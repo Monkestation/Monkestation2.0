@@ -59858,6 +59858,7 @@
 	pixel_y = 4;
 	pixel_x = 1
 	},
+/obj/item/hand_labeler,
 /turf/open/floor/iron/dark/textured_half,
 /area/station/science/robotics/lab)
 "rtR" = (

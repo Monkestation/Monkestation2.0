@@ -24197,7 +24197,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "fHD" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/smartfridge/organ,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 4;
 	id = "roboticsprivacy";
@@ -46745,6 +46745,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/engine/atmos)
+"kSI" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/vending/robotics,
+/turf/open/floor/iron/dark,
+/area/station/science/robotics/lab)
 "kSR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -75980,6 +75988,7 @@
 /obj/item/toy/figure/roboticist{
 	pixel_y = 4
 	},
+/obj/item/hand_labeler,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "rRS" = (
@@ -134434,7 +134443,7 @@ dOk
 dOk
 ozE
 hGz
-pRk
+kSI
 lsl
 iYC
 xFI

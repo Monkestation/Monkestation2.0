@@ -73486,6 +73486,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/item/hand_labeler,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "wBp" = (
