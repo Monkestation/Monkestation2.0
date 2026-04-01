@@ -128,7 +128,7 @@
 	required_atoms = list(
 		/obj/item/codex_cicatrix = 1,
 	)
-	result_atoms = list(/obj/vehicle/sealed/car/speedwagon)
+	result_atoms = list(/obj/vehicle/ridden/speedwagon)
 	cost = 2
 	research_tree_icon_path = 'icons/obj/weapons/sword.dmi'
 	research_tree_icon_state = "v8_engine"
