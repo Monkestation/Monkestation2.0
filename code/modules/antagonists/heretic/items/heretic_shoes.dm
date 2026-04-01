@@ -3,6 +3,7 @@
 	desc = "Sabatons made out of rugged, worn iron. Feels more stable than the ground they tread on. They're caked in a thin layer of rust - and yet, the sight of it fills you with odd relief."
 	icon_state = "hereticgreaves"
 	resistance_flags = ACID_PROOF | FIRE_PROOF | LAVA_PROOF
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 
 /obj/item/clothing/shoes/greaves_of_the_prophet/Initialize(mapload)
 	. = ..()
