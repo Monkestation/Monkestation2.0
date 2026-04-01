@@ -19,6 +19,8 @@
 	category = SPELLBOOK_CATEGORY_OFFENSIVE
 	moba_blacklist = TRUE
 
+/datum/spellbook_entry/smite
+	moba_blacklist = TRUE
 /*/datum/spellbook_entry/disintegrate //monkestation edit: replaced with a pointed version with a different effect
 	name = "Smite"
 	desc = "Charges your hand with an unholy energy that can be used to cause a touched victim to violently explode."
