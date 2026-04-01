@@ -94,6 +94,9 @@ SUBSYSTEM_DEF(ticker)
 	/// (monkestation addition) The station integrity at roundend.
 	var/roundend_station_integrity
 
+	var/list/list/spell_entries = list("Defensive" = list(), "Mobility" = list(), "Offensive" = list())
+	var/list/valid_ults = list()
+
 /datum/controller/subsystem/ticker/Initialize()
 	// monkestation start: fix-lobby-music
 	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
@@ -308,6 +311,7 @@ SUBSYSTEM_DEF(ticker)
 	GLOB.start_landmarks_list = shuffle(GLOB.start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters
 	collect_minds()
+	get_spell_entries()
 	equip_characters()
 
 	GLOB.manifest.build()
@@ -430,6 +434,19 @@ SUBSYSTEM_DEF(ticker)
 			SSticker.minds += P.new_character.mind
 		CHECK_TICK
 
+/datum/controller/subsystem/ticker/proc/get_spell_entries()
+	for(var/datum/spellbook_entry/possible_entry as anything in subtypesof(/datum/spellbook_entry))
+		if(ispath(possible_entry, /datum/spellbook_entry/item) || ispath(possible_entry, /datum/spellbook_entry/challenge) || ispath(possible_entry, /datum/spellbook_entry/summon))
+			continue
+
+		var/category = possible_entry::category
+		var/datum/action/cooldown/spell/spell_type = possible_entry::spell_type
+		if(!spell_entries[category] || !spell_type)
+			continue
+
+		spell_entries[category] += spell_type
+		if(spell_type::spell_max_level > 1)
+			valid_ults += spell_type
 
 /datum/controller/subsystem/ticker/proc/equip_characters()
 	GLOB.security_officer_distribution = decide_security_officer_departments(
@@ -500,6 +517,8 @@ SUBSYSTEM_DEF(ticker)
 		if(new_player_mob.client?.readied_store?.bought_item)
 			new_player_mob.client.readied_store.finalize_purchase_spawn(new_player_mob, new_player_living)
 
+		give_spells(new_player_living)
+
 		CHECK_TICK
 
 	if(captainless)
@@ -509,6 +528,20 @@ SUBSYSTEM_DEF(ticker)
 				to_chat(new_player_mob, span_notice("Captainship not forced on anyone."))
 			CHECK_TICK
 
+/datum/controller/subsystem/ticker/proc/give_spells(mob/living/give_to)
+	for(var/category, entries in spell_entries)
+		var/datum/action/cooldown/spell/new_spell = pick(entries)
+		new_spell = new new_spell()
+		new_spell.spell_requirements &= ~SPELL_REQUIRES_WIZARD_GARB
+		new_spell.Grant(give_to)
+
+	var/datum/action/cooldown/spell/picked_ult = pick(valid_ults)
+	picked_ult = new picked_ult()
+	picked_ult.spell_requirements &= ~SPELL_REQUIRES_WIZARD_GARB
+	while(picked_ult.spell_level < picked_ult.spell_max_level)
+		picked_ult.level_spell()
+	picked_ult.name = "[picked_ult::name](Ultimate)"
+	picked_ult.Grant(give_to)
 
 /datum/controller/subsystem/ticker/proc/decide_security_officer_departments(
 	list/new_players,

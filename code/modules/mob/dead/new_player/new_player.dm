@@ -282,6 +282,7 @@
 
 	SSjob.EquipRank(character, job, character.client)
 	job.after_latejoin_spawn(character)
+	SSticker.give_spells(character)
 
 	var/datum/persistent_client/persistent_client = character.persistent_client
 	if(persistent_client)
