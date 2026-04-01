@@ -213,7 +213,7 @@
 
 	var/turf/our_turf = get_turf(src)
 
-	for(var/turf/nearby_turf as anything in circle_range_turfs(src, 3))
+	for(var/turf/nearby_turf as anything in circle_range_turfs(src, 2))
 		if(valid_turf(our_turf, nearby_turf))
 			if(prob(50))
 				do_sparks(rand(1, 9), FALSE, nearby_turf)

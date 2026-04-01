@@ -104,6 +104,7 @@
 	wound_bonus = -13
 	armour_penetration = 30
 	speed = 0.75
+	damage_falloff_tile = -0.3
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/magnum/Initialize(mapload)
 	. = ..()
@@ -113,8 +114,9 @@
 /obj/projectile/bullet/pellet/shotgun_buckshot/express ///12 pellets
 	name = "express buckshot pellet"
 	damage = 4
-	wound_bonus = 0
+	wound_bonus = -3
 	speed = 1.5
+	damage_falloff_tile = -0.05
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/express/Initialize(mapload)
 	. = ..()

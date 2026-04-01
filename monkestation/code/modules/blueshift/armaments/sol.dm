@@ -149,6 +149,7 @@
 /datum/armament_entry/company_import/sol_defense/magazines/sol_rifle_standard
 	item_type = /obj/item/ammo_box/magazine/c40sol_rifle/standard/starts_empty
 	cost = PAYCHECK_COMMAND
+	contraband = TRUE
 
 /datum/armament_entry/company_import/sol_defense/magazines/sol_grenade_standard
 	item_type = /obj/item/ammo_box/magazine/c980_grenade/starts_empty

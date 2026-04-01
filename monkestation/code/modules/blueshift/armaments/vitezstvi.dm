@@ -66,17 +66,6 @@
 	cost = PAYCHECK_CREW * 2
 	contraband = TRUE
 
-/datum/armament_entry/company_import/vitezstvi/ammo_boxes/strilka_lethal
-	item_type = /obj/item/ammo_box/c310_cargo_box
-	cost = PAYCHECK_CREW * 2
-
-/datum/armament_entry/company_import/vitezstvi/ammo_boxes/strilka_rubber
-	item_type = /obj/item/ammo_box/c310_cargo_box/rubber
-
-/datum/armament_entry/company_import/vitezstvi/ammo_boxes/strilka_ap
-	item_type = /obj/item/ammo_box/c310_cargo_box/piercing
-	cost = PAYCHECK_CREW * 2
-
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/cesarzowa_lethal
 	item_type = /obj/item/ammo_box/c27_54cesarzowa
 	cost = PAYCHECK_CREW * 2
@@ -155,6 +144,7 @@
 /datum/armament_entry/company_import/vitezstvi/shot_shells/AP_slugs
 	item_type = /obj/item/ammo_box/advanced/s12gauge/apds
 	cost = PAYCHECK_COMMAND * 4
+	contraband = TRUE
 
 /datum/armament_entry/company_import/vitezstvi/shot_shells/buckshot
 	item_type = /obj/item/ammo_box/advanced/s12gauge/buckshot

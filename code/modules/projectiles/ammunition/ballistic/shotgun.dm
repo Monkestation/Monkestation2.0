@@ -94,6 +94,10 @@
 	variance = 40
 	advanced_print_req = TRUE
 
+/obj/item/ammo_casing/shotgun/magnum/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread, atom/fired_from)
+	. = ..()
+	do_sparks(rand(0, 1), FALSE, src)
+
 /obj/item/ammo_casing/shotgun/express
 	name = "express pelletshot shell"
 	desc = "A 12 gauge shell that fires more and smaller projectiles than buckshot. Considered taboo to speak about \
@@ -101,7 +105,7 @@
 	icon_state = "expshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot/express
 	pellets = 12 // Same overall damage as buckshot
-	variance = 30 // Slightly wider spread than buckshot
+	variance = 40 // Slightly wider spread than buckshot
 
 /obj/item/ammo_casing/shotgun/flechette
 	name = "flechette shell"

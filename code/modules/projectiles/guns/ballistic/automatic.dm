@@ -667,6 +667,7 @@
 	actions_types = list()
 	spread = 7.5
 	projectile_wound_bonus = -20
+	wield_recoil = 0.5
 
 /obj/item/gun/ballistic/automatic/sol_rifle/Initialize(mapload)
 	. = ..()
@@ -891,6 +892,7 @@
 	actions_types = list()
 	item_flags = SLOWS_WHILE_IN_HAND
 	recoil = 1.2
+	wield_recoil = 0.6
 	spread = 20
 
 /obj/item/gun/ballistic/automatic/minigun22/Initialize(mapload)
@@ -952,7 +954,7 @@
 	spawnwithmagazine = FALSE
 
 
-/obj/item/gun/ballistic/automatic/lanca // Semi-automatic rifle firing .310, I.E weaker damage mosin with slower fire rate but semi and magazines and accurate
+/obj/item/gun/ballistic/automatic/lanca // Semi-automatic rifle firing .310, I.E weaker damage mosin but semi and magazines and accurate
 	name = "\improper Lanca Battle Rifle"
 	desc = "A relatively compact, long barreled bullpup battle rifle chambered for .310 Strilka. Has an integrated sight with \
 		a surprisingly functional amount of magnification, given its place of origin."

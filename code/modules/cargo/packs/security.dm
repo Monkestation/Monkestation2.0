@@ -363,9 +363,9 @@
 /datum/supply_pack/security/armory/lasrifle
 	name = "Heavy Laser Crate"
 	desc = "Contains 2 heavy laser rifles to replace the ones that YOU LOST"
-	cost = CARGO_CRATE_VALUE * 17.5
+	cost = CARGO_CRATE_VALUE * 15
 	contains = list(/obj/item/gun/energy/laser/heavylaser = 2)
-	crate_name = "smg crate"
+	crate_name = "heavy laser crate"
 
 /datum/supply_pack/security/armory/sindano
 	name = "Sindano Submachinegun Crate"
@@ -422,6 +422,7 @@
 		/obj/item/ammo_box/advanced/s12gauge = 2,
 	)
 	crate_name = "Tactical Bóbr Crate"
+	contraband = TRUE
 
 /datum/supply_pack/security/armory/antitank
 	name = "Disposable Anti-Tank Rocket Crate"

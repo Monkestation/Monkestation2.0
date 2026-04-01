@@ -133,8 +133,8 @@
 	name = ".310 Strilka bullet"
 	damage = 45
 	armour_penetration = 30
-	wound_bonus = -55  //-10 from mosin
-	bare_wound_bonus = -25
+	wound_bonus = -55
+	bare_wound_bonus = -35
 	wound_falloff_tile = 0
 	speed = 2.25
 
@@ -142,6 +142,7 @@
 	name = ".310 Strilka surplus bullet"
 	weak_against_armour = TRUE //this is specifically more important for fighting carbons than fighting noncarbons. Against a simple mob, this is still a full force bullet
 	armour_penetration = 0
+	speed = 1.75
 
 /obj/projectile/bullet/strilka310/rubber
 	name = ".310 rubber bullet"
@@ -162,4 +163,13 @@
 	armour_penetration = 60
 	wound_falloff_tile = -2
 	speed = 3.3
+	projectile_piercing = PASSMOB
 
+/obj/projectile/bullet/strilka310/ap/on_hit(atom/target, blocked = 0, pierce_hit)
+	if(isliving(target))
+		// If the bullet has already gone through one person, stop it on this hit
+		if((pierces > 1))
+			projectile_piercing = NONE
+	armour_penetration -= 30
+
+	return ..()
