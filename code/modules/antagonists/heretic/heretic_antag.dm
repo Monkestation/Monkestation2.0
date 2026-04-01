@@ -453,16 +453,20 @@
 
 /datum/antagonist/heretic/proc/add_aura_overlay(mob/living/source, list/overlays)
 	SIGNAL_HANDLER
-	if(should_show_aura())
-		overlays += mutable_appearance('icons/mob/effects/heretic_aura.dmi', "heretic_aura")
-		overlays += emissive_appearance('icons/mob/effects/heretic_aura.dmi', "heretic_aura_e", source)
+	if(!should_show_aura())
+		return
+	var/mutable_appearance/aura = mutable_appearance('icons/mob/effects/heretic_aura.dmi', "heretic_aura")
+	if(HAS_TRAIT(source, TRAIT_HERETIC_AURA_HIDDEN))
+		aura.alpha = 100 // minimize visual clutter, but hopefully it's still visible enough
+	overlays += aura
+	overlays += emissive_appearance('icons/mob/effects/heretic_aura.dmi', "heretic_aura_e", source)
 
 /datum/antagonist/heretic/proc/should_show_aura()
 	if(ascended) // duh
 		return TRUE
 	if(!can_assign_self_objectives)
 		return FALSE // We spurned the offer of the Mansus :(
-	if(!unlimited_blades || HAS_TRAIT(owner.current, TRAIT_HERETIC_AURA_HIDDEN))
+	if(!unlimited_blades/* || HAS_TRAIT(owner.current, TRAIT_HERETIC_AURA_HIDDEN) */)
 		return FALSE // No aura if we have the trait or is too early still
 	if(feast_of_owls)
 		return FALSE // No use in giving the aura to a heretic that can't ascend
