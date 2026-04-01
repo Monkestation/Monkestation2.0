@@ -12,6 +12,7 @@
 	spell_type = /datum/action/cooldown/spell/emp/disable_tech
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 	cost = 1
+	moba_blacklist = TRUE
 
 /datum/spellbook_entry/repulse
 	name = "Repulse"
@@ -84,6 +85,7 @@
 		instantly summoning a swarm of bees to your location. These bees are NOT friendly to anyone."
 	spell_type = /datum/action/cooldown/spell/conjure/bee
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
+	moba_blacklist = TRUE
 
 /datum/spellbook_entry/duffelbag
 	name = "Bestow Cursed Duffel Bag"

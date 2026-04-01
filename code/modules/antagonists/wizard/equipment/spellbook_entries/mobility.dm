@@ -5,6 +5,7 @@
 	desc = "Allows you to switch bodies with a target next to you. You will both fall asleep when this happens, and it will be quite obvious that you are the target's body if someone watches you do it."
 	spell_type = /datum/action/cooldown/spell/pointed/mind_transfer
 	category = SPELLBOOK_CATEGORY_MOBILITY
+	moba_blacklist = TRUE
 
 /datum/spellbook_entry/knock
 	name = "Knock"

@@ -27,6 +27,7 @@
 	spell_type = /datum/action/cooldown/spell/tap
 	category = SPELLBOOK_CATEGORY_ASSISTANCE
 	cost = 1
+	moba_blacklist = TRUE
 
 /datum/spellbook_entry/item/staffanimation
 	name = "Staff of Animation"

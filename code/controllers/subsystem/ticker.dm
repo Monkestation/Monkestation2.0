@@ -441,10 +441,13 @@ SUBSYSTEM_DEF(ticker)
 
 		var/category = possible_entry::category
 		var/datum/action/cooldown/spell/spell_type = possible_entry::spell_type
-		if(!spell_entries[category] || !spell_type)
+		if(!spell_type || possible_entry::moba_blacklist || (!spell_entries[category] && category != "Assistance"))
 			continue
 
-		spell_entries[category] += spell_type
+		if(category == "Assistance")
+			spell_entries["Mobility"] += spell_type
+		else
+			spell_entries[category] += spell_type
 		if(spell_type::spell_max_level > 1)
 			valid_ults += spell_type
 
@@ -542,6 +545,7 @@ SUBSYSTEM_DEF(ticker)
 		picked_ult.level_spell()
 	picked_ult.name = "[picked_ult::name](Ultimate)"
 	picked_ult.Grant(give_to)
+	ADD_TRAIT(give_to.mind, TRAIT_MAGICALLY_GIFTED, "moba")
 
 /datum/controller/subsystem/ticker/proc/decide_security_officer_departments(
 	list/new_players,

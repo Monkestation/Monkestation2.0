@@ -17,6 +17,7 @@
 	desc = "Take on the form of an immovable rod, destroying all in your path. Purchasing this spell multiple times will also increase the rod's damage and travel range."
 	spell_type = /datum/action/cooldown/spell/rod_form
 	category = SPELLBOOK_CATEGORY_OFFENSIVE
+	moba_blacklist = TRUE
 
 /*/datum/spellbook_entry/disintegrate //monkestation edit: replaced with a pointed version with a different effect
 	name = "Smite"
@@ -31,6 +32,7 @@
 		Their lesser, easily manipulable minds will be convinced you are one of their allies, but only for a minute. Unless you also are a monkey."
 	spell_type = /datum/action/cooldown/spell/conjure/simian
 	category = SPELLBOOK_CATEGORY_OFFENSIVE
+	moba_blacklist = TRUE
 
 /datum/spellbook_entry/blind
 	name = "Blind"
@@ -101,12 +103,14 @@
 	spell_type =  /datum/action/cooldown/spell/splattercasting
 	category = SPELLBOOK_CATEGORY_OFFENSIVE
 	no_coexistance_typecache = list(/datum/action/cooldown/spell/lichdom)
+	moba_blacklist = TRUE
 
 /datum/spellbook_entry/sanguine_strike
 	name = "Exsanguinating Strike"
 	desc = "Sanguine spell that enchants your next weapon strike to deal more damage, heal you for damage dealt, and refill blood."
 	spell_type =  /datum/action/cooldown/spell/sanguine_strike
 	category = SPELLBOOK_CATEGORY_OFFENSIVE
+	moba_blacklist = TRUE
 
 /datum/spellbook_entry/scream_for_me
 	name = "Scream For Me"
@@ -114,6 +118,7 @@
 	spell_type =  /datum/action/cooldown/spell/touch/scream_for_me
 	cost = 1
 	category = SPELLBOOK_CATEGORY_OFFENSIVE
+	moba_blacklist = TRUE
 
 /datum/spellbook_entry/item/staffchaos
 	name = "Staff of Chaos"
