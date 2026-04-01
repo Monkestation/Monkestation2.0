@@ -269,6 +269,7 @@ SUBSYSTEM_DEF(ticker)
 				declare_completion(force_ending)
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 
+#define DISABLE_MOBA 1
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, span_boldannounce("Starting game..."))
 	var/init_start = world.timeofday
@@ -311,7 +312,9 @@ SUBSYSTEM_DEF(ticker)
 	GLOB.start_landmarks_list = shuffle(GLOB.start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters
 	collect_minds()
+#ifndef DISABLE_MOBA
 	get_spell_entries()
+#endif
 	equip_characters()
 
 	GLOB.manifest.build()
@@ -532,6 +535,9 @@ SUBSYSTEM_DEF(ticker)
 			CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/give_spells(mob/living/give_to)
+	if(!length(spell_entries["Defensive"]))
+		return
+
 	for(var/category, entries in spell_entries)
 		var/datum/action/cooldown/spell/new_spell = pick(entries)
 		new_spell = new new_spell()
