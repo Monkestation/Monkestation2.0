@@ -58,7 +58,7 @@
 
 /obj/item/mod/module/Destroy()
 	mod?.uninstall(src)
-	if(device)
+	if(isdatum(device))
 		UnregisterSignal(device, COMSIG_QDELETING)
 		QDEL_NULL(device)
 	return ..()
