@@ -246,6 +246,7 @@
 			to_chat(user, span_narsiesmall("How DARE you!? I will see you destroyed for this."))
 			var/non_flavor_warning = span_cultbold("You feel that your action has attracted ") + span_hypnophrase("attention") + span_cultbold(".")
 			to_chat(user, non_flavor_warning)
+		loc.flash_lighting_fx(range = 7, power = 3, color = LIGHT_COLOR_BLOOD_MAGIC, duration = 5 SECONDS)
 		return
 	else
 		heretic_datum.adjust_knowledge_points(2)

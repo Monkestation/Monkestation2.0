@@ -668,6 +668,8 @@
 				SEND_SOUND(mind.current, 'sound/magic/clockwork/narsie_attack.ogg')
 				to_chat(mind.current, span_cultlarge(span_warning("Arcane and forbidden knowledge floods your forges and archives. The cult has learned how to create the ")) + span_cultlarge(span_hypnophrase("[result]!")))
 
+	conversion_rune.flash_lighting_fx(range = 7, power = 3, color = COLOR_HERETIC_GREEN, duration = 5 SECONDS)
+
 	return SILENCE_SACRIFICE_MESSAGE|DUST_SACRIFICE
 
 /**
