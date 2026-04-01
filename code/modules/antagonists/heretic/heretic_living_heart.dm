@@ -238,6 +238,10 @@
 		else if(is_away_level(their_z) || is_secret_level(their_z))
 			balloon_message = "beyond the gateway!"
 
+		// on a shuttle
+		else if(is_reserved_level(their_z) && istype(get_area(tracked_thing), /area/shuttle))
+			balloon_message = "on a shuttle!"
+
 		// They're somewhere we probably can't get too - sacrifice z-level, centcom, etc
 		else
 			balloon_message = "on another plane!"
