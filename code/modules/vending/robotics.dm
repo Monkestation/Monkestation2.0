@@ -21,6 +21,7 @@
 				/obj/item/crowbar = 3,
 				/obj/item/storage/bag/construction = 1,
 				/obj/item/storage/bag/bio = 1,
+				/obj/item/storage/box/bodybags = 1,
 
 			),
 		),
@@ -43,14 +44,15 @@
 		),
 	)
 	contraband = list(
-		/obj/item/stock_parts/power_store/cell/potato = 3, //debating if i should add knives in this for floorbots
+		/obj/item/stock_parts/power_store/cell/potato = 3, //adds clown stuff to make honk mechs
 		/obj/item/storage/box/clown = 5,
 		/obj/item/bikehorn = 1,
 		/obj/item/clothing/mask/gas/clown_hat = 1,
 		/obj/item/clothing/shoes/clown_shoes = 1.
 	)
 	premium = list(
-		/obj/item/shears = 2,
+		/obj/item/shears = 1,
+		/obj/item/storage/box/flashes = 2,
 		/obj/item/reagent_containers/medipen/deforest/robot_liquid_solder = 2,
 		/obj/item/reagent_containers/medipen/deforest/robot_system_cleaner = 2,
 		/obj/item/clothing/gloves/latex/surgical = 1,

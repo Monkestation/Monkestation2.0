@@ -8755,6 +8755,10 @@
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
+"cDO" = (
+/obj/machinery/holopad,
+/turf/open/floor/iron/white/textured,
+/area/station/medical/storage)
 "cDP" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/nitrogen_input,
 /turf/open/floor/engine/n2,
@@ -58560,7 +58564,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "raq" = (
-/obj/machinery/holopad,
 /obj/effect/turf_decal/tile/blue/half{
 	dir = 1
 	},
@@ -111671,7 +111674,7 @@ tKm
 vdA
 uLp
 xWw
-xWw
+cDO
 xWw
 dWp
 mIl
