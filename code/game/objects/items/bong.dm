@@ -51,7 +51,7 @@
 		quarter_volume = reagents.total_volume/useable_bonghits
 	if(istype(tool, /obj/item/food/grown/cannabis/ultimate))
 		omega = TRUE
-		to_chat(user, "<span class='notice'>The immense power of [tool] causes [src] to quiver, as if in fear of the immense dankness of [tool].")
+		to_chat(user, span_notice("The immense power of [tool] causes [src] to quiver, as if in fear of the immense dankness of [tool]."))
 	qdel(tool)
 	return ITEM_INTERACT_SUCCESS
 
