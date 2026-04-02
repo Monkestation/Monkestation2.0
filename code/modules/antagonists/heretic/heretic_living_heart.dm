@@ -155,6 +155,7 @@
 			radius = 40,
 			require_near = TRUE,
 			tooltips = TRUE,
+			autopick_single_option = FALSE
 		)
 		radial_open = FALSE
 
