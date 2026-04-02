@@ -97,7 +97,7 @@
 				user.electrocute_act(25, src, flags = SHOCK_NOGLOVES)
 				user.visible_message(span_danger("[user] is surrounded by a violent electrical pulse!"), span_userdanger("ZZZZTTTT!"))
 			if(2)
-				user.adjust_fire_stacks(10)
+				user.adjust_fire_stacks(20)
 				user.ignite_mob()
 			if(3)
 				user.vomit(10, FALSE, TRUE)
@@ -107,7 +107,7 @@
 			if(4)
 				user.apply_status_effect(/datum/status_effect/freon/evil_bong)
 				user.visible_message("[user] is frozen in a giant block of ice!")
-				user.adjustFireLoss(20)
+				user.adjustFireLoss(25)
 			if(5)
 				to_chat(user, span_boldnotice("You feel an overwhelming sense of impending doom."))
 				addtimer(CALLBACK(TYPE_PROC_REF(/mob/living, pay_for_your_sins), user), rand(1 SECONDS, 10 SECONDS)) //hehe
@@ -189,3 +189,7 @@
 /obj/structure/closet/supplypod/anvil/stun
 	effectStun = TRUE
 	specialised = TRUE
+
+/datum/status_effect/freon/evil_bong
+	duration = 30 SECONDS
+	can_melt = FALSE
