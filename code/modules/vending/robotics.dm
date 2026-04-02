@@ -14,10 +14,7 @@
 				/obj/item/stack/cable_coil = 4,
 				/obj/item/assembly/flash/handheld = 4,
 				/obj/item/stock_parts/power_store/cell/high = 4,
-				/obj/item/assembly/prox_sensor = 3,
 				/obj/item/assembly/signaler = 3,
-				/obj/item/healthanalyzer = 3,
-				/obj/item/clothing/head/utility/hardhat = 3,
 				/obj/item/tank/internals/anesthetic = 2,
 				/obj/item/clothing/mask/breath/medical = 2,
 				/obj/item/screwdriver = 3,
@@ -29,20 +26,28 @@
 		),
 
 		list(
-			"name" = "Bot Assemblies",
+			"name" = "Bot Assembly Parts",
 			"products" = list(
-				/obj/item/bot_assembly/medbot = 2,
-				/obj/item/bot_assembly/cleanbot = 2,
-				/obj/item/bot_assembly/floorbot = 2,
+				/obj/item/healthanalyzer = 3,
+				/obj/item/clothing/head/utility/hardhat = 3,
+				/obj/item/reagent_containers/cup/bucket = 3,
+				/obj/item/assembly/prox_sensor = 6,
+				/obj/item/healthanalyzer = 3,
+				/obj/item/storage/medkit = 3,
+				/obj/item/bot_assembly/hygienebot = 3,
 				/obj/item/bot_assembly/secbot = 1,
-				/obj/item/bot_assembly/hygienebot = 2,
-				/obj/item/bot_assembly/firebot = 2,
+
+
+
 			),
 		),
 	)
 	contraband = list(
 		/obj/item/stock_parts/power_store/cell/potato = 3, //debating if i should add knives in this for floorbots
-		/obj/item/bot_assembly/honkbot = 5,
+		/obj/item/storage/box/clown = 5,
+		/obj/item/bikehorn = 1,
+		/obj/item/clothing/mask/gas/clown_hat = 1,
+		/obj/item/clothing/shoes/clown_shoes = 1.
 	)
 	premium = list(
 		/obj/item/shears = 2,
