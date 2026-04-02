@@ -183,7 +183,7 @@
 
 /obj/item/card/id/advanced/heretic/proc/eat_card(obj/item/card/id/card, mob/user)
 	if(card == src)
-		return //no self vore
+		return //no eating own card
 	fused_ids[card.name] = card
 	card.moveToNullspace()
 	access |= card.access
