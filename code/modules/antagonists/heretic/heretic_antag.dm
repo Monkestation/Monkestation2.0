@@ -374,10 +374,12 @@
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer) // Gain +1 knowledge every 20 minutes.
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY, PROC_REF(query_for_monster_hunter))
+	RegisterSignal(owner, COMSIG_OOZELING_REVIVED, PROC_REF(on_oozeling_revive))
 	return ..()
 
 /datum/antagonist/heretic/on_removal()
 	UnregisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY)
+	UnregisterSignal(owner, COMSIG_OOZELING_REVIVED)
 
 	if(owner.current)
 		for(var/knowledge_path in researched_knowledge)
@@ -1194,6 +1196,13 @@
 	// if you've sacced a head of staff, or passed the point where blade breaking gets disabled, you're potential prey
 	if(high_value_sacrifices > 0 || unlimited_blades)
 		prey += owner
+
+/// If an oozeling heretic is full-revived (such as via aheal), give them a living heart again.
+/datum/antagonist/heretic/proc/on_oozeling_revive(datum/source, mob/living/carbon/human/new_body, obj/item/organ/internal/brain/slime/core, nugget)
+	SIGNAL_HANDLER
+	if(!nugget)
+		var/datum/heretic_knowledge/living_heart/heart_knowledge = get_knowledge(/datum/heretic_knowledge/living_heart)
+		heart_knowledge.on_research(new_body, src)
 
 /datum/antagonist/heretic/antag_token(datum/mind/hosts_mind, mob/spender)
 	. = ..()

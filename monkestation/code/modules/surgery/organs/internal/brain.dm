@@ -667,7 +667,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	if(policy)
 		to_chat(new_body, policy, avoid_highlighting = TRUE)
 
-	SEND_SIGNAL(mind, COMSIG_OOZELING_REVIVED, new_body, src)
+	SEND_SIGNAL(mind, COMSIG_OOZELING_REVIVED, new_body, src, nugget)
 	return new_body
 
 /obj/item/organ/internal/brain/slime/Topic(href, list/href_list)
