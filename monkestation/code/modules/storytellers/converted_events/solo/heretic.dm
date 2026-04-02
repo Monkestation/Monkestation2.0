@@ -42,7 +42,6 @@
 	required_enemies = 6
 	weight = 8
 	min_players = 20
-	repeated_mode_adjust = TRUE
 
 /datum/round_event_control/antagonist/heretic/roundstart
 	name = "Heretics"
