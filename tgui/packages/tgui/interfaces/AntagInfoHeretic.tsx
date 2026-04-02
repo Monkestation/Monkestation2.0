@@ -193,7 +193,8 @@ const GuideSection = () => {
           <b>right click</b> on them to harvest them for&nbsp;
           <span style={hereticBlue}>knowledge points</span>. Tapping them makes
           them visible to all after a short time. Dreaming of Mansus may help to
-          find them.
+          find them. This rift will not open without first sending through to
+          the Mansus another sacrifice.
         </Stack.Item>
         <Stack.Item>
           - Use your&nbsp;

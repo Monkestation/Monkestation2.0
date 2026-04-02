@@ -316,7 +316,7 @@
  */
 /obj/effect/heretic_influence/proc/drain_influence(mob/living/user, knowledge_to_gain, drain_speed = HERETIC_RIFT_DEFAULT_DRAIN_SPEED)
 	if(user.has_status_effect(/datum/status_effect/heretic_sated))
-		loc.balloon_alert(user, "sated!")
+		loc.balloon_alert(user, "sated, must complete sacrifice!")
 		return
 
 	being_drained = TRUE
