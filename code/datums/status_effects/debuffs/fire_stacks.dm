@@ -221,7 +221,7 @@
  */
 
 /datum/status_effect/fire_handler/fire_stacks/proc/ignite(silent = FALSE)
-	if(HAS_TRAIT(owner, TRAIT_NOFIRE))
+	if(HAS_TRAIT(owner, TRAIT_NOFIRE) && !HAS_TRAIT(owner, TRAIT_SUPPRESS_NOFIRE))
 		return FALSE
 
 	on_fire = TRUE
@@ -264,7 +264,7 @@
 
 /datum/status_effect/fire_handler/fire_stacks/on_apply()
 	. = ..()
-	if(HAS_TRAIT(owner, TRAIT_NOFIRE))
+	if(HAS_TRAIT(owner, TRAIT_NOFIRE) && !HAS_TRAIT(owner, TRAIT_SUPPRESS_NOFIRE))
 		return FALSE
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_fire_overlay))
 	owner.update_appearance(UPDATE_OVERLAYS)

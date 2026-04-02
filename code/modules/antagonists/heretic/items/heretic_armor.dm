@@ -148,7 +148,7 @@
 	limb.dismember(BURN)
 
 /datum/action/item_action/toggle/flames
-	button_icon = 'icons/effects/magic.dmi'
+	button_icon = 'icons/obj/wizard.dmi'
 	button_icon_state = "fireball"
 
 /datum/action/item_action/toggle/flames/do_effect(trigger_flags)
@@ -162,10 +162,12 @@
 	flame_generation = !flame_generation
 
 	if(flame_generation)
+		ADD_TRAIT(user, TRAIT_SUPPRESS_NOFIRE, REF(src))
 		START_PROCESSING(SSobj, src)
 	else
 		user.extinguish()
 		STOP_PROCESSING(SSobj, src)
+		REMOVE_TRAIT(user, TRAIT_SUPPRESS_NOFIRE, REF(src))
 
 	user.balloon_alert(user, flame_generation ? "enabled" : "disabled")
 	user.fire_stack_decay_rate = flame_generation ? 0 : initial(user.fire_stack_decay_rate)

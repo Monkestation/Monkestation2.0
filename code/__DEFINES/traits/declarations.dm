@@ -203,6 +203,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This carbon doesn't show an overlay when they have no brain
 #define TRAIT_NO_DEBRAIN_OVERLAY "no_debrain_overlay"
 #define TRAIT_NOFIRE "nonflammable"
+#define TRAIT_SUPPRESS_NOFIRE "nonnonflammable"
 #define TRAIT_NOFIRE_SPREAD "no_fire_spreading"
 /// Prevents plasmamen from self-igniting if only their helmet is missing
 #define TRAIT_NOSELFIGNITION_HEAD_ONLY "no_selfignition_head_only"
