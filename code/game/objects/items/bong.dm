@@ -95,22 +95,22 @@
 		switch(rand(1, 5))
 			if(1)
 				user.electrocute_act(25, src, flags = SHOCK_NOGLOVES)
-				fool.visible_message(span_danger("[fool] is surrounded by a violent electrical pulse!"), span_userdanger("ZZZZTTTT!"))
+				user.visible_message(span_danger("[user] is surrounded by a violent electrical pulse!"), span_userdanger("ZZZZTTTT!"))
 			if(2)
-				fool.adjust_fire_stacks(10)
-				fool.ignite_mob()
+				user.adjust_fire_stacks(10)
+				user.ignite_mob()
 			if(3)
-				fool.vomit(10, FALSE, TRUE)
-				fool.adjust_disgust(100)
-				fool.apply_status_effect(/datum/status_effect/no_gravity, 30 SECONDS)
-				fool.visible_message(span_warning("[fool] begins floating around!"), span_warning("You feel nauseous and weightless!"))
+				user.vomit(10, FALSE, TRUE)
+				user.adjust_disgust(100)
+				user.apply_status_effect(/datum/status_effect/no_gravity, 30 SECONDS)
+				user.visible_message(span_warning("[user] begins floating around!"), span_warning("You feel nauseous and weightless!"))
 			if(4)
-				fool.apply_status_effect(/datum/status_effect/freon/magic_overload)
-				fool.visible_message("[fool] is frozen in a giant block of ice!")
-				fool.adjustFireLoss(20)
+				user.apply_status_effect(/datum/status_effect/freon/evil_bong)
+				user.visible_message("[user] is frozen in a giant block of ice!")
+				user.adjustFireLoss(20)
 			if(5)
-				to_chat(fool, span_boldnotice("You seem fine, actually."))
-				addtimer(CALLBACK(TYPE_PROC_REF(/mob/living, pay_for_your_sins), fool), rand(10 SECONDS, 10 MINUTES)) //hehe
+				to_chat(user, span_boldnotice("You feel an overwhelming sense of impending doom."))
+				addtimer(CALLBACK(TYPE_PROC_REF(/mob/living, pay_for_your_sins), user), rand(1 SECONDS, 10 SECONDS)) //hehe
 	if(bonghits > 0)
 		return
 
@@ -161,3 +161,31 @@
 				/obj/item/stack/sheet/glass = 10)
 	time = 2 SECONDS
 	category = CAT_CHEMISTRY
+
+/mob/living/proc/pay_for_your_sins()
+	podspawn(list(
+		"path" = /obj/structure/closet/supplypod/anvil/stun,
+		"target" = src,
+		))
+	sleep(3.4 SECONDS)
+	if(iscarbon(src))
+		AddElement(/datum/element/squish,  99 HOURS) // SQUEESHED FOREVER, YOU FOOL
+
+/obj/structure/closet/supplypod/anvil
+	name = "anvil"
+	desc = "Punishment for your hubris."
+	icon = 'monkestation/code/modules/smithing/icons/forge_structures.dmi'
+	icon_state = "anvil_empty"
+	delays = list(POD_TRANSIT = 2.6 SECONDS, POD_FALLING = 0.8 SECONDS)
+	effectStun = FALSE
+	damage = 50
+	effectMissile = TRUE
+	explosionSize = list(0,0,0,0)
+	rubble_type = RUBBLE_THIN
+	decal = null
+	door = null
+	fin_mask = null
+
+/obj/structure/closet/supplypod/anvil/stun
+	effectStun = TRUE
+	specialised = TRUE
