@@ -419,7 +419,7 @@
 	contains = list(
 		/obj/item/gun/ballistic/revolver/shotgun_revolver = 2,
 		/obj/item/ammo_box/tacshield/tutel/ = 2,
-		/obj/item/ammo_box/advanced/s12gauge = 2,
+		/obj/item/ammo_box/advanced/s12gauge/buckshot = 2,
 	)
 	crate_name = "Tactical Bóbr Crate"
 	contraband = TRUE

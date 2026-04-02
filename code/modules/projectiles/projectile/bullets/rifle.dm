@@ -132,9 +132,9 @@
 /obj/projectile/bullet/strilka310
 	name = ".310 Strilka bullet"
 	damage = 45
-	armour_penetration = 30
-	wound_bonus = -55
-	bare_wound_bonus = -35
+	armour_penetration = 20
+	wound_bonus = -60
+	bare_wound_bonus = -40
 	wound_falloff_tile = 0
 	speed = 2.25
 
@@ -160,8 +160,9 @@
 /obj/projectile/bullet/strilka310/ap
 	name = ".310 armor-piercing bullet"
 	damage = 35
-	armour_penetration = 60
+	armour_penetration = 50
 	wound_falloff_tile = -2
+	bare_wound_bonus = -55
 	speed = 3.3
 	projectile_piercing = PASSMOB
 
@@ -170,6 +171,8 @@
 		// If the bullet has already gone through one person, stop it on this hit
 		if((pierces > 1))
 			projectile_piercing = NONE
-	armour_penetration -= 30
+	armour_penetration -= 25
+	wound_bonus -= 30
+	bare_wound_bonus -= 30
 
 	return ..()

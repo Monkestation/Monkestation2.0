@@ -127,7 +127,7 @@
 	var/misfire_probability_cap = 25
 
 	///Recoil quantity when the gun is wielded
-	var/wield_recoil = 0.35
+	var/wield_recoil = 0.3
 
 	/// Does this gun have mag and nomag on mob variance?
 	var/alt_icons = FALSE
