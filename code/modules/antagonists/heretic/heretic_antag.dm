@@ -841,8 +841,8 @@
 			continue
 		if(!body.client || body.client?.is_afk())
 			continue
-		if(possible_target.get_effective_opt_in_level() < OPT_IN_YES_KILL)
-			continue
+		/* if(possible_target.get_effective_opt_in_level() < OPT_IN_YES_KILL)
+			continue */
 		if(!(possible_target.assigned_role?.job_flags & JOB_CREW_MEMBER))
 			continue
 		if(possible_target.assigned_role?.job_flags & JOB_CANNOT_BE_TARGET)
