@@ -73,7 +73,6 @@
 	if(amount_to_make <= 0)
 		return
 
-	var/location_sanity = 0
 	var/generated = 0
 	var/list/turf_groups = noise_turfs_station_equal_weight(6, forbidden_area_typecache)
 	main_loop:
