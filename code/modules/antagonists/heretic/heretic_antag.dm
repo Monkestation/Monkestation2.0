@@ -468,7 +468,7 @@
 		return
 	var/mutable_appearance/aura = mutable_appearance('icons/mob/effects/heretic_aura.dmi', "heretic_aura")
 	if(HAS_TRAIT(source, TRAIT_HERETIC_AURA_HIDDEN))
-		aura.alpha = 100 // minimize visual clutter, but hopefully it's still visible enough
+		aura.alpha = 150 // minimize visual clutter, but hopefully it's still visible enough
 	overlays += aura
 	overlays += emissive_appearance('icons/mob/effects/heretic_aura.dmi', "heretic_aura_e", source)
 
