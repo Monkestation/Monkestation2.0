@@ -109,6 +109,7 @@
 
 			log_game("Generated heretic influence at [AREACOORD(chosen_location)]")
 			new /obj/effect/heretic_influence(chosen_location)
+			generated++
 
 /// Returns true if any tracked heretic is currently eligible for influence spawning.
 /datum/reality_smash_tracker/proc/has_spawn_eligible_heretic()
