@@ -12,7 +12,9 @@
 	name = "Heartbeat of the Mansus"
 	desc = "Allows you to sacrifice targets to the Mansus by bringing them to a rune in critical (or worse) condition. \
 		If you have no targets, stand on a transmutation rune and invoke it to acquire some."
-	required_atoms = list(/mob/living/carbon/human = 1)
+	required_atoms = list(
+		list(/mob/living/carbon/human, /obj/item/organ/internal/brain/slime) = 1,
+	)
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY // Should be at the top
 	is_starting_knowledge = TRUE
@@ -76,27 +78,24 @@
 
 	// We've got no targets set, let's try to set some.
 	// If we recently failed to acquire targets, we will be unable to acquire any.
-	if(!LAZYLEN(heretic_datum.sac_targets))
+	if(!LAZYLEN(heretic_datum.current_sac_targets))
 		atoms += user
 		return TRUE
 
-	// You can ALWAYS sacrifice heads of staff if you need to do so.
-	var/datum/objective/major_sacrifice/major_sacc_objective = locate() in heretic_datum.objectives
-	var/can_sac_command = major_sacc_objective && !major_sacc_objective.check_completion()
-
 	// If we have targets, we can check to see if we can do a sacrifice
 	// Let's remove any humans in our atoms list that aren't a sac target
-	for(var/mob/living/carbon/human/sacrifice in atoms)
-		// If the mob's not in soft crit or worse, remove from list
-		if(sacrifice.stat < SOFT_CRIT)
-			atoms -= sacrifice
-			continue
-		// Otherwise if it's neither a target nor a cultist, remove it
-		if(!(sacrifice in heretic_datum.sac_targets) && !IS_CULTIST(sacrifice) && !(can_sac_command && (sacrifice.mind?.assigned_role?.job_flags & JOB_HEAD_OF_STAFF)))
-			atoms -= sacrifice
+	for(var/thingy in atoms)
+		if(ishuman(thingy))
+			var/mob/living/carbon/human/sacrifice = thingy
+			if(sacrifice.stat == CONSCIOUS || !heretic_datum.can_sacrifice(sacrifice))
+				atoms -= sacrifice
+		else if(istype(thingy, /obj/item/organ/internal/brain/slime))
+			var/obj/item/organ/internal/brain/slime/core = thingy
+			if(!heretic_datum.can_sacrifice(core))
+				atoms -= core
 
 	// Finally, return TRUE if we have a target in the list
-	if(locate(/mob/living/carbon/human) in atoms)
+	if(length(atoms))
 		return TRUE
 
 	// or FALSE if we don't
@@ -106,11 +105,9 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	// You can ALWAYS sacrifice heads of staff if you need to do so.
-	var/datum/objective/major_sacrifice/major_sacc_objective = locate() in heretic_datum.objectives
-	var/can_sac_command = major_sacc_objective && !major_sacc_objective.check_completion()
 	// Force it to work if the sacrifice is a cultist, even if there's no targets.
 	var/mob/living/carbon/human/sac = selected_atoms[1]
-	if(!LAZYLEN(heretic_datum.sac_targets) && !IS_CULTIST(sac) && !(can_sac_command && (sac.mind?.assigned_role?.job_flags & JOB_HEAD_OF_STAFF)))
+	if(!LAZYLEN(heretic_datum.current_sac_targets) && !heretic_datum.can_sacrifice(sac))
 		if(obtain_targets(user, heretic_datum = heretic_datum))
 			return TRUE
 		else
@@ -129,20 +126,7 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/obtain_targets(mob/living/user, silent = FALSE, datum/antagonist/heretic/heretic_datum)
 
 	// First construct a list of minds that are valid objective targets.
-	var/list/datum/mind/valid_targets = list()
-	for(var/datum/mind/possible_target as anything in get_crewmember_minds())
-		if(possible_target == user.mind)
-			continue
-		if(possible_target in target_blacklist)
-			continue
-		if(!ishuman(possible_target.current))
-			continue
-		if(possible_target.current.stat == DEAD)
-			continue
-		if(possible_target.assigned_role?.job_flags & JOB_CANNOT_BE_TARGET)
-			continue
-
-		valid_targets += possible_target
+	var/list/datum/mind/valid_targets = heretic_datum.possible_sacrifice_targets()
 
 	if(!length(valid_targets))
 		if(!silent)
@@ -178,16 +162,15 @@
 			break
 
 	// Now grab completely random targets until we'll full
-	var/target_sanity = 0
-	while(length(final_targets) < num_targets_to_generate && length(valid_targets) > num_targets_to_generate && target_sanity < 25)
+	var/remaining_targets = clamp(num_targets_to_generate - length(final_targets), 0, length(valid_targets))
+	for(var/i = 1 to remaining_targets)
 		final_targets += pick_n_take(valid_targets)
-		target_sanity++
 
 	if(!silent)
 		to_chat(user, span_danger("Your targets have been determined. Your Living Heart will allow you to track their position. Go and sacrifice them!"))
 
 	for(var/datum/mind/chosen_mind as anything in final_targets)
-		heretic_datum.add_sacrifice_target(chosen_mind.current)
+		heretic_datum.add_sacrifice_target(chosen_mind)
 		if(!silent)
 			to_chat(user, span_danger("[chosen_mind.current.real_name], the [chosen_mind.assigned_role?.title]."))
 
@@ -204,21 +187,27 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/sacrifice_process(mob/living/user, list/selected_atoms, turf/loc)
 
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
-	var/mob/living/carbon/human/sacrifice = locate() in selected_atoms
+	var/mob/living/carbon/human/sacrifice
+	for(var/sacrifice_candidate in selected_atoms)
+		if(ishuman(sacrifice_candidate))
+			sacrifice = sacrifice_candidate
+			break
+		else if(is_oozeling_core(sacrifice_candidate))
+			var/obj/item/organ/internal/brain/slime/core = sacrifice_candidate
+			sacrifice = core.rebuild_body(nugget = FALSE)
+			// ELSE THE CORE GETS DELETED AND WEIRD SHIT HAPPENS
+			selected_atoms -= core
+			selected_atoms += sacrifice
+			break
 	if(!sacrifice)
 		CRASH("[type] sacrifice_process didn't have a human in the atoms list. How'd it make it so far?")
-
-	var/sac_job_flag = sacrifice.mind?.assigned_role?.job_flags | sacrifice.last_mind?.assigned_role?.job_flags
-	var/datum/objective/major_sacrifice/major_sacc_objective = locate() in heretic_datum.objectives
-	var/can_sac_command = major_sacc_objective && !major_sacc_objective.check_completion()
-
-	if(!(sacrifice in heretic_datum.sac_targets) && !IS_CULTIST(sacrifice) && !(can_sac_command && (sac_job_flag & JOB_HEAD_OF_STAFF)))
+	if(!heretic_datum.can_sacrifice(sacrifice))
 		CRASH("[type] sacrifice_process managed to get a non-target, non-cult, non-command human. This is incorrect.")
 
-	if(sacrifice.mind)
-		LAZYADD(target_blacklist, sacrifice.mind)
+	var/datum/mind/sacrifice_mind = get_mind(sacrifice)
+	if(sacrifice_mind)
+		LAZYOR(heretic_datum.completed_sacrifices, sacrifice_mind)
 	heretic_datum.remove_sacrifice_target(sacrifice)
-
 
 	var/feedback = "Your patrons accept your offer"
 	var/datum/antagonist/cult/cultist_datum = GET_CULTIST(sacrifice)
@@ -226,7 +215,7 @@
 	heretic_datum.total_sacrifices++
 	user.remove_status_effect(/datum/status_effect/heretic_sated)
 	var/knowledge_reward = 2
-	if(sac_job_flag & JOB_HEAD_OF_STAFF)
+	if(sacrifice_mind?.assigned_role?.job_flags & JOB_HEAD_OF_STAFF)
 		knowledge_reward++
 		heretic_datum.high_value_sacrifices++
 		feedback += " <i>graciously</i>"

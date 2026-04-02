@@ -49,16 +49,20 @@
 	var/static/list/path_info = list()
 	/// Assoc list of [typepath] = [knowledge instance]. A list of all knowledge this heretic's reserached.
 	var/list/researched_knowledge = list()
-	/// Lazy assoc list of [refs to humans] to [image previews of the human]. Humans that we have as sacrifice targets.
-	var/list/mob/living/carbon/human/sac_targets
-	/// List of all sacrifice target's names, used for end of round report
-	var/list/all_sac_targets = list()
 	/// List that keeps track of which items have been gifted to the heretic after a cultist was sacrificed. Used to alter drop chances to reduce dupes.
 	var/list/unlocked_heretic_items = list(
 		/obj/item/melee/sickly_blade/cursed = 0,
 		/obj/item/clothing/neck/heretic_focus/crimson_medallion = 0,
 		/mob/living/basic/construct/harvester/heretic = 0,
 	)
+	/// Weakrefs to the minds of monsters have been successfully summoned. Includes ghouls.
+	var/list/datum/mind/monsters_summoned
+	/// Lazy list of minds that are our current sacrifice targets.
+	var/list/datum/mind/current_sac_targets
+	/// Lazy list containing all the minds we've ever had as sacrifice targets. Used for the end-of-round report.
+	var/list/datum/weakref/all_sac_targets
+	/// Lazy list of minds that we have sacrificed.
+	var/list/datum/weakref/completed_sacrifices
 	/// Whether or not the heretic can make unlimited blades, but unable to blade break to teleport
 	var/unlimited_blades = FALSE
 	/// Whether we are allowed to ascend
@@ -95,7 +99,10 @@
 	var/points_to_aura = 8
 
 /datum/antagonist/heretic/Destroy()
-	LAZYNULL(sac_targets)
+	LAZYNULL(monsters_summoned)
+	LAZYNULL(current_sac_targets)
+	LAZYNULL(all_sac_targets)
+	LAZYNULL(completed_sacrifices)
 	return ..()
 
 /datum/antagonist/heretic/proc/get_icon_of_knowledge(datum/heretic_knowledge/knowledge)
@@ -741,8 +748,10 @@
 	objectives += research_objective
 
 	var/num_heads = 0
-	for(var/mob/player in GLOB.alive_player_list)
-		if(player.mind?.assigned_role?.job_flags & JOB_HEAD_OF_STAFF)
+	for(var/datum/mind/player_mind in get_crewmember_minds())
+		if(QDELETED(player_mind.current) || player_mind.current.stat == DEAD)
+			continue
+		if(player_mind.assigned_role?.job_flags & JOB_HEAD_OF_STAFF)
 			num_heads++
 
 	var/datum/objective/minor_sacrifice/sac_objective = new()
@@ -759,43 +768,91 @@
 
 /**
  * Add [target] as a sacrifice target for the heretic.
- * Generates a preview image and associates it with a weakref of the mob.
  */
-/datum/antagonist/heretic/proc/add_sacrifice_target(mob/living/carbon/human/target)
-
-	var/mutable_appearance/target_appearance = copy_appearance_filter_overlays(target.appearance, recursion = 1)
-	target_appearance.appearance_flags = KEEP_TOGETHER
-	target_appearance.layer = FLOAT_LAYER
-	target_appearance.plane = FLOAT_PLANE
-	target_appearance.dir = SOUTH
-	target_appearance.pixel_x = target.base_pixel_x
-	target_appearance.pixel_y = target.base_pixel_y
-	target_appearance.pixel_z = target.base_pixel_z
-
-	LAZYSET(sac_targets, target, target_appearance)
-	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_deleted))
-	all_sac_targets += target.real_name
+/datum/antagonist/heretic/proc/add_sacrifice_target(target)
+	. = FALSE
+	var/datum/mind/target_mind = get_mind(target, include_last = TRUE)
+	if(!target_mind)
+		return FALSE
+	var/mob/living/carbon/target_body = target_mind.current
+	if(!istype(target_body))
+		return FALSE
+	LAZYOR(all_sac_targets, target_mind)
+	LAZYOR(current_sac_targets, target_mind)
+	return TRUE
 
 /**
  * Removes [target] from the heretic's sacrifice list.
  * Returns FALSE if no one was removed, TRUE otherwise
  */
-/datum/antagonist/heretic/proc/remove_sacrifice_target(mob/living/carbon/human/target)
-	if(!(target in sac_targets))
-		return FALSE
-
-	LAZYREMOVE(sac_targets, target)
-	UnregisterSignal(target, COMSIG_QDELETING)
+/datum/antagonist/heretic/proc/remove_sacrifice_target(target, remove_from_all = FALSE)
+	. = FALSE
+	var/datum/mind/target_mind = get_mind(target, include_last = TRUE)
+	if(!target_mind || !(target_mind in current_sac_targets))
+		return
+	LAZYREMOVE(current_sac_targets, target_mind)
+	if(remove_from_all)
+		LAZYREMOVE(all_sac_targets, target_mind)
 	return TRUE
 
 /**
- * Signal proc for [COMSIG_QDELETING] registered on sac targets
- * if sacrifice targets are deleted (gibbed, dusted, whatever), free their slot and reference
+ * Check to see if the given mob can be sacrificed.
  */
-/datum/antagonist/heretic/proc/on_target_deleted(mob/living/carbon/human/source)
-	SIGNAL_HANDLER
+/datum/antagonist/heretic/proc/can_sacrifice(target)
+	. = FALSE
+	var/datum/mind/target_mind = get_mind(target, include_last = TRUE)
+	if(!target_mind)
+		return FALSE
+	if(target_mind in current_sac_targets)
+		return TRUE
+	if(target_mind in completed_sacrifices)
+		return FALSE
+	if(target_mind.has_antag_datum(/datum/antagonist/cult))
+		return TRUE
+	// You can ALWAYS sacrifice heads of staff if you need to do so.
+	if(can_sacrifice_any_head() && (target_mind.assigned_role?.job_flags & JOB_HEAD_OF_STAFF))
+		return TRUE
 
-	remove_sacrifice_target(source)
+/**
+ * Check to see if we will allow any head of staff to be sacrificed.
+ */
+/datum/antagonist/heretic/proc/can_sacrifice_any_head()
+	var/datum/objective/major_sacrifice/major_sacc_objective = locate() in objectives
+	if(!major_sacc_objective)
+		return FALSE
+	if(major_sacc_objective.check_completion())
+		return FALSE
+	return TRUE
+
+/**
+ * Returns a list of minds of valid sacrifice targets from the current living players.
+ */
+/datum/antagonist/heretic/proc/possible_sacrifice_targets(include_current_targets = TRUE) as /list
+	. = list()
+	for(var/datum/mind/possible_target in get_crewmember_minds())
+		if(possible_target == owner)
+			continue
+		var/mob/living/body = possible_target.current
+		if(QDELETED(body) || body.stat >= SOFT_CRIT)
+			continue
+		if(IS_WEAKREF_OF(owner.current, possible_target.enslaved_to)) // would be too easy
+			continue
+		if(!body.client || body.client?.is_afk())
+			continue
+		if(possible_target.get_effective_opt_in_level() < OPT_IN_YES_KILL)
+			continue
+		if(!(possible_target.assigned_role?.job_flags & JOB_CREW_MEMBER))
+			continue
+		if(possible_target.assigned_role?.job_flags & JOB_CANNOT_BE_TARGET)
+			continue
+		if(!include_current_targets && (possible_target in current_sac_targets))
+			continue
+		if(possible_target in completed_sacrifices)
+			continue
+		var/turf/player_loc = get_turf(body)
+		if(isnull(player_loc) || !is_station_level(player_loc.z))
+			continue
+		. += possible_target
 
 /**
  * Increments knowledge by one.
@@ -823,7 +880,7 @@
 
 	parts += printplayer(owner)
 	parts += "<b>Sacrifices Made:</b> [total_sacrifices]"
-	parts += "The heretic's sacrifice targets were: [english_list(all_sac_targets, nothing_text = "No one")]."
+	parts += "The heretic's sacrifice targets were: [roundend_sac_list()]."
 	if(length(objectives))
 		var/count = 1
 		for(var/datum/objective/objective as anything in objectives)
@@ -854,6 +911,16 @@
 	parts += english_list(string_of_knowledge)
 
 	return parts.Join("<br>")
+
+/**
+ * Returns a list of minds that were sacrifice targets or sacrificed, for the roundend report.
+ */
+/datum/antagonist/heretic/proc/roundend_sac_list()
+	. = @"[ ERROR, PLEASE REPORT TO GITHUB! ]"
+	var/list/names = list()
+	for(var/datum/mind/target_mind as anything in all_sac_targets)
+		names += (target_mind in completed_sacrifices) ? "<b>[target_mind.name]</b>" : "[target_mind.name]"
+	return english_list(names, nothing_text = "No one")
 
 /datum/antagonist/heretic/get_admin_commands()
 	. = ..()
@@ -911,14 +978,14 @@
 		return
 
 	var/list/removable = list()
-	for(var/mob/living/carbon/human/old_target as anything in sac_targets)
+	for(var/datum/mind/old_target as anything in current_sac_targets)
 		removable[old_target.name] = old_target
 
 	var/name_of_removed = tgui_input_list(admin, "Choose a human to remove", "Who to Spare", removable)
 	if(QDELETED(src) || !admin.client?.holder || isnull(name_of_removed))
 		return
-	var/mob/living/carbon/human/chosen_target = removable[name_of_removed]
-	if(QDELETED(chosen_target) || !ishuman(chosen_target))
+	var/datum/mind/chosen_target = removable[name_of_removed]
+	if(!chosen_target)
 		return
 
 	if(!remove_sacrifice_target(chosen_target))
@@ -971,9 +1038,9 @@
 
 	. += "<br>"
 	. += "<i><b>Current Targets:</b></i><br>"
-	if(LAZYLEN(sac_targets))
-		for(var/mob/living/carbon/human/target as anything in sac_targets)
-			. += " - <b>[target.real_name]</b>, the [target.mind?.assigned_role?.title || "human"].<br>"
+	if(LAZYLEN(current_sac_targets))
+		for(var/datum/mind/target as anything in current_sac_targets)
+			. += " - <b>[target.name]</b>, the [target.assigned_role?.title || "human"].<br>"
 
 	else
 		. += "<i>None!</i><br>"
@@ -1206,11 +1273,14 @@
 	name = "summon monsters"
 	target_amount = 2
 	explanation_text = "Summon 2 monsters from the Mansus into this realm."
-	/// The total number of summons the objective owner has done
-	var/num_summoned = 0
 
 /datum/objective/heretic_summon/check_completion()
-	return completed || (num_summoned >= target_amount)
+	if(completed)
+		return TRUE
+	var/datum/antagonist/heretic/heretic_datum = owner.has_antag_datum(/datum/antagonist/heretic)
+	if(LAZYLEN(heretic_datum?.monsters_summoned) >= target_amount)
+		return TRUE
+	return FALSE
 
 /datum/outfit/heretic
 	name = "Heretic (Preview only)"

@@ -109,7 +109,7 @@
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
 	var/datum/heretic_knowledge/sac_knowledge = heretic_datum.get_knowledge(/datum/heretic_knowledge/hunt_and_sacrifice)
 
-	if(!LAZYLEN(heretic_datum.sac_targets))
+	if(!LAZYLEN(heretic_datum.current_sac_targets))
 		owner.balloon_alert(owner, "no targets, visit a rune!")
 		StartCooldown(1 SECONDS)
 		return TRUE
@@ -139,9 +139,21 @@
 		choosable_targets[blade.name] = image(icon = blade.icon, icon_state = blade.icon_state)
 		possible_tracked_atoms[blade.name] = blade
 
-	for(var/mob/living/carbon/human/sac_target as anything in heretic_datum.sac_targets)
-		choosable_targets[sac_target.real_name] = heretic_datum.sac_targets[sac_target]
-		possible_tracked_atoms[sac_target.real_name] = sac_target
+	for(var/datum/mind/target_mind as anything in heretic_datum.current_sac_targets)
+		var/mob/living/living_target = target_mind.current
+		if(QDELETED(living_target))
+			continue
+		var/sac_name = trimtext(target_mind.name || living_target.real_name || living_target.name)
+		var/mutable_appearance/target_appearance = new(isbrain(living_target) ? living_target.loc : living_target)
+		target_appearance.appearance_flags = KEEP_TOGETHER
+		target_appearance.layer = FLOAT_LAYER
+		target_appearance.plane = FLOAT_PLANE
+		target_appearance.dir = SOUTH
+		target_appearance.pixel_x = living_target.base_pixel_x
+		target_appearance.pixel_y = living_target.base_pixel_y
+		target_appearance.pixel_z = living_target.base_pixel_z
+		choosable_targets[sac_name] = strip_appearance_underlays(target_appearance)
+		possible_tracked_atoms[sac_name] = living_target
 
 	// If we don't have a last tracked name, open a radial to set one.
 	// If we DO have a last tracked name, we skip the radial if they right click the action.
