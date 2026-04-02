@@ -225,12 +225,13 @@
 	// Heads give 3 points, cultists give 1 point (and a special reward), normal sacrifices give 2 points.
 	heretic_datum.total_sacrifices++
 	user.remove_status_effect(/datum/status_effect/heretic_sated)
-	if((sac_job_flag & JOB_HEAD_OF_STAFF))
-		heretic_datum.adjust_knowledge_points(3)
+	var/knowledge_reward = 2
+	if(sac_job_flag & JOB_HEAD_OF_STAFF)
+		knowledge_reward++
 		heretic_datum.high_value_sacrifices++
 		feedback += " <i>graciously</i>"
 	if(cultist_datum)
-		heretic_datum.adjust_knowledge_points(1)
+		knowledge_reward++
 		grant_reward(user, sacrifice, loc)
 		// easier to read
 		var/rewards_given = heretic_datum.rewards_given
@@ -248,9 +249,10 @@
 			var/non_flavor_warning = span_cultbold("You feel that your action has attracted ") + span_hypnophrase("attention") + span_cultbold(".")
 			to_chat(user, non_flavor_warning)
 		loc.flash_lighting_fx(range = 7, power = 3, color = LIGHT_COLOR_BLOOD_MAGIC, duration = 5 SECONDS)
+		heretic_datum.adjust_knowledge_points(knowledge_reward)
 		return
-	else
-		heretic_datum.adjust_knowledge_points(2)
+
+	heretic_datum.adjust_knowledge_points(knowledge_reward)
 
 	to_chat(user, span_hypnophrase("[feedback]."))
 	if(!begin_sacrifice(sacrifice))
