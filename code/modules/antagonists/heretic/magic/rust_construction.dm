@@ -80,7 +80,7 @@
 	// I wanted to do a cool animation of a wall raising from the ground
 	// but I guess a fading filter will have to do for now as walls have 0 depth (currently)
 	// damn though with 3/4ths walls this'll look sick just imagine it
-	new_wall.add_filter("rust_wall", 2, list("type" = "outline", "color" = "#85be299c", "size" = 2))
+	new_wall.add_filter("rust_wall", 2, outline_filter(size = 2, color = "#85be299c"))
 	addtimer(CALLBACK(src, PROC_REF(fade_wall_filter), new_wall), filter_duration * 0.5)
 	addtimer(CALLBACK(src, PROC_REF(remove_wall_filter), new_wall), filter_duration)
 
