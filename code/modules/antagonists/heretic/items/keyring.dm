@@ -7,6 +7,7 @@
 	light_power = 1
 	light_on = TRUE
 	light_color = COLOR_GREEN
+	light_inner_range = 1
 	light_outer_range = 3
 	opacity = TRUE
 	density = FALSE //so we dont block doors closing
