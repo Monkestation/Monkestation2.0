@@ -15,6 +15,7 @@
 	var/list_reagents = null
 	var/packeditem = FALSE
 	var/quarter_volume = 0
+	var/omega = FALSE
 
 /obj/item/bong/Initialize(mapload)
 	. = ..()
@@ -48,6 +49,9 @@
 	if(tool.reagents)
 		tool.reagents.trans_to(src, tool.reagents.total_volume, transfered_by = user)
 		quarter_volume = reagents.total_volume/useable_bonghits
+	if(istype(tool, /obj/item/food/grown/cannabis/ultimate))
+		omega = TRUE
+		to_chat(user, "<span class='notice'>The immense power of [tool] causes [src] to quiver, as if in fear of the immense dankness of [tool].")
 	qdel(tool)
 	return ITEM_INTERACT_SUCCESS
 
@@ -64,6 +68,7 @@
 		new /obj/effect/decal/cleanable/ash(location)
 		packeditem = FALSE
 		bonghits = 0
+		omega = FALSE
 		reagents.clear_reagents()
 	return
 
@@ -90,6 +95,7 @@
 	to_chat(target_mob, "<span class='notice'>Your [name] goes out.</span>")
 	lit = FALSE
 	packeditem = FALSE
+	omega = FALSE
 	icon_state = icon_off
 	inhand_icon_state = icon_off
 	name = "[initial(name)]"
