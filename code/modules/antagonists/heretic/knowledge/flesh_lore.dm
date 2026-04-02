@@ -125,7 +125,7 @@
 		core.balloon_alert(source, "no soul!")
 		return COMPONENT_BLOCK_HAND_USE
 
-	var/mob/living/carbon/human/ghouled_slime = core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
+	var/mob/living/carbon/human/ghouled_slime = core.rebuild_body(source, nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	if(QDELETED(ghouled_slime))
 		core.balloon_alert(source, "failed to ghoul!")
 		return COMPONENT_BLOCK_HAND_USE
@@ -166,7 +166,7 @@
 		You can only create two at a time."
 	gain_text = "I found notes of a dark ritual, unfinished... yet still, I pushed forward."
 	required_atoms = list(
-		/mob/living/carbon/human = 1,
+		list(/mob/living/carbon/human, /obj/item/organ/internal/brain/slime) = 1,
 		/obj/item/food/grown/poppy = 1,
 	)
 	limit = 2
@@ -192,7 +192,7 @@
 
 	var/obj/item/organ/internal/brain/slime/slime_core = locate() in atoms
 	if(slime_core)
-		var/mob/living/carbon/human/new_slime_body = slime_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
+		var/mob/living/carbon/human/new_slime_body = slime_core.rebuild_body(user, nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 		if(!QDELETED(new_slime_body))
 			// ELSE THE CORE GETS DELETED AND WEIRD SHIT HAPPENS
 			atoms -= slime_core
