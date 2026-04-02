@@ -3008,7 +3008,7 @@
 "aTh" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
-	name = " robotics shutters";
+	name = "Robotics Shutters";
 	id = "roboticsurgery"
 	},
 /turf/open/floor/plating,
@@ -64843,7 +64843,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/left/directional/north,
 /obj/machinery/door/poddoor/shutters/preopen{
-	name = " robotics shutters";
+	name = "Robotics Shutters";
 	id = "roboticsurgery"
 	},
 /turf/open/floor/iron/dark,
@@ -70488,7 +70488,7 @@
 "utR" = (
 /obj/machinery/smartfridge/organ,
 /obj/machinery/door/poddoor/shutters/preopen{
-	name = " robotics shutters";
+	name = "Robotics Shutters";
 	id = "roboticsurgery"
 	},
 /turf/open/floor/iron/dark,
