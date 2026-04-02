@@ -60,9 +60,9 @@
 	/// Lazy list of minds that are our current sacrifice targets.
 	var/list/datum/mind/current_sac_targets
 	/// Lazy list containing all the minds we've ever had as sacrifice targets. Used for the end-of-round report.
-	var/list/datum/weakref/all_sac_targets
+	var/list/datum/mind/all_sac_targets
 	/// Lazy list of minds that we have sacrificed.
-	var/list/datum/weakref/completed_sacrifices
+	var/list/datum/mind/completed_sacrifices
 	/// Whether or not the heretic can make unlimited blades, but unable to blade break to teleport
 	var/unlimited_blades = FALSE
 	/// Whether we are allowed to ascend
