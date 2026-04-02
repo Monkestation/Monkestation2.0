@@ -15,7 +15,7 @@
 		"Pick this path if you enjoy the fantasy of being a necromancer commanding legions of allies.",
 	)
 	pros = list(
-		"Can turn dead humanoids (or oozeling cores) into fragile but loyal ghouls.",
+		"Can turn dead humanoids (or oozeling cores, via right click) into fragile but loyal ghouls.",
 		"Access to a versatile list of summoned minions.",
 		"Your summons are very versatie and can quicky overwhelm the crew should you coordinate your attacks",
 		"Eating organs or being fat grants various boons (depending on the level of your passive).",
@@ -27,7 +27,7 @@
 		"You are mostly focused around supporting your minions.",
 	)
 	tips = list(
-		"Your Mansus Grasp allows you to turn dead humanoids (or oozeling cores) into ghouls (even mindshielded humanoids like security officers and the captain). It also Leaves a mark that causes heavy bleeding when triggered by your bloody blade.",
+		"Your Mansus Grasp allows you to turn dead humanoids (or oozeling cores, via right click) into ghouls (even mindshielded humanoids like security officers and the captain). It also Leaves a mark that causes heavy bleeding when triggered by your bloody blade.",
 		"As a Flesh Heretic, organs and dead bodies are your best friends! You can use them for rituals, to heal or to gain buffs.",
 		"Your Flesh Surgery spell can heal your summons. Your robes grant you an aura that also heals nearby summons (but not yourself).",
 		"Your Flesh Surgery spell also lets you steal organs from humanoids. Useful if you need a spare liver.",
