@@ -83,7 +83,7 @@
 	if (carbon_owner.vomit(blood = TRUE, /* vomit_flags = VOMIT_CATEGORY_BLOOD */))
 		carbon_owner.visible_message(span_boldwarning("[carbon_owner] vomits out [carbon_owner.p_their()] [removing_organ]"))
 	else
-		carbon_owner.visible_message(span_boldwarning("[carbon_owner]'s [removing_organ] rips itself out of `[carbon_owner.p_their()] chest!"))
+		carbon_owner.visible_message(span_boldwarning("[carbon_owner]'s [removing_organ] rips itself out of [carbon_owner.p_their()] chest!"))
 
 	removing_organ.Remove(carbon_owner)
 
