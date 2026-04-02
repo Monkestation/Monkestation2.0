@@ -218,7 +218,7 @@
 	// You see, these tendrils are psychic. That's why you can't see them. Definitely not laziness. Just psychic. The character can feel but not see them.
 	// Because they're psychic. Yeah.
 	if(human_user.can_block_magic(MAGIC_RESISTANCE_MIND))
-		visible_message(span_danger("Psychic endrils lash out from [src], batting ineffectively at [user]'s head."))
+		visible_message(span_danger("Psychic tendrils lash out from [src], batting ineffectively at [user]'s head."))
 		return
 
 	// A very elaborate way to suicide
