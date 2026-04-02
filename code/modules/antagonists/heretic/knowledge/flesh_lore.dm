@@ -78,10 +78,11 @@
 /datum/heretic_knowledge/limited_amount/starting/base_flesh/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_mansus_grasp_secondary))
+	RegisterSignal(user, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_picked_up))
 
 /datum/heretic_knowledge/limited_amount/starting/base_flesh/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY)
+	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, COMSIG_MOB_EQUIPPED_ITEM))
 
 /datum/heretic_knowledge/limited_amount/starting/base_flesh/on_mansus_grasp(mob/living/source, mob/living/target)
 	. = ..()
@@ -133,6 +134,33 @@
 	make_ghoul(source, ghouled_slime)
 
 	return COMPONENT_USE_HAND
+
+/// Whenever we equip the mansus grasp hand, we register context for it, so that we get screentips for ghouling mobs.
+/datum/heretic_knowledge/limited_amount/starting/base_flesh/proc/on_picked_up(datum/source, obj/item/melee/touch_attack/mansus_fist/grasp)
+	SIGNAL_HANDLER
+	if(!istype(grasp))
+		return
+	grasp.register_item_context()
+	RegisterSignals(grasp, list(COMSIG_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(unregister_grasp))
+	RegisterSignal(grasp, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, PROC_REF(add_mansus_grasp_context))
+
+/// Unregister the signals on a mansus grasp hand.
+/datum/heretic_knowledge/limited_amount/starting/base_flesh/proc/unregister_grasp(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_ITEM_DROPPED, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET))
+
+/// Adds screentips for ghouling mobs to the mansus grasp.
+/datum/heretic_knowledge/limited_amount/starting/base_flesh/proc/add_mansus_grasp_context(obj/item/source, list/context, atom/target, mob/living/user)
+	SIGNAL_HANDLER
+	if(is_oozeling_core(target))
+		context[SCREENTIP_CONTEXT_RMB] = "Revive as ghoul"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(ishuman(target))
+		var/mob/living/carbon/human/human_target = target
+		if(human_target.stat == DEAD)
+			context[SCREENTIP_CONTEXT_LMB] = "Revive as ghoul"
+			return CONTEXTUAL_SCREENTIP_SET
+	return NONE
 
 /// The max amount of health a ghoul has.
 #define GHOUL_MAX_HEALTH 25
