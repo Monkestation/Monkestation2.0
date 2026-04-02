@@ -89,28 +89,31 @@
 	var/turf/open/pos = get_turf(src)
 	if(istype(pos) && pos.air.return_pressure() < 2*ONE_ATMOSPHERE)
 		pos.atmos_spawn_air("water_vapor=10;TEMP=T20C + 20")
-		if(omega)
-		to_chat(user, span_narsiesmall("Foolish [user], I laced yo shit..."))
-		user.say("Fuuuuuuuck")
-		switch(rand(1, 5))
-			if(1)
-				user.electrocute_act(25, src, flags = SHOCK_NOGLOVES)
-				user.visible_message(span_danger("[user] is surrounded by a violent electrical pulse!"), span_userdanger("ZZZZTTTT!"))
-			if(2)
-				user.adjust_fire_stacks(20)
-				user.ignite_mob()
-			if(3)
-				user.vomit(10, FALSE, TRUE)
-				user.adjust_disgust(100)
-				user.apply_status_effect(/datum/status_effect/no_gravity, 30 SECONDS)
-				user.visible_message(span_warning("[user] begins floating around!"), span_warning("You feel nauseous and weightless!"))
-			if(4)
-				user.apply_status_effect(/datum/status_effect/freon/evil_bong)
-				user.visible_message("[user] is frozen in a giant block of ice!")
-				user.adjustFireLoss(25)
-			if(5)
-				to_chat(user, span_boldnotice("You feel an overwhelming sense of impending doom."))
-				addtimer(CALLBACK(TYPE_PROC_REF(/mob/living, pay_for_your_sins), user), rand(1 SECONDS, 10 SECONDS)) //hehe
+		if(omega && iscarbon(user))
+			var/mob/living/carbon/fool = user
+			fool.visible_message(span_warning("As [fool] hits [src], a wave of dank energy flows forth from the omega weed inside it!"), span_danger("You feel an immense pressure, heralding a voice that rings inside your mind..."))
+			to_chat(fool, span_narsiesmall("Foolish [user], I laced yo shit..."))
+			fool.say("Fuuuuuuuck")
+			switch(rand(1, 5))
+				if(1)
+					fool.electrocute_act(50, src, flags = SHOCK_NOGLOVES)
+					fool.visible_message(span_danger("[fool] is surrounded by a violent electrical pulse!"), span_userdanger("ZZZZTTTT!"))
+				if(2)
+					fool.adjust_fire_stacks(20)
+					fool.adjustFireLoss(20)
+					fool.ignite_mob()
+				if(3)
+					fool.vomit(10, FALSE, TRUE)
+					fool.adjust_disgust(100)
+					fool.apply_status_effect(/datum/status_effect/no_gravity, 30 SECONDS)
+					fool.visible_message(span_warning("[fool] begins floating around!"), span_warning("You feel nauseous and weightless!"))
+				if(4)
+					fool.apply_status_effect(/datum/status_effect/freon/evil_bong)
+					fool.visible_message("[fool] is frozen in a giant block of ice!")
+					fool.adjustFireLoss(75)
+				if(5)
+					to_chat(fool, span_boldnotice("Your innies become outies!"))
+					fool.spill_organs(TRUE, FALSE, TRUE)
 	if(bonghits > 0)
 		return
 
@@ -161,34 +164,6 @@
 				/obj/item/stack/sheet/glass = 10)
 	time = 2 SECONDS
 	category = CAT_CHEMISTRY
-
-/mob/living/proc/pay_for_your_sins()
-	podspawn(list(
-		"path" = /obj/structure/closet/supplypod/anvil/stun,
-		"target" = src,
-		))
-	sleep(3.4 SECONDS)
-	if(iscarbon(src))
-		AddElement(/datum/element/squish,  99 HOURS) // SQUEESHED FOREVER, YOU FOOL
-
-/obj/structure/closet/supplypod/anvil
-	name = "anvil"
-	desc = "Punishment for your hubris."
-	icon = 'monkestation/code/modules/smithing/icons/forge_structures.dmi'
-	icon_state = "anvil_empty"
-	delays = list(POD_TRANSIT = 2.6 SECONDS, POD_FALLING = 0.8 SECONDS)
-	effectStun = FALSE
-	damage = 50
-	effectMissile = TRUE
-	explosionSize = list(0,0,0,0)
-	rubble_type = RUBBLE_THIN
-	decal = null
-	door = null
-	fin_mask = null
-
-/obj/structure/closet/supplypod/anvil/stun
-	effectStun = TRUE
-	specialised = TRUE
 
 /datum/status_effect/freon/evil_bong
 	duration = 30 SECONDS
