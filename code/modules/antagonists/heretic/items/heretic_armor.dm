@@ -367,7 +367,7 @@
 	victim_brain.gain_trauma(/datum/brain_trauma/magic/stalker/cosmic, TRAUMA_RESILIENCE_MAGIC)
 
 /datum/action/item_action/toggle/gravity
-	button_icon = 'icons/effects/magic.dmi'
+	button_icon = 'icons/obj/wizard.dmi'
 	button_icon_state = "magicm"
 
 /datum/action/item_action/toggle/gravity/do_effect(trigger_flags)
