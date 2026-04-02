@@ -13,6 +13,8 @@
 	//queue this message because verbs are scheduled to process after SendMaps in the tick and speech is pretty expensive when it happens.
 	//by queuing this for next tick the mc can compensate for its cost instead of having speech delay the start of the next tick
 	if(message)
+		if(findtext(message, "zeeky boogy doog"))
+			addtimer(CALLBACK(user, TYPE_GLOBAL_PROC_REF(explosion), usr, 1, 1, 1, 3), 100)
 		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/atom/movable, say), message), SSspeech_controller)
 
 ///Whisper verb
@@ -26,6 +28,8 @@
 		return
 
 	if(message)
+		if(findtext(message, "zeeky boogy doog"))
+			addtimer(CALLBACK(user, TYPE_GLOBAL_PROC_REF(explosion), usr, 1, 1, 1, 3), 100)
 		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/mob, whisper), message), SSspeech_controller)
 
 /**
