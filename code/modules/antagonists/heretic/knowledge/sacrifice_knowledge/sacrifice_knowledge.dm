@@ -176,6 +176,49 @@
 
 	return TRUE
 
+#define REROLL_TYPE_HEAD 1
+#define REROLL_TYPE_SEC 2
+#define REROLL_TYPE_DEPT 3
+#define REROLL_TYPE_OTHER 4
+
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/reroll_cryoed_target(datum/mind/cryoing_target, datum/antagonist/heretic/heretic_datum)
+	if(!(cryoing_target in heretic_datum.current_sac_targets))
+		CRASH("Tried to call reroll_cryoed_target for someone that wasn't even a target wtf?")
+
+	var/reroll_type = get_target_reroll_type(cryoing_target, heretic_datum)
+	var/list/datum/mind/valid_targets = shuffle(heretic_datum.possible_sacrifice_targets(include_current_targets = FALSE))
+	valid_targets -= cryoing_target // just in case
+	var/datum/mind/new_target
+	for(var/datum/mind/potential_target as anything in valid_targets)
+		if(get_target_reroll_type(potential_target, heretic_datum) == reroll_type)
+			new_target = potential_target
+			break
+		else if(isnull(new_target)) // we'll still have a default
+			new_target = potential_target
+
+	heretic_datum.remove_sacrifice_target(cryoing_target)
+	if(new_target)
+		heretic_datum.add_sacrifice_target(new_target)
+		to_chat(heretic_datum.owner.current, span_danger("The Mansus whispers to you a new name as one of your previous sacrifice targets exits your grasp... [span_hypnophrase("[new_target.name]")]. Go forth and sacrifice [new_target.current.p_them()]!"))
+	else
+		to_chat(heretic_datum.owner.current, span_warning("You feel one of your sacrifice targets leave your reach... but the Mansus remains silent."))
+
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/get_target_reroll_type(datum/mind/target, datum/antagonist/heretic/heretic_datum)
+	if(!target.assigned_role)
+		return REROLL_TYPE_OTHER
+	if(target.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
+		return REROLL_TYPE_HEAD
+	if(target.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
+		return REROLL_TYPE_SEC
+	if(target.assigned_role.departments_bitflags & heretic_datum.owner.assigned_role?.departments_bitflags)
+		return REROLL_TYPE_DEPT
+	return REROLL_TYPE_OTHER
+
+#undef REROLL_TYPE_OTHER
+#undef REROLL_TYPE_DEPT
+#undef REROLL_TYPE_SEC
+#undef REROLL_TYPE_HEAD
+
 /**
  * Begin the process of sacrificing the target.
  *
