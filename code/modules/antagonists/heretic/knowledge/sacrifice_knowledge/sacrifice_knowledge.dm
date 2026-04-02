@@ -372,6 +372,7 @@
 	// If our target is dead, try to revive them
 	// and if we fail to revive them, don't proceede the chain
 	sac_target.adjustOxyLoss(-100, FALSE)
+	sac_target.grab_ghost()
 	if(!sac_target.heal_and_revive(50, span_danger("[sac_target]'s heart begins to beat with an unholy force as [sac_target.p_they()] return[sac_target.p_s()] from death!")))
 		return
 
@@ -401,6 +402,8 @@
 	if(QDELETED(sac_target))
 		return
 
+	sac_target.grab_ghost()
+
 	// The target disconnected or something, we shouldn't bother sending them along.
 	if(!sac_target.client || !sac_target.mind)
 		disembowel_target(sac_target)
@@ -417,6 +420,7 @@
 	// and we fail to revive them (using a lower number than before),
 	// just disembowel them and stop the chain
 	sac_target.adjustOxyLoss(-100, FALSE)
+	sac_target.grab_ghost()
 	if(!sac_target.heal_and_revive(60, span_danger("[sac_target]'s heart begins to beat with an unholy force as [sac_target.p_they()] return[sac_target.p_s()] from death!")))
 		disembowel_target(sac_target)
 		return
