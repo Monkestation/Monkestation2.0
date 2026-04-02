@@ -147,6 +147,7 @@
 	new /obj/item/clothing/head/utility/hardhat/welding/white(src)
 	new /obj/item/clothing/neck/cloak/ce(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
+	new /obj/item/clothing/head/beret/engi/ce(src)
 
 /obj/item/storage/bag/garment/quartermaster
 	name = "quartermasters's garment bag"

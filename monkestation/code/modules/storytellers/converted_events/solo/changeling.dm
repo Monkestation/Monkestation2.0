@@ -1,8 +1,7 @@
-/datum/round_event_control/antagonist/solo/changeling
+/datum/round_event_control/antagonist/changeling
 	antag_flag = ROLE_CHANGELING
 	tags = list(TAG_COMBAT, TAG_ALIEN, TAG_CREW_ANTAG)
 	antag_datum = /datum/antagonist/changeling
-	repeated_mode_adjust = TRUE // apparently these roll too often despite their weight, maybe this will help?
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_BLUESHIELD,
@@ -24,18 +23,31 @@
 		JOB_AI,
 		JOB_CYBORG,
 	)
+	enemy_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+		JOB_CAPTAIN,
+		JOB_BLUESHIELD,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+		JOB_SECURITY_ASSISTANT,
+		JOB_BRIG_PHYSICIAN,
+		JOB_WARDEN,
+	)
+	required_enemies = 4
+	base_antags = 2
 	min_players = 20
-	weight = 10
+	weight = 12
 	shared_occurence_type = SHARED_CHANGELING
 	event_icon_state = "changeling"
 
-/datum/round_event_control/antagonist/solo/changeling/roundstart
+/datum/round_event_control/antagonist/changeling/roundstart
 	name = "Changelings"
 	roundstart = TRUE
 	earliest_start = 0
-	maximum_antags = 1
 
-/datum/round_event_control/antagonist/solo/changeling/midround
+/datum/round_event_control/antagonist/changeling/midround
 	name = "Genome Awakening (Changelings)"
 	antag_flag = ROLE_GENOMEAWAKENING
 	prompted_picking = TRUE

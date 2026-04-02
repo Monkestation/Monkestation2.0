@@ -14,6 +14,8 @@
 	delivery_icon = null //unwrappable
 	anchorable = FALSE
 	cutting_tool = null // Bodybags are not deconstructed by cutting
+	can_weld_shut = FALSE
+	can_install_electronics = FALSE
 	drag_slowdown = 0
 	has_closed_overlay = FALSE
 	can_install_electronics = FALSE

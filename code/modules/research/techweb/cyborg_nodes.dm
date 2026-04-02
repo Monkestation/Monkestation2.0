@@ -13,7 +13,6 @@
 		"borg_suit",
 		"borg_upgrade_rename",
 		"borg_upgrade_restart",
-		"borgupload",
 		"cyborgrecharger",
 		"mmi",
 		"robocontrol",

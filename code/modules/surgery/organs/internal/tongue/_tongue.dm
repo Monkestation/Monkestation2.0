@@ -598,14 +598,6 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 /obj/item/organ/internal/tongue/ethereal/get_possible_languages()
 	return ..() + /datum/language/voltaic
 
-/obj/item/organ/internal/tongue/cat
-	name = "felinid tongue"
-	desc = "A fleshy muscle mostly used for meowing."
-	say_mod = "meows"
-	liked_foodtypes = SEAFOOD | ORANGES | BUGS | GORE
-	disliked_foodtypes = GROSS | CLOTH | RAW
-	languages_native = list(/datum/language/nekomimetic)
-
 /obj/item/organ/internal/tongue/bananium
 	name = "bananium tongue"
 	desc = "A bananium geode mostly used for honking."
