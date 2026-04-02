@@ -203,6 +203,7 @@
 	/// Tracks how many times the beam has processed, after the maximum amount of cycles it will forcibly end the beam
 	var/cycle_tracker = 0
 
+
 /datum/action/cooldown/spell/stargazer_laser/cast(atom/target)
 	. = ..()
 
@@ -257,6 +258,7 @@
 /datum/action/cooldown/spell/stargazer_laser/New(Target, original)
 	. = ..()
 	sound_loop = new
+	invocation = pick("SH''P D' W''P", "M'KU M'KU B'M") // lmao
 
 /// Spawns the beginning of the laser, uses `targets` to determine the rotation
 /datum/action/cooldown/spell/stargazer_laser/proc/open_laser(mob/owner, list/turf/targets)
