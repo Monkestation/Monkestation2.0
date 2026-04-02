@@ -149,6 +149,7 @@
 		target_appearance.layer = FLOAT_LAYER
 		target_appearance.plane = FLOAT_PLANE
 		target_appearance.dir = SOUTH
+		target_appearance.alpha = 255
 		target_appearance.pixel_x = living_target.base_pixel_x
 		target_appearance.pixel_y = living_target.base_pixel_y
 		target_appearance.pixel_z = living_target.base_pixel_z
