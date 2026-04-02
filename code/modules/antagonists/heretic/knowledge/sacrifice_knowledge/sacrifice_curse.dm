@@ -69,7 +69,7 @@
 
 	var/list/removable_organs = list()
 	for(var/obj/item/organ/internal/bodypart_organ in owner.get_organs_for_zone(BODY_ZONE_CHEST))
-		if(istype(/obj/item/organ, /obj/item/organ/internal/brain))
+		if(istype(bodypart_organ, /obj/item/organ/internal/brain))
 			continue
 		if(bodypart_organ.organ_flags & (ORGAN_UNREMOVABLE|ORGAN_HIDDEN))
 			continue
