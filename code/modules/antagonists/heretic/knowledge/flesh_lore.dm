@@ -15,7 +15,7 @@
 		"Pick this path if you enjoy the fantasy of being a necromancer commanding legions of allies.",
 	)
 	pros = list(
-		"Can turn dead humanoids into fragile but loyal ghouls.",
+		"Can turn dead humanoids (or oozeling cores) into fragile but loyal ghouls.",
 		"Access to a versatile list of summoned minions.",
 		"Your summons are very versatie and can quicky overwhelm the crew should you coordinate your attacks",
 		"Eating organs or being fat grants various boons (depending on the level of your passive).",
@@ -27,7 +27,7 @@
 		"You are mostly focused around supporting your minions.",
 	)
 	tips = list(
-		"Your Mansus Grasp allows you to turn dead humanoids into ghouls (even mindshielded humanoids like security officers and the captain). It also Leaves a mark that causes heavy bleeding when triggered by your bloody blade.",
+		"Your Mansus Grasp allows you to turn dead humanoids (or oozeling cores) into ghouls (even mindshielded humanoids like security officers and the captain). It also Leaves a mark that causes heavy bleeding when triggered by your bloody blade.",
 		"As a Flesh Heretic, organs and dead bodies are your best friends! You can use them for rituals, to heal or to gain buffs.",
 		"Your Flesh Surgery spell can heal your summons. Your robes grant you an aura that also heals nearby summons (but not yourself).",
 		"Your Flesh Surgery spell also lets you steal organs from humanoids. Useful if you need a spare liver.",
@@ -75,6 +75,14 @@
 	to_chat(user, span_hierophant("Undertaking the Path of Flesh, you are given another objective."))
 	our_heretic.owner.announce_objectives()
 
+/datum/heretic_knowledge/limited_amount/starting/base_flesh/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_mansus_grasp_secondary))
+
+/datum/heretic_knowledge/limited_amount/starting/base_flesh/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY)
+
 /datum/heretic_knowledge/limited_amount/starting/base_flesh/on_mansus_grasp(mob/living/source, mob/living/target)
 	. = ..()
 
@@ -102,6 +110,30 @@
 
 	make_ghoul(source, target)
 
+// snowflake handler for ooze cores
+/datum/heretic_knowledge/limited_amount/starting/base_flesh/proc/on_mansus_grasp_secondary(mob/living/source, obj/item/organ/internal/brain/slime/core)
+	//SIGNAL_HANDLER
+	if(!is_oozeling_core(core))
+		return NONE
+
+	if(LAZYLEN(created_items) >= limit)
+		core.balloon_alert(source, "at ghoul limit!")
+		return COMPONENT_BLOCK_HAND_USE
+
+	core.brainmob?.grab_ghost()
+	if(!core.mind || !core.brainmob?.client)
+		core.balloon_alert(source, "no soul!")
+		return COMPONENT_BLOCK_HAND_USE
+
+	var/mob/living/carbon/human/ghouled_slime = core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
+	if(QDELETED(ghouled_slime))
+		core.balloon_alert(source, "failed to ghoul!")
+		return COMPONENT_BLOCK_HAND_USE
+
+	make_ghoul(source, ghouled_slime)
+
+	return COMPONENT_USE_HAND
+
 /// The max amount of health a ghoul has.
 #define GHOUL_MAX_HEALTH 25
 
@@ -128,7 +160,7 @@
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul
 	name = "Imperfect Ritual"
-	desc = "Allows you to transmute a corpse and a poppy to create a Voiceless Dead. \
+	desc = "Allows you to transmute a corpse (or oozeling core) and a poppy to create a Voiceless Dead. \
 		The corpse does not need to have a soul. \
 		Voiceless Dead are mute ghouls and only have 50 health, but can use Bloody Blades effectively. \
 		You can only create two at a time."
@@ -157,6 +189,16 @@
 		// We'll select any valid bodies here. If they're clientless, we'll give them a new one.
 		selected_atoms += body
 		return TRUE
+
+	var/obj/item/organ/internal/brain/slime/slime_core = locate() in atoms
+	if(slime_core)
+		var/mob/living/carbon/human/new_slime_body = slime_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
+		if(!QDELETED(new_slime_body))
+			// ELSE THE CORE GETS DELETED AND WEIRD SHIT HAPPENS
+			atoms -= slime_core
+			atoms += new_slime_body
+			selected_atoms += new_slime_body
+			return TRUE
 
 	loc.balloon_alert(user, "ritual failed, no valid body!")
 	return FALSE
