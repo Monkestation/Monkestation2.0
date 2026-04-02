@@ -29,6 +29,7 @@
 	)
 	tips = list(
 		"Your Mansus Grasp will instantly destroy mechs, silicons and androids. Hitting a marked target with your blade will cause heavy disgust and make them vomit, knocking them down briefly.",
+		"Your Mansus Grasp will also disable any body cameras on whoever you grasp.",
 		"Your Mansus Grasp and your spells are capable of rusting walls and floors, making them beneficial to you and harmful to the crew and silicons. Spread rust as much as possible.",
 		"Rusted turfs will heal you, regulate your blood temperature, make you resistant to batons knockdown, regenerate your stamina and blood and heal your wound and limbs once you level up your passive.",
 		"Always fight on your turf. Your opponent entering your turf are at a significant disadvantage.",
@@ -78,6 +79,9 @@
 
 /datum/heretic_knowledge/limited_amount/starting/base_rust/on_mansus_grasp(mob/living/source, mob/living/target)
 	. = ..()
+
+	for(var/obj/item/bodycam_upgrade/bodycamera as anything in target.get_all_contents_type(/obj/item/bodycam_upgrade))
+		bodycamera.turn_off()
 
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
