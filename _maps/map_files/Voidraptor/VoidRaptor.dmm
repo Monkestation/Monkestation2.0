@@ -966,39 +966,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/cold/directional/west,
-/obj/structure/table,
-/obj/item/storage/medkit{
-	pixel_x = -3;
-	pixel_y = 8
-	},
-/obj/item/healthanalyzer{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/storage/medkit{
-	pixel_x = -3;
-	pixel_y = 0
-	},
-/obj/item/healthanalyzer{
-	pixel_x = -3;
-	pixel_y = -2
-	},
-/obj/item/assembly/prox_sensor{
-	pixel_x = 10;
-	pixel_y = 14
-	},
-/obj/item/assembly/prox_sensor{
-	pixel_x = 11;
-	pixel_y = 8
-	},
-/obj/item/assembly/prox_sensor{
-	pixel_x = 10;
-	pixel_y = 2
-	},
-/obj/item/assembly/prox_sensor{
-	pixel_x = 11;
-	pixel_y = -4
-	},
+/obj/machinery/vending/robotics,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -69376,7 +69344,7 @@
 /turf/open/floor/vault,
 /area/station/ai_monitored/turret_protected/aisat/atmos)
 "tjC" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/smartfridge/organ,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "roboticsprivacy";
 	name = "Robotics Shutters";

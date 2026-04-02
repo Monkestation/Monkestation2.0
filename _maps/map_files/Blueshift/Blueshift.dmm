@@ -1721,7 +1721,7 @@
 	dir = 10
 	},
 /obj/item/radio/intercom/directional/west,
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/deployed,
 /turf/open/floor/iron/white,
 /area/station/science/robotics)
 "arA" = (

@@ -3009,7 +3009,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	name = " robotics shutters";
-	id = "robsurshut"
+	id = "roboticsurgery"
 	},
 /turf/open/floor/plating,
 /area/station/science/robotics/lab)
@@ -44390,7 +44390,7 @@
 "mUf" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/button/door/directional/east{
-	id = "robsurshut";
+	id = "roboticsurgery";
 	name = "Robotic Surgery Shutters"
 	},
 /obj/item/surgery_tray/deployed,
@@ -64844,7 +64844,7 @@
 /obj/machinery/door/window/left/directional/north,
 /obj/machinery/door/poddoor/shutters/preopen{
 	name = " robotics shutters";
-	id = "robsurshut"
+	id = "roboticsurgery"
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
@@ -70489,7 +70489,7 @@
 /obj/machinery/smartfridge/organ,
 /obj/machinery/door/poddoor/shutters/preopen{
 	name = " robotics shutters";
-	id = "robsurshut"
+	id = "roboticsurgery"
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
