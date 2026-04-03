@@ -6,7 +6,7 @@
 	name = "Space Phase"
 	desc = "Grants you Space Phase, a spell that allows you to move freely through space. \
 		You can only phase in and out when you are on a space or misc turf."
-	gain_text = "You feel like your body can move through space as if you where dust."
+	gain_text = "You feel like your body can move through space as if you were dust."
 
 	action_to_add = /datum/action/cooldown/spell/jaunt/space_crawl
 	cost = 2
