@@ -140,13 +140,13 @@
 		return
 
 	target.apply_status_effect(/datum/status_effect/star_mark)
-	target.apply_damage(damage = 5, damagetype = BURN)
+	target.apply_damage(damage = 5, damagetype = BURN, forced = TRUE)
 	var/datum/targeting_strategy/target_confirmer = GET_TARGETING_STRATEGY(ai_controller.blackboard[BB_TARGETING_STRATEGY])
 	for(var/mob/living/nearby_mob in range(1, src))
 		if(target == nearby_mob || !target_confirmer?.can_attack(src, nearby_mob))
 			continue
 		nearby_mob.apply_status_effect(/datum/status_effect/star_mark)
-		nearby_mob.apply_damage(10)
+		nearby_mob.apply_damage(10, forced = TRUE)
 		to_chat(nearby_mob, span_userdanger("\The [src] [attack_verb_continuous] you!"), type = MESSAGE_TYPE_COMBAT)
 		do_attack_animation(nearby_mob, ATTACK_EFFECT_SLASH)
 		log_combat(src, nearby_mob, "slashed")
@@ -389,7 +389,7 @@
 					living_victim.dust(just_ash = TRUE)
 				living_victim.emote("scream")
 				living_victim.apply_status_effect(/datum/status_effect/star_mark)
-				living_victim.apply_damage(damage = 30, damagetype = BURN, spread_damage = TRUE)
+				living_victim.apply_damage(damage = 30, damagetype = BURN, forced = TRUE, spread_damage = TRUE)
 	cycle_tracker++
 	damage_timer = addtimer(CALLBACK(src, PROC_REF(process_beam)), 0.3 SECONDS, TIMER_STOPPABLE)
 
