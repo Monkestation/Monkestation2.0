@@ -166,8 +166,8 @@
 		ADD_TRAIT(user, TRAIT_SUPPRESS_NOFIRE, REF(src))
 		START_PROCESSING(SSobj, src)
 	else
-		user.extinguish()
 		STOP_PROCESSING(SSobj, src)
+		user.extinguish()
 		REMOVE_TRAIT(user, TRAIT_SUPPRESS_NOFIRE, REF(src))
 
 	user.balloon_alert(user, flame_generation ? "enabled" : "disabled")
@@ -179,9 +179,8 @@
 		return
 	var/mob/living/wearer = loc
 	if(!isliving(wearer))
-		STOP_PROCESSING(SSobj, src)
 		flame_generation = FALSE
-		return
+		return PROCESS_KILL
 	COOLDOWN_START(src, flame_creation, 5 SECONDS)
 	wearer.adjust_fire_stacks(1)
 	wearer.ignite_mob(TRUE)
