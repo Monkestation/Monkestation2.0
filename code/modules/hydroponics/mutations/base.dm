@@ -220,7 +220,7 @@
 	created_product = /obj/item/food/grown/holymelon
 	created_seed = /obj/item/seeds/watermelon/holy
 	required_potency = list(30, 50)
-	required_endurance = list(60, 70)
+	required_endurance = list(60, 80)
 
 /datum/hydroponics/plant_mutation/galaxy_thistle
 	mutates_from = list(/obj/item/seeds/starthistle)
