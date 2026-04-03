@@ -167,8 +167,8 @@
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj, src)
-		user.extinguish()
 		REMOVE_TRAIT(user, TRAIT_SUPPRESS_NOFIRE, REF(src))
+		user.extinguish()
 
 	user.balloon_alert(user, flame_generation ? "enabled" : "disabled")
 	user.fire_stack_decay_rate = flame_generation ? 0 : initial(user.fire_stack_decay_rate)
