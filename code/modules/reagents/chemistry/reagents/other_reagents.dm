@@ -3082,6 +3082,7 @@
 	taste_description = "the intensely painful sensation of your bones and flesh compacting"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	ph = 7
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/scrunchium/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
