@@ -42,7 +42,7 @@
 		return
 	if(viewer.has_status_effect(applied_status_effect))
 		return
-	if(IS_HERETIC(viewer))
+	if(IS_HERETIC(viewer) || IS_MONSTERHUNTER(viewer))
 		return
 	if(viewer.can_block_magic(MAGIC_RESISTANCE_MOON))
 		return
@@ -65,7 +65,7 @@
 	. = ..()
 	if(!iscarbon(user))
 		return
-	if(HAS_TRAIT(user, TRAIT_ELDRITCH_PAINTING_EXAMINE))
+	if(HAS_TRAIT(user, TRAIT_ELDRITCH_PAINTING_EXAMINE) || IS_MONSTERHUNTER(user))
 		return
 
 	ADD_TRAIT(user, TRAIT_ELDRITCH_PAINTING_EXAMINE, REF(src))
