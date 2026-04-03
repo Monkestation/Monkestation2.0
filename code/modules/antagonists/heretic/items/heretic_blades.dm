@@ -56,6 +56,7 @@
 /obj/item/melee/sickly_blade/attack_self(mob/user)
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	if(heretic_datum?.unlimited_blades)
+		user.balloon_alert(user, "you can no longer blade break!")
 		return
 	if(HAS_TRAIT(user, TRAIT_ELDRITCH_ARENA_PARTICIPANT))
 		user.balloon_alert(user, "can't escape!")
