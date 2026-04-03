@@ -10,8 +10,8 @@
 	stage = GRENADE_READY
 	base_icon_state = "rustgrenade"
 	inhand_icon_state = "rustgrenade"
-	// grenade_arm_sound = 'sound/items/weapons/rust_sower_armbomb.ogg'
-	// grenade_sound_vary = FALSE
+	grenade_arm_sound = 'sound/items/weapons/rust_sower_armbomb.ogg'
+	grenade_sound_vary = FALSE
 
 /obj/item/grenade/chem_grenade/rust_sower/update_icon_state()
 	. = ..()
