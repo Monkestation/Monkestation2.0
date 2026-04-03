@@ -47,6 +47,10 @@
 /datum/component/living_drunk/process(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, drank_grace))
 		return
+	var/mob/living/living = parent
+
+	if(living.stat == DEAD)
+		return
 
 	current_drunkness = max(min_drunkness, (current_drunkness -= 0.1))
 	drunkness_change_effects()
