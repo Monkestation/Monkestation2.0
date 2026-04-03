@@ -77,6 +77,7 @@
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/heretic_focus)
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 
 /datum/armor/eldritch_armor
 	melee = 50
