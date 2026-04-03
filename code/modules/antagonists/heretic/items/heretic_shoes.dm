@@ -4,6 +4,7 @@
 	icon_state = "hereticgreaves"
 	resistance_flags = ACID_PROOF | FIRE_PROOF | LAVA_PROOF
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	can_be_tied = FALSE // they're sabatons, they don't have shoelaces
 
 /obj/item/clothing/shoes/greaves_of_the_prophet/Initialize(mapload)
 	. = ..()
