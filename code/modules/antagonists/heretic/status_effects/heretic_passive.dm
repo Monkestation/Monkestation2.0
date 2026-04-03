@@ -535,9 +535,8 @@
 	// Heals blood loss
 	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
 		source.blood_volume += 2.5 * delta_time
-	/* for(var/datum/reagent/reagent as anything in source.reagents.reagent_list)
-		reagent.volume -= 1 * reagent.purge_multiplier * seconds_per_tick */
-	source.reagents.update_total()
+	for(var/datum/reagent/reagent as anything in source.reagents?.reagent_list)
+		source.reagents.remove_reagent(reagent.type, seconds_per_tick)
 
 	if(!iscarbon(source))
 		return
