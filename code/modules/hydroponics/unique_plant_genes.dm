@@ -5,7 +5,7 @@
 /// Holymelon's anti-magic trait. Charges based on potency.
 /datum/plant_gene/trait/anti_magic
 	name = "Anti-Magic Vacuoles"
-	description = "You can hide behind it from a fireball!"
+	description = "You can hide behind it from a cult!"
 	icon = "hand-sparkles"
 	/// The amount of anti-magic blocking uses we have.
 	var/shield_uses = 1
@@ -18,7 +18,7 @@
 	shield_uses = round(CAPPED_POTENCY(our_seed) / 20)
 	//deliver us from evil o melon god
 	our_plant.AddComponent(/datum/component/anti_magic, \
-		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
+		antimagic_flags = MAGIC_RESISTANCE_HOLY, \
 		inventory_flags = ITEM_SLOT_HANDS, \
 		charges = shield_uses, \
 		drain_antimagic = CALLBACK(src, PROC_REF(drain_antimagic)), \
