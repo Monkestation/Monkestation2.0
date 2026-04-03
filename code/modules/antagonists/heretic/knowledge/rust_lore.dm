@@ -300,7 +300,7 @@
 		return
 
 	var/need_mob_update = FALSE
-	var/base_heal_amt = 1 * DELTA_WORLD_TIME(SSmobs)
+	var/base_heal_amt = 1 * DELTA_WORLD_TIME(SSclient_mobs)
 	need_mob_update += source.adjustBruteLoss(-base_heal_amt, updating_health = FALSE)
 	need_mob_update += source.adjustFireLoss(-base_heal_amt, updating_health = FALSE)
 	need_mob_update += source.adjustToxLoss(-base_heal_amt, updating_health = FALSE, forced = TRUE)
