@@ -884,6 +884,7 @@
 	rust_appearance = new /mutable_appearance()
 	rust_appearance.render_source = "*rust_overlay_[overlay_id]"
 	update_appearance(UPDATE_ICON)
+	update_rust_state(user)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
 	. = ..()
