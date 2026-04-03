@@ -263,6 +263,13 @@
 		heretic_datum.high_value_sacrifices++
 		feedback += " <i>graciously</i>"
 	if(cultist_datum)
+		notify_ghosts(
+			"[heretic_mind.name] has sacrificed [sacrifice.real_name], a blood cultist, to the Mansus!",
+			source = user,
+			action = NOTIFY_ORBIT,
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+			header = "touhou hijack lol",
+		)
 		knowledge_reward++
 		grant_reward(user, sacrifice, loc)
 		// easier to read
