@@ -305,6 +305,7 @@
 	need_mob_update += source.adjustFireLoss(-base_heal_amt, updating_health = FALSE)
 	need_mob_update += source.adjustToxLoss(-base_heal_amt, updating_health = FALSE, forced = TRUE)
 	need_mob_update += source.adjustOxyLoss(-base_heal_amt, updating_health = FALSE)
+	need_mob_update += source.adjustCloneLoss(-base_heal_amt, updating_health = FALSE)
 	source.stamina?.adjust(base_heal_amt * 4)
 
 	// source.adjust_blood_volume(base_heal_amt, maximum = BLOOD_VOLUME_NORMAL)

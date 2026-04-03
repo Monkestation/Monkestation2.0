@@ -525,6 +525,7 @@
 	need_mob_update += source.heal_overall_damage(main_healing, main_healing, updating_health = FALSE)
 	need_mob_update += source.adjustToxLoss(-main_healing, updating_health = FALSE, forced = TRUE) // Slimes are people too
 	need_mob_update += source.adjustOxyLoss(-main_healing, updating_health = FALSE)
+	need_mob_update += source.adjustCloneLoss(-main_healing, updating_health = FALSE)
 	source.stamina?.adjust(stam_healing/* , updating_stamina = FALSE */)
 	if(need_mob_update)
 		source.updatehealth()
