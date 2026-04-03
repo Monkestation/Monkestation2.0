@@ -507,8 +507,8 @@
 
 /// heal MANY bodyparts, in random order
 /mob/living/proc/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_bodytype, updating_health = TRUE)
-	. = (adjustBruteLoss(-brute, updating_health = FALSE) + \
-			adjustFireLoss(-burn, updating_health = FALSE))
+	. = (adjustBruteLoss(-abs(brute), updating_health = FALSE) + \
+			adjustFireLoss(-abs(burn), updating_health = FALSE))
 	src.stamina.adjust(abs(stamina), FALSE)
 	if(. && updating_health)
 		updatehealth()
