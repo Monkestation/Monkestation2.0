@@ -3088,5 +3088,5 @@
 	. = ..()
 	if(!HasElement(exposed_mob, /datum/element/squish))
 		exposed_mob.adjustBruteLoss(20)
-	exposed_mob.AddElement(/datum/element/squish, reac_volume * 5 SECONDS)
-	exposed_mob.visible_message(span_warning("[exposed_mob] is violently compacted for no apparent reason!"), span_warning("Your flesh and bone suddenly collapse inwards, scrunching you flat!"))
+		exposed_mob.AddElement(/datum/element/squish, reac_volume * 5 SECONDS)
+		exposed_mob.visible_message(span_warning("[exposed_mob] is violently compacted for no apparent reason!"), span_warning("Your flesh and bone suddenly collapse inwards, scrunching you flat!"))
