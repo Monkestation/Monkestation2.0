@@ -42899,7 +42899,7 @@
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/clothing/under/rank/centcom/intern,
-/obj/item/clothing/under/rank/centcom/officer_skirt,
+/obj/item/clothing/under/rank/centcom/officer/skirt,
 /obj/item/clothing/under/rank/centcom/officer,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
