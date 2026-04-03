@@ -70,12 +70,12 @@
 /datum/heretic_knowledge/limited_amount/starting/base_rust/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_secondary_mansus_grasp))
-	user.RemoveElement(/datum/element/rust_healing, FALSE, 1.5, 5)
+	user.AddElement(/datum/element/rust_healing, FALSE, 1.5, 5)
 
 /datum/heretic_knowledge/limited_amount/starting/base_rust/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY)
-	user.AddElement(/datum/element/rust_healing, FALSE, 1.5, 5)
+	user.RemoveElement(/datum/element/rust_healing, FALSE, 1.5, 5)
 
 /datum/heretic_knowledge/limited_amount/starting/base_rust/on_mansus_grasp(mob/living/source, mob/living/target)
 	. = ..()
