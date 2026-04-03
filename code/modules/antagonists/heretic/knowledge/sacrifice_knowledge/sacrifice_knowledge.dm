@@ -22,7 +22,7 @@
 	research_tree_icon_state = "eye_close"
 	research_tree_icon_frame = 1
 	/// How many targets do we generate?
-	var/num_targets_to_generate = 5
+	var/num_targets_to_generate = 7
 	/// Whether we've generated a heretic sacrifice z-level yet, from any heretic.
 	var/static/heretic_level_generated = FALSE
 	/// A weakref to the mind of our heretic.
