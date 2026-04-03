@@ -86,8 +86,7 @@
 
 /obj/projectile/moon_parade/proc/was_hit_already(mob/living/victim)
 	for(var/datum/weakref/ref as anything in mobs_hit)
-		var/mob/living/hit_victim = ref.resolve()
-		if(hit_victim == victim)
+		if(IS_WEAKREF_OF(victim, ref))
 			return TRUE
 	return FALSE
 
