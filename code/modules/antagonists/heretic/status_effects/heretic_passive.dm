@@ -522,7 +522,7 @@
 	var/delta_time = DELTA_WORLD_TIME(SSclient_mobs) * 0.5 // SSmobs.wait is 2 secs, so this should be halved.
 	var/main_healing = 1 + 1 * passive_level * delta_time
 	var/stam_healing = 5 + 5 * passive_level * delta_time
-	need_mob_update += source.heal_overall_damage(-main_healing, -main_healing, updating_health = FALSE)
+	need_mob_update += source.heal_overall_damage(main_healing, main_healing, updating_health = FALSE)
 	need_mob_update += source.adjustToxLoss(-main_healing, updating_health = FALSE, forced = TRUE) // Slimes are people too
 	need_mob_update += source.adjustOxyLoss(-main_healing, updating_health = FALSE)
 	source.stamina?.adjust(stam_healing/* , updating_stamina = FALSE */)

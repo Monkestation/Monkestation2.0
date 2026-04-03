@@ -252,11 +252,11 @@
  */
 /mob/living/carbon/heal_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype = NONE, target_zone = null)
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute, burn, required_bodytype, target_zone)
-	if(!parts.len)
+	if(!length(parts))
 		return
 	var/obj/item/bodypart/picked = pick(parts)
 	var/damage_calculator = picked.get_damage() //heal_damage returns update status T/F instead of amount healed so we dance gracefully around this
-	if(picked.heal_damage(brute, burn, required_bodytype, updating_health))
+	if(picked.heal_damage(abs(brute), abs(burn), required_bodytype, updating_health))
 		update_damage_overlays()
 	return max(damage_calculator - picked.get_damage(), 0)
 
@@ -274,13 +274,17 @@
 		return
 	var/obj/item/bodypart/picked = pick(parts)
 	var/damage_calculator = picked.get_damage()
-	if(picked.receive_damage(brute, burn, check_armor ? run_armor_check(picked, (brute ? MELEE : burn ? FIRE : null)) : FALSE, updating_health, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
+	if(picked.receive_damage(abs(brute), abs(burn), check_armor ? run_armor_check(picked, (brute ? MELEE : burn ? FIRE : null)) : FALSE, updating_health, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 		update_damage_overlays()
 	return (damage_calculator - picked.get_damage())
 
 ///Heal MANY bodyparts, in random order
 /mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_bodytype, updating_health = TRUE)
 	. = FALSE
+	// treat negative args as positive
+	brute = abs(brute)
+	burn = abs(burn)
+
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute, burn, required_bodytype)
 
 	var/update = NONE
@@ -310,6 +314,9 @@
 	. = FALSE
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return //godmode
+	// treat negative args as positive
+	brute = abs(brute)
+	burn = abs(burn)
 
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts(required_bodytype)
 	var/update = NONE
