@@ -79,18 +79,18 @@
 
 /datum/status_effect/heretic_passive/ash/on_apply()
 	. = ..()
-	owner.add_traits(list(TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), REF(src))
+	owner.add_traits(list(TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/heretic_passive/ash/heretic_level_upgrade()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_LAVA_IMMUNE, REF(src))
+	ADD_TRAIT(owner, TRAIT_LAVA_IMMUNE, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/heretic_passive/ash/heretic_level_final()
 	. = ..()
-	owner.add_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTLOWPRESSURE), REF(src))
+	owner.add_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTLOWPRESSURE), TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/heretic_passive/ash/on_remove()
-	owner.remove_traits(list(TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE, TRAIT_LAVA_IMMUNE, TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTLOWPRESSURE), REF(src))
+	owner.remove_traits(list(TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE, TRAIT_LAVA_IMMUNE, TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTLOWPRESSURE), TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 //---- Blade Passive
@@ -269,7 +269,7 @@
 
 /datum/status_effect/heretic_passive/flesh/on_apply()
 	. = ..()
-	owner.add_traits(list(TRAIT_VIRUSIMMUNE, TRAIT_SPACE_ANT_IMMUNITY), REF(src))
+	owner.add_traits(list(TRAIT_VIRUSIMMUNE, TRAIT_SPACE_ANT_IMMUNITY), TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/heretic_passive/flesh/tick(seconds_between_ticks)
 	. = ..()
@@ -278,7 +278,7 @@
 /datum/status_effect/heretic_passive/flesh/heretic_level_upgrade()
 	. = ..()
 	RegisterSignal(owner, COMSIG_LIVING_EAT_FOOD, PROC_REF(on_eat))
-	owner.add_traits(list(TRAIT_FAT_IGNORE_SLOWDOWN, TRAIT_VORACIOUS, TRAIT_GLUTTON), REF(src))
+	owner.add_traits(list(TRAIT_FAT_IGNORE_SLOWDOWN, TRAIT_VORACIOUS, TRAIT_GLUTTON), TRAIT_STATUS_EFFECT(id))
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/fat_human = owner
@@ -330,14 +330,14 @@
 	var/mob/living/carbon/human/heretic = owner
 	if(HAS_TRAIT(heretic, TRAIT_FAT))
 		heretic.physiology.damage_resistance += 25
-		ADD_TRAIT(heretic, TRAIT_BATON_RESISTANCE, REF(src))
+		ADD_TRAIT(heretic, TRAIT_BATON_RESISTANCE, TRAIT_STATUS_EFFECT(id))
 	else
 		heretic.physiology.damage_resistance -= 25
-		REMOVE_TRAIT(heretic, TRAIT_BATON_RESISTANCE, REF(src))
+		REMOVE_TRAIT(heretic, TRAIT_BATON_RESISTANCE, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/heretic_passive/flesh/on_remove()
 	. = ..()
-	owner.remove_traits(list(TRAIT_VIRUSIMMUNE, TRAIT_SPACE_ANT_IMMUNITY, TRAIT_FAT_IGNORE_SLOWDOWN, TRAIT_VORACIOUS, TRAIT_GLUTTON, TRAIT_BATON_RESISTANCE), REF(src))
+	owner.remove_traits(list(TRAIT_VIRUSIMMUNE, TRAIT_SPACE_ANT_IMMUNITY, TRAIT_FAT_IGNORE_SLOWDOWN, TRAIT_VORACIOUS, TRAIT_GLUTTON, TRAIT_BATON_RESISTANCE), TRAIT_STATUS_EFFECT(id))
 	UnregisterSignal(owner, list(COMSIG_LIVING_EAT_FOOD, SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT)))
 	if(!ishuman(owner))
 		return
@@ -363,21 +363,21 @@
 
 /datum/status_effect/heretic_passive/lock/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, REF(src))
+	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(heretic_datum, COMSIG_HERETIC_SHOP_SETUP, PROC_REF(on_shop_setup)) // Just in case we are applying this after the shop was set up
 
 /datum/status_effect/heretic_passive/lock/heretic_level_upgrade()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_XRAY_VISION, REF(src))
+	ADD_TRAIT(owner, TRAIT_XRAY_VISION, TRAIT_STATUS_EFFECT(id))
 	owner.update_sight()
 
 /datum/status_effect/heretic_passive/lock/heretic_level_final()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_LOCK_GRASP_UPGRADED, REF(src))
+	ADD_TRAIT(owner, TRAIT_LOCK_GRASP_UPGRADED, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/heretic_passive/lock/on_remove()
 	UnregisterSignal(owner, COMSIG_HERETIC_SHOP_SETUP)
-	owner.remove_traits(list(TRAIT_SHOCKIMMUNE, TRAIT_XRAY_VISION, TRAIT_LOCK_GRASP_UPGRADED), REF(src))
+	owner.remove_traits(list(TRAIT_SHOCKIMMUNE, TRAIT_XRAY_VISION, TRAIT_LOCK_GRASP_UPGRADED), TRAIT_STATUS_EFFECT(id))
 	owner.update_sight()
 	return ..()
 
@@ -416,7 +416,7 @@
 	var/obj/item/organ/internal/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!our_brain)
 		return
-	ADD_TRAIT(our_brain, TRAIT_BRAIN_TRAUMA_IMMUNITY, REF(src))
+	ADD_TRAIT(our_brain, TRAIT_BRAIN_TRAUMA_IMMUNITY, TRAIT_STATUS_EFFECT(id))
 	owner.AddElement(/datum/element/relay_attackers)
 	RegisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 
@@ -443,7 +443,7 @@
 
 /datum/status_effect/heretic_passive/moon/heretic_level_upgrade()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_SLEEPIMMUNE, REF(src))
+	ADD_TRAIT(owner, TRAIT_SLEEPIMMUNE, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/heretic_passive/moon/heretic_level_final()
 	. = ..()
@@ -453,8 +453,8 @@
 	var/obj/item/organ/internal/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!our_brain)
 		return ..()
-	REMOVE_TRAIT(our_brain, TRAIT_BRAIN_TRAUMA_IMMUNITY, REF(src))
-	REMOVE_TRAIT(owner, TRAIT_SLEEPIMMUNE, REF(src))
+	REMOVE_TRAIT(our_brain, TRAIT_BRAIN_TRAUMA_IMMUNITY, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_SLEEPIMMUNE, TRAIT_STATUS_EFFECT(id))
 	UnregisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED)
 	QDEL_NULL(amulet)
 	return ..()
@@ -501,9 +501,9 @@
 	SIGNAL_HANDLER
 
 	if(source.is_touching_rust())
-		ADD_TRAIT(source, TRAIT_BATON_RESISTANCE, REF(src))
+		ADD_TRAIT(source, TRAIT_BATON_RESISTANCE, TRAIT_STATUS_EFFECT(id))
 	else
-		REMOVE_TRAIT(source, TRAIT_BATON_RESISTANCE, REF(src))
+		REMOVE_TRAIT(source, TRAIT_BATON_RESISTANCE, TRAIT_STATUS_EFFECT(id))
 
 /**
  * Signal proc for [COMSIG_LIVING_LIFE].
@@ -569,19 +569,19 @@
 
 /datum/status_effect/heretic_passive/void/on_apply()
 	. = ..()
-	owner.add_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE), REF(src))
+	owner.add_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE), TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/heretic_passive/void/heretic_level_upgrade()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_NOBREATH, REF(src))
+	ADD_TRAIT(owner, TRAIT_NOBREATH, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/heretic_passive/void/heretic_level_final()
 	. = ..()
-	owner.add_traits(list(TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE), REF(src))
+	owner.add_traits(list(TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE), TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/heretic_passive/void/on_remove()
 	. = ..()
-	owner.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_NOBREATH, TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE), REF(src))
+	owner.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_NOBREATH, TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE), TRAIT_STATUS_EFFECT(id))
 
 #undef HERETIC_LEVEL_START
 #undef HERETIC_LEVEL_UPGRADE
