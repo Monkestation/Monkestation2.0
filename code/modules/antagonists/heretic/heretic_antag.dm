@@ -99,6 +99,8 @@
 	var/points_to_aura = 8
 
 /datum/antagonist/heretic/Destroy()
+	for(var/datum/mind/old_target as anything in current_sac_targets)
+		UnregisterSignal(old_target, COMSIG_MIND_CRYOED)
 	LAZYNULL(monsters_summoned)
 	LAZYNULL(current_sac_targets)
 	LAZYNULL(all_sac_targets)
@@ -784,11 +786,14 @@
 	var/datum/mind/target_mind = get_mind(target, include_last = TRUE)
 	if(!target_mind)
 		return FALSE
+	if(target_mind in current_sac_targets)
+		return TRUE
 	var/mob/living/carbon/target_body = target_mind.current
 	if(!istype(target_body))
 		return FALSE
 	LAZYOR(all_sac_targets, target_mind)
-	LAZYOR(current_sac_targets, target_mind)
+	LAZYADD(current_sac_targets, target_mind)
+	RegisterSignal(target_mind, COMSIG_MIND_CRYOED, PROC_REF(on_sacrifice_target_cryoed))
 	return TRUE
 
 /**
@@ -803,6 +808,7 @@
 	LAZYREMOVE(current_sac_targets, target_mind)
 	if(remove_from_all)
 		LAZYREMOVE(all_sac_targets, target_mind)
+	UnregisterSignal(target_mind, COMSIG_MIND_CRYOED)
 	return TRUE
 
 /**
@@ -863,6 +869,14 @@
 		if(isnull(player_loc) || !is_station_level(player_loc.z))
 			continue
 		. += possible_target
+
+/datum/antagonist/heretic/proc/on_sacrifice_target_cryoed(datum/mind/source, mob/living/cryoing_body)
+	SIGNAL_HANDLER
+	if(!(source in current_sac_targets))
+		UnregisterSignal(source, COMSIG_MIND_CRYOED)
+		CRASH("Somehow had COMSIG_MIND_CRYOED for a mind that wasn't a sacrifice target")
+	var/datum/heretic_knowledge/hunt_and_sacrifice/sac_knowledge = get_knowledge(/datum/heretic_knowledge/hunt_and_sacrifice)
+	sac_knowledge.reroll_cryoed_target(source, src)
 
 /**
  * Increments knowledge by one.

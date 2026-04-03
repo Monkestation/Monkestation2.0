@@ -335,12 +335,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 					update_objective.owner.announce_objectives()
 			qdel(objective)
 
-	// honestly this whole horrible proc needs to be refactored to use signals at some point.
-	for(var/datum/antagonist/heretic/heretic in GLOB.antagonists)
-		if(!(mob_occupant.mind in heretic.current_sac_targets))
-			continue
-		var/datum/heretic_knowledge/hunt_and_sacrifice/sac_knowledge = heretic.get_knowledge(/datum/heretic_knowledge/hunt_and_sacrifice)
-		sac_knowledge?.reroll_cryoed_target(mob_occupant.mind, heretic)
+	SEND_SIGNAL(mob_occupant.mind, COMSIG_MIND_CRYOED, mob_occupant)
 
 /// This function can not be undone; do not call this unless you are sure.
 /// Handles despawning the player.
