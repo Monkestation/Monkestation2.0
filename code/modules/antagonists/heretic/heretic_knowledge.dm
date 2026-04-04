@@ -644,6 +644,7 @@
 	notify_ghosts(
 		"[user.real_name] has completed an ascension ritual!",
 		source = user,
+		action = NOTIFY_ORBIT,
 		header = "A Heretic is Ascending!",
 	)
 	priority_announce(
