@@ -886,10 +886,8 @@
 	var/highest_deficiency = max(lethal_deficiency, stamina_deficiency)
 	if(lethal_deficiency >= 40 || stamina_deficiency >= 60)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE, multiplicative_slowdown = highest_deficiency / 75)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, update = TRUE, multiplicative_slowdown = highest_deficiency / 25)
 	else if(LAZYACCESS(movespeed_modification, "[/datum/movespeed_modifier/damage_slowdown]"))
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE)
-		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, update = TRUE)
 
 /mob/living/carbon/human/pre_stamina_change(diff as num, forced)
 	. = ..()
