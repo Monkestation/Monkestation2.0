@@ -58,6 +58,7 @@
 	need_mob_update += source.adjustFireLoss(-heal_amount * delta_time, updating_health = FALSE)
 	need_mob_update += source.adjustToxLoss(-heal_amount * delta_time, updating_health = FALSE, forced = TRUE) // Slimes are people too
 	need_mob_update += source.adjustOxyLoss(-heal_amount / 2 * delta_time, updating_health = FALSE)
+	need_mob_update += source.adjustCloneLoss(-heal_amount * delta_time, updating_health = FALSE)
 	source.stamina?.adjust(stamina_heal_amount * delta_time)
 	if(need_mob_update)
 		source.updatehealth()
