@@ -263,7 +263,7 @@
 	icon = 'monkestation/icons/obj/clock_cult/clockwork_weapons.dmi'
 	lefthand_file = 'monkestation/icons/mob/clock_cult/clockwork_lefthand.dmi'
 	righthand_file = 'monkestation/icons/mob/clock_cult/clockwork_righthand.dmi'
-	icon_state = "bow_clockwork_unchambered_undrawn"
+	icon_state = "bow_clockwork"
 	inhand_icon_state = "clockwork_bow"
 	base_icon_state = "bow_clockwork"
 	force = 10
@@ -312,10 +312,6 @@
 
 /obj/item/gun/ballistic/bow/clockwork/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	return
-
-/obj/item/gun/ballistic/bow/clockwork/update_icon_state()
-	. = ..()
-	icon_state = "[base_icon_state]_[chambered ? "chambered" : "unchambered"]_[drawn ? "drawn" : "undrawn"]"
 
 /obj/item/ammo_box/magazine/internal/bow/clockwork
 	ammo_type = /obj/item/ammo_casing/arrow/clockbolt
