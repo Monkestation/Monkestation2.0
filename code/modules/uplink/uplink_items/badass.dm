@@ -114,3 +114,32 @@
 	desc = "This pair of top notch combat boots comes fit with a reinforced toe in which is slotted a tiny kinetic penetrator made from tungsten composite. Wearing 'em lets you kick people in the groin with MAXIMUM pain."
 	item = /obj/item/clothing/shoes/combat/nutcracker
 	cost = 8
+
+/datum/uplink_item/badass/murderbone
+	name = "Corporate Sponsorship for Evil"
+	desc = "Our investors have decided that publicity is good no matter what kind it is. Even for a secretive organization formed \
+			out of a backdoor allegiance between several corporations with vendettas against Nanotrasen. By purchasing and dawning \
+			the provided apparel you will be free from all repercussions of mass crime and mass murder as you advertise the power \
+			of the Syndicate. The provided hat covers crime and the provided cloak covers murder. \
+			Show those Nanotrasen pigs what for in Syndicate sponsored style! DISCLAIMER: ONLY AVAILABLE FOR THE FIRST TWENTY MINUTES OF A SHIFT!"
+	cost = 20
+	lock_other_purchases = TRUE
+	cant_discount = TRUE
+	illegal_tech = FALSE
+	surplus = 0
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	item = /obj/item/storage/briefcase/evilbundle
+
+/datum/uplink_item/badass/murderbone/unique_checks(mob/user, datum/uplink_handler/handler, atom/movable/source)
+	if(world.time - SSticker.round_start_time > 20 MINUTES)
+		to_chat(user, span_boldwarning("Your benefactors are already busy with other schemes. You'll have to make do with what you have on hand."))
+		return FALSE
+
+	if(!handler || length(handler.active_objectives) || !handler.can_take_objectives || !handler.has_objectives)
+		return FALSE
+
+	for(var/datum/traitor_objective/objective in handler.completed_objectives)
+		if(objective.objective_state != OBJECTIVE_STATE_INVALID)
+			return FALSE
+
+	return TRUE
