@@ -38,7 +38,6 @@
 	required_atoms = list(
 		list(
 			/obj/item/food/breadslice/moldy,
-			/obj/item/food/badrecipe/moldy,
 			/obj/item/food/deadmouse/moldy,
 			/obj/item/food/pizzaslice/moldy,
 			/obj/item/food/boiledegg/rotten,
