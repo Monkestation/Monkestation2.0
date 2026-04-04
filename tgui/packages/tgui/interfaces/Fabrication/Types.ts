@@ -74,6 +74,93 @@ export type Design = {
  * The static and dynamic data made available to a fabricator UI.
  */
 export type FabricatorData = {
+	/**
+	 * Current machine mode for dual-purpose fabricators.
+	 */
+	machine_mode?: 'lathe' | 'ammo';
+
+	/**
+	 * Label for the mode-toggle button.
+	 */
+	mode_toggle_label?: string;
+
+  /**
+   * Label for the currently active lathe recipe set.
+   */
+  lathe_recipe_label?: string;
+
+  /**
+   * Internal ID of the currently active lathe recipe set.
+   */
+  lathe_recipe_set?: string;
+
+  /**
+   * Dropdown options for available lathe recipe sets.
+   */
+  lathe_recipe_sets?: Array<{
+    displayText: string;
+    value: string;
+  }>;
+
+  /**
+   * Label for cycling between available lathe recipe sets.
+   */
+  lathe_recipe_toggle_label?: string;
+
+  /**
+   * Whether there is more than one lathe recipe set available.
+   */
+  lathe_recipe_can_switch?: BooleanLike;
+
+	/**
+	 * Optional tgui theme name for this fabricator window.
+	 */
+	ui_theme?: string;
+
+  /**
+   * Ammo-mode: whether an ammo container is inserted.
+   */
+  mag_loaded?: BooleanLike;
+
+  /**
+   * Ammo-mode: whether the machine is currently filling rounds.
+   */
+  system_busy?: BooleanLike;
+
+  /**
+   * Ammo-mode: selected/inserted container name.
+   */
+  mag_name?: string;
+
+  /**
+   * Ammo-mode: current rounds in inserted container.
+   */
+  current_rounds?: number;
+
+  /**
+   * Ammo-mode: max rounds in inserted container.
+   */
+  max_rounds?: number;
+
+  /**
+   * Optional status/error message for ammo mode.
+   */
+  error?: string;
+
+  /**
+   * Optional color key for ammo mode status box.
+   */
+  error_type?: string;
+
+  /**
+   * Ammo-mode printable round options for the inserted container.
+   */
+  available_rounds?: Array<{
+    name: string;
+    typepath: string;
+    mats_list: string;
+  }>;
+
   /**
    * The materials available to the fabricator, via ore silo or local storage.
    */
