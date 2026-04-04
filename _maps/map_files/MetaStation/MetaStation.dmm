@@ -19749,6 +19749,7 @@
 	pixel_y = 2
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science/breakroom)
 "hbE" = (

@@ -1,0 +1,5 @@
+author: "Cujo"
+delete-after: True
+changes:
+  - rscadd: "Adds ignored_mob to audible_message"
+  - bugfix: "Actually fixes prude mode showing fart emotes in runechat"

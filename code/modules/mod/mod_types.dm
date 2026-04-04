@@ -284,6 +284,9 @@
 		/obj/item/mod/module/jump_jet,
 	)
 
+/obj/item/mod/control/pre_equipped/nuclear/unrestricted
+	req_access = null
+
 /obj/item/mod/control/pre_equipped/nuclear/no_jetpack
 
 /obj/item/mod/control/pre_equipped/nuclear/no_jetpack/Initialize(mapload, new_theme, new_skin, new_core)
