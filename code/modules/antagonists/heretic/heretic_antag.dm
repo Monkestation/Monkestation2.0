@@ -845,8 +845,9 @@
  */
 /datum/antagonist/heretic/proc/possible_sacrifice_targets(include_current_targets = TRUE) as /list
 	. = list()
+	var/list/allied_minds = get_all_team_members(owner)
 	for(var/datum/mind/possible_target in get_crewmember_minds())
-		if(possible_target == owner)
+		if(possible_target == owner || (possible_target in allied_minds))
 			continue
 		var/mob/living/body = possible_target.current
 		if(QDELETED(body) || body.stat >= SOFT_CRIT)

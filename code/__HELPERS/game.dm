@@ -378,3 +378,11 @@
 		return TRUE
 
 	return FALSE
+
+/// Returns a list of all minds that the target mind shares a team with.
+/proc/get_all_team_members(datum/mind/mind) as /list
+	. = list()
+	for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
+		var/datum/team/team = antag_datum.get_team()
+		if(team)
+			. |= team.members
