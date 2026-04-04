@@ -31,7 +31,8 @@
 
 /datum/heretic_knowledge/reroll_targets/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
-	LAZYNULL(heretic_datum.current_sac_targets)
+	for(var/datum/mind/target as anything in heretic_datum.current_sac_targets)
+		heretic_datum.remove_sacrifice_target(target)
 
 	var/datum/heretic_knowledge/hunt_and_sacrifice/target_finder = heretic_datum.get_knowledge(/datum/heretic_knowledge/hunt_and_sacrifice)
 	if(!target_finder)
