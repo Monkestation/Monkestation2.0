@@ -33,7 +33,7 @@
 		"Your Mansus Grasp and your spells are capable of rusting walls and floors, making them beneficial to you and harmful to the crew and silicons. Spread rust as much as possible.",
 		"Rusted turfs will heal you, regulate your blood temperature, make you resistant to batons knockdown, regenerate your stamina and blood and heal your wound and limbs once you level up your passive.",
 		"Always fight on your turf. Your opponent entering your turf are at a significant disadvantage.",
-		"Your Reassembled Raiment is only empowered while you are on your rusted tiles. If you want the most out of its power, stay on your rusted tiles.",
+		"Your Salvaged Remains is only empowered while you are on your rusted tiles. If you want the most out of its power, stay on your rusted tiles.",
 		"Your ability to destroy objects and walls improves as your passive ugprade increases; eventually you will be able to melt through airlocks, reinforced walls and even titanium walls.",
 		"Spreading rust can be fairly slow, especially early on. Consider summoning a few rust walkers to help you expand your domain.",
 		"Rusted Construction allows you to produce barriers for cover or escape, or even block off someone else's escape in a pinch. Make the most of it to manipulate the environment to your needs.",
