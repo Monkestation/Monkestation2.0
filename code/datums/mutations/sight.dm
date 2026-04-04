@@ -174,7 +174,7 @@
 	LE.firer = source
 	LE.damage *= GET_MUTATION_POWER(src) // MONKESTATION ADDITION
 	LE.def_zone = ran_zone(source.zone_selected)
-	LE.preparePixelProjectile(target, source, modifiers)
+	LE.aim_projectile(target, source, modifiers)
 	INVOKE_ASYNC(LE, TYPE_PROC_REF(/obj/projectile, fire))
 	playsound(source, 'monkestation/sound/weapons/gun/energy/Laser2.ogg', 75, TRUE)
 

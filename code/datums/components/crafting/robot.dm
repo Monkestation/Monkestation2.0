@@ -241,66 +241,72 @@
 
 /datum/crafting_recipe/vendozer_fl
 	name = "Vendozer Front Left Armor Parts"
+	desc = "Giant shitty armor for something... Crafted with the parts of a YouTool and SecDrobe." //the vending refills dont have unique names, so we have to do this.
 	always_available = FALSE
 	result = /obj/item/mecha_parts/part/vendozer_fl
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
 	time = 10 SECONDS
-	machinery = list(/obj/machinery/vending/tool  = CRAFTING_MACHINERY_CONSUME,/obj/machinery/vending/wardrobe/sec_wardrobe = CRAFTING_MACHINERY_CONSUME)
 	reqs = list(
 		/obj/item/stack/sheet/mineral/wood = 10,
-		/obj/item/stack/sheet/iron = 10,
+		/obj/item/stack/sheet/iron = 20,
 		/obj/item/pipe = 6,
-		/obj/item/stack/cable_coil = 30,
+		/obj/item/stack/cable_coil = 40,
+		/obj/item/vending_refill/youtool = 1,
+		/obj/item/vending_refill/wardrobe/sec_wardrobe = 1,
 	)
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/vendozer_fr
 	name = "Vendozer Front Right Armor Parts"
+	desc = "Giant shitty armor for something... Crafted with the parts of a Robust Softdrinks."
 	always_available = FALSE
 	result = /obj/item/mecha_parts/part/vendozer_fr
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
 	time = 10 SECONDS
-	machinery = list(/obj/machinery/vending/cola = CRAFTING_MACHINERY_CONSUME)
 	reqs = list(
 		/obj/item/stack/sheet/mineral/wood = 10,
 		/obj/item/stack/sheet/plasteel = 5,
 		/obj/item/pipe = 6,
-		/obj/item/stack/cable_coil = 30,
+		/obj/item/stack/cable_coil = 35,
 		/obj/item/toy/crayon/spraycan = 1,
+		/obj/item/vending_refill/cola = 1,
+		/obj/item/stack/sheet/iron = 5,
 	)
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/vendozer_bl
 	name = "Vendozer Back Left Armor Parts"
+	desc = "Giant shitty armor for something... Crafted with the parts of a NanoDrug Plus."
 	always_available = FALSE
 	result = /obj/item/mecha_parts/part/vendozer_bl
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
 	time = 10 SECONDS
-	machinery = list(/obj/machinery/vending/drugs = CRAFTING_MACHINERY_CONSUME)
 	reqs = list(
 		/obj/item/stack/sheet/mineral/wood = 10,
-		/obj/item/stack/sheet/iron = 10,
-		/obj/item/stack/cable_coil = 45,
+		/obj/item/stack/sheet/iron = 15,
+		/obj/item/stack/cable_coil = 50,
 		/obj/item/extinguisher = 2,
 		/obj/item/stack/sticky_tape = 5,
 		/obj/item/light/tube = 1,
+		/obj/item/vending_refill/drugs = 1,
 	)
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/vendozer_br
 	name = "Vendozer Back Right Armor Parts"
+	desc = "Giant shitty armor for something... Crafted with the parts of a Getmore Chocolate Corp vendor."
 	always_available = FALSE
 	result = /obj/item/mecha_parts/part/vendozer_br
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
 	time = 10 SECONDS
-	machinery = list(/obj/machinery/vending/snack = CRAFTING_MACHINERY_CONSUME)
 	reqs = list(
 		/obj/item/stack/sheet/mineral/wood = 10,
-		/obj/item/stack/sheet/iron = 10,
-		/obj/item/stack/cable_coil = 15,
+		/obj/item/stack/sheet/iron = 15,
+		/obj/item/stack/cable_coil = 20,
 		/obj/item/extinguisher = 2,
 		/obj/item/stack/sticky_tape = 5,
 		/obj/item/light/tube = 1,
+		/obj/item/vending_refill/snack = 1,
 	)
 	category = CAT_ROBOT
 

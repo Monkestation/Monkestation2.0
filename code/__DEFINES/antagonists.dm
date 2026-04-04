@@ -72,6 +72,7 @@
 
 
 // Heretic path defines.
+#define PATH_ANY "Any Path"
 #define PATH_START "Start Path"
 #define PATH_SIDE "Side Path"
 #define PATH_ASH "Ash Path"
@@ -348,6 +349,7 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_CREW "Deviant Crew"
 #define ANTAG_GROUP_BINGLES "Bingles"
 #define ANTAG_GROUP_DARKSPAWN "Darkspawn"
+#define ANTAG_GROUP_DEVILS "Infernal Agents"
 
 #define HUNTER_PACK_COPS "Spacepol Officers"
 #define HUNTER_PACK_RUSSIAN "Russian Smugglers"

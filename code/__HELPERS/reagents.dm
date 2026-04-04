@@ -180,24 +180,22 @@
 	else
 		return null
 
-///Returns a random reagent object minus blacklisted reagents
+///Returns a random reagent path minus blacklisted reagents
 /proc/get_random_reagent_id()
-	var/static/list/random_reagents = list()
-	if(!random_reagents.len)
+	var/static/list/random_reagents
+	if(!length(random_reagents))
+		random_reagents = list()
 		for(var/datum/reagent/reagent_path as anything in subtypesof(/datum/reagent))
 			if(initial(reagent_path.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
 				random_reagents += reagent_path
-	var/picked_reagent = pick(random_reagents)
-	return picked_reagent
+	return pick(random_reagents)
 
-///Returns a random reagent object minus blacklisted reagents
+///Returns a random reagent path
 /proc/get_random_reagent_id_unrestricted()
-	var/static/list/random_reagents = list()
-	if(!random_reagents.len)
-		for(var/datum/reagent/reagent_path as anything in subtypesof(/datum/reagent))
-			random_reagents += reagent_path
-	var/picked_reagent = pick(random_reagents)
-	return picked_reagent
+	var/static/list/random_reagents
+	if(!length(random_reagents))
+		random_reagents = subtypesof(/datum/reagent)
+	return pick(random_reagents)
 
 ///Returns reagent datum from reagent name string
 /proc/get_chem_id(chem_name)

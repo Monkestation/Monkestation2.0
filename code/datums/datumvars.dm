@@ -5,7 +5,7 @@
 	if(var_name == NAMEOF(src, vars))
 		return FALSE
 #ifndef TESTING
-	if(istype(src.vars[var_name], /datum/protected_list_holder))
+	if(!isnull(var_name) && istype(src.vars[var_name], /datum/protected_list_holder))
 		return FALSE
 #endif
 	return TRUE

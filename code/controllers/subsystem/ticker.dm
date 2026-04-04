@@ -275,10 +275,8 @@ SUBSYSTEM_DEF(ticker)
 	CHECK_TICK
 	//Configure mode and assign player to special mode stuff
 	var/can_continue = 0
-	//monkestation addition start
-	can_continue =	SSgamemode.pre_setup()
+	SSgamemode.roll_pre_setup_points()
 	CHECK_TICK
-	//monkestation addition end
 	can_continue = src.mode.pre_setup() //Choose antagonists
 	CHECK_TICK
 	can_continue = can_continue && SSjob.DivideOccupations() //Distribute jobs
@@ -349,19 +347,18 @@ SUBSYSTEM_DEF(ticker)
 	return TRUE
 
 /datum/controller/subsystem/ticker/proc/welcome_player(mob/player)
-	var/client/client = player.client
-	var/list/channel_volume = client?.prefs?.channel_volume?.Copy()
-	if(!client)
-		SEND_SOUND(player, sound(SSstation.announcer.get_rand_welcome_sound(), volume = 100))
-	else if("[CHANNEL_VOX]" in channel_volume)
-		SEND_SOUND(player, sound(SSstation.announcer.get_rand_welcome_sound(), volume = channel_volume["[CHANNEL_VOX]"] * (channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01)))
+	var/list/channel_volume = player?.client?.prefs?.channel_volume
+	if(!(channel_volume["[CHANNEL_STORYTELLER]"]))
+		return
+	var/volume_played = channel_volume["[CHANNEL_STORYTELLER]"] * (channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01)
+	SEND_SOUND(player, sound(SSstation.announcer.get_rand_welcome_sound(), volume = volume_played))
 
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = FALSE
 	if(!CONFIG_GET(flag/disable_storyteller))
 		SSgamemode.current_storyteller.round_started = TRUE
-		if(!SSgamemode.halted_storyteller)
-			SSgamemode.current_storyteller.tick(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
+		/*if(!SSgamemode.halted_storyteller) //temp removal
+			SSgamemode.current_storyteller.tick()*/ // we want this asap
 	mode.post_setup()
 	addtimer(CALLBACK(src, PROC_REF(fade_all_splashes)), 1 SECONDS) // extra second to make SURE all antags are setup
 
@@ -373,19 +370,14 @@ SUBSYSTEM_DEF(ticker)
 	send2adminchat("Server", "Round [GLOB.round_id ? "#[GLOB.round_id]" : ""] has started[allmins.len ? ".":" with no active admins online!"]")
 	setup_done = TRUE
 
-	for(var/i in GLOB.start_landmarks_list)
-		var/obj/effect/landmark/start/S = i
-		if(istype(S)) //we can not runtime here. not in this important of a proc.
-			S.after_round_start()
+	for(var/obj/effect/landmark/start/mark in GLOB.start_landmarks_list)
+		if(istype(mark)) //we can not runtime here. not in this important of a proc.
+			mark.after_round_start()
 		else
-			stack_trace("[S] [S.type] found in start landmarks list, which isn't a start landmark!")
+			stack_trace("[mark] [(isdatum(mark) ? mark.type : "non datum")] found in start landmarks list, which isn't a start landmark!")
 
 	// handle persistence stuff that requires ckeys, in this case hardcore mode and temporal scarring
-	for(var/i in GLOB.player_list)
-		if(!ishuman(i))
-			continue
-		var/mob/living/carbon/human/iter_human = i
-
+	for(var/mob/living/carbon/human/iter_human in GLOB.player_list)
 		iter_human.increment_scar_slot()
 		iter_human.load_persistent_scars()
 		SSpersistence.load_modular_persistence(iter_human.get_organ_slot(ORGAN_SLOT_BRAIN))
@@ -837,7 +829,8 @@ SUBSYSTEM_DEF(ticker)
 	///The reference to the end of round sound that we have chosen.
 	var/sound/end_of_round_sound_ref = sound(round_end_sound)
 	for(var/mob/M in GLOB.player_list)
-		if(M.client.prefs.read_preference(/datum/preference/toggle/sound_endofround))
+		if(M.client.prefs?.channel_volume["[CHANNEL_LOBBYMUSIC]"])
+			end_of_round_sound_ref.volume = calculate_mixed_volume(M.client, 100, CHANNEL_LOBBYMUSIC)
 			SEND_SOUND(M.client, end_of_round_sound_ref)
 
 	// monkestation removal start: fix-lobby-music

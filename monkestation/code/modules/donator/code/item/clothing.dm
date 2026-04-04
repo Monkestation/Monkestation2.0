@@ -971,3 +971,34 @@
 	inhand_icon_state = null
 	flags_cover = MASKCOVERSEYES
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+
+/obj/item/clothing/suit/costume/tsukihime_executor
+	name = "executor dress"
+	desc = "The Garb of God's Strongest Soldiers."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "tsukihime_executor"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN
+
+/obj/item/clothing/suit/hooded/cloak/red_regal_mantle
+	name = "red regal mantle"
+	desc = "A mantle fit for a king! It also has a 'golden' crown in one of it's pockets."
+	icon_state = "red_regal_mantle"
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	hoodtype = /obj/item/clothing/head/costume/crown/red_regal_mantle // It's funny
+	hood_up_affix = "" // no sprite change, it's just a crown on your head.
+	slot_flags = ITEM_SLOT_NECK
+
+/obj/item/clothing/head/costume/crown/red_regal_mantle
+	desc = "If you were to taste this crown, you'd notice it would taste like painted copper."
+
+/obj/item/clothing/accessory/silver_anchor
+	name = "silver anchor"
+	desc = "A shiny silver anchor connected to a black string."
+	icon_state = "silver_anchor"
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	attachment_slot = NONE
+	slot_flags = ITEM_SLOT_NECK
