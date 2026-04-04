@@ -53,6 +53,10 @@
 	// Cooldown of the ability itself is only 1 second after shooting, it's 25 seconds after we teleport to our ball
 	StartCooldown(25 SECONDS)
 
+/datum/action/cooldown/spell/pointed/projectile/star_blast/fire_projectile(atom/target)
+	. = ..()
+	owner.balloon_alert(owner, "cast again to activate the disk's secondary effect!")
+
 /datum/action/cooldown/spell/pointed/projectile/star_blast/proc/pull_victims()
 	new /obj/effect/temp_visual/circle_wave/star_blast(get_turf(owner))
 	for(var/turf/spawn_turf in range(1, get_turf(owner)))
