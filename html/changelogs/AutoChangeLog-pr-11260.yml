@@ -1,0 +1,4 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - rscadd: "Added formatting to the Exo Tracking Beacon messaging, perhaps letting you know easier that you are, in fact, getting a message from someone."
