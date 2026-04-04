@@ -56,6 +56,7 @@
 /datum/action/cooldown/spell/pointed/projectile/star_blast/fire_projectile(atom/target)
 	. = ..()
 	owner.balloon_alert(owner, "cast again to activate the disk's secondary effect!")
+	to_chat(owner, span_green("Cast Star Blast again in order to teleport to the ball and suck in nearby heathens!"), type = MESSAGE_TYPE_INFO)
 
 /datum/action/cooldown/spell/pointed/projectile/star_blast/proc/pull_victims()
 	new /obj/effect/temp_visual/circle_wave/star_blast(get_turf(owner))
