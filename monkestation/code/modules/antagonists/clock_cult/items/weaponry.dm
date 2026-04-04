@@ -280,13 +280,6 @@
 	AddElement(/datum/element/clockwork_pickup)
 	AddComponent(/datum/component/turf_checker, GLOB.clock_turf_types, COMSIG_CHECK_TURF_CLOCKWORK)
 
-/obj/item/gun/ballistic/bow/clockwork/afterattack(atom/target, mob/living/user, flag, params, passthrough)
-	if(!drawn || !chambered)
-		to_chat(user, span_notice("[src] must be drawn to fire a shot!"))
-		return
-
-	return ..()
-
 /obj/item/gun/ballistic/bow/clockwork/can_trigger_gun(mob/living/user, akimbo_usage)
 	return IS_CLOCK(user) //clock cultists should always be able to use their weapons
 
@@ -299,22 +292,22 @@
 	recharge_time = initial(recharge_time)
 
 /obj/item/gun/ballistic/bow/clockwork/attack_self(mob/living/user)
-	if(drawn || !chambered)
+	if(!chambered)
+		balloon_alert(user, "no arrow nocked!")
 		return
-
 	if(!do_after(user, 0.5 SECONDS * (iscogscarab(user) ? COGSCARAB_BOW_DRAW_TIME_MULT : 1), src))
 		return
-
-	to_chat(user, span_notice("You draw back the bowstring."))
-	drawn = TRUE
-	playsound(src, 'sound/weapons/draw_bow.ogg', 75, 0) //gets way too high pitched if the freq varies
-	update_icon()
+	balloon_alert(user, "[drawn ? "string released" : "string drawn"]")
+	drawn = !drawn
+	playsound(src, 'sound/items/weapons/gun/bow/bow_draw.ogg', 25, TRUE)
+	update_appearance()
 
 /// Recharges a bolt, done after the delay in shoot_live_shot
 /obj/item/gun/ballistic/bow/clockwork/proc/recharge_bolt()
 	var/obj/item/ammo_casing/arrow/clockbolt/bolt = new
 	magazine.give_round(bolt)
-	chambered = bolt
+	chambered = magazine.get_round()
+	drawn = FALSE
 	update_icon()
 
 /obj/item/gun/ballistic/bow/clockwork/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
