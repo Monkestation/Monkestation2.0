@@ -31,6 +31,7 @@
 	name = "caseless .45 bullet"
 	desc = "A .45 bullet casing. This one is caseless!"
 	caliber = CALIBER_45
+	can_be_printed = FALSE
 	projectile_type = /obj/projectile/bullet/c45/caseless
 
 /obj/item/ammo_box/c45/caseless
