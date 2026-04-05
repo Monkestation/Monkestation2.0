@@ -768,11 +768,20 @@
 		var/list/microwave_contents = list()
 		microwave_contents += get_all_contents() //Mobs are often hid inside of mob holders, which could be fried and made into a burger...
 		for(var/mob/living/victim in microwave_contents)
-			if(victim.electrocute_act(shock_damage = 100, source = src, siemens_coeff = 1, flags = SHOCK_NOGLOVES))
+			var/should_muck = FALSE
+			if(isbrain(victim))
+				var/obj/item/organ/internal/brain/brain = victim.loc
+				if(istype(brain))
+					brain.set_organ_damage(brain.maxHealth)
+				successful_shock = TRUE
+				should_muck = TRUE
+			else if(victim.electrocute_act(shock_damage = 100, source = src, siemens_coeff = 1, flags = SHOCK_NOGLOVES))
 				successful_shock = TRUE
 				if(victim.stat == DEAD) //This is mostly so humans that can_be_held don't get gibbed from one microwave run alone, but mice become burnt messes
 					victim.gib()
-					muck()
+					should_muck = TRUE
+			if(should_muck)
+				muck()
 		if(successful_shock) //We only want to give feedback once, regardless of how many mobs got shocked
 			visible_message(span_danger("You smell a burnt smell coming from [src]!"))
 			add_shared_particles(/particles/smoke)
