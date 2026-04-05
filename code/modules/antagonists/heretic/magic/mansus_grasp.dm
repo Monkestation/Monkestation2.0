@@ -39,6 +39,8 @@
 	var/mob/living/living_hit = victim
 	living_hit.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
 	if(!iscarbon(victim))
+		caster.do_attack_animation(victim, used_item = hand)
+		caster.changeNext_move(CLICK_CD_MELEE)
 		return TRUE
 
 	var/mob/living/carbon/carbon_hit = victim
@@ -61,11 +63,17 @@
 		to_chat(caster, span_warning("An unholy force intervenes as you grasp [carbon_hit], absorbing most of the effects!"))
 		to_chat(carbon_hit, span_warning("As [caster] grasps you with eldritch forces, your blood magic absorbs most of the effects!"))
 		carbon_hit.balloon_alert_to_viewers("absorbed!")
+
+		caster.do_attack_animation(carbon_hit, used_item = hand)
+		caster.changeNext_move(CLICK_CD_MELEE)
 		return TRUE
 
 	carbon_hit.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/heretic)
 	carbon_hit.AdjustKnockdown(5 SECONDS/* , daze_amount = 3 SECONDS */)
 	carbon_hit.stamina?.adjust(-80)
+
+	caster.do_attack_animation(carbon_hit, used_item = hand)
+	caster.changeNext_move(CLICK_CD_MELEE)
 
 	return TRUE
 
@@ -74,6 +82,8 @@
 		return SECONDARY_ATTACK_CALL_NORMAL
 
 	if(SEND_SIGNAL(caster, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, victim) & COMPONENT_USE_HAND)
+		caster.do_attack_animation(victim, used_item = hand)
+		caster.changeNext_move(CLICK_CD_MELEE)
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
