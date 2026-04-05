@@ -43,6 +43,24 @@
 	weight = 8
 	min_players = 20
 
+/datum/round_event_control/antagonist/heretic/get_weight()
+	. = ..()
+	// higher weight if there's an active blood cult
+	var/active_cultists = 0
+	for(var/datum/mind/cultist as anything in get_antag_minds(/datum/antagonist/cult))
+		var/mob/living/carbon/human/cultist_body = cultist.current
+		if(!ishuman(cultist_body) || QDELING(cultist_body))
+			continue
+		if(cultist_body.stat != CONSCIOUS)
+			continue
+		if(cultist_body.reagents?.has_reagent(/datum/reagent/water/holywater)) // skip cultists being deconverted
+			continue
+		active_cultists++
+	if(active_cultists >= 6)
+		. *= 2
+	else if(active_cultists >= 3)
+		. *= 1.5
+
 /datum/round_event_control/antagonist/heretic/roundstart
 	name = "Heretics"
 	roundstart = TRUE
