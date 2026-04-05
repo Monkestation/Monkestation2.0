@@ -46,6 +46,7 @@
 		) = 1,
 		/obj/item/grenade/chem_grenade = 1
 	)
+	banned_atom_types = list(/obj/item/grenade/chem_grenade/rust_sower)
 	result_atoms = list(/obj/item/grenade/chem_grenade/rust_sower)
 	cost = 2
 	research_tree_icon_path = 'icons/obj/weapons/grenade.dmi'
