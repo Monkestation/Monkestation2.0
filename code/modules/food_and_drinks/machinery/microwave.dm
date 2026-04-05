@@ -764,10 +764,8 @@
 		return
 
 	if(cycles == 1) //Only needs to try to shock mobs once, towards the end of the loop
-		var/successful_shock
-		var/list/microwave_contents = list()
-		microwave_contents += get_all_contents() //Mobs are often hid inside of mob holders, which could be fried and made into a burger...
-		for(var/mob/living/victim in microwave_contents)
+		var/successful_shock = FALSE
+		for(var/mob/living/victim as anything in get_all_contents_type(/mob/living)) //Mobs are often hid inside of mob holders, which could be fried and made into a burger...
 			if(isbrain(victim))
 				var/obj/item/organ/internal/brain/brain = victim.loc
 				if(istype(brain))
