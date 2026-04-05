@@ -101,6 +101,21 @@
 	to_chat(hallucinator, span_boldannounce("You feel reality distort for a moment..."))
 	return ..()
 
+/datum/hallucination/station_message/radiation_storm/
+
+/datum/hallucination/station_message/radiation_storm/start()
+	priority_announce("High levels of radiation detected near the station. Maintenance is best shielded from radiation.", \
+		"Anomaly Alert", ANNOUNCER_RADIATION, players = list(hallucinator))
+	addtimer(CALLBACK(src, PROC_REF(fake_warm_air)), 2 SECONDS)
+	return TRUE
+
+/datum/hallucination/station_message/radiation_storm/proc/fake_warm_air()
+	if(QDELETED(src) || QDELETED(hallucinator))
+		return
+
+	to_chat(hallucinator, span_warning("The air begins to grow warm."))
+	return
+
 /datum/hallucination/station_message/clock_cult_ark
 	// Clock cult's long gone, but this stays for posterity.
 	random_hallucination_weight = 0
