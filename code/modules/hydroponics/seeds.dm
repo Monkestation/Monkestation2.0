@@ -195,6 +195,12 @@
 /obj/item/seeds/proc/get_gene(typepath)
 	return (locate(typepath) in genes)
 
+/obj/item/seeds/proc/extra_harvest_checks(mob/living/user, atom/movable/planter)
+	. = TRUE
+	for(var/datum/plant_gene/plant_gene as anything in genes)
+		if(!plant_gene.extra_harvest_checks(user, planter))
+			return FALSE
+
 /obj/item/seeds/proc/reagents_from_genes()
 	reagents_add = list()
 	for(var/datum/plant_gene/reagent/R in genes)

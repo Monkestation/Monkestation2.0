@@ -283,6 +283,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			other_bible.inhand_icon_state = inhand_icon_state
 			other_bible.deity_name = deity_name
 			. = ITEM_INTERACT_SUCCESS
+		if(bible_smacked.GetComponent(/datum/component/plant_growing))
+			bible_smacked.balloon_alert(user, "blessed")
+			bible_smacked.AddComponent(/datum/component/blessed_plant_tray)
+			. = ITEM_INTERACT_SUCCESS
 		if(.)
 			return .
 

@@ -147,6 +147,8 @@
 		return
 
 	var/obj/item/seeds/seed = parent
+	if(!seed.extra_harvest_checks(user, planter))
+		return
 
 	if(seed.get_gene(/datum/plant_gene/trait/repeated_harvest))
 		repeated_harvest = TRUE

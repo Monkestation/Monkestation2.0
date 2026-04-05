@@ -1038,6 +1038,8 @@
 				set_plant_status(HYDROTRAY_PLANT_HARVESTABLE)
 
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
+		if(!myseed.extra_harvest_checks(user, src))
+			return
 		return myseed.harvest(user)
 
 	else if(plant_status == HYDROTRAY_PLANT_DEAD)

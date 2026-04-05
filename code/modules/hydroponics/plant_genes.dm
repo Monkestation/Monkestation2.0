@@ -45,6 +45,10 @@
 /datum/plant_gene/proc/on_new_seed(obj/item/seeds/new_seed)
 	return // Not implemented
 
+/// Extra checks needed to harvest a plant with this gene.
+/datum/plant_gene/proc/extra_harvest_checks(mob/living/user, atom/movable/planter)
+	return TRUE
+
 /// Core plant genes. Stores the main variables: lifespan, endurance, production, yield, potency, weed rate/chance
 /datum/plant_gene/core
 	/// The number value of our core gene.

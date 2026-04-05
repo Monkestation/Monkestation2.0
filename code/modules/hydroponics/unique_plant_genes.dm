@@ -25,6 +25,14 @@
 		expiration = CALLBACK(src, PROC_REF(expire)), \
 	)
 
+/datum/plant_gene/trait/anti_magic/extra_harvest_checks(mob/living/user, atom/movable/planter)
+	var/datum/component/blessed_plant_tray/bless_component = planter.GetComponent(/datum/component/blessed_plant_tray)
+	if(QDELETED(bless_component))
+		planter.balloon_alert(user, "can only harvest if tray is blessed!")
+		return FALSE
+	qdel(bless_component)
+	return TRUE
+
 /// When the plant our gene is hosted in is drained of an anti-magic charge.
 /datum/plant_gene/trait/anti_magic/proc/drain_antimagic(mob/user, obj/item/our_plant)
 	to_chat(user, span_warning("[our_plant] hums slightly, and seems to decay a bit."))
