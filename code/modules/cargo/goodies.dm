@@ -32,6 +32,13 @@
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/ballistic/revolver/c38/detective)
 
+/datum/supply_pack/goody/validhunting_sabre
+	name = "Authentic Shamshir Sabre"
+	desc = "Jealous of your local high ranking Nanotrasen official's officer sabre? You too can show your off your authority by larping as someone more important with this shoddy replica sabre."
+	cost = PAYCHECK_CREW * 4
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/storage/belt/sabre/cargo)
+
 /datum/supply_pack/goody/stingbang
 	name = "Stingbang Single-Pack"
 	desc = "Contains one \"stingbang\" grenade, perfect for playing meanhearted pranks."

@@ -168,7 +168,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 //	icon_state = "spare_safe"
 //	base_icon_state = "spare_safe"
 	armor_type = /datum/armor/safe_caps_spare
-	damage_deflection = 30 // prevents stealing the captain's spare using null rods/lavaland monsters/AP projectiles
+	damage_deflection = 5
 //	density = TRUE
 //	anchored_tabletop_offset = 6
 	custom_materials = list(
@@ -181,10 +181,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe/caps_spare, 32)
 
 /datum/armor/safe_caps_spare
-	melee = 100
-	bullet = 100
-	laser = 100
-	energy = 100
+	melee = 70
+	bullet = 70
+	laser = 70
+	energy = 70
 	bomb = 70
 	fire = 80
 	acid = 70
