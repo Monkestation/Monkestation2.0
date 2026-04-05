@@ -45,7 +45,13 @@
 
 /datum/round_event_control/antagonist/heretic/get_weight()
 	. = ..()
-	// higher weight if there's an active blood cult
+	// 1.5x higher weight if there's an active blood cult and no living heretics currently
+	for(var/datum/mind/heretic as anything in get_antag_minds(/datum/antagonist/heretic))
+		if(!ishuman(heretic.current) || QDELING(heretic.current))
+			continue
+		var/turf/heretic_turf = get_turf(heretic.current)
+		if(!is_centcom_level(heretic_turf?.z) && heretic.current.stat == CONSCIOUS)
+			return .
 	var/active_cultists = 0
 	for(var/datum/mind/cultist as anything in get_antag_minds(/datum/antagonist/cult))
 		var/mob/living/carbon/human/cultist_body = cultist.current
@@ -56,9 +62,7 @@
 		if(cultist_body.reagents?.has_reagent(/datum/reagent/water/holywater)) // skip cultists being deconverted
 			continue
 		active_cultists++
-	if(active_cultists >= 6)
-		. *= 2
-	else if(active_cultists >= 3)
+	if(active_cultists >= 3)
 		. *= 1.5
 
 /datum/round_event_control/antagonist/heretic/roundstart
