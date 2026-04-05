@@ -285,6 +285,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return FALSE
 	// monke end
 
+	if(is_banned_from(convertee.ckey, list(ROLE_SYNDICATE, ROLE_CULTIST)))
+		convertee.ghostize(can_reenter_corpse = FALSE)
+		convertee.death()
+		to_chat(invokers, span_narsiesmall("This one is forsaken, and cannot join us..."))
+		return do_sacrifice(convertee, invokers, cult_team)
+
 	var/brutedamage = convertee.getBruteLoss()
 	var/burndamage = convertee.getFireLoss()
 	if(brutedamage || burndamage)
