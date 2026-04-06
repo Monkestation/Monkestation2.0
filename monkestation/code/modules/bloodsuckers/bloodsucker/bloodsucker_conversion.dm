@@ -84,9 +84,8 @@
 	if(conversion_target.has_status_effect(/datum/status_effect/heretic_passive/moon))
 		to_chat(owner.current, span_userdanger("You begin to pour your will into [conversion_target]'s mind, \
 			but the demand does not stop. It draws you in, like a lamb caught in raPID WATERS, SWEPT INTO THE TUNNEL WITHIN, \
-			DRUMS DEAFING AS THE WATERS CRASH, THE LIGHTS AND SOUNDS DANCING ABOVE THE DROWNING DEPTHS, SWALLOWING YOU WHOLE."), type = MESSAGE_TYPE_WARNING)
+			DRUMS DEAFENING AS THE WATERS CRASH, THE LIGHTS AND SOUNDS DANCING ABOVE THE DROWNING DEPTHS, SWALLOWING YOU WHOLE."), type = MESSAGE_TYPE_WARNING)
 		to_chat(owner.current, span_hypnophrase(span_reallybig("STOP THE NOISE OUT OF THE WATERS STOP STOP STOP THE MUSIC STOP STOP.")), type = MESSAGE_TYPE_WARNING)
-
 
 		// congrats moon heretic, the hubris of a creature of the night has earned you one USEFUL minion!
 		if(!conversion_target.mind.has_antag_datum(/datum/antagonist/lunatic/master))
