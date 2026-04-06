@@ -82,7 +82,7 @@
 
 	// conversion gets REVERSED for moon heretics.
 	if(conversion_target.has_status_effect(/datum/status_effect/heretic_passive/moon))
-		to_chat(owner.current, span_userdanger("You begin to pour your willing into [conversion_target]'s mind, \
+		to_chat(owner.current, span_userdanger("You begin to pour your will into [conversion_target]'s mind, \
 			but the demand does not stop. It draws you in, like a lamb caught in raPID WATERS, SWEPT INTO THE TUNNEL WITHIN, \
 			DRUMS DEAFING AS THE WATERS CRASH, THE LIGHTS AND SOUNDS DANCING ABOVE THE DROWNING DEPTHS, SWALLOWING YOU WHOLE."), type = MESSAGE_TYPE_WARNING)
 		to_chat(owner.current, span_hypnophrase(span_reallybig("STOP THE NOISE OUT OF THE WATERS STOP STOP STOP THE MUSIC STOP STOP.")), type = MESSAGE_TYPE_WARNING)
