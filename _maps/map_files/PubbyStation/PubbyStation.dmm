@@ -12175,41 +12175,42 @@
 /area/station/service/theater)
 "aWs" = (
 /obj/structure/table/reinforced,
-/obj/item/pen/red{
-	pixel_y = 7
-	},
-/obj/item/dest_tagger{
-	pixel_x = 9;
-	pixel_y = -1
-	},
-/obj/item/stamp{
-	pixel_x = -8;
-	pixel_y = 3
-	},
-/obj/item/stamp/denied{
-	pixel_x = -2;
-	pixel_y = -2
-	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/right/directional/north{
+/obj/machinery/door/window/right/directional/south{
 	req_access = list("shipping")
 	},
+/obj/item/paper_bin/carbon{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/structure/desk_bell/departmental/supply{
+	pixel_x = 6;
+	pixel_y = 0
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "aWt" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/paper_bin/carbon{
-	pixel_x = 9;
-	pixel_y = 4
-	},
-/obj/structure/desk_bell/departmental/supply{
-	pixel_x = -6
-	},
-/obj/machinery/door/window/right/directional/south{
+/obj/machinery/door/window/left/directional/north{
 	req_access = list("shipping")
 	},
-/obj/structure/window/reinforced/spawner/directional/west,
+/obj/item/dest_tagger{
+	pixel_x = 9;
+	pixel_y = -1
+	},
+/obj/item/pen/red{
+	pixel_y = 7
+	},
+/obj/item/stamp/denied{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/stamp{
+	pixel_x = -8;
+	pixel_y = 3
+	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "aWu" = (
@@ -36427,7 +36428,8 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/trimline/brown/filled,
+/turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "jcc" = (
 /obj/machinery/chem_mass_spec,
@@ -48225,6 +48227,20 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
+"sHC" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningdock)
 "sHH" = (
 /obj/structure/flora/grass/jungle,
 /obj/structure/flora/bush/flowers_br/style_random,
@@ -96490,7 +96506,7 @@ sql
 aZr
 baD
 jbo
-xkk
+sHC
 xkk
 kif
 kif
