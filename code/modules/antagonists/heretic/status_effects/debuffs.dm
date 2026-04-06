@@ -79,7 +79,7 @@
 	id = "heretic_sated"
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = /atom/movable/screen/alert/status_effect/heretic_sated
-	duration = STATUS_EFFECT_PERMANENT
+	duration = 20 MINUTES /* STATUS_EFFECT_PERMANENT */
 	tick_interval = STATUS_EFFECT_NO_TICK
 
 /datum/status_effect/heretic_sated/on_apply()
