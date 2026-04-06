@@ -27,7 +27,7 @@
 	)
 	tips = list(
 		"Your Mansus Grasp allows you to mute your targets, making it ideal for silent assassinations (keep in mind that it won't short circuit their suit sensors, make sure you turn them off after you kill them). Yhe grasp also applies a mark that when triggered by the void blade will apply the maximum amount of stacks of void chill to your target, slowing them down to a crawl.",
-		"Void Cloak can be used to hide one of your blades and a Codex Cicatrix when the hood is down,  while acting as a focus when it's up.",
+		"Void Cloak can be used to hide one of your blades and a Codex Cicatrix when the hood is down, while acting as a focus when it's up.",
 		"Void chill is a debuff applied by your spells, your grasp, your mark and your blade once you unlock the upgrade. Each stack slows your target movement speed by 10% and make them gradually colder, up to a maximum of 5 stacks.",
 		"At 5 stacks void chill will also prevent your target from heating up.",
 		"You are immune to low pressure and cold damage at the start of the shift. Upgrade your passive to level 2 to no longer need to breathe. Use this to your advantage.",
@@ -50,7 +50,7 @@
 /datum/heretic_knowledge/limited_amount/starting/base_void
 	name = "Glimmer of Winter"
 	desc = "Opens up the Path of Void to you. \
-		Allows you to transmute a knife in sub-zero temperatures into a Void Blade. \
+		Allows you to transmute a knife in sub-zero temperatures (or the ocean) into a Void Blade. \
 		You can only create two at a time."
 	gain_text = "I feel a shimmer in the air, the air around me gets colder. \
 		I start to realize the emptiness of existence. Something's watching me."
@@ -67,7 +67,7 @@
 		return FALSE
 
 	var/turf/open/our_turf = loc
-	if(our_turf.GetTemperature() > T0C)
+	if(our_turf.GetTemperature() > T0C && !isoceanturf(our_turf))
 		loc.balloon_alert(user, "ritual failed, not cold enough!")
 		return FALSE
 
@@ -108,7 +108,7 @@
 
 /datum/heretic_knowledge/armor/void
 	name = "Hollow Weave"
-	desc = "Allows you to transmute a table (or a suit) and a mask in sub-zero temperatures to create a Hollow Weave, this armor will periodically nullify attacks and grant you a short stealth camoflage to reposition yourself. \
+	desc = "Allows you to transmute a table (or a suit) and a mask in sub-zero temperatures (or the ocean) to create a Hollow Weave, this armor will periodically nullify attacks and grant you a short stealth camoflage to reposition yourself. \
 			Acts as a focus while hooded."
 	gain_text = "Stepping through the cold air, I am shocked by a new sensation. \
 				Thousands of almost imperceivable threads cling to my form. \
@@ -127,7 +127,7 @@
 		return FALSE
 
 	var/turf/open/our_turf = loc
-	if(our_turf.GetTemperature() > T0C)
+	if(our_turf.GetTemperature() > T0C && !isoceanturf(our_turf))
 		loc.balloon_alert(user, "ritual failed, not cold enough!")
 		return FALSE
 
@@ -183,7 +183,7 @@
 /datum/heretic_knowledge/ultimate/void_final
 	name = "Waltz at the End of Time"
 	desc = "The ascension ritual of the Path of Void. \
-		Bring 3 corpses to a transmutation rune in sub-zero temperatures to complete the ritual. \
+		Bring 3 corpses to a transmutation rune in sub-zero temperatures (or the ocean) to complete the ritual. \
 		When completed, causes a violent storm of void snow \
 		to assault the station, freezing and damaging heathens. Those nearby will be silenced and frozen even quicker. \
 		Additionally, you will become immune to the effects of space."
@@ -207,7 +207,7 @@
 		return FALSE
 
 	var/turf/open/our_turf = loc
-	if(our_turf.GetTemperature() > T0C)
+	if(our_turf.GetTemperature() > T0C && !isoceanturf(our_turf))
 		loc.balloon_alert(user, "ritual failed, not cold enough!")
 		return FALSE
 
