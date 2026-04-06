@@ -313,3 +313,5 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 #define LOCATION_HEAD "on your head"
 /// String for items placed in the neck slot.
 #define LOCATION_NECK "around your neck"
+/// String for items placed in the id slot
+#define LOCATION_ID "in your ID slot"
