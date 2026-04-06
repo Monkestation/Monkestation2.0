@@ -212,14 +212,14 @@
 //---- Cosmic Passive
 // Level 1 Cosmic fields will speed up the caster and provide stamina regen
 // Level 2 Cosmic fields will disable any nearby bombs/TTVs/Syndicate Bombs
-// Level 3 Cosmic fields will temporarily slow down bullets that pass through them
+// Level 3 Cosmic fields will reflect bullets that pass through them.
 /datum/status_effect/heretic_passive/cosmic
 	name = "Chosen of the Stars"
 	id = "cosmic_passive"
 	passive_descriptions = list(
 		"Cosmic fields speed you up and regenerate stamina.",
 		"Cosmic fields disrupt grenades or signalers from being activated and turn off already primed grenades.",
-		"Cosmic fields slow projectiles down."
+		"Cosmic fields reflects projectiles."
 	)
 
 /datum/status_effect/heretic_passive/cosmic/tick(seconds_between_ticks)
@@ -243,7 +243,7 @@
 	if(!creator || !ismob(creator))
 		return
 	if(isstargazer(creator))
-		new_field.slows_projectiles()
+		new_field.reflects_projectiles()
 		new_field.prevents_explosions()
 		return
 	var/datum/status_effect/heretic_passive/cosmic/cosmic_passive = creator.has_status_effect(/datum/status_effect/heretic_passive/cosmic)
@@ -252,7 +252,7 @@
 	if(cosmic_passive.passive_level > HERETIC_LEVEL_START)
 		new_field.prevents_explosions()
 	if(cosmic_passive.passive_level > HERETIC_LEVEL_UPGRADE)
-		new_field.slows_projectiles()
+		new_field.reflects_projectiles()
 
 //---- Flesh Passive
 // Makes you never get disgust, virus immune and immune to damage from space ants

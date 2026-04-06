@@ -93,8 +93,10 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 	initial_duration = 30 SECONDS
 	/// Flags for what antimagic can just ignore our forcefields
 	var/antimagic_flags = MAGIC_RESISTANCE
-	/// If we are able to slow down projectiles
-	var/slows_projectiles = FALSE
+	/// If we are able to reflect projectiles
+	var/reflects_projectiles = FALSE
+	/// The person who summoned the cosmic field.
+	var/datum/weakref/summoner
 
 /obj/effect/forcefield/cosmic_field/Initialize(mapload, flags = MAGIC_RESISTANCE)
 	. = ..()
@@ -109,6 +111,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 		on_entered(src, thing)
 
 /obj/effect/forcefield/cosmic_field/Destroy(force)
+	summoner = null
 	// Make sure when the field goes away that the effects don't persist
 	for(var/atom/movable/thing in get_turf(src))
 		on_loc_exited(src, thing)
@@ -132,43 +135,79 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 		return FALSE
 	return ..()
 
+/obj/effect/forcefield/cosmic_field/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit)
+	if(try_reflect_projectile(hitting_projectile))
+		return BULLET_ACT_FORCE_PIERCE
+	return ..()
+
+/obj/effect/forcefield/cosmic_field/proc/should_reflect_projectile(obj/projectile/bullet)
+	if(istype(bullet, /obj/projectile/magic/star_ball))
+		return FALSE
+	if(IS_WEAKREF_OF(bullet.firer, summoner))
+		return FALSE
+	if(isstargazer(bullet.firer))
+		var/mob/living/basic/heretic_summon/star_gazer/star_gazer = bullet.firer
+		if(star_gazer.summoner == summoner)
+			return FALSE
+	return TRUE
+
+/obj/effect/forcefield/cosmic_field/proc/try_reflect_projectile(obj/projectile/bullet)
+	if(HAS_TRAIT(bullet, TRAIT_REFLECTED_BY_COSMIC_FIELD))
+		return TRUE
+	if(!should_reflect_projectile(bullet))
+		return FALSE
+	if(!reflects_projectiles)
+		bullet.paused = TRUE
+		return TRUE
+	var/mob/our_summoner = summoner?.resolve()
+	// ensure the projectile doesn't accidentally hit the summoner
+	if(our_summoner)
+		bullet.impacted[our_summoner] = TRUE
+		// or the stargazer's summoner, if the cosmic field was made by a stargazer
+		if(isstargazer(our_summoner))
+			var/mob/living/basic/heretic_summon/star_gazer/star_gazer = our_summoner
+			var/mob/dog_owner = star_gazer.summoner?.resolve()
+			if(dog_owner)
+				bullet.impacted[dog_owner] = TRUE
+	bullet.original = bullet.firer
+	bullet.firer = our_summoner || src
+	bullet.set_angle(get_angle(bullet, bullet.original) + rand(-15, 15))
+	bullet.visible_message(span_warning("[bullet] is reflected by [src]!"))
+	ADD_TRAIT(bullet, TRAIT_REFLECTED_BY_COSMIC_FIELD, REF(src))
+	return TRUE
+
 /obj/effect/forcefield/cosmic_field/proc/on_entered(datum/source, atom/movable/thing)
 	SIGNAL_HANDLER
-	if(isprojectile(thing) && slows_projectiles)
+	if(isprojectile(thing))
 		var/obj/projectile/bullet = thing
-		if(istype(bullet, /obj/projectile/magic/star_ball)) // Don't slow down star balls
-			return
-		bullet.speed *= 0.2 // 80% Slowdown
+		if(!istype(bullet, /obj/projectile/magic/star_ball)) // Don't slow down star balls
+			try_reflect_projectile(bullet)
 		return
 
 	if(!isliving(thing))
 		return
 	var/mob/living/living_mover = thing
-	var/datum/status_effect/heretic_passive/cosmic/cosmic_passive = living_mover.has_status_effect(/datum/status_effect/heretic_passive/cosmic)
-	if(!cosmic_passive)
-		return
-	living_mover.add_movespeed_modifier(/datum/movespeed_modifier/cosmic_field)
+	if(living_mover.has_status_effect(/datum/status_effect/heretic_passive/cosmic))
+		living_mover.add_movespeed_modifier(/datum/movespeed_modifier/cosmic_field)
 
 /obj/effect/forcefield/cosmic_field/proc/on_loc_exited(datum/source, atom/movable/thing)
 	SIGNAL_HANDLER
-	if(isprojectile(thing) && slows_projectiles)
+	if(isprojectile(thing))
 		var/obj/projectile/bullet = thing
 		if(istype(bullet, /obj/projectile/magic/star_ball)) // Don't speed up star balls
 			return
-		bullet.speed /= 0.2 // 80% Slowdown
+		bullet.paused = FALSE
 		return
 
 	if(!isliving(thing))
 		return
 	var/mob/living/living_mover = thing
-	var/datum/status_effect/heretic_passive/cosmic/cosmic_passive = living_mover.has_status_effect(/datum/status_effect/heretic_passive/cosmic)
-	if(!cosmic_passive)
-		return
-	living_mover.remove_movespeed_modifier(/datum/movespeed_modifier/cosmic_field)
+	if(living_mover.has_status_effect(/datum/status_effect/heretic_passive/cosmic))
+		living_mover.remove_movespeed_modifier(/datum/movespeed_modifier/cosmic_field)
 
-/// Adds the ability to slow down any projectiles that enters any turf we occupy
-/obj/effect/forcefield/cosmic_field/proc/slows_projectiles()
-	slows_projectiles = TRUE
+/// Adds the ability to reflect incoming projectiles.
+/obj/effect/forcefield/cosmic_field/proc/reflects_projectiles()
+	reflects_projectiles = TRUE
 
 /// Adds our cosmic field to the global list which bombs check to see if they have to stop exploding
 /obj/effect/forcefield/cosmic_field/proc/prevents_explosions()

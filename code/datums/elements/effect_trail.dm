@@ -44,7 +44,7 @@
 
 /datum/element/effect_trail/cosmic_field // Cosmic field subtype which applies any upgrades
 	var/prevents_explosions = FALSE
-	var/slows_projectiles = FALSE
+	var/reflects_projectiles = FALSE
 
 /datum/element/effect_trail/cosmic_field/Attach(datum/target, chosen_effect)
 	. = ..()
@@ -56,15 +56,17 @@
 	if(!istype(open_turf))
 		return
 	var/obj/effect/forcefield/cosmic_field/new_field = new chosen_effect(open_turf)
+	if(isliving(target_object))
+		new_field.summoner = WEAKREF(target_object)
 
 	if(prevents_explosions)
 		new_field.prevents_explosions()
-	if(slows_projectiles)
-		new_field.slows_projectiles()
+	if(reflects_projectiles)
+		new_field.reflects_projectiles()
 
 /datum/element/effect_trail/cosmic_field/antiexplosion
 	prevents_explosions = TRUE
 
 /datum/element/effect_trail/cosmic_field/antiprojectile
 	prevents_explosions = TRUE
-	slows_projectiles = TRUE
+	reflects_projectiles = TRUE

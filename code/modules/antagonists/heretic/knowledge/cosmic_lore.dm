@@ -32,7 +32,8 @@
 		"Star marked opponents cannot cross your cosmic fields willingly. But they can be dragged through!",
 		"Star Blast is both a jaunt ability as well as a disabling tool. Use it to catch several people in your cosmic fields at once.",
 		"Star Touch will prevent your target from teleporting away. Should they fail to break the tether, they will be put to sleep and then teleport to your feet.",
-		"It's Always a good idea to leave one cosmic rune near your ritual rune, it will allow you to quickly kidnap your targets to sacrifice them.",
+		"It's always a good idea to leave one cosmic rune near your ritual rune, it will allow you to quickly kidnap your targets to sacrifice them.",
+		"Your cosmic fields will freeze incoming projectiles while active"
 	)
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_cosmic
