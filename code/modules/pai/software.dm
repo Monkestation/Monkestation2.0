@@ -201,8 +201,8 @@
 /mob/living/silicon/pai/proc/host_scan(mode)
 	switch(mode)
 		if(PAI_SCAN_TARGET)
-			var/mob/living/target = get_holder()
-			if(!isliving(target))
+			var/mob/living/carbon/target = get_holder()
+			if(!iscarbon(target))
 				balloon_alert(src, "not being carried!")
 				return FALSE
 			healthscan(src, target)

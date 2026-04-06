@@ -315,7 +315,7 @@
 /datum/design/tscanner
 	name = "T-Ray Scanner"
 	id = "tscanner"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*1.5)
 	build_path = /obj/item/t_scanner
 	category = list(
@@ -409,7 +409,7 @@
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
- 
+
 /datum/design/nifsoft_hud/meson
 	name = "Meson HUD NIFSoft"
 	desc = "A NIFSoft datadisk containing the Meson HUD NIFsoft."

@@ -9,7 +9,7 @@
 	suicide_cry = "FOR THE MASTER!!"
 	genetic_points = 5
 	total_genetic_points = 5
-	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM
+	antag_flags = FLAG_CAN_SEE_EXPOITABLE_INFO
 	antag_count_points = 5
 
 	// This thralls master
@@ -28,7 +28,7 @@
 		if(initial(path.dna_cost) != 0)
 			continue
 		var/datum/action/changeling/innate_ability = new path()
-		if(istype(innate_ability, /datum/action/changeling/fakedeath))
+		if(istype(innate_ability, /datum/action/changeling/fakedeath) || HAS_TRAIT(owner, TRAIT_NO_SPECIAL_REVIVAL))
 			continue
 		innate_powers += innate_ability
 		innate_ability.on_purchase(owner.current, TRUE)

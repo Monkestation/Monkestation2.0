@@ -551,7 +551,7 @@
 		scantemp = "<font class='bad'>Subject's brain neurons are too short to be scanned.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
-	if(!body_only && HAS_TRAIT(mob_occupant, TRAIT_SUICIDED))
+	if(!body_only && (HAS_TRAIT(mob_occupant, TRAIT_SUICIDED) || (mob_occupant.mind && HAS_TRAIT(mob_occupant.mind, TRAIT_DEFIB_BLACKLISTED))))
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return

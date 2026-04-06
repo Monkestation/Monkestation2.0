@@ -170,6 +170,8 @@
 		if(QDELETED(content) || HAS_TRAIT(content, TRAIT_FALLING_INTO_BINGLE_HOLE) || isbrain(content))
 			continue
 		if(isliving(content) || is_type_in_typecache(content, swallow_blacklist))
+			if(istype(content, /obj/projectile))
+				continue
 			content.forceMove(content.drop_location())
 		else if(isobj(content))
 			item_value_consumed += get_item_value(content)
@@ -354,6 +356,7 @@
 	density = FALSE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	uses_integrity = TRUE
+	obj_flags = parent_type::obj_flags | BLOCK_Z_OUT_DOWN
 	var/obj/structure/bingle_hole/parent_pit
 
 /obj/structure/bingle_pit_overlay/Initialize(mapload, obj/structure/bingle_hole/parent_pit)
@@ -426,7 +429,7 @@
 	if(isbingle(projectile.firer))
 		return BULLET_ACT_FORCE_PIERCE // Projectiles from bingles pass through
 	if(parent_pit)
-		return parent_pit.bullet_act(projectile)
+		return parent_pit.projectile_hit(projectile)
 	else
 		return ..()
 

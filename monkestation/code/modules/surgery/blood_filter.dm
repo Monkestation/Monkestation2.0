@@ -31,7 +31,7 @@
 	var/obj/item/blood_filter/bloodfilter = tool
 	if(target.reagents?.total_volume)
 		for(var/datum/reagent/chem as anything in target.reagents.reagent_list)
-			if(!length(bloodfilter.whitelist) || (chem.type in bloodfilter.whitelist))
+			if(!length(bloodfilter.blacklist) || !(chem.type in bloodfilter.blacklist))
 				var/purge_amt = (chem.volume <= 2) ? chem.volume : min(chem.volume * chem_purge_factor, 10)
 				target.reagents.remove_reagent(chem.type, purge_amt)
 	var/tox_loss = target.getToxLoss()
@@ -42,10 +42,21 @@
 			target.adjustToxLoss(-(tox_loss * tox_heal_factor), forced = TRUE) //forced so this will actually heal oozelings too
 	var/list/remaining = list()
 	if(locate(/obj/item/healthanalyzer) in user.held_items)
-		if(tox_heal_factor > 0 && tox_loss > 0)
-			remaining += "<font color='[COLOR_GREEN]'>[round(tox_loss, 0.1)]</font> toxin"
-		if(target.reagents?.total_volume)
-			remaining += "<font color='[COLOR_MAGENTA]'>[round(target.reagents.total_volume, 0.1)]u</font> of reagents"
+		success_scan(target.getToxLoss(), remaining, tox_heal_factor, target)
+	else if(target.buckled)
+		var/obj/machinery/computer/operating/puter = null
+		if (istype(target.buckled, /obj/structure/table/optable))
+			var/obj/structure/table/optable/optable = target.buckled
+			puter = optable.computer
+		else if (istype(target.buckled, /obj/machinery/stasis))
+			var/obj/machinery/stasis/stasis = target.buckled
+			puter = stasis.op_computer
+		if(puter)
+			success_scan(target.getToxLoss(), remaining, tox_heal_factor, target)
+		else
+			for(var/obj/machinery/computer/vitals_reader/vitals_reader in range(2, target))
+				if(vitals_reader.patient == target)
+					success_scan(target.getToxLoss(), remaining, tox_heal_factor, target)
 	var/umsg = length(remaining) ? " [english_list(remaining)] remaining." : ""
 	display_results(
 		user,
@@ -56,6 +67,12 @@
 	)
 
 	return ..()
+
+/datum/surgery_step/filter_blood/proc/success_scan(tox_loss, remaining, tox_heal_factor, mob/living/carbon/target)
+	if(tox_heal_factor > 0 && tox_loss > 0)
+		remaining += "<font color='[COLOR_GREEN]'>[round(tox_loss, 0.1)]</font> toxin"
+	if(target.reagents?.total_volume)
+		remaining += "<font color='[COLOR_MAGENTA]'>[round(target.reagents.total_volume, 0.1)]u</font> of reagents"
 
 /datum/surgery/blood_filter/upgraded
 	name = "Filter Blood (Adv.)"

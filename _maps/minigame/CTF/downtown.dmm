@@ -1610,7 +1610,7 @@
 /obj/structure/rack{
 	resistance_flags = 64
 	},
-/obj/item/clothing/head/utility/hardhat/red,
+/obj/item/clothing/head/utility/hardhat/fire,
 /turf/open/floor/carpet/red,
 /area/centcom/ctf)
 "JM" = (

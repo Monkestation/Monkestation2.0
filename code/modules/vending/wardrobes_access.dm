@@ -52,6 +52,7 @@
 	)
 	inventory[ACCESS_BLUESHIELD] = list(
 		// BLUESHIELD
+		/obj/item/clothing/under/rank/security/private/corporal = 3,
 		/obj/item/clothing/head/beret/blueshield = 1,
 		/obj/item/clothing/head/beret/blueshield/navy = 1,
 		/obj/item/clothing/under/rank/blueshield = 1,

@@ -183,6 +183,8 @@
 	alert_type = /atom/movable/screen/alert/status_effect/moon_converted
 	duration = STATUS_EFFECT_PERMANENT
 	status_type = STATUS_EFFECT_REPLACE
+	remove_on_fullheal = TRUE
+	heal_flag_necessary = HEAL_ADMIN
 	///used to track damage
 	var/damage_sustained = 0
 	///overlay used to indicate that someone is marked
@@ -191,6 +193,7 @@
 	var/effect_icon = 'icons/effects/eldritch.dmi'
 	/// icon state for the overlay
 	var/effect_icon_state = "moon_insanity_overlay"
+	var/datum/weakref/visions_ref
 
 /atom/movable/screen/alert/status_effect/moon_converted
 	name = "Moon Converted"
@@ -217,7 +220,11 @@
 	ADD_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
 	owner.update_appearance(UPDATE_OVERLAYS)
-	owner.cause_hallucination(/datum/hallucination/delusion/preset/moon, "[id] status effect", duration = duration, affects_us = FALSE, affects_others = TRUE)
+	var/datum/hallucination/visions = owner.cause_hallucination(/datum/hallucination/delusion/preset/moon, "[id] status effect", duration = duration, affects_us = FALSE, affects_others = TRUE)
+	if(!visions)
+		return
+	visions_ref = WEAKREF(visions)
+
 	return TRUE
 
 /datum/status_effect/moon_converted/proc/on_damaged(datum/source, damage, damagetype)
@@ -242,6 +249,7 @@
 	// Span warning and unconscious so they realize they aren't evil anymore
 	to_chat(owner, span_warning("Your mind is cleared from the effects of The Mansus, your alligiences are as they were before."))
 	REMOVE_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
+	QDEL_NULL(visions_ref)
 	owner.AdjustUnconscious(5 SECONDS, ignore_canstun = FALSE)
 	owner.log_message("[owner] is no longer insane.", LOG_GAME)
 	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)

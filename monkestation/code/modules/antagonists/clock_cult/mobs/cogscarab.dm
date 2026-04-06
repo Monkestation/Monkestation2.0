@@ -94,8 +94,8 @@
 
 /obj/effect/mob_spawn/ghost_role/drone/cogscarab/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
-	spawned_mob.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 	spawned_mob.mind.add_antag_datum(/datum/antagonist/clock_cultist/clockmob)
+	spawned_mob.mind.special_role = ROLE_CLOCK_CULTIST
 
 /obj/effect/mob_spawn/ghost_role/drone/cogscarab/allow_spawn(mob/user, silent)
 	if(length(SSthe_ark.cogscarabs) > MAXIMUM_COGSCARABS)

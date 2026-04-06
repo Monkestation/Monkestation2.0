@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/reagent_containers/cup/bottle/random_buffer = 2,
 monkestation end */
 		/obj/item/reagent_containers/cup/rag = 1,
-		/obj/item/reagent_containers/hypospray/medipen/pumpup = 2,
+		/obj/item/reagent_containers/medipen/pumpup = 2,
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/stock_parts/power_store/cell/lead = 1,
 		/obj/item/storage/box/matches = 1,
@@ -243,7 +243,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 			) = 1,
 		list(//medical chems
 			/obj/item/reagent_containers/cup/bottle/multiver = 1,
-			/obj/item/reagent_containers/hypospray/medipen = 1,
+			/obj/item/reagent_containers/medipen = 1,
 			/obj/item/reagent_containers/syringe/convermol = 1,
 			) = 1,
 		list(//drinks
@@ -364,8 +364,8 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 			/obj/item/storage/medkit/regular = 1,
 			) = 1,
 		list(//medical chems
-			/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
-			/obj/item/reagent_containers/hypospray/medipen/salacid = 1,
+			/obj/item/reagent_containers/medipen/oxandrolone = 1,
+			/obj/item/reagent_containers/medipen/salacid = 1,
 			/obj/item/reagent_containers/syringe/contraband/methamphetamine = 1,
 			) = 1,
 		/obj/item/storage/pill_bottle/maintenance_pill/full = 1, //monkestation edit

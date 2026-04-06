@@ -480,17 +480,19 @@
 	desc = "A fire extinguisher with an arm attached to it."
 	icon_state = "firebot_arm"
 	created_name = "Firebot"
+	var/hardhat_type = /obj/item/clothing/head/utility/hardhat
 
 /obj/item/bot_assembly/firebot/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
-			if(istype(attacking_item, /obj/item/clothing/head/utility/hardhat/red))
+			if(istype(attacking_item, /obj/item/clothing/head/utility/hardhat))
 				if(!user.temporarilyRemoveItemFromInventory(attacking_item))
 					return
 				to_chat(user,span_notice("You add the [attacking_item] to [src]!"))
 				icon_state = "firebot_helmet"
 				desc = "An incomplete firebot assembly with a fire helmet."
+				hardhat_type = attacking_item.type
 				qdel(attacking_item)
 				build_step++
 
@@ -501,6 +503,7 @@
 				to_chat(user, span_notice("You add the [attacking_item] to [src]! Beep Boop!"))
 				var/mob/living/simple_animal/bot/firebot/F = new(drop_location())
 				F.name = created_name
+				F.hardhat_type = hardhat_type
 				qdel(attacking_item)
 				qdel(src)
 

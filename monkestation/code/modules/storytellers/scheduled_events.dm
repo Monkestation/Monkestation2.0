@@ -23,13 +23,13 @@
 	ignores_checks = passed_ignore
 	announce_change = passed_announce
 	/// Add a fake occurence to make the weightings/checks properly respect the scheduled event.
-	event.add_occurence()
+	event.add_occurrence()
 	fakes_occurence = TRUE
 
 /datum/scheduled_event/proc/remove_occurence()
 	if(fakes_occurence)
 		/// Remove the fake occurence if we still have it
-		event.subtract_occurence()
+		event.subtract_occurrence()
 		fakes_occurence = FALSE
 
 /// For admins who want to reschedule the event.
@@ -57,8 +57,9 @@
 
 	///Trigger the event and remove the scheduled datum
 	message_admins("Scheduled Event: [event] successfully triggered.")
+	SSgamemode.remove_scheduled_event(src, FALSE)
 	SSgamemode.TriggerEvent(event, ignores_checks)
-	SSgamemode.remove_scheduled_event(src)
+	qdel(src)
 
 /datum/scheduled_event/Destroy()
 	remove_occurence()

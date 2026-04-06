@@ -1,10 +1,3 @@
-/obj/machinery/camera
-
-	var/list/datum/weakref/localMotionTargets = list()
-	var/detectTime = 0
-	var/area/station/ai_monitored/area_motion = null
-	var/alarm_delay = 30 // Don't forget, there's another 3 seconds in queueAlarm()
-
 /obj/machinery/camera/process()
 	// motion camera event loop
 	if(!isMotion())
@@ -40,7 +33,7 @@
 /obj/machinery/camera/Destroy()
 	localMotionTargets = null
 	if(area_motion)
-		area_motion.motioncameras -= src
+		LAZYREMOVE(area_motion.motioncameras, src)
 	cancelAlarm()
 	return ..()
 
@@ -51,7 +44,7 @@
 		cancelAlarm()
 
 /obj/machinery/camera/proc/cancelAlarm()
-	if (detectTime == -1 && status)
+	if (detectTime == -1 && camera_enabled)
 		alarm_manager.clear_alarm(ALARM_MOTION)
 	detectTime = 0
 	return TRUE
@@ -59,7 +52,7 @@
 /obj/machinery/camera/proc/triggerAlarm()
 	if (!detectTime)
 		return FALSE
-	if(status)
+	if(camera_enabled)
 		if(alarm_manager.send_alarm(ALARM_MOTION, src, src))
 			visible_message(span_warning("A red light flashes on [src]!"))
 	detectTime = -1
@@ -73,7 +66,7 @@
 
 /obj/machinery/camera/motion/thunderdome
 	name = "entertainment camera"
-	network = list("thunder")
+	network = list(CAMERANET_NETWORK_THUNDERDOME)
 	c_tag = "Arena"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
 

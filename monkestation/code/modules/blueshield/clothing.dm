@@ -49,6 +49,7 @@
 	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/inhands/clothing/backpack_righthand.dmi'
 	icon_state = "backpack_blueshield"
 	inhand_icon_state = "backpack_blueshield"
+	alternate_worn_layer = (HEAD_LAYER-0.5)
 
 /obj/item/storage/backpack/satchel/blueshield
 	name = "blueshield satchel"

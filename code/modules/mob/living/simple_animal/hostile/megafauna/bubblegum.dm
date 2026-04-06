@@ -296,10 +296,10 @@ Difficulty: Hard
 	if(.)
 		recovery_time = world.time + 20 // can only attack melee once every 2 seconds but rapid_melee gives higher priority
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/bullet_act(obj/projectile/P)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/bullet_act(obj/projectile/proj)
 	if(BUBBLEGUM_IS_ENRAGED)
-		visible_message(span_danger("[src] deflects the projectile; [p_they()] can't be hit with ranged weapons while enraged!"), span_userdanger("You deflect the projectile!"))
-		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 300, TRUE)
+		visible_message(span_danger("[src] deflects the [proj]! [p_They()] can't be hit with ranged weapons while enraged!"), span_userdanger("You deflect the projectile!"))
+		playsound(src, SFX_BULLET_MISS, 300, TRUE)
 		return BULLET_ACT_BLOCK
 	return ..()
 
@@ -358,6 +358,7 @@ Difficulty: Hard
 	bloodiness = 0
 	base_name = ""
 	can_dry = FALSE
+	clean_type = CLEAN_TYPE_HARD_DECAL
 
 /obj/effect/decal/cleanable/blood/bubblegum/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
@@ -373,6 +374,7 @@ Difficulty: Hard
 	bloodiness = 20
 	base_name = ""
 	can_dry = FALSE
+	clean_type = CLEAN_TYPE_HARD_DECAL
 
 /obj/effect/decal/cleanable/blood/gibs/bubblegum/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()

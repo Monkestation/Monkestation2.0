@@ -121,7 +121,7 @@
 	icon_state = "floor_large"
 
 /turf/open/indestructible/white
-	icon_state = "white"
+	icon_state = "whitefull"
 
 /turf/open/indestructible/white/smooth_large
 	icon_state = "white_large"

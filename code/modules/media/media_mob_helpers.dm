@@ -46,10 +46,6 @@
 	if(!QDELETED(media_player))
 		best_source.play_for_listener(src, media_player, should_update_time)
 
-/mob/dead/new_player/Login()
-	. = ..()
-	GLOB.lobby_media.add_listener(src)
-
 /mob/proc/update_media_volume(channel)
 	if(isnull(current_media_source))
 		return

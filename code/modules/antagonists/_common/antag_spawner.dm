@@ -501,7 +501,7 @@
 	suit = /obj/item/clothing/suit/chameleon/syndie_armor
 	suit_store = /obj/item/gun/ballistic/automatic/plastikov
 	mask = /obj/item/clothing/mask/gas/syndicate
-	l_pocket = /obj/item/reagent_containers/hypospray/medipen/stimpack
+	l_pocket = /obj/item/reagent_containers/medipen/stimpack
 	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
 	internals_slot = ITEM_SLOT_RPOCKET
 	belt = /obj/item/crowbar/red

@@ -829,8 +829,6 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/stock_parts/power_store/cell))
-		if(ismachinery(loc))
-			return ITEM_INTERACT_BLOCKING
 		if(internal_cell)
 			to_chat(user, span_warning("You try to connect \the [tool] to \the [src], but its connectors are occupied."))
 			return ITEM_INTERACT_BLOCKING

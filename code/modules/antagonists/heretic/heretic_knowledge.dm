@@ -40,6 +40,8 @@
 	var/route
 	///Determines what kind of monster ghosts will ignore from here on out. Defaults to POLL_IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
 	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
+	///What path is required to research this knowledge. used to blacklist blade upgrades that are not of the main path the heretic has selected from being added to the research list
+	var/required_path = PATH_ANY
 
 /datum/heretic_knowledge/New()
 	if(!mutually_exclusive)

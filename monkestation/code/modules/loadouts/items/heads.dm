@@ -145,7 +145,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 
 /datum/loadout_item/head/red_hardhat
 	name = "Red Hardhat"
-	item_path = /obj/item/clothing/head/utility/hardhat/red
+	item_path = /obj/item/clothing/head/utility/hardhat/fire
 
 /datum/loadout_item/head/white_hardhat
 	name = "White Hardhat"
@@ -609,6 +609,18 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/cowboyhat_winter //BUYABLE
 	name = "Winter Cowboy Hat"
 	item_path = /obj/item/clothing/head/cowboy/nova/flat/cowl/sheriff
+
+/datum/loadout_item/head/deforest_hat //BUYABLE
+	name = "Deforest Hat"
+	item_path = /obj/item/clothing/head/soft/paramedic/deforest
+
+/datum/loadout_item/head/deforest_beret //BUYABLE
+	name = "Deforest Beret"
+	item_path = /obj/item/clothing/head/beret/medical/deforest
+
+/datum/loadout_item/head/warning_cone //BUYABLE
+	name = "Warning Cone"
+	item_path = /obj/item/clothing/head/cone
 
 /*
 *	JOB-LOCKED

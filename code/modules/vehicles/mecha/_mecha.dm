@@ -363,7 +363,7 @@
  */
 /obj/vehicle/sealed/mecha/proc/set_safety(mob/user)
 	weapons_safety = !weapons_safety
-	SEND_SOUND(user, sound('sound/machines/beep.ogg', volume = 25))
+	user.playsound_local(src, 'sound/machines/beep.ogg', 25)
 	balloon_alert(user, "equipment [weapons_safety ? "safe" : "ready"]")
 	set_mouse_pointer()
 	SEND_SIGNAL(src, COMSIG_MECH_SAFETIES_TOGGLE, user, weapons_safety)
@@ -430,10 +430,9 @@
 
 /obj/vehicle/sealed/mecha/proc/restore_equipment()
 	equipment_disabled = FALSE
-	for(var/occupant in occupants)
-		var/mob/mob_occupant = occupant
-		SEND_SOUND(mob_occupant, sound('sound/items/timer.ogg', volume=50))
-		to_chat(mob_occupant, span_notice("Equipment control unit has been rebooted successfully."))
+	for(var/mob/occupant as anything in occupants)
+		occupant.playsound_local(src, 'sound/items/timer.ogg', 50)
+		to_chat(occupant, span_notice("Equipment control unit has been rebooted successfully."))
 	set_mouse_pointer()
 
 /obj/vehicle/sealed/mecha/proc/update_part_values() ///Updates the values given by scanning module and capacitor tier, called when a part is removed or inserted.

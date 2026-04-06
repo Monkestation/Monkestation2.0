@@ -77,6 +77,7 @@
 	new /obj/item/clothing/suit/armor/vest/warden/alt(src)
 	new /obj/item/clothing/under/rank/security/warden/formal(src)
 	new /obj/item/clothing/under/rank/security/warden/skirt(src)
+	new /obj/item/clothing/under/rank/security/warden/grey(src)
 	new /obj/item/clothing/gloves/krav_maga/sec(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/clothing/mask/gas/sechailer(src)
@@ -146,6 +147,7 @@
 	new /obj/item/clothing/head/utility/hardhat/welding/white(src)
 	new /obj/item/clothing/neck/cloak/ce(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
+	new /obj/item/clothing/head/beret/engi/ce(src)
 
 /obj/item/storage/bag/garment/quartermaster
 	name = "quartermasters's garment bag"

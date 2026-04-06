@@ -1,0 +1,78 @@
+2026-04-01:
+  Absolucy:
+  - balance: Protolathes and techfabs should now print items ten times faster.
+  JohnFulpWillard:
+  - qol: Item pixel shift hotkey no longer locks you in place if you're not grabbing
+      something.
+  Shoddd:
+  - balance: HP ammo is no longer sold on the black market
+  - balance: Removes the makarov from the black market
+  - balance: Removes Syndicate Cawil from black market
+  - balance: black market sindano now has twice spread of the normal
+  - balance: black market trappiste now has .7 second longer firing delay
+  - bugfix: Detective revolver can no longer be made to never misfire
+  SirNightKnight:
+  - rscadd: rebranded dogginos outfit to the existing moffuchi's pizza.
+  - rscadd: added private security clothing, basically dark blue security clothing.
+      blueshield gets one private security jumpsuit.
+  - rscadd: added nanotrasen baseballs caps. NT rep gets a box of them and one in
+      their garment bag.
+  - rscadd: added the corporate liason's suit and suitskirt. a command blue outfit
+      for the nanotrasen representative.
+  - rscadd: gave the blueshield a swat mask and helmet in their garment bag.
+  - rscdel: removed the CC bunny outfit from the NT rep's garment bag.
+  Tractor-Maam:
+  - bugfix: the Theseus curator sat can now toggle its curtains.
+  - bugfix: the Theseus EVA storage no longer is free access through the shutters.
+  - rscadd: Theseus EVA is now on EVA or Library access instead of Command access.
+2026-04-04:
+  Absolucy:
+  - rscdel: You can no longer naturally get the corporate sponsorship trauma from
+      brain damage - only from the quirk or implant.
+  - bugfix: Fixed a missing cable in the xenobio hallway on MetaStation.
+  BobDABuilder9001:
+  - qol: moved the yellow tank output pipes in icebox ordnance so they dont fill up
+      right away
+  Cujo:
+  - rscadd: Adds ignored_mob to audible_message
+  - bugfix: Actually fixes prude mode showing fart emotes in runechat
+  Shod, Saukykouko, Singul0, Deadgebert, lelandkemble, necromanceranne, hack-wrench, improvedname, Jacquerel, SmArtKar:
+  - balance: 'traitors no longer have access to progtot, they now start with 25 TC
+      and all uplink prices have been balanced around this. Please check PR #11093
+      for a full list of changes'
+  - rscdel: Final objectives have been completely removed
+  - rscadd: Added pony to the uplink!
+  - rscadd: Adds 3 new kits into the syndie-kit spawn pool, 2 for special and another
+      for tactical
+  - balance: Removes buy limit on traitor discounts
+  - bugfix: removes dupe listing of razorwire
+  - bugfix: Station MODules no longer provide illegal technology
+  - rscadd: adds a smoke implant to uplink for tc , with 3 charges, that creates a
+      smoke cloud coughing smoke on activation. Both Traitors and Ops can get these.
+  - rscadd: Added smoke kit (5 grenades) with four grenades to uplink for 2 TC
+  - balance: Makarovs and Toy Pistols come in weapon cases. Complete with spare ammo.
+  - balance: Basic ammo for either weapon comes in weapon cases of three extra magazines
+      at an affordable price.
+  - balance: Donksoft Toy Pistols from the uplink are much stronger than their standard
+      counterparts.
+  - balance: Makarovs and Toy pistols have a magazine capacity of 12 rounds.
+  - balance: Gun/Ammo cases from the traitor uplink can be destroyed by activating
+      the disposal bomb. Press Alt-Right-Click on the case to start the timer.
+  - rscadd: The Mulligan Injector now comes as a kit which can create manifest entries
+      for you under your new identity, as well as an Assistant ID Card with your new
+      name.
+  - balance: Splits surgery dufflebag into two items the dufflebag itself and the
+      medkit
+  - rscadd: pointless badassery tab is now just Badassery, because there is nothing
+      pointless about being a badass
+  - balance: powerfist now does 20,30,40 damage and 3,3.5,4 tiles of knockback
+  SirNightKnight:
+  - balance: moved the shamshir sabre to cargo goodies and locked it behind weapon
+      access. dropped the sabre's force to 17 from 18. block to 15 from 20. and armor
+      penetration from 15 to 10. Price Dropped from Command to civilian paycheck.
+  Tractor-Maam:
+  - rscadd: Added formatting to the Exo Tracking Beacon messaging, perhaps letting
+      you know easier that you are, in fact, getting a message from someone.
+  cam_dev:
+  - rscdel: removed moaning from some reagents that caused it
+  - rscadd: added sway and twitch_s in many reagents to replace moaning

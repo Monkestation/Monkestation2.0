@@ -10,6 +10,7 @@
 #define KIT_SNIPER "sniper"
 #define KIT_NUKEOPS_METAGAME "metaops"
 #define KIT_LORD_SINGULOTH "lordsingulo"
+#define KIT_REVOLUTIONARY "revolutionary"
 
 #define KIT_JAMES_BOND "bond"
 #define KIT_NINJA "ninja"
@@ -19,6 +20,14 @@
 #define KIT_BEES "bee"
 #define KIT_MR_FREEZE "mr_freeze"
 #define KIT_TRAITOR_2006 "ancient"
+#define KIT_SAM_FISHER "sam_fisher"
+#define KIT_PROP_HUNT "prop_hunt"
+
+#define KIT_AMATEUR_ASSASSIN "amateur_assassin"
+#define KIT_INTERN_INFILTRATOR "intern_infiltrator"
+#define KIT_BEGINNER_BOMBER "beginner_bomber"
+#define KIT_STARTER_SABOTEUR "starter_saboteur"
+#define KIT_ROOKIE_RAIDER "rookie_raider"
 
 /// last audited december 2022
 /obj/item/storage/box/syndicate
@@ -35,7 +44,8 @@
 		KIT_IMPLANTS = 1,
 		KIT_HACKER = 3,
 		KIT_SNIPER = 1,
-		KIT_NUKEOPS_METAGAME = 1
+		KIT_NUKEOPS_METAGAME = 1,
+		KIT_REVOLUTIONARY = 2,
 		)))
 		if(KIT_RECON)
 			new /obj/item/clothing/glasses/thermal/xray(src) // ~8 tc?
@@ -55,7 +65,7 @@
 			new /obj/item/computer_disk/syndicate/camera_app(src) // 1 tc
 			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
-			new /obj/item/reagent_containers/syringe/mulligan(src) // 4 tc
+			new /obj/item/storage/box/syndie_kit/mulligan(src) // 4 tc
 			new /obj/item/switchblade(src) //I'll count this as 2 tc
 			new /obj/item/storage/fancy/cigarettes/cigpack_syndicate (src) // 2 tc this shit heals
 			new /obj/item/flashlight/emp(src) // 2 tc
@@ -153,7 +163,7 @@
 			new /obj/item/clothing/neck/tie/red/hitman(src)
 
 		if(KIT_NUKEOPS_METAGAME)
-			new /obj/item/mod/control/pre_equipped/nuclear(src) // 8 tc
+			new /obj/item/mod/control/pre_equipped/nuclear/unrestricted(src) // 8 tc
 			new /obj/item/gun/ballistic/shotgun/bulldog/unrestricted(src) // 8 tc
 			new /obj/item/implanter/explosive(src) // 2 tc
 			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
@@ -162,6 +172,18 @@
 			new /obj/item/grenade/c4 (src) // 1 tc
 			new /obj/item/card/emag(src) // 4 tc
 			new /obj/item/card/emag/doorjack(src) // 3 tc
+
+		if(KIT_REVOLUTIONARY)
+			new /obj/item/healthanalyzer/rad_laser(src) // 3 TC
+			new /obj/item/assembly/flash/hypnotic(src) // 7 TC
+			new /obj/item/storage/pill_bottle/lsd(src) // ~1 TC
+			new /obj/item/pen/sleepy(src) // 4 TC
+			new /obj/item/gun/ballistic/revolver/nagant(src) // 13 TC comparable to 357. revolvers
+			new /obj/item/megaphone(src)
+			new /obj/item/bedsheet/rev(src)
+			new /obj/item/clothing/suit/armor/vest/russian_coat(src)
+			new /obj/item/clothing/head/helmet/rus_ushanka(src)
+			new /obj/item/storage/box/syndie_kit/poster_box(src)
 
 /obj/item/storage/box/syndicate/bundle_b/PopulateContents()
 	switch (pick_weight(list(
@@ -172,7 +194,9 @@
 		KIT_MAD_SCIENTIST = 2,
 		KIT_BEES = 1,
 		KIT_MR_FREEZE = 2,
-		KIT_TRAITOR_2006 = 1
+		KIT_TRAITOR_2006 = 1,
+		KIT_SAM_FISHER = 1,
+		KIT_PROP_HUNT = 1,
 		)))
 		if(KIT_JAMES_BOND)
 			new /obj/item/gun/ballistic/automatic/pistol(src) // 7 tc
@@ -181,7 +205,7 @@
 			new /obj/item/ammo_box/magazine/m9mm(src)
 			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
 			new /obj/item/clothing/under/chameleon(src) // 1 tc
-			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src) // 5 tc
+			new /obj/item/reagent_containers/medipen/stimulants(src) // 5 tc
 			new /obj/item/reagent_containers/cup/rag(src)
 			new /obj/item/implanter/freedom(src) // 5 tc
 			new /obj/item/flashlight/emp(src) // 2 tc
@@ -191,7 +215,7 @@
 
 		if(KIT_NINJA)
 			new /obj/item/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
-			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src) // 5 tc
+			new /obj/item/reagent_containers/medipen/stimulants(src) // 5 tc
 			for(var/i in 1 to 6)
 				new /obj/item/throwing_star(src) // 1 tc
 			new /obj/item/storage/belt/chameleon(src) // worth some fraction of a tc
@@ -262,8 +286,25 @@
 			new /obj/item/gun/energy/laser/thermal/cryo(src) // ~6 tc
 			new /obj/item/melee/energy/sword/saber/blue(src) //see see it fits the theme bc its blue and ice is blue, 8 tc
 
-		if(KIT_TRAITOR_2006) //A kit so old, it's probably older than you. //This bundle is filled with the entire unlink contents traitors had access to in 2006, from OpenSS13. Notably the esword was not a choice but existed in code.
+		if(KIT_TRAITOR_2006) //A kit so old, it's probably older than you. //This bundle is filled with the entire uplink contents traitors had access to in 2006, from OpenSS13. Notably the esword was not a choice but existed in code.
 			new /obj/item/storage/toolbox/emergency/old/ancientbundle(src) //Items fit neatly into a classic toolbox just to remind you what the theme is.
+
+		if(KIT_SAM_FISHER)
+			new /obj/item/clothing/under/syndicate/combat(src)
+			new /obj/item/clothing/suit/armor/vest/marine/pmc(src) //The armor kit is comparable to the infiltrator, 6 TC
+			new /obj/item/clothing/head/helmet/marine/pmc(src)
+			new /obj/item/clothing/mask/gas/sechailer(src)
+			new /obj/item/clothing/glasses/night(src) // 3~ TC
+			new /obj/item/clothing/gloves/krav_maga/combatglovesplus(src) //5TC
+			new /obj/item/clothing/shoes/jackboots(src)
+			new /obj/item/storage/belt/military/assault/fisher(src) //items in this belt easily costs 18 TC
+
+		if(KIT_PROP_HUNT)
+			new /obj/item/chameleon(src) // 7 TC
+			new /obj/item/card/emag/doorjack(src) // 3 TC
+			new /obj/item/storage/box/syndie_kit/imp_stealth(src) //8 TC
+			new /obj/item/gun/ballistic/automatic/pistol(src) // 7 TC
+			new /obj/item/clothing/glasses/thermal(src) // 4 TC
 
 /obj/item/storage/toolbox/emergency/old/ancientbundle/ //So the subtype works
 
@@ -276,6 +317,103 @@
 	new /obj/item/gun/ballistic/revolver(src) // 13 tc old one stays in the old box
 	new /obj/item/implanter/freedom(src) // 5 tc
 	new /obj/item/stack/telecrystal(src) //The failsafe/self destruct isn't an item we can physically include in the kit, but 1 TC is technically enough to buy the equivalent.
+
+/obj/item/storage/belt/military/assault/fisher
+
+/obj/item/storage/belt/military/assault/fisher/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/pistol/clandestine(src) // 7 TC
+	new /obj/item/suppressor(src) // 3 TC
+	new /obj/item/ammo_box/magazine/m10mm(src) // 1 TC
+	new /obj/item/ammo_box/magazine/m10mm(src)
+	new /obj/item/gun/energy/recharge/fisher(src) // Acquirable through black market, shit utility item 1 TC
+	new /obj/item/card/emag/doorjack(src) // 3 TC
+	new /obj/item/knife/combat(src) //comparable to the e-dagger, 2 TC
+
+/obj/item/storage/box/syndie_kit/mini_kit
+	name = "Syndicate Mini-Kit"
+	desc = "A tiny, suspicious-looking box. Contains a starter set of basic tools."
+	icon_state = "mini_syndiebox"
+	illustration = null
+
+/obj/item/paper/selfdestruct/mini_kit_guide
+	name = "Syndicate Field Note (Mini-Kit)"
+	desc = "A hastily written note. Seems important though, that's why it's red."
+	color = "#b94030"
+	armed = TRUE
+	default_raw_text ={"
+<br><B>Syndicate Operative Field Note</B>
+<br>
+<br><B>NOTICE:</B> This message will self-incinerate in <I>20 seconds</I> after being opened.
+<br>
+<br><B>Kit Contents:</B> Each Mini-Kit contains a randomized loadout. Open the box to inspect your tools and adapt accordingly.
+<br>
+<br><B>Using Your Uplink:</B> Your telecrystal uplink is your lifeline. Spend wisely. This kit saves TC to give you flexibility. Keep it locked and hidden when not in use.
+<br>
+<br><B>Disposal:</B> Once you've taken all items from the kit, hold the empty box and press <B>Z</B> (or your 'Activate Item in Hand' key). The box will fold into an inconspicuous piece of cardboard.
+<br>
+<br>This note will auto-incinerate momentarily.
+<br>
+<br><I>Failure is not an option. Succeed or die trying.</I>
+	"}
+
+/obj/item/paper/selfdestruct/mini_kit_guide/Initialize(mapload)
+	. = ..()
+	update_appearance()
+
+/obj/item/storage/box/syndie_kit/mini_kit/PopulateContents()
+	new /obj/item/paper/selfdestruct/mini_kit_guide(src)
+	switch (pick_weight(list(
+		KIT_AMATEUR_ASSASSIN = 3,
+		KIT_INTERN_INFILTRATOR = 3,
+		KIT_BEGINNER_BOMBER = 2,
+		KIT_STARTER_SABOTEUR = 3,
+		KIT_ROOKIE_RAIDER = 2
+		)))
+		if(KIT_AMATEUR_ASSASSIN)
+			new /obj/item/storage/pill_bottle/syndicate/poison(src)
+			new /obj/item/pen/sleepy(src)
+			new /obj/item/clothing/gloves/latex/nitrile(src)
+			new /obj/item/soap/syndie(src)
+			new /obj/item/switchblade(src)
+			new /obj/item/restraints/handcuffs(src)
+			new /obj/item/stack/sticky_tape(src)
+			new /obj/item/clothing/glasses/blindfold(src)
+			new /obj/item/clothing/glasses/thermal(src)
+
+		if(KIT_INTERN_INFILTRATOR)
+			new /obj/item/storage/toolbox/syndicate(src)
+			new /obj/item/storage/box/syndie_kit/chameleon(src)
+			new /obj/item/encryptionkey/syndicate(src)
+			new /obj/item/card/id/advanced/chameleon(src)
+			new /obj/item/implanter/uplink(src)
+
+		if(KIT_BEGINNER_BOMBER)
+			new /obj/item/grenade/syndieminibomb(src)
+			new /obj/item/grenade/c4/x4(src)
+			new /obj/item/grenade/c4/x4(src)
+			new /obj/item/grenade/c4(src)
+			new /obj/item/grenade/c4(src)
+			new /obj/item/grenade/c4(src)
+			new /obj/item/grenade/frag(src)
+			new /obj/item/grenade/frag(src)
+
+		if(KIT_STARTER_SABOTEUR)
+			new /obj/item/card/emag(src)
+			new /obj/item/jammer(src)
+			new /obj/item/crowbar/power/syndicate(src)
+			new /obj/item/clothing/mask/balaclava(src)
+			new /obj/item/multitool/ai_detect(src)
+
+		if(KIT_ROOKIE_RAIDER)
+			new /obj/item/gun/ballistic/automatic/pistol/sol/evil(src)
+			new /obj/item/storage/box/syndie_kit/weapons_auth(src)
+			new /obj/item/ammo_box/magazine/c35sol_pistol(src)
+			new /obj/item/reagent_containers/medipen/stimulants(src)
+			new /obj/item/clothing/shoes/chameleon/noslip(src)
+			new /obj/item/clothing/suit/armor/vest(src)
+			new /obj/item/ammo_box/c35sol(src)
+
+	return
 
 /obj/item/storage/box/syndicate/contract_kit
 	name = "Contract Kit"
@@ -443,6 +581,14 @@
 		new /obj/item/grenade/empgrenade(src)
 	new /obj/item/implanter/emp(src)
 
+/obj/item/storage/box/syndie_kit/smoke
+	name = "smoke kit"
+
+/obj/item/storage/box/syndie_kit/smoke/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/grenade/smokebomb(src)
+	new /obj/item/implanter/smoke(src)
+
 /obj/item/storage/box/syndie_kit/chemical
 	name = "chemical kit"
 
@@ -456,7 +602,6 @@
 	new /obj/item/reagent_containers/cup/bottle/fentanyl(src)
 	new /obj/item/reagent_containers/cup/bottle/formaldehyde(src)
 	new /obj/item/reagent_containers/cup/bottle/spewium(src)
-	new /obj/item/reagent_containers/cup/bottle/cyanide(src)
 	new /obj/item/reagent_containers/cup/bottle/histamine(src)
 	new /obj/item/reagent_containers/cup/bottle/initropidril(src)
 	new /obj/item/reagent_containers/cup/bottle/pancuronium(src)
@@ -492,7 +637,7 @@
 /obj/item/storage/box/syndie_kit/tuberculosisgrenade/PopulateContents()
 	new /obj/item/grenade/chem_grenade/large/tuberculosis(src) // Monkestation Edit: Large grenade
 	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure(src)
+		new /obj/item/reagent_containers/medipen/tuberculosiscure(src)
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/reagent_containers/cup/bottle/tuberculosiscure(src)
 
@@ -538,6 +683,11 @@
 /obj/item/storage/box/syndie_kit/ez_clean/PopulateContents()
 	for(var/i in 1 to 3)
 		new/obj/item/grenade/chem_grenade/ez_clean(src)
+
+/obj/item/storage/box/syndie_kit/mulligan/PopulateContents()
+	. = ..()
+	new /obj/item/reagent_containers/syringe/mulligan(src)
+	new /obj/item/fake_identity_kit(src)
 
 /obj/item/storage/box/hug/reverse_revolver/PopulateContents()
 	new /obj/item/gun/ballistic/revolver/reverse(src)
@@ -796,6 +946,17 @@
 		/obj/item/food/grown/apple = 1,
 	), src)
 
+/obj/item/storage/box/syndicate/horse_box
+	name = "A pony box"
+	desc = "This is a set containing a syndicate pony cube and an apple, for the best cowboys in the wild station! Don't make an apple pie!"
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
+
+/obj/item/storage/box/syndicate/horse_box/PopulateContents()
+	new /obj/item/food/monkeycube/dangerous_horse(src)
+	new /obj/item/slimepotion/slime/sentience/nuclear/dangerous_horse(src)
+	new /obj/item/food/grown/apple(src)
+
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY
@@ -808,6 +969,7 @@
 #undef KIT_SNIPER
 #undef KIT_NUKEOPS_METAGAME
 #undef KIT_LORD_SINGULOTH
+#undef KIT_REVOLUTIONARY
 
 #undef KIT_JAMES_BOND
 #undef KIT_NINJA
@@ -817,3 +979,11 @@
 #undef KIT_BEES
 #undef KIT_MR_FREEZE
 #undef KIT_TRAITOR_2006
+#undef KIT_SAM_FISHER
+#undef KIT_PROP_HUNT
+
+#undef KIT_AMATEUR_ASSASSIN
+#undef KIT_INTERN_INFILTRATOR
+#undef KIT_BEGINNER_BOMBER
+#undef KIT_STARTER_SABOTEUR
+#undef KIT_ROOKIE_RAIDER

@@ -1,4 +1,4 @@
-#define HEART_RESPAWN_THRESHHOLD 40
+#define HEART_RESPAWN_THRESHHOLD 30 SECONDS
 #define HEART_SPECIAL_SHADOWIFY 2
 ///cooldown between charges of the projectile absorb
 #define DARKSPAWN_REFLECT_COOLDOWN 15 SECONDS

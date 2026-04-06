@@ -189,6 +189,12 @@
 #define DIRECT_OUTPUT(A, B) A << B
 #define DIRECT_INPUT(A, B) A >> B
 #define SEND_IMAGE(target, image) DIRECT_OUTPUT(target, image)
+/**
+ * Sends sound directly to the user's client
+ * If you're using this, you probably shouldn't be, check playsound or playsound_local instead.
+ * This is more cost-effective, but doesn't take into account volume preferences (and Master Volume should control all sounds)
+ * If you really want to use this, manually set volume w/ calculate_mixed_volume at least. Thanks.
+ */
 #define SEND_SOUND(target, sound) DIRECT_OUTPUT(target, sound)
 #define SEND_TEXT(target, text) DIRECT_OUTPUT(target, text)
 #define WRITE_FILE(file, text) DIRECT_OUTPUT(file, text)

@@ -308,7 +308,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/list/green_star_storytellers = list(/datum/storyteller/ghost, /datum/storyteller/sleeper) //list for calmer storytellers for a greenshift
 	var/list/midnight_sun_storytellers = list(/datum/storyteller/jester, /datum/storyteller/warrior, /datum/storyteller/brute) //list for the more chaotic storytellers for black sun
 	var/greenshift = FALSE
-	if((SSgamemode.selected_storyteller in green_star_storytellers) || (SSgamemode.current_storyteller.disable_distribution))
+	var/selected_storyteller = SSgamemode.current_storyteller?.type || SSgamemode.selected_storyteller
+	if((selected_storyteller in green_star_storytellers) || (SSgamemode.current_storyteller.disable_distribution))
 		greenshift = TRUE
 	/*if(0 to 19)
 		var/show_core_territory = (GLOB.current_living_antags.len > 0)
@@ -336,7 +337,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		. += "Your sector's advisory level is Black Orbit. Your sector's local comms network is currently undergoing a blackout, and we are therefore unable to accurately judge enemy movements within the region. However, information passed to us by GDI suggests a high amount of enemy activity in the sector, indicative of an impending attack. Remain on high alert, and as always, we advise remaining vigilant against any other potential threats."
 	if(100)
 	*/
-	else if(SSgamemode.selected_storyteller in midnight_sun_storytellers)
+	else if(selected_storyteller in midnight_sun_storytellers)
 		. += "Advisory Level: <b>Midnight Sun</b></center><BR>"
 		. += "Your sector's advisory level is Midnight Sun. Credible information passed to us by GDI suggests that the Syndicate is preparing to mount a major concerted offensive on Nanotrasen assets in the Spinward Sector to cripple our foothold there. All stations should remain on high alert and prepared to defend themselves."
 	else

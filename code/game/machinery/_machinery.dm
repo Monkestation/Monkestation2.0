@@ -241,7 +241,6 @@
 	update_current_power_usage()
 	setup_area_power_relationship()
 
-
 /**
  * proc to call when the machine starts to require power after a duration of not requiring power
  * sets up power related connections to its area if it exists and becomes area sensitive
@@ -629,12 +628,14 @@
 	set_panel_open(!panel_open)
 
 /obj/machinery/can_interact(mob/user)
+	if(QDELETED(user))
+		return FALSE
+
 	if((machine_stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE)) // Check if the machine is broken, and if we can still interact with it if so
 		return FALSE
 
 	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_INTERACT)
 		return FALSE
-
 
 	if(isAdminGhostAI(user))
 		return TRUE //the Gods have unlimited power and do not care for things such as range or blindness
