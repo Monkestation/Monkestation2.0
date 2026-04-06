@@ -86,6 +86,9 @@
 	to_chat(owner, span_warning("You are sated and cannot siphon more essence until you complete a sacrifice."))
 	return TRUE
 
+/datum/status_effect/heretic_sated/on_remove()
+	to_chat(owner, span_notice("You can drain essences once more."))
+
 /atom/movable/screen/alert/status_effect/heretic_sated
 	name = "Sated"
 	desc = "You cannot siphon essence from influences until you complete a sacrifice."
