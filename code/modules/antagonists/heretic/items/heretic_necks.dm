@@ -251,7 +251,7 @@
 		human_target.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
 		human_target.mob_mood.adjust_sanity(-sanity_damage)
 	else
-		if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
+		if(HAS_TRAIT_NOT_FROM(target, TRAIT_MINDSHIELD, NANITES_TRAIT))
 			human_target.balloon_alert(living_user, "their mind almost bends but something protects it!")
 			human_target.apply_status_effect(/datum/status_effect/moon_slept)
 			return TRUE
