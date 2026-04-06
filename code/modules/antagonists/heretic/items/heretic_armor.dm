@@ -1188,10 +1188,11 @@
 	. = ..()
 	UnregisterSignal(user, list(COMSIG_MOB_UNEQUIPPED_ITEM, COMSIG_MOB_EQUIPPED_ITEM))
 
-/obj/item/clothing/suit/hooded/cultrobes/void/proc/hide_item(datum/source, obj/item/item, slot)
+/obj/item/clothing/suit/hooded/cultrobes/void/proc/hide_item(mob/source, obj/item/item, slot)
 	SIGNAL_HANDLER
 	if(slot & ITEM_SLOT_SUITSTORE)
 		item.add_traits(list(TRAIT_NO_STRIP, TRAIT_NO_WORN_ICON, TRAIT_EXAMINE_SKIP), REF(src))
+		source.update_suit_storage()
 
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/show_item(datum/source, obj/item/item, slot)
 	SIGNAL_HANDLER
