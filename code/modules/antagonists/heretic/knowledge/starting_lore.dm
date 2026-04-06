@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 	var/obj/item/organ/where_to_put_our_heart = user.get_organ_slot(our_heretic.living_heart_organ_slot)
 	// Our heart slot is not valid to put a heart
-	if(!is_valid_heart(where_to_put_our_heart))
+	if(!is_valid_heart(where_to_put_our_heart, user))
 		where_to_put_our_heart = null
 
 	// If a heretic is made from a species without a heart, we need to find a backup.
@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		for(var/backup_slot in backup_organs)
 			var/obj/item/organ/look_for_backup = user.get_organ_slot(backup_slot)
 			// This backup slot is not a valid slot to put a heart
-			if(!is_valid_heart(look_for_backup))
+			if(!is_valid_heart(look_for_backup, user))
 				continue
 
 			// We found a replacement place to put our heart
@@ -167,12 +167,15 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	return TRUE
 
 /// Checks if the passed heart is a valid heart to become a living heart
-/datum/heretic_knowledge/living_heart/proc/is_valid_heart(obj/item/organ/new_heart)
+/datum/heretic_knowledge/living_heart/proc/is_valid_heart(obj/item/organ/new_heart, mob/living/user)
 	if(QDELETED(new_heart))
 		return FALSE
-	if(new_heart.organ_flags & (ORGAN_ROBOTIC|ORGAN_FAILING))
+	if(new_heart.organ_flags & ORGAN_FAILING)
 		return FALSE
-
+	if(new_heart.organ_flags & ORGAN_ROBOTIC)
+		if((new_heart.organ_flags & ORGAN_SYNTHETIC_FROM_SPECIES) && (user?.mob_biotypes & MOB_ROBOTIC)) // allow ipcs to use their default heart as a living heart
+			return TRUE
+		return FALSE
 	return TRUE
 
 /**
