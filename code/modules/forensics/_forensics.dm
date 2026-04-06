@@ -154,7 +154,9 @@
 	var/fibertext
 	var/atom/actual_parent = parent.resolve()
 	var/item_multiplier = isitem(actual_parent) ? ITEM_FIBER_MULTIPLIER : NON_ITEM_FIBER_MULTIPLIER
-	if(FIBERS_ALLOWED(suspect.wear_suit))
+	if(suspect.wear_suit)
+		if(suspect.wear_suit.clothing_flags & BLOCKS_FIBERS)
+			return TRUE
 		fibertext = "Material from \a [suspect.wear_suit]."
 		if(prob(10 * item_multiplier) && !LAZYACCESS(fibers, fibertext))
 			LAZYSET(fibers, fibertext, fibertext)
@@ -168,7 +170,9 @@
 				fibertext = "Material from a pair of [suspect.gloves.name]."
 				if(prob(20 * item_multiplier) && !LAZYACCESS(fibers, fibertext))
 					LAZYSET(fibers, fibertext, fibertext)
-	else if(FIBERS_ALLOWED(suspect.w_uniform))
+	else if(suspect.w_uniform)
+		if(suspect.w_uniform.clothing_flags & BLOCKS_FIBERS)
+			return TRUE
 		fibertext = "Fibers from \a [suspect.w_uniform]."
 		if(prob(15 * item_multiplier) && !LAZYACCESS(fibers, fibertext))
 			LAZYSET(fibers, fibertext, fibertext)
