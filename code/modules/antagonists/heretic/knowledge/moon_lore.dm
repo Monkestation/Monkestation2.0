@@ -214,7 +214,8 @@
 /datum/heretic_knowledge/ultimate/moon_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
 	ADD_TRAIT(user, TRAIT_MADNESS_IMMUNE, type)
-	user.mind.add_antag_datum(/datum/antagonist/lunatic/master)
+	if(!user.mind.has_antag_datum(/datum/antagonist/lunatic/master))
+		user.mind.add_antag_datum(/datum/antagonist/lunatic/master)
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
 	var/amount_of_lunatics = 0
