@@ -7,7 +7,8 @@
 	desc = "Allows you to transmute a glass shard, a bedsheet, and any outer clothing item (such as armor or a suit jacket) \
 		to create a Void Cloak. While the hood is down, the cloak functions as a focus. \
 		While the hood is up, the cloak is completely invisible, and protects you from space. It also provide decent armor and \
-		has pockets which can hold one of your blades, various ritual components (such as organs), and small heretical trinkets."
+		has pockets which can hold one of your blades, various ritual components (such as organs), and small heretical trinkets. \
+		In addition, it will never leave behind fibers."
 	gain_text = "The Owl is the keeper of things that are not quite in practice, but in theory are. Many things are."
 	required_atoms = list(
 		/obj/item/shard = 1,

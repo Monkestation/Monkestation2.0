@@ -1128,7 +1128,7 @@
 	icon_state = "void_cloak"
 	flags_inv = NONE
 	flags_cover = NONE
-	clothing_flags = STOPSPRESSUREDAMAGE
+	clothing_flags = STOPSPRESSUREDAMAGE|BLOCKS_FIBERS
 	armor_type = /datum/armor/cult_hoodie_void
 
 /datum/armor/cult_hoodie_void
@@ -1152,7 +1152,7 @@
 	allowed = list(/obj/item/melee/sickly_blade)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/void
 	flags_inv = NONE
-	clothing_flags = STOPSPRESSUREDAMAGE
+	clothing_flags = STOPSPRESSUREDAMAGE|BLOCKS_FIBERS
 	body_parts_covered = CHEST|GROIN|ARMS
 	// slightly worse than normal cult robes
 	armor_type = /datum/armor/cultrobes_void
@@ -1206,6 +1206,7 @@
 	// Let examiners know this works as a focus only if the hood is down
 	. += span_notice("Allows you to cast heretic spells while the hood is down.")
 	. += span_notice("Is space worthy as long as the hood is up.")
+	. += span_notice("In addition, it will never leave behind fibers.")
 
 /obj/item/clothing/suit/hooded/cultrobes/void/on_hood_down(obj/item/clothing/head/hooded/hood)
 	make_visible()
