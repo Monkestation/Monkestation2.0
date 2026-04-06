@@ -155,7 +155,7 @@
 		owner.balloon_alert(owner, "[mesmerized_target] is already in a hypnotic gaze.")
 		return
 	if(mesmerized_target.has_status_effect(/datum/status_effect/heretic_passive/moon))
-		to_chat(user, span_hypnophrase(span_reallybig("YOU GAZE INTO THE MOON AND YOU SEE THE TRUTH AND YOU SEE EVERYTHING AND YOU SEE-")))
+		to_chat(user, span_hypnophrase(span_reallybig("YOU GAZE INTO THE MOON AND YOU SEE THE TRUTH AND YOU SEE EVERYTHING AND YOU SEE-"))) // intentionally a run-on sentence because, well, you're going insane
 		user.balloon_alert(user, "YOU GAZE INTO THE MOON AND IT GAZES BACK")
 		user.apply_status_effect(/datum/status_effect/moon_converted)
 		power_activated_sucessfully() // PAY COST! BEGIN COOLDOWN!
