@@ -957,6 +957,41 @@
 
 	.["Adjust Knowledge Points"] = CALLBACK(src, PROC_REF(admin_change_points))
 	.["Give Focus"] = CALLBACK(src, PROC_REF(admin_give_focus))
+	if(heretic_path && heretic_path.route != PATH_START)
+		.["Give Blade"] = CALLBACK(src, PROC_REF(give_blade))
+		.["Give Robes"] = CALLBACK(src, PROC_REF(give_robes))
+	if(passive_level < 3)
+		.["Upgrade Passive Level (to [passive_level + 1])"] = CALLBACK(src, PROC_REF(increase_passive_level))
+
+/**
+ * Admin proc for giving a heretic their path's blade easily.
+ */
+/datum/antagonist/heretic/proc/give_blade(mob/admin)
+	var/datum/heretic_knowledge/limited_amount/starting/base_knowledge = get_knowledge(heretic_path.start) // they should always have base knowledge if they have a path...
+	var/blade_path = base_knowledge.result_atoms[1]
+	owner.current.put_in_hands(new blade_path(owner.current.drop_location()))
+	to_chat(admin, span_notice("Granted [ADMIN_LOOKUPFLW(owner.current)] their path's armor."), type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE)
+
+/**
+ * Admin proc for giving a heretic their path's robes easily.
+ */
+/datum/antagonist/heretic/proc/give_robes(mob/admin)
+	var/datum/heretic_knowledge/armor/armor_knowledge = new heretic_path.robes // just in case they don't have the robes researched yet
+	var/robes_path = armor_knowledge.result_atoms[1]
+	qdel(armor_knowledge)
+	owner.current.equip_to_slot_if_possible(new robes_path(owner.current.drop_location()), ITEM_SLOT_OCLOTHING)
+	to_chat(admin, span_notice("Granted [ADMIN_LOOKUPFLW(owner.current)] their path's robes."), type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE)
+
+/**
+ * Admin proc for upgrading a heretic's passive level easily.
+ */
+/datum/antagonist/heretic/proc/increase_passive_level(mob/admin)
+	if(passive_level == 1)
+		SEND_SIGNAL(src, COMSIG_HERETIC_PASSIVE_UPGRADE_FIRST)
+		to_chat(admin, span_notice("Upgraded the passive level of [ADMIN_LOOKUPFLW(owner.current)] to 2"), type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE)
+	else
+		SEND_SIGNAL(src, COMSIG_HERETIC_PASSIVE_UPGRADE_FINAL)
+		to_chat(admin, span_notice("Upgraded the passive level of [ADMIN_LOOKUPFLW(owner.current)] to 3"), type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE)
 
 /**
  * Admin proc for giving a heretic a Living Heart easily.
