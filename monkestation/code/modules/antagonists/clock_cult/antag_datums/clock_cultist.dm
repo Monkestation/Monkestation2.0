@@ -73,35 +73,43 @@
 /datum/antagonist/clock_cultist/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = mob_override || owner.current
+	add_team_hud(current, /datum/antagonist/clock_cultist)
+	current.throw_alert("clockinfo", /atom/movable/screen/alert/clockwork/clocksense)
+	if(!iseminence(current))
+		communicate.Grant(current)
+
+	if(istype(src, /datum/antagonist/clock_cultist/eminence))
+		return
+
 	current.faction |= FACTION_CLOCK
 	current.grant_language(/datum/language/ratvar, source = LANGUAGE_CULTIST)
-	current.throw_alert("clockinfo", /atom/movable/screen/alert/clockwork/clocksense)
 	current.add_traits(list(TRAIT_MAGICALLY_GIFTED, TRAIT_NO_MINDSWAP), REF(src))
-	if(!iseminence(current))
-		add_team_hud(current)
-		communicate.Grant(current)
-		if(ishuman(current) || iscogscarab(current)) //only human and cogscarabs would need a recall ability
-			recall.Grant(current)
+	if(ishuman(current) || iscogscarab(current)) //only human and cogscarabs would need a recall ability
+		recall.Grant(current)
 
-		owner_turf_healing = current.AddComponent(/datum/component/turf_healing, healing_types = list(TOX = (iscarbon(current) ? 4 : 1)), healing_turfs = GLOB.clock_turf_types)
-		RegisterSignal(current, COMSIG_CLOCKWORK_SLAB_USED, PROC_REF(switch_recall_slab))
-		handle_clown_mutation(current, mob_override ? "" : "The light of Ratvar allows you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-		add_forbearance(current)
+	owner_turf_healing = current.AddComponent(/datum/component/turf_healing, healing_types = list(TOX = (iscarbon(current) ? 4 : 1)), healing_turfs = GLOB.clock_turf_types)
+	RegisterSignal(current, COMSIG_CLOCKWORK_SLAB_USED, PROC_REF(switch_recall_slab))
+	handle_clown_mutation(current, mob_override ? "" : "The light of Ratvar allows you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
+	add_forbearance(current)
 
 /datum/antagonist/clock_cultist/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = mob_override || owner.current
-	current.faction -= FACTION_CLOCK
-	current.remove_language(/datum/language/ratvar, source = LANGUAGE_CULTIST)
 	current.clear_alert("clockinfo")
-	current.remove_filter("forbearance")
-	current.remove_traits(list(TRAIT_MAGICALLY_GIFTED, TRAIT_NO_MINDSWAP), REF(src))
 	if(!iseminence(current))
 		communicate.Remove(current)
-		recall.Remove(current)
-		UnregisterSignal(current, COMSIG_CLOCKWORK_SLAB_USED)
-		QDEL_NULL(owner_turf_healing)
-		handle_clown_mutation(current, removing = FALSE)
+
+	if(istype(src, /datum/antagonist/clock_cultist/eminence))
+		return
+
+	current.faction -= FACTION_CLOCK
+	current.remove_language(/datum/language/ratvar, source = LANGUAGE_CULTIST)
+	current.remove_filter("forbearance")
+	current.remove_traits(list(TRAIT_MAGICALLY_GIFTED, TRAIT_NO_MINDSWAP), REF(src))
+	recall.Remove(current)
+	UnregisterSignal(current, COMSIG_CLOCKWORK_SLAB_USED)
+	QDEL_NULL(owner_turf_healing)
+	handle_clown_mutation(current, removing = FALSE)
 
 /datum/antagonist/clock_cultist/ui_data(mob/user)
 	var/list/data = list()

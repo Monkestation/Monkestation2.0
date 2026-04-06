@@ -68,13 +68,7 @@
 		return
 
 	var/mob/living/eminence/new_mob = new /mob/living/eminence(get_turf(src))
-	if(isobserver(eminence))
-		new_mob.PossessByPlayer(eminence.key)
-	else
-		var/datum/antagonist/clock_cultist/servant_datum = eminence.mind.has_antag_datum(/datum/antagonist/clock_cultist)
-		if(servant_datum)
-			servant_datum.silent = TRUE
-			servant_datum.on_removal()
-		eminence.mind.transfer_to(new_mob, TRUE)
+	new_mob.PossessByPlayer(eminence.key)
+	new_mob.control_action.gain_host(new /mob/living/basic/drone/cogscarab(get_turf(src)))
 	new_mob.mind.add_antag_datum(/datum/antagonist/clock_cultist/eminence)
 	send_clock_message(span_bigbrass("The Eminence has risen!"))

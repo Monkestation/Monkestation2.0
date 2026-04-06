@@ -62,7 +62,7 @@
 			add_movespeed_modifier(/datum/movespeed_modifier/cogscarab_off_reebe, TRUE)
 
 /datum/actionspeed_modifier/cogscarab
-	multiplicative_slowdown = 0.6
+	multiplicative_slowdown = 0.5
 
 /datum/movespeed_modifier/cogscarab_off_reebe
 	multiplicative_slowdown = 0.7
@@ -106,5 +106,9 @@
 		to_chat(user, span_notice("Cogscarabs can only spawn in marked areas or on reebe."))
 		return FALSE
 	return TRUE
+
+/obj/effect/mob_spawn/ghost_role/drone/cogscarab/eminence_act(mob/living/eminence/user)
+	. = ..()
+	user.control_action.try_take_shell(src)
 
 #undef CLOCK_DRONE_MAX_ITEM_FORCE
