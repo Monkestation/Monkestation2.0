@@ -427,7 +427,7 @@
 
 /datum/status_effect/heretic_passive/moon/tick(seconds_between_ticks)
 	. = ..()
-	var/healing_amount = ((world.time > last_attack + combat_lockout) ? -1 * passive_level * seconds_between_ticks : -2 * passive_level * seconds_between_ticks)
+	var/healing_amount = ((world.time > last_attack + combat_lockout) ? -5 * passive_level * seconds_between_ticks : -10 * passive_level * seconds_between_ticks)
 	if(heretic_datum.ascended)
 		healing_amount = -15 * seconds_between_ticks
 	if(!amulet_equipped)
