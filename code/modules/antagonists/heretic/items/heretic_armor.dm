@@ -1128,6 +1128,7 @@
 	icon_state = "void_cloak"
 	flags_inv = NONE
 	flags_cover = NONE
+	clothing_flags = STOPSPRESSUREDAMAGE
 	armor_type = /datum/armor/cult_hoodie_void
 
 /datum/armor/cult_hoodie_void
@@ -1151,12 +1152,11 @@
 	allowed = list(/obj/item/melee/sickly_blade)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/void
 	flags_inv = NONE
+	clothing_flags = STOPSPRESSUREDAMAGE
 	body_parts_covered = CHEST|GROIN|ARMS
 	// slightly worse than normal cult robes
 	armor_type = /datum/armor/cultrobes_void
 	alternative_mode = TRUE
-	/* /// Whether the hood is flipped up
-	var/hood_up = FALSE */
 
 /datum/armor/cultrobes_void
 	melee = 30
@@ -1205,7 +1205,7 @@
 
 	// Let examiners know this works as a focus only if the hood is down
 	. += span_notice("Allows you to cast heretic spells while the hood is down.")
-	. += span_notice("Is space worthy as long as the hood is down.")
+	. += span_notice("Is space worthy as long as the hood is up.")
 
 /obj/item/clothing/suit/hooded/cultrobes/void/on_hood_down(obj/item/clothing/head/hooded/hood)
 	make_visible()
@@ -1231,10 +1231,8 @@
 	RemoveElement(/datum/element/heretic_focus)
 
 	if(isliving(loc))
-		loc.remove_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), REF(src))
-		REMOVE_TRAIT(loc, TRAIT_RESISTLOWPRESSURE, REF(src))
 		loc.balloon_alert(loc, "cloak hidden")
-		loc.visible_message(span_notice("Light shifts around [loc], making the cloak around them invisible!"))
+		loc.visible_message(span_notice("Light shifts around [loc], making the cloak around [loc.p_them()] invisible!"))
 
 /// Makes our cloak "visible" again.
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_visible()
@@ -1242,6 +1240,5 @@
 	AddElement(/datum/element/heretic_focus)
 
 	if(isliving(loc))
-		loc.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), REF(src))
 		loc.balloon_alert(loc, "cloak revealed")
-		loc.visible_message(span_notice("A kaleidoscope of colours collapses around [loc], a cloak appearing suddenly around their person!"))
+		loc.visible_message(span_notice("A kaleidoscope of colours collapses around [loc], a cloak appearing suddenly around [loc.p_their()] person!"))
