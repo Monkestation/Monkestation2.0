@@ -230,7 +230,7 @@
 	if(!isliving(target))
 		return FALSE
 	var/mob/living/living_target = target
-
+	playsound(src, 'sound/weapons/moonblade_hit.ogg', vol = 50, vary = TRUE, extrarange = -1, falloff_distance = 0)
 	if(!ishuman(target))
 		living_target.adjustFireLoss(30)
 		return TRUE
