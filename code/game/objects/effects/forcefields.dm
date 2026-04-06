@@ -156,6 +156,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 		return TRUE
 	if(!should_reflect_projectile(bullet))
 		return FALSE
+	bullet.add_atom_colour(COLOR_PURPLE, TEMPORARY_COLOUR_PRIORITY) // ourple
 	if(!reflects_projectiles)
 		bullet.paused = TRUE
 		return TRUE
@@ -197,6 +198,8 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 		if(istype(bullet, /obj/projectile/magic/star_ball)) // Don't speed up star balls
 			return
 		bullet.paused = FALSE
+		if(!HAS_TRAIT(bullet, TRAIT_REFLECTED_BY_COSMIC_FIELD)) // stays ourple if it's reflected instead of stopped
+			bullet.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 		return
 
 	if(!isliving(thing))
