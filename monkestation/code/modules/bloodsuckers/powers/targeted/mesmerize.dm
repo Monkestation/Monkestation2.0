@@ -127,6 +127,9 @@
 	else
 		to_chat(mesmerized_target, span_warning("[user]'s eyes look into yours, and [span_hypnophrase("you feel your mind slipping away")]..."))
 
+	if(mesmerized_target.has_status_effect(/datum/status_effect/heretic_passive/moon))
+		to_chat(user, span_danger("You have a horrible feeling as you look into [mesmerized_target]'s eyes..."), type = MESSAGE_TYPE_WARNING)
+
 	perform_indicators(mesmerized_target, modified_delay)
 
 	if(issilicon(mesmerized_target))
@@ -150,6 +153,12 @@
 		return
 	if(HAS_TRAIT_FROM_ONLY(mesmerized_target, TRAIT_NO_TRANSFORM, MESMERIZE_TRAIT))
 		owner.balloon_alert(owner, "[mesmerized_target] is already in a hypnotic gaze.")
+		return
+	if(mesmerized_target.has_status_effect(/datum/status_effect/heretic_passive/moon))
+		to_chat(user, span_hypnophrase(span_reallybig("YOU GAZE INTO THE MOON AND YOU SEE THE TRUTH AND YOU SEE EVERYTHING AND YOU SEE-")))
+		user.balloon_alert(user, "YOU GAZE INTO THE MOON AND IT GAZES BACK")
+		user.apply_status_effect(/datum/status_effect/moon_converted)
+		power_activated_sucessfully() // PAY COST! BEGIN COOLDOWN!
 		return
 	owner.balloon_alert(owner, "successfully mesmerized [mesmerized_target].")
 	mesmerize_effects(user, mesmerized_target)
