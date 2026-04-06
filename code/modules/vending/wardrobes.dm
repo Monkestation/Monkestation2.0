@@ -49,6 +49,12 @@
 				/obj/item/clothing/under/rank/security/officer/blueshirt = 2,
 				/obj/item/clothing/under/rank/security/officer/formal = 3,
 				/obj/item/clothing/under/rank/security/utility = 3,
+				/obj/item/clothing/accessory/armband/deputy = 4,
+				/obj/item/clothing/accessory/armband/cargo = 2,
+				/obj/item/clothing/accessory/armband/engine = 2,
+				/obj/item/clothing/accessory/armband/medblue = 2,
+				/obj/item/clothing/accessory/armband/hydro = 2,
+				/obj/item/clothing/accessory/armband/science = 2,
 			),
 		),
 		list(
@@ -193,35 +199,6 @@
 
 /obj/item/vending_refill/wardrobe/medi_wardrobe
 	machine_name = "MediDrobe"
-
-/obj/machinery/vending/wardrobe/engi_wardrobe
-	name = "EngiDrobe"
-	desc = "A vending machine renowned for vending industrial grade clothing."
-	icon_state = "engidrobe"
-	product_ads = "Guaranteed to protect your feet from industrial accidents!;Afraid of radiation? Then wear yellow!"
-	vend_reply = "Thank you for using the EngiDrobe!"
-	products = list(
-		/obj/item/clothing/accessory/pocketprotector = 3,
-		/obj/item/storage/backpack/duffelbag/engineering = 3,
-		/obj/item/storage/backpack/industrial = 3,
-		/obj/item/storage/backpack/satchel/eng = 3,
-		/obj/item/clothing/suit/hooded/wintercoat/engineering = 3,
-		/obj/item/clothing/under/rank/engineering/engineer = 3,
-		/obj/item/clothing/under/rank/engineering/engineer/skirt = 3,
-		/obj/item/clothing/under/rank/engineering/engineer/hazard = 3,
-		/obj/item/clothing/suit/hazardvest = 3,
-		/obj/item/clothing/shoes/workboots = 3,
-		/obj/item/clothing/head/beret/engi = 3,
-		/obj/item/clothing/mask/bandana/striped/engineering = 3,
-		/obj/item/clothing/head/utility/hardhat = 3,
-		/obj/item/clothing/head/utility/hardhat/welding = 3,
-	)
-	refill_canister = /obj/item/vending_refill/wardrobe/engi_wardrobe
-	payment_department = ACCOUNT_ENG
-	light_color = COLOR_VIVID_YELLOW
-
-/obj/item/vending_refill/wardrobe/engi_wardrobe
-	machine_name = "EngiDrobe"
 
 /obj/machinery/vending/wardrobe/atmos_wardrobe
 	name = "AtmosDrobe"
@@ -678,11 +655,11 @@
 		/obj/item/clothing/gloves/combat = 3,
 		/obj/item/clothing/glasses/sunglasses = 3,
 		/obj/item/clothing/under/rank/centcom/commander = 3,
-		/obj/item/clothing/under/rank/centcom/centcom_skirt = 3,
+		/obj/item/clothing/under/rank/centcom/commander/skirt = 3,
 		/obj/item/clothing/under/rank/centcom/intern = 3,
 		/obj/item/clothing/under/rank/centcom/official = 3,
 		/obj/item/clothing/under/rank/centcom/officer = 3,
-		/obj/item/clothing/under/rank/centcom/officer_skirt = 3,
+		/obj/item/clothing/under/rank/centcom/officer/skirt = 3,
 		/obj/item/clothing/suit/armor/centcom_formal = 3,
 		/obj/item/clothing/suit/space/officer = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/centcom = 3,

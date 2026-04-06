@@ -51,7 +51,6 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	tint = 2
 	armor_type = /datum/armor/space_plasmaman
-	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEEYES
 	resistance_flags = FIRE_PROOF
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_outer_range = 4
@@ -67,7 +66,7 @@
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF
-	visor_flags_inv = HIDEEYES|HIDEFACE
+	visor_flags_inv = HIDEFACE
 
 /datum/armor/space_plasmaman
 	bio = 100

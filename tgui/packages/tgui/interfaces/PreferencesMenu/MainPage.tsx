@@ -2,7 +2,8 @@ import { filterMap, sortBy } from 'common/collections';
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import type { ReactNode } from 'react';
-import { type sendAct, useBackend, useLocalState } from '../../backend';
+import type { sendAct } from 'tgui/events/act';
+import { useBackend, useLocalState } from '../../backend';
 import {
   Box,
   Button,

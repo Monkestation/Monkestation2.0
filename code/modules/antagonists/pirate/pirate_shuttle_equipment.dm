@@ -174,7 +174,7 @@
 /obj/machinery/piratepad/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
 	if (istype(I))
-		I.set_buffer(src)
+		multitool_set_buffer(I, src)
 		balloon_alert(user, "saved to multitool buffer")
 		return TRUE
 
@@ -215,9 +215,10 @@
 
 /obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
-	if (istype(I) && istype(I.buffer,/obj/machinery/piratepad))
-		to_chat(user, span_notice("You link [src] with [I.buffer] in [I] buffer."))
-		pad_ref = WEAKREF(I.buffer)
+	var/datum/buffer = multitool_get_buffer(I)
+	if (!QDELETED(buffer) && istype(buffer,/obj/machinery/piratepad))
+		to_chat(user, span_notice("You link [src] with [buffer] in [I] buffer."))
+		pad_ref = WEAKREF(buffer)
 		return TRUE
 
 /obj/machinery/computer/piratepad_control/LateInitialize(mapload_arg)

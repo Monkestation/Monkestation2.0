@@ -113,13 +113,14 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	. = NONE
 
 	var/tool_frequency = null
-	if(istype(tool.buffer, /datum/mod_link))
-		var/datum/mod_link/buffer_link = tool.buffer
+	var/datum/buffer = multitool_get_buffer(tool)
+	if(istype(buffer, /datum/mod_link))
+		var/datum/mod_link/buffer_link = buffer
 		tool_frequency = buffer_link.frequency
 		balloon_alert(user, "frequency set")
 		. = ITEM_INTERACT_SUCCESS
 	if(!tool_frequency && mod_link.frequency)
-		tool.set_buffer(mod_link)
+		multitool_set_buffer(tool, mod_link)
 		balloon_alert(user, "frequency copied")
 		. = ITEM_INTERACT_SUCCESS
 	else if(tool_frequency && !mod_link.frequency)
@@ -131,7 +132,7 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 			return ITEM_INTERACT_BLOCKING
 		switch(response)
 			if("Copy")
-				tool.set_buffer(mod_link)
+				multitool_set_buffer(tool, mod_link)
 				balloon_alert(user, "frequency copied")
 				. = ITEM_INTERACT_SUCCESS
 			if("Imprint")
@@ -308,13 +309,14 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	. = NONE
 
 	var/tool_frequency = null
-	if(istype(tool.buffer, /datum/mod_link))
-		var/datum/mod_link/buffer_link = tool.buffer
+	var/datum/buffer = multitool_get_buffer(tool)
+	if(istype(buffer, /datum/mod_link))
+		var/datum/mod_link/buffer_link = buffer
 		tool_frequency = buffer_link.frequency
 		balloon_alert(user, "frequency set")
 		. = ITEM_INTERACT_SUCCESS
 	if(!tool_frequency && mod_link.frequency)
-		tool.set_buffer(mod_link)
+		multitool_set_buffer(tool, mod_link)
 		balloon_alert(user, "frequency copied")
 		. = ITEM_INTERACT_SUCCESS
 	else if(tool_frequency && !mod_link.frequency)
@@ -326,7 +328,7 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 			return ITEM_INTERACT_BLOCKING
 		switch(response)
 			if("Copy")
-				tool.set_buffer(mod_link)
+				multitool_set_buffer(tool, mod_link)
 				balloon_alert(user, "frequency copied")
 				. = ITEM_INTERACT_SUCCESS
 			if("Imprint")
@@ -697,16 +699,11 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 
 /datum/looping_sound/call_ringtone
 	volume = 50
-	channel = CHANNEL_RINGTONES
 	sound_channel = CHANNEL_RINGTONES
 
 /datum/looping_sound/call_ringtone/New(_parent, start_immediately, _direct, _skip_starting_sounds, _channel = CHANNEL_RINGTONES, ringtone = CALL_RINGTONE_SOUND_DEFAULT)
 	set_ringtone(ringtone)
-	. = ..()
-
-/datum/looping_sound/call_ringtone/stop(null_parent)
-	. = ..()
-	playsound(get_turf(parent), sound(null), channel = CHANNEL_RINGTONES, mixer_channel = CHANNEL_RINGTONES)
+	return ..()
 
 /datum/looping_sound/call_ringtone/proc/set_ringtone(ringtone = CALL_RINGTONE_SOUND_DEFAULT)
 	var/list/ringtone_set = GLOB.call_ringtones[ringtone]

@@ -72,6 +72,7 @@
 
 
 // Heretic path defines.
+#define PATH_ANY "Any Path"
 #define PATH_START "Start Path"
 #define PATH_SIDE "Side Path"
 #define PATH_ASH "Ash Path"
@@ -282,15 +283,15 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 /// Chance the traitor gets a martyr objective instead of having to escape alive, as long as all the objectives are martyr compatible.
 #define MARTYR_PROB 20
 
-/// Chance the traitor gets a kill objective. If this prob fails, they will get a steal objective instead.
-#define KILL_PROB 50
-/// If a kill objective is rolled, chance that it is to destroy the AI.
+/// Chance the traitor gets a maroon objective. If this prob fails, they will get a steal objective instead.
+#define MAROON_PROB 50
+/// If a maroon objective is rolled, chance that it is to destroy the AI.
 #define DESTROY_AI_PROB(denominator) (100 / denominator)
-/// If the destroy AI objective doesn't roll, chance that we'll get a maroon instead. If this prob fails, they will get a generic assassinate objective instead.
-#define MAROON_PROB 30
+/// If the destroy AI objective doesn't roll, chance that we'll get a kill instead. If this prob fails, they will get a generic assassinate objective instead.
+#define KILL_PROB 20
 
 /// How many telecrystals a normal traitor starts with
-#define TELECRYSTALS_DEFAULT 20
+#define TELECRYSTALS_DEFAULT 25
 /// How many telecrystals mapper/admin only "precharged" uplink implant
 #define TELECRYSTALS_PRELOADED_IMPLANT 10
 /// The normal cost of an uplink implant; used for calcuating how many
@@ -348,6 +349,7 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_CREW "Deviant Crew"
 #define ANTAG_GROUP_BINGLES "Bingles"
 #define ANTAG_GROUP_DARKSPAWN "Darkspawn"
+#define ANTAG_GROUP_DEVILS "Infernal Agents"
 
 #define HUNTER_PACK_COPS "Spacepol Officers"
 #define HUNTER_PACK_RUSSIAN "Russian Smugglers"

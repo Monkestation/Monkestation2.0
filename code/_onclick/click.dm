@@ -277,6 +277,83 @@
 		checking = next
 	return FALSE
 
+/**
+ * Returns TRUE if a movable can "Reach" this atom. This is defined as adjacency
+ *
+ * Args:
+ * * user: The movable trying to reach us.
+ * * reacher_range: How far the reacher can reach.
+ * * depth: How deep nested inside of an atom contents stack an object can be.
+ * * direct_access: Do not override. Used for recursion.
+ */
+/atom/proc/IsReachableBy(atom/movable/user, reacher_range = 1, depth = INFINITY, direct_access = user.DirectAccess())
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	if(isnull(user))
+		return FALSE
+
+	if(src in direct_access)
+		return TRUE
+
+	// This is a micro-opt, if any turf ever returns false from IsContainedAtomAccessible, change this.
+	if(isturf(loc) || isturf(src))
+		if(CheckReachableAdjacency(user, reacher_range))
+			return TRUE
+
+	depth--
+
+	if(depth <= 0)
+		return FALSE
+
+	if(isnull(loc) || isarea(loc))
+		return FALSE
+	if(!HAS_TRAIT(src, TRAIT_SKIP_BASIC_REACH_CHECK) && !loc.IsContainedAtomAccessible(src, user))
+		return FALSE
+
+	return loc.IsReachableBy(user, reacher_range, depth, direct_access)
+
+/atom/proc/CheckReachableAdjacency(atom/movable/reacher, reacher_range)
+	if(reacher.Adjacent(src))
+		return TRUE
+
+	if(isliving(reacher))
+		var/mob/living/living_reacher = reacher
+		if(living_reacher.reach_length > reacher_range)
+			reacher_range = living_reacher.reach_length
+
+	return (reacher_range > 1) && RangedReachCheck(reacher, src, reacher_range)
+
+/// Called by IsReachableBy() to check for ranged reaches.
+/proc/RangedReachCheck(atom/movable/here, atom/movable/there, reach)
+	if(!here || !there)
+		return FALSE
+
+	if(reach <= 1)
+		return FALSE
+
+	// Prevent infinite loop.
+	if(istype(here, /obj/effect/abstract/reach_checker))
+		return FALSE
+
+	var/obj/effect/abstract/reach_checker/dummy = new(get_turf(here))
+	for(var/i in 1 to reach) //Limit it to that many tries
+		var/turf/T = get_step(dummy, get_dir(dummy, there))
+		if(there.IsReachableBy(dummy))
+			. = TRUE
+			break
+
+		if(!dummy.Move(T)) //we're blocked!
+			break
+
+	qdel(dummy)
+
+/// Returns TRUE if an atom contained within our contents is reachable.
+/atom/proc/IsContainedAtomAccessible(atom/contained, atom/movable/user)
+	return TRUE
+
+/atom/movable/IsContainedAtomAccessible(atom/contained, atom/movable/user)
+	return !!atom_storage
+
 /atom/movable/proc/DirectAccess()
 	return list(src, loc)
 

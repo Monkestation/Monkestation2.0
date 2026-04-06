@@ -77,3 +77,4 @@
 
 
 	addtimer(CALLBACK(client, TYPE_PROC_REF(/client, playtitlemusic)), 4 SECONDS, TIMER_DELETE_ME)
+	GLOB.lobby_media.add_listener(src)

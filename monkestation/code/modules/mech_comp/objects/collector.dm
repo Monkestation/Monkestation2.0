@@ -18,10 +18,10 @@
 	return ..()
 
 /obj/item/mcobject/collector/multitool_act_secondary(mob/living/user, obj/item/tool)
-	var/obj/item/multitool/multitool = tool
-	if(!istype(multitool.component_buffer, /obj/item/mcobject/messaging/storage) || QDELING(multitool.component_buffer))
+	var/obj/item/mcobject/component_buffer = multitool_get_comp_buffer(tool)
+	if(!istype(component_buffer, /obj/item/mcobject/messaging/storage) || QDELING(component_buffer))
 		return
-	linked_storage = multitool.component_buffer
+	linked_storage = component_buffer
 	RegisterSignal(linked_storage, COMSIG_QDELETING, PROC_REF(unset_linked_storage))
 	say("Successfully linked to storage component")
 

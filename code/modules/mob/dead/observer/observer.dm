@@ -973,6 +973,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		to_chat(usr, span_warning("Can't become a pAI candidate while not dead!"))
 
+/*
 /mob/dead/observer/verb/mafia_game_signup()
 	set category = "Ghost"
 	set name = "Signup for Mafia"
@@ -990,6 +991,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!game)
 		game = create_mafia_game("mafia")
 	game.ui_interact(usr)
+*/
 
 /mob/dead/observer/AltClickOn(atom/target)
 	client.loot_panel.open(get_turf(target))

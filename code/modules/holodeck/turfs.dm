@@ -46,7 +46,7 @@
 
 /turf/open/floor/holofloor/white
 	name = "white floor"
-	icon_state = "white"
+	icon_state = "whitefull"
 
 /turf/open/floor/holofloor/pure_white
 	name = "white floor"

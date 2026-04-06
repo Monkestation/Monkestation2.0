@@ -11,6 +11,7 @@ type Emote = {
   hands: BooleanLike;
   visible: BooleanLike;
   audible: BooleanLike;
+  has_visual: BooleanLike;
   sound: BooleanLike;
   use_params: BooleanLike;
 };
@@ -23,13 +24,18 @@ export const EmotePanelContent = (props) => {
   const { act, data } = useBackend<EmotePanelData>();
   const { emotes } = data;
 
-  const [filterVisible, toggleVisualFilter] = useLocalState<boolean>(
+  const [filterVisible, toggleVisibleFilter] = useLocalState<boolean>(
     'filterVisible',
     false,
   );
 
   const [filterAudible, toggleAudibleFilter] = useLocalState<boolean>(
     'filterAudible',
+    false,
+  );
+
+  const [filterVisual, toggleVisualFilter] = useLocalState<boolean>(
+    'filterVisual',
     false,
   );
 
@@ -78,7 +84,7 @@ export const EmotePanelContent = (props) => {
               align="center"
               tooltip="Visible"
               selected={filterVisible}
-              onClick={() => toggleVisualFilter(!filterVisible)}
+              onClick={() => toggleVisibleFilter(!filterVisible)}
             />
             <Button
               icon="comment"
@@ -88,6 +94,15 @@ export const EmotePanelContent = (props) => {
               tooltip="Audible"
               selected={filterAudible}
               onClick={() => toggleAudibleFilter(!filterAudible)}
+            />
+            <Button
+              icon="camera"
+              width="100%"
+              height="100%"
+              align="center"
+              tooltip="Has Animation"
+              selected={filterVisual}
+              onClick={() => toggleVisualFilter(!filterVisual)}
             />
             <Button
               icon="volume-up"
@@ -172,6 +187,7 @@ export const EmotePanelContent = (props) => {
                     : true) &&
                   (filterVisible ? emote.visible : true) &&
                   (filterAudible ? emote.audible : true) &&
+                  (filterVisual ? emote.has_visual : true) &&
                   (filterSound ? emote.sound : true) &&
                   (filterHands ? emote.hands : true) &&
                   (filterUseParams ? emote.use_params : true),
@@ -188,6 +204,7 @@ export const EmotePanelContent = (props) => {
                       <EmoteIcons
                         visible={emote.visible}
                         audible={emote.audible}
+                        visual={emote.has_visual}
                         sound={emote.sound}
                         hands={emote.hands}
                         use_params={emote.use_params}
@@ -229,7 +246,7 @@ export const EmotePanelContent = (props) => {
 };
 
 const EmoteIcons = (props) => {
-  const { visible, audible, sound, hands, use_params, margin } = props;
+  const { visible, audible, visual, sound, hands, use_params, margin } = props;
 
   return (
     <Box inline align="right">
@@ -244,6 +261,12 @@ const EmoteIcons = (props) => {
         m={margin}
         color={!audible ? 'red' : ''}
         opacity={!audible ? 0.5 : 1}
+      />
+      <Icon
+        name="camera"
+        m={margin}
+        color={!visual ? 'red' : ''}
+        opacity={!visual ? 0.5 : 1}
       />
       <Icon
         name="volume-up"

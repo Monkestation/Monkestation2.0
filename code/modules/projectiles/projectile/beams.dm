@@ -15,13 +15,12 @@
 	light_color = COLOR_SOFT_RED
 	ricochets_max = 50 //Honk!
 	ricochet_chance = 80
-	reflectable = REFLECT_NORMAL
+	reflectable = TRUE
 	wound_bonus = -20
 	bare_wound_bonus = 10
 
 
 /obj/projectile/beam/laser
-	generic_name = "laser beam"
 	tracer_type = /obj/effect/projectile/tracer/laser
 	muzzle_type = /obj/effect/projectile/muzzle/laser
 	impact_type = /obj/effect/projectile/impact/laser
@@ -29,14 +28,13 @@
 	bare_wound_bonus = 40
 
 /obj/projectile/beam/laser/lasrifle
-	generic_name = "rifle beam"
 	damage = 25
 	range = 30
 	tracer_type = /obj/effect/projectile/tracer/laser/rifle
 	impact_type = /obj/effect/projectile/impact/laser/rifle
 	muzzle_type = /obj/effect/projectile/muzzle/laser/rifle
 	hitscan = TRUE
-	tile_dropoff = 1 //This makes ricochets less impactful
+	damage_falloff_tile = -1 //This makes ricochets less impactful
 	armour_penetration = -30 //armor is * 130% more effective against it
 	wound_bonus = -15
 	wound_falloff_tile = 3
@@ -62,17 +60,16 @@
 	icon_state = "carbine_laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
 	damage = 9
+	wound_bonus = -40
+	speed = 0.9
 
 //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
 /obj/projectile/beam/laser/hellfire
 	name = "hellfire laser"
 	wound_bonus = 0
 	damage = 25
-	speed = 0.6 // higher power = faster, that's how light works right
-
-/obj/projectile/beam/laser/hellfire/Initialize(mapload)
-	. = ..()
-	transform *= 2
+	speed = 1.6
+	light_color = "#FF969D"
 
 /obj/projectile/beam/laser/heavylaser
 	name = "heavy laser"
@@ -122,13 +119,23 @@
 
 /obj/projectile/beam/practice
 	name = "practice laser"
-	generic_name = "practice laser beam"
 	damage = 0
 
 /obj/projectile/beam/scatter
 	name = "laser pellet"
 	icon_state = "scatterlaser"
-	damage = 5
+	damage = 7.5
+	wound_bonus = 5
+	bare_wound_bonus = 5
+	wound_falloff_tile = -2.5
+
+/obj/projectile/beam/scatter/pathetic
+	name = "extremely weak laser pellet"
+	damage = 1
+	wound_bonus = 0
+	color = "#dbc11d"
+	hitsound = 'sound/items/bikehorn.ogg' //honk
+	hitsound_wall = 'sound/items/bikehorn.ogg'
 
 /obj/projectile/beam/xray
 	name = "\improper X-ray beam"
@@ -143,6 +150,13 @@
 	tracer_type = /obj/effect/projectile/tracer/xray
 	muzzle_type = /obj/effect/projectile/muzzle/xray
 	impact_type = /obj/effect/projectile/impact/xray
+
+/obj/projectile/beam/laser/hardlight
+	name = "hardlight laser"
+	pass_flags = PASSTABLE
+	damage = 32
+	damage_type = BURN
+	range = 8
 
 /obj/projectile/beam/disabler
 	name = "disabler beam"
@@ -172,7 +186,6 @@
 
 /obj/projectile/beam/pulse
 	name = "pulse"
-	generic_name = "pulse beam"
 	icon_state = "u_laser"
 	damage = 50
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
@@ -219,6 +232,7 @@
 	return //don't want the emitters to miss
 
 /obj/projectile/beam/emitter/hitscan
+	icon_state = null
 	hitscan = TRUE
 	muzzle_type = /obj/effect/projectile/muzzle/laser/emitter
 	tracer_type = /obj/effect/projectile/tracer/laser/emitter
@@ -233,7 +247,6 @@
 	impact_light_intensity = 7
 	impact_light_outer_range = 2.5
 	impact_light_color_override = COLOR_LIME
-	range = 255 //come on, have some fun now! monkestation edit
 
 /obj/projectile/beam/lasertag
 	name = "laser tag beam"
@@ -263,6 +276,7 @@
 	impact_type = /obj/effect/projectile/impact/laser
 
 /obj/projectile/beam/lasertag/redtag/hitscan
+	icon_state = null
 	hitscan = TRUE
 
 /obj/projectile/beam/lasertag/bluetag
@@ -273,6 +287,7 @@
 	impact_type = /obj/effect/projectile/impact/laser/blue
 
 /obj/projectile/beam/lasertag/bluetag/hitscan
+	icon_state = null
 	hitscan = TRUE
 
 /obj/projectile/magic/shrink/alien

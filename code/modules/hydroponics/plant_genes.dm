@@ -750,7 +750,7 @@
 	var/mob/living/living_target = target
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	if(living_target.reagents && living_target.can_inject())
-		var/injecting_amount = qp_sigmoid(2000, 840, our_seed.potency)
+		var/injecting_amount = qp_sigmoid(2000, 50, our_seed.potency)
 		//420 units at 2000 potency
 		//one 5% reagent would fill a standard plant completely at 2000 potency
 		our_plant.reagents.trans_to(living_target, injecting_amount, methods = INJECT)
@@ -972,12 +972,29 @@
 		return
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	if(our_seed.get_gene(/datum/plant_gene/trait/stinging))
-		our_plant.embedding = EMBED_POINTY
-	else
-		our_plant.embedding = EMBED_HARMLESS
-	our_plant.updateEmbedding()
 	our_plant.throwforce = qp_sigmoid(1000, 50, our_seed.potency)
+	var/datum/embedding/plant_embed = our_plant.get_embed()
+	if (!plant_embed)
+		if(our_seed.get_gene(/datum/plant_gene/trait/stinging))
+			our_plant.set_embed(/datum/embedding/spiky_plant)
+		else
+			our_plant.set_embed(/datum/embedding/sticky_plant)
+		return
+
+	plant_embed.ignore_throwspeed_threshold = TRUE
+	if(our_seed.get_gene(/datum/plant_gene/trait/stinging))
+		return
+
+	plant_embed.pain_mult = 0
+	plant_embed.jostle_pain_mult = 0
+
+/datum/embedding/sticky_plant
+	pain_mult = 0
+	jostle_pain_mult = 0
+	ignore_throwspeed_threshold = TRUE
+
+/datum/embedding/spiky_plant
+	ignore_throwspeed_threshold = TRUE
 
 /**
  * This trait automatically heats up the plant's chemical contents when harvested.

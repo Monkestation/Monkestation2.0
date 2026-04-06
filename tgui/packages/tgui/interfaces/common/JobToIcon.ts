@@ -146,6 +146,9 @@ const ALTTITLES = {
   // Explorer - rocket
   Expeditionist: BASEICONS.Explorer,
   Scavenger: BASEICONS.Explorer,
+  Astronaut: BASEICONS.Explorer,
+  'Space Miner': BASEICONS.Explorer,
+  'Asteroid Miner': BASEICONS.Explorer,
   // Chaplain - cross
   Priest: BASEICONS.Chaplain,
   Preacher: BASEICONS.Chaplain,
@@ -304,6 +307,7 @@ const ALTTITLES = {
   Spelunker: BASEICONS['Shaft Miner'],
   'Drill Technician': BASEICONS['Shaft Miner'],
   Prospector: BASEICONS['Shaft Miner'],
+  'Big Game Hunter': BASEICONS['Shaft Miner'],
   // Station Engineer - gears
   'Emergency Damage Control Technician': BASEICONS['Station Engineer'],
   Electrician: BASEICONS['Station Engineer'],

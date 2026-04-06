@@ -10,5 +10,5 @@
 		EVENT_TRACK_OBJECTIVES = 1
 		)
 	population_min = 40
-	ignores_roundstart = TRUE
 	weight = 2
+	base_antag_points = 5

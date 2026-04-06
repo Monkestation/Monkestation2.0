@@ -42,7 +42,7 @@
 		/obj/item/grenade/c4 = 4,
 		/obj/item/grenade/flashbang = 2,
 		/obj/item/grenade/frag = 2,
-		/obj/item/reagent_containers/hypospray/medipen/stimulants = 1,
+		/obj/item/reagent_containers/medipen/stimulants = 1,
 		/obj/item/clothing/glasses/night = 1,
 	),src)
 
@@ -208,7 +208,7 @@
 		/obj/item/ammo_box/magazine/plastikov9mm/red = 2,
 		/obj/item/storage/medkit/tactical/premium = 1,
 		/obj/item/storage/medkit/combat/surgery = 1,
-		/obj/item/reagent_containers/hypospray/medipen/advanced = 1,
+		/obj/item/reagent_containers/medipen/advanced = 1,
 		/obj/item/gun/medbeam = 1,
 		/obj/item/autosurgeon/syndicate/hacked_linked_surgery =1,
 		/obj/item/clothing/gloves/latex/nitrile = 1,

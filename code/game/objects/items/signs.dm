@@ -23,7 +23,7 @@
 /obj/item/picket_sign/proc/retext(mob/user, obj/item/writing_instrument)
 	if(!user.can_write(writing_instrument))
 		return
-	var/txt = tgui_input_text(user, "What would you like to write on the sign?", "Sign Label", max_length = 30)
+	var/txt = tgui_input_text(user, "What would you like to write on the sign?", "Sign Label", max_length = 40)
 	if(txt && user.can_perform_action(src))
 		playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 		label = txt

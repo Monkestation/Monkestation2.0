@@ -43,6 +43,8 @@
 	var/list/returned_products
 	///If set, this access is needed to see this vending product.
 	var/access_requirement
+	///Is the item discountable by job discounts
+	var/discountable
 
 /**
  * # vending machines
@@ -380,6 +382,7 @@
 		R.age_restricted = initial(temp.age_restricted)
 		R.colorable = !!(initial(temp.greyscale_config) && initial(temp.greyscale_colors) && (initial(temp.flags_1) & IS_PLAYER_COLORABLE_1))
 		R.category = product_to_category[typepath]
+		R.discountable = temp.discountable
 		if(access_needed)
 			R.access_requirement = access_needed
 		recordlist += R
@@ -745,11 +748,14 @@
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/i in 1 to num_shards)
 				var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
-				shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult = 1, pain_chance = 5)
-				shard.updateEmbedding()
+				var/datum/embedding/embed = shard.get_embed()
+				embed.embed_chance = 100
+				embed.ignore_throwspeed_threshold = TRUE
+				embed.impact_pain_mult = 1
 				carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-				shard.embedding = list()
-				shard.updateEmbedding()
+				embed.embed_chance = initial(embed.embed_chance)
+				embed.ignore_throwspeed_threshold = initial(embed.ignore_throwspeed_threshold)
+				embed.impact_pain_mult = initial(embed.impact_pain_mult)
 			return TRUE
 		if (VENDOR_CRUSH_CRIT_PIN) // pin them beneath the machine until someone untilts it
 			if (!isliving(atom_target))
@@ -979,11 +985,14 @@
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/i in 1 to num_shards)
 				var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
-				shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult = 1, pain_chance = 5)
-				shard.updateEmbedding()
+				var/datum/embedding/embed = shard.get_embed()
+				embed.embed_chance = 100
+				embed.ignore_throwspeed_threshold = TRUE
+				embed.impact_pain_mult = 1
 				carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-				shard.embedding = list()
-				shard.updateEmbedding()
+				embed.embed_chance = initial(embed.embed_chance)
+				embed.ignore_throwspeed_threshold = initial(embed.ignore_throwspeed_threshold)
+				embed.impact_pain_mult = initial(embed.impact_pain_mult)
 			return TRUE
 		if (VENDOR_CRUSH_CRIT_PIN) // pin them beneath the machine until someone untilts it
 			if (!isliving(atom_target))
@@ -1156,6 +1165,7 @@
 			price = premium ? (record.custom_premium_price || extra_price) : (record.custom_price || default_price),
 			max_amount = record.max_amount,
 			ref = REF(record),
+			discountable = record.discountable,
 		)
 
 		var/atom/printed = record.product_path
@@ -1333,7 +1343,7 @@
 			vend_ready = TRUE
 			return
 		var/datum/bank_account/account = C.registered_account
-		if(account.account_job && account.account_job.paycheck_department == payment_department)
+		if(account.account_job && account.account_job.paycheck_department == payment_department && R.discountable)
 			price_to_use = max(round(price_to_use * DEPARTMENT_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
 		if(coin_records.Find(R) || hidden_records.Find(R))
 			price_to_use = R.custom_premium_price ? R.custom_premium_price : extra_price
@@ -1715,3 +1725,47 @@
 	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
 
 #undef MAX_VENDING_INPUT_AMOUNT
+
+/**
+ * This vending machine supports a list of items that changes based on the user/card's access.
+ */
+/obj/machinery/vending/access
+	name = "access-based vending machine"
+	///If set, this access is required to see non-access locked products in the vending machine.
+	var/minimum_access_to_view
+
+/obj/machinery/vending/access/Initialize(mapload)
+	. = ..()
+	var/list/inventory = list()
+	build_access_list(inventory)
+	for(var/access in inventory)
+		build_inventory(inventory[access], product_records, product_categories, start_empty = FALSE, access_needed = access)
+
+/**
+ * This is where you generate the list to store what items each access grants.
+ * Should be an assosciative list where the key is the access as a string and the value is the items typepath.
+ * You can also set it to TRUE instead of a list to allow them to purchase anything.
+ */
+/obj/machinery/vending/access/proc/build_access_list(list/inventory)
+	return
+
+/obj/machinery/vending/access/collect_records_for_static_data(list/records, list/categories, mob/living/user, premium)
+	if(isnull(minimum_access_to_view))
+		return ..()
+	//dead people can see records, i GUESS...
+	if(!istype(user))
+		return ..()
+	var/obj/item/card/id/user_id = user.get_idcard(TRUE)
+	if(!issilicon(user) && !(obj_flags & EMAGGED) && onstation && !(minimum_access_to_view in user_id?.access))
+		records = list()
+		return ..()
+	return ..()
+
+/// Debug version to verify access checking is working and functional
+/obj/machinery/vending/access/debug
+	minimum_access_to_view = ACCESS_ENGINEERING
+
+/obj/machinery/vending/access/debug/build_access_list(list/inventory)
+	inventory[ACCESS_EVA] = list(/obj/item/crowbar)
+	inventory[ACCESS_SECURITY] = list(/obj/item/wrench, /obj/item/gun/ballistic/revolver/mateba)
+

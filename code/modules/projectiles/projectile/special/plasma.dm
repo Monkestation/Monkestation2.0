@@ -43,7 +43,7 @@
 /obj/projectile/plasma/minerjdj //is plasma because wall cutting
 	name = ".950 JDJ Kinetic solid brass projectile"
 	desc = "you have somehow observed pure death, and it strikes fear that weaves deep within your psyche."
-	speed = 0.2
+	speed = 5
 	damage = 2500 //(EXPERIMENTAL) it costs like fucking over 40k points just to buy the rifle, lets test making it just delete one boss of your choice (and the loot potentially :)
 	dismemberment = 100 //yeah no if you get hit by this its so over
 	damage_type = BRUTE
@@ -74,7 +74,7 @@
 
 /obj/projectile/plasma/kineticshotgun/sniperslug // long range but cant hit the oneshot breakpoint of a watcher and does not penetrate targets
 	name = ".50 BMG kinetic"
-	speed = 0.4
+	speed = 2.5
 	damage = 75
 	fauna_mod = 2
 	range = 10

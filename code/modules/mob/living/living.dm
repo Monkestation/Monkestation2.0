@@ -532,7 +532,7 @@
 			to_chat(src, span_warning("You are unable to succumb to death! This life continues."), type=MESSAGE_TYPE_INFO)
 			return
 	log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!", LOG_ATTACK)
-	adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
+	adjustOxyLoss(health - dead_threshold)
 	updatehealth()
 	if(!whispered)
 		to_chat(src, span_notice("You have given up life and succumbed to death."))
@@ -729,7 +729,7 @@
 		setDir(pick(NORTH, SOUTH)) // We are and look helpless.
 	if(rotate_on_lying)
 		body_position_pixel_y_offset = PIXEL_Y_OFFSET_LYING
-	playsound(loc, 'goon/sounds/body_thud.ogg', ishuman(src) ? 40 : 15, 1, 0.3, mixer_channel = CHANNEL_MOB_SOUNDS)
+	playsound(loc, 'goon/sounds/body_thud.ogg', ishuman(src) ? 40 : 15, 1, 0.3, mixer_channel = CHANNEL_MOB_EMOTES)
 
 
 /// Proc to append behavior related to lying down.
@@ -1001,7 +1001,7 @@
 /// Checks if we are actually able to ressuscitate this mob.
 /// (We don't want to revive then to have them instantly die again)
 /mob/living/proc/can_be_revived()
-	if(health <= HEALTH_THRESHOLD_DEAD)
+	if(health <= dead_threshold)
 		return FALSE
 	return TRUE
 
@@ -1362,7 +1362,8 @@
 			to_chat(src, span_warning("You don't have the hands for this action!"))
 			return FALSE
 
-	if(!(action_bitflags & BYPASS_ADJACENCY) && ((action_bitflags & NOT_INSIDE_TARGET) || !recursive_loc_check(src, target)) && !CanReach(target))
+	//why this no work
+	if(!(action_bitflags & BYPASS_ADJACENCY) && ((action_bitflags & NOT_INSIDE_TARGET) || !recursive_loc_check(src, target)) && !target.IsReachableBy(src))
 		if(HAS_SILICON_ACCESS(src) && !ispAI(src))
 			if(!(action_bitflags & ALLOW_SILICON_REACH)) // silicons can ignore range checks (except pAIs)
 				if(!(action_bitflags & SILENT_ADJACENCY))
@@ -2144,6 +2145,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 
+/mob/living/can_hear()
+	. = !HAS_TRAIT(src, TRAIT_DEAF)
 
 /mob/living/set_stat(new_stat)
 	. = ..()
@@ -2648,11 +2651,25 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /// Switches this mob to processing as a cliented mob, instead of whatever subsystem it's currently using.
 /mob/living/proc/process_as_cliented_mob()
-	if(life_subsystem_type == /datum/controller/subsystem/mobs/client_mobs || QDELETED(src))
+	if(QDELETED(src))
 		return
-	var/datum/controller/subsystem/mobs/subsystem = SSmobs
-	if(life_subsystem_type)
-		subsystem = locate(life_subsystem_type) in Master.subsystems
-	life_subsystem_type = /datum/controller/subsystem/mobs/client_mobs
-	STOP_PROCESSING(subsystem, src)
+	var/datum/controller/subsystem/mobs/clientless_subsystem = locate(life_subsystem_type) in Master.subsystems
+	if(!clientless_subsystem)
+		return
+	STOP_PROCESSING(clientless_subsystem, src)
 	START_PROCESSING(SSclient_mobs, src)
+
+/// Switches this mob to processing as a cliented mob, instead of whatever subsystem it's currently using.
+/mob/living/proc/process_as_clientless_mob()
+	if(QDELETED(src))
+		return
+	var/datum/controller/subsystem/mobs/clientless_subsystem = locate(life_subsystem_type) in Master.subsystems
+	if(!clientless_subsystem)
+		return
+	STOP_PROCESSING(SSclient_mobs, src)
+	START_PROCESSING(clientless_subsystem, src)
+
+/// Returns the string form of the def_zone we have hit.
+/mob/living/proc/check_hit_limb_zone_name(hit_zone)
+	if(has_limbs)
+		return hit_zone

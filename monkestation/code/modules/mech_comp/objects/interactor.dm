@@ -50,15 +50,15 @@
 	return loc?.drop_location() || ..()
 
 /obj/item/mcobject/interactor/multitool_act_secondary(mob/living/user, obj/item/tool)
-	var/obj/item/multitool/multitool = tool
-	if(!multitool.component_buffer)
+	var/obj/item/mcobject/component_buffer = multitool_get_comp_buffer(tool)
+	if(!component_buffer)
 		return ..()
-	if(!istype(multitool.component_buffer, /obj/item/mcobject/messaging/storage))
+	if(!istype(component_buffer, /obj/item/mcobject/messaging/storage))
 		return ..()
 	if(check_restrictions(storage = TRUE))
 		balloon_alert(user, "storage interaction disabled!")
 		return
-	connected_storage = multitool.component_buffer
+	connected_storage = component_buffer
 	balloon_alert(user, "successfully linked storage component")
 
 /obj/item/mcobject/interactor/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
@@ -220,6 +220,9 @@
 	if(!can_interact_with(weapon))
 		balloon_alert(user, "[weapon] is incompatible!")
 		return
+	if(HAS_TRAIT(weapon, TRAIT_NODROP))
+		to_chat(user, "[weapon] is stuck to you!")
+		return
 	else if(check_restrictions(items = TRUE))
 		balloon_alert(user, "holding items is disabled!")
 		return
@@ -269,6 +272,7 @@
 	if(!QDELETED(dummy_human))
 		QDEL_NULL(dummy_human)
 	dummy_human = new(src)
+	dummy_human.interaction_range = 1
 	RegisterSignal(dummy_human, COMSIG_LIVING_PICKED_UP_ITEM, PROC_REF(on_dummy_pickup))
 	RegisterSignal(dummy_human, COMSIG_QDELETING, PROC_REF(on_dummy_qdel))
 

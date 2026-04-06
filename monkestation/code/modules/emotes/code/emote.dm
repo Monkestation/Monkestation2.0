@@ -549,7 +549,7 @@
 	name = "Alert"
 	cooldown = 5 SECONDS
 	audio_cooldown = 10 SECONDS //no free *chime
-	emote_type = EMOTE_VISIBLE
+	emote_type = EMOTE_VISIBLE | EMOTE_HAS_VISUAL
 	sound = 'sound/machines/chime.ogg'
 	empty_message_intentional = TRUE
 

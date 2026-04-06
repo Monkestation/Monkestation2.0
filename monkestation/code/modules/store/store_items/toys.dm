@@ -14,6 +14,11 @@ GLOBAL_LIST_INIT(store_toys, generate_store_items(/datum/store_item/toys))
 	name = "Walkman"
 	item_path = /obj/item/walkman
 
+/datum/store_item/toys/walkman
+	item_cost = 350
+	name = "Spare Cassette Tape"
+	item_path = /obj/item/cassette_tape/random
+
 /datum/store_item/toys/card_deck
 	item_cost = 2500
 	name = "Playing Card Deck"

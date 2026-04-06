@@ -141,18 +141,19 @@
 /obj/machinery/computer/cloning/multitool_act(mob/living/user, obj/item/multitool/multi)
 	. = NONE
 
-	if(!istype(multi.buffer, /obj/machinery/clonepod))
-		multi.set_buffer(src)
-		to_chat(user, "<font color = #666633>-% Successfully stored [REF(multi.buffer)] [multi.buffer] in buffer %-</font color>")
+	var/datum/buffer = multitool_get_buffer(multi)
+	if(!istype(buffer, /obj/machinery/clonepod))
+		multitool_set_buffer(multi, src)
+		to_chat(user, "<font color = #666633>-% Successfully stored [REF(buffer)] [buffer] in buffer %-</font color>")
 		return ITEM_INTERACT_SUCCESS
 
-	if(get_area(multi.buffer) != get_area(src))
+	if(get_area(buffer) != get_area(src))
 		to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
-		multi.set_buffer(null)
+		multitool_set_buffer(multi, null)
 		return ITEM_INTERACT_SUCCESS
 
-	to_chat(user, "<font color = #666633>-% Successfully linked [multi.buffer] with [src] %-</font color>")
-	var/obj/machinery/clonepod/pod = multi.buffer
+	to_chat(user, "<font color = #666633>-% Successfully linked [buffer] with [src] %-</font color>")
+	var/obj/machinery/clonepod/pod = buffer
 	pod.connected?.DetachCloner(pod)
 	AttachCloner(pod)
 	return ITEM_INTERACT_SUCCESS
@@ -550,7 +551,7 @@
 		scantemp = "<font class='bad'>Subject's brain neurons are too short to be scanned.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
-	if(!body_only && HAS_TRAIT(mob_occupant, TRAIT_SUICIDED))
+	if(!body_only && (HAS_TRAIT(mob_occupant, TRAIT_SUICIDED) || (mob_occupant.mind && HAS_TRAIT(mob_occupant.mind, TRAIT_DEFIB_BLACKLISTED))))
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return

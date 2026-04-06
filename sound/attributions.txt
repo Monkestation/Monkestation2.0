@@ -158,3 +158,5 @@ https://freesound.org/people/gynation/sounds/82378/
 
 roaring_fire.ogg made from: 10835 big fire loop.wav by Robinhood76 -- https://freesound.org/s/612277/ -- License: Attribution NonCommercial 4.0
 fire_puff made from: Bonfire Being Lit by samararaine -- https://freesound.org/s/186374/ -- License: Creative Commons 0
+
+wishgranter_gain.ogg and wishgranter_awaken.ogg by flleeppyy (https://github.com/flleeppyy)

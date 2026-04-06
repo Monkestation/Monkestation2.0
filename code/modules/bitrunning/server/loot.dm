@@ -35,8 +35,9 @@
 	certificate.update_appearance()
 
 	var/obj/structure/closet/crate/secure/bitrunning/decrypted/reward_cache = new(src, generated_domain, bonus)
-	reward_cache.manifest = WEAKREF(certificate)
-	reward_cache.update_appearance()
+	reward_cache.manifest = certificate
+	certificate.forceMove(reward_cache)
+	reward_cache.update_appearance(UPDATE_OVERLAYS)
 
 	chosen_forge.start_to_spawn(reward_cache)
 	return TRUE

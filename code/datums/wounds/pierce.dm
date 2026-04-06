@@ -68,7 +68,8 @@
 				vision_distance = COMBAT_MESSAGE_RANGE,
 
 			)
-
+			victim.do_splatter_effect(victim.dir)
+			victim.bleed(blood_bled)
 		if(20 to INFINITY)
 			victim.visible_message(
 				span_danger("A spray of blood streams from the gash in [victim]'s [limb.plaintext_zone]!"),
@@ -76,6 +77,8 @@
 				vision_distance = COMBAT_MESSAGE_RANGE,
 
 			)
+			victim.bleed(blood_bled)
+			victim.do_splatter_effect(victim.dir)
 			victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 
 	victim.bleed(blood_bled, TRUE)

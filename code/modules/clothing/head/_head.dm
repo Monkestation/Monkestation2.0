@@ -77,7 +77,7 @@
 				if(hair_style?.vertical_offset)
 					standing.pixel_y = hair_style.vertical_offset
 
-	if(contents)
+	if(contents && can_stack_hat)
 		var/current_hat = 1
 		for(var/obj/item/clothing/head/selected_hat in contents)
 			var/head_icon = 'icons/mob/clothing/head/beanie.dmi'
@@ -150,6 +150,8 @@
 	desc = initial(desc)
 
 /obj/item/clothing/head/proc/throw_hats(hat_count, turf/wearer_location, mob/user)
+	if(!can_stack_hat)
+		return
 	for(var/obj/item/clothing/head/throwing_hat in contents)
 		var/destination = get_edge_target_turf(wearer_location, pick(GLOB.alldirs))
 		if(!hat_count) //Only throw X number of hats
@@ -163,6 +165,8 @@
 		user.visible_message(span_warning("[user]'s hats go flying off!"))
 
 /obj/item/clothing/head/proc/update_hats(hat_removal, mob/living/user)
+	if(!can_stack_hat)
+		return
 	if(hat_removal)
 		var/obj/item/clothing/head/hat_to_remove = contents[length(contents)] //Get the last item in the hat and hand it to the user.
 		hat_to_remove.restore_initial()

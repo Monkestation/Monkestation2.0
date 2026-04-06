@@ -15,6 +15,7 @@
 		"basic_micro_laser",
 		"basic_scanning",
 		"blast",
+		"ignition",
 		"big_manipulator",
 		"assembler",
 		"manipulator_filter",
@@ -55,8 +56,11 @@
 		"electropack",
 		"experi_scanner",
 		"extinguisher",
+		"pocketfireextinguisher",
 		"fax",
 		"fishing_rod",
+		"fishing_line",
+		"fishing_hook",
 		"fishing_portal_generator",
 		"flashlight",
 		"fluid_ducts",
@@ -147,7 +151,8 @@
 		"universal_scanner",
 		"voice_analyzer",
 		"watering_can",
-		"modlink_scryer", // monkestation addition
+		"modlink_scryer",// monkestation addition
+		"flatpacker",
 	)
 
 /datum/techweb_node/basic_tools
@@ -257,4 +262,7 @@
 		"synth_heart",
 		"cybernetic_spleen",
 		"vitals_monitor",
+		"vial",
+		"large_vial",
+		"medical_crutch"
 	)

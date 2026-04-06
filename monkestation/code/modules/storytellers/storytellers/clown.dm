@@ -14,4 +14,3 @@
 	guarantees_roundstart_roleset = FALSE
 	restricted = TRUE //admins can still use this if they want the crew to really suffer, for that reason im going all in
 	roundstart_prob = 75
-	ignores_roundstart = TRUE

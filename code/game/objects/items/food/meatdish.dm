@@ -34,6 +34,7 @@
 	foodtypes = SEAFOOD
 	eatverbs = list("bite", "chew", "gnaw", "swallow", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_RESISTANCE
 
 /obj/item/food/fishmeat/carp
 	name = "carp fillet"
@@ -113,6 +114,7 @@
 	foodtypes = SEAFOOD | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
+	food_buffs = STATUS_EFFECT_FOOD_RESISTANCE
 
 /obj/item/food/fishandchips
 	name = "fish and chips"
@@ -127,6 +129,7 @@
 	tastes = list("fish" = 1, "chips" = 1)
 	foodtypes = SEAFOOD | VEGETABLES | FRIED
 	venue_value = FOOD_PRICE_NORMAL
+	food_buffs = STATUS_EFFECT_FOOD_RESISTANCE
 
 /obj/item/food/fishfry
 	name = "fish fry"
@@ -140,6 +143,7 @@
 	tastes = list("fish" = 1, "pan seared vegtables" = 1)
 	foodtypes = SEAFOOD | VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_RESISTANCE
 
 /obj/item/food/vegetariansushiroll
 	name = "vegetarian sushi roll"
@@ -152,6 +156,7 @@
 	tastes = list("boiled rice" = 4, "carrots" = 2, "potato" = 2)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_RESISTANCE
 
 /obj/item/food/vegetariansushiroll/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/vegetariansushislice, 4, screentip_verb = "Chop")
@@ -167,6 +172,7 @@
 	tastes = list("boiled rice" = 4, "carrots" = 2, "potato" = 2)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_RESISTANCE
 
 /obj/item/food/spicyfiletsushiroll
 	name = "spicy filet sushi roll"
@@ -181,6 +187,7 @@
 	tastes = list("boiled rice" = 4, "fish" = 2, "spicyness" = 2)
 	foodtypes = VEGETABLES | SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_RESISTANCE
 
 /obj/item/food/spicyfiletsushiroll/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spicyfiletsushislice, 4, screentip_verb = "Chop")
@@ -198,6 +205,7 @@
 	tastes = list("boiled rice" = 4, "fish" = 2, "spicyness" = 2)
 	foodtypes = VEGETABLES | SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_RESISTANCE
 
 // empty sushi for custom sushi
 /obj/item/food/sushi/empty
@@ -226,6 +234,7 @@
 	tastes = list("boiled rice" = 4, "fish filet" = 2, "soy sauce" = 2)
 	foodtypes = SEAFOOD | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_RESISTANCE
 
 /obj/item/food/meat_poke
 	name = "meat poke"
@@ -241,6 +250,7 @@
 	tastes = list("rice and meat" = 4, "lettuce" = 2, "soy sauce" = 2)
 	trash_type = /obj/item/reagent_containers/cup/bowl
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_RESISTANCE
 
 /obj/item/food/fish_poke
 	name = "fish poke"
@@ -256,6 +266,7 @@
 	tastes = list("rice and fish" = 4, "lettuce" = 2, "soy sauce" = 2)
 	trash_type = /obj/item/reagent_containers/cup/bowl
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_RESISTANCE
 
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
 
@@ -354,6 +365,7 @@
 	foodtypes = MEAT | ALCOHOL
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/raw_meatball
 	name = "raw meatball"
@@ -366,6 +378,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/meatball_type = /obj/item/food/meatball
 	var/patty_type = /obj/item/food/raw_patty
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/raw_meatball/make_grillable()
 	AddComponent(/datum/component/grillable, meatball_type, rand(30 SECONDS, 40 SECONDS), TRUE)
@@ -410,6 +423,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 	venue_value = FOOD_PRICE_CHEAP
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/meatball/human
 	name = "strange meatball"
@@ -440,6 +454,7 @@
 	foodtypes = MEAT | RAW
 	w_class = WEIGHT_CLASS_SMALL
 	var/patty_type = /obj/item/food/patty/plain
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/raw_patty/make_grillable()
 	AddComponent(/datum/component/grillable, patty_type, rand(30 SECONDS, 40 SECONDS), TRUE)
@@ -477,6 +492,7 @@
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 ///Exists purely for the crafting recipe (because itll take subtypes)
 /obj/item/food/patty/plain
@@ -533,6 +549,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 	venue_value = FOOD_PRICE_CHEAP
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/sausage/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/salami, 6, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
@@ -556,6 +573,7 @@
 	foodtypes = MEAT
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/rawkhinkali
 	name = "raw khinkali"
@@ -591,6 +609,7 @@
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/meatbun
 	name = "meat bun"
@@ -605,6 +624,7 @@
 	foodtypes = GRAIN | MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/stewedsoymeat
 	name = "stewed soy meat"
@@ -619,6 +639,7 @@
 	eatverbs = list("slurp", "sip", "inhale", "drink")
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/boiledspiderleg
 	name = "boiled spider leg"
@@ -634,6 +655,7 @@
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/spidereggsham
 	name = "green eggs and ham"
@@ -648,6 +670,7 @@
 	tastes = list("meat" = 1, "the colour green" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/sashimi
 	name = "carp sashimi"
@@ -664,6 +687,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	//total price of this dish is 20 and a small amount more for soy sauce, all of which are available at the orders console
 	venue_value = FOOD_PRICE_CHEAP
+	food_buffs = STATUS_EFFECT_FOOD_RESISTANCE
 
 /obj/item/food/sashimi/Initialize(mapload)
 	. = ..()
@@ -685,6 +709,7 @@
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
 	venue_value = FOOD_PRICE_CHEAP
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/nugget/Initialize(mapload)
 	. = ..()
@@ -705,6 +730,7 @@
 	tastes = list("meat" = 1, "butter" = 1)
 	foodtypes = MEAT | DAIRY | GRAIN
 	w_class = WEIGHT_CLASS_TINY
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/bbqribs
 	name = "bbq ribs"
@@ -719,6 +745,7 @@
 	)
 	tastes = list("meat" = 3, "smokey sauce" = 1)
 	foodtypes = MEAT | SUGAR
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/meatclown
 	name = "meat clown"
@@ -762,6 +789,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 14)
 	tastes = list("meat" = 3, "metal" = 1)
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/kebab/human
 	name = "human-kebab"
@@ -773,6 +801,7 @@
 	tastes = list("tender meat" = 3, "metal" = 1)
 	foodtypes = MEAT | GORE
 	venue_value = FOOD_PRICE_CHEAP
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/kebab/monkey
 	name = "meat-kebab"
@@ -784,6 +813,7 @@
 	tastes = list("meat" = 3, "metal" = 1)
 	foodtypes = MEAT
 	venue_value = FOOD_PRICE_CHEAP
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/kebab/tofu
 	name = "tofu-kebab"
@@ -792,6 +822,7 @@
 	tastes = list("tofu" = 3, "metal" = 1)
 	foodtypes = VEGETABLES
 	venue_value = FOOD_PRICE_CHEAP
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/kebab/tail
 	name = "lizard-tail kebab"
@@ -802,6 +833,7 @@
 	)
 	tastes = list("meat" = 8, "metal" = 4, "scales" = 1)
 	foodtypes = MEAT | GORE
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/kebab/rat
 	name = "rat-kebab"
@@ -816,6 +848,7 @@
 	tastes = list("rat meat" = 1, "metal" = 1)
 	foodtypes = MEAT | GORE
 	venue_value = FOOD_PRICE_CHEAP
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/kebab/rat/double
 	name = "double rat-kebab"
@@ -826,6 +859,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 		/datum/reagent/iron = 2,
 	)
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/kebab/fiesta
 	name = "fiesta skewer"
@@ -850,6 +884,7 @@
 	foodtypes = MEAT | FRIED
 	junkiness = 25
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/fried_chicken/Initialize(mapload)
 	. = ..()
@@ -867,6 +902,7 @@
 	foodtypes = MEAT | FRIED
 	junkiness = 25
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_MEDIUM
 
 /obj/item/food/beef_stroganoff
 	name = "beef stroganoff"
@@ -897,6 +933,7 @@
 	foodtypes = MEAT | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_NORMAL
 	venue_value = FOOD_PRICE_EXOTIC
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_MEDIUM
 
 /obj/item/food/beef_wellington/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/beef_wellington_slice, 3, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
@@ -914,6 +951,7 @@
 	foodtypes = MEAT | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/full_english
 	name = "full english breakfast"
@@ -928,6 +966,7 @@
 	foodtypes = MEAT | VEGETABLES | GRAIN | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_MEDIUM
 
 /obj/item/food/raw_meatloaf
 	name = "raw meatloaf"
@@ -942,6 +981,7 @@
 	tastes = list("raw meat" = 3, "onions" = 1)
 	foodtypes = MEAT | RAW | VEGETABLES
 	w_class = WEIGHT_CLASS_NORMAL
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_MEDIUM
 
 /obj/item/food/raw_meatloaf/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/meatloaf, rand(30 SECONDS, 40 SECONDS), TRUE, TRUE)
@@ -960,6 +1000,7 @@
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_NORMAL
 	burns_in_oven = TRUE
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_MEDIUM
 
 /obj/item/food/meatloaf/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meatloaf_slice, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
@@ -977,6 +1018,7 @@
 	tastes = list("juicy meat" = 3, "onions" = 1, "garlic" = 1, "ketchup" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/sweet_and_sour_meatballs
 	name = "sweet and sour meatballs"
@@ -990,6 +1032,7 @@
 	)
 	tastes = list("meat" = 5, "savory sauce" = 4, "tangy pineapple" = 3, "pepper" = 2)
 	foodtypes = MEAT | VEGETABLES | FRUIT | PINEAPPLE
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/kebab/pineapple_skewer
 	name = "pineapple skewer"
@@ -1002,6 +1045,7 @@
 	)
 	tastes = list("juicy meat" = 4, "pineapple" = 3)
 	foodtypes = MEAT | FRUIT | PINEAPPLE
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/futomaki_sushi_roll
 	name = "futomaki sushi roll"
@@ -1015,6 +1059,7 @@
 	tastes = list("boiled rice" = 4, "fish" = 5, "egg" = 3, "dried seaweed" = 2, "cucumber" = 2)
 	foodtypes = VEGETABLES | SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_RESISTANCE
 
 /obj/item/food/futomaki_sushi_roll/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/futomaki_sushi_slice, 4, screentip_verb = "Chop")
@@ -1031,6 +1076,7 @@
 	tastes = list("boiled rice" = 4, "fish" = 5, "egg" = 3, "dried seaweed" = 2, "cucumber" = 2)
 	foodtypes = VEGETABLES | SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_RESISTANCE
 
 /obj/item/food/philadelphia_sushi_roll
 	name = "Philadelphia sushi roll"
@@ -1044,6 +1090,7 @@
 	tastes = list("boiled rice" = 4, "fish" = 5, "creamy cheese" = 3, "dried seaweed" = 2, "cucumber" = 2)
 	foodtypes = VEGETABLES | SEAFOOD | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_RESISTANCE
 
 /obj/item/food/philadelphia_sushi_roll/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/philadelphia_sushi_slice, 4, screentip_verb = "Chop")
@@ -1060,6 +1107,7 @@
 	tastes = list("boiled rice" = 4, "fish" = 5, "creamy cheese" = 3, "dried seaweed" = 2, "cucumber" = 2)
 	foodtypes = VEGETABLES | SEAFOOD | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_RESISTANCE
 
 
 /obj/item/food/korta_wellington
@@ -1075,6 +1123,7 @@
 	foodtypes = MEAT | VEGETABLES | NUTS
 	w_class = WEIGHT_CLASS_NORMAL
 	venue_value = FOOD_PRICE_EXOTIC
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_MEDIUM
 
 /obj/item/food/korta_wellington/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/korta_wellington_slice, 3, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
@@ -1092,3 +1141,4 @@
 	foodtypes = MEAT | VEGETABLES | NUTS
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY

@@ -150,6 +150,7 @@
 #define INIT_ORDER_QUIRKS 73
 #define INIT_ORDER_REAGENTS 72 //HAS to be before mapping and assets - both create objects, which creates reagents, which relies on lists made in this subsystem
 #define INIT_ORDER_EVENTS 70
+#define INIT_ORDER_GAMEMODE 69 //events need to actually exist if we want to use them
 #define INIT_ORDER_IDACCESS 66
 #define INIT_ORDER_JOBS 65 // Must init before atoms, to set up properly the dynamic job lists.
 #define INIT_ORDER_TICKER 60 // monkestation edit: ticker needs to start before media_tracks before it loads tracks, since ticker loads and adds lobby tracks from config
@@ -249,6 +250,7 @@
 #define FIRE_PRIORITY_ASSETS 105
 #define FIRE_PRIORITY_TGUI 110
 #define FIRE_PRIORITY_TICKER 200
+#define FIRE_PRIORITY_SINGULO 350
 #define FIRE_PRIORITY_STATPANEL 390
 #define FIRE_PRIORITY_CHAT 400
 #define FIRE_PRIORITY_RUNECHAT 410
@@ -394,8 +396,7 @@
 #define SSLIQUIDS_RUN_TYPE_EVAPORATION 4
 #define SSLIQUIDS_RUN_TYPE_FIRE 5
 #define SSLIQUIDS_RUN_TYPE_OCEAN 6
-#define SSLIQUIDS_RUN_TYPE_TEMPERATURE 7
-#define SSLIQUIDS_RUN_TYPE_CACHED_EDGES 8
+#define SSLIQUIDS_RUN_TYPE_CACHED_EDGES 7
 
 ///The default state, no NT Representative ever spawned in.
 #define NT_REP_STATUS_DOESNT_EXIST 0

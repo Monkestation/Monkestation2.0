@@ -48,6 +48,10 @@
 #define BASE_CLOWN_REAGENTS list(\
 		/datum/reagent/consumable/laughter\
 	)
+#define BASE_EPI_REAGENTS list(\
+		/datum/reagent/medicine/epinephrine,\
+		/datum/reagent/medicine/salglu_solution,\
+	)
 #define HACKED_CLOWN_REAGENTS list(\
 		/datum/reagent/consumable/superlaughter\
 	)
@@ -302,6 +306,11 @@
 	name = "laughter injector"
 	desc = "Keeps the crew happy and productive!"
 	default_reagent_types = BASE_CLOWN_REAGENTS
+
+/obj/item/reagent_containers/borghypo/epi
+	name = "Emergency Hypospray"
+	desc = "Better then nothing, right?"
+	default_reagent_types = BASE_EPI_REAGENTS
 
 /obj/item/reagent_containers/borghypo/clown/hacked
 	desc = "Keeps the crew so happy they don't work!"

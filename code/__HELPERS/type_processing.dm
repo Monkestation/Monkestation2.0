@@ -48,7 +48,7 @@
 			/obj/item/reagent_containers = "REAGENT_CONTAINERS",
 			/obj/item/reagent_containers/pill = "PILL",
 			/obj/item/reagent_containers/pill/patch = "MEDPATCH",
-			/obj/item/reagent_containers/hypospray/medipen = "MEDIPEN",
+			/obj/item/reagent_containers/medipen = "MEDIPEN",
 			/obj/item/reagent_containers/cup/glass = "DRINK",
 			/obj/item/food = "FOOD",
 			/obj/item/bodypart = "BODYPART",

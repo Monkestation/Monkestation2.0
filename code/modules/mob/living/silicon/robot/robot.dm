@@ -52,10 +52,10 @@
 	if(!scrambledcodes && !builtInCamera)
 		builtInCamera = new (src)
 		builtInCamera.c_tag = real_name
-		builtInCamera.network = list("ss13")
+		builtInCamera.network = list(CAMERANET_NETWORK_SS13)
 		builtInCamera.internal_light = FALSE
 		if(wires.is_cut(WIRE_CAMERA))
-			builtInCamera.status = 0
+			builtInCamera.camera_enabled = 0
 	update_icons()
 	. = ..()
 
@@ -178,6 +178,7 @@
 			"Miner" = /obj/item/robot_model/miner,
 			"Janitor" = /obj/item/robot_model/janitor,
 			"Service" = /obj/item/robot_model/service,
+			"Standard" = /obj/item/robot_model/standard,
 		)
 		if(!CONFIG_GET(flag/disable_peaceborg))
 			GLOB.cyborg_model_list["Peacekeeper"] = /obj/item/robot_model/peacekeeper

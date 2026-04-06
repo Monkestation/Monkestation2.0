@@ -27,9 +27,9 @@
 	desc = "Contains eight different medipens in three different varieties, \
 		to assist in quickly treating seriously injured patients."
 	cost = CARGO_CRATE_VALUE * 3.5
-	contains = list(/obj/item/reagent_containers/hypospray/medipen = 2,
-					/obj/item/reagent_containers/hypospray/medipen/ekit = 3,
-					/obj/item/reagent_containers/hypospray/medipen/blood_loss = 3)
+	contains = list(/obj/item/reagent_containers/medipen = 2,
+					/obj/item/reagent_containers/medipen/ekit = 3,
+					/obj/item/reagent_containers/medipen/blood_loss = 3)
 	crate_name = "medipen crate"
 
 /datum/supply_pack/medical/chemical
@@ -77,8 +77,9 @@
 					/obj/item/reagent_containers/cup/bottle/epinephrine,
 					/obj/item/reagent_containers/cup/bottle/morphine,
 					/obj/item/reagent_containers/cup/bottle/toxin,
+					/obj/item/reagent_containers/cup/bottle/formaldehyde,
 					/obj/item/reagent_containers/cup/beaker/large,
-					/obj/item/reagent_containers/pill/insulin,
+					/obj/item/reagent_containers/syringe/convermol = 2,
 					/obj/item/stack/medical/gauze,
 					/obj/item/storage/box/beakers,
 					/obj/item/storage/box/medigels,
@@ -91,8 +92,6 @@
 					/obj/item/storage/medkit/fire,
 					/obj/item/defibrillator/loaded,
 					/obj/item/reagent_containers/blood/o_minus,
-					/obj/item/storage/pill_bottle/mining,
-					/obj/item/reagent_containers/pill/neurine,
 					/obj/item/stack/medical/bone_gel = 2,
 					/obj/item/vending_refill/medical,
 					/obj/item/vending_refill/drugs,

@@ -3,6 +3,8 @@ GLOBAL_LIST_INIT(used_sound_channels, list(
 	CHANNEL_LOBBYMUSIC,
 	CHANNEL_ADMIN,
 	CHANNEL_VOX,
+	CHANNEL_ANNOUNCEMENTS,
+	CHANNEL_STORYTELLER,
 	CHANNEL_JUKEBOX,
 	CHANNEL_HEARTBEAT,
 	CHANNEL_AMBIENCE,
@@ -18,8 +20,12 @@ GLOBAL_LIST_INIT(used_sound_channels, list(
 	CHANNEL_SQUEAK,
 	CHANNEL_MOB_EMOTES,
 	CHANNEL_SILICON_EMOTES,
+	CHANNEL_ELEVATOR,
 	CHANNEL_VOICES,
 	CHANNEL_RINGTONES,
+	CHANNEL_DELTA_SIRENS,
+	CHANNEL_ADMIN_SOUNDS,
+	CHANNEL_SHUTTLES,
 ))
 
 GLOBAL_LIST_INIT(proxy_sound_channels, list(
@@ -35,6 +41,8 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 	CHANNEL_MOB_EMOTES,
 	CHANNEL_SILICON_EMOTES,
 	CHANNEL_VOICES,
+	CHANNEL_ADMIN_SOUNDS,
+	CHANNEL_SHUTTLES,
 ))
 
 GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
@@ -54,14 +62,18 @@ GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
 		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_MACHINERY
 	else if(findtext(sound_text_string, "creatures/"))
 		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_MOB_SOUNDS
-	else if(findtext(sound_text_string, "/ai/"))
+	else if(findtext(sound_text_string, "announcer/"))
 		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_VOX
+	else if(findtext(sound_text_string, "ai/"))
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_STORYTELLER
 	else if(findtext(sound_text_string, "chatter/"))
-		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_MOB_SOUNDS
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_VOICES
 	else if(findtext(sound_text_string, "items/"))
 		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SOUND_EFFECTS
 	else if(findtext(sound_text_string, "weapons/"))
 		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SOUND_EFFECTS
+	else if(findtext(sound_text_string, "hyperspace/"))
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SHUTTLES
 	else
 		return FALSE
 
@@ -69,16 +81,12 @@ GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
 /proc/calculate_mixed_volume(client/client, volume, mixer_channel)
 	. = volume
 	var/list/channels = client?.prefs?.channel_volume
-	if(!channels)
-		return volume
-	var/static/master_volume_key = "[CHANNEL_MASTER_VOLUME]"
-
-	if(master_volume_key in channels)
-		. *= channels[master_volume_key] * 0.01
-	if(mixer_channel)
-		var/mixer_channel_key = "[mixer_channel]"
-		if(mixer_channel_key in channels)
-			. *= channels[mixer_channel_key] * 0.01
+	if(isnull(channels))
+		return .
+	. *= channels["[CHANNEL_MASTER_VOLUME]"] * 0.01
+	if(isnull(mixer_channel) || !("[mixer_channel]" in channels))
+		return .
+	. *= channels["[mixer_channel]"] * 0.01
 
 /mob/proc/stop_sound_channel(chan)
 	SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = chan))

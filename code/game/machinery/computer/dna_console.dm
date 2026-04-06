@@ -302,8 +302,9 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/dna_console/multitool_act(mob/living/user, obj/item/multitool/tool)
-	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
-		stored_research = tool.buffer
+	var/datum/buffer = multitool_get_buffer(tool)
+	if(!QDELETED(buffer) && istype(buffer, /datum/techweb))
+		stored_research = buffer
 	return TRUE
 
 /obj/machinery/computer/dna_console/click_alt(mob/user)
@@ -434,7 +435,6 @@
 			data["subjectStatus"] = scanner_occupant.stat
 		data["subjectHealth"] = scanner_occupant.health
 		data["subjectEnzymes"] = scanner_occupant.dna.unique_enzymes
-		data["isMonkey"] = ismonkey(scanner_occupant)
 		data["subjectUNI"] = scanner_occupant.dna.unique_identity
 		data["subjectUF"] = scanner_occupant.dna.unique_features
 		data["storage"]["occupant"] = tgui_occupant_mutations
