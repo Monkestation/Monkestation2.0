@@ -930,8 +930,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HERETIC_SUMMON "heretic_summon"
 /// Lock heretic grasp no longer goes on cooldown when opening things
 #define TRAIT_LOCK_GRASP_UPGRADED "lock_grasp_upgraded"
-/// Trait given to projectiles which have been reflected by a cosmic field.
-#define TRAIT_REFLECTED_BY_COSMIC_FIELD "reflected_by_cosmic_field"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"

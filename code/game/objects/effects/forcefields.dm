@@ -77,6 +77,9 @@
 	receive_ricochet_chance_mod = INFINITY //we do ricochet a lot!
 	initial_duration = 10 SECONDS
 
+/// Used to track if a projectile has already been reflected by a cosmic field.
+#define TRAIT_REFLECTED_BY_COSMIC_FIELD "reflected_by_cosmic_field"
+
 GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_field)
 
 /// The cosmic heretics forcefield
@@ -230,3 +233,5 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 
 /obj/effect/forcefield/cosmic_field/extrafast
 	initial_duration = 2.5 SECONDS
+
+#undef TRAIT_REFLECTED_BY_COSMIC_FIELD
