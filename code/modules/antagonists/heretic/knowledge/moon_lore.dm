@@ -84,7 +84,7 @@
 	if(!iscarbon(target))
 		return
 	if(IS_MONSTERHUNTER(target))
-		to_chat(target, span_danger("You hear echoing laughter from above... but it is <i>pathetic</i> compared to what surrounds you."))
+		to_chat(target, span_danger("You hear echoing laughter from above. And yet you cannot help but notice the pain and desperation it hides..."))
 		return
 	var/mob/living/carbon/carbon_target = target
 	to_chat(carbon_target, span_danger("You hear echoing laughter from above!"))
