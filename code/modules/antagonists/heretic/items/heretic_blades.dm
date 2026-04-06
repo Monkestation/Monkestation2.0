@@ -234,6 +234,11 @@
 	icon_state = "moon_blade"
 	inhand_icon_state = "moon_blade"
 	after_use_message = "The Moon hears your call..."
+	hitsound = 'sound/weapons/moonblade_hit.ogg'
+
+/obj/item/melee/sickly_blade/moon/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, INNATE_TRAIT)
 
 // Path of Nar'Sie's blade
 // What!? This blade is given to cultists as an altar item when they sacrifice a heretic.
