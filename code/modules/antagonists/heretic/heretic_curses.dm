@@ -74,7 +74,7 @@
 		return TRUE
 
 	if(IS_MONSTERHUNTER(to_curse))
-		to_chat(user, span_warning("Something incomprehensible lashes out at you as you attempt to curse [to_curse], tearing your flesh asunder!"))
+		to_chat(user, span_boldwarning("As you attempt to lay your curse upon [to_curse], something otherworldly reaches forth to bite and tears away at your body. Some hidden beast shadows your target!"), type = MESSAGE_TYPE_WARNING)
 		if(iscarbon(user) && !HAS_TRAIT(user, TRAIT_NEVER_WOUNDED) && !isoozeling(user)) // too lazy to do proper checks for "can they actually be slash wounded", this should suffice
 			var/mob/living/carbon/carbon_user = user
 			carbon_user.cause_wound_of_type_and_severity(WOUND_SLASH, pick(carbon_user.bodyparts), WOUND_SEVERITY_MODERATE, wound_source = "attempted monster hunter curse")

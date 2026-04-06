@@ -247,7 +247,7 @@
 		to_chat(convertee, span_boldwarning("[user]'s rise is influencing those who are weak willed. Their minds shall rend."))
 		return FALSE
 	if(IS_MONSTERHUNTER(convertee)) // they get special text (they're shielded by the TRAIT_UNCONVERTABLE check anyways)
-		to_chat(convertee, span_boldwarning("Echoing laughter pierces the veil around you... a weak, monstrous mockery of Wonderland."))
+		to_chat(convertee, span_boldwarning("This charade performed by moonstruck jesters cannot compare to the dream. To Wonderland. You are unimpressed."))
 		return FALSE
 	// Mindshielded and anti-magic folks are immune against this effect because this is a magical mind effect
 	if(HAS_MIND_TRAIT(convertee, TRAIT_UNCONVERTABLE) || HAS_TRAIT_NOT_FROM(convertee, TRAIT_MINDSHIELD, NANITES_TRAIT) || convertee.can_block_magic(MAGIC_RESISTANCE))
