@@ -98,7 +98,7 @@
 		if(iscarbon(owner.current))
 			var/mob/living/carbon/current_carbon = owner.current
 			var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet = new(current_carbon.drop_location())
-			var/list/slots = list(
+			var/static/list/slots = list(
 				LOCATION_NECK,
 				LOCATION_HANDS,
 				LOCATION_RPOCKET,
