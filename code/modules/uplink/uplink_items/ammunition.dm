@@ -157,5 +157,5 @@
 /datum/uplink_item/ammo/rubber
 	name = "Rubber Ammo Box"
 	desc = "A box with 16 rubber shells. A less-lethal high stamina damage spread of rubber pellets."
-	cost = 3
+	cost = 2
 	item = /obj/item/ammo_box/advanced/s12gauge/rubber
