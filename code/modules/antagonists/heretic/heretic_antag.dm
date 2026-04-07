@@ -442,7 +442,7 @@
 	)
 	our_mob.update_appearance(UPDATE_OVERLAYS)
 
-/// Removes the ability to blade break, removes cloak of shadows and removes the cap on how many blades you can craft
+/// Removes the ability to blade break and removes the cap on how many blades you can craft
 /datum/antagonist/heretic/proc/disable_blade_breaking()
 	if(unlimited_blades)
 		return
@@ -451,8 +451,6 @@
 	to_chat(heretic_mob, span_boldwarning("You have gained a lot of power, the mansus will no longer allow you to break your blades, but you can now make as many as you wish."))
 	heretic_mob.balloon_alert(heretic_mob, "blade breaking disabled!")
 	update_heretic_aura()
-	var/datum/action/cooldown/spell/shadow_cloak/cloak_spell = locate() in heretic_mob.actions
-	cloak_spell.Remove(heretic_mob)
 	show_to_ghosts = TRUE // you're visible anyways
 
 /// Adds an overlay to the heretic

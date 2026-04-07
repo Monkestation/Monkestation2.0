@@ -197,14 +197,6 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	research_tree_icon_path = 'icons/obj/clothing/neck.dmi'
 	research_tree_icon_state = "eldritch_necklace"
 
-/datum/heretic_knowledge/spell/cloak_of_shadows
-	name = "Cloak of Shadow"
-	desc = "Grants you the spell Cloak of Shadow. This spell will completely conceal your identity in a purple smoke \
-		for three minutes, assisting you in keeping secrecy. Requires a focus to cast."
-	action_to_add = /datum/action/cooldown/spell/shadow_cloak
-	cost = 0
-	is_starting_knowledge = TRUE
-
 /**
  * Codex Cicatrixi is available at the start:
  * This allows heretics to choose if they want to rush all the influences and take them stealthily, or
