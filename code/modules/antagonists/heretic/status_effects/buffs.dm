@@ -5,6 +5,7 @@
 	id = "Blessing of Crucible Soul"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 40 SECONDS
+	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = /atom/movable/screen/alert/status_effect/crucible_soul
 	show_duration = TRUE
 	///Stores the location where the mob drank the potion, used to teleport the drinker back to the spot after expiration
@@ -57,6 +58,7 @@
 	id = "Blessing of Dusk and Dawn"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 90 SECONDS
+	tick_interval = STATUS_EFFECT_NO_TICK
 	show_duration = TRUE
 	alert_type =/atom/movable/screen/alert/status_effect/duskndawn
 
@@ -293,6 +295,7 @@
 	id = "Caretaker’s Last Refuge"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = null
 	var/static/list/caretaking_traits = list(TRAIT_GODMODE, TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN, TRAIT_SECLUDED_LOCATION)
 
@@ -355,6 +358,7 @@
 	id = "Moon Grasp Hide Identity"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 15 SECONDS
+	tick_interval = STATUS_EFFECT_NO_TICK
 	show_duration = TRUE
 	alert_type = /atom/movable/screen/alert/status_effect/moon_grasp_hide
 
@@ -375,8 +379,8 @@
 	id = "heretic_lastresort"
 	alert_type = /atom/movable/screen/alert/status_effect/heretic_lastresort
 	duration = 12 SECONDS
-	status_type = STATUS_EFFECT_REPLACE
 	tick_interval = STATUS_EFFECT_NO_TICK
+	status_type = STATUS_EFFECT_REPLACE
 
 /atom/movable/screen/alert/status_effect/heretic_lastresort
 	name = "Last Resort"

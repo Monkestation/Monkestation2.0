@@ -56,24 +56,27 @@
 	remove_on_fullheal = TRUE
 	alert_type = null
 	duration = 3 SECONDS
-	on_remove_on_mob_delete = TRUE
-	///This overlay is applied to the owner for the duration of the effect.
-	var/static/mutable_appearance/mob_overlay
+	tick_interval = STATUS_EFFECT_NO_TICK
 
 /datum/status_effect/cloudstruck/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
-	if(!mob_overlay)
-		mob_overlay = mutable_appearance('icons/effects/eldritch.dmi', "cloud_swirl", ABOVE_MOB_LAYER)
 	return ..()
 
 /datum/status_effect/cloudstruck/on_apply()
-	owner.add_overlay(mob_overlay)
 	owner.become_blind(id)
+	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_cloud_overlay))
+	owner.update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
 /datum/status_effect/cloudstruck/on_remove()
 	owner.cure_blind(id)
-	owner.cut_overlay(mob_overlay)
+	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
+	owner.update_appearance(UPDATE_OVERLAYS)
+
+/// Updates the overlay of the owner
+/datum/status_effect/cloudstruck/proc/add_cloud_overlay(atom/source, list/overlays)
+	SIGNAL_HANDLER
+	overlays += mutable_appearance('icons/effects/eldritch.dmi', "cloud_swirl", ABOVE_MOB_LAYER)
 
 /datum/status_effect/heretic_sated
 	id = "heretic_sated"
@@ -145,6 +148,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/star_mark
 	remove_on_fullheal = TRUE
 	duration = 30 SECONDS
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_REPLACE
 	///overlay used to indicate that someone is marked
 	var/mutable_appearance/cosmic_overlay
@@ -201,6 +205,7 @@
 	id = "moon converted"
 	alert_type = /atom/movable/screen/alert/status_effect/moon_converted
 	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_REPLACE
 	remove_on_fullheal = TRUE
 	heal_flag_necessary = HEAL_ADMIN
@@ -274,6 +279,7 @@
 /datum/status_effect/moon_slept
 	id = "moon slept"
 	duration = 2 MINUTES
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	remove_on_fullheal = TRUE
 	alert_type = null

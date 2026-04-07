@@ -1,6 +1,7 @@
 /datum/status_effect/eldritch
 	id = "heretic_mark"
 	duration = 15 SECONDS
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	on_remove_on_mob_delete = TRUE
