@@ -76,3 +76,40 @@
   cam_dev:
   - rscdel: removed moaning from some reagents that caused it
   - rscadd: added sway and twitch_s in many reagents to replace moaning
+2026-04-07:
+  Absolucy:
+  - bugfix: Xenos can no longer clog up the roundend report by repeatedly entering
+      and exiting xenobio containment.
+  DaworseplayerEver:
+  - rscadd: Added brute, burn, oxy, toxin, and robotic patch medkit inside while also
+      replacing the expedition medkit with the combat medical medkit.
+  - rscadd: two legacy, two normal, a toxin, and oxygen medkit into another crate
+      for "Surplus"
+  - rscadd: Box of beakers, bodybag, sterile mask, and a emergency roller bed into
+      the medbay medical locker.
+  - rscadd: syndicate bodybag, security belt, box of cuffs, and a flash to the guard
+      locker room.
+  - rscadd: One syndicate inducer in engineering.
+  - rscadd: A syndicate bunny box in QM locker. Style!
+  - rscadd: One extra box of deluxe parts.
+  - map: Modified syndicate depot dorm rooms to be a tile longer!
+  - map: add 3 syndicate modsuit storage units in depots EVA and quartermaster room.
+  - map: Modified the brig bed into a shitter version. Sorry prisoners.
+  JohnFulpWillard:
+  - rscadd: Simians can now have a Big Stick that indicates them as being Leader of
+      the Simians. Beat your leader over the head and take it for yourself if you
+      don't like them.
+  - rscadd: You can now get a Chimp translation encryption key from Cargo.
+  - bugfix: Monkeys can now have prosthetic limbs.
+  - bugfix: Simians can no longer take the Outsider quirk.
+  Shoddd:
+  - bugfix: updates description of surplus crates to new tc values
+  Tractor-Maam:
+  - bugfix: silicons piloting Sheet Metal Drills no longer cause it to become invisible.
+  - bugfix: silicons piloting Portapotty Ambulances no longer cause it to become invisible.
+  - bugfix: silicons piloting Locker Mechs no longer cause it to become invisible.
+  notghosti:
+  - bugfix: Ashwalkers eggs created is now properly tracked.
+  - map: Pubby cargo now doesn't have a exposed floor in mining
+  - map: Pubby cargo now no longer has a exposed cargo console to the public.
+  - rscdel: Removed Instability from seed extractors
