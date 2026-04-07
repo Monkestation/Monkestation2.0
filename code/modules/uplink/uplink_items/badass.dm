@@ -1,5 +1,5 @@
 /datum/uplink_category/badassery
-	name = "Badassery" // Being a badass is not pointless
+	name = "(pointless) Badassery" //noted as pointless so new players dont waste their TC on them
 	weight = 0
 
 /datum/uplink_item/badass

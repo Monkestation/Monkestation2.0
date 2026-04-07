@@ -51,7 +51,6 @@
 		data["primary_objectives"] = primary_objectives
 		data["potential_objectives"] = potential_objectives
 		data["active_objectives"] = active_objectives
-		data["completed_final_objective"] = uplink_handler.final_objective
 
 	var/list/stock_list = uplink_handler.get_item_stock().Copy()
 	var/list/extra_purchasable_stock = list()

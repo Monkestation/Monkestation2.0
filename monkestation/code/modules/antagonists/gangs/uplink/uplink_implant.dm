@@ -88,11 +88,11 @@
 	return TRUE
 
 /obj/item/implant/uplink/gang/boss
-	starting_tc = 25 //bosses get extra TC over traitors
+	starting_tc = GANG_BOSS_STARTING_TC //bosses get extra TC over traitors
 	antag_type = /datum/antagonist/gang_member/boss
 
 /obj/item/implant/uplink/gang/lieutenant
-	starting_tc = 10
+	starting_tc = GANG_LIEUTENANT_STARTING_TC
 	antag_type = /datum/antagonist/gang_member/lieutenant
 
 //implanters

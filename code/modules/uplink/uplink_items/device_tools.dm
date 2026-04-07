@@ -99,6 +99,7 @@
 			After hacking a certain number of airlocks, the device will require some time to recharge."
 	item = /obj/item/card/emag/doorjack
 	cost = 3
+	purchasable_from = ~UPLINK_GANGS //if you want access find someone who can get you in, your a conversion antagonist
 
 /datum/uplink_item/device_tools/frame
 	name = "F.R.A.M.E. disk"
@@ -237,7 +238,7 @@
 	item = /obj/item/sbeacondrop
 	cost = 10
 	surplus = 50 // not while there isnt one on any station, monkestation edit: from 0 to 50, we have them
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS)
 
 /datum/uplink_item/device_tools/powersink
 	name = "Power Sink"
@@ -269,6 +270,7 @@
 			Comes with 5 charges."
 	item = /obj/item/compression_kit
 	cost = 5
+	purchasable_from = ~UPLINK_GANGS //too strong with tommyguns
 
 /datum/uplink_item/device_tools/guardian
 	name = "Holoparasites"
@@ -278,7 +280,7 @@
 	item = /obj/item/guardian_creator/tech
 	cost = 15
 	surplus = 40
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //might disable these for gangs
 	restricted = TRUE
 	refundable = TRUE
 
@@ -308,7 +310,7 @@
 	desc = "A contract abusing a loophole found by plasmamen to invade halls with harmful gases \
 			without repercussion or warning, garnering no attention from any higher powers. \
 			Has to be signed by purchaser to be considered valid."
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS)
 	item = /obj/item/card/plasma_license
 	cost = 20
 
@@ -350,7 +352,7 @@
 	item = /obj/vehicle/sealed/mecha/devitt
 	cost = 40
 	surplus = 0 // Two person item
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //probably gonna remove this from gangs
 
 /datum/uplink_item/device_tools/dehy_carp
 	name = "Dehydrated Space Carp"

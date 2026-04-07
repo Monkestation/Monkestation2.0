@@ -38,7 +38,7 @@
 	desc = "The feared MODsuit of a Syndicate agent. Features armoring and a set of inbuilt modules."
 	item = /obj/item/mod/control/pre_equipped/traitor
 	cost = 8
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //you can't buy it in nuke, because the elite modsuit costs the same while being better
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS) //you can't buy it in nuke, because the elite modsuit costs the same while being better
 
 /datum/uplink_item/utility_clothing/thermal_mod
 	name = "MODsuit Thermal Visor Module"
@@ -77,7 +77,7 @@
 			provides the user with superior armor and mobility compared to the standard Syndicate MODsuit."
 	item = /obj/item/mod/control/pre_equipped/traitor_elite
 	// This one costs more than the nuke op counterpart
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS)
 	progression_minimum = 90 MINUTES
 	cost = 16
 	cant_discount = TRUE

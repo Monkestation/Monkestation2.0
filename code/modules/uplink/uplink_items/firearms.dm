@@ -2,10 +2,10 @@
 	name = "Firearms"
 	weight = 9
 
-/datum/uplink_item/firearms
+/datum/uplink_item/firearm
 	category = /datum/uplink_category/firearms
 
-/datum/uplink_item/firearms/foampistol
+/datum/uplink_item/firearm/foampistol
 	name = "Donksoft Riot Pistol Case"
 	desc = "A case containing an innocent-looking toy pistol designed to fire foam darts at higher than normal velocity. \
 		Comes loaded with riot-grade darts effective at incapacitating a target, two spare magazines and a box of loose \
@@ -16,7 +16,7 @@
 	surplus = 50
 	purchasable_from = ~UPLINK_NUKE_OPS
 
-/datum/uplink_item/firearms/pistol
+/datum/uplink_item/firearm/pistol
 	name = "Makarov Pistol Case"
 	desc = "A weapon case containing an unknown variant of the Makarov pistol, along with two spare magazines and a box of loose 9mm ammunition. \
 		Chambered in 9mm. Perfect for frequent skirmishes with security, as well as ensuring you have enough firepower to outlast the competition. \
@@ -25,7 +25,7 @@
 	cost = 7
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
-/datum/uplink_item/firearms/whispering_jester_45
+/datum/uplink_item/firearm/whispering_jester_45
 	name = "Whispering-Jester .45 ACP Handgun"
 	desc = "A .45 handgun that is designed by Rayne Corp. The handgun has a built in suppressor. It's magazines contain 18 rounds and it comes in a weapons\
 	case holding two extra magazines and a ammo box."
@@ -33,7 +33,7 @@
 	cost = 10
 	surplus = 50
 
-/datum/uplink_item/firearms/crossbow
+/datum/uplink_item/firearm/crossbow
 	name = "Miniature Energy Crossbow"
 	desc = "A short bow mounted across a tiller in miniature. \
 	Small enough to fit into a pocket or slip into a bag unnoticed. \
@@ -44,24 +44,25 @@
 	item = /obj/item/gun/energy/recharge/ebow
 	cost = 10
 	surplus = 50
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS)
 
-/datum/uplink_item/firearms/revolver
+/datum/uplink_item/firearm/revolver
 	name = "Syndicate Revolver"
 	desc = "Waffle Co.'s modernized Syndicate revolver. Fires 7 brutal rounds of .357 Magnum."
 	item = /obj/item/gun/ballistic/revolver/syndicate
 	progression_minimum = 30 MINUTES
 	cost = 10
 	surplus = 50
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS)
 
-/datum/uplink_item/firearms/rebarxbowsyndie
+/datum/uplink_item/firearm/rebarxbowsyndie
 	name = "Syndicate Rebar Crossbow"
 	desc = "A much more proffessional version of the engineer's bootleg rebar crossbow. 3 shot mag, quicker loading, and better ammo. Owners manual included."
 	item = /obj/item/storage/box/syndie_kit/rebarxbowsyndie
 	cost = 10
+	purchasable_from = ~UPLINK_GANGS
 
-/datum/uplink_item/firearms/laser_musket
+/datum/uplink_item/firearm/laser_musket
 	name = "Syndicate Laser Musket"
 	desc = "An exprimental 'rifle' designed by Aetherofusion. This laser(probably) uses alien technology to fit 4 high energy capacitors \
 			into a small rifle which can be stored safely(?) in any backpack. To charge, simply press down on the main control panel. \
@@ -70,57 +71,62 @@
 	progression_minimum = 30 MINUTES
 	cost = 12
 	surplus = 40
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS)
 
-/datum/uplink_item/firearms/renoster
+/datum/uplink_item/firearm/renoster
 	name = "Renoster Shotgun Case"
 	desc = "A twelve gauge shotgun with an eight shell capacity underneath. Comes with two boxes of buckshot."
 	item = /obj/item/storage/toolbox/guncase/nova/opfor/renoster
 	cost = 10
+	purchasable_from = ~UPLINK_GANGS
 
-/datum/uplink_item/firearms/shotgun_revolver
+/datum/uplink_item/firearm/shotgun_revolver
 	name = "\improper Bóbr 12 GA revolver"
 	desc = "An outdated sidearm rarely seen in use by some members of the CIN. A revolver type design with a four shell cylinder. That's right, shell, this one shoots twelve guage.\
 	Comes with a 2 boxes of shotgun slugs and a tutel which works as both a shield and holds ammo to load your revolver with."
 	item = /obj/item/storage/toolbox/guncase/traitor/bobr
 	cost = 5
+	purchasable_from = ~UPLINK_GANGS
 
-/datum/uplink_item/firearms/wespe
+/datum/uplink_item/firearm/wespe
 	name = "Wespe Pistol"
 	desc = "The standard issue service pistol of SolFed's various military branches. Comes with attached light. Comes in a weapon magazine with two extras magazines and \
 	an ammo box, we don't recommend this one for much more than assistants however"
 	progression_minimum = 5 MINUTES
 	item = /obj/item/storage/toolbox/guncase/traitor/wespe
 	cost = 3
+	purchasable_from = ~UPLINK_GANGS
 
-/datum/uplink_item/firearms/shit_smg
+/datum/uplink_item/firearm/shit_smg
 	name = "Surplus Smg Bundle"
 	desc = "A single surplus Plastikov SMG and two extra magazines. A terrible weapon, perfect for henchmen."
 	item = /obj/item/storage/box/syndie_kit/shit_smg_bundle
 	cost = 4
+	purchasable_from = ~UPLINK_GANGS
 
-/datum/uplink_item/firearms/renoster
+/datum/uplink_item/firearm/renoster
 	name = "Renoster Shotgun Case"
 	desc = "A twelve gauge shotgun with an eight shell capacity underneath. Comes with two boxes of buckshot."
 	item = /obj/item/storage/toolbox/guncase/nova/opfor/renoster
 	cost = 10
+	purchasable_from = ~UPLINK_GANGS
 
-/datum/uplink_item/firearms/slipstick
+/datum/uplink_item/firearm/slipstick
 	name = "Syndie Lipstick"
 	desc = "Stylish way to kiss to death, isn't it syndiekisser?"
 	item = /obj/item/lipstick/syndie
 	cost = 12
 
-/datum/uplink_item/firearms/dart_pistol
+/datum/uplink_item/firearm/dart_pistol
 	name = "Dart Pistol"
 	desc = "A miniaturized version of a normal syringe gun. It is very quiet when fired and can fit into any \
 			space a small item can."
 	item = /obj/item/gun/syringe/syndicate
 	cost = 4
 	surplus = 50
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS)
 
-/datum/uplink_item/firearms/fss_disk
+/datum/uplink_item/firearm/fss_disk
 	name = "FSS-550 disk"
 	desc = "A disk that allows an autolathe to print the FSS-550 and associated ammo. \
 	The FSS-550 is a modified version of the WT-550 autorifle, it's good for arming a large group, but is weaker compared to 'proper' guns."

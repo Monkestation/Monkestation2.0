@@ -110,8 +110,8 @@
 	control.generate_image(picked_mobs)
 
 /datum/round_event/antagonist/start()
-	for(var/datum/mind/antag_mind as anything in setup_minds)
-		add_datum_to_mind(antag_mind, antag_mind.current)
+	for(var/datum/mind/antag_mind in setup_minds)
+		add_datum_to_mind(antag_mind)
 	spawn_extra_events()
 
 /datum/round_event/antagonist/proc/add_datum_to_mind(datum/mind/antag_mind)

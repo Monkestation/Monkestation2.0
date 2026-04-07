@@ -44,9 +44,16 @@
 	max_occurrences = 0
 //	preferred_events = list(/datum/round_event_control/antagonist/solo/traitor = 1)
 
+/datum/round_event_control/antagonist/solo/gangs/get_antag_amount()
+	return ..() * 2 //bit of a hack but we need twice the actual amount so we can get the lieutenants in correctly
+
 /datum/round_event/antagonist/solo/gangs
 
-/datum/round_event/antagonist/solo/gangs/add_datum_to_mind(datum/mind/antag_mind)
-	var/datum/antagonist/gang_member/boss/boss_datum = ..()
-	boss_datum.handler.telecrystals = /obj/item/implant/uplink/gang/boss::starting_tc
-	return boss_datum
+/datum/round_event/antagonist/solo/gangs/start()
+	while(length(setup_minds))
+		var/datum/mind/boss_mind = pick_n_take(setup_minds)
+		var/datum/mind/lieutenant_mind = pick_n_take(setup_minds)
+		var/datum/antagonist/gang_member/boss_datum = boss_mind.add_antag_datum(/datum/antagonist/gang_member/boss)
+		boss_datum.handler.telecrystals = GANG_BOSS_STARTING_TC
+		var/datum/antagonist/gang_member/lieutenant_datum = lieutenant_mind.add_antag_datum(/datum/antagonist/gang_member/lieutenant)
+		lieutenant_datum.handler.telecrystals = GANG_LIEUTENANT_STARTING_TC
