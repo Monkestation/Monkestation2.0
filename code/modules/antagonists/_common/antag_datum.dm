@@ -282,7 +282,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 			to_chat(owner.current, span_boldnotice("For more info, read the panel. \
 				You can always come back to it using the button in the top left."))
 			// uses a timer so it doesn't block, but still gives time for the rest of on_gain() to do its thing
-			addtimer(CALLBACK(info_button, TYPE_PROC_REF(/datum/action, Trigger)), 0.1 SECONDS)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, ui_interact), owner.current), 0.1 SECONDS)
 		var/type_policy = get_policy("[type]") // path to text
 		if(type_policy)
 			to_chat(owner.current, type_policy)
