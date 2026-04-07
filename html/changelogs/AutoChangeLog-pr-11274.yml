@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - image: "Added a new sprite for chasm filler capsules (sprited by Ice Type)"
+  - image: "Added a new sprite for luxury oozeling medipens (sprited by Bieyes)"

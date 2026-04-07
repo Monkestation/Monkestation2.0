@@ -3072,3 +3072,19 @@
 		if(SPT_PROB(10, seconds_per_tick))
 			affected_mob.emote(pick("twitch","choke","shiver","gag"))
 		..()
+
+/datum/reagent/scrunchium
+	name = "High-Purity Scrunchium"
+	color = "#72bba7"
+	description = "Scrunches fools who consume it."
+	taste_description = "the intensely painful sensation of your bones and flesh compacting"
+	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	ph = 7
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/scrunchium/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
+	. = ..()
+	if(!HasElement(exposed_mob, /datum/element/squish))
+		exposed_mob.adjustBruteLoss(20)
+		exposed_mob.AddElement(/datum/element/squish, reac_volume * 5 SECONDS)
+		exposed_mob.visible_message(span_warning("[exposed_mob] is violently compacted for no apparent reason!"), span_warning("Your flesh and bone suddenly collapse inwards, scrunching you flat!"))
