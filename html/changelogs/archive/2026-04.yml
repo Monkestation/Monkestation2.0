@@ -76,3 +76,8 @@
   cam_dev:
   - rscdel: removed moaning from some reagents that caused it
   - rscadd: added sway and twitch_s in many reagents to replace moaning
+2026-04-07:
+  Tractor-Maam:
+  - bugfix: silicons piloting Sheet Metal Drills no longer cause it to become invisible.
+  - bugfix: silicons piloting Portapotty Ambulances no longer cause it to become invisible.
+  - bugfix: silicons piloting Locker Mechs no longer cause it to become invisible.

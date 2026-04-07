@@ -4,7 +4,6 @@
 	icon = 'icons/mecha/mecha.dmi'
 	icon_state = "sheetmetaldrill"
 	base_icon_state = "sheetmetaldrill"
-	silicon_icon_state = "null"
 	max_integrity = 65
 	lights_power = 8
 	movedelay = 2.5
