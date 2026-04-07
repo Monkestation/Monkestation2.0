@@ -70,7 +70,7 @@
 
 	carbon_hit.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/heretic)
 	carbon_hit.AdjustKnockdown(5 SECONDS/* , daze_amount = 3 SECONDS */)
-	carbon_hit.stamina?.adjust(-80)
+	carbon_hit.stamina?.adjust(-65)
 
 	caster.do_attack_animation(carbon_hit, used_item = hand)
 	caster.changeNext_move(CLICK_CD_MELEE)

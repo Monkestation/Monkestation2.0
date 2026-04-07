@@ -131,7 +131,7 @@
 	// These stats are only applied if the weapon is fired fully aimed
 	// If fired without aiming or at someone too close, it will do much less
 	damage = 30
-	stamina = 30
+	stamina = 25
 	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 	///The mob that is currently inside the bullet
 	var/mob/stored_mob
