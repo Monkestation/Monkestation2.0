@@ -15,20 +15,15 @@
 	/// The turf being searched
 	var/turf/source_turf
 
-
 /datum/lootpanel/New(client/owner)
 	. = ..()
-
 	src.owner = owner
-
 
 /datum/lootpanel/Destroy(force)
 	reset_contents()
 	owner = null
 	source_turf = null
-
 	return ..()
-
 
 /datum/lootpanel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -37,26 +32,19 @@
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
-
 /datum/lootpanel/ui_host(mob/user)
 	return source_turf
 
-
 /datum/lootpanel/ui_close(mob/user)
-	. = ..()
-
 	UnregisterSignal(source_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
 	source_turf = null
 	reset_contents()
 
-
 /datum/lootpanel/ui_data(mob/user)
 	var/list/data = list()
-
 	data["contents"] = get_contents()
 	data["is_blind"] = !!user.is_blind()
 	data["searching"] = length(to_image)
-
 	return data
 
 
@@ -65,8 +53,5 @@
 	if(.)
 		return
 
-	switch(action)
-		if("grab")
-			return grab(usr, params)
-
-	return FALSE
+	if(action == "grab")
+		return grab(usr, params)
