@@ -3,7 +3,6 @@
 	id = SPECIES_SIMIAN
 	inherent_traits = list(
 		TRAIT_NO_UNDERWEAR,
-		TRAIT_NO_AUGMENTS, //Their bodytype doesn't allow augments, this prevents the futile effort.
 		TRAIT_MUTANT_COLORS,
 		TRAIT_FUR_COLORS,
 		//Simian unique traits
@@ -30,9 +29,35 @@
 	species_race_mutation = /datum/mutation/race/simian
 	give_monkey_species_effects = FALSE
 
+/datum/species/monkey/simian/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
+	. = ..()
+	var/datum/atom_hud/data/human/simian/simian_hud = GLOB.huds[DATA_HUD_SIMIAN]
+	simian_hud.show_to(human_who_gained_species)
+
+/datum/species/monkey/simian/on_species_loss(mob/living/carbon/human/C)
+	var/datum/atom_hud/data/human/simian/simian_hud = GLOB.huds[DATA_HUD_SIMIAN]
+	simian_hud.hide_from(C)
+	return ..()
+
 /datum/species/monkey/simian/get_species_description()
 	return "Simians are the closest siblings to Humans, unlike Monkeys, which is a term reserved for bio-engineered and mass produced \
 		creations that can be packaged into a cube, known as the Monkey Cube."
+
+/datum/species/monkey/simian/get_species_lore()
+	return list(
+		"Simians have always been looked down upon. Stolen from Ooga-9 as throwaway test subjects, \
+		these sentient apes have been fighting for their freedom as long as Nanotrasen records go, \
+		through a secret organization called Jungle Fever.",
+
+		"Once the Monkey Cube was created however, Nanotrasen no longer saw use for using sentient creatures, \
+		and granted Simians basic rights and continued employment at the corporation.",
+
+		"This was a great happenstance for the orgnization, which suddenly gained a massive following as it suddenly became legal \
+		and was even praised for their work in the Simian resistance. \
+		This eventually led to bankrolling from large simian-owned companies such as Bananotrasen.",
+
+		"Their organization collectivizes itself through what they call the Alpha, the one wielding the largest stick.",
+	)
 
 /datum/species/monkey/simian/create_pref_unique_perks()
 	var/list/to_add = list()
@@ -84,3 +109,86 @@
 /datum/species/monkey/simian/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
 	var/obj/item/clothing/mask/translator/simian_translator = new /obj/item/clothing/mask/translator(equipping.loc)
 	equipping.equip_to_slot(simian_translator, ITEM_SLOT_NECK)
+
+///The Simian Big Stick. I found it in the forest and kept it.
+/obj/item/big_stick
+	name = "big stick"
+	desc = "A big stick, probably found in the latest trip to the forest. God it looks cool though."
+	icon = 'icons/obj/weapons/stick.dmi'
+	worn_icon = 'icons/mob/clothing/back/stick.dmi'
+	icon_state = "stick0"
+	base_icon_state = "stick"
+	lefthand_file = 'icons/mob/inhands/weapons/stick_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/stick_righthand.dmi'
+
+	force = 10
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	throw_speed = 0.1
+	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
+	attack_verb_simple = list("smash", "slam", "whack", "thwack")
+	resistance_flags = FLAMMABLE
+	block_chance = 40
+	armour_penetration = 50
+	attack_verb_continuous = list("bludgeons", "whacks", "disciplines")
+	attack_verb_simple = list("bludgeon", "whack", "discipline")
+
+	///The simian holding the stick. Eek ook.
+	var/mob/living/simian_affected
+
+/obj/item/big_stick/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = 10, \
+		force_wielded = 14, \
+		icon_wielded = "[base_icon_state]1", \
+	)
+
+/obj/item/big_stick/Destroy(force)
+	simian_affected = null
+	return ..()
+
+/obj/item/big_stick/update_icon_state()
+	icon_state = "[base_icon_state]0"
+	return ..()
+
+/obj/item/big_stick/equipped(mob/living/user, slot, initial)
+	if(!ismonkey(user) || (user == simian_affected))
+		return ..()
+	ADD_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)
+	AddComponent(/datum/component/limbless_aid)
+	. = ..()
+	log_game("[user] has picked up the Big Stick (become Simian Leader).")
+	simian_affected = user
+	simian_affected.hud_add_simian_alpha()
+	RegisterSignal(simian_affected, COMSIG_SPECIES_LOSS, PROC_REF(on_species_change))
+	RegisterSignal(simian_affected, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
+
+/obj/item/big_stick/dropped(mob/living/user, silent)
+	remove_effects()
+	return ..()
+
+///When the simian holding us swaps species, we're no longer a 'simian' so aren't an Alpha anymore.
+/obj/item/big_stick/proc/on_species_change(mob/living/carbon/source, datum/species/lost_species)
+	SIGNAL_HANDLER
+	remove_effects()
+
+///Called when examined, Simians get a special text for stick holders.
+/obj/item/big_stick/proc/on_examined(atom/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(ismonkey(user) || isobserver(user))
+		examine_list += span_danger("[source.p_theyre(TRUE)] wielding \the [src]! [source.p_theyre(TRUE)] the Leader of the Simians!")
+
+/obj/item/big_stick/proc/remove_effects()
+	REMOVE_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)
+	qdel(GetComponent(/datum/component/limbless_aid))
+	if(isnull(simian_affected))
+		return
+	if(QDELETED(simian_affected))
+		simian_affected = null
+		return
+	log_game("[simian_affected] dropped the Big Stick (lost Simian Leader).")
+	simian_affected.hud_remove_simian_alpha()
+	UnregisterSignal(simian_affected, list(COMSIG_SPECIES_LOSS, COMSIG_ATOM_EXAMINE))
+	simian_affected = null

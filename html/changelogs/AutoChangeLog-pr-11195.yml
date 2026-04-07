@@ -1,0 +1,5 @@
+author: "TheColorCyan"
+delete-after: True
+changes:
+  - rscadd: "Slimes can now wear hats!"
+  - rscdel: "Slime accessories are no longer in the game, there was only one and completely inaccessible anyway"

@@ -133,6 +133,15 @@
 	var/datum/mind/progenitor
 	var/captive_xenos = 1
 
+/datum/team/xeno/captive/Destroy(force)
+	progenitor = null
+	return ..()
+
+/datum/team/xeno/captive/remove_member(datum/mind/member)
+	. = ..()
+	if(!length(members))
+		qdel(src)
+
 //XENO
 /mob/living/carbon/alien/mind_initialize()
 	..()
