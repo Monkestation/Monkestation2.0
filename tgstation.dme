@@ -8606,7 +8606,7 @@
 #include "monkestation\code\modules\slimecore\mobs\pet_commands\stop_feeding.dm"
 #include "monkestation\code\modules\slimecore\reagents\_base_reagent.dm"
 #include "monkestation\code\modules\slimecore\reagents\base_colors.dm"
-#include "monkestation\code\modules\slimecore\slime_accessories\_base_accessory.dm"
+#include "monkestation\code\modules\slimecore\slime_accessories\strippable_item.dm"
 #include "monkestation\code\modules\slimecore\slime_color_mutations\_base_color.dm"
 #include "monkestation\code\modules\slimecore\slime_color_mutations\colors.dm"
 #include "monkestation\code\modules\slimecore\slime_color_mutations\mutations\_base_mutation.dm"
