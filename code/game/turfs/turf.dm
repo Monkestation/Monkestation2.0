@@ -676,7 +676,15 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/add_vomit_floor(mob/living/M, toxvomit = NONE, purge_ratio = 0.1)
 
-	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
+	var/vomit_type
+	switch(toxvomit)
+		if(VOMIT_NEBULA)
+			vomit_type = /obj/effect/decal/cleanable/vomit/nebula
+		if(VOMIT_NEBULA_WORMS)
+			vomit_type = /obj/effect/decal/cleanable/vomit/nebula/worms
+		else
+			vomit_type = /obj/effect/decal/cleanable/vomit
+	var/obj/effect/decal/cleanable/vomit/V = new vomit_type(src, M.get_static_viruses())
 
 	//if the vomit combined, apply toxicity and reagents to the old vomit
 	if (QDELETED(V))

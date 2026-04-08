@@ -299,5 +299,5 @@
 	. = ..()
 	if (owner.stat != CONSCIOUS || owner.has_reagent(/datum/reagent/water/holywater) || IS_IN_MANSUS(owner) || !SPT_PROB(worm_chance, seconds_per_tick))
 		return
-	owner.vomit(/* MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM, */ vomit_type = /obj/effect/decal/cleanable/vomit/nebula/worms, distance = 0, stun = FALSE, harm = TRUE, message = TRUE)
+	owner.vomit(/* MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM, */ vomit_type = VOMIT_NEBULA_WORMS, distance = 0, stun = FALSE, harm = TRUE, message = TRUE)
 	owner.Knockdown(0.5 SECONDS)
