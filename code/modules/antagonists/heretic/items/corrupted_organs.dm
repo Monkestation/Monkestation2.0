@@ -289,8 +289,6 @@
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 	/// How likely are we to spawn worms?
 	var/worm_chance = 2
-	/// Cooldown between corrupted effects.
-	COOLDOWN_DECLARE(effect_cooldown)
 
 /obj/item/organ/internal/appendix/corrupt/Initialize(mapload)
 	. = ..()
@@ -299,8 +297,7 @@
 
 /obj/item/organ/internal/appendix/corrupt/on_life(seconds_per_tick)
 	. = ..()
-	if (owner.stat != CONSCIOUS || owner.has_reagent(/datum/reagent/water/holywater) || IS_IN_MANSUS(owner) || !COOLDOWN_FINISHED(src, effect_cooldown) || !SPT_PROB(worm_chance, seconds_per_tick))
+	if (owner.stat != CONSCIOUS || owner.has_reagent(/datum/reagent/water/holywater) || IS_IN_MANSUS(owner) || !SPT_PROB(worm_chance, seconds_per_tick))
 		return
-	COOLDOWN_START(src, effect_cooldown, rand(25 SECONDS, 90 SECONDS))
-	owner.vomit(/* MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM, */ vomit_type = /obj/effect/decal/cleanable/vomit/nebula/worms, distance = 0, harm = TRUE, message = TRUE)
+	owner.vomit(/* MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM, */ vomit_type = /obj/effect/decal/cleanable/vomit/nebula/worms, distance = 0, stun = FALSE, harm = TRUE, message = TRUE)
 	owner.Knockdown(0.5 SECONDS)
