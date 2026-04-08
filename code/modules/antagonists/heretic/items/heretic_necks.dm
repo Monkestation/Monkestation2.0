@@ -153,6 +153,7 @@
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "moon_amulette"
 	w_class = WEIGHT_CLASS_SMALL
+	hitsound = 'sound/weapons/moonblade_hit.ogg'
 	/// How much damage does this item do to the targets sanity?
 	var/sanity_damage = 20
 	var/list/possible_sounds = list(
@@ -162,6 +163,10 @@
 	)
 	var/valid_weapon_type = /obj/item/melee/sickly_blade
 	var/sanity_threshold = SANITY_LEVEL_INSANE
+
+/obj/item/clothing/neck/heretic_focus/moon_amulet/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, INNATE_TRAIT)
 
 /obj/item/clothing/neck/heretic_focus/moon_amulet/examine(mob/user)
 	. = ..()
@@ -230,7 +235,7 @@
 	if(!isliving(target))
 		return FALSE
 	var/mob/living/living_target = target
-	playsound(src, 'sound/weapons/moonblade_hit.ogg', vol = 200, vary = TRUE, extrarange = -1) // this sound is REALLY quiet, todo: make the sound itself less quiet
+	playsound(user, 'sound/weapons/moonblade_hit.ogg', vol = 200, vary = TRUE, extrarange = -1) // this sound is REALLY quiet, even after amplifying it...
 	if(!ishuman(target))
 		living_target.adjustFireLoss(30)
 		return TRUE
@@ -271,12 +276,16 @@
 		blade.wound_bonus = 0
 		blade.bare_wound_bonus = 0
 		blade.armour_penetration = 200
+		blade.hitsound = null
+		ADD_TRAIT(blade, TRAIT_CUSTOM_TAP_SOUND, REF(src))
 		RegisterSignal(blade, COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT, PROC_REF(modify_attack_message))
 		return
 	blade.force = initial(blade.force)
 	blade.wound_bonus = initial(blade.wound_bonus)
 	blade.bare_wound_bonus = initial(blade.bare_wound_bonus)
 	blade.armour_penetration = initial(blade.armour_penetration)
+	blade.hitsound = initial(blade.hitsound)
+	REMOVE_TRAIT(blade, TRAIT_CUSTOM_TAP_SOUND, REF(src))
 	UnregisterSignal(blade, COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT)
 
 /obj/item/clothing/neck/heretic_focus/moon_amulet/proc/modify_attack_message(obj/item/weapon, mob/living/victim, mob/living/attacker)
@@ -307,4 +316,6 @@
 	dropped_item.wound_bonus = initial(dropped_item.wound_bonus)
 	dropped_item.bare_wound_bonus = initial(dropped_item.bare_wound_bonus)
 	dropped_item.armour_penetration = initial(dropped_item.armour_penetration)
+	dropped_item.hitsound = initial(dropped_item.hitsound)
+	REMOVE_TRAIT(dropped_item, TRAIT_CUSTOM_TAP_SOUND, REF(src))
 	UnregisterSignal(dropped_item, COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT)
