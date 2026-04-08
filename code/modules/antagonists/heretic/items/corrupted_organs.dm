@@ -123,7 +123,7 @@
 	SIGNAL_HANDLER
 	if (!(methods & INGEST))
 		return
-	if (human.has_reagent(/datum/reagent/water/holywater) || locate(/datum/reagent/water/holywater) in reagents)
+	if (human.has_reagent(/datum/reagent/water/holywater) || (locate(/datum/reagent/water/holywater) in reagents))
 		return
 	var/datum/reagents/extra_reagents = new()
 	extra_reagents.add_reagent(pick(extra_ingredients), amount_added)
@@ -249,6 +249,8 @@
 		/datum/gas/miasma = 50,
 		/datum/gas/plasma = 20,
 	)
+	/// Cooldown between corrupted effects.
+	COOLDOWN_DECLARE(effect_cooldown)
 
 /obj/item/organ/internal/lungs/corrupt/Initialize(mapload)
 	. = ..()
@@ -256,8 +258,9 @@
 
 /obj/item/organ/internal/lungs/corrupt/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather)
 	. = ..()
-	if (!. || IS_IN_MANSUS(owner) || breather.has_reagent(/datum/reagent/water/holywater) || !prob(cough_chance))
+	if (!. || IS_IN_MANSUS(owner) || breather.has_reagent(/datum/reagent/water/holywater) || !prob(cough_chance) || !COOLDOWN_FINISHED(src, effect_cooldown))
 		return
+	COOLDOWN_START(src, effect_cooldown, rand(25 SECONDS, 90 SECONDS))
 	breather.emote("cough");
 	var/chosen_gas = pick_weight(gas_types)
 	var/datum/gas_mixture/mix_to_spawn = new()
@@ -286,6 +289,8 @@
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 	/// How likely are we to spawn worms?
 	var/worm_chance = 2
+	/// Cooldown between corrupted effects.
+	COOLDOWN_DECLARE(effect_cooldown)
 
 /obj/item/organ/internal/appendix/corrupt/Initialize(mapload)
 	. = ..()
@@ -294,7 +299,8 @@
 
 /obj/item/organ/internal/appendix/corrupt/on_life(seconds_per_tick)
 	. = ..()
-	if (owner.stat != CONSCIOUS || owner.has_reagent(/datum/reagent/water/holywater) || IS_IN_MANSUS(owner) || !SPT_PROB(worm_chance, seconds_per_tick))
+	if (owner.stat != CONSCIOUS || owner.has_reagent(/datum/reagent/water/holywater) || IS_IN_MANSUS(owner) || !COOLDOWN_FINISHED(src, effect_cooldown) || !SPT_PROB(worm_chance, seconds_per_tick))
 		return
+	COOLDOWN_START(src, effect_cooldown, rand(25 SECONDS, 90 SECONDS))
 	owner.vomit(/* MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM, */ vomit_type = /obj/effect/decal/cleanable/vomit/nebula/worms, distance = 0, harm = TRUE, message = TRUE)
 	owner.Knockdown(0.5 SECONDS)
