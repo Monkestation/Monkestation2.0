@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Added a visible balloon alert for whenever an oozeling toggles Slime Washing or Hydrophobia."
+  - qol: "Added a visible balloon alert for when an oozeling is melted by water exposure,"
