@@ -80,7 +80,7 @@
 	to_chat(user, span_danger("You start tightly squeezing [src]..."))
 	if(!do_after(user, 1.25 SECONDS, src))
 		return
-	to_chat(user, span_danger("[src] explodes into a shower of gore and blood, drenching your arm. You can feel the blood seeping into your skin. You inmediately feel better, but soon, the feeling turns hollow as your veins itch."))
+	to_chat(user, span_danger("[src] explodes into a shower of gore and blood, drenching your arm. You can feel the blood seeping into your skin. You immediately feel better, but soon, the feeling turns hollow as your veins itch."))
 	new /obj/effect/gibspawner/generic(get_turf(src))
 	var/heal_amt = user.adjustBruteLoss(-50)
 	user.adjustFireLoss( -(50 - abs(heal_amt)) ) // no double dipping
