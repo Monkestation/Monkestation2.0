@@ -23,20 +23,24 @@
 				/obj/item/storage/bag/bio = 1,
 				/obj/item/storage/box/bodybags = 1,
 
+
+
 			),
 		),
 
 		list(
 			"name" = "Bot Assembly Parts",
 			"products" = list(
-				/obj/item/healthanalyzer = 3,
 				/obj/item/clothing/head/utility/hardhat = 3,
+				/obj/item/extinguisher/empty = 3,
 				/obj/item/reagent_containers/cup/bucket = 3,
 				/obj/item/assembly/prox_sensor = 6,
 				/obj/item/healthanalyzer = 3,
 				/obj/item/storage/medkit = 3,
 				/obj/item/bot_assembly/hygienebot = 3,
+				/obj/item/stack/ducts = 3,
 				/obj/item/bot_assembly/secbot = 1,
+				/obj/item/storage/crayons = 1,
 
 
 
@@ -48,7 +52,10 @@
 		/obj/item/storage/box/clown = 5,
 		/obj/item/bikehorn = 1,
 		/obj/item/clothing/mask/gas/clown_hat = 1,
-		/obj/item/clothing/shoes/clown_shoes = 1.
+		/obj/item/clothing/shoes/clown_shoes = 1,
+		/obj/item/melee/baton/security = 1, //so beepsky can be completed
+
+
 	)
 	premium = list(
 		/obj/item/shears = 1,
@@ -57,6 +64,8 @@
 		/obj/item/reagent_containers/medipen/deforest/robot_system_cleaner = 2,
 		/obj/item/clothing/gloves/latex/surgical = 1,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
+
+
 	)
 	refill_canister = /obj/item/vending_refill/robotics
 	default_price = PAYCHECK_COMMAND
