@@ -181,7 +181,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	for(var/atom/sacrificed as anything in selected_atoms)
-		if(isliving(sacrificed))
+		if(isliving(sacrificed) || istype(sacrificed, /obj/item/organ/internal/brain)) // preemptive shielding against future "brainless oozeling"-esque bugs
 			continue
 
 		if(isstack(sacrificed))
