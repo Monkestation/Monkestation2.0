@@ -78,6 +78,16 @@
 	var/mob/living/silicon/ai/AI = usr
 	AI.ai_roster()
 
+/obj/screen/ai/dashboard
+	name = "Processing Dashboard"
+	icon_state = "dashboard"
+
+/obj/screen/ai/dashboard/Click()
+	if(..())
+		return
+	var/mob/living/silicon/ai/AI = usr
+	AI.dashboard.ui_interact(AI)
+
 /atom/movable/screen/ai/alerts
 	name = "Show Alerts"
 	icon_state = "alerts"
@@ -186,12 +196,25 @@
 
 // Language menu
 	using = new /atom/movable/screen/language_menu(null, src)
-	using.screen_loc = ui_ai_language_menu
+	//using.screen_loc = ui_ai_language_menu
+	if(owner?.client?.prefs?.widescreenpref)
+		using.screen_loc = ui_ai_language_menu_widescreen
+	else
+		using.screen_loc = ui_ai_language_menu
 	static_inventory += using
 
 //AI core
 	using = new /atom/movable/screen/ai/aicore(null, src)
 	using.screen_loc = ui_ai_core
+	static_inventory += using
+
+//Dashboard
+	using = new /obj/screen/ai/dashboard
+	if(owner?.client?.prefs?.widescreenpref)
+		using.screen_loc = ui_ai_dashboard_widescreen
+	else
+		using.screen_loc = ui_ai_dashboard
+
 	static_inventory += using
 
 //Camera list
@@ -264,10 +287,18 @@
 
 //Multicamera mode
 	using = new /atom/movable/screen/ai/multicam(null, src)
-	using.screen_loc = ui_ai_multicam
+	//using.screen_loc = ui_ai_multicam
+		if(owner?.client?.prefs?.widescreenpref)
+		using.screen_loc = ui_ai_multicam_widescreen
+	else
+		using.screen_loc = ui_ai_multicam
 	static_inventory += using
 
 //Add multicamera camera
 	using = new /atom/movable/screen/ai/add_multicam(null, src)
-	using.screen_loc = ui_ai_add_multicam
+	//using.screen_loc = ui_ai_add_multicam
+	if(owner?.client?.prefs?.widescreenpref)
+		using.screen_loc = ui_ai_add_multicam_widescreen
+	else
+		using.screen_loc = ui_ai_add_multicam
 	static_inventory += using
