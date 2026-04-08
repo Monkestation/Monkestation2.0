@@ -497,12 +497,14 @@
  *
  * Checks if we should have baton resistance on the new turf.
  */
-/datum/status_effect/heretic_passive/rust/proc/on_move(mob/source, atom/old_loc, dir, forced, list/old_locs)
+/datum/status_effect/heretic_passive/rust/proc/on_move(mob/living/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
 
 	if(source.is_touching_rust())
 		ADD_TRAIT(source, TRAIT_BATON_RESISTANCE, TRAIT_STATUS_EFFECT(id))
+		source.add_homeostasis_level(id, owner.standard_body_temperature, 5 KELVIN)
 	else
+		owner.remove_homeostasis_level(id)
 		REMOVE_TRAIT(source, TRAIT_BATON_RESISTANCE, TRAIT_STATUS_EFFECT(id))
 
 /**
