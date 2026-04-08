@@ -3489,9 +3489,9 @@
 /area/station/hallway/primary/central)
 "bey" = (
 /obj/machinery/light/floor/has_bulb,
-/obj/structure/industrial_lift,
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "publicElevator"
+/obj/structure/transport/linear,
+/obj/effect/landmark/transport/transport_id{
+	specific_transport_id = "publicElevator"
 	},
 /obj/effect/abstract/elevator_music_zone{
 	linked_elevator_id = "publicElevator"
@@ -17240,7 +17240,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/genetics)
 "fhk" = (
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /obj/structure/railing{
 	dir = 5
 	},
@@ -20316,7 +20316,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "ghl" = (
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /turf/open/openspace,
 /area/station/commons/storage/mining)
 "ghx" = (
@@ -45502,7 +45502,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "nRu" = (
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /obj/structure/railing{
 	dir = 10
 	},
@@ -55224,7 +55224,7 @@
 /turf/closed/wall/r_wall,
 /area/station/hallway/secondary/exit/departure_lounge)
 "qPP" = (
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /obj/structure/railing{
 	dir = 9
 	},
@@ -70603,7 +70603,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "vEH" = (
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /obj/structure/railing,
 /turf/open/openspace,
 /area/station/commons/storage/mining)
