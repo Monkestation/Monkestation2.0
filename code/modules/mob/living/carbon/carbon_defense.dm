@@ -163,7 +163,7 @@
 
 	if(length(diseases) && isliving(user))
 		var/mob/living/living = user
-		var/block = living.check_contact_sterility(BODY_ZONE_EVERYTHING)
+		var/block = living.check_contact_sterility(BODY_ZONE_ARMS)
 		var/list/contact = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 		if(length(contact) && !block)
 			for(var/datum/disease/acute/V as anything in contact)
@@ -171,7 +171,7 @@
 
 	if(isliving(user))
 		var/mob/living/living = user
-		var/block = check_contact_sterility(BODY_ZONE_EVERYTHING)
+		var/block = check_contact_sterility(BODY_ZONE_ARMS)
 		if(length(living.diseases))
 			var/list/contact = filter_disease_by_spread(living.diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 			if(length(contact) && !block)

@@ -25,17 +25,17 @@
 		if(toucher == mob)
 			if(part)
 				to_chat(mob, span_warning("As you bump into \the [touched], some of the skin on your [part] shears off!"))
-				part.take_damage(10)
+				part.take_damage(10 * power)
 			else
 				to_chat(mob, span_warning("As you bump into \the [touched], some of your skin shears off!"))
-				mob.adjustBruteLoss(10)
+				mob.adjustBruteLoss(10 * power)
 		else
 			if(part)
 				to_chat(mob, span_warning("As \the [toucher] [touch_type == DISEASE_BUMP ? "bumps into" : "touches"] you, some of the skin on your [part] shears off!"))
 				to_chat(toucher, span_danger("As you [touch_type == DISEASE_BUMP ? "bump into" : "touch"] \the [mob], some of the skin on \his [part] shears off!"))
-				part.take_damage(10)
+				part.take_damage(10 * power)
 			else
 				to_chat(mob, span_warning("As \the [toucher] [touch_type == DISEASE_BUMP ? "bumps into" : "touches"] you, some of your skin shears off!"))
 				to_chat(toucher, span_danger("As you [touch_type == DISEASE_BUMP ? "bump into" : "touch"] \the [mob], some of \his skin shears off!"))
-				mob.adjustBruteLoss(10)
+				mob.adjustBruteLoss(10 * power)
 */

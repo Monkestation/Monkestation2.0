@@ -74,6 +74,8 @@
 				slowdown *= 0.80 //egg gestates 20% faster if you're trapped in a nest
 			if(owner.has_reagent(/datum/reagent/medicine/stimulants))
 				slowdown *= 10 //stimulants greatly stun the babys growth
+			if(HAS_TRAIT(owner, TRAIT_IMMUNODEFICIENCY) && !HAS_TRAIT(owner, TRAIT_VIRUS_RESISTANCE))
+				slowdown *= 0.5 //terrible immune system = doubled parasite growth
 
 		addtimer(CALLBACK(src, PROC_REF(advance_embryo_stage)), growth_time*slowdown)
 
