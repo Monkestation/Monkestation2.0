@@ -252,15 +252,15 @@
 	if(!human_target.mob_mood)
 		return FALSE
 	if(human_target.mob_mood.sanity_level < sanity_threshold)
-		human_target.balloon_alert(living_user, "their mind is too strong!")
+		human_target.balloon_alert(living_user, "[human_target.p_their()] mind is too strong!")
 		human_target.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
 		human_target.mob_mood.adjust_sanity(-sanity_damage)
 	else
 		if(HAS_TRAIT_NOT_FROM(target, TRAIT_MINDSHIELD, NANITES_TRAIT))
-			human_target.balloon_alert(living_user, "their mind almost bends but something protects it!")
+			human_target.balloon_alert(living_user, "[human_target.p_their()] mind almost bends but something protects it!")
 			human_target.apply_status_effect(/datum/status_effect/moon_slept)
 			return TRUE
-		human_target.balloon_alert(living_user, "their mind bends to see the truth!")
+		human_target.balloon_alert(living_user, "[human_target.p_their()] mind bends to see the truth!")
 		human_target.apply_status_effect(/datum/status_effect/moon_converted)
 		living_user.log_message("made [human_target] insane.", LOG_GAME)
 		human_target.log_message("was driven insane by [living_user]", LOG_GAME)
