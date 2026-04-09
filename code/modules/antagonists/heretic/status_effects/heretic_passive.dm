@@ -539,7 +539,7 @@
 	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
 		source.blood_volume += 2.5 * delta_time
 	for(var/datum/reagent/reagent as anything in source.reagents?.reagent_list)
-		source.reagents.remove_reagent(reagent.type, seconds_per_tick)
+		source.reagents.remove_reagent(reagent.type, delta_time)
 
 	if(!iscarbon(source))
 		return
@@ -550,7 +550,7 @@
 		for(var/datum/wound/to_cure as anything in wounded_limb.wounds)
 			to_cure.remove_wound()
 	for(var/obj/item/organ/internal as anything in carbon_owner.organs)
-		internal.apply_organ_damage(round(-2 * seconds_per_tick))
+		internal.apply_organ_damage(round(-2 * delta_time))
 	if(passive_level < HERETIC_LEVEL_FINAL)
 		return
 	if(length(carbon_owner.get_missing_limbs()))
