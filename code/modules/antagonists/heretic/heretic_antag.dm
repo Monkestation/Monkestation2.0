@@ -901,7 +901,7 @@
 
 	parts += printplayer(owner)
 	if(heretic_path)
-		parts += "They followed the <b>[heretic_path.route]</b>"
+		parts += "They followed the <b><font color='[GLOB.heretic_path_to_color[heretic_path.route]]'>[heretic_path.route]</font></b>"
 	parts += "<b>Sacrifices Made:</b> [total_sacrifices]"
 	parts += "The heretic's sacrifice targets were: [roundend_sac_list()]."
 	if(length(objectives))
