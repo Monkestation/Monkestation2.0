@@ -1,5 +1,5 @@
 import { useBackend } from '../../backend';
-import { Section, Flex, ProgressBar, LabeledList, Box } from '../../components';
+import { Section, Flex, ProgressBar, Box } from '../../components';
 import { getGasFromPath } from '../../constants';
 
 interface GasInfo {
@@ -10,7 +10,6 @@ export const RBMKGraphs = () => {
   const { data } = useBackend<any>();
 
   const gases: Record<string, GasInfo> = data?.gas_composition || {};
-  const gasHistory: Record<string, number[]> = data?.gas_history || {};
 
   const activeGases = Object.entries(gases)
     .filter(([, info]) => Number(info?.percent ?? 0) > 0)
@@ -44,41 +43,6 @@ export const RBMKGraphs = () => {
             <ProgressBar value={0} maxValue={100}>
               No coolant gases detected
             </ProgressBar>
-          )}
-        </Section>
-      </Flex.Item>
-
-      <Flex.Item grow>
-        <Section title="Gas Composition History" fill>
-          {activeGases.length > 0 ? (
-            <LabeledList>
-              {activeGases.map(([gasPath]) => {
-                const gasLabel = getGasFromPath(gasPath)?.label || gasPath;
-                const values = gasHistory[gasPath] || [];
-                const recentValues = values.slice(-10);
-                const latestValue =
-                  recentValues.length > 0
-                    ? Number(recentValues[recentValues.length - 1] ?? 0)
-                    : 0;
-
-                return (
-                  <LabeledList.Item
-                    key={gasPath}
-                    label={gasLabel}>
-                    <Box>
-                      Current: {latestValue.toFixed(1)}%
-                      {recentValues.length > 0
-                        ? ` | Recent: ${recentValues
-                            .map((value) => Number(value).toFixed(1))
-                            .join(', ')}`
-                        : ' | No history yet'}
-                    </Box>
-                  </LabeledList.Item>
-                );
-              })}
-            </LabeledList>
-          ) : (
-            <Box color="label">No gas history available yet.</Box>
           )}
         </Section>
       </Flex.Item>

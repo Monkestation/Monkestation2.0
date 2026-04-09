@@ -3,85 +3,94 @@
  * Copyright (c) 2025 EatsTheGrapes
  */
 
-@use 'sass:color';
-@use 'sass:meta';
-
-@use '../colors.scss' with (
-  $primary: #6e1c1c,
-  // deep soviet red
-  $fg-map-keys: (),
-  $bg-map-keys: ()
-);
-
-@use '../base.scss' with (
-  $color-bg: #550202,
-  // dark background
-  $color-bg-grad-spread: 6%
-);
+$soviet-primary: #6e1c1c;
+$soviet-bg: #550202;
+$soviet-bg-strong: #3a0202;
+$soviet-panel: #7a1a1a;
+$soviet-border: #872d2d;
+$soviet-selected: #9d0808;
+$soviet-disabled: #363636;
+$soviet-caution: #be6209;
+$soviet-danger: #9a9d00;
 
 .theme-soviet {
-  // Atomic classes
-  @include meta.load-css('../atomic/color.scss');
+  background-color: $soviet-bg;
+  color: #f3d7d7;
 
-  // Components
-  @include meta.load-css(
-    '../components/Button.scss',
-    $with: (
-      'color-default': colors.$primary,
-      'color-disabled': #363636,
-      'color-selected': #9d0808,
-      'color-caution': #be6209,
-      'color-danger': #9a9d00
-    )
-  );
-
-  @include meta.load-css(
-    '../components/ImageButton.scss',
-    $with: (
-      'color-default': darken(colors.$primary, 20%),
-      'color-disabled': #363636,
-      'color-selected': #9d0808
-    )
-  );
-
-  @include meta.load-css(
-    '../components/Input.scss',
-    $with: ('border-color': #872d2d)
-  );
-
-  @include meta.load-css(
-    '../components/NoticeBox.scss',
-    $with: ('background-color': #7a1a1a)
-  );
-
-  @include meta.load-css(
-    '../components/NumberInput.scss',
-    $with: ('border-color': #872d2d)
-  );
-
-  @include meta.load-css(
-    '../components/ProgressBar.scss',
-    $with: ('background-color': rgba(0, 0, 0, 0.5))
-  );
-
-  @include meta.load-css('../components/Section.scss');
-
-  @include meta.load-css(
-    '../components/Tooltip.scss',
-    $with: ('background-color': #7a1a1a)
-  );
-
-  // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': #7a1a1a)
-  );
-
-  // Background logo
   .Layout__content {
-    background-image: url('../../assets/bg-hammer-sickle.svg');
+    background-color: $soviet-bg;
+    background-image: url('assets/bg-hammer-sickle.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70% 70%;
+  }
+
+  .Window {
+    background-color: $soviet-bg;
+    color: #f3d7d7;
+  }
+
+  .TitleBar {
+    background-color: $soviet-panel;
+  }
+
+  .Section {
+    background-color: rgba(0, 0, 0, 0.18);
+    border-color: $soviet-border;
+  }
+
+  .Button {
+    background-color: $soviet-primary;
+    border-color: $soviet-border;
+    color: #f5eaea;
+  }
+
+  .Button:hover {
+    background-color: #7e2323;
+  }
+
+  .Button--selected,
+  .Button.selected {
+    background-color: $soviet-selected;
+  }
+
+  .Button:disabled,
+  .Button.disabled {
+    background-color: $soviet-disabled;
+    color: #aaaaaa;
+  }
+
+  .Button--caution {
+    background-color: $soviet-caution;
+  }
+
+  .Button--danger {
+    background-color: $soviet-danger;
+  }
+
+  .Input,
+  .NumberInput__input,
+  input,
+  textarea,
+  select {
+    border-color: $soviet-border;
+    background-color: #3f0202;
+    color: #f3d7d7;
+  }
+
+  .NoticeBox {
+    background-color: $soviet-panel;
+    border-color: $soviet-border;
+    color: #f3d7d7;
+  }
+
+  .ProgressBar {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .Tooltip {
+    background-color: $soviet-panel;
+    color: #f3d7d7;
   }
 }
 

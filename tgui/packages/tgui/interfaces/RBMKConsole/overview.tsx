@@ -21,6 +21,11 @@ export const RBMKOverview = () => {
 
   const voidCoefficient = Number(data?.void_coefficient ?? 0);
 
+  const pressure = Number(data?.pressure_current ?? 0);
+  const pressureWarning = Number(data?.pressure_warning ?? 950);
+  const pressureCritical = Number(data?.pressure_critical ?? 1500);
+  const pressureExtreme = Number(data?.pressure_extreme ?? 2000);
+
   const integrity = Number(data?.integrity ?? 0);
   const maxIntegrity = Math.max(1, Number(data?.max_integrity ?? 100));
   const integrityPercent = Math.max(
@@ -47,17 +52,32 @@ export const RBMKOverview = () => {
             />
           </LabeledControls.Item>
 
+          <LabeledControls.Item label="Pressure">
+            <RoundGauge
+              size={2}
+              value={pressure}
+              minValue={0}
+              maxValue={pressureExtreme}
+              format={(value) => `${value.toFixed(1)} kPa`}
+              ranges={{
+                good: [0, pressureWarning],
+                yellow: [pressureWarning, pressureCritical],
+                bad: [pressureCritical, pressureExtreme],
+              }}
+            />
+          </LabeledControls.Item>
+
           <LabeledControls.Item label="Void Coefficient">
             <RoundGauge
               size={2}
               value={voidCoefficient}
               minValue={0}
-              maxValue={3}
+              maxValue={0.25}
               format={(value) => value.toFixed(3)}
               ranges={{
-                good: [0, 0.5],
-                yellow: [0.5, 1.5],
-                bad: [1.5, 3],
+                good: [0, 0.08],
+                yellow: [0.08, 0.17],
+                bad: [0.17, 0.25],
               }}
             />
           </LabeledControls.Item>
