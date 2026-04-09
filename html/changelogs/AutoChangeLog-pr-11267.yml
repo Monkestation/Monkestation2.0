@@ -1,0 +1,4 @@
+author: "Mantlecrawler"
+delete-after: True
+changes:
+  - bugfix: "Snipping cuffs off of alien larvae now works properly"

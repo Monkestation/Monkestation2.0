@@ -1,6 +1,0 @@
-author: "Tractor-Maam"
-delete-after: True
-changes:
-  - rscadd: "Mecha Orbital Pads and their consoles can now be printed after Advanced Robotics research."
-  - balance: "Mecha Orbital Pads now cost 5 plasteel to build."
-  - rscadd: "Added a examine hint to Mecha Orbital Pad Consoles to notify of being able to launch it from inside a mech. Did you know you could always do this (assuming the recieving pad had its lifeform restriction cut)?"

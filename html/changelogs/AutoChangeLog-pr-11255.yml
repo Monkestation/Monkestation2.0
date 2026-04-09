@@ -1,0 +1,4 @@
+author: "neeshacark"
+delete-after: True
+changes:
+  - balance: "system cleaner fixes clone damage at the same rate as toxin"
