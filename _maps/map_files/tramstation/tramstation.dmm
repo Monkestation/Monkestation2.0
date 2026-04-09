@@ -4791,7 +4791,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "aFm" = (
-/obj/machinery/crossing_signal/northeast{
+/obj/machinery/transport/crossing_signal/northeast{
 	inbound = 1;
 	outbound = 2
 	},
@@ -4799,7 +4799,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "aFp" = (
-/obj/machinery/crossing_signal/northeast{
+/obj/machinery/transport/crossing_signal/northeast{
 	inbound = 2;
 	outbound = 3
 	},
@@ -4965,7 +4965,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/tram/center)
 "aGO" = (
-/obj/structure/transport/linear/tram/white,
+/obj/structure/transport/linear/tram,
 /obj/machinery/door/window/tram/left/directional/south{
 	pixel_x = -32;
 	pixel_y = -7
@@ -5205,7 +5205,7 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical)
 "aII" = (
-/obj/machinery/destination_sign/indicator,
+/obj/machinery/transport/destination_sign/indicator,
 /turf/closed/wall,
 /area/station/hallway/primary/tram/left)
 "aIJ" = (
@@ -5632,7 +5632,7 @@
 /turf/closed/wall,
 /area/station/science/xenobiology)
 "aMD" = (
-/obj/machinery/destination_sign/indicator{
+/obj/machinery/transport/destination_sign/indicator{
 	dir = 1
 	},
 /turf/closed/wall,
@@ -8899,7 +8899,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "bJu" = (
-/obj/machinery/crossing_signal/southeast{
+/obj/machinery/transport/crossing_signal/southeast{
 	inbound = 1;
 	outbound = 2
 	},
@@ -14858,7 +14858,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/central)
 "dCf" = (
-/obj/machinery/destination_sign/indicator,
+/obj/machinery/transport/destination_sign/indicator,
 /turf/closed/wall,
 /area/station/hallway/primary/tram/right)
 "dCh" = (
@@ -20174,7 +20174,7 @@
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
 "fld" = (
-/obj/machinery/destination_sign/indicator,
+/obj/machinery/transport/destination_sign/indicator,
 /turf/closed/wall,
 /area/station/hallway/primary/tram/center)
 "flf" = (
@@ -20512,7 +20512,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/transfer)
 "fqv" = (
-/obj/structure/transport/linear/tram/white,
+/obj/structure/transport/linear/tram,
 /obj/machinery/door/window/tram/left/directional/north{
 	pixel_x = -32;
 	pixel_y = -25
@@ -25588,7 +25588,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "gUF" = (
-/obj/structure/transport/linear/tram/white,
+/obj/structure/transport/linear/tram,
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
@@ -28814,7 +28814,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "hYv" = (
-/obj/machinery/crossing_signal/northwest{
+/obj/machinery/transport/crossing_signal/northwest{
 	inbound = 2;
 	outbound = 3
 	},
@@ -34195,7 +34195,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "jEO" = (
-/obj/machinery/destination_sign/indicator{
+/obj/machinery/transport/destination_sign/indicator{
 	dir = 1
 	},
 /turf/closed/wall,
@@ -36487,7 +36487,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "kpb" = (
-/obj/structure/transport/linear/tram/white,
+/obj/structure/transport/linear/tram,
 /turf/open/floor/tram/plate,
 /area/station/hallway/primary/tram/center)
 "kpd" = (
@@ -38842,7 +38842,7 @@
 "kYp" = (
 /obj/structure/transport/linear/tram,
 /obj/structure/window/reinforced/tram/directional/south,
-/obj/machinery/destination_sign/south{
+/obj/machinery/transport/destination_sign/south{
 	pixel_y = -11
 	},
 /obj/effect/landmark/start/hangover,
@@ -46687,7 +46687,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
 "nwQ" = (
-/obj/machinery/destination_sign/indicator{
+/obj/machinery/transport/destination_sign/indicator{
 	dir = 1
 	},
 /turf/closed/wall,
@@ -47883,7 +47883,7 @@
 "nQc" = (
 /obj/structure/transport/linear/tram,
 /obj/structure/window/reinforced/tram/directional/north,
-/obj/machinery/destination_sign/north{
+/obj/machinery/transport/destination_sign/north{
 	pixel_y = 10
 	},
 /obj/structure/chair/sofa/bench/tram/left{
@@ -49181,7 +49181,7 @@
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "olw" = (
-/obj/structure/transport/linear/tram/white,
+/obj/structure/transport/linear/tram,
 /obj/structure/fluff/tram_rail,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -49343,7 +49343,7 @@
 /area/station/security/courtroom)
 "oor" = (
 /obj/structure/transport/linear/tram,
-/obj/machinery/destination_sign/north{
+/obj/machinery/transport/destination_sign/north{
 	pixel_y = 10
 	},
 /obj/structure/window/reinforced/tram/directional/north,
@@ -52314,7 +52314,7 @@
 /turf/open/misc/asteroid,
 /area/station/asteroid/tram/junction/east)
 "poG" = (
-/obj/machinery/crossing_signal/southwest{
+/obj/machinery/transport/crossing_signal/southwest{
 	inbound = 1;
 	outbound = 2
 	},
@@ -52607,7 +52607,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "ptB" = (
-/obj/machinery/crossing_signal/southwest{
+/obj/machinery/transport/crossing_signal/southwest{
 	inbound = 2;
 	outbound = 3
 	},
@@ -56319,7 +56319,7 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "qvZ" = (
-/obj/structure/transport/linear/tram/white,
+/obj/structure/transport/linear/tram,
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/tram/plate,
 /area/station/hallway/primary/tram/center)
@@ -59095,7 +59095,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "rlO" = (
-/obj/structure/transport/linear/tram/white,
+/obj/structure/transport/linear/tram,
 /obj/machinery/door/window/tram/right/directional/south{
 	pixel_y = -7
 	},
@@ -59444,7 +59444,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "rqG" = (
-/obj/machinery/crossing_signal/northwest{
+/obj/machinery/transport/crossing_signal/northwest{
 	inbound = 1;
 	outbound = 2
 	},
@@ -61944,7 +61944,7 @@
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/engineering/engine_smes)
 "siE" = (
-/obj/structure/transport/linear/tram/white,
+/obj/structure/transport/linear/tram,
 /obj/effect/landmark/transport/nav_beacon/tram/platform/tramstation/central,
 /obj/effect/landmark/transport/nav_beacon/tram/nav/tramstation/main,
 /turf/open/floor/tram/plate,
@@ -64300,7 +64300,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "sTn" = (
-/obj/structure/transport/linear/tram/white,
+/obj/structure/transport/linear/tram,
 /obj/effect/landmark/transport/transport_id,
 /turf/open/floor/tram/plate,
 /area/station/hallway/primary/tram/center)
@@ -70111,7 +70111,7 @@
 /area/station/medical/medbay/central)
 "uGM" = (
 /obj/structure/transport/linear/tram,
-/obj/machinery/destination_sign/south{
+/obj/machinery/transport/destination_sign/south{
 	pixel_y = -11
 	},
 /obj/structure/window/reinforced/tram/directional/south,
@@ -70727,7 +70727,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/powered/clownplanet)
 "uOL" = (
-/obj/structure/transport/linear/tram/white,
+/obj/structure/transport/linear/tram,
 /obj/machinery/door/window/tram/right/directional/north{
 	pixel_y = -25
 	},
@@ -80836,7 +80836,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "xXb" = (
-/obj/machinery/crossing_signal/southeast{
+/obj/machinery/transport/crossing_signal/southeast{
 	inbound = 2;
 	outbound = 3
 	},
