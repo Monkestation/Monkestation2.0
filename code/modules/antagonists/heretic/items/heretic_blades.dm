@@ -210,7 +210,7 @@
 	var/old_force = force
 	var/old_damtype = damtype
 	if(IS_BLOODSUCKER(target_mob))
-		force *= get_vamp_damage_multiplier(target_mob, check_zone(user.zone_selected))
+		force *= get_vamp_damage_multiplier(target_mob, user.zone_selected)
 		damtype = BURN
 	. = ..()
 	force = old_force
