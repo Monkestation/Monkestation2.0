@@ -503,7 +503,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		for(var/datum/species/random_species as anything in all_species_protoypes)
 			features |= random_species.randomize_features()
 
-		features["mcolor"] = "#[random_color()]"
+		var/datum/color_palette/generic_colors/palette = color_palettes[/datum/color_palette/generic_colors]
+		palette.mutant_color = "#[random_color()]"
+		palette.mutant_color_secondary = "#[random_color()]"
 
 	update_dna_identity()
 
