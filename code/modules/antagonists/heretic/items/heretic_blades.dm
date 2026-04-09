@@ -216,7 +216,6 @@
 
 /// Applies damage multipliers against bloodsuckers, causing them to take 1.2x damage, alongside bypassing any burn resistance.
 /obj/item/melee/sickly_blade/dark/proc/get_vamp_damage_multiplier(mob/living/victim, def_zone)
-	SIGNAL_HANDLER
 	. = 1.2
 	// negate physiology damage modifiers (i.e fortitude)
 	var/datum/physiology/physiology = astype(victim, /mob/living/carbon/human)?.physiology
