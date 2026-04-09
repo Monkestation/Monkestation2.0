@@ -909,6 +909,21 @@
 	if(mind.assigned_role.title in SSjob.name_occupations)
 		.[mind.assigned_role.title] = minutes
 
+#define NABBER_OVERLAY_LAYER 21.1
+
+///Intended to render accessories on a seperate layer
+/mob/living/carbon/human/proc/modify_accessory_overlay(var/accessory)
+	var/mob/living/carbon/human/human_wearer = src
+	var/wanted_accessory = accessory
+	var/image/held_overlay
+	remove_overlay(NABBER_OVERLAY_LAYER) //begone
+	// handle custom overlay via grabbing the icon
+	if(human_wearer.dna.species.held_accessory_path)
+		var/icon/custom_accessory_icon_path = human_wearer.dna.species.held_accessory_path
+		held_overlay = image(icon=custom_accessory_icon_path,icon_state=wanted_accessory) //Grab the image in question
+		overlays_standing[NABBER_OVERLAY_LAYER] = held_overlay
+	apply_overlay(NABBER_OVERLAY_LAYER)
+
 /mob/living/carbon/human/monkeybrain
 	ai_controller = /datum/ai_controller/monkey
 
@@ -1048,6 +1063,9 @@
 
 /mob/living/carbon/human/species/mush
 	race = /datum/species/mush
+
+/mob/living/carbon/human/species/nabber
+	race = /datum/species/nabber
 
 /mob/living/carbon/human/species/plasma
 	race = /datum/species/plasmaman

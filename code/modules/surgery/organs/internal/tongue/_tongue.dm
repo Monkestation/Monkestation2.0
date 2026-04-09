@@ -741,3 +741,10 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	name = "oni tongue"
 	liked_foodtypes = GORE | MEAT | SEAFOOD
 	disliked_foodtypes = VEGETABLES | GROSS
+
+/obj/item/organ/internal/tongue/nabber
+	name = "nabber tongue"
+	say_mod = "chitters"
+	liked_foodtypes = RAW | GORE | GRAIN
+	disliked_foodtypes = CLOTH | FRIED | TOXIC
+	toxic_foodtypes = DAIRY

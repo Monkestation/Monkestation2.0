@@ -27,7 +27,10 @@
 		/obj/item/seeds,
 		/obj/item/storage/bag/plants,
 	)
-	species_exception = list(/datum/species/golem)
+	species_exception = list(
+		/datum/species/golem,
+		/datum/species/nabber,
+	)
 	armor_type = /datum/armor/suit_apron
 
 /datum/armor/suit_apron
@@ -91,6 +94,7 @@
 	inhand_icon_state = null
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
+	species_exception = list(/datum/species/nabber)
 	allowed = list(
 		/obj/item/kitchen,
 		/obj/item/knife/kitchen,
@@ -168,7 +172,10 @@
 		/obj/item/gun/ballistic/rifle/rebarxbow,
 	)
 	resistance_flags = NONE
-	species_exception = list(/datum/species/golem)
+	species_exception = list(
+		/datum/species/golem,
+		/datum/species/nabber,
+	)
 
 /obj/item/clothing/suit/hazardvest/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()

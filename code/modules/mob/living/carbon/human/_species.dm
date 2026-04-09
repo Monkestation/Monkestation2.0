@@ -230,6 +230,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Species code is really odd...
 	var/properly_gained = FALSE
 
+	//neccessary for nabbers having cool shit
+	///	should not exist unless you're using things like custom arm overlays
+	var/held_accessory
+	var/held_accessory_path
+
 	///A list containing outfits that will be overridden in the species_equip_outfit proc. [Key = Typepath passed in] [Value = Typepath of outfit you want to equip for this specific species instead].
 	var/list/outfit_override_registry = list()
 
