@@ -174,6 +174,11 @@
 	inhand_icon_state = "securitypack"
 	alternate_worn_layer = (HEAD_LAYER-0.5)
 
+/obj/item/storage/backpack/security/private
+	name = "private security backpack"
+	icon_state = "backpack-private-security"
+	inhand_icon_state = "privatesecuritypack"
+
 /obj/item/storage/backpack/secmed
 	name = "security medical backpack"
 	desc = "A security-grade backpack, now in security grey!"
@@ -444,6 +449,11 @@
 	desc = "A robust satchel for security related needs."
 	icon_state = "satchel-security"
 	inhand_icon_state = "satchel-sec"
+
+/obj/item/storage/backpack/satchel/sec/private
+	name = "private security satchel"
+	icon_state = "satchel-private-security"
+	inhand_icon_state = "satchel-private-sec"
 
 /obj/item/storage/backpack/satchel/secmed
 	name = "security medical satchel"
@@ -821,7 +831,7 @@
 	new /obj/item/ammo_box/magazine/m9mm_aps/fire(src)
 	new /obj/item/ammo_box/magazine/m9mm_aps/fire(src)
 	new /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka(src)
-	new /obj/item/reagent_containers/hypospray/medipen/stimulants(src)
+	new /obj/item/reagent_containers/medipen/stimulants(src)
 	new /obj/item/grenade/syndieminibomb(src)
 
 // For ClownOps.

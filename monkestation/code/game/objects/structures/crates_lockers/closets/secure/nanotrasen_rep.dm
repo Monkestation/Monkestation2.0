@@ -15,6 +15,7 @@
 	new /obj/item/circuitboard/machine/fax(src)
 	new /obj/item/storage/photo_album/nt_rep(src)
 	new /obj/item/storage/briefcase/sponsorship(src)
+	new /obj/item/storage/box/nt_cap(src)
 
 /obj/item/computer_disk/command/nt_representative
 	name = "nt representative data disk"

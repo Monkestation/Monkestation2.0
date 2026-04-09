@@ -20,6 +20,10 @@
 	bodytemp_heat_damage_limit = INFINITY
 	vision_range = 5
 	aggro_vision_range = 18
+	// Pale purple, should be red enough to see stuff on lavaland
+	lighting_cutoff_red = 25
+	lighting_cutoff_green = 15
+	lighting_cutoff_blue = 35
 	move_force = MOVE_FORCE_OVERPOWERING
 	move_resist = MOVE_FORCE_OVERPOWERING
 	pull_force = MOVE_FORCE_OVERPOWERING
@@ -130,7 +134,7 @@
 	if(!isliving(target))
 		return
 	var/mob/living/living_target = target
-	if(living_target.stat == DEAD || (living_target.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(living_target, TRAIT_NODEATH)))
+	if(living_target.stat == DEAD || (living_target.health <= living_target.dead_threshold && HAS_TRAIT(living_target, TRAIT_NODEATH)))
 		devour(living_target)
 		return
 	if(isnull(client) && ranged && ranged_cooldown <= world.time)

@@ -491,14 +491,14 @@
 
 	insert_all_icons("nif", 'monkestation/code/modules/blueshift/icons/chat.dmi')
 
-/obj/item/autosurgeon/organ/nif
+/obj/item/autosurgeon/nif
 	starting_organ = /obj/item/organ/internal/cyberimp/brain/nif/standard
 	uses = 1
 
 /obj/item/organ/internal/cyberimp/brain/nif/debug
 	is_calibrated = TRUE
 
-/obj/item/autosurgeon/organ/nif/debug
+/obj/item/autosurgeon/nif/debug
 	starting_organ = /obj/item/organ/internal/cyberimp/brain/nif/debug
 	uses = 1
 
@@ -513,7 +513,7 @@
 	illustration = "disk_kit"
 
 /obj/item/storage/box/nif_ghost_box/PopulateContents()
-	new /obj/item/autosurgeon/organ/nif/ghost_role(src)
+	new /obj/item/autosurgeon/nif/ghost_role(src)
 	new /obj/item/disk/nifsoft_uploader/soulcatcher(src)
 	new /obj/item/disk/nifsoft_uploader/money_sense(src)
 

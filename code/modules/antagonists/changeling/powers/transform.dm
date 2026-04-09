@@ -6,6 +6,7 @@
 	dna_cost = CHANGELING_POWER_INNATE
 	req_dna = 1
 	req_human = TRUE
+	req_stat = DEAD
 
 /obj/item/clothing/glasses/changeling
 	name = "flesh"

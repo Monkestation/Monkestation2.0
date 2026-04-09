@@ -2326,15 +2326,16 @@
 /turf/open/floor/iron,
 /area/station/security/office)
 "amf" = (
-/obj/structure/closet/bombcloset/security,
 /obj/effect/turf_decal/bot,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/plating,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
 /area/station/security/lockers)
 "amg" = (
 /obj/structure/closet/l3closet/security,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plating,
+/turf/open/floor/iron/smooth,
 /area/station/security/lockers)
 "ami" = (
 /obj/structure/closet/secure_closet/security/sec,
@@ -2446,7 +2447,9 @@
 /area/station/security/evidence)
 "amQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/security/lockers)
 "amR" = (
@@ -2866,8 +2869,9 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "aoP" = (
-/obj/vehicle/ridden/secway,
-/turf/open/floor/plating,
+/obj/structure/closet/bombcloset/security,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/smooth,
 /area/station/security/lockers)
 "aoR" = (
 /obj/machinery/plate_press,
@@ -2958,6 +2962,9 @@
 /obj/machinery/camera/directional/west{
 	network = list("ss13","security");
 	c_tag = "Security - Bomb Storage"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
 	},
 /turf/open/floor/iron/smooth,
 /area/station/security/lockers)
@@ -7946,6 +7953,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
+/obj/structure/closet/l3closet/virology,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "aQn" = (
@@ -44649,6 +44657,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
+/obj/structure/closet/l3closet/virology,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "jVQ" = (
@@ -53805,6 +53814,13 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
+"ntS" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/security/prison/visit)
 "ntU" = (
 /obj/machinery/light/dim/directional/east,
 /turf/open/floor/circuit/telecomms/mainframe,
@@ -56520,9 +56536,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "ouc" = (
-/obj/machinery/flasher/portable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/box,
+/obj/vehicle/ridden/secway,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "ouw" = (
@@ -59048,6 +59064,12 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
+"poW" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/security/prison/visit)
 "poZ" = (
 /obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/wood,
@@ -65654,6 +65676,16 @@
 /obj/structure/sign/warning/electric_shock/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"rPu" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Prison Wing Access"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/permabrig,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/station/security/lockers)
 "rPA" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -109401,9 +109433,9 @@ sJl
 ain
 vQQ
 xKR
-siz
-mxq
-aoj
+poW
+ntS
+rPu
 amf
 amQ
 iTz

@@ -71,13 +71,15 @@
 		gib()
 
 /mob/living/basic/bingle/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
+	. = ..()
+	if (!.)
+		return
 	if(!isliving(target))
-		return ..()
+		return
 	var/mob/living/mob_target = target
 	mob_target.Disorient(3 SECONDS)
 	mob_target.stamina?.adjust(-32)
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
-	return ..()
 
 /mob/living/basic/bingle/mind_initialize()
 	. = ..()

@@ -24743,7 +24743,7 @@
 /area/station/ai_monitored/turret_protected/ai)
 "hrG" = (
 /obj/structure/rack/shelf,
-/obj/item/reagent_containers/hypospray/medipen/ekit,
+/obj/item/reagent_containers/medipen/ekit,
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
@@ -47021,11 +47021,11 @@
 /area/station/maintenance/port/fore)
 "nKg" = (
 /obj/structure/rack/shelf,
-/obj/item/reagent_containers/hypospray/medipen,
+/obj/item/reagent_containers/medipen,
 /obj/effect/turf_decal/tile/yellow/opposingcorners{
 	dir = 1
 	},
-/obj/item/reagent_containers/hypospray/medipen,
+/obj/item/reagent_containers/medipen,
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
@@ -78923,7 +78923,7 @@
 	dir = 1
 	},
 /obj/structure/rack/shelf,
-/obj/item/reagent_containers/hypospray/medipen/blood_loss,
+/obj/item/reagent_containers/medipen/blood_loss,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "xiU" = (
@@ -80788,7 +80788,7 @@
 /area/station/maintenance/disposal/incinerator)
 "xLw" = (
 /obj/structure/closet/crate/trashcart/laundry,
-/obj/item/reagent_containers/hypospray/medipen,
+/obj/item/reagent_containers/medipen,
 /obj/item/toy/crayon/spraycan,
 /obj/effect/spawner/random/contraband/prison,
 /obj/effect/turf_decal/tile/blue/opposingcorners{

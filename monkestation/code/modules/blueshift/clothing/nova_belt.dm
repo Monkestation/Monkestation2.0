@@ -20,6 +20,8 @@
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
+		/obj/item/reagent_containers/cup/vial,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
@@ -106,6 +108,6 @@
 	new /obj/item/tank/internals/emergency_oxygen(src)
 	new /obj/item/stack/spacecash/c1000(src)
 	new /obj/item/storage/pill_bottle/iron(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
+	new /obj/item/reagent_containers/medipen(src)
 	new /obj/item/flashlight/flare(src)
 	new /obj/item/crowbar/red(src)

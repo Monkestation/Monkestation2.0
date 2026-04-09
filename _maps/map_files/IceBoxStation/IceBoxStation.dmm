@@ -4817,6 +4817,15 @@
 	},
 /turf/open/floor/iron/white,
 /area/mine/living_quarters)
+"bwW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/binary/valve/digital{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/science/ordnance)
 "bxa" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 6
@@ -11381,6 +11390,7 @@
 	dir = 4
 	},
 /obj/machinery/duct,
+/obj/structure/cable,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "doG" = (
@@ -22934,6 +22944,8 @@
 	},
 /obj/item/reagent_containers/blood,
 /obj/machinery/iv_drip,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "gXe" = (
@@ -39711,6 +39723,7 @@
 "mjb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
+/obj/structure/cable,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "mjg" = (
@@ -40594,11 +40607,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "mxc" = (
-/obj/machinery/atmospherics/components/binary/valve/digital{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 6
 	},
 /turf/open/floor/iron,
 /area/station/science/ordnance)
@@ -42020,9 +42033,6 @@
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
 "mWj" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
-	dir = 6
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -64798,10 +64808,10 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "tPG" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
-	dir = 4
-	},
 /obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/science/ordnance)
 "tPM" = (
@@ -70091,6 +70101,12 @@
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/maintenance/port/fore)
+"vxu" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/station/science/ordnance)
 "vxx" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -71297,8 +71313,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "vSh" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/bodycontainer/morgue{
 	dir = 2
 	},
@@ -71486,7 +71500,7 @@
 /obj/machinery/computer/operating{
 	dir = 8
 	},
-/obj/item/radio/intercom/chapel/directional/east,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "vWe" = (
@@ -192438,7 +192452,7 @@ nIt
 nIt
 inh
 mWj
-aNu
+hFb
 tPG
 xEQ
 qaL
@@ -192695,8 +192709,8 @@ pOL
 pOL
 opD
 mxc
-hFb
-hFb
+aNu
+vxu
 fcj
 mEL
 vqv
@@ -192951,7 +192965,7 @@ pOL
 pOL
 pOL
 opD
-jGR
+bwW
 hFb
 mzb
 rEj

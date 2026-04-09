@@ -8,7 +8,7 @@
 	slot = ORGAN_SLOT_BUTT
 	throw_speed = 1
 	force = 4
-	embedding = list("pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE, "embed_chance" = 20)
+	embed_type = /datum/embedding/butt
 	hitsound = 'sound/misc/fart1.ogg'
 	body_parts_covered = HEAD
 	slot_flags = ITEM_SLOT_HEAD
@@ -17,6 +17,12 @@
 	var/fart_instability = 1 //Percent chance to lose your rear each fart.
 	var/cooling_down = FALSE
 	var/superfart_armed = FALSE
+
+/datum/embedding/butt
+	pain_mult = 0
+	jostle_pain_mult = 0
+	ignore_throwspeed_threshold = TRUE
+	embed_chance = 20
 
 //ADMIN ONLY ATOMIC ASS
 /obj/item/organ/internal/butt/atomic
@@ -188,8 +194,8 @@
 										"gets real close to [Targeted]'s face and cuts the cheese!")]", ignored_mobs = ignored_mobs)
 			hit_target = TRUE
 			break
-	if(!hit_target && !user.client?.prefs?.read_preference(/datum/preference/toggle/prude_mode))
-		user.audible_message("[pick(world.file2list("strings/farts.txt"))]", audible_message_flags = list(CHATMESSAGE_EMOTE = TRUE))
+	if(!hit_target)
+		user.audible_message("[pick(world.file2list("strings/farts.txt"))]", audible_message_flags = list(CHATMESSAGE_EMOTE = TRUE), ignored_mobs = ignored_mobs)
 
 	if(superfart_armed)
 		to_chat(user, span_notice("You decide to disarm your ass by farting slowly. Thank god."))

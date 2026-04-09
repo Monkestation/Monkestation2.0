@@ -7,11 +7,11 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket)
 	slot_flags = ITEM_SLOT_BACK
 	obj_flags = UNIQUE_RENAME
-	can_bayonet = TRUE
-	knife_x_offset = 22
-	knife_y_offset = 11
 	//monke edit: fully charges per crank because it was really confusing and unintuitive
 	//monke edit: increased cooldown time to compensate for increased charge
+
+/obj/item/gun/energy/laser/musket/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 22, offset_y = 11)
 
 /obj/item/gun/energy/laser/musket/Initialize(mapload)
 	. = ..()
@@ -164,16 +164,14 @@
 
 //  Monkestation Edit - explorer laser gun
 /obj/item/gun/energy/laser/explorer
-	name ="explorer laser gun"
-	desc = "A decomissioned military lasergun. Acid damage has left it's internal recharging battery fused inside with pitiful capacity. It can be hand charged for extra speed."
-	pin = /obj/item/firing_pin/explorer
+	name ="explorer hardlight laser gun"
+	desc = "A decomissioned military lasergun. Acid damage has left it's internal recharging battery fused inside with pitiful capacity. It can be hand charged for extra speed. \
+	Fires hardlight lasers, dealing more damage at the cost of dissipating extremely fast and being unable to pass through glass."
+	pin = /obj/item/firing_pin/explorer/unremovable
 	icon = 'monkestation/icons/obj/guns/explorer.dmi'
 	icon_state = "explorer"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/explorer)
 	selfcharge = 1
-	can_bayonet = TRUE
-	knife_x_offset = 17
-	knife_y_offset = 12
 
 /obj/item/gun/energy/laser/explorer/add_seclight_point()
 	AddComponent(/datum/component/seclite_attachable, \
@@ -181,7 +179,7 @@
 		light_overlay = "flight", \
 		overlay_x = 18, \
 		overlay_y = 8)
-	
+
 /obj/item/gun/energy/laser/explorer/Initialize(mapload)
 	. = ..()
 	AddComponent( \
@@ -191,11 +189,16 @@
 		cooldown_time = 1.5 SECONDS, \
 		charge_sound = 'sound/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.3 SECONDS, \
+		charge_move = IGNORE_USER_LOC_CHANGE, \
 		)
 
 /obj/item/ammo_casing/energy/laser/explorer
+	projectile_type = /obj/projectile/beam/laser/hardlight
 	e_cost = LASER_SHOTS(4, STANDARD_CELL_CHARGE)
 	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
 
 /obj/item/gun/energy/laser/explorer/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_REMOVED)
+
+/obj/item/gun/energy/laser/explorer/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 17, offset_y = 12)

@@ -29,7 +29,7 @@
 		qdel(N)
 		to_chat(user, span_warning("You're incapable of readying a finger gun in your current state."))
 
-/obj/item/ammo_casing/caseless/fingergun_bullet
+/obj/item/ammo_casing/fingergun_bullet
 	name = "imaginary bullet"
 	desc = "Bullets are not real idiot."
 	projectile_type = /obj/projectile/bullet/fingergun_bullet
@@ -37,6 +37,10 @@
 	caliber = "bulletsarenotrealyouidiot"
 	custom_materials = list()
 	harmful = FALSE
+
+/obj/item/ammo_casing/fingergun_bullet/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/caseless)
 
 /obj/projectile/bullet/fingergun_bullet
 	name = "imaginary bullet"
@@ -46,12 +50,12 @@
 	damage = 0
 	hitsound_wall = ""
 	impact_effect_type = null
-	embedding = list(embed_chance=0)
+	embed_type = null
 
 /obj/item/ammo_box/magazine/fingergun_emote
 	name = "finger gun magazine"
 	desc = "You should not be seeing this..."
-	ammo_type = /obj/item/ammo_casing/caseless/fingergun_bullet
+	ammo_type = /obj/item/ammo_casing/fingergun_bullet
 	caliber = "bulletsarenotrealyouidiot"
 	max_ammo = 8
 
