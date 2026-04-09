@@ -900,6 +900,8 @@
 	var/succeeded = TRUE
 
 	parts += printplayer(owner)
+	if(heretic_path)
+		parts += "They followed the <b>[heretic_path.route]</b>"
 	parts += "<b>Sacrifices Made:</b> [total_sacrifices]"
 	parts += "The heretic's sacrifice targets were: [roundend_sac_list()]."
 	if(length(objectives))
