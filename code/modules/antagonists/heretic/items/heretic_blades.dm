@@ -225,7 +225,7 @@
 			. /= phys_mod
 
 	// negate bodypart damage modifiers
-	var/obj/item/bodypart/affecting = astype(def_zone) || victim.get_bodypart(check_zone(def_zone))
+	var/obj/item/bodypart/affecting = victim.get_bodypart(check_zone(def_zone))
 	if(affecting)
 		var/part_mod = affecting.burn_modifier
 		if(part_mod < 1)
