@@ -206,6 +206,34 @@
 		icon_state = base_icon_state
 		inhand_icon_state = base_icon_state
 
+/obj/item/melee/sickly_blade/dark/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
+	var/old_force = force
+	var/old_damtype = damtype
+	if(IS_BLOODSUCKER(target_mob))
+		force *= get_vamp_damage_multiplier(target_mob, check_zone(user.zone_selected))
+		damtype = BURN
+	. = ..()
+	force = old_force
+	damtype = old_damtype
+
+/// Applies damage multipliers against bloodsuckers, causing them to take 1.2x damage, alongside bypassing any burn resistance.
+/obj/item/melee/sickly_blade/dark/proc/get_vamp_damage_multiplier(mob/living/victim, def_zone)
+	SIGNAL_HANDLER
+	. = 1.2
+	// negate physiology damage modifiers (i.e fortitude)
+	var/datum/physiology/physiology = astype(victim, /mob/living/carbon/human)?.physiology
+	if(physiology)
+		var/phys_mod = physiology.burn_mod
+		if(phys_mod < 1)
+			. /= phys_mod
+
+	// negate bodypart damage modifiers
+	var/obj/item/bodypart/affecting = astype(def_zone) || victim.get_bodypart(check_zone(def_zone))
+	if(affecting)
+		var/part_mod = affecting.burn_modifier
+		if(part_mod < 1)
+			. /= part_mod
+
 // Path of Cosmos's blade
 /obj/item/melee/sickly_blade/cosmic
 	name = "\improper cosmic blade"
