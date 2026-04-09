@@ -6,7 +6,6 @@ import {
   NumberInput,
   Flex,
   Box,
-  Knob,
   ProgressBar,
 } from '../../components';
 
@@ -29,20 +28,29 @@ export const RBMKControls = () => {
   const outletPressureMax = Number(data?.outlet_pressure_max ?? 1200);
   const outletPressure = Number(data?.outlet_pressure ?? 0);
 
+  const sendInletRate = (value: number) => {
+    if (!Number.isFinite(value)) {
+      return;
+    }
+
+    act('set_inlet_rate', {
+      rate: Math.round(value),
+    });
+  };
+
+  const sendOutletPressure = (value: number) => {
+    if (!Number.isFinite(value)) {
+      return;
+    }
+
+    act('set_outlet_pressure', {
+      pressure: value,
+    });
+  };
+
   return (
     <Flex direction="column" gap={1}>
       <Section title="Control Rod Depth">
-        <Flex justify="center" mb={1}>
-          <Knob
-            size={3}
-            minValue={0}
-            maxValue={maxRodDepth}
-            step={1}
-            value={depth}
-            onDrag={(_, value) => act('set_rods', { depth: value })}
-          />
-        </Flex>
-
         <ProgressBar
           value={depth}
           maxValue={maxRodDepth}
@@ -67,8 +75,16 @@ export const RBMKControls = () => {
         </Box>
 
         <Flex justify="space-between" mt={1}>
-          <Button icon="arrow-up" content="Raise" onClick={() => act('rod_up')} />
-          <Button icon="arrow-down" content="Lower" onClick={() => act('rod_down')} />
+          <Button
+            icon="arrow-up"
+            content="Raise"
+            onClick={() => act('rod_up')}
+          />
+          <Button
+            icon="arrow-down"
+            content="Lower"
+            onClick={() => act('rod_down')}
+          />
         </Flex>
       </Section>
 
@@ -111,8 +127,7 @@ export const RBMKControls = () => {
                   minValue={inletMin}
                   maxValue={inletMax}
                   step={1}
-                  suppressFlicker={2000}
-                  onChange={(_, value) => act('set_inlet_rate', { rate: value })}
+                  onChange={sendInletRate}
                 />
               </LabeledList.Item>
 
@@ -141,10 +156,7 @@ export const RBMKControls = () => {
                   minValue={0}
                   maxValue={outletPressureMax}
                   step={10}
-                  suppressFlicker={2000}
-                  onChange={(_, value) =>
-                    act('set_outlet_pressure', { pressure: value })
-                  }
+                  onChange={sendOutletPressure}
                 />
               </LabeledList.Item>
 

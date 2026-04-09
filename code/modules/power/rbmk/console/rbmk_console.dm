@@ -341,6 +341,7 @@
 	 ************************************************/
 	if (action == "toggle_inlet")
 		linked_reactor.inlet_open = !linked_reactor.inlet_open
+		linked_reactor.wake_coolant_ports()
 		linked_reactor.update_linked_consoles()
 		return TRUE
 
@@ -350,11 +351,13 @@
 			RBMK_INLET_RATE_MIN,
 			RBMK_INLET_RATE_MAX
 		)
+		linked_reactor.wake_coolant_ports()
 		linked_reactor.update_linked_consoles()
 		return TRUE
 
 	if (action == "toggle_outlet")
 		linked_reactor.outlet_open = !linked_reactor.outlet_open
+		linked_reactor.wake_coolant_ports()
 		linked_reactor.update_linked_consoles()
 		return TRUE
 
@@ -364,6 +367,7 @@
 			0,
 			RBMK_OUTLET_PRESSURE_MAX
 		)
+		linked_reactor.wake_coolant_ports()
 		linked_reactor.update_linked_consoles()
 		return TRUE
 

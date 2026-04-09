@@ -47,22 +47,31 @@
 
 
 /obj/machinery/atmospherics/components/unary/rbmk/inlet/process_atmos()
-    if (!parent_reactor || !parent_reactor.inlet_open)
+    if (!parent_reactor)
         return
+
+    if (!parent_reactor.inlet_open)
+        return
+
+    // Keep the port active while enabled so UI toggles/rate changes
+    // actually resume pulling on subsequent atmos ticks.
+    SSair.add_to_active(src)
 
     var/datum/gas_mixture/in_mix = airs[1]
     if (!in_mix || in_mix.total_moles() <= 0)
         return
 
-    var/amt = clamp(parent_reactor.inlet_rate / 1000, 0, 1)
-    var/datum/gas_mixture/moved = in_mix.remove_ratio(amt)
-    if (!moved || moved.total_moles() <= 0)
+    var/amount_ratio = clamp(parent_reactor.inlet_rate / 1000, 0, 1)
+    var/datum/gas_mixture/moved_mix = in_mix.remove_ratio(amount_ratio)
+    if (!moved_mix || moved_mix.total_moles() <= 0)
         return
 
-    parent_reactor.coolant_internal.merge(moved)
+    if (!parent_reactor.coolant_internal)
+        return
+
+    parent_reactor.coolant_internal.merge(moved_mix)
 
     update_parents()
-    SSair.add_to_active(src)
 
 
 
@@ -78,35 +87,41 @@
 
 
 /obj/machinery/atmospherics/components/unary/rbmk/outlet/process_atmos()
-    if (!parent_reactor || !parent_reactor.outlet_open)
+    if (!parent_reactor)
         return
+
+    if (!parent_reactor.outlet_open)
+        return
+
+    // Keep the port active while enabled so it continues checking
+    // for pressure relief even on ticks with no immediate transfer.
+    SSair.add_to_active(src)
 
     var/datum/gas_mixture/store = parent_reactor.coolant_internal
     if (!store || store.total_moles() <= 0)
         return
 
-    var/current = store.return_pressure()
-    var/target = parent_reactor.outlet_target_pressure
-    if (current <= target)
+    var/current_pressure = store.return_pressure()
+    var/target_pressure = parent_reactor.outlet_target_pressure
+    if (current_pressure <= target_pressure)
         return
 
-    var/excess_ratio = clamp((current - target) / max(target, 1), 0, 1)
-    var/datum/gas_mixture/released = store.remove_ratio(excess_ratio)
-    if (!released || released.total_moles() <= 0)
+    var/excess_ratio = clamp((current_pressure - target_pressure) / max(target_pressure, 1), 0, 1)
+    var/datum/gas_mixture/released_mix = store.remove_ratio(excess_ratio)
+    if (!released_mix || released_mix.total_moles() <= 0)
         return
 
     // Vent into connected pipe
     if (airs && airs.len)
-        airs[1].merge(released)
+        airs[1].merge(released_mix)
         update_parents()
-        SSair.add_to_active(src)
         return
 
     // Fallback: vent to turf
-    var/turf/T = get_turf(src)
-    if (T)
-        T.assume_air(released)
-        air_update_turf(T)
+    var/turf/port_turf = get_turf(src)
+    if (port_turf)
+        port_turf.assume_air(released_mix)
+        air_update_turf(port_turf)
 
 
 
@@ -172,6 +187,14 @@
         O.parent_reactor = src
         O.dir = EAST
         outlet = O
+
+
+/// Wake coolant ports after UI changes so SSair processes them again
+/obj/machinery/rbmk/reactor/proc/wake_coolant_ports()
+    if (inlet)
+        SSair.add_to_active(inlet)
+    if (outlet)
+        SSair.add_to_active(outlet)
 
 
 

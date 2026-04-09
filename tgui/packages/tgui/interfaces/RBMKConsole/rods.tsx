@@ -55,7 +55,7 @@ export const RBMKRods = () => {
 
             return (
               <Table.Row key={`${rod.slot_kind}-${rod.slot_index}`}>
-                <Table.Cell capitalize>{rod.slot_kind}</Table.Cell>
+                <Table.Cell>{rod.slot_kind}</Table.Cell>
                 <Table.Cell>{rod.slot_index}</Table.Cell>
                 <Table.Cell>{rod.type}</Table.Cell>
                 <Table.Cell>

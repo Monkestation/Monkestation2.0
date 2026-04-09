@@ -15,7 +15,7 @@ export const RBMKConsole = () => {
   );
 
   return (
-    <Window theme="soviet" width={832} height={576} resizable>
+    <Window theme="soviet" width={832} height={576}>
       <Window.Content>
         <Flex direction="column" height="100%">
           <Flex.Item grow>
