@@ -172,3 +172,61 @@
   ilikesaying:
   - qol: doubled the quantity of reagents, and biomass cost of reagent rations the
       Frontier Ration Printer
+2026-04-10:
+  Absolucy:
+  - bugfix: Fixed some potential issues with assembler screentips.
+  Absolucy, EnterTheJake:
+  - rscadd: adds the MOD shock-absorption module, into the game.
+  - rscadd: The MOD shock-absorption module into the the uplinks, costs 2 TC.
+  - balance: Nukie modsuits come with the shock absorption module preinstalled.
+  BanementI:
+  - rscadd: Added the shrimp plushie from Fulpstation! It can fry some damn good rice.
+  - rscadd: Added the aforementioned shrimp to the plush vendor and as a cargo order.
+  - rscadd: Added a new shrimp interaction.
+  - map: Included secret shrimps somewhere onto Oshan, where they live in harmony.
+  BartDrown:
+  - qol: Items on the griddle and oven tray can now be picked up using a serving tray
+      (single, single type, and all collection modes supported)
+  - qol: Serving tray contents can be dumped onto the oven tray by clicking the oven
+      or oven tray with the serving tray
+  - bugfix: Plasteel Chef's Dinnerware Vendor now sells the correct oven tray instead
+      of a non-functional cooking container
+  - qol: Material and ingredient lists in the crafting menu now filter based on search
+      text
+  BebeYoshi:
+  - map: Theseus bar is now considered a lounge instead of a cafeteria, extroverts
+      rejoice!
+  Cujo:
+  - bugfix: Deaf people no longer get a notification for PDA messages, instead getting
+      a vibration.
+  - rscadd: Hard of hearing now gives you a chance to not hear PDA messages
+  JohnFulpWillard:
+  - bugfix: Crushers now have triggers.
+  - bugfix: People who can't use guns now can't use any gun.
+  Mantlecrawler:
+  - balance: Plants with bluespace activity genes now only teleport you up to 5 tiles
+      in a direction, and apply disgust and confusion when used.
+  - balance: Contractor reinforcements cost 3 rep, but have a maximum of two now.
+  - bugfix: Snipping cuffs off of alien larvae now works properly
+  - balance: Botany can no longer get healium, RDX, or TATP through lesser strange
+      seeds.
+  SirNightKnight:
+  - qol: you can craft paper bins with 2 iron sheets.
+  - qol: you can craft colored folders with cardboard.
+  - qol: you can craft clipboards with 2 wood planks, an iron rod, and wirecutters.
+  - spellcheck: corrected a typo in the security barrier voucher option description.
+  - qol: added a clipboard to the security assistant detective kit.
+  flleeppyy:
+  - balance: Simians are now unbutcherable.
+  - bugfix: interview panel PP button not working
+  - rscadd: Plexora OOM shutdown type.
+  ilikesaying:
+  - spellcheck: changed "Then" to "Than" in Oni "Slow Footed" trait.
+  - spellcheck: changed Kotra Wellington to Korta Wellington.
+  neeshacark:
+  - balance: kindle kick jackboots have normal jackboot storage
+  - balance: system cleaner fixes clone damage at the same rate as toxin
+  notghosti:
+  - balance: Holy melons now mutate from honeydew's
+  - balance: Holy melons now take 60-80 endurance and 50-70 potency to mutate.
+  - balance: Religious Supplies Crate costs 5 crate value instead of 6
