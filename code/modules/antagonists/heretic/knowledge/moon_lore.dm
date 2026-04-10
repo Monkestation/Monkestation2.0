@@ -168,9 +168,9 @@
 	target.emote(pick("giggle", "laugh"))
 	target.mob_mood?.adjust_sanity(-10)
 	if(target.stat == CONSCIOUS && target.mob_mood?.sanity >= SANITY_NEUTRAL)
-		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
+		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2.5)
 		return
-	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 25)
+	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5) // normal attack will also apply 5, for a total of 10
 
 /datum/heretic_knowledge/spell/moon_ringleader
 	name = "Ringleaders Rise"
