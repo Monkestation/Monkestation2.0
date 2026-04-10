@@ -1,8 +1,6 @@
 ADMIN_VERB(reset_tram, R_DEBUG|R_ADMIN, FALSE, "Reset Tram", "Reset a tram controller or its contents.", ADMIN_CATEGORY_DEBUG)
 	var/static/list/debug_tram_list = list(
 		TRAMSTATION_LINE_1,
-		BIRDSHOT_LINE_1,
-		BIRDSHOT_LINE_2,
 		HILBERT_LINE_1,
 	)
 

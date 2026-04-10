@@ -59,48 +59,6 @@
 	platform_code = TRAMSTATION_EAST
 	tgui_icons = list("Departures" = "plane-departure", "Cargo" = "box", "Science" = "flask")
 
-//birdshot
-
-/obj/effect/landmark/transport/transport_id/birdshot/line_1
-	specific_transport_id = BIRDSHOT_LINE_1
-
-/obj/effect/landmark/transport/transport_id/birdshot/line_2
-	specific_transport_id = BIRDSHOT_LINE_2
-
-/obj/effect/landmark/transport/nav_beacon/tram/nav/birdshot/prison
-	name = BIRDSHOT_LINE_1
-	specific_transport_id = TRAM_NAV_BEACONS
-	dir = NORTH
-
-/obj/effect/landmark/transport/nav_beacon/tram/nav/birdshot/maint
-	name = BIRDSHOT_LINE_2
-	specific_transport_id = TRAM_NAV_BEACONS
-	dir = WEST
-
-/obj/effect/landmark/transport/nav_beacon/tram/platform/birdshot/sec_wing
-	name = "Security Wing"
-	specific_transport_id = BIRDSHOT_LINE_1
-	platform_code = BIRDSHOT_SECURITY_WING
-	tgui_icons = list("Security" = "gavel")
-
-/obj/effect/landmark/transport/nav_beacon/tram/platform/birdshot/prison_wing
-	name = "Prison Wing"
-	specific_transport_id = BIRDSHOT_LINE_1
-	platform_code = BIRDSHOT_PRISON_WING
-	tgui_icons = list("Prison" = "box")
-
-/obj/effect/landmark/transport/nav_beacon/tram/platform/birdshot/maint_left
-	name = "Port Platform"
-	specific_transport_id = BIRDSHOT_LINE_2
-	platform_code = BIRDSHOT_MAINTENANCE_LEFT
-	tgui_icons = list("Port Platform" = "plane-departure")
-
-/obj/effect/landmark/transport/nav_beacon/tram/platform/birdshot/maint_right
-	name = "Starboard Platform"
-	specific_transport_id = BIRDSHOT_LINE_2
-	platform_code = BRIDSHOT_MAINTENANCE_RIGHT
-	tgui_icons = list("Starboard Platform" = "plane-arrival")
-
 //map-agnostic landmarks
 
 /obj/effect/landmark/transport/nav_beacon/tram/nav/immovable_rod
