@@ -258,8 +258,9 @@
 
 		UnregisterSignal(source, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON)
 		source.RemoveComponentSource(REF(src), /datum/component/can_flash_from_behind)
-
-	team.rejected_brothers.Add(flashed)
-	to_chat(flashed, span_big(span_hypnophrase("You wake up forgetting why exactly you feel asleep, and the brotherly visions you had during your sleep")))
+	else
+		team.rejected_brothers.Add(flashed)
+		source.balloon_alert(source, "[flashed.name] has rejected you")
+		to_chat(flashed, span_big(span_hypnophrase("You wake up forgetting why exactly you fell asleep, and the brotherly visions you had during your sleep")))
 
 	flashed.SetSleeping(0 SECONDS)
