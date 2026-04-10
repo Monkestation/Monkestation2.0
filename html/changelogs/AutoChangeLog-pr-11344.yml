@@ -1,0 +1,4 @@
+author: "Cujo"
+delete-after: True
+changes:
+  - rscadd: "Adds missing space cleaner spray bottle to Metastation medical"
