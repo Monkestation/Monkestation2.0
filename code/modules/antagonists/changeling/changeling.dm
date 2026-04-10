@@ -778,6 +778,15 @@
 
 	chosen_dna.copy_dna(user.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 
+	// Snowflake to carry over anime implants
+	if(user.has_quirk(/datum/quirk/anime))
+		user.remove_quirk(/datum/quirk/anime)
+
+	for(var/datum/quirk/target_quirk as anything in chosen_profile.quirks)
+		if(istype(target_quirk, /datum/quirk/anime))
+			user.add_quirk(/datum/quirk/anime)
+			break
+
 	for(var/obj/item/bodypart/limb as anything in user.bodyparts)
 		limb.update_limb(is_creating = TRUE)
 
