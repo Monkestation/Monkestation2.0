@@ -515,6 +515,15 @@
 	if(QDELETED(sac_target))
 		return
 
+	// ensure they're awake and ready to play touhou
+	sac_target.SetUnconscious(0)
+	sac_target.SetSleeping(0)
+	sac_target.SetAllImmobility(0)
+	if(sac_target.resting)
+		sac_target.set_resting(FALSE, instant = TRUE)
+	else
+		sac_target.get_up(instant = TRUE)
+
 	// About how long should the helgrasp last? (1 metab a tick = helgrasp_time / 2 ticks (so, 1 minute = 60 seconds = 30 ticks))
 	var/helgrasp_time = 1 MINUTES
 
