@@ -74,6 +74,36 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	. = ..()
 	. += GLOB.sandbag_recipes
 
+/obj/item/stack/sheet/mineral/sandbags/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isopenturf(interacting_with))
+		return NONE
+	var/turf/open/build_on = interacting_with
+	if(!user.Adjacent(build_on))
+		return ITEM_INTERACT_BLOCKING
+	if(isgroundlessturf(build_on))
+		user.balloon_alert(user, "can't place it here!")
+		return ITEM_INTERACT_BLOCKING
+	if(build_on.is_blocked_turf())
+		user.balloon_alert(user, "something is blocking the tile!")
+		return ITEM_INTERACT_BLOCKING
+	if(get_amount() < 1)
+		user.balloon_alert(user, "not enough material!")
+		return ITEM_INTERACT_BLOCKING
+	if(!do_after(user, 3 SECONDS, build_on))
+		return ITEM_INTERACT_BLOCKING
+	if(build_on.is_blocked_turf())
+		user.balloon_alert(user, "something is blocking the tile!")
+		return ITEM_INTERACT_BLOCKING
+	if(!use(1))
+		user.balloon_alert(user, "not enough material!")
+		return ITEM_INTERACT_BLOCKING
+	new/obj/structure/barricade/sandbags(build_on)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/stack/sheet/mineral/sandbags/examine(mob/user)
+	. = ..()
+	. += span_notice("You can build a sandbag by right clicking on an empty floor.")
+
 /obj/item/emptysandbag
 	name = "empty sandbag"
 	desc = "A bag to be filled with sand."
@@ -85,7 +115,7 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	if(istype(attacking_item, /obj/item/stack/ore/glass))
 		var/obj/item/stack/ore/glass/G = attacking_item
 		to_chat(user, span_notice("You fill the sandbag."))
-		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags(drop_location())
+		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags(drop_location(), 3)
 		qdel(src)
 		if (Adjacent(user) && !issilicon(user))
 			user.put_in_hands(I)
