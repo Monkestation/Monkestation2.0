@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Crushers now have triggers."
+  - bugfix: "People who can't use guns now can't use any gun."

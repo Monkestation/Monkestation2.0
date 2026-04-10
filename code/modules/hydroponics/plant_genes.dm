@@ -563,11 +563,14 @@
 
 	our_plant.investigate_log("squash-teleported [key_name(target)] at [AREACOORD(target)]. Last touched by: [our_plant.fingerprintslast].", INVESTIGATE_BOTANY)
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	var/teleport_radius = max(round(CAPPED_POTENCY(our_seed) / 10), 1)
+	var/teleport_radius = max(round(CAPPED_POTENCY(our_seed) / 20), 1)
 	var/turf/T = get_turf(target)
 	new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
 	do_teleport(target, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
-
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		C.adjust_disgust(15)	//Two teleports is safe
+		C.adjust_confusion(3 SECONDS)
 /*
  * When slipped on, makes the target teleport and either teleport the source again or delete it.
  *
@@ -579,7 +582,7 @@
 
 	our_plant.investigate_log("slip-teleported [key_name(target)] at [AREACOORD(target)]. Last touched by: [our_plant.fingerprintslast].", INVESTIGATE_BOTANY)
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	var/teleport_radius = max(round(CAPPED_POTENCY(our_seed) / 10), 1)
+	var/teleport_radius = max(round(CAPPED_POTENCY(our_seed) / 20), 1)
 	var/turf/T = get_turf(target)
 	to_chat(target, span_warning("You slip through spacetime!"))
 	do_teleport(target, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)

@@ -1,0 +1,5 @@
+author: "Cujo"
+delete-after: True
+changes:
+  - bugfix: "Deaf people no longer get a notification for PDA messages, instead getting a vibration."
+  - rscadd: "Hard of hearing now gives you a chance to not hear PDA messages"

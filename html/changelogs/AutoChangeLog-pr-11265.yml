@@ -1,0 +1,6 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - balance: "Holy melons now mutate from honeydew's"
+  - balance: "Holy melons now take 60-80 endurance and 50-70 potency to mutate."
+  - balance: "Religious Supplies Crate costs 5 crate value instead of 6"

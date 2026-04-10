@@ -1,0 +1,4 @@
+author: "Mantlecrawler"
+delete-after: True
+changes:
+  - balance: "Botany can no longer get healium, RDX, or TATP through lesser strange seeds."
