@@ -5,7 +5,7 @@
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "main1"
 	anchored = TRUE
-	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND | INTERACT_ATOM_NO_FINGERPRINT_INTERACT
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	plane = FLOOR_PLANE
 	layer = SIGIL_LAYER
@@ -18,6 +18,7 @@
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "heretic_rune", silicon_image)
 	// ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
+	AddElement(/datum/element/block_turf_fingerprints)
 
 /obj/effect/heretic_rune/examine(mob/user)
 	. = ..()
