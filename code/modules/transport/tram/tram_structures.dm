@@ -596,7 +596,7 @@
 			deploy_spoiler()
 
 		update_appearance()
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return TRUE /* TOOL_ACT_TOOLTYPE_SUCCESS */
 
 	to_chat(user, span_notice("You begin repairing [src]..."))
 	if(!tool.use_tool(src, user, 4 SECONDS, volume = 50))
@@ -604,7 +604,7 @@
 	atom_integrity = max_integrity
 	to_chat(user, span_notice("You repair [src]."))
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return TRUE /* TOOL_ACT_TOOLTYPE_SUCCESS */
 
 /obj/structure/tram/spoiler/update_overlays()
 	. = ..()
