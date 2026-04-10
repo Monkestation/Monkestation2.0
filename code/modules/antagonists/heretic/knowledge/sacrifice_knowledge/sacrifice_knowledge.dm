@@ -401,7 +401,11 @@
 	sac_target.equip_to_slot_or_del(new /obj/item/restraints/handcuffs/energy/cult, ITEM_SLOT_HANDCUFFED/* , indirect_action = TRUE */)
 	sac_target.dropItemToGround(sac_target.legcuffed, TRUE)
 
-	sac_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 85, 150)
+	// if they are brain damaged to shit, let's... ensure they don't immediately die once we revive them.
+	if(sac_target.get_organ_loss(ORGAN_SLOT_BRAIN) > 150)
+		sac_target.setOrganLoss(ORGAN_SLOT_BRAIN, 150)
+	else
+		sac_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 85, 150)
 	sac_target.do_jitter_animation()
 	log_combat(heretic_mind.current, sac_target, "sacrificed")
 
