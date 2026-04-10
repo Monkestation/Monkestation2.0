@@ -1368,7 +1368,7 @@
 /obj/effect/landmark/transport/transport_id{
 	specific_transport_id = "test_vator"
 	},
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/structure/transport/linear/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
