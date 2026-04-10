@@ -56,7 +56,6 @@
 #define LOG_CLONING (1 << 22)
 #define LOG_MECHCOMP (1 << 23)
 #define LOG_BLACKMARKET (1 << 24)
-#define LOG_TRANSPORT (1 << 25) // todo: fix this
 
 //Individual logging panel pages
 #define INDIVIDUAL_GAME_LOG (LOG_GAME)
