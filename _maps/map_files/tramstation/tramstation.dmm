@@ -1763,7 +1763,7 @@
 "afP" = (
 /obj/structure/fluff/tram_rail,
 /turf/open/openspace,
-/area/station/asteroid)
+/area/station/hallway/primary/tram/left)
 "afQ" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/structure/fluff/tram_rail/floor,
@@ -1794,12 +1794,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
-"afX" = (
-/obj/structure/fluff/tram_rail/electric{
-	dir = 1
-	},
-/turf/open/openspace,
-/area/station/asteroid)
 "afZ" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
@@ -6679,7 +6673,7 @@
 /obj/structure/fluff/tram_rail/electric/anchor,
 /obj/structure/lattice,
 /turf/open/openspace,
-/area/station/asteroid/tram/junction/east)
+/area/station/hallway/primary/tram/right)
 "aZc" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
@@ -10395,6 +10389,10 @@
 /obj/structure/closet/firecloset/full,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"cfk" = (
+/obj/structure/lattice,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/right)
 "cfq" = (
 /obj/structure/ladder,
 /obj/effect/decal/cleanable/dirt,
@@ -10812,7 +10810,7 @@
 /obj/structure/fluff/tram_rail/electric/anchor,
 /obj/structure/lattice,
 /turf/open/openspace,
-/area/station/asteroid)
+/area/station/hallway/primary/tram/left)
 "cmH" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
@@ -25705,12 +25703,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
-"gXw" = (
-/obj/structure/fluff/tram_rail/electric{
-	dir = 1
-	},
-/turf/open/openspace,
-/area/station/asteroid/tram/junction/west)
 "gXx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -27279,12 +27271,6 @@
 "hzN" = (
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/command/storage/eva)
-"hzQ" = (
-/obj/structure/fluff/tram_rail/electric/anchor{
-	dir = 1
-	},
-/turf/open/openspace,
-/area/station/asteroid/tram/junction/east)
 "hzR" = (
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 4
@@ -37419,7 +37405,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/openspace,
-/area/station/asteroid/tram/junction/west)
+/area/station/hallway/primary/tram/left)
 "kFl" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
@@ -41283,6 +41269,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
+"lOl" = (
+/obj/structure/fluff/tram_rail/electric/anchor,
+/obj/structure/lattice,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "lOv" = (
 /obj/structure/chair{
 	name = "Defense"
@@ -42343,7 +42334,7 @@
 "meA" = (
 /obj/structure/fluff/tram_rail/electric/anchor,
 /turf/open/openspace,
-/area/station/asteroid)
+/area/station/hallway/primary/tram/center)
 "meB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -44778,10 +44769,6 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"mRF" = (
-/obj/structure/fluff/tram_rail/electric/anchor,
-/turf/open/openspace,
-/area/station/asteroid/tram/junction/east)
 "mRI" = (
 /obj/structure/ore_box,
 /obj/effect/turf_decal/sand/plating,
@@ -48337,6 +48324,13 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
+"nXH" = (
+/obj/structure/fluff/tram_rail/electric/anchor{
+	dir = 1
+	},
+/obj/structure/lattice,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "nXP" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -58980,6 +58974,10 @@
 /obj/effect/landmark/start/quartermaster,
 /turf/open/floor/carpet,
 /area/station/cargo/quartermaster)
+"riR" = (
+/obj/structure/lattice,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "riS" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -63980,7 +63978,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/openspace,
-/area/station/asteroid/tram/junction/east)
+/area/station/hallway/primary/tram/right)
 "sNr" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -68220,12 +68218,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
-"ueG" = (
-/obj/structure/fluff/tram_rail/electric{
-	dir = 1
-	},
-/turf/open/openspace,
-/area/station/asteroid/tram/junction/east)
 "ueZ" = (
 /obj/machinery/atmospherics/miner/carbon_dioxide,
 /turf/open/floor/engine/co2,
@@ -68397,6 +68389,10 @@
 	dir = 4
 	},
 /area/station/security/execution/education)
+"uiw" = (
+/obj/structure/lattice,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/left)
 "uiA" = (
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 4
@@ -73097,10 +73093,6 @@
 	},
 /turf/open/misc/dirt/jungle,
 /area/station/science/lower)
-"vvG" = (
-/obj/structure/fluff/tram_rail/electric,
-/turf/open/openspace,
-/area/station/asteroid)
 "vvK" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -80947,7 +80939,7 @@
 	dir = 1
 	},
 /turf/open/openspace,
-/area/station/asteroid/tram/junction/west)
+/area/station/hallway/primary/tram/center)
 "xYf" = (
 /obj/structure/flora/bush/jungle/c/style_random,
 /turf/open/misc/dirt/jungle,
@@ -80993,10 +80985,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/ai_monitored/security/armory)
-"xYF" = (
-/obj/structure/fluff/tram_rail/electric,
-/turf/open/openspace,
-/area/station/asteroid/tram/junction/east)
 "xYV" = (
 /turf/open/floor/noslip,
 /area/station/hallway/primary/tram/right)
@@ -168728,11 +168716,11 @@ yiM
 whW
 qUg
 iPy
-afy
-vvG
+cFs
+lNP
 dgP
-afX
-afy
+vVY
+cFs
 iPy
 rnR
 eJh
@@ -168985,11 +168973,11 @@ yiM
 sML
 lIQ
 iPy
-afy
-vvG
+cFs
+lNP
 dgP
-afX
-afy
+vVY
+cFs
 iPy
 aEP
 fwA
@@ -169242,11 +169230,11 @@ yiM
 gTC
 ifS
 iPy
-afy
-vvG
+cFs
+lNP
 dgP
-afX
-afy
+vVY
+cFs
 iPy
 aEP
 wEB
@@ -169499,11 +169487,11 @@ yiM
 aEh
 ojT
 ukT
-afy
+cFs
 afP
 dgP
-afX
-afy
+vVY
+cFs
 iPy
 vbR
 aHe
@@ -169756,11 +169744,11 @@ yiM
 aEh
 tYW
 yiM
-afy
-vvG
+cFs
+lNP
 dgP
-afX
-afy
+vVY
+cFs
 yiM
 eWz
 tBu
@@ -170013,11 +170001,11 @@ yiM
 qFZ
 nvB
 yiM
-afy
-vvG
+cFs
+lNP
 dgP
-afX
-afy
+vVY
+cFs
 yiM
 ePx
 aUB
@@ -170270,11 +170258,11 @@ afy
 nuQ
 gbD
 iLx
-afz
+uiw
 cmu
 wah
 kEV
-diE
+uiw
 ltG
 gkg
 pbN
@@ -170527,11 +170515,11 @@ afy
 nuQ
 gbD
 afy
-afy
-vvG
+cFs
+lNP
 dgP
-gXw
-fXs
+vVY
+cFs
 fXs
 gkg
 pbN
@@ -170784,11 +170772,11 @@ afy
 nuQ
 gbD
 afy
-afy
-vvG
+cFs
+lNP
 dgP
-gXw
-fXs
+vVY
+cFs
 fXs
 gkg
 pbN
@@ -171041,11 +171029,11 @@ afy
 nuQ
 gbD
 afy
-afy
-vvG
+cFs
+lNP
 dgP
-gXw
-fXs
+vVY
+cFs
 fXs
 gkg
 pbN
@@ -171298,11 +171286,11 @@ afy
 iKq
 gbD
 afy
-afy
-vvG
+cFs
+lNP
 dgP
-gXw
-fXs
+vVY
+cFs
 fXs
 gkg
 pbN
@@ -171555,11 +171543,11 @@ afy
 iKq
 age
 snG
-afy
-vvG
+cFs
+lNP
 dgP
-gXw
-fXs
+vVY
+cFs
 tAc
 vlL
 tfF
@@ -171812,11 +171800,11 @@ age
 aHf
 vFt
 uFa
-afy
-meA
+cFs
+bEt
 cPu
-xYe
-fXs
+rib
+cFs
 xmG
 yiM
 vlL
@@ -172069,11 +172057,11 @@ afy
 iKq
 age
 ygO
-afy
-vvG
+cFs
+lNP
 dgP
-gXw
-fXs
+vVY
+cFs
 gLu
 oGh
 tfF
@@ -172326,11 +172314,11 @@ fXs
 iKq
 kgL
 afy
-afy
-vvG
+cFs
+lNP
 dgP
-gXw
-fXs
+vVY
+cFs
 fXs
 lBK
 tfF
@@ -172583,11 +172571,11 @@ fXs
 iKq
 kgL
 afy
-afy
-vvG
+cFs
+lNP
 dgP
-gXw
-fXs
+vVY
+cFs
 fXs
 lBK
 tfF
@@ -172840,11 +172828,11 @@ fXs
 iKq
 kgL
 afy
-afy
-vvG
+eSz
+tCl
 omp
-gXw
-fXs
+wvE
+eSz
 fXs
 lBK
 tfF
@@ -173097,11 +173085,11 @@ fXs
 iKq
 kgL
 afy
-afy
-vvG
+eSz
+tCl
 omp
-gXw
-fXs
+wvE
+eSz
 fXs
 lBK
 tfF
@@ -173354,11 +173342,11 @@ fXs
 iKq
 age
 snG
-afy
-vvG
+eSz
+tCl
 omp
-gXw
-fXs
+wvE
+eSz
 tAc
 oGh
 tfF
@@ -173611,11 +173599,11 @@ oGh
 aHf
 izU
 uFa
-afy
+eSz
 meA
 omp
 xYe
-fXs
+eSz
 xmG
 qas
 vlL
@@ -173868,11 +173856,11 @@ afy
 iKq
 age
 ygO
-afy
-vvG
+eSz
+tCl
 omp
-gXw
-fXs
+wvE
+eSz
 gLu
 oGh
 tfF
@@ -174125,11 +174113,11 @@ afy
 iKq
 gbD
 afy
-afy
-vvG
+eSz
+tCl
 omp
-gXw
-fXs
+wvE
+eSz
 fXs
 gkg
 tfF
@@ -174382,11 +174370,11 @@ afy
 nuQ
 gbD
 afy
-afy
-vvG
+eSz
+tCl
 omp
-gXw
-fXs
+wvE
+eSz
 fXs
 gkg
 pbN
@@ -174639,11 +174627,11 @@ afy
 nuQ
 gbD
 afy
-afy
-vvG
+eSz
+tCl
 omp
-gXw
-fXs
+wvE
+eSz
 fXs
 gkg
 pbN
@@ -174896,11 +174884,11 @@ afy
 nuQ
 gbD
 afy
-afy
-vvG
+eSz
+tCl
 omp
-gXw
-fXs
+wvE
+eSz
 fXs
 gkg
 pbN
@@ -175153,11 +175141,11 @@ afy
 nuQ
 gbD
 afy
-afy
-vvG
+eSz
+tCl
 omp
-gXw
-fXs
+wvE
+eSz
 fXs
 gkg
 pbN
@@ -175410,11 +175398,11 @@ afz
 nuQ
 gbD
 rjk
-afz
-cmu
+riR
+lOl
 djy
-kEV
-diE
+nXH
+riR
 odL
 gkg
 pbN
@@ -175667,11 +175655,11 @@ izU
 vMI
 nEl
 izU
-afy
-vvG
+eSz
+tCl
 omp
-afX
-afy
+wvE
+eSz
 izU
 ydj
 dnp
@@ -175924,11 +175912,11 @@ izU
 wWn
 cut
 izU
-afy
-vvG
+eSz
+tCl
 omp
-afX
-afy
+wvE
+eSz
 izU
 rJC
 ghg
@@ -176181,11 +176169,11 @@ izU
 jWD
 gGI
 qhy
-afy
-vvG
+eSz
+tCl
 omp
-afX
-afy
+wvE
+eSz
 gTr
 rbJ
 ghg
@@ -176438,11 +176426,11 @@ izU
 qoF
 gEC
 gTr
-afy
-vvG
+eSz
+tCl
 omp
-afX
-afy
+wvE
+eSz
 qhy
 aGM
 uYR
@@ -176695,11 +176683,11 @@ izU
 flv
 vYA
 qhy
-afy
-vvG
+eSz
+tCl
 omp
-afX
-afy
+wvE
+eSz
 qhy
 pby
 seG
@@ -182349,11 +182337,11 @@ qhy
 qbo
 mUP
 qhy
-iDP
-xYF
+eSz
+tCl
 omp
-ueG
-iDP
+wvE
+eSz
 qhy
 vdj
 hke
@@ -182606,11 +182594,11 @@ qhy
 eIn
 suw
 qhy
-iDP
-xYF
+eSz
+tCl
 omp
-ueG
-iDP
+wvE
+eSz
 qhy
 wYw
 gvc
@@ -182863,11 +182851,11 @@ qhy
 jea
 qtS
 qhy
-iDP
-xYF
+eSz
+tCl
 omp
-ueG
-iDP
+wvE
+eSz
 qhy
 wYw
 rhj
@@ -183120,11 +183108,11 @@ qhy
 aQF
 lFM
 qhy
-iDP
-xYF
+eSz
+tCl
 omp
-ueG
-iDP
+wvE
+eSz
 gTr
 rrv
 wOP
@@ -183377,11 +183365,11 @@ izU
 eqK
 wez
 izU
-iDP
-xYF
+eSz
+tCl
 omp
-ueG
-iDP
+wvE
+eSz
 izU
 wez
 mhE
@@ -183634,11 +183622,11 @@ kRX
 eWA
 sMf
 glM
-swX
-aYM
+riR
+lOl
 lHm
-sNn
-swX
+nXH
+riR
 pQu
 oGR
 hDr
@@ -183891,11 +183879,11 @@ iDP
 hyU
 ows
 iDP
-iDP
-xYF
+eSz
+tCl
 omp
-ueG
-iDP
+wvE
+eSz
 iDP
 soY
 hDr
@@ -184148,11 +184136,11 @@ iDP
 hyU
 ows
 iDP
-iDP
-xYF
+eSz
+tCl
 omp
-ueG
-iDP
+wvE
+eSz
 iDP
 soY
 hDr
@@ -184405,11 +184393,11 @@ iDP
 hyU
 ows
 iDP
-iDP
-xYF
+eSz
+tCl
 omp
-ueG
-iDP
+wvE
+eSz
 iDP
 soY
 hDr
@@ -184662,11 +184650,11 @@ iDP
 hyU
 ows
 iDP
-iDP
-xYF
+eSz
+tCl
 omp
-ueG
-iDP
+wvE
+eSz
 iDP
 soY
 hDr
@@ -184919,11 +184907,11 @@ iDP
 fWy
 ows
 iDP
-iDP
-xYF
+eSz
+tCl
 omp
-ueG
-iDP
+wvE
+eSz
 iDP
 soY
 hDr
@@ -185176,11 +185164,11 @@ iDP
 fWy
 jDa
 kOT
-iDP
-xYF
+eSz
+tCl
 omp
-ueG
-iDP
+wvE
+eSz
 qsE
 afN
 ows
@@ -185433,11 +185421,11 @@ jDa
 hgI
 qas
 aPc
-iDP
-mRF
+eSz
+meA
 omp
-hzQ
-iDP
+xYe
+eSz
 kJS
 izU
 afN
@@ -185690,11 +185678,11 @@ iDP
 fWy
 jDa
 mdK
-iDP
-xYF
+eSz
+tCl
 omp
-ueG
-iDP
+wvE
+eSz
 uuO
 jDa
 ows
@@ -185947,11 +185935,11 @@ iDP
 fWy
 hDr
 iDP
-iDP
-xYF
+eSz
+tCl
 omp
-ueG
-iDP
+wvE
+eSz
 iDP
 feL
 ows
@@ -186204,11 +186192,11 @@ iDP
 fWy
 hDr
 iDP
-iDP
-xYF
+eSz
+tCl
 omp
-ueG
-iDP
+wvE
+eSz
 iDP
 feL
 ows
@@ -186461,11 +186449,11 @@ iDP
 fWy
 hDr
 iDP
-iDP
-xYF
+brm
+iOd
 ozQ
-ueG
-iDP
+vPi
+brm
 iDP
 feL
 ows
@@ -186718,11 +186706,11 @@ iDP
 fWy
 hDr
 iDP
-iDP
-xYF
+brm
+iOd
 ozQ
-ueG
-iDP
+vPi
+brm
 iDP
 feL
 ows
@@ -186975,11 +186963,11 @@ iDP
 fWy
 jDa
 kOT
-iDP
-xYF
+brm
+iOd
 ozQ
-ueG
-iDP
+vPi
+brm
 qsE
 jDa
 ows
@@ -187232,11 +187220,11 @@ jDa
 hgI
 bMb
 aPc
-iDP
-mRF
+brm
+puY
 ozQ
-hzQ
-iDP
+bTT
+brm
 kJS
 mZJ
 afN
@@ -187489,11 +187477,11 @@ iDP
 fWy
 jDa
 mdK
-iDP
-xYF
+brm
+iOd
 ozQ
-ueG
-iDP
+vPi
+brm
 uuO
 jDa
 ows
@@ -187746,11 +187734,11 @@ iDP
 fWy
 ows
 iDP
-iDP
-xYF
+brm
+iOd
 ivT
-ueG
-iDP
+vPi
+brm
 iDP
 soY
 ows
@@ -188003,11 +187991,11 @@ iDP
 hyU
 ows
 iDP
-iDP
-xYF
+brm
+iOd
 ozQ
-ueG
-iDP
+vPi
+brm
 iDP
 soY
 hDr
@@ -188260,11 +188248,11 @@ iDP
 hyU
 ows
 iDP
-iDP
-xYF
+brm
+iOd
 ozQ
-ueG
-iDP
+vPi
+brm
 iDP
 soY
 hDr
@@ -188517,11 +188505,11 @@ iDP
 hyU
 ows
 iDP
-iDP
-xYF
+brm
+iOd
 ozQ
-ueG
-iDP
+vPi
+brm
 iDP
 soY
 hDr
@@ -188774,11 +188762,11 @@ iDP
 hyU
 ows
 iDP
-iDP
-xYF
+brm
+iOd
 ozQ
-ueG
-iDP
+vPi
+brm
 iDP
 soY
 hDr
@@ -189031,11 +189019,11 @@ swX
 hyU
 ows
 xCb
-swX
+cfk
 aYM
 ogO
 sNn
-swX
+cfk
 qgW
 soY
 hDr
@@ -189288,11 +189276,11 @@ bMb
 lyt
 ghV
 bMb
-iDP
-xYF
+brm
+iOd
 ozQ
-ueG
-iDP
+vPi
+brm
 bMb
 ghV
 bXG
@@ -189545,11 +189533,11 @@ lZW
 kYk
 tYT
 aRO
-iDP
-xYF
+brm
+iOd
 ozQ
-ueG
-iDP
+vPi
+brm
 jDW
 iUL
 aHn
@@ -189802,11 +189790,11 @@ lZW
 sgq
 mzf
 aRO
-iDP
-xYF
+brm
+iOd
 ozQ
-ueG
-iDP
+vPi
+brm
 aRO
 gaH
 fsg
@@ -190059,11 +190047,11 @@ lZW
 kqs
 qHo
 aRO
-iDP
-xYF
+brm
+iOd
 ozQ
-ueG
-iDP
+vPi
+brm
 aRO
 aHo
 dHo
@@ -190316,11 +190304,11 @@ skT
 lRs
 lVe
 aRO
-iDP
-xYF
+brm
+iOd
 ozQ
-ueG
-iDP
+vPi
+brm
 aRO
 aEv
 hCz
