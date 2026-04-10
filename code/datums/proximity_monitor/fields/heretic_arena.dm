@@ -209,6 +209,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	SIGNAL_HANDLER
 	var/mutable_appearance/crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', arena_victor ? "arena_victor" : "arena_fighter", -HALO_LAYER)
 	crown_overlay.pixel_z = 24
+	crown_overlay.appearance_flags |= RESET_COLOR
 	overlays += crown_overlay
 
 // If our last attacker is an arena participant, we let them know they've scored a critical hit

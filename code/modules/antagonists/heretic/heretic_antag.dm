@@ -465,6 +465,7 @@
 	if(!should_show_aura())
 		return
 	var/mutable_appearance/aura = mutable_appearance('icons/mob/effects/heretic_aura.dmi', "heretic_aura")
+	aura.appearance_flags |= RESET_COLOR
 	if(HAS_TRAIT(source, TRAIT_HERETIC_AURA_HIDDEN))
 		aura.alpha = 150 // minimize visual clutter, but hopefully it's still visible enough
 	overlays += aura

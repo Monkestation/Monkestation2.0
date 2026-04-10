@@ -76,7 +76,9 @@
 /// Updates the overlay of the owner
 /datum/status_effect/cloudstruck/proc/add_cloud_overlay(atom/source, list/overlays)
 	SIGNAL_HANDLER
-	overlays += mutable_appearance('icons/effects/eldritch.dmi', "cloud_swirl", ABOVE_MOB_LAYER)
+	var/mutable_appearance/stink_overlay = mutable_appearance('icons/effects/eldritch.dmi', "cloud_swirl", ABOVE_MOB_LAYER)
+	stink_overlay.appearance_flags |= RESET_COLOR
+	overlays += stink_overlay
 
 /datum/status_effect/heretic_sated
 	id = "heretic_sated"
@@ -166,6 +168,7 @@
 
 /datum/status_effect/star_mark/on_creation(mob/living/new_owner, mob/living/new_spell_caster)
 	cosmic_overlay = mutable_appearance(effect_icon, effect_icon_state, BELOW_MOB_LAYER)
+	cosmic_overlay.appearance_flags |= RESET_COLOR
 	if(new_spell_caster)
 		spell_caster = WEAKREF(new_spell_caster)
 	return ..()
@@ -226,6 +229,7 @@
 /datum/status_effect/moon_converted/on_creation()
 	. = ..()
 	moon_insanity_overlay = mutable_appearance(effect_icon, effect_icon_state, ABOVE_MOB_LAYER)
+	moon_insanity_overlay.appearance_flags |= RESET_COLOR
 
 /datum/status_effect/moon_converted/Destroy()
 	moon_insanity_overlay = null
