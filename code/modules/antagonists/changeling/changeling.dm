@@ -878,6 +878,7 @@
 			attempted_fake_scar.fake = TRUE
 
 	user.regenerate_icons()
+	user.name = user.get_visible_name()
 	current_profile = chosen_profile
 
 /datum/antagonist/changeling/proc/query_for_monster_hunter(datum/source, list/prey)
