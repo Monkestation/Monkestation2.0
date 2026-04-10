@@ -1,0 +1,8 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - qol: "you can craft paper bins with 2 iron sheets."
+  - qol: "you can craft colored folders with cardboard."
+  - qol: "you can craft clipboards with 2 wood planks, an iron rod, and wirecutters."
+  - spellcheck: "corrected a typo in the security barrier voucher option description."
+  - qol: "added a clipboard to the security assistant detective kit."

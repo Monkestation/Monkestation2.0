@@ -1,0 +1,7 @@
+author: "BanementI"
+delete-after: True
+changes:
+  - rscadd: "Added the shrimp plushie from Fulpstation! It can fry some damn good rice."
+  - rscadd: "Added the aforementioned shrimp to the plush vendor and as a cargo order."
+  - rscadd: "Added a new shrimp interaction."
+  - map: "Included secret shrimps somewhere onto Oshan, where they live in harmony."

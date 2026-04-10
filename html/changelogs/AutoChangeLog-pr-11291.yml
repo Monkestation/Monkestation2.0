@@ -1,0 +1,4 @@
+author: "Mantlecrawler"
+delete-after: True
+changes:
+  - balance: "Plants with bluespace activity genes now only teleport you up to 5 tiles in a direction, and apply disgust and confusion when used."

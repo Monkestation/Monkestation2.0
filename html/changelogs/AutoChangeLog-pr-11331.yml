@@ -1,0 +1,4 @@
+author: "Mantlecrawler"
+delete-after: True
+changes:
+  - balance: "Contractor reinforcements cost 3 rep, but have a maximum of two now."

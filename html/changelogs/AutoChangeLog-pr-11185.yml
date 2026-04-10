@@ -1,0 +1,7 @@
+author: "BartDrown"
+delete-after: True
+changes:
+  - qol: "Items on the griddle and oven tray can now be picked up using a serving tray (single, single type, and all collection modes supported)"
+  - qol: "Serving tray contents can be dumped onto the oven tray by clicking the oven or oven tray with the serving tray"
+  - bugfix: "Plasteel Chef's Dinnerware Vendor now sells the correct oven tray instead of a non-functional cooking container"
+  - qol: "Material and ingredient lists in the crafting menu now filter based on search text"

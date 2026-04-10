@@ -161,3 +161,14 @@
   throwawayuseless, JohnFulpWillard:
   - rscadd: Added the Immunocompromised quirk for -6 points. Don't catch a cold!
   - bugfix: Fixes rot and such not spreading disease unless you're wearing bio-protection.
+2026-04-09:
+  Tractor-Maam:
+  - rscadd: Mecha Orbital Pads and their consoles can now be printed after Advanced
+      Robotics research.
+  - balance: Mecha Orbital Pads now cost 5 plasteel to build.
+  - rscadd: Added a examine hint to Mecha Orbital Pad Consoles to notify of being
+      able to launch it from inside a mech. Did you know you could always do this
+      (assuming the recieving pad had its lifeform restriction cut)?
+  ilikesaying:
+  - qol: doubled the quantity of reagents, and biomass cost of reagent rations the
+      Frontier Ration Printer
