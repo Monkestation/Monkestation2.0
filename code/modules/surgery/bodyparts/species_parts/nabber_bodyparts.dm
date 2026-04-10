@@ -12,6 +12,8 @@
 	brute_modifier = NABBER_BRUTE_MODIFIER
 	burn_modifier = NABBER_BURN_MODIFIER
 	bodytype =  BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
+	palette = /datum/color_palette/generic_colors
+	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/head/mutant/nabber/Initialize(mapload)
 	worn_ears_offset = new(
@@ -45,6 +47,8 @@
 	brute_modifier = NABBER_BRUTE_MODIFIER
 	burn_modifier = NABBER_BURN_MODIFIER
 	bodytype =  BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
+	palette = /datum/color_palette/generic_colors
+	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/chest/mutant/nabber/Initialize(mapload)
 	worn_back_offset = new(
@@ -99,6 +103,8 @@
 	bodytype =  BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
 	biological_state = BIO_STANDARD_UNJOINTED
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
+	palette = /datum/color_palette/generic_colors
+	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/arm/right/mutant/nabber
 	icon_greyscale = 'icons/mob/species/nabber/nabber_parts_greyscale.dmi'
@@ -110,6 +116,8 @@
 	bodytype =  BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
 	biological_state = BIO_STANDARD_UNJOINTED
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
+	palette = /datum/color_palette/generic_colors
+	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/leg/left/mutant/nabber
 	icon_greyscale = 'icons/mob/species/nabber/nabber_parts_greyscale.dmi'
@@ -119,6 +127,8 @@
 	biological_state = BIO_STANDARD_UNJOINTED
 	bodytype =  BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
 	footprint_sprite = FOOTPRINT_SPRITE_SNAKE
+	palette = /datum/color_palette/generic_colors
+	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/leg/right/mutant/nabber
 	icon_greyscale = 'icons/mob/species/nabber/nabber_parts_greyscale.dmi'
@@ -128,6 +138,8 @@
 	bodytype =  BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
 	biological_state = BIO_STANDARD_UNJOINTED
 	footprint_sprite = FOOTPRINT_SPRITE_SNAKE
+	palette = /datum/color_palette/generic_colors
+	palette_key = MUTANT_COLOR
 
 #undef NABBER_PUNCH_LOW
 #undef NABBER_PUNCH_HIGH

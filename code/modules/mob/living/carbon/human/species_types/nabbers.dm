@@ -81,6 +81,8 @@
 		LOADOUT_ITEM_MISC = 'icons/mob/species/nabber/custom_clothing/back.dmi',
 		LOADOUT_ITEM_EARS = 'icons/mob/species/nabber/custom_clothing/ears.dmi',
 		LOADOUT_ITEM_SUIT = 'icons/mob/species/nabber/custom_clothing/suit.dmi',
+		LOADOUT_ITEM_GLASSES = 'icons/mob/species/nabber/custom_clothing/glasses.dmi',
+		LOADOUT_ITEM_GLOVES = 'icons/mob/species/nabber/custom_clothing/gloves.dmi',
 	)
 
 	var/datum/action/cooldown/toggle_arms/arms
