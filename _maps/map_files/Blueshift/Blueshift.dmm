@@ -12058,7 +12058,8 @@
 	},
 /obj/machinery/door/window/elevator/left/directional/east{
 	elevator_mode = 1;
-	transport_linked_id = "publicElevator"
+	transport_linked_id = "publicElevator";
+	req_access = null
 	},
 /obj/machinery/button/elevator{
 	id = "publicElevator";
@@ -35955,9 +35956,10 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
 	},
-/obj/machinery/door/window/elevator/right/directional/east{
+/obj/machinery/door/window/elevator/left/directional/east{
 	elevator_mode = 1;
-	transport_linked_id = "publicElevator"
+	transport_linked_id = "publicElevator";
+	req_access = null
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/upper)
@@ -39545,7 +39547,9 @@
 	linked_elevator_id = "publicElevator"
 	},
 /obj/machinery/light/directional/north,
-/obj/machinery/door/window/elevator/left/directional/west,
+/obj/machinery/door/window/elevator/right/directional/west{
+	req_access = null
+	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "hES" = (
@@ -64434,9 +64438,8 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
 	},
-/obj/machinery/door/window/elevator/left/directional/east{
-	elevator_mode = 1;
-	transport_linked_id = "publicElevator"
+/obj/machinery/door/window/elevator/right/directional/east{
+	req_access = null
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
@@ -87023,7 +87026,9 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
-/obj/machinery/door/window/elevator/right/directional/west,
+/obj/machinery/door/window/elevator/right/directional/west{
+	req_access = null
+	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "qOZ" = (
@@ -104671,7 +104676,8 @@
 	},
 /obj/machinery/door/window/elevator/right/directional/west{
 	elevator_mode = 1;
-	transport_linked_id = "publicElevator"
+	transport_linked_id = "publicElevator";
+	req_access = null
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/upper)
@@ -105691,9 +105697,10 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
-/obj/machinery/door/window/elevator/left/directional/west{
+/obj/machinery/door/window/elevator/right/directional/west{
 	elevator_mode = 1;
-	transport_linked_id = "publicElevator"
+	transport_linked_id = "publicElevator";
+	req_access = null
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/upper)
@@ -108375,7 +108382,9 @@
 	linked_elevator_id = "publicElevator"
 	},
 /obj/machinery/light/directional/north,
-/obj/machinery/door/window/elevator/right/directional/east,
+/obj/machinery/door/window/elevator/right/directional/east{
+	req_access = null
+	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "uQl" = (

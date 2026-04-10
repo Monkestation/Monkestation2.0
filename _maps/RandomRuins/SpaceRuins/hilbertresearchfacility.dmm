@@ -213,9 +213,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"gd" = (
+/obj/machinery/transport/tram_controller/hilbert,
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "gv" = (
 /obj/structure/fluff/tram_rail,
-/obj/machinery/door/window/tram/hilbert,
 /obj/structure/transport/linear/tram,
 /obj/structure/thermoplastic/light,
 /turf/open/floor/engine,
@@ -413,10 +416,11 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/transport/linear/tram,
-/obj/structure/thermoplastic/light,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/obj/structure/transport/linear/tram,
+/obj/structure/thermoplastic/light,
+/obj/effect/landmark/transport/transport_id/hilbert,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "kw" = (
@@ -761,10 +765,10 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "uc" = (
 /obj/structure/fluff/tram_rail,
-/obj/structure/transport/linear/tram,
-/obj/structure/thermoplastic/light,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/east,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/structure/transport/linear/tram,
+/obj/structure/thermoplastic/light,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "uf" = (
@@ -1050,12 +1054,12 @@
 	dir = 1
 	},
 /obj/structure/sign/departments/cargo/directional/north,
-/obj/machinery/button/transport/tram{
-	id = 2;
-	pixel_y = 9;
-	specific_transport_id = "tram_hilbert"
-	},
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/button/transport/tram{
+	specific_transport_id = "hilb_1";
+	id = 2;
+	pixel_y = 9
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "zw" = (
@@ -1171,6 +1175,7 @@
 /obj/machinery/door/airlock/science{
 	name = "Hilbert's Office"
 	},
+/obj/effect/landmark/transport/nav_beacon/tram/nav/immovable_rod,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "BF" = (
@@ -1368,13 +1373,14 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Fo" = (
-/obj/machinery/button/transport/tram{
-	pixel_y = 9;
-	specific_transport_id = "tram_hilbert"
-	},
 /obj/structure/table/reinforced/rglass,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 4
+	},
+/obj/machinery/button/transport/tram{
+	specific_transport_id = "hilb_1";
+	id = 1;
+	pixel_y = 9
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -1420,9 +1426,9 @@
 	},
 /obj/structure/table/reinforced/rglass,
 /obj/machinery/button/transport/tram{
+	specific_transport_id = "hilb_1";
 	id = 3;
-	pixel_y = 9;
-	specific_transport_id = "tram_hilbert"
+	pixel_y = 9
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -1490,7 +1496,6 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/east,
 /obj/structure/transport/linear/tram,
 /obj/structure/thermoplastic/light,
-/obj/effect/landmark/transport/transport_id/hilbert,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Ic" = (
@@ -1789,9 +1794,6 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/machinery/door/window/tram/hilbert{
-	dir = 1
-	},
 /obj/structure/transport/linear/tram,
 /obj/structure/thermoplastic/light,
 /turf/open/floor/engine,
@@ -1867,14 +1869,14 @@
 /area/ruin/space)
 "QS" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
-/obj/structure/transport/linear/tram,
-/obj/structure/thermoplastic/light,
 /obj/machinery/computer/tram_controls{
 	dir = 8;
-	specific_transport_id = "tram_hilbert";
 	icon_state = "tram_alt_controls";
-	density = 0
+	density = 0;
+	specific_transport_id = "hilb_1"
 	},
+/obj/structure/transport/linear/tram,
+/obj/structure/thermoplastic/light,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "QU" = (
@@ -1940,10 +1942,10 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/transport/linear/tram,
-/obj/structure/thermoplastic/light,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/east,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/obj/structure/transport/linear/tram,
+/obj/structure/thermoplastic/light,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "RV" = (
@@ -2219,10 +2221,10 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "WQ" = (
 /obj/structure/fluff/tram_rail,
-/obj/structure/transport/linear/tram,
-/obj/structure/thermoplastic/light,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/structure/transport/linear/tram,
+/obj/structure/thermoplastic/light,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "WY" = (
@@ -3696,8 +3698,8 @@ ZV
 up
 Ok
 Bo
-Ok
-BI
+gd
+Xi
 hk
 KC
 Xw

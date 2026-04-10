@@ -3474,12 +3474,16 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "beo" = (
-/obj/machinery/button/elevator{
-	id = "publicElevator";
-	pixel_y = -25
+/obj/machinery/button/elevator/directional/north{
+	id = "publicElevator"
 	},
-/obj/machinery/door/window/left/directional/south{
-	dir = 8
+/obj/machinery/lift_indicator/directional/north{
+	linked_elevator_id = "publicElevator"
+	},
+/obj/machinery/door/window/elevator/left/directional/west{
+	elevator_mode = 1;
+	req_access = null;
+	transport_linked_id = "publicElevator"
 	},
 /turf/open/floor/iron/dark,
 /area/mine/storage)
@@ -3487,17 +3491,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"bey" = (
-/obj/machinery/light/floor/has_bulb,
-/obj/structure/transport/linear,
-/obj/effect/landmark/transport/transport_id{
-	specific_transport_id = "publicElevator"
-	},
-/obj/effect/abstract/elevator_music_zone{
-	linked_elevator_id = "publicElevator"
-	},
-/turf/open/openspace,
-/area/station/commons/storage/mining)
 "bez" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood,
@@ -16906,6 +16899,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/structure/transport/linear{
+	radial_travel = 0
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/mine/storage)
 "fab" = (
@@ -17239,13 +17235,6 @@
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/genetics)
-"fhk" = (
-/obj/structure/transport/linear,
-/obj/structure/railing{
-	dir = 5
-	},
-/turf/open/openspace,
-/area/station/commons/storage/mining)
 "fhm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -20316,7 +20305,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "ghl" = (
-/obj/structure/transport/linear,
+/obj/machinery/light/directional/west,
 /turf/open/openspace,
 /area/station/commons/storage/mining)
 "ghx" = (
@@ -28263,16 +28252,21 @@
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "iIh" = (
-/obj/machinery/button/elevator{
-	id = "publicElevator";
-	pixel_y = -25
-	},
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
+	},
+/obj/machinery/button/elevator/directional/north{
+	id = "publicElevator"
+	},
+/obj/machinery/door/window/elevator/left/directional/west{
+	elevator_mode = 1;
+	transport_linked_id = "publicElevator"
+	},
+/obj/machinery/lift_indicator/directional/north{
+	linked_elevator_id = "publicElevator"
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/mining)
@@ -42170,6 +42164,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/transport/linear{
+	radial_travel = 0
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/mine/storage)
 "mXD" = (
@@ -45502,10 +45499,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "nRu" = (
-/obj/structure/transport/linear,
-/obj/structure/railing{
-	dir = 10
-	},
+/obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/openspace,
 /area/station/commons/storage/mining)
 "nRx" = (
@@ -51205,6 +51199,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/structure/transport/linear{
+	radial_travel = 0
+	},
+/obj/machinery/elevator_control_panel/directional/north{
+	linked_elevator_id = "publicElevator";
+	preset_destination_names = list("3"="Icemoon                                                                                                                                                                                                                                                                Level","4"="Station                                                                                                                                                                                                                                                                Level")
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/mine/storage)
 "pDQ" = (
@@ -51535,7 +51536,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/sign/poster/contraband/random/directional/north,
+/obj/structure/transport/linear{
+	radial_travel = 0
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/mine/storage)
 "pIF" = (
@@ -55224,10 +55227,7 @@
 /turf/closed/wall/r_wall,
 /area/station/hallway/secondary/exit/departure_lounge)
 "qPP" = (
-/obj/structure/transport/linear,
-/obj/structure/railing{
-	dir = 9
-	},
+/obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/openspace,
 /area/station/commons/storage/mining)
 "qPY" = (
@@ -58375,7 +58375,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/sign/warning/xeno_mining/directional/south,
+/obj/structure/transport/linear{
+	radial_travel = 0
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/mine/storage)
 "rPY" = (
@@ -70603,8 +70605,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "vEH" = (
-/obj/structure/transport/linear,
-/obj/structure/railing,
 /turf/open/openspace,
 /area/station/commons/storage/mining)
 "vEJ" = (
@@ -72729,6 +72729,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
+"wow" = (
+/obj/structure/sign/warning/xeno_mining,
+/turf/closed/wall,
+/area/mine/storage)
 "wox" = (
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/stone,
@@ -77747,6 +77751,16 @@
 "xMI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/structure/transport/linear{
+	radial_travel = 0
+	},
+/obj/effect/landmark/transport/transport_id{
+	specific_transport_id = "publicElevator"
+	},
+/obj/machinery/light/floor,
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "publicElevator"
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/mine/storage)
@@ -173414,7 +173428,7 @@ ijn
 vWz
 vWz
 beo
-vWz
+wow
 vcj
 aaD
 qtS
@@ -238691,8 +238705,8 @@ ybv
 ybv
 clE
 kta
-fhk
-bey
+vEH
+vEH
 vEH
 clE
 qQC

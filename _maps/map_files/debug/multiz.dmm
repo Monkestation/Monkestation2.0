@@ -683,9 +683,9 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/preopen{
-	transport_linked_id = "test_vator";
 	elevator_mode = 1;
-	name = "Industrial Lift"
+	name = "Industrial Lift";
+	transport_linked_id = "test_vator"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1166,9 +1166,9 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor{
-	transport_linked_id = "test_vator";
 	elevator_mode = 1;
-	name = "Industrial Lift"
+	name = "Industrial Lift";
+	transport_linked_id = "test_vator"
 	},
 /turf/open/floor/iron/edge{
 	dir = 4
@@ -1368,7 +1368,7 @@
 /obj/effect/landmark/transport/transport_id{
 	specific_transport_id = "test_vator"
 	},
-/obj/machinery/light/floor/has_bulb,
+/obj/machinery/light/floor,
 /obj/structure/transport/linear/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
@@ -1881,9 +1881,9 @@
 /area/station/engineering/storage)
 "Vo" = (
 /obj/machinery/door/poddoor/preopen{
-	transport_linked_id = "test_vator";
 	elevator_mode = 1;
-	name = "Industrial Lift"
+	name = "Industrial Lift";
+	transport_linked_id = "test_vator"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1929,9 +1929,9 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor{
-	transport_linked_id = "test_vator";
 	elevator_mode = 1;
-	name = "Industrial Lift"
+	name = "Industrial Lift";
+	transport_linked_id = "test_vator"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
