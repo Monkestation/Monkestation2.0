@@ -1,6 +1,8 @@
 PROCESSING_SUBSYSTEM_DEF(transport)
 	name = "Transport"
 	wait = 0.05 SECONDS
+	flags = SS_POST_FIRE_TIMING | SS_NO_INIT
+
 	/// only used on maps with trams, so only enabled by such.
 	can_fire = FALSE
 
