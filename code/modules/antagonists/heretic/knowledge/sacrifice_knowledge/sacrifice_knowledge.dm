@@ -518,6 +518,7 @@
 	// ensure they're awake and ready to play touhou
 	sac_target.SetUnconscious(0)
 	sac_target.SetSleeping(0)
+	sac_target.stamina?.revitalize(forced = TRUE)
 	sac_target.SetAllImmobility(0)
 	if(sac_target.resting)
 		sac_target.set_resting(FALSE, instant = TRUE)
