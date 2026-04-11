@@ -1376,7 +1376,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
 	if(H.movement_type & FLYING)
 		var/obj/item/organ/external/wings/functional/wings = H.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
-		if(wings?.wings_open || HAS_TRAIT_FROM(H, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT))
+		if(wings?.wings_open)
 			wings.toggle_flight(H)
 			wings.fly_slip(H)
 	. = stunmod * H.physiology.stun_mod * amount
