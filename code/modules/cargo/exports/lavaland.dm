@@ -86,9 +86,9 @@
 	gibtonite_quality = bombrock.quality
 	switch(bombrock.quality)
 		if(GIBTONITE_QUALITY_HIGH)
-			return CARGO_CRATE_VALUE * 50
-		if(GIBTONITE_QUALITY_MEDIUM)
 			return CARGO_CRATE_VALUE * 30
+		if(GIBTONITE_QUALITY_MEDIUM)
+			return CARGO_CRATE_VALUE * 20
 		if(GIBTONITE_QUALITY_LOW)
-			return CARGO_CRATE_VALUE * 15
+			return CARGO_CRATE_VALUE * 10
 
