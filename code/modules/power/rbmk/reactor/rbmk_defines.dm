@@ -15,17 +15,17 @@
  *************************************************************/
 
 #define RBMK_AMBIENT_TEMP               293      // 20°C environment
-#define RBMK_TEMP_STRESS_THRESHOLD      1500
-#define RBMK_TEMP_CRITICAL              6000
+#define RBMK_TEMP_STRESS_THRESHOLD      2500
+#define RBMK_TEMP_CRITICAL              6500
 #define RBMK_MAX_TEMP                   10000
 
 // Visual bands
 #define RBMK_TEMP_OFF                   RBMK_AMBIENT_TEMP
-#define RBMK_TEMP_RUNNING               700
-#define RBMK_TEMP_HOT                   1500
-#define RBMK_TEMP_VERYHOT               3000
-#define RBMK_TEMP_OVERHEAT              RBMK_TEMP_CRITICAL
-#define RBMK_TEMP_MELTDOWN              7500
+#define RBMK_TEMP_RUNNING               900
+#define RBMK_TEMP_HOT                   2500
+#define RBMK_TEMP_VERYHOT               4500
+#define RBMK_TEMP_OVERHEAT              6500
+#define RBMK_TEMP_MELTDOWN              8000
 
 
 /*************************************************************
@@ -41,7 +41,7 @@
  *************************************************************/
 
 #define RBMK_FLUX_GAIN                  0.25      // was 0.02 (non-viable)
-#define RBMK_TEMP_GAIN_PER_TICK         0.06      // usable temp gain
+#define RBMK_TEMP_GAIN_PER_TICK         0.24      // aggressive temp gain
 #define RBMK_HEAT_SCALING               0.05      // was 0.0025 (killed heat)
 
 #define RBMK_FLUX_DECAY                 0.05      // was 0.18 (dominant sink)
@@ -74,7 +74,7 @@
 
 #define RBMK_REPAIRABLE_TEMP_RATIO      0.65
 #define RBMK_REPAIRABLE_FLUX_LIMIT      200
-#define RBMK_REPAIRABLE_PRESSURE_LIMIT  650
+#define RBMK_REPAIRABLE_PRESSURE_LIMIT  1800
 
 
 /*************************************************************
@@ -87,11 +87,11 @@
 #define RBMK_INLET_RATE_MAX             250
 
 #define RBMK_OUTLET_PRESSURE_BASE       101.3
-#define RBMK_OUTLET_PRESSURE_MAX        1200
+#define RBMK_OUTLET_PRESSURE_MAX        4200
 
-#define RBMK_PRESSURE_WARNING           950
-#define RBMK_PRESSURE_CRITICAL          1500
-#define RBMK_PRESSURE_EXTREME           2000
+#define RBMK_PRESSURE_WARNING           2400
+#define RBMK_PRESSURE_CRITICAL          3800
+#define RBMK_PRESSURE_EXTREME           5200
 
 
 /*************************************************************

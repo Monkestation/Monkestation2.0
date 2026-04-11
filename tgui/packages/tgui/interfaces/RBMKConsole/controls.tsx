@@ -55,9 +55,9 @@ export const RBMKControls = () => {
           value={depth}
           maxValue={maxRodDepth}
           ranges={{
-            good: [0, maxRodDepth * 0.3],
+            bad: [0, maxRodDepth * 0.3],
             yellow: [maxRodDepth * 0.3, maxRodDepth * 0.7],
-            bad: [maxRodDepth * 0.7, maxRodDepth],
+            good: [maxRodDepth * 0.7, maxRodDepth],
           }}>
           {depth.toFixed(0)}%
         </ProgressBar>

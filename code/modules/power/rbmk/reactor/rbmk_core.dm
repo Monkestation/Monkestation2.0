@@ -1,5 +1,5 @@
 /*************************************************************
- * RBMK Reactor Core — Canonical V1 Backbone
+ * RBMK Reactor Core — Canonical V3 Backbone
  * -----------------------------------------------------------
  * Responsibilities of this file:
  * - Reactor object definition / vars
@@ -7,6 +7,7 @@
  * - SCRAM / restart state helpers
  * - Rod insertion / removal
  * - Console synchronization
+ * - Explosion survival during meltdown
  *
  * This file does NOT own:
  * - main process logic
@@ -87,7 +88,15 @@
 	/************************************************
 	 * Control / Integrity
 	 ************************************************/
+	/// Commanded rod depth from console/operator input
 	var/control_rod_depth = 0
+	/// Actual physical rod depth used by reactor physics
+	var/actual_control_rod_depth = 0
+	/// Normal per-tick rod travel speed
+	var/control_rod_step = 4
+	/// Faster insertion speed during SCRAM
+	var/scram_control_rod_step = 20
+
 	var/reactor_integrity = RBMK_MAX_INTEGRITY
 	var/max_reactor_integrity = RBMK_MAX_INTEGRITY
 
@@ -131,8 +140,8 @@
 
 /// TRUE if any installed rods are active
 /obj/machinery/rbmk/reactor/proc/has_active_fuel_rods()
-	for (var/obj/item/rbmk/fuel_rod/fuel_rod in (normal_slots + special_slots))
-		if (fuel_rod && fuel_rod.active)
+	for(var/obj/item/rbmk/fuel_rod/fuel_rod in (normal_slots + special_slots))
+		if(fuel_rod && fuel_rod.active)
 			return TRUE
 	return FALSE
 
@@ -149,17 +158,29 @@
 
 /// Returns TRUE if this rod belongs in the special bank
 /obj/machinery/rbmk/reactor/proc/is_special_rod(obj/item/rbmk/fuel_rod/fuel_rod)
-	if (!fuel_rod)
+	if(!fuel_rod)
 		return FALSE
 
 	return fuel_rod.rod_type in list("plasma", "telecrystal", "supermatter")
 
 /// Returns the slot list a rod should use
 /obj/machinery/rbmk/reactor/proc/get_target_slot_list(obj/item/rbmk/fuel_rod/fuel_rod)
-	if (is_special_rod(fuel_rod))
+	if(is_special_rod(fuel_rod))
 		return special_slots
 
 	return normal_slots
+
+
+/*************************************************************
+ * Explosion Handling
+ *************************************************************/
+
+/// During meltdown, the reactor survives its own blast and remains as a slagged core.
+/obj/machinery/rbmk/reactor/ex_act(severity, target)
+	if(meltdown_in_progress)
+		return FALSE
+
+	return ..()
 
 
 /*************************************************************
@@ -173,6 +194,7 @@
 	reactor_integrity = RBMK_MAX_INTEGRITY
 	max_reactor_integrity = RBMK_MAX_INTEGRITY
 	control_rod_depth = 0
+	actual_control_rod_depth = 0
 
 	reset_reaction_state()
 	scrammed = FALSE
@@ -181,12 +203,12 @@
 	last_decay_check = 0
 
 	var/turf/reactor_turf = get_turf(src)
-	if (reactor_turf)
+	if(reactor_turf)
 		var/datum/gas_mixture/environment_mix = reactor_turf.return_air()
-		if (environment_mix)
+		if(environment_mix)
 			temperature = environment_mix.temperature
 
-	if (temperature < RBMK_AMBIENT_TEMP)
+	if(temperature < RBMK_AMBIENT_TEMP)
 		temperature = RBMK_AMBIENT_TEMP
 
 	normal_slots = list()
@@ -216,9 +238,9 @@
  * SCRAM
  *************************************************************/
 
-/// Emergency shutdown — forces rods fully inserted and kills reaction
+/// Emergency shutdown — commands full insertion and kills reaction
 /obj/machinery/rbmk/reactor/proc/force_scram()
-	if (meltdown_in_progress)
+	if(meltdown_in_progress)
 		return
 
 	scrammed = TRUE
@@ -238,29 +260,29 @@
 
 /// Insert rod into the proper bank
 /obj/machinery/rbmk/reactor/attackby(obj/item/item, mob/user, params)
-	if (!istype(item, /obj/item/rbmk/fuel_rod))
+	if(!istype(item, /obj/item/rbmk/fuel_rod))
 		return ..()
 
 	var/obj/item/rbmk/fuel_rod/fuel_rod = item
 	var/list/target_slots = get_target_slot_list(fuel_rod)
 
-	if (target_slots == special_slots)
-		if (length(special_slots) >= max_special_slots)
+	if(target_slots == special_slots)
+		if(length(special_slots) >= max_special_slots)
 			to_chat(user, span_warning("All special rod slots are occupied!"))
 			return TRUE
 	else
-		if (length(normal_slots) >= max_normal_slots)
+		if(length(normal_slots) >= max_normal_slots)
 			to_chat(user, span_warning("All normal rod slots are occupied!"))
 			return TRUE
 
-	if (!user.transferItemToLoc(fuel_rod, src))
+	if(!user.transferItemToLoc(fuel_rod, src))
 		return TRUE
 
 	target_slots += fuel_rod
 
 	// Inserting rods means the reactor is no longer "off".
 	// It stays non-running until process logic sees valid active rods.
-	if (scrammed && control_rod_depth < RBMK_CONTROL_ROD_MAX)
+	if(scrammed && control_rod_depth < RBMK_CONTROL_ROD_MAX)
 		control_rod_depth = RBMK_CONTROL_ROD_MAX
 
 	update_reactor_icon()
@@ -272,7 +294,7 @@
 
 /// Default hand interaction: remove the last installed rod
 /obj/machinery/rbmk/reactor/attack_hand(mob/user)
-	if (!user)
+	if(!user)
 		return
 
 	remove_last_rod(user)
@@ -281,25 +303,25 @@
 /obj/machinery/rbmk/reactor/proc/remove_last_rod(mob/user)
 	var/obj/item/rbmk/fuel_rod/fuel_rod = null
 
-	if (length(special_slots))
+	if(length(special_slots))
 		fuel_rod = special_slots[length(special_slots)]
 		special_slots -= fuel_rod
-	else if (length(normal_slots))
+	else if(length(normal_slots))
 		fuel_rod = normal_slots[length(normal_slots)]
 		normal_slots -= fuel_rod
 	else
-		if (user)
+		if(user)
 			to_chat(user, span_notice("No rods installed."))
 		return FALSE
 
 	fuel_rod.forceMove(get_turf(src))
 
-	if (user)
+	if(user)
 		to_chat(user, span_notice("You remove [fuel_rod.name] from the reactor."))
 
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
-	if (!has_fuel_rods())
+	if(!has_fuel_rods())
 		reset_reaction_state()
 
 	update_reactor_icon()
@@ -310,32 +332,32 @@
 /obj/machinery/rbmk/reactor/proc/remove_rod_by_slot(slot_kind, slot_index, mob/user = null)
 	var/list/target_slots = null
 
-	if (slot_kind == "special")
+	if(slot_kind == "special")
 		target_slots = special_slots
 	else
 		target_slots = normal_slots
 
-	if (!isnum(slot_index))
+	if(!isnum(slot_index))
 		return FALSE
 
 	slot_index = round(slot_index)
 
-	if (slot_index < 1 || slot_index > length(target_slots))
+	if(slot_index < 1 || slot_index > length(target_slots))
 		return FALSE
 
 	var/obj/item/rbmk/fuel_rod/fuel_rod = target_slots[slot_index]
-	if (!fuel_rod)
+	if(!fuel_rod)
 		return FALSE
 
 	target_slots -= fuel_rod
 	fuel_rod.forceMove(get_turf(src))
 
-	if (user)
+	if(user)
 		to_chat(user, span_notice("You remove [fuel_rod.name] from the reactor."))
 
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
-	if (!has_fuel_rods())
+	if(!has_fuel_rods())
 		reset_reaction_state()
 
 	update_reactor_icon()
@@ -349,7 +371,7 @@
 
 /// Update all linked RBMK consoles in range
 /obj/machinery/rbmk/reactor/proc/update_linked_consoles()
-	for (var/obj/machinery/computer/rbmk_console/console in range(7, src))
-		if (console.linked_reactor == src)
+	for(var/obj/machinery/computer/rbmk_console/console in range(7, src))
+		if(console.linked_reactor == src)
 			console.update_icon()
 			SStgui.update_uis(console)

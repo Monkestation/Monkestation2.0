@@ -1,5 +1,5 @@
 /*************************************************************
- * RBMK Process Logic — Canonical V4
+ * RBMK Process Logic — Canonical V4.8
  * -----------------------------------------------------------
  * Responsibilities of this file:
  * - passive decay
@@ -9,6 +9,8 @@
  * - tritium generation
  * - pressure sampling
  * - integrity / meltdown checks
+ * - real radiation emission
+ * - delayed control rod motion
  *
  * Design rules:
  * - OFF   = no rods installed
@@ -17,11 +19,14 @@
  * - No instability model
  * - Void coefficient is temperature-driven only
  *
- * V4 tuning:
- * - Cooling softened significantly so the core can actually heat up
- * - Flow still matters, but no longer smothers reactor output
- * - Tritium increased heavily while remaining linear with flux
- * - Meltdown only occurs when integrity reaches zero
+ * V4.8 tuning:
+ * - Core runs substantially hotter under load
+ * - Cooling still matters, but no longer smothers temperature
+ * - Heat becomes effective earlier in rod withdrawal
+ * - Uses built-in radiation_pulse() driven by RBMK radiation logic
+ * - Radiation now starts only after rods leave full insertion
+ * - Radiation scales primarily with reactor load instead of ambient temp bleed
+ * - Control rods now move toward commanded depth over time
  *************************************************************/
 
 
@@ -37,12 +42,26 @@
 	last_tick_flux = flux
 	last_tick_temp_gain = 0
 
+/// Move actual control rods toward the commanded target depth
+/obj/machinery/rbmk/reactor/proc/rbmk_update_control_rods()
+	var/step_size = control_rod_step
+
+	if(scrammed)
+		step_size = scram_control_rod_step
+
+	step_size = max(step_size, 1)
+
+	if(actual_control_rod_depth < control_rod_depth)
+		actual_control_rod_depth = min(actual_control_rod_depth + step_size, control_rod_depth)
+	else if(actual_control_rod_depth > control_rod_depth)
+		actual_control_rod_depth = max(actual_control_rod_depth - step_size, control_rod_depth)
+
+	actual_control_rod_depth = clamp(actual_control_rod_depth, 0, RBMK_CONTROL_ROD_MAX)
+
 /// Coolant heat exchange
-/// - Only a fraction of coolant contacts the core each tick
-/// - Inlet rate affects cooling authority
-/// - Cold coolant cools the core
-/// - Hot coolant heats the core
-/// - Processed coolant is merged back into the internal loop
+/// - Flow still matters, but coolant should not dominate the core
+/// - Core stays thermally stubborn so high-temp operation is possible
+/// - Coolant still heats up enough to make outlet temperature meaningful
 /obj/machinery/rbmk/reactor/proc/rbmk_coolant_exchange()
 	if(!coolant_internal)
 		return
@@ -51,8 +70,8 @@
 	if(total_coolant_moles <= 0)
 		return
 
-	// Much softer contact fraction so cooling helps without hard-locking temp.
-	var/flow_ratio = clamp(inlet_rate / max(RBMK_INLET_RATE_MAX, 1), 0.005, 0.12)
+	// Keep cooling meaningful without hard-smothering the core.
+	var/flow_ratio = clamp(inlet_rate / max(RBMK_INLET_RATE_MAX, 1), 0.006, 0.14)
 
 	var/datum/gas_mixture/contact_mix = coolant_internal.remove_ratio(flow_ratio)
 	if(!contact_mix)
@@ -65,11 +84,11 @@
 
 	var/contact_temp = contact_mix.temperature
 
-	// Higher = reactor temp is harder for coolant to bully around.
-	var/core_thermal_mass = 900
+	// Make the core harder to drag down.
+	var/core_thermal_mass = 2200
 
-	// Lower multiplier = contacted coolant has less control over the core.
-	var/coolant_thermal_mass = max(contact_moles * 2, 1)
+	// Coolant still picks up heat, but does not bully the core.
+	var/coolant_thermal_mass = max(contact_moles * 1.8, 1)
 
 	var/weighted_core_heat = temperature * core_thermal_mass
 	var/weighted_coolant_heat = contact_temp * coolant_thermal_mass
@@ -99,6 +118,65 @@
 		coolant_internal.return_pressure(),
 		0,
 		RBMK_PRESSURE_EXTREME
+	)
+
+/// Emit real station radiation using the built-in radiation system.
+/// Radiation should not begin until rods are lifted from full insertion,
+/// and should scale mostly with reactor load rather than ambient temp.
+/obj/machinery/rbmk/reactor/proc/emit_real_radiation()
+	if(meltdown_in_progress)
+		return
+
+	// No real radiation while fully inserted or while not actually running.
+	if(actual_control_rod_depth >= RBMK_CONTROL_ROD_MAX)
+		return
+	if(!running)
+		return
+	if(radiation <= 0 || flux <= 0)
+		return
+
+	var/integrity_ratio = reactor_integrity / max(max_reactor_integrity, 1)
+	integrity_ratio = clamp(integrity_ratio, 0, 1)
+
+	// Scale emission mostly by load.
+	// This keeps startup low and makes harder-running cores nastier.
+	var/load_ratio = clamp(flux / max(RBMK_MAX_FLUX, 1), 0, 1)
+
+	// Effective radiation output is softened heavily at low load.
+	var/effective_rad_output = radiation * (0.15 + (load_ratio * 0.85))
+	effective_rad_output = min(effective_rad_output, RBMK_MAX_RADIATION)
+
+	// At low load, threshold stays high enough that shielding/range matter a lot.
+	// At high load and lower integrity, radiation escapes more easily.
+	var/rad_threshold
+	if(integrity_ratio <= 0)
+		rad_threshold = effective_rad_output ? 0 : 1
+	else if(integrity_ratio >= 1)
+		rad_threshold = max(0.45, 1 - (effective_rad_output / RBMK_MAX_RADIATION))
+	else
+		rad_threshold = max(
+			0.20,
+			(1 - (effective_rad_output / RBMK_MAX_RADIATION)) ** ((1 / integrity_ratio) ** 1.2)
+		)
+
+	// Much softer chance curve.
+	// Healthy reactor = light chance, damaged reactor = meaningfully dangerous.
+	var/rad_chance = 2 + (load_ratio * 8) + ((1 - integrity_ratio) * 20)
+
+	// Keep it more chamber-local.
+	var/rad_range = clamp(round(2 + (load_ratio * 3)), 2, 5)
+
+	// Lower strength into the built-in system.
+	var/rad_intensity = max(1, round(effective_rad_output * 0.18))
+
+	radiation_pulse(
+		src,
+		rad_range,
+		rad_threshold,
+		rad_chance,
+		0,
+		rad_intensity,
+		TRUE
 	)
 
 /// Hard failure checks
@@ -134,6 +212,7 @@
 	 *******************************************************/
 	if(!has_fuel_rods())
 		reset_reaction_state()
+		actual_control_rod_depth = control_rod_depth
 
 		rbmk_coolant_exchange()
 		rbmk_update_pressure()
@@ -143,6 +222,9 @@
 		update_reactor_icon()
 		update_linked_consoles()
 		return
+
+	// Control rods continue moving whenever rods are installed.
+	rbmk_update_control_rods()
 
 
 	/*******************************************************
@@ -200,15 +282,36 @@
 	 *******************************************************/
 	running = TRUE
 
-	var/control_multiplier = clamp(
-		1 - (control_rod_depth / RBMK_CONTROL_ROD_MAX),
+	var/control_ratio = clamp(
+		actual_control_rod_depth / RBMK_CONTROL_ROD_MAX,
 		0,
 		1
 	)
 
-	total_flux *= control_multiplier
-	total_heat *= control_multiplier
-	total_radiation *= control_multiplier
+	var/flux_control_multiplier = clamp(
+		1 - control_ratio,
+		0,
+		1
+	)
+
+	// Less suppressive than flux through most of the range,
+	// but still reaches 0 when rods are fully inserted.
+	var/heat_control_multiplier = clamp(
+		1 - (control_ratio ** 1.35),
+		0,
+		1
+	)
+
+	// Radiation suppression sits between heat and flux.
+	var/radiation_control_multiplier = clamp(
+		1 - (control_ratio ** 1.15),
+		0,
+		1
+	)
+
+	total_flux *= flux_control_multiplier
+	total_heat *= heat_control_multiplier
+	total_radiation *= radiation_control_multiplier
 
 
 	/*******************************************************
@@ -252,6 +355,8 @@
 		0,
 		RBMK_MAX_RADIATION
 	)
+
+	emit_real_radiation()
 
 
 	/*******************************************************

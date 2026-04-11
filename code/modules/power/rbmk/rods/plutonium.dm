@@ -11,11 +11,6 @@
 /// Plutonium fuel rod
 /obj/item/rbmk/fuel_rod/plutonium
 
-
-
-
-
-
 	name = "Plutonium Fuel Rod"
 	desc = "A dangerously potent fuel rod with a massive neutron output. Requires aggressive cooling."
 	icon = 'icons/obj/fuel_rod.dmi'
