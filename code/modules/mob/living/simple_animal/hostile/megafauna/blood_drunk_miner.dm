@@ -38,8 +38,8 @@ Difficulty: Medium
 	rapid_melee = 5 // starts fast because the saw's closed. gets reduced appropriately when extended, see their transform_weapon ability
 	pixel_x = -16
 	base_pixel_x = -16
-	crusher_loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye, /obj/item/disk/design_disk/modkit_disc/blood_drunk_group)
-	loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/disk/design_disk/modkit_disc/blood_drunk_group)
+	crusher_loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye, /obj/item/disk/design_disk/modkit_disc/blood_drunk_group, /obj/item/book/granter/crafting_recipe/dusting/summoning_flute/blood_drunk_miner)
+	loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/disk/design_disk/modkit_disc/blood_drunk_group, /obj/item/book/granter/crafting_recipe/dusting/summoning_flute/blood_drunk_miner)
 	wander = FALSE
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL

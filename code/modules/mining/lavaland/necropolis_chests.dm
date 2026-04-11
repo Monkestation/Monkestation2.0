@@ -72,6 +72,7 @@
 			new /obj/item/book/granter/action/spell/sacredflame(src)
 		if(4)
 			new /obj/item/dragons_blood(src)
+	new /obj/item/book/granter/crafting_recipe/dusting/summoning_flute/drake(src)
 
 /obj/structure/closet/crate/necropolis/dragon/crusher
 	name = "firey dragon chest"
@@ -91,6 +92,7 @@
 
 /obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
 	new /obj/item/clothing/suit/hooded/hostile_environment(src)
+	new /obj/item/book/granter/crafting_recipe/dusting/summoning_flute/bubblegum(src)
 	var/loot = rand(1,2)
 	switch(loot)
 		if(1)
@@ -118,6 +120,7 @@
 	var/random_crystal = pick(choices)
 	new random_crystal(src)
 	new /obj/item/organ/internal/vocal_cords/colossus(src)
+	new /obj/item/book/granter/crafting_recipe/dusting/summoning_flute/colossus(src)
 
 /obj/structure/closet/crate/necropolis/colossus/crusher
 	name = "angelic colossus chest"

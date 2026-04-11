@@ -34,10 +34,10 @@ Warning the icebox version is being overridden in monkestation/code/modules/mob/
 	pixel_x = -16
 	base_pixel_x = -16
 	gps_name = "Berserk Signal"
-	loot = list()
+	loot = list(/obj/item/book/granter/crafting_recipe/dusting/summoning_flute/wendigo)
 	butcher_results = list()
 	guaranteed_butcher_results = list(/obj/item/wendigo_blood = 1, /obj/item/wendigo_skull = 1)
-	crusher_loot = list(/obj/item/crusher_trophy/wendigo_horn)
+	crusher_loot = list(/obj/item/crusher_trophy/wendigo_horn, /obj/item/book/granter/crafting_recipe/dusting/summoning_flute/wendigo)
 	wander = FALSE
 	del_on_death = FALSE
 	blood_volume = BLOOD_VOLUME_NORMAL
