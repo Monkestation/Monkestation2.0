@@ -46,7 +46,7 @@
 		return ..()
 
 	pull_victims()
-	do_teleport(owner, active_ball)
+	do_teleport(owner, active_ball, channel = TELEPORT_CHANNEL_MAGIC)
 	pull_victims() // Yes, this is intentional, we want to pull mobs from the place we were, and the place we've teleported to
 	QDEL_NULL(active_ball)
 	build_all_button_icons(UPDATE_OVERLAYS)
