@@ -19,15 +19,16 @@
 		return
 	if(!do_after(user, 3 SECONDS, src))
 		return
-	var/baseturf = SSmapping.level_trait(user.z, ZTRAIT_BASETURF)
-	if(isnull(baseturf))
-		to_chat(user, span_warning("In this environment, the flute produces no sound."))
-		return
-	if(istext(baseturf))
-		baseturf = text2path(baseturf)
-	if(baseturf != /turf/open/lava/smooth/lava_land_surface && baseturf != /turf/open/lava/plasma/ice_moon)
-		to_chat(user, span_warning("In this environment, the flute produces no sound."))
-		return
+	if(!SSmapping.level_trait(user.z, ZTRAIT_OSHAN_MINING))
+		var/baseturf = SSmapping.level_trait(user.z, ZTRAIT_BASETURF)
+		if(isnull(baseturf))
+			to_chat(user, span_warning("In this environment, the flute produces no sound."))
+			return
+		if(istext(baseturf))
+			baseturf = text2path(baseturf)
+		if(baseturf != /turf/open/lava/smooth/lava_land_surface && baseturf != /turf/open/lava/plasma/ice_moon)
+			to_chat(user, span_warning("In this environment, the flute produces no sound."))
+			return
 	to_chat(user, span_userdanger("A terrifying rumbling portends the arrival of the summoned one..."))
 	var/turf/spawn_location = get_turf(src)
 	new /obj/effect/temp_visual/dragon_swoop/spawn_marker(spawn_location)
