@@ -1,5 +1,5 @@
 /*************************************************************
- * RBMK Reactor Core — Canonical V3 Backbone
+ * RBMK Reactor Core — Canonical V4 Backbone
  * -----------------------------------------------------------
  * Responsibilities of this file:
  * - Reactor object definition / vars
@@ -8,6 +8,7 @@
  * - Rod insertion / removal
  * - Console synchronization
  * - Explosion survival during meltdown
+ * - Sound loop ownership
  *
  * This file does NOT own:
  * - main process logic
@@ -120,6 +121,12 @@
 	var/image/current_damage_overlay_image = null
 
 	/************************************************
+	 * Sound Tracking
+	 ************************************************/
+	var/datum/looping_sound/rbmk_reactor/soundloop = null
+	var/last_sound_state = ""
+
+	/************************************************
 	 * Meltdown Tracking
 	 * Owned by meltdown module, stored here
 	 ************************************************/
@@ -201,6 +208,8 @@
 	meltdown_announced = FALSE
 	meltdown_in_progress = FALSE
 	last_decay_check = 0
+	last_sound_state = ""
+	soundloop = new(list(src), FALSE)
 
 	var/turf/reactor_turf = get_turf(src)
 	if(reactor_turf)
@@ -230,6 +239,7 @@
 /// Destroy reactor
 /obj/machinery/rbmk/reactor/Destroy()
 	STOP_PROCESSING(SSmachines, src)
+	QDEL_NULL(soundloop)
 	rbmk_cleanup_atmos(src)
 	return ..()
 
