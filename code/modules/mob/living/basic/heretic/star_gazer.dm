@@ -348,6 +348,8 @@
 	. = ..()
 	transform = matrix(2, 2, MATRIX_SCALE)
 
+#define COOLDOWN_STARGAZER_BEAM_SCREAM "stargazer_beam_scream_cooldown"
+
 /// Recursive proc which affects whatever is caught within the beam
 /datum/action/cooldown/spell/stargazer_laser/proc/process_beam()
 	if(cycle_tracker > 33)
@@ -387,11 +389,16 @@
 						)
 					living_victim.death(TRUE, span_stargazer("COMPLETE ATOMIZATION")) // manually call death() so we have a cool-ass "you have succumbed to X" message
 					living_victim.dust()
-				living_victim.emote("scream")
+					continue
+				if(TIMER_COOLDOWN_FINISHED(living_victim, COOLDOWN_STARGAZER_BEAM_SCREAM))
+					TIMER_COOLDOWN_START(living_victim, COOLDOWN_STARGAZER_BEAM_SCREAM, 1.5 SECONDS)
+					INVOKE_ASYNC(living_victim, TYPE_PROC_REF(/mob, emote), "scream")
 				living_victim.apply_status_effect(/datum/status_effect/star_mark)
 				living_victim.apply_damage(damage = 30, damagetype = BURN, forced = TRUE, spread_damage = TRUE)
 	cycle_tracker++
 	damage_timer = addtimer(CALLBACK(src, PROC_REF(process_beam)), 0.3 SECONDS, TIMER_STOPPABLE)
+
+#undef COOLDOWN_STARGAZER_BEAM_SCREAM
 
 /// Stops the beam after we cancel it
 /datum/action/cooldown/spell/stargazer_laser/proc/stop_beaming()
