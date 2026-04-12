@@ -230,6 +230,9 @@
 		var/mob/living/patient = interacting_with
 		if(patient.buckled)
 			return NONE
+		patient.visible_message(span_warning("[user] starts buckling [patient] to [src]!"),\
+			span_userdanger("[user] starts buckling you to [src]!"),\
+			span_hear("You hear metal clanking."))
 		if(!do_after(user, 2 SECONDS))
 			return NONE
 		deploy_bed(user, get_turf(patient), patient)
