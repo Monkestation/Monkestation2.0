@@ -1254,12 +1254,11 @@
 	if(high_value_sacrifices > 0 || unlimited_blades)
 		prey += owner
 
-/// If an oozeling heretic is full-revived (such as via aheal), give them a living heart again.
+/// Give oozeling heretics their living heart back when revived.
 /datum/antagonist/heretic/proc/on_oozeling_revive(datum/source, mob/living/carbon/human/new_body, obj/item/organ/internal/brain/slime/core, nugget)
 	SIGNAL_HANDLER
-	if(!nugget)
-		var/datum/heretic_knowledge/living_heart/heart_knowledge = get_knowledge(/datum/heretic_knowledge/living_heart)
-		heart_knowledge.on_research(new_body, src)
+	var/datum/heretic_knowledge/living_heart/heart_knowledge = get_knowledge(/datum/heretic_knowledge/living_heart)
+	heart_knowledge.on_research(new_body, src)
 
 /datum/antagonist/heretic/antag_token(datum/mind/hosts_mind, mob/spender)
 	. = ..()
