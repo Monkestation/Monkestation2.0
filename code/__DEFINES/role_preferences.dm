@@ -94,6 +94,7 @@
 #define ROLE_LAZARUS_BAD "Slaved Revived Mob"
 #define ROLE_LAZARUS_GOOD "Friendly Revived Mob"
 #define ROLE_BLOODLING_THRALL "Bloodling Thrall" // monkestation edit
+#define ROLE_ABANDONED_IPC "Abandoned IPC"
 
 #define ROLE_CLOWN_OPERATIVE "Clown Operative"
 #define ROLE_FREE_GOLEM "Free Golem"
