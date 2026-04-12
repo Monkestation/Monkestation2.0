@@ -72,8 +72,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	if(flags & CHANGETURF_SKIP)
 		return new path(src)
 
+	var/old_astar_weight = (astar_weight - src::astar_weight) // just get the weight that isn't the turf
 	var/old_lighting_object = lighting_object
-	var/old_outdoor_effect = outdoor_effect //monkestation addition
 	var/old_lighting_corner_NE = lighting_corner_NE
 	var/old_lighting_corner_SE = lighting_corner_SE
 	var/old_lighting_corner_SW = lighting_corner_SW
@@ -90,7 +90,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/old_explosive_resistance = explosive_resistance - get_explosive_block()
 	var/old_lattice_underneath = lattice_underneath
 	var/old_liquids
-	if(isgroundlessturf(path))
+	if(isgroundlessturf(path) || ispath(path, /turf/closed))
 		QDEL_NULL(liquids)
 	else
 		old_liquids = liquids
@@ -100,6 +100,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	var/list/old_baseturfs = baseturfs
 	var/old_type = type
+	var/datum/weakref/old_ref = weak_reference
+	weak_reference = null
 
 	var/list/post_change_callbacks = list()
 	SEND_SIGNAL(src, COMSIG_TURF_CHANGE, path, new_baseturfs, flags, post_change_callbacks)
@@ -112,6 +114,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/carryover_turf_flags = (RESERVATION_TURF | UNUSED_RESERVATION_TURF) & turf_flags
 	var/turf/new_turf = new path(src)
 	new_turf.turf_flags |= carryover_turf_flags
+	new_turf.astar_weight += old_astar_weight
 
 	// WARNING WARNING
 	// Turfs DO NOT lose their signals when they get replaced, REMEMBER THIS
@@ -148,14 +151,9 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	liquids = old_liquids
 
-	if(SSlighting.initialized)
-		// Space tiles should never have lighting objects
-		//monkestation addition start
-		if(SSoutdoor_effects.initialized && SSoutdoor_effects.enabled)
-			outdoor_effect = old_outdoor_effect
-			get_sky_and_weather_states()
+	new_turf.weak_reference = old_ref
 
-		//monkestation addition end
+	if(SSlighting.initialized)
 		if(!space_lit)
 			// Should have a lighting object if we never had one
 			lighting_object = old_lighting_object || new /datum/lighting_object(src)
@@ -204,6 +202,10 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	if(flags_1 & INITIALIZED_1)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 		QUEUE_SMOOTH(src)
+
+	// we need to update gravity for any mob on a tile that is being created or destroyed
+	for(var/mob/living/target in new_turf.contents)
+		target.refresh_gravity()
 
 	return new_turf
 

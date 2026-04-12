@@ -30,10 +30,10 @@
 	. = ..()
 	if(!isturf(loc))
 		return INITIALIZE_HINT_QDEL
-	START_PROCESSING(SSactualfastprocess, src)
+	START_PROCESSING(SSaccelerated_particles, src)
 
 /obj/effect/accelerated_particle/Destroy(force)
-	STOP_PROCESSING(SSactualfastprocess, src)
+	STOP_PROCESSING(SSaccelerated_particles, src)
 	return ..()
 
 /obj/effect/accelerated_particle/Bump(atom/movable/bumped_atom)

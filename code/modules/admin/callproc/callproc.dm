@@ -187,6 +187,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	if(target != GLOBAL_PROC && !target.CanProcCall(procname))
 		to_chat(usr, "Proccall on [target.type]/proc/[procname] is disallowed!", confidential = TRUE)
 		return
+
 	var/current_caller = GLOB.AdminProcCaller
 	var/user_identifier = usr ? usr.client?.ckey : GLOB.AdminProcCaller
 	var/is_remote_handler = usr == GLOB.AdminProcCallHandler

@@ -94,6 +94,7 @@
 	/// TELEPORT: Move to Coffin & Close it!
 	user.set_resting(TRUE, TRUE, FALSE)
 	do_teleport(owner, bloodsuckerdatum_power.coffin, no_effects = TRUE, forced = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
+	bloodsuckerdatum_power.coffin.open(owner, TRUE)
 	bloodsuckerdatum_power.coffin.close(owner)
 	bloodsuckerdatum_power.coffin.take_contents()
 	playsound(bloodsuckerdatum_power.coffin.loc, bloodsuckerdatum_power.coffin.close_sound, vol = 15, vary = TRUE, extrarange = -3)

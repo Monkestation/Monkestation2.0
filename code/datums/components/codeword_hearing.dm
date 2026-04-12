@@ -45,12 +45,9 @@
 	if(!owner.can_hear() || !owner.has_language(hearing_args[HEARING_LANGUAGE]))
 		return
 
-	var/original_message = hearing_args[HEARING_RAW_MESSAGE]
 	var/message = hearing_args[HEARING_RAW_MESSAGE]
 	message = replace_regex.Replace(message, "<span class='[span_class]'>$1</span>")
 	hearing_args[HEARING_RAW_MESSAGE] = message
-	if(message != original_message)
-		hearing_args[HEARING_SPANS] |= SPAN_COPPERPLATE
 
 /// Since a parent can have multiple of these components on them simultaneously, this allows a datum to delete components from a specific source.
 /datum/component/codeword_hearing/proc/delete_if_from_source(component_source)

@@ -27,6 +27,8 @@
 	COOLDOWN_DECLARE(last_text)
 	/// even more wisdom from PDA.dm - "no everyone spamming" (prevents people from spamming the same message over and over)
 	COOLDOWN_DECLARE(last_text_everyone)
+	/// Cooldown for changing ringtone sound
+	COOLDOWN_DECLARE(ringtone_set_cooldown)
 	/// Whether or not we're in a mime PDA.
 	var/mime_mode = FALSE
 	/// Whether this app can send messages to all.
@@ -47,6 +49,8 @@
 	var/selected_image = null
 	/// Whether or not we're sending (or trying to send) a virus.
 	var/sending_virus = FALSE
+	/// The sound file to play when receiving a message || Monkestation Addition
+	var/ringtone_sound = PDA_RINGTONE_SOUND_DEFAULT
 
 /datum/computer_file/program/messenger/on_install()
 	. = ..()
@@ -320,6 +324,20 @@
 			selected_image = TEMP_IMAGE_PATH(REF(src))
 			update_pictures_for_all()
 			return TRUE
+		if("PDA_soundSet")
+			var/new_sound = params["sound"]
+			if(!(new_sound in GLOB.pda_ringtone_sounds))
+				return FALSE
+
+			ringtone_sound = new_sound
+
+			// Plays a preview of the sound selected
+			var/mob/living/usr_mob = usr
+			if(in_range(computer, usr_mob) && COOLDOWN_FINISHED(src, ringtone_set_cooldown))
+				playsound(computer, GLOB.pda_ringtone_sounds[new_sound], 30, TRUE, mixer_channel = CHANNEL_RINGTONES, extrarange = - 4)
+				COOLDOWN_START(src, ringtone_set_cooldown, 1 SECOND)
+
+			return TRUE
 
 /datum/computer_file/program/messenger/ui_static_data(mob/user)
 	var/list/static_data = list()
@@ -352,7 +370,10 @@
 	data["alert_silenced"] = alert_silenced
 	data["sending_and_receiving"] = sending_and_receiving
 	data["open_chat"] = viewing_messages_of
-
+	data["ringtone_sound"] = ringtone_sound
+	data["available_sounds"] = list()
+	for(var/sound_name in GLOB.pda_ringtone_sounds)
+		data["available_sounds"] += sound_name
 	// silicons handle selecting photos a bit differently for now
 	if(!issilicon(user))
 		var/list/stored_photos = list()
@@ -370,6 +391,10 @@
 		data["virus_attach"] = TRUE
 		data["sending_virus"] = sending_virus
 	return data
+
+/datum/computer_file/program/messenger/ui_assets(mob/user)
+	. = ..()
+	. += get_asset_datum(/datum/asset/spritesheet_batched/chat)
 
 //////////////////////
 // MESSAGE HANDLING //
@@ -453,7 +478,7 @@
 	if(!check_pda_message_against_filter(message, sender))
 		return null
 
-	return message
+	return emoji_parse(message)
 
 /// Sends a message to targets via PDA. When sending to everyone, set `everyone` to true so the message is formatted accordingly
 /datum/computer_file/program/messenger/proc/send_message(mob/living/sender, message, list/targets, everyone = FALSE)
@@ -552,9 +577,12 @@
 
 	return send_message_signal(sender, message, targets, fake_photo, FALSE, TRUE, fake_name, fake_job)
 
-/datum/computer_file/program/messenger/proc/send_message_signal(mob/sender, message, list/datum/computer_file/program/messenger/targets, photo_path = null, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
-	if(!sender.can_perform_action(computer, ALLOW_RESTING))
-		return FALSE
+/datum/computer_file/program/messenger/proc/send_message_signal(atom/source, message, list/datum/computer_file/program/messenger/targets, photo_path = null, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
+	var/mob/sender
+	if(ismob(source))
+		sender = source
+		if(!sender.can_perform_action(computer, ALLOW_RESTING|ALLOW_PAI))
+			return FALSE
 
 	if(!COOLDOWN_FINISHED(src, last_text))
 		return FALSE
@@ -652,17 +680,18 @@
 		if(!isnull(viewing_messages_of) && viewing_messages_of == sender_ref)
 			viewing_messages_of = REF(chat)
 
-	var/mob/living/receiver_mob = null
-	//Check our immediate loc
-	if(isliving(computer.loc))
-		receiver_mob = computer.loc
-	//Maybe they are a silicon!
-	else
-		receiver_mob = get(computer, /mob/living/silicon)
+	var/list/mob/living/receievers = list()
+	if(computer.inserted_pai)
+		receievers += computer.inserted_pai.pai
+	if(computer.loc && isliving(computer.loc))
+		receievers += computer.loc
 
-	var/should_ring = !alert_silenced || is_rigged
-
-	if(should_ring && istype(receiver_mob) && receiver_mob.is_literate() && (receiver_mob.stat == CONSCIOUS || receiver_mob.stat == SOFT_CRIT))
+	for(var/mob/living/messaged_mob as anything in receievers)
+		if(isnull(messaged_mob))
+			continue
+		if(QDELING(messaged_mob) || (messaged_mob.stat >= UNCONSCIOUS) || !messaged_mob.is_literate())
+			receievers -= messaged_mob
+			continue
 		var/reply_href = signal.data["rigged"] ? "explode" : "message"
 		var/photo_href = signal.data["rigged"] ? "explode" : "open"
 		var/reply
@@ -672,25 +701,32 @@
 			reply = "(<a href='byond://?src=[REF(src)];choice=[reply_href];skiprefresh=1;target=[REF(chat)]'>Reply</a>)"
 
 		// resolving w/o nullcheck here, assume the messenger exists if a real person sent a message
-		var/datum/computer_file/program/messenger/sender_messenger = chat.recipient?.resolve()
+		var/datum/computer_file/program/messenger/sender_messenger = chat?.recipient?.resolve()
 
 		var/sender_title = is_fake_user ? STRINGIFY_PDA_TARGET(fake_name, fake_job) : get_messenger_name(sender_messenger)
 		var/sender_name = is_fake_user ? fake_name : sender_messenger.computer.saved_identification
 
-		if (isAI(receiver_mob))
-			sender_title = "<a href='byond://?src=[REF(receiver_mob)];track=[html_encode(sender_name)]'>[sender_title]</a>"
+		if (isAI(messaged_mob))
+			sender_title = "<a href='byond://?src=[REF(messaged_mob)];track=[html_encode(sender_name)]'>[sender_title]</a>"
 
 		var/inbound_message = "[signal.format_message()]"
-		inbound_message = emoji_parse(inbound_message)
 
 		var/photo_message = signal.data["photo"] ? " (<a href='byond://?src=[REF(src)];choice=[photo_href];skiprefresh=1;target=[REF(chat)]'>Photo Attached</a>)" : ""
-		to_chat(receiver_mob, span_infoplain("[icon2html(computer, receiver_mob)] <b>PDA message from [sender_title], </b>\"[inbound_message]\"[photo_message] [reply]"))
+//Check if the mob can hear or has hard of hearing and rolls a 25% chance to receive the message
+		var/list/ignored_mobs = list()
+		if(!messaged_mob.can_hear() || (HAS_TRAIT(messaged_mob, TRAIT_HARD_OF_HEARING) && rand(0, 3) != 0))
+			to_chat(messaged_mob, span_infoplain("You feel your PDA vibrate."))
+			receievers -= messaged_mob
+			ignored_mobs += messaged_mob
+		else
+			to_chat(messaged_mob, span_infoplain("[icon2html(computer, messaged_mob)] <b>PDA message from [sender_title], </b>\"[inbound_message]\"[photo_message] [reply]"))
 
-	if (alert_able && should_ring)
-		computer.ring(ringtone, list(receiver_mob))
+	if (alert_able && (!alert_silenced || is_rigged))
+		computer.ring(ringtone, receievers)
 
-	SStgui.update_uis(computer)
-	update_pictures_for_all()
+	if(computer.active_program == src)
+		SStgui.update_uis(computer)
+		update_pictures_for_all()
 
 /// topic call that answers to people pressing "(Reply)" in chat
 /datum/computer_file/program/messenger/Topic(href, href_list)
@@ -698,7 +734,7 @@
 
 	if(QDELETED(src))
 		return
-	if(!usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH))
+	if(!usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH | ALLOW_RESTING | ALLOW_PAI))
 		return
 
 	// send an activation message and open the messenger

@@ -3,12 +3,15 @@
 	"name": "tgui-panel",
 	"version": "5.0.0",
 	"dependencies": {
-		"@types/node": "^14.x",
 		"common": "workspace:*",
-		"dompurify": "^2.4.4",
-		"inferno": "^8.2.1",
+		"dompurify": "^3.3.1",
+		"es-toolkit": "^1.44.0",
+		"jotai": "^2.16.2",
+		"react": "^19.2.3",
+		"react-dom": "^19.2.3",
 		"tgui": "workspace:*",
+		"tgui-core": "^5.7.2",
 		"tgui-dev-server": "workspace:*",
-		"tgui-polyfill": "workspace:*"
+		"zod": "^4.3.5"
 	}
 }

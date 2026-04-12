@@ -110,7 +110,7 @@
 	damage = 100
 	range = 7
 	pressure_decrease = 0.10 // Pressured enviorments are a no go for the railgun
-	speed = 0.1 // NYOOM
+	speed = 10 // NYOOM
 	projectile_piercing = PASSMOB
 
 
@@ -167,7 +167,7 @@
 	eyeblur = 69
 	drowsy = 69 SECONDS
 	jitter = 69 SECONDS
-	stamina = 69 SECONDS
+	stamina = 69
 	stutter = 69 SECONDS
 	slur = 69 SECONDS
 

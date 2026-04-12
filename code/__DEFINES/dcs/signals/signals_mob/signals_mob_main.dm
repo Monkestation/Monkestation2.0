@@ -1,4 +1,4 @@
-///Called on user, from base of /datum/strippable_item/alternate_action() (atom/target)
+///Called on user, from base of /datum/strippable_item/perform_alternate_action() (atom/target, action_key)
 #define COMSIG_TRY_ALT_ACTION "try_alt_action"
 	#define COMPONENT_CANT_ALT_ACTION (1<<0)
 ///Called on /basic when updating its speed, from base of /mob/living/basic/update_basic_mob_varspeed(): ()
@@ -71,6 +71,8 @@
 #define COMSIG_MOB_MIND_TRANSFERRED_OUT_OF "mob_mind_transferred_out_of"
 /// From /mob/proc/ghostize() Called when a mob sucessfully ghosts
 #define COMSIG_MOB_GHOSTIZED "mob_ghostized"
+
+#define COMSIG_MOB_RETRIEVE_ACCESS "retrieve_access"
 
 ///from base of obj/allowed(mob/M): (/obj) returns ACCESS_ALLOWED if mob has id access to the obj
 #define COMSIG_MOB_TRIED_ACCESS "tried_access"

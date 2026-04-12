@@ -116,7 +116,7 @@
 		return
 
 	var/turf_footstep = prepared_steps[footstep_type]
-	if(!turf_footstep)
+	if(!turf_footstep || !islist(footstep_sounds[turf_footstep]))
 		return
 	playsound(source_loc, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2] * volume, TRUE, footstep_sounds[turf_footstep][3] + e_range, falloff_distance = 1, vary = sound_vary, mixer_channel = CHANNEL_SOUND_FOOTSTEPS)
 
@@ -147,10 +147,12 @@
 		// we are wearing shoes
 
 		var/shoestep_type = prepared_steps[FOOTSTEP_MOB_SHOE]
-		heard_clients = playsound(source.loc, pick(footstep_sounds[shoestep_type][1]),
-			footstep_sounds[shoestep_type][2] * volume * volume_multiplier,
-			TRUE,
-			footstep_sounds[shoestep_type][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary, mixer_channel = CHANNEL_SOUND_FOOTSTEPS)
+		var/list/sounds = footstep_sounds[shoestep_type]
+		if(sounds)
+			heard_clients = playsound(source.loc, pick(sounds[1]),
+				sounds[2] * volume * volume_multiplier,
+				TRUE,
+				sounds[3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary, mixer_channel = CHANNEL_SOUND_FOOTSTEPS)
 	else
 		var/barefoot_type = prepared_steps[FOOTSTEP_MOB_BAREFOOT]
 		var/leg_num = source.step_leg
@@ -162,12 +164,14 @@
 		if(gotten?.step_sounds)
 			heard_clients = playsound(source.loc, pick(gotten.step_sounds), 50, TRUE, falloff_distance = 1, vary = sound_vary)
 		else
-			var/static/list/bare_footstep_sounds = GLOB.barefootstep
+			var/list/sounds = GLOB.barefootstep[barefoot_type]
+			if(!length(sounds))
+				return
 
-			heard_clients = playsound(source.loc, pick(bare_footstep_sounds[barefoot_type][1]),
-				bare_footstep_sounds[barefoot_type][2] * volume * volume_multiplier,
+			heard_clients = playsound(source.loc, pick(sounds[1]),
+				sounds[2] * volume * volume_multiplier,
 				TRUE,
-				bare_footstep_sounds[barefoot_type][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary, mixer_channel = CHANNEL_SOUND_FOOTSTEPS)
+				sounds[3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary, mixer_channel = CHANNEL_SOUND_FOOTSTEPS)
 
 	if(heard_clients)
 		play_fov_effect(source, 5, "footstep", direction, ignore_self = TRUE, override_list = heard_clients)

@@ -443,7 +443,7 @@
 			var/mob/living/carbon/M = target
 			M.adjust_silence(10 SECONDS)
 	else //Distant glare
-		var/loss = max(120 - (distance * 10), 0)
+		var/loss = max(60 - (distance * 10), 0)
 		target.stamina.adjust(-loss)
 		target.adjust_stutter(loss)
 		to_chat(target, span_userdanger("A purple light flashes through your mind, and exhaustion floods your body..."))
@@ -500,13 +500,11 @@
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/quantum_disruption/do_jaunt(mob/living/jaunter)
 	//createes distraction clone
 	var/mob/living/simple_animal/hostile/illusion/darkspawn/decoy = new(get_turf(jaunter))
-	decoy.Copy_Parent(jaunter, jaunt_duration, 100, 20) //closely follows regular player stats so it's not painfully obvious (still sorta is)
+	decoy.copy_parent(jaunter, jaunt_duration, 100, 20) //closely follows regular player stats so it's not painfully obvious (still sorta is)
 	decoy.cached_multiplicative_slowdown = jaunter.cached_multiplicative_slowdown
 	decoy.GiveTarget(owner) //so it starts running right away
 	decoy.Goto(owner, decoy.move_to_delay, decoy_min_distance)
-
-	. = ..()
-
+	return ..()
 
 
 //////////////////////////////////////////////////////////////////////////

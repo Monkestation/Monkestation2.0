@@ -1,3 +1,4 @@
+import { round, toFixed } from 'common/math';
 import { useBackend, useLocalState } from '../backend';
 import {
   AnimatedNumber,
@@ -9,7 +10,6 @@ import {
   Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { round, toFixed } from 'common/math';
 
 export const ChemMixingChamber = (props) => {
   const { act, data } = useBackend();
@@ -41,7 +41,8 @@ export const ChemMixingChamber = (props) => {
                       value={round(targetTemp)}
                       minValue={0}
                       maxValue={1000}
-                      onDrag={(e, value) =>
+                      tickWhileDragging
+                      onChange={(value) =>
                         act('temperature', {
                           target: value,
                         })
@@ -60,7 +61,7 @@ export const ChemMixingChamber = (props) => {
                     <Stack.Item grow>
                       <AnimatedNumber
                         value={temperature}
-                        format={(value) => toFixed(value) + ' K'}
+                        format={(value) => `${toFixed(value)} K`}
                       />
                     </Stack.Item>
                   </Stack>
@@ -98,7 +99,7 @@ export const ChemMixingChamber = (props) => {
                         fluid
                         value=""
                         placeholder="Reagent Name"
-                        onInput={(e, value) => setReagentName(value)}
+                        onChange={(value) => setReagentName(value)}
                       />
                     </Stack.Item>
                     <Stack.Item>
@@ -109,7 +110,8 @@ export const ChemMixingChamber = (props) => {
                         step={1}
                         stepPixelSize={3}
                         width="39px"
-                        onDrag={(e, value) => setReagentQuantity(value)}
+                        tickWhileDragging
+                        onChange={(value) => setReagentQuantity(value)}
                       />
                       <Box inline mr={1} />
                     </Stack.Item>
@@ -132,7 +134,7 @@ export const ChemMixingChamber = (props) => {
                       <Stack.Item key={reagent}>
                         <Stack fill>
                           <Stack.Item mt={0.25} textColor="label">
-                            {reagent.name + ':'}
+                            {`${reagent.name}:`}
                           </Stack.Item>
                           <Stack.Item mt={0.25} grow>
                             {reagent.required_reagent}

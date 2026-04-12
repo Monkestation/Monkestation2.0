@@ -10,7 +10,7 @@
 /* ----------------- Lore ----------------- */
 //Tape subtype for adding ruin lore -- the variables below are the ones you need to change
 /obj/item/tape/ruins
-	name = "tape"
+	name = "recording tape"
 	desc = "A magnetic tape that can hold up to ten minutes of content on either side."
 	icon_state = "tape_white"   //Options are white, blue, red, yellow, purple, greyscale, or you can chose one randomly (see tape/ruins/random below)
 

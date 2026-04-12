@@ -960,6 +960,13 @@
 	icon_file = 'icons/mob/clothing/accessories.dmi'
 	json_config = 'code/datums/greyscale/json_configs/waistcoat_worn.json'
 
+// Digi Stuff
+
+/datum/greyscale_config/digitigrade
+	name = "Digitigrade Clothes"
+	icon_file = 'icons/mob/clothing/digi_template.dmi'
+	json_config = 'code/datums/greyscale/json_configs/digitigrade.json'
+
 /datum/greyscale_config/witch_hat
 	name = "Fancy Hat"
 	icon_file = 'icons/obj/clothing/head/wizard.dmi'
@@ -1081,20 +1088,6 @@
 	icon_file = 'icons/mob/clothing/head/costume.dmi'
 	json_config = 'code/datums/greyscale/json_configs/party_hat.json'
 
-/datum/greyscale_config/lizard
-	name = "lizard Clothing"
-	icon_file = 'monkestation/icons/mob/gags/clothing/lizard_fallbacks.dmi'
-	json_config = 'code/datums/greyscale/json_configs/lizard_fallbacks/shoes.json'
-
-/datum/greyscale_config/lizard/shoes
-	name = "lizard Shoes"
-	json_config = 'code/datums/greyscale/json_configs/lizard_fallbacks/shoes.json'
-
-/datum/greyscale_config/lizard/under
-	name = "lizard Under"
-	json_config = 'code/datums/greyscale/json_configs/lizard_fallbacks/under.json'
-
-
 /datum/greyscale_config/polycloak
 	name = "cloak"
 	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
@@ -1163,20 +1156,6 @@
 	name = "Kitsune mask (Worn)"
 	icon_file = 'icons/mob/clothing/mask.dmi'
 
-// BANDANAS
-
-/datum/greyscale_config/bandana_worn/snouted
-	name = "Worn Bandana"
-	icon_file = SNOUTED_MASK_FILE
-
-/datum/greyscale_config/bandstriped_worn/snouted
-	name = "Worn Striped Bandana"
-	icon_file = SNOUTED_MASK_FILE
-
-/datum/greyscale_config/bandskull_worn/snouted
-	name = "Worn Skull Bandana"
-	icon_file = SNOUTED_MASK_FILE
-
 /*
 *	SUITS
 */
@@ -1193,10 +1172,6 @@
 	icon_file = 'monkestation/icons/mob/clothing/suit.dmi'
 	json_config = 'code/datums/greyscale/json_configs/tailcoat_worn.json'
 
-/datum/greyscale_config/tailcoat_worn/digitigrade
-	name = "Worn Tailcoat - Digitigrade"
-	icon_file = DIGITIGRADE_SUIT_FILE
-
 /datum/greyscale_config/tailcoat_bar
 	name = "Bartender's Tailcoat"
 	icon_file = 'monkestation/icons/obj/clothing/suits.dmi'
@@ -1207,20 +1182,7 @@
 	icon_file = 'monkestation/icons/mob/clothing/suit.dmi'
 	json_config = 'code/datums/greyscale/json_configs/tailcoat_bar_worn.json'
 
-/datum/greyscale_config/tailcoat_bar_worn/digitigrade
-	name = "Worn Bartender's Tailcoat - Digitigrade"
-	icon_file = DIGITIGRADE_SUIT_FILE
-
 // JUMPSUITS
-
-/datum/greyscale_config/jumpsuit_worn/digitigrade
-	name = "Worn Jumpsuit - Digitigrade"
-	icon_file = DIGITIGRADE_UNIFORM_FILE
-
-/datum/greyscale_config/jumpsuit_prison_worn/digitigrade
-	name = "Worn Prison Jumpsuit - Digitigrade"
-	icon_file = DIGITIGRADE_UNIFORM_FILE
-
 /datum/greyscale_config/bunnysuit
 	name = "Worn Bunny Suit"
 	icon_file = 'monkestation/icons/obj/clothing/uniforms.dmi'
@@ -1231,24 +1193,11 @@
 	icon_file = 'monkestation/icons/mob/clothing/uniform.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bunnysuit_worn.json'
 
-/datum/greyscale_config/bunnysuit_worn/digitigrade
-	name = "Worn Bunny Suit - Digitigrade"
-	icon_file = DIGITIGRADE_UNIFORM_FILE
-
 /*
 *	SHOES
 */
 
 // SNEAKERS
-
-/datum/greyscale_config/sneakers_worn/digitigrade
-	name = "Worn Sneakers - Digitigrade"
-	icon_file = DIGITIGRADE_SHOES_FILE
-
-/datum/greyscale_config/sneakers_orange_worn/digitigrade
-	name = "Worn Orange Sneakers - Digitigrade"
-	icon_file = DIGITIGRADE_SHOES_FILE
-
 /datum/greyscale_config/heels
 	name = "Heels"
 	icon_file = 'monkestation/icons/obj/clothing/shoes.dmi'
@@ -1258,10 +1207,6 @@
 	name = "Worn Heels"
 	icon_file = 'monkestation/icons/mob/clothing/feet.dmi'
 	json_config = 'code/datums/greyscale/json_configs/heels_worn.json'
-
-/datum/greyscale_config/heels_worn/digitigrade
-	name = "Worn Heels - Digitigrade"
-	icon_file = DIGITIGRADE_SHOES_FILE
 
 /datum/greyscale_config/bowtie_collar
 	name = "Bowtie Collar"

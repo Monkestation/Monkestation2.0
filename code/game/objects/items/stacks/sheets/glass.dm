@@ -27,7 +27,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/glass
 	grind_results = list(/datum/reagent/silicon = 20)
 	material_type = /datum/material/glass
-	point_value = 1
+	point_value = 2
 	tableVariant = /obj/structure/table/glass
 	matter_amount = 4
 	cost = 500
@@ -155,7 +155,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/rglass
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/iron = 10)
-	point_value = 4
+	point_value = 8
 	matter_amount = 6
 	tableVariant = /obj/structure/table/reinforced/rglass
 
@@ -193,7 +193,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	material_flags = NONE
 	merge_type = /obj/item/stack/sheet/plasmarglass
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10, /datum/reagent/iron = 10)
-	point_value = 23
+	point_value = 40
 	matter_amount = 8
 	tableVariant = /obj/structure/table/reinforced/plasmarglass
 
@@ -291,7 +291,10 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	var/shiv_type = /obj/item/knife/shiv
 	var/craft_time = 3.5 SECONDS
 	var/obj/item/stack/sheet/weld_material = /obj/item/stack/sheet/glass
-	embedding = list("embed_chance" = 65)
+	embed_type = /datum/embedding/shard
+
+/datum/embedding/shard
+	embed_chance = 65
 
 /datum/armor/item_shard
 	melee = 100

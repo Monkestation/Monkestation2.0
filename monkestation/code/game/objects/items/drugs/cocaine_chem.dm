@@ -22,7 +22,7 @@
 
 /datum/reagent/drug/cocaine
 	name = "cocaine"
-	description = "A powerful stimulant extracted from coca leaves. Reduces stun times, but causes drowsiness and severe brain damage if overdosed."
+	description = "A powerful stimulant extracted from coca leaves. Reduces stun times and gives you resistance to batons, but causes drowsiness and severe brain damage if overdosed."
 	reagent_state = LIQUID
 	color = "#ffffff"
 	overdose_threshold = 20
@@ -36,10 +36,12 @@
 	..()
 	containing_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/stimulants)
 	ADD_TRAIT(containing_mob, TRAIT_BATON_RESISTANCE, type)
+	containing_mob.stamina.regen_rate += 2 * REM
 
 /datum/reagent/drug/cocaine/on_mob_end_metabolize(mob/living/containing_mob)
 	containing_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/stimulants)
 	REMOVE_TRAIT(containing_mob, TRAIT_BATON_RESISTANCE, type)
+	containing_mob.stamina.regen_rate -= 2 * REM
 	..()
 
 /datum/reagent/drug/cocaine/on_mob_life(mob/living/carbon/carbon_mob, seconds_per_tick, times_fired)
@@ -52,7 +54,6 @@
 	carbon_mob.AdjustUnconscious(-15 * REM * seconds_per_tick)
 	carbon_mob.AdjustImmobilized(-15 * REM * seconds_per_tick)
 	carbon_mob.AdjustParalyzed(-15 * REM * seconds_per_tick)
-	carbon_mob.stamina.adjust(-2 * REM * seconds_per_tick, 0)
 	if(SPT_PROB(2.5, seconds_per_tick))
 		carbon_mob.emote("shiver")
 		carbon_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, (rand(1, 2) * unhealthy_multiplier) * REM * seconds_per_tick)

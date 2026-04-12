@@ -64,11 +64,7 @@
 	/// True if a gun dosen't need a pin, mostly used for abstract guns like tentacles and meathooks
 	var/pinless = FALSE
 
-	var/can_bayonet = FALSE //if a bayonet can be added or removed if it already has one.
 	var/has_manufacturer = TRUE // Set to true by default. This didn't exist until Brad needed to make a new pipe-gun esque weapon.
-	var/obj/item/knife/bayonet
-	var/knife_x_offset = 0
-	var/knife_y_offset = 0
 
 	var/ammo_x_offset = 0 //used for positioning ammo count overlay on sprite
 	var/ammo_y_offset = 0
@@ -90,6 +86,7 @@
 		pin = new pin(src)
 
 	add_seclight_point()
+	add_bayonet_point()
 
 	if(has_manufacturer)
 		give_manufacturer_examine()
@@ -97,8 +94,6 @@
 /obj/item/gun/Destroy()
 	if(isobj(pin)) //Can still be the initial path, then we skip
 		QDEL_NULL(pin)
-	if(bayonet)
-		QDEL_NULL(bayonet)
 	if(chambered) //Not all guns are chambered (EMP'ed energy guns etc)
 		QDEL_NULL(chambered)
 	if(isatom(suppressed)) //SUPPRESSED IS USED AS BOTH A TRUE/FALSE AND AS A REF, WHAT THE FUCKKKKKKKKKKKKKKKKK
@@ -121,14 +116,16 @@
 /obj/item/gun/proc/add_seclight_point()
 	return
 
+/// Similarly to add_seclight_point(), handles [the bayonet attachment component][/datum/component/bayonet_attachable]
+/obj/item/gun/proc/add_bayonet_point()
+	return
+
 /obj/item/gun/handle_atom_del(atom/A)
 	if(A == pin)
 		pin = null
 	if(A == chambered)
 		chambered = null
 		update_appearance()
-	if(A == bayonet)
-		clear_bayonet()
 	if(A == suppressed)
 		clear_suppressor()
 	return ..()
@@ -151,13 +148,6 @@
 				. += span_info("[pin] looks like [pin.p_theyre()] firmly locked in, [pin.p_they()] looks impossible to remove.")
 		else
 			. += "It doesn't have a <b>firing pin</b> installed, and won't fire."
-
-	if(bayonet)
-		. += "It has \a [bayonet] [can_bayonet ? "" : "permanently "]affixed to it."
-		if(can_bayonet) //if it has a bayonet and this is false, the bayonet is permanent.
-			. += span_info("[bayonet] looks like it can be <b>unscrewed</b> from [src].")
-	if(can_bayonet)
-		. += "It has a <b>bayonet</b> lug on it."
 
 //called after the gun has successfully fired its chambered ammo.
 /obj/item/gun/proc/process_chamber(mob/living/user, empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
@@ -286,31 +276,6 @@
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/gun/pre_attack(atom/A, mob/living/user, params)
-	. = ..()
-	if(.)
-		return .
-	if(isnull(bayonet) || !(user.istate & ISTATE_HARM))
-		return .
-	return bayonet.melee_attack_chain(user, A, params)
-
-/obj/item/gun/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(user.istate & ISTATE_HARM)
-		return NONE
-
-	if(istype(tool, /obj/item/knife))
-		var/obj/item/knife/new_stabber = tool
-		if(!can_bayonet || !new_stabber.bayonet || !isnull(bayonet)) //ensure the gun has an attachment point available, and that the knife is compatible with it.
-			return ITEM_INTERACT_BLOCKING
-		if(!user.transferItemToLoc(new_stabber, src))
-			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You attach [new_stabber] to [src]'s bayonet lug."))
-		bayonet = new_stabber
-		update_appearance()
-		return ITEM_INTERACT_SUCCESS
-
-	return NONE
-
 /obj/item/gun/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(ismob(interacting_with))
 		if(try_fire_gun(interacting_with, user, list2params(modifiers)))
@@ -319,11 +284,14 @@
 	return FALSE
 
 /obj/item/gun/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if((user.istate & ISTATE_HARM) && isliving(interacting_with))
+	if((user.istate & ISTATE_HARM) && user.Adjacent(interacting_with))
 		return ITEM_INTERACT_SKIP_TO_ATTACK // Gun bash / bayonet attack
 
-	if(!isliving(interacting_with))
+	if(!can_hold_up)
 		return ..()
+
+	if(!isliving(interacting_with))
+		return
 
 	var/datum/component/gunpoint/gunpoint_component = user.GetComponent(/datum/component/gunpoint)
 	if (gunpoint_component)
@@ -343,7 +311,13 @@
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/gun/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	return ITEM_INTERACT_BLOCKING
+	if(IN_GIVEN_RANGE(user, interacting_with, GUNPOINT_SHOOTER_STRAY_RANGE))
+		return interact_with_atom_secondary(interacting_with, user, modifiers)
+	if(!can_hold_up) //cant hold up so just shoot them
+		return interact_with_atom(interacting_with, user, modifiers)
+	if(isliving(interacting_with))
+		balloon_alert(user, "out of range!")
+
 //Just exists to stop it running ranged interact primary, and for other stuff to work based off of it
 
 /obj/item/gun/proc/try_fire_gun(atom/target, mob/living/user, params)
@@ -358,6 +332,10 @@
 		return
 	if(firing_burst)
 		return
+
+	if(SEND_SIGNAL(user, COMSIG_MOB_TRYING_TO_FIRE_GUN, src, target, flag, params) & COMPONENT_CANCEL_GUN_FIRE)
+		return
+
 	if(SEND_SIGNAL(src, COMSIG_GUN_TRY_FIRE, user, target, flag, params) & COMPONENT_CANCEL_GUN_FIRE)
 		return
 	if(flag) //It's adjacent, is the user, or is on the user's person
@@ -548,10 +526,12 @@
 		else
 			shoot_with_empty_chamber(user)
 			return
-		process_chamber(user = user)
-		update_appearance()
-		semicd = TRUE
-		addtimer(CALLBACK(src, PROC_REF(reset_semicd)), modified_delay)
+		// If gun gets destroyed as a result of firing
+		if (!QDELETED(src))
+			process_chamber()
+			update_appearance()
+			semicd = TRUE
+			addtimer(CALLBACK(src, PROC_REF(reset_semicd)), modified_delay)
 
 	if(user)
 		user.update_held_items()
@@ -569,10 +549,7 @@
 	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 
-	if(bayonet && can_bayonet) //if it has a bayonet, and the bayonet can be removed
-		return remove_bayonet(user, I)
-
-	else if(pin?.pin_removable && user.is_holding(src))
+	if(pin?.pin_removable && user.is_holding(src))
 		user.visible_message(span_warning("[user] attempts to remove [pin] from [src] with [I]."),
 		span_notice("You attempt to remove [pin] from [src]. (It will take [DisplayTimeText(FIRING_PIN_REMOVAL_DELAY)].)"), null, 3)
 		if(I.use_tool(src, user, FIRING_PIN_REMOVAL_DELAY, volume = 50))
@@ -616,36 +593,6 @@
 								span_warning("You rip [pin] out of [src] with [I], mangling the pin in the process."), null, 3)
 			QDEL_NULL(pin)
 			return TRUE
-
-/obj/item/gun/proc/remove_bayonet(mob/living/user, obj/item/tool_item)
-	tool_item?.play_tool_sound(src)
-	to_chat(user, span_notice("You unfix [bayonet] from [src]."))
-	bayonet.forceMove(drop_location())
-
-	if(Adjacent(user) && !issilicon(user))
-		user.put_in_hands(bayonet)
-
-	return clear_bayonet()
-
-/obj/item/gun/proc/clear_bayonet()
-	if(!bayonet)
-		return
-	bayonet = null
-	update_appearance()
-	return TRUE
-
-/obj/item/gun/update_overlays()
-	. = ..()
-	if(bayonet)
-		var/mutable_appearance/knife_overlay
-		var/state = "bayonet" //Generic state.
-		if(icon_exists('icons/obj/weapons/guns/bayonets.dmi', bayonet.icon_state)) //Snowflake state? //MONKESTATION EDIT - Refactored to `icon_exists`.
-			state = bayonet.icon_state
-		var/icon/bayonet_icons = 'icons/obj/weapons/guns/bayonets.dmi'
-		knife_overlay = mutable_appearance(bayonet_icons, state)
-		knife_overlay.pixel_x = knife_x_offset
-		knife_overlay.pixel_y = knife_y_offset
-		. += knife_overlay
 
 /obj/item/gun/proc/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params, bypass_timer)
 	if(!ishuman(user) || !ishuman(target))

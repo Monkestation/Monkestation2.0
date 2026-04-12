@@ -188,7 +188,6 @@
 
 /obj/machinery/am_shielding/proc/setup_core()
 	processing = TRUE
-	GLOB.machines |= src
 	START_PROCESSING(SSmachines, src)
 	if(!control_unit)
 		return

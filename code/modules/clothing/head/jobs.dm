@@ -335,8 +335,8 @@
 
 /obj/item/clothing/head/hats/warden
 	name = "warden's police hat"
-	desc = "It's a special armored hat issued to the Warden of a security force. Protects the head from impacts."
-	icon_state = "policehelm"
+	desc = "It's an old armored hat previously issued to the Warden of a security force. Protects the head from impacts."
+	icon_state = "wardenhat_police"
 	armor_type = /datum/armor/hats_warden
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden
@@ -351,27 +351,20 @@
 	acid = 60
 	wound = 6
 
-/obj/item/clothing/head/hats/warden/police
+/obj/item/clothing/head/hats/warden/spacepol
 	name = "police officer's hat"
 	desc = "A police officer's hat. This hat emphasizes that you are THE LAW."
 
+/obj/item/clothing/head/hats/warden/blue
+	name = "warden's hat"
+	desc = "A blue warden's hat. Looking at it gives you the feeling of wanting to keep people in cells for as long as possible."
+	icon_state = "wardenhat_blue"
+
 /obj/item/clothing/head/hats/warden/red
 	name = "warden's hat"
-	desc = "A warden's red hat. Looking at it gives you the feeling of wanting to keep people in cells for as long as possible."
-	icon_state = "wardenhat"
-	armor_type = /datum/armor/warden_red
-	strip_delay = 60
+	desc = "A red warden's hat. Looking at it gives you the feeling of wanting to keep people in cells for as long as possible."
+	icon_state = "wardenhat_red"
 	dog_fashion = /datum/dog_fashion/head/warden_red
-
-/datum/armor/warden_red
-	melee = 40
-	bullet = 30
-	laser = 30
-	energy = 40
-	bomb = 25
-	fire = 30
-	acid = 60
-	wound = 6
 
 /obj/item/clothing/head/hats/warden/drill
 	name = "warden's campaign hat"
@@ -505,6 +498,16 @@
 	desc = "A beret in a distinct surgical turquoise!"
 	greyscale_colors = "#5EB8B8"
 
+/obj/item/clothing/head/beret/medical/deforest
+	name = "Deforest Beret"
+	desc = "A Deforest Medical beret, velvet fabrics and directly infused dyes prevent age from tarnishing the striking presence of Deforest rescue personnel."
+	greyscale_colors = NONE
+	greyscale_config = NONE
+	greyscale_config_worn = NONE
+	icon_state = "deforest_beret"
+	icon = 'icons/obj/clothing/head/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head/hats.dmi'
+
 /obj/item/clothing/head/utility/surgerycap
 	name = "blue surgery cap"
 	icon_state = "surgicalcap"
@@ -524,6 +527,11 @@
 	name = "turquoise surgery cap"
 	icon_state = "surgicalcapcmo"
 	desc = "The CMO's medical surgery cap to prevent their hair from entering the insides of the patient!"
+
+/obj/item/clothing/head/utility/surgerycap/sec
+	name = "security surgical cap"
+	desc = "A security red medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
+	icon_state = "surgicalcapsec"
 
 //Engineering
 /obj/item/clothing/head/beret/engi

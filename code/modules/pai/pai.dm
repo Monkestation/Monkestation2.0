@@ -77,12 +77,10 @@
 	var/obj/item/instrument/piano_synth/instrument
 	/// Newscaster
 	var/obj/machinery/newscaster/pai/newscaster
-	/// PDA
-	var/atom/movable/screen/ai/modpc/pda_button
-	/// Photography module
-	var/obj/item/camera/siliconcam/pai_camera/camera
 	/// Remote signaler
 	var/obj/item/assembly/signaler/internal/signaler
+	///The messeenger ability that pAIs get when they are put in a PDA.
+	var/datum/action/innate/pai/messenger/messenger_ability
 
 	// Static lists
 	/// List of all available downloads
@@ -137,13 +135,16 @@
 
 // See software.dm for Topic()
 /mob/living/silicon/pai/can_perform_action(atom/movable/target, action_bitflags)
+	if(!(action_bitflags & ALLOW_PAI))
+		to_chat(src, span_warning("Your holochasis does not allow you to do this!"))
+		return FALSE
 	action_bitflags |= ALLOW_RESTING // Resting is just an aesthetic feature for them
 	action_bitflags &= ~ALLOW_SILICON_REACH // They don't get long reach like the rest of silicons
 	return ..(target, action_bitflags)
 
 /mob/living/silicon/pai/Destroy()
+	QDEL_NULL(messenger_ability)
 	QDEL_NULL(atmos_analyzer)
-	QDEL_NULL(camera)
 	QDEL_NULL(hacking_cable)
 	QDEL_NULL(instrument)
 	QDEL_NULL(internal_gps)
@@ -188,8 +189,8 @@
 			card.update_appearance()
 	if(deleting_atom == atmos_analyzer)
 		atmos_analyzer = null
-	if(deleting_atom == camera)
-		camera = null
+	if(deleting_atom == aicamera)
+		aicamera = null
 	if(deleting_atom == internal_gps)
 		internal_gps = null
 	if(deleting_atom == instrument)
@@ -202,7 +203,8 @@
 
 /mob/living/silicon/pai/Initialize(mapload)
 	. = ..()
-	START_PROCESSING(SSfastprocess, src)
+	if(istype(loc, /obj/item/modular_computer))
+		give_messenger_ability()
 	GLOB.pai_list += src
 	make_laws()
 	for(var/law in laws.inherent)
@@ -223,12 +225,14 @@
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
 	RegisterSignals(src, list(COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE), PROC_REF(on_shell_damaged))
 	RegisterSignal(src, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, PROC_REF(on_shell_weakened))
+	RegisterSignal(src, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
 	return TRUE
 
-/mob/living/silicon/pai/process(seconds_per_tick)
+/mob/living/silicon/pai/Life(seconds_per_tick, times_fired)
+	. = ..()
 	holochassis_health = clamp((holochassis_health + (HOLOCHASSIS_REGEN_PER_SECOND * seconds_per_tick)), -50, HOLOCHASSIS_MAX_HEALTH)
 
 /mob/living/silicon/pai/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
@@ -289,12 +293,8 @@
  * 	or FALSE if the pAI is not being carried.
  */
 /mob/living/silicon/pai/proc/get_holder()
-	var/mob/living/carbon/holder
-	if(!holoform && iscarbon(card.loc))
-		holder = card.loc
-	if(holoform && ispickedupmob(loc) && iscarbon(loc.loc))
-		holder = loc.loc
-	if(!holder || !iscarbon(holder))
+	var/mob/holder = recursive_loc_check(card, /mob/living/carbon)
+	if(isnull(holder))
 		return FALSE
 	return holder
 
@@ -443,5 +443,20 @@
 		return
 	leash.set_distance(new_distance)
 
+/mob/living/silicon/pai/proc/retrieve_access(atom/source, list/player_access)
+	SIGNAL_HANDLER
+	player_access += ACCESS_MAINT_TUNNELS
+
 /mob/living/silicon/pai/get_access()
 	return list(ACCESS_MAINT_TUNNELS) //MONKESTATION EDIT: Add inherent maints access to pAIs
+
+///Gives the messenger ability to the pAI, creating a new one if it doesn't have one already.
+/mob/living/silicon/pai/proc/give_messenger_ability()
+	if(!messenger_ability)
+		messenger_ability = new(src)
+	messenger_ability.Grant(src)
+
+///Removes the messenger ability from the pAI, but does not delete it.
+/mob/living/silicon/pai/proc/remove_messenger_ability()
+	if(messenger_ability)
+		messenger_ability.Remove(src)

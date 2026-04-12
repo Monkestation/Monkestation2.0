@@ -27,12 +27,12 @@
 	family_heirlooms = list(/obj/item/storage/medkit/ancient/heirloom)
 
 	mail_goodies = list(
-		/obj/item/reagent_containers/hypospray/medipen = 20,
-		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 10,
-		/obj/item/reagent_containers/hypospray/medipen/salacid = 10,
-		/obj/item/reagent_containers/hypospray/medipen/salbutamol = 10,
-		/obj/item/reagent_containers/hypospray/medipen/penacid = 10,
-		/obj/item/reagent_containers/hypospray/medipen/survival/luxury = 5
+		/obj/item/reagent_containers/medipen = 20,
+		/obj/item/reagent_containers/medipen/oxandrolone = 10,
+		/obj/item/reagent_containers/medipen/salacid = 10,
+		/obj/item/reagent_containers/medipen/salbutamol = 10,
+		/obj/item/reagent_containers/medipen/penacid = 10,
+		/obj/item/reagent_containers/medipen/survival/luxury = 5
 	)
 	rpg_title = "Corpse Runner"
 	job_flags = STATION_JOB_FLAGS
@@ -50,7 +50,7 @@
 	backpack_contents = list(
 		/obj/item/emergency_bed = 1,
 		)
-	belt = /obj/item/storage/belt/medical/paramedic
+	belt = /obj/item/storage/belt/medical/paramedic/full
 	ears = /obj/item/radio/headset/headset_med
 	head = /obj/item/clothing/head/soft/paramedic
 	gloves = /obj/item/clothing/gloves/latex/nitrile

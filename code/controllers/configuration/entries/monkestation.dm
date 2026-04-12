@@ -16,7 +16,7 @@
 /datum/config_entry/string/roundend_webhook_name
 
 /datum/config_entry/string/roundend_webhook_description
-	default = @"[Join Server!](http://play.monkestation.com:7420)"
+	default = @"[Join Server!](https://hub.monkestation.com/connect/3ea482a2)"
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/string/roundend_webhook_content
@@ -95,7 +95,7 @@
 	default = "http://127.0.0.1:1330"
 
 /datum/config_entry/string/plexora_url/ValidateAndSet(str_val)
-	if(!findtext(str_val, GLOB.is_http_protocol))
+	if(!is_http_protocol(str_val))
 		return FALSE
 	return ..()
 
@@ -103,3 +103,5 @@
 
 // Role ID to check if a user has in order for them to be let in.
 /datum/config_entry/string/plexora_verification_required_roleid
+
+/datum/config_entry/flag/cassettes_in_db

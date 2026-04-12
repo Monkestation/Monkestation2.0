@@ -182,11 +182,10 @@
 /proc/findname(msg)
 	if(!istext(msg))
 		msg = "[msg]"
-	for(var/i in GLOB.mob_list)
-		var/mob/M = i
+	for(var/mob/M as anything in GLOB.mob_list)
 		if(M.real_name == msg)
 			return M
-	return 0
+	return FALSE
 
 ///Find the first name of a mob from the real name with regex
 /mob/proc/first_name()
@@ -500,7 +499,7 @@
 	if(iscyborg(mob) || islarva(mob))
 		divided_health = (mob.health + mob.maxHealth) / (mob.maxHealth * 2)
 	else if(iscarbon(mob) || isAI(mob) || isbrain(mob))
-		divided_health = abs(HEALTH_THRESHOLD_DEAD - mob.health) / abs(HEALTH_THRESHOLD_DEAD - mob.maxHealth)
+		divided_health = abs(mob.dead_threshold - mob.health) / abs(mob.dead_threshold - mob.maxHealth)
 	return divided_health * 100
 
 /**

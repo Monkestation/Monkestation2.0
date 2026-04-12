@@ -18,6 +18,24 @@ In any query remember to add a prefix to the table names if you use one.
 
 ---
 
+Version 6.1 6 January 2026, by iliyaxox
+Add `cassette_purchases` table
+
+```sql
+CREATE TABLE `cassette_purchases` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `cassette_id` VARCHAR(32) NOT NULL,
+  `cassette_name` VARCHAR(64) NOT NULL,
+  `buyer_ckey` VARCHAR(32),
+  `purchase_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `server_id` VARCHAR(50),
+  PRIMARY KEY (`id`),
+  KEY `idx_cassette_id` (`cassette_id`),
+  KEY `idx_purchase_date` (`purchase_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; COLLATE=utf8mb4_general_ci;
+```
+---
+
 Version 6.0 6 October 2025, by Flleeppyy
 Remove `stickyban` and its related tables. (Holy shit we're going up a major version!!!!!)
 Also fixed some `CREATE TABLE` statements to remove `IF NOT EXISTS` since that was literally useless after `DROP TABLE IF EXISTS`
@@ -320,7 +338,7 @@ CREATE TABLE `text_adventures` (
 	`adventure_data` LONGTEXT NOT NULL,
 	`uploader` VARCHAR(32) NOT NULL,
 	`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`approved` TINYINT(1) NOT NULL DEFAULT FALSE,
+	`approved` TINYINT NOT NULL DEFAULT FALSE,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 ```

@@ -529,7 +529,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * @param obj/item/thing the item we're inserting
  * @param override skip feedback, only do animation check
  */
-/datum/storage/proc/item_insertion_feedback(mob/user, obj/item/thing, override = FALSE)
+/datum/storage/proc/item_insertion_feedback(mob/user, obj/item/thing, override = FALSE, sound = SFX_RUSTLE, sound_vary = TRUE)
 	if(!parent)
 		return
 
@@ -543,7 +543,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	if(rustle_sound)
-		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+		playsound(parent, sound, 50, sound_vary, -5)
 
 	if(!silent_for_user)
 		to_chat(user, span_notice("You put [thing] [insert_preposition]to [parent]."))
@@ -564,7 +564,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * @param atom/newLoc where we're placing the item
  * @param silent if TRUE, we won't play any exit sounds
  */
-/datum/storage/proc/attempt_remove(obj/item/thing, atom/newLoc, silent = FALSE, visual_updates = TRUE)
+/datum/storage/proc/attempt_remove(obj/item/thing, atom/newLoc, silent = FALSE, visual_updates = TRUE, sound = SFX_RUSTLE, sound_vary = TRUE)
 	if(!parent)
 		return
 
@@ -578,7 +578,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		thing.forceMove(newLoc)
 
 		if(rustle_sound && !silent)
-			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+			playsound(parent, sound, 50, sound_vary, -5)
 	else
 		thing.moveToNullspace()
 
@@ -715,7 +715,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		attempt_insert(thing, user)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(!isturf(thing.loc))
+	if(!isturf(thing.loc) && !(thing.flags_1 & IS_ONTOP_1))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	INVOKE_ASYNC(src, PROC_REF(collect_on_turf), thing, user)
@@ -733,6 +733,16 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	var/atom/holder = thing.loc
 	var/list/pick_up = holder.contents.Copy()
+
+	// When collecting from a non-turf (e.g. a machine surface), only pick up IS_ONTOP_1 items
+	// that are not plates. Plates (like oven trays) are structural parts of machines, not loose
+	// surface items, and should not be swept up alongside items cooking on the surface.
+	if(!isturf(holder))
+		var/list/surface_items = list()
+		for(var/obj/item/surface_item in pick_up)
+			if((surface_item.flags_1 & IS_ONTOP_1) && !istype(surface_item, /obj/item/plate))
+				surface_items += surface_item
+		pick_up = surface_items
 
 	if(collection_mode == COLLECT_SAME)
 		pick_up = typecache_filter_list(pick_up, typecacheof(thing.type))
@@ -808,7 +818,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * @param atom/dest_object where to dump to
  * @param mob/user the user who is dumping the contents
  */
-/datum/storage/proc/dump_content_at(atom/dest_object, dump_loc, mob/user)
+/datum/storage/proc/dump_content_at(atom/dest_object, dump_loc, mob/user, sound = SFX_RUSTLE, sound_vary = TRUE)
 	if(locked)
 		user.balloon_alert(user, "closed!")
 		return
@@ -823,7 +833,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		to_chat(user, span_notice("You dump the contents of [parent] into [dest_object]."))
 
 		if(rustle_sound)
-			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+			playsound(parent, sound, 50, sound_vary, -5)
 
 		for(var/obj/item/to_dump in real_location)
 			dest_object.atom_storage.attempt_insert(to_dump, user)
@@ -837,6 +847,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	remove_all(dump_loc)
+	SEND_SIGNAL(src, COMSIG_STORAGE_DUMP_ONTO_POST_TRANSFER, dest_object, user)
 
 /// Signal handler for whenever something gets mouse-dropped onto us.
 /datum/storage/proc/on_mousedropped_onto(datum/source, obj/item/dropping, mob/user)
@@ -989,7 +1000,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	return open_storage_on_signal(source, user) ? CLICK_ACTION_SUCCESS : NONE
 
 /// Opens the storage to the mob, showing them the contents to their UI.
-/datum/storage/proc/open_storage(mob/to_show)
+/datum/storage/proc/open_storage(mob/to_show, sound = SFX_RUSTLE, sound_vary = TRUE)
 	if(!parent)
 		return FALSE
 
@@ -1028,7 +1039,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		animate_parent()
 
 	if(rustle_sound)
-		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+		playsound(parent, sound, 50, sound_vary, -5)
 
 	return TRUE
 
@@ -1048,8 +1059,12 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	for(var/mob/user in can_see_contents())
-		if (!user.CanReach(parent))
+		if (!can_be_reached_by(user))
 			hide_contents(user)
+
+/// Relay for parent.IsReachableBy
+/datum/storage/proc/can_be_reached_by(mob/user)
+	return parent.IsReachableBy(user)
 
 /// Close the storage UI for everyone viewing us.
 /datum/storage/proc/close_all()
@@ -1095,10 +1110,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(toshow.active_storage != src && (toshow.stat == CONSCIOUS))
 		for(var/obj/item/thing in real_location)
 			if(thing.on_found(toshow))
-				toshow.active_storage.hide_contents(toshow)
+				toshow.active_storage?.hide_contents(toshow)
 
-	if(toshow.active_storage)
-		toshow.active_storage.hide_contents(toshow)
+	toshow.active_storage?.hide_contents(toshow)
 
 	toshow.active_storage = src
 

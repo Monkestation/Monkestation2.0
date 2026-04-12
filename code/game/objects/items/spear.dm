@@ -12,7 +12,7 @@
 	throwforce = 20
 	throw_speed = 4
 	demolition_mod = 0.75
-	embedding = list("impact_pain_mult" = 2, "remove_pain_mult" = 4, "jostle_chance" = 2.5)
+	embed_type = /datum/embedding/spear
 	armour_penetration = 30
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass= HALF_SHEET_MATERIAL_AMOUNT * 2)
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -31,6 +31,11 @@
 	var/force_unwielded = 10
 	/// How much damage to do wielded
 	var/force_wielded = 18
+
+/datum/embedding/spear
+	impact_pain_mult = 2
+	remove_pain_mult = 4
+	jostle_chance = 2.5
 
 /datum/armor/item_spear
 	fire = 50
@@ -192,7 +197,7 @@
 	if(stabbed.stat == CONSCIOUS && prob(50))
 		var/mob/living/simple_animal/hostile/illusion/fake_clone = new(user.loc)
 		fake_clone.faction = user.faction.Copy()
-		fake_clone.Copy_Parent(user, 100, user.health/2.5, 12, 30)
+		fake_clone.copy_parent(user, 100, user.health/2.5, 12, 30)
 		fake_clone.GiveTarget(stabbed)
 
 /*

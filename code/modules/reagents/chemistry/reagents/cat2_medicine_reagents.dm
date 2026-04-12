@@ -532,7 +532,7 @@
 
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	H.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.25 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
-	if(H.health <= HEALTH_THRESHOLD_CRIT && H.health > (H.crit_threshold + HEALTH_THRESHOLD_FULLCRIT * (2 * normalise_creation_purity()))) //we cannot save someone below our lowered crit threshold.
+	if(H.health <= H.crit_threshold && H.health > (H.crit_threshold + H.hardcrit_threshold * (2 * normalise_creation_purity()))) //we cannot save someone below our lowered crit threshold.
 
 		H.adjustToxLoss(-2 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		H.adjustBruteLoss(-2 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
@@ -549,7 +549,7 @@
 		if(SPT_PROB(18, seconds_per_tick))
 			to_chat(H,span_danger("Your body is trying to give up, but your heart is still beating!"))
 
-	if(H.health <= (H.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*(2*normalise_creation_purity()))) //certain death below this threshold
+	if(H.health <= (H.crit_threshold + H.hardcrit_threshold*(2*normalise_creation_purity()))) //certain death below this threshold
 		REMOVE_TRAIT(H, TRAIT_STABLEHEART, type) //we have to remove the stable heart trait before we give them a heart attack
 		to_chat(H,span_danger("You feel something rupturing inside your chest!"))
 		H.emote("scream")

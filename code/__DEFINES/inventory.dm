@@ -93,7 +93,7 @@
 ///hides mutant/moth wings, does not apply to functional wings
 #define HIDEMUTWINGS (1<<13)
 ///hides belts and riggings
-//#define HIDEBELT (1<<14)
+#define HIDEBELT (1<<14)
 ///hides antennae
 #define HIDEANTENNAE (1<<15)
 
@@ -150,14 +150,15 @@ DEFINE_BITFIELD(no_equip_flags, list(
 ))
 
 //Flags (actual flags, fucker ^) for /obj/item/var/supports_variations_flags
-///No alternative sprites based on bodytype
-#define CLOTHING_NO_VARIATION (1<<0)
 ///Has a sprite for digitigrade legs specifically.
-#define CLOTHING_DIGITIGRADE_VARIATION (1<<1)
+#define CLOTHING_DIGITIGRADE_VARIATION (1<<0)
 ///The sprite works fine for digitigrade legs as-is.
-#define CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON (1<<2)
-///Has a sprite for snouted heads specifically.
-#define CLOTHING_SNOUTED_VARIATION (1<<3)
+#define CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON (1<<1)
+/// Auto-generates the leg portion of the sprite with GAGS
+#define CLOTHING_DIGITIGRADE_MASK (1<<2)
+
+/// All variation flags which render "correctly" on a digitigrade leg setup
+#define DIGITIGRADE_VARIATIONS (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON|CLOTHING_DIGITIGRADE_MASK)
 
 //flags for covering body parts
 #define GLASSESCOVERSEYES (1<<0)
@@ -292,6 +293,8 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 	/obj/item/gun/ballistic/automatic/proto/pksmg,
 	/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic,
 	/obj/item/gun/ballistic/revolver/govmining,
+	/obj/item/gun/energy/laser/explorer,
+	/obj/item/melee/sledgehammer,
 ))
 
 /// String for items placed into the left pocket.
@@ -306,7 +309,11 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 #define LOCATION_GLOVES "on your hands"
 /// String for items placed in the eye/glasses slot.
 #define LOCATION_EYES "covering your eyes"
+/// Items placed in the mask slot.
+#define LOCATION_MASK "covering your face"
 /// String for items placed on the head/hat slot.
 #define LOCATION_HEAD "on your head"
 /// String for items placed in the neck slot.
 #define LOCATION_NECK "around your neck"
+/// String for items placed in the id slot
+#define LOCATION_ID "in your ID slot"

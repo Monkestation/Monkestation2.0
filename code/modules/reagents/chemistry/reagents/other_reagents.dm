@@ -571,7 +571,6 @@
 		affected_mob.adjustOxyLoss(-2 * REM * seconds_per_tick, 0)
 		affected_mob.adjustBruteLoss(-2 * REM * seconds_per_tick, 0)
 		affected_mob.adjustFireLoss(-2 * REM * seconds_per_tick, 0)
-		affected_mob.cause_pain(BODY_ZONES_ALL, -8 * REM * seconds_per_tick) //MONKESTATION ADDITION
 		if(ishuman(affected_mob) && affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
 			affected_mob.blood_volume += 3 * REM * seconds_per_tick
 	else  // Will deal about 90 damage when 50 units are thrown
@@ -971,7 +970,7 @@
 /datum/reagent/serotrotium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(ishuman(affected_mob))
 		if(SPT_PROB(3.5, seconds_per_tick))
-			affected_mob.emote(pick("twitch","drool","moan","gasp"))
+			affected_mob.emote(pick("twitch","drool","sway","gasp"))
 	..()
 
 /datum/reagent/oxygen
@@ -1043,7 +1042,7 @@
 	if(!HAS_TRAIT(src, TRAIT_IMMOBILIZED) && !isspaceturf(affected_mob.loc))
 		step(affected_mob, pick(GLOB.cardinals))
 	if(SPT_PROB(3.5, seconds_per_tick))
-		affected_mob.emote(pick("twitch","drool","moan"))
+		affected_mob.emote(pick("twitch","drool","sway"))
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5*seconds_per_tick)
 	..()
 
@@ -1139,7 +1138,7 @@
 	if(!HAS_TRAIT(affected_mob, TRAIT_IMMOBILIZED) && !isspaceturf(affected_mob.loc) && isturf(affected_mob.loc))
 		step(affected_mob, pick(GLOB.cardinals))
 	if(SPT_PROB(2.5, seconds_per_tick))
-		affected_mob.emote(pick("twitch","drool","moan"))
+		affected_mob.emote(pick("twitch","drool","sway"))
 	..()
 
 /datum/reagent/glycerol
@@ -2431,7 +2430,7 @@
 	// Silently add the zombie infection organ to be activated upon death
 	if(!exposed_mob.get_organ_slot(ORGAN_SLOT_ZOMBIE))
 		var/obj/item/organ/internal/zombie_infection/nodamage/ZI = new()
-		ZI.Insert(exposed_mob)
+		ZI.Follow_Insert(exposed_mob, ORGAN_SLOT_BRAIN)
 
 /datum/reagent/magillitis
 	name = "Magillitis"
@@ -2829,7 +2828,6 @@
 		drinker.adjustOxyLoss(-2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustBruteLoss(-2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustFireLoss(-2 * REM * seconds_per_tick, FALSE)
-		drinker.cause_pain(BODY_ZONES_ALL, -5 * REM * seconds_per_tick) // MONKESTATION ADDITION
 		drinker.fully_heal(HEAL_NEGATIVE_DISEASES)
 		if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
 			drinker.blood_volume += 3 * REM * seconds_per_tick
@@ -2970,10 +2968,20 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/stimulants = 5)
 
-/datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/kronkus_enjoyer)
+/datum/reagent/kronkus_extract/on_mob_metabolize(mob/living/carbon/user)
 	. = ..()
-	kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
-	kronkus_enjoyer.stamina.adjust(2, FALSE)
+
+	user.stamina.regen_rate += 2 * REM
+
+/datum/reagent/kronkus_extract/on_mob_end_metabolize(mob/living/carbon/user)
+	user.stamina.regen_rate -= 2 * REM
+
+	return ..()
+
+/datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/kronkus_enjoyer, seconds_per_tick)
+	. = ..()
+	kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1 * seconds_per_tick)
+	kronkus_enjoyer.stamina.adjust(1, FALSE)
 
 /datum/reagent/brimdust
 	name = "Brimdust"
@@ -3064,3 +3072,19 @@
 		if(SPT_PROB(10, seconds_per_tick))
 			affected_mob.emote(pick("twitch","choke","shiver","gag"))
 		..()
+
+/datum/reagent/scrunchium
+	name = "High-Purity Scrunchium"
+	color = "#72bba7"
+	description = "Scrunches fools who consume it."
+	taste_description = "the intensely painful sensation of your bones and flesh compacting"
+	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	ph = 7
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/scrunchium/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
+	. = ..()
+	if(!HasElement(exposed_mob, /datum/element/squish))
+		exposed_mob.adjustBruteLoss(20)
+		exposed_mob.AddElement(/datum/element/squish, reac_volume * 5 SECONDS)
+		exposed_mob.visible_message(span_warning("[exposed_mob] is violently compacted for no apparent reason!"), span_warning("Your flesh and bone suddenly collapse inwards, scrunching you flat!"))

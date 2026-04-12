@@ -95,7 +95,6 @@ IMPL_UPDATE_SPECIES_COLOR(arm/right)
 
 /obj/item/bodypart/leg/left/werewolf
 	limb_id = SPECIES_WEREWOLF
-	digitigrade_id = SPECIES_WEREWOLF
 	icon_greyscale = 'monkestation/code/modules/the_wolf_inside_of_me/icons/werewolf_parts_greyscale.dmi'
 	should_draw_greyscale = TRUE
 	bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
@@ -110,7 +109,6 @@ IMPL_UPDATE_SPECIES_COLOR(leg/left)
 
 /obj/item/bodypart/leg/right/werewolf
 	limb_id = SPECIES_WEREWOLF
-	digitigrade_id = SPECIES_WEREWOLF
 	icon_greyscale = 'monkestation/code/modules/the_wolf_inside_of_me/icons/werewolf_parts_greyscale.dmi'
 	should_draw_greyscale = TRUE
 	bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE

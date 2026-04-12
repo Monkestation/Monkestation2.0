@@ -50,12 +50,12 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Body Purist", "Hosed"),
 		list("Body Purist", "Neuralinked"),
 		list("Body Purist", "Bright Eyes"),
-		list("Hypoalgesia", "Hyperalgesia", "Analgesia"),
 		list("Kakologophobia", "Easily Offended"),
 		list("Deaf", "Hard Of Hearing"),
 		list("Paraplegic", "Hemiplegic", "Monoplegic"),
 		list("Prosthetic Limb", "Monoplegic"),
-		list("Cyborg Pre-screened dogtag", "Unborgable")
+		list("Cyborg Pre-screened dogtag", "Unborgable"),
+		list("Revival Blacklist", "Uncloneable Neurons"),
 		//MONKESTATION ADDITION END
 	)
 

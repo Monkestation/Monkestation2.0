@@ -216,10 +216,11 @@
 	required_production = list(20, INFINITY)
 
 /datum/hydroponics/plant_mutation/holy_melon
-	mutates_from = list(/obj/item/seeds/watermelon)
+	mutates_from = list(/obj/item/seeds/watermelon/honeydew)
 	created_product = /obj/item/food/grown/holymelon
 	created_seed = /obj/item/seeds/watermelon/holy
-	required_lifespan = list(80, INFINITY)
+	required_potency = list(30, 50)
+	required_endurance = list(60, 80)
 
 /datum/hydroponics/plant_mutation/galaxy_thistle
 	mutates_from = list(/obj/item/seeds/starthistle)

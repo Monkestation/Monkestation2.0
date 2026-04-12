@@ -40,7 +40,6 @@
 	healed_mob.blood_volume = BLOOD_VOLUME_NORMAL
 	healed_mob.set_nutrition(NUTRITION_LEVEL_FULL)
 	healed_mob.bodytemperature = BODYTEMP_NORMAL
-	healed_mob.pain_controller?.remove_all_pain()
 	if(apply_heal(healed_mob))
 		while(do_after(invoker, invocation_time, healed_mob))
 			if(!apply_heal(healed_mob)) //im sure theres a better way to do this but im too tired

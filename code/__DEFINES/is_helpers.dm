@@ -119,6 +119,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isarachnid(A) (is_species(A, /datum/species/arachnid)) //Monkestation Addition
 #define isteratoma(A) (is_species(A, /datum/species/teratoma)) //Monkestation Addition
 #define isapid(A) (is_species(A, /datum/species/apid)) //Monkestation Addition
+#define issimianspecies(A) (is_species(A, /datum/species/monkey/simian))
 
 //More carbon mobs
 #define isalien(A) (istype(A, /mob/living/carbon/alien))
@@ -207,19 +208,23 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 
 #define isbingle(A) (istype(A, /mob/living/basic/bingle))
 
-
-//Misc mobs
-#define isobserver(A) (istype(A, /mob/dead/observer))
-
-#define isdead(A) (istype(A, /mob/dead))
-
-#define isnewplayer(A) (istype(A, /mob/dead/new_player))
+//Eye mobs
+#define iseyemob(A) (istype(A, /mob/eye))
 
 #define isovermind(A) (istype(A, /mob/eye/blob))
 
-#define iseyemob(A) (istype(A, /mob/eye))
+#define iscameramob(A) (istype(A, /mob/eye/camera))
 
-#define isaicamera(A) (istype(A, /mob/eye/ai_eye))
+#define isaicamera(A) (istype(A, /mob/eye/camera/ai))
+
+#define isremotecamera(A) (istype(A, /mob/eye/camera/remote))
+
+//Dead mobs
+#define isdead(A) (istype(A, /mob/dead))
+
+#define isobserver(A) (istype(A, /mob/dead/observer))
+
+#define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
 //Objects
 #define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs

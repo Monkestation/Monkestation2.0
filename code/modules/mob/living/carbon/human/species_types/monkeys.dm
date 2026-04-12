@@ -46,6 +46,7 @@
 
 	//Default eyes have the side portrait icons on the wrong side, this fixes that.
 	eyes_icon = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
+	species_race_mutation = /datum/mutation/race
 	///Whether or not this monkey gets the innate effects of running over tables and the gene activated, used to exclude subtypes from getting it.
 	///The reason we block the gene's activation is so you can't "deconvert" from being a monkey subtype.
 	var/give_monkey_species_effects = TRUE
@@ -58,14 +59,14 @@
 	. = ..()
 	if(give_monkey_species_effects)
 		passtable_on(human_who_gained_species, SPECIES_TRAIT)
-		human_who_gained_species.dna.add_mutation(/datum/mutation/race, MUTATION_SOURCE_ACTIVATED)
+	human_who_gained_species.dna.add_mutation(species_race_mutation, MUTATION_SOURCE_ACTIVATED)
 	human_who_gained_species.update_mob_height()
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/human/C)
 	. = ..()
 	if(give_monkey_species_effects)
 		passtable_off(C, SPECIES_TRAIT)
-		C.dna.remove_mutation(/datum/mutation/race, MUTATION_SOURCE_ACTIVATED)
+	C.dna.remove_mutation(species_race_mutation, MUTATION_SOURCE_ACTIVATED)
 	C.update_mob_height()
 
 /datum/species/monkey/update_species_heights(mob/living/carbon/human/holder)

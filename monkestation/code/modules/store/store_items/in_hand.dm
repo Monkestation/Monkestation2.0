@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(store_inhand_items, generate_store_items(/datum/store_item/inha
 
 /datum/store_item/inhand/briefcase_secure
 	name = "Secure Briefcase"
-	item_path = /obj/item/storage/secure/briefcase
+	item_path = /obj/item/storage/briefcase/secure
 	item_cost = 4000
 
 /datum/store_item/inhand/skub
@@ -69,3 +69,13 @@ GLOBAL_LIST_INIT(store_inhand_items, generate_store_items(/datum/store_item/inha
 	name = "Perfume Scented Satchel"
 	item_path = /obj/item/storage/backpack/satchel/flowery
 	item_cost = 5000
+
+/datum/store_item/inhand/deforest_satchel
+	name = "Deforest Satchel"
+	item_path = /obj/item/storage/backpack/satchel/med/deforest
+	item_cost = 2500
+
+/datum/store_item/inhand/deforest_backpack
+	name = "Deforest Backpack"
+	item_path = /obj/item/storage/backpack/medic/deforest
+	item_cost = 2500

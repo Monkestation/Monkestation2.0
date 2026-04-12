@@ -3,14 +3,14 @@
 
 /datum/unit_test/linked_xenobio_pens/Run()
 	var/list/obj/machinery/plumbing/ooze_sucker/used_map_ids = list()
-	for(var/obj/machinery/slime_pen_controller/pen as anything in GLOB.slime_pen_controllers)
+	for(var/obj/machinery/slime_pen_controller/pen as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/slime_pen_controller))
 		if(!pen.mapping_id)
 			TEST_FAIL("Found a slime pen management console without a mapping ID at [AREACOORD(pen)]!")
 		else if(used_map_ids[pen.mapping_id])
 			TEST_FAIL("Found a slime pen management console with duplicate mapping_id [pen.mapping_id] at [AREACOORD(pen)], which is already used by the console at [AREACOORD(used_map_ids[pen.mapping_id])]!")
 		else
 			used_map_ids[pen.mapping_id] = pen
-	for(var/obj/machinery/plumbing/ooze_sucker/sucker as anything in GLOB.ooze_suckers)
+	for(var/obj/machinery/plumbing/ooze_sucker/sucker as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/plumbing/ooze_sucker))
 		if(!sucker.mapping_id)
 			TEST_FAIL("Found an ooze sucker without a mapping ID at [AREACOORD(sucker)]!")
 		else if(!used_map_ids[sucker.mapping_id])

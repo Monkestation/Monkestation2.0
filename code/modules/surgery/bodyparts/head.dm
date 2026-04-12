@@ -99,8 +99,8 @@
 		/// Draw this head as missing eyes
 		show_eyeless = FALSE
 
-		/// Can this head be dismembered normally?
-		can_dismember = FALSE
+		/// Can this head be dismembered when not hardcrit/dead?
+		can_always_dismember = FALSE
 
 /obj/item/bodypart/head/Destroy()
 	QDEL_NULL(brainmob) //order is sensitive, see warning in handle_atom_del() below
@@ -141,7 +141,7 @@
 			. += span_info("The brain has been removed from [src].")
 		else if(brain.suicided || (brainmob && HAS_TRAIT(brainmob, TRAIT_SUICIDED)))
 			. += span_info("There's a miserable expression on [real_name]'s face; they must have really hated life. There's no hope of recovery.")
-		else if(brainmob?.health <= HEALTH_THRESHOLD_DEAD)
+		else if(brainmob?.health <= brainmob?.dead_threshold)
 			. += span_info("It's leaking some kind of... clear fluid? The brain inside must be in pretty bad shape.")
 		else if(brainmob)
 			if(brainmob.key || brainmob.get_ghost(FALSE, TRUE))
@@ -163,7 +163,7 @@
 			. += span_info("[real_name]'s tongue has been removed.")
 
 /obj/item/bodypart/head/can_dismember(obj/item/item)
-	if(!can_dismember || owner.stat < HARD_CRIT)
+	if(!can_always_dismember && !HAS_TRAIT(owner, TRAIT_DEATHCOMA) && (owner.body_position == STANDING_UP || owner.health >= (owner.maxHealth * 0.5)))
 		return FALSE
 	return ..()
 

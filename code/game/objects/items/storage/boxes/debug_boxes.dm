@@ -8,7 +8,7 @@
 
 /obj/item/storage/box/material/PopulateContents() //less uranium because radioactive
 	// amount should be null if it should spawn with the type's default amount
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/stack/sheet/iron/fifty = null,
 		/obj/item/stack/sheet/glass/fifty = null,
 		/obj/item/stack/sheet/rglass = 50,
@@ -47,7 +47,7 @@
 	icon_state = "syndiebox"
 
 /obj/item/storage/box/debugbox/tools/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/card/emag=1,
 		/obj/item/construction/rcd/combat/admin=1,
 		/obj/item/disk/tech_disk/debug=1,
@@ -65,7 +65,7 @@
 		/obj/item/uplink/nuclear/debug=1,
 		/obj/item/clothing/ears/earmuffs/debug = 1,
 		)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 //---- Box of gun boxes
 /obj/item/storage/box/debugbox/guns

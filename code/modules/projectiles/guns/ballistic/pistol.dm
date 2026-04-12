@@ -244,6 +244,14 @@
 /obj/item/gun/ballistic/automatic/pistol/trappiste/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_TRAPPISTE)
 
+/obj/item/gun/ballistic/automatic/pistol/trappiste/damaged
+	desc = "A somewhat rare to see Trappiste pistol firing the high caliber .585 developed by the same company. \
+	Sees rare use mainly due to its tendency to cause severe wrist discomfort. This ones turning mechanism is rusted"
+	fire_delay = 1.7 SECONDS
+
+/obj/item/gun/ballistic/automatic/pistol/trappiste/damaged/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_REMOVED)
+
 /obj/item/gun/ballistic/automatic/pistol/sol/examine(mob/user)
 	. = ..()
 	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
@@ -379,7 +387,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	accepted_magazine_type = /obj/item/ammo_box/magazine/whispering_jester_45_magazine
-	can_bayonet = FALSE
 	can_suppress = FALSE
 	can_unsuppress = FALSE
 	suppressed = TRUE
@@ -405,7 +412,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	accepted_magazine_type = /obj/item/ammo_box/magazine/whispering_jester_45_magazine/big_lmao
-	can_bayonet = FALSE
 	can_suppress = FALSE
 	can_unsuppress = TRUE
 	suppressed = FALSE

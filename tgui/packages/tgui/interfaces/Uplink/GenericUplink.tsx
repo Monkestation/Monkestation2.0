@@ -1,10 +1,11 @@
-import { BooleanLike } from 'common/react';
-import { InfernoNode } from 'inferno';
+import type { BooleanLike } from 'common/react';
+import type { ReactNode } from 'react';
 
 import { useBackend, useLocalState, useSharedState } from '../../backend';
 import {
   Box,
   Button,
+  Divider,
   DmIcon,
   Icon,
   Input,
@@ -16,7 +17,7 @@ import {
 } from '../../components';
 
 type GenericUplinkProps = {
-  currency?: string | InfernoNode;
+  currency?: string | ReactNode;
   categories: string[];
   items: Item[];
   handleBuy: (item: Item) => void;
@@ -39,7 +40,7 @@ export const GenericUplink = (props: GenericUplinkProps) => {
     'compactModeUplink',
     false,
   );
-  let items = props.items.filter((value) => {
+  const items = props.items.filter((value) => {
     if (searchText.length === 0) {
       return value.category === selectedCategory;
     }
@@ -59,9 +60,9 @@ export const GenericUplink = (props: GenericUplinkProps) => {
                   lineHeight={2}
                   style={{
                     overflow: 'hidden',
-                    'white-space': 'nowrap',
-                    'text-overflow': 'ellipsis',
-                    'text-align': 'center',
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis',
+                    textAlign: 'center',
                   }}
                   onClick={() => act('buy_raw_tc')}
                 >
@@ -85,7 +86,7 @@ export const GenericUplink = (props: GenericUplinkProps) => {
               autoFocus
               value={searchText}
               placeholder="Search..."
-              onInput={(e, value) => setSearchText(value)}
+              onChange={(value) => setSearchText(value)}
               fluid
             />
           </Stack.Item>
@@ -137,8 +138,8 @@ export type Item = {
   icon: string;
   icon_state: string;
   category: string;
-  cost: InfernoNode | string;
-  desc: InfernoNode | string;
+  cost: ReactNode | string;
+  desc: ReactNode | string;
   disabled: BooleanLike;
   is_locked: BooleanLike;
 };
@@ -160,7 +161,7 @@ const ItemList = (props: ItemListProps) => {
       <Stack vertical mt={compactMode ? -0.5 : -1}>
         {items.map((item, index) => (
           <Stack.Item key={index} mt={compactMode ? 0.5 : 1}>
-            <Section key={item.name} fitted={compactMode ? true : false}>
+            <Section key={item.name} fitted={!!compactMode}>
               <Stack>
                 <Stack.Item>
                   <Box
@@ -190,8 +191,8 @@ const ItemList = (props: ItemListProps) => {
                         lineHeight="36px"
                         style={{
                           overflow: 'hidden',
-                          'white-space': 'nowrap',
-                          'text-overflow': 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          textOverflow: 'ellipsis',
                         }}
                       >
                         {item.name}
@@ -235,6 +236,7 @@ const ItemList = (props: ItemListProps) => {
                 </Stack.Item>
               </Stack>
             </Section>
+            <Divider />
           </Stack.Item>
         ))}
       </Stack>

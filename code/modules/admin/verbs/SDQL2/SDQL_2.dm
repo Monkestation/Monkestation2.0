@@ -203,9 +203,9 @@ ADMIN_VERB(sdql2_query, R_ADVANCEDCALL, FALSE, "SDQL2 Query", "Run a SDQL2 query
 	if(length(results) == 3)
 		for(var/I in 1 to 3)
 			to_chat(user, results[I], confidential = TRUE)
-	SSblackbox.record_feedback("nested tally", "SDQL query", 1, list(user.ckey, query_text))
 
 /world/proc/SDQL2_query(query_text, log_entry1, log_entry2, silent = FALSE)
+	SSblackbox.record_feedback("nested tally", "SDQL query", 1, list((usr ? usr.ckey : "No user"), query_text))
 	var/query_log = "executed SDQL query(s): \"[query_text]\"."
 	if(!silent)
 		message_admins("[log_entry1] [query_log]")
@@ -780,7 +780,11 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 			if(v == "#null")
 				SDQL_expression(d, set_list[sets])
 				break
+
 			i++
+			if(!temp.can_vv_get(v))
+				continue
+
 			if(i == sets.len)
 				if(superuser)
 					if(temp.vars.Find(v))
@@ -794,6 +798,8 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 				break
 
 /datum/sdql2_query/proc/SDQL_function_blocking(datum/object, procname, list/arguments, source)
+	if(!object.CanProcCall(procname))
+		return
 	var/list/new_args = list()
 	for(var/arg in arguments)
 		new_args[++new_args.len] = SDQL_expression(source, arg)

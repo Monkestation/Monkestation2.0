@@ -67,6 +67,7 @@
 		clone_human.equipOutfit(original_human.mind.assigned_role.outfit)
 	else
 		clone_human.equipOutfit(original_human.mind.assigned_role.plasmaman_outfit)
+		clone_human.equipOutfit(original_human.mind.assigned_role.outfit)
 		clone_human.internal = clone_human.get_item_for_held_index(2)
 
 	//clone doesnt show up on message lists
@@ -81,6 +82,13 @@
 	if(sensor_clothes)
 		sensor_clothes.sensor_mode = SENSOR_OFF
 		clone_human.update_suit_sensors()
+
+	SSquirks.AssignQuirks(clone_human, original_human.client)
+
+	var/datum/atom_voice/voice = new()
+	voice.copy_from(original_human.get_voice())
+
+	clone_human.get_voice().copy_from(voice)
 
 	// Perform a quick copy of existing memories.
 	// This may result in some minutely imperfect memories, but it'll do
@@ -117,11 +125,8 @@
 		new /obj/effect/holy(hosts_mind.current.loc)
 		QDEL_IN(hosts_mind.current, 20)
 
-	var/list/possible_spawns = list()
-	for(var/turf/warp_point in GLOB.generic_maintenance_landmarks)
-		if(istype(warp_point.loc, /area/station/maintenance) && is_safe_turf(warp_point))
-			possible_spawns += warp_point
-	if(!possible_spawns.len)
+	var/turf/warp_turf = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
+	if(!warp_turf)
 		message_admins("No valid spawn locations found for Paradox Clone token, aborting...")
 		return MAP_ERROR
 
@@ -130,8 +135,9 @@
 	player_mind.active = TRUE
 
 	var/mob/living/carbon/human/clone_victim = find_original()
-	var/mob/living/carbon/human/clone = duplicate_object(clone_victim, pick(possible_spawns))
-
+	var/mob/living/carbon/human/clone = duplicate_object(clone_victim, warp_turf)
+	if(clone.loc != warp_turf)
+		clone.forceMove(warp_turf)
 	player_mind.transfer_to(clone)
 	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/paradox_clone))
 

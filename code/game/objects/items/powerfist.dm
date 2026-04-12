@@ -1,7 +1,7 @@
 ///Defines for the pressure strength of the fist
 #define LOW_PRESSURE 1
-#define MID_PRESSURE 2
-#define HIGH_PRESSURE 3
+#define MID_PRESSURE 1.5
+#define HIGH_PRESSURE 2
 ///Defines for the tank change action
 #define TANK_INSERTING 0
 #define TANK_REMOVING 1
@@ -71,16 +71,16 @@
 	update_tank(tank, TANK_REMOVING, user)
 	return TRUE
 
-/obj/item/melee/powerfist/attackby(obj/item/item_to_insert, mob/user, params)
+/obj/item/melee/powerfist/item_interaction(mob/living/user, obj/item/item_to_insert, list/modifiers)
 	if(!istype(item_to_insert, /obj/item/tank/internals))
 		return ..()
 	if(tank)
 		to_chat(user, span_notice("A tank is already present, remove it with a screwdriver first."))
-		return
+		return NONE
 	var/obj/item/tank/internals/tank_to_insert = item_to_insert
 	if(tank_to_insert.volume <= 3)
 		to_chat(user, span_warning("\The [tank_to_insert] is too small for \the [src]."))
-		return
+		return NONE
 	update_tank(item_to_insert, TANK_INSERTING, user)
 
 /obj/item/melee/powerfist/proc/update_tank(obj/item/tank/internals/the_tank, removing = TANK_INSERTING, mob/living/carbon/human/user)
@@ -141,7 +141,7 @@
 	if(!QDELETED(target))
 		var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 
-		target.throw_at(throw_target, 5 * fist_pressure_setting, 0.5 + (fist_pressure_setting / 2))
+		target.throw_at(throw_target, 2 + fist_pressure_setting)
 
 	log_combat(user, target, "power fisted", src)
 

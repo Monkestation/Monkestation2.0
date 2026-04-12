@@ -20,7 +20,7 @@
 	move_resist = MOVE_FORCE_NORMAL
 	integrity_failure = 0.2
 	var/crash_dmg_min = 30
-	var/crash_dmg_stm = 70
+	var/crash_dmg_stm = 35
 	var/crash_para_driv = 0.7
 	var/crash_para_pass = 0.5
 	var/crash_para_roadkill = 0.5

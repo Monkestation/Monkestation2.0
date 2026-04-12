@@ -16,7 +16,7 @@
 
 	var/obj/projectile/hallucination/fake_projectile = new fake_type(start, src)
 
-	fake_projectile.preparePixelProjectile(hallucinator, start)
+	fake_projectile.aim_projectile(hallucinator, start)
 	fake_projectile.fire()
 
 	QDEL_IN(src, 10 SECONDS) // Should clean up the projectile if it somehow gets stuck.
@@ -32,7 +32,6 @@
 	ricochets_max = 0
 	ricochet_chance = 0
 	damage = 0
-	projectile_type = /obj/projectile/hallucination
 	log_override = TRUE
 	/// Our parent hallucination that's created us
 	var/datum/hallucination/parent
@@ -196,7 +195,7 @@
 	hit_duration_wall = 5
 
 /obj/projectile/hallucination/bullet/apply_effect_to_hallucinator(mob/living/afflicted)
-	afflicted.stamina.adjust(-60)
+	afflicted.stamina.adjust(-30)
 
 /obj/projectile/hallucination/laser
 	name = "laser"
@@ -213,10 +212,10 @@
 
 	ricochets_max = 50
 	ricochet_chance = 80
-	reflectable = REFLECT_NORMAL // No idea if this works
+	reflectable = TRUE
 
 /obj/projectile/hallucination/laser/apply_effect_to_hallucinator(mob/living/afflicted)
-	afflicted.stamina.adjust(-20)
+	afflicted.stamina.adjust(-10)
 	afflicted.adjust_eye_blur(4 SECONDS)
 
 /obj/projectile/hallucination/taser
@@ -259,10 +258,10 @@
 
 	ricochets_max = 50
 	ricochet_chance = 80
-	reflectable = REFLECT_NORMAL // No idea if this works
+	reflectable = TRUE
 
 /obj/projectile/hallucination/disabler/apply_effect_to_hallucinator(mob/living/afflicted)
-	afflicted.stamina.adjust(-30)
+	afflicted.stamina.adjust(-15)
 
 /obj/projectile/hallucination/ebow
 	name = "bolt"
@@ -277,7 +276,7 @@
 /obj/projectile/hallucination/ebow/apply_effect_to_hallucinator(mob/living/afflicted)
 	afflicted.adjust_slurring(10 SECONDS)
 	afflicted.Knockdown(1 SECONDS)
-	afflicted.stamina.adjust(-75) // 60 stam + 15 tox
+	afflicted.stamina.adjust(-40) // 60 stam + 15 tox
 	afflicted.adjust_eye_blur(20 SECONDS)
 
 /obj/projectile/hallucination/change

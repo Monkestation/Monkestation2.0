@@ -36,21 +36,24 @@ export const SpawnersMenu = (props) => {
                     </Stack.Item>
                     <Stack.Item>
                       <Button
-                        content="Jump"
                         onClick={() =>
                           act('jump', {
                             name: spawner.name,
                           })
                         }
-                      />
+                        ml="0.2em"
+                      >
+                        Jump
+                      </Button>
                       <Button
-                        content="Spawn"
                         onClick={() =>
                           act('spawn', {
                             name: spawner.name,
                           })
                         }
-                      />
+                      >
+                        Spawn
+                      </Button>
                     </Stack.Item>
                   </Stack>
                 }

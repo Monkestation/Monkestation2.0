@@ -313,6 +313,7 @@
 		a flurry of blades, neither hitting their mark, for the Champion was indomitable."
 	next_knowledge = list(/datum/heretic_knowledge/spell/furious_steel)
 	route = PATH_BLADE
+	required_path = PATH_BLADE
 	/// How much force do we apply to the offhand?
 	var/offand_force_decrement = 0
 	/// How much force was the last weapon we offhanded with? If it's different, we need to re-calculate the decrement
@@ -437,8 +438,3 @@
 	if(target.stat != DEAD)
 		// And! Get some free healing for a portion of the bonus damage dealt.
 		source.heal_overall_damage(bonus_damage / 2, bonus_damage / 2)
-		// monkestation start: heal pain on lifesteal too
-		source.cause_pain(BODY_ZONES_ALL, -(bonus_damage / 2), BRUTE)
-		source.cause_pain(BODY_ZONES_ALL, -(bonus_damage / 2), BURN)
-		source.adjust_pain_shock(-bonus_damage)
-		// monkestation end

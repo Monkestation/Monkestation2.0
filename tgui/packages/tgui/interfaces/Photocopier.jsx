@@ -101,7 +101,8 @@ const Options = (props) => {
             minValue={1}
             maxValue={10}
             value={num_copies}
-            onDrag={(e, value) =>
+            tickWhileDragging
+            onChange={(value) =>
               act('set_copies', {
                 num_copies: value,
               })
@@ -172,7 +173,7 @@ const Blanks = (props) => {
   const sortedBlanks = sortBy((blank) => blanks.category)(blanks || []);
 
   const categories = [];
-  for (let blank of sortedBlanks) {
+  for (const blank of sortedBlanks) {
     if (!categories.includes(blank.category)) {
       categories.push(blank.category);
     }

@@ -154,3 +154,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 			organ.transform = organ.transform.Scale(7,1)
 			organ.name = "wide " + organ.name
 	return ..()
+
+/mob/living/carbon/human/species/monkey/simian
+	race = /datum/species/monkey/simian
+	ai_controller = null

@@ -116,6 +116,11 @@
 	if (length(status_examines))
 		. += status_examines
 
+	//Nosferatu examine
+	var/datum/antagonist/bloodsucker/bloodsucker_datum = mind?.has_antag_datum(/datum/antagonist/bloodsucker)
+	if (bloodsucker_datum?.my_clan?.name == CLAN_NOSFERATU)
+		. += span_warning("[t_He] appear[p_s()] slouched over and grotesque - a twisted abomination, like some shameless creature of the night...")
+
 	var/appears_dead = FALSE
 	var/just_sleeping = FALSE
 
@@ -148,7 +153,8 @@
 			disabled += body_part
 		missing -= body_part.body_zone
 		for(var/obj/item/I in body_part.embedded_objects)
-			if(I.isEmbedHarmless())
+			var/harmless = I.get_embed().is_harmless()
+			if(harmless)
 				msg += "<B>[t_He] [t_has] [icon2html(I, user)] \a [I] stuck to [t_his] [body_part.name]!</B>\n"
 			else
 				msg += "<B>[t_He] [t_has] [icon2html(I, user)] \a [I] embedded in [t_his] [body_part.name]!</B>\n"
@@ -316,7 +322,7 @@
 		if(appears_dead)
 			bleed_text += ", but it has pooled and is not flowing.</span></B>\n"
 		else
-			if(reagents.has_reagent(/datum/reagent/toxin/heparin, needs_metabolizing = TRUE))
+			if(reagents?.has_reagent(/datum/reagent/toxin/heparin, needs_metabolizing = TRUE))
 				bleed_text += " incredibly quickly"
 
 			bleed_text += "!</B>\n"
@@ -327,7 +333,7 @@
 
 		msg += bleed_text.Join()
 
-	if(reagents.has_reagent(/datum/reagent/teslium, needs_metabolizing = TRUE))
+	if(reagents?.has_reagent(/datum/reagent/teslium, needs_metabolizing = TRUE))
 		msg += "[t_He] [t_is] emitting a gentle blue glow!\n"
 
 	if((!wear_suit && !w_uniform) && mind?.has_antag_datum(/datum/antagonist/thrall_darkspawn))
@@ -481,7 +487,10 @@
 					"<a href='byond://?src=[REF(src)];hud=s;add_citation=1;examine_time=[world.time]'>\[Add citation\]</a>",
 					"<a href='byond://?src=[REF(src)];hud=s;add_crime=1;examine_time=[world.time]'>\[Add crime\]</a>",
 					"<a href='byond://?src=[REF(src)];hud=s;add_note=1;examine_time=[world.time]'>\[Add note\]</a>"), "")
-	else if(isobserver(user))
+
+	if(HAS_TRAIT(user, TRAIT_EMPATH) && src.is_face_visible())
+		. += span_info("<b>Traits:</b> [get_quirk_string(FALSE, CAT_QUIRK_ALL)]")
+	else if (isobserver(user))
 		. += span_info("<b>Traits:</b> [get_quirk_string(FALSE, CAT_QUIRK_ALL)]")
 	. += "</span>"
 

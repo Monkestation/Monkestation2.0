@@ -31,10 +31,6 @@
 	calculate_advance_time()
 	message_admins("Storm started.")
 	send_to_playing_players(span_userdanger("The storm has been created! It will consume the station from the outside in, so plan around it!"))
-	var/datum/particle_weather/royale_storm/outside_storm = new
-	outside_storm.weather_duration_lower = royale_controller?.max_duration * 2
-	outside_storm.weather_duration_upper = royale_controller?.max_duration * 2
-	SSparticle_weather.run_weather(outside_storm, TRUE)
 	if(start_consuming_delay)
 		addtimer(CALLBACK(src, PROC_REF(consume_ring)), start_consuming_delay)
 	else
@@ -97,56 +93,6 @@
 		var/obj/effect/royale_storm_effect/storm = storms[storm_turf]
 		storms -= storm_turf
 		qdel(storm)
-
-	SSparticle_weather.stop_weather()
-
-/datum/weather/royale_storm
-	name = "royale storm"
-	desc = "A sick creation of the most ADHD ridden centcom scientists, used to force stationgoers to fight with the threat of being shredded by an artificial storm for entertainment."
-
-	telegraph_duration = 1 SECONDS
-	weather_overlay = "royale"
-	perpetual = TRUE
-
-	telegraph_message = null
-	weather_message = null
-	end_message = null
-
-	target_trait = ZTRAIT_STATION
-
-	immunity_type = "NOTHING KID"
-
-/datum/weather/royale_storm/weather_act(mob/living/living_affected)
-	living_affected.adjustFireLoss(5)
-	to_chat(living_affected, span_userdanger("You're badly burned by the storm!"))
-
-//for outside
-/datum/particle_weather/royale_storm
-	name = "Battle Royale Storm"
-	display_name = "Battle Royale Storm"
-	desc = "A sick creation of the most ADHD ridden centcom scientists, used to force stationgoers to fight with the threat of being shredded by an artificial storm for entertainment."
-	particle_effect_type = /particles/weather/rain/storm/royale
-
-	scale_vol_with_severity = TRUE
-	weather_sounds = list(/datum/looping_sound/rain)
-	weather_messages = list(span_userdanger("You're badly burned by the storm!"))
-
-	damage_type = BURN
-	damage_per_tick = 1
-	min_severity = 4
-	max_severity = 150
-	max_severity_change = 50
-	severity_steps = 50
-	probability = 1
-
-	weather_additional_events = list("thunder" = list(6, /datum/weather_event/thunder), "wind" = list(8, /datum/weather_event/wind))
-	weather_warnings = list("siren" = null, "message" = FALSE)
-	fire_smothering_strength = 6
-	weather_traits = WEATHERTRAIT_NO_IMMUNITIES
-
-/particles/weather/rain/storm/royale
-	gradient = list(0,"#4d00ff",1,"#8550ff",2,"#3900bd","loop")
-	color_change = generator("num",-5,5)
 
 //actual logic is handled on the antag datum, this does mean that mobs without the datum wont die, however if any players lack the datum it will break things anyway
 /obj/effect/royale_storm_effect

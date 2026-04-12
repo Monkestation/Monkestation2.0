@@ -381,8 +381,8 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 
 /obj/item/plate/oven_tray/material/fake_tin
 
-#define LARGE_MORTAR_STAMINA_MINIMUM 50 //What is the amount of stam damage that we prevent mortar use at
-#define LARGE_MORTAR_STAMINA_USE 70 //How much stam damage is given to people when the mortar is used
+#define LARGE_MORTAR_STAMINA_MINIMUM 25 //What is the amount of stam damage that we prevent mortar use at
+#define LARGE_MORTAR_STAMINA_USE 35 //How much stam damage is given to people when the mortar is used
 
 /obj/structure/large_mortar
 	name = "large mortar"
@@ -498,7 +498,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 
 		var/stamina_use = LARGE_MORTAR_STAMINA_USE
 		if(prob(user.mind.get_skill_modifier(/datum/skill/primitive, SKILL_PROBS_MODIFIER)))
-			stamina_use *= 0.5 //so it uses half the amount of stamina (35 instead of 70)
+			stamina_use *= 0.5 //so it uses half the amount of stamina
 
 		user.stamina.adjust(-stamina_use) //This is a bit more tiring than a normal sized mortar and pestle
 		user.mind.adjust_experience(/datum/skill/primitive, 5)
@@ -561,8 +561,8 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 #undef LARGE_MORTAR_STAMINA_MINIMUM
 #undef LARGE_MORTAR_STAMINA_USE
 
-#define MILLSTONE_STAMINA_MINIMUM 50 //What is the amount of stam damage that we prevent mill use at
-#define MILLSTONE_STAMINA_USE 100 //How much stam damage is given to people when the mill is used
+#define MILLSTONE_STAMINA_MINIMUM 25 //What is the amount of stam damage that we prevent mill use at
+#define MILLSTONE_STAMINA_USE 50 //How much stam damage is given to people when the mill is used
 
 /obj/structure/millstone
 	name = "millstone"

@@ -153,7 +153,7 @@ export const DiseaseIncubator = (props) => {
                       </NoticeBox>
                     )
                   ) : (
-                    <NoticeBox warning>
+                    <NoticeBox>
                       Dish does not contain a viable disease!
                     </NoticeBox>
                   )
