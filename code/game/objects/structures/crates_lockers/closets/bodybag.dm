@@ -17,7 +17,7 @@
 	can_weld_shut = FALSE
 	can_install_electronics = FALSE
 	drag_slowdown = 0
-	drag_slowdown = 0.25
+	drag_slowdown = 0.5
 	has_closed_overlay = FALSE
 	can_install_electronics = FALSE
 	paint_jobs = null
@@ -82,11 +82,11 @@
 /obj/structure/closet/body_bag/after_close(mob/living/user)
 	. = ..()
 	set_density(FALSE)
-	drag_slowdown = 0.25
+	drag_slowdown = 0.5
 	for(var/mob/living/mob_inside in contents)
-		drag_slowdown += 0.25
+		drag_slowdown += 0.5
 
-/obj/structure/closet/body_bag/before_open(mob/living/user, force)
+/obj/structure/closet/body_bag/before_close(mob/living/user, force)
 	if(!do_after(user, 3 SECONDS))
 		return FALSE
 	else
@@ -94,7 +94,7 @@
 
 /obj/structure/closet/body_bag/after_open(mob/living/user)
 	. = ..()
-	drag_slowdown = 0.25
+	drag_slowdown = 0.5
 
 /obj/structure/closet/body_bag/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
