@@ -85,9 +85,21 @@
 
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
-		for(var/obj/item/bodypart/robotic_limb as anything in carbon_target.get_bodyparts())
-			if(IS_ROBOTIC_LIMB(robotic_limb))
-				robotic_limb.receive_damage(500)
+		var/list/possible_limbs
+		if(isipc(target) && !HAS_TRAIT(target, TRAIT_NODISMEMBER)) // hugbox for ipcs (androids do not get the same mercy)
+			for(var/obj/item/bodypart/robotic_limb as anything in carbon_target.get_bodyparts())
+				if(!IS_ROBOTIC_LIMB(robotic_limb) || (robotic_limb.bodypart_flags & BODYPART_UNREMOVABLE))
+					continue
+				if(istype(robotic_limb, /obj/item/bodypart/chest))
+					continue
+				LAZYADD(possible_limbs, robotic_limb)
+		if(LAZYLEN(possible_limbs))
+			var/obj/item/bodypart/kablooey = pick(possible_limbs)
+			kablooey.dismember(silent = FALSE)
+		else // womp womp
+			for(var/obj/item/bodypart/robotic_limb as anything in carbon_target.get_bodyparts())
+				if(IS_ROBOTIC_LIMB(robotic_limb))
+					robotic_limb.receive_damage(500)
 
 	if(!issilicon(target) && !(target.mob_biotypes & MOB_ROBOTIC))
 		return
