@@ -84,7 +84,7 @@
 	set_density(FALSE)
 	drag_slowdown = 0.5
 	for(var/mob/living/mob_inside in contents)
-		drag_slowdown += 0.5
+		drag_slowdown += 0.25
 
 /obj/structure/closet/body_bag/before_close(mob/living/user, force)
 	if(!do_after(user, 3 SECONDS))
