@@ -380,9 +380,11 @@
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/cosmic/proc/toggle_gravity(mob/living/user)
 	if(!weightless_enabled)
 		user.add_traits(list(TRAIT_NEGATES_GRAVITY, TRAIT_MOVE_FLYING, TRAIT_FREE_HYPERSPACE_MOVEMENT), REF(src))
+		passtable_on(user, REF(src))
 		user.balloon_alert(user, "enabled")
 	else
 		user.remove_traits(list(TRAIT_NEGATES_GRAVITY, TRAIT_MOVE_FLYING, TRAIT_FREE_HYPERSPACE_MOVEMENT), REF(src))
+		passtable_off(user, REF(src))
 		user.balloon_alert(user, "disabled")
 	weightless_enabled = !weightless_enabled
 
