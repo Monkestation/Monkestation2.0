@@ -241,3 +241,8 @@
   - balance: You now get 3 sandbags from filling empty sandbags up
   SirNightKnight:
   - rscadd: buttbots can parrot any speaker.
+2026-04-12:
+  Absolucy:
+  - qol: Science bags can now hold slime potions.
+  - qol: Science biosuits can now hold anything in suit storage that science winter
+      coats can.
