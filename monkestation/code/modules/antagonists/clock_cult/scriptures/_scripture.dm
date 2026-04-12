@@ -33,7 +33,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	/// Are we only visible/usable if a unique condition is met
 	var/unique_locked = FALSE //if needed it might be worth turning these into descriptor strings
 	/// Ref to the mob invoking this
-	var/mob/living/invoker
+	var/mob/living/invoker //need to make this ref clear on del
 	/// Ref to the slab invoking this
 	var/obj/item/clockwork/clockwork_slab/invoking_slab
 	/// Timer object for the distance between invoking chants
@@ -285,8 +285,6 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	var/uses = 1
 	/// Text displayed after use
 	var/after_use_text = ""
-	/// Internal spell for pointed/aimed spells
-	var/datum/action/cooldown/spell/pointed/slab/pointed_spell
 	/// How many times this can be used this particular invocation, can go down
 	var/uses_left = 0
 	/// How much time left to use this
@@ -294,19 +292,9 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	/// ID of the loop timer
 	var/loop_timer_id
 
-/datum/scripture/slab/New()
-	. = ..()
-	pointed_spell = new
-	pointed_spell.name = src.name
-	pointed_spell.deactive_msg = ""
-	pointed_spell.parent_scripture = src
-
 /datum/scripture/slab/Destroy()
 	if(!QDELETED(progress))
 		progress.end_progress()
-
-	if(!QDELETED(pointed_spell))
-		QDEL_NULL(pointed_spell)
 
 	return ..()
 
@@ -319,7 +307,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	invoking_slab.charge_overlay = slab_overlay
 	invoking_slab.update_overlays()
 	invoking_slab.active_scripture = src
-	pointed_spell.set_click_ability(invoker)
+	invoker.click_intercept = src
 	SSthe_ark.clock_power -= power_cost
 	GLOB.clock_vitality -= vitality_cost
 	invoke_success()
@@ -368,29 +356,22 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 	if(!silent)
 		to_chat(invoker, span_brass("You are no longer invoking <b>[name]</b>."))
-	progress.end_progress()
+	progress?.end_progress()
 
-	pointed_spell.unset_click_ability(invoker)
+	if(invoker?.click_intercept == src)
+		invoker.click_intercept = null
 	invoking_slab.charge_overlay = null
 	invoking_slab.update_icon()
 	invoking_slab.active_scripture = null
 
 	end_invoke()
 
+/datum/scripture/slab/proc/InterceptClickOn(mob/living/user, params, atom/target)
+	click_on(target)
+
 /// Apply the effects of a scripture to an atom
 /datum/scripture/slab/proc/apply_effects(atom/applied_atom)
 	return TRUE
-
-/datum/action/cooldown/spell/pointed/slab
-	/// The scripture datum that this spell is referring to
-	var/datum/scripture/slab/parent_scripture
-
-/datum/action/cooldown/spell/pointed/slab/Destroy()
-	parent_scripture = null
-	return ..()
-
-/datum/action/cooldown/spell/pointed/slab/InterceptClickOn(mob/living/user, params, atom/target)
-	parent_scripture?.click_on(target)
 
 /// Generate all scriptures in a global assoc of name:ref. Only needs to be done once
 /proc/generate_clockcult_scriptures()
