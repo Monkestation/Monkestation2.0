@@ -121,3 +121,6 @@
 	var/list/alternative_deathgasps
 	///if we should greyscale limbs or set a preset color to them
 	var/greyscale_limbs = FALSE
+
+	///Boolean on whether symptoms for the mob has been created.
+	var/created_symptoms = FALSE

@@ -1,8 +1,0 @@
-author: "notghosti"
-delete-after: True
-changes:
-  - code_imp: "slightly improved dissection borer ability code."
-  - balance: "Dissection borer ability moved to t2 from t3"
-  - bugfix: "hivelord borers laying eggs will properly update health visuals"
-  - bugfix: "Dissection borer ability now properly uses chemicals"
-  - sound: "Dissection now plays a splat sound effect"

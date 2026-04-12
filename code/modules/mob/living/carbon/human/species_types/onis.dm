@@ -65,7 +65,7 @@
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "wind",
 			SPECIES_PERK_NAME = "Heavy Footed",
-			SPECIES_PERK_DESC = "You're a tad slower then the normal norman.", // 10% slower then normal.
+			SPECIES_PERK_DESC = "You're a tad slower than the normal norman.", // 10% slower then normal.
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
