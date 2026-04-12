@@ -224,11 +224,21 @@
 	if(isopenturf(interacting_with))
 		deploy_bed(user, interacting_with)
 		return ITEM_INTERACT_SUCCESS
+	if(isliving(interacting_with))
+		var/mob/living/patient = interacting_with
+		if(patient.buckled)
+			return NONE
+		if(!do_after(user, 2 SECONDS))
+			return NONE
+		deploy_bed(user, get_turf(patient), patient)
+		return ITEM_INTERACT_SUCCESS
 	return NONE
 
-/obj/item/emergency_bed/proc/deploy_bed(mob/user, atom/location)
+/obj/item/emergency_bed/proc/deploy_bed(mob/user, atom/location, mob/living/patient)
 	var/obj/structure/bed/medical/emergency/deployed = new /obj/structure/bed/medical/emergency(location)
 	deployed.add_fingerprint(user)
+	if(patient)
+		deployed.user_buckle_mob(patient, user, FALSE)
 	qdel(src)
 
 /obj/item/emergency_bed/silicon // ROLLER ROBO DA!

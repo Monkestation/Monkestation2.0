@@ -82,6 +82,12 @@
 	for(var/mob/living/mob_inside in contents)
 		drag_slowdown += 0.25
 
+/obj/structure/closet/body_bag/before_open(mob/living/user, force)
+	if(!do_after(user, 3 SECONDS))
+		return FALSE
+	else
+		return TRUE
+
 /obj/structure/closet/body_bag/after_open(mob/living/user)
 	. = ..()
 	drag_slowdown = 0.25
