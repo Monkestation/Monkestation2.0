@@ -1,49 +1,18 @@
-/*************************************************************
- * RBMK Visual Logic — Canonical V3
- * -----------------------------------------------------------
- * Design rules:
- * - "reactor_off" ONLY when there are NO fuel rods inserted
- * - Otherwise, visuals are driven purely by temperature
- * - SCRAM does NOT directly change visuals
- * - "reactor_meltdown" is a PRE-FAILURE extreme heat state
- * - Post-meltdown slagged state overrides everything
- * - Damage overlays update only when stage changes
- * - This file is the SOLE owner of update_icon()
- * - Sound state follows final sprite state
- *************************************************************/
-
-
-/*************************************************************
- * Standard icon hook
- *************************************************************/
-
-/// Standard engine icon hook
 /obj/machinery/rbmk/reactor/update_icon()
 	. = ..()
 	update_reactor_icon()
 	return .
 
 
-/*************************************************************
- * Sound Update
- *************************************************************/
-
-/// Updates the reactor looping sound based on final sprite state
 /obj/machinery/rbmk/reactor/proc/update_reactor_sound()
-	if(icon_state == "reactor_off")
+	if(icon_state == "reactor_off" || icon_state == "reactor_slagged")
 		if(soundloop)
 			QDEL_NULL(soundloop)
 		last_sound_state = icon_state
 		return
 
-	if(icon_state == "reactor_slagged")
-		if(soundloop)
-			QDEL_NULL(soundloop)
-		last_sound_state = icon_state
-		return
-
-	var/target_volume = 0
-	var/target_range = 20
+	var/target_volume = 10
+	var/target_range = 12
 
 	switch(icon_state)
 		if("reactor_on")
@@ -61,9 +30,6 @@
 		if("reactor_meltdown")
 			target_volume = 45
 			target_range = 26
-		else
-			target_volume = 10
-			target_range = 12
 
 	if(!soundloop || last_sound_state != icon_state)
 		if(soundloop)
@@ -84,19 +50,10 @@
 	last_sound_state = icon_state
 
 
-/*************************************************************
- * Main Visual Update
- *************************************************************/
-
-/// Updates the main reactor sprite and damage overlay state
 /obj/machinery/rbmk/reactor/proc/update_reactor_icon()
 	var/previous_damage_stage = current_damage_stage
 	var/new_damage_stage = 0
 
-	/************************************************
-	 * 1. Slagged state override
-	 * True destroyed/post-failure state
-	 ************************************************/
 	if(meltdown_in_progress || reactor_integrity <= 0)
 		icon_state = "reactor_slagged"
 		new_damage_stage = 4
@@ -108,13 +65,6 @@
 		update_reactor_sound()
 		return
 
-	/************************************************
-	 * 2. Base icon selection
-	 * OFF only when no rods are physically inserted
-	 *
-	 * reactor_meltdown is a live extreme-temperature state,
-	 * not the actual destroyed state.
-	 ************************************************/
 	if(!has_fuel_rods())
 		icon_state = "reactor_off"
 	else if(temperature < RBMK_TEMP_RUNNING)
@@ -128,9 +78,6 @@
 	else
 		icon_state = "reactor_meltdown"
 
-	/************************************************
-	 * 3. Damage overlay stage
-	 ************************************************/
 	var/safe_max_integrity = max(max_reactor_integrity, 1)
 	var/integrity_percent = (reactor_integrity / safe_max_integrity) * 100
 
@@ -145,9 +92,6 @@
 	else
 		new_damage_stage = 0
 
-	/************************************************
-	 * 4. Overlay refresh only on stage change
-	 ************************************************/
 	if(new_damage_stage != previous_damage_stage)
 		current_damage_stage = new_damage_stage
 		refresh_damage_overlay(new_damage_stage)
@@ -155,11 +99,6 @@
 	update_reactor_sound()
 
 
-/*************************************************************
- * Overlay Helpers
- *************************************************************/
-
-/// Remove current damage overlay and apply the requested one
 /obj/machinery/rbmk/reactor/proc/refresh_damage_overlay(new_stage)
 	if(current_damage_overlay_image)
 		overlays -= current_damage_overlay_image

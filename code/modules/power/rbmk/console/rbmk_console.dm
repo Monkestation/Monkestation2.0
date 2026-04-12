@@ -1,24 +1,3 @@
-/*************************************************************
- * RBMK Reactor Console — Canonical V2
- * -----------------------------------------------------------
- * Responsibilities of this file:
- * - nearest-reactor linking
- * - TGUI data export
- * - operator actions
- * - console visual state
- *
- * Design rule:
- * - UI should never be the source of truth for reactor physics.
- * - The reactor process loop decides whether the reactor is
- *   actually running.
- *************************************************************/
-
-
-/*************************************************************
- * Console Definition
- *************************************************************/
-
-/// RBMK control console
 /obj/machinery/computer/rbmk_console
 	name = "RBMK Reactor Console"
 	desc = "A console used to monitor and control an RBMK nuclear reactor."
@@ -40,27 +19,17 @@
 	var/obj/machinery/rbmk/reactor/linked_reactor = null
 
 
-/*************************************************************
- * Initialization / Cleanup
- *************************************************************/
-
-/// Startup
 /obj/machinery/computer/rbmk_console/Initialize(mapload)
 	. = ..()
 	auto_link()
 	update_icon()
 
-/// Cleanup
+
 /obj/machinery/computer/rbmk_console/Destroy()
 	linked_reactor = null
 	return ..()
 
 
-/*************************************************************
- * Reactor Linking & Console Visual State
- *************************************************************/
-
-/// Automatically link to nearest RBMK reactor
 /obj/machinery/computer/rbmk_console/proc/auto_link()
 	linked_reactor = null
 
@@ -73,7 +42,7 @@
 
 	update_icon()
 
-/// Update console icon appearance based on linked reactor condition
+
 /obj/machinery/computer/rbmk_console/update_icon()
 	. = ..()
 
@@ -96,15 +65,10 @@
 		icon_state = "reactorcontrol-3"
 
 
-/*************************************************************
- * UI / TGUI Framework
- *************************************************************/
-
-/// Physical-only UI state
 /obj/machinery/computer/rbmk_console/ui_state(mob/user)
 	return GLOB.physical_state
 
-/// Open TGUI
+
 /obj/machinery/computer/rbmk_console/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	if(.)
@@ -118,15 +82,10 @@
 	return ui
 
 
-/*************************************************************
- * Helper Utilities
- *************************************************************/
-
-/// Round to 0.01 precision
 /proc/rbmk_round2(number_value)
 	return round(number_value, 0.01)
 
-/// Export gas composition percentages from coolant mix
+
 /proc/rbmk_build_gas_composition_data(datum/gas_mixture/gas_mix)
 	var/list/gas_data = list()
 
@@ -151,11 +110,6 @@
 	return gas_data
 
 
-/*************************************************************
- * UI DATA EXPORT (Telemetry)
- *************************************************************/
-
-/// Export reactor telemetry to TGUI
 /obj/machinery/computer/rbmk_console/ui_data(mob/user)
 	var/list/data = list()
 
@@ -163,14 +117,11 @@
 		data["status"] = "No reactor linked"
 		return data
 
-	/************************************************
-	 * Core State
-	 ************************************************/
 	data["status"] = linked_reactor.meltdown_in_progress ? "Meltdown in progress" : "Online"
 	data["running"] = linked_reactor.running
 	data["scrammed"] = linked_reactor.scrammed
 
-	// Show ACTUAL rod depth so the monitor bar reflects delayed rod motion.
+	// Show the actual rod position so the UI reflects delayed rod movement.
 	data["control_rods"] = rbmk_round2(linked_reactor.actual_control_rod_depth)
 	data["max_control_rod"] = RBMK_CONTROL_ROD_MAX
 
@@ -193,9 +144,6 @@
 	data["pressure_critical"] = RBMK_PRESSURE_CRITICAL
 	data["pressure_extreme"] = RBMK_PRESSURE_EXTREME
 
-	/************************************************
-	 * Coolant Controls
-	 ************************************************/
 	data["inlet_open"] = linked_reactor.inlet_open
 	data["outlet_open"] = linked_reactor.outlet_open
 
@@ -212,9 +160,6 @@
 	data["inlet_pressure"] = inlet_mix ? rbmk_round2(inlet_mix.return_pressure()) : 0
 	data["outlet_pressure"] = outlet_mix ? rbmk_round2(outlet_mix.return_pressure()) : 0
 
-	/************************************************
-	 * History / Graph Data
-	 ************************************************/
 	var/list/pressure_history = list()
 	for(var/pressure_value in linked_reactor.coolant_pressure_history)
 		pressure_history += rbmk_round2(pressure_value)
@@ -227,9 +172,6 @@
 
 	data["gas_composition"] = rbmk_build_gas_composition_data(linked_reactor.coolant_internal)
 
-	/************************************************
-	 * Rod Inventory
-	 ************************************************/
 	data["max_normal_slots"] = linked_reactor.max_normal_slots
 	data["max_special_slots"] = linked_reactor.max_special_slots
 
@@ -265,11 +207,6 @@
 	return data
 
 
-/*************************************************************
- * UI ACTIONS
- *************************************************************/
-
-/// Handle TGUI actions
 /obj/machinery/computer/rbmk_console/ui_act(action, params)
 	. = ..()
 	if(.)
@@ -281,16 +218,10 @@
 			return TRUE
 		return FALSE
 
-	/************************************************
-	 * Utility
-	 ************************************************/
 	if(action == "rescan")
 		auto_link()
 		return TRUE
 
-	/************************************************
-	 * Control Rods / SCRAM
-	 ************************************************/
 	if(action == "rod_up")
 		linked_reactor.control_rod_depth = max(linked_reactor.control_rod_depth - 5, 0)
 		linked_reactor.update_linked_consoles()
@@ -318,9 +249,6 @@
 		linked_reactor.force_scram()
 		return TRUE
 
-	/************************************************
-	 * Coolant Controls
-	 ************************************************/
 	if(action == "toggle_inlet")
 		linked_reactor.inlet_open = !linked_reactor.inlet_open
 		linked_reactor.wake_coolant_ports()
@@ -353,9 +281,6 @@
 		linked_reactor.update_linked_consoles()
 		return TRUE
 
-	/************************************************
-	 * Rod Handling
-	 ************************************************/
 	if(action == "remove_rod")
 		var/slot_kind = params["kind"]
 		var/slot_index = text2num(params["index"])
