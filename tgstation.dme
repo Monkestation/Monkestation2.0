@@ -3033,6 +3033,8 @@
 #include "code\modules\antagonists\_common\antag_hud.dm"
 #include "code\modules\antagonists\_common\antag_spawner.dm"
 #include "code\modules\antagonists\_common\antag_team.dm"
+#include "code\modules\antagonists\abandoned_ipc\aipc_antag.dm"
+#include "code\modules\antagonists\abandoned_ipc\aipc_token.dm"
 #include "code\modules\antagonists\abductor\abductor.dm"
 #include "code\modules\antagonists\abductor\abductor_structures.dm"
 #include "code\modules\antagonists\abductor\ice_abductor.dm"
