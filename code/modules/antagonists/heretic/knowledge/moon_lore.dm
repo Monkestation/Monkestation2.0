@@ -280,43 +280,48 @@
 	)
 
 	for(var/mob/living/carbon/carbon_view in range(7, source))
-		var/carbon_sanity = carbon_view.mob_mood.sanity
-		if(carbon_view.stat != CONSCIOUS)
-			continue
-		if(IS_HERETIC_OR_MONSTER(carbon_view) || source.faction_check_atom(carbon_view))
-			continue
-		if(carbon_view.can_block_magic(MAGIC_RESISTANCE_MOON)) //Somehow a shitty piece of tinfoil is STILL able to hold out against the power of an ascended heretic.
-			continue
-		if(IS_MONSTERHUNTER(carbon_view)) // YOUR MADNESS IS WEAK COMPARED TO THE WONDERLAND
-			continue
-		new /obj/effect/temp_visual/moon_ringleader(get_turf(carbon_view))
-		if(carbon_view.has_status_effect(/datum/status_effect/confusion))
-			to_chat(carbon_view, span_big(span_hypnophrase("YOUR HEAD RATTLES WITH A THOUSAND VOICES JOINED IN A MADDENING CACOPHONY OF SOUND AND MUSIC. EVERY FIBER OF YOUR BEING SAYS 'RUN'.")))
-		carbon_view.adjust_confusion(2 SECONDS)
-		carbon_view.mob_mood.adjust_sanity(-20)
+		affect_nearby(source, carbon_view, seconds_per_tick)
 
-		if(carbon_sanity >= 10)
-			continue
-		// So our sanity is dead, time to fuck em up
-		if(SPT_PROB(20, seconds_per_tick))
-			to_chat(carbon_view, span_warning("it echoes through you!"))
-		visible_hallucination_pulse(
-			center = get_turf(carbon_view),
-			radius = 7,
-			hallucination_duration = 50 SECONDS
-		)
-		carbon_view.adjust_temp_blindness(5 SECONDS)
-		if(should_mind_explode(carbon_view))
-			to_chat(carbon_view, span_boldbig(span_red(\
-				"YOUR SENSES REEL AS YOUR MIND IS ENVELOPED BY AN OTHERWORLDLY FORCE ATTEMPTING TO REWRITE YOUR VERY BEING. \
-				YOU CANNOT EVEN BEGIN TO SCREAM BEFORE YOUR IMPLANT ACTIVATES ITS PSIONIC FAIL-SAFE PROTOCOL, TAKING YOUR HEAD WITH IT.")))
-			var/obj/item/bodypart/head/head = carbon_view.get_bodypart(BODY_ZONE_HEAD)
-			if(!head?.dismember())
-				carbon_view.gib(/* DROP_ALL_REMAINS */)
-			var/datum/effect_system/reagents_explosion/explosion = new(get_turf(carbon_view), 1, 1, 1)
-			explosion.start(src)
-		else
-			attempt_conversion(carbon_view, source)
+/datum/heretic_knowledge/ultimate/moon_final/proc/affect_nearby(mob/living/source, mob/living/carbon_view, seconds_per_tick)
+	if(!carbon_view.mob_mood)
+		return
+	var/carbon_sanity = carbon_view.mob_mood.sanity
+	if(carbon_view.stat != CONSCIOUS)
+		return
+	if(IS_HERETIC_OR_MONSTER(carbon_view)/*  || source.faction_check_atom(carbon_view) */) // second part might be causing issues ,dik
+		return
+	if(carbon_view.can_block_magic(MAGIC_RESISTANCE_MOON)) //Somehow a shitty piece of tinfoil is STILL able to hold out against the power of an ascended heretic.
+		return
+	if(IS_MONSTERHUNTER(carbon_view)) // YOUR MADNESS IS WEAK COMPARED TO THE WONDERLAND
+		return
+	new /obj/effect/temp_visual/moon_ringleader(get_turf(carbon_view))
+	if(carbon_view.has_status_effect(/datum/status_effect/confusion))
+		to_chat(carbon_view, span_big(span_hypnophrase("YOUR HEAD RATTLES WITH A THOUSAND VOICES JOINED IN A MADDENING CACOPHONY OF SOUND AND MUSIC. EVERY FIBER OF YOUR BEING SAYS 'RUN'.")))
+	carbon_view.adjust_confusion(2 SECONDS)
+	carbon_view.mob_mood.adjust_sanity(-20)
+
+	if(carbon_sanity >= 10)
+		return
+	// So our sanity is dead, time to fuck em up
+	if(SPT_PROB(20, seconds_per_tick))
+		to_chat(carbon_view, span_warning("it echoes through you!"))
+	visible_hallucination_pulse(
+		center = get_turf(carbon_view),
+		radius = 7,
+		hallucination_duration = 50 SECONDS
+	)
+	carbon_view.adjust_temp_blindness(5 SECONDS)
+	if(should_mind_explode(carbon_view))
+		to_chat(carbon_view, span_boldbig(span_red(\
+			"YOUR SENSES REEL AS YOUR MIND IS ENVELOPED BY AN OTHERWORLDLY FORCE ATTEMPTING TO REWRITE YOUR VERY BEING. \
+			YOU CANNOT EVEN BEGIN TO SCREAM BEFORE YOUR IMPLANT ACTIVATES ITS PSIONIC FAIL-SAFE PROTOCOL, TAKING YOUR HEAD WITH IT.")))
+		var/obj/item/bodypart/head/head = carbon_view.get_bodypart(BODY_ZONE_HEAD)
+		if(!head?.dismember())
+			carbon_view.gib(/* DROP_ALL_REMAINS */)
+		var/datum/effect_system/reagents_explosion/explosion = new(get_turf(carbon_view), 1, 1, 1)
+		explosion.start(src)
+	else
+		attempt_conversion(carbon_view, source)
 
 /datum/heretic_knowledge/ultimate/moon_final/proc/should_mind_explode(mob/living/carbon/target)
 	if(HAS_TRAIT_NOT_FROM(target, TRAIT_MINDSHIELD, NANITES_TRAIT))
