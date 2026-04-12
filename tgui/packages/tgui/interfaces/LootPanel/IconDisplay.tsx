@@ -40,5 +40,5 @@ export function IconDisplay(props: Props) {
     );
   }
 
-  return <Image fixErrors src={icon} height={3} width={3} />;
+  return <Image fixErrors src={icon} height={3} width={3} objectFit="cover" />;
 }

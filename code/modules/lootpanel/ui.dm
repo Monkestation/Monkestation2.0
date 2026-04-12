@@ -1,17 +1,14 @@
 /// UI helper for converting the associative list to a list of lists
 /datum/lootpanel/proc/get_contents()
-	var/list/items = list()
-
+	. = list()
 	for(var/datum/search_object/index as anything in contents)
-		UNTYPED_LIST_ADD(items, list(
+		UNTYPED_LIST_ADD(., list(
 			"icon_state" = index.icon_state,
 			"icon" = index.icon,
 			"name" = index.name,
 			"path" = index.path,
 			"ref" = REF(index),
 		))
-
-	return items
 
 
 /// Clicks an object from the contents. Validates the object and the user
