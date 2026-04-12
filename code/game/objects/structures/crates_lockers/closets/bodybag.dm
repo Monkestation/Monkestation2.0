@@ -263,7 +263,7 @@
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "prisonerenvirobag"
 	foldedbag_path = /obj/item/bodybag/environmental/prisoner
-	breakout_time = 2 MINUTE // because it's probably about as hard to get out of this as it is to get out of a straightjacket.
+	breakout_time = 2 MINUTES // because it's probably about as hard to get out of this as it is to get out of a straightjacket.
 	/// How long it takes to sinch the bag.
 	var/sinch_time = 10 SECONDS
 	/// Whether or not the bag is sinched. Starts unsinched.
