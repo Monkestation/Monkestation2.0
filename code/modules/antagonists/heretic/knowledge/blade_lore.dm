@@ -91,7 +91,7 @@
 	. = ..()
 	if(!.)
 		return
-	source.apply_status_effect(/datum/status_effect/protective_blades, 60 SECONDS, 1, 20, 0 SECONDS)
+	source.apply_status_effect(/datum/status_effect/protective_blades, 15 SECONDS, 1, 20, 0 SECONDS)
 
 /datum/heretic_knowledge/spell/realignment
 	name = "Realignment"
