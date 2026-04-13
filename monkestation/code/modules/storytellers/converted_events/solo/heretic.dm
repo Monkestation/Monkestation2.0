@@ -38,9 +38,9 @@
 		JOB_WARDEN,
 		JOB_CHAPLAIN,
 	)
-	required_enemies = 6
-	weight = 8
-	min_players = 20
+	required_enemies = 8
+	weight = 6
+	min_players = 35
 
 /datum/round_event_control/antagonist/heretic/roundstart
 	name = "Heretics"
