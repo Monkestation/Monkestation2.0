@@ -17,7 +17,7 @@
 	can_weld_shut = FALSE
 	can_install_electronics = FALSE
 	drag_slowdown = 0
-	drag_slowdown = 0.5
+	drag_slowdown = 0.25
 	has_closed_overlay = FALSE
 	can_install_electronics = FALSE
 	paint_jobs = null
@@ -26,7 +26,8 @@
 	var/obj/item/bodybag/foldedbag_instance = null
 	/// The tagged name of the bodybag, also used to check if the bodybag IS tagged.
 	var/tag_name
-
+	/// How long it takes to zip up the bag.
+	var/zip_up_time = 3 SECONDS
 	var/tagged = FALSE // so closet code knows to put the tag overlay back
 	can_install_electronics = FALSE
 
@@ -82,19 +83,19 @@
 /obj/structure/closet/body_bag/after_close(mob/living/user)
 	. = ..()
 	set_density(FALSE)
-	drag_slowdown = 0.5
+	drag_slowdown = 0.25
 	for(var/mob/living/mob_inside in contents)
 		drag_slowdown += 0.25
 
 /obj/structure/closet/body_bag/before_close(mob/living/user, force)
-	if(!do_after(user, 3 SECONDS))
+	if(!do_after(user, zip_up_time))
 		return FALSE
 	else
 		return TRUE
 
 /obj/structure/closet/body_bag/after_open(mob/living/user)
 	. = ..()
-	drag_slowdown = 0.5
+	drag_slowdown = 0.25
 
 /obj/structure/closet/body_bag/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -254,6 +255,7 @@
 	contents_thermal_insulation = 1
 	foldedbag_path = /obj/item/bodybag/environmental/nanotrasen
 	weather_protection = list(TRAIT_WEATHER_IMMUNE)
+	zip_up_time = 1 SECOND
 
 /// Securable enviro. bags
 
@@ -375,6 +377,7 @@
 	weather_protection = list(TRAIT_WEATHER_IMMUNE)
 	breakout_time = 4 MINUTES
 	sinch_time = 20 SECONDS
+	zip_up_time = 1 SECOND
 
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate/refresh_air()
 	air_contents = null
@@ -392,6 +395,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	foldedbag_path = null
 	weather_protection = list(TRAIT_SNOWSTORM_IMMUNE)
+	zip_up_time = 1 SECOND
 
 /obj/structure/closet/body_bag/environmental/hardlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type in list(BRUTE, BURN))
@@ -404,6 +408,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	foldedbag_path = null
 	weather_protection = list(TRAIT_SNOWSTORM_IMMUNE)
+	zip_up_time = 1 SECOND
 
 /obj/structure/closet/body_bag/environmental/prisoner/hardlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type in list(BRUTE, BURN))
