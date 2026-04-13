@@ -1,8 +1,6 @@
-import type { BooleanLike } from 'common/react';
-import { useBackend, useLocalState } from '../backend';
+import { useLocalState } from '../backend';
 import { Divider, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import type { Item } from './Uplink/GenericUplink';
 
 const allystyle = {
   color: 'yellow',
@@ -19,25 +17,7 @@ const goalstyle = {
   fontWeight: 'bold',
 };
 
-type Category = {
-  name: string;
-  items: Item[];
-};
-
-type Data = {
-  has_codewords: BooleanLike;
-  phrases: string;
-  responses: string;
-  theme: string;
-  allies: string;
-  goal: string;
-  intro: string;
-  processingTime: string;
-  categories: Category[];
-  can_change_objective: BooleanLike;
-};
-
-const IntroductionSection = (props) => {
+const IntroductionSection = () => {
   return (
     <Stack vertical fill>
       <Stack.Item height="40%">
@@ -86,10 +66,7 @@ const IntroductionSection = (props) => {
   );
 };
 
-const FlavorSection = (props) => {
-  const { data } = useBackend<Data>();
-  const { allies, goal } = data;
-
+const LawsSection = () => {
   return (
     <Section fill title="Diagnostics">
       <Stack vertical fill>
@@ -100,7 +77,7 @@ const FlavorSection = (props) => {
                 Accepted External Law Modules:
                 <br />
               </span>
-              &gt;{allies}
+              &gt;
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -114,11 +91,8 @@ enum Screen {
   Modules,
 }
 
-export const AntagInfoAIPC = (props) => {
-  const [antagInfoTab, setAntagInfoTab] = useLocalState<Screen>(
-    'antagInfoTab',
-    Screen.Intro,
-  );
+export const AntagInfoAIPC = () => {
+  const [antagInfoTab] = useLocalState<Screen>('antagInfoTab', Screen.Intro);
 
   return (
     <Window
@@ -136,7 +110,7 @@ export const AntagInfoAIPC = (props) => {
                     <IntroductionSection />
                   </Stack.Item>
                   <Stack.Item width="60%">
-                    <FlavorSection />
+                    <LawsSection />
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
