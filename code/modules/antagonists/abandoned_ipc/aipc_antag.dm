@@ -13,6 +13,5 @@
 	show_to_ghosts = TRUE
 	stinger_sound = 'sound/ambience/antag/malf.ogg'
 	ui_name = "AntagInfoAIPC"
-	can_assign_self_objectives = TRUE
-	default_custom_objective = "Steal the clown"
+	can_assign_self_objectives = FALSE
 	antagpanel_category = ANTAG_GROUP_ABANDONED_IPC
