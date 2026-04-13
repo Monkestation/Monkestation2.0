@@ -30,6 +30,7 @@
 	hardcore_random_bonus = TRUE
 	stinger_sound = 'sound/music/antag/heretic/heretic_gain.ogg'
 	antag_flags = parent_type::antag_flags | FLAG_ANTAG_OBSERVER_VISIBLE_PANEL
+	antag_count_points = 15
 
 	info_background_icon_state = "bg_heretic"
 	info_overlay_icon_state = "bg_heretic_border"
