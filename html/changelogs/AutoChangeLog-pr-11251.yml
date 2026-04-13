@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - balance: "You can no longer insert brains (or items containing brains) into a deconstructive analyzer."
-  - balance: "Microwaving brains no longer destroys them, albeit it will give it massive brain damage."

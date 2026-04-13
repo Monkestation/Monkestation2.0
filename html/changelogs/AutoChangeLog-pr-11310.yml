@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "The TGUI error popup now properly links to the Monkestation repo when asking to make an issue report."

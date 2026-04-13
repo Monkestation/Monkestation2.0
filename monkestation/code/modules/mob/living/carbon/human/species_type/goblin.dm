@@ -133,7 +133,7 @@
 	name = "goblin tongue"
 	disliked_foodtypes = VEGETABLES
 	liked_foodtypes = GORE | MEAT | GROSS
-	var/static/list/speech_replacements = list("ask" = "acks", "asks" = "ackses", new /regex(@"\bx", "g") = "z", new /regex(@"\bX", "g") = "Z", new /regex(@"\bx", "g") = "z", new /regex(@"(?<=[a-z])x", "g") = "cks",  new /regex(@"(?<=[A-Z])x", "g") = "cks",   new /regex(@"(?<=[A-Z])X", "g") = "CKS", ) //Reverses ask to a(c)ks, and changes beginning x's to z's, and x's inside words to "cks"
+	var/static/list/speech_replacements = list( new /regex(@"\bx(?=\w+)", "g") = "z", new /regex(@"\bX(?=\w+)", "g") = "Z", new /regex(@"\bx\b", "g") = "ecks", new /regex(@"\bX\b", "g") = "ECKS", new /regex(@"\Bx", "g") = "cks", new /regex(@"\BX", "g") = "CKS", new /regex(@"\bask", "g") = "acks", , new /regex(@"\bAsk", "g") = "Acks", new /regex(@"\bASK", "g") = "ACKS" ) //Reverses ask to a(c)ks, and changes beginning x's to z's, and x's inside words to "cks"
 
 /obj/item/organ/internal/tongue/goblin/New(class, timer, datum/mutation/copymut)
 	. = ..()
