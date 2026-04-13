@@ -246,3 +246,8 @@
   - qol: Science bags can now hold slime potions.
   - qol: Science biosuits can now hold anything in suit storage that science winter
       coats can.
+2026-04-13:
+  notghosti:
+  - bugfix: Bingles, space carp, space dragons, xenomorphs are now no longer only
+      worth half their intended points.
+  - rscadd: Borers, are now worth varying amounts of appriopate threat to the storyteller
