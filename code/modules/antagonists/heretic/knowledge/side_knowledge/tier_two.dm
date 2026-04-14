@@ -36,27 +36,6 @@
 		to_fuck_up.cause_wound_of_type_and_severity(WOUND_BLUNT, limb, WOUND_SEVERITY_CRITICAL)
 	return TRUE
 
-/datum/heretic_knowledge/greaves_of_the_prophet
-	name = "Greaves Of The Prophet"
-	desc = "Allows you to combine a pair of shoes and 2 sheets of titanium or silver into a pair of Armored Greaves, they confer to the user full immunity to slips."
-	gain_text = " \
-		Gristle churns into joint, a pop, and the fool twists a blackened foot from the \
-		jaws of another. At their game for centuries, this mangled tree of limbs twists, \
-		thrashing snares buried into snarling gums, seeking to shred the weight of grafted \
-		neighbors. Weighed down by lacerated feet, this canopy of rancid idiots ever seeks \
-		the undoing of its own bonds. I dread the thought of walking in their wake, but \
-		I must press on all the same. Their rhythms keep the feud fresh with indifference \
-		to barrier or border. Pulling more into their turmoil as they waltz."
-	required_atoms = list(
-		/obj/item/clothing/shoes = 1,
-		list(/obj/item/stack/sheet/mineral/titanium, /obj/item/stack/sheet/mineral/silver) = 2,
-	)
-	result_atoms = list(/obj/item/clothing/shoes/greaves_of_the_prophet)
-	cost = 2
-	research_tree_icon_path = 'icons/obj/clothing/shoes.dmi'
-	research_tree_icon_state = "hereticgreaves"
-	drafting_tier = 2
-
 /datum/heretic_knowledge/spell/opening_blast
 	name = "Wave Of Desperation"
 	desc = "Grants you Wave Of Desparation, a spell which can only be cast while restrained. \

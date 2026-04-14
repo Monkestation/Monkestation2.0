@@ -154,3 +154,12 @@
 	message_admins("Bro I'm so sorry (car heretic incoming: [ADMIN_LOOKUPFLW(user)], happy april fools)")
 	return TRUE
  */
+
+/datum/heretic_knowledge/spell/blood_siphon
+	name = "Blood Siphon"
+	desc = "Grants you Blood Siphon, a spell that drains a victim of blood and health, transferring it to you. \
+		Also has a chance to transfer wounds from you to the victim."
+	gain_text = "\"No matter the man, we bleed all the same.\" That's what the Marshal told me."
+	action_to_add = /datum/action/cooldown/spell/pointed/blood_siphon
+	cost = 2
+	drafting_tier = 4

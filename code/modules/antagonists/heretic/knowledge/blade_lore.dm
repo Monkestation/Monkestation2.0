@@ -30,7 +30,7 @@
 	tips = list(
 		"Your Mansus Grasp will stun your opponent if they are attacked from behind or while they are prone. This also locks them in the room they are in until the mark is detonated. Triggering the mark will grant you a orbiting knife that will protect you from one melee or ranged attack.",
 		"You have the highest blade cap out of all paths (A total of 4). But since they require silver or titanium to craft, you might be strapped for ingredients if the miners aren't doing their job. If you need materials, shuttle walls and seats are a source of titanium metal, and surgery tables a source of silver.",
-		"You are highly reliant on approaching opponents in melee. Slips, bolas and beartraps are your worst enemy. You can counteract slips by crafting a pair of Greaves Of The Prophet, or remove restraints with Ashen Passage.",
+		"You are highly reliant on approaching opponents in melee. Slips, bolas and beartraps are your worst enemy. You can also remove restraints with Ashen Passage.",
 		"Realignment will pull you out of stuns and knockdowns, but also pacifies you for the duration.",
 		"With Empowered Blades, your offensive power grows considerably. You are able to fight with dual-wielded blades, and can empower them by activating your Mansus Grasp while wielding your blades. Your blades also deal additional damage to objects, silicons and mechs.",
 		"Maintaining a good offense also creates a good defense. With orbiting blades, you are able to block additional incoming attacks.",
@@ -40,12 +40,12 @@
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_blade
 	knowledge_tier1 = /datum/heretic_knowledge/spell/realignment
-	guaranteed_side_tier1 = /datum/heretic_knowledge/greaves_of_the_prophet
+	guaranteed_side_tier1 = /datum/heretic_knowledge/essence
 	knowledge_tier2 = /datum/heretic_knowledge/duel_stance
-	guaranteed_side_tier2 = /datum/heretic_knowledge/essence
+	guaranteed_side_tier2 = /datum/heretic_knowledge/rune_carver
 	robes = /datum/heretic_knowledge/armor/blade
 	knowledge_tier3 = /datum/heretic_knowledge/spell/furious_steel
-	guaranteed_side_tier3 = /datum/heretic_knowledge/rune_carver
+	guaranteed_side_tier3 = /datum/heretic_knowledge/spell/blood_siphon
 	blade = /datum/heretic_knowledge/blade_upgrade/blade
 	knowledge_tier4 = /datum/heretic_knowledge/spell/wolves_among_sheep
 	ascension = /datum/heretic_knowledge/ultimate/blade_final
@@ -107,7 +107,8 @@
 
 /datum/heretic_knowledge/duel_stance
 	name = "Stance of the Torn Champion"
-	desc = "Grants resilience to blood loss from wounds and immunity to having your limbs dismembered. \
+	desc = "Grants resilience to blood loss from wounds, immunity to having your limbs dismembered, \
+		alongside immunity to slips. \
 		Additionally, when damaged below 50% of your maximum health, \
 		you gain increased resistance to gaining wounds and resistance to slowdown."
 	gain_text = "In time, it was he who stood alone among the bodies of his former comrades, awash in blood, none of it his own. \
@@ -121,7 +122,7 @@
 	var/in_duelist_stance = FALSE
 
 /datum/heretic_knowledge/duel_stance/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	ADD_TRAIT(user, TRAIT_NODISMEMBER, type)
+	user.add_traits(list(TRAIT_NODISMEMBER, TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE, TRAIT_NO_SLIP_ALL), type)
 	RegisterSignal(user, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(user, COMSIG_CARBON_GAIN_WOUND, PROC_REF(on_wound_gain))
 	RegisterSignal(user, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_update))
@@ -129,7 +130,7 @@
 	on_health_update(user) // Run this once, so if the knowledge is learned while hurt it activates properly
 
 /datum/heretic_knowledge/duel_stance/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	REMOVE_TRAIT(user, TRAIT_NODISMEMBER, type)
+	user.remove_traits(list(TRAIT_NODISMEMBER, TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE, TRAIT_NO_SLIP_ALL), type)
 	if(in_duelist_stance)
 		user.remove_traits(list(TRAIT_HARDLY_WOUNDED), type)
 		if(isliving(user))
