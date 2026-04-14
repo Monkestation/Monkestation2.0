@@ -83,16 +83,18 @@
 /datum/status_effect/heretic_sated
 	id = "heretic_sated"
 	status_type = STATUS_EFFECT_REPLACE
-	alert_type = /atom/movable/screen/alert/status_effect/heretic_sated
-	duration = 20 MINUTES /* STATUS_EFFECT_PERMANENT */
 	tick_interval = STATUS_EFFECT_NO_TICK
+	alert_type = /atom/movable/screen/alert/status_effect/heretic_sated
+	duration = 20 MINUTES
+	show_duration = TRUE
+
+/datum/status_effect/heretic_sated/on_creation(mob/living/new_owner, duration = 10 SECONDS)
+	src.duration = duration
+	return ..()
 
 /datum/status_effect/heretic_sated/on_apply()
 	to_chat(owner, span_warning("You are sated and cannot siphon more essence until you complete a sacrifice."))
 	return TRUE
-
-/datum/status_effect/heretic_sated/on_remove()
-	to_chat(owner, span_notice("You can drain essences once more."))
 
 /atom/movable/screen/alert/status_effect/heretic_sated
 	name = "Sated"

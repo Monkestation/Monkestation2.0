@@ -334,7 +334,8 @@
 	heretic_datum.adjust_knowledge_points(knowledge_to_gain)
 	heretic_datum.essences_siphoned++
 	if(heretic_datum.total_sacrifices < heretic_datum.essences_siphoned)
-		user.apply_status_effect(/datum/status_effect/heretic_sated)
+		var/duration = heretic_datum.feast_of_owls ? 10 MINUTES : 20 MINUTES
+		user.apply_status_effect(/datum/status_effect/heretic_sated, duration)
 
 	// Aaand now we delete it
 	after_drain(user)

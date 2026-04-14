@@ -76,6 +76,8 @@
 	var/datum/heretic_knowledge_tree_column/heretic_path
 	/// A sum of how many knowledge points this heretic CURRENTLY has. Used to research.
 	var/knowledge_points = 1
+	/// Points used for purchasing from the sidepath shop, tracked separately from regular knowledge points, these can ONLY be used from the sidepath, where the main ones can be used on both
+	var/sidepath_points = 0
 	/// The time between gaining influence passively. The heretic gain +1 knowledge points every this duration of time.
 	var/passive_gain_timer = 20 MINUTES
 	/// Tracks how many knowledge points the heretic has aqcuired. Once you get enough points you lose the ability to blade break
@@ -156,18 +158,21 @@
 	if(!length(source_list))
 		CRASH("get_knowledge_data called without source_list! (Got: [source_list || "empty list"])")
 	var/list/knowledge_data = list()
+	var/cost = source_list[knowledge][HKT_COST]
 
 	knowledge_data["path"] = knowledge
 	knowledge_data["icon_params"] = get_icon_of_knowledge(knowledge)
 	knowledge_data["name"] = initial(knowledge.name)
 	knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
-	knowledge_data["cost"] = source_list[knowledge][HKT_COST]
+	knowledge_data["cost"] = cost
 	knowledge_data["depth"] = source_list[knowledge][HKT_DEPTH]
 	knowledge_data["bgr"] = source_list[knowledge][HKT_UI_BGR]
 	knowledge_data[HKT_CATEGORY] = category
 	knowledge_data["ascension"] = ispath(knowledge, /datum/heretic_knowledge/ultimate)
 
 	knowledge_data["done"] = done
+	if(!done)
+		knowledge_data["can_research"] = can_buy_knowledge(knowledge, category, cost)
 	//description of a knowledge might change, make sure we are not shown the initial() value in that case
 	var/list/knowledge_info = researched_knowledge[knowledge]
 	if(islist(knowledge_info))
@@ -178,13 +183,21 @@
 		knowledge_data["desc"] = initial(knowledge.desc)
 	return knowledge_data
 
+/datum/antagonist/heretic/proc/can_buy_knowledge(datum/heretic_knowledge/knowledge, shop_category = HERETIC_KNOWLEDGE_TREE, cost = 0)
+	if(!researchable_knowledge(knowledge, shop_category))
+		return FALSE
+	if(shop_category == HERETIC_KNOWLEDGE_SHOP && sidepath_points >= cost)
+		return TRUE
+	return knowledge_points >= cost
 
 /datum/antagonist/heretic/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui?.set_autoupdate(FALSE)
 
 /datum/antagonist/heretic/ui_data(mob/user)
-	var/list/data = list("charges" = knowledge_points)
+	var/list/data = list()
+	data["charges"] = knowledge_points
+	data["sidepath_charges"] = sidepath_points
 
 	data["objectives"] = get_objectives()
 	data["can_change_objective"] = can_assign_self_objectives
@@ -307,6 +320,8 @@
 			return TRUE
 
 /datum/antagonist/heretic/proc/researchable_knowledge(datum/heretic_knowledge/knowledge_path, shop_category = HERETIC_KNOWLEDGE_TREE)
+	if(!length(heretic_shops[shop_category]))
+		return FALSE
 	var/list/knowledge_info = heretic_shops[shop_category][knowledge_path]
 	if(knowledge_info[HKT_ID] in get_researchable_knowledge())
 		return TRUE
@@ -896,6 +911,11 @@
 		update_heretic_aura()
 		SStgui.update_uis(src)
 
+/datum/antagonist/heretic/proc/adjust_sidepath_points(amount, update = TRUE)
+	sidepath_points = max(0, sidepath_points + amount) // Don't allow negative sidepath points
+	if(update)
+		SStgui.update_uis(src)
+
 /datum/antagonist/heretic/roundend_report()
 	var/list/parts = list()
 
@@ -958,6 +978,7 @@
 			.["Remove Heart Target"] = CALLBACK(src, PROC_REF(remove_target))
 
 	.["Adjust Knowledge Points"] = CALLBACK(src, PROC_REF(admin_change_points))
+	.["Adjust Sidepath Points"] = CALLBACK(src, PROC_REF(admin_change_sidepath_points))
 	.["Give Focus"] = CALLBACK(src, PROC_REF(admin_give_focus))
 	if(heretic_path && heretic_path.route != PATH_START)
 		.["Give Blade"] = CALLBACK(src, PROC_REF(give_blade))
@@ -1070,6 +1091,18 @@
 	adjust_knowledge_points(change_num)
 
 /**
+ * Admin proc for easily adding / removing sidepath points.
+ */
+/datum/antagonist/heretic/proc/admin_change_sidepath_points(mob/admin)
+	if(!admin.client?.holder)
+		to_chat(admin, span_warning("You shouldn't be using this!"))
+		return
+	var/change_num = tgui_input_number(admin, "Add or remove sidepath points", "Points", 0, 100, -100)
+	if(!change_num || QDELETED(src))
+		return
+	adjust_sidepath_points(change_num)
+
+/**
  * Admin proc for giving a heretic a focus.
  */
 /datum/antagonist/heretic/proc/admin_give_focus(mob/admin)
@@ -1118,11 +1151,14 @@
 		return FALSE
 
 	var/cost = knowledge_data[HKT_COST]
-	if(cost > knowledge_points)
+	if(!can_buy_knowledge(knowledge_type, category, cost))
 		return FALSE
-	if(!gain_knowledge(knowledge_type, category, update))
+	if(!gain_knowledge(knowledge_type, category, FALSE))
 		return FALSE
-	adjust_knowledge_points(-cost, FALSE)
+	if(category == HERETIC_KNOWLEDGE_SHOP && sidepath_points >= cost)
+		adjust_sidepath_points(-cost, update)
+	else
+		adjust_knowledge_points(-cost, update)
 	return TRUE
 /**
  * Learns the passed [typepath] of knowledge, creating a knowledge datum
@@ -1172,6 +1208,11 @@
 		researchable_knowledge |= knowledge_info[HKT_NEXT]
 		banned_knowledge |= knowledge_info[HKT_BAN]
 		banned_knowledge |= knowledge_type
+	if(feast_of_owls)
+		var/list/shop = heretic_shops[HERETIC_KNOWLEDGE_SHOP]
+		for(var/knowledge_path in shop)
+			var/list/shop_info = shop[knowledge_path]
+			researchable_knowledge |= shop_info[HKT_ID]
 	researchable_knowledge -= banned_knowledge
 	return researchable_knowledge
 
