@@ -5,7 +5,6 @@
 	damaged_dmi = 'icons/turf/snow.dmi'
 	desc = "Looks cold."
 	icon_state = "snow"
-	turf_flags = parent_type::turf_flags & ~NO_RUST
 	planetary_atmos = TRUE
 	initial_gas_mix = FROZEN_ATMOS
 	slowdown = 2

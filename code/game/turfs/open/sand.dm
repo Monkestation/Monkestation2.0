@@ -2,7 +2,6 @@
 	name = "beach"
 	desc = "Sandy."
 	icon = 'icons/misc/beach.dmi'
-	turf_flags = parent_type::turf_flags & ~NO_RUST
 	flags_1 = NONE
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_SAND

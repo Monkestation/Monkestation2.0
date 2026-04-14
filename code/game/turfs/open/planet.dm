@@ -5,7 +5,6 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "dirt"
 	base_icon_state = "dirt"
-	turf_flags = parent_type::turf_flags & ~NO_RUST
 	baseturfs = /turf/open/chasm/jungle
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	planetary_atmos = TRUE
