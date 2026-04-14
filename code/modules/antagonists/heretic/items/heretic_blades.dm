@@ -128,7 +128,7 @@
 		return ITEM_INTERACT_BLOCKING
 	interacting_with.light()
 	playsound(user, 'sound/weapons/fwoosh.ogg', vol = 50, vary = TRUE)
-	user.visible_message(span_notice("[user] swiftly slashes the tip of [interacting_with] with [src], that's cool as hell."))
+	user.visible_message(span_notice("[user] swiftly slashes the tip of [interacting_with] with [src], igniting it with the blade's flame, that's cool as hell."))
 	return ITEM_INTERACT_SUCCESS
 
 // Path of Flesh's blade
