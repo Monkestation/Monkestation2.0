@@ -71105,10 +71105,6 @@
 	pixel_x = 4;
 	pixel_y = 6
 	},
-/obj/item/storage/box/silver_ids{
-	pixel_x = 4;
-	pixel_y = 6
-	},
 /obj/item/storage/box/ids,
 /obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/tile/neutral,

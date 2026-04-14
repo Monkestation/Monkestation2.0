@@ -251,3 +251,33 @@
   - bugfix: Bingles, space carp, space dragons, xenomorphs are now no longer only
       worth half their intended points.
   - rscadd: Borers, are now worth varying amounts of appriopate threat to the storyteller
+2026-04-14:
+  BigManMason (sprites), JohnFulpWillard:
+  - rscadd: Re-added gun flipping, if you have a holster equipped.
+  - rscadd: Added Velvet-Fu to the Janitor's uplink.
+  - rscadd: Added the Bolt Action Pistol to the hacked SecTech.
+  Cerulyss-Aureon:
+  - refactor: 'Conducted HFR code refactoring: removed duplicates and updated logic
+      to align with the current TG version.'
+  - balance: Temporarily adjusted the antinoblium production formula to maintain HFR
+      gameplay progression. Without antinoblium replication.
+  Cujo:
+  - rscadd: Adds silver ID box to the HoP's locker
+  - rscdel: Removed silver ID boxes from spawning outside of HoP or Captain locker
+  Mantlecrawler:
+  - rscadd: Tacticool syndicate engineering jumpsuits and skirts to monkecoin store
+  - qol: Exosuit fabs no longer require their panel to be open to change drop direction,
+      and have their drop direction set by click drag, in the same manner as proto/autolathes
+      - You can also altclick to set them to drop on their own tile
+  - bugfix: Conveyor sorters can now actually sort items
+  - rscadd: Contextual screentips for sorters
+  - bugfix: Hyposprays now properly show their inhand screentips when they are actually
+      inhand
+  Mushyyyyy:
+  - balance: slightly increased the damage and wound damage fall off for scatter laser
+      shells.
+  cursedforestspirit:
+  - rscadd: A new admin verb that clears admin uploaded maps.
+  - rscdel: Removed the code automatically deleting custom maps.
+  - bugfix: Custom maps should no longer delete themselves before they load and default
+      to metastation.

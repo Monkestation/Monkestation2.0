@@ -2736,7 +2736,6 @@
 /area/station/engineering/gravity_generator)
 "aNG" = (
 /obj/structure/closet/secure_closet/hop,
-/obj/item/storage/box/silver_ids,
 /obj/item/storage/box/ids,
 /obj/machinery/light_switch/directional/north,
 /obj/machinery/firealarm/directional/west,
