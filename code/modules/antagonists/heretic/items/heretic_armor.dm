@@ -1201,6 +1201,10 @@
 	. += span_notice("Is space worthy as long as the hood is up.")
 	. += span_notice("In addition, it will never leave behind fibers.")
 
+/obj/item/clothing/suit/hooded/cultrobes/void/on_hood_created(obj/item/clothing/head/hooded/hood)
+	. = ..()
+	make_invisible()
+
 /obj/item/clothing/suit/hooded/cultrobes/void/on_hood_down(obj/item/clothing/head/hooded/hood)
 	make_visible()
 	return ..()
@@ -1215,16 +1219,13 @@
 	loc.balloon_alert(loc, "can't get the hood up!")
 	return FALSE
 
-/obj/item/clothing/suit/hooded/cultrobes/void/on_hood_created(obj/item/clothing/head/hooded/hood)
-	. = ..()
-	make_invisible()
-
 /// Makes our cloak "invisible". Not the wearer, the cloak itself.
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_invisible()
 	add_traits(list(TRAIT_NO_STRIP, TRAIT_EXAMINE_SKIP), REF(src))
 	RemoveElement(/datum/element/heretic_focus)
 
 	if(isliving(loc))
+		loc.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), REF(src))
 		loc.balloon_alert(loc, "cloak hidden")
 		loc.visible_message(span_notice("Light shifts around [loc], making the cloak around [loc.p_them()] invisible!"))
 
@@ -1233,6 +1234,11 @@
 	remove_traits(list(TRAIT_NO_STRIP, TRAIT_EXAMINE_SKIP), REF(src))
 	AddElement(/datum/element/heretic_focus)
 
-	if(isliving(loc))
-		loc.balloon_alert(loc, "cloak revealed")
-		loc.visible_message(span_notice("A kaleidoscope of colours collapses around [loc], a cloak appearing suddenly around [loc.p_their()] person!"))
+	var/mob/living/wearer = loc
+	if(isliving(wearer))
+		wearer.remove_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), REF(src))
+		// due to how temperature works, we need to make sure they don't freeze the moment they put the hood down after coming inside from a spacewalk
+		if(wearer.bodytemperature <= wearer.bodytemp_cold_damage_limit)
+			wearer.adjust_bodytemperature(INFINITY, max_temp = wearer.standard_body_temperature)
+		wearer.balloon_alert(wearer, "cloak revealed")
+		wearer.visible_message(span_notice("A kaleidoscope of colours collapses around [wearer], a cloak appearing suddenly around [wearer.p_their()] person!"))
