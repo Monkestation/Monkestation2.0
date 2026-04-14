@@ -5,6 +5,7 @@
 	icon_state = "ash"
 	base_icon_state = "ash"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
+	turf_flags = parent_type::turf_flags & ~NO_RUST
 	desc = "The ground is covered in volcanic ash."
 	baseturfs = /turf/open/misc/ashplanet/wateryrock //I assume this will be a chasm eventually, once this becomes an actual surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS

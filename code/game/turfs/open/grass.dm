@@ -4,6 +4,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "grass"
 	base_icon_state = "grass"
+	turf_flags = parent_type::turf_flags & ~NO_RUST
 	baseturfs = /turf/open/misc/sandy_dirt
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_GRASS
