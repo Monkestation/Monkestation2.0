@@ -1068,18 +1068,8 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/void
 	armor_type = /datum/armor/eldritch_armor/void
-	/// Cooldown before we can go back into stealth
-	COOLDOWN_DECLARE(stealth_cooldown)
-	/// Timer before our stealth runs out
-	var/stealth_timer
-
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/void/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
-	. = ..()
-	if(. || !timeleft(stealth_timer))
-		return
-	// Remove from stealth when you lose the robes
-	deltimer(stealth_timer)
-	end_stealth(user)
+	/// Cooldown before we can release an AOE void chill again.
+	COOLDOWN_DECLARE(chill_cooldown)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/void/robes_side_effect(mob/living/user)
 	. = ..()
@@ -1092,15 +1082,16 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/void/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type, damage_type)
 	. = ..()
-	if(!COOLDOWN_FINISHED(src, stealth_cooldown))
+	if(!COOLDOWN_FINISHED(src, chill_cooldown))
 		return
-	COOLDOWN_START(src, stealth_cooldown, 20 SECONDS)
-	stealth_timer = addtimer(CALLBACK(src, PROC_REF(end_stealth), owner), 5 SECONDS, TIMER_STOPPABLE)
-	owner.alpha = 0
+	COOLDOWN_START(src, chill_cooldown, 10 SECONDS)
+	for(var/mob/living/victim in oview(4, owner))
+		if(IS_HERETIC_OR_MONSTER(victim))
+			continue
+		if(victim.can_block_magic(MAGIC_RESISTANCE))
+			continue
+		victim.apply_status_effect(/datum/status_effect/void_chill, 1)
 	return TRUE
-
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/void/proc/end_stealth(mob/living/carbon/human/owner)
-	animate(owner, time = 1 SECONDS, alpha = initial(owner.alpha))
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/void
 	name = "\improper Hollow Weave"
