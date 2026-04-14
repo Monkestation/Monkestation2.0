@@ -103,7 +103,7 @@
 	cost = 2
 
 /// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Torn Champion.
-#define BLOOD_FLOW_PER_SEVEIRTY -1
+#define BLOOD_FLOW_PER_SEVERITY -1
 
 /datum/heretic_knowledge/duel_stance
 	name = "Stance of the Torn Champion"
@@ -152,7 +152,7 @@
 	if(gained_wound.blood_flow <= 0)
 		return
 
-	gained_wound.adjust_blood_flow(gained_wound.severity * BLOOD_FLOW_PER_SEVEIRTY)
+	gained_wound.adjust_blood_flow(gained_wound.severity * BLOOD_FLOW_PER_SEVERITY)
 
 /datum/heretic_knowledge/duel_stance/proc/on_health_update(mob/living/source)
 	SIGNAL_HANDLER
@@ -171,7 +171,7 @@
 		source.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown, TRUE)
 		return
 
-#undef BLOOD_FLOW_PER_SEVEIRTY
+#undef BLOOD_FLOW_PER_SEVERITY
 
 /datum/heretic_knowledge/armor/blade
 	desc = "Allows you to transmute a table (or a suit), a mask and a sheet of titanium or silver to create a Shattered Panoply. \
