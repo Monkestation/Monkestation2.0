@@ -12,7 +12,9 @@
 	var/turf/location
 
 /datum/status_effect/crucible_soul/on_apply()
-	to_chat(owner,span_notice("You phase through reality, nothing is out of bounds!"))
+	to_chat(owner, span_notice("You phase through reality, nothing is out of bounds!"))
+	owner.add_traits(list(TRAIT_PACIFISM, TRAIT_NOGUNS), TRAIT_STATUS_EFFECT(id))
+	RegisterSignal(owner, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(prevent_spell_usage))
 	owner.alpha = 180
 	owner.pass_flags |= PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB | PASSDOORS | PASSVEHICLE
 	location = get_turf(owner)
@@ -21,7 +23,9 @@
 	return TRUE
 
 /datum/status_effect/crucible_soul/on_remove()
-	to_chat(owner,span_notice("You regain your physicality, returning you to your original location..."))
+	to_chat(owner, span_notice("You regain your physicality, returning you to your original location..."))
+	owner.remove_traits(list(TRAIT_PACIFISM, TRAIT_NOGUNS), TRAIT_STATUS_EFFECT(id))
+	UnregisterSignal(owner, COMSIG_MOB_BEFORE_SPELL_CAST)
 	owner.alpha = initial(owner.alpha)
 	owner.pass_flags &= ~(PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB | PASSDOORS | PASSVEHICLE)
 	owner.forceMove(location)
@@ -30,6 +34,11 @@
 
 /datum/status_effect/crucible_soul/get_examine_text()
 	return span_notice("[owner.p_They()] [owner.p_do()]n't seem to be all here.")
+
+/datum/status_effect/crucible_soul/proc/prevent_spell_usage(datum/source, datum/spell)
+	SIGNAL_HANDLER
+	owner.balloon_alert(owner, "may not cast spells while phased out!")
+	return SPELL_CANCEL_CAST
 
 /datum/action/cancel_crucible_soul
 	name = "Recall"

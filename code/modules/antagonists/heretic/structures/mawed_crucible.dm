@@ -301,7 +301,7 @@
 	desc = "A glass bottle containing a bright orange, translucent liquid."
 	icon_state = "crucible_soul"
 	status_effect = /datum/status_effect/crucible_soul
-	crucible_tip = "Allows you to walk through walls. After expiring, you are teleported to your original location. Lasts 40 seconds."
+	crucible_tip = "Allows you to walk through walls, albeit you cannot attack or use spells while doing so. After expiring, you are teleported to your original location. Lasts 40 seconds."
 	can_refresh = FALSE
 
 /obj/item/eldritch_potion/crucible_soul/attack_self(mob/user)
