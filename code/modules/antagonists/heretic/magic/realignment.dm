@@ -61,6 +61,7 @@
 	return span_notice("[owner.p_Theyre()] glowing a soft white.")
 
 /datum/status_effect/realignment/on_apply()
+	owner.stamina?.resume()
 	owner.add_traits(realignment_traits, TRAIT_STATUS_EFFECT(id))
 	owner.add_filter(id, 2, list("type" = "outline", "color" = "#d6e3e7", "size" = 2))
 	var/filter = owner.get_filter(id)
