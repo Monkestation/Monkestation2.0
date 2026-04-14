@@ -7392,7 +7392,6 @@
 #include "monkestation\code\modules\blueshift\items\pizza.dm"
 #include "monkestation\code\modules\blueshift\items\plushies.dm"
 #include "monkestation\code\modules\blueshift\items\plushieslobcorp.dm"
-#include "monkestation\code\modules\blueshift\items\retractable_armor.dm"
 #include "monkestation\code\modules\blueshift\items\skillchip.dm"
 #include "monkestation\code\modules\blueshift\items\soul_catcher.dm"
 #include "monkestation\code\modules\blueshift\items\survival_pack.dm"
