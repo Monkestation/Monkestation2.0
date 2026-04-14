@@ -97,7 +97,7 @@
 /atom/movable/screen/alert/status_effect/heretic_sated
 	name = "Sated"
 	desc = "You cannot siphon essence from influences until you complete a sacrifice."
-	icon_state = "food_buff_2"
+	icon_state = "pierced_illusion"
 
 /datum/status_effect/corrosion_curse
 	id = "corrosion_curse"
