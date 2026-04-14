@@ -322,7 +322,7 @@
 
 /mob/living/simple_animal/bot/buttbot/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods, message_range)
 	. = ..()
-	if(COOLDOWN_FINISHED(src, repeat_cooldown) && prob(listen_probability) && ishuman(speaker))
+	if(COOLDOWN_FINISHED(src, repeat_cooldown) && prob(listen_probability))
 		COOLDOWN_START(src, repeat_cooldown, 2 SECONDS)
 		var/list/split_message = splittext_char(html_decode(raw_message), " ")
 		for (var/i in 1 to length(split_message))

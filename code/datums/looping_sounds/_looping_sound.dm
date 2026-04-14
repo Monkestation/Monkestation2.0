@@ -160,6 +160,8 @@
 
 	if(direct)
 		var/mob/mob_parent = parent
+		if(!mob_parent?.client)
+			return
 		sound_to_play.channel = sound_channel || guess_mixer_channel(soundfile) || SSsounds.random_available_channel()
 		sound_to_play.volume = volume_override || calculate_mixed_volume(mob_parent.client, sound_to_play.volume, sound_to_play.channel)
 		SEND_SOUND(mob_parent, sound_to_play)

@@ -16,5 +16,5 @@
 		crop.visible_message(span_warning("\The [crop] rots at an alarming rate!"))
 		new /obj/item/food/badrecipe(get_turf(crop))
 		qdel(crop)
-		if(prob(30 / multiplier))
+		if(prob(30 * power / multiplier))
 			break
