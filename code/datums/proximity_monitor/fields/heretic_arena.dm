@@ -171,6 +171,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 		to_chat(owner, span_big(span_hypnophrase("The mansus is pleased with your performance, you may leave now.")))
 	else
 		to_chat(owner, span_big(span_hypnophrase("You have done well, you may leave now.")))
+	owner.balloon_alert(owner, "you are free to leave now")
 	arena_victor = TRUE
 	owner.update_appearance(UPDATE_OVERLAYS)
 
