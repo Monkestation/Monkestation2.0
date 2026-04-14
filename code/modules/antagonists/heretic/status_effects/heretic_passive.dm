@@ -6,6 +6,7 @@
 	id = "heretic_passive"
 	duration = STATUS_EFFECT_PERMANENT
 	status_type = STATUS_EFFECT_REPLACE
+	processing_speed = STATUS_EFFECT_PRIORITY
 	alert_type = null
 	on_remove_on_mob_delete = TRUE
 	/// Reference to the owning heretic datum
