@@ -15,7 +15,7 @@
 	human.skin_tone = random_skin_tone()
 	human.dna.species.randomize_active_underwear_only(human)
 	// Needs to be called towards the end to update all the UIs just set above
-	human.dna.initialize_dna(newblood_type = random_blood_type(), create_mutation_blocks = randomize_mutations, randomize_features = TRUE)
+	human.dna.initialize_dna(newblood_type = random_human_blood_type(), create_mutation_blocks = randomize_mutations, randomize_features = TRUE)
 	// Snowflake stuff (ethereals)
 	human.dna.species.spec_updatehealth(human)
 	human.updateappearance(mutcolor_update = TRUE)
