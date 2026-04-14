@@ -46,7 +46,8 @@
 	. = ..()
 	if(!.) //dead or deleted
 		return
-	if(is_touching_rust())
+	var/turf/our_turf = get_turf(src)
+	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		adjustBruteLoss(-3 * seconds_per_tick)
 
 /// Converts unconverted terrain, sprays pocket sand around
