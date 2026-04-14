@@ -948,7 +948,8 @@
 	// The circuit should also be in component parts, so don't early return.
 	if(gone == circuit)
 		circuit = null
-	if((gone in component_parts) && !QDELETED(src))
+	// Check if component removed is an assembly because they get moved to component parts on attach
+	if((gone in component_parts) && !QDELETED(src) && !istype(gone, /obj/item/assembly))
 		component_parts -= gone
 		// It would be unusual for a component_part to be qdel'd ordinarily.
 		deconstruct(FALSE)
