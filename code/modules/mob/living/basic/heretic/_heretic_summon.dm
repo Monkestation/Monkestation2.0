@@ -27,6 +27,8 @@
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
 
+	lighting_cutoff = LIGHTING_CUTOFF_HIGH
+
 	istate = ISTATE_HARM
 	ai_controller = null
 	speak_emote = list("screams")
