@@ -435,10 +435,10 @@
 		return
 	if(!isnull(full_key))
 		full_key = null
-		update_button_status(src)
+		build_all_button_icons(UPDATE_BUTTON_STATUS)
 		return
 	full_key = tgui_input_keycombo(user, "Please bind a key for this action.")
-	update_button_status(src)
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 /datum/action/proc/keydown(mob/source, key, client/client, full_key)
 	SIGNAL_HANDLER
