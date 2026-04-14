@@ -42,13 +42,13 @@
 		icon_state = "[base_icon_state]_s"
 	icon_living = icon_state
 
-/mob/living/basic/heretic_summon/rust_walker/Life(seconds_per_tick = SSMOBS_DT)
+/mob/living/basic/heretic_summon/rust_walker/Life(seconds_per_tick)
 	. = ..()
 	if(!.) //dead or deleted
 		return
 	var/turf/our_turf = get_turf(src)
 	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
-		adjustBruteLoss(-3 * seconds_per_tick)
+		adjustBruteLoss(-3 * DELTA_WORLD_TIME(SSclient_mobs))
 
 /// Converts unconverted terrain, sprays pocket sand around
 /datum/ai_controller/basic_controller/rust_walker
