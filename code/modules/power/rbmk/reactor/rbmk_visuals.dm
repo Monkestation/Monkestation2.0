@@ -1,7 +1,6 @@
 /obj/machinery/rbmk/reactor/update_icon()
 	. = ..()
 	update_reactor_icon()
-	return .
 
 
 /obj/machinery/rbmk/reactor/proc/update_reactor_sound()
@@ -27,25 +26,22 @@
 		if("reactor_overheat")
 			target_volume = 32
 			target_range = 22
-		if("reactor_meltdown")
-			target_volume = 45
-			target_range = 26
 
-	if(!soundloop || last_sound_state != icon_state)
-		if(soundloop)
-			QDEL_NULL(soundloop)
-
-		soundloop = new(list(src), FALSE)
-		soundloop.mid_sounds = list('monkestation/sound/effects/rbmk/reactor_hum.ogg')
-		soundloop.mid_length = 50
+	if(soundloop && last_sound_state == icon_state)
 		soundloop.volume = target_volume
 		soundloop.extra_range = target_range
-		soundloop.falloff_distance = 5
-		soundloop.falloff_exponent = 8
-		soundloop.vary = TRUE
-	else
-		soundloop.volume = target_volume
-		soundloop.extra_range = target_range
+		return
+
+	QDEL_NULL(soundloop)
+
+	soundloop = new(list(src), FALSE)
+	soundloop.mid_sounds = list('monkestation/sound/effects/rbmk/reactor_hum.ogg')
+	soundloop.mid_length = 50
+	soundloop.volume = target_volume
+	soundloop.extra_range = target_range
+	soundloop.falloff_distance = 5
+	soundloop.falloff_exponent = 8
+	soundloop.vary = TRUE
 
 	last_sound_state = icon_state
 

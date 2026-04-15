@@ -7,11 +7,7 @@
 
 
 /obj/machinery/rbmk/reactor/proc/rbmk_update_control_rods()
-	var/step_size = control_rod_step
-
-	if(scrammed)
-		step_size = scram_control_rod_step
-
+	var/step_size = scrammed ? scram_control_rod_step : control_rod_step
 	step_size = max(step_size, 1)
 
 	if(actual_control_rod_depth < control_rod_depth)
@@ -75,23 +71,19 @@
 
 
 /obj/machinery/rbmk/reactor/proc/emit_real_radiation()
-	if(meltdown_in_progress)
+	if(meltdown_in_progress || !running)
 		return
 
 	// No emitted radiation while the rods are fully in or the reactor is not actually running.
 	if(actual_control_rod_depth >= RBMK_CONTROL_ROD_MAX)
 		return
-	if(!running)
-		return
 	if(radiation <= 0 || flux <= 0)
 		return
 
-	var/integrity_ratio = reactor_integrity / max(max_reactor_integrity, 1)
-	integrity_ratio = clamp(integrity_ratio, 0, 1)
-
-	// Scale mostly off load so startup stays light and hard-running cores get nastier.
+	var/integrity_ratio = clamp(reactor_integrity / max(max_reactor_integrity, 1), 0, 1)
 	var/load_ratio = clamp(flux / max(RBMK_MAX_FLUX, 1), 0, 1)
 
+	// Scale mostly off load so startup stays light and hard-running cores get nastier.
 	var/effective_rad_output = radiation * (0.15 + (load_ratio * 0.85))
 	effective_rad_output = min(effective_rad_output, RBMK_MAX_RADIATION)
 
@@ -142,7 +134,7 @@
 
 		rbmk_coolant_exchange()
 		rbmk_update_pressure()
-		rbmk_sample_coolant(src)
+		rbmk_sample_coolant()
 		rbmk_sample_reactor_temperature()
 
 		update_reactor_icon()
@@ -157,7 +149,7 @@
 	var/active_rods = 0
 
 	for(var/obj/item/rbmk/fuel_rod/fuel_rod in (normal_slots + special_slots))
-		if(!fuel_rod || !fuel_rod.active)
+		if(!fuel_rod?.active)
 			continue
 
 		var/list/rod_output = fuel_rod.process_rod()
@@ -181,7 +173,7 @@
 		rbmk_decay_process()
 		rbmk_coolant_exchange()
 		rbmk_update_pressure()
-		rbmk_sample_coolant(src)
+		rbmk_sample_coolant()
 		rbmk_sample_reactor_temperature()
 		check_decay_meltdown()
 		check_hard_meltdown_conditions()
@@ -193,7 +185,6 @@
 	running = TRUE
 
 	var/control_ratio = clamp(actual_control_rod_depth / RBMK_CONTROL_ROD_MAX, 0, 1)
-
 	var/flux_control_multiplier = clamp(1 - control_ratio, 0, 1)
 
 	// Heat is still easier to sustain than flux, but fully inserted rods still shut it down.
@@ -234,7 +225,7 @@
 
 	rbmk_coolant_exchange()
 	rbmk_update_pressure()
-	rbmk_sample_coolant(src)
+	rbmk_sample_coolant()
 	rbmk_sample_reactor_temperature()
 
 	update_reactor_integrity()

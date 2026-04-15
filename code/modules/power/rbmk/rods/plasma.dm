@@ -21,9 +21,6 @@
 	thermal_multiplier = 1.0
 	radiation_multiplier = 1.0
 
-	active = TRUE
-
-
 /obj/item/rbmk/fuel_rod/plasma/process_rod()
 	return list(
 		"flux" = 0,

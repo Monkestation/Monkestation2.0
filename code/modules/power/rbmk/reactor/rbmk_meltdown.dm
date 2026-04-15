@@ -1,9 +1,5 @@
 /obj/machinery/rbmk/reactor/proc/check_decay_meltdown()
-	if(meltdown_in_progress)
-		return
-
-	// Only matters after shutdown.
-	if(running)
+	if(meltdown_in_progress || running)
 		return
 
 	// Avoid checking this every tick.
@@ -60,8 +56,6 @@
 
 	update_linked_consoles()
 	log_game("[src] MELTDOWN triggered: [reason]")
-
-	STOP_PROCESSING(SSmachines, src)
 
 
 /obj/machinery/rbmk/reactor/proc/meltdown_radiation_pulse()

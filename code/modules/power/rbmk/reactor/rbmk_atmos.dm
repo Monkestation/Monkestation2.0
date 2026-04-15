@@ -25,10 +25,7 @@
 
 
 /obj/machinery/atmospherics/components/unary/rbmk/inlet/process_atmos()
-	if(!parent_reactor)
-		return
-
-	if(!parent_reactor.inlet_open)
+	if(!parent_reactor?.inlet_open)
 		return
 
 	// Keep the port active while enabled so toggles and rate changes
@@ -58,10 +55,7 @@
 
 
 /obj/machinery/atmospherics/components/unary/rbmk/outlet/process_atmos()
-	if(!parent_reactor)
-		return
-
-	if(!parent_reactor.outlet_open)
+	if(!parent_reactor?.outlet_open)
 		return
 
 	// Keep the port active while enabled so it keeps checking
@@ -83,7 +77,7 @@
 		return
 
 	// Prefer venting into the connected pipe network.
-	if(airs && airs.len)
+	if(airs?.len)
 		airs[1].merge(released_mix)
 		update_parents()
 		return
@@ -95,27 +89,21 @@
 		air_update_turf(port_turf)
 
 
-/proc/rbmk_init_coolant(obj/machinery/rbmk/reactor/reactor)
-	if(!reactor)
-		return
+/obj/machinery/rbmk/reactor/proc/rbmk_init_coolant()
+	coolant_internal = new /datum/gas_mixture()
+	coolant_internal.volume = RBMK_COOLANT_VOLUME_MAX
+	coolant_internal.temperature = RBMK_AMBIENT_TEMP
 
-	reactor.coolant_internal = new /datum/gas_mixture()
-	reactor.coolant_internal.volume = RBMK_COOLANT_VOLUME_MAX
-	reactor.coolant_internal.temperature = RBMK_AMBIENT_TEMP
-
-	reactor.coolant_pressure_history = list()
-	reactor.coolant_temperature_history = list()
-	reactor.coolant_total_moles_history = list()
-	reactor.coolant_gas_hist = list()
+	coolant_pressure_history = list()
+	coolant_temperature_history = list()
+	coolant_total_moles_history = list()
+	coolant_gas_hist = list()
 
 
-/proc/rbmk_cleanup_atmos(obj/machinery/rbmk/reactor/reactor)
-	if(reactor.inlet)
-		qdel(reactor.inlet)
-	if(reactor.outlet)
-		qdel(reactor.outlet)
-
-	QDEL_NULL(reactor.coolant_internal)
+/obj/machinery/rbmk/reactor/proc/rbmk_cleanup_atmos()
+	QDEL_NULL(inlet)
+	QDEL_NULL(outlet)
+	QDEL_NULL(coolant_internal)
 
 
 /obj/machinery/rbmk/reactor/proc/relink_ports()
@@ -123,23 +111,19 @@
 	if(!center)
 		return
 
-	if(inlet)
-		qdel(inlet)
-	if(outlet)
-		qdel(outlet)
+	QDEL_NULL(inlet)
+	QDEL_NULL(outlet)
 
 	var/turf/in_tile = get_step(center, WEST)
 	if(in_tile)
-		var/obj/machinery/atmospherics/components/unary/rbmk/base/I
-		I = new /obj/machinery/atmospherics/components/unary/rbmk/inlet(in_tile)
+		var/obj/machinery/atmospherics/components/unary/rbmk/inlet/I = new(in_tile)
 		I.parent_reactor = src
 		I.dir = WEST
 		inlet = I
 
 	var/turf/out_tile = get_step(center, EAST)
 	if(out_tile)
-		var/obj/machinery/atmospherics/components/unary/rbmk/base/O
-		O = new /obj/machinery/atmospherics/components/unary/rbmk/outlet(out_tile)
+		var/obj/machinery/atmospherics/components/unary/rbmk/outlet/O = new(out_tile)
 		O.parent_reactor = src
 		O.dir = EAST
 		outlet = O
@@ -153,33 +137,37 @@
 
 
 /obj/machinery/rbmk/reactor/proc/get_inlet_mix()
-	return inlet ? inlet.airs[1] : null
+	if(!inlet || !inlet.airs || inlet.airs.len < 1)
+		return null
+	return inlet.airs[1]
 
 
 /obj/machinery/rbmk/reactor/proc/get_outlet_mix()
-	return outlet ? outlet.airs[1] : null
+	if(!outlet || !outlet.airs || outlet.airs.len < 1)
+		return null
+	return outlet.airs[1]
 
 
 /obj/machinery/rbmk/reactor/proc/get_coolant_mix()
 	return coolant_internal
 
 
-/proc/rbmk_sample_coolant(obj/machinery/rbmk/reactor/reactor)
-	var/datum/gas_mixture/mix = reactor.coolant_internal
+/obj/machinery/rbmk/reactor/proc/rbmk_sample_coolant()
+	var/datum/gas_mixture/mix = coolant_internal
 	if(!mix)
 		return
 
-	reactor.coolant_pressure_history.Add(mix.return_pressure())
-	if(reactor.coolant_pressure_history.len > 60)
-		reactor.coolant_pressure_history.Cut(1, 2)
+	coolant_pressure_history.Add(mix.return_pressure())
+	if(coolant_pressure_history.len > 60)
+		coolant_pressure_history.Cut(1, 2)
 
-	reactor.coolant_temperature_history.Add(mix.temperature)
-	if(reactor.coolant_temperature_history.len > 60)
-		reactor.coolant_temperature_history.Cut(1, 2)
+	coolant_temperature_history.Add(mix.temperature)
+	if(coolant_temperature_history.len > 60)
+		coolant_temperature_history.Cut(1, 2)
 
-	reactor.coolant_total_moles_history.Add(mix.total_moles())
-	if(reactor.coolant_total_moles_history.len > 60)
-		reactor.coolant_total_moles_history.Cut(1, 2)
+	coolant_total_moles_history.Add(mix.total_moles())
+	if(coolant_total_moles_history.len > 60)
+		coolant_total_moles_history.Cut(1, 2)
 
 	var/total = mix.total_moles()
 	if(total <= 0)
@@ -189,9 +177,9 @@
 		var/list/g = mix.gases[gas]
 		var/percent = (g[MOLES] / total) * 100
 
-		var/list/history = reactor.coolant_gas_hist[gas]
+		var/list/history = coolant_gas_hist[gas]
 		if(!history)
-			history = reactor.coolant_gas_hist[gas] = list()
+			history = coolant_gas_hist[gas] = list()
 
 		history.Add(percent)
 		if(history.len > 60)

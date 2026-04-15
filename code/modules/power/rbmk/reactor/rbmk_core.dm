@@ -82,7 +82,7 @@
 
 /obj/machinery/rbmk/reactor/proc/has_active_fuel_rods()
 	for(var/obj/item/rbmk/fuel_rod/fuel_rod in (normal_slots + special_slots))
-		if(fuel_rod && fuel_rod.active)
+		if(fuel_rod?.active)
 			return TRUE
 	return FALSE
 
@@ -99,10 +99,7 @@
 
 
 /obj/machinery/rbmk/reactor/proc/is_special_rod(obj/item/rbmk/fuel_rod/fuel_rod)
-	if(!fuel_rod)
-		return FALSE
-
-	return fuel_rod.rod_type in list("plasma", "telecrystal", "supermatter")
+	return fuel_rod?.rod_type in list("plasma", "telecrystal", "supermatter")
 
 
 /obj/machinery/rbmk/reactor/proc/get_target_slot_list(obj/item/rbmk/fuel_rod/fuel_rod)
@@ -137,10 +134,9 @@
 	soundloop = new(list(src), FALSE)
 
 	var/turf/reactor_turf = get_turf(src)
-	if(reactor_turf)
-		var/datum/gas_mixture/environment_mix = reactor_turf.return_air()
-		if(environment_mix)
-			temperature = environment_mix.temperature
+	var/datum/gas_mixture/environment_mix = reactor_turf?.return_air()
+	if(environment_mix)
+		temperature = environment_mix.temperature
 
 	if(temperature < RBMK_AMBIENT_TEMP)
 		temperature = RBMK_AMBIENT_TEMP
@@ -154,18 +150,16 @@
 	coolant_gas_hist = list()
 	reactor_temperature_history = list()
 
-	rbmk_init_coolant(src)
+	rbmk_init_coolant()
 	relink_ports()
 
 	update_reactor_icon()
-	START_PROCESSING(SSmachines, src)
 	return INITIALIZE_HINT_NORMAL
 
 
 /obj/machinery/rbmk/reactor/Destroy()
-	STOP_PROCESSING(SSmachines, src)
 	QDEL_NULL(soundloop)
-	rbmk_cleanup_atmos(src)
+	rbmk_cleanup_atmos()
 	return ..()
 
 
@@ -184,24 +178,34 @@
 	update_linked_consoles()
 
 
-/obj/machinery/rbmk/reactor/attackby(obj/item/item, mob/user, params)
-	if(!istype(item, /obj/item/rbmk/fuel_rod))
-		return ..()
+/obj/machinery/rbmk/reactor/item_interaction(mob/living/user, obj/item/used_item, list/modifiers)
+	. = ..()
+	if(.)
+		return .
 
-	var/obj/item/rbmk/fuel_rod/fuel_rod = item
+	if(!istype(used_item, /obj/item/rbmk/fuel_rod))
+		return .
+
+	return try_insert_fuel_rod(used_item, user)
+
+
+/obj/machinery/rbmk/reactor/proc/try_insert_fuel_rod(obj/item/rbmk/fuel_rod/fuel_rod, mob/user)
+	if(!fuel_rod || !user)
+		return ITEM_INTERACT_FAILURE
+
 	var/list/target_slots = get_target_slot_list(fuel_rod)
 
 	if(target_slots == special_slots)
 		if(length(special_slots) >= max_special_slots)
 			to_chat(user, span_warning("All special rod slots are occupied!"))
-			return TRUE
+			return ITEM_INTERACT_SUCCESS
 	else
 		if(length(normal_slots) >= max_normal_slots)
 			to_chat(user, span_warning("All normal rod slots are occupied!"))
-			return TRUE
+			return ITEM_INTERACT_SUCCESS
 
 	if(!user.transferItemToLoc(fuel_rod, src))
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
 	target_slots += fuel_rod
 
@@ -215,7 +219,7 @@
 
 	to_chat(user, span_notice("You insert [fuel_rod.name] into the reactor."))
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 
 /obj/machinery/rbmk/reactor/attack_hand(mob/user)
@@ -255,12 +259,7 @@
 
 
 /obj/machinery/rbmk/reactor/proc/remove_rod_by_slot(slot_kind, slot_index, mob/user = null)
-	var/list/target_slots = null
-
-	if(slot_kind == "special")
-		target_slots = special_slots
-	else
-		target_slots = normal_slots
+	var/list/target_slots = (slot_kind == "special") ? special_slots : normal_slots
 
 	if(!isnum(slot_index))
 		return FALSE

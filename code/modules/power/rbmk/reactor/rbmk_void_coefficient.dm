@@ -1,11 +1,10 @@
 /obj/machinery/rbmk/reactor/proc/update_void_coefficient()
 	// No active reaction means no useful feedback term.
-	if(!running || meltdown_in_progress)
+	if(meltdown_in_progress || !running)
 		void_coefficient = 0
-		return void_coefficient
+		return 0
 
-	var/temperature_coefficient = temperature * RBMK_VC_TEMP_COEFF
-	temperature_coefficient = max(temperature_coefficient, 0)
+	var/temperature_coefficient = max(temperature * RBMK_VC_TEMP_COEFF, 0)
 
 	void_coefficient = clamp(
 		temperature_coefficient,

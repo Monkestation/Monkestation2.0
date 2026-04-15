@@ -18,4 +18,4 @@
 	radiation_multiplier = 3.0
 	thermal_multiplier = 1.4
 
-	active = TRUE
+
