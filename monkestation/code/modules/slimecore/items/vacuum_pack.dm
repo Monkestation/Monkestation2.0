@@ -346,6 +346,8 @@
 	return NONE
 
 /obj/item/vacuum_nozzle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/item/disk/vacuum_upgrade))
+		return pack.item_interaction(interacting_with, user, modifiers)
 	if(!istype(interacting_with, /obj/machinery/biomass_recycler))
 		return ranged_interact_with_atom(interacting_with, user, modifiers)
 	if(!(VACUUM_PACK_UPGRADE_BIOMASS in pack.upgrades))
