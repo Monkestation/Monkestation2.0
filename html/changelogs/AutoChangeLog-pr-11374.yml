@@ -1,0 +1,4 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - qol: "cursed duffelbags drop their contents on delete."

@@ -1030,7 +1030,8 @@
 	name = "Mecha Orbital Pad"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/mechpad
-	req_components = list()
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 5,) //you are sending a giant behemoth of a machine (that also does 80 falling damage in multi-z) into a plate
 
 /obj/item/circuitboard/machine/botpad
 	name = "Bot Orbital Pad"

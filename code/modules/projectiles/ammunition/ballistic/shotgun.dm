@@ -343,10 +343,12 @@
 	pellets = 36
 	variance = 25
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_death
+	can_be_printed = FALSE
 
 /obj/item/ammo_casing/shotgun/buckshot/hundred
 	pellets = 600
 	variance = 25
+	can_be_printed = FALSE
 
 
 // for the mining autoshotgun

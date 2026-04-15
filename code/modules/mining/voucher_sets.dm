@@ -286,7 +286,7 @@
 
 /datum/voucher_set/security/utility/barrier
 	name = "Barrier Grenades"
-	description = "Two barrier grenades."
+	description = "Three barrier grenades."
 	icon = 'icons/obj/weapons/grenade.dmi'
 	icon_state = "wallbang"
 	set_items = list(
@@ -421,6 +421,7 @@
 	new /obj/item/taperecorder(src)
 	new /obj/item/tape/random(src)
 	new /obj/item/folder/red(src)
+	new /obj/item/clipboard(src)
 	new /obj/item/storage/box/evidence(src)
 	new /obj/item/toy/crayon/white(src)
 	new /obj/item/binoculars(src)

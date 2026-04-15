@@ -104,6 +104,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CLUMSY "clumsy"
 /// Trait that means you are capable of holding items in some form
 #define TRAIT_CAN_HOLD_ITEMS "can_hold_items"
+/// This user can use advanced hypnoflashes.
+#define TRAIT_CAN_HYPNO "can_hypno"
 /// Trait which lets you clamber over a barrier
 #define TRAIT_FENCE_CLIMBER "can_climb_fences"
 /// means that you can't use weapons with normal trigger guards.
@@ -187,6 +189,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /* #define TRAIT_UNHUSKABLE "trait_unhuskable" */
 /// Reduces the chance viruses will spread to this mob, and if the mob has a virus, slows its advancement
 #define TRAIT_VIRUS_RESISTANCE "virus_resistance"
+/// Causes viruses, infected burns, and parasites to spread more effectively and faster, like an inverse of the above.
+#define TRAIT_IMMUNODEFICIENCY "immunodeficiency"
 #define TRAIT_GENELESS "geneless"
 #define TRAIT_PIERCEIMMUNE "pierce_immunity"
 #define TRAIT_NODISMEMBER "dismember_immunity"
