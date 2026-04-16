@@ -66,8 +66,12 @@
 	var/current_damage_stage = 0
 	var/image/current_damage_overlay_image = null
 
-	var/datum/looping_sound/rbmk_reactor/soundloop = null
-	var/last_sound_state = ""
+	var/datum/looping_sound/rbmk_reactor_low/low_soundloop = null
+	var/datum/looping_sound/rbmk_reactor_high/high_soundloop = null
+
+	var/startup_sequence_played = FALSE
+	var/previous_control_rod_depth = RBMK_CONTROL_ROD_MAX
+	var/rod_motion_in_progress = FALSE
 
 	var/meltdown_announced = FALSE
 	var/meltdown_in_progress = FALSE
@@ -129,9 +133,10 @@
 	meltdown_announced = FALSE
 	meltdown_in_progress = FALSE
 	last_decay_check = 0
-	last_sound_state = ""
 
-	soundloop = new /datum/looping_sound/rbmk_reactor(src, FALSE)
+	startup_sequence_played = FALSE
+	previous_control_rod_depth = RBMK_CONTROL_ROD_MAX
+	rod_motion_in_progress = FALSE
 
 	var/turf/reactor_turf = get_turf(src)
 	var/datum/gas_mixture/environment_mix = reactor_turf?.return_air()
@@ -158,9 +163,14 @@
 
 
 /obj/machinery/rbmk/reactor/Destroy()
-	if(soundloop)
-		soundloop.stop()
-	QDEL_NULL(soundloop)
+	if(low_soundloop)
+		low_soundloop.stop()
+	QDEL_NULL(low_soundloop)
+
+	if(high_soundloop)
+		high_soundloop.stop()
+	QDEL_NULL(high_soundloop)
+
 	rbmk_cleanup_atmos(src)
 	return ..()
 
@@ -172,6 +182,8 @@
 	scrammed = TRUE
 	control_rod_depth = RBMK_CONTROL_ROD_MAX
 	reset_reaction_state()
+	startup_sequence_played = FALSE
+	rod_motion_in_progress = FALSE
 
 	visible_message(span_danger("[src] emits a harsh shutdown alarm!"))
 	playsound(src, 'sound/machines/engine_alert1.ogg', 75, FALSE)
@@ -252,6 +264,8 @@
 
 	if(!has_fuel_rods())
 		reset_reaction_state()
+		startup_sequence_played = FALSE
+		rod_motion_in_progress = FALSE
 
 	update_reactor_icon()
 	update_linked_consoles()
@@ -283,6 +297,8 @@
 
 	if(!has_fuel_rods())
 		reset_reaction_state()
+		startup_sequence_played = FALSE
+		rod_motion_in_progress = FALSE
 
 	update_reactor_icon()
 	update_linked_consoles()

@@ -3,48 +3,66 @@
 	update_reactor_icon()
 
 
-/obj/machinery/rbmk/reactor/proc/update_reactor_sound()
-	if(icon_state == "reactor_off" || icon_state == "reactor_slagged")
-		if(soundloop)
-			soundloop.stop()
-			QDEL_NULL(soundloop)
-		last_sound_state = icon_state
-		return
+/obj/machinery/rbmk/reactor/proc/step_volume_toward(current_value, target_value, step = 2)
+	if(current_value < target_value)
+		return min(current_value + step, target_value)
+	if(current_value > target_value)
+		return max(current_value - step, target_value)
+	return current_value
 
-	var/target_volume = 10
-	var/target_range = 12
+
+/obj/machinery/rbmk/reactor/proc/update_reactor_sound()
+	var/low_target_volume = 0
+	var/high_target_volume = 0
+	var/low_target_range = 20
+	var/high_target_range = 24
+
+	if(icon_state == "reactor_off" || icon_state == "reactor_slagged")
+		if(low_soundloop)
+			low_soundloop.stop()
+			QDEL_NULL(low_soundloop)
+		if(high_soundloop)
+			high_soundloop.stop()
+			QDEL_NULL(high_soundloop)
+		return
 
 	switch(icon_state)
 		if("reactor_on")
-			target_volume = 8
-			target_range = 12
+			low_target_volume = 8
+			high_target_volume = 0
+			low_target_range = 12
+			high_target_range = 16
 		if("reactor_hot")
-			target_volume = 14
-			target_range = 15
+			low_target_volume = 12
+			high_target_volume = 4
+			low_target_range = 15
+			high_target_range = 18
 		if("reactor_veryhot")
-			target_volume = 22
-			target_range = 18
+			low_target_volume = 10
+			high_target_volume = 12
+			low_target_range = 18
+			high_target_range = 20
 		if("reactor_overheat")
-			target_volume = 32
-			target_range = 22
+			low_target_volume = 6
+			high_target_volume = 22
+			low_target_range = 20
+			high_target_range = 22
 		if("reactor_meltdown")
-			target_volume = 45
-			target_range = 26
+			low_target_volume = 0
+			high_target_volume = 32
+			low_target_range = 20
+			high_target_range = 26
 
-	if(soundloop && last_sound_state == icon_state)
-		soundloop.volume = target_volume
-		soundloop.extra_range = target_range
-		return
+	if(!low_soundloop)
+		low_soundloop = new /datum/looping_sound/rbmk_reactor_low(src, TRUE)
+	if(!high_soundloop)
+		high_soundloop = new /datum/looping_sound/rbmk_reactor_high(src, TRUE)
 
-	if(soundloop)
-		soundloop.stop()
-		QDEL_NULL(soundloop)
+	low_soundloop.volume = step_volume_toward(low_soundloop.volume, low_target_volume, 2)
+	low_soundloop.extra_range = low_target_range
 
-	soundloop = new /datum/looping_sound/rbmk_reactor(src, TRUE)
-	soundloop.volume = target_volume
-	soundloop.extra_range = target_range
-
-	last_sound_state = icon_state
+	high_soundloop.volume = step_volume_toward(high_soundloop.volume, high_target_volume, 2)
+	high_soundloop.extra_range = high_target_range
 
 
 /obj/machinery/rbmk/reactor/proc/update_reactor_icon()

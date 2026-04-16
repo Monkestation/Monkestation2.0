@@ -182,11 +182,20 @@
 	falloff_exponent = 1
 	sound_channel = CHANNEL_DELTA_SIRENS
 
-/datum/looping_sound/rbmk_reactor
-	mid_sounds = list('monkestation/sound/effects/rbmk/reactor_hum.ogg')
+/datum/looping_sound/rbmk_reactor_low
+	mid_sounds = list('monkestation/sound/effects/rbmk/reactor_hum_low.ogg')
 	mid_length = 50
-	volume = 5
+	volume = 0
 	extra_range = 20
+	falloff_distance = 5
+	falloff_exponent = 8
+	vary = TRUE
+
+/datum/looping_sound/rbmk_reactor_high
+	mid_sounds = list('monkestation/sound/effects/rbmk/reactor_hum_high.ogg')
+	mid_length = 50
+	volume = 0
+	extra_range = 24
 	falloff_distance = 5
 	falloff_exponent = 8
 	vary = TRUE

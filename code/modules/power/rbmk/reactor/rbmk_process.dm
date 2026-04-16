@@ -18,6 +18,44 @@
 	actual_control_rod_depth = clamp(actual_control_rod_depth, 0, RBMK_CONTROL_ROD_MAX)
 
 
+/obj/machinery/rbmk/reactor/proc/update_rod_motion_state()
+	var/rods_at_target = (actual_control_rod_depth == control_rod_depth)
+
+	if(!rods_at_target)
+		rod_motion_in_progress = TRUE
+		return
+
+	if(rod_motion_in_progress)
+		rod_motion_in_progress = FALSE
+		playsound(src, 'monkestation/sound/effects/rbmk/switch2.ogg', 55, TRUE)
+
+
+/obj/machinery/rbmk/reactor/proc/try_play_startup_sequence()
+	if(startup_sequence_played)
+		return
+
+	if(meltdown_in_progress || scrammed)
+		return
+
+	if(!has_fuel_rods())
+		return
+
+	if(previous_control_rod_depth >= RBMK_CONTROL_ROD_MAX && control_rod_depth < RBMK_CONTROL_ROD_MAX)
+		startup_sequence_played = TRUE
+		playsound(src, 'monkestation/sound/effects/rbmk/startup.ogg', 70, TRUE)
+		addtimer(CALLBACK(src, PROC_REF(play_startup_stage_two)), 20, TIMER_CLIENT_TIME | TIMER_DELETE_ME)
+
+
+/obj/machinery/rbmk/reactor/proc/play_startup_stage_two()
+	if(QDELETED(src))
+		return
+
+	if(meltdown_in_progress)
+		return
+
+	playsound(src, 'monkestation/sound/effects/rbmk/startup2.ogg', 70, TRUE)
+
+
 /obj/machinery/rbmk/reactor/proc/rbmk_coolant_exchange()
 	if(!coolant_internal)
 		return
@@ -39,7 +77,6 @@
 
 	var/contact_temp = contact_mix.temperature
 
-	// Keep the core hard to drag down while still letting coolant pick up heat.
 	var/core_thermal_mass = 2200
 	var/coolant_thermal_mass = max(contact_moles * 1.8, 1)
 
@@ -74,7 +111,6 @@
 	if(meltdown_in_progress || !running)
 		return
 
-	// No emitted radiation while the rods are fully in or the reactor is not actually running.
 	if(actual_control_rod_depth >= RBMK_CONTROL_ROD_MAX)
 		return
 	if(radiation <= 0 || flux <= 0)
@@ -83,7 +119,6 @@
 	var/integrity_ratio = clamp(reactor_integrity / max(max_reactor_integrity, 1), 0, 1)
 	var/load_ratio = clamp(flux / max(RBMK_MAX_FLUX, 1), 0, 1)
 
-	// Scale mostly off load so startup stays light and hard-running cores get nastier.
 	var/effective_rad_output = radiation * (0.15 + (load_ratio * 0.85))
 	effective_rad_output = min(effective_rad_output, RBMK_MAX_RADIATION)
 
@@ -124,24 +159,31 @@
 /obj/machinery/rbmk/reactor/process()
 	if(meltdown_in_progress || reactor_integrity <= 0)
 		reset_reaction_state()
+		rod_motion_in_progress = FALSE
 		update_reactor_icon()
 		update_linked_consoles()
+		previous_control_rod_depth = control_rod_depth
 		return
 
 	if(!has_fuel_rods())
 		reset_reaction_state()
 		actual_control_rod_depth = control_rod_depth
+		startup_sequence_played = FALSE
+		rod_motion_in_progress = FALSE
 
 		rbmk_coolant_exchange()
 		rbmk_update_pressure()
-		rbmk_sample_coolant()
+		rbmk_sample_coolant(src)
 		rbmk_sample_reactor_temperature()
 
 		update_reactor_icon()
 		update_linked_consoles()
+		previous_control_rod_depth = control_rod_depth
 		return
 
 	rbmk_update_control_rods()
+	update_rod_motion_state()
+	try_play_startup_sequence()
 
 	var/total_flux = 0
 	var/total_radiation = 0
@@ -163,7 +205,6 @@
 
 	last_tick_rod_count = active_rods
 
-	// SCRAM is just a latched event. If rods are pulled back out, allow the reactor to run again.
 	if(scrammed && control_rod_depth < RBMK_CONTROL_ROD_MAX)
 		scrammed = FALSE
 
@@ -173,24 +214,26 @@
 		rbmk_decay_process()
 		rbmk_coolant_exchange()
 		rbmk_update_pressure()
-		rbmk_sample_coolant()
+		rbmk_sample_coolant(src)
 		rbmk_sample_reactor_temperature()
 		check_decay_meltdown()
 		check_hard_meltdown_conditions()
 
 		update_reactor_icon()
 		update_linked_consoles()
+
+		if(control_rod_depth >= RBMK_CONTROL_ROD_MAX)
+			startup_sequence_played = FALSE
+			rod_motion_in_progress = FALSE
+
+		previous_control_rod_depth = control_rod_depth
 		return
 
 	running = TRUE
 
 	var/control_ratio = clamp(actual_control_rod_depth / RBMK_CONTROL_ROD_MAX, 0, 1)
 	var/flux_control_multiplier = clamp(1 - control_ratio, 0, 1)
-
-	// Heat is still easier to sustain than flux, but fully inserted rods still shut it down.
 	var/heat_control_multiplier = clamp(1 - (control_ratio ** 1.35), 0, 1)
-
-	// Radiation suppression sits between the two.
 	var/radiation_control_multiplier = clamp(1 - (control_ratio ** 1.15), 0, 1)
 
 	total_flux *= flux_control_multiplier
@@ -225,7 +268,7 @@
 
 	rbmk_coolant_exchange()
 	rbmk_update_pressure()
-	rbmk_sample_coolant()
+	rbmk_sample_coolant(src)
 	rbmk_sample_reactor_temperature()
 
 	update_reactor_integrity()
@@ -233,3 +276,8 @@
 
 	update_reactor_icon()
 	update_linked_consoles()
+
+	if(control_rod_depth >= RBMK_CONTROL_ROD_MAX)
+		startup_sequence_played = FALSE
+
+	previous_control_rod_depth = control_rod_depth
