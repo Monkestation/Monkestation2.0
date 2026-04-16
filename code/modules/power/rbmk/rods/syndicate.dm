@@ -27,7 +27,7 @@
 	active = TRUE
 
 
-/obj/item/rbmk/fuel_rod/supermatter/process_rod(var/reactor_temperature = RBMK_AMBIENT_TEMP, var/reactor_flux = 0, var/core_feedback_factor = 1.0)
+/obj/item/rbmk/fuel_rod/supermatter/process_rod(reactor_temperature = RBMK_AMBIENT_TEMP, reactor_flux = 0, core_feedback_factor = 1.0)
 	if(fuel_amount <= 0)
 		if(active)
 			active = FALSE
