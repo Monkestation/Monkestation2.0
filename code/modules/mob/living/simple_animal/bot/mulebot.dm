@@ -495,6 +495,7 @@
 	if(!speed)//Devide by zero man bad
 		return
 	num_steps = round(10/speed) //10, 5, or 3 steps, depending on how many wires we have cut
+	datum_flags &= ~DF_ISPROCESSING // hacky fix since /mob/living already registers this to another subsystem
 	START_PROCESSING(SSfastprocess, src)
 
 /mob/living/simple_animal/bot/mulebot/process()
