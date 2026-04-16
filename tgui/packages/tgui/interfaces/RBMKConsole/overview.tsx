@@ -11,7 +11,8 @@ export const RBMKOverview = () => {
   const { data } = useBackend<any>();
 
   const temperature = Number(data?.temperature ?? 0);
-  const maxTemp = Number(data?.max_temp ?? 10000);
+  const baseMaxTemp = Number(data?.max_temp ?? 20000);
+  const maxTemp = Math.max(baseMaxTemp, temperature);
 
   const radiation = Number(data?.radiation ?? 0);
   const maxRadiation = Number(data?.max_radiation ?? 700);
@@ -25,6 +26,7 @@ export const RBMKOverview = () => {
   const pressureWarning = Number(data?.pressure_warning ?? 950);
   const pressureCritical = Number(data?.pressure_critical ?? 1500);
   const pressureExtreme = Number(data?.pressure_extreme ?? 2000);
+  const maxPressure = Math.max(pressureExtreme, pressure);
 
   const integrity = Number(data?.integrity ?? 0);
   const maxIntegrity = Math.max(1, Number(data?.max_integrity ?? 100));
@@ -57,12 +59,12 @@ export const RBMKOverview = () => {
               size={2}
               value={pressure}
               minValue={0}
-              maxValue={pressureExtreme}
+              maxValue={maxPressure}
               format={(value) => `${value.toFixed(1)} kPa`}
               ranges={{
                 good: [0, pressureWarning],
                 yellow: [pressureWarning, pressureCritical],
-                bad: [pressureCritical, pressureExtreme],
+                bad: [pressureCritical, maxPressure],
               }}
             />
           </LabeledControls.Item>

@@ -123,12 +123,12 @@
 	data["running"] = reactor.running
 	data["scrammed"] = reactor.scrammed
 
-	// Show the actual rod position so the UI reflects delayed rod movement.
 	data["control_rods"] = rbmk_round2(reactor.actual_control_rod_depth)
+	data["control_rods_target"] = rbmk_round2(reactor.control_rod_depth)
 	data["max_control_rod"] = RBMK_CONTROL_ROD_MAX
 
 	data["temperature"] = rbmk_round2(reactor.temperature)
-	data["max_temp"] = RBMK_MAX_TEMP
+	data["max_temp"] = RBMK_TEMP_DISPLAY_MAX
 
 	data["radiation"] = rbmk_round2(reactor.radiation)
 	data["max_radiation"] = RBMK_MAX_RADIATION

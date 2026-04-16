@@ -48,7 +48,7 @@
 	meltdown_area_alarms()
 	#endif
 
-	temperature = max(temperature, RBMK_MAX_TEMP)
+	temperature = max(temperature, RBMK_TEMP_DAMAGE_RAMP)
 	flux = 0
 	radiation = 0
 	thermal_output = 0
@@ -97,7 +97,7 @@
 	)
 
 	new /obj/effect/hotspot(loc)
-	temperature = RBMK_MAX_TEMP * 2
+	temperature = max(temperature, RBMK_TEMP_DAMAGE_RAMP * 2)
 
 
 /obj/machinery/rbmk/reactor/proc/meltdown_area_alarms()

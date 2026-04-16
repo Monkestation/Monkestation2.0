@@ -13,6 +13,7 @@ export const RBMKControls = () => {
   const { data, act } = useBackend<any>();
 
   const depth = Number(data?.control_rods ?? 0);
+  const targetDepth = Number(data?.control_rods_target ?? depth);
   const running = Boolean(data?.running ?? false);
   const scrammed = Boolean(data?.scrammed ?? false);
   const maxRodDepth = Number(data?.max_control_rod ?? 100);
@@ -51,6 +52,9 @@ export const RBMKControls = () => {
   return (
     <Flex direction="column" gap={1}>
       <Section title="Control Rod Depth">
+        <Box mb={0.5} color="label">
+          Actual Position
+        </Box>
         <ProgressBar
           value={depth}
           maxValue={maxRodDepth}
@@ -60,6 +64,20 @@ export const RBMKControls = () => {
             good: [maxRodDepth * 0.7, maxRodDepth],
           }}>
           {depth.toFixed(0)}%
+        </ProgressBar>
+
+        <Box mt={1} mb={0.5} color="label">
+          Commanded Position
+        </Box>
+        <ProgressBar
+          value={targetDepth}
+          maxValue={maxRodDepth}
+          ranges={{
+            bad: [0, maxRodDepth * 0.3],
+            yellow: [maxRodDepth * 0.3, maxRodDepth * 0.7],
+            good: [maxRodDepth * 0.7, maxRodDepth],
+          }}>
+          {targetDepth.toFixed(0)}%
         </ProgressBar>
 
         <Flex justify="space-between" mt={0.5}>

@@ -2,7 +2,7 @@
 	if(meltdown_in_progress || reactor_integrity <= 0)
 		return
 
-	var/high_temp_damage_threshold = decay_meltdown_threshold
+	var/high_temp_damage_threshold = RBMK_TEMP_DAMAGE_RAMP
 	var/temperature_excess
 	var/pressure_excess
 	var/total_damage = 0
@@ -28,7 +28,7 @@
 	if(temperature_excess > 0)
 		total_damage += temperature_excess / 850
 
-		// Damage ramps up hard once the core is deep into the red.
+		// Damage ramps up hard once the core gets deep into the red.
 		if(temperature > high_temp_damage_threshold)
 			total_damage += (temperature - high_temp_damage_threshold) / 300
 

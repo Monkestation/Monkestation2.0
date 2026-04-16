@@ -71,7 +71,7 @@
 
 	var/meltdown_announced = FALSE
 	var/meltdown_in_progress = FALSE
-	var/decay_meltdown_threshold = RBMK_MAX_TEMP * 0.92
+	var/decay_meltdown_threshold = RBMK_TEMP_DAMAGE_RAMP
 	var/decay_check_interval = 2 SECONDS
 	var/last_decay_check = 0
 
@@ -110,7 +110,6 @@
 
 
 /obj/machinery/rbmk/reactor/ex_act(severity, target)
-	// Let the reactor survive its own meltdown blast so it can stay slagged.
 	if(meltdown_in_progress)
 		return FALSE
 
@@ -131,7 +130,8 @@
 	meltdown_in_progress = FALSE
 	last_decay_check = 0
 	last_sound_state = ""
-	soundloop = new(list(src), FALSE)
+
+	soundloop = new /datum/looping_sound/rbmk_reactor(src, FALSE)
 
 	var/turf/reactor_turf = get_turf(src)
 	var/datum/gas_mixture/environment_mix = reactor_turf?.return_air()
@@ -150,7 +150,7 @@
 	coolant_gas_hist = list()
 	reactor_temperature_history = list()
 
-	rbmk_init_coolant()
+	rbmk_init_coolant(src)
 	relink_ports()
 
 	update_reactor_icon()
@@ -158,8 +158,10 @@
 
 
 /obj/machinery/rbmk/reactor/Destroy()
+	if(soundloop)
+		soundloop.stop()
 	QDEL_NULL(soundloop)
-	rbmk_cleanup_atmos()
+	rbmk_cleanup_atmos(src)
 	return ..()
 
 
@@ -209,8 +211,6 @@
 
 	target_slots += fuel_rod
 
-	// Once rods are inserted, the reactor is no longer visually "off".
-	// Whether it actually runs is still decided in process().
 	if(scrammed && control_rod_depth < RBMK_CONTROL_ROD_MAX)
 		control_rod_depth = RBMK_CONTROL_ROD_MAX
 
