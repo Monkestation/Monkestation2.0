@@ -189,7 +189,7 @@
 	extra_range = 20
 	falloff_distance = 5
 	falloff_exponent = 8
-	vary = TRUE
+	vary = FALSE
 
 /datum/looping_sound/rbmk_reactor_high
 	mid_sounds = list('monkestation/sound/effects/rbmk/reactor_hum_high.ogg')
@@ -198,4 +198,4 @@
 	extra_range = 24
 	falloff_distance = 5
 	falloff_exponent = 8
-	vary = TRUE
+	vary = FALSE

@@ -55,7 +55,10 @@
 
 	if(low_target_volume > 0)
 		if(!low_soundloop)
-			low_soundloop = new /datum/looping_sound/rbmk_reactor_low(src, TRUE)
+			low_soundloop = new /datum/looping_sound/rbmk_reactor_low(list(src), FALSE)
+			low_soundloop.volume = 0
+			low_soundloop.extra_range = low_target_range
+			low_soundloop.start()
 
 		low_soundloop.volume = step_volume_toward(low_soundloop.volume, low_target_volume, 2)
 		low_soundloop.extra_range = low_target_range
@@ -65,7 +68,10 @@
 
 	if(high_target_volume > 0)
 		if(!high_soundloop)
-			high_soundloop = new /datum/looping_sound/rbmk_reactor_high(src, TRUE)
+			high_soundloop = new /datum/looping_sound/rbmk_reactor_high(list(src), FALSE)
+			high_soundloop.volume = 0
+			high_soundloop.extra_range = high_target_range
+			high_soundloop.start()
 
 		high_soundloop.volume = step_volume_toward(high_soundloop.volume, high_target_volume, 2)
 		high_soundloop.extra_range = high_target_range

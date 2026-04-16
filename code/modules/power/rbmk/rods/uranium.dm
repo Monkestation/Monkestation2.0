@@ -1,4 +1,4 @@
-/obj/item/rbmk/fuel_rod/uranium
+
 	name = "Uranium Fuel Rod"
 	desc = "A volatile uranium fuel rod. Produces high heat and dangerous levels of radiation."
 	icon = 'icons/obj/fuel_rod.dmi'

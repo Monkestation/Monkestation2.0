@@ -10,6 +10,11 @@
 	var/step_size = scrammed ? scram_control_rod_step : control_rod_step
 	step_size = max(step_size, 1)
 
+	if(!scrammed)
+		step_size = max(round(step_size * 0.35), 1)
+	else
+		step_size = max(round(step_size * 0.6), 1)
+
 	if(actual_control_rod_depth < control_rod_depth)
 		actual_control_rod_depth = min(actual_control_rod_depth + step_size, control_rod_depth)
 	else if(actual_control_rod_depth > control_rod_depth)
@@ -77,8 +82,16 @@
 
 	var/contact_temp = contact_mix.temperature
 
+	// Keep the reactor thermally heavy so it does not instantly swing around.
 	var/core_thermal_mass = 2200
-	var/coolant_thermal_mass = max(contact_moles * 1.8, 1)
+
+	// Cap participating coolant mass so trapped pressure does not massively amplify cooling.
+	var/effective_contact_moles = clamp(contact_moles, 0.5, 8)
+
+	// Make cooling mostly depend on flow instead of accumulated stored gas.
+	var/flow_strength = clamp(flow_ratio / 0.14, 0.05, 1.0)
+
+	var/coolant_thermal_mass = max(effective_contact_moles * 1.8 * flow_strength, 1)
 
 	var/weighted_core_heat = temperature * core_thermal_mass
 	var/weighted_coolant_heat = contact_temp * coolant_thermal_mass
