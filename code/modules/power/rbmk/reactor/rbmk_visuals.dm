@@ -53,16 +53,25 @@
 			low_target_range = 20
 			high_target_range = 26
 
-	if(!low_soundloop)
-		low_soundloop = new /datum/looping_sound/rbmk_reactor_low(src, TRUE)
-	if(!high_soundloop)
-		high_soundloop = new /datum/looping_sound/rbmk_reactor_high(src, TRUE)
+	if(low_target_volume > 0)
+		if(!low_soundloop)
+			low_soundloop = new /datum/looping_sound/rbmk_reactor_low(src, TRUE)
 
-	low_soundloop.volume = step_volume_toward(low_soundloop.volume, low_target_volume, 2)
-	low_soundloop.extra_range = low_target_range
+		low_soundloop.volume = step_volume_toward(low_soundloop.volume, low_target_volume, 2)
+		low_soundloop.extra_range = low_target_range
+	else if(low_soundloop)
+		low_soundloop.stop()
+		QDEL_NULL(low_soundloop)
 
-	high_soundloop.volume = step_volume_toward(high_soundloop.volume, high_target_volume, 2)
-	high_soundloop.extra_range = high_target_range
+	if(high_target_volume > 0)
+		if(!high_soundloop)
+			high_soundloop = new /datum/looping_sound/rbmk_reactor_high(src, TRUE)
+
+		high_soundloop.volume = step_volume_toward(high_soundloop.volume, high_target_volume, 2)
+		high_soundloop.extra_range = high_target_range
+	else if(high_soundloop)
+		high_soundloop.stop()
+		QDEL_NULL(high_soundloop)
 
 
 /obj/machinery/rbmk/reactor/proc/update_reactor_icon()
