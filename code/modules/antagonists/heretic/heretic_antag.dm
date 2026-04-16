@@ -500,18 +500,18 @@
 		return FALSE // Lock heretics never get this aura
 	return TRUE
 
-/datum/antagonist/heretic/proc/on_heretic_examine(mob/source, mob/user, text)
+/datum/antagonist/heretic/proc/on_heretic_examine(mob/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 	var/datum/antagonist/heretic_monster/minion = user.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
 	if(minion?.master == owner)
-		text += span_notice(span_slightly_larger("[source.p_They()] [source.p_are()] your master!"))
+		examine_text += span_heretic_master("[source.p_They()] [source.p_are()] your master!")
 	if(!should_show_aura())
 		return
 	var/mob/heretic_mob = owner.current
 	var/potential_string = "[heretic_mob.p_They()] [heretic_mob.p_are()] crackling with a swirling green vortex of energy."
 	if(can_ascend() == HERETIC_CAN_ASCEND)
 		potential_string += " [heretic_mob.p_They()] [heretic_mob.p_are()] shedding [heretic_mob.p_their()] mortal shell!"
-	text += span_green(potential_string)
+	examine_text += span_green(potential_string)
 
 /datum/antagonist/heretic/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()

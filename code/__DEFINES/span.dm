@@ -58,6 +58,7 @@
 #define span_grey(str) ("<span class='grey'>" + str + "</span>")
 #define span_header(str) ("<span class='header'>" + str + "</span>")
 #define span_hear(str) ("<span class='hear'>" + str + "</span>")
+#define span_heretic_master(str) ("<span class='heretic_master'>" + str + "</span>")
 #define span_hidden(str) ("<span class='hidden'>" + str + "</span>")
 #define span_hierophant(str) ("<span class='hierophant'>" + str + "</span>")
 #define span_hierophant_warning(str) ("<span class='hierophant_warning'>" + str + "</span>")

@@ -1483,6 +1483,24 @@ $job-colors: (
   }
 }
 
+.heretic_master {
+  color: hsl(275, 75%, 62%);
+  font-weight: bold;
+  font-style: italic;
+  animation: heretic_master_pulse 3s ease-in-out infinite;
+}
+
+@keyframes heretic_master_pulse {
+  0%,
+  100% {
+    text-shadow: 0 0 5px hsl(275, 70%, 55%);
+  }
+  50% {
+    color: hsl(282, 80%, 68%);
+    text-shadow: 0 0 10px hsl(278, 75%, 60%);
+  }
+}
+
 .stargazer {
   color: hsl(280, 98%, 50%);
   animation: stargazer_glow 2s ease-in-out infinite;
