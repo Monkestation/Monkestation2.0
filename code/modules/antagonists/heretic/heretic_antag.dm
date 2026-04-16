@@ -500,8 +500,11 @@
 		return FALSE // Lock heretics never get this aura
 	return TRUE
 
-/datum/antagonist/heretic/proc/on_heretic_examine(datum/source, mob/user, text)
+/datum/antagonist/heretic/proc/on_heretic_examine(mob/source, mob/user, text)
 	SIGNAL_HANDLER
+	var/datum/antagonist/heretic_monster/minion = user.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
+	if(minion?.master == owner)
+		text += span_notice(span_slightly_larger("[source.p_They()] [source.p_are()] your master!"))
 	if(!should_show_aura())
 		return
 	var/mob/heretic_mob = owner.current
