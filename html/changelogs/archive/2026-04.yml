@@ -281,3 +281,15 @@
   - rscdel: Removed the code automatically deleting custom maps.
   - bugfix: Custom maps should no longer delete themselves before they load and default
       to metastation.
+2026-04-15:
+  Absolucy:
+  - image: Ooze sucker upgrade disks now have a different sprite than vacuum pack
+      upgrade disks.
+  - qol: You can now click on vacuum pack upgrade disks with the vacpack nozzle to
+      insert them.
+  SirNightKnight:
+  - qol: cursed duffelbags drop their contents on delete.
+  - balance: you now need to infuse bluespace dust into blue tomato and banana seeds
+      respectively for their bluespace mutations to occur.
+  - balance: infusions are no longer RNG based and requires 100 units of the reagent
+      listed for the infusion.
