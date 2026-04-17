@@ -293,3 +293,6 @@
       respectively for their bluespace mutations to occur.
   - balance: infusions are no longer RNG based and requires 100 units of the reagent
       listed for the infusion.
+2026-04-17:
+  MissClassyPineapple:
+  - rscadd: Readded Nekomimetic
