@@ -44,7 +44,7 @@
 
 /mob/living/basic/heretic_summon/rust_walker/Life(seconds_per_tick)
 	. = ..()
-	if(!.) //dead or deleted
+	if(QDELETED(src))
 		return
 	var/turf/our_turf = get_turf(src)
 	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
