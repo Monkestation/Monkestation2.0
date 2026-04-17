@@ -308,7 +308,7 @@
 			if(!researchable_knowledge(researched_path, shop_category))
 				message_admins("Heretic [key_name(owner)] potentially attempted to href exploit to learn knowledge they can't learn!")
 				CRASH("Heretic attempted to learn knowledge they can't learn! (Got: [researched_path])")
-			if(ispath(researched_path, /datum/heretic_knowledge/ultimate) & can_ascend() != HERETIC_CAN_ASCEND)
+			if(ispath(researched_path, /datum/heretic_knowledge/ultimate) && can_ascend() != HERETIC_CAN_ASCEND)
 				message_admins("Heretic [key_name(owner)] potentially attempted to href exploit to learn ascension knowledge without completing objectives!")
 				CRASH("Heretic attempted to learn a final knowledge despite not being able to ascend!")
 
@@ -316,7 +316,8 @@
 			if(!purchase_knowledge(researched_path, shop_category))
 				return FALSE
 			SStgui.update_uis(src)
-			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
+			log_heretic_knowledge("[key_name(owner)] gained knowledge: [researched_path::name]")
+			SSblackbox.record_feedback("tally", "heretic_knowledge_researched", 1, "[researched_path::name]")
 			return TRUE
 
 /datum/antagonist/heretic/proc/researchable_knowledge(datum/heretic_knowledge/knowledge_path, shop_category = HERETIC_KNOWLEDGE_TREE)

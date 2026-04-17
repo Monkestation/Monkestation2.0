@@ -200,6 +200,8 @@
 	if(ritual_result)
 		loc.balloon_alert(user, "ritual complete")
 
+	SSblackbox.record_feedback("tally", "heretic_rituals_completed", 1, ritual.name)
+
 	return ritual_result
 
 
