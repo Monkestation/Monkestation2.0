@@ -48,13 +48,6 @@
 	required_lifespan = list(60, 80)
 	required_potency = list(-INFINITY, 20)
 
-/datum/hydroponics/plant_mutation/bluespace_banana
-	mutates_from = list(/obj/item/seeds/banana)
-	created_product = /obj/item/food/grown/banana/bluespace
-	created_seed = /obj/item/seeds/banana/bluespace
-	required_production = list(20, 60)
-	required_potency = list(70, INFINITY)
-
 /datum/hydroponics/plant_mutation/koi_beans
 	mutates_from = list(/obj/item/seeds/soya)
 	created_product = /obj/item/food/grown/koibeans
@@ -352,12 +345,6 @@
 	created_product = /obj/item/food/grown/tomato/killer
 	created_seed = /obj/item/seeds/tomato/killer
 	required_lifespan = list(50, 90)
-
-/datum/hydroponics/plant_mutation/bluespace_tomato
-	mutates_from = list(/obj/item/seeds/tomato/blue)
-	created_product = /obj/item/food/grown/tomato/blue/bluespace
-	created_seed = /obj/item/seeds/tomato/blue/bluespace
-	required_potency = list(120, INFINITY)
 
 /datum/hydroponics/plant_mutation/steel_towercap
 	mutates_from = list(/obj/item/seeds/tower)
