@@ -11,7 +11,7 @@
 	)
 	abstract_type = /datum/heretic_knowledge/armor
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch)
-	cost = 2
+	cost = 1
 
 	research_tree_icon_path = 'icons/obj/clothing/suits/armor.dmi'
 	research_tree_icon_state = "eldritch_armor"
