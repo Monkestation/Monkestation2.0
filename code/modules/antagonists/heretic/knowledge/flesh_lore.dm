@@ -49,6 +49,9 @@
 	knowledge_tier4 = /datum/heretic_knowledge/summon/stalker
 	ascension = /datum/heretic_knowledge/ultimate/flesh_final
 
+/datum/heretic_knowledge_tree_column/flesh/ascension_examine_text(mob/heretic)
+	return "[heretic.p_Their()] skin and bone twists and turns with every motion. You know [heretic.p_them()] to be the Lord of the Night, the Insatiable Flesh."
+
 /datum/heretic_knowledge/limited_amount/starting/base_flesh
 	name = "Principle of Hunger"
 	desc = "Opens up the Path of Flesh to you. \

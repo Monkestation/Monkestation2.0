@@ -47,6 +47,9 @@
 	knowledge_tier4 = /datum/heretic_knowledge/spell/void_conduit
 	ascension = /datum/heretic_knowledge/ultimate/void_final
 
+/datum/heretic_knowledge_tree_column/void/ascension_examine_text(mob/heretic)
+	return "[heretic.p_They()] seem distant, as though [heretic.p_their()] presence in this world is a mere suggestion. You know [heretic.p_them()] to be a Patron of the Void, an empty title."
+
 /datum/heretic_knowledge/limited_amount/starting/base_void
 	name = "Glimmer of Winter"
 	desc = "Opens up the Path of Void to you. \

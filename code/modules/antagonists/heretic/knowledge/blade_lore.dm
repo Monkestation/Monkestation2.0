@@ -50,6 +50,9 @@
 	knowledge_tier4 = /datum/heretic_knowledge/spell/wolves_among_sheep
 	ascension = /datum/heretic_knowledge/ultimate/blade_final
 
+/datum/heretic_knowledge_tree_column/blade/ascension_examine_text(mob/heretic)
+	return "[heretic.p_Their()] martial poise is perfect and impenetrable. You know [heretic.p_them()] to be a Blade Saint, Ever Unyielding."
+
 /datum/heretic_knowledge/limited_amount/starting/base_blade
 	name = "The Cutting Edge"
 	desc = "Opens up the Path of Blades to you. \

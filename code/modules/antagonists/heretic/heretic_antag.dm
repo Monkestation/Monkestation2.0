@@ -506,6 +506,9 @@
 	var/datum/antagonist/heretic_monster/minion = user.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
 	if(minion?.master == owner)
 		examine_text += span_heretic_master("[source.p_They()] [source.p_are()] your master!")
+	if(ascended)
+		examine_text += span_stargazer_big(heretic_path.ascension_examine_text(source))
+		return
 	if(!should_show_aura())
 		return
 	var/mob/heretic_mob = owner.current

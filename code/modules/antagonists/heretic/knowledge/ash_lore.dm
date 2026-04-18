@@ -47,6 +47,9 @@
 	knowledge_tier4 = /datum/heretic_knowledge/spell/flame_birth
 	ascension = /datum/heretic_knowledge/ultimate/ash_final
 
+/datum/heretic_knowledge_tree_column/ash/ascension_examine_text(mob/heretic)
+	return "Heat swirls about [heretic.p_them()]. You know [heretic.p_them()] to be an Ashlord, Bearer of the Lantern."
+
 /datum/heretic_knowledge/limited_amount/starting/base_ash
 	name = "Nightwatcher's Secret"
 	desc = "Opens up the Path of Ash to you. \

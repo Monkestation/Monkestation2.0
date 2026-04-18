@@ -51,6 +51,9 @@
 	knowledge_tier4 = /datum/heretic_knowledge/spell/moon_ringleader
 	ascension = /datum/heretic_knowledge/ultimate/moon_final
 
+/datum/heretic_knowledge_tree_column/moon/ascension_examine_text(mob/heretic)
+	return "[heretic.p_Their()] form cascades in tessellating hues. You know [heretic.p_them()] to be the Ringleader, Draped in Moonlight."
+
 /datum/heretic_knowledge/limited_amount/starting/base_moon
 	name = "Moonlight Troupe"
 	desc = "Opens up the Path of Moon to you. \

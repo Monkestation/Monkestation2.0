@@ -48,6 +48,9 @@
 	knowledge_tier4 = /datum/heretic_knowledge/spell/cosmic_expansion
 	ascension = /datum/heretic_knowledge/ultimate/cosmic_final
 
+/datum/heretic_knowledge_tree_column/cosmic/ascension_examine_text(mob/heretic)
+	return "A corona of alien energies follow [heretic.p_them()]. You know [heretic.p_them()] to be the Herald of the Stars, Bringer of the Cosmos."
+
 /datum/heretic_knowledge/limited_amount/starting/base_cosmic
 	name = "Eternal Gate"
 	desc = "Opens up the Path of Cosmos to you. \

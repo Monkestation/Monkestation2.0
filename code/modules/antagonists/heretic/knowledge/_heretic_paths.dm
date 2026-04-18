@@ -96,6 +96,10 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 
 	return data
 
+/// Returns the text to show when a heretic of this path has ascended.
+/// Mostly because I don't feel like porting the replacetext pronoun helpers yet.
+/datum/heretic_knowledge_tree_column/proc/ascension_examine_text(mob/heretic)
+	return "You should never see this, [heretic.p_they()] are bugged!"
 
 /**
  * Modifies the 2 lists provided in the arguments and sets it up so the heretic can actually start researching stuff.

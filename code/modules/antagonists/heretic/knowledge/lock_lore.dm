@@ -44,6 +44,9 @@
 	knowledge_tier4 = /datum/heretic_knowledge/spell/caretaker_refuge
 	ascension = /datum/heretic_knowledge/ultimate/lock_final
 
+/datum/heretic_knowledge_tree_column/lock/ascension_examine_text(mob/heretic)
+	return "[heretic.p_Their()] every moment seems unburdened by the restraints of this reality. You know [heretic.p_them()] to be Tidebringer, Breaker of Locks."
+
 /datum/heretic_knowledge/limited_amount/starting/base_lock
 	name = "A Steward's Secret"
 	desc = "Opens up the Path of Lock to you. \

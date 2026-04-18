@@ -51,6 +51,9 @@
 	knowledge_tier4 = /datum/heretic_knowledge/spell/rust_charge
 	ascension = /datum/heretic_knowledge/ultimate/rust_final
 
+/datum/heretic_knowledge_tree_column/rust/ascension_examine_text(mob/heretic)
+	return "The floor erodes and air putrifies in [heretic.p_their()] presence. You know [heretic.p_them()] to be Rustbringer, the Corruptor."
+
 /datum/heretic_knowledge/limited_amount/starting/base_rust
 	name = "Blacksmith's Tale"
 	desc = "Opens up the Path of Rust to you. \
