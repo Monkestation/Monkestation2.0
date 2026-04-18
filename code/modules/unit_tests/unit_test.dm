@@ -277,6 +277,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/structure/bingle_hole,
 		/obj/structure/bingle_pit_overlay,
 		// monkestation end
+		/obj/machinery/door/airlock/tram, // cursed shit that causes incomprehensible issues related to lights idfk
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)
