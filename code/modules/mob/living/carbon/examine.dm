@@ -298,9 +298,13 @@
 		. += span_revennotice("[t_He] can see you!")
 
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE, user, .)
+
+	. += late_examine(user)
+
 	if(length(.))
 		.[1] = "<span class='info'>" + .[1]
 		.[length(.)] += "</span>"
+
 	return .
 
 /**

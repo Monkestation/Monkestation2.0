@@ -444,7 +444,7 @@
 	var/list/parent_tags = ..()
 	parent_tags.Insert(1, weight_class_to_text(w_class)) // To make size display first, otherwise it looks goofy
 	. = parent_tags
-	.[weight_class_to_text(w_class)] = "[gender == PLURAL ? "They are" : "It is"] a [weight_class_to_text(w_class)] item."
+	.[weight_class_to_text(w_class)] = weight_class_to_tooltip(w_class)
 
 /obj/item/examine_descriptor(mob/user)
 	return "item"

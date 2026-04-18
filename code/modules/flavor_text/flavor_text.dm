@@ -100,19 +100,19 @@ GLOBAL_LIST_EMPTY(flavor_texts)
 	if(!examiner)
 		CRASH("format_flavor_for_examine() called without an examiner argument - proc is not implemented for a null examiner")
 
-	var/final_text = get_flavor_text(examiner, shorten)
+	. = list()
 
 	// Antagonists can see expoitable information.
 	if(expl_info)
 		for(var/datum/antagonist/antag_datum as anything in examiner.mind?.antag_datums)
 			if(!(antag_datum.antag_flags & FLAG_CAN_SEE_EXPOITABLE_INFO))
 				continue
-			if(final_text)
-				final_text += "\n"
-			final_text += "<a href='byond://?src=[REF(src)];exploitable_info=1'>\[Exploitable Info\]</a>\n"
+			. += "<a href='byond://?src=[REF(src)];exploitable_info=1'>\[Exploitable Info\]</a>\n"
 			break
 
-	return final_text
+	. += (separator_hr("Flavor text") + get_flavor_text(examiner, shorten))
+
+	return .
 
 /datum/flavor_text/Topic(href, href_list)
 	. = ..()

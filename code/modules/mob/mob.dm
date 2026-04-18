@@ -602,7 +602,7 @@
 	if(!result_combined)
 		var/list/result = examinify.examine(src)
 		var/atom_title = examinify.examine_title(src, thats = TRUE)
-		//SEND_SIGNAL(src, COMSIG_MOB_EXAMINING, examinify, result)
+		SEND_SIGNAL(src, COMSIG_MOB_EXAMINING, examinify, result)
 		result_combined = (atom_title ? fieldset_block("[atom_title][ismob(examinify) ? "!" :"."]", jointext(result, "<br>"), "boxed_message") : boxed_message(jointext(result, "<br>")))
 
 	to_chat(src, boxed_message(span_infoplain(result_combined)))
