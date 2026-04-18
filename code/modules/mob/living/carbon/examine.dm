@@ -462,7 +462,7 @@
 	if(wear_id && !HAS_TRAIT(wear_id, TRAIT_EXAMINE_SKIP))
 		var/obj/item/card/id/id = wear_id.GetID()
 		if(id && get_dist(user, src) <= ID_EXAMINE_DISTANCE)
-			var/id_href = "<a href='?src=[REF(src)];see_id=1;id_ref=[REF(id)];id_name=[id.registered_name];examine_time=[world.time]'>[wear_id.examine_title(user)]</a>"
+			var/id_href = "<a href='byond://?src=[REF(src)];see_id=1;id_ref=[REF(id)];id_name=[id.registered_name];examine_time=[world.time]'>[wear_id.examine_title(user)]</a>"
 			. += "[t_He] [t_is] wearing [id_href]."
 
 		else
@@ -503,7 +503,7 @@
 		var/datum/record/crew/target_record = find_record(perpname)
 		if(target_record)
 			. += "Rank: [target_record.rank]"
-			. += "<a href='?src=[REF(src)];hud=1;photo_front=1;examine_time=[world.time]'>\[Front photo\]</a><a href='?src=[REF(src)];hud=1;photo_side=1;examine_time=[world.time]'>\[Side photo\]</a>"
+			. += "<a href='byond://?src=[REF(src)];hud=1;photo_front=1;examine_time=[world.time]'>\[Front photo\]</a><a href='byond://?src=[REF(src)];hud=1;photo_side=1;examine_time=[world.time]'>\[Side photo\]</a>"
 		if(HAS_TRAIT(user, TRAIT_MEDICAL_HUD) && HAS_TRAIT(user, TRAIT_SECURITY_HUD))
 			title += separator_hr("Medical & Security Analysis")
 			. += get_medhud_examine_info(user, target_record)
