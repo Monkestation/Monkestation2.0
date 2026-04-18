@@ -53,6 +53,9 @@
 		else
 			. += mutable_appearance(damaged_dmi, pick(broken_states()))
 
+/turf/open/examine_descriptor(mob/user)
+	return "floor"
+
 //direction is direction of travel of A
 /turf/open/zPassIn(direction)
 	if(direction != DOWN)

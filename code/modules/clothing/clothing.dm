@@ -346,14 +346,6 @@
 	if(TRAIT_CAN_SIGN_ON_COMMS in clothing_traits)
 		. += "[src] allows you talk on radios through sign language."
 
-	switch (max_heat_protection_temperature)
-		if (400 to 1000)
-			. += "[src] offers the wearer limited protection from fire."
-		if (1001 to 1600)
-			. += "[src] offers the wearer some protection from fire."
-		if (1601 to 35000)
-			. += "[src] offers the wearer robust protection from fire."
-
 	for(var/zone in damage_by_parts)
 		var/pct_damage_part = damage_by_parts[zone] / limb_integrity * 100
 		var/zone_name = parse_zone(zone)
@@ -390,11 +382,43 @@
 			// Denotes that wearing makes your fingers chunky.
 			. += span_notice("Wearing [src] makes your fingers chunky, preventing use of most firearms, stun batons, and some computers.")
 
+/obj/item/clothing/examine_tags(mob/user)
+	. = ..()
+	if (clothing_flags & THICKMATERIAL)
+		.["thick"] = "Protects from most injections and sprays."
+	if (clothing_flags & CASTING_CLOTHES)
+		.["magical"] = "Allows magical beings to cast spells when wearing [src]."
+	if((clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
+		.["pressure-proof"] = "Protects the wearer from extremely low or high pressure, such as vacuum of space."
+	if(flags_cover & PEPPERPROOF)
+		.["pepper-proof"] = "Protects the wearer from the effects of pepperspray."
+	if (max_heat_protection_temperature || min_cold_protection_temperature)
+		var/heat_desc
+		var/cold_desc
+		switch (max_heat_protection_temperature)
+			if (400 to 1000)
+				heat_desc = "high"
+			if (1001 to 1600)
+				heat_desc = "very high"
+			if (1601 to 35000)
+				heat_desc = "extremely high"
+		switch (min_cold_protection_temperature)
+			if (160 to 272)
+				cold_desc = "low"
+			if (72 to 159)
+				cold_desc = "very low"
+			if (0 to 71)
+				cold_desc = "extremely low"
+		.["thermally insulated"] = "Protects the wearer from [jointext(list(heat_desc, cold_desc) - null, " and ")] temperatures."
+
+/obj/item/clothing/examine_descriptor(mob/user)
+	return "clothing"
+
 /obj/item/clothing/Topic(href, href_list)
 	. = ..()
 
 	if(href_list["list_armor"])
-		var/list/readout = list("<span class='notice'><u><b>PROTECTION CLASSES</u></b>")
+		var/list/readout = list()
 
 		var/datum/armor/armor = get_armor()
 		var/added_damage_header = FALSE
@@ -403,9 +427,9 @@
 			if(!rating)
 				continue
 			if(!added_damage_header)
-				readout += "\n<b>ARMOR (I-X)</b>"
+				readout += "<b><u>ARMOR (I-X)</u></b>"
 				added_damage_header = TRUE
-			readout += "\n[armor_to_protection_name(damage_key)] [armor_to_protection_class(rating)]"
+			readout += "[armor_to_protection_name(damage_key)] [armor_to_protection_class(rating)]"
 
 		var/added_durability_header = FALSE
 		for(var/durability_key in ARMOR_LIST_DURABILITY())
@@ -413,23 +437,24 @@
 			if(!rating)
 				continue
 			if(!added_durability_header)
-				readout += "\n<b>DURABILITY (I-X)</b>"
+				readout += "<b><u>DURABILITY (I-X)</u></b>"
 				added_damage_header = TRUE
-			readout += "\n[armor_to_protection_name(durability_key)] [armor_to_protection_class(rating)]"
+			readout += "[armor_to_protection_name(durability_key)] [armor_to_protection_class(rating)]"
 
-		if(flags_cover & HEADCOVERSMOUTH || flags_cover & PEPPERPROOF)
+		if((flags_cover & HEADCOVERSMOUTH) || (flags_cover & PEPPERPROOF))
 			var/list/things_blocked = list()
 			if(flags_cover & HEADCOVERSMOUTH)
 				things_blocked += span_tooltip("Because this item is worn on the head and is covering the mouth, it will block facehugger proboscides, killing facehuggers.", "facehuggers")
 			if(flags_cover & PEPPERPROOF)
 				things_blocked += "pepperspray"
 			if(length(things_blocked))
-				readout += "\n<b>COVERAGE</b>"
-				readout += "\nIt will block [english_list(things_blocked)]."
+				readout += "<b><u>COVERAGE</u></b>"
+				readout += "It will block [english_list(things_blocked)]."
 
-		readout += "</span>"
+		if(!length(readout))
+			readout += "No armor or durability information available."
 
-		if(clothing_flags & STOPSPRESSUREDAMAGE || visor_flags & STOPSPRESSUREDAMAGE)
+		if((clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
 			var/list/parts_covered = list()
 			var/output_string = "It"
 			if(!(clothing_flags & STOPSPRESSUREDAMAGE))
@@ -438,13 +463,29 @@
 				parts_covered += "head"
 			if(body_parts_covered & CHEST)
 				parts_covered += "torso"
+			if(body_parts_covered & (ARMS|HANDS))
+				parts_covered += "arms"
+			if(body_parts_covered & (LEGS|FEET))
+				parts_covered += "legs"
 			if(length(parts_covered)) // Just in case someone makes spaceproof gloves or something
 				readout += "[output_string] will protect the wearer's [english_list(parts_covered)] from [span_tooltip("The extremely low pressure is the biggest danger posed by the vacuum of space.", "low pressure")]."
 
-		if(min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT)
-			readout += "It will insulate the wearer from [span_tooltip("While not as dangerous as the lack of pressure, the extremely low temperature of space is also a hazard.", "the cold of space")]."
+		var/heat_prot
+		switch (max_heat_protection_temperature)
+			if (400 to 1000)
+				heat_prot = "minor"
+			if (1001 to 1600)
+				heat_prot = "some"
+			if (1601 to 35000)
+				heat_prot = "extreme"
+		if (heat_prot)
+			. += "[src] offers the wearer [heat_prot] protection from heat, up to [max_heat_protection_temperature] kelvin."
 
-		to_chat(usr, "[readout.Join()]")
+		if(min_cold_protection_temperature)
+			readout += "It will insulate the wearer from [min_cold_protection_temperature <= SPACE_SUIT_MIN_TEMP_PROTECT ? span_tooltip("While not as dangerous as the lack of pressure, the extremely low temperature of space is also a hazard.", "the cold of space, down to [min_cold_protection_temperature] kelvin") : "cold, down to [min_cold_protection_temperature] kelvin"]."
+
+		var/formatted_readout = span_notice("<b>PROTECTION CLASSES</b><hr>[jointext(readout, "\n")]")
+		to_chat(usr, boxed_message(formatted_readout))
 
 /**
  * Rounds armor_value down to the nearest 10, divides it by 10 and then converts it to Roman numerals.

@@ -9,6 +9,11 @@
 
 	return "Unknown"
 
+/mob/living/carbon/human/examine_title(mob/user, thats = FALSE)
+	. = ..()
+
+	. += ", \a <em>[dna.species.name]</em>"
+
 /mob/living/carbon/human/get_examine_icon(mob/user)
 	return null
 
@@ -225,9 +230,9 @@
 					. += "[t_He] appear[p_s()] to be staring off into space."
 				if (HAS_TRAIT(src, TRAIT_DEAF))
 					. += "[t_He] appear[p_s()] to not be responding to noises."
-				if (bodytemperature > dna.species.bodytemp_heat_damage_limit)
+				if (bodytemperature > bodytemp_heat_damage_limit)
 					. += "[t_He] [t_is] flushed and wheezing."
-				if (bodytemperature < dna.species.bodytemp_cold_damage_limit)
+				if (bodytemperature < bodytemp_cold_damage_limit)
 					. += "[t_He] [t_is] shivering."
 
 			if(HAS_TRAIT(user, TRAIT_SPIRITUAL) && mind?.holy_role)
