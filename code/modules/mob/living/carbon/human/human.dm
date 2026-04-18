@@ -139,7 +139,7 @@
 		if(istype(id, /obj/item/card/id/advanced/chameleon))
 			id_gender ||= gender
 			id_species ||= dna.species.name
-			id_blood_type ||= dna.blood_type
+			id_blood_type ||= get_blood_type()
 
 		var/id_examine = span_slightly_larger(separator_hr("This is <em>[src]'s ID card</em>."))
 		id_examine += "<div class='img_by_text_container'>"
@@ -156,7 +156,7 @@
 		id_examine += "</div>" // container
 		id_examine += "</div>" // text
 
-		to_chat(viewer, examine_block(span_info(id_examine)))
+		to_chat(viewer, boxed_message(span_info(id_examine)))
 
 ///////HUDs///////
 	if(href_list["hud"])
