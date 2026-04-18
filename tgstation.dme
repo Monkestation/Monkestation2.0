@@ -3500,6 +3500,8 @@
 #include "code\modules\asset_cache\assets\inventory.dm"
 #include "code\modules\asset_cache\assets\irv.dm"
 #include "code\modules\asset_cache\assets\jquery.dm"
+#include "code\modules\asset_cache\assets\loadout_items.dm"
+#include "code\modules\asset_cache\assets\loadout_store.dm"
 #include "code\modules\asset_cache\assets\lobby.dm"
 #include "code\modules\asset_cache\assets\mafia.dm"
 #include "code\modules\asset_cache\assets\mecha.dm"
