@@ -293,6 +293,8 @@
 
 ///main proc for moving the lift in the direction [travel_direction]. handles horizontal and/or vertical movement for multi platformed lifts and multitile lifts.
 /obj/structure/transport/linear/proc/travel(travel_direction)
+	var/static/list/game_planes = list(GAME_PLANE, GAME_PLANE_FOV_HIDDEN, GAME_PLANE_UPPER, GAME_PLANE_UPPER_FOV_HIDDEN)
+
 	var/list/things_to_move = transport_contents
 	var/turf/destination
 	if(!isturf(travel_direction))
@@ -390,7 +392,8 @@
 				if(QDELING(victim_structure))
 					continue
 				if(!is_type_in_typecache(victim_structure, transport_controller_datum.ignored_smashthroughs))
-					if((PLANE_TO_TRUE(victim_structure.plane) == FLOOR_PLANE && victim_structure.layer > TRAM_RAIL_LAYER) || (PLANE_TO_TRUE(victim_structure.plane) == GAME_PLANE && victim_structure.layer > LOW_OBJ_LAYER) )
+					var/victim_plane = PLANE_TO_TRUE(victim_structure.plane)
+					if((victim_plane == FLOOR_PLANE && victim_structure.layer > TRAM_RAIL_LAYER) || ((victim_plane in game_planes) && victim_structure.layer > LOW_OBJ_LAYER) )
 						if(victim_structure.anchored && initial(victim_structure.anchored) == TRUE)
 							visible_message(span_danger("[src] smashes through [victim_structure]!"))
 							victim_structure.deconstruct(FALSE)
