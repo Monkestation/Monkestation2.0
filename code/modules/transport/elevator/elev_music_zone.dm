@@ -67,7 +67,7 @@ GLOBAL_LIST_EMPTY(elevator_music)
 	QDEL_LIST_ASSOC_VAL(tracked_mobs)
 	return ..()
 
-/datum/proximity_monitor/advanced/elevator_music_area/field_turf_crossed(mob/entered, turf/location)
+/datum/proximity_monitor/advanced/elevator_music_area/field_turf_crossed(mob/entered, turf/location, turf/new_location)
 	if (!istype(entered) || !entered.mind)
 		return
 
@@ -80,7 +80,7 @@ GLOBAL_LIST_EMPTY(elevator_music)
 		tracked_mobs[entered] = null // Still add it to the list so we don't keep making this check
 	RegisterSignal(entered, COMSIG_QDELETING, PROC_REF(mob_destroyed))
 
-/datum/proximity_monitor/advanced/elevator_music_area/field_turf_uncrossed(mob/exited, turf/location)
+/datum/proximity_monitor/advanced/elevator_music_area/field_turf_uncrossed(mob/exited, turf/location, turf/new_location)
 	if (!(exited in tracked_mobs))
 		return
 	if ((new_location in field_turfs) || (new_location in edge_turfs))
