@@ -12,6 +12,7 @@
 	floor_tile = /obj/item/stack/tile/noslip/tram_plate
 	slowdown = 0
 	flags_1 = NONE
+	astar_weight = 75
 
 /turf/open/floor/noslip/tram_plate/energized
 	desc = "The linear induction plate that powers the tram. It is currently energized."

@@ -1060,3 +1060,77 @@
 	ckeywhitelist = list("Milthy")
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+/datum/loadout_item/neck/flavafloh_commissar_jacket
+	name = "Commissar Jacket"
+	item_path = /obj/item/clothing/neck/flavafloh_commissar_jacket
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/flavafloh_pale_blue_fatigues
+	name = "Pale Blue Fatigues"
+	item_path = /obj/item/clothing/under/rank/security/officer/flavafloh_pale_blue_fatigues
+	donator_only = TRUE
+	requires_purchase = FALSE
+	restricted_roles = list(JOB_SECURITY_ASSISTANT,JOB_SECURITY_OFFICER,JOB_BRIG_PHYSICIAN,JOB_WARDEN,JOB_HEAD_OF_SECURITY)
+
+/datum/loadout_item/pocket_items/donator/cyber_mastiff
+	name = "Pet Delivery Beacon - Cyber Mastiff"
+	item_path = /obj/item/choice_beacon/pet/donator/cyber_mastiff
+	ckeywhitelist = list("Flava-Floh")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/effects/cyber_mastiff
+	name = "Cyber Mastiff Transformation"
+	item_path = /obj/item/effect_granter/donator/cyber_mastiff
+	ckeywhitelist = list("Flava-Floh")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/mask/lobotomites_visage
+	name = "Lobotomite's Visage"
+	item_path = /obj/item/clothing/mask/gas/lobotomites_visage
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// Yatosamasensei
+/datum/loadout_item/suit/tsukihime_executor
+	name = "Executor Dress"
+	item_path = /obj/item/clothing/suit/costume/tsukihime_executor
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/plushies/kumoko_san
+	name = "Kumoku-San Plush"
+	item_path = /obj/item/toy/plush/kumoko_san
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/yato_neco_arc
+	name = "Pet Delivery Beacon - Neco-Arc"
+	item_path = /obj/item/choice_beacon/pet/donator/yato_neco_arc
+	ckeywhitelist = list("Yatosamasensei")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/effects/yato_neco_arc
+	name = "Neco-Arc Transformation"
+	item_path = /obj/item/effect_granter/donator/yato_neco_arc
+	ckeywhitelist = list("Yatosamasensei")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// Ravin Hobo
+/datum/loadout_item/neck/red_regal_mantle
+	name = "Red Regal Mantle"
+	item_path = /obj/item/clothing/suit/hooded/cloak/red_regal_mantle
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// Snackiversal
+/datum/loadout_item/neck/anchor_necklace
+	name = "Silver Anchor"
+	item_path = /obj/item/clothing/accessory/silver_anchor
+	donator_only = TRUE
+	requires_purchase = FALSE

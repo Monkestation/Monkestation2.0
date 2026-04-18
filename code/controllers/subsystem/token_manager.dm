@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(token_manager)
 		return // Request was already handled
 
 	var/admin_message = span_adminnotice("[span_adminsay("TOKEN WARNING:")] [key_name_admin(request.requester_client)]'s token request for [span_bold(request.details)] will timeout in [span_boldwarning("1 MINUTE")]!")
-	var/admin_href = " (<a href='byond://?_src_=holder;[HrefToken()];token_approve=[REF(request)]'>APPROVE</a>) (<a href='byond://?_src_=holder;[HrefToken()];token_reject=[REF(request)]'>REJECT</a>) (<a href='byond://?_src_=holder;[HrefToken()];token_manager=1'>PANEL</a>)"
+	var/admin_href = " (<a href='byond://?_src_=holder;[HrefToken()];approve_antag_token=[REF(request.requester_client.mob)]'>APPROVE</a>) (<a href='byond://?_src_=holder;[HrefToken()];reject_antag_token=[REF(request.requester_client.mob)]'>REJECT</a>) (<a href='byond://?_src_=holder;[HrefToken()];token_manager=1'>PANEL</a>)"
 
 	for(var/client/admin_client as anything in GLOB.admins)
 		to_chat(admin_client, "[admin_message][admin_href]")

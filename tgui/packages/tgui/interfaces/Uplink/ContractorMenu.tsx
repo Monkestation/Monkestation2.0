@@ -1,5 +1,5 @@
 import { useBackend } from '../../backend';
-import { Box, Button, Icon, Section, Table, Stack } from '../../components';
+import { Box, Button, Icon, Section, Stack, Table } from '../../components';
 
 export type ContractorItem = {
   id: string;
@@ -23,12 +23,12 @@ export const ContractorMenu = (props: ContractorMenuProps) => {
       <Box>Reputation: {props.rep}</Box>
       <Stack vertical>
         {contractor_hub_items.map((item) => {
-          const repInfo = item.cost ? item.cost + ' Rep' : 'FREE';
+          const repInfo = item.cost ? `${item.cost} Rep` : 'FREE';
           const stock = item.stock !== -1;
           return (
             <Stack.Item key={item.name}>
               <Section
-                title={item.name + ' - ' + repInfo}
+                title={`${item.name} - ${repInfo}`}
                 buttons={
                   <>
                     {stock && (

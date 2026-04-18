@@ -46,6 +46,7 @@
 	log.name = "[input] ([md5(identifier)])"
 	log.input_type = input
 	log.parameters["message"] = content
+	log.parameters["language"] = /datum/language/common
 	log_entries.Add(log)
 	update_logs()
 
@@ -73,10 +74,10 @@
 	var/list/compileerrors = Compiler.Compile(rawcode)
 	COOLDOWN_START(src, compile_cooldown, 2 SECONDS)
 	if(!length(compileerrors) && (compiledcode != rawcode))
-		user.log_message(rawcode, LOG_NTSL)
+		logger.Log(LOG_CATEGORY_NTSL, "Uploaded by [user]: [rawcode]")
 		compiledcode = rawcode
 	if(istype(user.mind?.assigned_role, /datum/job/signal_technician)) //achivement description says only Signal Technician gets the achivement
-		var/freq = length(freq_listening[1]) ? freq_listening[1] : 1459
+		var/freq = length(freq_listening) ? freq_listening[1] : 1459
 		var/atom/movable/M = new()
 		var/atom/movable/virtualspeaker/speaker = new(null, M, server_radio)
 		speaker.name = "Poly"
@@ -88,12 +89,13 @@
 			signal.data["name"] = ""
 			signal.data["reject"] = FALSE
 			Compiler.Run(signal)
-			if(!signal.data["reject"] == FALSE)
+			if(signal.data["reject"] == FALSE)
 				user.client.give_award(/datum/award/achievement/jobs/Poly_silent, user)
 		else
 			for(var/sample in signal.data["spans"])
 				if(sample == SPAN_COMMAND)
 					user.client.give_award(/datum/award/achievement/jobs/Poly_loud, user)
 					break // Not having this break leaves us open to a potential DoS attack.
+		signal.data["reject"] = TRUE //Don't pass achievement signals.
 	return compileerrors
 //end-NTSL

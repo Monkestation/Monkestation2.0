@@ -12,10 +12,10 @@ import {
 import { CharacterPreview } from '../common/CharacterPreview';
 import { EditableText } from '../common/EditableText';
 import { CrimeWatcher } from './CrimeWatcher';
-import { RecordPrint } from './RecordPrint';
 import { CRIMESTATUS2COLOR, CRIMESTATUS2DESC } from './constants';
 import { getSecurityRecord } from './helpers';
-import { SecurityRecordsData } from './types';
+import { RecordPrint } from './RecordPrint';
+import type { SecurityRecordsData } from './types';
 
 /** Views a selected record. */
 export const SecurityRecordView = (props) => {

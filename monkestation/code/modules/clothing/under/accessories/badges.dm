@@ -136,15 +136,15 @@
 /obj/item/clothing/accessory/badge/cargo/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot & (ITEM_SLOT_ICLOTHING|ITEM_SLOT_HANDS)) //ITEM_SLOT_NECK inv doesn't call dropped so we don't need to re-register.
-		RegisterSignal(user, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_tried_access))
+		RegisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
 
 /obj/item/clothing/accessory/badge/cargo/dropped(mob/living/user)
-	UnregisterSignal(user, COMSIG_MOB_TRIED_ACCESS)
+	UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
 	return ..()
 
-/obj/item/clothing/accessory/badge/cargo/proc/on_tried_access(datum/source, obj/locked_thing)
+/obj/item/clothing/accessory/badge/cargo/proc/retrieve_access(datum/source, list/player_access)
 	SIGNAL_HANDLER
-	return locked_thing?.check_access(src) ? ACCESS_ALLOWED : NONE
+	player_access += access
 
 /obj/item/clothing/accessory/badge/cargo/GetAccess()
 	return access

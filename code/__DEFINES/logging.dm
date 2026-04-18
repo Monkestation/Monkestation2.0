@@ -54,8 +54,7 @@
 #define LOG_SPEECH_INDICATORS (1 << 21)
 #define LOG_CLONING (1 << 22)
 #define LOG_MECHCOMP (1 << 23)
-#define LOG_NTSL (1 << 24) // MONKESTATION ADDITION -- NTSL
-#define LOG_BLACKMARKET (1 << 25)
+#define LOG_BLACKMARKET (1 << 24)
 
 //Individual logging panel pages
 #define INDIVIDUAL_GAME_LOG (LOG_GAME)
@@ -65,7 +64,7 @@
 #define INDIVIDUAL_COMMS_LOG (LOG_PDA | LOG_CHAT | LOG_COMMENT | LOG_TELECOMMS)
 #define INDIVIDUAL_OOC_LOG (LOG_OOC | LOG_ADMIN)
 #define INDIVIDUAL_OWNERSHIP_LOG (LOG_OWNERSHIP)
-#define INDIVIDUAL_SHOW_ALL_LOG (LOG_ATTACK | LOG_SAY | LOG_WHISPER | LOG_EMOTE | LOG_RADIO_EMOTE | LOG_DSAY | LOG_PDA | LOG_CHAT | LOG_COMMENT | LOG_TELECOMMS | LOG_OOC | LOG_ADMIN | LOG_OWNERSHIP | LOG_GAME | LOG_ADMIN_PRIVATE | LOG_ASAY | LOG_MECHA | LOG_VIRUS | LOG_SHUTTLE | LOG_ECON | LOG_VICTIM | LOG_SPEECH_INDICATORS | LOG_CLONING | LOG_NTSL)
+#define INDIVIDUAL_SHOW_ALL_LOG (LOG_ATTACK | LOG_SAY | LOG_WHISPER | LOG_EMOTE | LOG_RADIO_EMOTE | LOG_DSAY | LOG_PDA | LOG_CHAT | LOG_COMMENT | LOG_TELECOMMS | LOG_OOC | LOG_ADMIN | LOG_OWNERSHIP | LOG_GAME | LOG_ADMIN_PRIVATE | LOG_ASAY | LOG_MECHA | LOG_VIRUS | LOG_SHUTTLE | LOG_ECON | LOG_VICTIM | LOG_SPEECH_INDICATORS | LOG_CLONING)
 
 #define LOGSRC_CKEY "Ckey"
 #define LOGSRC_MOB "Mob"
@@ -118,6 +117,7 @@
 #define LOG_CATEGORY_TOOL "tool"
 #define LOG_CATEGORY_VIRUS "virus"
 #define LOG_CATEGORY_FLOXY "floxy"
+#define LOG_CATEGORY_CAVE_GENERATION "cave-generation"
 #define LOG_CATEGORY_MECHCOMP "mechcomp"
 #define LOG_CATEGORY_NTSL "ntsl" // MONKESTATION ADDITION: NTSL
 #define LOG_CATEGORY_CLONING "cloning"
@@ -189,6 +189,12 @@
 #define DIRECT_OUTPUT(A, B) A << B
 #define DIRECT_INPUT(A, B) A >> B
 #define SEND_IMAGE(target, image) DIRECT_OUTPUT(target, image)
+/**
+ * Sends sound directly to the user's client
+ * If you're using this, you probably shouldn't be, check playsound or playsound_local instead.
+ * This is more cost-effective, but doesn't take into account volume preferences (and Master Volume should control all sounds)
+ * If you really want to use this, manually set volume w/ calculate_mixed_volume at least. Thanks.
+ */
 #define SEND_SOUND(target, sound) DIRECT_OUTPUT(target, sound)
 #define SEND_TEXT(target, text) DIRECT_OUTPUT(target, text)
 #define WRITE_FILE(file, text) DIRECT_OUTPUT(file, text)

@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../../backend';
-import { Button, NoticeBox, Section, TextArea, Stack } from '../../components';
-import { RequestsData } from './types';
+import { Button, NoticeBox, Section, Stack, TextArea } from '../../components';
+import type { RequestsData } from './types';
 
 export const AnnouncementTab = (props) => {
   const { act, data } = useBackend<RequestsData>();

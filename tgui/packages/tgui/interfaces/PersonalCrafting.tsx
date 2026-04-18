@@ -1,23 +1,23 @@
-import { BooleanLike, classes } from 'common/react';
-import { createSearch } from 'common/string';
-import { flow } from 'common/fp';
 import { filter, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
+import { type BooleanLike, classes } from 'common/react';
+import { createSearch } from 'common/string';
+import type React from 'react';
 import { useBackend, useLocalState } from '../backend';
 import {
-  Divider,
-  Button,
-  Section,
-  Tabs,
-  Stack,
   Box,
-  Input,
+  Button,
+  Divider,
   Icon,
-  Tooltip,
+  Input,
   NoticeBox,
+  Section,
+  Stack,
+  Tabs,
+  Tooltip,
 } from '../components';
 import { Window } from '../layouts';
 import { Food } from './PreferencesMenu/data';
-import React from 'react';
 
 const TYPE_ICONS = {
   'Can Make': 'utensils',
@@ -216,6 +216,17 @@ export const PersonalCrafting = (props) => {
     material_occurences[0].atom_id,
   );
   const [tabMode, setTabMode] = useLocalState('tabMode', 0);
+  const visibleMaterials =
+    tabMode === TABS.material && searchText.length > 0
+      ? [
+          ...material_occurences.filter((m) => m.atom_id === activeMaterial),
+          ...material_occurences.filter((m) => {
+            if (m.atom_id === activeMaterial) return false;
+            const name = data.atom_data[Number(m.atom_id) - 1]?.name ?? '';
+            return name.toLowerCase().includes(searchText.toLowerCase());
+          }),
+        ]
+      : material_occurences;
   const searchName = createSearch(searchText, (item: Recipe) => item.name);
   let recipes = flow([
     filter<Recipe>(
@@ -372,7 +383,7 @@ export const PersonalCrafting = (props) => {
                           </Tabs.Tab>
                         ))}
                       {tabMode === TABS.material &&
-                        material_occurences.map((material) => (
+                        visibleMaterials.map((material) => (
                           <Tabs.Tab
                             key={material.atom_id}
                             selected={
@@ -597,7 +608,7 @@ const MaterialContent = (props) => {
           mr={-0.5}
           className={classes([
             mode ? 'cooking32x32' : 'crafting32x32',
-            'a' + atom_id,
+            `a${atom_id}`,
           ])}
           style={{ imageRendering: 'pixelated' }}
         />
@@ -704,7 +715,7 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
           <Box
             className={classes([
               mode ? 'cooking32x32' : 'crafting32x32',
-              'a' + item.result,
+              `a${item.result}`,
             ])}
             style={{ imageRendering: 'pixelated' }}
           />
@@ -963,7 +974,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
               m={'16px'}
               className={classes([
                 mode ? 'cooking32x32' : 'crafting32x32',
-                'a' + item.result,
+                `a${item.result}`,
               ])}
             />
           </Box>
@@ -1007,14 +1018,12 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
                 {(item.tool_paths || item.tool_behaviors) && (
                   <Box>
                     <GroupTitle title="Tools" />
-                    {item.tool_paths &&
-                      item.tool_paths.map((tool) => (
-                        <AtomContent key={tool} atom_id={tool} amount={1} />
-                      ))}
-                    {item.tool_behaviors &&
-                      item.tool_behaviors.map((tool) => (
-                        <ToolContent key={tool} tool={tool} />
-                      ))}
+                    {item.tool_paths?.map((tool) => (
+                      <AtomContent key={tool} atom_id={tool} amount={1} />
+                    ))}
+                    {item.tool_behaviors?.map((tool) => (
+                      <ToolContent key={tool} tool={tool} />
+                    ))}
                   </Box>
                 )}
                 {item.machinery && (
@@ -1104,7 +1113,7 @@ const AtomContent = ({ atom_id, amount }) => {
         mr={0.5}
         className={classes([
           mode ? 'cooking32x32' : 'crafting32x32',
-          'a' + atom_id,
+          `a${atom_id}`,
         ])}
         style={{ imageRendering: 'pixelated' }}
       />

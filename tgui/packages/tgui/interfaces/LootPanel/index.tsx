@@ -1,13 +1,13 @@
-import { SearchItem } from './types';
-import { BooleanLike } from 'common/react';
+import { isEscape } from 'common/keys';
+import { clamp } from 'common/math';
+import type { BooleanLike } from 'common/react';
 import { Component } from 'react';
 import { useBackend } from '../../backend';
-import { clamp } from 'common/math';
-import { Stack, Section, Button, Input } from '../../components';
+import { Button, Input, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { GroupedContents } from './GroupedContents';
-import { isEscape } from 'common/keys';
 import { RawContents } from './RawContents';
+import type { SearchItem } from './types';
 
 type Data = {
   contents: SearchItem[];
@@ -20,7 +20,7 @@ type LootPanelState = {
   contentsByPathName: Record<string, SearchItem[]>;
 };
 
-export class LootPanel extends Component<{}, LootPanelState> {
+export class LootPanel extends Component<any, LootPanelState> {
   state = {
     grouping: true,
     searchText: '',

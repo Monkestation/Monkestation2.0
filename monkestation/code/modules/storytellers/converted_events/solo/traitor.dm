@@ -1,4 +1,4 @@
-/datum/round_event_control/antagonist/solo/traitor
+/datum/round_event_control/antagonist/traitor
 	antag_flag = ROLE_SYNDICATE_INFILTRATOR
 	tags = list(TAG_COMBAT, TAG_CREW_ANTAG, TAG_MUNDANE)
 	antag_datum = /datum/antagonist/traitor/infiltrator
@@ -25,14 +25,14 @@
 	weight = 18
 	event_icon_state = "traitor"
 
-/datum/round_event_control/antagonist/solo/traitor/roundstart
+/datum/round_event_control/antagonist/traitor/roundstart
 	name = "Traitors"
 	antag_flag = ROLE_TRAITOR
 	antag_datum = /datum/antagonist/traitor
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
 
-/datum/round_event_control/antagonist/solo/traitor/midround
+/datum/round_event_control/antagonist/traitor/midround
 	name = "Sleeper Agents (Traitors)"
 	antag_flag = ROLE_SLEEPER_AGENT
 	antag_datum = /datum/antagonist/traitor/infiltrator/sleeper_agent

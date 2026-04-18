@@ -78,19 +78,34 @@
 	inhand_icon_state = null
 	hat_type = "red"
 	dog_fashion = null
-	name = "firefighter helmet"
-	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
 
+/obj/item/clothing/head/utility/hardhat/fire
+	name = "firefighter helmet"
+	desc = "A firefighter's helmet with a light attached. Perfect for fire related emergencies in a plasma research facility."
+	icon_state = "hardhat0_fire"
+	inhand_icon_state = null
+	hat_type = "fire"
+	dog_fashion = null
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
+	armor_type = /datum/armor/utility_fire
 
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 
-/obj/item/clothing/head/utility/hardhat/red/upgraded
-	name = "workplace-ready firefighter helmet"
-	desc = "By applying state of the art lighting technology to a fire helmet, and using photo-chemical hardening methods, this hardhat will protect you from robust workplace hazards."
+
+/obj/item/clothing/head/utility/hardhat/fire/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+
+/obj/item/clothing/head/utility/hardhat/upgraded
+	name = "workplace-ready hardhat"
+	desc = "By applying state of the art lighting technology to a hardhat, and using photo-chemical hardening methods, this hardhat will protect you from robust workplace hazards."
 	icon_state = "hardhat0_purple"
 	inhand_icon_state = null
-	light_outer_range = 5
+	light_outer_range = 6
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/silver = SMALL_MATERIAL_AMOUNT*5)
 	hat_type = "purple"

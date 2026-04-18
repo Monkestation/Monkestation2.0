@@ -39,7 +39,7 @@ export const MassSpec = (props) => {
         {!!processing && (
           <Dimmer fontSize="32px">
             <Icon name="cog" spin={1} />
-            {' Purifying... ' + round(eta) + 's'}
+            {` Purifying... ${round(eta)}s`}
           </Dimmer>
         )}
         <Section
@@ -96,7 +96,7 @@ export const MassSpec = (props) => {
         >
           <BeakerMassProfile loaded={!!beaker1} beaker={beaker1Contents} />
           {!!beaker1Contents.length && (
-            <Box>{'Eta of selection: ' + round(eta) + ' seconds'}</Box>
+            <Box>{`Eta of selection: ${round(eta)} seconds`}</Box>
           )}
         </Section>
         <Section
@@ -327,7 +327,7 @@ const MassSpectroscopy = (props) => {
           step={graphUpperRange / 400}
           height={17.2}
           format={(value) => round(value)}
-          width={(centerValue / graphUpperRange) * 400 + 'px'}
+          width={`${(centerValue / graphUpperRange) * 400}px`}
           value={lowerRange}
           minValue={graphLowerRange}
           maxValue={centerValue}
@@ -347,7 +347,7 @@ const MassSpectroscopy = (props) => {
           height={17.2}
           format={(value) => round(value)}
           step={graphUpperRange / 400}
-          width={400 - (centerValue / graphUpperRange) * 400 + 'px'}
+          width={`${400 - (centerValue / graphUpperRange) * 400}px`}
           value={upperRange}
           minValue={centerValue}
           maxValue={graphUpperRange}
@@ -371,7 +371,7 @@ const MassSpectroscopy = (props) => {
             value={centerValue}
             height={1.9}
             format={(value) => round(value)}
-            width={400 + 'px'}
+            width={`${400}px`}
             minValue={graphLowerRange + 1}
             maxValue={graphUpperRange - 1}
             color={'invisible'}

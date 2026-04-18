@@ -84,7 +84,7 @@
 
 /obj/item/gun/ballistic/rocketlauncher/afterattack()
 	. = ..()
-	magazine.get_round(FALSE) //Hack to clear the mag after it's fired
+	magazine.get_round() //Hack to clear the mag after it's fired
 
 /obj/item/gun/ballistic/rocketlauncher/attack_self_tk(mob/user)
 	return //too difficult to remove the rocket with TK
@@ -135,7 +135,6 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/c980_grenade
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/grenade_launcher.ogg'
 	can_suppress = FALSE
-	can_bayonet = FALSE
 	burst_size = 1
 	fire_delay = 5
 	actions_types = list()

@@ -228,14 +228,14 @@
 			wires.cut_random()
 
 
-/mob/living/simple_animal/bot/mulebot/bullet_act(obj/projectile/Proj)
+/mob/living/simple_animal/bot/mulebot/bullet_act(obj/projectile/proj)
 	. = ..()
 	if(. && !QDELETED(src)) //Got hit and not blown up yet.
 		if(prob(50) && !isnull(load))
 			unload(0)
 		if(prob(25))
 			visible_message(span_danger("Something shorts out inside [src]!"))
-			wires.cut_random(source = Proj.firer)
+			wires.cut_random(source = proj.firer)
 
 /mob/living/simple_animal/bot/mulebot/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -495,6 +495,7 @@
 	if(!speed)//Devide by zero man bad
 		return
 	num_steps = round(10/speed) //10, 5, or 3 steps, depending on how many wires we have cut
+	datum_flags &= ~DF_ISPROCESSING // hacky fix since /mob/living already registers this to another subsystem
 	START_PROCESSING(SSfastprocess, src)
 
 /mob/living/simple_animal/bot/mulebot/process()

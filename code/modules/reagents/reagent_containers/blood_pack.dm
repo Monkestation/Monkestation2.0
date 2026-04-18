@@ -97,9 +97,6 @@
 	. = ..()
 	. += span_notice("There is a toxin warning on the label. This is for slimepeople.")
 
-/obj/item/reagent_containers/blood/universal
-	blood_type = /datum/blood_type/universal
-
 /obj/item/reagent_containers/blood/attackby(obj/item/tool, mob/user, params)
 	if (IS_WRITING_UTENSIL(tool))
 		if(!user.can_write(tool))

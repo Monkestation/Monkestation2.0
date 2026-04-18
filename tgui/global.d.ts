@@ -209,4 +209,6 @@ interface Window {
   hubStorage: Storage;
   domainStorage: Storage;
   serverStorage: Storage;
+
+  __chatRenderer__: any;
 }

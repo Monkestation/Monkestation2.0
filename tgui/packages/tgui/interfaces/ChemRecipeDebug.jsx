@@ -70,7 +70,7 @@ export const ChemRecipeDebug = (props) => {
               {(processAll && <Box>All</Box>) || (
                 <Box>
                   {queuedReactions.length &&
-                    queuedReactions.map((entry) => entry.name + ', ')}
+                    queuedReactions.map((entry) => `${entry.name}, `)}
                 </Box>
               )}
             </LabeledList.Item>
@@ -228,7 +228,7 @@ export const ChemRecipeDebug = (props) => {
               <Flex.Item color="label">
                 <AnimatedNumber
                   value={currentpH}
-                  format={(value) => 'pH: ' + round(value, 3)}
+                  format={(value) => `pH: ${round(value, 3)}`}
                 />
               </Flex.Item>
               <Flex.Item>
@@ -272,45 +272,44 @@ export const ChemRecipeDebug = (props) => {
                   Target
                 </Table.Cell>
               </Table.Row>
-              {activeReactions &&
-                activeReactions.map((reaction) => (
-                  <Table.Row key="reactions">
-                    <Table.Cell width={'60px'} color={reaction.danger && 'red'}>
-                      {reaction.name}
-                    </Table.Cell>
-                    <Table.Cell width={'100px'} pr={'10px'}>
-                      <RoundGauge
-                        size={1.3}
-                        value={reaction.quality}
-                        minValue={0}
-                        maxValue={1}
-                        alertAfter={reaction.purityAlert}
-                        content={'test'}
-                        format={() => ''}
-                        ml={5}
-                        ranges={{
-                          red: [0, reaction.minPure],
-                          orange: [reaction.minPure, reaction.inverse],
-                          yellow: [reaction.inverse, 0.8],
-                          green: [0.8, 1],
-                        }}
-                      />
-                    </Table.Cell>
-                    <Table.Cell width={'70px'}>
-                      <ProgressBar
-                        value={reaction.reactedVol}
-                        minValue={0}
-                        maxValue={reaction.targetVol}
-                        textAlign={'center'}
-                        icon={reaction.overheat && 'thermometer-full'}
-                        width={7}
-                        color={reaction.overheat ? 'red' : 'label'}
-                      >
-                        {reaction.targetVol}u
-                      </ProgressBar>
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
+              {activeReactions?.map((reaction) => (
+                <Table.Row key="reactions">
+                  <Table.Cell width={'60px'} color={reaction.danger && 'red'}>
+                    {reaction.name}
+                  </Table.Cell>
+                  <Table.Cell width={'100px'} pr={'10px'}>
+                    <RoundGauge
+                      size={1.3}
+                      value={reaction.quality}
+                      minValue={0}
+                      maxValue={1}
+                      alertAfter={reaction.purityAlert}
+                      content={'test'}
+                      format={() => ''}
+                      ml={5}
+                      ranges={{
+                        red: [0, reaction.minPure],
+                        orange: [reaction.minPure, reaction.inverse],
+                        yellow: [reaction.inverse, 0.8],
+                        green: [0.8, 1],
+                      }}
+                    />
+                  </Table.Cell>
+                  <Table.Cell width={'70px'}>
+                    <ProgressBar
+                      value={reaction.reactedVol}
+                      minValue={0}
+                      maxValue={reaction.targetVol}
+                      textAlign={'center'}
+                      icon={reaction.overheat && 'thermometer-full'}
+                      width={7}
+                      color={reaction.overheat ? 'red' : 'label'}
+                    >
+                      {reaction.targetVol}u
+                    </ProgressBar>
+                  </Table.Cell>
+                </Table.Row>
+              ))}
               <Table.Row />
             </Table>
           )}

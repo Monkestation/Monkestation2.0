@@ -561,7 +561,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	if(upgrade_flags & BORER_STEALTH_MODE)
 		return FALSE
 
-	maturity_age += DELTA_WORLD_TIME(SSmobs)
+	maturity_age += DELTA_WORLD_TIME(SSclient_mobs)
 
 	var/maturity_threshold = calculate_maturation_discounts()
 	if(!chem_point_gained && maturity_age >= maturity_threshold)

@@ -1,5 +1,7 @@
 import { sortBy } from 'common/collections';
 import { capitalize } from 'common/string';
+import { type JSX, useState } from 'react';
+import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import {
   Blink,
@@ -12,11 +14,9 @@ import {
   Section,
   TextArea,
 } from '../components';
-import { StatusDisplayControls } from './common/StatusDisplayControls';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
-import { JSX, useState } from 'react';
-import { BooleanLike } from 'tgui-core/react';
+import { StatusDisplayControls } from './common/StatusDisplayControls';
 
 const STATE_BUYING_SHUTTLE = 'buying_shuttle';
 const STATE_CHANGING_STATUS = 'changing_status';
@@ -745,7 +745,7 @@ const PageMessages = (props) => {
   const messageElements: JSX.Element[] = [];
 
   for (const [messageIndex, message] of Object.entries(messages)) {
-    let answers: JSX.Element | null =
+    const answers: JSX.Element | null =
       message.possibleAnswers.length > 0 ? (
         <Box mt={1}>
           {message.possibleAnswers.map((answer, answerIndex) => (

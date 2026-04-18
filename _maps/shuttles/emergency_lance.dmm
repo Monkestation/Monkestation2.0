@@ -179,19 +179,19 @@
 "hp" = (
 /obj/item/radio/intercom/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = -3
 	},
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = 3
 	},
-/obj/item/reagent_containers/hypospray/medipen/atropine,
+/obj/item/reagent_containers/medipen/atropine,
 /obj/structure/closet/crate/medical{
 	name = "emergency survival supplies"
 	},
-/obj/item/reagent_containers/hypospray/medipen/blood_loss,
-/obj/item/reagent_containers/hypospray/medipen/blood_loss,
-/obj/item/reagent_containers/hypospray/medipen,
+/obj/item/reagent_containers/medipen/blood_loss,
+/obj/item/reagent_containers/medipen/blood_loss,
+/obj/item/reagent_containers/medipen,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "hu" = (
@@ -1021,10 +1021,10 @@
 /area/shuttle/escape)
 "HJ" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = -3
 	},
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = 3
 	},
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{

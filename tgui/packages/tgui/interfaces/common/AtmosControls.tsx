@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { decodeHtmlEntities } from 'common/string';
 import { useBackend } from '../../backend';
 import { Button, LabeledList, NumberInput, Section } from '../../components';
@@ -203,6 +203,15 @@ export const Scrubber = (props: ScrubberProps) => {
               act('widenet', {
                 ref: refID,
                 val: Number(!widenet),
+              })
+            }
+          />
+          <Button
+            icon={'square'}
+            content={'Toggle filters'}
+            onClick={() =>
+              act('toggle_all_filters', {
+                ref: refID,
               })
             }
           />

@@ -138,6 +138,7 @@
 		"holosignrestaurant",
 		"holosignbar",
 		"inducer",
+		"inducer_eng",
 		"tray_goggles",
 		"holopad",
 		"vendatray",

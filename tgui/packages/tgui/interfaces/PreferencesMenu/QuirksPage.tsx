@@ -1,6 +1,6 @@
-import { Box, Icon, Stack, Tooltip } from '../../components';
-import { PreferencesMenuData, Quirk } from './data';
 import { useBackend } from '../../backend';
+import { Box, Icon, Stack, Tooltip } from '../../components';
+import type { PreferencesMenuData, Quirk } from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
 const getValueClass = (value: number): string => {

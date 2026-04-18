@@ -6,7 +6,7 @@ import {
   Modal,
   Stack,
 } from '../../components';
-import { SubsystemData } from './types';
+import type { SubsystemData } from './types';
 
 type Props = {
   subsystem: SubsystemData;

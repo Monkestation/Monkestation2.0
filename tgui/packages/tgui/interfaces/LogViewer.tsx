@@ -160,7 +160,10 @@ const validateRegExp = (str: string) => {
 const CategoryViewer = (props: CategoryViewerProps) => {
   const [search, setSearch] = useLocalState('search', '');
   let [searchRegex, setSearchRegex] = useLocalState('searchRegex', false);
-  let [caseSensitive, setCaseSensitive] = useLocalState('caseSensitive', false);
+  const [caseSensitive, setCaseSensitive] = useLocalState(
+    'caseSensitive',
+    false,
+  );
   if (!search && searchRegex) {
     setSearchRegex(false);
     searchRegex = false;

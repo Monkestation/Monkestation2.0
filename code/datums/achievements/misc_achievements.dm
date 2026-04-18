@@ -70,7 +70,7 @@
 	database_id = MEDAL_CLEANBOSS
 
 /datum/award/achievement/misc/rule8
-	name = "Rule 3"
+	name = "Rule 1" // formerly known as rule 3, but we made it #1 ig
 	desc = "Call an admin this is ILLEGAL!!"
 	database_id = MEDAL_RULE8 //blame tg lmao
 	icon_state = "rule8"

@@ -40,8 +40,7 @@
 	decompose_matrix.rotation = arctan(cossine, sine) * flip_sign
 
 /matrix/proc/TurnTo(old_angle, new_angle)
-	. = new_angle - old_angle
-	Turn(.) //BYOND handles cases such as -270, 360, 540 etc. DOES NOT HANDLE 180 TURNS WELL, THEY TWEEN AND LOOK LIKE SHIT
+	return Turn(new_angle - old_angle) //BYOND handles cases such as -270, 360, 540 etc. DOES NOT HANDLE 180 TURNS WELL, THEY TWEEN AND LOOK LIKE SHIT
 
 /atom/proc/SpinAnimation(speed = 10, loops = -1, clockwise = 1, segments = 3, parallel = TRUE)
 	if(!segments)
@@ -75,12 +74,14 @@
 		matrix(transform).Translate(0, 1),
 		matrix(transform).Translate(1, 0),
 		matrix(transform).Translate(0, -1),
+		matrix(transform),
 	)
 
-	animate(src, transform = transforms[1], time = 0.2, loop = loops)
+	animate(src, transform = transforms[1], time = 0.1, loop = loops)
 	animate(transform = transforms[2], time = 0.1)
 	animate(transform = transforms[3], time = 0.2)
 	animate(transform = transforms[4], time = 0.3)
+	animate(transform = transforms[5], time = 0.1)
 
 /**
  * Shear the transform on either or both axes.

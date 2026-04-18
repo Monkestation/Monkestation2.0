@@ -57,7 +57,6 @@
 
 /obj/machinery/bomb_actualizer/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, PROC_REF(modify_explosion))
 	radio = new(src)
 	radio.keyslot = new radio_key
 	radio.set_listening(FALSE)
@@ -184,28 +183,25 @@
 			stage++
 
 	if(active && (timer <= world.time))
+		RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, PROC_REF(modify_explosion))
 		playsound(loc, youdied, 100, FALSE, 45)
 		active = FALSE
 		stage = 0
 		update_appearance()
 		inserted_bomb.toggle_valve(tank_to_target)
 
-
 /obj/machinery/bomb_actualizer/proc/seconds_remaining()
 	if(active)
 		. = max(0, round(timer - world.time) / 10)
-
 	else
 		. = 420
 
-
-
-	/**
-	* catches the parameters of the TTV's explosion as it happens internally,
-	* cancels the explosion and then re-triggers it to happen with modified perameters (such as maxcap = false)
-	* while REDUCING the theoretical size by actualizer multiplier
-	* (actualizer_multiplier 0.25 would mean the 200 size theoretical bomb is only 12 + (200*0.25) in size )
-	*/
+/**
+ * catches the parameters of the TTV's explosion as it happens internally,
+ * cancels the explosion and then re-triggers it to happen with modified perameters (such as maxcap = false)
+ * while REDUCING the theoretical size by actualizer multiplier
+ * (actualizer_multiplier 0.25 would mean the 200 size theoretical bomb is only 12 + (200*0.25) in size )
+ */
 /obj/machinery/bomb_actualizer/proc/modify_explosion(atom/source, list/arguments)
 	SIGNAL_HANDLER
 	if(!exploded)

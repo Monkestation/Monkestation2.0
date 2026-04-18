@@ -21,7 +21,7 @@
 	/// See: [/datum/component/tackler/var/speed]
 	var/tackle_speed = 1
 	/// See: [/datum/component/tackler/var/skill_mod]
-	var/skill_mod = 2 //monkestation edit: 0 to 2
+	var/skill_mod = 1.5 //monkestation edit: 0 to 2 to 1.5
 
 /obj/item/clothing/gloves/tackler/Destroy()
 	tackler = null
@@ -66,7 +66,7 @@
 	tackle_stam_cost = 15
 	base_knockdown = 1.25 SECONDS
 	tackle_range = 5
-	skill_mod = 2
+	skill_mod = 3 // monkestation edit: 2 to 3, to compensate for the gripper buff
 
 
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT

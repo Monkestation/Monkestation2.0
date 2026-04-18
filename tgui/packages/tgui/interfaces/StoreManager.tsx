@@ -1,17 +1,17 @@
+import { classes } from 'common/react';
 import { useBackend, useSharedState } from '../backend';
 import {
   Box,
   Button,
   DmIcon,
+  Icon,
   Section,
   Stack,
-  Tabs,
   Table,
-  Icon,
+  Tabs,
 } from '../components';
-import { PreferencesMenuData } from './PreferencesMenu/data';
 import { Window } from '../layouts';
-import { classes } from 'common/react';
+import type { PreferencesMenuData } from './PreferencesMenu/data';
 
 export const StoreManager = () => {
   const { act, data } = useBackend<PreferencesMenuData>();
@@ -74,7 +74,7 @@ export const StoreManager = () => {
                     Purchase
                   </Table.Cell>
                 </Table.Row>
-                {selectedTab && selectedTab.contents ? (
+                {selectedTab?.contents ? (
                   selectedTab.contents.map((item, index) => (
                     <Table.Row
                       key={item.name}

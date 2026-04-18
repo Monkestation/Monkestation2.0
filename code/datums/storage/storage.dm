@@ -715,7 +715,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		attempt_insert(thing, user)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(!isturf(thing.loc))
+	if(!isturf(thing.loc) && !(thing.flags_1 & IS_ONTOP_1))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	INVOKE_ASYNC(src, PROC_REF(collect_on_turf), thing, user)
@@ -733,6 +733,16 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	var/atom/holder = thing.loc
 	var/list/pick_up = holder.contents.Copy()
+
+	// When collecting from a non-turf (e.g. a machine surface), only pick up IS_ONTOP_1 items
+	// that are not plates. Plates (like oven trays) are structural parts of machines, not loose
+	// surface items, and should not be swept up alongside items cooking on the surface.
+	if(!isturf(holder))
+		var/list/surface_items = list()
+		for(var/obj/item/surface_item in pick_up)
+			if((surface_item.flags_1 & IS_ONTOP_1) && !istype(surface_item, /obj/item/plate))
+				surface_items += surface_item
+		pick_up = surface_items
 
 	if(collection_mode == COLLECT_SAME)
 		pick_up = typecache_filter_list(pick_up, typecacheof(thing.type))
@@ -1049,8 +1059,12 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	for(var/mob/user in can_see_contents())
-		if (!user.CanReach(parent))
+		if (!can_be_reached_by(user))
 			hide_contents(user)
+
+/// Relay for parent.IsReachableBy
+/datum/storage/proc/can_be_reached_by(mob/user)
+	return parent.IsReachableBy(user)
 
 /// Close the storage UI for everyone viewing us.
 /datum/storage/proc/close_all()
@@ -1096,10 +1110,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(toshow.active_storage != src && (toshow.stat == CONSCIOUS))
 		for(var/obj/item/thing in real_location)
 			if(thing.on_found(toshow))
-				toshow.active_storage.hide_contents(toshow)
+				toshow.active_storage?.hide_contents(toshow)
 
-	if(toshow.active_storage)
-		toshow.active_storage.hide_contents(toshow)
+	toshow.active_storage?.hide_contents(toshow)
 
 	toshow.active_storage = src
 

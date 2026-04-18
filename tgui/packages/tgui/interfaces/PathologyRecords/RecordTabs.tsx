@@ -1,8 +1,8 @@
 import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { useBackend, useLocalState } from 'tgui/backend';
-import { Stack, Section, Tabs, NoticeBox, Box, Icon } from 'tgui/components';
-import { MedicalRecord, MedicalRecordData } from './types';
+import { Box, Icon, NoticeBox, Section, Stack, Tabs } from 'tgui/components';
+import type { MedicalRecord, MedicalRecordData } from './types';
 
 /** Displays all found records. */
 export const MedicalRecordTabs = (props) => {

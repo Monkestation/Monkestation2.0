@@ -124,6 +124,7 @@
 		owner.clear_alert(ALERT_FIRE)
 	else if(!was_on_fire && owner.on_fire)
 		owner.throw_alert(ALERT_FIRE, /atom/movable/screen/alert/fire)
+		owner.SetSleeping(-1) //FIRE!!!!!
 	owner.update_appearance(UPDATE_OVERLAYS)
 	update_particles()
 

@@ -88,11 +88,6 @@
 /// global signal when a global nullrod type is picked
 #define COMSIG_GLOB_NULLROD_PICKED "!nullrod_picked"
 
-// Used for smothering fires upon weather event start/stop
-#define COMSIG_GLOB_WEATHER_CHANGE "!weather_event_changed"
-
-#define COMSIG_GLOB_WEATHER_EFFECT "!weather_effect_update"
-
 /// Sent whenever a mob becomes capable of hearing DJ music: (mob/listener)
 #define COMSIG_GLOB_ADD_MUSIC_LISTENER "!add_music_listener"
 /// Sent whenever a mob becomes no longer capable of hearing DJ music: (mob/listener)

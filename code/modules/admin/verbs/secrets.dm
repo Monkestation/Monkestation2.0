@@ -310,14 +310,13 @@ monkestation end */
 		if("events")
 			if(!is_funmin)
 				return
-			if(SSgamemode.wizardmode)
-				switch(tgui_alert(usr,"What would you like to do?",,list("Intensify Summon Events","Turn Off Summon Events","Nothing")))
+			if(istype(SSgamemode.current_storyteller, /datum/storyteller/wizard)) //maybe handle this better
+				switch(tgui_alert(usr, "What would you like to do?", "Wizard Events", list("Intensify Summon Events", "Turn Off Summon Events", "Nothing")))
 					if("Intensify Summon Events")
 						summon_events(holder)
 						SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Intensify"))
 					if("Turn Off Summon Events")
-						SSgamemode.toggleWizardmode()
-						SSgamemode.event_frequency_multiplier = initial(SSgamemode.event_frequency_multiplier)
+						SSgamemode.set_storyteller(SSgamemode.selected_storyteller || /datum/storyteller/guide)
 						SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Disable"))
 			else
 				if(tgui_alert(usr,"Do you want to toggle summon events on?",,list("Yes","No")) == "Yes")
@@ -632,6 +631,22 @@ monkestation end */
 			sound_to_playing_players('sound/effects/pray_chaplain.ogg')
 			message_admins("[key_name_admin(holder)] healed everyone.")
 			log_admin("[key_name(holder)] healed everyone.")
+
+		if("lobotomize_the_bird")
+			var/choice = tgui_alert(usr, "Would you like to lobotomize Poly? This will kill them, and clear ALL saved phrases!", "i have to water the shitbird wait a minute", list("Yes", "No"))
+			if(choice != "Yes")
+				return
+			for(var/mob/living/basic/parrot/poly/shitbird in GLOB.mob_living_list)
+				ADD_TRAIT(shitbird, TRAIT_DONT_WRITE_MEMORY, ADMIN_TRAIT)
+				new /obj/effect/temp_visual/bsa_impact(shitbird.loc) // BOOM.
+				shitbird.dust(just_ash = TRUE)
+
+			for(var/poly_file in list("data/npc_saves/Poly.sav", "data/npc_saves/Poly.json", "data/npc_saves/polytalk.json"))
+				if(fexists(poly_file))
+					fdel(poly_file)
+
+			message_admins("[key_name_admin(holder)] lobotomized Poly.")
+			log_admin("[key_name(holder)] lobotomized Poly.")
 
 	if(E)
 		E.processing = FALSE

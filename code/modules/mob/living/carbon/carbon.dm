@@ -62,6 +62,7 @@
 			take_bodypart_damage(5 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 		else if(!iscarbon(hit_atom) && extra_speed)
 			take_bodypart_damage(5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
+		impact_fart()
 		oof_noise = TRUE
 
 	if(iscarbon(hit_atom) && hit_atom != src)
@@ -96,6 +97,7 @@
 				span_danger("[src] crashes into [hit_atom][extra_speed ? " really hard" : ""]!"),
 				span_userdanger("You[extra_speed ? " violently" : ""] crash into [hit_atom][extra_speed ? " extra hard" : ""]!"))
 		log_combat(src, victim, "crashed into")
+		victim.impact_fart()
 
 	if(oof_noise)
 		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
@@ -112,13 +114,13 @@
 /mob/living/carbon/Topic(href, href_list)
 	..()
 	if(href_list["embedded_object"] && usr.can_perform_action(src, NEED_DEXTERITY))
-		var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
-		if(!L)
+		var/obj/item/bodypart/limb = locate(href_list["embedded_limb"]) in bodyparts
+		if(!limb)
 			return
-		var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
-		if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
+		var/obj/item/weapon = locate(href_list["embedded_object"]) in limb.embedded_objects
+		if(!weapon || weapon.loc != src) //no item, no limb, or item is not in limb or in the person anymore
 			return
-		SEND_SIGNAL(src, COMSIG_CARBON_EMBED_RIP, I, L)
+		weapon.get_embed().rip_out(usr)
 		return
 
 	if(href_list["gauze_limb"])
@@ -486,7 +488,7 @@
 	set_health(round(maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute, DAMAGE_PRECISION))
 	update_stat()
 	on_stamina_update()
-	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD*2) && stat == DEAD )
+	if(((maxHealth - total_burn) < dead_threshold*2) && stat == DEAD )
 		become_husk(BURN)
 	med_hud_set_health()
 	if(stat == SOFT_CRIT)
@@ -495,7 +497,7 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 	if(HAS_TRAIT(src, TRAIT_REVIVES_BY_HEALING))
 		cure_husk() // If it has TRAIT_REVIVES_BY_HEALING, it probably can't be cloned. No husk cure, so we cure that here.
-		if(stat == DEAD && !HAS_TRAIT(src, TRAIT_DEFIB_BLACKLISTED) && health > 50)
+		if(stat == DEAD && (!mind || !HAS_TRAIT(mind, TRAIT_DEFIB_BLACKLISTED)) && health > 50)
 			revive(FALSE)
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
@@ -794,7 +796,7 @@
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	if(stat != DEAD)
-		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
+		if(health <= dead_threshold && !HAS_TRAIT(src, TRAIT_NODEATH))
 			death()
 			return
 		if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED, AUTOPSY_TRAIT))
@@ -906,7 +908,7 @@
 	if (HAS_TRAIT(src, TRAIT_HUSK))
 		return DEFIB_FAIL_HUSK
 
-	if (HAS_TRAIT(src, TRAIT_DEFIB_BLACKLISTED))
+	if (mind && HAS_TRAIT(mind, TRAIT_DEFIB_BLACKLISTED))
 		return DEFIB_FAIL_BLACKLISTED
 
 	if ((getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
@@ -1371,3 +1373,60 @@
 		return
 	head.adjustBleedStacks(5)
 	visible_message(span_notice("[src] gets a nosebleed."), span_warning("You get a nosebleed."))
+
+/mob/living/carbon/check_hit_limb_zone_name(hit_zone)
+	if(get_bodypart(hit_zone))
+		return hit_zone
+	// When a limb is missing the damage is actually passed to the chest
+	return BODY_ZONE_CHEST
+
+/mob/living/carbon/death(gibbed)
+	if (stat == DEAD)
+		return ..()
+
+	if (gibbed)
+		gib_fart()
+	else if (HAS_TRAIT(src, TRAIT_LOUD_ASS) || prob(1))
+		death_fart_timerid = addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon, death_fart)), rand(2 SECONDS, 10 SECONDS), TIMER_STOPPABLE | TIMER_DELETE_ME)
+	else if (prob(10))
+		death_fart_timerid = addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon, death_fart)), rand(15 SECONDS, 100 SECONDS), TIMER_STOPPABLE | TIMER_DELETE_ME)
+	. = ..()
+
+/mob/living/carbon/ZImpactDamage(turf/T, levels)
+	impact_fart()
+	. = ..()
+
+/mob/living/carbon/set_stat(new_stat)
+	. = ..()
+	if(isnull(.))
+		return
+
+	if (. == DEAD && stat != DEAD)
+		cancel_death_fart()
+
+/mob/living/carbon/proc/impact_fart(probability = 1, volume = 25)
+	if(HAS_TRAIT(src, TRAIT_LOUD_ASS) || prob(probability))
+		var/obj/item/organ/internal/butt/butt = get_organ_by_type(/obj/item/organ/internal/butt)
+		if (butt)
+			visible_message(span_notice("[src] has the wind knocked out of [p_them()]!"))
+			playsound(src, pick(butt.sound_effect), volume, mixer_channel = CHANNEL_PRUDE)
+
+/mob/living/carbon/proc/cancel_death_fart()
+	if (death_fart_timerid)
+		deltimer(death_fart_timerid)
+		death_fart_timerid = null
+
+/mob/living/carbon/proc/death_fart()
+	var/obj/item/organ/internal/butt/butt = get_organ_by_type(/obj/item/organ/internal/butt)
+	if (butt)
+		visible_message(span_notice("[src]'s ass gives one last salute!"))
+		playsound(src, pick(butt.sound_effect), 50, mixer_channel = CHANNEL_PRUDE)
+
+/mob/living/carbon/proc/gib_fart(freq=0)
+	if (stat == DEAD && world.time - timeofdeath > 1 SECOND)
+		return
+
+	if(HAS_TRAIT(src, TRAIT_LOUD_ASS))
+		if (freq == 0)
+			freq = rand(27000, 37000)
+		playsound(src.loc, 'sound/misc/fart1.ogg', 200, TRUE, frequency=freq, mixer_channel = CHANNEL_PRUDE, pressure_affected = FALSE)

@@ -1026,7 +1026,7 @@
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTION_STEP, num_reactions, seconds_per_tick)
 
 	if(length(mix_message) && my_atom) //This is only at the end
-		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]"))
+		my_atom.audible_message(span_notice("<img class='icon' src='\ref[my_atom]'> [mix_message.Join()]"), push_appearance = my_atom)
 
 	if(!LAZYLEN(reaction_list))
 		finish_reacting()
@@ -1093,7 +1093,7 @@
 	for(var/datum/equilibrium/equilibrium as anything in reaction_list)
 		mix_message += end_reaction(equilibrium)
 	if(my_atom && length(mix_message))
-		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]"))
+		my_atom.audible_message(span_notice("<img class='icon' src='\ref[my_atom]'> [mix_message.Join()]"), push_appearance = my_atom)
 	finish_reacting()
 
 /*
@@ -1114,7 +1114,7 @@
 				mix_message += end_reaction(equilibrium)
 				any_stopped = TRUE
 	if(length(mix_message))
-		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))][mix_message.Join()]"))
+		my_atom.audible_message(span_notice("<img class='icon' src='\ref[my_atom]'>[mix_message.Join()]"), push_appearance = my_atom)
 	return any_stopped
 
 /*
@@ -1204,20 +1204,19 @@
 		SSblackbox.record_feedback("tally", "chemical_reaction", yield, product)
 		add_reagent(product, yield, null, chem_temp, sum_purity)
 
-	var/list/seen = viewers(4, get_turf(my_atom))
-	var/iconhtml = icon2html(cached_my_atom, seen)
+	var/iconhtml = "<img class='icon' src='\ref[cached_my_atom]'>"
 	if(cached_my_atom)
 		if(!ismob(cached_my_atom) && !istype(cached_my_atom, /obj/item/circuit_component)) // No bubbling mobs
 			if(selected_reaction.mix_sound)
 				playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, TRUE)
 
-			my_atom.audible_message(span_notice("[iconhtml] [selected_reaction.mix_message]"))
+			my_atom.audible_message(span_notice("[iconhtml] [selected_reaction.mix_message]"), push_appearance = cached_my_atom)
 
 		if(istype(cached_my_atom, /obj/item/slime_extract))
 			var/obj/item/slime_extract/extract = my_atom
 			extract.Uses--
 			if(extract.Uses <= 0) // give the notification that the slime core is dead
-				my_atom.visible_message(span_notice("[iconhtml] \The [my_atom]'s power is consumed in the reaction."))
+				my_atom.visible_message(span_notice("[iconhtml] \The [my_atom]'s power is consumed in the reaction."), push_appearance = cached_my_atom)
 				extract.name = "used slime extract"
 				extract.desc = "This extract has been used up."
 

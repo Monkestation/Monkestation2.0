@@ -49,14 +49,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/operative_duff
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ultra, 32)
 
-/obj/structure/sign/poster/contraband/secborg_vale
-	name = "Defaced Valeborg Advertisement"
-	desc = "This poster originally sought to advertise the sleek utility of the valeborg - but it seems to have been long since defaced. One word lies on top; 'RUN.' - Perhaps fitting, considering the security model shown."
-	icon = 'monkestation/code/modules/blueshift/icons/posters/contraband.dmi'
-	icon_state = "poster_sr_valeborg"
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/secborg_vale, 32)
-
 /obj/structure/sign/poster/contraband/killingjoke // I like Batman :)))
 	name = "You don't have to be crazy to work here - but it sure helps!"
 	desc = "A poster boldly stating that being insane abord Nanotrasen stations isn't required. But it doesn't hurt to have!"

@@ -108,18 +108,6 @@
 	//Check inventory slots
 	return (wear_id?.GetID() || belt?.GetID())
 
-/mob/living/carbon/human/can_use_guns(obj/item/G)
-	. = ..()
-	if(G.trigger_guard == TRIGGER_GUARD_ALLOW_ALL)
-		return TRUE
-	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
-		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
-			balloon_alert(src, "fingers are too big!")
-			return FALSE
-	if(HAS_TRAIT(src, TRAIT_NOGUNS))
-		to_chat(src, span_warning("You can't bring yourself to use a ranged weapon!"))
-		return FALSE
-
 /mob/living/carbon/human/get_policy_keywords()
 	. = ..()
 	. += "[dna.species.type]"
@@ -150,8 +138,7 @@
 	for(var/i in missing_bodyparts)
 		var/datum/scar/scaries = new
 		scars += "[scaries.format_amputated(i)]"
-	for(var/i in all_scars)
-		var/datum/scar/iter_scar = i
+	for(var/datum/scar/iter_scar as anything in all_scars)
 		if(!iter_scar.fake)
 			scars += "[iter_scar.format()];"
 	return scars

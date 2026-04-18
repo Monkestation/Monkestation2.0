@@ -1,9 +1,9 @@
 import { classes } from 'common/react';
 import { capitalizeAll } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Section, Tabs, Stack } from '../components';
-import { InfoSection } from './RapidConstructionDevice';
+import { Box, Button, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
+import { InfoSection } from './RapidConstructionDevice';
 
 type Data = {
   selected_icon: string;

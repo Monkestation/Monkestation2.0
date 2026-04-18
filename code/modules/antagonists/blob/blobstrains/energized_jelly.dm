@@ -9,27 +9,27 @@
 	complementary_color = "#00E5B1"
 	reagent = /datum/reagent/blob/energized_jelly
 
-/datum/blobstrain/reagent/energized_jelly/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	if((damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER) && B.get_integrity() - damage <= 0 && prob(10))
-		do_sparks(rand(2, 4), FALSE, B)
+/datum/blobstrain/reagent/energized_jelly/damage_reaction(obj/structure/blob/damaged, damage, damage_type, damage_flag)
+	if((damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER) && damaged.get_integrity() - damage <= 0 && prob(10))
+		do_sparks(rand(2, 4), FALSE, damaged)
 	return ..()
 
-/datum/blobstrain/reagent/energized_jelly/tesla_reaction(obj/structure/blob/B, power)
+/datum/blobstrain/reagent/energized_jelly/tesla_reaction(obj/structure/blob/zapped, power)
 	return FALSE
 
-/datum/blobstrain/reagent/energized_jelly/emp_reaction(obj/structure/blob/B, severity)
-	var/damage = rand(30, 50) - severity * rand(10, 15)
-	B.take_damage(damage, BURN, ENERGY)
+/datum/blobstrain/reagent/energized_jelly/emp_reaction(obj/structure/blob/emped, severity)
+	var/damage = rand(20, 30) - (severity * 10)
+	emped.take_damage(damage, BURN, ENERGY)
 
 /datum/reagent/blob/energized_jelly
 	name = "Energized Blob Jelly"
 	taste_description = "gelatin"
 	color = "#EFD65A"
 
-/datum/reagent/blob/energized_jelly/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/eye/blob/overmind)
+/datum/reagent/blob/energized_jelly/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message, touch_protection, mob/eye/blob/overmind)
 	. = ..()
 	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
-	exposed_mob.losebreath += round(0.2*reac_volume)
-	exposed_mob.stamina.adjust(-reac_volume * 1.2)
+	exposed_mob.losebreath += round(0.3*reac_volume)
+	exposed_mob.stamina.adjust(trunc(-reac_volume * 1.5))
 	if(exposed_mob)
-		exposed_mob.apply_damage(0.6*reac_volume, OXY)
+		exposed_mob.apply_damage(round(0.6*reac_volume), OXY)

@@ -1,13 +1,16 @@
 /obj/item/clothing/gloves/color/plasmaman
 	desc = "Covers up those scandalous boney hands."
 	name = "plasma envirogloves"
+	icon = 'icons/obj/clothing/plasmaman_gloves.dmi'
+	worn_icon = 'icons/mob/clothing/plasmaman_gloves.dmi'
 	icon_state = "plasmaman"
 	greyscale_colors = "#913b00"
 
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-	resistance_flags = NONE
+	clothing_flags = THICKMATERIAL
+	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/color_plasmaman
 
 /datum/armor/color_plasmaman
@@ -57,6 +60,8 @@
 	name = "atmos envirogloves"
 	icon_state = "atmosplasma"
 	greyscale_colors = "#00a5ff"
+	siemens_coefficient = 0.3
+	clothing_traits = list(TRAIT_QUICKER_CARRY)
 
 /obj/item/clothing/gloves/color/plasmaman/explorer
 	name = "explorer envirogloves"
@@ -116,7 +121,7 @@
 /obj/item/clothing/gloves/color/plasmaman/radio
 	name = "translation envirogloves"
 	desc = "Allows the less vocally-capable plasmamen to use sign language over comms."
-	icon_state = "radio_gplasma"
+	icon_state = "radio_g"
 	inhand_icon_state = null
 	greyscale_colors = null
 	worn_icon_state = "radio_g"

@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				to_chat(src, span_danger("[msg]"))
 				return
 
-		var/stl = CONFIG_GET(number/second_topic_limit)
+		var/stl = max(CONFIG_GET(number/second_topic_limit), CONFIG_GET(number/tgui_max_chunk_count))
 		if (stl)
 			var/second = round(world.time, 1 SECONDS)
 			if (!topiclimiter)
@@ -115,7 +115,15 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	// TGUIless adminhelp
 	if(href_list["tguiless_adminhelp"])
+		if(current_ticket && !usr.client.holder)
+			if(!COOLDOWN_FINISHED(src, current_ticket.client_message_cooldown))
+				to_chat(usr, span_warning("You must wait [COOLDOWN_TIMELEFT(src, current_ticket.client_message_cooldown) * 0.1] seconds before sending another message."))
+				return
+		current_ticket?.currently_typing[ckey] = CLASSIC_ADMINPM_TIME_KEY
 		no_tgui_adminhelp(input(src, "Enter your ahelp", "Ahelp") as null|message)
+		if(current_ticket)
+			COOLDOWN_START(src, current_ticket.client_message_cooldown, 3 SECONDS)
+		current_ticket?.currently_typing -= ckey
 		return
 
 	if(href_list["commandbar_typing"])
@@ -352,14 +360,19 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	. = ..() //calls mob.Login()
 
+
 	// Admin Verbs need the client's mob to exist. Must be after ..()
 	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
 	//Admin Authorization
 	var/datum/admins/admin_datum = GLOB.admin_datums[ckey]
+	var/datum/admins/deadmin_datum = GLOB.deadmins[ckey]
 	if (!isnull(admin_datum))
 		admin_datum.associate(src)
 		connecting_admin = TRUE
-	else if(GLOB.deadmins[ckey])
+	else if(deadmin_datum && prefs.read_preference(/datum/preference/toggle/autoadmin))
+		connecting_admin = TRUE
+		deadmin_datum.activate()
+	else if(deadmin_datum)
 		add_verb(src, /client/proc/readmin)
 		connecting_admin = TRUE
 	if(CONFIG_GET(flag/autoadmin))
@@ -576,7 +589,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
 		to_chat(src, span_warning("Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you."))
 
-	update_ambience_pref(prefs.read_preference(/datum/preference/toggle/sound_ambience))
+	update_ambience_pref(prefs?.channel_volume["[CHANNEL_AMBIENCE]"])
 
 	//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
@@ -1301,6 +1314,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	set name = "Stop Sounds"
 	set category = "OOC"
 	set desc = "Stop Current Sounds"
+
+	current_ambient_sound = null
 	SEND_SOUND(usr, sound(null))
 	tgui_panel?.stop_music()
 	media_player?.stop()

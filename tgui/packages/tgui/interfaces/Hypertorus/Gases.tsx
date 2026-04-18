@@ -1,3 +1,7 @@
+import { filter, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
+import { toFixed } from 'common/math';
+import { useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -6,14 +10,9 @@ import {
   ProgressBar,
   Section,
 } from 'tgui/components';
-import { HelpDummy, HoverHelp } from './helpers';
-import { HypertorusFuel, HypertorusGas } from '.';
-import { filter, sortBy } from 'common/collections';
 import { getGasColor, getGasLabel } from 'tgui/constants';
-
-import { flow } from 'common/fp';
-import { toFixed } from 'common/math';
-import { useBackend } from 'tgui/backend';
+import type { HypertorusFuel, HypertorusGas } from '.';
+import { HelpDummy, HoverHelp } from './helpers';
 
 type GasListProps = {
   input_max: number;
@@ -68,7 +67,7 @@ const ensure_gases = (gas_array: HypertorusGas[] = [], gasids) => {
     gases_by_id[gas.id] = true;
   });
 
-  for (let gasid of gasids) {
+  for (const gasid of gasids) {
     if (!gases_by_id[gasid]) {
       gas_array.push({ id: gasid, amount: 0 });
     }
@@ -147,7 +146,7 @@ const GasList = (props: GasListProps) => {
               minValue={0}
               maxValue={minimumScale}
             >
-              {toFixed(gas.amount, 2) + ' moles'}
+              {`${toFixed(gas.amount, 2)} moles`}
             </ProgressBar>
           </LabeledList.Item>
         );

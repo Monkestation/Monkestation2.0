@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
   AnimatedNumber,
@@ -88,7 +88,7 @@ export const ChemDebugSynthesizer = (props) => {
             <>
               <Box>
                 <AnimatedNumber value={beakerCurrentVolume} />
-                {' / ' + beakerMaxVolume + ' u'}
+                {` / ${beakerMaxVolume} u`}
               </Box>
               {beakerContents.length > 0 ? (
                 <LabeledList>

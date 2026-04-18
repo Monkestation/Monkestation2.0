@@ -58,22 +58,6 @@
 	else
 		base_amount = 90 + rand(-10, 10)
 
-	switch(pain_controller?.get_average_pain()) // pain raises it a bit
-		if(25 to 50)
-			base_amount += 5
-		if(50 to 75)
-			base_amount += 10
-		if(75 to INFINITY)
-			base_amount += 15
-
-	switch(pain_controller?.pain_modifier) // numbness lowers it a bit
-		if(0.25 to 0.5)
-			base_amount -= 15
-		if(0.5 to 0.75)
-			base_amount -= 10
-		if(0.75 to 1)
-			base_amount -= 5
-
 	if(has_status_effect(/datum/status_effect/determined)) // adrenaline
 		base_amount += 10
 

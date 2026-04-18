@@ -1,8 +1,8 @@
 // @ts-nocheck
-import { useBackend, useSharedState, useLocalState } from '../../backend';
-import { Box, Button, Section, Stack, Tabs, Table } from '../../components';
+import { useBackend, useLocalState, useSharedState } from '../../backend';
+import { Box, Button, Section, Stack, Table, Tabs } from '../../components';
 import { CharacterPreview } from '../common/CharacterPreview';
-import { PreferencesMenuData, createSetPreference } from './data';
+import { createSetPreference, type PreferencesMenuData } from './data';
 import { NameInput } from './names';
 
 const CLOTHING_CELL_SIZE = 64;
@@ -123,7 +123,7 @@ export const LoadoutManager = (props) => {
             </Section>
           </Stack.Item>
           <Stack.Item grow>
-            {selectedTab && selectedTab.contents ? (
+            {selectedTab?.contents ? (
               <Section
                 title={selectedTab.title}
                 fill

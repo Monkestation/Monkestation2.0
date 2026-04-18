@@ -183,9 +183,8 @@
 	hasinner = TRUE
 
 /datum/sprite_accessory/anime_bottom/leopard
-	name = "Leopard"
+	name = "Leopard Tail"
 	icon_state = "leopard"
-	hasinner = TRUE
 
 /datum/sprite_accessory/anime_bottom/twocat
 	name = "Doubled Cat Tail"

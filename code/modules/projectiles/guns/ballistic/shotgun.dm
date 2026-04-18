@@ -34,6 +34,12 @@
 		process_fire(user, user, FALSE)
 		. = 1
 
+/obj/item/gun/ballistic/shotgun/cargo
+	name = "cargo shotgun"
+	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath. \
+	This one has been provided by the Interstellar Cargo Union for defending the bay against tiders."
+	pin = /obj/item/firing_pin/cargo/unremovable
+
 /obj/item/gun/ballistic/shotgun/lethal
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/lethal
 
@@ -122,9 +128,9 @@
 	projectile_wound_bonus = 15
 	pin = /obj/item/firing_pin/implant/pindicate
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/riot/evil
+
 /obj/item/gun/ballistic/shotgun/riot/sol/evil/unrestricted
 	pin = /obj/item/firing_pin
-
 // Automatic Shotguns//
 
 /obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user)
