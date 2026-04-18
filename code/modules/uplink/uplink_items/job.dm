@@ -359,6 +359,15 @@
 	restricted_roles = list(JOB_ASSISTANT, JOB_MIME, JOB_CLOWN)
 	refundable = FALSE
 
+/datum/uplink_item/role_restricted/velvetfu
+	name = "Velvet-Fu VHS tape"
+	desc = "Velvet-Fu is a knock-off Hollywood Martial Art.\n\
+			Has a notice, 'Removes the ability to Grab/Push'.\n\
+			Has been modified to beam its knowledge directly into your eyes, removing the need for a TV."
+	item = /obj/item/book/granter/martial/velvetfu
+	cost = 8
+	restricted_roles = list(JOB_JANITOR)
+
 /datum/uplink_item/role_restricted/minibible
 	name = "Miniature Bible"
 	desc = "We understand it can be difficult to carry out some of our missions. Here is some spiritual counsel in a small package."

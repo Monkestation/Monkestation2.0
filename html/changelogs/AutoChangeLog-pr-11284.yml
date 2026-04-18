@@ -1,5 +1,0 @@
-author: "BebeYoshi"
-delete-after: True
-changes:
-  - rscadd: "A new station message hallucination based on radiation storm was added."
-  - bugfix: "Blobs, Malf AI and Meteors now properly get announced in their hallucinations."

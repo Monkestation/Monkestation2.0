@@ -1,5 +1,0 @@
-author: "Mantlecrawler"
-delete-after: True
-changes:
-  - qol: "you can now build sandbags by right clicking on a tile with the sandbags"
-  - balance: "You now get 3 sandbags from filling empty sandbags up"
