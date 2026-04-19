@@ -258,6 +258,13 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Tacticool Skirtleneck"
 	item_path = /obj/item/clothing/under/syndicate/tacticool/skirt //This has been rebalanced in modular_skyrat\master_files\code\modules\clothing\under\syndicate.dm
 
+/datum/loadout_item/under/miscellaneous/tacticool_engi_turtleneck
+	name = "Tacticool Engineering Turtleneck"
+	item_path = /obj/item/clothing/under/syndicate/nova/overalls/unarmoured/tacticool
+
+/datum/loadout_item/under/miscellaneous/tactical_skirt_engi_turtleneck
+	name = "Tacticool Engineering Skirtleneck"
+	item_path = /obj/item/clothing/under/syndicate/nova/overalls/unarmoured/skirt/tacticool
 
 /datum/loadout_item/under/miscellaneous/gladiator
 	name = "Gladiator Uniform"

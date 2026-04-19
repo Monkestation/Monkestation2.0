@@ -11,6 +11,10 @@
 #define MARTIALART_WRESTLING "wrestling"
 #define MARTIALART_AWAKENEDDRAGON "awakened dragon"
 #define MARTIALART_SLASHER_GRAB "slasher grab"
+//Used in bloodsucker_life.dm
+#define MARTIALART_FRENZYGRAB "frenzy grabbing"
+//Used in velvet_fu.dm
+#define MARTIALART_VELVETFU "velvetfu"
 
 /// The number of hits required to crit a target
 #define HITS_TO_CRIT(damage) round(100 / damage, 0.1)

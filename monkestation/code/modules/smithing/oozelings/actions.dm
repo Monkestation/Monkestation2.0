@@ -33,12 +33,20 @@
 	if(!ishuman(owner))
 		return FALSE
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(clean_floor))
-	owner.visible_message(span_purple("[owner]'s outer membrane starts to develop a roiling film on the outside, absorbing grime into their inner layer!"), span_purple("Your outer membrane develops a roiling film on the outside, absorbing grime off yourself and your clothes; as well as the floor beneath you."))
+	owner.visible_message(
+		span_purple("[owner]'s outer membrane starts to develop a roiling film on the outside, absorbing grime into [owner.p_their()] inner layer!"),
+		span_purple("Your outer membrane develops a roiling film on the outside, absorbing grime off yourself and your clothes; as well as the floor beneath you.")
+	)
+	owner.balloon_alert_to_viewers("begins absorbing grime")
 	return TRUE
 
 /datum/status_effect/slime_washing/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
-	owner.visible_message(span_notice("[owner]'s outer membrane returns to normal, no longer cleaning [owner.p_their()] surroundings."), span_notice("Your outer membrane returns to normal, filth no longer being cleansed."))
+	owner.visible_message(
+		span_notice("[owner]'s outer membrane returns to normal, no longer cleaning [owner.p_their()] surroundings."),
+		span_notice("Your outer membrane returns to normal, filth no longer being cleansed.")
+	)
+	owner.balloon_alert_to_viewers("stops absorbing grime")
 
 /datum/status_effect/slime_washing/tick(seconds_between_ticks, seconds_per_tick)
 	if(owner.stat == DEAD)
@@ -60,7 +68,7 @@
 	return TRUE
 
 /datum/status_effect/slime_washing/get_examine_text()
-	return span_notice("[owner.p_Their()] outer layer is pulling in grime, filth sinking inside of their body and vanishing.")
+	return span_purple("[owner.p_Their()] outer layer is pulling in grime, filth sinking inside of their body and vanishing.")
 
 ///////
 /// HYDROPHOBIA SPELL
@@ -84,15 +92,9 @@
 		CRASH("Non-human somehow had [name] action")
 
 	if(user.has_status_effect(/datum/status_effect/slime_hydrophobia))
-		slime_hydrophobia_deactivate(user)
-		return
-
-	user.apply_status_effect(/datum/status_effect/slime_hydrophobia)
-	user.visible_message(span_purple("[user]'s outer membrane starts to ooze out an oily coating, [owner.p_their()] body becoming more viscous!"), span_purple("Your outer membrane starts to ooze out an oily coating, protecting you from water but making your body more viscous."))
-
-/datum/action/cooldown/slime_hydrophobia/proc/slime_hydrophobia_deactivate(mob/living/carbon/human/user)
-	user.remove_status_effect(/datum/status_effect/slime_hydrophobia)
-	user.visible_message(span_purple("[user]'s outer membrane returns to normal, [owner.p_their()] body drawing the oily coat back inside!"), span_purple("Your outer membrane returns to normal, water being dangerous to you again."))
+		user.remove_status_effect(/datum/status_effect/slime_hydrophobia)
+	else
+		user.apply_status_effect(/datum/status_effect/slime_hydrophobia)
 
 /datum/movespeed_modifier/status_effect/slime_hydrophobia
 	multiplicative_slowdown = 1.5
@@ -104,17 +106,26 @@
 	alert_type = null
 
 /datum/status_effect/slime_hydrophobia/on_apply()
-	. = ..()
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/slime_hydrophobia, update = TRUE)
 	ADD_TRAIT(owner, TRAIT_SLIME_HYDROPHOBIA, TRAIT_STATUS_EFFECT(id))
+	owner.visible_message(
+		span_purple("[owner]'s outer membrane starts to ooze out an oily coating, [owner.p_their()] body becoming more viscous!"),
+		span_purple("Your outer membrane starts to ooze out an oily coating, protecting you from water but making your body more viscous.")
+	)
+	owner.balloon_alert_to_viewers("starts oozing a hydrophobic coating!")
+	return TRUE
 
 /datum/status_effect/slime_hydrophobia/on_remove()
-	. = ..()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/slime_hydrophobia, update = TRUE)
 	REMOVE_TRAIT(owner, TRAIT_SLIME_HYDROPHOBIA, TRAIT_STATUS_EFFECT(id))
+	owner.visible_message(
+		span_purple("[owner]'s outer membrane returns to normal, [owner.p_their()] body drawing the oily coat back inside!"),
+		span_purple("Your outer membrane returns to normal, water being dangerous to you again.")
+	)
+	owner.balloon_alert_to_viewers("hydrophobic coating dispelled")
 
 /datum/status_effect/slime_hydrophobia/get_examine_text()
-	return span_notice("[owner.p_They()] [owner.p_are()] oozing out an oily coating onto [owner.p_their()] outer membrane, water rolling right off.")
+	return span_purple("[owner.p_They()] [owner.p_are()] oozing out an oily coating onto [owner.p_their()] outer membrane, water rolling right off.")
 
 /**
 	* Toggle Death Signal simply adds and removes the trait required for slimepeople to transmit a GPS signal upon core ejection.

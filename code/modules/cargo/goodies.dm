@@ -269,6 +269,12 @@
 	cost = PAYCHECK_CREW * 12
 	contains = list(/obj/item/encryptionkey/slime)
 
+/datum/supply_pack/goody/monkey_encryption_key
+	name = "Chimpanzee radio encryption key"
+	desc = "A hi-tech radio encryption key that allows the wearer to understand chimpanzee when the radio is worn."
+	cost = PAYCHECK_CREW * 12
+	contains = list(/obj/item/encryptionkey/monkey)
+
 /datum/supply_pack/goody/fishing_toolbox
 	name = "Fishing toolbox"
 	desc = "Complete toolbox set for your fishing adventure. Advanced hooks and lines sold separetely."
@@ -356,3 +362,9 @@
 	contains = list(
 		/obj/item/storage/pipebox,
 	)
+
+/datum/supply_pack/goody/shrimpplush
+	name = "Shrimp Plushie"
+	desc = "It really is just that shrimple."
+	cost = PAYCHECK_CREW * 4
+	contains = list(/obj/item/toy/plush/shrimp)

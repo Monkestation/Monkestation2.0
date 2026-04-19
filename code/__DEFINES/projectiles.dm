@@ -20,6 +20,8 @@
 #define CALIBER_10MM "10mm"
 /// The caliber used by most revolver variants.
 #define CALIBER_357 ".357"
+/// The caliber for Joel's gun, used in 'joel_gun.dm'
+#define CALIBER_C22 ".c22"
 /// The caliber used by the detective's revolver.
 #define CALIBER_38 ".38"
 /// The caliber used by the chaplain's revolver.

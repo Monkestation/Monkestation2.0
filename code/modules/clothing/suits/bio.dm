@@ -111,6 +111,10 @@
 /obj/item/clothing/suit/bio_suit/scientist
 	icon_state = "bio_scientist"
 
+/obj/item/clothing/suit/bio_suit/scientist/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.science_suit_allowed
+
 //CMO's biosuit, blue stripe
 /obj/item/clothing/head/bio_hood/cmo
 	icon_state = "bio_cmo"

@@ -27011,6 +27011,9 @@
 "jtA" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_y = 18
+	},
 /obj/item/clothing/glasses/hud/health{
 	pixel_y = 6
 	},
@@ -51571,7 +51574,6 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/storage/box/silver_ids,
 /obj/item/storage/box/ids,
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood,

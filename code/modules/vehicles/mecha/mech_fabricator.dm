@@ -72,6 +72,8 @@
 		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
 		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
 	)
+	/// The direction we send finished products. If null, puts them on our own tile
+	var/drop_direction
 
 /obj/machinery/mecha_part_fabricator/emagged
 	obj_flags = parent_type::obj_flags | EMAGGED
@@ -105,6 +107,15 @@
 			update_static_data(user)
 		return
 	return ..()
+
+/obj/machinery/mecha_part_fabricator/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
+		return
+	var/direction = get_dir(src, over_location)
+	if(!direction)
+		return
+	drop_direction = direction
+	balloon_alert(user, "dropping [dir2text(drop_direction)]")
 
 /// Updates the various authorization checks used to determine if combat parts are available to the current user
 /obj/machinery/mecha_part_fabricator/proc/check_auth_changes(mob/user)
@@ -193,14 +204,12 @@
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Storing up to <b>[rmat.local_size]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.")
-	if(panel_open)
-		. += span_notice("Alt-click to rotate the output direction.")
+	. += span_notice("[EXAMINE_HINT("Alt-click")] to rotate the output direction.")
+	. += span_notice("[EXAMINE_HINT("Click-drag")] in a direciton to set it to output in that direction")
 
 /obj/machinery/mecha_part_fabricator/click_alt(mob/living/user)
-	if(!panel_open)
-		return CLICK_ACTION_BLOCKING
-	dir = turn(dir, -90)
-	balloon_alert(user, "rotated to [dir2text(dir)].")
+	drop_direction = null
+	balloon_alert(user, "drop direction reset")
 	return CLICK_ACTION_SUCCESS
 
 /**
@@ -300,8 +309,12 @@
 
 /obj/machinery/mecha_part_fabricator/process()
 	// If there's a stored part to dispense due to an obstruction, try to dispense it.
+	var/turf/exit
 	if(stored_part)
-		var/turf/exit = get_step(src,(dir))
+		if(isnull(drop_direction))
+			exit = loc
+		else
+			exit = get_step(src,(drop_direction))
 		if(exit.density)
 			return TRUE
 
@@ -336,10 +349,12 @@
  */
 /obj/machinery/mecha_part_fabricator/proc/dispense_built_part(datum/design/D)
 	var/obj/item/I = new D.build_path(src)
-
+	var/turf/exit
 	being_built = null
-
-	var/turf/exit = get_step(src,(dir))
+	if(isnull(drop_direction))
+		exit = loc
+	else
+		exit = get_step(src,(drop_direction))
 	if(exit.density)
 		say("Error! The part outlet is obstructed.")
 		desc = "It's trying to dispense the fabricated [D.name], but the part outlet is obstructed."
