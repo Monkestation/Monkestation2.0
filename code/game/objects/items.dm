@@ -449,6 +449,13 @@
 /obj/item/examine_descriptor(mob/user)
 	return "item"
 
+/obj/item/examine(mob/user)
+	// lazily initialize the weapon description element if it hasn't been already
+	if(!(item_flags & WEAPON_DESCRIPTION_INITIALIZED))
+		add_weapon_description()
+		item_flags |= WEAPON_DESCRIPTION_INITIALIZED
+	return ..()
+
 /obj/item/examine_more(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER))
