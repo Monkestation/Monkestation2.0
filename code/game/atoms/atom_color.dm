@@ -132,10 +132,10 @@
 	if(!(overlay.appearance_flags & KEEP_TOGETHER))
 		// Recursively ensure any nested overlays/underlays also get the color filter
 		for(var/mutable_appearance/child_overlay as anything in overlay.overlays)
-			if(!(child_overlay.appearance_flags & KEEP_APART))
+			if(!isnull(child_overlay) && !(child_overlay.appearance_flags & KEEP_APART))
 				color_atom_overlay(child_overlay)
 		for(var/mutable_appearance/child_underlay as anything in overlay.underlays)
-			if(!(child_underlay.appearance_flags & KEEP_APART))
+			if(!isnull(child_underlay) && !(child_underlay.appearance_flags & KEEP_APART))
 				color_atom_overlay(child_underlay)
 
 	return overlay
