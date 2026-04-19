@@ -19,7 +19,7 @@
 /datum/preference_middleware/loadout/get_ui_static_data()
 	. = list(
 		"extra_tabs" = list(),
-		"unavailable_items" = list(),
+		"available_items" = list(),
 	)
 	#ifndef UNIT_TESTS
 	if (preferences.current_window != PREFERENCE_WINDOW_CHARACTERS)
@@ -38,8 +38,8 @@
 
 	for(var/item_path, item in GLOB.all_loadout_datums)
 		var/datum/loadout_item/loadout_item = item
-		if(!is_item_allowed(loadout_item))
-			.["unavailable_items"] += "[item_path]"
+		if(is_item_allowed(loadout_item))
+			.["available_items"] += "[item_path]"
 
 /datum/preference_middleware/loadout/get_ui_data(mob/user)
 	. = ..()

@@ -200,7 +200,7 @@ export type PreferencesMenuData = {
   window: PreferencesCurrentWindow;
   starting_page: PreferencesSelectedPage;
   owned_items: string[];
-  unavailable_items: string[];
+  available_items: string[];
 
   channels: Channel[];
 };

@@ -54,7 +54,7 @@ export const LoadoutManager = (props) => {
     user_is_donator,
     total_coins,
     selected_unusuals,
-    unavailable_items,
+    available_items,
   } = data;
 
   const [base_loadout_tabs, set_base_loadout_tabs] = useState<LoadoutData[]>(
@@ -156,9 +156,7 @@ export const LoadoutManager = (props) => {
               >
                 <Table>
                   {selectedTab.contents
-                    .filter(
-                      (item) => !unavailable_items.includes(item.item_path),
-                    )
+                    .filter((item) => available_items.includes(item.item_path))
                     .map((item, index) => (
                       <Table.Row
                         header
