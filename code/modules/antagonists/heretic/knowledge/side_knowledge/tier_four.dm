@@ -2,17 +2,6 @@
  * Tier 4 knowledge: Combat related knowledge
  */
 
-/datum/heretic_knowledge/spell/space_phase
-	name = "Space Phase"
-	desc = "Grants you Space Phase, a spell that allows you to move freely through space. \
-		You can only phase in and out when you are on a space or misc turf."
-	gain_text = "You feel like your body can move through space as if you were dust."
-
-	action_to_add = /datum/action/cooldown/spell/jaunt/space_crawl
-	cost = 2
-	research_tree_icon_frame = 6
-	drafting_tier = 4
-
 /datum/heretic_knowledge/unfathomable_curio
 	name = "Unfathomable Curio"
 	desc = "Allows you to transmute 3 rods, lungs, and any belt into an Unfathomable Curio - \

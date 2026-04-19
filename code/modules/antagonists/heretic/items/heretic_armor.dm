@@ -344,7 +344,7 @@
 	clothing_flags = THICKMATERIAL | PLASMAMAN_PREVENT_IGNITION | STOPSPRESSUREDAMAGE
 	// cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-	actions_types = list(/datum/action/item_action/toggle/gravity)
+	actions_types = list(/datum/action/item_action/toggle/gravity, /datum/action/cooldown/spell/jaunt/space_crawl)
 	/// If our robes are making us weightless
 	var/weightless_enabled = FALSE
 

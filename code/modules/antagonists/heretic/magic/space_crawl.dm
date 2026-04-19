@@ -14,7 +14,7 @@
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "space_crawl"
 
-	school = SCHOOL_FORBIDDEN
+	school = SCHOOL_TRANSLOCATION
 
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
@@ -32,9 +32,6 @@
 	UnregisterSignal(remove_from, COMSIG_MOVABLE_MOVED)
 
 /datum/action/cooldown/spell/jaunt/space_crawl/can_cast_spell(feedback = TRUE)
-	// we may loose the focus during jaunt, so you need to be always able to exit on a valid turf
-	if(is_jaunting(owner) && is_valid_turf())
-		return TRUE
 	. = ..()
 	if(!.)
 		return FALSE
@@ -49,7 +46,7 @@
 /datum/action/cooldown/spell/jaunt/space_crawl/before_cast(atom/cast_on)
 	if(is_jaunting(owner) && is_valid_turf())
 		return NONE
-	. = ..()
+	return ..()
 
 /datum/action/cooldown/spell/jaunt/space_crawl/proc/is_valid_turf()
 	var/turf/my_turf = get_turf(owner)
@@ -90,11 +87,6 @@
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
 	if(iscarbon(jaunter))
 		jaunter.drop_all_held_items()
-		// Sanity check to ensure we didn't lose our focus as a result.
-		if(!HAS_TRAIT(jaunter, TRAIT_ALLOW_HERETIC_CASTING))
-			REMOVE_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
-			exit_jaunt(jaunter, our_turf)
-			return FALSE
 		// Give them some space hands to prevent them from doing things
 		var/obj/item/space_crawl/left_hand = new(jaunter)
 		var/obj/item/space_crawl/right_hand = new(jaunter)
@@ -134,6 +126,8 @@
 		for(var/obj/item/space_crawl/space_hand in unjaunter.held_items)
 			unjaunter.temporarilyRemoveItemFromInventory(space_hand, force = TRUE)
 			qdel(space_hand)
+	if(unjaunter.bodytemperature <= unjaunter.bodytemp_cold_damage_limit) // workaround for RESISTCOLD jank
+		unjaunter.adjust_bodytemperature(INFINITY, max_temp = unjaunter.standard_body_temperature)
 	return ..()
 
 
