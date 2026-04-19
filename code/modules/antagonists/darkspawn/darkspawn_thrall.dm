@@ -121,7 +121,7 @@
 		return
 	var/mob/living/carbon/human/thrall = owner.current
 	if((!thrall.wear_suit && !thrall.w_uniform))
-		examine_text += "[thrall.p_Their()] whole body is covered in sigils!"
+		examine_text += span_velvet("[thrall.p_Their()] whole body is covered in sigils!")
 
 ////////////////////////////////////////////////////////////////////////////////////
 //--------------------------------Antag hud---------------------------------------//
