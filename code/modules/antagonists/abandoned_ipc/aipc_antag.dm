@@ -15,3 +15,18 @@
 	ui_name = "AntagInfoAIPC"
 	can_assign_self_objectives = FALSE
 	antagpanel_category = ANTAG_GROUP_ABANDONED_IPC
+	///The ion laws that this abandoned IPC must follow
+	var/list/laws = list()
+
+/datum/antagonist/abandoned_ipc/on_gain()
+	for(var/i in 1 to rand(4,8))
+		laws += generate_ion_law()
+	return ..()
+
+/datum/antagonist/abandoned_ipc/ui_static_data(mob/user)
+	var/list/data = list()
+	data["antag_name"] = name
+	data["objectives"] = get_objectives()
+	data["can_change_objective"] = can_assign_self_objectives
+	data["laws"] = laws
+	return data

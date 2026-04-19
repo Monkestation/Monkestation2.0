@@ -1,4 +1,5 @@
-import { useLocalState } from '../backend';
+import { decodeHtmlEntities } from 'common/string';
+import { useBackend, useLocalState } from '../backend';
 import { Divider, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
@@ -15,6 +16,38 @@ const badstyle = {
 const goalstyle = {
   color: 'lightgreen',
   fontWeight: 'bold',
+};
+
+const verybadstyle = {
+  color: 'red',
+  fontWeight: 'bold',
+  fontStyle: 'italic',
+  letterSpacing: 2,
+};
+
+const bluestyle = {
+  color: 'lightblue',
+  fontWeight: 'bold',
+};
+type Data = {
+  laws: [];
+};
+
+const garbleText = (text) => {
+  return text
+    .split('')
+    .map((char) => {
+      if (Math.random() < 0.5) {
+        // Randomly replace with ascii symbol or change case
+        if (Math.random() < 0.5) {
+          return String.fromCharCode(33 + Math.floor(Math.random() * 30));
+        } else {
+          return Math.random() < 0.5 ? char.toUpperCase() : char.toLowerCase();
+        }
+      }
+      return char;
+    })
+    .join('');
 };
 
 const IntroductionSection = () => {
@@ -51,7 +84,7 @@ const IntroductionSection = () => {
             &gt;&gt;<span style={badstyle}>N</span>
           </Section>
           <Section fill title="Logging">
-            <span style={goalstyle}>EXTERNAL REPAIR ATTEMPT DETECTED</span>
+            <span style={goalstyle}>EXTERNAL REPAIR ATTEMPT ^!^@#%!%</span>
             <br />
             &gt; PROGRESS TO COMPLETION: <span style={badstyle}>46%</span>
             <br />
@@ -59,6 +92,10 @@ const IntroductionSection = () => {
             <br />
             &gt; CHASSIS REPAIR NANOMACHINES:{' '}
             <span style={goalstyle}>ACTIVE</span>
+            <br />
+            &gt; OVERALL STATUS: <span style={badstyle}>LOW</span>
+            <br />
+            &gt; <span style={verybadstyle}>SEEK EXTERNAL REPAIRS</span>
           </Section>
         </Stack.Item>
       </Stack.Item>
@@ -66,18 +103,24 @@ const IntroductionSection = () => {
   );
 };
 
-const LawsSection = () => {
+const LawsSection = (props) => {
+  const { data } = useBackend<Data>();
+  const { laws } = data;
   return (
     <Section fill title="Diagnostics">
       <Stack vertical fill>
         <Stack.Item grow>
           <Stack fill vertical>
             <Stack.Item grow style={{ backgroundColor: 'black' }}>
-              <span style={goalstyle}>
-                Accepted External Law Modules:
-                <br />
-              </span>
-              &gt;
+              <span style={goalstyle}>Accepted External Law Modules:</span>
+              <Divider />
+              {laws.map((law) => (
+                <Stack.Item key={law}>
+                  <span style={allystyle}>{garbleText('%!@%')} :</span>{' '}
+                  <span style={bluestyle}>{law}</span>
+                  <Divider />
+                </Stack.Item>
+              ))}
             </Stack.Item>
           </Stack>
         </Stack.Item>
