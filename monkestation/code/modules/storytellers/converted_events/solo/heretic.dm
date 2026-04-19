@@ -40,7 +40,7 @@
 		JOB_CHAPLAIN,
 	)
 	required_enemies = 6
-	weight = 8
+	weight = 5
 	min_players = 20
 
 /datum/round_event_control/antagonist/heretic/get_weight()
@@ -74,6 +74,7 @@
 	antag_flag = ROLE_FORBIDDENCALLING
 	name = "Forbidden Calling (Heretics)"
 	prompted_picking = TRUE
+	max_occurrences = 1
 	typepath = /datum/round_event/antagonist/heretic/midround
 
 /datum/round_event/antagonist/heretic/start()
