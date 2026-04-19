@@ -2823,13 +2823,13 @@
 		drinker.adjust_drowsiness(-10 * REM * seconds_per_tick)
 		drinker.AdjustAllImmobility(-40 * REM * seconds_per_tick)
 		drinker.stamina.adjust(10 * REM * seconds_per_tick, TRUE)
-		drinker.adjustToxLoss(-2 * REM * seconds_per_tick, FALSE, forced = TRUE)
-		drinker.adjustOxyLoss(-2 * REM * seconds_per_tick, FALSE)
-		drinker.adjustBruteLoss(-2 * REM * seconds_per_tick, FALSE)
-		drinker.adjustFireLoss(-2 * REM * seconds_per_tick, FALSE)
+		drinker.adjustToxLoss(-3 * REM * seconds_per_tick, FALSE, forced = TRUE)
+		drinker.adjustOxyLoss(-3 * REM * seconds_per_tick, FALSE)
+		drinker.adjustBruteLoss(-3 * REM * seconds_per_tick, FALSE)
+		drinker.adjustFireLoss(-3 * REM * seconds_per_tick, FALSE)
 		drinker.fully_heal(HEAL_NEGATIVE_DISEASES)
 		if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
-			drinker.blood_volume += 3 * REM * seconds_per_tick
+			drinker.blood_volume += 4 * REM * seconds_per_tick
 	else
 		drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * seconds_per_tick, 150)
 		drinker.adjustToxLoss(2 * REM * seconds_per_tick, FALSE)
