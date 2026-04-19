@@ -83,9 +83,6 @@ GLOBAL_LIST_EMPTY(flavor_texts)
 		found_text = TextPreview(found_text, EXAMINE_FLAVOR_MAX_DISPLAYED)
 		found_text += " <a href='byond://?src=[REF(src)];flavor_text=1'>\[More\]</a>"
 
-	if(found_text)
-		found_text += "\n"
-
 	return found_text
 
 /**
@@ -107,7 +104,7 @@ GLOBAL_LIST_EMPTY(flavor_texts)
 		for(var/datum/antagonist/antag_datum as anything in examiner.mind?.antag_datums)
 			if(!(antag_datum.antag_flags & FLAG_CAN_SEE_EXPOITABLE_INFO))
 				continue
-			. += "<a href='byond://?src=[REF(src)];exploitable_info=1'>\[Exploitable Info\]</a>\n"
+			. += "<a href='byond://?src=[REF(src)];exploitable_info=1'>\[Exploitable Info\]</a>"
 			break
 
 	. += (separator_hr("Flavor text") + get_flavor_text(examiner, shorten))

@@ -39,32 +39,27 @@
 
 	// Who's identity are we dealing with? In most cases it's the same as [src], but it could be disguised people, or null.
 	var/datum/flavor_text/known_identity = get_visible_flavor(user)
-	var/expanded_examine = ""
 
 	if(linked_flavor && user.client?.holder && isAdminObserver(user))
-		// Formatted output list of records.
-		var/admin_line = ""
 
 		if(linked_flavor.flavor_text)
-			admin_line += "<a href='byond://?src=[REF(linked_flavor)];flavor_text=1'>\[FLA\]</a>"
+			. += "<a href='byond://?src=[REF(linked_flavor)];flavor_text=1'>\[FLA\]</a>"
 		if(linked_flavor.expl_info)
-			admin_line += "<a href='byond://?src=[REF(linked_flavor)];exploitable_info=1'>\[EXP\]</a>"
+			. += "<a href='byond://?src=[REF(linked_flavor)];exploitable_info=1'>\[EXP\]</a>"
 		if(known_identity != linked_flavor)
-			admin_line += "\nThey are currently [isnull(known_identity) ? "disguised and have no visible flavor":"visible as the flavor text of [known_identity.name]"]."
+			. += "They are currently [isnull(known_identity) ? "disguised and have no visible flavor":"visible as the flavor text of [known_identity.name]"]."
 
-		if(admin_line)
-			expanded_examine += "ADMIN EXAMINE: [ADMIN_LOOKUPFLW(src)] - [admin_line]\n"
+		if(length(.))
+			.[1] = "ADMIN EXAMINE: [ADMIN_LOOKUPFLW(src)]" + .[1]
 
 	// if the mob doesn't have a client, show how long they've been disconnected for.
 	if(!client && last_connection_time && stat != DEAD)
 		var/formatted_afk_time = span_bold("[round((world.time - lastclienttime) / (1 MINUTES), 0.1)]")
-		expanded_examine += span_italics("\n[p_Theyve()] been unresponsive for [formatted_afk_time] minute(s).\n")
-
-	if(length(expanded_examine))
-		expanded_examine = span_info(expanded_examine)
-		. += expanded_examine
+		. += span_italics("[p_Theyve()] been unresponsive for [formatted_afk_time] minute(s).")
 
 	if(known_identity)
+		if(length(.) > 0 && .[length(.)])
+			. += ""
 		. += known_identity.format_flavor_for_examine(user)
 
 // This isn't even an extension of examine_more this is the only definition for /human/examine_more, isn't that neat?
@@ -77,4 +72,4 @@
 	else if(ishuman(src))
 		// I hate this istype src but it's easier to handle this here
 		// Not all mobs should say "YOU CAN'T MAKE OUT DETAILS OF THIS PERSON"
-		. += span_smallnoticeital("You can't make out any details of this individual.\n")
+		. += span_smallnoticeital("You can't make out any details of this individual.")

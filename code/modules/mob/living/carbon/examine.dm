@@ -1,4 +1,5 @@
 #define CARBON_EXAMINE_EMBEDDING_MAX_DIST 4
+#define CARBON_EXAMINE_GAUZE_MAX_DIST 1
 
 /// Adds a newline to the examine list if the above entry is not empty and it is not the first element in the list
 #define ADD_NEWLINE_IF_NECESSARY(list) if(length(list) > 0 && list[length(list)]) { list += "" }
@@ -78,6 +79,12 @@
 				. += span_italics(span_notice(embed_text))
 			else
 				. += span_boldwarning(embed_text)
+
+		if(body_part.current_gauze)
+			var/gauze_href = body_part.current_gauze.name
+			if (get_dist(src, user) <= CARBON_EXAMINE_GAUZE_MAX_DIST && isliving(user))
+				gauze_href = "<a href='byond://?src=[REF(src)];gauze_limb=[REF(body_part)]'>[gauze_href]</a>"
+			. += span_notice("There is some [icon2html(body_part.current_gauze, user)] [gauze_href] wrapped around [t_his] [body_part.plaintext_zone].")
 
 		for(var/datum/wound/iter_wound as anything in body_part.wounds)
 			. += span_danger(iter_wound.get_examine_description(user))
@@ -160,13 +167,32 @@
 		var/mob/living/carbon/human/husrc = src // gross istypesrc but easier than refactoring even further for now
 		if(husrc.skin_tone == "albino")
 			apparent_blood_volume -= (BLOOD_VOLUME_NORMAL * 0.25) // knocks you down a few pegs
-	switch(apparent_blood_volume)
-		if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-			. += span_warning("[t_He] [t_has] pale skin.")
-		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-			. += span_boldwarning("[t_He] look[p_s()] like pale death.")
-		if(-INFINITY to BLOOD_VOLUME_BAD)
-			. += span_deadsay("<b>[t_He] resemble[p_s()] a crushed, empty juice pouch.</b>")
+	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
+		apparent_blood_volume = BLOOD_VOLUME_NORMAL
+	if(isethereal(src))
+		if(appears_dead && blood_volume < ETHEREAL_BLOOD_CHARGE_LOWEST_PASSIVE)
+			. += "[span_deadsay("<b>[t_He] resemble[p_s()] a crushed, empty juice pouch.</b>")]"
+		else
+			switch(blood_volume)
+				if(ETHEREAL_BLOOD_CHARGE_OVERLOAD to ETHEREAL_BLOOD_CHARGE_DANGEROUS)
+					. += "<b>Electricity is arcing off of [t_him]!</b>"
+				if(ETHEREAL_BLOOD_CHARGE_FULL to ETHEREAL_BLOOD_CHARGE_OVERLOAD)
+					. += "[t_He] seems unusually bright, and [t_is] sparking occasionally."
+				if(ETHEREAL_BLOOD_CHARGE_LOW to ETHEREAL_BLOOD_CHARGE_NORMAL)
+					. += "[t_His] light is dimming.\n"
+				if(ETHEREAL_BLOOD_CHARGE_LOWEST_PASSIVE to ETHEREAL_BLOOD_CHARGE_LOW)
+					. += "<b>[t_His] light is very dim, and is flickering slightly.</b>"
+				if(-INFINITY to ETHEREAL_BLOOD_CHARGE_LOWEST_PASSIVE)
+					. += "<b>[t_His] light is very dim, and is flickering on and off.</b>"
+					. += "[span_deadsay("<b>[t_His] movements seem painful and [t_his] breathing is erratic!</b>")]"
+	else
+		switch(apparent_blood_volume)
+			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
+				. += span_warning("[t_He] [t_has] pale skin.")
+			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
+				. += span_boldwarning("[t_He] look[p_s()] like pale death.")
+			if(-INFINITY to BLOOD_VOLUME_BAD)
+				. += span_deadsay("<b>[t_He] resemble[p_s()] a crushed, empty juice pouch.</b>")
 
 	if(is_bleeding())
 		var/list/obj/item/bodypart/bleeding_limbs = list()
@@ -230,10 +256,23 @@
 					. += "[t_He] appear[p_s()] to be staring off into space."
 				if (HAS_TRAIT(src, TRAIT_DEAF))
 					. += "[t_He] appear[p_s()] to not be responding to noises."
+				else if (HAS_TRAIT(src, TRAIT_HARD_OF_HEARING))
+					if (HAS_TRAIT_FROM(src, TRAIT_HARD_OF_HEARING, EAR_DAMAGE))
+						. += "[t_He] appear[p_s()] to not be responding to <strong>quiet</strong> noises."
+					else
+						. += "[t_He] appear[p_s()] to not be responding to <strong>quiet voices</strong>."
 				if (bodytemperature > bodytemp_heat_damage_limit)
 					. += "[t_He] [t_is] flushed and wheezing."
 				if (bodytemperature < bodytemp_cold_damage_limit)
 					. += "[t_He] [t_is] shivering."
+				if(HAS_TRAIT(src, TRAIT_EVIL))
+					. += "[t_His] eyes radiate with a unfeeling, cold detachment. There is nothing but darkness within [t_his] soul."
+					if(living_user.mind?.holy_role >= HOLY_ROLE_PRIEST)
+						. += span_warning("PERFECT FOR SMITING!!")
+					else
+						if(!HAS_TRAIT(user, TRAIT_EVIL))
+							living_user.add_mood_event("encountered_evil", /datum/mood_event/encountered_evil)
+							living_user.set_jitter_if_lower(15 SECONDS)
 
 			if(HAS_TRAIT(user, TRAIT_SPIRITUAL) && mind?.holy_role)
 				. += "[t_He] [t_has] a holy aura about [t_him]."
@@ -252,7 +291,10 @@
 			if(!key)
 				npc_message = "[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely."
 			else if(!client)
-				npc_message ="[t_He] [t_has] a blank, absent-minded stare and appears completely unresponsive to anything. [t_He] may snap out of it soon."
+				if(round(((world.time - lastclienttime) / (1 MINUTES)),1) >= 30)
+					npc_message = "[t_He] [t_has] a blank, absent-minded stare and [t_has] been completely unresponsive to anything for [round(((world.time - lastclienttime) / (1 MINUTES)),1)] minutes. [t_He] may snap out of it soon. They are able to be put into a cryopod by you."
+				else
+					npc_message = "[t_He] [t_has] a blank, absent-minded stare and [t_has] been completely unresponsive to anything for [round(((world.time - lastclienttime) / (1 MINUTES)),1)] minutes. [t_He] may snap out of it soon."
 			if(npc_message)
 				// give some space since this is usually near the end
 				ADD_NEWLINE_IF_NECESSARY(.)
@@ -290,6 +332,9 @@
 	if(length(hud_info))
 		. += hud_info
 
+	if(HAS_TRAIT(user, TRAIT_EMPATH) && src.is_face_visible())
+		ADD_NEWLINE_IF_NECESSARY(.)
+		. += "<b>Quirks:</b> [get_quirk_string(FALSE, CAT_QUIRK_ALL)]"
 	if(isobserver(user))
 		ADD_NEWLINE_IF_NECESSARY(.)
 		. += "<b>Quirks:</b> [get_quirk_string(FALSE, CAT_QUIRK_ALL)]"
@@ -297,8 +342,16 @@
 	if((isobserver(user) || isrevenant(user)) && user.invisibility <= see_invisible)
 		. += span_revennotice("[t_He] can see you!")
 
+	if (!CONFIG_GET(flag/disable_antag_opt_in_preferences))
+		var/opt_in_status = mind?.get_effective_opt_in_level()
+		if (!isnull(opt_in_status))
+			var/stringified_optin = GLOB.antag_opt_in_strings["[opt_in_status]"]
+			ADD_NEWLINE_IF_NECESSARY(.)
+			. += "Antag Opt-in Status: <b><font color='[GLOB.antag_opt_in_colors[stringified_optin]]'>[stringified_optin]</font></b>"
+
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE, user, .)
 
+	ADD_NEWLINE_IF_NECESSARY(.)
 	. += late_examine(user)
 
 	if(length(.))
@@ -592,3 +645,4 @@
 
 #undef ADD_NEWLINE_IF_NECESSARY
 #undef CARBON_EXAMINE_EMBEDDING_MAX_DIST
+#undef CARBON_EXAMINE_GAUZE_MAX_DIST
