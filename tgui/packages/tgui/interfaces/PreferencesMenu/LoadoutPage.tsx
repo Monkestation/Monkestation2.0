@@ -156,7 +156,11 @@ export const LoadoutManager = (props) => {
               >
                 <Table>
                   {selectedTab.contents
-                    .filter((item) => available_items.includes(item.item_path))
+                    .filter(
+                      (item) =>
+                        !!item.unusual_placement ||
+                        available_items.includes(item.path),
+                    )
                     .map((item, index) => (
                       <Table.Row
                         header
