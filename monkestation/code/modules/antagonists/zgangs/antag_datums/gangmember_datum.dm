@@ -322,7 +322,7 @@
 	var/had_hud = antag_datum.enemy_hud
 	var/datum/atom_hud/alternate_appearance/basic/has_antagonist/hud = antag_datum.get_enemy_hud(hud_keys, target)
 	if(had_hud)
-		if(hud_keys in hud.valid_keys)
+		if(hud_keys in hud.valid_keys) //does not work correctly
 			return
 
 		hud.valid_keys += hud_keys

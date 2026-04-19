@@ -55,5 +55,5 @@
 		var/datum/mind/lieutenant_mind = pick_n_take(setup_minds)
 		var/datum/antagonist/gang_member/boss_datum = boss_mind.add_antag_datum(/datum/antagonist/gang_member/boss)
 		boss_datum.handler.telecrystals = GANG_BOSS_STARTING_TC
-		var/datum/antagonist/gang_member/lieutenant_datum = lieutenant_mind.add_antag_datum(/datum/antagonist/gang_member/lieutenant)
+		var/datum/antagonist/gang_member/lieutenant_datum = lieutenant_mind.add_antag_datum(/datum/antagonist/gang_member/lieutenant, boss_datum.gang_team)
 		lieutenant_datum.handler.telecrystals = GANG_LIEUTENANT_STARTING_TC
