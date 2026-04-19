@@ -1,6 +1,7 @@
 /datum/heretic_knowledge_tree_column/moon
 	route = PATH_MOON
 	ui_bgr = "node_moon"
+	examine_class = "heretic_path_moon"
 	complexity = "Hard"
 	complexity_color = COLOR_RED
 	icon = list(

@@ -39,6 +39,7 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 	var/list/tips = list("Don't use it", "Don't touch it", "Don't look at it")
 	///UI background
 	var/ui_bgr = BGR_SIDE
+	var/examine_class = "heretic_path_start"
 
 	//-- Knowledge in order of unlocking
 	///Starting knowledge - first thing you pick. Gives you access to blades, grasp, mark and passive

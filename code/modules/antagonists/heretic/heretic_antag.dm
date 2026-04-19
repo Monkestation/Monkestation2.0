@@ -507,7 +507,7 @@
 	if(minion?.master == owner)
 		examine_text += span_heretic_master("[source.p_They()] [source.p_are()] your master!")
 	if(ascended)
-		examine_text += span_stargazer_big(heretic_path.ascension_examine_text(source))
+		examine_text += "<span class='[heretic_path.examine_class]'>[span_big(span_bold(heretic_path.ascension_examine_text(source)))]</span>"
 		return
 	if(!should_show_aura())
 		return

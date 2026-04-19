@@ -1,6 +1,7 @@
 /datum/heretic_knowledge_tree_column/cosmic
 	route = PATH_COSMIC
 	ui_bgr = "node_cosmos"
+	examine_class = "heretic_path_cosmic"
 	complexity = "Hard"
 	complexity_color = COLOR_RED
 	icon = list(

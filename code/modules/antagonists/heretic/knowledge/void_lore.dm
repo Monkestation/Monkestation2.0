@@ -1,6 +1,7 @@
 /datum/heretic_knowledge_tree_column/void
 	route = PATH_VOID
 	ui_bgr = "node_void"
+	examine_class = "heretic_path_void"
 	complexity = "Easy"
 	complexity_color = COLOR_GREEN
 	icon = list(

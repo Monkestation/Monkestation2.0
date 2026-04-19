@@ -1,6 +1,7 @@
 /datum/heretic_knowledge_tree_column/lock
 	route = PATH_LOCK
 	ui_bgr = "node_lock"
+	examine_class = "heretic_path_lock"
 	complexity = "Medium"
 	complexity_color = COLOR_YELLOW
 	icon = list(
@@ -22,7 +23,7 @@
 		"The weakest heretic path in direct combat, period.",
 		"Very limited direct combat benefits.",
 		"You have no defensive benefits or immunities.",
-		"no mobility or direct additional teleportation",
+		"No mobility or direct additional teleportation.",
 		"Highly reliant on sourcing power from other departments, players and the game world.",
 	)
 	tips = list(

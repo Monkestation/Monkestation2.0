@@ -1,6 +1,7 @@
 /datum/heretic_knowledge_tree_column/blade
 	route = PATH_BLADE
 	ui_bgr = "node_blade"
+	examine_class = "heretic_path_blade"
 	complexity = "Hard"
 	complexity_color = COLOR_RED
 	icon = list(

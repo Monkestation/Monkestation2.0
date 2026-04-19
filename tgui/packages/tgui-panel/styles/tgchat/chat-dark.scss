@@ -1576,3 +1576,21 @@ $job-colors: (
     text-shadow: 0 0 16px hsl(280, 75%, 35%);
   }
 }
+
+$heretic-path-colors: (
+  'start': hsl(120, 61%, 60%),
+  'rust': hsl(36, 45%, 58%),
+  'flesh': hsl(0, 90%, 72%),
+  'ash': hsl(0, 100%, 60%),
+  'void': hsl(180, 100%, 55%),
+  'blade': hsl(0, 0%, 75%),
+  'cosmic': hsl(290, 70%, 68%),
+  'lock': hsl(55, 100%, 57%),
+  'moon': hsl(195, 100%, 65%),
+);
+
+@each $path-name, $path-color in $heretic-path-colors {
+  .heretic_path_#{$path-name} {
+    color: $path-color;
+  }
+}

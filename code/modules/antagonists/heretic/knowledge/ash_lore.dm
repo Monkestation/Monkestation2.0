@@ -1,6 +1,7 @@
 /datum/heretic_knowledge_tree_column/ash
 	route = PATH_ASH
 	ui_bgr = "node_ash"
+	examine_class = "heretic_path_ash"
 	complexity = "Easy"
 	complexity_color = COLOR_GREEN
 	icon = list(

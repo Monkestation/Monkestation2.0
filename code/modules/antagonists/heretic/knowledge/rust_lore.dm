@@ -1,6 +1,7 @@
 /datum/heretic_knowledge_tree_column/rust
 	route = PATH_RUST
 	ui_bgr = "node_rust"
+	examine_class = "heretic_path_rust"
 	complexity = "Medium"
 	complexity_color = COLOR_YELLOW
 	icon = list(
