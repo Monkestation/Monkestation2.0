@@ -406,7 +406,7 @@
 	if(stun)
 		Stun(8 SECONDS)
 	if(knockdown)
-		Stun(8 SECONDS)
+		Knockdown(8 SECONDS)
 
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
 	var/turf/T = get_turf(src)
