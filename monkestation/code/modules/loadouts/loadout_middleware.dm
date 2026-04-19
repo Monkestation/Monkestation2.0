@@ -155,63 +155,6 @@
 	ui.send_update()
 	preferences.character_preview_view?.update_body()
 
-/datum/preference_middleware/proc/list_to_data(list_of_datums)
-	if(!LAZYLEN(list_of_datums) || QDELETED(preferences)|| QDELETED(preferences.parent))
-		return
-
-	var/list/formatted_list = new(length(list_of_datums))
-
-	var/array_index = 1
-	for(var/datum/loadout_item/item as anything in list_of_datums)
-		if(QDELETED(preferences) || QDELETED(preferences.parent))
-			return
-
-		#ifndef UNIT_TESTS
-		if(!isnull(item.ckeywhitelist)) //These checks are also performed in the backend.
-			if(!(preferences.parent_ckey in item.ckeywhitelist) && !is_admin(preferences.parent))
-				formatted_list.len--
-				continue
-
-		if(item.donator_only) //These checks are also performed in the backend.
-			if((!preferences.parent.persistent_client.patreon?.is_donator() && !preferences.parent.persistent_client.twitch?.is_donator()) && !is_admin(preferences.parent))
-				formatted_list.len--
-				continue
-
-		if(item.mentor_only) //These checks are also performed in the backend.
-			if(!is_mentor(preferences.parent) && !is_admin(preferences.parent))
-				formatted_list.len--
-				continue
-
-		if(item.admin_only) //These checks are also performed in the backend.
-			if(!is_admin(preferences.parent))
-				formatted_list.len--
-				continue
-
-		if(item.required_season && !check_holidays(item.required_season))
-			formatted_list.len--
-			continue
-
-		if(item.requires_purchase && !(item.item_path in preferences.inventory))
-			formatted_list.len--
-			continue
-		#endif
-		var/atom/loadout_atom = item.item_path
-
-		var/list/formatted_item = list()
-		formatted_item["name"] = item.name
-		formatted_item["path"] = item.item_path
-		formatted_item["is_greyscale"] = !!(initial(loadout_atom.greyscale_config) && initial(loadout_atom.greyscale_colors) && (initial(loadout_atom.flags_1) & IS_PLAYER_COLORABLE_1))
-		formatted_item["is_renamable"] = item.can_be_named
-		formatted_item["is_job_restricted"] = !isnull(item.restricted_roles)
-		formatted_item["is_donator_only"] = !isnull(item.donator_only)
-		formatted_item["is_ckey_whitelisted"] = !isnull(item.ckeywhitelist)
-		if(LAZYLEN(item.additional_tooltip_contents))
-			formatted_item["tooltip_text"] = item.additional_tooltip_contents.Join("\n")
-
-		formatted_list[array_index++] = formatted_item
-
-	return formatted_list
-
 /datum/preference_middleware/proc/convert_stored_unusuals_to_data()
 	var/list/data = preferences.extra_stat_inventory["unusual"]
 	if(!length(data))
