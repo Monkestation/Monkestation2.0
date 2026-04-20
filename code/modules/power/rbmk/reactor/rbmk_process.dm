@@ -48,14 +48,17 @@
 	if(previous_control_rod_depth >= RBMK_CONTROL_ROD_MAX && control_rod_depth < RBMK_CONTROL_ROD_MAX)
 		startup_sequence_played = TRUE
 		playsound(src, 'monkestation/sound/effects/rbmk/startup.ogg', 70, TRUE)
-		addtimer(CALLBACK(src, PROC_REF(play_startup_stage_two)), 20, TIMER_CLIENT_TIME | TIMER_DELETE_ME)
+		addtimer(CALLBACK(src, PROC_REF(play_startup_stage_two)), 1, TIMER_DELETE_ME)
 
 
 /obj/machinery/rbmk/reactor/proc/play_startup_stage_two()
 	if(QDELETED(src))
 		return
 
-	if(meltdown_in_progress)
+	if(meltdown_in_progress || scrammed)
+		return
+
+	if(!has_fuel_rods())
 		return
 
 	playsound(src, 'monkestation/sound/effects/rbmk/startup2.ogg', 70, TRUE)
@@ -69,9 +72,23 @@
 	if(total_coolant_moles <= 0)
 		return
 
-	var/flow_ratio = clamp(inlet_rate / max(RBMK_INLET_RATE_MAX, 1), 0.006, 0.14)
+	// Treat inlet_rate as a cooling throughput request, not a raw percentage
+	// of the whole internal coolant reservoir.
+	var/flow_ratio = clamp(inlet_rate / max(RBMK_INLET_RATE_MAX, 1), 0, 1)
+	if(flow_ratio <= 0)
+		return
 
-	var/datum/gas_mixture/contact_mix = coolant_internal.remove_ratio(flow_ratio)
+	// Bounded participating coolant mass per tick.
+	// This makes cooling depend mostly on commanded flow rather than
+	// on how huge the stored reservoir happens to be.
+	var/desired_contact_moles = 0.5 + (flow_ratio * 7.5)
+	desired_contact_moles = clamp(desired_contact_moles, 0.5, 8)
+
+	var/remove_ratio = clamp(desired_contact_moles / total_coolant_moles, 0, 1)
+	if(remove_ratio <= 0)
+		return
+
+	var/datum/gas_mixture/contact_mix = coolant_internal.remove_ratio(remove_ratio)
 	if(!contact_mix)
 		return
 
@@ -85,11 +102,8 @@
 	// Keep the reactor thermally heavy so it does not instantly swing around.
 	var/core_thermal_mass = 2200
 
-	// Cap participating coolant mass so trapped pressure does not massively amplify cooling.
 	var/effective_contact_moles = clamp(contact_moles, 0.5, 8)
-
-	// Make cooling mostly depend on flow instead of accumulated stored gas.
-	var/flow_strength = clamp(flow_ratio / 0.14, 0.05, 1.0)
+	var/flow_strength = clamp(flow_ratio, 0.05, 1.0)
 
 	var/coolant_thermal_mass = max(effective_contact_moles * 1.8 * flow_strength, 1)
 
@@ -178,11 +192,12 @@
 		previous_control_rod_depth = control_rod_depth
 		return
 
+	rbmk_update_control_rods()
+	update_rod_motion_state()
+
 	if(!has_fuel_rods())
 		reset_reaction_state()
-		actual_control_rod_depth = control_rod_depth
 		startup_sequence_played = FALSE
-		rod_motion_in_progress = FALSE
 
 		rbmk_coolant_exchange()
 		rbmk_update_pressure()
@@ -194,8 +209,6 @@
 		previous_control_rod_depth = control_rod_depth
 		return
 
-	rbmk_update_control_rods()
-	update_rod_motion_state()
 	try_play_startup_sequence()
 
 	var/total_flux = 0
@@ -237,7 +250,6 @@
 
 		if(control_rod_depth >= RBMK_CONTROL_ROD_MAX)
 			startup_sequence_played = FALSE
-			rod_motion_in_progress = FALSE
 
 		previous_control_rod_depth = control_rod_depth
 		return

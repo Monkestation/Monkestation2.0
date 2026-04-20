@@ -18,6 +18,25 @@
 	return INITIALIZE_HINT_NORMAL
 
 
+/obj/machinery/atmospherics/components/unary/rbmk/base/proc/remove_moles_capped(datum/gas_mixture/source_mix, desired_moles)
+	if(!source_mix)
+		return null
+
+	var/total_moles = source_mix.total_moles()
+	if(total_moles <= 0)
+		return null
+
+	desired_moles = clamp(desired_moles, 0, total_moles)
+	if(desired_moles <= 0)
+		return null
+
+	var/remove_ratio = clamp(desired_moles / total_moles, 0, 1)
+	if(remove_ratio <= 0)
+		return null
+
+	return source_mix.remove_ratio(remove_ratio)
+
+
 /obj/machinery/atmospherics/components/unary/rbmk/inlet
 	parent_type = /obj/machinery/atmospherics/components/unary/rbmk/base
 	name = "RBMK Coolant Inlet"
@@ -28,20 +47,22 @@
 	if(!parent_reactor?.inlet_open)
 		return
 
-	// Keep the port active while enabled so toggles and rate changes
-	// continue to take effect on later atmos ticks.
 	SSair.add_to_active(src)
 
 	var/datum/gas_mixture/in_mix = airs[1]
 	if(!in_mix || in_mix.total_moles() <= 0)
 		return
 
-	var/amount_ratio = clamp(parent_reactor.inlet_rate / 1000, 0, 1)
-	var/datum/gas_mixture/moved_mix = in_mix.remove_ratio(amount_ratio)
-	if(!moved_mix || moved_mix.total_moles() <= 0)
+	if(!parent_reactor.coolant_internal)
 		return
 
-	if(!parent_reactor.coolant_internal)
+	// Treat inlet_rate as a throughput cap, not a percentage of the whole pipe mix.
+	var/desired_moles = clamp(parent_reactor.inlet_rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX)
+	if(desired_moles <= 0)
+		return
+
+	var/datum/gas_mixture/moved_mix = remove_moles_capped(in_mix, desired_moles)
+	if(!moved_mix || moved_mix.total_moles() <= 0)
 		return
 
 	parent_reactor.coolant_internal.merge(moved_mix)
@@ -58,8 +79,6 @@
 	if(!parent_reactor?.outlet_open)
 		return
 
-	// Keep the port active while enabled so it keeps checking
-	// whether pressure needs to be relieved.
 	SSair.add_to_active(src)
 
 	var/datum/gas_mixture/store = parent_reactor.coolant_internal
@@ -67,12 +86,19 @@
 		return
 
 	var/current_pressure = store.return_pressure()
-	var/target_pressure = parent_reactor.outlet_target_pressure
+	var/target_pressure = max(parent_reactor.outlet_target_pressure, RBMK_OUTLET_PRESSURE_BASE)
 	if(current_pressure <= target_pressure)
 		return
 
-	var/excess_ratio = clamp((current_pressure - target_pressure) / max(target_pressure, 1), 0, 1)
-	var/datum/gas_mixture/released_mix = store.remove_ratio(excess_ratio)
+	var/pressure_delta = current_pressure - target_pressure
+	if(pressure_delta <= 0)
+		return
+
+	// Bounded outlet release instead of dumping a huge fraction of the whole reservoir.
+	var/pressure_ratio = clamp(pressure_delta / max(RBMK_PRESSURE_CRITICAL, 1), 0.05, 1)
+	var/max_release_moles = max(10, RBMK_INLET_RATE_MAX * pressure_ratio)
+
+	var/datum/gas_mixture/released_mix = remove_moles_capped(store, max_release_moles)
 	if(!released_mix || released_mix.total_moles() <= 0)
 		return
 
