@@ -4,7 +4,6 @@
 
 	var/high_temp_damage_threshold = RBMK_TEMP_DAMAGE_RAMP
 	var/temperature_excess
-	var/pressure_excess
 	var/total_damage = 0
 
 	// A hot core can still keep chewing itself up after shutdown.
@@ -23,7 +22,6 @@
 		return
 
 	temperature_excess = max(0, temperature - RBMK_TEMP_STRESS_THRESHOLD)
-	pressure_excess = max(0, pressure - RBMK_PRESSURE_WARNING)
 
 	if(temperature_excess > 0)
 		total_damage += temperature_excess / 850
@@ -32,16 +30,10 @@
 		if(temperature > high_temp_damage_threshold)
 			total_damage += (temperature - high_temp_damage_threshold) / 300
 
-	if(pressure_excess > 0)
-		total_damage += pressure_excess / 1700
-
-		if(pressure > RBMK_PRESSURE_CRITICAL)
-			total_damage += (pressure - RBMK_PRESSURE_CRITICAL) / 1000
-
 	if(total_damage <= 0)
 		return
 
 	reactor_integrity = max(reactor_integrity - total_damage, 0)
 
 	if(reactor_integrity <= 0)
-		trigger_meltdown("Core breach: Temperature / pressure overload!")
+		trigger_meltdown("Core breach: Thermal overload!")
