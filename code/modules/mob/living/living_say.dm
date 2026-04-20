@@ -173,7 +173,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			message_range = 1
 			log_talk(message, LOG_WHISPER, forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 			if(stat == HARD_CRIT)
-				var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
+				var/health_diff = round(-dead_threshold + health)
 				// If we cut our message short, abruptly end it with a-..
 				var/message_len = length_char(message)
 				message = copytext_char(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
@@ -212,6 +212,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(succumbed)
 			succumb()
 		return
+
+	if(client?.prefs?.read_preference(/datum/preference/toggle/autopunctuation))
+		message = autopunct_bare(message)
 
 	//This is before anything that sends say a radio message, and after all important message type modifications, so you can scumb in alien chat or something
 	if(saymode && !saymode.handle_message(src, message, language))
@@ -260,7 +263,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return FALSE
 	if(!GET_CLIENT(src))
 		return
-	if(client?.prefs?.read_preference(/datum/preference/toggle/sound_ai_radio) && (radio_freq && (radio_freq == FREQ_COMMON || radio_freq < MIN_FREQ)) && can_hear())
+	if((client?.prefs?.channel_volume["[CHANNEL_VOX]"]) && (radio_freq && (radio_freq == FREQ_COMMON || radio_freq < MIN_FREQ)) && can_hear())
 		var/atom/movable/virtualspeaker/vspeaker = speaker
 		if(isAI(vspeaker.source))
 			playsound_local(
@@ -268,9 +271,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 				'goon/sounds/misc/talk/radio_ai.ogg',
 				vol = 170,
 				vary = TRUE,
+				channel = CHANNEL_VOX,
 				pressure_affected = FALSE,
 				use_reverb = FALSE,
-				mixer_channel = CHANNEL_MOB_SOUNDS
 			)
 
 	if (HAS_TRAIT(src, TRAIT_HARD_OF_HEARING) && !HAS_TRAIT(speaker, TRAIT_SIGN_LANG))

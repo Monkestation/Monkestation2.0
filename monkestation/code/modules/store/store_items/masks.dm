@@ -33,7 +33,7 @@ GLOBAL_LIST_INIT(store_masks, generate_store_items(/datum/store_item/mask))
 
 /datum/store_item/mask/deforest_breath_mask
 	name = "Deforest Breath Mask"
-	item_path = /obj/item/clothing/mask/breath/deforest
+	item_path = /obj/item/clothing/mask/surgical/deforest
 
 /*
 *	GAS MASKS

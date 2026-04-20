@@ -1,5 +1,0 @@
-author: "Shoddd"
-delete-after: True
-changes:
-  - bugfix: "huds no longer override seeing quirks with empath"
-  - bugfix: "empath can no longer see the quirks of anyone with their face covered"

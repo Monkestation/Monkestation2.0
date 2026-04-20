@@ -113,6 +113,10 @@
 	has_sensor = HAS_SENSORS
 	can_adjust = TRUE
 
+/obj/item/clothing/under/syndicate/nova/overalls/unarmoured/tacticool
+	name = "tacticool utility turtleneck"
+	desc = "A pair of spiffy overalls with a tacticool turtleneck underneath, now with 100% more tacticool."
+
 /obj/item/clothing/under/syndicate/nova/overalls/unarmoured/skirt
 	name = "suspicious utility overalls skirtleneck"
 	desc = "A pair of spiffy overalls with a turtleneck underneath, this one is a skirt instead, breezy."
@@ -121,6 +125,10 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/syndicate/nova/overalls/unarmoured/skirt/tacticool
+	name = "tacticool utility skirtleneck"
+	desc = "A pair of spiffy overalls with a tacticool turtleneck underneath, now with 100% more tacticool."
 
 /obj/item/clothing/under/syndicate/nova/overalls/unarmoured/examine_more(mob/user)
 	. = ..()

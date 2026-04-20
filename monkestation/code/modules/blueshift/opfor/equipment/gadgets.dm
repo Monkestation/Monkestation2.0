@@ -6,13 +6,6 @@
 	item_type = /obj/item/card/id/advanced/chameleon
 	description = "A highly advanced chameleon ID card. Touch this card on another ID card or player to choose which accesses to copy. Has special magnetic properties which force it to the front of wallets."
 
-/datum/opposing_force_equipment/gadget/chameleonheadsetdeluxe
-	name = "Advanced Chameleon Headset"
-	item_type = /obj/item/radio/headset/chameleon/advanced
-	description = "A premium model Chameleon Headset. All the features you love of the original, but now with flashbang \
-	protection, voice amplification, memory-foam, HD Sound Quality, and extra-wide spectrum dial. Usually reserved \
-	for high-ranking Cybersun officers, a few spares have been reserved for field agents."
-
 /datum/opposing_force_equipment/gadget/smtheft_kit
 	admin_note = "A kit liberated from Progression Traitor, allows someone to cut off a piece of the SM. Mishandling of the sliver can result in user being dusted. Upon successful extraction the SM will gain a quirk that turns its delamination countdown from its usual 15 seconds (at 0 Integrity) to 5 seconds; it will also slowly gather up 800 energy, potentially setting it on course for delamination."
 	item_type = /obj/item/storage/box/syndie_kit/supermatter

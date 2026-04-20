@@ -59,7 +59,7 @@
 	if(!host)
 		return
 	if(trait_icon && trait_icon_state)
-		slime_visual = mutable_appearance(trait_icon, trait_icon_state, host.layer)
+		slime_visual = mutable_appearance(trait_icon, trait_icon_state)
 		LAZYADD(host.update_overlays_on_z, slime_visual)
 
 /datum/slime_trait/visual/on_remove(mob/living/basic/slime/parent)

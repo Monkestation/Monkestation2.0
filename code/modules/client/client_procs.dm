@@ -589,7 +589,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
 		to_chat(src, span_warning("Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you."))
 
-	update_ambience_pref(prefs.read_preference(/datum/preference/toggle/sound_ambience))
+	update_ambience_pref(prefs?.channel_volume["[CHANNEL_AMBIENCE]"])
 
 	//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
@@ -1314,6 +1314,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	set name = "Stop Sounds"
 	set category = "OOC"
 	set desc = "Stop Current Sounds"
+
+	current_ambient_sound = null
 	SEND_SOUND(usr, sound(null))
 	tgui_panel?.stop_music()
 	media_player?.stop()

@@ -339,3 +339,13 @@
 	)
 	greyscale_config = null
 	greyscale_colors = null
+
+/obj/item/encryptionkey/monkey
+	name = "\improper Chimpanzee translation key"
+	desc = "An encryption key that automatically encodes Chimp heard through the radio into common. The signal's rather scratchy."
+	icon_state = "translation_cypherkey"
+	language_data = list(
+		/datum/language/monkey = 100,
+	)
+	greyscale_config = null
+	greyscale_colors = null

@@ -91,58 +91,84 @@
 /mob/living/proc/is_ears_covered()
 	return null
 
-/mob/living/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
+/mob/living/bullet_act(obj/projectile/proj, def_zone, piercing_hit = FALSE, blocked = 0)
 	. = ..()
-	if(. != BULLET_ACT_HIT)
+	if (. != BULLET_ACT_HIT)
 		return .
-	if(!hitting_projectile.is_hostile_projectile())
-		return BULLET_ACT_HIT
 
-	// we need a second, silent armor check to actually know how much to reduce damage taken, as opposed to
-	// on [/atom/proc/bullet_act] where it's just to pass it to the projectile's on_hit().
-	var/armor_check = min(ARMOR_MAX_BLOCK, check_projectile_armor(def_zone, hitting_projectile, is_silent = TRUE))
+	if(blocked >= 100)
+		if(proj.is_hostile_projectile())
+			apply_projectile_effects(proj, def_zone, blocked)
+		return .
 
-	var/stamina_armor_check = armor_check
+	var/hit_limb_zone = check_hit_limb_zone_name(def_zone)
+	var/organ_hit_text = ""
+	if (hit_limb_zone)
+		organ_hit_text = "in \the [parse_zone_with_bodypart(hit_limb_zone)]"
 
-	//If we hit a limb with stamina damage, we check the armor on the chest instead, to prevent cheesing armor by targeting limbs to stamcrit.
-	if (def_zone != BODY_ZONE_CHEST && def_zone != BODY_ZONE_HEAD)
-		stamina_armor_check = min(ARMOR_MAX_BLOCK, check_projectile_armor(BODY_ZONE_CHEST, hitting_projectile, is_silent = TRUE))
+	switch (proj.suppressed)
+		if (SUPPRESSED_QUIET)
+			to_chat(src, span_userdanger("You're shot by \a [proj] [organ_hit_text]!"))
+		if (SUPPRESSED_NONE)
+			visible_message(span_danger("[src] is hit by \a [proj] [organ_hit_text]!"), \
+					span_userdanger("You're hit by \a [proj] [organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
+			if(is_blind())
+				to_chat(src, span_userdanger("You feel something hit you [organ_hit_text]!"))
 
+	if(proj.is_hostile_projectile())
+		apply_projectile_effects(proj, def_zone, blocked)
+
+/mob/living/proc/apply_projectile_effects(obj/projectile/proj, def_zone, armor_check)
 	apply_damage(
-		damage = hitting_projectile.damage,
-		damagetype = hitting_projectile.damage_type,
+		damage = proj.damage,
+		damagetype = proj.damage_type,
 		def_zone = def_zone,
-		blocked = armor_check,
-		wound_bonus = hitting_projectile.wound_bonus,
-		bare_wound_bonus = hitting_projectile.bare_wound_bonus,
-		sharpness = hitting_projectile.sharpness,
-		attack_direction = hitting_projectile.dir,
+		blocked = min(ARMOR_MAX_BLOCK, armor_check),  //cap damage reduction at 90%
+		wound_bonus = proj.wound_bonus,
+		bare_wound_bonus = proj.bare_wound_bonus,
+		sharpness = proj.sharpness,
+		attack_direction = get_dir(proj.starting, src),
 	)
-	if(hitting_projectile.stamina)
-		apply_damage(
-			damage = hitting_projectile.stamina,
-			damagetype = STAMINA,
-			def_zone = def_zone,
-			blocked = stamina_armor_check,
-			attack_direction = hitting_projectile.dir,
-		)
 
 	apply_effects(
-		stun = hitting_projectile.stun,
-		knockdown = hitting_projectile.knockdown,
-		unconscious = hitting_projectile.unconscious,
-		slur = (mob_biotypes & MOB_ROBOTIC) ? 0 SECONDS : hitting_projectile.slur, // Don't want your cyborgs to slur from being ebow'd
-		stutter = (mob_biotypes & MOB_ROBOTIC) ? 0 SECONDS : hitting_projectile.stutter, // Don't want your cyborgs to stutter from being tazed
-		eyeblur = hitting_projectile.eyeblur,
-		drowsy = hitting_projectile.drowsy,
+		stun = proj.stun,
+		knockdown = proj.knockdown,
+		unconscious = proj.unconscious,
+		slur = (mob_biotypes & MOB_ROBOTIC) ? 0 SECONDS : proj.slur, // Don't want your cyborgs to slur from being ebow'd
+		stutter = (mob_biotypes & MOB_ROBOTIC) ? 0 SECONDS : proj.stutter, // Don't want your cyborgs to stutter from being tazed
+		eyeblur = proj.eyeblur,
+		drowsy = proj.drowsy,
 		blocked = armor_check,
-		jitter = (mob_biotypes & MOB_ROBOTIC) ? 0 SECONDS : hitting_projectile.jitter, // Cyborgs can jitter but not from being shot
-		paralyze = hitting_projectile.paralyze,
-		immobilize = hitting_projectile.immobilize,
+		stamina = proj.stamina,
+		jitter = (mob_biotypes & MOB_ROBOTIC) ? 0 SECONDS : proj.jitter, // Cyborgs can jitter but not from being shot
+		paralyze = proj.paralyze,
+		immobilize = proj.immobilize,
 	)
-	if(hitting_projectile.dismemberment)
-		check_projectile_dismemberment(hitting_projectile, def_zone)
-	return BULLET_ACT_HIT
+
+	if(proj.dismemberment)
+		check_projectile_dismemberment(proj, def_zone)
+
+	if (proj.damage && armor_check < 100)
+		create_projectile_hit_effects(proj, def_zone, armor_check)
+
+/mob/living/proc/create_projectile_hit_effects(obj/projectile/proj, def_zone, blocked)
+	if (proj.damage_type != BRUTE)
+		return
+
+	var/obj/item/bodypart/hit_bodypart = get_bodypart(check_hit_limb_zone_name(def_zone))
+	if (blood_volume && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
+		do_splatter_effect(angle2dir(proj.angle))
+		if(prob(33))
+			add_splatter_floor(get_turf(src))
+		return
+
+	if (hit_bodypart?.biological_state & (BIO_METAL|BIO_WIRED))
+		var/random_damage_mult = RANDOM_DECIMAL(0.85, 1.15) // SOMETIMES you can get more or less sparks
+		var/damage_dealt = ((proj.damage / (1 - (blocked / 100))) * random_damage_mult)
+
+		var/spark_amount = round((damage_dealt / PROJECTILE_DAMAGE_PER_ROBOTIC_SPARK))
+		if (spark_amount > 0)
+			do_sparks(spark_amount, FALSE, src)
 
 /mob/living/check_projectile_armor(def_zone, obj/projectile/impacting_projectile, is_silent)
 	. = run_armor_check(
@@ -152,20 +178,17 @@
 		silent = is_silent,
 		weak_against_armour = impacting_projectile.weak_against_armour,
 	)
-	if(impacting_projectile.grazing)
-		. += 50
 	return .
 
-/mob/living/proc/check_projectile_dismemberment(obj/projectile/P, def_zone)
-	return 0
+/mob/living/proc/check_projectile_dismemberment(obj/projectile/proj, def_zone)
+	return
 
 /obj/item/proc/get_volume_by_throwforce_and_or_w_class()
-		if(throwforce && w_class)
-				return clamp((throwforce + w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
-		else if(w_class)
-				return clamp(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
-		else
-				return 0
+	if(throwforce && w_class)
+		return clamp((throwforce + w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
+	if(w_class)
+		return clamp(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
+	return 0
 
 ///LEGACY HELPER
 /mob/living/proc/set_combat_mode(new_mode, silent = TRUE)
@@ -194,7 +217,7 @@
 		blocked = TRUE
 
 	var/zone = get_random_valid_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
-	var/nosell_hit = SEND_SIGNAL(thrown_item, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, blocked, throwingdatum) // TODO: find a better way to handle hitpush and skipcatch for humans
+	var/nosell_hit = (SEND_SIGNAL(thrown_item, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, blocked, throwingdatum) & MOVABLE_IMPACT_ZONE_OVERRIDE) // TODO: find a better way to handle hitpush and skipcatch for humans
 	if(nosell_hit)
 		skipcatch = TRUE
 		hitpush = FALSE
@@ -230,6 +253,9 @@
 		Knockdown(4 SECONDS)
 		emote("scream", intentional=FALSE)
 	return ..()
+
+/mob/living/proc/create_splatter(splatter_dir)
+	new /obj/effect/temp_visual/dir_setting/bloodsplatter(get_turf(src), splatter_dir)
 
 /mob/living/fire_act()
 	. = ..()
@@ -656,7 +682,7 @@
 /// Simplified ricochet angle calculation for mobs (also the base version doesn't work on mobs)
 /mob/living/handle_ricochet(obj/projectile/ricocheting_projectile)
 	var/face_angle = get_angle_raw(ricocheting_projectile.x, ricocheting_projectile.pixel_x, ricocheting_projectile.pixel_y, ricocheting_projectile.p_y, x, y, pixel_x, pixel_y)
-	var/new_angle_s = SIMPLIFY_DEGREES(face_angle + GET_ANGLE_OF_INCIDENCE(face_angle, (ricocheting_projectile.Angle + 180)))
+	var/new_angle_s = SIMPLIFY_DEGREES(face_angle + GET_ANGLE_OF_INCIDENCE(face_angle, (ricocheting_projectile.angle + 180)))
 	ricocheting_projectile.set_angle(new_angle_s)
 	return TRUE
 
