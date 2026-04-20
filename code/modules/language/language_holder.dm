@@ -478,6 +478,7 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/mushroom = list(LANGUAGE_ATOM),
 		/datum/language/monkey = list(LANGUAGE_ATOM),
 		/datum/language/goblin = list(LANGUAGE_ATOM),
+		/datum/language/nekomimetic = list(LANGUAGE_ATOM),
 		/datum/language/yangyu = list(LANGUAGE_ATOM),
 	)
 	spoken_languages = list(
@@ -494,6 +495,7 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/mushroom = list(LANGUAGE_ATOM),
 		/datum/language/monkey = list(LANGUAGE_ATOM),
 		/datum/language/goblin = list(LANGUAGE_ATOM),
+		/datum/language/nekomimetic = list(LANGUAGE_ATOM),
 		/datum/language/yangyu = list(LANGUAGE_ATOM),
 	)
 
@@ -590,6 +592,16 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 	spoken_languages = list(
 		/datum/language/common = list(LANGUAGE_ATOM),
 		/datum/language/sylvan = list(LANGUAGE_ATOM),
+	)
+
+/datum/language_holder/felinid
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/nekomimetic = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/nekomimetic = list(LANGUAGE_ATOM),
 	)
 
 /datum/language_holder/darkspawn
