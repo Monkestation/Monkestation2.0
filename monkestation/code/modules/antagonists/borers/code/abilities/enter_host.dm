@@ -56,7 +56,7 @@
 	var/list/usable_hosts = list()
 	for(var/mob/living/carbon/human/listed_human in range(1, cortical_owner))
 		// no non-human hosts
-		if(!ishuman(listed_human) || ismonkey(listed_human))
+		if(!ishuman(listed_human) || ismonkeybasic(listed_human))
 			to_chat(cortical_owner, span_warning("[listed_human] is not a human!"))
 			continue
 		// cannot have multiple borers (for now)

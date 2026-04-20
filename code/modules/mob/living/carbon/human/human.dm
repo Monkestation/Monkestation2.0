@@ -38,6 +38,11 @@
 		return
 	mob_mood = new /datum/mood(src)
 
+/mob/living/carbon/human/proc/create_symptoms()
+	if(flags_1 & HOLOGRAM_1)
+		return
+	AddComponent(/datum/component/symptom_genes, dna.species, 3)
+
 /mob/living/carbon/human/dummy/setup_mood()
 	return
 

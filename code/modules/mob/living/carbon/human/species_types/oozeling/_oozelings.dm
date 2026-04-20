@@ -285,7 +285,7 @@
 			span_warning("[slime]'s form melts away from the water!"),
 			span_danger("The water causes you to melt away!"),
 		)
-		slime.balloon_alert(slime, "water melts you!")
+		slime.balloon_alert_to_viewers("melts away from water!", "water melts you!")
 		COOLDOWN_START(src, water_alert_cooldown, 1 SECONDS)
 	return TRUE
 

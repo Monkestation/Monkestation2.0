@@ -17,6 +17,7 @@
 	force = 0 //You can't hit stuff unless wielded
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 	throwforce = 5
 	throw_speed = 4
 	armour_penetration = 10
@@ -217,7 +218,7 @@
 	return interact_with_atom_secondary(interacting_with, user, modifiers)
 
 /obj/item/kinetic_crusher/proc/fire_kinetic_blast(atom/target, mob/living/user, list/modifiers)
-	if(!charged)
+	if(!charged || !can_trigger_gun(user))
 		return
 	var/turf/proj_turf = user.loc
 	if(!isturf(proj_turf))

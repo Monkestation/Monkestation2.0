@@ -10,11 +10,13 @@
 #define ETHEREAN 7
 #define BONE 8
 #define MOTH 9
-#define ASH_TONGUE 10
-#define TORII 11
-#define UNCOMMON 12
-#define GOBLIN 13
-#define SLIME 14
+#define CAT 10
+#define ASH_TONGUE 11
+#define TORII 12
+#define UNCOMMON 13
+#define GOBLIN 14
+#define FELINID 15
+#define SLIME 16
 
 ///Span classes that players are allowed to set in a radio transmission.
 GLOBAL_LIST_INIT(allowed_custom_spans, list(
@@ -150,10 +152,12 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 			"etherean" = ETHEREAN,
 			"bonespeak" = BONE,
 			"mothian" = MOTH,
+			"cat" = CAT,
 			"ash" = ASH_TONGUE,
 			"torii" = TORII,
 			"uncommon" = UNCOMMON,
 			"goblin" = GOBLIN,
+			"felinid" = FELINID,
 			"slime" = SLIME,
 		))
 	)
@@ -198,6 +202,8 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 			oldlangbits = BONE
 		if(/datum/language/moffic)
 			oldlangbits = MOTH
+		if(/datum/language/nekomimetic)
+			oldlangbits = CAT
 		if(/datum/language/ashtongue)
 			oldlangbits = ASH_TONGUE
 		if(/datum/language/yangyu)
@@ -206,6 +212,8 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 			oldlangbits = UNCOMMON
 		if(/datum/language/goblin)
 			oldlangbits = GOBLIN
+		if(/datum/language/nekomimetic)
+			oldlangbits = FELINID
 		if(/datum/language/slime)
 			oldlangbits = SLIME
 
@@ -345,6 +353,8 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 			return /datum/language/calcic
 		if(MOTH)
 			return /datum/language/moffic
+		if(CAT)
+			return /datum/language/nekomimetic
 		if(ASH_TONGUE)
 			return /datum/language/ashtongue
 		if(TORII)
@@ -353,6 +363,8 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 			return /datum/language/uncommon
 		if(GOBLIN)
 			return /datum/language/goblin
+		if(FELINID)
+			return /datum/language/nekomimetic
 		if(SLIME)
 			return /datum/language/slime
 
@@ -534,8 +546,10 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 #undef ETHEREAN
 #undef BONE
 #undef MOTH
+#undef CAT
 #undef ASH_TONGUE
 #undef TORII
 #undef UNCOMMON
 #undef GOBLIN
+#undef FELINID
 #undef SLIME
