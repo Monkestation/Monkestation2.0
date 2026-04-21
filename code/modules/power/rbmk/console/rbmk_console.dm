@@ -2,6 +2,7 @@
 	name = "RBMK Reactor Console"
 	desc = "A console used to monitor and control an RBMK nuclear reactor."
 	icon = 'icons/obj/reactor_controller.dmi'
+	base_icon_state = "reactorcontrol"
 	icon_state = "reactorcontrol-1"
 	density = TRUE
 	anchored = TRUE
@@ -18,17 +19,14 @@
 
 	var/obj/machinery/rbmk/reactor/linked_reactor = null
 
-
 /obj/machinery/computer/rbmk_console/Initialize(mapload)
 	. = ..()
 	auto_link()
-	update_icon()
-
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/computer/rbmk_console/Destroy()
 	linked_reactor = null
 	return ..()
-
 
 /obj/machinery/computer/rbmk_console/proc/auto_link()
 	linked_reactor = null
@@ -40,31 +38,28 @@
 			shortest_distance_found = current_distance
 			linked_reactor = reactor
 
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 
-
-/obj/machinery/computer/rbmk_console/update_icon()
+/obj/machinery/computer/rbmk_console/update_icon_state()
 	. = ..()
-
 	var/obj/machinery/rbmk/reactor/reactor = linked_reactor
 	if(!reactor)
-		icon_state = "reactorcontrol-1"
+		icon_state = "[base_icon_state]-1"
 		return
 
 	if(reactor.meltdown_in_progress || reactor.reactor_integrity <= 0)
-		icon_state = "reactorcontrol-3"
+		icon_state = "[base_icon_state]-3"
 		return
 
 	var/integrity_value = reactor.reactor_integrity
 	var/max_integrity_value = max(reactor.max_reactor_integrity, 1)
 
 	if(integrity_value >= max_integrity_value * 0.7)
-		icon_state = "reactorcontrol-1"
+		icon_state = "[base_icon_state]-1"
 	else if(integrity_value >= max_integrity_value * 0.4)
-		icon_state = "reactorcontrol-2"
+		icon_state = "[base_icon_state]-2"
 	else
-		icon_state = "reactorcontrol-3"
-
+		icon_state = "[base_icon_state]-3"
 
 /obj/machinery/computer/rbmk_console/ui_state(mob/user)
 	return GLOB.physical_state
