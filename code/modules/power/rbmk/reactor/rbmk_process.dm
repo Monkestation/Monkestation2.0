@@ -74,7 +74,7 @@
 
 	// Treat inlet_rate as a cooling throughput request, not a raw percentage
 	// of the whole internal coolant reservoir.
-	var/flow_ratio = clamp(inlet_rate / max(RBMK_INLET_RATE_MAX, 1), 0, 1)
+	var/flow_ratio = CLAMP01(inlet_rate / max(RBMK_INLET_RATE_MAX, 1))
 	if(flow_ratio <= 0)
 		return
 
@@ -84,7 +84,7 @@
 	var/desired_contact_moles = 0.5 + (flow_ratio * 7.5)
 	desired_contact_moles = clamp(desired_contact_moles, 0.5, 8)
 
-	var/remove_ratio = clamp(desired_contact_moles / total_coolant_moles, 0, 1)
+	var/remove_ratio = CLAMP01(desired_contact_moles / total_coolant_moles)
 	if(remove_ratio <= 0)
 		return
 
@@ -143,8 +143,8 @@
 	if(radiation <= 0 || flux <= 0)
 		return
 
-	var/integrity_ratio = clamp(reactor_integrity / max(max_reactor_integrity, 1), 0, 1)
-	var/load_ratio = clamp(flux / max(RBMK_MAX_FLUX, 1), 0, 1)
+	var/integrity_ratio = CLAMP01(reactor_integrity / max(max_reactor_integrity, 1))
+	var/load_ratio = CLAMP01(flux / max(RBMK_MAX_FLUX, 1))
 
 	var/effective_rad_output = radiation * (0.15 + (load_ratio * 0.85))
 	effective_rad_output = min(effective_rad_output, RBMK_MAX_RADIATION)
@@ -256,10 +256,10 @@
 
 	running = TRUE
 
-	var/control_ratio = clamp(actual_control_rod_depth / RBMK_CONTROL_ROD_MAX, 0, 1)
-	var/flux_control_multiplier = clamp(1 - control_ratio, 0, 1)
-	var/heat_control_multiplier = clamp(1 - (control_ratio ** 1.35), 0, 1)
-	var/radiation_control_multiplier = clamp(1 - (control_ratio ** 1.15), 0, 1)
+	var/control_ratio = CLAMP01(actual_control_rod_depth / RBMK_CONTROL_ROD_MAX)
+	var/flux_control_multiplier = CLAMP01(1 - control_ratio)
+	var/heat_control_multiplier = CLAMP01(1 - (control_ratio ** 1.35))
+	var/radiation_control_multiplier = CLAMP01(1 - (control_ratio ** 1.15))
 
 	total_flux *= flux_control_multiplier
 	total_heat *= heat_control_multiplier
