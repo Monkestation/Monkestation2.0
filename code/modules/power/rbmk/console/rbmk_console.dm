@@ -169,7 +169,7 @@
 
 	var/list/rods_list = list()
 
-	for(var/normal_slot_index = 1, normal_slot_index <= reactor.max_normal_slots, normal_slot_index++)
+	for(var/normal_slot_index = 1 to reactor.max_normal_slots)
 		var/obj/item/rbmk/fuel_rod/normal_rod = null
 		if(normal_slot_index <= length(reactor.normal_slots))
 			normal_rod = reactor.normal_slots[normal_slot_index]
@@ -182,7 +182,7 @@
 			"slot_index" = normal_slot_index
 		))
 
-	for(var/special_slot_index = 1, special_slot_index <= reactor.max_special_slots, special_slot_index++)
+	for(var/special_slot_index = 1 to reactor.max_special_slots)
 		var/obj/item/rbmk/fuel_rod/special_rod = null
 		if(special_slot_index <= length(reactor.special_slots))
 			special_rod = reactor.special_slots[special_slot_index]
