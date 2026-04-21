@@ -5,6 +5,9 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, FALSE, "Show Player Pan
 		to_chat(user, span_warning("You seem to be selecting a mob that doesn't exist anymore."), confidential = TRUE)
 		return
 
+	if(istype(player, /client))
+		player = astype(player, /client).mob
+
 	var/body = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Options for [player.key]</title></head>"
 	body += "<body>Options panel for <b>[player]</b>"
 	if(player.client)

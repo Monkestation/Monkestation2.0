@@ -8371,7 +8371,6 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/storage/box/silver_ids,
 /obj/item/storage/box/ids,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/wood,

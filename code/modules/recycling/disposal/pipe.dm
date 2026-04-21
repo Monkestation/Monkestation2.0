@@ -77,10 +77,13 @@
 		expel(holdplease, get_turf(src), 0)
 	stored = null // It gets dumped out in expel()
 
-/obj/structure/disposalpipe/handle_atom_del(atom/A)
-	if(A == stored && !QDELETED(src))
-		spawn_pipe = FALSE
-		stored = null
+/obj/structure/disposalpipe/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone != stored || QDELETED(src))
+		return
+	spawn_pipe = FALSE
+	stored = null
+	if(QDELETED(gone))
 		deconstruct(FALSE) //pipe has broken.
 
 // returns the direction of the next pipe object, given the entrance dir

@@ -297,6 +297,23 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 	/obj/item/melee/sledgehammer,
 ))
 
+/// Allowed list for science winter coats and bio suits.
+GLOBAL_LIST_INIT(science_suit_allowed, list(
+	/obj/item/analyzer,
+	/obj/item/dnainjector,
+	/obj/item/hypospray,
+	/obj/item/paper,
+	/obj/item/reagent_containers/cup/beaker,
+	/obj/item/reagent_containers/cup/bottle,
+	/obj/item/reagent_containers/cup/tube,
+	/obj/item/reagent_containers/dropper,
+	/obj/item/reagent_containers/medipen,
+	/obj/item/reagent_containers/pill,
+	/obj/item/reagent_containers/syringe,
+	/obj/item/storage/bag/xeno,
+	/obj/item/storage/pill_bottle,
+))
+
 /// String for items placed into the left pocket.
 #define LOCATION_LPOCKET "in your left pocket"
 /// String for items placed into the right pocket

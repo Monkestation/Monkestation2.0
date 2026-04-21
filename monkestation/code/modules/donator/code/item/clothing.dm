@@ -512,6 +512,10 @@
 	name = "jackboot kindle kicks"
 	desc = "They look just like kindle kicks! But these are boots!"
 
+/obj/item/clothing/shoes/kindle_kicks/jackboot/Initialize(mapload)
+	. = ..()
+	create_storage(storage_type = /datum/storage/pockets/shoes)
+
 /obj/item/clothing/suit/hooded/mothysmantle
 	name = "mothys mantle"
 	desc = "A thick garment that keeps warm and protects those precious wings from harsh weather, also commonly used during festivities. Feels much heavier than it looks. This one seems as if it were specially tailored for someone and has a hood unlike others of it's type."
