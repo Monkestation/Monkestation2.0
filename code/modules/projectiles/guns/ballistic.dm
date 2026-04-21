@@ -298,7 +298,6 @@
 			stack_trace("Trying to move a qdeleted casing of type [casing.type]!")
 			chambered = null
 		else if(casing_ejector || !from_firing)
-			chambered = null
 			casing.forceMove(drop_location()) //Eject casing onto ground.
 			if(!QDELETED(casing))
 				var/bounce_angle
@@ -308,7 +307,8 @@
 				casing.bounce_away(bounce_angle = bounce_angle, still_warm = TRUE)
 				SEND_SIGNAL(casing, COMSIG_CASING_EJECTED)
 		else if(empty_chamber)
-			clear_chambered()
+			UnregisterSignal(chambered, COMSIG_MOVABLE_MOVED)
+			chambered = null
 	if (chamber_next_round && (magazine?.max_ammo > 1))
 		chamber_round()
 
@@ -371,7 +371,7 @@
 			balloon_alert(user, "[magazine_wording] loaded")
 		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
 		if (bolt_type == BOLT_TYPE_OPEN && !bolt_locked)
-			chamber_round(TRUE)
+			chamber_round()
 		update_appearance()
 		return TRUE
 	else
@@ -614,14 +614,12 @@
 	return bullets
 
 ///gets a list of every bullet in the gun
-/obj/item/gun/ballistic/proc/get_ammo_list(countchambered = TRUE, drop_all = FALSE)
+/obj/item/gun/ballistic/proc/get_ammo_list(countchambered = TRUE)
 	var/list/rounds = list()
 	if(chambered && countchambered)
 		rounds.Add(chambered)
-		if(drop_all)
-			chambered = null
 	if(magazine)
-		rounds.Add(magazine.ammo_list(drop_all))
+		rounds.Add(magazine.ammo_list())
 	return rounds
 
 #define BRAINS_BLOWN_THROW_RANGE 3

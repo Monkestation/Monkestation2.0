@@ -29,15 +29,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount/loaded, 28)
 
 /obj/machinery/defibrillator_mount/Destroy()
-	if(defib)
-		QDEL_NULL(defib)
-	. = ..()
-
-/obj/machinery/defibrillator_mount/handle_atom_del(atom/A)
-	if(A == defib)
-		defib = null
-		end_processing()
+	QDEL_NULL(defib)
 	return ..()
+
+/obj/machinery/defibrillator_mount/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == defib)
+		// Make sure processing ends before the defib is nulled
+		end_processing()
+		defib = null
+		update_appearance()
 
 /obj/machinery/defibrillator_mount/examine(mob/user)
 	. = ..()

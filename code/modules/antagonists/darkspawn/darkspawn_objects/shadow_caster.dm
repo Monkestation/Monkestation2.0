@@ -2,7 +2,7 @@
 	name = "shadow caster"
 	desc = "A bow made of solid darkness. The arrows it shoots seem to suck light out of the surroundings."
 	icon = 'icons/obj/darkspawn_items.dmi'
-	icon_state = "shadow_caster_unchambered_undrawn"
+	icon_state = "shadow_caster"
 	inhand_icon_state = "shadow_caster"
 	base_icon_state = "shadow_caster"
 	lefthand_file = 'icons/mob/inhands/antag/darkspawn/darkspawn_lefthand.dmi'
@@ -19,22 +19,10 @@
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/light_eater)
 
-
 /obj/item/gun/ballistic/bow/shadow_caster/shoot_live_shot(mob/living/user, pointblank, atom/pbtarget, message)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(recharge_bolt)), recharge_time)
 	recharge_time = initial(recharge_time)
-
-/obj/item/gun/ballistic/bow/shadow_caster/attack_self(mob/living/user)
-	if(drawn || !chambered)
-		return
-
-	to_chat(user, span_notice("You draw back the bowstring."))
-	drawn = TRUE
-	playsound(src, 'sound/weapons/draw_bow.ogg', 75, 0) //gets way too high pitched if the freq varies
-	update_icon()
-
-
 
 /obj/item/gun/ballistic/bow/shadow_caster/attackby(obj/item/I, mob/user, params)
 	return
@@ -43,12 +31,9 @@
 /obj/item/gun/ballistic/bow/shadow_caster/proc/recharge_bolt()
 	var/obj/item/ammo_casing/arrow/shadow/bolt = new
 	magazine.give_round(bolt)
-	chambered = bolt
+	chambered = magazine.get_round()
+	drawn = FALSE
 	update_icon()
-
-/obj/item/gun/ballistic/bow/shadow_caster/update_icon_state()
-	. = ..()
-	icon_state = "[base_icon_state]_[chambered ? "chambered" : "unchambered"]_[drawn ? "drawn" : "undrawn"]"
 
 // the thing that holds the ammo inside the bow
 /obj/item/ammo_box/magazine/internal/bow/shadow
