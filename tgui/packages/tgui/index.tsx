@@ -4,10 +4,6 @@
  * @license MIT
  */
 import './styles/main.scss';
-// MONKESTATION ADDITION START
-import './styles/themes/clockwork.scss';
-import './styles/themes/admintickets.scss';
-// MONKESTATION ADDITION END
 
 import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { App } from './app';
