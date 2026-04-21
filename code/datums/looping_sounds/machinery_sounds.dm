@@ -184,7 +184,7 @@
 
 /datum/looping_sound/rbmk_reactor_low
 	mid_sounds = list('monkestation/sound/effects/rbmk/reactor_hum_low.ogg')
-	mid_length = 50
+	mid_length = 5 SECONDS
 	volume = 0
 	extra_range = 20
 	falloff_distance = 5
@@ -193,7 +193,7 @@
 
 /datum/looping_sound/rbmk_reactor_high
 	mid_sounds = list('monkestation/sound/effects/rbmk/reactor_hum_high.ogg')
-	mid_length = 50
+	mid_length = 5 SECONDS
 	volume = 0
 	extra_range = 24
 	falloff_distance = 5
