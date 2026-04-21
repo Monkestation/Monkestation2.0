@@ -285,6 +285,6 @@
 			if(!istext(slot_kind))
 				return FALSE
 
-			return reactor.remove_rod_by_slot(slot_kind, slot_index, usr)
+			return reactor.remove_rod_by_slot(slot_kind, slot_index, ui.user)
 
 	return FALSE
