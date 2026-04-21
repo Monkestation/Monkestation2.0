@@ -1,0 +1,6 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - image: "added the chef, tramp, and braided facial hair styles."
+  - image: "added the researcher and clown hair style."
+  - bugfix: "removed a duplicate hairstyle define for \"hair_f\""

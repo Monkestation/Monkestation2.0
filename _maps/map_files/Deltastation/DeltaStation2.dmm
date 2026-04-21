@@ -68030,7 +68030,6 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/box/silver_ids,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "pXW" = (
