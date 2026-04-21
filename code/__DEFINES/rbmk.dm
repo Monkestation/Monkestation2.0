@@ -70,3 +70,5 @@
 // Caps
 #define RBMK_MAX_RADIATION 700
 #define RBMK_MAX_FLUX 75
+
+#define RBMK_ROUND2(x) (round((x), 0.01))

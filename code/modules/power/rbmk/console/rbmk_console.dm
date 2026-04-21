@@ -77,11 +77,6 @@
 
 	return ui
 
-
-/obj/machinery/computer/rbmk_console/proc/rbmk_round2(number_value)
-	return round(number_value, 0.01)
-
-
 /obj/machinery/computer/rbmk_console/proc/rbmk_build_gas_composition_data(datum/gas_mixture/gas_mix)
 	var/list/gas_data = list()
 
@@ -100,7 +95,7 @@
 			gas_percent = (gas_entry[MOLES] / total_moles) * 100
 
 		gas_data[gas_path] = list(
-			"percent" = rbmk_round2(gas_percent)
+			"percent" = RBMK_ROUND2(gas_percent)
 		)
 
 	return gas_data
@@ -118,25 +113,25 @@
 	data["running"] = reactor.running
 	data["scrammed"] = reactor.scrammed
 
-	data["control_rods"] = rbmk_round2(reactor.actual_control_rod_depth)
-	data["control_rods_target"] = rbmk_round2(reactor.control_rod_depth)
+	data["control_rods"] = RBMK_ROUND2(reactor.actual_control_rod_depth)
+	data["control_rods_target"] = RBMK_ROUND2(reactor.control_rod_depth)
 	data["max_control_rod"] = RBMK_CONTROL_ROD_MAX
 
-	data["temperature"] = rbmk_round2(reactor.temperature)
+	data["temperature"] = RBMK_ROUND2(reactor.temperature)
 	data["max_temp"] = RBMK_TEMP_DISPLAY_MAX
 
-	data["radiation"] = rbmk_round2(reactor.radiation)
+	data["radiation"] = RBMK_ROUND2(reactor.radiation)
 	data["max_radiation"] = RBMK_MAX_RADIATION
 
-	data["flux"] = rbmk_round2(reactor.flux)
+	data["flux"] = RBMK_ROUND2(reactor.flux)
 	data["max_flux"] = RBMK_MAX_FLUX
 
-	data["void_coefficient"] = rbmk_round2(reactor.void_coefficient)
+	data["void_coefficient"] = RBMK_ROUND2(reactor.void_coefficient)
 
-	data["integrity"] = rbmk_round2(reactor.reactor_integrity)
+	data["integrity"] = RBMK_ROUND2(reactor.reactor_integrity)
 	data["max_integrity"] = reactor.max_reactor_integrity
 
-	data["pressure_current"] = rbmk_round2(reactor.pressure)
+	data["pressure_current"] = RBMK_ROUND2(reactor.pressure)
 	data["pressure_warning"] = RBMK_PRESSURE_WARNING
 	data["pressure_critical"] = RBMK_PRESSURE_CRITICAL
 	data["pressure_extreme"] = RBMK_PRESSURE_EXTREME
@@ -148,23 +143,23 @@
 	data["inlet_min"] = RBMK_INLET_RATE_MIN
 	data["inlet_max"] = RBMK_INLET_RATE_MAX
 
-	data["outlet_target_pressure"] = rbmk_round2(reactor.outlet_target_pressure)
+	data["outlet_target_pressure"] = RBMK_ROUND2(reactor.outlet_target_pressure)
 	data["outlet_pressure_max"] = RBMK_OUTLET_PRESSURE_MAX
 
 	var/datum/gas_mixture/inlet_mix = reactor.get_inlet_mix()
 	var/datum/gas_mixture/outlet_mix = reactor.get_outlet_mix()
 
-	data["inlet_pressure"] = inlet_mix ? rbmk_round2(inlet_mix.return_pressure()) : 0
-	data["outlet_pressure"] = outlet_mix ? rbmk_round2(outlet_mix.return_pressure()) : 0
+	data["inlet_pressure"] = inlet_mix ? RBMK_ROUND2(inlet_mix.return_pressure()) : 0
+	data["outlet_pressure"] = outlet_mix ? RBMK_ROUND2(outlet_mix.return_pressure()) : 0
 
 	var/list/pressure_history = list()
 	for(var/pressure_value in reactor.coolant_pressure_history)
-		pressure_history += rbmk_round2(pressure_value)
+		pressure_history += RBMK_ROUND2(pressure_value)
 	data["pressure"] = pressure_history
 
 	var/list/reactor_temperature_history = list()
 	for(var/temperature_value in reactor.reactor_temperature_history)
-		reactor_temperature_history += rbmk_round2(temperature_value)
+		reactor_temperature_history += RBMK_ROUND2(temperature_value)
 	data["reactor_temperature_history"] = reactor_temperature_history
 
 	data["gas_composition"] = rbmk_build_gas_composition_data(reactor.coolant_internal)
