@@ -1,0 +1,7 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - balance: "dragging a closed bodybag gives a slowdown of 0.25 and an additional  0.25 for each body inside."
+  - balance: "closing bodybags takes 3 seconds. syndicate bodybags, the elite nanotrasen enviromental bag, and hardlight bodybags only take 1 second to close up"
+  - qol: "you can click mobs with roller beds to quick deploy the rollerbed under them after a 2 second do-after."
+  - balance: "lowers the breakout time for prisoner bodybags to be more reasonable. 2 minutes for regular. 4 minutes for syndicate prisoner bags\n## Pre-Merge Checklist\n- [x] You tested this on a local server.\n- [x] This code did not runtime during testing.\n- [x] You documented all of your changes."
