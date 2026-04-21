@@ -182,15 +182,15 @@
 	if(!mix)
 		return
 
-	coolant_pressure_history.Add(mix.return_pressure())
+	coolant_pressure_history += mix.return_pressure()
 	if(length(coolant_pressure_history) > 60)
 		coolant_pressure_history.Cut(1, 2)
 
-	coolant_temperature_history.Add(mix.temperature)
+	coolant_temperature_history += mix.temperature
 	if(length(coolant_temperature_history) > 60)
 		coolant_temperature_history.Cut(1, 2)
 
-	coolant_total_moles_history.Add(mix.total_moles())
+	coolant_total_moles_history += mix.total_moles()
 	if(length(coolant_total_moles_history) > 60)
 		coolant_total_moles_history.Cut(1, 2)
 
