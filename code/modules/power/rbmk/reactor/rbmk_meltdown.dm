@@ -83,7 +83,6 @@
 	if(reactor_turf)
 		released_mix.temperature = max(released_mix.temperature, temperature)
 		reactor_turf.assume_air(released_mix)
-		air_update_turf(reactor_turf)
 
 
 /obj/machinery/rbmk/reactor/proc/meltdown_explosions()
