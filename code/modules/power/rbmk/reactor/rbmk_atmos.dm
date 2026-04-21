@@ -162,13 +162,13 @@
 
 
 /obj/machinery/rbmk/reactor/proc/get_inlet_mix()
-	if(!inlet || !inlet.airs || inlet.airs.len < 1)
+	if(length(inlet?.airs) < 1)
 		return null
 	return inlet.airs[1]
 
 
 /obj/machinery/rbmk/reactor/proc/get_outlet_mix()
-	if(!outlet || !outlet.airs || outlet.airs.len < 1)
+	if(length(outlet?.airs) < 1)
 		return null
 	return outlet.airs[1]
 
@@ -183,15 +183,15 @@
 		return
 
 	coolant_pressure_history.Add(mix.return_pressure())
-	if(coolant_pressure_history.len > 60)
+	if(length(coolant_pressure_history) > 60)
 		coolant_pressure_history.Cut(1, 2)
 
 	coolant_temperature_history.Add(mix.temperature)
-	if(coolant_temperature_history.len > 60)
+	if(length(coolant_temperature_history) > 60)
 		coolant_temperature_history.Cut(1, 2)
 
 	coolant_total_moles_history.Add(mix.total_moles())
-	if(coolant_total_moles_history.len > 60)
+	if(length(coolant_total_moles_history) > 60)
 		coolant_total_moles_history.Cut(1, 2)
 
 	var/total = mix.total_moles()
