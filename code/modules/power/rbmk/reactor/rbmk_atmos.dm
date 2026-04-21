@@ -112,7 +112,6 @@
 	var/turf/port_turf = get_turf(src)
 	if(port_turf)
 		port_turf.assume_air(released_mix)
-		air_update_turf(port_turf)
 
 
 /obj/machinery/rbmk/reactor/proc/rbmk_init_coolant()
