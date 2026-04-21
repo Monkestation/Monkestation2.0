@@ -162,7 +162,6 @@
  * type - Typepath of the item we are trying to find the costs of
  * costs - Assoc list we modify and return
  */
-
 /obj/machinery/flatpacker/proc/analyze_cost(type, costs)
 	var/comp_type = type
 	if(ispath(type, /datum/stock_part))
@@ -171,13 +170,12 @@
 		if(as_part.tier > print_tier)
 			print_tier = as_part.tier
 
-	var/datum/design/design_datum = SSresearch.item_to_design[comp_type]
-	var/by_techweb = !isnull(design_datum)
+	var/by_techweb = !isnull(SSresearch.item_to_design[comp_type])
 	var/obj/item/null_comp = by_techweb ? null : new comp_type
-	var/list/mat_list = by_techweb ? design_datum.materials : null_comp.custom_materials
-
+	var/list/mat_list = by_techweb ? SSresearch.item_to_design[comp_type][1].materials : null_comp.custom_materials
 	for(var/atom/mat as anything in mat_list)
 		var/mat_type = mat.type
+
 		CREATE_AND_INCREMENT(costs, mat_type, mat_list[mat] * inserted_board.req_components[type])
 
 	qdel(null_comp)
