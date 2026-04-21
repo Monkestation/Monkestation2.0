@@ -1,6 +1,0 @@
-author: "TheColorCyan"
-delete-after: True
-changes:
-  - bugfix: "anime trait now carries over if you transform into person with it, meaning it doesn't get randomized, and removes itself if you transform into person without it."
-  - bugfix: "(MrMelbert) Changelings no longer randomize features (moth wings, lizard tails, ect.) when transforming"
-  - refactor: "(MrMelbert) Refactored a bit of human randomization."

@@ -296,3 +296,46 @@
 2026-04-17:
   MissClassyPineapple:
   - rscadd: Readded Nekomimetic
+2026-04-21:
+  Absolucy:
+  - admin: Added a ban type specifically to ban players from using the Wishgranter.
+  Absolucy, GPeckman:
+  - bugfix: The flight potion wings will no longer fail to work on lavaland/icemoon
+      on rare occasions.
+  Mantlecrawler, commissioned by Moffifuwa:
+  - rscadd: Citationinators can now be used to fine anything, rather than only people
+      on the manifest. Fine that door for being in your way!
+  - rscadd: You can now EMAG a citationinator to allow anyone to use it, rather than
+      just those with security access
+  SirNightKnight:
+  - balance: dragging a closed bodybag gives a slowdown of 0.25 and an additional  0.25
+      for each body inside.
+  - balance: closing bodybags takes 3 seconds. syndicate bodybags, the elite nanotrasen
+      enviromental bag, and hardlight bodybags only take 1 second to close up
+  - qol: you can click mobs with roller beds to quick deploy the rollerbed under them
+      after a 2 second do-after.
+  - balance: 'lowers the breakout time for prisoner bodybags to be more reasonable.
+      2 minutes for regular. 4 minutes for syndicate prisoner bags
+
+      ## Pre-Merge Checklist
+
+      - [x] You tested this on a local server.
+
+      - [x] This code did not runtime during testing.
+
+      - [x] You documented all of your changes.'
+  - image: changed how bodycamera overlays look.
+  - image: added the chef, tramp, and braided facial hair styles.
+  - image: added the researcher and clown hair style.
+  - bugfix: removed a duplicate hairstyle define for "hair_f"
+  TheColorCyan:
+  - bugfix: anime trait now carries over if you transform into person with it, meaning
+      it doesn't get randomized, and removes itself if you transform into person without
+      it.
+  - bugfix: (MrMelbert) Changelings no longer randomize features (moth wings, lizard
+      tails, ect.) when transforming
+  - refactor: (MrMelbert) Refactored a bit of human randomization.
+  Tractor-Maam:
+  - rscdel: Removed cat from NTSL (nekomimetic exists and does the same thing.)
+  - spellcheck: fixed the NTSL language reference list, making it accurate to the
+      actual variables used.
