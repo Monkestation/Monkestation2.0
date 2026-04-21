@@ -280,7 +280,7 @@
 
 	slot_index = round(slot_index)
 
-	if(slot_index < 1 || slot_index > length(target_slots))
+	if(!ISINRANGE(slot_index, 1, length(target_slots)))
 		return FALSE
 
 	var/obj/item/rbmk/fuel_rod/fuel_rod = target_slots[slot_index]
@@ -288,7 +288,7 @@
 		return FALSE
 
 	target_slots -= fuel_rod
-	fuel_rod.forceMove(get_turf(src))
+	fuel_rod.forceMove(drop_location())
 
 	if(user)
 		to_chat(user, span_notice("You remove [fuel_rod.name] from the reactor."))
@@ -308,5 +308,5 @@
 /obj/machinery/rbmk/reactor/proc/update_linked_consoles()
 	for(var/obj/machinery/computer/rbmk_console/console in range(7, src))
 		if(console.linked_reactor == src)
-			console.update_icon()
+			console.update_appearance()
 			SStgui.update_uis(console)
