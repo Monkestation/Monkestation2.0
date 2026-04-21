@@ -198,14 +198,13 @@
 	if(total <= 0)
 		return
 
-	for(var/gas in mix.gases)
-		var/list/g = mix.gases[gas]
+	for(var/gas, g in mix.gases)
 		var/percent = (g[MOLES] / total) * 100
 
 		var/list/history = coolant_gas_hist[gas]
 		if(!history)
 			history = coolant_gas_hist[gas] = list()
 
-		history.Add(percent)
-		if(history.len > 60)
+		history += percent
+		if(length(history) > 60)
 			history.Cut(1, 2)
