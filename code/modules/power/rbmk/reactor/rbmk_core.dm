@@ -255,7 +255,7 @@
 			to_chat(user, span_notice("No rods installed."))
 		return FALSE
 
-	fuel_rod.forceMove(get_turf(src))
+	fuel_rod.forceMove(drop_location())
 
 	if(user)
 		to_chat(user, span_notice("You remove [fuel_rod.name] from the reactor."))
