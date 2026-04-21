@@ -30,7 +30,7 @@
 	if(desired_moles <= 0)
 		return null
 
-	var/remove_ratio = clamp(desired_moles / total_moles, 0, 1)
+	var/remove_ratio = CLAMP01(desired_moles / total_moles)
 	if(remove_ratio <= 0)
 		return null
 
