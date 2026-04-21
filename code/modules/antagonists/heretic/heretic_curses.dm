@@ -70,7 +70,7 @@
 		return FALSE
 
 	if(IS_HERETIC(to_curse) && to_curse != user)
-		to_chat(user, span_warning("[to_curse.p_their()] ties to the Mansus are too strong. You are unable to curse [to_curse]."))
+		to_chat(user, span_warning("[to_curse.p_Their()] ties to the Mansus are too strong. You are unable to curse [to_curse]."))
 		return TRUE
 
 	if(IS_MONSTERHUNTER(to_curse))
