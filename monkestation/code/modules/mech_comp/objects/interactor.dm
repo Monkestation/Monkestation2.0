@@ -322,6 +322,7 @@
 	name = src::name
 	real_name = src::name
 	dna?.real_name = src::name
+	ADD_TRAIT(src, TRAIT_DEAF, INNATE_TRAIT)
 
 /mob/living/carbon/human/dummy/mechcomp/abstract_move(atom/destination)
 	if(!move_sanity_check(destination))
