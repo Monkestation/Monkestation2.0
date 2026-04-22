@@ -1091,6 +1091,8 @@
 		if(victim.can_block_magic(MAGIC_RESISTANCE))
 			continue
 		victim.apply_status_effect(/datum/status_effect/void_chill, 1)
+	new /obj/effect/temp_visual/circle_wave/void_armor(get_turf(owner))
+	playsound(owner, 'sound/magic/voidblink.ogg', vol = 20, vary = TRUE, frequency = 2)
 	return TRUE
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/void
