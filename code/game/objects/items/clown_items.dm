@@ -232,7 +232,7 @@
 		return
 	for(var/mob/hearer in ohearers(7, get_turf(src)))
 		if(!HAS_TRAIT(hearer, TRAIT_DEAF))
-			hearer.emote("flip")
+			INVOKE_ASYNC(hearer, TYPE_PROC_REF(/mob, emote), "flip")
 	COOLDOWN_START(src, golden_horn_cooldown, 1 SECONDS)
 
 //canned laughter
