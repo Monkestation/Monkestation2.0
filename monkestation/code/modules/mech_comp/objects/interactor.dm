@@ -333,9 +333,6 @@
 		return FALSE
 	return ..()
 
-/mob/living/carbon/human/dummy/mechcomp/can_hear()
-	return FALSE
-
 /mob/living/carbon/human/dummy/mechcomp/can_speak(allow_mimes)
 	return FALSE
 
