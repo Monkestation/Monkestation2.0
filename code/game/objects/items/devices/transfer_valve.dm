@@ -27,16 +27,14 @@
 /obj/item/transfer_valve/IsAssemblyHolder()
 	return TRUE
 
-/obj/item/transfer_valve/handle_atom_del(atom/deleted_atom)
+/obj/item/transfer_valve/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(deleted_atom == tank_one)
+	if(gone == tank_one)
 		tank_one = null
 		update_appearance()
-		return
-	if(deleted_atom == tank_two)
+	else if(gone == tank_two)
 		tank_two = null
 		update_appearance()
-		return
 
 /obj/item/transfer_valve/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/tank))
@@ -263,14 +261,12 @@
 				split_gases()
 				valve_open = FALSE
 				tank_one.forceMove(drop_location())
-				tank_one = null
 				. = TRUE
 		if("tanktwo")
 			if(tank_two)
 				split_gases()
 				valve_open = FALSE
 				tank_two.forceMove(drop_location())
-				tank_two = null
 				. = TRUE
 		if("toggle")
 			toggle_valve()

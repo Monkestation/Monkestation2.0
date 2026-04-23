@@ -778,6 +778,15 @@
 
 	chosen_dna.copy_dna(user.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 
+	// Snowflake to carry over anime implants
+	if(user.has_quirk(/datum/quirk/anime))
+		user.remove_quirk(/datum/quirk/anime)
+
+	for(var/datum/quirk/target_quirk as anything in chosen_profile.quirks)
+		if(istype(target_quirk, /datum/quirk/anime))
+			user.add_quirk(/datum/quirk/anime)
+			break
+
 	for(var/obj/item/bodypart/limb as anything in user.bodyparts)
 		limb.update_limb(is_creating = TRUE)
 
@@ -869,6 +878,7 @@
 			attempted_fake_scar.fake = TRUE
 
 	user.regenerate_icons()
+	user.name = user.get_visible_name()
 	current_profile = chosen_profile
 
 /datum/antagonist/changeling/proc/query_for_monster_hunter(datum/source, list/prey)

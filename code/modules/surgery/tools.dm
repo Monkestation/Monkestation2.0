@@ -22,6 +22,9 @@
 	desc = "Micro-mechanical manipulator for retracting stuff."
 	toolspeed = 0.5
 
+/obj/item/retractor/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_medborg_retractor"
 
 /obj/item/hemostat
 	name = "hemostat"
@@ -49,6 +52,9 @@
 	desc = "Tiny servos power a pair of pincers to stop bleeding."
 	toolspeed = 0.5
 
+/obj/item/hemostat/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_medborg_hemostat"
 
 /obj/item/cautery
 	name = "cautery"
@@ -78,6 +84,10 @@
 /obj/item/cautery/augment
 	desc = "A heated element that cauterizes wounds."
 	toolspeed = 0.5
+
+/obj/item/cautery/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_medborg_cautery"
 
 /obj/item/cautery/advanced
 	name = "searing tool"
@@ -179,6 +189,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 
+/obj/item/surgicaldrill/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_medborg_drill"
+
 /obj/item/scalpel
 	name = "scalpel"
 	desc = "Cut, cut, and once more cut."
@@ -227,9 +241,10 @@
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
 	toolspeed = 0.5
 
-/obj/item/scalpel/borg // Monke edit start:
+/obj/item/scalpel/cyborg
 	desc = "Ultra-sharp blade attached directly to your servos for extra-accuracy."
-	toolspeed= 0.5 // Monke Edit end: Added a borg scalpel for some different flavor text since, ya know borgs dont exactly have "Bones"
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_medborg_scalpel"
 
 /obj/item/circular_saw
 	name = "circular saw"
@@ -277,6 +292,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 
+/obj/item/circular_saw/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_medborg_saw"
 
 /obj/item/surgical_drapes
 	name = "surgical drapes"
@@ -293,6 +311,10 @@
 /obj/item/surgical_drapes/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/surgery_initiator)
+
+/obj/item/surgical_drapes/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_medborg_surgicaldrapes"
 
 /obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
 	name = "surgical processor"
@@ -567,6 +589,10 @@
 
 /obj/item/bonesetter/get_surgery_tool_overlay(tray_extended)
 	return "bonesetter" + (tray_extended ? "" : "_out")
+
+/obj/item/bonesetter/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_medborg_bonesetter"
 
 /obj/item/blood_filter
 	name = "blood filter"
