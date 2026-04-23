@@ -1,0 +1,7 @@
+author: "Runian"
+delete-after: True
+changes:
+  - rscadd: "Cyborg omni-toolset was added. It is able to switch between tools in hand without having to drop anything."
+  - qol: "Surgical tools for medical cyborgs and construction tools for engineering cyborgs have been replaced with two cyborg omni-toolsets."
+  - image: "Surgical tools for medical cyborgs now look more mechanic and animated."
+  - image: "Construction tools for engineering cyborgs (and drones) now look more mechanic and animated."
