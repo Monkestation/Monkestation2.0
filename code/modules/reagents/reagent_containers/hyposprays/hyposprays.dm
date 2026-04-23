@@ -206,7 +206,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 /obj/item/hypospray/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	if(isnull(held_item))
+	if(held_item == src)
 		context[SCREENTIP_CONTEXT_LMB] = "Change mode"
 		context[SCREENTIP_CONTEXT_RMB] = "Remove vial"
 		if(upgrade_flags & HYPO_UPGRADE_NOZZLE)

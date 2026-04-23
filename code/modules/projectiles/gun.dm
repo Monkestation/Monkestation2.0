@@ -120,15 +120,13 @@
 /obj/item/gun/proc/add_bayonet_point()
 	return
 
-/obj/item/gun/handle_atom_del(atom/A)
-	if(A == pin)
+/obj/item/gun/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == pin)
 		pin = null
-	if(A == chambered)
+	if(gone == chambered)
 		chambered = null
 		update_appearance()
-	if(A == suppressed)
-		clear_suppressor()
-	return ..()
 
 ///Clears var and updates icon. In the case of ballistic weapons, also updates the gun's weight.
 /obj/item/gun/proc/clear_suppressor()

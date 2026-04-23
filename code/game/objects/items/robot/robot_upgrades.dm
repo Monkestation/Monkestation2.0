@@ -624,17 +624,6 @@
 	model_flags = BORG_MODEL_PEACEKEEPER
 	items_to_add = list(/obj/item/nanite_remote/cyborg)
 
-/obj/item/borg/upgrade/surgery
-	name = "medical surgical toolset upgrade"
-	desc = "An upgrade to the Medical model cyborg's surgical tools, streamlining \
-		the surgical process."
-	icon_state = "module_medical"
-	require_model = TRUE
-	model_type = list(/obj/item/robot_model/medical)
-	model_flags = BORG_MODEL_MEDICAL
-	items_to_add = list(/obj/item/circular_saw/augment, /obj/item/scalpel/borg, /obj/item/cautery/augment, /obj/item/retractor/augment, /obj/item/hemostat/augment)
-	items_to_remove = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/cautery, /obj/item/retractor, /obj/item/hemostat)
-
 /obj/item/borg/upgrade/better_clamp
 	name = "improved integrated hydraulic clamp"
 	desc = "An improved hydraulic clamp that trades its storage quantity to allow for bigger packages to be picked up instead!"
@@ -714,3 +703,30 @@
 		return .
 	for(var/obj/item/healthanalyzer/cyborg/analyzer in borg.model.modules)
 		analyzer.downgrade()
+
+/obj/item/borg/upgrade/surgery_omnitool
+	name = "cyborg surgical omni-tool upgrade"
+	desc = "An upgrade to the Medical model, upgrading the built-in \
+		surgical omnitool, to be on par with advanced surgical tools, allowing for faster surgery."
+	icon_state = "cyborg_upgrade4"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
+	model_flags = BORG_MODEL_MEDICAL
+
+/obj/item/borg/upgrade/surgery_omnitool/action(mob/living/silicon/robot/cyborg, mob/living/user = usr)
+	. = ..()
+	if(!.)
+		return .
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_upgrade in cyborg.model.modules)
+		if(omnitool_upgrade.upgraded)
+			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
+			return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in cyborg.model.modules)
+		omnitool.set_upgraded(TRUE)
+
+/obj/item/borg/upgrade/surgery_omnitool/deactivate(mob/living/silicon/robot/cyborg, mob/living/user = usr)
+	. = ..()
+	if(!.)
+		return .
+	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
+		omnitool.set_upgraded(FALSE)
