@@ -408,7 +408,7 @@
 	if(owner.current)
 		for(var/knowledge_path in researched_knowledge)
 			var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_path][HKT_INSTANCE]
-			knowledge.on_lose(owner.current, src)
+			knowledge.on_lose(owner.current, src, being_removed = TRUE)
 			QDEL_NULL(researched_knowledge[knowledge_path][HKT_INSTANCE])
 
 	// REMOVE_TRAIT(owner, TRAIT_SEE_BLESSED_TILES, REF(src))

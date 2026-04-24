@@ -74,7 +74,7 @@
 	grasp_spell?.invocation_type = INVOCATION_NONE
 	grasp_spell?.sound = null
 
-/datum/heretic_knowledge/limited_amount/starting/base_lock/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/limited_amount/starting/base_lock/on_lose(mob/user, datum/antagonist/heretic/our_heretic, being_removed = FALSE)
 	. = ..()
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY)
 

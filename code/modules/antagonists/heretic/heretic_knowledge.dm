@@ -99,8 +99,9 @@
  * Arguments
  * * user - the heretic which we're removing things from
  * * our_heretic - The antag datum of who is losing us. This should never be null.
+ * * being_removed - If TRUE, then we're being de-heretic'd.
  */
-/datum/heretic_knowledge/proc/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/proc/on_lose(mob/user, datum/antagonist/heretic/our_heretic, being_removed = FALSE)
 	return
 
 /**
@@ -228,7 +229,7 @@
 	created_action.Grant(user)
 	created_action_ref = WEAKREF(created_action)
 
-/datum/heretic_knowledge/spell/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/spell/on_lose(mob/user, datum/antagonist/heretic/our_heretic, being_removed = FALSE)
 	var/datum/action/cooldown/spell/created_action = created_action_ref?.resolve()
 	if(created_action?.owner == user)
 		created_action.Remove(user)
@@ -320,7 +321,7 @@
 		var/mob/living/living_user = user
 		living_user.apply_status_effect(eldritch_passive)
 
-/datum/heretic_knowledge/limited_amount/starting/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/limited_amount/starting/on_lose(mob/user, datum/antagonist/heretic/our_heretic, being_removed = FALSE)
 	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
 	if(isliving(user))
 		var/mob/living/living_user = user
@@ -388,7 +389,7 @@
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
 	RegisterSignal(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, PROC_REF(on_ranged_eldritch_blade))
 
-/datum/heretic_knowledge/blade_upgrade/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/blade_upgrade/on_lose(mob/user, datum/antagonist/heretic/our_heretic, being_removed = FALSE)
 	UnregisterSignal(user, list(COMSIG_HERETIC_BLADE_ATTACK, COMSIG_HERETIC_RANGED_BLADE_ATTACK))
 
 

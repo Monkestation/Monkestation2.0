@@ -85,7 +85,7 @@
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_mansus_grasp_secondary))
 	RegisterSignal(user, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_picked_up))
 
-/datum/heretic_knowledge/limited_amount/starting/base_flesh/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/limited_amount/starting/base_flesh/on_lose(mob/user, datum/antagonist/heretic/our_heretic, being_removed = FALSE)
 	. = ..()
 	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, COMSIG_MOB_EQUIPPED_ITEM))
 

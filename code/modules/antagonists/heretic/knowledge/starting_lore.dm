@@ -120,7 +120,9 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	else
 		to_chat(user, span_boldnotice("You don't have a heart, or any chest organs for that matter. You didn't get a Living Heart because of it."))
 
-/datum/heretic_knowledge/living_heart/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/living_heart/on_lose(mob/user, datum/antagonist/heretic/our_heretic, being_removed = FALSE)
+	if(!being_removed) // only remove the living heart if we're being de-heretic'd.
+		return
 	var/obj/item/organ/our_living_heart = user.get_organ_slot(our_heretic.living_heart_organ_slot)
 	if(our_living_heart)
 		qdel(our_living_heart.GetComponent(/datum/component/living_heart))

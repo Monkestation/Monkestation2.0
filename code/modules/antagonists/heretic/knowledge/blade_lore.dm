@@ -134,7 +134,7 @@
 
 	on_health_update(user) // Run this once, so if the knowledge is learned while hurt it activates properly
 
-/datum/heretic_knowledge/duel_stance/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/duel_stance/on_lose(mob/user, datum/antagonist/heretic/our_heretic, being_removed = FALSE)
 	user.remove_traits(list(TRAIT_NODISMEMBER, TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE, TRAIT_NO_SLIP_ALL), type)
 	if(in_duelist_stance)
 		user.remove_traits(list(TRAIT_HARDLY_WOUNDED), type)
@@ -227,7 +227,7 @@
 	RegisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST, PROC_REF(on_grasp_cast))
 	RegisterSignal(user, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_blade_equipped))
 
-/datum/heretic_knowledge/blade_upgrade/blade/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/blade_upgrade/blade/on_lose(mob/user, datum/antagonist/heretic/our_heretic, being_removed = FALSE)
 	. = ..()
 	UnregisterSignal(user, list(COMSIG_TOUCH_HANDLESS_CAST, COMSIG_MOB_EQUIPPED_ITEM))
 

@@ -234,7 +234,7 @@
 	heavy_storm = new(user, 10)
 	user.update_sight()
 
-/datum/heretic_knowledge/ultimate/void_final/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/ultimate/void_final/on_lose(mob/user, datum/antagonist/heretic/our_heretic, being_removed = FALSE)
 	on_death(user) // Losing is pretty much dying. I think
 
 /datum/heretic_knowledge/ultimate/void_final/proc/on_update_sight(mob/user)
