@@ -117,11 +117,18 @@
 	/// Boolean. If TRUE, the Click() proc will attempt to Click() on the master first if there is a master.
 	var/click_master = TRUE
 
+	///If set, this overlay will be added to the icon.
+	var/overlay_state
+	///The file to fetch the overlay from
+	var/overlay_icon = 'icons/hud/screen_alert.dmi'
+
 /atom/movable/screen/alert/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	if(clickable_glow)
 		add_filter("clickglow", 2, outline_filter(color = COLOR_GOLD, size = 1))
 		mouse_over_pointer = MOUSE_HAND_POINTER
+	if(overlay_state)
+		update_appearance()
 
 /atom/movable/screen/alert/MouseEntered(location,control,params)
 	. = ..()
@@ -141,6 +148,11 @@
 /atom/movable/screen/alert/update_icon_state()
 	. = ..()
 	icon_state = "[base_icon_state || initial(icon_state)][severity]"
+
+/atom/movable/screen/alert/update_overlays()
+	. = ..()
+	if(overlay_state)
+		. += mutable_appearance(overlay_icon, overlay_state)
 
 //Gas alerts
 // Gas alerts are continuously thrown/cleared by:

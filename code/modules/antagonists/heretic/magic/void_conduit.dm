@@ -24,7 +24,7 @@
 /obj/structure/void_conduit
 	name = "Void Conduit"
 	desc = "An open gate which leads to nothingness. Releases pulses which you do not want to get hit by."
-	icon = 'icons/effects/effects.dmi'
+	icon = 'icons/effects/void_effects.dmi'
 	icon_state = "void_conduit"
 	anchored = TRUE
 	density = TRUE
