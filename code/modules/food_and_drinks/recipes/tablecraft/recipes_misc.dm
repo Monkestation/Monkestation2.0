@@ -116,6 +116,7 @@
 		/obj/item/stock_parts/power_store/cell/super =1,
 		/obj/item/melee/sabre = 1
 	)
+	blacklist = list(/obj/item/melee/sabre/cargo)
 	result = /obj/item/food/powercrepe
 	category = CAT_MISCFOOD
 
