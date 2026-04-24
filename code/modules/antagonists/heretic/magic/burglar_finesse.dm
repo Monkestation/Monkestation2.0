@@ -1,12 +1,13 @@
 /datum/action/cooldown/spell/pointed/burglar_finesse
 	name = "Burglar's Finesse"
-	desc = "Steal a random item from the victim's backpack."
+	desc = "Steal a random item from the victim's backpack. \
+		(This spell does NOT require a focus.)"
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "burglarsfinesse"
 
-	school = SCHOOL_FORBIDDEN
+	school = SCHOOL_TRANSLOCATION
 	cooldown_time = 40 SECONDS
 
 	invocation = "Y'O'K!"

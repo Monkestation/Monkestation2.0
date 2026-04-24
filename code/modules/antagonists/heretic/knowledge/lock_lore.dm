@@ -185,7 +185,8 @@
 /datum/heretic_knowledge/spell/burglar_finesse
 	name = "Burglar's Finesse"
 	desc = "Grants you Burglar's Finesse, a single-target spell \
-		that puts a random item from the victims backpack into your hand."
+		that puts a random item from the victims backpack into your hand. \
+		This spell does not require a focus."
 	gain_text = "Consorting with Burglar spirits is frowned upon, but a Steward will always want to learn about new doors."
 
 	action_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
