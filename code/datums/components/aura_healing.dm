@@ -95,6 +95,8 @@
 	return ..()
 
 /datum/component/aura_healing/process(seconds_per_tick)
+	var/delta_time = DELTA_WORLD_TIME_WITHOUT_HIBERNATION(SSaura)
+
 	var/should_show_effect = COOLDOWN_FINISHED(src, last_heal_effect_time)
 	if (should_show_effect)
 		COOLDOWN_START(src, last_heal_effect_time, HEAL_EFFECT_COOLDOWN)
@@ -123,28 +125,28 @@
 			new /obj/effect/temp_visual/heal(get_turf(candidate), healing_color)
 
 		if (iscarbon(candidate) || issilicon(candidate) || isbasicmob(candidate))
-			candidate.adjustBruteLoss(-brute_heal * seconds_per_tick, updating_health = FALSE)
-			candidate.adjustFireLoss(-burn_heal * seconds_per_tick, updating_health = FALSE)
+			candidate.adjustBruteLoss(-brute_heal * delta_time, updating_health = FALSE)
+			candidate.adjustFireLoss(-burn_heal * delta_time, updating_health = FALSE)
 
 		if (iscarbon(candidate))
 			// Toxin healing is forced for slime people
-			candidate.adjustToxLoss(-toxin_heal * seconds_per_tick, updating_health = FALSE, forced = TRUE)
+			candidate.adjustToxLoss(-toxin_heal * delta_time, updating_health = FALSE, forced = TRUE)
 
-			candidate.adjustOxyLoss(-suffocation_heal * seconds_per_tick, updating_health = FALSE)
-			candidate.stamina.adjust(stamina_heal * seconds_per_tick)
-			candidate.adjustCloneLoss(-clone_heal * seconds_per_tick, updating_health = FALSE)
+			candidate.adjustOxyLoss(-suffocation_heal * delta_time, updating_health = FALSE)
+			candidate.stamina.adjust(stamina_heal * delta_time)
+			candidate.adjustCloneLoss(-clone_heal * delta_time, updating_health = FALSE)
 
 			for (var/organ in organ_healing)
-				candidate.adjustOrganLoss(organ, -organ_healing[organ] * seconds_per_tick)
+				candidate.adjustOrganLoss(organ, -organ_healing[organ] * delta_time)
 		else if (isanimal(candidate))
 			var/mob/living/simple_animal/animal_candidate = candidate
-			animal_candidate.adjustHealth(-simple_heal * seconds_per_tick, updating_health = FALSE)
+			animal_candidate.adjustHealth(-simple_heal * delta_time, updating_health = FALSE)
 		else if (isbasicmob(candidate))
 			var/mob/living/basic/basic_candidate = candidate
-			basic_candidate.adjust_health(-simple_heal * seconds_per_tick, updating_health = FALSE)
+			basic_candidate.adjust_health(-simple_heal * delta_time, updating_health = FALSE)
 
 		if (candidate.blood_volume < BLOOD_VOLUME_NORMAL)
-			candidate.blood_volume += blood_heal * seconds_per_tick
+			candidate.blood_volume += blood_heal * delta_time
 
 		candidate.updatehealth()
 
