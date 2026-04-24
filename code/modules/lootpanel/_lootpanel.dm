@@ -41,8 +41,7 @@
 			return UI_DISABLED
 		if(living_user.incapacitated())
 			return UI_UPDATE
-		return UI_INTERACTIVE
-	return UI_UPDATE
+	return UI_INTERACTIVE
 
 /datum/lootpanel/ui_close(mob/user)
 	UnregisterSignal(source_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
