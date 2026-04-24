@@ -32,8 +32,17 @@
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
-/datum/lootpanel/ui_host(mob/user)
-	return source_turf
+/datum/lootpanel/ui_status(mob/user, datum/ui_state/state)
+	if(!CAN_THEY_SEE(source_turf, user))
+		return UI_CLOSE
+	if(isliving(user))
+		var/mob/living/living_user = user
+		if(living_user.incapacitated())
+			return UI_UPDATE
+		if(get_dist(user, source_turf) > 1)
+			return UI_DISABLED
+		return UI_INTERACTIVE
+	return UI_UPDATE
 
 /datum/lootpanel/ui_close(mob/user)
 	UnregisterSignal(source_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
