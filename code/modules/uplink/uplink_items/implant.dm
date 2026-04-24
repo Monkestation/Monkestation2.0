@@ -63,6 +63,15 @@
 	item = /obj/item/storage/box/syndie_kit/imp_hard_spear
 	cost = 7
 
+/datum/uplink_item/implants/hardlight/bundle
+	name = "Hardlight Spear Implant Bundle"
+	desc = "A box containing a total of five hardlight spears. \
+	Through the magic of bulk pricing, it is possible to obtain the maximum number of hardlight spear implants for a discounted price. \
+	Not to be sold seperately."
+	item = /obj/item/storage/box/syndie_kit/imp_hard_spear/bundle
+	cost = 25
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //So poor nukies don't end up buying this instead of a commanding implant
+
 /datum/uplink_item/implants/weapons_auth
 	name = "Weapon Authorization Kit"
 	desc = "An implant and firing pin that allows you restrict any pin weapon to those with the implant."

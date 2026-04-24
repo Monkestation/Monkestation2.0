@@ -836,3 +836,30 @@
 	if(.)
 		for(var/obj/item/healthanalyzer/cyborg/analyzer in R.model.modules)
 			analyzer.downgrade()
+
+/obj/item/borg/upgrade/surgery_omnitool
+	name = "cyborg surgical omni-tool upgrade"
+	desc = "An upgrade to the Medical model, upgrading the built-in \
+		surgical omnitool, to be on par with advanced surgical tools, allowing for faster surgery."
+	icon_state = "cyborg_upgrade4"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
+	model_flags = BORG_MODEL_MEDICAL
+
+/obj/item/borg/upgrade/surgery_omnitool/action(mob/living/silicon/robot/cyborg, mob/living/user = usr)
+	. = ..()
+	if(!.)
+		return .
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_upgrade in cyborg.model.modules)
+		if(omnitool_upgrade.upgraded)
+			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
+			return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in cyborg.model.modules)
+		omnitool.set_upgraded(TRUE)
+
+/obj/item/borg/upgrade/surgery_omnitool/deactivate(mob/living/silicon/robot/cyborg, mob/living/user = usr)
+	. = ..()
+	if(!.)
+		return .
+	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
+		omnitool.set_upgraded(FALSE)
