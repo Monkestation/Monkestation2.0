@@ -71,7 +71,7 @@
 				var/list/req_text_list = list()
 				for(var/atom/possible_type as anything in req_type_list)
 					req_text_list += ritual.parse_required_item(possible_type)
-				ritual_requirements += english_list(req_text_list, and_text = "or")
+				ritual_requirements += english_list(req_text_list, and_text = " or ")
 
 			else
 				ritual_requirements += ritual.parse_required_item(req_type)
@@ -182,7 +182,7 @@
 			var/list/req_text_list = list()
 			for(var/possible_type, needed_amount in req_type_list)
 				req_text_list += ritual.parse_required_item(possible_type, fulfilled_amount)
-			what_are_we_missing += english_list(req_text_list, and_text = "or")
+			what_are_we_missing += english_list(req_text_list, and_text = " or ")
 
 		else
 			what_are_we_missing = ritual.parse_required_item(req_type)
