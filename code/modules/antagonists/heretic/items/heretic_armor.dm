@@ -438,7 +438,6 @@
 		requires_visibility = FALSE, \
 		limit_to_trait = TRAIT_HERETIC_SUMMON, \
 		healing_color = COLOR_RED, \
-		self_heal = FALSE, \
 	)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/flesh/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
