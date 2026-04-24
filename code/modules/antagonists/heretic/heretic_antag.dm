@@ -117,6 +117,10 @@
 	//can't imagine why you would want this one, so it can't be overridden by the knowledge
 	var/icon_moving = 0
 
+	// we need to convert this to a typepath
+	if(istype(knowledge))
+		knowledge = knowledge.type
+
 	//item transmutation knowledge does not generate its own icon due to implementation difficulties, the icons have to be specified in the override vars
 
 	//if the knowledge has a special icon, use that
