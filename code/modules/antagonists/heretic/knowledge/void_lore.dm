@@ -53,9 +53,10 @@
 
 /datum/heretic_knowledge/limited_amount/starting/base_void
 	name = "Glimmer of Winter"
-	desc = "Opens up the Path of Void to you. \
-		Allows you to transmute a knife in sub-zero temperatures (or the ocean) into a Void Blade. \
+	desc = "Opens up the Path of Void to you.<br>\
+		Allows you to create Void Blades. \
 		You can only create two at a time."
+	transmute_text = "Transmute a knife in sub-zero temperatures, or in the ocean."
 	gain_text = "I feel a shimmer in the air, the air around me gets colder. \
 		I start to realize the emptiness of existence. Something's watching me."
 	required_atoms = list(/obj/item/knife = 1)
@@ -89,8 +90,8 @@
 
 /datum/heretic_knowledge/spell/void_phase
 	name = "Void Phase"
-	desc = "Grants you Void Phase, a long range targeted teleport spell. \
-		Additionally causes damage to heathens around your original and target destination."
+	desc = "Grants you Void Phase, a long range targeted teleport spell.<br>\
+		Causes damage to heathens around your original and target destination."
 	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like \
 		nothing - leaving a harsh, cold breeze in their wake. They disappear, and I am left in the blizzard."
 	action_to_add = /datum/action/cooldown/spell/pointed/void_phase
@@ -111,9 +112,9 @@
 	drafting_tier = 5
 
 /datum/heretic_knowledge/armor/void
-	name = "Hollow Weave"
-	desc = "Allows you to transmute a table (or a suit) and a mask in sub-zero temperatures (or the ocean) to create a Hollow Weave, this armor will periodically nullify attacks and afflict nearby enemies with a void chill stack. \
-			Acts as a focus while hooded."
+	desc = "Create a Hollow Weave.<br>\
+		This armor will periodically nullify attacks and afflict nearby heathens with a void chill stack."
+	transmute_text = "Transmute a table (or a suit) and a mask in sub-zero temperatures or the ocean."
 	gain_text = "Stepping through the cold air, I am shocked by a new sensation. \
 				Thousands of almost imperceivable threads cling to my form. \
 				I am left adrift with every step. \
@@ -149,7 +150,8 @@
 
 /datum/heretic_knowledge/blade_upgrade/void
 	name = "Seeking Blade"
-	desc = "Your blade now freezes enemies. Additionally, you can now attack distant marked targets with your Void Blade, teleporting directly next to them."
+	desc = "Your blade now freezes enemies.<br>\
+		Additionally, you can now attack distant marked targets with your Void Blade, teleporting directly next to them."
 	gain_text = "Fleeting memories, fleeting feet. I mark my way with frozen blood upon the snow. Covered and forgotten."
 
 
@@ -176,7 +178,9 @@
 
 /datum/heretic_knowledge/spell/void_conduit
 	name = "Void Conduit"
-	desc = "Grants you Void Conduit, a spell which summons a pulsing gate to the Void itself. Every pulse breaks windows and airlocks, while afflicting Heathens with an eldritch chill and shielding Heretics against low pressure."
+	desc = "Grants you Void Conduit, a spell which summons a pulsing gate to the void itself.<br>\
+		Every pulse breaks windows and airlocks, while simultaneously afflicting heathens with an eldritch chill \
+		and shielding heretics against low pressure."
 	gain_text = "The hum in the still, cold air turns to a cacophonous rattle. \
 		Over the noise, there is no distinction to the clattering of window panes and the yawning knowledge that ricochets through my skull. \
 		The doors won't close. I can't keep the cold out now."
@@ -186,11 +190,11 @@
 
 /datum/heretic_knowledge/ultimate/void_final
 	name = "Waltz at the End of Time"
-	desc = "The ascension ritual of the Path of Void. \
-		Bring 3 corpses to a transmutation rune in sub-zero temperatures (or the ocean) to complete the ritual. \
+	desc = "The ascension ritual of the Path of Void.<br>\
 		When completed, causes a violent storm of void snow \
-		to assault the station, freezing and damaging heathens. Those nearby will be silenced and frozen even quicker. \
+		to assault the station, freezing and damaging heathens. Those nearby will be silenced and frozen even quicker.<br>\
 		Additionally, you will become immune to the effects of space."
+	transmute_text = "Transmute three corpses in sub-zero temperatures, or in the ocean."
 	gain_text = "The world falls into darkness. I stand in an empty plane, small flakes of ice fall from the sky. \
 		The Aristocrat stands before me, beckoning. We will play a waltz to the whispers of dying reality, \
 		as the world is destroyed before our eyes. The void will return all to nothing, WITNESS MY ASCENSION!"

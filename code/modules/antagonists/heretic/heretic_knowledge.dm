@@ -15,6 +15,10 @@
 	var/name = "Basic knowledge"
 	/// Description of the knowledge, shown to the heretic. Describes what it unlocks / does.
 	var/desc = "Basic knowledge of forbidden arts."
+	/// Simple text described of what is needed for this ritual.
+	var/transmute_text = ""
+	/// Any sort of additional notice that players should know about this ritual.
+	var/notice = ""
 	/// What's shown to the heretic when the knowledge is acquired
 	var/gain_text
 	/// Assoc list of [typepaths we need] to [amount needed].
@@ -132,13 +136,13 @@
  * Parses specific items into a more readble form.
  * Can be overriden by knoweldge subtypes.
  */
-/datum/heretic_knowledge/proc/parse_required_item(atom/item_path, number_of_things)
+/datum/heretic_knowledge/proc/parse_required_item(atom/item_path, number_of_things = 1)
 	// If we need a human, there is a high likelihood we actually need a (dead) body
 	if(ispath(item_path, /mob/living/carbon/human))
-		return "bod[number_of_things > 1 ? "ies" : "y"]"
+		return "[number_of_things] bod[number_of_things > 1 ? "ies" : "y"]"
 	if(ispath(item_path, /mob/living))
-		return "carcass[number_of_things > 1 ? "es" : ""] of any kind"
-	return "[initial(item_path.name)]\s"
+		return "[number_of_things] carcass[number_of_things > 1 ? "es" : ""] of any kind"
+	return trimtext("[number_of_things] [initial(item_path.name)]\s")
 /**
  * Called whenever the knowledge's associated ritual is completed successfully.
  *
@@ -487,6 +491,7 @@
 /datum/heretic_knowledge/knowledge_ritual
 	name = "Ritual of Knowledge"
 	desc = "A randomly generated transmutation ritual that rewards knowledge points and can only be completed once."
+	notice = "This can only be completed once."
 	gain_text = "Everything can be a key to unlocking the secrets behind the Gates. I must be wary and wise."
 	abstract_type = /datum/heretic_knowledge/knowledge_ritual
 	cost = 1
@@ -549,7 +554,8 @@
 
 	to_chat(user, span_hierophant("Completing it will reward you [KNOWLEDGE_RITUAL_POINTS] knowledge points. You can check the knowledge in your Researched Knowledge to be reminded."))
 
-	desc = "Allows you to transmute [english_list(requirements_string)] for [KNOWLEDGE_RITUAL_POINTS] bonus knowledge points. This can only be completed once."
+	transmute_text = "Transmute [english_list(requirements_string)]."
+	desc = "Rewards you with [KNOWLEDGE_RITUAL_POINTS] bonus knowledge points."
 
 /datum/heretic_knowledge/knowledge_ritual/can_be_invoked(datum/antagonist/heretic/invoker)
 	return !was_completed

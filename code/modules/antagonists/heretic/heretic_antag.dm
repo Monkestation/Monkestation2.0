@@ -179,8 +179,19 @@
 		var/datum/heretic_knowledge/knowledge_instance = knowledge_info[HKT_INSTANCE]
 
 		knowledge_data["desc"] = knowledge_instance.desc
+		knowledge_data["info"] = knowledge_instance.transmute_text
+		knowledge_data["notice"] = knowledge_instance.notice
 	else
 		knowledge_data["desc"] = initial(knowledge.desc)
+		knowledge_data["info"] = initial(knowledge.transmute_text)
+		knowledge_data["notice"] = initial(knowledge.notice)
+
+	if(ispath(knowledge, /datum/heretic_knowledge/ultimate))
+		var/ascension_check = can_ascend()
+		if(ascension_check != HERETIC_CAN_ASCEND)
+			knowledge_data["disabled"] = TRUE
+			knowledge_data["notice"] += "<br>[ascension_check]"
+
 	return knowledge_data
 
 /datum/antagonist/heretic/proc/can_buy_knowledge(datum/heretic_knowledge/knowledge, shop_category = HERETIC_KNOWLEDGE_TREE, cost = 0)
@@ -241,14 +252,6 @@
 		if(!(knowledge_info[HKT_ID] in researchable_knowledges))
 			continue
 		var/list/knowledge_data = get_knowledge_data(knowledge_path, heretic_tree, FALSE)
-
-		// Final knowledge can't be learned until all objectives are complete.
-		if(ispath(knowledge_path, /datum/heretic_knowledge/ultimate))
-			var/ascension_check = can_ascend()
-			if(ascension_check != HERETIC_CAN_ASCEND)
-				knowledge_data["disabled"] = TRUE
-				knowledge_data["tooltip"] = ascension_check
-
 
 		var/depth = knowledge_data[HKT_DEPTH]
 
@@ -1244,7 +1247,7 @@
  * Get a list of all rituals this heretic can invoke on a rune.
  * Iterates over all of our knowledge and, if we can invoke it, adds it to our list.
  *
- * Returns an associated list of [knowledge name] to [knowledge datum] sorted by knowledge priority.
+ * Returns an list of knowledge datums sorted by knowledge priority.
  */
 /datum/antagonist/heretic/proc/get_rituals()
 	var/list/rituals = list()
@@ -1253,9 +1256,9 @@
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_path][HKT_INSTANCE]
 		if(!knowledge.can_be_invoked(src))
 			continue
-		rituals[knowledge.name] = knowledge
+		rituals += knowledge
 
-	return sortTim(rituals, GLOBAL_PROC_REF(cmp_heretic_knowledge), associative = TRUE)
+	return sortTim(rituals, GLOBAL_PROC_REF(cmp_heretic_knowledge))
 
 /**
  * Checks to see if our heretic can ccurrently ascend.
@@ -1266,7 +1269,7 @@
 	if(feast_of_owls)
 		return "The owls have taken your right of ascension (denied ascension)." // We sold our ambition for immediate power :/
 	if(!can_assign_self_objectives)
-		return "The mansus has spurned you (denied ascension)."
+		return "The Mansus has spurned you (denied ascension)."
 	for(var/datum/objective/must_be_done as anything in objectives)
 		if(!must_be_done.check_completion())
 			return "Must complete all objectives before ascending."

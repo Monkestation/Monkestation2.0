@@ -50,10 +50,11 @@
 
 /datum/heretic_knowledge/limited_amount/starting/base_lock
 	name = "A Steward's Secret"
-	desc = "Opens up the Path of Lock to you. \
-		Allows you to transmute a knife and a crowbar into a Key Blade. \
+	desc = "Opens up the Path of Lock to you.<br>\
+		Allows you to create Key Blades. \
 		You can only create two at a time and they function as fast crowbars. \
 		In addition, they can fit into utility belts."
+	transmute_text = "Transmute a knife and a crowbar."
 	gain_text = "The Locked Labyrinth leads to freedom. But only the trapped Stewards know the correct path."
 	required_atoms = list(
 		/obj/item/knife = 1,
@@ -122,12 +123,15 @@
 
 /datum/heretic_knowledge/key_ring
 	name = "Key Keeper’s Burden"
-	desc = "Allows you to transmute a wallet, an iron rod, and an ID card to create an Eldritch Card. \
-		Hit a pair of airlocks with it to create a pair of portals, which will teleport you between them, but teleport non-heretics randomly. \
+	desc = "Enchants an ID card into an Eldritch Card.<br>\
+		Hit a pair of airlocks with it to create a pair of portals, \
+		which will teleport you between them, but teleport non-heretics randomly. \
 		You can ctrl-click the card to invert this behavior for created portals. \
-		Each card may only sustain a single pair of portals at the same time. \
+		Each card may only sustain a single pair of portals at the same time.<br>\
 		It also functions and appears the same as a regular ID Card. \
-		Attacking it with a normal ID card consumes it and gains its access, and you can use it in-hand to change its appearance to a card you fused."
+		Attacking it with a normal ID card consumes it and gains its access, \
+		and you can use it in-hand to change its appearance to a card you fused."
+	transmute_text = "Transmute a wallet, an iron rod, and an ID card."
 	gain_text = "The Keeper sneered. \"These plastic rectangles are a mockery of keys, and I curse every door that desires them.\""
 	required_atoms = list(
 		/obj/item/storage/wallet = 1,
@@ -153,8 +157,10 @@
 
 /datum/heretic_knowledge/limited_amount/concierge_rite
 	name = "Concierge's Rite"
-	desc = "Allows you to transmute a crayon, a wooden plank, and a multitool to create a Labyrinth Handbook. \
-		It can materialize a barricade at range that only you and people resistant to magic can pass. Has 5 charges which regenerate over time."
+	desc = "Author a Labyrinth Handbook.<br>\
+		It can materialize a barricade at range that only you and people resistant to magic can pass.<br>\
+		Has 5 charges which regenerate over time."
+	transmute_text = "Transmute a crayon, a wooden plank, and a multitool."
 	gain_text = "The Concierge scribbled my name into the Handbook. \"Welcome to your new home, fellow Steward.\""
 	required_atoms = list(
 		/obj/item/toy/crayon = 1,
@@ -168,12 +174,12 @@
 	drafting_tier = 5
 
 /datum/heretic_knowledge/armor/lock
-	desc = "Allows you to transmute a table (or a suit), a mask and a crowbar to create a shifting guise. \
-		It grants you camoflage from cameras, hides your identity, voice and muffles your footsteps. \
-		Acts as a focus while hooded."
+	desc = "Create a Shifting Guise.<br>\
+		It grants you camouflage from cameras, hides your identity, voice and muffles your footsteps."
+	transmute_text = "Transmute a table (or a suit), a mask and a crowbar."
 	gain_text = "While stewards are known to the Concierge, \
-				they still consort between one another and with outsiders under shaded cloaks and drawn hoods. \
-				Familiarity is treachery, even to oneself."
+		they still consort between one another and with outsiders under shaded cloaks and drawn hoods. \
+		Familiarity is treachery, even to oneself."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/lock)
 	research_tree_icon_state = "lock_armor"
 	required_atoms = list(
@@ -206,10 +212,10 @@
 		return ..()
 
 /datum/heretic_knowledge/spell/caretaker_refuge
-	name = "Caretaker’s Last Refuge"
-	desc = "Gives you a spell that makes you transparent and not dense. Cannot be used near living sentient beings. \
-		While in refuge, you cannot use your hands or spells, and you are immune to slowdown. \
-		You are invincible but unable to harm anything. Cancelled by being hit with an anti-magic item."
+	name = "Caretaker's Last Refuge"
+	desc = "Gives you a spell that makes you transparent and not dense.<br>\
+		While the spell is active, you cannot use your hands or other spells, and you are immune to slowdown. \
+		You are fully invincible but unable to harm anything."
 	gain_text = "Jealously, the Guard and the Hound hunted me. But I unlocked my form, and was but a haze, untouchable."
 	action_to_add = /datum/action/cooldown/spell/caretaker
 	cost = 2

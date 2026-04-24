@@ -53,9 +53,10 @@
 
 /datum/heretic_knowledge/limited_amount/starting/base_ash
 	name = "Nightwatcher's Secret"
-	desc = "Opens up the Path of Ash to you. \
-		Allows you to transmute a match and a knife into an Ashen Blade. \
+	desc = "Opens up the Path of Ash to you.<br>\
+		Allows you to create a Ashen Blades. \
 		You can only create two at a time."
+	transmute_text = "Transmute a match and a knife."
 	gain_text = "The City Guard know their watch. If you ask them at night, they may tell you about the ashy lantern."
 	required_atoms = list(
 		/obj/item/knife = 1,
@@ -113,10 +114,10 @@
 	research_tree_icon_frame = 7
 
 /datum/heretic_knowledge/armor/ash
-	desc = "Allows you to transmute a table (or a suit), a mask and a match to create a scorched mantle. \
-		It provides completes protection from fire, and is able to produce more flames passively. \
-		When you have enough fire, you may cast empowered versions of your ashen spells. \
-		Acts as a focus while hooded."
+	desc = "Create a Scorched Mantle.<br>\
+		It provides completes protection from fire, and is able to produce more flames passively.<br>\
+		When you have enough fire, you may cast empowered versions of your ashen spells."
+	transmute_text = "Transmute a table (or a suit), a mask and a match."
 	gain_text = "The Watch remain as they fell, crumbling away from sight. \
 			Yet the winds blowing through the city call them back to service, dust kicked into the air, a drifting silhouette of the fallen."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/ash)
@@ -129,9 +130,10 @@
 
 /datum/heretic_knowledge/mad_mask
 	name = "Mask of Madness"
-	desc = "Allows you to transmute any mask, four candles, a stun baton, and a liver to create a Mask of Madness. \
-		The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity. \
+	desc = "Create a Mask of Madness.<br>\
+		The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity.<br>\
 		It can also be forced onto a heathen, to make them unable to take it off..."
+	transmute_text = "Transmute any mask, four candles, a stun baton, and a liver."
 	gain_text = "The Nightwatcher was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
 	required_atoms = list(
 		/obj/item/organ/internal/liver = 1,
@@ -164,7 +166,7 @@
 /datum/heretic_knowledge/spell/flame_birth
 	name = "Nightwatcher's Rebirth"
 	desc = "Grants you Nightwatcher's Rebirth, a spell that extinguishes you and \
-		burns all nearby heathens who are currently on fire, healing you for every victim afflicted. \
+		burns all nearby heathens who are currently on fire, healing you for every victim afflicted.<br>\
 		If any victims afflicted are in critical condition, they will also instantly die."
 	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
 		The Nightwatcher was a particular man, always watching."
@@ -175,13 +177,12 @@
 
 /datum/heretic_knowledge/ultimate/ash_final
 	name = "Ashlord's Rite"
-	desc = "The ascension ritual of the Path of Ash. \
-		Bring 3 burning or husked corpses to a transmutation rune to complete the ritual. \
-		When completed, you become a harbinger of flames, gaining two abilites. \
+	desc = "The ascension ritual of the Path of Ash.<br>\
+		When completed, you become a harbinger of flames, gaining two abilites.<br>\
 		Cascade, which causes a massive, growing ring of fire around you, \
-		and Oath of Flame, causing you to passively create a ring of flames as you walk. \
-		Some ashen spells you already knew will be empowered as well. \
+		and Oath of Flame, causing you to passively create a ring of flames as you walk.<br>\
 		You will also become immune to flames, space, and similar environmental hazards."
+	transmute_text = "Transmute 3 burning or husked corpses."
 	gain_text = "The Watch is dead, the Nightwatcher burned with it. Yet his fire burns evermore, \
 		for the Nightwatcher brought forth the rite to mankind! His gaze continues, as now I am one with the flames, \
 		WITNESS MY ASCENSION, THE ASHY LANTERN BLAZES ONCE MORE!"

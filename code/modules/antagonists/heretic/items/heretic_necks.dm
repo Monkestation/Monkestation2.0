@@ -1,6 +1,7 @@
 /obj/item/clothing/neck/heretic_focus
 	name = "amber focus"
-	desc = "An amber focusing glass that provides a link to the world beyond. The necklace seems to twitch, but only when you look at it from the corner of your eye."
+	desc = "An amber focusing glass that provides a link to the world beyond. \
+		The necklace seems to twitch, but only when you look at it from the corner of your eye."
 	icon_state = "eldritch_necklace"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF
@@ -11,7 +12,8 @@
 
 /obj/item/clothing/neck/heretic_focus/crimson_medallion
 	name = "crimson medallion"
-	desc = "A blood-red focusing glass that provides a link to the world beyond, and worse. Its eye is constantly twitching and gazing in all directions. It almost seems to be silently screaming..."
+	desc = "A blood-red focusing glass that provides a link to the world beyond, and worse. \
+		Its eye is constantly twitching and gazing in all directions. It almost seems to be silently screaming..."
 	icon_state = "crimson_medallion"
 	/// The aura healing component. Used to delete it when taken off.
 	var/datum/component/component
@@ -106,7 +108,8 @@
 
 /obj/item/clothing/neck/eldritch_amulet
 	name = "warm eldritch medallion"
-	desc = "A strange medallion. Peering through the crystalline surface, the world around you melts away. You see your own beating heart, and the pulsing of a thousand others."
+	desc = "A strange medallion. Peering through the crystalline surface, the world around you melts away. \
+		You see your own beating heart, and the pulsing of a thousand others."
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "eye_medalion"
 	w_class = WEIGHT_CLASS_SMALL

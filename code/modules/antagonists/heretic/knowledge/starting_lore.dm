@@ -18,9 +18,8 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
  */
 /datum/heretic_knowledge/spell/basic
 	name = "Break of Dawn"
-	desc = "Starts your journey into the Mansus. \
-		Grants you the Mansus Grasp, a powerful and upgradable \
-		disabling spell that can be cast regardless of having a focus."
+	desc = "Starts your journey into the Mansus.<br>\
+		Grants you the Mansus Grasp, a powerful and upgradable disabling spell."
 	action_to_add = /datum/action/cooldown/spell/touch/mansus_grasp
 	cost = 0
 	is_starting_knowledge = TRUE
@@ -68,10 +67,10 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
  */
 /datum/heretic_knowledge/living_heart
 	name = "The Living Heart"
-	desc = "Grants you a Living Heart, allowing you to track sacrifice targets. \
-		Should you lose your heart, you can transmute a poppy and a pool of blood \
-		to awaken your heart into a Living Heart. If your heart is Cybernetic, \
-		you will be unable to reawaken it."
+	desc = "Grants you a Living Heart, allowing you to track sacrifice targets."
+	transmute_text = "Should you lose your heart, you can transmute a poppy and a pool of blood \
+		to awaken your heart into a Living Heart."
+	notice = "If your heart is Cybernetic, you will be unable to reawaken it."
 	required_atoms = list(
 		/obj/effect/decal/cleanable/blood = 1,
 		/obj/item/food/grown/poppy = 1,
@@ -113,8 +112,8 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 	if(where_to_put_our_heart)
 		where_to_put_our_heart.AddComponent(/datum/component/living_heart)
-		desc = "Grants you a Living Heart, tied to your [where_to_put_our_heart.name], allowing you to track sacrifice targets. \
-			Should you lose your [where_to_put_our_heart.name], you can transmute a poppy and a pool of blood \
+		desc = "Grants you a Living Heart, tied to your [where_to_put_our_heart.name], allowing you to track sacrifice targets."
+		transmute_text = "Should you lose your [where_to_put_our_heart.name], you can transmute a poppy and a pool of blood \
 			to awaken your [where_to_put_our_heart.name] into a Living Heart. \
 			Cybernetic [where_to_put_our_heart.name]\s will block the ritual!"
 
@@ -184,8 +183,9 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
  */
 /datum/heretic_knowledge/amber_focus
 	name = "Amber Focus"
-	desc = "Allows you to transmute a sheet of glass and a pair of eyes to create an Amber Focus. \
+	desc = "Create an Amber Focus.<br>\
 		A focus must be worn in order to cast more advanced spells."
+	transmute_text = "Transmute a sheet of glass and a pair of eyes."
 	required_atoms = list(
 		/obj/item/organ/internal/eyes = 1,
 		/obj/item/stack/sheet/glass = 1,
@@ -209,6 +209,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	desc = "Allows you to transmute a book, any pen, and your pick from any carcass (animal or human), leather, or hide to create a Codex Cicatrix. \
 		The Codex Cicatrix can be used when draining influences to gain additional knowledge, but comes at greater risk of being noticed. \
 		It can also be used to draw and remove transmutation runes easier, and as a spell focus in a pinch."
+	transmute_text = "Transmute a book, any pen, and your pick from any carcass (animal or human) or leather."
 	gain_text = "The occult leaves fragments of knowledge and power anywhere and everywhere. The Codex Cicatrix is one such example. \
 		Within the leather-bound faces and age old pages, a path into the Mansus is revealed."
 	required_atoms = list(
@@ -277,7 +278,9 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 /datum/heretic_knowledge/feast_of_owls
 	name = "Feast of Owls"
-	desc = "Allows you to undergo a ritual that gives you 2 knowledge points and 4 sidepath points, unlocks the full sidepath shop, makes draining rifts only makes you sated for 10 minutes, but locks you out of ascension. This can only be done once and cannot be reverted."
+	desc = "Allows you to undergo a ritual that grants you 2 knowledge points and 4 sidepath points, \
+		unlocks the full sidepath shop, makes draining rifts only makes you sated for 10 minutes, but locks you out of ascension."
+	notice = "This can only be done once and cannot be reverted."
 	gain_text = "Under the soft glow of unreason there is a beast that stalks the night. I shall bring it forth and let it enter my presence. It will feast upon my amibitions and leave knowledge in its wake."
 	is_starting_knowledge = TRUE
 	required_atoms = list()
@@ -332,10 +335,11 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
  */
 /datum/heretic_knowledge/bookworm
 	name = "Warren King's Welcome"
-	desc = "Allows you to transmute 5 cable pieces and a piece of paper to infuse any ID with maintenace and external airlock access."
+	desc = "Infuses any ID with maintenace and external airlock access."
+	transmute_text = "Transmute 5 cable pieces, a piece of paper, and a multitool, alongside the ID you wish to infuse."
 	gain_text = "Gnawed into vicious-stained fingerbones, my grim invitation snaps my nauseous and clouded mind towards the heavy-set door. \
-	Slowly, the light dances between a crawling darkness, blanketing the fetid promenade with infinite machinations. \
-	But the King will soon take his pound of flesh. Even here, the taxman takes their cut. For there are a thousands mouths to feed."
+		Slowly, the light dances between a crawling darkness, blanketing the fetid promenade with infinite machinations. \
+		But the King will soon take his pound of flesh. Even here, the taxman takes their cut. For there are a thousands mouths to feed."
 	required_atoms = list(
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/paper = 1,

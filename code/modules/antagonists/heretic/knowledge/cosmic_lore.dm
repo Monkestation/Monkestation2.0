@@ -78,9 +78,10 @@
 
 /datum/heretic_knowledge/spell/cosmic_runes
 	name = "Cosmic Runes"
-	desc = "Grants you Cosmic Runes, a spell that creates two runes linked with each other for easy teleportation. \
-		Only the entity activating the rune will get transported, and it can be used by anyone without a star mark. \
-		However, people with a star mark will get transported along with another person using the rune."
+	desc = "Opens up the Path of Cosmos to you.<br>\
+		Allows you to create Cosmic Blades. \
+		You can only create two at a time."
+	transmute_text = "Transmute a sheet of plasma and a knife."
 	gain_text = "The distant stars crept into my dreams, roaring and screaming without reason. \
 		I spoke, and heard my own words echoed back."
 	action_to_add = /datum/action/cooldown/spell/cosmic_rune
@@ -97,8 +98,9 @@
 
 /datum/heretic_knowledge/armor/cosmic
 
-	desc = "Allows you to transmute a table (or a suit), a mask and a sheet of plasma to create a Starwoven Cloak, grants protection from the hazards of space while granting to the user the ability to levitate at will. \
-			Acts as a focus while hooded."
+	desc = "Create a Starwoven Cloak.<br>Grants protection from the hazards of space \
+		while granting to the user the ability to levitate at will, and phase through space itself."
+	transmute_text = "Transmute a table (or a suit), a mask and a sheet of plasma."
 	gain_text = "Like radiant cords, the stars shone in union across the silken shape of a billowing cloak, that at once does and does not drape my shoulders. \
 				The eyes of the Beast rested upon me, and through me."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/cosmic)
@@ -222,15 +224,15 @@
 
 /datum/heretic_knowledge/ultimate/cosmic_final
 	name = "Creators's Gift"
-	desc = "The ascension ritual of the Path of Cosmos. \
-		Bring 3 corpses with a star mark to a transmutation rune to complete the ritual. \
+	desc = "The ascension ritual of the Path of Cosmos.<br>\
 		When completed, you become the owner of a Star Gazer. \
 		You will be able to command the Star Gazer with Alt+click. \
-		You can also give it commands through speech. \
+		You can also give it commands through speech.<br>\
 		The Star Gazer is a strong ally who can even break down reinforced walls. \
-		The Star Gazer has an aura that will heal you and damage opponents. \
-		Star Touch can now teleport you to the Star Gazer when activated in your hand. \
+		The Star Gazer has an aura that will heal you and damage opponents.<br>\
+		Star Touch can now teleport you to the Star Gazer when activated in your hand.<br>\
 		Your cosmic expansion spell and your blades also become greatly empowered."
+	transmute_text = "Transmute three corpses with a star mark on them."
 	gain_text = "The Beast held out its hand, I grabbed hold and they pulled me to them. Their body was towering, but it seemed so small and feeble after all their tales compiled in my head. \
 		I clung on to them, they would protect me, and I would protect it. \
 		I closed my eyes with my head laid against their form. I was safe. \
