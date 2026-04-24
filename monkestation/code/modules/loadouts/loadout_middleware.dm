@@ -73,6 +73,8 @@
 			return FALSE
 		if(item.mentor_only && !is_mentor(parent_client))
 			return FALSE
+		if(item.donator_only && !parent_client.persistent_client.patreon?.is_donator() && !parent_client.persistent_client.twitch?.is_donator())
+			return FALSE
 	if(item.required_season && !check_holidays(item.required_season))
 		return FALSE
 	if(item.requires_purchase && !(item.item_path in preferences.inventory))
