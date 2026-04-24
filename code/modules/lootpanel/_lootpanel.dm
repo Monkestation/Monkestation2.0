@@ -37,10 +37,10 @@
 		return UI_CLOSE
 	if(isliving(user))
 		var/mob/living/living_user = user
-		if(living_user.incapacitated())
-			return UI_UPDATE
 		if(get_dist(user, source_turf) > 1)
 			return UI_DISABLED
+		if(living_user.incapacitated())
+			return UI_UPDATE
 		return UI_INTERACTIVE
 	return UI_UPDATE
 
