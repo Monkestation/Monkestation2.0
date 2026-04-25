@@ -34,9 +34,9 @@
 		// This really shouldn't happen. If it somehow does, print out a stack trace and gracefully handle it.
 		stack_trace("apply_defauly_parts called on machine that already had component_parts: [machine]")
 
-		// Remove references of components so it doesn't trigger Exited logic and remove existing parts.
+		// Move to nullspace so you don't trigger handle_atom_del logic and remove existing parts.
 		for(var/obj/item/part as anything in machine.component_parts)
-			machine.component_parts -= part
+			part.moveToNullspace(loc)
 			qdel(part)
 
 	// List of components always contains the circuit board used to build it.
@@ -47,7 +47,9 @@
 		// This really shouldn't happen. If it somehow does, print out a stack trace and gracefully handle it.
 		stack_trace("apply_default_parts called from a circuit board that does not belong to machine: [machine]")
 
-		QDEL_NULL(machine.circuit)
+		// Move to nullspace so you don't trigger handle_atom_del logic, remove old circuit, add new circuit.
+		machine.circuit.moveToNullspace()
+		qdel(machine.circuit)
 		machine.circuit = src
 
 	return

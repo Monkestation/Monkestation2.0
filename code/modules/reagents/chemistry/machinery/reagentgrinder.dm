@@ -112,13 +112,13 @@
 /obj/machinery/reagentgrinder/attack_ai_secondary(mob/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
 
-/obj/machinery/reagentgrinder/Exited(atom/movable/gone, direction)
+/obj/machinery/reagentgrinder/handle_atom_del(atom/A)
 	. = ..()
-	if(gone == beaker)
+	if(A == beaker)
 		beaker = null
 		update_appearance()
-	if(holdingitems[gone])
-		holdingitems -= gone
+	if(holdingitems[A])
+		holdingitems -= A
 
 /obj/machinery/reagentgrinder/proc/drop_all_items()
 	for(var/i in holdingitems)

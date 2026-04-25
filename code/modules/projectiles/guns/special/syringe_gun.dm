@@ -38,10 +38,10 @@
 	max_syringes = reset_fantasy_variable("max_syringes", max_syringes)
 	return ..()
 
-/obj/item/gun/syringe/Exited(atom/movable/gone, direction)
+/obj/item/gun/syringe/handle_atom_del(atom/A)
 	. = ..()
-	if(gone in syringes)
-		syringes -= gone
+	if(A in syringes)
+		syringes.Remove(A)
 
 /obj/item/gun/syringe/recharge_newshot()
 	if(!syringes.len)

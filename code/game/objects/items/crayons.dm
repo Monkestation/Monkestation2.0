@@ -202,7 +202,7 @@
 
 /obj/item/toy/crayon/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!"))
-	user.add_atom_colour(color_transition_filter(paint_color, SATURATION_OVERRIDE), ADMIN_COLOUR_PRIORITY)
+	user.add_atom_colour(paint_color, ADMIN_COLOUR_PRIORITY)
 	return (BRUTELOSS|OXYLOSS)
 
 /obj/item/toy/crayon/Initialize(mapload)
@@ -830,9 +830,7 @@
 	if(isbodypart(target))
 		var/obj/item/bodypart/limb = target
 		if(IS_ROBOTIC_LIMB(limb))
-			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Restyle robotic limb"
-	else
-		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Copy color"
+			context[SCREENTIP_CONTEXT_LMB] = "Restyle robotic limb"
 
 	return CONTEXTUAL_SCREENTIP_SET
 
@@ -881,15 +879,16 @@
 	return ..()
 
 /obj/item/toy/crayon/spraycan/use_on(atom/target, mob/user, list/modifiers)
-	if (LAZYACCESS(modifiers, CTRL_CLICK))
-		return ctrl_interact(target, user)
-
 	if(is_capped)
 		balloon_alert(user, "take the cap off first!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(check_empty(user))
 		return ITEM_INTERACT_BLOCKING
+
+	if (isbodypart(target))
+		if (color_limb(target, user))
+			return ITEM_INTERACT_SUCCESS
 
 	if(iscarbon(target))
 		if(pre_noise || post_noise)
@@ -913,17 +912,17 @@
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.expose(carbon_target, VAPOR, fraction * volume_multiplier)
 
-	else if(actually_paints && target.is_atom_colour(paint_color, min_priority_index = WASHABLE_COLOUR_PRIORITY))
-		balloon_alert(user, "[target.p_theyre()] already that color!")
-		return ITEM_INTERACT_BLOCKING
+	//else if(actually_paints && target.is_atom_colour(paint_color, min_priority_index = WASHABLE_COLOUR_PRIORITY))
+	//	balloon_alert(user, "[target.p_theyre()] already that color!")
+	//	return FALSE TODO: Port atom color
 
-	var/saturation_mode = SATURATION_MULTIPLY
-	if (LAZYACCESS(modifiers, RIGHT_CLICK))
-		saturation_mode = SATURATION_OVERRIDE
+//	var/saturation_mode = SATURATION_MULTIPLY
+//	if (LAZYACCESS(modifiers, RIGHT_CLICK)) //we need https://github.com/tgstation/tgstation/pull/88201 for this
+//		saturation_mode = SATURATION_OVERRIDE
 
 	if(ismob(target) && (HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))
 		if(actually_paints)
-			target.add_atom_colour(color_transition_filter(paint_color, saturation_mode), WASHABLE_COLOUR_PRIORITY)
+			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 			SEND_SIGNAL(target, COMSIG_LIVING_MOB_PAINTED)
 		use_charges(user, 2, requires_full = FALSE)
 		reagents.trans_to(target, ., volume_multiplier, transfered_by = user, methods = VAPOR)
@@ -951,10 +950,6 @@
 		user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
 		return ITEM_INTERACT_SUCCESS
 
-	if (color_is_dark && saturation_mode == SATURATION_OVERRIDE && !(target.flags_1 & ALLOW_DARK_PAINTS_1))
-		to_chat(user, span_warning("A color that dark on an object like this? Surely not..."))
-		return ITEM_INTERACT_BLOCKING
-
 	if(istype(target, /obj/item/pipe))
 		if(!GLOB.pipe_color_name.Find(paint_color))
 			balloon_alert(user, "invalid pipe color!")
@@ -973,7 +968,7 @@
 	else if (is_type_in_typecache(target, direct_color_types))
 		target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 	else
-		target.add_atom_colour(color_transition_filter(paint_color, saturation_mode), WASHABLE_COLOUR_PRIORITY)
+		target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 
 	if(isitem(target) && isliving(target.loc))
 		var/obj/item/target_item = target
@@ -992,30 +987,9 @@
 	user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/toy/crayon/spraycan/proc/ctrl_interact(atom/interacting_with, mob/living/user)
-	if(is_capped)
-		if(!interacting_with.color)
-			// let's be generous and assume if they're trying to match something with no color, while capped,
-			// we shouldn't be blocking further interactions
-			return NONE
-		balloon_alert(user, "take the cap off first!")
-		return ITEM_INTERACT_BLOCKING
-
-	if(check_empty(user))
-		return ITEM_INTERACT_BLOCKING
-
-	if(!isbodypart(interacting_with) || !actually_paints)
-		if(interacting_with.color)
-			paint_color = interacting_with.color
-			balloon_alert(user, "matched colour of target")
-			update_appearance()
-			return ITEM_INTERACT_BLOCKING
-		balloon_alert(user, "can't match those colours!")
-		return ITEM_INTERACT_BLOCKING
-
-	var/obj/item/bodypart/limb = interacting_with
+/obj/item/toy/crayon/spraycan/proc/color_limb(obj/item/bodypart/limb, mob/living/user)
 	if(!IS_ROBOTIC_LIMB(limb))
-		return ITEM_INTERACT_BLOCKING
+		return FALSE
 
 	var/list/skins = list()
 	var/static/list/style_list_icons = list(
@@ -1034,7 +1008,7 @@
 	if(choice && (use_charges(user, 5, requires_full = FALSE)))
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 		limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
-	return ITEM_INTERACT_SUCCESS
+	return TRUE
 
 /obj/item/toy/crayon/spraycan/click_alt(mob/user)
 	if(!has_cap)

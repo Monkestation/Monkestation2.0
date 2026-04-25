@@ -21,8 +21,7 @@
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
-/obj/item/evidencebag/Exited(atom/movable/gone, direction)
-	. = ..()
+/obj/item/evidencebag/handle_atom_del(atom/A)
 	cut_overlays()
 	w_class = initial(w_class)
 	icon_state = initial(icon_state)

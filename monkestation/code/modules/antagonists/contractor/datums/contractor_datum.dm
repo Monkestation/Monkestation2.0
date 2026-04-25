@@ -36,7 +36,6 @@
 	show_to_ghosts = TRUE
 	give_uplink = FALSE
 	suicide_cry = "FOR THE CONTRACTS!!"
-	give_secondary_objectives = TRUE
 	/// The outfit the contractor is equipped with
 	var/contractor_outfit = /datum/outfit/contractor
 

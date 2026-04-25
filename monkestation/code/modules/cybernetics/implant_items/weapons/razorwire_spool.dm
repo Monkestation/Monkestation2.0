@@ -19,7 +19,7 @@
 	hitsound = 'sound/weapons/whip.ogg'
 	attack_verb_continuous = list("slashes", "whips", "lashes", "lacerates")
 	attack_verb_simple = list("slash", "whip", "lash", "lacerate")
-	var/additional_distance = 1
+	var/additional_distance = 3
 	var/datum/component/leash/tracked_component
 	var/atom/movable/leashed_atom
 	COOLDOWN_DECLARE(ensnare)

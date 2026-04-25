@@ -93,12 +93,11 @@
 			if(stored_id_card)
 				SSexplosions.low_mov_atom += stored_id_card
 
-/obj/machinery/pdapainter/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(gone == stored_pda)
+/obj/machinery/pdapainter/handle_atom_del(atom/A)
+	if(A == stored_pda)
 		stored_pda = null
 		update_appearance(UPDATE_ICON)
-	if(gone == stored_id_card)
+	if(A == stored_id_card)
 		stored_id_card = null
 		update_appearance(UPDATE_ICON)
 

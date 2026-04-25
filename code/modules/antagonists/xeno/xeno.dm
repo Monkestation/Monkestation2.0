@@ -22,7 +22,7 @@
 	antagpanel_category = ANTAG_GROUP_XENOS
 	prevent_roundtype_conversion = FALSE
 	show_to_ghosts = TRUE
-	antag_flags = FLAG_ANTAG_CAP_TEAM | FLAG_ANTAG_CAP_IGNORE_HUMANITY
+	antag_flags = FLAG_ANTAG_CAP_TEAM
 	antag_count_points = 4
 	var/datum/team/xeno/xeno_team
 
@@ -132,15 +132,6 @@
 	///The first member of this team, presumably the queen.
 	var/datum/mind/progenitor
 	var/captive_xenos = 1
-
-/datum/team/xeno/captive/Destroy(force)
-	progenitor = null
-	return ..()
-
-/datum/team/xeno/captive/remove_member(datum/mind/member)
-	. = ..()
-	if(!length(members))
-		qdel(src)
 
 //XENO
 /mob/living/carbon/alien/mind_initialize()

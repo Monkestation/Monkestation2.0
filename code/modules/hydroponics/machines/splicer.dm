@@ -303,7 +303,9 @@
 			if (volume <= 0)
 				continue
 
-			if(volume >= 100)
+			var/infusion_chance = min(floor(volume / 5), 100)
+
+			if(prob(infusion_chance))
 				var/random_rate = rand(3, 25) / 100
 
 				var/datum/plant_gene/reagent/existing_gene = null
@@ -332,7 +334,7 @@
 
 				successful_reagents += reagent_instance
 			else
-				to_chat(usr, span_notice("Attempted to infuse [reagent_instance.name] into [seed_1], but it failed. Infusion requires a volume of 100 units."))
+				to_chat(usr, span_notice("Attempted to infuse [reagent_instance.name] into [seed_1], but it failed."))
 
 
 		seed_1.reagents_from_genes()

@@ -38,11 +38,6 @@
 		return
 	mob_mood = new /datum/mood(src)
 
-/mob/living/carbon/human/proc/create_symptoms()
-	if(flags_1 & HOLOGRAM_1)
-		return
-	AddComponent(/datum/component/symptom_genes, dna.species, 3)
-
 /mob/living/carbon/human/dummy/setup_mood()
 	return
 
@@ -58,7 +53,9 @@
 	apply_status_effect(/datum/status_effect/lungless)
 
 /mob/living/carbon/human/proc/setup_human_dna()
-	randomize_human(src, randomize_mutations = TRUE)
+	//initialize dna. for spawned humans; overwritten by other code
+	randomize_human(src)
+	dna.initialize_dna()
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)

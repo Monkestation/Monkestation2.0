@@ -24,11 +24,11 @@
 		if(3, 4)
 			to_chat(mob, span_boldwarning("Your eyes burn!"))
 			mob.set_eye_blur_if_lower(10 SECONDS)
-			eyes.apply_organ_damage(1 * power)
+			eyes.apply_organ_damage(1)
 
 		else
 			mob.set_eye_blur_if_lower(20 SECONDS)
-			eyes.apply_organ_damage(5 * power)
+			eyes.apply_organ_damage(5)
 
 			// Applies nearsighted at minimum
 			if(!mob.is_nearsighted_from(EYE_DAMAGE) && eyes.damage <= eyes.low_threshold)

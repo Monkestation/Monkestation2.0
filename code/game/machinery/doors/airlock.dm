@@ -330,12 +330,11 @@
 	diag_hud.remove_atom_from_hud(src)
 	return ..()
 
-/obj/machinery/door/airlock/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(gone == note)
+/obj/machinery/door/airlock/handle_atom_del(atom/A)
+	if(A == note)
 		note = null
 		update_appearance()
-	if(gone == seal)
+	if(A == seal)
 		seal = null
 		update_appearance()
 

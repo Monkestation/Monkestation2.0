@@ -151,35 +151,6 @@
 	)
 	generate_items_inside(items_inside, src)
 
-/obj/item/storage/medkit/surgery_syndie
-	name = "suspicous surgical medkit"
-	desc = "An suspicous coloured medkit full of advanced medical equipment."
-	icon_state = "medkit_tactical_lite"
-	inhand_icon_state = "medkit-tactical"
-	damagetype_healed = HEAL_ALL_DAMAGE
-
-/obj/item/storage/medkit/surgery_syndie/PopulateContents()
-	if(empty)
-		return
-	var/list/items_inside = list(
-		/obj/item/scalpel/advanced = 1,
-		/obj/item/retractor/advanced = 1,
-		/obj/item/cautery/advanced = 1,
-		/obj/item/surgical_drapes = 1,
-		/obj/item/stack/medical/gauze/twelve = 1,
-		/obj/item/reagent_containers/medigel/sterilizine = 1,
-		/obj/item/bonesetter = 1,
-		/obj/item/blood_filter = 1,
-		/obj/item/stack/medical/bone_gel = 1,
-		/obj/item/stack/sticky_tape/surgical = 1,
-		/obj/item/reagent_containers/syringe = 1,
-		/obj/item/reagent_containers/cup/bottle/sodium_thiopental = 1,
-	)
-	generate_items_inside(items_inside,src)
-
-/obj/item/storage/medkit/surgery_syndie/get_medbot_skin()
-	return "bezerk"
-
 /obj/item/storage/medkit/ancient
 	icon_state = "oldfirstaid"
 	desc = "A first aid kit with the ability to heal common types of injuries."
@@ -780,15 +751,6 @@
 /obj/item/storage/pill_bottle/paxpsych/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/paxpsych(src)
-
-/obj/item/storage/pill_bottle/immunodeficiency
-	name = "bottle of immune boosters"
-	desc = "Contains immune system boosters, used to manage chronic immunodeficiency."
-
-/obj/item/storage/pill_bottle/immunodeficiency/PopulateContents()
-	. = ..()
-	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/pill/spaceacillin(src)
 
 /obj/item/storage/pill_bottle/naturalbait
 	name = "freshness jar"

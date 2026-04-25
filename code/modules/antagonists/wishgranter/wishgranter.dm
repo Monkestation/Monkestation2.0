@@ -1,6 +1,5 @@
 /datum/antagonist/wishgranter
 	name = "\improper Wishgranter Avatar"
-	job_rank = ROLE_WISHGRANTER_AVATAR
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
 	antagpanel_category = "Avatar of the Wish Granter"
@@ -38,7 +37,7 @@
 	objectives += hijack
 
 /datum/antagonist/wishgranter/on_gain()
-	owner.special_role = ROLE_WISHGRANTER_AVATAR
+	owner.special_role = "Avatar of the Wish Granter"
 	forge_objectives()
 	owner.add_traits(given_mind_traits, REF(src))
 	return ..()

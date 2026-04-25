@@ -1,5 +1,5 @@
 /datum/uplink_category/badassery
-	name = "Badassery" // Being a badass is not pointless
+	name = "(Pointless) Badassery"
 	weight = 0
 
 /datum/uplink_item/badass
@@ -37,15 +37,6 @@
 	item = /obj/item/toy/cards/deck/syndicate
 	cost = 1
 	surplus = 40
-	illegal_tech = FALSE
-
-/datum/uplink_item/device_tools/fakenucleardisk
-	name = "Decoy Nuclear Authentication Disk"
-	desc = "It's just a normal disk. Visually it's identical to the real deal, but it won't hold up under closer scrutiny by the Captain. \
-			Don't try to give this to us to complete your objective, we know better!"
-	item = /obj/item/disk/nuclear/fake
-	cost = 1
-	surplus = 1
 	illegal_tech = FALSE
 
 /datum/uplink_item/badass/syndiecigs
@@ -123,35 +114,3 @@
 	desc = "This pair of top notch combat boots comes fit with a reinforced toe in which is slotted a tiny kinetic penetrator made from tungsten composite. Wearing 'em lets you kick people in the groin with MAXIMUM pain."
 	item = /obj/item/clothing/shoes/combat/nutcracker
 	cost = 8
-
-/datum/uplink_item/badass/costumes/syndimaid
-	name = "Syndicate Maid Outfit"
-	desc = "A box containing a 'tactical' and 'practical' maid outfit. We uh... found this... laying around... you sure you want this thing?"
-	item = /obj/item/storage/box/syndimaid
-	cost = 4
-	purchasable_from = ALL
-	limited_stock = 1
-	cant_discount = TRUE
-
-/datum/uplink_item/badass/costumes/syndibunny
-	name = "Syndicate Bunny Suit"
-	desc = "A box containing a bunny suit and tailcoat. Due to a catastrophic typo we recieved a specialized syndicate bunny suit instead of a battle suit. Just get rid of it."
-	item = /obj/item/storage/box/syndibunny
-	cost = 4
-	purchasable_from = ALL
-	limited_stock = 1
-	cant_discount = TRUE
-
-/datum/uplink_item/badass/bad_time_stickers
-	name = "Leaked Sticker Pack"
-	desc = "A box of leaked stickers from the NT production line."
-	item = /obj/item/storage/box/monkestation_stickers/bad_time
-	cost = 1
-	purchasable_from = ALL
-	cant_discount = TRUE
-
-/datum/uplink_item/badass/dangerous_horse
-	name = "a boxed syndicate pony"
-	desc = "This box contains everything for a better life. Pony, a mind potion for this pony, an apple for this pony. For God's sake, don't make apple pie!"
-	item = /obj/item/storage/box/syndicate/horse_box
-	cost = 10

@@ -305,7 +305,9 @@
 			spread_text = "Respiration"
 
 /datum/disease/advance/proc/set_severity(level_sev)
+
 	switch(level_sev)
+
 		if(-INFINITY to 0)
 			severity = DISEASE_SEVERITY_POSITIVE
 		if(1)

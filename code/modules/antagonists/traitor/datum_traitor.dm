@@ -55,6 +55,7 @@
 	// Progression elements are best left to the roundstart antagonists
 	// There will still be a timelock on uplink items
 	name = "\improper Infiltrator"
+	give_secondary_objectives = TRUE // Changed from FALSE to TRUE - MONKEYSTATION EDIT CHANGE
 
 /datum/antagonist/traitor/infiltrator/sleeper_agent
 	name = "\improper Syndicate Sleeper Agent"
@@ -78,7 +79,7 @@
 		else
 			uplink_handler = uplink.uplink_handler
 		uplink_handler.primary_objectives = objectives
-		uplink_handler.has_progression = uplink_handler.has_progression
+		uplink_handler.has_progression = TRUE
 		SStraitor.register_uplink_handler(uplink_handler)
 
 		if(give_secondary_objectives)
@@ -104,7 +105,7 @@
 				if((uplink_handler.assigned_role in item.restricted_roles) || (uplink_handler.assigned_species in item.restricted_species))
 					uplink_items += item
 					continue
-		uplink_handler.extra_purchasable += create_uplink_sales(rand(uplink_sales_min, uplink_sales_max), /datum/uplink_category/discounts, -1, uplink_items)
+		uplink_handler.extra_purchasable += create_uplink_sales(rand(uplink_sales_min, uplink_sales_max), /datum/uplink_category/discounts, 5, uplink_items) //monkestation edit: from 1 stock to 5
 
 	if(give_objectives)
 		forge_traitor_objectives()
@@ -134,7 +135,7 @@
 	else
 		string += ", [to_display.telecrystal_reward] TC"
 		string += ", [to_display.progression_reward] PR"
-	if(to_display.objective_state == OBJECTIVE_STATE_ACTIVE)
+	if(to_display.objective_state == OBJECTIVE_STATE_ACTIVE && !istype(to_display, /datum/traitor_objective/ultimate))
 		string += " <a href='byond://?src=[REF(owner)];fail_objective=[REF(to_display)]'>Fail this objective</a>"
 		string += " <a href='byond://?src=[REF(owner)];succeed_objective=[REF(to_display)]'>Succeed this objective</a>"
 	if(to_display.objective_state == OBJECTIVE_STATE_INACTIVE)
@@ -246,7 +247,7 @@
 	objectives += ending_objective
 
 /datum/antagonist/traitor/proc/forge_single_generic_objective()
-	if(prob(MAROON_PROB))
+	if(prob(KILL_PROB))
 		var/list/active_ais = active_ais()
 		if(active_ais.len && prob(DESTROY_AI_PROB(GLOB.joined_player_list.len)))
 			var/datum/objective/destroy/destroy_objective = new()
@@ -254,16 +255,16 @@
 			destroy_objective.find_target()
 			return destroy_objective
 
-		if(prob(KILL_PROB))
-			var/datum/objective/assassinate/kill_objective = new()
-			kill_objective.owner = owner
-			kill_objective.find_target()
-			return kill_objective
+		if(prob(MAROON_PROB))
+			var/datum/objective/maroon/maroon_objective = new()
+			maroon_objective.owner = owner
+			maroon_objective.find_target()
+			return maroon_objective
 
-		var/datum/objective/maroon/maroon_objective = new()
-		maroon_objective.owner = owner
-		maroon_objective.find_target()
-		return maroon_objective
+		var/datum/objective/assassinate/kill_objective = new()
+		kill_objective.owner = owner
+		kill_objective.find_target()
+		return kill_objective
 
 	var/datum/objective/steal/steal_objective = new()
 	steal_objective.owner = owner
@@ -336,6 +337,9 @@
 				traitor_won = FALSE
 			objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
 			count++
+		if(uplink_handler.final_objective)
+			objectives_text += "<br>[span_greentext("[traitor_won ? "Additionally" : "However"], the final objective \"[uplink_handler.final_objective]\" was completed!")]"
+			traitor_won = TRUE
 
 	result += "<br>[owner.name] <B>[traitor_flavor["roundend_report"]]</B>"
 

@@ -1,21 +1,20 @@
 /**
  * Nanotrasen TCS Language - Made by Doohl, ported to Yogs by Altoids
  */
-#define COMMON 1
+#define HUMAN 1
 #define MONKEY 2
 #define ROBOT 3
 #define DRACONIC 4
 #define BEACHTONGUE 5
 #define SYLVAN 6
-#define VOLTAIC 7
-#define CALCIC 8
+#define ETHEREAN 7
+#define BONE 8
 #define MOTH 9
 #define ASH_TONGUE 10
-#define YANGYU 11
+#define TORII 11
 #define UNCOMMON 12
 #define GOBLIN 13
-#define FELINID 14
-#define SLIME 15
+#define SLIME 14
 
 ///Span classes that players are allowed to set in a radio transmission.
 GLOBAL_LIST_INIT(allowed_custom_spans, list(
@@ -140,22 +139,21 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 	 * However, I think the signal can only have one language
 	 * So, the lowest bit set within $language overrides any higher ones that are set.
 	 */
-	interpreter.SetVar( // please also update tgui\packages\tgui\interfaces\NTSLCoding.tsx if you touch this.
+	interpreter.SetVar(
 		"languages", new /datum/n_enum(list(
-			"common" = COMMON,
+			"human" = HUMAN,
 			"monkey" = MONKEY,
 			"robot" = ROBOT,
 			"draconic" = DRACONIC,
 			"beachtounge" = BEACHTONGUE,
 			"sylvan" = SYLVAN,
-			"voltaic" = VOLTAIC,
-			"calcic" = CALCIC,
-			"moffic" = MOTH,
+			"etherean" = ETHEREAN,
+			"bonespeak" = BONE,
+			"mothian" = MOTH,
 			"ash" = ASH_TONGUE,
-			"yangyu" = YANGYU,
+			"torii" = TORII,
 			"uncommon" = UNCOMMON,
 			"goblin" = GOBLIN,
-			"nekomimetic" = FELINID,
 			"slime" = SLIME,
 		))
 	)
@@ -183,7 +181,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 	var/oldlangbits
 	switch(oldlang)
 		if(/datum/language/common)
-			oldlangbits = COMMON
+			oldlangbits = HUMAN
 		if(/datum/language/monkey)
 			oldlangbits = MONKEY
 		if(/datum/language/machine)
@@ -195,21 +193,19 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 		if(/datum/language/sylvan)
 			oldlangbits = SYLVAN
 		if(/datum/language/voltaic)
-			oldlangbits = VOLTAIC
+			oldlangbits = ETHEREAN
 		if(/datum/language/calcic)
-			oldlangbits = CALCIC
+			oldlangbits = BONE
 		if(/datum/language/moffic)
 			oldlangbits = MOTH
 		if(/datum/language/ashtongue)
 			oldlangbits = ASH_TONGUE
 		if(/datum/language/yangyu)
-			oldlangbits = YANGYU
+			oldlangbits = TORII
 		if(/datum/language/uncommon)
 			oldlangbits = UNCOMMON
 		if(/datum/language/goblin)
 			oldlangbits = GOBLIN
-		if(/datum/language/nekomimetic)
-			oldlangbits = FELINID
 		if(/datum/language/slime)
 			oldlangbits = SLIME
 
@@ -291,7 +287,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 		"job" = "",
 		"pass" = TRUE,
 		"filters" = list(),
-		"language" = COMMON,
+		"language" = HUMAN,
 		"say" = "says",
 		"ask" = "asks",
 		"yell" = "yells",
@@ -331,7 +327,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 		return langbits
 
 	switch(langbits)
-		if(COMMON)
+		if(HUMAN)
 			return /datum/language/common
 		if(MONKEY)
 			return /datum/language/monkey
@@ -343,22 +339,20 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 			return /datum/language/beachbum
 		if(SYLVAN)
 			return /datum/language/sylvan
-		if(VOLTAIC)
+		if(ETHEREAN)
 			return /datum/language/voltaic
-		if(CALCIC)
+		if(BONE)
 			return /datum/language/calcic
 		if(MOTH)
 			return /datum/language/moffic
 		if(ASH_TONGUE)
 			return /datum/language/ashtongue
-		if(YANGYU)
+		if(TORII)
 			return /datum/language/yangyu
 		if(UNCOMMON)
 			return /datum/language/uncommon
 		if(GOBLIN)
 			return /datum/language/goblin
-		if(FELINID)
-			return /datum/language/nekomimetic
 		if(SLIME)
 			return /datum/language/slime
 
@@ -531,18 +525,17 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 
 #undef SIGNAL_COOLDOWN
 #undef MAX_MEM_VARS
-#undef COMMON
+#undef HUMAN
 #undef MONKEY
 #undef ROBOT
 #undef DRACONIC
 #undef BEACHTONGUE
 #undef SYLVAN
-#undef VOLTAIC
-#undef CALCIC
+#undef ETHEREAN
+#undef BONE
 #undef MOTH
 #undef ASH_TONGUE
-#undef YANGYU
+#undef TORII
 #undef UNCOMMON
 #undef GOBLIN
-#undef FELINID
 #undef SLIME

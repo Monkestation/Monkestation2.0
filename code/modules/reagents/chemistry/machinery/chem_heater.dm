@@ -49,9 +49,9 @@
 		QDEL_NULL(beaker)
 	return ..()
 
-/obj/machinery/chem_heater/Exited(atom/movable/gone, direction)
+/obj/machinery/chem_heater/handle_atom_del(atom/A)
 	. = ..()
-	if(gone == beaker)
+	if(A == beaker)
 		beaker = null
 		update_appearance()
 

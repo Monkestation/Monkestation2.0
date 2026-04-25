@@ -76,9 +76,10 @@
 	. = ..()
 	add_memory_in_range(src, 7, /datum/memory/pet_died, deuteragonist = src) //Protagonist is the person memorizing it
 
-/mob/living/basic/pet/Exited(atom/movable/gone, direction)
+/mob/living/basic/pet/handle_atom_del(atom/deleting_atom)
 	. = ..()
-	if(gone != collar)
+
+	if(deleting_atom != collar)
 		return
 
 	collar = null

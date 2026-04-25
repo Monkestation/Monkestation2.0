@@ -63,8 +63,7 @@
 	antag_hud_name = "infested_thrall"
 	hijack_speed = 0
 	suicide_cry = "FOR THE MASTER!!"
-	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM | FLAG_ANTAG_CAP_IGNORE_HUMANITY
-	antag_count_points = 5
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM
 
 	// This thralls master
 	var/master = null

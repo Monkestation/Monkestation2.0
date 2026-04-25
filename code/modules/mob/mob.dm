@@ -341,15 +341,10 @@
  * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
  * * push_appearance (optional) pushes an atom's appearance to all viewing mobs, for use with <img src='\ref[thing]'>
  */
-/atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, audible_message_flags = NONE, atom/push_appearance, list/ignored_mobs)
+/atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, audible_message_flags = NONE, atom/push_appearance)
 	if(!isnull(push_appearance) && !isatom(push_appearance))
 		stack_trace("push_appearance must be an atom, but got [push_appearance] instead")
-	var/list/hearers = get_hearers_in_range(hearing_distance, src) //caches the hearers and then removes ignored mobs.
-	if(isnull(hearers))
-		return
-	if(!islist(ignored_mobs))
-		ignored_mobs = list(ignored_mobs)
-	hearers -= ignored_mobs
+	var/list/hearers = get_hearers_in_view(hearing_distance, src)
 	if(self_message)
 		hearers -= src
 	var/raw_msg = message
@@ -374,7 +369,7 @@
  * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
  * * push_appearance (optional) pushes an atom's appearance to all viewing mobs, for use with <img src='\ref[thing]'>
  */
-/mob/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, audible_message_flags = NONE, atom/push_appearance, list/ignored_mobs)
+/mob/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, audible_message_flags = NONE, atom/push_appearance)
 	. = ..()
 	if(self_message)
 		show_message(self_message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)

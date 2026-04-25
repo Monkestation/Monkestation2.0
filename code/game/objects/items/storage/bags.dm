@@ -524,22 +524,25 @@
 	atom_storage.max_total_storage = 200
 	atom_storage.max_slots = 25
 	atom_storage.set_holdable(list(
+//MONKESTATION EDIT START
 		/obj/item/autoslime,
+//MONKESTATION EDIT END
 		/obj/item/bodypart,
 		/obj/item/food/deadmouse,
 		/obj/item/food/monkeycube,
 		/obj/item/organ,
 		/obj/item/petri_dish,
+		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/slime_extract,
+//MONKESTATION EDIT START
 		/obj/item/slimecross,
-		/obj/item/slimepotion,
-		/obj/item/stack/biomass,
+//MONKESTATION EDIT END
+		/obj/item/slime_extract,
 		/obj/item/swab,
+		/obj/item/stack/biomass // monke: make science bags able to hold biomass cubes
 		))
 
 /obj/item/storage/bag/construction

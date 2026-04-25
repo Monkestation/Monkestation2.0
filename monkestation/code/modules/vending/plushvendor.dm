@@ -37,7 +37,6 @@
 				/obj/item/toy/plush/abductor = 1,
 				/obj/item/toy/plush/abductor/agent = 1,
 				/obj/item/toy/plush/greek_cucumber = 1,
-				/obj/item/toy/plush/shrimp = 1,
 			),
 		),
 		list(

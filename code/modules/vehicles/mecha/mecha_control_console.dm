@@ -58,7 +58,7 @@
 			var/message = tgui_input_text(usr, "Input message", "Transmit message")
 			var/obj/vehicle/sealed/mecha/M = MT.chassis
 			if(trim(message) && M)
-				to_chat(M.occupants, "[span_boldnotice("Incoming message from Exosuit Control:")] [message]")
+				to_chat(M.occupants, message)
 				to_chat(usr, span_notice("Message sent."))
 				. = TRUE
 		if("shock")

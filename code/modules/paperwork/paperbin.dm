@@ -189,9 +189,6 @@
 	if(bin_pen)
 		. += pen_overlay
 
-/obj/item/paper_bin/empty
-	total_paper = 0
-
 /obj/item/paper_bin/construction
 	name = "construction paper bin"
 	desc = "Contains all the paper you'll never need, IN COLOR!"

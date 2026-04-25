@@ -179,29 +179,27 @@
 	else
 		. += text("Systems nonfunctional.")
 
-/mob/living/silicon/pai/Exited(atom/movable/gone, direction)
-	if(gone == atmos_analyzer)
+/mob/living/silicon/pai/handle_atom_del(atom/deleting_atom)
+	if(deleting_atom == hacking_cable)
+		untrack_pai()
+		untrack_thing(hacking_cable)
+		hacking_cable = null
+		SStgui.update_user_uis(src)
+		if(!QDELETED(card))
+			card.update_appearance()
+	if(deleting_atom == atmos_analyzer)
 		atmos_analyzer = null
-	else if(gone == aicamera)
+	if(deleting_atom == aicamera)
 		aicamera = null
-	else if(gone == internal_gps)
+	if(deleting_atom == internal_gps)
 		internal_gps = null
-	else if(gone == instrument)
+	if(deleting_atom == instrument)
 		instrument = null
-	else if(gone == newscaster)
+	if(deleting_atom == newscaster)
 		newscaster = null
-	else if(gone == signaler)
+	if(deleting_atom == signaler)
 		signaler = null
 	return ..()
-
-/mob/living/silicon/pai/proc/on_hacking_cable_del(atom/source)
-	SIGNAL_HANDLER
-	untrack_pai()
-	untrack_thing(hacking_cable)
-	hacking_cable = null
-	SStgui.update_user_uis(src)
-	if(!QDELETED(card))
-		card.update_appearance()
 
 /mob/living/silicon/pai/Initialize(mapload)
 	. = ..()

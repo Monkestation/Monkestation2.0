@@ -104,8 +104,6 @@
 #define ROLE_WIZARD_APPRENTICE "apprentice"
 #define ROLE_SYNDICATE_MONKEY "Syndicate Monkey Agent"
 
-#define ROLE_WISHGRANTER_AVATAR "Wishgranter Avatar"
-
 //Spawner roles
 #define ROLE_ANCIENT_CREW "Ancient Crew"
 #define ROLE_ASHWALKER "Ash Walker"

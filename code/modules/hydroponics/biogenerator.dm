@@ -71,11 +71,13 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += beaker
 
-/obj/machinery/biogenerator/Exited(atom/movable/gone, direction)
+/obj/machinery/biogenerator/handle_atom_del(atom/deleting_atom)
 	. = ..()
-	if(gone == beaker)
+
+	if(deleting_atom == beaker)
 		beaker = null
 		update_appearance()
+
 
 /obj/machinery/biogenerator/RefreshParts()
 	. = ..()

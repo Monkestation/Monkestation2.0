@@ -34,21 +34,23 @@
 	. = ..()
 	. += span_notice("[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.")
 
-/obj/machinery/atmospherics/components/unary/hypertorus/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/atmospherics/components/unary/hypertorus/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!fusion_started)
-		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, I))
+		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, attacking_item))
 			return
-	if(default_change_direction_wrench(user, I))
+	if(default_change_direction_wrench(user, attacking_item))
+		return
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/welder_act(mob/living/user, obj/item/tool)
 	if(!cracked)
 		return FALSE
-	if((user.istate & ISTATE_HARM)) ///user.combat_mode not found in current build; leaving as is.
+	if((user.istate & ISTATE_HARM))
 		return FALSE
 	balloon_alert(user, "repairing...")
-	if(tool.use_tool(src, user, 10 SECONDS, volume=30))
+	if(tool.use_tool(src, user, 10 SECONDS, volume=30, amount=5))
 		balloon_alert(user, "repaired")
 		cracked = FALSE
 		update_appearance(UPDATE_ICON)
@@ -128,13 +130,13 @@
 	. = ..()
 	. += span_notice("[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.")
 
-/obj/machinery/hypertorus/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/hypertorus/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!fusion_started)
-		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, I))
+		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, attacking_item))
 			return
-	if(default_change_direction_wrench(user, I))
+	if(default_change_direction_wrench(user, attacking_item))
 		return
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 	return ..()
 
@@ -153,13 +155,10 @@
 	desc = "Interface for the HFR to control the flow of the reaction."
 	icon_state = "interface_off"
 	circuit = /obj/item/circuitboard/machine/HFR_interface
+	var/obj/machinery/atmospherics/components/unary/hypertorus/core/connected_core
 	icon_state_off = "interface_off"
 	icon_state_open = "interface_open"
 	icon_state_active = "interface_active"
-	/// Have we been activated at least once?
-	var/activated = FALSE
-	/// Reference to the core of our machine
-	var/obj/machinery/atmospherics/components/unary/hypertorus/core/connected_core
 
 /obj/machinery/hypertorus/interface/Destroy()
 	if(connected_core)
@@ -168,19 +167,16 @@
 
 /obj/machinery/hypertorus/interface/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
-	var/turf/T = get_step(src,REVERSE_DIR(dir))
+	var/turf/T = get_step(src,turn(dir,180))
 	var/obj/machinery/atmospherics/components/unary/hypertorus/core/centre = locate() in T
 
 	if(!centre || !centre.check_part_connectivity())
 		to_chat(user, span_notice("Check all parts and then try again."))
 		return TRUE
-
+	new/obj/item/paper/guides/jobs/atmos/hypertorus(loc)
 	connected_core = centre
-	connected_core.activate(user)
-	if(!activated)
-		new /obj/item/paper/guides/jobs/atmos/hypertorus(loc)
-		activated = TRUE
 
+	connected_core.activate(user)
 	return TRUE
 
 /obj/machinery/hypertorus/interface/ui_interact(mob/user, datum/tgui/ui)

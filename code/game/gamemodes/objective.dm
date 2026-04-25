@@ -279,7 +279,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 		return TRUE
 	if (!considered_alive(target))
 		return TRUE
-	if (!target.current.onCentCom())
+	if (!target.current.onCentCom() && !target.current.onSyndieBase())
 		return TRUE
 	return FALSE
 

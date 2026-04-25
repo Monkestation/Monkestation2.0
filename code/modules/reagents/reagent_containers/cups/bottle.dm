@@ -34,7 +34,7 @@
 
 /obj/item/reagent_containers/cup/bottle/spewium
 	name = "spewium bottle"
-	desc = "A small bottle of spewium. Causes uncontrollable vomitting, causes organ vomitting in high doses."
+	desc = "A small bottle of spewium."
 	list_reagents = list(/datum/reagent/toxin/spewium = 50)
 
 /obj/item/reagent_containers/cup/bottle/morphine
@@ -137,7 +137,7 @@
 
 /obj/item/reagent_containers/cup/bottle/polonium
 	name = "polonium bottle"
-	desc = "A small bottle. Contains Polonium. A highly radioactive and toxic chemical."
+	desc = "A small bottle. Contains Polonium."
 	list_reagents = list(/datum/reagent/toxin/polonium = 50)
 
 /obj/item/reagent_containers/cup/bottle/magillitis
@@ -147,52 +147,52 @@
 
 /obj/item/reagent_containers/cup/bottle/venom
 	name = "venom bottle"
-	desc = "A small bottle. Contains Venom. A toxic chemical that gets stronger the more is ingested."
+	desc = "A small bottle. Contains Venom."
 	list_reagents = list(/datum/reagent/toxin/venom = 50)
 
 /obj/item/reagent_containers/cup/bottle/fentanyl
 	name = "fentanyl bottle"
-	desc = "A small bottle. Contains Fentanyl. Damages the brain and causes toxic damage before causing victim to pass out."
+	desc = "A small bottle. Contains Fentanyl."
 	list_reagents = list(/datum/reagent/toxin/fentanyl = 50)
 
 /obj/item/reagent_containers/cup/bottle/formaldehyde
 	name = "formaldehyde bottle"
-	desc = "A small bottle. Contains formaldehyde, a chemical that prevents organs from decaying. Slightly toxic to the living."
+	desc = "A small bottle. Contains formaldehyde, a chemical that prevents organs from decaying."
 	list_reagents = list(/datum/reagent/toxin/formaldehyde = 50)
 
 /obj/item/reagent_containers/cup/bottle/initropidril
 	name = "initropidril bottle"
-	desc = "A small bottle. Contains initropidril. A lethal toxin causing extreme loss of breath, paralysis, and heart attacks."
+	desc = "A small bottle. Contains initropidril."
 	list_reagents = list(/datum/reagent/toxin/initropidril = 50)
 
 /obj/item/reagent_containers/cup/bottle/pancuronium
 	name = "pancuronium bottle"
-	desc = "A small bottle. Contains pancuronium. Quickly incapacitates victims, causes slight oxygen loss."
+	desc = "A small bottle. Contains pancuronium."
 	list_reagents = list(/datum/reagent/toxin/pancuronium = 50)
 
 /obj/item/reagent_containers/cup/bottle/sodium_thiopental
 	name = "sodium thiopental bottle"
-	desc = "A small bottle. Contains sodium thiopental. A non-toxic chemical that induces stamina damage and unconsciousness in its victim."
+	desc = "A small bottle. Contains sodium thiopental."
 	list_reagents = list(/datum/reagent/toxin/sodium_thiopental = 50)
 
 /obj/item/reagent_containers/cup/bottle/coniine
 	name = "coniine bottle"
-	desc = "A small bottle. Contains coniine. A slow but deadly toxin that stops breathing."
+	desc = "A small bottle. Contains coniine."
 	list_reagents = list(/datum/reagent/toxin/coniine = 50)
 
 /obj/item/reagent_containers/cup/bottle/curare
 	name = "curare bottle"
-	desc = "A small bottle. Contains curare. A slightly toxic chemical that induces paralysis and small amounts of breath loss."
+	desc = "A small bottle. Contains curare."
 	list_reagents = list(/datum/reagent/toxin/curare = 50)
 
 /obj/item/reagent_containers/cup/bottle/amanitin
 	name = "amanitin bottle"
-	desc = "A small bottle. Contains amanitin. A extremely powerful delayed toxin that deals its a massive amount of toxin damage at once upon full metabolization."
+	desc = "A small bottle. Contains amanitin."
 	list_reagents = list(/datum/reagent/toxin/amanitin = 50)
 
 /obj/item/reagent_containers/cup/bottle/histamine
 	name = "histamine bottle"
-	desc = "A small bottle. Contains Histamine. A incredibly lethal, or minorly annoying toxin depending on the dose"
+	desc = "A small bottle. Contains Histamine."
 	list_reagents = list(/datum/reagent/toxin/histamine = 50)
 
 /obj/item/reagent_containers/cup/bottle/diphenhydramine
@@ -535,5 +535,5 @@
 //Changeling stuff
 /obj/item/reagent_containers/cup/bottle/antipathogenic_changeling
 	name = "Changeling Immunoglobulin bottle"
-	desc = "A small bottle. Contains Changeling Immunoglobulin, a strong anti-pathogenic agent that instantly cures any virus."
+	desc = "A small bottle. Contains Changeling Immunoglobulin, a strong anti-pathogenic agent."
 	list_reagents = list(/datum/reagent/medicine/antipathogenic/changeling = 50)

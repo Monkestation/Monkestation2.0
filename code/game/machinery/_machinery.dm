@@ -216,7 +216,14 @@
 	end_processing()
 	dump_inventory_contents()
 
-	clear_components()
+	if (!isnull(component_parts))
+		// Don't delete the stock part singletons
+		for (var/atom/atom_part in component_parts)
+			qdel(atom_part)
+		component_parts.Cut()
+		component_parts = null
+
+	QDEL_NULL(circuit)
 	unset_static_power()
 	return ..()
 
@@ -872,7 +879,6 @@
 					qdel(item)
 		else
 			var/obj/item/obj_part = part
-			component_parts -= part
 			obj_part.forceMove(loc)
 			if(istype(A) && obj_part.get_shipbreaking_reward()) //shipbreaking
 				var/obj/item/reward = obj_part.get_shipbreaking_reward()
@@ -939,35 +945,21 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += occupant
 
-/obj/machinery/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(gone == occupant)
+/obj/machinery/handle_atom_del(atom/deleting_atom)
+	if(deleting_atom == occupant)
 		set_occupant(null)
 		update_appearance()
+		updateUsrDialog()
+		return ..()
 
 	// The circuit should also be in component parts, so don't early return.
-	if(gone == circuit)
+	if(deleting_atom == circuit)
 		circuit = null
-	if((gone in component_parts) && !QDELETED(src))
-		component_parts -= gone
+	if((deleting_atom in component_parts) && !QDELETED(src))
+		component_parts.Remove(deleting_atom)
 		// It would be unusual for a component_part to be qdel'd ordinarily.
-		// Check if component removed is an assembly because they get moved to component parts on attach
-		if(!istype(gone, /obj/item/assembly))
-			deconstruct(FALSE)
-
-/**
- * This should be called before mass qdeling components to make space for replacements.
- * If not done, things will go awry as Exited() destroys the machine when it detects
- * even a single component exiting the atom.
- */
-/obj/machinery/proc/clear_components()
-	if(!component_parts)
-		return
-	var/list/old_components = component_parts
-	circuit = null
-	component_parts = null
-	for(var/atom/atom_part in old_components)
-		qdel(atom_part)
+		deconstruct(FALSE)
+	return ..()
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
 	if((flags_1 & NODECONSTRUCT_1) || screwdriver.tool_behaviour != TOOL_SCREWDRIVER)
@@ -1193,6 +1185,14 @@
 			emp_act(EMP_LIGHT)
 		power -= power * 0.0005
 	return ..()
+
+/obj/machinery/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == occupant)
+		set_occupant(null)
+	if(gone == circuit)
+		LAZYREMOVE(component_parts, gone)
+		circuit = null
 
 /obj/machinery/proc/adjust_item_drop_location(atom/movable/dropped_atom) // Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
 	var/md5 = md5(dropped_atom.name) // Oh, and it's deterministic too. A specific item will always drop from the same slot.

@@ -217,8 +217,8 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += beaker
 
-/obj/machinery/cryo_cell/Exited(atom/movable/gone, direction)
-	. = ..()
+/obj/machinery/cryo_cell/handle_atom_del(atom/gone)
+	..()
 	if(gone == beaker)
 		beaker = null
 

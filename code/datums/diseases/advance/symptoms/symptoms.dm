@@ -30,7 +30,7 @@
 	var/next_activation = 0
 	var/symptom_delay_min = 1
 	var/symptom_delay_max = 1
-	///Can be used to multiply virus effects, generally should exclude positive symptoms.
+	///Can be used to multiply virus effects
 	var/power = 1
 	///A neutered symptom has no effect, and only affects statistics.
 	var/neutered = FALSE

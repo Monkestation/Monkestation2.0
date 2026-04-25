@@ -53,26 +53,24 @@
 	appearance.layer = layer + 0.1
 	. += appearance
 
-/obj/structure/headpike/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(gone != victim && gone != spear)
-		return
-	if(gone == victim)
+/obj/structure/headpike/handle_atom_del(atom/A)
+	if(A == victim)
 		victim = null
-	if(gone == spear)
+	if(A == spear)
 		spear = null
 	if(!QDELETED(src))
 		deconstruct(TRUE)
+	return ..()
 
 /obj/structure/headpike/deconstruct(disassembled)
-	var/obj/item/bodypart/head/our_head = victim
-	var/obj/item/spear/our_spear = spear
-	victim = null
-	spear = null
-	our_head?.forceMove(drop_location()) //Make sure the head always comes off
+	if(victim) //Make sure the head always comes off
+		victim.forceMove(drop_location())
+		victim = null
 	if(!disassembled)
 		return ..()
-	our_spear?.forceMove(drop_location())
+	if(spear)
+		spear.forceMove(drop_location())
+		spear = null
 	return ..()
 
 /obj/structure/headpike/attack_hand(mob/user, list/modifiers)

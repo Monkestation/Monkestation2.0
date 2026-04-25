@@ -1111,7 +1111,7 @@
 
 
 /obj/item/food/korta_wellington
-	name = "Korta wellington"
+	name = "Kotra wellington"
 	desc = "A luxurious log of beef, covered in a fine mushroom duxelle and pancetta ham, then bound in korta pastry."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "korta_wellington"

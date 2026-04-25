@@ -194,8 +194,8 @@
 										"gets real close to [Targeted]'s face and cuts the cheese!")]", ignored_mobs = ignored_mobs)
 			hit_target = TRUE
 			break
-	if(!hit_target)
-		user.audible_message("[pick(world.file2list("strings/farts.txt"))]", audible_message_flags = list(CHATMESSAGE_EMOTE = TRUE), ignored_mobs = ignored_mobs)
+	if(!hit_target && !user.client?.prefs?.read_preference(/datum/preference/toggle/prude_mode))
+		user.audible_message("[pick(world.file2list("strings/farts.txt"))]", audible_message_flags = list(CHATMESSAGE_EMOTE = TRUE))
 
 	if(superfart_armed)
 		to_chat(user, span_notice("You decide to disarm your ass by farting slowly. Thank god."))
@@ -322,7 +322,7 @@
 
 /mob/living/simple_animal/bot/buttbot/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods, message_range)
 	. = ..()
-	if(COOLDOWN_FINISHED(src, repeat_cooldown) && prob(listen_probability))
+	if(COOLDOWN_FINISHED(src, repeat_cooldown) && prob(listen_probability) && ishuman(speaker))
 		COOLDOWN_START(src, repeat_cooldown, 2 SECONDS)
 		var/list/split_message = splittext_char(html_decode(raw_message), " ")
 		for (var/i in 1 to length(split_message))

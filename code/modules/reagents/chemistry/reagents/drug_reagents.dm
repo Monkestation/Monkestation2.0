@@ -31,7 +31,7 @@
 	if(isturf(affected_mob.loc) && !isspaceturf(affected_mob.loc) && !HAS_TRAIT(affected_mob, TRAIT_IMMOBILIZED) && SPT_PROB(5, seconds_per_tick))
 		step(affected_mob, pick(GLOB.cardinals))
 	if(SPT_PROB(3.5, seconds_per_tick))
-		affected_mob.emote(pick("twitch","twitch_s","drool","sway","giggle"))
+		affected_mob.emote(pick("twitch","drool","moan","giggle"))
 	..()
 
 /datum/reagent/drug/space_drugs/overdose_start(mob/living/affected_mob)
@@ -264,7 +264,7 @@
 		for(var/i in 1 to round(8 * REM * seconds_per_tick, 1))
 			step(affected_mob, pick(GLOB.cardinals))
 	if(SPT_PROB(10, seconds_per_tick))
-		affected_mob.emote(pick("twitch","drool","sway","scream"))
+		affected_mob.emote(pick("twitch","drool","moan"))
 	if(SPT_PROB(28, seconds_per_tick))
 		affected_mob.drop_all_held_items()
 	..()
@@ -530,7 +530,7 @@
 /datum/reagent/drug/mushroomhallucinogen/overdose_process(mob/living/psychonaut, seconds_per_tick, times_fired)
 	. = ..()
 	if(SPT_PROB(10, seconds_per_tick))
-		psychonaut.emote(pick("twitch","twitch_s","drool","sway"))
+		psychonaut.emote(pick("twitch","drool","moan"))
 
 	if(SPT_PROB(10, seconds_per_tick))
 		psychonaut.apply_status_effect(/datum/status_effect/tower_of_babel)

@@ -32,13 +32,6 @@
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/ballistic/revolver/c38/detective)
 
-/datum/supply_pack/goody/validhunting_sabre
-	name = "Authentic Shamshir Sabre"
-	desc = "Jealous of your local high ranking Nanotrasen official's officer sabre? You too can show your off your authority by larping as someone more important with this shoddy replica sabre."
-	cost = PAYCHECK_CREW * 4
-	access_view = ACCESS_WEAPONS
-	contains = list(/obj/item/storage/belt/sabre/cargo)
-
 /datum/supply_pack/goody/stingbang
 	name = "Stingbang Single-Pack"
 	desc = "Contains one \"stingbang\" grenade, perfect for playing meanhearted pranks."
@@ -257,12 +250,6 @@
 	cost = PAYCHECK_CREW * 12
 	contains = list(/obj/item/encryptionkey/ethereal)
 
-/datum/supply_pack/goody/felinid_encryption_key
-	name = "Felinid radio encryption key"
-	desc = "A hi-tech radio encryption key that allows the wearer to understand nekomimetic when the radio is worn."
-	cost = PAYCHECK_CREW * 12
-	contains = list(/obj/item/encryptionkey/felinid)
-
 /datum/supply_pack/goody/uncommon_encryption_key
 	name = "Uncommon radio encryption key"
 	desc = "A hi-tech radio encryption key that allows the wearer to understand uncommon when the radio is worn."
@@ -274,12 +261,6 @@
 	desc = "A hi-tech radio encryption key that allows the wearer to understand slime when the radio is worn."
 	cost = PAYCHECK_CREW * 12
 	contains = list(/obj/item/encryptionkey/slime)
-
-/datum/supply_pack/goody/monkey_encryption_key
-	name = "Chimpanzee radio encryption key"
-	desc = "A hi-tech radio encryption key that allows the wearer to understand chimpanzee when the radio is worn."
-	cost = PAYCHECK_CREW * 12
-	contains = list(/obj/item/encryptionkey/monkey)
 
 /datum/supply_pack/goody/fishing_toolbox
 	name = "Fishing toolbox"
@@ -368,9 +349,3 @@
 	contains = list(
 		/obj/item/storage/pipebox,
 	)
-
-/datum/supply_pack/goody/shrimpplush
-	name = "Shrimp Plushie"
-	desc = "It really is just that shrimple."
-	cost = PAYCHECK_CREW * 4
-	contains = list(/obj/item/toy/plush/shrimp)

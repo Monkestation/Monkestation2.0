@@ -34,11 +34,17 @@
 	return ..()
 
 /obj/item/pet_carrier/Exited(atom/movable/gone, direction)
-	. = ..()
 	if(isliving(gone) && (gone in occupants))
-		var/mob/living/living_gone = gone
+		var/mob/living/L = gone
 		occupants -= gone
-		occupant_weight -= living_gone.mob_size
+		occupant_weight -= L.mob_size
+
+/obj/item/pet_carrier/handle_atom_del(atom/A)
+	if((A in occupants) && isliving(A))
+		var/mob/living/L = A
+		occupants -= L
+		occupant_weight -= L.mob_size
+	..()
 
 /obj/item/pet_carrier/examine(mob/user)
 	. = ..()

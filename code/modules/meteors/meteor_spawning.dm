@@ -4,7 +4,7 @@
 	for(var/i in 1 to number)
 		spawn_meteor(meteor_types, direction)
 
-/proc/spawn_meteor(list/meteor_types, direction, atom/target, distance_from_edge = 0)
+/proc/spawn_meteor(list/meteor_types, direction, atom/target)
 	if (SSmapping.is_planetary())
 		stack_trace("Tried to spawn meteors in a map which isn't in space.")
 		return // We're not going to find any space turfs here
@@ -18,7 +18,7 @@
 		else
 			start_side = pick(GLOB.cardinals)
 		var/start_Z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
-		picked_start = spaceDebrisStartLoc(start_side, start_Z, distance_from_edge)
+		picked_start = spaceDebrisStartLoc(start_side, start_Z)
 		if(target)
 			if(!isturf(target))
 				target = get_turf(target)
@@ -31,22 +31,22 @@
 	var/new_meteor = pick_weight(meteor_types)
 	new new_meteor(picked_start, picked_goal)
 
-/proc/spaceDebrisStartLoc(start_side, Z, distance_from_edge = 0)
+/proc/spaceDebrisStartLoc(start_side, Z)
 	var/starty
 	var/startx
 	switch(start_side)
 		if(NORTH)
-			starty = world.maxy - (TRANSITIONEDGE + MAP_EDGE_PAD) - distance_from_edge
-			startx = rand((TRANSITIONEDGE + MAP_EDGE_PAD + distance_from_edge), world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD + distance_from_edge))
+			starty = world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD)
+			startx = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD))
 		if(EAST)
-			starty = rand((TRANSITIONEDGE + MAP_EDGE_PAD + distance_from_edge),world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD + distance_from_edge))
-			startx = world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD) - distance_from_edge
+			starty = rand((TRANSITIONEDGE + MAP_EDGE_PAD),world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD))
+			startx = world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD)
 		if(SOUTH)
-			starty = (TRANSITIONEDGE + MAP_EDGE_PAD) + distance_from_edge
-			startx = rand((TRANSITIONEDGE + MAP_EDGE_PAD + distance_from_edge), world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD + distance_from_edge))
+			starty = (TRANSITIONEDGE + MAP_EDGE_PAD)
+			startx = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD))
 		if(WEST)
-			starty = rand((TRANSITIONEDGE + MAP_EDGE_PAD + distance_from_edge), world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD + distance_from_edge))
-			startx = (TRANSITIONEDGE + MAP_EDGE_PAD) + distance_from_edge
+			starty = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD))
+			startx = (TRANSITIONEDGE + MAP_EDGE_PAD)
 	. = locate(startx, starty, Z)
 
 /proc/spaceDebrisFinishLoc(startSide, Z)
