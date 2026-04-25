@@ -1,0 +1,5 @@
+author: "CujoGaming"
+delete-after: True
+changes:
+  - rscadd: "Adds approved and denied stamps to Oshan HoP office"
+  - rscdel: "Removes mindshield boxes from HoP office on Delta and Blueshift"

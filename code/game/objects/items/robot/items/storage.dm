@@ -335,7 +335,6 @@
 /obj/item/borg/apparatus/cooking
 	name = "service storage apparatus"
 	desc = "A special apparatus for carrying food, bowls, plates, oven trays, soup pots and paper."
-	icon = 'monkestation/icons/mob/silicon/robot_items.dmi'
 	icon_state = "borg_service_apparatus"
 	storable = list(
 		/obj/item/food,

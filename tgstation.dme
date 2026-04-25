@@ -6760,7 +6760,6 @@
 #include "monkestation\code\game\objects\items\rayne_corp\rayne_lantern.dm"
 #include "monkestation\code\game\objects\items\rayne_corp\rayne_mender.dm"
 #include "monkestation\code\game\objects\items\robot\items\hypo.dm"
-#include "monkestation\code\game\objects\items\robot\items\robot_upgrades.dm"
 #include "monkestation\code\game\objects\items\stacks\tile_types.dm"
 #include "monkestation\code\game\objects\items\storage\backpack.dm"
 #include "monkestation\code\game\objects\items\storage\book.dm"
