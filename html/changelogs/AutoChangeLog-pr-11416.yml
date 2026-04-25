@@ -1,0 +1,7 @@
+author: "ilikesaying"
+delete-after: True
+changes:
+  - rscdel: "Removed San Marzano Canned Tomatoes"
+  - qol: "Tomato Sauce now takes regular Tomatoes"
+  - image: "removed Canned Tomatoes sprites"
+  - map: "removed Canned Tomato trash from ruins"

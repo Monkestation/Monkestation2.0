@@ -151,10 +151,6 @@
 	name = "dog eat dog envirochow"
 	icon_state = "envirochow_empty"
 
-/obj/item/trash/can/food/tomatoes
-	name = "canned San Marzano tomatoes"
-	icon_state = "tomatoescan_empty"
-
 /obj/item/trash/can/food/pine_nuts
 	name = "canned pine nuts"
 	icon_state = "pinenutscan_empty"
