@@ -6299,6 +6299,7 @@
 #include "code\modules\vending\cola.dm"
 #include "code\modules\vending\donk.dm"
 #include "code\modules\vending\drinnerware.dm"
+#include "code\modules\vending\egodrobe.dm"
 #include "code\modules\vending\engineering.dm"
 #include "code\modules\vending\engivend.dm"
 #include "code\modules\vending\games.dm"
