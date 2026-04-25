@@ -38,8 +38,9 @@
 		important_text = "Serve [creator], and assist [creator.p_them()] in completing [creator.p_their()] goals at any cost."
 		owner_ref = WEAKREF(creator)
 		spawner_job_path = /datum/job/servant_golem
+	var/mob/living/master
 	if(isliving(creator))
-		var/mob/living/master = creator
+		master = creator
 
 	if(master.is_antag)
 		notify_ghosts(
