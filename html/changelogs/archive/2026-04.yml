@@ -350,3 +350,7 @@
   - image: Surgical tools for medical cyborgs now look more mechanic and animated.
   - image: Construction tools for engineering cyborgs (and drones) now look more mechanic
       and animated.
+2026-04-24:
+  Ice-Type:
+  - rscadd: You can now buy a bundle with five hardlight spear implants (the maximum)
+      for 25 TC

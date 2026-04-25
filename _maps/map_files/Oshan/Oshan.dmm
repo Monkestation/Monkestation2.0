@@ -72416,6 +72416,14 @@
 	pixel_x = -10;
 	pixel_y = 4
 	},
+/obj/item/stamp/granted{
+	pixel_x = -12;
+	pixel_y = 4
+	},
+/obj/item/stamp/denied{
+	pixel_x = -8;
+	pixel_y = 4
+	},
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/hop)
 "wmx" = (

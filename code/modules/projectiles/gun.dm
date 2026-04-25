@@ -20,6 +20,7 @@
 	attack_verb_continuous = list("strikes", "hits", "bashes")
 	attack_verb_simple = list("strike", "hit", "bash")
 	action_slots = ALL
+	alternate_worn_layer = HANDS_LAYER+0.05
 
 	var/super_throw = FALSE
 	var/gun_flags = NONE
