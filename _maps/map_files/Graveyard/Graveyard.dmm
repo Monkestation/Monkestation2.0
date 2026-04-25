@@ -55472,7 +55472,6 @@
 	pixel_x = -3;
 	pixel_y = 2
 	},
-/obj/item/storage/box/silver_ids,
 /obj/structure/cable,
 /obj/machinery/light/directional/north,
 /obj/machinery/requests_console/auto_name/directional/north,

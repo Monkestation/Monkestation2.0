@@ -408,7 +408,7 @@ effective or pretty fucking useless.
 	for (var/obj/item/radio/radio in target_contents)
 		if((ignore_syndie && radio.syndie) || radio.ignores_radio_jammers)
 			continue
-		radio.set_broadcasting(FALSE)
+		radio.set_broadcasting(FALSE, actual_setting = FALSE)
 	for (var/obj/item/bodycam_upgrade/bodycamera in target_contents)
 		bodycamera.turn_off()
 

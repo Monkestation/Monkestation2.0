@@ -72,31 +72,34 @@
 			processable += initial(atom.name)
 			comma = !comma
 		context[SCREENTIP_CONTEXT_MISC] = processable
+		. = CONTEXTUAL_SCREENTIP_SET
 
-	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
+		. = CONTEXTUAL_SCREENTIP_SET
 
-	if(!panel_open)
-		return CONTEXTUAL_SCREENTIP_SET
+	if(!panel_open || !held_item)
+		return
 
 	if(held_item.tool_behaviour == TOOL_CROWBAR)
 		if(!length(crafting_inventory) && !crafting)
 			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 		context[SCREENTIP_CONTEXT_RMB] = "Force Apart"
+		. = CONTEXTUAL_SCREENTIP_SET
 
-	if(held_item.tool_behaviour == TOOL_MULTITOOL)
-		if(!chosen_recipe == null || length(crafting_inventory))
+	else if(held_item.tool_behaviour == TOOL_MULTITOOL)
+		if(!isnull(chosen_recipe) || length(crafting_inventory))
 			context[SCREENTIP_CONTEXT_LMB] = "Reset"
 		context[SCREENTIP_CONTEXT_RMB] = "Examine Wires"
+		. = CONTEXTUAL_SCREENTIP_SET
 
-	if(held_item.tool_behaviour == TOOL_WIRECUTTER && wire_integrity <= 2.0)
+	else if(held_item.tool_behaviour == TOOL_WIRECUTTER && wire_integrity <= 2.0)
 		context[SCREENTIP_CONTEXT_LMB] = "Cut Wires"
+		. = CONTEXTUAL_SCREENTIP_SET
 
-	if(held_item)
-		if(istype(held_item, /obj/item/stack/cable_coil))
-			context[SCREENTIP_CONTEXT_LMB] = "Mend Wires"
-
-	return CONTEXTUAL_SCREENTIP_SET
+	else if(istype(held_item, /obj/item/stack/cable_coil))
+		context[SCREENTIP_CONTEXT_LMB] = "Mend Wires"
+		. = CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/assembler/examine(mob/user)
 	. = ..()

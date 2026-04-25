@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - qol: "Item pixel shift hotkey no longer locks you in place if you're not grabbing something."

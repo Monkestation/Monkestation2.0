@@ -164,3 +164,187 @@
 
 #undef PKBORG_DAMPEN_CYCLE_DELAY
 #undef POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER
+
+// Bare minimum omni-toolset for modularity.
+/obj/item/borg/cyborg_omnitool
+	name = "cyborg omni-toolset"
+	desc = "You shouldn't see this in-game normally."
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_medborg"
+	/// Our tools (list of item typepaths).
+	var/list/obj/item/omni_toolkit = list()
+	/// Map of solid objects internally used by the omni-tool.
+	var/list/obj/item/atoms = list()
+	/// Object we are referencing to for force, sharpness and sound.
+	var/obj/item/reference
+	/// Is the toolset upgraded or not?
+	var/upgraded = FALSE
+
+/obj/item/borg/cyborg_omnitool/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/borg/cyborg_omnitool/Destroy(force)
+	for(var/obj/item/tool_path as anything in atoms)
+		var/obj/item/tool = atoms[tool_path]
+		if(!QDELETED(tool)) // If we are sharing tools from our other omnitool brothers, we don't want to re-delete them if they got deleted first.
+			qdel(tool)
+	atoms.Cut()
+
+	return ..()
+
+/obj/item/borg/cyborg_omnitool/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if (!issilicon(user))
+		return
+	var/mob/living/silicon/robot/as_cyborg = user
+	if (!(src in as_cyborg.held_items))
+		context[SCREENTIP_CONTEXT_RMB] = "Select Tool"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/**
+ * Sets the new internal tool to be used.
+ * Arguments
+ *
+ * * obj/item/ref - typepath for the new internal omnitool
+ */
+/obj/item/borg/cyborg_omnitool/proc/set_internal_tool(obj/item/tool)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	for(var/obj/item/internal_tool as anything in omni_toolkit)
+		if(internal_tool == tool)
+			reference = internal_tool
+			tool_behaviour = initial(internal_tool.tool_behaviour)
+			break
+
+/obj/item/borg/cyborg_omnitool/get_all_tool_behaviours()
+	. = list()
+	for(var/obj/item/tool as anything in omni_toolkit)
+		. += initial(tool.tool_behaviour)
+
+/// The omnitool interacts with real world objects based on the state it has assumed.
+/obj/item/borg/cyborg_omnitool/get_proxy_attacker_for(atom/target, mob/user)
+	if(!reference)
+		return src
+
+	// First check if we have the tool.
+	var/obj/item/tool = atoms[reference]
+	if(!QDELETED(tool))
+		return tool
+
+	// Else try to borrow an in-built tool from our other omnitool brothers to save & share memory & such.
+	var/mob/living/silicon/robot/borg = user
+	for(var/obj/item/borg/cyborg_omnitool/omni_tool in borg.model.basic_modules)
+		if(omni_tool == src)
+			continue
+		tool = omni_tool.atoms[reference]
+		if(!QDELETED(tool))
+			atoms[reference] = tool
+			return tool
+
+	// If all else fails, just make a new one from scratch.
+	tool = new reference(user)
+	// The internal tool is considered part of the tool itself, so don't let it be dropped.
+	tool.item_flags |= ABSTRACT
+	ADD_TRAIT(tool, TRAIT_NODROP, INNATE_TRAIT)
+	atoms[reference] = tool
+	tool.toolspeed = upgraded ? initial(tool.toolspeed) * 0.5 : initial(tool.toolspeed)
+	return tool
+
+/obj/item/borg/cyborg_omnitool/attack_self(mob/user)
+	// Build the radial menu options.
+	var/list/radial_menu_options = list()
+	var/list/tool_map = list()
+	for(var/obj/item as anything in omni_toolkit)
+		var/tool_name = initial(item.name)
+		radial_menu_options[tool_name] = image(icon = initial(item.icon), icon_state = initial(item.icon_state))
+		tool_map[tool_name] = item
+
+	// Assign the new tool behaviour.
+	var/internal_tool_name = show_radial_menu(user, src, radial_menu_options, require_near = TRUE, tooltips = TRUE)
+	if(!internal_tool_name)
+		return
+
+	// Set the reference & update icons.
+	set_internal_tool(tool_map[internal_tool_name])
+	update_appearance(UPDATE_ICON_STATE)
+	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
+
+/obj/item/borg/cyborg_omnitool/Click(location, control, params)
+	var/list/modifiers = params2list(params)
+	if(!LAZYACCESS(modifiers, RIGHT_CLICK) || !iscyborg(usr))
+		return ..()
+	var/mob/living/silicon/robot/user = usr
+	if (!(src in user.held_items))
+		attack_self(user)
+	return ..()
+
+/obj/item/borg/cyborg_omnitool/update_icon_state()
+	if (reference)
+		icon_state = reference.icon_state
+	return ..()
+
+/**
+ * Sets the upgrade status of the omnitool.
+ * Arguments
+ *
+ * * upgrade - TRUE/FALSE for upgraded
+ */
+/obj/item/borg/cyborg_omnitool/proc/set_upgraded(upgrade)
+	if(upgraded == upgrade)
+		return
+	upgraded = upgrade
+	for(var/tool_reference in atoms)
+		var/obj/item/tool = atoms[tool_reference]
+		if(QDELETED(tool))
+			continue
+		tool.toolspeed = upgraded ? initial(tool.toolspeed) * 0.5 : initial(tool.toolspeed)
+	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
+
+/obj/item/borg/cyborg_omnitool/medical
+	name = "surgical omni-toolset"
+	desc = "A set of surgical tools used by cyborgs to operate on various surgical operations."
+	omni_toolkit = list(
+		/obj/item/surgical_drapes/cyborg,
+		/obj/item/scalpel/cyborg,
+		/obj/item/surgicaldrill/cyborg,
+		/obj/item/hemostat/cyborg,
+		/obj/item/retractor/cyborg,
+		/obj/item/cautery/cyborg,
+		/obj/item/circular_saw/cyborg,
+		/obj/item/bonesetter/cyborg,
+	)
+
+/obj/item/borg/cyborg_omnitool/medical/upgraded
+	upgraded = TRUE
+
+// Toolset for engineering cyborgs. This is all of the tools except for the welding tool since it's quite hard to implement (read: can't be arsed to).
+/obj/item/borg/cyborg_omnitool/engineering
+	name = "engineering omni-toolset"
+	desc = "A set of engineering tools used by cyborgs to conduct various engineering tasks."
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_engiborg"
+	omni_toolkit = list(
+		/obj/item/wrench/cyborg,
+		/obj/item/wirecutters/cyborg,
+		/obj/item/screwdriver/cyborg,
+		/obj/item/crowbar/cyborg,
+		/obj/item/multitool/cyborg,
+	)
+
+/obj/item/borg/cyborg_omnitool/engineering/examine(mob/user)
+	. = ..()
+	if(tool_behaviour != TOOL_MULTITOOL)
+		return
+	for(var/obj/item/multitool/tool in atoms)
+		. += "Its multitool buffer contains [tool.buffer]"
+		break
+
+/obj/item/borg/cyborg_omnitool/engineering/syndie
+	omni_toolkit = list(
+		/obj/item/wrench/cyborg,
+		/obj/item/wirecutters/cyborg,
+		/obj/item/screwdriver/cyborg/nuke,
+		/obj/item/crowbar/cyborg,
+		/obj/item/multitool/cyborg,
+	)

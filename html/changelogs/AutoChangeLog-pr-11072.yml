@@ -1,9 +1,0 @@
-author: "Shoddd"
-delete-after: True
-changes:
-  - balance: "HP ammo is no longer sold on the black market"
-  - balance: "Removes the makarov from the black market"
-  - balance: "Removes Syndicate Cawil from black market"
-  - balance: "black market sindano now has twice spread of the normal"
-  - balance: "black market trappiste now has .7 second longer firing delay"
-  - bugfix: "Detective revolver can no longer be made to never misfire"

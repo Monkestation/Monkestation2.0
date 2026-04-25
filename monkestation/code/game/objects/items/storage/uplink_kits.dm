@@ -3,9 +3,18 @@
 #define KIT_ITEM_CATEGORY_MISC "misc"
 /obj/item/storage/box/syndie_kit/imp_hard_spear
 	name = "hardlight spear implant box"
+	desc = "Remember your promise."
 
 /obj/item/storage/box/syndie_kit/imp_hard_spear/PopulateContents()
 	new /obj/item/implanter/hard_spear(src)
+
+/obj/item/storage/box/syndie_kit/imp_hard_spear/bundle
+	name = "hardlight spear implant bundle"
+
+
+/obj/item/storage/box/syndie_kit/imp_hard_spear/bundle/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/implanter/hard_spear(src)
 
 /obj/item/storage/box/syndie_kit/imp_hard_spear/max
 	name = "commanding hardlight spear implant box"
@@ -198,15 +207,6 @@
 			<li>A tip, any activated mutations in the person being scanned, will be present in the clones produced, allowing you to give the clones some intrinsic powers. Make sure to use activators, not mutators.</li>\
 			</ul>
 			Good luck agent. You can burn this document."}
-
-/obj/item/storage/box/syndie_kit/shotgun_revolver
-	desc = "A box containing a value bundled shotgun revolver and some shotgun shells. Comes with two quickload cartridges of slugs"
-
-/obj/item/storage/box/syndie_kit/shotgun_revolver/PopulateContents()
-	new /obj/item/gun/ballistic/revolver/shotgun_revolver(src)
-	new /obj/item/ammo_box/advanced/s12gauge(src)
-	new /obj/item/ammo_box/advanced/s12gauge(src)
-
 
 /obj/item/storage/box/syndie_kit/shit_smg_bundle
 	desc = "A box containing a surplus space soviet Plastikov and two magazines. Perfect for henchmen."
