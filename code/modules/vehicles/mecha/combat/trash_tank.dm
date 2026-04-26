@@ -100,13 +100,13 @@
 	base_icon_state = "maintenance_battle_tank"
 	silicon_icon_state = "null"
 	SET_BASE_PIXEL(-48, 0)
-	max_integrity = 500 // thoughts, you must do alot of work to make this thing, but compared to another traitor item, the devitt Mk.III, it only requires 1 crewman and doesnt cost as much tc. I say it has more HP cause it wont be as fast, and you dont have a 2nd person to work with
+	max_integrity = 400 // thoughts, you must do alot of work to make this thing, but compared to another traitor item, the devitt Mk.III, it only requires 1 crewman and doesnt cost as much tc. I say it has less HP cause it wont be as fast, but you dont need a 2nd person to work
 	force = 30
 	movedelay = 1.5
 	stepsound = 'monkestation/sound/mecha/tank_treads.ogg'
 	turnsound = 'monkestation/sound/mecha/tank_treads.ogg'
 	mecha_flags = IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE //can't strafe bruv
-	armor_type = /datum/armor/maintenance_battle_tank //you put alot of effort into this huh? Well its still a pile of trash.
+	armor_type = /datum/armor/maintenance_battle_tank //you put alot of effort into this huh? Well its still a pile of trash, just alot of it.
 	internal_damage_threshold = 35 //beefer
 	var/crushdmglower = 4
 	var/crushdmgupper = 10
@@ -131,7 +131,7 @@
 	melee = 60
 	bullet = 40
 	laser = 40
-	energy = 20
+	energy = 40
 	fire = 70
 	acid = 60
 
