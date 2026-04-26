@@ -127,6 +127,14 @@
 		MECHA_ARMOR = 0,
 	)
 
+/datum/armor/scrap_tank/uparmoured
+	melee = 60
+	bullet = 40
+	laser = 40
+	energy = 20
+	fire = 70
+	acid = 60
+
 /obj/vehicle/sealed/mecha/maintenance_battle_tank/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(has_gravity())
