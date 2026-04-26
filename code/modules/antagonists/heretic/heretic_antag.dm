@@ -75,7 +75,7 @@
 	/// The path our heretic has chosen.
 	var/datum/heretic_knowledge_tree_column/heretic_path
 	/// A sum of how many knowledge points this heretic CURRENTLY has. Used to research.
-	var/knowledge_points = 1
+	var/knowledge_points = 2
 	/// Points used for purchasing from the sidepath shop, tracked separately from regular knowledge points, these can ONLY be used from the sidepath, where the main ones can be used on both
 	var/sidepath_points = 0
 	/// The time between gaining influence passively. The heretic gain +1 knowledge points every this duration of time.
