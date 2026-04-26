@@ -113,7 +113,7 @@
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/sentinellascannon
-	equip_cooldown = 50
+	equip_cooldown = 3 SECONDS
 	name = "\improper Sentinel Laser Cannon"
 	desc = "A massive turbolaser mounted in a turret."
 	icon_state = "sentinel_cannon_laser"
@@ -301,7 +301,7 @@
 	name = "\improper FNX-99 \"Hades\" Carbine"
 	desc = "A weapon for combat exosuits. Shoots incendiary bullets."
 	icon_state = "mecha_carbine"
-	equip_cooldown = 10
+	equip_cooldown = 8
 	projectile = /obj/projectile/bullet/incendiary/fnx99
 	projectiles = 24
 	projectiles_cache = 24
@@ -325,7 +325,7 @@
 	name = "\improper LBX AC 10 \"Scattershot\""
 	desc = "A weapon for combat exosuits. Shoots a spread of pellets."
 	icon_state = "mecha_scatter"
-	equip_cooldown = 20
+	equip_cooldown = 15
 	projectile = /obj/projectile/bullet/scattershot
 	projectiles = 40
 	projectiles_cache = 40
@@ -339,7 +339,7 @@
 	name = "\improper Ultra AC 2"
 	desc = "A weapon for combat exosuits. Shoots a rapid, three shot burst."
 	icon_state = "mecha_uac2"
-	equip_cooldown = 10
+	equip_cooldown = 8
 	projectile = /obj/projectile/bullet/lmg
 	projectiles = 300
 	projectiles_cache = 300
@@ -367,7 +367,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rotary
 	name = "Hotchkiss Rotary Cannon"
-	desc = "A very expensive and complicated Rotary Cannon for combat exosuits. NT execs only."
+	desc = "A very expensive and complicated Rotary Cannon for combat exosuits."
 	icon_state = "mecha_rotary"
 	equip_cooldown = 0.3 SECONDS
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
@@ -375,7 +375,7 @@
 	projectiles = 400
 	projectiles_cache = 400
 	projectiles_cache_max = 400
-	projectiles_per_shot = 10
+	projectiles_per_shot = 2
 	projectile_delay = 0.06 SECONDS
 	variance = 12
 	randomspread = 7
@@ -645,6 +645,24 @@
 	ammo_type = MECHA_AMMO_LIGHTTANK
 	mech_flags = EXOSUIT_MODULE_TANK
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/maintenance_battle_cannon
+	name = "D-10T cannon"
+	desc = "A 100mm cannon, developed through many manhours of the brightest in the Soviet Union, somehow fabricated by you with trash on a spacestation."
+	icon = 'icons/mecha/supertanks.dmi'
+	icon_state = "maintenance_battle_cannon"
+	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	harmful = TRUE
+	projectile = /obj/projectile/bullet/rocket/sentinelshell
+	equip_cooldown = 8 SECONDS
+	projectiles = 20
+	projectiles_cache = 10
+	projectiles_cache_max = 40
+	projectiles_per_shot = 1
+	variance = 10
+	randomspread = 3
+	ammo_type = MECHA_AMMO_SENTINEL
+	mech_flags = EXOSUIT_MODULE_TANK
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/sentinelcannon
 	name = "Sentinel Cannon"
 	desc = "A large artillery cannon affixed to a turret."
@@ -652,7 +670,7 @@
 	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
 	harmful = TRUE
 	projectile = /obj/projectile/bullet/rocket/sentinelshell
-	equip_cooldown = 12 SECONDS
+	equip_cooldown = 6 SECONDS
 	projectiles = 20
 	projectiles_cache = 0
 	projectiles_cache_max = 40
