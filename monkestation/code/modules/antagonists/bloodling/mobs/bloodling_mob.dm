@@ -135,7 +135,7 @@
 
 /// Checks if we should evolve, and also calls the evolution proc
 /mob/living/basic/bloodling/proper/proc/check_evolution()
-	if(evolution_level == 6)
+	if(evolution_level > 5)
 		return FALSE
 	if((75 > biomass) && (evolution_level != 1))
 		evolution(1)
@@ -184,6 +184,8 @@
 			new_bloodling = new /mob/living/basic/bloodling/proper/tier5(src.loc)
 		if(6)
 			new_bloodling = new /mob/living/basic/bloodling/proper/ascending(src.loc)
+		if(7)
+			new_bloodling = new /mob/living/basic/bloodling/proper/ascended(src.loc)
 	evolution_mind_change(new_bloodling)
 	new_bloodling.update_health_hud()
 
@@ -303,5 +305,33 @@
 		/datum/action/cooldown/bloodling_hivespeak,
 	)
 	speed = 2.5
+
+/mob/living/basic/bloodling/proper/ascended
+	icon = 'monkestation/code/modules/antagonists/bloodling/sprites/bloodling_ascended_sprites.dmi'
+	icon_state = "bloodling_ascended"
+	icon_living = "bloodling_ascended"
+	icon_dead = "bloodling_ascended_dead"
+
+	pixel_x = -16 //offset so the mob collision is roughly the middle of the sprite
+	base_pixel_x = -16
+	maptext_height = 64
+	maptext_width = 64
+	mob_size = MOB_SIZE_HUGE
+	
+	evolution_level = 7
+	initial_powers = list(
+		/datum/action/cooldown/bloodling/absorb,
+		/datum/action/cooldown/bloodling/ascension,
+		/datum/action/cooldown/bloodling/infest,
+		/datum/action/cooldown/bloodling/build,
+		/datum/action/cooldown/bloodling/devour,
+		/datum/action/cooldown/bloodling/dissonant_shriek,
+		/datum/action/cooldown/spell/aoe/repulse/bloodling,
+		/datum/action/cooldown/bloodling/transfer_biomass,
+		/datum/action/cooldown/bloodling/heal,
+		/datum/action/cooldown/bloodling/give_life,
+		/datum/action/cooldown/bloodling_hivespeak,
+	)
+	speed = 3
 
 #undef FORMAT_BIO_TEXT
