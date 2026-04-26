@@ -213,6 +213,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			succumb()
 		return
 
+	if(client?.prefs?.read_preference(/datum/preference/toggle/autopunctuation))
+		message = autopunct_bare(message)
+
 	//This is before anything that sends say a radio message, and after all important message type modifications, so you can scumb in alien chat or something
 	if(saymode && !saymode.handle_message(src, message, language))
 		return

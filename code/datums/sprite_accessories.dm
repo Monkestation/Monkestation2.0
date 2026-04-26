@@ -269,6 +269,14 @@
 	name = "Buzzcut"
 	icon_state = "hair_buzzcut"
 
+/datum/sprite_accessory/hair/clown
+	name = "Clown"
+	icon_state = "hair_clown"
+
+/datum/sprite_accessory/hair/researcher
+	name = "Researcher"
+	icon_state = "hair_researcher"
+
 /datum/sprite_accessory/hair/chinbob
 	name = "Chin-Length Bob Cut"
 	icon_state = "hair_chinbob"
@@ -697,10 +705,6 @@
 	name = "Short Hair 5"
 	icon_state = "hair_e"
 
-/datum/sprite_accessory/hair/shorthair6
-	name = "Short Hair 6"
-	icon_state = "hair_f"
-
 /datum/sprite_accessory/hair/shorthair7
 	name = "Short Hair 7"
 	icon_state = "hair_shorthairg"
@@ -1007,6 +1011,14 @@
 	name = "Beard (Long)"
 	icon_state = "facial_longbeard"
 
+/datum/sprite_accessory/facial_hair/tramp
+	name = "Beard (Tramp)"
+	icon_state = "facial_tramp"
+
+/datum/sprite_accessory/facial_hair/braided
+	name = "Beard (Braided)"
+	icon_state = "facial_braided"
+
 /datum/sprite_accessory/facial_hair/volaju
 	name = "Beard (Volaju)"
 	icon_state = "facial_volaju"
@@ -1078,6 +1090,10 @@
 /datum/sprite_accessory/facial_hair/handlebar2
 	name = "Moustache (Handlebar 2)"
 	icon_state = "facial_handlebar2"
+
+/datum/sprite_accessory/facial_hair/chef
+	name = "Moustache (Chef)"
+	icon_state = "facial_chef"
 
 /datum/sprite_accessory/facial_hair/elvis
 	name = "Sideburns (Elvis)"

@@ -265,7 +265,7 @@
 /obj/item/disk/sucker_upgrade
 	name = "ooze sucker upgrade disk"
 	desc = "An upgrade disk for an ooze sucker."
-	icon_state = "rndmajordisk"
+	icon_state = "cargodisk"
 
 	/// A message given to the player when they examine a sucker with this installed.
 	var/notice

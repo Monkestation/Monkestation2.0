@@ -539,6 +539,10 @@
 	. = ..()
 	AddComponent(/datum/component/curse_of_hunger, add_dropdel = TRUE)
 
+/obj/item/storage/backpack/duffelbag/cursed/Destroy()
+	emptyStorage()
+	. = ..()
+
 /obj/item/storage/backpack/duffelbag/captain
 	name = "captain's duffel bag"
 	desc = "A large duffel bag for holding extra captainly goods."

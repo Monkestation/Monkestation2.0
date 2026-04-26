@@ -527,7 +527,7 @@
 	playsound(src, sound, 50, TRUE)
 	loc.visible_message(span_notice("<img class='icon' src='\ref[src]'> \The [src] displays a [origin.filedesc] notification: [html_encode(alerttext)]"), vision_distance = vision_distance, push_appearance = src)
 
-/obj/item/modular_computer/proc/ring(ringtone, list/balloon_alertees) // bring bring
+/obj/item/modular_computer/proc/ring(ringtone, list/balloon_alertees, list/ignored_mobs) // bring bring
 	if(!use_energy(check_programs = FALSE))
 		return
 	// Get the messenger app's new sound settings || Monkestation Addition START
@@ -543,7 +543,7 @@
 	else
 		playsound(src, sound_to_play, 50, TRUE, mixer_channel = CHANNEL_RINGTONES) // Monkestation change
 	ringtone = "*[ringtone]*"
-	audible_message(ringtone)
+	audible_message(ringtone, ignored_mobs = ignored_mobs)
 	for(var/mob/living/alertee in balloon_alertees)
 		alertee.balloon_alert(alertee, ringtone)
 
