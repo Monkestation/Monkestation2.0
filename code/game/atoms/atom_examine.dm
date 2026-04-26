@@ -144,7 +144,7 @@
 
 /// Icon displayed in examine
 /atom/proc/get_examine_icon(mob/user)
-	return icon2html(src, user)
+	return ma2html(src, user)
 
 /**
  * Formats the atom's name into a string for use in examine (as the "title" of the atom)
