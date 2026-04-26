@@ -106,7 +106,7 @@
 	stepsound = 'monkestation/sound/mecha/tank_treads.ogg'
 	turnsound = 'monkestation/sound/mecha/tank_treads.ogg'
 	mecha_flags = IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE //can't strafe bruv
-	armor_type = /datum/armor/scrap_tank/uparmored //you put alot of effort into this huh? Well its still a pile of trash.
+	armor_type = /datum/armor/maintenance_battle_tank //you put alot of effort into this huh? Well its still a pile of trash.
 	internal_damage_threshold = 35 //beefer
 	var/crushdmglower = 4
 	var/crushdmgupper = 10
@@ -127,7 +127,7 @@
 		MECHA_ARMOR = 0,
 	)
 
-/datum/armor/scrap_tank/uparmoured
+/datum/armor/maintenance_battle_tank
 	melee = 60
 	bullet = 40
 	laser = 40
