@@ -41,7 +41,7 @@
 	var/mob/living/master
 	if(isliving(creator))
 		master = creator
-		if(is_antag(master))
+		if(master.is_antag)
 			notify_ghosts(
 				"\A golem shell has been completed in \the [init_area.name], by an antagonist master.",
 				source = src,
