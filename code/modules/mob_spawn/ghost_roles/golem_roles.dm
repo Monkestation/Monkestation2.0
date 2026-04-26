@@ -41,15 +41,15 @@
 	var/mob/living/master
 	if(isliving(creator))
 		master = creator
-	if(is_antag(master))
-		notify_ghosts(
-			"\A golem shell has been completed in \the [init_area.name], by an antagonist master.",
-			source = src,
-			action = NOTIFY_PLAY,
-			notify_flags = NOTIFY_CATEGORY_NOFLASH,
-			ignore_key = POLL_IGNORE_GOLEM,
-		)
-		return
+		if(is_antag(master))
+			notify_ghosts(
+				"\A golem shell has been completed in \the [init_area.name], by an antagonist master.",
+				source = src,
+				action = NOTIFY_PLAY,
+				notify_flags = NOTIFY_CATEGORY_NOFLASH,
+				ignore_key = POLL_IGNORE_GOLEM,
+			)
+			return
 
 	notify_ghosts(
 		"\A golem shell has been completed in \the [init_area.name].",
