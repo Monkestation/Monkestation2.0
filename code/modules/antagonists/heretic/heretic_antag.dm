@@ -868,6 +868,16 @@
 	return TRUE
 
 /**
+ * Returns a list of the bodies of all current sacrifice targets.
+ */
+/datum/antagonist/heretic/proc/current_sacrifice_targets() as /list
+	. = list()
+	for(var/datum/mind/target_mind as anything in current_sac_targets)
+		var/mob/living/living_target = target_mind.current
+		if(!QDELETED(living_target))
+			. += living_target
+
+/**
  * Returns a list of minds of valid sacrifice targets from the current living players.
  */
 /datum/antagonist/heretic/proc/possible_sacrifice_targets(include_current_targets = TRUE) as /list

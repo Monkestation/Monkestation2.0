@@ -78,7 +78,7 @@
 
 	// We've got no targets set, let's try to set some.
 	// If we recently failed to acquire targets, we will be unable to acquire any.
-	if(!LAZYLEN(heretic_datum.current_sac_targets))
+	if(!LAZYLEN(heretic_datum.current_sacrifice_targets()))
 		atoms += user
 		return TRUE
 
@@ -107,7 +107,7 @@
 	// You can ALWAYS sacrifice heads of staff if you need to do so.
 	// Force it to work if the sacrifice is a cultist, even if there's no targets.
 	var/mob/living/carbon/human/sac = selected_atoms[1]
-	if(!LAZYLEN(heretic_datum.current_sac_targets) && !heretic_datum.can_sacrifice(sac))
+	if(!LAZYLEN(heretic_datum.current_sacrifice_targets()) && !heretic_datum.can_sacrifice(sac))
 		if(obtain_targets(user, heretic_datum = heretic_datum))
 			return TRUE
 		else
