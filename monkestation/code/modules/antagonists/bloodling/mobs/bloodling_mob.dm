@@ -333,4 +333,8 @@
 	)
 	speed = 3
 
+/mob/living/basic/bloodling/proper/ascended/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/seethrough_mob)
+
 #undef FORMAT_BIO_TEXT
