@@ -354,3 +354,16 @@
   Ice-Type:
   - rscadd: You can now buy a bundle with five hardlight spear implants (the maximum)
       for 25 TC
+2026-04-26:
+  CujoGaming:
+  - rscadd: Adds approved and denied stamps to Oshan HoP office
+  - rscdel: Removes mindshield boxes from HoP office on Delta and Blueshift
+  LettuceGuardian:
+  - image: Gun sprites are now overlaid below the hand layer.
+  Shoddd:
+  - balance: sandevistan after images are no longer dense
+  ilikesaying:
+  - rscdel: Removed San Marzano Canned Tomatoes
+  - qol: Tomato Sauce now takes regular Tomatoes
+  - image: removed Canned Tomatoes sprites
+  - map: removed Canned Tomato trash from ruins
