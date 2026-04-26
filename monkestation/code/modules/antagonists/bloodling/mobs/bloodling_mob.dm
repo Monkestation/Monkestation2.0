@@ -321,7 +321,6 @@
 	evolution_level = 7
 	initial_powers = list(
 		/datum/action/cooldown/bloodling/absorb,
-		/datum/action/cooldown/bloodling/ascension,
 		/datum/action/cooldown/bloodling/infest,
 		/datum/action/cooldown/bloodling/build,
 		/datum/action/cooldown/bloodling/devour,
