@@ -37,6 +37,7 @@
 	damage = 20
 	armour_penetration = 80
 	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
+	speed = 2.5
 
 /obj/projectile/bullet/a223
 	name = ".223 bullet"
@@ -53,6 +54,7 @@
 	damage = 30
 	armour_penetration = 100
 	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
+	speed = 2.5
 
 
 // .40 Sol Long, caseless rifle bullets
@@ -88,8 +90,8 @@
 /obj/projectile/bullet/c40sol/pierce
 	name = ".40 Sol match bullet"
 	icon_state = "gaussphase"
-	speed = 1.4
-	damage = 15
+	speed = 2.25
+	damage = 13
 	armour_penetration = 40
 	wound_bonus = -30
 	bare_wound_bonus = -10
@@ -101,15 +103,10 @@
 
 /obj/projectile/bullet/c40sol/pierce/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(isliving(target))
-		var/mob/living/poor_sap = target
-
-		// If the target mob has enough armor to stop the bullet, or the bullet has already gone through two people, stop it on this hit
-		if((poor_sap.run_armor_check(def_zone, BULLET, "", "", silent = TRUE) > 20) || (pierces > 2))
+		// If the bullet has already gone through two people, stop it on this hit
+		if((pierces > 2))
 			projectile_piercing = NONE
-
-			if(damage > 10) // Lets just be safe with this one
-				damage -= 5
-			armour_penetration -= 10
+			armour_penetration -= 20
 
 	return ..()
 
@@ -118,6 +115,7 @@
 	name = ".40 Sol Long incendiary bullet"
 	icon_state = "redtrac"
 	damage = 15
+	speed = 1.5
 	/// How many firestacks the bullet should impart upon a target when impacting
 	var/firestacks_to_give = 1
 
@@ -133,20 +131,23 @@
 
 /obj/projectile/bullet/strilka310
 	name = ".310 Strilka bullet"
-	damage = 55    //-5 from mosin
-	armour_penetration = 10
-	wound_bonus = -50  //-5 from mosin
+	damage = 45
+	armour_penetration = 20
+	wound_bonus = -60
+	bare_wound_bonus = -40
 	wound_falloff_tile = 0
+	speed = 2.25
 
 /obj/projectile/bullet/strilka310/surplus
 	name = ".310 Strilka surplus bullet"
 	weak_against_armour = TRUE //this is specifically more important for fighting carbons than fighting noncarbons. Against a simple mob, this is still a full force bullet
 	armour_penetration = 0
+	speed = 1.75
 
 /obj/projectile/bullet/strilka310/rubber
 	name = ".310 rubber bullet"
 	damage = 10
-	stamina = 27.5
+	stamina = 40
 	ricochets_max = 5
 	ricochet_incidence_leeway = 0
 	ricochet_chance = 130
@@ -154,11 +155,24 @@
 	shrapnel_type = null
 	sharpness = NONE
 	embed_type = null
+	speed = 1.5
 
 /obj/projectile/bullet/strilka310/ap
 	name = ".310 armor-piercing bullet"
-	damage = 45
-	armour_penetration = 60
+	damage = 35
+	armour_penetration = 50
 	wound_falloff_tile = -2
-	wound_bonus = -45
-	speed = 2
+	bare_wound_bonus = -55
+	speed = 3.3
+	projectile_piercing = PASSMOB
+
+/obj/projectile/bullet/strilka310/ap/on_hit(atom/target, blocked = 0, pierce_hit)
+	if(isliving(target))
+		// If the bullet has already gone through one person, stop it on this hit
+		if((pierces > 1))
+			projectile_piercing = NONE
+	armour_penetration -= 25
+	wound_bonus -= 30
+	bare_wound_bonus -= 30
+
+	return ..()

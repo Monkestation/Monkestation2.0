@@ -52,7 +52,7 @@
 	name = "7.12x82mm incendiary bullet"
 	damage = 15
 	fire_stacks = 3
-	speed = 1.25 //monke edit
+	speed = 1.5
 
 /obj/projectile/bullet/mm712x82/match
 	name = "7.12x82mm match bullet"
@@ -60,7 +60,7 @@
 	ricochet_chance = 60
 	ricochet_auto_aim_range = 4
 	ricochet_incidence_leeway = 55
-	speed = 2 //monke edit
+	speed = 2.5 //monke edit
 
 /obj/projectile/bullet/mm712x82/bouncy
 	name = "7.12x82mm rubber bullet"
@@ -70,7 +70,7 @@
 	ricochet_auto_aim_range = 4
 	ricochet_incidence_leeway = 0
 	ricochet_decay_chance = 0.9
-	speed = 1.25 //monke edit
+	speed = 1.5
 
 
 // 12.7x70mm (Malone / tank MG)

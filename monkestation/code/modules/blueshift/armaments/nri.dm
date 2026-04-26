@@ -77,14 +77,15 @@
 /datum/armament_entry/company_import/nri_surplus/misc/trench_tool
 	item_type = /obj/item/trench_tool
 	cost = PAYCHECK_CREW
-/*
+
 /datum/armament_entry/company_import/nri_surplus/misc/tutel
 	item_type = /obj/item/ammo_box/tacshield/tutel/
 	cost = PAYCHECK_CREW * 3
+	contraband = TRUE
 
 /datum/armament_entry/company_import/nri_surplus/firearm
 	subcategory = "Firearms"
-
+/*
 /datum/armament_entry/company_import/nri_surplus/firearm/shotgun_revolver
 	item_type = /obj/item/gun/ballistic/revolver/shotgun_revolver
 	cost = PAYCHECK_COMMAND * 6
@@ -96,6 +97,7 @@
 /datum/armament_entry/company_import/nri_surplus/firearm/plasma_marksman
 	item_type = /obj/item/gun/ballistic/automatic/pistol/plasma_marksman
 	cost = PAYCHECK_COMMAND * 6
+
 
 /datum/armament_entry/company_import/nri_surplus/firearm/miecz
 	item_type = /obj/item/gun/ballistic/automatic/miecz
@@ -116,19 +118,20 @@
 	contraband = TRUE
 	cost = PAYCHECK_COMMAND * 16
 	restricted = TRUE
-
+*/
 /datum/armament_entry/company_import/nri_surplus/firearm_ammo
 	subcategory = "Firearm Magazines"
 	cost = PAYCHECK_CREW
-
+/*
 /datum/armament_entry/company_import/nri_surplus/firearm_ammo/plasma_battery
 	item_type = /obj/item/ammo_box/magazine/recharge/plasma_battery
 
 /datum/armament_entry/company_import/nri_surplus/firearm_ammo/miecz
 	item_type = /obj/item/ammo_box/magazine/miecz/spawns_empty
-
+*/
 /datum/armament_entry/company_import/nri_surplus/firearm_ammo/sakhno
 	item_type = /obj/item/ammo_box/strilka310
+	contraband = TRUE
 
 /datum/armament_entry/company_import/nri_surplus/firearm_ammo/lanca
 	item_type = /obj/item/ammo_box/magazine/lanca/spawns_empty
@@ -138,4 +141,18 @@
 	item_type = /obj/item/ammo_box/magazine/wylom
 	contraband = TRUE
 	cost = PAYCHECK_CREW * 3
-*/
+
+/datum/armament_entry/company_import/nri_surplus/ammo_boxes/strilka_lethal
+	item_type = /obj/item/ammo_box/c310_cargo_box
+	cost = PAYCHECK_CREW * 2
+	contraband = TRUE
+
+/datum/armament_entry/company_import/nri_surplus/ammo_boxes/strilka_rubber
+	item_type = /obj/item/ammo_box/c310_cargo_box/rubber
+	contraband = TRUE
+
+/datum/armament_entry/company_import/nri_surplus/ammo_boxes/strilka_ap
+	item_type = /obj/item/ammo_box/c310_cargo_box/piercing
+	cost = PAYCHECK_CREW * 2
+	contraband = TRUE
+

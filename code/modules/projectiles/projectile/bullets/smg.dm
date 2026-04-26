@@ -22,11 +22,13 @@
 /obj/projectile/bullet/c45/ap
 	name = ".45 armor-piercing bullet"
 	armour_penetration = 75
+	speed = 2.25
 
 /obj/projectile/bullet/incendiary/c45
 	name = ".45 incendiary bullet"
 	damage = 15
 	fire_stacks = 2
+	speed = 1.5
 
 /obj/projectile/bullet/c45/hp
 	name = ".45 hollow-point bullet"
@@ -51,11 +53,13 @@
 	damage = 15
 	armour_penetration = 40
 	embed_type = null
+	speed = 2.25
 
 /obj/projectile/bullet/incendiary/c46x30mm
 	name = "4.6x30mm incendiary bullet"
 	damage = 10
 	fire_stacks = 1
+	speed = 1.5
 
 /obj/projectile/bullet/c46x30mm/salt
 	name = "4.6x30mm saltshot bullet"
@@ -77,14 +81,14 @@
 
 /obj/projectile/bullet/c27_54cesarzowa
 	name = ".27-54 Cesarzowa piercing bullet"
-	damage = 15
+	damage = 12
 	armour_penetration = 30
 	wound_bonus = -10
 
 /obj/projectile/bullet/c27_54cesarzowa/rubber
 	name = ".27-54 Cesarzowa rubber bullet"
 	stamina = 15
-	damage = 6
+	damage = 3
 	weak_against_armour = TRUE
 	wound_bonus = -30
 	bare_wound_bonus = -10

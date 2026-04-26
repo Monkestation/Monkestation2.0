@@ -71,7 +71,6 @@
 	item_type = /obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/empty
 	cost = PAYCHECK_COMMAND * 2
 
-/*
 
 /datum/armament_entry/company_import/sol_defense/sidearm
 	subcategory = "Sidearms"
@@ -92,6 +91,7 @@
 	item_type = /obj/item/gun/ballistic/revolver/takbok
 	cost = PAYCHECK_COMMAND * 6
 
+/*
 // Lethal anything that's not a pistol, requires high company interest
 
 /datum/armament_entry/company_import/sol_defense/longarm
@@ -149,6 +149,7 @@
 /datum/armament_entry/company_import/sol_defense/magazines/sol_rifle_standard
 	item_type = /obj/item/ammo_box/magazine/c40sol_rifle/standard/starts_empty
 	cost = PAYCHECK_COMMAND
+	contraband = TRUE
 
 /datum/armament_entry/company_import/sol_defense/magazines/sol_grenade_standard
 	item_type = /obj/item/ammo_box/magazine/c980_grenade/starts_empty

@@ -136,7 +136,7 @@
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/grenade_launcher.ogg'
 	can_suppress = FALSE
 	burst_size = 1
-	fire_delay = 5
+	fire_delay = 7
 	actions_types = list()
 	/// The currently stored range to detonate shells at
 	var/target_range = 14

@@ -12,7 +12,7 @@
 	wound_bonus = 0
 	wound_falloff_tile = -5
 	embed_falloff_tile = -3
-	speed = 1.6
+	speed = 1.75
 	//light_system = OVERLAY_LIGHT
 	//light_outer_range = 1.25
 	//light_power = 1

@@ -17,10 +17,11 @@
 
 /obj/projectile/bullet/c9mm/ap
 	name = "9mm armor-piercing bullet"
-	damage = 27
+	damage = 25
 	armour_penetration = 75
 	embed_type = null
 	shrapnel_type = null
+	speed = 2.25
 
 /obj/projectile/bullet/c9mm/hp
 	name = "9mm hollow-point bullet"
@@ -31,6 +32,7 @@
 	name = "9mm incendiary bullet"
 	damage = 15
 	fire_stacks = 2
+	speed = 1.5
 
 
 // 10mm
@@ -43,6 +45,7 @@
 	name = "10mm armor-piercing bullet"
 	damage = 35
 	armour_penetration = 60
+	speed = 2.25
 
 /obj/projectile/bullet/c10mm/hp
 	name = "10mm hollow-point bullet"
@@ -53,14 +56,15 @@
 	name = "10mm incendiary bullet"
 	damage = 20
 	fire_stacks = 3
+	speed = 1.5
 
 
 ///.35 sol short, weak crew pistol/smg round
 
-/obj/projectile/bullet/c35sol ///Yes yes, fits in both pistols and revolvers. I'm putting it here
+/obj/projectile/bullet/c35sol ///Yes yes, fits in both pistols and revolvers. I'm putting it here.
 	name = ".35 Sol Short bullet"
 	damage = 15
-	wound_bonus = -5 // Normal bullets are 20
+	wound_bonus = -15
 	bare_wound_bonus = 5
 	embed_falloff_tile = -4
 
@@ -106,9 +110,10 @@
 
 /obj/projectile/bullet/c35sol/pierce // What it says on the tin, AP rounds
 	name = ".35 Sol Short armor piercing bullet"
-	damage = 13
+	damage = 11
 	bare_wound_bonus = -30
-	armour_penetration = 30
+	armour_penetration = 50
+	speed = 2.25
 
 
 ///.585 Trappiste, heavy crew pistol/smg round
@@ -130,7 +135,7 @@
 
 /obj/projectile/bullet/c585trappiste/hollowpoint
 	name = ".585 Trappiste hollowhead bullet"
-	damage = 25
+	damage = 30
 	weak_against_armour = TRUE
 	wound_bonus = 10
 	bare_wound_bonus = 20
@@ -141,13 +146,13 @@
 /obj/projectile/bullet/c35
 	name = ".35 Auto bullet"
 	damage = 20
-	wound_bonus = -5
+	wound_bonus = -10
 
 /obj/projectile/bullet/c35/rubber
 	name = ".35 Auto rubber bullet"
 	icon = 'monkestation/code/modules/security/icons/paco_ammo.dmi'
 	icon_state = "rubber_bullet"
-	damage = 4
+	damage = 3
 	stamina = 24
 	sharpness = NONE
 	embed_type = null
