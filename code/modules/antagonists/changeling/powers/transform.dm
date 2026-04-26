@@ -113,6 +113,9 @@
 	var/icon/cached_flat_icon
 	/// HUD job icon of the ID
 	var/hud_icon
+	/// Things we store for examine
+	var/stored_name
+	var/stored_job
 
 /obj/item/changeling/id/equipped(mob/user, slot, initial)
 	. = ..()
@@ -131,7 +134,7 @@
 
 /obj/item/changeling/id/get_id_examine_strings(mob/user)
 	. = ..()
-	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "hugeicon")]")
+	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
 
 /obj/item/changeling/id/get_examine_icon(mob/user)
 	return icon2html(get_cached_flat_icon(), user)

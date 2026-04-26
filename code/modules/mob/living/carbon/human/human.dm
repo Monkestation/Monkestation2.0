@@ -112,8 +112,15 @@
 		var/mob/viewer = usr
 		var/can_see_still = (viewer in viewers(src))
 
+		var/obj/item/id_slot = wear_id
 		var/obj/item/card/id/id = wear_id?.GetID()
+
 		var/same_id = id && (href_list["id_ref"] == REF(id) || href_list["id_name"] == id.registered_name)
+
+		if(istype(id_slot, /obj/item/changeling/id))
+			var/obj/item/changeling/id/flesh_id = id_slot
+			same_id = id_slot && (href_list["id_ref"] == REF(id) || href_list["id_name"] == flesh_id.stored_name)
+
 		if(!same_id && can_see_still)
 			to_chat(viewer, span_notice("[p_They()] [p_are()] no longer wearing that ID card."))
 			return
@@ -129,24 +136,44 @@
 			to_chat(viewer, span_notice("You can't make out that ID from here."))
 			return
 
-		var/id_name = id.registered_name
-		var/id_age = id.registered_age
-		var/id_job = id.assignment
-		// Should probably be recorded on the ID, but this is easier (albiet more restrictive) on chameleon ID users
-		var/datum/record/crew/record = find_record(id_name)
-		var/id_blood_type = record?.blood_type
-		var/id_gender = record?.gender
-		var/id_species = record?.species
-		var/id_icon = jointext(id.get_id_examine_strings(viewer), "")
-		// Fill in some blanks for chameleon IDs to maintain the illusion of a real ID
-		if(istype(id, /obj/item/card/id/advanced/chameleon))
-			id_gender ||= gender
+		var/id_name
+		var/id_age
+		var/id_job
+		var/id_blood_type
+		var/id_gender
+		var/id_species
+		var/id_icon
+
+		if(istype(id_slot, /obj/item/changeling/id))
+			var/obj/item/changeling/id/flesh_id = id_slot
+			id_name = flesh_id.stored_name
+			id_job = flesh_id.stored_job
+			// Everything else gets pulled from their profile
+			id_age ||= age
+			id_gender ||= capitalize(gender)
 			id_species ||= dna.species.name
 			id_blood_type ||= get_blood_type()
+			id_icon = jointext(flesh_id.get_id_examine_strings(viewer), "")
+		else
+			id_name = id.registered_name
+			id_age = id.registered_age
+			id_job = id.assignment
+			// Should probably be recorded on the ID, but this is easier (albiet more restrictive) on chameleon ID users
+			var/datum/record/crew/record = find_record(id_name)
+			id_blood_type = record?.blood_type
+			id_gender = record?.gender
+			id_species = record?.species
+			id_icon = jointext(id.get_id_examine_strings(viewer), "")
 
-		if(istype(id, /obj/item/card/id/advanced))
-			var/obj/item/card/id/advanced/advancedID = id
-			id_job = advancedID.trim_assignment_override || id_job
+			// Fill in some blanks for chameleon IDs to maintain the illusion of a real ID
+			if(istype(id, /obj/item/card/id/advanced/chameleon))
+				id_gender ||= gender
+				id_species ||= dna.species.name
+				id_blood_type ||= get_blood_type()
+
+			if(istype(id, /obj/item/card/id/advanced))
+				var/obj/item/card/id/advanced/advancedID = id
+				id_job = advancedID.trim_assignment_override || id_job
 
 		var/id_examine = span_slightly_larger(separator_hr("This is <em>[src]'s ID card</em>."))
 		id_examine += "<div class='img_by_text_container'>"

@@ -513,13 +513,22 @@
 		. += "[t_He] [t_has] [back.examine_title(user)] on [t_his] back."
 	//ID
 	if(wear_id && !HAS_TRAIT(wear_id, TRAIT_EXAMINE_SKIP))
-		var/obj/item/card/id/id = wear_id.GetID()
-		if(id && get_dist(user, src) <= ID_EXAMINE_DISTANCE)
-			var/id_href = "<a href='byond://?src=[REF(src)];see_id=1;id_ref=[REF(id)];id_name=[id.registered_name];examine_time=[world.time]'>[wear_id.examine_title(user)]</a>"
-			. += "[t_He] [t_is] wearing [id_href]."
-
+		var/obj/item/id_slot = wear_id
+		if(istype(id_slot, /obj/item/changeling/id))
+			var/obj/item/changeling/id/flesh_id = id_slot
+			if(flesh_id && get_dist(user, src) <= ID_EXAMINE_DISTANCE)
+				var/id_href = "<a href='byond://?src=[REF(src)];see_id=1;id_ref=[REF(flesh_id)];id_name=[flesh_id.stored_name];examine_time=[world.time]'>[wear_id.examine_title(user)]</a>"
+				. += "[t_He] [t_is] wearing [id_href]."
+			else
+				. += "[t_He] [t_is] wearing [wear_id.examine_title(user)]."
 		else
-			. += "[t_He] [t_is] wearing [wear_id.examine_title(user)]."
+			var/obj/item/card/id/id = wear_id.GetID()
+			if(id && get_dist(user, src) <= ID_EXAMINE_DISTANCE)
+				var/id_href = "<a href='byond://?src=[REF(src)];see_id=1;id_ref=[REF(id)];id_name=[id.registered_name];examine_time=[world.time]'>[wear_id.examine_title(user)]</a>"
+				. += "[t_He] [t_is] wearing [id_href]."
+
+			else
+				. += "[t_He] [t_is] wearing [wear_id.examine_title(user)]."
 	//Hands
 	for(var/obj/item/held_thing in held_items)
 		if((held_thing.item_flags & (ABSTRACT|HAND_ITEM)) || HAS_TRAIT(held_thing, TRAIT_EXAMINE_SKIP))
