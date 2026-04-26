@@ -148,11 +148,12 @@
 			var/obj/item/changeling/id/flesh_id = id_slot
 			id_name = flesh_id.stored_name
 			id_job = flesh_id.stored_job
-			// Everything else gets pulled from their profile
-			id_age ||= age
-			id_gender ||= capitalize(gender)
-			id_species ||= dna.species.name
-			id_blood_type ||= get_blood_type()
+			// Since we get actual name from ID might as well try to pull their records
+			var/datum/record/crew/record = find_record(id_name)
+			id_age = record?.age
+			id_blood_type = record?.blood_type
+			id_gender = record?.gender
+			id_species = record?.species
 			id_icon = jointext(flesh_id.get_id_examine_strings(viewer), "")
 		else
 			id_name = id.registered_name
