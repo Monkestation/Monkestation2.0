@@ -40,7 +40,7 @@
 		"\"Too large to assemble directly, will need to craft intermediaries.\"",
 	)
 
-/obj/item/book/granter/crafting_recipe/maintenance_battle_tank/recoil(mob/living/user)
+/obj/item/book/granter/crafting_recipe/vendozer/recoil(mob/living/user)
 	to_chat(user, span_warning("The book ignites in rage and fury, incinerating itself before you can read it."))
 	qdel(src)
 

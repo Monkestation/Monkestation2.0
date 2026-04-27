@@ -703,7 +703,7 @@
 	cost = 8
 
 /datum/uplink_item/support/missilerackammo
-	name = "short range missiles"
+	name = "Short Range Missiles"
 	desc = "A box of large missiles, ready for loading into an SRM-8 exosuit missile rack."
 	item = /obj/item/mecha_ammo/missiles_srm
 	cost = 5

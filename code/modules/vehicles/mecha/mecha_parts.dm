@@ -342,7 +342,7 @@
 
 /obj/item/mecha_parts/part/mbt_tracks
 	name="\improper Maintenance Battle Tank Tracks"
-	desc="A set of tracks made out of Mule Bot wheels and conveytorbelts."
+	desc="A set of tracks made out of wheelchairs and conveytor belts."
 	icon = 'icons/mecha/tanks_construction.dmi'
 	icon_state = "tracks"
 

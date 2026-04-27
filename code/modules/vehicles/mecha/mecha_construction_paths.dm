@@ -840,7 +840,7 @@
 	return list(
 		list(
 			"key" = TOOL_CROWBAR,
-			"desc" = "The treads can be lifted up into their axles with a <b>crowbared</b>.",
+			"desc" = "The treads can be lifted up into their axles with a <b>crowbar</b>.",
 			"forward_message" = "added tracks",
 		),
 		list(
@@ -904,35 +904,35 @@
 		list(
 			"key" = TOOL_WRENCH,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "there are bolt holes to fill now that the cannon is in its mounting, use a <b> wrench </b> to fix that.",
+			"desc" = "there are bolt holes to fill now that the cannon is in its mounting, use a <b>wrench</b> to fix that.",
 			"forward_message" = "secured cannon",
 			"backward_message" = "dropped cannon"
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_WRENCH,
-			"desc" = "the lights and optics for the cannon can now be attached with a <b> screwdriver </b>.",
+			"desc" = "the lights and optics for the cannon can now be attached with a <b>screwdriver</b>.",
 			"forward_message" = "mounted optics",
 			"backward_message" = "unsecured cannon"
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_WRENCH,
-			"desc" = "theres more screws then you thought, keep using that <b> screwdriver </b>.",
+			"desc" = "theres more screws then you thought, keep using that <b>screwdriver</b>.",
 			"forward_message" = "actually mounted optics",
 			"backward_message" = "unsecured optics"
 		),
 		list(
 			"key" = TOOL_WRENCH,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "the last thing to put on is all the external accessories, use a <b> wrench </b>.",
+			"desc" = "the last thing to put on is all the external accessories, use a <b>wrench</b>.",
 			"forward_message" = "mounted accessories",
 			"backward_message" = "broke screws"
 		),
 		list(
 			"key" = TOOL_WELDER,
 			"back_key" = TOOL_WRENCH,
-			"desc" = "the tank is ready to be assembled with a <b> welding tool </b>.",
+			"desc" = "the tank is ready to be assembled with a <b>welding tool</b>.",
 			"forward_message" = "welded tank",
 			"backward_message" = "unsecured accessories"
 		),
