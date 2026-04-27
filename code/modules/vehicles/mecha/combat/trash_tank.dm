@@ -14,7 +14,7 @@
 	armor_type = /datum/armor/scrap_tank //mediocre armor, do you expect any better?
 	internal_damage_threshold = 60 //Its got shitty durability
 	var/crushdmglower = 2
-	var/crushdmgupper = 5
+	var/crushdmgupper = 4
 	wreckage = /obj/structure/closet/crate/trashcart
 	mech_type = EXOSUIT_MODULE_TRASHTANK
 	equip_by_category = list(
@@ -103,13 +103,14 @@
 	max_integrity = 400 // thoughts, you must do alot of work to make this thing, but compared to another traitor item, the devitt Mk.III, it only requires 1 crewman and doesnt cost as much tc. I say it has less HP cause it wont be as fast, but you dont need a 2nd person to work
 	force = 30
 	movedelay = 1.6
+	bumpsmash = TRUE
 	stepsound = 'monkestation/sound/mecha/tank_treads.ogg'
 	turnsound = 'monkestation/sound/mecha/tank_treads.ogg'
 	mecha_flags = IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE //can't strafe bruv
 	armor_type = /datum/armor/maintenance_battle_tank //you put alot of effort into this huh? Well its still a pile of trash, just alot of it.
 	internal_damage_threshold = 35 //beefer
 	var/crushdmglower = 4
-	var/crushdmgupper = 10
+	var/crushdmgupper = 8
 	wreckage = /obj/structure/mecha_wreckage/maintenance_battle_tank
 	mech_type = EXOSUIT_MODULE_TRASHTANK
 	equip_by_category = list(
@@ -134,6 +135,42 @@
 	energy = 40
 	fire = 70
 	acid = 60
+
+
+/datum/action/vehicle/sealed/mecha/mech_smoke
+	name = "Smoke"
+	button_icon_state = "mech_smoke"
+
+/datum/action/vehicle/sealed/mecha/mech_smoke/Trigger(trigger_flags)
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants))
+		return
+	if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_SMOKE) && chassis.smoke_charges>0)
+		chassis.smoke_system.start()
+		chassis.smoke_charges--
+		TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_SMOKE, chassis.smoke_cooldown)
+
+/datum/action/vehicle/sealed/mecha/mech_zoom
+	name = "Zoom"
+	button_icon_state = "mech_zoom_off"
+
+/datum/action/vehicle/sealed/mecha/mech_zoom/Trigger(trigger_flags)
+	if(!..())
+		return
+	if(!owner.client || !chassis || !(owner in chassis.occupants))
+		return
+	chassis.zoom_mode = !chassis.zoom_mode
+	button_icon_state = "mech_zoom_[chassis.zoom_mode ? "on" : "off"]"
+	chassis.log_message("Toggled zoom mode.", LOG_MECHA)
+	to_chat(owner, "[icon2html(chassis, owner)]<font color='[chassis.zoom_mode?"blue":"red"]'>Zoom mode [chassis.zoom_mode?"en":"dis"]abled.</font>")
+	if(chassis.zoom_mode)
+		owner.client.view_size.setTo(4.5)
+		owner.playsound_local(src, 'sound/mecha/imag_enh.ogg', 50)
+	else
+		owner.client.view_size.resetToDefault()
+	build_all_button_icons()
+
 
 /obj/vehicle/sealed/mecha/maintenance_battle_tank/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()

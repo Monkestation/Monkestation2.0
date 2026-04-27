@@ -141,6 +141,13 @@
 	cost = 16
 	restricted_roles = list(JOB_STATION_ENGINEER)
 
+/datum/uplink_item/role_restricted/maintenance_battle_tank
+	name = "Maintenance Battle Tank Blueprints"
+	desc = "One of our archivists found these mad scribblings from Eastern Kentucky 400 years ago, we translated it from hill billy and now you can assemble... whatever it is."
+	item = /obj/item/book/granter/crafting_recipe/maintenance_battle_tank
+	cost = 20
+	restricted_roles = list(JOB_STATION_ENGINEER, JOB_ASSISTANT)
+
 /datum/uplink_item/role_restricted/magillitis_serum
 	name = "Magillitis Serum Autoinjector"
 	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. \

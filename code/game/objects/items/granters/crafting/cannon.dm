@@ -40,6 +40,32 @@
 		"\"Too large to assemble directly, will need to craft intermediaries.\"",
 	)
 
-/obj/item/book/granter/crafting_recipe/vendozer/recoil(mob/living/user)
+/obj/item/book/granter/crafting_recipe/maintenance_battle_tank/recoil(mob/living/user)
 	to_chat(user, span_warning("The book ignites in rage and fury, incinerating itself before you can read it."))
+	qdel(src)
+
+/obj/item/book/granter/crafting_recipe/maintenance_battle_tank
+	name = "Redneck's guide to engineering: vol.345, Appalachia Armored Warfare"
+	desc = "A very thick and old magazine, you can smell chewing tabbacco and cheap whiskey eminating from the book."
+	crafting_recipe_types = list(
+		/datum/crafting_recipe/mbt_chassis,
+		/datum/crafting_recipe/mbt_engine,
+		/datum/crafting_recipe/mbt_tracks,
+		/datum/crafting_recipe/mbt_turret,
+		/datum/crafting_recipe/mbt_autoloader,
+		/datum/crafting_recipe/mbt_gun,
+		/datum/crafting_recipe/mbt_accessories,
+	)
+	icon_state = "book1"
+	remarks = list(
+		"\"I'd bet you could use reinforced tables for this.\"",
+		"\"Making engines is that easy? wow!\"",
+		"\"This is just East German technical documents...\"",
+		"\"I never knew the strength and certainty of wood.\"",
+		"\"Wish I had the next issue, it says its about nuclear bombs.\"",
+		"\"It has smoke grenades installed? oooooh.\"",
+	)
+
+/obj/item/book/granter/crafting_recipe/vendozer/recoil(mob/living/user)
+	to_chat(user, span_warning("The whiskey finally soaks through the last strands of the paper, turning it to mush."))
 	qdel(src)
