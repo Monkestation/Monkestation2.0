@@ -102,7 +102,7 @@
 	SET_BASE_PIXEL(-48, 0)
 	max_integrity = 400 // thoughts, you must do alot of work to make this thing, but compared to another traitor item, the devitt Mk.III, it only requires 1 crewman and doesnt cost as much tc. I say it has less HP cause it wont be as fast, but you dont need a 2nd person to work
 	force = 30
-	movedelay = 1.5
+	movedelay = 1.6
 	stepsound = 'monkestation/sound/mecha/tank_treads.ogg'
 	turnsound = 'monkestation/sound/mecha/tank_treads.ogg'
 	mecha_flags = IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE //can't strafe bruv
@@ -115,14 +115,14 @@
 	equip_by_category = list(
 		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/maintenance_battle_cannon,
 		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lighttankmg,
-		MECHA_UTILITY = list(),
-		MECHA_POWER = list(),
+		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/radio, /obj/item/mecha_parts/mecha_equipment/air_tank/full),
+		MECHA_POWER = list(/obj/item/mecha_parts/mecha_equipment/generator),
 		MECHA_ARMOR = list(),
 	)
 	max_equip_by_category = list(
 		MECHA_L_ARM = 1,
 		MECHA_R_ARM = 1,
-		MECHA_UTILITY = 0,
+		MECHA_UTILITY = 5,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 0,
 	)
