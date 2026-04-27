@@ -355,9 +355,9 @@
 	if(cycle_tracker > 33)
 		stop_beaming()
 	for(var/obj/effect/abstract/gazer_beam_filling/fillings as anything in beam_fillings)
-		if(prob(98))
+		if(prob(80))
 			continue
-		// 2% chance to pull you towards the beam
+		// 20% chance to pull you towards the beam
 		fillings.pull_victims()
 	for(var/turf/target as anything in targets)
 		if(iswallturf(target))
