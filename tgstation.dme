@@ -6889,6 +6889,8 @@
 #include "monkestation\code\modules\antagonists\bloodling\abilities\infect.dm"
 #include "monkestation\code\modules\antagonists\bloodling\abilities\infest.dm"
 #include "monkestation\code\modules\antagonists\bloodling\abilities\transfer_biomass.dm"
+#include "monkestation\code\modules\antagonists\bloodling\abilities\swim.dm"
+#include "monkestation\code\modules\antagonists\bloodling\abilities\bolster.dm"
 #include "monkestation\code\modules\antagonists\bloodling\abilities\whiplash.dm"
 #include "monkestation\code\modules\antagonists\bloodling\mobs\bloodling_mob.dm"
 #include "monkestation\code\modules\antagonists\bloodling\mobs\minions.dm"
