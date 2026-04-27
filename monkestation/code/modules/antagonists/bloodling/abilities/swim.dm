@@ -11,7 +11,7 @@
 
 /datum/action/cooldown/bloodling/swim/PreActivate(atom/target)
 	if(!istype(get_turf(target), /turf/open/misc/bloodling))
-		owner.balloon_alert(owner, "No flesh at destination!")
+		owner.balloon_alert(owner, "no flesh at destination!")
 		return FALSE
 	. = ..()
 	return
