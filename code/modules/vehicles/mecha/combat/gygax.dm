@@ -55,7 +55,7 @@
 		MECHA_ARMOR = 3,
 	)
 	equip_by_category = list(
-		MECHA_L_ARM = null,,
+		MECHA_L_ARM = null,
 		MECHA_R_ARM = null,
 		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/radio, /obj/item/mecha_parts/mecha_equipment/air_tank/full, /obj/item/mecha_parts/mecha_equipment/thrusters/ion),
 		MECHA_POWER = list(),
@@ -72,11 +72,11 @@
 	fire = 100
 	acid = 100
 
-/obj/vehicle/sealed/mecha/gygax/dark/loaded/Initialize(mapload)
+/obj/vehicle/sealed/mecha/gygax/dark/Initialize(mapload)
 	. = ..()
 	max_ammo()
 
-/obj/vehicle/sealed/mecha/gygax/dark/loaded/populate_parts()
+/obj/vehicle/sealed/mecha/gygax/dark/populate_parts()
 	cell = new /obj/item/stock_parts/power_store/cell/bluespace(src)
 	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
