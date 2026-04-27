@@ -11,7 +11,7 @@
 
 /datum/action/cooldown/bloodling/bolster/PreActivate(atom/target)
 	if(!istype(owner.loc, /turf/open/misc/bloodling))
-		owner.balloon_alert(owner, "The ground has no biomass!")
+		owner.balloon_alert(owner, "the ground has no biomass!")
 		return FALSE
 	. = ..()
 	return
@@ -22,5 +22,5 @@
 	our_mob.add_biomass(150)
 	our_mob.Stun(10, ignore_canstun = TRUE)
 	playsound(get_turf(owner), 'sound/items/drink.ogg', 30)
-	owner.balloon_alert(owner, "Your biomass is restored!")
+	owner.balloon_alert(owner, "your biomass is restored!")
 	return TRUE
