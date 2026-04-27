@@ -203,7 +203,7 @@
 	name = "exosuit repair droid"
 	desc = "An automated repair droid for exosuits. Scans for damage and repairs it. Can fix almost all types of external or internal damage."
 	icon_state = "repair_droid"
-	energy_drain = 50
+	energy_drain = 250
 	range = 0
 	can_be_toggled = TRUE
 	active = FALSE
@@ -211,7 +211,7 @@
 	unstackable = TRUE
 	movedelay = 0.4
 	/// Repaired health per second
-	var/health_boost = 1
+	var/health_boost = 3 // 30 hp in 10 seconds, which is alot actually. A 30 second fight could repair 1/3rd of a gygaxes hp
 	var/icon/droid_overlay
 	var/list/repairable_damage = list(MECHA_INT_TEMP_CONTROL,MECHA_CABIN_AIR_BREACH)
 
