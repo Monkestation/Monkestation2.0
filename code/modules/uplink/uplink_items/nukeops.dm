@@ -696,6 +696,18 @@
 	item = /obj/item/mecha_ammo/flamer
 	cost = 1
 
+/datum/uplink_item/support/missilerack
+	name = "\improper SRM-8 missile rack"
+	desc = "A weapon for combat exosuits. Launches short range missiles."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
+	cost = 8
+
+/datum/uplink_item/support/missilerackammo
+	name = "short range missiles"
+	desc = "A box of large missiles, ready for loading into an SRM-8 exosuit missile rack."
+	item = /obj/item/mecha_ammo/missiles_srm
+	cost = 5
+
 /datum/uplink_item/support/devitt
 	name = "Devitt Mk3 Light Tank"
 	desc = "An ancient tank found in the wearhouse, comes prepared with a cannon and machinegun. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
