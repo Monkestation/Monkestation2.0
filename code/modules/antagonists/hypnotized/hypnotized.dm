@@ -5,6 +5,7 @@
 	roundend_category = "hypnotized victims"
 	antag_hud_name = "brainwashed"
 	ui_name = "AntagInfoBrainwashed"
+	antag_flags = ANTAG_FAKE
 	show_in_antagpanel = TRUE
 	antagpanel_category = ANTAG_GROUP_CREW
 	show_name_in_check_antagonists = TRUE

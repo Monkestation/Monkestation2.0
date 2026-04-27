@@ -18,20 +18,6 @@
 #define STARGAZER_TRAIT "stargazer"
 /// Trait source for the vanguard scripture
 #define VANGUARD_TRAIT "vanguard"
-/// Source trait for Bloodsuckers-related traits
-#define BLOODSUCKER_TRAIT "bloodsucker_trait"
-/// Source for bloodsucker mesmerize related traits
-#define MESMERIZE_TRAIT "meserize_trait"
-/// Source trait for bloodsucker dominate related traits
-#define DOMINATE_TRAIT "dominate_trait"
-/// Source trait for bloodsuckers in torpor.
-#define TORPOR_TRAIT "torpor_trait"
-/// Source trait for stuff related to bloodsuckers in coffins.
-#define BLOODSUCKER_COFFIN_TRAIT "bloodsucker_coffin_trait"
-/// Source trait for bloodsuckers using fortitude.
-#define FORTITUDE_TRAIT "fortitude_trait"
-/// Source trait for bloodsucker mesmerization.
-#define MESMERIZED_TRAIT "mesmerized_trait"
 /// Source trait for Monster Hunter-related traits
 #define HUNTER_TRAIT "monsterhunter_trait"
 /// Source trait while Feeding

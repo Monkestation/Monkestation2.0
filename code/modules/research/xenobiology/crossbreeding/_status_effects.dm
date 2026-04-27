@@ -691,6 +691,8 @@
 		linked_alert.icon_state = "slime_bluespace_on"
 
 	if(owner.stat >= SOFT_CRIT)
+		if(HAS_TRAIT(owner, TRAIT_FAKEDEATH) && owner.health > owner.crit_threshold)
+			return ..()
 		owner.visible_message(span_warning("[linked_extract] notices the change in [owner]'s physical health, and activates!"))
 		do_sparks(5,FALSE,owner)
 		var/F = find_safe_turf(zlevels = owner.z, extended_safety_checks = TRUE)

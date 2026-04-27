@@ -9,12 +9,6 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		option.info = span_boldnotice(initial(guardian_path.creator_desc))
 		.[guardian_path] = option
 
-	//MONKESTATION EDIT START
-	// Hack to change Timestop Guardian's radial icon, since it's in a different DMI
-	var/datum/radial_menu_choice/timestop_opt = .[/mob/living/basic/guardian/standard/timestop]
-	timestop_opt.image = image(icon = 'monkestation/icons/bloodsuckers/timestop_guardian.dmi', icon_state = "timestop")
-	//MONKESTATION EDIT END
-
 /// An item which grants you your very own soul buddy
 /obj/item/guardian_creator
 	name = "enchanted deck of tarot cards"
@@ -84,7 +78,9 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 			continue
 		radial_options -= possible_guardian
 	var/mob/living/basic/guardian/guardian_path
-	if(random)
+	if(IS_VAMPIRE(user))
+		guardian_path = /mob/living/basic/guardian/standard/timestop
+	else if(random)
 		guardian_path = pick(possible_guardians)
 	else
 		guardian_path = show_radial_menu(user, src, radial_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 42, require_near = TRUE)

@@ -94,6 +94,9 @@
 	owner.stamina.adjust(3.5 * seconds_between_ticks, forced = TRUE)
 	if(needs_update)
 		owner.updatehealth()
+	// it's a blood vial, so... it should cure your blood.
+	owner.remove_status_effect(/datum/status_effect/blood_drain)
+	owner.remove_status_effect(/datum/status_effect/bloodboil)
 
 /datum/movespeed_modifier/cursed_blood
 	multiplicative_slowdown = -0.6

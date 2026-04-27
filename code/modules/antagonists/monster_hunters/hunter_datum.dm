@@ -39,7 +39,7 @@
 	/// A typecache of ability types that will be revealed to the monster hunter when they gain insight.
 	var/static/list/monster_abilities = typecacheof(list(
 		/datum/action/changeling,
-		/datum/action/cooldown/bloodsucker
+		/datum/action/cooldown/vampire,
 	))
 
 /datum/antagonist/monsterhunter/apply_innate_effects(mob/living/mob_override)
@@ -67,8 +67,10 @@
 	INVOKE_ASYNC(src, PROC_REF(load_wonderland))
 	owner.add_traits(mind_traits, HUNTER_TRAIT)
 	//Teach Stake crafting
-	owner.teach_crafting_recipe(/datum/crafting_recipe/hardened_stake)
-	owner.teach_crafting_recipe(/datum/crafting_recipe/silver_stake)
+	owner.teach_crafting_recipe(list(
+		/datum/crafting_recipe/hardened_stake,
+		/datum/crafting_recipe/silver_stake,
+	))
 	var/mob/living/carbon/criminal = owner.current
 	var/obj/item/rabbit_locator/card = new(criminal.drop_location(), src)
 	var/list/slots = list("backpack" = ITEM_SLOT_BACKPACK, "left pocket" = ITEM_SLOT_LPOCKET, "right pocket" = ITEM_SLOT_RPOCKET)
@@ -90,6 +92,10 @@
 	locator = null
 	to_chat(owner.current, span_userdanger("Your hunt has ended: You enter retirement once again, and are no longer a Monster Hunter."))
 	owner.special_role = null
+	owner.forget_crafting_recipe(list(
+		/datum/crafting_recipe/hardened_stake,
+		/datum/crafting_recipe/silver_stake,
+	))
 	return ..()
 
 /datum/antagonist/monsterhunter/proc/spawn_rabbits(amount = 5)
@@ -354,7 +360,7 @@
 
 /datum/objective/hunter/Destroy()
 	if(target)
-		UnregisterSignal(target, list(COMSIG_HERETIC_PATH_CHOSEN, COMSIG_BLOODSUCKER_CLAN_CHOSEN))
+		UnregisterSignal(target, list(COMSIG_HERETIC_PATH_CHOSEN, COMSIG_VAMPIRE_CLAN_CHOSEN))
 	return ..()
 
 /datum/objective/hunter/proc/uncover_target()
@@ -365,7 +371,7 @@
 	to_chat(owner.current, span_userdanger("You have identified a monster, your objective list has been updated!"))
 	owner.current?.log_message("identified one of their targets, [key_name(target.current)].", LOG_GAME)
 	target.current?.log_message("was identified by [key_name(owner.current)], a Monster Hunter.", LOG_GAME, log_globally = FALSE)
-	RegisterSignals(target, list(COMSIG_HERETIC_PATH_CHOSEN, COMSIG_BLOODSUCKER_CLAN_CHOSEN), TYPE_PROC_REF(/datum/objective, update_explanation_text))
+	RegisterSignals(target, list(COMSIG_HERETIC_PATH_CHOSEN, COMSIG_VAMPIRE_CLAN_CHOSEN), TYPE_PROC_REF(/datum/objective, update_explanation_text))
 
 /datum/objective/hunter/check_completion()
 	return completed || !considered_alive(target)
@@ -375,10 +381,10 @@
 		explanation_text = initial(explanation_text)
 		return
 	var/target_name = target.name || target.current?.real_name || target.current?.real_name
-	var/datum/antagonist/bloodsucker/bloodsucker = target.has_antag_datum(/datum/antagonist/bloodsucker)
+	var/datum/antagonist/vampire/vampire = target.has_antag_datum(/datum/antagonist/vampire)
 	var/datum/antagonist/heretic/heretic = target.has_antag_datum(/datum/antagonist/heretic)
-	if(bloodsucker)
-		explanation_text = "Slay the monster known as [target_name], a [bloodsucker.my_clan?.name || "clanless"] Bloodsucker."
+	if(vampire)
+		explanation_text = "Slay the monster known as [target_name], a [vampire.my_clan?.name || "clanless"] Vampire."
 	else if(heretic)
 		if(heretic.heretic_path == PATH_START)
 			explanation_text = "Slay the monster known as [target_name], a heretic."
@@ -469,11 +475,11 @@
 	var/static/list/antag_datums_to_check
 	if(!antag_datums_to_check)
 		antag_datums_to_check = typecacheof(list(
-			/datum/antagonist/bloodsucker,
 			/datum/antagonist/changeling,
 			/datum/antagonist/heretic,
 			/datum/antagonist/heretic_monster,
 			/datum/antagonist/teratoma, // as they're associated with changelings
+			/datum/antagonist/vampire,
 			/datum/antagonist/vassal,
 		))
 

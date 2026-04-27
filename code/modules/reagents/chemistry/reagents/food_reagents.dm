@@ -478,7 +478,7 @@
 	added_traits = list(TRAIT_GARLIC_BREATH)
 
 /datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	if(isvampire(M)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
+	if(islesservampire(M)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
 		if(SPT_PROB(min(current_cycle/2, 12.5), seconds_per_tick))
 			to_chat(M, span_danger("You can't get the scent of garlic out of your nose! You can barely think..."))
 			M.Paralyze(10)

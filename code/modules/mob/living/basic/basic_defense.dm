@@ -40,6 +40,7 @@
 			)
 			to_chat(user, span_notice("You [response_help_simple] [src]."))
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+			SEND_SIGNAL(user, COMSIG_LIVING_PET_ANIMAL, src)
 		return TRUE
 
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
@@ -84,6 +85,7 @@
 							span_notice("[user.name] [response_help_continuous] you."), null, COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_notice("You [response_help_simple] [src]."))
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+			SEND_SIGNAL(user, COMSIG_LIVING_PET_ANIMAL, src)
 
 
 /mob/living/basic/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)

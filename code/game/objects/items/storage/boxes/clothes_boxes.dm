@@ -144,6 +144,18 @@
 	new /obj/item/camera(src)
 	new /obj/item/wallframe/telescreen/entertainment(src)
 
+/obj/item/storage/box/hero/vamphunter // I SWEAR this isn't just the chaplains stuff!!!!
+	name = "Vampire Hunter Kit - 1735"
+	desc = "Vampire Hunter - 1735. \n" + span_notice("The garb can hold a variety of relevant items.\nComes with a crucifix that wards against hexes, and a few premium stakes.")
+
+/obj/item/storage/box/hero/vamphunter/PopulateContents()
+	new /obj/item/clothing/suit/armor/vamphunter(src)
+	new /obj/item/clothing/head/helmet/vamphunter_hat(src)
+	new /obj/item/clothing/neck/crucifix(src)
+	new	/obj/item/stake/hardened/silver(src)
+	new /obj/item/stake/hardened/silver(src)
+	new /obj/item/reagent_containers/cup/glass/bottle/garlic_extract(src)
+
 /obj/item/storage/box/holy
 	name = "Templar Kit"
 	/// This item is used to generate a preview image for this set.

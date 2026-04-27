@@ -45,7 +45,7 @@
 	add_fingerprint(user)
 
 	//no scanning if its a husk or DNA-less Species
-	if (!HAS_TRAIT(interacting_with, TRAIT_GENELESS) && !HAS_TRAIT(interacting_with, TRAIT_BADDNA))
+	if ((!HAS_TRAIT(interacting_with, TRAIT_GENELESS) || HAS_TRAIT(interacting_with, TRAIT_FAKEGENES)) && !HAS_TRAIT(interacting_with, TRAIT_BADDNA))
 		user.visible_message(span_notice("[user] analyzes [interacting_with]'s genetic sequence."))
 		balloon_alert(user, "sequence analyzed")
 		playsound(user, 'sound/items/healthanalyzer.ogg', 50) // close enough

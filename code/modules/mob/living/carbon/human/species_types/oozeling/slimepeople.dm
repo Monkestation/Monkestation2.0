@@ -72,8 +72,6 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 	needs_manager_update = TRUE
 
 /datum/species/oozeling/slime/spec_life(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
-	if(IS_BLOODSUCKER(slime))
-		return ..()
 	if(needs_manager_update && manager)
 		manager.add_body(slime)
 		needs_manager_update = FALSE
@@ -101,7 +99,7 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 	if(!.)
 		return
 	var/mob/living/carbon/human/owner = src.owner
-	if(!ishuman(owner) || IS_BLOODSUCKER(owner))
+	if(!ishuman(owner))
 		return FALSE
 	if(owner.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		return TRUE
@@ -173,9 +171,6 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
-
-/datum/action/innate/swap_body/IsAvailable(feedback)
-	return ..() && !IS_BLOODSUCKER(owner)
 
 /datum/action/innate/swap_body/Activate()
 	var/datum/species/oozeling/slime/slime = astype(astype(owner, /mob/living/carbon/human)?.dna?.species)

@@ -21,3 +21,7 @@
 /// Logging for wizard powers learned
 /proc/log_spellbook(text, list/data)
 	logger.Log(LOG_CATEGORY_UPLINK_SPELL, text, data)
+
+/// Logging for vampire powers unlocked.
+/proc/log_vampire_power(text, list/data)
+	logger.Log(LOG_CATEGORY_UPLINK_VAMPIRE, text, data)

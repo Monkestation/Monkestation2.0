@@ -506,6 +506,8 @@
 	var/mob/living/master = target.mind.enslaved_to?.resolve()
 	if(master && (for_clock_cult ? !IS_CLOCK(master) : !IS_CULTIST(master))) //monkestation edit: master is now checked based off of for_clock_cult
 		return FALSE
+	if(HAS_MIND_TRAIT(target, TRAIT_VAMPIRE_ALIGNED))
+		return FALSE
 	if(IS_HERETIC_OR_MONSTER(target))
 		return FALSE
 	if(HAS_TRAIT(target, TRAIT_MINDSHIELD) || isbot(target)) //monkestation edit: moved isdrone() as well as issilicon() to the next check down

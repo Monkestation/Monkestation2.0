@@ -46,7 +46,12 @@
 /datum/status_effect/silver_bullet/on_apply()
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/silver_bullet)
 	to_chat(owner, span_userdanger("Your body suddenly feels impossibly heavy, you can barely move!"), type = MESSAGE_TYPE_COMBAT)
+	SEND_SIGNAL(owner, COMSIG_LIVING_BLOODSILVER_HIT)
 	return TRUE
+
+/datum/status_effect/silver_bullet/refresh(effect, ...)
+	. = ..()
+	SEND_SIGNAL(owner, COMSIG_LIVING_BLOODSILVER_HIT)
 
 /datum/status_effect/silver_bullet/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/silver_bullet)

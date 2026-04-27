@@ -83,3 +83,5 @@
 #define CAT_CULT "Blood Cult"
 // Monke addition
 #define CAT_GUNPARTS "Gunparts"
+
+#define CAT_VAMPIRE "Vampire"

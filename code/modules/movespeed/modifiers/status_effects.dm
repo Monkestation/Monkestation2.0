@@ -59,3 +59,6 @@
 
 /datum/movespeed_modifier/status_effect/sledgehammer_thrown_stagger
 	multiplicative_slowdown = 3
+
+/datum/movespeed_modifier/status_effect/life_drain
+	multiplicative_slowdown = 1.25

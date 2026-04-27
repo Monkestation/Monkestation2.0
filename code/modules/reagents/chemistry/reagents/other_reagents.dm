@@ -52,10 +52,11 @@
 
 	var/datum/blood_type/blood = exposed_mob.get_blood_type()
 	if(blood?.reagent_type == type && ((methods & INJECT) || ((methods & INGEST))))
-		if(data["blood_type"] in blood.compatible_types)
-			exposed_mob.blood_volume = min(exposed_mob.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
-		else
-			exposed_mob.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
+		if(!HAS_TRAIT(exposed_mob, TRAIT_DRINKS_BLOOD))
+			if(data["blood_type"] in blood.compatible_types)
+				exposed_mob.blood_volume = min(exposed_mob.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+			else
+				exposed_mob.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
 
 		exposed_mob.reagents.remove_reagent(type, reac_volume) // Because we don't want blood to just lie around in the patient's blood, makes no sense.
 

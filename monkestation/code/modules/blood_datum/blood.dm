@@ -354,7 +354,3 @@ PROCESSING_SUBSYSTEM_DEF(blood_drying)
 /// For simplemob blood, which also largely don't actually use blood
 /datum/blood_type/animal
 	name = "Y-"
-
-/datum/blood_type/crew/bloodsucker
-	name = "B++"
-	reagent_type = /datum/reagent/blood/bloodsucker

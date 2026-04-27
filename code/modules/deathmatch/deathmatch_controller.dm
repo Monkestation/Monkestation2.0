@@ -41,6 +41,9 @@
 	return GLOB.observer_state
 
 /datum/deathmatch_controller/ui_interact(mob/user, datum/tgui/ui)
+	if(HAS_TRAIT(user, TRAIT_NO_OBSERVE))
+		to_chat(user, span_warning("You cannot play or host deathmatch in your current form!"))
+		return
 	ui = SStgui.try_update_ui(user, src, null)
 	if(!ui)
 		ui = new(user, src, "DeathmatchPanel")
@@ -73,7 +76,7 @@
 
 /datum/deathmatch_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || !isobserver(usr))
+	if(. || !isobserver(usr) || HAS_TRAIT(usr, TRAIT_NO_OBSERVE))
 		return
 	switch (action)
 		if ("host")

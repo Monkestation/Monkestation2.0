@@ -380,6 +380,11 @@ GLOBAL_LIST_EMPTY(soulcatchers)
 	button_icon = 'monkestation/code/modules/blueshift/icons/mob/actions/actions_nif.dmi'
 	button_icon_state = "soulcatcher_enter"
 
+/datum/action/innate/join_soulcatcher/IsAvailable(feedback)
+	. = ..()
+	if(HAS_TRAIT(owner, TRAIT_NO_OBSERVE))
+		return FALSE
+
 /datum/action/innate/join_soulcatcher/Activate()
 	. = ..()
 	var/mob/dead/observer/joining_soul = owner
@@ -391,6 +396,10 @@ GLOBAL_LIST_EMPTY(soulcatchers)
 /mob/dead/observer/verb/join_soulcatcher()
 	set name = "Enter Soulcatcher"
 	set category = "Ghost"
+
+	if(HAS_TRAIT(src, TRAIT_NO_OBSERVE))
+		to_chat(src, span_warning("You cannot enter a soulcatcher in your current form!"))
+		return
 
 	var/list/joinable_soulcatchers = list()
 	for(var/datum/component/soulcatcher/soulcatcher in GLOB.soulcatchers)

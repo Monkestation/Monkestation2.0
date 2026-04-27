@@ -329,6 +329,15 @@
 	desc = "A flask of holy water...it's been sitting in the Necropolis a while though."
 	list_reagents = list(/datum/reagent/hellwater = 100)
 
+/obj/item/reagent_containers/cup/glass/bottle/garlic_extract
+	name = "flask of garlic extract"
+	desc = "A flask of concentrated, and sanctified garlic extract. Surely to ward off any vampires trying to bite you. Lucky for you, those don't exist... right?"
+	icon = 'icons/obj/drinks/bottles.dmi'
+	icon_state = "holyflask"
+	inhand_icon_state = "holyflask"
+	list_reagents = list(/datum/reagent/consumable/garlic = 70, /datum/reagent/water/holywater = 30)
+	drink_type = VEGETABLES
+
 /obj/item/reagent_containers/cup/glass/bottle/vermouth
 	name = "Goldeneye vermouth"
 	desc = "Sweet, sweet dryness~"

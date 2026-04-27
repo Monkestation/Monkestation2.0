@@ -1,7 +1,7 @@
 /datum/job/curator
 	title = JOB_CURATOR
 	description = "Read and write books and hand them to people, stock \
-		bookshelves, report on station news, play god awful music and livestream the latest skull-crushing."
+		bookshelves, report on station news, play god awful music, livestream the latest skull-crushing, and hunt vampires."
 	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 1
@@ -34,6 +34,15 @@
 
 	voice_of_god_silence_power = 3
 	rpg_title = "Veteran Adventurer"
+
+/datum/job/curator/after_spawn(mob/living/spawned, client/player_client)
+	. = ..()
+	if(spawned.mind)
+		ADD_TRAIT(spawned.mind, TRAIT_OCCULTIST, JOB_TRAIT)
+		spawned.mind.teach_crafting_recipe(list(
+			/datum/crafting_recipe/hardened_stake,
+			/datum/crafting_recipe/silver_stake,
+		))
 
 /datum/outfit/job/curator
 	name = "Curator"

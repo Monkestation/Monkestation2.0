@@ -131,6 +131,8 @@ ADMIN_VERB(flip_ghost_spawn, R_FUN, FALSE, "Toggle Centcom Spawning", "Toggles w
 	. = ..()
 	if(GLOB.disable_ghost_spawning)
 		return FALSE
+	if(HAS_TRAIT(owner, TRAIT_NO_OBSERVE))
+		return FALSE
 
 /datum/action/cooldown/mob_cooldown/create_ghost_player/Activate(atom/target)
 	var/mob/dead/observer/player = owner

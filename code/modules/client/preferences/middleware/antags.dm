@@ -70,6 +70,8 @@
 		ROLE_FUGITIVE = /datum/antagonist/fugitive,
 		ROLE_LONE_OPERATIVE = /datum/antagonist/nukeop/lone,
 		ROLE_SENTIENCE = /datum/antagonist/sentient_creature,
+		ROLE_VAMPIRE = /datum/antagonist/vampire,
+		ROLE_VAMPIRIC_ACCIDENT = /datum/antagonist/vampire,
 		// monkestation start: non-dynamic antags
 		ROLE_CORTICAL_BORER = /datum/antagonist/cortical_borer,
 		ROLE_DRIFTING_CONTRACTOR = /datum/antagonist/traitor/contractor,
@@ -139,6 +141,8 @@
 		ROLE_LONE_OPERATIVE = /datum/antagonist/nukeop/lone,
 		ROLE_SENTIENCE = /datum/antagonist/sentient_creature,
 		// monkestation start: non-dynamic antags
+		ROLE_VAMPIRE = /datum/antagonist/vampire,
+		ROLE_VAMPIRIC_ACCIDENT = /datum/antagonist/vampire,
 		ROLE_CORTICAL_BORER = /datum/antagonist/cortical_borer,
 		ROLE_DRIFTING_CONTRACTOR = /datum/antagonist/traitor/contractor,
 		ROLE_SLASHER = /datum/antagonist/slasher,
