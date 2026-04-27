@@ -82,11 +82,11 @@
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
-	equip_cooldown = 8
+	equip_cooldown = 7
 	name = "\improper CH-PS \"Immolator\" laser"
 	desc = "A weapon for combat exosuits. Shoots basic lasers."
 	icon_state = "mecha_laser"
-	energy_drain = 30
+	energy_drain = 60
 	projectile = /obj/projectile/beam/laser
 	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
 	harmful = TRUE
@@ -108,7 +108,7 @@
 	name = "\improper CH-LC \"Solaris\" laser cannon"
 	desc = "A weapon for combat exosuits. Shoots heavy lasers."
 	icon_state = "mecha_laser"
-	energy_drain = 60
+	energy_drain = 100
 	projectile = /obj/projectile/beam/laser/heavylaser
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
@@ -369,14 +369,14 @@
 	name = "Hotchkiss Rotary Cannon"
 	desc = "A very expensive and complicated Rotary Cannon for combat exosuits."
 	icon_state = "mecha_rotary"
-	equip_cooldown = 0.3 SECONDS
+	equip_cooldown = 1 SECONDS
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	projectile = /obj/projectile/bullet/neville
 	projectiles = 400
 	projectiles_cache = 400
 	projectiles_cache_max = 400
 	projectiles_per_shot = 2
-	projectile_delay = 0.06 SECONDS
+	projectile_delay = 0.5 SECONDS
 	variance = 12
 	randomspread = 7
 	harmful = TRUE
@@ -386,16 +386,16 @@
 	name = "\improper Avtomat AC 3"
 	desc = "An SSC-designed weapon for combat exosuits licensed by NT. Fires a small caliber at considerable speed."
 	icon_state = "mecha_minigun"
-	equip_cooldown = 0.3 SECONDS
+	equip_cooldown = 0.5 SECONDS
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	projectile = /obj/projectile/bullet/peashooter
 	projectiles = 750
 	projectiles_cache = 0
 	projectiles_cache_max = 1500
 	projectiles_per_shot = 6
-	projectile_delay = 0.09 SECONDS
-	variance = 20
-	randomspread = 13
+	projectile_delay = 0.0833 SECONDS // means all the bullets fire before next cycle
+	variance = 25
+	randomspread = 18
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_PEASHOOTER
 
