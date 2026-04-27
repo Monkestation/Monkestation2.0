@@ -371,8 +371,8 @@
 	icon_state = "accessories"
 
 /obj/item/mecha_parts/part/mbt_gun
-	name="\improper D-10T rifled cannon"
-	desc="A 100mm cannon, developed through many manhours of the brightest in the Soviet Union, somehow fabricated by you with trash on a spacestation."
+	name="\improper Maintenance Battle Tank Gun"
+	desc="A D-10T rifled cannon, developed through many manhours of the brightest in the Soviet Union, somehow fabricated by you with trash on a spacestation."
 	icon = 'icons/mecha/tanks_construction.dmi'
 	icon_state = "gun"
 
