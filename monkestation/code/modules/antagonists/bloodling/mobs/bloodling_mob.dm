@@ -330,6 +330,8 @@
 		/datum/action/cooldown/bloodling/heal,
 		/datum/action/cooldown/bloodling/give_life,
 		/datum/action/cooldown/bloodling_hivespeak,
+		/datum/action/cooldown/bloodling/bolster,
+		/datum/action/cooldown/bloodling/swim,
 	)
 	speed = 3
 
