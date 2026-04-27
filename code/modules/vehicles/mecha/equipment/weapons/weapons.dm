@@ -687,9 +687,9 @@
 	icon_state = "mecha_light_tank_mg"
 	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
 	projectile = /obj/projectile/bullet/mm127x70
-	projectiles = 30
-	projectiles_cache = 60
-	projectiles_cache_max = 120
+	projectiles = 45
+	projectiles_cache = 90
+	projectiles_cache_max = 180
 	projectiles_per_shot = 5
 	projectile_delay = 0.1 SECONDS
 	equip_cooldown = 1 SECONDS

@@ -66,6 +66,6 @@
 		"\"It has smoke grenades installed? oooooh.\"",
 	)
 
-/obj/item/book/granter/crafting_recipe/vendozer/recoil(mob/living/user)
+/obj/item/book/granter/crafting_recipe/maintenance_battle_tank/recoil(mob/living/user)
 	to_chat(user, span_warning("The whiskey finally soaks through the last strands of the paper, turning it to mush."))
 	qdel(src)

@@ -355,7 +355,6 @@
 	result = /obj/item/mecha_parts/chassis/mbt
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
 	time = 30 SECONDS
-	machinery = list(/obj/structure/closet/crate/bin  = CRAFTING_MACHINERY_CONSUME)
 	reqs = list(
 		/obj/item/stack/sheet/mineral/wood = 10,
 		/obj/item/light/bulb = 1,
@@ -372,11 +371,11 @@
 /datum/crafting_recipe/mbt_gun
 	name = "Maintenance Battle Tank Cannon"
 	always_available = FALSE
-	result = /obj/item/mecha_parts/mbt_gun
+	result = /obj/item/mecha_parts/part/mbt_gun
 	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
 	time = 30 SECONDS
-	machinery = list(/obj/machinery/autolathe  = CRAFTING_MACHINERY_CONSUME)
 	reqs = list(
+		/obj/item/circuitboard/machine/autolathe = 1,
 		/obj/item/stack/sheet/plasteel = 50,
 		/obj/item/stack/cable_coil = 30,
 		/obj/item/assembly/igniter = 1,
@@ -389,11 +388,11 @@
 /datum/crafting_recipe/mbt_tracks
 	name = "Maintenance Battle Tank Tracks"
 	always_available = FALSE
-	result = /obj/item/mecha_parts/mbt_tracks
+	result = /obj/item/mecha_parts/part/mbt_tracks
 	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
 	time = 30 SECONDS
-	machinery = list(/mob/living/simple_animal/bot/mulebot  = CRAFTING_MACHINERY_CONSUME)
 	reqs = list(
+		/obj/item/wheelchair = 5,
 		/obj/item/stack/sheet/plasteel = 10,
 		/obj/item/crowbar = 10,
 		/obj/item/tank/internals/oxygen = 10,
@@ -404,13 +403,13 @@
 /datum/crafting_recipe/mbt_turret
 	name = "Maintenance Battle Tank Turret"
 	always_available = FALSE
-	result = /obj/item/mecha_parts/mbt_turret
+	result = /obj/item/mecha_parts/part/mbt_turret
 	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
 	time = 30 SECONDS
-	machinery = list(/obj/machinery/portable_atmospherics/canister  = CRAFTING_MACHINERY_CONSUME,/obj/structure/closet/crate/trashcart  = CRAFTING_MACHINERY_CONSUME)
 	reqs = list(
-		/obj/item/stack/sheet/plasteel = 10,
+		/obj/item/stack/sheet/plasteel = 20,
 		/obj/item/stack/cable_coil = 20,
+		/obj/item/stack/sheet/iron = 10,
 		/obj/item/tank/internals/oxygen = 4,
 		/obj/item/tank/internals/plasma = 2,
 		/obj/item/stack/sheet/rglass = 5,
@@ -423,26 +422,26 @@
 /datum/crafting_recipe/mbt_autoloader
 	name = "Maintenance Battle Tank Autoloader"
 	always_available = FALSE
-	result = /obj/item/mecha_parts/mbt_autoloader
+	result = /obj/item/mecha_parts/part/mbt_autoloader
 	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
 	time = 30 SECONDS
-	machinery = list(/obj/structure/disposalpipe/segment  = CRAFTING_MACHINERY_CONSUME)
 	reqs = list(
+		/obj/item/pipe_dispenser = 1,
 		/obj/item/stack/sheet/iron = 10,
 		/obj/item/stack/cable_coil = 10,
 		/obj/item/assembly/prox_sensor = 2,
 		/obj/item/assembly/timer = 1,
 		/obj/item/stack/sheet/cloth = 10,
+
 	)
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/mbt_engine
 	name = "Maintenance Battle Tank Engine"
 	always_available = FALSE
-	result = /obj/item/mecha_parts/mbt_engine
+	result = /obj/item/mecha_parts/part/mbt_engine
 	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
 	time = 30 SECONDS
-	machinery = list(/obj/machinery/power/port_gen/pacman  = CRAFTING_MACHINERY_CONSUME, /obj/machinery/door/poddoor  = CRAFTING_MACHINERY_CONSUME, /obj/machinery/disposal/bin  = CRAFTING_MACHINERY_CONSUME)
 	reqs = list(
 		/obj/item/stack/sheet/iron = 20,
 		/obj/item/stack/cable_coil = 20,
@@ -451,16 +450,19 @@
 		/obj/item/electronics/apc = 1,
 		/obj/item/extinguisher = 2,
 		/obj/item/paper = 10,
+		/obj/item/assembly/control = 1,
+		/obj/item/circuitboard/machine/pacman = 1,
+
+
 	)
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/mbt_accessories
 	name = "Maintenance Battle Tank Parts"
 	always_available = FALSE
-	result = /obj/item/mecha_parts/mbt_accessories
+	result = /obj/item/mecha_parts/part/mbt_accessories
 	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
 	time = 30 SECONDS
-	machinery = list(/obj/structure/tank_dispenser  = CRAFTING_MACHINERY_CONSUME, /obj/structure/closet  = CRAFTING_MACHINERY_CONSUME)
 	reqs = list(
 		/obj/item/stack/sheet/iron = 20,
 		/obj/item/stack/cable_coil = 20,
@@ -472,5 +474,8 @@
 		/obj/item/chair = 6,
 		/obj/item/storage/toolbox = 4,
 		/obj/item/rwd = 1,
+		/obj/item/tank/internals/oxygen = 4,
+		/obj/item/tank/internals/plasma = 2,
+		/obj/item/stack/sheet/iron = 2,
 	)
 	category = CAT_ROBOT
