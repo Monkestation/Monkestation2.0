@@ -38,6 +38,13 @@
 			"products" = list(
 				/obj/item/stock_parts/power_store/cell/high = 12
 			),
+		),
+		list(
+			"name" = "Other",
+			"icon" = "city",
+			"products" = list(
+				/obj/item/clothing/neck/cloak/arbiter = 3
+			),
 		)
 	)
 
