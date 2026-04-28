@@ -1,4 +1,0 @@
-author: "LettuceGuardian"
-delete-after: True
-changes:
-  - image: "Gun sprites are now overlaid below the hand layer."
