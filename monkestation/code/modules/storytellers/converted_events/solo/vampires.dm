@@ -40,7 +40,7 @@
 	)
 	required_enemies = 1
 	min_players = 8
-	weight = 8
+	weight = 10
 	base_antags = 1
 	maximum_antags = 2
 	denominator = 25 // need at least 25 pop for 2 vamps
