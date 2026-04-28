@@ -1,6 +1,6 @@
 /obj/structure/vampire/vassalrack
 	name = "vassalization rack"
-	desc = "If this wasn't meant for torture, then someone has some fairly horrifying hobbies."
+	desc = "If this wasn't meant for brainwashing, then someone has some fairly horrifying hobbies."
 	icon = 'icons/vampires/vamp_obj.dmi'
 	icon_state = "vassalrack"
 	anchored = FALSE
@@ -10,7 +10,7 @@
 	ghost_desc = "This is a vassalization rack, which allows vampires to turn crew members into loyal vassals."
 	vampire_desc = "This is the vassalization rack, which allows you to turn crew members into loyal vassals in your service. This costs blood to do.\n\
 		Simply click and hold on a victim, and then drag their sprite onto the vassalization rack. Right-click on the vassalization rack to unbuckle them.\n\
-		To convert into a vassal, repeatedly click on the vassalization rack. The time required scales with the tool in your hand."
+		To convert into a vassal, repeatedly click on the vassalization rack."
 	vassal_desc = "This is the vassalization rack, which allows your master to turn crew members into loyal vassals.\n\
 		Aid your master in bringing their victims here and keeping them secure.\n\
 		You can secure victims to the vassalization rack by click-dragging the victim onto the rack while it is secured."
@@ -18,14 +18,16 @@
 		They usually ensure that victims are handcuffed to prevent them from running away.\n\
 		Their rituals take time, allowing us to disrupt them."
 
-	/// How many times a buckled person has to be tortured to be converted.
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 8)
+
+	/// How many times a buckled person has to be interacted with to be converted.
 	var/convert_progress = 3
 	/// Mindshielded individuals and antagonists must willingly accept you as their master.
 	var/wants_vassalization = FALSE
 	/// Prevents popup spam.
 	var/vassalization_offered = FALSE
-	/// No spamming torture
-	var/is_torturing = FALSE
+	/// No spamming vassalization
+	var/in_progress = FALSE
 
 /obj/structure/vampire/vassalrack/examine(mob/user)
 	. = ..()
@@ -76,7 +78,7 @@
 	playsound(loc, 'sound/effects/pop_expl.ogg', vol = 25, vary = TRUE)
 	update_appearance(UPDATE_ICON)
 
-	// Set up Torture stuff now
+	// Set up vassalization stuff now
 	reset_progress()
 
 /// Attempt Unbuckle
@@ -122,8 +124,7 @@
 		user_unbuckle_mob(buckled_person, user)
 		return TRUE
 
-	var/obj/item/held_item = user.get_inactive_held_item()
-	try_to_torture(user, buckled_person, held_item)
+	try_to_progress(user, buckled_person)
 
 /obj/structure/vampire/vassalrack/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -138,20 +139,14 @@
 		else
 			user_unbuckle_mob(buckled_carbons, user)
 
-/obj/structure/vampire/vassalrack/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(IS_VAMPIRE(user) && has_buckled_mobs() && !(user.istate & ISTATE_HARM))
-		return try_to_torture(user, pick(buckled_mobs), attacking_item)
-	return ..()
-
 /**
- * Torture steps:
+ * Conversion steps:
  *
  * * When convert_progress reaches 0, the victim is ready to be converted
- * * Using a better tool will reduce the time required to torture
  * * If the victim has a mindshield or is an antagonist, they must accept the conversion. If they don't accept, they aren't converted
  * * vassalize target
  */
-/obj/structure/vampire/vassalrack/proc/try_to_torture(mob/living/living_vampire, mob/living/living_target, obj/item/held_item)
+/obj/structure/vampire/vassalrack/proc/try_to_progress(mob/living/living_vampire, mob/living/living_target)
 	if(DOING_INTERACTION(living_vampire, DOAFTER_SOURCE_PERSUASION_RACK))
 		return
 
@@ -161,23 +156,23 @@
 
 	var/datum/antagonist/vampire/vampiredatum = IS_VAMPIRE(living_vampire)
 
-	if(!vampiredatum.can_make_vassal(living_target) || is_torturing)
+	if(!vampiredatum.can_make_vassal(living_target) || in_progress)
 		return
 
 	// These if statements can be simplified but aren't for better code-readability.
 	if(convert_progress > 0)
-		balloon_alert(living_vampire, "spilling blood...")
+		balloon_alert(living_vampire, "catering blood...")
 
-		is_torturing = TRUE
+		in_progress = TRUE
 		living_target.Paralyze(1 SECONDS)
-		vampiredatum.adjust_blood_volume(-TORTURE_BLOOD_HALF_COST)
+		vampiredatum.adjust_blood_volume(-VASSALIZATION_BLOOD_HALF_COST)
 
-		if(!do_torture(living_vampire, living_target, held_item))
-			is_torturing = FALSE
+		if(!attempt_progress(living_vampire, living_target))
+			in_progress = FALSE
 			return
-		is_torturing = FALSE
+		in_progress = FALSE
 
-		vampiredatum.adjust_blood_volume(-TORTURE_BLOOD_HALF_COST)
+		vampiredatum.adjust_blood_volume(-VASSALIZATION_BLOOD_HALF_COST)
 		convert_progress--
 
 		if(convert_progress > 0)
@@ -202,31 +197,20 @@
 			return
 
 		// Make our target into a vassal
-		vampiredatum.adjust_blood_volume(-TORTURE_CONVERSION_COST)
+		vampiredatum.adjust_blood_volume(-VASSALIZATION_CONVERSION_COST)
 		if(vampiredatum.make_vassal(living_target))
 			// We've made a vassal the proper way, do clan stuff
 			vampiredatum.my_clan?.on_vassal_made(living_vampire, living_target)
-			vampiredatum.rank_up(1, ignore_reqs = TRUE)
+			vampiredatum.rank_up(1, ignore_reqs = TRUE, increase_goal = FALSE)
 			remove_loyalties(living_target)
 
-/obj/structure/vampire/vassalrack/proc/do_torture(mob/living/user, mob/living/carbon/target, obj/item/held_item)
-	var/torture_time = 15
-	torture_time -= held_item?.force / 4
-	torture_time -= held_item?.sharpness + 1
-
-	// Minimum 5 seconds
-	torture_time = max(5 SECONDS, torture_time SECONDS)
-	if(do_after(user, torture_time, target, interaction_key = DOAFTER_SOURCE_PERSUASION_RACK))
-		held_item?.play_tool_sound(target)
-
-		var/obj/item/bodypart/selected_bodypart = pick(target.bodyparts)
+/obj/structure/vampire/vassalrack/proc/attempt_progress(mob/living/user, mob/living/carbon/target)
+	if(do_after(user, 5 SECONDS, target, interaction_key = DOAFTER_SOURCE_PERSUASION_RACK))
 		target.visible_message(
-			span_danger("[user] performs a ritual, spilling some of [target]'s blood from [target.p_their()] [selected_bodypart.name]!"),
-			span_userdanger("[user] performs a ritual, spilling some blood from your [selected_bodypart.name]!"))
-
-		INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, emote), "scream")
+			span_danger("[user] performs a ritual, catering some of [user.p_their()] blood to [target]!"),
+			span_userdanger("[user] feeds some of [user.p_their()] blood to you! " + span_awe("You feel as if your mind is slipping away...?"))
+		)
 		target.set_jitter_if_lower(10 SECONDS)
-		target.apply_damage(held_item ? held_item.force / 4 : 2, held_item ? held_item.damtype : BRUTE, selected_bodypart)
 		return TRUE
 	else
 		balloon_alert(user, "interrupted!")
@@ -242,9 +226,9 @@
 	to_chat(user, span_notice("[target] has been given the opportunity for servitude. You await [target.p_their()] decision..."))
 	var/alert_response = tgui_alert(
 		user = target, \
-		message = "You are being tortured! Do you want to give in and pledge your undying loyalty to [user]? \n\
+		message = "You are being brainwashed! Do you want to give into the addiction to the blood of [user]? \n\
 			You will not lose your current objectives, but they come second to the will of your new master!", \
-		title = "THE HORRIBLE PAIN! WHEN WILL IT END?!",
+		title = "Give into the addiction?",
 		buttons = list("Accept", "Refuse"),
 		timeout = 15 SECONDS, \
 		autofocus = TRUE
@@ -262,7 +246,7 @@
 	convert_progress = initial(convert_progress)
 	wants_vassalization = initial(wants_vassalization)
 	vassalization_offered = initial(vassalization_offered)
-	is_torturing = initial(is_torturing)
+	in_progress = initial(in_progress)
 
 /obj/structure/vampire/vassalrack/proc/remove_loyalties(mob/living/target)
 	// Find Mind Implant & Destroy

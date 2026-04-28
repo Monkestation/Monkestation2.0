@@ -878,14 +878,7 @@ const VampireGuide = () => {
                   lair
                 </Box>{' '}
                 → restrain your target → drag them onto the rack → click the
-                rack to begin the torture process.
-                <br />
-                <br />
-                You can speed up the conversion significantly by using{' '}
-                <Box inline textColor="red">
-                  sharp tools
-                </Box>{' '}
-                on the victim while they are restrained.
+                rack to begin the vassalization process.
               </Box>
               <br />
               <Box fontSize="13px">
@@ -937,9 +930,10 @@ const VampireGuide = () => {
               <Box inline textColor="purple">
                 Vassals
               </Box>{' '}
-              are mortals who have been broken and bound to your will. They
-              serve as your eyes, ears, and hands among the living, carrying out
-              your commands while you remain hidden in the shadows.
+              are mortals who have been rendered addicted to your vitae, binding
+              them to your will. They serve as your eyes, ears, and hands among
+              the living, carrying out your commands while you remain hidden in
+              the shadows.
               <br />
               <br />
               <Box bold>Creating Vassals</Box>
@@ -955,17 +949,10 @@ const VampireGuide = () => {
                 . Capture your target and restrain them so they cannot escape,
                 then drag them onto the rack. Click the rack to begin the{' '}
                 <Box inline textColor="red">
-                  torture
+                  vassalization
                 </Box>{' '}
-                process that will break their will and bind them to you.
-                <br />
-                <br />
-                Using{' '}
-                <Box inline textColor="red">
-                  sharp implements
-                </Box>{' '}
-                on the victim while they are restrained will accelerate the
-                process considerably.
+                process that will give them an addiction to your blood, binding
+                them to your will.
               </Box>
               <br />
               <Box bold>Limitations</Box>

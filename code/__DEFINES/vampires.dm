@@ -11,9 +11,9 @@
 /// Determines Vampire regeneration rate
 #define BS_BLOOD_VOLUME_MAX_REGEN 700
 /// Cost to torture someone halfway, in blood. Called twice for full cost
-#define TORTURE_BLOOD_HALF_COST 8
+#define VASSALIZATION_BLOOD_HALF_COST 8
 /// Cost to convert someone after successful torture, in blood
-#define TORTURE_CONVERSION_COST 50
+#define VASSALIZATION_CONVERSION_COST 50
 /// Once blood is this low, will enter a Frenzy
 #define FRENZY_THRESHOLD_ENTER 25
 /// Once blood is this high, will exit the Frenzy. Intentionally high, we want to kill the person we feed off of

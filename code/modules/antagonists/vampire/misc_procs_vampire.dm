@@ -71,7 +71,7 @@
  * Increase our unspent vampire levels by one and try to rank up if inside a coffin
  * Called when sleeping in a coffin, and admin abuse
 **/
-/datum/antagonist/vampire/proc/rank_up(levels, ignore_reqs = FALSE)
+/datum/antagonist/vampire/proc/rank_up(levels, ignore_reqs = FALSE, increase_goal = TRUE)
 	if(QDELETED(owner) || QDELETED(owner.current))
 		return FALSE
 
@@ -98,7 +98,8 @@
 		vitae_goal_progress = max(vitae_goal_progress - current_vitae_goal, 0)
 	/* else
 		vitae_goal_progress = 0 */
-	current_vitae_goal += VITAE_GOAL_STANDARD
+	if(increase_goal)
+		current_vitae_goal += VITAE_GOAL_STANDARD
 
 	return TRUE
 
