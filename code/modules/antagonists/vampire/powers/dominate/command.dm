@@ -120,31 +120,6 @@
 		deactivate_power()
 		return
 
-	var/modified_delay = channel_time
-	if(HAS_TRAIT_NOT_FROM(living_target, TRAIT_MINDSHIELD, NANITES_TRAIT))
-		modified_delay *= 1.5
-
-	// instant on your own vassals
-	var/datum/antagonist/vassal/victim_vassal = IS_VASSAL(living_target)
-	if(victim_vassal && (victim_vassal in vampiredatum_power.vassals))
-		modified_delay = 0
-
-	if(modified_delay > 0)
-		living_target.balloon_alert(living_target, "your thoughts begin to blur!")
-		living_target.add_client_colour(/datum/client_colour/glass_colour/pink)
-	if(!do_after(owner, modified_delay, living_target, IGNORE_TARGET_LOC_CHANGE | IGNORE_HELD_ITEM, extra_checks = CALLBACK(src, PROC_REF(continue_active)), hidden = TRUE))
-		living_target.balloon_alert(living_target, "your thoughts come back into focus.")
-		living_target.remove_client_colour(/datum/client_colour/glass_colour/pink)
-		deactivate_power()
-		return
-	living_target.remove_client_colour(/datum/client_colour/glass_colour/pink)
-
-	// they're out of range once more
-	if(!(living_target in hearers(target_range, owner)))
-		living_target.balloon_alert(living_target, "your thoughts come back into focus.")
-		deactivate_power()
-		return
-
 	//Actually command them now
 	owner.say(command, forced = "[type]")
 
@@ -167,7 +142,7 @@
 	if(findtext_char(command, " "))
 		to_chat(owner, span_warning("Please only input a single word."))
 		return FALSE
-	if(length_char(command)  > 7)
+	if(length_char(command) > 10)
 		to_chat(owner, span_warning("Command too long!"))
 		return FALSE
 	if(copytext(command, 1, 5) == "kill" || copytext(command, 1, 7) == "murder" || copytext(command, 1, 8) == "suicide" || copytext(command, 1, 4) == "die")
