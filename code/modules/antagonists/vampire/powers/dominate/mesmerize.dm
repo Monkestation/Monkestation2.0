@@ -119,19 +119,14 @@
 
 	var/modified_delay = mesmerize_delay
 	var/eye_protection = living_target.get_eye_protection()
-	to_chat(living_target, span_warning("[owner]'s eyes look into yours, and [span_awe("you feel your mind slipping away")]..."), type = MESSAGE_TYPE_COMBAT)
 	if(eye_protection > 0)
 		modified_delay += (eye_protection * 0.25) * mesmerize_delay
-		to_chat(living_target, span_warning("It feels like your eye-protection is helping you resist the gaze!"), type = MESSAGE_TYPE_COMBAT)
-		to_chat(living_target, span_warning("But, you can still feel it making your eyes grow heavy."), type = MESSAGE_TYPE_COMBAT)
 		to_chat(owner, span_warning("[living_target] is wearing eye-protection, it will take longer to mesmerize [living_target.p_them()]."), type = MESSAGE_TYPE_COMBAT)
 		owner.balloon_alert(owner, "attempting to hypnotize [living_target], but [living_target.p_they()] [living_target.p_are()] partially protected!")
 	else
 		owner.balloon_alert(owner, "attempting to hypnotize [living_target]...")
 
-	perform_indicators(living_target, modified_delay)
-
-	if(!do_after(owner, modified_delay, living_target, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(continue_active)), hidden = TRUE))
+	if(!do_after(owner, modified_delay, living_target, extra_checks = CALLBACK(src, PROC_REF(continue_active)), hidden = TRUE))
 		deactivate_power()
 		return
 
@@ -158,22 +153,6 @@
 /datum/action/cooldown/vampire/targeted/mesmerize/deactivate_power()
 	. = ..()
 	target_ref = null
-
-/datum/action/cooldown/vampire/targeted/mesmerize/proc/perform_indicators(mob/target, duration)
-	// Display an animated overlay over our head to indicate what's going on
-	eldritch_eye(target, "eye_open", 1 SECONDS)
-	var/main_duration = max(duration - 2 SECONDS, 1 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(eldritch_eye), target, "eye_flash", main_duration), 1 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(eldritch_eye), target,  "eye_close", 1 SECONDS), main_duration + 1 SECONDS)
-
-/// Display an animated overlay over our head to indicate what's going on
-/datum/action/cooldown/vampire/targeted/mesmerize/proc/eldritch_eye(mob/target, icon_state = "eye_open", duration = 1 SECONDS)
-	var/image/image = image('icons/effects/eldritch.dmi', owner, icon_state, ABOVE_ALL_MOB_LAYER)
-	image.pixel_w = -(owner.pixel_x + owner.pixel_w)
-	image.pixel_z = 28
-	image.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	SET_PLANE_EXPLICIT(image, ABOVE_HUD_PLANE, owner)
-	flick_overlay_global(image, list(owner?.client, target?.client), duration)
 
 /datum/status_effect/mesmerized
 	id = "mesmerized"
