@@ -55,11 +55,6 @@
 		owner.balloon_alert(owner, "[carbon_target] is already being summoned.")
 		return FALSE
 
-	// TODO: use some different criteria here that's less easy to cheese.
-	if(carbon_target.istate & ISTATE_HARM)
-		owner.balloon_alert(owner, "[carbon_target] is on guard.")
-		return FALSE
-
 	return TRUE
 
 /datum/action/cooldown/vampire/targeted/summon/fire_targeted_power(atom/target_atom)
