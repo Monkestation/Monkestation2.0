@@ -1,8 +1,4 @@
-#ifdef STORYTELLER_TRACK_BOOSTER
 /datum/round_event_control/antagonist/vampire
-#else
-/datum/round_event_control/antagonist/solo/vampire
-#endif
 	antag_flag = ROLE_VAMPIRE
 	tags = list(TAG_COMBAT, TAG_MAGICAL, TAG_CREW_ANTAG, TAG_SPOOKY)
 	antag_datum = /datum/antagonist/vampire
@@ -25,100 +21,57 @@
 		JOB_CURATOR,
 	)
 	enemy_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
 		JOB_CAPTAIN,
 		JOB_BLUESHIELD,
+		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
-		JOB_WARDEN,
 		JOB_SECURITY_OFFICER,
 		JOB_SECURITY_ASSISTANT,
-		JOB_DETECTIVE,
+		JOB_BRIG_PHYSICIAN,
+		JOB_WARDEN,
+		JOB_CHAPLAIN,
 		JOB_CURATOR,
 	)
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CYBORG,
 	)
-	required_enemies = 2
-	min_players = 20
-	weight = 10
-	base_antags = 2
-	maximum_antags = 4
+	required_enemies = 1
+	min_players = 8
+	weight = 8
+	base_antags = 1
+	maximum_antags = 2
+	denominator = 25 // need at least 25 pop for 2 vamps
 	event_icon_state = "vampires"
-	repeated_mode_adjust = TRUE
 
-#ifdef STORYTELLER_TRACK_BOOSTER
-/datum/round_event_control/antagonist/vampire/get_antag_amount()
-#else
-/datum/round_event_control/antagonist/solo/vampire/get_antag_amount()
-#endif
-	. = ..()
-	if(SSgamemode.get_correct_popcount() < 35)
-		return min(., 2)
-
-#ifdef STORYTELLER_TRACK_BOOSTER
 /datum/round_event_control/antagonist/vampire/roundstart
-#else
-/datum/round_event_control/antagonist/solo/vampire/roundstart
-#endif
 	name = "Vampires"
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
 
-#ifdef STORYTELLER_TRACK_BOOSTER
 /datum/round_event_control/antagonist/vampire/midround
-#else
-/datum/round_event_control/antagonist/solo/vampire/midround
-#endif
 	name = "Vampiric Accident"
-#ifdef STORYTELLER_TRACK_BOOSTER
 	typepath = /datum/round_event/antagonist/vampire
-#else
-	typepath = /datum/round_event/antagonist/solo/vampire
-#endif
 	antag_flag = ROLE_VAMPIRIC_ACCIDENT
 	prompted_picking = TRUE
 	max_occurrences = 1
 
-#ifdef STORYTELLER_TRACK_BOOSTER
-/datum/round_event_control/antagonist/vampire/midround/get_weight()
-#else
-/datum/round_event_control/antagonist/solo/vampire/midround/get_weight()
-#endif
+/datum/round_event_control/antagonist/vampire/midround/can_spawn_event(players_amt, allow_magic, fake_check)
 	. = ..()
-	// if there's only one or two vamps, let's raise the chance of giving them some friends
+	if(!.)
+		return
 	var/vampire_amt = 0
 	for(var/datum/antagonist/vampire/vampire as anything in GLOB.all_vampires)
 		var/mob/body = vampire.owner?.current
 		if(!vampire.final_death && !QDELETED(body))
 			vampire_amt++
-	if(vampire_amt == 1)
-		. *= 2
-	else if(vampire_amt == 2)
-		. *= 1.5
+	var/crew_amt = SSgamemode.get_correct_popcount() - vampire_amt
+	if(crew_amt < 25 && vampire_amt > 0)
+		return FALSE
 
-#ifdef STORYTELLER_TRACK_BOOSTER
-/datum/round_event_control/antagonist/vampire/midround/get_antag_amount()
-#else
-/datum/round_event_control/antagonist/solo/vampire/midround/get_antag_amount()
-#endif
-	. = ..()
-	var/vampire_amt = 0
-	for(var/datum/antagonist/vampire/vampire as anything in GLOB.all_vampires)
-		var/mob/body = vampire.owner?.current
-		if(!vampire.final_death && !QDELETED(body))
-			vampire_amt++
-	if(vampire_amt >= 7)
-		return min(., 1)
-	else if(vampire_amt >= 4)
-		return min(., 2)
-	else
-		return .
-
-#ifdef STORYTELLER_TRACK_BOOSTER
 /datum/round_event/antagonist/vampire/add_datum_to_mind(datum/mind/antag_mind)
-#else
-/datum/round_event/antagonist/solo/vampire/add_datum_to_mind(datum/mind/antag_mind)
-#endif
 	var/datum/antagonist/vampire/vampire_datum = antag_mind.add_antag_datum(/datum/antagonist/vampire)
 	var/extra_levels = rand(2, 3)
 	vampire_datum.vampire_level_unspent += extra_levels
