@@ -354,7 +354,7 @@
 	always_available = FALSE
 	result = /obj/item/mecha_parts/chassis/mbt
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
-	time = 30 SECONDS
+	time = 20 SECONDS
 	reqs = list(
 		/obj/item/stack/sheet/mineral/wood = 10,
 		/obj/item/light/bulb = 1,
@@ -373,7 +373,7 @@
 	always_available = FALSE
 	result = /obj/item/mecha_parts/part/mbt_gun
 	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
-	time = 30 SECONDS
+	time = 10 SECONDS
 	reqs = list(
 		/obj/item/circuitboard/machine/autolathe = 1,
 		/obj/item/stack/sheet/plasteel = 50,
@@ -390,7 +390,7 @@
 	always_available = FALSE
 	result = /obj/item/mecha_parts/part/mbt_tracks
 	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
-	time = 30 SECONDS
+	time = 10 SECONDS
 	reqs = list(
 		/obj/item/wheelchair = 5,
 		/obj/item/stack/sheet/plasteel = 10,
@@ -405,7 +405,7 @@
 	always_available = FALSE
 	result = /obj/item/mecha_parts/part/mbt_turret
 	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
-	time = 30 SECONDS
+	time = 10 SECONDS
 	reqs = list(
 		/obj/item/stack/sheet/plasteel = 20,
 		/obj/item/stack/cable_coil = 20,
@@ -424,7 +424,7 @@
 	always_available = FALSE
 	result = /obj/item/mecha_parts/part/mbt_autoloader
 	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
-	time = 30 SECONDS
+	time = 10 SECONDS
 	reqs = list(
 		/obj/item/pipe_dispenser = 1,
 		/obj/item/stack/sheet/iron = 10,
@@ -441,7 +441,7 @@
 	always_available = FALSE
 	result = /obj/item/mecha_parts/part/mbt_engine
 	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
-	time = 30 SECONDS
+	time = 10 SECONDS
 	reqs = list(
 		/obj/item/stack/sheet/iron = 20,
 		/obj/item/stack/cable_coil = 20,
@@ -462,7 +462,7 @@
 	always_available = FALSE
 	result = /obj/item/mecha_parts/part/mbt_accessories
 	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
-	time = 30 SECONDS
+	time = 10 SECONDS
 	reqs = list(
 		/obj/item/stack/sheet/iron = 20,
 		/obj/item/stack/cable_coil = 20,
