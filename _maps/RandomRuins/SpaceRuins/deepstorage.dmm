@@ -603,7 +603,6 @@
 	name = "Showers"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "cw" = (
@@ -653,7 +652,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "cG" = (
@@ -689,7 +687,6 @@
 /obj/item/soap/syndie,
 /obj/structure/curtain,
 /obj/machinery/shower/directional/south,
-/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "cO" = (
@@ -697,14 +694,12 @@
 /obj/structure/curtain,
 /obj/item/soap/syndie,
 /obj/machinery/shower/directional/south,
-/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "cP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/directional/west,
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "cR" = (
@@ -747,7 +742,6 @@
 	},
 /obj/structure/mirror/directional/east,
 /obj/machinery/light/directional/west,
-/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "cZ" = (
@@ -759,7 +753,6 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
-/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "da" = (
@@ -803,7 +796,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/sink/directional/west,
-/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "ds" = (
@@ -948,13 +940,11 @@
 	dir = 6
 	},
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "dS" = (
 /obj/machinery/airalarm/directional/south,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "dV" = (
@@ -976,7 +966,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "eb" = (
@@ -1035,7 +1024,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/firedoor,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "en" = (
@@ -1052,14 +1040,12 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "ep" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "eq" = (
@@ -1070,7 +1056,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "es" = (
@@ -1079,7 +1064,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/duct,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
@@ -1089,7 +1073,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "ev" = (
@@ -1153,7 +1136,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 6
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "eD" = (
@@ -1203,7 +1185,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 6
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "eR" = (
@@ -1330,12 +1311,6 @@
 /obj/structure/filingcabinet,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/deepstorage/airlock)
-"eY" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/duct,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/deepstorage)
 "eZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -1364,7 +1339,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 6
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "ff" = (
@@ -1405,9 +1379,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/plumbing/synthesizer{
-	reagent_id = /datum/reagent/water
-	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "fm" = (
@@ -1436,13 +1407,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
-"fs" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
-	},
-/obj/machinery/duct,
-/turf/open/floor/iron/white,
-/area/ruin/space/has_grav/deepstorage/pharmacy)
 "fu" = (
 /obj/structure/chair/office/tactical{
 	dir = 8
@@ -1507,7 +1471,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 6
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "fF" = (
@@ -1568,7 +1531,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 6
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "fP" = (
@@ -1608,7 +1570,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/machinery/firealarm/directional/west,
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "gb" = (
@@ -1627,7 +1588,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "gh" = (
@@ -1660,7 +1620,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "gk" = (
@@ -1679,7 +1638,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "gm" = (
@@ -1746,7 +1704,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "gy" = (
@@ -1765,12 +1722,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage)
-"gA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/structure/cable,
-/obj/machinery/duct,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/deepstorage/power)
 "gB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible{
 	dir = 5
@@ -1930,7 +1881,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "hi" = (
@@ -1943,7 +1893,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 6
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "hk" = (
@@ -1958,7 +1907,6 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/apc/cell_5k,
 /obj/effect/mapping_helpers/apc/syndicate_access,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "hm" = (
@@ -2188,7 +2136,6 @@
 /obj/effect/turf_decal/trimline/blue/end{
 	dir = 4
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "lf" = (
@@ -2208,7 +2155,6 @@
 	name = "Atmospherics and Power Storage"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "lj" = (
@@ -2219,7 +2165,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "lB" = (
@@ -2485,7 +2430,6 @@
 /obj/machinery/coffeemaker/impressa,
 /obj/item/storage/box/coffeepack,
 /obj/item/storage/box/coffeepack/robusta,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "pS" = (
@@ -2599,7 +2543,6 @@
 "rv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "rx" = (
@@ -2748,7 +2691,6 @@
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "ud" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "ug" = (
@@ -2957,7 +2899,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "xp" = (
-/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "xw" = (
@@ -3053,7 +2994,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/sink/directional/west,
-/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "yQ" = (
@@ -3315,7 +3255,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "Ee" = (
@@ -3627,7 +3566,6 @@
 	pixel_x = -8;
 	pixel_y = 4
 	},
-/obj/machinery/duct,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
@@ -3684,7 +3622,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "LB" = (
@@ -3950,7 +3887,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "Qt" = (
@@ -4025,7 +3961,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "Rw" = (
-/obj/machinery/duct,
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
@@ -5105,7 +5040,7 @@ ge
 NA
 NX
 dc
-fs
+Qi
 Rw
 xp
 AR
@@ -5157,7 +5092,7 @@ ge
 ge
 Jn
 dc
-fs
+Qi
 rB
 lf
 tk
@@ -5877,14 +5812,14 @@ kP
 kP
 et
 cP
-eY
+kP
 lg
-gA
+gT
 hl
 fZ
 gj
 ud
-gA
+gT
 fl
 gT
 so
