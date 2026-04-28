@@ -815,7 +815,6 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "du" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/structure/grille,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "dv" = (
@@ -870,13 +869,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/aux_storage)
-"dz" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 6
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/deepstorage)
 "dA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -902,15 +894,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
-"dF" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/structure/chair{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/deepstorage)
 "dG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -926,7 +909,6 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space/has_grav/deepstorage)
 "dM" = (
-/obj/structure/cable,
 /obj/machinery/door/airlock/highsecurity{
 	name = "Classified Storage"
 	},
@@ -1359,10 +1341,8 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "fa" = (
-/obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/structure/grille,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/armory)
 "fc" = (
@@ -2933,6 +2913,11 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
+"wK" = (
+/obj/machinery/door/firedoor,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/armory)
 "wM" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 8
@@ -5160,7 +5145,7 @@ PF
 cD
 qg
 dg
-dz
+dA
 fN
 ge
 ge
@@ -5420,7 +5405,7 @@ cl
 uB
 cT
 oJ
-dF
+xw
 dV
 Kh
 ds
@@ -5991,7 +5976,7 @@ mN
 bA
 bA
 Ya
-fa
+wK
 dM
 ee
 hL
