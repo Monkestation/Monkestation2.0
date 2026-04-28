@@ -33,3 +33,17 @@
 	description = span_boldwarning("You feel something crawling in your mind...")
 	mood_change = -15
 	timeout = 5 MINUTES
+
+/datum/mood_event/vassal_happy
+	description = span_awe("I feel complete when I'm near my master...")
+	mood_change = 10
+	hidden = TRUE
+
+/datum/mood_event/vassal_away
+	description = span_warning("I crave my master's blood...")
+	mood_change = -5
+	hidden = TRUE
+
+/datum/mood_event/vassal_away_severe //not hidden since it's so severe
+	description = span_awe(span_big("I feel so empty without my master's blood..."))
+	mood_change = -30

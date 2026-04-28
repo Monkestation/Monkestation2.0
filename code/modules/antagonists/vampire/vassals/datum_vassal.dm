@@ -19,6 +19,10 @@
 	/// A link to our team monitor, used to track our master.
 	var/datum/component/team_monitor/monitor
 
+	/// How much time has been spent away from their master, used for moodlets.
+	var/time_away_from_master = 0
+	var/last_life_tick = 0
+
 /datum/antagonist/vassal/antag_panel_data()
 	return "Master : [master.owner.name]"
 
@@ -29,6 +33,7 @@
 	RegisterSignal(current_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignals(current_mob, list(COMSIG_MOB_LOGIN, COMSIG_MOVABLE_Z_CHANGED), PROC_REF(on_login))
 	RegisterSignal(current_mob, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(on_update_sight))
+	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
 	current_mob.update_sight()
 
@@ -47,8 +52,15 @@
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
 
-	UnregisterSignal(current_mob, list(COMSIG_ATOM_EXAMINE, COMSIG_MOB_LOGIN, COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOB_UPDATE_SIGHT))
+	UnregisterSignal(current_mob, list(
+		COMSIG_ATOM_EXAMINE,
+		COMSIG_MOB_LOGIN,
+		COMSIG_MOVABLE_Z_CHANGED,
+		COMSIG_MOB_UPDATE_SIGHT,
+		COMSIG_LIVING_LIFE,
+	))
 	current_mob.update_sight()
+	current_mob.clear_mood_event("vassal")
 
 	// Tracking
 	QDEL_NULL(monitor)
@@ -248,3 +260,24 @@
 	powers += power
 	power.Grant(owner.current)
 	log_vampire_power("[key_name(owner.current)] has received \"[power]\" as a vassal")
+
+/datum/antagonist/vassal/proc/on_life(datum/source)
+	SIGNAL_HANDLER
+	var/mob/living/current = owner.current
+	if(QDELETED(current) || current.stat != CONSCIOUS)
+		return
+	var/mob/living/master_body = master.owner.current
+	if(QDELETED(master_body))
+		return
+	time_away_from_master += (world.time - last_life_tick)
+	last_life_tick = world.time
+	if(CAN_THEY_SEE(master_body, current))
+		time_away_from_master = 0
+		current.add_mood_event("vassal", /datum/mood_event/vassal_happy)
+	else if(time_away_from_master >= 25 MINUTES)
+		current.add_mood_event("vassal", /datum/mood_event/vassal_away_severe)
+		current.set_jitter_if_lower(5 SECONDS)
+	else if(time_away_from_master >= 5 MINUTES)
+		current.add_mood_event("vassal", /datum/mood_event/vassal_away)
+	else
+		current.clear_mood_event("vassal")
