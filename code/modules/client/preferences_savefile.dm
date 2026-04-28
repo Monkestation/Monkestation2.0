@@ -268,7 +268,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			write_preference(preference, preference.serialize(value_cache[preference_type]))
 
 	savefile.set_entry("lastchangelog", lastchangelog)
-	savefile.set_entry("be_special", be_special)
+	var/list/be_special_to_save = be_special.Copy()
+	if(ROLE_VAMPIRE in be_special_to_save)
+		be_special_to_save -= ROLE_VAMPIRE
+		be_special_to_save += "Bloodsucker"
+	savefile.set_entry("be_special", be_special_to_save)
 	savefile.set_entry("default_slot", default_slot)
 	savefile.set_entry("toggles", toggles)
 	savefile.set_entry("chat_toggles", chat_toggles)
@@ -421,6 +425,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 /datum/preferences/proc/sanitize_be_special(list/input_be_special)
 	var/list/output = list()
+
+	if("Bloodsucker" in input_be_special)
+		input_be_special -= "Bloodsucker"
+		input_be_special += ROLE_VAMPIRE
 
 	for (var/role in input_be_special)
 		if (role in GLOB.special_roles)

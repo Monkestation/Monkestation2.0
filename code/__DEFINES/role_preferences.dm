@@ -28,7 +28,7 @@
 #define ROLE_DARKSPAWN_FIGHTER "Fighter"
 #define ROLE_DARKSPAWN_WARLOCK "Warlock"
 #define ROLE_DARKSPAWN_SCOUT "Scout"
-#define ROLE_VAMPIRE "Bloodsucker"
+#define ROLE_VAMPIRE "Vampire"
 
 // Midround roles
 #define ROLE_ABDUCTOR "Abductor"
