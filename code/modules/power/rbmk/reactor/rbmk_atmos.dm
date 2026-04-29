@@ -4,18 +4,31 @@
 	density = FALSE
 	piping_layer = 3
 
-	/// Reactor this port belongs to
+	/// Reactor this port belongs to.
 	var/obj/machinery/rbmk/reactor/parent_reactor
+
+	/// Compatibility for SSair.add_to_active() on this custom atmos machinery.
+	/// Some atmos machinery parents expect this var to exist when the object is activated.
+	var/list/atmos_adjacent_turfs = list()
 
 
 /obj/machinery/atmospherics/components/unary/rbmk/base/Initialize(mapload)
 	. = ..()
-	airs = list(new /datum/gas_mixture())
+
+	if(!length(airs))
+		airs = list(new /datum/gas_mixture())
+
 	initialize_directions = dir
 	connect_nodes()
 	update_parents()
-	SSair.add_to_active(src)
+
 	return INITIALIZE_HINT_NORMAL
+
+
+/obj/machinery/atmospherics/components/unary/rbmk/base/Destroy()
+	parent_reactor = null
+	atmos_adjacent_turfs = null
+	return ..()
 
 
 /obj/machinery/atmospherics/components/unary/rbmk/base/proc/remove_moles_capped(datum/gas_mixture/source_mix, desired_moles)
@@ -47,8 +60,6 @@
 	if(!parent_reactor?.inlet_open)
 		return
 
-	SSair.add_to_active(src)
-
 	var/datum/gas_mixture/in_mix = airs[1]
 	if(!in_mix || in_mix.total_moles() <= 0)
 		return
@@ -79,8 +90,6 @@
 	if(!parent_reactor?.outlet_open)
 		return
 
-	SSair.add_to_active(src)
-
 	var/datum/gas_mixture/store = parent_reactor.coolant_internal
 	if(!store || store.total_moles() <= 0)
 		return
@@ -103,7 +112,7 @@
 		return
 
 	// Prefer venting into the connected pipe network.
-	if(airs?.len)
+	if(length(airs))
 		airs[1].merge(released_mix)
 		update_parents()
 		return
@@ -198,8 +207,9 @@
 	if(total <= 0)
 		return
 
-	for(var/gas, g in mix.gases)
-		var/percent = (g[MOLES] / total) * 100
+	for(var/gas in mix.gases)
+		var/list/gas_data = mix.gases[gas]
+		var/percent = (gas_data[MOLES] / total) * 100
 
 		var/list/history = coolant_gas_hist[gas]
 		if(!history)

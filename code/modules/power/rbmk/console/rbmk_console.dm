@@ -19,14 +19,17 @@
 
 	var/obj/machinery/rbmk/reactor/linked_reactor = null
 
+
 /obj/machinery/computer/rbmk_console/Initialize(mapload)
 	. = ..()
 	auto_link()
-	update_appearance(UPDATE_ICON_STATE)
+	update_appearance(UPDATE_ICON)
+
 
 /obj/machinery/computer/rbmk_console/Destroy()
 	linked_reactor = null
 	return ..()
+
 
 /obj/machinery/computer/rbmk_console/proc/auto_link()
 	linked_reactor = null
@@ -38,10 +41,10 @@
 			shortest_distance_found = current_distance
 			linked_reactor = reactor
 
-	update_appearance(UPDATE_ICON_STATE)
+	update_appearance(UPDATE_ICON)
+
 
 /obj/machinery/computer/rbmk_console/update_icon_state()
-	. = ..()
 	var/obj/machinery/rbmk/reactor/reactor = linked_reactor
 	if(!reactor)
 		icon_state = "[base_icon_state]-1"
@@ -61,6 +64,11 @@
 	else
 		icon_state = "[base_icon_state]-3"
 
+
+/obj/machinery/computer/rbmk_console/update_overlays()
+	. = list()
+
+
 /obj/machinery/computer/rbmk_console/ui_state(mob/user)
 	return GLOB.physical_state
 
@@ -76,6 +84,7 @@
 		ui.open()
 
 	return ui
+
 
 /obj/machinery/computer/rbmk_console/proc/rbmk_build_gas_composition_data(datum/gas_mixture/gas_mix)
 	var/list/gas_data = list()
