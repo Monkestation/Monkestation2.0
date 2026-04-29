@@ -979,6 +979,17 @@
 
 	parts += english_list(string_of_knowledge)
 
+	var/list/minions
+	for(var/datum/mind/minion_mind as anything in monsters_summoned)
+		// sanity check to skip i.e ghouls that got deconverted
+		var/datum/antagonist/heretic_monster/minion_datum = minion_mind?.has_antag_datum(/datum/antagonist/heretic_monster)
+		if(minion_datum?.master == owner)
+			LAZYADD(minions, minion_mind)
+
+	if(LAZYLEN(minions))
+		parts += "<b>Their minions were:</b>"
+		parts += printplayerlist(minions)
+
 	return parts.Join("<br>")
 
 /**

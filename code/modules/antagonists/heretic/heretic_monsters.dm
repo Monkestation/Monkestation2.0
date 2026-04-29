@@ -8,6 +8,7 @@
 	antag_hud_name = "heretic_beast"
 	suicide_cry = "MY MASTER SMILES UPON ME!!"
 	show_in_antagpanel = FALSE
+	show_in_roundend = FALSE // handled by the heretic's roundend report
 	stinger_sound = 'sound/music/antag/heretic/heretic_gain.ogg'
 	/// Our master (a heretic)'s mind.
 	var/datum/mind/master
