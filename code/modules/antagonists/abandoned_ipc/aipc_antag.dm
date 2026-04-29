@@ -18,15 +18,29 @@
 	///The ion laws that this abandoned IPC must follow
 	var/list/laws = list()
 
+/datum/outfit/abandoned_ipc
+	name = "Abandoned IPC (Preview Only)"
+	l_hand = /obj/item/storage/toolbox/mechanical
+	r_hand = /obj/item/melee/baton/security/cattleprod
+
+/datum/antagonist/abandoned_ipc/get_preview_icon()
+	var/mob/living/carbon/human/dummy/consistent/ipc = new
+	ipc.set_species(/datum/species/ipc)
+	var/icon/ipc_icon = render_preview_outfit(/datum/outfit/abandoned_ipc, ipc)
+	qdel(ipc)
+	return finish_preview_icon(ipc_icon)
+
 /datum/antagonist/abandoned_ipc/on_gain()
 	for(var/i in 1 to rand(4,8))
 		laws += generate_ion_law()
+	var/mob/living/carbon/human/H = owner.current
+	H.set_species(/datum/species/ipc)
+	var/obj/item/organ/internal/heart/synth/abandoned/newheart = new
+	newheart.Insert(H, TRUE, FALSE)
 	return ..()
 
 /datum/antagonist/abandoned_ipc/ui_static_data(mob/user)
 	var/list/data = list()
 	data["antag_name"] = name
-	data["objectives"] = get_objectives()
-	data["can_change_objective"] = can_assign_self_objectives
 	data["laws"] = laws
 	return data
