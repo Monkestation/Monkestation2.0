@@ -70,11 +70,13 @@
 
 
 /obj/machinery/computer/rbmk_console/update_overlays()
-	. = ..()
+	SHOULD_CALL_PARENT(FALSE)
 
-	// The parent computer type tries to build default computer overlays like
-	// "[base_icon_state]_key" and emissives from generic computer icon states.
-	// This console uses a custom wide sprite with full-state icons instead.
+	// This console uses custom full-state sprites:
+	// reactorcontrol-1, reactorcontrol-2, reactorcontrol-3.
+	// The parent computer overlay proc tries to create default computer overlays
+	// and emissives from generic icon states like "generic" / "generic_key",
+	// which do not exist in icons/obj/reactor_controller.dmi.
 	return list()
 
 
