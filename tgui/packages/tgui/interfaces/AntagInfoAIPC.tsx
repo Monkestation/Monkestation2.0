@@ -1,4 +1,3 @@
-import { decodeHtmlEntities } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Divider, Section, Stack } from '../components';
 import { Window } from '../layouts';
