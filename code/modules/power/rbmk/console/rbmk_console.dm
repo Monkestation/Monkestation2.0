@@ -25,6 +25,8 @@
 	auto_link()
 	update_appearance(UPDATE_ICON)
 
+	return .
+
 
 /obj/machinery/computer/rbmk_console/Destroy()
 	linked_reactor = null
@@ -45,6 +47,8 @@
 
 
 /obj/machinery/computer/rbmk_console/update_icon_state()
+	. = ..()
+
 	var/obj/machinery/rbmk/reactor/reactor = linked_reactor
 	if(!reactor)
 		icon_state = "[base_icon_state]-1"
@@ -66,7 +70,12 @@
 
 
 /obj/machinery/computer/rbmk_console/update_overlays()
-	. = list()
+	. = ..()
+
+	// The parent computer type tries to build default computer overlays like
+	// "[base_icon_state]_key" and emissives from generic computer icon states.
+	// This console uses a custom wide sprite with full-state icons instead.
+	return list()
 
 
 /obj/machinery/computer/rbmk_console/ui_state(mob/user)
