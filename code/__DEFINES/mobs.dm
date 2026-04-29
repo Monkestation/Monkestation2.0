@@ -393,6 +393,8 @@
 #define SLIP_WHEN_CRAWLING (1<<4)
 /// the mob won't slip if the turf has the TRAIT_TURF_IGNORE_SLIPPERY trait.
 #define SLIPPERY_TURF (1<<5)
+/// Slipping on this will send them sliding for a long time
+#define SUPER_DUPER_SLIDE (1<<6)
 
 #define MAX_CHICKENS 50
 
