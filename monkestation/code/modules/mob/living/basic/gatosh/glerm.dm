@@ -1,7 +1,7 @@
-/mob/living/basic/ggg/glerm
+/mob/living/basic/gatosh/glerm
 	name = "\improper glerm"
 	desc = "A little guy. Seems to be glerming."
-	icon = 'monkestation/icons/mob/ggg/glerm.dmi'
+	icon = 'monkestation/icons/mob/gatosh/glerm.dmi'
 	icon_state = "glerm"
 	icon_living = "glerm"
 	icon_dead = "glerm_dead"
@@ -32,20 +32,22 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/dog
 
-/mob/living/basic/ggg/glerm/cool
+	butcher_results = list(/obj/item/food/meat/slab/glerm = 2, /obj/item/food/glermtail/raw = 1)
+
+/mob/living/basic/gatosh/glerm/cool
 	name = "\improper cool glerm"
 	desc = "A cool little guy. Seems to be glerming harder than the rest."
-	icon = 'monkestation/icons/mob/ggg/glerm.dmi'
+	icon = 'monkestation/icons/mob/gatosh/glerm.dmi'
 	icon_state = "glerm_cool"
 	icon_living = "glerm_cool"
 	icon_dead = "glerm_cool_dead"
 	gold_core_spawnable = NO_SPAWN
 
-/mob/living/basic/ggg/glerm/cool/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/mob/living/basic/gatosh/glerm/cool/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	playsound(src, 'sound/vehicles/skateboard_roll.ogg', 50, TRUE)
 
-/mob/living/basic/ggg/glerm/Initialize(mapload)
+/mob/living/basic/gatosh/glerm/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -54,14 +56,14 @@
 	default_name = "Bingus"
 	company_source = "Glerm Industries LLC"
 	company_message = "Be sure to feed your glerm."
-	donator_pet = /mob/living/basic/ggg/glerm
+	donator_pet = /mob/living/basic/gatosh/glerm
 
 /obj/item/choice_beacon/pet/donator/coolglerm
 	name = "Cool Glerm"
 	default_name = "Cool Bingus"
 	company_source = "Glerm Industries LLC"
 	company_message = "Be sure to feed your cool glerm premium glerm food."
-	donator_pet = /mob/living/basic/ggg/glerm/cool
+	donator_pet = /mob/living/basic/gatosh/glerm/cool
 
 /datum/loadout_item/pocket_items/donator/glerm
 	name = "Pet Delivery Beacon - Glerm"

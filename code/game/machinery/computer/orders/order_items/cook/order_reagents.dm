@@ -100,3 +100,8 @@
 	name = "Honey"
 	item_path = /obj/item/reagent_containers/condiment/honey
 	cost_per_order = 75
+
+/datum/orderable_item/reagents/glermpaste
+	name = "Glerm Acid Paste"
+	item_path = /obj/item/reagent_containers/condiment/glermpaste
+	cost_per_order = 80

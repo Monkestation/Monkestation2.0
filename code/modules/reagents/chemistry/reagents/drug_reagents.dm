@@ -753,7 +753,7 @@
 
 /datum/reagent/drug/kronkaine
 	name = "Kronkaine"
-	description = "A highly illegal stimulant from the edge of the galaxy.\nIt is said the average kronkaine addict causes as much criminal damage as five stick up men, two rascals and one proferssional cambringo hustler combined."
+	description = "A highly illegal stimulant from the edge of the galaxy.\nIt is said the average kronkaine addict causes as much criminal damage as five stick up men, two rascals and one professional cambringo hustler combined."
 	reagent_state = SOLID
 	color = "#FAFAFA"
 	taste_description = "numbing bitterness"

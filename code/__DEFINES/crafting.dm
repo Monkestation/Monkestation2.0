@@ -60,6 +60,7 @@
 #define CAT_SPAGHETTI "Spaghettis"
 #define CAT_ICE "Frozen"
 #define CAT_DRINK "Drinks"
+#define CAT_GOBFOOD "Gobbish Food"
 
 //crafting defines
 //When adding new defines, please make sure to also add them to the encompassing list

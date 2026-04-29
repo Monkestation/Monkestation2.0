@@ -129,3 +129,13 @@
 	name = "Mothic Pantry Pack"
 	item_path = /obj/item/storage/box/mothic_cans_sauces
 	cost_per_order = 120
+
+/datum/orderable_item/milk_eggs/glerm_meat
+	name = "Glerm Meat"
+	item_path = /obj/item/food/meat/slab/glerm
+	cost_per_order = 14
+
+/datum/orderable_item/milk_eggs/wutchacalitz
+	name = "Canned Wutchacalitz"
+	item_path = /obj/item/food/canned/wutchacalitz
+	cost_per_order = 120

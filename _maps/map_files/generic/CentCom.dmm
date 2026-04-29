@@ -23338,7 +23338,7 @@
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/adminroom)
 "hor" = (
-/mob/living/basic/ggg/glerm{
+/mob/living/basic/gatosh/glerm{
 	name = "Springus";
 	health = 9999
 	},
