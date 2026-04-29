@@ -2,12 +2,12 @@
 	name = "Fuel Rod"
 	desc = "A generic fuel rod designed for RBMK reactors."
 	icon = 'icons/obj/fuel_rod.dmi'
-	icon_state = "rod_generic"
+	icon_state = "empty"
 	layer = OBJ_LAYER + 0.02
 	plane = GAME_PLANE
 
-	var/rod_type = "generic"
-	var/rod_color = "white"
+	var/rod_type = "empty"
+	var/rod_color = "grey"
 
 	var/fuel_amount = 100
 	var/fuel_consumption = 1
@@ -20,7 +20,7 @@
 	var/active = TRUE
 
 	var/depleted_icon_state = "rod_empty"
-	var/depleted_description = "A spent fuel rod, inert."
+	var/depleted_description = "An empty fuel rod ready for packing."
 
 
 /obj/item/rbmk/fuel_rod/proc/deplete_rod()
