@@ -6769,7 +6769,6 @@
 "bCm" = (
 /obj/structure/table/wood,
 /obj/machinery/light/directional/north,
-/obj/item/storage/lockbox/loyalty,
 /obj/structure/secure_safe/directional/east,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
