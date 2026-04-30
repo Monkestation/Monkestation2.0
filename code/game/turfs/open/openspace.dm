@@ -10,6 +10,8 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pathing_pass_method = TURF_PATHING_PASS_PROC
 	plane = TRANSPARENT_FLOOR_PLANE
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
+	turf_flags = NO_RUST
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
 
@@ -149,7 +151,7 @@
 			return TRUE
 	return FALSE
 
-/turf/open/openspace/rust_heretic_act()
+/turf/open/openspace/rust_heretic_act(rust_strength)
 	return FALSE
 
 /turf/open/openspace/CanAStarPass(to_dir, datum/can_pass_info/pass_info)

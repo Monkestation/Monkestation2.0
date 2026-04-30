@@ -410,7 +410,7 @@
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper)
 	if(on_fire)
-		if(!HAS_TRAIT(helper, TRAIT_NOFIRE) || helper == src)
+		if(!HAS_TRAIT(helper, TRAIT_NOFIRE) || HAS_TRAIT(helper, TRAIT_SUPPRESS_NOFIRE) || helper == src)
 			to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
 			return
 		if(DOING_INTERACTION(helper, DOAFTER_SOURCE_EXTINGUISHING_HUG))

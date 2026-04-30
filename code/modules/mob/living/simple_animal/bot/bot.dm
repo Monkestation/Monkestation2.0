@@ -1093,7 +1093,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(!length(path))
 		addtimer(CALLBACK(src, PROC_REF(set_path), null), 0.6 SECONDS) // Enough time for the animate to finish
 
-/mob/living/simple_animal/bot/rust_heretic_act()
+/mob/living/simple_animal/bot/rust_heretic_act(rust_strength)
 	adjustBruteLoss(400)
 
 //Will always check hands first, because access_card is internal to the mob and can't be removed or swapped.

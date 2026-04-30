@@ -1,4 +1,4 @@
-#define SUMMON_POSSIBILITIES 3
+	#define SUMMON_POSSIBILITIES 3
 #define CULT_VICTORY 1
 #define CULT_LOSS 0
 #define CULT_NARSIE_KILLED -1
@@ -263,6 +263,13 @@
 	var/cult_risen = FALSE
 	///Has the cult asceneded, and gotten halos?
 	var/cult_ascendent = FALSE
+
+	/// List that keeps track of which items have been unlocked after a heretic was sacked.
+	var/list/unlocked_heretic_items = list(
+		CURSED_BLADE_UNLOCKED = FALSE,
+		CRIMSON_MEDALLION_UNLOCKED = FALSE,
+		PROTEON_ORB_UNLOCKED = FALSE,
+	)
 
 	///Has narsie been summoned yet?
 	var/narsie_summoned = FALSE

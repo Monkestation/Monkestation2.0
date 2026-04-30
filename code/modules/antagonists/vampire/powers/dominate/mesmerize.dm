@@ -126,8 +126,20 @@
 	else
 		owner.balloon_alert(owner, "attempting to hypnotize [living_target]...")
 
+	if(living_target.has_status_effect(/datum/status_effect/heretic_passive/moon))
+		to_chat(owner, span_danger("As you begin to stare into [living_target]'s eyes, you cannot help but notice a strange glint. Like the light catching something just within a yawning tunnel."), type = MESSAGE_TYPE_WARNING)
+
 	if(!do_after(owner, modified_delay, living_target, extra_checks = CALLBACK(src, PROC_REF(continue_active)), hidden = TRUE))
 		deactivate_power()
+		return
+
+	if(living_target.has_status_effect(/datum/status_effect/heretic_passive/moon))
+		to_chat(owner, span_danger(span_slightly_larger("You stare into [living_target]'s eyes, but find yourself staring back. And in your own eyes, you see yourself staring back. And in your own eyes-")), type = MESSAGE_TYPE_WARNING)
+		to_chat(owner, span_userdanger("The pressure in your skull is too much to bear, as the descending infinity of your own hubris refuses to leave your thoughts."), type = MESSAGE_TYPE_WARNING)
+		owner.emote("laugh") // no async, ensure we laugh before the status effect KOs us.
+		var/mob/living/living_owner = owner
+		living_owner.apply_status_effect(/datum/status_effect/moon_converted)
+		power_activated_sucessfully() // PAY COST! BEGIN COOLDOWN!
 		return
 
 	owner.balloon_alert(owner, "successfully mesmerized [living_target].")
