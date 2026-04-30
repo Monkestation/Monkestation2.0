@@ -146,71 +146,71 @@
 
 // EGOdrobe changes start here.
 
-/obj/item/clothing/under/projectmoon
-	icon = 'icons/obj/clothing/projectmoon/lcuniform.dmi'
-	worn_icon = 'icons/mob/clothing/projectmoon/under.dmi'
+/obj/item/clothing/under/egosuits
+	icon = 'icons/obj/clothing/egosuits/lcuniform.dmi'
+	worn_icon = 'icons/mob/clothing/egosuits/under.dmi'
 
-/obj/item/clothing/under/projectmoon/control
+/obj/item/clothing/under/egosuits/control
 	name = "control department uniform"
 	desc = "A red suit with golden trim, worn by clerks from the Control department."
 	icon_state = "control"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/projectmoon/information
+/obj/item/clothing/under/egosuits/information
 	name = "information department uniform"
 	desc = "A purple waistcoat and trousers over a dress shirt, worn by clerks from the Information department."
 	icon_state = "information"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/projectmoon/safety
+/obj/item/clothing/under/egosuits/safety
 	name = "safety department uniform"
 	desc = "A seafoam-green suit jacket with black trousers, worn by clerks from the Safety department."
 	icon_state = "safety"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/projectmoon/training
+/obj/item/clothing/under/egosuits/training
 	name = "training department uniform"
 	desc = "An orange suit jacket with black trousers and an orange bowtie, worn by clerks from the Training department."
 	icon_state = "training"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/projectmoon/command
+/obj/item/clothing/under/egosuits/command
 	name = "command department uniform"
 	desc = "A yellow suit with a black dress shirt, worn by clerks from the Command department."
 	icon_state = "command"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/projectmoon/discipline
+/obj/item/clothing/under/egosuits/discipline
 	name = "discipline department uniform"
 	desc = "A red tracksuit with athletic white lines worn by clerks from the Discipline department."
 	icon_state = "disciplinary"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/projectmoon/welfare
+/obj/item/clothing/under/egosuits/welfare
 	name = "welfare department uniform"
 	desc = "An old fashioned gray sailor outfit with a blue necktie, worn by clerks from the Welfare department."
 	icon_state = "welfare"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/projectmoon/extraction
+/obj/item/clothing/under/egosuits/extraction
 	name = "extraction department uniform"
 	desc = "A black jumpsuit with a grey vest jacket, embroidered with hexagonal gold patterns. Worn by clerks from the Extraction department."
 	icon_state = "extraction"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/projectmoon/records
+/obj/item/clothing/under/egosuits/records
 	name = "record department uniform"
 	desc = "A white qipao and black trousers with grey cloud patterns. Buttons up at the chest, and fastened around the waist with a belt of fabric. Worn by clerks from the Records department."
 	icon_state = "records"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/projectmoon/architecture
+/obj/item/clothing/under/egosuits/architecture
 	name = "architecture department uniform"
 	desc = "A black-and-white suit. Worn by clerks from the Architecture department."
 	icon_state = "architecture"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/projectmoon/wcorp
+/obj/item/clothing/under/egosuits/wcorp
 	name = "\improper w corp uniform"
 	desc = "A blue and black uniform worn by W Corp's employees."
 	icon_state = "wuniform"
