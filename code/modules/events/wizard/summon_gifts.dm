@@ -10,8 +10,7 @@
 
 /datum/round_event/wizard/summon_gifts/start()
 	for(var/mob/living/carbon/gifted_mob in GLOB.alive_player_list) //sentient monkeys get gifts too!
-		var/obj/item/gift = new /obj/item/a_gift/anything/wiz_name(get_turf(gifted_mob))
-		gifted_mob.put_in_hands(gift)
+		gifted_mob.put_in_hands(new /obj/item/a_gift/anything/wiz_name(gifted_mob.drop_location()))
 		playsound(get_turf(gifted_mob),'sound/magic/summon_guns.ogg', 50, 1)
 		to_chat(gifted_mob, "A magical gift appears before you!")
 
