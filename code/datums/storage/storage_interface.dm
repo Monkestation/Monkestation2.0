@@ -32,6 +32,7 @@
 	return list(cells, corner_top_left, corner_top_right, corner_bottom_left, corner_bottom_right, rowjoin_left, rowjoin_right, closer)
 
 /datum/storage_interface/Destroy(force)
+	QDEL_NULL(closer)
 	QDEL_NULL(cells)
 	QDEL_NULL(corner_top_left)
 	QDEL_NULL(corner_top_right)
