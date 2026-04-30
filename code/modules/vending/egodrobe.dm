@@ -118,7 +118,8 @@
 				/obj/item/clothing/suit/egosuits/limbus/limbus_coat_short = 3,
 				/obj/item/clothing/suit/egosuits/limbus/durante = 1,
 				/obj/item/clothing/suit/egosuits/other/wcorp = 3,
-				/obj/item/clothing/under/egosuits/wcorp = 3
+				/obj/item/clothing/under/egosuits/wcorp = 3,
+				/obj/item/clothing/head/egosuits/wcorp = 3
 			),
 		)
 	)
