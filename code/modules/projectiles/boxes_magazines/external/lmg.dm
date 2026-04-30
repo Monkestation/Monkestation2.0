@@ -52,7 +52,7 @@
 
 /obj/item/ammo_box/magazine/c65xeno_drum
 	name = "\improper 6.5mm drum magazine"
-	desc = "A hefty 120 round drum of 6.5mm frangible rounds, designed for minimal damage to company property."
+	desc = "A hefty 100 round drum of 6.5mm frangible rounds, designed for minimal damage to company property."
 
 	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "c65xeno_drum"
@@ -67,7 +67,7 @@
 
 /obj/item/ammo_box/magazine/c65xeno_drum/pierce
 	name = "\improper 6.5mm AP drum magazine"
-	desc = "A hefty 120 round drum of 6.5mm saboted tungsten penetrators, designed to punch through multiple targets. Warning: Liable to break windows."
+	desc = "A hefty 100 round drum of 6.5mm saboted tungsten penetrators, designed to punch through multiple targets. Warning: Liable to break windows."
 
 	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "c65xeno_drumP"
@@ -77,7 +77,7 @@
 
 /obj/item/ammo_box/magazine/c65xeno_drum/incendiary
 	name = "\improper 6.5mm incendiary drum magazine"
-	desc = "A hefty 120 round drum of 6.5mm rounds tipped with an incendiary compound."
+	desc = "A hefty 100 round drum of 6.5mm rounds tipped with an incendiary compound."
 
 	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "c65xeno_drumI"
