@@ -24,7 +24,7 @@
 	var/obj/item/clothing/head/egosuits/hat = null
 
 // Code for initializing the hat-toggling
-/obj/item/clothing/suit/egosuits/Initialize()
+/obj/item/clothing/suit/egosuits/Initialize(mapload)
 	. = ..()
 	if(hat)
 		AddComponent(\
