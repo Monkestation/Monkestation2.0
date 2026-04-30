@@ -511,6 +511,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		swap_hands.screen_loc = ui_swaphand_position(mymob, hand_ind)
 		hand_num += 1
 
+	for(var/atom/movable/screen/human/equip/equip in static_inventory)
+		equip.screen_loc = ui_equip_position(mymob)
+
 	if(ismob(mymob) && mymob.hud_used == src)
 		show_hud(hud_version)
 
