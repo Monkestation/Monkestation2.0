@@ -1018,7 +1018,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		if(user.active_storage == src && user.client)
 			seeing += user
 		else
-			is_using -= user
+			hide_contents(user)
 	return seeing
 
 /**
@@ -1085,8 +1085,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	is_using -= to_hide
 
-	to_hide.client.screen -= storage_interfaces[to_hide].list_ui_elements()
-	to_hide.client.screen -= real_location.contents
+	if(to_hide.client)
+		to_hide.client.screen -= storage_interfaces[to_hide].list_ui_elements()
+		to_hide.client.screen -= real_location.contents
 	QDEL_NULL(storage_interfaces[to_hide])
 
 	return TRUE
