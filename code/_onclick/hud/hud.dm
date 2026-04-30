@@ -507,7 +507,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	for(var/atom/movable/screen/swap_hand/swap_hands in static_inventory)
 		var/hand_ind = RIGHT_HANDS
 		if (num_of_swaps > 1)
-			hand_ind = IS_RIGHT_INDEX(hand_num) ? LEFT_HANDS : RIGHT_HANDS
+			hand_ind = IS_LEFT_INDEX(hand_num) ? LEFT_HANDS : RIGHT_HANDS
 		swap_hands.screen_loc = ui_swaphand_position(mymob, hand_ind)
 		hand_num += 1
 
