@@ -3,7 +3,6 @@
 	max_slots = 99
 	max_specific_storage = WEIGHT_CLASS_GIGANTIC
 	max_total_storage = 99
-	do_rustle = FALSE
 	silent = TRUE
 	screen_max_columns = 8
 	storage_type = /datum/storage_interface/silicon
