@@ -131,9 +131,6 @@
 	for(var/mob/person as anything in is_using)
 		hide_contents(person)
 
-	QDEL_NULL(boxes)
-	QDEL_NULL(closer)
-
 	is_using.Cut()
 	QDEL_LIST_ASSOC_VAL(storage_interfaces)
 
