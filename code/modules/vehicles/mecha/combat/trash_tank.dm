@@ -102,7 +102,7 @@
 	SET_BASE_PIXEL(-48, 0)
 	max_integrity = 400 // thoughts, you must do alot of work to make this thing, but compared to another traitor item, the devitt Mk.III, it only requires 1 crewman and doesnt cost as much tc. I say it has less HP cause it wont be as fast, but you dont need a 2nd person to work
 	force = 30
-	movedelay = 1.6
+	movedelay = 1.9
 	bumpsmash = TRUE
 	stepsound = 'monkestation/sound/mecha/tank_treads.ogg'
 	turnsound = 'monkestation/sound/mecha/tank_treads.ogg'
