@@ -1,0 +1,6 @@
+author: "Absolucy, Cyberboss, lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "The lootpanel will now properly close with distance from the target like most other tguis."
+  - qol: "The lootpanel will now automatically refresh when new items enter it. Removed the manual refresh button."
+  - bugfix: "The auto updating lootpanel now automatically shows new items that haven't moved yet."
