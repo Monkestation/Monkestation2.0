@@ -173,7 +173,7 @@
 	duration = 1 MINUTES
 	tick_interval = STATUS_EFFECT_NO_TICK
 	on_remove_on_mob_delete = TRUE
-	alert_type = null
+	alert_type = /atom/movable/screen/alert/status_effect/commanded
 	/// The vampire that casted this command.
 	var/mob/living/caster
 	/// The actual command used for the objective.
@@ -191,6 +191,7 @@
 /datum/status_effect/commanded/on_apply()
 	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
 	directives = brainwash(owner, "[command]!", "[caster.real_name]'s Command")
+	owner.clear_alert(ALERT_BRAINWASHED) // we're using our own alert here
 
 	// make sure they have a moment to realize what's going on
 	owner.Immobilize(2 SECONDS, TRUE)
@@ -200,14 +201,22 @@
 	message_admins("[ADMIN_LOOKUPFLW(caster)] used the COMMAND ability on [ADMIN_LOOKUPFLW(owner)], commanding them to [command].")
 	log_game("[key_name(caster)] used the command ability on [key_name(owner)], commanding them to [command].")
 
+	var/atom/movable/screen/alert/status_effect/commanded/command_alert = linked_alert
+	if(command_alert)
+		command_alert.command = command
+
 	owner.AddElement(/datum/element/relay_attackers)
 	RegisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
+	RegisterSignal(owner, COMSIG_LIVING_SLAPPED, PROC_REF(on_slapped))
 	return TRUE
 
 /datum/status_effect/commanded/on_remove()
-	UnregisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED)
+	UnregisterSignal(owner, list(COMSIG_ATOM_WAS_ATTACKED, COMSIG_LIVING_SLAPPED))
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
 	unbrainwash(owner, directives)
+	// if we still have some other brainwashing, throw the brainwashed alert again
+	if(owner.mind?.has_antag_datum(/datum/antagonist/brainwashed))
+		owner.throw_alert(ALERT_BRAINWASHED, /atom/movable/screen/alert/brainwashed)
 	directives = null
 	owner.balloon_alert(caster, "[owner] snapped out of [owner.p_their()] trance!")
 	caster = null
@@ -223,3 +232,29 @@
 		caster.Stun(0.5 SECONDS, TRUE)
 	to_chat(owner, span_awe(span_reallybig("You quickly come back to your senses as you're hit by [attacker]!")))
 	qdel(src)
+
+/datum/status_effect/commanded/proc/on_slapped(datum/source, mob/living/carbon/human/slapper)
+	SIGNAL_HANDLER
+	// no slapping yourself out of it
+	if(slapper == owner)
+		return
+	// gotta slap 'em in the face
+	if(slapper.zone_selected != BODY_ZONE_HEAD && slapper.zone_selected != BODY_ZONE_PRECISE_MOUTH)
+		return
+	if(slapper == caster || prob(10))
+		to_chat(owner, span_awe(span_reallybig("You quickly come back to your senses as you're slapped by [slapper]!")))
+		qdel(src)
+
+/atom/movable/screen/alert/status_effect/commanded
+	name = "Commanded"
+	desc = "You've been brainwashed, you can't resist the Directives engraved upon your mind!"
+	icon_state = "vampire_command"
+	var/command
+
+/atom/movable/screen/alert/status_effect/commanded/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+	to_chat(owner, span_awe(span_reallybig("[command]")))
+	var/datum/antagonist/brainwashed/brainwashed = owner.mind.has_antag_datum(/datum/antagonist/brainwashed)
+	brainwashed.ui_interact(owner)
