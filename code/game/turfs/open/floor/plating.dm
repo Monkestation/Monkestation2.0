@@ -14,6 +14,7 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	rust_resistance = RUST_RESISTANCE_BASIC
 	astar_weight = 75
 
 	//Can this plating have reinforced floors placed ontop of it
@@ -138,11 +139,6 @@
 
 #undef PLATE_REINFORCE_COST
 
-/turf/open/floor/plating/rust_heretic_act()
-	if(prob(70))
-		new /obj/effect/temp_visual/glowing_rune(src)
-	return ..()
-
 /turf/open/floor/plating/make_plating(force = FALSE)
 	return
 
@@ -219,6 +215,7 @@
 	baseturfs = /turf/open/floor/plating
 	rcd_proof = TRUE
 	upgradable = FALSE
+	rust_resistance = RUST_RESISTANCE_REINFORCED
 
 	//Used to track which stage of deconstruction the plate is currently in, Intact > Bolts Loosened > Cut
 	var/deconstruction_state = PLATE_INTACT

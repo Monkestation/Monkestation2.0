@@ -1,198 +1,211 @@
-/**
- * # The path of Moon.
- *
- * Goes as follows:
- *
- * Moonlight Troupe
- * Grasp of Lunacy
- * Smile of the moon
- * > Sidepaths:
- *   Mind Gate
- *   Ashen Eyes
- *
- * Mark of Moon
- * Ritual of Knowledge
- * Lunar Parade
- * Moonlight Amulette
- * > Sidepaths:
- *   Curse of Paralasys
- *   Unfathomable Curio
- * 	 Unsealed Arts
- *
- * Moonlight blade
- * Ringleaders Rise
- * > Sidepaths:
- *   Ashen Ritual
- *
- * Last Act
- */
+/datum/heretic_knowledge_tree_column/moon
+	route = PATH_MOON
+	ui_bgr = "node_moon"
+	examine_class = "heretic_path_moon"
+	complexity = "Hard"
+	complexity_color = COLOR_RED
+	icon = list(
+		"icon" = 'icons/obj/weapons/khopesh.dmi',
+		"state" = "moon_blade",
+		"frame" = 1,
+		"dir" = SOUTH,
+		"moving" = FALSE,
+	)
+	description = list(
+		"The Path of Moon revolves around sanity, sowing confusion and discord, and skirting the conventional rules of combat.",
+		"Play this path if you are already experienced with Heretic and want to try something highly unconventional, or simply if you desire to play a pacifist Heretic (Yes, really!)."
+	)
+	pros = list(
+		"High amount of tools to confound foes.",
+		"Sows chaos through the station via lunatics.",
+		"Practically immune to disabling effects while wearing the Resplendent Regalia."
+	)
+	cons = list(
+		"No mobility.",
+		"No direct tools to damage your opponents.",
+		"Reliant on misdirection and confusion.",
+		"Lunatics can become liabilities.",
+		"Fairly fragile despite their unique protection mechanics.",
+		"Death while wearing the Resplendent Regalia results in a gorey end.",
+	)
+	tips = list(
+		"Your Mansus Grasp will make your victim briefly hallucinate and apply a mark that, when triggered by your moon blade, will apply confusion and pacify them (the latter will get removed if the victim receives too much damage at once).",
+		"Your moon blade is special compared to the other heretic blades. It can be used even if you are pacified.",
+		"Your passive makes you completely impervious to brain traumas and slowly regenerates your brain health. Makes sure to upgrade it to bolster the regeneration effect.",
+		"Your Resplendent Regalia utterly changes the rules of combat for you and your opponents; You become fully immune to disabling effect, and all damage received (lethal or non lethal) will be converted into brain damage. However. the robes themselves have no armor, and prevent you from using guns as well as pacifying you (you can still use your moon blade).",
+		"Your moon amulette allows you to channel its effects through your moon blade. When toggled on, your Moon blade will no longer do lethal damage, but do sanity damage and become unblockable, this also allows you to use it while wearing your robes!",
+		"Your moon amulette is a vital part of your kit, as it allows your passive to regenerate double the brain health while worn.",
+		"If the sanity of your opponents goes below  a certain threshold, they'll become a lunatic. Lunatics are prompted to start attacking everyone (including you). Should you want to sacrifice them (or to get them to leave you be), hit them again with your moon blade to put them to sleep.",
+		"Ringleader's Rise summons an army of clones. They do barely any damage, but should they be attacked by non-heretics, they will explode and cause sanity and brain damage to those around them.",
+		"Your ascension will grant you an aura that converts nearby people to loyal lunatics. However, if they have a mindshield implant, their heads will instead detonate after a time.",
+	)
+
+	start = /datum/heretic_knowledge/limited_amount/starting/base_moon
+	knowledge_tier1 = /datum/heretic_knowledge/spell/mind_gate
+	guaranteed_side_tier1 = /datum/heretic_knowledge/phylactery
+	knowledge_tier2 = /datum/heretic_knowledge/moon_amulet
+	guaranteed_side_tier2 = /datum/heretic_knowledge/codex_morbus
+	robes = /datum/heretic_knowledge/armor/moon
+	knowledge_tier3 = /datum/heretic_knowledge/spell/moon_parade
+	guaranteed_side_tier3 = /datum/heretic_knowledge/unfathomable_curio
+	blade = /datum/heretic_knowledge/blade_upgrade/moon
+	knowledge_tier4 = /datum/heretic_knowledge/spell/moon_ringleader
+	ascension = /datum/heretic_knowledge/ultimate/moon_final
+
+/datum/heretic_knowledge_tree_column/moon/ascension_examine_text(mob/heretic)
+	return "[heretic.p_Their()] form cascades in tessellating hues. You know [heretic.p_them()] to be the Ringleader, Draped in Moonlight."
+
 /datum/heretic_knowledge/limited_amount/starting/base_moon
 	name = "Moonlight Troupe"
-	desc = "Opens up the Path of Moon to you. \
-		Allows you to transmute 2 sheets of iron and a knife into an Lunar Blade. \
+	desc = "Opens up the Path of Moon to you.<br>\
+		Allows you to create Lunar Blades. \
 		You can only create two at a time."
+	transmute_text = "Transmute 2 sheets of glass and a knife."
 	gain_text = "Under the light of the moon the laughter echoes."
-	next_knowledge = list(/datum/heretic_knowledge/moon_grasp)
 	required_atoms = list(
 		/obj/item/knife = 1,
-		/obj/item/stack/sheet/iron = 2,
+		/obj/item/stack/sheet/glass = 2,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/moon)
-	route = PATH_MOON
+	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_state = "moon_blade"
+	mark_type = /datum/status_effect/eldritch/moon
+	eldritch_passive = /datum/status_effect/heretic_passive/moon
 
-/datum/heretic_knowledge/base_moon/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	add_traits(user ,TRAIT_EMPATH, REF(src))
+/datum/heretic_knowledge/limited_amount/starting/base_moon/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	// user.AddComponentFrom(REF(src), /datum/component/empathy, seen_it = TRUE, visible_info = ALL, self_empath = FALSE, sense_dead = FALSE, sense_whisper = TRUE, smite_target = FALSE)
+	ADD_TRAIT(user, TRAIT_EMPATH, REF(src))
 
-/datum/heretic_knowledge/moon_grasp
-	name = "Grasp of Lunacy"
-	desc = "Your Mansus Grasp will cause them to hallucinate everyone as lunar mass, \
-		and hides your identity for a short dur	ation."
-	gain_text = "The troupe on the side of the moon showed me truth, and I took it."
-	next_knowledge = list(/datum/heretic_knowledge/spell/moon_smile)
-	cost = 1
-	route = PATH_MOON
+/datum/heretic_knowledge/limited_amount/starting/base_moon/on_mansus_grasp(mob/living/source, mob/living/target)
+	. = ..()
 
-/datum/heretic_knowledge/moon_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
+	if(target.can_block_magic(MAGIC_RESISTANCE_MOON))
+		to_chat(target, span_danger("You hear echoing laughter from above... but it is dull and distant."))
+		return
 
-/datum/heretic_knowledge/moon_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
-
-/datum/heretic_knowledge/moon_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
-	SIGNAL_HANDLER
 	source.apply_status_effect(/datum/status_effect/moon_grasp_hide)
 
 	if(!iscarbon(target))
 		return
-	var/mob/living/carbon/carbon_target = target
-	to_chat(carbon_target, span_danger("You hear echoing laughter from above"))
-	carbon_target.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by mansus grasp")
-	carbon_target.mob_mood?.set_sanity(carbon_target.mob_mood.sanity - 30)
-
-/datum/heretic_knowledge/spell/moon_smile
-	name = "Smile of the moon"
-	desc = "Grants you Smile of the moon, a ranged spell muting, blinding, deafening and knocking down the target for a\
-		duration based on their sanity."
-	gain_text = "The moon smiles upon us all and those who see its true side can bring its joy."
-	next_knowledge = list(
-		/datum/heretic_knowledge/mark/moon_mark,
-		/datum/heretic_knowledge/medallion,
-		/datum/heretic_knowledge/spell/mind_gate,
-	)
-	spell_to_add = /datum/action/cooldown/spell/pointed/moon_smile
-	cost = 1
-	route = PATH_MOON
-
-/datum/heretic_knowledge/mark/moon_mark
-	name = "Mark of Moon"
-	desc = "Your Mansus Grasp now applies the Mark of Moon. The mark is triggered from an attack with your Moon Blade. \
-		When triggered, the victim is confused, and when the mark is applied they are pacified \
-		until attacked."
-	gain_text = "The troupe on the moon would dance all day long \
-		and in that dance the moon would smile upon us \
-		but when the night came its smile would dull forced to gaze on the earth."
-	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/moon)
-	route = PATH_MOON
-	mark_type = /datum/status_effect/eldritch/moon
-
-/datum/heretic_knowledge/mark/moon_mark/trigger_mark(mob/living/source, mob/living/target)
-	. = ..()
-	if(!.)
+	if(IS_MONSTERHUNTER(target))
+		to_chat(target, span_danger("You hear echoing laughter from above. And yet you cannot help but notice the pain and desperation it hides..."))
 		return
+	var/mob/living/carbon/carbon_target = target
+	to_chat(carbon_target, span_danger("You hear echoing laughter from above!"))
+	carbon_target.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by mansus grasp")
+	carbon_target.mob_mood.adjust_sanity(-30)
 
-	// Also refunds 75% of charge!
-	var/datum/action/cooldown/spell/touch/mansus_grasp/grasp = locate() in source.actions
-	if(grasp)
-		grasp.next_use_time = min(round(grasp.next_use_time - grasp.cooldown_time * 0.75), 0)
-		grasp.build_all_button_icons()
+/datum/heretic_knowledge/spell/mind_gate
+	name = "Mind Gate"
+	desc = "Grants you Mind Gate, a spell which mutes, deafens, blinds, inflicts hallucinations, \
+		confusion, oxygen loss and brain damage to its target over 10 seconds.<br>\
+		Casting the spell causes brain damage."
+	gain_text = "My mind swings open like a gate, and its insight will let me perceive the truth."
 
-/datum/heretic_knowledge/knowledge_ritual/moon
-	next_knowledge = list(/datum/heretic_knowledge/spell/moon_parade)
-	route = PATH_MOON
+	action_to_add = /datum/action/cooldown/spell/pointed/mind_gate
+	cost = 2
 
-/datum/heretic_knowledge/spell/moon_parade
-	name = "Lunar Parade"
-	desc = "Grants you Lunar Parade, a spell that - after a short charge - sends a carnival forward \
-		when hitting someone they are forced to join the parade and suffer hallucinations."
-	gain_text = "The music like a reflection of the soul compelled them, like moths to a flame they followed"
-	next_knowledge = list(/datum/heretic_knowledge/moon_amulette)
-	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
-	cost = 1
-	route = PATH_MOON
-
-
-/datum/heretic_knowledge/moon_amulette
-	name = "Moonlight Amulette"
-	desc = "Allows you to transmute 2 sheets of glass, a heart and a tie \
-			if the item is used on someone with low sanity they go berserk attacking everyone \
-			, if their sanity isnt low enough it decreases their mood."
+/datum/heretic_knowledge/moon_amulet
+	name = "Moonlight Amulet"
+	desc = "Sculpt a Moonlight Amulet.<br>\
+		If the item is used on someone with low sanity, they go berserk - attacking anyone nearby. \
+		If their sanity isn't low enough, it decreases their mood.<br>\
+		Wearing yourself this will heal your brain damage and grant you the ability to see heathens through walls, \
+		but makes your blades harmless - instead damaging their mind directly."
+	transmute_text = "Transmute 2 sheets of glass, a heart and a tie."
 	gain_text = "At the head of the parade he stood, the moon condensed into one mass, a reflection of the soul."
-	next_knowledge = list(
-		/datum/heretic_knowledge/blade_upgrade/moon,
-		/datum/heretic_knowledge/reroll_targets,
-		/datum/heretic_knowledge/unfathomable_curio,
-		/datum/heretic_knowledge/curse/paralysis,
-		/datum/heretic_knowledge/painting,
-	)
+
 	required_atoms = list(
 		/obj/item/organ/internal/heart = 1,
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/clothing/neck/tie = 1,
 	)
-	result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulette)
-	cost = 1
-	route = PATH_MOON
+	result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulet)
+	cost = 2
+
+	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_state = "moon_amulette"
+	research_tree_icon_frame = 9
+
+/datum/heretic_knowledge/armor/moon
+	desc = "Create a Resplendant Regalia.<br>While worn, renders you fully immune to disabling effects \
+		and converts all forms of damage into brain damage, though also causing pacifism (with the exception of your Moon Blade)."
+	gain_text = "Trails of light and mirth flowed from every arm of this magnificent attire. \
+			The troupe twirled in irridescent cascades, dazzling onlookers with the truth they sought. \
+			I observed, basking in the light, to find my self."
+	transmute_text = "Transmute a table (or a suit), a mask and two sheets of glass."
+	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon)
+	research_tree_icon_state = "moon_armor"
+	required_atoms = list(
+		list(/obj/structure/table, /obj/item/clothing/suit) = 1,
+		/obj/item/clothing/mask = 1,
+		/obj/item/stack/sheet/glass = 2,
+	)
+
+/datum/heretic_knowledge/spell/moon_parade
+	name = "Lunar Parade"
+	desc = "Grants you Lunar Parade, a spell that - after a short charge - fires a projectile.<br>\
+		Anyone hit by it is forced to join the parade, following the projectile while suffering hallucinations."
+	gain_text = "The music like a reflection of the soul compelled them, like moths to a flame they followed"
+	action_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
+	cost = 2
+	drafting_tier = 5
 
 /datum/heretic_knowledge/blade_upgrade/moon
 	name = "Moonlight Blade"
-	desc = "Your blade now deals brain damage, causes random hallucinations and does sanity damage."
+	desc = "Your blade now deals brain damage, causes random hallucinations and does sanity damage.<br>\
+		Deals more brain damage if your victim is insane or unconscious."
 	gain_text = "His wit was sharp as a blade, cutting through the lie to bring us joy."
-	next_knowledge = list(/datum/heretic_knowledge/spell/moon_ringleader)
-	route = PATH_MOON
-	required_path = PATH_MOON
+
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "blade_upgrade_moon"
 
 /datum/heretic_knowledge/blade_upgrade/moon/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
-	if(source == target)
+	if(source == target || !isliving(target))
 		return
 
-	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 100)
+	if(target.can_block_magic(MAGIC_RESISTANCE_MOON) || IS_MONSTERHUNTER(target))
+		return
+
 	target.cause_hallucination( \
 			get_random_valid_hallucination_subtype(/datum/hallucination/body), \
 			"upgraded path of moon blades", \
 		)
 	target.emote(pick("giggle", "laugh"))
-	target.mob_mood?.set_sanity(target.mob_mood.sanity - 10)
+	target.mob_mood?.adjust_sanity(-10)
+	if(target.stat == CONSCIOUS && target.mob_mood?.sanity >= SANITY_NEUTRAL)
+		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2.5)
+		return
+	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5) // normal attack will also apply 5, for a total of 10
 
 /datum/heretic_knowledge/spell/moon_ringleader
 	name = "Ringleaders Rise"
-	desc = "Grants you Ringleaders Rise, an aoe spell that deals more brain damage the lower the sanity of everyone in the AoE,\
-			causes hallucinations with those who have less sanity getting more. \
-			If their sanity is low enough turns them insane, the spell then halves their sanity."
+	desc = "Grants you Ringleaders Rise, an AoE spell that deals brain damage and causes hallucinations, scaling with sanity."
 	gain_text = "I grabbed his hand and we rose, those who saw the truth rose with us. \
 		The ringleader pointed up and the dim light of truth illuminated us further."
-	next_knowledge = list(
-		/datum/heretic_knowledge/ultimate/moon_final,
-		/datum/heretic_knowledge/summon/ashy,
-	)
-	spell_to_add = /datum/action/cooldown/spell/aoe/moon_ringleader
-	cost = 1
-	route = PATH_MOON
+
+	action_to_add = /datum/action/cooldown/spell/aoe/moon_ringleader
+	cost = 2
+
+	research_tree_icon_frame = 5
+	is_final_knowledge = TRUE
 
 /datum/heretic_knowledge/ultimate/moon_final
 	name = "The Last Act"
-	desc = "The ascension ritual of the Path of Moon. \
-		Bring 3 corpses with more than 50 brain damage to a transmutation rune to complete the ritual. \
-		When completed, you become a harbinger of madness gaining and aura of passive sanity decrease \
-		, confusion increase and if their sanity is low enough brain damage and blindness. \
-		1/5th of the crew will turn into acolytes and follow your command, they will all recieve moonlight amulettes."
+	desc = "The ascension ritual of the Path of Moon.<br>\
+		When completed, you become a harbinger of madness gaining and aura of passive sanity decrease, \
+		crewmembers with low enough sanity will be converted into acolytes.<br>\
+		1/5th of the crew will turn into acolytes and follow your command, they will all receive moonlight amulets."
+	transmute_text = "Transmute 3 corpses with more than 50 brain damage."
 	gain_text = "We dived down towards the crowd, his soul splitting off in search of greater venture \
 		for where the Ringleader had started the parade, I shall continue it unto the suns demise \
 		WITNESS MY ASCENSION, THE MOON SMILES ONCE MORE AND FOREVER MORE IT SHALL!"
-	route = PATH_MOON
+
 	ascension_achievement = /datum/award/achievement/misc/moon_ascension
 	announcement_text = "%SPOOKY% Laugh, for the ringleader %NAME% has ascended! \
 						The truth shall finally devour the lie! %SPOOKY%"
-	announcement_sound = 'sound/ambience/antag/heretic/ascend_moon.ogg'
+	announcement_sound = 'sound/music/antag/heretic/ascend_moon.ogg'
 
 /datum/heretic_knowledge/ultimate/moon_final/is_valid_sacrifice(mob/living/sacrifice)
 
@@ -206,12 +219,14 @@
 /datum/heretic_knowledge/ultimate/moon_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
 	ADD_TRAIT(user, TRAIT_MADNESS_IMMUNE, type)
+	if(!user.mind.has_antag_datum(/datum/antagonist/lunatic/master))
+		user.mind.add_antag_datum(/datum/antagonist/lunatic/master)
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
 	var/amount_of_lunatics = 0
 	var/list/lunatic_candidates = list()
 	for(var/mob/living/carbon/human/crewmate as anything in shuffle(GLOB.human_list))
-		if(QDELETED(crewmate) || isnull(crewmate.client) || isnull(crewmate.mind) || crewmate.stat != CONSCIOUS)
+		if(QDELETED(crewmate) || isnull(crewmate.client) || isnull(crewmate.mind) || crewmate.stat != CONSCIOUS || crewmate.can_block_magic(MAGIC_RESISTANCE_MIND))
 			continue
 		var/turf/crewmate_turf = get_turf(crewmate)
 		var/crewmate_z = crewmate_turf?.z
@@ -225,59 +240,97 @@
 	var/max_lunatics = ceil(max(length(GLOB.manifest.locked), length(lunatic_candidates)) * 0.2)
 
 	for(var/mob/living/carbon/human/crewmate as anything in lunatic_candidates)
-		// Heretics, lunatics and monsters shouldn't become lunatics because they either have a master or have a mansus grasp
-		if(IS_HERETIC_OR_MONSTER(crewmate))
-			to_chat(crewmate, span_boldwarning("[user]'s rise is influencing those who are weak willed. Their minds shall rend." ))
-			continue
-		// Mindshielded and anti-magic folks are immune against this effect because this is a magical mind effect
-		if(HAS_TRAIT(crewmate, TRAIT_MINDSHIELD) || crewmate.can_block_magic(MAGIC_RESISTANCE) || HAS_MIND_TRAIT(crewmate, TRAIT_UNCONVERTABLE)) // monkestation edit: TRAIT_UNCONVERTABLE
-			to_chat(crewmate, span_boldwarning("You feel shielded from something." ))
-			continue
 		if(amount_of_lunatics > max_lunatics)
 			to_chat(crewmate, span_boldwarning("You feel uneasy, as if for a brief moment something was gazing at you."))
 			continue
-		var/datum/antagonist/lunatic/lunatic = crewmate.mind.add_antag_datum(/datum/antagonist/lunatic)
-		lunatic.set_master(user.mind, user)
-		var/obj/item/clothing/neck/heretic_focus/moon_amulette/amulet = new(crewmate.drop_location())
-		var/static/list/slots = list(
-			"neck" = ITEM_SLOT_NECK,
-			"hands" = ITEM_SLOT_HANDS,
-			"backpack" = ITEM_SLOT_BACKPACK,
-			"right pocket" = ITEM_SLOT_RPOCKET,
-			"left pocket" = ITEM_SLOT_RPOCKET,
-		)
-		crewmate.equip_in_one_of_slots(amulet, slots, qdel_on_fail = FALSE)
-		crewmate.emote("laugh")
-		amount_of_lunatics++
+		if(attempt_conversion(crewmate, user))
+			amount_of_lunatics++
 
-/datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
+/datum/heretic_knowledge/ultimate/moon_final/proc/attempt_conversion(mob/living/carbon/convertee, mob/user)
+	// Heretics, lunatics and monsters shouldn't become lunatics because they either have a master or have a mansus grasp
+	if(IS_HERETIC_OR_MONSTER(convertee))
+		to_chat(convertee, span_boldwarning("[user]'s rise is influencing those who are weak willed. Their minds shall rend."))
+		return FALSE
+	if(IS_MONSTERHUNTER(convertee)) // they get special text (they're shielded by the TRAIT_UNCONVERTABLE check anyways)
+		to_chat(convertee, span_boldwarning("This charade performed by moonstruck jesters cannot compare to the dream. To Wonderland. You are unimpressed."))
+		return FALSE
+	// Mindshielded and anti-magic folks are immune against this effect because this is a magical mind effect
+	if(HAS_MIND_TRAIT(convertee, TRAIT_UNCONVERTABLE) || HAS_TRAIT_NOT_FROM(convertee, TRAIT_MINDSHIELD, NANITES_TRAIT) || convertee.can_block_magic(MAGIC_RESISTANCE))
+		to_chat(convertee, span_boldwarning("You feel shielded from something."))
+		return FALSE
+
+	if(!convertee.mind)
+		return FALSE
+
+	var/datum/antagonist/lunatic/lunatic = convertee.mind.add_antag_datum(/datum/antagonist/lunatic)
+	lunatic.set_master(user.mind, user)
+	var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet = new(convertee.drop_location())
+	var/static/list/slots = list(
+		LOCATION_NECK,
+		LOCATION_HANDS,
+		LOCATION_RPOCKET,
+		LOCATION_LPOCKET,
+		LOCATION_BACKPACK,
+	)
+	convertee.equip_in_one_of_slots(amulet, slots, qdel_on_fail = FALSE)
+	INVOKE_ASYNC(convertee, TYPE_PROC_REF(/mob, emote), "laugh")
+	return TRUE
+
+/datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick)
 	SIGNAL_HANDLER
-
 	visible_hallucination_pulse(
 		center = get_turf(source),
 		radius = 7,
 		hallucination_duration = 60 SECONDS
 	)
 
-	for(var/mob/living/carbon/carbon_view in view(5, source))
-		var/carbon_sanity = carbon_view.mob_mood.sanity
-		if(carbon_view.stat != CONSCIOUS)
-			continue
-		if(IS_HERETIC_OR_MONSTER(carbon_view))
-			continue
-		new /obj/effect/temp_visual/moon_ringleader(get_turf(carbon_view))
-		carbon_view.adjust_confusion(2 SECONDS)
-		carbon_view.mob_mood.set_sanity(carbon_sanity - 5)
-		if(carbon_sanity < 30)
-			if(SPT_PROB(20, seconds_per_tick))
-				to_chat(carbon_view, span_warning("you feel your mind beginning to rend!"))
-			carbon_view.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
-		if(carbon_sanity < 10)
-			if(SPT_PROB(20, seconds_per_tick))
-				to_chat(carbon_view, span_warning("it echoes through you!"))
-			visible_hallucination_pulse(
-				center = get_turf(carbon_view),
-				radius = 7,
-				hallucination_duration = 50 SECONDS
-			)
-			carbon_view.adjust_temp_blindness(5 SECONDS)
+	for(var/mob/living/carbon/carbon_view in range(7, source))
+		affect_nearby(source, carbon_view, seconds_per_tick)
+
+/datum/heretic_knowledge/ultimate/moon_final/proc/affect_nearby(mob/living/source, mob/living/carbon_view, seconds_per_tick)
+	if(!carbon_view.mob_mood)
+		return
+	var/carbon_sanity = carbon_view.mob_mood.sanity
+	if(carbon_view.stat != CONSCIOUS)
+		return
+	if(IS_HERETIC_OR_MONSTER(carbon_view)/*  || source.faction_check_atom(carbon_view) */) // second part might be causing issues ,dik
+		return
+	if(carbon_view.can_block_magic(MAGIC_RESISTANCE_MOON)) //Somehow a shitty piece of tinfoil is STILL able to hold out against the power of an ascended heretic.
+		return
+	if(IS_MONSTERHUNTER(carbon_view)) // YOUR MADNESS IS WEAK COMPARED TO THE WONDERLAND
+		return
+	new /obj/effect/temp_visual/moon_ringleader(get_turf(carbon_view))
+	if(carbon_view.has_status_effect(/datum/status_effect/confusion))
+		to_chat(carbon_view, span_big(span_hypnophrase("YOUR HEAD RATTLES WITH A THOUSAND VOICES JOINED IN A MADDENING CACOPHONY OF SOUND AND MUSIC. EVERY FIBER OF YOUR BEING SAYS 'RUN'.")))
+	carbon_view.adjust_confusion(2 SECONDS)
+	carbon_view.mob_mood.adjust_sanity(-20)
+
+	if(carbon_sanity >= 10)
+		return
+	// So our sanity is dead, time to fuck em up
+	if(SPT_PROB(20, seconds_per_tick))
+		to_chat(carbon_view, span_warning("it echoes through you!"))
+	visible_hallucination_pulse(
+		center = get_turf(carbon_view),
+		radius = 7,
+		hallucination_duration = 50 SECONDS
+	)
+	carbon_view.adjust_temp_blindness(5 SECONDS)
+	if(should_mind_explode(carbon_view))
+		to_chat(carbon_view, span_boldbig(span_red(\
+			"YOUR SENSES REEL AS YOUR MIND IS ENVELOPED BY AN OTHERWORLDLY FORCE ATTEMPTING TO REWRITE YOUR VERY BEING. \
+			YOU CANNOT EVEN BEGIN TO SCREAM BEFORE YOUR IMPLANT ACTIVATES ITS PSIONIC FAIL-SAFE PROTOCOL, TAKING YOUR HEAD WITH IT.")))
+		var/obj/item/bodypart/head/head = carbon_view.get_bodypart(BODY_ZONE_HEAD)
+		if(!head?.dismember())
+			carbon_view.gib(/* DROP_ALL_REMAINS */)
+		var/datum/effect_system/reagents_explosion/explosion = new(get_turf(carbon_view), 1, 1, 1)
+		explosion.start(src)
+	else
+		attempt_conversion(carbon_view, source)
+
+/datum/heretic_knowledge/ultimate/moon_final/proc/should_mind_explode(mob/living/carbon/target)
+	if(HAS_TRAIT_NOT_FROM(target, TRAIT_MINDSHIELD, NANITES_TRAIT))
+		return TRUE
+	if(IS_CULTIST_OR_CULTIST_MOB(target))
+		return TRUE
+	return FALSE

@@ -393,8 +393,9 @@
 		roastableicon.color = held_sausage.color
 		. += roastableicon
 
-/obj/item/melee/roastingstick/handle_atom_del(atom/target)
-	if (target == held_sausage)
+/obj/item/melee/roastingstick/Exited(atom/movable/gone, direction)
+	. = ..()
+	if (gone == held_sausage)
 		held_sausage = null
 		update_appearance()
 

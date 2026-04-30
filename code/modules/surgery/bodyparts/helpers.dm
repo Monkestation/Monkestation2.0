@@ -1,15 +1,35 @@
-
-/mob/living/proc/get_bodypart(zone)
+/**
+ * Returns a bodypart of the specified zone that this mob has
+ *
+ * * zone: the zone to get.
+ * Defaults to chest, allowing for skilling zone nullchecks if you don't care what bodypart you get.
+ *
+ * Returns a bodypart, or null.
+ */
+/mob/living/proc/get_bodypart(zone = BODY_ZONE_CHEST) as /obj/item/bodypart
 	return
 
-/mob/living/carbon/get_bodypart(zone)
+/mob/living/carbon/get_bodypart(zone = BODY_ZONE_CHEST)
 	RETURN_TYPE(/obj/item/bodypart)
-
-	if(!zone)
-		zone = BODY_ZONE_CHEST
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-		if(bodypart.body_zone == zone)
-			return bodypart
+		if(bodypart.body_zone != zone)
+			continue
+		return bodypart
+
+/**
+ * Returns all bodyparts this mob has, optionally including stumps.
+ *
+ * include_stumps: whether or not to consider stumps as valid bodyparts to return.
+ * Defaults to FALSE, meaning that if a limb is missing (is a stump), it won't be included in the returned list.
+ *
+ * Returns a list of bodyparts, which may be empty.
+ */
+/mob/living/proc/get_bodyparts()
+	. = list()
+	for(var/zone in GLOB.all_body_zones)
+		var/obj/item/bodypart/bodypart = get_bodypart(zone)
+		if(bodypart)
+			. += bodypart
 
 ///Replaces a single limb and deletes the old one if there was one
 /mob/living/carbon/proc/del_and_replace_bodypart(obj/item/bodypart/new_limb, special)

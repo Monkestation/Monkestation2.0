@@ -147,6 +147,9 @@
 /obj/item/gun/ballistic/revolver/joel/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return interact_with_atom(interacting_with, user, modifiers)
 
+/obj/item/gun/ballistic/revolver/joel/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return NONE
+
 /obj/item/gun/ballistic/revolver/joel/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	// Can pull the trigger if it's empty since we don't care
 	if(!chambered)

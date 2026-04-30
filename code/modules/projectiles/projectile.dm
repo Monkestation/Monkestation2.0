@@ -639,6 +639,8 @@
 	// if pass_flags match, pass through entirely - unless direct target is set.
 	if((target.pass_flags_self & pass_flags) && !direct_target)
 		return FALSE
+	if(HAS_TRAIT(target, TRAIT_UNHITTABLE_BY_LASERS) && (armor_flag == LASER))
+		return FALSE
 	if(!ignore_source_check && firer && !direct_target)
 		if(target == firer || (target == firer.loc && ismecha(firer.loc)) || (target in firer.buckled_mobs))
 			return FALSE

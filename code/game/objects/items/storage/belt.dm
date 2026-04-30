@@ -75,7 +75,7 @@
 		/obj/item/wirecutters,
 		/obj/item/wrench,
 		/obj/item/spess_knife,
-		/obj/item/melee/sickly_blade/knock, //monkestation edit(maybe)
+		/obj/item/melee/sickly_blade/lock,
 		/obj/item/clockwork/replica_fabricator, //monkestation edit
 		/obj/item/clockwork/clockwork_slab, //monkestation edit
 		/obj/item/holotool, //monkestation edit

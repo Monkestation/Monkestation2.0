@@ -141,6 +141,9 @@
 	///How many points of antag capacity does this job give
 	var/antag_capacity_points = 1 //might need to default this to 0 and set it manually on all station jobs
 
+	/// If TRUE, then this job will latejoin "normally" on Oshan, instead of via pod.
+	var/oshan_normal_latejoin = FALSE
+
 /datum/job/New()
 	. = ..()
 	var/new_spawn_positions = CHECK_MAP_JOB_CHANGE(title, "spawn_positions")

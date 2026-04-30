@@ -1,5 +1,5 @@
-import { createSearch } from 'common/string';
-import { Box } from '../../components';
+import { Box } from 'tgui-core/components';
+import { createSearch } from 'tgui-core/string';
 
 import { LootBox } from './LootBox';
 import type { SearchItem } from './types';
@@ -9,7 +9,7 @@ type Props = {
   searchText: string;
 };
 
-export const RawContents = (props: Props) => {
+export function RawContents(props: Props) {
   const { contents, searchText } = props;
 
   const filteredContents = contents.filter(
@@ -23,4 +23,4 @@ export const RawContents = (props: Props) => {
       ))}
     </Box>
   );
-};
+}

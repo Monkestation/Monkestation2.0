@@ -164,6 +164,8 @@
 	else
 		adjust_stacks(owner.fire_stack_decay_rate * seconds_between_ticks)
 
+	SEND_SIGNAL(owner, COMSIG_FIRE_STACKS_UPDATED, stacks)
+
 	if(stacks <= 0)
 		qdel(src)
 		return TRUE
@@ -219,7 +221,7 @@
  */
 
 /datum/status_effect/fire_handler/fire_stacks/proc/ignite(silent = FALSE)
-	if(HAS_TRAIT(owner, TRAIT_NOFIRE))
+	if(HAS_TRAIT(owner, TRAIT_NOFIRE) && !HAS_TRAIT(owner, TRAIT_SUPPRESS_NOFIRE))
 		return FALSE
 
 	on_fire = TRUE
@@ -254,7 +256,7 @@
 	if(on_fire)
 		extinguish()
 	set_stacks(0)
-	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
+	UnregisterSignal(owner, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_EXTINGUISH))
 	owner.update_appearance(UPDATE_OVERLAYS)
 	if (cached_state)
 		owner.remove_shared_particles(cached_state)
@@ -262,9 +264,10 @@
 
 /datum/status_effect/fire_handler/fire_stacks/on_apply()
 	. = ..()
-	if(HAS_TRAIT(owner, TRAIT_NOFIRE))
+	if(HAS_TRAIT(owner, TRAIT_NOFIRE) && !HAS_TRAIT(owner, TRAIT_SUPPRESS_NOFIRE))
 		return FALSE
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_fire_overlay))
+	RegisterSignal(owner, COMSIG_ATOM_EXTINGUISH, PROC_REF(extinguish))
 	owner.update_appearance(UPDATE_OVERLAYS)
 
 /datum/status_effect/fire_handler/fire_stacks/proc/add_fire_overlay(mob/living/source, list/overlays)
