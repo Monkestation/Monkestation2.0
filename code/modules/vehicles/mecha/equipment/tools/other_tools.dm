@@ -211,7 +211,7 @@
 	unstackable = TRUE
 	movedelay = 0.4
 	/// Repaired health per second
-	var/health_boost = 3 // 30 hp in 10 seconds, which is alot actually. A 30 second fight could repair 1/3rd of a gygaxes hp
+	var/health_boost = 1.7 // 102 hp a minute.
 	var/icon/droid_overlay
 	var/list/repairable_damage = list(MECHA_INT_TEMP_CONTROL,MECHA_CABIN_AIR_BREACH)
 
