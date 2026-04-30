@@ -128,9 +128,6 @@
 	src.attack_hand_interact = attack_hand_interact || src.attack_hand_interact
 
 /datum/storage/Destroy()
-	parent = null
-	real_location = null
-
 	for(var/mob/person as anything in is_using)
 		hide_contents(person)
 
@@ -138,7 +135,10 @@
 	QDEL_NULL(closer)
 
 	is_using.Cut()
-	QDEL_LAZYLIST(storage_interfaces)
+	QDEL_LIST_ASSOC_VAL(storage_interfaces)
+
+	parent = null
+	real_location = null
 
 	return ..()
 
@@ -1089,6 +1089,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		to_hide.client.screen -= storage_interfaces[to_hide].list_ui_elements()
 		to_hide.client.screen -= real_location.contents
 	QDEL_NULL(storage_interfaces[to_hide])
+	storage_interfaces -= to_hide
 
 	return TRUE
 
