@@ -332,50 +332,6 @@
 	desc="Savannah-Ivanov armor plates. They are uniquely shaped and reinforced to deal with the stresses of two pilots, grandiose leaps, and missiles."
 	icon_state = "savannah_ivanov_armor"
 
-// Maintenance Battle Tank, I.E. Trash T-55
-
-/obj/item/mecha_parts/chassis/mbt
-	name = "\improper Maintenance Battle Tank chassis"
-	icon = 'icons/mecha/tanks_construction.dmi'
-	icon_state = "backbone"
-	construct_type = /datum/component/construction/unordered/mecha_chassis/mbt
-
-/obj/item/mecha_parts/part/mbt_tracks
-	name="\improper Maintenance Battle Tank Tracks"
-	desc="A set of tracks made out of wheelchairs and conveytor belts."
-	icon = 'icons/mecha/tanks_construction.dmi'
-	icon_state = "tracks"
-
-/obj/item/mecha_parts/part/mbt_engine
-	name="\improper Maintenance Battle Tank Engine"
-	desc="A Blast door and disposals unit shrouding a jumbled mess of oil, wire, and plasma generators."
-	icon = 'icons/mecha/tanks_construction.dmi'
-	icon_state = "engine"
-
-/obj/item/mecha_parts/part/mbt_turret
-	name="\improper Maintenance Battle Tank turret"
-	desc="A dome turret constructed out of a trashcart and gas canisters."
-	icon = 'icons/mecha/tanks_construction.dmi'
-	icon_state = "turret"
-
-/obj/item/mecha_parts/part/mbt_autoloader
-	name="\improper Maintenance Battle Tank autoloader"
-	desc="A jumble of disposals and actuators to push shells into a gunbreech."
-	icon = 'icons/mecha/tanks_construction.dmi'
-	icon_state = "autoloader"
-
-/obj/item/mecha_parts/part/mbt_accessories
-	name="\improper Maintenance Battle Tank parts"
-	desc="A fuel tanks, lights, optics, and whatever else was thought of in 5 minutes to slap on a mobile trash heap."
-	icon = 'icons/mecha/tanks_construction.dmi'
-	icon_state = "accessories"
-
-/obj/item/mecha_parts/part/mbt_gun
-	name="\improper Maintenance Battle Tank Gun"
-	desc="A D-10T rifled cannon, developed through many manhours of the brightest in the Soviet Union, somehow fabricated by you with trash on a spacestation."
-	icon = 'icons/mecha/tanks_construction.dmi'
-	icon_state = "gun"
-
 // The Vendozer, Needed a spot to put the parts, doesnt have a mech buildup. Has intermediary parts.
 
 /obj/item/mecha_parts/part/vendozer_fl
