@@ -40,10 +40,10 @@
 	hidden = TRUE
 
 /datum/mood_event/vassal_away
-	description = span_warning("I crave my master's blood...")
+	description = span_warning("I crave my master's presence...")
 	mood_change = -5
 	hidden = TRUE
 
 /datum/mood_event/vassal_away_severe //not hidden since it's so severe
-	description = span_awe(span_big("I feel so empty without my master's blood..."))
+	description = span_awe(span_big("I feel so empty being away from my master for so long..."))
 	mood_change = -30
