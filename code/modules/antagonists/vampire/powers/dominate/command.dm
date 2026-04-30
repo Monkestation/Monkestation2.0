@@ -127,6 +127,10 @@
 	if(HAS_TRAIT_NOT_FROM(living_target, TRAIT_MINDSHIELD, NANITES_TRAIT))
 		time_multiplier = 0.5
 
+	var/datum/antagonist/vassal/target_vassal = IS_VASSAL(living_target)
+	if(target_vassal && !(target_vassal in vampiredatum_power.vassals))
+		time_multiplier = 0.5 // commanding someone else's vassal only lasts half the time
+
 	living_target.apply_status_effect(/datum/status_effect/commanded, owner, command, power_time * time_multiplier)
 
 	power_activated_sucessfully() // PAY COST! BEGIN COOLDOWN!
