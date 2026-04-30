@@ -351,3 +351,40 @@
 	else
 		message = copytext(message, 2)
 	to_chat(target, custom_boxed_message("purple_box", span_purple("<b>[source]: </b>[message]")))
+
+///Checks to see if `atom/source` is behind `atom/target`
+/proc/check_behind(atom/source, atom/target)
+	// Let's see if source is behind target
+	// "Behind" is defined as 3 tiles directly to the back of the target
+	// x . .
+	// x > .
+	// x . .
+
+	// No tactical spinning allowed
+	if(HAS_TRAIT(target, TRAIT_SPINNING))
+		return TRUE
+
+	// We'll take "same tile" as "behind" for ease
+	if(target.loc == source.loc)
+		return TRUE
+
+	// We'll also assume lying down is behind, as mob directions when lying are unclear
+	if(isliving(target))
+		var/mob/living/living_target = target
+		if(living_target.body_position == LYING_DOWN)
+			return TRUE
+
+	// Exceptions aside, let's actually check if they're, yknow, behind
+	var/dir_target_to_source = get_dir(target, source)
+	if(target.dir & REVERSE_DIR(dir_target_to_source))
+		return TRUE
+
+	return FALSE
+
+/// Returns a list of all minds that the target mind shares a team with.
+/proc/get_all_team_members(datum/mind/mind) as /list
+	. = list()
+	for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
+		var/datum/team/team = antag_datum.get_team()
+		if(team)
+			. |= team.members

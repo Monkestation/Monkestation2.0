@@ -1,0 +1,6 @@
+author: "BobDABuilder9001"
+delete-after: True
+changes:
+  - rscadd: "BB Flashes are BACK. The one being flashed choses if they want to join."
+  - rscadd: "Brothers can be the big, regular or little brother. This does nothing but add some text over the brotherly chat. Based off when you join the brother team"
+  - qol: "Admins can change the brother chance of a BB team"

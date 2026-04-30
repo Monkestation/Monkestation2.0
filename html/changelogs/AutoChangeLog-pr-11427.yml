@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "You can now properly disable prompts for bloodling thralls as a ghost."
