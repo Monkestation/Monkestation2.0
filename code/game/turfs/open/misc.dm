@@ -6,7 +6,7 @@
 	desc = "report on github please"
 
 	flags_1 = NO_SCREENTIPS_1
-	turf_flags = CAN_BE_DIRTY_1 | IS_SOLID | NO_RUST
+	turf_flags = CAN_BE_DIRTY_1 | IS_SOLID
 
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT

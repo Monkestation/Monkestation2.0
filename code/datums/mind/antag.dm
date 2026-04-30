@@ -216,6 +216,8 @@
 
 	enslaved_to = WEAKREF(creator)
 
+	SEND_SIGNAL(current, COMSIG_MOB_ENSLAVED_TO, creator)
+
 	current.faction |= creator.faction
 	creator.faction |= "[REF(current)]"
 

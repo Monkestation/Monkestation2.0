@@ -1,0 +1,4 @@
+author: "Absolucy, Needicla, SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Spray painted clothing and such is now properly recolored on your sprite."

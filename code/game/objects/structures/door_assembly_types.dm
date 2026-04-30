@@ -271,6 +271,18 @@
 	name = "large public airlock assembly"
 	base_name = "large public airlock"
 
+/obj/structure/door_assembly/multi_tile/door_assembly_tram
+	name = "tram door assembly"
+	icon = 'icons/obj/doors/airlocks/tram/tram.dmi'
+	base_name = "tram door"
+	overlays_file = 'icons/obj/doors/airlocks/tram/tram-overlays.dmi'
+	glass_type = /obj/machinery/door/airlock/tram
+	airlock_type = /obj/machinery/door/airlock/tram
+	glass = FALSE
+	noglass = TRUE
+	mineral = "titanium"
+	material_type = /obj/item/stack/sheet/mineral/titanium
+
 /obj/structure/door_assembly/door_assembly_material/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/turf/T = get_turf(src)

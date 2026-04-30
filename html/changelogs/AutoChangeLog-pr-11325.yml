@@ -1,0 +1,9 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - map: "Moved the APC in Oshan's Xenobiology to inside of Xenobiology."
+  - map: "Prettied up Oshan's Xenobiology a bit."
+  - map: "Added 3 more escape pods to Oshan."
+  - map: "Removed the extra cassette pouch on Oshan."
+  - map: "Made the medkit outside of Oshan's medbay actually filled at roundstart."
+  - bugfix: "AIs, cyborgs, and prisoners should now spawn properly on Oshan when latejoining."

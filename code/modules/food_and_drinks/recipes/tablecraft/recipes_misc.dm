@@ -213,7 +213,7 @@
 /datum/crafting_recipe/food/tomato_sauce
 	name = "Tomato sauce"
 	reqs = list(
-		/obj/item/food/canned/tomatoes = 1,
+		/obj/item/food/grown/tomato = 1,
 		/datum/reagent/consumable/salt = 2,
 		/obj/item/food/grown/herbs = 1,
 		/datum/reagent/consumable/quality_oil = 5

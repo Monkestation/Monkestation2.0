@@ -958,12 +958,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 		state = HUNGER_STATE_FAT
 		return
 
-/*
 	if(HAS_TRAIT(hungry, TRAIT_GLUTTON))
 		fullness = NUTRITION_LEVEL_VERY_HUNGRY
 		state = HUNGER_STATE_HUNGRY // Can't get enough
 		return
-*/
 
 	fullness = round(hungry.get_fullness(only_consumable = TRUE), 0.05)
 	switch(fullness)
