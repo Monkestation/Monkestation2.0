@@ -446,10 +446,12 @@
 	desc = "A light armor vest worn by W Corp."
 	icon = 'icons/obj/clothing/egosuits/suits.dmi'
 	worn_icon = 'icons/mob/clothing/egosuits/suit.dmi'
+	flags_inv = NONE
 	icon_state = "w_corp"
 
 /obj/item/clothing/head/egosuits/wcorp
 	name = "W Corp cap"
 	desc = "A ball cap worn by W Corp."
 	icon_state = "what"
+	flags_inv = NONE
 	perma = TRUE
