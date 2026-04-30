@@ -1,6 +1,7 @@
 /datum/storyteller/brute
 	name = "The Brute"
 	desc = "While the brute will hit hard, it tires quickly."
+	star_colour = STARCOLOUR_REDSTAR
 	starting_point_multipliers = list(
 		EVENT_TRACK_MUNDANE = 1,
 		EVENT_TRACK_MODERATE = 1,

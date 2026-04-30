@@ -6620,6 +6620,7 @@
 #include "monkestation\code\datums\mutations\species\winged.dm"
 #include "monkestation\code\datums\quirks\_quirk.dm"
 #include "monkestation\code\datums\quirks\negative_quirks\clown_disbelief.dm"
+#include "monkestation\code\datums\quirks\negative_quirks\csl.dm"
 #include "monkestation\code\datums\quirks\negative_quirks\dnr.dm"
 #include "monkestation\code\datums\quirks\negative_quirks\feeble.dm"
 #include "monkestation\code\datums\quirks\negative_quirks\kakologophobia.dm"

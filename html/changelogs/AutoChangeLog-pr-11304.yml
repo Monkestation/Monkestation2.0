@@ -1,0 +1,5 @@
+author: "Melbert, cam_dev"
+delete-after: True
+changes:
+  - rscadd: "added Common Second Language quirk, understand between 10-90% of common!"
+  - rscadd: "can now change the percentage of your bilingual language you understand (good for beginners)"
