@@ -424,3 +424,13 @@
 	var/mob/living/carbon/carbon_owner = owner
 	if(!istype(carbon_owner.handcuffed, /obj/item/restraints/handcuffs/silver))
 		qdel(src)
+
+/proc/max_vampire_vassals()
+	var/total_players = SSgamemode.get_correct_popcount()
+	switch(total_players)
+		if(1 to 15)
+			return 1
+		if(16 to 30)
+			return 2
+		else
+			return 3

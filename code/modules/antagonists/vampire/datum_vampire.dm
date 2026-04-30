@@ -733,16 +733,6 @@
 				continue
 		.++
 
-/datum/antagonist/vampire/proc/get_max_vassals()
-	var/total_players = SSgamemode.get_correct_popcount()
-	switch(total_players)
-		if(1 to 20)
-			. = 1
-		if(21 to 30)
-			. = 2
-		else
-			. = 3
-
 /datum/antagonist/vampire/proc/on_examine(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
 	var/text

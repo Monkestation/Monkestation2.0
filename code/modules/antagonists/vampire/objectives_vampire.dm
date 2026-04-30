@@ -19,7 +19,7 @@
 	name = "Vassalize Mortals"
 
 /datum/objective/vampire/ego/vassals/New()
-	target_amount = rand(1, 3)
+	target_amount = min(rand(1, 3), max_vampire_vassals())
 	return ..()
 
 /datum/objective/vampire/ego/vassals/update_explanation_text()
