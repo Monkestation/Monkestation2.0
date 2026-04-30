@@ -11,13 +11,18 @@
 		return 1
 
 /atom/movable/screen/robot/module/Click()
-	if(..())
+	// Observers can look at a cyborg's inventory.
+	var/mob/living/silicon/robot/robot_owner = hud.mymob
+	if(robot_owner.model.type != /obj/item/robot_model)
+		if(usr.active_storage == robot_owner.model.atom_storage)
+			robot_owner.model.atom_storage.hide_contents(usr)
+		else
+			robot_owner.model.atom_storage.open_storage(usr)
+		return TRUE
+	. = ..()
+	if(.)
 		return
-	var/mob/living/silicon/robot/R = usr
-	if(R.model.type != /obj/item/robot_model)
-		R.hud_used.toggle_show_robot_modules()
-		return 1
-	R.pick_model()
+	robot_owner.pick_model()
 
 /atom/movable/screen/robot/module1
 	name = "module1"
@@ -62,6 +67,7 @@
 /atom/movable/screen/robot/store
 	name = "store"
 	icon_state = "store"
+	screen_loc = ui_borg_store
 
 /atom/movable/screen/robot/store/Click()
 	if(..())
@@ -148,10 +154,6 @@
 	robit.hands.screen_loc = ui_borg_module
 	static_inventory += robit.hands
 
-//Store
-	module_store_icon = new /atom/movable/screen/robot/store(null, src)
-	module_store_icon.screen_loc = ui_borg_store
-
 	pull_icon = new /atom/movable/screen/pull(null, src)
 	pull_icon.icon = 'icons/hud/screen_cyborg.dmi'
 	pull_icon.screen_loc = ui_borg_pull
@@ -162,72 +164,6 @@
 	zone_select = new /atom/movable/screen/zone_sel/robot(null, src)
 	zone_select.update_appearance()
 	static_inventory += zone_select
-
-
-/datum/hud/proc/toggle_show_robot_modules()
-	if(!iscyborg(mymob))
-		return
-
-	var/mob/living/silicon/robot/R = mymob
-
-	R.shown_robot_modules = !R.shown_robot_modules
-	update_robot_modules_display()
-
-/datum/hud/proc/update_robot_modules_display(mob/viewer)
-	if(!iscyborg(mymob))
-		return
-
-	var/mob/living/silicon/robot/R = mymob
-
-	var/mob/screenmob = viewer || R
-
-	if(!R.model)
-		return
-
-	if(!R.client)
-		return
-
-	if(R.shown_robot_modules && screenmob.hud_used.hud_shown)
-		//Modules display is shown
-		screenmob.client.screen += module_store_icon //"store" icon
-
-		if(!R.model.modules)
-			to_chat(usr, span_warning("Selected model has no modules to select!"))
-			return
-
-		if(!R.robot_modules_background)
-			return
-
-		var/display_rows = max(CEILING(length(R.model.get_inactive_modules()) / 8, 1),1)
-		R.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
-		screenmob.client.screen += R.robot_modules_background
-
-		var/x = -4 //Start at CENTER-4,SOUTH+1
-		var/y = 1
-
-		for(var/atom/movable/A in R.model.get_inactive_modules())
-			//Module is not currently active
-			screenmob.client.screen += A
-			if(x < 0)
-				A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
-			else
-				A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
-			SET_PLANE_IMPLICIT(A, ABOVE_HUD_PLANE)
-
-			x++
-			if(x == 4)
-				x = -4
-				y++
-
-	else
-		//Modules display is hidden
-		screenmob.client.screen -= module_store_icon //"store" icon
-
-		for(var/atom/A in R.model.get_inactive_modules())
-			//Module is not currently active
-			screenmob.client.screen -= A
-		R.shown_robot_modules = 0
-		screenmob.client.screen -= R.robot_modules_background
 
 /datum/hud/robot/persistent_inventory_update(mob/viewer)
 	if(!mymob)

@@ -246,7 +246,6 @@
 	tool = new reference(user)
 	// The internal tool is considered part of the tool itself, so don't let it be dropped.
 	tool.item_flags |= ABSTRACT
-	ADD_TRAIT(tool, TRAIT_NODROP, INNATE_TRAIT)
 	atoms[reference] = tool
 	tool.toolspeed = upgraded ? initial(tool.toolspeed) * 0.5 : initial(tool.toolspeed)
 	return tool
