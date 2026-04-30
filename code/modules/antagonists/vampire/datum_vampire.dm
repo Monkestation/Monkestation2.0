@@ -505,16 +505,10 @@
 	// Now list their vassals
 	if(length(vassals))
 		report += span_header("<br>Their vassals were...")
+		var/list/vassal_minds = list()
 		for(var/datum/antagonist/vassal/vassal in vassals)
-			if(!vassal.owner)
-				continue
-
-			var/list/vassal_report = list()
-			vassal_report += "<b>[vassal.owner.name]</b>"
-
-			if(vassal.owner.assigned_role)
-				vassal_report += " the [vassal.owner.assigned_role.title]"
-			report += vassal_report.Join()
+			vassal_minds += vassal.owner
+		report += printplayerlist(vassal_minds)
 
 	if(objectives_complete)
 		report += span_greentext(span_big("<br>The [name] was successful!"))
