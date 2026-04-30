@@ -4040,6 +4040,7 @@
 #include "code\modules\clothing\suits\labcoat.dm"
 #include "code\modules\clothing\suits\lasertag.dm"
 #include "code\modules\clothing\suits\moth.dm"
+#include "code\modules\clothing\suits\projectmoon.dm"
 #include "code\modules\clothing\suits\reactive_armour.dm"
 #include "code\modules\clothing\suits\reactive_armour_dimensional_themes.dm"
 #include "code\modules\clothing\suits\shirt.dm"
