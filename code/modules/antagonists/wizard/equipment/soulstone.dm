@@ -296,7 +296,7 @@
 		return FALSE
 
 	if(!forced)
-		var/datum/antagonist/cult/cultist = IS_CULTIST(user)
+		var/datum/antagonist/cult/cultist = GET_CULTIST(user)
 		if(cultist)
 			var/datum/team/cult/cult_team = cultist.get_team()
 			if(victim.mind && cult_team.is_sacrifice_target(victim.mind))
@@ -510,7 +510,7 @@
 	newstruct.clear_alert("bloodsense")
 	sense_alert = newstruct.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
 	if(sense_alert)
-		sense_alert.Cviewer = newstruct
+		sense_alert.construct_owner = newstruct
 	newstruct.cancel_camera()
 
 /obj/item/soulstone/anybody

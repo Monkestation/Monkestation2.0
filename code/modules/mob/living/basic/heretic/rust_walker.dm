@@ -6,28 +6,31 @@
 	icon_state = "rust_walker_s"
 	base_icon_state = "rust_walker"
 	icon_living = "rust_walker_s"
-	maxHealth = 75
-	health = 75
+	maxHealth = 100
+	health = 100
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	sight = SEE_TURFS
 	speed = 1
 	ai_controller = /datum/ai_controller/basic_controller/rust_walker
+	mob_biotypes = MOB_ROBOTIC|MOB_MINERAL
 
 /mob/living/basic/heretic_summon/rust_walker/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_RUST)
-	var/datum/action/cooldown/spell/aoe/rust_conversion/small/conversion = new(src)
-	conversion.Grant(src)
-	ai_controller?.set_blackboard_key(BB_GENERIC_ACTION, conversion)
 
-	var/datum/action/cooldown/spell/basic_projectile/rust_wave/short/wave = new(src)
-	wave.Grant(src)
-	ai_controller?.set_blackboard_key(BB_TARGETED_ACTION, wave)
+	var/static/list/grantable_spells = list(
+		/datum/action/cooldown/spell/aoe/rust_conversion = BB_GENERIC_ACTION,
+		/datum/action/cooldown/spell/basic_projectile/rust_wave/short = BB_TARGETED_ACTION,
+	)
+	grant_actions_by_list(grantable_spells)
 
 /mob/living/basic/heretic_summon/rust_walker/setDir(newdir)
 	. = ..()
 	update_appearance(UPDATE_ICON_STATE)
+
+/mob/living/basic/heretic_summon/rust_walker/do_rust_heretic_act(atom/target)
+	target.rust_heretic_act(RUST_RESISTANCE_TITANIUM)
 
 /mob/living/basic/heretic_summon/rust_walker/update_icon_state()
 	. = ..()
@@ -39,14 +42,13 @@
 		icon_state = "[base_icon_state]_s"
 	icon_living = icon_state
 
-/mob/living/basic/heretic_summon/rust_walker/Life(seconds_per_tick = SSMOBS_DT, times_fired)
-	if(stat == DEAD)
-		return ..()
+/mob/living/basic/heretic_summon/rust_walker/Life(seconds_per_tick)
+	. = ..()
+	if(QDELETED(src))
+		return
 	var/turf/our_turf = get_turf(src)
 	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
-		adjustBruteLoss(-3 * seconds_per_tick)
-
-	return ..()
+		adjustBruteLoss(-3 * DELTA_WORLD_TIME(SSclient_mobs))
 
 /// Converts unconverted terrain, sprays pocket sand around
 /datum/ai_controller/basic_controller/rust_walker
@@ -57,6 +59,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/rust
 	planning_subtrees = list(
+		/* /datum/ai_planning_subtree/escape_captivity, */
 		/datum/ai_planning_subtree/use_mob_ability/rust_walker,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability,
@@ -70,8 +73,7 @@
 
 /datum/idle_behavior/idle_random_walk/rust/perform_idle_behavior(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/our_mob = controller.pawn
-	var/turf/our_turf = get_turf(our_mob)
-	if (HAS_TRAIT(our_turf, TRAIT_RUSTY))
+	if (our_mob.is_touching_rust())
 		walk_chance = (our_mob.health < our_mob.maxHealth) ? 10 : 50
 	else
 		walk_chance = (our_mob.health < our_mob.maxHealth) ? 50 : 10
@@ -82,6 +84,6 @@
 
 /datum/ai_planning_subtree/use_mob_ability/rust_walker/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/turf/our_turf = get_turf(controller.pawn)
-	if (HAS_TRAIT(our_turf, TRAIT_RUSTY))
+	if (!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
 	return ..()

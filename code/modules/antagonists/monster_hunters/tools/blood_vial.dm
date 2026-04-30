@@ -69,6 +69,17 @@
 	show_duration = TRUE
 	processing_speed = STATUS_EFFECT_PRIORITY
 
+	/// A list of status effects to remove on application and each tick.
+	var/list/status_effects_to_remove = list(
+		/datum/status_effect/cloudstruck,
+		/datum/status_effect/corrosion_curse,
+		/datum/status_effect/eldritch,
+		/datum/status_effect/forced_combat,
+		/datum/status_effect/forced_combat/amok,
+		/datum/status_effect/star_mark,
+		/datum/status_effect/void_chill,
+	)
+
 /atom/movable/screen/alert/status_effect/cursed_blood
 	name = "Cursed Blood"
 	desc = "Something foreign is coursing through your veins!"
@@ -78,6 +89,8 @@
 	to_chat(owner, span_warning("You feel a great power surging through you!"))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/cursed_blood)
 	owner.fully_heal(HEAL_NEGATIVE_DISEASES)
+	for(var/status_effect_type in status_effects_to_remove)
+		owner.remove_status_effect(status_effect_type)
 	return TRUE
 
 /datum/status_effect/cursed_blood/on_remove()
@@ -94,6 +107,9 @@
 	owner.stamina.adjust(3.5 * seconds_between_ticks, forced = TRUE)
 	if(needs_update)
 		owner.updatehealth()
+
+	for(var/status_effect_type in status_effects_to_remove)
+		owner.remove_status_effect(status_effect_type)
 
 /datum/movespeed_modifier/cursed_blood
 	multiplicative_slowdown = -0.6

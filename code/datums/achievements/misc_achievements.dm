@@ -147,10 +147,10 @@
 	database_id = MEDAL_ARCHMAGE
 	icon_state = "archmage"
 
-/datum/award/achievement/misc/knock_ascension
+/datum/award/achievement/misc/lock_ascension
 	name = "Secrets behind the Spider Door"
 	desc = "You managed to open a gate into the mansus."
-	database_id = MEDAL_KNOCK_ASCENSION
+	database_id = MEDAL_LOCK_ASCENSION
 	icon_state = "knockascend"
 
 /datum/award/achievement/misc/toolbox_soul

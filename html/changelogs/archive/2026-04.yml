@@ -367,3 +367,101 @@
   - qol: Tomato Sauce now takes regular Tomatoes
   - image: removed Canned Tomatoes sprites
   - map: removed Canned Tomato trash from ruins
+2026-04-30:
+  Absolucy:
+  - map: Moved the APC in Oshan's Xenobiology to inside of Xenobiology.
+  - map: Prettied up Oshan's Xenobiology a bit.
+  - map: Added 3 more escape pods to Oshan.
+  - map: Removed the extra cassette pouch on Oshan.
+  - map: Made the medkit outside of Oshan's medbay actually filled at roundstart.
+  - bugfix: AIs, cyborgs, and prisoners should now spawn properly on Oshan when latejoining.
+  Absolucy, Cyberboss, lelandkemble:
+  - bugfix: The lootpanel will now properly close with distance from the target like
+      most other tguis.
+  - qol: The lootpanel will now automatically refresh when new items enter it. Removed
+      the manual refresh button.
+  - bugfix: The auto updating lootpanel now automatically shows new items that haven't
+      moved yet.
+  Absolucy, EnterTheJake, Xander3359, OrcaCora, Artur, necromanceranne, carlarctg:
+  - rscadd: All Heretic paths now start with a gradually evolving passive ability.
+  - balance: the entire heretic tree has been rebalanced.
+  - balance: the grasp and mark upgrade are now granted upon selecting the path
+  - rscadd: All Heretic paths now have a unique robe.
+  - balance: Heretic ability to blade break is now disabled after X amount of knowledge
+      has been acquired (and so is the limit on blades) or the 2nd passive level is
+      unlocked.
+  - balance: it's no longer possible to cross-path into different heretic paths.
+  - balance: Every main knowledge spell will now grant to the heretic the option to
+      select a side knowledge from a draft of 3, this is a free point.
+  - balance: Heretic ascension will now call the shuttle with no possibility of recall.
+  - rscadd: A new tab has been added in the heretic UI, the knowledge shop.
+  - rscadd: Heretics will now gain temporary X-ray vision when near an untapped essence.
+  - balance: Codex cicatrix no longer requires a special pen.
+  - balance: Ritual of knowledge requires less items to complete now.
+  - balance: the minimum number of required sacrifices to unlock ascension has been
+      upped to 4, and the maximum bumped down to 5.
+  - image: loads of new sprites have been added.
+  - rscadd: Heretics can now sacrifice Cultists for sweet loot.
+  - rscadd: Cultists can now sacrifice Heretics for sick trinkets.
+  - rscdel: Removed Bastard Blade from the game, code, and life
+  - balance: You no longer need crewed bodies for the heretic ascension ritual, any
+      humanoid bodies will do.
+  - rscadd: You can now ghost observe heretics and click on their antag panel button
+      to view their heretic UI.
+  - rscdel: Flying mobs no longer have 3x worse damage slowdown.
+  - qol: Disgust vomit knocks you down rather than stunning you.
+  Absolucy, LT3:
+  - refactor: Tram process/industrial lift refactored into transport subsystem
+  - refactor: Nanotrasen has traded in last year's tram for a new 2563 model!
+  - rscadd: Tram spoilers can be emagged to cause extra damage on collision
+  - rscadd: Tram can now be manually driven from the controller cabinet using TGUI
+  - rscadd: Tram floor tiles can be created using plastic sheets
+  - rscadd: Tram walls/floor tiles can be removed, repaired, and replaced
+  - rscadd: Tram frames (girder) can be created/placed using titanium sheets
+  - rscadd: Broken tram machinery causes crossing signals to malfunction
+  - rscadd: Ninja drain on tram controls will cause minor malfunction on other tram
+      components
+  - rscadd: Engineers can stop/start and disable the tram
+  - qol: Tram machinery now has context hints and examine text to indicate status
+  - qol: Tram remote no longer requires physically touching the tram before using
+  - code_imp: You can now construct furniture and other decorations on the tram
+  - code_imp: Tram electrocution is now a component, not a turf
+  - code_imp: Tram stats are now persistent between rounds and logged to feedback
+  - code_imp: Engineers can now end Tram Malfunction event early by repairing the
+      tram controller
+  - code_imp: Replacement tram machinery is researchable and buildable
+  - code_imp: Most tram machinery now performs auto configuration instead of hardcoded
+      map values
+  - code_imp: Tram remote can now set specific destinations
+  - code_imp: Tram actions/errors now create log entries
+  - balance: Tram base floor is no longer indestructible
+  - balance: Damaged energized tram plates have a chance to electrocute
+  - bugfix: Tram destination signs should no longer display incorrect emissive overlays
+  - bugfix: Tram crossing signals no longer turn amber before the tram starts moving
+  - image: Improved sprites for most tram components
+  - image: Removed all unused/duplicate tram icons from .dmis
+  - image: Colors are now consistent between status, tram, incident displays
+  - admin: Reset tram commands available to admins in the debug panel
+  - rscadd: Telecoms now has a central tram controller
+  - rscadd: Tram controller is now included in communications blackout event
+  - qol: Tram malfunction event only stops tram once, requiring engineering to reset
+      (no tools required)
+  - qol: Tram malfunction event no longer sends a Central Command announcement when
+      fixed
+  - rscdel: Tram doors no longer force crush you during tram malfunction event
+  - rscdel: Silicons can no longer control the tram when communication is lost
+  - bugfix: Fixed bug where players could be invisibly attached to the tram forever
+  - rscadd: The tram has been equipped with enhanced safety glass to reduce the severity
+      of crew injuries
+  Absolucy, Needicla, SmArtKar:
+  - bugfix: Spray painted clothing and such is now properly recolored on your sprite.
+  LettuceGuardian:
+  - bugfix: Changeling plasmamen igniting when using their chitinous armour.
+  Mantlecrawler:
+  - rscadd: Rem plushie, in the store for a "small" fee
+  SirNightKnight:
+  - rscadd: added the captain's campaign cap.
+  - image: recolored the captain beret to fit the current captain color scheme better
+  suffering intensfies:
+  - bugfix: diagnostic hud implants and modsuit visors now let you see cyborg charge
+      and HP properly

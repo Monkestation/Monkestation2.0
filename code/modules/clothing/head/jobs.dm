@@ -127,7 +127,14 @@
 	icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#0070B7#FFCE5B"
+	greyscale_colors = "#41579a#e6a345"
+
+/obj/item/clothing/head/hats/caphat/armored
+	name = "captain's campaign hat"
+	desc = "For the Captains who do not shy away from action. Uses reinforced fabric to offer sufficient protection."
+	icon_state = "caphelmet"
+	armor_type = /datum/armor/vest_capcarapace
+	dog_fashion = null
 
 //Head of Personnel
 /obj/item/clothing/head/hats/hopcap
