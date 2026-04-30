@@ -56,7 +56,7 @@
 	typepath = /datum/round_event/antagonist/vampire
 	antag_flag = ROLE_VAMPIRIC_ACCIDENT
 	prompted_picking = TRUE
-	max_occurrences = 1
+	// max_occurrences = 1
 
 /datum/round_event_control/antagonist/vampire/midround/can_spawn_event(players_amt, allow_magic, fake_check)
 	. = ..()
