@@ -1,0 +1,4 @@
+author: "Mantlecrawler"
+delete-after: True
+changes:
+  - rscadd: "You can now select a blood cult granter under opfor equipment"
