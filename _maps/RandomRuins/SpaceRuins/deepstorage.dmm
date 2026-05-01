@@ -2592,17 +2592,10 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
-"hr" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "s2"
-	},
-/turf/open/floor/engine,
-/area/ruin/space/has_grav/deepstorage/xenobiology)
 "hv" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
-/obj/machinery/duct,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
@@ -2659,22 +2652,12 @@
 "iK" = (
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
-"jD" = (
-/obj/machinery/plumbing/ooze_compressor{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes{
-	dir = 8
-	},
-/turf/open/floor/iron/white/textured,
-/area/ruin/space/has_grav/deepstorage/xenobiology)
 "kB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/directional/south,
-/obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "kE" = (
@@ -2724,13 +2707,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/storage)
-"mD" = (
-/obj/effect/turf_decal/stripes{
-	dir = 1
-	},
-/obj/machinery/duct,
-/turf/open/floor/engine,
-/area/ruin/space/has_grav/deepstorage/xenobiology)
 "mW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -2830,7 +2806,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "sy" = (
@@ -2884,15 +2859,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
-"vc" = (
-/obj/machinery/plumbing/ooze_compressor{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes{
-	dir = 4
-	},
-/turf/open/floor/iron/white/textured,
-/area/ruin/space/has_grav/deepstorage/xenobiology)
 "vs" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -2979,10 +2945,7 @@
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "xf" = (
-/obj/effect/turf_decal/stripes{
-	dir = 1
-	},
-/obj/machinery/duct,
+/obj/machinery/slime_compressor,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "xg" = (
@@ -3040,7 +3003,6 @@
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "An" = (
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "Az" = (
@@ -3121,12 +3083,6 @@
 /obj/structure/window/reinforced/plasma/spawner/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
-"CZ" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "s1"
-	},
-/turf/open/floor/engine,
-/area/ruin/space/has_grav/deepstorage/xenobiology)
 "Db" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -3340,13 +3296,6 @@
 /obj/machinery/smartfridge/extract/preloaded,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
-"NF" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "s3";
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/ruin/space/has_grav/deepstorage/xenobiology)
 "Ob" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/crusher)
@@ -3365,7 +3314,6 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/machinery/duct,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/apc/cell_5k,
 /obj/effect/mapping_helpers/apc/syndicate_access,
@@ -3562,7 +3510,6 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "WR" = (
@@ -3592,10 +3539,6 @@
 /obj/effect/turf_decal/bot_red/left,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
-"Zx" = (
-/obj/machinery/duct,
-/turf/open/floor/engine,
-/area/ruin/space/has_grav/deepstorage/xenobiology)
 "ZL" = (
 /obj/machinery/growing/tray,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -4093,9 +4036,9 @@ ab
 KZ
 Ps
 yA
-hr
-Zx
-xf
+iK
+iK
+Mv
 oA
 iK
 yA
@@ -4147,9 +4090,9 @@ iK
 iK
 iK
 iK
-xf
-mD
-NF
+Mv
+oA
+iK
 iK
 iK
 CL
@@ -4199,7 +4142,7 @@ Ta
 iK
 iK
 on
-xf
+Mv
 qM
 iK
 iK
@@ -4250,7 +4193,7 @@ LH
 TL
 TL
 TL
-jD
+TL
 Wf
 aw
 VY
@@ -4300,7 +4243,7 @@ ab
 KZ
 CQ
 sy
-sy
+xf
 gp
 KO
 An
@@ -4458,7 +4401,7 @@ wF
 vL
 vL
 vL
-vc
+vL
 PM
 VY
 aJ
@@ -4511,7 +4454,7 @@ Nw
 iK
 iK
 Sp
-xf
+Mv
 VY
 aK
 aV
@@ -4561,8 +4504,8 @@ ab
 KZ
 iK
 yA
-CZ
-Zx
+iK
+iK
 hv
 VY
 aL
