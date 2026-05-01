@@ -10,19 +10,25 @@
 	if(isobserver(usr))
 		return 1
 
-/atom/movable/screen/robot/module/Click()
-	// Observers can look at a cyborg's inventory.
-	var/mob/living/silicon/robot/robot_owner = hud.mymob
-	if(robot_owner.model.type != /obj/item/robot_model)
-		if(usr.active_storage == robot_owner.model.atom_storage)
-			robot_owner.model.atom_storage.hide_contents(usr)
-		else
-			robot_owner.model.atom_storage.open_storage(usr)
-		return TRUE
+/atom/movable/screen/robot/module/Click(location, control, params)
 	. = ..()
-	if(.)
+	var/mob/living/silicon/robot/robot_owner = hud.mymob
+	if(robot_owner.model.type == /obj/item/robot_model)
+		if(.)
+			return
+		robot_owner.pick_model()
 		return
-	robot_owner.pick_model()
+	var/list/modifiers = params2list(params)
+	if(robot_owner.module_active && !LAZYACCESS(modifiers, RIGHT_CLICK) && !.)
+		robot_owner.uneq_active()
+		return
+
+	// Observers can look at a cyborg's inventory, so we ignore parent return value here, unlike everywhere else.
+	if(usr.active_storage == robot_owner.model.atom_storage)
+		robot_owner.model.atom_storage.hide_contents(usr)
+	else
+		robot_owner.model.atom_storage.open_storage(usr)
+	return TRUE
 
 /atom/movable/screen/robot/module1
 	name = "module1"
@@ -63,17 +69,6 @@
 		return
 	var/mob/living/silicon/robot/R = usr
 	R.radio.interact(R)
-
-/atom/movable/screen/robot/store
-	name = "store"
-	icon_state = "store"
-	screen_loc = ui_borg_store
-
-/atom/movable/screen/robot/store/Click()
-	if(..())
-		return
-	var/mob/living/silicon/robot/R = usr
-	R.uneq_active()
 
 /datum/hud/robot
 	has_interaction_ui = TRUE
