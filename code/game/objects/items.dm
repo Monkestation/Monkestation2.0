@@ -705,9 +705,9 @@
 	item_flags &= ~IN_INVENTORY
 	UnregisterSignal(src, list(SIGNAL_ADDTRAIT(TRAIT_NO_WORN_ICON), SIGNAL_REMOVETRAIT(TRAIT_NO_WORN_ICON)))
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
-	if(iscarbon(user))
-		SEND_SIGNAL(user, COMSIG_CARBON_ITEM_DROPPED, src)
-	if(!silent)
+	SEND_SIGNAL(user, COMSIG_MOB_DROPPED_ITEM, src)
+
+	if(!silent && drop_sound)
 		playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE, mixer_channel = drop_mixer_channel) // monkestation edit: sound mixer
 	if(user)
 		user.update_cached_insulation()

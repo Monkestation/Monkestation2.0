@@ -73,6 +73,17 @@
 			payload.defuse()
 		return
 
+	for(var/obj/effect/forcefield/cosmic_field/potential_field as anything in GLOB.active_cosmic_fields)
+		if(get_dist(potential_field, src) < 3)
+			new /obj/effect/temp_visual/revenant(get_turf(src))
+			end_processing()
+			detonation_timer = null
+			next_beep = null
+			countdown.stop()
+			if(payload in src)
+				payload.defuse()
+			return
+
 	if(!isnull(next_beep) && (next_beep <= world.time))
 		var/volume
 		switch(seconds_remaining())

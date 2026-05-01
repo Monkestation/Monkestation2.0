@@ -12048,27 +12048,6 @@
 /obj/structure/hedge,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/security/brig)
-"coT" = (
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/stripes{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 4
-	},
-/obj/machinery/door/window/elevator/left/directional/east{
-	elevator_mode = 1;
-	elevator_linked_id = "publicElevator"
-	},
-/obj/machinery/button/elevator{
-	id = "publicElevator";
-	pixel_y = 32
-	},
-/obj/machinery/lift_indicator/directional/north{
-	linked_elevator_id = "publicElevator"
-	},
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/upper)
 "cpc" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/disposalpipe/segment{
@@ -12352,6 +12331,26 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/security/range)
+"csB" = (
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/machinery/button/elevator{
+	id = "publicElevator";
+	pixel_y = 32
+	},
+/obj/machinery/lift_indicator/directional/north{
+	linked_elevator_id = "publicElevator"
+	},
+/obj/machinery/light/directional/north,
+/obj/machinery/door/window/elevator/right/directional/east{
+	req_access = null
+	},
+/turf/open/floor/iron/dark,
+/area/station/hallway/primary/central)
 "csC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -12773,6 +12772,11 @@
 	pixel_y = -6
 	},
 /turf/open/floor/iron/dark,
+/area/station/hallway/primary/central)
+"cvv" = (
+/obj/structure/transport/linear/public,
+/obj/structure/railing,
+/turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/primary/central)
 "cvB" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -15717,13 +15721,6 @@
 	dir = 1
 	},
 /area/station/security/brig)
-"cWl" = (
-/obj/structure/industrial_lift/public,
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/floor/plating/elevatorshaft,
-/area/station/hallway/primary/central)
 "cWn" = (
 /obj/structure/table/wood/fancy/blue,
 /obj/item/flashlight/lamp{
@@ -18051,16 +18048,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/station/maintenance/cult_chapel_maint)
-"duF" = (
-/obj/effect/turf_decal/caution/stand_clear,
-/obj/structure/industrial_lift/public,
-/obj/structure/railing,
-/obj/machinery/elevator_control_panel/directional/south{
-	linked_elevator_id = "publicElevator";
-	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
-	},
-/turf/open/floor/plating/elevatorshaft,
-/area/station/hallway/primary/central)
 "duI" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/glass/colocup{
@@ -31389,6 +31376,28 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/station/maintenance/central)
+"fZn" = (
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/machinery/button/elevator{
+	id = "publicElevator";
+	pixel_y = 32
+	},
+/obj/machinery/lift_indicator/directional/north{
+	linked_elevator_id = "publicElevator"
+	},
+/obj/machinery/door/window/elevator/right/directional/west{
+	elevator_mode = 1;
+	transport_linked_id = "publicElevator";
+	req_access = null
+	},
+/turf/open/floor/iron/dark,
+/area/station/hallway/primary/upper)
 "fZs" = (
 /obj/effect/turf_decal/siding/thinplating/dark,
 /obj/structure/window/spawner/directional/south,
@@ -32547,6 +32556,13 @@
 /obj/item/wrench,
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
+"glw" = (
+/obj/structure/transport/linear/public,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/elevatorshaft,
+/area/station/hallway/primary/central)
 "glz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -35052,6 +35068,21 @@
 	dir = 4
 	},
 /area/station/maintenance/solars/port/fore)
+"gKi" = (
+/obj/effect/turf_decal/vg_decals/numbers/two,
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/machinery/door/window/elevator/right/directional/west{
+	elevator_mode = 1;
+	transport_linked_id = "publicElevator";
+	req_access = null
+	},
+/turf/open/floor/iron/dark,
+/area/station/hallway/primary/upper)
 "gKn" = (
 /turf/open/floor/iron/stairs/right,
 /area/station/hallway/primary/central/aft)
@@ -35947,20 +35978,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/solars/starboard/fore)
-"gST" = (
-/obj/effect/turf_decal/vg_decals/numbers/two,
-/obj/effect/turf_decal/stripes{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 4
-	},
-/obj/machinery/door/window/elevator/right/directional/east{
-	elevator_mode = 1;
-	elevator_linked_id = "publicElevator"
-	},
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/upper)
 "gSU" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cocaine{
@@ -36323,6 +36340,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/construction)
+"gXi" = (
+/obj/effect/turf_decal/caution/stand_clear,
+/obj/structure/transport/linear/public,
+/obj/effect/landmark/transport/transport_id{
+	specific_transport_id = "publicElevator"
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/elevatorshaft,
+/area/station/hallway/primary/central)
 "gXl" = (
 /obj/structure/closet/crate/bin,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -37191,11 +37219,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/port)
-"hgU" = (
-/obj/structure/industrial_lift/public,
-/obj/structure/railing,
-/turf/open/floor/plating/elevatorshaft,
-/area/station/hallway/primary/central)
 "hgY" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -39530,24 +39553,6 @@
 /obj/machinery/door/airlock/maintenance_hatch,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
-"hEP" = (
-/obj/effect/turf_decal/stripes{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 8
-	},
-/obj/machinery/button/elevator{
-	id = "publicElevator";
-	pixel_y = 32
-	},
-/obj/machinery/lift_indicator/directional/north{
-	linked_elevator_id = "publicElevator"
-	},
-/obj/machinery/light/directional/north,
-/obj/machinery/door/window/elevator/left/directional/west,
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
 "hES" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/terminal{
@@ -40849,22 +40854,6 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"hRG" = (
-/obj/structure/table/wood,
-/obj/item/storage/box/ids{
-	pixel_x = 3;
-	pixel_y = 4
-	},
-/obj/item/storage/box/pdas{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/wood,
-/area/station/command/heads_quarters/hop)
 "hRO" = (
 /turf/closed/wall,
 /area/station/command/captain_dining)
@@ -49452,6 +49441,26 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/upper)
+"jBV" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/machinery/button/elevator{
+	id = "publicElevator";
+	pixel_y = 32
+	},
+/obj/machinery/lift_indicator/directional/north{
+	linked_elevator_id = "publicElevator"
+	},
+/obj/machinery/light/directional/north,
+/obj/machinery/door/window/elevator/right/directional/west{
+	req_access = null
+	},
+/turf/open/floor/iron/dark,
+/area/station/hallway/primary/central)
 "jBW" = (
 /obj/structure/water_source/puddle,
 /obj/structure/flora/bush/reed{
@@ -57434,6 +57443,16 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
+"lbe" = (
+/obj/effect/turf_decal/caution/stand_clear,
+/obj/structure/transport/linear/public,
+/obj/structure/railing,
+/obj/machinery/elevator_control_panel/directional/south{
+	linked_elevator_id = "publicElevator";
+	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
+	},
+/turf/open/floor/plating/elevatorshaft,
+/area/station/hallway/primary/central)
 "lbi" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -63562,6 +63581,28 @@
 /obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/iron,
 /area/station/command/captain_dining)
+"mkq" = (
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/machinery/door/window/elevator/left/directional/east{
+	elevator_mode = 1;
+	transport_linked_id = "publicElevator";
+	req_access = null
+	},
+/obj/machinery/button/elevator{
+	id = "publicElevator";
+	pixel_y = 32
+	},
+/obj/machinery/lift_indicator/directional/north{
+	linked_elevator_id = "publicElevator"
+	},
+/turf/open/floor/iron/dark,
+/area/station/hallway/primary/upper)
 "mky" = (
 /obj/structure/chair,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -64425,20 +64466,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
-"muW" = (
-/obj/effect/turf_decal/stripes{
-	dir = 4
-	},
-/obj/effect/turf_decal/vg_decals/numbers/one,
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 4
-	},
-/obj/machinery/door/window/elevator/left/directional/east{
-	elevator_mode = 1;
-	elevator_linked_id = "publicElevator"
-	},
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
 "muY" = (
 /obj/machinery/bookbinder,
 /obj/structure/cable,
@@ -87013,17 +87040,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/station/maintenance/abandon_art_studio)
-"qON" = (
-/obj/effect/turf_decal/stripes{
-	dir = 8
-	},
-/obj/effect/turf_decal/vg_decals/numbers/one,
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 8
-	},
-/obj/machinery/door/window/elevator/right/directional/west,
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
 "qOZ" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/table/wood,
@@ -99852,17 +99868,6 @@
 "tle" = (
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
-"tli" = (
-/obj/effect/turf_decal/caution/stand_clear,
-/obj/structure/industrial_lift/public,
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "publicElevator"
-	},
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/floor/plating/elevatorshaft,
-/area/station/hallway/primary/central)
 "tlr" = (
 /obj/structure/closet/lasertag/red,
 /obj/machinery/light/small/directional/north,
@@ -104652,27 +104657,6 @@
 /obj/item/fur_dyer,
 /turf/open/floor/iron/white,
 /area/station/service/barber)
-"ugc" = (
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/stripes{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 8
-	},
-/obj/machinery/button/elevator{
-	id = "publicElevator";
-	pixel_y = 32
-	},
-/obj/machinery/lift_indicator/directional/north{
-	linked_elevator_id = "publicElevator"
-	},
-/obj/machinery/door/window/elevator/right/directional/west{
-	elevator_mode = 1;
-	elevator_linked_id = "publicElevator"
-	},
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/upper)
 "ugd" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
 /obj/structure/lattice,
@@ -105681,20 +105665,6 @@
 "uog" = (
 /turf/open/floor/iron,
 /area/station/science/explab)
-"uol" = (
-/obj/effect/turf_decal/vg_decals/numbers/two,
-/obj/effect/turf_decal/stripes{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 8
-	},
-/obj/machinery/door/window/elevator/left/directional/west{
-	elevator_mode = 1;
-	elevator_linked_id = "publicElevator"
-	},
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/upper)
 "uom" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -108069,6 +108039,19 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet/red,
 /area/station/service/library/abandoned)
+"uMU" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/turf_decal/vg_decals/numbers/one,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/machinery/door/window/elevator/right/directional/west{
+	req_access = null
+	},
+/turf/open/floor/iron/dark,
+/area/station/hallway/primary/central)
 "uMX" = (
 /turf/open/floor/iron/dark/side{
 	dir = 10
@@ -108358,24 +108341,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"uQj" = (
-/obj/effect/turf_decal/stripes{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 4
-	},
-/obj/machinery/button/elevator{
-	id = "publicElevator";
-	pixel_y = 32
-	},
-/obj/machinery/lift_indicator/directional/north{
-	linked_elevator_id = "publicElevator"
-	},
-/obj/machinery/light/directional/north,
-/obj/machinery/door/window/elevator/right/directional/east,
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
 "uQl" = (
 /obj/structure/chair/wood{
 	dir = 4
@@ -111791,6 +111756,21 @@
 "vwF" = (
 /turf/closed/wall/r_wall,
 /area/station/security/corrections_officer)
+"vwK" = (
+/obj/effect/turf_decal/vg_decals/numbers/two,
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/machinery/door/window/elevator/left/directional/east{
+	elevator_mode = 1;
+	transport_linked_id = "publicElevator";
+	req_access = null
+	},
+/turf/open/floor/iron/dark,
+/area/station/hallway/primary/upper)
 "vwN" = (
 /turf/open/floor/iron/dark/side{
 	dir = 4
@@ -120359,6 +120339,19 @@
 	},
 /turf/open/floor/carpet,
 /area/station/service/lawoffice)
+"xaZ" = (
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/effect/turf_decal/vg_decals/numbers/one,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/machinery/door/window/elevator/right/directional/east{
+	req_access = null
+	},
+/turf/open/floor/iron/dark,
+/area/station/hallway/primary/central)
 "xbb" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/reagent_dispensers/fueltank,
@@ -120740,6 +120733,22 @@
 /obj/item/storage/dice,
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
+"xfs" = (
+/obj/structure/table/wood,
+/obj/item/storage/box/ids{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/storage/box/pdas{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/hop)
 "xfA" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/growing/tray,
@@ -157612,8 +157621,8 @@ twB
 aMQ
 sYL
 cYn
-uQj
-muW
+csB
+xaZ
 yhm
 yhm
 sCX
@@ -157869,8 +157878,8 @@ qjx
 qjx
 rYx
 vcR
-cWl
-hgU
+glw
+cvv
 yhm
 qeU
 jLA
@@ -158126,8 +158135,8 @@ qjx
 npL
 xlK
 vcR
-tli
-duF
+gXi
+lbe
 sCX
 fuR
 dyt
@@ -158383,8 +158392,8 @@ qjx
 rPE
 nkh
 vcR
-cWl
-hgU
+glw
+cvv
 yhm
 cNE
 dZQ
@@ -158640,8 +158649,8 @@ qjx
 aMQ
 lDp
 cYn
-hEP
-qON
+jBV
+uMU
 yhm
 yhm
 sCX
@@ -221316,7 +221325,7 @@ mMZ
 qES
 eFs
 hSo
-hRG
+xfs
 pQs
 skf
 sLh
@@ -223148,8 +223157,8 @@ sgt
 pgY
 oqO
 mzu
-coT
-gST
+mkq
+vwK
 lcX
 ixW
 tQr
@@ -224176,8 +224185,8 @@ mMJ
 pgY
 rko
 mzu
-ugc
-uol
+fZn
+gKi
 lcX
 mCP
 oLQ

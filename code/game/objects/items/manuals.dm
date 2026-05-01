@@ -136,13 +136,13 @@
 				<h2>Basic ingredients preparation:</h2>
 
 				<b>Dough:</b> 10u water + 15u flour for simple dough.<br>
-				6u egg yolk + 12 egg white + 15u flour + 5u sugar for cake batter.<br>
-				Doughs can be transformed by using a knife and rolling pin.<br>
-				All doughs can be microwaved.<br>
+				6u egg yolk + 12 egg white (3 eggs) + 15u flour + 5u sugar for cake batter.<br>
+				Doughs can be transformed by using a rolling pin(flat dough) and knife(dough slice).<br>
+				All doughs can be baked.<br>
 				<b>Bowl:</b> Add water to it for soup preparation.<br>
 				<b>Meat:</b> Microwave it, process it, slice it into microwavable cutlets with your knife, or use it raw.<br>
-				<b>Cheese:</b> Add 5u universal enzyme (catalyst) to milk and soy milk to prepare cheese (sliceable) and tofu.<br>
-				<b>Rice:</b> Mix 10u rice with 10u water in a bowl then microwave it.
+				<b>Cheese:</b> Add 5u universal enzyme (catalyst) to 40u milk and 10u soy milk to prepare cheese (sliceable) or tofu.<br>
+				<b>Rice:</b> Mix 10u rice with 10u water, then boil in a soup pot with 25u water.
 
 				<h2>Custom food:</h2>
 				Add ingredients to a base item to prepare a custom meal.<br>
@@ -161,8 +161,22 @@
 				<h2>Table Craft:</h2>
 				Put ingredients on table, then click and drag the table onto yourself to see what recipes you can prepare.
 
+				<h2>Griddle:</h2>
+				Use it to cook food ingredients (raw meats, eggs, toast, etc...).
+				It can cook up to 7 ingredients at once.
+				Do be careful not to leave them on an active griddle for to long!
+
+				<h2>Stove:</h2>
+				Use it to boil food ingredients (rice, spaghetti, vegetables, meat, etc...) in a Soup Pot.
+
+				<h2>Oven:</h2>
+				Use it to bake food ingredients (doughs, some vegetables, etc...)
+
+				<h2>Range:</h2>
+				A combination of both the Stove and Oven, it can perform the tasks of both at the same time!
+
 				<h2>Microwave:</h2>
-				Use it to cook or boil food ingredients (meats, doughs, egg, donkpocket, etc...).
+				Use it to microwave some food ingredients (egg, donkpocket, etc...).
 				It can cook multiple items at once.
 
 				<h2>Processor:</h2>
@@ -176,14 +190,14 @@
 
 
 				<h2>Example recipes:</h2>
-				<b>Vanilla Cake</b>: Microwave cake batter.<br>
+				<b>Vanilla Cake</b>: Bake cake batter.<br>
 				<b>Burger:</b> 1 bun + 1 meat steak<br>
 				<b>Bread:</b> Microwave dough.<br>
 				<b>Waffles:</b> 2 pastry base<br>
 				<b>Popcorn:</b> Microwave corn.<br>
 				<b>Meat Steak:</b> Microwave meat.<br>
 				<b>Meat Pie:</b> 1 plain pie + 1u black pepper + 1u salt + 2 meat cutlets<br>
-				<b>Boiled Spaghetti:</b>Raw Spaghetti + 50u water at 450+K<br>
+				<b>Boiled Spaghetti:</b>Raw Spaghetti + 25u water at 450+K<br>
 				<b>Donuts:</b> 1u sugar + 1 pastry base<br>
 				<b>Fries:</b> Process potato.
 

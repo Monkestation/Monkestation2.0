@@ -29,6 +29,7 @@
 		TRAIT_FEARLESS, // to ensure things like fear of heresy or blood or whatever don't fuck them over
 		TRAIT_NOCRITDAMAGE,
 		TRAIT_NOSOFTCRIT,
+		TRAIT_RUSTIMMUNE,
 	)
 	/// A list of traits innately granted to the mind of monster hunters.
 	var/static/list/mind_traits = list(
@@ -380,10 +381,10 @@
 	if(bloodsucker)
 		explanation_text = "Slay the monster known as [target_name], a [bloodsucker.my_clan?.name || "clanless"] Bloodsucker."
 	else if(heretic)
-		if(heretic.heretic_path == PATH_START)
+		if(!heretic.heretic_path || heretic.heretic_path.route == PATH_START)
 			explanation_text = "Slay the monster known as [target_name], a heretic."
 		else
-			explanation_text = "Slay the monster known as [target_name], a heretic of the [heretic.heretic_path]."
+			explanation_text = "Slay the monster known as [target_name], a heretic of the [heretic.heretic_path.route]."
 	else if(target.has_antag_datum(/datum/antagonist/changeling))
 		explanation_text = "Slay the monster known as [target_name], a changeling."
 	else

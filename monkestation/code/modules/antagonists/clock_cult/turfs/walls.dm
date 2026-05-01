@@ -145,7 +145,7 @@
 /turf/closed/wall/clockwork/ratvar_act()
 	return FALSE
 
-/turf/closed/wall/clockwork/rust_heretic_act()
+/turf/closed/wall/clockwork/rust_heretic_act(rust_strength)
 	visible_message(span_warning("\The [src] glows for a second, but is uneffected by the magic!"))
 	return
 

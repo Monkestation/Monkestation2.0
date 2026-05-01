@@ -419,12 +419,11 @@
 		return FALSE
 
 	held_item?.play_tool_sound(target)
-	target.visible_message(
-		span_danger("[user] performs a ritual, spilling some of [target]'s blood from [target.p_their()] [selected_bodypart.name] and shaking [target.p_them()] up!"),
-		span_userdanger("[user] performs a ritual, spilling some blood from your [selected_bodypart.name], shaking you up!")
-	)
 
-	INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, emote), "scream")
+	if(target.has_status_effect(/datum/status_effect/heretic_passive/moon))
+		INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, emote), "laugh")
+	else
+		INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, emote), "scream")
 	target.set_timed_status_effect(5 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 	target.apply_damages(brute = torture_dmg_brute, burn = torture_dmg_burn, def_zone = selected_bodypart.body_zone)
 	//Torture succeeded. You may torture again.
