@@ -1,5 +1,6 @@
 ///your an evil person for grinding poor slimes up into ooze
 
+/**
 /obj/machinery/plumbing/slime_grinder
 	name = "slime grinder"
 	desc = "An unholy creation, does not grind the slimes quickly."
@@ -103,3 +104,4 @@
 		update_appearance()
 		return // Stops slime from actually hitting the machine
 	return ..() // If it is anything else handle being hit normally.
+*/

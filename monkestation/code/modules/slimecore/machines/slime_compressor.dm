@@ -264,11 +264,12 @@
 	if(!istype(current_recipe, /datum/compressor_recipe/crossbreed))
 		new_compress_time *= 0.5
 
-	if(!machine_do_after_visable(src, new_compress_time))
+	if(!machine_do_after_visable(src, new_compress_time, extra_checks = CALLBACK(src, PROC_REF(compressing))))
 		active = FALSE
 		soundloop.stop()
 		clear_recipe()
 		update_icon_state()
+		return
 
 	finish_compressing()
 
@@ -307,6 +308,20 @@
 	soundloop.stop()
 
 	update_icon_state()
+
+/obj/machinery/slime_compressor/proc/compressing()
+	if (!active)
+		return FALSE
+
+	// somehow...?
+	if (!length(mobs_inside))
+		return FALSE
+
+	if (!directly_use_energy(active_power_usage))
+		say("Not enough energy!")
+		return FALSE
+
+	return TRUE
 
 #undef CROSSBREED_BASE_PATHS
 #undef COMPRESSOR_BASE_EXTRACT_AMOUNT
