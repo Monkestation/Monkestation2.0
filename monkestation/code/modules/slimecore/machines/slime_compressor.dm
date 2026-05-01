@@ -37,6 +37,9 @@
 	///are we grinding some slimes
 	var/active = FALSE
 
+	/// Sound that plays when compressing
+	var/datum/looping_sound/microwave/soundloop
+
 	/// Recipes we can choose from
 	var/static/list/recipe_choices = list()
 	var/static/list/base_choices = list()
@@ -88,6 +91,7 @@
 				cross_breed_choices["[initial(stored_recipe.output_item.name)]"] |= list("[initial(subtype_breed.colour)] [initial(subtype_stored.output_item.name)]" = subtype_image)
 				choice_to_datum |= list("[initial(subtype_breed.colour)] [initial(subtype_stored.output_item.name)]" = subtype_stored)
 
+	soundloop = new(src, FALSE)
 	register_context()
 
 /obj/machinery/slime_compressor/RefreshParts()
@@ -251,6 +255,9 @@
  */
 /obj/machinery/slime_compressor/proc/compress_recipe()
 	active = TRUE
+	soundloop.start()
+	update_icon_state()
+
 	var/new_compress_time = compress_time
 	// Halve compression time for regular extracts
 	if(!istype(current_recipe, /datum/compressor_recipe/crossbreed))
@@ -258,6 +265,7 @@
 
 	if(!machine_do_after_visable(src, new_compress_time))
 		active = FALSE
+		soundloop.stop()
 		clear_recipe()
 		update_icon_state()
 
@@ -295,6 +303,7 @@
 		qdel(victim)
 
 	clear_recipe()
+	soundloop.stop()
 
 	update_icon_state()
 
