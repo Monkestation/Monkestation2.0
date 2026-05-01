@@ -1,0 +1,24 @@
+2026-05-01:
+  Absolucy:
+  - qol: You can now properly disable prompts for bloodling thralls as a ghost.
+  BobDABuilder9001:
+  - rscadd: BB Flashes are BACK. The one being flashed choses if they want to join.
+  - rscadd: Brothers can be the big, regular or little brother. This does nothing
+      but add some text over the brotherly chat. Based off when you join the brother
+      team
+  - qol: Admins can change the brother chance of a BB team
+  Mantlecrawler:
+  - rscadd: You can now select a blood cult granter under opfor equipment
+  Melbert, cam_dev:
+  - rscadd: added Common Second Language quirk, understand between 10-90% of common!
+  - rscadd: can now change the percentage of your bilingual language you understand
+      (good for beginners)
+  ilikesaying:
+  - qol: halved the quantity of water required to boil Rice and Spaghetti.
+  - qol: updated the Chef manual.
+  notghosti:
+  - rscadd: Star reports have been refactored and give more information to rounds
+      expectations/storyteller.
+  - balance: Slasher and Bingles have been moved from the medium storyteller track
+      to High
+  - balance: ' Plague rats now require enemies to spawn'

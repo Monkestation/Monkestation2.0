@@ -167,6 +167,7 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define MASKCOVERSMOUTH (1<<3) // on other items, these are just for mask/head
 #define HEADCOVERSMOUTH (1<<4)
 #define PEPPERPROOF (1<<5) //protects against pepperspray
+#define ALLOW_SURGERY_THROUGH (1<<6) //item will not obstruct body part access, such as for surgery, despite covering the body part
 
 #define TINT_DARKENED 2 //Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3 //Threshold of tint level to obscure vision fully
