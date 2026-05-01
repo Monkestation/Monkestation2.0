@@ -5,7 +5,6 @@
 	antag_datum = /datum/antagonist/clock_cultist
 	typepath = /datum/round_event/antagonist/clockcult
 	shared_occurence_type = SHARED_HIGH_THREAT
-	repeated_mode_adjust = TRUE
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,

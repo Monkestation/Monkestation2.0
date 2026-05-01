@@ -15,7 +15,6 @@
 		JOB_BRIG_PHYSICIAN,
 	)
 	shared_occurence_type = SHARED_HIGH_THREAT
-	repeated_mode_adjust = TRUE
 	maximum_antags = 1
 	required_roles = list(JOB_AI)
 	required_enemies = 4
