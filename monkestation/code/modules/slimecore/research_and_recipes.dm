@@ -45,7 +45,7 @@
 	build_path = /obj/machinery/slime_compressor
 	req_components = list(
 		/datum/stock_part/manipulator = 1,
-		/datum/stock_part/laser = 1)
+		/datum/stock_part/micro_laser = 1)
 
 /datum/design/slimevac
 	name = "Slime Vacuum"

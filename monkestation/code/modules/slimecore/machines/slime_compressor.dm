@@ -224,11 +224,16 @@
 			return FALSE
 	var/datum/slime_color/color = slime.current_color
 	if(istype(color, base_slime_required) && !base_complete)
+		if(istype(current_recipe, /datum/compressor_recipe/crossbreed))
+			if(slime.slime_flags & ADULT_SLIME)
+				base_complete = TRUE
+				return TRUE
+			return FALSE
 		base_complete = TRUE
 		return TRUE
 	// Crossbreed extracts can only be made with adult slimes
 	else if (istype (color, cross_slime_required) && !cross_complete)
-		if (slime.slime_flags & ADULT_SLIME)
+		if(slime.slime_flags & ADULT_SLIME)
 			cross_complete = TRUE
 			return TRUE
 	return FALSE
@@ -241,7 +246,7 @@
 	var/new_compress_time = compress_time
 	// Halve compression time for regular extracts
 	if(!istype(current_recipe, /datum/compressor_recipe/crossbreed))
-		new_compress_time =* 0.5
+		new_compress_time *= 0.5
 
 	if(!machine_do_after_visable(src, new_compress_time))
 		active = FALSE
@@ -279,10 +284,10 @@
 			new current_recipe.output_item(drop_location())
 	active = FALSE
 
-	clear_recipe()
-
 	for (var/victim in contents)
 		qdel(victim)
+
+	clear_recipe()
 
 	update_icon_state()
 
