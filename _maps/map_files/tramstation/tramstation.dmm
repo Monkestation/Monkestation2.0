@@ -16251,14 +16251,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
-"dZn" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "3";
-	dir = 1
-	},
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "dZu" = (
 /obj/machinery/mecha_part_fabricator,
 /obj/effect/turf_decal/delivery,
@@ -60461,7 +60453,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/machinery/duct,
 /obj/machinery/door/window/elevator/left/directional/north{
 	elevator_mode = 1;
 	transport_linked_id = "tram_xeno_lift"
@@ -127602,11 +127593,11 @@ aMB
 sPL
 bdO
 rLd
-kTh
-eGt
-xQh
-xQh
-dZn
+pbt
+exH
+bfH
+bfH
+cml
 bfH
 qVr
 aaa

@@ -2050,7 +2050,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/duct,
 /obj/structure/cable,
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
@@ -4582,7 +4581,6 @@
 /turf/open/floor/iron,
 /area/station/science/research)
 "bbK" = (
-/obj/machinery/duct,
 /obj/structure/cable,
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
@@ -12967,7 +12965,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/duct,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -14827,11 +14824,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
-"dxU" = (
-/obj/structure/cable,
-/obj/machinery/duct,
-/turf/open/floor/glass/reinforced,
-/area/station/science/xenobiology)
 "dxV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -27637,10 +27629,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
-"gvX" = (
-/obj/machinery/duct,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "gwd" = (
 /obj/machinery/washing_machine,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
@@ -27829,9 +27817,6 @@
 "gyQ" = (
 /obj/machinery/light/floor/has_bulb,
 /mob/living/basic/slime,
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "4"
-	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "gyV" = (
@@ -28410,10 +28395,6 @@
 /area/station/security/prison/workout)
 "gGn" = (
 /mob/living/basic/slime,
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "5";
-	dir = 2
-	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "gGq" = (
@@ -33018,14 +32999,6 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/station/science/ordnance/storage)
-"hID" = (
-/mob/living/basic/slime,
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "6";
-	dir = 2
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "hIH" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 10
@@ -44729,11 +44702,6 @@
 /obj/machinery/lathe/workstation,
 /turf/open/floor/iron,
 /area/station/engineering/main)
-"ksG" = (
-/obj/machinery/duct,
-/obj/structure/cable,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "ksH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/yellow/line{
@@ -46110,14 +46078,6 @@
 /obj/structure/sign/warning/pods,
 /turf/closed/wall,
 /area/station/hallway/secondary/entry)
-"kKp" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "2";
-	dir = 1
-	},
-/mob/living/basic/slime,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "kKx" = (
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 4
@@ -55411,7 +55371,7 @@
 /area/station/medical/psychology)
 "mVe" = (
 /obj/effect/turf_decal/bot_red,
-/obj/machinery/plumbing/ooze_compressor,
+/obj/machinery/slime_compressor,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "mVi" = (
@@ -60633,15 +60593,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/kitchen/coldroom)
-"okI" = (
-/obj/machinery/light/floor/has_bulb,
-/mob/living/basic/slime,
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "1";
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "okJ" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
@@ -65945,12 +65896,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"pAi" = (
-/obj/structure/cable,
-/obj/machinery/duct,
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/stone,
-/area/station/science/xenobiology)
 "pAu" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/siding/white{
@@ -66232,7 +66177,6 @@
 /area/station/engineering/atmos)
 "pDM" = (
 /obj/structure/cable,
-/obj/machinery/duct,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -73843,7 +73787,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/duct,
 /obj/structure/cable,
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
@@ -92789,11 +92732,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"vUy" = (
-/obj/machinery/duct,
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "vUz" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
@@ -97890,16 +97828,6 @@
 /obj/structure/cable/layer3,
 /turf/open/floor/iron,
 /area/station/engineering/main)
-"xdk" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/duct,
-/turf/open/floor/stone,
-/area/station/science/xenobiology)
 "xdn" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/box/red,
@@ -102091,14 +102019,6 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
 /turf/open/floor/engine,
 /area/station/science/ordnance/burnchamber)
-"yey" = (
-/mob/living/basic/slime,
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "3";
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "yeD" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -123913,15 +123833,15 @@ pTC
 iLv
 pQO
 gyQ
-gvX
+fMl
 fMl
 oQS
 tLp
 taA
 fMl
-gvX
-okI
-vUy
+fMl
+gyQ
+pQO
 iLv
 mWL
 bOj
@@ -124170,13 +124090,13 @@ gXx
 dXn
 fMl
 fMl
-gvX
+fMl
 rOY
 oQS
 tLp
 taA
 nYS
-gvX
+fMl
 fMl
 fMl
 cdG
@@ -124427,13 +124347,13 @@ pTC
 oop
 gvl
 gvl
-xdk
+gvl
 gvl
 wDL
 tLp
 lfN
 gvl
-xdk
+gvl
 gvl
 gvl
 hcZ
@@ -124684,13 +124604,13 @@ pTC
 qCN
 fMl
 fMl
-gvX
+fMl
 acC
 oQS
 tLp
 taA
 jNn
-gvX
+fMl
 fMl
 fMl
 neN
@@ -124941,13 +124861,13 @@ uHM
 iLv
 iLv
 iLv
-ksG
-ksG
+iLv
+iLv
 avI
-dxU
+tLp
 rto
-ksG
-ksG
+iLv
+iLv
 iLv
 iLv
 iLv
@@ -125198,14 +125118,14 @@ mQO
 iLv
 pQO
 gGn
-gvX
+fMl
 fMl
 oQS
-dxU
+tLp
 taA
 fMl
-gvX
-yey
+fMl
+gGn
 pQO
 iLv
 sjC
@@ -125455,13 +125375,13 @@ pTC
 qCN
 fMl
 fMl
-gvX
+fMl
 umK
 oQS
-dxU
+tLp
 taA
 fOp
-gvX
+fMl
 fMl
 fMl
 neN
@@ -125712,13 +125632,13 @@ pTC
 oop
 gvl
 gvl
-xdk
+gvl
 gvl
 wDL
-dxU
+tLp
 lfN
 gvl
-xdk
+gvl
 gvl
 gvl
 hcZ
@@ -125969,13 +125889,13 @@ pTC
 fsA
 fMl
 fMl
-gvX
+fMl
 vFK
 oQS
-pAi
+tpS
 taA
 vVD
-gvX
+fMl
 fMl
 fMl
 bCD
@@ -126226,13 +126146,13 @@ mQO
 iLv
 fMl
 fMl
-gvX
+fMl
 fMl
 eJt
 bbK
 dFZ
 fMl
-gvX
+fMl
 fMl
 fMl
 iLv
@@ -126482,15 +126402,15 @@ rwI
 mQO
 iLv
 pQO
-hID
-gvX
+gGn
+fMl
 fMl
 eJt
 bbK
 dFZ
 fMl
-gvX
-kKp
+fMl
+gGn
 pQO
 iLv
 oVW
