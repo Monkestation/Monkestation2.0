@@ -163,6 +163,7 @@
 /datum/design/board/brm
 	name = "Boulder Retrieval Matrix Board"
 	id = "brm"
+	build_type = COLONY_FABRICATOR | AUTOLATHE | PROTOLATHE
 	materials = list(
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
 	)

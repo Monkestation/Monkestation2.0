@@ -239,9 +239,13 @@
 #define JOB_CANNOT_BE_TARGET (1<<10)
 /// This job can't exist on planetary maps.
 #define JOB_NO_PLANETARY (1<<11)
+/// This job is a head of staff.
+#define JOB_HEAD_OF_STAFF (1<<12)
 
 /// Combination flag for jobs which are considered regular crew members of the station.
 #define STATION_JOB_FLAGS (JOB_ANNOUNCE_ARRIVAL|JOB_CREW_MANIFEST|JOB_EQUIP_RANK|JOB_CREW_MEMBER|JOB_NEW_PLAYER_JOINABLE|JOB_REOPEN_ON_ROUNDSTART_LOSS|JOB_ASSIGN_QUIRKS|JOB_CAN_BE_INTERN)
+/// Combination flag for jobs which are considered heads of staff.
+#define HEAD_OF_STAFF_JOB_FLAGS (JOB_BOLD_SELECT_TEXT|JOB_CANNOT_OPEN_SLOTS|JOB_HEAD_OF_STAFF)
 
 #define FACTION_NONE "None"
 #define FACTION_STATION "Station"

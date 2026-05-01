@@ -143,6 +143,8 @@
 		"toy_armblade",
 		"toy_balloon",
 		"toygun",
+		"tram_floor_dark",
+		"tram_floor_light",
 		"trapdoor_electronics",
 		"turbine_part_compressor",
 		"turbine_part_rotor",
@@ -264,4 +266,5 @@
 		"vitals_monitor",
 		"vial",
 		"large_vial",
+		"medical_crutch"
 	)

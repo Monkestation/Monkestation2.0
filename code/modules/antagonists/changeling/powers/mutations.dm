@@ -543,6 +543,7 @@
 	icon_state = "lingarmor"
 	inhand_icon_state = null
 	item_flags = DROPDEL
+	clothing_flags = PLASMAMAN_PREVENT_IGNITION
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/armor_changeling
 	flags_inv = HIDEJUMPSUIT
@@ -572,6 +573,7 @@
 	icon_state = "lingarmorhelmet"
 	inhand_icon_state = null
 	item_flags = DROPDEL
+	clothing_flags = PLASMAMAN_PREVENT_IGNITION
 	armor_type = /datum/armor/helmet_changeling
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
 	flags_cover = PEPPERPROOF

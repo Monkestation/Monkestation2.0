@@ -33,6 +33,7 @@
 		/obj/item/clothing/head/caphat/beret = 1,
 		/obj/item/clothing/head/caphat/beret/alt = 1,
 		/obj/item/clothing/head/hats/imperial/cap = 1,
+		/obj/item/clothing/head/hats/caphat/armored = 1,
 		/obj/item/clothing/under/rank/captain = 1,
 		/obj/item/clothing/under/rank/captain/skirt = 1,
 		/obj/item/clothing/under/rank/captain/dress = 1,
@@ -52,6 +53,7 @@
 	)
 	inventory[ACCESS_BLUESHIELD] = list(
 		// BLUESHIELD
+		/obj/item/clothing/under/rank/security/private/corporal = 3,
 		/obj/item/clothing/head/beret/blueshield = 1,
 		/obj/item/clothing/head/beret/blueshield/navy = 1,
 		/obj/item/clothing/under/rank/blueshield = 1,

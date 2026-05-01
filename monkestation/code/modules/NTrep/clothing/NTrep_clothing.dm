@@ -83,6 +83,17 @@
 	name = "representative's garment bag"
 	desc = "A bag for storing extra clothes and shoes. This one belongs to the Nanotrasen representative."
 
+/obj/item/storage/box/nt_cap
+	name = "box of Nanotrasen caps"
+	desc = "A box of baseball caps with the Nanotrasen logo. Glory to Nanotrasen!"
+	icon_state = "ntbox"
+	illustration = "writing"
+
+/obj/item/storage/box/nt_cap/PopulateContents()
+	..()
+	for(var/iterator in 1 to 7)
+		new /obj/item/clothing/head/soft/nt(src)
+
 /obj/item/storage/bag/garment/nanotrasen_representative/PopulateContents()
 	new /obj/item/clothing/under/rank/centcom/nanotrasen_representative(src)
 	new /obj/item/clothing/under/rank/centcom/nanotrasen_representative/turtleneck(src)
@@ -94,8 +105,6 @@
 	new /obj/item/clothing/suit/armor/vest/nanotrasen_representative(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
-	new /obj/item/clothing/under/costume/playbunny/centcom(src)
-	new /obj/item/clothing/suit/jacket/tailcoat/centcom/ntrep(src)
-	new /obj/item/clothing/shoes/heels/centcom(src)
-	new /obj/item/clothing/head/playbunnyears/centcom(src)
-	new /obj/item/clothing/neck/tie/bunnytie/centcom/tied(src)
+	new /obj/item/clothing/under/rank/centcom/corporate_liaison(src)
+	new /obj/item/clothing/under/rank/centcom/corporate_liaison/skirt(src)
+	new /obj/item/clothing/head/soft/nt(src)

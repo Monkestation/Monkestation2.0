@@ -164,9 +164,10 @@
 
 //  Monkestation Edit - explorer laser gun
 /obj/item/gun/energy/laser/explorer
-	name ="explorer laser gun"
-	desc = "A decomissioned military lasergun. Acid damage has left it's internal recharging battery fused inside with pitiful capacity. It can be hand charged for extra speed."
-	pin = /obj/item/firing_pin/explorer
+	name ="explorer hardlight laser gun"
+	desc = "A decomissioned military lasergun. Acid damage has left it's internal recharging battery fused inside with pitiful capacity. It can be hand charged for extra speed. \
+	Fires hardlight lasers, dealing more damage at the cost of dissipating extremely fast and being unable to pass through glass."
+	pin = /obj/item/firing_pin/explorer/unremovable
 	icon = 'monkestation/icons/obj/guns/explorer.dmi'
 	icon_state = "explorer"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/explorer)
@@ -188,9 +189,11 @@
 		cooldown_time = 1.5 SECONDS, \
 		charge_sound = 'sound/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.3 SECONDS, \
+		charge_move = IGNORE_USER_LOC_CHANGE, \
 		)
 
 /obj/item/ammo_casing/energy/laser/explorer
+	projectile_type = /obj/projectile/beam/laser/hardlight
 	e_cost = LASER_SHOTS(4, STANDARD_CELL_CHARGE)
 	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
 

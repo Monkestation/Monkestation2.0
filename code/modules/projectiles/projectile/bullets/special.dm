@@ -79,7 +79,7 @@
 /obj/projectile/bullet/coin
 	name = "marksman coin"
 	icon_state = "coinshot"
-	speed = 0.33
+	speed = 1.8
 	damage = 5
 	color = "#dbdd4c"
 

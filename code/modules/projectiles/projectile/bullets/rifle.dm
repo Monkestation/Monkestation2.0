@@ -88,7 +88,7 @@
 /obj/projectile/bullet/c40sol/pierce
 	name = ".40 Sol match bullet"
 	icon_state = "gaussphase"
-	speed = 2
+	speed = 1.4
 	damage = 15
 	armour_penetration = 40
 	wound_bonus = -30
@@ -161,4 +161,4 @@
 	armour_penetration = 60
 	wound_falloff_tile = -2
 	wound_bonus = -45
-	speed = 3.3
+	speed = 2

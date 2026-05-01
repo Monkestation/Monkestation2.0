@@ -328,6 +328,13 @@
 		if(el_tail && (el_tail.wag_flags & WAG_WAGGING)) // lizard tail wagging is robust and can swat away assailants!
 			defense_mod += 1
 
+		if(istype(tackle_target.wear_suit, /obj/item/clothing/suit/hooded/cultrobes/eldritch/blade))
+			defense_mod += 8
+		if(istype(tackle_target.wear_suit, /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust))
+			var/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/rust_robes = tackle_target.wear_suit
+			if(rust_robes.rusted)
+				defense_mod += 10
+
 	// OF-FENSE
 	var/mob/living/carbon/sacker = parent
 	var/sacker_drunkenness = sacker.get_drunk_amount()

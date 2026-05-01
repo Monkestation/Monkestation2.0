@@ -1093,3 +1093,44 @@
 	item_path = /obj/item/clothing/mask/gas/lobotomites_visage
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+// Yatosamasensei
+/datum/loadout_item/suit/tsukihime_executor
+	name = "Executor Dress"
+	item_path = /obj/item/clothing/suit/costume/tsukihime_executor
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/plushies/kumoko_san
+	name = "Kumoku-San Plush"
+	item_path = /obj/item/toy/plush/kumoko_san
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/yato_neco_arc
+	name = "Pet Delivery Beacon - Neco-Arc"
+	item_path = /obj/item/choice_beacon/pet/donator/yato_neco_arc
+	ckeywhitelist = list("Yatosamasensei")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/effects/yato_neco_arc
+	name = "Neco-Arc Transformation"
+	item_path = /obj/item/effect_granter/donator/yato_neco_arc
+	ckeywhitelist = list("Yatosamasensei")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// Ravin Hobo
+/datum/loadout_item/neck/red_regal_mantle
+	name = "Red Regal Mantle"
+	item_path = /obj/item/clothing/suit/hooded/cloak/red_regal_mantle
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// Snackiversal
+/datum/loadout_item/neck/anchor_necklace
+	name = "Silver Anchor"
+	item_path = /obj/item/clothing/accessory/silver_anchor
+	donator_only = TRUE
+	requires_purchase = FALSE

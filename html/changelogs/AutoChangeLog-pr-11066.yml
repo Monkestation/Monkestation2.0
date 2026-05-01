@@ -1,0 +1,6 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - rscadd: "Star reports have been refactored and give more information to rounds expectations/storyteller."
+  - balance: "Slasher and Bingles have been moved from the medium storyteller track to High"
+  - balance: " Plague rats now require enemies to spawn"
