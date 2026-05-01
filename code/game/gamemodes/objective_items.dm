@@ -380,7 +380,7 @@
 	..()
 
 /datum/objective_item/steal/supermatter/target_exists()
-	return GLOB.main_supermatter_engine != null
+	return TRUE
 
 // Doesn't need item_owner = (JOB_AI) because this handily functions as a murder objective if there isn't one
 /datum/objective_item/steal/functionalai
