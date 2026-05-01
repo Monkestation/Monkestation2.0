@@ -79,6 +79,12 @@
 	var/decay_check_interval = 2 SECONDS
 	var/last_decay_check = 0
 
+	/// Whether normal reactor processing is paused by an active supermatter rod cascade.
+	var/supermatter_cascade_active = FALSE
+
+	/// Supermatter rod currently controlling the reactor cascade.
+	var/obj/item/rbmk/fuel_rod/supermatter/supermatter_rod = null
+
 
 /obj/machinery/rbmk/reactor/proc/has_fuel_rods()
 	return (length(normal_slots) + length(special_slots)) > 0
@@ -113,6 +119,31 @@
 	return normal_slots
 
 
+/obj/machinery/rbmk/reactor/proc/check_supermatter_rod_activation()
+	if(supermatter_cascade_active || meltdown_in_progress)
+		return FALSE
+
+	if(!running)
+		return FALSE
+
+	if(temperature < 5000)
+		return FALSE
+
+	for(var/obj/item/rbmk/fuel_rod/supermatter/sm_rod in special_slots)
+		if(!sm_rod)
+			continue
+
+		if(sm_rod.cascade_controller)
+			continue
+
+		supermatter_cascade_active = TRUE
+		supermatter_rod = sm_rod
+		sm_rod.start_cascade(src)
+		return TRUE
+
+	return FALSE
+
+
 /obj/machinery/rbmk/reactor/ex_act(severity, target)
 	if(meltdown_in_progress)
 		return FALSE
@@ -133,6 +164,9 @@
 	meltdown_announced = FALSE
 	meltdown_in_progress = FALSE
 	last_decay_check = 0
+
+	supermatter_cascade_active = FALSE
+	supermatter_rod = null
 
 	startup_sequence_played = FALSE
 	previous_control_rod_depth = RBMK_CONTROL_ROD_MAX
@@ -163,6 +197,12 @@
 
 
 /obj/machinery/rbmk/reactor/Destroy()
+	if(supermatter_rod?.cascade_controller)
+		supermatter_rod.stop_cascade(FALSE)
+
+	supermatter_rod = null
+	supermatter_cascade_active = FALSE
+
 	if(low_soundloop)
 		low_soundloop.stop()
 	QDEL_NULL(low_soundloop)
@@ -255,6 +295,10 @@
 			to_chat(user, span_notice("No rods installed."))
 		return FALSE
 
+	if(fuel_rod == supermatter_rod)
+		var/obj/item/rbmk/fuel_rod/supermatter/sm_rod = fuel_rod
+		sm_rod.stop_cascade(TRUE)
+
 	fuel_rod.forceMove(drop_location())
 
 	if(user)
@@ -286,6 +330,10 @@
 	var/obj/item/rbmk/fuel_rod/fuel_rod = target_slots[slot_index]
 	if(!fuel_rod)
 		return FALSE
+
+	if(fuel_rod == supermatter_rod)
+		var/obj/item/rbmk/fuel_rod/supermatter/sm_rod = fuel_rod
+		sm_rod.stop_cascade(TRUE)
 
 	target_slots -= fuel_rod
 	fuel_rod.forceMove(drop_location())

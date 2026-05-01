@@ -192,6 +192,12 @@
 		previous_control_rod_depth = control_rod_depth
 		return
 
+	check_supermatter_rod_activation()
+
+	if(supermatter_cascade_active)
+		update_linked_consoles()
+		return
+
 	rbmk_update_control_rods()
 	update_rod_motion_state()
 

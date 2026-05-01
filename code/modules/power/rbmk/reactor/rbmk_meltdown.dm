@@ -58,6 +58,58 @@
 	log_game("[src] MELTDOWN triggered: [reason]")
 
 
+/obj/machinery/rbmk/reactor/proc/trigger_supermatter_rod_meltdown(reason)
+	if(meltdown_in_progress)
+		return
+
+	meltdown_in_progress = TRUE
+	meltdown_announced = TRUE
+
+	scrammed = TRUE
+	running = FALSE
+	control_rod_depth = RBMK_CONTROL_ROD_MAX
+	reactor_integrity = 0
+
+	world << span_userdanger("[RBMK_MELTDOWN_PREFIX]: SUPERMATTER CASCADE FAILURE: [reason]!")
+	priority_announce(
+		"RBMK supermatter rod cascade failure detected. Reactor containment has entered a resonance-collapse meltdown state.",
+		"RBMK Supermatter Cascade Alert",
+		'sound/misc/airraid.ogg'
+	)
+
+	cut_overlays()
+	current_damage_overlay_image = null
+	current_damage_stage = 4
+	update_reactor_icon()
+
+	// This is intentionally not a normal thermal SCRAM reset.
+	// The SM rod failure leaves the reactor in an extreme resonance-collapse state.
+	temperature = max(temperature, RBMK_TEMP_DAMAGE_RAMP * 2)
+	flux = RBMK_MAX_FLUX
+	radiation = RBMK_MAX_RADIATION
+	thermal_output = 0
+	void_coefficient = 0
+
+	#if RBMK_MELTDOWN_RADIATION
+	meltdown_radiation_pulse()
+	#endif
+
+	#if RBMK_MELTDOWN_ATMOS_DUMP
+	meltdown_atmos_release()
+	#endif
+
+	#if RBMK_MELTDOWN_EXPLOSIONS
+	meltdown_explosions()
+	#endif
+
+	#if RBMK_MELTDOWN_ALARMS
+	meltdown_area_alarms()
+	#endif
+
+	update_linked_consoles()
+	log_game("[src] SUPERMATTER ROD MELTDOWN triggered: [reason]")
+
+
 /obj/machinery/rbmk/reactor/proc/meltdown_radiation_pulse()
 	radiation_pulse(
 		src,
