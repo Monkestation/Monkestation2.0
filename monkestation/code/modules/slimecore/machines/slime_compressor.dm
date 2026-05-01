@@ -95,7 +95,7 @@
 		compression_speed = manipulator.tier
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
 		bonus_chance = (laser.tier * 15) - 15
-	compress_time = compress_time / compression_speed
+	compress_time = COMPRESSOR_BASE_COMPRESS_TIME / compression_speed
 	bonus_extract_chance = bonus_chance
 
 /obj/machinery/slime_compressor/examine(mob/living/user)
@@ -275,7 +275,7 @@
 	else
 		new current_recipe.output_item(drop_location())
 		// Chance to have a bonus extract based on parts tier
-		if (bonus_extract_chance)
+		if (prob(bonus_extract_chance))
 			new current_recipe.output_item(drop_location())
 	active = FALSE
 
