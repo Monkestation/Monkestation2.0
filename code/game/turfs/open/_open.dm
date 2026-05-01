@@ -328,7 +328,7 @@
 	if(lube & SLIDE_ICE)
 		// Ice slides only go 1 tile, this is so you will slip across ice until you reach a non-slip tile
 		slide_distance = 1
-	else if(SUPER_DUPER_SLIDE)
+	else if(lube & SUPER_DUPER_SLIDE)
 		slide_distance = 255
 	else if(HAS_TRAIT(slipper, TRAIT_CURSED))
 		// When cursed, all slips send you flying
