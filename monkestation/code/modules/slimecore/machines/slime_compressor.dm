@@ -46,6 +46,9 @@
 	/// Recipe we have currently set
 	var/datum/compressor_recipe/current_recipe
 
+	/// Mobs we have inside the compressor
+	var/list/mobs_inside = list()
+
 	/// Base slime required for the recipe (e.g. regenerative has purple as base)
 	var/datum/slime_color/base_slime_required
 	/// Cross slime required to make the crossbreed
@@ -97,6 +100,11 @@
 		bonus_chance = (laser.tier * 15) - 15
 	compress_time = COMPRESSOR_BASE_COMPRESS_TIME / compression_speed
 	bonus_extract_chance = bonus_chance
+
+/obj/machinery/slime_compressor/Exited(atom/movable/gone, direction)
+	if(gone in mobs_inside)
+		mobs_inside -= gone
+	return ..()
 
 /obj/machinery/slime_compressor/examine(mob/living/user)
 	. = ..()
@@ -174,7 +182,7 @@
 	cross_complete = FALSE
 
 	balloon_alert_to_viewers("set extract recipe")
-	remove_mobs_inside()
+	remove_slimes_inside()
 
 /**
  * Clear recipe and update HUD
@@ -183,16 +191,15 @@
 	current_recipe = null
 	base_complete = FALSE
 	cross_complete = FALSE
-	remove_mobs_inside()
+	remove_slimes_inside()
 	manage_hud_as_needed()
 
 /**
  * Move all mobs in our contents out
  */
-/obj/machinery/slime_compressor/proc/remove_mobs_inside()
-	for (var/victim in contents)
-		var/mob/living/removed = victim
-		removed.forceMove(get_turf(src))
+/obj/machinery/slime_compressor/proc/remove_slimes_inside()
+	for (var/mob/living/basic/slime/victim in mobs_inside)
+		victim.forceMove(get_turf(src))
 
 /**
  * On hit we check if mob is a slime
@@ -210,6 +217,7 @@
 		if(!check_recipe(slime))
 			return
 		slime.forceMove(src)
+		mobs_inside += slime
 		manage_hud_as_needed()
 		return
 	return ..()
@@ -268,12 +276,11 @@
 		// Slimes that had steroid used on them produce extra
 		total_extract_amount += COMPRESSOR_BASE_EXTRACT_AMOUNT
 
-		for(var/mob/living/basic/slime/slime in contents)
+		for(var/mob/living/basic/slime/slime in mobs_inside)
 			total_extract_amount += slime.slime_extract_bonus
 			// Baby slimes only make half of the extracts
 			if (!(slime.slime_flags & ADULT_SLIME))
 				total_extract_amount *= 0.5
-			total_extract_amount += slime.slime_extract_bonus
 
 		for(var/i in 1 to total_extract_amount)
 			new current_recipe.output_item(drop_location())
@@ -284,7 +291,7 @@
 			new current_recipe.output_item(drop_location())
 	active = FALSE
 
-	for (var/victim in contents)
+	for (var/mob/living/basic/slime/victim in mobs_inside)
 		qdel(victim)
 
 	clear_recipe()
