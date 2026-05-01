@@ -19,7 +19,7 @@
 		manage_hud_as_needed(cleanup = TRUE)
 
 /obj/machinery/slime_compressor/proc/manage_hud_as_needed(cleanup = FALSE)
-	if(!anchored || (cleanup && !QDELETED(hover_popup) && !length(hover_popup.hud_users_all_z_levels)))
+	if(!anchored || panel_open || (cleanup && !QDELETED(hover_popup) && !length(hover_popup.hud_users_all_z_levels)))
 		// don't bother keeping the hud around if it isn't needed
 		QDEL_NULL(hover_popup)
 		return

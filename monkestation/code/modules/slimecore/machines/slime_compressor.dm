@@ -138,6 +138,27 @@
 		context[SCREENTIP_CONTEXT_RMB] = "Select a crossbreed to make"
 	return CONTEXTUAL_SCREENTIP_SET
 
+/obj/machinery/slime_compressor/crowbar_act(mob/living/user, obj/item/tool)
+	. = NONE
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/slime_compressor/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(active)
+		return
+	if(default_deconstruction_screwdriver(user, "[icon_state]_open", initial(icon_state), tool))
+		clear_recipe()
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/slime_compressor/wrench_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(active)
+		return
+	if(default_unfasten_wrench(user, tool))
+		clear_recipe()
+		return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/slime_compressor/attack_hand(mob/living/user, list/modifiers)
 	if(. || !can_interact(user))
 		return
@@ -156,6 +177,9 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || !can_interact(user))
 		return
 	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!anchored)
+		balloon_alert(user, "unanchored!")
+		return
 	if(current_recipe && !active)
 		clear_recipe()
 		balloon_alert_to_viewers("cancelled recipe")
