@@ -72,11 +72,6 @@
 /obj/machinery/computer/rbmk_console/update_overlays()
 	SHOULD_CALL_PARENT(FALSE)
 
-	// This console uses custom full-state sprites:
-	// reactorcontrol-1, reactorcontrol-2, reactorcontrol-3.
-	// The parent computer overlay proc tries to create default computer overlays
-	// and emissives from generic icon states like "generic" / "generic_key",
-	// which do not exist in icons/obj/reactor_controller.dmi.
 	return list()
 
 
@@ -132,6 +127,22 @@
 	data["status"] = reactor.meltdown_in_progress ? "Meltdown in progress" : "Online"
 	data["running"] = reactor.running
 	data["scrammed"] = reactor.scrammed
+
+	data["supermatter_cascade_active"] = reactor.supermatter_cascade_active
+	data["supermatter_cascade_status"] = null
+	data["supermatter_cascade_time_left"] = 0
+	data["supermatter_cascade_final_countdown"] = FALSE
+
+	if(reactor.supermatter_rod?.cascade_controller)
+		var/datum/supermatter_rod_cascade/cascade = reactor.supermatter_rod.cascade_controller
+		data["supermatter_cascade_final_countdown"] = cascade.final_countdown_active
+
+		if(cascade.final_countdown_active)
+			data["supermatter_cascade_status"] = "TERMINAL COUNTDOWN"
+			data["supermatter_cascade_time_left"] = max(cascade.final_countdown_duration - (world.time - cascade.final_countdown_started_at), 0)
+		else
+			data["supermatter_cascade_status"] = "CONTROL LOCKOUT"
+			data["supermatter_cascade_time_left"] = max(cascade.duration - (world.time - cascade.started_at), 0)
 
 	data["control_rods"] = RBMK_ROUND2(reactor.actual_control_rod_depth)
 	data["control_rods_target"] = RBMK_ROUND2(reactor.control_rod_depth)
@@ -231,6 +242,12 @@
 			auto_link()
 			return TRUE
 		return FALSE
+
+	if(reactor.supermatter_cascade_active)
+		if(action == "rescan")
+			auto_link()
+			return TRUE
+		return TRUE
 
 	switch(action)
 		if("rescan")
