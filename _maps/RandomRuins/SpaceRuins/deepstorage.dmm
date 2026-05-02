@@ -20,14 +20,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
-/obj/item/storage/medkit/combat/surgery{
-	pixel_x = 0;
-	pixel_y = -6
-	},
-/obj/item/storage/medkit/combat{
-	pixel_x = 0;
-	pixel_y = 6
-	},
+/obj/item/surgery_tray,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "ah" = (
@@ -182,17 +175,48 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "aR" = (
-/obj/structure/closet/cardboard,
 /obj/effect/turf_decal/delivery,
-/obj/item/storage/box/monkeycubes,
-/obj/item/storage/box/monkeycubes,
-/obj/item/storage/box/monkeycubes,
+/obj/structure/closet/crate/medical,
+/obj/item/storage/medkit/regular{
+	pixel_x = -10;
+	pixel_y = -3
+	},
+/obj/item/storage/medkit/regular{
+	pixel_x = -10;
+	pixel_y = 0
+	},
+/obj/item/storage/medkit/regular{
+	pixel_x = -10;
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/ancient{
+	pixel_x = 0;
+	pixel_y = -4
+	},
+/obj/item/storage/medkit/ancient{
+	pixel_x = 0;
+	pixel_y = -1
+	},
+/obj/item/storage/medkit/ancient{
+	pixel_x = 0;
+	pixel_y = 2
+	},
+/obj/item/storage/medkit/robotic_repair{
+	pixel_x = 8;
+	pixel_y = -1
+	},
+/obj/item/storage/medkit/robotic_repair{
+	pixel_x = 8;
+	pixel_y = 5
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aS" = (
 /obj/machinery/airalarm/directional/north{
 	req_one_access = list("syndicate")
 	},
+/obj/structure/cargo_shelf,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aT" = (
@@ -298,10 +322,6 @@
 /obj/structure/sink/kitchen/directional/south,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
-"bd" = (
-/obj/machinery/deepfryer,
-/turf/open/floor/iron/cafeteria,
-/area/ruin/space/has_grav/deepstorage/kitchen)
 "be" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/highsecurity{
@@ -396,7 +416,7 @@
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bx" = (
 /obj/machinery/light/directional/east,
-/obj/machinery/griddle,
+/obj/machinery/deepfryer,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "by" = (
@@ -462,11 +482,14 @@
 /obj/structure/cable,
 /obj/structure/closet/cardboard,
 /obj/item/knife/kitchen,
-/obj/item/knife/kitchen,
-/obj/item/kitchen/rollingpin,
 /obj/item/hatchet,
 /obj/item/cultivator,
 /obj/effect/turf_decal/delivery,
+/obj/item/kitchen/rollingpin/illegal,
+/obj/item/kitchen/rollingpin/illegal,
+/obj/item/knife/kitchen,
+/obj/item/knife/kitchen,
+/obj/item/knife/butcher,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "bI" = (
@@ -525,7 +548,7 @@
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bO" = (
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/structure/table,
+/obj/machinery/griddle,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bP" = (
@@ -575,6 +598,14 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
+"cb" = (
+/obj/structure/cable,
+/obj/machinery/power/rtg/portable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/power)
 "cd" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -846,8 +877,8 @@
 "dv" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate");
-	name = "GPS crate";
-	desc = "highly sensitive"
+	name = "Secured Gear Crate";
+	desc = "Special Equipment Bud."
 	},
 /obj/item/clothing/gloves/combat,
 /obj/item/clothing/gloves/combat,
@@ -1089,9 +1120,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
-"eq" = (
-/turf/closed/wall/r_wall,
-/area/ruin/space/has_grav/deepstorage/airlock)
 "er" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 1
@@ -1151,19 +1179,24 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "ey" = (
 /obj/structure/table/wood,
-/obj/item/flashlight/lamp,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
+	},
+/obj/item/flashlight/lamp{
+	pixel_x = 0;
+	pixel_y = 11
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "ez" = (
-/obj/structure/chair/stool/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/siding/wood,
+/obj/structure/chair{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "eA" = (
@@ -1382,7 +1415,6 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "fc" = (
 /obj/structure/table,
-/obj/item/storage/backpack/duffelbag/syndie/surgery,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "fd" = (
@@ -1643,6 +1675,11 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
+"fW" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/power)
 "fZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/machinery/firealarm/directional/west,
@@ -1865,6 +1902,7 @@
 "gJ" = (
 /obj/machinery/light/small/directional/west,
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "gK" = (
@@ -2018,7 +2056,7 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "hE" = (
-/obj/machinery/porta_turret/syndicate/energy/raven{
+/obj/machinery/porta_turret/syndicate/energy{
 	dir = 4
 	},
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
@@ -2154,36 +2192,44 @@
 "jx" = (
 /obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/structure/table,
-/obj/item/storage/medkit/regular{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/medkit/regular{
-	pixel_x = 2;
-	pixel_y = 2
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
+	},
+/obj/item/storage/medkit/brute{
+	pixel_x = 1;
+	pixel_y = 2
+	},
+/obj/item/storage/medkit/brute{
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "jy" = (
 /obj/structure/table,
 /obj/structure/cable,
-/obj/item/storage/medkit/brute{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/medkit/brute{
-	pixel_x = 1;
+/obj/item/storage/medkit/robotic_repair{
+	pixel_x = 0;
 	pixel_y = 2
+	},
+/obj/item/storage/medkit/robotic_repair{
+	pixel_x = 4;
+	pixel_y = 3
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "jA" = (
 /obj/structure/window/reinforced/tinted/spawner/directional/east,
 /obj/structure/table/reinforced,
+/obj/item/storage/medkit/combat{
+	pixel_x = 0;
+	pixel_y = 6
+	},
+/obj/item/storage/medkit/combat/surgery{
+	pixel_x = 0;
+	pixel_y = -6
+	},
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "jD" = (
@@ -2280,11 +2326,15 @@
 /obj/item/clothing/accessory/armband/medblue,
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/gloves/latex/surgical,
+/obj/item/clothing/glasses/hud/health/night/science,
+/obj/item/clothing/glasses/hud/health/night/science,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "md" = (
-/obj/machinery/computer/diseasesplicer,
-/obj/effect/turf_decal/trimline/green/filled/warning,
+/obj/effect/turf_decal/trimline/green/end{
+	dir = 4
+	},
+/obj/structure/chair/office/tactical,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "mt" = (
@@ -2298,15 +2348,15 @@
 	name = "Ammo crate"
 	},
 /obj/item/ammo_box/magazine/c40sol_rifle{
-	pixel_x = 3;
+	pixel_x = 6;
 	pixel_y = 1
 	},
 /obj/item/ammo_box/magazine/c40sol_rifle{
-	pixel_x = 3;
+	pixel_x = 6;
 	pixel_y = -2
 	},
 /obj/item/ammo_box/magazine/c40sol_rifle{
-	pixel_x = 3;
+	pixel_x = 6;
 	pixel_y = -5
 	},
 /obj/item/ammo_box/c40sol{
@@ -2325,6 +2375,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
+"mA" = (
+/obj/item/storage/box/petridish,
+/obj/machinery/disease2/diseaseanalyser,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "mE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -2363,14 +2418,7 @@
 "nk" = (
 /obj/structure/table,
 /obj/machinery/firealarm/directional/east,
-/obj/item/storage/medkit/robotic_repair{
-	pixel_x = 4;
-	pixel_y = 3
-	},
-/obj/item/storage/medkit/robotic_repair{
-	pixel_x = 0;
-	pixel_y = 2
-	},
+/obj/item/storage/backpack/duffelbag/syndie/surgery,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "nv" = (
@@ -2396,14 +2444,6 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
-"nG" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/box/beakers/bluespace{
-	pixel_x = -5;
-	pixel_y = 1
-	},
-/turf/open/floor/engine,
-/area/ruin/space/has_grav/deepstorage/pharmacy)
 "nY" = (
 /obj/machinery/airalarm/directional/east{
 	req_one_access = list("syndicate")
@@ -2450,6 +2490,11 @@
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
+"os" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/beakers/bluespace,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "oC" = (
 /obj/machinery/power/rtg/portable,
 /obj/structure/cable,
@@ -2613,10 +2658,7 @@
 	name = "Equipment"
 	},
 /obj/item/storage/box/syringes,
-/obj/item/storage/box/syringes,
 /obj/item/storage/box/beakers,
-/obj/item/storage/box/beakers,
-/obj/item/storage/box/tube,
 /obj/item/storage/box/tube,
 /obj/item/storage/box/petridish,
 /turf/open/floor/iron/white,
@@ -2696,6 +2738,12 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"rU" = (
+/obj/effect/turf_decal/trimline/orange/line{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "sd" = (
 /obj/machinery/corral_corner{
 	mapping_id = "s4"
@@ -2763,9 +2811,9 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "sV" = (
-/obj/machinery/disease2/centrifuge,
-/obj/effect/turf_decal/trimline/green/filled/warning,
-/obj/item/storage/box/tube,
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "tk" = (
@@ -2808,6 +2856,8 @@
 /obj/structure/closet/l3closet/scientist,
 /obj/item/clothing/suit/bio_suit/interdyne,
 /obj/item/clothing/head/bio_hood/interdyne,
+/obj/item/clothing/suit/bio_suit/interdyne,
+/obj/item/clothing/head/bio_hood/interdyne,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "ud" = (
@@ -2815,9 +2865,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "ug" = (
-/obj/machinery/disease2/diseaseanalyser,
-/obj/effect/turf_decal/trimline/green/filled/warning,
-/obj/item/storage/box/petridish,
+/obj/effect/turf_decal/trimline/green/end{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "un" = (
@@ -2839,6 +2889,14 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"uy" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/trimline/green/filled/warning{
+	dir = 4
+	},
+/obj/item/weapon/virusdish/random,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "uB" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -2848,7 +2906,7 @@
 /area/ruin/space/has_grav/deepstorage)
 "uG" = (
 /obj/machinery/door/airlock/medical/glass{
-	name = "Pharmacy"
+	name = "Chemistry"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -2932,16 +2990,32 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
+"wk" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/table/wood,
+/obj/item/storage/box/donkpockets{
+	pixel_x = 2
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage)
 "wu" = (
 /obj/machinery/chem_dispenser/fullupgrade,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "wy" = (
-/obj/machinery/airalarm/directional/south{
-	req_one_access = list("syndicate")
+/obj/item/storage/box/beakers/variety{
+	pixel_x = 6;
+	pixel_y = 0
 	},
-/obj/effect/mapping_helpers/airalarm/syndicate_access,
-/obj/effect/turf_decal/trimline/orange/line,
+/obj/item/storage/box/beakers/variety{
+	pixel_x = -5;
+	pixel_y = 0
+	},
+/obj/structure/table/reinforced,
+/obj/item/storage/box/beakers/variety{
+	pixel_x = 0;
+	pixel_y = 7
+	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "wF" = (
@@ -3054,7 +3128,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
-/obj/structure/closet/crate/freezer/surplus_limbs,
+/obj/machinery/iv_drip/saline,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "xN" = (
@@ -3094,6 +3168,15 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
+"xX" = (
+/obj/machinery/airalarm/directional/south{
+	req_one_access = list("syndicate")
+	},
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/machinery/vending/syndichem,
+/obj/effect/turf_decal/trimline/orange/line,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "yf" = (
 /obj/machinery/chem_master,
 /turf/open/floor/engine,
@@ -3329,6 +3412,14 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
+"BM" = (
+/obj/machinery/disease2/centrifuge,
+/obj/item/storage/box/tube,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "BW" = (
 /obj/structure/table,
 /obj/item/cultivator,
@@ -3350,6 +3441,20 @@
 /obj/effect/turf_decal/trimline/orange/line,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"Ct" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/closet/crate/internals,
+/obj/item/tank/internals/emergency_oxygen/double,
+/obj/item/tank/internals/emergency_oxygen/double,
+/obj/item/tank/internals/emergency_oxygen/double,
+/obj/item/tank/internals/oxygen/yellow,
+/obj/item/tank/internals/oxygen/yellow,
+/obj/item/tank/internals/oxygen/yellow,
+/obj/item/clothing/mask/gas/syndicate,
+/obj/item/clothing/mask/gas/syndicate,
+/obj/item/clothing/mask/gas/syndicate,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage/aux_storage)
 "CL" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/secure/gear{
@@ -3401,9 +3506,6 @@
 /obj/structure/sign/warning/secure_area/directional/west,
 /turf/open/floor/engine/o2,
 /area/ruin/space/has_grav/deepstorage/armory)
-"Dp" = (
-/turf/closed/wall/r_wall,
-/area/ruin/space/has_grav/deepstorage)
 "Dq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -3414,6 +3516,32 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
+"DT" = (
+/obj/structure/table/wood,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/item/toy/plush/shark,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/deepstorage/dorm)
+"Ea" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp{
+	pixel_x = 0;
+	pixel_y = 11
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/item/toy/plush/beeplushie{
+	pixel_x = 0;
+	pixel_y = -4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/deepstorage/dorm)
 "Ee" = (
 /obj/structure/table/wood,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -3422,6 +3550,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
+/obj/item/toy/plush/moth,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "Eg" = (
@@ -3488,6 +3617,12 @@
 /obj/structure/table,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/crusher)
+"EG" = (
+/obj/effect/turf_decal/trimline/orange/line{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "EH" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -3523,9 +3658,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
 	},
-/obj/structure/table/reinforced,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"EX" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
 "Fv" = (
 /obj/machinery/corral_corner{
 	mapping_id = "s3"
@@ -3579,6 +3717,16 @@
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/kitchen)
+"Gn" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/machinery/door/window/brigdoor/left/directional/east{
+	name = "Surgery";
+	req_one_access = list("syndicate")
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "Gw" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -3756,6 +3904,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
+/obj/structure/closet/crate/freezer/surplus_limbs,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "KO" = (
@@ -3955,7 +4104,10 @@
 /area/ruin/space/has_grav/deepstorage/aux_storage)
 "Og" = (
 /obj/structure/table/reinforced,
-/obj/item/book/manual/wiki/infections,
+/obj/item/book/manual/wiki/infections{
+	pixel_x = 7;
+	pixel_y = 6
+	},
 /obj/machinery/reagentgrinder{
 	pixel_y = 14;
 	pixel_x = -11
@@ -3966,6 +4118,10 @@
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
+	},
+/obj/item/stack/sheet/mineral/uranium/five{
+	pixel_x = 0;
+	pixel_y = -2
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
@@ -4059,6 +4215,10 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
+"Qk" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "Ql" = (
 /obj/structure/closet/cardboard,
 /obj/item/stack/sheet/cardboard,
@@ -4081,6 +4241,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Pharmacy"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "Qt" = (
@@ -4116,19 +4280,11 @@
 	pixel_x = 9;
 	pixel_y = 0
 	},
-/obj/item/storage/box/monkeycubes/mousecubes{
-	pixel_x = 9;
-	pixel_y = 0
-	},
 /obj/effect/turf_decal/trimline/green/filled/warning{
 	dir = 1
 	},
 /obj/item/storage/box/monkeycubes{
 	pixel_x = -8;
-	pixel_y = 0
-	},
-/obj/item/storage/box/monkeycubes{
-	pixel_x = -9;
 	pixel_y = 0
 	},
 /turf/open/floor/iron/white,
@@ -4260,6 +4416,10 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/aux_storage)
+"Tn" = (
+/obj/machinery/computer/diseasesplicer,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "Tq" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/cargo_shelf,
@@ -4315,16 +4475,16 @@
 	pixel_y = 5
 	},
 /obj/item/folder/red{
-	pixel_x = 7;
-	pixel_y = 5
-	},
-/obj/item/pen{
-	pixel_x = -7;
-	pixel_y = 2
+	pixel_x = 5;
+	pixel_y = 0
 	},
 /obj/item/pen{
 	pixel_x = -6;
 	pixel_y = 5
+	},
+/obj/item/pen{
+	pixel_x = 4;
+	pixel_y = 8
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -4696,9 +4856,9 @@ aa
 aa
 aa
 aa
-wQ
-Iy
-Iy
+ab
+ab
+ab
 aa
 aa
 aa
@@ -4805,7 +4965,7 @@ ab
 ab
 ab
 ab
-aa
+ab
 aa
 aa
 aa
@@ -4818,7 +4978,7 @@ ab
 Iy
 Iy
 Iy
-Iy
+ab
 ab
 ab
 ab
@@ -4857,8 +5017,8 @@ OR
 OR
 OR
 ab
-wQ
-aa
+ab
+Iy
 aa
 aa
 "}
@@ -4908,10 +5068,10 @@ OR
 Og
 vH
 OR
+OR
 ab
-ab
+wQ
 Iy
-aa
 aa
 "}
 (8,1,1) = {"
@@ -4959,12 +5119,12 @@ yg
 OR
 QW
 sV
+BM
 OR
 ab
-ab
 Iy
+wQ
 ab
-aa
 "}
 (9,1,1) = {"
 aa
@@ -5011,8 +5171,8 @@ QA
 OR
 Oc
 ug
+mA
 OR
-ab
 ab
 Iy
 ab
@@ -5063,8 +5223,8 @@ Ay
 OR
 qS
 md
+Tn
 OR
-ab
 ab
 Iy
 ab
@@ -5088,7 +5248,7 @@ xf
 uU
 Tf
 Bk
-tn
+EX
 Oe
 zl
 zl
@@ -5114,12 +5274,12 @@ tS
 rT
 Zn
 qR
+uy
 Op
 OR
 ab
-ab
 Iy
-ab
+Iy
 ab
 "}
 (12,1,1) = {"
@@ -5144,12 +5304,12 @@ Vu
 Oe
 zl
 zl
-Jm
-Jm
+vn
+Ct
 vn
 vn
 ge
-ey
+Ea
 zu
 ge
 ey
@@ -5158,7 +5318,7 @@ ge
 ey
 zu
 dc
-Qi
+Gn
 jA
 PN
 OR
@@ -5168,7 +5328,7 @@ OR
 OR
 OR
 OR
-ab
+OR
 ab
 Iy
 Iy
@@ -5204,7 +5364,7 @@ ge
 UK
 ez
 ge
-Ee
+DT
 ez
 ge
 Ee
@@ -5216,11 +5376,11 @@ kV
 RT
 OR
 FS
-nG
+Qk
+os
 wu
 yf
 OR
-ab
 ab
 Iy
 Iy
@@ -5269,12 +5429,12 @@ AR
 OR
 OB
 Uj
+rU
 PH
 AI
 OR
 ab
 ab
-Iy
 Iy
 ab
 "}
@@ -5321,12 +5481,12 @@ tk
 OR
 kk
 EW
+Qk
 Cp
 ae
 OR
 ab
 ab
-Iy
 Iy
 ab
 "}
@@ -5374,11 +5534,11 @@ uG
 mW
 Il
 wy
+xX
 gF
 OR
 ab
 ab
-Iy
 Iy
 ab
 "}
@@ -5425,12 +5585,12 @@ rx
 OR
 EL
 Az
+EG
 JV
 ZN
 OR
 ab
 ab
-Iy
 Iy
 ab
 "}
@@ -5480,9 +5640,9 @@ OR
 OR
 OR
 OR
+OR
 ab
 ab
-Iy
 Iy
 ab
 "}
@@ -5508,7 +5668,7 @@ bH
 hH
 TC
 cH
-cI
+wk
 cI
 dD
 Nl
@@ -5535,7 +5695,7 @@ ab
 ab
 ab
 Iy
-aa
+Iy
 aa
 "}
 (20,1,1) = {"
@@ -5570,7 +5730,7 @@ ds
 ds
 ds
 ds
-Dp
+ds
 fT
 ne
 It
@@ -5639,8 +5799,8 @@ aa
 aa
 aa
 aa
-ab
-ab
+aa
+aa
 "}
 (22,1,1) = {"
 aa
@@ -5691,8 +5851,8 @@ Iy
 aa
 aa
 aa
-ab
-ab
+aa
+aa
 "}
 (23,1,1) = {"
 aa
@@ -5726,7 +5886,7 @@ ho
 eT
 EP
 ho
-eq
+ho
 nv
 ne
 PT
@@ -5736,14 +5896,14 @@ ds
 ab
 ab
 ab
-ab
-ab
 Iy
 Iy
-aa
-aa
 ab
 ab
+aa
+aa
+aa
+aa
 aa
 "}
 (24,1,1) = {"
@@ -5804,7 +5964,7 @@ aa
 aa
 Iy
 Iy
-Iy
+ab
 ab
 ab
 ab
@@ -5889,7 +6049,7 @@ gq
 QI
 gJ
 gR
-gZ
+cb
 gZ
 oC
 oC
@@ -5909,16 +6069,16 @@ aa
 ab
 aa
 aa
-Iy
 ab
 ab
+ab
 Ob
 Ob
 Ob
 Ob
 Ob
 Ob
-bd
+OX
 bx
 bO
 LC
@@ -5939,9 +6099,9 @@ JR
 gh
 gr
 QI
-gK
+fW
 gR
-gZ
+cb
 ZP
 oC
 oC
@@ -6003,8 +6163,8 @@ ab
 Iy
 aa
 aa
-ab
 aa
+ab
 "}
 (29,1,1) = {"
 aa
@@ -6054,9 +6214,9 @@ ab
 Iy
 Iy
 aa
-ab
-ab
 aa
+ab
+ab
 "}
 (30,1,1) = {"
 aa
@@ -6103,11 +6263,11 @@ QI
 ab
 ab
 ab
-Iy
+ab
+aa
 aa
 aa
 ab
-aa
 aa
 "}
 (31,1,1) = {"
@@ -6522,7 +6682,7 @@ aa
 aa
 aa
 aa
-aa
+ab
 aa
 aa
 "}
@@ -6573,9 +6733,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+ab
+ab
+ab
 aa
 "}
 (40,1,1) = {"
@@ -6622,12 +6782,12 @@ ab
 aa
 aa
 aa
+aa
+aa
+aa
+aa
 ab
-aa
-aa
-aa
 ab
-aa
 aa
 "}
 (41,1,1) = {"
@@ -6674,7 +6834,7 @@ Iy
 aa
 aa
 aa
-ab
+aa
 aa
 aa
 aa
@@ -6881,8 +7041,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+ab
+ab
 ab
 ab
 ab
@@ -6933,13 +7093,13 @@ aa
 aa
 aa
 aa
-aa
-aa
 ab
 ab
 ab
-aa
-aa
+ab
+ab
+ab
+ab
 aa
 "}
 (47,1,1) = {"
@@ -6979,18 +7139,18 @@ aa
 aa
 aa
 aa
+ab
+ab
+ab
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+ab
+ab
+ab
+ab
 aa
 aa
 "}
@@ -7031,19 +7191,19 @@ aa
 aa
 aa
 ab
-aa
-aa
-aa
 ab
-aa
-aa
 ab
 aa
 aa
 aa
 aa
 aa
-ab
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 "}
 (49,1,1) = {"
@@ -7084,7 +7244,7 @@ aa
 aa
 aa
 aa
-aa
+ab
 aa
 aa
 aa
