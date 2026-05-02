@@ -1006,3 +1006,11 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	attachment_slot = NONE
 	slot_flags = ITEM_SLOT_NECK
+
+/obj/item/clothing/neck/cloak/moth_cloak
+	name = "prismatic cloak"
+	desc = "Shiny cloak in the shape of mothic wings. Seems like it can give one an apperance of a moth person...Or hide one's mothic wings."
+	icon_state = "moth_cloak"
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	flags_inv = HIDEMUTWINGS | HIDESUITSTORAGE
