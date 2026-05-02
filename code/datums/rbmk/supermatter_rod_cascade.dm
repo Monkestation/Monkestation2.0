@@ -296,6 +296,6 @@
 	reactor.trigger_supermatter_rod_meltdown("Supermatter rod cascade resonance failure")
 
 	var/datum/sm_delam/cascade/cascade = new
-	INVOKE_ASYNC(cascade, PROC_REF(rbmk_cascade), cascade_origin)
+	INVOKE_ASYNC(cascade, TYPE_PROC_REF(/datum/sm_delam/cascade, rbmk_cascade), cascade_origin)
 
 	qdel(src)

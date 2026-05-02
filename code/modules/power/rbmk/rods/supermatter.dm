@@ -7,26 +7,9 @@
 	rod_type = "supermatter"
 	rod_color = "gold"
 
-	// The supermatter rod should not behave like a normal fuel rod.
-	// The cascade datum owns its actual reactor effects.
-	fuel_amount = 100
-	depletion_rate = 0
-
-	base_heat_output = 0
-	base_radiation_output = 0
-
-	thermal_multiplier = 0
-	flux_multiplier = 0
-	radiation_multiplier = 0
-
-	reactivity_sensitivity = 0
-
 	active = TRUE
 
-	/// Active cascade controller, if this rod has taken over a reactor.
 	var/datum/supermatter_rod_cascade/cascade_controller = null
-
-	/// Whether the sealed supermatter sliver is still contained.
 	var/contained_sliver = TRUE
 
 
@@ -73,7 +56,7 @@
 	. = ..()
 
 	if(cascade_controller)
-		. += span_bolddanger("The rod is actively resonating with a supermatter cascade.")
+		. += span_bolddanger("The rod is actively resonating with harmonic inbalance.")
 	else if(contained_sliver)
 		. += span_warning("A sealed supermatter sliver is locked inside the casing.")
 	else
