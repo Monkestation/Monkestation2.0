@@ -5,9 +5,11 @@
 
 /datum/status_effect/rainbow_protection
 	id = "rainbow_protection"
-	duration = 100
+	duration = 10 SECONDS
+	tick_interval = 0.2 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/rainbow_protection
 	show_duration = TRUE
+	var/hue = 0
 
 /datum/status_effect/rainbow_protection/on_apply()
 	owner.add_traits(list(TRAIT_PACIFISM, TRAIT_GODMODE), TRAIT_STATUS_EFFECT(id))
@@ -16,8 +18,9 @@
 	return ..()
 
 /datum/status_effect/rainbow_protection/tick()
-	owner.add_atom_colour(rgb(rand(0, 255), rand(0, 255), rand(0, 255)), TEMPORARY_COLOUR_PRIORITY)
-	return ..()
+	hue = (hue + 15) % 360
+	var/new_color = rgb(hue, 100, 50, space = COLORSPACE_HSL)
+	owner.add_atom_colour(color_transition_filter(new_color, SATURATION_OVERRIDE), TEMPORARY_COLOUR_PRIORITY)
 
 /datum/status_effect/rainbow_protection/on_remove()
 	owner.remove_traits(list(TRAIT_PACIFISM, TRAIT_GODMODE), TRAIT_STATUS_EFFECT(id))
@@ -37,7 +40,7 @@
 	show_duration = TRUE
 
 /datum/status_effect/slimeskin/on_apply()
-	owner.add_atom_colour("#3070CC", TEMPORARY_COLOUR_PRIORITY)
+	owner.add_atom_colour(color_transition_filter("#3070CC", SATURATION_OVERRIDE), TEMPORARY_COLOUR_PRIORITY)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.damage_resistance += 10
@@ -46,7 +49,7 @@
 	return ..()
 
 /datum/status_effect/slimeskin/on_remove()
-	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#3070CC")
+	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.damage_resistance -= 10
@@ -778,7 +781,9 @@
 	colour = "pyrite"
 
 /datum/status_effect/stabilized/pyrite/tick()
-	owner.add_atom_colour(rgb(rand(0, 255), rand(0, 255), rand(0, 255)), TEMPORARY_COLOUR_PRIORITY)
+	var/new_color = rgb(rand(0, 360), 100, 50, space = COLORSPACE_HSL)
+	owner.add_atom_colour(color_transition_filter(new_color, SATURATION_OVERRIDE), TEMPORARY_COLOUR_PRIORITY)
+	return ..()
 
 /datum/status_effect/stabilized/pyrite/on_remove()
 	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
