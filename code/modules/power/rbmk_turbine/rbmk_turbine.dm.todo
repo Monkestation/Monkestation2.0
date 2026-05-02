@@ -1,0 +1,222 @@
+/obj/machinery/power/rbmk_turbine
+	name = "RBMK turbine"
+	desc = "A turbine generator designed to extract power from hot reactor coolant gas."
+	icon = 'icons/obj/machines/turbine.dmi'
+	icon_state = "turbine_off"
+	base_icon_state = "turbine"
+	density = TRUE
+	anchored = TRUE
+	use_power = NO_POWER_USE
+	resistance_flags = FIRE_PROOF
+	can_change_cable_layer = TRUE
+
+	/// Whether the turbine is currently allowed to move gas and generate power.
+	var/active = FALSE
+
+	/// Energy waiting to be paid into the powernet.
+	var/stored_generation = 0
+
+	/// Last output sent to the powernet.
+	var/last_power_output = 0
+
+	/// Cosmetic/telemetry rotor speed.
+	var/rpm = 0
+
+	/// RPM target calculated from recent power output.
+	var/target_rpm = 0
+
+	/// Gas telemetry.
+	var/inlet_temperature = T20C
+	var/outlet_temperature = T20C
+	var/inlet_pressure = 0
+	var/outlet_pressure = 0
+	var/flow_moles = 0
+
+	/// Simple V1 durability.
+	var/damage = 0
+	var/max_damage = 100
+
+/obj/machinery/power/rbmk_turbine/Initialize(mapload)
+	. = ..()
+	connect_to_network()
+	SSair.start_processing_machine(src)
+	update_appearance()
+
+/obj/machinery/power/rbmk_turbine/Destroy()
+	SSair.stop_processing_machine(src)
+	disconnect_from_network()
+	return ..()
+
+/obj/machinery/power/rbmk_turbine/process(seconds_per_tick)
+	if(!active || machine_stat & BROKEN)
+		last_power_output = 0
+		target_rpm = 0
+		update_rpm()
+		update_appearance()
+		return
+
+	if(!powernet)
+		connect_to_network()
+
+	var/power_output = round(stored_generation / RBMK_TURBINE_POWER_PAYOUT_DIVISOR)
+
+	if(power_output > 0)
+		add_avail(power_output)
+		stored_generation = max(stored_generation - power_output, 0)
+
+	last_power_output = power_output
+	target_rpm = clamp(round(power_output / RBMK_TURBINE_POWER_PER_RPM), 0, RBMK_TURBINE_MAX_RPM)
+
+	update_rpm()
+	update_appearance()
+
+/obj/machinery/power/rbmk_turbine/process_atmos()
+	if(!active || machine_stat & BROKEN)
+		clear_gas_telemetry()
+		return
+
+	var/turf/open/inlet_turf = get_step(src, turn(dir, 180))
+	var/turf/open/outlet_turf = get_step(src, dir)
+
+	if(!istype(inlet_turf) || !istype(outlet_turf))
+		clear_gas_telemetry()
+		return
+
+	var/datum/gas_mixture/input_mix = inlet_turf.return_air()
+	var/datum/gas_mixture/output_mix = outlet_turf.return_air()
+
+	if(!input_mix || !output_mix)
+		clear_gas_telemetry()
+		return
+
+	inlet_temperature = input_mix.temperature
+	inlet_pressure = input_mix.return_pressure()
+	outlet_pressure = output_mix.return_pressure()
+
+	if(inlet_temperature <= RBMK_TURBINE_MIN_TEMP)
+		flow_moles = 0
+		outlet_temperature = output_mix.temperature
+		return
+
+	var/datum/gas_mixture/moved_gas = input_mix.pump_gas_to(output_mix, inlet_pressure * RBMK_TURBINE_INTAKE_RATIO)
+
+	if(!moved_gas || moved_gas.total_moles() <= 0)
+		flow_moles = 0
+		outlet_temperature = output_mix.temperature
+		return
+
+	flow_moles = moved_gas.total_moles()
+
+	var/moved_heat_capacity = moved_gas.heat_capacity()
+	if(moved_heat_capacity <= 0)
+		outlet_temperature = output_mix.temperature
+		return
+
+	var/temp_delta_available = max(moved_gas.temperature - RBMK_TURBINE_EXHAUST_TARGET_TEMP, 0)
+	var/temp_delta_extracted = temp_delta_available * RBMK_TURBINE_EXTRACTION_RATIO
+	var/extracted_heat = moved_heat_capacity * temp_delta_extracted
+
+	if(extracted_heat <= 0)
+		outlet_temperature = output_mix.temperature
+		return
+
+	moved_gas.temperature = max(moved_gas.temperature - (extracted_heat / moved_heat_capacity), TCMB)
+	stored_generation += extracted_heat * RBMK_TURBINE_EFFICIENCY
+
+	outlet_temperature = moved_gas.temperature
+
+	inlet_turf.update_visuals()
+	inlet_turf.air_update_turf(TRUE)
+	outlet_turf.update_visuals()
+	outlet_turf.air_update_turf(TRUE)
+
+	process_damage()
+
+/obj/machinery/power/rbmk_turbine/proc/update_rpm()
+	if(rpm < target_rpm)
+		rpm = min(rpm + RBMK_TURBINE_RPM_STEP, target_rpm)
+	else if(rpm > target_rpm)
+		rpm = max(rpm - RBMK_TURBINE_RPM_STEP, target_rpm)
+
+/obj/machinery/power/rbmk_turbine/proc/clear_gas_telemetry()
+	inlet_temperature = T20C
+	outlet_temperature = T20C
+	inlet_pressure = 0
+	outlet_pressure = 0
+	flow_moles = 0
+
+/obj/machinery/power/rbmk_turbine/proc/process_damage()
+	if(inlet_temperature > RBMK_TURBINE_SAFE_TEMP)
+		damage += RBMK_TURBINE_TEMP_DAMAGE
+
+	if(inlet_pressure > RBMK_TURBINE_SAFE_PRESSURE)
+		damage += RBMK_TURBINE_PRESSURE_DAMAGE
+
+	if(rpm > RBMK_TURBINE_SAFE_RPM)
+		damage += RBMK_TURBINE_RPM_DAMAGE
+
+	damage = clamp(damage, 0, max_damage)
+
+	if(damage < max_damage)
+		return
+
+	machine_stat |= BROKEN
+	active = FALSE
+	last_power_output = 0
+	target_rpm = 0
+	visible_message(span_warning("[src] screams violently and seizes up!"))
+	playsound(src, 'sound/machines/engine_alert1.ogg', 75, FALSE)
+	update_appearance()
+
+/obj/machinery/power/rbmk_turbine/proc/get_integrity()
+	return max(round(100 - ((damage / max_damage) * 100), 0.1), 0)
+
+/obj/machinery/power/rbmk_turbine/proc/get_console_data()
+	return list(
+		"name" = name,
+		"active" = active,
+		"broken" = !!(machine_stat & BROKEN),
+		"rpm" = rpm,
+		"max_rpm" = RBMK_TURBINE_MAX_RPM,
+		"last_power_output" = last_power_output,
+		"stored_generation" = round(stored_generation, 1),
+		"inlet_temperature" = round(inlet_temperature, 0.1),
+		"outlet_temperature" = round(outlet_temperature, 0.1),
+		"inlet_pressure" = round(inlet_pressure, 0.1),
+		"outlet_pressure" = round(outlet_pressure, 0.1),
+		"flow_moles" = round(flow_moles, 0.01),
+		"integrity" = get_integrity(),
+	)
+
+/obj/machinery/power/rbmk_turbine/update_icon_state()
+	. = ..()
+
+	if(machine_stat & BROKEN)
+		icon_state = "turbine_broken"
+		return
+
+	if(active)
+		icon_state = "turbine_on"
+		return
+
+	icon_state = "turbine_off"
+
+/obj/machinery/power/rbmk_turbine/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+
+	if(machine_stat & BROKEN)
+		balloon_alert(user, "broken!")
+		return TRUE
+
+	active = !active
+	balloon_alert(user, "[active ? "started" : "stopped"]")
+	update_appearance()
+	return TRUE
+
+/obj/machinery/power/rbmk_turbine/examine(mob/user)
+	. = ..()
+	. += "It is producing [display_power(last_power_output)]."
+	. += "The rotor is spinning at [rpm] RPM."
+	. += "Integrity: [get_integrity()]%."
