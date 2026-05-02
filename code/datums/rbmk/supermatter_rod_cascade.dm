@@ -4,6 +4,7 @@
 
 	var/started_at = 0
 	var/duration = 5 MINUTES
+	var/cascade_hold_temperature = 8000
 
 	var/final_countdown_active = FALSE
 	var/final_countdown_started_at = 0
@@ -88,10 +89,9 @@
 
 	reactor.running = TRUE
 	reactor.scrammed = FALSE
-
-	reactor.temperature += 120 * seconds_per_tick * (1 + progress)
-	reactor.flux += 20 * seconds_per_tick * (1 + progress)
-	reactor.radiation += 40 * seconds_per_tick * (1 + progress)
+	reactor.temperature = cascade_hold_temperature
+	reactor.thermal_output = 0
+	reactor.last_tick_temp_gain = 0
 
 	reactor.update_reactor_integrity()
 	reactor.update_reactor_icon()
@@ -123,9 +123,11 @@
 	var/elapsed = world.time - final_countdown_started_at
 	var/time_left = max(final_countdown_duration - elapsed, 0)
 
-	reactor.temperature += 250 * seconds_per_tick
-	reactor.flux += 50 * seconds_per_tick
-	reactor.radiation += 100 * seconds_per_tick
+	reactor.running = TRUE
+	reactor.scrammed = FALSE
+	reactor.temperature = cascade_hold_temperature
+	reactor.thermal_output = 0
+	reactor.last_tick_temp_gain = 0
 
 	update_warp(1)
 	send_stationwide_feelings()

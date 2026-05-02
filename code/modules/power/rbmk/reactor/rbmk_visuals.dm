@@ -52,6 +52,11 @@
 			high_target_volume = 32
 			low_target_range = 20
 			high_target_range = 26
+		if("reactor_cascade")
+			low_target_volume = 4
+			high_target_volume = 36
+			low_target_range = 22
+			high_target_range = 30
 
 	if(low_target_volume > 0)
 		if(!low_soundloop)
@@ -85,6 +90,30 @@
 	if(meltdown_in_progress || reactor_integrity <= 0)
 		icon_state = "reactor_slagged"
 		new_damage_stage = 4
+
+		if(new_damage_stage != previous_damage_stage)
+			current_damage_stage = new_damage_stage
+			refresh_damage_overlay(new_damage_stage)
+
+		update_reactor_sound()
+		return
+
+	if(supermatter_cascade_active)
+		icon_state = "reactor_cascade"
+
+		var/safe_max_integrity = max(max_reactor_integrity, 1)
+		var/integrity_percent = (reactor_integrity / safe_max_integrity) * 100
+
+		if(integrity_percent < RBMK_DAMAGE_OVERLAY_4)
+			new_damage_stage = 4
+		else if(integrity_percent < RBMK_DAMAGE_OVERLAY_3)
+			new_damage_stage = 3
+		else if(integrity_percent < RBMK_DAMAGE_OVERLAY_2)
+			new_damage_stage = 2
+		else if(integrity_percent < RBMK_DAMAGE_OVERLAY_1)
+			new_damage_stage = 1
+		else
+			new_damage_stage = 0
 
 		if(new_damage_stage != previous_damage_stage)
 			current_damage_stage = new_damage_stage

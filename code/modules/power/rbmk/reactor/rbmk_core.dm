@@ -119,6 +119,13 @@
 	return normal_slots
 
 
+/obj/machinery/rbmk/reactor/proc/get_installed_supermatter_rod()
+	for(var/obj/item/rbmk/fuel_rod/supermatter/sm_rod in special_slots)
+		return sm_rod
+
+	return null
+
+
 /obj/machinery/rbmk/reactor/proc/check_supermatter_rod_activation()
 	if(supermatter_cascade_active || meltdown_in_progress)
 		return FALSE
@@ -283,8 +290,12 @@
 
 /obj/machinery/rbmk/reactor/proc/remove_last_rod(mob/user)
 	var/obj/item/rbmk/fuel_rod/fuel_rod = null
+	var/obj/item/rbmk/fuel_rod/supermatter/installed_sm_rod = get_installed_supermatter_rod()
 
-	if(length(special_slots))
+	if(installed_sm_rod)
+		fuel_rod = installed_sm_rod
+		special_slots -= fuel_rod
+	else if(length(special_slots))
 		fuel_rod = special_slots[length(special_slots)]
 		special_slots -= fuel_rod
 	else if(length(normal_slots))
@@ -329,6 +340,12 @@
 
 	var/obj/item/rbmk/fuel_rod/fuel_rod = target_slots[slot_index]
 	if(!fuel_rod)
+		return FALSE
+
+	var/obj/item/rbmk/fuel_rod/supermatter/installed_sm_rod = get_installed_supermatter_rod()
+	if(installed_sm_rod && fuel_rod != installed_sm_rod)
+		if(user)
+			to_chat(user, span_warning("The supermatter rod is resonating too violently. It must be removed before any other rods can be handled."))
 		return FALSE
 
 	if(fuel_rod == supermatter_rod)
