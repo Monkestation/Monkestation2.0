@@ -6,25 +6,24 @@
 /datum/status_effect/rainbow_protection
 	id = "rainbow_protection"
 	duration = 10 SECONDS
-	tick_interval = 0.2 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/rainbow_protection
 	show_duration = TRUE
-	var/hue = 0
 
 /datum/status_effect/rainbow_protection/on_apply()
 	owner.add_traits(list(TRAIT_PACIFISM, TRAIT_GODMODE), TRAIT_STATUS_EFFECT(id))
 	owner.visible_message(span_warning("[owner] shines with a brilliant rainbow light."),
 		span_notice("You feel protected by an unknown force!"))
+	owner.add_filter("rainbow_protection_[REF(src)]", 2, color_matrix_filter(list(0,0,0, 0,0.75,0, 0,0,1, 0,0.25,0), COLORSPACE_HSL))
+	var/color_filter = owner.get_filter("rainbow_protection_[REF(src)]")
+	animate(color_filter, list("color" = list(0,0,0, 0,0.75,0, 0,0,1, 0.33,0.25,0)), time = 1 SECONDS, loop = -1)
+	animate(list("color" = list(0,0,0, 0,0.75,0, 0,0,1, 0.66,0.25,0)), time = 1 SECONDS)
+	animate(list("color" = list(0,0,0, 0,0.75,0, 0,0,1, 1,0.25,0)), time = 1 SECONDS)
+	animate(list("color" = list(0,0,0, 0,0.75,0, 0,0,1, 0,0.25,0)), time = 0) // IMPORTANT!
 	return ..()
 
-/datum/status_effect/rainbow_protection/tick()
-	hue = (hue + 15) % 360
-	var/new_color = rgb(hue, 100, 50, space = COLORSPACE_HSL)
-	owner.add_atom_colour(color_transition_filter(new_color, SATURATION_OVERRIDE), TEMPORARY_COLOUR_PRIORITY)
-
 /datum/status_effect/rainbow_protection/on_remove()
+	owner.remove_filter("rainbow_protection_[REF(src)]")
 	owner.remove_traits(list(TRAIT_PACIFISM, TRAIT_GODMODE), TRAIT_STATUS_EFFECT(id))
-	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	owner.visible_message(span_notice("[owner] stops glowing, the rainbow light fading away."),
 		span_warning("You no longer feel protected..."))
 
