@@ -124,10 +124,10 @@
 /obj/projectile/beam/scatter
 	name = "laser pellet"
 	icon_state = "scatterlaser"
-	damage = 7.5
+	damage = 8.15
 	wound_bonus = 5
 	bare_wound_bonus = 5
-	wound_falloff_tile = -2.5
+	wound_falloff_tile = -3
 
 /obj/projectile/beam/scatter/pathetic
 	name = "extremely weak laser pellet"
@@ -156,7 +156,7 @@
 	pass_flags = PASSTABLE
 	damage = 32
 	damage_type = BURN
-	range = 6
+	range = 8
 
 /obj/projectile/beam/disabler
 	name = "disabler beam"

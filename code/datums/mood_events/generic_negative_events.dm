@@ -464,6 +464,11 @@
 	mood_change = -3
 	timeout = 5 MINUTES
 
+/datum/mood_event/amulet_insanity
+	description = "I sEe THe LiGHt, It mUsT BE stOPPed!"
+	mood_change = -6
+	timeout = 5 MINUTES
+
 /datum/mood_event/mallet_humiliation
 	description = "Getting hit by such a stupid weapon feels rather humiliating..."
 	mood_change = -3

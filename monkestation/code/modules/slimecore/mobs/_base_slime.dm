@@ -77,7 +77,8 @@
 	///this is our mutation chance
 	var/mutation_chance = 30
 
-	var/obj/item/slime_accessory/worn_accessory
+	///Currently worn item on the head slot
+	var/obj/item/equipped_hat = null
 
 	///this is a list of trees that we replace goes from base = replaced
 	var/list/replacement_trees = list()
@@ -113,6 +114,7 @@
 	. = ..()
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SLIME, 0.5, -11)
 	AddElement(/datum/element/soft_landing)
+	AddElement(/datum/element/strippable, GLOB.strippable_slime_items)
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_CAREFUL_STEPS, INNATE_TRAIT)
@@ -148,6 +150,7 @@
 
 /mob/living/basic/slime/death(gibbed)
 	buckled?.unbuckle_mob(src, force = TRUE)
+	equipped_hat?.forceMove(drop_location())
 	return ..()
 
 /mob/living/basic/slime/Destroy()
@@ -165,6 +168,13 @@
 		qdel(mutation)
 
 	QDEL_NULL(current_color)
+	equipped_hat?.forceMove(drop_location())
+	return ..()
+
+/mob/living/basic/slime/Exited(atom/movable/gone, direction)
+	if(gone == equipped_hat)
+		equipped_hat = null
+		update_appearance(UPDATE_OVERLAYS)
 	return ..()
 
 /mob/living/basic/slime/mob_try_pickup(mob/living/user, instant)
@@ -287,11 +297,12 @@
 
 /mob/living/basic/slime/update_overlays()
 	. = ..()
-	if(worn_accessory)
-		if(slime_flags & ADULT_SLIME)
-			. += mutable_appearance(worn_accessory.accessory_icon, "[worn_accessory.accessory_icon_state]-adult", layer + 0.15, src, appearance_flags = (KEEP_APART | RESET_COLOR))
-		else
-			. += mutable_appearance(worn_accessory.accessory_icon, "[worn_accessory.accessory_icon_state]-baby", layer + 0.15, src, appearance_flags = (KEEP_APART | RESET_COLOR))
+	if (equipped_hat)
+		var/mutable_appearance/hat_overlay = equipped_hat.build_worn_icon(default_layer = 0.15, default_icon_file = 'icons/mob/clothing/head/default.dmi')
+		SET_PLANE_EXPLICIT(hat_overlay, PLANE_TO_TRUE(plane), src)
+		hat_overlay.appearance_flags = RESET_COLOR|KEEP_APART
+		hat_overlay.pixel_y -= 8
+		. += hat_overlay
 
 /mob/living/basic/slime/proc/check_secretion()
 	if((!(slime_flags & ADULT_SLIME)) || (slime_flags & STORED_SLIME) || (slime_flags & MUTATING_SLIME) || (slime_flags & NOOOZE_SLIME))
@@ -469,22 +480,15 @@
 		mutation_chance += 10
 		start_split()
 
-/mob/living/basic/slime/attackby(obj/item/attacking_item, mob/living/user, params)
-	. = ..()
-	if(!istype(attacking_item, /obj/item/slime_accessory))
-		return
-	worn_accessory = attacking_item
-	attacking_item.forceMove(src)
+// Handles placing a hat on the slime
+/mob/living/basic/slime/proc/equip_hat(obj/item/item, mob/living/user)
+	if(user)
+		user.visible_message(span_notice("[user] puts [item] on [name]'s head."),
+			span_notice("You put [item] on [name]'s head."))
+	item.forceMove(src)
+	equipped_hat = item
 	update_appearance(UPDATE_OVERLAYS)
-
-/mob/living/basic/slime/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	. = ..()
-	if(worn_accessory)
-		visible_message("[user] takes the [worn_accessory] off the [src].")
-		balloon_alert_to_viewers("removed accessory")
-		user.put_in_hands(worn_accessory)
-		worn_accessory = null
-		update_appearance(UPDATE_OVERLAYS)
+	return TRUE
 
 /mob/living/basic/slime/Life(seconds_per_tick, times_fired)
 	if(isopenturf(loc))

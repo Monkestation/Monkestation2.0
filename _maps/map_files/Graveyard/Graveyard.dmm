@@ -42676,7 +42676,7 @@
 "qDm" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/under/rank/centcom/officer,
-/obj/item/clothing/under/rank/centcom/officer_skirt,
+/obj/item/clothing/under/rank/centcom/officer/skirt,
 /obj/item/clothing/under/rank/centcom/intern,
 /obj/item/clothing/under/rank/centcom/commander,
 /obj/item/clothing/under/rank/centcom/centcom_skirt,
@@ -55472,7 +55472,6 @@
 	pixel_x = -3;
 	pixel_y = 2
 	},
-/obj/item/storage/box/silver_ids,
 /obj/structure/cable,
 /obj/machinery/light/directional/north,
 /obj/machinery/requests_console/auto_name/directional/north,

@@ -380,9 +380,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "afA" = (
-/obj/structure/industrial_lift/public,
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "departures_lift"
+/obj/structure/transport/linear/public,
+/obj/effect/landmark/transport/transport_id{
+	specific_transport_id = "departures_lift"
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/primary/starboard)
@@ -1198,7 +1198,7 @@
 /turf/open/floor/iron/white/corner,
 /area/station/hallway/secondary/exit/departure_lounge)
 "atl" = (
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /obj/machinery/elevator_control_panel/directional/south{
 	pixel_x = -6;
 	linked_elevator_id = "cargo_lobbylift";
@@ -4216,7 +4216,7 @@
 	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck");
 	pixel_x = 16
 	},
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/primary/port)
 "bmt" = (
@@ -4351,7 +4351,7 @@
 "bnw" = (
 /obj/machinery/door/window/elevator/right/directional/north{
 	elevator_mode = 1;
-	elevator_linked_id = "arrivals_lift"
+	transport_linked_id = "arrivals_lift"
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/secondary/entry)
@@ -6046,7 +6046,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/theater)
 "bOB" = (
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "bOE" = (
@@ -6642,7 +6642,7 @@
 "bZc" = (
 /obj/machinery/door/window/elevator/left/directional/north{
 	elevator_mode = 1;
-	elevator_linked_id = "arrivals_lift"
+	transport_linked_id = "arrivals_lift"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
@@ -6945,7 +6945,7 @@
 /obj/effect/turf_decal/loading_area,
 /obj/machinery/door/window/elevator/right/directional/north{
 	elevator_mode = 1;
-	elevator_linked_id = "cargo_lobbylift"
+	transport_linked_id = "cargo_lobbylift"
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -10909,7 +10909,7 @@
 "dlQ" = (
 /obj/machinery/door/window/elevator/left/directional/south{
 	elevator_mode = 1;
-	elevator_linked_id = "cargo_lobbylift"
+	transport_linked_id = "cargo_lobbylift"
 	},
 /obj/machinery/door/firedoor/border_only,
 /obj/effect/turf_decal/loading_area{
@@ -25020,7 +25020,7 @@
 	},
 /area/station/science/robotics/lab)
 "hvv" = (
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /turf/open/floor/plating,
 /area/station/cargo/storage)
 "hvB" = (
@@ -29249,9 +29249,9 @@
 	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck");
 	req_access = list("robotics")
 	},
-/obj/structure/industrial_lift,
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "robo_mechbaylift"
+/obj/structure/transport/linear,
+/obj/effect/landmark/transport/transport_id{
+	specific_transport_id = "robo_mechbaylift"
 	},
 /turf/open/floor/plating,
 /area/station/science/robotics/mechbay)
@@ -34083,7 +34083,7 @@
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos)
 "kcd" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/primary/starboard)
 "kcf" = (
@@ -36039,9 +36039,9 @@
 	req_access = list("engineering");
 	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
 	},
-/obj/structure/industrial_lift,
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "engi_SMlift"
+/obj/structure/transport/linear,
+/obj/effect/landmark/transport/transport_id{
+	specific_transport_id = "engi_SMlift"
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
@@ -37162,7 +37162,7 @@
 "kTi" = (
 /obj/machinery/door/window/elevator/right/directional/south{
 	elevator_mode = 1;
-	elevator_linked_id = "cargo_lobbylift"
+	transport_linked_id = "cargo_lobbylift"
 	},
 /obj/machinery/door/firedoor/border_only,
 /obj/effect/turf_decal/loading_area{
@@ -44162,9 +44162,9 @@
 /turf/open/floor/iron/dark/smooth_edge,
 /area/station/common/arcade)
 "mRR" = (
-/obj/structure/industrial_lift,
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "cargo_lobbylift"
+/obj/structure/transport/linear,
+/obj/effect/landmark/transport/transport_id{
+	specific_transport_id = "cargo_lobbylift"
 	},
 /turf/open/floor/plating,
 /area/station/cargo/storage)
@@ -48916,9 +48916,9 @@
 /turf/open/openspace,
 /area/station/maintenance/starboard/fore)
 "oog" = (
-/obj/structure/industrial_lift/public,
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "arrivals_lift"
+/obj/structure/transport/linear/public,
+/obj/effect/landmark/transport/transport_id{
+	specific_transport_id = "arrivals_lift"
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/primary/port)
@@ -52201,7 +52201,7 @@
 "pqw" = (
 /obj/machinery/door/window/elevator/right/directional/north{
 	elevator_mode = 1;
-	elevator_linked_id = "departures_lift"
+	transport_linked_id = "departures_lift"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
@@ -52734,7 +52734,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/eva)
 "pyc" = (
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /turf/open/floor/plating,
 /area/station/science/robotics/mechbay)
 "pyi" = (
@@ -53803,7 +53803,7 @@
 /turf/open/floor/iron/small,
 /area/station/hallway/primary/central/aft)
 "pNq" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/primary/port)
 "pNr" = (
@@ -58160,7 +58160,7 @@
 "rcS" = (
 /obj/machinery/door/window/elevator/right/directional/north{
 	elevator_mode = 1;
-	elevator_linked_id = "departures_lift"
+	transport_linked_id = "departures_lift"
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/secondary/exit)
@@ -58777,7 +58777,7 @@
 "rme" = (
 /obj/machinery/door/window/elevator/right/directional/north{
 	elevator_mode = 1;
-	elevator_linked_id = "arrivals_lift"
+	transport_linked_id = "arrivals_lift"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
@@ -62989,7 +62989,7 @@
 	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck");
 	pixel_x = -16
 	},
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/primary/starboard)
 "szZ" = (
@@ -69302,7 +69302,7 @@
 "uuO" = (
 /obj/machinery/door/window/elevator/left/directional/north{
 	elevator_mode = 1;
-	elevator_linked_id = "departures_lift"
+	transport_linked_id = "departures_lift"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
@@ -69789,7 +69789,7 @@
 "uCb" = (
 /obj/machinery/door/window/elevator/left/directional/north{
 	elevator_mode = 1;
-	elevator_linked_id = "departures_lift"
+	transport_linked_id = "departures_lift"
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/secondary/exit)
@@ -71482,7 +71482,7 @@
 "vbb" = (
 /obj/machinery/door/window/elevator/left/directional/north{
 	elevator_mode = 1;
-	elevator_linked_id = "arrivals_lift"
+	transport_linked_id = "arrivals_lift"
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/secondary/entry)
@@ -77637,7 +77637,7 @@
 "wMR" = (
 /obj/machinery/door/window/elevator/left/directional/north{
 	elevator_mode = 1;
-	elevator_linked_id = "cargo_lobbylift"
+	transport_linked_id = "cargo_lobbylift"
 	},
 /obj/machinery/door/firedoor/border_only{
 	dir = 1

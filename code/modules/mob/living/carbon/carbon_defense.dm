@@ -163,7 +163,7 @@
 
 	if(length(diseases) && isliving(user))
 		var/mob/living/living = user
-		var/block = living.check_contact_sterility(BODY_ZONE_EVERYTHING)
+		var/block = living.check_contact_sterility(BODY_ZONE_ARMS)
 		var/list/contact = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 		if(length(contact) && !block)
 			for(var/datum/disease/acute/V as anything in contact)
@@ -171,7 +171,7 @@
 
 	if(isliving(user))
 		var/mob/living/living = user
-		var/block = check_contact_sterility(BODY_ZONE_EVERYTHING)
+		var/block = check_contact_sterility(BODY_ZONE_ARMS)
 		if(length(living.diseases))
 			var/list/contact = filter_disease_by_spread(living.diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 			if(length(contact) && !block)
@@ -410,7 +410,7 @@
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper)
 	if(on_fire)
-		if(!HAS_TRAIT(helper, TRAIT_NOFIRE) || helper == src)
+		if(!HAS_TRAIT(helper, TRAIT_NOFIRE) || HAS_TRAIT(helper, TRAIT_SUPPRESS_NOFIRE) || helper == src)
 			to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
 			return
 		if(DOING_INTERACTION(helper, DOAFTER_SOURCE_EXTINGUISHING_HUG))

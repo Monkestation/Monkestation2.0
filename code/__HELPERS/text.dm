@@ -1274,3 +1274,12 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		for(var/i = 1 to (4 - padding_needed))
 			payload_base64 += "="
 	return json_decode(rustg_decode_base64(payload_base64))
+
+/// Ensures sentences end in appropriate punctuation (a period if none exist) and that all whitespace-bounded 'i' characters are capitalized.
+/// If the sentence ends in chat-flavored markdown for bolds, italics or underscores and does not have a preceding period, exclamation mark or other flavored sentence terminator, add a period.
+/// (e.g: 'Borgs are rogue' becomes 'Borgs are rogue.', '+BORGS ARE ROGUE+ becomes '+BORGS ARE ROGUE+.', '+Borgs are rogue~+' is untouched.)
+/proc/autopunct_bare(input_text)
+	if (findtext_char(input_text, GLOB.needs_eol_autopunctuation))
+		input_text += "."
+
+	return replacetext_char(input_text, GLOB.noncapital_i, "I")
