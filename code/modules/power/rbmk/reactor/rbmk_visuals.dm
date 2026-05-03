@@ -136,7 +136,7 @@
 		icon_state = "reactor maxsafe"
 	else if(temperature < RBMK_TEMP_OVERHEAT)
 		icon_state = "reactor_overheat"
-	else if(temperature >= RBMK_TEMP_MELTDOWN
+	else if(temperature >= RBMK_TEMP_MELTDOWN)
 		icon_state = "reactor_meltdown"
 
 	var/safe_max_integrity = max(max_reactor_integrity, 1)
