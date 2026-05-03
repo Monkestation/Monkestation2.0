@@ -186,17 +186,7 @@
 			GLOB.cyborg_model_list["Security"] = /obj/item/robot_model/security
 
 	//monkestation edit start
-	for(var/model in GLOB.cyborg_model_list)
-		// Creating the lists here since we know all the model icons will need them right after.
-		GLOB.cyborg_all_models_icon_list[model] = list()
-
 	// Create radial menu for choosing borg model
-	if(!length(GLOB.cyborg_base_models_icon_list))
-		for(var/option in GLOB.cyborg_model_list)
-			var/obj/item/robot_model/model = GLOB.cyborg_model_list[option]
-			var/model_icon = initial(model.cyborg_base_icon)
-			GLOB.cyborg_base_models_icon_list[option] = image(icon = 'monkestation/icons/mob/robots.dmi', icon_state = model_icon)
-
 	var/input_model = show_radial_menu(src, src, GLOB.cyborg_base_models_icon_list, radius = 42)
 	if(!input_model || model.type != /obj/item/robot_model)
 		return
