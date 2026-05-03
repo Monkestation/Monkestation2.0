@@ -21,6 +21,13 @@
 	var/atom/movable/warp_effect/warp = null
 	var/last_warp_update = 0
 	var/warp_update_interval = 1 SECONDS
+	var/last_warp_stage = -1
+
+	// Centering offset for the large warp icon.
+	// The warp icon is larger than 32x32, so 0,0 anchors its bottom-left corner to the reactor.
+	// -112 centers a 256x256 effect over a normal tile-centered reactor visual.
+	var/warp_center_pixel_x = -112
+	var/warp_center_pixel_y = -112
 
 
 /datum/supermatter_rod_cascade/New(obj/item/rbmk/fuel_rod/supermatter/new_source_rod, obj/machinery/rbmk/reactor/new_reactor)
@@ -196,27 +203,74 @@
 
 	warp = new(reactor)
 	reactor.vis_contents += warp
-	warp.alpha = 80
-	warp.transform = matrix().Scale(0.5, 0.5)
+
+	// The warp icon is huge. Center it over the reactor instead of anchoring its bottom-left corner.
+	warp.pixel_x = warp_center_pixel_x
+	warp.pixel_y = warp_center_pixel_y
+
+	// Do not grow/move the warp. The effect gets stronger through filters only.
+	warp.transform = matrix()
+	warp.alpha = 255
+
+	last_warp_stage = -1
+	last_warp_update = 0
+
+	apply_warp_strength(0)
 
 
 /datum/supermatter_rod_cascade/proc/update_warp(progress)
 	if(!warp)
 		return
 
-	if(last_warp_update + warp_update_interval > world.time)
+	var/clamped_progress = clamp(progress, 0, 1)
+
+	// Five-minute cascade: increase distortion once per minute.
+	// Stage 0 = 5 minutes left.
+	// Stage 1 = 4 minutes left.
+	// Stage 2 = 3 minutes left.
+	// Stage 3 = 2 minutes left.
+	// Stage 4 = 1 minute left.
+	// Stage 5 = terminal intensity.
+	var/warp_stage = clamp(FLOOR(clamped_progress * 5, 1), 0, 5)
+
+	if(warp_stage == last_warp_stage)
 		return
 
+	last_warp_stage = warp_stage
 	last_warp_update = world.time
 
-	var/scale = 0.5 + progress * 2.5
-	var/alpha = clamp(round(80 + progress * 175), 80, 255)
+	apply_warp_strength(warp_stage)
 
-	animate(
-		warp,
-		time = warp_update_interval,
-		transform = matrix().Scale(scale, scale),
-		alpha = alpha
+
+/datum/supermatter_rod_cascade/proc/apply_warp_strength(warp_stage)
+	if(!warp || !reactor)
+		return
+
+	var/stage_progress = clamp(warp_stage / 5, 0, 1)
+
+	// Keep the large warp icon centered over the reactor every update.
+	warp.loc = reactor
+	warp.pixel_x = warp_center_pixel_x
+	warp.pixel_y = warp_center_pixel_y
+	warp.transform = matrix()
+	warp.alpha = 255
+
+	// Stronger distortion each minute.
+	// This affects the pinch strength without growing the warp sprite.
+	var/ripple_strength = 3 + (stage_progress * 22)
+	var/ripple_repeat = max(24 - round(stage_progress * 12), 8)
+	var/ripple_radius = 96
+
+	warp.filters = list(
+		filter(
+			type = "ripple",
+			x = 0,
+			y = 0,
+			size = ripple_strength,
+			repeat = ripple_repeat,
+			radius = ripple_radius,
+			falloff = 0
+		)
 	)
 
 

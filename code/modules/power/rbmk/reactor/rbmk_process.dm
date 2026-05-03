@@ -7,13 +7,17 @@
 
 
 /obj/machinery/rbmk/reactor/proc/rbmk_update_control_rods()
-	var/step_size = scrammed ? scram_control_rod_step : control_rod_step
+	// SCRAM insertion should be immediate when the target is full insertion.
+	// Do not force control_rod_depth here, so lowering the target later can still clear SCRAM.
+	if(scrammed && control_rod_depth >= RBMK_CONTROL_ROD_MAX)
+		actual_control_rod_depth = RBMK_CONTROL_ROD_MAX
+		return
+
+	var/step_size = control_rod_step
 	step_size = max(step_size, 1)
 
-	if(!scrammed)
-		step_size = max(round(step_size * 0.35), 1)
-	else
-		step_size = max(round(step_size * 0.6), 1)
+	// Normal rod movement: about 2x faster than previous behavior.
+	step_size = max(round(step_size * 0.35), 1) * 2
 
 	if(actual_control_rod_depth < control_rod_depth)
 		actual_control_rod_depth = min(actual_control_rod_depth + step_size, control_rod_depth)
@@ -47,21 +51,25 @@
 
 	if(previous_control_rod_depth >= RBMK_CONTROL_ROD_MAX && control_rod_depth < RBMK_CONTROL_ROD_MAX)
 		startup_sequence_played = TRUE
-		playsound(src, 'monkestation/sound/effects/rbmk/startup.ogg', 70, TRUE)
-		addtimer(CALLBACK(src, PROC_REF(play_startup_stage_two)), 1, TIMER_DELETE_ME)
+
+		// Stage one.
+		playsound(src, 'monkestation/sound/effects/rbmk/startup.ogg', 80, FALSE)
+
+		// Stage two.
+		// Delay is intentionally longer so startup2.ogg plays after startup.ogg instead of on top of it.
+		addtimer(CALLBACK(src, PROC_REF(play_startup_stage_two)), 3 SECONDS, TIMER_DELETE_ME)
 
 
 /obj/machinery/rbmk/reactor/proc/play_startup_stage_two()
 	if(QDELETED(src))
 		return
 
-	if(meltdown_in_progress || scrammed)
+	// Do not block on scrammed or fuel rods here.
+	// Stage one already confirmed the startup sequence began.
+	if(meltdown_in_progress)
 		return
 
-	if(!has_fuel_rods())
-		return
-
-	playsound(src, 'monkestation/sound/effects/rbmk/startup2.ogg', 70, TRUE)
+	playsound(src, 'monkestation/sound/effects/rbmk/startup2.ogg', 90, FALSE)
 
 
 /obj/machinery/rbmk/reactor/proc/rbmk_coolant_exchange()
@@ -215,6 +223,11 @@
 		previous_control_rod_depth = control_rod_depth
 		return
 
+	// Clear SCRAM before checking startup transition.
+	// If this happens after try_play_startup_sequence(), startup can miss the full-insertion -> withdrawn transition.
+	if(scrammed && control_rod_depth < RBMK_CONTROL_ROD_MAX)
+		scrammed = FALSE
+
 	try_play_startup_sequence()
 
 	var/total_flux = 0
@@ -236,9 +249,6 @@
 		active_rods++
 
 	last_tick_rod_count = active_rods
-
-	if(scrammed && control_rod_depth < RBMK_CONTROL_ROD_MAX)
-		scrammed = FALSE
 
 	if(active_rods <= 0 || scrammed)
 		running = FALSE
