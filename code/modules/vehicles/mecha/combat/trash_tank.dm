@@ -94,7 +94,7 @@
 
 /obj/vehicle/sealed/mecha/maintenance_battle_tank
 	desc = "The Trash Tank's much larger, MUCH SCARIER brother."
-	name = "/improper Maintenance Battle Tank"
+	name = "Maintenance Battle Tank"
 	icon = 'icons/mecha/supertanks.dmi'
 	icon_state = "maintenance_battle_tank"
 	base_icon_state = "maintenance_battle_tank"
