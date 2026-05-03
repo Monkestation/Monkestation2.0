@@ -135,7 +135,7 @@
 	energy = 40
 	fire = 70
 	acid = 60
-
+	bomb = 35
 
 /datum/action/vehicle/sealed/mecha/mech_smoke
 	name = "Smoke"
