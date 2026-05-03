@@ -82,7 +82,7 @@
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
-	equip_cooldown = 7
+	equip_cooldown = 0.8 SECONDS
 	name = "\improper CH-PS \"Immolator\" laser"
 	desc = "A weapon for combat exosuits. Shoots basic lasers."
 	icon_state = "mecha_laser"
@@ -104,7 +104,7 @@
 	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser2.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
-	equip_cooldown = 15
+	equip_cooldown = 1.75 SECONDS
 	name = "\improper CH-LC \"Solaris\" laser cannon"
 	desc = "A weapon for combat exosuits. Shoots heavy lasers."
 	icon_state = "mecha_laser"
@@ -125,7 +125,7 @@
 	mech_flags = EXOSUIT_MODULE_SENTINEL
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
-	equip_cooldown = 20
+	equip_cooldown = 2 SECONDS
 	name = "\improper MKIV ion heavy cannon"
 	desc = "A weapon for combat exosuits. Shoots tech-disabling ion beams. Don't get caught in the blast!"
 	icon_state = "mecha_ion"
@@ -134,7 +134,7 @@
 	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/tesla
-	equip_cooldown = 35
+	equip_cooldown = 3.5 SECONDS
 	name = "\improper MKI Tesla Cannon"
 	desc = "A weapon for combat exosuits. Fires electric bolts alike to the experimental tesla engine."
 	icon_state = "mecha_ion"
@@ -144,7 +144,7 @@
 	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
-	equip_cooldown = 30
+	equip_cooldown = 3 SECONDS
 	name = "eZ-13 MK2 heavy pulse rifle"
 	desc = "A weapon for combat exosuits. Shoots powerful destructive blasts capable of demolishing obstacles."
 	icon_state = "mecha_pulse"
@@ -154,7 +154,7 @@
 	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
-	equip_cooldown = 10
+	equip_cooldown = 1 SECONDS
 	name = "217-D Heavy Plasma Cutter"
 	desc = "A device that shoots resonant plasma bursts at extreme velocity. The blasts are capable of crushing rock and demolishing solid obstacles."
 	icon_state = "mecha_plasmacutter"
@@ -169,7 +169,7 @@
 
 //Exosuit-mounted kinetic accelerator
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun
-	equip_cooldown = 10
+	equip_cooldown = 1 SECONDS
 	name = "Exosuit Proto-kinetic Accelerator"
 	desc = "An exosuit-mounted mining tool that does increased damage in low pressure. Drawing from an onboard power source allows it to project further than the handheld version."
 	icon_state = "mecha_kineticgun"
@@ -184,7 +184,7 @@
 	desc = "A weapon for combat exosuits. Shoots non-lethal stunning electrodes."
 	icon_state = "mecha_taser"
 	energy_drain = 20
-	equip_cooldown = 8
+	equip_cooldown = 0.8 SECONDS
 	projectile = /obj/projectile/energy/electrode
 	fire_sound = 'sound/weapons/taser.ogg'
 
@@ -194,7 +194,7 @@
 	desc = "Equipment for clown exosuits. Spreads fun and joy to everyone around. Honk!"
 	icon_state = "mecha_honker"
 	energy_drain = 200
-	equip_cooldown = 150
+	equip_cooldown = 15 SECONDS
 	projectiles_per_shot = 0
 	range = MECHA_MELEE|MECHA_RANGED
 	kickback = FALSE
@@ -301,7 +301,7 @@
 	name = "\improper FNX-99 \"Hades\" Carbine"
 	desc = "A weapon for combat exosuits. Shoots incendiary bullets."
 	icon_state = "mecha_carbine"
-	equip_cooldown = 4
+	equip_cooldown = 0.8 SECONDS
 	projectile = /obj/projectile/bullet/incendiary/fnx99
 	projectiles = 24
 	projectiles_cache = 24
@@ -314,7 +314,7 @@
 	desc = "A weapon for combat exosuits. A mime invention; field tests show targets cannot even scream before going down."
 	fire_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
 	icon_state = "mecha_mime"
-	equip_cooldown = 30
+	equip_cooldown = 3 SECONDS
 	projectile = /obj/projectile/bullet/mime
 	projectiles = 6
 	projectiles_cache = 999
@@ -325,7 +325,7 @@
 	name = "\improper LBX AC 10 \"Scattershot\""
 	desc = "A weapon for combat exosuits. Shoots a spread of pellets."
 	icon_state = "mecha_scatter"
-	equip_cooldown = 1.5 SECONDS
+	equip_cooldown = 2 SECONDS
 	projectile = /obj/projectile/bullet/scattershot
 	projectiles = 40
 	projectiles_cache = 40
@@ -339,7 +339,7 @@
 	name = "\improper Ultra AC 2"
 	desc = "A weapon for combat exosuits. Shoots a rapid, three shot burst."
 	icon_state = "mecha_uac2"
-	equip_cooldown = 8
+	equip_cooldown = 1.2 SECONDS
 	projectile = /obj/projectile/bullet/lmg
 	projectiles = 300
 	projectiles_cache = 300
@@ -355,7 +355,7 @@
 	name = "Executor Mech Rifle"
 	desc = "A weapon for combat exosuits. Its armor piercing rounds bring down men and mech alike."
 	icon_state = "mecha_heavy"
-	equip_cooldown = 3.8 SECONDS
+	equip_cooldown = 4 SECONDS
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	projectile = /obj/projectile/bullet/neville
 	projectiles = 20
@@ -427,7 +427,7 @@
 	projectiles_cache = 0
 	projectiles_cache_max = 0
 	disabledreload = TRUE
-	equip_cooldown = 60
+	equip_cooldown = 6 SECONDS
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_MISSILE_SRM
 
@@ -442,7 +442,7 @@
 	projectiles_cache = 0
 	projectiles_cache_max = 0
 	disabledreload = TRUE
-	equip_cooldown = 60
+	equip_cooldown = 6 SECONDS
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_MISSILE_PEP
 
@@ -483,7 +483,7 @@
 	projectiles_cache = 6
 	projectiles_cache_max = 24
 	missile_speed = 1.5
-	equip_cooldown = 60
+	equip_cooldown = 6 SECONDS
 	ammo_type = MECHA_AMMO_FLASHBANG
 	var/det_time = 20
 
@@ -502,7 +502,7 @@
 	projectiles_cache_max = 0
 	disabledreload = TRUE
 	projectile = /obj/item/grenade/clusterbuster
-	equip_cooldown = 90
+	equip_cooldown = 9 SECONDS
 	ammo_type = MECHA_AMMO_CLUSTERBANG
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar
@@ -515,7 +515,7 @@
 	missile_speed = 1.5
 	projectiles_cache = 999
 	projectiles_cache_max = 999
-	equip_cooldown = 20
+	equip_cooldown = 2 SECONDS
 	mech_flags = EXOSUIT_MODULE_HONK
 	movedelay = 0
 	ammo_type = MECHA_AMMO_BANANA_PEEL
@@ -530,7 +530,7 @@
 	missile_speed = 1.5
 	projectiles_cache = 999
 	projectiles_cache_max = 999
-	equip_cooldown = 10
+	equip_cooldown = 1 SECONDS
 	mech_flags = EXOSUIT_MODULE_HONK
 	movedelay = 0
 	ammo_type = MECHA_AMMO_MOUSETRAP
@@ -544,7 +544,7 @@
 	desc = "Equipment for clown exosuits. Delivers fun right to your face!"
 	icon_state = "mecha_punching_glove"
 	energy_drain = 250
-	equip_cooldown = 20
+	equip_cooldown = 2 SECONDS
 	range = MECHA_MELEE|MECHA_RANGED
 	movedelay = 0
 	missile_range = 5
@@ -625,7 +625,7 @@
 	projectiles = 6
 	missile_speed = 1.5
 	projectiles_cache = 999
-	equip_cooldown = 60
+	equip_cooldown = 6 SECONDS
 	det_time = 20
 	mech_flags = EXOSUIT_MODULE_HONK
 
