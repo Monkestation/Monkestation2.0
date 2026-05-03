@@ -32,26 +32,43 @@
 			high_target_volume = 0
 			low_target_range = 12
 			high_target_range = 16
+
+		if("reactor_moderate")
+			low_target_volume = 10
+			high_target_volume = 2
+			low_target_range = 14
+			high_target_range = 17
+
 		if("reactor_hot")
 			low_target_volume = 12
 			high_target_volume = 4
 			low_target_range = 15
 			high_target_range = 18
+
 		if("reactor_veryhot")
 			low_target_volume = 10
 			high_target_volume = 12
 			low_target_range = 18
 			high_target_range = 20
+
+		if("reactor_maxsafe")
+			low_target_volume = 8
+			high_target_volume = 18
+			low_target_range = 19
+			high_target_range = 22
+
 		if("reactor_overheat")
 			low_target_volume = 6
 			high_target_volume = 22
 			low_target_range = 20
 			high_target_range = 22
+
 		if("reactor_meltdown")
 			low_target_volume = 0
 			high_target_volume = 32
 			low_target_range = 20
 			high_target_range = 26
+
 		if("reactor_cascade")
 			low_target_volume = 4
 			high_target_volume = 36
@@ -127,16 +144,16 @@
 	else if(temperature < RBMK_TEMP_RUNNING)
 		icon_state = "reactor_on"
 	else if(temperature < RBMK_TEMP_MODERATE)
-		icon_state = "reactor moderate"
-		else if(temperature < RBMK_TEMP_HOT)
+		icon_state = "reactor_moderate"
+	else if(temperature < RBMK_TEMP_HOT)
 		icon_state = "reactor_hot"
 	else if(temperature < RBMK_TEMP_VERYHOT)
 		icon_state = "reactor_veryhot"
 	else if(temperature < RBMK_TEMP_MAXSAFE)
-		icon_state = "reactor maxsafe"
-	else if(temperature < RBMK_TEMP_OVERHEAT)
+		icon_state = "reactor_maxsafe"
+	else if(temperature < RBMK_TEMP_MELTDOWN)
 		icon_state = "reactor_overheat"
-	else if(temperature >= RBMK_TEMP_MELTDOWN)
+	else
 		icon_state = "reactor_meltdown"
 
 	var/safe_max_integrity = max(max_reactor_integrity, 1)
