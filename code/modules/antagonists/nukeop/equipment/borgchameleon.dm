@@ -55,6 +55,7 @@
 		to_chat(user, span_warning("You need at least [display_energy(ACTIVATION_COST)] charge in your cell to use [src]!"))
 
 /obj/item/borg_chameleon/attack_self_secondary(mob/user, modifiers)
+	initialize_cyborg_model_lists()
 	var/input_model = show_radial_menu(user = user, anchor = src, choices = GLOB.cyborg_base_models_icon_list, radius = 42, require_near = TRUE)
 	if(!input_model)
 		return

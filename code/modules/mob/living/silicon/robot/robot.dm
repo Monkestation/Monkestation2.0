@@ -171,6 +171,8 @@
 		return
 
 	//monkestation edit start
+	initialize_cyborg_model_lists()
+
 	// Create radial menu for choosing borg model
 	var/input_model = show_radial_menu(src, src, GLOB.cyborg_base_models_icon_list, radius = 42)
 	if(!input_model || model.type != /obj/item/robot_model)
