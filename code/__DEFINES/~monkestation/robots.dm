@@ -4,7 +4,7 @@ GLOBAL_LIST_INIT(cyborg_model_list, initialize_cyborg_model_list())
 GLOBAL_LIST_INIT(cyborg_base_models_icon_list, initialize_cyborg_base_models_icon_list())
 
 /proc/initialize_cyborg_model_list()
-	. = list(
+	var/valid_cyborg_models = list(
 		"Engineering" = /obj/item/robot_model/engineering,
 		"Medical" = /obj/item/robot_model/medical,
 		"Cargo" = /obj/item/robot_model/cargo, //monkestation edit
@@ -14,16 +14,18 @@ GLOBAL_LIST_INIT(cyborg_base_models_icon_list, initialize_cyborg_base_models_ico
 		"Standard" = /obj/item/robot_model/standard,
 	)
 	if(!CONFIG_GET(flag/disable_peaceborg))
-		.["Peacekeeper"] = /obj/item/robot_model/peacekeeper
+		valid_cyborg_models["Peacekeeper"] = /obj/item/robot_model/peacekeeper
 	if(!CONFIG_GET(flag/disable_secborg))
-		.["Security"] = /obj/item/robot_model/security
+		valid_cyborg_models["Security"] = /obj/item/robot_model/security
+	return valid_cyborg_models
 
 /proc/initialize_cyborg_base_models_icon_list()
-	. = list()
+	var/valid_base_models = list()
 	for(var/option in GLOB.cyborg_model_list)
 		var/obj/item/robot_model/model = GLOB.cyborg_model_list[option]
 		var/model_icon = initial(model.cyborg_base_icon)
-		.[option] = image(icon = 'monkestation/icons/mob/robots.dmi', icon_state = model_icon)
+		valid_base_models[option] = image(icon = 'monkestation/icons/mob/robots.dmi', icon_state = model_icon)
+	return valid_base_models
 
 #define CYBORG_ICON_CARGO 'monkestation/code/modules/cargoborg/icons/robots_cargo.dmi'
 
