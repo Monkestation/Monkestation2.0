@@ -328,6 +328,10 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 		return
 	if(DOING_INTERACTION_WITH_TARGET(remover, wearer) || (wearer.w_uniform != uniform) || src.loc != uniform)
 		return
+	if(!remover.can_perform_action(wearer, NEED_DEXTERITY | NEED_HANDS | FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
+		return
+	if(!remover.CanReach(wearer))
+		return
 	remover.visible_message(
 		span_warning("[remover] begins removing [src] from [wearer]."),
 		span_notice("You start removing [src] from [wearer]."))
