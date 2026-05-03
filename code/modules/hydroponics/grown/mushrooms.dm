@@ -396,3 +396,10 @@
 	name = "tictooth"
 	desc = "The 'tooth' of a tictooth funnel. Careful not to cut yourself! Inedible in this state, it can be processed into a variety of goods. These strange plants are from the Moffic fleet, but genetic studies show they descend from the glosscup family. Not even the Moffs can say when they got their hands on it, though."
 	icon_state = "tictooth"
+
+/obj/item/grown/tictooth/welder_act(mob/living/user, obj/item/I)
+	if(I.use_tool(src, user, 0, volume=50))
+		to_chat(user, span_notice("You melt [src] down into a glass shard."))
+		new /obj/item/shard(user.drop_location())
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS

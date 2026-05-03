@@ -48,7 +48,7 @@
 
 /datum/reagent/consumable/ethanol/dry_voltaic_yellow
 	name = "Dry Voltaic Yellow"
-	description = "Electrically charged wine reinforced with herbs, spices, and brandies. Recharges etherials, but also nontoxic."
+	description = "Electrically charged wine reinforced with herbs, spices, and brandy. Recharges etherials, but also nontoxic."
 	boozepwr = 60
 	color = "#ffce6c"
 	taste_description = "very dry static"
