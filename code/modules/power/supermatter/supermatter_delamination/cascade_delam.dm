@@ -102,11 +102,18 @@
 	message_admins("[origin] triggered an RBMK supermatter cascade. [ADMIN_VERBOSEJMP(origin)]")
 	origin.investigate_log("triggered an RBMK supermatter cascade.", INVESTIGATE_ENGINE)
 
-	// RBMK cascade handoff should immediately become Lambda,
+	// RBMK cascade handoff should immediately become Lambda.
+	// Do not call effect_emergency_state() here, because it replays emergency/airraid behavior.
 	if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_LAMBDA)
 		SSsecurity_level.set_level(SEC_LEVEL_LAMBDA)
 
+	// Give the reactor explosion tick room to finish before the cascade effects begin.
+	sleep(1)
+
 	effect_cascade_demoralize()
+
+	// Spread player-wide messages and announcements across separate ticks to reduce handoff hitching.
+	sleep(1)
 
 	priority_announce(
 		"A Type-C resonance shift event has occurred in your sector. Scans indicate local oscillation flux affecting spatial and gravitational substructure. \
@@ -120,12 +127,14 @@
 
 	sleep(5 SECONDS)
 	var/obj/cascade_portal/rift = effect_evac_rift_start()
-	RegisterSignal(rift, COMSIG_QDELETING, PROC_REF(end_round_holder))
+	if(rift)
+		RegisterSignal(rift, COMSIG_QDELETING, PROC_REF(end_round_holder))
 
 	SSsupermatter_cascade.can_fire = TRUE
 	SSsupermatter_cascade.cascade_initiated = TRUE
 
-	effect_crystal_mass_from_origin(origin, rift)
+	if(rift)
+		effect_crystal_mass_from_origin(origin, rift)
 
 	return TRUE
 
