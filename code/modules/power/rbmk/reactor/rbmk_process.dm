@@ -80,49 +80,41 @@
 	if(total_coolant_moles <= 0)
 		return
 
-	// Treat inlet_rate as a cooling throughput request, not a raw percentage
-	// of the whole internal coolant reservoir.
-	var/flow_ratio = CLAMP01(inlet_rate / max(RBMK_INLET_RATE_MAX, 1))
-	if(flow_ratio <= 0)
+	var/commanded_flow_ratio = CLAMP01(inlet_rate / max(RBMK_INLET_RATE_MAX, 1))
+
+	// Coolant always exchanges some heat with the core while present.
+	// Open ports increase transfer strength.
+	var/flow_ratio = max(commanded_flow_ratio, RBMK_COOLANT_STAGNANT_FLOW_RATIO)
+
+	if(!inlet_open && !outlet_open)
+		flow_ratio = RBMK_COOLANT_STAGNANT_FLOW_RATIO
+	else if(!inlet_open || !outlet_open)
+		flow_ratio = max(flow_ratio * RBMK_COOLANT_ONE_PORT_FLOW_MULT, RBMK_COOLANT_STAGNANT_FLOW_RATIO)
+
+	var/coolant_temp = coolant_internal.temperature
+	var/temp_delta = temperature - coolant_temp
+
+	if(abs(temp_delta) < 0.1)
 		return
 
-	// Bounded participating coolant mass per tick.
-	// This makes cooling depend mostly on commanded flow rather than
-	// on how huge the stored reservoir happens to be.
-	var/desired_contact_moles = 0.5 + (flow_ratio * 7.5)
-	desired_contact_moles = clamp(desired_contact_moles, 0.5, 8)
+	// Prevent tiny amounts of gas from magically controlling the whole reactor.
+	var/coolant_presence = CLAMP01(total_coolant_moles / max(RBMK_INLET_RATE_MAX * 2, 1))
 
-	var/remove_ratio = CLAMP01(desired_contact_moles / total_coolant_moles)
-	if(remove_ratio <= 0)
-		return
+	if(total_coolant_moles >= RBMK_COOLANT_MIN_EFFECTIVE_MOLES)
+		coolant_presence = max(coolant_presence, 0.20)
 
-	var/datum/gas_mixture/contact_mix = coolant_internal.remove_ratio(remove_ratio)
-	if(!contact_mix)
-		return
+	// Gas heats/cools quickly. Core moves slower because it is thermally heavy.
+	var/coolant_response = RBMK_COOLANT_BASE_RESPONSE + (flow_ratio * RBMK_COOLANT_FLOW_RESPONSE)
+	var/core_response = RBMK_CORE_BASE_RESPONSE + (flow_ratio * RBMK_CORE_FLOW_RESPONSE)
 
-	var/contact_moles = contact_mix.total_moles()
-	if(contact_moles <= 0)
-		coolant_internal.merge(contact_mix)
-		return
+	var/coolant_temp_change = clamp(temp_delta * coolant_response, -RBMK_COOLANT_TEMP_CHANGE_CAP, RBMK_COOLANT_TEMP_CHANGE_CAP)
+	var/core_temp_change = clamp(temp_delta * core_response, -RBMK_CORE_TEMP_CHANGE_CAP, RBMK_CORE_TEMP_CHANGE_CAP)
 
-	var/contact_temp = contact_mix.temperature
+	coolant_temp_change *= max(coolant_presence, 0.20)
+	core_temp_change *= coolant_presence
 
-	// Keep the reactor thermally heavy so it does not instantly swing around.
-	var/core_thermal_mass = 2200
-
-	var/effective_contact_moles = clamp(contact_moles, 0.5, 8)
-	var/flow_strength = clamp(flow_ratio, 0.05, 1.0)
-
-	var/coolant_thermal_mass = max(effective_contact_moles * 1.8 * flow_strength, 1)
-
-	var/weighted_core_heat = temperature * core_thermal_mass
-	var/weighted_coolant_heat = contact_temp * coolant_thermal_mass
-	var/equilibrium_temperature = (weighted_core_heat + weighted_coolant_heat) / (core_thermal_mass + coolant_thermal_mass)
-
-	temperature = equilibrium_temperature
-	contact_mix.temperature = equilibrium_temperature
-
-	coolant_internal.merge(contact_mix)
+	coolant_internal.temperature = max(coolant_temp + coolant_temp_change, TCMB)
+	temperature = max(temperature - core_temp_change, RBMK_AMBIENT_TEMP)
 
 
 /obj/machinery/rbmk/reactor/proc/rbmk_sample_reactor_temperature()
@@ -140,6 +132,10 @@
 		return
 
 	pressure = clamp(coolant_internal.return_pressure(), 0, RBMK_PRESSURE_EXTREME)
+
+	// Keep coolant ports active while either side is commanded open.
+	if(inlet_open || outlet_open)
+		wake_coolant_ports()
 
 
 /obj/machinery/rbmk/reactor/proc/emit_real_radiation()

@@ -14,8 +14,8 @@
 /obj/machinery/rbmk/reactor/proc/update_reactor_sound()
 	var/low_target_volume = 0
 	var/high_target_volume = 0
-	var/low_target_range = 20
-	var/high_target_range = 24
+	var/low_target_range = 6
+	var/high_target_range = 8
 
 	if(icon_state == "reactor_off" || icon_state == "reactor_slagged")
 		if(low_soundloop)
@@ -30,59 +30,60 @@
 		if("reactor_on")
 			low_target_volume = 8
 			high_target_volume = 0
-			low_target_range = 12
-			high_target_range = 16
+			low_target_range = 6
+			high_target_range = 8
 
 		if("reactor_moderate")
 			low_target_volume = 10
 			high_target_volume = 2
-			low_target_range = 14
-			high_target_range = 17
+			low_target_range = 7
+			high_target_range = 9
 
 		if("reactor_hot")
 			low_target_volume = 12
 			high_target_volume = 4
-			low_target_range = 15
-			high_target_range = 18
+			low_target_range = 8
+			high_target_range = 10
 
 		if("reactor_veryhot")
 			low_target_volume = 10
 			high_target_volume = 12
-			low_target_range = 18
-			high_target_range = 20
+			low_target_range = 9
+			high_target_range = 11
 
 		if("reactor_maxsafe")
 			low_target_volume = 8
 			high_target_volume = 18
-			low_target_range = 19
-			high_target_range = 22
+			low_target_range = 9
+			high_target_range = 12
 
 		if("reactor_overheat")
 			low_target_volume = 6
 			high_target_volume = 22
-			low_target_range = 20
-			high_target_range = 22
+			low_target_range = 10
+			high_target_range = 13
 
 		if("reactor_meltdown")
 			low_target_volume = 0
 			high_target_volume = 32
-			low_target_range = 20
-			high_target_range = 26
+			low_target_range = 10
+			high_target_range = 15
 
 		if("reactor_cascade")
 			low_target_volume = 4
 			high_target_volume = 36
-			low_target_range = 22
-			high_target_range = 30
+			low_target_range = 12
+			high_target_range = 16
 
 	if(low_target_volume > 0)
 		if(!low_soundloop)
 			low_soundloop = new /datum/looping_sound/rbmk_reactor_low(src, TRUE)
 			low_soundloop.volume = 0
-			low_soundloop.extra_range = low_target_range
 
 		low_soundloop.volume = step_volume_toward(low_soundloop.volume, low_target_volume, 2)
 		low_soundloop.extra_range = low_target_range
+		low_soundloop.falloff_distance = 2
+		low_soundloop.falloff_exponent = 6
 	else if(low_soundloop)
 		low_soundloop.stop()
 		QDEL_NULL(low_soundloop)
@@ -91,10 +92,11 @@
 		if(!high_soundloop)
 			high_soundloop = new /datum/looping_sound/rbmk_reactor_high(src, TRUE)
 			high_soundloop.volume = 0
-			high_soundloop.extra_range = high_target_range
 
 		high_soundloop.volume = step_volume_toward(high_soundloop.volume, high_target_volume, 2)
 		high_soundloop.extra_range = high_target_range
+		high_soundloop.falloff_distance = 2
+		high_soundloop.falloff_exponent = 7
 	else if(high_soundloop)
 		high_soundloop.stop()
 		QDEL_NULL(high_soundloop)

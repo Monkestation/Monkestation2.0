@@ -67,7 +67,7 @@
 	if(!parent_reactor.coolant_internal)
 		return
 
-	// Treat inlet_rate as a throughput cap, not a percentage of the whole pipe mix.
+	// Treat inlet_rate as a direct circulation throughput cap.
 	var/desired_moles = clamp(parent_reactor.inlet_rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX)
 	if(desired_moles <= 0)
 		return
@@ -96,28 +96,28 @@
 
 	var/current_pressure = store.return_pressure()
 	var/target_pressure = max(parent_reactor.outlet_target_pressure, RBMK_OUTLET_PRESSURE_BASE)
-	if(current_pressure <= target_pressure)
+
+	// Outlet should always circulate when open.
+	// Pressure only adds extra relief; it no longer gates all flow.
+	var/desired_release_moles = clamp(parent_reactor.inlet_rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX)
+
+	if(current_pressure > target_pressure)
+		var/pressure_delta = current_pressure - target_pressure
+		var/pressure_ratio = clamp(pressure_delta / max(RBMK_PRESSURE_CRITICAL, 1), 0.05, 1)
+		desired_release_moles = max(desired_release_moles, max(10, RBMK_INLET_RATE_MAX * pressure_ratio))
+
+	if(desired_release_moles <= 0)
 		return
 
-	var/pressure_delta = current_pressure - target_pressure
-	if(pressure_delta <= 0)
-		return
-
-	// Bounded outlet release instead of dumping a huge fraction of the whole reservoir.
-	var/pressure_ratio = clamp(pressure_delta / max(RBMK_PRESSURE_CRITICAL, 1), 0.05, 1)
-	var/max_release_moles = max(10, RBMK_INLET_RATE_MAX * pressure_ratio)
-
-	var/datum/gas_mixture/released_mix = remove_moles_capped(store, max_release_moles)
+	var/datum/gas_mixture/released_mix = remove_moles_capped(store, desired_release_moles)
 	if(!released_mix || released_mix.total_moles() <= 0)
 		return
 
-	// Prefer venting into the connected pipe network.
 	if(length(airs))
 		airs[1].merge(released_mix)
 		update_parents()
 		return
 
-	// Fallback to turf if there is no usable pipe mix.
 	var/turf/port_turf = get_turf(src)
 	if(port_turf)
 		port_turf.assume_air(released_mix)

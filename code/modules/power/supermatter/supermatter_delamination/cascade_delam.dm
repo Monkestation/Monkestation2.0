@@ -104,8 +104,8 @@
 
 	// RBMK cascade handoff should immediately become Lambda.
 	// Do not call effect_emergency_state() here, because it replays emergency/airraid behavior.
-	if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_LAMBDA)
-		SSsecurity_level.set_level(SEC_LEVEL_LAMBDA)
+	if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_GAMMA)
+		SSsecurity_level.set_level(SEC_LEVEL_GAMMA)
 
 	// Give the reactor explosion tick room to finish before the cascade effects begin.
 	sleep(1)

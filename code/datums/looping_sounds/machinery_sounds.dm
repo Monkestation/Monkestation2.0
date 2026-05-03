@@ -186,16 +186,20 @@
 	mid_sounds = list('monkestation/sound/effects/rbmk/reactor_hum_low.ogg')
 	mid_length = 5 SECONDS
 	volume = 0
-	extra_range = 20
-	falloff_distance = 5
-	falloff_exponent = 8
+	extra_range = 6
+	falloff_distance = 2
+	falloff_exponent = 6
+	ignore_walls = FALSE
+	pressure_affected = FALSE
 	vary = FALSE
 
 /datum/looping_sound/rbmk_reactor_high
 	mid_sounds = list('monkestation/sound/effects/rbmk/reactor_hum_high.ogg')
 	mid_length = 5 SECONDS
 	volume = 0
-	extra_range = 24
-	falloff_distance = 5
-	falloff_exponent = 8
+	extra_range = 8
+	falloff_distance = 2
+	falloff_exponent = 7
+	ignore_walls = FALSE
+	pressure_affected = FALSE
 	vary = FALSE
