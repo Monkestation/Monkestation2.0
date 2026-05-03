@@ -102,7 +102,10 @@
 	message_admins("[origin] triggered an RBMK supermatter cascade. [ADMIN_VERBOSEJMP(origin)]")
 	origin.investigate_log("triggered an RBMK supermatter cascade.", INVESTIGATE_ENGINE)
 
-	effect_emergency_state()
+	// RBMK cascade handoff should immediately become Lambda,
+	if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_LAMBDA)
+		SSsecurity_level.set_level(SEC_LEVEL_LAMBDA)
+
 	effect_cascade_demoralize()
 
 	priority_announce(
