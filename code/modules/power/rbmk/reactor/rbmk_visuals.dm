@@ -126,13 +126,13 @@
 		icon_state = "reactor_off"
 	else if(temperature < RBMK_TEMP_RUNNING)
 		icon_state = "reactor_on"
-	else if(tempurature < RBMK_TEMP_MODERATE)
+	else if(temperature < RBMK_TEMP_MODERATE)
 		icon_state = "reactor moderate"
 		else if(temperature < RBMK_TEMP_HOT)
 		icon_state = "reactor_hot"
 	else if(temperature < RBMK_TEMP_VERYHOT)
 		icon_state = "reactor_veryhot"
-	else if(tempurature < RBMK_TEMP_MAXSAFE)
+	else if(temperature < RBMK_TEMP_MAXSAFE)
 		icon_state = "reactor maxsafe"
 	else if(temperature < RBMK_TEMP_OVERHEAT)
 		icon_state = "reactor_overheat"
