@@ -63,7 +63,7 @@
 	var/lums = GET_SIMPLE_LUMCOUNT(T)
 	if(lums < SHADOW_SPECIES_BRIGHT_LIGHT)
 		speed = 0 //Faster, too
-		alpha = max(alpha - ((SHADOW_SPECIES_BRIGHT_LIGHT - lums) * 60), 10) //Rapidly becomes more invisible in the dark
+		alpha = max(alpha - ((SHADOW_SPECIES_BRIGHT_LIGHT - lums) * 60), 0) //Rapidly becomes more invisible in the dark
 	else
 		speed = 1
 		alpha = min(alpha + (lums * 30), 255) //Slowly becomes more visible in brighter light
