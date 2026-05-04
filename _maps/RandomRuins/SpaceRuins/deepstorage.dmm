@@ -215,7 +215,6 @@
 /obj/machinery/airalarm/directional/north{
 	req_one_access = list("syndicate")
 	},
-/obj/structure/cargo_shelf,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
@@ -229,8 +228,8 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "aU" = (
 /obj/effect/turf_decal/delivery,
-/obj/effect/spawner/random/trash/mopbucket,
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aV" = (
@@ -261,6 +260,7 @@
 	amount = 5
 	},
 /obj/machinery/light/directional/north,
+/obj/item/stack/rods/fifty,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aW" = (
@@ -282,6 +282,10 @@
 	amount = 10
 	},
 /obj/effect/turf_decal/delivery,
+/obj/item/stack/sheet/iron/fifty{
+	pixel_x = 2;
+	pixel_y = 2
+	},
 /obj/item/stack/sheet/iron/fifty{
 	pixel_x = 2;
 	pixel_y = 2
@@ -737,7 +741,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "cM" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/curtain,
 /obj/machinery/shower/directional/south,
 /obj/item/soap/deluxe,
@@ -783,25 +786,21 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "cX" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/toilet{
 	dir = 4
 	},
 /obj/structure/mirror/directional/east,
 /obj/machinery/light/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "cZ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/mirror/directional/east,
-/obj/machinery/airalarm/directional/west{
-	req_one_access = list("syndicate")
-	},
-/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /obj/structure/toilet{
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "da" = (
@@ -823,14 +822,17 @@
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "de" = (
 /obj/structure/table,
-/obj/item/storage/medkit/emergency{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/obj/item/storage/medkit/emergency,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/item/storage/medkit/combat_surgeon/stocked{
+	pixel_x = -5;
+	pixel_y = 0
+	},
+/obj/item/storage/medkit/combat_surgeon/stocked{
+	pixel_x = -3;
+	pixel_y = 5
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
@@ -902,6 +904,8 @@
 /obj/item/clothing/suit/armor/vest/alt,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
+/obj/item/storage/backpack/duffelbag/syndie,
+/obj/item/storage/backpack/duffelbag/syndie,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "dx" = (
@@ -1072,7 +1076,9 @@
 	pixel_x = 8;
 	pixel_y = -3
 	},
-/obj/structure/closet/crate/freezer,
+/obj/structure/closet/crate/freezer{
+	name = "Bean Freezer"
+	},
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/aux_storage)
@@ -1415,6 +1421,15 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "fc" = (
 /obj/structure/table,
+/obj/effect/spawner/random/exotic/tool,
+/obj/item/clothing/gloves/combat{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/item/clothing/gloves/combat{
+	pixel_x = 3;
+	pixel_y = -2
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "fd" = (
@@ -1434,11 +1449,11 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "ff" = (
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage)
 "fg" = (
@@ -1552,7 +1567,16 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "fA" = (
-/obj/structure/closet/firecloset/full,
+/obj/structure/closet/firecloset/full{
+	name = "Advanced Fire Safety Closet";
+	desc = "It a storage unit that contains addictional fire fighting supplies!"
+	},
+/obj/item/extinguisher,
+/obj/item/extinguisher,
+/obj/item/extinguisher/advanced,
+/obj/item/extinguisher/advanced,
+/obj/structure/sign/warning/fire/directional/east,
+/obj/item/watertank/atmos,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "fB" = (
@@ -1742,6 +1766,9 @@
 	},
 /obj/structure/closet/radiation,
 /obj/effect/turf_decal/bot,
+/obj/item/storage/belt/utility/syndicate,
+/obj/item/storage/belt/utility/syndicate,
+/obj/item/storage/toolbox/syndicate,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "gl" = (
@@ -1852,6 +1879,9 @@
 	},
 /obj/structure/closet/radiation,
 /obj/effect/turf_decal/bot,
+/obj/item/storage/belt/utility/syndicate,
+/obj/item/storage/belt/utility/syndicate,
+/obj/item/storage/toolbox/syndicate,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "gD" = (
@@ -1869,7 +1899,10 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "gG" = (
-/obj/structure/closet/crate/freezer,
+/obj/structure/closet/crate/freezer{
+	name = "Blood Crate";
+	desc = "A crate containing lifesaving blood supplies in the case that someone bleeds."
+	},
 /obj/item/reagent_containers/blood/o_minus,
 /obj/item/reagent_containers/blood/o_minus,
 /obj/item/reagent_containers/blood/o_minus,
@@ -2169,7 +2202,6 @@
 	req_one_access = list("syndicate")
 	},
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
-/obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "iK" = (
@@ -2197,25 +2229,45 @@
 	dir = 1
 	},
 /obj/item/storage/medkit/brute{
-	pixel_x = 1;
-	pixel_y = 2
+	pixel_x = -12;
+	pixel_y = 1
 	},
 /obj/item/storage/medkit/brute{
-	pixel_x = 4;
+	pixel_x = -9;
 	pixel_y = 4
+	},
+/obj/item/storage/medkit/civil_defense/stocked{
+	pixel_x = 10;
+	pixel_y = 0
+	},
+/obj/item/storage/medkit/civil_defense/stocked{
+	pixel_x = 10;
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/civil_defense/stocked{
+	pixel_x = 10;
+	pixel_y = 6
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "jy" = (
 /obj/structure/table,
 /obj/structure/cable,
-/obj/item/storage/medkit/robotic_repair{
-	pixel_x = 0;
+/obj/item/storage/medkit/civil_defense/comfort/stocked{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/obj/item/storage/medkit/civil_defense/comfort/stocked{
+	pixel_x = -6;
 	pixel_y = 2
 	},
-/obj/item/storage/medkit/robotic_repair{
-	pixel_x = 4;
-	pixel_y = 3
+/obj/item/storage/medkit/civil_defense/comfort/stocked{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/storage/medkit/robotic_repair/preemo/stocked{
+	pixel_x = 3;
+	pixel_y = 4
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
@@ -2347,18 +2399,6 @@
 	req_access = list("syndicate");
 	name = "Ammo crate"
 	},
-/obj/item/ammo_box/magazine/c40sol_rifle{
-	pixel_x = 6;
-	pixel_y = 1
-	},
-/obj/item/ammo_box/magazine/c40sol_rifle{
-	pixel_x = 6;
-	pixel_y = -2
-	},
-/obj/item/ammo_box/magazine/c40sol_rifle{
-	pixel_x = 6;
-	pixel_y = -5
-	},
 /obj/item/ammo_box/c40sol{
 	pixel_x = -7;
 	pixel_y = 0
@@ -2370,8 +2410,20 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/item/ammo_box/c40sol/pierce{
-	pixel_x = -5;
+	pixel_x = -1;
 	pixel_y = 0
+	},
+/obj/item/ammo_box/c40sol/pierce{
+	pixel_x = -1;
+	pixel_y = 0
+	},
+/obj/item/ammo_box/magazine/c40sol_rifle/standard{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/ammo_box/magazine/c40sol_rifle/standard{
+	pixel_x = 6;
+	pixel_y = -2
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
@@ -2439,9 +2491,15 @@
 /area/ruin/space/has_grav/deepstorage)
 "nA" = (
 /obj/structure/table,
-/obj/effect/spawner/random/exotic/antag_gear_weak,
-/obj/effect/spawner/random/exotic/antag_gear_weak,
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/item/storage/box/nri_flares{
+	pixel_x = -4;
+	pixel_y = 0
+	},
+/obj/item/storage/box/nri_flares{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "nY" = (
@@ -2449,13 +2507,6 @@
 	req_one_access = list("syndicate")
 	},
 /obj/structure/table,
-/obj/item/stack/cable_coil,
-/obj/item/stack/rods/fifty,
-/obj/item/stack/sheet/iron/fifty{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/stack/cable_coil,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
@@ -2492,6 +2543,7 @@
 /area/ruin/space/has_grav/deepstorage)
 "os" = (
 /obj/structure/table/reinforced,
+/obj/item/storage/box/beakers/bluespace,
 /obj/item/storage/box/beakers/bluespace,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
@@ -2814,6 +2866,12 @@
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 8
 	},
+/obj/structure/table/reinforced,
+/obj/item/storage/box/masks,
+/obj/item/storage/box/gloves{
+	pixel_x = 0;
+	pixel_y = 5
+	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "tk" = (
@@ -2931,6 +2989,12 @@
 	},
 /obj/effect/turf_decal/syndicateemblem/bottom/left,
 /obj/effect/turf_decal/siding/dark,
+/obj/item/radio/intercom{
+	freerange = 1;
+	name = "Syndicate Radio Intercom";
+	pixel_y = -39;
+	pixel_x = 0
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "uU" = (
@@ -2946,7 +3010,10 @@
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "vj" = (
-/obj/structure/guncase,
+/obj/structure/guncase{
+	name = "Sol Rifle";
+	desc = "A note says that you shouldn't lose this."
+	},
 /obj/machinery/door/window/brigdoor/right/directional/south{
 	name = "Emergency Defense Gun";
 	desc = "Open incase of intruders or something.";
@@ -3003,18 +3070,22 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "wy" = (
-/obj/item/storage/box/beakers/variety{
-	pixel_x = 6;
-	pixel_y = 0
-	},
+/obj/structure/table/reinforced,
 /obj/item/storage/box/beakers/variety{
 	pixel_x = -5;
 	pixel_y = 0
 	},
-/obj/structure/table/reinforced,
 /obj/item/storage/box/beakers/variety{
-	pixel_x = 0;
-	pixel_y = 7
+	pixel_x = -2;
+	pixel_y = 0
+	},
+/obj/item/storage/box/beakers/variety{
+	pixel_x = 1;
+	pixel_y = 0
+	},
+/obj/item/storage/box/beakers/variety{
+	pixel_x = 4;
+	pixel_y = 0
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
@@ -3264,7 +3335,9 @@
 	pixel_x = 8;
 	pixel_y = -3
 	},
-/obj/structure/closet/crate/freezer,
+/obj/structure/closet/crate/freezer{
+	name = "Bean Freezer"
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/aux_storage)
 "zu" = (
@@ -3463,7 +3536,8 @@
 	},
 /obj/item/storage/box/stockparts/deluxe,
 /obj/item/storage/box/stockparts/deluxe,
-/obj/item/storage/part_replacer,
+/obj/item/storage/box/stockparts/deluxe,
+/obj/item/storage/part_replacer/bluespace/tier4,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/aux_storage)
 "CQ" = (
@@ -3504,6 +3578,7 @@
 /obj/structure/window/reinforced/plasma/spawner/directional/south,
 /obj/effect/spawner/structure/electrified_grille,
 /obj/structure/sign/warning/secure_area/directional/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /turf/open/floor/engine/o2,
 /area/ruin/space/has_grav/deepstorage/armory)
 "Dq" = (
@@ -3572,6 +3647,9 @@
 /obj/item/soap/syndie,
 /obj/item/soap/syndie,
 /obj/item/soap/syndie,
+/obj/item/lightreplacer/blue,
+/obj/item/lightreplacer,
+/obj/item/lightreplacer,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/aux_storage)
 "Em" = (
@@ -3808,6 +3886,7 @@
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
 /obj/effect/spawner/structure/electrified_grille,
 /obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /turf/open/floor/engine/o2,
 /area/ruin/space/has_grav/deepstorage/armory)
 "Jm" = (
@@ -3913,26 +3992,6 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
-"KP" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/syndicate,
-/obj/item/storage/toolbox/syndicate,
-/obj/item/flashlight/flare,
-/obj/item/flashlight/flare{
-	pixel_y = 6
-	},
-/obj/item/flashlight/flare,
-/obj/item/flashlight/flare{
-	pixel_y = 6
-	},
-/obj/item/flashlight/flare,
-/obj/item/flashlight/flare{
-	pixel_y = 6
-	},
-/obj/item/flashlight,
-/obj/item/flashlight,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/deepstorage/armory)
 "KT" = (
 /obj/machinery/light/small/directional/north,
 /obj/item/restraints/handcuffs,
@@ -3969,8 +4028,9 @@
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "LE" = (
 /obj/structure/table,
-/obj/effect/spawner/random/exotic/tool,
 /obj/machinery/light/directional/south,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "LH" = (
@@ -3991,18 +4051,7 @@
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "LO" = (
-/obj/structure/table,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/gloves/combat{
-	pixel_x = -3;
-	pixel_y = 4
-	},
-/obj/item/clothing/gloves/combat{
-	pixel_x = 3;
-	pixel_y = -2
-	},
+/obj/machinery/recharge_station/fullupgrade,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "Mv" = (
@@ -4152,12 +4201,6 @@
 /obj/item/paper/fluff/ruins/deepstorage/hydro_notice,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
-"OM" = (
-/obj/structure/window/reinforced/plasma/spawner/directional/east,
-/obj/structure/window/reinforced/plasma/spawner/directional/west,
-/obj/effect/spawner/structure/electrified_grille,
-/turf/open/floor/engine/o2,
-/area/ruin/space/has_grav/deepstorage/armory)
 "OR" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
@@ -4221,8 +4264,6 @@
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "Ql" = (
 /obj/structure/closet/cardboard,
-/obj/item/stack/sheet/cardboard,
-/obj/item/stack/cable_coil,
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/package_wrap,
@@ -4230,8 +4271,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 10
 	},
+/obj/item/stack/sheet/cardboard/fifty,
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
+"Qm" = (
+/turf/closed/wall/r_wall/syndicate/hull,
+/area/ruin/space)
 "Qr" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -4254,6 +4302,11 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
+"Qu" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/spawner/random/trash/mopbucket,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage/aux_storage)
 "QA" = (
 /obj/machinery/door/airlock/virology/glass,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
@@ -4295,6 +4348,15 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
+"Rg" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/west{
+	req_one_access = list("syndicate")
+	},
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage)
 "Rj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
 	dir = 6
@@ -4314,6 +4376,46 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"RF" = (
+/obj/effect/turf_decal/delivery,
+/obj/item/food/canned/chap{
+	pixel_x = -8;
+	pixel_y = -4
+	},
+/obj/structure/closet/crate/freezer{
+	name = "Chap Freezer";
+	desc = "Smells like meat."
+	},
+/obj/item/food/canned/chap{
+	pixel_x = -8;
+	pixel_y = -1
+	},
+/obj/item/food/canned/chap{
+	pixel_x = -8;
+	pixel_y = 3
+	},
+/obj/item/food/canned/chap{
+	pixel_x = -8;
+	pixel_y = 7
+	},
+/obj/item/food/canned/chap{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/item/food/canned/chap{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/item/food/canned/chap{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/food/canned/chap{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage/aux_storage)
 "RH" = (
 /obj/machinery/corral_corner{
 	mapping_id = "s3"
@@ -4361,6 +4463,10 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
+"SS" = (
+/obj/structure/sign/warning/secure_area/directional/west,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
 "Ta" = (
 /obj/machinery/corral_corner{
 	mapping_id = "s2"
@@ -4471,23 +4577,20 @@
 	dir = 4
 	},
 /obj/item/folder/red{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/obj/item/folder/red{
-	pixel_x = 5;
+	pixel_x = -7;
 	pixel_y = 0
 	},
 /obj/item/pen{
 	pixel_x = -6;
-	pixel_y = 5
-	},
-/obj/item/pen{
-	pixel_x = 4;
-	pixel_y = 8
+	pixel_y = -2
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
+	},
+/obj/item/folder/syndicate/red{
+	pixel_x = 8;
+	pixel_y = 0;
+	name = "folder- 'TOP SECRET COMMUNICATION LINKS'"
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/deepstorage/dorm)
@@ -4538,6 +4641,7 @@
 /obj/item/flatpacked_machine/sustenance_machine,
 /obj/item/flatpacked_machine/organics_printer,
 /obj/item/flatpacked_machine/gps_beacon,
+/obj/item/flatpacked_machine/organics_ration_printer,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "VU" = (
@@ -4605,6 +4709,7 @@
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
 /obj/effect/spawner/structure/electrified_grille,
 /obj/structure/sign/warning/secure_area/directional/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /turf/open/floor/engine/o2,
 /area/ruin/space/has_grav/deepstorage/armory)
 "Ya" = (
@@ -4670,23 +4775,22 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "ZF" = (
-/obj/item/flashlight/flare,
-/obj/item/flashlight/flare,
-/obj/item/flashlight/flare,
-/obj/item/flashlight/flare,
-/obj/item/flashlight/flare,
-/obj/item/flashlight/flare,
 /obj/item/flashlight,
 /obj/item/flashlight,
 /obj/item/flashlight,
 /obj/item/shovel,
-/obj/item/pickaxe/drill,
-/obj/item/pickaxe/drill,
-/obj/item/pickaxe/drill,
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/secure/science{
 	name = "Mining Tools"
 	},
+/obj/item/pickaxe/drill/compact,
+/obj/item/pickaxe/drill/compact,
+/obj/item/pickaxe/drill/compact,
+/obj/item/mining_scanner,
+/obj/item/mining_scanner,
+/obj/item/mining_scanner,
+/obj/item/storage/box/nri_flares,
+/obj/item/storage/box/nri_flares,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "ZL" = (
@@ -5070,8 +5174,8 @@ vH
 OR
 OR
 ab
-wQ
 Iy
+wQ
 aa
 "}
 (8,1,1) = {"
@@ -5123,7 +5227,7 @@ BM
 OR
 ab
 Iy
-wQ
+Iy
 ab
 "}
 (9,1,1) = {"
@@ -5302,12 +5406,12 @@ ZF
 kE
 Vu
 Oe
+RF
 zl
-zl
+Qu
+vn
 vn
 Ct
-vn
-vn
 ge
 Ea
 zu
@@ -5737,10 +5841,10 @@ It
 ds
 ds
 ds
-ab
-ab
 Iy
 Iy
+ab
+Qm
 ab
 ab
 ab
@@ -5792,7 +5896,7 @@ gQ
 Iy
 Iy
 Iy
-Iy
+SS
 Iy
 Iy
 aa
@@ -6189,7 +6293,7 @@ ca
 ct
 oE
 kP
-kP
+Rg
 kP
 kP
 et
@@ -6402,7 +6506,7 @@ dO
 hL
 OY
 Ht
-KP
+LO
 fo
 QI
 fB
@@ -6525,7 +6629,7 @@ ab
 ab
 ab
 Iy
-wQ
+Iy
 aa
 aa
 aa
@@ -6711,7 +6815,7 @@ Ya
 Ya
 XK
 Bv
-OM
+Bv
 Bv
 Jc
 Dh
