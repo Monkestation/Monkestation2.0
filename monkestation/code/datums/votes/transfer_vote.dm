@@ -41,6 +41,7 @@
 	)
 
 /datum/vote/shuttle_call/finalize_vote(winning_option)
+	SSvote.last_vote_time = -INFINITY // prevent crew transfer vote from blocking map votes
 	switch(winning_option)
 		if(CHOICE_CALL)
 			SSautotransfer.crew_transfer_passed()

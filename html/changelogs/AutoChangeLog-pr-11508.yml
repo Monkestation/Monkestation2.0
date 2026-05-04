@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Crew Transfer votes no longer trigger the vote cooldown - as such, you can start a map vote immediately after if you wish."
