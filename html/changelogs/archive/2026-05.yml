@@ -25,3 +25,18 @@
 2026-05-03:
   TheColorCyan:
   - rscadd: added  thebonezone66's donator item - Prismatic cloak
+2026-05-04:
+  Absolucy:
+  - bugfix: Stabilized Pyrite extracts no longer curse you with being a walking disco
+      ball forever.
+  - qol: Coloration from stable pyrite, regen rainbow, and regen adamantine extracts
+      now looks better.
+  - image: Monster Hunter weapons and items now have new, beautiful sprites, made
+      by infrared_baron.
+  JohnFulpWillard:
+  - bugfix: Darkspawns can use their staff again.
+  Runian:
+  - rscadd: The color of a cyborg's eye lights now uses their lamp color instead of
+      being the usual white-yellow.
+  - bugfix: The cyborg surgical omni-tool upgrade now uses the medical module sprite
+      just like other medical module upgrades.
