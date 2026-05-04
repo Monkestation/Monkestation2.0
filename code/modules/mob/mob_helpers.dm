@@ -544,3 +544,12 @@
 		"[key_name(src)] manually changed selected zone",
 		data,
 	)
+
+/// Returns true if the mob is on a rusty tile, really low level just because we call it in a bunch of unrelated places
+/mob/proc/is_touching_rust(check_flying = FALSE)
+	if (check_flying && (movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
+		return FALSE
+	if (HAS_TRAIT(src, TRAIT_MAGICALLY_PHASED) || (movement_type & VENTCRAWLING))
+		return FALSE
+	var/turf/our_turf = get_turf(src)
+	return HAS_TRAIT(our_turf, TRAIT_RUSTY)

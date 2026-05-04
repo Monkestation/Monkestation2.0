@@ -390,6 +390,8 @@
 		return
 	if((worn_neck_item.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(worn_neck_item.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
 		update_body_parts()
+	if((worn_neck_item.flags_inv & HIDEMUTWINGS))
+		update_body_parts()
 	if(worn_neck_item.flags_inv & HIDEEYES)
 		update_worn_glasses()
 	sec_hud_set_security_status()

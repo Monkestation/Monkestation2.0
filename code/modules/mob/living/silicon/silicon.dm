@@ -442,7 +442,7 @@
 /mob/living/silicon/handle_high_gravity(gravity, seconds_per_tick, times_fired)
 	return
 
-/mob/living/silicon/rust_heretic_act()
+/mob/living/silicon/rust_heretic_act(rust_strength)
 	adjustBruteLoss(500)
 
 /mob/living/silicon/on_floored_start()

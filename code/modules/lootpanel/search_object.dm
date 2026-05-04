@@ -14,8 +14,10 @@
 	/// Typepath of the original object for ui grouping
 	var/path
 
+
 /datum/search_object/New(client/owner, atom/item)
 	. = ..()
+
 	src.item = item
 	name = item.name
 	if(isobj(item))
@@ -49,12 +51,14 @@
 	return
 #endif
 
-	icon = item.icon
+	icon = "[item.icon]"
 	icon_state = item.icon_state
+
 
 /datum/search_object/Destroy(force)
 	item = null
 	icon = null
+
 	return ..()
 
 /datum/search_object/proc/try_generate_container(client/owner)
@@ -75,6 +79,7 @@
 
 	if(!QDELETED(src))
 		qdel(src)
+
 
 /// Parent tile has been altered, entire search needs reset
 /datum/search_object/proc/on_turf_change(turf/source, path, list/new_baseturfs, flags, list/post_change_callbacks)

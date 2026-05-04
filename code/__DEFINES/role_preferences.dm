@@ -85,6 +85,7 @@
 #define ROLE_REVENANT "Revenant"
 #define ROLE_OVERTHROW "Syndicate Mutineer" //Role removed, left here for safety.
 #define ROLE_SENTIENCE "Sentience Potion Spawn"
+#define ROLE_SOULTRAPPED_HERETIC "Soultrapped Heretic"
 #define ROLE_PYROCLASTIC_SLIME "Pyroclastic Anomaly Slime"
 #define ROLE_MIND_TRANSFER "Mind Transfer Potion"
 #define ROLE_POSIBRAIN "Posibrain"
@@ -218,6 +219,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	// I'm not too sure why these are here, but they're not moving.
 	ROLE_PAI = 0,
 	ROLE_SENTIENCE = 0,
+	ROLE_SOULTRAPPED_HERETIC = 0,
 ))
 
 //Job defines for what happens when you fail to qualify for any job during job selection

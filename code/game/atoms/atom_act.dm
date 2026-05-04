@@ -217,6 +217,7 @@
 
 ///Called when something resists while this atom is its loc
 /atom/proc/container_resist_act(mob/living/user)
+	return
 
 /**
  * Called when the atom log's in or out
@@ -231,11 +232,16 @@
  * Causes effects when the atom gets hit by a rust effect from heretics
  *
  * Override this if you want custom behaviour in whatever gets hit by the rust
+ * /turf/rust_turf should be used instead for overriding rust on turfs
+ * rust_strength (optional) - if you want to vary the effect based on the users' strength
  */
-/atom/proc/rust_heretic_act()
+/atom/proc/rust_heretic_act(rust_strength)
 	return
 
-
+///wrapper proc that passes our mob's rust_strength to the target we are rusting
+/mob/living/proc/do_rust_heretic_act(atom/target)
+	var/datum/antagonist/heretic/heretic_data = GET_HERETIC(src)
+	target.rust_heretic_act(heretic_data?.rust_strength)
 
 
 
