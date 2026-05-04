@@ -7,8 +7,8 @@
 	icon_living = "crawling_shadows"
 	initial_language_holder = /datum/language_holder/darkspawn
 	//survival variables
-	maxHealth = 20
-	health = 20
+	maxHealth = 5
+	health = 5
 	pressure_resistance = INFINITY
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	bodytemp_cold_damage_limit = 0
@@ -16,7 +16,7 @@
 
 	//movement variables
 	movement_type = FLYING
-	speed = 0
+	speed = 1
 	pass_flags = PASSTABLE | PASSMOB | PASSDOORS | PASSMACHINE
 
 	//combat variables
@@ -62,9 +62,9 @@
 	var/turf/T = get_turf(src)
 	var/lums = GET_SIMPLE_LUMCOUNT(T)
 	if(lums < SHADOW_SPECIES_BRIGHT_LIGHT)
-		speed = -1 //Faster, too
-		alpha = max(alpha - ((SHADOW_SPECIES_BRIGHT_LIGHT - lums) * 60), 0) //Rapidly becomes more invisible in the dark
+		speed = 0 //Faster, too
+		alpha = max(alpha - ((SHADOW_SPECIES_BRIGHT_LIGHT - lums) * 60), 10) //Rapidly becomes more invisible in the dark
 	else
-		speed = 0
+		speed = 1
 		alpha = min(alpha + (lums * 30), 255) //Slowly becomes more visible in brighter light
 	update_simplemob_varspeed()
