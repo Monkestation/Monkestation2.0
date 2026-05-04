@@ -183,8 +183,8 @@
 	sound_channel = CHANNEL_DELTA_SIRENS
 
 /datum/looping_sound/rbmk_reactor_low
-	mid_sounds = list('monkestation/sound/effects/rbmk/reactor_hum_low.ogg')
-	mid_length = 5 SECONDS
+	mid_sounds = list('sound/rbmk/reactor_hum_low.ogg')
+	mid_length = 15 SECONDS
 	volume = 0
 	extra_range = 6
 	falloff_distance = 2
@@ -194,10 +194,21 @@
 	vary = FALSE
 
 /datum/looping_sound/rbmk_reactor_high
-	mid_sounds = list('monkestation/sound/effects/rbmk/reactor_hum_high.ogg')
-	mid_length = 5 SECONDS
+	mid_sounds = list('sound/rbmk/reactor_hum_high.ogg')
+	mid_length = 10 SECONDS
 	volume = 0
 	extra_range = 8
+	falloff_distance = 2
+	falloff_exponent = 7
+	ignore_walls = FALSE
+	pressure_affected = FALSE
+	vary = FALSE
+
+/datum/looping_sound/rbmk_turbine_mid
+	mid_sounds = list('sound/rbmk/turbine_mid.ogg')
+	mid_length = 18 SECONDS
+	volume = 0
+	extra_range = 10
 	falloff_distance = 2
 	falloff_exponent = 7
 	ignore_walls = FALSE

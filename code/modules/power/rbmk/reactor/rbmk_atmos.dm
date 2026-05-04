@@ -4,11 +4,7 @@
 	density = FALSE
 	piping_layer = 3
 
-	/// Reactor this port belongs to.
 	var/obj/machinery/rbmk/reactor/parent_reactor
-
-	/// Compatibility for SSair.add_to_active() on this custom atmos machinery.
-	/// Some atmos machinery parents expect this var to exist when the object is activated.
 	var/list/atmos_adjacent_turfs = list()
 
 
@@ -35,15 +31,15 @@
 	if(!source_mix)
 		return null
 
-	var/total_moles = source_mix.total_moles()
-	if(total_moles <= 0)
+	var/total_source_moles = source_mix.total_moles()
+	if(total_source_moles <= 0)
 		return null
 
-	desired_moles = clamp(desired_moles, 0, total_moles)
+	desired_moles = clamp(desired_moles, 0, total_source_moles)
 	if(desired_moles <= 0)
 		return null
 
-	var/remove_ratio = CLAMP01(desired_moles / total_moles)
+	var/remove_ratio = CLAMP01(desired_moles / total_source_moles)
 	if(remove_ratio <= 0)
 		return null
 
@@ -60,19 +56,21 @@
 	if(!parent_reactor?.inlet_open)
 		return
 
-	var/datum/gas_mixture/in_mix = airs[1]
-	if(!in_mix || in_mix.total_moles() <= 0)
+	if(length(airs) < 1)
+		return
+
+	var/datum/gas_mixture/inlet_pipe_mix = airs[1]
+	if(!inlet_pipe_mix || inlet_pipe_mix.total_moles() <= 0)
 		return
 
 	if(!parent_reactor.coolant_internal)
 		return
 
-	// Treat inlet_rate as a direct circulation throughput cap.
 	var/desired_moles = clamp(parent_reactor.inlet_rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX)
 	if(desired_moles <= 0)
 		return
 
-	var/datum/gas_mixture/moved_mix = remove_moles_capped(in_mix, desired_moles)
+	var/datum/gas_mixture/moved_mix = remove_moles_capped(inlet_pipe_mix, desired_moles)
 	if(!moved_mix || moved_mix.total_moles() <= 0)
 		return
 
@@ -90,15 +88,13 @@
 	if(!parent_reactor?.outlet_open)
 		return
 
-	var/datum/gas_mixture/store = parent_reactor.coolant_internal
-	if(!store || store.total_moles() <= 0)
+	var/datum/gas_mixture/internal_coolant_mix = parent_reactor.coolant_internal
+	if(!internal_coolant_mix || internal_coolant_mix.total_moles() <= 0)
 		return
 
-	var/current_pressure = store.return_pressure()
+	var/current_pressure = internal_coolant_mix.return_pressure()
 	var/target_pressure = max(parent_reactor.outlet_target_pressure, RBMK_OUTLET_PRESSURE_BASE)
 
-	// Outlet should always circulate when open.
-	// Pressure only adds extra relief; it no longer gates all flow.
 	var/desired_release_moles = clamp(parent_reactor.inlet_rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX)
 
 	if(current_pressure > target_pressure)
@@ -109,7 +105,7 @@
 	if(desired_release_moles <= 0)
 		return
 
-	var/datum/gas_mixture/released_mix = remove_moles_capped(store, desired_release_moles)
+	var/datum/gas_mixture/released_mix = remove_moles_capped(internal_coolant_mix, desired_release_moles)
 	if(!released_mix || released_mix.total_moles() <= 0)
 		return
 
@@ -118,9 +114,9 @@
 		update_parents()
 		return
 
-	var/turf/port_turf = get_turf(src)
-	if(port_turf)
-		port_turf.assume_air(released_mix)
+	var/turf/outlet_turf = get_turf(src)
+	if(outlet_turf)
+		outlet_turf.assume_air(released_mix)
 
 
 /obj/machinery/rbmk/reactor/proc/rbmk_init_coolant()
@@ -141,26 +137,26 @@
 
 
 /obj/machinery/rbmk/reactor/proc/relink_ports()
-	var/turf/center = get_turf(src)
-	if(!center)
+	var/turf/center_turf = get_turf(src)
+	if(!center_turf)
 		return
 
 	QDEL_NULL(inlet)
 	QDEL_NULL(outlet)
 
-	var/turf/in_tile = get_step(center, WEST)
-	if(in_tile)
-		var/obj/machinery/atmospherics/components/unary/rbmk/inlet/I = new(in_tile)
-		I.parent_reactor = src
-		I.dir = WEST
-		inlet = I
+	var/turf/inlet_turf = get_step(center_turf, WEST)
+	if(inlet_turf)
+		var/obj/machinery/atmospherics/components/unary/rbmk/inlet/new_inlet = new(inlet_turf)
+		new_inlet.parent_reactor = src
+		new_inlet.dir = WEST
+		inlet = new_inlet
 
-	var/turf/out_tile = get_step(center, EAST)
-	if(out_tile)
-		var/obj/machinery/atmospherics/components/unary/rbmk/outlet/O = new(out_tile)
-		O.parent_reactor = src
-		O.dir = EAST
-		outlet = O
+	var/turf/outlet_turf = get_step(center_turf, EAST)
+	if(outlet_turf)
+		var/obj/machinery/atmospherics/components/unary/rbmk/outlet/new_outlet = new(outlet_turf)
+		new_outlet.parent_reactor = src
+		new_outlet.dir = EAST
+		outlet = new_outlet
 
 
 /obj/machinery/rbmk/reactor/proc/wake_coolant_ports()
@@ -187,34 +183,34 @@
 
 
 /obj/machinery/rbmk/reactor/proc/rbmk_sample_coolant()
-	var/datum/gas_mixture/mix = coolant_internal
-	if(!mix)
+	var/datum/gas_mixture/coolant_mix = coolant_internal
+	if(!coolant_mix)
 		return
 
-	coolant_pressure_history += mix.return_pressure()
+	coolant_pressure_history += coolant_mix.return_pressure()
 	if(length(coolant_pressure_history) > 60)
 		coolant_pressure_history.Cut(1, 2)
 
-	coolant_temperature_history += mix.temperature
+	coolant_temperature_history += coolant_mix.temperature
 	if(length(coolant_temperature_history) > 60)
 		coolant_temperature_history.Cut(1, 2)
 
-	coolant_total_moles_history += mix.total_moles()
+	coolant_total_moles_history += coolant_mix.total_moles()
 	if(length(coolant_total_moles_history) > 60)
 		coolant_total_moles_history.Cut(1, 2)
 
-	var/total = mix.total_moles()
-	if(total <= 0)
+	var/total_coolant_moles = coolant_mix.total_moles()
+	if(total_coolant_moles <= 0)
 		return
 
-	for(var/gas in mix.gases)
-		var/list/gas_data = mix.gases[gas]
-		var/percent = (gas_data[MOLES] / total) * 100
+	for(var/gas_path in coolant_mix.gases)
+		var/list/gas_data = coolant_mix.gases[gas_path]
+		var/percent = (gas_data[MOLES] / total_coolant_moles) * 100
 
-		var/list/history = coolant_gas_hist[gas]
-		if(!history)
-			history = coolant_gas_hist[gas] = list()
+		var/list/gas_history = coolant_gas_hist[gas_path]
+		if(!gas_history)
+			gas_history = coolant_gas_hist[gas_path] = list()
 
-		history += percent
-		if(length(history) > 60)
-			history.Cut(1, 2)
+		gas_history += percent
+		if(length(gas_history) > 60)
+			gas_history.Cut(1, 2)

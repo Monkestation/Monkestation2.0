@@ -47,9 +47,7 @@
 	var/running = FALSE
 	var/scrammed = FALSE
 
-	/// Target rod depth set by the console
 	var/control_rod_depth = 0
-	/// Actual rod depth used by reactor physics
 	var/actual_control_rod_depth = 0
 	var/control_rod_step = 4
 	var/scram_control_rod_step = 20
@@ -79,10 +77,7 @@
 	var/decay_check_interval = 2 SECONDS
 	var/last_decay_check = 0
 
-	/// Whether normal reactor processing is paused by an active supermatter rod cascade.
 	var/supermatter_cascade_active = FALSE
-
-	/// Supermatter rod currently controlling the reactor cascade.
 	var/obj/item/rbmk/fuel_rod/supermatter/supermatter_rod = null
 
 
@@ -120,8 +115,8 @@
 
 
 /obj/machinery/rbmk/reactor/proc/get_installed_supermatter_rod()
-	for(var/obj/item/rbmk/fuel_rod/supermatter/sm_rod in special_slots)
-		return sm_rod
+	for(var/obj/item/rbmk/fuel_rod/supermatter/installed_supermatter_rod in special_slots)
+		return installed_supermatter_rod
 
 	return null
 
@@ -136,16 +131,16 @@
 	if(temperature < 5000)
 		return FALSE
 
-	for(var/obj/item/rbmk/fuel_rod/supermatter/sm_rod in special_slots)
-		if(!sm_rod)
+	for(var/obj/item/rbmk/fuel_rod/supermatter/installed_supermatter_rod in special_slots)
+		if(!installed_supermatter_rod)
 			continue
 
-		if(sm_rod.cascade_controller)
+		if(installed_supermatter_rod.cascade_controller)
 			continue
 
 		supermatter_cascade_active = TRUE
-		supermatter_rod = sm_rod
-		sm_rod.start_cascade(src)
+		supermatter_rod = installed_supermatter_rod
+		installed_supermatter_rod.start_cascade(src)
 		return TRUE
 
 	return FALSE
@@ -196,7 +191,7 @@
 	coolant_gas_hist = list()
 	reactor_temperature_history = list()
 
-	rbmk_init_coolant(src)
+	rbmk_init_coolant()
 	relink_ports()
 
 	update_reactor_icon()
@@ -218,7 +213,7 @@
 		high_soundloop.stop()
 	QDEL_NULL(high_soundloop)
 
-	rbmk_cleanup_atmos(src)
+	rbmk_cleanup_atmos()
 	return ..()
 
 
@@ -290,10 +285,10 @@
 
 /obj/machinery/rbmk/reactor/proc/remove_last_rod(mob/user)
 	var/obj/item/rbmk/fuel_rod/fuel_rod = null
-	var/obj/item/rbmk/fuel_rod/supermatter/installed_sm_rod = get_installed_supermatter_rod()
+	var/obj/item/rbmk/fuel_rod/supermatter/installed_supermatter_rod = get_installed_supermatter_rod()
 
-	if(installed_sm_rod)
-		fuel_rod = installed_sm_rod
+	if(installed_supermatter_rod)
+		fuel_rod = installed_supermatter_rod
 		special_slots -= fuel_rod
 	else if(length(special_slots))
 		fuel_rod = special_slots[length(special_slots)]
@@ -307,8 +302,8 @@
 		return FALSE
 
 	if(fuel_rod == supermatter_rod)
-		var/obj/item/rbmk/fuel_rod/supermatter/sm_rod = fuel_rod
-		sm_rod.stop_cascade(TRUE)
+		var/obj/item/rbmk/fuel_rod/supermatter/removed_supermatter_rod = fuel_rod
+		removed_supermatter_rod.stop_cascade(TRUE)
 
 	fuel_rod.forceMove(drop_location())
 
@@ -342,15 +337,15 @@
 	if(!fuel_rod)
 		return FALSE
 
-	var/obj/item/rbmk/fuel_rod/supermatter/installed_sm_rod = get_installed_supermatter_rod()
-	if(installed_sm_rod && fuel_rod != installed_sm_rod)
+	var/obj/item/rbmk/fuel_rod/supermatter/installed_supermatter_rod = get_installed_supermatter_rod()
+	if(installed_supermatter_rod && fuel_rod != installed_supermatter_rod)
 		if(user)
 			to_chat(user, span_warning("The supermatter rod is resonating too violently. It must be removed before any other rods can be handled."))
 		return FALSE
 
 	if(fuel_rod == supermatter_rod)
-		var/obj/item/rbmk/fuel_rod/supermatter/sm_rod = fuel_rod
-		sm_rod.stop_cascade(TRUE)
+		var/obj/item/rbmk/fuel_rod/supermatter/removed_supermatter_rod = fuel_rod
+		removed_supermatter_rod.stop_cascade(TRUE)
 
 	target_slots -= fuel_rod
 	fuel_rod.forceMove(drop_location())

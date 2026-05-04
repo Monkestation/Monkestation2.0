@@ -5579,6 +5579,7 @@
 #include "code\modules\power\rbmk\rods\supermatter.dm"
 #include "code\modules\power\rbmk\rods\thorium.dm"
 #include "code\modules\power\rbmk\rods\uranium.dm"
+#include "code\modules\power\rbmk_turbine\rbmk_turbine.dm"
 #include "code\modules\power\singularity\containment_field.dm"
 #include "code\modules\power\singularity\dark_matter_singularity.dm"
 #include "code\modules\power\singularity\emitter.dm"

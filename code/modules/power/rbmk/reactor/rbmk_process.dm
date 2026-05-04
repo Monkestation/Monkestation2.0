@@ -7,16 +7,12 @@
 
 
 /obj/machinery/rbmk/reactor/proc/rbmk_update_control_rods()
-	// SCRAM insertion should be immediate when the target is full insertion.
-	// Do not force control_rod_depth here, so lowering the target later can still clear SCRAM.
 	if(scrammed && control_rod_depth >= RBMK_CONTROL_ROD_MAX)
 		actual_control_rod_depth = RBMK_CONTROL_ROD_MAX
 		return
 
 	var/step_size = control_rod_step
 	step_size = max(step_size, 1)
-
-	// Normal rod movement: about 2x faster than previous behavior.
 	step_size = max(round(step_size * 0.35), 1) * 2
 
 	if(actual_control_rod_depth < control_rod_depth)
@@ -36,7 +32,7 @@
 
 	if(rod_motion_in_progress)
 		rod_motion_in_progress = FALSE
-		playsound(src, 'monkestation/sound/effects/rbmk/switch2.ogg', 55, TRUE)
+		playsound(src, 'sound/rbmk/switch2.ogg', 55, TRUE)
 
 
 /obj/machinery/rbmk/reactor/proc/try_play_startup_sequence()
@@ -51,12 +47,7 @@
 
 	if(previous_control_rod_depth >= RBMK_CONTROL_ROD_MAX && control_rod_depth < RBMK_CONTROL_ROD_MAX)
 		startup_sequence_played = TRUE
-
-		// Stage one.
-		playsound(src, 'monkestation/sound/effects/rbmk/startup.ogg', 80, FALSE)
-
-		// Stage two.
-		// Delay is intentionally longer so startup2.ogg plays after startup.ogg instead of on top of it.
+		playsound(src, 'sound/rbmk/startup.ogg', 80, FALSE)
 		addtimer(CALLBACK(src, PROC_REF(play_startup_stage_two)), 3 SECONDS, TIMER_DELETE_ME)
 
 
@@ -64,57 +55,48 @@
 	if(QDELETED(src))
 		return
 
-	// Do not block on scrammed or fuel rods here.
-	// Stage one already confirmed the startup sequence began.
 	if(meltdown_in_progress)
 		return
 
-	playsound(src, 'monkestation/sound/effects/rbmk/startup2.ogg', 90, FALSE)
+	playsound(src, 'sound/rbmk/startup2.ogg', 90, FALSE)
 
 
 /obj/machinery/rbmk/reactor/proc/rbmk_coolant_exchange()
 	if(!coolant_internal)
 		return
 
-	var/total_coolant_moles = coolant_internal.total_moles()
-	if(total_coolant_moles <= 0)
+	if(coolant_internal.total_moles() <= 0)
+		return
+
+	var/coolant_heat_capacity = coolant_internal.heat_capacity()
+	if(coolant_heat_capacity <= 0)
 		return
 
 	var/commanded_flow_ratio = CLAMP01(inlet_rate / max(RBMK_INLET_RATE_MAX, 1))
-
-	// Coolant always exchanges some heat with the core while present.
-	// Open ports increase transfer strength.
-	var/flow_ratio = max(commanded_flow_ratio, RBMK_COOLANT_STAGNANT_FLOW_RATIO)
+	var/exchange_ratio = max(commanded_flow_ratio, RBMK_COOLANT_STAGNANT_FLOW_RATIO)
 
 	if(!inlet_open && !outlet_open)
-		flow_ratio = RBMK_COOLANT_STAGNANT_FLOW_RATIO
+		exchange_ratio = RBMK_COOLANT_STAGNANT_FLOW_RATIO
 	else if(!inlet_open || !outlet_open)
-		flow_ratio = max(flow_ratio * RBMK_COOLANT_ONE_PORT_FLOW_MULT, RBMK_COOLANT_STAGNANT_FLOW_RATIO)
+		exchange_ratio = max(exchange_ratio * RBMK_COOLANT_ONE_PORT_FLOW_MULT, RBMK_COOLANT_STAGNANT_FLOW_RATIO)
 
-	var/coolant_temp = coolant_internal.temperature
-	var/temp_delta = temperature - coolant_temp
+	var/exchange_coefficient = RBMK_COOLANT_EXCHANGE_COEFFICIENT + (exchange_ratio * RBMK_COOLANT_EXCHANGE_FLOW_BONUS)
+	exchange_coefficient = CLAMP01(exchange_coefficient)
 
-	if(abs(temp_delta) < 0.1)
+	var/temperature_delta = (temperature - coolant_internal.temperature) * exchange_coefficient
+	if(abs(temperature_delta) < 0.1)
 		return
 
-	// Prevent tiny amounts of gas from magically controlling the whole reactor.
-	var/coolant_presence = CLAMP01(total_coolant_moles / max(RBMK_INLET_RATE_MAX * 2, 1))
+	var/energy_to_coolant = CALCULATE_CONDUCTION_ENERGY(temperature_delta, coolant_heat_capacity, RBMK_CORE_HEAT_CAPACITY)
 
-	if(total_coolant_moles >= RBMK_COOLANT_MIN_EFFECTIVE_MOLES)
-		coolant_presence = max(coolant_presence, 0.20)
+	var/coolant_temperature_change = energy_to_coolant / coolant_heat_capacity
+	var/core_temperature_change = energy_to_coolant / RBMK_CORE_HEAT_CAPACITY
 
-	// Gas heats/cools quickly. Core moves slower because it is thermally heavy.
-	var/coolant_response = RBMK_COOLANT_BASE_RESPONSE + (flow_ratio * RBMK_COOLANT_FLOW_RESPONSE)
-	var/core_response = RBMK_CORE_BASE_RESPONSE + (flow_ratio * RBMK_CORE_FLOW_RESPONSE)
+	coolant_temperature_change = clamp(coolant_temperature_change, -RBMK_COOLANT_MAX_GAS_TEMP_CHANGE, RBMK_COOLANT_MAX_GAS_TEMP_CHANGE)
+	core_temperature_change = clamp(core_temperature_change, -RBMK_COOLANT_MAX_CORE_TEMP_CHANGE, RBMK_COOLANT_MAX_CORE_TEMP_CHANGE)
 
-	var/coolant_temp_change = clamp(temp_delta * coolant_response, -RBMK_COOLANT_TEMP_CHANGE_CAP, RBMK_COOLANT_TEMP_CHANGE_CAP)
-	var/core_temp_change = clamp(temp_delta * core_response, -RBMK_CORE_TEMP_CHANGE_CAP, RBMK_CORE_TEMP_CHANGE_CAP)
-
-	coolant_temp_change *= max(coolant_presence, 0.20)
-	core_temp_change *= coolant_presence
-
-	coolant_internal.temperature = max(coolant_temp + coolant_temp_change, TCMB)
-	temperature = max(temperature - core_temp_change, RBMK_AMBIENT_TEMP)
+	coolant_internal.temperature = max(coolant_internal.temperature + coolant_temperature_change, TCMB)
+	temperature = max(temperature - core_temperature_change, RBMK_AMBIENT_TEMP)
 
 
 /obj/machinery/rbmk/reactor/proc/rbmk_sample_reactor_temperature()
@@ -133,7 +115,6 @@
 
 	pressure = clamp(coolant_internal.return_pressure(), 0, RBMK_PRESSURE_EXTREME)
 
-	// Keep coolant ports active while either side is commanded open.
 	if(inlet_open || outlet_open)
 		wake_coolant_ports()
 
@@ -211,7 +192,7 @@
 
 		rbmk_coolant_exchange()
 		rbmk_update_pressure()
-		rbmk_sample_coolant(src)
+		rbmk_sample_coolant()
 		rbmk_sample_reactor_temperature()
 
 		update_reactor_icon()
@@ -219,8 +200,6 @@
 		previous_control_rod_depth = control_rod_depth
 		return
 
-	// Clear SCRAM before checking startup transition.
-	// If this happens after try_play_startup_sequence(), startup can miss the full-insertion -> withdrawn transition.
 	if(scrammed && control_rod_depth < RBMK_CONTROL_ROD_MAX)
 		scrammed = FALSE
 
@@ -252,7 +231,7 @@
 		rbmk_decay_process()
 		rbmk_coolant_exchange()
 		rbmk_update_pressure()
-		rbmk_sample_coolant(src)
+		rbmk_sample_coolant()
 		rbmk_sample_reactor_temperature()
 		check_decay_meltdown()
 		check_hard_meltdown_conditions()
@@ -305,7 +284,7 @@
 
 	rbmk_coolant_exchange()
 	rbmk_update_pressure()
-	rbmk_sample_coolant(src)
+	rbmk_sample_coolant()
 	rbmk_sample_reactor_temperature()
 
 	update_reactor_integrity()

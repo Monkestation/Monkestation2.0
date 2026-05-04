@@ -259,7 +259,7 @@
 			reactor.control_rod_depth = max(reactor.control_rod_depth - 5, 0)
 
 			if(reactor.control_rod_depth != old_depth)
-				playsound(reactor, 'monkestation/sound/effects/rbmk/switch.ogg', 50, TRUE)
+				playsound(reactor, 'sound/rbmk/switch.ogg', 50, TRUE)
 
 			reactor.update_linked_consoles()
 			return TRUE
@@ -269,7 +269,7 @@
 			reactor.control_rod_depth = min(reactor.control_rod_depth + 5, RBMK_CONTROL_ROD_MAX)
 
 			if(reactor.control_rod_depth != old_depth)
-				playsound(reactor, 'monkestation/sound/effects/rbmk/switch.ogg', 50, TRUE)
+				playsound(reactor, 'sound/rbmk/switch.ogg', 50, TRUE)
 
 			reactor.update_linked_consoles()
 			return TRUE
@@ -280,7 +280,7 @@
 			reactor.control_rod_depth = clamp(requested_depth, 0, RBMK_CONTROL_ROD_MAX)
 
 			if(reactor.control_rod_depth != old_depth)
-				playsound(reactor, 'monkestation/sound/effects/rbmk/switch.ogg', 50, TRUE)
+				playsound(reactor, 'sound/rbmk/switch.ogg', 50, TRUE)
 
 			reactor.update_linked_consoles()
 			return TRUE
