@@ -49,7 +49,7 @@ export const TGUI_CHAT_ATTRIBUTES_TO_PROPS = {
 const createHighlightNode = (text, color) => {
   const node = document.createElement('span');
   node.className = 'Chat__highlight';
-  node.setAttribute('style', `--h-color:${color}`);
+  node.setAttribute('style', `--highlight-color:${color}`);
   node.textContent = text;
   return node;
 };
@@ -465,7 +465,10 @@ class ChatRenderer {
               );
               if (highlighted && parser.highlightWholeMessage) {
                 node.className += ' ChatMessage--highlighted';
-                node.style.setProperty('--h-color', parser.highlightColor);
+                node.style.setProperty(
+                  '--highlight-color',
+                  parser.highlightColor,
+                );
               }
             });
         }
