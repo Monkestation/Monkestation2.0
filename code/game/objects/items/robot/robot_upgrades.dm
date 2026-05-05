@@ -534,13 +534,11 @@
 		return .
 	crew_monitor = new /datum/action/item_action/crew_monitor(src)
 	crew_monitor.Grant(borg)
-	icon_state = "scanner"
 
 /obj/item/borg/upgrade/pinpointer/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
-	icon_state = "pinpointer_crew"
 	crew_monitor.Remove(borg)
 	QDEL_NULL(crew_monitor)
 
@@ -552,6 +550,8 @@
 
 /datum/action/item_action/crew_monitor
 	name = "Interface With Crew Monitor"
+	button_icon = 'icons/obj/device.dmi'
+	button_icon_state = "scanner_med"
 
 /obj/item/borg/upgrade/transform
 	name = "borg model picker (Standard)"
