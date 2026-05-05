@@ -494,8 +494,6 @@
 			var/obj/machinery/computer/operating/operating_computer = nearby_object
 			surgeries_to_add |= operating_computer.advanced_surgeries
 			continue
-		if(!istype(nearby_object, /obj/item/disk))
-			continue
 		if(istype(nearby_object, /obj/item/disk/surgery))
 			var/obj/item/disk/surgery/surgery_disk = nearby_object
 			for(var/surgery in surgery_disk.surgeries)
