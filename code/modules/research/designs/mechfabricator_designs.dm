@@ -1166,12 +1166,12 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
 
-/datum/design/borg_upgrade_surgicalprocessor
-	name = "Surgical Processor"
-	id = "borg_upgrade_surgicalprocessor"
+/datum/design/borg_upgrade_surgical_serverlink
+	name = "Surgical Serverlink"
+	id = "borg_upgrade_surgical_serverlink"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/processor
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT*2, /datum/material/silver =SHEET_MATERIAL_AMOUNT*2)
+	build_path = /obj/item/borg/upgrade/surgical_serverlink
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*6, /datum/material/glass = SMALL_MATERIAL_AMOUNT*6, /datum/material/silver = SMALL_MATERIAL_AMOUNT*5, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT*2.5)
 	construction_time = 40
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL

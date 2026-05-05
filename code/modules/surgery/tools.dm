@@ -316,7 +316,7 @@
 	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "toolkit_medborg_surgicaldrapes"
 
-/obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
+/obj/item/surgical_processor
 	name = "surgical processor"
 	desc = "A device for scanning and initiating surgeries from a disk or operating computer."
 	icon = 'icons/obj/device.dmi'

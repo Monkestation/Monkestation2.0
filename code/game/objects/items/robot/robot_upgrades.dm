@@ -440,16 +440,112 @@
 		return .
 	defib_instance?.forceMove(borg.drop_location()) // [on_defib_instance_qdel_or_moved()] handles the rest.
 
-/obj/item/borg/upgrade/processor
-	name = "medical cyborg surgical processor"
-	desc = "An upgrade to the Medical model, installing a processor \
-		capable of scanning surgery disks and carrying \
-		out procedures"
+/obj/item/borg/upgrade/surgical_serverlink
+	name = "medical cyborg surgical serverlink"
+	desc = "An upgrade to the Medical model, installing a surgical databank that can record available surgeries and gives instructions on how to perform surgical procedures."
 	icon_state = "module_medical"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
 	model_flags = BORG_MODEL_MEDICAL
-	items_to_add = list(/obj/item/surgical_processor)
+	/// Action that looks for nearby operating tables to load new surgeries from.
+	var/datum/action/serverlink_scanner
+	/// The techweb that automatically gets checked for available surgeries.
+	var/datum/techweb/linked_techweb
+	// List of surgeries that can be started.
+	var/list/loaded_surgeries = list()
+
+/obj/item/borg/upgrade/surgical_serverlink/Initialize(mapload)
+	. = ..()
+	if(isnull(linked_techweb))
+		linked_techweb = SSresearch.science_tech
+
+/obj/item/borg/upgrade/surgical_serverlink/action(mob/living/silicon/robot/borg, mob/living/user = usr)
+	. = ..()
+	if(!.)
+		return .
+	RegisterSignal(borg, COMSIG_SURGERY_STARTING, PROC_REF(check_surgery))
+	RegisterSignal(borg, COMSIG_MOB_SURGERY_STEP_SUCCESS, PROC_REF(on_step_completion))
+	serverlink_scanner = new /datum/action/item_action/cyborg_serverlink(src)
+	serverlink_scanner.Grant(borg)
+
+/obj/item/borg/upgrade/surgical_serverlink/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
+	. = ..()
+	if(!.)
+		return .
+	UnregisterSignal(borg, list(COMSIG_SURGERY_STARTING, COMSIG_MOB_SURGERY_STEP_SUCCESS))
+	serverlink_scanner.Remove(borg)
+	QDEL_NULL(serverlink_scanner)
+
+/obj/item/borg/upgrade/surgical_serverlink/ui_action_click(mob/user, actiontype)
+	playsound(src, 'sound/machines/terminal_processing.ogg', 25, TRUE)
+	user.balloon_alert(user, "downloading surgery data...")
+	if(!do_after(user, 1 SECONDS, user))
+		user.balloon_alert(user, "surgery download interrupted!")
+		return
+	playsound(src, 'sound/machines/terminal_success.ogg', 25, TRUE)
+	var/list/surgeries_to_add = list()
+	for(var/design in linked_techweb.researched_designs)
+		var/datum/design/surgery/surgery_design = SSresearch.techweb_design_by_id(design)
+		if(!istype(surgery_design))
+			continue
+		surgeries_to_add |= surgery_design.surgery
+	for(var/obj/nearby_object in range(1, user))
+		if(istype(nearby_object, /obj/machinery/computer/operating))
+			var/obj/machinery/computer/operating/operating_computer = nearby_object
+			surgeries_to_add |= operating_computer.advanced_surgeries
+			continue
+		if(!istype(nearby_object, /obj/item/disk))
+			continue
+		if(istype(nearby_object, /obj/item/disk/surgery))
+			var/obj/item/disk/surgery/surgery_disk = nearby_object
+			for(var/surgery in surgery_disk.surgeries)
+				surgeries_to_add |= surgery
+			continue
+		if(istype(nearby_object, /obj/item/disk/tech_disk))
+			var/obj/item/disk/tech_disk/tech_disk = nearby_object
+			for(var/design in tech_disk.stored_research.researched_designs)
+				var/datum/design/surgery/surgery_design = SSresearch.techweb_design_by_id(design)
+				if(!istype(surgery_design))
+					continue
+				surgeries_to_add |= surgery_design.surgery
+			continue
+	if(!length(surgeries_to_add))
+		user.balloon_alert(user, "no new surgery data found")
+		return
+	var/list/old_surgery_count = length(loaded_surgeries)
+	loaded_surgeries |= surgeries_to_add
+	var/list/new_surgery_count = length(loaded_surgeries)
+	var/surgery_count_difference = new_surgery_count - old_surgery_count
+	if(!surgery_count_difference)
+		user.balloon_alert(user, "no new surgery data found")
+		return
+	user.balloon_alert(user, "installed [surgery_count_difference] new surgeries, [new_surgery_count] total loaded")
+
+/obj/item/borg/upgrade/surgical_serverlink/proc/check_surgery(mob/user, datum/surgery/surgery, mob/patient)
+	SIGNAL_HANDLER
+	if(surgery.replaced_by in loaded_surgeries)
+		return COMPONENT_CANCEL_SURGERY
+	if(surgery.type in loaded_surgeries)
+		return COMPONENT_FORCE_SURGERY
+
+/obj/item/borg/upgrade/surgical_serverlink/proc/on_step_completion(mob/living/user, datum/surgery_step/current_step, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+	SIGNAL_HANDLER
+	var/possible_steps = list()
+	if(current_step.repeatable)
+		possible_steps += "[current_step.name]"
+	var/datum/surgery_step/next_step = surgery.get_surgery_next_step()
+	if(!isnull(next_step))
+		possible_steps += "[next_step.name]"
+		qdel(next_step)
+	if(!length(possible_steps))
+		target.balloon_alert(user, "surgery done!")
+		return
+	target.balloon_alert(user, "next step: [english_list(possible_steps, and_text = " or ")]")
+
+/datum/action/item_action/cyborg_serverlink
+	name = "Update Surgeries"
+	button_icon = 'icons/obj/device.dmi'
+	button_icon_state = "surgical_processor"
 
 /obj/item/borg/upgrade/ai
 	name = "B.O.R.I.S. module"
