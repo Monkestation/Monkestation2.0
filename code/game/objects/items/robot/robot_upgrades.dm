@@ -440,36 +440,36 @@
 		return .
 	defib_instance?.forceMove(borg.drop_location()) // [on_defib_instance_qdel_or_moved()] handles the rest.
 
-/obj/item/borg/upgrade/surgical_serverlink
-	name = "medical cyborg surgical serverlink"
+/obj/item/borg/upgrade/surgical_database
+	name = "medical cyborg surgical database"
 	desc = "An upgrade to the Medical model, installing a surgical databank that can record available surgeries and gives instructions on how to perform surgical procedures."
 	icon_state = "module_medical"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
 	model_flags = BORG_MODEL_MEDICAL
-	/// Action that looks for nearby operating tables to load new surgeries from.
-	var/datum/action/serverlink_scanner
+	/// Action that looks for nearby objects to load new surgeries from.
+	var/datum/action/database_scanner
 	// List of surgeries that can be started.
 	var/list/loaded_surgeries = list()
 
-/obj/item/borg/upgrade/surgical_serverlink/action(mob/living/silicon/robot/borg, mob/living/user = usr)
+/obj/item/borg/upgrade/surgical_database/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
 	RegisterSignal(borg, COMSIG_SURGERY_STARTING, PROC_REF(check_surgery))
 	RegisterSignal(borg, COMSIG_MOB_SURGERY_STEP_SUCCESS, PROC_REF(on_step_completion))
-	serverlink_scanner = new /datum/action/item_action/cyborg_serverlink(src)
-	serverlink_scanner.Grant(borg)
+	database_scanner = new /datum/action/item_action/cyborg_surgical_database(src)
+	database_scanner.Grant(borg)
 
-/obj/item/borg/upgrade/surgical_serverlink/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
+/obj/item/borg/upgrade/surgical_database/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
 	UnregisterSignal(borg, list(COMSIG_SURGERY_STARTING, COMSIG_MOB_SURGERY_STEP_SUCCESS))
-	serverlink_scanner.Remove(borg)
-	QDEL_NULL(serverlink_scanner)
+	database_scanner.Remove(borg)
+	QDEL_NULL(database_scanner)
 
-/obj/item/borg/upgrade/surgical_serverlink/ui_action_click(mob/user, actiontype)
+/obj/item/borg/upgrade/surgical_database/ui_action_click(mob/user, actiontype)
 	playsound(src, 'sound/machines/terminal_processing.ogg', 25, TRUE)
 	user.balloon_alert(user, "downloading surgery data...")
 	if(!do_after(user, 1 SECONDS, user))
@@ -507,14 +507,14 @@
 		return
 	user.balloon_alert(user, "installed [surgery_count_difference] new surgeries, [new_surgery_count] total loaded")
 
-/obj/item/borg/upgrade/surgical_serverlink/proc/check_surgery(mob/user, datum/surgery/surgery, mob/patient)
+/obj/item/borg/upgrade/surgical_database/proc/check_surgery(mob/user, datum/surgery/surgery, mob/patient)
 	SIGNAL_HANDLER
 	if(surgery.replaced_by in loaded_surgeries)
 		return COMPONENT_CANCEL_SURGERY
 	if(surgery.type in loaded_surgeries)
 		return COMPONENT_FORCE_SURGERY
 
-/obj/item/borg/upgrade/surgical_serverlink/proc/on_step_completion(mob/living/user, datum/surgery_step/current_step, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+/obj/item/borg/upgrade/surgical_database/proc/on_step_completion(mob/living/user, datum/surgery_step/current_step, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	SIGNAL_HANDLER
 	var/possible_steps = list()
 	if(current_step.repeatable)
@@ -528,7 +528,7 @@
 		return
 	target.balloon_alert(user, "next step: [english_list(possible_steps, and_text = " or ")]")
 
-/datum/action/item_action/cyborg_serverlink
+/datum/action/item_action/cyborg_surgical_database
 	name = "Update Surgeries"
 	button_icon = 'icons/obj/device.dmi'
 	button_icon_state = "surgical_processor"

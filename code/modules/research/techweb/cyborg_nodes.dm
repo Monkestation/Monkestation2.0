@@ -47,7 +47,7 @@
 		"borg_upgrade_expandedsynthesiser",
 		"borg_upgrade_piercinghypospray",
 		"borg_upgrade_pinpointer",
-		"borg_upgrade_surgical_serverlink",
+		"borg_upgrade_surgical_database",
 		"borg_upgrade_surgicalomnitool",
 		"borg_upgrade_advanalyzer",
 	)
