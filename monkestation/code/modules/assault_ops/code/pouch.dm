@@ -24,7 +24,7 @@
 	unique_reskin = list(
 		"Ammo Pouch" = "ammopouch",
 		"Casing Pouch" = "casingpouch"
-		)
+	)
 
 /obj/item/storage/pouch/ammo/Initialize(mapload)
 	. = ..()
