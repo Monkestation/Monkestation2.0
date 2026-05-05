@@ -40,3 +40,7 @@
       being the usual white-yellow.
   - bugfix: The cyborg surgical omni-tool upgrade now uses the medical module sprite
       just like other medical module upgrades.
+2026-05-05:
+  Absolucy:
+  - qol: Crew Transfer votes no longer trigger the vote cooldown - as such, you can
+      start a map vote immediately after if you wish.
