@@ -449,8 +449,6 @@
 	model_flags = BORG_MODEL_MEDICAL
 	/// Action that looks for nearby operating tables to load new surgeries from.
 	var/datum/action/serverlink_scanner
-	/// The techweb that automatically gets checked for available surgeries.
-	var/datum/techweb/linked_techweb
 	// List of surgeries that can be started.
 	var/list/loaded_surgeries = list()
 
@@ -484,11 +482,6 @@
 		return
 	playsound(src, 'sound/machines/terminal_success.ogg', 25, TRUE)
 	var/list/surgeries_to_add = list()
-	for(var/design in linked_techweb.researched_designs)
-		var/datum/design/surgery/surgery_design = SSresearch.techweb_design_by_id(design)
-		if(!istype(surgery_design))
-			continue
-		surgeries_to_add |= surgery_design.surgery
 	for(var/obj/nearby_object in range(1, user))
 		if(istype(nearby_object, /obj/machinery/computer/operating))
 			var/obj/machinery/computer/operating/operating_computer = nearby_object
