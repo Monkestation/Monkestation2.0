@@ -452,11 +452,6 @@
 	// List of surgeries that can be started.
 	var/list/loaded_surgeries = list()
 
-/obj/item/borg/upgrade/surgical_serverlink/Initialize(mapload)
-	. = ..()
-	if(isnull(linked_techweb))
-		linked_techweb = SSresearch.science_tech
-
 /obj/item/borg/upgrade/surgical_serverlink/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
