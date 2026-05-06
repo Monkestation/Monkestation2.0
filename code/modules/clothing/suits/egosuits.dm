@@ -4,6 +4,11 @@
 // for the EGOdrobe and its restock. Thank you to the original creators, and thank you to Project Moon for creating the
 // games these originate from.
 
+//Spritework for LC13 suits (including the arbiter cloak, clerk suits, W Corp jumpsuit all featured in
+//code\modules\clothing\under\miscellaneous.dm and monkestation\code\modules\clothing\neck\cloaks.dm)
+//were done by:
+//Kitsunemitsu, InsightfulParasite, Mel Taculo, TemperanceTempy, Gwuhja, Yuraizz, Mann Handle and CrabbyTheCrab
+
 // Base code for what the thing is and what it can hold (some of this will change when redefined
 // by risk levels, realization, etc)
 /obj/item/clothing/suit/egosuits
@@ -64,6 +69,7 @@
 	desc = "Now the straitjacket is nothing but an accessory to the hatred and anger that remains."
 	icon_state = "regret"
 
+//Lantern sprites created by Crabby the Crab
 /obj/item/clothing/suit/egosuits/teth/lantern
 	name = "lantern"
 	desc = "The luminous organ shines brilliantly, making it useful for lighting up the dark. It’s also great as a lure."
@@ -138,6 +144,7 @@
 	desc = "A dark coat with yellow details. You feel as if you can hear faint buzzing coming out of it."
 	icon_state = "hornet"
 
+//Faint Aroma sprites done by TemperanceTempy
 /obj/item/clothing/suit/egosuits/waw/aroma
 	name = "faint aroma"
 	desc = "The ceramic surface is tough as if it had been glazed several times. \
@@ -154,6 +161,7 @@
 	desc = "The armor is torn up with countless traces that recount the history of the unending battle."
 	icon_state = "cobalt_scar"
 
+//Heaven sprites done by Mann Handle
 /obj/item/clothing/suit/egosuits/waw/heaven
 	name = "heaven"
 	desc = "That's what a gaze is. Attention. An invisible string that connects us."
@@ -192,6 +200,7 @@
 	This could stop countless incidents, but you’ll have to be prepared to step into the Black Forest…"
 	icon_state = "twilight"
 
+//CENSORED sprites done by TemperanceTempy
 /obj/item/clothing/suit/egosuits/aleph/censored
 	name = "CENSORED"
 	desc = "Goodness, that’s disgusting."
@@ -295,6 +304,7 @@
 	desc = "When good and evil meet discord and assonance will be quelled."
 	icon_state = "duality_yang"
 
+//Yin and Yang sprites done by Crabby the Crab
 /obj/item/clothing/suit/egosuits/realized/duality_yin
 	name = "harmony of duality"
 	desc = "All that isn't shall become all that is."
@@ -401,6 +411,7 @@
 	icon_state = "breverb"
 
 // Thumb
+//Thumb sprites done by Gwuhja
 /obj/item/clothing/suit/egosuits/other/thumb
 	flags_inv = HIDEJUMPSUIT | HIDEGLOVES
 	name = "Thumb Soldato armor"
