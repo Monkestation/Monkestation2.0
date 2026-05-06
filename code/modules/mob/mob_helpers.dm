@@ -399,10 +399,6 @@
 		var/mob/living/T = pick(nearby_mobs)
 		ClickOn(T)
 
-///Can the mob hear
-/mob/proc/can_hear()
-	. = TRUE
-
 /**
  * Get the list of keywords for policy config
  *

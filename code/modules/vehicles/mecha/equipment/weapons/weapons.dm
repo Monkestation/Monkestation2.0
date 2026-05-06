@@ -213,7 +213,7 @@
 	playsound(chassis, 'sound/items/airhorn.ogg', 100, TRUE)
 	to_chat(source, "[icon2html(src, source)]<font color='red' size='5'>[tactile_message]</font>") //monkestation edit
 	for(var/mob/living/carbon/M in ohearers(honk_range, chassis)) //monkestation edit
-		if(!M.can_hear())
+		if(HAS_TRAIT(M, TRAIT_DEAF))
 			continue
 		var/turf/turf_check = get_turf(M)
 		if(isspaceturf(turf_check) && !turf_check.Adjacent(src)) //in space nobody can hear you honk.

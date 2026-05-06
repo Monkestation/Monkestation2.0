@@ -123,6 +123,9 @@
 	if((!thrall.wear_suit && !thrall.w_uniform))
 		examine_text += span_velvet("[thrall.p_Their()] whole body is covered in sigils!")
 
+/datum/antagonist/thrall_darkspawn/pre_mindshield(mob/implanter, mob/living/mob_override)
+	return COMPONENT_MINDSHIELD_RESISTED
+
 ////////////////////////////////////////////////////////////////////////////////////
 //--------------------------------Antag hud---------------------------------------//
 ////////////////////////////////////////////////////////////////////////////////////
