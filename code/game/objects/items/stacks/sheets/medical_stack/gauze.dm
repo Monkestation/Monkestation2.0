@@ -104,6 +104,8 @@
 		return
 	if(!helper.can_perform_action(owner, NEED_HANDS|FORBID_TELEKINESIS_REACH)) // telekinetic removal can be added later
 		return
+	if(!helper.CanReach(owner))
+		return
 
 	var/whose = helper == owner ? "your" : "[owner]'s"
 	var/theirs = helper == owner ? helper.p_their() : "[owner]'s"
