@@ -87,7 +87,7 @@
 		return FALSE
 
 	// Is our target deaf?
-	if(!living_target.can_hear())
+	if(HAS_TRAIT(living_target, TRAIT_DEAF))
 		owner.balloon_alert(owner, "[living_target] cannot hear you!")
 		return FALSE
 
