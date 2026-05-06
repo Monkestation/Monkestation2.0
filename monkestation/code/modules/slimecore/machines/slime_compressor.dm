@@ -119,6 +119,9 @@
 	if (base_complete && cross_complete)
 		. += span_notice("The extract is ready to be made!")
 		return
+	if (active)
+		. += span_notice("The machine is currently working!")
+		return
 	. += span_notice("The recipe requires:")
 	if (!base_complete)
 		. += span_notice("[base_slime_required.name] slime as base.")
@@ -228,34 +231,36 @@
  * Move all mobs in our contents out
  */
 /obj/machinery/slime_compressor/proc/remove_slimes_inside()
-	for (var/mob/living/basic/slime/victim in mobs_inside)
+	for (var/mob/living/victim in mobs_inside)
+		if(!isslime(victim))
+			continue
 		victim.forceMove(get_turf(src))
 
 /**
- * On hit we check if mob is a slime
+ * On hit we check if atom is a slime
  * Then we do check_recipe(), and if it passes, complete part of the recipe
  * After, we move the mob inside
  */
 /obj/machinery/slime_compressor/hitby(atom/movable/hit_by, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if (active)
 		return
-	var/mob/living/victim = hit_by
-	if (isslime(victim))
-		if (!current_recipe)
-			return ..()
-		var/mob/living/basic/slime/slime = victim
-		if(!check_recipe(slime))
-			return
-		slime.forceMove(src)
-		mobs_inside += slime
-		manage_hud_as_needed()
-		return
-	return ..()
+	if (!isslime(hit_by))
+		return ..()
+	if (!current_recipe)
+		return ..()
+	var/mob/living/basic/slime/slime = hit_by
+	if(!check_recipe(slime))
+		return ..()
+	slime.forceMove(src)
+	mobs_inside += slime
+	manage_hud_as_needed()
 
 /**
  * Check if the slime fits the recipe we have set
  */
 /obj/machinery/slime_compressor/proc/check_recipe(mob/living/basic/slime/slime)
+	if (!isslime(slime))
+		return FALSE
 	// Cleaner slimes split very fast so it would make it...too easy
 	for(var/datum/slime_trait/trait in slime.slime_traits)
 		if (istype(trait,/datum/slime_trait/cleaner))
@@ -315,6 +320,8 @@
 		total_extract_amount += COMPRESSOR_BASE_EXTRACT_AMOUNT
 
 		for(var/mob/living/basic/slime/slime in mobs_inside)
+			if(!isslime(slime))
+				continue
 			total_extract_amount += slime.slime_extract_bonus
 			// Baby slimes only make half of the extracts
 			if (!(slime.slime_flags & ADULT_SLIME))
@@ -329,7 +336,9 @@
 			new current_recipe.output_item(drop_location())
 	active = FALSE
 
-	for (var/mob/living/basic/slime/victim in mobs_inside)
+	for (var/mob/living/victim in mobs_inside)
+		if(!isslime(victim))
+			continue
 		qdel(victim)
 
 	clear_recipe()
@@ -361,7 +370,9 @@
 
 // I just carried this over from slime grinder
 /obj/machinery/slime_compressor/proc/screams_of_the_damned()
-	for(var/mob/living/basic/slime/slime in mobs_inside)
+	for(var/mob/living/victim in mobs_inside)
+		if(!isslime(victim))
+			continue
 		var/list/slime_blender = list(
 			'monkestation/code/modules/slimecore/sounds/slimeblender1.ogg',
 			'monkestation/code/modules/slimecore/sounds/slimeblender2.ogg',
