@@ -18,7 +18,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	bodytemp_cold_damage_limit = -1
 	bodytemp_heat_damage_limit = INFINITY
-	vision_range = 5
+//	vision_range = 5 MONKESTATION EDIT REMOVAL -- Makes megafauna actually dangerous, check your GPS
 	aggro_vision_range = 18
 	// Pale purple, should be red enough to see stuff on lavaland
 	lighting_cutoff_red = 25
@@ -183,6 +183,18 @@
 
 		if (EXPLODE_LIGHT)
 			adjustBruteLoss(50)
+
+// This on purpose does not call parent, do not make it call parent, we literally use NOTHING from our parents, we're fine.
+/mob/living/simple_animal/hostile/megafauna/Life(seconds_per_tick, times_fired)
+	if(AIStatus != AI_IDLE)
+		return
+
+	var/list/targets = ListTargets()
+	for(var/mob/target as anything in targets)
+		if(!isliving(target) || faction_check_atom(target))
+			continue
+		toggle_ai(AI_ON)
+		FindTarget(targets)
 
 /// Sets/adds the next time the megafauna can use a melee or ranged attack, in deciseconds. It is a list to allow using named args. Use the ignore_staggered var if youre setting the cooldown to ranged_cooldown_time.
 /mob/living/simple_animal/hostile/megafauna/proc/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)
