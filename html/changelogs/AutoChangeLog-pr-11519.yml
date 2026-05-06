@@ -1,0 +1,10 @@
+author: "TheColorCyan"
+delete-after: True
+changes:
+  - bugfix: "fixed being able to stip gauzes and scryers from afar"
+  - bugfix: "fixed ammo pouch reskins being invisible"
+  - bugfix: "new osaka sunrise soup is no longer meat type (because it doesnt have meat)"
+  - bugfix: "alt click now works as a way to get your ID out of a laptop"
+  - map: "fixed missing wire on tramstation ranching"
+  - bugfix: "advanced chameleon headset now actually gives you ear protection like it says it does"
+  - rscadd: "big manipulator circuit can be printed using circuit impriter"

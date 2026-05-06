@@ -162,10 +162,8 @@
 	if (HAS_TRAIT(current, TRAIT_CULT_HALO))
 		current.RemoveElement(/datum/element/cult_halo)
 
-/datum/antagonist/cult/on_mindshield(mob/implanter)
-	if(!silent)
-		to_chat(owner.current, span_warning("You feel something interfering with your mental conditioning, but you resist it!"))
-	return
+/datum/antagonist/cult/pre_mindshield(mob/implanter, mob/living/mob_override)
+	return COMPONENT_MINDSHIELD_RESISTED
 
 /datum/antagonist/cult/admin_add(datum/mind/new_owner,mob/admin)
 	give_equipment = FALSE

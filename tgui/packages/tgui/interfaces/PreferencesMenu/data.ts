@@ -196,19 +196,21 @@ export type PreferencesMenuData = {
   selected_loadout: string[];
   selected_unusuals: string[];
   total_coins: number;
-  loadout_tabs: LoadoutData[];
+  extra_tabs: LoadoutData[];
   window: PreferencesCurrentWindow;
   starting_page: PreferencesSelectedPage;
   owned_items: string[];
+  available_items: string[];
 
   channels: Channel[];
 };
 
-type LoadoutData = {
+export type LoadoutData = {
   name: string;
   title: string;
   contents: LoadoutItem[];
 };
+
 type LoadoutItem = {
   name: string;
   icon: string;
@@ -217,7 +219,7 @@ type LoadoutItem = {
   cost: number;
   item_path: string;
   path: string;
-  unusual_placement: number;
+  unusual_placement: string; // why?
   is_greyscale: boolean;
   is_renamable: boolean;
   is_job_restricted: boolean;
