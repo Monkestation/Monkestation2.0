@@ -44,6 +44,7 @@
 
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/gun/ballistic/rifle/boltaction/harpoon)
 	hoodtype = /obj/item/clothing/head/hooded/shark_hood
+	inhand_icon_state = null
 
 /obj/item/clothing/head/hooded/shark_hood
 	name = "shark hood"
