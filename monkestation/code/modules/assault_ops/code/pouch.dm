@@ -22,12 +22,8 @@
 	custom_price = PAYCHECK_CREW * 4
 	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
-		"Ammo Pouch" = list(
-			RESKIN_ICON_STATE = "ammopouch"
-		),
-		"Casing Pouch" = list(
-			RESKIN_ICON_STATE = "casingpouch"
-		),
+		"Ammo Pouch" = "ammopouch",
+		"Casing Pouch" = "casingpouch"
 	)
 
 /obj/item/storage/pouch/ammo/Initialize(mapload)
