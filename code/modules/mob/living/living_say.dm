@@ -263,7 +263,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return FALSE
 	if(!GET_CLIENT(src))
 		return
-	if((client?.prefs?.channel_volume["[CHANNEL_VOX]"]) && (radio_freq && (radio_freq == FREQ_COMMON || radio_freq < MIN_FREQ)) && can_hear())
+	if((client?.prefs?.channel_volume["[CHANNEL_VOX]"]) && (radio_freq && (radio_freq == FREQ_COMMON || radio_freq < MIN_FREQ)) && !HAS_TRAIT(src, TRAIT_DEAF))
 		var/atom/movable/virtualspeaker/vspeaker = speaker
 		if(isAI(vspeaker.source))
 			playsound_local(
@@ -343,7 +343,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		deaf_type = MSG_AUDIBLE // Since you should be able to hear yourself without looking
 
 	// Create map text prior to modifying message for goonchat
-	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && !(stat == UNCONSCIOUS || stat == HARD_CRIT) && (ismob(speaker) || client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs)) && can_hear())
+	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && !(stat == UNCONSCIOUS || stat == HARD_CRIT) && (ismob(speaker) || client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs)) && !HAS_TRAIT(src, TRAIT_DEAF))
 		if (message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 			create_chat_message(speaker, null, message_mods[MODE_CUSTOM_SAY_EMOTE], spans, EMOTE_MESSAGE)
 		else
