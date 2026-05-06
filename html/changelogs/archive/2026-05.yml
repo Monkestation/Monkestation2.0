@@ -44,3 +44,13 @@
   Absolucy:
   - qol: Crew Transfer votes no longer trigger the vote cooldown - as such, you can
       start a map vote immediately after if you wish.
+2026-05-06:
+  CannibalHunter:
+  - rscadd: Added the frog mask to the donator loadout items.
+  Runian:
+  - rscadd: Medical Cyborg's crew monitor button icon now looks like a medical crew
+      monitor.
+  - bugfix: Medical Cyborg's crew monitor button icon no longer becomes invisible
+      when getting an another action (e.g. self-repair).
+  ercrowther:
+  - bugfix: fixed hyposprays deleting containers when in crit
