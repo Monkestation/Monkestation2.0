@@ -34,6 +34,7 @@
 	RegisterSignals(current_mob, list(COMSIG_MOB_LOGIN, COMSIG_MOVABLE_Z_CHANGED), PROC_REF(on_login))
 	RegisterSignal(current_mob, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(on_update_sight))
 	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+	RegisterSignal(current_mob, COMSIG_MOVABLE_HEAR, PROC_REF(handle_hearing))
 
 	current_mob.update_sight()
 
@@ -58,6 +59,7 @@
 		COMSIG_MOVABLE_Z_CHANGED,
 		COMSIG_MOB_UPDATE_SIGHT,
 		COMSIG_LIVING_LIFE,
+		COMSIG_MOVABLE_HEAR,
 	))
 	current_mob.update_sight()
 	current_mob.clear_mood_event("vassal")
@@ -281,3 +283,11 @@
 		current.add_mood_event("vassal", /datum/mood_event/vassal_away)
 	else
 		current.clear_mood_event("vassal")
+
+/**
+ * Makes it so stuff our master's speech is more noticable by adding a chat effect to it.
+ */
+/datum/antagonist/vassal/proc/handle_hearing(datum/source, list/hearing_args)
+	SIGNAL_HANDLER
+	if(hearing_args[HEARING_SPEAKER] == master.owner?.current)
+		hearing_args[HEARING_SPANS] = list("heretic_master") + hearing_args[HEARING_SPANS]
