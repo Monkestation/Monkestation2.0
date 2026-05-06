@@ -18,8 +18,9 @@
 	var/static/list/actions_to_add = list(
 		/datum/action/cooldown/spell/fire_sworn,
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
-		/datum/action/cooldown/spell/pointed/cleave,
 	)
-	for (var/action in actions_to_add)
-		var/datum/action/cooldown/new_action = new action(src)
-		new_action.Grant(src)
+	grant_actions_by_list(actions_to_add)
+
+/mob/living/basic/heretic_summon/ash_spirit/Life(seconds_per_tick)
+	. = ..()
+	adjustBruteLoss(-3) // 3 health passively healing

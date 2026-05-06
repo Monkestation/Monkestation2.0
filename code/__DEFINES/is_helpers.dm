@@ -119,6 +119,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isarachnid(A) (is_species(A, /datum/species/arachnid)) //Monkestation Addition
 #define isteratoma(A) (is_species(A, /datum/species/teratoma)) //Monkestation Addition
 #define isapid(A) (is_species(A, /datum/species/apid)) //Monkestation Addition
+#define issimianspecies(A) (is_species(A, /datum/species/monkey/simian))
 
 //More carbon mobs
 #define isalien(A) (istype(A, /mob/living/carbon/alien))
@@ -158,6 +159,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isshade(A) (istype(A, /mob/living/basic/shade))
 
 #define is_simian(A) (isgorilla(A) || ismonkey(A))
+
+#define isstargazer(A) (istype(A, /mob/living/basic/heretic_summon/star_gazer))
 
 /// returns whether or not the atom is either a basic mob OR simple animal
 #define isanimal_or_basicmob(A) (istype(A, /mob/living/simple_animal) || istype(A, /mob/living/basic))
@@ -250,7 +253,7 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 
 #define ismachinery(A) (istype(A, /obj/machinery))
 
-#define istramwall(A) (istype(A, /obj/structure/window/reinforced/tram/front))
+#define istramwall(A) (istype(A, /obj/structure/tram))
 
 #define isvendor(A) (istype(A, /obj/machinery/vending))
 

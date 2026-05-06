@@ -217,8 +217,8 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += beaker
 
-/obj/machinery/cryo_cell/handle_atom_del(atom/gone)
-	..()
+/obj/machinery/cryo_cell/Exited(atom/movable/gone, direction)
+	. = ..()
 	if(gone == beaker)
 		beaker = null
 
@@ -586,7 +586,7 @@
 
 		data["occupant"]["health"] = round(mob_occupant.health, 1)
 		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
-		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
+		data["occupant"]["minHealth"] = mob_occupant.dead_threshold
 		data["occupant"]["bruteLoss"] = round(mob_occupant.getBruteLoss(), 1)
 		data["occupant"]["oxyLoss"] = round(mob_occupant.getOxyLoss(), 1)
 		data["occupant"]["toxLoss"] = round(mob_occupant.getToxLoss(), 1)

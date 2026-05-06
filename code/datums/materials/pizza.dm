@@ -12,6 +12,7 @@
 	item_sound_override = 'sound/effects/meatslap.ogg'
 	turf_sound_override = FOOTSTEP_MEAT
 	texture_layer_icon_state = "pizza"
+	mat_rust_resistance = RUST_RESISTANCE_REINFORCED
 
 /datum/material/pizza/on_removed(atom/source, amount, material_flags)
 	. = ..()

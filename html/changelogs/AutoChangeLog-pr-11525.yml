@@ -1,0 +1,5 @@
+author: "Runian"
+delete-after: True
+changes:
+  - rscadd: "Medical Cyborg's crew monitor button icon now looks like a medical crew monitor."
+  - bugfix: "Medical Cyborg's crew monitor button icon no longer becomes invisible when getting an another action (e.g. self-repair)."

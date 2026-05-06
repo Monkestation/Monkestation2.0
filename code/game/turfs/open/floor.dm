@@ -384,6 +384,12 @@
 			return TRUE
 	return FALSE
 
+/turf/open/floor/rust_turf(magic = FALSE)
+	if(HAS_TRAIT(src, TRAIT_RUSTY))
+		return FALSE
+	ChangeTurf(/turf/open/floor/plating)
+	return ..()
+
 /turf/open/floor/material
 	name = "floor"
 	icon_state = "materialfloor"

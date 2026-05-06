@@ -610,6 +610,18 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Winter Cowboy Hat"
 	item_path = /obj/item/clothing/head/cowboy/nova/flat/cowl/sheriff
 
+/datum/loadout_item/head/deforest_hat //BUYABLE
+	name = "Deforest Hat"
+	item_path = /obj/item/clothing/head/soft/paramedic/deforest
+
+/datum/loadout_item/head/deforest_beret //BUYABLE
+	name = "Deforest Beret"
+	item_path = /obj/item/clothing/head/beret/medical/deforest
+
+/datum/loadout_item/head/warning_cone //BUYABLE
+	name = "Warning Cone"
+	item_path = /obj/item/clothing/head/cone
+
 /*
 *	JOB-LOCKED
 */

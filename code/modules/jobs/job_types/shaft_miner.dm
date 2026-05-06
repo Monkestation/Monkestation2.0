@@ -45,7 +45,7 @@
 	ears = /obj/item/radio/headset/headset_cargo/mining
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/workboots/mining
-	l_pocket = /obj/item/reagent_containers/hypospray/medipen/survival
+	l_pocket = /obj/item/reagent_containers/medipen/survival
 	r_pocket = /obj/item/storage/bag/ore //causes issues if spawned in backpack
 
 	backpack = /obj/item/storage/backpack/explorer
@@ -109,8 +109,8 @@
 			var/obj/item/stack/sheet/animalhide/goliath_hide/plating = new()
 			explorer_suit.hood.attackby(plating)
 	for(var/obj/item/gun/energy/recharge/kinetic_accelerator/accelerator in miner_contents)
-		var/obj/item/knife/combat/survival/knife = new(accelerator)
-		accelerator.bayonet = knife
+		var/datum/component/bayonet_attachable/bayonet = accelerator.GetComponent(/datum/component/bayonet_attachable)
+		bayonet.add_bayonet(new /obj/item/knife/combat/survival(accelerator))
 		var/obj/item/flashlight/seclite/flashlight = new()
 		var/datum/component/seclite_attachable/light_component = accelerator.GetComponent(/datum/component/seclite_attachable)
 		light_component.add_light(flashlight)

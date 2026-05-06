@@ -29,6 +29,7 @@
 		/obj/item/melee/flyswatter = 1,
 		/obj/item/clothing/head/helmet/toggleable/justice = 2,
 		/obj/item/clothing/head/helmet/toggleable/justice/escape = 2,
+		/obj/item/gun/ballistic/revolver/joel = 1,
 	)
 	premium = list(
 		/obj/item/storage/belt/security/webbing = 5,

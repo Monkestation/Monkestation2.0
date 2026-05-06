@@ -20,7 +20,7 @@
 	/// Slowdown applied wwhen magpulse is active. This is added onto existing slowdown
 	var/slowdown_active = 2
 	/// A list of traits we apply when we get activated
-	var/list/active_traits = list(TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE, TRAIT_NEGATES_GRAVITY)
+	var/list/active_traits = list(TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE, TRAIT_NEGATES_GRAVITY, TRAIT_PRESSURE_FLING_RESISTANT)
 
 /obj/item/clothing/shoes/magboots/Initialize(mapload)
 	. = ..()

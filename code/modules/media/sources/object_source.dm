@@ -64,7 +64,7 @@
 
 /datum/media_source/object/get_priority(mob/target)
 	var/datum/preferences/prefs = target?.client?.prefs
-	if(!QDELETED(prefs) && !prefs.read_preference(/datum/preference/toggle/sound_jukebox))
+	if(!QDELETED(prefs) && !(prefs.channel_volume["[CHANNEL_JUKEBOX]"]))
 		return -1
 	var/turf/listener_turf = get_turf(target)
 	if(QDELETED(src) || isnull(source_turf) || isnull(listener_turf) || source_turf.z != listener_turf.z || volume <= 0 || !current_track?.url)

@@ -127,7 +127,14 @@
 	icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#0070B7#FFCE5B"
+	greyscale_colors = "#41579a#e6a345"
+
+/obj/item/clothing/head/hats/caphat/armored
+	name = "captain's campaign hat"
+	desc = "For the Captains who do not shy away from action. Uses reinforced fabric to offer sufficient protection."
+	icon_state = "caphelmet"
+	armor_type = /datum/armor/vest_capcarapace
+	dog_fashion = null
 
 //Head of Personnel
 /obj/item/clothing/head/hats/hopcap
@@ -497,6 +504,16 @@
 	name = "chief medical officer beret"
 	desc = "A beret in a distinct surgical turquoise!"
 	greyscale_colors = "#5EB8B8"
+
+/obj/item/clothing/head/beret/medical/deforest
+	name = "Deforest Beret"
+	desc = "A Deforest Medical beret, velvet fabrics and directly infused dyes prevent age from tarnishing the striking presence of Deforest rescue personnel."
+	greyscale_colors = NONE
+	greyscale_config = NONE
+	greyscale_config_worn = NONE
+	icon_state = "deforest_beret"
+	icon = 'icons/obj/clothing/head/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 
 /obj/item/clothing/head/utility/surgerycap
 	name = "blue surgery cap"

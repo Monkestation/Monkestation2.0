@@ -264,7 +264,7 @@
 	var/atom/destination
 	var/obj/effect/oshan_launch_point/player/picked_point
 
-	if(length(GLOB.oshan_launch_points))
+	if(length(GLOB.oshan_launch_points) && !mind.assigned_role.oshan_normal_latejoin)
 		picked_point = pick(GLOB.oshan_launch_points)
 		destination = get_edge_target_turf(picked_point, picked_point.map_edge_direction)
 	else
