@@ -89,5 +89,5 @@ map leadpoisoningstation
 endmap
 
 map oshan
-	votable
+	disabled
 endmap
