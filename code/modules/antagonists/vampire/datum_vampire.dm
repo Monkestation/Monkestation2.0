@@ -334,6 +334,7 @@
 	RegisterSignal(src, COMSIG_VAMPIRE_TRACK_HUMANITY_GAIN, PROC_REF(on_track_humanity_gain_signal))
 	RegisterSignal(owner, COMSIG_OOZELING_CORE_EJECTED, PROC_REF(on_oozeling_core_ejected))
 	RegisterSignal(owner, COMSIG_OOZELING_REVIVED, PROC_REF(on_oozeling_revive))
+	RegisterSignals(owner, list(COMSIG_ANTAGONIST_GAINED, COMSIG_ANTAGONIST_REMOVED), PROC_REF(on_login))
 
 	owner.teach_crafting_recipe(list(
 		/datum/crafting_recipe/vassalrack,
@@ -374,7 +375,12 @@
 /datum/antagonist/vampire/on_removal()
 	REMOVE_TRAIT(owner, TRAIT_VAMPIRE_ALIGNED, REF(src))
 	UnregisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY)
-	UnregisterSignal(owner, list(COMSIG_OOZELING_CORE_EJECTED, COMSIG_OOZELING_REVIVED))
+	UnregisterSignal(owner, list(
+		COMSIG_OOZELING_CORE_EJECTED,
+		COMSIG_OOZELING_REVIVED,
+		COMSIG_ANTAGONIST_GAINED,
+		COMSIG_ANTAGONIST_REMOVED,
+	))
 
 	owner.forget_crafting_recipe(list(
 		/datum/crafting_recipe/vassalrack,
