@@ -1,0 +1,5 @@
+author: "Runian"
+delete-after: True
+changes:
+  - spellcheck: "Laws have been uploaded via the OneHuman law module now end with a period."
+  - spellcheck: "Many AI law modules that give a zeroth law have split into multiple short sentences rather than being a single run-on sentence."

@@ -1,0 +1,4 @@
+author: "Cujo"
+delete-after: True
+changes:
+  - rscadd: "Medical spray cans can now spray more units at once"
