@@ -33,6 +33,7 @@
 		JOB_WARDEN,
 		JOB_CHAPLAIN,
 		JOB_CURATOR,
+		JOB_CHIEF_MEDICAL_OFFICER, // because the blood loss will be a pain for CMO or something idk
 	)
 	restricted_roles = list(
 		JOB_AI,
