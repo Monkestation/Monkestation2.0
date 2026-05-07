@@ -10,11 +10,13 @@
 	power_explanation = "Click any player to attempt to compel them.\n\
 		If your target is already commanded, a Curator, or a vampire, you will fail.\n\
 		Once commanded, the target will do their best to fulfill it, with a duration scaling with level.\n\
-		If your target is mindshielded, your command's duration will be halved, and commanding them will take longer.\n\
+		If your target is mindshielded, your command's duration will be halved.\n\
 		At level 1, your command will stay for 60 seconds.\n\
 		At level 2, it will remain for 3 minutes.\n\
 		Be smart with your wording. They will become pacified, and won't obey violent commands.\n\
-		In addition, attacking your target will immediately snap them out of their compulsion."
+		In addition, attacking your target will immediately snap them out of their compulsion.\n\n\
+		Commanding your own vassals is free and does not cost any vitae.\n\
+		Commanding the vassal of another vampire will result in the command's duration being halved."
 	vampire_power_flags = NONE
 	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	vitaecost = 120
