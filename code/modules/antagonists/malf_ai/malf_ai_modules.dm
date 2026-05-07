@@ -1380,11 +1380,9 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		cyborg.balloon_alert(ai_user, "cyborg not connected!")
 		return FALSE
 
-	ai_user.playsound_local(user, 'sound/misc/box_deploy.ogg', 50, TRUE)
-	adjust_uses(-1)
-	if(uses)
-		desc = "[initial(desc)] It has [uses] use\s remaining."
-		build_all_button_icons()
+	if(cyborg.scrambledcodes)
+		cyborg.balloon_alert(ai_user, "already scrambled!")
+		return FALSE
 
 	var/unlock_performed = FALSE
 	cyborg.scrambledcodes = TRUE
