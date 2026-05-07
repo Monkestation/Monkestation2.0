@@ -41,7 +41,7 @@
 #define POLL_IGNORE_DEFECTIVECLONE "defectiveclone"
 #define POLL_IGNORE_BINGLE "bingle"
 #define POLL_IGNORE_DARKSPAWN_PSYCHE "darkspawn_psyche"
-
+#define POLL_IGNORE_BLOODLING_THRALL "bloodling_thrall"
 
 GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_ACADEMY_WIZARD = "Academy Wizard Defender",
@@ -49,6 +49,7 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_ASH_SPIRIT = "Ash Spirit",
 	POLL_IGNORE_ASHWALKER = "Ashwalker eggs",
 	POLL_IGNORE_BLOB = "Blob spores",
+	POLL_IGNORE_BLOODLING_THRALL = "Bloodling Thrall",
 	POLL_IGNORE_BOTS = "Bots",
 	POLL_IGNORE_CARGORILLA = "Cargorilla",
 	POLL_IGNORE_CONTRACTOR_SUPPORT = "Contractor Support Unit",

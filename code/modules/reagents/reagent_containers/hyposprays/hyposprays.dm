@@ -190,7 +190,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	if(vial)
 		if(!can_remove_vials)
 			return FALSE
-		if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
+		if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING|IGNORE_SOFTCRIT))
 			return FALSE
 		if(!silent)
 			to_chat(user, span_notice("You remove the [vial] from [src]."))
