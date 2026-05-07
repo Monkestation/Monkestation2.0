@@ -179,12 +179,13 @@
 
 /obj/item/borg/charger
 	name = "power connector"
+	desc = "An energy probe that can charge batteries and energy-dependent weapons (using the cyborg battery, in both directions), as well as recharge the cyborg from all types of chargers, the effectiveness depends on the components of the machine."
 	icon_state = "charger_draw"
 	item_flags = NOBLUDGEON
 	/// Charging mode
 	var/mode = "draw"
 	/// Whitelist of charging machines
-	var/static/list/charge_machines = typecacheof(list(/obj/machinery/cell_charger, /obj/machinery/recharger, /obj/machinery/recharge_station, /obj/machinery/mech_bay_recharge_port))
+	var/static/list/charge_machines = typecacheof(list(/obj/machinery/cell_charger, /obj/machinery/cell_charger_multi, /obj/machinery/recharger, /obj/machinery/recharge_station, /obj/machinery/mech_bay_recharge_port))
 	/// Whitelist of chargable items
 	var/static/list/charge_items = typecacheof(list(/obj/item/stock_parts/power_store/cell, /obj/item/gun/energy))
 
@@ -197,6 +198,7 @@
 		mode = "charge"
 	else
 		mode = "draw"
+	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	to_chat(user, span_notice("You toggle [src] to \"[mode]\" mode."))
 	update_appearance()
 
@@ -212,6 +214,11 @@
 				to_chat(user, span_warning("[target_machine] is unpowered!"))
 				return
 
+			var/capacitor_rate = 1
+			for(var/datum/stock_part/capacitor/capacitor in target_machine.component_parts)
+				if(capacitor)
+					capacitor_rate = capacitor.tier //// УСИЛИТЬ ЗАРЯДКУ ОРУЖИЯ
+
 			to_chat(user, span_notice("You connect to [target_machine]'s power line..."))
 			while(do_after(user, 1.5 SECONDS, target = target_machine, progress = FALSE))
 				if(!user || !user.cell || mode != "draw")
@@ -220,12 +227,14 @@
 				if((target_machine.machine_stat & (NOPOWER|BROKEN)) || !target_machine.anchored)
 					break
 
-				target_machine.charge_cell(0.15 * STANDARD_CELL_CHARGE, user.cell)
+				target_machine.charge_cell(0.3 * STANDARD_CELL_CHARGE * capacitor_rate, user.cell)
+				do_sparks(1, FALSE, target)
 
 			to_chat(user, span_notice("You stop charging yourself."))
 
 		else if(is_type_in_list(target, charge_items))
 			var/obj/item/stock_parts/power_store/cell/cell = target
+			var/charge_ratio = 1
 			if(!istype(cell))
 				cell = locate(/obj/item/stock_parts/power_store/cell) in target
 			if(!cell)
@@ -234,6 +243,7 @@
 
 			if(istype(target, /obj/item/gun/energy))
 				var/obj/item/gun/energy/energy_gun = target
+				charge_ratio = 2
 				if(!energy_gun.can_charge)
 					to_chat(user, span_warning("[target] has no power port!"))
 					return
@@ -254,17 +264,19 @@
 				if(cell != target && cell.loc != target)
 					return
 
-				var/draw = min(cell.charge, cell.chargerate*0.5, user.cell.maxcharge - user.cell.charge)
+				var/draw = min(cell.charge, cell.chargerate * charge_ratio, user.cell.maxcharge - user.cell.charge)
 				if(!cell.use(draw))
 					break
 				if(!user.cell.give(draw))
 					break
 				target.update_appearance()
+				do_sparks(1, FALSE, target)
 
 			to_chat(user, span_notice("You stop charging yourself."))
 
 	else if(is_type_in_list(target, charge_items))
 		var/obj/item/stock_parts/power_store/cell/cell = target
+		var/charge_ratio = 1
 		if(!istype(cell))
 			cell = locate(/obj/item/stock_parts/power_store/cell) in target
 		if(!cell)
@@ -273,6 +285,7 @@
 
 		if(istype(target, /obj/item/gun/energy))
 			var/obj/item/gun/energy/energy_gun = target
+			charge_ratio = 2
 			if(!energy_gun.can_charge)
 				to_chat(user, span_warning("[target] has no power port!"))
 				return
@@ -292,12 +305,13 @@
 			if(cell != target && cell.loc != target)
 				return
 
-			var/draw = min(user.cell.charge, cell.chargerate * 0.5, cell.maxcharge - cell.charge)
+			var/draw = min(user.cell.charge, cell.chargerate * charge_ratio, cell.maxcharge - cell.charge)
 			if(!user.cell.use(draw))
 				break
 			if(!cell.give(draw))
 				break
 			target.update_appearance()
+			do_sparks(1, FALSE, target)
 
 		to_chat(user, span_notice("You stop charging [target]."))
 

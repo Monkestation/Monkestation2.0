@@ -5,6 +5,7 @@
 #define WALLFRAME_TYPE "wallframe_type"
 #define FURNISH_TYPE "furnish_type"
 #define AIRLOCK_TYPE "airlock_type"
+#define FIRELOCK_TYPE "firelock_type"
 
 ///flags to be sent to UI
 #define TITLE "title"
@@ -50,6 +51,9 @@
 				list(CONSTRUCTION_MODE = RCD_REFLECTOR, ICON = "reflector_base", TITLE = "Reflector"),
 				list(CONSTRUCTION_MODE = RCD_GIRDER, ICON = "girder", TITLE = "Girder"),
 				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window_sill, ICON = "window_sill-0", TITLE = "Window Sill"),
+				list(CONSTRUCTION_MODE = RCD_FIRELOCK, FIRELOCK_TYPE = /obj/machinery/door/firedoor, ICON = "firelock_window", TITLE = "Firelock"),
+				list(CONSTRUCTION_MODE = RCD_FIRELOCK, FIRELOCK_TYPE = /obj/machinery/door/firedoor/border_only, ICON = "firelock_slim", TITLE = "Slim Firelock"),
+				list(CONSTRUCTION_MODE = RCD_FIRELOCK, FIRELOCK_TYPE = /obj/machinery/door/firedoor/heavy, ICON = "firelock_heavy", TITLE = "Heavy Firelock"),
 			),
 
 			//Computers & Machine Frames
@@ -63,6 +67,8 @@
 				list(CONSTRUCTION_MODE = RCD_WALLFRAME, WALLFRAME_TYPE = /obj/item/wallframe/apc, ICON = "apc", TITLE = "APC WallFrame"),
 				list(CONSTRUCTION_MODE = RCD_WALLFRAME, WALLFRAME_TYPE = /obj/item/wallframe/airalarm, ICON = "alarm_bitem", TITLE = "AirAlarm WallFrame"),
 				list(CONSTRUCTION_MODE = RCD_WALLFRAME, WALLFRAME_TYPE = /obj/item/wallframe/firealarm, ICON = "fire_bitem", TITLE = "FireAlarm WallFrame"),
+				list(CONSTRUCTION_MODE = RCD_WALLFRAME, WALLFRAME_TYPE = /obj/item/wallframe/button, ICON = "button", TITLE = "Button WallFrame"),
+				list(CONSTRUCTION_MODE = RCD_WALLFRAME, WALLFRAME_TYPE = /obj/item/wallframe/camera/wired, ICON = "cameracase", TITLE = "Camera WallFrame"),
 			),
 
 			//Interior Design[construction_mode = RCD_FURNISHING is implied]
@@ -153,6 +159,8 @@
 	var/obj/item/wallframe/wallframe_type = /obj/item/wallframe/apc
 	/// type of furniture tables,chairs etc we are trying to build
 	var/furnish_type = /obj/structure/chair
+	/// type of firedoor
+	var/obj/machinery/door/firedoor/firelock_type = /obj/machinery/door/firedoor
 	/// delay multiplier for all construction types
 	var/delay_mod = 1
 	/// variable for R walls to deconstruct them
@@ -325,6 +333,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				RCD_FURNISHING,
 				RCD_MACHINE,
 				RCD_REFLECTOR,
+				RCD_FIRELOCK,
 				RCD_WINDOWGRILLE,
 			)
 
@@ -567,6 +576,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				construction_mode = design[CONSTRUCTION_MODE]
 				if(design[WINDOW_TYPE] != null)
 					window_type = design[WINDOW_TYPE]
+				if(design[FIRELOCK_TYPE] != null)
+					firelock_type = design[FIRELOCK_TYPE]
 			else if(category_name == "Machines")
 				construction_mode = design[CONSTRUCTION_MODE]
 				if(design[COMPUTER_DIR] != null)
@@ -732,12 +743,33 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	w_class = WEIGHT_CLASS_TINY
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT *6, /datum/material/glass=SHEET_MATERIAL_AMOUNT*4)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 6, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 4)
 	var/ammoamt = 40
 
 /obj/item/rcd_ammo/large
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*24, /datum/material/glass=SHEET_MATERIAL_AMOUNT*16)
+	name = "RCD large matter cartridge"
+	desc = "If the standard seemed unnaturally heavy, then this one is 4 times heavier than usual!"
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 18, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 12)
+	w_class = WEIGHT_CLASS_SMALL
 	ammoamt = 160
+	color = "#cc99ff"
+
+/obj/item/rcd_ammo/mega_large
+	name = "RCD massive matter cartridge"
+	desc = "This is no longer a small block, but a solid monoblock, it is not just 8 times heavier than usual, but also takes up more space."
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 28, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 20, /datum/material/titanium= SHEET_MATERIAL_AMOUNT * 8, /datum/material/uranium=SHEET_MATERIAL_AMOUNT * 4)
+	icon_state = "rcdammo_mega"
+	w_class = WEIGHT_CLASS_NORMAL
+	ammoamt = 320
+	color = "#cc99ff"
+
+/obj/item/rcd_ammo/ultra_large
+	name = "RCD bluespace matter cartridge"
+	desc = "A very strange cartridge with a constantly changing structure. It has a very small weight and volume, but it holds 16 times more than usual!"
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 36, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 28, /datum/material/titanium=SHEET_MATERIAL_AMOUNT * 12, /datum/material/uranium=SHEET_MATERIAL_AMOUNT * 8, /datum/material/plasma=SHEET_MATERIAL_AMOUNT * 4, /datum/material/bluespace=SHEET_MATERIAL_AMOUNT * 2)
+	icon_state = "rcdammo_ultra"
+	ammoamt = 640
+	color = "#2478ff"
 
 /obj/item/construction/rcd/combat/admin
 	name = "admin RCD"

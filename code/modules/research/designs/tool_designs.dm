@@ -100,10 +100,47 @@
 
 /datum/design/rcd_ammo
 	name = "RCD Matter Cartridge"
+	desc = "Highly compressed matter for the RCD."
 	id = "rcd_ammo"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*6, /datum/material/glass =SHEET_MATERIAL_AMOUNT*4)
 	build_path = /obj/item/rcd_ammo
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/rcd_ammo_large
+	name = "large RCD matter cartridge"
+	desc = "If the standard seemed unnaturally heavy, then this one is 4 times heavier than usual!"
+	id = "rcd_ammo_large"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 18, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 12)
+	build_path = /obj/item/rcd_ammo/large
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/rcd_ammo_mega_large
+	name = "massive RCD matter cartridge"
+	desc = "This is no longer a small block, but a solid monoblock, it is not just 8 times heavier than usual, but also takes up more space."
+	id = "rcd_ammo_mega_large"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 28, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 20, /datum/material/titanium= SHEET_MATERIAL_AMOUNT * 8, /datum/material/uranium=SHEET_MATERIAL_AMOUNT * 4)
+	build_path = /obj/item/rcd_ammo/mega_large
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/rcd_ammo_ultra_large
+	name = "bluespace RCD matter cartridge"
+	desc = "A very strange cartridge with a constantly changing structure. It has a very small weight and volume, but it holds 16 times more than usual!"
+	id = "rcd_ammo_ultra_large"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 36, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 28, /datum/material/titanium=SHEET_MATERIAL_AMOUNT * 12, /datum/material/uranium=SHEET_MATERIAL_AMOUNT * 8, /datum/material/plasma=SHEET_MATERIAL_AMOUNT * 4, /datum/material/bluespace=SHEET_MATERIAL_AMOUNT * 2)
+	build_path = /obj/item/rcd_ammo/ultra_large
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
 	)

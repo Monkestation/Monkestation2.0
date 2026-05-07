@@ -84,6 +84,13 @@
 				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
 		if(RCD_REFLECTOR)
 			return list("mode" = RCD_REFLECTOR, "delay" = 2 SECONDS, "cost" = 20)
+		if(RCD_FIRELOCK)
+			if(the_rcd.firelock_type == /obj/machinery/door/firedoor/border_only)
+				return list("mode" = RCD_FIRELOCK, "delay" = 1 SECONDS, "cost" = 8)
+			if(the_rcd.firelock_type == /obj/machinery/door/firedoor/heavy)
+				return list("mode" = RCD_FIRELOCK, "delay" = 5 SECONDS, "cost" = 16)
+			if(the_rcd.firelock_type == /obj/machinery/door/firedoor)
+				return list("mode" = RCD_FIRELOCK, "delay" = 3 SECONDS, "cost" = 12)
 		if(RCD_AIRLOCK)
 			if(the_rcd.airlock_glass)
 				return list("mode" = RCD_AIRLOCK, "delay" = 5 SECONDS, "cost" = 20)
@@ -139,6 +146,16 @@
 			var/obj/structure/reflector/reflector_base = new(src)
 			reflector_base.set_anchored(TRUE)
 			return TRUE
+
+		if(RCD_FIRELOCK)
+			if(locate(/obj/machinery/door/firedoor) in src)
+				balloon_alert(user, "there's already a firedoor!")
+				return FALSE
+			var/obj/machinery/door/firedoor/new_firedoor = new the_rcd.firelock_type(src)
+			if(istype(new_firedoor, /obj/machinery/door/firedoor/border_only))
+				new_firedoor.setDir(user.dir)
+			return TRUE
+
 		if(RCD_AIRLOCK)
 			if(ispath(the_rcd.airlock_type, /obj/machinery/door/window))
 				if(!valid_build_direction(src, user.dir, is_fulltile = FALSE))
