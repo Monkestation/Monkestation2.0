@@ -434,13 +434,5 @@
 			. = 2
 		else
 			. = 3
-	if(count_security() > .)
+	if(SSgamemode.sec_crew > .)
 		return . + 1
-
-/proc/count_security()
-	. = 0
-	for(var/datum/mind/crew as anything in get_crewmember_minds())
-		if(QDELETED(crew.current) || crew.current.stat == DEAD || !crew.assigned_role)
-			continue
-		if(crew.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
-			.++
