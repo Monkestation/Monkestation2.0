@@ -376,6 +376,38 @@ extra range addition
 			'monkestation/sound/effects/ballpit.ogg'), 100, 0),
 		)
 
+/datum/component/shoesteps/tap_shoes
+	custom_sounds = list(
+		FOOTSTEP_WOOD = list(list(
+			'monkestation/sound/effects/tapshoes/tapwood1.ogg',
+			'monkestation/sound/effects/tapshoes/tapwood2.ogg',
+			'monkestation/sound/effects/tapshoes/tapwood3.ogg',
+			'monkestation/sound/effects/tapshoes/tapwood4.ogg',
+		), 100, 0),
+		FOOTSTEP_FLOOR = list(list(
+			'monkestation/sound/effects/tapshoes/tapmetal1.ogg',
+			'monkestation/sound/effects/tapshoes/tapmetal2.ogg',
+			'monkestation/sound/effects/tapshoes/tapmetal3.ogg',
+			'monkestation/sound/effects/tapshoes/tapmetal4.ogg',
+		), 75, -1),
+		FOOTSTEP_PLATING = list(list(), 100, 1),
+		FOOTSTEP_CARPET = list(list(
+			'monkestation/sound/effects/tapshoes/tapcarpet1.ogg',
+			'monkestation/sound/effects/tapshoes/tapcarpet2.ogg',
+			'monkestation/sound/effects/tapshoes/tapcarpet3.ogg',
+			'monkestation/sound/effects/tapshoes/tapcarpet4.ogg',
+		), 75, -1),
+		FOOTSTEP_SAND = list(list(), 75, 0),
+		FOOTSTEP_GRASS = list(list(), 75, 0),
+		FOOTSTEP_WATER = list(list(), 100, 1),
+		FOOTSTEP_LAVA = list(list(), 100, 0),
+		FOOTSTEP_MEAT = list(list(
+			'sound/effects/meatslap.ogg'), 100, 0),
+		FOOTSTEP_CATWALK = list(list(), 100, 1),
+		FOOTSTEP_BALL = list(list(
+			'monkestation/sound/effects/ballpit.ogg'), 100, 0),
+	)
+
 /obj/item/clothing/shoes/clown_shoes/orchestra
 	name = "musical shoes"
 	desc = "the prankster's standard issue clowning shoes. But somethings off about this pair, maybe the band over to the side, off camera, can help us identify whats wrong."
