@@ -133,7 +133,12 @@
 
 	living_target.apply_status_effect(/datum/status_effect/commanded, owner, command, power_time * time_multiplier)
 
-	power_activated_sucessfully() // PAY COST! BEGIN COOLDOWN!
+	// commanding our own vassal is free and invokes no cooldown
+	if(target_vassal && (target_vassal in vampiredatum_power.vassals))
+		StartCooldown()
+		deactivate_power(TRUE)
+	else
+		power_activated_sucessfully() // PAY COST! BEGIN COOLDOWN!
 
 /datum/action/cooldown/vampire/targeted/command/proc/get_single_word_command()
 	. = TRUE
