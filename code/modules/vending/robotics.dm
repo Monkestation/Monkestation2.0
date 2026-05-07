@@ -23,8 +23,6 @@
 				/obj/item/storage/bag/bio = 1,
 				/obj/item/storage/box/bodybags = 1,
 
-
-
 			),
 		),
 
@@ -42,8 +40,6 @@
 				/obj/item/bot_assembly/secbot = 1,
 				/obj/item/storage/crayons = 1,
 
-
-
 			),
 		),
 	)
@@ -55,7 +51,6 @@
 		/obj/item/clothing/shoes/clown_shoes = 1,
 		/obj/item/melee/baton/security = 1, //so beepsky can be completed
 
-
 	)
 	premium = list(
 		/obj/item/shears = 1,
@@ -64,7 +59,6 @@
 		/obj/item/reagent_containers/medipen/deforest/robot_system_cleaner = 2,
 		/obj/item/clothing/gloves/latex/surgical = 1,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
-
 
 	)
 	refill_canister = /obj/item/vending_refill/robotics
