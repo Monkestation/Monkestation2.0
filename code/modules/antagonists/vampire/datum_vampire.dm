@@ -456,7 +456,7 @@
 
 /datum/antagonist/vampire/ui_data(mob/user)
 	return list(
-		"vassal_count" = length(vassals),
+		"vassal_count" = count_vassals(),
 		"max_vassals" = max_vampire_vassals(),
 	)
 
