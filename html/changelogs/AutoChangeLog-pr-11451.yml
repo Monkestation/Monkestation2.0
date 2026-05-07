@@ -1,4 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - bugfix: "Cyborg surgery omni-toolset now can pull organs via organ manipulation as intended."

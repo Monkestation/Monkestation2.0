@@ -1028,7 +1028,12 @@
 /obj/item/card/id/departmental_budget/sci
 	department_ID = ACCOUNT_SCI
 	department_name = ACCOUNT_SCI_NAME
-	icon_state = "sci_budget"
+	icon_state = "sci_budget" //for five hundred cloners
+
+/obj/item/card/id/departmental_budget/cc
+	department_ID = ACCOUNT_CC
+	department_name = ACCOUNT_CC_NAME
+	icon_state = "cc_budget" //for mountains of goldschlager
 
 /obj/item/card/id/departmental_budget/click_alt(mob/living/user)
 	registered_account.bank_card_talk(span_warning("Withdrawing is not compatible with this card design."), TRUE) //prevents the vault bank machine being useless and putting money from the budget to your card to go over personal crates
