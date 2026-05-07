@@ -1,5 +1,0 @@
-author: "Ice-Type"
-delete-after: True
-changes:
-  - rscadd: "Golem shells will now tell ghosts if their creator is an antagonist"
-  - rscdel: "\"Sentient creature\" random events can no longer roll beepskies"

@@ -1,0 +1,4 @@
+author: "Mantlecrawler"
+delete-after: True
+changes:
+  - bugfix: "Hyposprays no longer brick doafters when attempting to draw blood from a living mob"
