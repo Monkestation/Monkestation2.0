@@ -135,7 +135,6 @@
 
 	// commanding our own vassal is free and invokes no cooldown
 	if(target_vassal && (target_vassal in vampiredatum_power.vassals))
-		StartCooldown()
 		deactivate_power(TRUE)
 	else
 		power_activated_sucessfully() // PAY COST! BEGIN COOLDOWN!
