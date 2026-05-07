@@ -744,7 +744,7 @@
 		text = "<img class='icon' src='\ref['icons/vampires/vampiric.dmi']?state=vampire'> "
 
 	if(IS_VASSAL(examiner) in vassals)
-		text += span_cult("<EM>This is, [return_full_name()] your Master!</EM>")
+		text += span_vampire_master("<EM>This is, [return_full_name()] your Master!</EM>")
 		examine_text += text
 		return
 

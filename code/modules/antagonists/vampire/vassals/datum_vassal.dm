@@ -290,4 +290,4 @@
 /datum/antagonist/vassal/proc/handle_hearing(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
 	if(hearing_args[HEARING_SPEAKER] == master.owner?.current)
-		hearing_args[HEARING_SPANS] = list("heretic_master") + hearing_args[HEARING_SPANS]
+		hearing_args[HEARING_SPANS] = list("vampire_master") + hearing_args[HEARING_SPANS]

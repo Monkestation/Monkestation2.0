@@ -742,6 +742,24 @@ h2.alert {
   }
 }
 
+.vampire_master {
+  color: hsl(350, 75%, 50%);
+  font-weight: bold;
+  font-style: italic;
+  animation: vampire_master_pulse 3s ease-in-out infinite;
+}
+
+@keyframes vampire_master_pulse {
+  0%,
+  100% {
+    text-shadow: 0 0 5px hsl(350, 70%, 40%);
+  }
+  50% {
+    color: hsl(355, 85%, 55%);
+    text-shadow: 0 0 10px hsl(352, 75%, 45%);
+  }
+}
+
 .deconversion_message {
   color: hsl(270, 100%, 31.4%);
   font-size: 185%;
