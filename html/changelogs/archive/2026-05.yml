@@ -54,3 +54,49 @@
       when getting an another action (e.g. self-repair).
   ercrowther:
   - bugfix: fixed hyposprays deleting containers when in crit
+2026-05-07:
+  Absolucy:
+  - qol: Changed how chat highlights are styled - any color should look good now,
+      regardless of light or dark mode.
+  - refactor: Optimized some code related to the loadout menu/store.
+  Absolucy, Melbert:
+  - refactor: Refactored how deafness is tracked. Please report any weird interactions
+      with sounds, like messages or sfx being missing.
+  - bugfix: Lacking ears and being in hard crit now consistently treats you as "being
+      deaf". This affects a few minor interactions like empath, the jukebox, and sleeping.
+  Ice-Type:
+  - rscadd: Golem shells will now tell ghosts if their creator is an antagonist
+  - rscdel: '"Sentient creature" random events can no longer roll beepskies'
+  LettuceGuardian:
+  - rscadd: Two more reskins for the security and engineering MODsuit.
+  Runian:
+  - image: All hud themes now have their own images for storage which may differ from
+      their previous look.
+  - refactor: Storage's visual portion has been now handled separately as a storage
+      interface.
+  - balance: Cyborg Chameleon Projector can switch to any crew-aligned cyborg model
+      via Right-Click.
+  - balance: Cyborg Chameleon Projector can change their disguise name to a different
+      random name via Ctrl-Click.
+  - bugfix: Cyborg surgery omni-toolset now can pull organs via organ manipulation
+      as intended.
+  Sakaniko:
+  - image: Modified the anime implant cat tail to use the updated sprite that Cat
+      Tail organs use.
+  - image: Ported resprites for 26 different hairstyles. Check the PR for a list.
+  - rscadd: Added 1 new hairstyle - Short Bangs 2.
+  TheColorCyan:
+  - balance: bloodsuckers can no longer convert mindshielded people or remove their
+      mindshield
+  - balance: darkspawn can no longer thrall mindshielded people
+  - balance: clock cultists, blood cultists and darkspawn thralls resist their mindshields
+      to indicate that mindshields dont actually deconvert them
+  - bugfix: fixed being able to stip gauzes and scryers from afar
+  - bugfix: fixed ammo pouch reskins being invisible
+  - bugfix: new osaka sunrise soup is no longer meat type (because it doesnt have
+      meat)
+  - bugfix: alt click now works as a way to get your ID out of a laptop
+  - map: fixed missing wire on tramstation ranching
+  - bugfix: advanced chameleon headset now actually gives you ear protection like
+      it says it does
+  - rscadd: big manipulator circuit can be printed using circuit impriter
