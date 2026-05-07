@@ -8,7 +8,7 @@
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 8 SECONDS
+	cooldown_time = 6 SECONDS
 	unset_after_click = FALSE
 
 	// Both of these are changed in before_cast
