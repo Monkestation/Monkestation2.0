@@ -2170,9 +2170,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		counted_money += counted_credit
 	return round(physical_cash_total)
 
-/mob/living/can_hear()
-	. = !HAS_TRAIT(src, TRAIT_DEAF)
-
 /mob/living/set_stat(new_stat)
 	. = ..()
 	if(isnull(.))
