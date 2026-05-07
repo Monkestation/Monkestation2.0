@@ -137,7 +137,8 @@ const RequestControls = (props) => {
 
   return (
     <div className="RequestManager__controlsContainer">
-      <Button onClick={() => act('pp', { id: request.id })}>PP</Button>
+      <Button onClick={() => act('pp', { id: request.id })}>PP (Veth)</Button>
+      <Button onClick={() => act('pp_old', { id: request.id })}>PP</Button>
       <Button onClick={() => act('vv', { id: request.id })}>VV</Button>
       <Button onClick={() => act('sm', { id: request.id })}>SM</Button>
       <Button onClick={() => act('flw', { id: request.id })}>FLW</Button>

@@ -183,9 +183,6 @@
 /area/template_noop)
 "jk" = (
 /obj/structure/rack/shelf,
-/obj/item/food/canned/tomatoes,
-/obj/item/food/canned/tomatoes,
-/obj/item/food/canned/tomatoes,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/mineral/titanium,

@@ -90,7 +90,7 @@
 ///Use LAZYLISTDUPLICATE instead if you want it to null with no entries
 #define LAZYCOPY(L) (L ? L.Copy() : list() )
 /// Consider LAZYNULL instead
-#define LAZYCLEARLIST(L) if(L) L.Cut()
+#define LAZYCLEARLIST(L) L?.Cut()
 /// Clears any nulls out of a list, and also turns the list itself null if its empty afterwards.
 #define LAZYCLEARNULLS(L) if(L) { list_clear_nulls(L); if(!length(L)) L = null };
 ///Returns the list if it's actually a valid list, otherwise will initialize it
@@ -985,6 +985,14 @@
 			continue
 		UNTYPED_LIST_ADD(keys, key)
 	return keys
+
+/// Turns an associative list into a flat list of values
+/proc/assoc_to_values(list/key_list)
+	if(!islist(key_list))
+		return null
+	. = list()
+	for(var/key in key_list)
+		. |= LIST_VALUE_WRAP_LISTS(key_list[key])
 
 ///compare two lists, returns TRUE if they are the same
 /proc/compare_list(list/l,list/d)

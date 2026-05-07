@@ -59,7 +59,7 @@
 
 	if(isprojectile(arrived))
 		var/obj/projectile/arrived_proj = arrived
-		arrived_proj.pixel_speed_multiplier = bullet_speed_multiplier
+		arrived_proj.speed *= bullet_speed_multiplier
 	else if(isliving(arrived))
 		var/mob/living/arrived_movable = arrived
 		arrived_movable.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/slowing_field, TRUE, atom_speed_multiplier)
@@ -75,7 +75,7 @@
 
 	if(isprojectile(gone))
 		var/obj/projectile/arrived_proj = gone
-		arrived_proj.pixel_speed_multiplier = 1
+		arrived_proj.speed = initial(arrived_proj.speed)
 	else if(isliving(gone))
 		var/mob/living/arrived_movable = gone
 		arrived_movable.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/slowing_field)

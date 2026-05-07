@@ -80,7 +80,7 @@
 // monkestation explorer vouchers
 /datum/voucher_set/explorer
 
-/datum/voucher_set/explorer/retro_laser 
+/datum/voucher_set/explorer/retro_laser
 	name = "Laser Gun Kit"
 	description = "Contains a low capacity but recharging laser gun, and a knife and flashlight to attach to it. It's firing pin won't work on the station or in NanoTrasen controlled space. No connection has been found by NT to any alleged 'war crimes' and the distrubition of this weapon to an incredibly accident prone workforce."
 	icon = 'monkestation/icons/obj/guns/explorer.dmi'
@@ -111,7 +111,7 @@
 		/obj/item/storage/belt/mining/vendor,
 		/obj/item/stack/medical/ointment = 1,
 		/obj/item/stack/medical/suture = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants,
+		/obj/item/reagent_containers/medipen/deforest/coagulants,
 		)
 
 /datum/voucher_set/explorer/breacher_kit
@@ -286,7 +286,7 @@
 
 /datum/voucher_set/security/utility/barrier
 	name = "Barrier Grenades"
-	description = "Two barrier grenades."
+	description = "Three barrier grenades."
 	icon = 'icons/obj/weapons/grenade.dmi'
 	icon_state = "wallbang"
 	set_items = list(
@@ -421,6 +421,7 @@
 	new /obj/item/taperecorder(src)
 	new /obj/item/tape/random(src)
 	new /obj/item/folder/red(src)
+	new /obj/item/clipboard(src)
 	new /obj/item/storage/box/evidence(src)
 	new /obj/item/toy/crayon/white(src)
 	new /obj/item/binoculars(src)

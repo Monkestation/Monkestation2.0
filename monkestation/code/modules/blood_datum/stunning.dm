@@ -1,6 +1,3 @@
-
-#define COMSIG_BEAM_ENTERED "beam_entered"
-
 /// Status effect tracking being tased by someone!
 /datum/status_effect/tased
 	id = "being_tased"
@@ -285,5 +282,3 @@
 
 /datum/movespeed_modifier/being_tased
 	multiplicative_slowdown = 4
-
-#undef COMSIG_BEAM_ENTERED

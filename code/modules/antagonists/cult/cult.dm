@@ -1,4 +1,4 @@
-#define SUMMON_POSSIBILITIES 3
+	#define SUMMON_POSSIBILITIES 3
 #define CULT_VICTORY 1
 #define CULT_LOSS 0
 #define CULT_NARSIE_KILLED -1
@@ -162,10 +162,8 @@
 	if (HAS_TRAIT(current, TRAIT_CULT_HALO))
 		current.RemoveElement(/datum/element/cult_halo)
 
-/datum/antagonist/cult/on_mindshield(mob/implanter)
-	if(!silent)
-		to_chat(owner.current, span_warning("You feel something interfering with your mental conditioning, but you resist it!"))
-	return
+/datum/antagonist/cult/pre_mindshield(mob/implanter, mob/living/mob_override)
+	return COMPONENT_MINDSHIELD_RESISTED
 
 /datum/antagonist/cult/admin_add(datum/mind/new_owner,mob/admin)
 	give_equipment = FALSE
@@ -263,6 +261,13 @@
 	var/cult_risen = FALSE
 	///Has the cult asceneded, and gotten halos?
 	var/cult_ascendent = FALSE
+
+	/// List that keeps track of which items have been unlocked after a heretic was sacked.
+	var/list/unlocked_heretic_items = list(
+		CURSED_BLADE_UNLOCKED = FALSE,
+		CRIMSON_MEDALLION_UNLOCKED = FALSE,
+		PROTEON_ORB_UNLOCKED = FALSE,
+	)
 
 	///Has narsie been summoned yet?
 	var/narsie_summoned = FALSE

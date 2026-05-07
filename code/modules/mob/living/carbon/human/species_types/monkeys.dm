@@ -73,10 +73,6 @@
 	if(HAS_TRAIT(holder, TRAIT_DWARF))
 		return MONKEY_HEIGHT_DWARF
 	return MONKEY_HEIGHT_MEDIUM
-
-/datum/species/monkey/randomize_features(mob/living/carbon/human/human_mob)
-	randomize_external_organs(human_mob)
-
 /datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
 	// If our hands are not blocked, dont try to bite them
 	if(!HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))

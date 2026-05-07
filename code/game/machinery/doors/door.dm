@@ -65,7 +65,7 @@
 	/// Current elevator status for processing
 	var/elevator_status
 	/// What specific lift ID do we link with?
-	var/elevator_linked_id
+	var/transport_linked_id
 
 /datum/armor/machinery_door
 	melee = 30
@@ -88,7 +88,7 @@
 	air_update_turf(TRUE, TRUE)
 	register_context()
 	if(elevator_mode)
-		if(elevator_linked_id)
+		if(transport_linked_id)
 			elevator_status = LIFT_PLATFORM_LOCKED
 			GLOB.elevator_doors += src
 		else
@@ -546,9 +546,6 @@
 			else if(ishuman(future_pancake)) //For humans
 				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 				future_pancake.emote("scream")
-				future_pancake.Paralyze(100)
-			else if(ismonkey(future_pancake)) //For monkeys
-				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 				future_pancake.Paralyze(100)
 			else //for simple_animals & borgs
 				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)

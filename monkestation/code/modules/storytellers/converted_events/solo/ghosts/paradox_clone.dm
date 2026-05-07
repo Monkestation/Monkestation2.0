@@ -1,7 +1,7 @@
-/datum/round_event_control/antagonist/solo/from_ghosts/paradox_clone
+/datum/round_event_control/antagonist/from_ghosts/paradox_clone
 	name = "Paradox Clone"
 	tags = list(TAG_OUTSIDER_ANTAG, TAG_SPOOKY, TAG_TARGETED)
-	typepath = /datum/round_event/antagonist/solo/ghost/paradox_clone
+	typepath = /datum/round_event/antagonist/ghost/paradox_clone
 	antag_flag = ROLE_PARADOX_CLONE
 	track = EVENT_TRACK_MAJOR
 	antag_datum = /datum/antagonist/paradox_clone
@@ -19,15 +19,15 @@
 	max_occurrences = 2
 	prompted_picking = TRUE
 
-/datum/round_event/antagonist/solo/ghost/paradox_clone
+/datum/round_event/antagonist/ghost/paradox_clone
 	var/mob/living/carbon/human/clone_victim
 	var/mob/living/carbon/human/new_human
 
-/datum/round_event/antagonist/solo/ghost/paradox_clone/setup()
+/datum/round_event/antagonist/ghost/paradox_clone/setup()
 	var/turf/warp_turf = find_maintenance_spawn(TRUE, FALSE)
 	if(!warp_turf)
 		return
-	var/datum/round_event_control/antagonist/solo/cast_control = control
+	var/datum/round_event_control/antagonist/cast_control = control
 	antag_count = cast_control.get_antag_amount()
 	antag_flag = cast_control.antag_flag
 	antag_datum = cast_control.antag_datum
@@ -76,7 +76,7 @@
 	setup = TRUE
 
 
-/datum/round_event/antagonist/solo/ghost/paradox_clone/add_datum_to_mind(datum/mind/antag_mind)
+/datum/round_event/antagonist/ghost/paradox_clone/add_datum_to_mind(datum/mind/antag_mind)
 	var/datum/antagonist/paradox_clone/new_datum = antag_mind.add_antag_datum(/datum/antagonist/paradox_clone)
 	new_datum.original_ref = WEAKREF(clone_victim.mind)
 	new_datum.setup_clone()
@@ -91,7 +91,7 @@
  * Trims through GLOB.player_list and finds a target
  * Returns a single human victim, if none is possible then returns null.
  */
-/datum/round_event/antagonist/solo/ghost/paradox_clone/proc/find_original()
+/datum/round_event/antagonist/ghost/paradox_clone/proc/find_original()
 	var/list/possible_targets = list()
 
 	for(var/mob/living/carbon/human/player in GLOB.player_list)

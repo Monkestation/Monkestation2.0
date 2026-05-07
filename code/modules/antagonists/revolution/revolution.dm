@@ -553,7 +553,7 @@
 		player_mind.add_antag_datum(/datum/antagonist/enemy_of_the_revolution)
 
 		if(player_mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
-			ADD_TRAIT(player, TRAIT_DEFIB_BLACKLISTED, REF(src))
+			ADD_TRAIT(player_mind, TRAIT_DEFIB_BLACKLISTED, REF(src))
 
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
 		if(!(job.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND))
@@ -617,8 +617,7 @@
 /datum/team/revolution/proc/defeat_effects()
 	// If the revolution was quelled, make rev heads unable to be revived through pods
 	for (var/datum/mind/rev_head as anything in ex_headrevs)
-		if(!isnull(rev_head.current))
-			ADD_TRAIT(rev_head.current, TRAIT_DEFIB_BLACKLISTED, REF(src))
+		ADD_TRAIT(rev_head, TRAIT_DEFIB_BLACKLISTED, REF(src))
 
 	for(var/datum/objective/mutiny/head_tracker in objectives)
 		var/mob/living/head_of_staff = head_tracker.target?.current

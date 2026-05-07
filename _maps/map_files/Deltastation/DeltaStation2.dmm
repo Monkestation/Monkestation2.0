@@ -6769,7 +6769,6 @@
 "bCm" = (
 /obj/structure/table/wood,
 /obj/machinery/light/directional/north,
-/obj/item/storage/lockbox/loyalty,
 /obj/structure/secure_safe/directional/east,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
@@ -68039,7 +68038,6 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/box/silver_ids,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "pXW" = (
@@ -97361,7 +97359,7 @@
 /obj/item/toy/figure/md{
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/hypospray/medipen{
+/obj/item/reagent_containers/medipen{
 	pixel_y = -4
 	},
 /obj/machinery/light/directional/south,

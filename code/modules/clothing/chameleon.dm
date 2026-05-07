@@ -990,6 +990,16 @@
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
+/obj/item/radio/headset/chameleon/advanced
+	special_desc = "A chameleon headset employed by the Syndicate in infiltration operations. \
+	This particular model features flashbang protection, and the ability to amplify your volume."
+	command = TRUE
+	freerange = TRUE
+
+/obj/item/radio/headset/chameleon/advanced/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+
 /obj/item/modular_computer/pda/chameleon
 	name = "tablet"
 	var/datum/action/item_action/chameleon/change/tablet/chameleon_action

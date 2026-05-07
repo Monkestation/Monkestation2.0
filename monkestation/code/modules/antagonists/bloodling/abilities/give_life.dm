@@ -36,11 +36,14 @@
 	target_mob.balloon_alert(target_mob, "giving sentience to flesh...")
 
 	var/mob/living/basic/bloodling/proper/our_bloodling = owner
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_notice("Bloodling Thrall")]?",
-	check_jobban = ROLE_BLOODLING_THRALL, poll_time = 10 SECONDS,
-	checked_target = target_mob,
-	alert_pic = target_mob,
-	role_name_text = "Bloodling Thrall",
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		"Do you want to play as [span_notice("Bloodling Thrall")]?",
+		check_jobban = ROLE_BLOODLING_THRALL,
+		poll_time = 10 SECONDS,
+		ignore_category = POLL_IGNORE_BLOODLING_THRALL,
+		checked_target = target_mob,
+		alert_pic = target_mob,
+		role_name_text = "Bloodling Thrall",
 	)
 
 	if(isnull(chosen_one))

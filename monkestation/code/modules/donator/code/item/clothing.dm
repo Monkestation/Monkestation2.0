@@ -512,6 +512,10 @@
 	name = "jackboot kindle kicks"
 	desc = "They look just like kindle kicks! But these are boots!"
 
+/obj/item/clothing/shoes/kindle_kicks/jackboot/Initialize(mapload)
+	. = ..()
+	create_storage(storage_type = /datum/storage/pockets/shoes)
+
 /obj/item/clothing/suit/hooded/mothysmantle
 	name = "mothys mantle"
 	desc = "A thick garment that keeps warm and protects those precious wings from harsh weather, also commonly used during festivities. Feels much heavier than it looks. This one seems as if it were specially tailored for someone and has a hood unlike others of it's type."
@@ -971,3 +975,42 @@
 	inhand_icon_state = null
 	flags_cover = MASKCOVERSEYES
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+
+/obj/item/clothing/suit/costume/tsukihime_executor
+	name = "executor dress"
+	desc = "The Garb of God's Strongest Soldiers."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "tsukihime_executor"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN
+
+/obj/item/clothing/suit/hooded/cloak/red_regal_mantle
+	name = "red regal mantle"
+	desc = "A mantle fit for a king! It also has a 'golden' crown in one of it's pockets."
+	icon_state = "red_regal_mantle"
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	hoodtype = /obj/item/clothing/head/costume/crown/red_regal_mantle // It's funny
+	hood_up_affix = "" // no sprite change, it's just a crown on your head.
+	slot_flags = ITEM_SLOT_NECK
+
+/obj/item/clothing/head/costume/crown/red_regal_mantle
+	desc = "If you were to taste this crown, you'd notice it would taste like painted copper."
+
+/obj/item/clothing/accessory/silver_anchor
+	name = "silver anchor"
+	desc = "A shiny silver anchor connected to a black string."
+	icon_state = "silver_anchor"
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	attachment_slot = NONE
+	slot_flags = ITEM_SLOT_NECK
+
+/obj/item/clothing/neck/cloak/moth_cloak
+	name = "prismatic cloak"
+	desc = "Shiny cloak in the shape of mothic wings. Seems like it can give one an apperance of a moth person...Or hide one's mothic wings."
+	icon_state = "moth_cloak"
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	flags_inv = HIDEMUTWINGS | HIDESUITSTORAGE
