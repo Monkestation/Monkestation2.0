@@ -448,6 +448,12 @@
 	log_admin("[key_name(usr)] [msg]")
 	new_owner.add_antag_datum(src)
 
+/datum/antagonist/vampire/ui_data(mob/user)
+	return list(
+		"vassal_count" = length(vassals),
+		"max_vassals" = max_vampire_vassals(),
+	)
+
 /datum/antagonist/vampire/ui_static_data(mob/user)
 	. = ..()
 

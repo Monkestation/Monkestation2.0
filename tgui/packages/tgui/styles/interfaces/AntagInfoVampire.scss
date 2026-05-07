@@ -1,0 +1,107 @@
+:root {
+    --vamp-blood: oklch(0.65 0.22 22); // vivid crimson — vitae, danger, blood
+    --vamp-blood-dark: oklch(0.52 0.18 22); // deep crimson — darkred headings
+    --vamp-kindred: oklch(
+        0.72 0.15 300
+    ); // violet-purple — kindred society, vassals
+    --vamp-masquerade: oklch(
+        0.82 0.12 78
+    ); // warm gold — the Masquerade, highlights
+    --vamp-arcane: oklch(
+        0.72 0.12 242
+    ); // cool periwinkle — tips, humanity, info
+    --vamp-beast: oklch(0.75 0.17 55); // amber-orange — the Beast, frenzy
+    --vamp-lair: oklch(0.73 0.14 150); // sage green — lair, nature
+    --vamp-curator: oklch(0.79 0.11 340); // rose-pink — the Curator
+    --vamp-muted: oklch(0.58 0.02 240); // cool gray — secondary/quote text
+    --vamp-ember: oklch(0.84 0.13 96); // warm yellow — candelabrum
+}
+
+// Semantic color helpers
+.vamp-blood {
+    color: var(--vamp-blood);
+}
+.vamp-blood-dark {
+    color: var(--vamp-blood-dark);
+}
+.vamp-kindred {
+    color: var(--vamp-kindred);
+}
+.vamp-masquerade {
+    color: var(--vamp-masquerade);
+}
+.vamp-arcane {
+    color: var(--vamp-arcane);
+}
+.vamp-beast {
+    color: var(--vamp-beast);
+}
+.vamp-lair {
+    color: var(--vamp-lair);
+}
+.vamp-curator {
+    color: var(--vamp-curator);
+}
+.vamp-muted {
+    color: var(--vamp-muted);
+}
+.vamp-ember {
+    color: var(--vamp-ember);
+}
+
+// Callout boxes
+.vamp-tip {
+    font-size: 13px;
+    border-left: 3px solid var(--vamp-arcane);
+    border-radius: 0 4px 4px 0;
+    padding: 6px 10px;
+    color: var(--vamp-arcane);
+    background-color: oklch(0.72 0.12 242 / 0.07);
+}
+
+.vamp-gold-note {
+    font-size: 13px;
+    border-left: 3px solid var(--vamp-masquerade);
+    border-radius: 0 4px 4px 0;
+    padding: 6px 10px;
+    color: var(--vamp-masquerade);
+    background-color: oklch(0.82 0.12 78 / 0.07);
+}
+
+.vamp-danger-box {
+    border: 2px solid var(--vamp-blood);
+    border-radius: 8px;
+    padding: 10px;
+    background-color: oklch(0.65 0.22 22 / 0.1);
+}
+
+// Top navigation tab bar
+.vamp-top-tabs {
+    display: flex;
+    width: 100%;
+}
+
+.vamp-top-tab {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    padding: 10px 12px;
+    font-family:
+        "Cinzel Decorative", "Uncial Antiqua", "Old English Text MT", serif;
+    text-shadow: 0 1px 0 oklch(0 0 0 / 0.6);
+
+    &--featured {
+        font-size: 30px;
+    }
+}
+
+// Guide section sidebar tab spacing
+.vamp-guide-tab {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
