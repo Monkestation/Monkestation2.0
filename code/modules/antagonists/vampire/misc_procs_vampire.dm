@@ -442,7 +442,5 @@
 	for(var/datum/mind/crew as anything in get_crewmember_minds())
 		if(QDELETED(crew.current) || crew.current.stat == DEAD || !crew.assigned_role)
 			continue
-		if(crew.has_antag_datum(/datum/antagonist/vassal))
-			continue
 		if(crew.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
 			.++
