@@ -87,10 +87,8 @@
 	/// instead of displaying multiple items of the same type, display them as numbered contents
 	var/numerical_stacking = FALSE
 
-	/// storage display object
-	var/atom/movable/screen/storage/boxes
-	/// close button object
-	var/atom/movable/screen/close/closer
+	/// Associated list that keeps track of all storage UI datums per person.
+	VAR_PRIVATE/list/datum/storage_interface/storage_interfaces = null
 
 	/// maximum amount of columns a storage object can have
 	var/screen_max_columns = 7
@@ -120,9 +118,6 @@
 	set_parent(parent)
 	set_real_location(parent)
 
-	boxes = new(null, null, src)
-	closer = new(null, null, src)
-
 	src.max_slots = max_slots || src.max_slots
 	src.max_specific_storage = max_specific_storage || src.max_specific_storage
 	src.max_total_storage = max_total_storage || src.max_total_storage
@@ -132,22 +127,15 @@
 	src.collection_mode = collection_mode || src.collection_mode
 	src.attack_hand_interact = attack_hand_interact || src.attack_hand_interact
 
-	orient_to_hud()
-
 /datum/storage/Destroy()
-	parent = null
-	real_location = null
-
 	for(var/mob/person as anything in is_using)
-		if(person.active_storage == src)
-			person.active_storage = null
-			person.client?.screen -= boxes
-			person.client?.screen -= closer
-
-	QDEL_NULL(boxes)
-	QDEL_NULL(closer)
+		hide_contents(person)
 
 	is_using.Cut()
+	QDEL_LIST_ASSOC_VAL(storage_interfaces)
+
+	parent = null
+	real_location = null
 
 	return ..()
 
@@ -919,68 +907,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	return toreturn
 
-/// Updates the storage UI to fit all objects inside storage.
-/datum/storage/proc/orient_to_hud()
-	var/adjusted_contents = real_location.contents.len
-
-	//Numbered contents display
-	var/list/datum/numbered_display/numbered_contents
-	if(numerical_stacking)
-		numbered_contents = process_numerical_display()
-		adjusted_contents = numbered_contents.len
-	//if the ammount of contents reaches some multiplier of the final column (and its not the last slot), let the player view an additional row
-	var/additional_row = (!(adjusted_contents % screen_max_columns) && adjusted_contents < max_slots)
-
-	var/columns = clamp(max_slots, 1, screen_max_columns)
-	var/rows = clamp(CEILING(adjusted_contents / columns, 1) + additional_row, 1, screen_max_rows)
-
-	orient_item_boxes(rows, columns, numbered_contents)
-
-/// Generates the actual UI objects, their location, and alignments whenever we open storage up.
-/datum/storage/proc/orient_item_boxes(rows, cols, list/obj/item/numerical_display_contents)
-	boxes.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x+cols-1]:[screen_pixel_x],[screen_start_y+rows-1]:[screen_pixel_y]"
-	var/current_x = screen_start_x
-	var/current_y = screen_start_y
-	var/turf/our_turf = get_turf(real_location)
-
-	if(islist(numerical_display_contents))
-		for(var/type in numerical_display_contents)
-			var/datum/numbered_display/numberdisplay = numerical_display_contents[type]
-
-			var/obj/item/display_sample = numberdisplay.sample_object
-			display_sample.mouse_opacity = MOUSE_OPACITY_OPAQUE
-			display_sample.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
-			display_sample.maptext = MAPTEXT("<font color='white'>[(numberdisplay.number > 1)? "[numberdisplay.number]" : ""]</font>")
-			SET_PLANE(display_sample, ABOVE_HUD_PLANE, our_turf)
-
-			current_x++
-
-			if(current_x - screen_start_x >= cols)
-				current_x = screen_start_x
-				current_y++
-
-				if(current_y - screen_start_y >= rows)
-					break
-
-	else
-		for(var/obj/item in real_location)
-			item.mouse_opacity = MOUSE_OPACITY_OPAQUE
-			item.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
-			item.maptext = ""
-			item.plane = ABOVE_HUD_PLANE
-			SET_PLANE(item, ABOVE_HUD_PLANE, our_turf)
-
-			current_x++
-
-			if(current_x - screen_start_x >= cols)
-				current_x = screen_start_x
-				current_y++
-
-				if(current_y - screen_start_y >= rows)
-					break
-
-	closer.screen_loc = "[screen_start_x + cols]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
-
 /// Signal handler to open up the storage when we recieve a signal.
 /datum/storage/proc/open_storage_on_signal(datum/source, mob/to_show)
 	SIGNAL_HANDLER
@@ -1045,10 +971,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 
 /// Async version of putting something into a mobs hand.
-/datum/storage/proc/put_in_hands_async(mob/toshow, obj/item/toremove)
-	if(!toshow.put_in_hands(toremove))
+/datum/storage/proc/put_in_hands_async(mob/to_show, obj/item/toremove)
+	if(!to_show.put_in_hands(toremove))
 		if(!silent)
-			toremove.balloon_alert(toshow, "fumbled!")
+			toremove.balloon_alert(to_show, "fumbled!")
 		return TRUE
 
 /// Signal handler for whenever a mob walks away with us, close if they can't reach us.
@@ -1089,66 +1015,80 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		if(user.active_storage == src && user.client)
 			seeing += user
 		else
-			is_using -= user
+			hide_contents(user)
 	return seeing
 
 /**
  * Show our storage to a mob.
  *
- * @param mob/toshow the mob to show the storage to
+ * @param mob/to_show - the mob to show the storage to
  *
  * @returns FALSE if the show failed, TRUE otherwise
  */
-/datum/storage/proc/show_contents(mob/toshow)
-	if(!toshow.client)
+/datum/storage/proc/show_contents(mob/to_show)
+	if(!to_show.client)
 		return FALSE
 
 	// You can only inspect hidden contents if you're an observer
-	if(!isobserver(toshow) && !display_contents)
+	if(!isobserver(to_show) && !display_contents)
 		return FALSE
 
-	if(toshow.active_storage != src && (toshow.stat == CONSCIOUS))
+	if(to_show.active_storage != src && (to_show.stat == CONSCIOUS))
 		for(var/obj/item/thing in real_location)
-			if(thing.on_found(toshow))
-				toshow.active_storage?.hide_contents(toshow)
+			if(thing.on_found(to_show))
+				to_show.active_storage.hide_contents(to_show)
 
-	toshow.active_storage?.hide_contents(toshow)
+	if(to_show.active_storage)
+		to_show.active_storage.hide_contents(to_show)
 
-	toshow.active_storage = src
+	to_show.active_storage = src
 
 	if(ismovable(real_location))
 		var/atom/movable/movable_loc = real_location
 		movable_loc.become_active_storage(src)
 
-	orient_to_hud()
+	LAZYINITLIST(storage_interfaces)
 
-	is_using |= toshow
+	var/ui_style = ui_style2icon(to_show.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 
-	toshow.client.screen |= boxes
-	toshow.client.screen |= closer
-	toshow.client.screen |= real_location.contents
+	if (isnull(storage_interfaces[to_show]))
+		storage_interfaces[to_show] = new /datum/storage_interface(ui_style, src)
+
+	orient_storage()
+
+	is_using |= to_show
+
+	to_show.client.screen |= storage_interfaces[to_show].list_ui_elements()
+	to_show.client.screen |= real_location.contents
+
 	return TRUE
-
 /**
  * Hide our storage from a mob.
  *
- * @param mob/toshow the mob to hide the storage from
+ * @param mob/to_show the mob to hide the storage from
  */
-/datum/storage/proc/hide_contents(mob/toshow)
-	if(!toshow.client)
+/datum/storage/proc/hide_contents(mob/to_hide)
+	if(!to_hide.client)
 		return TRUE
-	if(toshow.active_storage == src)
-		toshow.active_storage = null
+	if(to_hide.active_storage == src)
+		to_hide.active_storage = null
 
 	if(!length(is_using) && ismovable(real_location))
 		var/atom/movable/movable_loc = real_location
 		movable_loc.lose_active_storage(src)
 
-	is_using -= toshow
+	if (isnull(storage_interfaces[to_hide]))
+		return TRUE
 
-	toshow.client.screen -= boxes
-	toshow.client.screen -= closer
-	toshow.client.screen -= real_location.contents
+	is_using -= to_hide
+
+	if(to_hide.client)
+		to_hide.client.screen -= storage_interfaces[to_hide].list_ui_elements()
+		to_hide.client.screen -= real_location.contents
+	QDEL_NULL(storage_interfaces[to_hide])
+	storage_interfaces -= to_hide
+
+	return TRUE
 
 /datum/storage/proc/action_trigger(datum/source, datum/action/triggered)
 	SIGNAL_HANDLER
@@ -1156,6 +1096,35 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	toggle_collection_mode(triggered.owner)
 
 	return COMPONENT_ACTION_BLOCK_TRIGGER
+
+/// Updates views of all objects in storage and stretches UI to appropriate size
+/datum/storage/proc/orient_storage()
+	var/adjusted_contents = length(real_location.contents)
+	var/list/datum/numbered_display/numbered_contents
+	if(numerical_stacking)
+		numbered_contents = process_numerical_display()
+		adjusted_contents = length(numbered_contents)
+
+	// If the ammount of contents reaches some multiplier of the final column (and its not the last slot), let the player view an additional row.
+	var/additional_row = (!(adjusted_contents % screen_max_columns) && adjusted_contents < max_slots)
+
+	var/columns = clamp(max_slots, 1, screen_max_columns)
+	var/rows = clamp(ceil(adjusted_contents / columns) + additional_row, 1, screen_max_rows)
+
+	for (var/mob/ui_user as anything in storage_interfaces)
+		if (isnull(storage_interfaces[ui_user]))
+			continue
+		storage_interfaces[ui_user].update_position(
+			screen_start_x,
+			screen_pixel_x,
+			screen_start_y,
+			screen_pixel_y,
+			columns,
+			rows,
+			ui_user,
+			real_location,
+			numbered_contents,
+		)
 
 /datum/storage/proc/action_deleted(datum/source)
 	SIGNAL_HANDLER

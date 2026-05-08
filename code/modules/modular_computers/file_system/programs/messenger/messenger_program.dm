@@ -714,7 +714,7 @@
 		var/photo_message = signal.data["photo"] ? " (<a href='byond://?src=[REF(src)];choice=[photo_href];skiprefresh=1;target=[REF(chat)]'>Photo Attached</a>)" : ""
 //Check if the mob can hear or has hard of hearing and rolls a 25% chance to receive the message
 		var/list/ignored_mobs = list()
-		if(!messaged_mob.can_hear() || (HAS_TRAIT(messaged_mob, TRAIT_HARD_OF_HEARING) && rand(0, 3) != 0))
+		if(HAS_TRAIT(messaged_mob, TRAIT_DEAF) || (HAS_TRAIT(messaged_mob, TRAIT_HARD_OF_HEARING) && rand(0, 3) != 0))
 			to_chat(messaged_mob, span_infoplain("You feel your PDA vibrate."))
 			receievers -= messaged_mob
 			ignored_mobs += messaged_mob

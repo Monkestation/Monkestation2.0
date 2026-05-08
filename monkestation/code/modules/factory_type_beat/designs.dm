@@ -60,7 +60,7 @@
 	name = "Big Manipulator Board"
 	desc = "The circuit board for a big manipulator."
 	id = "big_manipulator"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE | COLONY_FABRICATOR
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE | COLONY_FABRICATOR | IMPRINTER
 	build_path = /obj/item/circuitboard/machine/big_manipulator
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
