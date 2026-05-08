@@ -534,33 +534,50 @@
 
 	// Long range
 /obj/item/healthanalyzer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION) && can_see(user, interacting_with, 15))
-		if(istype(interacting_with, /mob/living))
-			if((get_dist(user, interacting_with) > 1) && works_from_distance)
-				interacting_with.Beam(user, icon='icons/effects/beam_advanced.dmi', icon_state = "med_scan", time = 5)
-				playsound(src, 'sound/items/pip.ogg', 25, FALSE, 2)
-				return attack(interacting_with, user)
+	if(!works_from_distance)
+		return NONE
+
+	if(!istype(interacting_with, /mob/living))
+		return NONE
+
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION) || !can_see(user, interacting_with, 15))
+		return NONE
+
+	interacting_with.Beam(user, icon = 'icons/effects/beam_advanced.dmi', icon_state = "med_scan", time = 0.5 SECONDS)
+	playsound(src, 'sound/items/pip.ogg', 25, FALSE, 2)
+	attack(interacting_with, user)
+
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/healthanalyzer/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION) && can_see(user, interacting_with, 15))
-		if(istype(interacting_with, /mob/living))
-			if((get_dist(user, interacting_with) > 1) && works_from_distance)
-				interacting_with.Beam(user, icon='icons/effects/beam_advanced.dmi', icon_state = "med_scan", time = 5)
-				playsound(src, 'sound/items/pip.ogg', 25, FALSE, 2)
-				return attack_secondary(interacting_with, user, modifiers)
+	if(!works_from_distance)
+		return NONE
 
+	if(!istype(interacting_with, /mob/living))
+		return NONE
+
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION) || !can_see(user, interacting_with, 15))
+		return NONE
+
+	interacting_with.Beam(user, icon = 'icons/effects/beam_advanced.dmi', icon_state = "med_scan", time = 0.5 SECONDS)
+	playsound(src, 'sound/items/pip.ogg', 25, FALSE, 2)
+	attack_secondary(interacting_with, user)
+
+	return ITEM_INTERACT_SUCCESS
+
+///////////////////////////////////////////
 
 /obj/item/healthanalyzer/range
 	name = "remote health analyzer"
 	desc = "A hand-held medical scanner for detecting patient's vital signs from a distance. Limited edition from NT medical department."
-	icon = 'monkestation/icons/obj/advanced_device.dmi'
+	icon = 'icons/obj/advanced_device.dmi'
 	icon_state = "health_range"
 	works_from_distance = TRUE
 	custom_premium_price = PAYCHECK_CREW * 6
 
 /obj/item/healthanalyzer/advanced
 	name = "advanced health analyzer"
-	icon = 'monkestation/icons/obj/advanced_device.dmi'
+	icon = 'icons/obj/advanced_device.dmi'
 	icon_state = "health_adv"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
 	works_from_distance = TRUE
@@ -609,7 +626,7 @@
 /obj/item/healthanalyzer/cyborg
 	name = "remote health analyzer"
 	desc = "A hand-held medical scanner for detecting patient's vital signs from a distance. Limited edition from NT medical department."
-	icon = 'monkestation/icons/obj/advanced_device.dmi'
+	icon = 'icons/obj/advanced_device.dmi'
 	icon_state = "health_range"
 	works_from_distance = TRUE
 

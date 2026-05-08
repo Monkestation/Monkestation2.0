@@ -324,7 +324,7 @@
 /obj/item/multitool/tricorder
 	name = "Tricorder"
 	desc = "A multifunctional device that can perform a wide range of tasks. Some functionality can be expanded using highly specialized analyzers."
-	icon = 'monkestation/icons/obj/advanced_device.dmi'
+	icon = 'icons/obj/advanced_device.dmi'
 	icon_state = "tricorder"
 	worn_icon_state = "electronic"
 	flags_1 = CONDUCT_1
@@ -386,13 +386,13 @@
 	add_fingerprint(user)
 
 	// Health scan
-	if (medical_tricorder)
+	if(medical_tricorder)
 		healthscan(user, M)
 	else
 		lesserhealthscan(user, M)
 
 	// Rad scan
-	if (SEND_SIGNAL(M, COMSIG_GEIGER_COUNTER_SCAN, user, src) & COMSIG_GEIGER_COUNTER_SCAN_SUCCESSFUL)
+	if(SEND_SIGNAL(M, COMSIG_GEIGER_COUNTER_SCAN, user, src) & COMSIG_GEIGER_COUNTER_SCAN_SUCCESSFUL)
 		return
 	to_chat(user, span_notice("[isliving(M) ? "Subject" : "Target"] is free of radioactive contamination."))
 	return
@@ -400,10 +400,9 @@
 /obj/item/multitool/tricorder/attack_secondary(mob/living/victim, mob/living/user, params)
 	add_fingerprint(user)
 	// Chem scan carbon
-	if (medical_tricorder)
-		if(!user.is_blind())
-			chemscan(user, victim)
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(medical_tricorder && !user.is_blind())
+		chemscan(user, victim)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/multitool/tricorder/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -456,7 +455,7 @@
 		return ITEM_INTERACT_SUCCESS
 
 	// Chem scan item
-	if (chemical_tricorder)
+	if(chemical_tricorder)
 		if(is_reagent_container(interacting_with))
 			var/obj/item/reagent_containers/cont = interacting_with
 			if(!LAZYLEN(cont.reagents.reagent_list))

@@ -638,7 +638,7 @@
 /obj/item/blood_filter/advanced
 	name = "bio-corrector"
 	desc = "The latest medical prototype with a bone gel synthesizer. It sets bones, cleanses blood and lymph. The application of bone gel is possible only with invasive intervention."
-	icon = 'monkestation/icons/obj/advanced_device.dmi'
+	icon = 'icons/obj/advanced_device.dmi'
 	icon_state = "biocorrector"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -677,7 +677,7 @@
 /obj/item/breathing_bag
 	name = "Ambu bag"
 	desc = "Also known as a breathing bag, it is a mechanical manual device for performing artificial lung ventilation."
-	icon = 'monkestation/icons/obj/advanced_device.dmi'
+	icon = 'icons/obj/advanced_device.dmi'
 	icon_state = "breathing_bag"
 	lefthand_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
