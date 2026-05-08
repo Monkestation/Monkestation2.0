@@ -100,3 +100,27 @@
   - bugfix: advanced chameleon headset now actually gives you ear protection like
       it says it does
   - rscadd: big manipulator circuit can be printed using circuit impriter
+2026-05-08:
+  Absolucy:
+  - rscadd: Added a player count and the IC date/year to the statpanel.
+  Cujo:
+  - rscadd: Medical spray cans can now spray more units at once
+  - bugfix: Ghosts are no longer able to turn on PDAs and laptops
+  LettuceGuardian:
+  - rscadd: NT rep gets a departmental budget card.
+  Mantlecrawler:
+  - bugfix: Hyposprays no longer brick doafters when attempting to draw blood from
+      a living mob
+  Runian:
+  - spellcheck: Laws have been uploaded via the OneHuman law module now end with a
+      period.
+  - spellcheck: Many AI law modules that give a zeroth law have split into multiple
+      short sentences rather than being a single run-on sentence.
+  - bugfix: The ability to locate APCs with an omnitool's multitool for cyborgs have
+      been restored.
+  Sakaniko:
+  - qol: Added an audio notification whenever you receive a law change as AI.
+  - image: Change the AI's law panel to match the rest of the current UI.
+  - image: Adjusted the colour of hacked laws to be easier to see on dark UI.
+  SirNightKnight:
+  - bugfix: fixed white gloves deleting on drop.
