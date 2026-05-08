@@ -13,9 +13,6 @@ GLOBAL_LIST_EMPTY(facial_hair_gradients_list) //stores /datum/sprite_accessory/f
 GLOBAL_LIST_EMPTY(underwear_list) //stores /datum/sprite_accessory/underwear indexed by name
 GLOBAL_LIST_EMPTY(underwear_m) //stores only underwear name
 GLOBAL_LIST_EMPTY(underwear_f) //stores only underwear name
-GLOBAL_LIST_EMPTY(ornithid_underwear) //Same as above, but for ornithids only.
-GLOBAL_LIST_EMPTY(ornithid_underwear_m)
-GLOBAL_LIST_EMPTY(ornithid_underwear_f)
 	//Undershirts
 GLOBAL_LIST_EMPTY(undershirt_list) //stores /datum/sprite_accessory/undershirt indexed by name
 GLOBAL_LIST_EMPTY(undershirt_m)  //stores only undershirt name

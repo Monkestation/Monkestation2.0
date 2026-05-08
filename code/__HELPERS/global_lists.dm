@@ -58,7 +58,6 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/arm_wingsopen, GLOB.arm_wingsopen_list) //NON-MODULE CHANGE
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/avian, GLOB.tails_list_avian) //NON-MODULE CHANGE
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/plumage, GLOB.avian_ears_list) //NON-MODULE CHANGE
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/ornithid_underwear, GLOB.ornithid_underwear_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_tail, GLOB.oni_tail_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_wings, GLOB.oni_wings_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_horns, GLOB.oni_horns_list) //Monkestation Addition
