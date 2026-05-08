@@ -471,14 +471,14 @@
 				readout += "[output_string] will protect the wearer's [english_list(parts_covered)] from [span_tooltip("The extremely low pressure is the biggest danger posed by the vacuum of space.", "low pressure")]."
 
 		var/heat_prot
-		switch (max_heat_protection_temperature)
-			if (400 to 1000)
+		switch(max_heat_protection_temperature)
+			if(400 to 1000)
 				heat_prot = "minor"
-			if (1001 to 1600)
+			if(1001 to 1600)
 				heat_prot = "some"
-			if (1601 to 35000)
+			if(1601 to 35000)
 				heat_prot = "extreme"
-		if (heat_prot)
+		if(heat_prot)
 			. += "[src] offers the wearer [heat_prot] protection from heat, up to [max_heat_protection_temperature] kelvin."
 
 		if(min_cold_protection_temperature)
