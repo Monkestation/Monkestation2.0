@@ -58,7 +58,7 @@ GLOBAL_LIST_INIT(store_masks, generate_store_items(/datum/store_item/mask))
 *	JOB-LOCKED
 */
 
-/datum/loadout_item/mask/balaclavathermal
+/datum/store_item/mask/balaclavathermal
 	name = "Thermal Balaclava"
 	item_path = /obj/item/clothing/mask/thermal_balaclava
 	item_cost = 4000
