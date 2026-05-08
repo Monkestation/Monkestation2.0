@@ -69,6 +69,11 @@ GLOBAL_LIST_INIT(loadout_masks, generate_loadout_items(/datum/loadout_item/mask)
 *	JOB-LOCKED
 */
 
+/datum/loadout_item/mask/balaclavathermal
+	name = "Thermal Balaclava"
+	item_path = /obj/item/clothing/mask/thermal_balaclava
+	restricted_roles = list(JOB_SECURITY_ASSISTANT, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY, JOB_BLUESHIELD)
+
 /datum/loadout_item/mask/balaclavatac
 	name = "Tactical Balaclava"
 	item_path = /obj/item/clothing/mask/thermal_balaclava/alt
