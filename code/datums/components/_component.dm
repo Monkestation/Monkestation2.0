@@ -457,11 +457,10 @@
 		target.ClearFromParent()
 	target.parent = src
 	var/result = target.PostTransfer()
-	switch(result)
-		if(COMPONENT_INCOMPATIBLE)
-			var/c_type = target.type
-			qdel(target)
-			CRASH("Incompatible [c_type] transfer attempt to a [type]!")
+	if(result == COMPONENT_INCOMPATIBLE)
+		var/c_type = target.type
+		qdel(target)
+		CRASH("Incompatible [c_type] transfer attempt to a [type]!")
 
 	if(target == AddComponent(target))
 		target._JoinParent()

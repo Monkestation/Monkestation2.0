@@ -14,11 +14,15 @@
 	/// With what color will we paint with
 	var/paint_color = COLOR_WHITE
 	/// How many uses are left
-	var/paintleft = 10
+	var/paintleft = 50
 
 /obj/item/paint/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/falling_hazard, damage = 20, wound_bonus = 5, hardhat_safety = TRUE, crushes = FALSE) // You ever watched home alone?
+
+/obj/item/paint/examine(mob/user)
+	. = ..()
+	. += "It currently has [paintleft] [paintleft == 1 ? "use" : "uses"] left."
 
 /obj/item/paint/red
 	name = "red paint"
@@ -59,9 +63,11 @@
 	gender = PLURAL
 	name = "adaptive paint"
 	icon_state = "paint_neutral"
+	var/static/list/possible_colors
 
 /obj/item/paint/anycolor/attack_self(mob/user)
-	var/list/possible_colors = list(
+	if(!possible_colors)
+		possible_colors = list(
 		"black" = image(icon = src.icon, icon_state = "paint_black"),
 		"blue" = image(icon = src.icon, icon_state = "paint_blue"),
 		"green" = image(icon = src.icon, icon_state = "paint_green"),
@@ -70,6 +76,7 @@
 		"white" = image(icon = src.icon, icon_state = "paint_white"),
 		"yellow" = image(icon = src.icon, icon_state = "paint_yellow")
 		)
+
 	var/picked_color = show_radial_menu(user, src, possible_colors, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 38, require_near = TRUE)
 	switch(picked_color)
 		if("black")

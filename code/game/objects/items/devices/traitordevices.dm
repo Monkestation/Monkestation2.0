@@ -438,6 +438,11 @@ effective or pretty fucking useless.
 		return NONE
 	if(!tool.toolspeed)
 		return ITEM_INTERACT_BLOCKING
+//monkestation edit start
+	if(!construction_checks(user))
+		return NONE
+//monkestation edit end
+
 	balloon_alert(user, "constructing...")
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 20))
 		return ITEM_INTERACT_BLOCKING
@@ -470,6 +475,12 @@ effective or pretty fucking useless.
 /obj/item/storage/toolbox/emergency/turret/nukie/explosives/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/grenade/c4/x4(src)
+
+//monkestation edit start
+///Put any extra checks you want to do before constructing here
+/obj/item/storage/toolbox/emergency/turret/proc/construction_checks(mob/living/user)
+	return TRUE
+//monkestation edit end
 
 /obj/machinery/porta_turret/syndicate/toolbox
 	icon_state = "toolbox_off"

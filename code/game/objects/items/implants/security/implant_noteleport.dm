@@ -21,7 +21,7 @@
 	RegisterSignal(target, COMSIG_MOB_PRE_JAUNT, PROC_REF(on_jaunt))
 	return TRUE
 
-/obj/item/implant/teleport_blocker/removed(mob/target, silent = FALSE, special = FALSE)
+/obj/item/implant/teleport_blocker/removed(mob/target, silent = FALSE, special = FALSE, forced = FALSE)
 	. = ..()
 	if(!. || !isliving(target))
 		return FALSE

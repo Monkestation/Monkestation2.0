@@ -69,6 +69,8 @@
 #define TRAIT_REVENANT_BLIGHT_PROTECTION "revenant_blight_protection"
 /// Caused by temporary deafness, makes everyone sounds like they are whispering
 #define TRAIT_HARD_OF_HEARING "hard_of_hearing"
+/// Prevents uplink use by mobs with this trait
+#define TRAIT_UPLINK_USE_BLOCKED "uplink_use_blocked"
 
 // Traits related to food
 /// Trait for Fire Burps

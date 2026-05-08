@@ -6,7 +6,7 @@
 	icon = 'icons/obj/implants.dmi'
 	icon_state = "generic" //Shows up as the action button icon
 	item_flags = ABSTRACT | DROPDEL
-	resistance_flags = INDESTRUCTIBLE
+	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	// This gives the user an action button that allows them to activate the implant.
 	// If the implant needs no action button, then null this out.
 	// Or, if you want to add a unique action button, then replace this.
@@ -61,7 +61,8 @@
  */
 /obj/item/implant/proc/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	if(SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTING, args) & COMPONENT_STOP_IMPLANTING)
-		return
+		return FALSE
+
 	LAZYINITLIST(target.implants)
 	if(!force && !can_be_implanted_in(target))
 		return FALSE
@@ -123,7 +124,10 @@
  * * silent - unused here
  * * special - unused here
  */
-/obj/item/implant/proc/removed(mob/living/source, silent = FALSE, special = 0)
+/obj/item/implant/proc/removed(mob/living/source = imp_in, silent = FALSE, special = FALSE, forced = FALSE)
+	if((SEND_SIGNAL(src, COMSIG_IMPLANT_CHECK_REMOVAL, source, silent, special) & COMPONENT_STOP_IMPLANT_REMOVAL) && !forced) //we still want to send the signal even if forced
+		return FALSE
+
 	moveToNullspace()
 	imp_in = null
 	source.implants -= src
@@ -139,7 +143,7 @@
 
 /obj/item/implant/Destroy()
 	if(imp_in)
-		removed(imp_in)
+		removed(imp_in, forced = TRUE) //monkestation edit: adds forced
 	return ..()
 
 //Called when the implant begins to be removed surgicallly

@@ -89,3 +89,28 @@
 
 /// How much heretic Mark of Rust mark does to items
 #define RUST_MARK_DAMAGE	50
+
+// Gang member
+#define IS_GANGMEMBER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/gang_member))
+///Checks if a gangmember antag datum's rank is >= the input gang rank level
+#define MEETS_GANG_RANK(antag_datum, rank_to_meet) (antag_datum?.rank >= rank_to_meet)
+///Check if a mob is in the specified gang
+#define IS_IN_GANG(mob, gang) (mob?.mind in gang?.members)
+///Check if a gang antag datum is in a gang
+#define IS_DATUM_IN_GANG(datum, gang) (datum?.gang_team == gang)
+
+#define GANG_RANK_MEMBER 0
+#define GANG_RANK_LIEUTENANT 1
+#define GANG_RANK_BOSS 2
+
+///The maximum number of lieutenants a gang can have
+#define MAX_LIEUTENANTS 2
+
+///How much TC do gang bosses start with
+#define GANG_BOSS_STARTING_TC 25
+
+///How much TC do gang lieutenants start with
+#define GANG_LIEUTENANT_STARTING_TC 10
+
+//temp define for alt compiles
+#define PAINT_GANGS 1

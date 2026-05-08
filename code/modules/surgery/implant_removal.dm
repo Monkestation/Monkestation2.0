@@ -50,6 +50,17 @@
 
 /datum/surgery_step/extract_implant/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(implant)
+//monkestation edit start
+		if(!implant.removed(target))
+			display_results(
+				user,
+				target,
+				span_notice("You fail to remove [implant] from [target]'s [target_zone]."),
+				span_notice("[user] fails to remove [implant] from [target]'s [target_zone]!"),
+				span_notice("[user] fails to remove something from [target]'s [target_zone]!"),
+			)
+			return FALSE
+//monkestation edit end
 		display_results(
 			user,
 			target,
@@ -62,7 +73,6 @@
 			implant.on_surgical_removal_complete()
 
 		display_pain(target, "You can feel your [implant.name] pulled out of you!")
-		implant.removed(target)
 
 		var/obj/item/implantcase/case
 		for(var/obj/item/implantcase/implant_case in user.held_items)

@@ -6,10 +6,11 @@
 	/// If specified, the equip sound will use this mixer channel.
 	var/equip_mixer_channel = CHANNEL_SOUND_EFFECTS
 
+///Adjust an items weight class by an amount, with the end result being capped between min and max_weight
 /obj/item/proc/adjust_weight_class(amt, min_weight = WEIGHT_CLASS_TINY, max_weight = WEIGHT_CLASS_GIGANTIC)
 	if(!amt || !isnum(amt))
 		stack_trace("Attempted to adjust weight class by an invalid value ([amt])")
 		return FALSE
 	var/old_w_class = w_class
-	w_class = clamp(w_class + amt, min_weight, max_weight)
+	update_weight_class(clamp(w_class + amt, min_weight, max_weight))
 	return w_class != old_w_class

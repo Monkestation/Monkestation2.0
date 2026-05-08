@@ -167,6 +167,7 @@
 	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_ROBOTICIST)
 	cost = 5
 	surplus = 50
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/role_restricted/springlock_module
 	name = "Heavily Modified Springlock MODsuit Module"
@@ -189,6 +190,7 @@
 	cost = 14
 	item = /obj/item/storage/box/hug/reverse_revolver
 	restricted_roles = list(JOB_CLOWN)
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/role_restricted/pressure_mod
 	name = "Kinetic Accelerator Pressure Mod"
@@ -219,6 +221,7 @@
 	item = /obj/item/storage/box/syndie_kit/laser_arm
 	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
 	surplus = 20
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/role_restricted/chemical_gun
 	name = "Reagent Dartgun"
@@ -284,6 +287,7 @@
 	cost = 25
 	surplus = 0
 	restricted_roles = list(JOB_CHAPLAIN)
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/role_restricted/concealed_weapon_bay
 	name = "Concealed Weapon Bay"
@@ -296,6 +300,7 @@
 	cost = 3
 	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
 	surplus = 15
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/role_restricted/spider_injector
 	name = "Australicus Slime Mutator"

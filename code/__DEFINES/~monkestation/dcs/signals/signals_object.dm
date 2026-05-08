@@ -6,3 +6,8 @@
 
 ///sent by the ark SS whenever an anchoring crystal is created (/obj/structure/destructible/clockwork/anchoring_crystal/charged_crystal)
 #define COMSIG_ANCHORING_CRYSTAL_CREATED "anchoring_crystal_created"
+
+/// called on implants, before an implant has been removed: (mob/living/source, silent, special)
+#define COMSIG_IMPLANT_CHECK_REMOVAL "pre_implant_removed"
+	/// Stops the call of removed() on the implant
+	#define COMPONENT_STOP_IMPLANT_REMOVAL (1<<0)

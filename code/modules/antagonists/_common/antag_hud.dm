@@ -7,12 +7,12 @@ GLOBAL_LIST_EMPTY_TYPED(has_antagonist_huds, /datum/atom_hud/alternate_appearanc
 	///The key or list of keys that are valid to see this hud, if unset then it will display to everyone with the antag datum like normal
 	var/list/valid_keys
 
-/datum/atom_hud/alternate_appearance/basic/has_antagonist/New(key, image/I, antag_datum_type, valid_keys) //monkestation edit: adds valid_keys
+/datum/atom_hud/alternate_appearance/basic/has_antagonist/New(key, image/img, antag_datum_type, valid_keys)
 	if(antag_datum_type)
 		src.antag_datum_type = antag_datum_type
 	src.valid_keys = valid_keys
 	GLOB.has_antagonist_huds += src
-	return ..(key, I, NONE)
+	return ..(key, img, NONE)
 
 /datum/atom_hud/alternate_appearance/basic/has_antagonist/Destroy()
 	GLOB.has_antagonist_huds -= src

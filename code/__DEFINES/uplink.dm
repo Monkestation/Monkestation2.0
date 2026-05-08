@@ -9,6 +9,9 @@
 /// This item is purchasable to clown ops
 #define UPLINK_CLOWN_OPS (1 << 2)
 
+/// This item is purchasable to gangs
+#define UPLINK_GANGS (1 << 5)
+
 /// the uplink flag for contractors
 #define UPLINK_CONTRACTORS (1 << 6)
 

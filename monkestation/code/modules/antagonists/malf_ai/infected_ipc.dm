@@ -6,6 +6,7 @@
 	antag_hud_name = "traitor"
 	suicide_cry = "FOR MY MASTER!!"
 	antag_moodlet = /datum/mood_event/infected_ipc
+	antag_count_points = 2
 	///radio binary for IPC
 	var/obj/item/implant/radio/infected_ipc/internal_radio
 	/// The camera for ai

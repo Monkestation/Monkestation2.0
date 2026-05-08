@@ -48,6 +48,7 @@
 	// An empty uplink is kinda useless.
 	surplus = 0
 	restricted = TRUE
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/implants/uplink/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/obj/item/storage/box/syndie_kit/uplink_box = ..()
@@ -62,6 +63,7 @@
 	Wait a minimum of three seconds between injections. Exact mechanism for spear summoning is classified under Aetherofusion NDA."
 	item = /obj/item/storage/box/syndie_kit/imp_hard_spear
 	cost = 7
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/implants/hardlight/bundle
 	name = "Hardlight Spear Implant Bundle"

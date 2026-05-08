@@ -40,6 +40,7 @@
 	progression_minimum = 15 MINUTES
 	cost = 5
 	surplus = 20
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/cybernetics/hacked_linked_surgery
 	name = "Syndicate Surgery Implant"
@@ -53,9 +54,8 @@
 /datum/uplink_item/cybernetics/hivenode_implanter
 	name = "Hive Node Implanter"
 	desc = "A Xenomorph hive node. When implanted, allows connection to any Xenomorphs in nearby psionic networks."
-	cost = 5 //similar price to binary translator
+	cost = 4 //similar price to binary translator
 	item = /obj/item/autosurgeon/syndicate/hivenode
-
 
 /datum/uplink_item/cybernetics/thermals
 	name = "Thermal Eyes"
