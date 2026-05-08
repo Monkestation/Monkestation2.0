@@ -37,6 +37,8 @@
 	H.set_species(/datum/species/ipc)
 	var/obj/item/organ/internal/heart/synth/abandoned/newheart = new
 	newheart.Insert(H, TRUE, FALSE)
+	var/obj/item/organ/internal/cyberimp/arm/item_set/doorjack/canopener = new
+	canopener.Insert(H, TRUE, FALSE)
 	return ..()
 
 /datum/antagonist/abandoned_ipc/ui_static_data(mob/user)
@@ -44,3 +46,37 @@
 	data["antag_name"] = name
 	data["laws"] = laws
 	return data
+
+/datum/antagonist/abandoned_ipc/get_admin_commands()
+	. = ..()
+	.["Add law"] = CALLBACK(src, PROC_REF(admin_add_law))
+	.["Remove law"] = CALLBACK(src, PROC_REF(admin_remove_law))
+
+/datum/antagonist/abandoned_ipc/proc/admin_add_law(mob/admin)
+	var/new_law = tgui_input_text(admin, "What law?", "Ai law 2 open")
+	laws += new_law
+	owner.current.balloon_alert(owner.current, "laws updated!")
+	message_admins("[key_name_admin(admin)] has added a law to an abandoned IPC [key_name_admin(owner)]. New law is [span_blue(new_law)].")
+	log_admin("[key_name(admin)] has added a law to an abandoned IPC [key_name(owner)]. New law is [new_law].")
+
+/datum/antagonist/abandoned_ipc/proc/admin_remove_law(mob/admin)
+	var/gone_law = tgui_input_list(admin, "What law?", "AI law 2 close", laws)
+	laws -= gone_law
+	owner.current.balloon_alert(owner.current, "laws updated!")
+	message_admins("[key_name_admin(admin)] has removed a law from an abandoned IPC [key_name_admin(owner)]. Removed law is [span_blue(gone_law)].")
+	log_admin("[key_name(admin)] has removed a law from an abandoned IPC [key_name(owner)]. Removed law is [gone_law].")
+
+/obj/item/organ/internal/cyberimp/arm/item_set/doorjack
+	name = "Doorjack Implant"
+	desc = "An internal doorjack implant. Useful for getting through doors!"
+	icon_state = "toolkit_doorjack"
+	contents = newlist(/obj/item/internal_doorjack)
+	zone = "r_arm"
+
+/obj/item/internal_doorjack
+	name = "integrated Doorjack"
+	desc = "A built in doorjack, attached to your arm. Can be used to open doors."
+	icon = "wawa"
+	icon_state = 'icons/obj/card.dmi'
+
+// update_icon(ALL, AIRLOCK_EMAG, 1)
