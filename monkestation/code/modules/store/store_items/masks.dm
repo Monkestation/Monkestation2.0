@@ -58,7 +58,10 @@ GLOBAL_LIST_INIT(store_masks, generate_store_items(/datum/store_item/mask))
 *	JOB-LOCKED
 */
 
-// Ain't a damn thing
+/datum/store_item/mask/balaclavatac
+	name = "Tactical Balaclava"
+	item_path = /obj/item/clothing/mask/thermal_balaclava/alt
+	item_cost = 4000
 
 /*
 *	FAMILIES
