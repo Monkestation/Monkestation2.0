@@ -425,6 +425,10 @@
 	if(!istype(carbon_owner.handcuffed, /obj/item/restraints/handcuffs/silver))
 		qdel(src)
 
+
+/// Cached max vassal cap, to prevent it from ever going down
+GLOBAL_VAR_INIT(highest_vassal_cap, 1)
+
 /proc/max_vampire_vassals()
 	var/total_players = SSgamemode.get_correct_popcount()
 	switch(total_players)
@@ -435,4 +439,7 @@
 		else
 			. = 3
 	if(SSgamemode.sec_crew > .)
-		return . + 1
+		. += 1
+
+	GLOB.highest_vassal_cap = max(GLOB.highest_vassal_cap, .)
+	return GLOB.highest_vassal_cap
