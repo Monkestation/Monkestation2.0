@@ -107,7 +107,7 @@
 					stack_trace("[player_mob] ([player_mob.ckey]) has null prefs, which shouldn't be possible!")
 					continue
 
-				if(!player_mob.can_hear() || !player_mob.client?.prefs?.channel_volume["[CHANNEL_VOX]"])
+				if(HAS_TRAIT(player_mob, TRAIT_DEAF) || !player_mob.client?.prefs?.channel_volume["[CHANNEL_VOX]"])
 					continue
 
 				var/turf/player_turf = get_turf(player_mob)

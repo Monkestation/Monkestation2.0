@@ -399,10 +399,6 @@
 		var/mob/living/T = pick(nearby_mobs)
 		ClickOn(T)
 
-///Can the mob hear
-/mob/proc/can_hear()
-	. = TRUE
-
 /**
  * Examine text for traits shared by multiple types.
  *

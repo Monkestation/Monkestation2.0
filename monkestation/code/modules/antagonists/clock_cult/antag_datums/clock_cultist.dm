@@ -123,10 +123,8 @@
 	var/icon/icon = render_preview_outfit(preview_outfit)
 	return finish_preview_icon(icon)
 
-/datum/antagonist/clock_cultist/on_mindshield(mob/implanter)
-	if(!silent)
-		to_chat(owner.current, span_warning("You feel something pushing away the light of Ratvar, but you resist it!"))
-	return
+/datum/antagonist/clock_cultist/pre_mindshield(mob/implanter, mob/living/mob_override)
+	return COMPONENT_MINDSHIELD_RESISTED
 
 /datum/antagonist/clock_cultist/admin_add(datum/mind/new_owner,mob/admin)
 	new_owner.add_antag_datum(src)
