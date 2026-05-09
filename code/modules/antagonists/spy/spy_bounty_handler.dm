@@ -133,7 +133,11 @@
 	 * anything that is abstract,
 	 * and anything that locks uplinks.
 	 */
-	if(isnull(item.item) || item.item == ABSTRACT_UPLINK_ITEM || !(item.purchasable_from & UPLINK_SPY) || (item.purchasable_from & UPLINK_CLOWN_OPS && !(item.purchasable_from & UPLINK_TRAITORS)) || (item.purchasable_from & UPLINK_NUKE_OPS && !(item.purchasable_from & UPLINK_TRAITORS))  || (item.lock_other_purchases))
+	if(isnull(item.item) || item.item == ABSTRACT_UPLINK_ITEM \
+	|| !(item.purchasable_from & UPLINK_SPY) \
+	|| (item.purchasable_from & UPLINK_CLOWN_OPS && !(item.purchasable_from & UPLINK_TRAITORS)) \
+	|| (item.purchasable_from & UPLINK_NUKE_OPS && !(item.purchasable_from & UPLINK_TRAITORS)) \
+	|| (item.lock_other_purchases))
 		return FALSE
 
 	// This will have some overlap, and that's intentional -
