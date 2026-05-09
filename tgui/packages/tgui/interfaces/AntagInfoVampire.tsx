@@ -12,7 +12,11 @@ import {
 } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { type Objective, ObjectivePrintout } from './common/Objectives';
+import {
+  type Objective,
+  ObjectivePrintout,
+  ReplaceObjectivesButton,
+} from './common/Objectives';
 
 type VampireInformation = {
   clan: ClanInfo[];
@@ -21,6 +25,7 @@ type VampireInformation = {
   vassal_count: number;
   max_vassals: number;
   objectives: Objective[];
+  can_change_objective: BooleanLike;
 };
 
 type ClanInfo = {
@@ -93,12 +98,22 @@ const VampireIntroduction = (props: {
   setTab: React.Dispatch<SetStateAction<InfoTab>>;
 }) => {
   const { data } = useBackend<VampireInformation>();
-  const { objectives, vassal_count, max_vassals } = data;
+  const { objectives, vassal_count, max_vassals, can_change_objective } = data;
   return (
     <Stack vertical fill>
       <Stack.Item grow maxHeight="220px">
         <Section fill scrollable title="Objectives">
-          <ObjectivePrintout objectives={objectives} titleMessage="" />
+          <ObjectivePrintout
+            objectives={objectives}
+            titleMessage=""
+            objectiveFollowup={
+              <ReplaceObjectivesButton
+                can_change_objective={can_change_objective}
+                button_title={'Acquire New Tastes'}
+                button_colour={'red'}
+              />
+            }
+          />
         </Section>
       </Stack.Item>
       <Stack.Item textAlign="center">
