@@ -44,7 +44,7 @@
 	if(.)
 		return TRUE
 
-	playsound(src.loc, SFX_TERMINAL_TYPE, 50, FALSE)
+	playsound(loc, SFX_TERMINAL_TYPE, 50, FALSE)
 
 /obj/machinery/computer/accounting/hop/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
