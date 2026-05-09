@@ -1,0 +1,6 @@
+author: "Sakaniko"
+delete-after: True
+changes:
+  - image: "Fixed miscoloured limbs on ornithids."
+  - image: "Adjusted some sprites for ornithid legs and arms to look better."
+  - image: "Fixed a stray missing pixel on male human torsos."
