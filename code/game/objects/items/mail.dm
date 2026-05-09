@@ -130,7 +130,7 @@
 		for(var/obj/machinery/mail_collector/cargo/collector as anything in SSmachines.get_machines_by_type(/obj/machinery/mail_collector/cargo))
 			collector.adjust_money(/datum/export/mail_token::cost / 2)
 	else
-		user.put_in_hands(new /obj/item/cargo/mail_token) // MONKESTATION EDIT
+		user.put_in_hands(new /obj/item/cargo/mail_token)
 	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
 
