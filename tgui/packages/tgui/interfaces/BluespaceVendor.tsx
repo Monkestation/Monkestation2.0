@@ -1,7 +1,7 @@
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
 import { useBackend } from '../backend';
 import {
@@ -194,7 +194,7 @@ const GasDisplay = (props: GasDisplayProps) => {
           <Button
             icon="play"
             tooltipPosition="left"
-            tooltip={'Start adding ' + name + '.'}
+            tooltip={`Start adding ${name}.`}
             disabled={!inserted_tank}
             onClick={() =>
               act('start_pumping', {
@@ -207,7 +207,7 @@ const GasDisplay = (props: GasDisplayProps) => {
             disabled={selected_gas !== id}
             icon="minus"
             tooltipPosition="left"
-            tooltip={'Stop adding ' + name + '.'}
+            tooltip={`Stop adding ${name}.`}
             onClick={() =>
               act('stop_pumping', {
                 gas_id: id,

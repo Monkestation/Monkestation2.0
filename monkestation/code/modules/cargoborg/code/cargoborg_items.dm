@@ -320,40 +320,6 @@
 	construction_time = 12 SECONDS
 	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_CARGO)
 
-
-/obj/item/borg/upgrade/better_clamp
-	name = "improved integrated hydraulic clamp"
-	desc = "An improved hydraulic clamp that trades its storage quantity to allow for bigger packages to be picked up instead!"
-	icon_state = "cyborg_upgrade3"
-	require_model = TRUE
-	model_type = list(/obj/item/robot_model/cargo)
-	model_flags = BORG_MODEL_CARGO
-
-
-/obj/item/borg/upgrade/better_clamp/action(mob/living/silicon/robot/cyborg, user = usr)
-	. = ..()
-	if(!.)
-		return
-	var/obj/item/borg/hydraulic_clamp/better/big_clamp = locate() in cyborg.model.modules
-	if(big_clamp)
-		to_chat(user, span_warning("This cyborg is already equipped with an improved integrated hydraulic clamp!"))
-		return FALSE
-
-	big_clamp = new(cyborg.model)
-	cyborg.model.basic_modules += big_clamp
-	cyborg.model.add_module(big_clamp, FALSE, TRUE)
-
-
-/obj/item/borg/upgrade/better_clamp/deactivate(mob/living/silicon/robot/cyborg, user = usr)
-	. = ..()
-	if(!.)
-		return
-	var/obj/item/borg/hydraulic_clamp/better/big_clamp = locate() in cyborg.model.modules
-	if(big_clamp)
-		cyborg.model.remove_module(big_clamp, TRUE)
-
-
-
 /// The fabled paper plane crossbow and its hardlight paper planes.
 /obj/item/paperplane/syndicate/hardlight
 	name = "hardlight paper plane"
@@ -365,12 +331,13 @@
 	var/list/paper_colors = list(COLOR_CYAN, COLOR_BLUE_LIGHT, COLOR_BLUE)
 	alpha = 150 // It's hardlight, it's gotta be see-through.
 
-
 /obj/item/paperplane/syndicate/hardlight/Initialize(mapload)
 	. = ..()
 	color = color_hex2color_matrix(pick(paper_colors))
 	alpha = initial(alpha) // It's hardlight, it's gotta be see-through.
 
+/obj/item/paperplane/syndicate/hardlight/attack_self(mob/user)
+	return
 
 /obj/item/borg/paperplane_crossbow
 	name = "paper plane crossbow"
@@ -440,16 +407,20 @@
 	check_amount()
 
 
-/obj/item/borg/paperplane_crossbow/afterattack(atom/target, mob/living/user, proximity, click_params)
+/obj/item/borg/paperplane_crossbow/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
 	check_amount()
-	if(iscyborg(user))
-		var/mob/living/silicon/robot/robot_user = user
-		if(!robot_user.cell.use(0.012 * STANDARD_CELL_CHARGE))
-			to_chat(user, span_warning("Not enough power."))
-			return FALSE
-		shoot(target, user, click_params)
+	if(!iscyborg(user))
+		return ITEM_INTERACT_BLOCKING
+	var/mob/living/silicon/robot/robot_user = user
+	if(!robot_user.cell.use(0.012 * STANDARD_CELL_CHARGE))
+		to_chat(user, span_warning("Not enough power."))
+		return ITEM_INTERACT_BLOCKING
+	shoot(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
+/obj/item/borg/paperplane_crossbow/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom_secondary(interacting_with, user, modifiers)
 
 /// Holders for the package wrap and the wrapping paper synthetizers.
 

@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { capitalize, createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import {
@@ -6,13 +6,13 @@ import {
   Button,
   Dimmer,
   Divider,
+  DmIcon,
   Icon,
   Input,
   NumberInput,
   Section,
   Stack,
   Tabs,
-  DmIcon,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -76,7 +76,7 @@ const ShoppingTab = (props) => {
     searchItem,
     (order_datums) => order_datums.name,
   );
-  let goods =
+  const goods =
     searchItem.length > 0
       ? order_datums.filter((item) => search(item) && item.cat === shopCategory)
       : order_datums.filter((item) => item && item.cat === shopCategory);
@@ -154,7 +154,7 @@ const ShoppingTab = (props) => {
                   </Stack.Item>
                   <Stack.Item mt={-0.5}>
                     <Box fontSize="10px" color="label" textAlign="right">
-                      {item.cost + credit_type + ' per order.'}
+                      {`${item.cost + credit_type} per order.`}
                     </Box>
                     <Button
                       ml={2}
@@ -240,7 +240,7 @@ const CheckoutTab = (props) => {
                   <Stack>
                     <Stack.Item>{capitalize(item.name)}</Stack.Item>
                     <Stack.Item grow mt={-1} color="label" fontSize="10px">
-                      {'"' + item.desc + '"'}
+                      {`"${item.desc}"`}
                       <br />
                       <Box textAlign="right">
                         {item.name +

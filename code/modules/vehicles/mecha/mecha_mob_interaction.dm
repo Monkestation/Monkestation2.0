@@ -50,7 +50,7 @@
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
 	set_mouse_pointer()
 	if(!internal_damage)
-		SEND_SOUND(newoccupant, sound('sound/mecha/nominal.ogg',volume=50))
+		newoccupant.playsound_local(src, 'sound/mecha/nominal.ogg', 50)
 	return TRUE
 
 ///proc called when a new mmi mob tries to enter this mech
@@ -96,10 +96,11 @@
 	brain_mob.reset_perspective(src)
 	brain_mob.remote_control = src
 	brain_mob.update_mouse_pointer()
+	RegisterSignal(brain_mob, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
 	setDir(SOUTH)
 	log_message("[brain_obj] moved in as pilot.", LOG_MECHA)
 	if(!internal_damage)
-		SEND_SOUND(brain_obj, sound('sound/mecha/nominal.ogg',volume=50))
+		brain_mob.playsound_local(src, 'sound/mecha/nominal.ogg', 50)
 	user.log_message("has put the MMI/posibrain of [key_name(brain_mob)] into [src]", LOG_GAME)
 	brain_mob.log_message("was put into [src] by [key_name(user)]", LOG_GAME, log_globally = FALSE)
 	return TRUE
@@ -111,6 +112,7 @@
 		mob_container = M
 	else if(isbrain(M))
 		var/mob/living/brain/brain = M
+		UnregisterSignal(brain, COMSIG_MOB_RETRIEVE_ACCESS)
 		mob_container = brain.container
 	else if(isAI(M))
 		var/mob/living/silicon/ai/AI = M

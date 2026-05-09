@@ -274,6 +274,8 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_CHANGE_IDS]"] = "ID Console"
 	desc_by_access["[ACCESS_AI_UPLOAD]"] = "AI Chambers"
 	desc_by_access["[ACCESS_TELEPORTER]"] = "Teleporter"
+	desc_by_access["[ACCESS_BLUESHIELD]"] = "Blueshield Office"
+	desc_by_access["[ACCESS_NT_REPRESENTATVE]"] = "NT Representative Office"
 	desc_by_access["[ACCESS_EVA]"] = "EVA"
 	desc_by_access["[ACCESS_COMMAND]"] = "Command"
 	desc_by_access["[ACCESS_CAPTAIN]"] = "Captain"

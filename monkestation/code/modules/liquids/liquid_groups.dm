@@ -50,12 +50,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/list/cached_fire_spreads = list()
 	///list of old reagents
 	var/list/cached_reagent_list = list()
-	///cached temperature between turfs recalculated on group_process
-	var/cached_temperature_shift = 0
-	///does temperature need action
-	var/temperature_shift_needs_action = FALSE
-	///this groups list of currently running turfs, we iterate over this to stop redundancy
-	var/list/current_temperature_queue = list()
 	///do we evaporate
 	var/evaporates = TRUE
 	/// Liquids in this group will always evaporate regardless of height
@@ -97,7 +91,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	cached_edge_turfs = null
 	cached_fire_spreads = null
 	cached_reagent_list = null
-	current_temperature_queue = null
 	splitting_array = null
 	return ..()
 
@@ -221,14 +214,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		if(isopenturf(turf))
 			continue
 		remove_from_group(turf)
-
-	var/turf/open/open_turf = pick(members)
-	var/datum/gas_mixture/math_cache = open_turf.air
-
-	if(math_cache && total_reagent_volume)
-		if(!(group_temperature <= math_cache.return_temperature() + 5 && math_cache.return_temperature() - 5 <= group_temperature) && !temperature_shift_needs_action)
-			cached_temperature_shift =((math_cache.return_temperature() * max(1, math_cache.total_moles())) + ((group_temperature * max(1, (total_reagent_volume * 0.025))))) / (max(1, (total_reagent_volume * 0.025)) + max(1, math_cache.total_moles()))
-			temperature_shift_needs_action = TRUE
 
 	if(from_SS)
 		total_reagent_volume = reagents.total_volume
@@ -423,14 +408,11 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/amount = 0
 	for(var/list_item in reagent_list)
 		amount += reagent_list[list_item]
-	handle_temperature(amount, chem_temp)
 	handle_visual_changes()
 	process_group()
 
 /datum/liquid_group/proc/add_reagent(obj/effect/abstract/liquid_turf/member, datum/reagent/reagent, amount, temperature)
 	reagents.add_reagent(reagent, amount, temperature, no_react = TRUE)
-
-	handle_temperature(amount, temperature)
 	handle_visual_changes()
 	process_group()
 
@@ -499,11 +481,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		reagents_per_turf = 0
 	process_turf_disperse()
 	process_group()
-
-/datum/liquid_group/proc/handle_temperature(previous_reagents, temp)
-	var/baseline_temperature = ((total_reagent_volume * group_temperature) + (previous_reagents * temp)) / (total_reagent_volume + previous_reagents)
-	group_temperature = baseline_temperature
-	reagents.chem_temp = group_temperature
 
 /datum/liquid_group/proc/handle_visual_changes()
 	var/new_color
@@ -1026,33 +1003,3 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 				var/mob/living/target_living = target_atom
 				target_living.Paralyze(6 SECONDS)
 				to_chat(target_living, span_danger("You are knocked down by the currents!"))
-
-/datum/liquid_group/proc/fetch_temperature_queue()
-	if(!temperature_shift_needs_action)
-		return list()
-
-	var/list/returned =  list()
-	for(var/tur in members)
-		var/turf/open/member = tur
-		returned |= member
-
-	current_temperature_queue = returned
-	return returned
-
-/datum/liquid_group/proc/act_on_queue(turf/member)
-	if(!temperature_shift_needs_action)
-		return
-
-	var/turf/open/member_open = member
-	var/datum/gas_mixture/gas = member_open.air
-	if(!gas)
-		return
-
-	gas.temperature = cached_temperature_shift
-	if(group_temperature != cached_temperature_shift)
-		group_temperature = cached_temperature_shift
-		reagents.chem_temp = cached_temperature_shift
-
-	current_temperature_queue -= member
-	if(!length(current_temperature_queue))
-		temperature_shift_needs_action = FALSE

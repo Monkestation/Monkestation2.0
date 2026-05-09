@@ -219,6 +219,8 @@
 		return gags_to_universal_icon(atom_path)
 	if(ispath(atom_path, /obj))
 		var/obj/obj_path = atom_path
+		if(initial(obj_path.icon_preview))
+			icon_file = initial(obj_path.icon_preview)
 		if(initial(obj_path.icon_state_preview))
 			icon_state = initial(obj_path.icon_state_preview)
 	return uni_icon(icon_file, icon_state, color=initial(atom_path.color))

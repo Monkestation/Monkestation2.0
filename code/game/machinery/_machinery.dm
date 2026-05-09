@@ -216,14 +216,7 @@
 	end_processing()
 	dump_inventory_contents()
 
-	if (!isnull(component_parts))
-		// Don't delete the stock part singletons
-		for (var/atom/atom_part in component_parts)
-			qdel(atom_part)
-		component_parts.Cut()
-		component_parts = null
-
-	QDEL_NULL(circuit)
+	clear_components()
 	unset_static_power()
 	return ..()
 
@@ -240,7 +233,6 @@
 		return
 	update_current_power_usage()
 	setup_area_power_relationship()
-
 
 /**
  * proc to call when the machine starts to require power after a duration of not requiring power
@@ -629,12 +621,14 @@
 	set_panel_open(!panel_open)
 
 /obj/machinery/can_interact(mob/user)
+	if(QDELETED(user))
+		return FALSE
+
 	if((machine_stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE)) // Check if the machine is broken, and if we can still interact with it if so
 		return FALSE
 
 	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_INTERACT)
 		return FALSE
-
 
 	if(isAdminGhostAI(user))
 		return TRUE //the Gods have unlimited power and do not care for things such as range or blindness
@@ -878,6 +872,7 @@
 					qdel(item)
 		else
 			var/obj/item/obj_part = part
+			component_parts -= part
 			obj_part.forceMove(loc)
 			if(istype(A) && obj_part.get_shipbreaking_reward()) //shipbreaking
 				var/obj/item/reward = obj_part.get_shipbreaking_reward()
@@ -944,21 +939,35 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += occupant
 
-/obj/machinery/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == occupant)
+/obj/machinery/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == occupant)
 		set_occupant(null)
 		update_appearance()
-		updateUsrDialog()
-		return ..()
 
 	// The circuit should also be in component parts, so don't early return.
-	if(deleting_atom == circuit)
+	if(gone == circuit)
 		circuit = null
-	if((deleting_atom in component_parts) && !QDELETED(src))
-		component_parts.Remove(deleting_atom)
+	if((gone in component_parts) && !QDELETED(src))
+		component_parts -= gone
 		// It would be unusual for a component_part to be qdel'd ordinarily.
-		deconstruct(FALSE)
-	return ..()
+		// Check if component removed is an assembly because they get moved to component parts on attach
+		if(!istype(gone, /obj/item/assembly))
+			deconstruct(FALSE)
+
+/**
+ * This should be called before mass qdeling components to make space for replacements.
+ * If not done, things will go awry as Exited() destroys the machine when it detects
+ * even a single component exiting the atom.
+ */
+/obj/machinery/proc/clear_components()
+	if(!component_parts)
+		return
+	var/list/old_components = component_parts
+	circuit = null
+	component_parts = null
+	for(var/atom/atom_part in old_components)
+		qdel(atom_part)
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
 	if((flags_1 & NODECONSTRUCT_1) || screwdriver.tool_behaviour != TOOL_SCREWDRIVER)
@@ -1185,14 +1194,6 @@
 		power -= power * 0.0005
 	return ..()
 
-/obj/machinery/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(gone == occupant)
-		set_occupant(null)
-	if(gone == circuit)
-		LAZYREMOVE(component_parts, gone)
-		circuit = null
-
 /obj/machinery/proc/adjust_item_drop_location(atom/movable/dropped_atom) // Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
 	var/md5 = md5(dropped_atom.name) // Oh, and it's deterministic too. A specific item will always drop from the same slot.
 	for (var/i in 1 to 32)
@@ -1201,8 +1202,9 @@
 	dropped_atom.pixel_x = -8 + ((.%3)*8)
 	dropped_atom.pixel_y = -8 + (round( . / 3)*8)
 
-/obj/machinery/rust_heretic_act()
-	take_damage(500, BRUTE, MELEE, 1)
+/obj/machinery/rust_heretic_act(rust_strength)
+	var/damage = 500 + rust_strength * 200
+	take_damage(damage, BRUTE, BOMB, 1)
 
 /obj/machinery/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, occupant))

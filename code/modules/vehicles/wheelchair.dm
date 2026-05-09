@@ -55,13 +55,12 @@
 	update_appearance()
 
 /obj/vehicle/ridden/wheelchair/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
-	. = ..()
-	if(force || !usr)
-		return
-	if(usr == buckled_mob)
-		return
-	if(do_after(usr, 1 SECONDS))
-		return
+	if(force || !usr || usr == buckled_mob)
+		return ..()
+	if(!do_after(usr, 1 SECONDS, src))
+		to_chat(usr, span_warning("You need yourself and [src] to stand still in order to unbuckle [buckled_mob]!"))
+		return null
+	return ..()
 
 /obj/vehicle/ridden/wheelchair/post_unbuckle_mob()
 	. = ..()

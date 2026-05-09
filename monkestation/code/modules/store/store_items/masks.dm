@@ -31,6 +31,9 @@ GLOBAL_LIST_INIT(store_masks, generate_store_items(/datum/store_item/mask))
 	name = "Sterile Mask"
 	item_path = /obj/item/clothing/mask/surgical
 
+/datum/store_item/mask/deforest_breath_mask
+	name = "Deforest Breath Mask"
+	item_path = /obj/item/clothing/mask/surgical/deforest
 
 /*
 *	GAS MASKS
@@ -46,11 +49,24 @@ GLOBAL_LIST_INIT(store_masks, generate_store_items(/datum/store_item/mask))
 	item_path = /obj/item/clothing/mask/gas/atp
 	item_cost = 5000
 
+/datum/store_item/mask/deforest_mask
+	name = "Deforest Gas Mask"
+	item_path = /obj/item/clothing/mask/gas/deforest
+	item_cost = 4000
+
 /*
 *	JOB-LOCKED
 */
 
-// Ain't a damn thing
+/datum/store_item/mask/balaclavathermal
+	name = "Thermal Balaclava"
+	item_path = /obj/item/clothing/mask/thermal_balaclava
+	item_cost = 4000
+
+/datum/store_item/mask/balaclavatac
+	name = "Tactical Balaclava"
+	item_path = /obj/item/clothing/mask/thermal_balaclava/alt
+	item_cost = 4000
 
 /*
 *	FAMILIES

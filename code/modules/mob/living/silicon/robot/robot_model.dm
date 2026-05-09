@@ -384,11 +384,8 @@
 		/obj/item/pipe_dispenser,
 		/obj/item/extinguisher,
 		/obj/item/weldingtool/largetank/cyborg,
-		/obj/item/screwdriver/cyborg,
-		/obj/item/wrench/cyborg,
-		/obj/item/crowbar/cyborg,
-		/obj/item/wirecutters/cyborg,
-		/obj/item/multitool/cyborg,
+		/obj/item/borg/cyborg_omnitool/engineering,
+		/obj/item/borg/cyborg_omnitool/engineering,
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
 		/obj/item/assembly/signaler/cyborg,
@@ -411,6 +408,35 @@
 	model_traits = list(TRAIT_NEGATES_GRAVITY)
 	hat_offset = -4
 	badge_offset = -4
+
+/obj/item/robot_model/standard
+	name = "Standard"
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/reagent_containers/borghypo/epi, // Buffed slightly by letting them dispense salglu. Can help humans better at the cost of a smaller welding tank so they can't just heal all the time. Feels more in line with what's expectted of borgs nowdays.
+		/obj/item/healthanalyzer,
+		/obj/item/wrench/cyborg,
+		/obj/item/crowbar/cyborg,
+		/obj/item/stack/sheet/iron,
+		/obj/item/stack/tile/iron/base/cyborg,
+		/obj/item/weldingtool/mini, // Why on gods green earth did they have a full cyborg welder before?
+		/obj/item/extinguisher/mini, // Likewise, why could they put out fires as good as engineering borgs? They are jacks of all trades, master of none.
+		/obj/item/pickaxe,
+		/obj/item/t_scanner/adv_mining_scanner,
+		/obj/item/soap/nanotrasen,
+		/obj/item/borg/cyborghug,
+		/obj/item/storage/bag/tray,
+		// Zipties have been removed because why god would you let them become security 2.
+	)
+	emag_modules = list(
+		/obj/item/melee/energy/sword/cyborg, //I don't think there was any reason to use cyborg specific esword with this? They both act functionally the same.
+	)
+	cyborg_base_icon = "robot"
+	model_select_icon = "standard"
+	model_traits = list(TRAIT_NEGATES_GRAVITY)
+	hat_offset = -3
+	badge_offset = -3
+
 
 /obj/item/robot_model/janitor
 	name = "Janitor"
@@ -683,14 +709,8 @@
 		/obj/item/borg/apparatus/beaker,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/surgical_drapes,
-		/obj/item/retractor, //Monke edit start: remove augment tools
-		/obj/item/hemostat,
-		/obj/item/cautery,
-		/obj/item/surgicaldrill,
-		/obj/item/scalpel,
-		/obj/item/circular_saw, //Monke edit end: remove augment tools
-		/obj/item/bonesetter,
+		/obj/item/borg/cyborg_omnitool/medical,
+		/obj/item/borg/cyborg_omnitool/medical,
 		/obj/item/blood_filter,
 		/obj/item/extinguisher/mini,
 		/obj/item/emergency_bed/silicon,
@@ -840,7 +860,7 @@
 		// Monkestation edit end
 		/obj/item/rsf,
 		/obj/item/instrument/guitar,
-		/obj/item/instrument/piano_synth/robot,
+		/obj/item/instrument/piano_synth,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/lighter,
 		/obj/item/storage/bag/tray,
@@ -939,15 +959,10 @@
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/reagent_containers/borghypo/syndicate,
 		/obj/item/shockpaddles/syndicate/cyborg,
-		/obj/item/healthanalyzer,
-		/obj/item/surgical_drapes,
-		/obj/item/retractor/augment, //monkestation edit start: Augmented tools
-		/obj/item/hemostat/augment,
-		/obj/item/cautery/augment,
-		/obj/item/surgicaldrill/augment,
-		/obj/item/scalpel/augment, //monkestation edit: Augmented tools
+		/obj/item/healthanalyzer/cyborg,
+		/obj/item/borg/cyborg_omnitool/medical/upgraded,
+		/obj/item/borg/cyborg_omnitool/medical/upgraded,
 		/obj/item/melee/energy/sword/cyborg/saw,
-		/obj/item/bonesetter,
 		/obj/item/blood_filter,
 		/obj/item/emergency_bed/silicon,
 		/obj/item/crowbar/cyborg,
@@ -972,12 +987,9 @@
 		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/extinguisher,
 		/obj/item/weldingtool/largetank/cyborg,
-		/obj/item/screwdriver/nuke,
-		/obj/item/wrench/cyborg,
-		/obj/item/crowbar/cyborg,
-		/obj/item/wirecutters/cyborg,
+		/obj/item/borg/cyborg_omnitool/engineering/syndie,
+		/obj/item/borg/cyborg_omnitool/engineering/syndie,
 		/obj/item/analyzer,
-		/obj/item/multitool/cyborg,
 		/obj/item/stack/sheet/iron,
 		/obj/item/stack/sheet/glass,
 		/obj/item/borg/apparatus/sheet_manipulator,
@@ -1047,7 +1059,7 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/hand_labeler/borg,
 		/obj/item/rsf/deluxe/cyborg,
-		/obj/item/instrument/piano_synth/robot,
+		/obj/item/instrument/piano_synth,
 		/obj/item/lighter,
 		/obj/item/storage/bag/tray,
 		/obj/item/reagent_containers/borghypo/borgshaker/centcom,

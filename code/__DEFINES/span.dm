@@ -14,8 +14,8 @@
 #define span_alien(str) ("<span class='alien'>" + str + "</span>")
 #define span_announce(str) ("<span class='announce'>" + str + "</span>")
 #define span_announcement_header(str) ("<span class='announcement_header'>" + str + "</span>")
-#define span_average(str) ("<span class='average'" + str + "</span")
-#define span_bad(str) ("<span class='bad'" + str + "</span")
+#define span_average(str) ("<span class='average'>" + str + "</span")
+#define span_bad(str) ("<span class='bad'>" + str + "</span")
 #define span_big(str) ("<span class='big'>" + str + "</span>")
 #define span_bigicon(str) ("<span class='bigicon'>" + str + "</span>")
 #define span_binarysay(str) ("<span class='binarysay'>" + str + "</span>")
@@ -58,6 +58,7 @@
 #define span_grey(str) ("<span class='grey'>" + str + "</span>")
 #define span_header(str) ("<span class='header'>" + str + "</span>")
 #define span_hear(str) ("<span class='hear'>" + str + "</span>")
+#define span_heretic_master(str) ("<span class='heretic_master'>" + str + "</span>")
 #define span_hidden(str) ("<span class='hidden'>" + str + "</span>")
 #define span_hierophant(str) ("<span class='hierophant'>" + str + "</span>")
 #define span_hierophant_warning(str) ("<span class='hierophant_warning'>" + str + "</span>")
@@ -138,6 +139,9 @@
 #define span_yell(str) ("<span class='yell'>" + str + "</span>")
 #define span_yellowteamradio(str) ("<span class='yellowteamradio'>" + str + "</span>")
 #define span_center(str) ("<span class='center'>[str]</span>")
+
+#define span_stargazer(str) ("<span class='stargazer'>[str]</span>")
+#define span_stargazer_big(str) ("<span class='stargazer_big'>[str]</span>")
 
 // Spans that use embedded tgui components:
 // Sorted alphabetically

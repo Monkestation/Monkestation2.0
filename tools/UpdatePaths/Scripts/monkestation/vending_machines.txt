@@ -1,0 +1,2 @@
+/obj/machinery/vending/wardrobe/engi_wardrobe : /obj/machinery/vending/access/engi_wardrobe{@OLD}
+/obj/machinery/vending/wardrobe/cargo_wardrobe : /obj/machinery/vending/access/wardrobe_cargo{@OLD}

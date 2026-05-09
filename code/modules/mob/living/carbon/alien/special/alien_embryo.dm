@@ -74,6 +74,8 @@
 				slowdown *= 0.80 //egg gestates 20% faster if you're trapped in a nest
 			if(owner.has_reagent(/datum/reagent/medicine/stimulants))
 				slowdown *= 10 //stimulants greatly stun the babys growth
+			if(HAS_TRAIT(owner, TRAIT_IMMUNODEFICIENCY) && !HAS_TRAIT(owner, TRAIT_VIRUS_RESISTANCE))
+				slowdown *= 0.5 //terrible immune system = doubled parasite growth
 
 		addtimer(CALLBACK(src, PROC_REF(advance_embryo_stage)), growth_time*slowdown)
 
@@ -128,7 +130,7 @@
 	new_xeno.PossessByPlayer(ghost.key)
 	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100)) //To get the player's attention
 	new_xeno.add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_NO_TRANSFORM), type) //so we don't move during the bursting animation
-	new_xeno.invisibility = INVISIBILITY_MAXIMUM
+	new_xeno.SetInvisibility(INVISIBILITY_MAXIMUM, id=type)
 
 	sleep(0.6 SECONDS)
 
@@ -138,7 +140,7 @@
 
 	if(!isnull(new_xeno))
 		new_xeno.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_NO_TRANSFORM), type)
-		new_xeno.invisibility = 0
+		new_xeno.RemoveInvisibility(type)
 
 	// monkestation start: don't gib the victim, just do 150 brute + spawn some gibs
 	new_xeno.visible_message(span_danger("[new_xeno] bursts out of [owner]!"), span_userdanger("You exit [owner], your previous host."), span_hear("You hear organic matter ripping and tearing!"))

@@ -50,9 +50,8 @@ export const BattleRoyalePanel = (props) => {
           content="Adjust storm delay"
           onClick={() => act('adjust_storm_delay')}
         />
-        Expected maximum duration: {'[' + data.max_duration + ']   '}
-        Storm delay:{' '}
-        {data.storm_delay ? '[' + data.storm_delay + ']' : '[Unset]'}
+        Expected maximum duration: {`[${data.max_duration}]   `}
+        Storm delay: {data.storm_delay ? `[${data.storm_delay}]` : '[Unset]'}
         <Section title="Currently active data">
           {active_dataset.length
             ? active_dataset.map((royaledataset) => (

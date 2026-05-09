@@ -11,8 +11,8 @@ import {
   Section,
   Stack,
 } from '../../components';
-import { GeneticMakeupInfo } from './GeneticMakeupInfo';
 import { PULSE_DURATION_MAX, PULSE_STRENGTH_MAX } from './constants';
+import { GeneticMakeupInfo } from './GeneticMakeupInfo';
 
 const GeneticMakeupBufferInfo = (props) => {
   const { index, makeup } = props;
@@ -278,7 +278,7 @@ const PulseBoard = (props) => {
     }
   }
   return (
-    <Section title={'Unique ' + name} minHeight="100%" position="relative">
+    <Section title={`Unique ${name}`} minHeight="100%" position="relative">
       <Box mx="-1px">{blocks}</Box>
     </Section>
   );

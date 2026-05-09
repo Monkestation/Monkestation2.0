@@ -91,6 +91,8 @@
 ///The limb fits a modular custom shape
 #define BODYTYPE_CUSTOM (1<<8)
 
+#define BODYTYPE_LIST_PROSTHETIC (BODYTYPE_ROBOTIC | BODYTYPE_HUMANOID | BODYTYPE_MONKEY)
+
 //Species gib types
 #define GIB_TYPE_HUMAN "human"
 #define GIB_TYPE_ROBOTIC "robotic"
@@ -290,6 +292,7 @@
 
 //Disgust levels for humans
 #define DISGUST_LEVEL_MAXEDOUT 150
+#define DISGUST_LEVEL_VERYDISGUSTED 100
 #define DISGUST_LEVEL_DISGUSTED 75
 #define DISGUST_LEVEL_VERYGROSS 50
 #define DISGUST_LEVEL_GROSS 25
@@ -354,6 +357,7 @@
 #define SENTIENCE_HUMANOID 3
 #define SENTIENCE_MINEBOT 4
 #define SENTIENCE_BOSS 5
+#define SENTIENCE_PONY 6
 
 //Mob AI Status
 #define POWER_RESTORATION_OFF 0
@@ -492,6 +496,8 @@
 #define FLASH_PROTECTION_NONE 0
 #define FLASH_PROTECTION_FLASH 1
 #define FLASH_PROTECTION_WELDER 2
+#define FLASH_PROTECTION_WELDER_SENSITIVE 3
+#define FLASH_PROTECTION_WELDER_HYPER_SENSITIVE 4
 
 // Roundstart trait system
 
@@ -660,6 +666,8 @@
 #define AI_HOLOGRAM_RATVAR "Ratvar"
 #define AI_HOLOGRAM_SPIDER "Spider"
 #define AI_HOLOGRAM_XENO "Xeno Queen"
+#define AI_HOLOGRAM_ROBOT "Robot"
+#define AI_HOLOGRAM_DRONE "Drone"
 
 /// Icon state to use for ai displays that just turns them off
 #define AI_DISPLAY_DONT_GLOW "ai_off"
@@ -897,6 +905,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define NOT_INSIDE_TARGET (1<<10)
 /// Checks for base adjacency, but silences the error
 #define SILENT_ADJACENCY (1<<11)
+/// Allows pAIs to perform an action
+#define ALLOW_PAI (1<<12)
 
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
 #define RESIZE_DEFAULT_SIZE 1
@@ -908,7 +918,9 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define VOMIT_TOXIC 1
 /// The mob will vomit a purple color
 #define VOMIT_PURPLE 2
-#define VOMIT_NANITE 3
+#define VOMIT_NEBULA 3
+#define VOMIT_NEBULA_WORMS 4
+#define VOMIT_NANITE 5
 
 /// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
 #define NO_BUCKLE_LYING -1

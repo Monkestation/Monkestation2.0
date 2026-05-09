@@ -1,5 +1,5 @@
 import { multiline } from 'common/string';
-import { FeatureToggle, CheckboxInput } from '../base';
+import { CheckboxInput, type FeatureToggle } from '../base';
 
 export const chat_bankcard: FeatureToggle = {
   name: 'Enable income updates',

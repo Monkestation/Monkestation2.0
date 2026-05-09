@@ -173,7 +173,7 @@ const Blanks = (props) => {
   const sortedBlanks = sortBy((blank) => blanks.category)(blanks || []);
 
   const categories = [];
-  for (let blank of sortedBlanks) {
+  for (const blank of sortedBlanks) {
     if (!categories.includes(blank.category)) {
       categories.push(blank.category);
     }

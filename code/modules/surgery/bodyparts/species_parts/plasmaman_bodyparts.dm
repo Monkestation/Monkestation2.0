@@ -9,13 +9,8 @@
 	dmg_overlay_type = null
 	burn_modifier = 1.5
 	brute_modifier = 1.5
+	head_flags = HEAD_EYESPRITES | HEAD_HAIR | HEAD_FACIAL_HAIR
 
-//MONKESTATION ADDITION START
-/*
-	head_flags = HEAD_EYESPRITES
-*/
-	head_flags = HEAD_EYESPRITES | HEAD_HAIR
-// MONKESTATION ADDITION END
 /obj/item/bodypart/chest/plasmaman
 	icon = 'icons/mob/species/plasmaman/bodyparts.dmi'
 	icon_state = "plasmaman_chest"

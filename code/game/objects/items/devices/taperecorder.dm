@@ -1,6 +1,6 @@
 /obj/item/taperecorder
 	name = "universal recorder"
-	desc = "A device that can record to cassette tapes, and play them. It automatically translates the content in playback."
+	desc = "A device that can record to recording tapes, and play them. It automatically translates the content in playback."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "taperecorder_empty"
 	inhand_icon_state = "analyzer"
@@ -366,7 +366,7 @@
 	starting_tape_type = null
 
 /obj/item/tape
-	name = "tape"
+	name = "recording tape"
 	desc = "A magnetic tape that can hold up to ten minutes of content on either side."
 	icon_state = "tape_white"
 	icon = 'icons/obj/device.dmi'

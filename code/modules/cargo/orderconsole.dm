@@ -14,8 +14,8 @@
 	var/contraband = FALSE
 	var/self_paid = FALSE
 	var/safety_warning = "For safety and ethical reasons, the automated supply shuttle cannot transport live organisms, \
-		human remains, classified nuclear weaponry, mail, undelivered departmental order crates, syndicate bombs, \
-		homing beacons, unstable eigenstates, fax machines, or machinery housing any form of artificial intelligence."
+		human remains, classified nuclear weaponry, mail, undelivered departmental order crates, Syndicate bombs, \
+		homing beacons, unstable eigenstates, fax machines, industrial assembly machines, identification cards, or machinery housing any form of artificial intelligence."
 	/// radio used by the console to send messages on supply channel
 	var/obj/item/radio/headset/radio
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
@@ -394,6 +394,7 @@
 						if(restrictions)
 							requisition_text += "- Access Restrictions: [restrictions]</br>"
 						requisition_text += "- Ordered by: [order.orderer] ([order.orderer_rank])</br>"
+						requisition_text += "- Cost: [order.pack.cost] credits<br/>"
 						requisition_text += "- Paid by: [order.paying_account?.account_holder || "Cargo"]<br/>"
 						var/reason = order.reason
 						if(reason)

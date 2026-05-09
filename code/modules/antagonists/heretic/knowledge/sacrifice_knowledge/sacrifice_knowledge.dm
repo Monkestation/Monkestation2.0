@@ -1,4 +1,3 @@
-/* monkestation removal: refactored in [monkestation\code\modules\antagonists\heretic\knowledge\sacrifice_knowledge\sacrifice_knowledge.dm]
 // The knowledge and process of heretic sacrificing.
 
 /// How long we put the target so sleep for (during sacrifice).
@@ -11,12 +10,17 @@
  */
 /datum/heretic_knowledge/hunt_and_sacrifice
 	name = "Heartbeat of the Mansus"
-	desc = "Allows you to sacrifice targets to the Mansus by bringing them to a rune in critical (or worse) condition. \
-		If you have no targets, stand on a transmutation rune and invoke it to acquire some."
-	required_atoms = list(/mob/living/carbon/human = 1)
+	desc = "Allows you to sacrifice targets to the Mansus by bringing them to a rune in critical (or worse) condition."
+	notice = "If you have no targets, stand on a transmutation rune and invoke it to acquire some."
+	required_atoms = list(
+		list(/mob/living/carbon/human, /obj/item/organ/internal/brain/slime) = 1,
+	)
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY // Should be at the top
-	route = PATH_START
+	is_starting_knowledge = TRUE
+	research_tree_icon_path = 'icons/effects/eldritch.dmi'
+	research_tree_icon_state = "eye_close"
+	research_tree_icon_frame = 1
 	/// How many targets do we generate?
 	var/num_targets_to_generate = 5
 	/// Whether we've generated a heretic sacrifice z-level yet, from any heretic.
@@ -27,6 +31,16 @@
 	var/list/datum/mind/target_blacklist
 	/// An assoc list of [ref] to [timers] - a list of all the timers of people in the shadow realm currently
 	var/list/return_timers
+	/// Evil organs we can put in people
+	var/static/list/grantable_organs = list(
+		/obj/item/organ/internal/appendix/corrupt,
+		/obj/item/organ/internal/eyes/corrupt,
+		/obj/item/organ/internal/heart/corrupt,
+		/obj/item/organ/internal/liver/corrupt,
+		/obj/item/organ/internal/lungs/corrupt,
+		/obj/item/organ/internal/stomach/corrupt,
+		/obj/item/organ/internal/tongue/corrupt,
+	)
 
 /datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force)
 	heretic_mind = null
@@ -41,21 +55,20 @@
 #ifndef UNIT_TESTS // This is a decently hefty thing to generate while unit testing, so we should skip it.
 	if(!heretic_level_generated)
 		heretic_level_generated = TRUE
-		log_game("Generating z-level for heretic sacrifices...")
+		log_game("Loading heretic lazytemplate for heretic sacrifices...")
 		INVOKE_ASYNC(src, PROC_REF(generate_heretic_z_level))
 #endif
 
 /// Generate the sacrifice z-level.
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/generate_heretic_z_level()
-	var/datum/map_template/heretic_sacrifice_level/new_level = new()
-	if(!new_level.load_new_z())
-		log_game("The heretic sacrifice z-level failed to load.")
-		message_admins("The heretic sacrifice z-level failed to load. Heretic sacrifices won't be teleported to the shadow realm. \
+	if(!SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_HERETIC_SACRIFICE))
+		log_game("The heretic sacrifice template failed to load.")
+		message_admins("The heretic sacrifice lazy template failed to load. Heretic sacrifices won't be teleported to the shadow realm. \
 			If you want, you can spawn an /obj/effect/landmark/heretic somewhere to stop that from happening.")
-		CRASH("Failed to initialize heretic sacrifice z-level!")
+		CRASH("Failed to lazy load heretic sacrifice template!")
 
 /datum/heretic_knowledge/hunt_and_sacrifice/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	// First we have to check if the heretic has a Living Heart.
 	// You may wonder why we don't straight up prevent them from invoking the ritual if they don't have one -
 	// Hunt and sacrifice should always be invokable for clarity's sake, even if it'll fail immediately.
@@ -64,28 +77,25 @@
 		return FALSE
 
 	// We've got no targets set, let's try to set some.
-	// If we recently failed to aquire targets, we will be unable to aquire any.
-	if(!LAZYLEN(heretic_datum.sac_targets))
+	// If we recently failed to acquire targets, we will be unable to acquire any.
+	if(!LAZYLEN(heretic_datum.current_sacrifice_targets()))
 		atoms += user
 		return TRUE
 
-
-	// monkestation edit: allow stamcrit targets to be sacrificed (bc they're incapable of putting up resistance)
-	// in addition, if you need to sac a head of staff, any of them will do.
-	var/datum/objective/major_sacrifice/sac_head = locate() in heretic_datum.objectives
 	// If we have targets, we can check to see if we can do a sacrifice
 	// Let's remove any humans in our atoms list that aren't a sac target
-	for(var/mob/living/carbon/human/sacrifice in atoms)
-		var/is_target = (sacrifice in heretic_datum.sac_targets)
-		var/sac_department_flag = (sacrifice.mind?.assigned_role?.departments_bitflags | sacrifice.last_mind?.assigned_role?.departments_bitflags)
-		var/is_needed_command = (sac_head && !sac_head.check_completion() && (sac_department_flag & DEPARTMENT_BITFLAG_COMMAND))
-		var/is_valid_state = (sacrifice.stat != CONSCIOUS || HAS_TRAIT_FROM(sacrifice, TRAIT_INCAPACITATED, STAMINA))
-		if(!(is_target || is_needed_command) || !is_valid_state)
-			atoms -= sacrifice
-	// monkestation end
+	for(var/thingy in atoms)
+		if(ishuman(thingy))
+			var/mob/living/carbon/human/sacrifice = thingy
+			if(sacrifice.stat == CONSCIOUS || !heretic_datum.can_sacrifice(sacrifice))
+				atoms -= sacrifice
+		else if(istype(thingy, /obj/item/organ/internal/brain/slime))
+			var/obj/item/organ/internal/brain/slime/core = thingy
+			if(!heretic_datum.can_sacrifice(core))
+				atoms -= core
 
 	// Finally, return TRUE if we have a target in the list
-	if(locate(/mob/living/carbon/human) in atoms)
+	if(length(atoms))
 		return TRUE
 
 	// or FALSE if we don't
@@ -93,8 +103,11 @@
 	return FALSE
 
 /datum/heretic_knowledge/hunt_and_sacrifice/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	if(!LAZYLEN(heretic_datum.sac_targets))
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+	// You can ALWAYS sacrifice heads of staff if you need to do so.
+	// Force it to work if the sacrifice is a cultist, even if there's no targets.
+	var/mob/living/carbon/human/sac = selected_atoms[1]
+	if(!LAZYLEN(heretic_datum.current_sacrifice_targets()) && !heretic_datum.can_sacrifice(sac))
 		if(obtain_targets(user, heretic_datum = heretic_datum))
 			return TRUE
 		else
@@ -113,18 +126,7 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/obtain_targets(mob/living/user, silent = FALSE, datum/antagonist/heretic/heretic_datum)
 
 	// First construct a list of minds that are valid objective targets.
-	var/list/datum/mind/valid_targets = list()
-	for(var/datum/mind/possible_target as anything in get_crewmember_minds())
-		if(possible_target == user.mind)
-			continue
-		if(possible_target in target_blacklist)
-			continue
-		if(!ishuman(possible_target.current))
-			continue
-		if(possible_target.current.stat == DEAD)
-			continue
-
-		valid_targets += possible_target
+	var/list/datum/mind/valid_targets = heretic_datum.possible_sacrifice_targets()
 
 	if(!length(valid_targets))
 		if(!silent)
@@ -140,7 +142,7 @@
 
 	// First target, any command.
 	for(var/datum/mind/head_mind as anything in shuffle(valid_targets))
-		if(head_mind.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+		if(head_mind.assigned_role?.job_flags & JOB_HEAD_OF_STAFF)
 			final_targets += head_mind
 			valid_targets -= head_mind
 			break
@@ -160,20 +162,62 @@
 			break
 
 	// Now grab completely random targets until we'll full
-	var/target_sanity = 0
-	while(length(final_targets) < num_targets_to_generate && length(valid_targets) > num_targets_to_generate && target_sanity < 25)
+	var/remaining_targets = clamp(num_targets_to_generate - length(final_targets), 0, length(valid_targets))
+	for(var/i = 1 to remaining_targets)
 		final_targets += pick_n_take(valid_targets)
-		target_sanity++
 
 	if(!silent)
 		to_chat(user, span_danger("Your targets have been determined. Your Living Heart will allow you to track their position. Go and sacrifice them!"))
 
 	for(var/datum/mind/chosen_mind as anything in final_targets)
-		heretic_datum.add_sacrifice_target(chosen_mind.current)
+		heretic_datum.add_sacrifice_target(chosen_mind)
 		if(!silent)
 			to_chat(user, span_danger("[chosen_mind.current.real_name], the [chosen_mind.assigned_role?.title]."))
 
 	return TRUE
+
+#define REROLL_TYPE_HEAD 1
+#define REROLL_TYPE_SEC 2
+#define REROLL_TYPE_DEPT 3
+#define REROLL_TYPE_OTHER 4
+
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/reroll_cryoed_target(datum/mind/cryoing_target, datum/antagonist/heretic/heretic_datum)
+	if(!(cryoing_target in heretic_datum.current_sac_targets))
+		CRASH("Tried to call reroll_cryoed_target for someone that wasn't even a target wtf?")
+
+	var/reroll_type = get_target_reroll_type(cryoing_target, heretic_datum)
+	var/list/datum/mind/valid_targets = shuffle(heretic_datum.possible_sacrifice_targets(include_current_targets = FALSE))
+	valid_targets -= cryoing_target // just in case
+	var/datum/mind/new_target
+	for(var/datum/mind/potential_target as anything in valid_targets)
+		if(get_target_reroll_type(potential_target, heretic_datum) == reroll_type)
+			new_target = potential_target
+			break
+		else if(isnull(new_target)) // we'll still have a default
+			new_target = potential_target
+
+	heretic_datum.remove_sacrifice_target(cryoing_target)
+	if(new_target)
+		heretic_datum.add_sacrifice_target(new_target)
+		to_chat(heretic_datum.owner.current, span_danger("The Mansus whispers to you a new name as one of your previous sacrifice targets exits your grasp... [span_hypnophrase("[new_target.name]")]. Go forth and sacrifice [new_target.current.p_them()]!"))
+	else
+		to_chat(heretic_datum.owner.current, span_warning("You feel one of your sacrifice targets leave your reach... but the Mansus remains silent."))
+
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/get_target_reroll_type(datum/mind/target, datum/antagonist/heretic/heretic_datum)
+	if(!target.assigned_role)
+		return REROLL_TYPE_OTHER
+	if(target.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
+		return REROLL_TYPE_HEAD
+	if(target.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
+		return REROLL_TYPE_SEC
+	if(target.assigned_role.departments_bitflags & heretic_datum.owner.assigned_role?.departments_bitflags)
+		return REROLL_TYPE_DEPT
+	return REROLL_TYPE_OTHER
+
+#undef REROLL_TYPE_OTHER
+#undef REROLL_TYPE_DEPT
+#undef REROLL_TYPE_SEC
+#undef REROLL_TYPE_HEAD
 
 /**
  * Begin the process of sacrificing the target.
@@ -181,41 +225,145 @@
  * Arguments
  * * user - the mob doing the sacrifice (a heretic)
  * * selected_atoms - a list of all atoms chosen. Should be (at least) one human.
- * * loc - the turf the sacrifice is occuring on
+ * * loc - the turf the sacrifice is occurring on
  */
-/datum/heretic_knowledge/hunt_and_sacrifice/proc/sacrifice_process(mob/living/user, list/selected_atoms)
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/sacrifice_process(mob/living/user, list/selected_atoms, turf/loc)
 
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	var/obj/item/organ/internal/brain/slime/slime = locate() in selected_atoms
-
-	if(slime)
-		slime.rebuild_body()
-		slime.coredeath = FALSE
-		addtimer(CALLBACK(slime, TYPE_PROC_REF(/obj/item/organ/internal/brain/slime, enable_coredeath)), 20 SECONDS)
-
-	var/mob/living/carbon/human/sacrifice = locate() in selected_atoms
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+	var/mob/living/carbon/human/sacrifice
+	for(var/sacrifice_candidate in selected_atoms)
+		if(ishuman(sacrifice_candidate))
+			sacrifice = sacrifice_candidate
+			break
+		else if(is_oozeling_core(sacrifice_candidate))
+			var/obj/item/organ/internal/brain/slime/core = sacrifice_candidate
+			sacrifice = core.rebuild_body(nugget = FALSE)
+			// ELSE THE CORE GETS DELETED AND WEIRD SHIT HAPPENS
+			selected_atoms -= core
+			selected_atoms += sacrifice
+			break
 	if(!sacrifice)
 		CRASH("[type] sacrifice_process didn't have a human in the atoms list. How'd it make it so far?")
-	if(!(sacrifice in heretic_datum.sac_targets))
-		CRASH("[type] sacrifice_process managed to get a non-target human. This is incorrect.")
+	if(!heretic_datum.can_sacrifice(sacrifice))
+		CRASH("[type] sacrifice_process managed to get a non-target, non-cult, non-command human. This is incorrect.")
 
-	if(sacrifice.mind)
-		LAZYADD(target_blacklist, sacrifice.mind)
+	var/datum/mind/sacrifice_mind = get_mind(sacrifice)
+	if(sacrifice_mind)
+		LAZYOR(heretic_datum.completed_sacrifices, sacrifice_mind)
 	heretic_datum.remove_sacrifice_target(sacrifice)
 
 	var/feedback = "Your patrons accept your offer"
-	var/sac_department_flag = sacrifice.mind?.assigned_role?.departments_bitflags | sacrifice.last_mind?.assigned_role?.departments_bitflags
-	if(sac_department_flag & DEPARTMENT_BITFLAG_COMMAND)
-		heretic_datum.knowledge_points++
+	var/datum/antagonist/cult/cultist_datum = GET_CULTIST(sacrifice)
+	// Heads give 3 points, cultists give 1 point (and a special reward), normal sacrifices give 2 points.
+	heretic_datum.total_sacrifices++
+	user.remove_status_effect(/datum/status_effect/heretic_sated)
+	var/knowledge_reward = 2
+	if(sacrifice_mind?.assigned_role?.job_flags & JOB_HEAD_OF_STAFF)
+		knowledge_reward++
 		heretic_datum.high_value_sacrifices++
 		feedback += " <i>graciously</i>"
+	if(cultist_datum)
+		notify_ghosts(
+			"[heretic_mind.name] has sacrificed [sacrifice.real_name], a blood cultist, to the Mansus!",
+			source = user,
+			action = NOTIFY_ORBIT,
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+			header = "touhou hijack lol",
+		)
+		knowledge_reward++
+		grant_reward(user, sacrifice, loc)
+		// easier to read
+		var/rewards_given = heretic_datum.rewards_given
+		// Chance for it to send a warning to cultists, higher with each reward. Stops after 5 because they probably got the hint by then.
+		if(prob(min(15 * rewards_given)) && (rewards_given <= 5))
+			for(var/datum/mind/mind as anything in cultist_datum.cult_team.members)
+				if(mind.current)
+					SEND_SOUND(mind.current, 'sound/magic/clockwork/narsie_attack.ogg')
+					var/message = span_narsie("A vile heretic has ") + \
+					span_cultlarge(span_hypnophrase("sacrificed")) + \
+					span_narsie(" one of our own. Destroy and sacrifice the infidel before it claims more!")
+					to_chat(mind.current, message)
+			// he(retic) gets a warn too
+			to_chat(user, span_narsiesmall("How DARE you!? I will see you destroyed for this."))
+			var/non_flavor_warning = span_cultbold("You feel that your action has attracted ") + span_hypnophrase("attention") + span_cultbold(".")
+			to_chat(user, non_flavor_warning)
+		loc.flash_lighting_fx(range = 7, power = 3, color = LIGHT_COLOR_BLOOD_MAGIC, duration = 5 SECONDS)
+		heretic_datum.adjust_knowledge_points(knowledge_reward)
+		return
+
+	heretic_datum.adjust_knowledge_points(knowledge_reward)
 
 	to_chat(user, span_hypnophrase("[feedback]."))
-	heretic_datum.total_sacrifices++
-	heretic_datum.knowledge_points += 2
-
 	if(!begin_sacrifice(sacrifice))
 		disembowel_target(sacrifice)
+		return
+
+	sacrifice.apply_status_effect(/datum/status_effect/heretic_curse, user)
+
+
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/grant_reward(mob/living/user, mob/living/sacrifice, turf/loc)
+
+	// Visible and audible encouragement!
+	to_chat(user, span_big(span_hypnophrase("A servant of the Sanguine Apostate!")))
+	to_chat(user, span_hierophant("Your patrons are rapturous!"))
+	playsound(sacrifice, 'sound/magic/disintegrate.ogg', 75, TRUE)
+
+	// Drop all items and splatter them around messily.
+	var/list/dustee_items = sacrifice.unequip_everything()
+	for(var/obj/item/loot as anything in dustee_items)
+		loot.throw_at(get_step_rand(sacrifice), 2, 4, user, TRUE)
+
+	// The loser is DUSTED.
+	sacrifice.dust(just_ash = TRUE, drop_items = TRUE)
+
+	// Increase reward counter
+	var/datum/antagonist/heretic/antag = GET_HERETIC(user)
+	antag.rewards_given++
+
+	// Cool effect for the rune as well as the item
+	var/obj/effect/heretic_rune/rune = locate() in range(2, user)
+	if(rune)
+		rune.gender_reveal(
+			outline_color = COLOR_CULT_RED,
+			ray_color = null,
+			do_float = FALSE,
+			do_layer = FALSE,
+		)
+
+	addtimer(CALLBACK(src, PROC_REF(deposit_reward), user, loc, null, rune), 5 SECONDS)
+
+
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/deposit_reward(mob/user, turf/loc, loop = 0, obj/rune)
+	if(loop > 5) // Max limit for retrying a reward
+		return
+	// Remove the outline, we don't need it anymore.
+	rune?.remove_filter("reward_outline")
+	playsound(loc, 'sound/magic/repulse.ogg', 75, TRUE)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+	ASSERT(heretic_datum)
+	// This list will be almost identical to unlocked_heretic_items, with the same keys, the difference being the values will be 1 to 5.
+	var/list/rewards = heretic_datum.unlocked_heretic_items.Copy()
+	// We will make it increasingly less likely to get a reward if you've already got it
+	for(var/possible_reward in heretic_datum.unlocked_heretic_items)
+		var/amount_already_awarded = heretic_datum.unlocked_heretic_items[possible_reward]
+		rewards[possible_reward] = min(5 - (amount_already_awarded * 2), 1)
+
+	var/atom/reward = pick_weight(rewards)
+	reward = new reward(loc)
+
+	if(isliving(reward))
+		if(summon_ritual_mob(user, loc, reward) == FALSE)
+			qdel(reward)
+			deposit_reward(user, loc, loop++, rune) // If no ghosts, try again until limit is hit
+		return
+
+	else if(isitem(reward))
+		var/obj/item/item_reward = reward
+		item_reward.gender_reveal(outline_color = null, ray_color = COLOR_CULT_RED)
+
+	ASSERT(reward)
+
+	return reward
 
 /**
  * This proc is called from [proc/sacrifice_process] after the heretic successfully sacrifices [sac_target].)
@@ -241,17 +389,23 @@
 
 	var/turf/destination = get_turf(destination_landmark)
 
-	sac_target.visible_message(span_danger("[sac_target] begins to shudder violenty as dark tendrils begin to drag them into thin air!"))
-	sac_target.set_handcuffed(new /obj/item/restraints/handcuffs/energy/cult(sac_target))
-	sac_target.update_handcuffed()
+	notify_ghosts(
+		"[heretic_mind.name] has sacrificed [sac_target.real_name] to the Mansus!",
+		source = sac_target,
+		action = NOTIFY_ORBIT,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		header = "touhou hijack lol",
+	)
 
-	if(sac_target.legcuffed)
-		sac_target.legcuffed.forceMove(sac_target.drop_location())
-		sac_target.legcuffed.dropped(sac_target)
-		sac_target.legcuffed = null
-		sac_target.update_worn_legcuffs()
+	sac_target.visible_message(span_danger("[sac_target] begins to shudder violently as dark tendrils begin to drag [sac_target.p_them()] into thin air!"))
+	sac_target.equip_to_slot_or_del(new /obj/item/restraints/handcuffs/energy/cult, ITEM_SLOT_HANDCUFFED/* , indirect_action = TRUE */)
+	sac_target.dropItemToGround(sac_target.legcuffed, TRUE)
 
-	sac_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 85, 150)
+	// if they are brain damaged to shit, let's... ensure they don't immediately die once we revive them.
+	if(sac_target.get_organ_loss(ORGAN_SLOT_BRAIN) > 150)
+		sac_target.setOrganLoss(ORGAN_SLOT_BRAIN, 150)
+	else
+		sac_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 85, 150)
 	sac_target.do_jitter_animation()
 	log_combat(heretic_mind.current, sac_target, "sacrificed")
 
@@ -261,8 +415,8 @@
 	// If our target is dead, try to revive them
 	// and if we fail to revive them, don't proceede the chain
 	sac_target.adjustOxyLoss(-100, FALSE)
-	sac_target.grab_ghost() // monke edit: try to grab their ghost
-	if(!sac_target.heal_and_revive(50, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
+	sac_target.grab_ghost()
+	if(!sac_target.heal_and_revive(50, span_danger("[sac_target]'s heart begins to beat with an unholy force as [sac_target.p_they()] return[sac_target.p_s()] from death!")))
 		return
 
 	if(sac_target.AdjustUnconscious(SACRIFICE_SLEEP_DURATION))
@@ -291,12 +445,14 @@
 	if(QDELETED(sac_target))
 		return
 
-	sac_target.grab_ghost() // monke edit: try to grab their ghost
+	sac_target.grab_ghost()
 
 	// The target disconnected or something, we shouldn't bother sending them along.
 	if(!sac_target.client || !sac_target.mind)
 		disembowel_target(sac_target)
 		return
+
+	curse_organs(sac_target)
 
 	// Send 'em to the destination. If the teleport fails, just disembowel them and stop the chain
 	if(!destination || !do_teleport(sac_target, destination, asoundin = 'sound/magic/repulse.ogg', asoundout = 'sound/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
@@ -307,18 +463,44 @@
 	// and we fail to revive them (using a lower number than before),
 	// just disembowel them and stop the chain
 	sac_target.adjustOxyLoss(-100, FALSE)
-	sac_target.grab_ghost() // monke edit: try to grab their ghost again before revival
-	if(!sac_target.heal_and_revive(60, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
+	sac_target.grab_ghost()
+	if(!sac_target.heal_and_revive(60, span_danger("[sac_target]'s heart begins to beat with an unholy force as [sac_target.p_they()] return[sac_target.p_s()] from death!")))
 		disembowel_target(sac_target)
 		return
 
 	to_chat(sac_target, span_big(span_hypnophrase("Unnatural forces begin to claw at your every being from beyond the veil.")))
+
+	SEND_SOUND(sac_target, sound('sound/music/antag/heretic/heretic_sacrifice.ogg', volume = 50)) // play theme
 
 	sac_target.apply_status_effect(/datum/status_effect/unholy_determination, SACRIFICE_REALM_DURATION)
 	addtimer(CALLBACK(src, PROC_REF(after_target_wakes), sac_target), SACRIFICE_SLEEP_DURATION * 0.5) // Begin the minigame
 
 	RegisterSignal(sac_target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_target_escape)) // Cheese condition
 	RegisterSignal(sac_target, COMSIG_LIVING_DEATH, PROC_REF(on_target_death)) // Loss condition
+
+/// Apply a sinister curse to some of the target's organs as an incentive to leave us alone
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/curse_organs(mob/living/carbon/human/sac_target)
+	var/list/usable_organs = grantable_organs.Copy()
+	if (isplasmaman(sac_target))
+		usable_organs -= /obj/item/organ/internal/lungs/corrupt // Their lungs are already more cursed than anything I could give them
+
+	// don't remove unremovable organs
+	for(var/obj/item/organ/internal/organ_type as anything in usable_organs)
+		var/obj/item/organ/internal/current_organ = sac_target.get_organ_slot(organ_type::slot)
+		if(current_organ?.organ_flags & ORGAN_UNREMOVABLE)
+			usable_organs -= organ_type
+
+	var/total_implant = rand(2, 4)
+
+	for (var/i in 1 to total_implant)
+		if (!length(usable_organs))
+			return
+		var/organ_path = pick_n_take(usable_organs)
+		var/obj/item/organ/to_give = new organ_path
+		to_give.Insert(sac_target)
+
+	new /obj/effect/gibspawner/human/bodypartless(get_turf(sac_target), sac_target)
+	sac_target.visible_message(span_boldwarning("Several organs force themselves out of [sac_target]!"))
 
 /**
  * This proc is called from [proc/after_target_sleeps] when the [sac_target] should be waking up.)
@@ -332,6 +514,16 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/after_target_wakes(mob/living/carbon/human/sac_target)
 	if(QDELETED(sac_target))
 		return
+
+	// ensure they're awake and ready to play touhou
+	sac_target.SetUnconscious(0)
+	sac_target.SetSleeping(0)
+	sac_target.stamina?.revitalize(forced = TRUE)
+	sac_target.SetAllImmobility(0)
+	if(sac_target.resting)
+		sac_target.set_resting(FALSE, instant = TRUE)
+	else
+		sac_target.get_up(instant = TRUE)
 
 	// About how long should the helgrasp last? (1 metab a tick = helgrasp_time / 2 ticks (so, 1 minute = 60 seconds = 30 ticks))
 	var/helgrasp_time = 1 MINUTES
@@ -392,12 +584,12 @@
 	sac_target.remove_status_effect(/datum/status_effect/necropolis_curse)
 	sac_target.remove_status_effect(/datum/status_effect/unholy_determination)
 	sac_target.reagents?.del_reagent(/datum/reagent/inverse/helgrasp/heretic)
+	sac_target.uncuff()
 	sac_target.clear_mood_event("shadow_realm")
 	if(IS_HERETIC(sac_target))
 		var/datum/antagonist/heretic/victim_heretic = sac_target.mind?.has_antag_datum(/datum/antagonist/heretic)
-		victim_heretic.knowledge_points -= 3
-	else
-		sac_target.gain_trauma(/datum/brain_trauma/mild/phobia/heresy, TRAUMA_RESILIENCE_LOBOTOMY) // monke edit: allow lobotomy to cure the phobia
+		victim_heretic.adjust_knowledge_points(-3)
+
 	// Wherever we end up, we sure as hell won't be able to explain
 	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)
 	sac_target.adjust_stutter(40 SECONDS)
@@ -410,7 +602,7 @@
 		return
 
 	// Teleport them to a random safe coordinate on the station z level.
-	var/turf/open/floor/safe_turf = get_safe_random_station_turf()
+	var/turf/open/floor/safe_turf = get_safe_random_station_turf_equal_weight()
 	var/obj/effect/landmark/observer_start/backup_loc = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 	if(!safe_turf)
 		safe_turf = get_turf(backup_loc)
@@ -477,8 +669,8 @@
 	sac_target.set_jitter_if_lower(120 SECONDS)
 	sac_target.set_eye_blur_if_lower(100 SECONDS)
 	sac_target.set_dizzy_if_lower(1 MINUTES)
-	sac_target.AdjustKnockdown(80)
-	sac_target.stamina.adjust(-120)
+	sac_target.AdjustKnockdown(8 SECONDS)
+	sac_target.stamina?.adjust(-STAMINA_MAX)
 
 	// Glad i'm outta there, though!
 	sac_target.add_mood_event("shadow_realm_survived", /datum/mood_event/shadow_realm_live)
@@ -513,7 +705,7 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/disembowel_target(mob/living/carbon/human/sac_target)
 	if(heretic_mind)
 		log_combat(heretic_mind.current, sac_target, "disemboweled via sacrifice")
-	sac_target.spill_organs()
+	sac_target.spill_organs(/* DROP_ALL_REMAINS */)
 	sac_target.apply_damage(250, BRUTE)
 	if(sac_target.stat != DEAD)
 		sac_target.investigate_log("has been killed by heretic sacrifice.", INVESTIGATE_DEATHS)
@@ -523,8 +715,9 @@
 		span_userdanger("Your organs are violently pulled out of your chest by shadowy hands!")
 	)
 
-	new /obj/effect/gibspawner/human/bodypartless(get_turf(sac_target))
+	new /obj/effect/gibspawner/human/bodypartless(get_turf(sac_target), sac_target)
+
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/play_music(mob/living/carbon/human/sac_target)
 
 #undef SACRIFICE_SLEEP_DURATION
 #undef SACRIFICE_REALM_DURATION
-monkestation end */

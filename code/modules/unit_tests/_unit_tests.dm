@@ -140,6 +140,7 @@
 #include "hunger_curse.dm"
 #include "hydroponics_extractor_storage.dm"
 #include "hydroponics_validate_genes.dm"
+#include "id_access.dm"
 #include "inhands.dm"
 #include "json_savefile_importing.dm"
 #include "keybinding_init.dm"

@@ -15,16 +15,6 @@
 #define PLANE_SPACE -25
 #define PLANE_SPACE_PARALLAX -20
 
-//monkestation begin
-//Not ever visible, place beneath everything
-#define WEATHER_OVERLAY_PLANE -70
-#define WEATHER_RENDER_TARGET "*WEATHER_OVERLAY_PLANE"
-
-#define WEATHER_OVERLAY_PLANE_ECLIPSE -71
-#define WEATHER_ECLIPSE_RENDER_TARGET "*WEATHER_OVERLAY_PLANE_ECLIPSE"
-
-//monkestation end
-
 #define GRAVITY_PULSE_PLANE -16
 #define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
 
@@ -40,9 +30,6 @@
 #define GAME_PLANE_UPPER -9
 #define WALL_PLANE_UPPER -8
 #define GAME_PLANE_UPPER_FOV_HIDDEN -7
-#define WEATHER_EFFECT_PLANE_ECLIPSE -6
-#define WEATHER_EFFECT_PLANE_MISC -5
-#define WEATHER_EFFECT_PLANE -4 // monkestation edit
 
 ///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees
 #define SEETHROUGH_PLANE -3
@@ -163,8 +150,10 @@
 #define WIRE_LAYER 2.044
 #define GLASS_FLOOR_LAYER 2.046
 #define TRAM_RAIL_LAYER 2.047
-#define TRAM_FLOOR_LAYER 2.048
 #define ABOVE_OPEN_TURF_LAYER 2.049
+
+// #define LOWER_RUNE_LAYER 2.0491 /* (16 + TOPDOWN_LAYER) */
+// #define RUNE_LAYER 2.0492 /* (17 + TOPDOWN_LAYER) */
 
 //WALL_PLANE layers
 #define CLOSED_TURF_LAYER 2.05
@@ -190,6 +179,9 @@
 // Anything above this layer is not "on" a turf for the purposes of washing
 // I hate this life of ours
 #define FLOOR_CLEAN_LAYER 2.55
+#define TRAM_STRUCTURE_LAYER 2.57
+#define TRAM_FLOOR_LAYER 2.58
+#define TRAM_WALL_LAYER 2.59
 
 #define BELOW_OPEN_DOOR_LAYER 2.6
 #define BLASTDOOR_LAYER 2.65
@@ -228,6 +220,7 @@
 // GAME_PLANE_UPPER layers
 #define ABOVE_MOB_LAYER 4.1
 #define WALL_OBJ_LAYER 4.25
+#define TRAM_SIGNAL_LAYER 4.26
 // WALL_PLANE_UPPER layers
 #define EDGED_TURF_LAYER 4.3
 #define ON_EDGED_TURF_LAYER 4.35
@@ -298,6 +291,10 @@
 /// Layer for tutorial instructions
 #define TUTORIAL_INSTRUCTIONS_LAYER 5
 
+/// Layer for pathfinding arrows
+#define PATH_ARROW_DEBUG_LAYER 7
+/// Layer for pathfinding overlays
+#define PATH_DEBUG_LAYER 8
 
 #define LOBBY_BACKGROUND_LAYER 3
 #define LOBBY_BUTTON_LAYER 4

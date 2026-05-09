@@ -203,6 +203,15 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 	name = "Rainbow Bow Tie"
 	item_path = /obj/item/clothing/neck/bowtie/rainbow
 
+/datum/loadout_item/neck/knight_cloak // Non donator version of the knight cloak
+	name = "Knight Cloak (alt)"
+	item_path = /obj/item/clothing/neck/knightcloak/alt
+
+/datum/loadout_item/neck/hornet_cloak // Non donator version of the hornet cloak
+	name = "Hornet Cloak (alt)"
+	item_path = /obj/item/clothing/neck/hornetcloak/alt
+
+
 /datum/loadout_item/neck/modlink
 	name = "MODlink Scryer"
 	item_path = /obj/item/clothing/neck/link_scryer/loaded
@@ -228,7 +237,6 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 
 /datum/loadout_item/neck/donator/knight_cloak
 	name = "Knight Cloak"
-	restricted_roles = list(JOB_MIME)
 	item_path = /obj/item/clothing/neck/knightcloak
 
 /datum/loadout_item/neck/donator/hornet_cloak

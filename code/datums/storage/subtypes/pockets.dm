@@ -82,7 +82,7 @@
 		/obj/item/dnainjector,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/pill,
-		/obj/item/reagent_containers/hypospray/medipen,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/implanter,
 		/obj/item/screwdriver,
@@ -103,7 +103,7 @@
 		/obj/item/toy/crayon,
 		/obj/item/reagent_containers/cup/glass/flask),
 		list(/obj/item/screwdriver/power,
-		/obj/item/ammo_casing/caseless/rocket,
+		/obj/item/ammo_casing/rocket,
 		/obj/item/clothing/mask/cigarette/pipe,
 		/obj/item/toy/crayon/spraycan)
 		)
@@ -118,7 +118,7 @@
 		/obj/item/scalpel,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/dnainjector,
-		/obj/item/reagent_containers/hypospray/medipen,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/implanter,
 		/obj/item/screwdriver,
@@ -138,7 +138,7 @@
 		/obj/item/bikehorn,
 		/obj/item/reagent_containers/cup/glass/flask),
 		list(/obj/item/screwdriver/power,
-		/obj/item/ammo_casing/caseless/rocket,
+		/obj/item/ammo_casing/rocket,
 		/obj/item/clothing/mask/cigarette/pipe,
 		/obj/item/toy/crayon/spraycan)
 		)
@@ -170,15 +170,20 @@
 					  /obj/item/ammo_box/a762))
 
 
+///Void cloak pocket
 /datum/storage/pockets/void_cloak
-	quickdraw = TRUE
 	max_total_storage = 5 // 2 small items + 1 tiny item, or 1 normal item + 1 small item
 	max_slots = 3
 
-/datum/storage/pockets/void_cloak/New()
+/datum/storage/pockets/void_cloak/New(
+	atom/parent,
+	max_slots,
+	max_specific_storage,
+	max_total_storage,
+)
 	. = ..()
 	set_holdable(list(
-		/obj/item/ammo_box/a762/lionhunter,
+		/obj/item/ammo_box/speedloader/strilka310/lionhunter,
 		/obj/item/bodypart, // Bodyparts are often used in rituals. They're also often normal sized, so you can only fit one.
 		/obj/item/clothing/neck/eldritch_amulet,
 		/obj/item/clothing/neck/heretic_focus,

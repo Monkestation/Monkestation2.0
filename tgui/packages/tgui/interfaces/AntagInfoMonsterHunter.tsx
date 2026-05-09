@@ -1,17 +1,17 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
   Box,
   Button,
+  Dimmer,
+  DmIcon,
+  Flex,
+  Icon,
   Section,
   Stack,
-  Icon,
-  Flex,
-  DmIcon,
-  Dimmer,
 } from '../components';
 import { Window } from '../layouts';
-import { Objective } from './common/Objectives';
+import type { Objective } from './common/Objectives';
 
 type HunterWeapon = {
   id: string;

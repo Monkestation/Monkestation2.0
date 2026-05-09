@@ -12,7 +12,7 @@
 	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS
 	armor_type = /datum/armor/helmet_space
-	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT //monkestation edit
+	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	interaction_flags_click = NEED_DEXTERITY
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
 
@@ -147,11 +147,11 @@
 	return ..()
 
 // Clean up the cell on destroy
-/obj/item/clothing/suit/space/handle_atom_del(atom/A)
-	if(A == cell)
+/obj/item/clothing/suit/space/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
 		cell = null
 		thermal_on = FALSE
-	return ..()
 
 // support for items that interact with the cell
 /obj/item/clothing/suit/space/get_cell(atom/movable/interface, mob/user)

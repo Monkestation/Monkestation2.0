@@ -69,7 +69,7 @@ const ProductCategory = (props) => {
               title={
                 <span>
                   {<Icon name={product.ui_icon} />}
-                  {' ' + product.name}
+                  {` ${product.name}`}
                 </span>
               }
               fill={false}

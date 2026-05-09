@@ -1288,6 +1288,22 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
 	)
 
+/datum/design/borg_upgrade_advanalyzer
+	name = "Advanced Health Analyzer"
+	id = "borg_upgrade_advanalyzer"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/adv_healthanalyzer
+	materials = list(
+		/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT*1.25,
+		/datum/material/silver =SHEET_MATERIAL_AMOUNT,
+		/datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5
+	)
+	construction_time = 120
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	)
+
 /datum/design/borg_upgrade_nvgmeson
 	name = "Nightvision Meson Sight"
 	id = "borg_upgrade_nvmeson"

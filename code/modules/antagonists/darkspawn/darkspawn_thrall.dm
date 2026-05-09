@@ -86,9 +86,9 @@
 
 	if(isliving(current_mob))
 		var/obj/item/organ/internal/shadowtumor/thrall/tumor = current_mob.get_organ_slot(ORGAN_SLOT_BRAIN_TUMOR)
-		if(!tumor || !istype(tumor))
+		if(!istype(tumor))
 			tumor = new
-			tumor.Insert(current_mob, FALSE, FALSE)
+			tumor.Follow_Insert(current_mob, ORGAN_SLOT_BRAIN, FALSE, FALSE)
 			if(team)
 				tumor.antag_team = team
 
@@ -112,6 +112,9 @@
 			qdel(spells)
 	qdel(get_shadow_tumor(current_mob))
 	current_mob.update_sight()
+
+/datum/antagonist/thrall_darkspawn/pre_mindshield(mob/implanter, mob/living/mob_override)
+	return COMPONENT_MINDSHIELD_RESISTED
 
 ////////////////////////////////////////////////////////////////////////////////////
 //--------------------------------Antag hud---------------------------------------//

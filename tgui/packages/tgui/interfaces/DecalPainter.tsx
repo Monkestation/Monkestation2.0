@@ -1,7 +1,6 @@
-import { Button, ColorBox, Flex, Section, Stack } from '../components';
-import { BooleanLike } from 'common/react';
-
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
+import { Button, ColorBox, Flex, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type DecalInfo = {

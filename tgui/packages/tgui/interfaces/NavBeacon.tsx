@@ -1,3 +1,4 @@
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
   Box,
@@ -9,7 +10,6 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
-import { BooleanLike } from 'common/react';
 
 export type Data = {
   locked: BooleanLike;

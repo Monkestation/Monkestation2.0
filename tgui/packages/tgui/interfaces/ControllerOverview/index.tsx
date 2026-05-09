@@ -2,11 +2,11 @@ import { useLocalState } from '../../backend';
 import { Button, Dropdown, Input, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { SORTING_TYPES } from './contants';
-import { FilterAction, filterReducer, FilterState } from './filters';
+import { FilterAction, type FilterState, filterReducer } from './filters';
 import { OverviewSection } from './OverviewSection';
 import { SubsystemDialog } from './SubsystemDialog';
 import { SubsystemViews } from './SubsystemViews';
-import { SortType, SubsystemData } from './types';
+import { SortType, type SubsystemData } from './types';
 
 export const ControllerOverview = (props) => {
   return (

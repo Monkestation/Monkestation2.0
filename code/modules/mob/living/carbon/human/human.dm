@@ -38,6 +38,11 @@
 		return
 	mob_mood = new /datum/mood(src)
 
+/mob/living/carbon/human/proc/create_symptoms()
+	if(flags_1 & HOLOGRAM_1)
+		return
+	AddComponent(/datum/component/symptom_genes, dna.species, 3)
+
 /mob/living/carbon/human/dummy/setup_mood()
 	return
 
@@ -47,15 +52,15 @@
 /mob/living/carbon/human/proc/setup_organless_effects()
 	// All start without eyes, and get them via set species
 	become_blind(NO_EYES)
+	// And no ears, and get them via set species
+	ADD_TRAIT(src, TRAIT_DEAF, NO_EARS)
 	// Mobs cannot taste anything without a tongue; the tongue organ removes this on Insert
 	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 	// No lungs until you get lungs
 	apply_status_effect(/datum/status_effect/lungless)
 
 /mob/living/carbon/human/proc/setup_human_dna()
-	//initialize dna. for spawned humans; overwritten by other code
-	randomize_human(src)
-	dna.initialize_dna()
+	randomize_human(src, randomize_mutations = TRUE)
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
@@ -662,13 +667,15 @@
 				dna.remove_mutation(existing_mutation.name, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR, MUTATION_SOURCE_TIMED_INJECTOR))
 	return ..()
 
-/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
+/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1, knockdown = FALSE)
 	if(blood && HAS_TRAIT(src, TRAIT_NOBLOOD) && !HAS_TRAIT(src, TRAIT_TOXINLOVER))
 		if(message)
 			visible_message(span_warning("[src] dry heaves!"), \
 							span_userdanger("You try to throw up, but there's nothing in your stomach!"))
 		if(stun)
 			Stun(20 SECONDS)
+		if(knockdown)
+			Knockdown(20 SECONDS)
 		return 1
 	..()
 
@@ -689,6 +696,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_MOD_MUTATIONS, "Add/Remove Mutation")
 	VV_DROPDOWN_OPTION(VV_HK_MOD_QUIRKS, "Add/Remove Quirks")
 	VV_DROPDOWN_OPTION(VV_HK_SET_SPECIES, "Set Species")
+	VV_DROPDOWN_OPTION(VV_HK_REISSUE_RSID, "Reissue roundstart ID")
 
 /mob/living/carbon/human/vv_do_topic(list/href_list)
 	. = ..()
@@ -750,6 +758,37 @@
 			var/newtype = GLOB.species_list[result]
 			admin_ticket_log("[key_name(usr)] has modified the bodyparts of [src] to [result]") // MONKESTATION EDIT - tgui tickets
 			set_species(newtype)
+	if(href_list[VV_HK_REISSUE_RSID])
+		if(!check_rights(R_SPAWN))
+			return
+		if(!(mind.assigned_role?.job_flags & JOB_CREW_MEMBER))
+			to_chat(usr, span_warning("This mob is not a crew member!"))
+			return
+		if(!mind.assigned_role.outfit)
+			to_chat(usr, span_warning("This mob has no outfit in their assigned role!"))
+			return
+		var/obj/item/card/id/advanced/card = new mind.assigned_role.outfit.id
+		SSid_access.apply_trim_to_card(card, mind.assigned_role.outfit.id_trim)
+
+		card.registered_name = real_name
+
+		if(age)
+			card.registered_age = age
+
+		card.update_label()
+		card.update_icon()
+
+		var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[account_id]"]
+
+		if(account && account.account_id == account_id)
+			card.registered_account = account
+			account.bank_cards += card
+
+		sec_hud_set_ID()
+
+		put_in_hands(card)
+		message_admins("[key_name_admin(usr)] has reissued [key_name_admin(usr)]'s ID via VV")
+		log_admin("[key_name(usr)] has reissued [key_name(usr)]'s ID via VV")
 
 /mob/living/carbon/human/limb_attack_self()
 	var/obj/item/bodypart/arm = hand_bodyparts[active_hand_index]
@@ -854,10 +893,8 @@
 	var/highest_deficiency = max(lethal_deficiency, stamina_deficiency)
 	if(lethal_deficiency >= 40 || stamina_deficiency >= 60)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE, multiplicative_slowdown = highest_deficiency / 75)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, update = TRUE, multiplicative_slowdown = highest_deficiency / 25)
 	else if(LAZYACCESS(movespeed_modification, "[/datum/movespeed_modifier/damage_slowdown]"))
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE)
-		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, update = TRUE)
 
 /mob/living/carbon/human/pre_stamina_change(diff as num, forced)
 	. = ..()

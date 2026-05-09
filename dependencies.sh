@@ -11,7 +11,7 @@ export BYOND_MINOR=1663
 export RUST_G_REPO="Monkestation/rust-g"
 
 #rust_g git tag
-export RUST_G_VERSION=4.2.0
+export RUST_G_VERSION=6.0.1
 
 #auxcpu git tag
 export AUXCPU_VERSION=1.0.0

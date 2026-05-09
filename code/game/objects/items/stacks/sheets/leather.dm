@@ -211,6 +211,7 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 		new/datum/stack_recipe("security medical belt", /obj/item/storage/belt/medical/secmed, 2, check_density = FALSE, category = CAT_CONTAINERS), \
 		new/datum/stack_recipe("shoulder holster", /obj/item/storage/belt/holster, 3, check_density = FALSE, category = CAT_CONTAINERS), \
 		new/datum/stack_recipe("bandolier", /obj/item/storage/belt/bandolier, 5, check_density = FALSE, category = CAT_CONTAINERS), \
+		new/datum/stack_recipe("medical bandolier", /obj/item/storage/belt/medbandolier, 5, check_density = FALSE, category = CAT_CONTAINERS), \
 	)),
 	new/datum/stack_recipe_list("cowboy hats", list( \
 		new/datum/stack_recipe("sheriff hat", /obj/item/clothing/head/cowboy/brown, 2, check_density = FALSE, category = CAT_CLOTHING), \

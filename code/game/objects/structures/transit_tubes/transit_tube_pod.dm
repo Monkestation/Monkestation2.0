@@ -50,7 +50,8 @@
 		transfer_fingerprints_to(R)
 		R.setDir(dir)
 		empty_pod(location)
-	qdel(src)
+	if(!QDELETED(src))
+		qdel(src)
 
 /obj/structure/transit_tube_pod/ex_act(severity, target)
 	. = ..()

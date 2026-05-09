@@ -206,6 +206,14 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 	name = "Tacticool Skirtleneck"
 	item_path = /obj/item/clothing/under/syndicate/tacticool/skirt
 
+/datum/store_item/under/miscellaneous/tacticool_engi_turtleneck
+	name = "Tacticool Engineering Turtleneck"
+	item_path = /obj/item/clothing/under/syndicate/nova/overalls/unarmoured/tacticool
+
+/datum/store_item/under/miscellaneous/tactical_skirt_engi_turtleneck
+	name = "Tacticool Engineering Skirtleneck"
+	item_path = /obj/item/clothing/under/syndicate/nova/overalls/unarmoured/skirt/tacticool
+
 
 /datum/store_item/under/miscellaneous/gladiator
 	name = "Gladiator Uniform"
@@ -542,6 +550,11 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 /datum/store_item/under/jumpsuit/utility	//BUYABLE
 	name = "Utility Uniform"
 	item_path = /obj/item/clothing/under/misc/nova/utility
+	item_cost = 3000
+
+/datum/store_item/under/jumpsuit/deforest	//BUYABLE
+	name = "Deforest Uniform"
+	item_path = /obj/item/clothing/under/rank/medical/paramedic/deforest
 	item_cost = 3000
 
 /datum/store_item/under/miscellaneous/vicvest //BUYABLE

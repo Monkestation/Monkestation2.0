@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(store_pockets, generate_store_items(/datum/store_item/pocket))
 	item_cost = 3000
 
 /datum/store_item/pocket/tape
-	name = "Spare Cassette Tape"
+	name = "Spare Recording Tape"
 	item_path = /obj/item/tape/random
 	item_cost = 2500
 

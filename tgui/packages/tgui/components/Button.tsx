@@ -1,5 +1,5 @@
-import { BooleanLike } from 'common/react';
-import { ComponentProps } from 'react';
+import type { BooleanLike } from 'common/react';
+import type { ComponentProps } from 'react';
 import { Button as TGUIButton } from 'tgui-core/components';
 
 export const Button = (props: ComponentProps<typeof TGUIButton>) => {

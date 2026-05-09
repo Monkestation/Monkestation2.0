@@ -40,8 +40,8 @@ export const SOFTWARE_DESC = {
   'Door Jack': `A tool that allows you to open doors.`,
   'Encryption Slot': `Allows you to speak on other radio frequencies. You must
     get an encryption key inserted.`,
-  'Host Scan': `A health analyzer that can be used in hand or to report bound
-    master vitals.`,
+  'Host Scan': `A health analyzer that can be used to scan your carrier,
+    or your master with right-click,`,
   'Internal GPS': `A tool that allows you to broadcast your location.`,
   'Medical HUD': `Allows you to view medical status using an overlay HUD.`,
   'Music Synthesizer': `Synthesizes instruments, plays sounds and imported

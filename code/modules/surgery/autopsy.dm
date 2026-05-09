@@ -4,7 +4,6 @@
 	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
-		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/autopsy,
 		/datum/surgery_step/close,
 	)
@@ -27,7 +26,7 @@
 	display_results(
 		user,
 		target,
-		span_notice("You begins performing an autopsy on [target]..."),
+		span_notice("You begin performing an autopsy on [target]..."),
 		span_notice("[user] uses [tool] to perform an autopsy on [target]."),
 		span_notice("[user] uses [tool] on [target]'s chest."),
 	)

@@ -36,7 +36,10 @@
 /datum/element/undertile/proc/hide(atom/movable/source, underfloor_accessibility)
 	SIGNAL_HANDLER
 
-	source.invisibility = underfloor_accessibility < UNDERFLOOR_VISIBLE ? invisibility_level : 0
+	if(underfloor_accessibility < UNDERFLOOR_VISIBLE)
+		source.SetInvisibility(invisibility_level, id=type)
+	else
+		source.RemoveInvisibility(type)
 
 	var/turf/T = get_turf(source)
 

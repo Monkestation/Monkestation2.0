@@ -1,6 +1,7 @@
 /turf/open/floor/iron
 	icon_state = "floor"
 	floor_tile = /obj/item/stack/tile/iron/base
+	floor_tile = /obj/item/stack/tile/iron/base
 
 /turf/open/floor/iron/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
@@ -12,12 +13,6 @@
 /turf/open/floor/iron/examine(mob/user)
 	. = ..()
 	. += span_notice("There's a <b>small crack</b> on the edge of it.")
-
-
-/turf/open/floor/iron/rust_heretic_act()
-	if(prob(70))
-		new /obj/effect/temp_visual/glowing_rune(src)
-	ChangeTurf(/turf/open/floor/plating/rust)
 
 /turf/open/floor/iron/update_icon_state()
 	if(broken || burnt)
@@ -127,9 +122,14 @@
 	floor_tile = /obj/item/stack/tile/iron/dark/smooth_large
 
 /turf/open/floor/iron/dark/side
-	icon_state = "dark"
-	base_icon_state = "dark"
+	icon_state = "darkhall"
+	base_icon_state = "darkhall"
 	floor_tile = /obj/item/stack/tile/iron/dark_side
+
+/turf/open/floor/iron/dark/side/flat
+	icon_state = "darkhall_flat"
+	base_icon_state = "darkhall_flat"
+	floor_tile = /obj/item/stack/tile/iron/dark_side_flat
 
 /turf/open/floor/iron/dark/corner
 	icon_state = "darkcorner"
@@ -216,8 +216,8 @@
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/iron/white
-	icon_state = "white"
-	base_icon_state = "white"
+	icon_state = "whitefull"
+	base_icon_state = "whitefull"
 	floor_tile = /obj/item/stack/tile/iron/white
 
 /turf/open/floor/iron/white/smooth_edge
@@ -244,6 +244,11 @@
 	icon_state = "whitehall"
 	base_icon_state = "whitehall"
 	floor_tile = /obj/item/stack/tile/iron/white_side
+
+/turf/open/floor/iron/white/side/flat
+	icon_state = "whitehall_flat"
+	base_icon_state = "whitehall_flat"
+	floor_tile = /obj/item/stack/tile/iron/white_side_flat
 
 /turf/open/floor/iron/white/corner
 	icon_state = "whitecorner"

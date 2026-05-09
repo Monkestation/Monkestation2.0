@@ -1,7 +1,7 @@
+import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
-import { resolveAsset } from '../assets';
 
 enum CkeyPollEnum {
   PLEXORA_DOWN = -1,
@@ -135,7 +135,7 @@ export const DiscordVerification = (props) => {
           <Button
             icon="paperclip"
             as="a"
-            // @ts-ignore
+            // @ts-expect-error
             href={discord_invite}
             target="_blank"
           >

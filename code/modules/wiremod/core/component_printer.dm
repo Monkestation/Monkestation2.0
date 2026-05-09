@@ -44,8 +44,9 @@
 	RegisterSignal(techweb, COMSIG_TECHWEB_REMOVE_DESIGN, PROC_REF(on_removed))
 
 /obj/machinery/component_printer/multitool_act(mob/living/user, obj/item/multitool/tool)
-	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
-		connect_techweb(tool.buffer)
+	var/datum/buffer = multitool_get_buffer(tool)
+	if(!QDELETED(buffer) && istype(buffer, /datum/techweb))
+		connect_techweb(buffer)
 	return TRUE
 
 /obj/machinery/component_printer/proc/on_research(datum/source, datum/design/added_design, custom)

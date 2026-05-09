@@ -1,24 +1,24 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes } from 'common/react';
+import { useState } from 'react';
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
   Dropdown,
+  Flex,
   Input,
+  LabeledList,
   Modal,
   NoticeBox,
   NumberInput,
-  LabeledList,
   Section,
   Stack,
-  Flex,
   Table,
 } from '../components';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
-import { useState } from 'react';
 
 export const LibraryConsole = (props) => {
   const { act, data } = useBackend();
@@ -250,7 +250,7 @@ export const CheckoutEntries = (props) => {
           <Table.Cell>{entry.author}</Table.Cell>
           <Table.Cell>{entry.borrower}</Table.Cell>
           <Table.Cell backgroundColor={entry.overdue ? 'bad' : 'good'}>
-            {entry.overdue ? 'Overdue' : entry.due_in_minutes + ' Minutes'}
+            {entry.overdue ? 'Overdue' : `${entry.due_in_minutes} Minutes`}
           </Table.Cell>
         </Table.Row>
       ))}
@@ -268,12 +268,9 @@ const CheckoutModal = (props) => {
     })),
     sortBy((book) => book.key),
   ])(data.inventory);
+  const { checkout_title } = data;
 
   const [checkoutBook, setCheckoutBook] = useLocalState('CheckoutBook', false);
-  const [bookName, setBookName] = useLocalState(
-    'CheckoutBookName',
-    'Insert Book name...',
-  );
   const [checkoutee, setCheckoutee] = useLocalState('Checkoutee', 'Recipient');
   const [checkoutPeriod, setCheckoutPeriod] = useLocalState(
     'CheckoutPeriod',
@@ -288,10 +285,15 @@ const CheckoutModal = (props) => {
         over
         mb={1.7}
         width="100%"
-        displayText={bookName}
+        placeholder="Insert Book name..."
+        displayText={checkout_title}
         options={inventory.map((book) => book.title)}
-        value={bookName}
-        onSelected={(e) => setBookName(e)}
+        value={checkout_title}
+        onSelected={(e) => {
+          act('set_checkout', {
+            book_name: e,
+          });
+        }}
       />
       <LabeledList>
         <LabeledList.Item label="Loan To">
@@ -306,6 +308,7 @@ const CheckoutModal = (props) => {
             value={checkoutPeriod}
             unit=" Minutes"
             minValue={1}
+            maxValue={90}
             stepPixelSize={10}
             onChange={(value) => setCheckoutPeriod(value)}
           />
@@ -321,7 +324,6 @@ const CheckoutModal = (props) => {
             onClick={() => {
               setCheckoutBook(false);
               act('checkout', {
-                book_name: bookName,
                 loaned_to: checkoutee,
                 checkout_time: checkoutPeriod,
               });
@@ -914,8 +916,7 @@ export const PageSelect = (props) => {
       </Stack.Item>
       <Stack.Item>
         <Input
-          placeholder={current_page + '/' + page_count}
-          value={input}
+          placeholder={`${current_page}/${page_count}`}
           onChange={(value) => {
             // I am so sorry
             if (value !== '') {

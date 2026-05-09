@@ -1,19 +1,18 @@
+import type { BooleanLike } from 'common/react';
+import { Component, createRef, type RefObject } from 'react';
+import { useBackend } from '../../backend';
 import {
-  Stack,
-  Section,
-  Button,
   Box,
-  Input,
-  Modal,
-  Tooltip,
+  Button,
   Icon,
   Image,
+  Input,
+  Modal,
+  Section,
+  Stack,
+  Tooltip,
 } from '../../components';
-import { Component, RefObject, createRef } from 'react';
-import { NtMessage, NtMessenger, NtPicture } from './types';
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../../backend';
-import { decodeHtmlEntities } from 'common/string';
+import type { NtMessage, NtMessenger, NtPicture } from './types';
 
 type ChatScreenProps = {
   canReply: BooleanLike;
@@ -146,7 +145,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     const { act } = useBackend();
     const { chatRef, recipient } = this.props;
 
-    let ref = chatRef ? chatRef : recipient.ref;
+    const ref = chatRef ? chatRef : recipient.ref;
 
     act('PDA_sendMessage', {
       ref: ref,
@@ -175,7 +174,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     } = this.props;
     const { message, canSend, previewingImage, selectingPhoto } = this.state;
 
-    let filteredMessages: React.JSX.Element[] = [];
+    const filteredMessages: React.JSX.Element[] = [];
 
     for (let index = 0; index < messages.length; index++) {
       const message = messages[index];
@@ -402,12 +401,14 @@ const ChatMessage = (props: ChatMessageProps) => {
   const { message, everyone, outgoing, photoPath, timestamp, onPreviewImage } =
     props;
 
-  const displayMessage = decodeHtmlEntities(message);
+  const messageHTML = {
+    __html: `${message}`,
+  };
 
   return (
     <Box className={`NtosChatMessage${outgoing ? '_outgoing' : ''}`}>
       <Box className="NtosChatMessage__content">
-        <Box as="span">{displayMessage}</Box>
+        <Box as="span" dangerouslySetInnerHTML={messageHTML} />
         <Tooltip content={timestamp} position={outgoing ? 'left' : 'right'}>
           <Icon
             className="NtosChatMessage__timestamp"

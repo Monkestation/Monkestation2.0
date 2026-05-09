@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { Fragment } from 'react';
 import { useBackend, useLocalState } from '../backend';
 import {
@@ -13,9 +13,9 @@ import {
 import { Window } from '../layouts';
 import {
   Scrubber,
-  ScrubberProps,
+  type ScrubberProps,
   Vent,
-  VentProps,
+  type VentProps,
 } from './common/AtmosControls';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
@@ -362,7 +362,7 @@ const AirAlarmControlModes = (props) => {
             color={
               mode.path === selectedModePath && (mode.danger ? 'red' : 'green')
             }
-            content={mode.name + ' - ' + mode.desc}
+            content={`${mode.name} - ${mode.desc}`}
             onClick={() => act('mode', { mode: mode.path })}
           />
           <Box mt={1} />
@@ -480,7 +480,7 @@ const AirAlarmControlThresholds = (props) => {
                   setActiveModal({
                     id: tlv.id,
                     name: tlv.name,
-                    type: thresholdTypeMap['hazard_min'],
+                    type: thresholdTypeMap.hazard_min,
                     typeVar: 'hazard_min',
                     typeName: 'Minimum Hazard',
                     unit: tlv.unit,
@@ -490,7 +490,7 @@ const AirAlarmControlThresholds = (props) => {
               >
                 {tlv.hazard_min === -1
                   ? 'Disabled'
-                  : tlv.hazard_min + ' ' + tlv.unit}
+                  : `${tlv.hazard_min} ${tlv.unit}`}
               </Button>
             </Table.Cell>
             <Table.Cell>
@@ -500,7 +500,7 @@ const AirAlarmControlThresholds = (props) => {
                   setActiveModal({
                     id: tlv.id,
                     name: tlv.name,
-                    type: thresholdTypeMap['warning_min'],
+                    type: thresholdTypeMap.warning_min,
                     typeVar: 'warning_min',
                     typeName: 'Minimum Warning',
                     unit: tlv.unit,
@@ -510,7 +510,7 @@ const AirAlarmControlThresholds = (props) => {
               >
                 {tlv.warning_min === -1
                   ? 'Disabled'
-                  : tlv.warning_min + ' ' + tlv.unit}
+                  : `${tlv.warning_min} ${tlv.unit}`}
               </Button>
             </Table.Cell>
             <Table.Cell>
@@ -520,7 +520,7 @@ const AirAlarmControlThresholds = (props) => {
                   setActiveModal({
                     id: tlv.id,
                     name: tlv.name,
-                    type: thresholdTypeMap['warning_max'],
+                    type: thresholdTypeMap.warning_max,
                     typeVar: 'warning_max',
                     typeName: 'Maximum Warning',
                     unit: tlv.unit,
@@ -530,7 +530,7 @@ const AirAlarmControlThresholds = (props) => {
               >
                 {tlv.warning_max === -1
                   ? 'Disabled'
-                  : tlv.warning_max + ' ' + tlv.unit}
+                  : `${tlv.warning_max} ${tlv.unit}`}
               </Button>
             </Table.Cell>
             <Table.Cell>
@@ -540,7 +540,7 @@ const AirAlarmControlThresholds = (props) => {
                   setActiveModal({
                     id: tlv.id,
                     name: tlv.name,
-                    type: thresholdTypeMap['hazard_max'],
+                    type: thresholdTypeMap.hazard_max,
                     typeVar: 'hazard_max',
                     typeName: 'Maximum Hazard',
                     unit: tlv.unit,
@@ -550,33 +550,31 @@ const AirAlarmControlThresholds = (props) => {
               >
                 {tlv.hazard_max === -1
                   ? 'Disabled'
-                  : tlv.hazard_max + ' ' + tlv.unit}
+                  : `${tlv.hazard_max} ${tlv.unit}`}
               </Button>
             </Table.Cell>
             <Table.Cell>
-              <>
-                <Button
-                  color="green"
-                  icon="sync"
-                  onClick={() =>
-                    act('reset_threshold', {
-                      threshold: tlv.id,
-                      threshold_type: thresholdTypeMap['all'],
-                    })
-                  }
-                />
-                <Button
-                  color="red"
-                  icon="times"
-                  onClick={() =>
-                    act('set_threshold', {
-                      threshold: tlv.id,
-                      threshold_type: thresholdTypeMap['all'],
-                      value: -1,
-                    })
-                  }
-                />
-              </>
+              <Button
+                color="green"
+                icon="sync"
+                onClick={() =>
+                  act('reset_threshold', {
+                    threshold: tlv.id,
+                    threshold_type: thresholdTypeMap.all,
+                  })
+                }
+              />
+              <Button
+                color="red"
+                icon="times"
+                onClick={() =>
+                  act('set_threshold', {
+                    threshold: tlv.id,
+                    threshold_type: thresholdTypeMap.all,
+                    value: -1,
+                  })
+                }
+              />
             </Table.Cell>
           </Table.Row>
         ))}
@@ -584,7 +582,7 @@ const AirAlarmControlThresholds = (props) => {
       {activeModal && (
         <EditingModal
           oldValue={
-            (tlvSettings.find((tlv) => tlv.id === activeModal.id) || {})[
+            tlvSettings.find((tlv) => tlv.id === activeModal.id)?.[
               activeModal.typeVar
             ]
           }
@@ -616,23 +614,21 @@ const AirAlarmAirConditioningControls = (_props) => {
       <Box mt={1} />
       <LabeledList>
         <LabeledList.Item label={'Target Temperature'}>
-          <>
-            <NumberInput
-              value={target}
-              minValue={min}
-              maxValue={max}
-              onChange={(target: number) => act('set_ac_target', { target })}
-              unit="K"
-              step={1}
-              disabled={!enabled}
-            />
-            <Button
-              icon="thermometer-quarter"
-              content="Default"
-              color={enabled && 'good'}
-              onClick={() => act('default_ac_target')}
-            />
-          </>
+          <NumberInput
+            value={target}
+            minValue={min}
+            maxValue={max}
+            onChange={(target: number) => act('set_ac_target', { target })}
+            unit="K"
+            step={1}
+            disabled={!enabled}
+          />
+          <Button
+            icon="thermometer-quarter"
+            content="Default"
+            color={enabled && 'good'}
+            onClick={() => act('default_ac_target')}
+          />
         </LabeledList.Item>
       </LabeledList>
     </>

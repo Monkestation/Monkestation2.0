@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-max-depth */
 import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { useBackend, useLocalState } from '../backend';
@@ -6,11 +7,11 @@ import {
   Button,
   DmIcon,
   Dropdown,
+  Input,
+  Knob,
   LabeledList,
   Section,
   Stack,
-  Input,
-  Knob,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -260,9 +261,7 @@ export const CassetteDeck = (props) => {
                         {' '}
                         <Stack align="center">
                           {' '}
-                          <Stack.Item style={controlLabelStyle}>
-                            NEW
-                          </Stack.Item>{' '}
+                          <Stack.Item style={controlLabelStyle}>NEW</Stack.Item>{' '}
                           <Stack.Item grow>
                             {' '}
                             <Input

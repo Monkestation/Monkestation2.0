@@ -318,7 +318,9 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/IsFoodGone(atom/owner, mob/living/feeder)
 	if(QDELETED(owner) || !(IS_EDIBLE(owner)))
 		return TRUE
-	return FALSE
+	if(owner.reagents.total_volume)
+		return FALSE
+	return TRUE
 
 /// Normal time to forcefeed someone something
 #define EAT_TIME_FORCE_FEED (3 SECONDS)
@@ -355,7 +357,7 @@ Behavior that's still missing from this component that original food items had t
 	var/fullness = eater.get_fullness() + 10 //The theoretical fullness of the person eating if they were to eat this
 
 	var/time_to_eat = (eater == feeder) ? eat_time : EAT_TIME_FORCE_FEED
-	if(HAS_TRAIT(eater, TRAIT_VORACIOUS))
+	if(HAS_TRAIT(eater, TRAIT_VORACIOUS) && !HAS_TRAIT(eater, TRAIT_GLUTTON)) //with TRAIT_GLUTTON you consume food without delay
 		if(fullness < NUTRITION_LEVEL_FAT || (eater != feeder)) // No extra delay when being forcefed
 			time_to_eat *= EAT_TIME_VORACIOUS_MULT
 		else
@@ -372,11 +374,11 @@ Behavior that's still missing from this component that original food items had t
 		var/message_to_consumer = ""
 		var/message_to_blind_consumer = ""
 
-		if(junkiness && eater.satiety < -150 && eater.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(eater, TRAIT_VORACIOUS))
+		if(junkiness && eater.satiety < -150 && eater.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(eater, TRAIT_VORACIOUS) && !HAS_TRAIT(eater, TRAIT_GLUTTON))
 			to_chat(eater, span_warning("You don't feel like eating any more junk food at the moment!"))
 			return
 		else if(fullness > (600 * (1 + eater.overeatduration / (4000 SECONDS)))) // The more you eat - the more you can eat
-			if(HAS_TRAIT(eater, TRAIT_VORACIOUS))
+			if(HAS_TRAIT(eater, TRAIT_VORACIOUS) || HAS_TRAIT(eater, TRAIT_GLUTTON))
 				message_to_nearby_audience = span_notice("[eater] voraciously forces \the [parent] down [eater.p_their()] throat..")
 				message_to_consumer = span_notice("You voraciously force \the [parent] down your throat.")
 			else
@@ -456,26 +458,21 @@ Behavior that's still missing from this component that original food items had t
 	var/atom/owner = parent
 
 	if(!owner?.reagents)
+		. = FALSE
 		stack_trace("[eater] failed to bite [owner], because [owner] had no reagents.")
-		return FALSE
-
 	if(eater.satiety > -200)
 		eater.adjust_satiety(-junkiness)
 	playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
-
-	// Show warning if total_volume is zero
-	if(owner.reagents && owner.reagents.total_volume == 0)
-		to_chat(eater, span_warning("[capitalize(owner)] tastes of nothing! It doesn't feel nutritious at all..."))
-
+	if(!owner.reagents.total_volume)
+		return
 	var/sig_return = SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder, bitecount, bite_consumption)
 	if(sig_return & DESTROY_FOOD)
 		qdel(owner)
 		return
 
 	var/fraction = 0.3
-	if(owner.reagents && owner.reagents.total_volume > 0)
-		fraction = min(bite_consumption / owner.reagents.total_volume, 1)
-		owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, methods = INGEST)
+	fraction = min(bite_consumption / owner.reagents.total_volume, 1)
+	owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, methods = INGEST)
 	eater.hud_used?.hunger?.update_hunger_bar()
 	bitecount++
 	var/desired_mask = (total_bites / bitecount)
@@ -487,8 +484,7 @@ Behavior that's still missing from this component that original food items had t
 		current_mask = desired_mask
 		parent.add_filter("bite", 0, alpha_mask_filter(icon=icon('goon/icons/obj/food.dmi', "eating[desired_mask]")))
 	checkLiked(fraction, eater)
-	// I've served my purpose, oh God of food. Let me rest now.
-	if(bitecount >= total_bites && total_bites > 0)
+	if(!owner.reagents.total_volume)
 		On_Consume(eater, feeder)
 
 	//Invoke our after eat callback if it is valid

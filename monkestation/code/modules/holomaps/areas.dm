@@ -72,7 +72,7 @@
 /area/station/maintenance/department/cargo
 	holomap_color = HOLOMAP_AREACOLOR_CARGO
 
-/* //Monkestation edit - QM is not a head
+/* QM is not a head
 /area/station/command/heads_quarters/qm
 	holomap_color = HOLOMAP_AREACOLOR_CARGO
 */

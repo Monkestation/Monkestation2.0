@@ -7,7 +7,7 @@
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/obj/implants.dmi'
 	button_icon_state = "adrenal"
-	// sound = 'sound/magic/whistlereset.ogg'
+	// sound = 'sound/magic/whistlereset.ogg' I have no idea why this was commented out
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 6 SECONDS
@@ -54,13 +54,15 @@
 	alert_type = /atom/movable/screen/alert/status_effect/realignment
 	tick_interval = 0.2 SECONDS
 	show_duration = TRUE
-	var/static/list/traits = list(TRAIT_PACIFISM, TRAIT_CANT_STAMCRIT)
+	///Traits to add/remove
+	var/list/realignment_traits = list(TRAIT_BATON_RESISTANCE, TRAIT_PACIFISM)
 
 /datum/status_effect/realignment/get_examine_text()
-	return span_notice("[owner.p_theyre(TRUE)] glowing a soft white.")
+	return span_notice("[owner.p_Theyre()] glowing a soft white.")
 
 /datum/status_effect/realignment/on_apply()
-	owner.add_traits(traits, TRAIT_STATUS_EFFECT(id))
+	owner.stamina?.resume()
+	owner.add_traits(realignment_traits, TRAIT_STATUS_EFFECT(id))
 	owner.add_filter(id, 2, list("type" = "outline", "color" = "#d6e3e7", "size" = 2))
 	var/filter = owner.get_filter(id)
 	animate(filter, alpha = 127, time = 1 SECONDS, loop = -1)
@@ -68,12 +70,12 @@
 	return TRUE
 
 /datum/status_effect/realignment/on_remove()
-	owner.remove_traits(traits, TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(realignment_traits, TRAIT_STATUS_EFFECT(id))
 	owner.remove_filter(id)
 
-/datum/status_effect/realignment/tick(seconds_between_ticks, times_fired)
-	owner.stamina.adjust(8 * seconds_between_ticks, TRUE)
-	owner.AdjustAllImmobility(-0.5 SECONDS * seconds_between_ticks)
+/datum/status_effect/realignment/tick(seconds_between_ticks)
+	owner.stamina?.adjust(10)
+	owner.AdjustAllImmobility(-1 SECONDS)
 
 /atom/movable/screen/alert/status_effect/realignment
 	name = "Realignment"
