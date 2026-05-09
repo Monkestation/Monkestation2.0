@@ -6,6 +6,7 @@ import RBMKOverview from './overview';
 import RBMKControls from './controls';
 import RBMKRods from './rods';
 import RBMKGraphs from './graphs';
+import RBMKGenerators from './generators';
 
 const formatDeciseconds = (timeLeft: number) => {
   const totalSeconds = Math.max(Math.ceil(timeLeft / 10), 0);
@@ -64,15 +65,14 @@ const RBMKCascadeLockout = () => {
 
 export const RBMKConsole = () => {
   const { act, data } = useBackend<any>();
-  const [tab, setTab] = useLocalState<'overview' | 'controls' | 'rods' | 'graphs'>(
-    'rbmk_tab',
-    'overview',
-  );
+  const [tab, setTab] = useLocalState<
+    'overview' | 'controls' | 'rods' | 'graphs' | 'generators'
+  >('rbmk_tab', 'overview');
 
   if (data?.supermatter_cascade_active) {
     return (
       <Window theme="soviet" width={560} height={500}>
-        <Window.Content className="RBMKConsole">
+        <Window.Content className="RBMKConsole" scrollable>
           <RBMKCascadeLockout />
         </Window.Content>
       </Window>
@@ -83,7 +83,7 @@ export const RBMKConsole = () => {
     <Window theme="soviet" width={832} height={576}>
       <Window.Content className="RBMKConsole">
         <Flex direction="column" height="100%">
-          <Flex.Item grow>
+          <Flex.Item>
             <Tabs>
               <Tabs.Tab
                 selected={tab === 'overview'}
@@ -113,6 +113,13 @@ export const RBMKConsole = () => {
                 Graphs
               </Tabs.Tab>
 
+              <Tabs.Tab
+                selected={tab === 'generators'}
+                onClick={() => setTab('generators')}
+                icon="bolt">
+                Generators
+              </Tabs.Tab>
+
               <Flex.Item grow />
 
               <Tabs.Tab>
@@ -123,11 +130,16 @@ export const RBMKConsole = () => {
                 />
               </Tabs.Tab>
             </Tabs>
+          </Flex.Item>
 
-            {tab === 'overview' && <RBMKOverview />}
-            {tab === 'controls' && <RBMKControls />}
-            {tab === 'rods' && <RBMKRods />}
-            {tab === 'graphs' && <RBMKGraphs />}
+          <Flex.Item grow basis={0}>
+            <Box height="100%" overflowY="auto">
+              {tab === 'overview' && <RBMKOverview />}
+              {tab === 'controls' && <RBMKControls />}
+              {tab === 'rods' && <RBMKRods />}
+              {tab === 'graphs' && <RBMKGraphs />}
+              {tab === 'generators' && <RBMKGenerators />}
+            </Box>
           </Flex.Item>
         </Flex>
       </Window.Content>

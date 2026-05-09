@@ -10,12 +10,23 @@
 #define RBMK_TURBINE_MAX_RPM 120000
 #define RBMK_TURBINE_STALE_TIME 2 SECONDS
 
+#define RBMK_TURBINE_MAX_INTEGRITY 100
+#define RBMK_TURBINE_TEMP_STRESS_THRESHOLD 8000
+#define RBMK_TURBINE_TEMP_DAMAGE_RAMP 9500
+#define RBMK_TURBINE_TEMP_DAMAGE_BASE 0.35
+#define RBMK_TURBINE_TEMP_DAMAGE_RAMP_MULT 1.15
+#define RBMK_TURBINE_DAMAGE_FLOW_MULT 1.5
+#define RBMK_TURBINE_DAMAGE_MAX_PER_TICK 8
+
+#define RBMK_TURBINE_SOUND_VOLUME 22
+#define RBMK_TURBINE_ICON_STATE "turbine"
+
 
 /obj/machinery/power/rbmk_turbine
 	name = "RBMK turbine"
 	desc = "A heavy turbine assembly designed to convert heated RBMK coolant flow into electrical power."
-	icon = 'icons/obj/barsigns.dmi'
-	icon_state = "empty"
+	icon = 'icons/obj/machines/rbmk_turbine.dmi'
+	icon_state = RBMK_TURBINE_ICON_STATE
 
 	anchored = TRUE
 	density = TRUE
@@ -38,11 +49,9 @@
 	var/obj/machinery/atmospherics/components/unary/rbmk/turbine/outlet/outlet = null
 
 	var/datum/gas_mixture/turbine_internal = null
-	var/datum/looping_sound/rbmk_turbine_mid/turbine_soundloop = null
+	var/datum/looping_sound/rbmk_turbine/turbine_soundloop = null
 
 	var/running = FALSE
-	var/was_running = FALSE
-
 	var/inlet_open = TRUE
 	var/outlet_open = TRUE
 	var/flow_rate = RBMK_TURBINE_FLOW_RATE_MAX
@@ -59,9 +68,19 @@
 	var/last_temperature_drop = 0
 	var/last_generation_time = 0
 
+	var/generator_integrity = RBMK_TURBINE_MAX_INTEGRITY
+	var/max_generator_integrity = RBMK_TURBINE_MAX_INTEGRITY
+	var/last_generator_damage = 0
+	var/last_overtemp = 0
+
 
 /obj/machinery/power/rbmk_turbine/Initialize(mapload)
 	. = ..()
+
+	generator_integrity = RBMK_TURBINE_MAX_INTEGRITY
+	max_generator_integrity = RBMK_TURBINE_MAX_INTEGRITY
+	last_generator_damage = 0
+	last_overtemp = 0
 
 	turbine_internal = new /datum/gas_mixture()
 	turbine_internal.volume = RBMK_TURBINE_VOLUME_MAX
@@ -103,6 +122,8 @@
 	last_heat_capacity = 0
 	last_heat_extracted = 0
 	last_temperature_drop = 0
+	last_generator_damage = 0
+	last_overtemp = 0
 	rpm = 0
 	running = FALSE
 
@@ -111,50 +132,90 @@
 
 
 /obj/machinery/power/rbmk_turbine/proc/update_turbine_icon()
-	if(running)
-		icon_state = "turbine_on"
-		return
-
-	icon_state = "turbine_off"
-
-
-/obj/machinery/power/rbmk_turbine/proc/step_volume_toward(current_value, target_value, step = 2)
-	if(current_value < target_value)
-		return min(current_value + step, target_value)
-	if(current_value > target_value)
-		return max(current_value - step, target_value)
-	return current_value
+	icon_state = RBMK_TURBINE_ICON_STATE
 
 
 /obj/machinery/power/rbmk_turbine/proc/update_turbine_sound()
-	var/rpm_ratio = CLAMP01(rpm / max(RBMK_TURBINE_MAX_RPM, 1))
-
 	if(running && rpm > 0)
-		if(!was_running)
-			playsound(src, 'sound/rbmk/turbine_start.ogg', 70, FALSE)
-
 		if(!turbine_soundloop)
-			turbine_soundloop = new /datum/looping_sound/rbmk_turbine_mid(src, TRUE)
-			turbine_soundloop.volume = 0
+			turbine_soundloop = new /datum/looping_sound/rbmk_turbine(src, TRUE)
 
-		var/target_volume = clamp(10 + (rpm_ratio * 24), 10, 34)
+		var/rpm_ratio = CLAMP01(rpm / max(RBMK_TURBINE_MAX_RPM, 1))
 
-		turbine_soundloop.volume = step_volume_toward(turbine_soundloop.volume, target_volume, 2)
-		turbine_soundloop.extra_range = clamp(7 + round(rpm_ratio * 8), 7, 15)
+		turbine_soundloop.volume = RBMK_TURBINE_SOUND_VOLUME
+		turbine_soundloop.extra_range = clamp(5 + round(rpm_ratio * 5), 5, 10)
 		turbine_soundloop.falloff_distance = 2
 		turbine_soundloop.falloff_exponent = 7
 
-		was_running = TRUE
 		return
-
-	if(was_running)
-		playsound(src, 'sound/rbmk/turbine_end.ogg', 70, FALSE)
 
 	if(turbine_soundloop)
 		turbine_soundloop.stop()
 		QDEL_NULL(turbine_soundloop)
 
-	was_running = FALSE
+
+/obj/machinery/power/rbmk_turbine/proc/get_generator_integrity_percent()
+	return round((generator_integrity / max(max_generator_integrity, 1)) * 100, 0.1)
+
+
+/obj/machinery/power/rbmk_turbine/proc/update_generator_integrity(gas_temperature)
+	last_generator_damage = 0
+	last_overtemp = max(gas_temperature - RBMK_TURBINE_TEMP_STRESS_THRESHOLD, 0)
+
+	if(machine_stat & BROKEN)
+		return
+
+	if(gas_temperature <= RBMK_TURBINE_TEMP_STRESS_THRESHOLD)
+		return
+
+	var/temperature_over_threshold = gas_temperature - RBMK_TURBINE_TEMP_STRESS_THRESHOLD
+	var/damage_amount = (temperature_over_threshold / 1000) * RBMK_TURBINE_TEMP_DAMAGE_BASE
+
+	if(gas_temperature > RBMK_TURBINE_TEMP_DAMAGE_RAMP)
+		var/temperature_over_ramp = gas_temperature - RBMK_TURBINE_TEMP_DAMAGE_RAMP
+		damage_amount += ((temperature_over_ramp / 1000) ** 1.35) * RBMK_TURBINE_TEMP_DAMAGE_RAMP_MULT
+
+	var/flow_ratio = CLAMP01(last_flow_moles / max(flow_rate, 1))
+	damage_amount *= 1 + (flow_ratio * RBMK_TURBINE_DAMAGE_FLOW_MULT)
+	damage_amount = clamp(damage_amount, 0, RBMK_TURBINE_DAMAGE_MAX_PER_TICK)
+
+	if(damage_amount <= 0)
+		return
+
+	last_generator_damage = damage_amount
+	generator_integrity = max(generator_integrity - damage_amount, 0)
+
+
+/obj/machinery/power/rbmk_turbine/proc/check_generator_failure_conditions()
+	if(machine_stat & BROKEN)
+		return
+
+	if(generator_integrity > 0)
+		return
+
+	generator_integrity = 0
+	turbine_fail_from_overheat()
+
+
+/obj/machinery/power/rbmk_turbine/proc/turbine_fail_from_overheat()
+	if(machine_stat & BROKEN)
+		return
+
+	running = FALSE
+	rpm = 0
+	last_power_output = 0
+
+	visible_message(span_danger("[src] screams as its generator windings burn out!"))
+	playsound(src, 'sound/machines/engine_alert1.ogg', 60, FALSE)
+
+	set_machine_stat(machine_stat | BROKEN)
+
+	if(turbine_soundloop)
+		turbine_soundloop.stop()
+		QDEL_NULL(turbine_soundloop)
+
+	update_turbine_icon()
+	update_turbine_sound()
 
 
 /obj/machinery/power/rbmk_turbine/proc/relink_ports()
@@ -165,17 +226,19 @@
 	QDEL_NULL(inlet)
 	QDEL_NULL(outlet)
 
-	var/obj/machinery/atmospherics/components/unary/rbmk/turbine/inlet/new_inlet = new(center_turf)
-	new_inlet.parent_turbine = src
-	new_inlet.dir = SOUTH
-	inlet = new_inlet
-
 	var/turf/outlet_turf = get_step(center_turf, WEST)
 	if(outlet_turf)
 		var/obj/machinery/atmospherics/components/unary/rbmk/turbine/outlet/new_outlet = new(outlet_turf)
 		new_outlet.parent_turbine = src
 		new_outlet.dir = WEST
 		outlet = new_outlet
+
+	var/turf/inlet_turf = get_step(center_turf, EAST)
+	if(inlet_turf)
+		var/obj/machinery/atmospherics/components/unary/rbmk/turbine/inlet/new_inlet = new(inlet_turf)
+		new_inlet.parent_turbine = src
+		new_inlet.dir = EAST
+		inlet = new_inlet
 
 
 /obj/machinery/power/rbmk_turbine/proc/wake_turbine_ports()
@@ -207,6 +270,8 @@
 	last_heat_capacity = 0
 	last_heat_extracted = 0
 	last_temperature_drop = 0
+	last_generator_damage = 0
+	last_overtemp = 0
 	rpm = 0
 	running = FALSE
 
@@ -219,6 +284,15 @@
 	last_flow_moles = working_mix.total_moles()
 	last_inlet_temperature = working_mix.temperature
 	last_heat_capacity = working_mix.heat_capacity()
+
+	update_generator_integrity(working_mix.temperature)
+	check_generator_failure_conditions()
+
+	if(machine_stat & BROKEN)
+		last_outlet_temperature = working_mix.temperature
+		update_turbine_icon()
+		update_turbine_sound()
+		return
 
 	if(!powernet || last_heat_capacity <= 0)
 		last_outlet_temperature = working_mix.temperature
@@ -355,7 +429,7 @@
 /obj/machinery/atmospherics/components/unary/rbmk/turbine/inlet
 	parent_type = /obj/machinery/atmospherics/components/unary/rbmk/turbine/base
 	name = "RBMK turbine inlet"
-	dir = SOUTH
+	dir = EAST
 
 
 /obj/machinery/atmospherics/components/unary/rbmk/turbine/inlet/process_atmos()
@@ -434,3 +508,12 @@
 #undef RBMK_TURBINE_MAX_POWER_OUTPUT
 #undef RBMK_TURBINE_MAX_RPM
 #undef RBMK_TURBINE_STALE_TIME
+#undef RBMK_TURBINE_MAX_INTEGRITY
+#undef RBMK_TURBINE_TEMP_STRESS_THRESHOLD
+#undef RBMK_TURBINE_TEMP_DAMAGE_RAMP
+#undef RBMK_TURBINE_TEMP_DAMAGE_BASE
+#undef RBMK_TURBINE_TEMP_DAMAGE_RAMP_MULT
+#undef RBMK_TURBINE_DAMAGE_FLOW_MULT
+#undef RBMK_TURBINE_DAMAGE_MAX_PER_TICK
+#undef RBMK_TURBINE_SOUND_VOLUME
+#undef RBMK_TURBINE_ICON_STATE

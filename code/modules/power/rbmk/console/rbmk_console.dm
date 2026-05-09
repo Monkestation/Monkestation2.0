@@ -116,9 +116,72 @@
 	return gas_data
 
 
+/obj/machinery/computer/rbmk_console/proc/get_turbine_data()
+	var/list/turbine_data = list()
+	var/total_turbine_power = 0
+	var/total_turbine_integrity = 0
+	var/turbine_count = 0
+
+	if(!linked_reactor)
+		return list(
+			"turbines" = turbine_data,
+			"total_turbine_power" = 0,
+			"average_turbine_integrity" = 0,
+			"turbine_count" = 0
+		)
+
+	for(var/obj/machinery/power/rbmk_turbine/turbine in range(20, linked_reactor))
+		turbine_count++
+
+		var/integrity_percent = turbine.get_generator_integrity_percent()
+		var/current_power_output = RBMK_ROUND2(turbine.last_power_output)
+
+		total_turbine_power += current_power_output
+		total_turbine_integrity += integrity_percent
+
+		var/list/current_turbine = list(
+			"name" = turbine.name,
+			"index" = turbine_count,
+			"running" = turbine.running,
+			"broken" = (turbine.machine_stat & BROKEN) ? TRUE : FALSE,
+			"integrity" = RBMK_ROUND2(integrity_percent),
+			"power_output" = current_power_output,
+			"rpm" = RBMK_ROUND2(turbine.rpm),
+			"flow_moles" = RBMK_ROUND2(turbine.last_flow_moles),
+			"inlet_temperature" = RBMK_ROUND2(turbine.last_inlet_temperature),
+			"outlet_temperature" = RBMK_ROUND2(turbine.last_outlet_temperature),
+			"inlet_pressure" = RBMK_ROUND2(turbine.last_inlet_pressure),
+			"outlet_pressure" = RBMK_ROUND2(turbine.last_outlet_pressure),
+			"heat_capacity" = RBMK_ROUND2(turbine.last_heat_capacity),
+			"heat_extracted" = RBMK_ROUND2(turbine.last_heat_extracted),
+			"temperature_drop" = RBMK_ROUND2(turbine.last_temperature_drop),
+			"last_damage" = RBMK_ROUND2(turbine.last_generator_damage),
+			"overtemp" = RBMK_ROUND2(turbine.last_overtemp)
+		)
+
+		turbine_data += list(current_turbine)
+
+	var/average_turbine_integrity = 0
+	if(turbine_count > 0)
+		average_turbine_integrity = total_turbine_integrity / turbine_count
+
+	return list(
+		"turbines" = turbine_data,
+		"total_turbine_power" = RBMK_ROUND2(total_turbine_power),
+		"average_turbine_integrity" = RBMK_ROUND2(average_turbine_integrity),
+		"turbine_count" = turbine_count
+	)
+
+
 /obj/machinery/computer/rbmk_console/ui_data(mob/user)
 	var/list/data = list()
 	var/obj/machinery/rbmk/reactor/reactor = linked_reactor
+
+	var/list/turbine_summary = get_turbine_data()
+	data["turbines"] = turbine_summary["turbines"]
+	data["total_turbine_power"] = turbine_summary["total_turbine_power"]
+	data["average_turbine_integrity"] = turbine_summary["average_turbine_integrity"]
+	data["turbine_count"] = turbine_summary["turbine_count"]
 
 	if(!reactor)
 		data["status"] = "No reactor linked"

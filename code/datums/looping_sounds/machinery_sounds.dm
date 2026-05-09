@@ -204,13 +204,12 @@
 	pressure_affected = FALSE
 	vary = FALSE
 
-/datum/looping_sound/rbmk_turbine_mid
+/datum/looping_sound/rbmk_turbine
+	start_sound = 'sound/rbmk/turbine_start.ogg'
+	start_length = 16
 	mid_sounds = list('sound/rbmk/turbine_mid.ogg')
-	mid_length = 18 SECONDS
-	volume = 0
-	extra_range = 10
-	falloff_distance = 2
-	falloff_exponent = 7
-	ignore_walls = FALSE
-	pressure_affected = FALSE
+	mid_length = 18
+	end_sound = 'sound/rbmk/turbine_end.ogg'
+	volume = 24
+	extra_range = 8
 	vary = FALSE
