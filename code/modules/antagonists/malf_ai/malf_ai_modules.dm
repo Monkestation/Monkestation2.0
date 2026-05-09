@@ -1393,9 +1393,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			unlock_performed = TRUE
 
 	adjust_uses(-1)
-	if(uses)
-		desc = "[initial(desc)] It has [uses] use\s remaining."
-		build_all_button_icons()
+	build_all_button_icons(update_flags = UPDATE_BUTTON_NAME)
 
 	ai_user.playsound_local(user, 'sound/misc/interference.ogg', 20, TRUE)
 	if(unlock_performed)
@@ -1405,6 +1403,11 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		cyborg.balloon_alert(ai_user, "scrambled!")
 		unset_ranged_ability(user, span_danger("Scambled the encryption codes of [cyborg]."))
 	return TRUE
+
+/datum/action/innate/ai/ranged/cyborg_code_scrambler/update_button_name(atom/movable/screen/movable/action_button/button, force = FALSE)
+	if(uses)
+		desc = "[initial(desc)] It has [uses] use\s remaining."
+	return ..()
 
 #undef DEFAULT_DOOMSDAY_TIMER
 #undef DOOMSDAY_ANNOUNCE_INTERVAL
