@@ -38,7 +38,7 @@
 
 	picked_doom ||= pick(list(DOOM_EVENTS, DOOM_ANTAGS, DOOM_ROD))
 	switch(picked_doom)
-		if (DOOM_EVENTS) //triggers a MASSIVE amount of events pretty quickly
+		if(DOOM_EVENTS) //triggers a MASSIVE amount of events pretty quickly
 			summon_events() //wont effect the events created directly from this, but it will effect any events that happen after
 			var/list/possible_events = list()
 			for(var/datum/round_event_control/possible_event as anything in SSevents.control)
@@ -50,25 +50,41 @@
 				var/datum/round_event_control/event = pick(possible_events)
 				addtimer(CALLBACK(event, TYPE_PROC_REF(/datum/round_event_control, run_event)), (10 * timer_counter) SECONDS)
 				timer_counter++
-		if (DOOM_ANTAGS) //so I heard you like antags
-			var/datum/game_mode/dynamic/dynamic = SSticker.mode
-			dynamic.create_threat(100, dynamic.threat_log, "Final grand ritual")
-			ASYNC //sleeps
-				for(var/i in 1 to 4) //spawn 4 midrounds
-					sleep(50) //sleep 5 seconds between each one
-					var/list/possible_rulesets = dynamic.init_rulesets(/datum/dynamic_ruleset/midround/from_ghosts)
-					if(i == 1) //always draft at least one heavy, although funny, it would be kind of lame if we just got 4 abductors
-						for(var/datum/dynamic_ruleset/midround/entry in possible_rulesets)
-							if(!entry.midround_ruleset_style == MIDROUND_RULESET_STYLE_HEAVY)
-								possible_rulesets -= entry
-					var/picked_ruleset = pick(possible_rulesets)
-					dynamic.picking_specific_rule(picked_ruleset, TRUE)
-		if (DOOM_ROD) //spawns a ghost controlled, forced looping rod, only technically less damaging then singaloth or tesloose
+
+		if(DOOM_ANTAGS) //make 50% of the crew be traitors with an objective to kill each other, give the rest guns
+			var/list/active_players = shuffle(SSgamemode.get_active_players())
+			var/desired_traitors = length(active_players) / 2
+			var/list/traitors = list()
+			for(var/mob/player in active_players)
+				if(player.mind && length(traitors) < desired_traitors && !player.mind.has_antag_datum(/datum/antagonist/traitor))
+					traitors += player.mind.add_antag_datum(/datum/antagonist/traitor)
+					continue
+
+				if(!ishuman(player))
+					continue
+
+				//give gun
+				var/gun_type = pick(GLOB.summoned_guns)
+				var/obj/item/gun/spawned_gun = new gun_type(get_turf(player))
+				if(istype(spawned_gun))
+					spawned_gun.unlock()
+				playsound(get_turf(player), 'sound/magic/summon_guns.ogg', 50, TRUE)
+				var/in_hand = player.put_in_hands(spawned_gun)
+				to_chat(player, span_warning("\A [spawned_gun] appears [in_hand ? "in your hand" : "at your feet"]!"))
+
+			var/list/possible_targets = shuffle(traitors.Copy())
+			for(var/datum/antagonist/traitor/tator in traitors)
+				var/datum/objective/assassinate/objective = new
+				objective.target = astype(pick_n_take(possible_targets - tator), /datum/antagonist/traitor).owner
+				objective.update_explanation_text()
+				tator.objectives.Insert(length(tator.objectives) - 1, objective)
+
+		if(DOOM_ROD) //spawns a ghost controlled, forced looping rod, only technically less damaging then singaloth or tesloose
 			var/obj/effect/immovablerod/rod = new(current_location)
 			rod.loopy_rod = TRUE
 			rod.can_suplex = FALSE
 			rod.deadchat_plays(ANARCHY_MODE, 3 SECONDS)
 
-#undef DOOM_EVENTS //monkestation edit
-#undef DOOM_ANTAGS //monkestation edit
-#undef DOOM_ROD //monkestation edit
+#undef DOOM_EVENTS
+#undef DOOM_ANTAGS
+#undef DOOM_ROD
