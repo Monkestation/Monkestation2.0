@@ -270,3 +270,25 @@
 
 /datum/laser_weapon_mode/trickshot_disabler/remove_from_weapon(obj/item/gun/energy/applied_gun)
 	return
+
+// Windup autofire lethal burn mode for the large laser
+/datum/laser_weapon_mode/machinegun
+	name = "Kill"
+	casing = /obj/item/ammo_casing/energy/cybersun_big_machinegun
+	weapon_icon_state = "kill"
+	charge_sections = 5
+	shot_delay = 1 SECONDS
+	json_speech_string = "kill"
+	gun_runetext_color = "#b34747ff"
+	/// Keeps track of the autofire component for deleting later
+	var/datum/component/automatic_fire/autofire_component
+
+/datum/laser_weapon_mode/machinegun/apply_to_weapon(obj/item/gun/energy/applied_gun)
+	applied_gun.burst_size = 2
+	autofire_component = applied_gun.AddComponent(/datum/component/automatic_fire, shot_delay)
+	applied_gun.spread = 5
+
+/datum/laser_weapon_mode/machinegun/remove_from_weapon(obj/item/gun/energy/applied_gun)
+	applied_gun.burst_size = 1
+	QDEL_NULL(autofire_component)
+	applied_gun.spread = 0

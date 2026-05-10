@@ -311,8 +311,7 @@
 		It provides enough kick to bruise a shoulder pretty bad if used without protection."
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/xhihao_light_arms/guns32x.dmi'
 	icon_state = "bogseo"
-	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/xhihao_light_arms/guns_lefthand.dmi'
-	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/xhihao_light_arms/guns_righthand.dmi'
+	worn_icon_state = "bogseo"
 	inhand_icon_state = "bogseo"
 	special_mags = FALSE
 	bolt_type = BOLT_TYPE_STANDARD
@@ -324,13 +323,21 @@
 	can_suppress = TRUE
 	suppressor_x_offset = 9
 	burst_size = 2
-	fire_delay = 0.5 SECONDS
+	fire_delay = 0.8 SECONDS
 	actions_types = list()
 	spread = 14.5
 	// Hope you didn't need to see anytime soon
 	recoil = 2
 	wield_recoil = 1
 	projectile_wound_bonus = -5
+
+/obj/item/gun/ballistic/automatic/xhihao_smg/Initialize(mapload)
+	. = ..()
+
+	give_autofire()
+
+/obj/item/gun/ballistic/automatic/xhihao_smg/proc/give_autofire()
+	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/gun/ballistic/automatic/xhihao_smg/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_XHIHAO)

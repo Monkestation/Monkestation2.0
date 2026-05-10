@@ -41,6 +41,7 @@
 	var/list/weapon_mode_options = list(
 		/datum/laser_weapon_mode,
 		/datum/laser_weapon_mode/marksman,
+		/datum/laser_weapon_mode/machinegun,
 		/datum/laser_weapon_mode/disabler_machinegun,
 		/datum/laser_weapon_mode/launcher,
 		/datum/laser_weapon_mode/shotgun,
@@ -279,13 +280,29 @@
 #undef MOD_LASER_SPEECH_COOLDOWN
 #undef DEFAULT_RUNECHAT_GUN_COLOR
 
-// Red kill lasers for the big gun
+// Default red kill lasers for the big gun
 
 /obj/item/ammo_casing/energy/cybersun_big_kill
 	projectile_type = /obj/projectile/beam/cybersun_laser
 	e_cost = LASER_SHOTS(28, STANDARD_CELL_CHARGE)
 	select_name = "Kill"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/laser_firing/laser.ogg'
+
+/obj/projectile/beam/cybersun_laser
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/saibasan/projectiles.dmi'
+	icon_state = "kill_large"
+	damage = 15
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
+	light_color = COLOR_SOFT_RED
+	wound_falloff_tile = 1
+
+// Auto burst kill lasers for the big gun
+/obj/item/ammo_casing/energy/cybersun_big_machinegun
+	projectile_type = /obj/projectile/beam/cybersun_laser
+	e_cost = LASER_SHOTS(22, STANDARD_CELL_CHARGE)
+	select_name = "Kill"
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/laser_firing/laser.ogg'
+	delay = 2
 
 /obj/projectile/beam/cybersun_laser
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/saibasan/projectiles.dmi'
