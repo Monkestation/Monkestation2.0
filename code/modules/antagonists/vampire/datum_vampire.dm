@@ -524,9 +524,9 @@
 		report += printplayerlist(vassal_minds)
 
 	if(objectives_complete)
-		report += span_greentext(span_big("<br>The [name] was successful!"))
+		report += span_greentext(span_big("The [name] was successful!"))
 	else
-		report += span_redtext(span_big("<br>The [name] has failed!"))
+		report += span_redtext(span_big("The [name] has failed!"))
 
 	return report.Join("<br>")
 
