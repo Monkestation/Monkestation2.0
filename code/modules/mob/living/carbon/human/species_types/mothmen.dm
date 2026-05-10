@@ -59,9 +59,10 @@
 	if(istype(attacking_item, /obj/item/melee/flyswatter))
 		damage_mods += 10 // Yes, a 10x damage modifier
 
-/datum/species/moth/randomize_features(mob/living/carbon/human/human_mob)
-	human_mob.dna.features["moth_markings"] = pick(GLOB.moth_markings_list)
-	randomize_external_organs(human_mob)
+/datum/species/moth/randomize_features()
+	var/list/features = ..()
+	features["moth_markings"] = pick(GLOB.moth_markings_list)
+	return features
 
 /datum/species/moth/get_species_description()
 	return "Hailing from a planet that was lost long ago, the moths travel \

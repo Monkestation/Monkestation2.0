@@ -53,7 +53,7 @@
 		from advanced machinery, exosuits, and other devices, allowing the user to visualize current power levels \
 		and integrity of such. They say these also let you see behind you."
 	icon_state = "diaghud_visor"
-	hud_type = DATA_HUD_DIAGNOSTIC_ADVANCED
+	hud_type = DATA_HUD_DIAGNOSTIC_BASIC
 	visor_traits = list(TRAIT_DIAGNOSTIC_HUD)
 
 //Security Visor - Gives you a security HUD.

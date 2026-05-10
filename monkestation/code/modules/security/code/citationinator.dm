@@ -13,6 +13,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	req_access = list(ACCESS_SECURITY)
 	custom_price = PAYCHECK_COMMAND * 2.5 //Comes out to 50 with the security dept discount on the vendor
+	/// Skips access checks, if true
+	var/access_check_skipped = FALSE
 
 /obj/item/citationinator/attack_self(mob/living/user, modifiers)
 	if(!isliving(user))
@@ -22,23 +24,44 @@
 	issue_fine(user)
 	icon_state = initial(icon_state)
 
+/obj/item/citationinator/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+	if(access_check_skipped)
+		balloon_alert(user, "no access locks to override!")
+	else
+		access_check_skipped = TRUE
+		balloon_alert(user, "access lock overridden")
+
+/obj/item/citationinator/examine(mob/user)
+	. = ..()
+	if(access_check_skipped)
+		. += span_notice("It's ID card reader is sparking and seems faulty.")
 /obj/item/citationinator/proc/issue_fine(mob/living/user)
 	var/obj/item/card/id/using_id = user.get_idcard()
-	if(!istype(using_id) || QDELING(using_id))
+	if((!istype(using_id) || QDELING(using_id)) && !access_check_skipped)
+		balloon_alert(user, "no ID found!")
 		return
-	if(!check_access(using_id))
-		to_chat(user, span_warning("Insufficient access to issue citations!"))
+	if(!check_access(using_id) && !access_check_skipped)
+		balloon_alert(user, "no access!")
 		return
-	var/list/choices = list()
-	for(var/datum/record/crew/person in GLOB.manifest.general)
-		if(!person.name)
-			continue
-		choices[person.name] = person
-	var/victim_name = tgui_input_list(user, "Select crew member to fine", "Do you got a loicense for that, mate?", choices, timeout = 1 MINUTES)
+	var/victim_name
+	var/on_crew = TRUE
+	var/datum/record/crew/victim
+	switch(tgui_alert(user, "Fine recipient", "Make some sod's life worse", list("On crew manifest", "Off crew manifest / non-living recipient")))
+		if("Off crew manifest / non-living recipient")
+			on_crew = FALSE
+			victim_name = trim(tgui_input_text(user, "Name", "", encode = FALSE, timeout = 1 MINUTES))
+		if("On crew manifest")
+			var/list/choices = list()
+			for(var/datum/record/crew/person in GLOB.manifest.general)
+				if(!person.name)
+					continue
+				choices[person.name] = person
+			victim_name = tgui_input_list(user, "Select crew member to fine", "Do you got a loicense for that, mate?", choices, timeout = 1 MINUTES)
+			victim = choices[victim_name]
 	if(!victim_name)
 		return
-	var/datum/record/crew/victim = choices[victim_name]
-	if(!victim)
+	if(!victim && on_crew)
 		return
 	var/fine = tgui_input_number(user, "How many credits to fine?", "Civil Asset Forfeiture", default = 50, max_value = CONFIG_GET(number/maxfine), timeout = 1 MINUTES, round_value = 1)
 	if(!fine)
@@ -49,10 +72,11 @@
 	var/reason = trim(tgui_input_text(user, "Provide details about the citation.", "Handling a fish in suspicious circumstances", multiline = TRUE, encode = FALSE, timeout = 1 MINUTES))
 	var/issuer_name = using_id.assignment + " " + using_id.registered_name
 	var/datum/crime/citation/new_citation = new(name = citation_name, details = reason, author = issuer_name, fine = fine)
-	new_citation.alert_owner(user, src, victim.name, "You have been issued a [fine]cr citation for [citation_name] by [issuer_name]. Fines are payable at Security.")
-	victim.citations += new_citation
-	investigate_log("New Citation: <strong>[citation_name]</strong> Fine: [fine] | Added to [victim.name] by [key_name(user)]", INVESTIGATE_RECORDS)
-	SSblackbox.ReportCitation(REF(new_citation), user.ckey, user.real_name, victim.name, citation_name, fine)
+	if(on_crew)
+		new_citation.alert_owner(user, src, victim.name, "You have been issued a [fine]cr citation for [citation_name] by [issuer_name]. Fines are payable at Security.")
+		victim.citations += new_citation
+		investigate_log("New Citation: <strong>[citation_name]</strong> Fine: [fine] | Added to [victim.name] by [key_name(user)]", INVESTIGATE_RECORDS)
+		SSblackbox.ReportCitation(REF(new_citation), user.ckey, user.real_name, victim.name, citation_name, fine)
 
 	var/final_paper_text = "# <u>SECURITY CITATION</u>\n"
 	final_paper_text += "You have been issued a citation by the on-board station security department for the following offense:<br>"
@@ -68,7 +92,7 @@
 	final_paper_text += "<i>Refusing to accept this ticket, or failure to pay/dispute this citation within a reasonable timeframe, may result in you being charged with Fine Evasion (code 111) and serving time in the station brig.</i><br>"
 
 	var/obj/item/paper/slip = new(drop_location())
-	slip.name = "Citation - [victim.name] for [sanitize(new_citation.name)]"
+	slip.name = "Citation - [victim_name] for [sanitize(new_citation.name)]"
 	slip.color = COLOR_FADED_PINK
 
 	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)

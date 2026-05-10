@@ -700,3 +700,6 @@
 /obj/effect/temp_visual/dir_setting/firing_effect/sweep_attack/full_circle
 	icon_state = "big_slash_360"
 	duration = 0.4 SECONDS
+
+/obj/effect/temp_visual/circle_wave/star_blast
+	color = COLOR_VOID_PURPLE

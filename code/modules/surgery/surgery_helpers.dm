@@ -23,12 +23,16 @@
 	if(iscarbon(located_mob))
 		var/mob/living/carbon/clothed_carbon = located_mob
 		for(var/obj/item/clothing/clothes in list(clothed_carbon.back, clothed_carbon.wear_mask, clothed_carbon.head, clothed_carbon.wear_neck))
+			if(clothes.flags_cover & ALLOW_SURGERY_THROUGH)
+				continue
 			covered_locations |= clothes.body_parts_covered
 			face_covered |= clothes.flags_inv
 			eyesmouth_covered |= clothes.flags_cover
 		if(ishuman(clothed_carbon))
 			var/mob/living/carbon/human/clothed_human = clothed_carbon
 			for(var/obj/item/clothes in list(clothed_human.wear_suit, clothed_human.w_uniform, clothed_human.shoes, clothed_human.belt, clothed_human.gloves, clothed_human.glasses, clothed_human.ears))
+				if(clothes.flags_cover & ALLOW_SURGERY_THROUGH)
+					continue
 				covered_locations |= clothes.body_parts_covered
 				face_covered |= clothes.flags_inv
 				eyesmouth_covered |= clothes.flags_cover

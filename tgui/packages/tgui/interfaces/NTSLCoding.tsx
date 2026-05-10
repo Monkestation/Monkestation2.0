@@ -343,14 +343,15 @@ const Guide = (props) => {
       <br /> {/* Btw, clown is also allowed. But we don't tell them that */}
       <br />
       NT Readable languages: <br />
-      (var = languages.language_name) <br />1 (human) <br />2 (monkey) <br />3
+      (var = languages.language_name) <br />1 (common) <br />2 (monkey) <br />3
       (robot) <br />4 (draconic) <br />5 (beachtounge) <br />6 (sylvan) <br />7
-      (etherean) <br />8 (bonespeak) <br />9 (mothian) <br />
+      (voltaic) <br />8 (calcic) <br />9 (moffic) <br />
       10 (ash) <br />
-      11 (torii) <br />
+      11 (yangyu) <br />
       12 (uncommon) <br />
       13 (goblin) <br />
-      14 (slime) <br />
+      14 (nekomimetic) <br />
+      15 (slime) <br />
       <br />
       <br />
       Broadcasted signals will not run itself through Scripts.

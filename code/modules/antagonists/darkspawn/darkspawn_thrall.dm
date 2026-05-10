@@ -113,6 +113,9 @@
 	qdel(get_shadow_tumor(current_mob))
 	current_mob.update_sight()
 
+/datum/antagonist/thrall_darkspawn/pre_mindshield(mob/implanter, mob/living/mob_override)
+	return COMPONENT_MINDSHIELD_RESISTED
+
 ////////////////////////////////////////////////////////////////////////////////////
 //--------------------------------Antag hud---------------------------------------//
 ////////////////////////////////////////////////////////////////////////////////////

@@ -384,11 +384,8 @@
 		/obj/item/pipe_dispenser,
 		/obj/item/extinguisher,
 		/obj/item/weldingtool/largetank/cyborg,
-		/obj/item/screwdriver/cyborg,
-		/obj/item/wrench/cyborg,
-		/obj/item/crowbar/cyborg,
-		/obj/item/wirecutters/cyborg,
-		/obj/item/multitool/cyborg,
+		/obj/item/borg/cyborg_omnitool/engineering,
+		/obj/item/borg/cyborg_omnitool/engineering,
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
 		/obj/item/assembly/signaler/cyborg,
@@ -426,11 +423,11 @@
 		/obj/item/extinguisher/mini, // Likewise, why could they put out fires as good as engineering borgs? They are jacks of all trades, master of none.
 		/obj/item/pickaxe,
 		/obj/item/t_scanner/adv_mining_scanner,
-		/obj/item/soap/nanotrasen, 
+		/obj/item/soap/nanotrasen,
 		/obj/item/borg/cyborghug,
 		/obj/item/storage/bag/tray,
 		// Zipties have been removed because why god would you let them become security 2.
-	) 
+	)
 	emag_modules = list(
 		/obj/item/melee/energy/sword/cyborg, //I don't think there was any reason to use cyborg specific esword with this? They both act functionally the same.
 	)
@@ -712,14 +709,8 @@
 		/obj/item/borg/apparatus/beaker,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/surgical_drapes,
-		/obj/item/retractor, //Monke edit start: remove augment tools
-		/obj/item/hemostat,
-		/obj/item/cautery,
-		/obj/item/surgicaldrill,
-		/obj/item/scalpel,
-		/obj/item/circular_saw, //Monke edit end: remove augment tools
-		/obj/item/bonesetter,
+		/obj/item/borg/cyborg_omnitool/medical,
+		/obj/item/borg/cyborg_omnitool/medical,
 		/obj/item/blood_filter,
 		/obj/item/extinguisher/mini,
 		/obj/item/emergency_bed/silicon,
@@ -969,14 +960,9 @@
 		/obj/item/reagent_containers/borghypo/syndicate,
 		/obj/item/shockpaddles/syndicate/cyborg,
 		/obj/item/healthanalyzer/cyborg,
-		/obj/item/surgical_drapes,
-		/obj/item/retractor/augment, //monkestation edit start: Augmented tools
-		/obj/item/hemostat/augment,
-		/obj/item/cautery/augment,
-		/obj/item/surgicaldrill/augment,
-		/obj/item/scalpel/augment, //monkestation edit: Augmented tools
+		/obj/item/borg/cyborg_omnitool/medical/upgraded,
+		/obj/item/borg/cyborg_omnitool/medical/upgraded,
 		/obj/item/melee/energy/sword/cyborg/saw,
-		/obj/item/bonesetter,
 		/obj/item/blood_filter,
 		/obj/item/emergency_bed/silicon,
 		/obj/item/crowbar/cyborg,
@@ -1001,12 +987,9 @@
 		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/extinguisher,
 		/obj/item/weldingtool/largetank/cyborg,
-		/obj/item/screwdriver/nuke,
-		/obj/item/wrench/cyborg,
-		/obj/item/crowbar/cyborg,
-		/obj/item/wirecutters/cyborg,
+		/obj/item/borg/cyborg_omnitool/engineering/syndie,
+		/obj/item/borg/cyborg_omnitool/engineering/syndie,
 		/obj/item/analyzer,
-		/obj/item/multitool/cyborg,
 		/obj/item/stack/sheet/iron,
 		/obj/item/stack/sheet/glass,
 		/obj/item/borg/apparatus/sheet_manipulator,

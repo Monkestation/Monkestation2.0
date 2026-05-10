@@ -39,6 +39,7 @@
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/head/caphat/beret(src)
+	new /obj/item/clothing/head/hats/caphat/armored(src)
 
 /obj/item/storage/bag/garment/hos
 	name = "head of security's garment bag"

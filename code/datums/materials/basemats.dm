@@ -7,6 +7,7 @@
 	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/iron
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
+	mat_rust_resistance = RUST_RESISTANCE_BASIC
 	ore_type = /obj/item/stack/ore/iron
 	mineral_rarity = MATERIAL_RARITY_COMMON
 	points_per_unit = 1 / SHEET_MATERIAL_AMOUNT
@@ -240,6 +241,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 1.25, BIO = 1, FIRE = 0.7, ACID = 1)
 	ore_type = /obj/item/stack/ore/titanium
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
+	mat_rust_resistance = RUST_RESISTANCE_TITANIUM
 
 /datum/material/titanium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
@@ -436,6 +438,7 @@ monkestation end */
 	beauty_modifier = 500 / SHEET_MATERIAL_AMOUNT
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
+	mat_rust_resistance = RUST_RESISTANCE_BASIC
 
 /datum/material/sand/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.adjust_disgust(17)
@@ -454,6 +457,7 @@ monkestation end */
 	beauty_modifier = 600 / SHEET_MATERIAL_AMOUNT
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "brick"
+	mat_rust_resistance = RUST_RESISTANCE_BASIC
 
 /datum/material/snow
 	name = "snow"
@@ -467,6 +471,7 @@ monkestation end */
 	beauty_modifier = 600 / SHEET_MATERIAL_AMOUNT
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
+	mat_rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /datum/material/snow/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/water, rand(5, 10))
