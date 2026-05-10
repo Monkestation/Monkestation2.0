@@ -356,7 +356,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 				span_userdanger("[user] is trying to take a blood sample from you!"),
 			)
 		if(use_delay)
-			if(!do_after(user, use_delay, user, living_target))
+			if(!do_after(user, use_delay, living_target))
 				return ITEM_INTERACT_BLOCKING
 
 		if(living_target.transfer_blood_to(vial, transfer_amount))
