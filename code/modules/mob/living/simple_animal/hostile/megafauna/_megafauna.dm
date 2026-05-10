@@ -18,7 +18,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	bodytemp_cold_damage_limit = -1
 	bodytemp_heat_damage_limit = INFINITY
-	vision_range = 5
+	vision_range = 4
 	aggro_vision_range = 18
 	// Pale purple, should be red enough to see stuff on lavaland
 	lighting_cutoff_red = 25
