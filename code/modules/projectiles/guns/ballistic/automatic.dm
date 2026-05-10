@@ -331,17 +331,9 @@
 	wield_recoil = 1
 	projectile_wound_bonus = -5
 
-/obj/item/gun/ballistic/automatic/xhihao_smg/Initialize(mapload)
-	. = ..()
-
-	give_autofire()
-
-/obj/item/gun/ballistic/automatic/xhihao_smg/proc/give_autofire()
-	AddComponent(/datum/component/automatic_fire, fire_delay)
-
 /obj/item/gun/ballistic/automatic/xhihao_smg/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_XHIHAO)
-///	AddComponent(/datum/component/automatic_fire, fire_delay)
+	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/gun/ballistic/automatic/xhihao_smg/examine(mob/user)
 	. = ..()
