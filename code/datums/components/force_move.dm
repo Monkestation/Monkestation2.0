@@ -4,7 +4,7 @@
 ///Supports slip and crashing interactions. Like slamming into a wall or slipping into disposals
 /datum/component/force_move
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	/// Current movement loop, so we can keep it if this component is added twice
+	/// Current movement loop, so we can prevent a duplicate
 	var/datum/move_loop/has_target/our_looper = null
 	// Making these vars for ease of inheritance
 	/// If TRUE the movement causes a spin every step
