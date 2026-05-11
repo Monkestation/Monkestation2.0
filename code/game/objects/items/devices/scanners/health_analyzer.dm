@@ -344,7 +344,7 @@
 		var/list/cyberimps
 		for(var/obj/item/organ/internal/cyberimp/cyberimp in humantarget.organs)
 			if(IS_ROBOTIC_ORGAN(cyberimp) && !(cyberimp.organ_flags & ORGAN_HIDDEN))
-				LAZYADD(cyberimps, cyberimp.get_examine_string(user))
+				LAZYADD(cyberimps, cyberimp.examine_title(user))
 		if(LAZYLEN(cyberimps))
 			if(!render)
 				render_list += "<hr>"

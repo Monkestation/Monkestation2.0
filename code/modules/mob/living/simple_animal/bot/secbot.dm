@@ -55,6 +55,11 @@
 
 	var/stamina_damage = 60 //1 hit slows, 2 hit stam crits
 
+/mob/living/simple_animal/bot/secbot/Initialize(mapload)
+	. = ..()
+	// Beepsky hates people scanning them
+	RegisterSignal(src, COMSIG_MOVABLE_SPY_STEALING, PROC_REF(retaliate_async))
+
 /mob/living/simple_animal/bot/secbot/beepsky
 	name = "Commander Beep O'sky"
 	desc = "It's Commander Beep O'sky! Officially the superior officer of all bots on station, Beepsky remains as humble and dedicated to the law as the day he was first fabricated."
@@ -198,6 +203,10 @@
 			security_mode_flags ^= SECBOT_HANDCUFF_TARGET
 		if("arrest_alert")
 			security_mode_flags ^= SECBOT_DECLARE_ARRESTS
+
+/mob/living/simple_animal/bot/secbot/proc/retaliate_async(datum/source, mob/user, ...)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(retaliate), user)
 
 /mob/living/simple_animal/bot/secbot/proc/retaliate(mob/living/carbon/human/attacking_human)
 	var/judgement_criteria = judgement_criteria()
