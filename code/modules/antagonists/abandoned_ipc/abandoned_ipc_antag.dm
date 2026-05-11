@@ -15,18 +15,20 @@
 	ui_name = "AntagInfoAIPC"
 	can_assign_self_objectives = FALSE
 	antagpanel_category = ANTAG_GROUP_ABANDONED_IPC
+	preview_outfit = /datum/outfit/abandoned_ipc
 	///The ion laws that this abandoned IPC must follow
 	var/list/laws = list()
 
 /datum/outfit/abandoned_ipc
 	name = "Abandoned IPC (Preview Only)"
-	l_hand = /obj/item/storage/toolbox/mechanical
-	r_hand = /obj/item/melee/baton/security/cattleprod
+	r_hand = /obj/item/storage/toolbox/mechanical
+	l_hand = /obj/item/melee/baton/security/cattleprod
 
 /datum/antagonist/abandoned_ipc/get_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/ipc = new
 	ipc.set_species(/datum/species/ipc)
 	var/icon/ipc_icon = render_preview_outfit(/datum/outfit/abandoned_ipc, ipc)
+	ipc_icon.Shift(NORTH, 4)
 	qdel(ipc)
 	return finish_preview_icon(ipc_icon)
 
@@ -67,16 +69,50 @@
 	log_admin("[key_name(admin)] has removed a law from an abandoned IPC [key_name(owner)]. Removed law is [gone_law].")
 
 /obj/item/organ/internal/cyberimp/arm/item_set/doorjack
-	name = "Doorjack Implant"
+	name = "doorjack implant"
 	desc = "An internal doorjack implant. Useful for getting through doors!"
 	icon_state = "toolkit_doorjack"
 	contents = newlist(/obj/item/internal_doorjack)
 	zone = "r_arm"
 
 /obj/item/internal_doorjack
-	name = "integrated Doorjack"
+	name = "integrated doorjack"
 	desc = "A built in doorjack, attached to your arm. Can be used to open doors."
-	icon = "wawa"
-	icon_state = 'icons/obj/card.dmi'
+	icon = 'icons/obj/card.dmi'
+	icon_state = "doorjack_implant"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 
-// update_icon(ALL, AIRLOCK_EMAG, 1)
+/obj/item/internal_doorjack/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with, /obj/machinery/door/airlock))
+		return
+	var/obj/machinery/door/airlock/door = interacting_with
+	door.update_icon(ALL, 6, 1)
+	door.operating = TRUE
+	if(!do_after(user, 1.2 SECONDS, interacting_with))
+		return
+	door.finish_emag_act()
+	return ITEM_INTERACT_SUCCESS
+
+/datum/antagonist/abandoned_ipc/antag_token(datum/mind/hosts_mind, mob/spender)
+	var/spender_key = spender.key
+	if(!spender_key)
+		CRASH("wtf, spender had no key")
+	if(isliving(spender) && hosts_mind)
+		hosts_mind.current.unequip_everything()
+		new /obj/effect/holy/quiet(hosts_mind.current.loc)
+		QDEL_IN(hosts_mind.current, 1 SECOND)
+
+	var/turf/spawn_loc = find_safe_turf_in_maintenance()
+	if(isnull(spawn_loc))
+		message_admins("Failed to find valid spawn location for [ADMIN_LOOKUPFLW(spender)], who spent an abandoned IPC antag token")
+		CRASH("Failed to find valid spawn location for an abandoned IPC antag token")
+
+	var/mob/living/carbon/human/abandoned_ipc = new(spawn_loc)
+	abandoned_ipc.PossessByPlayer(spender_key)
+	abandoned_ipc.mind.add_antag_datum(/datum/antagonist/abandoned_ipc)
+	if(isobserver(spender))
+		qdel(spender)
+	message_admins("[ADMIN_LOOKUPFLW(abandoned_ipc)] has been made into an abandoned ipc by using an antag token.")
+

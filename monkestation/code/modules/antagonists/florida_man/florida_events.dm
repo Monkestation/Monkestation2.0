@@ -87,9 +87,13 @@
 	mouse_opacity = 0
 	pixel_x = -32
 	pixel_y = 0
+	var/volume = 50
 
 /obj/effect/holy/Initialize(mapload)
-	playsound(src,'monkestation/sound/misc/adminspawn.ogg',50,1)
-	QDEL_IN(src, 20)
+	playsound(src,'monkestation/sound/misc/adminspawn.ogg',volume,1)
+	QDEL_IN(src, 2 SECONDS)
 	. = ..()
 	return INITIALIZE_HINT_NORMAL
+
+/obj/effect/holy/quiet
+	volume = 25
