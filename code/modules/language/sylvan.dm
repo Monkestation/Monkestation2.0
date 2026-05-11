@@ -20,4 +20,5 @@
 	default_priority = 90
 	mutual_understanding = list(
 		/datum/language/mushroom = 40,
+		/datum/language/spacer = 1,
 	)

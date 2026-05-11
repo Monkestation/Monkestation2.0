@@ -9,17 +9,30 @@
 	additional_syllable_low = 0
 	additional_syllable_high = 1
 	syllables = list(
-		"ada", "zir", "bian", "ach", "usk", "ado", "ich", "cuan", "iga", "qing", "le", "que", "ki", "qaf", "dei", "eta"
+		"ada", "zir", "bian", "ach", "usk", "ado", "ich", "cuan", "iga", "qing", "le", "que", "ki", "qaf", "dei", "eta", //original syllables from port
+		"ja", "xe", "no", "ya", //uncommon syllables (one also common and yangyu)
+		"ye", "arr", "grog", "me", //piratespeak syllables
+		"ska", "bra", "nik", "led", //panslavic syllables
+		"jjae", //yangyu syllable
+		"bola", "ollo", //gobbish syllables
+		"ik", "ka", //draconic and ashtongue syllables
+		"tyc", "tun", //moffic syllables
+		"wex", //sylvan syllable
+		"wawa", //wawa
 	)
 	icon_state = "spacer"
 	default_priority = 50
 
 	mutual_understanding = list(
-		/datum/language/uncommon = 25,
-		/datum/language/common = 25,
+		/datum/language/uncommon = 20,
+		/datum/language/piratespeak = 20,
 		/datum/language/panslavic = 20,
 		/datum/language/yangyu = 10,
-		/datum/language/piratespeak = 5,
+		/datum/language/goblin = 10,
 		/datum/language/draconic = 5,
 		/datum/language/moffic = 5,
+		/datum/language/common = 4,
+		/datum/language/ashtongue = 4,
+		/datum/language/sylvan = 1,
+		/datum/language/wawa = 1,
 	)

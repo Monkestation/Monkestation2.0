@@ -14,3 +14,7 @@
 
 	default_priority = 90
 	icon_state = "goblin"
+
+	mutual_understanding = list(
+		/datum/language/spacer = 10,
+	)

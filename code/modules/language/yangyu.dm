@@ -19,3 +19,7 @@
 	)
 	icon_state = "torii"
 	default_priority = 94
+
+	mutual_understanding = list(
+		/datum/language/spacer = 10,
+	)
