@@ -163,6 +163,8 @@
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEEYES|HIDEMASK
+	desc_controls = "Alt-Click to flip the visor."
+	var/flipped_visor = FALSE
 
 /datum/armor/helmet_alt
 	melee = 15
@@ -177,6 +179,48 @@
 /obj/item/clothing/head/helmet/alt/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
+
+/obj/item/clothing/head/helmet/alt/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(issignaler(attacking_item))
+		var/obj/item/assembly/signaler/attached_signaler = attacking_item
+		// There's a flashlight in us. Remove it first, or it'll be lost forever!
+		var/obj/item/flashlight/seclite/blocking_us = locate() in src
+		if(blocking_us)
+			to_chat(user, span_warning("[blocking_us] is in the way, remove it first!"))
+			return TRUE
+
+		if(!attached_signaler.secured)
+			to_chat(user, span_warning("Secure [attached_signaler] first!"))
+			return TRUE
+
+		to_chat(user, span_notice("You add [attached_signaler] to [src]."))
+
+		qdel(attached_signaler)
+		var/obj/item/bot_assembly/secbot/secbot_frame = new(loc)
+		user.put_in_hands(secbot_frame)
+
+		qdel(src)
+		return TRUE
+
+	return ..()
+
+/obj/item/clothing/head/helmet/alt/click_alt(mob/user)
+	flipped_visor = !flipped_visor
+	balloon_alert(user, "visor flipped")
+	// base_icon_state is modified for seclight attachment component
+	base_icon_state = "[initial(base_icon_state)][flipped_visor ? "-novisor" : ""]"
+	icon_state = base_icon_state
+	if(flipped_visor)
+		flags_cover &= ~(HEADCOVERSEYES|HEADCOVERSMOUTH|PEPPERPROOF)
+		flags_inv &= ~(HIDEFACE|HIDEFACIALHAIR|HIDESNOUT|HIDEEYES|HIDEMASK)
+		playsound(src, SFX_VISOR_DOWN, 20, TRUE, -1)
+	else
+		flags_cover |= (HEADCOVERSEYES|HEADCOVERSMOUTH|PEPPERPROOF)
+		flags_inv |= (HIDEFACE|HIDEFACIALHAIR|HIDESNOUT|HIDEEYES|HIDEMASK)
+		playsound(src, SFX_VISOR_UP, 20, TRUE, -1)
+	user.update_worn_glasses()
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/helmet/marine
 	name = "tactical combat helmet"
