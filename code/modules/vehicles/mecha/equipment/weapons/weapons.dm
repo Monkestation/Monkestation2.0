@@ -46,7 +46,8 @@
 	var/newtonian_target = turn(chassis.dir,180)
 	. = ..()//start the cooldown early because of sleeps
 	for(var/i in 1 to projectiles_per_shot)
-		if(energy_drain && !chassis.has_charge(energy_drain))//in case we run out of energy mid-burst, such as emp
+		//in case we run out of energy mid-burst, such as emp
+		if((energy_drain && !chassis.has_charge(energy_drain)) || (astype(src, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic)?.projectiles <= 0))
 			break
 		var/spread = 0
 		if(variance)
@@ -341,9 +342,9 @@
 	icon_state = "mecha_uac2"
 	equip_cooldown = 10
 	projectile = /obj/projectile/bullet/lmg
-	projectiles = 300
-	projectiles_cache = 300
-	projectiles_cache_max = 1200
+	projectiles = 100
+	projectiles_cache = 100
+	projectiles_cache_max = 300
 	projectiles_per_shot = 3
 	variance = 6
 	randomspread = 1

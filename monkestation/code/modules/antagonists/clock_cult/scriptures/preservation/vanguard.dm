@@ -25,7 +25,7 @@
 /datum/scripture/slab/vanguard/count_down()
 	. = ..()
 	if(time_left == 5 SECONDS)
-		to_chat(invoker, span_userdanger("You start to feel tired again."))
+		invoker.balloon_alert(invoker, "you start to feel tired again.")
 
 /datum/scripture/slab/vanguard/end_invocation(silent)
 	. = ..()
@@ -33,4 +33,4 @@
 							   TRAIT_PUSHIMMUNE,
 							   TRAIT_NOLIMBDISABLE,
 							   TRAIT_IGNOREDAMAGESLOWDOWN), VANGUARD_TRAIT)
-	to_chat(invoker, span_bolddanger("You feel the last of the energy from \the [invoking_slab] leave you.")) //smaller span here because its pretty obvious when it ends anyway
+	to_chat(invoker, span_userdanger("You feel the last of the energy from \the [invoking_slab] leave you."))
