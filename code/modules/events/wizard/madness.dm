@@ -2,6 +2,7 @@
 	name = "Curse of Madness"
 	weight = 1
 	typepath = /datum/round_event/wizard/madness
+	max_occurrences = 0 //admin only, if the wizard wants to spend the points then they can
 	earliest_start = 0 MINUTES
 	description = "Reveals a horrifying truth to everyone, giving them a trauma."
 	admin_setup = list(/datum/event_admin_setup/text_input/madness)
