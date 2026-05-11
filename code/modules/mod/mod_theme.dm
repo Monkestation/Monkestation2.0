@@ -1973,6 +1973,7 @@
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	slowdown_inactive = 1
 	slowdown_active = 0.5
+	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/restraints/handcuffs,
