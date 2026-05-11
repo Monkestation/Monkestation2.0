@@ -43,7 +43,6 @@
 	if(!i_am_original)
 		return
 
-	// Delete the old loop but don't delete us
 	clean_loop()
 
 	src.spin = spin
@@ -64,7 +63,7 @@
 	if(QDELETED(our_looper))
 		return
 	UnregisterSignal(our_looper, list(COMSIG_MOVELOOP_POSTPROCESS, COMSIG_QDELETING))
-	qdel(our_looper)
+	QDEL_NULL(our_looper)
 
 /// Signal proc to prevent client movement
 /datum/component/force_move/proc/stop_move(datum/source)
