@@ -54,7 +54,7 @@
 /// Create a new movement loop for us
 /datum/component/force_move/proc/create_loop(atom/target)
 	var/dist = get_dist(parent, target)
-	our_looper = SSmove_manager.move_towards(parent, target, delay = 1, timeout = min(dist, 6 SECONDS))
+	our_looper = SSmove_manager.move_towards(parent, target, delay = 1, timeout = dist)
 	if(spin)
 		RegisterSignal(our_looper, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(slip_spin))
 	RegisterSignal(our_looper, COMSIG_QDELETING, PROC_REF(loop_ended))
