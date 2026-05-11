@@ -39,11 +39,13 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Common Second Language", "Foreigner"), //monkestation edit 2, re-added but replaced bilingual with csl
 		//MONKESTATION ADDITION START
 		list("Listener", "Uncommon"),
-		list("Outsider", "Uncommon"),
-		list("Listener", "Mute"),
-		list("Listener", "Deaf"),
+		list("Monolingual", "Uncommon"),
+		list("Listener", "Monolingual"),
+		list("Listener", "Polyglot"),
+		list("Linguist", "Listener"),
+		list("Linguist", "Monolingual"),
 		list("Polyglot", "Listener"),
-		list("Polyglot", "Bilingual"),
+		list("Polyglot", "Monolingual"),
 		list("Polyglot", "Common Second Language"),
 		list("Lisp", "Mute"),
 		list("Polyglot", "Foreigner"),

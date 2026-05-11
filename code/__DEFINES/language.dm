@@ -39,9 +39,16 @@
 #define LANGUAGE_BLOODSUCKER "bloodsucker"
 #define LANGUAGE_VASSAL "vassal"
 #define LANGUAGE_DARKSPAWN "darkspawn"
+#define LANGUAGE_TONGUE "tongue"
+#define LANGUAGE_FUGITIVE_HUNTER "fugitive hunter"
+#define LANGUAGE_NINJA "ninja"
 
 // Language flags. Used in granting and removing languages.
 /// This language can be spoken.
 #define SPOKEN_LANGUAGE (1<<0)
 /// This language can be understood.
 #define UNDERSTOOD_LANGUAGE (1<<1)
+
+// Iris/Oculis port: they use both sets (language_understood and understood_language and the two spoken defines) for whatever reason. I ain't asking questions. I'm just hobbling stuff together like a good monke contributor.
+#define LANGUAGE_UNDERSTOOD	1
+#define LANGUAGE_SPOKEN	2

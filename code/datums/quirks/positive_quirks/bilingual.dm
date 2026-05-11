@@ -9,12 +9,10 @@
 	mail_goodies = list(/obj/item/taperecorder, /obj/item/clothing/head/frenchberet, /obj/item/clothing/mask/fakemoustache/italian)
 
 /datum/quirk/bilingual/add(client/client_source)
-	var/wanted_language = client_source?.prefs?.read_preference(/datum/preference/choiced/language)
-	if(isnull(wanted_language))
-		return
+	var/wanted_language = client_source?.prefs.read_preference(/datum/preference/choiced/language)
 	var/datum/language/language_type
 	if(wanted_language == "Random")
-		language_type = pick(GLOB.roundstart_languages)
+		language_type = pick(GLOB.uncommon_roundstart_languages)
 	else if(wanted_language)
 		language_type = GLOB.language_types_by_name[wanted_language]
 	if(!language_type || quirk_holder.has_language(language_type))
@@ -23,7 +21,10 @@
 			to_chat(quirk_holder, span_boldnotice("You are already familiar with the quirk in your preferences, so you did not learn one."))
 			return
 		to_chat(quirk_holder, span_boldnotice("You are already familiar with the quirk in your preferences, so you learned Galactic Uncommon instead."))
-	quirk_holder.grant_language(language_type, source = LANGUAGE_QUIRK)
+
+	var/speakable = client_source?.prefs.read_preference(/datum/preference/toggle/language_speakable)
+	if(isnull(speakable) || speakable)
+		quirk_holder.grant_language(language_type, SPOKEN_LANGUAGE|UNDERSTOOD_LANGUAGE, source = LANGUAGE_QUIRK)
 
 /datum/quirk/bilingual/remove()
 	if(QDELING(quirk_holder))

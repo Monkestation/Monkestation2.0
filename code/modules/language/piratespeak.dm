@@ -15,3 +15,4 @@
 	"shiver","timbers","matey","swashbuckler"
 	)
 	icon_state = "pirate"
+	secret = TRUE

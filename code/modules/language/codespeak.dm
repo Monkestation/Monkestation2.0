@@ -5,6 +5,7 @@
 	default_priority = 0
 	flags = TONGUELESS_SPEECH | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD
 	icon_state = "codespeak"
+	secret = TRUE
 
 /datum/language/codespeak/scramble_sentence(input, list/mutual_languages)
 	var/sentence = read_word_cache(input)

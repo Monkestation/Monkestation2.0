@@ -14,12 +14,12 @@
 	material_modifier = 0.5
 	material_flags = MATERIAL_EFFECTS | MATERIAL_AFFECT_STATISTICS
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	/// Abstract root type
+	abstract_type = /obj/structure/statue
 	/// Beauty component mood modifier
 	var/impressiveness = 15
 	/// Art component subtype added to this statue
 	var/art_type = /datum/element/art
-	/// Abstract root type
-	var/abstract_type = /obj/structure/statue
 
 /obj/structure/statue/Initialize(mapload)
 	. = ..()

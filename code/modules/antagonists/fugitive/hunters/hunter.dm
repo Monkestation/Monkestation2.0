@@ -67,7 +67,25 @@
 	return hunter_team
 
 /datum/antagonist/fugitive_hunter/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/owner_mob = mob_override || owner.current
+	var/datum/language_holder/holder = owner_mob.get_language_holder()
 	add_team_hud(mob_override || owner.current)
+	switch(backstory)
+		if(HUNTER_PACK_RUSSIAN)
+			holder.grant_language(/datum/language/panslavic, source = LANGUAGE_FUGITIVE_HUNTER)
+			holder.selected_language = /datum/language/panslavic
+		if(HUNTER_PACK_BOUNTY)
+			holder.grant_language(/datum/language/spacer, source = LANGUAGE_FUGITIVE_HUNTER)
+
+/datum/antagonist/fugitive_hunter/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/owner_mob = mob_override || owner.current
+	switch(backstory)
+		if(HUNTER_PACK_RUSSIAN)
+			owner_mob.remove_language(/datum/language/panslavic, source = LANGUAGE_FUGITIVE_HUNTER)
+		if(HUNTER_PACK_BOUNTY)
+			owner_mob.remove_language(/datum/language/spacer, source = LANGUAGE_FUGITIVE_HUNTER)
+	return ..()
 
 /datum/team/fugitive_hunters
 	var/backstory = "error"

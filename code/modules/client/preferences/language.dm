@@ -4,25 +4,37 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	should_update_preview = FALSE
 
+/datum/preference/choiced/language/create_default_value()
+	return "Random"
+
 /datum/preference/choiced/language/is_accessible(datum/preferences/preferences)
 	if (!..())
 		return FALSE
 
 	return /datum/quirk/bilingual::name in preferences.all_quirks
 
+/datum/preference/choiced/language/icon_for(value)
+	var/datum/language/lang = GLOB.language_types_by_name[value]
+	if(lang)
+		var/datum/universal_icon/lang_icon = uni_icon(lang.icon, lang.icon_state)
+		lang_icon.scale(32, 32)
+		return lang_icon
+
+	var/datum/universal_icon/unknown = uni_icon('icons/misc/language.dmi', "unknown")
+	unknown.scale(32, 32)
+	return unknown
+
 /datum/preference/choiced/language/init_possible_values()
 	var/list/values = list()
 
-	if(!GLOB.roundstart_languages.len)
+	if(!GLOB.uncommon_roundstart_languages.len)
 		generate_selectable_species_and_languages()
 
 	values += "Random"
 	//we add uncommon as it's foreigner-only.
 	values += /datum/language/uncommon::name
 
-	for(var/datum/language/language_type as anything in GLOB.roundstart_languages)
-		if(ispath(language_type, /datum/language/common))
-			continue
+	for(var/datum/language/language_type as anything in GLOB.uncommon_roundstart_languages)
 		if(initial(language_type.name) in values)
 			continue
 		values += initial(language_type.name)
@@ -32,24 +44,20 @@
 /datum/preference/choiced/language/apply_to_human(mob/living/carbon/human/target, value)
 	return
 
-/datum/preference/choiced/language_skill
+/datum/preference/toggle/language_speakable
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	savefile_key = "language_skill"
+	savefile_key = "language_speakable"
 	savefile_identifier = PREFERENCE_CHARACTER
+	default_value = TRUE
 	can_randomize = FALSE
 
-/datum/preference/choiced/language_skill/create_default_value()
-	return "100%"
-
-/datum/preference/choiced/language_skill/is_accessible(datum/preferences/preferences)
+/datum/preference/toggle/language_speakable/is_accessible(datum/preferences/preferences)
 	if(!..())
 		return FALSE
+
 	return /datum/quirk/bilingual::name in preferences.all_quirks
 
-/datum/preference/choiced/language_skill/init_possible_values()
-	return list("100%", "75%", "50%", "33%", "25%", "10%")
-
-/datum/preference/choiced/language_skill/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/toggle/language_speakable/apply_to_human(mob/living/carbon/human/target, value)
 	return
 
 /datum/preference/choiced/csl_strength

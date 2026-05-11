@@ -18,3 +18,4 @@
 	)
 
 	icon_state = "bloodsucker"
+	secret = TRUE

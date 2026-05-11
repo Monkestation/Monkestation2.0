@@ -374,3 +374,9 @@
 	desc = "It really is just that shrimple."
 	cost = PAYCHECK_CREW * 4
 	contains = list(/obj/item/toy/plush/shrimp)
+
+/datum/supply_pack/goody/spacerbook
+	name = "Union-Approved Spacer Manual"
+	desc = "Bridge the language gap with those weird aliens today!"
+	cost = PAYCHECK_CREW * 2
+	contains = list(/obj/item/language_manual/spacer_manual)

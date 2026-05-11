@@ -22,6 +22,7 @@
 					"tail", "trim", "tube", "wobble", "roll", "gnarly", "epic")
 
 	icon_state = "beach"
+	secret = TRUE
 
 	mutual_understanding = list(
 		/datum/language/common = 50,

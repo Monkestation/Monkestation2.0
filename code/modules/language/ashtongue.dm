@@ -40,3 +40,4 @@
 	mutual_understanding = list(
 		/datum/language/draconic = 80,
 	)
+	secret = TRUE

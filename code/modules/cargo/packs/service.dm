@@ -308,3 +308,10 @@
 		/obj/item/storage/box/lethalshot,
 		/obj/item/magazine_shuffler,
 	)
+
+/datum/supply_pack/service/spacermanuals
+	name = "Spacer Manuals: Full Trilogy"
+	desc = "Bridge the language gap with those weird aliens today! Contains three spacer manuals."
+	cost = CARGO_CRATE_VALUE * 1.5
+	contains = list(/obj/item/language_manual/spacer_manual = 3)
+	crate_name = "spacer manual crate"
