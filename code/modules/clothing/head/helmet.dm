@@ -180,30 +180,6 @@
 	. = ..()
 	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
-/obj/item/clothing/head/helmet/alt/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(issignaler(attacking_item))
-		var/obj/item/assembly/signaler/attached_signaler = attacking_item
-		// There's a flashlight in us. Remove it first, or it'll be lost forever!
-		var/obj/item/flashlight/seclite/blocking_us = locate() in src
-		if(blocking_us)
-			to_chat(user, span_warning("[blocking_us] is in the way, remove it first!"))
-			return TRUE
-
-		if(!attached_signaler.secured)
-			to_chat(user, span_warning("Secure [attached_signaler] first!"))
-			return TRUE
-
-		to_chat(user, span_notice("You add [attached_signaler] to [src]."))
-
-		qdel(attached_signaler)
-		var/obj/item/bot_assembly/secbot/secbot_frame = new(loc)
-		user.put_in_hands(secbot_frame)
-
-		qdel(src)
-		return TRUE
-
-	return ..()
-
 /obj/item/clothing/head/helmet/alt/click_alt(mob/user)
 	flipped_visor = !flipped_visor
 	balloon_alert(user, "visor flipped")
