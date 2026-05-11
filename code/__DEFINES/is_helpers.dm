@@ -281,6 +281,8 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 
 #define isgun(A) (istype(A, /obj/item/gun))
 
+#define isammobox(A) (istype(A, /obj/item/ammo_box))
+
 #define isinstrument(A) (istype(A, /obj/item/instrument) || istype(A, /obj/structure/musician))
 
 #define is_reagent_container(O) (istype(O, /obj/item/reagent_containers))

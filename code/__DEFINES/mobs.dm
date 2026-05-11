@@ -1032,3 +1032,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define MINING_MOB_PROJECTILE_VULNERABILITY list(BRUTE)
 /// The amount of "blood" that a slimeperson consumes when regenerating a single limb.
 #define REGEN_BLOOD_REQUIREMENT 40
+
+/// Distance which you can see someone's ID card
+/// Short enough that you can inspect over tables (bartender checking age)
+#define ID_EXAMINE_DISTANCE 3

@@ -1,0 +1,4 @@
+author: "Mushyyyyy"
+delete-after: True
+changes:
+  - bugfix: "https://github.com/Monkestation/Monkestation2.0/issues/11544 Phazon construction step fixed"
