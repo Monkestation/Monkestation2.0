@@ -201,7 +201,7 @@
 	chassis.max_integrity += applied_integrity
 
 /obj/item/mecha_parts/mecha_equipment/armor/hardened_exosuit_part/detach(atom/moveto)
-	chassis.set_integrity(chassis.get_integrity().subtract_other_integrity(applied_integrity)
+	chassis.set_integrity(chassis.get_integrity().subtract_other_integrity(applied_integrity))
 	return..()
 
 /obj/item/mecha_parts/mecha_equipment/armor/hardened_exosuit_plate
