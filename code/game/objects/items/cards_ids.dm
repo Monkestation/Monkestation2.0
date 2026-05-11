@@ -163,8 +163,8 @@
 		cached_flat_icon.Crop(ID_ICON_BORDERS)
 	return cached_flat_icon
 
-/obj/item/card/id/get_examine_string(mob/user, thats = FALSE)
-	return "[ma2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]"
+/obj/item/card/id/get_examine_icon(mob/user)
+	return ma2html(get_cached_flat_icon(), user)
 
 /obj/item/card/id/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	if(isitem(old_loc))
@@ -1028,7 +1028,12 @@
 /obj/item/card/id/departmental_budget/sci
 	department_ID = ACCOUNT_SCI
 	department_name = ACCOUNT_SCI_NAME
-	icon_state = "sci_budget"
+	icon_state = "sci_budget" //for five hundred cloners
+
+/obj/item/card/id/departmental_budget/cc
+	department_ID = ACCOUNT_CC
+	department_name = ACCOUNT_CC_NAME
+	icon_state = "cc_budget" //for mountains of goldschlager
 
 /obj/item/card/id/departmental_budget/click_alt(mob/living/user)
 	registered_account.bank_card_talk(span_warning("Withdrawing is not compatible with this card design."), TRUE) //prevents the vault bank machine being useless and putting money from the budget to your card to go over personal crates
@@ -1753,7 +1758,7 @@
 
 					var/selected_trim_path = tgui_input_list(user, "Select trim to apply to your card.\nNote: This will not grant any trim accesses.", "Forge Trim", sort_list(trim_list, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 					if(selected_trim_path)
-						SSid_access.apply_trim_to_chameleon_card(src, trim_list[selected_trim_path])
+						SSid_access.apply_trim_override(src, trim_list[selected_trim_path])
 
 				var/target_occupation = tgui_input_text(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? assignment : "Assistant")
 				if(target_occupation)
@@ -1787,7 +1792,7 @@
 			if(forged)
 				registered_name = initial(registered_name)
 				assignment = initial(assignment)
-				SSid_access.remove_trim_from_chameleon_card(src)
+				SSid_access.remove_trim_override(src)
 				REMOVE_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)
 				user.log_message("reset \the [initial(name)] named \"[src]\" to default.", LOG_GAME)
 				update_label()

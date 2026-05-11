@@ -213,25 +213,22 @@
 	switch(blood_bled)
 		if(7 to 13)
 			victim.visible_message(
-				span_smalldanger("A thin stream of blood drips from [victim]'s mouth from the blow to [victim.p_their()] chest."),
-				span_danger("You cough up a bit of blood from the blow to your chest."),
-				vision_distance = COMBAT_MESSAGE_RANGE,
-
-			)
+					span_smalldanger("A thin stream of blood drips from [victim]'s mouth from the blow to [victim.p_their()] chest."),
+					span_danger("You cough up a bit of blood from the blow to your chest."),
+					vision_distance = COMBAT_MESSAGE_RANGE,
+				)
 		if(14 to 19)
 			victim.visible_message(
-				span_smalldanger("Blood spews out of [victim]'s mouth from the blow to [victim.p_their()] chest!"),
-				span_danger("You spit out a string of blood from the blow to your chest!"),
-				vision_distance = COMBAT_MESSAGE_RANGE,
-
-			)
+					span_smalldanger("Blood spews out of [victim]'s mouth from the blow to [victim.p_their()] chest!"),
+					span_danger("You spit out a string of blood from the blow to your chest!"),
+					vision_distance = COMBAT_MESSAGE_RANGE,
+				)
 		if(20 to INFINITY)
 			victim.visible_message(
-				span_danger("Blood spurts out of [victim]'s mouth from the blow to [victim.p_their()] chest!"),
-				span_bolddanger("You choke up on a spray of blood from the blow to your chest!"),
-				vision_distance = COMBAT_MESSAGE_RANGE,
-
-			)
+					span_danger("Blood spurts out of [victim]'s mouth from the blow to [victim.p_their()] chest!"),
+					span_bolddanger("You choke up on a spray of blood from the blow to your chest!"),
+					vision_distance = COMBAT_MESSAGE_RANGE,
+				)
 	victim.bleed(blood_bled, TRUE)
 	if(blood_bled >= 14)
 		victim.do_splatter_effect(attack_direction)

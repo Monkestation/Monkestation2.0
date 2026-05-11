@@ -157,7 +157,7 @@ ADMIN_VERB(cancel_shuttle, R_ADMIN, FALSE, "Cancel Shuttle", "Recall the shuttle
 	return
 
 ADMIN_VERB(disable_shuttle, R_ADMIN, FALSE, "Disable Shuttle", "Those fuckers aren't getting out.", ADMIN_CATEGORY_EVENTS)
-	if(SSshuttle.emergency.mode == SHUTTLE_DISABLED)
+	if(SSshuttle.evac_blockers["admin"])
 		to_chat(user, span_warning("Error, shuttle is already disabled."))
 		return
 
@@ -166,12 +166,8 @@ ADMIN_VERB(disable_shuttle, R_ADMIN, FALSE, "Disable Shuttle", "Those fuckers ar
 
 	message_admins(span_adminnotice("[key_name_admin(user)] disabled the shuttle."))
 
-	SSshuttle.last_mode = SSshuttle.emergency.mode
-	SSshuttle.last_call_time = SSshuttle.emergency.timeLeft(1)
+	SSshuttle.registerEvacBlocker("admin")
 	SSshuttle.admin_emergency_no_recall = TRUE
-	SSshuttle.emergency.setTimer(0)
-	SSshuttle.emergency.mode = SHUTTLE_DISABLED
-	SSshuttle.admin_emergency_disabled = TRUE //monkestation edit
 	priority_announce(
 		text = "Emergency Shuttle uplink failure, shuttle disabled until further notice.",
 		title = "Uplink Failure",
@@ -189,16 +185,8 @@ ADMIN_VERB(enable_shuttle, R_ADMIN, FALSE, "Enable Shuttle", "Those fuckers ARE 
 		return
 
 	message_admins(span_adminnotice("[key_name_admin(user)] enabled the emergency shuttle."))
+	SSshuttle.clearEvacBlocker("admin")
 	SSshuttle.admin_emergency_no_recall = FALSE
-	SSshuttle.emergency_no_recall = FALSE
-	SSshuttle.admin_emergency_disabled = FALSE //monkestation edit
-	if(SSshuttle.last_mode == SHUTTLE_DISABLED) //If everything goes to shit, fix it.
-		SSshuttle.last_mode = SHUTTLE_IDLE
-
-	SSshuttle.emergency.mode = SSshuttle.last_mode
-	if(SSshuttle.last_call_time < 10 SECONDS && SSshuttle.last_mode != SHUTTLE_IDLE)
-		SSshuttle.last_call_time = 10 SECONDS //Make sure no insta departures.
-	SSshuttle.emergency.setTimer(SSshuttle.last_call_time)
 	priority_announce(
 		text = "Emergency Shuttle uplink reestablished, shuttle enabled.",
 		title = "Uplink Restored",
