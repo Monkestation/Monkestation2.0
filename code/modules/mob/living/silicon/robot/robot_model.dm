@@ -768,6 +768,11 @@
 	/// Reference to the energy shield action.
 	var/datum/weakref/energy_shield_ref
 
+/obj/item/robot_model/miner/rebuild_modules()
+	. = ..()
+	if(!mining_scanner)
+		mining_scanner = new(src)
+
 /obj/item/robot_model/miner/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
 	var/datum/action/cooldown/cyborg_miner_shield/energy_shield_action = new(loc)
 	. = ..()
@@ -810,11 +815,6 @@
 	SIGNAL_HANDLER
 	if(active)
 		overlays += shield_overlay
-
-/obj/item/robot_model/miner/rebuild_modules()
-	. = ..()
-	if(!mining_scanner)
-		mining_scanner = new(src)
 
 /obj/item/robot_model/peacekeeper
 	name = "Peacekeeper"
