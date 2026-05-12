@@ -432,12 +432,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	var/datum/action/cooldown/cyborg_miner_shield/shield = locate(/datum/action/cooldown/cyborg_miner_shield) in borg.actions
 	if(!shield || !shield.active)
 		return ..()
-	if(borg.cell.charge <= 0.4 * STANDARD_CELL_CHARGE)
-		balloon_alert(borg, "not enough energy!")
-		shield.active = FALSE
-		playsound(src, 'sound/mecha/mech_shield_drop.ogg', 50, FALSE)
-		borg.cut_overlay(shield.shield_overlay)
-		return ..()
 	if(!lavaland_equipment_pressure_check(get_turf(borg)))
 		balloon_alert(borg, "the shield didn't absorb the damage!")
 		return ..()
@@ -445,4 +439,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	balloon_alert(borg, "absorbed!")
 	borg.cell.use(damage * (STANDARD_CELL_CHARGE / 15), force = TRUE)
 	damage *= 0.5
+	if(!borg.cell.charge())
+		shield.active = FALSE
+		playsound(src, 'sound/mecha/mech_shield_drop.ogg', 50, FALSE)
+		borg.update_appearance()
 	return ..()
