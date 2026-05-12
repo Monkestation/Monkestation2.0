@@ -605,26 +605,6 @@
 			RESKIN_ICON_STATE = "militarywebbing2",
 			RESKIN_WORN_ICON_STATE = "militarywebbing2",
 		),
-		"Tan" = list(
-			RESKIN_ICON_STATE = "explorer1",
-			RESKIN_WORN_ICON_STATE = "explorer1",
-		),
-		"Tan Pouches" = list(
-			RESKIN_ICON_STATE = "explorer2",
-			RESKIN_WORN_ICON_STATE = "explorer2",
-		),
-		"Security Grey" = list(
-			RESKIN_ICON_STATE = "securitywebbing",
-			RESKIN_WORN_ICON_STATE = "securitywebbing",
-		),
-		"Security Black" = list(
-			RESKIN_ICON_STATE = "securitywebbing2",
-			RESKIN_WORN_ICON_STATE = "securitywebbing2",
-		),
-		"Security White" = list(
-			RESKIN_ICON_STATE = "securitywebbing3",
-			RESKIN_WORN_ICON_STATE = "securitywebbing3",
-		),
 	)
 
 /obj/item/storage/belt/military/Initialize(mapload)
