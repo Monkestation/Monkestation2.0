@@ -274,4 +274,4 @@
 /obj/item/organ/internal/heart/synth/abandoned/on_life(seconds_per_tick, times_fired)
 	if(prob(spark_prob))
 		do_sparks(1, FALSE, owner)
-	. = ..()
+	return ..()
