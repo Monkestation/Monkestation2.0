@@ -1339,6 +1339,76 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 	return TRUE
 
+/datum/ai_module/malf/utility/cyborg_code_scrambler
+	name = "Cyborg Code Scrambler"
+	description = "Lets you remotely unlock and hide a cyborg from robotics consoles."
+	cost = 30
+	one_purchase = FALSE
+	power_type = /datum/action/innate/ai/ranged/cyborg_code_scrambler
+	unlock_sound = SFX_SPARKS
+	unlock_text = span_notice("You gain the ability to unlock and scramble the codes of a cyborg of your choice.")
+
+/datum/action/innate/ai/ranged/cyborg_code_scrambler
+	name = "Cyborg Code Scrambler"
+	desc = "Allows you to remotely unlock and hide a cyborg from robotics consoles."
+	button_icon = 'icons/mob/actions/actions_revenant.dmi'
+	button_icon_state = "malfunction"
+	uses = 2
+	enable_text = span_notice("You prepare to irreversibly scramble a cyborg's encryption codes.")
+	disable_text = span_notice("You withhold from scrambling any encryption codes.")
+	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
+
+/datum/action/innate/ai/ranged/cyborg_code_scrambler/New()
+	. = ..()
+	desc = "[desc] It has [uses] use\s remaining."
+
+/datum/action/innate/ai/ranged/cyborg_code_scrambler/do_ability(mob/living/user, atom/clicked_on)
+	if(!isAI(user))
+		return FALSE
+
+	var/mob/living/silicon/ai/ai_user = user
+	if(ai_user.incapacitated())
+		unset_ranged_ability(ai_user)
+		return FALSE
+
+	if(!iscyborg(clicked_on))
+		clicked_on.balloon_alert(ai_user, "not a cyborg!")
+		return FALSE
+
+	var/mob/living/silicon/robot/cyborg = clicked_on
+	if(cyborg.connected_ai != ai_user)
+		cyborg.balloon_alert(ai_user, "cyborg not connected!")
+		return FALSE
+
+	if(cyborg.scrambledcodes)
+		cyborg.balloon_alert(ai_user, "already scrambled!")
+		return FALSE
+
+	var/unlock_performed = FALSE
+	cyborg.scrambledcodes = TRUE
+	if(cyborg.lockcharge)
+		cyborg.SetLockdown(FALSE)
+		if(!cyborg.lockcharge) // They could still be locked down (e.g. wire cut).
+			cyborg.ai_lockdown = FALSE
+			unlock_performed = TRUE
+
+	adjust_uses(-1)
+	build_all_button_icons(update_flags = UPDATE_BUTTON_NAME)
+
+	ai_user.playsound_local(user, 'sound/misc/interference.ogg', 20, TRUE)
+	if(unlock_performed)
+		cyborg.balloon_alert(ai_user, "unlocked and scrambled!")
+		unset_ranged_ability(user, span_danger("Unlocked and scrambled the encryption codes of [cyborg]."))
+	else
+		cyborg.balloon_alert(ai_user, "scrambled!")
+		unset_ranged_ability(user, span_danger("Scambled the encryption codes of [cyborg]."))
+	return TRUE
+
+/datum/action/innate/ai/ranged/cyborg_code_scrambler/update_button_name(atom/movable/screen/movable/action_button/button, force = FALSE)
+	if(uses)
+		desc = "[initial(desc)] It has [uses] use\s remaining."
+	return ..()
+
 #undef DEFAULT_DOOMSDAY_TIMER
 #undef DOOMSDAY_ANNOUNCE_INTERVAL
 

@@ -35,6 +35,7 @@
 			"products" = list(
 				/obj/item/clothing/mask/balaclava = 4,
 				/obj/item/clothing/mask/thermal_balaclava = 4,
+				/obj/item/clothing/mask/thermal_balaclava/alt = 4,
 			),
 		),
 		list(

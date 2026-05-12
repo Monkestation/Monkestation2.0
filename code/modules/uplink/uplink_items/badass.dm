@@ -123,6 +123,7 @@
 	desc = "This pair of top notch combat boots comes fit with a reinforced toe in which is slotted a tiny kinetic penetrator made from tungsten composite. Wearing 'em lets you kick people in the groin with MAXIMUM pain."
 	item = /obj/item/clothing/shoes/combat/nutcracker
 	cost = 8
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/badass/costumes/syndimaid
 	name = "Syndicate Maid Outfit"

@@ -1,0 +1,4 @@
+author: "TheColorCyan"
+delete-after: True
+changes:
+  - bugfix: "(vinylspiders) fixes a bug where the quirk menu does not update when adding/removing quirks"

@@ -1,4 +1,0 @@
-author: "Cujo"
-delete-after: True
-changes:
-  - bugfix: "Ghosts are no longer able to turn on PDAs and laptops"

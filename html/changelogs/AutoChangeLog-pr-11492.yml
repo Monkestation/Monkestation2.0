@@ -1,6 +1,0 @@
-author: "Sakaniko"
-delete-after: True
-changes:
-  - qol: "Added an audio notification whenever you receive a law change as AI."
-  - image: "Change the AI's law panel to match the rest of the current UI."
-  - image: "Adjusted the colour of hacked laws to be easier to see on dark UI."
