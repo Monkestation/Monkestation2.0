@@ -200,7 +200,7 @@
 	var/list/targets = ListTargets()
 	var/list/actual_targets = list()
 	for(var/mob/target as anything in targets)
-		if(isliving(target) && !faction_check_atom(target))
+		if(isliving(target) && target.stat != DEAD && !faction_check_atom(target))
 			actual_targets += target
 
 	if(!length(actual_targets))
