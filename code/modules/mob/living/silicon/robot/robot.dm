@@ -298,9 +298,6 @@
 			SET_PLANE_EXPLICIT(eye_lights, ABOVE_GAME_PLANE, src)
 		eye_lights.icon = icon
 		. += eye_lights
-	//var/datum/action/cooldown/cyborg_miner_shield/shield = locate(/datum/action/cooldown/cyborg_miner_shield) in src.actions
-	//if(shield?.active)
-	//	. += shield.shield_overlay
 	if(opened)
 		if(wiresexposed)
 			. += "ov-opencover +w"
