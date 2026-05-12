@@ -241,3 +241,12 @@
   - balance: Slab scriptures(besides vanguard) no longer have a time limit to use
       them after invocation.
   - balance: Clockwork hammer knockback now has a 15 second cooldown.
+2026-05-12:
+  LettuceGuardian:
+  - bugfix: Blueshield MODsuit now comes with a hearing protection module.
+  Shoddd:
+  - bugfix: forged and hardened exosuit parts now properly remove added integrity
+      when removed.
+  - balance: bingles now have a minimum pop of 35
+  TheColorCyan:
+  - bugfix: fixed any non ballistic mecha weapons not working
