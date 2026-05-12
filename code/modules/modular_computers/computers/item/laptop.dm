@@ -77,8 +77,9 @@
 
 	toggle_open(user)
 
-
 /obj/item/modular_computer/laptop/click_alt(mob/user)
+	if(remove_id(user))
+		return CLICK_ACTION_SUCCESS
 	if(!screen_on)
 		return CLICK_ACTION_BLOCKING
 	try_toggle_open(user) // Close it.

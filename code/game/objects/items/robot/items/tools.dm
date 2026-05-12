@@ -270,6 +270,15 @@
 	update_appearance(UPDATE_ICON_STATE)
 	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
 
+/obj/item/borg/cyborg_omnitool/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	if(.)
+		return
+	var/obj/item/active_tool = get_proxy_attacker_for(src, user)
+	if(active_tool == src)
+		return
+	active_tool.attack_self_secondary(user, modifiers)
+
 /obj/item/borg/cyborg_omnitool/Click(location, control, params)
 	var/list/modifiers = params2list(params)
 	if(!LAZYACCESS(modifiers, RIGHT_CLICK) || !iscyborg(usr))
