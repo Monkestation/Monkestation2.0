@@ -269,9 +269,9 @@
 	icon_state = "abandoned_heart_on"
 	base_icon_state = "abandoned_heart_off"
 	//Prob to craete sparks on life, when implanted in a person
-	var/spark_prob = 15
+	var/spark_prob = 10
 
 /obj/item/organ/internal/heart/synth/abandoned/on_life(seconds_per_tick, times_fired)
-	if(prob(spark_prob))
+	if(!SPT_PROB(spark_prob, seconds_per_tick))
 		do_sparks(1, FALSE, owner)
 	. = ..()

@@ -56,6 +56,8 @@
 
 /datum/antagonist/abandoned_ipc/proc/admin_add_law(mob/admin)
 	var/new_law = tgui_input_text(admin, "What law?", "Ai law 2 open")
+	if(!new_law)
+		return
 	laws += new_law
 	owner.current.balloon_alert(owner.current, "laws updated!")
 	message_admins("[key_name_admin(admin)] has added a law to an abandoned IPC [key_name_admin(owner)]. New law is [span_blue(new_law)].")
@@ -63,6 +65,8 @@
 
 /datum/antagonist/abandoned_ipc/proc/admin_remove_law(mob/admin)
 	var/gone_law = tgui_input_list(admin, "What law?", "AI law 2 close", laws)
+	if(!gone_law)
+		return
 	laws -= gone_law
 	owner.current.balloon_alert(owner.current, "laws updated!")
 	message_admins("[key_name_admin(admin)] has removed a law from an abandoned IPC [key_name_admin(owner)]. Removed law is [span_blue(gone_law)].")
@@ -86,12 +90,12 @@
 
 /obj/item/internal_doorjack/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!istype(interacting_with, /obj/machinery/door/airlock))
-		return
+		return NONE
 	var/obj/machinery/door/airlock/door = interacting_with
 	door.update_icon(ALL, 6, 1)
 	door.operating = TRUE
 	if(!do_after(user, 1.2 SECONDS, interacting_with))
-		return
+		return ITEM_INTERACT_BLOCKING
 	door.finish_emag_act()
 	return ITEM_INTERACT_SUCCESS
 
