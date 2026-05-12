@@ -788,7 +788,7 @@
 
 /datum/action/cooldown/cyborg_miner_shield
 	name = "Toggle Energy Shield"
-	desc = "Toggles a shield which negates some damage while within a low-pressure environment."
+	desc = "Toggles an energy shield that consumes your cell's power to reduce incoming damage. Only works in low-pressure environments."
 	button_icon = 'icons/mob/silicon/robot_items.dmi'
 	button_icon_state = "module_miner"
 	/// Is the shield active?
