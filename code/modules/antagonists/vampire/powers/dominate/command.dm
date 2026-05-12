@@ -155,7 +155,9 @@
 	if(length_char(command) > 10)
 		to_chat(owner, span_warning("Command too long!"))
 		return FALSE
-	if(copytext(command, 1, 5) == "kill" || copytext(command, 1, 7) == "murder" || copytext(command, 1, 8) == "suicide" || copytext(command, 1, 4) == "die" || copytext(command, 1, 5) == "piss") // piss is there just because it can make people uncomfortable
+
+	var/command_lower = lowertext(command)
+	if(copytext(command_lower, 1, 5) == "kill" || copytext(command_lower, 1, 7) == "murder" || copytext(command_lower, 1, 8) == "suicide" || copytext(command_lower, 1, 4) == "die" || copytext(command_lower, 1, 5) == "piss") // piss is there just because it can make people uncomfortable
 		owner.balloon_alert(owner, "that won't work!")
 		to_chat(owner, span_warning(" * Remember, victims will be pacified for the duration of the command!"))
 		return FALSE
