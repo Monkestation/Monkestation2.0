@@ -426,3 +426,23 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(!hitting_projectile.is_hostile_projectile() || hitting_projectile.damage <= 0)
 		return
 	spark_system.start()
+
+/mob/living/silicon/robot/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, bare_wound_bonus, sharpness, attack_direction, obj/item/attacking_item)
+	var/mob/living/silicon/robot/borg = src
+	var/datum/action/cooldown/cyborg_miner_shield/shield = locate(/datum/action/cooldown/cyborg_miner_shield) in borg.actions
+	if(!shield || !shield.active)
+		return ..()
+	if(borg.cell.charge <= 0.4 * STANDARD_CELL_CHARGE)
+		balloon_alert(borg, "not enough energy!")
+		shield.active = FALSE
+		playsound(src, 'sound/mecha/mech_shield_drop.ogg', 50, FALSE)
+		borg.cut_overlay(shield.shield_overlay)
+		return ..()
+	if(!lavaland_equipment_pressure_check(get_turf(borg)))
+		balloon_alert(borg, "the shield didn't absorb the damage!")
+		return ..()
+	playsound(src, 'sound/mecha/mech_shield_deflect.ogg', 100, TRUE)
+	balloon_alert(borg, "absorbed!")
+	borg.cell.use(damage * (STANDARD_CELL_CHARGE / 15), force = TRUE)
+	damage *= 0.5
+	return ..()
