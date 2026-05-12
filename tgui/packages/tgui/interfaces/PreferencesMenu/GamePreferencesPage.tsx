@@ -1,9 +1,8 @@
-import { binaryInsertWith } from 'common/collections';
-import { sortBy } from 'common/collections';
-import { ReactNode } from 'react';
+import { binaryInsertWith, sortBy } from 'common/collections';
+import { type ReactNode, useState } from 'react';
 import { useBackend } from '../../backend';
 import { Box, Stack, Tooltip } from '../../components';
-import { PreferencesMenuData } from './data';
+import type { PreferencesMenuData } from './data';
 import features from './preferences/features';
 import { FeatureValueInput } from './preferences/features/base';
 import { TabbedMenu } from './TabbedMenu';
@@ -19,7 +18,7 @@ const binaryInsertPreference = binaryInsertWith<PreferenceChild>(
 
 const sortByName = sortBy<[string, PreferenceChild[]]>(([name]) => name);
 
-export const GamePreferencesPage = (props) => {
+export function GamePreferencesPage(props) {
   const { act, data } = useBackend<PreferencesMenuData>();
 
   const gamePreferences: Record<string, PreferenceChild[]> = {};
@@ -63,14 +62,14 @@ export const GamePreferencesPage = (props) => {
         {name}
 
         <Stack.Item grow={1} basis={0}>
-          {(feature && (
+          {feature ? (
             <FeatureValueInput
               feature={feature}
               featureId={featureId}
               value={value}
               act={act}
             />
-          )) || (
+          ) : (
             <Box as="b" color="red">
               ...is not filled out properly!!!
             </Box>
@@ -92,10 +91,23 @@ export const GamePreferencesPage = (props) => {
     );
   }
 
+  const [searchText, setSearchText] = useState('');
+
   const gamePreferenceEntries: [string, ReactNode[]][] = sortByName(
     Object.entries(gamePreferences),
   ).map(([category, preferences]) => {
-    return [category, preferences.map((entry) => entry.children)];
+    return [
+      category,
+      preferences
+        .filter((entry) => {
+          return (
+            !searchText ||
+            searchText.length < 2 ||
+            entry.name.toLowerCase().includes(searchText.toLowerCase())
+          );
+        })
+        .map((entry) => entry.children),
+    ];
   });
 
   return (
@@ -104,6 +116,8 @@ export const GamePreferencesPage = (props) => {
       contentProps={{
         fontSize: 1.5,
       }}
+      searchText={searchText}
+      setSearchText={setSearchText}
     />
   );
-};
+}

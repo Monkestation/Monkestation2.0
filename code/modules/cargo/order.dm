@@ -14,6 +14,7 @@
 	var/order_cost = 0
 	var/order_id = 0
 	var/errors = 0
+	color = COLOR_LIGHT_ORANGE
 
 /obj/item/paper/requisition
 //	can_become_message_in_bottle = FALSE //A lot of these are spawned each round, they'd only dilute the pool and make it boring.
@@ -140,7 +141,7 @@
 	manifest_text += "Contents: <br/>"
 	manifest_text += "<ul>"
 	var/container_contents = list() // Associative list with the format (item_name = nº of occurrences, ...)
-	for(var/obj/item/stuff in container.contents - manifest_paper)
+	for(var/atom/stuff in container.contents - manifest_paper)
 		if(isstack(stuff))
 			var/obj/item/stack/thing = stuff
 			container_contents[thing.singular_name] += thing.amount
@@ -176,8 +177,8 @@
 
 	if(istype(container, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/crate = container
-		crate.manifest = WEAKREF(manifest_paper)
-		crate.update_appearance()
+		crate.manifest = manifest_paper
+		crate.update_appearance(UPDATE_ICON)
 
 	return manifest_paper
 

@@ -383,7 +383,8 @@
 /obj/machinery/smartfridge/ui_static_data(mob/user)
 	return list("ui_theme" = tgui_theme)
 
-/obj/machinery/smartfridge/handle_atom_del(atom/A) // Update the UIs in case something inside gets deleted
+/obj/machinery/smartfridge/Exited(atom/movable/gone, direction) // Update the UIs in case something inside is removed
+	. = ..()
 	SStgui.update_uis(src)
 
 /obj/machinery/smartfridge/ui_act(action, params)
@@ -678,6 +679,7 @@
 	var/static/list/chemfridge_typecache = typecacheof(list(
 					/obj/item/reagent_containers/syringe,
 					/obj/item/reagent_containers/cup/bottle,
+					/obj/item/reagent_containers/cup/tube,
 					/obj/item/reagent_containers/cup/beaker,
 					/obj/item/reagent_containers/spray,
 					/obj/item/reagent_containers/medigel,

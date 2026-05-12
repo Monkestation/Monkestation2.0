@@ -82,6 +82,7 @@ GLOBAL_LIST_INIT(store_neck, generate_store_items(/datum/store_item/neck))
 	name = "Boat cloak"
 	item_path = /obj/item/clothing/neck/boatcloak
 	item_cost = 7500
+
 /datum/store_item/neck/ranger_poncho
 	name = "Ranger Poncho"
 	item_path = /obj/item/clothing/neck/ranger_poncho
@@ -137,6 +138,16 @@ GLOBAL_LIST_INIT(store_neck, generate_store_items(/datum/store_item/neck))
 	name = "Asexual Pride Cloak"
 	item_path = /obj/item/clothing/neck/ace
 	item_cost = 10000
+
+/datum/store_item/neck/hornet_cloak
+	name = "Hornet Cloak (alt)"
+	item_path = /obj/item/clothing/neck/hornetcloak/alt
+	item_cost = 5000
+
+/datum/store_item/neck/knight_cloak
+	name = "Knight Cloak (alt)"
+	item_path = /obj/item/clothing/neck/knightcloak/alt
+	item_cost = 5000
 
 /*
 *	NECKTIES

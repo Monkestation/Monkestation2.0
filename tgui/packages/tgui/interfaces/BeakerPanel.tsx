@@ -220,7 +220,7 @@ export const BeakerPanel = (props) => {
             return (
               <Flex key={index} align="center" mb={1}>
                 <Flex.Item grow>
-                  {currentreagentData?.name || 'Unknown Reagent ' + reagent.id}
+                  {currentreagentData?.name || `Unknown Reagent ${reagent.id}`}
                 </Flex.Item>
                 <Flex.Item>
                   <NumberInput
@@ -263,7 +263,7 @@ export const BeakerPanel = (props) => {
                 style={{
                   border: '1px solid #ccc',
                   minHeight: '25px',
-                  backgroundColor: 1 ? '#2a2a2a' : '#1a1a1a',
+                  backgroundColor: '#2a2a2a',
                 }}
               >
                 {selectedReagents[containerNum]?.name || 'No reagent selected'}

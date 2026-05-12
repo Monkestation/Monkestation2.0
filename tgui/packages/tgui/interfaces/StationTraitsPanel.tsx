@@ -1,6 +1,6 @@
 import { filterMap } from 'common/collections';
 import { exhaustiveCheck } from 'common/exhaustive';
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Divider, Dropdown, Stack, Tabs } from '../components';
 import { Window } from '../layouts';

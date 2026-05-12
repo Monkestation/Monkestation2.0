@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,

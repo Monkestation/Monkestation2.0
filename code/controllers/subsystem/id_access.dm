@@ -274,6 +274,8 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_CHANGE_IDS]"] = "ID Console"
 	desc_by_access["[ACCESS_AI_UPLOAD]"] = "AI Chambers"
 	desc_by_access["[ACCESS_TELEPORTER]"] = "Teleporter"
+	desc_by_access["[ACCESS_BLUESHIELD]"] = "Blueshield Office"
+	desc_by_access["[ACCESS_NT_REPRESENTATVE]"] = "NT Representative Office"
 	desc_by_access["[ACCESS_EVA]"] = "EVA"
 	desc_by_access["[ACCESS_COMMAND]"] = "Command"
 	desc_by_access["[ACCESS_CAPTAIN]"] = "Captain"
@@ -442,14 +444,14 @@ SUBSYSTEM_DEF(id_access)
 	id_card.update_icon()
 
 /**
- * Applies a trim to a chameleon card. This is purely visual, utilising the card's override vars.
+ * Applies a trim to a card. This is purely visual, utilising the card's override vars.
  *
  * Arguments:
- * * id_card - The chameleon card to apply the trim visuals to.
-* * trim_path - A trim path to apply to the card. Grabs the trim's associated singleton and applies it.
+ * * id_card - The card to apply the trim visuals to.
+ * * trim_path - A trim path to apply to the card. Grabs the trim's associated singleton and applies it.
  * * check_forged - Boolean value. If TRUE, will not overwrite the card's assignment if the card has been forged.
  */
-/datum/controller/subsystem/id_access/proc/apply_trim_to_chameleon_card(obj/item/card/id/advanced/chameleon/id_card, trim_path, check_forged = TRUE)
+/datum/controller/subsystem/id_access/proc/apply_trim_override(obj/item/card/id/advanced/id_card, trim_path, check_forged = TRUE)
 	var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
 	id_card.trim_icon_override = trim.trim_icon
 	id_card.trim_state_override = trim.trim_state
@@ -460,18 +462,16 @@ SUBSYSTEM_DEF(id_access)
 	id_card.subdepartment_color_override = trim.subdepartment_color
 	id_card.trim_chat_span_override = trim.chat_span()
 
-	if(!check_forged || !id_card.forged)
-		id_card.assignment = trim.assignment
-
-	// We'll let the chameleon action update the card's label as necessary instead of doing it here.
-
+	var/obj/item/card/id/advanced/chameleon/cham_id = id_card
+	if (istype(cham_id) && (!check_forged || !cham_id.forged))
+		cham_id.assignment = trim.assignment
 /**
- * Removes a trim from a chameleon ID card.
+ * Removes a trim from a ID card.
  *
  * Arguments:
  * * id_card - The ID card to remove the trim from.
  */
-/datum/controller/subsystem/id_access/proc/remove_trim_from_chameleon_card(obj/item/card/id/advanced/chameleon/id_card)
+/datum/controller/subsystem/id_access/proc/remove_trim_override(obj/item/card/id/advanced/id_card)
 	id_card.trim_icon_override = null
 	id_card.trim_state_override = null
 	id_card.trim_assignment_override = null

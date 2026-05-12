@@ -3,20 +3,20 @@ import {
   Box,
   Button,
   ColorBox,
+  Divider,
   Flex,
-  Stack,
   Icon,
   Image,
   Input,
   LabeledList,
   Section,
+  Stack,
   Table,
-  Divider,
 } from '../components';
 import { Window } from '../layouts';
 
 type ColorEntry = {
-  index: Number;
+  index: number;
   value: string;
 };
 
@@ -24,7 +24,7 @@ type SpriteData = {
   icon_states: string[];
   finished: string;
   steps: SpriteEntry[];
-  time_spent: Number;
+  time_spent: number;
 };
 
 type SpriteEntry = {
@@ -173,7 +173,7 @@ const SingleDirection = (props) => {
       <Button
         content={DirectionAbbreviation[dir]}
         tooltip={`Sets the direction of the preview sprite to ${dir}`}
-        disabled={`${dir}` === data.sprites_dir ? true : false}
+        disabled={`${dir}` === data.sprites_dir}
         textAlign="center"
         onClick={() => act('change_dir', { new_sprite_dir: dir })}
         lineHeight={3}

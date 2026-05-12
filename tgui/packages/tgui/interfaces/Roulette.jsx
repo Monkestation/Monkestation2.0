@@ -1,6 +1,6 @@
 import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Table, NumberInput } from '../components';
+import { Box, Button, NumberInput, Table } from '../components';
 import { Window } from '../layouts';
 
 const getNumberColor = (number) => {
@@ -189,7 +189,7 @@ export const RouletteBetTable = (props) => {
             'Roulette',
             'Roulette__lowertable--cell',
             'Roulette__lowertable--spinresult',
-            'Roulette__lowertable--spinresult-' + getNumberColor(data.LastSpin),
+            `Roulette__lowertable--spinresult-${getNumberColor(data.LastSpin)}`,
           ])}
         >
           {data.LastSpin}
@@ -281,7 +281,7 @@ export const RouletteBetTable = (props) => {
             House Balance:
           </Box>
           <Box inline>
-            {data.HouseBalance ? data.HouseBalance + ' cr' : 'None'}
+            {data.HouseBalance ? `${data.HouseBalance} cr` : 'None'}
           </Box>
         </Table.Cell>
         <Table.Cell className="Roulette__lowertable--cell">

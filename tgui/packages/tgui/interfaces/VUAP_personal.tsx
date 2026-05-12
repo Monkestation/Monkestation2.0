@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, Section, Table, Stack } from '../components';
+import { Box, Button, Section, Stack, Table } from '../components';
 import { Window } from '../layouts';
 
 interface MuteStates {

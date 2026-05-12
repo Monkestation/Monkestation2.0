@@ -6,6 +6,7 @@
 
 /obj/structure/closet/secure_closet/nanotrasen_representative/PopulateContents()
 	..()
+	new /obj/item/card/id/departmental_budget/cc(src)
 	new /obj/item/storage/backpack/satchel/leather(src)
 	new /obj/item/storage/photo_album/personal(src)
 	new /obj/item/assembly/flash(src)
@@ -15,6 +16,7 @@
 	new /obj/item/circuitboard/machine/fax(src)
 	new /obj/item/storage/photo_album/nt_rep(src)
 	new /obj/item/storage/briefcase/sponsorship(src)
+	new /obj/item/storage/box/nt_cap(src)
 
 /obj/item/computer_disk/command/nt_representative
 	name = "nt representative data disk"

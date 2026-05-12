@@ -17,6 +17,7 @@
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/repair_bone_hairline,
+		/datum/surgery_step/close,
 	)
 
 /datum/surgery/repair_bone_hairline/can_start(mob/living/user, mob/living/carbon/target)
@@ -46,6 +47,7 @@
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/reset_compound_fracture,
 		/datum/surgery_step/repair_bone_compound,
+		/datum/surgery_step/close,
 	)
 
 /datum/surgery/repair_bone_compound/can_start(mob/living/user, mob/living/carbon/target)

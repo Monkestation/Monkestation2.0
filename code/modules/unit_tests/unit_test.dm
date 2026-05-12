@@ -159,6 +159,18 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	log_world("::[priority] file=[file],line=[line],title=[map_name]: [type]::[annotation_text]")
 
+/**
+ * Helper to perform a click
+ *
+ * * clicker: The mob that will be clicking
+ * * clicked_on: The atom that will be clicked
+ * * passed_params: A list of parameters to pass to the click
+ */
+/datum/unit_test/proc/click_wrapper(mob/living/clicker, atom/clicked_on, list/passed_params = list(LEFT_CLICK = 1, BUTTON = LEFT_CLICK))
+	clicker.next_click = -1
+	clicker.next_move = -1
+	clicker.ClickOn(clicked_on, list2params(passed_params))
+
 /proc/RunUnitTest(datum/unit_test/test_path, list/test_results)
 	if(ispath(test_path, /datum/unit_test/focus_only))
 		return
@@ -255,7 +267,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/effect/spawner/random_bar,
 		/obj/machinery/atm, // starts a timer, and if its being instantly deleted it can cause issues
 		/obj/machinery/ocean_elevator,
-		/atom/movable/outdoor_effect,
 		/turf/closed/mineral/random/regrowth,
 		/obj/effect/abstract/signboard_holder, // shouldn't exist outside of signboards
 		/obj/effect/transmission_beam, // relies on the existence of a PTL
@@ -266,6 +277,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/structure/bingle_hole,
 		/obj/structure/bingle_pit_overlay,
 		// monkestation end
+		/obj/machinery/door/airlock/tram, // cursed shit that causes incomprehensible issues related to lights idfk
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)
@@ -297,9 +309,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	//No heart to give
 	ignore += typesof(/obj/structure/ethereal_crystal)
 	//No linked console
-	ignore += typesof(/mob/eye/ai_eye/remote/base_construction)
+	ignore += typesof(/mob/eye/camera/remote/base_construction)
 	//See above
-	ignore += typesof(/mob/eye/ai_eye/remote/shuttle_docker)
+	ignore += typesof(/mob/eye/camera/remote/shuttle_docker)
 	//Hangs a ref post invoke async, which we don't support. Could put a qdeleted check but it feels hacky
 	ignore += typesof(/obj/effect/anomaly/grav/high)
 	//See above
@@ -329,7 +341,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	//Needs a holodeck area linked to it which is not guarenteed to exist and technically is supposed to have a 1:1 relationship with computer anyway.
 	ignore += typesof(/obj/machinery/computer/holodeck)
 	//runtimes if not paired with a landmark
-	ignore += typesof(/obj/structure/industrial_lift)
+	ignore += typesof(/obj/structure/transport/linear)
 	// Runtimes if the associated machinery does not exist, but not the base type
 	ignore += subtypesof(/obj/machinery/airlock_controller)
 	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.

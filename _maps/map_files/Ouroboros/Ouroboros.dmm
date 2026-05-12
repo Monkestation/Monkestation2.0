@@ -380,9 +380,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "afA" = (
-/obj/structure/industrial_lift/public,
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "departures_lift"
+/obj/structure/transport/linear/public,
+/obj/effect/landmark/transport/transport_id{
+	specific_transport_id = "departures_lift"
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/primary/starboard)
@@ -1198,7 +1198,7 @@
 /turf/open/floor/iron/white/corner,
 /area/station/hallway/secondary/exit/departure_lounge)
 "atl" = (
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /obj/machinery/elevator_control_panel/directional/south{
 	pixel_x = -6;
 	linked_elevator_id = "cargo_lobbylift";
@@ -4216,7 +4216,7 @@
 	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck");
 	pixel_x = 16
 	},
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/primary/port)
 "bmt" = (
@@ -4351,7 +4351,7 @@
 "bnw" = (
 /obj/machinery/door/window/elevator/right/directional/north{
 	elevator_mode = 1;
-	elevator_linked_id = "arrivals_lift"
+	transport_linked_id = "arrivals_lift"
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/secondary/entry)
@@ -6029,6 +6029,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -6045,7 +6046,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/theater)
 "bOB" = (
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "bOE" = (
@@ -6641,7 +6642,7 @@
 "bZc" = (
 /obj/machinery/door/window/elevator/left/directional/north{
 	elevator_mode = 1;
-	elevator_linked_id = "arrivals_lift"
+	transport_linked_id = "arrivals_lift"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
@@ -6778,6 +6779,10 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/engineering/atmos/upper)
+"cbh" = (
+/obj/vehicle/ridden/battering_ram,
+/turf/open/floor/iron/dark/diagonal,
+/area/station/ai_monitored/security/armory)
 "cbx" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -6940,7 +6945,7 @@
 /obj/effect/turf_decal/loading_area,
 /obj/machinery/door/window/elevator/right/directional/north{
 	elevator_mode = 1;
-	elevator_linked_id = "cargo_lobbylift"
+	transport_linked_id = "cargo_lobbylift"
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -7285,9 +7290,9 @@
 /area/station/engineering/atmos/hfr_room)
 "ciS" = (
 /obj/structure/chair/office,
-/obj/item/radio/intercom/directional/west,
 /obj/machinery/light/warm/directional/west,
 /obj/effect/landmark/start/detective,
+/obj/structure/detectiveboard/directional/west,
 /turf/open/floor/wood/parquet,
 /area/station/security/detectives_office)
 "ciW" = (
@@ -8277,6 +8282,7 @@
 /obj/item/stock_parts/scanning_module,
 /obj/item/stock_parts/micro_laser,
 /obj/machinery/light_switch/directional/north,
+/obj/item/flatpack,
 /turf/open/floor/iron/white/side{
 	dir = 1
 	},
@@ -10903,7 +10909,7 @@
 "dlQ" = (
 /obj/machinery/door/window/elevator/left/directional/south{
 	elevator_mode = 1;
-	elevator_linked_id = "cargo_lobbylift"
+	transport_linked_id = "cargo_lobbylift"
 	},
 /obj/machinery/door/firedoor/border_only,
 /obj/effect/turf_decal/loading_area{
@@ -13424,7 +13430,6 @@
 /area/station/maintenance/department/science/xenobiology)
 "dYP" = (
 /obj/structure/flora/bush/fullgrass/style_random,
-/obj/machinery/growing/tray,
 /obj/item/radio/intercom/prison/directional/west,
 /turf/open/misc/dirt/planet,
 /area/station/security/prison)
@@ -23128,6 +23133,7 @@
 	},
 /obj/item/healthanalyzer,
 /obj/item/radio/headset/headset_med,
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "gSX" = (
@@ -24737,7 +24743,7 @@
 /area/station/ai_monitored/turret_protected/ai)
 "hrG" = (
 /obj/structure/rack/shelf,
-/obj/item/reagent_containers/hypospray/medipen/ekit,
+/obj/item/reagent_containers/medipen/ekit,
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
@@ -25014,7 +25020,7 @@
 	},
 /area/station/science/robotics/lab)
 "hvv" = (
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /turf/open/floor/plating,
 /area/station/cargo/storage)
 "hvB" = (
@@ -29243,9 +29249,9 @@
 	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck");
 	req_access = list("robotics")
 	},
-/obj/structure/industrial_lift,
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "robo_mechbaylift"
+/obj/structure/transport/linear,
+/obj/effect/landmark/transport/transport_id{
+	specific_transport_id = "robo_mechbaylift"
 	},
 /turf/open/floor/plating,
 /area/station/science/robotics/mechbay)
@@ -34077,7 +34083,7 @@
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos)
 "kcd" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/primary/starboard)
 "kcf" = (
@@ -36033,9 +36039,9 @@
 	req_access = list("engineering");
 	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
 	},
-/obj/structure/industrial_lift,
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "engi_SMlift"
+/obj/structure/transport/linear,
+/obj/effect/landmark/transport/transport_id{
+	specific_transport_id = "engi_SMlift"
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
@@ -37156,7 +37162,7 @@
 "kTi" = (
 /obj/machinery/door/window/elevator/right/directional/south{
 	elevator_mode = 1;
-	elevator_linked_id = "cargo_lobbylift"
+	transport_linked_id = "cargo_lobbylift"
 	},
 /obj/machinery/door/firedoor/border_only,
 /obj/effect/turf_decal/loading_area{
@@ -44156,9 +44162,9 @@
 /turf/open/floor/iron/dark/smooth_edge,
 /area/station/common/arcade)
 "mRR" = (
-/obj/structure/industrial_lift,
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "cargo_lobbylift"
+/obj/structure/transport/linear,
+/obj/effect/landmark/transport/transport_id{
+	specific_transport_id = "cargo_lobbylift"
 	},
 /turf/open/floor/plating,
 /area/station/cargo/storage)
@@ -47015,11 +47021,11 @@
 /area/station/maintenance/port/fore)
 "nKg" = (
 /obj/structure/rack/shelf,
-/obj/item/reagent_containers/hypospray/medipen,
+/obj/item/reagent_containers/medipen,
 /obj/effect/turf_decal/tile/yellow/opposingcorners{
 	dir = 1
 	},
-/obj/item/reagent_containers/hypospray/medipen,
+/obj/item/reagent_containers/medipen,
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
@@ -48910,9 +48916,9 @@
 /turf/open/openspace,
 /area/station/maintenance/starboard/fore)
 "oog" = (
-/obj/structure/industrial_lift/public,
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "arrivals_lift"
+/obj/structure/transport/linear/public,
+/obj/effect/landmark/transport/transport_id{
+	specific_transport_id = "arrivals_lift"
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/primary/port)
@@ -52195,7 +52201,7 @@
 "pqw" = (
 /obj/machinery/door/window/elevator/right/directional/north{
 	elevator_mode = 1;
-	elevator_linked_id = "departures_lift"
+	transport_linked_id = "departures_lift"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
@@ -52728,7 +52734,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/eva)
 "pyc" = (
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /turf/open/floor/plating,
 /area/station/science/robotics/mechbay)
 "pyi" = (
@@ -53340,6 +53346,7 @@
 /obj/item/hand_labeler{
 	pixel_x = 6
 	},
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/wood/parquet,
 /area/station/security/detectives_office)
 "pGv" = (
@@ -53796,7 +53803,7 @@
 /turf/open/floor/iron/small,
 /area/station/hallway/primary/central/aft)
 "pNq" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/primary/port)
 "pNr" = (
@@ -55302,7 +55309,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/item/storage/secure/safe/caps_spare,
+/obj/structure/secure_safe/caps_spare,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -58153,7 +58160,7 @@
 "rcS" = (
 /obj/machinery/door/window/elevator/right/directional/north{
 	elevator_mode = 1;
-	elevator_linked_id = "departures_lift"
+	transport_linked_id = "departures_lift"
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/secondary/exit)
@@ -58770,7 +58777,7 @@
 "rme" = (
 /obj/machinery/door/window/elevator/right/directional/north{
 	elevator_mode = 1;
-	elevator_linked_id = "arrivals_lift"
+	transport_linked_id = "arrivals_lift"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
@@ -62176,7 +62183,7 @@
 /obj/structure/railing{
 	dir = 5
 	},
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "snU" = (
@@ -62873,6 +62880,7 @@
 /area/station/command/heads_quarters/hos)
 "syA" = (
 /obj/machinery/light/warm/directional/west,
+/obj/machinery/cassette_library,
 /turf/open/floor/wood/large,
 /area/station/service/library)
 "syF" = (
@@ -62981,7 +62989,7 @@
 	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck");
 	pixel_x = -16
 	},
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/primary/starboard)
 "szZ" = (
@@ -64584,6 +64592,7 @@
 /obj/structure/flora/rock/pile/style_2,
 /obj/structure/flora/rock/pile,
 /obj/structure/flora/bush/sparsegrass/style_random,
+/obj/machinery/growing/tray,
 /turf/open/misc/dirt/planet,
 /area/station/security/prison)
 "sYg" = (
@@ -69293,7 +69302,7 @@
 "uuO" = (
 /obj/machinery/door/window/elevator/left/directional/north{
 	elevator_mode = 1;
-	elevator_linked_id = "departures_lift"
+	transport_linked_id = "departures_lift"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
@@ -69780,7 +69789,7 @@
 "uCb" = (
 /obj/machinery/door/window/elevator/left/directional/north{
 	elevator_mode = 1;
-	elevator_linked_id = "departures_lift"
+	transport_linked_id = "departures_lift"
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/secondary/exit)
@@ -71473,7 +71482,7 @@
 "vbb" = (
 /obj/machinery/door/window/elevator/left/directional/north{
 	elevator_mode = 1;
-	elevator_linked_id = "arrivals_lift"
+	transport_linked_id = "arrivals_lift"
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/secondary/entry)
@@ -75491,6 +75500,7 @@
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/mapping_helpers/requests_console/ore_update,
 /obj/machinery/light/warm/directional/east,
+/obj/item/flatpack,
 /turf/open/openspace,
 /area/station/cargo/office)
 "whH" = (
@@ -77627,7 +77637,7 @@
 "wMR" = (
 /obj/machinery/door/window/elevator/left/directional/north{
 	elevator_mode = 1;
-	elevator_linked_id = "cargo_lobbylift"
+	transport_linked_id = "cargo_lobbylift"
 	},
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -78913,7 +78923,7 @@
 	dir = 1
 	},
 /obj/structure/rack/shelf,
-/obj/item/reagent_containers/hypospray/medipen/blood_loss,
+/obj/item/reagent_containers/medipen/blood_loss,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "xiU" = (
@@ -80717,7 +80727,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/nanotrasen_representative,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "xKb" = (
@@ -80778,7 +80788,7 @@
 /area/station/maintenance/disposal/incinerator)
 "xLw" = (
 /obj/structure/closet/crate/trashcart/laundry,
-/obj/item/reagent_containers/hypospray/medipen,
+/obj/item/reagent_containers/medipen,
 /obj/item/toy/crayon/spraycan,
 /obj/effect/spawner/random/contraband/prison,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
@@ -121272,7 +121282,7 @@ bQR
 tbm
 bND
 kPN
-mtx
+sau
 sau
 utS
 mVZ
@@ -121530,8 +121540,8 @@ tRY
 vCx
 tRY
 sau
-sau
 ctc
+cbh
 bIn
 sWQ
 jDU

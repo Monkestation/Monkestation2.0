@@ -32,6 +32,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	var/atom/movable/screen/blobpwrdisplay
 
+	var/atom/movable/screen/mapvote_hud/mapvote_hud
 	var/atom/movable/screen/alien_plasma_display
 	var/atom/movable/screen/alien_queen_finder
 
@@ -135,6 +136,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	screentip_images = preferences?.read_preference(/datum/preference/toggle/screentip_images)
 	screentip_text = new(null, src)
 	static_inventory += screentip_text
+
+	if(preferences?.read_preference(/datum/preference/toggle/mapvote_hud))
+		mapvote_hud = new(null, src, preferences)
+		infodisplay += mapvote_hud
 
 	for(var/mytype in subtypesof(/atom/movable/plane_master_controller))
 		var/atom/movable/plane_master_controller/controller_instance = new mytype(null,src)
@@ -255,6 +260,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	bloodling_bio_display = null
 	alien_queen_finder = null
 	combo_display = null
+	mapvote_hud = null
 
 	QDEL_LIST_ASSOC_VAL(master_groups)
 	QDEL_LIST_ASSOC_VAL(plane_master_controllers)
@@ -493,12 +499,20 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		static_inventory += hand_box
 		hand_box.update_appearance()
 
-	var/i = 1
-	for(var/atom/movable/screen/swap_hand/SH in static_inventory)
-		SH.screen_loc = ui_swaphand_position(mymob,!(i % 2) ? 2: 1)
-		i++
-	for(var/atom/movable/screen/human/equip/E in static_inventory)
-		E.screen_loc = ui_equip_position(mymob)
+	var/num_of_swaps = 0
+	for(var/atom/movable/screen/swap_hand/swap_hands in static_inventory)
+		num_of_swaps += 1
+
+	var/hand_num = 1
+	for(var/atom/movable/screen/swap_hand/swap_hands in static_inventory)
+		var/hand_ind = RIGHT_HANDS
+		if (num_of_swaps > 1)
+			hand_ind = IS_LEFT_INDEX(hand_num) ? LEFT_HANDS : RIGHT_HANDS
+		swap_hands.screen_loc = ui_swaphand_position(mymob, hand_ind)
+		hand_num += 1
+
+	for(var/atom/movable/screen/human/equip/equip in static_inventory)
+		equip.screen_loc = ui_equip_position(mymob)
 
 	if(ismob(mymob) && mymob.hud_used == src)
 		show_hud(hud_version)
@@ -817,4 +831,4 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/action_group/listed/refresh_actions()
 	. = ..()
-	owner.palette_actions.refresh_actions() // We effect them, so we gotta refresh em
+	owner?.palette_actions.refresh_actions() // We effect them, so we gotta refresh em

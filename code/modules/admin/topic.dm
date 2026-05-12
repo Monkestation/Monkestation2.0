@@ -754,7 +754,7 @@
 				return
 			if (!usr.client.holder.fakekey)
 				to_chat(usr, span_warning("You have been automatically stealthed via STLTH-FLW as [span_bold(usr.ckey)]"))
-				usr.client.enable_stealth_mode(usr.ckey, "STLTH-FLW")
+				usr.client.enable_stealth_mode(usr.ckey, FALSE, "STLTH-FLW")
 
 		usr.client?.admin_follow(locate(href_list["adminplayerobservefollow"]))
 	else if(href_list["admingetmovable"])
@@ -1105,6 +1105,9 @@
 			return
 		M.mind_initialize()
 
+	else if(href_list["spawn_panel"])
+		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/spawn_panel)
+
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))
 			return
@@ -1243,16 +1246,16 @@
 			new /obj/effect/pod_landingzone(target, pod)
 
 		if (number == 1)
-			log_admin("[key_name(usr)] created a [english_list(paths)]")
+			log_admin("[key_name(usr)] created an instance of [english_list(paths)]")
 			for(var/path in paths)
 				if(ispath(path, /mob))
-					message_admins("[key_name_admin(usr)] created a [english_list(paths)]")
+					message_admins("[key_name_admin(usr)] created an instance of [english_list(paths)]")
 					break
 		else
-			log_admin("[key_name(usr)] created [number]ea [english_list(paths)]")
+			log_admin("[key_name(usr)] created [number] instances of [english_list(paths)]")
 			for(var/path in paths)
 				if(ispath(path, /mob))
-					message_admins("[key_name_admin(usr)] created [number]ea [english_list(paths)]")
+					message_admins("[key_name_admin(usr)] created [number] instances of [english_list(paths)]")
 					break
 		return
 

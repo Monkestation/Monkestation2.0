@@ -133,7 +133,7 @@
 	/obj/item/wormhole_jaunter/ = list("Jaunter!", "Yeesh, never liked traveling by wormhole!", "Safe...ish wormholes!", "Saves your rear from a chasm if you keep it on you!", "Ready to open a wormhole!"),
 
 	/obj/item/organ/internal/monster_core/ = list("Got some beast organs!", "Organ here!", "Crush this in a pinch!", "Monster organ, grab it before it goes bad!", "Organ! I prefer red sugar..."),
-	/obj/item/reagent_containers/hypospray/medipen/survival/ = list("Survival pen!", "Medipen here!", "Keep one of these in your pocket!", "With this, the fight goes on!", "No time for a lie-down!"),
+	/obj/item/reagent_containers/medipen/survival/ = list("Survival pen!", "Medipen here!", "Keep one of these in your pocket!", "With this, the fight goes on!", "No time for a lie-down!"),
 	/obj/item/extinguisher/ = list("Fire extinguisher!", "Extinguisher here!", "Works against magma fires too!", "Never know when you'll need this!", "Where's the fire?"),
 	/obj/item/lazarus_injector/ = list("Lazarus Injector!", "Wish I had this for my goldfish!", "Lazarus here!", "Lets go revive some pets!"),
 	/obj/item/extraction_pack/ = list("Fulton Pack!", "They're coming too?", "Use this, it's a fulton recovery device.", "Time to grab everything not nailed down!","Heard about a guy that brought home a bear with one of these!", "Link this to a beacon!"),

@@ -37,13 +37,14 @@
  * @returns {boolean} - TRUE if the camera worked.
  */
 /mob/living/silicon/pai/proc/use_camera(mob/user, mode)
-	if(!camera || isnull(mode))
+	if(!aicamera || isnull(mode))
 		return FALSE
 	switch(mode)
 		if(PAI_PHOTO_MODE_CAMERA)
-			camera.toggle_camera_mode(user)
+			aicamera.toggle_camera_mode(user)
 		if(PAI_PHOTO_MODE_PRINTER)
-			camera.pai_print(user)
+			var/obj/item/camera/siliconcam/pai_camera/paicam = aicamera
+			paicam.pai_print(user)
 		if(PAI_PHOTO_MODE_ZOOM)
-			camera.adjust_zoom(user)
+			aicamera.adjust_zoom(user)
 	return TRUE

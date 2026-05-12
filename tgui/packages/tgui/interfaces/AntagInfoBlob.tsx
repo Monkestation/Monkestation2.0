@@ -7,9 +7,8 @@ import {
   Section,
   Stack,
 } from '../components';
-import { Objective } from './common/Objectives';
-
 import { Window } from '../layouts';
+import type { Objective } from './common/Objectives';
 
 type Data = {
   color: string;
@@ -21,7 +20,7 @@ type Data = {
 
 const BLOB_COLOR = '#556b2f';
 
-export const AntagInfoBlob = (props) => {
+export const AntagInfoBlob = () => {
   return (
     <Window width={400} height={550}>
       <Window.Content>
@@ -38,7 +37,7 @@ export const AntagInfoBlob = (props) => {
   );
 };
 
-const Overview = (props) => {
+const Overview = () => {
   const { data } = useBackend<Data>();
   const { color, description, effects, name } = data;
 
@@ -99,7 +98,7 @@ const Overview = (props) => {
   );
 };
 
-const Basics = (props) => {
+const Basics = () => {
   return (
     <Collapsible title="The Basics">
       <LabeledList>
@@ -117,7 +116,8 @@ const Basics = (props) => {
         </LabeledList.Item>
         <LabeledList.Item label="Shortcuts">
           Click = Expand Blob | Middle Mouse Click = Rally Spores | Ctrl Click =
-          Create Shield Blob | Alt Click = Remove Blob
+          Create Shield Blob on normal blobs and make sub overminds on nodes |
+          Alt Click = Remove Blob
         </LabeledList.Item>
         <LabeledList.Item label="Comms">
           Attempting to talk will send a message to all other overminds,
@@ -128,7 +128,7 @@ const Basics = (props) => {
   );
 };
 
-const Minions = (props) => {
+const Minions = () => {
   return (
     <Collapsible title="Minions">
       <LabeledList>
@@ -147,7 +147,7 @@ const Minions = (props) => {
   );
 };
 
-const Structures = (props) => {
+const Structures = () => {
   return (
     <Collapsible title="Structures">
       <Box>
@@ -183,7 +183,7 @@ const Structures = (props) => {
   );
 };
 
-const ObjectiveDisplay = (props) => {
+const ObjectiveDisplay = () => {
   const { data } = useBackend<Data>();
   const { color, objectives } = data;
 

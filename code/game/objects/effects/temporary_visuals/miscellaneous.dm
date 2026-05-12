@@ -99,6 +99,12 @@
 	icon_state = "firing_effect"
 	duration = 2
 
+/obj/effect/temp_visual/dir_setting/firing_effect/Initialize(mapload, set_dir)
+	. = ..()
+	if (ismovable(loc))
+		var/atom/movable/spawned_inside = loc
+		spawned_inside.vis_contents += src
+
 /obj/effect/temp_visual/dir_setting/firing_effect/setDir(newdir)
 	switch(newdir)
 		if(NORTH)
@@ -694,3 +700,6 @@
 /obj/effect/temp_visual/dir_setting/firing_effect/sweep_attack/full_circle
 	icon_state = "big_slash_360"
 	duration = 0.4 SECONDS
+
+/obj/effect/temp_visual/circle_wave/star_blast
+	color = COLOR_VOID_PURPLE

@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/pointed/void_phase
 	name = "Void Phase"
-	desc = "Let's you blink to your pointed destination, causes 3x3 aoe damage bubble \
+	desc = "Lets you blink to your pointed destination, causes 3x3 aoe damage bubble \
 		around your pointed destination and your current location. \
 		It has a minimum range of 3 tiles and a maximum range of 9 tiles."
 	background_icon_state = "bg_heretic"
@@ -10,7 +10,7 @@
 	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 25 SECONDS
+	cooldown_time = 20 SECONDS
 
 	invocation = "RE'L'TY PH'S'E."
 	invocation_type = INVOCATION_WHISPER
@@ -57,7 +57,7 @@
 		if(living_mob.can_block_magic(antimagic_flags))
 			continue
 		living_mob.apply_damage(40, BRUTE, wound_bonus = CANT_WOUND)
-		living_mob.apply_status_effect(/datum/status_effect/void_chill, 1)
+		living_mob.apply_status_effect(/datum/status_effect/void_chill, 2)
 
 /obj/effect/temp_visual/voidin
 	icon = 'icons/effects/96x96.dmi'

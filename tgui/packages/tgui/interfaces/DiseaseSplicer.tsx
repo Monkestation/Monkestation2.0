@@ -1,13 +1,13 @@
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import {
   Button,
   Dimmer,
-  LabeledList,
   Icon,
-  Slider,
+  LabeledList,
   NoticeBox,
   Section,
+  Slider,
 } from '../components';
 import { Window } from '../layouts';
 

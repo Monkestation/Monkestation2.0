@@ -2,10 +2,10 @@ import { useBackend } from '../backend';
 import {
   Box,
   Button,
-  Stack,
   LabeledList,
   ProgressBar,
   Section,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -30,17 +30,17 @@ export const DnaVault = (props) => {
           <LabeledList>
             <LabeledList.Item label="Human DNA">
               <ProgressBar value={dna / dna_max}>
-                {dna + ' / ' + dna_max + ' Samples'}
+                {`${dna} / ${dna_max} Samples`}
               </ProgressBar>
             </LabeledList.Item>
             <LabeledList.Item label="Plant DNA">
               <ProgressBar value={plants / plants_max}>
-                {plants + ' / ' + plants_max + ' Samples'}
+                {`${plants} / ${plants_max} Samples`}
               </ProgressBar>
             </LabeledList.Item>
             <LabeledList.Item label="Animal DNA">
               <ProgressBar value={animals / animals_max}>
-                {animals + ' / ' + animals_max + ' Samples'}
+                {`${animals} / ${animals_max} Samples`}
               </ProgressBar>
             </LabeledList.Item>
           </LabeledList>

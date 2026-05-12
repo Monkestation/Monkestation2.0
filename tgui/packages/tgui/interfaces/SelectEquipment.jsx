@@ -5,13 +5,13 @@ import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
+  Dropdown,
   Icon,
+  Image,
   Input,
   Section,
   Stack,
   Tabs,
-  Dropdown,
-  Image,
 } from '../components';
 import { Window } from '../layouts';
 

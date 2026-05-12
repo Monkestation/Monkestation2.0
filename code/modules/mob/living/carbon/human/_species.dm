@@ -204,6 +204,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///Unique cookie given by admins through prayers
 	var/species_cookie = /obj/item/food/cookie
 
+	///The path of the mutation that turns the user into this species, so they have it innately.
+	///Defaults to random monkey/simian if null.
+	var/datum/mutation/race/species_race_mutation = null
+
 	/// List of family heirlooms this species can get with the family heirloom quirk. List of types.
 	var/list/family_heirlooms
 
@@ -511,9 +515,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// Drop the items the new species can't wear
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN_PRE, src, old_species)
 
-	if(C.dna.species.exotic_bloodtype)
-		C.dna.human_blood_type = exotic_bloodtype
-
 	if(C.hud_used)
 		C.hud_used.update_locked_slots()
 
@@ -599,8 +600,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	SHOULD_CALL_PARENT(TRUE)
 	C.butcher_results = null
-	if(C.dna.species.exotic_bloodtype)
-		C.dna.human_blood_type = random_human_blood_type()
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
 	for(var/obj/item/organ/external/organ in C.organs)
@@ -904,8 +903,19 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	randomize_active_underwear_only(human_mob)
 	human_mob.update_body()
 
-///Proc that will randomize all the external organs (i.e. horns, frills, tails etc.) of a species' associated mob
-/datum/species/proc/randomize_external_organs(mob/living/carbon/human/human_mob)
+/datum/species/proc/randomize_active_features(mob/living/carbon/human/human_mob)
+	var/list/new_features = randomize_features()
+	for(var/feature_key in new_features)
+		human_mob.dna.features[feature_key] = new_features[feature_key]
+	human_mob.updateappearance(mutcolor_update = TRUE)
+
+/**
+ * Returns a list of features, randomized, to be used by DNA
+ */
+/datum/species/proc/randomize_features()
+	SHOULD_CALL_PARENT(TRUE)
+
+	var/list/new_features = list()
 	var/static/list/organs_to_randomize = list()
 	for(var/obj/item/organ/external/organ_path as anything in external_organs)
 		var/overlay_path = initial(organ_path.bodypart_overlay)
@@ -914,13 +924,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			sample_overlay = new overlay_path()
 			organs_to_randomize[overlay_path] = sample_overlay
 
-		var/new_look = pick(sample_overlay.get_global_feature_list())
-		human_mob.dna.features["[sample_overlay.feature_key]"] = new_look
-		mutant_bodyparts["[sample_overlay.feature_key]"] = new_look
+		new_features["[sample_overlay.feature_key]"] = pick(sample_overlay.get_global_feature_list())
 
-///Proc that randomizes all the appearance elements (external organs, markings, hair etc.) of a species' associated mob. Function set by child procs
-/datum/species/proc/randomize_features(mob/living/carbon/human/human_mob)
-	return
+	return new_features
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	SHOULD_CALL_PARENT(TRUE)
@@ -1218,11 +1224,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	else
 
 		var/obj/item/organ/internal/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
-		var/obj/item/bodypart/attacking_bodypart
-		if(brain)
-			attacking_bodypart = brain.get_attacking_limb(target)
-		if(!attacking_bodypart)
-			attacking_bodypart = user.get_active_hand()
+		var/obj/item/bodypart/attacking_bodypart = attacker_style?.get_attacking_limb(user, target) || brain?.get_attacking_limb(target) || user.get_active_hand()
 		var/atk_verb = attacking_bodypart.unarmed_attack_verb
 		var/atk_effect = attacking_bodypart.unarmed_attack_effect
 
@@ -1275,23 +1277,28 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		var/attack_direction = get_dir(user, target)
 		var/attack_type = attacking_bodypart.attack_type
+		SEND_SIGNAL(target, COMSIG_HUMAN_GOT_PUNCHED, user, damage, attack_type, affecting)
+		SEND_SIGNAL(user, COMSIG_HUMAN_PUNCHED, target, damage, attack_type, affecting)
 		if(atk_effect == ATTACK_EFFECT_KICK)//kicks deal 1.5x raw damage
 			if(damage >= 9)
 				target.force_say()
 			log_combat(user, target, "kicked")
-			var/ough = HAS_TRAIT(user, TRAIT_NUTCRACKER) ? 4.8 : 1
 			var/damagemod = HAS_TRAIT(user, TRAIT_NUTCRACKER) ? 3 : 1 //yeowch
 			target.apply_damage(damage * 1.5 * damagemod, attack_type, affecting, armor_block, attack_direction = attack_direction)
 			if(zone == BODY_ZONE_CHEST && user.zone_selected == BODY_ZONE_PRECISE_GROIN && ishuman(target))
 				for(var/obj/item/clothing/iter_clothing in target.get_clothing_on_part(affecting))
 					if(!HAS_TRAIT(user, TRAIT_NUTCRACKER))
 						if((iter_clothing.clothing_flags & THICKMATERIAL) || iter_clothing.get_armor_rating(MELEE) >= 15)
-							if(iter_clothing.body_parts_covered & BODY_ZONE_PRECISE_GROIN)
+							if(iter_clothing.body_parts_covered & GROIN)
 								return TRUE
-				target.sharp_pain(BODY_ZONE_CHEST, 25 * ough, BRUTE, 30 SECONDS)
 				user.visible_message(span_warning("[target] gets brutally [atk_verb]ed in the groin! Holy shit!"), self_message=span_warning("You [atk_verb] [target] right in the groin! <b>BRUTAL!</b>"), blind_message=span_warning("You hear a horrific pained screech!"), ignored_mobs=list(target))
 				to_chat(target, span_boldwarning("[uppertext("[user]")] BRUTALLY [uppertext("[atk_verb]")]S YOU RIGHT IN THE GROIN! JESUS FUCK IT HURTS!"))
 				target.emote("scream", message="screams for dear life!")
+				if(HAS_TRAIT(user, TRAIT_NUTCRACKER))
+					target.Paralyze(50)
+					target.Knockdown(200)
+				else
+					target.Knockdown(50)
 				playsound(get_turf(target), 'sound/effects/glassbr1.ogg')
 		else//other attacks deal full raw damage + 1.5x in stamina damage
 			target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
@@ -1308,7 +1315,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			target.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)
 			log_combat(user, target, "got a stun punch with their previous punch")
 		return TRUE // monkestation edit
-
 /datum/species/proc/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return
 
@@ -1374,7 +1380,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
 	if(H.movement_type & FLYING)
 		var/obj/item/organ/external/wings/functional/wings = H.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
-		if(wings)
+		if(wings?.wings_open)
 			wings.toggle_flight(H)
 			wings.fly_slip(H)
 	. = stunmod * H.physiology.stun_mod * amount

@@ -2,7 +2,6 @@ import { classes } from 'common/react';
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
 import { Box, Button, Image, Section, Stack } from '../../components';
-import { MutationInfo } from './MutationInfo';
 import {
   CLEAR_GENE,
   GENE_COLORS,
@@ -12,6 +11,7 @@ import {
   SUBJECT_DEAD,
   SUBJECT_TRANSFORMING,
 } from './constants';
+import { MutationInfo } from './MutationInfo';
 
 const GenomeImage = (props) => {
   const { url, selected, onClick } = props;
@@ -36,7 +36,7 @@ const GenomeImage = (props) => {
 const GeneCycler = (props) => {
   const { act } = useBackend();
   const { alias, gene, index, disabled, ...rest } = props;
-  const color = (disabled && GENE_COLORS['X']) || GENE_COLORS[gene];
+  const color = (disabled && GENE_COLORS.X) || GENE_COLORS[gene];
   return (
     <Button
       {...rest}
@@ -158,7 +158,7 @@ const GenomeSequencer = (props) => {
 export const DnaConsoleSequencer = (props) => {
   const { data, act } = useBackend();
   const mutations = data.storage?.occupant ?? [];
-  const { isJokerReady, isMonkey, jokerSeconds, subjectStatus } = data;
+  const { isJokerReady, jokerSeconds, subjectStatus } = data;
   const { sequencerMutation, jokerActive } = data.view;
   const mutation = mutations.find(
     (mutation) => mutation.Alias === sequencerMutation,
@@ -200,11 +200,6 @@ export const DnaConsoleSequencer = (props) => {
           Genetic sequence corrupted. Subject diagnostic report: DECEASED.
         </Section>
       )) ||
-        (isMonkey && mutation?.Name !== 'Monkified' && (
-          <Section color="bad">
-            Genetic sequence corrupted. Subject diagnostic report: MONKEY.
-          </Section>
-        )) ||
         (subjectStatus === SUBJECT_TRANSFORMING && (
           <Section color="bad">
             Genetic sequence corrupted. Subject diagnostic report: TRANSFORMING.

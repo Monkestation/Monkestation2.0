@@ -39,6 +39,7 @@
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/head/caphat/beret(src)
+	new /obj/item/clothing/head/hats/caphat/armored(src)
 
 /obj/item/storage/bag/garment/hos
 	name = "head of security's garment bag"
@@ -77,6 +78,7 @@
 	new /obj/item/clothing/suit/armor/vest/warden/alt(src)
 	new /obj/item/clothing/under/rank/security/warden/formal(src)
 	new /obj/item/clothing/under/rank/security/warden/skirt(src)
+	new /obj/item/clothing/under/rank/security/warden/grey(src)
 	new /obj/item/clothing/gloves/krav_maga/sec(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/clothing/mask/gas/sechailer(src)
@@ -121,6 +123,8 @@
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer/skirt(src)
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck(src)
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck/skirt(src)
+	new /obj/item/clothing/under/rank/medical/chief_medical_officer/formal(src)
+	new /obj/item/clothing/under/rank/medical/chief_medical_officer/formal/skirt(src)
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer/scrubs(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/medical/cmo(src)
 	new /obj/item/clothing/suit/toggle/labcoat/cmo(src)
@@ -144,6 +148,7 @@
 	new /obj/item/clothing/head/utility/hardhat/welding/white(src)
 	new /obj/item/clothing/neck/cloak/ce(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
+	new /obj/item/clothing/head/beret/engi/ce(src)
 
 /obj/item/storage/bag/garment/quartermaster
 	name = "quartermasters's garment bag"

@@ -107,6 +107,18 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 	return TRUE
 
+/*
+ * Inserts an organ based on the location of another organ's zone if there is one.
+ * If there isn't one, it defaults to normal organ zone insertion.
+ * Uses same parameters as Insert.
+ * slot - the organ slot to follow the location of.
+ */
+/obj/item/organ/proc/Follow_Insert(mob/living/carbon/receiver, slot, special = FALSE, drop_if_replaced = TRUE)
+	var/obj/item/organ/organ_to_follow = receiver.get_organ_slot(slot)
+	if(organ_to_follow)
+		src.zone = organ_to_follow.zone
+	return Insert(receiver, special, drop_if_replaced)
+
 /// Called after the organ is inserted into a mob.
 /// Adds Traits, Actions, and Status Effects on the mob in which the organ is impanted.
 /// Override this proc to create unique side-effects for inserting your organ. Must be called by overrides.
@@ -258,6 +270,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(required_organ_flag && !(organ_flags & required_organ_flag))
 		return
 	damage = clamp(damage + damage_amount, 0, maximum)
+	SEND_SIGNAL(src, COMSIG_ORGAN_ADJUST_DAMAGE, damage_amount, maximum, required_organ_flag)
 	var/mess = check_damage_thresholds(owner)
 	prev_damage = damage
 

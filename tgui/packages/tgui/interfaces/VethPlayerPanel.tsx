@@ -1,13 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
-import {
-  Box,
-  Button,
-  Section,
-  Table,
-  TextArea,
-  Stack,
-} from '../components';
-import { BoxProps } from '../components/Box';
+import { Box, Button, Section, Stack, Table, TextArea } from '../components';
+import type { BoxProps } from '../components/Box';
 import { Window } from '../layouts';
 
 type PlayerData = {

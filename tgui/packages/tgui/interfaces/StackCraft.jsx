@@ -1,19 +1,19 @@
-import { useBackend, useLocalState } from '../backend';
-import { filter, sortBy, map, reduce } from 'common/collections';
+import { filter, map, reduce, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { createSearch } from 'common/string';
 import { toTitleCase } from 'tgui-core/string';
-import { Window } from '../layouts';
+import { useBackend, useLocalState } from '../backend';
 import {
   Box,
-  Section,
-  NoticeBox,
-  Collapsible,
-  Input,
   Button,
-  Stack,
+  Collapsible,
   ImageButton,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
 } from '../components';
+import { Window } from '../layouts';
 
 export const StackCraft = () => {
   return (
@@ -37,7 +37,7 @@ const Recipes = (props) => {
     <Section
       fill
       scrollable
-      title={'Amount: ' + amount}
+      title={`Amount: ${amount}`}
       buttons={
         <>
           {searchActive && (
@@ -110,7 +110,7 @@ const filterRecipeList = (recipeList, titleFilter) => {
  * @param recipe recipe to check
  */
 const isRecipeList = (recipe) => {
-  return recipe['ref'] === undefined;
+  return recipe.ref === undefined;
 };
 
 /**

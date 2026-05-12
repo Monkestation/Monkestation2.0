@@ -1,13 +1,12 @@
-import { BooleanLike, classes } from 'common/react';
+import { type BooleanLike, classes } from 'common/react';
+import type { ReactNode } from 'react';
 import { Component } from 'react';
-
 import {
   Box,
   Button,
   Dimmer,
   Flex,
   Icon,
-  NoticeBox,
   Section,
   Stack,
   Tooltip,
@@ -15,10 +14,9 @@ import {
 import {
   calculateProgression,
   getDangerLevel,
-  Rank,
+  type Rank,
 } from './calculateDangerLevel';
 import { ObjectiveState } from './constants';
-import type { ReactNode } from 'react';
 
 export type Objective = {
   id: number;
@@ -32,7 +30,6 @@ export type Objective = {
   ui_buttons?: ObjectiveUiButton[];
   objective_state: ObjectiveState;
   original_progression: number;
-  final_objective: BooleanLike;
 };
 
 export type ObjectiveUiButton = {
@@ -305,12 +302,9 @@ const ObjectiveFunction = (
       contractorRep={objective.contractor_rep}
       objectiveState={objective.objective_state}
       originalProgression={objective.original_progression}
-      hideTcRep={objective.final_objective}
-      finalObjective={objective.final_objective}
+      hideTcRep={false}
       canAbort={
-        !!handleAbort &&
-        !objective.final_objective &&
-        objective.objective_state === ObjectiveState.Active
+        !!handleAbort && objective.objective_state === ObjectiveState.Active
       }
       grow={grow}
       handleCompletion={(event) => {
@@ -359,7 +353,6 @@ type ObjectiveElementProps = {
   telecrystalPenalty: number;
   grow: boolean;
   hideTcRep: BooleanLike;
-  finalObjective: BooleanLike;
   canAbort: BooleanLike;
 
   handleCompletion?: (event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -383,7 +376,6 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
     originalProgression,
     hideTcRep,
     grow,
-    finalObjective,
     ...rest
   } = props;
 
@@ -446,13 +438,6 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
               Failing this objective will deduct {telecrystalPenalty} TC.
             </Box>
           )}
-          {finalObjective && objectiveState === ObjectiveState.Inactive && (
-            <NoticeBox mt={1}>
-              Taking this objective will lock you out of getting anymore
-              objectives! Furthermore, you will be unable to abort this
-              objective.
-            </NoticeBox>
-          )}
         </Box>
       </Flex.Item>
       <Flex.Item>
@@ -474,7 +459,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
                     textAlign="center"
                   >
                     {telecrystalReward} TC,
-                    {contractorRep ? ' ' + contractorRep + ' REP,' : ''}
+                    {contractorRep ? ` ${contractorRep} REP,` : ''}
                     <Box ml={1} as="span">
                       {calculateProgression(progressionReward)} Threat Level
                       {Math.abs(progressionDiff) > 10 && (

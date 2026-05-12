@@ -241,3 +241,8 @@
 	bio = 90
 	fire = 70
 	acid = 50
+
+/obj/item/clothing/shoes/workboots/black/deforest
+	name = "Deforest work boots"
+	desc = "A pair of Deforest Medical boots built of reinforced leathers and weather-resistant rubber; there's a large white reflective strip across the collar."
+	icon_state = "hivisboots"

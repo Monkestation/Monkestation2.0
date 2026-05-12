@@ -1,90 +1,5 @@
 //Antag modules for MODsuits
 
-///Armor Booster - Grants your suit more armor and speed in exchange for EVA protection. Also acts as a welding screen.
-/obj/item/mod/module/armor_booster
-	name = "MOD armor booster module"
-	desc = "A retrofitted series of retractable armor plates, allowing the suit to function as essentially power armor, \
-		giving the user incredible protection against conventional firearms, or everyday attacks in close-quarters. \
-		However, the additional plating cannot deploy alongside parts of the suit used for vacuum sealing, \
-		so this extra armor provides zero ability for extravehicular activity while deployed."
-	icon_state = "armor_booster"
-	module_type = MODULE_TOGGLE
-	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
-	removable = FALSE
-	incompatible_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/welding)
-	cooldown_time = 0.5 SECONDS
-	overlay_state_inactive = "module_armorbooster_off"
-	overlay_state_active = "module_armorbooster_on"
-	use_mod_colors = TRUE
-	/// Whether or not this module removes pressure protection.
-	var/remove_pressure_protection = TRUE
-	/// Speed added to the control unit.
-	var/speed_added = 0.5
-	/// Speed that we actually added.
-	var/actual_speed_added = 0
-	/// Armor values added to the suit parts.
-	var/list/armor_mod = /datum/armor/mod_module_armor_boost
-	/// List of parts of the suit that are spaceproofed, for giving them back the pressure protection.
-	var/list/spaceproofed = list()
-
-/obj/item/mod/module/armor_booster/no_speedbost
-	speed_added = 0
-
-/datum/armor/mod_module_armor_boost
-	melee = 25
-	bullet = 30
-	laser = 15
-	energy = 15
-
-/obj/item/mod/module/armor_booster/on_suit_activation()
-	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
-
-/obj/item/mod/module/armor_booster/on_suit_deactivation(deleting = FALSE)
-	if(deleting)
-		return
-	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
-
-/obj/item/mod/module/armor_booster/on_activation()
-	. = ..()
-	if(!.)
-		return
-	playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	actual_speed_added = max(0, min(mod.slowdown_active, speed_added))
-	mod.slowdown -= actual_speed_added
-	mod.wearer.update_equipment_speed_mods()
-	var/list/parts = mod.mod_parts + mod
-	for(var/obj/item/part as anything in parts)
-		part.set_armor(part.get_armor().add_other_armor(armor_mod))
-		if(!remove_pressure_protection || !isclothing(part))
-			continue
-		var/obj/item/clothing/clothing_part = part
-		if(clothing_part.clothing_flags & STOPSPRESSUREDAMAGE)
-			clothing_part.clothing_flags &= ~STOPSPRESSUREDAMAGE
-			spaceproofed[clothing_part] = TRUE
-
-/obj/item/mod/module/armor_booster/on_deactivation(display_message = TRUE, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
-	if(!deleting)
-		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	mod.slowdown += actual_speed_added
-	mod.wearer.update_equipment_speed_mods()
-	var/list/parts = mod.mod_parts + mod
-	for(var/obj/item/part as anything in parts)
-		part.set_armor(part.get_armor().subtract_other_armor(armor_mod))
-		if(!remove_pressure_protection || !isclothing(part))
-			continue
-		var/obj/item/clothing/clothing_part = part
-		if(spaceproofed[clothing_part])
-			clothing_part.clothing_flags |= STOPSPRESSUREDAMAGE
-	spaceproofed = list()
-
-/obj/item/mod/module/armor_booster/generate_worn_overlay(mutable_appearance/standing)
-	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
-	overlay_state_active = "[initial(overlay_state_active)]-[mod.skin]"
-	return ..()
-
 ///Energy Shield - Gives you a rechargeable energy shield that nullifies attacks.
 /obj/item/mod/module/energy_shield
 	name = "MOD energy shield module"
@@ -152,6 +67,7 @@
 	shield_icon_file = 'icons/effects/magic.dmi'
 	shield_icon = "mageshield"
 	recharge_path = /obj/item/wizard_armour_charge
+	lose_multiple_charges = TRUE
 
 ///Magic Nullifier - Protects you from magic.
 /obj/item/mod/module/anti_magic
@@ -289,7 +205,7 @@
 	if(!.)
 		return
 	var/obj/projectile/flame = new /obj/projectile/bullet/incendiary/fire(mod.wearer.loc)
-	flame.preparePixelProjectile(target, mod.wearer)
+	flame.aim_projectile(target, mod.wearer)
 	flame.firer = mod.wearer
 	playsound(src, 'sound/items/modsuit/flamethrower.ogg', 75, TRUE)
 	INVOKE_ASYNC(flame, TYPE_PROC_REF(/obj/projectile, fire))
@@ -482,7 +398,7 @@ monkestation end */
 	complexity = 0
 	removable = FALSE
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0
-	incompatible_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/armor_booster, /obj/item/mod/module/welding)
+	incompatible_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/welding)
 
 /obj/item/mod/module/infiltrator/on_install()
 	ADD_TRAIT(mod, TRAIT_EXAMINE_SKIP, REF(src))

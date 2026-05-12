@@ -1,8 +1,8 @@
 import { classes } from 'common/react';
 import { useBackend } from '../../backend';
 import {
-  Box,
   BlockQuote,
+  Box,
   Button,
   Divider,
   Icon,
@@ -14,10 +14,10 @@ import { CharacterPreview } from '../common/CharacterPreview';
 import {
   createSetPreference,
   Food,
-  Perk,
-  PreferencesMenuData,
-  ServerData,
-  Species,
+  type Perk,
+  type PreferencesMenuData,
+  type ServerData,
+  type Species,
 } from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
@@ -66,11 +66,11 @@ const IGNORE_UNLESS_LIKED: Set<Food> = new Set([
   Food.Toxic,
 ]);
 
-const notIn = function <T>(set: Set<T>) {
-  return (value: T) => {
+const notIn =
+  <T,>(set: Set<T>) =>
+  (value: T) => {
     return !set.has(value);
   };
-};
 
 const FoodList = (props: {
   food: Food[];
@@ -237,7 +237,7 @@ const SpeciesPageInner = (props: {
   const { act, data } = useBackend<PreferencesMenuData>();
   const setSpecies = createSetPreference(act, 'species');
 
-  let species: [string, Species][] = Object.entries(props.species).map(
+  const species: [string, Species][] = Object.entries(props.species).map(
     ([species, data]) => {
       return [species, data];
     },

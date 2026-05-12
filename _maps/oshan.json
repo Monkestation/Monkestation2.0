@@ -18,7 +18,6 @@
 			"Gravity": true,
 			"Mining": true,
 			"Baseturf": "/turf/open/floor/plating/ocean/rock",
-			"Daycycle": true,
 			"No Parallax": true,
 			"OshanTrait": true
 		}

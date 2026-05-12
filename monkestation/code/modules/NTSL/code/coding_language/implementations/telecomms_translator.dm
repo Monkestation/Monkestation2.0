@@ -1,19 +1,21 @@
 /**
  * Nanotrasen TCS Language - Made by Doohl, ported to Yogs by Altoids
  */
-#define HUMAN (1<<0)
-#define MONKEY (1<<1)
-#define ROBOT (1<<2)
-#define DRACONIC (1<<3)
-#define BEACHTONGUE (1<<4)
-#define SYLVAN (1<<5)
-#define ETHEREAN (1<<6)
-#define BONE (1<<7)
-#define MOTH (1<<8)
-#define CAT (1<<9)
-#define ASH_TONGUE (1<<10)
-#define TORII (1<<11)
-#define UNCOMMON (1<<12)
+#define COMMON 1
+#define MONKEY 2
+#define ROBOT 3
+#define DRACONIC 4
+#define BEACHTONGUE 5
+#define SYLVAN 6
+#define VOLTAIC 7
+#define CALCIC 8
+#define MOTH 9
+#define ASH_TONGUE 10
+#define YANGYU 11
+#define UNCOMMON 12
+#define GOBLIN 13
+#define FELINID 14
+#define SLIME 15
 
 ///Span classes that players are allowed to set in a radio transmission.
 GLOBAL_LIST_INIT(allowed_custom_spans, list(
@@ -138,21 +140,25 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 	 * However, I think the signal can only have one language
 	 * So, the lowest bit set within $language overrides any higher ones that are set.
 	 */
-	interpreter.SetVar("languages", new /datum/n_enum(list(
-		"human" = HUMAN,
-		"monkey" = MONKEY,
-		"robot" = ROBOT,
-		"draconic" = DRACONIC,
-		"beachtounge" = BEACHTONGUE,
-		"sylvan" = SYLVAN,
-		"etherean" = ETHEREAN,
-		"bonespeak" = BONE,
-		"mothian" = MOTH,
-		"cat" = CAT,
-		"ash" = ASH_TONGUE,
-		"torii" = TORII,
-		"uncommon" = UNCOMMON,
-	)))
+	interpreter.SetVar( // please also update tgui\packages\tgui\interfaces\NTSLCoding.tsx if you touch this.
+		"languages", new /datum/n_enum(list(
+			"common" = COMMON,
+			"monkey" = MONKEY,
+			"robot" = ROBOT,
+			"draconic" = DRACONIC,
+			"beachtounge" = BEACHTONGUE,
+			"sylvan" = SYLVAN,
+			"voltaic" = VOLTAIC,
+			"calcic" = CALCIC,
+			"moffic" = MOTH,
+			"ash" = ASH_TONGUE,
+			"yangyu" = YANGYU,
+			"uncommon" = UNCOMMON,
+			"goblin" = GOBLIN,
+			"nekomimetic" = FELINID,
+			"slime" = SLIME,
+		))
+	)
 
 	interpreter.Run() // run the thing
 
@@ -177,7 +183,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 	var/oldlangbits
 	switch(oldlang)
 		if(/datum/language/common)
-			oldlangbits = HUMAN
+			oldlangbits = COMMON
 		if(/datum/language/monkey)
 			oldlangbits = MONKEY
 		if(/datum/language/machine)
@@ -189,19 +195,23 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 		if(/datum/language/sylvan)
 			oldlangbits = SYLVAN
 		if(/datum/language/voltaic)
-			oldlangbits = ETHEREAN
+			oldlangbits = VOLTAIC
 		if(/datum/language/calcic)
-			oldlangbits = BONE
+			oldlangbits = CALCIC
 		if(/datum/language/moffic)
 			oldlangbits = MOTH
-		if(/datum/language/nekomimetic)
-			oldlangbits = CAT
 		if(/datum/language/ashtongue)
 			oldlangbits = ASH_TONGUE
 		if(/datum/language/yangyu)
-			oldlangbits = TORII
+			oldlangbits = YANGYU
 		if(/datum/language/uncommon)
 			oldlangbits = UNCOMMON
+		if(/datum/language/goblin)
+			oldlangbits = GOBLIN
+		if(/datum/language/nekomimetic)
+			oldlangbits = FELINID
+		if(/datum/language/slime)
+			oldlangbits = SLIME
 
 	// Signal data
 	var/datum/n_struct/signal/script_signal = new(list(
@@ -281,7 +291,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 		"job" = "",
 		"pass" = TRUE,
 		"filters" = list(),
-		"language" = HUMAN,
+		"language" = COMMON,
 		"say" = "says",
 		"ask" = "asks",
 		"yell" = "yells",
@@ -306,6 +316,8 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 		S.properties["source"] = params[3]
 	if(length(params) >= 4)
 		S.properties["job"] = params[4]
+	if(length(params) >= 5)
+		S.properties["filters"] = params[5]
 	return S
 
 
@@ -319,7 +331,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 		return langbits
 
 	switch(langbits)
-		if(HUMAN)
+		if(COMMON)
 			return /datum/language/common
 		if(MONKEY)
 			return /datum/language/monkey
@@ -331,15 +343,26 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 			return /datum/language/beachbum
 		if(SYLVAN)
 			return /datum/language/sylvan
-		if(ETHEREAN)
+		if(VOLTAIC)
 			return /datum/language/voltaic
-		if(BONE)
+		if(CALCIC)
 			return /datum/language/calcic
 		if(MOTH)
 			return /datum/language/moffic
-		if(CAT)
+		if(ASH_TONGUE)
+			return /datum/language/ashtongue
+		if(YANGYU)
+			return /datum/language/yangyu
+		if(UNCOMMON)
+			return /datum/language/uncommon
+		if(GOBLIN)
+			return /datum/language/goblin
+		if(FELINID)
 			return /datum/language/nekomimetic
+		if(SLIME)
+			return /datum/language/slime
 
+///Stores data from the script to use between radio messages.
 /datum/n_function/default/mem
 	name = "mem"
 	interp_type = /datum/n_Interpreter/TCS_Interpreter
@@ -362,6 +385,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 			S.memory[address] = value
 			return TRUE
 
+///Wipes a memory list.
 /datum/n_function/default/clearmem
 	name = "clearmem"
 	interp_type = /datum/n_Interpreter/TCS_Interpreter
@@ -371,6 +395,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 	S.memory = list()
 	return TRUE
 
+///Sends a signal (like remote signallers), first param is the Frequency, second param is the Code.
 /datum/n_function/default/remote_signal
 	name = "remote_signal"
 	interp_type = /datum/n_Interpreter/TCS_Interpreter
@@ -409,6 +434,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 
 		message_admins("Telecomms server \"[S.id]\" sent a signal command, which was triggered by NTSL<B>: </B> [format_frequency(freq)]/[code]")
 
+///Broadcasts a message to the radio.
 /datum/n_function/default/broadcast
 	name = "broadcast"
 	interp_type = /datum/n_Interpreter/TCS_Interpreter
@@ -424,7 +450,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 	var/freq = script_signal.get_clean_property("freq")
 	var/source = script_signal.get_clean_property("source")
 	var/job = script_signal.get_clean_property("job")
-	var/spans = script_signal.get_clean_property("filters")
+	var/list/spans = script_signal.get_clean_property("filters")
 	var/say = script_signal.get_clean_property("say")
 	var/ask = script_signal.get_clean_property("ask")
 	var/yell = script_signal.get_clean_property("yell")
@@ -505,16 +531,18 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 
 #undef SIGNAL_COOLDOWN
 #undef MAX_MEM_VARS
-#undef HUMAN
+#undef COMMON
 #undef MONKEY
 #undef ROBOT
 #undef DRACONIC
 #undef BEACHTONGUE
 #undef SYLVAN
-#undef ETHEREAN
-#undef BONE
+#undef VOLTAIC
+#undef CALCIC
 #undef MOTH
-#undef CAT
 #undef ASH_TONGUE
-#undef TORII
+#undef YANGYU
 #undef UNCOMMON
+#undef GOBLIN
+#undef FELINID
+#undef SLIME

@@ -1,4 +1,4 @@
-import { FeatureChoiced, FeatureDropdownInput } from '../base';
+import { type FeatureChoiced, FeatureDropdownInput } from '../base';
 
 export const pride_pin: FeatureChoiced = {
   name: 'Pride Pin',

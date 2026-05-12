@@ -4293,8 +4293,6 @@
 "XU" = (
 /obj/machinery/light/small/directional/west,
 /obj/machinery/firealarm/directional/west,
-/obj/machinery/light/small/directional/west,
-/obj/machinery/firealarm/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 9
 	},

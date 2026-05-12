@@ -49,6 +49,16 @@
 		drift_direction = turn(drift_direction, 180)
 		return
 
+	// if we drift into a wall or groundless, try to keep going ahead until we hit a normal open turf, up to 3 times.
+	if(!force)
+		var/safety = 3
+		while((destination.density || isgroundlessturf(destination)) && safety > 0)
+			safety--
+			var/new_destination = get_step(destination, drift_direction)
+			if(!new_destination || is_edge_or_blacklist(new_destination))
+				break
+			destination = new_destination
+
 	center.relocate(destination.x, destination.y, destination.z)
 
 	///if we are end of round or pre round no point in checking vents or dousing rods. As latter there will never be any and former doesn't matter as rounds over.
@@ -188,8 +198,7 @@
 	var/message
 	if(heat > SUBCALL_HEATCOST * subcalls)
 		message = "Big Hotspot event triggered at [AREACOORD(calculation_point)] in [area_name_string] with a heat value of [heat]"
-		spawn(3 SECONDS)
-			after_move_effect(subcalls++, heat - ((SUBCALL_HEATCOST + 500) * subcalls))
+		addtimer(CALLBACK(src, PROC_REF(after_move_effect), subcalls++, heat - ((SUBCALL_HEATCOST + 500) * subcalls)), 3 SECONDS)
 	else
 		message = "Small Hotspot event triggered at [AREACOORD(calculation_point)] in [area_name_string] with a heat value of [heat]"
 

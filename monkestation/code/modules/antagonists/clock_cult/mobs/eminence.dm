@@ -8,7 +8,6 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	icon_state = "eminence"
 	mob_biotypes = MOB_SPIRIT
 	mouse_opacity = MOUSE_OPACITY_ICON
-	move_on_shuttle = TRUE
 	invisibility = INVISIBILITY_OBSERVER
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -26,6 +25,19 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	lighting_cutoff_red = 35
 	lighting_cutoff_green = 20
 	lighting_cutoff_blue = 0
+	///The list of actions we are granted, this REALLY should only be used once in a round so im not going to static it
+	var/list/granted_actions = list(
+		/datum/action/innate/clockcult/space_fold,
+		/datum/action/cooldown/clock_cult/eminence/purge_reagents,
+		/datum/action/cooldown/clock_cult/eminence/linked_abscond,
+		/datum/action/innate/clockcult/teleport_to_servant,
+		/datum/action/innate/clockcult/teleport_to_station,
+		/datum/action/innate/clockcult/eminence_abscond,
+		/datum/action/innate/clockcult/show_warpable_areas,
+		/datum/action/innate/clockcult/add_warp_area,
+	)
+	///We reference this from outside a bit so it gets its own ref
+	var/datum/action/control_host/cogscarab/control_action
 	///how many cogs we have
 	var/cogs = 0
 	///our interal radio
@@ -42,10 +54,24 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	cogs = GLOB.clock_installed_cogs
 	AddElement(/datum/element/simple_flying)
 	internal_radio = new /obj/item/radio/borg/eminence(src)
-	ADD_TRAIT(src, TRAIT_GODMODE, INNATE_TRAIT)
-	grant_all_languages() //this is appearently an issue, im too lazy to figure it out so im just gonna do this
+	add_traits(list(TRAIT_NO_MINDSWAP, TRAIT_GODMODE, TRAIT_MAGICALLY_PHASED), INNATE_TRAIT)
+	grant_all_languages() //language refactor borked a bunch of stuff so this is needed
+	for(var/datum/action/our_action as anything in granted_actions)
+		our_action = new our_action(src)
+		our_action.Grant(src)
+
+/mob/living/eminence/mind_initialize()
+	. = ..()
+	if(control_action)
+		return
+
+	control_action = new(src)
+	control_action.Grant(src)
 
 /mob/living/eminence/Destroy()
+	QDEL_LIST(actions)
+	QDEL_NULL(internal_radio)
+	marked_servant = null
 	if(GLOB.current_eminence == src)
 		GLOB.current_eminence = null
 	return ..()
@@ -59,7 +85,6 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	forceMove(old_loc)
 	return FALSE
 
-
 /mob/living/eminence/ClickOn(atom/clicked_on, params)
 	. = ..()
 	clicked_on.eminence_act(src)
@@ -69,20 +94,20 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 		return
 
 	if(src.client)
-		if(client.prefs.muted & MUTE_IC)
+		if(client?.prefs.muted & MUTE_IC)
 			to_chat(src, span_boldwarning("You cannot send IC messages (muted)."))
 			return
-		if(!(ignore_spam || forced) && src.client.handle_spam_prevention(message,MUTE_IC))
+		if(!(ignore_spam || forced) && src.client?.handle_spam_prevention(message, MUTE_IC))
 			return
 
 	if(stat)
 		return
 
 	if(COOLDOWN_FINISHED(src, command_sound_cooldown))
-		send_clock_message(src, span_bigbrass(message), sent_sound = 'monkestation/sound/effects/eminence_command.ogg')
-		COOLDOWN_START(src, command_sound_cooldown, 40 SECONDS)
+		send_clock_message(span_bigbrass(message), src, sent_sound = 'monkestation/sound/effects/eminence_command.ogg')
+		COOLDOWN_START(src, command_sound_cooldown, 30 SECONDS)
 	else
-		send_clock_message(src, span_bigbrass(message))
+		send_clock_message(span_bigbrass(message), src)
 
 /mob/living/eminence/get_status_tab_items()
 	. = ..()
@@ -117,7 +142,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 /mob/living/eminence/dust(just_ash, drop_items, force)
 	if(!force)
 		return FALSE
-	. = ..()
+	return ..()
 
 /mob/living/eminence/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE)
 	return
@@ -128,7 +153,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 
 /mob/living/eminence_act(mob/living/eminence/user)
 	. = ..()
-	if(IS_CLOCK(src))
+	if(user != src && IS_CLOCK(src))
 		user.marked_servant = WEAKREF(src)
 		to_chat(user, "You mark [src].")
 

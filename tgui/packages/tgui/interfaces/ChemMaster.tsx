@@ -1,20 +1,20 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { capitalize } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import {
   AnimatedNumber,
   Box,
   Button,
+  ColorBox,
+  Divider,
   DmIcon,
   Icon,
-  Section,
-  Table,
-  NumberInput,
   LabeledList,
-  ColorBox,
+  NumberInput,
   ProgressBar,
+  Section,
   Stack,
-  Divider,
+  Table,
 } from '../components';
 import { Window } from '../layouts';
 

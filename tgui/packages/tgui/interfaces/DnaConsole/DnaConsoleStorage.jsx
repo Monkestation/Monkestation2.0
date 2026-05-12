@@ -4,13 +4,11 @@ import {
   Box,
   Button,
   Collapsible,
-  Stack,
   LabeledList,
   Section,
+  Stack,
   Tabs,
 } from '../../components';
-import { GeneticMakeupInfo } from './GeneticMakeupInfo';
-import { MutationInfo } from './MutationInfo';
 import {
   STORAGE_CONS_SUBMODE_CHROMOSOMES,
   STORAGE_CONS_SUBMODE_MUTATIONS,
@@ -20,6 +18,8 @@ import {
   STORAGE_MODE_CONSOLE,
   STORAGE_MODE_DISK,
 } from './constants';
+import { GeneticMakeupInfo } from './GeneticMakeupInfo';
+import { MutationInfo } from './MutationInfo';
 
 export const DnaConsoleStorage = (props) => {
   const { data, act } = useBackend();

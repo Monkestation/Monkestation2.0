@@ -8,10 +8,13 @@
 	RegisterSignals(src, list(
 		SIGNAL_ADDTRAIT(TRAIT_FAKEDEATH),
 		SIGNAL_REMOVETRAIT(TRAIT_FAKEDEATH),
-
-		SIGNAL_ADDTRAIT(TRAIT_DEFIB_BLACKLISTED),
-		SIGNAL_REMOVETRAIT(TRAIT_DEFIB_BLACKLISTED),
 	), PROC_REF(update_medhud_on_signal))
+
+	if(mind)
+		RegisterSignals(mind, list(
+			SIGNAL_ADDTRAIT(TRAIT_DEFIB_BLACKLISTED),
+			SIGNAL_REMOVETRAIT(TRAIT_DEFIB_BLACKLISTED),
+		), PROC_REF(update_medhud_on_signal))
 
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED), PROC_REF(on_immobilized_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_IMMOBILIZED), PROC_REF(on_immobilized_trait_loss))
@@ -74,13 +77,11 @@
 	if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
 		set_combat_indicator(FALSE)
 		become_blind(UNCONSCIOUS_TRAIT)
-		set_pain_mod(PAIN_MOD_KOD, 0.8)
 		add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_KNOCKEDOUT)
 		update_body() // Update eyelids
 
 	else
 		cure_blind(UNCONSCIOUS_TRAIT)
-		unset_pain_mod(PAIN_MOD_KOD)
 		remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_KNOCKEDOUT)
 		update_body() // Update eyelids
 

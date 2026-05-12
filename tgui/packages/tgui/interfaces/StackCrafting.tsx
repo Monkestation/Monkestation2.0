@@ -1,6 +1,6 @@
 import { clamp } from 'common/math';
 import { createSearch, toTitleCase } from 'common/string';
-import React, { ReactNode, useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import { useBackend } from '../backend';
 import {
   Box,

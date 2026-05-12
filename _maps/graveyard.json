@@ -19,8 +19,7 @@
 			"Mining": true,
 			"Linkage": "Cross",
 			"Gravity": true,
-			"No Parallax": true,
-			"Daycycle": false
+			"No Parallax": true
 		},
 		{
 			"Down": true,
@@ -28,8 +27,7 @@
 			"Mining": false,
 			"Linkage": "Cross",
 			"Gravity": true,
-			"No Parallax": true,
-			"Daycycle": true
+			"No Parallax": true
 		}
 	],
 	"minetype": "none",

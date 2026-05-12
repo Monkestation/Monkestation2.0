@@ -563,11 +563,14 @@
 
 	our_plant.investigate_log("squash-teleported [key_name(target)] at [AREACOORD(target)]. Last touched by: [our_plant.fingerprintslast].", INVESTIGATE_BOTANY)
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	var/teleport_radius = max(round(CAPPED_POTENCY(our_seed) / 10), 1)
+	var/teleport_radius = max(round(CAPPED_POTENCY(our_seed) / 20), 1)
 	var/turf/T = get_turf(target)
 	new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
 	do_teleport(target, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
-
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		C.adjust_disgust(15)	//Two teleports is safe
+		C.adjust_confusion(3 SECONDS)
 /*
  * When slipped on, makes the target teleport and either teleport the source again or delete it.
  *
@@ -579,7 +582,7 @@
 
 	our_plant.investigate_log("slip-teleported [key_name(target)] at [AREACOORD(target)]. Last touched by: [our_plant.fingerprintslast].", INVESTIGATE_BOTANY)
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	var/teleport_radius = max(round(CAPPED_POTENCY(our_seed) / 10), 1)
+	var/teleport_radius = max(round(CAPPED_POTENCY(our_seed) / 20), 1)
 	var/turf/T = get_turf(target)
 	to_chat(target, span_warning("You slip through spacetime!"))
 	do_teleport(target, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
@@ -750,7 +753,7 @@
 	var/mob/living/living_target = target
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	if(living_target.reagents && living_target.can_inject())
-		var/injecting_amount = qp_sigmoid(2000, 840, our_seed.potency)
+		var/injecting_amount = qp_sigmoid(2000, 50, our_seed.potency)
 		//420 units at 2000 potency
 		//one 5% reagent would fill a standard plant completely at 2000 potency
 		our_plant.reagents.trans_to(living_target, injecting_amount, methods = INJECT)
@@ -972,12 +975,29 @@
 		return
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	if(our_seed.get_gene(/datum/plant_gene/trait/stinging))
-		our_plant.embedding = EMBED_POINTY
-	else
-		our_plant.embedding = EMBED_HARMLESS
-	our_plant.updateEmbedding()
 	our_plant.throwforce = qp_sigmoid(1000, 50, our_seed.potency)
+	var/datum/embedding/plant_embed = our_plant.get_embed()
+	if (!plant_embed)
+		if(our_seed.get_gene(/datum/plant_gene/trait/stinging))
+			our_plant.set_embed(/datum/embedding/spiky_plant)
+		else
+			our_plant.set_embed(/datum/embedding/sticky_plant)
+		return
+
+	plant_embed.ignore_throwspeed_threshold = TRUE
+	if(our_seed.get_gene(/datum/plant_gene/trait/stinging))
+		return
+
+	plant_embed.pain_mult = 0
+	plant_embed.jostle_pain_mult = 0
+
+/datum/embedding/sticky_plant
+	pain_mult = 0
+	jostle_pain_mult = 0
+	ignore_throwspeed_threshold = TRUE
+
+/datum/embedding/spiky_plant
+	ignore_throwspeed_threshold = TRUE
 
 /**
  * This trait automatically heats up the plant's chemical contents when harvested.

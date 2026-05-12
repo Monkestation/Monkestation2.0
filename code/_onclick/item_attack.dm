@@ -298,7 +298,7 @@
 	if(final_force <= 0)
 		return 0
 
-	var/damage = take_damage(final_force, attacking_item.damtype, MELEE, 1, get_dir(src, user))
+	var/damage = take_damage(final_force, attacking_item.damtype, MELEE, TRUE, get_dir(src, user))
 	//only witnesses close by and the victim see a hit message.
 	user.visible_message(span_danger("[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
 		span_danger("You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
@@ -482,6 +482,11 @@
 			return clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
 /mob/living/proc/send_item_attack_message(obj/item/weapon, mob/living/user, hit_area, def_zone)
+	if(SEND_SIGNAL(weapon, COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT, src, user) & SIGNAL_MESSAGE_MODIFIED)
+		return TRUE
+	if(SEND_SIGNAL(src, COMSIG_SEND_ITEM_ATTACK_MESSAGE_CARBON, weapon, user) & SIGNAL_MESSAGE_MODIFIED)
+		return TRUE
+
 	if(!weapon.force && !length(weapon.attack_verb_simple) && !length(weapon.attack_verb_continuous))
 		return
 

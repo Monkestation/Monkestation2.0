@@ -25,17 +25,17 @@
 		break
 
 /obj/machinery/computer/turbine_computer/multitool_act(mob/living/user, obj/item/tool)
-	var/obj/item/multitool/multitool = tool
-	if(!istype(multitool.buffer, /obj/machinery/power/turbine/core_rotor))
-		to_chat(user, span_notice("Wrong machine type in [multitool] buffer..."))
+	var/datum/buffer = multitool_get_buffer(tool)
+	if(!istype(buffer, /obj/machinery/power/turbine/core_rotor))
+		to_chat(user, span_notice("Wrong machine type in [tool] buffer..."))
 		return
 	if(turbine_core)
 		to_chat(user, span_notice("Changing [src] bluespace network..."))
 	if(!do_after(user, 0.2 SECONDS, src))
 		return
 	playsound(get_turf(user), 'sound/machines/click.ogg', 10, TRUE)
-	register_machine(multitool.buffer)
-	to_chat(user, span_notice("You link [src] to the console in [multitool]'s buffer."))
+	register_machine(buffer)
+	to_chat(user, span_notice("You link [src] to the console in [tool]'s buffer."))
 	return TRUE
 
 /obj/machinery/computer/turbine_computer/proc/register_machine(machine)

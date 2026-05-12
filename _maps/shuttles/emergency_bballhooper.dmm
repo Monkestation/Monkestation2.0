@@ -629,34 +629,34 @@
 /area/shuttle/escape)
 "JR" = (
 /obj/structure/table,
-/obj/item/clothing/head/utility/hardhat/red{
+/obj/item/clothing/head/utility/hardhat/fire{
 	name = "A La Penners' Helmet";
 	pixel_x = 8;
 	pixel_y = -5
 	},
 /obj/machinery/light/cold/directional/north,
-/obj/item/clothing/head/utility/hardhat/red{
+/obj/item/clothing/head/utility/hardhat/fire{
 	name = "A La Penners' Helmet";
 	pixel_x = 8;
 	pixel_y = 1
 	},
-/obj/item/clothing/head/utility/hardhat/red{
+/obj/item/clothing/head/utility/hardhat/fire{
 	name = "A La Penners' Helmet";
 	pixel_x = 8;
 	pixel_y = 7
 	},
 /obj/machinery/status_display/evac/directional/north,
-/obj/item/clothing/head/utility/hardhat/red{
+/obj/item/clothing/head/utility/hardhat/fire{
 	name = "A La Penners' Helmet";
 	pixel_x = -7;
 	pixel_y = -5
 	},
-/obj/item/clothing/head/utility/hardhat/red{
+/obj/item/clothing/head/utility/hardhat/fire{
 	name = "A La Penners' Helmet";
 	pixel_x = -7;
 	pixel_y = 1
 	},
-/obj/item/clothing/head/utility/hardhat/red{
+/obj/item/clothing/head/utility/hardhat/fire{
 	name = "A La Penners' Helmet";
 	pixel_x = -7;
 	pixel_y = 7

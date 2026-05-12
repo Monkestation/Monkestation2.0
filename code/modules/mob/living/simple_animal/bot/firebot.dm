@@ -37,6 +37,9 @@
 	var/extinguish_fires = TRUE
 	var/stationary_mode = FALSE
 
+	/// the type of hardhat this firebot was made with so we know what to drop when it breaks
+	var/hardhat_type = /obj/item/clothing/head/utility/hardhat
+
 /mob/living/simple_animal/bot/firebot/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
@@ -297,7 +300,7 @@
 	var/atom/Tsec = drop_location()
 
 	new /obj/item/assembly/prox_sensor(Tsec)
-	new /obj/item/clothing/head/utility/hardhat/red(Tsec)
+	new hardhat_type(Tsec)
 
 	var/turf/T = get_turf(Tsec)
 

@@ -70,7 +70,7 @@
 	database_id = MEDAL_CLEANBOSS
 
 /datum/award/achievement/misc/rule8
-	name = "Rule 3"
+	name = "Rule 1" // formerly known as rule 3, but we made it #1 ig
 	desc = "Call an admin this is ILLEGAL!!"
 	database_id = MEDAL_RULE8 //blame tg lmao
 	icon_state = "rule8"
@@ -147,10 +147,10 @@
 	database_id = MEDAL_ARCHMAGE
 	icon_state = "archmage"
 
-/datum/award/achievement/misc/knock_ascension
+/datum/award/achievement/misc/lock_ascension
 	name = "Secrets behind the Spider Door"
 	desc = "You managed to open a gate into the mansus."
-	database_id = MEDAL_KNOCK_ASCENSION
+	database_id = MEDAL_LOCK_ASCENSION
 	icon_state = "knockascend"
 
 /datum/award/achievement/misc/toolbox_soul

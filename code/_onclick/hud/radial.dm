@@ -274,10 +274,10 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	selected_choice = choices_values[choice_id]
 
 /datum/radial_menu/proc/get_next_id()
-	return "c_[choices.len]"
+	return "c_[length(choices)]"
 
 /datum/radial_menu/proc/set_choices(list/new_choices, use_tooltips, set_page = 1)
-	if(choices.len)
+	if(length(choices))
 		Reset()
 	for(var/E in new_choices)
 		var/id = get_next_id()
@@ -288,7 +288,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			if(I)
 				choices_icons[id] = I
 
-			if (istype(new_choices[E], /datum/radial_menu_choice))
+			if(istype(new_choices[E], /datum/radial_menu_choice))
 				choice_datums[id] = new_choices[E]
 	setup_menu(use_tooltips, set_page)
 

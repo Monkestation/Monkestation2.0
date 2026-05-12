@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { BlockQuote, Button, Dropdown, Section, Stack } from '../components';
@@ -91,9 +91,7 @@ export const SparringContract = (props) => {
                     selected={weaponlist[weapon - 1]}
                     options={weaponlist}
                     onSelected={(value) =>
-                      setWeapon(
-                        weaponlist.findIndex((title) => title === value) + 1,
-                      )
+                      setWeapon(weaponlist.indexOf(value) + 1)
                     }
                   />
                 </Stack.Item>
@@ -130,9 +128,7 @@ export const SparringContract = (props) => {
                     selected={stakelist[stakes - 1]}
                     options={stakelist}
                     onSelected={(value) =>
-                      setStakes(
-                        stakelist.findIndex((title) => title === value) + 1,
-                      )
+                      setStakes(stakelist.indexOf(value) + 1)
                     }
                   />
                 </Stack.Item>
@@ -210,7 +206,7 @@ export const SparringContract = (props) => {
                   <Button
                     tooltip={
                       (in_area &&
-                        'Both participants are present in the ' + area + '.') ||
+                        `Both participants are present in the ${area}.`) ||
                       'Both participants need to be in the arena!'
                     }
                     color={(in_area && 'green') || 'red'}

@@ -86,7 +86,9 @@
 	. = ..()
 	var/obj/item/paper/toppaper = toppaper_ref?.resolve()
 	if(toppaper)
-		. += toppaper.icon_state
+		var/mutable_appearance/paper_overlay = mutable_appearance(toppaper.icon, toppaper.icon_state)
+		paper_overlay.color = toppaper.color
+		. += paper_overlay
 		. += toppaper.overlays
 	if(!integrated_pen && pen) //monkestation edit
 		. += "clipboard_pen"
