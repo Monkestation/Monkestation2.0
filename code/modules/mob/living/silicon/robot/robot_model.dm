@@ -802,6 +802,9 @@
 
 /datum/action/cooldown/cyborg_miner_shield/Activate()
 	var/mob/living/silicon/robot/borg = owner
+	if(!active && !borg.cell.charge())
+		borg.balloon_alert(borg, "no charge!")
+		return
 	active = !active
 	if(active)
 		playsound(borg, 'sound/mecha/mech_shield_raise.ogg', 50, FALSE)

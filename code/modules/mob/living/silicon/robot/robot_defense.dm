@@ -440,7 +440,5 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	borg.cell.use(damage * (STANDARD_CELL_CHARGE / 15), force = TRUE)
 	damage *= 0.5
 	if(!borg.cell.charge())
-		shield.active = FALSE
-		playsound(src, 'sound/mecha/mech_shield_drop.ogg', 50, FALSE)
-		borg.update_appearance()
+		shield.Activate() // Turns it off.
 	return ..()
