@@ -1,6 +1,0 @@
-author: "TheColorCyan"
-delete-after: True
-changes:
-  - balance: "bloodsuckers can no longer convert mindshielded people or remove their mindshield"
-  - balance: "darkspawn can no longer thrall mindshielded people"
-  - balance: "clock cultists, blood cultists and darkspawn thralls resist their mindshields to indicate that mindshields dont actually deconvert them"

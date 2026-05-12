@@ -4,7 +4,7 @@
 	tip = "Make your weapons more powerful by enchanting them with stargazers."
 	button_icon_state = "Stargazer"
 	power_cost = STANDARD_CELL_CHARGE * 0.25
-	invocation_time = 1 MINUTES
+	invocation_time = 45 SECONDS
 	invocation_text = list("The light of Engine shall empower my armaments!")
 	summoned_structure = /obj/structure/destructible/clockwork/gear_base/stargazer
 	cogs_required = 2

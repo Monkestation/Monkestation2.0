@@ -28,6 +28,7 @@
 #define ROLE_DARKSPAWN_FIGHTER "Fighter"
 #define ROLE_DARKSPAWN_WARLOCK "Warlock"
 #define ROLE_DARKSPAWN_SCOUT "Scout"
+#define ROLE_SPY "Spy"
 
 // Midround roles
 #define ROLE_ABDUCTOR "Abductor"
@@ -165,6 +166,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_ASSAULT_OPERATIVE = 14,
 	ROLE_BLOODLING = 15,
 	ROLE_DARKSPAWN = 14,
+	ROLE_SPY = 0,
 
 	// Midround
 	ROLE_ABDUCTOR = 0,
