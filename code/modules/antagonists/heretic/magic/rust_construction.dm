@@ -9,7 +9,6 @@
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 6 SECONDS
-	unset_after_click = FALSE
 
 	// Both of these are changed in before_cast
 	invocation = "Someone raises a wall of rust."
