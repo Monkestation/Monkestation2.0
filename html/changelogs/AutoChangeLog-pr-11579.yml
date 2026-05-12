@@ -1,0 +1,4 @@
+author: "Shoddd"
+delete-after: True
+changes:
+  - bugfix: "forged and hardened exosuit parts now properly remove added integrity when removed."

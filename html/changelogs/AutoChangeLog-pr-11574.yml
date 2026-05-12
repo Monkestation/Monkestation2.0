@@ -1,0 +1,4 @@
+author: "TheColorCyan"
+delete-after: True
+changes:
+  - bugfix: "fixed any non ballistic mecha weapons not working"
