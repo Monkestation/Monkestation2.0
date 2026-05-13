@@ -250,3 +250,13 @@
   - balance: bingles now have a minimum pop of 35
   TheColorCyan:
   - bugfix: fixed any non ballistic mecha weapons not working
+2026-05-13:
+  TheColorCyan:
+  - bugfix: fixed mobs becoming invisible if they toggled seethrough
+  - bugfix: (vinylspiders) fixes a bug where the quirk menu does not update when adding/removing
+      quirks
+  Vekter, Shodd:
+  - balance: event horizen rifle now requires unregulated bluespace research (behind
+      illegal tech)
+  cark:
+  - rscadd: Added a bunch of new family heirlooms.
