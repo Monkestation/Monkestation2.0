@@ -162,7 +162,7 @@
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEEYES|HIDEMASK
+	flags_inv = HIDEEARS|HIDEHAIR
 	desc_controls = "Alt-Click to flip the visor."
 	var/flipped_visor = FALSE
 
@@ -188,11 +188,11 @@
 	icon_state = base_icon_state
 	if(flipped_visor)
 		flags_cover &= ~(HEADCOVERSEYES|HEADCOVERSMOUTH|PEPPERPROOF)
-		flags_inv &= ~(HIDEFACE|HIDEFACIALHAIR|HIDESNOUT|HIDEEYES|HIDEMASK)
+		flags_inv &= ~(HIDEEARS|HIDEHAIR)
 		playsound(src, SFX_VISOR_DOWN, 20, TRUE, -1)
 	else
 		flags_cover |= (HEADCOVERSEYES|HEADCOVERSMOUTH|PEPPERPROOF)
-		flags_inv |= (HIDEFACE|HIDEFACIALHAIR|HIDESNOUT|HIDEEYES|HIDEMASK)
+		flags_inv |= (HIDEEARS|HIDEHAIR)
 		playsound(src, SFX_VISOR_UP, 20, TRUE, -1)
 	user.update_worn_glasses()
 	update_appearance()
