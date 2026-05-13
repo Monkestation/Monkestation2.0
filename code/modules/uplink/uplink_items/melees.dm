@@ -45,7 +45,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/dualsaber
 	cost = 16
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_SPY)
 
 /datum/uplink_item/melees/doublesword/get_discount_value(discount_type)
 	switch(discount_type)
@@ -81,7 +81,7 @@
 	progression_minimum = 30 MINUTES
 	cost = 12
 	surplus = 30
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
 
 /datum/uplink_item/melees/martialarts/advanced
 	name = "Scroll of the Awakened Dragon"
@@ -91,7 +91,7 @@
 	surplus = 5 // Rare but not impossible.
 	item = /obj/item/book/granter/martial/carp/true
 	lock_other_purchases = TRUE
-	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS)
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS | UPLINK_SPY)
 
 /datum/uplink_item/melees/edagger
 	name = "Energy Dagger"

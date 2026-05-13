@@ -54,3 +54,209 @@
       when getting an another action (e.g. self-repair).
   ercrowther:
   - bugfix: fixed hyposprays deleting containers when in crit
+2026-05-07:
+  Absolucy:
+  - qol: Changed how chat highlights are styled - any color should look good now,
+      regardless of light or dark mode.
+  - refactor: Optimized some code related to the loadout menu/store.
+  Absolucy, Melbert:
+  - refactor: Refactored how deafness is tracked. Please report any weird interactions
+      with sounds, like messages or sfx being missing.
+  - bugfix: Lacking ears and being in hard crit now consistently treats you as "being
+      deaf". This affects a few minor interactions like empath, the jukebox, and sleeping.
+  Ice-Type:
+  - rscadd: Golem shells will now tell ghosts if their creator is an antagonist
+  - rscdel: '"Sentient creature" random events can no longer roll beepskies'
+  LettuceGuardian:
+  - rscadd: Two more reskins for the security and engineering MODsuit.
+  Runian:
+  - image: All hud themes now have their own images for storage which may differ from
+      their previous look.
+  - refactor: Storage's visual portion has been now handled separately as a storage
+      interface.
+  - balance: Cyborg Chameleon Projector can switch to any crew-aligned cyborg model
+      via Right-Click.
+  - balance: Cyborg Chameleon Projector can change their disguise name to a different
+      random name via Ctrl-Click.
+  - bugfix: Cyborg surgery omni-toolset now can pull organs via organ manipulation
+      as intended.
+  Sakaniko:
+  - image: Modified the anime implant cat tail to use the updated sprite that Cat
+      Tail organs use.
+  - image: Ported resprites for 26 different hairstyles. Check the PR for a list.
+  - rscadd: Added 1 new hairstyle - Short Bangs 2.
+  TheColorCyan:
+  - balance: bloodsuckers can no longer convert mindshielded people or remove their
+      mindshield
+  - balance: darkspawn can no longer thrall mindshielded people
+  - balance: clock cultists, blood cultists and darkspawn thralls resist their mindshields
+      to indicate that mindshields dont actually deconvert them
+  - bugfix: fixed being able to stip gauzes and scryers from afar
+  - bugfix: fixed ammo pouch reskins being invisible
+  - bugfix: new osaka sunrise soup is no longer meat type (because it doesnt have
+      meat)
+  - bugfix: alt click now works as a way to get your ID out of a laptop
+  - map: fixed missing wire on tramstation ranching
+  - bugfix: advanced chameleon headset now actually gives you ear protection like
+      it says it does
+  - rscadd: big manipulator circuit can be printed using circuit impriter
+2026-05-08:
+  Absolucy:
+  - rscadd: Added a player count and the IC date/year to the statpanel.
+  Cujo:
+  - rscadd: Medical spray cans can now spray more units at once
+  - bugfix: Ghosts are no longer able to turn on PDAs and laptops
+  LettuceGuardian:
+  - rscadd: NT rep gets a departmental budget card.
+  Mantlecrawler:
+  - bugfix: Hyposprays no longer brick doafters when attempting to draw blood from
+      a living mob
+  Runian:
+  - spellcheck: Laws have been uploaded via the OneHuman law module now end with a
+      period.
+  - spellcheck: Many AI law modules that give a zeroth law have split into multiple
+      short sentences rather than being a single run-on sentence.
+  - bugfix: The ability to locate APCs with an omnitool's multitool for cyborgs have
+      been restored.
+  Sakaniko:
+  - qol: Added an audio notification whenever you receive a law change as AI.
+  - image: Change the AI's law panel to match the rest of the current UI.
+  - image: Adjusted the colour of hacked laws to be easier to see on dark UI.
+  SirNightKnight:
+  - bugfix: fixed white gloves deleting on drop.
+2026-05-10:
+  LettuceGuardian:
+  - rscadd: New balaclava option available at the loadout menu or sec wardrobes.
+  Runian:
+  - rscadd: New AI Malfunctioning Module, Cyborg Code Scrambler. It lets you remotely
+      unlock and hide a cyborg from robotics consoles.
+  Sakaniko:
+  - image: Fixed miscoloured limbs on ornithids.
+  - image: Adjusted some sprites for ornithid legs and arms to look better.
+  - image: Fixed a stray missing pixel on male human torsos.
+2026-05-11:
+  Absolucy, EnterTheJake:
+  - balance: Jetpack module energy drain has been massively reduced.
+  - balance: armor on the Magnate,Safegaurd and sec modsuits has been considerably
+      increased.
+  - balance: 'Sec MOD plates have been transferred from RnD to Cargo.
+
+      balance The Infiltrator MOD now comes with the shock absorption module pre-installed.'
+  - balance: Nukie MODsuits hav a bit more complexity.
+  - bugfix: Nukie MODs now have the same flash protection as the other suits with
+      welding protection.
+  - balance: night visor module comes pre-installed in the syndie mods, no longer
+      consumes complexity,drains less power and doesn't conflict with the other visor
+      MODules.
+  - balance: Combat MODs and RDs now grant earing protection when the suit is active.
+  DaworseplayerEver:
+  - rscadd: Added more Medical supplies in Deep Storage such as a syndicate combat
+      medical kit and a combat surgical kit!
+  - rscadd: Added more items in Deep Storage closet such as operation kits because
+      for some reason the ghost roles lack them.
+  - rscdel: Removed generally crap items out of the base.
+  - rscdel: Removed a syndicate surgical duffle bag kit.
+  - qol: Removed some generally unneeded items like cassette players out of the boxes
+      in Deep Storage.
+  - map: fixed a huge majority of the previously old Deep Storage pipe system which
+      had more than 30-40 percent of all pipes inside a wall. Most are fixed now with
+      only one system of pipes still being in a wall that links to outputting waste
+      gas.
+  - map: added a new Virology and containment unit for Deep Storage, features all
+      the tools needed to operate it.
+  - map: modified the old secured storage into two new chambers in Deep Storage. Classified
+      storage, and Secured Storage each containing their own equipment.
+  - map: modified Medbay by adding upgraded vendors, expanding the space inside deep
+      storage medbay center, and adding additional equipment inside for use.
+  - map: added two syndicate modsuit storage units in Secured Storage of Deep Storage,
+      also moved pretty much everything else that was old into that area.
+  - map: added a small emergency defense armory in Deep storage Classified storage
+      containing a empty syndicate Sol rifle with 2 mags of 30 round sol mags with
+      ammo to boot. Also moved the other sensitive equipment like headsets and ammo
+      inside which is walled off with reinforced walls and reinforced plasma windows.
+  - map: added extra Deep storage RTG to balance the extra use of power.
+  - map: expanded Deep Storage Xenobio by giving it an extra pen as well as smoothing
+      out the place.
+  - rscadd: more food in the kitchen to cook with.
+  - map: modified Deep Storage dorms to feature beds and bedsheets incase players
+      need to SSD or do whatever.
+  - qol: Changed much of the access in Deep Storage to feature syndicate access such
+      as air alarms and certain lockers and storages. No more will you have your shit
+      stolen or be locked out of.
+  - rscdel: Deleted alot of flares and flashlights that weren't needed and replaced
+      much of the flares with boxed ones instead.
+  - map: Deep storage engineering now has a plethora of actual tools and advanced
+      firefighting supplies!
+  - rscadd: More frontier items to build and use it with!
+  Mantle, Melbert:
+  - rscadd: Ported Spy Thiefs from TG, a lower threat antag, which are inspired by
+      the antagonist of the same name on goon. Spies run around and steal stuff, in
+      exchange for rewards, but get no other powers to help them do so.
+  - bugfix: Stealing (for progtot, or spys) the cargo granted stamp now actually works.
+  Mushyyyyy:
+  - bugfix: https://github.com/Monkestation/Monkestation2.0/issues/11544 Phazon construction
+      step fixed
+  TheColorCyan:
+  - bugfix: (Hatterhat) Projectile damage multipliers on guns are now reflected in
+      their combat information.
+  - admin: (Hatterhat) Admins can now make a gun's fired projectiles better or worse
+      at wounding by changing the gun's projectile_wound_bonus. Surely this will not
+      have any repercussions.
+  - qol: (GPeckman) Clothing now tells you if it is pressure-proof and insulated enough
+      for spacewalking when examining it.
+  - qol: (MrMelbert) The way examine looks has been updated.
+  - qol: '(MrMelbert) A person''s ID card no longer appears with a big icon on examine.
+      You can now click on their ID card (in the chat box) to get a bigger picture
+      of it, as well as information about them.
+
+      refactor:(MrMelbert)  Much of examine backend code has been refactored, report
+      any odd looking text.'
+  - refactor: (SmArtKar) Refactored how examines display item properties. A lot of
+      them are now displayed as tags that you can hover over to receive details about,
+      like item size, resistances and materials an object is made of.
+  - qol: (SmArtKar) Protection classes now better elaborate on thermal resistances
+      of items, displaying the exact temperatures they can protect you from.
+  - qol: (SmArtKar) Improved descriptions on size tooltips to explain where the item
+      can be stored
+  big-boss-crate:
+  - rscadd: added a multitude of cosmetic outfits from LC13 (most EGO sprites done
+      by InsightfulParasite, thank you to them)
+  - rscadd: added the EGOdrobe, a new vending machine whose restock you can buy through
+      a hacked cargo console in the Imports section (this is what sells you the new
+      outfits)
+  wraith-54321:
+  - balance: Takes wizard wand belt cost back down to 2 points but makes it so you
+      can only select 5 of the 7 wand types.
+  - balance: Makes implanted regen cores not be an aheal while off lavaland.
+  - balance: Reduces berserker antimagic to only be ANTIMAGIC_MIND.
+  - balance: Makes space dragons heal the full HP of mobs they eat.
+  - balance: Reduces crew Quarad drum magazine capacity from 120 to 100.(might take
+      it down to 80)
+  - balance: Reduces Quarad bonus damage from 2.5 to 1.5.
+  - balance: Reworks the durand shield to instead be an additional max stat armor
+      that is hit before the mech.
+  - balance: Cuts mech LMG ammo down by 2/3, it could fire nonstop for 6 minutes before.
+  - balance: Eminence beacons no longer dust the person who uses it(put them onto
+      a vitality sigil to ghost offer)
+  - balance: Slab scriptures(besides vanguard) no longer have a time limit to use
+      them after invocation.
+  - balance: Clockwork hammer knockback now has a 15 second cooldown.
+2026-05-12:
+  LettuceGuardian:
+  - bugfix: Blueshield MODsuit now comes with a hearing protection module.
+  Shoddd:
+  - bugfix: forged and hardened exosuit parts now properly remove added integrity
+      when removed.
+  - balance: bingles now have a minimum pop of 35
+  TheColorCyan:
+  - bugfix: fixed any non ballistic mecha weapons not working
+2026-05-13:
+  TheColorCyan:
+  - bugfix: fixed mobs becoming invisible if they toggled seethrough
+  - bugfix: (vinylspiders) fixes a bug where the quirk menu does not update when adding/removing
+      quirks
+  Vekter, Shodd:
+  - balance: event horizen rifle now requires unregulated bluespace research (behind
+      illegal tech)
+  cark:
+  - rscadd: Added a bunch of new family heirlooms.

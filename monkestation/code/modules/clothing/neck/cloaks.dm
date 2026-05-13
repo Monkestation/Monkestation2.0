@@ -279,3 +279,7 @@
 	icon_state = "straw_coat"
 	worn_icon_state = "straw_coat"
 
+/obj/item/clothing/neck/cloak/arbiter
+	name = "arbiter's cloak"
+	desc = "A fancy cloak worn by the Arbiters of the Head."
+	icon_state = "arbitercloak"

@@ -1,5 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - image: "All hud themes now have their own images for storage which may differ from their previous look."
-  - refactor: "Storage's visual portion has been now handled separately as a storage interface."
