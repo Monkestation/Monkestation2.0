@@ -49,7 +49,7 @@
 		return FALSE
 	if (!owner.Adjacent(target))
 		return FALSE
-	if(target.type in blacklist)
+	if(is_type_in_list(target, blacklist))
 		owner.balloon_alert(owner, "invalid target!")
 		return FALSE
 	return ..()
