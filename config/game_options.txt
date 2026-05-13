@@ -299,7 +299,6 @@ LAW_WEIGHT corporate,5
 LAW_WEIGHT hippocratic,5
 LAW_WEIGHT maintain,5
 LAW_WEIGHT liveandletlive,5
-LAW_WEIGHT peacekeeper,5
 LAW_WEIGHT ten_commandments,5
 LAW_WEIGHT nutimov,5
 
