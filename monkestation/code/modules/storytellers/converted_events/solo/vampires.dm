@@ -63,11 +63,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/vampire_amt = 0
-	for(var/datum/antagonist/vampire/vampire as anything in GLOB.all_vampires)
-		var/mob/body = vampire.owner?.current
-		if(!vampire.final_death && !QDELETED(body))
-			vampire_amt++
+	var/vampire_amt = count_vampires()
 	var/crew_amt = SSgamemode.get_correct_popcount() - vampire_amt
 	if(crew_amt < 25 && vampire_amt > 0)
 		return FALSE

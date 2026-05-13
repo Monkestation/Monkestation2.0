@@ -443,3 +443,11 @@ GLOBAL_VAR_INIT(highest_vassal_cap, 1)
 
 	GLOB.highest_vassal_cap = max(GLOB.highest_vassal_cap, .)
 	return GLOB.highest_vassal_cap
+
+/proc/count_vampires()
+	. = 0
+	for(var/datum/antagonist/vampire/vampire as anything in GLOB.all_vampires)
+		var/mob/body = vampire.owner?.current
+		if(vampire.final_death || QDELETED(body) || !body.key)
+			continue
+		.++
