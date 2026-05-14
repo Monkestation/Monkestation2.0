@@ -1,0 +1,5 @@
+author: "Runian"
+delete-after: True
+changes:
+  - rscadd: "Medical cyborg surgical database upgrade has been added."
+  - rscdel: "Medical cyborg surgical processor upgrade has been removed."
