@@ -380,15 +380,15 @@
 			"src=[REF(src)];track_cyborg=[text_ref(connected_robot)]",
 		))
 		// monkestation edit start PR #5133
-		var/connected_ipc_amt = length(connected_ipcs)
-		if(connected_ipc_amt)
-			. += "Connected IPCs: [connected_ipc_amt]"
-			for(var/mob/living/carbon/human/connected_ipc as anything in connected_ipcs)
-				var/robot_status = "Nominal"
-				if(connected_ipc.stat != CONSCIOUS || !connected_ipc.client)
-					robot_status = "OFFLINE"
-				//Name. Area, and Status! Everything an AI wants to know about its TV-heads!
-				. += "[connected_ipc.name] | S.Integrity: [connected_ipc.health]% | Loc: [get_area_name(connected_ipc, TRUE)] | Status: [robot_status]"
+	var/connected_ipc_amt = length(connected_ipcs)
+	if(connected_ipc_amt)
+		. += "Connected IPCs: [connected_ipc_amt]"
+		for(var/mob/living/carbon/human/connected_ipc as anything in connected_ipcs)
+			var/robot_status = "Nominal"
+			if(connected_ipc.stat != CONSCIOUS || !connected_ipc.client)
+				robot_status = "OFFLINE"
+			//Name. Area, and Status! Everything an AI wants to know about its TV-heads!
+			. += "[connected_ipc.name] | S.Integrity: [connected_ipc.health]% | Loc: [get_area_name(connected_ipc, TRUE)] | Status: [robot_status]"
 		// monkestation edit end PR #5133
 	. += list(list("AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]")) //Count of total AI shells
 
