@@ -270,25 +270,3 @@
 
 /datum/laser_weapon_mode/trickshot_disabler/remove_from_weapon(obj/item/gun/energy/applied_gun)
 	return
-
-// Windup autofire lethal burn mode for the large laser, overrides default parent
-/datum/laser_weapon_mode/machinegun
-	name = "Full Auto"
-	casing = /obj/item/ammo_casing/energy/cybersun_big_machinegun
-	weapon_icon_state = "kill"
-	charge_sections = 5
-	shot_delay = 1 SECONDS
-	json_speech_string = "kill"
-	gun_runetext_color = "#b34747ff"
-	//for later deletion
-	var/datum/component/automatic_fire/autofire_component
-
-/datum/laser_weapon_mode/machinegun/apply_to_weapon(obj/item/gun/energy/applied_gun)
-	autofire_component = applied_gun.AddComponent(/datum/component/automatic_fire, shot_delay)
-	applied_gun.burst_size = 2
-	applied_gun.spread = 10
-
-/datum/laser_weapon_mode/machinegun/remove_from_weapon(obj/item/gun/energy/applied_gun)
-	QDEL_NULL(autofire_component)
-	applied_gun.burst_size = 1
-	applied_gun.spread = 0

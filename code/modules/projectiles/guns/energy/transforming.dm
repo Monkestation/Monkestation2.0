@@ -39,9 +39,9 @@
 	recoil = 0.25 // This isn't enough to mean ANYTHING aside from it jolting your screen the tiniest amount
 	/// What datums of weapon modes can we use?
 	var/list/weapon_mode_options = list(
+		/datum/laser_weapon_mode,
 		/datum/laser_weapon_mode/marksman,
 		/datum/laser_weapon_mode/disabler_machinegun,
-		/datum/laser_weapon_mode/machinegun,
 		/datum/laser_weapon_mode/launcher,
 		/datum/laser_weapon_mode/shotgun,
 	)
@@ -295,14 +295,6 @@
 	light_color = COLOR_SOFT_RED
 	wound_falloff_tile = 1
 
-// Auto burst kill lasers for the big gun
-/obj/item/ammo_casing/energy/cybersun_big_machinegun
-	projectile_type = /obj/projectile/beam/cybersun_laser
-	e_cost = LASER_SHOTS(22, STANDARD_CELL_CHARGE)
-	select_name = "Kill"
-	fire_sound = 'monkestation/code/modules/blueshift/sounds/laser_firing/laser.ogg'
-	delay = 2
-
 // Speedy sniper lasers for the big gun
 
 /obj/item/ammo_casing/energy/cybersun_big_sniper
@@ -313,7 +305,7 @@
 
 /obj/projectile/beam/cybersun_laser/marksman
 	icon_state = "sniper"
-	damage = 45
+	damage = 35
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
 	speed = 2.5
 	light_outer_range = 2
