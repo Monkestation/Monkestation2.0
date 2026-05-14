@@ -388,7 +388,12 @@
 			if(connected_ipc.stat != CONSCIOUS || !connected_ipc.client)
 				robot_status = "OFFLINE"
 			//Name. Area, and Status! Everything an AI wants to know about its TV-heads!
-			. += "[connected_ipc.name] | S.Integrity: [connected_ipc.health]% | Loc: [get_area_name(connected_ipc, TRUE)] | Status: [robot_status]"
+			. += list(list("[connected_ipc.name]: ",
+				"S.Integrity: [connected_ipc.health]% | \
+				Loc: [get_area_name(connected_ipc, TRUE)] | \
+				Status: [robot_status]",
+				"src=[REF(src)];track_ipc=[text_ref(connected_ipc)]",
+			))
 		// monkestation edit end PR #5133
 	. += list(list("AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]")) //Count of total AI shells
 
@@ -565,6 +570,11 @@
 		if(!cyborg)
 			return
 		ai_tracking_tool.set_tracked_mob(cyborg)
+	if(href_list["track_ipc"])
+		var/mob/living/carbon/human/connected_ipc = locate(href_list["track_ipc"]) in connected_ipcs
+		if(!connected_ipc)
+			return
+		ai_tracking_tool.set_tracked_mob(connected_ipc)
 	if (href_list["mach_close"])
 		var/t1 = "window=[href_list["mach_close"]]"
 		unset_machine()
