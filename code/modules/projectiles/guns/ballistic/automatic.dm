@@ -323,7 +323,7 @@
 	can_suppress = TRUE
 	suppressor_x_offset = 9
 	burst_size = 2
-	fire_delay = 0.8 SECONDS
+	fire_delay = 0.5 SECONDS
 	actions_types = list()
 	spread = 14.5
 	// Hope you didn't need to see anytime soon
@@ -333,7 +333,6 @@
 
 /obj/item/gun/ballistic/automatic/xhihao_smg/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_XHIHAO)
-	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/gun/ballistic/automatic/xhihao_smg/examine(mob/user)
 	. = ..()

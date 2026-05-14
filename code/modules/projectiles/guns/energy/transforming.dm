@@ -279,7 +279,7 @@
 #undef MOD_LASER_SPEECH_COOLDOWN
 #undef DEFAULT_RUNECHAT_GUN_COLOR
 
-// Default red kill lasers for the big gun
+// Red kill lasers for the big gun
 
 /obj/item/ammo_casing/energy/cybersun_big_kill
 	projectile_type = /obj/projectile/beam/cybersun_laser
