@@ -173,12 +173,9 @@
 		to_chat(user, span_warning("You can only hack IPCs!"))
 		return FALSE
 	var/mob/living/carbon/human/ipc = clicked_on
-	/*if(ipc.client?.prefs && (!(ROLE_MALF in ipc.client.prefs.be_special) || !(ROLE_MALF_MIDROUND in ipc.client.prefs.be_special)))
+	if(ipc.client?.prefs && (!(ROLE_MALF in ipc.client.prefs.be_special) || !(ROLE_MALF_MIDROUND in ipc.client.prefs.be_special)))
 		to_chat(user, span_warning("Target seems unwilling to be hacked, find another target."))
 		return FALSE
-	*/ //MAYBE TODO - infected IPC role in particular?
-	if(is_banned_from(ipc.ckey, list(ROLE_SYNDICATE, ROLE_MALF)))
-		to_chat(user, span_warning("Target software mismatch. Cannot infect."))
 	if(!ipc.mind)
 		to_chat(user, span_warning("Target must be have a mind."))
 		return FALSE
