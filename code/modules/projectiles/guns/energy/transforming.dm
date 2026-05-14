@@ -39,10 +39,9 @@
 	recoil = 0.25 // This isn't enough to mean ANYTHING aside from it jolting your screen the tiniest amount
 	/// What datums of weapon modes can we use?
 	var/list/weapon_mode_options = list(
-		/datum/laser_weapon_mode,
 		/datum/laser_weapon_mode/marksman,
 		/datum/laser_weapon_mode/disabler_machinegun,
-		/datum/laser_weapon_mode/machinegun, // this one overrides the parent mode, see blueshift/datums/laser/modes
+		/datum/laser_weapon_mode/machinegun,
 		/datum/laser_weapon_mode/launcher,
 		/datum/laser_weapon_mode/shotgun,
 	)
@@ -303,14 +302,6 @@
 	select_name = "Kill"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/laser_firing/laser.ogg'
 	delay = 2
-
-/obj/projectile/beam/cybersun_laser
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/saibasan/projectiles.dmi'
-	icon_state = "kill_large"
-	damage = 15
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
-	light_color = COLOR_SOFT_RED
-	wound_falloff_tile = 1
 
 // Speedy sniper lasers for the big gun
 

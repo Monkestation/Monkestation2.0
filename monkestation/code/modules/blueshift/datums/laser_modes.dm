@@ -273,7 +273,7 @@
 
 // Windup autofire lethal burn mode for the large laser, overrides default parent
 /datum/laser_weapon_mode/machinegun
-	name = "Kill"
+	name = "Full Auto"
 	casing = /obj/item/ammo_casing/energy/cybersun_big_machinegun
 	weapon_icon_state = "kill"
 	charge_sections = 5
