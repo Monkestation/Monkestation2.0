@@ -177,7 +177,7 @@
 		to_chat(user, span_warning("Target seems unwilling to be hacked, find another target."))
 		return FALSE
 	*/ //MAYBE TODO - infected IPC role in particular?
-	if(is_banned_from(convertee.ckey, list(ROLE_SYNDICATE, ROLE_MALF)))
+	if(is_banned_from(ipc.ckey, list(ROLE_SYNDICATE, ROLE_MALF)))
 		to_chat(user, span_warning("Target software mismatch. Cannot infect."))
 	if(!ipc.mind)
 		to_chat(user, span_warning("Target must be have a mind."))
