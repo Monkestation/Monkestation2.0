@@ -93,7 +93,7 @@
 			playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE)
 			COOLDOWN_START(src, spam_cooldown_time, SPAM_CD)
 		return FALSE
-	if(COOLDOWN_FINISHED(src, spam_cooldown_time))
+	if(COOLDOWN_FINISHED(src, spam_cooldown_time) && !silent)
 		to_chat(the_toucher, span_warning("You try to push through the hardlight barrier with little effect."))
 		COOLDOWN_START(src, spam_cooldown_time, SPAM_CD)
 	return FALSE

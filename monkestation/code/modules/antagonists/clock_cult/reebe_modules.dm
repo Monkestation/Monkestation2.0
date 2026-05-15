@@ -139,15 +139,16 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 // 	return ..()
 
 /obj/effect/servant_blocker/CanAllowThrough(atom/movable/mover, border_dir)
-	if(!iscarbon(gate_toucher))
-		if(isvehicle(gate_toucher))
-			var/obj/vehicle/toucher = gate_toucher
+	. = ..()
+	if(!iscarbon(mover))
+		if(isvehicle(mover))
+			var/obj/vehicle/toucher = mover
 			for(var/mob/living/carbon/human in toucher.occupants)
 				if(IS_CLOCK(human))
 					return FALSE
-		if(!isstructure(gate_toucher))
+		if(!isstructure(mover))
 			return TRUE
-		var/obj/structure/cargobay = gate_toucher
+		var/obj/structure/cargobay = mover
 		for(var/mob/living/stowaway in cargobay.contents)
 			if(IS_CLOCK(stowaway))
 				return FALSE
