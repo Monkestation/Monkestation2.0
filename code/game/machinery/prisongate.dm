@@ -42,7 +42,7 @@
 		icon_state = "prisongate_on"
 		update_use_power(ACTIVE_POWER_USE)
 
-/obj/machinery/prisongate/CanAllowThrough(atom/movable/gate_toucher, border_dir)
+/obj/machinery/prisongate/CanAllowThrough(atom/movable/gate_toucher, border_dir, silent)
 	. = ..()
 	if(!iscarbon(gate_toucher))
 		if(isvehicle(gate_toucher))
