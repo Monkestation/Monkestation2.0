@@ -436,7 +436,7 @@ monkestation end */
 	stealth_alpha = 30
 	module_type = MODULE_ACTIVE
 	cooldown_time = 2 SECONDS
-	incompatible_modules = list(/obj/item/mod/module/stealth, /obj/item/mod/module/armor_booster)
+	incompatible_modules = list(/obj/item/mod/module/stealth, /obj/item/mod/module/welding/syndicate)
 	/// How much time before we are able to cloak again after the cloak is broken (not disabled)
 	COOLDOWN_DECLARE(recloak_timer)
 	/// If the stealth portion of the module is active
