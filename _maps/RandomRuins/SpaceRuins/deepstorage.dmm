@@ -100,7 +100,6 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/machinery/duct,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
@@ -2082,12 +2081,6 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
-"hr" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "s2"
-	},
-/turf/open/floor/engine,
-/area/ruin/space/has_grav/deepstorage/xenobiology)
 "hE" = (
 /obj/machinery/porta_turret/syndicate/energy{
 	dir = 4
@@ -2213,14 +2206,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
-"jv" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
-/turf/open/floor/iron/white/textured,
-/area/ruin/space/has_grav/deepstorage/xenobiology)
 "jx" = (
 /obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/structure/table,
@@ -2284,15 +2269,6 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
-"jD" = (
-/obj/machinery/plumbing/ooze_compressor{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes{
-	dir = 8
-	},
-/turf/open/floor/iron/white/textured,
-/area/ruin/space/has_grav/deepstorage/xenobiology)
 "kk" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/trimline/orange/line{
@@ -2646,7 +2622,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "pX" = (
-/obj/machinery/duct,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
@@ -2689,7 +2664,6 @@
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
-/obj/machinery/duct,
 /obj/machinery/camera/autoname/directional/south{
 	network = list("bunker1")
 	},
@@ -2999,15 +2973,6 @@
 "uU" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
-"vc" = (
-/obj/machinery/plumbing/ooze_compressor{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes{
-	dir = 4
-	},
-/turf/open/floor/iron/white/textured,
-/area/ruin/space/has_grav/deepstorage/xenobiology)
 "vj" = (
 /obj/structure/guncase{
 	name = "Sol Rifle";
@@ -3125,13 +3090,6 @@
 /obj/item/stack/sheet/mineral/plasma/twenty,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
-"wH" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
-/obj/machinery/duct,
-/turf/open/floor/iron/white/textured,
-/area/ruin/space/has_grav/deepstorage/xenobiology)
 "wK" = (
 /obj/machinery/door/firedoor,
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
@@ -3159,6 +3117,10 @@
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "xf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 10
+	},
 /obj/machinery/slime_compressor,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
@@ -3471,13 +3433,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 10
 	},
-/turf/open/floor/iron/white/textured,
-/area/ruin/space/has_grav/deepstorage/xenobiology)
-"BH" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "BM" = (
@@ -3866,10 +3821,6 @@
 "Iy" = (
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
-"IS" = (
-/obj/machinery/duct,
-/turf/open/floor/iron/white/textured,
-/area/ruin/space/has_grav/deepstorage/xenobiology)
 "Jc" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
@@ -4529,11 +4480,6 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
-"Ud" = (
-/obj/machinery/light/floor/has_bulb,
-/obj/machinery/duct,
-/turf/open/floor/iron/white/textured,
-/area/ruin/space/has_grav/deepstorage/xenobiology)
 "Uj" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -4543,14 +4489,6 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
-"Uw" = (
-/obj/machinery/duct,
-/obj/effect/turf_decal/stripes,
-/obj/effect/turf_decal/stripes{
-	dir = 1
-	},
-/turf/open/floor/iron/white/textured,
-/area/ruin/space/has_grav/deepstorage/xenobiology)
 "Uy" = (
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
@@ -4683,7 +4621,6 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "XF" = (
-/obj/machinery/duct,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
@@ -4740,7 +4677,6 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/machinery/duct,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/apc/cell_5k,
 /obj/effect/mapping_helpers/apc/syndicate_access,
@@ -4753,10 +4689,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
-"Zx" = (
-/obj/machinery/duct,
-/turf/open/floor/engine,
-/area/ruin/space/has_grav/deepstorage/xenobiology)
 "ZD" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -5278,14 +5210,14 @@ ab
 uU
 Ps
 yA
-hr
-Zx
-Uw
+iK
+iK
+tm
 iK
 yA
-hr
-Zx
-xf
+iK
+iK
+Mv
 uU
 Tq
 tn
@@ -5332,12 +5264,12 @@ iK
 iK
 iK
 iK
-Uw
+tm
 iK
 iK
 iK
 iK
-xf
+Mv
 uU
 Tf
 Bk
@@ -5384,7 +5316,7 @@ Fv
 iK
 iK
 RH
-Uw
+tm
 Ta
 iK
 iK
@@ -5435,12 +5367,12 @@ LH
 TL
 TL
 TL
-jD
+TL
 XF
 TL
 TL
 TL
-jD
+TL
 aw
 Uy
 VY
@@ -5488,11 +5420,11 @@ sy
 KO
 gp
 sy
-IS
-IS
-Ud
-IS
-BH
+sy
+sy
+gp
+sy
+KO
 An
 uU
 aR
@@ -5538,14 +5470,14 @@ uU
 Ad
 sy
 LI
-LI
+xf
 YP
 sG
 VU
 BA
 LI
 tA
-jv
+tA
 uU
 aS
 bn
@@ -5592,11 +5524,11 @@ sy
 UO
 gp
 sy
-IS
-IS
-Ud
-IS
-wH
+sy
+sy
+gp
+sy
+UO
 sx
 Hp
 aT
@@ -5643,12 +5575,12 @@ wF
 vL
 vL
 vL
-vc
+vL
 pX
 vL
 vL
 vL
-vc
+vL
 Zb
 uU
 aU
@@ -5696,12 +5628,12 @@ Ve
 iK
 iK
 sd
-Uw
+tm
 Nw
 iK
 iK
 Sp
-xf
+Mv
 uU
 aV
 bq
@@ -5746,14 +5678,14 @@ ab
 uU
 iK
 yA
-hr
-Zx
-Uw
+iK
+iK
+tm
 iK
 yA
-CZ
-Zx
-xf
+iK
+iK
+Mv
 uU
 aW
 br
