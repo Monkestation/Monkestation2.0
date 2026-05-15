@@ -140,7 +140,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || isobserver(ui.user) || ui.user != owner)
+	if(. || isobserver(ui.user) || ui.user != owner.current)
 		return
 	switch(action)
 		if("change_objectives")
