@@ -41,6 +41,9 @@
 	if(HAS_MIND_TRAIT(target, TRAIT_UNCONVERTABLE))
 		to_chat(owner, span_velvet("This one is something else entirely. [target.p_They()] cannot be controlled."))
 		return
+	if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
+		to_chat(owner, span_velvet("[target] has foreign machinery that resists our thralling."))
+		return FALSE
 	var/mob/living/existing_master = target.mind.enslaved_to?.resolve()
 	if(existing_master && !IS_DARKSPAWN_OR_THRALL(existing_master))
 		to_chat(owner, span_velvet("[target.p_Their()] mind already belongs to someone else."))
@@ -75,14 +78,6 @@
 			flavour += span_boldwarning("The creature's gaze swallows the universe into blackness.")
 
 		to_chat(target, flavour.Join("<br>"))
-		if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
-			to_chat(owner, span_warning("[target] has foreign machinery that resists our thralling, we shall attempt to destroy it."))
-			target.visible_message(span_warning("[target] seems to resist an unseen force!"))
-			if(!do_after(owner, 20 SECONDS, target, hidden = TRUE))
-				to_chat(target, span_userdanger("It cannot be permitted to succeed."))
-				return FALSE
-			for(var/obj/item/implant/mindshield/L in target)
-				qdel(L)
 
 	playsound(owner, 'sound/ambience/antag/darkspawn/veil_mind_gasp.ogg', 25)
 

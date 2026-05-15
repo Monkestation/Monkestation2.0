@@ -1139,4 +1139,12 @@
 /datum/loadout_item/neck/moth_cloak
 	name = "Prismatic Cloak"
 	item_path = /obj/item/clothing/neck/cloak/moth_cloak
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//Trox McYeet
+/datum/loadout_item/mask/le_froggo_mask
+	name = "Frog Mask"
+	item_path = /obj/item/clothing/mask/animal/frog
+	donator_only = TRUE
 	requires_purchase = FALSE

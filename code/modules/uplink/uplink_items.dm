@@ -144,6 +144,34 @@
 	if(lock_secondary_objectives)
 		uplink_handler.disable_secondary_objectives()
 
+/// Used to create the uplink's item for generic use, rather than use by a Syndie specifically
+/// Can be used to "de-restrict" some items, such as Nukie guns spawning with Syndicate pins
+/datum/uplink_item/proc/spawn_item_for_generic_use(mob/user)
+	var/atom/movable/created = new item(user.loc)
+
+	if(isgun(created))
+		replace_pin(created)
+	else if(istype(created, /obj/item/storage/toolbox/guncase))
+		for(var/obj/item/gun/gun in created)
+			replace_pin(gun)
+
+	if(isobj(created))
+		var/obj/created_obj = created
+		LAZYREMOVE(created_obj.req_access, ACCESS_SYNDICATE)
+		LAZYREMOVE(created_obj.req_one_access, ACCESS_SYNDICATE)
+
+	return created
+
+/// Used by spawn_item_for_generic_use to replace the pin of a gun with a normal one
+/datum/uplink_item/proc/replace_pin(obj/item/gun/gun_reward)
+	PRIVATE_PROC(TRUE)
+
+	if(!istype(gun_reward.pin, /obj/item/firing_pin/implant/pindicate))
+		return
+
+	QDEL_NULL(gun_reward.pin)
+	gun_reward.pin = new /obj/item/firing_pin(gun_reward)
+
 /// Spawns an item in the world
 /datum/uplink_item/proc/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	if(!spawn_path)
