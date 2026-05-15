@@ -6,6 +6,7 @@
 
 /obj/structure/closet/secure_closet/nanotrasen_representative/PopulateContents()
 	..()
+	new /obj/item/card/id/departmental_budget/cc(src)
 	new /obj/item/storage/backpack/satchel/leather(src)
 	new /obj/item/storage/photo_album/personal(src)
 	new /obj/item/assembly/flash(src)
