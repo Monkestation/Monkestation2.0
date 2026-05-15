@@ -42,7 +42,7 @@
 		icon_state = "prisongate_on"
 		update_use_power(ACTIVE_POWER_USE)
 
-/obj/machinery/prisongate/CanAllowThrough(atom/movable/gate_toucher, border_dir, silent)
+/obj/machinery/prisongate/CanAllowThrough(atom/movable/gate_toucher, border_dir)
 	. = ..()
 	if(!iscarbon(gate_toucher))
 		if(isvehicle(gate_toucher))
@@ -93,7 +93,7 @@
 			playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE)
 			COOLDOWN_START(src, spam_cooldown_time, SPAM_CD)
 		return FALSE
-	if(COOLDOWN_FINISHED(src, spam_cooldown_time) && !silent)
+	if(COOLDOWN_FINISHED(src, spam_cooldown_time))
 		to_chat(the_toucher, span_warning("You try to push through the hardlight barrier with little effect."))
 		COOLDOWN_START(src, spam_cooldown_time, SPAM_CD)
 	return FALSE
