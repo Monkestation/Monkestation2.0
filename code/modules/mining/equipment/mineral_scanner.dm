@@ -48,6 +48,9 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
+/obj/item/t_scanner/adv_mining_scanner/cyborg/cyborg_unequip(mob/user)
+	return // Prevents it from turning off when unequipped.
+
 /obj/item/t_scanner/adv_mining_scanner/lesser
 	name = "automatic mining scanner"
 	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations."
