@@ -89,7 +89,7 @@
 
 
 /obj/machinery/mail_collector/on_set_is_operational(old_value)
-	if (old_value == FALSE)
+	if(!old_value)
 		end_processing()
 		return
 	begin_processing()
