@@ -17,6 +17,8 @@
 		modularInterface.shutdown_computer()
 	. = ..()
 
+	notify_ai(AI_NOTIFICATION_CYBORG_DEATH)
+
 	locked = FALSE //unlock cover
 
 	if(!QDELETED(builtInCamera) && builtInCamera.camera_enabled)
