@@ -98,6 +98,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	membrane_mur = new /datum/action/cooldown/membrane_murmur()
 	colorize()
 	transform.Scale(2, 2)
+	register_context()
 
 /obj/item/organ/internal/brain/slime/Destroy(force)
 	GLOB.dead_oozeling_cores -= src
@@ -123,9 +124,9 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	. = ..()
 	if(gps_active)
 		. += span_notice("A dim light lowly pulsates from the center of the core, indicating an outgoing signal from a tracking microchip.")
-		. += span_red("You could probably use the core in-hand to snuff out the tracking signal and retrieve the items within it.")
+		. += span_red("You could probably [EXAMINE_HINT("use the core in-hand")] to snuff out the tracking signal and retrieve the items within it.")
 	else
-		. += span_red("You could probably use the core in-hand to retrieve the items within it.")
+		. += span_red("You could probably [EXAMINE_HINT("use the core in-hand")] to retrieve the items within it.")
 	if(mind?.dnr || (locate(/datum/quirk/dnr) in stored_quirks))
 		. += span_warning("It looks dull and faded, as if the soul within the core had moved on...")
 	else if((brainmob && (brainmob.client || brainmob.get_ghost())) || (mind?.current && (mind.current.client || mind.current.get_ghost())) || decoy_override)
@@ -144,6 +145,14 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		. += span_notice("floating inside...")
 	else
 		. += span_notice("...nothing of interest.")
+
+/obj/item/organ/internal/brain/slime/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(held_item == src)
+		context[SCREENTIP_CONTEXT_LMB] = gps_active ? "Snuff GPS and retrieve items" : "Retrieve items"
+		return CONTEXTUAL_SCREENTIP_SET
+	else if(istype(held_item, /obj/item/stake) && user.Adjacent(src))
+		context[SCREENTIP_CONTEXT_LMB] = "Stake core"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/organ/internal/brain/slime/attack_self(mob/living/user) // Allows a player (presumably an antag) to deactivate the GPS signal on a slime core
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
