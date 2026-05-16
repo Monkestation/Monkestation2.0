@@ -1,6 +1,12 @@
 #define DAMAGE_WATER_STACKS 5
 #define REGEN_WATER_STACKS 1
 #define HEALTH_HEALED 2.5
+///The rate at which slimes regenerate their jelly normally
+#define JELLY_REGEN_RATE 1.5
+///The rate at which slimes regenerate their jelly when they completely run out of it and start taking damage, usually after having cannibalized all their limbs already
+#define JELLY_REGEN_RATE_EMPTY 2.5
+///The blood volume at which slimes begin to start losing nutrition -- so that IV drips can work for blood deficient slimes
+#define BLOOD_VOLUME_LOSE_NUTRITION 550
 
 /datum/species/oozeling
 	name = "\improper Oozeling"
@@ -18,13 +24,14 @@
 	mutantears = /obj/item/organ/internal/ears/jelly
 	mutantlungs = /obj/item/organ/internal/lungs/slime
 	mutanttongue = /obj/item/organ/internal/tongue/jelly
-	mutantheart = /obj/item/organ/internal/heart/slime
+	mutantheart = null
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_EASYDISMEMBER,
 		TRAIT_NOFIRE,
 		TRAIT_SPLEENLESS_METABOLISM,
 		TRAIT_FOOD_ABSORPTION,
+		TRAIT_TOXINLOVER,
 	)
 
 	meat = /obj/item/food/meat/slab/human/mutant/slime
@@ -50,6 +57,8 @@
 		/datum/action/cooldown/slime_washing,
 		/datum/action/cooldown/slime_hydrophobia,
 		/datum/action/innate/core_signal,
+		/datum/action/innate/regenerate_limbs,
+		/datum/action/innate/retract_limb,
 	)
 	/// Typepaths of extra actions to give to all oozelings.
 	var/list/extra_actions = list()
@@ -71,6 +80,7 @@
 /datum/species/oozeling/on_species_gain(mob/living/carbon/slime, datum/species/old_species, pref_load)
 	. = ..()
 	RegisterSignal(slime, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_reagent_expose))
+	RegisterSignal(slime, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(slime_blood))
 	for(var/action_type in default_actions + extra_actions)
 		var/datum/action/action = new action_type(src)
 		action.Grant(slime)
@@ -80,7 +90,7 @@
 		slime.set_nutrition(rand(NUTRITION_LEVEL_FED, NUTRITION_LEVEL_START_MAX))
 
 /datum/species/oozeling/on_species_loss(mob/living/carbon/human/former_slime, datum/species/new_species, pref_load)
-	UnregisterSignal(former_slime, COMSIG_ATOM_EXPOSE_REAGENTS)
+	UnregisterSignal(former_slime, list(COMSIG_ATOM_EXPOSE_REAGENTS, COMSIG_HUMAN_ON_HANDLE_BLOOD))
 	QDEL_LIST(actions_given)
 	. = ..()
 	former_slime.blood_volume = clamp(former_slime.blood_volume, BLOOD_VOLUME_SAFE, BLOOD_VOLUME_NORMAL)
@@ -289,6 +299,60 @@
 		COOLDOWN_START(src, water_alert_cooldown, 1 SECONDS)
 	return TRUE
 
+/datum/species/oozeling/proc/slime_blood(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
+	SIGNAL_HANDLER
+
+	if(slime.stat == DEAD)
+		return NONE
+
+	. = HANDLE_BLOOD_NO_NUTRITION_DRAIN|HANDLE_BLOOD_NO_EFFECTS
+
+	if(slime.blood_volume <= 0)
+		slime.blood_volume += JELLY_REGEN_RATE_EMPTY * seconds_per_tick
+		slime.adjustBruteLoss(2.5 * seconds_per_tick)
+		to_chat(slime, span_danger("You feel empty!"))
+
+	if(slime.blood_volume < BLOOD_VOLUME_NORMAL)
+		if(slime.nutrition >= NUTRITION_LEVEL_STARVING)
+			slime.blood_volume += JELLY_REGEN_RATE * seconds_per_tick
+			if(slime.blood_volume <= BLOOD_VOLUME_LOSE_NUTRITION) // don't lose nutrition if we are above a certain threshold, otherwise slimes on IV drips will still lose nutrition
+				slime.adjust_nutrition(-1.25 * seconds_per_tick)
+
+	if(HAS_TRAIT(slime, TRAIT_BLOOD_DEFICIENCY))
+		var/datum/quirk/blooddeficiency/blooddeficiency = slime.get_quirk(/datum/quirk/blooddeficiency)
+		blooddeficiency?.lose_blood(slime, seconds_per_tick)
+
+	if(slime.blood_volume < BLOOD_VOLUME_OKAY)
+		if(SPT_PROB(2.5, seconds_per_tick))
+			to_chat(slime, span_danger("You feel drained!"))
+
+	if(slime.blood_volume < BLOOD_VOLUME_BAD)
+		cannibalize_body(slime)
+	return .
+
+/datum/species/oozeling/proc/cannibalize_body(mob/living/carbon/human/body)
+	if(HAS_TRAIT(body, TRAIT_OOZELING_NO_CANNIBALIZE))
+		return
+	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - body.get_missing_limbs()
+	var/obj/item/bodypart/consumed_limb
+	if(!length(limbs_to_consume))
+		body.losebreath++
+		return
+	if(body.num_legs) //Legs go before arms
+		limbs_to_consume -= list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
+	consumed_limb = body.get_bodypart(pick(limbs_to_consume))
+	for(var/obj/item/organ/internal/organ in body.get_organs_for_zone(consumed_limb.body_zone))
+		organ.Remove(body)
+		if(!QDELETED(organ))
+			organ.forceMove(body.drop_location())
+	consumed_limb.drop_limb()
+	body.visible_message(
+		span_danger("[body]'s [consumed_limb] rapidly loses its shape, painfully being drawn back into [body.p_their()] body!"),
+		span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!")
+	)
+	qdel(consumed_limb)
+	body.blood_volume += 20
+
 /datum/species/oozeling/create_pref_unique_perks()
 	var/list/to_add = list()
 
@@ -352,3 +416,10 @@
 	)
 
 	return to_add
+
+#undef BLOOD_VOLUME_LOSE_NUTRITION
+#undef JELLY_REGEN_RATE_EMPTY
+#undef JELLY_REGEN_RATE
+#undef HEALTH_HEALED
+#undef REGEN_WATER_STACKS
+#undef DAMAGE_WATER_STACKS
