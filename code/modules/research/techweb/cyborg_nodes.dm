@@ -206,10 +206,7 @@
 	id = "illegal_combat_implants"
 	display_name = "Illegal Combat Cybernetic Implants"
 	description = "Illegal military grade combat implants to improve performance."
-	prereq_ids = list(
-		"combat_cyber_implants",
-		"syndicate_basic",
-	)
+	prereq_ids = list("combat_cyber_implants", "syndicate_basic")
 	design_ids = list(
 		"ci-thermals",
 		"ci-xray"
