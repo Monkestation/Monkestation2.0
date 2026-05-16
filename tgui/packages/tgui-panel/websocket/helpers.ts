@@ -130,7 +130,7 @@ const setupWebsocket = (force = false) => {
   });
 
   websocket.addEventListener('message', (event) => {
-    if(event.data === "metadata") {
+    if(event.data === 'requestMetadata') {
       Byond.sendMessage('requestMetadata');
     }
   });
