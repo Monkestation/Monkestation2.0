@@ -125,7 +125,14 @@ const setupWebsocket = (force = false) => {
   websocket.addEventListener('open', () => {
     clearReconnectTimer();
     sendWSNotice('Websocket connected!', true);
+    Byond.sendMessage('requestMetadata'); // let's be nice and request metadata
     retryCount = 0;
+  });
+
+  websocket.addEventListener('message', (event) => {
+    if(event.data === "metadata") {
+      Byond.sendMessage('requestMetadata');
+    }
   });
 
   websocket.addEventListener('close', (ev) => {
