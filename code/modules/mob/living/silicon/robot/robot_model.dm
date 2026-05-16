@@ -739,7 +739,7 @@
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/borg/sight/meson,
-		/obj/item/t_scanner/adv_mining_scanner/cyborg
+		/obj/item/t_scanner/adv_mining_scanner/cyborg,
 		/obj/item/storage/bag/ore/cyborg,
 		/obj/item/pickaxe/drill/cyborg,
 		/obj/item/shovel,
