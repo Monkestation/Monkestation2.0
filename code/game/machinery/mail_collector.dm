@@ -175,7 +175,7 @@
 	balloon_alert(user, "repaired")
 	atom_integrity = max_integrity
 	set_machine_stat(machine_stat & ~BROKEN)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
 /obj/machinery/mail_collector/on_deconstruction(disassembled)
