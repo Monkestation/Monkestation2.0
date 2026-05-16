@@ -24,7 +24,6 @@
 	mutantears = /obj/item/organ/internal/ears/jelly
 	mutantlungs = /obj/item/organ/internal/lungs/slime
 	mutanttongue = /obj/item/organ/internal/tongue/jelly
-	mutantheart = null
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_EASYDISMEMBER,
