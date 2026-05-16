@@ -46,7 +46,7 @@
 
 /obj/item/t_scanner/adv_mining_scanner/cyborg/Initialize(mapload)
 	. = ..()
-	toggle_on()
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/t_scanner/adv_mining_scanner/lesser
 	name = "automatic mining scanner"
