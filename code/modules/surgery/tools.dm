@@ -316,7 +316,7 @@
 	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "toolkit_medborg_surgicaldrapes"
 
-/obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
+/obj/item/surgical_processor
 	name = "surgical processor"
 	desc = "A device for scanning and initiating surgeries from a disk or operating computer."
 	icon = 'icons/obj/device.dmi'
@@ -351,10 +351,6 @@
 	RegisterSignal(user, COMSIG_SURGERY_STARTING, PROC_REF(check_surgery))
 
 /obj/item/surgical_processor/dropped(mob/user, silent)
-	. = ..()
-	UnregisterSignal(user, COMSIG_SURGERY_STARTING)
-
-/obj/item/surgical_processor/cyborg_unequip(mob/user)
 	. = ..()
 	UnregisterSignal(user, COMSIG_SURGERY_STARTING)
 

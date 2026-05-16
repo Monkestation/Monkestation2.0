@@ -9,6 +9,8 @@
 /// This item is purchasable to clown ops
 #define UPLINK_CLOWN_OPS (1 << 2)
 
+/// Can be randomly given to spies for their bounties
+#define UPLINK_SPY (1 << 4)
 /// the uplink flag for contractors
 #define UPLINK_CONTRACTORS (1 << 6)
 
@@ -26,6 +28,11 @@
 
 /// Minimal cost for an item to be eligible for a discount
 #define TRAITOR_DISCOUNT_MIN_PRICE 4
+
+/// Lower threshold for which an uplink items's TC cost is considered "low" for spy bounties picking rewards
+#define SPY_LOWER_COST_THRESHOLD 5
+/// Upper threshold for which an uplink items's TC cost is considered "high" for spy bounties picking rewards
+#define SPY_UPPER_COST_THRESHOLD 10
 
 #define STARTING_COMMON_CONTRACTS 3
 #define STARTING_UNCOMMON_CONTRACTS 2
