@@ -1202,6 +1202,16 @@
 	icon_file = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	json_config = 'code/datums/greyscale/json_configs/lava_cat_hood_worn.json'
 
+/datum/greyscale_config/lava_cat_robe/inhand_left
+	name = "Lava Cat Hood"
+	icon_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/lava_cat_lefthand.json'
+
+/datum/greyscale_config/lava_cat_robe/inhand_right
+	name = "Lava Cat Hood"
+	icon_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/lava_cat_righthand.json'
+
 // JUMPSUITS
 /datum/greyscale_config/bunnysuit
 	name = "Worn Bunny Suit"

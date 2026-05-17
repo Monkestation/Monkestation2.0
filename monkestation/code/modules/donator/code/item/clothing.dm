@@ -65,10 +65,12 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "lava_cat_robe"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	inhand_icon_state = null
+	inhand_icon_state = "lava_cat_robe"
 	greyscale_colors = "#2B0F0F#7A1E1E#FF6A00"
 	greyscale_config = /datum/greyscale_config/lava_cat_robe
 	greyscale_config_worn = /datum/greyscale_config/lava_cat_robe/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/lava_cat_robe/inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/lava_cat_robe/inhand_right
 	respect_suit_greyscale = TRUE
 	flags_1 = IS_PLAYER_COLORABLE_1
 	allowed = list(
