@@ -231,7 +231,6 @@
 	..()
 
 /obj/item/robot_model/proc/transform_to(new_config_type, forced = FALSE)
-
 	var/mob/living/silicon/robot/cyborg = loc
 	var/obj/item/robot_model/new_model = new new_config_type(cyborg)
 	cyborg.icon = 'icons/mob/silicon/robots.dmi' //reset our icon to default, but before a new custom icon may be applied by be_transformed_to
