@@ -20,7 +20,7 @@ Assistant
 
 	department_for_prefs = /datum/job_department/assistant
 
-	family_heirlooms = list(/obj/item/storage/toolbox/mechanical/old/heirloom, /obj/item/clothing/gloves/cut/heirloom)
+	family_heirlooms = list(/obj/item/storage/toolbox/mechanical/old/heirloom, /obj/item/clothing/gloves/cut/heirloom, /obj/item/screwdriver, /obj/item/crowbar, /obj/item/wirecutters)
 
 	mail_goodies = list(
 		/obj/effect/spawner/random/food_or_drink/donkpockets = 10,
