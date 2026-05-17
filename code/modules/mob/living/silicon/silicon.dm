@@ -329,7 +329,7 @@
 		if (length(law) > 0)
 			if (!(law in hackedcheck))
 				law_display = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawh=[index]'>[law_display] [ion_num()]:</A> <font color='#660000'>[law]</font><BR>"}
+			list += {"<A href='byond://?src=[REF(src)];lawh=[index]'>[law_display] [ion_num()]:</A> <font color='#aa0000'>[law]</font><BR>"}
 
 	for (var/index in 1 to length(laws.ion))
 		law_display = "Yes"
@@ -359,7 +359,9 @@
 			number++
 	list += {"<br><br><A href='byond://?src=[REF(src)];laws=1'>State Laws</A>"}
 
-	usr << browse(list, "window=laws")
+	var/datum/browser/browser = new(usr, "laws")
+	browser.set_content(list)
+	browser.open()
 
 /mob/living/silicon/proc/ai_roster()
 	if(!client)

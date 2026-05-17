@@ -1,0 +1,4 @@
+author: "Mantlecrawler"
+delete-after: True
+changes:
+  - balance: "Thrown pies now only hardstun if the thrower is a clown or is clumsy. Also applies to pie cannons"

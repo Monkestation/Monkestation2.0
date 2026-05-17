@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "ORMs now give less points/mats for upgraded parts, t4 ORMs give 1.6x the mats instead of 2.05x"

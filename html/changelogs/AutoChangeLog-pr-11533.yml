@@ -1,0 +1,4 @@
+author: "byondsucks"
+delete-after: True
+changes:
+  - balance: "Rust construction cooldown is now 6 seconds."

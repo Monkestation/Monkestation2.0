@@ -1224,11 +1224,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	else
 
 		var/obj/item/organ/internal/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
-		var/obj/item/bodypart/attacking_bodypart
-		if(brain)
-			attacking_bodypart = brain.get_attacking_limb(target)
-		if(!attacking_bodypart)
-			attacking_bodypart = user.get_active_hand()
+		var/obj/item/bodypart/attacking_bodypart = attacker_style?.get_attacking_limb(user, target) || brain?.get_attacking_limb(target) || user.get_active_hand()
 		var/atk_verb = attacking_bodypart.unarmed_attack_verb
 		var/atk_effect = attacking_bodypart.unarmed_attack_effect
 
@@ -1281,6 +1277,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		var/attack_direction = get_dir(user, target)
 		var/attack_type = attacking_bodypart.attack_type
+		SEND_SIGNAL(target, COMSIG_HUMAN_GOT_PUNCHED, user, damage, attack_type, affecting)
+		SEND_SIGNAL(user, COMSIG_HUMAN_PUNCHED, target, damage, attack_type, affecting)
 		if(atk_effect == ATTACK_EFFECT_KICK)//kicks deal 1.5x raw damage
 			if(damage >= 9)
 				target.force_say()
@@ -1317,7 +1315,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			target.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)
 			log_combat(user, target, "got a stun punch with their previous punch")
 		return TRUE // monkestation edit
-
 /datum/species/proc/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return
 

@@ -174,7 +174,7 @@
 
 /// Succeed in putting something inside us
 /mob/living/basic/space_dragon/proc/eat(mob/living/food)
-	adjust_health(-food.maxHealth * 0.25)
+	adjust_health(-food.maxHealth)
 	if (QDELETED(food) || food.loc == src)
 		return FALSE
 	playsound(src, 'sound/magic/demon_attack1.ogg', 60, TRUE)

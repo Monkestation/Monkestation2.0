@@ -719,3 +719,48 @@ effective or pretty fucking useless.
 	light_outer_range = 2
 	light_power = 1
 	light_color = COLOR_SOFT_RED
+
+/// Flashbang disguised as a pen
+/obj/item/pen/penbang
+	degrees = 90
+
+/obj/item/pen/penbang/on_transform(obj/item/source, mob/user, active)
+	. = ..()
+	var/det_time = 1 SECONDS + (4 SECONDS * (degrees / 90))
+	if(user)
+		to_chat(user, span_warning("You prime the penbang! [capitalize(DisplayTimeText(det_time))]!"))
+		log_bomber(user, "has primed a", src, "(penbang) for detonation")
+	addtimer(CALLBACK(src, PROC_REF(detonate), user), det_time)
+
+/obj/item/pen/penbang/proc/detonate(mob/user)
+	var/obj/item/grenade/flashbang/bang = new(get_turf(src))
+	bang.detonate()
+	qdel(src)
+
+/// A camera disguised as a flash
+/obj/item/camera/flash
+	/// The flash we use to flash people with
+	var/obj/item/assembly/flash/handheld/internal_flash
+
+/obj/item/camera/flash/Initialize(mapload)
+	. = ..()
+	internal_flash = new(src)
+
+/obj/item/camera/flash/Destroy()
+	QDEL_NULL(internal_flash)
+	return ..()
+
+/obj/item/camera/flash/Exited(atom/movable/gone, direction)
+	. = ..()
+	// i guess this is a normal camera now. shouldn't happen, though
+	if(gone == internal_flash)
+		internal_flash = null
+
+/obj/item/camera/flash/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isliving(interacting_with))
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	return ..()
+
+/obj/item/camera/flash/attack(mob/living/M, mob/user)
+	return internal_flash?.attack(M, user)
