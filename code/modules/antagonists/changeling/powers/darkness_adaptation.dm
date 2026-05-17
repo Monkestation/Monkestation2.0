@@ -17,6 +17,12 @@
 	. = ..()
 	RegisterSignal(user, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(eye_implanted))
 	RegisterSignal(user, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(eye_removed))
+	RegisterSignal(user, COMSIG_LIVING_BLOODSILVER_HIT, PROC_REF(on_bloodsilver_hit))
+
+
+/datum/action/changeling/darkness_adaptation/Remove(mob/living/carbon/human/cling)
+	. = ..()
+	UnregisterSignal(cling, list(COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN, COMSIG_LIVING_BLOODSILVER_HIT))
 
 /datum/action/changeling/darkness_adaptation/sting_action(mob/living/carbon/human/cling) //SHOULD always be human, because req_human = TRUE
 	..()
@@ -81,3 +87,10 @@
 		return
 	eyes.flash_protect = initial(eyes.flash_protect)
 	// We don't need to bother about removing or adding night vision, fortunately, because they can't see anyways
+
+/datum/action/changeling/darkness_adaptation/proc/on_bloodsilver_hit(mob/living/carbon/human/cling)
+	SIGNAL_HANDLER
+
+	if(is_active)
+		is_active = FALSE
+		disable_ability(cling)

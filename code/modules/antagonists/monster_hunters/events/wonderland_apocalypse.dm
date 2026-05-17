@@ -141,6 +141,10 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 		TRAIT_NO_SHOCK_BUILDUP,
 	)
 */
+	/// Message given to the user when the status effect is given.
+	var/apply_message = "You feel an ominous pressure fill the air around you..."
+	/// The "cause" used for logging damage from recoil.
+	var/effect_name = "Wonderland"
 	/// Typecache of spells to NOT trigger the effect on.
 	var/static/list/spell_whitelist_typecache
 	/// Typecache of non-spell actions to trigger the effect on.
@@ -162,7 +166,6 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	))
 
 /datum/status_effect/wonderland_district/on_apply()
-	. = ..()
 	if(FACTION_RABBITS in owner?.faction)
 		return FALSE
 /* leaving this here for later planned changes ~Lucy
@@ -172,13 +175,16 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 			RegisterSignal(owner, SIGNAL_ADDTRAIT(trait), PROC_REF(remove_banned_traits))
 		remove_banned_traits()
 */
-	to_chat(owner, span_warning("You feel an ominous pressure fill the air around you..."))
+	if(apply_message)
+		to_chat(owner, span_warning("You feel an ominous pressure fill the air around you..."))
 	RegisterSignal(owner, COMSIG_ENTER_AREA, PROC_REF(on_enter_area))
 	RegisterSignal(owner, COMSIG_MOB_AFTER_SPELL_CAST, PROC_REF(after_spell_cast))
 	RegisterSignal(owner, COMSIG_MOB_GRANTED_ACTION, PROC_REF(owner_granted_action))
 	RegisterSignal(owner, COMSIG_MOB_REMOVED_ACTION, PROC_REF(owner_removed_action))
 	for(var/datum/action/action as anything in owner.actions)
 		owner_granted_action(owner, action)
+
+	return TRUE
 
 /datum/status_effect/wonderland_district/on_remove()
 	. = ..()
@@ -239,7 +245,22 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.vomit(lost_nutrition = 0, blood = TRUE, stun = FALSE, distance = prob(20) + 1, message = FALSE)
-	owner.log_message("suffered recoil from using [logged_cause] due to the effects of Wonderland.", LOG_VICTIM)
+	owner.log_message("suffered recoil from using [logged_cause] due to the effects of [effect_name].", LOG_VICTIM)
+
+// subtype used for the temporary effect of the bloodsilver bullet
+/datum/status_effect/wonderland_district/bloodsilver
+	id = "wonderland_district_bloodsilver"
+	alert_type = null
+	apply_message = null
+	effect_name = "bloodsilver debuff"
+
+/datum/status_effect/wonderland_district/bloodsilver/on_apply()
+	if(owner.has_status_effect(/datum/status_effect/wonderland_district)) // avoid stacking with actual wonderland
+		return FALSE
+	return ..()
+
+/datum/status_effect/wonderland_district/bloodsilver/on_enter_area(datum/source, area/centcom/new_area)
+	return
 
 /atom/movable/screen/alert/status_effect/wonderland_district
 	name = "Wonderland Manifestation"
