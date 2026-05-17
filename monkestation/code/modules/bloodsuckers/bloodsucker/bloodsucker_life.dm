@@ -100,6 +100,8 @@
 		return FALSE
 	if(!in_torpor && HAS_TRAIT(owner.current, TRAIT_MASQUERADE))
 		return FALSE
+	if(owner.current.has_status_effect(/datum/status_effect/silver_bullet))
+		return FALSE
 	var/in_coffin = istype(owner.current.loc, /obj/structure/closet/crate/coffin)
 	var/actual_regen = bloodsucker_regen_rate + additional_regen
 	owner.current.adjustCloneLoss(-1 * (actual_regen * 4) * mult)
