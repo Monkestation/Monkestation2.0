@@ -8,7 +8,7 @@
 	novariants = TRUE
 
 GLOBAL_LIST_INIT(fleshmass_recipes, list ( \
-	new/datum/stack_recipe_list("organs", list(
+	new/datum/stack_recipe_list("Organs", list(
 		new/datum/stack_recipe("human heart", /obj/item/organ/internal/heart, 1, time = 0, one_per_turf = FALSE, on_solid_ground = FALSE, category = CAT_ORGANS),
 		new/datum/stack_recipe("human liver", /obj/item/organ/internal/liver, 1, time = 0, one_per_turf = FALSE, on_solid_ground = FALSE, category = CAT_ORGANS),
 		new/datum/stack_recipe("human lungs", /obj/item/organ/internal/lungs, 1, time = 0, one_per_turf = FALSE, on_solid_ground = FALSE, category = CAT_ORGANS),
@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(fleshmass_recipes, list ( \
 		new/datum/stack_recipe("human stomach", /obj/item/organ/internal/stomach, 1, time = 0, one_per_turf = FALSE, on_solid_ground = FALSE, category = CAT_ORGANS),
 		new/datum/stack_recipe("monkey tail", /obj/item/organ/external/tail/monkey, 1, time = 0, one_per_turf = FALSE, on_solid_ground = FALSE, category = CAT_ORGANS),
 		)),	\
-	new/datum/stack_recipe_list("limbs", list(
+	new/datum/stack_recipe_list("Limbs", list(
 		new/datum/stack_recipe("human left leg", /obj/item/bodypart/leg/left, 1, time = 0, one_per_turf = FALSE, on_solid_ground = FALSE, category = CAT_LIMBS),
 		new/datum/stack_recipe("human right leg", /obj/item/bodypart/leg/right, 1, time = 0, one_per_turf = FALSE, on_solid_ground = FALSE, category = CAT_LIMBS),
 		new/datum/stack_recipe("human left arm", /obj/item/bodypart/arm/left, 1, time = 0, one_per_turf = FALSE, on_solid_ground = FALSE, category = CAT_LIMBS),
