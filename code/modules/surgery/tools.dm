@@ -686,23 +686,25 @@
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 1
 
-/obj/item/breathing_bag/attack(mob/living/M, mob/user)
-	if(M == user)
-		return
-	if (M.is_mouth_covered())
-		to_chat(user, span_warning("To perform mechanical ventilation, the patient must be unmasked!"))
-		return
-	to_chat(user, span_notice("Applying a breathing mask to [M] face."))
-	if(!do_after(user, 3 SECONDS, user))
-		to_chat(user, span_warning("It doesn't work!"))
-		return
-	. = ..()
-	playsound(user,'sound/items/breathing_bag.ogg', 100, TRUE)
-	for(var/ivl in 1 to 15)
-		if(!do_after(user, 1 SECONDS, user))
+/obj/item/breathing_bag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /mob/living) && can_see(user, interacting_with, 1))
+		var/mob/living/mob = interacting_with
+		if(mob == user)
 			return
-		if(get_dist(user, M) > 1)
-			to_chat(user, span_notice("Where did he go?"))
+		if (mob.is_mouth_covered())
+			to_chat(user, span_warning("To perform mechanical ventilation, the patient must be unmasked!"))
 			return
-		to_chat(user, span_notice("Performing artificial ventilation!"))
-		M.adjustOxyLoss(-15)
+		to_chat(user, span_notice("Applying a breathing mask to [mob] face."))
+		if(!do_after(user, 3 SECONDS, user))
+			to_chat(user, span_warning("It doesn't work!"))
+			return
+		. = ..()
+		playsound(user,'sound/items/breathing_bag.ogg', 100, TRUE)
+		for(var/ivl in 1 to 15)
+			if(!do_after(user, 1 SECONDS, user))
+				return
+			if(get_dist(user, mob) > 1)
+				to_chat(user, span_notice("Where did he go?"))
+				return
+			to_chat(user, span_notice("Performing artificial ventilation!"))
+			mob.adjustOxyLoss(-15)
