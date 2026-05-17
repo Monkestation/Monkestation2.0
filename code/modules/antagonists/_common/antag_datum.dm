@@ -140,7 +140,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || isobserver(ui.user) || ui.user != owner.current)
+	if(. || isobserver(ui.user))
 		return
 	switch(action)
 		if("change_objectives")
@@ -151,9 +151,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 	return GLOB.always_state
 
 /datum/antagonist/ui_status(mob/user, datum/ui_state/state)
-	if(isobserver(user) && (antag_flags & FLAG_ANTAG_OBSERVER_VISIBLE_PANEL))
-		return UI_UPDATE
-	return ..()
+    if(isobserver(user) && (antag_flags & FLAG_ANTAG_OBSERVER_VISIBLE_PANEL))
+        return UI_UPDATE
+    if(user.mind != owner)
+        return UI_CLOSE
+    return ..()
 
 /datum/antagonist/ui_static_data(mob/user)
 	var/list/data = list()
