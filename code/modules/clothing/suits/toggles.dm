@@ -51,6 +51,9 @@
 	SHOULD_CALL_PARENT(TRUE)
 	src.hood = hood
 	RegisterSignal(hood, COMSIG_QDELETING, PROC_REF(on_hood_deleted))
+	if(respect_suit_greyscale && src.greyscale_colors && istype(hood) && src.greyscale_colors != hood.greyscale_colors)
+		hood.greyscale_colors = src.greyscale_colors
+		src.update_greyscale() // hood greyscale will update itself when suit does. Keeps them in sync.
 
 /// Called when hood is deleted
 /obj/item/clothing/suit/hooded/proc/on_hood_deleted()

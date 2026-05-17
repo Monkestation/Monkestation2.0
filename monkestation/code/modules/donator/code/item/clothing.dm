@@ -85,9 +85,7 @@
 
 /obj/item/clothing/suit/hooded/lava_cat_robe/on_hood_created(obj/item/clothing/head/hooded/hood)
 	..()
-	if(respect_suit_greyscale && src.greyscale_colors && istype(hood) && src.greyscale_colors != hood.greyscale_colors)
-		hood.greyscale_colors = src.greyscale_colors
-		src.update_greyscale() // hood greyscale will update itself when suit does. Keeps them in sync.
+
 
 /obj/item/clothing/head/hooded/lava_cat_hood
 	name = "\improper lava cat hood"
