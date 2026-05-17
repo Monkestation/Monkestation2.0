@@ -152,7 +152,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(istype(attacking_item, /obj/item/borg/apparatus/circuit) && user != src && cell && opened && !wiresexposed)
 		var/obj/item/borg/apparatus/circuit/robo_hand = attacking_item
 		if(robo_hand.stored == null)
-			to_chat(user, span_notice("You remove \the [cell]."))
+			to_chat(user, span_notice("You remove [cell]."))
 			cell.update_appearance()
 			cell.add_fingerprint(user)
 			user.put_in_hands(cell)

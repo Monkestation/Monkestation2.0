@@ -16,6 +16,7 @@
 	name = "Switch Optical Sensors"
 	desc = "Switches the optical sensors of the cyborg to alternative available models."
 
+///////////////////////////////////////
 
 /obj/item/borg/sight/xray
 	name = "\proper X-ray vision"

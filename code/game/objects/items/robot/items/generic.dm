@@ -185,7 +185,13 @@
 	/// Charging mode
 	var/mode = "draw"
 	/// Whitelist of charging machines
-	var/static/list/charge_machines = typecacheof(list(/obj/machinery/cell_charger, /obj/machinery/cell_charger_multi, /obj/machinery/recharger, /obj/machinery/recharge_station, /obj/machinery/mech_bay_recharge_port))
+	var/static/list/charge_machines = typecacheof(list(
+		/obj/machinery/cell_charger,
+		/obj/machinery/cell_charger_multi,
+		/obj/machinery/recharger,
+		/obj/machinery/recharge_station,
+		/obj/machinery/mech_bay_recharge_port,
+		))
 	/// Whitelist of chargable items
 	var/static/list/charge_items = typecacheof(list(/obj/item/stock_parts/power_store/cell, /obj/item/gun/energy))
 
@@ -217,7 +223,7 @@
 			var/capacitor_rate = 1
 			for(var/datum/stock_part/capacitor/capacitor in target_machine.component_parts)
 				if(capacitor)
-					capacitor_rate = capacitor.tier //// УСИЛИТЬ ЗАРЯДКУ ОРУЖИЯ
+					capacitor_rate = capacitor.tier
 
 			to_chat(user, span_notice("You connect to [target_machine]'s power line..."))
 			while(do_after(user, 1.5 SECONDS, target = target_machine, progress = FALSE))

@@ -137,12 +137,11 @@
 	return ..()
 
 /obj/item/borg/apparatus/beaker/examine(mob/user)
-	if (stored)
+	if(stored)
 		to_chat(user, span_notice("   <i>Alt-click</i> will drop the currently stored beaker."))
 		to_chat(user, span_notice("   <i>Right-clicking</i> will splash the beaker on the ground."))
 		return stored.examine(user)
-	else
-		return ..()
+	return ..()
 
 /obj/item/borg/apparatus/beaker/update_overlays()
 	. = ..()
@@ -213,11 +212,10 @@
 					/obj/item/bodypart)
 
 /obj/item/borg/apparatus/organ_storage/examine(mob/user)
-	if (stored)
+	if(stored)
 		to_chat(user, span_notice("   <i>Alt-click</i> will drop the currently stored organ."))
 		return stored.examine(user)
-	else
-		return ..()
+	return ..()
 
 /obj/item/borg/apparatus/organ_storage/update_overlays()
 	. = ..()
@@ -282,11 +280,10 @@
 	. += arm
 
 /obj/item/borg/apparatus/sheet_manipulator/examine(mob/user)
-	if (stored)
+	if(stored)
 		to_chat(user, span_notice("   <i>Alt-click</i> will drop the currently stored sheets."))
 		return stored.examine(user)
-	else
-		return ..()
+	return ..()
 
 /obj/item/borg/apparatus/sheet_manipulator/extra
 	name = "secondary material manipulation apparatus"
@@ -321,11 +318,10 @@
 	. += arm
 
 /obj/item/borg/apparatus/circuit/examine(mob/user)
-	if (stored)
+	if(stored)
 		to_chat(user, span_notice("   <i>Alt-click</i> will drop the currently stored circuit."))
 		return stored.examine(user)
-	else
-		return ..()
+	return ..()
 
 /obj/item/borg/apparatus/circuit/pre_attack(atom/atom, mob/living/user, params)
 	if(istype(atom, /obj/item/ai_module) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
@@ -355,11 +351,10 @@
 	return ..()
 
 /obj/item/borg/apparatus/cooking/examine(mob/user)
-	if (stored)
+	if(stored)
 		to_chat(user, span_notice("   <i>Alt-click</i> will drop the currently stored item."))
 		return stored.examine(user)
-	else
-		return ..()
+	return ..()
 
 /obj/item/borg/apparatus/cooking/update_overlays()
 	. = ..()

@@ -318,7 +318,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 		if(RCD_WALLFRAME)	// Add electronics via RCD. Access codes are taken from the RCD.
 			board = the_rcd.airlock_electronics.create_copy(board)
 			balloon_alert(user, "electronics added")
-			user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
+			user.visible_message(
+				span_notice("[user] fabricates a circuit and places it into [src]."), \
 				span_notice("You adapt a airlock circuit and slot it into the assembly."))
 			if(board.passed_name)	// Naming the button from the RCD graph "Airlock Name"
 				name = board.passed_name
@@ -327,15 +328,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	return FALSE
 
 // New attach
-
 /obj/item/wallframe/button/attach(turf/on_wall, mob/user)
-	var/obj/machinery/button/summ
-	for(var/count in user.loc.contents)
-		if(istype(count, /obj/machinery/button))
-			summ = summ + 1
-	if(summ >= 4)
-		to_chat(user, span_notice("You try to add next button, but there no more room and the wallframe falls to the floor."))
-		return FALSE
+	var/button_count = 0
+	var/list/buttons_we_have = list()	// buttons at the same dir
+	for(var/obj/machinery/button/button_we_found in get_turf(user))
+		if(button_we_found?.dir == user.dir)
+			button_count++
+			buttons_we_have += button_we_found
+			message_admins("[button_count]")
+		if(button_count >= 4)
+			to_chat(user, span_notice("You try to add next button, but there no more room and the wallframe falls to the floor."))
+			return FALSE
 
 	if(result_path)
 		playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
@@ -347,9 +350,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 		var/obj/O = new result_path(get_turf(user), floor_to_wall, TRUE)
 		O.setDir(floor_to_wall)
 
-		if(summ)
-			for(var/obj/machinery/button/current_old_button in user.loc.contents)
-				switch(summ)
+		if(button_count)
+			for(var/obj/machinery/button/current_old_button in buttons_we_have)
+				switch(button_count)
 					if(1)
 						switch(floor_to_wall)	// offset of the already existing first button
 							if(NORTH)

@@ -304,6 +304,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			// monkestation start: window sills
 			if(is_full_tile)
 				structures_to_ignore += /obj/structure/window_sill
+			if(istype(target, /obj/structure/door_assembly))
+				structures_to_ignore += /obj/structure/door_assembly
 			// monkestation end
 
 			//check if we can build our window on the grill

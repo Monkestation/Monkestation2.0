@@ -388,7 +388,6 @@
 	if(the_rcd.mode == RCD_DECONSTRUCT)
 		return list("mode" = RCD_DECONSTRUCT, "delay" = 5 SECONDS, "cost" = 16)
 	else if(((state == AIRLOCK_ASSEMBLY_NEEDS_WIRES) || (state == AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS)) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
-		density = FALSE
 		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 2 SECONDS, "cost" = 1)
 
 	return FALSE
@@ -396,12 +395,10 @@
 /obj/structure/door_assembly/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_UPGRADE_SIMPLE_CIRCUITS)
-			density = TRUE
 			user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
 			span_notice("You adapt a airlock circuit and slot it into the assembly."))
 			electronics = the_rcd.airlock_electronics.create_copy(electronics)
 			state = AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER
-			update_name()
 			update_appearance()
 			return TRUE
 		if(RCD_DECONSTRUCT)

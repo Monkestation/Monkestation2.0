@@ -23,10 +23,10 @@
 		var/obj/item/borg/apparatus/circuit/robo_hand = attacking_object
 		if(robo_hand.stored == null)
 			if(cell)
-				user.visible_message(span_notice("[user] removes \the [cell] from [src]!"))
+				user.visible_message(span_notice("[user] removes [cell] from [src]!"))
 				balloon_alert(user, "cell removed")
-				user.put_in_hands(cell)
 				cell.update_appearance()
+				user.put_in_hands(cell)
 				cell = null
 				charging = APC_NOT_CHARGING
 				update_appearance()
