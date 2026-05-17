@@ -335,7 +335,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 		if(button_we_found?.dir == user.dir)
 			button_count++
 			buttons_we_have += button_we_found
-			message_admins("[button_count]")
 		if(button_count >= 4)
 			to_chat(user, span_notice("You try to add next button, but there no more room and the wallframe falls to the floor."))
 			return FALSE
