@@ -344,31 +344,31 @@
 	var/long_range_tricorder = FALSE	// if TRUE tricorder can work as long range gas analyzer
 
 ////////// Upgrades V1 //////////
-/obj/item/multitool/tricorder/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/healthanalyzer))
+/obj/item/multitool/tricorder/item_interaction(mob/living/user, obj/item/item_to_insert, list/modifiers)
+	if(istype(item_to_insert, /obj/item/healthanalyzer))
 		if(!medical_tricorder)
 			medical_tricorder = TRUE
-			to_chat(user, span_notice("You connect the improved sensors from the [W] to the tricorder."))
+			to_chat(user, span_notice("You connect the improved sensors from the [item_to_insert] to the tricorder."))
 			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-			qdel(W)
+			qdel(item_to_insert)
 		else
 			to_chat(user, span_warning("This modification has already been installed here."))
 
-	if(istype(W, /obj/item/ph_meter))
+	if(istype(item_to_insert, /obj/item/ph_meter))
 		if(!chemical_tricorder)
 			chemical_tricorder = TRUE
-			to_chat(user, span_notice("You connect the improved sensors from the [W] to the tricorder."))
+			to_chat(user, span_notice("You connect the improved sensors from the [item_to_insert] to the tricorder."))
 			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-			qdel(W)
+			qdel(item_to_insert)
 		else
 			to_chat(user, span_warning("This modification has already been installed here."))
 
-	if(istype(W, /obj/item/analyzer/ranged))
+	if(istype(item_to_insert, /obj/item/analyzer/ranged))
 		if(!long_range_tricorder)
 			long_range_tricorder = TRUE
-			to_chat(user, span_notice("You connect the long range sensors from the [W] to the tricorder."))
+			to_chat(user, span_notice("You connect the long range sensors from the [item_to_insert] to the tricorder."))
 			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-			qdel(W)
+			qdel(item_to_insert)
 		else
 			to_chat(user, span_warning("This modification has already been installed here."))
 
@@ -382,32 +382,9 @@
 	user.visible_message(span_suicide("[user] tries to conduct an in-depth analysis of [user.p_them()]self!"))
 	return BRUTELOSS
 
-/obj/item/multitool/tricorder/attack(mob/living/M, mob/living/user, obj/item/I)
-	add_fingerprint(user)
-
-	// Health scan
-	if(medical_tricorder)
-		healthscan(user, M)
-	else
-		lesserhealthscan(user, M)
-
-	// Rad scan
-	if(SEND_SIGNAL(M, COMSIG_GEIGER_COUNTER_SCAN, user, src) & COMSIG_GEIGER_COUNTER_SCAN_SUCCESSFUL)
-		return
-	to_chat(user, span_notice("[isliving(M) ? "Subject" : "Target"] is free of radioactive contamination."))
-	return
-
-/obj/item/multitool/tricorder/attack_secondary(mob/living/victim, mob/living/user, params)
-	add_fingerprint(user)
-	// Chem scan carbon
-	if(medical_tricorder && !user.is_blind())
-		chemscan(user, victim)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /obj/item/multitool/tricorder/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 ////////// Upgrades V2 //////////
-	if(istype(interacting_with, /obj/item/healthanalyzer))
+	if(istype(interacting_with, /obj/item/healthanalyzer) && can_see(user, interacting_with, 1))
 		if(!medical_tricorder)
 			medical_tricorder = TRUE
 			to_chat(user, span_notice("You connect the improved sensors from the [interacting_with] to the tricorder."))
@@ -417,7 +394,7 @@
 			to_chat(user, span_warning("This modification has already been installed here."))
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(interacting_with, /obj/item/ph_meter))
+	if(istype(interacting_with, /obj/item/ph_meter) && can_see(user, interacting_with, 1))
 		if(!chemical_tricorder)
 			chemical_tricorder = TRUE
 			to_chat(user, span_notice("You connect the improved sensors from the [interacting_with] to the tricorder."))
@@ -427,7 +404,7 @@
 			to_chat(user, span_warning("This modification has already been installed here."))
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(interacting_with, /obj/item/analyzer/ranged))
+	if(istype(interacting_with, /obj/item/analyzer/ranged) && can_see(user, interacting_with, 1))
 		if(!long_range_tricorder)
 			long_range_tricorder = TRUE
 			to_chat(user, span_notice("You connect the long range sensors from the [interacting_with] to the tricorder."))
@@ -441,13 +418,22 @@
 	// TCOMs
 	if(istype(interacting_with, /obj/machinery/telecomms) && can_see(user, interacting_with, long_range_tricorder? 15 : 1))
 		return
-	// Human
-	if(istype(interacting_with, /mob/living) && can_see(user, interacting_with, long_range_tricorder? 15 : 1))
-		if((get_dist(user, interacting_with) > 1) && long_range_tricorder)
-			atmos_scan(user, (interacting_with.return_analyzable_air() ? interacting_with : get_turf(interacting_with)))
-		return
 
 ////////// Scan //////////
+	// Health scan Mob
+	if(istype(interacting_with, /mob/living) && can_see(user, interacting_with, 1))
+		var/mob/living/mob = interacting_with
+		if(medical_tricorder)
+			healthscan(user, mob)
+		else
+			lesserhealthscan(user, mob)
+
+		// Rad scan Mob
+		if(SEND_SIGNAL(mob, COMSIG_GEIGER_COUNTER_SCAN, user, src) & COMSIG_GEIGER_COUNTER_SCAN_SUCCESSFUL)
+			return ITEM_INTERACT_SUCCESS
+		to_chat(user, span_notice("[isliving(mob) ? "Subject" : "Target"] is free of radioactive contamination."))
+		return ITEM_INTERACT_SUCCESS
+
 	// Anomaly
 	if(istype(interacting_with, /obj/effect/anomaly) && can_see(user, interacting_with, long_range_tricorder? 15 : 1))
 		var/obj/effect/anomaly/anomaly = interacting_with
@@ -479,7 +465,14 @@
 	// Atmos scan 1
 	if(!HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION) && can_see(user, interacting_with, long_range_tricorder? 15 : 1))
 		atmos_scan(user, (interacting_with.return_analyzable_air() ? interacting_with : get_turf(interacting_with)))
-	return NONE
+		return ITEM_INTERACT_SUCCESS
+
+/obj/item/multitool/tricorder/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	// Chem scan Mob
+	if(istype(interacting_with, /mob/living) && can_see(user, interacting_with, 1))
+		var/mob/living/mob = interacting_with
+		if(medical_tricorder && !user.is_blind())
+			chemscan(user, mob)
 
 ////////// Long range scan //////////
 /obj/item/multitool/tricorder/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
