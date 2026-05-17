@@ -39,12 +39,11 @@
 	icon_state = "blahaj_costume"
 	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
-	inhand_icon_state = "blahaj_costume"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/gun/ballistic/rifle/boltaction/harpoon)
 	hoodtype = /obj/item/clothing/head/hooded/shark_hood
-	inhand_icon_state = null
 
 /obj/item/clothing/head/hooded/shark_hood
 	name = "shark hood"
@@ -82,10 +81,6 @@
 		/obj/item/toy
 	)
 	hoodtype = /obj/item/clothing/head/hooded/lava_cat_hood
-
-/obj/item/clothing/suit/hooded/lava_cat_robe/on_hood_created(obj/item/clothing/head/hooded/hood)
-	..()
-
 
 /obj/item/clothing/head/hooded/lava_cat_hood
 	name = "\improper lava cat hood"
