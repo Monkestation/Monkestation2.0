@@ -79,3 +79,13 @@ GLOBAL_LIST_INIT(store_inhand_items, generate_store_items(/datum/store_item/inha
 	name = "Deforest Backpack"
 	item_path = /obj/item/storage/backpack/medic/deforest
 	item_cost = 2500
+
+/datum/store_item/inhand/umbrella
+	name = "Umbrella (recolorable)"
+	item_path = /obj/item/umbrella
+	item_cost = 2000
+
+/datum/store_item/inhand/parasol
+	name = "Parasol"
+	item_path = /obj/item/umbrella/parasol
+	item_cost = 5000
