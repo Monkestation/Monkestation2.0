@@ -104,7 +104,9 @@
 		/datum/status_effect/caretaker_refuge,
 		/datum/status_effect/changeling_adrenaline,
 		/datum/status_effect/changeling_muscles,
+		/datum/status_effect/duskndawn,
 		/datum/status_effect/fleshmend,
+		/datum/status_effect/marshal,
 		/datum/status_effect/realignment,
 	)
 	/// Reagent types to purge from the victim.
