@@ -19,7 +19,6 @@
 	RegisterSignal(user, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(eye_removed))
 	RegisterSignal(user, COMSIG_LIVING_BLOODSILVER_HIT, PROC_REF(on_bloodsilver_hit))
 
-
 /datum/action/changeling/darkness_adaptation/Remove(mob/living/carbon/human/cling)
 	. = ..()
 	UnregisterSignal(cling, list(COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN, COMSIG_LIVING_BLOODSILVER_HIT))
