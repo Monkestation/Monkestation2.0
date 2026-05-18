@@ -101,10 +101,11 @@
 	/// Types of status effects to remove.
 	/// We're just gonna remove them every tick instead of tediously adding COMSIG_LIVING_BLOODSILVER_HIT to every effect.
 	var/list/effects_to_remove = list(
-		/datum/status_effect/fleshmend,
+		/datum/status_effect/caretaker_refuge,
 		/datum/status_effect/changeling_adrenaline,
 		/datum/status_effect/changeling_muscles,
-		/datum/status_effect/caretaker_refuge,
+		/datum/status_effect/fleshmend,
+		/datum/status_effect/realignment,
 	)
 	/// Reagent types to purge from the victim.
 	/// This doesn't instantly remove all of it - instead, the metabolization rate is basically doubled.
