@@ -138,10 +138,10 @@
 #define ui_inv3 "CENTER :16,SOUTH:5"
 #define ui_borg_module "CENTER+1:16,SOUTH:5"
 #define ui_borg_store "CENTER+2:16,SOUTH:5"
-#define ui_borg_camera "CENTER+3:21,SOUTH:5"
-#define ui_borg_alerts "CENTER+4:21,SOUTH:5"
-#define ui_borg_language_menu "CENTER+4:19,SOUTH+1:6"
-#define ui_borg_navigate_menu "CENTER+3:21,SOUTH:21"
+#define ui_borg_camera "CENTER+2:16,SOUTH:5"
+#define ui_borg_alerts "CENTER+3:16,SOUTH:5"
+#define ui_borg_navigate_menu "CENTER+2:16,SOUTH:21"
+#define ui_borg_language_menu "CENTER+3:14,SOUTH+1:6"
 
 //Aliens
 #define ui_alien_health "EAST,CENTER-1:15"

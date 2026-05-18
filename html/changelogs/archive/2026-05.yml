@@ -266,3 +266,21 @@
   - rscdel: Medical cyborg surgical processor upgrade has been removed.
   TheColorCyan:
   - bugfix: fixed clothes that obscure other clothes not hiding them
+2026-05-18:
+  JohnFulpWillard:
+  - balance: ORMs now give less points/mats for upgraded parts, t4 ORMs give 1.6x
+      the mats instead of 2.05x
+  LettuceGuardian:
+  - rscadd: New alt+click skins for sec and syndie webbing.
+  - rscadd: Resprited the bulletproof helmet.
+  - rscadd: Umbrellas and parasols now available in the store!
+  Mantlecrawler:
+  - balance: Thrown pies now only hardstun if the thrower is a clown or is clumsy.
+      Also applies to pie cannons
+  Runian:
+  - bugfix: Upon safe deconstruction, cyborg upgrades are now dropped onto the floor
+      instead of being deleted.
+  SirNightKnight:
+  - bugfix: fixed foam passing through objects it shouldn't like windows.
+  byondsucks:
+  - balance: Rust construction cooldown is now 6 seconds.

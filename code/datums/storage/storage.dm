@@ -45,6 +45,8 @@
 
 	/// list of all the mobs currently viewing the contents
 	var/list/is_using = list()
+	/// The type of storage interface this datum uses.
+	var/datum/storage_interface/storage_type = /datum/storage_interface
 
 	var/locked = STORAGE_NOT_LOCKED
 	/// whether or not we should open when clicked
@@ -1052,7 +1054,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/ui_style = ui_style2icon(to_show.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 
 	if (isnull(storage_interfaces[to_show]))
-		storage_interfaces[to_show] = new /datum/storage_interface(ui_style, src)
+		storage_interfaces[to_show] = new storage_type(ui_style, src, to_show)
 
 	orient_storage()
 
