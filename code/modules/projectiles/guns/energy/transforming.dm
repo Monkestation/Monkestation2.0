@@ -305,7 +305,7 @@
 
 /obj/projectile/beam/cybersun_laser/marksman
 	icon_state = "sniper"
-	damage = 35
+	damage = 30
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
 	speed = 2.5
 	light_outer_range = 2
