@@ -260,3 +260,9 @@
       illegal tech)
   cark:
   - rscadd: Added a bunch of new family heirlooms.
+2026-05-15:
+  Runian:
+  - rscadd: Medical cyborg surgical database upgrade has been added.
+  - rscdel: Medical cyborg surgical processor upgrade has been removed.
+  TheColorCyan:
+  - bugfix: fixed clothes that obscure other clothes not hiding them
