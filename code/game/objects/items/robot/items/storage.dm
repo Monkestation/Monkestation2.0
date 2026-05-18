@@ -291,12 +291,12 @@
 
 ///Apparatus allowing Engineer/Sabo borgs to manipulate Machine and Computer circuit boards
 /obj/item/borg/apparatus/circuit
-	name = "circuit manipulation apparatus"
-	desc = "A special apparatus for carrying and manipulating circuit boards."
+	name = "electronics manipulation apparatus"
+	desc = "A special apparatus for carrying and manipulating electronics like circuit boards, cells, stock parts, signalers and etc."
 	icon_state = "borg_hardware_apparatus"
 	storable = list(/obj/item/circuitboard,
 				/obj/item/electronics,
-				/obj/item/stock_parts/power_store,
+				/obj/item/stock_parts,
 				/obj/item/assembly)
 
 /obj/item/borg/apparatus/circuit/Initialize(mapload)

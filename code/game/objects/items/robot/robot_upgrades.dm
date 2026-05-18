@@ -652,17 +652,6 @@
 	icon_state = "module_honk"
 	new_model = /obj/item/robot_model/clown
 
-/*
-/obj/item/borg/upgrade/circuit_app
-	name = "circuit manipulation apparatus"
-	desc = "An engineering cyborg upgrade allowing for manipulation of circuit boards."
-	icon_state = "module_engineer"
-	require_model = TRUE
-	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
-	model_flags = BORG_MODEL_ENGINEERING
-	items_to_add = list(/obj/item/borg/apparatus/circuit)
-*/
-
 /obj/item/borg/upgrade/extra_sheet_manipulator
 	name = "secondary material manipulation apparatus"
 	desc = "A supplementary apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles."
