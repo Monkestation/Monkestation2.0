@@ -64,7 +64,7 @@
 	for(var/item_to_remove in items)
 		var/obj/item/module_item = locate(item_to_remove) in borg.model.modules
 		if(module_item)
-			borg.model.remove_module(module_item)
+			borg.model.remove_module(module_item, TRUE)
 	return TRUE
 
 /obj/item/borg/upgrade/rename
@@ -174,8 +174,8 @@
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/janitor)
 	model_flags = BORG_MODEL_JANITOR
-	items_to_add = list(/obj/item/storage/bag/trash/bluespace)
-	items_to_remove = list(/obj/item/storage/bag/trash)
+	items_to_add = list(/obj/item/storage/bag/trash/bluespace/cyborg)
+	items_to_remove = list(/obj/item/storage/bag/trash/cyborg)
 
 /obj/item/borg/upgrade/amop
 	name = "janitor cyborg advanced mop"
@@ -185,7 +185,7 @@
 	model_type = list(/obj/item/robot_model/janitor)
 	model_flags = BORG_MODEL_JANITOR
 	items_to_add = list(/obj/item/mop/advanced)
-	items_to_remove = list(/obj/item/mop)
+	items_to_remove = list(/obj/item/mop/cyborg)
 
 /obj/item/borg/upgrade/prt
 	name = "janitor cyborg plating repair tool"

@@ -128,7 +128,9 @@
 	design_ids = list(
 		"ci-antidrop",
 		"ci-antistun",
-		"ci-thrusters"
+		"ci-thermals",
+		"ci-thrusters",
+		"ci-xray",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
@@ -198,23 +200,6 @@
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/cyber_organs_upgraded/New()
-	..()
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
-		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_DISCOUNT_MINOR)
-
-/datum/techweb_node/illegal_combat_implants
-	id = "illegal_combat_implants"
-	display_name = "Illegal Combat Cybernetic Implants"
-	description = "Illegal military grade combat implants to improve performance."
-	prereq_ids = list("combat_cyber_implants", "syndicate_basic")
-	design_ids = list(
-		"ci-thermals",
-		"ci-xray"
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
-	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
-
-/datum/techweb_node/illegal_combat_implants/New()
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_DISCOUNT_MINOR)

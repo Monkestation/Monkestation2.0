@@ -301,6 +301,10 @@
 	src.add_fingerprint(user)
 	return uses > 0
 
+/obj/item/lightreplacer/cyborg/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+
 /obj/item/lightreplacer/blue
 	name = "bluespace light replacer"
 	desc = "A modified light replacer that zaps lights into place. Refill with broken or working lightbulbs, or sheets of glass."

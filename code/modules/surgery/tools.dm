@@ -610,13 +610,6 @@
 /obj/item/blood_filter/get_surgery_tool_overlay(tray_extended)
 	return "filter"
 
-/obj/item/blood_filter/click_alt(mob/living/user)
-	ui_interact(user)
-
-/obj/item/blood_filter/examine()
-	. = ..()
-	. += span_notice("There is a small <b>\"Alt-click\"</b> button here, which is responsible for setting up the filtering list exceptions.")
-
 /obj/item/blood_filter/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -655,78 +648,3 @@
 			var/chem_name = params["reagent"]
 			var/chem_id = get_chem_id(chem_name)
 			blacklist -= chem_id
-
-// Biocorrector
-/obj/item/blood_filter/advanced
-	name = "bio-corrector"
-	desc = "The latest medical prototype with a bone gel synthesizer. It sets bones, cleanses blood and lymph. The application of bone gel is possible only with invasive intervention."
-	icon = 'icons/obj/advanced_device.dmi'
-	icon_state = "biocorrector"
-	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	inhand_icon_state = "adv_retractor"
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 4, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 2, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3)
-	toolspeed = 0.7
-
-/obj/item/blood_filter/advanced/get_all_tool_behaviours()
-	return list(TOOL_BLOODFILTER, TOOL_BONESET)
-
-/obj/item/blood_filter/advanced/Initialize(mapload)
-	. = ..()
-	AddComponent( \
-		/datum/component/transforming, \
-		force_on = force, \
-		throwforce_on = throwforce, \
-		hitsound_on = hitsound, \
-		w_class_on = w_class, \
-		clumsy_check = FALSE, \
-	)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
-
-/obj/item/blood_filter/advanced/examine()
-	. = ..()
-	. += span_notice("The device is ready for <b>[tool_behaviour == TOOL_BLOODFILTER ? "blood filtration" : "bone manipulation"]</b>.")
-
-/obj/item/blood_filter/advanced/proc/on_transform(obj/item/source, mob/user, active)
-	SIGNAL_HANDLER
-
-	tool_behaviour = (active ? TOOL_BONESET : TOOL_BLOODFILTER)
-	balloon_alert(user, "rebuilt to [active ? "bone manipulation" : "blood filtration"]")
-	playsound(user ? user : src, 'sound/items/change_drill.ogg', 50, TRUE)
-	return COMPONENT_NO_DEFAULT_MESSAGE
-
-// 	Ambu bag
-/obj/item/breathing_bag
-	name = "Ambu bag"
-	desc = "Also known as a breathing bag, it is a mechanical manual device for performing artificial lung ventilation."
-	icon = 'icons/obj/advanced_device.dmi'
-	icon_state = "breathing_bag"
-	lefthand_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
-	inhand_icon_state = "m_mask"
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
-	w_class = WEIGHT_CLASS_SMALL
-	toolspeed = 1
-
-/obj/item/breathing_bag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(istype(interacting_with, /mob/living) && can_see(user, interacting_with, 1))
-		var/mob/living/mob = interacting_with
-		if(mob == user)
-			return
-		if (mob.is_mouth_covered())
-			to_chat(user, span_warning("To perform mechanical ventilation, the patient must be unmasked!"))
-			return
-		to_chat(user, span_notice("Applying a breathing mask to [mob] face."))
-		if(!do_after(user, 3 SECONDS, user))
-			to_chat(user, span_warning("It doesn't work!"))
-			return
-		. = ..()
-		playsound(user,'sound/items/breathing_bag.ogg', 100, TRUE)
-		for(var/ivl in 1 to 15)
-			if(!do_after(user, 1 SECONDS, user))
-				return
-			if(get_dist(user, mob) > 1)
-				to_chat(user, span_notice("Where did he go?"))
-				return
-			to_chat(user, span_notice("Performing artificial ventilation!"))
-			mob.adjustOxyLoss(-15)

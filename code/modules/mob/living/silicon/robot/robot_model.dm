@@ -58,20 +58,17 @@
 
 /obj/item/robot_model/Initialize(mapload)
 	. = ..()
-	robot = loc
-	create_storage(storage_type = /datum/storage/cyborg_internal_storage)
-	// src is what we store items visible to borgs, we'll store things in the bot itself otherwise.
 	for(var/path in basic_modules)
-		var/obj/item/new_module = new path(robot)
+		var/obj/item/new_module = new path(src)
 		basic_modules += new_module
 		basic_modules -= path
 	for(var/path in emag_modules)
-		var/obj/item/new_module = new path(robot)
+		var/obj/item/new_module = new path(src)
 		emag_modules += new_module
 		emag_modules -= path
 //monkestation edit start
 	for(var/path in clock_modules)
-		var/obj/item/new_module = new path(robot)
+		var/obj/item/new_module = new path(src)
 		clock_modules += new_module
 		clock_modules -= path
 //monkestation edit end
@@ -108,21 +105,22 @@
 	if(added_module.loc != src)
 		added_module.forceMove(src)
 	modules += added_module
+	ADD_TRAIT(added_module, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 	added_module.mouse_opacity = MOUSE_OPACITY_OPAQUE
-	added_module.obj_flags |= ABSTRACT
 	if(nonstandard)
 		added_modules += added_module
 	if(requires_rebuild)
 		rebuild_modules()
 	return added_module
 
-/obj/item/robot_model/proc/remove_module(obj/item/removed_module)
+/obj/item/robot_model/proc/remove_module(obj/item/removed_module, delete_after)
 	basic_modules -= removed_module
 	modules -= removed_module
 	emag_modules -= removed_module
 	added_modules -= removed_module
 	rebuild_modules()
-	qdel(removed_module)
+	if(delete_after)
+		qdel(removed_module)
 
 /obj/item/robot_model/proc/rebuild_modules() //builds the usable module list from the modules we have
 	var/mob/living/silicon/robot/cyborg = loc
@@ -130,9 +128,7 @@
 		return
 	var/list/held_modules = cyborg.held_items.Copy()
 	var/active_module = cyborg.module_active
-	//move everything out of the model's inventory
-	for(var/obj/item/module as anything in modules)
-		module.forceMove(robot)
+	cyborg.drop_all_held_items()
 	modules = list()
 	for(var/obj/item/module in basic_modules)
 		add_module(module, FALSE, FALSE)
@@ -148,13 +144,13 @@
 	//monkestation edit end
 	for(var/obj/item/module in added_modules)
 		add_module(module, FALSE, FALSE)
-	cyborg.drop_all_held_items()
 	for(var/module in held_modules)
 		if(module)
-			cyborg.put_in_hand(module, held_modules.Find(module))
+			cyborg.equip_module_to_slot(module, held_modules.Find(module))
 	if(active_module)
 		cyborg.select_module(held_modules.Find(active_module))
-	atom_storage.refresh_views()
+	if(cyborg.hud_used)
+		cyborg.hud_used.update_robot_modules_display()
 
 /obj/item/robot_model/proc/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
 	SHOULD_CALL_PARENT(TRUE)
@@ -233,6 +229,7 @@
 /obj/item/robot_model/proc/transform_to(new_config_type, forced = FALSE)
 	var/mob/living/silicon/robot/cyborg = loc
 	var/obj/item/robot_model/new_model = new new_config_type(cyborg)
+	new_model.robot = cyborg
 	cyborg.icon = 'icons/mob/silicon/robots.dmi' //reset our icon to default, but before a new custom icon may be applied by be_transformed_to
 	if(!new_model.be_transformed_to(src, forced))
 		if(!cyborg.client)
@@ -320,6 +317,8 @@
 	cyborg.updatehealth()
 	cyborg.update_icons()
 	cyborg.notify_ai(AI_NOTIFICATION_NEW_MODEL)
+	if(cyborg.hud_used)
+		cyborg.hud_used.update_robot_modules_display()
 	SSblackbox.record_feedback("tally", "cyborg_modules", 1, cyborg.model)
 
 /**
@@ -447,13 +446,13 @@
 		/obj/item/crowbar/cyborg,
 		/obj/item/stack/tile/iron/base/cyborg,
 		/obj/item/soap/nanotrasen/cyborg,
-		/obj/item/storage/bag/trash,
+		/obj/item/storage/bag/trash/cyborg,
 		/obj/item/melee/flyswatter,
 		/obj/item/extinguisher/mini,
-		/obj/item/mop,
+		/obj/item/mop/cyborg,
 		/obj/item/reagent_containers/cup/bucket,
 		/obj/item/paint/paint_remover,
-		/obj/item/lightreplacer,
+		/obj/item/lightreplacer/cyborg,
 		/obj/item/holosign_creator,
 		/obj/item/reagent_containers/spray/cyborg_drying,
 		/obj/item/wirebrush,
@@ -713,7 +712,6 @@
 		/obj/item/borg/cyborg_omnitool/medical,
 		/obj/item/borg/cyborg_omnitool/medical,
 		/obj/item/blood_filter,
-		/obj/item/breathing_bag, // MS: biocore-ambu
 		/obj/item/extinguisher/mini,
 		/obj/item/emergency_bed/silicon,
 		/obj/item/borg/cyborghug/medical,
@@ -950,7 +948,7 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	cyborg.faction -= FACTION_SILICON //ai turrets
 
-/obj/item/robot_model/syndicate/remove_module(obj/item/removed_module)
+/obj/item/robot_model/syndicate/remove_module(obj/item/removed_module, delete_after)
 	..()
 	var/mob/living/silicon/robot/cyborg = loc
 	cyborg.faction |= FACTION_SILICON //ai is your bff now!
@@ -1035,8 +1033,8 @@
 
 /obj/item/robot_model/syndicate/kiltborg/do_transform_delay() //AUTO-EQUIPPING THESE TOOLS ANY EARLIER CAUSES RUNTIMES OH YEAH
 	. = ..()
-	robot.equip_to_slot(locate(/obj/item/claymore/highlander/robot) in basic_modules, 1)
-	robot.equip_to_slot(locate(/obj/item/pinpointer/nuke) in basic_modules, 2)
+	robot.equip_module_to_slot(locate(/obj/item/claymore/highlander/robot) in basic_modules, 1)
+	robot.equip_module_to_slot(locate(/obj/item/pinpointer/nuke) in basic_modules, 2)
 	robot.place_on_head(new /obj/item/clothing/head/beret/highlander(robot)) //THE ONLY PART MORE IMPORTANT THAN THE SWORD IS THE HAT
 	ADD_TRAIT(robot.hat, TRAIT_NODROP, HIGHLANDER_TRAIT)
 

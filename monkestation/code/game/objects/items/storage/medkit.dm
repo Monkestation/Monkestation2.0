@@ -11,8 +11,8 @@
 		/obj/item/scalpel/advanced = 1,
 		/obj/item/retractor/advanced = 1,
 		/obj/item/cautery/advanced = 1,
-		/obj/item/blood_filter/advanced = 1,
-		/obj/item/breathing_bag = 1,
+		/obj/item/bonesetter = 1,
+		/obj/item/blood_filter = 1,
 	)
 	generate_items_inside(items_inside, src)
 

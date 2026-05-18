@@ -76,6 +76,10 @@
 	desc = "An integrated electric mining drill."
 	flags_1 = NONE
 
+/obj/item/pickaxe/drill/cyborg/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+
 /obj/item/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"

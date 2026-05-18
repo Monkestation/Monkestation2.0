@@ -51,18 +51,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
-/datum/design/tricorder
-	name = "Tricorder"
-	desc = "A multifunctional device that can perform a wide range of tasks."
-	id = "tricorder"
-	build_type = PROTOLATHE | AWAY_LATHE | COLONY_FABRICATOR
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 3, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3)
-	build_path = /obj/item/multitool/tricorder
-	category = list(
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
-		)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
-
 /datum/design/rangedanalyzer
 	name = "Experimental Long-range Gas Analyzer"
 	desc = "An experimental gas analyzer capable of operating at long distance"

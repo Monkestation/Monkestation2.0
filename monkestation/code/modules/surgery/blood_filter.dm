@@ -41,9 +41,7 @@
 		else
 			target.adjustToxLoss(-(tox_loss * tox_heal_factor), forced = TRUE) //forced so this will actually heal oozelings too
 	var/list/remaining = list()
-	if(istype(tool, /obj/item/blood_filter/advanced))
-		success_scan(target.getToxLoss(), remaining, tox_heal_factor, target)
-	else if(locate(/obj/item/healthanalyzer) in user.held_items)
+	if(locate(/obj/item/healthanalyzer) in user.held_items)
 		success_scan(target.getToxLoss(), remaining, tox_heal_factor, target)
 	else if(target.buckled)
 		var/obj/machinery/computer/operating/puter = null
