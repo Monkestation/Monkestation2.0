@@ -85,10 +85,6 @@
 	ricochet_auto_aim_range = 5
 	ricochet_shoots_firer = FALSE
 
-/obj/projectile/bullet/bloodsilver/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_REFLECTED_BY_COSMIC_FIELD, INNATE_TRAIT) // should allow them to pierce cosmic fields without adding a snowflake check to the fields themselves
-
 /obj/projectile/bullet/bloodsilver/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(!isliving(target) || QDELING(target) || !is_monster_hunter_prey(target))
@@ -110,6 +106,9 @@
 		/datum/status_effect/changeling_muscles,
 		/datum/status_effect/caretaker_refuge,
 	)
+	var/list/reagents_to_purge = list(
+		/datum/reagent/eldritch,
+	)
 
 /datum/status_effect/silver_bullet/on_apply()
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/silver_bullet)
@@ -128,6 +127,8 @@
 
 /datum/status_effect/silver_bullet/tick(seconds_between_ticks)
 	remove_effects()
+	for(var/datum/reagent/reagent_type as anything in reagents_to_purge)
+		owner.reagents?.remove_reagent(reagent_type, reagent_type::metabolization_rate * seconds_between_ticks)
 
 /datum/status_effect/silver_bullet/refresh(effect, ...)
 	. = ..()
