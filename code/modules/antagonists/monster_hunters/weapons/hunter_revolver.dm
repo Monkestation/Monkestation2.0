@@ -113,11 +113,13 @@
 	to_chat(owner, span_userdanger("Your body suddenly feels impossibly heavy, you can barely move!"), type = MESSAGE_TYPE_COMBAT)
 	SEND_SIGNAL(owner, COMSIG_LIVING_BLOODSILVER_HIT)
 	remove_effects()
+	RegisterSignal(owner, COMSIG_MOB_PRE_JAUNT, PROC_REF(on_jaunt))
 	return TRUE
 
 /datum/status_effect/silver_bullet/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/silver_bullet)
 	owner.remove_status_effect(/datum/status_effect/wonderland_district/bloodsilver)
+	UnregisterSignal(owner, COMSIG_MOB_PRE_JAUNT)
 	to_chat(owner, span_notice("The impossible weight fades away, allowing you to move normally once more."), type = MESSAGE_TYPE_COMBAT)
 
 /datum/status_effect/silver_bullet/tick(seconds_between_ticks)
@@ -130,6 +132,13 @@
 /datum/status_effect/silver_bullet/proc/remove_effects(datum/source)
 	for(var/effect_type in effects_to_remove)
 		owner.remove_status_effect(effect_type)
+
+/datum/status_effect/silver_bullet/proc/on_jaunt(mob/living/jaunter)
+	SIGNAL_HANDLER
+
+	to_chat(jaunter, span_userdanger("As you try to jaunt, a hidden beast drags you down, keeping you anchored to this plane of existence!"), type = MESSAGE_TYPE_WARNING)
+	duration += 1.5 SECONDS // punishment!!
+	return COMPONENT_BLOCK_JAUNT
 
 /atom/movable/screen/alert/status_effect/silver_bullet
 	name = "Bloodsilver Curse"
