@@ -60,7 +60,6 @@
 	return FALSE
 
 /datum/movespeed_modifier/silver_bullet
-	movetypes = GROUND
 	multiplicative_slowdown = 4
 	flags = IGNORE_NOSLOW
 
