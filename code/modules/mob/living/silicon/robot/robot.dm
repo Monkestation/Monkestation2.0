@@ -22,10 +22,6 @@
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_GOT_DAMPENED), PROC_REF(on_dampen))
 
-	robot_modules_background = new()
-	robot_modules_background.icon_state = "block"
-	SET_PLANE_EXPLICIT(robot_modules_background, HUD_PLANE, src)
-
 	inv1 = new /atom/movable/screen/robot/module1()
 	inv2 = new /atom/movable/screen/robot/module2()
 	inv3 = new /atom/movable/screen/robot/module3()
@@ -507,6 +503,10 @@
 
 	dump_into_mmi(drop_to)
 
+	// Remove upgrades.
+	for(var/obj/item/borg/upgrade/I in upgrades)
+		I.forceMove(get_turf(src))
+
 	qdel(src)
 
 
@@ -550,6 +550,8 @@
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - New cyborg shell detected: <a href='byond://?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
 		if(AI_NOTIFICATION_CYBORG_DISCONNECTED) //Tampering with the wires
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Remote telemetry lost with [name].")]<br>")
+		if(AI_NOTIFICATION_CYBORG_DEATH)
+			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Cyborg unit failure detected: <a href='byond://?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
 
 /mob/living/silicon/robot/can_perform_action(atom/movable/target, action_bitflags)
 	if(lockcharge || low_power_mode)
@@ -683,14 +685,10 @@
 /mob/living/silicon/robot/proc/ResetModel()
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
 	drop_all_held_items()
-	shown_robot_modules = FALSE
 
 	for(var/obj/item/storage/bag in model.contents) // drop all of the items that may be stored by the cyborg
 		for(var/obj/item in bag)
 			item.forceMove(drop_location())
-
-	if(hud_used)
-		hud_used.update_robot_modules_display()
 
 	if (hasExpanded)
 		hasExpanded = FALSE

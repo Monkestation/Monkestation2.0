@@ -18,6 +18,20 @@
 
 ///////////////////////////////////////
 
+/obj/item/borg/sight/equipped(mob/living/silicon/robot/user, slot, initial = FALSE)
+	. = ..()
+	if(!iscyborg(user))
+		return .
+	user.sight_mode |= sight_mode
+	user.update_sight()
+
+/obj/item/borg/sight/dropped(mob/living/silicon/robot/user, silent)
+	if(!iscyborg(user))
+		return ..()
+	user.sight_mode &= ~sight_mode
+	user.update_sight()
+	return ..()
+
 /obj/item/borg/sight/xray
 	name = "\proper X-ray vision"
 	icon = 'icons/obj/signs.dmi'

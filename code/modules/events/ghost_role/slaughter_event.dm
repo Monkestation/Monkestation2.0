@@ -9,7 +9,7 @@
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Spawns a slaughter demon, to hunt by travelling through pools of blood."
 	min_wizard_trigger_potency = 6
-	max_wizard_trigger_potency = 7
+	max_wizard_trigger_potency = 100
 	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_EXTERNAL, TAG_MAGICAL, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE

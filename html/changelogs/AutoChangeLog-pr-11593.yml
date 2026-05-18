@@ -1,0 +1,4 @@
+author: "Tractor Maam, JohnFulpWillard"
+delete-after: True
+changes:
+  - rscadd: "AIs can now quickly track their cyborgs and infected IPCs through their status panel."
