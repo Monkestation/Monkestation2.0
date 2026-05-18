@@ -106,6 +106,8 @@
 		/datum/status_effect/changeling_muscles,
 		/datum/status_effect/caretaker_refuge,
 	)
+	/// Reagent types to purge from the victim.
+	/// This doesn't instantly remove all of it - instead, the metabolization rate is basically doubled.
 	var/list/reagents_to_purge = list(
 		/datum/reagent/eldritch,
 	)
