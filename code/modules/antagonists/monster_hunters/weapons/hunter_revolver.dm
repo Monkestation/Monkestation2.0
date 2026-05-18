@@ -98,9 +98,9 @@
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/silver_bullet
 
-	/// Types of statistatusc effects to remove.
+	/// Types of status effects to remove.
 	/// We're just gonna remove them every tick instead of tediously adding COMSIG_LIVING_BLOODSILVER_HIT to every effect.
-	var/static/list/effects_to_remove = list(
+	var/list/effects_to_remove = list(
 		/datum/status_effect/fleshmend,
 		/datum/status_effect/changeling_adrenaline,
 		/datum/status_effect/changeling_muscles,
