@@ -22,7 +22,7 @@
 		/datum/job_department/cargo,
 		)
 
-	family_heirlooms = list(/obj/item/clipboard)
+	family_heirlooms = list(/obj/item/clipboard, /obj/item/dest_tagger)
 
 	mail_goodies = list(
 		/obj/item/pizzabox = 10,

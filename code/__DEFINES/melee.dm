@@ -15,7 +15,8 @@
 #define MARTIALART_FRENZYGRAB "frenzy grabbing"
 //Used in velvet_fu.dm
 #define MARTIALART_VELVETFU "velvetfu"
-
+//spider bite, for spys
+#define MARTIALART_SPIDERSBITE "spider's bite"
 /// The number of hits required to crit a target
 #define HITS_TO_CRIT(damage) round(100 / damage, 0.1)
 

@@ -409,12 +409,27 @@
 
 /obj/item/storage/belt/security/webbing
 	name = "security webbing"
-	desc = "Unique and versatile chest rig, can hold security gear."
+	desc = "Unique and versatile chest rig, can hold security gear. This one has limited polychromatic tech."
 	icon_state = "securitywebbing"
 	inhand_icon_state = "securitywebbing"
 	worn_icon_state = "securitywebbing"
 	content_overlays = FALSE
 	custom_premium_price = PAYCHECK_COMMAND * 2 //monkestation edit: 3 to 2
+	uses_advanced_reskins = TRUE
+	unique_reskin = list(
+		"Security Grey" = list(
+			RESKIN_ICON_STATE = "securitywebbing",
+			RESKIN_WORN_ICON_STATE = "securitywebbing",
+		),
+		"Security Black" = list(
+			RESKIN_ICON_STATE = "securitywebbing2",
+			RESKIN_WORN_ICON_STATE = "securitywebbing2",
+		),
+		"Security White" = list(
+			RESKIN_ICON_STATE = "securitywebbing3",
+			RESKIN_WORN_ICON_STATE = "securitywebbing3",
+		),
+	)
 
 /obj/item/storage/belt/security/webbing/Initialize(mapload)
 	. = ..()
@@ -575,11 +590,22 @@
 
 /obj/item/storage/belt/military
 	name = "chest rig"
-	desc = "A set of tactical webbing worn by Syndicate boarding parties."
+	desc = "A set of tactical webbing worn by Syndicate boarding parties. This one comes with limited polychromatic tech!"
 	icon_state = "militarywebbing"
 	inhand_icon_state = "militarywebbing"
 	worn_icon_state = "militarywebbing"
 	resistance_flags = FIRE_PROOF
+	uses_advanced_reskins = TRUE
+	unique_reskin = list(
+		"Grey" = list(
+			RESKIN_ICON_STATE = "militarywebbing",
+			RESKIN_WORN_ICON_STATE = "militarywebbing",
+		),
+		"Black" = list(
+			RESKIN_ICON_STATE = "militarywebbing2",
+			RESKIN_WORN_ICON_STATE = "militarywebbing2",
+		),
+	)
 
 /obj/item/storage/belt/military/Initialize(mapload)
 	. = ..()
@@ -640,6 +666,7 @@
 	inhand_icon_state = "security"
 	worn_icon_state = "security"
 	content_overlays = TRUE
+	uses_advanced_reskins = FALSE
 
 /obj/item/storage/belt/military/abductor/full/PopulateContents()
 	new /obj/item/screwdriver/abductor(src)
@@ -656,6 +683,7 @@
 	icon_state = "military"
 	inhand_icon_state = "security"
 	worn_icon_state = "military"
+	uses_advanced_reskins = FALSE
 
 /obj/item/storage/belt/military/assault
 	name = "assault belt"
@@ -663,6 +691,7 @@
 	icon_state = "assaultbelt"
 	inhand_icon_state = "security"
 	worn_icon_state = "assault"
+	uses_advanced_reskins = FALSE
 
 /obj/item/storage/belt/military/assault/Initialize(mapload)
 	. = ..()
@@ -741,6 +770,9 @@
 	for(var/obj/item/gun/magic/wand/W in contents) //All wands in this pack come in the best possible condition
 		W.max_charges = initial(W.max_charges)
 		W.charges = W.max_charges
+
+/obj/item/storage/belt/wands/wizard/PopulateContents()
+	new /obj/effect/spawner/set_selector/wand_belt(src)
 
 /obj/item/storage/belt/janitor
 	name = "janibelt"

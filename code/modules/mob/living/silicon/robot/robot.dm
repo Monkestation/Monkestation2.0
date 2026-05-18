@@ -507,6 +507,10 @@
 
 	dump_into_mmi(drop_to)
 
+	// Remove upgrades.
+	for(var/obj/item/borg/upgrade/I in upgrades)
+		I.forceMove(get_turf(src))
+
 	qdel(src)
 
 
