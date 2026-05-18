@@ -1,6 +1,0 @@
-author: "Sakaniko"
-delete-after: True
-changes:
-  - image: "Modified the anime implant cat tail to use the updated sprite that Cat Tail organs use."
-  - image: "Ported resprites for 26 different hairstyles. Check the PR for a list."
-  - rscadd: "Added 1 new hairstyle - Short Bangs 2."

@@ -1,0 +1,4 @@
+author: "Runian"
+delete-after: True
+changes:
+  - balance: "Cyborgs will send a chat notification to their master AI that they have died."
