@@ -1,7 +1,7 @@
 /obj/item/gun/ballistic/revolver/hunter_revolver
 	name = "\improper Hunter's Revolver"
 	desc = "While doing minimal physical damage, the bullets will force a monster to carry the weight of their impure sins for a short while, greatly slowing them down."
-	icon = 'monkestation/icons/obj/guns/redeemer.dmi'
+	icon = 'icons/obj/weapons/guns/redeemer.dmi'
 	icon_state = "redeemer"
 	inhand_icon_state = "redeemer"
 	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthand.dmi'
