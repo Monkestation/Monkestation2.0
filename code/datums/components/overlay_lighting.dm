@@ -72,6 +72,8 @@
 	var/directional_offset_y
 	///Cast range for the directional cast (how far away the atom is moved)
 	var/cast_range = 2
+	/// Additional offsets of both the lamp and mask based on the holder's direction.
+	var/list/directional_light_offset
 
 /datum/component/overlay_lighting/Initialize(_range, _power, _color, starts_on, is_directional, is_beam)
 	if(!ismovable(parent))
@@ -520,7 +522,12 @@
 		var/matrix/transform = matrix()
 		if(beam && range > 1)
 			transform.Scale(scale_x, scale_y)
-		transform.Translate(translate_x, translate_y)
+		if(!isnull(directional_light_offset))
+			var/list/offset = directional_light_offset[ISDIAGONALDIR(current_direction) ? dir2text(current_direction & (WEST|EAST)) : dir2text(current_direction)]
+			if(offset)
+				directional_offset_y += offset[1]
+				directional_offset_y += offset[2]
+		transform.Translate(directional_offset_x, directional_offset_y)
 		visible_mask.transform = transform
 	if(overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays += visible_mask
@@ -542,8 +549,28 @@
 	if(current_direction == newdir)
 		return
 	current_direction = newdir
+	update_cone_offset()
 	if(overlay_lighting_flags & LIGHTING_ON)
 		make_luminosity_update()
+
+/// Updates the cone's offset if there is one.
+/datum/component/overlay_lighting/proc/update_cone_offset()
+	if(!cone)
+		return
+	if(current_holder && (overlay_lighting_flags & LIGHTING_ON))
+		current_holder.underlays -= cone
+	var/x_translate = -32
+	var/y_translate = -32
+	if(!isnull(directional_light_offset))
+		var/list/offset = directional_light_offset[ISDIAGONALDIR(current_direction) ? dir2text(current_direction & (WEST|EAST)) : dir2text(current_direction)]
+		if(offset)
+			x_translate += offset[1]
+			y_translate += offset[2]
+	var/matrix/new_transform = new
+	new_transform.Translate(x_translate, y_translate)
+	cone.transform = new_transform
+	if(current_holder && (overlay_lighting_flags & LIGHTING_ON))
+		current_holder.underlays += cone
 
 /datum/component/overlay_lighting/proc/on_parent_crafted(datum/source, atom/movable/new_craft)
 	SIGNAL_HANDLER

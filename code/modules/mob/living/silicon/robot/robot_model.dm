@@ -35,6 +35,8 @@
 	var/list/storages = list()
 	///List of traits that will be applied to the mob if this model is used.
 	var/list/model_traits = null
+	/// List of features that has been applied by the selected model's skin. Only used for dealing with offsets.
+	var/list/model_features = null
 	///List of radio channels added to the cyborg
 	var/list/radio_channels = list()
 	///Whether the borg loses tool slots with damage.
@@ -45,10 +47,12 @@
 	var/allow_riding = TRUE
 	///Whether the borg can stuff itself into disposals
 	var/canDispose = FALSE
-	///The y offset of the hat worn on our head.
-	var/hat_offset = -3
-	///The y offset of the badge we're decorated with.
-	var/badge_offset = -3
+	/// The offsets of the hat worn on our head.
+	var/list/hat_offset = list("north" = list(0, -3), "south" = list(0, -3), "east" = list(0, -3), "west" = list(0, -3))
+	/// The offsets of the badge we're decorated with.
+	var/list/badge_offset = list("north" = list(0, -3), "south" = list(0, -3), "east" = list(0, -3), "west" = list(0, -3))
+	/// The offsets of the lighting overlay.
+	var/list/lighting_offset = list("north" = list(0, 0), "south" = list(0, 0), "east" = list(0, 0), "west" = list(0, 0))
 	///The x offsets of a person riding the borg
 	var/list/ride_offset_x = list("north" = 0, "south" = 0, "east" = -6, "west" = 6)
 	///The y offsets of a person riding the borg
@@ -246,6 +250,8 @@
 	cyborg.diag_hud_set_borgcell()
 	cyborg.diag_hud_set_aishell()
 	cyborg.update_icons()
+	cyborg.model.handle_pixel_w()
+	cyborg.model.handle_lighting_offset()
 	log_silicon("CYBORG: [key_name(cyborg)] has transformed into the [new_model] model.")
 
 	INVOKE_ASYNC(new_model, PROC_REF(do_transform_animation))
@@ -261,7 +267,10 @@
 		var/list/reskin_icons = list()
 		for(var/skin in borg_skins)
 			var/list/details = borg_skins[skin]
-			reskin_icons[skin] = image(icon = details[SKIN_ICON] || 'icons/mob/silicon/robots.dmi', icon_state = details[SKIN_ICON_STATE])
+			var/image/reskin_image = image(icon = details[SKIN_ICON] || 'icons/mob/silicon/robots.dmi', icon_state = details[SKIN_ICON_STATE])
+			if(!isnull(details[SKIN_FEATURES]) && (BORG_FEATURE_WIDE in details[SKIN_FEATURES]))
+				reskin_image.pixel_x -= 16 // Recenters the icon for the radial menu.
+			reskin_icons[skin] = reskin_image
 		var/borg_skin = show_radial_menu(cyborg, cyborg, reskin_icons, custom_check = CALLBACK(src, PROC_REF(check_menu), cyborg, old_model), radius = 38, require_near = TRUE)
 		if(!borg_skin)
 			return FALSE
@@ -279,8 +288,12 @@
 			hat_offset = details[SKIN_HAT_OFFSET]
 		if(!isnull(details[SKIN_BADGE_OFFSET]))
 			badge_offset = details[SKIN_BADGE_OFFSET]
+		if(!isnull(details[SKIN_LIGHTING_OFFSET]))
+			lighting_offset = details[SKIN_LIGHTING_OFFSET]
 		if(!isnull(details[SKIN_TRAITS]))
 			model_traits += details[SKIN_TRAITS]
+		if(!isnull(details[SKIN_FEATURES]))
+			model_features += details[SKIN_FEATURES]
 	for(var/i in old_model.added_modules)
 		added_modules += i
 		old_model.added_modules -= i
@@ -337,6 +350,27 @@
 		return FALSE
 	return TRUE
 
+/obj/item/robot_model/proc/handle_pixel_w()
+	var/mob/living/silicon/robot/cyborg = loc
+	if(!istype(cyborg))
+		return
+	if(BORG_FEATURE_WIDE in model_features)
+		cyborg.pixel_w = -16
+		cyborg.base_pixel_x = -16
+		return
+	cyborg.pixel_w = 0
+	cyborg.base_pixel_x = 0
+
+/obj/item/robot_model/proc/handle_lighting_offset()
+	var/mob/living/silicon/robot/cyborg = loc
+	if(!istype(cyborg))
+		return
+	var/datum/component/overlay_lighting/lighting_overlay = cyborg.GetComponent(/datum/component/overlay_lighting)
+	if(!lighting_overlay)
+		return
+	lighting_overlay.directional_light_offset = lighting_offset
+	lighting_overlay.update_cone_offset()
+
 /obj/item/robot_model/clown
 	name = "Clown"
 	basic_modules = list(
@@ -364,8 +398,8 @@
 	)
 	model_select_icon = "service"
 	cyborg_base_icon = "clown"
-	hat_offset = -2
-	badge_offset = -2
+	hat_offset = list("north" = list(0, -2), "south" = list(0, -2), "east" = list(0, -2), "west" = list(0, -2))
+	badge_offset = list("north" = list(0, -2), "south" = list(0, -2), "east" = list(0, -2), "west" = list(0, -2))
 
 /obj/item/robot_model/clown/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
 	. = ..()
@@ -406,8 +440,17 @@
 	cyborg_base_icon = "engineer"
 	model_select_icon = "engineer"
 	model_traits = list(TRAIT_NEGATES_GRAVITY)
-	hat_offset = -4
-	badge_offset = -4
+	hat_offset = list("north" = list(0, -4), "south" = list(0, -4), "east" = list(0, -4), "west" = list(0, -4))
+	badge_offset = list("north" = list(0, -4), "south" = list(0, -4), "east" = list(0, -4), "west" = list(0, -4))
+	borg_skins = list(
+		"Engineer" = list(
+			SKIN_ICON_STATE = "engineer"
+		),
+		"Smol Raptor" = list(
+			SKIN_ICON_STATE = "smolraptor_engineer",
+			BORG_SKINS_SMOLRAPTOR
+		)
+	)
 
 /obj/item/robot_model/standard
 	name = "Standard"
@@ -434,9 +477,17 @@
 	cyborg_base_icon = "robot"
 	model_select_icon = "standard"
 	model_traits = list(TRAIT_NEGATES_GRAVITY)
-	hat_offset = -3
-	badge_offset = -3
-
+	hat_offset = list("north" = list(0, -3), "south" = list(0, -3), "east" = list(0, -3), "west" = list(0, -3))
+	badge_offset = list("north" = list(0, -3), "south" = list(0, -3), "east" = list(0, -3), "west" = list(0, -3))
+	borg_skins = list(
+		"Standard" = list(
+			SKIN_ICON_STATE = "robot"
+		),
+		"Smol Raptor" = list(
+			SKIN_ICON_STATE = "smolraptor_standard",
+			BORG_SKINS_SMOLRAPTOR
+		)
+	)
 
 /obj/item/robot_model/janitor
 	name = "Janitor"
@@ -463,8 +514,17 @@
 	)
 	cyborg_base_icon = "janitor"
 	model_select_icon = "janitor"
-	hat_offset = -5
-	badge_offset = -2
+	hat_offset = list("north" = list(0, -5), "south" = list(0, -5), "east" = list(0, -5), "west" = list(0, -5))
+	badge_offset = list("north" = list(0, -2), "south" = list(0, -2), "east" = list(0, -2), "west" = list(0, -2))
+	borg_skins = list(
+		"Janitor" = list(
+			SKIN_ICON_STATE = "janitor"
+		),
+		"Smol Raptor" = list(
+			SKIN_ICON_STATE = "smolraptor_janitor",
+			BORG_SKINS_SMOLRAPTOR
+		)
+	)
 	/// Weakref to the wash toggle action we own
 	var/datum/weakref/wash_toggle_ref
 
@@ -727,11 +787,19 @@
 	cyborg_base_icon = "medical"
 	model_select_icon = "medical"
 	model_traits = list(TRAIT_PUSHIMMUNE)
-	hat_offset = 3
-	badge_offset = 0
+	hat_offset = list("north" = list(0, 3), "south" = list(0, 3), "east" = list(0, 3), "west" = list(0, 3))
+	badge_offset = list("north" = list(0, 0), "south" = list(0, 0), "east" = list(0, 0), "west" = list(0, 0))
 	borg_skins = list(
-		"Machinified Doctor" = list(SKIN_ICON_STATE = "medical"),
-		"Qualified Doctor" = list(SKIN_ICON_STATE = "qualified_doctor"),
+		"Machinified Doctor" = list(
+			SKIN_ICON_STATE = "medical"
+		),
+		"Qualified Doctor" = list(
+			SKIN_ICON_STATE = "qualified_doctor"
+		),
+		"Smol Raptor" = list(
+			SKIN_ICON_STATE = "smolraptor_medical",
+			BORG_SKINS_SMOLRAPTOR
+		)
 	)
 
 /obj/item/robot_model/miner
@@ -757,12 +825,23 @@
 	)
 	cyborg_base_icon = "miner"
 	model_select_icon = "miner"
-	hat_offset = 0
-	badge_offset = -2
+	hat_offset = list("north" = list(0, 0), "south" = list(0, 0), "east" = list(0, 0), "west" = list(0, 0))
+	badge_offset = list("north" = list(0, -2), "south" = list(0, -2), "east" = list(0, -2), "west" = list(0, -2))
 	borg_skins = list(
-		"Asteroid Miner" = list(SKIN_ICON_STATE = "minerOLD"),
-		"Spider Miner" = list(SKIN_ICON_STATE = "spidermin", SKIN_BADGE_OFFSET = -8),
-		"Lavaland Miner" = list(SKIN_ICON_STATE = "miner"),
+		"Asteroid Miner" = list(
+			SKIN_ICON_STATE = "minerOLD"
+		),
+		"Spider Miner" = list(
+			SKIN_ICON_STATE = "spidermin",
+			SKIN_BADGE_OFFSET = list("north" = list(0), "south" = list(0, -8), "east" = list(0, -8), "west" = list(0, -8))
+		),
+		"Lavaland Miner" = list(
+			SKIN_ICON_STATE = "miner"
+		),
+		"Smol Raptor" = list(
+			SKIN_ICON_STATE = "smolraptor_miner",
+			BORG_SKINS_SMOLRAPTOR
+		)
 	)
 	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes. //fuck you
 
@@ -793,8 +872,17 @@
 	cyborg_base_icon = "peace"
 	model_select_icon = "standard"
 	model_traits = list(TRAIT_PUSHIMMUNE)
-	hat_offset = -2
-	badge_offset = -2
+	hat_offset = list("north" = list(0, -2), "south" = list(0, -2), "east" = list(0, -2), "west" = list(0, -2))
+	badge_offset = list("north" = list(0, -2), "south" = list(0, -2), "east" = list(0, -2), "west" = list(0, -2))
+	borg_skins = list(
+		"Peacekeeper" = list(
+			SKIN_ICON_STATE = "peace"
+		),
+		"Smol Raptor" = list(
+			SKIN_ICON_STATE = "smolraptor_peacekeeper",
+			BORG_SKINS_SMOLRAPTOR
+		)
+	)
 
 /obj/item/robot_model/peacekeeper/do_transform_animation()
 	..()
@@ -818,8 +906,17 @@
 	cyborg_base_icon = "sec"
 	model_select_icon = "security"
 	model_traits = list(TRAIT_PUSHIMMUNE)
-	hat_offset = 3
-	badge_offset = -3
+	hat_offset = list("north" = list(0, 3), "south" = list(0, 3), "east" = list(0, 3), "west" = list(0, 3))
+	badge_offset = list("north" = list(0, -3), "south" = list(0, -3), "east" = list(0, -3), "west" = list(0, -3))
+	borg_skins = list(
+		"Security" = list(
+			SKIN_ICON_STATE = "sec"
+		),
+		"Smol Raptor" = list(
+			SKIN_ICON_STATE = "smolraptor_security",
+			BORG_SKINS_SMOLRAPTOR
+		)
+	)
 
 /obj/item/robot_model/security/do_transform_animation()
 	..()
@@ -883,20 +980,38 @@
 	cyborg_base_icon = "service_m" // display as butlerborg for radial model selection
 	model_select_icon = "service"
 	special_light_key = "service"
-	hat_offset = 0
+	hat_offset = list("north" = list(0, 0), "south" = list(0, 0), "east" = list(0, 0), "west" = list(0, 0))
 	borg_skins = list(
-		"Bro" = list(SKIN_ICON_STATE = "brobot"),
-		"Butler" = list(SKIN_ICON_STATE = "service_m"),
-		"Kent" = list(SKIN_ICON_STATE = "kent", SKIN_LIGHT_KEY = "medical", SKIN_HAT_OFFSET = 3),
-		"Tophat" = list(SKIN_ICON_STATE = "tophat", SKIN_LIGHT_KEY = NONE, SKIN_HAT_OFFSET = INFINITY),
-		"Waitress" = list(SKIN_ICON_STATE = "service_f"),
+		"Bro" = list(
+			SKIN_ICON_STATE = "brobot"
+		),
+		"Butler" = list(
+			SKIN_ICON_STATE = "service_m"
+		),
+		"Kent" = list(
+			SKIN_ICON_STATE = "kent",
+			SKIN_LIGHT_KEY = "medical",
+			SKIN_HAT_OFFSET = list("north" = list(0, 3), "south" = list(0, 3), "east" = list(0, 3), "west" = list(0, 3))
+		),
+		"Tophat" = list(
+			SKIN_ICON_STATE = "tophat",
+			SKIN_LIGHT_KEY = NONE,
+			SKIN_HAT_OFFSET = list("north" = list(0, INFINITY), "south" = list(0, INFINITY), "east" = list(0, INFINITY), "west" = list(0, INFINITY))
+		),
+		"Waitress" = list(
+			SKIN_ICON_STATE = "service_f"
+		),
 		"Kerfus" = list(
 			SKIN_ICON_STATE = "kerfus_service",
 			SKIN_LIGHT_KEY = NONE,
 			SKIN_ICON = CYBORG_ICON_CARGO,
 			SKIN_TRAITS = list(TRAIT_CAT),
-			SKIN_BADGE_OFFSET = -6,
+			SKIN_BADGE_OFFSET = list("north" = list(0, -6), "south" = list(0, -6), "east" = list(0, -6), "west" = list(0, -6))
 		),
+		"Smol Raptor" = list(
+			SKIN_ICON_STATE = "smolraptor_service",
+			BORG_SKINS_SMOLRAPTOR
+		)
 	)
 
 /obj/item/robot_model/service/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
@@ -940,8 +1055,8 @@
 	cyborg_base_icon = "synd_sec"
 	model_select_icon = "malf"
 	model_traits = list(TRAIT_PUSHIMMUNE)
-	hat_offset = 3
-	badge_offset = -3
+	hat_offset = list("north" = list(0, 3), "south" = list(0, 3), "east" = list(0, 3), "west" = list(0, 3))
+	badge_offset = list("north" = list(0, -3), "south" = list(0, -3), "east" = list(0, -3), "west" = list(0, -3))
 
 /obj/item/robot_model/syndicate/rebuild_modules()
 	..()
@@ -975,7 +1090,7 @@
 	cyborg_base_icon = "synd_medical"
 	model_select_icon = "malf"
 	model_traits = list(TRAIT_PUSHIMMUNE)
-	hat_offset = 3
+	hat_offset = list("north" = list(0, 3), "south" = list(0, 3), "east" = list(0, 3), "west" = list(0, 3))
 
 /obj/item/robot_model/saboteur
 	name = "Syndicate Saboteur"
@@ -1004,8 +1119,8 @@
 	cyborg_base_icon = "synd_engi"
 	model_select_icon = "malf"
 	model_traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY)
-	hat_offset = -4
-	badge_offset = -4
+	hat_offset = list("north" = list(0, -4), "south" = list(0, -4), "east" = list(0, -4), "west" = list(0, -4))
+	badge_offset = list("north" = list(0, -4), "south" = list(0, -4), "east" = list(0, -4), "west" = list(0, -4))
 	canDispose = TRUE
 
 /obj/item/robot_model/syndicate/kiltborg
@@ -1016,8 +1131,8 @@
 	)
 	model_select_icon = "kilt"
 	cyborg_base_icon = "kilt"
-	hat_offset = -2
-	badge_offset = -2
+	hat_offset = list("north" = list(0, -2), "south" = list(0, -2), "east" = list(0, -2), "west" = list(0, -2))
+	badge_offset = list("north" = list(0, -2), "south" = list(0, -2), "east" = list(0, -2), "west" = list(0, -2))
 	breakable_modules = FALSE
 	locked_transform = FALSE //GO GO QUICKLY AND SLAUGHTER THEM ALL
 
@@ -1069,16 +1184,18 @@
 	cyborg_base_icon = "centcomborg"
 	model_select_icon = "service"
 	special_light_key = "centcomborg"
-	hat_offset = 3
-	badge_offset = -3
+	hat_offset = list("north" = list(0, 3), "south" = list(0, 3), "east" = list(0, 3), "west" = list(0, 3))
+	badge_offset =  list("north" = list(0, -3), "south" = list(0, -3), "east" = list(0, -3), "west" = list(0, -3))
 	borg_skins = list(
-		"Standard" = list(SKIN_ICON_STATE = "centcomborg"),
+		"Standard" = list(
+			SKIN_ICON_STATE = "centcomborg"
+		),
 		"Kerfus" = list(
 			SKIN_ICON_STATE = "kerfus_centcom",
 			SKIN_LIGHT_KEY = NONE,
 			SKIN_TRAITS = list(TRAIT_CAT),
-			SKIN_BADGE_OFFSET = -6,
-		),
+			SKIN_BADGE_OFFSET = list("north" = list(0, -6), "south" = list(0, -6), "east" = list(0, -6), "west" = list(0, -6))
+		)
 	)
 
 /obj/item/robot_model/centcom/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)

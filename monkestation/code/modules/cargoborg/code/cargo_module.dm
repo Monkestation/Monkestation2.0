@@ -49,4 +49,8 @@
 			SKIN_TRAITS = list(TRAIT_CAT),
 			SKIN_BADGE_OFFSET = -6,
 		),
+		"Smol Raptor" = list(
+			SKIN_ICON_STATE = "smolraptor_cargo",
+			BORG_SKINS_SMOLRAPTOR
+		)
 	)

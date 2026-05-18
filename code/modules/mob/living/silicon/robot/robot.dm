@@ -309,12 +309,20 @@
 		else
 			add_overlay("ov-opencover -c")
 	if(hat)
-		var/mutable_appearance/head_overlay = hat.build_worn_icon(default_layer = 20, default_icon_file = 'icons/mob/clothing/head/default.dmi')
-		head_overlay.pixel_z += model.hat_offset
-		add_overlay(head_overlay)
+		var/mutable_appearance/hat_overlay = hat.build_worn_icon(default_layer = 20, default_icon_file = 'icons/mob/clothing/head/default.dmi')
+		if(model.hat_offset)
+			var/list/offset = model.hat_offset[ISDIAGONALDIR(dir) ? dir2text(dir & (WEST|EAST)) : dir2text(dir)]
+			if(offset)
+				hat_overlay.pixel_w = offset[1]
+				hat_overlay.pixel_z = offset[2]
+		add_overlay(hat_overlay)
 	if(worn_badge)
 		var/mutable_appearance/accessory_overlay = mutable_appearance(worn_badge.worn_icon, worn_badge.icon_state)
-		accessory_overlay.pixel_z += model.badge_offset
+		if(model.badge_offset)
+			var/list/offset = model.badge_offset[ISDIAGONALDIR(dir) ? dir2text(dir & (WEST|EAST)) : dir2text(dir)]
+			if(offset)
+				accessory_overlay.pixel_w = offset[1]
+				accessory_overlay.pixel_z = offset[2]
 		add_overlay(accessory_overlay)
 	update_appearance(UPDATE_OVERLAYS)
 
@@ -325,6 +333,13 @@
 	SET_PLANE_EXPLICIT(eye_lights, PLANE_TO_TRUE(eye_lights.plane), src)
 	add_overlay(eye_lights)
 	return ..()
+
+/mob/living/silicon/robot/setDir(newdir)
+	var/old_dir = dir
+	. = ..()
+	if(. == old_dir)
+		return
+	update_icons()
 
 /mob/living/silicon/robot/proc/self_destruct(mob/user)
 	var/turf/groundzero = get_turf(src)
