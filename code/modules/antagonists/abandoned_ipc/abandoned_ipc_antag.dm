@@ -82,7 +82,7 @@
 /obj/item/internal_doorjack
 	name = "integrated doorjack"
 	desc = "A built in doorjack, attached to your arm. Can be used to open doors."
-	icon = 'icons/obj/card.dmi'
+	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "doorjack_implant"
 	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
