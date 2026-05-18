@@ -85,6 +85,10 @@
 	ricochet_auto_aim_range = 5
 	ricochet_shoots_firer = FALSE
 
+/obj/projectile/bullet/bloodsilver/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_REFLECTED_BY_COSMIC_FIELD, INNATE_TRAIT) // should allow them to pierce cosmic fields without adding a snowflake check to the fields themselves
+
 /obj/projectile/bullet/bloodsilver/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(!isliving(target) || QDELING(target) || !is_monster_hunter_prey(target))
