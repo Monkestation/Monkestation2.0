@@ -44,10 +44,6 @@
 	var/current_cooldown = 0
 	var/range = 7
 
-/obj/item/t_scanner/adv_mining_scanner/cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
-
 /obj/item/t_scanner/adv_mining_scanner/cyborg/cyborg_unequip(mob/user)
 	return // Prevents it from turning off when unequipped.
 
