@@ -387,7 +387,7 @@
 		/obj/item/weldingtool/largetank/cyborg,
 		/obj/item/borg/cyborg_omnitool/engineering,
 		/obj/item/borg/cyborg_omnitool/engineering,
-		/obj/item/lightreplacer/cyborg,
+		/obj/item/lightreplacer,
 		/obj/item/borg/apparatus/circuit,
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
