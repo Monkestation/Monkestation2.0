@@ -23,8 +23,10 @@
 
 /obj/item/gun/ballistic/revolver/hunter_revolver/examine(mob/user)
 	. = ..()
-	if(IS_MONSTERHUNTER(user))
-		. += span_info("Right click with it in order to attack with its powerful knife.")
+	if(!IS_MONSTERHUNTER(user) && !isobserver(user))
+		return
+	. += span_info("Bloodsilver bullets will apply a short-lived but debilitating curse to monsters, slowing them down immensely and crippling many of their abilities.")
+	. += span_info("[EXAMINE_HINT("Right click")] with it in order to attack with its powerful knife.")
 
 /obj/item/gun/ballistic/revolver/hunter_revolver/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(is_monster_hunter_prey(target_mob))
