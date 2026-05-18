@@ -8,6 +8,7 @@
 	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthand.dmi'
 	base_pixel_x = -8
 	pixel_x = -8
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/bloodsilver
 	initial_caliber = CALIBER_BLOODSILVER
 	force = 18
