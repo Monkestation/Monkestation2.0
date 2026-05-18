@@ -25,7 +25,7 @@
 	. = ..()
 	if(!IS_MONSTERHUNTER(user) && !isobserver(user))
 		return
-	. += span_info("Bloodsilver bullets will apply a short-lived but debilitating curse to monsters, slowing them down immensely and crippling many of their abilities.")
+	. += span_info("While bloodsilver bullets do not do much damage, they afflict monsters with a short-lived but debilitating curse, slowing them down immensely and crippling many of their wretched abilities.")
 	. += span_info("[EXAMINE_HINT("Right click")] with it in order to attack with its powerful knife.")
 
 /obj/item/gun/ballistic/revolver/hunter_revolver/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
