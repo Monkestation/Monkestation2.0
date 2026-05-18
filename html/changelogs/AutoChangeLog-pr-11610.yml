@@ -1,0 +1,4 @@
+author: "Runian"
+delete-after: True
+changes:
+  - balance: "Mining Cyborg's advanced mining scanner has been moved to a module rather than being built into them."

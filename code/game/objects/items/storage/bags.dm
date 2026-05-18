@@ -85,10 +85,6 @@
 			icon_state = "[initial(icon_state)]"
 	return ..()
 
-/obj/item/storage/bag/trash/cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
-
 /obj/item/storage/bag/trash/filled
 
 /obj/item/storage/bag/trash/filled/PopulateContents()
@@ -108,9 +104,6 @@
 	. = ..()
 	atom_storage.max_total_storage = 60
 	atom_storage.max_slots = 60
-
-/obj/item/storage/bag/trash/bluespace/cyborg
-	insertable = FALSE
 
 // -----------------------------
 //        Mining Satchel
@@ -140,23 +133,24 @@
 	atom_storage.set_holdable(list(/obj/item/stack/ore))
 	atom_storage.silent_for_user = TRUE
 
+/obj/item/storage/bag/ore/Destroy()
+	. = ..()
+	stop_listening()
+
 /obj/item/storage/bag/ore/equipped(mob/user)
 	. = ..()
 	if(listeningTo == user)
 		return
-	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-		qdel(connector)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(pickup_ores))
-	connector = AddComponent(/datum/component/connect_loc_behalf, user, loc_connections)
-	listeningTo = user
+	stop_listening()
+	start_listening_to(user)
 
 /obj/item/storage/bag/ore/dropped()
 	. = ..()
-	if(listeningTo)
-		QDEL_NULL(connector)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-		listeningTo = null
+	stop_listening()
+
+/obj/item/storage/bag/ore/cyborg_unequip(mob/user)
+	// Restores functionality where mining cyborgs don't need to actively equip the satchel to pick up ores.
+	start_listening_to(user)
 
 /obj/item/storage/bag/ore/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/boulder))
@@ -213,6 +207,22 @@
 			)
 
 	spam_protection = FALSE
+
+/// Stops listening to the user. Will begin automatically picking up ores.
+/obj/item/storage/bag/ore/proc/stop_listening()
+	if(!listeningTo)
+		return
+	UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	qdel(connector)
+	listeningTo = null
+
+/// Begins listening to the user. Will stop automatically picking up ores.
+/obj/item/storage/bag/ore/proc/start_listening_to(mob/user)
+	if(listeningTo || QDELETED(src))
+		return
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(pickup_ores))
+	connector = AddComponent(/datum/component/connect_loc_behalf, user, loc_connections)
+	listeningTo = user
 
 /obj/item/storage/bag/ore/proc/on_listener_turf_entered(datum/source, atom/movable/thing, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
@@ -429,6 +439,10 @@
 		I_copy.plane = FLOAT_PLANE
 		I_copy.layer = FLOAT_LAYER
 		. += I_copy
+
+/obj/item/storage/bag/tray/cyborg_unequip(mob/user)
+	. = ..()
+	atom_storage.remove_all(drop_location())
 
 /obj/item/storage/bag/tray/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
