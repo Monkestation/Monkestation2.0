@@ -250,7 +250,7 @@
 	cyborg.diag_hud_set_borgcell()
 	cyborg.diag_hud_set_aishell()
 	cyborg.update_icons()
-	cyborg.model.handle_pixel_w()
+	cyborg.model.handle_model_features()
 	cyborg.model.handle_lighting_offset()
 	log_silicon("CYBORG: [key_name(cyborg)] has transformed into the [new_model] model.")
 
@@ -350,7 +350,8 @@
 		return FALSE
 	return TRUE
 
-/obj/item/robot_model/proc/handle_pixel_w()
+/// Sets pixel shift based on their model's features.
+/obj/item/robot_model/proc/handle_model_features()
 	var/mob/living/silicon/robot/cyborg = loc
 	if(!istype(cyborg))
 		return
@@ -361,6 +362,7 @@
 	cyborg.pixel_w = 0
 	cyborg.base_pixel_x = 0
 
+/// Updates the lighting overlay to account for the model's lighting offset.
 /obj/item/robot_model/proc/handle_lighting_offset()
 	var/mob/living/silicon/robot/cyborg = loc
 	if(!istype(cyborg))
