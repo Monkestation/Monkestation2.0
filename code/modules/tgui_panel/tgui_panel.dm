@@ -125,7 +125,7 @@
 	if(istype(SSassets.transport, /datum/asset_transport/webroot))
 		if(isnull(webroot_asset_urls))
 			webroot_asset_urls = list()
-			for(var/asset_type as anything in list(/datum/asset/simple/tgui_panel, /datum/asset/simple/namespaced/fontawesome, /datum/asset/simple/namespaced/tgfont, /datum/asset/spritesheet_batched/chat))
+			for(var/asset_type in list(/datum/asset/simple/tgui_panel, /datum/asset/simple/namespaced/fontawesome, /datum/asset/simple/namespaced/tgfont, /datum/asset/spritesheet_batched/chat))
 				var/datum/asset/asset = get_asset_datum(asset_type)
 				webroot_asset_urls += asset.get_url_mappings()
 		metadata["webroot"] = list(
