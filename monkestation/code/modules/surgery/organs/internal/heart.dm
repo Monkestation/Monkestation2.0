@@ -272,7 +272,6 @@
 	var/spark_prob = 15
 
 /obj/item/organ/internal/heart/synth/abandoned/on_life(seconds_per_tick, times_fired)
-	if(!SPT_PROB(spark_prob, seconds_per_tick))
 	if(SPT_PROB(spark_prob, seconds_per_tick))
 		do_sparks(1, FALSE, owner)
 	return ..()
