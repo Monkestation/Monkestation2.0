@@ -2656,6 +2656,7 @@
 #include "code\game\objects\items\stacks\telecrystal.dm"
 #include "code\game\objects\items\stacks\tickets.dm"
 #include "code\game\objects\items\stacks\wrap.dm"
+#include "code\game\objects\items\stacks\sheets\fleshmass.dm"
 #include "code\game\objects\items\stacks\sheets\glass.dm"
 #include "code\game\objects\items\stacks\sheets\hot_ice.dm"
 #include "code\game\objects\items\stacks\sheets\leather.dm"
