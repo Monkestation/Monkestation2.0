@@ -9,7 +9,7 @@
 	muzzle_type = /obj/effect/projectile/muzzle/stun
 	impact_type = /obj/effect/projectile/impact/stun
 	/// How much stamina damage will the tase deal in 1 second
-	VAR_PROTECTED/tase_stamina = 30
+	VAR_PROTECTED/tase_stamina = 35
 	/// Electrodes that follow the projectile
 	VAR_PRIVATE/datum/weakref/beam_weakref
 	/// We need to track who was the ORIGINAL firer of the projectile specifically to ensure deflects work correctly
@@ -64,41 +64,7 @@
 	do_sparks(1, TRUE, src)
 	return ..()
 
-/obj/projectile/energy/electrode/ai_turrets
-	tase_stamina = 40
 
-/obj/projectile/energy/electrode/on_hit(mob/living/target, blocked = 0, pierce_hit)
-	. = ..()
-	if(pierce_hit)
-		return
-	if(. == BULLET_ACT_BLOCK || blocked >= 100 || !isliving(target))
-		return
-	// we need a "from", otherwise, where does the electricity come from?
-	if(isnull(fired_from))
-		target.visible_message(
-			span_warning("[src]\s collide with [target] harmlessly[isfloorturf(target.loc) ? ", before falling to [target.loc]" : ""]."),
-			span_notice("[src] collide with you harmlessly[isfloorturf(target.loc) ? ", before falling to [target.loc]" : ""]."),
-		)
-		return
-
-	do_sparks(1, TRUE, src)
-	do_sparks(1, TRUE, fired_from)
-	target.apply_status_effect(
-		/*type = *//datum/status_effect/tased,
-		/*taser = */fired_from,
-		/*firer = */initial_firer_weakref?.resolve() || firer,
-		/*tase_stamina = */tase_stamina,
-		/*energy_drain = */STANDARD_CELL_CHARGE * 0.05,
-		/*electrode_name = */"\the [src]\s",
-		/*tase_range = */maximum_range + 1,
-	)
-
-/obj/projectile/energy/electrode/on_range() //to ensure the bolt sparks when it reaches the end of its range if it didn't hit a target yet
-	do_sparks(1, TRUE, src)
-	return ..()
-
-/obj/projectile/energy/electrode/ai_turrets
-	tase_stamina = 120
 
 /// Status effect tracking being tased by someone!
 /datum/status_effect/tased
@@ -242,6 +208,9 @@
 	if(!tasing)
 		return
 
+	if(prob(25))
+		SEND_SIGNAL(owner, COMSIG_LIVING_MINOR_SHOCK)
+
 	owner.adjust_stutter_up_to(10 SECONDS, 20 SECONDS)
 	owner.adjust_jitter_up_to(20 SECONDS, 30 SECONDS)
 	if(owner.stat <= SOFT_CRIT)
@@ -260,7 +229,11 @@
 
 	// the actual stunning is here
 	if(!owner.check_stun_immunity(CANSTUN|CANKNOCKDOWN))
-		owner.apply_damage(stamina_per_second * seconds_between_ticks, STAMINA)
+		var/armor_modifier = owner.getarmor(null, ENERGY)
+		var/damage_modifier = 1
+		if(HAS_TRAIT(owner, TRAIT_TASER_RESISTANCE))
+			damage_modifier = 0.5
+		owner.apply_damage(stamina_per_second * seconds_between_ticks * damage_modifier, STAMINA, null, armor_modifier)
 
 /// Sets the passed atom as the "taser"
 /datum/status_effect/tased/proc/set_taser(datum/new_taser)
