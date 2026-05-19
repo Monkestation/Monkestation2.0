@@ -116,6 +116,8 @@
 	var/static/list/webroot_asset_urls
 
 	var/list/metadata = list(
+		"game_version" = GLOB.game_version,
+		"server_name" = CONFIG_GET(string/servername),
 		"round_id" = GLOB.round_id,
 		"map_name" = SSmapping.current_map?.map_name,
 		"round_duration" = round(STATION_TIME_PASSED() / 10, 1),
