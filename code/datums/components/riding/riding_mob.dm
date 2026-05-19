@@ -300,6 +300,20 @@
 		Unbuckle(user)
 		to_chat(user, span_warning("You can't grab onto [robot_parent] with no hands!"))
 
+/datum/component/riding/creature/cyborg/vehicle_mob_buckle(mob/living/ridden, mob/living/rider, force = FALSE)
+	var/mob/living/silicon/robot/robot_parent = parent
+	if(!istype(robot_parent.model) || isnull(robot_parent.model.model_features) || !(BORG_FEATURE_RIDER_OVERLAY in robot_parent.model.model_features))
+		return ..()
+	robot_parent.update_icons() // Gives the overlay.
+	return ..()
+
+/datum/component/riding/creature/cyborg/vehicle_mob_unbuckle(mob/living/formerly_ridden, mob/living/former_rider, force = FALSE)
+	var/mob/living/silicon/robot/robot_parent = parent
+	if(!istype(robot_parent.model) || !(BORG_FEATURE_RIDER_OVERLAY in robot_parent.model.model_features))
+		return ..()
+	robot_parent.update_icons() // Removes the overlay.
+	return ..()
+
 /datum/component/riding/creature/cyborg/handle_vehicle_layer(dir)
 	var/atom/movable/robot_parent = parent
 	if(dir == SOUTH)
@@ -315,11 +329,14 @@
 
 	for(var/mob/living/rider in robot_parent.buckled_mobs)
 		rider.setDir(dir)
-		if(istype(robot_parent.model))
-			if(dir2text(dir) in robot_parent.model.ride_offset_x)
-				rider.pixel_x = robot_parent.model.ride_offset_x[dir2text(dir)]
-			if(dir2text(dir) in robot_parent.model.ride_offset_y)
-				rider.pixel_y = robot_parent.model.ride_offset_y[dir2text(dir)]
+		if(!istype(robot_parent.model))
+			continue
+		if(isnull(robot_parent.model.ride_offset))
+			continue
+		var/list/offset = robot_parent.model.ride_offset[ISDIAGONALDIR(dir) ? dir2text(dir & (WEST|EAST)) : dir2text(dir)]
+		if(offset)
+			rider.pixel_x = offset[1]
+			rider.pixel_y = offset[2]
 
 //now onto every other ridable mob//
 

@@ -324,6 +324,8 @@
 				accessory_overlay.pixel_w = offset[1]
 				accessory_overlay.pixel_z = offset[2]
 		add_overlay(accessory_overlay)
+	if(has_buckled_mobs() && !isnull(model.model_features) && (BORG_FEATURE_RIDER_OVERLAY in model.model_features))
+		add_overlay("saddle")
 	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/silicon/robot/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)

@@ -47,16 +47,14 @@
 	var/allow_riding = TRUE
 	///Whether the borg can stuff itself into disposals
 	var/canDispose = FALSE
+	/// The offsets of the person riding the borg.
+	var/list/ride_offset = list("north" = list(0, 4), "south" = list(0, 4), "east" = list(-6, 3), "west" = list(6, 3))
 	/// The offsets of the hat worn on our head.
 	var/list/hat_offset = list("north" = list(0, -3), "south" = list(0, -3), "east" = list(0, -3), "west" = list(0, -3))
 	/// The offsets of the badge we're decorated with.
 	var/list/badge_offset = list("north" = list(0, -3), "south" = list(0, -3), "east" = list(0, -3), "west" = list(0, -3))
 	/// The offsets of the lighting overlay.
 	var/list/lighting_offset = list("north" = list(0, 0), "south" = list(0, 0), "east" = list(0, 0), "west" = list(0, 0))
-	///The x offsets of a person riding the borg
-	var/list/ride_offset_x = list("north" = 0, "south" = 0, "east" = -6, "west" = 6)
-	///The y offsets of a person riding the borg
-	var/list/ride_offset_y = list("north" = 4, "south" = 4, "east" = 3, "west" = 3)
 	///List of skins the borg can be reskinned to, optional
 	var/list/borg_skins
 
@@ -284,6 +282,8 @@
 			cyborg.base_pixel_y = details[SKIN_PIXEL_Y]
 		if(!isnull(details[SKIN_LIGHT_KEY]))
 			special_light_key = details[SKIN_LIGHT_KEY]
+		if(!isnull(details[SKIN_RIDE_OFFSET]))
+			ride_offset = details[SKIN_RIDE_OFFSET]
 		if(!isnull(details[SKIN_HAT_OFFSET]))
 			hat_offset = details[SKIN_HAT_OFFSET]
 		if(!isnull(details[SKIN_BADGE_OFFSET]))

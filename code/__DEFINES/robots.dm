@@ -57,6 +57,7 @@
 #define SKIN_PIXEL_X "skin_pixel_x"
 #define SKIN_PIXEL_Y "skin_pixel_y"
 #define SKIN_LIGHT_KEY "skin_light_key"
+#define SKIN_RIDE_OFFSET "skin_ride_offset"
 #define SKIN_HAT_OFFSET "skin_hat_offset"
 #define SKIN_BADGE_OFFSET "skin_badge_offset"
 #define SKIN_LIGHTING_OFFSET "skin_lighting_offset"
@@ -341,12 +342,14 @@ DEFINE_BITFIELD(janitor_mode_flags, list(
 #define MEDIBOT_VOICED_NOOO	"Nooo!"
 #define MEDIBOT_VOICED_CHICKEN "LOOK AT ME?! i am a chicken."
 
-#define BORG_FEATURE_WIDE "cyborg_feature_wide" // 64x32 sprites
+#define BORG_FEATURE_WIDE "borg_feature_wide" // 64x32 sprites.
+#define BORG_FEATURE_RIDER_OVERLAY "borg_feature_rider_overlay" // Applies 'saddle' overlay to the cyborg if someone is buckled to them.
 
 #define BORG_SKINS_SMOLRAPTOR \
 	SKIN_ICON = 'icons/mob/silicon/robots_smolraptors.dmi',\
-	SKIN_FEATURES = list(BORG_FEATURE_WIDE),\
+	SKIN_FEATURES = list(BORG_FEATURE_WIDE, BORG_FEATURE_RIDER_OVERLAY),\
 	SKIN_LIGHT_KEY = "smolraptor",\
+	SKIN_RIDE_OFFSET = list("north" = list(0, 8), "south" = list(0, 8), "east" = list(11, 8), "west" = list(-11, 8)),\
 	SKIN_HAT_OFFSET = list("north" = list(16, 0), "south" = list(16, -1), "east" = list(37, 0), "west" = list(-5, 0)),\
 	SKIN_BADGE_OFFSET = list("north" = list(16, -6), "south" = list(16, -7), "east" = list(25, -6), "west" = list(7, -6)),\
 	SKIN_LIGHTING_OFFSET = list("north" = list(16, 0), "south" = list(16, 0), "east" = list(32, 0), "west" = list(0, 0))
