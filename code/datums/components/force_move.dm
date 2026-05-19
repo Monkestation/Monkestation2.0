@@ -80,12 +80,13 @@
 	SIGNAL_HANDLER
 
 
-	if(!result && slip_spin)
-		var/mob/mob_parent = parent
-		mob_parent.spin(1, 1)
+	if(!result)
+		if(slip_spin)
+			var/mob/mob_parent = parent
+			mob_parent.spin(1, 1)
 		return
 
-	if(!isliving(parent))
+	if(!slip_crash || !isliving(parent))
 		return
 
 	var/mob/living/living_parent = parent
