@@ -1,7 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - rscadd: "Observers can now view a cyborg's inventory."
-  - qol: "Stored cyborg items retain their original position and no longer shuffle other items down when taken out."
-  - qol: "For cyborgs, the store button has been removed but its functionality has moved to the cyborg module button. Left-click to store the active module and right-click to open the storage."
-  - refactor: "Cyborgs now stores and handles all of their items via a storage datum."
