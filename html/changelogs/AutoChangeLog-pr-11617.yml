@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "For the like, 5 people who actually use the websocket feature, you can now request metadata for them (round id, map name, round duration, game state)"

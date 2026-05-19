@@ -935,7 +935,7 @@
 	item_path = /obj/item/clothing/glasses/hud/health/aviators
 	donator_only = TRUE
 	requires_purchase = FALSE
-	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_PARAMEDIC, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER)
+	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_PARAMEDIC, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER, JOB_BRIG_PHYSICIAN)
 
 /datum/loadout_item/glasses/diagnostic_aviators
 	name = "Diagnostic Aviators"
@@ -1091,6 +1091,13 @@
 /datum/loadout_item/mask/lobotomites_visage
 	name = "Lobotomite's Visage"
 	item_path = /obj/item/clothing/mask/gas/lobotomites_visage
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// Coll6
+/datum/loadout_item/suit/lava_cat_robe
+	name = "Lava Cat Robe"
+	item_path = /obj/item/clothing/suit/hooded/lava_cat_robe
 	donator_only = TRUE
 	requires_purchase = FALSE
 

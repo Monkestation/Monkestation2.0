@@ -266,3 +266,53 @@
   - rscdel: Medical cyborg surgical processor upgrade has been removed.
   TheColorCyan:
   - bugfix: fixed clothes that obscure other clothes not hiding them
+2026-05-18:
+  JohnFulpWillard:
+  - balance: ORMs now give less points/mats for upgraded parts, t4 ORMs give 1.6x
+      the mats instead of 2.05x
+  LettuceGuardian:
+  - rscadd: New alt+click skins for sec and syndie webbing.
+  - rscadd: Resprited the bulletproof helmet.
+  - rscadd: Umbrellas and parasols now available in the store!
+  Mantlecrawler:
+  - balance: Thrown pies now only hardstun if the thrower is a clown or is clumsy.
+      Also applies to pie cannons
+  Runian:
+  - bugfix: Upon safe deconstruction, cyborg upgrades are now dropped onto the floor
+      instead of being deleted.
+  SirNightKnight:
+  - bugfix: fixed foam passing through objects it shouldn't like windows.
+  byondsucks:
+  - balance: Rust construction cooldown is now 6 seconds.
+2026-05-19:
+  FelineMistress:
+  - rscadd: Added Biocorrector, Ambu Bag, Remote Health Analyzer, Tricorder
+  - qol: Remote Health Analyzer mechanics
+  - bugfix: fixed that the omni tool could not filter blood
+  - sound: added Ambu Bag, Remote Health Analyzer sound effects
+  - image: added Added Biocorrector, Ambu Bag, Remote Health Analyzer, Tricorder /modified
+      Advanced Health Analyzer icons
+  Runian:
+  - rscadd: Observers can now view a cyborg's inventory.
+  - qol: Stored cyborg items retain their original position and no longer shuffle
+      other items down when taken out.
+  - qol: For cyborgs, the store button has been removed but its functionality has
+      moved to the cyborg module button. Left-click to store the active module and
+      right-click to open the storage.
+  - refactor: Cyborgs now stores and handles all of their items via a storage datum.
+  - balance: Cyborgs will send a chat notification to their master AI that they have
+      died.
+  - rscadd: Illegal Combat Cybernetic Implants tech node. It require Illegal Technology,
+      Combat Cybernetic Implants, and 40 points.
+  - balance: X-Ray Eyes and Thermals Eyes is now unlocked via Illegal Combat Cybernetic
+      Implants.
+  - balance: Mining Cyborg's advanced mining scanner has been moved to a module rather
+      than being built into them.
+  SirNightKnight:
+  - bugfix: fixed CPR not working.
+  "Siro, TheColorCyan, T\u2026":
+  - rscadd: Adds Lava Cat robe
+  - bugfix: Fixes Shark Costume object icon when worn with hood up.
+  Tractor Maam, JohnFulpWillard:
+  - rscadd: AIs can now quickly track their cyborgs and infected IPCs through their
+      status panel.
