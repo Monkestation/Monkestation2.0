@@ -25,7 +25,7 @@
 	. = ..()
 	if(!IS_MONSTERHUNTER(user) && !isobserver(user))
 		return
-	. += span_info("While bloodsilver bullets do not do much damage, they afflict monsters with a brief but debilitating curse, slowing them down immensely and crippling many of their wretched abilities.")
+	. += span_info("While bloodsilver bullets do not do much damage, they afflict monsters with a brief but debilitating curse, crippling many of their wretched abilities.")
 	. += span_info("[EXAMINE_HINT("Right click")] with it in order to attack with its powerful knife.")
 
 /obj/item/gun/ballistic/revolver/hunter_revolver/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
@@ -60,10 +60,6 @@
 	var/hand_zone = ((user.get_held_index_of_item(src) || user.active_hand_index) % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
 	user.apply_damage(force / 2, def_zone = hand_zone, sharpness = SHARP_EDGED)
 	return FALSE
-
-/datum/movespeed_modifier/silver_bullet
-	multiplicative_slowdown = 4
-	flags = IGNORE_NOSLOW
 
 /obj/item/ammo_box/magazine/internal/cylinder/bloodsilver
 	name = "redeemer revolver cylinder"
@@ -119,9 +115,8 @@
 
 /datum/status_effect/silver_bullet/on_apply()
 	ADD_TRAIT(owner, TRAIT_BLOODSILVER_CURSE, TRAIT_STATUS_EFFECT(id))
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/silver_bullet)
 	owner.apply_status_effect(/datum/status_effect/wonderland_district/bloodsilver)
-	to_chat(owner, span_userdanger("Your body suddenly feels impossibly heavy, you can barely move!"), type = MESSAGE_TYPE_COMBAT)
+	to_chat(owner, span_userdanger("Your body suddenly feels impossibly heavy, you can barely move!"), type = MESSAGE_TYPE_COMBAT) // gotta change this text to describe the new effect
 	SEND_SIGNAL(owner, COMSIG_LIVING_BLOODSILVER_HIT)
 	remove_effects()
 	RegisterSignal(owner, COMSIG_MOB_PRE_JAUNT, PROC_REF(on_jaunt))
@@ -129,7 +124,6 @@
 
 /datum/status_effect/silver_bullet/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_BLOODSILVER_CURSE, TRAIT_STATUS_EFFECT(id))
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/silver_bullet)
 	owner.remove_status_effect(/datum/status_effect/wonderland_district/bloodsilver)
 	UnregisterSignal(owner, COMSIG_MOB_PRE_JAUNT)
 	to_chat(owner, span_notice("The impossible weight fades away, allowing you to move normally once more."), type = MESSAGE_TYPE_COMBAT)
@@ -156,5 +150,6 @@
 
 /atom/movable/screen/alert/status_effect/silver_bullet
 	name = "Bloodsilver Curse"
-	desc = "You can feel your sins crawling on your back, weighing you down immensely."
-	icon_state = "weaken"
+	desc = "Your powers have been suppressed by an otherworldly beast!"
+	icon = 'monkestation/icons/hud/screen_alert.dmi'
+	icon_state = "wonderland"
