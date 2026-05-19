@@ -18,6 +18,7 @@
 
 ///////////////////////////////////////
 
+/*
 /obj/item/borg/sight/equipped(mob/living/silicon/robot/user, slot, initial = FALSE)
 	. = ..()
 	if(!iscyborg(user))
@@ -31,6 +32,7 @@
 	user.sight_mode &= ~sight_mode
 	user.update_sight()
 	return ..()
+*/
 
 /obj/item/borg/sight/xray
 	name = "\proper X-ray vision"

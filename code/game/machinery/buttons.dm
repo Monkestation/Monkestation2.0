@@ -211,7 +211,7 @@
 			to_chat(user, span_notice("You remove electronics from the button frame."))
 
 		else if(can_alter_skin)
-			to_chat(usr, span_notice("You're starting to adjust the color display."))
+			to_chat(user, span_notice("You're starting to adjust the color display."))
 			var/static/list/choices = list(
 				"Gray"		= image(icon = 'icons/obj/buttons.dmi', icon_state = "button"),
 				"Green"		= image(icon = 'icons/obj/buttons.dmi', icon_state = "button-green"),
@@ -309,7 +309,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 
 // RCD fix airlock without electronics
 /obj/machinery/button/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if((!board) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
+	if(!board && the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS)
 		return list("mode" = RCD_WALLFRAME, "delay" = 2 SECONDS, "cost" = 1)
 	return FALSE
 
@@ -319,8 +319,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 			board = the_rcd.airlock_electronics.create_copy(board)
 			balloon_alert(user, "electronics added")
 			user.visible_message(
-				span_notice("[user] fabricates a circuit and places it into [src]."), \
-				span_notice("You adapt a airlock circuit and slot it into the assembly."))
+				span_notice("[user] fabricates a circuit and places it into [src]."),
+				span_notice("You adapt a airlock circuit and slot it into the assembly."),
+			)
 			if(board.passed_name)	// Naming the button from the RCD graph "Airlock Name"
 				name = board.passed_name
 			update_appearance()

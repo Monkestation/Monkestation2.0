@@ -197,13 +197,13 @@
 		/obj/machinery/recharge_station,
 		/obj/machinery/mech_bay_recharge_port,
 		/obj/machinery/power/apc,
-		))
+	))
 	/// Whitelist of chargable items
 	var/static/list/charge_items = typecacheof(list(
 		/obj/item/stock_parts/power_store/cell,
 		/obj/item/gun/energy,
 		/obj/item/melee/baton/security,
-		))
+	))
 
 /obj/item/borg/charger/Initialize(mapload)
 	. = ..()
@@ -386,7 +386,7 @@
 
 /obj/item/borg/charger/Destroy()
 	QDEL_NULL(soundloop)
-	. = ..()
+	return ..()
 
 /obj/item/harmalarm
 	name = "\improper Sonic Harm Prevention Tool"

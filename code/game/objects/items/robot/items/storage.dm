@@ -138,8 +138,8 @@
 
 /obj/item/borg/apparatus/beaker/examine(mob/user)
 	if(stored)
-		to_chat(user, span_notice("   <i>Alt-click</i> will drop the currently stored beaker."))
-		to_chat(user, span_notice("   <i>Right-clicking</i> will splash the beaker on the ground."))
+		to_chat(user, span_nicegreen(" <i>Alt-click</i> will drop the currently stored beaker."))
+		to_chat(user, span_nicegreen(" <i>Right-clicking</i> will splash the beaker on the ground."))
 		return stored.examine(user)
 	return ..()
 
@@ -213,7 +213,7 @@
 
 /obj/item/borg/apparatus/organ_storage/examine(mob/user)
 	if(stored)
-		to_chat(user, span_notice("   <i>Alt-click</i> will drop the currently stored organ."))
+		to_chat(user, span_nicegreen(" <i>Alt-click</i> will drop the currently stored organ."))
 		return stored.examine(user)
 	return ..()
 
@@ -281,7 +281,7 @@
 
 /obj/item/borg/apparatus/sheet_manipulator/examine(mob/user)
 	if(stored)
-		to_chat(user, span_notice("   <i>Alt-click</i> will drop the currently stored sheets."))
+		to_chat(user, span_nicegreen(" <i>Alt-click</i> will drop the currently stored sheets."))
 		return stored.examine(user)
 	return ..()
 
@@ -319,7 +319,7 @@
 
 /obj/item/borg/apparatus/circuit/examine(mob/user)
 	if(stored)
-		to_chat(user, span_notice("   <i>Alt-click</i> will drop the currently stored circuit."))
+		to_chat(user, span_nicegreen(" <i>Alt-click</i> will drop the currently stored circuit."))
 		return stored.examine(user)
 	return ..()
 
@@ -352,7 +352,7 @@
 
 /obj/item/borg/apparatus/cooking/examine(mob/user)
 	if(stored)
-		to_chat(user, span_notice("   <i>Alt-click</i> will drop the currently stored item."))
+		to_chat(user, span_nicegreen(" <i>Alt-click</i> will drop the currently stored item."))
 		return stored.examine(user)
 	return ..()
 
