@@ -431,6 +431,7 @@
 	RegisterSignal(our_mob, COMSIG_USER_ITEM_INTERACTION, PROC_REF(on_item_use))
 	RegisterSignal(our_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(after_fully_healed))
 	RegisterSignal(our_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_heretic_examine))
+	RegisterSignal(our_mob, COMSIG_MOB_EXAMINING, PROC_REF(on_examining))
 	RegisterSignal(our_mob, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_aura_overlay))
 
 	RegisterSignals(
@@ -459,6 +460,7 @@
 			COMSIG_LIVING_POST_FULLY_HEAL,
 			COMSIG_LIVING_CULT_SACRIFICED,
 			COMSIG_ATOM_EXAMINE,
+			COMSIG_MOB_EXAMINING,
 			COMSIG_ATOM_UPDATE_OVERLAYS,
 			SIGNAL_ADDTRAIT(TRAIT_HERETIC_AURA_HIDDEN),
 			SIGNAL_REMOVETRAIT(TRAIT_HERETIC_AURA_HIDDEN)
@@ -510,9 +512,6 @@
 
 /datum/antagonist/heretic/proc/on_heretic_examine(mob/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
-	var/datum/antagonist/heretic_monster/minion = user.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
-	if(minion?.master == owner)
-		examine_text += span_heretic_master("[source.p_They()] [source.p_are()] your master!")
 	if(ascended)
 		examine_text += "<span class='[heretic_path.examine_class]'>[span_big(span_bold(heretic_path.ascension_examine_text(source)))]</span>"
 		return
@@ -523,6 +522,14 @@
 	if(can_ascend() == HERETIC_CAN_ASCEND)
 		potential_string += " [heretic_mob.p_They()] [heretic_mob.p_are()] shedding [heretic_mob.p_their()] mortal shell!"
 	examine_text += span_green(potential_string)
+
+/datum/antagonist/heretic/proc/on_examining(mob/source, mob/living/examined, list/examine_text)
+	SIGNAL_HANDLER
+	if(!isliving(examined) || !examined.mind)
+		return
+	var/datum/antagonist/heretic_monster/monster = examined.mind.has_antag_datum(/datum/antagonist/heretic_monster)
+	if(monster.master == owner)
+		examine_text += span_heretic_master("[examined.p_They()] [examined.p_are()] your servant!")
 
 /datum/antagonist/heretic/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()
