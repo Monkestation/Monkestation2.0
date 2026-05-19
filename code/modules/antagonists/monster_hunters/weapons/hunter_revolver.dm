@@ -144,8 +144,10 @@
 /datum/status_effect/silver_bullet/proc/on_jaunt(mob/living/jaunter)
 	SIGNAL_HANDLER
 
-	to_chat(jaunter, span_userdanger("As you try to jaunt, a hidden beast drags you down, keeping you anchored to this plane of existence!"), type = MESSAGE_TYPE_WARNING)
-	duration += 1.5 SECONDS // punishment!!
+	playsound(jaunter, 'sound/effects/meteorimpact.ogg', vol = 40, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+	to_chat(jaunter, span_userdanger("As you try to jaunt, a hidden beast grabs your very being, violently dragging you back down into this plane of existence!"), type = MESSAGE_TYPE_WARNING)
+	jaunter.set_confusion_if_lower(2.5 SECONDS)
+	jaunter.Knockdown(0.5 SECONDS, ignore_canstun = TRUE)
 	return COMPONENT_BLOCK_JAUNT
 
 /atom/movable/screen/alert/status_effect/silver_bullet
