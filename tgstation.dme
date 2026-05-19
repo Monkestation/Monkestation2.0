@@ -7232,7 +7232,6 @@
 #include "monkestation\code\modules\blood_datum\debilitated.dm"
 #include "monkestation\code\modules\blood_datum\designs.dm"
 #include "monkestation\code\modules\blood_datum\forensics_helpers.dm"
-#include "monkestation\code\modules\blood_datum\stunning.dm"
 #include "monkestation\code\modules\blood_datum\components\item_receiver.dm"
 #include "monkestation\code\modules\blood_datum\components\limbless_aid.dm"
 #include "monkestation\code\modules\blood_datum\elements\easy_ignite.dm"
