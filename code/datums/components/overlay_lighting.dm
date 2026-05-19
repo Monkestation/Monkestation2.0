@@ -525,7 +525,7 @@
 		if(!isnull(directional_light_offset))
 			var/list/offset = directional_light_offset[ISDIAGONALDIR(current_direction) ? dir2text(current_direction & (WEST|EAST)) : dir2text(current_direction)]
 			if(offset)
-				directional_offset_y += offset[1]
+				directional_offset_x += offset[1]
 				directional_offset_y += offset[2]
 		transform.Translate(directional_offset_x, directional_offset_y)
 		visible_mask.transform = transform
