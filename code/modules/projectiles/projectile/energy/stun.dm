@@ -3,7 +3,7 @@
 	icon_state = "spark"
 	color = COLOR_YELLOW
 	hitsound = 'sound/weapons/taserhit.ogg'
-	range = 5
+	range = 4
 	reflectable = FALSE
 	tracer_type = /obj/effect/projectile/tracer/stun
 	muzzle_type = /obj/effect/projectile/muzzle/stun
@@ -86,7 +86,7 @@
 	/// What do we name the electrodes?
 	VAR_FINAL/electrode_name
 	/// How far can the taser reach?
-	VAR_FINAL/tase_range = 6
+	VAR_FINAL/tase_range = 4
 	/// Are we tasing?
 	VAR_PRIVATE/tasing = FALSE
 
@@ -94,10 +94,10 @@
 	mob/living/new_owner,
 	datum/fired_from,
 	atom/movable/firer,
-	tase_stamina = 80,
+	tase_stamina = 35,
 	energy_drain = STANDARD_CELL_CHARGE * 0.05,
 	electrode_name = "the electrodes",
-	tase_range = 6,
+	tase_range = 4,
 )
 	if(isnull(fired_from) || isnull(firer) || !can_tase_with(fired_from))
 		qdel(src)
@@ -218,7 +218,7 @@
 
 	// You are damp, that's bad when you're being tased
 	if(owner.fire_stacks < 0)
-		owner.apply_damage(max(1, owner.fire_stacks * -0.5 * seconds_between_ticks), FIRE, spread_damage = TRUE)
+		owner.apply_damage(owner.fire_stacks * -0.5 * seconds_between_ticks, BURN, spread_damage = TRUE)
 		if(SPT_PROB(25, seconds_between_ticks))
 			do_sparks(1, FALSE, owner)
 
