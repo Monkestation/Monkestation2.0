@@ -32,16 +32,18 @@
 	RegisterSignal(parent, COMSIG_ATOM_PRE_PRESSURE_PUSH, PROC_REF(stop_pressure))
 
 /datum/component/force_move/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, COMSIG_ATOM_PRE_PRESSURE_PUSH, COMSIG_MOVELOOP_POSTPROCESS))
+	UnregisterSignal(parent, list(COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, COMSIG_ATOM_PRE_PRESSURE_PUSH))
 
-// Slipping allows for two force_move components to be added, this breaks the movement loop signals and if slide distance is too high,
-// it causes people to get stuck until the loop expires.
-// We could just reduce the slide but really we should just make sure that two loops aren't created that conflict eachother.
+// Slipping allowed for two force_move components to be added, this breaks the movement loop signals and if slide distance is too high,
+// it causes people to get stuck until the loop expires. So is to prevent the creation of an unmanaged loop.
 /datum/component/force_move/InheritComponent(datum/component/force_move/new_mover, i_am_original, atom/target, slip_spin, slip_crash)
 	if(!i_am_original)
 		return
 
-	clean_loop()
+	// Remove the old loop such it doesn't delete us with it
+	if(!QDELETED(our_looper))
+		UnregisterSignal(our_looper, list(COMSIG_MOVELOOP_POSTPROCESS, COMSIG_QDELETING))
+		QDEL_NULL(our_looper)
 
 	src.slip_spin = slip_spin
 	src.slip_crash = slip_crash
@@ -55,13 +57,6 @@
 	if(slip_spin || slip_crash)
 		RegisterSignal(our_looper, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_process))
 	RegisterSignal(our_looper, COMSIG_QDELETING, PROC_REF(loop_ended))
-
-/// Safely remove the old loop in case of inheritance
-/datum/component/force_move/proc/clean_loop()
-	if(QDELETED(our_looper))
-		return
-	UnregisterSignal(our_looper, list(COMSIG_MOVELOOP_POSTPROCESS, COMSIG_QDELETING))
-	QDEL_NULL(our_looper)
 
 /// Signal proc to prevent client movement
 /datum/component/force_move/proc/stop_move(datum/source)
