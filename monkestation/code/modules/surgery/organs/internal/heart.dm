@@ -262,3 +262,17 @@
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
+
+/obj/item/organ/internal/heart/synth/abandoned
+	name = "faulty hydraulic pump engine"
+	desc = "A strange and older version of a synth heart, it appears damaged, but still functional."
+	icon_state = "abandoned_heart_on"
+	base_icon_state = "abandoned_heart_off"
+	//Prob to craete sparks on life, when implanted in a person
+	var/spark_prob = 15
+
+/obj/item/organ/internal/heart/synth/abandoned/on_life(seconds_per_tick, times_fired)
+	if(!SPT_PROB(spark_prob, seconds_per_tick))
+	if(SPT_PROB(spark_prob, seconds_per_tick))
+		do_sparks(1, FALSE, owner)
+	return ..()
