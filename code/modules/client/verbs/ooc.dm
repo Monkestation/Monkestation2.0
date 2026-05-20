@@ -137,7 +137,8 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 				if(check_rights_for(src, R_ADMIN))
 					var/ooc_color = prefs.read_preference(/datum/preference/color/ooc_color)
-					to_chat(receiver, span_adminooc("[CONFIG_GET(flag/allow_admin_ooccolor) && ooc_color ? "<font color=[ooc_color]>" :"" ][span_prefix("OOC:")] <EM>[prefix][keyfield]:</EM> <span class='message linkify'>[msg]</span>"), avoid_highlighting = avoid_highlight)
+					var/has_ooc_color = CONFIG_GET(flag/allow_admin_ooccolor) && ooc_color
+					to_chat(receiver, span_adminooc("[has_ooc_color ? "<font color='[ooc_color]'>" : "" ][span_prefix("OOC:")] <EM>[prefix][keyfield]:</EM> <span class='message linkify'>[msg]</span>[has_ooc_color ? "</font>" : ""]"), avoid_highlighting = avoid_highlight)
 				else
 					to_chat(receiver, span_adminobserverooc(span_prefix("OOC:</span> <EM>[prefix][keyfield]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
 			else
