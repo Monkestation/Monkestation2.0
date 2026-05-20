@@ -57,6 +57,12 @@
 	var/list/attack_action_types = list()
 	///any delay before we start attacking something near us
 	var/attack_delay = 0.25 SECONDS
+	// MONKESTATION EDIT ADDITION START -- megafauna hardmode
+	/// Affects every aspect of the megafauna to make it sigificantly harder if enabled
+	var/hardmode = FALSE
+	/// What gem should be dropped when the megafauna is defeated in hardmode
+	var/obj/item/gem/hardmode_reward = null
+	// MONKESTATION EDIT ADDITION END
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
@@ -103,6 +109,10 @@
 		if(!elimination) //used so the achievment only occurs for the last legion to die.
 			grant_achievement(achievement_type, score_achievement_type, crusher_kill, force_grant)
 			SSblackbox.record_feedback("tally", tab, 1, "[initial(name)]")
+	// MONKESTATION EDIT ADDITION START -- megafauna hardmode
+	if(hardmode && hardmode_reward)
+		loot += hardmode_reward
+	// MONKESTATION EDIT ADDITION END
 	return ..()
 
 /// Spawns crusher loot instead of normal loot
@@ -216,6 +226,10 @@
 		L.client.give_award(/datum/award/score/boss_score, L) //Score progression for bosses killed in general
 		L.client.give_award(score_achievement_type, L) //Score progression for specific boss killed
 	return TRUE
+
+/mob/living/simple_animal/hostile/megafauna/proc/activate_hardmode()
+	SHOULD_CALL_PARENT(TRUE)
+	hardmode = TRUE
 
 /datum/action/innate/megafauna_attack
 	name = "Megafauna Attack"

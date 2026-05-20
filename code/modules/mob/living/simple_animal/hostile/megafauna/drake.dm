@@ -69,6 +69,7 @@
 	death_message = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
+	hardmode_reward = /obj/item/gem/dragon
 	/// Fire cone ability
 	var/datum/action/cooldown/mob_cooldown/fire_breath/cone/fire_cone
 	/// Meteors ability
@@ -99,6 +100,12 @@
 	QDEL_NULL(mass_fire)
 	QDEL_NULL(lava_swoop)
 	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/activate_hardmode()
+	. = ..()
+	meteors.boosted = TRUE
+	mass_fire.boosted = TRUE
+	lava_swoop.boosted = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/dragon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	. = ..()
@@ -133,6 +140,9 @@
 	else if(prob(10+anger_modifier) && DRAKE_ENRAGED)
 		mass_fire.Trigger(target = target)
 		return
+	else if(hardmode && prob(20))
+		arena_escape_enrage(FALSE)
+		return
 	if(fire_cone.Trigger(target = target) && prob(50))
 		meteors.StartCooldown(0)
 		meteors.Trigger(target = target)
@@ -157,10 +167,11 @@
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(arena_escape_enrage))
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/arena_escape_enrage() // you ran somehow / teleported away from my arena attack now i'm mad fucker
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/arena_escape_enrage(should_heal = TRUE) // you ran somehow / teleported away from my arena attack now i'm mad fucker
 	SLEEP_CHECK_DEATH(0, src)
-	visible_message(span_boldwarning("[src] starts to glow vibrantly as its wounds close up!"))
-	adjustBruteLoss(-250) // yeah you're gonna pay for that, don't run nerd
+	if(should_heal)
+		visible_message(span_boldwarning("[src] starts to glow vibrantly as its wounds close up!"))
+		adjustBruteLoss(-250) // yeah you're gonna pay for that, don't run nerd
 	add_atom_colour(rgb(255, 255, 0), TEMPORARY_COLOUR_PRIORITY)
 	move_to_delay = move_to_delay / 2
 	set_light_range(10)
@@ -177,7 +188,10 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	anger_modifier = clamp(((maxHealth - health)/60),0,20)
+	if(!hardmode)
+		anger_modifier = clamp(((maxHealth - health)/60),0,20)
+	else
+		anger_modifier = clamp(((maxHealth - health)/60),15,20)
 	lava_swoop.enraged = DRAKE_ENRAGED
 	if(!forced && (swooping & SWOOP_INVULNERABLE))
 		return FALSE
