@@ -3,7 +3,7 @@
 	icon_state = "spark"
 	color = COLOR_YELLOW
 	hitsound = 'sound/weapons/taserhit.ogg'
-	range = 4
+	range = 5
 	reflectable = FALSE
 	tracer_type = /obj/effect/projectile/tracer/stun
 	muzzle_type = /obj/effect/projectile/muzzle/stun
@@ -86,7 +86,7 @@
 	/// What do we name the electrodes?
 	VAR_FINAL/electrode_name
 	/// How far can the taser reach?
-	VAR_FINAL/tase_range = 4
+	VAR_FINAL/tase_range = 5
 	/// Are we tasing?
 	VAR_PRIVATE/tasing = FALSE
 
@@ -97,7 +97,7 @@
 	tase_stamina = 35,
 	energy_drain = STANDARD_CELL_CHARGE * 0.05,
 	electrode_name = "the electrodes",
-	tase_range = 4,
+	tase_range = 5,
 )
 	if(isnull(fired_from) || isnull(firer) || !can_tase_with(fired_from))
 		qdel(src)
