@@ -316,3 +316,28 @@
   Tractor Maam, JohnFulpWillard:
   - rscadd: AIs can now quickly track their cyborgs and infected IPCs through their
       status panel.
+2026-05-20:
+  Absolucy:
+  - rscadd: For the like, 5 people who actually use the websocket feature, you can
+      now request metadata for them (round id, map name, round duration, game state)
+  E231kei500bandai:
+  - balance: Changed Peacekeeper Law 1 to "Avoid initiating violent conflict against
+      others." so silicons can ignore threats
+  JohnFulpWillard:
+  - bugfix: pAIs can play music again.
+  LettuceGuardian:
+  - bugfix: Improper icon on one of the bulletproof helmet states
+  - bugfix: Loadout umbrellas no longer colour themselves randomly.
+  Runian:
+  - bugfix: Cyborg items can no longer be inserted into non-cyborg inventories (e.g.
+      normal satchels).
+  - bugfix: Miner Cyborg's satchel of holding now correctly picks up ores while unequipped.
+  Shoddd:
+  - balance: increases sandevistans price to 13 TC
+  SirNightKnight:
+  - bugfix: security gets bungo donuts as heirlooms instead of ERRORs.
+  TheColorCyan:
+  - balance: syndicate modsuit now has 0.25 active slowdown
+  - balance: elite modsuit now cost 12 TC
+  hyper2snyper:
+  - rscadd: Gives Brig Physician access to various medical loadout items.

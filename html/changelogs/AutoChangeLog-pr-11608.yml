@@ -1,0 +1,12 @@
+author: "Mantlecrawler"
+delete-after: True
+changes:
+  - bugfix: "Atrocinator module now has propper logging for admins under death log"
+  - bugfix: "Dashes can no longer bypass prison gate scanners, or reebe's servant blockers"
+  - bugfix: "You can no longer bypass servant blockers by using a wheelchair as a servant on reebe"
+  - bugfix: "Ghosts can no longer research stuff for heretics"
+  - bugfix: "Claymores now count as knifes"
+  - bugfix: "Evidence bags can no longer teleport things with TK"
+  - bugfix: "Cultivator now properly says that you clear weeds from the plant container, rather than itself"
+  - bugfix: "Deforest hoods no longer get rid of buffs like durathread, or xenobio potions, nor delete piles of hats or similar"
+  - bugfix: "Hi vis hood (that of the deforest jacket) is now properly labeled as a deforest hood"
