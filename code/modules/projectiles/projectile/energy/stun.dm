@@ -210,6 +210,14 @@
 
 	if(prob(25))
 		SEND_SIGNAL(owner, COMSIG_LIVING_MINOR_SHOCK)
+		if(HAS_TRAIT(owner, TRAIT_HULK))
+			owner.say(pick(
+				";RAAAAAAAARGH!",
+				";HNNNNNNNNNGGGGGGH!",
+				";GWAAAAAAAARRRHHH!",
+				"NNNNNNNNGGGGGGGGHH!",
+				";AAAAAAARRRGH!",
+			), forced = "hulk")
 
 	owner.adjust_stutter_up_to(10 SECONDS, 20 SECONDS)
 	owner.adjust_jitter_up_to(20 SECONDS, 30 SECONDS)
