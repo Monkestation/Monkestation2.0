@@ -257,7 +257,7 @@ GLOBAL_VAR(restart_counter)
 	var/static/list/topic_handlers = TopicHandlers()
 
 	var/list/input = params2list(T)
-	if(input[1] == "TWITCH-API")
+	if(length(input) && input[1] == "TWITCH-API")
 		SStwitch.handle_topic(input)
 
 	var/datum/world_topic/handler

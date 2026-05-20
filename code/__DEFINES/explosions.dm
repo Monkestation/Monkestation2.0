@@ -71,3 +71,13 @@
 #define GRENADE_DUD (1<<0)
 /// The grenade has been used and as such cannot detonate.
 #define GRENADE_USED (1<<1)
+
+///used for the list returned by get_explosion_turfs
+#define EX_HIGH_MOV_ATOM 1
+#define EX_MED_MOV_ATOM 2
+#define EX_LOW_MOV_ATOM 3
+#define EX_HIGHTURF 4
+#define EX_MEDTURF 5
+#define EX_LOWTURF 6
+#define EX_FLAMETURF 7
+#define EX_THROWTURF 8

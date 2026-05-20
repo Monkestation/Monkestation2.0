@@ -9,3 +9,6 @@
 
 ///sent by gang machines when they activate
 #define COMSIG_GANG_MACHINE_ACTIVATED "g_machine_activated"
+
+///sent by the turf of a paint splatter whenever the splatter updates updates
+#define COMSIG_PAINT_SPLATTER_UPDATE "paint_splatter_update"

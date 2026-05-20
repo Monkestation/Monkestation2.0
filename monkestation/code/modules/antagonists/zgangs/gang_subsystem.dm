@@ -25,6 +25,8 @@ PROCESSING_SUBSYSTEM_DEF(gangs)
 	var/list/possible_gang_colors
 	///assoc list of gang outfit items with key values of how much representation they provide
 	var/alist/gang_outfits = alist() //starts as a list so we dont need to init the entire SS for a single peice of clothing getting spawned
+	///a typecache of turfs that cannot be painted
+	var/list/blacklisted_paint_turfs
 
 /datum/controller/subsystem/processing/gangs/PreInit()
 	. = ..()
@@ -36,6 +38,13 @@ PROCESSING_SUBSYSTEM_DEF(gangs)
 	all_gangs_by_tag = alist()
 	cached_extra_rep = list()
 	gang_tags_by_area = alist()
+	blacklisted_paint_turfs = typecacheof(list(
+		/turf/open/space,
+		/turf/open/chasm,
+		/turf/open/lava,
+		/turf/open/water,
+		/turf/open/openspace,
+	))
 	//19 possible tags, you really shouldnt need more then this
 	all_gang_tags = list(
 		"Omni",
@@ -152,6 +161,45 @@ PROCESSING_SUBSYSTEM_DEF(gangs)
 
 	for(var/datum/team/gang/gang_team in all_gangs)
 		gang_team.rep += gang_team.painted_tiles % PAINTED_TILES_PER_REP
+
+///Apply paint to an atom, wont do anything if passed something besides a turf or a mob
+///Stacks is for the painted status effect if we are applying to a mob
+/datum/controller/subsystem/processing/gangs/proc/paint_atom(atom/target, color, stacks = 1)
+	if(!color)
+		return
+
+	if(isturf(target))
+		return paint_turf(target, color)
+	else if(ismob(target))
+		return paint_mob(target, color, stacks)
+
+///Apply paint of the passed color to a turf, then claim it for the gang of that color
+/datum/controller/subsystem/processing/gangs/proc/paint_turf(turf/target, color)
+	if(!isturf(target) || (blacklisted_paint_turfs && is_type_in_typecache(target, blacklisted_paint_turfs)))
+		return FALSE
+
+/datum/controller/subsystem/processing/gangs/proc/paint_mob(mob/living/target, color, stacks = 1)
+
+/datum/controller/subsystem/processing/gangs/proc/get_paint_visual_string(color, alist/connections)
+	. = "[color]" //stringcasting to ensure nothing runtimes
+	for(var/dir_value in GLOB.cardinals) //iterate over cardinals to ensure constant ordering
+		var/dir_data = connections[dir_value]
+		if(!dir_data)
+			continue
+		. += "[dir_value]" + "[dir_data]"
+	return .
+
+/datum/controller/subsystem/processing/gangs/proc/do_smooth(atom/smoothed) //this is probably overengineered
+	var/static/list/to_smooth = list()
+	var/static/is_running
+	to_smooth += smoothed
+	if(is_running)
+		return
+
+	is_running = TRUE
+	sleep(0)
+//	do_smoothing(to_smooth)
+	is_running = FALSE
 
 ///Call to add a piece of clothing to gang_outfits
 /datum/controller/subsystem/processing/gangs/proc/register_gang_clothing(obj/item/clothing/registered, value = 1)

@@ -164,12 +164,8 @@
 	else if(our_turf.bullet_bounce_sound)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, our_turf.bullet_bounce_sound, 20, 1), sound_delay) //Soft / non-solid turfs that shouldn't make a sound when a shell casing is ejected over them.
 
-/obj/item/ammo_casing/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread, atom/fired_from)
-	. = ..()
-	update_trash_trait()
-
-/obj/item/ammo_casing/refresh_shot()
-	. = ..()
+/obj/item/ammo_casing/proc/refresh_shot()
+	loaded_projectile = new projectile_type(src, src)
 	update_trash_trait()
 
 /obj/item/ammo_casing/proc/update_trash_trait()

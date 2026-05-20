@@ -294,12 +294,11 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, FALSE, "Check Bomb Impact", "See what th
  */
 /datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke, atom/explosion_cause, area/area_lock)
 	epicenter = get_turf(epicenter)
-
-	var/area/checking = get_area(epicenter)
-	if(SEND_SIGNAL(checking, COMSIG_AREA_EXPLOSION_SHOCKWAVE) & COMSIG_CANCEL_EXPLOSION)
+	if(!epicenter)
 		return
 
-	if(!epicenter)
+	var/area/checking = epicenter.loc //we know epicenter is a turf by this point so we can just grab loc
+	if(SEND_SIGNAL(checking, COMSIG_AREA_EXPLOSION_SHOCKWAVE) & COMSIG_CANCEL_EXPLOSION)
 		return
 
 	if(isnull(flame_range))
@@ -409,7 +408,43 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, FALSE, "Check Bomb Impact", "See what th
 
 	var/list/affected_turfs = prepare_explosion_turfs(max_range, epicenter)
 
-	var/reactionary = CONFIG_GET(flag/reactionary_explosions)
+	var/list/exploded_turfs = get_explosion_turfs(epicenter, affected_turfs, devastation_range, heavy_impact_range, light_impact_range, flame_range, max_range, CONFIG_GET(flag/reactionary_explosions), TRUE, area_lock)
+	high_mov_atom += exploded_turfs[EX_HIGH_MOV_ATOM]
+	med_mov_atom += exploded_turfs[EX_MED_MOV_ATOM]
+	low_mov_atom += exploded_turfs[EX_LOW_MOV_ATOM]
+	highturf += exploded_turfs[EX_HIGHTURF]
+	medturf += exploded_turfs[EX_MEDTURF]
+	lowturf += exploded_turfs[EX_LOWTURF]
+	flameturf += exploded_turfs[EX_FLAMETURF]
+	throwturf += exploded_turfs[EX_THROWTURF]
+
+	var/took = (REALTIMEOFDAY - started_at) / 10
+
+	//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes to explosion code using this please so we can compare
+	if(GLOB.Debug2)
+		log_world("## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds.")
+
+	explosion_index += 1
+
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_EXPLOSION, epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range, explosion_cause, explosion_index)
+
+///returns a nested list of what atoms will be affected by an explosion, the defines should be used as the list is ordered and they are actually just index values
+/datum/controller/subsystem/explosions/proc/get_explosion_turfs(turf/epicenter, list/affected_turfs, devastation_range, heavy_impact_range, light_impact_range, flame_range, max_range = max(devastation_range, heavy_impact_range, light_impact_range, flame_range), reactionary = TRUE, do_throw, area_lock)
+	var/list/things = alist(
+		EX_HIGH_MOV_ATOM = list(),
+		EX_MED_MOV_ATOM = list(),
+		EX_LOW_MOV_ATOM = list(),
+		EX_HIGHTURF = list(),
+		EX_MEDTURF = list(),
+		EX_LOWTURF = list(),
+		EX_FLAMETURF = list(),
+		EX_THROWTURF = list(),
+	)
+
+	epicenter = get_turf(epicenter)
+	if(!epicenter)
+		return things
+
 	// this list is setup in the form position -> block for that position
 	// we assert that turfs will be processed closed to farthest, so we can build this as we go along
 	// This is gonna be an array, index'd by turfs
@@ -417,13 +452,15 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, FALSE, "Check Bomb Impact", "See what th
 
 	//lists are guaranteed to contain at least 1 turf at this point
 	//we presuppose that we'll be iterating away from the epicenter
+	var/epi_x = epicenter.x
+	var/epi_y = epicenter.y
 	for(var/turf/explode as anything in affected_turfs)
 		if(area_lock && !(explode in area_lock))
 			continue
 
 		var/our_x = explode.x
 		var/our_y = explode.y
-		var/dist = CHEAP_HYPOTENUSE(our_x, our_y, x0, y0)
+		var/dist = CHEAP_HYPOTENUSE(our_x, our_y, epi_x, epi_y)
 		var/block = 0
 		// Using this pattern, block will flow out from blocking turfs, essentially caching the recursion
 		// This is safe because if get_step_towards is ever anything but caridnally off, it'll do a diagonal move
@@ -436,7 +473,6 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, FALSE, "Check Bomb Impact", "See what th
 				var/our_block = cached_exp_block[get_step_towards(explode, epicenter)]
 				block += our_block
 				cached_exp_block[explode] = our_block + explode.explosive_resistance
-
 
 		var/severity = EXPLODE_NONE
 		if(dist + (block * EXPLOSION_BLOCK_DEV) < devastation_range)
@@ -455,43 +491,32 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, FALSE, "Check Bomb Impact", "See what th
 					items -= holder		//Stops mobs from taking double damage from explosions originating from them/their turf, such as from projectiles
 			switch(severity)
 				if(EXPLODE_DEVASTATE)
-					SSexplosions.high_mov_atom += items
+					things[EX_HIGH_MOV_ATOM] += items
 				if(EXPLODE_HEAVY)
-					SSexplosions.med_mov_atom += items
+					things[EX_MED_MOV_ATOM] += items
 				if(EXPLODE_LIGHT)
-					SSexplosions.low_mov_atom += items
+					things[EX_LOW_MOV_ATOM] += items
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
-				SSexplosions.highturf += explode
+				things[EX_HIGHTURF] += explode
 			if(EXPLODE_HEAVY)
-				SSexplosions.medturf += explode
+				things[EX_MEDTURF] += explode
 			if(EXPLODE_LIGHT)
-				SSexplosions.lowturf += explode
+				things[EX_LOWTURF] += explode
 
 		if(prob(40) && dist < flame_range && !isspaceturf(explode) && !explode.density)
-			flameturf += explode
+			things[EX_FLAMETURF] += explode
 
-		//--- THROW ITEMS AROUND ---
-		if (explode.explosion_throw_details)
-			var/list/throwingturf = explode.explosion_throw_details
-			if (throwingturf[1] < max_range - dist)
-				throwingturf[1] = max_range - dist
-				throwingturf[2] = get_dir(epicenter, explode)
-				throwingturf[3] = max_range
-		else
-			explode.explosion_throw_details = list(max_range - dist, get_dir(epicenter, explode), max_range)
-			throwturf += explode
-
-
-	var/took = (REALTIMEOFDAY - started_at) / 10
-
-	//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes to explosion code using this please so we can compare
-	if(GLOB.Debug2)
-		log_world("## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds.")
-
-	explosion_index += 1
-
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_EXPLOSION, epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range, explosion_cause, explosion_index)
+		if(do_throw)
+			if(explode.explosion_throw_details)
+				var/list/throwingturf = explode.explosion_throw_details
+				if(throwingturf[1] < max_range - dist)
+					throwingturf[1] = max_range - dist
+					throwingturf[2] = get_dir(epicenter, explode)
+					throwingturf[3] = max_range
+			else
+				explode.explosion_throw_details = list(max_range - dist, get_dir(epicenter, explode), max_range)
+				things[EX_THROWTURF] += explode
 
 // Explosion SFX defines...
 /// The probability that a quaking explosion will make the station creak per unit. Maths!

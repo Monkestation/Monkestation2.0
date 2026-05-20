@@ -93,6 +93,7 @@
 	var/obj/projectile/loaded_projectile_cache = loaded_projectile
 	loaded_projectile = null
 	loaded_projectile_cache.fire(null, direct_target)
+	update_trash_trait()
 	return loaded_projectile_cache
 
 /obj/item/ammo_casing/proc/spread(turf/target, turf/current, distro)
