@@ -12,31 +12,25 @@ import {
 import { Window } from '../layouts';
 
 type GeneralContext = {
-  theme: string; // Theme of the UI.
-  amount: number; // The selected amount of reagents we transfer at a time.
-  transferAmounts: number[]; // All transfer amounts.
-  minTransferVolume: number; // Minimum transfer volume.
-  maxTransferVolume: number; // Maximum transfer volume.
-  maxReagentVolume: number; // Max volume for each reagent.
-  reagents: Reagent[]; // Information for each reagent.
-  selectedReagent?: string; // Our selected reagent typepath, if we ever selected one.
-  saved_recipes: Record<string, Recipe[]>;
-  selectedRecipeId?: string; // Our selected recipe ID, if we ever selected one.
+  theme: string;
+  amount: number;
+  transferAmounts: number[];
+  minTransferVolume: number;
+  maxTransferVolume: number;
+  maxReagentVolume: number;
+  reagents: Reagent[];
+  selectedReagent?: string;
+  saved_recipes: Record<string, number>;
+  selectedRecipeId?: string;
   recording: boolean;
-  recordingRecipe: Recipe[];
+  recordingRecipe: string[];
+  canReagentSearch: boolean;
 };
 
 export type Reagent = {
-  typepath: string;
   name: string;
   volume: number;
   description: string;
-};
-
-export type Recipe = {
-  typepath: string;
-  name: string;
-  volume: number;
 };
 
 export const BorgChemicalDispenser = () => {
@@ -52,6 +46,7 @@ export const BorgChemicalDispenser = () => {
     reagents,
     selectedReagent,
     selectedRecipeId,
+    canReagentSearch,
   } = data;
 
   return (
@@ -71,7 +66,7 @@ export const BorgChemicalDispenser = () => {
               </Stack.Item>
               <Stack.Item grow>
                 <Stack vertical fill>
-                  <Stack.Item basis="70%">
+                  <Stack.Item basis="60%">
                     <BorgHypoRecipes
                       recipes={saved_recipes}
                       recordingRecipe={recordingRecipe}
@@ -85,7 +80,7 @@ export const BorgChemicalDispenser = () => {
                       }}
                     />
                   </Stack.Item>
-                  <Stack.Item basis="30%">
+                  <Stack.Item basis="40%">
                     <BorgHypoRecipeDisplay />
                   </Stack.Item>
                 </Stack>
@@ -96,14 +91,16 @@ export const BorgChemicalDispenser = () => {
             <BorgHypoChemicals
               sectionTitle={'Chemicals'}
               chemicals={reagents}
-              dispenseAct={(reagentTypepath) => {
+              dispenseAct={(reagentName) => {
                 act('select_reagent', {
-                  typepath: reagentTypepath,
+                  reagent_name: reagentName,
                 });
               }}
-              chemicalButtonSelect={(reagentTypepath) =>
-                selectedReagent === reagentTypepath
+              chemicalButtonSelect={(reagentName) =>
+                selectedReagent === reagentName
               }
+              offerReagentSearch={true}
+              disableReagentSearch={!canReagentSearch}
             />
           </Stack.Item>
         </Stack>
@@ -148,7 +145,7 @@ export const BorgHypoSettings = (props: {
         <LabeledList.Item label="Custom Amount">
           <Slider
             step={1}
-            stepPixelSize={75}
+            stepPixelSize={30}
             value={selectedAmount}
             minValue={minAmount}
             maxValue={maxAmount}
@@ -162,9 +159,9 @@ export const BorgHypoSettings = (props: {
 
 export const BorgHypoRecipes = (props: {
   /** Associated list of saved recipe macros. */
-  recipes: Record<string, Recipe[]>;
+  recipes: Record<string, number>;
   /** The current recipe macro that's being recorded, if any. We assume we aren't recording a recipe if this is undefined! */
-  recordingRecipe: Recipe[];
+  recordingRecipe: string[];
   /** Called when the user attempts to start a recipe recording. */
   recordAct: () => void;
   /** Called when the user attempts to cancel a recipe recording. */
@@ -260,23 +257,21 @@ export const BorgHypoRecipeDisplay = () => {
   const { data } = useBackend<GeneralContext>();
   const { recordingRecipe } = data;
 
-  const recording = !!recordingRecipe;
-
+  const isRecording = !!recordingRecipe;
   const recordedContents =
-    recording &&
-    recordingRecipe.map((recipe) => ({
-      typepath: recipe.typepath,
-      name: recipe.name,
-      volume: recipe.volume,
+    isRecording &&
+    Object.keys(recordingRecipe).map((id) => ({
+      id,
+      volume: recordingRecipe[id],
     }));
 
   return (
     <Section title="Recipe Creation" fill scrollable>
-      {recording && (
+      {isRecording && (
         <Stack align="start" justify="space-between" direction="column">
           {recordedContents.map((reagent, i) => (
             <Stack.Item key={i} color="label">
-              {reagent.volume}u of {reagent.name}
+              {reagent.volume}u of {reagent.id}
             </Stack.Item>
           ))}
         </Stack>
@@ -290,14 +285,45 @@ export const BorgHypoChemicals = (props: {
   sectionTitle: string;
   /** All reagents that should be given a dispense button.  */
   chemicals: Reagent[];
-  /** Called when the user clicks on a reagent dispense button. Arg is the ID of the button's reagent. */
-  dispenseAct: (reagentId: string) => void;
-  /** Optional callback that returns whether or not a reagent dispense button will appear "activated". Arg is the ID of the button's reagent. */
-  chemicalButtonSelect?: (reagentId: string) => BooleanLike;
+  /** Called when the user clicks on a reagent dispense button. Arg is the name of the button's reagent. */
+  dispenseAct: (reagentName: string) => void;
+  /** Optional callback that returns whether or not a reagent dispense button will appear "activated". Arg is the name of the button's reagent. */
+  chemicalButtonSelect?: (reagentName: string) => BooleanLike;
+  /** Optional boolean that gives a button to perform Reagent Search. */
+  offerReagentSearch?: boolean;
+  /** Optional boolean that disables Reagent Search from being clicked on. */
+  disableReagentSearch?: boolean;
 }) => {
-  const { chemicals, sectionTitle, dispenseAct, chemicalButtonSelect } = props;
+  const { act } = useBackend();
+  const {
+    chemicals,
+    sectionTitle,
+    dispenseAct,
+    chemicalButtonSelect,
+    offerReagentSearch,
+    disableReagentSearch,
+  } = props;
   return (
-    <Section title={sectionTitle} fill scrollable>
+    <Section
+      title={sectionTitle}
+      fill
+      scrollable
+      buttons={
+        offerReagentSearch
+          ? [
+              <Button
+                key="reaction_lookup"
+                icon="book"
+                content="Reaction Search"
+                tooltip="Look up recipes and reagents!"
+                tooltipPosition="bottom-start"
+                disabled={disableReagentSearch}
+                onClick={() => act('reaction_lookup')}
+              />,
+            ]
+          : []
+      }
+    >
       {chemicals.map((reagent) => (
         <Flex key={reagent.name} m={0.5}>
           <Flex.Item grow>
@@ -324,10 +350,10 @@ export const BorgHypoChemicals = (props: {
               textAlign={'center'}
               selected={
                 chemicalButtonSelect
-                  ? chemicalButtonSelect(reagent.typepath)
+                  ? chemicalButtonSelect(reagent.name)
                   : false
               }
-              onClick={() => dispenseAct(reagent.typepath)}
+              onClick={() => dispenseAct(reagent.name)}
             />
           </Flex.Item>
         </Flex>

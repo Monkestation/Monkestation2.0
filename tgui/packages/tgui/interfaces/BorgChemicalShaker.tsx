@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
 import { Stack } from '../components';
-import type { Reagent, Recipe } from '../interfaces/BorgChemicalDispenser';
+import type { Reagent } from '../interfaces/BorgChemicalDispenser';
 
 import {
   BorgHypoChemicals,
@@ -20,10 +20,10 @@ type GeneralContext = {
   reagents_alc: Reagent[];
   reagents_nonalc: Reagent[];
   selectedReagent?: string;
-  saved_recipes: Record<string, Recipe[]>;
+  saved_recipes: Record<string, number>;
   selectedRecipeId?: string;
   recording: boolean;
-  recordingRecipe: Recipe[];
+  recordingRecipe: string[];
 };
 
 export const BorgChemicalShaker = () => {
@@ -40,10 +40,11 @@ export const BorgChemicalShaker = () => {
     reagents_nonalc,
     selectedReagent,
     selectedRecipeId,
+    canReagentSearch,
   } = data;
 
   return (
-    <Window width={680} height={610} theme={theme}>
+    <Window width={900} height={610} theme={theme}>
       <Window.Content>
         <Stack fill>
           <Stack.Item grow>
@@ -81,30 +82,38 @@ export const BorgChemicalShaker = () => {
             </Stack>
           </Stack.Item>
           <Stack.Item grow={2}>
-            <BorgHypoChemicals
-              sectionTitle={'Alcoholic'}
-              chemicals={reagents_alc}
-              dispenseAct={(reagentTypepath) => {
-                act('select_reagent', {
-                  typepath: reagentTypepath,
-                });
-              }}
-              chemicalButtonSelect={(reagentTypepath) =>
-                selectedReagent === reagentTypepath
-              }
-            />
-            <BorgHypoChemicals
-              sectionTitle={'Non-Alcoholic'}
-              chemicals={reagents_nonalc}
-              dispenseAct={(reagentTypepath) => {
-                act('select_reagent', {
-                  typepath: reagentTypepath,
-                });
-              }}
-              chemicalButtonSelect={(reagentTypepath) =>
-                selectedReagent === reagentTypepath
-              }
-            />
+            <Stack fill>
+              <Stack.Item basis="50%">
+                <BorgHypoChemicals
+                  sectionTitle={'Alcoholic'}
+                  chemicals={reagents_alc}
+                  dispenseAct={(reagentName) => {
+                    act('select_reagent', {
+                      reagent_name: reagentName,
+                    });
+                  }}
+                  chemicalButtonSelect={(reagentName) =>
+                    selectedReagent === reagentName
+                  }
+                />
+              </Stack.Item>
+              <Stack.Item basis="50%">
+                <BorgHypoChemicals
+                  sectionTitle={'Non-Alcoholic'}
+                  chemicals={reagents_nonalc}
+                  dispenseAct={(reagentName) => {
+                    act('select_reagent', {
+                      reagent_name: reagentName,
+                    });
+                  }}
+                  chemicalButtonSelect={(reagentName) =>
+                    selectedReagent === reagentName
+                  }
+                  offerReagentSearch={true}
+                  disableReagentSearch={!canReagentSearch}
+                />
+              </Stack.Item>
+            </Stack>
           </Stack.Item>
         </Stack>
       </Window.Content>

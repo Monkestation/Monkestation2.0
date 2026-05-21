@@ -110,7 +110,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	amount_per_transfer_from_this = 5
 	/// In the hypo's TGUI, each of these numbers will be available as buttons to click on.
-	possible_transfer_amounts = list(1, 2, 5)
+	possible_transfer_amounts = list(2, 5)
 	/// Cell cost for charging a reagent.
 	var/charge_cost = 0.05 * STANDARD_CELL_CHARGE
 	/// Counts up to the next time we charge.
@@ -188,14 +188,14 @@
 /// Adds a list of reagents that can be produced.
 /obj/item/reagent_containers/cyborg_hypospray/proc/add_reagent_list(list/datum/reagent/reagent_typepaths)
 	for(var/datum/reagent/reagent_typepath as anything in reagent_typepaths)
-		if(stored_reagents[reagent_typepath])
+		if(!isnull(stored_reagents[reagent_typepath]))
 			continue
 		stored_reagents[reagent_typepath] = max_volume_per_reagent
 
 /// Removes a list of reagents from being produced.
 /obj/item/reagent_containers/cyborg_hypospray/proc/remove_reagent_list(list/datum/reagent/reagent_typepaths)
 	for(var/datum/reagent/reagent_typepath as anything in reagent_typepaths)
-		if(!stored_reagents[reagent_typepath])
+		if(isnull(stored_reagents[reagent_typepath]))
 			continue
 		stored_reagents[reagent_typepath] = null
 		if(selected_reagent_typepath == reagent_typepath)
@@ -205,12 +205,12 @@
 /obj/item/reagent_containers/cyborg_hypospray/proc/regenerate_reagents(list/datum/reagent/reagents_typepaths_to_regen, amount)
 	var/total_charge_cost = 0
 	for(var/datum/reagent/reagents_typepath_to_regen as anything in reagents_typepaths_to_regen)
-		if(!stored_reagents[reagents_typepath_to_regen])
+		if(isnull(stored_reagents[reagents_typepath_to_regen]))
 			continue
 		var/reagent_volume = stored_reagents[reagents_typepath_to_regen]
 		if(reagent_volume >= max_volume_per_reagent)
 			continue
-		stored_reagents[reagents_typepath_to_regen] = clamp(reagent_volume + amount, 0, reagent_volume)
+		stored_reagents[reagents_typepath_to_regen] = clamp(reagent_volume + amount, 0, max_volume_per_reagent)
 		total_charge_cost += charge_cost
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/cyborg = loc
@@ -221,7 +221,7 @@
 	var/reagent_volume = stored_reagents[reagent_typepath]
 	if(!stored_reagents[reagent_typepath])
 		return
-	stored_reagents[reagent_typepath] = clamp(reagent_volume - amount, 0, reagent_volume)
+	stored_reagents[reagent_typepath] = clamp(reagent_volume - amount, 0, max_volume_per_reagent)
 
 /// Checks if the hypospray has enough reagents to perform an injection.
 /obj/item/reagent_containers/cyborg_hypospray/proc/has_reagents_for_injection(user, silent = TRUE)
@@ -249,31 +249,24 @@
 		balloon_alert(user, "no reagent selected!")
 	return FALSE
 
-/// Creates the reagents. Capped by the injection volume (single) or by possible transfer amount (recipe).
+/// Creates the reagents.
 /obj/item/reagent_containers/cyborg_hypospray/proc/create_reagent_injector()
-	var/datum/reagents/reagent_injector = new(new_flags = NO_REACT)
+	var/datum/reagents/reagent_injector = new(possible_transfer_amounts[length(possible_transfer_amounts)], new_flags = NO_REACT)
 	if(selected_reagent_typepath)
 		reagent_injector.add_reagent(selected_reagent_typepath, amount_per_transfer_from_this, reagtemp = dispensed_temperature, no_react = TRUE)
 	else if(selected_recipe_id)
 		var/recipe_information = saved_recipes[selected_recipe_id]
 		if(recipe_information)
-			for(var/recipe_step in recipe_information)
-				var/recipe_typepath = recipe_step["typepath"]
-				var/recipe_amount_amount = recipe_step["volume"]
-				reagent_injector.add_reagent(recipe_typepath, recipe_amount_amount, reagtemp = dispensed_temperature, no_react = TRUE)
-
-	var/capped_injection_volume = clamp(reagent_injector.total_volume, possible_transfer_amounts[1], possible_transfer_amounts[length(possible_transfer_amounts)])
-	if(capped_injection_volume >= reagent_injector.total_volume)
-		for(var/datum/reagent/added_reagent in reagent_injector.reagent_list)
-			deplete_reagent(added_reagent.type, added_reagent.volume)
-		return reagent_injector
-
-	// Only transfer and consume reagents up to the cap.
-	var/datum/reagents/limited_reagent_injector = new(new_flags = NO_REACT)
-	reagent_injector.trans_to(limited_reagent_injector, capped_injection_volume, methods = INJECT)
-	for(var/datum/reagent/added_reagent in limited_reagent_injector.reagent_list)
+			for(var/reagent_name in recipe_information)
+				var/datum/reagent/reagent_typepath = GLOB.name2reagent[reagent_name]
+				if(!reagent_typepath)
+					continue
+				var/recipe_volume = recipe_information[reagent_name]
+				reagent_injector.add_reagent(reagent_typepath, recipe_volume, reagtemp = dispensed_temperature, no_react = TRUE)
+	// We do not need to worry about excess reagents as they do not get added past the reagent's maximum volume.
+	for(var/datum/reagent/added_reagent in reagent_injector.reagent_list)
 		deplete_reagent(added_reagent.type, added_reagent.volume)
-	return limited_reagent_injector
+	return reagent_injector
 
 /// Upgrades the hypospray.
 /obj/item/reagent_containers/cyborg_hypospray/proc/upgrade()
@@ -318,11 +311,15 @@
 			"volume" = round(stored_reagents[reagent_typepath], 0.01),
 		)))
 	data["reagents"] = available_reagents
-	data["selectedReagent"] = selected_reagent_typepath
+	data["selectedReagent"] = selected_reagent_typepath?.name
 	data["selectedRecipeId"] = selected_recipe_id
 	data["saved_recipes"] = saved_recipes
 	data["recording"] = !isnull(recording_recipe)
 	data["recordingRecipe"] = recording_recipe
+	if(iscyborg(user))
+		var/mob/living/silicon/robot/cyborg = user
+		var/obj/item/borg/apparatus/beaker/beaker_apparatus = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+		data["canReagentSearch"] = !isnull(beaker_apparatus)
 	return data
 
 /obj/item/reagent_containers/cyborg_hypospray/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -334,12 +331,12 @@
 	switch(action)
 		if("select_reagent")
 			playsound(src, 'sound/effects/pop.ogg', 50, 0)
-			var/datum/reagent/clicked_reagent_typepath = text2path(params["typepath"])
-			if(!isnull(stored_reagents[clicked_reagent_typepath]))
+			var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(params["reagent_name"])]
+			if(!isnull(stored_reagents[reagent_typepath]))
 				if(recording_recipe)
-					UNTYPED_LIST_ADD(recording_recipe, list("typepath" = clicked_reagent_typepath, "name" = clicked_reagent_typepath.name, "volume" = amount_per_transfer_from_this))
+					recording_recipe[params["reagent_name"]] += amount_per_transfer_from_this
 				else
-					selected_reagent_typepath = clicked_reagent_typepath
+					selected_reagent_typepath = reagent_typepath
 					selected_recipe_id = null
 			. = TRUE
 
@@ -364,11 +361,10 @@
 			if(saved_recipes[name] && tgui_alert(ui.user, "\"[name]\" already exists, do you want to overwrite it?",, list("No", "Yes")) != "Yes")
 				return
 			if(name && recording_recipe)
-				for(var/list/recipe_reagent in recording_recipe)
-					var/datum/reagent/recipe_typepath = recipe_reagent["typepath"]
-					// Verify this hypo can dispense every chemical
-					if(isnull(stored_reagents[recipe_typepath]))
-						to_chat(user, span_warning("\The [src] cannot find ") + span_boldwarning(recipe_typepath.name) + span_warning("!"))
+				for(var/reagent_name in recording_recipe)
+					var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(reagent_name)]
+					if(isnull(stored_reagents[reagent_typepath]))
+						to_chat(user, span_warning("\The [src] cannot find ") + span_boldwarning(reagent_name) + span_warning("!"))
 						return
 				saved_recipes[name] = recording_recipe
 				recording_recipe = null
@@ -394,6 +390,14 @@
 			selected_recipe_id = recipe_name
 			selected_reagent_typepath = null
 			. = TRUE
+
+		if("reaction_lookup")
+			if(iscyborg(user))
+				var/mob/living/silicon/robot/cyborg = user
+				var/obj/item/borg/apparatus/beaker/beaker_apparatus = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+				if(!isnull(beaker_apparatus) && !isnull(beaker_apparatus.stored))
+					beaker_apparatus.stored.reagents.ui_interact(cyborg)
+					. = TRUE
 
 /// Medical cyborg hypospray.
 /obj/item/reagent_containers/cyborg_hypospray/medical
@@ -494,7 +498,7 @@
 	var/list/drink_reagents = list()
 	for(var/datum/reagent/reagent_typepath as anything in stored_reagents)
 		// Split the reagents into alcoholic / non-alcoholic.
-		if(istype(reagent_typepath, /datum/reagent/consumable/ethanol))
+		if(ispath(reagent_typepath, /datum/reagent/consumable/ethanol))
 			alcohol_reagents.Add(list(list(
 				"typepath" = reagent_typepath,
 				"name" = reagent_typepath.name,
@@ -514,14 +518,42 @@
 	data["amount"] = amount_per_transfer_from_this
 	data["reagents_alc"] = alcohol_reagents
 	data["reagents_nonalc"] = drink_reagents
-	data["selectedReagent"] = selected_reagent_typepath
+	data["selectedReagent"] = selected_reagent_typepath?.name
 	data["selectedRecipeId"] = selected_recipe_id
 	data["saved_recipes"] = saved_recipes
 	data["recording"] = !isnull(recording_recipe)
 	data["recordingRecipe"] = recording_recipe
+	if(iscyborg(user))
+		var/mob/living/silicon/robot/cyborg = user
+		var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+		if(!isnull(beverage_apparatus) && !isnull(beverage_apparatus.stored))
+			data["canReagentSearch"] = TRUE
+		if(!data["canReagentSearch"])
+			var/obj/item/reagent_containers/cup/beaker/large/internal_beaker = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+			if(!isnull(internal_beaker))
+				data["canReagentSearch"] = TRUE
 	return data
 
-/obj/item/reagent_containers/borghypo/borgshaker/hacked
+/obj/item/reagent_containers/cyborg_hypospray/shaker/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	var/mob/user = ui.user
+	switch(action)
+		if("reaction_lookup")
+			if(iscyborg(user))
+				var/mob/living/silicon/robot/cyborg = user
+				var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+				if(!isnull(beverage_apparatus) && !isnull(beverage_apparatus.stored))
+					beverage_apparatus.stored.reagents.ui_interact(cyborg)
+					. = TRUE
+				if(!.)
+					var/obj/item/reagent_containers/cup/beaker/large/internal_beaker = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+					if(!isnull(internal_beaker))
+						internal_beaker.reagents.ui_interact(cyborg)
+					. = TRUE
+
+/obj/item/reagent_containers/cyborg_hypospray/borgshaker/hacked
 	name = "cyborg shaker"
 	desc = "Will mix drinks that knock them dead."
 	icon_state = "threemileislandglass"
@@ -530,13 +562,13 @@
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 	default_reagent_types = HACKED_SERVICE_REAGENTS
 
-/obj/item/reagent_containers/borghypo/borgshaker/centcom
+/obj/item/reagent_containers/cyborg_hypospray/borgshaker/centcom
 	max_volume_per_reagent = 50
 	possible_transfer_amounts = list(5, 10, 20, 50, 100)
 	charge_cost = 0.05 * STANDARD_CELL_CHARGE
 	recharge_time = 1 SECOND
 
-/obj/item/reagent_containers/borghypo/borgshaker/centcom/Initialize(mapload)
+/obj/item/reagent_containers/cyborg_hypospray/borgshaker/centcom/Initialize(mapload)
 	default_reagent_types += BASE_CENTCOM_REAGENTS
 	. = ..()
 
