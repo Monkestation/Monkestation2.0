@@ -219,9 +219,15 @@
 
 /obj/item/crusher_trophy/hardmode
 	name = "HRD-MDE crusher injector"
-	desc = "An experimental attachment to a kinetic crusher that can make megafaunas crystallize a core, making them harder."
+	desc = "An experimental attachment to a kinetic crusher that can make megafauna crystallize a core, making them harder."
 	icon_state = "crevice_shard"
 	denied_type = /obj/item/crusher_trophy/hardmode
+
+/obj/item/crusher_trophy/hardmode/examine_more(mob/user)
+	. = ..()
+	. += span_notice("An experimental injector developed by the Nanotrasen Science Division used to force a megafauna to crystallize a core.")
+	. += span_notice("Due to the crystallization process the megafauna becomes much stronger, however the core can be extracted post-death.")
+	. += span_notice("A use for crystallized cores has not yet been found, but many experienced miners show them off just like trophies.")
 
 /obj/item/crusher_trophy/hardmode/effect_desc()
 	return "the next mark detonation on a compatible megafauna to crystallize its core, destroying itself"
@@ -229,6 +235,5 @@
 /obj/item/crusher_trophy/hardmode/on_mark_detonation(mob/living/simple_animal/hostile/megafauna/target, mob/living/user)
 	if(istype(target) && target.hardmode_reward != null && !target.hardmode)
 		target.activate_hardmode()
-		target.adjustBruteLoss(-2500) // Makes sure its fully healed up and ready for FUN
 		log_combat(user, target, "turned on hardmode for", src)
 		qdel(src)

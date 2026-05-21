@@ -103,13 +103,13 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/activate_hardmode()
 	. = ..()
-	move_to_delay *= 0.5
 	melee_damage_lower *= 2
 	melee_damage_upper *= 2
-	set_varspeed(move_to_delay)
-	handle_automated_action()
 	rays = new(src)
 	vis_contents += rays
+	move_to_delay *= 0.5
+	set_varspeed(move_to_delay)
+	handle_automated_action()
 
 /datum/action/innate/megafauna_attack/blink
 	name = "Blink To Target"

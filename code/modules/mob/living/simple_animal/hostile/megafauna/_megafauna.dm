@@ -230,6 +230,7 @@
 /mob/living/simple_animal/hostile/megafauna/proc/activate_hardmode()
 	SHOULD_CALL_PARENT(TRUE)
 	hardmode = TRUE
+	adjustBruteLoss(-2500)
 
 /datum/action/innate/megafauna_attack
 	name = "Megafauna Attack"

@@ -31,8 +31,7 @@
 
 /obj/item/gem/hierophant
 	name = "\improper Densified Dilithium"
-	desc = "A strange mass of dilithium which pulses to a steady rhythm. Its strange surface exudes a unique radio signal detectable by GPS. It looks like it could be destructively analyzed to extract the condensed materials within...\
-	actually upon closer inspection it appears its just colored purple glass, what a scam"
+	desc = "A strange mass of dilithium which pulses to a steady rhythm. Its strange surface exudes a unique radio signal detectable by GPS. It looks like it could be destructively analyzed to extract the condensed materials within."
 	icon_state = "hierophant"
 	sheet_type = /obj/item/stack/sheet/glass{amount = 500} // Yes, 500.
 	light_system = 1

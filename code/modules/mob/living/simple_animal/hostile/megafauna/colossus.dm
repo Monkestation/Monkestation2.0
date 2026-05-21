@@ -55,7 +55,7 @@
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
 	death_message = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
-	//hardmode_reward = /obj/item/gem/colossus
+	hardmode_reward = /obj/item/gem/colossus
 	/// Spiral shots ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/colossus/spiral_shots
 	/// Random shots ablity
@@ -94,25 +94,37 @@
 	QDEL_NULL(dir_shots)
 	return ..()
 
+/mob/living/simple_animal/hostile/megafauna/colossus/activate_hardmode()
+	. = ..()
+	random_shots.projectile_amount *= 2
+	shotgun_blast.telegraph_time *= 0.5
+	dir_shots.boosted = TRUE
+	dir_shots.firing_time *= 0.5
+	move_to_delay *= 0.5
+	set_varspeed(move_to_delay)
+	handle_automated_action()
+
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
 	anger_modifier = clamp(((maxHealth - health) / 40), 0, 20)
 
 	if(client)
 		return
 
-	if(enrage(target))
-		if(move_to_delay == initial(move_to_delay))
-			visible_message(span_colossus("\"<b>You can't dodge.</b>\""))
-		ranged_cooldown = world.time + 3 SECONDS
-		telegraph()
-		dir_shots.fire_in_directions(src, target, GLOB.alldirs)
-		move_to_delay = 3
-		return
-	else
-		move_to_delay = initial(move_to_delay)
+	if(!hardmode)
+		if(enrage(target))
+			if(move_to_delay == initial(move_to_delay))
+				visible_message(span_colossus("\"<b>You can't dodge.</b>\""))
+			ranged_cooldown = world.time + 3 SECONDS
+			telegraph()
+			dir_shots.fire_in_directions(src, target, GLOB.alldirs)
+			move_to_delay = 3
+			return
+		else
+			move_to_delay = initial(move_to_delay)
 
 	if(health <= maxHealth / 10 && final_available)
-		final_available = FALSE
+		if(!hardmode)
+			final_available = FALSE
 		colossus_final.Trigger(target = target)
 	else if(prob(20 + anger_modifier)) //Major attack
 		spiral_shots.Trigger(target = target)
