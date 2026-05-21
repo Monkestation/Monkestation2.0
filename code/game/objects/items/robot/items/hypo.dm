@@ -199,7 +199,7 @@
 	for(var/datum/reagent/reagent_typepath as anything in reagent_typepaths)
 		if(isnull(stored_reagents[reagent_typepath]))
 			continue
-		stored_reagents[reagent_typepath] = null
+		stored_reagents -= reagent_typepath
 		if(selected_reagent_typepath == reagent_typepath)
 			selected_reagent_typepath = null
 
@@ -281,7 +281,7 @@
 
 /// Downgrades the hypospray.
 /obj/item/reagent_containers/borghypo/proc/downgrade()
-	if(upgraded || isnull(expanded_reagent_types))
+	if(!upgraded || isnull(expanded_reagent_types))
 		return FALSE
 	upgraded = FALSE
 	remove_reagent_list(expanded_reagent_types)
