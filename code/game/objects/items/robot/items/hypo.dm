@@ -229,7 +229,7 @@
 /obj/item/reagent_containers/borghypo/proc/has_reagents_for_injection(user, silent = TRUE)
 	if(selected_reagent_typepath)
 		var/stored_volume = stored_reagents[selected_reagent_typepath]
-		if(!stored_volume || reagent_volume > stored_volume)
+		if(!stored_volume || amount_per_transfer_from_this > stored_volume)
 			if(!silent)
 				balloon_alert(user, "not enough [selected_reagent_typepath.name]!")
 			return FALSE
