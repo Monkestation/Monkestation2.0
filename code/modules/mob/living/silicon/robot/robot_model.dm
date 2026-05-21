@@ -723,7 +723,8 @@
 		/obj/item/borg/lollipop,
 		// TESTING STUFF!
 		// TODO: Don't forget this!
-		/obj/item/reagent_containers/cyborg_hypospray/medical
+		/obj/item/reagent_containers/cyborg_hypospray/medical,
+		/obj/item/reagent_containers/cyborg_hypospray/shaker
 	)
 	radio_channels = list(RADIO_CHANNEL_MEDICAL)
 	emag_modules = list(
