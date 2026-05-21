@@ -34,6 +34,7 @@ export const BorgChemicalShaker = () => {
     transferAmounts,
     minTransferVolume,
     maxTransferVolume,
+    maxReagentVolume,
     saved_recipes,
     recordingRecipe,
     reagents_alc,
@@ -86,6 +87,7 @@ export const BorgChemicalShaker = () => {
               <Stack.Item basis="50%">
                 <BorgHypoChemicals
                   sectionTitle={'Alcoholic'}
+                  maximumChemicalVolume={maxReagentVolume}
                   chemicals={reagents_alc}
                   dispenseAct={(reagentName) => {
                     act('select_reagent', {
@@ -100,6 +102,7 @@ export const BorgChemicalShaker = () => {
               <Stack.Item basis="50%">
                 <BorgHypoChemicals
                   sectionTitle={'Non-Alcoholic'}
+                  maximumChemicalVolume={maxReagentVolume}
                   chemicals={reagents_nonalc}
                   dispenseAct={(reagentName) => {
                     act('select_reagent', {

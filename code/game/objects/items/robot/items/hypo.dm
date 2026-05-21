@@ -110,7 +110,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	amount_per_transfer_from_this = 5
 	/// In the hypo's TGUI, each of these numbers will be available as buttons to click on.
-	possible_transfer_amounts = list(2, 5)
+	possible_transfer_amounts = list(1, 2, 5)
 	/// Cell cost for charging a reagent.
 	var/charge_cost = 0.05 * STANDARD_CELL_CHARGE
 	/// Counts up to the next time we charge.
@@ -141,8 +141,8 @@
 	var/selected_recipe_id
 	/// The theme for our UI.
 	var/tgui_theme = PDA_THEME_NTOS
-	/// Changes the UI's text to match if it is for drinks or chemicals.
-	var/is_dispensing_drinks = FALSE
+	/// Should we play a sound upon injecting someone?
+	var/injection_sound = 'sound/items/autoinjector.ogg'
 
 /obj/item/reagent_containers/borghypo/Initialize(mapload)
 	. = ..()
@@ -181,6 +181,8 @@
 	balloon_alert(user, "[reagent_injector.total_volume] unit\s injected")
 	reagent_injector.trans_to(injectee, reagent_injector.total_volume, transfered_by = user, methods = INJECT)
 	log_combat(user, injectee, "injected", src, "(CHEMICALS: [reagent_injector])")
+	if(injection_sound)
+		playsound(injectee, injection_sound, 20, TRUE)
 
 /obj/item/reagent_containers/borghypo/attack_self(mob/user)
 	ui_interact(user)
@@ -409,6 +411,7 @@
 	tgui_theme = "syndicate"
 	default_reagent_types = HACKED_MEDICAL_REAGENTS
 	expanded_reagent_types = null
+	injection_sound = null
 
 /// Peacekeeper cyborg hypospray.
 /obj/item/reagent_containers/borghypo/peace
@@ -420,6 +423,7 @@
 	icon_state = "borghypo_s"
 	tgui_theme = "syndicate"
 	default_reagent_types = HACKED_PEACE_REAGENTS
+	injection_sound = null
 
 /// Clown cyborg hypospray.
 /obj/item/reagent_containers/borghypo/clown
@@ -432,6 +436,7 @@
 	icon_state = "borghypo_s"
 	tgui_theme = "syndicate"
 	default_reagent_types = HACKED_CLOWN_REAGENTS
+	injection_sound = null
 
 /// Standard cyborg hypospray.
 /obj/item/reagent_containers/borghypo/epi
@@ -456,6 +461,7 @@
 	name = "emergency paramedic hypospray"
 	desc = "A cut-down version of the cyborg's chemical synthesizer and injection system for paramedics able to fit into implants."
 	amount_per_transfer_from_this = 2
+	possible_transfer_amounts = list(1, 2)
 	max_volume_per_reagent = 10
 	default_reagent_types = PARAMEDIC_MEDICAL_REAGENTS
 	bypass_protection = TRUE

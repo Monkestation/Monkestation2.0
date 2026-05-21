@@ -41,6 +41,7 @@ export const BorgChemicalDispenser = () => {
     transferAmounts,
     minTransferVolume,
     maxTransferVolume,
+    maxReagentVolume,
     saved_recipes,
     recordingRecipe,
     reagents,
@@ -90,6 +91,7 @@ export const BorgChemicalDispenser = () => {
           <Stack.Item grow={1.25}>
             <BorgHypoChemicals
               sectionTitle={'Chemicals'}
+              maximumChemicalVolume={maxReagentVolume}
               chemicals={reagents}
               dispenseAct={(reagentName) => {
                 act('select_reagent', {
@@ -283,6 +285,8 @@ export const BorgHypoRecipeDisplay = () => {
 export const BorgHypoChemicals = (props: {
   /** The title of the section. */
   sectionTitle: string;
+  /** The maximum amount of each reagent. */
+  maximumChemicalVolume: number;
   /** All reagents that should be given a dispense button.  */
   chemicals: Reagent[];
   /** Called when the user clicks on a reagent dispense button. Arg is the name of the button's reagent. */
@@ -297,6 +301,7 @@ export const BorgHypoChemicals = (props: {
   const { act } = useBackend();
   const {
     chemicals,
+    maximumChemicalVolume,
     sectionTitle,
     dispenseAct,
     chemicalButtonSelect,
@@ -327,7 +332,7 @@ export const BorgHypoChemicals = (props: {
       {chemicals.map((reagent) => (
         <Flex key={reagent.name} m={0.5}>
           <Flex.Item grow>
-            <ProgressBar value={reagent.volume / 30}>
+            <ProgressBar value={reagent.volume / maximumChemicalVolume}>
               <Flex>
                 <Flex.Item grow textAlign={'left'}>
                   {reagent.name}
