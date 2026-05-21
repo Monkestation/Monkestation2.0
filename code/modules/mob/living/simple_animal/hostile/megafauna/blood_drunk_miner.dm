@@ -52,6 +52,7 @@ Difficulty: Medium
 	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	move_force = MOVE_FORCE_NORMAL //Miner beeing able to just move structures like bolted doors and glass looks kinda strange
+	hardmode_reward = /obj/item/gem/blood_miner
 	/// Does this blood-drunk miner heal slightly while attacking and heal more when gibbing people?
 	var/guidance = FALSE
 	/// Dash ability

@@ -174,6 +174,8 @@
 		adjustBruteLoss(-250) // yeah you're gonna pay for that, don't run nerd
 	add_atom_colour(rgb(255, 255, 0), TEMPORARY_COLOUR_PRIORITY)
 	move_to_delay = move_to_delay / 2
+	set_varspeed(move_to_delay) // MONKESTATION EDIT ADDITION
+	handle_automated_action() // MONKESTATION EDIT ADDITION (This makes sure the ashdrake updates its movement speed)
 	set_light_range(10)
 	SLEEP_CHECK_DEATH(5 SECONDS, src) // run.
 	mass_fire.Activate(target)
@@ -189,9 +191,9 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(!hardmode)
-		anger_modifier = clamp(((maxHealth - health)/60),0,20)
+		anger_modifier = clamp(((maxHealth - health) / 60), 0, 20)
 	else
-		anger_modifier = clamp(((maxHealth - health)/60),15,20)
+		anger_modifier = clamp(((maxHealth - health) / 60), 15, 20)
 	lava_swoop.enraged = DRAKE_ENRAGED
 	if(!forced && (swooping & SWOOP_INVULNERABLE))
 		return FALSE
