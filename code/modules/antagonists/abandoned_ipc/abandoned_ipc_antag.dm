@@ -90,13 +90,11 @@
 
 /obj/item/internal_doorjack/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!istype(interacting_with, /obj/machinery/door/airlock))
-		return
 		return NONE
 	var/obj/machinery/door/airlock/door = interacting_with
 	door.update_icon(ALL, 6, 1)
 	door.operating = TRUE
 	if(!do_after(user, 1.2 SECONDS, interacting_with))
-		return
 		return ITEM_INTERACT_BLOCKING
 	door.finish_emag_act()
 	return ITEM_INTERACT_SUCCESS
