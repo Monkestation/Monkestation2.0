@@ -2635,6 +2635,7 @@
 #include "code\game\objects\items\robot\ai_upgrades.dm"
 #include "code\game\objects\items\robot\robot_parts.dm"
 #include "code\game\objects\items\robot\robot_upgrades.dm"
+#include "code\game\objects\items\robot\items\chemdisp.dm"
 #include "code\game\objects\items\robot\items\food.dm"
 #include "code\game\objects\items\robot\items\generic.dm"
 #include "code\game\objects\items\robot\items\hud.dm"
