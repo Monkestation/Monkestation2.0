@@ -84,7 +84,7 @@
 	return TRUE
 
 /obj/item/evidencebag/attack_self(mob/user)
-	if(contents.len)
+	if(contents.len && user.is_holding(src))
 		var/obj/item/I = contents[1]
 		user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."),\
 		span_hear("You hear someone rustle around in a plastic bag, and remove something."))
@@ -94,7 +94,7 @@
 		icon_state = "evidenceobj"
 		desc = "An empty evidence bag."
 
-	else
+	else if(user.is_holding(src))
 		to_chat(user, span_notice("[src] is empty."))
 		icon_state = "evidenceobj"
 	return

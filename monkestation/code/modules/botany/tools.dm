@@ -11,7 +11,7 @@
 	if(user.istate & ISTATE_HARM)
 		return ..()
 	if(SEND_SIGNAL(A, COMSIG_GROWING_ADJUST_WEED, -10))
-		user.visible_message(span_notice("[user] uproots the weeds."), span_notice("You remove the weeds from [src]."))
+		user.visible_message(span_notice("[user] uproots the weeds."), span_notice("You remove the weeds from [A]."))
 		return TRUE
 	return ..()
 

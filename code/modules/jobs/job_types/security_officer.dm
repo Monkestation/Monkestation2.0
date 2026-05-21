@@ -28,7 +28,7 @@
 		/datum/job_department/security,
 		)
 
-	family_heirlooms = list(/obj/item/book/manual/wiki/security_space_law, /obj/item/clothing/head/beret/sec, /obj/item/restraints/handcuffs, /obj/item/assembly/flash/handheld, /obj/item/clothing/mask/whistle, /obj/item/food/donut, /obj/item/clothing/glasses/hud/security/sunglasses, /obj/item/citationinator)
+	family_heirlooms = list(/obj/item/book/manual/wiki/security_space_law, /obj/item/clothing/head/beret/sec, /obj/item/restraints/handcuffs, /obj/item/assembly/flash/handheld, /obj/item/clothing/mask/whistle, /obj/item/food/donut/bungo, /obj/item/clothing/glasses/hud/security/sunglasses, /obj/item/citationinator)
 
 	mail_goodies = list(
 		/obj/item/food/donut/caramel = 10,
