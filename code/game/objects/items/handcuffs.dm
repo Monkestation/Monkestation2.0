@@ -450,6 +450,7 @@
 	name = "bear trap"
 	throw_speed = 1
 	throw_range = 1
+	drag_slowdown = 1
 	icon_state = "beartrap"
 	desc = "A trap used to catch bears and other legged creatures."
 	///If true, the trap is "open" and can trigger.
@@ -477,13 +478,76 @@
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
-/obj/item/restraints/legcuffs/beartrap/attack_self(mob/user)
+/obj/item/restraints/legcuffs/beartrap/proc/set_arm(toggle_state, mob/user, silent = TRUE)
+	armed = toggle_state
+	if(armed)
+		w_class = WEIGHT_CLASS_BULKY
+		if(!silent)
+			playsound(src, 'sound/weapons/handcuffs.ogg', 30, FALSE, -3)
+	else
+		w_class = WEIGHT_CLASS_NORMAL
+		if(!silent)
+			playsound(src, 'sound/weapons/handcuffs.ogg', 40, FALSE, -5)
+
+	update_appearance(UPDATE_ICON)
+
+
+/obj/item/restraints/legcuffs/beartrap/attack_self(mob/living/user)
 	. = ..()
 	if(!ishuman(user) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
-	armed = !armed
-	update_appearance()
-	to_chat(user, span_notice("[src] is now [armed ? "armed" : "disarmed"]"))
+
+	if(armed && (HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(25))
+		to_chat(user, span_warning("Your hand slips, setting off the trigger!"))
+		var/hand_zone = user.held_index_to_dir(user.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
+		spring_trap(user, def_zone = hand_zone)
+		return
+
+	var/is_expert = FALSE
+	if(user.mind?.get_skill_level(/datum/skill/cleaning) >= SKILL_LEVEL_MASTER)
+		is_expert = TRUE
+	if(!is_expert)
+		if(!do_after(user, 3 SECONDS, src))
+			user.balloon_alert(user, "interrupted!")
+			return
+
+	set_arm(!armed, user, FALSE)
+
+	user.visible_message(span_notice("[user] [is_expert ? "expertly " : " "][armed ? "arms" : "disarms"] \the [src]!"), span_notice("\The [src] is now [armed ? "armed" : "disarmed"]!"))
+
+/obj/item/restraints/legcuffs/beartrap/attempt_pickup(mob/user)
+	if(!armed)
+		return ..()
+
+	if(!ishuman(user) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		return
+
+	if(armed && (HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(25))
+		to_chat(user, span_warning("Your hand slips, setting off the trigger!"))
+		var/hand_zone = user.held_index_to_dir(user.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
+		spring_trap(user, def_zone = hand_zone)
+		return
+
+	var/is_expert = FALSE
+	if(user.mind?.get_skill_level(/datum/skill/cleaning) >= SKILL_LEVEL_MASTER)
+		is_expert = TRUE
+	if(!is_expert)
+		if(!do_after(user, 3 SECONDS, src))
+			user.balloon_alert(user, "interrupted!")
+			return
+
+	set_arm(!armed, user, FALSE)
+
+	user.visible_message(span_notice("[user] [is_expert ? "expertly " : " "]disarms \the [src]!"), span_notice("\The [src] is now disarmed!"))
+
+	set_arm(FALSE, user, FALSE)
+
+
+	return ..()
+
+/// Extra checks for if the trap should close on the victim. Used by subtypes mostly.
+/obj/item/restraints/legcuffs/beartrap/proc/is_valid_salad(mob/living/carbon/victim)
+	return TRUE
 
 /**
  * Closes a bear trap
@@ -492,20 +556,39 @@
  * Arguments:
  */
 /obj/item/restraints/legcuffs/beartrap/proc/close_trap()
-	armed = FALSE
-	update_appearance()
+	set_arm(FALSE, FALSE)
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 
-/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(datum/source, atom/movable/target, thrown_at = FALSE)
+/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(datum/source, atom/movable/target, thrown_at = FALSE, def_zone = BODY_ZONE_CHEST)
 	SIGNAL_HANDLER
-	if(!armed || !isturf(loc) || !isliving(target))
+	if(!armed)
 		return
+
+	if(isitem(target) && prob(25))
+		var/obj/item/bait = target
+		if(bait.w_class >= WEIGHT_CLASS_NORMAL)
+			close_trap()
+			target.visible_message(span_danger("\the [bait] triggers \the [src]!"))
+			return
+
+	if(isprojectile(target))
+		var/obj/projectile/bait_projectile = target
+		if(bait_projectile.original == src && bait_projectile.damage >= 5 && prob(30))
+			close_trap()
+			target.visible_message(span_danger("\the [bait_projectile] triggers \the [src]!"))
+			return
+
+	if(!isliving(target))
+		return
+
 	var/mob/living/victim = target
+	if(!is_valid_salad(victim))
+		return
 	if(istype(victim.buckled, /obj/vehicle))
 		var/obj/vehicle/ridden_vehicle = victim.buckled
 		if(!ridden_vehicle.are_legs_exposed) //close the trap without injuring/trapping the rider if their legs are inside the vehicle at all times.
 			close_trap()
-			ridden_vehicle.visible_message(span_danger("[ridden_vehicle] triggers \the [src]."))
+			ridden_vehicle.visible_message(span_danger("[ridden_vehicle] triggers \the [src]!"))
 			return
 
 	//don't close the trap if they're as small as a mouse, or not touching the ground
@@ -519,16 +602,15 @@
 	else
 		victim.visible_message(span_danger("[victim] triggers \the [src]."), \
 				span_userdanger("You trigger \the [src]!"))
-	var/def_zone = BODY_ZONE_CHEST
-	if(iscarbon(victim) && victim.body_position == STANDING_UP)
+
+	if(iscarbon(victim) && victim.body_position == STANDING_UP && !((def_zone == BODY_ZONE_PRECISE_R_HAND) || (def_zone == BODY_ZONE_PRECISE_L_HAND)))
 		var/mob/living/carbon/carbon_victim = victim
 		def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 		if(!carbon_victim.legcuffed && carbon_victim.num_legs >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
 			INVOKE_ASYNC(carbon_victim, TYPE_PROC_REF(/mob/living/carbon, equip_to_slot), src, ITEM_SLOT_LEGCUFFED)
 			SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 
-	victim.apply_damage(trap_damage, BRUTE, def_zone)
-
+	victim.apply_damage(trap_damage, BRUTE, def_zone, sharpness = SHARP_POINTY, wound_bonus=trap_damage/2, bare_wound_bonus = trap_damage, blocked = victim.run_armor_check(def_zone, MELEE))
 /**
  * # Energy snare
  *
@@ -560,12 +642,79 @@
 		do_sparks(1, TRUE, src)
 		qdel(src)
 
+/obj/item/restraints/legcuffs/beartrap/energy/emp_act(severity)
+	do_sparks(rand(1,3), FALSE, src)
+	if(!ismob(loc))
+		do_sparks(1, TRUE, src)
+		qdel(src)
+	if(isturf(loc))
+		close_trap()
+	visible_message(span_warning("\The [src] overloads!"))
+
 /obj/item/restraints/legcuffs/beartrap/energy/attack_hand(mob/user, list/modifiers)
-	spring_trap(null, user)
+	dissipate()
 	return ..()
 
 /obj/item/restraints/legcuffs/beartrap/energy/cyborg
 	breakouttime = 2 SECONDS // Cyborgs shouldn't have a strong restraint
+
+/**
+ * # Security beartrap
+ *
+ * This closes on people's legs only if they are wanted or incarcerated.
+ *
+ * If it's emagged it only closes on security.
+ */
+/obj/item/restraints/legcuffs/beartrap/security
+	name = "security trap"
+	icon_state = "sectrap"
+	desc = "A rubber padded trap used to catch criminals non-lethally. Relies on security record data to function."
+	trap_damage = 0
+	breakouttime = 5 SECONDS
+	breakout_while_moving = TRUE
+	custom_price = PAYCHECK_COMMAND * 2.5 //Comes out to 50 with the security dept discount on the vendor
+
+/obj/item/restraints/legcuffs/beartrap/security/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/restraints/legcuffs/beartrap/security/update_overlays()
+	. = ..()
+	if(obj_flags & EMAGGED)
+		. += "sectrap_emag"
+		return
+	. = "sectrap_[armed ? "on" : "off"]"
+
+/obj/item/restraints/legcuffs/beartrap/security/emp_act(severity)
+	do_sparks(rand(1,3), FALSE, src)
+	close_trap()
+	visible_message(span_warning("\The [src] overloads!"))
+
+/obj/item/restraints/legcuffs/beartrap/security/emag_act(mob/user)
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	update_appearance(UPDATE_ICON)
+	trap_damage = 30
+	do_sparks(3, FALSE, src)
+	sleep(1 SECOND)
+	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
+	balloon_alert(user, "biometric scanner set!")
+
+/obj/item/restraints/legcuffs/beartrap/security/is_valid_salad(mob/living/carbon/victim)
+	if(obj_flags & EMAGGED)
+		var/obj/item/organ/internal/liver/liver = victim.get_organ_slot(ORGAN_SLOT_LIVER)
+		if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+			return TRUE
+		else
+			return FALSE
+	var/perpname = victim.get_face_name(victim.get_id_name())
+	var/datum/record/crew/record = find_record(perpname)
+	if(!record)
+		return FALSE
+	if((record.wanted_status == WANTED_ARREST || record.wanted_status == WANTED_PRISONER))
+		return TRUE
+	return FALSE
 
 /obj/item/restraints/legcuffs/bola
 	name = "bola"
