@@ -43,7 +43,7 @@ Difficulty: Extremely Hard
 	death_message = "falls to the ground, decaying into plasma particles."
 	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
-//	hardmode_reward = /obj/item/gem/frost_miner
+	//hardmode_reward = /obj/item/gem/frost_miner
 	/// If the demonic frost miner is in its enraged state
 	var/enraged = FALSE
 	/// If the demonic frost miner is currently transforming to its enraged state

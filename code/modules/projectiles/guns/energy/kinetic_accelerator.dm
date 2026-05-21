@@ -622,6 +622,20 @@
 	KA.trigger_guard = TRIGGER_GUARD_NORMAL
 	..()
 
+/obj/item/borg/upgrade/modkit/hardmode
+	name = "HRD-MDE accelerator injector"
+	desc = "An experimental attachment to a kinetic accelerator that can make megafaunas crystallize a core, making them harder."
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
+	icon_state = "crevice_shard"
+	cost = 0
+	denied_type = /obj/item/borg/upgrade/modkit/hardmode
+
+/obj/item/borg/upgrade/modkit/hardmode/projectile_strike(obj/projectile/kinetic/K, turf/target_turf, mob/living/simple_animal/hostile/megafauna/target, obj/item/gun/energy/recharge/kinetic_accelerator/KA)
+	if(istype(target) && target.hardmode_reward != null && !target.hardmode)
+		target.activate_hardmode()
+		target.adjustBruteLoss(-2500) // Makes sure its fully healed up and ready for FUN
+		log_combat(KA, target, "turned on hardmode for", src)
+		qdel(src)
 
 //Cosmetic
 

@@ -68,7 +68,7 @@ Difficulty: Hard
 	death_message = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	death_sound = 'sound/magic/enter_blood.ogg'
 	faction = list(FACTION_MINING, FACTION_BOSS, FACTION_HELL)
-	hardmode_reward = /obj/item/gem/bubblegum
+	//hardmode_reward = /obj/item/gem/bubblegum
 	/// Check to see if we should spawn blood
 	var/spawn_blood = TRUE
 	/// Actual time where enrage ends

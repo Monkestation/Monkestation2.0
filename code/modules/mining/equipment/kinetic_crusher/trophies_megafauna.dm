@@ -216,3 +216,19 @@
 	var/mob/living/basic/mining/legion_brood/minion = new (LivingUser.loc)
 	minion.assign_creator(LivingUser)
 	next_use_time = world.time + 4 SECONDS
+
+/obj/item/crusher_trophy/hardmode
+	name = "HRD-MDE crusher injector"
+	desc = "An experimental attachment to a kinetic crusher that can make megafaunas crystallize a core, making them harder."
+	icon_state = "crevice_shard"
+	denied_type = /obj/item/crusher_trophy/hardmode
+
+/obj/item/crusher_trophy/hardmode/effect_desc()
+	return "the next mark detonation on a compatible megafauna to crystallize its core, destroying itself"
+
+/obj/item/crusher_trophy/hardmode/on_mark_detonation(mob/living/simple_animal/hostile/megafauna/target, mob/living/user)
+	if(istype(target) && target.hardmode_reward != null && !target.hardmode)
+		target.activate_hardmode()
+		target.adjustBruteLoss(-2500) // Makes sure its fully healed up and ready for FUN
+		log_combat(user, target, "turned on hardmode for", src)
+		qdel(src)
