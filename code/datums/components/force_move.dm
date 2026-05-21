@@ -22,6 +22,9 @@
 	if(!target || !ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	var/mob/mob_parent = parent
+	mob_parent.face_atom(target)
+
 	src.slip_spin = slip_spin
 	src.slip_crash = slip_crash
 
@@ -74,8 +77,7 @@
 /datum/component/force_move/proc/post_process(datum/source, result, delay)
 	SIGNAL_HANDLER
 
-
-	if(!result)
+	if(result != MOVELOOP_FAILURE)
 		if(slip_spin)
 			var/mob/mob_parent = parent
 			mob_parent.spin(1, 1)
