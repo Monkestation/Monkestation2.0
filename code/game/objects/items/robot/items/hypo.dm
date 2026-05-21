@@ -226,7 +226,8 @@
 /// Checks if the hypospray has enough reagents to perform an injection.
 /obj/item/reagent_containers/borghypo/proc/has_reagents_for_injection(user, silent = TRUE)
 	if(selected_reagent_typepath)
-		if(!stored_reagents[selected_reagent_typepath])
+		var/stored_volume = stored_reagents[selected_reagent_typepath]
+		if(!stored_volume || reagent_volume > stored_volume)
 			if(!silent)
 				balloon_alert(user, "not enough [selected_reagent_typepath.name]!")
 			return FALSE
