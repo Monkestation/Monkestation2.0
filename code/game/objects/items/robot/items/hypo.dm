@@ -459,7 +459,7 @@
 	default_reagent_types = PARAMEDIC_MEDICAL_REAGENTS
 	bypass_protection = TRUE
 
-/obj/item/reagent_containers/borghypo/shaker
+/obj/item/reagent_containers/borghypo/borgshaker
 	name = "cyborg shaker"
 	desc = "An advanced drink synthesizer and mixer."
 	icon = 'icons/obj/drinks/bottles.dmi'
