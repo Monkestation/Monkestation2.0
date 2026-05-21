@@ -60,7 +60,7 @@ export const BorgChemicalShaker = () => {
               </Stack.Item>
               <Stack.Item grow>
                 <Stack vertical fill>
-                  <Stack.Item basis="70%">
+                  <Stack.Item basis="60%">
                     <BorgHypoRecipes
                       recipes={saved_recipes}
                       recordingRecipe={recordingRecipe}
@@ -74,7 +74,7 @@ export const BorgChemicalShaker = () => {
                       }}
                     />
                   </Stack.Item>
-                  <Stack.Item basis="30%">
+                  <Stack.Item basis="40%">
                     <BorgHypoRecipeDisplay />
                   </Stack.Item>
                 </Stack>

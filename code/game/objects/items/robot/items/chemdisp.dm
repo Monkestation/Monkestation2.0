@@ -236,13 +236,13 @@
 		if(!recipe_information)
 			to_chat(user, span_warning("Couldn't find recipe ") + span_boldwarning(selected_recipe_id) + span_warning("!"))
 			return FALSE
-		for(var/recipe in recipe_information)
-			var/datum/reagent/recipe_typepath = recipe["typepath"]
-			var/recipe_volume = recipe["amount"]
-			var/reagent_volume = stored_reagents[recipe_typepath]
-			if(!reagent_volume || recipe_volume > reagent_volume)
+		for(var/reagent_name in recipe_information)
+			var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(reagent_name)]
+			var/reagent_volume = recipe_information[reagent_name]
+			var/stored_volume = stored_reagents[reagent_typepath]
+			if(!stored_volume || reagent_volume > stored_volume)
 				if(!silent)
-					balloon_alert(user, "not enough [recipe_typepath.name]!")
+					balloon_alert(user, "not enough [reagent_name]!")
 				return FALSE
 		return TRUE
 	if(!silent)
@@ -258,7 +258,7 @@
 		var/recipe_information = saved_recipes[selected_recipe_id]
 		if(recipe_information)
 			for(var/reagent_name in recipe_information)
-				var/datum/reagent/reagent_typepath = GLOB.name2reagent[reagent_name]
+				var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(reagent_name)]
 				if(!reagent_typepath)
 					continue
 				var/recipe_volume = recipe_information[reagent_name]
@@ -355,7 +355,7 @@
 			. = TRUE
 
 		if("save_recording")
-			var/name = tgui_input_text(ui.user, "What do you want to name this recipe?", "Recipe Name?", "Recipe Name", MAX_NAME_LEN)
+			var/name = tgui_input_text(ui.user, "What do you want to name this recipe?", "Recipe Name?", "Recipe Name", 30) // They should be short and concise.
 			if(ui_status(user, state) != UI_INTERACTIVE)
 				return
 			if(saved_recipes[name] && tgui_alert(ui.user, "\"[name]\" already exists, do you want to overwrite it?",, list("No", "Yes")) != "Yes")
