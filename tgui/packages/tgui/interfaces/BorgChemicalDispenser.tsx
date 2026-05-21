@@ -87,7 +87,7 @@ export const BorgChemicalDispenser = () => {
               </Stack.Item>
             </Stack>
           </Stack.Item>
-          <Stack.Item grow={2}>
+          <Stack.Item grow={1.25}>
             <BorgHypoChemicals
               sectionTitle={'Chemicals'}
               chemicals={reagents}
