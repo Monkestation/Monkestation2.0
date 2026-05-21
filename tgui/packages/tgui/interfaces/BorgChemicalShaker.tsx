@@ -44,7 +44,7 @@ export const BorgChemicalShaker = () => {
   } = data;
 
   return (
-    <Window width={900} height={610} theme={theme}>
+    <Window width={1000} height={610} theme={theme}>
       <Window.Content>
         <Stack fill>
           <Stack.Item grow>
