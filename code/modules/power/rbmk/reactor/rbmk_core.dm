@@ -54,6 +54,7 @@
 
 	var/reactor_integrity = RBMK_MAX_INTEGRITY
 	var/max_reactor_integrity = RBMK_MAX_INTEGRITY
+	var/list/active_welder_repairers = list()
 
 	var/datum/gas_mixture/coolant_internal = null
 
@@ -158,6 +159,7 @@
 
 	reactor_integrity = RBMK_MAX_INTEGRITY
 	max_reactor_integrity = RBMK_MAX_INTEGRITY
+	active_welder_repairers = list()
 	control_rod_depth = 0
 	actual_control_rod_depth = 0
 
@@ -204,6 +206,7 @@
 
 	supermatter_rod = null
 	supermatter_cascade_active = FALSE
+	active_welder_repairers = null
 
 	if(low_soundloop)
 		low_soundloop.stop()
@@ -232,6 +235,118 @@
 
 	update_reactor_icon()
 	update_linked_consoles()
+
+
+/obj/machinery/rbmk/reactor/welder_act(mob/living/user, obj/item/tool)
+	if(!user || !tool)
+		return ITEM_INTERACT_FAILURE
+
+	if(!active_welder_repairers)
+		active_welder_repairers = list()
+
+	if(user in active_welder_repairers)
+		balloon_alert(user, "already repairing")
+		return ITEM_INTERACT_SUCCESS
+
+	if(!tool.tool_start_check(user, amount = RBMK_WELDER_REPAIR_FUEL_COST))
+		return ITEM_INTERACT_SUCCESS
+
+	if(!can_welder_repair(user, TRUE))
+		return ITEM_INTERACT_SUCCESS
+
+	active_welder_repairers += user
+
+	user.visible_message(
+		span_notice("[user] starts repairing [src]'s damaged casing."),
+		span_notice("You begin repairing [src]'s damaged casing..."),
+		span_hear("You hear welding.")
+	)
+
+	INVOKE_ASYNC(src, PROC_REF(welder_repair_loop), user, tool)
+
+	return ITEM_INTERACT_SUCCESS
+
+
+/obj/machinery/rbmk/reactor/proc/can_welder_repair(mob/living/user, show_alerts = FALSE)
+	if(meltdown_in_progress || supermatter_cascade_active)
+		if(show_alerts)
+			balloon_alert(user, "too unstable!")
+		return FALSE
+
+	if(reactor_integrity <= 0)
+		if(show_alerts)
+			balloon_alert(user, "beyond repair!")
+		return FALSE
+
+	if(temperature > RBMK_REPAIRABLE_TEMP_LIMIT)
+		if(show_alerts)
+			balloon_alert(user, "too hot!")
+			to_chat(user, span_warning("[src] is too hot to safely repair. It must be below [RBMK_REPAIRABLE_TEMP_LIMIT] K."))
+		return FALSE
+
+	if(reactor_integrity >= max_reactor_integrity)
+		if(show_alerts)
+			balloon_alert(user, "fully repaired")
+		return FALSE
+
+	return TRUE
+
+
+/obj/machinery/rbmk/reactor/proc/finish_welder_repair(mob/living/user)
+	if(!active_welder_repairers || !user)
+		return
+
+	active_welder_repairers -= user
+
+
+/obj/machinery/rbmk/reactor/proc/welder_repair_loop(mob/living/user, obj/item/tool)
+	if(QDELETED(src))
+		return
+
+	if(QDELETED(user) || QDELETED(tool))
+		finish_welder_repair(user)
+		return
+
+	if(!active_welder_repairers || !(user in active_welder_repairers))
+		return
+
+	if(!can_welder_repair(user, TRUE))
+		finish_welder_repair(user)
+		return
+
+	if(!tool.use_tool(src, user, RBMK_WELDER_REPAIR_TIME, volume = 40, amount = RBMK_WELDER_REPAIR_FUEL_COST))
+		finish_welder_repair(user)
+		return
+
+	if(!can_welder_repair(user, TRUE))
+		finish_welder_repair(user)
+		return
+
+	var/old_integrity = reactor_integrity
+	reactor_integrity = min(reactor_integrity + RBMK_WELDER_REPAIR_AMOUNT, max_reactor_integrity)
+
+	var/repaired_amount = reactor_integrity - old_integrity
+	if(repaired_amount <= 0)
+		finish_welder_repair(user)
+		balloon_alert(user, "fully repaired")
+		return
+
+	balloon_alert(user, "repaired")
+	to_chat(user, span_notice("You repair [src]'s casing integrity by [round(repaired_amount, 0.1)]%."))
+
+	update_reactor_icon()
+	update_linked_consoles()
+
+	if(reactor_integrity >= max_reactor_integrity)
+		finish_welder_repair(user)
+
+		user.visible_message(
+			span_notice("[user] finishes repairing [src]'s casing."),
+			span_notice("You finish repairing [src]'s casing.")
+		)
+		return
+
+	INVOKE_ASYNC(src, PROC_REF(welder_repair_loop), user, tool)
 
 
 /obj/machinery/rbmk/reactor/item_interaction(mob/living/user, obj/item/used_item, list/modifiers)
