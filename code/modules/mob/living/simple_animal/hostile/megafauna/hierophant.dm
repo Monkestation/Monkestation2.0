@@ -799,7 +799,7 @@ Difficulty: Hard
 	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/obj/effect/hierophant_rays_holder/Initialize()
+/obj/effect/hierophant_rays_holder/Initialize(mapload)
 	. = ..()
 	add_filter(name = "ray", priority = 1, params = list(
 		type = "rays",

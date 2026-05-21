@@ -7,7 +7,7 @@
 	/// The sheet this should spawn if its welded
 	var/obj/item/stack/sheet/sheet_type = /obj/item/stack/sheet/iron
 
-/obj/item/gem/Initialize()
+/obj/item/gem/Initialize(mapload)
 	. = ..()
 	add_overlay("shine")
 	pixel_x = rand(-8, 8)
@@ -39,7 +39,7 @@
 	light_power = 1
 	light_color = "#b714cc"
 
-/obj/item/gem/hierophant/Initialize()
+/obj/item/gem/hierophant/Initialize(mapload)
 	. = ..()
 	new /obj/item/gps/internal/purple(src)
 	update_light()
@@ -79,7 +79,7 @@
 /*
 /obj/item/gem/clockwork
 	name = "\improper Densified Brass"
-	desc = "Rat'vars influence over this world has been longer than any species may ever comprehend, yet nar'sie finally banished rat'var into his realm. Locking him out of this world.The clockwork defender's powersource was this gem you extracted, its still vibrant with energy"
+	desc = "Ratvar's influence over this world has been longer than any species may ever comprehend, yet Nar'sie finally banished Ratvar into his realm. Locking him out of this world.The clockwork defender's powersource was this gem you extracted, its still vibrant with energy"
 	icon_state = "clockwork"
 	sheet_type = /obj/item/stack/sheet/bronze{amount = 150} // its basically worse iron, lets give them a good bit of it
 	light_outer_range = 4
@@ -103,8 +103,4 @@
 	light_outer_range = 3
 	light_power = 3
 	light_color = "#380a41"
-
-/obj/item/gem/demon/Initialize()
-	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
 */
