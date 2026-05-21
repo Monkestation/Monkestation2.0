@@ -241,6 +241,10 @@
 			return FALSE
 		for(var/reagent_name in recipe_information)
 			var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(reagent_name)]
+			if(!reagent_typepath)
+				if(!silent)
+					balloon_alert(user, "[reagent_name] not found!")
+				return FALSE
 			var/reagent_volume = recipe_information[reagent_name]
 			var/stored_volume = stored_reagents[reagent_typepath]
 			if(!stored_volume || reagent_volume > stored_volume)
