@@ -121,6 +121,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	max_integrity = 200
 	armor_type = /datum/armor/item_claymore
 	resistance_flags = FIRE_PROOF
+	tool_behaviour = TOOL_KNIFE // what is a sword but a big knife
 
 /datum/armor/item_claymore
 	fire = 100

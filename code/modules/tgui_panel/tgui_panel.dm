@@ -95,6 +95,9 @@
 	if(type == "telemetry")
 		analyze_telemetry(payload)
 		return TRUE
+	if(type == "requestMetadata")
+		send_metadata()
+		return TRUE
 
 /**
  * public
@@ -103,3 +106,16 @@
  */
 /datum/tgui_panel/proc/send_roundrestart()
 	window.send_message("roundrestart")
+
+/**
+ * private
+ *
+ * Sent when a client requests metadata - used for websocket stuff.
+ */
+/datum/tgui_panel/proc/send_metadata()
+	window.send_message("metadata", list(
+		"round_id" = GLOB.round_id,
+		"map_name" = SSmapping.current_map?.map_name,
+		"round_duration" = round(STATION_TIME_PASSED() / 10, 1),
+		"gamestate" = SSticker.current_state,
+	))

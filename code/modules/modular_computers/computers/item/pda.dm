@@ -340,12 +340,17 @@
 
 /obj/item/modular_computer/pda/silicon/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_TABLET_CHECK_DETONATE, PROC_REF(tab_no_detonate))
 	vis_flags |= VIS_INHERIT_ID
 	silicon_owner = loc
 	if(!istype(silicon_owner))
 		silicon_owner = null
 		stack_trace("[type] initialized outside of a silicon, deleting.")
 		return INITIALIZE_HINT_QDEL
+
+/obj/item/modular_computer/pda/silicon/proc/tab_no_detonate() // if a silicon PDA blows up, thats Not Great and Cant Be Fixed
+	SIGNAL_HANDLER
+	return COMPONENT_TABLET_NO_DETONATE
 
 /obj/item/modular_computer/pda/silicon/Destroy()
 	silicon_owner = null
