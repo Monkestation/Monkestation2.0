@@ -1,4 +1,8 @@
 import { classes } from 'common/react';
+import { useEffect, useState } from 'react';
+import { resolveAsset } from 'tgui/assets';
+import { logger } from 'tgui/logging';
+import { fetchRetry } from 'tgui-core/http';
 import { useBackend, useSharedState } from '../backend';
 import {
   Box,
@@ -13,15 +17,41 @@ import {
 import { Window } from '../layouts';
 import type { PreferencesMenuData } from './PreferencesMenu/data';
 
+type StoreEntry = {
+  name: string;
+  path: string;
+  cost: number;
+  desc: string;
+  icon: string;
+  icon_state?: string;
+  job_restricted?: string;
+};
+
+type StoreTab = {
+  name: string;
+  title: string;
+  contents: StoreEntry[];
+};
+
 export const StoreManager = () => {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const { loadout_tabs, total_coins, owned_items } = data;
+  const { total_coins, owned_items } = data;
+
+  const [store_tabs, set_store_tabs] = useState<StoreTab[]>([]);
+  useEffect(() => {
+    fetchRetry(resolveAsset('loadout_store.json'))
+      .then((response) => response.json())
+      .then((loadout_data: StoreTab[]) => set_store_tabs(loadout_data))
+      .catch((error) => {
+        logger.log('Failed to fetch loadout_store.json', JSON.stringify(error));
+      });
+  }, []);
 
   const [selectedTabName, setSelectedTab] = useSharedState(
     'tabs',
-    loadout_tabs[0]?.name,
+    store_tabs[0]?.name,
   );
-  const selectedTab = loadout_tabs.find(
+  const selectedTab = store_tabs.find(
     (curTab) => curTab.name === selectedTabName,
   );
 
@@ -45,7 +75,7 @@ export const StoreManager = () => {
               }
             >
               <Tabs>
-                {loadout_tabs.map((curTab) => (
+                {store_tabs.map((curTab) => (
                   <Tabs.Tab
                     key={curTab.name}
                     selected={selectedTabName === curTab.name}

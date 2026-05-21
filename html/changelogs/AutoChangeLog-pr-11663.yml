@@ -1,0 +1,4 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - bugfix: "silicons can no longer have their integrated PDA permanently bricked by receiving a PDA bomb."
