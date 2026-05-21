@@ -1,6 +1,6 @@
 /obj/item/gun/ballistic/revolver/hunter_revolver
 	name = "\improper Hunter's Revolver"
-	desc = "While doing minimal physical damage, the bullets will force a monster to carry the weight of their impure sins for a short while, greatly slowing them down."
+	desc = "A large revolver, with an impossibly sharp silver blade at the end of its handle."
 	icon = 'icons/obj/weapons/guns/redeemer.dmi'
 	icon_state = "redeemer"
 	inhand_icon_state = "redeemer"
@@ -26,7 +26,7 @@
 	if(!IS_MONSTERHUNTER(user) && !isobserver(user))
 		return
 	. += span_info("While bloodsilver bullets do not do much damage, they afflict monsters with a brief but debilitating curse, crippling many of their wretched abilities.")
-	. += span_info("[EXAMINE_HINT("Right click")] with it in order to attack with its powerful knife.")
+	. += span_info("[EXAMINE_HINT("Right click")] with it in order to attack with its powerful knife. The knife is more effective against monsters.")
 
 /obj/item/gun/ballistic/revolver/hunter_revolver/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(is_monster_hunter_prey(target_mob))
@@ -116,17 +116,18 @@
 /datum/status_effect/silver_bullet/on_apply()
 	ADD_TRAIT(owner, TRAIT_BLOODSILVER_CURSE, TRAIT_STATUS_EFFECT(id))
 	owner.apply_status_effect(/datum/status_effect/wonderland_district/bloodsilver)
-	to_chat(owner, span_userdanger("Your body suddenly feels impossibly heavy, you can barely move!"), type = MESSAGE_TYPE_COMBAT) // gotta change this text to describe the new effect
+	to_chat(owner, span_userdanger("An invisible blaze fills your body, you feel as if your abilities are are compromised!"), type = MESSAGE_TYPE_COMBAT)
 	SEND_SIGNAL(owner, COMSIG_LIVING_BLOODSILVER_HIT)
 	remove_effects()
 	RegisterSignal(owner, COMSIG_MOB_PRE_JAUNT, PROC_REF(on_jaunt))
+	SEND_SOUND(owner, sound('sound/effects/bloodsilver_curse.ogg', volume = 75))
 	return TRUE
 
 /datum/status_effect/silver_bullet/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_BLOODSILVER_CURSE, TRAIT_STATUS_EFFECT(id))
 	owner.remove_status_effect(/datum/status_effect/wonderland_district/bloodsilver)
 	UnregisterSignal(owner, COMSIG_MOB_PRE_JAUNT)
-	to_chat(owner, span_notice("The impossible weight fades away, allowing you to move normally once more."), type = MESSAGE_TYPE_COMBAT)
+	to_chat(owner, span_notice("The invisible blaze within your body fades away."), type = MESSAGE_TYPE_COMBAT)
 
 /datum/status_effect/silver_bullet/tick(seconds_between_ticks)
 	remove_effects()
