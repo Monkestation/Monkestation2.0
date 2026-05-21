@@ -85,10 +85,10 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if(visible_byond_member)
 		LAZYADD(key_tags, "byond_member")
 
-	if(persistent_client.patreon.access_rank > 0)
+	if(persistent_client.patreon.access_rank > 0 && prefs.read_preference(/datum/preference/toggle/patreon_public))
 		LAZYADD(key_tags, "emoji-patreon")
 
-	if(persistent_client.twitch.access_rank > 0)
+	if(persistent_client.twitch.access_rank > 0 && prefs.read_preference(/datum/preference/toggle/twitch_public))
 		LAZYADD(key_tags, "emoji-twitch")
 
 	if(visible_byond_member) // add color last
