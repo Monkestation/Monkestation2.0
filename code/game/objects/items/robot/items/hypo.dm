@@ -167,7 +167,7 @@
 	var/mob/living/carbon/injectee = target_mob
 	if(!istype(injectee))
 		return
-	if(!has_reagents_for_injection(user, FALSE)) // Gives balloon alerts.
+	if(!has_reagents_for_injection(user)) // Gives balloon alerts.
 		return
 	if(!injectee.reagents) // They should have reagents, but just in case.
 		balloon_alert(user, "unable to inject!")
@@ -226,12 +226,11 @@
 	stored_reagents[reagent_typepath] = clamp(reagent_volume - amount, 0, max_volume_per_reagent)
 
 /// Checks if the hypospray has enough reagents to perform an injection.
-/obj/item/reagent_containers/borghypo/proc/has_reagents_for_injection(user, silent = TRUE)
+/obj/item/reagent_containers/borghypo/proc/has_reagents_for_injection(user)
 	if(selected_reagent_typepath)
 		var/stored_volume = stored_reagents[selected_reagent_typepath]
 		if(!stored_volume || amount_per_transfer_from_this > stored_volume)
-			if(!silent)
-				balloon_alert(user, "not enough [selected_reagent_typepath.name]!")
+			balloon_alert(user, "not enough [selected_reagent_typepath.name]!")
 			return FALSE
 		return TRUE
 	if(selected_recipe_id)
@@ -242,18 +241,15 @@
 		for(var/reagent_name in recipe_information)
 			var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(reagent_name)]
 			if(!reagent_typepath)
-				if(!silent)
-					balloon_alert(user, "[reagent_name] not found!")
+				balloon_alert(user, "[reagent_name] not found!")
 				return FALSE
 			var/reagent_volume = recipe_information[reagent_name]
 			var/stored_volume = stored_reagents[reagent_typepath]
 			if(!stored_volume || reagent_volume > stored_volume)
-				if(!silent)
-					balloon_alert(user, "not enough [reagent_name]!")
+				balloon_alert(user, "not enough [reagent_name]!")
 				return FALSE
 		return TRUE
-	if(!silent)
-		balloon_alert(user, "no reagent selected!")
+	balloon_alert(user, "no reagent selected!")
 	return FALSE
 
 /// Creates the reagents.
@@ -487,7 +483,7 @@
 /obj/item/reagent_containers/borghypo/borgshaker/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!interacting_with.is_refillable())
 		return NONE
-	if(!has_reagents_for_injection(user, FALSE)) // Gives balloon alerts.
+	if(!has_reagents_for_injection(user)) // Gives balloon alerts.
 		return ITEM_INTERACT_BLOCKING
 	if(interacting_with.reagents.total_volume >= interacting_with.reagents.maximum_volume)
 		balloon_alert(user, "it's full!")
