@@ -350,7 +350,24 @@
 
 /obj/item/modular_computer/pda/silicon/proc/tab_no_detonate() // if a silicon PDA blows up, thats Not Great and Cant Be Fixed
 	SIGNAL_HANDLER
-	return COMPONENT_TABLET_NO_DETONATE
+	. = COMPONENT_TABLET_NO_DETONATE
+	to_chat(silicon_owner, span_danger("POWER SURGE DETECTED/"))
+	do_sparks(4, FALSE, src)
+	if(isAI(silicon_owner))
+		silicon_owner.adjustFireLoss(25)
+		if(!isturf(silicon_owner.loc)) //AI not in core? not wise to disable a random APC then.
+			silicon_owner.Paralyze(10 SECONDS)
+		else
+			var/area/AIarea = get_area(silicon_owner)
+			var/obj/machinery/power/apc/AIapc = AIarea.apc
+			if(AIapc)
+				AIapc.energy_fail(45, forced = TRUE)
+				do_sparks(4, FALSE, AIapc)
+	else if(ispAI(silicon_owner))
+		silicon_owner.emp_act(EMP_HEAVY)
+	else //how did this happen cyborgs shouldnt have messengers, oh well!
+		silicon_owner.Paralyze(5 SECONDS)
+
 
 /obj/item/modular_computer/pda/silicon/Destroy()
 	silicon_owner = null
