@@ -15,7 +15,7 @@
 	pixel_x = -32
 	pixel_y = -32
 
-	layer = OBJ_LAYER + 1
+	layer = OBJ_LAYER - 1
 	plane = GAME_PLANE
 
 	var/obj/machinery/atmospherics/components/unary/rbmk/inlet/inlet = null
@@ -354,6 +354,10 @@
 	if(.)
 		return .
 
+	if(istype(used_item, /obj/item/rbmk/rod_tool))
+		var/obj/item/rbmk/rod_tool/rod_tool = used_item
+		return try_remove_rod_with_tool(user, rod_tool)
+
 	if(!istype(used_item, /obj/item/rbmk/fuel_rod))
 		return .
 
@@ -395,25 +399,63 @@
 	if(!user)
 		return
 
-	remove_last_rod(user)
+	if(has_fuel_rods())
+		balloon_alert(user, "tool required")
+		to_chat(user, span_warning("You need an RBMK rod handling tool to manually extract fuel rods."))
+		return
+
+	to_chat(user, span_notice("No rods installed."))
 
 
-/obj/machinery/rbmk/reactor/proc/remove_last_rod(mob/user)
-	var/obj/item/rbmk/fuel_rod/fuel_rod = null
+/obj/machinery/rbmk/reactor/proc/get_rod_tool_target()
 	var/obj/item/rbmk/fuel_rod/supermatter/installed_supermatter_rod = get_installed_supermatter_rod()
-
 	if(installed_supermatter_rod)
-		fuel_rod = installed_supermatter_rod
+		return installed_supermatter_rod
+
+	if(length(special_slots))
+		return special_slots[length(special_slots)]
+
+	if(length(normal_slots))
+		return normal_slots[length(normal_slots)]
+
+	return null
+
+
+/obj/machinery/rbmk/reactor/proc/get_rod_tool_removal_time(obj/item/rbmk/fuel_rod/fuel_rod)
+	if(fuel_rod == supermatter_rod && supermatter_cascade_active)
+		return RBMK_ROD_TOOL_REMOVE_TIME_CASCADE
+
+	if(is_special_rod(fuel_rod))
+		return RBMK_ROD_TOOL_REMOVE_TIME_SPECIAL
+
+	return RBMK_ROD_TOOL_REMOVE_TIME_NORMAL
+
+
+/obj/machinery/rbmk/reactor/proc/apply_rod_tool_knockback(mob/living/user, cascade_extraction = FALSE)
+	if(!user)
+		return
+
+	if(!cascade_extraction && temperature <= RBMK_ROD_TOOL_HOT_KNOCKBACK_TEMP)
+		return
+
+	var/knockback_range = cascade_extraction ? RBMK_ROD_TOOL_CASCADE_KNOCKBACK_RANGE : RBMK_ROD_TOOL_HOT_KNOCKBACK_RANGE
+	var/turf/throw_target = get_edge_target_turf(user, get_dir(src, user))
+
+	visible_message(span_danger("[src] violently vents superheated gas as the rod is extracted!"))
+	playsound(src, 'sound/effects/explosionfar.ogg', 70, TRUE)
+
+	user.throw_at(throw_target, knockback_range, 2, src)
+
+
+/obj/machinery/rbmk/reactor/proc/finish_remove_rod(obj/item/rbmk/fuel_rod/fuel_rod, mob/user = null)
+	if(!fuel_rod)
+		return FALSE
+
+	if(fuel_rod in special_slots)
 		special_slots -= fuel_rod
-	else if(length(special_slots))
-		fuel_rod = special_slots[length(special_slots)]
-		special_slots -= fuel_rod
-	else if(length(normal_slots))
-		fuel_rod = normal_slots[length(normal_slots)]
+	else if(fuel_rod in normal_slots)
 		normal_slots -= fuel_rod
 	else
-		if(user)
-			to_chat(user, span_notice("No rods installed."))
 		return FALSE
 
 	if(fuel_rod == supermatter_rod)
@@ -437,7 +479,63 @@
 	return TRUE
 
 
+/obj/machinery/rbmk/reactor/proc/try_remove_rod_with_tool(mob/living/user, obj/item/rbmk/rod_tool/tool)
+	if(!user || !tool)
+		return ITEM_INTERACT_FAILURE
+
+	var/obj/item/rbmk/fuel_rod/fuel_rod = get_rod_tool_target()
+	if(!fuel_rod)
+		balloon_alert(user, "no rod")
+		return ITEM_INTERACT_SUCCESS
+
+	var/cascade_extraction = (fuel_rod == supermatter_rod && supermatter_cascade_active)
+	var/removal_time = get_rod_tool_removal_time(fuel_rod)
+
+	user.visible_message(
+		span_notice("[user] starts extracting [fuel_rod] from [src]."),
+		span_notice("You begin extracting [fuel_rod] from [src]..."),
+		span_hear("You hear heavy mechanical clamping.")
+	)
+
+	if(cascade_extraction)
+		to_chat(user, span_danger("The supermatter rod fights the extractor. Keep pulling!"))
+	else if(temperature > RBMK_ROD_TOOL_HOT_KNOCKBACK_TEMP)
+		to_chat(user, span_warning("The reactor is dangerously hot. Manual rod extraction may violently vent heat."))
+
+	if(!tool.use_tool(src, user, removal_time, volume = 40))
+		return ITEM_INTERACT_SUCCESS
+
+	if(QDELETED(fuel_rod))
+		return ITEM_INTERACT_SUCCESS
+
+	if(!finish_remove_rod(fuel_rod, user))
+		balloon_alert(user, "failed")
+		return ITEM_INTERACT_SUCCESS
+
+	apply_rod_tool_knockback(user, cascade_extraction)
+
+	return ITEM_INTERACT_SUCCESS
+
+
+/obj/machinery/rbmk/reactor/proc/remove_last_rod(mob/user)
+	if(user)
+		balloon_alert(user, "tool required")
+		to_chat(user, span_warning("You need an RBMK rod handling tool to manually extract fuel rods."))
+
+	return FALSE
+
+
 /obj/machinery/rbmk/reactor/proc/remove_rod_by_slot(slot_kind, slot_index, mob/user = null)
+	if(meltdown_in_progress || supermatter_cascade_active)
+		if(user)
+			to_chat(user, span_warning("Remote rod extraction is locked out by unsafe reactor conditions. Use a rod handling tool."))
+		return FALSE
+
+	if(temperature > RBMK_ROD_CONSOLE_SAFE_TEMP_LIMIT)
+		if(user)
+			to_chat(user, span_warning("Remote rod extraction is unsafe above [RBMK_ROD_CONSOLE_SAFE_TEMP_LIMIT] K. Use a rod handling tool."))
+		return FALSE
+
 	var/list/target_slots = (slot_kind == "special") ? special_slots : normal_slots
 
 	if(!isnum(slot_index))
@@ -458,26 +556,7 @@
 			to_chat(user, span_warning("The supermatter rod is resonating too violently. It must be removed before any other rods can be handled."))
 		return FALSE
 
-	if(fuel_rod == supermatter_rod)
-		var/obj/item/rbmk/fuel_rod/supermatter/removed_supermatter_rod = fuel_rod
-		removed_supermatter_rod.stop_cascade(TRUE)
-
-	target_slots -= fuel_rod
-	fuel_rod.forceMove(drop_location())
-
-	if(user)
-		to_chat(user, span_notice("You remove [fuel_rod.name] from the reactor."))
-
-	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-
-	if(!has_fuel_rods())
-		reset_reaction_state()
-		startup_sequence_played = FALSE
-		rod_motion_in_progress = FALSE
-
-	update_reactor_icon()
-	update_linked_consoles()
-	return TRUE
+	return finish_remove_rod(fuel_rod, user)
 
 
 /obj/machinery/rbmk/reactor/proc/update_linked_consoles()
