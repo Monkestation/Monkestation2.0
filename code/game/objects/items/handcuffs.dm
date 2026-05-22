@@ -532,7 +532,7 @@
 	if(user.mind?.get_skill_level(/datum/skill/cleaning) >= SKILL_LEVEL_MASTER)
 		is_expert = TRUE
 	if(!is_expert)
-		if(!do_after(user, 3 SECONDS, src))
+		if(!do_after(user, 5 SECONDS, src))
 			user.balloon_alert(user, "interrupted!")
 			return
 
@@ -564,18 +564,18 @@
 	if(!armed)
 		return
 
-	if(isitem(target) && prob(25))
+	if(isitem(target) && prob(35))
 		var/obj/item/bait = target
-		if(bait.w_class >= WEIGHT_CLASS_NORMAL)
+		if(bait.w_class >= WEIGHT_CLASS_SMALL)
 			close_trap()
-			target.visible_message(span_danger("\the [bait] triggers \the [src]!"))
+			target.visible_message(span_danger("\The [bait] triggers \the [src]!"))
 			return
 
 	if(isprojectile(target))
 		var/obj/projectile/bait_projectile = target
-		if(bait_projectile.original == src && bait_projectile.damage >= 5 && prob(30))
+		if(bait_projectile.original == src && bait_projectile.damage >= 5 && prob(35))
 			close_trap()
-			target.visible_message(span_danger("\the [bait_projectile] triggers \the [src]!"))
+			target.visible_message(span_danger("\The [bait_projectile] triggers \the [src]!"))
 			return
 
 	if(!isliving(target))
