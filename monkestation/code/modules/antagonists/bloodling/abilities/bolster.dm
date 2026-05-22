@@ -16,7 +16,7 @@
 	return ..()
 
 /datum/action/cooldown/bloodling/bolster/Activate(atom/target)
-	..()
+	. = ..()
 	var/mob/living/basic/bloodling/our_mob = owner
 	our_mob.add_biomass(150)
 	our_mob.Stun(10, ignore_canstun = TRUE)
