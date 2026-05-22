@@ -5576,6 +5576,7 @@
 #include "code\modules\power\rbmk\reactor\rbmk_void_coefficient.dm"
 #include "code\modules\power\rbmk\rods\base.dm"
 #include "code\modules\power\rbmk\rods\plutonium.dm"
+#include "code\modules\power\rbmk\rods\rod_tool.dm"
 #include "code\modules\power\rbmk\rods\supermatter.dm"
 #include "code\modules\power\rbmk\rods\thorium.dm"
 #include "code\modules\power\rbmk\rods\uranium.dm"
