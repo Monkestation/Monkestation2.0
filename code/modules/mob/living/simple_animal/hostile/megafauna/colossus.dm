@@ -96,13 +96,14 @@
 
 /mob/living/simple_animal/hostile/megafauna/colossus/activate_hardmode()
 	. = ..()
+	spiral_shots.projectile_type = /obj/projectile/colossus/fast
+	random_shots.projectile_type = /obj/projectile/colossus/fast
 	random_shots.projectile_amount *= 2
+	shotgun_blast.projectile_type = /obj/projectile/colossus/fast
 	shotgun_blast.telegraph_time *= 0.5
+	dir_shots.projectile_type = /obj/projectile/colossus/fast
 	dir_shots.boosted = TRUE
 	dir_shots.firing_time *= 0.5
-	move_to_delay *= 0.5
-	set_varspeed(move_to_delay)
-	handle_automated_action()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()
@@ -254,6 +255,9 @@
 			SSexplosions.med_mov_atom += target
 		else
 			SSexplosions.medturf += target
+
+/obj/projectile/colossus/fast
+	speed = 1
 
 ///Anomolous Crystal///
 
