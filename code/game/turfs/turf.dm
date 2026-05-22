@@ -830,7 +830,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/is_holy()
 	if(locate(/obj/effect/blessing) in src)
 		return TRUE
-	if(istype(loc,
-/area/station/service/chapel))
+	if(istype(loc, /area/station/service/chapel))
 		return TRUE
 	return FALSE

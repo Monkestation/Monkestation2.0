@@ -55,7 +55,7 @@
 	duration = 5
 	plane = FLOOR_PLANE
 
-/obj/effect/temp_visual/religion/turf/floor
+/obj/effect/temp_visual/holy_grass
 	icon = 'icons/effects/religion_effects.dmi'
 	randomdir = FALSE
 	duration = 10
