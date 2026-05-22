@@ -169,7 +169,7 @@
 /datum/religion_rites/shadow_heart
 	name = "Shadow Heart"
 	desc = "Creates a shadow heart, which can be placed into yourself or someone else to begin converting them into a shadow person."
-	ritual_length = 1 SECONDS
+	ritual_length = 30 SECONDS
 	ritual_invocations = list(
 		"Let the darkness seep into you...",
 		"... And cover you, envelope you ...",
@@ -187,7 +187,7 @@
 /datum/religion_rites/shadow_obelisk
 	name = "Obelisk Manifestation"
 	desc = "Creates an obelisk that generates shadows and additional favor."
-	ritual_length = 1 SECONDS
+	ritual_length = 30 SECONDS
 	ritual_invocations = list(
 		"Let the shadows combine...",
 		"... Solidify and grow ...",
@@ -216,7 +216,7 @@
 /datum/religion_rites/expand_shadows
 	name = "Shadow Expansion"
 	desc = "Grow the reach of shadows extending from the altar, and any obelisks. The cost of this ritual increases with each use."
-	ritual_length = 1 SECONDS
+	ritual_length = 25 SECONDS
 	ritual_invocations = list(
 		"Spread out...",
 		"... Kill the light ...",
@@ -365,7 +365,7 @@
 /datum/religion_rites/grand_ritual_one
 	name = "Grand ritual: Beckoning shadows"
 	desc = "Convince shadows to take interest in your sect. Travel freely between obelisks with assistance of the shadows."
-	ritual_length = 1 SECONDS
+	ritual_length = 45 SECONDS
 	ritual_invocations = list(
 		"Shadows hear me...",
 		"... Come to your kin ...",
