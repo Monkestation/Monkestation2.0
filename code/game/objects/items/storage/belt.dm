@@ -444,9 +444,9 @@
 
 /obj/item/storage/belt/mining/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 6
+	atom_storage.max_slots = 7
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 20
+	atom_storage.max_total_storage = 24
 	atom_storage.set_holdable(list(
 		/obj/item/analyzer,
 		/obj/item/clothing/gloves,
@@ -666,6 +666,7 @@
 	worn_icon_state = "security"
 	content_overlays = TRUE
 	uses_advanced_reskins = FALSE
+	unique_reskin = null
 
 /obj/item/storage/belt/military/abductor/full/PopulateContents()
 	new /obj/item/screwdriver/abductor(src)
@@ -683,6 +684,7 @@
 	inhand_icon_state = "security"
 	worn_icon_state = "military"
 	uses_advanced_reskins = FALSE
+	unique_reskin = null
 
 /obj/item/storage/belt/military/assault
 	name = "assault belt"
@@ -691,6 +693,7 @@
 	inhand_icon_state = "security"
 	worn_icon_state = "assault"
 	uses_advanced_reskins = FALSE
+	unique_reskin = null
 
 /obj/item/storage/belt/military/assault/Initialize(mapload)
 	. = ..()

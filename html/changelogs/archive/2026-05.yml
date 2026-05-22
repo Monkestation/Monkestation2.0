@@ -284,3 +284,98 @@
   - bugfix: fixed foam passing through objects it shouldn't like windows.
   byondsucks:
   - balance: Rust construction cooldown is now 6 seconds.
+2026-05-19:
+  FelineMistress:
+  - rscadd: Added Biocorrector, Ambu Bag, Remote Health Analyzer, Tricorder
+  - qol: Remote Health Analyzer mechanics
+  - bugfix: fixed that the omni tool could not filter blood
+  - sound: added Ambu Bag, Remote Health Analyzer sound effects
+  - image: added Added Biocorrector, Ambu Bag, Remote Health Analyzer, Tricorder /modified
+      Advanced Health Analyzer icons
+  Runian:
+  - rscadd: Observers can now view a cyborg's inventory.
+  - qol: Stored cyborg items retain their original position and no longer shuffle
+      other items down when taken out.
+  - qol: For cyborgs, the store button has been removed but its functionality has
+      moved to the cyborg module button. Left-click to store the active module and
+      right-click to open the storage.
+  - refactor: Cyborgs now stores and handles all of their items via a storage datum.
+  - balance: Cyborgs will send a chat notification to their master AI that they have
+      died.
+  - rscadd: Illegal Combat Cybernetic Implants tech node. It require Illegal Technology,
+      Combat Cybernetic Implants, and 40 points.
+  - balance: X-Ray Eyes and Thermals Eyes is now unlocked via Illegal Combat Cybernetic
+      Implants.
+  - balance: Mining Cyborg's advanced mining scanner has been moved to a module rather
+      than being built into them.
+  SirNightKnight:
+  - bugfix: fixed CPR not working.
+  "Siro, TheColorCyan, T\u2026":
+  - rscadd: Adds Lava Cat robe
+  - bugfix: Fixes Shark Costume object icon when worn with hood up.
+  Tractor Maam, JohnFulpWillard:
+  - rscadd: AIs can now quickly track their cyborgs and infected IPCs through their
+      status panel.
+2026-05-20:
+  Absolucy:
+  - rscadd: For the like, 5 people who actually use the websocket feature, you can
+      now request metadata for them (round id, map name, round duration, game state)
+  E231kei500bandai:
+  - balance: Changed Peacekeeper Law 1 to "Avoid initiating violent conflict against
+      others." so silicons can ignore threats
+  JohnFulpWillard:
+  - bugfix: pAIs can play music again.
+  LettuceGuardian:
+  - bugfix: Improper icon on one of the bulletproof helmet states
+  - bugfix: Loadout umbrellas no longer colour themselves randomly.
+  Runian:
+  - bugfix: Cyborg items can no longer be inserted into non-cyborg inventories (e.g.
+      normal satchels).
+  - bugfix: Miner Cyborg's satchel of holding now correctly picks up ores while unequipped.
+  Shoddd:
+  - balance: increases sandevistans price to 13 TC
+  SirNightKnight:
+  - bugfix: security gets bungo donuts as heirlooms instead of ERRORs.
+  TheColorCyan:
+  - balance: syndicate modsuit now has 0.25 active slowdown
+  - balance: elite modsuit now cost 12 TC
+  hyper2snyper:
+  - rscadd: Gives Brig Physician access to various medical loadout items.
+2026-05-21:
+  Mantlecrawler:
+  - bugfix: Atrocinator module now has propper logging for admins under death log
+  - bugfix: Dashes can no longer bypass prison gate scanners, or reebe's servant blockers
+  - bugfix: You can no longer bypass servant blockers by using a wheelchair as a servant
+      on reebe
+  - bugfix: Ghosts can no longer research stuff for heretics
+  - bugfix: Claymores now count as knifes
+  - bugfix: Evidence bags can no longer teleport things with TK
+  - bugfix: Cultivator now properly says that you clear weeds from the plant container,
+      rather than itself
+  - bugfix: Deforest hoods no longer get rid of buffs like durathread, or xenobio
+      potions, nor delete piles of hats or similar
+  - bugfix: Hi vis hood (that of the deforest jacket) is now properly labeled as a
+      deforest hood
+  Shoddd:
+  - balance: thick skin and dense bones now give hardly wounded and embed resistance
+  - balance: bone wounds now take halve as long to heal when covered in surgerical
+      tape and bone gel
+  TheColorCyan:
+  - bugfix: fixed being able to reskin assault, abductor and ect. belts into...errors
+2026-05-22:
+  Absolucy:
+  - code_imp: Minor performance / functionality improvements to examine icons.
+  Absolucy, EnterTheJake:
+  - balance: Wraith Module recloaking timer bumped from 5 to 10 seconds.
+  - balance: The Wraith Module's cloak now dissipates on ranged attacks and any type
+      of bump.
+  - balance: Wraith Module can no longer be installed In suits with the armor booster
+      module .
+  Gboster-0:
+  - balance: megafauna now activelly hunt down any players in their sight
+  - rscadd: megafauna can only now spawn above y68 on lavaland
+  TheColorCyan,  ZBunz:
+  - rscadd: added zbunz's pet delivery beacon - shark axolotl
+  Tractor-Maam:
+  - bugfix: silicons can no longer have their integrated PDA permanently bricked by
+      receiving a PDA bomb.
