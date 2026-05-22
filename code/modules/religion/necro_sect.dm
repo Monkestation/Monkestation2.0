@@ -7,7 +7,7 @@
 	max_favor = 10000
 	desired_items = list(/obj/item/organ/)
 	rites_list = list(
-		/datum/religion_rites/living_sacrifice,
+		/datum/religion_rites/sacrifice,
 		/datum/religion_rites/raise_dead,
 		/datum/religion_rites/raise_undead,
 		/datum/religion_rites/lesser_lichdom,
@@ -195,9 +195,9 @@
 	raise_target = null
 	return ..()
 
-/datum/religion_rites/living_sacrifice
+/datum/religion_rites/sacrifice
 	name = "Living Sacrifice"
-	desc = "Sacrifice a non-sentient living buckled creature for favor."
+	desc = "Sacrifice a non-sentient buckled creature for favor, dead or alive based on how much vitality it had."
 	ritual_length = 25 SECONDS
 	ritual_invocations = list(
 		"To offer this being unto the gods ...",
@@ -207,10 +207,10 @@
 		"... I offer you this living being ...",
 	)
 	invoke_msg = "... may it join the horde of undead, and become one with the souls of the damned. "
-
 //the living creature chosen for the sacrifice of the rite
 	var/mob/living/chosen_sacrifice
-/datum/religion_rites/living_sacrifice/perform_rite(mob/living/user, atom/religious_tool)
+
+/datum/religion_rites/sacrifice/perform_rite(mob/living/user, atom/religious_tool)
 	if(!religious_tool || !ismovable(religious_tool))
 		to_chat(user, span_warning("This rite requires a religious device that individuals can be buckled to."))
 		return FALSE
@@ -232,7 +232,7 @@
 			cuff(creature)
 		return ..()
 
-/datum/religion_rites/living_sacrifice/invoke_effect(mob/living/user, atom/movable/religious_tool)
+/datum/religion_rites/sacrifice/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	var/turf/altar_turf = get_turf(religious_tool)
 	if(!(chosen_sacrifice in religious_tool.buckled_mobs)) //checks one last time if the right creature is still buckled
 		to_chat(user, span_warning("The right sacrifice is no longer on the altar!"))
@@ -247,7 +247,7 @@
 	chosen_sacrifice = null
 	return ..()
 
-/datum/religion_rites/living_sacrifice/proc/cuff(mob/living/carbon/C)
+/datum/religion_rites/sacrifice/proc/cuff(mob/living/carbon/C)
 	if(C.handcuffed)
 		return
 	C.handcuffed = new /obj/item/restraints/handcuffs/energy/cult(C)
