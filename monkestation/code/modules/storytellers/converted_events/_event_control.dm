@@ -150,7 +150,7 @@
 						last_round_high_threat = TRUE
 						break //good indents
 
-		if(last_round_high_threat) //half weight if there was a high threat last round
+		if(last_round_high_threat) //4/5 weight if there was a high threat last round
 			. *= 0.8
 	return .
 

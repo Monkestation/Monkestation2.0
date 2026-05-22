@@ -5,7 +5,7 @@
 	antag_datum = /datum/antagonist/bloodling
 	typepath = /datum/round_event/antagonist/bloodling
 	shared_occurence_type = SHARED_HIGH_THREAT
-	repeated_mode_adjust = TRUE
+	repeated_mode_adjust = FALSE
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_HEAD_OF_PERSONNEL,
@@ -26,6 +26,7 @@
 	)
 	enemy_roles = list(
 		JOB_CAPTAIN,
+		JOB_BLUESHIELD,
 		JOB_HEAD_OF_SECURITY,
 		JOB_DETECTIVE,
 		JOB_WARDEN,
