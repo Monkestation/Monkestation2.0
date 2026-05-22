@@ -362,3 +362,20 @@
       tape and bone gel
   TheColorCyan:
   - bugfix: fixed being able to reskin assault, abductor and ect. belts into...errors
+2026-05-22:
+  Absolucy:
+  - code_imp: Minor performance / functionality improvements to examine icons.
+  Absolucy, EnterTheJake:
+  - balance: Wraith Module recloaking timer bumped from 5 to 10 seconds.
+  - balance: The Wraith Module's cloak now dissipates on ranged attacks and any type
+      of bump.
+  - balance: Wraith Module can no longer be installed In suits with the armor booster
+      module .
+  Gboster-0:
+  - balance: megafauna now activelly hunt down any players in their sight
+  - rscadd: megafauna can only now spawn above y68 on lavaland
+  TheColorCyan,  ZBunz:
+  - rscadd: added zbunz's pet delivery beacon - shark axolotl
+  Tractor-Maam:
+  - bugfix: silicons can no longer have their integrated PDA permanently bricked by
+      receiving a PDA bomb.
