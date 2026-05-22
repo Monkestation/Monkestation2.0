@@ -62,6 +62,10 @@
 	item_path = /obj/item/storage/box/minertracker
 	cost_per_order = 600
 
+/datum/orderable_item/mining/sandbags
+	item_path = /obj/item/stack/sheet/mineral/sandbags/five
+	cost_per_order = 300
+
 /datum/orderable_item/mining/fulton_core //i really have to wonder why the fulton core and the fulton were not next to each other from the beginning
 	item_path = /obj/item/fulton_core
 	cost_per_order = 400
@@ -86,6 +90,10 @@
 /datum/orderable_item/mining/conscription_kit
 	item_path = /obj/item/storage/backpack/duffelbag/mining_conscript
 	cost_per_order = 1500
+
+/datum/orderable_item/mining/seclite
+	item_path = /obj/item/flashlight/seclite
+	cost_per_order = 200
 
 /datum/orderable_item/mining/mining_drone //welcome to the big boy tab fellah
 	item_path = /mob/living/basic/mining_drone
