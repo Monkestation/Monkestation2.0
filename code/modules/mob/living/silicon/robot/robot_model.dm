@@ -297,6 +297,7 @@
 		cyborg.worn_badge.forceMove(drop_location())
 
 	cyborg.cut_overlays()
+	LAZYNULL(cyborg.managed_overlays) // Or else our overlays won't get re-added (since we are likely to have exact same overlays).
 	cyborg.setDir(SOUTH)
 	do_transform_delay()
 
