@@ -669,8 +669,7 @@
 	icon_state = "sectrap"
 	desc = "A rubber padded trap used to catch criminals non-lethally. Relies on security record data to function."
 	trap_damage = 0
-	breakouttime = 5 SECONDS
-	breakout_while_moving = TRUE
+	breakouttime = 10 SECONDS
 	custom_price = PAYCHECK_COMMAND
 
 /obj/item/restraints/legcuffs/beartrap/security/Initialize(mapload)
