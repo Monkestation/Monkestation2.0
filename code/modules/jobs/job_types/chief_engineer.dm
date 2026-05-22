@@ -32,7 +32,7 @@
 	display_order = JOB_DISPLAY_ORDER_CHIEF_ENGINEER
 	bounty_types = CIV_JOB_ENG
 
-	family_heirlooms = list(/obj/item/clothing/head/utility/hardhat/white, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
+	family_heirlooms = list(/obj/item/clothing/head/utility/hardhat/white, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters, /obj/item/clothing/glasses/meson/engine)
 
 	mail_goodies = list(
 		/obj/item/food/cracker = 25, //you know. for poly
