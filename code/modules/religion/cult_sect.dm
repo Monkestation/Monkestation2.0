@@ -39,7 +39,7 @@
 /datum/religion_rites/conversion
 	name = "Initiation"
 	desc = "Converts someone to your sect. They must be willing, so the first invocation will instead prompt them to join. \
-	Once they accept and are converted, they will become a acolyte, counting as a member for rituals."
+	Once they accept and are converted, they will become a acolyte, counting as a member for rituals. The sect gains 100 favor per conversion."
 	ritual_length = 30 SECONDS
 	ritual_invocations = list(
 		"dv'n lrd `bve",
