@@ -671,7 +671,7 @@
 	trap_damage = 0
 	breakouttime = 5 SECONDS
 	breakout_while_moving = TRUE
-	custom_price = PAYCHECK_COMMAND * 2.5 //Comes out to 50 with the security dept discount on the vendor
+	custom_price = PAYCHECK_COMMAND
 
 /obj/item/restraints/legcuffs/beartrap/security/Initialize(mapload)
 	. = ..()
