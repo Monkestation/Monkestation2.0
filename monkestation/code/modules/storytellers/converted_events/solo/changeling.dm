@@ -38,7 +38,7 @@
 	required_enemies = 4
 	base_antags = 2
 	min_players = 20
-	weight = 12
+	weight = 13
 	shared_occurence_type = SHARED_CHANGELING
 	event_icon_state = "changeling"
 
