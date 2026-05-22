@@ -227,7 +227,7 @@
 
 	else if (length(natureturfs))
 		var/turf/open/floor/grass/F = pick(natureturfs)
-		new /obj/effect/temp_visual/religion/turf/floor(F)
+		new /obj/effect/temp_visual/holy_grass(F)
 
 	else
 		// Are we in space or something? No nature turfs or convertable turfs? Double the cooldown
