@@ -637,7 +637,7 @@
 	. += span_notice("A use for crystallized cores has not yet been found, but many experienced miners show them off just like trophies.")
 
 /obj/item/borg/upgrade/modkit/hardmode/projectile_strike(obj/projectile/kinetic/K, turf/target_turf, mob/living/simple_animal/hostile/megafauna/target, obj/item/gun/energy/recharge/kinetic_accelerator/KA)
-	if(istype(target) && target.hardmode_reward != null && !target.hardmode)
+	if(istype(target) && target.hardmode_reward != null && !target.hardmode && !is_station_level(target.z))
 		target.activate_hardmode()
 		log_combat(KA, target, "turned on hardmode for", src)
 		qdel(src)

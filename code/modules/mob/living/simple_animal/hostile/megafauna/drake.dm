@@ -107,6 +107,31 @@
 	mass_fire.boosted = TRUE
 	lava_swoop.boosted = TRUE
 
+/mob/living/simple_animal/hostile/megafauna/dragon/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(!hardmode || QDELETED(src) || stat == DEAD || is_mining_level(new_turf.z))
+		return
+
+	var/list/mining_levels = SSmapping.levels_by_trait(ZTRAIT_MINING)
+	if(!mining_levels.len)
+		return
+	INVOKE_ASYNC(src, PROC_REF(run_away), pick(mining_levels))
+
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/run_away(target_z = 1)
+	var/turf/target_turf
+	for(var/i in 1 to 100)
+		target_turf = locate(rand(1,255), rand(1,255), target_z)
+		if(istype(target_turf, /turf/open/misc/asteroid))
+			break
+
+	visible_message(span_boldwarning("[src] flies away!"))
+	animate(src, alpha = 0, pixel_y = 96, time = 1 SECONDS)
+	sleep(1 SECONDS)
+	forceMove(target_turf)
+	animate(src, alpha = 255, pixel_y = initial(pixel_y), time = 1 SECONDS)
+	visible_message(span_boldwarning("[src] flies from up above!"))
+	adjustHealth(-2500)
+
 /mob/living/simple_animal/hostile/megafauna/dragon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	. = ..()
 	if(!.)

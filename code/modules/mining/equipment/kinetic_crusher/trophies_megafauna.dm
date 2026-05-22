@@ -233,7 +233,7 @@
 	return "the next mark detonation on a compatible megafauna to crystallize its core, destroying itself"
 
 /obj/item/crusher_trophy/hardmode/on_mark_detonation(mob/living/simple_animal/hostile/megafauna/target, mob/living/user)
-	if(istype(target) && target.hardmode_reward != null && !target.hardmode)
+	if(istype(target) && target.hardmode_reward != null && !target.hardmode && !is_station_level(target.z))
 		target.activate_hardmode()
 		log_combat(user, target, "turned on hardmode for", src)
 		qdel(src)

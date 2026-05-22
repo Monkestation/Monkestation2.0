@@ -112,6 +112,14 @@ Difficulty: Hard
 	set_varspeed(move_to_delay)
 	handle_automated_action()
 
+/mob/living/simple_animal/hostile/megafauna/hierophant/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(hardmode && !QDELETED(src) && is_mining_level(spawned_beacon.z) && !is_mining_level(new_turf.z))
+		visible_message(span_hierophant_warning("\"Vixyvrmrk xs fewi...\""))
+		INVOKE_ASYNC(src, PROC_REF(blink), spawned_beacon)
+		adjustHealth(-2500)
+		visible_message(span_hierophant("\"Vitemvw gsqtpixi. Stivexmrk ex qebmqyq ijjmgmirgc.\""))
+
 /datum/action/innate/megafauna_attack/blink
 	name = "Blink To Target"
 	button_icon = 'icons/mob/actions/actions_items.dmi'

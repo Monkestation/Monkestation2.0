@@ -104,6 +104,37 @@
 	set_varspeed(move_to_delay)
 	handle_automated_action()
 
+/mob/living/simple_animal/hostile/megafauna/colossus/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(!hardmode || QDELETED(src) || is_mining_level(new_turf.z))
+		return
+
+	var/list/mining_levels = SSmapping.levels_by_trait(ZTRAIT_MINING)
+	if(!mining_levels.len)
+		return
+	INVOKE_ASYNC(src, PROC_REF(teleport_away), pick(mining_levels))
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/teleport_away(target_z = 1)
+	var/turf/target_turf
+	for(var/i in 1 to 100)
+		target_turf = locate(rand(1,255), rand(1,255), target_z)
+		if(istype(target_turf, /turf/open/misc/asteroid))
+			break
+
+	var/datum/effect_system/spark_spread/quantum/sparks = new()
+	sparks.set_up(5, 1, loc)
+	sparks.start()
+	playsound(loc, 'sound/magic/blink.ogg', 50, TRUE)
+	visible_message(span_boldwarning("[src] vanishes with blue sparks!"))
+
+	forceMove(target_turf)
+	sparks = new()
+	sparks.set_up(5, 1, target_turf)
+	sparks.start()
+	playsound(target_turf, 'sound/magic/blink.ogg', 50, TRUE)
+	visible_message(span_boldwarning("[src] appears with blue sparks dancing around them!"))
+	adjustHealth(-2500)
+
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
 	anger_modifier = clamp(((maxHealth - health) / 40), 0, 20)
 
