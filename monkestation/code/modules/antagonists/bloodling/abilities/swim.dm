@@ -13,8 +13,7 @@
 	if(!istype(get_turf(target), /turf/open/misc/bloodling))
 		owner.balloon_alert(owner, "no flesh at destination!")
 		return FALSE
-	. = ..()
-	return
+	return ..()
 
 /datum/action/cooldown/bloodling/swim/Activate(atom/target)
 	..()
