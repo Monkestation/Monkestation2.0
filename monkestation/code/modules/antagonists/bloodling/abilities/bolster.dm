@@ -13,8 +13,7 @@
 	if(!istype(owner.loc, /turf/open/misc/bloodling))
 		owner.balloon_alert(owner, "the ground has no biomass!")
 		return FALSE
-	. = ..()
-	return
+	return ..()
 
 /datum/action/cooldown/bloodling/bolster/Activate(atom/target)
 	..()
