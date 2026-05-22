@@ -453,6 +453,7 @@
 	drag_slowdown = 1
 	icon_state = "beartrap"
 	desc = "A trap used to catch bears and other legged creatures."
+	gender = NEUTER
 	///If true, the trap is "open" and can trigger.
 	var/armed = FALSE
 	///How much damage the trap deals when triggered.
