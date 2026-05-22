@@ -825,11 +825,3 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// A 3d-aware version of heuristic_cardinal that just... adds the Z-axis distance with a multiplier.
 /turf/proc/heuristic_cardinal_3d(turf/T, mob/traverser)
 	return heuristic_cardinal(T, traverser) + abs(z - T.z) * 5 // Weight z-level differences higher so that we try to change Z-level sooner
-
-/// Checks if the turf was blessed with holy water OR the area its in is Chapel
-/turf/proc/is_holy()
-	if(locate(/obj/effect/blessing) in src)
-		return TRUE
-	if(istype(loc, /area/station/service/chapel))
-		return TRUE
-	return FALSE

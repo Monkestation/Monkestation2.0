@@ -129,10 +129,6 @@
 	if(user.mind.holy_role != HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, span_warning("You are not the high priest, and therefore cannot select a religious sect."))
 		return
-	var/turf/T = get_turf(parent)
-	if(!T.is_holy())
-		to_chat(user, span_warning("The altar must be in a holy place to select a religious sect."))
-		return
 	if(!user.can_perform_action(parent, FORBID_TELEKINESIS_REACH))
 		to_chat(user,span_warning("You cannot select a sect at this time."))
 		return
