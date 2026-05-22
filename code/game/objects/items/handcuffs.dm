@@ -685,7 +685,10 @@
 
 /obj/item/restraints/legcuffs/beartrap/security/emp_act(severity)
 	do_sparks(rand(1,3), FALSE, src)
-	close_trap()
+	if(prob(70))
+		close_trap()
+	else
+		emag_act()
 	visible_message(span_warning("\The [src] overloads!"))
 
 /obj/item/restraints/legcuffs/beartrap/security/emag_act(mob/user)
@@ -697,7 +700,8 @@
 	do_sparks(3, FALSE, src)
 	sleep(1 SECOND)
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
-	balloon_alert(user, "biometric scanner set!")
+	if(user)
+		balloon_alert(user, "biometric scanner set!")
 
 /obj/item/restraints/legcuffs/beartrap/security/is_valid_salad(mob/living/carbon/victim)
 	if(obj_flags & EMAGGED)
