@@ -186,7 +186,7 @@
 
 /datum/religion_rites/shadow_obelisk
 	name = "Obelisk Manifestation"
-	desc = "Creates an obelisk that generates shadows and additional favor."
+	desc = "Creates an obelisk that generates shadows and additional favor when anchored by a nullrod."
 	ritual_length = 30 SECONDS
 	ritual_invocations = list(
 		"Let the shadows combine...",
