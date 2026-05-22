@@ -81,7 +81,7 @@
 /datum/orderable_item/mining/surplusnecro
 	item_path = /obj/structure/closet/crate/necropolis/surplus
 	desc = "A leftover necropolis crate from the Mining RND storage warehouse. Content quality not guranteed, but you dont need a key."
-	cost_per_order = 5384 //your literally buying a necropolis crate, for no key, and no risk of combat or being dumped in a pit so it costs 3500 to shuttle buy
+	cost_per_order = 6730 //your literally buying a necropolis crate, for no key, and no risk of combat or being dumped in a pit so it costs 4375 to shuttle buy
 
 /datum/orderable_item/mining/conscription_kit
 	item_path = /obj/item/storage/backpack/duffelbag/mining_conscript
