@@ -16,7 +16,7 @@
 	return ..()
 
 /datum/action/cooldown/bloodling/swim/Activate(atom/target)
-	..()
+	. = ..()
 	var/mob/living/basic/bloodling/our_mob = owner
 
 	//Stay still for a moment and do an animation
