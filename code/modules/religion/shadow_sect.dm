@@ -48,7 +48,7 @@
 ///Check the conditions shared by the three grand rituals, condensed into a single proc to cut down on duplicate code
 /datum/religion_sect/shadow_sect/proc/grand_ritual_checks(mob/living/user, atom/religious_tool, pre_ritual_check = FALSE)
 	if(pre_ritual_check)
-		if(!isblessedshadow(user))
+		if(!isshadowperson(user)) // all shadow people can perform rituals if holy role
 			to_chat(user, span_warning("How dare someone not of blessed shadow kind try to communicate with shadows!"))
 			return FALSE
 
