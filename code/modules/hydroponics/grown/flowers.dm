@@ -15,7 +15,8 @@
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
 	genes = list(/datum/plant_gene/trait/preserved)
-	possible_mutations = list(/datum/hydroponics/plant_mutation/geranium, /datum/hydroponics/plant_mutation/lily, /datum/hydroponics/plant_mutation/fleshmass)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/geranium, /datum/hydroponics/plant_mutation/lily)
+	infusion_mutations = list(/datum/hydroponics/plant_mutation/infusion/fleshmass)
 	reagents_add = list(/datum/reagent/medicine/c2/libital = 0.2, /datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/food/grown/poppy

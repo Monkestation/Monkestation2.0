@@ -28,3 +28,9 @@
 	reagent_requirement = list(/datum/reagent/bluespace)
 	created_product = /obj/item/food/grown/banana/bluespace
 	created_seed = /obj/item/seeds/banana/bluespace
+
+/datum/hydroponics/plant_mutation/infusion/fleshmass
+	mutates_from = list(/obj/item/seeds/poppy)
+	created_product = /obj/item/food/grown/fleshmass
+	created_seed = /obj/item/seeds/fleshmass
+	reagent_requirement = list(/datum/reagent/medicine/c2/synthflesh)
