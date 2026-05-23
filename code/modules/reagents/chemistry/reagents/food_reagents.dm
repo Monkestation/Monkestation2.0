@@ -412,7 +412,7 @@
 
 /datum/reagent/consumable/salt/expose_turf(turf/exposed_turf, reac_volume) //Creates an umbra-blocking salt pile
 	. = ..()
-	if(!istype(exposed_turf) || (reac_volume < 1))
+	if(!istype(exposed_turf) || isgroundlessturf(exposed_turf) || (reac_volume < 1))
 		return
 
 	var/obj/effect/decal/cleanable/food/salt/old_salt = locate() in exposed_turf
