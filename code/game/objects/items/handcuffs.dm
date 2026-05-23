@@ -686,7 +686,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/security/emp_act(severity)
 	do_sparks(rand(1,3), FALSE, src)
-	if(prob(70))
+	if(prob(50))
 		close_trap()
 	else
 		emag_act()
