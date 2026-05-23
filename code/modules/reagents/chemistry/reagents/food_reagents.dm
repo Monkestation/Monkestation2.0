@@ -421,7 +421,6 @@
 	else
 		old_salt.safepasses = initial(old_salt.safepasses)
 
-
 /datum/reagent/consumable/salt/expose_mob(mob/living/carbon/exposed_carbon, methods, reac_volume)
 	. = ..()
 	if(!iscarbon(exposed_carbon) || !(methods & (PATCH|TOUCH|VAPOR)))
