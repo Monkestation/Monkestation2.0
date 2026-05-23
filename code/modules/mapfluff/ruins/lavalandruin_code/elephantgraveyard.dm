@@ -173,7 +173,7 @@
 	balloon_alert(user, "already open!")
 	return FALSE
 
-/obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
+/obj/structure/closet/crate/grave/filled/populate_contents_immediate() //GRAVEROBBING IS NOW A FEATURE
 	..()
 	new /obj/effect/decal/remains/human/grave(src)
 	switch(rand(1,8))

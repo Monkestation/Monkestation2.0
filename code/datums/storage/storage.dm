@@ -45,11 +45,13 @@
 
 	/// list of all the mobs currently viewing the contents
 	var/list/is_using = list()
+	/// The type of storage interface this datum uses.
+	var/datum/storage_interface/storage_type = /datum/storage_interface
 
 	var/locked = STORAGE_NOT_LOCKED
 	/// whether or not we should open when clicked
 	var/attack_hand_interact = TRUE
-	/// whether or not we allow storage objects of the same size inside
+	/// Whether or not we allow storage objects of the same size inside. Will skip the check that stops inserting items into it if it is inside of a smaller storage object.
 	var/allow_big_nesting = FALSE
 
 	/// should we be allowed to pickup an object by clicking it
@@ -389,7 +391,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	// this is valid if the container our location is being held in is a storage item
 	var/datum/storage/bigger_fish = parent.loc.atom_storage
-	if(bigger_fish && bigger_fish.max_specific_storage < max_specific_storage)
+	if(bigger_fish && bigger_fish.max_specific_storage < max_specific_storage && !bigger_fish.allow_big_nesting)
 		if(messages && user)
 			user.balloon_alert(user, "[LOWER_TEXT(parent.loc.name)] is in the way!")
 		return FALSE
@@ -1052,7 +1054,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/ui_style = ui_style2icon(to_show.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 
 	if (isnull(storage_interfaces[to_show]))
-		storage_interfaces[to_show] = new /datum/storage_interface(ui_style, src)
+		storage_interfaces[to_show] = new storage_type(ui_style, src, to_show)
 
 	orient_storage()
 

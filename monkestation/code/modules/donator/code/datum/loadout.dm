@@ -935,7 +935,7 @@
 	item_path = /obj/item/clothing/glasses/hud/health/aviators
 	donator_only = TRUE
 	requires_purchase = FALSE
-	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_PARAMEDIC, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER)
+	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_PARAMEDIC, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER, JOB_BRIG_PHYSICIAN)
 
 /datum/loadout_item/glasses/diagnostic_aviators
 	name = "Diagnostic Aviators"
@@ -1094,6 +1094,13 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+// Coll6
+/datum/loadout_item/suit/lava_cat_robe
+	name = "Lava Cat Robe"
+	item_path = /obj/item/clothing/suit/hooded/lava_cat_robe
+	donator_only = TRUE
+	requires_purchase = FALSE
+
 // Yatosamasensei
 /datum/loadout_item/suit/tsukihime_executor
 	name = "Executor Dress"
@@ -1146,5 +1153,13 @@
 /datum/loadout_item/mask/le_froggo_mask
 	name = "Frog Mask"
 	item_path = /obj/item/clothing/mask/animal/frog
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//ZBunz
+/datum/loadout_item/pocket_items/donator/shark_axolotl
+	name = "Pet Delivery Beacon - Shark Axolotl"
+	item_path = /obj/item/choice_beacon/pet/donator/shark_axolotl
+	ckeywhitelist = list("ZBunz")
 	donator_only = TRUE
 	requires_purchase = FALSE

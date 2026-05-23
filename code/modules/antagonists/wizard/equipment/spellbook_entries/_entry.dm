@@ -84,7 +84,15 @@
  * Return truthy if the purchase was successful, FALSE otherwise
  */
 /datum/spellbook_entry/proc/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
-	var/datum/action/cooldown/spell/existing = locate(spell_type) in user.actions
+	var/list/actions_copy = user.actions?.Copy()
+	var/datum/action/cooldown/spell/existing = locate(spell_type) in actions_copy
+	if(existing)
+		actions_copy -= existing
+	while(existing && length(actions_copy) && existing.type != spell_type) //this isnt great but ugh
+		existing = locate(spell_type) in actions_copy
+		if(existing)
+			actions_copy -= existing
+
 	if(existing)
 		var/before_name = existing.name
 		if(!existing.level_spell())

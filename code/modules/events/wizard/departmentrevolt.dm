@@ -13,6 +13,8 @@
 		/datum/event_admin_setup/question/departmental_revolt_annouce,
 		/datum/event_admin_setup/question/departmental_revolt_dangerous
 	)
+	min_wizard_trigger_potency = 6
+	max_wizard_trigger_potency = 100
 
 /datum/round_event/wizard/deprevolt
 	///which department is revolting?
@@ -33,7 +35,7 @@
 
 /datum/event_admin_setup/listed_options/departmental_revolt/get_list()
 	return subtypesof(/datum/job_department)
-	
+
 /datum/event_admin_setup/listed_options/departmental_revolt/apply_to_event(datum/round_event/wizard/deprevolt/event)
 	event.picked_department = chosen
 
