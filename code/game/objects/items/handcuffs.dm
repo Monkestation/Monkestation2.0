@@ -565,7 +565,7 @@
 	if(!armed)
 		return
 
-	if(isitem(target) && prob(35))
+	if(isitem(target))
 		var/obj/item/bait = target
 		if(bait.w_class >= WEIGHT_CLASS_SMALL)
 			close_trap()
@@ -574,7 +574,7 @@
 
 	if(isprojectile(target))
 		var/obj/projectile/bait_projectile = target
-		if(bait_projectile.original == src && bait_projectile.damage >= 5 && prob(35))
+		if(bait_projectile.original == src && bait_projectile.damage >= 5)
 			close_trap()
 			target.visible_message(span_danger("\The [bait_projectile] triggers \the [src]!"))
 			return
