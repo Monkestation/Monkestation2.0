@@ -10,10 +10,7 @@
 	control_freak = initial(control_freak)
 	SSadmin_verbs.deassosciate_mentor(src)
 
-/client/proc/rementor()
-	set name = "Rementor"
-	set category = "Mentor"
-	set desc = "Regain your mentor powers."
+DEFINE_PROC_VERB(/client, rementor, "Rementor", "Regain your mentor powers.", FALSE, "Mentor")
 
 	var/datum/mentors/mentor = GLOB.dementors[ckey]
 

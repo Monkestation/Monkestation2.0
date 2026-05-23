@@ -80,10 +80,7 @@
 	defender.adjustOxyLoss(30)
 	attacker.say("Heavenly Dragon Kick!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
 
-/mob/living/proc/awakened_dragon_help()
-	set name = "Recall Teachings"
-	set desc = "Remember the martial techniques of the Awakened Dragon."
-	set category = "Awakened Dragon"
+DEFINE_PROC_VERB(/mob/living, awakened_dragon_help, "Recall Teachings", "Remember the martial techniques of the Awakened Dragon.", FALSE, "Awakened Dragon")
 
 	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the venerable Awakened Dragon...</i></b>\n\
 	[span_notice("Crushing Maw")]: Punch Punch. Deal additional damage every second (consecutive) punch! Extremely good chance to wound!\n\

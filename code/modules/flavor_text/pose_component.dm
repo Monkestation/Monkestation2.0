@@ -57,10 +57,7 @@
 	qdel(src)
 
 /// Verb that lets you set temporary pose / examine text.
-/mob/living/verb/set_examine()
-	set category = "IC"
-	set name = "Set Examine Text"
-	set desc = "Sets temporary text shown to people on examine. Can be used to pose your character, describe an injury, or anything you can think of."
+DEFINE_VERB(/mob/living, set_examine, "Set Examine Text", "Sets temporary text shown to people on examine. Can be used to pose your character, describe an injury, or anything you can think of.", FALSE, "IC")
 
 	if(stat == DEAD || HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		to_chat(usr, span_warning("You can't do this right now!"))

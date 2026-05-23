@@ -485,10 +485,7 @@
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
-/mob/living/verb/pulled(atom/movable/AM as mob|obj in oview(1))
-	set name = "Pull"
-	set category = "Object"
-
+DEFINE_VERB(/mob/living, pulled, "Pull", "", FALSE, "IC", atom/movable/AM as mob|obj in oview(1))
 	if(istype(AM) && Adjacent(AM))
 		start_pulling(AM)
 	else if(!(istate & ISTATE_HARM)) //Don;'t cancel pulls if misclicking in combat mode.
@@ -502,27 +499,24 @@
 	update_pull_movespeed()
 	update_pull_hud_icon()
 
-/mob/living/verb/stop_pulling1()
-	set name = "Stop Pulling"
-	set category = "IC"
+DEFINE_VERB(/mob/living, stop_pulling1, "Stop Pulling", "", FALSE, "IC")
 	stop_pulling()
 
 //same as above
-/mob/living/pointed(atom/A as mob|obj|turf in view(client.view, src))
+/mob/living/__pointed(atom/A)
 	if(incapacitated())
 		return FALSE
 
 	return ..()
 
-/mob/living/_pointed(atom/pointing_at)
+/mob/living/do_pointed(atom/pointing_at)
 	if(!..())
 		return FALSE
 
 	log_message("points at [pointing_at]", LOG_EMOTE)
 	visible_message("<span class='infoplain'>[span_name("[src]")] points at [pointing_at].</span>", span_notice("You point at [pointing_at]."))
 
-/mob/living/verb/succumb(whispered as null)
-	set hidden = TRUE
+DEFINE_VERB(/mob/living, succumb, "succumb", "", TRUE, "", whispered as null)
 	if (!CAN_SUCCUMB(src))
 		if(HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
 			if(whispered)
@@ -595,10 +589,7 @@
 
 // MOB PROCS //END
 
-/mob/living/proc/mob_sleep()
-	set name = "Sleep"
-	set category = "IC"
-
+DEFINE_PROC_VERB(/mob/living, mob_sleep, "Sleep", "", FALSE, "IC")
 	if(IsSleeping())
 		to_chat(src, span_warning("You are already sleeping!"))
 		return
@@ -652,10 +643,7 @@
 		account = I.registered_account
 		return account
 
-/mob/living/proc/toggle_resting()
-	set name = "Rest"
-	set category = "IC"
-
+DEFINE_PROC_VERB(/mob/living, toggle_resting, "Rest", "", FALSE, "IC")
 	set_resting(!resting, FALSE)
 
 
@@ -1154,14 +1142,11 @@
 		return FALSE
 	return TRUE
 
-/mob/living/verb/resist()
-	set name = "Resist"
-	set category = "IC"
+DEFINE_VERB(/mob/living, resist, "Resist", "", FALSE, "IC")
+	do_resist()
 
-	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_resist)))
-
-///proc extender of [/mob/living/verb/resist] meant to make the process queable if the server is overloaded when the verb is called
-/mob/living/proc/execute_resist()
+///gotta let folks override this thing
+/mob/living/proc/do_resist()
 	if(!can_resist())
 		return
 	changeNext_move(CLICK_CD_RESIST)

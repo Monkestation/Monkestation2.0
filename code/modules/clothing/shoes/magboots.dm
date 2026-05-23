@@ -35,11 +35,7 @@
 	slowdown_active = 0
 	// Don't need to touch the actual slowdown here, since the speed potion does it for us
 
-/obj/item/clothing/shoes/magboots/verb/toggle()
-	set name = "Toggle Magboots"
-	set category = "Object"
-	set src in usr
-
+DEFINE_VERB(/obj/item/clothing/shoes/magboots, toggle, "Toggle Magboots", "", FALSE, "Object")
 	if(!can_use(usr))
 		return
 	attack_self(usr)

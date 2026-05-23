@@ -1,9 +1,6 @@
 GLOBAL_LIST_INIT(redeemed_codes, list())
 
-/client/verb/redeem_code()
-	set name = "Redeem Code"
-	set category = "OOC"
-	set desc = "Redeem a code given to you."
+DEFINE_VERB(/client, redeem_code, "Redeem Code", "Redeem a code given to you.", FALSE, "OOC")
 	var/code = tgui_input_text(usr, "Please enter the code", "Code Redemption")
 	if(!code)
 		return

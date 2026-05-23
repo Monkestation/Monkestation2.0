@@ -192,10 +192,7 @@
 	spin()
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/pickaxe/drill/implant/verb/spin()
-	set name = "Spin Drillbit"
-	set category = "Object"
-	set desc = "Click to spin your drill's head. It won't do practically anything, but it's pretty cool anyway."
+DEFINE_VERB(/obj/item/pickaxe/drill/implant, spin, "Spin Drillbit", "Click to spin your drill's head. It won't do practically anything, but it's pretty cool anyway.", FALSE, "Object")
 
 	var/mob/user = usr
 

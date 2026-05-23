@@ -848,10 +848,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 
 	new /datum/admin_help(message, user_client, FALSE, urgent)
 
-/client/verb/no_tgui_adminhelp(message as message)
-	set name = "NoTguiAdminhelp"
-	set hidden = TRUE
-
+DEFINE_INSTANT_VERB(/client, no_tgui_adminhelp, "NoTguiAdminhelp", "", TRUE, "", message as message)
 	if(adminhelptimerid)
 		return
 
@@ -859,9 +856,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 
 	GLOB.admin_help_ui_handler.perform_adminhelp(src, message, FALSE)
 
-/client/verb/adminhelp()
-	set category = "Admin"
-	set name = "Adminhelp"
+DEFINE_VERB(/client, adminhelp, "Adminhelp", "", FALSE, "Admin")
 	if(current_ticket && !holder)
 		if(!COOLDOWN_FINISHED(src, current_ticket.client_message_cooldown))
 			to_chat(usr, span_warning("You must wait [COOLDOWN_TIMELEFT(src, current_ticket.client_message_cooldown) * 0.1] seconds before sending another message."))
@@ -871,10 +866,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 		COOLDOWN_START(src, current_ticket.client_message_cooldown, 3 SECONDS)
 	to_chat(src, span_boldnotice("Adminhelp failing to open or work? <a href='byond://?src=[REF(src)];tguiless_adminhelp=1'>Click here</a>"))
 
-/client/verb/view_latest_ticket()
-	set category = "Admin"
-	set name = "View Latest Ticket"
-
+DEFINE_VERB(/client, view_latest_ticket, "View Latest Ticket", "", FALSE, "Admin")
 	if(!current_ticket)
 		// Check if the client had previous tickets, and show the latest one
 		var/list/prev_tickets = list()

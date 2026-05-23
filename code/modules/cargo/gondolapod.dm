@@ -40,10 +40,7 @@
 	if(opened)
 		. += "[icon_state]_open"
 
-/mob/living/simple_animal/pet/gondola/gondolapod/verb/deliver()
-	set name = "Release Contents"
-	set category = "Gondola"
-	set desc = "Release any contents stored within your vast belly."
+DEFINE_VERB(/mob/living/simple_animal/pet/gondola/gondolapod, deliver, "Release Contents", "Release any contents stored within your vast belly.", FALSE, "Gondola")
 	linked_pod.open_pod(src, forced = TRUE)
 
 /mob/living/simple_animal/pet/gondola/gondolapod/examine(mob/user)
@@ -53,10 +50,7 @@
 	else
 		. += span_notice("It looks like it has already made its delivery.</b>")
 
-/mob/living/simple_animal/pet/gondola/gondolapod/verb/check()
-	set name = "Count Contents"
-	set category = "Gondola"
-	set desc = "Take a deep look inside youself, and count up what's inside"
+DEFINE_VERB(/mob/living/simple_animal/pet/gondola/gondolapod, check, "Count Contents", "Take a deep look inside youself, and count up what's inside", FALSE, "Gondola")
 	var/total = contents.len
 	if (total)
 		to_chat(src, span_notice("You detect [total] object\s within your incredibly vast belly."))

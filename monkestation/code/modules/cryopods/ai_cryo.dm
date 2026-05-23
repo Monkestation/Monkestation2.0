@@ -1,7 +1,4 @@
-/mob/living/silicon/ai/verb/ai_cryo()
-	set name = "AI Cryogenic Stasis"
-	set desc = "Puts the current AI personality into cryogenic stasis, freeing the space for another."
-	set category = "AI Commands"
+DEFINE_VERB(/mob/living/silicon/ai, ai_cryo, "AI Cryogenic Stasis", "Puts the current AI personality into cryogenic stasis, freeing the space for another.", FALSE, "AI Commands")
 
 	if(incapacitated())
 		return

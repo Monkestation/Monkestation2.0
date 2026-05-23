@@ -40,7 +40,7 @@
 	add_verb(src, /mob/living/proc/toggle_resting)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-/mob/living/basic/mothroach/toggle_resting()
+/mob/living/basic/mothroach/__toggle_resting()
 	. = ..()
 	if(stat == DEAD)
 		return

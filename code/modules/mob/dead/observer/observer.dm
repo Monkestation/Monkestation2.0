@@ -286,11 +286,7 @@ Works together with spawning an observer, noted above.
 /*
 This is the proc mobs get to turn into a ghost. Forked from ghostize due to compatibility issues.
 */
-/mob/living/verb/ghost()
-	set category = "OOC"
-	set name = "Ghost"
-	set desc = "Relinquish your life and enter the land of the dead."
-
+DEFINE_VERB(/mob/living, ghost, "Ghost", "Relinquish your life and enter the land of the dead.", FALSE, "OOC")
 	if(stat != DEAD)
 		succumb()
 	if(stat == DEAD)
@@ -303,11 +299,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	ghostize(FALSE) // FALSE parameter is so we can never re-enter our body. U ded.
 	return TRUE
 
-/mob/eye/verb/ghost()
-	set category = "OOC"
-	set name = "Ghost"
-	set desc = "Relinquish your life and enter the land of the dead."
-
+DEFINE_VERB(/mob/eye, ghost, "Ghost", "Relinquish your life and enter the land of the dead.", FALSE, "OOC")
 	var/response = tgui_alert(usr, "Are you sure you want to ghost? If you ghost whilst still alive you cannot re-enter your body! If you are leaving the round, use cryo instead.", "Confirm Ghost Observe", list("Ghost", "Stay in Body")) // MONKESTATION EDIT: issuing commands to use cryo instead of just ghosting in a locker.
 	if(response != "Ghost")
 		return
@@ -348,9 +340,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(new_area != ambience_tracked_area)
 		update_ambience_area(new_area)
 
-/mob/dead/observer/verb/reenter_corpse()
-	set category = "Ghost"
-	set name = "Re-enter Corpse"
+DEFINE_VERB(/mob/dead/observer, reenter_corpse, "Re-enter Corpse", "", FALSE, "Ghost")
 	if(!client)
 		return
 	if(!mind || QDELETED(mind.current))
@@ -370,9 +360,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	mind.current.client.init_verbs()
 	return TRUE
 
-/mob/dead/observer/verb/stay_dead()
-	set category = "Ghost"
-	set name = "Do Not Resuscitate"
+DEFINE_VERB(/mob/dead/observer, stay_dead, "Do Not Resuscitate", "", FALSE, "Ghost")
 	if(!client)
 		return
 	if(!can_reenter_corpse)
@@ -423,10 +411,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(sound)
 		SEND_SOUND(src, sound(sound))
 
-/mob/dead/observer/proc/dead_tele()
-	set category = "Ghost"
-	set name = "Teleport"
-	set desc= "Teleport to a location"
+DEFINE_PROC_VERB(/mob/dead/observer, dead_tele, "Teleport", "Teleport to a location", FALSE, "Ghost")
 	if(!isobserver(usr))
 		to_chat(usr, span_warning("Not when you're not dead!"))
 		return
@@ -452,11 +437,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	usr.abstract_move(pick(L))
 
-/mob/dead/observer/verb/follow()
-	set category = "Ghost"
-	set name = "Orbit" // "Haunt"
-	set desc = "Follow and orbit a mob."
-
+// "Haunt"
+DEFINE_VERB(/mob/dead/observer, follow, "Orbit", "Follow and orbit a mob.", FALSE, "Ghost")
 	GLOB.orbit_menu.show(src)
 
 // This is the ghost's follow verb with an argument
@@ -497,11 +479,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if (!isnull(client) && !isnull(client.eye))
 		reset_perspective(null)
 
-/mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
-	set category = "Ghost"
-	set name = "Jump to Mob"
-	set desc = "Teleport to a mob"
-
+//Moves the ghost instead of just changing the ghosts's eye -Nodrak
+DEFINE_VERB(/mob/dead/observer, jumptomob, "Jump to Mob", "Teleport to a mob", FALSE, "Ghost")
 	if(!isobserver(usr)) //Make sure they're an observer!
 		return
 
@@ -528,11 +507,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		to_chat(source_mob, span_danger("This mob is not located in the game world."))
 
-/mob/dead/observer/verb/change_view_range()
-	set category = "Ghost"
-	set name = "View Range"
-	set desc = "Change your view range."
-
+DEFINE_VERB(/mob/dead/observer, change_view_range, "View Range", "Change your view range.", FALSE, "Ghost")
 	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder)
 		to_chat(usr, span_notice("That verb is currently globally disabled."))
 		return
@@ -548,10 +523,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		client.view_size.resetToDefault()
 
-/mob/dead/observer/verb/add_view_range(input as num)
-	set name = "Add View Range"
-	set hidden = TRUE
-
+DEFINE_VERB(/mob/dead/observer, add_view_range, "Add View Range", "", TRUE, "", input as num)
 	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder)
 		to_chat(usr, span_notice("That verb is currently globally disabled."))
 		return
@@ -560,11 +532,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(input)
 		client.rescale_view(input, 0, ((max_view*2)+1) - 15)
 
-/mob/dead/observer/verb/boo()
-	set category = "Ghost"
-	set name = "Boo!"
-	set desc= "Scare your crew members because of boredom!"
-
+DEFINE_VERB(/mob/dead/observer, boo, "Boo!", "Scare your crew members because of boredom!", FALSE, "Ghost")
 	if(bootime > world.time)
 		return
 	var/obj/machinery/light/L = locate(/obj/machinery/light) in view(1, src)
@@ -573,17 +541,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	//Maybe in the future we can add more <i>spooky</i> code here!
 
 
-/mob/dead/observer/verb/toggle_ghostsee()
-	set name = "Toggle Ghost Vision"
-	set desc = "Toggles your ability to see things only ghosts can see, like other ghosts"
-	set category = "Ghost"
+DEFINE_VERB(/mob/dead/observer, toggle_ghostsee, "Toggle Ghost Vision", "Toggles your ability to see things only ghosts can see, like other ghosts", FALSE, "Ghost")
 	ghostvision = !(ghostvision)
 	update_sight()
 	to_chat(usr, span_boldnotice("You [(ghostvision?"now":"no longer")] have ghost vision."))
 
-/mob/dead/observer/verb/toggle_darkness()
-	set name = "Toggle Darkness"
-	set category = "Ghost"
+DEFINE_VERB(/mob/dead/observer, toggle_darkness, "Toggle Darkness", "", FALSE, "Ghost")
 	switch(lighting_cutoff)
 		if (LIGHTING_CUTOFF_VISIBLE)
 			lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
@@ -636,11 +599,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			if(GHOST_OTHERS_SIMPLE)
 				client?.images |= (GLOB.ghost_images_simple-ghostimage_simple)
 
-/mob/dead/observer/verb/possess()
-	set category = "Ghost"
-	set name = "Possess!"
-	set desc= "Take over the body of a mindless creature!"
-
+DEFINE_VERB(/mob/dead/observer, possess, "Possess!", "Take over the body of a mindless creature!", FALSE, "Ghost")
 	var/list/possessible = list()
 	for(var/mob/living/L in GLOB.alive_mob_list)
 		if(istype(L,/mob/living/carbon/human/dummy) || !get_turf(L)) //Haha no.
@@ -668,16 +627,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	target.faction = list(FACTION_NEUTRAL)
 	return TRUE
 
-/mob/dead/observer/_pointed(atom/pointed_at)
+/mob/dead/observer/do_pointed(atom/pointed_at)
 	if(!..())
 		return FALSE
 
 	visible_message(span_deadsay("<b>[src]</b> points to [pointed_at]."))
 
-/mob/dead/observer/verb/view_manifest()
-	set name = "View Crew Manifest"
-	set category = "Ghost"
-
+DEFINE_VERB(/mob/dead/observer, view_manifest, "View Crew Manifest", "", FALSE, "Ghost")
 	if(!client)
 		return
 	if(world.time < client.crew_manifest_delay)
@@ -744,11 +700,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/datum/atom_hud/data_hud = GLOB.huds[hudtype]
 		data_hud.hide_from(src)
 
-/mob/dead/observer/verb/toggle_data_huds()
-	set name = "Toggle Sec/Med/Diag HUD"
-	set desc = "Toggles whether you see medical/security/diagnostic HUDs"
-	set category = "Ghost"
-
+DEFINE_VERB(/mob/dead/observer, toggle_data_huds, "Toggle Sec/Med/Diag HUD", "Toggles whether you see medical/security/diagnostic HUDs", FALSE, "Ghost")
 	if(data_huds_on) //remove old huds
 		remove_data_huds()
 		to_chat(src, span_notice("Data HUDs disabled."))
@@ -759,11 +711,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		data_huds_on = 1
 
 // MONKESTATION ADDITION START
-/mob/dead/observer/verb/toggle_disease_view()
-	set name = "Toggle Disease View"
-	set desc = "Toggles whether you see disease infection vectors. (dormant, blood, contact and airborne)"
-	set category = "Ghost"
-
+DEFINE_VERB(/mob/dead/observer, toggle_disease_view, "Toggle Disease View", "Toggles whether you see disease infection vectors. (dormant, blood, contact and airborne)", FALSE, "Ghost")
 	if(disease_view)
 		RemoveElement(/datum/element/virus_viewer)
 		to_chat(src, span_notice("Disease view disabled."))
@@ -774,11 +722,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	disease_view = !disease_view
 // MONKESTATION ADDITION END
 
-/mob/dead/observer/verb/toggle_health_scan()
-	set name = "Toggle Health Scan"
-	set desc = "Toggles whether you health-scan living beings on click"
-	set category = "Ghost"
-
+DEFINE_VERB(/mob/dead/observer, toggle_health_scan, "Toggle Health Scan", "Toggles whether you health-scan living beings on click", FALSE, "Ghost")
 	if(health_scan) //remove old huds
 		to_chat(src, span_notice("Health scan disabled."))
 		health_scan = FALSE
@@ -786,11 +730,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, span_notice("Health scan enabled."))
 		health_scan = TRUE
 
-/mob/dead/observer/verb/toggle_chem_scan()
-	set name = "Toggle Chem Scan"
-	set desc = "Toggles whether you scan living beings for chemicals and addictions on click"
-	set category = "Ghost"
-
+DEFINE_VERB(/mob/dead/observer, toggle_chem_scan, "Toggle Chem Scan", "Toggles whether you scan living beings for chemicals and addictions on click", FALSE, "Ghost")
 	if(chem_scan) //remove old huds
 		to_chat(src, span_notice("Chem scan disabled."))
 		chem_scan = FALSE
@@ -798,11 +738,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, span_notice("Chem scan enabled."))
 		chem_scan = TRUE
 
-/mob/dead/observer/verb/toggle_gas_scan()
-	set name = "Toggle Gas Scan"
-	set desc = "Toggles whether you analyze gas contents on click"
-	set category = "Ghost"
-
+DEFINE_VERB(/mob/dead/observer, toggle_gas_scan, "Toggle Gas Scan", "Toggles whether you analyze gas contents on click", FALSE, "Ghost")
 	if(gas_scan)
 		to_chat(src, span_notice("Gas scan disabled."))
 		gas_scan = FALSE
@@ -810,12 +746,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, span_notice("Gas scan enabled."))
 		gas_scan = TRUE
 
-/mob/dead/observer/verb/restore_ghost_appearance()
-	set name = "Restore Ghost Character"
-	set desc = "Sets your deadchat name and ghost appearance to your \
-		roundstart character."
-	set category = "Ghost"
-
+DEFINE_VERB(/mob/dead/observer, restore_ghost_appearance, "Restore Ghost Character", "Sets your deadchat name and ghost appearance to your roundstart character.", FALSE, "Ghost")
 	set_ghost_appearance()
 	if(client?.prefs)
 		var/real_name = client.prefs.read_preference(/datum/preference/name/real_name)
@@ -893,10 +824,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		hide_other_mob_action_buttons(target)
 		LAZYREMOVE(target.observers, src)
 
-/mob/dead/observer/verb/observe()
-	set name = "Observe"
-	set category = "Ghost"
-
+DEFINE_VERB(/mob/dead/observer, observe, "Observe", "", FALSE, "Ghost")
 	if(!isobserver(usr) || HAS_TRAIT(src, TRAIT_NO_OBSERVE)) //Make sure they're an observer!
 		return
 
@@ -960,11 +888,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		set_sight(initial(sight))
 
-/mob/dead/observer/verb/register_pai_candidate()
-	set category = "Ghost"
-	set name = "pAI Setup"
-	set desc = "Upload a fragment of your personality to the global pAI databanks"
-
+DEFINE_VERB(/mob/dead/observer, register_pai_candidate, "pAI Setup", "Upload a fragment of your personality to the global pAI databanks", FALSE, "Ghost")
 	register_pai()
 
 /mob/dead/observer/proc/register_pai()
@@ -1054,19 +978,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			to_chat(G, message)
 	GLOB.observer_default_invisibility = amount
 
-/mob/dead/observer/proc/open_spawners_menu()
-	set name = "Spawners Menu"
-	set desc = "See all currently available spawners"
-	set category = "Ghost"
+DEFINE_PROC_VERB(/mob/dead/observer, open_spawners_menu, "Spawners Menu", "See all currently available spawners", FALSE, "Ghost")
 	if(!spawners_menu)
 		spawners_menu = new(src)
 
 	spawners_menu.ui_interact(src)
 
-/mob/dead/observer/proc/open_minigames_menu()
-	set name = "Minigames Menu"
-	set desc = "See all currently available minigames"
-	set category = "Ghost"
+DEFINE_PROC_VERB(/mob/dead/observer, open_minigames_menu, "Minigames Menu", "See all currently available minigames", FALSE, "Ghost")
 	if(!client)
 		return
 	if(!isobserver(src))
@@ -1077,11 +995,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	minigames_menu.ui_interact(src)
 
-/mob/dead/observer/proc/tray_view()
-	set category = "Ghost"
-	set name = "T-ray view"
-	set desc = "Toggles a view of sub-floor objects"
-
+DEFINE_PROC_VERB(/mob/dead/observer, tray_view, "T-ray view", "Toggles a view of sub-floor objects", FALSE, "Ghost")
 	var/static/t_ray_view = FALSE
 	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder && !t_ray_view)
 		to_chat(usr, span_notice("That verb is currently globally disabled."))

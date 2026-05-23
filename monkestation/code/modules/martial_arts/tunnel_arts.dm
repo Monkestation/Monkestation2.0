@@ -215,10 +215,7 @@
 	return COMPONENT_NO_AFTERATTACK
 
 /// Verb added to humans who learn the tunnel arts.
-/mob/living/proc/tunnel_arts_help()
-	set name = "Remember the Arts"
-	set desc = "Remember the martial techniques of Maint Khan, who brought to the Spinward Sector the knowledge of the Tunnel Arts."
-	set category = "The Tunnel Arts"
+DEFINE_PROC_VERB(/mob/living, tunnel_arts_help, "Remember the Arts", "Remember the martial techniques of Maint Khan, who brought to the Spinward Sector the knowledge of the Tunnel Arts.", FALSE, "The Tunnel Arts")
 
 	to_chat(src, "<b><i>You retreat inward and recall the teachings of the Tunnel Arts...</i></b>\n\
 	[span_notice("One Thousand Fists")]: Punch Punch. Deal additional damage every second (consecutive) punch, and potentially conjure forth an illusionary Khan Warrior.\n\

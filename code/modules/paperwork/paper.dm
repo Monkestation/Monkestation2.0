@@ -298,11 +298,7 @@
 		icon_state = "[initial(icon_state)]_words"
 	return ..()
 
-/obj/item/paper/verb/rename()
-	set name = "Rename paper"
-	set category = "Object"
-	set src in usr
-
+DEFINE_VERB(/obj/item/paper, rename, "Rename paper", "", FALSE, "Object")
 	if(!usr.can_read(src) || usr.is_blind() || usr.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB) || (isobserver(usr) && !isAdminGhostAI(usr)))
 		return
 	if(ishuman(usr))

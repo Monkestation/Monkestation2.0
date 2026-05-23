@@ -6,10 +6,7 @@
 	COOLDOWN_DECLARE(adminwho_alert_cooldown)
 
 
-/client/verb/who()
-	set name = "Who"
-	set category = "OOC"
-
+DEFINE_VERB(/client, who, "Who", "", FALSE, "OOC")
 	var/msg = ""
 
 	var/list/Lines = list()
@@ -74,10 +71,7 @@
 	msg += "<b>Total Players: [length(Lines)]</b>"
 	to_chat(src, fieldset_block(span_bold("Current Players"), span_infoplain(msg), "boxed_message"), type = MESSAGE_TYPE_OOC)
 
-/client/verb/adminwho()
-	set category = "Admin"
-	set name = "Adminwho"
-
+DEFINE_VERB(/client, adminwho, "Adminwho", "", FALSE, "Admin")
 	var/list/lines = list()
 	var/payload_string = generate_adminwho_string()
 	var/header = (payload_string == NO_ADMINS_ONLINE_MESSAGE) ? "No Admins Currently Online" : "Current Admins"

@@ -193,10 +193,7 @@
 		else
 			. += mutable_appearance(icon, "smalldish-empty")
 
-/obj/machinery/disease2/diseaseanalyser/verb/PrintPaper()
-	set name = "Print last analysis"
-	set category = "Object"
-	set src in oview(1)
+DEFINE_WORLD_OBJECT_VERB(/obj/machinery/disease2/diseaseanalyser, PrintPaper, oview(1), "Print last analysis", "", FALSE, "Object")
 
 	if(!isturf(usr?.loc))
 		return

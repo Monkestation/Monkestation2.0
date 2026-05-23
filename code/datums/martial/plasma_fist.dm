@@ -142,11 +142,7 @@
 		return TRUE
 	return FALSE
 
-/mob/living/proc/plasma_fist_help()
-	set name = "Recall Teachings"
-	set desc = "Remember the martial techniques of the Plasma Fist."
-	set category = "Plasma Fist"
-
+DEFINE_PROC_VERB(/mob/living, plasma_fist_help, "Recall Teachings", "Remember the martial techniques of the Plasma Fist.", FALSE, "Plasma Fist")
 	var/datum/martial_art/plasma_fist/martial = usr.mind.martial_art
 	to_chat(usr, "<b><i>You clench your fists and have a flashback of knowledge...</i></b>")
 	to_chat(usr, "[span_notice("Tornado Sweep")]: Punch Punch Shove. Repulses opponent and everyone back.")

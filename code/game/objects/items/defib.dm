@@ -116,7 +116,7 @@
 	update_power()
 
 /obj/item/defibrillator/ui_action_click()
-	INVOKE_ASYNC(src, PROC_REF(toggle_paddles))
+	INVOKE_ASYNC(src, PROC_REF(__toggle_paddles))
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/defibrillator/attack_hand(mob/user, list/modifiers)
@@ -151,7 +151,7 @@
 
 /obj/item/defibrillator/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item == paddles)
-		toggle_paddles()
+		__toggle_paddles()
 	else if(istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		var/obj/item/stock_parts/power_store/cell/C = attacking_item
 		if(cell)
@@ -186,9 +186,7 @@
 
 	update_power()
 
-/obj/item/defibrillator/proc/toggle_paddles()
-	set name = "Toggle Paddles"
-	set category = "Object"
+DEFINE_VERB(/obj/item/defibrillator, toggle_paddles, "Toggle Paddles", "", FALSE, "Object")
 	on = !on
 
 	var/mob/living/carbon/user = usr
@@ -302,7 +300,7 @@
 
 /obj/item/defibrillator/compact/combat/loaded/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item == paddles)
-		toggle_paddles()
+		__toggle_paddles()
 		return
 
 /obj/item/defibrillator/compact/combat/loaded/nanotrasen

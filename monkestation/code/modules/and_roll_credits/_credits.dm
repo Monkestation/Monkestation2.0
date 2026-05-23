@@ -45,9 +45,7 @@
 
 	LAZYNULL(SScredits.ignored_clients)
 
-/client/proc/ClearCredits()
-	set name = "Hide Credits"
-	set category = "OOC"
+DEFINE_PROC_VERB(/client, ClearCredits, "Hide Credits", "", FALSE, "OOC")
 	remove_verb(src, /client/proc/ClearCredits)
 
 	LAZYADDASSOC(SScredits.ignored_clients, src, TRUE)

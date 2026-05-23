@@ -8,10 +8,7 @@ MENTOR_VERB(mentor_follow, R_MENTOR, FALSE, "Mentor Follow", "Visually follow a 
 	log_mentor("[key_name(user)] began following [key_name(followed_guy)]")
 	BLACKBOX_LOG_MENTOR_VERB("Mentor Follow")
 
-/client/proc/mentor_unfollow()
-	set category = "Mentor"
-	set name = "Stop Following"
-	set desc = "Stop following the followed mob."
+DEFINE_PROC_VERB(/client, mentor_unfollow, "Stop Following", "Stop following the followed mob.", FALSE, "Mentor")
 
 	remove_verb(src, /client/proc/mentor_unfollow)
 	to_chat(GLOB.admins, span_adminooc("<span class='prefix'>MENTOR:</span> <EM>[key_name(usr)]</EM> is no longer following <EM>[key_name(eye)]</span>"), type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE)

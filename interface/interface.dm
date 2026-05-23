@@ -12,10 +12,7 @@ GLOBAL_LIST_INIT(important_interface_verbs, list(
 ))
 
 //Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
-/client/verb/wiki()
-	set name = "wiki"
-	set desc = "Open the wiki."
-	set hidden = TRUE
+DEFINE_VERB(/client, wiki, "wiki", "Open the wiki.", TRUE, "")
 	var/wikiurl = CONFIG_GET(string/wikiurl)
 	if(wikiurl)
 		if(tgui_alert(src, "This will open the wiki in your browser. Are you sure?",, list("Yes","No"))!="Yes")
@@ -25,10 +22,7 @@ GLOBAL_LIST_INIT(important_interface_verbs, list(
 		to_chat(src, span_danger("The wiki URL is not set in the server configuration."))
 	return
 
-/client/verb/forum()
-	set name = "forum"
-	set desc = "Visit the forum."
-	set hidden = TRUE
+DEFINE_VERB(/client, forum, "forum", "Visit the forum.", TRUE, "")
 	var/forumurl = CONFIG_GET(string/forumurl)
 	if(forumurl)
 		if(tgui_alert(src, "This will open the forum in your browser. Are you sure?",, list("Yes","No"))!="Yes")
@@ -38,10 +32,7 @@ GLOBAL_LIST_INIT(important_interface_verbs, list(
 		to_chat(src, span_danger("The forum URL is not set in the server configuration."))
 	return
 
-/client/verb/rules()
-	set name = "rules"
-	set desc = "Show Server Rules."
-	set hidden = TRUE
+DEFINE_VERB(/client, rules, "rules", "Show Server Rules.", TRUE, "")
 	var/rulesurl = CONFIG_GET(string/rulesurl)
 	if(rulesurl)
 		if(tgui_alert(src, "This will open the rules in your browser. Are you sure?",, list("Yes","No"))!="Yes")
@@ -51,10 +42,7 @@ GLOBAL_LIST_INIT(important_interface_verbs, list(
 		to_chat(src, span_danger("The rules URL is not set in the server configuration."))
 	return
 
-/client/verb/github()
-	set name = "github"
-	set desc = "Visit Github"
-	set hidden = TRUE
+DEFINE_VERB(/client, github, "github", "Visit Github", TRUE, "")
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(githuburl)
 		if(tgui_alert(src, "This will open the Github repository in your browser. Are you sure?",, list("Yes","No"))!="Yes")
@@ -64,10 +52,7 @@ GLOBAL_LIST_INIT(important_interface_verbs, list(
 		to_chat(src, span_danger("The Github URL is not set in the server configuration."))
 	return
 
-/client/verb/reportissue()
-	set name = "report-issue"
-	set desc = "Report an issue"
-	set hidden = TRUE
+DEFINE_VERB(/client, reportissue, "report-issue", "Report an issue", TRUE, "")
 	var/githuburl = CONFIG_GET(string/githuburl)
 	var/issue_key = CONFIG_GET(string/issue_key)
 	if(!issue_key)
@@ -170,9 +155,7 @@ GLOBAL_LIST_INIT(important_interface_verbs, list(
 	SEND_SOUND(src, 'sound/misc/compiler-stage2.ogg')
 	to_chat(src, span_notice("Bug submitted successfully."))
 
-/client/verb/changelog()
-	set name = "Changelog"
-	set category = "OOC"
+DEFINE_VERB(/client, changelog, "Changelog", "", FALSE, "OOC")
 	if(!GLOB.changelog_tgui)
 		GLOB.changelog_tgui = new /datum/changelog()
 
@@ -182,10 +165,7 @@ GLOBAL_LIST_INIT(important_interface_verbs, list(
 		prefs.save_preferences()
 		winset(src, "infobuttons.changelog", "font-style=;")
 
-/client/verb/hotkeys_help()
-	set name = "Hotkeys Help"
-	set category = "OOC"
-
+DEFINE_VERB(/client, hotkeys_help, "Hotkeys Help", "", FALSE, "OOC")
 	if(!GLOB.hotkeys_tgui)
 		GLOB.hotkeys_tgui = new /datum/hotkeys_help()
 

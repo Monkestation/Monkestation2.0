@@ -89,9 +89,7 @@
 	return TRUE
 
 /// Checks if the mob wants to leave the soulcatcher. If they do and are able to leave, they are booted out.
-/mob/living/soulcatcher_soul/verb/leave_soulcatcher()
-	set name = "Leave Soulcatcher"
-	set category = "IC"
+DEFINE_VERB(/mob/living/soulcatcher_soul, leave_soulcatcher, "Leave Soulcatcher", "", FALSE, "IC")
 
 	if(!able_to_leave)
 		to_chat(src, span_warning("You are unable to leave the soulcatcher."))
@@ -106,7 +104,7 @@
 	return_to_body()
 	qdel(src)
 
-/mob/living/soulcatcher_soul/ghost()
+/mob/living/soulcatcher_soul/__ghost()
 	. = ..()
 	return_to_body()
 	qdel(src)
@@ -139,7 +137,7 @@
 	room.send_message(message, src, FALSE)
 	return TRUE
 
-/mob/living/soulcatcher_soul/me_verb(message as text|null)
+/mob/living/soulcatcher_soul/__me_verb(message)
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message)
 		return FALSE
@@ -156,12 +154,10 @@
 	return TRUE
 
 
-/mob/living/soulcatcher_soul/whisper_verb()
-	set hidden = TRUE
+/mob/living/soulcatcher_soul/__whisper_verb()
 	return FALSE
 
-/mob/living/soulcatcher_soul/resist()
-	set hidden = TRUE
+/mob/living/soulcatcher_soul/__resist()
 	return FALSE
 
 /// Assuming we have a previous body a present mind on our soul, we are going to transfer the mind back to the old body.
@@ -226,10 +222,7 @@
 	user_component.ui_interact(owner)
 
 /// Prompts the parent mob to send a say message to the soulcatcher. Returns False if no soulcatcher or message could be found.
-/mob/living/proc/soulcatcher_say()
-	set name = "Soul Say"
-	set category = "IC"
-	set desc = "Send a Say message to your currently targeted soulcatcher room."
+DEFINE_PROC_VERB(/mob/living, soulcatcher_say, "Soul Say", "Send a Say message to your currently targeted soulcatcher room.", FALSE, "IC")
 	var/datum/component/soulcatcher/target_soulcatcher = find_soulcatcher()
 	if(!target_soulcatcher || !target_soulcatcher.targeted_soulcatcher_room)
 		return FALSE
@@ -242,10 +235,7 @@
 	return TRUE
 
 /// Prompts the parent mob to send a emote to the soulcatcher. Returns False if no soulcatcher or emote could be found.
-/mob/living/proc/soulcatcher_emote()
-	set name = "Soul Me"
-	set category = "IC"
-	set desc = "Send an emote to your currently targeted soulcatcher room."
+DEFINE_PROC_VERB(/mob/living, soulcatcher_emote, "Soul Me", "Send an emote to your currently targeted soulcatcher room.", FALSE, "IC")
 	var/datum/component/soulcatcher/target_soulcatcher = find_soulcatcher()
 	if(!target_soulcatcher || !target_soulcatcher.targeted_soulcatcher_room)
 		return FALSE

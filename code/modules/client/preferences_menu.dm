@@ -1,20 +1,8 @@
-/datum/verbs/menu/Preferences/verb/open_character_preferences()
-	set category = "OOC"
-	set name = "Open Character Preferences"
-	set desc = "Open Character Preferences"
+DEFINE_VERB(/client, open_character_preferences, "Open Character Preferences", "Open Character Preferences", FALSE, "OOC")
+	prefs?.open_window(PREFERENCE_PAGE_CHARACTERS)
 
-	usr?.client?.prefs?.open_window(PREFERENCE_PAGE_CHARACTERS)
+DEFINE_VERB(/client, open_game_preferences, "Open Game Preferences", "Open Game Settings", FALSE, "OOC")
+	prefs?.open_window(PREFERENCE_PAGE_SETTINGS)
 
-/datum/verbs/menu/Preferences/verb/open_game_preferences()
-	set category = "OOC"
-	set name = "Open Game Preferences"
-	set desc = "Open Game Settings"
-
-	usr?.client?.prefs?.open_window(PREFERENCE_PAGE_SETTINGS)
-
-/datum/verbs/menu/Preferences/verb/open_volume_mixer()
-	set category = "OOC"
-	set name = "Volume Mixer"
-	set desc = "Open Volume Mixer"
-
-	usr?.client?.prefs?.open_window(PREFERENCE_PAGE_PREFERENCES_VOLUME)
+DEFINE_VERB(/client, open_volume_mixer, "Volume Mixer", "Open Volume Mixer", FALSE, "OOC")
+	prefs?.open_window(PREFERENCE_PAGE_PREFERENCES_VOLUME)

@@ -1,6 +1,4 @@
-/client/verb/mentorwho()
-	set category = "Mentor"
-	set name = "Mentorwho"
+DEFINE_VERB(/client, mentorwho, "Mentorwho", "", FALSE, "Mentor")
 
 	var/msg = "<b>Current Mentors:</b>\n"
 	//Admin version

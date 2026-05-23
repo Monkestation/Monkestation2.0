@@ -58,18 +58,12 @@
 /client
 	var/list/redeemed_rewards = list()
 
-/client/verb/open_xp_menu()
-	set category = "IC"
-	set name = "Open XP Menu"
-	set desc = "List job xp."
+DEFINE_VERB(/client, open_xp_menu, "Open XP Menu", "List job xp.", FALSE, "IC")
 
 	xp_menu = new(src)
 	xp_menu.ui_interact(usr)
 
-/client/verb/claim_job_reward()
-	set category = "IC"
-	set name = "Claim Job Rewards"
-	set desc = "List job rewards you have for the current job and can spawn."
+DEFINE_VERB(/client, claim_job_reward, "Claim Job Rewards", "List job rewards you have for the current job and can spawn.", FALSE, "IC")
 
 	if(!isliving(mob))
 		to_chat(src, "For this to work you need to be living.")
@@ -106,10 +100,7 @@
 		var/mob/living/carbon/human/human_mob = mob
 		human_mob.put_in_hands(new_item)
 
-/client/verb/reload_job_rewards()
-	set category = "IC"
-	set name = "Reload Job Rewards"
-	set desc = "Refresh job rewards you have for the current job (Use this if you suspect something is missing or broken)."
+DEFINE_VERB(/client, reload_job_rewards, "Reload Job Rewards", "Refresh job rewards you have for the current job (Use this if you suspect something is missing or broken).", FALSE, "IC")
 
 	if(!isliving(mob))
 		to_chat(src, "For this to work you need to be living.")

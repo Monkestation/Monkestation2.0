@@ -1,7 +1,4 @@
-/mob/dead/observer/up()
-	set name = "Move Upwards"
-	set category = "IC"
-
+/mob/dead/observer/__up()
 	if(zMove(UP, z_move_flags = ZMOVE_FEEDBACK))
 		to_chat(src, "<span class='notice'>You move upwards.</span>")
 

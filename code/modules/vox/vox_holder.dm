@@ -128,10 +128,7 @@
 #ifdef TESTING
 GLOBAL_DATUM(test_vox_holder, /datum/vox_holder)
 
-/mob/verb/aivox2()
-	set name = "VOX Test UI"
-	set desc = "vox refactor test ui"
-	set category = "!! VOX !!"
+DEFINE_VERB(/mob, aivox2, "VOX Test UI", "vox refactor test ui", FALSE, "!! VOX !!")
 
 	if(isnull(GLOB.test_vox_holder))
 		GLOB.test_vox_holder = new

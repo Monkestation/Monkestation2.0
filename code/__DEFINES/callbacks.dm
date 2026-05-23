@@ -22,3 +22,6 @@
 
 /// like CALLBACK but specifically for verb callbacks
 #define VERB_CALLBACK new /datum/callback/verb_callback
+
+/// like CALLBACK but for internal only hell callbacks
+#define HELL_CALLBACK new /datum/callback/verb_callback/list_args

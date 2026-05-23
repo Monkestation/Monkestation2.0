@@ -116,6 +116,13 @@
 #define MAX_DESC_LEN 280
 #define MAX_AAS_LENGTH 168
 
+/// Verb name for the say verb, used in DEFINE_VERBLIKE
+#define VERB_SAY "Say"
+/// Verb name for the whisper verb, used in DEFINE_VERBLIKE
+#define VERB_WHISPER "Whisper"
+/// Verb name for the me verb, used in DEFINE_VERBLIKE
+#define VERB_ME "Me"
+
 // Audio/Visual Flags. Used to determine what sense are required to notice a message.
 #define MSG_VISUAL (1<<0)
 #define MSG_AUDIBLE (1<<1)

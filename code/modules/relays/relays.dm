@@ -1,9 +1,7 @@
 // Originally ported from Iris Station, but added toml config support.
 GLOBAL_VAR(relay_config)
 
-/client/verb/go2relay()
-	set category = "OOC"
-	set name = "Internet Routing Relays"
+DEFINE_VERB(/client, go2relay, "Internet Routing Relays", "", FALSE, "OOC")
 
 	if(is_localhost())
 		to_chat(src, span_notice("You are on localhost, this verb is useless to you."))

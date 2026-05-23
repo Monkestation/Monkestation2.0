@@ -1,7 +1,4 @@
-/client/verb/show_tickets()
-	set name = "Tickets"
-	set desc = "Show list of tickets"
-	set category = "Admin"
+DEFINE_VERB(/client, show_tickets, "Tickets", "Show list of tickets", FALSE, "Admin")
 
 	if(holder)
 		GLOB.ahelp_tickets.ui_interact(usr)

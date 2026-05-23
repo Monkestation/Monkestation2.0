@@ -175,59 +175,44 @@
 			stack_trace(params["message"])
 	MM2_DEBUG("topic: [json_encode(href_list - "params", JSON_PRETTY_PRINT)]\nparams: [json_encode(params, JSON_PRETTY_PRINT)]")
 
-/client/verb/reload_mm2()
-	set name = "Force Reload Media Player"
-	set desc = "Forcefully reloads your client's media player (used for lobby and jukebox music)"
-	set category = "OOC"
+DEFINE_VERB(/client, reload_mm2, "Force Reload Media Player", "Forcefully reloads your client's media player (used for lobby and jukebox music)", FALSE, "OOC")
 
 	if(!QDELETED(media_player))
 		QDEL_NULL(media_player)
 	media_player = new(src)
 
 #ifdef MM2_DEBUGGING
-/client/verb/mm2_play()
-	set name = "MM2: Play"
-	set category = "MM2"
+DEFINE_VERB(/client, mm2_play, "MM2: Play", "", FALSE, "MM2")
 
 	var/url = trimtext(tgui_input_text(src, "What to play?", "Media Manager 2", default = "https://files.catbox.moe/29g5xp.mp3", encode = FALSE))
 	if(url)
 		media_player.play(url)
 		MM2_DEBUG("playing")
 
-/client/verb/mm2_pause()
-	set name = "MM2: Pause"
-	set category = "MM2"
+DEFINE_VERB(/client, mm2_pause, "MM2: Pause", "", FALSE, "MM2")
 
 	media_player.pause()
 	MM2_DEBUG("paused")
 
-/client/verb/mm2_stop()
-	set name = "MM2: Stop"
-	set category = "MM2"
+DEFINE_VERB(/client, mm2_stop, "MM2: Stop", "", FALSE, "MM2")
 
 	media_player.stop()
 	MM2_DEBUG("stopped")
 
-/client/verb/mm2_set_position()
-	set name = "MM2: Set Position"
-	set category = "MM2"
+DEFINE_VERB(/client, mm2_set_position, "MM2: Set Position", "", FALSE, "MM2")
 
 	var/x = tgui_input_number(src, "Set X Value", "Media Manager 2", default = 0, min_value = -10, max_value = 10) || 0
 	var/y = tgui_input_number(src, "Set Y Value", "Media Manager 2", default = 0, min_value = -10, max_value = 10) || 0
 	media_player.set_position(x, y)
 	MM2_DEBUG("set pos to [x],[y]")
 
-/client/verb/mm2_set_time()
-	set name = "MM2: Set Time"
-	set category = "MM2"
+DEFINE_VERB(/client, mm2_set_time, "MM2: Set Time", "", FALSE, "MM2")
 
 	var/time = tgui_input_number(src, "Set Time (Seconds)", "Media Manager 2", default = 0, min_value = 0, round_value = FALSE) || 0
 	media_player.set_time(time)
 	MM2_DEBUG("set time to [time]")
 
-/client/verb/mm2_reload_all()
-	set name = "MM2: Reload Base HTML/JS"
-	set category = "MM2"
+DEFINE_VERB(/client, mm2_reload_all, "MM2: Reload Base HTML/JS", "", FALSE, "MM2")
 
 	reload_all_mm2()
 	MM2_DEBUG("reloaded all")

@@ -2,10 +2,8 @@ GLOBAL_VAR_INIT(OOC_COLOR, null)//If this is null, use the CSS for OOC. Otherwis
 GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 ///talking in OOC uses this
-/client/verb/ooc(msg as text)
-	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
-	set category = "OOC"
-
+//Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
+DEFINE_VERB(/client, ooc, "OOC", "", FALSE, "OOC", msg as text)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
@@ -177,10 +175,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		GLOB.dooc_allowed = !GLOB.dooc_allowed
 
 
-/client/proc/set_ooc() // MONKE EDIT Why were these kept?
-	set name = "Set Player OOC Color"
-	set desc = "Modifies player OOC Color"
-	set category = "Server"
+DEFINE_PROC_VERB(/client, set_ooc, "Set Player OOC Color", "Modifies player OOC Color", FALSE, "Server") // MONKE EDIT Why were these kept?
 	if(IsAdminAdvancedProcCall())
 		return
 
@@ -193,10 +188,7 @@ ADMIN_VERB(set_ooc_color, R_FUN, FALSE, "Set Player OOC Color", "Modifies the gl
 	log_admin("[key_name_admin(user)] has set the player ooc color to [new_color].")
 	GLOB.OOC_COLOR = new_color
 
-/client/proc/reset_ooc() // MONKE EDIT Why were these kept?
-	set name = "Reset Player OOC Color"
-	set desc = "Returns player OOC Color to default"
-	set category = "Server"
+DEFINE_PROC_VERB(/client, reset_ooc, "Reset Player OOC Color", "Returns player OOC Color to default", FALSE, "Server") // MONKE EDIT Why were these kept?
 	if(IsAdminAdvancedProcCall())
 		return
 
@@ -208,21 +200,13 @@ ADMIN_VERB(reset_ooc_color, R_FUN, FALSE, "Reset Player OOC Color", "Returns pla
 	GLOB.OOC_COLOR = null
 
 //Checks admin notice
-/client/verb/admin_notice()
-	set name = "Adminnotice"
-	set category = "Admin"
-	set desc ="Check the admin notice if it has been set"
-
+DEFINE_VERB(/client, admin_notice, "Adminnotice", "Check the admin notice if it has been set", FALSE, "Admin")
 	if(GLOB.admin_notice)
 		to_chat(src, "[span_boldnotice("Admin Notice:")]\n \t [GLOB.admin_notice]")
 	else
 		to_chat(src, span_notice("There are no admin notices at the moment."))
 
-/client/verb/motd()
-	set name = "MOTD"
-	set category = "OOC"
-	set desc ="Check the Message of the Day"
-
+DEFINE_VERB(/client, motd, "MOTD", "Check the Message of the Day", FALSE, "OOC")
 	var/motd = global.config.motd
 	if(motd)
 		to_chat(src, "<span class='infoplain'><div class=\"motd\">[motd]</div></span>", handle_whitespace=FALSE)
@@ -231,22 +215,14 @@ ADMIN_VERB(reset_ooc_color, R_FUN, FALSE, "Reset Player OOC Color", "Returns pla
 
 	config.ShowLobbyNotices(src) // monkestation edit
 
-/client/proc/self_notes()
-	set name = "View Admin Remarks"
-	set category = "OOC"
-	set desc = "View the notes that admins have written about you"
-
+DEFINE_PROC_VERB(/client, self_notes, "View Admin Remarks", "View the notes that admins have written about you", FALSE, "OOC")
 	if(!CONFIG_GET(flag/see_own_notes))
 		to_chat(usr, span_notice("Sorry, that function is not enabled on this server."))
 		return
 
 	browse_messages(null, usr.ckey, null, TRUE)
 
-/client/proc/self_playtime()
-	set name = "View tracked playtime"
-	set category = "OOC"
-	set desc = "View the amount of playtime for roles the server has tracked."
-
+DEFINE_PROC_VERB(/client, self_playtime, "View tracked playtime", "View the amount of playtime for roles the server has tracked.", FALSE, "OOC")
 	if(!CONFIG_GET(flag/use_exp_tracking))
 		to_chat(usr, span_notice("Sorry, tracking is currently disabled."))
 		return
@@ -254,11 +230,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, FALSE, "Reset Player OOC Color", "Returns pla
 	new /datum/job_report_menu(src, usr)
 
 // Ignore verb
-/client/verb/select_ignore()
-	set name = "Ignore"
-	set category = "OOC"
-	set desc ="Ignore a player's messages on the OOC channel"
-
+DEFINE_VERB(/client, select_ignore, "Ignore", "Ignore a player's messages on the OOC channel", FALSE, "OOC")
 	// Make a list to choose players from
 	var/list/players = list()
 
@@ -336,11 +308,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, FALSE, "Reset Player OOC Color", "Returns pla
 	to_chat(src, "<span class='infoplain'>You are now ignoring [selection] on the OOC channel.</span>")
 
 // Unignore verb
-/client/verb/select_unignore()
-	set name = "Unignore"
-	set category = "OOC"
-	set desc = "Stop ignoring a player's messages on the OOC channel"
-
+DEFINE_VERB(/client, select_unignore, "Unignore", "Stop ignoring a player's messages on the OOC channel", FALSE, "OOC")
 	// Check if we've ignored any players
 	if(!length(prefs.ignoring))
 		// Express that we haven't ignored any players in chat
@@ -373,26 +341,14 @@ ADMIN_VERB(reset_ooc_color, R_FUN, FALSE, "Reset Player OOC Color", "Returns pla
 	// Express that we've unignored the selected player in chat
 	to_chat(src, "<span class='infoplain'>You are no longer ignoring [selection] on the OOC channel.</span>")
 
-/client/proc/show_previous_roundend_report()
-	set name = "Your Last Round"
-	set category = "OOC"
-	set desc = "View the last round end report you've seen"
-
+DEFINE_PROC_VERB(/client, show_previous_roundend_report, "Your Last Round", "View the last round end report you've seen", FALSE, "OOC")
 	SSticker.show_roundend_report(src, report_type = PERSONAL_LAST_ROUND)
 
-/client/proc/show_servers_last_roundend_report()
-	set name = "Server's Last Round"
-	set category = "OOC"
-	set desc = "View the last round end report from this server"
-
+DEFINE_PROC_VERB(/client, show_servers_last_roundend_report, "Server's Last Round", "View the last round end report from this server", FALSE, "OOC")
 	SSticker.show_roundend_report(src, report_type = SERVER_LAST_ROUND)
 
-/client/verb/fit_viewport()
-	set name = "Fit Viewport"
-	set category = "OOC"
-	set desc = "Fit the width of the map window to match the viewport"
+DEFINE_VERB(/client, fit_viewport, "Fit Viewport", "Fit the width of the map window to match the viewport", FALSE, "OOC")
 	set waitfor = FALSE
-
 	// Fetch aspect ratio
 	var/view_size = getviewsize(view)
 	var/aspect_ratio = view_size[1] / view_size[2]
@@ -472,11 +428,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, FALSE, "Reset Player OOC Color", "Returns pla
 	else //Delayed to avoid wingets from Login calls.
 		addtimer(CALLBACK(src, VERB_REF(fit_viewport), 1 SECONDS))
 
-/client/verb/policy()
-	set name = "Show Policy"
-	set desc = "Show special server rules related to your current character."
-	set category = "OOC"
-
+DEFINE_VERB(/client, policy, "Show Policy", "Show special server rules related to your current character.", FALSE, "OOC")
 	//Collect keywords
 	var/list/keywords = mob.get_policy_keywords()
 	var/header = get_policy(POLICY_VERB_HEADER)
@@ -495,23 +447,13 @@ ADMIN_VERB(reset_ooc_color, R_FUN, FALSE, "Reset Player OOC Color", "Returns pla
 	browser.set_content(policytext.Join(""))
 	browser.open()
 
-/client/verb/fix_stat_panel()
-	set name = "Fix Stat Panel"
-	set hidden = TRUE
-
+DEFINE_VERB(/client, fix_stat_panel, "Fix Stat Panel", "", TRUE, "")
 	init_verbs()
 
-/client/proc/export_preferences()
-	set name = "Export Preferences"
-	set desc = "Export your current preferences to a file."
-	set category = "OOC"
-
+DEFINE_PROC_VERB(/client, export_preferences, "Export Preferences", "Export your current preferences to a file.", FALSE, "OOC")
 	ASSERT(prefs, "User attempted to export preferences while preferences were null!") // what the fuck
 
 	prefs.savefile.export_json_to_client(usr, ckey)
 
-/client/verb/map_vote_tally_count()
-	set name = "Show Map Vote Tallies"
-	set desc = "View the current map vote tally counts."
-	set category = "OOC"
+DEFINE_VERB(/client, map_vote_tally_count, "Show Map Vote Tallies", "View the current map vote tally counts.", FALSE, "OOC")
 	to_chat(mob, SSmap_vote.tally_printout)

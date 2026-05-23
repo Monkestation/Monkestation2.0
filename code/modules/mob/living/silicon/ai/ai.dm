@@ -326,9 +326,7 @@
 		ai_display.emotion = emote
 		ai_display.update()
 
-/mob/living/silicon/ai/verb/pick_icon()
-	set category = "AI Commands"
-	set name = "Set AI Core Display"
+DEFINE_VERB(/mob/living/silicon/ai, pick_icon, "Set AI Core Display", "", FALSE, "AI Commands")
 	if(incapacitated())
 		return
 	icon = initial(icon)
@@ -441,13 +439,11 @@
 	else
 		return GLOB.cameranet.checkTurfVis(target_turf)
 
-/mob/living/silicon/ai/cancel_camera()
+/mob/living/silicon/ai/__cancel_camera()
 	view_core()
 
-/mob/living/silicon/ai/verb/ai_camera_track()
-	set name = "track"
-	set hidden = TRUE //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
-
+//Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
+DEFINE_VERB(/mob/living/silicon/ai, ai_camera_track, "track", "", TRUE, "")
 	ai_tracking_tool.track_input(src)
 
 ///Called when an AI finds their tracking target.
@@ -464,9 +460,7 @@
 	if(eyeobj)
 		eyeobj.glide_size = new_glide_size
 
-/mob/living/silicon/ai/verb/toggle_anchor()
-	set category = "AI Commands"
-	set name = "Toggle Floor Bolts"
+DEFINE_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "", FALSE, "AI Commands")
 	if(!isturf(loc)) // if their location isn't a turf
 		return // stop
 	if(stat == DEAD)
@@ -651,11 +645,7 @@
 	eyeobj.setLoc(get_turf(C))
 	return TRUE
 
-/mob/living/silicon/ai/proc/botcall()
-	set category = "AI Commands"
-	set name = "Access Robot Control"
-	set desc = "Wirelessly control various automatic robots."
-
+DEFINE_PROC_VERB(/mob/living/silicon/ai, botcall, "Access Robot Control", "Wirelessly control various automatic robots.", FALSE, "AI Commands")
 	if(!robot_control)
 		robot_control = new(src)
 
@@ -715,9 +705,7 @@
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
 //Adds in /mob/living/silicon/ai/proc/ai_network_change() instead
 //Addition by Mord_Sith to define AI's network change ability
-/mob/living/silicon/ai/proc/ai_network_change()
-	set category = "AI Commands"
-	set name = "Jump To Network"
+DEFINE_PROC_VERB(/mob/living/silicon/ai, ai_network_change, "Jump To Network", "", FALSE, "AI Commands")
 	unset_machine()
 	ai_tracking_tool.reset_tracking()
 	var/cameralist[0]
@@ -759,11 +747,7 @@
 //End of code by Mord_Sith
 
 //I am the icon meister. Bow fefore me. //>fefore
-/mob/living/silicon/ai/proc/ai_hologram_change()
-	set name = "Change Hologram"
-	set desc = "Change the default hologram available to AI to something else."
-	set category = "AI Commands"
-
+DEFINE_PROC_VERB(/mob/living/silicon/ai, ai_hologram_change, "Change Hologram", "Change the default hologram available to AI to something else.", FALSE, "AI Commands")
 	if(incapacitated())
 		return
 	var/input
@@ -920,11 +904,7 @@
 		C.Togglelight(1)
 		lit_cameras |= C
 
-/mob/living/silicon/ai/proc/control_integrated_radio()
-	set name = "Transceiver Settings"
-	set desc = "Allows you to change settings of your radio."
-	set category = "AI Commands"
-
+DEFINE_PROC_VERB(/mob/living/silicon/ai, control_integrated_radio, "Transceiver Settings", "Allows you to change settings of your radio.", FALSE, "AI Commands")
 	if(incapacitated())
 		return
 
@@ -936,11 +916,7 @@
 	if(radio)
 		radio.make_syndie()
 
-/mob/living/silicon/ai/proc/set_automatic_say_channel()
-	set name = "Set Auto Announce Mode"
-	set desc = "Modify the default radio setting for your automatic announcements."
-	set category = "AI Commands"
-
+DEFINE_PROC_VERB(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto Announce Mode", "Modify the default radio setting for your automatic announcements.", FALSE, "AI Commands")
 	if(incapacitated())
 		return
 	set_autosay()
@@ -1128,10 +1104,7 @@
 	to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
 	apc.update_appearance()
 
-/mob/living/silicon/ai/verb/deploy_to_shell(mob/living/silicon/robot/target)
-	set category = "AI Commands"
-	set name = "Deploy to Shell"
-
+DEFINE_VERB(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "", FALSE, "AI Commands", mob/living/silicon/robot/target)
 	if(incapacitated())
 		return
 	if(control_disabled)
@@ -1198,7 +1171,7 @@
 		deployed_shell.undeploy()
 	diag_hud_set_deployed()
 
-/mob/living/silicon/ai/resist()
+/mob/living/silicon/ai/__resist()
 	return
 
 /mob/living/silicon/ai/spawned/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
@@ -1214,16 +1187,11 @@
 	if(.)
 		end_multicam()
 
-/mob/living/silicon/ai/up()
-	set name = "Move Upwards"
-	set category = "IC"
-
+/mob/living/silicon/ai/__up()
 	if(eyeobj.zMove(UP, z_move_flags = ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move upwards."))
 
-/mob/living/silicon/ai/down()
-	set name = "Move Down"
-	set category = "IC"
+/mob/living/silicon/ai/__down()
 
 	if(eyeobj.zMove(DOWN, z_move_flags = ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move down."))
@@ -1272,9 +1240,7 @@
 		return ai_voicechanger.say_name
 	return
 
-/mob/living/silicon/ai/verb/jobtitles()
-	set category = "AI Commands"
-	set name = "Toggle Jobtitle Display"
+DEFINE_VERB(/mob/living/silicon/ai, jobtitles, "Toggle Jobtitle Display", "", FALSE, "AI Commands")
 
 	if(incapacitated())
 		return

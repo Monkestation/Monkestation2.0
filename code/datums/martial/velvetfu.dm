@@ -285,10 +285,7 @@
 	playsound(D, 'sound/items/weapons/punch1.ogg', 50, TRUE, -1)
 	return TRUE
 
-/mob/living/proc/velvetfu_help()
-	set name = "Recall Teachings"
-	set desc = "Remember the martial techniques of Velvet-Fu."
-	set category = "VelvetFu"
+DEFINE_PROC_VERB(/mob/living, velvetfu_help, "Recall Teachings", "Remember the martial techniques of Velvet-Fu.", FALSE, "VelvetFu")
 
 	to_chat(usr, span_notice("<b><i>You try to remember the VHS tapes of Velvet-Fu...</i></b>\n\
 	Iron Hoof: Disarm/Grab/Harm while opponent is down, though Disarm works best.\n\

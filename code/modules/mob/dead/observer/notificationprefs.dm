@@ -1,7 +1,4 @@
-/mob/dead/observer/verb/show_notificationprefs()
-	set category = "Ghost"
-	set name = "Notification preferences"
-	set desc = "Notification preferences"
+DEFINE_VERB(/mob/dead/observer, show_notificationprefs, "Notification preferences", "Notification preferences", FALSE, "Ghost")
 
 	var/datum/notificationpanel/panel = new(usr)
 

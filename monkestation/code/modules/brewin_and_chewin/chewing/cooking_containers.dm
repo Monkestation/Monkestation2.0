@@ -158,11 +158,7 @@
 /obj/item/reagent_containers/cooking_container/proc/handle_ignition()
 	return FALSE
 
-/obj/item/reagent_containers/cooking_container/verb/empty()
-	set src in view(1)
-	set name = "Empty Container"
-	set category = "Object"
-	set desc = "Removes items from the container, excluding reagents."
+DEFINE_WORLD_OBJECT_VERB(/obj/item/reagent_containers/cooking_container, empty, view(1), "Empty Container", "Removes items from the container, excluding reagents.", FALSE, "Object")
 	do_empty(usr)
 
 /obj/item/reagent_containers/cooking_container/proc/do_empty(mob/user, atom/target = null, reagent_clear = TRUE)

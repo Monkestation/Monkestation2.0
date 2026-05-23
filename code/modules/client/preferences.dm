@@ -681,10 +681,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return default_randomization
 
-/client/verb/change_character_slot()
-	set name = "Change Character Slot"
-	set desc = "Changes the active character slot. This is no different than clicking the preferred character slot in the Character Setup menu."
-	set category = "OOC"
+DEFINE_VERB(/client, change_character_slot, "Change Character Slot", "Changes the active character slot. This is no different than clicking the preferred character slot in the Character Setup menu.", FALSE, "OOC")
 
 	var/list/characters = prefs.create_character_profiles()
 	var/list/options = list()

@@ -153,9 +153,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, FALSE, "Show Player Pan
 	user << browse(body, "window=adminplayeropts-[REF(player)];size=550x515")
 	BLACKBOX_LOG_ADMIN_VERB("Player Panel")
 
-/client/proc/cmd_admin_godmode(mob/mob in GLOB.mob_list) //MONKE EDIT TODO CONVERT TO AVD tg doesn't no idea why.
-	set category = "Admin.Game"
-	set name = "Godmode"
+DEFINE_PROC_VERB(/client, cmd_admin_godmode, "Godmode", "", FALSE, "Admin.Game", mob/mob in GLOB.mob_list) //MONKE EDIT TODO CONVERT TO AVD tg doesn't no idea why.
 	if(!check_rights(R_ADMIN))
 		return
 

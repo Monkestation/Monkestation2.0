@@ -153,10 +153,7 @@ If the target is T3 grabbed or sleeping, instead deal 60 damage with a weeping a
 		return TRUE
 	return FALSE
 
-/mob/living/carbon/human/proc/tribal_claw_help()
-	set name = "Recall Teachings"
-	set desc = "Remember the martial techniques of the Tribal Claw"
-	set category = "Tribal Claw"
+DEFINE_PROC_VERB(/mob/living/carbon/human, tribal_claw_help, "Recall Teachings", "Remember the martial techniques of the Tribal Claw", FALSE, "Tribal Claw")
 
 	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the Tribal Claw...</i></b>")
 

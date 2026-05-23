@@ -388,9 +388,7 @@ GLOBAL_LIST_EMPTY(soulcatchers)
 
 	joining_soul.join_soulcatcher()
 
-/mob/dead/observer/verb/join_soulcatcher()
-	set name = "Enter Soulcatcher"
-	set category = "Ghost"
+DEFINE_VERB(/mob/dead/observer, join_soulcatcher, "Enter Soulcatcher", "", FALSE, "Ghost")
 
 	var/list/joinable_soulcatchers = list()
 	for(var/datum/component/soulcatcher/soulcatcher in GLOB.soulcatchers)
