@@ -1,6 +1,0 @@
-author: "Mantlecrawler"
-delete-after: True
-changes:
-  - rscadd: "Seclites can now be bought from the mining points vendor"
-  - rscadd: "5 prefilled sandbags can now be bought from the mining points vendor"
-  - balance: "Explorer's vest now has 7 slots and 24 max weight"

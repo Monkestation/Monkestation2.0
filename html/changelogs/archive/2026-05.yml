@@ -379,3 +379,18 @@
   Tractor-Maam:
   - bugfix: silicons can no longer have their integrated PDA permanently bricked by
       receiving a PDA bomb.
+2026-05-23:
+  Mantlecrawler:
+  - balance: The mining point cost of busted necropolis chests has been raised by
+      25%
+  - qol: Examining a ID card will now show its amounts of bitrunning and mining points,
+      should it have any.
+  - rscadd: Seclites can now be bought from the mining points vendor
+  - rscadd: 5 prefilled sandbags can now be bought from the mining points vendor
+  - balance: Explorer's vest now has 7 slots and 24 max weight
+  TheColorCyan:
+  - refactor: refactored multi-hit component, now you have to right-click one tile
+      or more away from yourself, and it no longer works when directly clicking things
+      or clicking a tile right near you
+  - balance: using multi-hit now applies slowdown for a very short duration
+  - bugfix: fixed baseball bats kneecapping not working

@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed Patreon and Twitch subscriber icons not showing next to your username in OOC. This has seemingly never worked despite being in the code for like 3 years at this point."
+  - rscadd: "Added preferences (under the \"CHAT\" section) to disable your OOC messages having said icons."
+  - rscadd: "Websocket metadata now also passes along URLs to chat styles and such."

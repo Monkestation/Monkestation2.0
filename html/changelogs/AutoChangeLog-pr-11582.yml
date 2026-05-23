@@ -1,0 +1,5 @@
+author: "Runian"
+delete-after: True
+changes:
+  - rscadd: "Miner Cyborgs now have an energy shield that they can toggle, but only works in low-pressure environments. It reduces inbound damage by 50%, but consumes a hefty amount of energy each time."
+  - bugfix: "Cyborgs now always get their overlays whenever their appearance updates."

@@ -1,4 +1,0 @@
-author: "Mantlecrawler"
-delete-after: True
-changes:
-  - qol: "Examining a ID card will now show its amounts of bitrunning and mining points, should it have any."
