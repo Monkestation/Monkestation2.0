@@ -284,6 +284,19 @@ ADMIN_VERB(atmos_control, R_DEBUG | R_SERVER, FALSE, "Atmos Control Panel", "Ope
 ADMIN_VERB(cpu_control, R_DEBUG, FALSE, "Toggle Cpu Controls", "Enables performance debug view", ADMIN_CATEGORY_DEBUG)
 	GLOB.cpu_tracker.toggle_cpu_debug(user)
 
+ADMIN_VERB(verb_costs, R_DEBUG, FALSE, "Print Verb Costs", "Displays verbs in order of most to least average cost", ADMIN_CATEGORY_DEBUG)
+	var/list/text = list("<B>Verb Costs</B><BR><BR><ol>")
+	var/list/display_verbs = GLOB.average_verb_cost.Copy()
+	sortTim(display_verbs, cmp=GLOBAL_PROC_REF(cmp_verb_cost_desc), associative = TRUE)
+	for(var/proc_name in display_verbs)
+		var/list/intel = display_verbs[proc_name]
+		text += "<li><u>[proc_name] => [DS2MS(TICKS2DS(RATIO2TICK(intel[VERB_LIST_COST])))] (Time Since Last Called [world.time - intel[VERB_LIST_TIME]])</u></li>"
+	text += "</ol>"
+
+	var/datum/browser/browser = new(user, "verb_cost", "Verb Costs", 700, 400)
+	browser.set_content(text.Join())
+	browser.open()
+
 ADMIN_VERB(reload_cards, R_DEBUG, FALSE, "Reload Cards", "Reload all TCG cards.", ADMIN_CATEGORY_DEBUG)
 	if(!SStrading_card_game.loaded)
 		message_admins("The card subsystem is not currently loaded.") //MONKE EDIT
