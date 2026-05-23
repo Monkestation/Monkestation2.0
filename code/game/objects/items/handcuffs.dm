@@ -719,6 +719,23 @@
 		return TRUE
 	return FALSE
 
+/obj/item/restraints/legcuffs/beartrap/slasher
+	name = "barbed bear trap"
+	alpha = 160
+	var/datum/antagonist/slasher/slasher_owner
+
+/obj/item/restraints/legcuffs/beartrap/slasher/Destroy()
+	if(slasher_owner)
+		slasher_owner.linked_traps -= src
+	return ..()
+
+/obj/item/restraints/legcuffs/beartrap/slasher/proc/set_slasher(datum/antagonist/slasher/slasherdatum)
+	if(slasher_owner)
+		slasher_owner.linked_traps -= src
+	slasher_owner = slasherdatum
+	if(slasher_owner)
+		slasher_owner.linked_traps += src
+
 /obj/item/restraints/legcuffs/bola
 	name = "bola"
 	desc = "A restraining device designed to be thrown at the target. Upon connecting with said target, it will wrap around their legs, making it difficult for them to move quickly."
