@@ -38,6 +38,8 @@
 /datum/religion_sect/honk/on_sacrifice(/obj/item/food/grown/banana/offering, mob/living/user)
 	adjust_favor(25, user)
 	to_chat(user, span_notice("HONK"))
+	qdel(offering)
+	return TRUE
 
 /datum/religion_rites/holypie
 	name = "Holy Pie"
