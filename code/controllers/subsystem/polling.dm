@@ -100,6 +100,10 @@ SUBSYSTEM_DEF(polling)
 		else
 			surrounding_image = image(chat_text_border_icon)
 
+	var/surrounding_icon
+	if(surrounding_image)
+		surrounding_icon = icon2html(surrounding_image, group, extra_classes = "bigicon")
+
 	for(var/mob/candidate_mob as anything in group)
 		if(!candidate_mob.client)
 			continue
@@ -190,9 +194,6 @@ SUBSYSTEM_DEF(polling)
 				volume *= sfx_volume * 0.01
 			SEND_SOUND(candidate_mob, sound('sound/misc/prompt.ogg', volume = volume))
 			// monkestation end
-			var/surrounding_icon
-			if(surrounding_image)
-				surrounding_icon = ma2html(surrounding_image, candidate_mob, extra_classes = "bigicon")
 			var/final_message =  boxed_message("<span style='text-align:center;display:block'>[surrounding_icon] <span style='font-size:1.2em'>[span_ooc(question)]</span> [surrounding_icon]\n[act_jump]      [act_signup]      [act_never]</span>")
 			to_chat(candidate_mob, final_message)
 
