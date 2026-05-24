@@ -40,6 +40,7 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	attack_action_types = list()
+	rawr_sound = 'sound/magic/demon_dies.ogg' // MONKESTATION EDIT ADDITION
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_defender/Initialize(mapload)
 	. = ..()

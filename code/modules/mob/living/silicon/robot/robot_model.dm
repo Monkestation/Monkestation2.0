@@ -297,6 +297,7 @@
 		cyborg.worn_badge.forceMove(drop_location())
 
 	cyborg.cut_overlays()
+	LAZYNULL(cyborg.managed_overlays) // Or else our overlays won't get re-added (since we are likely to have exact same overlays).
 	cyborg.setDir(SOUTH)
 	do_transform_delay()
 
@@ -767,6 +768,60 @@
 		"Spider Miner" = list(SKIN_ICON_STATE = "spidermin", SKIN_BADGE_OFFSET = -8),
 		"Lavaland Miner" = list(SKIN_ICON_STATE = "miner"),
 	)
+	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes. //fuck you
+	/// Reference to the energy shield action.
+	var/datum/weakref/energy_shield_ref
+
+/obj/item/robot_model/miner/rebuild_modules()
+	. = ..()
+	if(!mining_scanner)
+		mining_scanner = new(src)
+
+/obj/item/robot_model/miner/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
+	var/datum/action/cooldown/cyborg_miner_shield/energy_shield_action = new(loc)
+	. = ..()
+	if(!.)
+		return
+	energy_shield_action.Grant(loc)
+	energy_shield_ref = WEAKREF(energy_shield_action)
+
+/obj/item/robot_model/miner/Destroy()
+	QDEL_NULL(mining_scanner)
+	QDEL_NULL(energy_shield_ref)
+	return ..()
+
+/datum/action/cooldown/cyborg_miner_shield
+	name = "Toggle Energy Shield"
+	desc = "Toggles an energy shield that consumes your cell's power to reduce incoming damage. Only works in low-pressure environments."
+	button_icon = 'icons/mob/silicon/robot_items.dmi'
+	button_icon_state = "module_miner"
+	/// Is the shield active?
+	var/active = FALSE
+	/// The overlay to update with.
+	var/mutable_appearance/shield_overlay
+
+/datum/action/cooldown/cyborg_miner_shield/New(Target, original)
+	. = ..()
+	shield_overlay = mutable_appearance('icons/mecha/durand_shield.dmi', "borg_shield")
+
+/datum/action/cooldown/cyborg_miner_shield/Activate()
+	var/mob/living/silicon/robot/borg = owner
+	if(!active && !borg.cell.charge())
+		borg.balloon_alert(borg, "no charge!")
+		return
+	active = !active
+	if(active)
+		playsound(borg, 'sound/mecha/mech_shield_raise.ogg', 50, FALSE)
+		RegisterSignal(borg, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_shield_overlay_update), override = TRUE)
+	else
+		playsound(borg, 'sound/mecha/mech_shield_drop.ogg', 50, FALSE)
+		UnregisterSignal(borg, COMSIG_ATOM_UPDATE_OVERLAYS)
+	borg.update_appearance()
+
+/datum/action/cooldown/cyborg_miner_shield/proc/on_shield_overlay_update(atom/source, list/overlays)
+	SIGNAL_HANDLER
+	if(active)
+		overlays += shield_overlay
 
 /obj/item/robot_model/peacekeeper
 	name = "Peacekeeper"
