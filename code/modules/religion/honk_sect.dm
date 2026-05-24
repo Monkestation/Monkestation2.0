@@ -35,10 +35,12 @@
 	H.add_mood_event("honk", /datum/mood_event/honk)
 	return TRUE
 
-/datum/religion_sect/honk/on_sacrifice(/obj/item/food/grown/banana/offering, mob/living/user)
-	adjust_favor(25, user)
-	to_chat(user, span_notice("HONK"))
-	qdel(offering)
+/datum/religion_sect/honk/on_sacrifice(obj/item/N, mob/living/L)
+	if(!istype(N, /obj/item/food/grown/banana))
+		return
+	adjust_favor(25, L)
+	to_chat(L, span_notice("HONK"))
+	qdel(N)
 	return TRUE
 
 /datum/religion_rites/holypie
