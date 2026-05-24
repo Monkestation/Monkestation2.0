@@ -489,3 +489,18 @@
 
 /mob/living/basic/pet/yato_neco_arc/get_laugh_sound()
 	return pick('monkestation/code/modules/donator/sounds/neco_arc_1.ogg','monkestation/code/modules/donator/sounds/neco_arc_2.ogg','monkestation/code/modules/donator/sounds/neco_arc_3.ogg')
+
+/mob/living/basic/axolotl/shark_costume
+	name = "shark axolotl"
+	desc = "This axolotl seems to wear a scary shark costume!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "shark_axolotl"
+	icon_living = "shark_axolotl"
+	icon_dead = "shark_axolotl-dead"
+	held_state = "shark_axolotl"
+	held_lh = 'monkestation/code/modules/donator/icons/mob/pets_held_lh.dmi'
+	held_rh = 'monkestation/code/modules/donator/icons/mob/pets_held_rh.dmi'
+	head_icon = 'monkestation/code/modules/donator/icons/mob/pets_held.dmi'
+	gold_core_spawnable = NO_SPAWN
+
+	ckeywhitelist = list("ZBunz")

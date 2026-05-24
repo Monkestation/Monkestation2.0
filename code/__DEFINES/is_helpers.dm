@@ -160,6 +160,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define is_simian(A) (isgorilla(A) || ismonkey(A))
 
+#define isstargazer(A) (istype(A, /mob/living/basic/heretic_summon/star_gazer))
+
 /// returns whether or not the atom is either a basic mob OR simple animal
 #define isanimal_or_basicmob(A) (istype(A, /mob/living/simple_animal) || istype(A, /mob/living/basic))
 
@@ -251,7 +253,7 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 
 #define ismachinery(A) (istype(A, /obj/machinery))
 
-#define istramwall(A) (istype(A, /obj/structure/window/reinforced/tram/front))
+#define istramwall(A) (istype(A, /obj/structure/tram))
 
 #define isvendor(A) (istype(A, /obj/machinery/vending))
 
@@ -278,6 +280,8 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 #define isprojectile(A) (istype(A, /obj/projectile))
 
 #define isgun(A) (istype(A, /obj/item/gun))
+
+#define isammobox(A) (istype(A, /obj/item/ammo_box))
 
 #define isinstrument(A) (istype(A, /obj/item/instrument) || istype(A, /obj/structure/musician))
 
@@ -331,6 +335,7 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 #define is_captain_job(job_type) (istype(job_type, /datum/job/captain))
 #define is_chaplain_job(job_type) (istype(job_type, /datum/job/chaplain))
 #define is_clown_job(job_type) (istype(job_type, /datum/job/clown) || istype(job_type, /datum/job/yellowclown) || istype(job_type, /datum/job/ert/clown)) //monkestation edit: adds ERT clowns cus why not
+#define is_mime_job(job_type) (istype(job_type, /datum/job/mime))
 #define is_detective_job(job_type) (istype(job_type, /datum/job/detective))
 #define is_scientist_job(job_type) (istype(job_type, /datum/job/scientist))
 #define is_security_officer_job(job_type) (istype(job_type, /datum/job/security_officer))

@@ -482,7 +482,6 @@
 		var/random_food = pick_weight(list(
 			/obj/item/food/bechamel_sauce = 5,
 			/obj/item/food/canned/pine_nuts = 5,
-			/obj/item/food/canned/tomatoes = 5,
 			/obj/item/food/pesto = 5,
 			/obj/item/food/tomato_sauce = 5,
 			))

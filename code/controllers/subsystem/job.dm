@@ -942,7 +942,7 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/SendToLateJoin(mob/M, buckle = TRUE)
 	var/atom/destination
 
-	if(length(GLOB.oshan_launch_points))
+	if(length(GLOB.oshan_launch_points) && !M.mind?.assigned_role?.oshan_normal_latejoin)
 		var/obj/effect/oshan_launch_point/player/picked_point = pick(GLOB.oshan_launch_points)
 		destination = get_edge_target_turf(picked_point, picked_point.map_edge_direction)
 		destination.JoinLaunchTowards(M, picked_point)

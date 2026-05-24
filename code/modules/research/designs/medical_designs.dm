@@ -351,6 +351,30 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/biocorrector
+	name = "Bio-corrector"
+	desc = "The latest medical prototype with a bone gel synthesizer. It sets bones, cleanses blood and lymph. The application of bone gel is possible only with invasive intervention."
+	id = "biocorrector"
+	build_path = /obj/item/blood_filter/advanced
+	build_type = PROTOLATHE | AWAY_LATHE | COLONY_FABRICATOR
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 4, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 2, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3)
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
+		)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/breathing_bag
+	name = "Ambu Bag"
+	desc = "Also known as a breathing bag, it is a mechanical manual device for performing artificial lung ventilation."
+	id = "breathing_bag"
+	build_path = /obj/item/breathing_bag
+	build_type = PROTOLATHE | AWAY_LATHE | COLONY_FABRICATOR
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
+		)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /datum/design/medical_spray_bottle
 	name = "Medical Spray Bottle"
 	desc = "A traditional spray bottle used to generate a fine mist. Not to be confused with a medspray."
@@ -446,7 +470,7 @@
 	id = "surgery_tray"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/silver =SHEET_MATERIAL_AMOUNT)
-	build_path = "/obj/item/surgery_tray/craftable"
+	build_path = /obj/item/surgery_tray/craftable
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
 	)

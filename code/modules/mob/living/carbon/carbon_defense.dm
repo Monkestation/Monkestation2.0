@@ -410,7 +410,7 @@
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper)
 	if(on_fire)
-		if(!HAS_TRAIT(helper, TRAIT_NOFIRE) || helper == src)
+		if(!HAS_TRAIT(helper, TRAIT_NOFIRE) || HAS_TRAIT(helper, TRAIT_SUPPRESS_NOFIRE) || helper == src)
 			to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
 			return
 		if(DOING_INTERACTION(helper, DOAFTER_SOURCE_EXTINGUISHING_HUG))
@@ -702,15 +702,6 @@
 			hit_clothes = head
 		if(hit_clothes)
 			hit_clothes.take_damage(damage_amount, damage_type, damage_flag, 0)
-
-/mob/living/carbon/can_hear()
-	. = FALSE
-	var/obj/item/organ/internal/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
-	if(ears && !HAS_TRAIT(src, TRAIT_DEAF))
-		. = TRUE
-	if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NOHARDCRIT))
-		. = FALSE
-
 
 /mob/living/carbon/adjustOxyLoss(amount, updating_health = TRUE, forced, required_biotype, required_respiration_type)
 	. = ..()

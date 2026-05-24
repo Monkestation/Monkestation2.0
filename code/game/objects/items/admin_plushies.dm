@@ -791,3 +791,18 @@
 	if(grenade && !grenade.active)
 		user.log_message("activated a hidden grenade in [src].", LOG_VICTIM)
 		grenade.arm_grenade(user, msg = FALSE, volume = 10)
+
+/obj/item/toy/plush/admin/rem
+	name = "Rem Plushie"
+	desc = "A plushie of Rem!"
+	icon_state = "remplushie"
+	gender = NEUTER
+
+/datum/loadout_item/plushies/rem
+	name = "Rem Plushie"
+	item_path = /obj/item/toy/plush/admin/rem
+
+/datum/store_item/plushies/rem
+	name = "Rem Plushie"
+	item_path = /obj/item/toy/plush/admin/rem
+	item_cost = 50000

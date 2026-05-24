@@ -22,13 +22,13 @@
 
 
 ///returns nothing with an alert instead of the message if it contains something in the ic filter, and sanitizes normally if the name is fine. It returns nothing so it backs out of the input the same way as if you had entered nothing.
-/proc/sanitize_name(target, allow_numbers = FALSE, cap_after_symbols = TRUE)
+/proc/sanitize_name(target, allow_numbers = FALSE, cap_after_symbols = TRUE, mob/user = usr)
 	if(is_ic_filtered(target) || is_soft_ic_filtered(target))
-		tgui_alert(usr, "You cannot set a name that contains a word prohibited in IC chat!")
+		tgui_alert(user, "You cannot set a name that contains a word prohibited in IC chat!")
 		return ""
 	var/result = reject_bad_name(target, allow_numbers = allow_numbers, strict = TRUE, cap_after_symbols = cap_after_symbols)
 	if(!result)
-		tgui_alert(usr, "Invalid name.")
+		tgui_alert(user, "Invalid name.")
 		return ""
 	return sanitize(result)
 
@@ -1182,6 +1182,16 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 			. = "gigantic"
 		else
 			. = ""
+
+/proc/weight_class_to_tooltip(w_class)
+	switch(w_class)
+		if(WEIGHT_CLASS_TINY to WEIGHT_CLASS_SMALL)
+			return "This item can fit into pockets, boxes and backpacks."
+		if(WEIGHT_CLASS_NORMAL)
+			return "This item can fit into backpacks."
+		if(WEIGHT_CLASS_BULKY to WEIGHT_CLASS_GIGANTIC)
+			return "This item is too large to fit into any standard storage."
+	return ""
 
 /// Removes all non-alphanumerics from the text, keep in mind this can lead to id conflicts
 /proc/sanitize_css_class_name(name)

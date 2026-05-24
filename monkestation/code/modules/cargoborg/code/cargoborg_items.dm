@@ -320,40 +320,6 @@
 	construction_time = 12 SECONDS
 	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_CARGO)
 
-
-/obj/item/borg/upgrade/better_clamp
-	name = "improved integrated hydraulic clamp"
-	desc = "An improved hydraulic clamp that trades its storage quantity to allow for bigger packages to be picked up instead!"
-	icon_state = "cyborg_upgrade3"
-	require_model = TRUE
-	model_type = list(/obj/item/robot_model/cargo)
-	model_flags = BORG_MODEL_CARGO
-
-
-/obj/item/borg/upgrade/better_clamp/action(mob/living/silicon/robot/cyborg, user = usr)
-	. = ..()
-	if(!.)
-		return
-	var/obj/item/borg/hydraulic_clamp/better/big_clamp = locate() in cyborg.model.modules
-	if(big_clamp)
-		to_chat(user, span_warning("This cyborg is already equipped with an improved integrated hydraulic clamp!"))
-		return FALSE
-
-	big_clamp = new(cyborg.model)
-	cyborg.model.basic_modules += big_clamp
-	cyborg.model.add_module(big_clamp, FALSE, TRUE)
-
-
-/obj/item/borg/upgrade/better_clamp/deactivate(mob/living/silicon/robot/cyborg, user = usr)
-	. = ..()
-	if(!.)
-		return
-	var/obj/item/borg/hydraulic_clamp/better/big_clamp = locate() in cyborg.model.modules
-	if(big_clamp)
-		cyborg.model.remove_module(big_clamp, TRUE)
-
-
-
 /// The fabled paper plane crossbow and its hardlight paper planes.
 /obj/item/paperplane/syndicate/hardlight
 	name = "hardlight paper plane"
