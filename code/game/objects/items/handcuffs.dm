@@ -514,7 +514,7 @@
 
 	set_arm(!armed, user, FALSE)
 
-	user.visible_message(span_notice("[user] [is_expert ? "expertly " : " "][armed ? "arms" : "disarms"] \the [src]!"), span_notice("\The [src] is now [armed ? "armed" : "disarmed"]!"))
+	user.visible_message(span_notice("[user][is_expert ? " expertly " : " "][armed ? "arms" : "disarms"] \the [src]!"), span_notice("\The [src] is now [armed ? "armed" : "disarmed"]!"))
 
 /obj/item/restraints/legcuffs/beartrap/attempt_pickup(mob/user)
 	if(!armed)
@@ -539,7 +539,7 @@
 
 	set_arm(!armed, user, FALSE)
 
-	user.visible_message(span_notice("[user] [is_expert ? "expertly " : " "]disarms \the [src]!"), span_notice("\The [src] is now disarmed!"))
+	user.visible_message(span_notice("[user][is_expert ? " expertly " : " "]disarms \the [src]!"), span_notice("\The [src] is now disarmed!"))
 
 	set_arm(FALSE, user, FALSE)
 
