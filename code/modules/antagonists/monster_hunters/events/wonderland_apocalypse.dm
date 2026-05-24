@@ -244,7 +244,7 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	owner.take_overall_damage(brute = rand(5, 15))
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.vomit(lost_nutrition = 0, blood = TRUE, stun = FALSE, distance = prob(20) + 1, message = FALSE)
+		carbon_owner.vomit(lost_nutrition = 0, blood = TRUE, stun = FALSE, distance = prob(20) + 1, message = FALSE, force = TRUE)
 	owner.log_message("suffered recoil from using [logged_cause] due to the effects of [effect_name].", LOG_VICTIM)
 
 // subtype used for the temporary effect of the bloodsilver bullet
