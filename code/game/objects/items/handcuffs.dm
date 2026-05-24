@@ -711,6 +711,9 @@
 			return TRUE
 		else
 			return FALSE
+	var/obj/item/card/id/idcard = victim.get_idcard(FALSE)
+	if(istype(idcard, /obj/item/card/id/advanced/chameleon))
+		return FALSE
 	var/perpname = victim.get_face_name(victim.get_id_name())
 	var/datum/record/crew/record = find_record(perpname)
 	if(!record)
