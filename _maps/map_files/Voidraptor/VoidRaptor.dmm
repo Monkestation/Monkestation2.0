@@ -2423,6 +2423,7 @@
 	pixel_y = 20
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/drain,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "aKT" = (
@@ -2735,7 +2736,6 @@
 /area/station/engineering/gravity_generator)
 "aNG" = (
 /obj/structure/closet/secure_closet/hop,
-/obj/item/storage/box/silver_ids,
 /obj/item/storage/box/ids,
 /obj/machinery/light_switch/directional/north,
 /obj/machinery/firealarm/directional/west,
@@ -3549,7 +3549,7 @@
 /obj/structure/table/reinforced/rglass,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/door/firedoor,
-/obj/item/reagent_containers/hypospray/medipen{
+/obj/item/reagent_containers/medipen{
 	pixel_y = 16
 	},
 /obj/machinery/door/poddoor/shutters/window/preopen{
@@ -18402,7 +18402,7 @@
 	},
 /obj/item/reagent_containers/cup/bottle/epinephrine,
 /obj/item/reagent_containers/syringe,
-/obj/item/reagent_containers/hypospray/medipen{
+/obj/item/reagent_containers/medipen{
 	pixel_y = 16
 	},
 /obj/machinery/door/window/right/directional/west{
@@ -19942,7 +19942,7 @@
 /area/station/engineering/atmos)
 "fLo" = (
 /obj/structure/closet/crate/trashcart/laundry,
-/obj/item/reagent_containers/hypospray/medipen,
+/obj/item/reagent_containers/medipen,
 /obj/item/toy/crayon/spraycan,
 /obj/effect/spawner/random/contraband/prison,
 /obj/item/radio/intercom/prison/directional/north,
@@ -21488,6 +21488,7 @@
 	pixel_y = 20
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/drain,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "giM" = (
@@ -24249,6 +24250,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/supermatter/room)
 "gVD" = (
+/obj/structure/closet{
+	name = "janitorial supplies"
+	},
+/obj/item/pushbroom,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/morgue)
 "gVG" = (
@@ -81975,6 +81980,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/small,
 /area/station/commons/dorms)
+"wGC" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/machinery/component_printer,
+/turf/open/floor/iron/freezer,
+/area/station/medical/chemistry)
 "wGI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -117410,7 +117422,7 @@ tfc
 uYj
 hKm
 gTX
-cyc
+wGC
 cyc
 cyc
 cGX

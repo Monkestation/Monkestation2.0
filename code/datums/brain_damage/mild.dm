@@ -237,7 +237,7 @@
 	var/list/speak_dejavu = list()
 
 /datum/brain_trauma/mild/mind_echo/handle_hearing(datum/source, list/hearing_args)
-	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER])
+	if(HAS_TRAIT(owner, TRAIT_DEAF) || owner == hearing_args[HEARING_SPEAKER])
 		return
 
 	if(length(hear_dejavu) >= 5)
@@ -339,6 +339,7 @@
 	scan_desc = "advertisement echolalia"
 	gain_text = span_warning("You feel the need to mimic advertisements.")
 	lose_text = span_notice("You no longer feel the need to mimic advertisements.")
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/advert_force_speak/on_gain()
 	src.owner.AddComponentFrom(REF(src), /datum/component/advert_force_speak, rand(1 MINUTE))

@@ -3,11 +3,17 @@
 /// This migration transfers the player's existing preferences into the new toggles
 
 /datum/preferences/proc/migrate_legacy_sound_toggles(savefile/savefile)
-	write_preference(GLOB.preference_entries[/datum/preference/toggle/sound_ambience], toggles & 1<<2)
-	write_preference(GLOB.preference_entries[/datum/preference/toggle/sound_announcements], toggles & 1<<11)
+	if(!(toggles & 1<<2))
+		channel_volume["[CHANNEL_AMBIENCE]"] = 0
+	if(!(toggles & 1<<3))
+		channel_volume["[CHANNEL_LOBBYMUSIC]"] = 0
+	if(!(toggles & 1<<8))
+		channel_volume["[CHANNEL_BUZZ]"] = 0
+	if(!(toggles & 1<<11))
+		channel_volume["[CHANNEL_ANNOUNCEMENTS]"] = 0
+	if(!(toggles & 1<<7))
+		channel_volume["[CHANNEL_INSTRUMENTS]"] = 0
+		channel_volume["[CHANNEL_INSTRUMENTS_ROBOT]"] = 0
+	if(!(toggles & 1<<1))
+		channel_volume["[CHANNEL_ADMIN]"] = 0
 	write_preference(GLOB.preference_entries[/datum/preference/toggle/sound_combatmode], toggles & 1<<22)
-	write_preference(GLOB.preference_entries[/datum/preference/toggle/sound_endofround], toggles & 1<<20)
-	write_preference(GLOB.preference_entries[/datum/preference/toggle/sound_instruments], toggles & 1<<7)
-	write_preference(GLOB.preference_entries[/datum/preference/toggle/sound_lobby], toggles & 1<<3)
-	write_preference(GLOB.preference_entries[/datum/preference/toggle/sound_midi], toggles & 1<<1)
-	write_preference(GLOB.preference_entries[/datum/preference/toggle/sound_ship_ambience], toggles & 1<<8)

@@ -123,11 +123,11 @@
 
 /obj/item/clothing/gloves/latex/nitrile/deforest
 	name = "Deforest Gloves"
-	desc = "A pair of high-visibility gloves designed by Deforest Medical for search and rescue, reinforced with thicker cut-resistant fabrics and lined with a heat insulation layer, these gloves can hold their own in most environments."
+	desc = "A pair of high-visibility gloves designed by Deforest Medical for search and rescue, reinforced with thicker cut-resistant fabrics and lined with a heat insulation layer, these gloves can hold their own in most environments. A special neural lining increases the medical skill of the wearer similar to that of advanced latex gloves."
 	icon_state = "hivisgloves"
 
 /obj/item/clothing/gloves/latex/nitrile/deforest/cosmetic
-	desc = "A pair of high-visibility gloves designed by Deforest Medical, made without anything special. They do not confer any benefits to the wearer"
+	desc = "A pair of high-visibility gloves designed by Deforest Medical for search and rescue, reinforced with thicker cut-resistant fabrics and lined with a heat insulation layer, these gloves can hold their own in most environments. This variant lacks the neural lining and does not increase wearer skill."
 	clothing_traits = NONE
 
 /obj/item/clothing/gloves/tinkerer

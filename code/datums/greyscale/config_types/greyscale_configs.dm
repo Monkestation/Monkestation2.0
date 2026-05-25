@@ -1182,6 +1182,36 @@
 	icon_file = 'monkestation/icons/mob/clothing/suit.dmi'
 	json_config = 'code/datums/greyscale/json_configs/tailcoat_bar_worn.json'
 
+/datum/greyscale_config/lava_cat_robe
+	name = "Lava Cat Robe"
+	icon_file ='monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	json_config = 'code/datums/greyscale/json_configs/lava_cat_robe.json'
+
+/datum/greyscale_config/lava_cat_robe/worn
+	name = "Worn Lava Cat Robe"
+	icon_file = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	json_config = 'code/datums/greyscale/json_configs/lava_cat_robe_worn.json'
+
+/datum/greyscale_config/lava_cat_hood
+	name = "Lava Cat Hood"
+	icon_file ='monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	json_config = 'code/datums/greyscale/json_configs/lava_cat_hood.json'
+
+/datum/greyscale_config/lava_cat_hood/worn
+	name = "Worn Lava Cat Hood"
+	icon_file = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	json_config = 'code/datums/greyscale/json_configs/lava_cat_hood_worn.json'
+
+/datum/greyscale_config/lava_cat_robe/inhand_left
+	name = "Lava Cat Hood"
+	icon_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/lava_cat_lefthand.json'
+
+/datum/greyscale_config/lava_cat_robe/inhand_right
+	name = "Lava Cat Hood"
+	icon_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/lava_cat_righthand.json'
+
 // JUMPSUITS
 /datum/greyscale_config/bunnysuit
 	name = "Worn Bunny Suit"

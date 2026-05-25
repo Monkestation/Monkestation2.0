@@ -226,7 +226,8 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 			. += door_overlay
 			door_overlay.overlays += emissive_blocker(door_overlay.icon, door_overlay.icon_state, src, alpha = door_overlay.alpha) // If we don't do this the door doesn't block emissives and it looks weird.
 		else if(has_closed_overlay)
-			. += "[icon_door || overlay_state]_door"
+			var/mutable_appearance/door_overlay = mutable_appearance(icon, "[icon_door || overlay_state]_door", alpha = src.alpha)
+			. += door_overlay
 
 	if(opened)
 		return
@@ -316,7 +317,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	if(id_card)
 		. += span_notice("It can be [EXAMINE_HINT("marked")] with a pen.")
 	if(can_weld_shut && !welded)
-		. += span_notice("Its can be [EXAMINE_HINT("welded")] shut.")
+		. += span_notice("It can be [EXAMINE_HINT("welded")] shut.")
 	if(welded)
 		. += span_notice("Its [EXAMINE_HINT("welded")] shut.")
 	if(anchorable && !anchored)
@@ -324,7 +325,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	if(anchored)
 		. += span_notice("Its [EXAMINE_HINT("bolted")] to the ground.")
 	if(length(paint_jobs))
-		. += span_notice("It can be [EXAMINE_HINT("painted")] another texture.")
+		. += span_notice("It can be [EXAMINE_HINT("painted")] another texture with an [EXAMINE_HINT("airlock painter")].")
 	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
 		. += span_notice("If you bump into [p_them()] while running, you will jump inside.")
 

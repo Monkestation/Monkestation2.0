@@ -252,13 +252,13 @@
  */
 /mob/living/carbon/heal_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype = NONE, target_zone = null)
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute, burn, required_bodytype, target_zone)
-	if(!parts.len)
+	if(!length(parts))
 		return
 	var/obj/item/bodypart/picked = pick(parts)
-	var/damage_calculator = picked.get_damage(TRUE) //heal_damage returns update status T/F instead of amount healed so we dance gracefully around this
-	if(picked.heal_damage(brute, burn, required_bodytype, updating_health))
+	var/damage_calculator = picked.get_damage() //heal_damage returns update status T/F instead of amount healed so we dance gracefully around this
+	if(picked.heal_damage(abs(brute), abs(burn), required_bodytype, updating_health))
 		update_damage_overlays()
-	return max(damage_calculator - picked.get_damage(TRUE), 0)
+	return max(damage_calculator - picked.get_damage(), 0)
 
 
 /**
@@ -270,49 +270,64 @@
  */
 /mob/living/carbon/take_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype, check_armor = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE)
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts(required_bodytype)
-	if(!parts.len)
+	if(!length(parts))
 		return
 	var/obj/item/bodypart/picked = pick(parts)
-	if(picked.receive_damage(brute, burn, check_armor ? run_armor_check(picked, (brute ? MELEE : burn ? FIRE : null)) : FALSE, updating_health, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
+	var/damage_calculator = picked.get_damage()
+	if(picked.receive_damage(abs(brute), abs(burn), check_armor ? run_armor_check(picked, (brute ? MELEE : burn ? FIRE : null)) : FALSE, updating_health, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 		update_damage_overlays()
+	return (damage_calculator - picked.get_damage())
 
 ///Heal MANY bodyparts, in random order
 /mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_bodytype, updating_health = TRUE)
+	. = FALSE
+	// treat negative args as positive
+	brute = abs(brute)
+	burn = abs(burn)
+
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute, burn, required_bodytype)
 
 	var/update = NONE
-	while(parts.len && (brute > 0 || burn > 0))
+	while(length(parts) && (brute > 0 || burn > 0))
 		var/obj/item/bodypart/picked = pick(parts)
 
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
 
+		. += picked.get_damage()
+
 		update |= picked.heal_damage(brute, burn, required_bodytype, FALSE)
+
+		. -= picked.get_damage() // return the net amount of damage healed
 
 		brute = round(brute - (brute_was - picked.brute_dam), DAMAGE_PRECISION)
 		burn = round(burn - (burn_was - picked.burn_dam), DAMAGE_PRECISION)
 
 		parts -= picked
-	if(updating_health)
+	if(. && updating_health)
 		updatehealth()
 	if(update)
 		update_damage_overlays()
 
 /// damage MANY bodyparts, in random order
 /mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_bodytype)
+	. = FALSE
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return //godmode
+	// treat negative args as positive
+	brute = abs(brute)
+	burn = abs(burn)
 
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts(required_bodytype)
-	var/update = 0
-	while(parts.len && (brute > 0 || burn > 0))
+	var/update = NONE
+	while(length(parts) && (brute > 0 || burn > 0))
 		var/obj/item/bodypart/picked = pick(parts)
 		var/brute_per_part = round(brute/parts.len, DAMAGE_PRECISION)
 		var/burn_per_part = round(burn/parts.len, DAMAGE_PRECISION)
 
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
-
+		. += picked.get_damage()
 
 		update |= picked.receive_damage(
 			brute_per_part,
@@ -323,11 +338,13 @@
 			wound_bonus = CANT_WOUND, // disabling wounds from these for now cuz your entire body snapping cause your heart stopped would suck
 		)
 
+		. -= picked.get_damage() // return the net amount of damage taken
+
 		brute = round(brute - (picked.brute_dam - brute_was), DAMAGE_PRECISION)
 		burn = round(burn - (picked.burn_dam - burn_was), DAMAGE_PRECISION)
 
 		parts -= picked
-	if(updating_health)
+	if(. && updating_health)
 		updatehealth()
 	if(update)
 		update_damage_overlays()

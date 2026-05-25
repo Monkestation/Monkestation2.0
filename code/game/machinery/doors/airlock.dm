@@ -55,13 +55,6 @@
 
 // Wires for the airlock are located in the datum folder, inside the wires datum folder.
 
-#define AIRLOCK_CLOSED 1
-#define AIRLOCK_CLOSING 2
-#define AIRLOCK_OPEN 3
-#define AIRLOCK_OPENING 4
-#define AIRLOCK_DENY 5
-#define AIRLOCK_EMAG 6
-
 #define AIRLOCK_FRAME_CLOSED "closed"
 #define AIRLOCK_FRAME_CLOSING "closing"
 #define AIRLOCK_FRAME_OPEN "open"
@@ -330,11 +323,12 @@
 	diag_hud.remove_atom_from_hud(src)
 	return ..()
 
-/obj/machinery/door/airlock/handle_atom_del(atom/A)
-	if(A == note)
+/obj/machinery/door/airlock/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == note)
 		note = null
 		update_appearance()
-	if(A == seal)
+	if(gone == seal)
 		seal = null
 		update_appearance()
 
@@ -1494,9 +1488,10 @@
 /obj/machinery/door/airlock/proc/prison_open()
 	if((obj_flags & EMAGGED) || is_probably_external_airlock()) // monkestation edit: STOP SPACING ENGI
 		return
-	locked = FALSE
+	if(locked)
+		unbolt()
 	open()
-	locked = TRUE
+	bolt()
 	return
 
 // gets called when a player uses an airlock painter on this airlock
@@ -2594,14 +2589,6 @@
 	set_density(TRUE)
 	operating = FALSE
 	return TRUE
-
-
-#undef AIRLOCK_CLOSED
-#undef AIRLOCK_CLOSING
-#undef AIRLOCK_OPEN
-#undef AIRLOCK_OPENING
-#undef AIRLOCK_DENY
-#undef AIRLOCK_EMAG
 
 #undef AIRLOCK_SECURITY_NONE
 #undef AIRLOCK_SECURITY_IRON

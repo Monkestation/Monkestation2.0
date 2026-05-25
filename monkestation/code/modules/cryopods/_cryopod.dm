@@ -335,6 +335,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 					update_objective.owner.announce_objectives()
 			qdel(objective)
 
+	SEND_SIGNAL(mob_occupant.mind, COMSIG_MIND_CRYOED, mob_occupant)
+
 /// This function can not be undone; do not call this unless you are sure.
 /// Handles despawning the player.
 /obj/machinery/cryopod/proc/despawn_occupant()
@@ -404,6 +406,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	visible_message(span_notice("[src] hums and hisses as it moves [mob_occupant.real_name] into storage."))
 
 	human_occupant?.save_persistent_scars(target_ckey = human_occupant.ckey || stored_ckey)
+	handle_objectives()
 
 	mob_occupant.ghostize(can_reenter_corpse = FALSE)
 	ADD_TRAIT(mob_occupant, TRAIT_NO_TRANSFORM, REF(src))
@@ -445,7 +448,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		if(account)
 			GLOB.lottery_ticket_owners -= account
 
-	handle_objectives()
 	QDEL_NULL(occupant)
 	open_machine()
 	name = initial(name)

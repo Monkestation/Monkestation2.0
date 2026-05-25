@@ -197,12 +197,12 @@
 	var/list/guardians = source.get_all_linked_holoparasites()
 	if(!length(guardians))
 		return
-	if(source.health <= HEALTH_THRESHOLD_DEAD)
+	if(source.health <= source.dead_threshold)
 		for(var/mob/guardian in guardians)
 			if(guardian.loc == src)
 				continue
 			consume_guardian(guardian)
-	else if(source.health > HEALTH_THRESHOLD_CRIT)
+	else if(source.health > source.crit_threshold)
 		for(var/mob/guardian in guardians)
 			if(guardian.loc != src)
 				continue
@@ -710,7 +710,7 @@
 
 /obj/item/clothing/suit/hooded/berserker/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, ALL, inventory_flags = ITEM_SLOT_OCLOTHING)
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE_MIND, inventory_flags = ITEM_SLOT_OCLOTHING)
 	AddComponent(/datum/component/armor_plate, maxamount = 1, upgrade_item = /obj/item/drake_remains, armor_mod = /datum/armor/drake_empowerment, upgrade_prefix = "empowered")
 	allowed = GLOB.mining_suit_allowed
 

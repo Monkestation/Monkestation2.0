@@ -18,8 +18,12 @@
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	bodytemp_cold_damage_limit = -1
 	bodytemp_heat_damage_limit = INFINITY
-	vision_range = 5
+	vision_range = 4
 	aggro_vision_range = 18
+	// Pale purple, should be red enough to see stuff on lavaland
+	lighting_cutoff_red = 25
+	lighting_cutoff_green = 15
+	lighting_cutoff_blue = 35
 	move_force = MOVE_FORCE_OVERPOWERING
 	move_resist = MOVE_FORCE_OVERPOWERING
 	pull_force = MOVE_FORCE_OVERPOWERING
@@ -53,6 +57,13 @@
 	var/list/attack_action_types = list()
 	///any delay before we start attacking something near us
 	var/attack_delay = 0.25 SECONDS
+	// MONKESTATION EDIT ADDITION START -- Megafauna warnings
+	/// The list of players we have warned [mob.tag = world.time]
+	var/alist/warned_players = list()
+	var/rawr_sound = 'sound/creatures/space_dragon_roar.ogg'
+	/// The cooldown of our roar
+	COOLDOWN_DECLARE(rawr_cooldown)
+	// MONKESTATION EDIT ADDITION END
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
@@ -130,7 +141,7 @@
 	if(!isliving(target))
 		return
 	var/mob/living/living_target = target
-	if(living_target.stat == DEAD || (living_target.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(living_target, TRAIT_NODEATH)))
+	if(living_target.stat == DEAD || (living_target.health <= living_target.dead_threshold && HAS_TRAIT(living_target, TRAIT_NODEATH)))
 		devour(living_target)
 		return
 	if(isnull(client) && ranged && ranged_cooldown <= world.time)
@@ -179,6 +190,43 @@
 
 		if (EXPLODE_LIGHT)
 			adjustBruteLoss(50)
+
+// MONKESTATION EDIT ADDITION START
+// This on purpose does not call parent, do not make it call parent, we literally use NOTHING from our parents, we're fine.
+/mob/living/simple_animal/hostile/megafauna/Life(seconds_per_tick, times_fired)
+	if(AIStatus != AI_IDLE || !COOLDOWN_FINISHED(src, rawr_cooldown))
+		return
+
+	var/list/targets = ListTargets()
+	var/list/actual_targets = list()
+	for(var/mob/target as anything in targets)
+		if(isliving(target) && target.stat != DEAD && !faction_check_atom(target))
+			actual_targets += target
+
+	if(!length(actual_targets))
+		return
+
+	var/mob/living/target = pick(actual_targets)
+	if(warned_players[target.tag] && warned_players[target.tag] < world.time + (20 SECONDS))
+		warned_players.Cut()
+		toggle_ai(AI_ON)
+		FindTarget(list(target))
+		return
+
+	warn_players(actual_targets)
+	for(var/mob/living/warn_target as anything in actual_targets)
+		warned_players[warn_target.tag] = world.time
+	COOLDOWN_START(src, rawr_cooldown, 3 SECONDS)
+
+/mob/living/simple_animal/hostile/megafauna/proc/warn_players(list/targets)
+	playsound(src, rawr_sound, 100, extrarange = 5, falloff_distance = (vision_range + 2))
+	for(var/mob/living/shake_target as anything in targets)
+		shake_camera(shake_target, 2 SECONDS)
+	if(prob(0.1))
+		visible_message(span_userdanger("[src] roars loudly, visibly being annoyed with your presence!"))
+		return
+	visible_message(span_userdanger("[src] roars loudly!"))
+// MONKESTATION EDIT ADDITION END
 
 /// Sets/adds the next time the megafauna can use a melee or ranged attack, in deciseconds. It is a list to allow using named args. Use the ignore_staggered var if youre setting the cooldown to ranged_cooldown_time.
 /mob/living/simple_animal/hostile/megafauna/proc/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)

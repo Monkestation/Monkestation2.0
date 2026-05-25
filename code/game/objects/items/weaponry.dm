@@ -121,6 +121,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	max_integrity = 200
 	armor_type = /datum/armor/item_claymore
 	resistance_flags = FIRE_PROOF
+	tool_behaviour = TOOL_KNIFE // what is a sword but a big knife
 
 /datum/armor/item_claymore
 	fire = 100
@@ -426,7 +427,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 2
 	throwforce = 10 //10 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = 18 damage on hit due to guaranteed embedding
 	throw_speed = 4
-	embedding = list("pain_mult" = 4, "embed_chance" = 100, "fall_chance" = 0)
+	embed_type = /datum/embedding/throwing_star
 	armour_penetration = 75
 
 	w_class = WEIGHT_CLASS_SMALL
@@ -434,11 +435,22 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 5)
 	resistance_flags = FIRE_PROOF
 
+/datum/embedding/throwing_star
+	pain_mult = 4
+	embed_chance = 100
+	fall_chance = 0
+
 /obj/item/throwing_star/stamina
 	name = "shock throwing star"
 	desc = "An aerodynamic disc designed to cause excruciating pain when stuck inside fleeing targets, hopefully without causing fatal harm."
 	throwforce = 5
-	embedding = list("pain_chance" = 5, "embed_chance" = 100, "fall_chance" = 0, "jostle_chance" = 10, "pain_stam_pct" = 0.8, "jostle_pain_mult" = 3)
+	embed_type = /datum/embedding/throwing_star/stamina
+
+/datum/embedding/throwing_star/stamina
+	pain_mult = 5
+	jostle_chance = 10
+	pain_stam_pct = 0.8
+	jostle_pain_mult = 3
 
 /obj/item/throwing_star/toy
 	name = "toy throwing star"
@@ -446,7 +458,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sharpness = NONE
 	force = 0
 	throwforce = 0
-	embedding = list("pain_mult" = 0, "jostle_pain_mult" = 0, "embed_chance" = 100, "fall_chance" = 0)
+	embed_type = /datum/embedding/throwing_star/toy
+
+/datum/embedding/throwing_star/toy
+	pain_mult = 0
+	jostle_pain_mult = 0
 
 /obj/item/switchblade
 	name = "switchblade"
@@ -1067,7 +1083,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 25
 	throw_speed = 4
 	attack_speed = CLICK_CD_HYPER_RAPID
-	embedding = list("embed_chance" = 100)
+	embed_type = /datum/embedding/hfr_blade
 	block_chance = 25
 	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
@@ -1081,6 +1097,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/previous_y
 	/// The previous target we attacked
 	var/datum/weakref/previous_target
+
+/datum/embedding/hfr_blade
+	embed_chance = 100
 
 /obj/item/highfrequencyblade/Initialize(mapload)
 	. = ..()

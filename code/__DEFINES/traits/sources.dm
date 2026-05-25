@@ -23,11 +23,13 @@
 /// cannot be removed without admin intervention
 #define ROUNDSTART_TRAIT "roundstart"
 #define JOB_TRAIT "job"
+/// Trait given by cyborg actively holding it.
 #define CYBORG_ITEM_TRAIT "cyborg-item"
 /// Any traits granted by quirks.
 #define QUIRK_TRAIT "quirk_trait"
 /// (B)admins only.
 #define ADMIN_TRAIT "admin"
+#define DEVIL_TRAIT "devil"
 /// Any traits given through a smite.
 #define SMITE_TRAIT "smite"
 #define CHANGELING_TRAIT "changeling"
@@ -101,6 +103,10 @@
 /// Trait given by joining as a crewmember
 #define CREW_JOIN_TRAIT "crew_join_trait"
 
+//---- Heretic Traits Sources
+/// Traits given by the heretic arena spell
+#define HERETIC_ARENA_TRAIT "heretic_arena"
+
 /// Trait given to you by shapeshifting
 #define SHAPESHIFT_TRAIT "shapeshift_trait"
 
@@ -113,6 +119,7 @@
 #define GENETICS_SPELL "genetics_spell"
 #define EYES_COVERED "eyes_covered"
 #define NO_EYES "no_eyes"
+#define NO_EARS "no_ears"
 #define HYPNOCHAIR_TRAIT "hypnochair"
 #define FLASHLIGHT_EYES "flashlight_eyes"
 #define IMPURE_OCULINE "impure_oculine"
@@ -295,3 +302,9 @@
 
 /// Trait added by battle royale
 #define BATTLE_ROYALE_TRAIT "battle_royale"
+
+/// Trait gained by a guardian who is recalled
+#define GUARDIAN_RECALLED "guardian_recalled"
+
+/// Trait aquired from being painted a certain color
+#define ATOM_COLOR_TRAIT "atom_color"

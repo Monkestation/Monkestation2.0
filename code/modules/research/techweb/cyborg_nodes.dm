@@ -13,7 +13,6 @@
 		"borg_suit",
 		"borg_upgrade_rename",
 		"borg_upgrade_restart",
-		"borgupload",
 		"cyborgrecharger",
 		"mmi",
 		"robocontrol",
@@ -48,8 +47,8 @@
 		"borg_upgrade_expandedsynthesiser",
 		"borg_upgrade_piercinghypospray",
 		"borg_upgrade_pinpointer",
-		"borg_upgrade_surgicalprocessor",
-		"borg_upgrade_surgicaltools", //Monke edit: Might need to move this one to the same research node as cybernetic surgical toolset for balance.
+		"borg_upgrade_surgical_database",
+		"borg_upgrade_surgicalomnitool",
 		"borg_upgrade_advanalyzer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
@@ -129,9 +128,7 @@
 	design_ids = list(
 		"ci-antidrop",
 		"ci-antistun",
-		"ci-thermals",
-		"ci-thrusters",
-		"ci-xray",
+		"ci-thrusters"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
@@ -201,6 +198,23 @@
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/cyber_organs_upgraded/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_DISCOUNT_MINOR)
+
+/datum/techweb_node/illegal_combat_implants
+	id = "illegal_combat_implants"
+	display_name = "Illegal Combat Cybernetic Implants"
+	description = "Illegal military grade combat implants to improve performance."
+	prereq_ids = list("combat_cyber_implants", "syndicate_basic")
+	design_ids = list(
+		"ci-thermals",
+		"ci-xray"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
+
+/datum/techweb_node/illegal_combat_implants/New()
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_DISCOUNT_MINOR)

@@ -356,12 +356,12 @@
 /mob/living/silicon/ai/get_status_tab_items()
 	. = ..()
 	if(stat != CONSCIOUS)
-		. += "Systems nonfunctional"
+		. += list(list("Systems nonfunctional"))
 		return
-	. += "System integrity: [(health + 100) * 0.5]%"
+	. += list(list("System integrity: [(health + 100) * 0.5]%"))
 	if(isturf(loc)) //only show if we're "in" a core
-		. += "Backup Power: [battery * 0.5]%"
-	. += "Connected cyborgs: [length(connected_robots)]"
+		. += list(list("Backup Power: [battery * 0.5]%"))
+	. += list(list("Connected cyborgs: [length(connected_robots)]"))
 	for(var/r in connected_robots)
 		var/mob/living/silicon/robot/connected_robot = r
 		var/robot_status = "Nominal"
@@ -372,10 +372,14 @@
 		else if(!connected_robot.cell || connected_robot.cell.charge <= 0)
 			robot_status = "DEPOWERED"
 		//Name, Health, Battery, Model, Area, and Status! Everything an AI wants to know about its borgies!
-		. += "[connected_robot.name] | S.Integrity: [connected_robot.health]% | Cell: [connected_robot.cell ? "[connected_robot.cell.charge]/[connected_robot.cell.maxcharge]" : "Empty"] | \
-		Model: [connected_robot.designation] | Loc: [get_area_name(connected_robot, TRUE)] | Status: [robot_status]"
-
-	// monkestation edit start PR #5133
+		. += list(list("[connected_robot.name]: ",
+			"S.Integrity: [connected_robot.health]% | \
+			Cell: [connected_robot.cell ? "[display_energy(connected_robot.cell.charge)]/[display_energy(connected_robot.cell.maxcharge)]" : "Empty"] | \
+			Model: [connected_robot.designation] | Loc: [get_area_name(connected_robot, TRUE)] | \
+			Status: [robot_status]",
+			"src=[REF(src)];track_cyborg=[text_ref(connected_robot)]",
+		))
+		// monkestation edit start PR #5133
 	var/connected_ipc_amt = length(connected_ipcs)
 	if(connected_ipc_amt)
 		. += "Connected IPCs: [connected_ipc_amt]"
@@ -384,10 +388,14 @@
 			if(connected_ipc.stat != CONSCIOUS || !connected_ipc.client)
 				robot_status = "OFFLINE"
 			//Name. Area, and Status! Everything an AI wants to know about its TV-heads!
-			. += "[connected_ipc.name] | S.Integrity: [connected_ipc.health]% | Loc: [get_area_name(connected_ipc, TRUE)] | Status: [robot_status]"
-	// monkestation edit end PR #5133
-
-	. += "AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]" //Count of total AI shells
+			. += list(list("[connected_ipc.name]: ",
+				"S.Integrity: [connected_ipc.health]% | \
+				Loc: [get_area_name(connected_ipc, TRUE)] | \
+				Status: [robot_status]",
+				"src=[REF(src)];track_ipc=[text_ref(connected_ipc)]",
+			))
+		// monkestation edit end PR #5133
+	. += list(list("AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]")) //Count of total AI shells
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
 	if(control_disabled)
@@ -546,7 +554,7 @@
 	if(usr != src)
 		return
 
-	if(href_list["emergencyAPC"]) //This check comes before incapacitated() because the only time it would be useful is when we have no power.
+	if(href_list["emergencyAPC"]) //This check comes before incapacitated because the only time it would be useful is when we have no power.
 		if(!apc_override)
 			to_chat(src, span_notice("APC backdoor is no longer available."))
 			return
@@ -556,6 +564,17 @@
 	if(incapacitated())
 		return
 
+
+	if(href_list["track_cyborg"])
+		var/mob/living/silicon/robot/cyborg = locate(href_list["track_cyborg"]) in connected_robots
+		if(!cyborg)
+			return
+		ai_tracking_tool.set_tracked_mob(cyborg)
+	if(href_list["track_ipc"])
+		var/mob/living/carbon/human/connected_ipc = locate(href_list["track_ipc"]) in connected_ipcs
+		if(!connected_ipc)
+			return
+		ai_tracking_tool.set_tracked_mob(connected_ipc)
 	if (href_list["mach_close"])
 		var/t1 = "window=[href_list["mach_close"]]"
 		unset_machine()

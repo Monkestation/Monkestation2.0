@@ -1,4 +1,0 @@
-author: "SirNightKnight"
-delete-after: True
-changes:
-  - bugfix: "fixed light replacers not being able to place lights in floodlight frames."

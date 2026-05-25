@@ -78,6 +78,8 @@
 	button_icon_state = "smoke"
 	cooldown_time = 0 SECONDS // We're here for the interface not the cooldown
 	click_to_activate = FALSE
+	/// Particle effect we use to show smoke
+	VAR_PRIVATE/obj/effect/abstract/particle_holder/mob_smoke
 	/// Gas being expelled.
 	var/active_gas = null
 	/// Associative list of types of gases to moles we create every life tick.
@@ -122,13 +124,10 @@
 	owner.investigate_log("set their gas type to [picked_gas].", INVESTIGATE_ATMOS)
 	var/had_gas = !isnull(active_gas)
 	active_gas = gas_type
-	if(isnull(owner.particles))
-		owner.particles = new /particles/smoke/steam()
-		owner.particles.position = list(-1, 8, 0)
-		owner.particles.fadein = 5
-		owner.particles.height = 200
+	if(isnull(mob_smoke))
+		mob_smoke = new(owner, /particles/smoke/steam/guardian)
 	//var/datum/gas/chosen_gas = active_gas // Casting it so that we can access gas vars in initial, it's still a typepath
-	owner.particles.color = COLOR_BLUE
+	mob_smoke.color = COLOR_BLUE
 	if (!had_gas)
 		RegisterSignal(owner, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
@@ -138,7 +137,7 @@
 	if (!isnull(active_gas))
 		to_chat(src, span_notice("You stop releasing gas."))
 	active_gas = null
-	QDEL_NULL(owner.particles)
+	QDEL_NULL(mob_smoke)
 	UnregisterSignal(owner, COMSIG_LIVING_LIFE)
 
 /// Release gas every life tick while active

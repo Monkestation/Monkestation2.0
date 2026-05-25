@@ -425,6 +425,11 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				return TRUE
 
 			scrubber.toggle_filters(params["val"])
+		if("toggle_all_filters")
+			if (isnull(scrubber))
+				return TRUE
+
+			scrubber.toggle_filters(GLOB.meta_gas_info)
 		if ("mode")
 			select_mode(user, text2path(params["mode"]))
 			investigate_log("was turned to [selected_mode.name] mode by [key_name(user)]", INVESTIGATE_ATMOS)

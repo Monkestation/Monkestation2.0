@@ -208,3 +208,8 @@
 	SIGNAL_HANDLER
 	if(new_stat != CONSCIOUS)
 		qdel(src)
+
+/datum/status_effect/bloodchill/changeling
+	id = "changeling_bloodchill"
+	duration = 10 SECONDS
+	alert_type = null

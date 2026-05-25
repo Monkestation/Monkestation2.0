@@ -351,6 +351,30 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/biocorrector
+	name = "Bio-corrector"
+	desc = "The latest medical prototype with a bone gel synthesizer. It sets bones, cleanses blood and lymph. The application of bone gel is possible only with invasive intervention."
+	id = "biocorrector"
+	build_path = /obj/item/blood_filter/advanced
+	build_type = PROTOLATHE | AWAY_LATHE | COLONY_FABRICATOR
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 4, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 2, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3)
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
+		)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/breathing_bag
+	name = "Ambu Bag"
+	desc = "Also known as a breathing bag, it is a mechanical manual device for performing artificial lung ventilation."
+	id = "breathing_bag"
+	build_path = /obj/item/breathing_bag
+	build_type = PROTOLATHE | AWAY_LATHE | COLONY_FABRICATOR
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
+		)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /datum/design/medical_spray_bottle
 	name = "Medical Spray Bottle"
 	desc = "A traditional spray bottle used to generate a fine mist. Not to be confused with a medspray."
@@ -446,7 +470,122 @@
 	id = "surgery_tray"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/silver =SHEET_MATERIAL_AMOUNT)
-	build_path = "/obj/item/surgery_tray/craftable"
+	build_path = /obj/item/surgery_tray/craftable
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/cup/vial
+	name = "Vial"
+	id = "vial"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/reagent_containers/cup/vial
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/large_vial
+	name = "Large Vial"
+	id = "large_vial"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/reagent_containers/cup/vial/large
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/hypospray
+	name = "Hypospray"
+	desc = "A sterile, air-needle autoinjector for rapid administration of drugs to patients."
+	id = "hypospray"
+	build_path = /obj/item/hypospray
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 3, /datum/material/plastic = SHEET_MATERIAL_AMOUNT, /datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/titanium = SHEET_MATERIAL_AMOUNT)
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/bluespacevial
+	name = "Bluespace Vial"
+	desc = "A small vial powered by experimental bluespace technology capable of holding 60 units."
+	id = "bluespacevial"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/plasma = SMALL_MATERIAL_AMOUNT, /datum/material/diamond = SMALL_MATERIAL_AMOUNT, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/reagent_containers/cup/vial/bluespace
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/hypo_pierce_upgrade
+	name = "Hypospray Piercing Upgrade"
+	desc = "A upgrade for hyposprays, allowing them to pierce thick clothing"
+	id = "hypo_pierce_upgrade"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SMALL_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/hypospray_upgrade/piercing
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/hypo_speed_upgrade
+	name = "Hypospray Speed Upgrade"
+	desc = "A upgrade for hyposprays, allowing them to work faster"
+	id = "hypo_speed_upgrade"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = SMALL_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/hypospray_upgrade/speed
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/hypo_nozzle_upgrade
+	name = "Hypospray Nozzle Upgrade"
+	desc = "A upgrade for hyposprays, allowing them to inject or apply more units at a time."
+	id = "hypo_nozzle_upgrade"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/hypospray_upgrade/nozzle
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/vial_box
+	name = "Vial Box"
+	desc = "A lockable box that can be used to store vials"
+	id = "vial_box"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/storage/lockbox/vialbox
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/crutch
+	name = "Medical Crutch"
+	id = "medical_crutch"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1,
+	)
+	build_path = /obj/item/cane/crutch
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
 	)

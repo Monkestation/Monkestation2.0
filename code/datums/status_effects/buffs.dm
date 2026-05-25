@@ -324,7 +324,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 
 /datum/status_effect/good_music/tick()
-	if(owner.can_hear())
+	if(!HAS_TRAIT(owner, TRAIT_DEAF))
 		owner.adjust_dizzy(-4 SECONDS)
 		owner.adjust_jitter(-4 SECONDS)
 		owner.adjust_confusion(-1 SECONDS)

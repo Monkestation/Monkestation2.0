@@ -935,7 +935,7 @@
 	item_path = /obj/item/clothing/glasses/hud/health/aviators
 	donator_only = TRUE
 	requires_purchase = FALSE
-	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_PARAMEDIC, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER)
+	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_PARAMEDIC, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER, JOB_BRIG_PHYSICIAN)
 
 /datum/loadout_item/glasses/diagnostic_aviators
 	name = "Diagnostic Aviators"
@@ -1091,5 +1091,82 @@
 /datum/loadout_item/mask/lobotomites_visage
 	name = "Lobotomite's Visage"
 	item_path = /obj/item/clothing/mask/gas/lobotomites_visage
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// Coll6
+/datum/loadout_item/suit/lava_cat_robe
+	name = "Lava Cat Robe"
+	item_path = /obj/item/clothing/suit/hooded/lava_cat_robe
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// Yatosamasensei
+/datum/loadout_item/suit/tsukihime_executor
+	name = "Executor Dress"
+	item_path = /obj/item/clothing/suit/costume/tsukihime_executor
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/plushies/kumoko_san
+	name = "Kumoku-San Plush"
+	item_path = /obj/item/toy/plush/kumoko_san
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/yato_neco_arc
+	name = "Pet Delivery Beacon - Neco-Arc"
+	item_path = /obj/item/choice_beacon/pet/donator/yato_neco_arc
+	ckeywhitelist = list("Yatosamasensei")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/effects/yato_neco_arc
+	name = "Neco-Arc Transformation"
+	item_path = /obj/item/effect_granter/donator/yato_neco_arc
+	ckeywhitelist = list("Yatosamasensei")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// Ravin Hobo
+/datum/loadout_item/neck/red_regal_mantle
+	name = "Red Regal Mantle"
+	item_path = /obj/item/clothing/suit/hooded/cloak/red_regal_mantle
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// Snackiversal
+/datum/loadout_item/neck/anchor_necklace
+	name = "Silver Anchor"
+	item_path = /obj/item/clothing/accessory/silver_anchor
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//thebonezone66
+/datum/loadout_item/neck/moth_cloak
+	name = "Prismatic Cloak"
+	item_path = /obj/item/clothing/neck/cloak/moth_cloak
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//Trox McYeet
+/datum/loadout_item/mask/le_froggo_mask
+	name = "Frog Mask"
+	item_path = /obj/item/clothing/mask/animal/frog
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//ZBunz
+/datum/loadout_item/pocket_items/donator/shark_axolotl
+	name = "Pet Delivery Beacon - Shark Axolotl"
+	item_path = /obj/item/choice_beacon/pet/donator/shark_axolotl
+	ckeywhitelist = list("ZBunz")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/effects/shark_axolotl
+	name = "Shark Axolotl Transformation"
+	item_path = /obj/item/effect_granter/donator/shark_axolotl
+	ckeywhitelist = list("ZBunz")
 	donator_only = TRUE
 	requires_purchase = FALSE

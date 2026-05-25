@@ -18,7 +18,8 @@
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/hypospray,
+		/obj/item/hypospray,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/gun/syringe,
@@ -152,13 +153,13 @@
 		deployable_type = /obj/item/clothing/head/hooded/winterhood/medical/deforest,\
 		equipped_slot = ITEM_SLOT_HEAD,\
 		action_name = "Toggle Hood",\
-		destroy_on_removal = TRUE,\
+		destroy_on_removal = FALSE,\
 		parent_icon_state_suffix = "",\
 		down_overlay_state_suffix = "", \
 	)
 
 /obj/item/clothing/head/hooded/winterhood/medical/deforest
-	name = "Hi-Vis Hood"
+	name = "Deforest Hood"
 	desc = "A high-visibility hood designed by Deforest Medical for search and rescue, wool lining and interwoven fabrics make this hood noticeably thick."
 	icon_state = "hivishood"
 	worn_icon = 'icons/mob/clothing/head/hats.dmi'
