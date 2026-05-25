@@ -9,7 +9,7 @@
 	muzzle_type = /obj/effect/projectile/muzzle/stun
 	impact_type = /obj/effect/projectile/impact/stun
 	/// How much stamina damage will the tase deal in 1 second
-	VAR_PROTECTED/tase_stamina = 40
+	VAR_PROTECTED/tase_stamina = 35
 	/// Electrodes that follow the projectile
 	VAR_PRIVATE/datum/weakref/beam_weakref
 	/// We need to track who was the ORIGINAL firer of the projectile specifically to ensure deflects work correctly
@@ -288,7 +288,7 @@
 
 	playsound(firer, 'monkestation/sound/effects/taser_charge.ogg', 45, TRUE, 1)
 
-	addtimer(CALLBACK(src, PROC_REF(start_tase)), 1 SECOND)
+	addtimer(CALLBACK(src, PROC_REF(start_tase)), 1.5 SECONDS)
 
 /datum/status_effect/tased/proc/start_tase()
 	if(!QDELETED(tase_line))
@@ -374,7 +374,7 @@
 		span_notice("You try to remove [electrode_name][remover == owner ? "" : " from [owner]"]!"),
 	)
 	// If embedding was less... difficult to work with, I would make tasers rely on an embedded object to handle this
-	if(!do_after(remover, 2 SECONDS, owner, extra_checks = CALLBACK(src, PROC_REF(try_remove_taser_checks)), interaction_key = id))
+	if(!do_after(remover, 1.5 SECONDS, owner, extra_checks = CALLBACK(src, PROC_REF(try_remove_taser_checks)), interaction_key = id))
 		return
 	remover.visible_message(
 		span_warning("[owner] removes [electrode_name] from [remover == owner ? "[owner.p_their()]" : "[owner]'s"] body!"),
