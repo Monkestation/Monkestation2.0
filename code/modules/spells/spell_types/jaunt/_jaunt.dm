@@ -85,7 +85,7 @@
 		RegisterSignal(jaunter, COMSIG_ATOM_INTERNAL_EXPLOSION, PROC_REF(poof), jaunter)
 	return jaunt
 
-/// If you try using chemical grenades or other methods to explode while invicible by jaunting, expect a consequence
+/// If you try using chemical grenades or other methods to explode while invincible by jaunting, expect a consequence
 /datum/action/cooldown/spell/jaunt/proc/poof(mob/living/jaunter)
 	SIGNAL_HANDLER
 
