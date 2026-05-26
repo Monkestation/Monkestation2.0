@@ -9,7 +9,7 @@
 	category = EVENT_CATEGORY_SPACE
 	description = "The station passes through an immovable rod."
 	min_wizard_trigger_potency = 6
-	max_wizard_trigger_potency = 7
+	max_wizard_trigger_potency = 100
 	admin_setup = list(/datum/event_admin_setup/set_location/immovable_rod, /datum/event_admin_setup/question/immovable_rod)
 	track = EVENT_TRACK_MODERATE
 	tags = list(TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_MAGICAL)

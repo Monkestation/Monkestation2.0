@@ -6,7 +6,7 @@
 	category = EVENT_CATEGORY_AI
 	description = "Gives the AI a new, randomized law."
 	min_wizard_trigger_potency = 2
-	max_wizard_trigger_potency = 7
+	max_wizard_trigger_potency = 100
 	track = EVENT_TRACK_MODERATE
 	tags = list(TAG_TARGETED, TAG_ALIEN)
 	event_group = /datum/event_group/bsod

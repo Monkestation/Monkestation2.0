@@ -15,6 +15,10 @@
 	if(on_reebe(owner))
 		if(!length(SSthe_ark.marked_areas))
 			return FALSE
+		if(ROUND_TIME_TICKS < 45 MINUTES && !length(SSthe_ark.anchoring_crystals)) //so cogscarabs dont instantly get the cult called out(and also actually build defenses)
+			to_chat(owner, span_brass("The ark is not yet connected enough to reality, either wait until an anchoring crystal is placed or 45 minutes into the shift."))
+			return FALSE
+
 		var/area/selection = tgui_input_list(owner, "Where do you want to warp?", "Warping", SSthe_ark.marked_areas)
 		if(!isarea(selection))
 			return FALSE
