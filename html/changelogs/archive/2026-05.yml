@@ -412,3 +412,7 @@
   - bugfix: Hopefully fixed infinitely stacking salt piles that would kill the FPS
       of anyone unfortunate enough to be nearby.
   - bugfix: Salt piles will no longer spawn in mid-air / on groundless turfs.
+2026-05-26:
+  SirNightKnight:
+  - balance: lowered the zip up time of regular bodybags to 0.5 seconds
+  - image: resprited the engineering hardsuit.
