@@ -1,0 +1,4 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - balance: "lowered the zip up time of regular bodybags to 0.5 seconds"
