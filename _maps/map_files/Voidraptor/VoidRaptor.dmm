@@ -22832,8 +22832,8 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/table,
 /obj/item/storage/box/lights/mixed,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metalfoam,
+/obj/item/grenade/chem_grenade/smart_metalfoam,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/atmos)
 "gAZ" = (
@@ -34211,18 +34211,18 @@
 	},
 /area/station/science/research)
 "jDE" = (
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = -4;
 	pixel_y = 6
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 4;
 	pixel_y = 2
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 8
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_y = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -38553,10 +38553,10 @@
 	pixel_y = 3
 	},
 /obj/item/stack/rods/fifty,
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_y = 3
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_y = 3
 	},
 /turf/open/floor/iron/textured,
@@ -51386,7 +51386,7 @@
 /obj/item/stack/sheet/plasteel/twenty,
 /obj/item/wrench,
 /obj/effect/turf_decal/bot,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metalfoam,
 /obj/item/crowbar/red,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10

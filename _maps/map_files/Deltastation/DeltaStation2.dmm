@@ -21263,9 +21263,9 @@
 /obj/item/storage/box/lights/mixed,
 /obj/item/storage/box/lights/mixed,
 /obj/item/storage/box/lights/mixed,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metalfoam,
+/obj/item/grenade/chem_grenade/smart_metalfoam,
+/obj/item/grenade/chem_grenade/smart_metalfoam,
 /obj/structure/cable/layer3,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -35852,8 +35852,8 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/crowbar,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metalfoam,
+/obj/item/grenade/chem_grenade/smart_metalfoam,
 /obj/structure/sign/poster/official/report_crimes/directional/north,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
@@ -61006,7 +61006,7 @@
 /obj/item/wrench,
 /obj/effect/turf_decal/bot,
 /obj/machinery/firealarm/directional/east,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metalfoam,
 /obj/item/crowbar/red,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
@@ -96008,18 +96008,18 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/airalarm/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = -4;
 	pixel_y = 6
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_y = 4
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 4;
 	pixel_y = 2
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 8
 	},
 /turf/open/floor/iron/dark,

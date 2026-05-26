@@ -355,6 +355,25 @@
 	if(welded)
 		. += icon_welded
 
+/obj/structure/closet/crate/trashcart/engineering/filled/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/storage/box/metalfoam = 2,
+		/obj/item/storage/box/large_oxygen_candles = 2,
+		/obj/item/storage/box/flares = 2,
+		/obj/item/pickaxe = 2,
+		/obj/item/storage/box/nanofrost = 1,
+		/obj/item/extinguisher = 2,
+		/obj/item/storage/medkit/o2 = 1,
+		/obj/item/stack/sheet/iron/fifty = 1,
+		/obj/item/stack/sheet/rods/fifty = 1,
+		/obj/item/stack/sheet/glass/fifty = 1,
+		/obj/item/stack/sheet/rglass/fifty = 1,
+		/obj/item/stack/sheet/plasteel/twenty = 1,
+		/obj/item/storage/box/lights/mixed = 1,
+		/obj/item/storage/toolbox/mechanical = 1,
+		/obj/item/storage/toolbox/electrical = 1,
+	))
+
 /obj/structure/closet/crate/trashcart/laundry
 	name = "laundry cart"
 	desc = "A large cart for hauling around large amounts of laundry."

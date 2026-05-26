@@ -9855,18 +9855,18 @@
 	dir = 8
 	},
 /obj/structure/rack,
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = -4;
 	pixel_y = 6
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 4;
 	pixel_y = 2
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 8
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_y = 4
 	},
 /obj/machinery/door/window/brigdoor/right/directional/west{
@@ -21090,8 +21090,8 @@
 /obj/item/t_scanner,
 /obj/item/t_scanner,
 /obj/item/t_scanner,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metalfoam,
+/obj/item/grenade/chem_grenade/smart_metalfoam,
 /obj/machinery/newscaster/directional/south,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/item/wrench,

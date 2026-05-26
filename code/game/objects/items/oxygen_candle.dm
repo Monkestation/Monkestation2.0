@@ -5,13 +5,17 @@
 	desc = "A steel tube with the words 'OXYGEN - PULL CORD TO IGNITE' stamped on the side.\nA small label reads <span class='warning'>'WARNING: NOT FOR LIGHTING USE. WILL IGNITE FLAMMABLE GASSES'</span>"
 	icon = 'icons/obj/atmospherics/oxygen_candle.dmi'
 	icon_state = "oxycandle"
+	base_icon_state = "oxycandle"
 	grind_results = list(/datum/reagent/sodium = 5, /datum/reagent/chlorine = 5, /datum/reagent/iron = 10, /datum/reagent/oxygen = 30)
 	w_class = WEIGHT_CLASS_SMALL
 	light_color = LIGHT_COLOR_LAVA // Very warm chemical burn
+	light_outer_range = 2
 	var/pulled = FALSE
-	var/processes_left = 50
+	/// how long does this burn for?
+	var/fuel = 1 MINUTE
 	var/oxygen_amount = 10
 	var/on_damage = 6
+	pressure_resistance = 20
 
 /obj/item/oxygen_candle/attack(mob/living/carbon/victim, mob/living/carbon/user)
 	if(!isliving(victim))
@@ -30,7 +34,7 @@
 		icon_state = "[base_icon_state]_burning"
 		pulled = TRUE
 		START_PROCESSING(SSobj, src)
-		set_light(2)
+		set_light_on(FALSE)
 		name = "lit [initial(name)]"
 		attack_verb_continuous = string_list(list("burns", "singes"))
 		attack_verb_simple = string_list(list("burn", "singe"))
@@ -38,15 +42,15 @@
 		force = on_damage
 		damtype = BURN
 
-/obj/item/oxygen_candle/process()
+/obj/item/oxygen_candle/process(seconds_per_tick)
 	var/turf/my_turf = get_turf(src)
 	if(!my_turf)
 		return
 	my_turf.hotspot_expose(500, 100)
 	my_turf.atmos_spawn_air("o2=[oxygen_amount];TEMP=[OXY_CANDLE_RELEASE_TEMP]")
-	processes_left--
-	if(processes_left <= 0)
-		set_light(0)
+	fuel = max(fuel - seconds_per_tick * (1 SECONDS), 0)
+	if(fuel <= 0)
+		set_light_on(FALSE)
 		STOP_PROCESSING(SSobj, src)
 		name = "burnt [initial(name)]"
 		icon_state = "[base_icon_state]_burnt"
@@ -65,10 +69,11 @@
 /obj/item/oxygen_candle/large
 	name = "large oxygen candle"
 	icon_state = "oxycandle_large"
+	base_icon_state = "oxycandle_large"
 	grind_results = list(/datum/reagent/sodium = 10, /datum/reagent/chlorine = 10, /datum/reagent/iron = 20, /datum/reagent/oxygen = 60)
 	light_color = LIGHT_COLOR_BABY_BLUE
-	processes_left = 100
-	oxygen_amount = 25
+	fuel = 5 MINUTES
+	oxygen_amount = 30
 	on_damage = 12
 
 #undef OXY_CANDLE_RELEASE_TEMP

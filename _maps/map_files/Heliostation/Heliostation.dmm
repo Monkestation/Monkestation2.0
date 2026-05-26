@@ -21633,7 +21633,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/storage/box/smart_metal_foam{
+/obj/item/storage/box/smart_metalfoam{
 	pixel_x = 5;
 	pixel_y = 8
 	},
@@ -53561,15 +53561,15 @@
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/effect/turf_decal/delivery,
 /obj/structure/table/reinforced,
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = -5;
 	pixel_y = 9
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 4;
 	pixel_y = 9
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = -4;
 	pixel_y = 5
 	},
@@ -68583,7 +68583,7 @@
 "sWF" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/bot,
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = -6;
 	pixel_y = 10
 	},
@@ -68595,11 +68595,11 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 1;
 	pixel_y = 9
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = -5;
 	pixel_y = 6
 	},

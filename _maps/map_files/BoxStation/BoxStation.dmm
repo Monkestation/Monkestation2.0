@@ -15625,14 +15625,14 @@
 	dir = 6
 	},
 /obj/structure/table,
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = -9;
 	pixel_y = 18
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_y = 18
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 9;
 	pixel_y = 18
 	},
@@ -55635,7 +55635,7 @@
 	},
 /obj/structure/sign/poster/official/safety_internals/directional/east,
 /obj/structure/table,
-/obj/item/storage/box/smart_metal_foam{
+/obj/item/storage/box/smart_metalfoam{
 	pixel_x = 4;
 	pixel_y = 7
 	},

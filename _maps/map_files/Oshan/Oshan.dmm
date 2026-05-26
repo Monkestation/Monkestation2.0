@@ -1940,19 +1940,19 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = -4;
 	pixel_y = 6
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 1;
 	pixel_y = 9
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 4;
 	pixel_y = 6
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_y = 3
 	},
 /obj/machinery/digital_clock/directional/east,
@@ -41609,7 +41609,7 @@
 /obj/structure/table/reinforced,
 /obj/item/wrench,
 /obj/item/crowbar,
-/obj/item/storage/box/smart_metal_foam,
+/obj/item/storage/box/smart_metalfoam,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8

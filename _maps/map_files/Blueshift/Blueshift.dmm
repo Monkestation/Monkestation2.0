@@ -9791,7 +9791,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/wrench,
 /obj/structure/table/reinforced,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metalfoam,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -81356,18 +81356,18 @@
 /obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 1
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = -4;
 	pixel_y = 6
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 4;
 	pixel_y = 2
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 8
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_y = 4
 	},
 /obj/structure/table/reinforced,
@@ -104005,11 +104005,11 @@
 "tZy" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/rack,
-/obj/item/storage/box/smart_metal_foam{
+/obj/item/storage/box/smart_metalfoam{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/box/smart_metal_foam,
+/obj/item/storage/box/smart_metalfoam,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/eva/upper)
