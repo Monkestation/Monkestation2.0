@@ -315,10 +315,11 @@
 	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	name = "foamed metal"
-	desc = "A lightweight foamed metal wall that can be used as base to construct a wall."
+	desc = "A lightweight foamed metal wall that can be used as a base to construct a wall."
 	gender = PLURAL
 	max_integrity = 20
 	can_atmos_pass = ATMOS_PASS_DENSITY
+	pass_flags_self = PASSCLOSEDTURF
 	obj_flags = CAN_BE_HIT | BLOCK_Z_IN_DOWN | BLOCK_Z_IN_UP
 	///Var used to prevent spamming of the construction sound
 	var/next_beep = 0
@@ -326,10 +327,13 @@
 /obj/structure/foamedmetal/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE, TRUE)
+	var/turf/open/location = loc
+	if(isspaceturf(location))
+		location.PlaceOnTop(/turf/open/floor/plating/foam)
 
 /obj/structure/foamedmetal/Destroy()
 	air_update_turf(TRUE, FALSE)
-	playsound(src, 'sound/weapons/genhit.ogg', 75, TRUE, -4)
+	playsound(src, 'sound/effects/crackshatter.ogg', 30, TRUE, -4)
 	. = ..()
 
 /obj/structure/foamedmetal/Move()
