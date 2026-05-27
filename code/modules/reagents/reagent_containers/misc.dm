@@ -357,18 +357,6 @@
 
 /obj/item/reagent_containers/cup/fuelcanister/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(istype(interacting_with, /obj/structure/reagent_dispensers/fueltank))
-		var/obj/structure/reagent_dispensers/fueltank/fuel_tank = interacting_with
-		if(!fuel_tank.reagents.has_reagent(/datum/reagent/fuel))
-			to_chat(user, span_warning("\The [fuel_tank] is out of fuel!"))
-			return ITEM_INTERACT_BLOCKING
-		if(reagents.total_volume >= reagents.maximum_volume)
-			to_chat(user, span_warning("Your [src] is already full!"))
-			return ITEM_INTERACT_BLOCKING
-		fuel_tank.reagents.trans_to(src, fuel_tank.tank_volume, transfered_by = user)
-		playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
-		return ITEM_INTERACT_SUCCESS
-
 	if(!(user.istate & ISTATE_HARM))
 		return
 	if(cap_on)
