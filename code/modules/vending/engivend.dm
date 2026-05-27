@@ -32,6 +32,7 @@
 		/obj/item/construction/rcd/loaded = 2,
 		/obj/item/grenade/chem_grenade/smart_metalfoam = 10,
 		/obj/item/storage/box/smart_metalfoam = 2,
+		/obj/item/storage/box/large_oxygen_candles = 2,
 	)
 	refill_canister = /obj/item/vending_refill/engivend
 	default_price = PAYCHECK_CREW
