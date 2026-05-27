@@ -19,27 +19,18 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
 
-	armor_type = /datum/armor/chaplainsuit_armor_weaker
-	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
+	armor_type = /datum/armor/chaplainsuit_archer_garb
 	strip_delay = 80
 	equip_delay_other = 60
 	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood/divine_archer
 	hood_up_affix = ""
-
-/datum/armor/chaplainsuit_armor_weaker
-	melee = 40
-	bullet = 5
-	laser = 5
-	energy = 5
-	fire = 60
-	acid = 60
-	wound = 10
 
 /// hood
 /obj/item/clothing/head/hooded/chaplain_hood/divine_archer
 	name = "divine archer hood"
 	desc = "A divine hood included, because have you ever got the sun in your eyes during archery? Oh, it's just the worst."
 	icon_state = "archerhood"
+	armor_type = /datum/armor/chaplainsuit_archer_garb
 
 /// gloves
 /obj/item/clothing/gloves/divine_archer

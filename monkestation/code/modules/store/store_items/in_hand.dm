@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(store_inhand_items, generate_store_items(/datum/store_item/inha
 
 /datum/store_item/inhand/umbrella
 	name = "Umbrella (recolorable)"
-	item_path = /obj/item/umbrella
+	item_path = /obj/item/umbrella/consistent
 	item_cost = 2000
 
 /datum/store_item/inhand/parasol

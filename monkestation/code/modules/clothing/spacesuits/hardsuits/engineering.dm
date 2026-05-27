@@ -10,13 +10,6 @@
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
 
-/* Emissives commented out until rotation is fixed.
-/obj/item/clothing/head/helmet/space/hardsuit/engine/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
-	. = ..()
-	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
-*/
-
 /obj/item/clothing/suit/space/hardsuit/engine
 	name = "engineering hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
@@ -39,12 +32,6 @@
 	if(GS)
 		qdel(GS)
 
-/* Emissives commented out until rotation is fixed.
-/obj/item/clothing/suit/space/hardsuit/engine/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
-	. = ..()
-	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
-*/
 
 /////////////////////////////////// ATMOSPHERICS /////////////////////////////////////////////
 
