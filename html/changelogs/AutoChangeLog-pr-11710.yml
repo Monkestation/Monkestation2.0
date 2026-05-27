@@ -1,0 +1,5 @@
+author: "Runian"
+delete-after: True
+changes:
+  - bugfix: "Being wabbajacked into a standard cyborg no longer (briefly) connects you to the AI, if any."
+  - bugfix: "AIs no longer have \"ghost\" connections from people that get wabbajacked into a station cyborg."
