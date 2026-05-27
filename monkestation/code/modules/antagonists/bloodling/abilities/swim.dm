@@ -26,9 +26,9 @@
 	our_mob.spawn_gibs()
 	var/icon_was = our_mob.icon_state
 	our_mob.icon_state = ""
-
+	
 	sleep(5)
-
+	
 	do_teleport(owner, get_turf(target), no_effects=TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
 	our_mob.spawn_gibs()
 	playsound(get_turf(owner), 'sound/effects/blobattack.ogg', 30)
