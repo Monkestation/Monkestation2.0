@@ -30,6 +30,7 @@
 		"rcd_upgrade_frames",
 		"rcd_upgrade_furnishing",
 		"rcd_upgrade_simple_circuits",
+		"rcd_ammo_mega_large",
 		"rpd_upgrade_unwrench",
 	)
 
@@ -42,6 +43,7 @@
 	description = "Unlocks new RCD designs."
 	design_ids = list(
 		"rcd_upgrade_silo_link",
+		"rcd_ammo_ultra_large",
 	)
 	prereq_ids = list(
 		"bluespace_travel",
