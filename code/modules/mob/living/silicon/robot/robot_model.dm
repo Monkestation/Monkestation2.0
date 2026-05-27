@@ -975,6 +975,29 @@
 			qdel(button)
 	return ..()
 
+/obj/item/robot_model/science
+	name = "Science"
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+	)
+	emag_modules = list()
+	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
+	cyborg_base_icon = "science"
+	model_select_icon = "science"
+	borg_skins = list(
+		"Science" = list(
+			SKIN_ICON_STATE = "science"
+		),
+		"Eyebot" = list(
+			SKIN_ICON_STATE = "science_eyebot",
+			SKIN_LIGHT_KEY = "science_eyebot",
+		),
+		"Drone" = list(
+			SKIN_ICON_STATE = "science_drone",
+			SKIN_ICON_STATE = "science_drone"
+		)
+	)
+
 /obj/item/robot_model/syndicate
 	name = "Syndicate Assault"
 	basic_modules = list(

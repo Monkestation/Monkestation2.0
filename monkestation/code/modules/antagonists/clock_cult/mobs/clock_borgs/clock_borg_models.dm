@@ -49,6 +49,14 @@
 		/obj/item/clock_module/sentinels_compromise,
 		/obj/item/clockwork/replica_fabricator)
 
+/obj/item/robot_model/science
+	clock_modules = list(/obj/item/clock_module/abscond,
+		/obj/item/gun/ballistic/bow/clockwork,
+		/obj/item/clock_module/kindle,
+		/obj/item/clock_module/vanguard,
+		/obj/item/clock_module/sentinels_compromise,
+		/obj/item/clock_module/sigil_submission)
+
 /obj/item/robot_model/miner
 	clock_modules = list(/obj/item/clock_module/abscond,
 		/obj/item/clock_module/vanguard,
