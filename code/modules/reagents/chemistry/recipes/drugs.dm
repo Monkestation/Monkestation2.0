@@ -102,12 +102,12 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_TOXIN | REACTION_TAG_DAMAGING
 
 /datum/chemical_reaction/maint_tar1
-	results = list(/datum/reagent/toxin/acid = 1 ,/datum/reagent/drug/maint/tar = 3)
+	results = list(/datum/reagent/toxin/acid = 1 , /datum/reagent/drug/maint/tar = 3)
 	required_reagents = list(/datum/reagent/consumable/tea = 1, /datum/reagent/yuck = 1 , /datum/reagent/fuel = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_TOXIN | REACTION_TAG_DAMAGING
 
 /datum/chemical_reaction/maint_tar2
-	results = list(/datum/reagent/toxin/acid = 1 ,/datum/reagent/drug/maint/tar = 3)
+	results = list(/datum/reagent/toxin/acid = 1 , /datum/reagent/drug/maint/tar = 3)
 	required_reagents = list(/datum/reagent/consumable/tea = 1, /datum/reagent/consumable/enzyme = 3 , /datum/reagent/fuel = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_TOXIN | REACTION_TAG_DAMAGING
 
@@ -121,6 +121,12 @@
 	results = list(/datum/reagent/drug/maint/powder = 1)
 	required_reagents = list(/datum/reagent/drug/maint/sludge = 6 , /datum/reagent/toxin/acid/nitracid = 1 , /datum/reagent/consumable/enzyme = 1)
 	required_catalysts = list(/datum/reagent/acetone_oxide = 5)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
+
+/datum/chemical_reaction/maint_goo
+	results = list(/datum/reagent/toxin/mutagen = 1, /datum/reagent/drug/maint/tar = 1, /datum/reagent/drug/maint/goo = 3)
+	required_reagents = list(/datum/reagent/drug/maint/powder = 1 , /datum/reagent/drug/maint/milk = 9)
+	required_catalysts = list(/datum/reagent/toxin/mutagen = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
 
 //These drug item reactions should probably be converted to fermichem in the future.
