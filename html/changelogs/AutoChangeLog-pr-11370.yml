@@ -1,8 +1,0 @@
-author: "FelineMistress"
-delete-after: True
-changes:
-  - rscadd: "Added Biocorrector, Ambu Bag, Remote Health Analyzer, Tricorder"
-  - qol: "Remote Health Analyzer mechanics"
-  - bugfix: "fixed that the omni tool could not filter blood"
-  - sound: "added Ambu Bag, Remote Health Analyzer sound effects"
-  - image: "added Added Biocorrector, Ambu Bag, Remote Health Analyzer, Tricorder /modified Advanced Health Analyzer icons"
