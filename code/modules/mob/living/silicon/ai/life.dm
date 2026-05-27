@@ -3,6 +3,9 @@
 		return
 	//Being dead doesn't mean your temperature never changes
 
+	if(dashboard)
+			dashboard.tick(seconds_per_tick)
+
 	if(malfhack?.aidisabled)
 		deltimer(malfhacking)
 		// This proc handles cleanup of screen notifications and

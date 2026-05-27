@@ -89,7 +89,7 @@ GLOBAL_LIST_EMPTY(wire_color_directory)
 GLOBAL_LIST_EMPTY(wire_name_directory)
 
 //GLOBAL_LIST_EMPTY(ai_status_displays) Probably not needed, but keeping in handy in case later code wants it as yog had it
-GLOBAL_LIST_EMPTY(ai_core_displays
+GLOBAL_LIST_EMPTY(ai_core_displays)
 
 /// List of all instances of /obj/effect/mob_spawn/ghost_role in the game world
 GLOBAL_LIST_EMPTY(mob_spawners)

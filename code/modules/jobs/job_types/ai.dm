@@ -23,10 +23,18 @@
 	var/do_special_check = TRUE
 	config_tag = "AI"
 	antag_capacity_points = 3
-	allow_overflow = FALSE // We have Triumvirate event for this. 
+	allow_overflow = FALSE // We have Triumvirate event for this.
 
 /datum/job/ai/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
+	AI.relocate(TRUE)
+
+	var/total_available_cpu = GLOB.ai_os.total_cpu - GLOB.ai_os.total_cpu_assigned()
+	var/total_available_ram = GLOB.ai_os.total_ram - GLOB.ai_os.total_ram_assigned()
+
+	GLOB.ai_os.add_cpu(AI, total_available_cpu)
+	GLOB.ai_os.add_ram(AI, total_available_ram)
+
 	//we may have been created after our borg
 	if(SSticker.current_state == GAME_STATE_SETTING_UP)
 		for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
@@ -68,7 +76,7 @@
 			continue
 		GLOB.latejoin_ai_cores -= inactive_core
 		inactive_core.available = FALSE
-		. = inactive_core.loc
+		//. = inactive_core.loc I think I kill this but I'm not 100% sure
 		qdel(inactive_core)
 		return
 	return ..()

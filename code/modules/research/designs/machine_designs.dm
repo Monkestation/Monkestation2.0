@@ -1246,3 +1246,19 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/expansion_card_holder
+	name = "Machine Design (Expansion Card Bus Board)"
+	desc = "The circuit board for an expansion card bus."
+	id = "expansion_card_holder"
+	build_path = /obj/item/circuitboard/machine/expansion_card_holder
+	category = list("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/ai_data_core
+	name = "Machine Design (AI Data Core Board)"
+	desc = "The circuit board for an AI data core."
+	id = "ai_data_core"
+	build_path = /obj/item/circuitboard/machine/ai_data_core
+	category = list("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE

@@ -9,6 +9,9 @@
 	if(multicam_on)
 		end_multicam()
 	view_core()
+	if(!login_warned_temp)
+		to_chat(src, span_userdanger("WARNING. THE WAY AI IS PLAYED HAS CHANGED. PLEASE REFER TO THE NEWLY MERGED OR TESTMERGED AI PR. ALSO SHOUT AT ICE TYPE FOR NOT UPDATING THIS WITH A LINK"))
+		login_warned_temp = TRUE
 	INVOKE_ASYNC(src, PROC_REF(preload_vox_voices))
 	show_laws(FALSE)
 

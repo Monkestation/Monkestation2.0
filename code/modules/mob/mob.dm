@@ -585,6 +585,12 @@
 	face_atom(examinify)
 	var/list/result
 	if(client)
+		if(istype(src, /mob/living/silicon/ai) && istype(A, /mob/living/carbon/human)) //Override for AI's examining humans
+			var/mob/living/carbon/human/H = A
+			result = H.examine_simple(src)
+			to_chat(src, boxed_message("<span class='infoplain'>[result.Join()]</span>"))
+			SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)
+			return
 		LAZYINITLIST(client.recent_examines)
 		var/ref_to_atom = ref(examinify)
 		var/examine_time = client.recent_examines[ref_to_atom]

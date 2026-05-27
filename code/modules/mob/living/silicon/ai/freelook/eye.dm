@@ -86,7 +86,7 @@
 /mob/eye/camera/ai/setLoc(destination, force_update = FALSE)
 	if(!ai)
 		return
-	if(!isturf(ai.loc))
+	if(!(isturf(ai.loc) || istype(ai.loc, /obj/machinery/ai/data_core)))
 		return
 
 	. = ..()
@@ -149,9 +149,11 @@
 // This will move the AIEye. It will also cause lights near the eye to light up, if toggled.
 // This is handled in the proc below this one.
 #define SPRINT_PER_TICK 0.5
-#define MAX_SPRINT 50
 #define SPRINT_PER_STEP 20
 /mob/living/silicon/ai/proc/AIMove(direction)
+	var/max_sprint = user.max_camera_sprint
+	// yeah this has to update in real time now as it can be upgraded. Let's hope being able to do so doesn't break anything. It sounds like there\
+	are limitations with the current system, hopefully they're not too crippling.
 	if(last_moved && last_moved + 1 < world.timeofday)
 		// Decay sprint based off how long it took us to input this next move
 		var/missed_sprint = max((world.timeofday + 1) - last_moved, 0) * SPRINT_PER_TICK
@@ -171,13 +173,12 @@
 
 	last_moved = world.timeofday
 	if(acceleration)
-		sprint = min(sprint + SPRINT_PER_TICK, MAX_SPRINT)
+		sprint = min(sprint + SPRINT_PER_TICK, max_sprint)
 	else
 		sprint = initial(sprint)
 
 	ai_tracking_tool.reset_tracking()
 #undef SPRINT_PER_STEP
-#undef MAX_SPRINT
 #undef SPRINT_PER_TICK
 
 // Return to the Core.
