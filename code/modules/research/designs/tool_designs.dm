@@ -26,6 +26,18 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/hybridcutters
+	name = "Hybrid Cutters"
+	desc = "A tool that functions both as a crowbar and a pair of wire-cutters. Lacks the prying capabilities of the jaws of life."
+	id = "hybridcutters"
+	build_path = /obj/item/crowbar/power/science
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*2.25, /datum/material/silver =SHEET_MATERIAL_AMOUNT*1.25, /datum/material/gold =SMALL_MATERIAL_AMOUNT*2)
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/jawsoflife
 	name = "Jaws of Life"
 	desc = "A small, compact Jaws of Life with an interchangeable pry jaws and cutting jaws"
