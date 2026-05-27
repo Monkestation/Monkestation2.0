@@ -1493,7 +1493,7 @@
 
 		if(WABBAJACK_ROBOT)
 			var/static/list/robot_options = list(
-				/mob/living/silicon/robot/disconnected = 200, // Gets the roundstart lawset.
+				/mob/living/silicon/robot/disconnected = 200,
 				/mob/living/basic/drone/polymorphed = 200,
 				/mob/living/silicon/robot/model/syndicate = 100,
 				/mob/living/silicon/robot/model/syndicate/medical = 100,
