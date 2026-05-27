@@ -27,7 +27,7 @@
 	/// The tagged name of the bodybag, also used to check if the bodybag IS tagged.
 	var/tag_name
 	/// How long it takes to zip up the bag.
-	var/zip_up_time = 3 SECONDS
+	var/zip_up_time = 0.5 SECOND
 	var/tagged = FALSE // so closet code knows to put the tag overlay back
 	can_install_electronics = FALSE
 
@@ -146,6 +146,7 @@
 	foldedbag_path = /obj/item/bodybag/bluespace
 	mob_storage_capacity = 15
 	max_mob_size = MOB_SIZE_LARGE
+	zip_up_time = 3 SECONDS
 
 /obj/structure/closet/body_bag/bluespace/attempt_fold(mob/living/carbon/human/the_folder)
 	. = FALSE

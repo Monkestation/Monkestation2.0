@@ -26,11 +26,12 @@
 	description = "Engineering and Mining upgrades for cyborgs."
 	prereq_ids = list("adv_engi", "basic_mining", "cyborg")
 	design_ids = list(
-		"borg_upgrade_circuitapp",
 		"borg_upgrade_diamonddrill",
 		"borg_upgrade_holding",
 		"borg_upgrade_lavaproof",
 		"borg_upgrade_rped",
+		"borg_upgrade_extra_sheet_manipulator",
+		"borg_upgrade_charger",
 		"borg_upgrade_nvmeson"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
@@ -87,6 +88,8 @@
 		"c38_trac",
 		"implant_chem",
 		"implant_tracking",
+		"implant_exile",
+		"implant_bluespace",
 		"implantcase",
 		"implanter",
 		"locator",

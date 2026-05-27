@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Hopefully fixed infinitely stacking salt piles that would kill the FPS of anyone unfortunate enough to be nearby."
-  - bugfix: "Salt piles will no longer spawn in mid-air / on groundless turfs."

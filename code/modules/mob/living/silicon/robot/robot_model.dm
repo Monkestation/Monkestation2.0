@@ -388,6 +388,8 @@
 		/obj/item/weldingtool/largetank/cyborg,
 		/obj/item/borg/cyborg_omnitool/engineering,
 		/obj/item/borg/cyborg_omnitool/engineering,
+		/obj/item/lightreplacer,
+		/obj/item/borg/apparatus/circuit,
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
 		/obj/item/assembly/signaler/cyborg,
@@ -407,7 +409,7 @@
 	)
 	cyborg_base_icon = "engineer"
 	model_select_icon = "engineer"
-	model_traits = list(TRAIT_NEGATES_GRAVITY)
+	model_traits = list(TRAIT_NEGATES_GRAVITY, TRAIT_KNOW_ENGI_WIRES, TRAIT_KNOW_ROBO_WIRES)
 	hat_offset = -4
 	badge_offset = -4
 
@@ -1037,6 +1039,7 @@
 		/obj/item/weldingtool/largetank/cyborg,
 		/obj/item/borg/cyborg_omnitool/engineering/syndie,
 		/obj/item/borg/cyborg_omnitool/engineering/syndie,
+		/obj/item/borg/apparatus/circuit,
 		/obj/item/analyzer,
 		/obj/item/stack/sheet/iron,
 		/obj/item/stack/sheet/glass,
@@ -1048,10 +1051,11 @@
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/borg_chameleon,
 		/obj/item/card/emag,
+		/obj/item/borg/charger,
 	)
 	cyborg_base_icon = "synd_engi"
 	model_select_icon = "malf"
-	model_traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY)
+	model_traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY, TRAIT_KNOW_ENGI_WIRES, TRAIT_KNOW_ROBO_WIRES)
 	hat_offset = -4
 	badge_offset = -4
 	canDispose = TRUE

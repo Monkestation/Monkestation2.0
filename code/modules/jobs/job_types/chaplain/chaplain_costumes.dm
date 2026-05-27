@@ -7,21 +7,9 @@
 
 /obj/item/clothing/suit/chaplainsuit/armor
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-
-
 	armor_type = /datum/armor/chaplainsuit_armor
-	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
 	equip_delay_other = 60
-
-/datum/armor/chaplainsuit_armor
-	melee = 50
-	bullet = 10
-	laser = 10
-	energy = 10
-	fire = 80
-	acid = 80
-	wound = 20
 
 /obj/item/clothing/suit/hooded/chaplainsuit
 	allowed = list(/obj/item/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/cup/glass/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/flashlight/flare/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
@@ -50,6 +38,11 @@
 	inhand_icon_state = "bishoprobe"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
+
+/obj/item/clothing/suit/chaplainsuit/bishoprobe/black
+	name = "black bishop's robes"
+	icon_state = "blackbishoprobe"
+	inhand_icon_state = "ro_suit"
 
 /obj/item/clothing/suit/chaplainsuit/armor/studentuni
 	name = "student robe"
@@ -115,19 +108,11 @@
 	desc = "It has the unyielding gaze of a god eternally forgotten."
 	icon_state = "clockwork_helmet"
 	inhand_icon_state = null
-	armor_type = /datum/armor/chaplain_clock
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 8 SECONDS
 	dog_fashion = null
-
-/datum/armor/chaplain_clock
-	melee = 50
-	bullet = 10
-	laser = 10
-	energy = 10
-	fire = 80
-	acid = 80
+	armor_type = /datum/armor/chaplain_clock
 
 /obj/item/clothing/suit/chaplainsuit/armor/clock
 	name = "forgotten armour"
@@ -135,8 +120,9 @@
 	icon_state = "clockwork_cuirass"
 	inhand_icon_state = null
 	allowed = list(/obj/item/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/cup/glass/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/flashlight/flare/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-	slowdown = 0
-	clothing_flags = NONE
+	slowdown = 0.2
+	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
+	armor_type = /datum/armor/chaplain_clock
 
 /obj/item/clothing/head/helmet/chaplain
 	name = "crusader helmet"
@@ -150,14 +136,6 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
-
-/datum/armor/helmet_chaplain
-	melee = 50
-	bullet = 10
-	laser = 10
-	energy = 10
-	fire = 80
-	acid = 80
 
 /obj/item/clothing/suit/chaplainsuit/armor/templar
 	name = "crusader armour"
@@ -187,6 +165,8 @@
 	desc = "Defend the treasure..."
 	icon_state = "knight_ancient"
 	inhand_icon_state = null
+	slowdown = 0.2 // stone armor is heavy
+	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 
 /obj/item/clothing/head/helmet/chaplain/witchunter_hat
 	name = "witchunter hat"
@@ -203,12 +183,14 @@
 	inhand_icon_state = null
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+	armor_type = /datum/armor/chaplainsuit_adept
 
 /obj/item/clothing/suit/chaplainsuit/armor/adept
 	name = "adept robes"
 	desc = "The ideal outfit for burning the unfaithful."
 	icon_state = "crusader"
 	inhand_icon_state = null
+	armor_type = /datum/armor/chaplainsuit_adept
 
 /obj/item/clothing/suit/chaplainsuit/armor/crusader
 	name = "Crusader's Armour"
@@ -280,3 +262,36 @@
 	icon_state = "technotao"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
+
+/obj/item/clothing/suit/hooded/chaplain_hoodie/cult
+	name = "follower hoodie"
+	desc = "Hoodie made for acolytes of the chaplain."
+	icon_state = "chaplain_hoodie"
+	icon = 'icons/obj/clothing/suits/chaplain.dmi'
+	worn_icon = 'icons/mob/clothing/suits/chaplain.dmi'
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	allowed = list(/obj/item/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/cup/glass/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/flashlight/flare/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood/cult
+
+/obj/item/clothing/head/hooded/chaplain_hood/cult
+	name = "dark follower hood"
+	desc = "Hood made for acolytes of the chaplain."
+	icon = 'icons/obj/clothing/head/chaplain.dmi'
+	worn_icon = 'icons/mob/clothing/head/chaplain.dmi'
+	icon_state = "chaplain_hood"
+	body_parts_covered = HEAD
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+	clothing_traits = list(TRAIT_ANONYMOUS)
+
+/obj/item/clothing/suit/hooded/chaplain_hoodie/leader/cult_leader
+	name = "leader hoodie"
+	desc = "Now you're ready for some 50 dollar bling water."
+	icon_state = "chaplain_hoodie_leader"
+	inhand_icon_state = null
+	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood/cult/leader
+
+/obj/item/clothing/head/hooded/chaplain_hood/cult/leader
+	name = "dark leader hood"
+	desc = "I mean, you don't /have/ to seek bling water. I just think you should."
+	icon_state = "chaplain_hood_leader"
