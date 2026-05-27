@@ -2,7 +2,7 @@
 	filename = "lifeline"
 	filedesc = "Lifeline"
 	extended_desc = "This program allows for tracking of crew members via their suit sensors."
-	download_access = list(ACCESS_MEDICAL, ACCESS_BLUESHIELD, ACCESS_BRIG_PHYSICIAN, ACCESS_DETECTIVE)
+	download_access = list(ACCESS_MEDICAL, ACCESS_BLUESHIELD, ACCESS_DETECTIVE)
 	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	ui_header = "borg_mon.gif" //DEBUG -- new icon before PR (classic)
 	program_open_overlay = "radarntos"

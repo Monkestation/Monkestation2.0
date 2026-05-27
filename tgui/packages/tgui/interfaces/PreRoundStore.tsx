@@ -4,14 +4,14 @@ import {
   Box,
   Button,
   Divider,
-  Flex,
-  Stack,
-  Section,
-  Icon,
   DmIcon,
+  Flex,
+  Icon,
+  Section,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { LobbyNotices, LobbyNoticesType } from './common/LobbyNotices';
+import { LobbyNotices, type LobbyNoticesType } from './common/LobbyNotices';
 
 type Item = {
   path: string;
@@ -26,6 +26,7 @@ type Data = {
   currently_owned?: string;
   balance: number;
   items: Item[];
+  selected_character?: string;
 };
 
 const ItemListEntry = (props) => {
@@ -68,11 +69,11 @@ const ItemListEntry = (props) => {
 export const PreRoundStore = (_props) => {
   const {
     act,
-    data: { notices, balance, items, currently_owned },
+    data: { notices, balance, items, currently_owned, selected_character },
   } = useBackend<Data>();
 
   return (
-    <Window resizable title="Pre Round Shop" width={450} height={700}>
+    <Window title="Pre Round Shop" width={450} height={700}>
       <Window.Content scrollable>
         <Section>
           <LobbyNotices notices={notices} />
@@ -80,34 +81,49 @@ export const PreRoundStore = (_props) => {
             Purchase an item that will spawn with you round start!
           </BlockQuote>
           <Stack vertical fill>
-            {currently_owned ? (
+            {currently_owned && (
               <Stack.Item>
                 <Box>Held Item: {currently_owned}</Box>
               </Stack.Item>
-            ) : (
-              ''
             )}
             <Stack.Item>
               <Section>
-                <Flex direction="row" align="center">
+                <Flex direction="row" align="center" justify="space-between">
                   <Box>
                     Balance: {balance} <Icon name="coins" />
                   </Box>
+                  <Button icon="user" onClick={() => act('change_slot')}>
+                    Change Character
+                  </Button>
                 </Flex>
               </Section>
             </Stack.Item>
+
+            {selected_character && (
+              <Stack.Item textAlign="center" mb="1em">
+                <h3
+                  style={{
+                    padding: 0,
+                  }}
+                >
+                  Readying up as '{selected_character}'
+                </h3>
+              </Stack.Item>
+            )}
             <Stack.Item>
-              {items.map((purchase) => {
-                const { name, cost, path } = purchase;
-                return (
-                  <ItemListEntry
-                    key={name}
-                    product={purchase}
-                    disabled={balance < cost}
-                    onClick={() => act('attempt_buy', { path })}
-                  />
-                );
-              })}
+              {items && items.length > 0
+                ? items.map((purchase) => {
+                    const { name, cost, path } = purchase;
+                    return (
+                      <ItemListEntry
+                        key={name}
+                        product={purchase}
+                        disabled={balance < cost}
+                        onClick={() => act('attempt_buy', { path })}
+                      />
+                    );
+                  })
+                : 'No items to display.'}
             </Stack.Item>
           </Stack>
         </Section>

@@ -453,3 +453,54 @@
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 	ckeywhitelist = list("Milthy")
+
+/mob/living/basic/pet/cyber_mastiff
+	name = "cyber mastiff"
+	desc = "It's The Emperor's good boy!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "mecha_walter"
+	icon_living = "mecha_walter"
+	icon_dead = "mecha_walter-dead"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Flava-Floh")
+
+/mob/living/basic/pet/yato_neco_arc
+	name = "\improper Neco-Arc" // Neko-Aruku
+	desc = "Woah dude... It's that really silly cat I saw on the terminal man..."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "neco_arc"
+	icon_living = "neco_arc"
+	icon_dead = "neco_arc-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Yatosamasensei")
+
+/mob/living/basic/pet/yato_neco_arc/death(gibbed)
+	emote("scream")
+	return ..()
+
+/mob/living/basic/pet/yato_neco_arc/get_scream_sound()
+	return pick('monkestation/code/modules/donator/sounds/neco_arc_1.ogg','monkestation/code/modules/donator/sounds/neco_arc_2.ogg','monkestation/code/modules/donator/sounds/neco_arc_3.ogg')
+
+/mob/living/basic/pet/yato_neco_arc/get_laugh_sound()
+	return pick('monkestation/code/modules/donator/sounds/neco_arc_1.ogg','monkestation/code/modules/donator/sounds/neco_arc_2.ogg','monkestation/code/modules/donator/sounds/neco_arc_3.ogg')
+
+/mob/living/basic/axolotl/shark_costume
+	name = "shark axolotl"
+	desc = "This axolotl seems to wear a scary shark costume!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "shark_axolotl"
+	icon_living = "shark_axolotl"
+	icon_dead = "shark_axolotl-dead"
+	held_state = "shark_axolotl"
+	held_lh = 'monkestation/code/modules/donator/icons/mob/pets_held_lh.dmi'
+	held_rh = 'monkestation/code/modules/donator/icons/mob/pets_held_rh.dmi'
+	head_icon = 'monkestation/code/modules/donator/icons/mob/pets_held.dmi'
+	gold_core_spawnable = NO_SPAWN
+
+	ckeywhitelist = list("ZBunz")

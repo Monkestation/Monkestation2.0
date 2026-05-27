@@ -1,6 +1,6 @@
 import { Box, Button, Slider, Stack } from '../../../../../components';
 
-import {
+import type {
   FeatureChoiced,
   FeatureChoicedServerData,
   FeatureNumeric,
@@ -52,13 +52,14 @@ const FeatureSliderInput = (
 
   return (
     <Slider
-      onChange={(_, value: number) => {
+      tickWhileDragging
+      onChange={(_, value) => {
         props.handleSetValue(value);
       }}
       minValue={props.serverData.minimum}
       maxValue={props.serverData.maximum}
       step={props.serverData.step}
-      value={props.value}
+      value={props.value || props.serverData.minimum}
     />
   );
 };

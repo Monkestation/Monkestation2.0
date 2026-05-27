@@ -1,0 +1,4 @@
+author: "CheffieGithub"
+delete-after: True
+changes:
+  - bugfix: "Fixed an edge case issue with forced movement"

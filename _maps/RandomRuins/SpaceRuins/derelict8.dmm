@@ -168,7 +168,6 @@
 	pixel_y = 2
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/item/reagent_containers/pill/ibuprofen,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav)
 "BX" = (

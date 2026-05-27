@@ -22,7 +22,7 @@
 		owner.adjust_jitter(1)
 		owner.adjust_dizzy(1)
 
-		current_ticks_cooldown -= SSmobs.wait
+		current_ticks_cooldown -= SSclient_mobs.wait
 
 		return
 

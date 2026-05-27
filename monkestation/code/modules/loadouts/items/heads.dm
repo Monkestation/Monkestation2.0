@@ -145,7 +145,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 
 /datum/loadout_item/head/red_hardhat
 	name = "Red Hardhat"
-	item_path = /obj/item/clothing/head/utility/hardhat/red
+	item_path = /obj/item/clothing/head/utility/hardhat/fire
 
 /datum/loadout_item/head/white_hardhat
 	name = "White Hardhat"
@@ -335,7 +335,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/nursehat
 	name = "Nurse Hat"
 	item_path = /obj/item/clothing/head/costume/nursehat
-	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_GENETICIST, JOB_CHEMIST, JOB_VIROLOGIST)
+	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_GENETICIST, JOB_CHEMIST, JOB_VIROLOGIST, JOB_BRIG_PHYSICIAN)
 
 /*
 *	JOB BERETS
@@ -350,12 +350,12 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/cargo_beret
 	name = "Supply Beret"
 	item_path = /obj/item/clothing/head/beret/cargo
-	restricted_roles = list(JOB_QUARTERMASTER, JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_LATEJOIN_EXPLORER)
+	restricted_roles = list(JOB_QUARTERMASTER, JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_EXPLORER)
 
 /datum/loadout_item/head/beret_med
 	name = "Medical Beret"
 	item_path = /obj/item/clothing/head/beret/medical
-	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_VIROLOGIST, JOB_CHEMIST, JOB_CHIEF_MEDICAL_OFFICER)
+	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_VIROLOGIST, JOB_CHEMIST, JOB_CHIEF_MEDICAL_OFFICER, JOB_BRIG_PHYSICIAN)
 
 /datum/loadout_item/head/beret_paramedic
 	name = "Paramedic Beret"
@@ -435,7 +435,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/constable
 	name = "Constable Helmet"
 	item_path = /obj/item/clothing/head/costume/constable
-	restricted_roles = list(JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	restricted_roles = list(JOB_SECURITY_ASSISTANT, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
 	requires_purchase = FALSE
 
 /// EVERYTHING NOVA RELATED
@@ -609,6 +609,18 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/cowboyhat_winter //BUYABLE
 	name = "Winter Cowboy Hat"
 	item_path = /obj/item/clothing/head/cowboy/nova/flat/cowl/sheriff
+
+/datum/loadout_item/head/deforest_hat //BUYABLE
+	name = "Deforest Hat"
+	item_path = /obj/item/clothing/head/soft/paramedic/deforest
+
+/datum/loadout_item/head/deforest_beret //BUYABLE
+	name = "Deforest Beret"
+	item_path = /obj/item/clothing/head/beret/medical/deforest
+
+/datum/loadout_item/head/warning_cone //BUYABLE
+	name = "Warning Cone"
+	item_path = /obj/item/clothing/head/cone
 
 /*
 *	JOB-LOCKED

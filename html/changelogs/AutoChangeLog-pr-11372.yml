@@ -1,0 +1,11 @@
+author: "Shoddd"
+delete-after: True
+changes:
+  - rscadd: "5 new religious sects for the chaplain. Necromancy Sect, Cult Sect, Clown Sect, Nature Sect, and admin only Shadow Sect"
+  - rscadd: "Chaplains altar can now be unanchored, you can only perform rituals in holy places however! (blessed tiles or chapel)"
+  - rscadd: "ports Holy skateboard nullrod from TGstation, made by Loafin34"
+  - rscadd: "ports Holy Cross nullrod from Yogstation, made by ynot01"
+  - balance: "Chaplain default armor is now only 35 melee prot, and doesn't block shove knockdowns"
+  - balance: "Chaplain adept suit is now 25 melee armor but 100 fire armor"
+  - balance: "Chaplain clock and stone armor is 50 melee armor, with a 20% slowdown and blocks shove knockdowns"
+  - balance: "Chaplain archer armor is now 30 melee, 15 bullet, laser, and energy armor"

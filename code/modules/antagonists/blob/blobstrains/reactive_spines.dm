@@ -12,21 +12,21 @@
 	reagent = /datum/reagent/blob/reactive_spines
 	COOLDOWN_DECLARE(retaliate_cooldown)
 
-/datum/blobstrain/reagent/reactive_spines/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	if(damage && ((damage_type == BRUTE) || (damage_type == BURN)) && B.get_integrity() - damage > 0 && COOLDOWN_FINISHED(src, retaliate_cooldown)) // Is there any damage, is it burn or brute, will we be alive, and has the cooldown finished?
-		COOLDOWN_START(src, retaliate_cooldown, 2.5 SECONDS) // 2.5 seconds before auto-retaliate can whack everything within 1 tile again
-		B.visible_message(span_boldwarning("The blob retaliates, lashing out!"))
-		for(var/atom/thing in range(1, B))
+/datum/blobstrain/reagent/reactive_spines/damage_reaction(obj/structure/blob/damaged, damage, damage_type, damage_flag)
+	//Is there any damage, is it burn or brute, will we be alive, and has the cooldown finished?
+	if(damage && ((damage_type == BRUTE) || (damage_type == BURN)) && damaged.get_integrity() - damage > 0 && COOLDOWN_FINISHED(src, retaliate_cooldown))
+		COOLDOWN_START(src, retaliate_cooldown, 2.5 SECONDS) // 2.5 seconds before auto-retaliate can whack everything within 1 tile again, refactor this somehow
+		damaged.visible_message(span_boldwarning("The blob retaliates, lashing out!"))
+		for(var/atom/thing in range(1, damaged))
 			if(!thing.can_blob_attack())
 				continue
 			var/attacked_turf = get_turf(thing)
 			if(isliving(thing) && !HAS_TRAIT(thing, TRAIT_BLOB_ALLY)) // Make sure to inject strain-reagents with automatic attacks when needed.
-				B.blob_attack_animation(attacked_turf, overmind)
+				damaged.blob_attack_animation(attacked_turf)
 				attack_living(thing)
 
-			else if(thing.blob_act(B)) // After checking for mobs, whack everything else with the standard attack
-				B.blob_attack_animation(attacked_turf, overmind) // Only play the animation if the attack did something meaningful
-
+			else if(thing.blob_act(damaged)) // After checking for mobs, whack everything else with the standard attack
+				damaged.blob_attack_animation(attacked_turf) // Only play the animation if the attack did something meaningful
 	return ..()
 
 /datum/reagent/blob/reactive_spines

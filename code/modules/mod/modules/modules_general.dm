@@ -98,7 +98,7 @@
 	icon_state = "jetpack"
 	module_type = MODULE_TOGGLE
 	complexity = 3
-	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.05
 	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/jetpack)
 	cooldown_time = 0.5 SECONDS
@@ -143,11 +143,15 @@
 		return
 	if(full_speed)
 		mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+	else
+		mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/halfspeed)
 
 /obj/item/mod/module/jetpack/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(full_speed)
 		mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+	else
+		mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/halfspeed)
 
 /obj/item/mod/module/jetpack/get_configuration()
 	. = ..()
@@ -793,3 +797,25 @@
 	var/datum/effect_system/lightning_spread/sparks = new /datum/effect_system/lightning_spread
 	sparks.set_up(number = 5, cardinals_only = TRUE, location = mod.wearer.loc)
 	sparks.start()
+
+/obj/item/mod/module/hearing_protection
+	name = "MOD hearing protection module"
+	desc = "A module that protects the users ears from loud sounds"
+	complexity = 0
+	removable = FALSE
+	incompatible_modules = list(/obj/item/mod/module/hearing_protection)
+	/* required_slots = list(ITEM_SLOT_HEAD) */
+
+/obj/item/mod/module/hearing_protection/on_suit_activation()
+	var/obj/item/clothing/head_cover = mod.helmet /* mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES) */
+	if(istype(head_cover))
+		head_cover.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
+		var/datum/component/wearertargeting/earprotection/protection = head_cover.GetComponent(/datum/component/wearertargeting/earprotection)
+		protection.on_equip(src, mod.wearer, ITEM_SLOT_HEAD)
+
+/obj/item/mod/module/hearing_protection/on_suit_deactivation(deleting = FALSE)
+	if(deleting)
+		return
+	var/obj/item/clothing/head_cover = mod.helmet /* mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES) */
+	if(istype(head_cover))
+		qdel(head_cover.GetComponent(/datum/component/wearertargeting/earprotection))

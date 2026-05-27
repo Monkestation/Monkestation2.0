@@ -54,7 +54,7 @@
 	cost = 18
 	purchasable_from = UPLINK_NUKE_OPS
 
-/datum/uplink_item/dangerous/rawketlawnchair
+/datum/uplink_item/firearms/rawketlawnchair
 	name = "84mm Rocket Propelled Grenade Launcher"
 	desc = "A reusable rocket propelled grenade launcher preloaded with a low-yield 84mm HE round. \
 		Guaranteed to send your target out with a bang or your money back!"
@@ -63,7 +63,7 @@
 	surplus = 30
 	purchasable_from = UPLINK_NUKE_OPS
 
-/datum/uplink_item/dangerous/pie_cannon
+/datum/uplink_item/firearms/pie_cannon
 	name = "Banana Cream Pie Cannon"
 	desc = "A special pie cannon for a special clown, this gadget can hold up to 20 pies and automatically fabricates one every two seconds!"
 	cost = 10
@@ -71,7 +71,7 @@
 	surplus = 0
 	purchasable_from = UPLINK_CLOWN_OPS
 
-/datum/uplink_item/dangerous/bananashield
+/datum/uplink_item/melees/bananashield
 	name = "Bananium Energy Shield"
 	desc = "A clown's most powerful defensive weapon, this personal shield provides near immunity to ranged energy attacks \
 		by bouncing them back at the ones who fired them. It can also be thrown to bounce off of people, slipping them, \
@@ -81,7 +81,7 @@
 	surplus = 40 //monkestation edit: from 0 to 40
 	purchasable_from = UPLINK_CLOWN_OPS
 
-/datum/uplink_item/dangerous/clownsword
+/datum/uplink_item/melees/clownsword
 	name = "Bananium Energy Sword"
 	desc = "An energy sword that deals no damage, but will slip anyone it contacts, be it by melee attack, thrown \
 	impact, or just stepping on it. Beware friendly fire, as even anti-slip shoes will not protect against it."
@@ -90,7 +90,7 @@
 	surplus = 100 //monkestation edit: from 0 to 100(its funny)
 	purchasable_from = UPLINK_CLOWN_OPS
 
-/datum/uplink_item/dangerous/clownoppin
+/datum/uplink_item/firearms/clownoppin
 	name = "Ultra Hilarious Firing Pin"
 	desc = "A firing pin that, when inserted into a gun, makes that gun only useable by clowns and clumsy people and makes that gun honk whenever anyone tries to fire it."
 	cost = 1 //much cheaper for clown ops than for clowns
@@ -99,7 +99,7 @@
 	illegal_tech = FALSE
 	surplus = 80
 
-/datum/uplink_item/dangerous/clownopsuperpin
+/datum/uplink_item/firearms/clownopsuperpin
 	name = "Super Ultra Hilarious Firing Pin"
 	desc = "Like the ultra hilarious firing pin, except the gun you insert this pin into explodes when someone who isn't clumsy or a clown tries to fire it."
 	cost = 4 //much cheaper for clown ops than for clowns
@@ -108,7 +108,7 @@
 	illegal_tech = FALSE
 	surplus = 80
 
-/datum/uplink_item/dangerous/shotgun
+/datum/uplink_item/firearms/shotgun
 	name = "Bulldog Shotgun"
 	desc = "A fully-loaded semi-automatic drum-fed shotgun, complete with a secondary magazine. Compatible with all 12g rounds. Designed for close \
 			quarter anti-personnel engagements."
@@ -117,7 +117,7 @@
 	surplus = 40
 	purchasable_from = UPLINK_NUKE_OPS
 
-/datum/uplink_item/dangerous/smg
+/datum/uplink_item/firearms/smg
 	name = "C-20r Submachine Gun"
 	desc = "A fully-loaded Scarborough Arms bullpup submachine gun. The C-20r fires .45 rounds with a \
 			24-round magazine and is compatible with suppressors."
@@ -126,7 +126,7 @@
 	surplus = 40
 	purchasable_from = UPLINK_NUKE_OPS
 
-/datum/uplink_item/dangerous/shield
+/datum/uplink_item/melees/shield
 	name = "Energy Shield"
 	desc = "An incredibly useful personal shield projector, capable of reflecting energy projectiles and defending \
 			against other attacks. Pair with an Energy Sword for a killer combination."
@@ -135,7 +135,7 @@
 	surplus = 40 //monkestation edit: from 20 to 40
 	purchasable_from = UPLINK_NUKE_OPS
 
-/datum/uplink_item/dangerous/machinegun
+/datum/uplink_item/firearms/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
 			This deadly weapon has a massive 50-round magazine of devastating 7.12x82mm ammunition."
@@ -144,7 +144,7 @@
 	surplus = 10 //monkestation edit: from 0 to 10
 	purchasable_from = UPLINK_NUKE_OPS
 
-/datum/uplink_item/dangerous/carbine
+/datum/uplink_item/firearms/carbine
 	name = "M-90gl Carbine"
 	desc = "A fully-loaded, specialized three-round burst carbine that fires 5.56mm ammunition from a 30 round magazine \
 			with a 40mm underbarrel grenade launcher. Use secondary-fire to fire the grenade launcher."
@@ -153,7 +153,7 @@
 	surplus = 50
 	purchasable_from = UPLINK_NUKE_OPS
 
-/datum/uplink_item/dangerous/sniper
+/datum/uplink_item/firearms/sniper
 	name = "Anti-Materiel Sniper Rifle"
 	desc = "An outdated, but still extremely powerful anti-material sniper rifle. Fires .50 BMG cartridges from a 6 round magazine. \
 			Can be fitted with a suppressor. If anyone asks how that even works, tell them it's Nanotrasen's fault."
@@ -162,7 +162,7 @@
 	surplus = 25
 	purchasable_from = UPLINK_NUKE_OPS
 
-/datum/uplink_item/dangerous/pistol_nukeop
+/datum/uplink_item/firearms/pistol_nukeop
 	name = "Ansem Pistol"
 	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
 			with suppressors."
@@ -170,14 +170,14 @@
 	cost = 6
 	purchasable_from = UPLINK_NUKE_OPS
 
-/datum/uplink_item/dangerous/surplus_smg
+/datum/uplink_item/firearms/surplus_smg
 	name = "Surplus SMG"
 	desc = "A horribly outdated automatic weapon. Why would you want to use this?"
 	item = /obj/item/gun/ballistic/automatic/plastikov
 	cost = 2
 	purchasable_from = UPLINK_NUKE_OPS
 
-/datum/uplink_item/dangerous/foamsmg
+/datum/uplink_item/firearms/foamsmg
 	name = "Toy Submachine Gun"
 	desc = "A fully-loaded Donksoft bullpup submachine gun that fires riot grade darts with a 20-round magazine."
 	item = /obj/item/gun/ballistic/automatic/c20r/toy
@@ -185,7 +185,7 @@
 	surplus = 70 //monkestation edit: from 0 to 70
 	purchasable_from = UPLINK_CLOWN_OPS
 
-/datum/uplink_item/dangerous/foammachinegun
+/datum/uplink_item/firearms/foammachinegun
 	name = "Toy Machine Gun"
 	desc = "A fully-loaded Donksoft belt-fed machine gun. This weapon has a massive 50-round magazine of devastating \
 			riot grade darts, that can briefly incapacitate someone in just one volley."
@@ -194,7 +194,7 @@
 	surplus = 70 //monkestation edit: from 0 to 70
 	purchasable_from = UPLINK_CLOWN_OPS
 
-/datum/uplink_item/stealthy_weapons/cqc
+/datum/uplink_item/melees/cqc
 	name = "CQC Manual"
 	desc = "A manual that teaches a single user tactical Close-Quarters Combat before self-destructing."
 	item = /obj/item/book/granter/martial/cqc
@@ -412,14 +412,14 @@
 /datum/uplink_item/ammo/rocket/basic
 	name = "84mm HE Rocket"
 	desc = "A low-yield anti-personnel HE rocket. Gonna take you out in style!"
-	item = /obj/item/ammo_casing/caseless/rocket
+	item = /obj/item/ammo_casing/rocket
 	cost = 4
 
 /datum/uplink_item/ammo/rocket/heap
 	name = "84mm HEAP Rocket"
 	desc = "A high-yield HEAP rocket; extremely effective against literally everything and anything near that thing that doesn't exist anymore. \
 			Strike fear into the hearts of your enemies."
-	item = /obj/item/ammo_casing/caseless/rocket/heap
+	item = /obj/item/ammo_casing/rocket/heap
 	cost = 6
 
 /datum/uplink_item/ammo/surplus_smg
@@ -656,7 +656,7 @@
 	item = /obj/item/storage/toolbox/emergency/turret/nukie
 	cost = 16
 
-/datum/uplink_item/stealthy_tools/combatbananashoes
+/datum/uplink_item/utility_clothing/combatbananashoes
 	name = "Combat Banana Shoes"
 	desc = "While making the wearer immune to most slipping attacks like regular combat clown shoes, these shoes \
 		can generate a large number of synthetic banana peels as the wearer walks, slipping up would-be pursuers. They also \
@@ -671,14 +671,14 @@
 	cost = 4
 	purchasable_from = UPLINK_NUKE_OPS
 
-/datum/uplink_item/suits/modsuit/elite
+/datum/uplink_item/utility_clothing/modsuit/elite
 	name = "Elite Syndicate MODsuit"
 	desc = "An upgraded, elite version of the Syndicate MODsuit. It features fireproofing, and also \
 			provides the user with superior armor and mobility compared to the standard Syndicate MODsuit."
 	item = /obj/item/mod/control/pre_equipped/elite
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
-/datum/uplink_item/suits/energy_shield
+/datum/uplink_item/utility_clothing/energy_shield
 	name = "MODsuit Energy Shield Module"
 	desc = "An energy shield module for a MODsuit. The shields can handle up to three impacts \
 			within a short duration and will rapidly recharge while not under fire."
@@ -686,26 +686,28 @@
 	cost = 15
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
-/datum/uplink_item/suits/emp_shield
+/datum/uplink_item/utility_clothing/emp_shield
 	name = "MODsuit Advanced EMP Shield Module"
 	desc = "An advanced EMP shield module for a MODsuit. It protects your entire body from electromagnetic pulses."
 	item = /obj/item/mod/module/emp_shield/advanced
 	cost = 5
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
-/datum/uplink_item/suits/injector
+/datum/uplink_item/utility_clothing/injector
 	name = "MODsuit Injector Module"
 	desc = "An injector module for a MODsuit. It is an extendable piercing injector with 30u capacity."
 	item = /obj/item/mod/module/injector
 	cost = 2
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	illegal_tech = FALSE
 
-/datum/uplink_item/suits/holster
+/datum/uplink_item/utility_clothing/holster
 	name = "MODsuit Holster Module"
 	desc = "A holster module for a MODsuit. It can stealthily store any not too heavy gun inside it."
 	item = /obj/item/mod/module/holster
 	cost = 2
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	illegal_tech = FALSE
 
 /datum/uplink_item/device_tools/assault_pod
 	name = "Assault Pod Targeting Device"
@@ -743,7 +745,7 @@
 
 /datum/uplink_item/device_tools/medkit/premium
 	name = "Syndicate Combat Medical Suite"
-	desc = "This first aid kit is a suspicious black and red. Included is an unloaded combat chemical injector \
+	desc = "This first aid kit is a suspicious black and red. Included is an combat hypospray \
 			for suit-penetrative chem delivery, a medical science night vision HUD for quick identification of injured personnel and chemical supplies, \
 			improved medical supplies, including Interdyne-approved pharmaceuticals, a hacked cybernetic surgery toolset arm implant, \
 			and some helpful MODsuit modules for for field medical use and operative physiopharmaceutical augmentation."
@@ -879,7 +881,7 @@
 	cost = 5
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
 
-/datum/uplink_item/suits/cybersun_juggernaut_suit
+/datum/uplink_item/utility_clothing/cybersun_juggernaut_suit
 	name = "Cybersun Juggernaut Minigun Combo and Suit Access Card"
 	desc = "Developed by Cybersun for use in clearing heavy space bear infestations in asteroid belt operations.\
 	It now has a new purpose as the heavy operation suit of the Syndicate. By purchasing this you get a special Authorization Key to the only suit in storage at Firebase Balthazord."
@@ -897,7 +899,7 @@
 	item = /obj/item/amogus_potion
 	cost = 7
 
-/datum/uplink_item/ammo/LMG
+/datum/uplink_item/ammo/lmg
 	name = "6.5 FMJ Quarad drum"
 	desc = "A surplus 120 round drum of FMJ bullets for the Quarad"
 	item = /obj/item/ammo_box/magazine/c65xeno_drum/evil
@@ -905,7 +907,7 @@
 	purchasable_from = UPLINK_NUKE_OPS
 	illegal_tech = FALSE
 
-/datum/uplink_item/ammo/LMG/incendiary
+/datum/uplink_item/ammo/lmg/incendiary
 	name = "6.5 Inferno Quarad drum"
 	desc = "A 120 round drum of Inferno bullets for the Quarad. They leave a trail of fire"
 	item = /obj/item/ammo_box/magazine/c65xeno_drum/incendiary/evil
@@ -913,7 +915,7 @@
 	purchasable_from = UPLINK_NUKE_OPS
 	illegal_tech = FALSE
 
-/datum/uplink_item/ammo/LMG/pierce
+/datum/uplink_item/ammo/lmgLMG/pierce
 	name = "6.5 UDS Quarad drum"
 	desc = "No, NOT depleted uranium. 120 round drum of piercing and irradiating bullets for the Quarad"
 	item = /obj/item/ammo_box/magazine/c65xeno_drum/pierce/evil
@@ -921,7 +923,7 @@
 	purchasable_from = UPLINK_NUKE_OPS
 	illegal_tech = FALSE
 
-/datum/uplink_item/dangerous/Evil_Quarad
+/datum/uplink_item/firearms/Evil_Quarad
 	name = "Syndicate-Enhanced Light Suppression Weapon"
 	desc = "A heavily modified Quarad LMG, complete with bluespace barrel extender and retooled recoil reduction. Takes 120 round drums, good for suppressive fire."
 	item = /obj/item/gun/ballistic/automatic/quarad_lmg/evil
@@ -958,3 +960,10 @@
 	restricted = TRUE
 	refundable = TRUE
 
+/datum/uplink_item/device_tools/hypospray_kit
+	name = "Syndicate Combat Hypospray Kit"
+	desc = "An advanced kit containing a combat hypospray and a wide variety of vials containing \"perfectly legal chemicals\" to treat combatants."
+	item = /obj/item/storage/medkit/hypospray/syndicate
+	cost = 7
+	surplus = 66
+	purchasable_from = UPLINK_NUKE_OPS

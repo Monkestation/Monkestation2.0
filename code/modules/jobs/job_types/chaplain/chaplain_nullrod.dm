@@ -33,6 +33,7 @@
 		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
 	)
+	AddComponent(/datum/component/cult_kill_tracker)
 	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
 
 	if(!GLOB.holy_weapon_type && type == /obj/item/nullrod)
@@ -43,6 +44,7 @@
 			rods[nullrod_type] = initial(nullrod_type.menu_description)
 		//special non-nullrod subtyped shit
 		rods[/obj/item/gun/ballistic/bow/divine/with_quiver] = "A divine bow and 10 quivered holy arrows."
+		rods[/obj/item/melee/skateboard/holyboard] = "A skateboard that grants you flight and anti-magic abilities while ridden. Fits in your bag."
 		AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, PROC_REF(on_holy_weapon_picked)))
 
 /obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/holy_weapon_type)
@@ -680,3 +682,86 @@
 	attack_verb_simple = list("stab", "poke", "slash", "clock")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	menu_description = "A pointy spear which penetrates armor a little. Can be worn only on the belt."
+
+
+/obj/item/nullrod/cross
+	name = "golden crucifix"
+	desc = "Resist the devil, and he will flee from you."
+	icon = 'monkestation/icons/obj/misc.dmi'
+	icon_state = "cross"
+	inhand_icon_state = "cross"
+	force = 0 // How often we forget
+	throwforce = 0 // Faith without works is...
+	attack_verb_simple = list("blessed")
+	var/held_up = FALSE
+	var/mutable_appearance/holy_glow_fx
+	var/obj/effect/dummy/lighting_obj/moblight/holy_glow_light
+	COOLDOWN_DECLARE(holy_notification)
+
+/obj/item/nullrod/cross/Destroy()
+	qdel(holy_glow_light)
+	holy_glow_fx = null
+	return ..()
+
+/obj/item/nullrod/cross/attack_self(mob/living/user)
+	. = ..()
+	if(!istype(user))
+		return // sanity
+	if(held_up)
+		unwield(user)
+		return
+	if(!do_after(user, 0.5 SECONDS, target = src))
+		return
+	user.visible_message(span_notice("[user] raises \the [src]."), span_notice("You raise \the [src]."))
+	held_up = TRUE
+	w_class = WEIGHT_CLASS_GIGANTIC // Heavy, huh?
+	slot_flags = 0
+	holy_glow_fx = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
+	user.add_overlay(holy_glow_fx)
+	holy_glow_light = user.mob_light(color = LIGHT_COLOR_HOLY_MAGIC, range = 2)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(unwield))
+	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(unwield))
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/item/nullrod/cross/proc/unwield(mob/user)
+	if(!held_up)
+		return
+	user.visible_message(span_notice("[user] lowers \the [src]."), span_notice("You lower \the [src]."))
+	held_up = FALSE
+	w_class = WEIGHT_CLASS_SMALL
+	slot_flags = ITEM_SLOT_BELT
+	user.cut_overlay(holy_glow_fx)
+	qdel(holy_glow_light)
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(src, COMSIG_ITEM_DROPPED)
+	STOP_PROCESSING(SSfastprocess, src)
+
+/obj/item/nullrod/cross/process()
+	if(!held_up)
+		return PROCESS_KILL // something has gone terribly wrong
+	if(!isliving(loc))
+		return PROCESS_KILL // something has gone terribly wrong
+
+	var/notify = FALSE
+	if(COOLDOWN_FINISHED(src, holy_notification))
+		COOLDOWN_START(src, holy_notification, 0.8 SECONDS)
+		notify = TRUE
+
+	var/list/chapview = view(4, get_turf(loc))
+	for(var/mob/living/L in range(2, get_teleport_loc(get_turf(loc), loc, 2)))
+		if(!L.mind?.holy_role && (L in chapview)) // Priests are unaffected, trying to use it as a non-priest will harm you
+			if(notify)
+				to_chat(L, span_userdanger("The holy light burns you!"))
+				new /obj/effect/temp_visual/cult/sparks(get_turf(L))
+			// Unholy creatures take more damage
+			// Everyone else still takes damage but less real damage
+			// Average DPS is 5|15 or 10|10 if unholy (burn|stam)
+			// Should be incredibly difficult to metacheck with this due to RNG and fast processing
+			if(IS_CULTIST(L) || IS_CLOCK(L) || IS_WIZARD(L) || isvampire(L) || IS_BLOODSUCKER(L) || IS_VASSAL(L) || IS_HERETIC_OR_MONSTER(L))
+				L.adjustFireLoss(rand(3,5) * 0.5) // 1.5-2.5 AVG 2.0
+			else
+				L.adjustFireLoss(rand(1,3) * 0.5) // 0.5-1.5 AVG 1.0
+
+/obj/item/nullrod/cross/examine(mob/user)
+	. = ..()
+	. += "[span_notice("Use in-hand while facing evil to ")][span_danger("purge it.")]"

@@ -5,11 +5,11 @@
 	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
 	icon_state = "40mm_projectile"
 	damage = 60
-	embedding = null
+	embed_type = null
 	shrapnel_type = null
 	range = 30
 
-/obj/projectile/bullet/a40mm/Range() //because you lob the grenade to achieve the range :)
+/obj/projectile/bullet/a40mm/reduce_range() //because you lob the grenade to achieve the range :)
 	if(!has_gravity(get_area(src)))
 		range++
 	return ..()
@@ -38,7 +38,7 @@
 	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
 	icon_state = "40mmRUBBER_projectile"
 	damage = 20
-	stamina = 250 //BONK
+	stamina = 125 //BONK
 	paralyze = 5 SECONDS
 	wound_bonus = 30
 	weak_against_armour = TRUE
@@ -185,9 +185,9 @@
 /obj/projectile/bullet/c980grenade
 	name = ".980 Tydhouer practice grenade"
 	damage = 20
-	stamina = 30
+	stamina = 15
 	range = 14
-	speed = 2 // Higher means slower, y'all
+	speed = 0.5
 	sharpness = NONE
 
 /obj/projectile/bullet/c980grenade/on_hit(atom/target, blocked = 0, pierce_hit)

@@ -176,13 +176,10 @@
 ///Whether a mob is a Revenge Vassal
 #define IS_REVENGE_VASSAL(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/vassal/revenge))
 
-//Used in bloodsucker_life.dm
-#define MARTIALART_FRENZYGRAB "frenzy grabbing"
-
 /// The level needed to complete the Tremere objective.
 #define TREMERE_OBJECTIVE_POWER_LEVEL 5
 
 #define BLOODSUCKER_MAX_BLOOD_DEFAULT 600
 #define BLOODSUCKER_MAX_BLOOD_INCREASE_ON_RANKUP 80
-#define BLOODSUCKER_REGEN_INCREASE_ON_RANKUP 0.25
+#define BLOODSUCKER_REGEN_INCREASE_ON_RANKUP 0.1
 #define BLOODSUCKER_UNARMED_DMG_INCREASE_ON_RANKUP 0.5

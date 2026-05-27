@@ -24,6 +24,7 @@
 	paycheck = PAYCHECK_NANOTRASEN
 	paycheck_department = ACCOUNT_CC
 
+	mind_traits = list(TRAIT_CAN_HYPNO)
 	liver_traits = list(TRAIT_PRETENDER_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_NANOTRASEN_REPRESENTATIVE
@@ -46,7 +47,7 @@
 	)
 	exclusive_mail_goodies = TRUE
 	rpg_title = "Diplomat"
-	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
+	job_flags = STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS
 
 	voice_of_god_power = 1.4 //Command staff has authority
 
@@ -101,9 +102,9 @@
 		/obj/item/clipboard = 1,
 	)
 	belt = /obj/item/gun/energy/laser/plasmacore
-	shoes = /obj/item/clothing/shoes/laceup
+	l_pocket = /obj/item/assembly/flash/memorizer/memories
 	r_pocket = /obj/item/modular_computer/pda/heads/ntrep
-	l_hand = /obj/item/storage/secure/briefcase/cash
+	l_hand = /obj/item/storage/briefcase/secure/cash
 	glasses = /obj/item/clothing/glasses/sunglasses
 	ears = /obj/item/radio/headset/headset_cent/representative
 	gloves = /obj/item/clothing/gloves/color/black

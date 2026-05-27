@@ -36,7 +36,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Social Anxiety", "Mute"),
 		list("Mute", "Soft-Spoken"),
 		list("Stormtrooper Aim", "Big Hands"),
-		//list("Bilingual", "Foreigner"), //monkestation edit, commented out
+		list("Common Second Language", "Foreigner"), //monkestation edit 2, re-added but replaced bilingual with csl
 		//MONKESTATION ADDITION START
 		list("Listener", "Uncommon"),
 		list("Outsider", "Uncommon"),
@@ -44,18 +44,19 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Listener", "Deaf"),
 		list("Polyglot", "Listener"),
 		list("Polyglot", "Bilingual"),
+		list("Polyglot", "Common Second Language"),
 		list("Lisp", "Mute"),
 		list("Polyglot", "Foreigner"),
 		//might be fun to change this in the future. you can be a body purist but be forced to use implants regardless for medical reasons
 		list("Body Purist", "Hosed"),
 		list("Body Purist", "Neuralinked"),
 		list("Body Purist", "Bright Eyes"),
-		list("Hypoalgesia", "Hyperalgesia", "Analgesia"),
 		list("Kakologophobia", "Easily Offended"),
 		list("Deaf", "Hard Of Hearing"),
 		list("Paraplegic", "Hemiplegic", "Monoplegic"),
 		list("Prosthetic Limb", "Monoplegic"),
-		list("Cyborg Pre-screened dogtag", "Unborgable")
+		list("Cyborg Pre-screened dogtag", "Unborgable"),
+		list("Revival Blacklist", "Uncloneable Neurons"),
 		//MONKESTATION ADDITION END
 	)
 

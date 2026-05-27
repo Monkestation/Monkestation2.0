@@ -63,17 +63,32 @@
 	return protection // Pass the protection value collected here upwards
 
 /**
- * React to a hit by a projectile object
+ * Wrapper for bullet_act used for atom-specific calculations, i.e. armor
  *
  * @params
  * * hitting_projectile - projectile
  * * def_zone - zone hit
  * * piercing_hit - is this hit piercing or normal?
  */
-/atom/proc/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
+
+/atom/proc/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE, blocked = null)
+	if (isnull(blocked))
+		blocked = check_projectile_armor(def_zone, hitting_projectile)
+	return bullet_act(hitting_projectile, def_zone, piercing_hit, blocked)
+
+/**
+ * React to a hit by a projectile object
+ *
+ * @params
+ * * hitting_projectile - projectile
+ * * def_zone - zone hit
+ * * piercing_hit - is this hit piercing or normal?
+ * * blocked - total armor value to apply to this hit
+ */
+/atom/proc/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE, blocked = 0)
 	SHOULD_CALL_PARENT(TRUE)
 
-	var/sigreturn = SEND_SIGNAL(src, COMSIG_ATOM_PRE_BULLET_ACT, hitting_projectile, def_zone)
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_ATOM_PRE_BULLET_ACT, hitting_projectile, def_zone, piercing_hit, blocked)
 	if(sigreturn & COMPONENT_BULLET_PIERCED)
 		return BULLET_ACT_FORCE_PIERCE
 	if(sigreturn & COMPONENT_BULLET_BLOCKED)
@@ -81,7 +96,7 @@
 	if(sigreturn & COMPONENT_BULLET_ACTED)
 		return BULLET_ACT_HIT
 
-	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, hitting_projectile, def_zone)
+	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, hitting_projectile, def_zone, piercing_hit, blocked)
 	if(QDELETED(hitting_projectile)) // Signal deleted it?
 		return BULLET_ACT_BLOCK
 
@@ -89,7 +104,7 @@
 		target = src,
 		// This armor check only matters for the visuals and messages in on_hit(), it's not actually used to reduce damage since
 		// only living mobs use armor to reduce damage, but on_hit() is going to need the value no matter what is shot.
-		blocked = check_projectile_armor(def_zone, hitting_projectile),
+		blocked = blocked,
 		pierce_hit = piercing_hit,
 	)
 
@@ -114,6 +129,11 @@
  * Default behaviour is to move back from the item that hit us
  */
 /atom/proc/hitby_react(atom/movable/harmed_atom)
+	if(isliving(harmed_atom))
+		var/mob/living/hit_atom = harmed_atom
+		if(hit_atom.has_status_effect(/datum/status_effect/no_throw_back))
+			return
+
 	if(harmed_atom && isturf(harmed_atom.loc))
 		step(harmed_atom, turn(harmed_atom.dir, 180))
 
@@ -197,6 +217,7 @@
 
 ///Called when something resists while this atom is its loc
 /atom/proc/container_resist_act(mob/living/user)
+	return
 
 /**
  * Called when the atom log's in or out
@@ -211,11 +232,16 @@
  * Causes effects when the atom gets hit by a rust effect from heretics
  *
  * Override this if you want custom behaviour in whatever gets hit by the rust
+ * /turf/rust_turf should be used instead for overriding rust on turfs
+ * rust_strength (optional) - if you want to vary the effect based on the users' strength
  */
-/atom/proc/rust_heretic_act()
+/atom/proc/rust_heretic_act(rust_strength)
 	return
 
-
+///wrapper proc that passes our mob's rust_strength to the target we are rusting
+/mob/living/proc/do_rust_heretic_act(atom/target)
+	var/datum/antagonist/heretic/heretic_data = GET_HERETIC(src)
+	target.rust_heretic_act(heretic_data?.rust_strength)
 
 
 

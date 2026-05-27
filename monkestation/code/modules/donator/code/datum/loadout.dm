@@ -114,7 +114,7 @@
 	ckeywhitelist = list("ruby_flamewing")
 
 /datum/loadout_item/under/miscellaneous/syndie_pajamas
-	name = "Syndicate Pajamas"
+	name = "Luxury Syndicate Pajamas"
 	item_path = /obj/item/clothing/under/costume/syndie_pajamas
 	donator_only = TRUE
 	requires_purchase = FALSE
@@ -439,13 +439,13 @@
 	requires_purchase = FALSE
 
 /datum/loadout_item/plushies/elliethedarksunplush
-	name = "Ellie plush"
+	name = "Ellie Dark Sun plush"
 	item_path = /obj/item/toy/plush/elliethedarksun
 	donator_only = TRUE
 	requires_purchase = FALSE
 
 /datum/loadout_item/plushies/ellie_valentine
-	name = "Ellie plush"
+	name = "Ellie Valentine plush"
 	item_path = /obj/item/toy/plush/ellie_valentine
 	donator_only = TRUE
 	requires_purchase = FALSE
@@ -590,7 +590,7 @@
 
 //Ophaq
 /datum/loadout_item/suit/ophaq_rainbowcoat
-	name = "Rainbow Coat"
+	name = "Ophaq Rainbow Coat"
 	item_path = /obj/item/clothing/suit/toggle/ophaq_rainbowcoat
 	donator_only = TRUE
 	requires_purchase = FALSE
@@ -935,7 +935,7 @@
 	item_path = /obj/item/clothing/glasses/hud/health/aviators
 	donator_only = TRUE
 	requires_purchase = FALSE
-	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_PARAMEDIC, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER)
+	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_PARAMEDIC, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER, JOB_BRIG_PHYSICIAN)
 
 /datum/loadout_item/glasses/diagnostic_aviators
 	name = "Diagnostic Aviators"
@@ -1058,5 +1058,115 @@
 	name = "Pet Delivery Beacon - Bananadola"
 	item_path = /obj/item/choice_beacon/pet/donator/bananadola
 	ckeywhitelist = list("Milthy")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/neck/flavafloh_commissar_jacket
+	name = "Commissar Jacket"
+	item_path = /obj/item/clothing/neck/flavafloh_commissar_jacket
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/flavafloh_pale_blue_fatigues
+	name = "Pale Blue Fatigues"
+	item_path = /obj/item/clothing/under/rank/security/officer/flavafloh_pale_blue_fatigues
+	donator_only = TRUE
+	requires_purchase = FALSE
+	restricted_roles = list(JOB_SECURITY_ASSISTANT,JOB_SECURITY_OFFICER,JOB_BRIG_PHYSICIAN,JOB_WARDEN,JOB_HEAD_OF_SECURITY)
+
+/datum/loadout_item/pocket_items/donator/cyber_mastiff
+	name = "Pet Delivery Beacon - Cyber Mastiff"
+	item_path = /obj/item/choice_beacon/pet/donator/cyber_mastiff
+	ckeywhitelist = list("Flava-Floh")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/effects/cyber_mastiff
+	name = "Cyber Mastiff Transformation"
+	item_path = /obj/item/effect_granter/donator/cyber_mastiff
+	ckeywhitelist = list("Flava-Floh")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/mask/lobotomites_visage
+	name = "Lobotomite's Visage"
+	item_path = /obj/item/clothing/mask/gas/lobotomites_visage
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// Coll6
+/datum/loadout_item/suit/lava_cat_robe
+	name = "Lava Cat Robe"
+	item_path = /obj/item/clothing/suit/hooded/lava_cat_robe
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// Yatosamasensei
+/datum/loadout_item/suit/tsukihime_executor
+	name = "Executor Dress"
+	item_path = /obj/item/clothing/suit/costume/tsukihime_executor
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/plushies/kumoko_san
+	name = "Kumoku-San Plush"
+	item_path = /obj/item/toy/plush/kumoko_san
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/yato_neco_arc
+	name = "Pet Delivery Beacon - Neco-Arc"
+	item_path = /obj/item/choice_beacon/pet/donator/yato_neco_arc
+	ckeywhitelist = list("Yatosamasensei")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/effects/yato_neco_arc
+	name = "Neco-Arc Transformation"
+	item_path = /obj/item/effect_granter/donator/yato_neco_arc
+	ckeywhitelist = list("Yatosamasensei")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// Ravin Hobo
+/datum/loadout_item/neck/red_regal_mantle
+	name = "Red Regal Mantle"
+	item_path = /obj/item/clothing/suit/hooded/cloak/red_regal_mantle
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// Snackiversal
+/datum/loadout_item/neck/anchor_necklace
+	name = "Silver Anchor"
+	item_path = /obj/item/clothing/accessory/silver_anchor
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//thebonezone66
+/datum/loadout_item/neck/moth_cloak
+	name = "Prismatic Cloak"
+	item_path = /obj/item/clothing/neck/cloak/moth_cloak
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//Trox McYeet
+/datum/loadout_item/mask/le_froggo_mask
+	name = "Frog Mask"
+	item_path = /obj/item/clothing/mask/animal/frog
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//ZBunz
+/datum/loadout_item/pocket_items/donator/shark_axolotl
+	name = "Pet Delivery Beacon - Shark Axolotl"
+	item_path = /obj/item/choice_beacon/pet/donator/shark_axolotl
+	ckeywhitelist = list("ZBunz")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/effects/shark_axolotl
+	name = "Shark Axolotl Transformation"
+	item_path = /obj/item/effect_granter/donator/shark_axolotl
+	ckeywhitelist = list("ZBunz")
 	donator_only = TRUE
 	requires_purchase = FALSE

@@ -93,7 +93,7 @@
 ///hides mutant/moth wings, does not apply to functional wings
 #define HIDEMUTWINGS (1<<13)
 ///hides belts and riggings
-//#define HIDEBELT (1<<14)
+#define HIDEBELT (1<<14)
 ///hides antennae
 #define HIDEANTENNAE (1<<15)
 
@@ -119,6 +119,10 @@
 //defines for the index of hands
 #define LEFT_HANDS 1
 #define RIGHT_HANDS 2
+/// Checks if the value is "right" - same as ISEVEN, but used primarily for hand or foot index contexts
+#define IS_RIGHT_INDEX(value) (value % 2 == 0)
+/// Checks if the value is "left" - same as ISODD, but used primarily for hand or foot index contexts
+#define IS_LEFT_INDEX(value) (value % 2 != 0)
 
 //flags for female outfits: How much the game can safely "take off" the uniform without it looking weird
 /// For when there's simply no need for a female version of this uniform.
@@ -150,14 +154,15 @@ DEFINE_BITFIELD(no_equip_flags, list(
 ))
 
 //Flags (actual flags, fucker ^) for /obj/item/var/supports_variations_flags
-///No alternative sprites based on bodytype
-#define CLOTHING_NO_VARIATION (1<<0)
 ///Has a sprite for digitigrade legs specifically.
-#define CLOTHING_DIGITIGRADE_VARIATION (1<<1)
+#define CLOTHING_DIGITIGRADE_VARIATION (1<<0)
 ///The sprite works fine for digitigrade legs as-is.
-#define CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON (1<<2)
-///Has a sprite for snouted heads specifically.
-#define CLOTHING_SNOUTED_VARIATION (1<<3)
+#define CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON (1<<1)
+/// Auto-generates the leg portion of the sprite with GAGS
+#define CLOTHING_DIGITIGRADE_MASK (1<<2)
+
+/// All variation flags which render "correctly" on a digitigrade leg setup
+#define DIGITIGRADE_VARIATIONS (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON|CLOTHING_DIGITIGRADE_MASK)
 
 //flags for covering body parts
 #define GLASSESCOVERSEYES (1<<0)
@@ -166,6 +171,7 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define MASKCOVERSMOUTH (1<<3) // on other items, these are just for mask/head
 #define HEADCOVERSMOUTH (1<<4)
 #define PEPPERPROOF (1<<5) //protects against pepperspray
+#define ALLOW_SURGERY_THROUGH (1<<6) //item will not obstruct body part access, such as for surgery, despite covering the body part
 
 #define TINT_DARKENED 2 //Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3 //Threshold of tint level to obscure vision fully
@@ -292,6 +298,25 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 	/obj/item/gun/ballistic/automatic/proto/pksmg,
 	/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic,
 	/obj/item/gun/ballistic/revolver/govmining,
+	/obj/item/gun/energy/laser/explorer,
+	/obj/item/melee/sledgehammer,
+))
+
+/// Allowed list for science winter coats and bio suits.
+GLOBAL_LIST_INIT(science_suit_allowed, list(
+	/obj/item/analyzer,
+	/obj/item/dnainjector,
+	/obj/item/hypospray,
+	/obj/item/paper,
+	/obj/item/reagent_containers/cup/beaker,
+	/obj/item/reagent_containers/cup/bottle,
+	/obj/item/reagent_containers/cup/tube,
+	/obj/item/reagent_containers/dropper,
+	/obj/item/reagent_containers/medipen,
+	/obj/item/reagent_containers/pill,
+	/obj/item/reagent_containers/syringe,
+	/obj/item/storage/bag/xeno,
+	/obj/item/storage/pill_bottle,
 ))
 
 /// String for items placed into the left pocket.
@@ -306,7 +331,11 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 #define LOCATION_GLOVES "on your hands"
 /// String for items placed in the eye/glasses slot.
 #define LOCATION_EYES "covering your eyes"
+/// Items placed in the mask slot.
+#define LOCATION_MASK "covering your face"
 /// String for items placed on the head/hat slot.
 #define LOCATION_HEAD "on your head"
 /// String for items placed in the neck slot.
 #define LOCATION_NECK "around your neck"
+/// String for items placed in the id slot
+#define LOCATION_ID "in your ID slot"

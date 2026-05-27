@@ -5,6 +5,9 @@
 /datum/movespeed_modifier/jetpack/cybernetic
 	multiplicative_slowdown = -0.5
 
+/datum/movespeed_modifier/jetpack/halfspeed
+	multiplicative_slowdown = -0.3
+
 /datum/movespeed_modifier/jetpack/fullspeed
 	multiplicative_slowdown = -0.5
 

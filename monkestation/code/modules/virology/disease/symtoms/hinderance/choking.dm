@@ -12,4 +12,4 @@
 	mob.emote("gasp")
 	if(prob(25))
 		to_chat(mob, span_warning("[pick("You're having difficulty breathing.", "Your breathing becomes heavy.")]"))
-	mob.adjustOxyLoss(rand(2, 3) * multiplier)
+	mob.adjustOxyLoss(rand(2, 3) * power * multiplier)

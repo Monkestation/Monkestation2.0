@@ -174,11 +174,13 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 
 	switch(action)
 		if ("pp")
-			//SSadmin_verbs.dynamic_invoke_verb(ui.user, /datum/admin_verb/show_player_panel, request.owner?.mob)
 			usr.client.selectedPlayerCkey = request.owner?.mob.ckey
 			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/vuap_personal)
 			return TRUE
-
+		if ("pp_old")
+			usr.client.selectedPlayerCkey = request.owner?.mob.ckey
+			SSadmin_verbs.dynamic_invoke_verb(ui.user, /datum/admin_verb/show_player_panel, request.owner?.mob)
+			return TRUE
 		if ("vv")
 			var/mob/M = request.owner?.mob
 			usr.client.debug_variables(M)
@@ -242,7 +244,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 				to_chat(usr, "You cannot set the nuke code for a non-nuke-code-request request!", confidential = TRUE)
 				return TRUE
 			var/code = random_nukecode()
-			for(var/obj/machinery/nuclearbomb/selfdestruct/SD in GLOB.nuke_list)
+			for(var/obj/machinery/nuclearbomb/selfdestruct/SD in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/selfdestruct))
 				SD.r_code = code
 			message_admins("[key_name_admin(usr)] has set the self-destruct code to \"[code]\".")
 			return TRUE

@@ -3,9 +3,18 @@
 #define KIT_ITEM_CATEGORY_MISC "misc"
 /obj/item/storage/box/syndie_kit/imp_hard_spear
 	name = "hardlight spear implant box"
+	desc = "Remember your promise."
 
 /obj/item/storage/box/syndie_kit/imp_hard_spear/PopulateContents()
 	new /obj/item/implanter/hard_spear(src)
+
+/obj/item/storage/box/syndie_kit/imp_hard_spear/bundle
+	name = "hardlight spear implant bundle"
+
+
+/obj/item/storage/box/syndie_kit/imp_hard_spear/bundle/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/implanter/hard_spear(src)
 
 /obj/item/storage/box/syndie_kit/imp_hard_spear/max
 	name = "commanding hardlight spear implant box"
@@ -19,7 +28,7 @@
 	icon_state = "syndiebox"
 
 /obj/item/storage/box/syndimaid/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/clothing/head/maidheadband/syndicate = 1,
 		/obj/item/clothing/under/syndicate/skirt/maid = 1,
 		/obj/item/clothing/gloves/combat/maid = 1,
@@ -33,7 +42,7 @@
 	icon_state = "syndiebox"
 
 /obj/item/storage/box/syndibunny/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/clothing/head/playbunnyears/syndicate = 1,
 		/obj/item/clothing/under/syndicate/syndibunny = 1,
 		/obj/item/clothing/suit/jacket/tailcoat/syndicate = 1,
@@ -60,7 +69,7 @@
 	new /obj/item/melee/baton/telescopic/contractor_baton(src)
 
 	// You get one item from each sub list
-	var/static/list/item_list = list(
+	var/list/item_list = list(
 		KIT_ITEM_CATEGORY_SUPPORT = list(
 			/obj/item/pen/sleepy,
 			/obj/item/storage/medkit/tactical,
@@ -70,7 +79,7 @@
 			/obj/item/clothing/shoes/chameleon/noslip,
 			/obj/item/clothing/glasses/thermal/syndi,
 			/obj/item/storage/box/syndie_kit/imp_freedom,
-			/obj/item/reagent_containers/hypospray/medipen/stimulants,
+			/obj/item/reagent_containers/medipen/stimulants,
 			/obj/item/card/emag/doorjack,
 		),
 
@@ -110,7 +119,7 @@
 
 /obj/item/storage/box/syndie_kit/contract_kit/midround/PopulateContents()
 	// You get one item from each sub list
-	var/static/list/item_list = list(
+	var/list/item_list = list(
 		KIT_ITEM_CATEGORY_SUPPORT = list(
 			/obj/item/pen/sleepy,
 			/obj/item/storage/medkit/tactical,
@@ -120,7 +129,7 @@
 			/obj/item/clothing/shoes/chameleon/noslip,
 			/obj/item/clothing/glasses/thermal/syndi,
 			/obj/item/storage/box/syndie_kit/imp_freedom,
-			/obj/item/reagent_containers/hypospray/medipen/stimulants,
+			/obj/item/reagent_containers/medipen/stimulants,
 			/obj/item/card/emag/doorjack,
 		),
 
@@ -166,7 +175,7 @@
 	icon_state = "syndiebox"
 
 /obj/item/storage/box/clonearmy/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/disk/clonearmy = 1,
 		/obj/item/stack/sheet/iron = 15,
 		/obj/item/stack/sheet/glass = 4,
@@ -199,15 +208,6 @@
 			</ul>
 			Good luck agent. You can burn this document."}
 
-/obj/item/storage/box/syndie_kit/shotgun_revolver
-	desc = "A box containing a value bundled shotgun revolver and some shotgun shells. Comes with two quickload cartridges of slugs"
-
-/obj/item/storage/box/syndie_kit/shotgun_revolver/PopulateContents()
-	new /obj/item/gun/ballistic/revolver/shotgun_revolver(src)
-	new /obj/item/ammo_box/advanced/s12gauge(src)
-	new /obj/item/ammo_box/advanced/s12gauge(src)
-
-
 /obj/item/storage/box/syndie_kit/shit_smg_bundle
 	desc = "A box containing a surplus space soviet Plastikov and two magazines. Perfect for henchmen."
 
@@ -226,14 +226,14 @@
 	new /obj/item/clothing/suit/jacket/det_suit/khan(src)
 
 /obj/item/storage/box/syndie_kit/razorwire/PopulateContents()
-	new /obj/item/autosurgeon/organ/syndicate/razorwire/l(src)
+	new /obj/item/autosurgeon/syndicate/razorwire/l(src)
 
 /obj/item/storage/box/syndie_kit/esword/PopulateContents()
-	new /obj/item/autosurgeon/organ/syndicate/esword(src)
+	new /obj/item/autosurgeon/syndicate/esword(src)
 
 /obj/item/storage/box/syndie_kit/deepvien/PopulateContents()
-	new /obj/item/autosurgeon/organ/syndicate/deepvien(src)
-	new /obj/item/autosurgeon/organ/syndicate/deepvien/l(src)
+	new /obj/item/autosurgeon/syndicate/deepvien(src)
+	new /obj/item/autosurgeon/syndicate/deepvien/l(src)
 
 /obj/item/storage/box/syndie_kit/xray
 	name = "X-Ray Mutation Kit"
@@ -242,7 +242,7 @@
 /obj/item/storage/box/syndie_kit/xray/PopulateContents()
 	new /obj/item/dnainjector/syndicate_xray(src)
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/hypospray/medipen/deforest/occuisate(src)
+		new /obj/item/reagent_containers/medipen/deforest/occuisate(src)
 
 /obj/item/storage/box/syndie_kit/laser_eyes
 	name = "Laser Eyes Mutation Kit"
@@ -251,7 +251,7 @@
 /obj/item/storage/box/syndie_kit/laser_eyes/PopulateContents()
 	new /obj/item/dnainjector/syndicate_laser_eyes(src)
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/hypospray/medipen/deforest/occuisate(src)
+		new /obj/item/reagent_containers/medipen/deforest/occuisate(src)
 
 #undef KIT_ITEM_CATEGORY_SUPPORT
 #undef KIT_ITEM_CATEGORY_WEAPONS

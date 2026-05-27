@@ -70,6 +70,7 @@
 	add_team_hud(current_mob)
 	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(thrall_life))
 	RegisterSignal(current_mob, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
+	RegisterSignal(current_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	current_mob.update_appearance(UPDATE_OVERLAYS)
 	current_mob.grant_language(/datum/language/shadowtongue, source = LANGUAGE_DARKSPAWN)
 	current_mob.faction |= FACTION_DARKSPAWN
@@ -86,9 +87,9 @@
 
 	if(isliving(current_mob))
 		var/obj/item/organ/internal/shadowtumor/thrall/tumor = current_mob.get_organ_slot(ORGAN_SLOT_BRAIN_TUMOR)
-		if(!tumor || !istype(tumor))
+		if(!istype(tumor))
 			tumor = new
-			tumor.Insert(current_mob, FALSE, FALSE)
+			tumor.Follow_Insert(current_mob, ORGAN_SLOT_BRAIN, FALSE, FALSE)
 			if(team)
 				tumor.antag_team = team
 
@@ -100,7 +101,7 @@
 	team?.remove_thrall(owner)
 
 	UnregisterSignal(current_mob, COMSIG_LIVING_LIFE)
-	UnregisterSignal(current_mob, COMSIG_ATOM_UPDATE_OVERLAYS)
+	UnregisterSignal(current_mob, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_EXAMINE))
 	current_mob.update_appearance(UPDATE_OVERLAYS)
 	current_mob.remove_language(/datum/language/shadowtongue, source = LANGUAGE_DARKSPAWN)
 	current_mob.faction -= FACTION_DARKSPAWN
@@ -112,6 +113,18 @@
 			qdel(spells)
 	qdel(get_shadow_tumor(current_mob))
 	current_mob.update_sight()
+
+/datum/antagonist/thrall_darkspawn/proc/on_examine(mob/living/source, mob/examiner, list/examine_text)
+	SIGNAL_HANDLER
+
+	if(!ishuman(owner.current))
+		return
+	var/mob/living/carbon/human/thrall = owner.current
+	if((!thrall.wear_suit && !thrall.w_uniform))
+		examine_text += span_velvet("[thrall.p_Their()] whole body is covered in sigils!")
+
+/datum/antagonist/thrall_darkspawn/pre_mindshield(mob/implanter, mob/living/mob_override)
+	return COMPONENT_MINDSHIELD_RESISTED
 
 ////////////////////////////////////////////////////////////////////////////////////
 //--------------------------------Antag hud---------------------------------------//

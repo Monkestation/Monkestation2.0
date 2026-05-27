@@ -2,7 +2,7 @@
 #define MAX_CORES_BLUESPACE 8
 #define MAX_CORES_GRAVITATIONAL 8
 #define MAX_CORES_FLUX 8
-#define MAX_CORES_VORTEX 8
+#define MAX_CORES_VORTEX 1
 #define MAX_CORES_PYRO 8
 #define MAX_CORES_HALLUCINATION 8
 #define MAX_CORES_BIOSCRAMBLER 8
@@ -27,6 +27,7 @@ GLOBAL_LIST_INIT(bioscrambler_limb_id_blacklist, list(
 	BODYPART_ID_PSYKER,
 	SPECIES_GOBLIN,
 	SPECIES_TERATOMA,
+	SPECIES_OOZELING,
 ))
 
 /// Blacklist of organs which should not appear when bioscrambled.
@@ -71,6 +72,7 @@ GLOBAL_LIST_INIT(bioscrambler_organs_blacklist, typecacheof(list(
 	/obj/item/organ/internal/empowered_borer_egg,
 	/obj/item/organ/internal/butt/atomic,
 	/obj/item/organ/internal/borer_body,
+	/obj/item/organ/internal/heart/shadow_ritual,
 )) - subtypesof(/obj/item/organ/external/wings/functional) - typesof(/obj/item/organ/external/wings/moth))
 
 /// List of body parts we can apply to people

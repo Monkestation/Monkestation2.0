@@ -96,6 +96,7 @@
 	GLOB.emote_list = init_emote_list() // WHY DOES THIS NEED TO GO HERE? IT JUST INITS DATUMS
 	init_crafting_recipes()
 	init_crafting_recipes_atoms()
+	init_religion_sects()
 
 /// Inits crafting recipe lists
 /proc/init_crafting_recipes(list/crafting_recipes)
@@ -249,7 +250,7 @@
 // Wall mounted machinery which are visually on the wall.
 GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/item/radio/intercom,
-	/obj/item/storage/secure/safe,
+	/obj/structure/secure_safe,
 	/obj/machinery/airalarm,
 	/obj/machinery/bluespace_vendor,
 	/obj/machinery/button,
@@ -285,6 +286,10 @@ GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 GLOBAL_LIST_INIT(WALLITEMS_EXTERIOR, typecacheof(list(
 	/obj/machinery/camera,
 	/obj/machinery/light,
-	/obj/structure/camera_assembly,
 	/obj/structure/light_construct,
 )))
+
+/proc/init_religion_sects()
+	for(var/path in subtypesof(/datum/religion_sect))
+		var/datum/religion_sect/each_sect = new path()
+		GLOB.religion_sect_datums += each_sect

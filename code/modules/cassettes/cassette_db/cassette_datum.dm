@@ -1,5 +1,5 @@
 /datum/cassette
-	/// The unique ID of the cassette.
+	/// The unique ID of the cassette. example: "4c5d8d69e021a64_alice123456"
 	var/id
 	/// The name of the cassette.
 	var/name
@@ -7,6 +7,16 @@
 	var/desc
 	/// The status of this cassette.
 	var/status = CASSETTE_STATUS_UNAPPROVED
+	/// The time this cassette tape was submitted (unix timestamp)
+	var/submitted_time
+	/// The ckey of the admin who approved this tape
+	var/approved_ckey
+	/// The time this cassette tape was approved (unix timestamp)
+	var/approved_time
+	/// The ckey of the admin who deleted this tape, if status is deleted. this also counts as the field for who denied it if status is denied.
+	var/deleted_ckey
+	/// The time this cassette tape was deleted (unix timestamp)
+	var/deleted_time
 	/// Information about the author of this cassette.
 	var/datum/cassette_author/author
 
@@ -44,8 +54,14 @@
 	else
 		status = data["approved"] ? CASSETTE_STATUS_APPROVED : CASSETTE_STATUS_UNAPPROVED
 
+	submitted_time = data["submitted_time"]
+	approved_ckey = data["approved_ckey"]
+	approved_time = data["approved_time"]
+	deleted_ckey = data["deleted_ckey"]
+	deleted_time = data["deleted_time"]
+
 	author.name = data["author_name"]
-	author.ckey = ckey(data["author_ckey"])
+	author.ckey = data["author_ckey"]
 
 	for(var/side_name, side_data in data["songs"])
 		var/datum/cassette_side/side
@@ -69,6 +85,11 @@
 		"status" = status,
 		"author_name" = author.name,
 		"author_ckey" = author.ckey,
+		"submitted_time" = submitted_time,
+		"approved_ckey" = approved_ckey,
+		"approved_time" = approved_time,
+		"deleted_ckey" = deleted_ckey,
+		"deleted_time" = deleted_time,
 		"songs" = list(
 			"side1" = list(),
 			"side2" = list(),
@@ -86,44 +107,6 @@
 	rustg_file_write(json_encode(export(), JSON_PRETTY_PRINT), CASSETTE_FILE(id))
 	if(!rustg_file_exists(CASSETTE_FILE(id)))
 		CRASH("okay wtf we failed to save cassette [id], check folder permissions!!")
-
-/// Saves the cassette to the database.
-/// Returns TRUE if successful, FALSE otherwise.
-/datum/cassette/proc/save_to_db()
-	. = FALSE
-	if(!id)
-		CRASH("Attempted to save cassette without an ID to database")
-	if(!SSdbcore.Connect())
-		CRASH("Could not save cassette [id], database not connected")
-	var/datum/db_query/query_save_cassette = SSdbcore.NewQuery({"
-		INSERT INTO [format_table_name("cassettes")]
-			(id, name, desc, status, author_name, author_ckey, front, back)
-		VALUES
-			(:id, :name, :desc, :status, :author_name, :author_ckey, :front, :back)
-		ON DUPLICATE KEY UPDATE
-			name = VALUES(name),
-			desc = VALUES(desc),
-			status = VALUES(status),
-			author_name = VALUES(author_name),
-			author_ckey = VALUES(author_ckey),
-			front = VALUES(front),
-			back = VALUES(back)
-	"}, list(
-		"id" = id,
-		"name" = name,
-		"desc" = desc,
-		"status" = status,
-		"author_name" = author.name,
-		"author_name" = ckey(author.ckey),
-		"front" = json_encode(front.export()),
-		"back" = json_encode(back.export()),
-	))
-	if(!query_save_cassette.warn_execute())
-		qdel(query_save_cassette)
-		CRASH("Failed to save cassette [id] to database")
-	qdel(query_save_cassette)
-	return TRUE
-
 
 /// Simple helper to get a side of the cassette.
 /// TRUE is front side, FALSE is back side.

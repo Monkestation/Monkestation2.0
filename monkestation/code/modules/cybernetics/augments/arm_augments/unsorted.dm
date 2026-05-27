@@ -126,7 +126,7 @@
 	var/target_zone = living_target.get_random_valid_zone(source.zone_selected)
 	var/armor_block = living_target.run_armor_check(target_zone, MELEE/*, armour_penetration = attacking_bodypart.unarmed_effectiveness*/)
 	living_target.apply_damage(potential_damage, attacking_bodypart.attack_type, target_zone, armor_block)
-	living_target.apply_damage(potential_damage * 2, STAMINA, target_zone, armor_block)
+	living_target.apply_damage(potential_damage, STAMINA, target_zone, armor_block)
 
 	if(source.body_position != LYING_DOWN) //Throw them if we are standing
 		var/atom/throw_target = get_edge_target_turf(living_target, source.dir)
@@ -178,12 +178,12 @@
 /obj/item/organ/internal/cyberimp/arm/ammo_counter/Insert(mob/living/carbon/M, special, drop_if_replaced)
 	. = ..()
 	RegisterSignal(M,COMSIG_CARBON_ITEM_PICKED_UP, PROC_REF(add_to_hand))
-	RegisterSignal(M,COMSIG_CARBON_ITEM_DROPPED, PROC_REF(remove_from_hand))
+	RegisterSignal(M,COMSIG_MOB_DROPPED_ITEM, PROC_REF(remove_from_hand))
 
 /obj/item/organ/internal/cyberimp/arm/ammo_counter/Remove(mob/living/carbon/M, special)
 	. = ..()
 	UnregisterSignal(M,COMSIG_CARBON_ITEM_PICKED_UP)
-	UnregisterSignal(M,COMSIG_CARBON_ITEM_DROPPED)
+	UnregisterSignal(M,COMSIG_MOB_DROPPED_ITEM)
 	our_gun = null
 	update_hud_elements()
 

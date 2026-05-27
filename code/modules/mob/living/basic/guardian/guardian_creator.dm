@@ -127,6 +127,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	to_chat(user, guardian_theme.get_fluff_string(summoned_guardian.guardian_type))
 	to_chat(user, replacetext(success_message, "%GUARDIAN", mob_name))
 	summoned_guardian.client?.init_verbs()
+	summoned_guardian.updatehealth() // Set the initial health hud
 	return summoned_guardian
 
 /// Checks to ensure we're still capable of using the radial selector
@@ -171,7 +172,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	name = "holoparasite injector"
 	desc = "It contains an alien nanoswarm of unknown origin. Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, it requires an organic host as a home base and source of fuel."
 	icon = 'icons/obj/medical/syringe.dmi'
-	icon_state = "combat_hypo"
+	icon_state = "hypo_combat"
 	theme = GUARDIAN_THEME_TECH
 	allow_multiple = TRUE
 	allow_changeling = FALSE

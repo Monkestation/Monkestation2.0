@@ -5,8 +5,8 @@
 	export_types = list(/obj/structure/closet/crate)
 	exclude_types = list(
 		/obj/structure/closet/crate/large,
-		/obj/structure/closet/crate/mail,
 		/obj/structure/closet/crate/wooden,
+		/obj/structure/closet/crate/coffin,
 		)
 
 /datum/export/large/crate/total_printout(datum/export_report/ex, notes = TRUE) // That's why a goddamn metal crate costs that much.
@@ -14,7 +14,7 @@
 	if(. && notes)
 		. += " Thanks for participating in Nanotrasen Crates Recycling Program."
 
-/datum/export/large/crate/wooden
+/datum/export/large/crate/large
 	cost = CARGO_CRATE_VALUE/5
 	unit_name = "large wooden crate"
 	export_types = list(/obj/structure/closet/crate/large)
@@ -24,14 +24,14 @@
 	unit_name = "ore box"
 	export_types = list(/obj/structure/ore_box)
 
-/datum/export/large/crate/wood
-	cost = CARGO_CRATE_VALUE * 0.48
+/datum/export/large/crate/wooden
+	cost = CARGO_CRATE_VALUE * 0.75 //150
 	unit_name = "wooden crate"
 	export_types = list(/obj/structure/closet/crate/wooden)
 	exclude_types = list()
 
 /datum/export/large/crate/coffin
-	cost = CARGO_CRATE_VALUE/2 //50 wooden crates cost 800 credits, and you can make 10 coffins in seconds with those planks. Each coffin selling for 100 means you can make a net gain of 200 credits for wasting your time making coffins.
+	cost = CARGO_CRATE_VALUE/5
 	unit_name = "coffin"
 	export_types = list(/obj/structure/closet/crate/coffin)
 

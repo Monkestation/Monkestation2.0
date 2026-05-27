@@ -77,7 +77,108 @@
 		/obj/item/storage/backpack/duffelbag/mining_conscript,
 	)
 
-//MONKESTATION EDIT START
+// monkestation explorer vouchers
+/datum/voucher_set/explorer
+
+/datum/voucher_set/explorer/retro_laser
+	name = "Laser Gun Kit"
+	description = "Contains a low capacity but recharging laser gun, and a knife and flashlight to attach to it. It's firing pin won't work on the station or in NanoTrasen controlled space. No connection has been found by NT to any alleged 'war crimes' and the distrubition of this weapon to an incredibly accident prone workforce."
+	icon = 'monkestation/icons/obj/guns/explorer.dmi'
+	icon_state = "explorer"
+	set_items = list(
+		/obj/item/gun/energy/laser/explorer,
+		/obj/item/flashlight/seclite,
+		/obj/item/knife/combat/survival,
+		)
+
+/datum/voucher_set/explorer/extraction_kit
+	name = "Medevac Kit"
+	description = "Contains some fulton extraction packs and a beacon signaller, which allows you to send back dead bodies using your cargo teleporter. Smack the cargo teleporter with the fulton packs, and set up the signaller in a safe place. Comes with a regular first aid kit."
+	icon = 'icons/obj/fulton.dmi'
+	icon_state = "extraction_pack"
+	set_items = list(
+		/obj/item/extraction_pack,
+		/obj/item/fulton_core,
+		/obj/item/storage/medkit/regular,
+		)
+
+/datum/voucher_set/explorer/survival_capsule
+	name = "Survival Kit"
+	description = "Contains an explorer's webbing with a surival capsule inside, a tube of ointment for burns, a roll of sutures for bruises and a coagulant injector for bleeding."
+	icon = 'icons/obj/clothing/belts.dmi'
+	icon_state = "explorer1"
+	set_items = list(
+		/obj/item/storage/belt/mining/vendor,
+		/obj/item/stack/medical/ointment = 1,
+		/obj/item/stack/medical/suture = 1,
+		/obj/item/reagent_containers/medipen/deforest/coagulants,
+		)
+
+/datum/voucher_set/explorer/breacher_kit
+	name = "Breaching Kit"
+	description = "Contains three breaching charges. Like c-4, but cannot be attached to living things."
+	icon = 'monkestation/icons/obj/items/breachingcharge.dmi'
+	icon_state = "breaching-charge0"
+	set_items = list(
+		/obj/item/grenade/c4/explosivecharge,
+		/obj/item/grenade/c4/explosivecharge,
+		/obj/item/grenade/c4/explosivecharge,
+		)
+
+/datum/voucher_set/explorer/outback
+	name = "Bushman Kit"
+	description = "Contains a robust bowie knife and sheathe to keep it secure. Comes with a stocked frontier medical kit for tending your injuries."
+	icon = 'monkestation/code/modules/blueshift/icons/bowie.dmi'
+	icon_state = "bowiehand"
+	set_items = list(
+		/obj/item/storage/belt/bowie_sheath,
+		/obj/item/storage/medkit/frontier/stocked,
+		/obj/item/clothing/head/cowboy/brown,
+		)
+
+/datum/voucher_set/explorer/first_mate
+	name = "Explorer Conscription Kit"
+	description = "The captain of every voyage needs a trusty right hand spaceman. Bring a buddy along into the abyss with a duffel bag containing a spare mining hardsuit, jetpack, gps device, a proto-kinetic accelerator, a survival knife, a seclite, a mesons, an automatic mining scanner, a mining satchel, a gas mask, a mining radio key and a special ID card with a basic mining access."
+	icon = 'icons/obj/storage/backpack.dmi'
+	icon_state = "duffel-explorer"
+	set_items = list(
+		/obj/item/storage/backpack/duffelbag/explorer_conscript = 1,
+		)
+
+/obj/item/card/id/advanced/explorer
+	name = "explorer ID"
+	trim = /datum/id_trim/job/explorer/spare
+
+/obj/item/storage/backpack/duffelbag/explorer_conscript
+	name = "explorer conscription kit"
+	desc = "A kit containing everything a crewmember needs to join the exploration force."
+	icon = 'icons/obj/storage/backpack.dmi'
+	icon_state = "duffel-explorer"
+	inhand_icon_state = "duffel-explorer"
+
+/obj/item/storage/backpack/duffelbag/explorer_conscript/PopulateContents()
+	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
+	new /obj/item/storage/bag/ore(src)
+	new /obj/item/storage/box/emergency_eva/explorer(src)
+	new /obj/item/encryptionkey/headset_mining(src)
+	new /obj/item/clothing/mask/gas/explorer(src)
+	new /obj/item/card/id/advanced/explorer(src)
+	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
+	new /obj/item/knife/combat/survival(src)
+	new /obj/item/flashlight/seclite(src)
+	new /obj/item/cargo_teleporter(src)
+
+/datum/voucher_set/explorer/conscription_kit
+	name = "Lavaland Kit"
+	description = "Contains the classic lavaland mining kit, and a proto-kinetic crusher for exploring the lavaland wastes. Consisting of a proto-kinetic accelerator, a survival knife, a seclite, an explorer's suit, a mesons, an automatic mining scanner, a mining satchel, a gas mask, a mining radio key and a special ID card with a basic mining access."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "crusher"
+	set_items = list(
+		/obj/item/storage/backpack/duffelbag/mining_conscript,
+		/obj/item/kinetic_crusher,
+	)
+
 //categories
 /datum/voucher_set/security
 
@@ -165,12 +266,12 @@
 		)
 
 /datum/voucher_set/security/utility/donut_box
-	name = "Box of Donuts"
+	name = "Variety Box of Donuts"
 	description = "Tantalizing..."
 	icon = 'icons/obj/food/donuts.dmi'
 	icon_state = "donutbox"
 	set_items = list(
-		/obj/item/storage/fancy/donut_box,
+		/obj/item/storage/fancy/donut_box/random,
 		/obj/item/reagent_containers/cup/glass/coffee,
 		)
 
@@ -185,7 +286,7 @@
 
 /datum/voucher_set/security/utility/barrier
 	name = "Barrier Grenades"
-	description = "Two barrier grenades."
+	description = "Three barrier grenades."
 	icon = 'icons/obj/weapons/grenade.dmi'
 	icon_state = "wallbang"
 	set_items = list(
@@ -320,6 +421,7 @@
 	new /obj/item/taperecorder(src)
 	new /obj/item/tape/random(src)
 	new /obj/item/folder/red(src)
+	new /obj/item/clipboard(src)
 	new /obj/item/storage/box/evidence(src)
 	new /obj/item/toy/crayon/white(src)
 	new /obj/item/binoculars(src)
@@ -348,41 +450,3 @@
 	new /obj/item/gun/energy/taser/old(src)
 	new /obj/item/storage/box/pinpointer_pairs(src)
 	new /obj/item/book/manual/wiki/security_space_law(src)
-
-/// Brig physician kit
-
-/datum/voucher_set/security/brig_physician/monitor
-	name = "Officers monitor"
-	description = "A dead officer ? Not on your watch."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "scanner"
-	set_items = list(
-		/obj/item/sensor_device/brigdoc
-	)
-
-/datum/voucher_set/security/brig_physician/pinpointer
-	name = "Pinpointer"
-	description = "Tracking issues ? Never heard of them."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "pinpointer_crew"
-	set_items = list(
-		/obj/item/pinpointer/crew
-	)
-
-/datum/voucher_set/security/brig_physician/bodybags
-	name = "Prisoners bodybags"
-	description = "Carrying a prisoner has never been easier."
-	icon = 'icons/obj/bodybag.dmi'
-	icon_state = "prisonerenvirobag"
-	set_items = list(
-		/obj/structure/closet/body_bag/environmental/prisoner = 4
-	)
-
-/datum/voucher_set/security/brig_physician/defib_belt
-	name = "Compact Defibrilator"
-	description = "Combat medic ? Trauma team ? Small players, this one got it all."
-	icon = 'icons/obj/medical/defib.dmi'
-	icon_state = "defibcompact"
-	set_items = list(
-		/obj/item/defibrillator/compact
-	)

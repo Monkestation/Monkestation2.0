@@ -83,7 +83,7 @@
 	if(reagents.total_volume >= wanted_amount && anchored && length(inputspot.contents))
 		use_energy(active_power_usage * seconds_per_tick)
 		var/obj/AM = pick(inputspot.contents)///pick a reagent_container that could be used
-		if((is_reagent_container(AM) && !istype(AM, /obj/item/reagent_containers/hypospray/medipen)) || istype(AM, /obj/item/ammo_casing/shotgun/dart))
+		if((is_reagent_container(AM) && !istype(AM, /obj/item/reagent_containers/medipen)) || istype(AM, /obj/item/ammo_casing/shotgun/dart))
 			var/obj/item/reagent_containers/B = AM
 			///see if it would overflow else inject
 			if((B.reagents.total_volume + wanted_amount) <= B.reagents.maximum_volume)

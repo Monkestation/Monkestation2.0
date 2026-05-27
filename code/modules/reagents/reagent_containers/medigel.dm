@@ -16,7 +16,7 @@
 	throw_speed = 3
 	throw_range = 7
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10)
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,60)
 	volume = 60
 	var/can_fill_from_container = TRUE
 	var/apply_type = PATCH
@@ -33,8 +33,7 @@
 	)
 
 /obj/item/reagent_containers/medigel/mode_change_message(mob/user)
-	var/squirt_mode = amount_per_transfer_from_this == initial(amount_per_transfer_from_this)
-	to_chat(user, span_notice("You will now apply the medigel's contents in [squirt_mode ? "extended sprays":"short bursts"]. You'll now use [amount_per_transfer_from_this] units per use."))
+	to_chat(user, span_notice("You'll now use [amount_per_transfer_from_this] units per use."))
 
 /obj/item/reagent_containers/medigel/attack(mob/M, mob/user, def_zone)
 	if(!reagents || !reagents.total_volume)

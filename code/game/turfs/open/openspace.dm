@@ -10,6 +10,8 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pathing_pass_method = TURF_PATHING_PASS_PROC
 	plane = TRANSPARENT_FLOOR_PLANE
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
+	turf_flags = NO_RUST
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
 
@@ -118,6 +120,10 @@
 		build_with_rods(C, user)
 	else if(istype(C, /obj/item/stack/tile/iron))
 		build_with_floor_tiles(C, user)
+	else if(istype(C, /obj/item/stack/thermoplastic))
+		build_with_transport_tiles(C, user)
+	else if(istype(C, /obj/item/stack/sheet/mineral/titanium))
+		build_with_titanium(C, user)
 
 /turf/open/openspace/build_with_floor_tiles(obj/item/stack/tile/iron/used_tiles)
 	if(!CanCoverUp())
@@ -145,13 +151,19 @@
 			return TRUE
 	return FALSE
 
-/turf/open/openspace/rust_heretic_act()
+/turf/open/openspace/rust_heretic_act(rust_strength)
 	return FALSE
 
 /turf/open/openspace/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
 	var/atom/movable/our_movable = pass_info.caller_ref?.resolve()
 	if(our_movable && !our_movable.can_z_move(DOWN, src, null, ZMOVE_FALL_FLAGS)) //If we can't fall here (flying/lattice), it's fine to path through
 		return TRUE
+	if(pass_info.multiz_checks)
+		var/turf/turf_below = GET_TURF_BELOW(src)
+		if(turf_below)
+			var/obj/structure/stairs/stairs_below = locate() in turf_below
+			if(stairs_below?.isTerminator())
+				return TRUE
 	return FALSE
 
 /turf/open/openspace/replace_floor(turf/open/new_floor_path, flags)
@@ -163,7 +175,14 @@
 	PlaceOnTop(new_floor_path, flags = flags)
 
 /turf/open/openspace/can_cross_safely(atom/movable/crossing)
-	return HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)
+	if(HAS_TRAIT(crossing, TRAIT_MOVE_FLYING) || (locate(/obj/structure/lattice) in src))
+		return TRUE
+	var/turf/below = GET_TURF_BELOW(src)
+	if(below)
+		var/obj/structure/stairs/stairs_below = locate() in below
+		if(stairs_below?.isTerminator())
+			return TRUE
+	return FALSE
 
 /turf/open/openspace/icemoon
 	name = "ice chasm"

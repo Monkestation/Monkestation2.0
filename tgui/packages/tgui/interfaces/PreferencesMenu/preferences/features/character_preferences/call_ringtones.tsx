@@ -1,10 +1,10 @@
 import { sortStrings } from 'common/collections';
 import { Button, Stack } from '../../../../../components';
 import {
-  Feature,
-  FeatureChoicedServerData,
+  type Feature,
+  type FeatureChoicedServerData,
   FeatureDropdownInput,
-  FeatureValueProps,
+  type FeatureValueProps,
 } from '../base';
 
 const FeatureRingtoneDropdownInput = (

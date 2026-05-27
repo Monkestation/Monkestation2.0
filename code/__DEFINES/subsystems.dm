@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 0 // monkestation edit: we've added plenty of our own tables to the db
+#define DB_MINOR_VERSION 1 // monkestation edit: we've added plenty of our own tables to the db
 
 
 //! ## Timing subsystem
@@ -150,6 +150,7 @@
 #define INIT_ORDER_QUIRKS 73
 #define INIT_ORDER_REAGENTS 72 //HAS to be before mapping and assets - both create objects, which creates reagents, which relies on lists made in this subsystem
 #define INIT_ORDER_EVENTS 70
+#define INIT_ORDER_GAMEMODE 69 //events need to actually exist if we want to use them
 #define INIT_ORDER_IDACCESS 66
 #define INIT_ORDER_JOBS 65 // Must init before atoms, to set up properly the dynamic job lists.
 #define INIT_ORDER_TICKER 60 // monkestation edit: ticker needs to start before media_tracks before it loads tracks, since ticker loads and adds lobby tracks from config
@@ -187,8 +188,7 @@
 #define INIT_ORDER_XKEYSCORE -10
 #define INIT_ORDER_LIGHTING -20
 #define INIT_ORDER_STARLIGHT -21
-#define INIT_ORDER_OUTDOOR_EFFECTS -22
-#define INIT_ORDER_SHUTTLE -23
+#define INIT_ORDER_SHUTTLE -22
 #define INIT_ORDER_MINOR_MAPPING -40
 #define INIT_ORDER_PATH -50
 #define INIT_ORDER_EXPLOSIONS -69
@@ -211,6 +211,7 @@
 #define FIRE_PRIORITY_GLOWSHROOMS 10
 #define FIRE_PRIORITY_MEMORY_STATS 10
 #define FIRE_PRIORITY_STARLIGHT 10
+#define FIRE_PRIORITY_PARTICLE_SPEWERS 10
 #define FIRE_PRIORITY_GARBAGE 15
 #define FIRE_PRIORITY_DATABASE 16
 #define FIRE_PRIORITY_POLLUTION 18
@@ -237,15 +238,19 @@
 #define FIRE_PRIORITY_DEFAULT 50
 #define FIRE_PRIORITY_PLEXORA 60
 #define FIRE_PRIORITY_PARALLAX 65
+#define FIRE_PRIORITY_MOBS 70
+#define FIRE_PRIORITY_CARBON_MOBS 75
 #define FIRE_PRIORITY_INSTRUMENTS 80
 #define FIRE_PRIORITY_FLUIDS 80
+#define FIRE_PRIORITY_MEGAFAUNA_MOBS 80
 #define FIRE_PRIORITY_PROJECTILES 85
 #define FIRE_PRIORITY_PRIORITY_EFFECTS 90
 #define FIRE_PRIORITY_STAMINA 95
-#define FIRE_PRIORITY_MOBS 100
+#define FIRE_PRIORITY_CLIENT_MOBS 100
 #define FIRE_PRIORITY_ASSETS 105
 #define FIRE_PRIORITY_TGUI 110
 #define FIRE_PRIORITY_TICKER 200
+#define FIRE_PRIORITY_SINGULO 350
 #define FIRE_PRIORITY_STATPANEL 390
 #define FIRE_PRIORITY_CHAT 400
 #define FIRE_PRIORITY_RUNECHAT 410
@@ -391,8 +396,7 @@
 #define SSLIQUIDS_RUN_TYPE_EVAPORATION 4
 #define SSLIQUIDS_RUN_TYPE_FIRE 5
 #define SSLIQUIDS_RUN_TYPE_OCEAN 6
-#define SSLIQUIDS_RUN_TYPE_TEMPERATURE 7
-#define SSLIQUIDS_RUN_TYPE_CACHED_EDGES 8
+#define SSLIQUIDS_RUN_TYPE_CACHED_EDGES 7
 
 ///The default state, no NT Representative ever spawned in.
 #define NT_REP_STATUS_DOESNT_EXIST 0

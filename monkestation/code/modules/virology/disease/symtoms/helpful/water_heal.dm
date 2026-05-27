@@ -45,6 +45,6 @@
 	if(prob(5))
 		to_chat(M, span_notice("You feel yourself absorbing the water around you to soothe your damaged skin."))
 
-	M.heal_overall_damage(brute = actual_power, burn = actual_power * 2, required_bodytype = BODYTYPE_ORGANIC)
+	M.heal_overall_damage(brute = actual_power, burn = actual_power * 2)
 
 	return TRUE

@@ -103,6 +103,13 @@
 			return I
 	return FALSE
 
+// List version of above proc
+// Returns ret_item, which is either the successfully located item or null
+/mob/proc/is_holding_item_of_types(list/typepaths)
+	for(var/typepath in typepaths)
+		var/ret_item = is_holding_item_of_type(typepath)
+		return ret_item
+
 //Checks if we're holding a tool that has given quality
 //Returns the tool that has the best version of this quality
 /mob/proc/is_holding_tool_quality(quality)
@@ -144,7 +151,7 @@
 	return FALSE
 
 /mob/proc/can_put_in_hand(I, hand_index)
-	if(hand_index > held_items.len)
+	if(hand_index > length(held_items))
 		return FALSE
 	if(!put_in_hand_check(I))
 		return FALSE
@@ -153,7 +160,7 @@
 	return !held_items[hand_index]
 
 /mob/proc/put_in_hand(obj/item/I, hand_index, forced = FALSE, ignore_anim = TRUE)
-	if(hand_index == null || !held_items.len || (!forced && !can_put_in_hand(I, hand_index)))
+	if(hand_index == null || !length(held_items) || (!forced && !can_put_in_hand(I, hand_index)))
 		return FALSE
 
 	if(isturf(I.loc) && !ignore_anim)
@@ -366,7 +373,7 @@
 		SET_PLANE_EXPLICIT(I, initial(I.plane), newloc)
 		I.appearance_flags &= ~NO_CLIENT_COLOR
 		if(!no_move && !(I.item_flags & DROPDEL)) //item may be moved/qdel'd immedietely, don't bother moving it
-			if (isnull(newloc))
+			if (isnull(newloc) || QDELING(I))
 				I.moveToNullspace()
 			else
 				I.forceMove(newloc)

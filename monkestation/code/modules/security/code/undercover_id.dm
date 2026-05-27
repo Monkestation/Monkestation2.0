@@ -11,9 +11,8 @@
 	/// Anti-metagaming protections. If TRUE, anyone can change the ID card's details. If FALSE, only syndicate agents can.
 	var/anyone = TRUE
 
-	var/datum/action/item_action/chameleon/change/id/chameleon_card_action // MONKESTATION ADDITION -- DATUM MOVED FROM INITIALIZE()
+	var/datum/action/item_action/chameleon/change/id/chameleon_card_action // DATUM MOVED FROM INITIALIZE()
 
-// MONKESTATION ADDITION START
 /obj/item/card/id/advanced/undercover/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
@@ -28,13 +27,11 @@
 		actions -= chameleon_card_action
 		chameleon_card_action.Remove(user)
 		log_game("[key_name(user)] has locked the disguise of the agent ID ([name]) with [attacking_item]")
-// MONKESTATION ADDITION END
 
 /obj/item/card/id/advanced/undercover/Initialize(mapload)
 	. = ..()
 
-//	var/datum/action/item_action/chameleon/change/id/chameleon_card_action = new(src) MONKESTATION EDIT CHANGE OLD
-	chameleon_card_action = new(src) // MONKESTATION EDIT CHANGE NEW -- MOVED THE DATUM TO THE ITEM ITSELF
+	chameleon_card_action = new(src)
 	chameleon_card_action.chameleon_type = /obj/item/card/id/advanced
 	chameleon_card_action.chameleon_name = "ID Card"
 	chameleon_card_action.initialize_disguises()
@@ -57,10 +54,8 @@
 	return data
 
 /obj/item/card/id/advanced/undercover/attack_self(mob/user)
-	// MONKESTATION ADDITION START
 	if(chameleon_card_action.hidden)
 		return ..()
-	// MONKESTATION ADDITION END
 	if(isliving(user) && user.mind)
 		var/popup_input = tgui_input_list(user, "Choose Action", "Agent ID", list("Show", "Forge/Reset", "Change Account ID"))
 		if(user.incapacitated())
@@ -101,7 +96,7 @@
 
 					var/selected_trim_path = tgui_input_list(user, "Select trim to apply to your card.\nNote: This will not grant any trim accesses.", "Forge Trim", sort_list(trim_list, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 					if(selected_trim_path)
-						SSid_access.apply_trim_to_chameleon_card(src, trim_list[selected_trim_path])
+						SSid_access.apply_trim_override(src, trim_list[selected_trim_path])
 
 				var/target_occupation = tgui_input_text(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Undercover card job assignment", assignment ? assignment : "Assistant")
 				if(target_occupation)
@@ -135,7 +130,7 @@
 			if(forged)
 				registered_name = initial(registered_name)
 				assignment = initial(assignment)
-				SSid_access.remove_trim_from_chameleon_card(src)
+				SSid_access.remove_trim_override(src)
 				REMOVE_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)
 				user.log_message("reset \the [initial(name)] named \"[src]\" to default.", LOG_GAME)
 				update_label()

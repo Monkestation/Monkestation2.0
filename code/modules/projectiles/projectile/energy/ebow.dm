@@ -7,8 +7,6 @@
 	eyeblur = 20 SECONDS
 	knockdown = 10
 	slur = 10 SECONDS
-	debilitating = TRUE
-	debilitate_mult = 5
 
 /obj/projectile/energy/bolt/halloween
 	name = "candy corn"

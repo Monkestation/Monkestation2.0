@@ -12,6 +12,8 @@
 /datum/emote
 	/// What calls the emote.
 	var/key = ""
+	///Lazylist of alt keys that will work but not be told to players.
+	var/list/alt_keys
 	/// This will also call the emote.
 	var/key_third_person = ""
 	/// Needed for more user-friendly emote names, so emotes with keys like "aflap" will show as "flap angry". Defaulted to key.
@@ -144,7 +146,7 @@
 			user.visible_message(msg, visible_message_flags = EMOTE_MESSAGE)
 		if(emote_type & EMOTE_IMPORTANT)
 			for(var/mob/living/viewer in viewers())
-				if(viewer.is_blind() && !viewer.can_hear())
+				if(viewer.is_blind() && HAS_TRAIT(viewer, TRAIT_DEAF))
 					to_chat(viewer, msg)
 
 	SEND_SIGNAL(user, COMSIG_MOB_EMOTED(key))

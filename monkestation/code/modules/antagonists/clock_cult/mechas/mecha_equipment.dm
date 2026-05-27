@@ -62,7 +62,7 @@
 		return
 
 	new /obj/effect/temp_visual/steam(current_turf)
-	var/turf/throw_at_turf = get_turf_in_angle(Angle, current_turf, 7)
+	var/turf/throw_at_turf = get_turf_in_angle(angle, current_turf, 7)
 	//basic tracker vars, anti lag to make sure we dont try and throw 100 things at the same time
 	var/thrown_items = 0
 	var/thrown_mobs = 0

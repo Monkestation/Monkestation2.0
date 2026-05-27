@@ -557,9 +557,6 @@
 	// Enough to make the mob sleep.
 		if(n2o_pp > n2o_sleep_min)
 			breather.Sleeping(min(breather.AmountSleeping() + 100, 200))
-		// And apply anesthesia if it worked
-		if(HAS_TRAIT(breather, TRAIT_KNOCKEDOUT))
-			breather.apply_status_effect(/datum/status_effect/grouped/anesthetic, /datum/gas/nitrous_oxide)
 
 /// N2O side-effects. "Too much N2O!"
 /obj/item/organ/internal/lungs/proc/safe_n2o(mob/living/carbon/breather, datum/gas_mixture/breath, old_n2o_pp)
@@ -956,6 +953,14 @@
 	if (breath?.gases[/datum/gas/plasma] && !skip_breath)
 		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma][MOLES])
 		breather_slime.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
+
+/obj/item/organ/internal/lungs/slime/slime_smoker
+	name = "smoker vacuole"
+	desc = "A large organelle designed to store oxygen and other important gasses. It loosk discolored, from smoking a lot."
+	icon_state = "lungs_smoker"
+
+	maxHealth = SMOKER_ORGAN_HEALTH
+	healing_factor = SMOKER_LUNG_HEALING
 
 /obj/item/organ/internal/lungs/oni
 	name = "oni lungs"

@@ -25,6 +25,7 @@
 #define POLL_IGNORE_PAI "pai"
 #define POLL_IGNORE_POSIBRAIN "posibrain"
 #define POLL_IGNORE_POSSESSED_BLADE "possessed_blade"
+#define POLL_IGNORE_HOLYUNDEAD "holy_undead"
 #define POLL_IGNORE_PYROSLIME "slime"
 #define POLL_IGNORE_RAW_PROPHET "raw_prophet"
 #define POLL_IGNORE_REGAL_RAT "regal_rat"
@@ -34,13 +35,14 @@
 #define POLL_IGNORE_SHADE "shade"
 #define POLL_IGNORE_SYNDICATE "syndicate"
 #define POLL_IGNORE_SPLITPERSONALITY "splitpersonality"
+#define POLL_IGNORE_STALKER "stalker"
 #define POLL_IGNORE_VENUSHUMANTRAP "venus"
 #define POLL_IGNORE_SPECTRAL_BLADE "spectralblade"
 #define POLL_IGNORE_SHUTTLE_DENIZENS "shuttledenizen"
 #define POLL_IGNORE_DEFECTIVECLONE "defectiveclone"
 #define POLL_IGNORE_BINGLE "bingle"
 #define POLL_IGNORE_DARKSPAWN_PSYCHE "darkspawn_psyche"
-
+#define POLL_IGNORE_BLOODLING_THRALL "bloodling_thrall"
 
 GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_ACADEMY_WIZARD = "Academy Wizard Defender",
@@ -48,6 +50,7 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_ASH_SPIRIT = "Ash Spirit",
 	POLL_IGNORE_ASHWALKER = "Ashwalker eggs",
 	POLL_IGNORE_BLOB = "Blob spores",
+	POLL_IGNORE_BLOODLING_THRALL = "Bloodling Thrall",
 	POLL_IGNORE_BOTS = "Bots",
 	POLL_IGNORE_CARGORILLA = "Cargorilla",
 	POLL_IGNORE_CONTRACTOR_SUPPORT = "Contractor Support Unit",
@@ -90,6 +93,7 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_SHADE = "Shade",
 	POLL_IGNORE_IMAGINARYFRIEND = "Imaginary Friend",
 	POLL_IGNORE_SPLITPERSONALITY = "Split Personality",
+	POLL_IGNORE_STALKER = "Stalker",
 	POLL_IGNORE_CONTRACTOR_SUPPORT = "Contractor Support Unit",
 	POLL_IGNORE_ACADEMY_WIZARD = "Academy Wizard Defender",
 	POLL_IGNORE_PAI = JOB_PERSONAL_AI,

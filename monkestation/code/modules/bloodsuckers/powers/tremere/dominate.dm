@@ -29,7 +29,6 @@
 	target_range = 5
 	mesmerize_delay = 4 SECONDS
 	blind_at_level = 3
-	requires_facing_target = FALSE
 	blocked_by_glasses = FALSE
 	/// Data huds to show while the power is active
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED)
@@ -86,7 +85,7 @@
 	. = ..()
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/ActivatePower(atom/target)
-	..()
+	. = ..()
 	if(level_current >= DOMINATE_XRAY_LEVEL)
 		ADD_TRAIT(owner, TRAIT_XRAY_VISION, DOMINATE_TRAIT)
 	for(var/hudtype in datahuds)
@@ -124,11 +123,11 @@
 	var/datum/antagonist/vassal/vassal = IS_VASSAL(target)
 	if(!victim_has_blood(target))
 		return FALSE
-	if(!bloodsuckerdatum_power.can_make_vassal(target))
-		return FALSE
 	if(vassal)
 		owner.balloon_alert(owner, "attempting to revive.")
 	else
+		if(!bloodsuckerdatum_power.can_make_vassal(target))
+			return FALSE
 		owner.balloon_alert(owner, "attempting to vassalize.")
 	if(!do_after(user, vassal_creation_time, target, NONE, TRUE, hidden = TRUE))
 		return FALSE
@@ -175,6 +174,12 @@
 	INVOKE_ASYNC(vassal_datum, TYPE_PROC_REF(/datum, ui_interact), target) // make sure they see the vassal popup!!
 	power_activated_sucessfully(cost_override = TEMP_VASSALIZE_COST, cooldown_override = get_vassalize_cooldown())
 	to_chat(user, span_warning("We revive [target]!"))
+
+	//Remove mindshield if they have one
+	for(var/obj/item/implant/implant as anything in target.implants)
+		if(istype(implant, /obj/item/implant/mindshield) && implant.removed(target, silent = TRUE))
+			qdel(implant)
+
 	var/living_time = get_vassal_duration()
 	log_combat(owner, target, "tremere mindslaved", addition = "Revived and converted [target] into a temporary tremere vassal for [DisplayTimeText(living_time)].")
 	if(level_current <= DOMINATE_NON_MUTE_VASSALIZE_LEVEL)

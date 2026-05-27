@@ -74,20 +74,31 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	mob.log_talk(raw_msg, LOG_OOC)
 
 	var/keyname = key
-	if(!!IsByondMember())
-		if(prefs.toggles & MEMBER_PUBLIC)
-			keyname = "<font color='[prefs.read_preference(/datum/preference/color/ooc_color) || GLOB.normal_ooc_colour]'>[icon2html('icons/ui_icons/chat/member_content.dmi', world, "blag")][keyname]</font>"
+	var/key_prefix = ""
+	var/list/key_tags
+
+	// heart first lol
 	if(prefs.hearted)
-		var/datum/asset/spritesheet_batched/chat/sheet = get_asset_datum(/datum/asset/spritesheet_batched/chat)
-		keyname = "[sheet.icon_tag("emoji-heart")][keyname]"
+		LAZYADD(key_tags, "emoji-heart")
 
-	if(persistent_client.patreon.access_rank > 0)
-		var/datum/asset/spritesheet_batched/chat/sheet = get_asset_datum(/datum/asset/spritesheet_batched/chat)
-		keyname = "[sheet.icon_tag("patreon")][keyname]"
+	var/visible_byond_member = !!IsByondMember() && (prefs.toggles & MEMBER_PUBLIC)
+	if(visible_byond_member)
+		LAZYADD(key_tags, "byond_member")
 
-	if(persistent_client.twitch.access_rank > 0)
+	if(persistent_client.patreon.access_rank > 0 && prefs.read_preference(/datum/preference/toggle/patreon_public))
+		LAZYADD(key_tags, "emoji-patreon")
+
+	if(persistent_client.twitch.access_rank > 0 && prefs.read_preference(/datum/preference/toggle/twitch_public))
+		LAZYADD(key_tags, "emoji-twitch")
+
+	if(visible_byond_member) // add color last
+		keyname = "<font color='[prefs.read_preference(/datum/preference/color/ooc_color) || GLOB.normal_ooc_colour]'>[keyname]</font>"
+
+	if(LAZYLEN(key_tags))
 		var/datum/asset/spritesheet_batched/chat/sheet = get_asset_datum(/datum/asset/spritesheet_batched/chat)
-		keyname = "[sheet.icon_tag("twitch")][keyname]"
+		for(var/icon_name in key_tags)
+			key_prefix = "[sheet.icon_tag(icon_name)][key_prefix]"
+		key_prefix = "<span style='vertical-align: text-top; padding-right: 0.2em'>[key_prefix]</span>"
 
 	// pronouns
 	var/pronouns = prefs.read_preference(/datum/preference/text/ooc_pronouns)
@@ -103,27 +114,64 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		var/avoid_highlight = receiver == src
 		if(holder)
 			if(!holder.fakekey || receiver.holder)
-				var/keyfield_pre = "[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]"
-				var/keyfield = conditional_tooltip_alt(keyfield_pre, pronouns, length(pronouns))
+				var/list/key_chunks = list()
+
+				var/key_real = keyname
+				var/prefix = key_prefix
+				var/tooltip_real = length(pronouns) ? pronouns : null
+				key_chunks += tooltip_real ? conditional_tooltip_alt(key_real, tooltip_real, TRUE) : key_real
+
+				if(holder.fakekey)
+					var/key_fake = "(" + holder.fakekey + ")"
+					var/tooltip_fake = null
+
+					if(istext(holder.showpronouns))
+						tooltip_fake = holder.showpronouns
+					else if(holder.showpronouns && length(pronouns))
+						tooltip_fake = pronouns
+
+					key_chunks += tooltip_fake ? conditional_tooltip_alt(key_fake, tooltip_fake, TRUE) : key_fake
+					prefix = ""
+
+				var/keyfield = jointext(key_chunks, "/")
+
 				if(check_rights_for(src, R_ADMIN))
 					var/ooc_color = prefs.read_preference(/datum/preference/color/ooc_color)
-					to_chat(receiver, span_adminooc("[CONFIG_GET(flag/allow_admin_ooccolor) && ooc_color ? "<font color=[ooc_color]>" :"" ][span_prefix("OOC:")] <EM>[keyfield]:</EM> <span class='message linkify'>[msg]</span>"), avoid_highlighting = avoid_highlight)
+					var/has_ooc_color = CONFIG_GET(flag/allow_admin_ooccolor) && ooc_color
+					to_chat(receiver, span_adminooc("[has_ooc_color ? "<font color='[ooc_color]'>" : "" ][span_prefix("OOC:")] <EM>[prefix][keyfield]:</EM> <span class='message linkify'>[msg]</span>[has_ooc_color ? "</font>" : ""]"), avoid_highlighting = avoid_highlight)
 				else
-					to_chat(receiver, span_adminobserverooc(span_prefix("OOC:</span> <EM>[keyfield]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
+					to_chat(receiver, span_adminobserverooc(span_prefix("OOC:</span> <EM>[prefix][keyfield]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
 			else
+				var/keyfield
 				var/keyfield_pre = holder.fakekey ? holder.fakekey : key
-				var/keyfield = conditional_tooltip_alt(keyfield_pre, pronouns, length(pronouns))
+				var/pronoun_text = null
+				var/prefix = key_prefix
+
+				if (holder.fakekey)
+					if (istext(holder.showpronouns))
+						pronoun_text = holder.showpronouns
+					else if (holder.showpronouns && length(pronouns))
+						pronoun_text = pronouns
+					prefix = ""
+				else if (length(pronouns))
+					pronoun_text = pronouns
+
+				if (pronoun_text)
+					keyfield = conditional_tooltip_alt(keyfield_pre, pronoun_text, TRUE)
+				else
+					keyfield = keyfield_pre
+
 				if(GLOB.OOC_COLOR)
-					to_chat(receiver, span_oocplain("<font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[keyfield]:</EM> <span class='message linkify'>[msg]</span></b></font>"), avoid_highlighting = avoid_highlight)
+					to_chat(receiver, span_oocplain("<font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[prefix][keyfield]:</EM> <span class='message linkify'>[msg]</span></b></font>"), avoid_highlighting = avoid_highlight)
 				else
 					to_chat(receiver, span_ooc(span_prefix("OOC:</span> <EM>[keyfield]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
 
 		else if(!(key in receiver.prefs.ignoring))
 			var/keyfield = conditional_tooltip_alt(keyname, pronouns, length(pronouns))
 			if(GLOB.OOC_COLOR)
-				to_chat(receiver, span_oocplain("<font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[keyfield]:</EM> <span class='message linkify'>[msg]</span></b></font>"), avoid_highlighting = avoid_highlight)
+				to_chat(receiver, span_oocplain("<font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[key_prefix][keyfield]:</EM> <span class='message linkify'>[msg]</span></b></font>"), avoid_highlighting = avoid_highlight)
 			else
-				to_chat(receiver, span_ooc(span_prefix("OOC:</span> <EM>[keyfield]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
+				to_chat(receiver, span_ooc(span_prefix("OOC:</span> <EM>[key_prefix][keyfield]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
 
 /proc/toggle_ooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
@@ -153,7 +201,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		return
 
 ADMIN_VERB(set_ooc_color, R_FUN, FALSE, "Set Player OOC Color", "Modifies the global OOC color.", ADMIN_CATEGORY_SERVER)
-	var/newColor = input(user, "Please select the new player OOC color.", "OOC color") as color | null
+	var/newColor = tgui_color_picker(user, "Please select the new player OOC color.", "OOC color")
 	if(isnull(newColor))
 		return
 	var/new_color = sanitize_color(newColor)

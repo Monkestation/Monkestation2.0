@@ -1,7 +1,6 @@
-import { Button, LabeledList, Section } from '../components';
 import type { BooleanLike } from 'common/react';
-
 import { useBackend } from '../backend';
+import { Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 import { ColorItem } from './RapidPipeDispenser';
 

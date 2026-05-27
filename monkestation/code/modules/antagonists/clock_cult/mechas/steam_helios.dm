@@ -57,7 +57,7 @@
 	return ..()
 
 //kinda lame to lose it to a single heretic clicking it once
-/obj/vehicle/sealed/mecha/steam_helios/rust_heretic_act()
+/obj/vehicle/sealed/mecha/steam_helios/rust_heretic_act(rust_strength)
 	visible_message(span_warning("\The [src] glows for a second, but is uneffected by the magic!"))
 	return
 

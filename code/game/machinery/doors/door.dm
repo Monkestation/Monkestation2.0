@@ -27,6 +27,10 @@
 	var/visible = TRUE
 	var/operating = FALSE
 	var/glass = FALSE
+	/// Do we need to keep track of a filler panel with the airlock
+	var/multi_tile
+	/// A filler object used to fill the space of multi-tile airlocks
+	var/obj/structure/fluff/airlock_filler/filler
 	var/welded = FALSE
 	/// For rglass-windowed airlocks and firedoors
 	var/heat_proof = FALSE
@@ -61,7 +65,7 @@
 	/// Current elevator status for processing
 	var/elevator_status
 	/// What specific lift ID do we link with?
-	var/elevator_linked_id
+	var/transport_linked_id
 
 /datum/armor/machinery_door
 	melee = 30
@@ -76,12 +80,15 @@
 	AddElement(/datum/element/blocks_explosives)
 	. = ..()
 	set_init_door_layer()
+	if(multi_tile)
+		set_bounds()
+		set_filler()
+		update_overlays()
 	update_freelook_sight()
 	air_update_turf(TRUE, TRUE)
 	register_context()
-	GLOB.airlocks += src
 	if(elevator_mode)
-		if(elevator_linked_id)
+		if(transport_linked_id)
 			elevator_status = LIFT_PLATFORM_LOCKED
 			GLOB.elevator_doors += src
 		else
@@ -139,14 +146,50 @@
 
 /obj/machinery/door/Destroy()
 	update_freelook_sight()
-	GLOB.airlocks -= src
 	if(elevator_mode)
 		GLOB.elevator_doors -= src
 	if(spark_system)
 		qdel(spark_system)
 		spark_system = null
+	QDEL_NULL(filler)
 	air_update_turf(TRUE, FALSE)
 	return ..()
+
+/obj/machinery/door/Move()
+	if(multi_tile)
+		set_filler()
+	return ..()
+
+/**
+ * Sets the bounds of the airlock. For use with multi-tile airlocks.
+ * If the airlock is multi-tile, it will set the bounds to be the size of the airlock.
+ * If the airlock doesn't already have a filler object, it will create one.
+ * If the airlock already has a filler object, it will move it to the correct location.
+ */
+/obj/machinery/door/proc/set_filler()
+	if(!multi_tile)
+		return
+	if(!filler)
+		filler = new(get_step(src, get_adjusted_dir(dir)))
+		filler.pair_airlock(src)
+	else
+		filler.loc = get_step(src, get_adjusted_dir(dir))
+
+	filler.density = density
+	filler.set_opacity(opacity)
+
+/**
+ * Checks which way the airlock is facing and adjusts the direction accordingly.
+ * For use with multi-tile airlocks.
+ *
+ * @param dir direction to adjust
+ * @return adjusted direction
+ */
+/obj/machinery/door/proc/get_adjusted_dir(dir)
+	if(dir in list(NORTH, SOUTH))
+		return EAST
+	else
+		return NORTH
 
 /**
  * Signal handler for checking if we notify our surrounding that access requirements are lifted accordingly to a newly set security level
@@ -312,7 +355,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/crowbar_act(mob/living/user, obj/item/tool)
-	if((user.istate & ISTATE_HARM))
+	if((user.istate & ISTATE_HARM && user.istate & ISTATE_SECONDARY))
 		return
 
 	var/forced_open = FALSE
@@ -332,6 +375,9 @@
 	if(istype(weapon, /obj/item/access_key))
 		var/obj/item/access_key/key = weapon
 		return key.attempt_open_door(user, src)
+	else if (!(user.istate & ISTATE_HARM && user.istate & ISTATE_SECONDARY) && weapon.tool_behaviour == TOOL_CROWBAR)
+		try_to_crowbar(weapon, user, FALSE)
+		return TRUE
 	else if(!(user.istate & ISTATE_HARM) && istype(weapon, /obj/item/fireaxe))
 		try_to_crowbar(weapon, user, FALSE)
 		return TRUE
@@ -493,29 +539,26 @@
 		open()
 
 /obj/machinery/door/proc/crush()
-	for(var/mob/living/future_pancake in get_turf(src))
-		future_pancake.visible_message(span_warning("[src] closes on [future_pancake], crushing [future_pancake.p_them()]!"), span_userdanger("[src] closes on you and crushes you!"))
-		SEND_SIGNAL(future_pancake, COMSIG_LIVING_DOORCRUSHED, src)
-		if(isalien(future_pancake))  //For xenos
-			future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5) //Xenos go into crit after aproximately the same amount of crushes as humans.
-			future_pancake.emote("roar")
-		else if(ismonkey(future_pancake))
-			future_pancake.emote("screech")
-			future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-			future_pancake.Paralyze(100)
-		else if(ishuman(future_pancake)) //For humans
-			future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-			future_pancake.emote("scream")
-			future_pancake.Paralyze(100)
-		else //for simple_animals & borgs
-			future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-		var/turf/location = get_turf(src)
-		//add_blood doesn't work for borgs/xenos, but add_blood_floor does.
-		future_pancake.add_splatter_floor(location)
-		log_combat(src, future_pancake, "crushed")
-	for(var/obj/vehicle/sealed/mecha/mech in get_turf(src))
-		mech.take_damage(DOOR_CRUSH_DAMAGE)
-		log_combat(src, mech, "crushed")
+	for(var/turf/checked_turf in locs)
+		for(var/mob/living/future_pancake in checked_turf)
+			future_pancake.visible_message(span_warning("[src] closes on [future_pancake], crushing [future_pancake.p_them()]!"), span_userdanger("[src] closes on you and crushes you!"))
+			SEND_SIGNAL(future_pancake, COMSIG_LIVING_DOORCRUSHED, src)
+			if(isalien(future_pancake))  //For xenos
+				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5) //Xenos go into crit after aproximately the same amount of crushes as humans.
+				future_pancake.emote("roar")
+			else if(ishuman(future_pancake)) //For humans
+				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+				future_pancake.emote("scream")
+				future_pancake.Paralyze(100)
+			else //for simple_animals & borgs
+				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+				var/turf/location = get_turf(src)
+				//add_blood doesn't work for borgs/xenos, but add_blood_floor does.
+				future_pancake.add_splatter_floor(location)
+				log_combat(src, future_pancake, "crushed")
+		for(var/obj/vehicle/sealed/mecha/mech in get_turf(src)) // Your fancy metal won't save you here!
+			mech.take_damage(DOOR_CRUSH_DAMAGE)
+			log_combat(src, mech, "crushed")
 
 /obj/machinery/door/proc/autoclose()
 	if(!QDELETED(src) && !density && !operating && !locked && !welded && autoclose)

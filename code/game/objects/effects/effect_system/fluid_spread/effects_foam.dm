@@ -40,6 +40,8 @@
 	. = ..()
 	if(slippery_foam)
 		AddComponent(/datum/component/slippery, 100)
+	if(HAS_TRAIT(loc, TRAIT_ELEVATED_TURF))
+		plane = FLOOR_PLANE
 	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
 	AddElement(/datum/element/atmos_sensitive, mapload)
@@ -92,15 +94,18 @@
 
 	if(isturf(loc))
 		var/turf/turf_location = loc
-		for(var/obj/object in turf_location)
-			if(object == src)
-				continue
-			if(turf_location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(object, TRAIT_T_RAY_VISIBLE))
-				continue
-			reagents.expose(object, VAPOR, fraction)
+		if(!HAS_TRAIT(turf_location, TRAIT_ELEVATED_TURF))
+			for(var/obj/object in turf_location)
+				if(object == src)
+					continue
+				if(turf_location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(object, TRAIT_T_RAY_VISIBLE))
+					continue
+				reagents.expose(object, VAPOR, fraction)
 
 	var/hit = 0
 	for(var/mob/living/foamer in loc)
+		if(HAS_TRAIT(foamer, TRAIT_ON_ELEVATED_SURFACE))
+			continue
 		hit += foam_mob(foamer, seconds_per_tick)
 	if(hit)
 		lifetime += ds_seconds_per_tick //this is so the decrease from mobs hit and the natural decrease don't cumulate.
@@ -138,9 +143,10 @@
 		return FALSE
 
 	var/datum/can_pass_info/info = new(no_id = TRUE)
+	info.pass_flags = PASSTABLE | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE
 	for(var/iter_dir in GLOB.cardinals)
 		var/turf/spread_turf = get_step(src, iter_dir)
-		if(spread_turf?.density || spread_turf.LinkBlockedWithAccess(spread_turf, info))
+		if(spread_turf?.density || location.LinkBlockedWithAccess(spread_turf, info))
 			continue
 
 		var/obj/effect/particle_effect/fluid/foam/foundfoam = locate() in spread_turf //Don't spread foam where there's already foam!
@@ -150,7 +156,10 @@
 			continue
 
 		for(var/mob/living/foaming in spread_turf)
+			if(HAS_TRAIT(foaming, TRAIT_ON_ELEVATED_SURFACE))
+				continue
 			foam_mob(foaming, seconds_per_tick)
+
 
 		var/obj/effect/particle_effect/fluid/foam/spread_foam = new type(spread_turf, group, src)
 		reagents.copy_to(spread_foam, (reagents.total_volume))

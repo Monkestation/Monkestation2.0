@@ -1,6 +1,5 @@
-import { BooleanLike } from 'common/react';
-import { sendAct } from '../../backend';
-import { Gender } from './preferences/gender';
+import type { BooleanLike } from 'common/react';
+import type { Gender } from './preferences/gender';
 
 export enum Food {
   Alcohol = 'ALCOHOL',
@@ -115,8 +114,14 @@ export enum PreferencesSelectedPage {
   Volume = 2,
 }
 
+// FIX ME
+// Future ref: you do NOT need to pass around the global `act` like this
 export const createSetPreference =
-  (act: typeof sendAct, preference: string) => (value: unknown) => {
+  (
+    act: (event: string, data: Record<string, unknown>) => void,
+    preference: string,
+  ) =>
+  (value: unknown) => {
     act('set_preference', {
       preference,
       value,
@@ -131,6 +136,7 @@ export enum PreferencesCurrentWindow {
 export type Channel = {
   num: number;
   name: string;
+  desc: string;
   volume: number;
 };
 
@@ -190,19 +196,21 @@ export type PreferencesMenuData = {
   selected_loadout: string[];
   selected_unusuals: string[];
   total_coins: number;
-  loadout_tabs: LoadoutData[];
+  extra_tabs: LoadoutData[];
   window: PreferencesCurrentWindow;
   starting_page: PreferencesSelectedPage;
   owned_items: string[];
+  available_items: string[];
 
   channels: Channel[];
 };
 
-type LoadoutData = {
+export type LoadoutData = {
   name: string;
   title: string;
   contents: LoadoutItem[];
 };
+
 type LoadoutItem = {
   name: string;
   icon: string;
@@ -211,7 +219,7 @@ type LoadoutItem = {
   cost: number;
   item_path: string;
   path: string;
-  unusual_placement: number;
+  unusual_placement: string; // why?
   is_greyscale: boolean;
   is_renamable: boolean;
   is_job_restricted: boolean;

@@ -8,6 +8,12 @@
 		return TRUE
 	return FALSE
 
+/mob/living/carbon/human/extrapolator_act(mob/user, obj/item/extrapolator/E, scan = TRUE)
+	if(!created_symptoms)
+		create_symptoms()
+		created_symptoms = TRUE
+	return ..()
+
 /obj/item/extrapolator
 	name = "virus extrapolator"
 	icon = 'monkestation/icons/obj/device.dmi'
@@ -40,12 +46,10 @@
 	if(!scan)
 		try_disease_modification(user, interacting_with)
 	else
-		switch(interacting_with.extrapolator_act(user, src, scan))
-			if(FALSE)
-				if(scan)
-					to_chat(user, "<span class='notice'>[src] fails to return any data</span>")
-			else
-				to_chat(user, span_notice("You store \the [interacting_with]'s blood sample in [src]."))
+		if(interacting_with.extrapolator_act(user, src, scan))
+			to_chat(user, span_notice("You store \the [interacting_with]'s blood sample in [src]."))
+		else if(scan)
+			to_chat(user, span_notice("[src] fails to return any data."))
 
 /obj/item/extrapolator/attack_self(mob/user)
 	. = ..()

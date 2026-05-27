@@ -44,7 +44,7 @@
 	/// If you have the use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
 	var/minimal_player_age = 0
 
-	var/outfit = null
+	var/datum/outfit/outfit = null
 
 	/// The job's outfit that will be assigned for plasmamen.
 	var/plasmaman_outfit = null
@@ -141,6 +141,9 @@
 	///How many points of antag capacity does this job give
 	var/antag_capacity_points = 1 //might need to default this to 0 and set it manually on all station jobs
 
+	/// If TRUE, then this job will latejoin "normally" on Oshan, instead of via pod.
+	var/oshan_normal_latejoin = FALSE
+
 /datum/job/New()
 	. = ..()
 	var/new_spawn_positions = CHECK_MAP_JOB_CHANGE(title, "spawn_positions")
@@ -182,24 +185,27 @@
 		for(var/i in roundstart_experience)
 			spawned_human.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
+	//don't let the compromised die right out of the gates. We can't check trait as it hasn't been assigned yet.
+	if(/datum/quirk/item_quirk/immunodeficiency::name in player_client.prefs?.all_quirks)
+		return
 	if(prob(25))
 		var/virus_choice = pick(WILD_ACUTE_DISEASES)
-		var/list/anti = list(
-			ANTIGEN_BLOOD	= 2,
-			ANTIGEN_COMMON	= 2,
-			ANTIGEN_RARE	= 1,
-			ANTIGEN_ALIEN	= 0,
+		var/static/list/anti = list(
+			ANTIGEN_BLOOD = 2,
+			ANTIGEN_COMMON = 2,
+			ANTIGEN_RARE = 1,
+			ANTIGEN_ALIEN = 0,
 		)
-		var/list/bad = list(
-			EFFECT_DANGER_HELPFUL	= 1,
-			EFFECT_DANGER_FLAVOR	= 2,
-			EFFECT_DANGER_ANNOYING	= 2,
-			EFFECT_DANGER_HINDRANCE	= 2,
-			EFFECT_DANGER_HARMFUL	= 2,
-			EFFECT_DANGER_DEADLY	= 2,
+		var/static/list/bad = list(
+			EFFECT_DANGER_HELPFUL = 1,
+			EFFECT_DANGER_FLAVOR = 2,
+			EFFECT_DANGER_ANNOYING = 2,
+			EFFECT_DANGER_HINDRANCE = 2,
+			EFFECT_DANGER_HARMFUL = 2,
+			EFFECT_DANGER_DEADLY = 2,
 		)
 		var/datum/disease/acute/disease = new virus_choice
-		disease.makerandom(list(50,90),list(10,100),anti,bad,src)
+		disease.makerandom(list(50,90), list(10,100), anti, bad, src)
 
 		disease.disease_flags |= DISEASE_DORMANT
 		disease.spread_flags &= ~(DISEASE_SPREAD_AIRBORNE | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_BLOOD)
@@ -244,7 +250,7 @@
 
 /mob/living/carbon/human/on_job_equipping(datum/job/equipping, datum/preferences/used_pref)
 	var/datum/bank_account/bank_account = new(real_name, equipping, dna.species.payday_modifier)
-	bank_account.payday(STARTING_PAYCHECKS, TRUE)
+	bank_account.payday(STARTING_PAYCHECKS, free = TRUE)
 	account_id = bank_account.account_id
 	bank_account.replaceable = FALSE
 	add_mob_memory(/datum/memory/key/account, remembered_id = account_id)
@@ -332,6 +338,8 @@
 	var/edited_total_positions = CHECK_MAP_JOB_CHANGE(title, "total_positions")
 	if(!isnull(edited_total_positions) && (edited_total_positions == 0))
 		available_latejoin = FALSE
+	if((job_flags & JOB_NO_PLANETARY) && SSmapping.is_planetary())
+		return FALSE
 
 	if(!available_roundstart && !available_latejoin) //map config disabled the job
 		return FALSE
@@ -381,10 +389,6 @@
 /datum/job/proc/get_radio_information()
 	if(job_flags & JOB_CREW_MEMBER)
 		return "<b>Prefix your message with :h to speak on your department's radio. To see other prefixes, look closely at your headset.</b>"
-
-//Checks if certain conditions are met making the job eligible.
-/datum/job/proc/conditions_met()
-	return TRUE
 
 /datum/outfit/job
 	name = "Standard Gear"

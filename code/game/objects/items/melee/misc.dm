@@ -14,7 +14,6 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	force = 1
-	pain_damage = 12
 	throwforce = 7
 	demolition_mod = 0.25
 	wound_bonus = 15
@@ -63,7 +62,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
 	obj_flags = UNIQUE_RENAME
-	force = 20 // MONKESTATION EDIT ORG 15
+	force = 18
 	throwforce = 10
 	demolition_mod = 0.75 //but not metal
 	w_class = WEIGHT_CLASS_BULKY
@@ -394,8 +393,9 @@
 		roastableicon.color = held_sausage.color
 		. += roastableicon
 
-/obj/item/melee/roastingstick/handle_atom_del(atom/target)
-	if (target == held_sausage)
+/obj/item/melee/roastingstick/Exited(atom/movable/gone, direction)
+	. = ..()
+	if (gone == held_sausage)
 		held_sausage = null
 		update_appearance()
 

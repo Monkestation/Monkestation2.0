@@ -146,7 +146,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 
 	//Searing body temperatures cure diseases, on top of killing you.
 	if(mob.bodytemperature > max_bodytemperature)
-		cure(target = mob)
+		cure(add_resistance = FALSE, target = mob)
 		return
 
 	if(disease_flags & DISEASE_DORMANT)

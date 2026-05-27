@@ -62,7 +62,7 @@
 			add_movespeed_modifier(/datum/movespeed_modifier/cogscarab_off_reebe, TRUE)
 
 /datum/actionspeed_modifier/cogscarab
-	multiplicative_slowdown = 0.6
+	multiplicative_slowdown = 0.5
 
 /datum/movespeed_modifier/cogscarab_off_reebe
 	multiplicative_slowdown = 0.7
@@ -94,8 +94,8 @@
 
 /obj/effect/mob_spawn/ghost_role/drone/cogscarab/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
-	spawned_mob.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 	spawned_mob.mind.add_antag_datum(/datum/antagonist/clock_cultist/clockmob)
+	spawned_mob.mind.special_role = ROLE_CLOCK_CULTIST
 
 /obj/effect/mob_spawn/ghost_role/drone/cogscarab/allow_spawn(mob/user, silent)
 	if(length(SSthe_ark.cogscarabs) > MAXIMUM_COGSCARABS)
@@ -106,5 +106,9 @@
 		to_chat(user, span_notice("Cogscarabs can only spawn in marked areas or on reebe."))
 		return FALSE
 	return TRUE
+
+/obj/effect/mob_spawn/ghost_role/drone/cogscarab/eminence_act(mob/living/eminence/user)
+	. = ..()
+	user.control_action.try_take_shell(src)
 
 #undef CLOCK_DRONE_MAX_ITEM_FORCE

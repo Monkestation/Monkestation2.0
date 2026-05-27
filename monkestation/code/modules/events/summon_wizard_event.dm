@@ -15,7 +15,7 @@
 /datum/round_event/summon_wizard_event/setup()
 	var/list/possible_events = list()
 	var/player_count = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
-	for(var/datum/round_event_control/possible_event as anything in SSevents.control)
+	for(var/datum/round_event_control/possible_event in SSevents.control)
 		if(!possible_event.wizardevent || !possible_event.can_spawn_event(player_count, allow_magic = TRUE))
 			continue
 		possible_events[possible_event] = possible_event.get_weight()

@@ -8,9 +8,10 @@
 
 	var/list/colors = list()
 	var/list/all_dna = GET_ATOM_BLOOD_DNA(src)
-	for(var/dna_sample in all_dna)
-		colors += GLOB.blood_types[all_dna[dna_sample]]?.color
-	list_clear_nulls(colors)
+	for(var/dna_sample, dna_type in all_dna)
+		var/blood_color = GLOB.blood_types[dna_type]?.color
+		if(blood_color)
+			colors += blood_color
 	var/final_color = COLOR_BLOOD
 	if(length(colors))
 		final_color = pop(colors)
@@ -34,10 +35,8 @@
 	if(dried)
 		return TRUE
 	// Imperfect, ends up with some blood types being double-set-up, but harmless (for now)
-	for(var/new_blood in blood_DNA_to_add)
-		var/datum/blood_type/blood = GLOB.blood_types[blood_DNA_to_add[new_blood]]
-		if(!blood)
-			continue
-		blood.set_up_blood(src, first_dna == 0)
+	for(var/new_blood, blood_type in blood_DNA_to_add)
+		var/datum/blood_type/blood = GLOB.blood_types[blood_type]
+		blood?.set_up_blood(src, first_dna == 0)
 	update_appearance()
 	return TRUE

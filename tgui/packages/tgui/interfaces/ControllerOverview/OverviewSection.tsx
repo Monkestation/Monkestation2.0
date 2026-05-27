@@ -1,6 +1,6 @@
 import { useBackend } from '../../backend';
 import { Button, LabeledList, Section, Stack } from '../../components';
-import { ControllerData } from './types';
+import type { ControllerData } from './types';
 
 export const OverviewSection = (props) => {
   const { act, data } = useBackend<ControllerData>();
@@ -36,15 +36,14 @@ export const OverviewSection = (props) => {
             Fast
           </Button>
           <Button.Input
-            currentValue={(rolling_length / 10).toString()}
-            onCommit={(e, value) => {
+            buttonText={`Average: ${rolling_length / 10} Second(s)`}
+            value={(rolling_length / 10).toString()}
+            onCommit={(value) => {
               act('set_rolling_length', {
                 rolling_length: value,
               });
             }}
-          >
-            Average: {rolling_length / 10} Second(s)
-          </Button.Input>
+          />
         </>
       }
     >

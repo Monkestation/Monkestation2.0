@@ -37,12 +37,18 @@ SUBSYSTEM_DEF(statpanels)
 		if(cached)
 			global_data += "Next Map: [cached.map_name]"
 
+		var/active_players = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = FALSE) //This is a list of all active players, including players who are dead
+		var/observing_players = length(GLOB.current_observers_list) //This is a list of all players that started as an observer-- dead and lobby players are not included.
+		var/timeinworld = "[time2text(world.timeofday, "DD of Month,")] [CURRENT_STATION_YEAR]"
+
 		global_data += list(
 			"Storyteller: [!SSgamemode.secret_storyteller && SSgamemode.current_storyteller ? SSgamemode.current_storyteller.name : "Secret"]",
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
+			"Connected: [length(GLOB.clients)] | Active: [active_players] | Observing: [observing_players]",
+			" ",
 			"Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss", world.timezone)]",
 			"Round Time: [ROUND_TIME()]",
-			"Station Time: [station_time_timestamp()]",
+			"Station Time: [station_time_timestamp()], [timeinworld]",
 			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)",
 		)
 
@@ -169,6 +175,15 @@ SUBSYSTEM_DEF(statpanels)
 
 	// Push update
 	target.stat_panel.send_message("update_interviews", data)
+	// Monkestation Addition: Token Manager START
+	var/list/token_data = list(
+		"accepted" = SStoken_manager.accepted_count || 0,
+		"pending" = length(SStoken_manager.pending_requests) || 0,
+		"rejected" = SStoken_manager.rejected_count || 0,
+		"timed_out" = SStoken_manager.timed_out_count || 0,
+	)
+	target.stat_panel.send_message("update_tokens", token_data)
+	// Monkestation Addition END
 
 /datum/controller/subsystem/statpanels/proc/set_SDQL2_tab(client/target)
 	var/list/sdql2A = list()

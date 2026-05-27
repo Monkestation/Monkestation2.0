@@ -27,7 +27,6 @@
 		// monkestation addition: pain system
 		TRAIT_ABATES_SHOCK,
 		TRAIT_ANALGESIA,
-		TRAIT_NO_PAIN_EFFECTS,
 		TRAIT_NO_SHOCK_BUILDUP,
 		// monkestation end
 		// HIGH FUNCTIONING UNIQUE
@@ -79,6 +78,40 @@
 
 	return to_add
 
+/datum/species/zombie/fragile
+	name = "Shambler"
+	id = SPECIES_ZOMBIE_SHAMBLER
+	inherent_traits = list(
+		// SHARED WITH ALL ZOMBIES
+		TRAIT_NO_ZOMBIFY,
+		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_EASILY_WOUNDED,
+		TRAIT_EASYDISMEMBER,
+		TRAIT_FAKEDEATH,
+		TRAIT_NOBREATH,
+		TRAIT_NOCLONELOSS,
+		TRAIT_NODEATH,
+		TRAIT_NOHUNGER,
+		TRAIT_LIVERLESS_METABOLISM,
+		TRAIT_RADIMMUNE,
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_TOXIMMUNE,
+		TRAIT_ABATES_SHOCK,
+		TRAIT_ANALGESIA,
+		TRAIT_NO_SHOCK_BUILDUP,
+		// HIGH FUNCTIONING UNIQUE
+		TRAIT_NOBLOOD,
+		TRAIT_SUCCUMB_OVERRIDE,
+		// FRAGILE ZOMBIES
+		TRAIT_EASILY_WOUNDED,
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_PRIMITIVE,
+	)
+	maxhealthmod = 0.5
+
+
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
 	id = SPECIES_ZOMBIE_INFECTIOUS
@@ -111,7 +144,6 @@
 		// monkestation addition: pain system
 		TRAIT_ABATES_SHOCK,
 		TRAIT_ANALGESIA,
-		TRAIT_NO_PAIN_EFFECTS,
 		TRAIT_NO_SHOCK_BUILDUP,
 		// monkestation end
 		// INFECTIOUS UNIQUE
@@ -191,7 +223,7 @@
 	infection = C.get_organ_slot(ORGAN_SLOT_ZOMBIE)
 	if(!infection)
 		infection = new()
-		infection.Insert(C)
+		infection.Follow_Insert(C, ORGAN_SLOT_BRAIN)
 
 // Your skin falls off
 /datum/species/human/krokodil_addict

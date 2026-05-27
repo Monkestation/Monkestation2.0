@@ -31,7 +31,7 @@
 	if(isturf(affected_mob.loc) && !isspaceturf(affected_mob.loc) && !HAS_TRAIT(affected_mob, TRAIT_IMMOBILIZED) && SPT_PROB(5, seconds_per_tick))
 		step(affected_mob, pick(GLOB.cardinals))
 	if(SPT_PROB(3.5, seconds_per_tick))
-		affected_mob.emote(pick("twitch","drool","moan","giggle"))
+		affected_mob.emote(pick("twitch","twitch_s","drool","sway","giggle"))
 	..()
 
 /datum/reagent/drug/space_drugs/overdose_start(mob/living/affected_mob)
@@ -170,9 +170,11 @@
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()
 	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
+	L.stamina.regen_rate += 2 * REM
 
 /datum/reagent/drug/methamphetamine/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
+	L.stamina.regen_rate -= 2 * REM
 	..()
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -185,7 +187,6 @@
 	affected_mob.AdjustUnconscious(-40 * REM * seconds_per_tick)
 	affected_mob.AdjustParalyzed(-40 * REM * seconds_per_tick)
 	affected_mob.AdjustImmobilized(-40 * REM * seconds_per_tick)
-	affected_mob.stamina.adjust(2 * REM * seconds_per_tick, TRUE)
 	affected_mob.set_jitter_if_lower(4 SECONDS * REM * seconds_per_tick)
 	if(!safe || overdosed) // MONKESTATION EDIT: Makes Unknown Methamphetamine Isomer actually safe. "safe" is false by default.
 		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1, 4) * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
@@ -263,7 +264,7 @@
 		for(var/i in 1 to round(8 * REM * seconds_per_tick, 1))
 			step(affected_mob, pick(GLOB.cardinals))
 	if(SPT_PROB(10, seconds_per_tick))
-		affected_mob.emote(pick("twitch","drool","moan"))
+		affected_mob.emote(pick("twitch","drool","sway","scream"))
 	if(SPT_PROB(28, seconds_per_tick))
 		affected_mob.drop_all_held_items()
 	..()
@@ -529,7 +530,7 @@
 /datum/reagent/drug/mushroomhallucinogen/overdose_process(mob/living/psychonaut, seconds_per_tick, times_fired)
 	. = ..()
 	if(SPT_PROB(10, seconds_per_tick))
-		psychonaut.emote(pick("twitch","drool","moan"))
+		psychonaut.emote(pick("twitch","twitch_s","drool","sway"))
 
 	if(SPT_PROB(10, seconds_per_tick))
 		psychonaut.apply_status_effect(/datum/status_effect/tower_of_babel)

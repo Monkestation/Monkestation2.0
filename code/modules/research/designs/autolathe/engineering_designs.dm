@@ -315,7 +315,7 @@
 /datum/design/tscanner
 	name = "T-Ray Scanner"
 	id = "tscanner"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*1.5)
 	build_path = /obj/item/t_scanner
 	category = list(
@@ -393,7 +393,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
-
 /datum/design/marker_beacon
 	name = "Marker Beacon (x30)"
 	id = "marker_beacon"
@@ -409,10 +408,70 @@
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
- 
+
 /datum/design/nifsoft_hud/meson
 	name = "Meson HUD NIFSoft"
 	desc = "A NIFSoft datadisk containing the Meson HUD NIFsoft."
 	id = "nifsoft_hud_meson"
 	build_path = /obj/item/disk/nifsoft_uploader/meson_hud
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/tram_controller
+	name = "Tram Controller Cabinet"
+	id = "tram_controller"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 7,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 7,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 4,
+	)
+	build_path = /obj/item/wallframe/tram/controller
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/tram_display
+	name = "Tram Indicator Display"
+	id = "tram_display"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2,
+	)
+	build_path = /obj/item/wallframe/indicator_display
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/tram_floor_dark
+	name = "Dark Tram Tile"
+	id = "tram_floor_dark"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 0.25)
+	build_path = /obj/item/stack/thermoplastic
+	maxstack = 50
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/tram_floor_light
+	name = "Light Tram Tile"
+	id = "tram_floor_light"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 0.25)
+	build_path = /obj/item/stack/thermoplastic/light
+	maxstack = 50
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING

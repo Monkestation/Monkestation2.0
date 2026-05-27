@@ -14,6 +14,12 @@
 
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(play_sound))
 
+/datum/element/noisy_movement/Detach(mob/living/source)
+
+	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
+
+	return ..()
+
 /datum/element/noisy_movement/proc/play_sound(atom/movable/source, old_loc, movement_dir, forced)
 	SIGNAL_HANDLER
 	if(!forced && !CHECK_MOVE_LOOP_FLAGS(source, MOVEMENT_LOOP_OUTSIDE_CONTROL) && source.has_gravity())

@@ -1,6 +1,6 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Section, Button, Stack, Collapsible, Box } from '../components';
+import { Box, Button, Collapsible, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 enum CassetteStatus {
@@ -76,7 +76,7 @@ export const CassetteReview = () => {
                 </Stack.Item>
                 {[cassette.songs.side1, cassette.songs.side2].map(
                   (side, idx) => (
-                    <Stack.Item key={idx} fill>
+                    <Stack.Item key={idx}>
                       <Collapsible
                         title={idx === 0 ? 'Side A' : 'Side B'}
                         color="transparent"

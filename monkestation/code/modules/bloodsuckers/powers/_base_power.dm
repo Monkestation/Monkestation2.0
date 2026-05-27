@@ -36,7 +36,7 @@
 	var/level_current = 1
 	///The cost to ACTIVATE this Power
 	var/bloodcost = 0
-	///The cost to MAINTAIN this Power - Only used for Constant Cost Powers
+	///The cost to MAINTAIN this Power for every second it is active - Only used for Constant Cost Powers
 	var/constant_bloodcost = 0
 
 	/// A looping timer ID to update the button status, because this code is garbage and doesn't process properly, and I don't feel like refactoring it. ~Lucy
@@ -218,6 +218,7 @@
 	bloodsuckerdatum_power.bloodsucker_blood_volume -= bloodcost
 	bloodsuckerdatum_power.update_hud()
 
+///Return value of this proc is used to decide if we need to set a click override for our user, for targeted bloodsucker powers
 /datum/action/cooldown/bloodsucker/proc/ActivatePower(trigger_flags)
 	SHOULD_CALL_PARENT(TRUE)
 	active = TRUE
@@ -225,6 +226,8 @@
 		START_PROCESSING(SSprocessing, src)
 
 	build_all_button_icons()
+
+	return FALSE
 
 /datum/action/cooldown/bloodsucker/proc/DeactivatePower()
 	if(!active) //Already inactive? Return
@@ -248,15 +251,19 @@
 	if(!ContinueActive(owner)) // We can't afford the Power? Deactivate it.
 		DeactivatePower()
 		return
-	// We can keep this up (For now), so Pay Cost!
-	if(!(power_flags & BP_AM_COSTLESS_UNCONSCIOUS) && owner.stat != CONSCIOUS)
-		var/constant_bloodcost = get_blood_cost(constant = TRUE)
-		if(bloodsuckerdatum_power)
-			bloodsuckerdatum_power.AddBloodVolume(-constant_bloodcost)
-		else
-			var/mob/living/living_owner = owner
-			if(!HAS_TRAIT(living_owner, TRAIT_NOBLOOD))
-				living_owner.blood_volume -= constant_bloodcost
+
+	//If we are unconscious and the power has the BP_AM_COSTLESS_UNCONSCIOUS flag, we get to use it for free.
+	if((power_flags & BP_AM_COSTLESS_UNCONSCIOUS) && owner.stat != CONSCIOUS)
+		return
+
+	// We can keep this up (for now), so Pay Cost!
+	var/constant_bloodcost = get_blood_cost(constant = TRUE)
+	if(bloodsuckerdatum_power)
+		bloodsuckerdatum_power.AddBloodVolume(-constant_bloodcost * seconds_per_tick)
+	else
+		var/mob/living/living_owner = owner
+		if(!HAS_TRAIT(living_owner, TRAIT_NOBLOOD))
+			living_owner.blood_volume -= constant_bloodcost * seconds_per_tick
 	return TRUE
 
 /// Checks to make sure this power can stay active

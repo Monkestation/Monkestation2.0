@@ -52,10 +52,11 @@
 				chosen_one = SSpolling.poll_ghosts_for_target(
 					check_jobban = ROLE_BLOODLING_THRALL,
 					poll_time = 10 SECONDS,
+					ignore_category = POLL_IGNORE_BLOODLING_THRALL,
 					checked_target = carbon_mob,
 					alert_pic = carbon_mob,
 					role_name_text = "Bloodling Thrall",
-					)
+				)
 
 		if(isnull(chosen_one))
 			is_infecting = FALSE

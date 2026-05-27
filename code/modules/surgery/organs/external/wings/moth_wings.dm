@@ -97,7 +97,7 @@
 	return GLOB.moth_wings_list
 
 /datum/bodypart_overlay/mutant/wings/moth/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(!(human.wear_suit?.flags_inv & HIDEMUTWINGS))
+	if(!(human.wear_suit?.flags_inv & HIDEMUTWINGS) && !(human.wear_neck?.flags_inv & HIDEMUTWINGS))
 		return TRUE
 	return FALSE
 
