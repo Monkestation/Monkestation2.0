@@ -169,7 +169,7 @@
 	icon = 'icons/obj/atmospherics/tank.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/tanks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tanks_righthand.dmi'
-	desc_controls = "Alt-Click to close or open the fuel nozzel cap."
+	desc_controls = "Alt-Click to close or open the fuel nozzle cap."
 	icon_state = "canister"
 	base_icon_state = "canister"
 	volume = 250
