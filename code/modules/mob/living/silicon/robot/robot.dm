@@ -38,12 +38,12 @@
 	model = new /obj/item/robot_model(src)
 	model.rebuild_modules()
 
-	if(lawupdate)
+	if(!laws)
 		make_laws()
-		for (var/law in laws.inherent)
+		for(var/law in laws.inherent)
 			lawcheck += law
-		if(!TryConnectToAI())
-			lawupdate = FALSE
+	if(lawupdate && !TryConnectToAI())
+		lawupdate = FALSE
 
 	if(!scrambledcodes && !builtInCamera)
 		builtInCamera = new (src)
