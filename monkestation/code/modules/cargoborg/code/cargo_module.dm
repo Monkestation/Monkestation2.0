@@ -1,6 +1,3 @@
-/atom/movable/screen/robot
-	icon = 'monkestation/icons/hud/screen_cyborg.dmi'
-
 // CARGO
 /obj/item/robot_model/cargo
 	name = "Cargo"
