@@ -990,9 +990,9 @@
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/borg/apparatus/beaker, // We trust that they will not act like chemistry.
-		/obj/item/borg/apparatus/organ_storage/limb, // They need to be able to hold limbs to hit artifacts with it.
-		/obj/item/borg/apparatus/organ_storage/artifact, // TODO: This needs to be more specific. It should not be a subtype.
-		/obj/item/borg/apparatus/organ_storage/disk, // TODO: This needs to be more specific. It should not be a subtype.
+		///obj/item/borg/apparatus/organ_storage/limb, // They need to be able to hold limbs to hit artifacts with it.
+		///obj/item/borg/apparatus/organ_storage/artifact, // TODO: This needs to be more specific. It should not be a subtype.
+		///obj/item/borg/apparatus/organ_storage/disk, // TODO: This needs to be more specific. It should not be a subtype.
 		// TODO: Should they get the ability to (un)lock cyborgs? Maybe, but let us be safe and decline for now.
 		// !! Do not give them the ability to pick up materials. We do not want them to be engineering cyborgs.
 		// !! The ability to upgrade cyborgs must be gated in some way. It can be your typical cyborg upgrade OR locked behind illegal / emagged.
