@@ -200,7 +200,8 @@
 
 	var/screentip_change = FALSE
 
-	context[SCREENTIP_CONTEXT_ALT_LMB] = cap_on ? "Close" : "Open"
+	if(!cap_lost)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = cap_on ? "Close" : "Open"
 
 	if(istype(held_item, /obj/item/weldingtool) && reagents.total_volume)
 		context[SCREENTIP_CONTEXT_LMB] = "Refuel"
