@@ -34,7 +34,8 @@
 	var/obj/item/clothing/head/cone/selected_cone = locate() in contents
 	if(!selected_cone)
 		selected_cone = src
-
+	if(!(user.dropItemToGround(selected_cone)))
+		return
 	var/clickx
 	var/clicky
 
