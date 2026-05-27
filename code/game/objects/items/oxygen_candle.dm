@@ -18,7 +18,7 @@
 	var/fuel = 1 MINUTE
 	var/oxygen_amount = 10
 	var/on_damage = 6
-	pressure_resistance = 100
+	pressure_resistance = 10
 
 /obj/item/oxygen_candle/attack(mob/living/carbon/victim, mob/living/carbon/user)
 	if(!isliving(victim))
