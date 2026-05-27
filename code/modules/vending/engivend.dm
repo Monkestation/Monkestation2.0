@@ -23,6 +23,7 @@
 		/obj/item/storage/box/metalfoam = 2,
 		/obj/item/storage/box/nanofrost = 2,
 		/obj/item/storage/box/flares = 2,
+		/obj/item/clothing/head/cone = 15,
 	)
 	contraband = list(
 		/obj/item/stock_parts/power_store/cell/potato = 3,
