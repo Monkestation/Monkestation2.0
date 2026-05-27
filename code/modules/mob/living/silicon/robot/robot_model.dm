@@ -460,7 +460,7 @@
 		/obj/item/holosign_creator,
 		/obj/item/reagent_containers/spray/cyborg_drying,
 		/obj/item/wirebrush,
-		/obj/item/pushbroom,
+		/obj/item/pushbroom/cyborg,
 	)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(
