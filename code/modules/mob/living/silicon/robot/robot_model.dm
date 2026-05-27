@@ -979,35 +979,28 @@
 	name = "Science"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
-		/obj/item/assembly/flash/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/borg/cyborg_omnitool/engineering,
-		/obj/item/experi_scanner,
+		/obj/item/stack/cable_coil,
+		/obj/item/experi_scanner, // Material Scans will require cooperation. Pester your engineering cyborg for help.
 		/obj/item/nanite_scanner,
 		/obj/item/nanite_remote/cyborg, // If it is too powerful as a base module, move it to the upgrade.
-		/obj/item/assembly/signaler,
 		/obj/item/analyzer,
+		/obj/item/assembly/signaler, // We are only allowing anomaly defusing. You will need hands for actual ordiance.
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/borg/apparatus/beaker, // We trust that they will not act like chemistry.
-		///obj/item/borg/apparatus/organ_storage/limb, // They need to be able to hold limbs to hit artifacts with it.
-		///obj/item/borg/apparatus/organ_storage/artifact, // TODO: This needs to be more specific. It should not be a subtype.
-		///obj/item/borg/apparatus/organ_storage/disk, // TODO: This needs to be more specific. It should not be a subtype.
-		// TODO: Should they get the ability to (un)lock cyborgs? Maybe, but let us be safe and decline for now.
-		// !! Do not give them the ability to pick up materials. We do not want them to be engineering cyborgs.
-		// !! The ability to upgrade cyborgs must be gated in some way. It can be your typical cyborg upgrade OR locked behind illegal / emagged.
-		// !! The ability to create cyborgs must be gated in the same way as above.
-		//
-		// Xenobiology
+		/obj/item/borg/apparatus/circuit/science,
+		/obj/item/borg/apparatus/organ_storage/limb, // They need to be able to hold limbs to hit artifacts with it.
+		/obj/item/storage/bag/xeno
 		/obj/item/vacuum_pack, // TODO: This needs to be customized for cyborgs as they cannot use this.
-		// TODO: Something that can grab monkey cubes and biomass cubes.
-		// TODO: Something to grab /obj/item/disk/vacuum_upgrade and its subtypes
-		// TODO: Something to grab /obj/item/disk/sucker_upgrade and its subtypes
-		// TODO: Something to grab /obj/item/disk/biomass_upgrade and its subtypes
-		// TODO: Something to grab /obj/item/slime_mutation_syringe and its subtypes
 
 	)
 	emag_modules = list(
+		// TODO: Should they be allowed to interact with TTVs?
+		// TODO: Should they be allowed to (un)lock cyborg covers?
+		// TODO: Should they be able to create & upgrade cyborgs?
+		// !! Note for the above cyborg-related capabilities, it must be gated; it should be either emag (here) or some form of upgrade.
 		/obj/item/syndicate_teleporter, // Perhaps they should get something more unique than this.
 	)
 	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)

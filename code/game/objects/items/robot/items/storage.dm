@@ -249,6 +249,11 @@
 	desc = "A container for holding and application of various monster organs."
 	storable = list(/obj/item/organ/internal/monster_core)
 
+/obj/item/borg/apparatus/organ_storage/limb
+	name = "limb storage bag"
+	desc = "A container for holding limbs."
+	storable = list(/obj/item/bodypart)
+
 ///Apparatus to allow Engineering/Sabo borgs to manipulate any material sheets.
 /obj/item/borg/apparatus/sheet_manipulator
 	name = "material manipulation apparatus"
@@ -327,6 +332,20 @@
 	if(istype(atom, /obj/item/ai_module) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
 		to_chat(user, span_warning("This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up."))
 	return ..()
+
+/obj/item/borg/apparatus/circuit/science
+	name = "science manipulation apparatus"
+	desc = "A special apparatus for carrying various stock parts, disks, assemblies, and even artifacts!"
+	storable = list(
+		/obj/item/stock_parts,
+		/obj/item/assembly,
+		/obj/item/disk,
+		/obj/item/artifact_item,
+		/obj/item/artifact_item_tiny,
+		/obj/item/gun/magic/artifact,
+		/obj/item/melee/artifact,
+		/obj/item/slime_mutation_syringe
+	)
 
 //apparatus to allow borgs to cook
 /obj/item/borg/apparatus/cooking
