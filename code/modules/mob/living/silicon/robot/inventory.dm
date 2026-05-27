@@ -49,10 +49,11 @@
 		return
 	item_module.mouse_opacity = initial(item_module.mouse_opacity)
 	observer_screen_update(item_module)
-
+	ADD_TRAIT(item_module, TRAIT_NODROP, CYBORG_ITEM_TRAIT) // This prevents items being from inserted anywhere that isn't our inventory (e.g. no more putting it in someone else's dufflebag).
 
 /// Helper for cyborgs unequipping things.
 /mob/living/silicon/robot/proc/deactivate_module(obj/item/item_module)
+	REMOVE_TRAIT(item_module, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 	transferItemToLoc(item_module, newloc = model)
 
 /mob/living/silicon/robot/doUnEquip(obj/item/item_dropping, force, atom/newloc, no_move, invdrop, silent)

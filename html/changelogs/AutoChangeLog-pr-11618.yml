@@ -1,5 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - rscadd: "Illegal Combat Cybernetic Implants tech node. It require Illegal Technology, Combat Cybernetic Implants, and 40 points."
-  - balance: "X-Ray Eyes and Thermals Eyes is now unlocked via Illegal Combat Cybernetic Implants."
