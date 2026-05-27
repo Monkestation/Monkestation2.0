@@ -132,11 +132,30 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 	icon_state = "servant_blocker"
 	anchored = TRUE
 
-/obj/effect/servant_blocker/CanPass(atom/movable/mover, border_dir)
-	for(var/mob/held_mob in mover.get_all_contents())
-		if(IS_CLOCK(held_mob))
-			return FALSE
-	return ..()
+// /obj/effect/servant_blocker/CanPass(atom/movable/mover, border_dir)
+// 	for(var/mob/held_mob in mover.get_all_contents())
+// 		if(IS_CLOCK(held_mob))
+// 			return FALSE
+// 	return ..()
+
+/obj/effect/servant_blocker/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if(!iscarbon(mover))
+		if(isvehicle(mover))
+			var/obj/vehicle/toucher = mover
+			for(var/mob/living/carbon/human in toucher.occupants)
+				if(IS_CLOCK(human))
+					return FALSE
+		if(!isstructure(mover))
+			return TRUE
+		var/obj/structure/cargobay = mover
+		for(var/mob/living/stowaway in cargobay.contents)
+			if(IS_CLOCK(stowaway))
+				return FALSE
+	else
+		for(var/mob/held_mob in mover.get_all_contents())
+			if(IS_CLOCK(held_mob))
+				return FALSE
 
 /obj/effect/spawner/structure/window/clockwork
 	name = "brass window spawner"

@@ -72,6 +72,7 @@ Difficulty: Hard
 							   /datum/action/innate/megafauna_attack/chaser_swarm,
 							   /datum/action/innate/megafauna_attack/cross_blasts,
 							   /datum/action/innate/megafauna_attack/blink_spam)
+	rawr_sound = 'sound/effects/curse6.ogg' // MONKESTATION EDIT ADDITION
 
 	var/burst_range = 3 //range on burst aoe
 	var/beam_range = 5 //range on cross blast beams

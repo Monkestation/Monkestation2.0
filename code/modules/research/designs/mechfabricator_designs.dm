@@ -1244,12 +1244,23 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
 	)
 
-/datum/design/borg_upgrade_circuit_app
-	name = "Circuit Manipulator"
-	id = "borg_upgrade_circuitapp"
+/datum/design/borg_upgrade_extra_sheet_manipulator
+	name = "Secondary Material Manipulation Apparatus"
+	id = "borg_upgrade_extra_sheet_manipulator"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/circuit_app
+	build_path = /obj/item/borg/upgrade/extra_sheet_manipulator
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT, /datum/material/titanium =SMALL_MATERIAL_AMOUNT*5)
+	construction_time = 120
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
+	)
+
+/datum/design/borg_upgrade_charger
+	name = "Power Connector"
+	id = "borg_upgrade_charger"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/charger
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT, /datum/material/plasma =SMALL_MATERIAL_AMOUNT*5)
 	construction_time = 120
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING

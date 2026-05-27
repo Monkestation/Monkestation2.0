@@ -1,3 +1,38 @@
+/**** Pyre God ****/
+
+/datum/religion_sect/pyre
+	name = "Pyre"
+	desc = "Sacrificing burning corpses with a lot of burn damage and candles grants you favor."
+	quote = "It must burn! The primal energy must be respected."
+	tgui_icon = "fire-alt"
+	alignment = ALIGNMENT_NEUT
+	max_favor = 10000
+	desired_items = list(/obj/item/flashlight/flare/candle = "already lit")
+	rites_list = list(/datum/religion_rites/fireproof, /datum/religion_rites/burning_sacrifice, /datum/religion_rites/infinite_candle)
+	altar_icon_state = "convertaltar-red"
+
+/datum/religion_sect/pyre/on_select()
+	. = ..()
+	AddComponent(/datum/component/sect_nullrod_bonus, list(
+		/obj/item/gun/ballistic/bow/divine/with_quiver = list(
+			/datum/religion_rites/blazing_star,
+		),
+	))
+
+//candle sect bibles don't heal or do anything special apart from the standard holy water blessings
+/datum/religion_sect/pyre/sect_bless(mob/living/target, mob/living/chap)
+	return TRUE
+
+/datum/religion_sect/pyre/on_sacrifice(obj/item/flashlight/flare/candle/offering, mob/living/user)
+	if(!istype(offering))
+		return
+	if(!offering.on)
+		to_chat(user, span_notice("The candle needs to be lit to be offered!"))
+		return
+	to_chat(user, span_notice("[GLOB.deity] is pleased with your sacrifice."))
+	adjust_favor(20, user) //it's not a lot but hey there's a pacifist favor option at least
+	qdel(offering)
+	return TRUE
 
 ///apply a bunch of fire immunity effect to clothing
 /datum/religion_rites/fireproof/proc/apply_fireproof(obj/item/clothing/fireproofed)

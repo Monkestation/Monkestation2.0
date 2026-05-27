@@ -7,3 +7,4 @@
 #define RCD_COMPUTER (1 << 11)
 #define RCD_FLOODLIGHT (1 << 12)
 #define RCD_FURNISHING (1 << 13)
+#define RCD_FIRELOCK (1 << 14)
