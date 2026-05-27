@@ -1,6 +1,0 @@
-author: "SirNightKnight"
-delete-after: True
-changes:
-  - balance: "oading a bobr shotgun revolver with the tutel speedloader shield is 0.5 seconds, everything else is 1.5."
-  - qol: "added text for loading a shell from a shotgun ammobox."
-  - bugfix: "fixed empty ammo boxes not being able to pick up ammo."

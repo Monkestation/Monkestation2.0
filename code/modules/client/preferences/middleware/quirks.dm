@@ -92,11 +92,12 @@
 		// If the client is sending an invalid give_quirk, that means that
 		// something went wrong with the client prediction, so we should
 		// catch it back up to speed.
-		preferences.update_static_data(user)
+		preferences.update_static_data(user, always_instant = TRUE)
 		return TRUE
 
 	preferences.all_quirks = new_quirks
 	preferences.character_preview_view?.update_body()
+	preferences.update_static_data(user, always_instant = TRUE)
 
 	return TRUE
 
@@ -111,11 +112,12 @@
 		// If the client is sending an invalid remove_quirk, that means that
 		// something went wrong with the client prediction, so we should
 		// catch it back up to speed.
-		preferences.update_static_data(user)
+		preferences.update_static_data(user, always_instant = TRUE)
 		return TRUE
 
 	preferences.all_quirks = new_quirks
 	preferences.character_preview_view?.update_body()
+	preferences.update_static_data(user, always_instant = TRUE)
 
 	return TRUE
 

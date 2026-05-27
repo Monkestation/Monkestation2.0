@@ -10,7 +10,9 @@
 		'icons/obj/firealarm.dmi' = list("fire_bitem"),
 		'icons/obj/lighting.dmi' = list("floodlight_c1"),
 		'icons/obj/monitors.dmi' = list("alarm_bitem"),
-		'icons/obj/wallframe.dmi' = list("apc"),
+		'icons/obj/wallframe.dmi' = list("apc", "button"),
+		'icons/obj/machines/camera.dmi' = list("cameracase"),
+		'icons/obj/doors/rcd_assets.dmi' = list("firelock_heavy", "firelock_window", "firelock_slim"),
 		'icons/obj/stock_parts.dmi' = list("box_1"),
 		'icons/obj/objects.dmi' = list("bed"),
 		'icons/obj/smooth_structures/catwalk.dmi' = list("catwalk-0"),
@@ -33,7 +35,7 @@
 	//for each airlock type we create its overlayed version with the suffix Glass in the sprite name
 	var/list/airlocks = list(
 		"Standard" = 'icons/obj/doors/airlocks/station/public.dmi',
-		"Public" = 'icons/obj/doors/airlocks/station2/glass.dmi',
+		"Public" = 'icons/obj/doors/airlocks/public/glass.dmi',
 		"Engineering" = 'icons/obj/doors/airlocks/station/engineering.dmi',
 		"Atmospherics" = 'icons/obj/doors/airlocks/station/atmos.dmi',
 		"Security" = 'icons/obj/doors/airlocks/station/security.dmi',

@@ -18,6 +18,7 @@
 	light_power = 2
 	light_on = FALSE
 	engine_sound = 'sound/effects/servostep.ogg'
+	interaction_flags_mouse_drop = NONE
 	///Maximum size of a mob trying to enter the mech
 	var/maximum_mob_size = MOB_SIZE_SMALL
 	COOLDOWN_DECLARE(sound_cooldown)
@@ -90,7 +91,7 @@
 	update_appearance()
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
 	if(atom_integrity == max_integrity)
-		SEND_SOUND(newoccupant, sound('sound/mecha/nominal.ogg',volume=50))
+		newoccupant.playsound_local(src, 'sound/mecha/nominal.ogg', 50)
 
 /obj/vehicle/sealed/car/vim/mob_try_exit(mob/pilot, mob/user, silent = FALSE, randomstep = FALSE)
 	. = ..()

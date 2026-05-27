@@ -139,7 +139,7 @@ SUBSYSTEM_DEF(job)
 		if(!job.config_check())
 			continue
 		if(!job.map_check()) //Even though we initialize before mapping, this is fine because the config is loaded at new
-			log_job_debug("Removed [job.title] due to map config")
+			log_job_debug("Removed [job.title] due to map config.")
 			continue
 
 		//MONKESTATION EDIT START
@@ -942,7 +942,7 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/SendToLateJoin(mob/M, buckle = TRUE)
 	var/atom/destination
 
-	if(length(GLOB.oshan_launch_points))
+	if(length(GLOB.oshan_launch_points) && !M.mind?.assigned_role?.oshan_normal_latejoin)
 		var/obj/effect/oshan_launch_point/player/picked_point = pick(GLOB.oshan_launch_points)
 		destination = get_edge_target_turf(picked_point, picked_point.map_edge_direction)
 		destination.JoinLaunchTowards(M, picked_point)
@@ -1140,10 +1140,6 @@ SUBSYSTEM_DEF(job)
 	if(required_playtime_remaining)
 		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_PLAYTIME, possible_job.title)], Player: [player], MissingTime: [required_playtime_remaining][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_PLAYTIME
-
-	if(!possible_job.conditions_met())
-		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_CONDITIONS_UNMET, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
-		return  JOB_UNAVAILABLE_CONDITIONS_UNMET
 
 	//MONKESTATION EDIT START
 	// Job is for donators of a specific level and fail if they did not meet the requirements.

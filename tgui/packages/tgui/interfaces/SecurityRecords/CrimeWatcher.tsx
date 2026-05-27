@@ -1,6 +1,4 @@
-import { useLocalState, useBackend } from 'tgui/backend';
-import { SECURETAB, Crime, SecurityRecordsData } from './types';
-import { getSecurityRecord } from './helpers';
+import { useBackend, useLocalState } from 'tgui/backend';
 import {
   BlockQuote,
   Box,
@@ -17,6 +15,8 @@ import {
   TextArea,
   Tooltip,
 } from 'tgui/components';
+import { getSecurityRecord } from './helpers';
+import { type Crime, SECURETAB, type SecurityRecordsData } from './types';
 
 /** Displays a list of crimes and allows to add new ones. */
 export const CrimeWatcher = (props) => {
@@ -169,7 +169,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
               fluid
               maxLength={25}
               onEscape={() => setEditing(false)}
-              onEnter={(event, value) => {
+              onEnter={(value) => {
                 setEditing(false);
                 act('edit_crime', {
                   crew_ref: crew_ref,
@@ -184,7 +184,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
               maxLength={1025}
               mt={1}
               onEscape={() => setEditing(false)}
-              onEnter={(event, value) => {
+              onEnter={(value) => {
                 setEditing(false);
                 act('edit_crime', {
                   crew_ref: crew_ref,
@@ -246,7 +246,7 @@ const CrimeAuthor = (props) => {
         <Input
           fluid
           maxLength={25}
-          onChange={(_, value) => setCrimeName(value)}
+          onChange={(value) => setCrimeName(value)}
           placeholder="Brief overview"
         />
       </Stack.Item>
@@ -254,17 +254,15 @@ const CrimeAuthor = (props) => {
         Details
         <TextArea
           fluid
-          height={4}
           maxLength={1025}
-          multiline
-          onChange={(_, value) => setCrimeDetails(value)}
+          onChange={(value) => setCrimeDetails(value)}
           placeholder="Type some details..."
         />
       </Stack.Item>
       <Stack.Item color="label">
         Fine (leave blank to arrest)
         <RestrictedInput
-          onChange={(_, value) => setCrimeFine(value)}
+          onChange={(value) => setCrimeFine(value)}
           fluid
           maxValue={1000}
         />

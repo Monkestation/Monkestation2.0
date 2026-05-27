@@ -29,7 +29,7 @@
 	return BRUTELOSS
 
 /obj/item/seeds/kudzu/proc/plant(mob/user)
-	if(isspaceturf(user.loc))
+	if(user.loc.type in GLOB.spacevine_tile_spread_blacklist)
 		return
 	if(!isturf(user.loc))
 		to_chat(user, span_warning("You need more space to plant [src]."))
@@ -45,7 +45,7 @@
 
 /obj/item/seeds/kudzu/attack_self(mob/user)
 	user.visible_message(span_danger("[user] begins throwing seeds on the ground..."))
-	if(do_after(user, 5 SECONDS, target = user.drop_location(), progress = TRUE))
+	if(do_after(user, 5 SECONDS, target = user.drop_location(), progress = TRUE) && !(user.loc.type in GLOB.spacevine_tile_spread_blacklist))
 		plant(user)
 		to_chat(user, span_notice("You plant the kudzu. You monster."))
 

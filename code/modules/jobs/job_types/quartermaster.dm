@@ -27,7 +27,7 @@
 	departments_list = list(
 		/datum/job_department/cargo,
 		)
-	family_heirlooms = list(/obj/item/stamp, /obj/item/stamp/denied)
+	family_heirlooms = list(/obj/item/stamp, /obj/item/stamp/denied, /obj/item/dest_tagger, /obj/item/clipboard)
 	mail_goodies = list(
 		/obj/item/circuitboard/machine/emitter = 3
 	)
@@ -46,6 +46,9 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	l_hand = /obj/item/clipboard
-
+	backpack_contents = list(
+		/obj/item/boxcutter = 1,
+		/obj/item/universal_scanner = 1,
+	)
 	chameleon_extras = /obj/item/stamp/qm
 	accessory = /obj/item/clothing/accessory/badge/cargo/quartermaster

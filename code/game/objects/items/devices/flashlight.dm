@@ -281,11 +281,12 @@
 
 /obj/item/flashlight/pen
 	name = "penlight"
-	desc = "A high-powered UV penlight intended to help stave off infection in the field on serious burned patients. Probably really bad to look into. It can also be used to create a hologram to alert people of incoming medical assistance."
+	desc = "A high-powered UV penlight intended to help stave off infection in the field on seriously burned patients. Probably really bad to look into. It can also be used to create a hologram to alert people of incoming medical assistance."
 	dir = EAST
 	icon_state = "penlight"
 	inhand_icon_state = ""
 	worn_icon_state = "pen"
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_EARS
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = CONDUCT_1
 	light_outer_range = 2

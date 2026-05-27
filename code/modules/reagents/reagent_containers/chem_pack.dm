@@ -44,3 +44,9 @@
 	if(sealed)
 		return
 	..()
+
+/obj/item/reagent_containers/chem_pack/saline
+	name = "intravenous saline bag"
+	desc = "A plastic pressure bag, or 'chem pack', for IV administration of drugs. This one contains a mixture of saline-glucose, iron, and tirimol to treat bloodloss."
+	list_reagents = list(/datum/reagent/medicine/salglu_solution = 55, /datum/reagent/iron = 35, /datum/reagent/medicine/c2/tirimol = 10)
+	sealed = TRUE

@@ -31,7 +31,7 @@
 	///A wearkef to the throwdatum we're currently dealing with, if we need it
 	var/datum/weakref/tackle_ref
 
-/datum/component/tackler/Initialize(stamina_cost = 13, base_knockdown = 1 SECONDS, range = 4, speed = 1, skill_mod = 0, min_distance = min_distance)
+/datum/component/tackler/Initialize(stamina_cost = 13, base_knockdown = 1 SECONDS, range = 4, speed = 1, skill_mod = 0, min_distance = min_distance, silent_gain = FALSE)
 	if(!iscarbon(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -41,9 +41,9 @@
 	src.speed = speed
 	src.skill_mod = skill_mod
 	src.min_distance = min_distance
-
-	var/mob/P = parent
-	to_chat(P, span_notice("You are now able to launch tackles! You can do so by activating throw mode, and ") + span_boldnotice("RIGHT-CLICKING on your target with an empty hand."))
+	if(!silent_gain)
+		var/mob/P = parent
+		to_chat(P, span_notice("You are now able to launch tackles! You can do so by activating throw mode, and ") + span_boldnotice("RIGHT-CLICKING on your target with an empty hand."))
 
 	addtimer(CALLBACK(src, PROC_REF(resetTackle)), base_knockdown, TIMER_STOPPABLE)
 
@@ -328,6 +328,13 @@
 		if(el_tail && (el_tail.wag_flags & WAG_WAGGING)) // lizard tail wagging is robust and can swat away assailants!
 			defense_mod += 1
 
+		if(istype(tackle_target.wear_suit, /obj/item/clothing/suit/hooded/cultrobes/eldritch/blade))
+			defense_mod += 8
+		if(istype(tackle_target.wear_suit, /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust))
+			var/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/rust_robes = tackle_target.wear_suit
+			if(rust_robes.rusted)
+				defense_mod += 10
+
 	// OF-FENSE
 	var/mob/living/carbon/sacker = parent
 	var/sacker_drunkenness = sacker.get_drunk_amount()
@@ -348,7 +355,8 @@
 		if(!istype(sacker_moth_wing) || sacker_moth_wing.burnt)
 			attack_mod -= 2
 	var/obj/item/organ/external/wings/sacker_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
-	if(sacker_wing)
+//	if(sacker_wing) // MONKESTATION EDIT OLD -- Arachnids use the external wing slot aswell, so we have to check for actual wings
+	if(sacker_wing && istype(sacker_wing)) // MONKESTATION EDIT NEW
 		attack_mod += 2
 
 	if(ishuman(target))
@@ -423,7 +431,8 @@
 			playsound(user, 'sound/effects/blobattack.ogg', 60, TRUE)
 			playsound(user, 'sound/effects/splat.ogg', 70, TRUE)
 			playsound(user, 'sound/effects/wounds/crack2.ogg', 70, TRUE)
-			user.pain_emote("scream")
+			if(!HAS_TRAIT(user, TRAIT_ANALGESIA))
+				user.emote("scream")
 			user.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic) // oopsie indeed!
 			shake_camera(user, 7, 7)
 			user.flash_act(1, TRUE, TRUE, length = 4.5)

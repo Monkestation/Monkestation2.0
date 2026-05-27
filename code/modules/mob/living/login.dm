@@ -7,6 +7,8 @@
 		qdel(client)
 		return FALSE
 
+	process_as_cliented_mob()
+
 	//Mind updates
 	sync_mind()
 
@@ -29,3 +31,4 @@
 
 	if(GLOB.sacrament_done)
 		AddComponent(/datum/component/shadowlands)
+	set_ssd_indicator(FALSE)

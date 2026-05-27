@@ -47,3 +47,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	alternate_worn_layer = UNDER_SUIT_LAYER
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
+
+/obj/item/clothing/mask/thermal_balaclava/alt
+	name = "tactical balaclava"
+	desc = "Protects your face from the cold. Won't protect you from looking like a dork."
+	icon_state = "balaclavatac"
+	worn_icon_state = "balaclavatac"

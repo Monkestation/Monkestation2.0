@@ -3,7 +3,6 @@
 #define RESKIN_SYNDIE "Syndicate Red"
 
 /obj/item/clothing/under/syndicate
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/syndicate_digi.dmi'
 
 /obj/item/clothing/under/syndicate/nova
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/syndicate.dmi'
@@ -32,7 +31,6 @@
 	can_adjust = TRUE
 	has_sensor = HAS_SENSORS
 	armor_type = /datum/armor/clothing_under
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	unique_reskin = list(
 		RESKIN_NT = "tactifool_blue",
 		RESKIN_CHARCOAL = "tactifool"
@@ -58,7 +56,6 @@
 /obj/item/clothing/under/syndicate/bloodred/sleepytime/sensors //Halloween-only
 	has_sensor = HAS_SENSORS
 	armor_type = /datum/armor/clothing_under
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/syndicate/nova/baseball
 	name = "syndicate baseball tee"
@@ -116,6 +113,10 @@
 	has_sensor = HAS_SENSORS
 	can_adjust = TRUE
 
+/obj/item/clothing/under/syndicate/nova/overalls/unarmoured/tacticool
+	name = "tacticool utility turtleneck"
+	desc = "A pair of spiffy overalls with a tacticool turtleneck underneath, now with 100% more tacticool."
+
 /obj/item/clothing/under/syndicate/nova/overalls/unarmoured/skirt
 	name = "suspicious utility overalls skirtleneck"
 	desc = "A pair of spiffy overalls with a turtleneck underneath, this one is a skirt instead, breezy."
@@ -124,6 +125,10 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/syndicate/nova/overalls/unarmoured/skirt/tacticool
+	name = "tacticool utility skirtleneck"
+	desc = "A pair of spiffy overalls with a tacticool turtleneck underneath, now with 100% more tacticool."
 
 /obj/item/clothing/under/syndicate/nova/overalls/unarmoured/examine_more(mob/user)
 	. = ..()
@@ -150,7 +155,6 @@
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
 	armor_type = /datum/armor/clothing_under/syndicate
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	unique_reskin = list(
 		RESKIN_SYNDIE = "syndicate_red",
 		RESKIN_CHARCOAL = "syndicate"
@@ -270,7 +274,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/head/helmet.dmi'
 	icon_state = "swat_ds"
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /obj/item/clothing/head/beret/sec/syndicate
 	name = "brig officer's beret"
@@ -406,7 +409,6 @@
 	icon_state = "ip_turtleneck"
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/syndicate/nova/interdyne/miner
 	name = "interdyne jumpsuit"

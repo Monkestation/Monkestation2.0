@@ -17,11 +17,14 @@
 	new /obj/item/storage/box/silver_ids(src)
 	new /obj/item/radio/headset/heads/captain/alt(src)
 	new /obj/item/radio/headset/heads/captain(src)
-	new /obj/item/storage/belt/sabre(src)
-	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/door_remote/captain(src)
 	new /obj/item/storage/photo_album/captain(src)
 	new /obj/item/storage/pipebox/fancy(src)
+
+/obj/structure/closet/secure_closet/captains/populate_contents_immediate()
+	. = ..()
+	new /obj/item/storage/belt/sabre(src)
+	new /obj/item/gun/energy/e_gun(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "head of personnel's locker"
@@ -37,10 +40,9 @@
 	new /obj/item/computer_disk/command/hop(src)
 	new /obj/item/radio/headset/heads/hop(src)
 	new /obj/item/storage/box/ids(src)
-	new /obj/item/storage/box/ids(src)
+	new /obj/item/storage/box/silver_ids(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/assembly/flash/handheld(src)
-	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
 	new /obj/item/door_remote/civilian(src)
@@ -48,6 +50,10 @@
 	new /obj/item/storage/photo_album/hop(src)
 	new /obj/item/storage/lockbox/medal/hop(src)
 	new /obj/item/clothing/suit/space/hardsuit/hop(src) //monkestation addition
+
+/obj/structure/closet/secure_closet/hop/populate_contents_immediate()
+	. = ..()
+	new /obj/item/gun/energy/e_gun(src)
 
 /obj/structure/closet/secure_closet/hos
 	name = "head of security's locker"
@@ -300,6 +306,9 @@
 	new /obj/item/storage/box/firingpins(src)
 	for(var/i in 1 to 3)
 		new /obj/item/storage/box/rubbershot(src)
+
+/obj/structure/closet/secure_closet/armory2/populate_contents_immediate()
+	. = ..()
 	for(var/i in 1 to 3)
 		new /obj/item/gun/ballistic/shotgun/riot(src)
 
@@ -313,11 +322,14 @@
 	new /obj/item/storage/box/firingpins(src)
 	new /obj/item/gun/energy/ionrifle(src)
 	for(var/i in 1 to 3)
+		new /obj/item/gun/energy/laser/thermal(src)
+
+/obj/structure/closet/secure_closet/armory3/populate_contents_immediate()
+	. = ..()
+	for(var/i in 1 to 3)
 		new /obj/item/gun/energy/e_gun(src)
 	for(var/i in 1 to 3)
 		new /obj/item/gun/energy/laser(src)
-	for(var/i in 1 to 3)
-		new /obj/item/gun/energy/laser/thermal(src)
 
 /obj/structure/closet/secure_closet/tac
 	name = "armory tac locker"
@@ -361,8 +373,8 @@
 	new /obj/item/storage/backpack/duffelbag/secmed/surgery(src)
 	new /obj/item/defibrillator/loaded(src)
 	new /obj/item/sensor_device/security(src)
-	new /obj/item/reagent_containers/blood/universal(src)
-	new /obj/item/reagent_containers/blood/universal(src)
+	new /obj/item/reagent_containers/chem_pack/saline(src)
+	new /obj/item/reagent_containers/chem_pack/saline(src)
 	new /obj/item/storage/toolbox/repair (src)
 	new /obj/item/storage/medkit/regular(src)
 	new /obj/item/storage/medkit/brute(src)

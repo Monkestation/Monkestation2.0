@@ -109,9 +109,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// This turf will never be cleared away by other objects on Initialize.
 #define NO_CLEARING (1<<7)
 
-#define TURF_WEATHER (1<<8) //monkestation edit
 /// This atom is a pseudo-floor that blocks map generation's checkPlaceAtom() from placing things like trees ontop of it.
-#define TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES (1<<9)
+#define TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES (1<<8)
 
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
@@ -164,22 +163,36 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 	the atom/checkpass() proc uses them (tables will call movable atom checkpass(PASSTABLE) for example)
 */
 //flags for pass_flags
+/// Allows you to pass over tables.
 #define PASSTABLE (1<<0)
+/// Allows you to pass over glass(this generally includes anything see-through that's glass-adjacent, ie. windows, windoors, airlocks with glass, etc.)
 #define PASSGLASS (1<<1)
+/// Allows you to pass over grilles.
 #define PASSGRILLE (1<<2)
+/// Allows you to pass over blob tiles.
 #define PASSBLOB (1<<3)
+/// Allows you to pass over mobs.
 #define PASSMOB (1<<4)
+/// Allows you to pass over closed turfs, ie. walls.
 #define PASSCLOSEDTURF (1<<5)
 /// Let thrown things past us. **ONLY MEANINGFUL ON pass_flags_self!**
 #define LETPASSTHROW (1<<6)
+/// Allows you to pass over machinery, ie. vending machines, computers, protolathes, etc.
 #define PASSMACHINE (1<<7)
+/// Allows you to pass over structures, ie. racks, tables(if you don't already have PASSTABLE), etc.
 #define PASSSTRUCTURE (1<<8)
+/// Allows you to pass over plastic flaps, often found at cargo or MULE dropoffs.
 #define PASSFLAPS (1<<9)
+/// Allows you to pass over airlocks and mineral doors.
 #define PASSDOORS (1<<10)
+/// Allows you to pass over vehicles, ie. mecha, secways, the pimpin' ride, etc.
 #define PASSVEHICLE (1<<11)
+/// Allows you to pass over dense items.
 #define PASSITEM (1<<12)
 /// Do not intercept click attempts during Adjacent() checks. See [turf/proc/ClickCross]. **ONLY MEANINGFUL ON pass_flags_self!**
 #define LETPASSCLICKS (1<<13)
+/// Allows you to pass over windows and window-adjacent stuff, like windows and windoors. Does not include airlocks with glass in them.
+#define PASSWINDOW (1<<14)
 
 //Movement Types
 #define GROUND (1<<0)
@@ -188,6 +201,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FLOATING (1<<3)
 /// When moving, will Cross() everything, but won't stop or Bump() anything.
 #define PHASING (1<<4)
+/// Combination flag for movetypes which, for all intents and purposes, mean the mob is not touching the ground
+#define MOVETYPES_NOT_TOUCHING_GROUND (FLYING|FLOATING)
 
 //Fire and Acid stuff, for resistance_flags
 #define LAVA_PROOF (1<<0)
@@ -335,3 +350,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMOTE_VISIBLE (1<<1)
 /// Is it an emote that should be shown regardless of blindness/deafness
 #define EMOTE_IMPORTANT (1<<2)
+/// Does this emote play a visual when being played, unrelated to whether or not it's visual
+//(which is whether you need to see to be told of the emote being played)
+#define EMOTE_HAS_VISUAL (1<<3)

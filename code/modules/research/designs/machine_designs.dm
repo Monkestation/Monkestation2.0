@@ -145,6 +145,28 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING //Monkestation edit: Engi circuit
 
+/datum/design/board/mechpad
+	name = "Orbital Mech Pad Board"
+	desc = "The circuit board for a exosuit launchpad."
+	id = "mechpad"
+	build_type = IMPRINTER
+	build_path = /obj/item/circuitboard/machine/mechpad
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ROBOTICS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/mechpad_console
+	name = "Orbital Mech Pad Console Board"
+	desc = "The circuit board for a exosuit launchpads console."
+	id = "mechpad_console"
+	build_type = IMPRINTER
+	build_path = /obj/item/circuitboard/computer/mechpad
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/board/launchpad
 	name = "Bluespace Launchpad Board"
 	desc = "The circuit board for a bluespace Launchpad."
@@ -762,6 +784,26 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/board/crossing_signal
+	name = "Crossing Signal Board"
+	desc = "The circuit board for a tram crossing signal."
+	id = "crossing_signal"
+	build_path = /obj/item/circuitboard/machine/crossing_signal
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_TELECOMMS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/guideway_sensor
+	name = "Guideway Sensor Board"
+	desc = "The circuit board for a tram proximity sensor."
+	id = "guideway_sensor"
+	build_path = /obj/item/circuitboard/machine/guideway_sensor
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_TELECOMMS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/board/limbgrower
 	name = "Limb Grower Board"
 	desc = "The circuit board for a limb grower."
@@ -1227,3 +1269,22 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/board/ecto_sniffer
+	name = "Ectoscopic Sniffer Board"
+	desc = "The circuit board for an Ectoscopic Sniffer, the latest in Sci-Fi!"
+	id = "ecto_sniffer"
+	build_path = /obj/item/circuitboard/machine/ecto_sniffer
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/flatpacker
+	name = "Flatpacker Machine Board"
+	desc = "The circuit board for a Flatpacker."
+	id = "flatpacker"
+	build_path = /obj/item/circuitboard/machine/flatpacker
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING

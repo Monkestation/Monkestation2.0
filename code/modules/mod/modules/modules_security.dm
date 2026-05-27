@@ -298,7 +298,7 @@
 	do_sparks(rand(3, 6), FALSE, src)
 	if(thrower)
 		var/mob/living/simple_animal/hostile/illusion/mirage/mirage = new(get_turf(src))
-		mirage.Copy_Parent(thrower, 15 SECONDS)
+		mirage.copy_parent(thrower, 15 SECONDS)
 	qdel(src)
 
 ///Projectile Dampener - Weakens projectiles in range.
@@ -316,7 +316,7 @@
 	/// Damage multiplier on projectiles.
 	var/damage_multiplier = 0.75
 	/// Speed multiplier on projectiles, higher means slower.
-	var/speed_multiplier = 2.5
+	var/speed_multiplier = 0.4
 	/// List of all tracked projectiles.
 	var/list/tracked_projectiles = list()
 	/// Effect image on projectiles.

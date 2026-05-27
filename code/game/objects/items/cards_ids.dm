@@ -59,6 +59,8 @@
 
 	/// The name registered on the card (for example: Dr Bryan See)
 	var/registered_name = null
+	///Boolean on whether a blank bank account should be created on the ID's init.
+	var/create_bank_on_init = TRUE
 	/// Linked bank account.
 	var/datum/bank_account/registered_account
 
@@ -119,10 +121,11 @@
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 
-	var/datum/bank_account/blank_bank_account = new /datum/bank_account("Unassigned", player_account = FALSE)
-	registered_account = blank_bank_account
-	blank_bank_account.account_job = new /datum/job/unassigned
-	registered_account.replaceable = TRUE
+	if(create_bank_on_init)
+		var/datum/bank_account/blank_bank_account = new /datum/bank_account("Unassigned", player_account = FALSE)
+		registered_account = blank_bank_account
+		blank_bank_account.account_job = new /datum/job/unassigned
+		registered_account.replaceable = TRUE
 
 	// Applying the trim updates the label and icon, so don't do this twice.
 	if(ispath(trim))
@@ -146,7 +149,7 @@
 
 /obj/item/card/id/get_id_examine_strings(mob/user)
 	. = ..()
-	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
+	. += list("[ma2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
 
 /obj/item/card/id/update_overlays()
 	. = ..()
@@ -160,8 +163,62 @@
 		cached_flat_icon.Crop(ID_ICON_BORDERS)
 	return cached_flat_icon
 
-/obj/item/card/id/get_examine_string(mob/user, thats = FALSE)
-	return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]"
+/obj/item/card/id/get_examine_icon(mob/user)
+	return ma2html(get_cached_flat_icon(), user)
+
+/obj/item/card/id/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	if(isitem(old_loc))
+		unequip_from_item_loc(old_loc)
+	. = ..()
+	if(isitem(loc))
+		equip_to_item_loc(loc)
+
+/obj/item/card/id/equipped(mob/user, slot)
+	. = ..()
+	if (slot & (ITEM_SLOT_ID|ITEM_SLOT_HANDS))
+		RegisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access), override = TRUE)
+	if (slot & ITEM_SLOT_POCKETS)
+		//putting it in your pocket doesn't let you use it as access.
+		UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
+
+/obj/item/card/id/dropped(mob/user)
+	UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
+	if(isitem(loc))
+		equip_to_item_loc(loc) // "dropped" into an item, like a worn wallet
+	return ..()
+
+/// ID card is being equipped to an item (like a pda or wallet)
+/obj/item/card/id/proc/equip_to_item_loc(atom/new_loc)
+	RegisterSignal(new_loc, COMSIG_ITEM_EQUIPPED, PROC_REF(on_loc_equipped), override = TRUE)
+	RegisterSignal(new_loc, COMSIG_ITEM_DROPPED, PROC_REF(on_loc_dropped), override = TRUE)
+	if (ismob(new_loc.loc))
+		var/mob/wearer = new_loc.loc
+		// Equip chain shenanigans
+		UnregisterSignal(wearer, COMSIG_MOB_RETRIEVE_ACCESS)
+		on_loc_equipped(new_loc, wearer, wearer.get_slot_by_item(new_loc))
+
+/// ID card is being unequipped from an item (like a pda or wallet)
+/obj/item/card/id/proc/unequip_from_item_loc(atom/old_loc)
+	UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	if (ismob(old_loc.loc))
+		UnregisterSignal(old_loc.loc, COMSIG_MOB_RETRIEVE_ACCESS)
+
+/obj/item/card/id/proc/on_loc_equipped(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+
+	if (slot & (ITEM_SLOT_ID|ITEM_SLOT_HANDS))
+		RegisterSignal(equipper, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access), override = TRUE)
+	else //This is necessary because unlike TG, Monke doens't call dropped when moving an item from hand to belt/pockets/ID
+		UnregisterSignal(equipper, COMSIG_MOB_RETRIEVE_ACCESS)
+
+/obj/item/card/id/proc/on_loc_dropped(datum/source, mob/dropper)
+	SIGNAL_HANDLER
+	UnregisterSignal(dropper, COMSIG_MOB_RETRIEVE_ACCESS)
+
+///Called when we're being used as access.
+/obj/item/card/id/proc/retrieve_access(datum/source, list/player_access)
+	SIGNAL_HANDLER
+	player_access += GetAccess()
 
 /**
  * Helper proc, checks whether the ID card can hold any given set of wildcards.
@@ -735,6 +792,10 @@
 		if(ACCESS_COMMAND in access)
 			var/datum/bank_account/linked_dept = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			. += "The [linked_dept.account_holder] linked to the ID reports a balance of [linked_dept.account_balance] cr."
+		if(registered_account.mining_points)
+			. += span_notice("The account linked to the ID has [registered_account.mining_points] mining points available.")
+		if(registered_account.bitrunning_points)
+			. += span_notice("The account linked to the ID has [registered_account.bitrunning_points] bitrunning points available.")
 
 	if(HAS_TRAIT(user, TRAIT_ID_APPRAISER))
 		. += HAS_TRAIT(src, TRAIT_JOB_FIRST_ID_CARD) ? span_boldnotice("Hmm... yes, this ID was issued from Central Command!") : span_boldnotice("This ID was created in this sector, not by Central Command.")
@@ -800,7 +861,7 @@
 	RETURN_TYPE(/obj/item/card/id)
 	return src
 
-/obj/item/card/id/RemoveID()
+/obj/item/card/id/remove_id()
 	return src
 
 /obj/item/card/id/proc/chat_span()
@@ -971,7 +1032,12 @@
 /obj/item/card/id/departmental_budget/sci
 	department_ID = ACCOUNT_SCI
 	department_name = ACCOUNT_SCI_NAME
-	icon_state = "sci_budget"
+	icon_state = "sci_budget" //for five hundred cloners
+
+/obj/item/card/id/departmental_budget/cc
+	department_ID = ACCOUNT_CC
+	department_name = ACCOUNT_CC_NAME
+	icon_state = "cc_budget" //for mountains of goldschlager
 
 /obj/item/card/id/departmental_budget/click_alt(mob/living/user)
 	registered_account.bank_card_talk(span_warning("Withdrawing is not compatible with this card design."), TRUE) //prevents the vault bank machine being useless and putting money from the budget to your card to go over personal crates
@@ -1066,24 +1132,15 @@
 	is_intern = FALSE
 	update_label()
 
-/obj/item/card/id/advanced/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/obj/item/card/id/advanced/on_loc_equipped(datum/source, mob/equipper, slot)
 	. = ..()
+	if(istype(loc, /obj/item/storage/wallet) || istype(loc, /obj/item/modular_computer))
+		update_intern_status(source, equipper, slot)
 
-	//Old loc
-	if(istype(old_loc, /obj/item/storage/wallet))
-		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-
-	if(istype(old_loc, /obj/item/modular_computer))
-		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-
-	//New loc
-	if(istype(loc, /obj/item/storage/wallet))
-		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(update_intern_status))
-		RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(remove_intern_status))
-
-	if(istype(loc, /obj/item/modular_computer))
-		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(update_intern_status))
-		RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(remove_intern_status))
+/obj/item/card/id/advanced/on_loc_dropped(datum/source, mob/dropper)
+	. = ..()
+	if(istype(loc, /obj/item/storage/wallet) || istype(loc, /obj/item/modular_computer))
+		remove_intern_status(source, dropper)
 
 /obj/item/card/id/advanced/update_overlays()
 	. = ..()
@@ -1705,7 +1762,7 @@
 
 					var/selected_trim_path = tgui_input_list(user, "Select trim to apply to your card.\nNote: This will not grant any trim accesses.", "Forge Trim", sort_list(trim_list, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 					if(selected_trim_path)
-						SSid_access.apply_trim_to_chameleon_card(src, trim_list[selected_trim_path])
+						SSid_access.apply_trim_override(src, trim_list[selected_trim_path])
 
 				var/target_occupation = tgui_input_text(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? assignment : "Assistant")
 				if(target_occupation)
@@ -1739,7 +1796,7 @@
 			if(forged)
 				registered_name = initial(registered_name)
 				assignment = initial(assignment)
-				SSid_access.remove_trim_from_chameleon_card(src)
+				SSid_access.remove_trim_override(src)
 				REMOVE_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)
 				user.log_message("reset \the [initial(name)] named \"[src]\" to default.", LOG_GAME)
 				update_label()

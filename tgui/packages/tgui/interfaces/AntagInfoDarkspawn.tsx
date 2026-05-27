@@ -1,9 +1,9 @@
+import type { BooleanLike } from 'common/react';
 import { capitalize } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Section, Stack, Box, Tabs, Button, Flex, DmIcon } from '../components';
+import { Box, Button, DmIcon, Flex, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
-import { BooleanLike } from 'common/react';
-import { ObjectivePrintout, Objective } from './common/Objectives';
+import { type Objective, ObjectivePrintout } from './common/Objectives';
 
 const Velvet = {
   fontWeight: 'bold',
@@ -72,7 +72,7 @@ export const AntagInfoDarkspawn = (props) => {
     <Window width={750} height={650}>
       <Window.Content
         style={{
-          'background-image': 'none',
+          backgroundImage: 'none',
           background:
             'radial-gradient(circle, rgba(9,9,24,1) 54%, rgba(10,10,31,1) 60%, rgba(21,11,46,1) 80%, rgba(24,14,47,1) 100%);',
         }}
@@ -318,7 +318,7 @@ const ResearchInfo = (props) => {
             </Stack.Item>
 
             <Stack.Item grow={1}>
-              <Stack fill fluid direction="column">
+              <Stack fill direction="column">
                 <Stack.Item>
                   <KnowledgePreview />
                 </Stack.Item>
@@ -375,11 +375,11 @@ const MenuTabs = (props) => {
   return (
     <Section>
       <Tabs>
-        {categories.map((category) => (
+        {categories.map((category, idx) => (
           <Tabs.Tab
             width="100%"
             fontSize="16px"
-            key={category}
+            key={idx}
             selected={category === selectedCategory}
             onClick={() => {
               setSelectedCategory(category);
@@ -396,7 +396,6 @@ const MenuTabs = (props) => {
             <Tabs.Tab
               fontSize="16px"
               key={knowledge}
-              Autofocus
               selected={psiWeb.path === selectedKnowledgePath}
               onClick={() => setSelectedKnowledgePath(psiWeb.path)}
             >
@@ -440,7 +439,6 @@ const KnowledgePreview = (props) => {
       >
         <Stack
           fill
-          fluid
           vertical
           justify="flex-start"
           fontSize="16px"
@@ -460,8 +458,7 @@ const KnowledgePreview = (props) => {
                 style={{
                   background:
                     'radial-gradient(circle, rgb(114, 100, 255) 0%, rgb(33, 0, 127) 100%);',
-                  '-ms-interpolation-mode': 'nearest-neighbor',
-                  'image-rendering': 'pixelated',
+                  imageRendering: 'pixelated',
                 }}
               />
             </Stack.Item>
@@ -473,7 +470,7 @@ const KnowledgePreview = (props) => {
           </Stack.Item>
           <Stack.Item fontSize="12px" color="purple">
             {selectedKnowledge?.purchases_left > 0 &&
-              'Can be purchased ' + selectedKnowledge.purchases_left + ' times'}
+              `Can be purchased ${selectedKnowledge.purchases_left} times`}
           </Stack.Item>
         </Stack>
       </Section>
@@ -508,9 +505,9 @@ const ClassSelection = (props) => {
       height="100%"
       width="100%"
       style={{
-        'align-items': 'center',
+        alignItems: 'center',
         height: '100%',
-        'justify-content': 'center',
+        justifyContent: 'center',
       }}
     >
       {classData.map((darkspawnclass) => (

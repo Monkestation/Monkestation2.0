@@ -131,7 +131,7 @@
 		JOB_PSYCHOLOGIST = TRAIT_DEPRESSION,
 		JOB_LAWYER = TRAIT_JAILBIRD,
 		JOB_JANITOR = TRAIT_SNOB,
-		JOB_LATEJOIN_BARBER = TRAIT_BALD,
+		JOB_BARBER = TRAIT_BALD,
 	) // Jobs and their corresponding quirks
 	var/list/special_pool = list() //The special list, for quirk-based
 	var/chosen_victim  //The obsession target

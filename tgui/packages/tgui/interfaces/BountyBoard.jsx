@@ -1,5 +1,4 @@
 import { useBackend } from '../backend';
-import { UserDetails } from './Vending';
 import {
   BlockQuote,
   Box,
@@ -13,6 +12,7 @@ import {
 } from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
+import { UserDetails } from './Vending';
 
 export const BountyBoard = (props) => {
   return (
@@ -60,7 +60,7 @@ export const BountyBoardContent = (props) => {
                     {request.owner}
                   </Stack.Item>
                   <Stack.Item width="100px">
-                    {formatMoney(request.value) + ' cr'}
+                    {`${formatMoney(request.value)} cr`}
                   </Stack.Item>
                   <Stack.Item>
                     <Button
@@ -138,7 +138,7 @@ export const BountyBoardContent = (props) => {
                 width="200px"
                 backgroundColor="black"
                 textColor="white"
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('bountyText', {
                     bountytext: value,
                   })
@@ -152,7 +152,7 @@ export const BountyBoardContent = (props) => {
                   maxValue={1000}
                   value={bountyValue}
                   width="80px"
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     act('bountyVal', {
                       bountyval: value,
                     })

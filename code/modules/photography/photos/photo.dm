@@ -12,6 +12,8 @@
 	grind_results = list(/datum/reagent/iodine = 4)
 	var/datum/picture/picture
 	var/scribble //Scribble on the back.
+	/// Wether or not this is a photo of someone's ass
+	var/assphoto = FALSE
 
 /obj/item/photo/Initialize(mapload, datum/picture/P, datum_name = TRUE, datum_desc = TRUE)
 	set_picture(P, datum_name, datum_desc, TRUE)
@@ -73,6 +75,7 @@
 			return
 		var/txt = tgui_input_text(user, "What would you like to write on the back?", "Photo Writing", max_length = 128)
 		if(txt && user.can_perform_action(src))
+			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 			scribble = txt
 	else
 		return ..()

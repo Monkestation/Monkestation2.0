@@ -1,17 +1,17 @@
+import { ckey } from 'common/other';
+import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Window } from '../layouts';
 import {
-  Section,
+  Box,
   Button,
+  Collapsible,
+  Dropdown,
+  Input,
+  Section,
   Stack,
   Tabs,
-  Box,
-  Collapsible,
-  Input,
-  Dropdown,
 } from '../components';
-import { createSearch } from 'common/string';
-import { ckey } from 'common/other';
+import { Window } from '../layouts';
 
 type Data = {
   cassettes: Cassette[];
@@ -143,12 +143,12 @@ export const MixtapeSpawner = (_props) => {
                       placeholder="Search..."
                       fluid
                       value={searchQuery}
-                      onInput={(_, value) => setSearchQuery(value)}
+                      onChange={(value) => setSearchQuery(value)}
                     />
                   </Stack.Item>
                   <Stack.Item>
                     <Dropdown
-                      displayText={searchType.valueOf()}
+                      selected={searchType.valueOf()}
                       options={Object.values(SearchType) as string[]}
                       onSelected={(value) => setSearchType(value)}
                     />
@@ -161,8 +161,6 @@ export const MixtapeSpawner = (_props) => {
                     {filteredCassettes.map((cassette) => (
                       <Tabs.Tab
                         key={cassette.id}
-                        fluid
-                        ellipsis
                         color="transparent"
                         selected={cassette.id === selected_cassette?.id}
                         onClick={() => setSelectedCassette(cassette)}

@@ -136,13 +136,13 @@
 				<h2>Basic ingredients preparation:</h2>
 
 				<b>Dough:</b> 10u water + 15u flour for simple dough.<br>
-				6u egg yolk + 12 egg white + 15u flour + 5u sugar for cake batter.<br>
-				Doughs can be transformed by using a knife and rolling pin.<br>
-				All doughs can be microwaved.<br>
+				6u egg yolk + 12 egg white (3 eggs) + 15u flour + 5u sugar for cake batter.<br>
+				Doughs can be transformed by using a rolling pin(flat dough) and knife(dough slice).<br>
+				All doughs can be baked.<br>
 				<b>Bowl:</b> Add water to it for soup preparation.<br>
 				<b>Meat:</b> Microwave it, process it, slice it into microwavable cutlets with your knife, or use it raw.<br>
-				<b>Cheese:</b> Add 5u universal enzyme (catalyst) to milk and soy milk to prepare cheese (sliceable) and tofu.<br>
-				<b>Rice:</b> Mix 10u rice with 10u water in a bowl then microwave it.
+				<b>Cheese:</b> Add 5u universal enzyme (catalyst) to 40u milk and 10u soy milk to prepare cheese (sliceable) or tofu.<br>
+				<b>Rice:</b> Mix 10u rice with 10u water, then boil in a soup pot with 25u water.
 
 				<h2>Custom food:</h2>
 				Add ingredients to a base item to prepare a custom meal.<br>
@@ -161,8 +161,22 @@
 				<h2>Table Craft:</h2>
 				Put ingredients on table, then click and drag the table onto yourself to see what recipes you can prepare.
 
+				<h2>Griddle:</h2>
+				Use it to cook food ingredients (raw meats, eggs, toast, etc...).
+				It can cook up to 7 ingredients at once.
+				Do be careful not to leave them on an active griddle for to long!
+
+				<h2>Stove:</h2>
+				Use it to boil food ingredients (rice, spaghetti, vegetables, meat, etc...) in a Soup Pot.
+
+				<h2>Oven:</h2>
+				Use it to bake food ingredients (doughs, some vegetables, etc...)
+
+				<h2>Range:</h2>
+				A combination of both the Stove and Oven, it can perform the tasks of both at the same time!
+
 				<h2>Microwave:</h2>
-				Use it to cook or boil food ingredients (meats, doughs, egg, donkpocket, etc...).
+				Use it to microwave some food ingredients (egg, donkpocket, etc...).
 				It can cook multiple items at once.
 
 				<h2>Processor:</h2>
@@ -176,14 +190,14 @@
 
 
 				<h2>Example recipes:</h2>
-				<b>Vanilla Cake</b>: Microwave cake batter.<br>
+				<b>Vanilla Cake</b>: Bake cake batter.<br>
 				<b>Burger:</b> 1 bun + 1 meat steak<br>
 				<b>Bread:</b> Microwave dough.<br>
 				<b>Waffles:</b> 2 pastry base<br>
 				<b>Popcorn:</b> Microwave corn.<br>
 				<b>Meat Steak:</b> Microwave meat.<br>
 				<b>Meat Pie:</b> 1 plain pie + 1u black pepper + 1u salt + 2 meat cutlets<br>
-				<b>Boiled Spaghetti:</b>Raw Spaghetti + 50u water at 450+K<br>
+				<b>Boiled Spaghetti:</b>Raw Spaghetti + 25u water at 450+K<br>
 				<b>Donuts:</b> 1u sugar + 1 pastry base<br>
 				<b>Fries:</b> Process potato.
 
@@ -235,49 +249,56 @@
 
 // Wiki books that are linked to the configured wiki link.
 
+/// The size of the window that the wiki books open in.
+#define BOOK_WINDOW_BROWSE_SIZE "970x710"
+/// This macro will resolve to code that will open up the associated wiki page in the window.
+#define WIKI_PAGE_IFRAME(title, wikiurl, link_identifier) {"
+<html>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+		<title>[html_encode(title)]</title>
+		<style>
+			body {
+				margin: 0;
+			}
+			p {
+				margin: 8px;
+			}
+			iframe {
+				border: 0;
+				margin-left: -177px;
+				margin-top: -80px;
+				width: calc(100% + 177px);
+				height: calc(100% + 80px);
+				display: none;
+			}
+			body.loaded p {
+				display: none;
+			}
+			body.loaded iframe {
+				display: inline;
+			}
+		</style>
+	</head>
+	<body>
+		<p>You start skimming through the manual...</p>
+		<iframe src="[wikiurl]/[link_identifier]?useskin=vector" onload="document.body.classList.add('loaded')"></iframe>
+	</body>
+</html>
+"}
+
 // A book that links to the wiki
 /obj/item/book/manual/wiki
 	var/page_link = ""
-	window_size = "970x710"
+	window_size = BOOK_WINDOW_BROWSE_SIZE
 
-/obj/item/book/manual/wiki/attack_self()
-	var/wikiurl = CONFIG_GET(string/wikiurl)
-	if(!wikiurl)
+/obj/item/book/manual/wiki/display_content(mob/living/user)
+	var/wiki_url = CONFIG_GET(string/wikiurl)
+	if(!wiki_url)
+		user.balloon_alert(user, "this book is empty!")
 		return
-	usr.client << link("[wikiurl]/[page_link]")
-	return ..()
-
-/*
-/obj/item/book/manual/wiki/proc/initialize_wikibook()
-	var/wikiurl = CONFIG_GET(string/wikiurl)
-	if(wikiurl)
-		var/wikiinfo = {"
-
-			<html>
-			<head>
-			<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-			<style>
-				iframe {
-					display: none;
-				}
-			</style>
-			</head>
-			<body>
-			<script type="text/javascript">
-				function pageloaded(myframe) {
-					document.getElementById("loading").style.display = "none";
-					myframe.style.display = "inline";
-			}
-			</script>
-			<p id='loading'>You start skimming through the manual...</p>
-			<iframe width='100%' height='97%' onload="pageloaded(this)" src="[wikiurl]/[page_link]" frameborder="0" id="main_frame"></iframe>
-			</body>
-
-			</html>
-
-			"}
-		book_data.set_content(wikiinfo, trusted = TRUE)
-*/
+	credit_book_to_reader(user)
+	DIRECT_OUTPUT(user, browse(WIKI_PAGE_IFRAME(name, wiki_url, page_link), "window=manual;size=[BOOK_WINDOW_BROWSE_SIZE]")) // if you change this GUARANTEE that it works.
 
 //MONKESTATION EDIT BEGIN - basically there isn't a single thing that's not touched below this line. Just going to make this abundantly obvious that we have a lot of changes, between names of some manuals being changed to reflect different jobs to all of the links to the wiki. There's basically zero excuse for me to not leave an edit comment on here.
 
@@ -478,3 +499,6 @@
 	page_link = "How_to_avoid_getting_banned"
 
 //MONKESTATION EDIT END
+
+#undef BOOK_WINDOW_BROWSE_SIZE
+#undef WIKI_PAGE_IFRAME

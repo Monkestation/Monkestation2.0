@@ -89,7 +89,7 @@ const SearchAndDisplay = (props) => {
                 placeholder={book_id === null ? 'ID' : book_id}
                 mt={0.5}
                 width="70px"
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('set_search_id', {
                     id: value,
                   })
@@ -112,7 +112,7 @@ const SearchAndDisplay = (props) => {
                 value={title}
                 placeholder={title || 'Title'}
                 mt={0.5}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('set_search_title', {
                     title: value,
                   })
@@ -124,7 +124,7 @@ const SearchAndDisplay = (props) => {
                 value={author}
                 placeholder={author || 'Author'}
                 mt={0.5}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('set_search_author', {
                     author: value,
                   })

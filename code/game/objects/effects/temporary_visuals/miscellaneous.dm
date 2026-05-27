@@ -99,6 +99,12 @@
 	icon_state = "firing_effect"
 	duration = 2
 
+/obj/effect/temp_visual/dir_setting/firing_effect/Initialize(mapload, set_dir)
+	. = ..()
+	if (ismovable(loc))
+		var/atom/movable/spawned_inside = loc
+		spawned_inside.vis_contents += src
+
 /obj/effect/temp_visual/dir_setting/firing_effect/setDir(newdir)
 	switch(newdir)
 		if(NORTH)
@@ -174,6 +180,9 @@
 	. = ..()
 	if(fades)
 		animate(src, alpha = 0, time = 32)
+
+/obj/effect/temp_visual/dir_setting/curse/long // Necro Sect Usage
+	duration = 330
 
 /obj/effect/temp_visual/dir_setting/curse/blob
 	icon_state = "curseblob"
@@ -344,6 +353,9 @@
 /obj/effect/temp_visual/bluespace_fissure/Initialize(mapload)
 	. = ..()
 	apply_wibbly_filters(src)
+
+/obj/effect/temp_visual/bluespace_fissure/long
+	duration = 300
 
 /obj/effect/temp_visual/gib_animation
 	icon = 'icons/mob/simple/mob.dmi'
@@ -694,3 +706,6 @@
 /obj/effect/temp_visual/dir_setting/firing_effect/sweep_attack/full_circle
 	icon_state = "big_slash_360"
 	duration = 0.4 SECONDS
+
+/obj/effect/temp_visual/circle_wave/star_blast
+	color = COLOR_VOID_PURPLE

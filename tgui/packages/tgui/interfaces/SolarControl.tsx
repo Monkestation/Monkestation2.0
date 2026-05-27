@@ -1,17 +1,17 @@
-import { BooleanLike } from 'common/react';
-import { formatPower } from '../format';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
   Box,
   Button,
+  Chart,
+  Icon,
   LabeledList,
   NumberInput,
   ProgressBar,
-  Chart,
   Section,
   Stack,
-  Icon,
 } from '../components';
+import { formatPower } from '../format';
 import { Window } from '../layouts';
 
 type Data = {
@@ -158,7 +158,8 @@ export const SolarControl = (props) => {
                   minValue={-360}
                   maxValue={+720}
                   value={azimuth_current}
-                  onDrag={(e, value) => act('azimuth', { value })}
+                  tickWhileDragging
+                  onChange={(value) => act('azimuth', { value })}
                 />
               )}
               {tracking_state === 1 && (
@@ -174,12 +175,13 @@ export const SolarControl = (props) => {
                     const sign = Math.sign(rate) > 0 ? '+' : '-';
                     return sign + Math.abs(rate);
                   }}
-                  onDrag={(e, value) => act('azimuth_rate', { value })}
+                  tickWhileDragging
+                  onChange={(value) => act('azimuth_rate', { value })}
                 />
               )}
               {tracking_state === 2 && (
                 <Box inline color="label" mt="3px">
-                  {azimuth_current + ' °'} (auto)
+                  {`${azimuth_current} °`} (auto)
                 </Box>
               )}
             </LabeledList.Item>

@@ -1,7 +1,7 @@
 // THIS IS A MONKESTATION UI FILE
 
 import { useBackend } from '../backend';
-import { Section, Stack, Button, BlockQuote } from '../components';
+import { BlockQuote, Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const borerColor = {

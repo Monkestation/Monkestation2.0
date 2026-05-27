@@ -56,19 +56,20 @@
 /obj/machinery/quantumpad/multitool_act(mob/living/user, obj/item/multitool/multi)
 	. = NONE
 	if(panel_open)
-		multi.set_buffer(src)
+		multitool_set_buffer(multi, src)
 		to_chat(user, span_notice("You save the data in [multi.name]'s buffer. It can now be saved to pads with closed panels."))
 		return ITEM_INTERACT_SUCCESS
 
-	if(!istype(multi.buffer, /obj/machinery/quantumpad))
+	var/datum/buffer = multitool_get_buffer(multi)
+	if(!istype(buffer, /obj/machinery/quantumpad))
 		to_chat(user, span_warning("There is no quantum pad data saved in [multi.name]'s buffer!"))
 		return ITEM_INTERACT_BLOCKING
 
-	if(multi.buffer == src)
+	if(buffer == src)
 		to_chat(user, span_warning("You cannot link a pad to itself!"))
 		return ITEM_INTERACT_BLOCKING
 	else
-		linked_pad = multi.buffer
+		linked_pad = buffer
 		to_chat(user, span_notice("You link [src] to the one in [multi.name]'s buffer."))
 		return ITEM_INTERACT_SUCCESS
 

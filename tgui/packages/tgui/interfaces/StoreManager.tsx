@@ -1,27 +1,57 @@
+import { classes } from 'common/react';
+import { useEffect, useState } from 'react';
+import { resolveAsset } from 'tgui/assets';
+import { logger } from 'tgui/logging';
+import { fetchRetry } from 'tgui-core/http';
 import { useBackend, useSharedState } from '../backend';
 import {
   Box,
   Button,
   DmIcon,
+  Icon,
   Section,
   Stack,
-  Tabs,
   Table,
-  Icon,
+  Tabs,
 } from '../components';
-import { PreferencesMenuData } from './PreferencesMenu/data';
 import { Window } from '../layouts';
-import { classes } from 'common/react';
+import type { PreferencesMenuData } from './PreferencesMenu/data';
 
-export const StoreManager = (props) => {
+type StoreEntry = {
+  name: string;
+  path: string;
+  cost: number;
+  desc: string;
+  icon: string;
+  icon_state?: string;
+  job_restricted?: string;
+};
+
+type StoreTab = {
+  name: string;
+  title: string;
+  contents: StoreEntry[];
+};
+
+export const StoreManager = () => {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const { loadout_tabs, total_coins, owned_items } = data;
+  const { total_coins, owned_items } = data;
+
+  const [store_tabs, set_store_tabs] = useState<StoreTab[]>([]);
+  useEffect(() => {
+    fetchRetry(resolveAsset('loadout_store.json'))
+      .then((response) => response.json())
+      .then((loadout_data: StoreTab[]) => set_store_tabs(loadout_data))
+      .catch((error) => {
+        logger.log('Failed to fetch loadout_store.json', JSON.stringify(error));
+      });
+  }, []);
 
   const [selectedTabName, setSelectedTab] = useSharedState(
     'tabs',
-    loadout_tabs[0]?.name,
+    store_tabs[0]?.name,
   );
-  const selectedTab = loadout_tabs.find(
+  const selectedTab = store_tabs.find(
     (curTab) => curTab.name === selectedTabName,
   );
 
@@ -33,16 +63,19 @@ export const StoreManager = (props) => {
             <Section
               title="Store Categories"
               align="center"
+              className="StoreManager__Categories__Section"
               buttons={
                 <Button
                   icon="fa-solid fa-coins"
-                  content={total_coins}
                   tooltip="This is your total Monkecoin amount."
-                />
+                  tooltipPosition="top"
+                >
+                  {total_coins}
+                </Button>
               }
             >
               <Tabs>
-                {loadout_tabs.map((curTab) => (
+                {store_tabs.map((curTab) => (
                   <Tabs.Tab
                     key={curTab.name}
                     selected={selectedTabName === curTab.name}
@@ -71,7 +104,7 @@ export const StoreManager = (props) => {
                     Purchase
                   </Table.Cell>
                 </Table.Row>
-                {selectedTab && selectedTab.contents ? (
+                {selectedTab?.contents ? (
                   selectedTab.contents.map((item, index) => (
                     <Table.Row
                       key={item.name}
@@ -104,28 +137,35 @@ export const StoreManager = (props) => {
                         <Button
                           fluid
                           backgroundColor="transparent"
-                          content={item.name}
                           tooltip={item.desc}
-                        />
+                        >
+                          {item.name}
+                        </Button>
                       </Table.Cell>
                       <Table.Cell style={{ textAlign: 'right' }}>
-                        <Box display="flex" justifyContent="flex-end">
+                        <Box
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                          }}
+                        >
                           <Button
                             icon="fa-solid fa-coins"
                             backgroundColor="transparent"
-                            content={item.cost}
                             tooltip="This is the cost of the item."
-                          />
+                          >
+                            {item.cost}
+                          </Button>
                         </Box>
                       </Table.Cell>
                       <Table.Cell style={{ textAlign: 'right' }}>
-                        <Box display="flex" justifyContent="flex-end">
+                        <Box
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                          }}
+                        >
                           <Button.Confirm
-                            content={
-                              owned_items.includes(item.path)
-                                ? 'Owned'
-                                : 'Purchase'
-                            }
                             disabled={
                               owned_items.includes(item.path) ||
                               total_coins < item.cost
@@ -135,7 +175,11 @@ export const StoreManager = (props) => {
                                 path: item.path,
                               })
                             }
-                          />
+                          >
+                            {owned_items.includes(item.path)
+                              ? 'Owned'
+                              : 'Purchase'}
+                          </Button.Confirm>
                         </Box>
                       </Table.Cell>
                     </Table.Row>

@@ -88,6 +88,7 @@
 #define COLOR_LIME "#32CD32"
 #define COLOR_DARK_LIME "#00aa00"
 #define COLOR_VERY_PALE_LIME_GREEN "#DDFFD3"
+#define COLOR_HERETIC_GREEN COLOR_VERY_PALE_LIME_GREEN // i am co-opting this as heretic glow.
 #define COLOR_VERY_DARK_LIME_GREEN "#003300"
 #define COLOR_GREEN "#008000"
 #define COLOR_CHRISTMAS_GREEN "#00873E"
@@ -112,6 +113,8 @@
 #define COLOR_COMMAND_BLUE "#1B67A5"
 #define COLOR_MEDICAL_BLUE "#5B97BC"
 #define COLOR_MODERATE_BLUE "#555CC2"
+#define COLOR_TRAM_BLUE "#6160A8"
+#define COLOR_TRAM_LIGHT_BLUE "#A8A7DA"
 #define COLOR_AMETHYST "#822BFF"
 #define COLOR_BLUE_LIGHT "#33CCFF"
 #define COLOR_NAVY "#000080"
@@ -206,6 +209,14 @@
 #define COLOR_SAMPLE_BROWN "#91542d"
 #define COLOR_SAMPLE_GRAY "#5e5856"
 
+///Colors for blood greyscale sprites
+#define BLOOD_COLOR_RED "#AA1010"
+#define BLOOD_COLOR_LIZARD "#035A00"
+#define BLOOD_COLOR_XENO "#96BB00"
+#define BLOOD_COLOR_OIL "#2C2C2C"
+#define BLOOD_COLOR_BLACK "#1F1A00"
+#define BLOOD_COLOR_DRIED "#370404" // Not to be used normally, only exists for mapper convinience
+
 ///Main colors for UI themes
 #define COLOR_THEME_MIDNIGHT "#6086A0"
 #define COLOR_THEME_PLASMAFIRE "#FFB200"
@@ -243,6 +254,8 @@
 #define LIGHT_COLOR_BLUEGREEN "#7DE1AF"
 /// Diluted cyan. rgb(125, 225, 225)
 #define LIGHT_COLOR_CYAN "#7DE1E1"
+/// Faint cyan. rgb(200, 240, 255)
+#define LIGHT_COLOR_FAINT_CYAN "#CAF0FF"
 /// Baby Blue rgb(0, 170, 220)
 #define LIGHT_COLOR_BABY_BLUE "#00AADC"
 /// Electric cyan rgb(0, 255, 255)
@@ -305,6 +318,15 @@
 #define COLOR_PRIDE_GREEN "#41FC66"
 #define COLOR_PRIDE_BLUE "#42FFF2"
 #define COLOR_PRIDE_PURPLE "#5D5DFC"
+
+/// Colors for status/tram/incident displays
+#define COLOR_DISPLAY_RED "#BE3455"
+#define COLOR_DISPLAY_ORANGE "#FF9900"
+#define COLOR_DISPLAY_YELLOW "#FFF743"
+#define COLOR_DISPLAY_GREEN "#3CF046"
+#define COLOR_DISPLAY_CYAN "#22FFCC"
+#define COLOR_DISPLAY_BLUE "#22CCFF"
+#define COLOR_DISPLAY_PURPLE "#5D5DFC"
 
 /// The default color for admin say, used as a fallback when the preference is not enabled
 #define DEFAULT_ASAY_COLOR COLOR_MOSTLY_PURE_RED
@@ -386,6 +408,18 @@ GLOBAL_LIST_INIT(cable_colors, list(
 	CABLE_COLOR_WHITE = CABLE_HEX_COLOR_WHITE,
 	CABLE_COLOR_YELLOW = CABLE_HEX_COLOR_YELLOW,
 	CABLE_COLOR_BROWN = CABLE_HEX_COLOR_BROWN
+))
+
+GLOBAL_LIST_INIT(heretic_path_to_color, list(
+	PATH_START = COLOR_LIME,
+	PATH_RUST = COLOR_CARGO_BROWN,
+	PATH_FLESH = COLOR_SOFT_RED,
+	PATH_ASH = COLOR_VIVID_RED,
+	PATH_VOID = COLOR_CYAN,
+	PATH_BLADE = COLOR_SILVER,
+	PATH_COSMIC = COLOR_PURPLE,
+	PATH_LOCK = COLOR_YELLOW,
+	PATH_MOON = COLOR_BLUE_LIGHT,
 ))
 
 #define HUSK_COLOR_TONE rgb(96, 88, 80)

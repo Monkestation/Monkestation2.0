@@ -613,7 +613,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		found_intercom.audible_message(message = "[found_intercom] crackles for a split second.", hearing_distance = 3)
 		playsound(found_intercom, 'sound/items/airhorn.ogg', vol = 100, vary = TRUE)
 		for(var/mob/living/carbon/honk_victim in ohearers(6, found_intercom))
-			if(HAS_TRAIT(honk_victim, TRAIT_GODMODE) || !honk_victim.can_hear())
+			if(HAS_TRAIT(honk_victim, TRAIT_GODMODE) || HAS_TRAIT(honk_victim, TRAIT_DEAF))
 				continue
 			var/turf/victim_turf = get_turf(honk_victim)
 			if((isspaceturf(victim_turf) || ((victim_turf.return_air()?.return_pressure() || 0) < SOUND_MINIMUM_PRESSURE)) && !victim_turf.Adjacent(found_intercom)) //Prevents getting honked in space
@@ -811,7 +811,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 		if(!uses)
 			break
-		if(!C.status || C.view_range != initial(C.view_range))
+		if(!C.camera_enabled || C.view_range != initial(C.view_range))
 			C.toggle_cam(owner_AI, 0) //Reactivates the camera based on status. Badly named proc.
 			C.view_range = initial(C.view_range)
 			fixed_cameras++
@@ -841,10 +841,6 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 	var/upgraded_cameras = 0
 	for(var/obj/machinery/camera/camera as anything in GLOB.cameranet.cameras)
-		var/obj/structure/camera_assembly/assembly = camera.assembly_ref?.resolve()
-		if(!assembly)
-			continue
-
 		var/upgraded = FALSE
 
 		if(!camera.isXRay())
@@ -955,6 +951,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	var/prev_verbs
 	/// Saved span state, used to restore after a voice change
 	var/prev_span
+	/// The list of available voices
+	var/static/list/voice_options = list("normal", SPAN_ROBOT, SPAN_YELL, SPAN_CLOWN)
 
 /obj/machinery/ai_voicechanger/Initialize(mapload)
 	. = ..()
@@ -982,11 +980,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /obj/machinery/ai_voicechanger/ui_data(mob/user)
 	var/list/data = list()
-	data["voices"] = list("normal", SPAN_ROBOT, SPAN_YELL, SPAN_CLOWN) //manually adding this since i dont see other option
+	data["voices"] = voice_options
 	data["loud"] = loudvoice
 	data["on"] = changing_voice
 	data["say_verb"] = say_verb
 	data["name"] = say_name
+	data["selected"] = say_span || owner.speech_span
 	return data
 
 /obj/machinery/ai_voicechanger/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -1020,9 +1019,23 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			if(changing_voice)
 				owner.radio.use_command = loudvoice
 		if("look")
-			say_span = params["look"]
+			var/selection = params["look"]
+			if(isnull(selection))
+				return FALSE
+
+			var/found = FALSE
+			for(var/option in voice_options)
+				if(option == selection)
+					found = TRUE
+					break
+			if(!found)
+				stack_trace("User attempted to select an unavailable voice option")
+				return FALSE
+
+			say_span = selection
 			if(changing_voice)
 				owner.speech_span = say_span
+			to_chat(owner, span_notice("Voice changed to [selection]."))
 		if("verb")
 			say_verb = params["verb"]
 			if(changing_voice)
@@ -1325,6 +1338,76 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		return FALSE
 
 	return TRUE
+
+/datum/ai_module/malf/utility/cyborg_code_scrambler
+	name = "Cyborg Code Scrambler"
+	description = "Lets you remotely unlock and hide a cyborg from robotics consoles."
+	cost = 30
+	one_purchase = FALSE
+	power_type = /datum/action/innate/ai/ranged/cyborg_code_scrambler
+	unlock_sound = SFX_SPARKS
+	unlock_text = span_notice("You gain the ability to unlock and scramble the codes of a cyborg of your choice.")
+
+/datum/action/innate/ai/ranged/cyborg_code_scrambler
+	name = "Cyborg Code Scrambler"
+	desc = "Allows you to remotely unlock and hide a cyborg from robotics consoles."
+	button_icon = 'icons/mob/actions/actions_revenant.dmi'
+	button_icon_state = "malfunction"
+	uses = 2
+	enable_text = span_notice("You prepare to irreversibly scramble a cyborg's encryption codes.")
+	disable_text = span_notice("You withhold from scrambling any encryption codes.")
+	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
+
+/datum/action/innate/ai/ranged/cyborg_code_scrambler/New()
+	. = ..()
+	desc = "[desc] It has [uses] use\s remaining."
+
+/datum/action/innate/ai/ranged/cyborg_code_scrambler/do_ability(mob/living/user, atom/clicked_on)
+	if(!isAI(user))
+		return FALSE
+
+	var/mob/living/silicon/ai/ai_user = user
+	if(ai_user.incapacitated())
+		unset_ranged_ability(ai_user)
+		return FALSE
+
+	if(!iscyborg(clicked_on))
+		clicked_on.balloon_alert(ai_user, "not a cyborg!")
+		return FALSE
+
+	var/mob/living/silicon/robot/cyborg = clicked_on
+	if(cyborg.connected_ai != ai_user)
+		cyborg.balloon_alert(ai_user, "cyborg not connected!")
+		return FALSE
+
+	if(cyborg.scrambledcodes)
+		cyborg.balloon_alert(ai_user, "already scrambled!")
+		return FALSE
+
+	var/unlock_performed = FALSE
+	cyborg.scrambledcodes = TRUE
+	if(cyborg.lockcharge)
+		cyborg.SetLockdown(FALSE)
+		if(!cyborg.lockcharge) // They could still be locked down (e.g. wire cut).
+			cyborg.ai_lockdown = FALSE
+			unlock_performed = TRUE
+
+	adjust_uses(-1)
+	build_all_button_icons(update_flags = UPDATE_BUTTON_NAME)
+
+	ai_user.playsound_local(user, 'sound/misc/interference.ogg', 20, TRUE)
+	if(unlock_performed)
+		cyborg.balloon_alert(ai_user, "unlocked and scrambled!")
+		unset_ranged_ability(user, span_danger("Unlocked and scrambled the encryption codes of [cyborg]."))
+	else
+		cyborg.balloon_alert(ai_user, "scrambled!")
+		unset_ranged_ability(user, span_danger("Scambled the encryption codes of [cyborg]."))
+	return TRUE
+
+/datum/action/innate/ai/ranged/cyborg_code_scrambler/update_button_name(atom/movable/screen/movable/action_button/button, force = FALSE)
+	if(uses)
+		desc = "[initial(desc)] It has [uses] use\s remaining."
+	return ..()
 
 #undef DEFAULT_DOOMSDAY_TIMER
 #undef DOOMSDAY_ANNOUNCE_INTERVAL

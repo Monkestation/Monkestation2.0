@@ -96,6 +96,9 @@
 	rider.stamina.adjust(-instability* 3 * tony_hawk)
 	playsound(src, 'sound/effects/bang.ogg', 40, TRUE)
 	if(!iscarbon(rider) || rider.stamina.loss >= 100 || grinding || iscarbon(bumped_thing))
+		var/mob/living/carbon/carbon_rider = rider
+		if (istype(carbon_rider))
+			carbon_rider.impact_fart()
 		var/atom/throw_target = get_edge_target_turf(rider, pick(GLOB.cardinals))
 		unbuckle_mob(rider)
 		if((istype(bumped_thing, /obj/machinery/disposal/bin)))
@@ -117,6 +120,7 @@
 			if(grinding)
 				grinding_mulitipler = 2
 			victim.Knockdown(4 * grinding_mulitipler SECONDS)
+			victim.impact_fart()
 	else
 		var/backdir = turn(dir, 180)
 		step(src, backdir)
@@ -184,12 +188,28 @@
 	board_item_type = /obj/item/melee/skateboard/pro
 	instability = 6
 
-/obj/vehicle/ridden/scooter/skateboard/hoverboard/
+/obj/vehicle/ridden/scooter/skateboard/hoverboard
 	name = "hoverboard"
 	desc = "A blast from the past, so retro!"
 	board_item_type = /obj/item/melee/skateboard/hoverboard
 	instability = 3
 	icon_state = "hoverboard_red"
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded
+	name = "holy skateboard"
+	desc = "A board blessed by the gods with the power to grind for our sins. Has the initials 'J.C.' on the underside."
+	board_item_type = /obj/item/melee/skateboard/holyboard
+	instability = 3
+	icon_state = "hoverboard_holy"
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded/post_buckle_mob(mob/living/M)
+	M.AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
+	return ..()
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded/post_unbuckle_mob(mob/living/M)
+	if(!has_buckled_mobs())
+		qdel (M.GetComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY))
+		return ..()
 
 /obj/vehicle/ridden/scooter/skateboard/hoverboard/admin
 	name = "\improper Board Of Directors"

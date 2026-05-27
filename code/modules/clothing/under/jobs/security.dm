@@ -12,7 +12,6 @@
 /obj/item/clothing/under/rank/security
 	icon = 'icons/obj/clothing/under/security.dmi'
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
-	worn_icon_digitigrade = 'icons/mob/clothing/under/security_digi.dmi'
 	armor_type = /datum/armor/rank_security
 	strip_delay = 50
 	sensor_mode = SENSOR_COORDS
@@ -296,7 +295,6 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit_prison_inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit_prison_inhand_right
 	greyscale_config_worn = /datum/greyscale_config/jumpsuit_prison_worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/jumpsuit_prison_worn/digitigrade
 	has_sensor = LOCKED_SENSORS
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
@@ -312,7 +310,6 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit_prison_inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit_prison_inhand_right
 	greyscale_config_worn = /datum/greyscale_config/jumpsuit_prison_worn
-	greyscale_config_worn_digitigrade = null
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
@@ -352,3 +349,30 @@
 /obj/item/clothing/under/rank/security/officer/spacepol/beatcop
 	icon_state = "spacepolice_families"
 	inhand_icon_state = null
+
+//////////////////////
+// PRIVATE SECURITY //
+//////////////////////
+
+/obj/item/clothing/under/rank/security/private
+	name = "private security turtleneck"
+	desc = "A tactical turtleneck for the privates of Nanotrasen's private security force."
+	icon_state = "private"
+	inhand_icon_state = "b_suit"
+	armor_type = /datum/armor/security_head_of_security
+
+/obj/item/clothing/under/rank/security/private/corporal
+	name = "private security jumpsuit"
+	desc = "A tactical security jumpsuit for the corporals of Nanotrasen's private security force, complete with Nanotrasen belt buckle."
+	icon_state = "corporal"
+
+/obj/item/clothing/under/rank/security/private/sergeant
+	name = "silver private security jumpsuit"
+	desc = "A tactical security jumpsuit for the sergeants of Nanotrasen's private security force, complete with Nanotrasen belt buckle."
+	icon_state = "sergeant"
+
+/obj/item/clothing/under/rank/security/private/lieutenant
+	name = "gold private security jumpsuit"
+	desc = "A tactical security jumpsuit for the lieutenants of Nanotrasen's private security force, complete with Nanotrasen belt buckle."
+	icon_state = "lieutenant"
+

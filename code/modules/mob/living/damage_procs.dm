@@ -98,25 +98,6 @@
 			damage_dealt = -1 *  adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
 			damage_dealt = -1 * stamina?.adjust(-damage_amount)
-		if(PAIN)
-			if(pain_controller)
-				var/pre_pain = pain_controller.get_average_pain()
-				var/pain_amount = damage_amount
-				var/chosen_zone
-				if(spread_damage || isnull(def_zone))
-					chosen_zone = BODY_ZONES_ALL
-					pain_amount /= 6
-				else if(isbodypart(def_zone))
-					var/obj/item/bodypart/actual_hit = def_zone
-					chosen_zone = actual_hit.body_zone
-				else
-					chosen_zone = check_zone(def_zone)
-
-				sharp_pain(chosen_zone, pain_amount, STAMINA, 12.5 SECONDS, 0.8)
-				damage_dealt += pre_pain - pain_controller.get_average_pain()
-				damage_dealt += stamina?.adjust(-damage_amount * 0.25, forced = forced)
-			else
-				damage_dealt = -1 * stamina.adjust(-damage_amount, forced = forced)
 		if(BRAIN)
 			damage_dealt = -1 * adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
 
@@ -149,22 +130,22 @@
  * Simply a wrapper for calling mob adjustXLoss() procs to heal a certain damage type,
  * when you don't know what damage type you're healing exactly.
  */
-/mob/living/proc/heal_damage_type(heal_amount = 0, damagetype = BRUTE)
+/mob/living/proc/heal_damage_type(heal_amount = 0, damagetype = BRUTE, update_health = TRUE)
 	heal_amount = abs(heal_amount)
 
 	switch(damagetype)
 		if(BRUTE)
-			return adjustBruteLoss(-heal_amount)
+			return adjustBruteLoss(-heal_amount, update_health)
 		if(BURN)
-			return adjustFireLoss(-heal_amount)
+			return adjustFireLoss(-heal_amount, update_health)
 		if(TOX)
-			return adjustToxLoss(-heal_amount, forced = TRUE) // monkestation edit: we're gonna assume anything using this proc intends to do true healing, so, let's not kill oozelings
+			return adjustToxLoss(-heal_amount, update_health, forced = TRUE) // monkestation edit: we're gonna assume anything using this proc intends to do true healing, so, let's not kill oozelings
 		if(OXY)
-			return adjustOxyLoss(-heal_amount)
+			return adjustOxyLoss(-heal_amount, update_health)
 		if(CLONE)
-			return adjustCloneLoss(-heal_amount)
+			return adjustCloneLoss(-heal_amount, update_health)
 		if(STAMINA)
-			return stamina.adjust(heal_amount)
+			return stamina.adjust(heal_amount, update_health)
 
 /// return the damage amount for the type given
 /**
@@ -249,6 +230,7 @@
 		eyeblur = 0 SECONDS,
 		drowsy = 0 SECONDS,
 		blocked = 0, // This one's not an effect, don't be confused - it's the % of the other effects to be blocked by armor
+		stamina = 0, // This one's a damage type, and not an effect
 		jitter = 0 SECONDS,
 		paralyze = 0,
 		immobilize = 0,
@@ -267,6 +249,10 @@
 		apply_effect(paralyze, EFFECT_PARALYZE, blocked)
 	if(immobilize)
 		apply_effect(immobilize, EFFECT_IMMOBILIZE, blocked)
+
+	if(stamina)
+		apply_damage(stamina, STAMINA, null, blocked)
+
 	if(drowsy)
 		adjust_drowsiness(drowsy)
 	if(eyeblur)
@@ -505,7 +491,8 @@
  * returns the net change in damage
  */
 /mob/living/proc/heal_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype = NONE, target_zone = null)
-	. = (adjustBruteLoss(-brute, FALSE) + adjustFireLoss(-burn, FALSE)) //zero as argument for no instant health update
+	. = (adjustBruteLoss(-abs(brute), updating_health = FALSE) + \
+			adjustFireLoss(-abs(burn), updating_health = FALSE))
 	if(!.) // no change, no need to update
 		return FALSE
 	if(updating_health)
@@ -513,34 +500,36 @@
 
 /// damage ONE external organ, organ gets randomly selected from damaged ones.
 /mob/living/proc/take_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype, check_armor = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE)
-	adjustBruteLoss(brute, FALSE) //zero as argument for no instant health update
-	adjustFireLoss(burn, FALSE)
-	if(updating_health)
+	. = (adjustBruteLoss(abs(brute), updating_health = FALSE) + \
+			adjustFireLoss(abs(burn), updating_health = FALSE))
+	if(. && updating_health)
 		updatehealth()
 
 /// heal MANY bodyparts, in random order
 /mob/living/proc/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_bodytype, updating_health = TRUE)
-	adjustBruteLoss(-brute, FALSE) //zero as argument for no instant health update
-	adjustFireLoss(-burn, FALSE)
-	src.stamina.adjust(stamina, FALSE)
-	if(updating_health)
+	. = (adjustBruteLoss(-abs(brute), updating_health = FALSE) + \
+			adjustFireLoss(-abs(burn), updating_health = FALSE))
+	src.stamina.adjust(abs(stamina), FALSE)
+	if(. && updating_health)
 		updatehealth()
 
 /// damage MANY bodyparts, in random order
 /mob/living/proc/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_bodytype)
-	adjustBruteLoss(brute, FALSE) //zero as argument for no instant health update
-	adjustFireLoss(burn, FALSE)
-	src.stamina.adjust(-stamina, FALSE)
-	if(updating_health)
+	. = (adjustBruteLoss(abs(brute), updating_health = FALSE) + \
+			adjustFireLoss(abs(burn), updating_health = FALSE))
+	src.stamina.adjust(-abs(stamina), FALSE)
+	if(. && updating_health)
 		updatehealth()
 
 ///heal up to amount damage, in a given order
-/mob/living/proc/heal_ordered_damage(amount, list/damage_types)
+/mob/living/proc/heal_ordered_damage(amount, list/damage_types, update_health = TRUE)
 	. = 0 //we'll return the amount of damage healed
 	for(var/damagetype in damage_types)
 		var/amount_to_heal = min(abs(amount), get_current_damage_of_type(damagetype)) //heal only up to the amount of damage we have
 		if(amount_to_heal)
-			. += heal_damage_type(amount_to_heal, damagetype)
+			. += heal_damage_type(amount_to_heal, damagetype, FALSE)
 			amount -= amount_to_heal //remove what we healed from our current amount
 		if(!amount)
 			break
+	if(. && update_health)
+		updatehealth()

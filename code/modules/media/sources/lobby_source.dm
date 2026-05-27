@@ -8,6 +8,6 @@ GLOBAL_DATUM_INIT(lobby_media, /datum/media_source/lobby, new)
 /datum/media_source/lobby/get_priority(mob/target)
 	if(CONFIG_GET(flag/disallow_title_music))
 		return -1
-	if(target?.client?.prefs?.read_preference(/datum/preference/toggle/sound_lobby))
+	if(target?.client?.prefs?.channel_volume["[CHANNEL_LOBBYMUSIC]"] > 0)
 		return INFINITY
 	return -1

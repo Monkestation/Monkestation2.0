@@ -537,7 +537,7 @@
 				monkey_tail.Insert(human_mob, drop_if_replaced = FALSE)
 			var/datum/species/human_species = human_mob.dna?.species
 			if(human_species)
-				human_species.randomize_features(human_mob)
+				human_species.randomize_active_features(human_mob)
 				human_species.randomize_active_underwear(human_mob)
 
 			owner.remove_status_effect(/datum/status_effect/eigenstasium)
@@ -562,6 +562,14 @@
 #undef EIGENSTASIUM_PHASE_2_END
 #undef EIGENSTASIUM_PHASE_3_START
 #undef EIGENSTASIUM_PHASE_3_END
+
+// Stops knockback when someone is thrown against something. (See: [/atom/proc/hitby_react])
+/datum/status_effect/no_throw_back
+	id = "no_throw_back"
+	alert_type = null
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 0.5 SECONDS
+	tick_interval = STATUS_EFFECT_NO_TICK
 
 /datum/status_effect/tagalong //applied to darkspawns while they accompany someone //yogs start: darkspawn
 	id = "tagalong"

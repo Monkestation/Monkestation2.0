@@ -12,7 +12,6 @@
 	inhand_icon_state = "electronic"
 
 	steel_sheet_cost = 2
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass=SMALL_MATERIAL_AMOUNT, /datum/material/plastic=SMALL_MATERIAL_AMOUNT)
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
 
 	icon_state_menu = "menu"
@@ -63,6 +62,11 @@
 		QDEL_NULL(inserted_item)
 	return ..()
 
+/obj/item/modular_computer/pda/eject_stored_items(atom/droploc)
+	inserted_item?.forceMove(droploc) // PDA pen slot
+	inserted_item = null
+	return ..()
+
 /obj/item/modular_computer/pda/install_default_programs()
 	var/list/apps_to_download = list()
 	if(has_pda_programs)
@@ -89,7 +93,7 @@
 /obj/item/modular_computer/pda/interact(mob/user)
 	. = ..()
 	if(HAS_TRAIT(src, TRAIT_PDA_MESSAGE_MENU_RIGGED))
-		explode(usr, from_message_menu = TRUE)
+		explode(user, from_message_menu = TRUE)
 
 /obj/item/modular_computer/pda/attack_self(mob/user)
 	// bypass literacy checks to access syndicate uplink
@@ -234,7 +238,7 @@
 	var/new_sound = owner_client.prefs.read_preference(/datum/preference/choiced/pda_ringtone_sound)
 	if(new_sound)
 		update_ringtone_sound(new_sound)
-		
+
 	var/new_theme = owner_client.prefs.read_preference(/datum/preference/choiced/pda_theme)
 	if(new_theme)
 		device_theme = GLOB.pda_name_to_theme[new_theme]
@@ -423,6 +427,28 @@
 
 /obj/item/modular_computer/pda/silicon/ui_state(mob/user)
 	return GLOB.reverse_contained_state
+
+/obj/item/modular_computer/pda/silicon/explode(mob/target, mob/bomber, from_message_menu)
+	if(from_message_menu)
+		log_bomber(null, null, target, "'s induced disruption as [target.p_they()] tried to open their tablet message menu because of a recent tablet bomb sent to a silicon.")
+	else
+		log_bomber(bomber, "successfully tablet-disrupted", target, "as [target.p_they()] tried to reply to a rigged tablet message sent to a silicon [bomber && !is_special_character(bomber) ? "(SENT BY NON-ANTAG)" : ""]")
+	to_chat(silicon_owner, span_danger("POWER SURGE DETECTED/"))
+	do_sparks(4, FALSE, src)
+	if(isAI(silicon_owner))
+		silicon_owner.adjustFireLoss(25)
+		if(!isturf(silicon_owner.loc)) //AI not in core? not wise to disable a random APC then.
+			silicon_owner.Unconscious(10 SECONDS,  TRUE)
+		else
+			var/area/AIarea = get_area(silicon_owner)
+			var/obj/machinery/power/apc/AIapc = AIarea.apc
+			if(AIapc)
+				AIapc.energy_fail(45, forced = TRUE)
+				do_sparks(4, FALSE, AIapc)
+	else if(ispAI(silicon_owner))
+		silicon_owner.emp_act(EMP_HEAVY)
+	else //how did this happen cyborgs shouldnt have messengers, oh well!
+		silicon_owner.Paralyze(5 SECONDS)
 
 /obj/item/modular_computer/pda/silicon/cyborg/syndicate
 	icon_state = "tablet-silicon-syndicate"

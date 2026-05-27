@@ -15,6 +15,7 @@
 		"basic_micro_laser",
 		"basic_scanning",
 		"blast",
+		"ignition",
 		"big_manipulator",
 		"assembler",
 		"manipulator_filter",
@@ -55,8 +56,11 @@
 		"electropack",
 		"experi_scanner",
 		"extinguisher",
+		"pocketfireextinguisher",
 		"fax",
 		"fishing_rod",
+		"fishing_line",
+		"fishing_hook",
 		"fishing_portal_generator",
 		"flashlight",
 		"fluid_ducts",
@@ -117,6 +121,7 @@
 		"shotgun_slug",
 		"sec_Islug",
 		"sec_rshot",
+		"sec_pen",
 		"servingtray",
 		"shaker",
 		"shot_glass",
@@ -138,6 +143,8 @@
 		"toy_armblade",
 		"toy_balloon",
 		"toygun",
+		"tram_floor_dark",
+		"tram_floor_light",
 		"trapdoor_electronics",
 		"turbine_part_compressor",
 		"turbine_part_rotor",
@@ -146,7 +153,8 @@
 		"universal_scanner",
 		"voice_analyzer",
 		"watering_can",
-		"modlink_scryer", // monkestation addition
+		"modlink_scryer",// monkestation addition
+		"flatpacker",
 	)
 
 /datum/techweb_node/basic_tools
@@ -218,6 +226,10 @@
 		"cybernetic_liver",
 		"cybernetic_lungs",
 		"cybernetic_stomach",
+		"surplus_cybernetic_l_leg",
+		"surplus_cybernetic_r_leg",
+		"surplus_cybernetic_l_arm",
+		"surplus_cybernetic_r_arm",
 		"defibmountdefault",
 		"dropper",
 		"hemostat",
@@ -252,4 +264,7 @@
 		"synth_heart",
 		"cybernetic_spleen",
 		"vitals_monitor",
+		"vial",
+		"large_vial",
+		"medical_crutch"
 	)

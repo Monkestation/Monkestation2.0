@@ -41,7 +41,7 @@
 		else
 			icon_state = "[soft_type][soft_suffix]"
 			to_chat(user, span_notice("You flip the hat back in normal position."))
-		update_icon()
+		update_appearance(UPDATE_ICON)
 		usr.update_worn_head() //so our mob-overlays update
 
 /obj/item/clothing/head/soft/examine(mob/user)
@@ -218,3 +218,16 @@
 	update_icon()
 
 #undef PROPHAT_MOOD
+
+/obj/item/clothing/head/soft/paramedic/deforest
+	name = "Deforest Hat"
+	desc = "A Deforest Medical high-visibility hat often seen worn by local reps trying to shill their wares to various stations."
+	icon_state = "hivishatsoft"
+	soft_type = "hivishat"
+
+/obj/item/clothing/head/soft/nt
+	name = "\improper Nanotrasen cap"
+	desc = "It's a baseball hat in a tasteless white colour with the Nanotrasen logo embroidered on the front. Glory to Nanotrasen!"
+	icon_state = "ntsoft"
+	soft_type = "nt"
+	dog_fashion = null

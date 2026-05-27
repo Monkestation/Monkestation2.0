@@ -329,7 +329,7 @@
 	var/turf/p_turf = get_turf(ricocheting_projectile)
 	var/face_direction = get_dir(src, p_turf) || get_dir(src, ricocheting_projectile)
 	var/face_angle = dir2angle(face_direction)
-	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (ricocheting_projectile.Angle + 180))
+	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (ricocheting_projectile.angle + 180))
 	var/a_incidence_s = abs(incidence_s)
 	if(a_incidence_s > 90 && a_incidence_s < 270)
 		return FALSE
@@ -647,9 +647,6 @@
 		return null
 	return list("[dna.unique_enzymes]" = blood.type)
 
-/mob/living/carbon/alien/get_blood_dna_list()
-	return list("UNKNOWN DNA" = "X*")
-
 /mob/living/silicon/get_blood_dna_list()
 	return
 
@@ -691,14 +688,6 @@
 	return null
 
 /**
- * This proc is called when an atom in our contents has it's [Destroy][/atom/proc/Destroy] called
- *
- * Default behaviour is to simply send [COMSIG_ATOM_CONTENTS_DEL]
- */
-/atom/proc/handle_atom_del(atom/deleting_atom)
-	SEND_SIGNAL(src, COMSIG_ATOM_CONTENTS_DEL, deleting_atom)
-
-/**
  * the vision impairment to give to the mob whose perspective is set to that atom
  *
  * (e.g. an unfocused camera giving you an impaired vision when looking through it)
@@ -737,22 +726,6 @@
 	The "highest priority" one is always displayed as opposed to the default of
 	"whichever was set last is displayed"
 */
-
-///Resets the atom's color to null, and then sets it to the highest priority colour available
-/atom/proc/update_atom_colour()
-	color = null
-	if(!atom_colours)
-		return
-	for(var/checked_color in atom_colours)
-		if(islist(checked_color))
-			var/list/color_list = checked_color
-			if(color_list.len)
-				color = color_list
-				return
-		else if(checked_color)
-			color = checked_color
-			return
-
 
 /**
  * Wash this atom
@@ -1060,7 +1033,7 @@
 	var/extra_context = ""
 	var/misc_context = ""
 
-	if(isliving(user) || isovermind(user) || isaicamera(user) || (ghost_screentips && isobserver(user)))
+	if(isliving(user) || isovermind(user) || iscameramob(user) || (ghost_screentips && isobserver(user)))
 		var/obj/item/held_item = user.get_active_held_item()
 
 		if (flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1 || held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS)

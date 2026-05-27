@@ -17,6 +17,7 @@
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/repair_bone_hairline,
+		/datum/surgery_step/close,
 	)
 
 /datum/surgery/repair_bone_hairline/can_start(mob/living/user, mob/living/carbon/target)
@@ -46,6 +47,7 @@
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/reset_compound_fracture,
 		/datum/surgery_step/repair_bone_compound,
+		/datum/surgery_step/close,
 	)
 
 /datum/surgery/repair_bone_compound/can_start(mob/living/user, mob/living/carbon/target)
@@ -60,7 +62,7 @@
 /datum/surgery_step/repair_bone_hairline
 	name = "repair hairline fracture (bonesetter/bone gel/tape)"
 	implements = list(
-		/obj/item/bonesetter = 100,
+		TOOL_BONESET = 100,
 		/obj/item/stack/medical/bone_gel = 100,
 		/obj/item/stack/sticky_tape/surgical = 100,
 		/obj/item/stack/sticky_tape/super = 50,
@@ -110,7 +112,7 @@
 /datum/surgery_step/reset_compound_fracture
 	name = "reset bone (bonesetter)"
 	implements = list(
-		/obj/item/bonesetter = 100,
+		TOOL_BONESET = 100,
 		/obj/item/stack/sticky_tape/surgical = 60,
 		/obj/item/stack/sticky_tape/super = 40,
 		/obj/item/stack/sticky_tape = 20)
@@ -155,6 +157,7 @@
 #define IMPLEMENTS_THAT_FIX_BONES list( \
 	/obj/item/stack/medical/bone_gel = 100, \
 	/obj/item/stack/sticky_tape/surgical = 100, \
+	/obj/item/blood_filter/advanced = 100, \
 	/obj/item/stack/sticky_tape/super = 50, \
 	/obj/item/stack/sticky_tape = 30, \
 )

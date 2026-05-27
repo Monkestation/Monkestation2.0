@@ -1,8 +1,8 @@
-import { Window } from '../layouts';
-import { BooleanLike, classes } from 'common/react';
+import { type BooleanLike, classes } from 'common/react';
 import { capitalizeAll } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { LabeledList, Section, Button, Tabs, Stack, Box } from '../components';
+import { Box, Button, LabeledList, Section, Stack, Tabs } from '../components';
+import { Window } from '../layouts';
 import { AirLockMainSection } from './AirlockElectronics';
 
 type Data = {
@@ -100,7 +100,6 @@ const DesignSection = (props) => {
       <Tabs>
         {categories.map((category) => (
           <Tabs.Tab
-            fluid
             key={category.cat_name}
             selected={category.cat_name === shownCategory.cat_name}
             onClick={() => setCategoryName(category.cat_name)}
@@ -113,7 +112,6 @@ const DesignSection = (props) => {
         <Button
           key={i + 1}
           fluid
-          ellipsis
           height="31px"
           color="transparent"
           selected={
@@ -139,8 +137,7 @@ const DesignSection = (props) => {
                 design.icon === 'catwalk0'
                   ? 'scale(0.7)'
                   : 'scale(1.0)',
-              '-ms-interpolation-mode': 'nearest-neighbor',
-              'image-rendering': 'pixelated',
+              imageRendering: 'pixelated',
             }}
           />
           <span>{capitalizeAll(design.title)}</span>

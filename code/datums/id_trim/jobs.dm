@@ -26,6 +26,10 @@
 	if(ispath(job))
 		job = SSjob.GetJobType(job)
 
+	//The job is disabled.
+	if(isnull(job))
+		return
+
 	if(isnull(job_changes))
 		job_changes = SSmapping.current_map.job_changes
 

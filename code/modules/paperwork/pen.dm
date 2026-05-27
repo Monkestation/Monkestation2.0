@@ -22,20 +22,23 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.1)
+	custom_materials = null // to not be put into autolathes
 	pressure_resistance = 2
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	var/colour = "#000000" //what colour the ink is!
 	var/degrees = 0
 	var/font = PEN_FONT
 	var/requires_gravity = TRUE // can you use this to write in zero-g
-	embedding = list(embed_chance = 50)
+	embed_type = /datum/embedding/pen
 	sharpness = SHARP_POINTY
 	var/dart_insert_icon = 'icons/obj/weapons/guns/toy.dmi'
 	var/dart_insert_casing_icon_state = "overlay_pen"
 	var/dart_insert_projectile_icon_state = "overlay_pen_proj"
 	/// If this pen can be clicked in order to retract it
 	var/can_click = TRUE
+
+/datum/embedding/pen
+	embed_chance = 50
 
 /obj/item/pen/Initialize(mapload)
 	. = ..()
@@ -83,11 +86,11 @@
 /obj/item/pen/proc/on_inserted_into_dart(datum/source, obj/projectile/dart, mob/user, embedded = FALSE)
 	SIGNAL_HANDLER
 
-/obj/item/pen/proc/get_dart_var_modifiers()
+/obj/item/pen/proc/get_dart_var_modifiers(obj/projectile/projectile)
 	return list(
 		"damage" = max(5, throwforce),
 		"speed" = max(0, throw_speed - 3),
-		"embedding" = embedding,
+		"embedding" = get_embed().create_copy(projectile),
 		"armour_penetration" = armour_penetration,
 		"wound_bonus" = wound_bonus,
 		"bare_wound_bonus" = bare_wound_bonus,
@@ -162,7 +165,6 @@
 	icon_state = "pen-charcoal"
 	colour = "#696969"
 	font = CHARCOAL_FONT
-	custom_materials = null
 	grind_results = list(/datum/reagent/ash = 5, /datum/reagent/cellulose = 10)
 	requires_gravity = FALSE // this is technically a pencil
 	can_click = FALSE
@@ -182,7 +184,6 @@
 	throwforce = 5
 	throw_speed = 4
 	colour = "#DC143C"
-	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT*7.5)
 	sharpness = SHARP_EDGED
 	resistance_flags = FIRE_PROOF
 	unique_reskin = list("Oak" = "pen-fountain-o",
@@ -191,7 +192,10 @@
 						"Black and Silver" = "pen-fountain-b",
 						"Command Blue" = "pen-fountain-cb"
 						)
-	embedding = list("embed_chance" = 75)
+	embed_type = /datum/embedding/pen/captain
+
+/datum/embedding/pen/captain
+	embed_chance = 50
 
 /obj/item/pen/fountain/captain/Initialize(mapload)
 	. = ..()
@@ -355,6 +359,38 @@
 		attack_self(user)
 	return BRUTELOSS
 
+//if edagger is turned on and in ear slot, and the user has hair, light the hair on fire
+/obj/item/pen/edagger/equipped(mob/equipee, slot, human)
+	. = ..()
+	//is it equipped in ears, is it activated, are they not bald
+	if((slot & ITEM_SLOT_EARS) && HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		if(ishuman(equipee))
+			var/mob/living/carbon/human/human_equipee = equipee
+			if(human_equipee.hairstyle != "Bald")
+				human_equipee.visible_message("You smell something burning...")
+				addtimer(CALLBACK(src, PROC_REF(deferred_ignite), human_equipee), 25)
+
+//sets them on fire and burns off their hair
+/obj/item/pen/edagger/proc/deferred_ignite(mob/living/carbon/human/human_equipee)
+	human_equipee.adjust_fire_stacks(2)
+	human_equipee.ignite_mob()
+	human_equipee.set_hairstyle("Bald", update = TRUE)
+	human_equipee.visible_message(span_bolddanger("[human_equipee]\s hair burns off!"), \
+		span_bolddanger("Your hair burns off!"))
+
+//allows the edagger to lights cigarettes
+/obj/item/pen/edagger/ignition_effect(atom/atom, mob/user)
+	if(!heat && !HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return ""
+
+	var/in_mouth = ""
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		if(carbon_user.wear_mask)
+			in_mouth = ", barely missing [carbon_user.p_their()] nose"
+	. = span_warning("[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [atom.name] in the process.")
+	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
+	add_fingerprint(user)
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
@@ -369,7 +405,7 @@
 		inhand_icon_state = hidden_icon
 		lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-		embedding = list(embed_chance = 100) // Rule of cool
+		set_embed(/datum/embedding/edagger_active)
 	else
 		name = initial(name)
 		desc = initial(desc)
@@ -377,14 +413,16 @@
 		inhand_icon_state = initial(inhand_icon_state)
 		lefthand_file = initial(lefthand_file)
 		righthand_file = initial(righthand_file)
-		embedding = list(embed_chance = EMBED_CHANCE)
+		set_embed(embed_type)
 
-	updateEmbedding()
 	if(user)
 		balloon_alert(user, "[hidden_name] [active ? "active" : "concealed"]")
 	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
 	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/datum/embedding/edagger_active
+	embed_chance = 100
 
 /obj/item/pen/edagger/proc/on_scan(datum/source, mob/user, list/extra_data)
 	SIGNAL_HANDLER
@@ -399,7 +437,6 @@
 	worn_icon_state = "pen"
 	force = 3
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.1, /datum/material/diamond=SMALL_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT*0.1)
 	pressure_resistance = 2
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	tool_behaviour = TOOL_MINING //For the classic "digging out of prison with a spoon but you're in space so this analogy doesn't work" situation.
@@ -503,7 +540,7 @@
 	living_target.apply_status_effect(/datum/status_effect/surrender_timed)
 	to_chat(living_target, span_userdanger("[user] requests your immediate surrender! You are given 30 seconds to comply!"))
 	new /obj/effect/temp_visual/security_holosign(target_turf, user) //produce a holographic glow
-	COOLDOWN_START(src, holosign_cooldown, 30 SECONDS)
+	COOLDOWN_START(src, holosign_cooldown, 5 SECONDS)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/effect/temp_visual/security_holosign

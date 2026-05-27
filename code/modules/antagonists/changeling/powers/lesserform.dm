@@ -1,21 +1,28 @@
 /datum/action/changeling/lesserform
 	name = "Lesser Form"
-	desc = "We debase ourselves and become lesser. We become a monkey. Costs 15 chemicals." // monkestation edit
+	desc = "We debase ourselves and become lesser. We become a monkey. Costs 15 chemicals."
 	helptext = "We become much smaller, allowing us to slip out of cuffs and climb through vents. Right-click to drop items."
 	button_icon_state = "lesser_form"
-	chemical_cost = 15 // monkestation edit
+	chemical_cost = 15
 	dna_cost = 1
 	/// Whether to allow the transformation animation to play
 	var/transform_instantly = FALSE
+	/// Whether to drop our stuff when we finish turning into a monkey.
+	var/drop_stuff = FALSE
 
 /datum/action/changeling/lesserform/Grant(mob/granted_to)
 	. = ..()
 	if (!owner)
 		return
-	RegisterSignals(granted_to, list(COMSIG_HUMAN_MONKEYIZE, COMSIG_MONKEY_HUMANIZE), PROC_REF(changed_form))
+	RegisterSignal(granted_to, COMSIG_MONKEY_HUMANIZE, PROC_REF(changed_form))
+	RegisterSignal(granted_to, COMSIG_HUMAN_MONKEYIZE, PROC_REF(on_monkeyize))
 
 /datum/action/changeling/lesserform/Remove(mob/remove_from)
 	UnregisterSignal(remove_from, list(COMSIG_HUMAN_MONKEYIZE, COMSIG_MONKEY_HUMANIZE))
+	return ..()
+
+/datum/action/changeling/lesserform/Trigger(trigger_flags)
+	drop_stuff = (trigger_flags & TRIGGER_SECONDARY_ACTION)
 	return ..()
 
 //Transform into a monkey.
@@ -62,6 +69,13 @@
 /datum/action/changeling/lesserform/proc/changed_form()
 	SIGNAL_HANDLER
 	build_all_button_icons(update_flags = UPDATE_BUTTON_NAME | UPDATE_BUTTON_ICON)
+
+/datum/action/changeling/lesserform/proc/on_monkeyize(mob/living/carbon/human/user)
+	SIGNAL_HANDLER
+	if(drop_stuff)
+		user.unequip_everything()
+		drop_stuff = FALSE
+	changed_form()
 
 /datum/action/changeling/lesserform/update_button_name(atom/movable/screen/movable/action_button/button, force)
 	if (ismonkeybasic(owner))

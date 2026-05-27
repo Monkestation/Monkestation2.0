@@ -8,7 +8,6 @@
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suits/armor.dmi'
 	icon_state = "warden_syndie"
 	current_skin = "warden_syndie" //prevents reskinning
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 // HEAD OF PERSONNEL
 /obj/item/clothing/suit/armor/vest/hop/hop_formal

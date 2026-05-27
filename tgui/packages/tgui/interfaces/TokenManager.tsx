@@ -295,9 +295,7 @@ const TokenRequestRow = (props: { request: TokenRequest }) => {
         >
           {request.requester_ckey}
         </Button>
-        {!!request.is_donor && (
-          <Icon name="star" color="gold" ml={1} title="Donor Token" />
-        )}
+        {!!request.is_donor && <Icon name="star" color="gold" ml={1} />}
       </Table.Cell>
       <Table.Cell>
         <Box bold>{request.details}</Box>

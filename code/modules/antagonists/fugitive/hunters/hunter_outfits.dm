@@ -185,8 +185,8 @@
 	gloves = /obj/item/clothing/gloves/fingerless
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/vest/blueshirt
-	l_pocket = /obj/item/reagent_containers/hypospray/medipen/gore
-	r_pocket = /obj/item/reagent_containers/hypospray/medipen/gore
+	l_pocket = /obj/item/reagent_containers/medipen/gore
+	r_pocket = /obj/item/reagent_containers/medipen/gore
 	id = /obj/item/card/id/advanced/bountyhunter
 
 	id_trim = /datum/id_trim/bounty_hunter/psykers

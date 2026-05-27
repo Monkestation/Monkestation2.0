@@ -233,8 +233,14 @@
 	return "It has [uses] light\s remaining (plus [bulb_shards] fragment\s)."
 
 /obj/item/lightreplacer/proc/Use(mob/user)
+	if(uses <= 0)
+		return FALSE
+
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	src.add_fingerprint(user)
 	add_uses(-1)
+
+	return TRUE
 
 // Negative numbers will subtract
 /obj/item/lightreplacer/proc/add_uses(amount = 1)
@@ -294,10 +300,6 @@
 /obj/item/lightreplacer/proc/can_use(mob/living/user)
 	src.add_fingerprint(user)
 	return uses > 0
-
-/obj/item/lightreplacer/cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/lightreplacer/blue
 	name = "bluespace light replacer"

@@ -29,7 +29,7 @@
 		qdel(N)
 		to_chat(user, span_warning("You're incapable of readying a finger gun in your current state."))
 
-/obj/item/ammo_casing/caseless/fingergun_bullet
+/obj/item/ammo_casing/fingergun_bullet
 	name = "imaginary bullet"
 	desc = "Bullets are not real idiot."
 	projectile_type = /obj/projectile/bullet/fingergun_bullet
@@ -37,6 +37,10 @@
 	caliber = "bulletsarenotrealyouidiot"
 	custom_materials = list()
 	harmful = FALSE
+
+/obj/item/ammo_casing/fingergun_bullet/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/caseless)
 
 /obj/projectile/bullet/fingergun_bullet
 	name = "imaginary bullet"
@@ -46,12 +50,12 @@
 	damage = 0
 	hitsound_wall = ""
 	impact_effect_type = null
-	embedding = list(embed_chance=0)
+	embed_type = null
 
 /obj/item/ammo_box/magazine/fingergun_emote
 	name = "finger gun magazine"
 	desc = "You should not be seeing this..."
-	ammo_type = /obj/item/ammo_casing/caseless/fingergun_bullet
+	ammo_type = /obj/item/ammo_casing/fingergun_bullet
 	caliber = "bulletsarenotrealyouidiot"
 	max_ammo = 8
 
@@ -116,39 +120,3 @@
 /obj/item/gun/ballistic/fingergun_emote/eject_magazine()
 	return
 
-/datum/emote/living/carbon/sweatdrop
-	key = "sweatdrop"
-	key_third_person = "sweatdrops"
-	message = "sweats"
-	emote_type = EMOTE_VISIBLE
-	vary = TRUE
-	sound = 'monkestation/sound/effects/sweatdrop.ogg'
-
-/datum/emote/living/carbon/sweatdrop/run_emote(mob/living/carbon/user, params, type_override, intentional)
-	. = ..()
-	if(!.)
-		return
-	var/image/emote_animation = image('monkestation/icons/mob/species/human/emote_visuals.dmi', user, "sweatdrop", pixel_x = 10, pixel_y = 10)
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		emote_animation = human_user.apply_height_offsets(emote_animation, UPPER_BODY)
-	flick_overlay_global(emote_animation, GLOB.clients, 3 SECONDS)
-
-/datum/emote/living/carbon/sweatdrop/sweat //This is entirely the same as sweatdrop, however people might use either, so I'm adding this one instead of editing the other one.
-	key = "sweat"
-
-/datum/emote/living/carbon/annoyed
-	key = "annoyed"
-	emote_type = EMOTE_VISIBLE
-
-/datum/emote/living/carbon/annoyed/run_emote(mob/living/carbon/user, params, type_override, intentional)
-	. = ..()
-	if(!.)
-		return
-	var/image/emote_animation = image('monkestation/icons/mob/species/human/emote_visuals.dmi', user, "annoyed", pixel_x = 10, pixel_y = 10)
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		emote_animation = human_user.apply_height_offsets(emote_animation, UPPER_BODY)
-	flick_overlay_global(emote_animation, GLOB.clients, 5 SECONDS)
-	// as this emote has no message, it won't play a sound due to the parent proc, so we play it manually here
-	playsound(user, 'monkestation/sound/effects/annoyed.ogg', vol = 50, vary = TRUE)

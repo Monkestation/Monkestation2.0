@@ -49,6 +49,7 @@
 	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/inhands/clothing/backpack_righthand.dmi'
 	icon_state = "backpack_blueshield"
 	inhand_icon_state = "backpack_blueshield"
+	alternate_worn_layer = (HEAD_LAYER-0.5)
 
 /obj/item/storage/backpack/satchel/blueshield
 	name = "blueshield satchel"
@@ -151,7 +152,6 @@
 /obj/item/clothing/under/rank/blueshield
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/command.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/command.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/command_digi.dmi'
 	name = "blueshield's suit"
 	desc = "A classic bodyguard's suit, with custom-fitted Blueshield-Blue cuffs and a Nanotrasen insignia over one of the pockets."
 	icon_state = "blueshield"

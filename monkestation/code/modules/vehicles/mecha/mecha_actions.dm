@@ -16,7 +16,7 @@
 		if(chassis.light_amplification)
 			for(var/trait in amplification_traits)
 				ADD_TRAIT(user, trait, MECH_TRAIT)
-			SEND_SOUND(owner, sound('monkestation/sound/mecha/light_amp.ogg', volume=50))
+			owner.playsound_local(src, 'monkestation/sound/mecha/light_amp.ogg', 50)
 			user.update_sight()
 		else
 			for(var/trait in amplification_traits)

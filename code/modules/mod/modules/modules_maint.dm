@@ -32,7 +32,7 @@
 	to_chat(mod.wearer, span_danger("[src] makes an ominous click sound..."))
 	playsound(src, 'sound/items/modsuit/springlock.ogg', 75, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(snap_shut)), rand(3 SECONDS, 5 SECONDS))
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_activate_spring_block))
+	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_activate_spring_block), override = TRUE)
 
 ///Signal fired when wearer attempts to activate/deactivate suits
 /obj/item/mod/module/springlock/proc/on_activate_spring_block(datum/source, user)
@@ -382,7 +382,7 @@
 	you_fucked_up = TRUE
 	playsound(src, 'sound/effects/whirthunk.ogg', 75)
 	to_chat(mod.wearer, span_userdanger("That was stupid."))
-	investigate_log("has flown off into space due to the [src].", INVESTIGATE_DEATHS)
+	investigate_log("has caused [key_name(mod.wearer)] to fly off into space.", INVESTIGATE_DEATHS)
 	mod.wearer.Stun(FLY_TIME, ignore_canstun = TRUE)
 	animate(mod.wearer, FLY_TIME, pixel_z = 256, alpha = 0)
 	QDEL_IN(mod.wearer, FLY_TIME)

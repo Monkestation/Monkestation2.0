@@ -1,3 +1,4 @@
+import { decodeHtmlEntities } from 'common/string';
 import { useBackend } from '../../backend';
 import {
   BlockQuote,
@@ -7,11 +8,10 @@ import {
   Section,
   Stack,
 } from '../../components';
-import { decodeHtmlEntities } from 'common/string';
 import {
-  RequestMessage,
+  type RequestMessage,
   RequestPriority,
-  RequestsData,
+  type RequestsData,
   RequestType,
 } from './types';
 
@@ -50,7 +50,7 @@ const MessageDisplay = (props: { message: RequestMessage }) => {
           <NoticeBox>High Priority</NoticeBox>
         )}
         {message.priority === RequestPriority.EXTREME && (
-          <NoticeBox bad>!!!Extreme Priority!!!</NoticeBox>
+          <NoticeBox danger>!!!Extreme Priority!!!</NoticeBox>
         )}
         <BlockQuote>
           {decodeHtmlEntities(message.content)}

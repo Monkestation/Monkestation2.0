@@ -1,12 +1,12 @@
 import { sortStrings } from 'common/collections';
 import { Button, Stack } from '../../../../../components';
 import {
-  Feature,
-  FeatureChoiced,
-  FeatureChoicedServerData,
+  type Feature,
+  type FeatureChoiced,
+  type FeatureChoicedServerData,
   FeatureDropdownInput,
   FeatureShortTextInput,
-  FeatureValueProps,
+  type FeatureValueProps,
 } from '../base';
 
 export const pda_theme: FeatureChoiced = {

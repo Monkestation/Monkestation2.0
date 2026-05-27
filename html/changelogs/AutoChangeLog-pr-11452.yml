@@ -1,0 +1,10 @@
+author: "Laiko44"
+delete-after: True
+changes:
+  - rscadd: "New bloodling ascended form. Big, more max biomass, and you can't devolve anymore."
+  - rscadd: "New bloodling ability: Meatspace Travel, letting you teleport to meat tiles."
+  - rscadd: "New bloodling ability: Bolster, restoring biomass if you're standing on a meat tile."
+  - image: "Modified the flesh tiles the bloodling ascension makes."
+  - image: "Recolored and slightly modified the bloodling ascension cocoon to fit with other bloodling sprites."
+  - image: "New sprite for Meatspace Travel."
+  - image: "New sprite for the ascended bloodling."

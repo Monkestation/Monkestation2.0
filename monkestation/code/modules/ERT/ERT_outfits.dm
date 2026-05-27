@@ -20,7 +20,7 @@
 
 /datum/antagonist/ert/generic/greet()
 	..()
-	owner.current.playsound_local(get_turf(owner.current), 'monkestation/sound/ambience/antag/ert.ogg', 100, 0, use_reverb = FALSE) //monkestation addition
+	owner.current.playsound_local(get_turf(owner.current), 'monkestation/sound/ambience/antag/ert.ogg', 100, 0, use_reverb = FALSE)
 
 /datum/outfit/centcom/ert/generic
 	name = "Emergency Response Officer"
@@ -159,7 +159,7 @@
 
 /datum/antagonist/ert/generic/medical/blue
 	name = "Code Blue Medical Response Officer"
-	outfit = /datum/outfit/centcom/ert/generic/medical
+	outfit = /datum/outfit/centcom/ert/generic/medical/blue
 
 /datum/outfit/centcom/ert/generic/medical/blue
 	name = "Code Blue Medical Response Officer"
@@ -172,7 +172,8 @@
 		/obj/item/storage/box/medipens = 1,
 		/obj/item/storage/belt/medical/ert = 1,
 		/obj/item/defibrillator/compact/loaded = 1,
-		/obj/item/reagent_containers/hypospray/cmo = 1, //this shouldn't cause any problems?
+		/obj/item/hypospray/cmo = 1, //this shouldn't cause any problems?
+		/obj/item/storage/lockbox/vialbox/hypo_deluxe = 1,
 		/obj/item/emergency_bed = 1,
 		/obj/item/healthanalyzer/advanced = 1,
 	)
@@ -196,7 +197,7 @@
 		/obj/item/storage/medkit/advanced = 1,
 		/obj/item/storage/box/medipens = 1,
 		/obj/item/storage/belt/medical/paramedic/full = 1,
-		/obj/item/reagent_containers/hypospray/combat = 1,
+		/obj/item/hypospray/combat = 1,
 		/obj/item/pinpointer/crew = 1,
 		/obj/item/emergency_bed = 1,
 		/obj/item/healthanalyzer/advanced = 1,
@@ -519,7 +520,7 @@
 	backpack_contents = list(
 		/obj/item/book/bible = 1,
 		/obj/item/reagent_containers/cup/glass/bottle/holywater = 2,
-		/obj/item/reagent_containers/hypospray/combat/heresypurge = 1,
+		/obj/item/hypospray/combat/heresypurge = 1,
 		/obj/item/storage/box/flashbangs = 1,
 		/obj/item/storage/belt/security/full/bola = 1,
 	)

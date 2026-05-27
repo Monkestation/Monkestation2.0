@@ -362,6 +362,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 	log_world("Initializations complete within [time] second\s!")
 
 	initialize_cooking_recipes()
+	clear_profiler()
 
 	// monkestation edit below
 	// basically, most songs end around the 5 minute mark,
@@ -983,3 +984,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 	last_profiled = REALTIMEOFDAY
 	SSprofiler.DumpFile(allow_yield = FALSE)
 
+/// Clears the profiler.
+/datum/controller/master/proc/clear_profiler()
+	world.Profile(PROFILE_CLEAR)
+	world.Profile(PROFILE_CLEAR, type = "sendmaps")

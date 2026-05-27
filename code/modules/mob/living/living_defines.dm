@@ -6,6 +6,11 @@
 	interaction_flags_click = ALLOW_RESTING
 	interaction_flags_mouse_drop = ALLOW_RESTING
 
+	/// Default typepath of the subsystem used for Life()
+	/// If this mob has a client/mind, it will always use SSclient_mobs.
+	/// If unset, defaults to SSmobs.
+	var/life_subsystem_type = /datum/controller/subsystem/mobs
+
 	///Tracks the current size of the mob in relation to its original size. Use update_transform(resize) to change it.
 	var/current_size = RESIZE_DEFAULT_SIZE
 	var/lastattacker = null
@@ -16,6 +21,13 @@
 	var/maxHealth = MAX_LIVING_HEALTH
 	/// The mob's current health.
 	var/health = MAX_LIVING_HEALTH
+
+	/// when the mob goes from "normal" to crit
+	var/crit_threshold = HEALTH_THRESHOLD_CRIT
+	///When the mob enters hard critical state and is fully incapacitated.
+	var/hardcrit_threshold = HEALTH_THRESHOLD_FULLCRIT
+	///Amount of damage needed to be fully dead
+	var/dead_threshold = HEALTH_THRESHOLD_DEAD
 
 	/// Modified applied to attacks with items or fists
 	var/outgoing_damage_mod = 1
@@ -34,11 +46,6 @@
 
 	/// Rate at which fire stacks should decay from this mob
 	var/fire_stack_decay_rate = -0.05
-
-	/// when the mob goes from "normal" to crit
-	var/crit_threshold = HEALTH_THRESHOLD_CRIT
-	///When the mob enters hard critical state and is fully incapacitated.
-	var/hardcrit_threshold = HEALTH_THRESHOLD_FULLCRIT
 
 	//Damage dealing vars! These are meaningless outside of specific instances where it's checked and defined.
 	/// Lower bound of damage done by unarmed melee attacks. Mob code is a mess, only works where this is checked for.
@@ -224,6 +231,9 @@
 	var/datum/stamina_container/stamina
 	/// What our current gravity state is. Used to avoid duplicate animates and such
 	var/gravity_state = null
+
+	/// how many tiles can this mob reach with their hands? 1 tile is adjacent.
+	var/reach_length = 1
 
 	/// Body temp we homeostasize to
 	var/standard_body_temperature = BODYTEMP_NORMAL
