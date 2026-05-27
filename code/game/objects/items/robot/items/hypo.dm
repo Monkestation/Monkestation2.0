@@ -461,7 +461,6 @@
 	name = "emergency paramedic hypospray"
 	desc = "A cut-down version of the cyborg's chemical synthesizer and injection system for paramedics able to fit into implants."
 	amount_per_transfer_from_this = 2
-	possible_transfer_amounts = list(1, 2)
 	max_volume_per_reagent = 10
 	default_reagent_types = PARAMEDIC_MEDICAL_REAGENTS
 	bypass_protection = TRUE
