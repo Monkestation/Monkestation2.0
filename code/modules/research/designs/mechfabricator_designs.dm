@@ -1559,12 +1559,12 @@
 
 // MONKE START - changed/added lots of department_flags
 
-/datum/design/mod_paint_kit
-	name = "MOD Paint Kit"
-	desc = "A paint kit for Modular Suits."
-	id = "mod_paint_kit"
+/datum/design/paint_kit
+	name = "robotics Paint Kit"
+	desc = "A paint kit for IPCs, robotic limbs, and MODsuits."
+	id = "paint_kit"
 	build_type = PROTOLATHE | MECHFAB
-	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT)
 	construction_time = 5 SECONDS
 	build_path = /obj/item/mod/paint
 	category = list(

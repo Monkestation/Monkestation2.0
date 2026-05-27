@@ -827,11 +827,6 @@
 	context[SCREENTIP_CONTEXT_LMB] = "Paint"
 	context[SCREENTIP_CONTEXT_RMB] = "Coat with paint"
 
-	if(isbodypart(target))
-		var/obj/item/bodypart/limb = target
-		if(IS_ROBOTIC_LIMB(limb))
-			context[SCREENTIP_CONTEXT_LMB] = "Restyle robotic limb"
-
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/toy/crayon/spraycan/isValidSurface(surface)
@@ -885,10 +880,6 @@
 
 	if(check_empty(user))
 		return ITEM_INTERACT_BLOCKING
-
-	if (isbodypart(target))
-		if (color_limb(target, user))
-			return ITEM_INTERACT_SUCCESS
 
 	if(iscarbon(target))
 		if(pre_noise || post_noise)
@@ -986,29 +977,6 @@
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 	user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
 	return ITEM_INTERACT_SUCCESS
-
-/obj/item/toy/crayon/spraycan/proc/color_limb(obj/item/bodypart/limb, mob/living/user)
-	if(!IS_ROBOTIC_LIMB(limb))
-		return FALSE
-
-	var/list/skins = list()
-	var/static/list/style_list_icons = list(
-		"standard" = 'icons/mob/augmentation/augments.dmi',
-		"engineer" = 'icons/mob/augmentation/augments_engineer.dmi',
-		"security" = 'icons/mob/augmentation/augments_security.dmi',
-		"mining" = 'icons/mob/augmentation/augments_mining.dmi',
-		)
-
-	for(var/skin_option in style_list_icons)
-		var/image/part_image = image(icon = style_list_icons[skin_option], icon_state = "[limb.limb_id]_[limb.body_zone]")
-		if(limb.aux_zone) //Hands
-			part_image.overlays += image(icon = style_list_icons[skin_option], icon_state = "[limb.limb_id]_[limb.aux_zone]")
-		skins += list("[skin_option]" = part_image)
-	var/choice = show_radial_menu(user, src, skins, require_near = TRUE)
-	if(choice && (use_charges(user, 5, requires_full = FALSE)))
-		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
-		limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
-	return TRUE
 
 /obj/item/toy/crayon/spraycan/click_alt(mob/user)
 	if(!has_cap)

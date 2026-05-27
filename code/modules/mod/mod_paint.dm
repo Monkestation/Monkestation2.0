@@ -6,8 +6,8 @@
 #define MODPAINT_MIN_OVERALL_COLORS 1.5
 
 /obj/item/mod/paint
-	name = "MOD paint kit"
-	desc = "This kit will repaint your MODsuit to something unique."
+	name = "Robotics paint kit"
+	desc = "This kit will allow you to repaint IPCs, robotic limbs, and MODsuits into something unique."
 	icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
 	icon_state = "paintkit"
 	var/obj/item/mod/control/editing_mod
@@ -20,8 +20,24 @@
 
 /obj/item/mod/paint/examine(mob/user)
 	. = ..()
-	. += span_notice("<b>Left-click</b> a MODsuit to change skin.")
-	. += span_notice("<b>Right-click</b> a MODsuit to recolor.")
+	. += span_notice("<b>Left-click</b> a MODsuit or IPC to change skin.")
+	. += span_notice("<b>Right-click</b> a MODsuit or robotic limb to recolor.")
+
+/obj/item/mod/paint/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers) //do stuff before attackby!
+	if((user.istate & ISTATE_HARM))
+		return ..()
+	if(isipc(target))
+		color_ipc(target, user)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+	return ..()
+
+/obj/item/mod/paint/pre_attack_secondary(atom/target, mob/living/user, params)
+	if((user.istate & ISTATE_HARM))
+		return ..()
+	if(isbodypart(target))
+		if(color_limb(target, user))
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ..()
 
 /obj/item/mod/paint/ui_interact(mob/user, datum/tgui/ui)
 	if(!editing_mod)
@@ -129,6 +145,40 @@
 	if(user.incapacitated() || !user.is_holding(src) || !mod || mod.active || mod.activating)
 		return FALSE
 	return TRUE
+
+/obj/item/mod/paint/proc/color_limb(obj/item/bodypart/limb, mob/living/user)
+	if(!IS_ROBOTIC_LIMB(limb))
+		return FALSE
+
+	var/list/skins = list()
+	var/static/list/style_list_icons = list(
+		"standard" = 'icons/mob/augmentation/augments.dmi',
+		"engineer" = 'icons/mob/augmentation/augments_engineer.dmi',
+		"security" = 'icons/mob/augmentation/augments_security.dmi',
+		"mining" = 'icons/mob/augmentation/augments_mining.dmi',
+		)
+
+	for(var/skin_option in style_list_icons)
+		var/image/part_image = image(icon = style_list_icons[skin_option], icon_state = "[limb.limb_id]_[limb.body_zone]")
+		if(limb.aux_zone) //Hands
+			part_image.overlays += image(icon = style_list_icons[skin_option], icon_state = "[limb.limb_id]_[limb.aux_zone]")
+		skins += list("[skin_option]" = part_image)
+	var/choice = show_radial_menu(user, src, skins, require_near = TRUE)
+	if(choice)
+		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
+		limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
+	return TRUE
+
+/obj/item/mod/paint/proc/color_ipc(mob/living/target, mob/living/user)
+	var/reskin = tgui_input_list(user, "Which chassis do you want to use?", "Chassis Change", GLOB.ipc_chassis_list)
+	var/color_choice = tgui_color_picker(user, "Which color do you want your Chassis to be", "Color Change")
+	if(!reskin)
+		return
+	if(!color_choice)
+		return
+	var/mob/living/carbon/human/ipc = target
+	ipc.dna.features["ipc_chassis"] = reskin
+	ipc.update_body()
 
 #undef MODPAINT_MAX_COLOR_VALUE
 #undef MODPAINT_MIN_COLOR_VALUE
