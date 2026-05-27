@@ -373,7 +373,7 @@
 	if(ismob(interacting_with))
 		var/mob/target_mob = interacting_with
 		target_mob.show_message(
-			span_userdanger("[user] splash the contents of [src] onto you!"),
+			span_userdanger("[user] splashs the contents of [src] onto you!"),
 			MSG_VISUAL,
 			span_userdanger("You feel drenched!"),
 		)
