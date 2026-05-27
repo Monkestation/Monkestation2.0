@@ -32132,6 +32132,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
+/obj/structure/closet/crate/trashcart/engineering/filled,
 /turf/open/floor/iron/textured_edge,
 /area/station/engineering/power_room)
 "jbL" = (
@@ -70177,6 +70178,13 @@
 /obj/machinery/light/cold/directional/south,
 /turf/open/floor/iron/dark/diagonal,
 /area/station/engineering/transit_tube)
+"tuO" = (
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 5
+	},
+/obj/structure/closet/crate/trashcart/engineering/filled,
+/turf/open/floor/iron/textured,
+/area/station/engineering/power_room)
 "tuU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -125174,7 +125182,7 @@ urg
 fNT
 orj
 gpe
-nUG
+tuO
 rgv
 jKQ
 pha

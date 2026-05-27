@@ -2659,6 +2659,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison/visit)
+"aTz" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/east,
+/obj/structure/closet/crate/trashcart/engineering/filled,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "aTB" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
@@ -28238,6 +28246,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/execution)
+"jcA" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/structure/closet/crate/trashcart/engineering/filled,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "jcB" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
@@ -107699,8 +107714,8 @@ fbT
 ppP
 tfN
 oYQ
-qzl
-sgJ
+jcA
+aTz
 qzl
 fpn
 xOH

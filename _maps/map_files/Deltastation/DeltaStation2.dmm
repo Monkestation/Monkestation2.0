@@ -12426,6 +12426,14 @@
 	},
 /turf/open/floor/carpet,
 /area/station/command/bridge)
+"cQF" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/structure/closet/crate/trashcart/engineering/filled,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "cQM" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -126972,7 +126980,7 @@ hiJ
 yfg
 tJZ
 cui
-kMn
+cQF
 gme
 mRv
 ovN
@@ -127486,7 +127494,7 @@ kTn
 phu
 vvH
 vaw
-kMn
+cQF
 jkK
 fbn
 gTr

@@ -22,6 +22,7 @@
 		/obj/item/grenade/chem_grenade/iron_metalfoam = 5,
 		/obj/item/storage/box/metalfoam = 2,
 		/obj/item/storage/box/nanofrost = 2,
+		/obj/item/storage/box/flares = 2,
 	)
 	contraband = list(
 		/obj/item/stock_parts/power_store/cell/potato = 3,
@@ -29,8 +30,8 @@
 	premium = list(
 		/obj/item/storage/belt/utility = 3,
 		/obj/item/construction/rcd/loaded = 2,
-		/obj/item/storage/box/smart_metalfoam = 2,
 		/obj/item/grenade/chem_grenade/smart_metalfoam = 10,
+		/obj/item/storage/box/smart_metalfoam = 2,
 	)
 	refill_canister = /obj/item/vending_refill/engivend
 	default_price = PAYCHECK_CREW

@@ -14754,6 +14754,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/autoname/directional/north,
+/obj/structure/closet/crate/trashcart/engineering/filled,
 /turf/open/floor/plating,
 /area/station/engineering/hallway)
 "erB" = (
@@ -60211,6 +60212,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/closet/crate/trashcart/engineering/filled,
 /turf/open/floor/plating,
 /area/station/engineering/hallway)
 "ryq" = (

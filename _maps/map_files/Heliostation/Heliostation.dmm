@@ -33723,6 +33723,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/structure/closet/crate/trashcart/engineering/filled,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "fSz" = (
@@ -78199,6 +78200,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
+/obj/structure/closet/crate/trashcart/engineering/filled,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "wFV" = (

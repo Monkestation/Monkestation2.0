@@ -21169,6 +21169,7 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/closet/crate/trashcart/engineering/filled,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
 "fAA" = (
@@ -59446,6 +59447,7 @@
 	name = "Engineering Requests Console"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/closet/crate/trashcart/engineering/filled,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
 "rrE" = (

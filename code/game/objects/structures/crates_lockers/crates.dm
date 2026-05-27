@@ -374,6 +374,7 @@
 		/obj/item/storage/toolbox/electrical = 1,
 		/obj/item/inducer/orderable = 1,
 		/obj/item/reagent_containers/cup/fuelcanister = 1,
+		/obj/item/clothing/head/cone = 5,
 	), src)
 
 /obj/structure/closet/crate/trashcart/laundry
