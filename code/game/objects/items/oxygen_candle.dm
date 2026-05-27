@@ -59,7 +59,7 @@
 	set_light_on(FALSE)
 	name = "burnt [initial(name)]"
 	icon_state = "[base_icon_state]_burnt"
-	desc += "\nThis tube has exhausted it's chemicals."
+	desc += "\nThis tube has exhausted its chemicals."
 	playsound(src, 'sound/effects/space_wind.ogg', 70, TRUE)
 	attack_verb_continuous = initial(attack_verb_continuous)
 	attack_verb_simple = initial(attack_verb_simple)

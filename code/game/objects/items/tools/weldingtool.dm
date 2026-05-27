@@ -343,9 +343,6 @@
 	max_fuel = 40
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
 
-/obj/item/weldingtool/largetank/flamethrower_screwdriver()
-	return
-
 /obj/item/weldingtool/largetank/empty
 	starting_fuel = FALSE
 
@@ -363,9 +360,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.3, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.1)
 	change_icons = FALSE
-
-/obj/item/weldingtool/mini/flamethrower_screwdriver()
-	return
 
 /obj/item/weldingtool/mini/empty
 	starting_fuel = FALSE

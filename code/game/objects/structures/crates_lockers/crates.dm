@@ -313,7 +313,7 @@
 			new /obj/item/storage/bag/trash/filled(src)
 
 /obj/structure/closet/crate/trashcart/engineering
-	desc = "A heavy, industrial metal cart with wheels. It's fully fire and acid proof and protects it's contents from extreme enviroments. Fancy!"
+	desc = "A heavy, industrial metal cart with wheels. It's fully fire and acid proof and protects its contents from extreme enviroments. Fancy!"
 	name = "engineering cart"
 	icon_state = "engcart"
 	base_icon_state = "engcart"
@@ -330,7 +330,7 @@
 	melee = 20
 	bullet = 10
 	laser = 10
-	bomb = 10
+	bomb = 80
 	fire = 100
 	acid = 100
 
@@ -373,6 +373,7 @@
 		/obj/item/storage/toolbox/mechanical = 1,
 		/obj/item/storage/toolbox/electrical = 1,
 		/obj/item/inducer/orderable = 1,
+		/obj/item/reagent_containers/cup/fuelcanister = 1,
 	), src)
 
 /obj/structure/closet/crate/trashcart/laundry
