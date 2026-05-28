@@ -527,7 +527,7 @@
 	if(chosen)
 		do_suck(chosen, user)
 
-/// Additions check for sucking targets into the backpack.
+/// Additional checks for sucking targets into the backpack.
 /obj/item/slime_vacuum/proc/suck_checks(atom/movable/target, mob/user)
 	if(get_dist(user, target) > range)
 		return FALSE
