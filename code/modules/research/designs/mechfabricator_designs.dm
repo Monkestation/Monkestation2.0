@@ -1122,17 +1122,6 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
 
-/datum/design/borg_transform_science
-	name = "Science Module"
-	id = "borg_transform_science"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/transform/science
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT)
-	construction_time = 12 SECONDS
-	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
-	)
-
 /datum/design/borg_upgrade_science_apparatus_improvement_robotics
 	name = "Robotics Apparatus Improvement"
 	id = "borg_upgrade_science_apparatus_improvement_robotics"
@@ -1155,6 +1144,18 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_RESEARCH
 	)
 
+/datum/design/borg_upgrade_science_xenobiology
+	name = "Xenobiology Tools"
+	id = "borg_upgrade_science_xenobiology"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/science_xenobiology
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_RESEARCH
+	)
+
+/obj/item/borg/upgrade/science_xenobiology
 /datum/design/borg_upgrade_science_hypospray
 	name = "Scientific Hypospray"
 	id = "borg_upgrade_science_hypospray"

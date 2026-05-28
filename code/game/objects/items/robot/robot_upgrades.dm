@@ -656,12 +656,6 @@
 	icon_state = "module_honk"
 	new_model = /obj/item/robot_model/clown
 
-/obj/item/borg/upgrade/transform/science
-	name = "borg model picker (Science)"
-	desc = "Allows you to turn a cyborg into a science cyborg."
-	icon_state = "module_science"
-	new_model = /obj/item/robot_model/science
-
 /obj/item/borg/upgrade/extra_sheet_manipulator
 	name = "secondary material manipulation apparatus"
 	desc = "A supplementary apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles."
@@ -893,6 +887,14 @@
 		/obj/item/transfer_valve
 	)
 
+/obj/item/borg/upgrade/science_xenobiology
+	name = "science xenobiology upgrade"
+	desc = "An upgrade for science cyborgs that enables them to perform work in xenobiology."
+	items_to_add = list(
+		/obj/item/slime_vacuum,
+		/obj/item/storage/bag/xeno
+	)
+
 /obj/item/borg/upgrade/science_hypospray
 	name = "science hypospray upgrade"
 	desc = "An upgrade for science cyborgs that significantly improves their reagent transfer capabilities."
@@ -907,3 +909,5 @@
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/dropper
 	)
+
+

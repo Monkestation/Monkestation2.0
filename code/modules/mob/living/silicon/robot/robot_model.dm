@@ -989,8 +989,6 @@
 		/obj/item/nanite_scanner, // Nanite remote not included because it is an upgrade.
 		/obj/item/borg/apparatus/sheet_manipulator, // This is needed for material scans.
 		/obj/item/borg/apparatus/circuit/science,
-		/obj/item/slime_vacuum,
-		/obj/item/storage/bag/xeno,
 		/obj/item/analyzer,
 		/obj/item/assembly/signaler, // Ordiance is an upgrade.
 		/obj/item/borg/apparatus/beaker,
