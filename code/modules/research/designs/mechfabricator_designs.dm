@@ -1332,17 +1332,6 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
 
-/datum/design/borg_upgrade_broomer
-	name = "Experimental Push Broom"
-	id = "borg_upgrade_broomer"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/broomer
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*2, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
-	construction_time = 120
-	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
-	)
-
 /datum/design/borg_upgrade_advanalyzer
 	name = "Advanced Health Analyzer"
 	id = "borg_upgrade_advanalyzer"
