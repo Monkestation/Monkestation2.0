@@ -1002,6 +1002,8 @@
 	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
 	cyborg_base_icon = "science"
 	model_select_icon = "science"
+	hat_offset = 3
+	badge_offset = 3
 	borg_skins = list(
 		"Science" = list(
 			SKIN_ICON_STATE = "science"
@@ -1009,10 +1011,14 @@
 		"Eyebot" = list(
 			SKIN_ICON_STATE = "science_eyebot",
 			SKIN_LIGHT_KEY = "science_eyebot",
+			SKIN_HAT_OFFSET = INFINITY,
+			SKIN_BADGE_OFFSET = INFINITY
 		),
 		"Drone" = list(
 			SKIN_ICON_STATE = "science_drone",
-			SKIN_ICON_STATE = "science_drone"
+			SKIN_ICON_STATE = "science_drone",
+			SKIN_HAT_OFFSET = INFINITY,
+			SKIN_BADGE_OFFSET = INFINITY
 		)
 	)
 

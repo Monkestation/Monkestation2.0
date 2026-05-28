@@ -13,6 +13,7 @@ GLOBAL_LIST_EMPTY(cyborg_base_models_icon_list)
 			"Miner" = /obj/item/robot_model/miner,
 			"Janitor" = /obj/item/robot_model/janitor,
 			"Service" = /obj/item/robot_model/service,
+			"Science" = /obj/item/robot_model/science,
 			"Standard" = /obj/item/robot_model/standard,
 		)
 		if(!CONFIG_GET(flag/disable_peaceborg))
