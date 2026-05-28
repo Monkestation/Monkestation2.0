@@ -83,16 +83,6 @@
 	surplus = 30
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
 
-/datum/uplink_item/melees/martialarts/advanced
-	name = "Scroll of the Awakened Dragon"
-	desc = "A scroll penned by the infamous Awakened Dragon, penned with the blood of their \
-			disciples, it appears to have clues towards true enlightenment in the path of the Sleeping Carp."
-	cost = 25
-	surplus = 5 // Rare but not impossible.
-	item = /obj/item/book/granter/martial/carp/true
-	lock_other_purchases = TRUE
-	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS | UPLINK_SPY)
-
 /datum/uplink_item/melees/edagger
 	name = "Energy Dagger"
 	desc = "A dagger made of energy that looks and functions as a pen when off."
