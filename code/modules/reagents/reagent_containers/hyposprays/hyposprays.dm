@@ -398,10 +398,11 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 
 /obj/item/hypospray/scientific
 	name = "scientific hypospray"
-	desc = "A variant of the DeForest Medical Corporation hypospray that is not quite as good as the original counterpart, but serves as an adequate means of moving around reagents. "
+	desc = "A variant of the DeForest Medical Corporation hypospray that is not quite as good as the original counterpart, but serves as an adequate tool for transferring reagents."
 	inject_other = 3 SECONDS // The same exact speed as a syringe.
 	spray_other = 3 SECONDS
 	draw_other = 3 SECONDS
+	default_vial = /obj/item/reagent_containers/cup/vial
 
 //combat
 

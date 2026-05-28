@@ -647,8 +647,7 @@
 		return
 	if(!new_model)
 		return FALSE
-	if(!borg.model.transform_to(new_model, FALSE))
-		return FALSE
+	borg.model.transform_to(new_model, FALSE)
 
 /obj/item/borg/upgrade/transform/clown
 	name = "borg model picker (Clown)"
