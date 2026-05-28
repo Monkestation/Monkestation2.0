@@ -80,6 +80,7 @@
 		/obj/item/clockwork/clockwork_slab,
 		/obj/item/holotool,
 		/obj/item/gun/energy/plasmacutter,
+		/obj/item/rwd,
 	))
 
 /obj/item/storage/belt/utility/chief

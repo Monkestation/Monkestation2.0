@@ -1,5 +1,5 @@
 /// How many seconds between each fuel depletion tick ("use" proc)
-#define WELDER_FUEL_BURN_INTERVAL 1 SECOND
+#define WELDER_FUEL_BURN_INTERVAL 0.5 SECOND
 /obj/item/weldingtool
 	name = "welding tool"
 	desc = "A standard edition welder provided by Nanotrasen."
