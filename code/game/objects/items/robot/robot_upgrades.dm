@@ -643,19 +643,23 @@
 
 /obj/item/borg/upgrade/transform/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if(. && new_model)
-		borg.model.transform_to(new_model, FALSE)
+	if(!.)
+		return
+	if(!new_model)
+		return FALSE
+	if(!borg.model.transform_to(new_model, FALSE))
+		return FALSE
 
 /obj/item/borg/upgrade/transform/clown
 	name = "borg model picker (Clown)"
-	desc = "Allows you to to turn a cyborg into a clown, honk."
+	desc = "Allows you to turn a cyborg into a clown, honk."
 	icon_state = "module_honk"
 	new_model = /obj/item/robot_model/clown
 
 /obj/item/borg/upgrade/transform/science
 	name = "borg model picker (Science)"
-	desc = "Allows you to to turn a cyborg into a science cyborg."
-	icon_state = "module_general"
+	desc = "Allows you to turn a cyborg into a science cyborg."
+	icon_state = "module_science"
 	new_model = /obj/item/robot_model/science
 
 /obj/item/borg/upgrade/extra_sheet_manipulator
