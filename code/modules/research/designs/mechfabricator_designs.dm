@@ -1155,7 +1155,6 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_RESEARCH
 	)
 
-/obj/item/borg/upgrade/science_xenobiology
 /datum/design/borg_upgrade_science_hypospray
 	name = "Scientific Hypospray"
 	id = "borg_upgrade_science_hypospray"
