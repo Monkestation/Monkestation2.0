@@ -983,23 +983,25 @@
 		/obj/item/borg/cyborg_omnitool/engineering,
 		/obj/item/weldingtool/largetank/cyborg,
 		/obj/item/stack/cable_coil,
-		/obj/item/experi_scanner, // Material Scans will require cooperation. Pester your engineering cyborg for help.
-		/obj/item/nanite_scanner, // Remote is an upgrade.
+		/obj/item/borg/apparatus/sheet_manipulator, // This ieeded for material scans.
+		/obj/item/experi_scanner,
+		/obj/item/nanite_scanner, // Nanite remote not included because it is an upgrade.
+		/obj/item/borg/apparatus/circuit/science,
 		/obj/item/slime_vacuum,
 		/obj/item/storage/bag/xeno,
 		/obj/item/analyzer,
-		/obj/item/assembly/signaler, // We are only allowing anomaly defusing. You will need hands for actual ordiance.
+		/obj/item/assembly/signaler, // We are only allowing anomaly defusing. You will need hands for early ordiance.
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/borg/apparatus/beaker, // We trust that they will not act like chemistry.
 		/obj/item/borg/apparatus/organ_storage/limb, // They need to be able to hold limbs to hit artifacts with it.
-		/obj/item/borg/apparatus/circuit/science,
 	)
 	emag_modules = list(
-		// TODO: Should they be allowed to interact with TTVs?
-		// TODO: Should they be allowed to (un)lock cyborg covers?
-		// TODO: Should they be able to create & upgrade cyborgs?
+		// ? Should they be allowed to interact with TTVs?
+		// ? Should they be allowed to (un)lock cyborg covers?
+		// ? Should they be able to create & upgrade cyborgs?
 		// !! Note for the above cyborg-related capabilities, it must be gated; it should be either emag (here) or some form of upgrade.
+		/obj/item/borg/apparatus/circuit/ordnance, // TODO: Add a form of /emag_act to models themselves instead of needing to create a new item for this.
 		/obj/item/syndicate_teleporter, // Perhaps they should get something more unique than this.
 	)
 	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)

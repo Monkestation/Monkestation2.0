@@ -78,6 +78,17 @@
 	if(!CONFIG_GET(flag/disable_secborg))
 		design_ids += "borg_upgrade_disablercooler"
 
+/datum/techweb_node/cyborg_upg_research
+	id = "cyborg_upg_research"
+	display_name = "Cyborg Upgrades: Research"
+	description = "They're taking our jobs!"
+	prereq_ids = list("cyborg_upg_med", "cyborg_upg_engiminer")
+	design_ids = list(
+		"borg_transform_science"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
+
 // Implants root node
 /datum/techweb_node/subdermal_implants
 	id = "subdermal_implants"
