@@ -837,7 +837,7 @@
 	icon_state = "module_science"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/science)
-	model_flags = BORG_MODEL_RESEARCH
+	model_flags = BORG_MODEL_SCIENCE
 	var/list/storables_to_add = list()
 
 /obj/item/borg/upgrade/science_apparatus_improvement/action(mob/living/silicon/robot/borg, mob/living/user = usr)
@@ -893,7 +893,7 @@
 	icon_state = "module_science"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/science)
-	model_flags = BORG_MODEL_RESEARCH
+	model_flags = BORG_MODEL_SCIENCE
 	items_to_add = list(
 		/obj/item/slime_vacuum,
 		/obj/item/storage/bag/xeno
@@ -905,7 +905,7 @@
 	icon_state = "module_science"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/science)
-	model_flags = BORG_MODEL_RESEARCH
+	model_flags = BORG_MODEL_SCIENCE
 	items_to_add = list(
 		/obj/item/hypospray/scientific
 	)
