@@ -1,5 +1,38 @@
 /obj/item/borg/sight
+	desc = "The module of additional sensors is activated in the upper panel. Retention in the active module is not required."
 	var/sight_mode = null
+	actions_types = list(/datum/action/item_action/borg_sight)
+
+/obj/item/borg/sight/ui_action_click(mob/user, actiontype)
+	var/mob/living/silicon/robot/borg = user
+	if(borg.sight_mode)
+		borg.sight_mode = 0
+		borg.update_sight()
+	else
+		borg.sight_mode |= sight_mode
+		borg.update_sight()
+
+/datum/action/item_action/borg_sight
+	name = "Switch Optical Sensors"
+	desc = "Switches the optical sensors of the cyborg to alternative available models."
+
+///////////////////////////////////////
+
+/*
+/obj/item/borg/sight/equipped(mob/living/silicon/robot/user, slot, initial = FALSE)
+	. = ..()
+	if(!iscyborg(user))
+		return .
+	user.sight_mode |= sight_mode
+	user.update_sight()
+
+/obj/item/borg/sight/dropped(mob/living/silicon/robot/user, silent)
+	if(!iscyborg(user))
+		return ..()
+	user.sight_mode &= ~sight_mode
+	user.update_sight()
+	return ..()
+*/
 
 /obj/item/borg/sight/xray
 	name = "\proper X-ray vision"
