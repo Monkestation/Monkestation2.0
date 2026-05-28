@@ -186,7 +186,7 @@
 		spawned.throw_at(interacting_with, min(get_dist(user, interacting_with), (illegal ? 5 : 11)), 1, user, gentle = TRUE) // Gentle so that eggs have 50% instead of 12.5% to spawn a chick.
 
 	var/launcher_name = requires_nozzle ? nozzle.name : src.name
-	user.visible_message(span_warning("[user] shoots [spawned] out their [item_shooter_name]!"), span_notice("You fabricate and shoot [spawned] out of your [launcher_name]."))
+	user.visible_message(span_warning("[user] shoots [spawned] out their [launcher_name]!"), span_notice("You fabricate and shoot [spawned] out of your [launcher_name]."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/slime_vacuum/multitool_act(mob/living/user, obj/item/tool)
