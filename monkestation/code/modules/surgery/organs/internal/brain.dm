@@ -768,20 +768,13 @@ ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use t
 		if(damage > BRAIN_DAMAGE_MILD)
 			to_chat(owner, span_warning("Alert: Minor corruption in central processing unit. Error Code: 001-HP"))
 
-/*
-/obj/item/organ/internal/brain/synth/circuit
-	name = "compact AI circuit"
-	desc = "A compact and extremely complex circuit, perfectly dimensioned to fit in the same slot as a synthetic-compatible positronic brain. It is usually slotted into the chest of synthetic crewmembers."
-	icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi'
-	icon_state = "circuit-occupied"
-	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-*/
-
 /obj/item/organ/internal/brain/synth/mmi
 	name = "compact man-machine interface"
 	desc = "A compact man-machine interface, perfectly dimensioned to fit in the same slot as a synthetic-compatible positronic brain. Unfortunately, the brain seems to be permanently attached to the circuitry, and it seems relatively sensitive to it's environment. It is usually slotted into the chest of synthetic crewmembers."
 	icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi'
 	icon_state = "mmi-ipc"
+
+/obj/item/organ/internal/brain/synth/irc
+	name = "compact	"
+	desc = "A compact internal radio component, perfectly dimensioned to fit in the same slot as a synthetic-compatible positronic brain. It is usually slotted into the chest of synthetic crewmembers."
 
