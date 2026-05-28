@@ -7276,7 +7276,6 @@
 #include "monkestation\code\modules\bloodsuckers\bloodsucker\bloodsucker_datum.dm"
 #include "monkestation\code\modules\bloodsuckers\bloodsucker\bloodsucker_flaws.dm"
 #include "monkestation\code\modules\bloodsuckers\bloodsucker\bloodsucker_frenzy.dm"
-#include "monkestation\code\modules\bloodsuckers\bloodsucker\bloodsucker_guardian.dm"
 #include "monkestation\code\modules\bloodsuckers\bloodsucker\bloodsucker_hud.dm"
 #include "monkestation\code\modules\bloodsuckers\bloodsucker\bloodsucker_life.dm"
 #include "monkestation\code\modules\bloodsuckers\bloodsucker\bloodsucker_misc_procs.dm"
