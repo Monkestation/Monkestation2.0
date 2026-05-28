@@ -284,7 +284,7 @@
 	if(!linked)
 		return
 	. += span_notice("Right click in hand to select the type of creature to spawn.")
-	. += span_info("It is currently set to spawn a [name_of_mobs[selected_creature]]")
+	. += span_info("It is currently set to spawn a [name_of_mobs[selected_creature]].")
 	. += span_info("It has [linked.stored_matter] unit\s of biomass.")
 
 
