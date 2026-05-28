@@ -146,7 +146,7 @@
 			span_userdanger("[attacker] pinches something in your neck, and you fall unconscious!"),
 		)
 		grab_log_description = "grabbed and nerve pinched"
-		defender.Unconscious(6 SECONDS)
+		defender.Unconscious(10 SECONDS)
 		if(old_grab_state == GRAB_PASSIVE || old_grab_state == GRAB_AGGRESSIVE && instant_grab == TRUE)
 			attacker.setGrabState(GRAB_NECK)
 			defender.grabbedby(attacker, 1)
