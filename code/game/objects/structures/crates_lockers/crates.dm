@@ -375,7 +375,7 @@
 		/obj/item/inducer/orderable = 1,
 		/obj/item/reagent_containers/cup/fuelcanister/full = 1,
 		/obj/item/clothing/head/cone = 5,
-		/obj/item/rwd = 1,
+		/obj/item/rwd/loaded = 1,
 	), src)
 
 /obj/structure/closet/crate/trashcart/laundry
