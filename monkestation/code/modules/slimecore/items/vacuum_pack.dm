@@ -22,7 +22,7 @@
 	name = "Toggle Vacuum Nozzle"
 
 /obj/item/slime_vacuum
-	name = "slime vaccum"
+	name = "slime vacuum"
 	desc = "A large nozzle that sucks in slimes."
 	icon = 'monkestation/code/modules/slimecore/icons/equipment.dmi'
 	icon_state = "vacuum_nozzle"
