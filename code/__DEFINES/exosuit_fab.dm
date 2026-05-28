@@ -10,6 +10,8 @@
 #define BORG_MODEL_ENGINEERING (1<<4)
 /// Module is compatible with Peacekeeper Cyborg model
 #define BORG_MODEL_PEACEKEEPER (1<<5)
+/// Module is compatible with Research Cyborg model
+#define BORG_MODEL_RESEARCH (1<<6)
 
 /// Module is compatible with Ripley Exosuit models
 #define EXOSUIT_MODULE_RIPLEY (1<<0)

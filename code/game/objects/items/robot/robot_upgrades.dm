@@ -831,3 +831,80 @@
 		return .
 	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
 		omnitool.set_upgraded(FALSE)
+
+//
+// Science Cyborgs
+//
+
+// This is a base item which should be inherited from.
+/obj/item/borg/upgrade/science_apparatus_improvement
+	name = "science apparatus upgrade"
+	desc = "An upgrade for science cyborgs that enables them to hold and manipulate more items with their apparatus."
+	icon_state = "module_research"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/science)
+	model_flags = BORG_MODEL_RESEARCH
+	var/list/storables_to_add = list()
+
+/obj/item/borg/upgrade/science_apparatus_improvement/action(mob/living/silicon/robot/cyborg, mob/living/user = usr)
+	. = ..()
+	if(!.)
+		return .
+	var/obj/item/borg/apparatus/circuit/science/apparatus = locate() in borg.model.modules
+	if(isnull(apparatus))
+		to_chat(user, span_warning("This cyborg doesn't have an apparatus to upgrade!"))
+		return FALSE
+	if(!length(storables_to_add))
+		to_chat(user, span_warning("This upgrade doesn't seem to do anything!"))
+		return FALSE
+	apparatus.storable |= storables_to_add
+
+/obj/item/borg/upgrade/science_apparatus_improvement/deactivate(mob/living/silicon/robot/cyborg, mob/living/user = usr)
+	. = ..()
+	if(!.)
+		return .
+	var/obj/item/borg/apparatus/circuit/science/apparatus = locate() in borg.model.modules
+	if(isnull(apparatus))
+		return FALSE
+	if(!length(storables_to_add))
+		return FALSE
+	apparatus.storable -= storables_to_add
+
+/obj/item/borg/upgrade/science_apparatus_improvement/robotics
+	name = "science robotics upgrade"
+	desc = "An upgrade for science cyborgs that enables them to hold and manipulate robotics-adjacent items."
+	storables_to_add = list(
+		/obj/item/borg_restart_board,
+		/obj/item/borg/upgrade,
+		/obj/item/mmi,
+		/obj/item/assembly/flash,
+		/obj/item/bodypart/arm/left/robot,
+		/obj/item/bodypart/arm/right/robot,
+		/obj/item/bodypart/leg/left/robot,
+		/obj/item/bodypart/leg/right/robot,
+		/obj/item/bodypart/chest/robot,
+		/obj/item/bodypart/head/robot,
+	)
+
+/obj/item/borg/upgrade/science_apparatus_improvement/ordnance
+	name = "science ordnance upgrade"
+	desc = "An upgrade for science cyborgs that enables them to hold and manipulate ordnance-adjacent items."
+	storables_to_add = list(
+		/obj/item/tank/internals,
+		/obj/item/transfer_valve
+	)
+
+/obj/item/borg/upgrade/science_hypospray
+	name = "science hypospray upgrade"
+	desc = "An upgrade for science cyborgs that significantly improves their reagent transfer capabilities."
+	icon_state = "module_research"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/science)
+	model_flags = BORG_MODEL_RESEARCH
+	items_to_add = list(
+		/obj/item/hypospray/scientific
+	)
+	items_to_remove = list(
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/dropper
+	)

@@ -347,14 +347,6 @@
 		/obj/item/slime_mutation_syringe
 	)
 
-/obj/item/borg/apparatus/circuit/ordnance
-	name = "ordnance manipulation apparatus"
-	desc = "A special apparatus for carrying ordnance-related items."
-	storable = list(
-		/obj/item/tank/internals,
-		/obj/item/transfer_valve
-	)
-
 //apparatus to allow borgs to cook
 /obj/item/borg/apparatus/cooking
 	name = "service storage apparatus"

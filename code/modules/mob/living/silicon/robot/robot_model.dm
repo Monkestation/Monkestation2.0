@@ -997,11 +997,6 @@
 		/obj/item/borg/apparatus/organ_storage/limb, // They need to be able to hold limbs to hit artifacts with it.
 	)
 	emag_modules = list(
-		// ? Should they be allowed to interact with TTVs?
-		// ? Should they be allowed to (un)lock cyborg covers?
-		// ? Should they be able to create & upgrade cyborgs?
-		// !! Note for the above cyborg-related capabilities, it must be gated; it should be either emag (here) or some form of upgrade.
-		/obj/item/borg/apparatus/circuit/ordnance, // TODO: Add a form of /emag_act to models themselves instead of needing to create a new item for this.
 		/obj/item/syndicate_teleporter, // Perhaps they should get something more unique than this.
 	)
 	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)

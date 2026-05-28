@@ -84,9 +84,12 @@
 	description = "They're taking our jobs!"
 	prereq_ids = list("cyborg_upg_med", "cyborg_upg_engiminer")
 	design_ids = list(
-		"borg_transform_science"
+		"borg_transform_science",
+		"borg_upgrade_science_apparatus_improvement_robotics",
+		"borg_upgrade_science_apparatus_improvement_ordnance",
+		"borg_upgrade_science_hypospray",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 // Implants root node
