@@ -149,6 +149,17 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		add_to_upgrades(U, user)
 		return
 
+	if(istype(attacking_item, /obj/item/borg/apparatus/circuit) && user != src && cell && opened && !wiresexposed)
+		var/obj/item/borg/apparatus/circuit/robo_hand = attacking_item
+		if(robo_hand.stored == null)
+			to_chat(user, span_notice("You remove [cell]."))
+			cell.update_appearance()
+			cell.add_fingerprint(user)
+			user.put_in_hands(cell)
+			update_icons()
+			diag_hud_set_borgcell()
+			return
+
 	if(istype(attacking_item, /obj/item/toner))
 		if(toner >= tonermax)
 			to_chat(user, span_warning("The toner level of [src] is at its highest level possible!"))
@@ -364,6 +375,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	else
 		GLOB.lawchanges.Add("[time] <B>:</B> [name]([key]) emagged by external event.")
 
+	model.rebuild_modules()
+
 	INVOKE_ASYNC(src, PROC_REF(borg_emag_end), user)
 	return TRUE
 
@@ -426,3 +439,19 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(!hitting_projectile.is_hostile_projectile() || hitting_projectile.damage <= 0)
 		return
 	spark_system.start()
+
+/mob/living/silicon/robot/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, bare_wound_bonus, sharpness, attack_direction, obj/item/attacking_item)
+	var/mob/living/silicon/robot/borg = src
+	var/datum/action/cooldown/cyborg_miner_shield/shield = locate(/datum/action/cooldown/cyborg_miner_shield) in borg.actions
+	if(!shield || !shield.active)
+		return ..()
+	if(!lavaland_equipment_pressure_check(get_turf(borg)))
+		balloon_alert(borg, "the shield didn't absorb the damage!")
+		return ..()
+	playsound(src, 'sound/mecha/mech_shield_deflect.ogg', 100, TRUE)
+	balloon_alert(borg, "absorbed!")
+	borg.cell.use(damage * (STANDARD_CELL_CHARGE / 15), force = TRUE)
+	damage *= 0.5
+	if(!borg.cell.charge())
+		shield.Activate() // Turns it off.
+	return ..()

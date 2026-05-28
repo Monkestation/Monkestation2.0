@@ -431,11 +431,16 @@ monkestation end */
 
 /obj/item/mod/module/stealth/wraith
 	name = "MOD Wraith Cloaking Module"
-	desc = "A more destructive adaptation of the stealth module."
+	desc = "A more destructive adaptation of the stealth module. Incompatible with armor modules"
 	icon_state = "cloak_traitor"
 	stealth_alpha = 30
 	module_type = MODULE_ACTIVE
 	cooldown_time = 2 SECONDS
+	incompatible_modules = list(/obj/item/mod/module/stealth, /obj/item/mod/module/welding/syndicate)
+	/// How much time before we are able to cloak again after the cloak is broken (not disabled)
+	COOLDOWN_DECLARE(recloak_timer)
+	/// If the stealth portion of the module is active
+	var/stealth_active = FALSE
 
 /obj/item/mod/module/stealth/wraith/on_select_use(atom/target)
 	. = ..()
@@ -445,38 +450,50 @@ monkestation end */
 		balloon_alert(mod.wearer, "can't reach that!")
 		return
 	if(istype(target, /obj/machinery/power/apc)) //Bit too strong for a module so this is blacklisted
-		balloon_alert(mod.wearer, "cant disable apc!")
+		balloon_alert(mod.wearer, "can't disable apc!")
 		return
 
 	var/list/things_to_disrupt = list(target)
-	if(iscarbon(target))
-		var/mob/living/carbon/carbon_target = target
-		things_to_disrupt += carbon_target.get_all_gear()
+	if(isliving(target))
+		var/mob/living/live_target = target
+		things_to_disrupt += live_target.get_all_gear()
 
 	for(var/atom/disrupted as anything in things_to_disrupt)
 		if(disrupted.on_saboteur(src, 1 MINUTES))
 			mod.add_charge(DEFAULT_CHARGE_DRAIN * 250)
 
+/obj/item/mod/module/stealth/wraith/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
+	. = ..()
+	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_MOB_BUMP, COMSIG_ATOM_BUMPED, COMSIG_MOB_FIRED_GUN))
+
 /obj/item/mod/module/stealth/wraith/on_suit_activation()
-	// remove the `override = TRUE`s if/when https://github.com/tgstation/tgstation/pull/88010 is ever ported ~Lucy
-	if(bumpoff)
-		RegisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP, PROC_REF(unstealth), override = TRUE)
+	start_stealth()
+
+/obj/item/mod/module/stealth/wraith/on_suit_deactivation(deleting)
+	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED, COMSIG_LIVING_MOB_BUMP, COMSIG_ATOM_BUMPED, COMSIG_MOB_FIRED_GUN))
+	animate(mod.wearer, alpha = 255, time = 1.5 SECONDS)
+	stealth_active = FALSE
+
+/obj/item/mod/module/stealth/wraith/proc/start_stealth()
+	if(!COOLDOWN_FINISHED(src, recloak_timer)) // Prevents being able to bypass the cooldown by disabling and re-enabling the module
+		addtimer(CALLBACK(src, PROC_REF(start_stealth)), COOLDOWN_TIMELEFT(src, recloak_timer))
+		return
+	RegisterSignals(mod.wearer, list(COMSIG_LIVING_MOB_BUMP, COMSIG_ATOM_BUMPED, COMSIG_MOB_FIRED_GUN), PROC_REF(unstealth), override = TRUE)
 	RegisterSignal(mod.wearer, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack), override = TRUE)
 	RegisterSignal(mod.wearer, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act), override = TRUE)
 	RegisterSignals(mod.wearer, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), PROC_REF(unstealth), override = TRUE)
 	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
 	drain_power(use_energy_cost)
-
-/obj/item/mod/module/stealth/wraith/on_suit_deactivation(deleting)
-	if(bumpoff)
-		UnregisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP)
-	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED))
-	animate(mod.wearer, alpha = 255, time = 1.5 SECONDS)
+	stealth_active = TRUE
 
 /obj/item/mod/module/stealth/wraith/unstealth(datum/source)
+	if(!stealth_active)
+		return
 	. = ..()
 	if(mod.active)
-		addtimer(CALLBACK(src, PROC_REF(on_suit_activation)), 5 SECONDS)
+		COOLDOWN_START(src, recloak_timer, 10 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(start_stealth)), 10 SECONDS)
+		stealth_active = FALSE
 
 /obj/item/mod/module/stealth/wraith/examine_more(mob/user)
 	. = ..()
