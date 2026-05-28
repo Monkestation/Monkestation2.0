@@ -24,12 +24,12 @@
 	id = "cyborg_upg_engiminer"
 	display_name = "Cyborg Upgrades: Engineering & Mining"
 	description = "Engineering and Mining upgrades for cyborgs."
-	prereq_ids = list("adv_engi", "basic_mining", "cyborg")
+	prereq_ids = list("practical_bluespace", "adv_engi", "basic_mining", "cyborg")
 	design_ids = list(
 		"borg_upgrade_diamonddrill",
 		"borg_upgrade_holding",
 		"borg_upgrade_lavaproof",
-		"borg_upgrade_rped",
+		"borg_upgrade_bs_rped",
 		"borg_upgrade_extra_sheet_manipulator",
 		"borg_upgrade_charger",
 		"borg_upgrade_nvmeson"

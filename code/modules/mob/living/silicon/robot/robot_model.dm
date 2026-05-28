@@ -388,6 +388,7 @@
 		/obj/item/weldingtool/largetank/cyborg,
 		/obj/item/borg/cyborg_omnitool/engineering,
 		/obj/item/borg/cyborg_omnitool/engineering,
+		/obj/item/storage/part_replacer/cyborg,
 		/obj/item/lightreplacer,
 		/obj/item/borg/apparatus/circuit,
 		/obj/item/t_scanner,
@@ -983,6 +984,7 @@
 		/obj/item/borg/cyborg_omnitool/engineering,
 		/obj/item/weldingtool/largetank/cyborg,
 		/obj/item/stack/cable_coil,
+		/obj/item/storage/part_replacer/cyborg,
 		/obj/item/experi_scanner,
 		/obj/item/nanite_scanner, // Nanite remote not included because it is an upgrade.
 		/obj/item/borg/apparatus/sheet_manipulator, // This is needed for material scans.
@@ -990,8 +992,8 @@
 		/obj/item/slime_vacuum,
 		/obj/item/storage/bag/xeno,
 		/obj/item/analyzer,
-		/obj/item/assembly/signaler, // We are only allowing anomaly defusing. You will need hands for early ordiance.
-		/obj/item/borg/apparatus/beaker, // We trust that they will not act like chemistry.
+		/obj/item/assembly/signaler, // Ordiance is an upgrade.
+		/obj/item/borg/apparatus/beaker,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/borg/apparatus/organ_storage/limb, // They need to be able to hold limbs to hit artifacts with it.
@@ -1081,6 +1083,7 @@
 		/obj/item/weldingtool/largetank/cyborg,
 		/obj/item/borg/cyborg_omnitool/engineering/syndie,
 		/obj/item/borg/cyborg_omnitool/engineering/syndie,
+		/obj/item/storage/part_replacer/cyborg,
 		/obj/item/borg/apparatus/circuit,
 		/obj/item/analyzer,
 		/obj/item/stack/sheet/iron,

@@ -591,14 +591,15 @@
 		borg.hasExpanded = FALSE
 		borg.update_transform(0.5)
 
-/obj/item/borg/upgrade/rped
-	name = "engineering cyborg RPED"
-	desc = "A rapid part exchange device for the engineering cyborg."
+/obj/item/borg/upgrade/bs_rped
+	name = "engineering cyborg bluespace RPED"
+	desc = "A bluespace rapid part exchange device for the engineering cyborg."
 	icon_state = "module_engineer"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur, /obj/item/robot_model/science)
 	model_flags = BORG_MODEL_ENGINEERING
-	items_to_add = list(/obj/item/storage/part_replacer/cyborg)
+	items_to_remove = list(/obj/item/storage/part_replacer/cyborg)
+	items_to_add = list(/obj/item/storage/part_replacer/bluespace)
 
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"
@@ -720,7 +721,7 @@
 			Allowing the cyborg to signal nanites in crew."
 	icon_state = "module_peace"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/peacekeeper, /obj/item/robot_model/security)
+	model_type = list(/obj/item/robot_model/peacekeeper, /obj/item/robot_model/security, /obj/item/robot_model/science)
 	model_flags = BORG_MODEL_PEACEKEEPER
 	items_to_add = list(/obj/item/nanite_remote/cyborg)
 
@@ -845,7 +846,7 @@
 	model_flags = BORG_MODEL_RESEARCH
 	var/list/storables_to_add = list()
 
-/obj/item/borg/upgrade/science_apparatus_improvement/action(mob/living/silicon/robot/cyborg, mob/living/user = usr)
+/obj/item/borg/upgrade/science_apparatus_improvement/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -858,7 +859,7 @@
 		return FALSE
 	apparatus.storable |= storables_to_add
 
-/obj/item/borg/upgrade/science_apparatus_improvement/deactivate(mob/living/silicon/robot/cyborg, mob/living/user = usr)
+/obj/item/borg/upgrade/science_apparatus_improvement/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .

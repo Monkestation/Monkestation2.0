@@ -1277,13 +1277,13 @@
 	)
 	search_metadata = "boris"
 
-/datum/design/borg_upgrade_rped
-	name = "Rapid Part Exchange Device"
-	id = "borg_upgrade_rped"
+/datum/design/borg_upgrade_bs_rped
+	name = "Bluespace Rapid Part Exchange Device"
+	id = "borg_upgrade_bs_rped"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/rped
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*5, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5)
-	construction_time = 120
+	build_path = /obj/item/borg/upgrade/bs_rped
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 2.5)
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
 	)
