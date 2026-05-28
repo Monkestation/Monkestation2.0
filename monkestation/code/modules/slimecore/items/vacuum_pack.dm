@@ -710,7 +710,7 @@
 	icon_state = "rndmajordisk"
 	var/upgrade_type
 
-/obj/item/disk/vacuum_upgrade/proc/on_upgrade(obj/item/slime_vacuum/vaccum)
+/obj/item/disk/vacuum_upgrade/proc/on_upgrade(obj/item/vacuum_pack/vaccum)
 
 /obj/item/disk/vacuum_upgrade/stasis
 	name = "vacuum pack stasis upgrade disk"
@@ -722,7 +722,7 @@
 	desc = "An upgrade disk for a backpack vacuum xenofauna storage that makes the pack passively heal all the slimes inside of it."
 	upgrade_type = VACUUM_PACK_UPGRADE_HEALING
 
-/obj/item/disk/vacuum_upgrade/healing/on_upgrade(obj/item/slime_vacuum/vaccum)
+/obj/item/disk/vacuum_upgrade/healing/on_upgrade(obj/item/vacuum_pack/vaccum)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/disk/vacuum_upgrade/capacity
@@ -730,7 +730,7 @@
 	desc = "An upgrade disk for a backpack vacuum xenofauna storage that expands it's internal slime storage."
 	upgrade_type = VACUUM_PACK_UPGRADE_CAPACITY
 
-/obj/item/disk/vacuum_upgrade/capacity/on_upgrade(obj/item/slime_vacuum/vaccum)
+/obj/item/disk/vacuum_upgrade/capacity/on_upgrade(obj/item/vacuum_pack/vaccum)
 	vaccum.capacity = UPGRADED_VACUUM_PACK_CAPACITY
 
 /obj/item/disk/vacuum_upgrade/range
@@ -738,7 +738,7 @@
 	desc = "An upgrade disk for a backpack vacuum xenofauna storage that strengthens it's pump and allows it to reach further."
 	upgrade_type = VACUUM_PACK_UPGRADE_RANGE
 
-/obj/item/disk/vacuum_upgrade/range/on_upgrade(obj/item/slime_vacuum/vaccum)
+/obj/item/disk/vacuum_upgrade/range/on_upgrade(obj/item/vacuum_pack/vaccum)
 	vaccum.range = UPGRADED_VACUUM_PACK_RANGE
 
 /obj/item/disk/vacuum_upgrade/speed
@@ -746,7 +746,7 @@
 	desc = "An upgrade disk for a backpack vacuum xenofauna storage that upgrades it's motor and allows it to suck slimes up faster."
 	upgrade_type = VACUUM_PACK_UPGRADE_SPEED
 
-/obj/item/disk/vacuum_upgrade/speed/on_upgrade(obj/item/slime_vacuum/vaccum)
+/obj/item/disk/vacuum_upgrade/speed/on_upgrade(obj/item/vacuum_pack/vaccum)
 	vaccum.speed = UPGRADED_VACUUM_PACK_SPEED
 
 /obj/item/disk/vacuum_upgrade/pacification
