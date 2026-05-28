@@ -23239,8 +23239,8 @@
 	},
 /obj/item/storage/box/petridish,
 /obj/effect/turf_decal/siding/purple,
-/obj/item/vacuum_pack,
-/obj/item/vacuum_pack,
+/obj/item/slime_vacuum,
+/obj/item/slime_vacuum,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "fva" = (

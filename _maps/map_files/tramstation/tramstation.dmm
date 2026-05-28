@@ -25113,8 +25113,8 @@
 	dir = 4
 	},
 /obj/structure/table/glass,
-/obj/item/vacuum_pack,
-/obj/item/vacuum_pack,
+/obj/item/slime_vacuum,
+/obj/item/slime_vacuum,
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
 "gNu" = (

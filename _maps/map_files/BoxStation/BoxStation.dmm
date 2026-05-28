@@ -26036,7 +26036,7 @@
 	pixel_y = 8
 	},
 /obj/item/wirecutters,
-/obj/item/vacuum_pack,
+/obj/item/slime_vacuum,
 /obj/item/disk/vacuum_upgrade/biomass,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)

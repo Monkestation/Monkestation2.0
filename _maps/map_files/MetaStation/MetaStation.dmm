@@ -26437,8 +26437,8 @@
 	dir = 1
 	},
 /obj/item/disk/vacuum_upgrade/biomass,
-/obj/item/vacuum_pack,
-/obj/item/vacuum_pack,
+/obj/item/slime_vacuum,
+/obj/item/slime_vacuum,
 /obj/item/disk/vacuum_upgrade/biomass,
 /obj/structure/table/glass,
 /turf/open/floor/iron,
