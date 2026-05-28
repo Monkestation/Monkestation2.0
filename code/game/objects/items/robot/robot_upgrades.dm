@@ -840,7 +840,7 @@
 /obj/item/borg/upgrade/science_apparatus_improvement
 	name = "science apparatus upgrade"
 	desc = "An upgrade for science cyborgs that enables them to hold and manipulate more items with their apparatus."
-	icon_state = "module_research"
+	icon_state = "module_science"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/science)
 	model_flags = BORG_MODEL_RESEARCH
@@ -850,7 +850,7 @@
 	. = ..()
 	if(!.)
 		return .
-	var/obj/item/borg/apparatus/circuit/science/apparatus = locate() in borg.model.modules
+	var/obj/item/borg/apparatus/circuit/science/apparatus = locate() in cyborg.model.modules
 	if(isnull(apparatus))
 		to_chat(user, span_warning("This cyborg doesn't have an apparatus to upgrade!"))
 		return FALSE
@@ -863,7 +863,7 @@
 	. = ..()
 	if(!.)
 		return .
-	var/obj/item/borg/apparatus/circuit/science/apparatus = locate() in borg.model.modules
+	var/obj/item/borg/apparatus/circuit/science/apparatus = locate() in cyborg.model.modules
 	if(isnull(apparatus))
 		return FALSE
 	if(!length(storables_to_add))
@@ -872,7 +872,7 @@
 
 /obj/item/borg/upgrade/science_apparatus_improvement/robotics
 	name = "science robotics upgrade"
-	desc = "An upgrade for science cyborgs that enables them to hold and manipulate robotics-adjacent items."
+	desc = "An upgrade for science cyborgs that enables them to hold and manipulate robotics-related items."
 	storables_to_add = list(
 		/obj/item/borg_restart_board,
 		/obj/item/borg/upgrade,
@@ -888,7 +888,7 @@
 
 /obj/item/borg/upgrade/science_apparatus_improvement/ordnance
 	name = "science ordnance upgrade"
-	desc = "An upgrade for science cyborgs that enables them to hold and manipulate ordnance-adjacent items."
+	desc = "An upgrade for science cyborgs that enables them to hold and manipulate ordnance-related items."
 	storables_to_add = list(
 		/obj/item/tank/internals,
 		/obj/item/transfer_valve
@@ -897,7 +897,7 @@
 /obj/item/borg/upgrade/science_hypospray
 	name = "science hypospray upgrade"
 	desc = "An upgrade for science cyborgs that significantly improves their reagent transfer capabilities."
-	icon_state = "module_research"
+	icon_state = "module_science"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/science)
 	model_flags = BORG_MODEL_RESEARCH
