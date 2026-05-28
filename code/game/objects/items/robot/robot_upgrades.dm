@@ -886,7 +886,7 @@
 	model_type = list(/obj/item/robot_model/science)
 	model_flags = BORG_MODEL_SCIENCE
 	items_to_add = list(
-		/obj/item/slime_vacuum,
+		/obj/item/vacuum_pack,
 		/obj/item/storage/bag/xeno
 	)
 

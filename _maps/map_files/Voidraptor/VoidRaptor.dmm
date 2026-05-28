@@ -66233,11 +66233,11 @@
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/firealarm/directional/south,
-/obj/item/slime_vacuum,
-/obj/item/slime_vacuum,
-/obj/item/slime_vacuum,
-/obj/item/slime_vacuum,
-/obj/item/slime_vacuum,
+/obj/item/vacuum_pack,
+/obj/item/vacuum_pack,
+/obj/item/vacuum_pack,
+/obj/item/vacuum_pack,
+/obj/item/vacuum_pack,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},

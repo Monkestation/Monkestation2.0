@@ -21,7 +21,7 @@
 /datum/action/item_action/toggle_nozzle
 	name = "Toggle Vacuum Nozzle"
 
-/obj/item/slime_vacuum
+/obj/item/vacuum_pack
 	name = "slime vacuum"
 	desc = "A large nozzle that sucks in slimes."
 	icon = 'monkestation/code/modules/slimecore/icons/equipment.dmi'
@@ -85,20 +85,20 @@
 	var/busting_beam
 	COOLDOWN_DECLARE(busting_throw_cooldown)
 
-/obj/item/slime_vacuum/Destroy()
+/obj/item/vacuum_pack/Destroy()
 	linked = null
 	if(VACUUM_PACK_UPGRADE_HEALING in upgrades)
 		STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/slime_vacuum/process(seconds_per_tick)
+/obj/item/vacuum_pack/process(seconds_per_tick)
 	if(!(VACUUM_PACK_UPGRADE_HEALING in upgrades))
 		return PROCESS_KILL
 
 	for(var/mob/living/basic/animal in stored)
 		animal.adjustBruteLoss(-5 * seconds_per_tick)
 
-/obj/item/slime_vacuum/examine(mob/user)
+/obj/item/vacuum_pack/examine(mob/user)
 	. = ..()
 	if(LAZYLEN(stored))
 		. += span_notice("It has [LAZYLEN(stored)] creatures stored in it.")
@@ -109,23 +109,23 @@
 		return
 	. += get_nozzle_examine()
 
-/obj/item/slime_vacuum/equipped(mob/user, slot, initial)
+/obj/item/vacuum_pack/equipped(mob/user, slot, initial)
 	. = ..()
 	if(requires_nozzle)
 		return
 	handle_signal_registration(user)
 
-/obj/item/slime_vacuum/dropped(mob/user, silent)
+/obj/item/vacuum_pack/dropped(mob/user, silent)
 	. = ..()
 	if(requires_nozzle)
 		return
 	handle_signal_unregistration(user)
 
-/obj/item/slime_vacuum/attack_self(mob/user, modifiers)
+/obj/item/vacuum_pack/attack_self(mob/user, modifiers)
 	. = ..()
 	toggle_selective_mode(user)
 
-/obj/item/slime_vacuum/attack_self_secondary(mob/user, modifiers)
+/obj/item/vacuum_pack/attack_self_secondary(mob/user, modifiers)
 	. = ..()
 	if(requires_nozzle)
 		return
@@ -134,19 +134,19 @@
 		return
 	selected_creature = chosen_creature
 
-/obj/item/slime_vacuum/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/vacuum_pack/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(requires_nozzle && (QDELETED(nozzle) || nozzle.loc == src))
 		return NONE
 	if(!do_suck(interacting_with, user))
 		return NONE
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/slime_vacuum/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/vacuum_pack/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(requires_nozzle && (QDELETED(nozzle) || nozzle.loc == src))
 		return NONE
 	return interact_with_atom_secondary(interacting_with, user, modifiers)
 
-/obj/item/slime_vacuum/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/vacuum_pack/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(requires_nozzle && (QDELETED(nozzle) || nozzle.loc == src))
 		return NONE
 
@@ -189,12 +189,12 @@
 	user.visible_message(span_warning("[user] shoots [spawned] out their [launcher_name]!"), span_notice("You fabricate and shoot [spawned] out of your [launcher_name]."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/slime_vacuum/multitool_act(mob/living/user, obj/item/tool)
+/obj/item/vacuum_pack/multitool_act(mob/living/user, obj/item/tool)
 	modified = !modified
 	to_chat(user, span_notice("You turn the safety switch on [src] [modified ? "off" : "on"]."))
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/slime_vacuum/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/item/vacuum_pack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/disk/vacuum_upgrade))
 		return NONE
 
@@ -212,7 +212,7 @@
 	qdel(upgrade)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/slime_vacuum/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/vacuum_pack/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(istype(interacting_with, /obj/item/disk/vacuum_upgrade))
 		return item_interaction(user, interacting_with, modifiers)
 	if(istype(interacting_with, /obj/machinery/biomass_recycler))
@@ -225,16 +225,16 @@
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /// Registers signals associated with the item.
-/obj/item/slime_vacuum/proc/handle_signal_registration(mob/user)
+/obj/item/vacuum_pack/proc/handle_signal_registration(mob/user)
 	RegisterSignal(user, COMSIG_MOB_ALTCLICKON, PROC_REF(on_user_altclick), override = TRUE)
 
 /// Unregisters signals associated with the item.
-/obj/item/slime_vacuum/proc/handle_signal_unregistration(mob/user)
+/obj/item/vacuum_pack/proc/handle_signal_unregistration(mob/user)
 	UnregisterSignal(user, COMSIG_MOB_ALTCLICKON)
 	selecting_radial_target = FALSE
 
 /// Ttoggles selective mode if they are allowed to.
-/obj/item/slime_vacuum/proc/toggle_selective_mode(mob/user)
+/obj/item/vacuum_pack/proc/toggle_selective_mode(mob/user)
 	if(illegal)
 		return
 	selective_mode = !selective_mode
@@ -246,7 +246,7 @@
 	)
 
 /// Offers a radial menu to select what creature to shoot out.
-/obj/item/slime_vacuum/proc/choose_selected_creature(mob/user, atom/radial_anchor)
+/obj/item/vacuum_pack/proc/choose_selected_creature(mob/user, atom/radial_anchor)
 	if(!linked)
 		user.balloon_alert(user, "needs to be linked to biomass recycler!")
 		return
@@ -275,7 +275,7 @@
 	return spawn_type
 
 /// Gets additional examine information for its nozzle.
-/obj/item/slime_vacuum/proc/get_nozzle_examine()
+/obj/item/vacuum_pack/proc/get_nozzle_examine()
 	. = list()
 	if(!illegal)
 		. += span_notice("Activate to change firing modes. Currently set to [selective_mode ? "selective" : "indiscriminate"].")
@@ -289,7 +289,7 @@
 
 
 /// Tries to suck our target.
-/obj/item/slime_vacuum/proc/do_suck(atom/movable/target, mob/user)
+/obj/item/vacuum_pack/proc/do_suck(atom/movable/target, mob/user)
 	if(ghost_busting)
 		return FALSE
 
@@ -362,7 +362,7 @@
 
 
 /// Shoots out whatever is stored inside the vacuum.
-/obj/item/slime_vacuum/proc/spew_contents(atom/movable/target, mob/user)
+/obj/item/vacuum_pack/proc/spew_contents(atom/movable/target, mob/user)
 	if(LAZYLEN(stored) <= 0)
 		to_chat(user, span_warning("[src] is empty!"))
 		return
@@ -413,7 +413,7 @@
 	var/launcher_name = requires_nozzle && !QDELETED(nozzle) && nozzle != src ? nozzle.name : src.name
 	user.visible_message(span_warning("[user] shoots [spewed] out their [launcher_name]!"), span_notice("You shoot [spewed] out of your [launcher_name]."))
 
-/obj/item/slime_vacuum/proc/suck_victim(atom/movable/target, mob/user, silent = FALSE)
+/obj/item/vacuum_pack/proc/suck_victim(atom/movable/target, mob/user, silent = FALSE)
 	if(!suck_checks(target, user))
 		return
 
@@ -441,14 +441,14 @@
 	if((VACUUM_PACK_UPGRADE_STASIS in upgrades))
 		ADD_TRAIT(slime, TRAIT_SLIME_STASIS, "vacuum_pack_stasis")
 
-/obj/item/slime_vacuum/proc/start_busting(mob/living/basic/revenant/revenant, mob/living/user)
+/obj/item/vacuum_pack/proc/start_busting(mob/living/basic/revenant/revenant, mob/living/user)
 	revenant.visible_message(span_warning("[user] starts sucking [revenant] into their [src.name]!"), span_userdanger("You are being sucked into [user]'s [src.name]!"))
 	ghost_busting = revenant
 	ghost_buster = user
 	busting_beam = user.Beam(revenant, icon_state = "drain_life")
 	bust_the_ghost()
 
-/obj/item/slime_vacuum/proc/bust_the_ghost()
+/obj/item/vacuum_pack/proc/bust_the_ghost()
 	while(check_busting())
 		if(!do_after(ghost_buster, 0.5 SECONDS, target = ghost_busting, extra_checks = CALLBACK(src, PROC_REF(check_busting)), timed_action_flags = IGNORE_TARGET_LOC_CHANGE|IGNORE_USER_LOC_CHANGE))
 			ghost_busting = null
@@ -458,7 +458,7 @@
 		ghost_busting.adjust_health(5)
 		ghost_busting.apply_status_effect(/datum/status_effect/revenant/revealed, 0.5 SECONDS)
 
-/obj/item/slime_vacuum/proc/check_busting()
+/obj/item/vacuum_pack/proc/check_busting()
 	if(isnull(ghost_busting?.loc) || QDELING(ghost_busting))
 		return FALSE
 
@@ -476,7 +476,7 @@
 
 	return TRUE
 
-/obj/item/slime_vacuum/proc/on_user_altclick(mob/living/user, atom/movable/target)
+/obj/item/vacuum_pack/proc/on_user_altclick(mob/living/user, atom/movable/target)
 	SIGNAL_HANDLER
 	if(!isliving(user) || user != loc)
 		UnregisterSignal(user, COMSIG_MOB_ALTCLICKON)
@@ -494,7 +494,7 @@
 		select_suck_target(user, target)
 		selecting_radial_target = FALSE
 
-/obj/item/slime_vacuum/proc/select_suck_target(mob/living/user, atom/movable/target)
+/obj/item/vacuum_pack/proc/select_suck_target(mob/living/user, atom/movable/target)
 	var/turf/target_turf = get_turf(target)
 	if(isnull(target_turf))
 		return
@@ -528,7 +528,7 @@
 		do_suck(chosen, user)
 
 /// Additional checks for sucking targets into the backpack.
-/obj/item/slime_vacuum/proc/suck_checks(atom/movable/target, mob/user)
+/obj/item/vacuum_pack/proc/suck_checks(atom/movable/target, mob/user)
 	if(get_dist(user, target) > range)
 		return FALSE
 	if(!(target in view(user, range)))
@@ -544,7 +544,7 @@
 	return TRUE
 
 /// Additional checks for the suck radial menu that must be passed to be kept open.
-/obj/item/slime_vacuum/proc/suck_radial_checks(mob/living/user, turf/target_turf)
+/obj/item/vacuum_pack/proc/suck_radial_checks(mob/living/user, turf/target_turf)
 	if(user.incapacitated())
 		return FALSE
 	if(!CAN_THEY_SEE(target_turf, user))
@@ -556,7 +556,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/slime_vacuum/backpack
+/obj/item/vacuum_pack/backpack
 	name = "backpack xenofauna storage"
 	desc = "A Xynergy Solutions brand vacuum xenofauna storage with an extendable nozzle. Do not use to practice kissing."
 	icon = 'monkestation/code/modules/slimecore/icons/equipment.dmi'
@@ -573,45 +573,45 @@
 	requires_nozzle = TRUE
 	nozzle_type = /obj/item/vacuum_nozzle
 
-/obj/item/slime_vacuum/backpack/Initialize(mapload)
+/obj/item/vacuum_pack/backpack/Initialize(mapload)
 	. = ..()
 	nozzle = new nozzle_type(src)
 
-/obj/item/slime_vacuum/backpack/Destroy()
+/obj/item/vacuum_pack/backpack/Destroy()
 	QDEL_NULL(nozzle)
 	return ..()
 
-/obj/item/slime_vacuum/backpack/dropped(mob/user)
+/obj/item/vacuum_pack/backpack/dropped(mob/user)
 	..()
 	remove_nozzle()
 
-/obj/item/slime_vacuum/backpack/equipped(mob/user, slot)
+/obj/item/vacuum_pack/backpack/equipped(mob/user, slot)
 	. = ..()
 	if(slot != ITEM_SLOT_BACK)
 		remove_nozzle()
 
-/obj/item/slime_vacuum/backpack/attack_hand(mob/user, list/modifiers)
+/obj/item/vacuum_pack/backpack/attack_hand(mob/user, list/modifiers)
 	if(user.get_item_by_slot(user.getBackSlot()) != src)
 		return ..()
 	toggle_nozzle(user)
 
-/obj/item/slime_vacuum/backpack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/item/vacuum_pack/backpack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(tool == nozzle)
 		remove_nozzle()
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 
-/obj/item/slime_vacuum/backpack/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+/obj/item/vacuum_pack/backpack/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	var/mob/wearer = loc
 	if(istype(wearer) && istype(over, /atom/movable/screen/inventory/hand))
 		var/atom/movable/screen/inventory/hand/hand = over
 		wearer.putItemFromInventoryInHandIfPossible(src, hand.held_index)
 	return ..()
 
-/obj/item/slime_vacuum/backpack/ui_action_click(mob/user)
+/obj/item/vacuum_pack/backpack/ui_action_click(mob/user)
 	toggle_nozzle(user)
 
-/obj/item/slime_vacuum/backpack/proc/toggle_nozzle(mob/living/user)
+/obj/item/vacuum_pack/backpack/proc/toggle_nozzle(mob/living/user)
 	if(!istype(user) || user.incapacitated())
 		return
 
@@ -632,7 +632,7 @@
 
 	playsound(user, 'sound/mecha/mechmove03.ogg', 75, TRUE)
 
-/obj/item/slime_vacuum/backpack/proc/remove_nozzle()
+/obj/item/vacuum_pack/backpack/proc/remove_nozzle()
 	if(QDELETED(nozzle))
 		return
 	if(ismob(nozzle.loc))
@@ -653,7 +653,7 @@
 	item_flags = NOBLUDGEON | ABSTRACT
 	slot_flags = NONE
 	/// The vacuum pack this nozzle is from.
-	var/obj/item/slime_vacuum/backpack/pack
+	var/obj/item/vacuum_pack/backpack/pack
 
 /obj/item/vacuum_nozzle/Initialize(mapload)
 	. = ..()
@@ -759,7 +759,7 @@
 	desc = "An upgrade disk for a backpack vacuum xenofauna storage that allows it to automatically recycle dead biomass and make living creatures on right click."
 	upgrade_type = VACUUM_PACK_UPGRADE_BIOMASS
 
-/obj/item/slime_vacuum/backpack/syndicate
+/obj/item/vacuum_pack/backpack/syndicate
 	name = "modified backpack xenofauna storage"
 	desc = "An illegally modified vacuum backpack xenofauna storage that has much more power, capacity and will make every slime it shoots out rabid."
 	icon_state = "vacuum_pack_syndicate"

@@ -48300,9 +48300,9 @@
 /area/station/maintenance/port/greater)
 "paV" = (
 /obj/structure/table/reinforced/plasmarglass,
-/obj/item/slime_vacuum,
-/obj/item/slime_vacuum,
-/obj/item/slime_vacuum,
+/obj/item/vacuum_pack,
+/obj/item/vacuum_pack,
+/obj/item/vacuum_pack,
 /obj/item/disk/vacuum_upgrade/biomass,
 /obj/item/disk/vacuum_upgrade/biomass,
 /obj/item/disk/vacuum_upgrade/biomass,
