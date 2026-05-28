@@ -890,6 +890,10 @@
 /obj/item/borg/upgrade/science_xenobiology
 	name = "science xenobiology upgrade"
 	desc = "An upgrade for science cyborgs that enables them to perform work in xenobiology."
+	icon_state = "module_science"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/science)
+	model_flags = BORG_MODEL_RESEARCH
 	items_to_add = list(
 		/obj/item/slime_vacuum,
 		/obj/item/storage/bag/xeno
