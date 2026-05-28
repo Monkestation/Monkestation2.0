@@ -344,7 +344,8 @@
 		/obj/item/artifact_item_tiny,
 		/obj/item/gun/magic/artifact,
 		/obj/item/melee/artifact,
-		/obj/item/slime_mutation_syringe
+		/obj/item/slime_mutation_syringe,
+		/obj/item/borg_restart_board
 	)
 
 //apparatus to allow borgs to cook

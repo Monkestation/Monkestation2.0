@@ -874,7 +874,6 @@
 	name = "science robotics upgrade"
 	desc = "An upgrade for science cyborgs that enables them to hold and manipulate robotics-related items."
 	storables_to_add = list(
-		/obj/item/borg_restart_board,
 		/obj/item/borg/upgrade,
 		/obj/item/mmi,
 		/obj/item/assembly/flash,
@@ -883,7 +882,7 @@
 		/obj/item/bodypart/leg/left/robot,
 		/obj/item/bodypart/leg/right/robot,
 		/obj/item/bodypart/chest/robot,
-		/obj/item/bodypart/head/robot,
+		/obj/item/bodypart/head/robot
 	)
 
 /obj/item/borg/upgrade/science_apparatus_improvement/ordnance
