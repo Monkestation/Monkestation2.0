@@ -850,7 +850,7 @@
 	. = ..()
 	if(!.)
 		return .
-	var/obj/item/borg/apparatus/circuit/science/apparatus = locate() in cyborg.model.modules
+	var/obj/item/borg/apparatus/circuit/science/apparatus = locate() in borg.model.modules
 	if(isnull(apparatus))
 		to_chat(user, span_warning("This cyborg doesn't have an apparatus to upgrade!"))
 		return FALSE
@@ -863,7 +863,7 @@
 	. = ..()
 	if(!.)
 		return .
-	var/obj/item/borg/apparatus/circuit/science/apparatus = locate() in cyborg.model.modules
+	var/obj/item/borg/apparatus/circuit/science/apparatus = locate() in borg.model.modules
 	if(isnull(apparatus))
 		return FALSE
 	if(!length(storables_to_add))
