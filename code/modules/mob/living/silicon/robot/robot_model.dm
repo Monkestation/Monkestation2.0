@@ -981,20 +981,19 @@
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/borg/cyborg_omnitool/engineering,
+		/obj/item/weldingtool/largetank/cyborg,
 		/obj/item/stack/cable_coil,
 		/obj/item/experi_scanner, // Material Scans will require cooperation. Pester your engineering cyborg for help.
-		/obj/item/nanite_scanner,
-		/obj/item/nanite_remote/cyborg, // If it is too powerful as a base module, move it to the upgrade.
+		/obj/item/nanite_scanner, // Remote is an upgrade.
+		/obj/item/slime_vacuum,
+		/obj/item/storage/bag/xeno,
 		/obj/item/analyzer,
 		/obj/item/assembly/signaler, // We are only allowing anomaly defusing. You will need hands for actual ordiance.
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/borg/apparatus/beaker, // We trust that they will not act like chemistry.
-		/obj/item/borg/apparatus/circuit/science,
 		/obj/item/borg/apparatus/organ_storage/limb, // They need to be able to hold limbs to hit artifacts with it.
-		/obj/item/storage/bag/xeno
-		/obj/item/vacuum_pack, // TODO: This needs to be customized for cyborgs as they cannot use this.
-
+		/obj/item/borg/apparatus/circuit/science,
 	)
 	emag_modules = list(
 		// TODO: Should they be allowed to interact with TTVs?
