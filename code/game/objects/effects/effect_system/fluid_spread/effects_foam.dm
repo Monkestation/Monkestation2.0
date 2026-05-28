@@ -323,13 +323,16 @@
 	obj_flags = CAN_BE_HIT | BLOCK_Z_IN_DOWN | BLOCK_Z_IN_UP
 	///Var used to prevent spamming of the construction sound
 	var/next_beep = 0
+	///Do we seal the floor below us aswell?
+	var/foam_floor = TRUE
 
 /obj/structure/foamedmetal/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE, TRUE)
-	var/turf/open/location = loc
-	if(isspaceturf(location))
-		location.PlaceOnTop(/turf/open/floor/plating/foam)
+	if(foam_floor)
+		var/turf/open/location = loc
+		if(isspaceturf(location))
+			location.PlaceOnTop(/turf/open/floor/plating/foam)
 
 /obj/structure/foamedmetal/Destroy()
 	air_update_turf(TRUE, FALSE)
@@ -444,6 +447,7 @@
 	alpha = 120
 	max_integrity = 10
 	pass_flags_self = PASSGLASS
+	foam_floor = FALSE
 
 /obj/structure/foamedmetal/resin/Initialize(mapload)
 	. = ..()
