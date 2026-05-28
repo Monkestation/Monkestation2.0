@@ -472,7 +472,7 @@
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(emergency_destination)
 		balloon_alert(user, "emergency teleport triggered!")
-		if (!HAS_TRAIT(user, TRAIT_NOBLOOD))
+		if (!HAS_TRAIT(user, TRAIT_NOBLOOD) && !issilicon(user))
 			make_bloods(mobloc, emergency_destination, user)
 		playsound(mobloc, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
