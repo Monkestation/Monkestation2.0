@@ -1493,7 +1493,7 @@
 
 		if(WABBAJACK_ROBOT)
 			var/static/list/robot_options = list(
-				/mob/living/silicon/robot = 200,
+				/mob/living/silicon/robot/disconnected = 200,
 				/mob/living/basic/drone/polymorphed = 200,
 				/mob/living/silicon/robot/model/syndicate = 100,
 				/mob/living/silicon/robot/model/syndicate/medical = 100,
@@ -1507,8 +1507,6 @@
 				new_mob.gender = gender
 				new_mob.SetInvisibility(INVISIBILITY_NONE)
 				new_mob.job = JOB_CYBORG
-				created_robot.lawupdate = FALSE
-				created_robot.connected_ai = null
 				created_robot.mmi.transfer_identity(src) //Does not transfer key/client.
 				created_robot.clear_inherent_laws(announce = FALSE)
 				created_robot.clear_zeroth_law(announce = FALSE)

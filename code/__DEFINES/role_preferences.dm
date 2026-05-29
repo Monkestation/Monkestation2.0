@@ -86,6 +86,7 @@
 #define ROLE_REVENANT "Revenant"
 #define ROLE_OVERTHROW "Syndicate Mutineer" //Role removed, left here for safety.
 #define ROLE_SENTIENCE "Sentience Potion Spawn"
+#define ROLE_HOLY_SUMMONED "Holy Summoned"
 #define ROLE_SOULTRAPPED_HERETIC "Soultrapped Heretic"
 #define ROLE_PYROCLASTIC_SLIME "Pyroclastic Anomaly Slime"
 #define ROLE_MIND_TRANSFER "Mind Transfer Potion"

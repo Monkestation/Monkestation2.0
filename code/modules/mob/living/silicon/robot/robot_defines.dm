@@ -95,7 +95,7 @@
 	var/emag_cooldown = 0
 	var/wiresexposed = FALSE
 
-	///Cyborgs will sync their laws with their AI by default
+	/// Should their laws sync with their master AI? Upon initialization, will try to assign and connect them to an AI.
 	var/lawupdate = TRUE
 	///Used to determine if a borg shows up on the robotics console.  Setting to TRUE hides them.
 	var/scrambledcodes = FALSE
@@ -146,6 +146,9 @@
 ///This is the subtype that gets created by robot suits. It's needed so that those kind of borgs don't have a useless cell in them
 /mob/living/silicon/robot/nocell
 	cell = null
+
+/mob/living/silicon/robot/disconnected
+	lawupdate = FALSE
 
 /mob/living/silicon/robot/shell
 	name = "AI Shell"

@@ -854,13 +854,13 @@
 			return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/paper))
-		//MONKESTATION EDIT START
-		// Don't allow plastic cards (including the spare ID safe code biscuits!) to be inserted
+		var/obj/item/paper/attacking_paper = tool
 		if(istype(tool, /obj/item/paper/paperslip/corporate))
 			return ITEM_INTERACT_BLOCKING
-		//MONKESTATION EDIT END
 		if(stored_paper >= max_paper)
 			balloon_alert(user, "no more room!")
+			return ITEM_INTERACT_BLOCKING
+		if(!attacking_paper.is_empty() && tgui_alert(user, "\the [attacking_paper] has contents on it! Are you sure you want to recycle it?", "Recycling", list("Yes", "No")) != "Yes")
 			return ITEM_INTERACT_BLOCKING
 		if(!user.temporarilyRemoveItemFromInventory(tool))
 			return FALSE

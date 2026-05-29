@@ -355,15 +355,15 @@
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/reagent_containers/borghypo/medical/hypo in borg.model.modules)
-		hypo.upgrade_hypo()
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
+		hypo.upgrade()
 
 /obj/item/borg/upgrade/hypospray/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/reagent_containers/borghypo/medical/hypo in borg.model.modules)
-		hypo.remove_hypo_upgrade()
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
+		hypo.downgrade()
 
 /obj/item/borg/upgrade/hypospray/expanded
 	name = "medical cyborg expanded hypospray"
@@ -652,14 +652,23 @@
 	icon_state = "module_honk"
 	new_model = /obj/item/robot_model/clown
 
-/obj/item/borg/upgrade/circuit_app
-	name = "circuit manipulation apparatus"
-	desc = "An engineering cyborg upgrade allowing for manipulation of circuit boards."
+/obj/item/borg/upgrade/extra_sheet_manipulator
+	name = "secondary material manipulation apparatus"
+	desc = "A supplementary apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles."
 	icon_state = "module_engineer"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
-	items_to_add = list(/obj/item/borg/apparatus/circuit)
+	items_to_add = list(/obj/item/borg/apparatus/sheet_manipulator/extra)
+
+/obj/item/borg/upgrade/charger
+	name = "power connector"
+	desc = "An energy probe that can charge batteries and energy-dependent weapons (using the cyborg battery, in both directions), as well as recharge the cyborg from all types of chargers, the effectiveness depends on the components of the machine"
+	icon_state = "module_engineer"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/engineering)
+	model_flags = BORG_MODEL_ENGINEERING
+	items_to_add = list(/obj/item/borg/charger)
 
 /obj/item/borg/upgrade/beaker_app
 	name = "beaker storage apparatus"
@@ -669,15 +678,6 @@
 	model_type = list(/obj/item/robot_model/medical)
 	model_flags = BORG_MODEL_MEDICAL
 	items_to_add = list(/obj/item/borg/apparatus/beaker/extra)
-
-/obj/item/borg/upgrade/broomer
-	name = "experimental push broom"
-	desc = "An experimental push broom used for efficiently pushing refuse."
-	icon_state = "module_janitor"
-	require_model = TRUE
-	model_type = list(/obj/item/robot_model/janitor)
-	model_flags = BORG_MODEL_JANITOR
-	items_to_add = list(/obj/item/pushbroom/cyborg)
 
 /obj/item/borg/upgrade/uwu
 	name = "cyborg UwU-speak \"upgrade\""

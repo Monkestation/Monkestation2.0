@@ -795,7 +795,7 @@
 		if(CONSTRUCTION_PANEL_OPEN)
 			. += span_notice("It is <i>unbolted</i> from the floor. The circuit could be removed with a <b>crowbar</b>.")
 			if(!reinforced)
-				. += span_notice("It could be reinforced with plasteel.")
+				. += span_notice("It could be reinforced with metal.")
 		if(CONSTRUCTION_NO_CIRCUIT)
 			. += span_notice("There are no <i>firelock electronics</i> in the frame. The frame could be <b>welded</b> apart .")
 
@@ -841,24 +841,24 @@
 					new /obj/machinery/door/firedoor(get_turf(src))
 				qdel(src)
 				return
-			if(istype(attacking_object, /obj/item/stack/sheet/plasteel))
-				var/obj/item/stack/sheet/plasteel/plasteel_sheet = attacking_object
+			if(istype(attacking_object, /obj/item/stack/sheet/iron))
+				var/obj/item/stack/sheet/iron/iron_sheet = attacking_object
 				if(reinforced)
 					to_chat(user, span_warning("[src] is already reinforced."))
 					return
-				if(plasteel_sheet.get_amount() < 2)
-					to_chat(user, span_warning("You need more plasteel to reinforce [src]."))
+				if(iron_sheet.get_amount() < 2)
+					to_chat(user, span_warning("You need more metal to reinforce [src]."))
 					return
 				user.visible_message(span_notice("[user] begins reinforcing [src]..."), \
 					span_notice("You begin reinforcing [src]..."))
 				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 				if(do_after(user, DEFAULT_STEP_TIME, target = src))
-					if(constructionStep != CONSTRUCTION_PANEL_OPEN || reinforced || plasteel_sheet.get_amount() < 2 || !plasteel_sheet)
+					if(constructionStep != CONSTRUCTION_PANEL_OPEN || reinforced || iron_sheet.get_amount() < 2 || !iron_sheet)
 						return
 					user.visible_message(span_notice("[user] reinforces [src]."), \
 						span_notice("You reinforce [src]."))
 					playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
-					plasteel_sheet.use(2)
+					iron_sheet.use(2)
 					reinforced = 1
 				return
 		if(CONSTRUCTION_NO_CIRCUIT)
@@ -890,7 +890,7 @@
 					var/turf/tagetloc = get_turf(src)
 					new /obj/item/stack/sheet/iron(tagetloc, 3)
 					if(reinforced)
-						new /obj/item/stack/sheet/plasteel(tagetloc, 2)
+						new /obj/item/stack/sheet/iron(tagetloc, 2)
 					qdel(src)
 				return
 			if(istype(attacking_object, /obj/item/electroadaptive_pseudocircuit))

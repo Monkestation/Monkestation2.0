@@ -352,7 +352,13 @@
 					L.put_in_hands(I)
 					. = TRUE
 			else
-				I = L.get_active_held_item()
+				if(iscyborg(L))
+					var/mob/living/silicon/robot/borg = L
+					if(istype(borg.module_active, /obj/item/borg/apparatus/circuit))
+						var/obj/item/borg/apparatus/circuit/robo_hand = borg.module_active
+						I = robo_hand.stored
+				else
+					I = L.get_active_held_item()
 				if(isassembly(I))
 					var/obj/item/assembly/A = I
 					if(A.attachable)

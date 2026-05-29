@@ -341,6 +341,7 @@
 				ROLE_MIND_TRANSFER,
 				ROLE_POSIBRAIN,
 				ROLE_SENTIENCE,
+				ROLE_HOLY_SUMMONED,
 			),
 			"Antagonist Positions" = list(
 				ROLE_PLAGUERAT,

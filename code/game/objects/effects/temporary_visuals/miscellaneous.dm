@@ -181,6 +181,9 @@
 	if(fades)
 		animate(src, alpha = 0, time = 32)
 
+/obj/effect/temp_visual/dir_setting/curse/long // Necro Sect Usage
+	duration = 330
+
 /obj/effect/temp_visual/dir_setting/curse/blob
 	icon_state = "curseblob"
 
@@ -350,6 +353,9 @@
 /obj/effect/temp_visual/bluespace_fissure/Initialize(mapload)
 	. = ..()
 	apply_wibbly_filters(src)
+
+/obj/effect/temp_visual/bluespace_fissure/long
+	duration = 300
 
 /obj/effect/temp_visual/gib_animation
 	icon = 'icons/mob/simple/mob.dmi'

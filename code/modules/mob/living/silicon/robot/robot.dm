@@ -38,12 +38,12 @@
 	model = new /obj/item/robot_model(src)
 	model.rebuild_modules()
 
-	if(lawupdate)
+	if(!laws)
 		make_laws()
-		for (var/law in laws.inherent)
+		for(var/law in laws.inherent)
 			lawcheck += law
-		if(!TryConnectToAI())
-			lawupdate = FALSE
+	if(lawupdate && !TryConnectToAI())
+		lawupdate = FALSE
 
 	if(!scrambledcodes && !builtInCamera)
 		builtInCamera = new (src)
@@ -277,11 +277,9 @@
 /mob/living/silicon/robot/regenerate_icons()
 	return update_icons()
 
-/mob/living/silicon/robot/update_icons()
-	cut_overlays()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	icon_state = model.cyborg_base_icon
-	if(stat != DEAD && !(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
+/mob/living/silicon/robot/update_overlays()
+	. = ..()
+	if(stat != DEAD && !(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed() || low_power_mode)) // Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_enabled || lamp_doom)
@@ -295,23 +293,25 @@
 			eye_lights.color = COLOR_WHITE
 			SET_PLANE_EXPLICIT(eye_lights, ABOVE_GAME_PLANE, src)
 		eye_lights.icon = icon
-		add_overlay(eye_lights)
-
+		. += eye_lights
 	if(opened)
 		if(wiresexposed)
-			add_overlay("ov-opencover +w")
+			. += "ov-opencover +w"
 		else if(cell)
-			add_overlay("ov-opencover +c")
+			. += "ov-opencover +c"
 		else
-			add_overlay("ov-opencover -c")
+			. += "ov-opencover -c"
 	if(hat)
 		var/mutable_appearance/head_overlay = hat.build_worn_icon(default_layer = 20, default_icon_file = 'icons/mob/clothing/head/default.dmi')
 		head_overlay.pixel_z += model.hat_offset
-		add_overlay(head_overlay)
+		. += head_overlay
 	if(worn_badge)
 		var/mutable_appearance/accessory_overlay = mutable_appearance(worn_badge.worn_icon, worn_badge.icon_state)
 		accessory_overlay.pixel_z += model.badge_offset
-		add_overlay(accessory_overlay)
+		. += accessory_overlay
+
+/mob/living/silicon/robot/update_icons()
+	icon_state = model.cyborg_base_icon
 	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/silicon/robot/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -647,11 +647,11 @@
 		if(health <= -maxHealth) //die only once
 			death()
 			toggle_headlamp(1)
-			return
-		if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsKnockdown() || IsParalyzed())
-			set_stat(UNCONSCIOUS)
 		else
-			set_stat(CONSCIOUS)
+			if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsKnockdown() || IsParalyzed())
+				set_stat(UNCONSCIOUS)
+			else
+				set_stat(CONSCIOUS)
 	diag_hud_set_status()
 	diag_hud_set_health()
 	diag_hud_set_aishell()

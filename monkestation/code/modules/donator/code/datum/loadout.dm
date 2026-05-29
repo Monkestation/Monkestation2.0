@@ -1163,3 +1163,10 @@
 	ckeywhitelist = list("ZBunz")
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+/datum/loadout_item/effects/shark_axolotl
+	name = "Shark Axolotl Transformation"
+	item_path = /obj/item/effect_granter/donator/shark_axolotl
+	ckeywhitelist = list("ZBunz")
+	donator_only = TRUE
+	requires_purchase = FALSE

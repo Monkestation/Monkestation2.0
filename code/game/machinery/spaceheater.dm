@@ -222,6 +222,11 @@
 		user.visible_message(span_notice("\The [user] inserts a power cell into \the [src]."), span_notice("You insert the power cell into \the [src]."))
 		SStgui.update_uis(src)
 		return TRUE
+
+	if(istype(attacking_item, /obj/item/borg/apparatus/circuit) && panel_open)
+		var/obj/item/borg/apparatus/circuit/robo_hand = attacking_item
+		if(robo_hand.stored == null)
+			return attack_hand(user)
 	return ..()
 
 /obj/machinery/space_heater/attack_hand_secondary(mob/user, list/modifiers)

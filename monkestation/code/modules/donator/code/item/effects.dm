@@ -181,3 +181,9 @@
 	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
 	icon_state = "neco_arc"
 	animal_transformation = /mob/living/basic/pet/yato_neco_arc
+
+/obj/item/effect_granter/donator/shark_axolotl
+	name = "Shark Axolotl"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "shark_axolotl"
+	animal_transformation = /mob/living/basic/axolotl/shark_costume

@@ -98,6 +98,8 @@
 		if(is_type_in_typecache(checked_object, GLOB.WALLITEMS_INTERIOR) && !check_external)
 			//Direction works sometimes
 			if(checked_object.dir == dir_toward_wall)
+				if(istype(checked_object, /obj/machinery/button))
+					return FALSE
 				return TRUE
 
 			//Some stuff doesn't use dir properly, so we need to check pixel instead

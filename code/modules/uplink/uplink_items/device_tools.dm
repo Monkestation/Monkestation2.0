@@ -345,6 +345,8 @@
 	cost = 40
 	surplus = 0 // Two person item
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
+	cant_discount = TRUE
+	progression_minimum = 30 MINUTES
 
 /datum/uplink_item/device_tools/dehy_carp
 	name = "Dehydrated Space Carp"
