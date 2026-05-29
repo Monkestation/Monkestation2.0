@@ -64,21 +64,9 @@ multiple modular subtrees with behaviors
 	var/interesting_dist = AI_DEFAULT_INTERESTING_DIST
 
 /datum/ai_controller/New(atom/new_pawn)
-	change_ai_movement_type(ai_movement)
-	init_subtrees()
-
-	if(idle_behavior)
-		idle_behavior = new idle_behavior()
-
-	if(!isnull(new_pawn)) // unit tests need the ai_controller to exist in isolation due to list schenanigans i hate it here
-		PossessPawn(new_pawn)
+	return
 
 /datum/ai_controller/Destroy(force)
-	UnpossessPawn(FALSE)
-	our_cells = null
-	set_movement_target(type, null)
-	if(ai_movement.moving_controllers[src])
-		ai_movement.stop_moving_towards(src)
 	return ..()
 
 ///Sets the current movement target, with an optional param to override the movement behavior
