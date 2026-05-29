@@ -372,8 +372,8 @@
 /obj/item/syndicate_teleporter/process(seconds_per_tick, times_fired)
 	if(SPT_PROB(10, seconds_per_tick) && charges < max_charges)
 		charges++
-		if(isliving(loc))
-			var/mob/living/holder = loc
+		if(ishuman(loc))
+			var/mob/living/carbon/human/holder = loc
 			balloon_alert(holder, "teleporter beeps")
 		playsound(src, 'sound/machines/twobeep.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 
@@ -381,8 +381,8 @@
 	if(!prob(50/severity))
 		return
 	var/teleported_something = FALSE
-	if(isliving(loc))
-		var/mob/living/holder = loc
+	if(ishuman(loc))
+		var/mob/living/carbon/human/holder = loc
 		balloon_alert(holder, "teleporter buzzes!")
 		attempt_teleport(user = holder, triggered_by_emp = TRUE)
 	else
@@ -507,8 +507,6 @@
 
 ///Bleed and make blood splatters at tele start and end points
 /obj/item/syndicate_teleporter/proc/make_bloods(turf/old_location, turf/new_location, mob/user)
-	if(!iscarbon(user))
-		return
 	var/mob/living/carbon/carbon_user = user
 	carbon_user.add_splatter_floor(old_location)
 	carbon_user.add_splatter_floor(new_location)
