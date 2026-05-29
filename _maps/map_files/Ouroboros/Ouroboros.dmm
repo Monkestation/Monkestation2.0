@@ -7036,13 +7036,6 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "cek" = (
-/obj/item/borg/upgrade/rename{
-	pixel_y = 14;
-	pixel_x = -6
-	},
-/obj/item/borg/upgrade/rename{
-	pixel_y = 12
-	},
 /obj/item/storage/toolbox/electrical{
 	pixel_x = 7;
 	pixel_y = 2
@@ -8662,7 +8655,6 @@
 	req_access = list("rd");
 	name = "High-Risk Modules"
 	},
-/obj/effect/spawner/random/aimodule/harmful,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/circuit/red,
@@ -9264,9 +9256,6 @@
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "cMt" = (
-/obj/machinery/computer/robotics{
-	dir = 1
-	},
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /obj/effect/turf_decal/tile/purple/half/contrasted,
@@ -23246,9 +23235,6 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/common/laser_tag)
 "gUD" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -23809,7 +23795,6 @@
 	req_access = list("rd");
 	name = "Low-Risk Modules"
 	},
-/obj/effect/spawner/random/aimodule/neutral,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/circuit,
@@ -24997,9 +24982,6 @@
 	},
 /area/station/commons/vacant_room/commissary)
 "hvn" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/structure/cable/layer1,
 /obj/structure/cable/layer3,
 /turf/open/floor/circuit,
@@ -27814,10 +27796,6 @@
 /obj/item/flashlight/lamp/green{
 	pixel_y = 15;
 	pixel_x = 6
-	},
-/obj/item/pai_card{
-	pixel_y = 3;
-	pixel_x = -6
 	},
 /obj/machinery/cassette_deck{
 	pixel_y = 5
@@ -31594,9 +31572,6 @@
 /turf/open/openspace,
 /area/station/science/genetics)
 "jpW" = (
-/obj/machinery/computer/robotics{
-	dir = 4
-	},
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/glass/reinforced,
 /area/station/command/heads_quarters/rd)
@@ -32096,9 +32071,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "jxJ" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
@@ -34588,9 +34560,6 @@
 /turf/open/floor/wood/large,
 /area/station/service/barber)
 "kjB" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
@@ -34701,11 +34670,6 @@
 	dir = 8
 	},
 /area/station/engineering/gravity_generator)
-"kkE" = (
-/obj/structure/table,
-/obj/effect/mob_spawn/ghost_role/drone/bar,
-/turf/open/floor/wood,
-/area/station/command/meeting_room/council)
 "kkR" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 6
@@ -37675,9 +37639,6 @@
 /area/station/command/heads_quarters/hop)
 "laa" = (
 /obj/structure/cable,
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/machinery/flasher/directional/north{
 	id = "AI";
 	pixel_x = -22
@@ -38313,11 +38274,6 @@
 "lix" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/table/reinforced,
-/obj/item/ai_module/supplied/freeform{
-	pixel_x = -2;
-	pixel_y = 8
-	},
-/obj/item/ai_module/supplied/freeform,
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark/side{
 	dir = 8
@@ -39086,11 +39042,6 @@
 "lvy" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/table/reinforced,
-/obj/item/ai_module/reset{
-	pixel_x = 2;
-	pixel_y = 8
-	},
-/obj/item/ai_module/reset/purge,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark/side{
 	dir = 4
@@ -41081,9 +41032,6 @@
 "lYG" = (
 /obj/effect/turf_decal/tile/blue/full,
 /obj/effect/turf_decal/box/white,
-/obj/machinery/computer/upload/ai{
-	dir = 4
-	},
 /obj/machinery/flasher/directional/south{
 	id = "AI"
 	},
@@ -45212,9 +45160,6 @@
 /turf/open/floor/iron,
 /area/station/common/laser_tag)
 "niZ" = (
-/obj/machinery/computer/upload/borg{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/blue/full,
 /obj/effect/turf_decal/box/white,
 /obj/machinery/camera/motion/directional/south{
@@ -45249,11 +45194,6 @@
 "njr" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/table,
-/obj/item/ai_module/toy_ai{
-	pixel_y = 16;
-	pixel_x = -6
-	},
-/obj/effect/spawner/random/aimodule/harmless,
 /obj/machinery/light/cold/directional/west,
 /turf/open/floor/iron/dark/side{
 	dir = 4
@@ -51698,7 +51638,6 @@
 /area/station/security/brig/entrance)
 "pjs" = (
 /obj/structure/closet/secure_closet/research_director,
-/obj/item/pai_card,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -52490,10 +52429,6 @@
 /mob/living/basic/rabbit/daisy,
 /turf/open/floor/wood,
 /area/station/service/library/lounge)
-"pux" = (
-/obj/machinery/drone_dispenser/preloaded,
-/turf/open/floor/plating,
-/area/station/maintenance/port/lesser)
 "puz" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
@@ -53618,10 +53553,6 @@
 /obj/structure/table/glass,
 /obj/item/folder/blue{
 	pixel_x = 7
-	},
-/obj/item/aicard{
-	pixel_y = 6;
-	pixel_x = -3
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -55335,7 +55266,6 @@
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/fore)
 "qjT" = (
-/obj/effect/spawner/random/techstorage/ai_all,
 /obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/bot,
 /obj/structure/rack/shelf,
@@ -61431,9 +61361,6 @@
 /turf/open/floor/iron/white/small,
 /area/station/medical/treatment_center)
 "scq" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "scu" = (
@@ -70470,7 +70397,6 @@
 	},
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/oil/streak,
-/obj/item/robot_suit,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/robotics/lab)
 "uMO" = (
@@ -74695,7 +74621,6 @@
 	pixel_y = 10;
 	pixel_x = 5
 	},
-/obj/effect/spawner/round_default_module,
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron/dark/side{
 	dir = 8
@@ -77905,10 +77830,6 @@
 	},
 /obj/machinery/airalarm/directional/south,
 /obj/structure/table/glass,
-/obj/item/pai_card{
-	pixel_x = -6;
-	pixel_y = 3
-	},
 /obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /turf/open/floor/iron/dark/side{
@@ -110246,7 +110167,7 @@ xAm
 vZy
 xsW
 dvI
-pux
+nQA
 fPA
 iyO
 oHE
@@ -117458,7 +117379,7 @@ lNk
 iVj
 nKb
 mkO
-kkE
+oED
 xHt
 mwA
 lNk

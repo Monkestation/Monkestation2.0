@@ -2700,9 +2700,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "aNg" = (
-/obj/machinery/computer/upload/ai{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/blue/filled/end{
 	dir = 8
 	},
@@ -2832,11 +2829,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/explab)
-"aOA" = (
-/obj/structure/table/reinforced,
-/obj/effect/mob_spawn/ghost_role/drone/bar,
-/turf/open/floor/carpet/purple,
-/area/station/common/night_club)
 "aOI" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
@@ -6565,12 +6557,6 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/station/service/library/abandoned)
-"bWK" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
-/turf/open/floor/circuit/green,
-/area/station/ai_monitored/turret_protected/ai)
 "bWT" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/structure/filingcabinet/security,
@@ -10719,7 +10705,6 @@
 /area/station/medical/chemistry)
 "diH" = (
 /obj/structure/table/wood/fancy/blue,
-/obj/effect/spawner/random/aimodule/neutral,
 /obj/machinery/door/window/left/directional/south{
 	name = "Core Modules";
 	req_access = list("rd")
@@ -11068,7 +11053,6 @@
 /turf/open/floor/carpet/grimey,
 /area/station/hallway/primary/central/fore)
 "dnX" = (
-/obj/machinery/computer/robotics,
 /turf/open/floor/iron/white/textured_large,
 /area/station/command/heads_quarters/rd)
 "dnZ" = (
@@ -12240,7 +12224,6 @@
 	dir = 10
 	},
 /obj/structure/table,
-/obj/item/pai_card,
 /turf/open/floor/iron/white,
 /area/station/hallway/primary/fore)
 "dDP" = (
@@ -21290,9 +21273,6 @@
 /turf/open/floor/glass/reinforced,
 /area/station/maintenance/port/fore)
 "ggB" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -22862,9 +22842,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/structure/cable/layer3,
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai)
@@ -23093,7 +23070,6 @@
 /area/station/maintenance/port/aft)
 "gEJ" = (
 /obj/structure/table/wood/fancy/red,
-/obj/effect/spawner/random/aimodule/harmful,
 /obj/machinery/door/window/brigdoor/left/directional/north{
 	name = "High-Risk Modules";
 	req_access = list("rd")
@@ -24242,7 +24218,6 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "gUW" = (
 /obj/structure/table,
-/obj/item/pai_card,
 /turf/open/floor/wood/large,
 /area/station/commons/fitness/recreation/entertainment)
 "gVA" = (
@@ -26021,12 +25996,6 @@
 /area/station/science/xenobiology)
 "hvo" = (
 /obj/structure/table/reinforced,
-/obj/item/aicard{
-	pixel_y = 3
-	},
-/obj/item/circuitboard/aicore{
-	pixel_y = 3
-	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/firealarm/directional/east{
 	pixel_y = 5
@@ -26258,10 +26227,6 @@
 /obj/machinery/door/window/right/directional/south{
 	name = "Library Desk";
 	req_access = list("library")
-	},
-/obj/item/pai_card{
-	pixel_x = -13;
-	pixel_y = 2
 	},
 /turf/open/floor/carpet,
 /area/station/service/library)
@@ -27620,7 +27585,6 @@
 	id = "AI"
 	},
 /obj/structure/table/wood/fancy/green,
-/obj/effect/spawner/random/aimodule/harmless,
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "hRJ" = (
@@ -36605,7 +36569,6 @@
 /area/station/service/theater)
 "knP" = (
 /obj/structure/table,
-/obj/item/aicard,
 /obj/item/folder/blue{
 	pixel_x = 3;
 	pixel_y = 3
@@ -37266,7 +37229,6 @@
 /area/station/science/xenobiology)
 "kxB" = (
 /obj/structure/table/wood/fancy/royalblack,
-/obj/effect/spawner/round_default_module,
 /obj/item/toy/figure/borg{
 	pixel_y = 12
 	},
@@ -41596,9 +41558,6 @@
 	dir = 6
 	},
 /obj/machinery/light_switch/directional/east,
-/obj/machinery/computer/robotics{
-	dir = 1
-	},
 /turf/open/floor/iron/white,
 /area/station/security/checkpoint/science/research)
 "lDD" = (
@@ -47355,8 +47314,6 @@
 /area/station/hallway/primary/fore)
 "nju" = (
 /obj/structure/rack,
-/obj/item/aicard/aitater,
-/obj/item/ai_module/reset,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/pod/dark,
 /area/station/engineering/storage/tech)
@@ -49977,16 +49934,6 @@
 	},
 /turf/open/floor/iron/textured,
 /area/station/engineering/power_room)
-"nUJ" = (
-/obj/machinery/computer/upload/borg{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/blue/filled/end{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/vault,
-/area/station/ai_monitored/turret_protected/ai_upload)
 "nUN" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 4
@@ -52625,7 +52572,6 @@
 "oJr" = (
 /obj/structure/table/reinforced/rglass,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/item/aicard,
 /obj/item/assembly/timer,
 /obj/item/assembly/signaler,
 /obj/effect/turf_decal/tile/purple/anticorner{
@@ -53457,7 +53403,6 @@
 	name = "science camera";
 	network = list("ss13","rd")
 	},
-/obj/item/pai_card,
 /obj/effect/landmark/start/depsec/science,
 /turf/open/floor/wood/large,
 /area/station/science/research)
@@ -59794,7 +59739,6 @@
 /area/station/engineering/supermatter)
 "qEU" = (
 /obj/effect/turf_decal/box,
-/obj/item/robot_suit,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/robotics/lab)
 "qFh" = (
@@ -62304,7 +62248,6 @@
 /area/station/maintenance/port)
 "rnR" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/ai_all,
 /obj/machinery/light/small/directional/west,
 /obj/structure/sign/warning/electric_shock/directional/west,
 /obj/effect/turf_decal/bot,
@@ -69690,9 +69633,6 @@
 	},
 /area/station/hallway/primary/central)
 "toU" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/structure/cable,
 /obj/effect/landmark/start/cyborg,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -71824,7 +71764,6 @@
 /obj/effect/turf_decal/siding/wood/end{
 	dir = 1
 	},
-/obj/item/pai_card,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "tSb" = (
@@ -72592,7 +72531,6 @@
 /area/station/engineering/atmos/hfr_room)
 "uex" = (
 /obj/structure/closet/secure_closet/research_director,
-/obj/item/pai_card,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/dark/textured_large,
@@ -74840,16 +74778,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/lobby)
-"uGy" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
-/obj/structure/cable/layer3,
-/turf/open/floor/vault,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "uGz" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
@@ -75637,11 +75565,6 @@
 /area/station/cargo/office)
 "uSZ" = (
 /obj/structure/table/wood/fancy/royalblack,
-/obj/item/ai_module/reset{
-	pixel_x = 2;
-	pixel_y = 8
-	},
-/obj/item/ai_module/supplied/freeform,
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -77811,7 +77734,6 @@
 /turf/open/floor/wood,
 /area/station/security/prison/garden)
 "vzV" = (
-/obj/item/borg/upgrade/rename,
 /obj/effect/turf_decal/tile/dark_red/anticorner/contrasted,
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/iron/dark/textured,
@@ -80237,7 +80159,6 @@
 /area/station/engineering/supermatter)
 "wjk" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/drone_dispenser/preloaded,
 /turf/open/floor/iron/textured,
 /area/station/science/robotics/mechbay)
 "wjq" = (
@@ -81374,9 +81295,6 @@
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/department/science/ordnance_maint)
 "wyH" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/machinery/flasher/directional/south{
 	id = "AI";
 	pixel_x = 22
@@ -81965,7 +81883,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "wGn" = (
-/obj/item/robot_suit,
 /obj/effect/landmark/start/gary,
 /turf/open/floor/plating,
 /area/station/science/research/abandoned)
@@ -101395,7 +101312,7 @@ qEq
 vIx
 uPy
 uPy
-bWK
+sgt
 qmE
 uKy
 eai
@@ -102157,7 +102074,7 @@ ggB
 aBb
 fOp
 nlD
-uGy
+fOp
 gvs
 fOp
 fOp
@@ -102169,7 +102086,7 @@ iPD
 wyH
 dYb
 uQi
-bWK
+sgt
 lvx
 coc
 rDp
@@ -102937,7 +102854,7 @@ qEq
 mqA
 uPy
 uPy
-bWK
+sgt
 xKl
 vGT
 eJO
@@ -115023,7 +114940,7 @@ wwD
 hIA
 cRe
 cRe
-nUJ
+aNg
 ceP
 hRD
 xhq
@@ -130592,7 +130509,7 @@ kLc
 unI
 poE
 mRm
-aOA
+mRm
 rgt
 unI
 unI

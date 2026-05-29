@@ -4984,8 +4984,6 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/tile/green/fourcorners,
-/obj/effect/spawner/random/aimodule/harmless,
-/obj/effect/spawner/random/aimodule/neutral,
 /obj/effect/turf_decal/siding/dark_blue{
 	dir = 8
 	},
@@ -7137,9 +7135,6 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
-/obj/machinery/ai_slipper{
-	uses = 8
-	},
 /obj/effect/turf_decal/siding/dark_blue{
 	dir = 8
 	},
@@ -8030,7 +8025,6 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/sorting)
 "cBe" = (
-/obj/item/robot_suit,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/small,
 /area/station/science/robotics)
@@ -8773,16 +8767,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/station/service/lawoffice)
-"cOV" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners{
-	color = "#009dc4"
-	},
-/obj/machinery/computer/upload/borg{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/red/filled/warning,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/ai_upload)
 "cPh" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
@@ -9865,11 +9849,8 @@
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/structure/rack,
 /obj/effect/turf_decal/bot,
-/obj/item/aicard,
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
-/obj/item/ai_module/reset,
-/obj/item/ai_module/reset,
 /obj/item/flashlight{
 	pixel_x = 1;
 	pixel_y = 5
@@ -10743,9 +10724,6 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/end{
 	dir = 4
 	},
-/obj/machinery/ai_slipper{
-	uses = 8
-	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "dpI" = (
@@ -11522,9 +11500,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
-/obj/item/ai_module/core/full/crewsimov,
-/obj/effect/spawner/round_default_module,
-/obj/item/ai_module/core/freeformcore,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "dCI" = (
@@ -12894,9 +12869,6 @@
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library)
 "dWT" = (
-/obj/machinery/computer/robotics{
-	dir = 4
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
@@ -14013,7 +13985,6 @@
 	pixel_y = 10
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/circuitboard/aicore,
 /obj/item/computer_disk/ordnance,
 /obj/item/stamp/head/rd{
 	pixel_x = -7;
@@ -14431,18 +14402,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/upper)
-"ewG" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners{
-	color = "#009dc4"
-	},
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 1
-	},
-/obj/machinery/ai_slipper{
-	uses = 8
-	},
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/ai_upload)
 "ewQ" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/wood{
@@ -15402,9 +15361,6 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "eKI" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
@@ -15583,9 +15539,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
 "eNU" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/effect/turf_decal/box,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -19008,10 +18961,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
-/obj/effect/spawner/random/aimodule/harmful,
-/obj/item/ai_module/reset/purge{
-	pixel_y = 11
-	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "fPv" = (
@@ -19860,18 +19809,6 @@
 	dir = 2
 	},
 /area/station/maintenance/disposal/incinerator)
-"gcz" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners{
-	color = "#009dc4"
-	},
-/obj/structure/table/glass/plasmaglass,
-/obj/effect/turf_decal/trimline/dark_blue/filled/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red/fourcorners,
-/obj/effect/spawner/random/aimodule/harmful,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/ai_upload)
 "gcF" = (
 /obj/structure/table,
 /obj/item/toy/figure/mime{
@@ -24687,9 +24624,6 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "hFV" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -33375,9 +33309,6 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/station/hallway/secondary/entry)
 "kta" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -34775,9 +34706,6 @@
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/hos)
 "kNS" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/effect/turf_decal/box,
 /obj/machinery/flasher/directional/north{
 	id = "AI";
@@ -37285,8 +37213,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/green/fourcorners,
-/obj/effect/spawner/random/aimodule/harmless,
-/obj/effect/spawner/random/aimodule/neutral,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "lvY" = (
@@ -41781,7 +41707,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
-/obj/item/pai_card,
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/storage/primary)
@@ -46548,9 +46473,6 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
 "opF" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/effect/turf_decal/box,
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/corner{
@@ -51261,9 +51183,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
@@ -51356,8 +51275,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/green/fourcorners,
-/obj/effect/spawner/random/aimodule/harmless,
-/obj/effect/spawner/random/aimodule/harmless,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "pLj" = (
@@ -58939,7 +58856,6 @@
 /area/station/command/heads_quarters/ce)
 "sgm" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/ai_all,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
@@ -62203,7 +62119,6 @@
 /area/station/hallway/primary/central/aft)
 "tfk" = (
 /obj/structure/table/glass/plasmaglass,
-/obj/item/ai_module/supplied/freeform,
 /obj/machinery/button/door/directional/south{
 	id = "aiload";
 	name = "AI Upload Blast Door Control";
@@ -65687,10 +65602,6 @@
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/borg/upgrade/rename{
-	pixel_x = -13;
-	pixel_y = -3
-	},
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/item/stack/sheet/iron/fifty{
 	pixel_x = 5;
@@ -67136,9 +67047,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners{
 	color = "#009dc4"
 	},
-/obj/machinery/computer/upload/ai{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/red/filled/warning,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -67891,10 +67799,6 @@
 "uOT" = (
 /obj/machinery/light/directional/south,
 /obj/structure/table/glass/plasmaglass,
-/obj/item/ai_module/supplied/freeform,
-/obj/item/ai_module/toy_ai{
-	pixel_x = 5
-	},
 /turf/open/floor/carpet/cyan,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "uPk" = (
@@ -73169,7 +73073,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
-/obj/item/aicard,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/science/server)
 "wvp" = (
@@ -76844,9 +76747,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/dark_blue/filled/warning,
-/obj/machinery/ai_slipper{
-	uses = 8
-	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "xzx" = (
@@ -77398,7 +77298,6 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
-/obj/machinery/drone_dispenser/preloaded,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "xKu" = (
@@ -102324,7 +102223,7 @@ vSD
 fPu
 lOc
 hLW
-cOV
+uDt
 xBV
 jZB
 xBV
@@ -102578,7 +102477,7 @@ meJ
 meJ
 yam
 vSD
-gcz
+fPu
 lOc
 eIt
 lwg
@@ -102835,8 +102734,8 @@ meJ
 meJ
 yam
 vSD
-gcz
-ewG
+fPu
+lOc
 uyq
 tiX
 hSR
