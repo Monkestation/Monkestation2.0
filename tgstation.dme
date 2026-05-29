@@ -8981,6 +8981,7 @@
 #include "monkestation\code\modules\virology\disease\symptom_varients\strengthen.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\_symptom.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\animation_procs.dm"
+#include "monkestation\code\modules\virology\disease\symtoms\annoying\anime_syndrome.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\annoying\bee_vomit.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\annoying\bloodynose.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\annoying\chicken_pox.dm"
