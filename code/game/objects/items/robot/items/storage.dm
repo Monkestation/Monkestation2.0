@@ -5,8 +5,10 @@
 	icon_state = "hugmodule"
 	/// The item stored inside of this apparatus
 	var/obj/item/stored
-	/// Whitelist of types allowed in this apparatus
+	/// Whitelist of types (and its subtypes) that are allowed in this apparatus.
 	var/list/storable = list()
+	/// Blacklist of types (and its subtypes) that are not allowed in this apparatus.
+	var/list/blacklisted_storables = list()
 
 /obj/item/borg/apparatus/Initialize(mapload)
 	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, PROC_REF(safedecon))
@@ -48,6 +50,7 @@
 	if(!stored || !issilicon(user))
 		return ..()
 	stored.attack_self(user)
+
 /obj/item/borg/apparatus/attack_self_secondary(mob/living/silicon/robot/user)
 	if(!stored || !issilicon(user))
 		return ..()
@@ -66,24 +69,29 @@
 	else
 		return ..()
 
+/// Checks if the item is allowed to be inside of the apparatus.
 /obj/item/borg/apparatus/proc/itemcheck(atom/atom)
+	if(is_type_in_list(atom, blacklisted_storables))
+		return FALSE
 	for(var/storable_type in storable)
 		if(istype(atom, storable_type))
 			return TRUE
 	return FALSE
 
+/// Attempts to put the item into the apparatus.
 /obj/item/borg/apparatus/proc/put_in_apparatus(atom/atom, mob/user)
-	if(!stored)
-		if((istype(atom.loc, /mob/living/silicon/robot) && (atom == user)) || (istype(atom.loc, /obj/item/robot_model) && (atom == user)) || HAS_TRAIT(atom, TRAIT_NODROP))
-			return FALSE // Borgs should not be grabbing their own modules
-		if(itemcheck(atom))
-			var/obj/item/item = atom
-			item.forceMove(src)
-			stored = item
-			RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
-			update_appearance()
-			return TRUE
-	return FALSE
+	if(stored)
+		return FALSE
+	if((istype(atom.loc, /mob/living/silicon/robot) && (atom == user)) || (istype(atom.loc, /obj/item/robot_model) && (atom == user)) || HAS_TRAIT(atom, TRAIT_NODROP))
+		return FALSE // Borgs should not be grabbing their own modules.
+	if(!itemcheck(atom))
+		return FALSE
+	var/obj/item/item = atom
+	item.forceMove(src)
+	stored = item
+	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
+	update_appearance()
+	return TRUE
 
 /obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, params)
 	if(LAZYACCESS(params, RIGHT_CLICK))
@@ -347,6 +355,9 @@
 		/obj/item/artifact_summon_wand,
 		/obj/item/slime_mutation_syringe,
 		/obj/item/borg_restart_board
+	)
+	blacklisted_storables = list(
+		/obj/item/disk/nuclear
 	)
 
 //apparatus to allow borgs to cook
