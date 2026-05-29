@@ -148,6 +148,11 @@
 			if (trait_obsessions[job] != null && HAS_TRAIT(owner, trait_obsessions[job]))
 				special_pool += possible_target.current
 			possible_targets += possible_target.current
+			//check if they are exempt from being an obsession target
+			var/mob/living/carbon/human/exempt_target = possible_target
+			if(exempt_target.obsession_target == 0)
+				possible_targets -= exempt_target
+				special_pool -= exempt_target
 
 	//Do we have any special target?
 	if(length(special_pool))
