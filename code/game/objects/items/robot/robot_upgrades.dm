@@ -598,8 +598,47 @@
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur, /obj/item/robot_model/science)
 	model_flags = BORG_MODEL_ENGINEERING
-	items_to_remove = list(/obj/item/storage/part_replacer/cyborg)
-	items_to_add = list(/obj/item/storage/part_replacer/bluespace)
+
+/obj/item/borg/upgrade/bs_rped/action(mob/living/silicon/robot/borg, user = usr)
+	. = ..()
+	if(!.)
+		return
+
+	var/obj/item/storage/part_replacer/cyborg/rped = locate() in borg.model.modules
+	if(isnull(rped))
+		to_chat(user, span_warning("This cyborg doesn't have a rapid part exchange device to upgrade!"))
+		return FALSE
+
+	install_items(borg, user, list(/obj/item/storage/part_replacer/bluespace))
+	var/obj/item/storage/part_replacer/bluespace/brped = locate() in borg.model.modules
+	var/move_location = borg.drop_location()
+	brped.atom_storage.silent_for_user = TRUE
+	for(var/obj/item in rped)
+		if(!brped.atom_storage.attempt_insert(item, borg, TRUE))
+			item.forceMove(move_location)
+	brped.atom_storage.silent_for_user = initial(brped.atom_storage.silent_for_user)
+	remove_items(borg, user, list(/obj/item/storage/part_replacer/cyborg))
+	return TRUE
+
+/obj/item/borg/upgrade/bs_rped/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
+	. = ..()
+	if(!.)
+		return
+
+	var/obj/item/storage/part_replacer/bluespace/brped = locate() in borg.model.modules
+	if(isnull(brped))
+		return FALSE
+
+	install_items(borg, user, list(/obj/item/storage/part_replacer/cyborg))
+	var/obj/item/storage/part_replacer/cyborg/rped = locate() in borg.model.modules
+	var/move_location = borg.drop_location()
+	rped.atom_storage.silent_for_user = TRUE
+	for(var/obj/item in brped)
+		if(!rped.atom_storage.attempt_insert(item, borg, TRUE))
+			item.forceMove(move_location)
+	rped.atom_storage.silent_for_user = initial(rped.atom_storage.silent_for_user)
+	remove_items(borg, user, list(/obj/item/storage/part_replacer/bluespace))
+	return TRUE
 
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"
@@ -873,6 +912,9 @@
 /obj/item/borg/upgrade/science_apparatus_improvement/ordnance
 	name = "science ordnance upgrade"
 	desc = "An upgrade for science cyborgs that enables them to hold and manipulate ordnance-related items."
+	items_to_add = list(
+		/obj/item/pipe_dispenser
+	)
 	storables_to_add = list(
 		/obj/item/tank/internals,
 		/obj/item/transfer_valve
@@ -903,7 +945,8 @@
 	model_flags = BORG_MODEL_SCIENCE
 	items_to_add = list(
 		/obj/item/vacuum_pack,
-		/obj/item/storage/bag/xeno
+		/obj/item/storage/bag/xeno,
+		/obj/item/construction/plumbing/research
 	)
 
 /obj/item/borg/upgrade/science_hypospray
