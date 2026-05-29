@@ -165,7 +165,7 @@
 
 /obj/item/reagent_containers/cup/fuelcanister
 	name = "fuel canister"
-	desc = "A canister full of industrial welding fuel. Refillable with fuel tanks. Do not puncture."
+	desc = "A canister full of industrial welding fuel. Do not puncture."
 	icon = 'icons/obj/atmospherics/tank.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/tanks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tanks_righthand.dmi'
