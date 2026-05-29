@@ -878,6 +878,22 @@
 		/obj/item/transfer_valve
 	)
 
+/obj/item/borg/upgrade/science_apparatus_improvement/circuits
+	name = "science circuits upgrade"
+	desc = "An upgrade for science cyborgs that enables them to hold and manipulate circuits-related items."
+	items_to_add = list(
+		/obj/item/multitool/circuit
+	)
+	storables_to_add = list(
+		/obj/item/circuit_component,
+		/obj/item/shell,
+		/obj/item/usb_cable,
+		/obj/item/keyboard_shell,
+		/obj/item/wiremod_scanner,
+		/obj/item/integrated_circuit,
+		/obj/item/mod/module/circuit,
+	)
+
 /obj/item/borg/upgrade/science_xenobiology
 	name = "science xenobiology upgrade"
 	desc = "An upgrade for science cyborgs that enables them to perform work in xenobiology."

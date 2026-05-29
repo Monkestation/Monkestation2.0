@@ -85,6 +85,7 @@
 	design_ids = list(
 		"borg_upgrade_science_apparatus_improvement_robotics",
 		"borg_upgrade_science_apparatus_improvement_ordnance",
+		"borg_upgrade_science_apparatus_improvement_circuits",
 		"borg_upgrade_science_xenobiology",
 		"borg_upgrade_science_hypospray"
 	)
