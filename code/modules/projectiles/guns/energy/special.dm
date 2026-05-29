@@ -196,7 +196,6 @@
 	force = 15
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 	toolspeed = 0.4
-	charge_weld = (0.01 * STANDARD_CELL_CHARGE)
 
 #define AMMO_SELECT_BLUE 1
 #define AMMO_SELECT_ORANGE 2
