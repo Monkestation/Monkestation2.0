@@ -110,6 +110,5 @@
 	// monkestation edit start PR #5133
 	if(is_ipc_mode || HAS_MIND_TRAIT(victim, TRAIT_UNBORGABLE))
 		victim.set_species(/datum/species/ipc)
-		if(victim.get_organ_by_type(/obj/item/organ/internal/brain))
 		victim.heal_damage_type(max(0, 80 - victim.getBruteLoss()), BRUTE)
 	// monkestation edit end PR #5133

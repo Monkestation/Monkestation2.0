@@ -704,12 +704,9 @@
 			to_chat(usr, "That's already an AI.", confidential = TRUE)
 			return
 
-		var/move = TRUE
 		switch(tgui_alert(usr,"Move new AI to AI spawn location?","Move AI?", list("Yes", "No","Cancel")))
 			if("Cancel", null)
 				return
-			if("No")
-				move = FALSE
 		if(QDELETED(our_mob))
 			to_chat(usr, span_danger("Subject was deleted already. Transform canceled."))
 			return
@@ -1230,7 +1227,7 @@
 								var/obj/item/I = O
 								L.put_in_hands(I)
 			if(pod)
-			new /obj/effect/pod_landingzone(target, pod)
+				new /obj/effect/pod_landingzone(target, pod)
 
 		if (number == 1)
 			log_admin("[key_name(usr)] created an instance of [english_list(paths)]")

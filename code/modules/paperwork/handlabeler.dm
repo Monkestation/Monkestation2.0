@@ -134,9 +134,6 @@
 	var/diff = starting_labels - labels_left
 	if(diff)
 		labels_left = starting_labels
-		// 50 per label. Magical cyborg paper doesn't come cheap.
-		var/cost = diff * 50
-
 
 	return .
 

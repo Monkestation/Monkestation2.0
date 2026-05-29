@@ -95,8 +95,6 @@
 /datum/preferences/proc/render_new_preview_appearance(mob/living/carbon/human/dummy/mannequin)
 	var/datum/job/preview_job = get_highest_priority_job()
 
-	if(preview_job)
-		// Set up the dummy for its photoshoot
 	apply_prefs_to(mannequin, TRUE)
 
 	if(preview_job)

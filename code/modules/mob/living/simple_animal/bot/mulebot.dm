@@ -482,20 +482,6 @@
 
 /mob/living/simple_animal/bot/mulebot/handle_automated_action()
 	return
-	if(!has_power())
-		turn_off()
-		return
-	if(mode == BOT_IDLE)
-		return
-	if(HAS_TRAIT(src, TRAIT_IMMOBILIZED))
-		return
-
-	var/speed = (wires.is_cut(WIRE_MOTOR1) ? 0 : 1) + (wires.is_cut(WIRE_MOTOR2) ? 0 : 2)
-	if(!speed)//Devide by zero man bad
-		return
-	num_steps = round(10/speed) //10, 5, or 3 steps, depending on how many wires we have cut
-	datum_flags &= ~DF_ISPROCESSING // hacky fix since /mob/living already registers this to another subsystem
-	START_PROCESSING(SSfastprocess, src)
 
 /mob/living/simple_animal/bot/mulebot/process()
 	if(!(bot_mode_flags & BOT_MODE_ON) || client || (num_steps <= 0) || !has_power())

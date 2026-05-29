@@ -170,57 +170,6 @@
 /mob/living/simple_animal/bot/firebot/handle_automated_action()
 	return
 
-	// Target reached ENGAGE WATER CANNON
-	if(target_fire && (get_dist(src, target_fire) <= (bot_cover_flags & BOT_COVER_EMAGGED ? 1 : 2))) // Make the bot spray water from afar when not emagged
-		if((speech_cooldown + SPEECH_INTERVAL) < world.time)
-			if(ishuman(target_fire))
-				speak("Stop, drop and roll!")
-				playsound(src, 'sound/voice/firebot/stopdropnroll.ogg', 50, FALSE)
-			else
-				speak("Extinguishing!")
-				playsound(src, 'sound/voice/firebot/extinguishing.ogg', 50, FALSE)
-			speech_cooldown = world.time
-
-			flick("firebot1_use", src)
-			spray_water(target_fire, src)
-
-		soft_reset()
-
-	// Target ran away
-	else if(target_fire && path.len && (get_dist(target_fire,path[path.len]) > 2))
-		path = list()
-		mode = BOT_IDLE
-		last_found = world.time
-
-	else if(target_fire && stationary_mode)
-		soft_reset()
-		return
-
-	if(target_fire && (get_dist(src, target_fire) > 2))
-
-		path = get_path_to(src, target_fire, max_distance=30, mintargetdist=1, access=access_card.GetAccess())
-		mode = BOT_MOVING
-		if(!path.len)
-			soft_reset()
-
-	if(path.len > 0 && target_fire)
-		if(!bot_move(path[path.len]))
-			old_target_fire = target_fire
-			soft_reset()
-		return
-
-	// We got a target but it's too far away from us
-	if(path.len > 8 && target_fire)
-		frustration++
-
-	if(bot_mode_flags & BOT_MODE_AUTOPATROL && !target_fire)
-		switch(mode)
-			if(BOT_IDLE, BOT_START_PATROL)
-				start_patrol()
-			if(BOT_PATROL)
-				bot_patrol()
-
-
 //Look for burning people or turfs around the bot
 /mob/living/simple_animal/bot/firebot/process_scan(atom/scan_target)
 	if(!is_burning(scan_target))

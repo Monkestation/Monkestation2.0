@@ -68,7 +68,6 @@
 		if(isAI(subject))
 			message += "<b>AI [key_name(subject, usr)]'s laws:</b>"
 		else if(iscyborg(subject))
-			var/mob/living/silicon/robot/borg = subject
 			message += "<b>CYBORG [key_name(subject, usr)]: laws:</b>"
 		else
 			message += "<b>SOMETHING SILICON [key_name(subject, usr)]'s laws:</b>"

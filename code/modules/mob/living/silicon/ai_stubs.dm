@@ -1,53 +1,53 @@
 /// Stub procs for removed AI/robot click handlers - silicon content was deleted
 /obj/proc/attack_ai(mob/user)
-    return FALSE
+	return FALSE
 
 /obj/proc/attack_ai_secondary(mob/user)
-    return FALSE
+	return FALSE
 
 /obj/proc/attack_robot(mob/user)
-    return FALSE
+	return FALSE
 
 /obj/proc/attack_robot_secondary(mob/user)
-    return FALSE
+	return FALSE
 
 /obj/proc/cyborg_unequip(mob/user)
-    return
+	return
 
 /obj/proc/AICtrlClick(mob/user)
-    return
+	return
 
 /obj/proc/AIShiftClick(mob/user)
-    return
+	return
 
 /obj/proc/AIAltClick(mob/user)
-    return
+	return
 
 /obj/proc/AIMiddleClick(mob/user)
-    return
+	return
 
 /mob/living/proc/attack_ai(mob/user)
-    return FALSE
+	return FALSE
 
 /mob/living/proc/attack_robot(mob/user)
-    return FALSE
+	return FALSE
 
 /mob/living/proc/AICtrlClick(mob/user)
-    return
+	return
 
 /mob/living/proc/AIShiftClick(mob/user)
-    return
+	return
 
 /mob/living/proc/AIAltClick(mob/user)
-    return
+	return
 
 /mob/living/proc/AIMiddleClick(mob/user)
-    return
+	return
 
 /turf/proc/attack_robot(mob/user)
-    return FALSE
+	return FALSE
 
 /turf/proc/attack_ai(mob/user)
-    return FALSE
+	return FALSE
 
 
