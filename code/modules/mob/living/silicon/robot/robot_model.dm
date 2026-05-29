@@ -998,7 +998,7 @@
 		/obj/item/borg/apparatus/organ_storage/limb, // They need to be able to hold limbs to hit artifacts with it.
 	)
 	emag_modules = list(
-		/obj/item/syndicate_teleporter, // Perhaps they should get something more unique than this.
+		/obj/item/borg/handheld_jaunter,
 	)
 	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
 	cyborg_base_icon = "science"
