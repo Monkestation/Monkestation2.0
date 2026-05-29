@@ -2988,7 +2988,6 @@
 	anchored = 1;
 	name = "crew supplies"
 	},
-/obj/effect/spawner/random/aimodule/harmful,
 /obj/effect/spawner/random/decoration,
 /obj/effect/spawner/random/decoration,
 /obj/effect/spawner/random/decoration/paint,

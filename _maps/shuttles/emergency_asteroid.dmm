@@ -224,10 +224,6 @@
 /obj/machinery/recharger,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bf" = (
-/obj/machinery/ai_slipper,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "bg" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Emergency Shuttle Cockpit"
@@ -509,7 +505,7 @@ aq
 aq
 ac
 aW
-bf
+at
 bn
 ac
 Jx

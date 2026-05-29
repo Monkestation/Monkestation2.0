@@ -111,7 +111,6 @@
 /area/ruin/space/abandoned_tele)
 "z" = (
 /obj/structure/closet/crate,
-/obj/item/aicard,
 /obj/item/multitool,
 /obj/item/weldingtool,
 /obj/item/wrench,

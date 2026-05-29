@@ -939,11 +939,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"kk" = (
-/obj/machinery/computer/aifixer,
-/obj/effect/turf_decal/tile/purple/fourcorners,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "ok" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular{
@@ -1341,7 +1336,7 @@ dz
 aa
 aa
 ac
-kk
+DS
 PD
 ap
 aI

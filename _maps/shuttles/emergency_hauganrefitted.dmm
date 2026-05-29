@@ -276,12 +276,6 @@
 /obj/structure/closet/l3closet/janitor,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"tp" = (
-/obj/machinery/computer/aifixer{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
 "tv" = (
 /obj/item/paper/fluff{
 	default_raw_text = "<center><font color='blue'><u>Aircraft #6</u></font>'s profit last year was <font color='red'><b>-6240cr</b></font>";
@@ -637,7 +631,6 @@
 /area/shuttle/escape)
 "RQ" = (
 /obj/structure/closet/crate/large,
-/obj/item/ai_module/toy_ai,
 /obj/item/toy/cards/deck/kotahi,
 /obj/item/gun/ballistic/automatic/pistol/toy,
 /obj/item/toy/sword,
@@ -959,7 +952,7 @@ rE
 rE
 sT
 uG
-tp
+VY
 EB
 uG
 Xr

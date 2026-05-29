@@ -411,10 +411,6 @@
 	pixel_y = 1
 	},
 /obj/machinery/light/small/directional/south,
-/obj/item/pai_card{
-	pixel_x = 16;
-	pixel_y = 2
-	},
 /obj/item/paper/fluff/ruins/listeningstation/reports/september,
 /turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/listeningstation/dorms)

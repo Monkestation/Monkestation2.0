@@ -205,7 +205,6 @@
 /area/ruin/space)
 "iE" = (
 /obj/structure/table,
-/obj/item/pai_card,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "jH" = (

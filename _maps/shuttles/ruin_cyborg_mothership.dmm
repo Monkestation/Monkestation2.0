@@ -36,7 +36,6 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/ruin/cyborg_mothership)
 "dA" = (
-/obj/item/disk/holodisk/ruin/cyborg_mothership,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/circuit/airless,
 /area/shuttle/ruin/cyborg_mothership)
@@ -409,9 +408,6 @@
 /turf/open/floor/circuit/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "vy" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/cyborg_mothership{
-	dir = 1
-	},
 /turf/open/floor/circuit/green/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "vL" = (
@@ -581,8 +577,6 @@
 "Dv" = (
 /obj/structure/cable,
 /obj/structure/table_frame,
-/obj/item/aicard,
-/obj/item/ai_module/core/full/overlord,
 /turf/open/floor/circuit/green/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "Em" = (
@@ -642,7 +636,6 @@
 /area/shuttle/ruin/cyborg_mothership)
 "HK" = (
 /mob/living/basic/hivebot,
-/obj/item/circuitboard/aicore,
 /obj/structure/cable,
 /turf/open/floor/circuit/green/airless,
 /area/shuttle/ruin/cyborg_mothership)
@@ -694,12 +687,6 @@
 	dir = 4
 	},
 /turf/open/floor/circuit/airless,
-/area/shuttle/ruin/cyborg_mothership)
-"MB" = (
-/obj/machinery/computer/shuttle/cyborg_mothership{
-	dir = 1
-	},
-/turf/open/floor/circuit/green/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "MK" = (
 /obj/machinery/light/cold/no_nightlight/directional/west,
@@ -839,7 +826,6 @@
 /area/shuttle/ruin/cyborg_mothership)
 "TZ" = (
 /obj/item/radio/intercom/directional/south,
-/obj/structure/ai_core,
 /turf/open/floor/circuit/green/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "Uq" = (
@@ -882,7 +868,6 @@
 "VQ" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/docking_port/mobile/cyborg_mothership,
 /turf/open/floor/plating,
 /area/shuttle/ruin/cyborg_mothership)
 "VU" = (
@@ -1267,7 +1252,7 @@ hB
 yF
 dA
 Ng
-MB
+vy
 ey
 yG
 Uq

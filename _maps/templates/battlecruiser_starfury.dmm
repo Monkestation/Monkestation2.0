@@ -1357,7 +1357,6 @@
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "eN" = (
-/obj/item/aicard,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/east,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/structure/window/reinforced/survival_pod{

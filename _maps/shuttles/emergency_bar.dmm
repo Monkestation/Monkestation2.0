@@ -251,11 +251,6 @@
 /obj/structure/chair/wood,
 /turf/open/floor/carpet/grimey,
 /area/shuttle/escape)
-"aX" = (
-/mob/living/basic/drone/snowflake/bardrone,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "aY" = (
 /obj/machinery/vending/boozeomat,
 /obj/machinery/light/directional/east,
@@ -749,7 +744,7 @@ bH
 aP
 aE
 aU
-aX
+aE
 aE
 aE
 be

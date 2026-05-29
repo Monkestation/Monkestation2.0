@@ -551,7 +551,6 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/effect/spawner/random/aimodule/syndicate,
 /turf/open/floor/wood/tile,
 /area/centcom/syndicate_mothership/control)
 "hW" = (
@@ -983,7 +982,6 @@
 /area/centcom/syndicate_mothership/control)
 "mK" = (
 /obj/structure/table/wood,
-/obj/item/pai_card,
 /turf/open/floor/wood/tile,
 /area/centcom/syndicate_mothership/control)
 "mL" = (

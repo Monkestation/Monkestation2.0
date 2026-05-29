@@ -12468,11 +12468,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main)
-"Yk" = (
-/obj/item/aicard,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/awaymission/snowdin/cave)
 "Ym" = (
 /turf/open/misc/asteroid/snow{
 	floor_variance = 0;
@@ -35854,7 +35849,7 @@ Zy
 Zy
 CC
 QO
-Yk
+ka
 Rs
 CC
 CC

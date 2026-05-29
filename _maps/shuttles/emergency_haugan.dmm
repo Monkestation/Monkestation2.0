@@ -169,12 +169,6 @@
 "sT" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
-"tp" = (
-/obj/machinery/computer/aifixer{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
 "tv" = (
 /obj/item/paper/fluff{
 	default_raw_text = "<center><h1>Plane Crash!</h1><br>1 die in fireball at Nanotrasen Proving Grounds!<br><i><font color='grey'>An image of a Yate Haugan Neo crashing is attached below.</font></i></center>";
@@ -797,7 +791,7 @@ rE
 rE
 sT
 uG
-tp
+VY
 EB
 uG
 Xr

@@ -1729,9 +1729,6 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "FR" = (
-/obj/machinery/computer/aifixer{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 1
@@ -2601,13 +2598,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
-"Wa" = (
-/obj/structure/chair/comfy/teal{
-	dir = 4
-	},
-/mob/living/basic/drone/snowflake/bardrone,
-/turf/open/floor/wood/tile,
-/area/shuttle/escape)
 "Wc" = (
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 4
@@ -3531,7 +3521,7 @@ xf
 xf
 mw
 mw
-Wa
+mw
 xf
 Ov
 uV

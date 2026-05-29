@@ -680,7 +680,6 @@
 /obj/item/raw_anomaly_core/random,
 /obj/item/clothing/suit/toggle/labcoat/science,
 /obj/item/reagent_containers/cup/soda_cans/dr_gibb,
-/obj/item/mmi/posibrain,
 /obj/machinery/camera/autoname/old/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
@@ -1059,9 +1058,6 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table,
 /obj/machinery/door/window/brigdoor/right/directional/east,
-/obj/machinery/computer/upload/borg{
-	dir = 4
-	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "fL" = (
@@ -1713,7 +1709,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/storage/photo_album,
-/obj/item/pai_card,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "jm" = (
@@ -4917,17 +4912,6 @@
 "Be" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/ancientstation/delta/biolab)
-"Bg" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/table,
-/obj/machinery/door/window/brigdoor/right/directional/east,
-/obj/machinery/computer/aifixer{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/ancientstation/delta/ai)
 "Bh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
@@ -5225,7 +5209,6 @@
 	listening = 0;
 	name = "Custom Channel"
 	},
-/obj/structure/ai_core/deactivated,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "CN" = (
@@ -5637,17 +5620,6 @@
 /obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
-"EB" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/table,
-/obj/machinery/door/window/brigdoor/right/directional/east,
-/obj/machinery/computer/upload/ai{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/ancientstation/delta/ai)
 "ED" = (
 /obj/effect/decal/cleanable/oil,
 /obj/machinery/light/small/directional/west,
@@ -8616,7 +8588,6 @@
 /area/ruin/space/ancientstation/beta/atmos)
 "VU" = (
 /obj/structure/alien/weeds,
-/obj/item/robot_suit/prebuilt,
 /obj/structure/alien/weeds,
 /obj/machinery/camera/autoname/old/directional/north,
 /turf/open/floor/iron/dark,
@@ -13314,8 +13285,8 @@ ff
 Tc
 lj
 fK
-EB
-Bg
+fK
+fK
 hs
 hs
 ye

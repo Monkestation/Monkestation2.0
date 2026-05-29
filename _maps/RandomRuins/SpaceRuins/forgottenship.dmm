@@ -716,12 +716,6 @@
 /obj/structure/sign/departments/cargo,
 /turf/closed/wall/r_wall/syndicate/hull,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"cl" = (
-/obj/machinery/light/directional/north,
-/obj/item/ai_module/core/full/cybersun,
-/obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cm" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Syndicate Ship Airlock"
@@ -2058,7 +2052,7 @@ aa
 aa
 aa
 bZ
-cl
+aA
 aw
 bZ
 aB

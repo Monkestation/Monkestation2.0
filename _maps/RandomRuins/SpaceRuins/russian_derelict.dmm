@@ -548,11 +548,6 @@
 /obj/effect/gibspawner/robot,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/eva)
-"em" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/ghost_role/drone/derelict,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/engineering/tech_storage)
 "eo" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -1448,11 +1443,6 @@
 /obj/item/kirbyplants/random/dead,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/central)
-"mq" = (
-/obj/effect/mapping_helpers/broken_floor,
-/obj/effect/mob_spawn/ghost_role/drone/derelict,
-/turf/open/floor/plating,
-/area/ruin/space/ks13/engineering/sb_bow_solars_control)
 "ms" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/gibspawner/generic,
@@ -3018,11 +3008,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
-"vf" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/mob_spawn/ghost_role/drone/derelict,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/engineering/secure_storage)
 "vi" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
@@ -3169,7 +3154,6 @@
 "vV" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/pai_card,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/science/rnd)
 "vY" = (
@@ -4332,10 +4316,6 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
-"Bj" = (
-/obj/effect/mob_spawn/ghost_role/drone/derelict,
-/turf/open/floor/iron,
-/area/ruin/space/ks13/ai/corridor)
 "Bo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -4860,7 +4840,6 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/ai_module/core/full/drone,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
 "DL" = (
@@ -5992,12 +5971,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/monke/engineering/aux_engine)
-"Jk" = (
-/obj/item/aicard,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/ai/vault)
 "Jl" = (
 /obj/structure/table,
 /obj/item/wallframe/firealarm{
@@ -7801,7 +7774,6 @@
 /turf/open/floor/wood,
 /area/ruin/space/ks13/service/chapel_office)
 "RV" = (
-/obj/effect/mob_spawn/ghost_role/drone/derelict,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
@@ -8202,11 +8174,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/ks13/medical/medbay)
-"Tt" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/obj/machinery/drone_dispenser/derelict,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/science/rnd)
 "Tu" = (
 /obj/machinery/computer/old{
 	dir = 8
@@ -14148,7 +14115,7 @@ Py
 aU
 aU
 NR
-em
+RF
 QG
 FJ
 kI
@@ -14241,7 +14208,7 @@ Yc
 Yc
 Yc
 Yc
-Bj
+fU
 Bu
 Hg
 fJ
@@ -15052,7 +15019,7 @@ TQ
 TQ
 qv
 Kk
-vf
+TQ
 gC
 lF
 qd
@@ -15602,7 +15569,7 @@ yz
 xf
 zH
 ss
-Jk
+ss
 SM
 Ym
 xf
@@ -15987,7 +15954,7 @@ Cy
 YZ
 Th
 il
-Tt
+vi
 Ir
 Ir
 vi
@@ -17400,7 +17367,7 @@ ud
 li
 IK
 xS
-mq
+IK
 VB
 DU
 dT

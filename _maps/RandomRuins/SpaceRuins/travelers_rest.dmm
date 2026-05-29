@@ -51,10 +51,6 @@
 	on = 1;
 	hide = 1
 	},
-/obj/item/pai_card{
-	pixel_x = -8;
-	pixel_y = 2
-	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
 "bN" = (

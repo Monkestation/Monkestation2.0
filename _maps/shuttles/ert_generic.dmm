@@ -757,9 +757,6 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/ert/armory)
 "yU" = (
-/obj/machinery/computer/aifixer{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/box,
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/ert/clonerybay)
@@ -1318,7 +1315,6 @@
 /area/shuttle/ert/cargo)
 "QQ" = (
 /obj/structure/table/reinforced,
-/obj/item/aicard,
 /obj/machinery/light/warm/directional/west,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/ert/bridge)

@@ -5548,9 +5548,6 @@
 /obj/item/taperecorder{
 	pixel_x = -3
 	},
-/obj/item/pai_card{
-	pixel_x = 4
-	},
 /turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
@@ -5928,15 +5925,6 @@
 /area/awaymission/undergroundoutpost45/research)
 "oA" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/cafeteria{
-	dir = 5;
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/research)
-"oB" = (
-/obj/machinery/computer/aifixer{
-	dir = 8
-	},
 /turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
@@ -38494,7 +38482,7 @@ mj
 mQ
 mP
 nS
-oB
+mP
 oA
 pJ
 qm

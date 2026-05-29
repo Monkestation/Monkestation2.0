@@ -760,9 +760,6 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Ws" = (
-/obj/machinery/computer/aifixer{
-	dir = 8
-	},
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)

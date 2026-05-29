@@ -57,10 +57,6 @@
 /obj/item/bodypart/arm/right/robot,
 /turf/open/misc/asteroid/airless,
 /area/space)
-"r" = (
-/obj/docking_port/stationary/cyborg_mothership,
-/turf/template_noop,
-/area/space)
 "s" = (
 /obj/item/stock_parts/power_store/cell/high/empty,
 /turf/open/misc/asteroid/airless,
@@ -131,12 +127,6 @@
 /area/space)
 "N" = (
 /obj/effect/decal/cleanable/oil,
-/turf/open/misc/asteroid/airless,
-/area/space)
-"O" = (
-/obj/item/robot_suit{
-	name = "Destroyed Unit-577"
-	},
 /turf/open/misc/asteroid/airless,
 /area/space)
 "Q" = (
@@ -1551,7 +1541,7 @@ a
 a
 a
 a
-r
+a
 a
 a
 a
@@ -1591,7 +1581,7 @@ a
 W
 W
 L
-O
+L
 E
 E
 L

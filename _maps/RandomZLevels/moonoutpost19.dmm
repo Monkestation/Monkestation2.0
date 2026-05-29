@@ -1019,7 +1019,6 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "ia" = (
-/obj/machinery/computer/aifixer,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
@@ -2987,9 +2986,6 @@
 /area/awaymission/moonoutpost19/arrivals)
 "ww" = (
 /obj/structure/rack,
-/obj/item/pai_card{
-	pixel_x = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},

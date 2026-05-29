@@ -49,7 +49,6 @@
 /area/shuttle/escape)
 "ai" = (
 /obj/effect/turf_decal/bot_white,
-/obj/machinery/computer/aifixer,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aj" = (

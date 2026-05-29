@@ -300,7 +300,6 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "kb" = (
-/obj/item/borg/upgrade/defib,
 /obj/structure/closet/crate/medical{
 	anchored = 1
 	},
@@ -368,7 +367,6 @@
 /area/shuttle/escape)
 "mc" = (
 /obj/structure/table/reinforced,
-/obj/item/borg_restart_board,
 /obj/item/reagent_containers/cup/glass/mug/nanotrasen{
 	pixel_x = -11
 	},
@@ -1129,9 +1127,6 @@
 /area/shuttle/escape)
 "Lj" = (
 /obj/effect/turf_decal/box/corners{
-	dir = 4
-	},
-/obj/machinery/computer/aifixer{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured,
