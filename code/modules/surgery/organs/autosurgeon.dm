@@ -391,11 +391,6 @@
 	starting_organ = /obj/item/organ/internal/cyberimp/brain/anti_drop/syndicate
 	uses = 1
 
-/obj/item/autosurgeon/syndicate/baton
-	desc = "A single use autosurgeon that contains a arm electrification implant implant. A screwdriver can be used to remove it, but implants can't be placed back in."
-	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/baton
-	uses = 1
-
 /obj/item/autosurgeon/syndicate/flash
 	desc = "A single use autosurgeon that contains a integrated high-intensity photon projector implant. A screwdriver can be used to remove it, but implants can't be placed back in."
 	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/flash

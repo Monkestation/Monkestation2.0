@@ -265,7 +265,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 /datum/scripture/create_structure/get_true_invocation_time()
 	. = ..()
 	if(GLOB.clock_ark?.current_state >= ARK_STATE_ACTIVE)
-		. *= (iscogscarab(invoker) ? assault_invoke_time_mult : assault_invoke_time_mult * 2)
+		. *= assault_invoke_time_mult * 2
 
 /datum/scripture/create_structure/invoke_success()
 	return new summoned_structure(get_turf(invoker))

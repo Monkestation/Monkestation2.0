@@ -35,7 +35,7 @@ GLOBAL_LIST_EMPTY(vampire_houses)
 	var/datum/job/vampire_job = SSjob.GetJob(target.job)
 	if(!vampire_job) //no job or no mind LOSERS
 		return
-	var/list/valid_departments = (SSjob.joinable_departments.Copy()) - list(/datum/job_department/silicon, /datum/job_department/undefined)
+	var/list/valid_departments = (SSjob.joinable_departments.Copy()) - list(/datum/job_department/undefined)
 	for(var/datum/job_department/potential_house as anything in valid_departments)
 		if(vampire_job in potential_house.department_jobs)
 			vampire_house = potential_house

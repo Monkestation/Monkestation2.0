@@ -53,7 +53,7 @@
 	*z_ptr = 0
 	return TRUE
 
-/datum/media_source/proc/get_volume(mob/target)
+/datum/media_source/proc/get_volume(target)
 	. = volume
 	if(isnull(mixer_channel))
 		return volume

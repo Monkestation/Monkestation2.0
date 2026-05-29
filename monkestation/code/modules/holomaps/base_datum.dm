@@ -28,11 +28,6 @@
 	if(!base_map || reinit_base_map)
 		base_map = image(SSholomaps.extra_holomaps["[HOLOMAP_EXTRA_STATIONMAP]_[map_z]"])
 
-	if(isAI(user) || isaicamera(user))
-		var/turf/eye_turf = get_turf(user?.client?.eye)
-		if(eye_turf)
-			location_turf = eye_turf
-
 	update_map(extra_overlays)
 
 /datum/station_holomap/proc/generate_legend(list/overlays_to_use = list())

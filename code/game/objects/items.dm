@@ -660,13 +660,6 @@
 		return
 	attack_paw(ayy, modifiers)
 
-/obj/item/attack_robot(mob/living/silicon/robot/user)
-	if(!istype(loc, /obj/item/robot_model))
-		return
-	if(user.low_power_mode) //can't equip modules with an empty cell.
-		return
-	user.activate_module(src)
-
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
 /obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)

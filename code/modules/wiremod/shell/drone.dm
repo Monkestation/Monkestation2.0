@@ -65,21 +65,6 @@
 	/// Delay between each movement
 	var/move_delay = 0.2 SECONDS
 
-/obj/item/circuit_component/bot_circuit/register_shell(atom/movable/shell)
-	. = ..()
-	if(ismob(shell))
-		RegisterSignal(shell, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(on_borg_charge))
-
-/obj/item/circuit_component/bot_circuit/unregister_shell(atom/movable/shell)
-	UnregisterSignal(shell, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
-	return ..()
-
-/obj/item/circuit_component/bot_circuit/proc/on_borg_charge(datum/source, amount)
-	SIGNAL_HANDLER
-	if (isnull(parent.cell))
-		return
-	parent.cell.give(amount)
-
 /obj/item/circuit_component/bot_circuit/populate_ports()
 	north = add_input_port("Move North", PORT_TYPE_SIGNAL)
 	east = add_input_port("Move East", PORT_TYPE_SIGNAL)

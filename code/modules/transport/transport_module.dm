@@ -756,12 +756,6 @@
 
 	return open_lift_radial(user)
 
-/obj/structure/transport/linear/attack_robot(mob/living/user)
-	if(!radial_travel)
-		return ..()
-
-	return open_lift_radial(user)
-
 /**
  * Shows a message indicating that the lift has moved up or down.
  * Arguments:
@@ -916,39 +910,6 @@
 	for(var/obj/structure/transport/linear/tram/tram_part as anything in transport_controller_datum.transport_modules) //only thing everyone needs to know is the new location.
 		tram_part.set_travelling(FALSE)
 		transport_controller_datum.controls_lock(FALSE)
-
-///debug proc to highlight the locs of the tram platform
-/obj/structure/transport/linear/tram/proc/find_dimensions(iterations = 100)
-	message_admins("num turfs: [length(locs)]")
-
-	var/overlay = /obj/effect/overlay/ai_detect_hud
-	var/list/turfs = list()
-
-	for(var/turf/our_turf as anything in locs)
-		new overlay(our_turf)
-		turfs += our_turf
-
-	addtimer(CALLBACK(src, PROC_REF(clear_turfs), turfs, iterations), 1)
-
-/obj/structure/transport/linear/tram/proc/clear_turfs(list/turfs_to_clear, iterations)
-	for(var/turf/our_old_turf as anything in turfs_to_clear)
-		var/obj/effect/overlay/ai_detect_hud/hud = locate() in our_old_turf
-		if(hud)
-			qdel(hud)
-
-	var/overlay = /obj/effect/overlay/ai_detect_hud
-
-	for(var/turf/our_turf as anything in locs)
-		new overlay(our_turf)
-
-	iterations--
-
-	var/list/turfs = list()
-	for(var/turf/our_turf as anything in locs)
-		turfs += our_turf
-
-	if(iterations)
-		addtimer(CALLBACK(src, PROC_REF(clear_turfs), turfs, iterations), 1)
 
 /obj/structure/transport/linear/tram/proc/estop_throw(throw_direction)
 	for(var/mob/living/passenger in transport_contents)

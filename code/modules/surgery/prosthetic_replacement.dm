@@ -32,22 +32,12 @@
 	name = "add prosthetic"
 	implements = list(
 		/obj/item/bodypart = 100,
-		/obj/item/borg/apparatus/organ_storage = 100,
 		/obj/item/chainsaw = 100,
 		/obj/item/melee/synthetic_arm_blade = 100)
 	time = 32
 	var/organ_rejection_dam = 0
 
 /datum/surgery_step/add_prosthetic/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(istype(tool, /obj/item/borg/apparatus/organ_storage))
-		if(!tool.contents.len)
-			to_chat(user, span_warning("There is nothing inside [tool]!"))
-			return SURGERY_STEP_FAIL
-		var/obj/item/organ_storage_contents = tool.contents[1]
-		if(!isbodypart(organ_storage_contents))
-			to_chat(user, span_warning("[organ_storage_contents] cannot be attached!"))
-			return SURGERY_STEP_FAIL
-		tool = organ_storage_contents
 	if(isbodypart(tool))
 		var/obj/item/bodypart/bodypart_to_attach = tool
 		if(IS_ORGANIC_LIMB(bodypart_to_attach))
@@ -90,11 +80,6 @@
 
 /datum/surgery_step/add_prosthetic/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	. = ..()
-	if(istype(tool, /obj/item/borg/apparatus/organ_storage))
-		tool.icon_state = initial(tool.icon_state)
-		tool.desc = initial(tool.desc)
-		tool.cut_overlays()
-		tool = tool.contents[1]
 	if(isbodypart(tool) && user.temporarilyRemoveItemFromInventory(tool))
 		var/obj/item/bodypart/bodypart_to_attach = tool
 		bodypart_to_attach.try_attach_limb(target)

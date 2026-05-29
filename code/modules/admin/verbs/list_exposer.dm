@@ -69,18 +69,13 @@
 			message += "<b>AI [key_name(subject, usr)]'s laws:</b>"
 		else if(iscyborg(subject))
 			var/mob/living/silicon/robot/borg = subject
-			message += "<b>CYBORG [key_name(subject, usr)] [borg.connected_ai?"(Slaved to: [key_name(borg.connected_ai)])":"(Independent)"]: laws:</b>"
-		else if (ispAI(subject))
-			message += "<b>pAI [key_name(subject, usr)]'s laws:</b>"
+			message += "<b>CYBORG [key_name(subject, usr)]: laws:</b>"
 		else
 			message += "<b>SOMETHING SILICON [key_name(subject, usr)]'s laws:</b>"
 
 		message += "<br>"
 
-		if (!subject.laws)
-			message += "[key_name(subject, usr)]'s laws are null?? Contact a coder."
-		else
-			message += jointext(subject.laws.get_law_list(include_zeroth = TRUE), "<br>")
+		message += "[key_name(subject, usr)]'s laws were removed with the law system."
 
 		to_chat(usr, message, confidential = TRUE)
 

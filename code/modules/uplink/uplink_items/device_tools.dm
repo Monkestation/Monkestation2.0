@@ -201,14 +201,6 @@
 	item = /obj/item/stack/sticky_tape/pointy/super
 	cost = 1
 
-/datum/uplink_item/device_tools/hacked_module
-	name = "Hacked AI Law Upload Module"
-	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. \
-			Be careful with wording, as artificial intelligences may look for loopholes to exploit."
-	progression_minimum = 30 MINUTES
-	item = /obj/item/ai_module/syndicate
-	cost = 4
-
 /datum/uplink_item/device_tools/hypnotic_flash
 	name = "Hypnotic Flash"
 	desc = "A modified flash able to hypnotize targets. If the target is not in a mentally vulnerable state, it will only confuse and pacify them temporarily."

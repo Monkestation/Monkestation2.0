@@ -19,7 +19,6 @@
 	finish_action(controller, TRUE)
 
 /datum/ai_behavior/find_and_set/proc/search_tactic(datum/ai_controller/controller, locate_path, search_range)
-	return locate(locate_path) in oview(search_range, controller.pawn)
 
 /**
  * Variant of find and set that fails if the living pawn doesn't hold something

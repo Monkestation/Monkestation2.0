@@ -4,16 +4,6 @@
 
 //Command
 
-/obj/item/circuitboard/computer/aiupload
-	name = "AI Upload"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/computer/upload/ai
-
-/obj/item/circuitboard/computer/borgupload
-	name = "Cyborg Upload"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/computer/upload/borg
-
 /obj/item/circuitboard/computer/bsa_control
 	name = "Bluespace Artillery Controls"
 	build_path = /obj/machinery/computer/bsa_control
@@ -369,11 +359,6 @@
 
 //Science
 
-/obj/item/circuitboard/computer/aifixer
-	name = "AI Integrity Restorer"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/aifixer
-
 /obj/item/circuitboard/computer/launchpad_console
 	name = "Launchpad Control Console"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
@@ -426,11 +411,6 @@
 	name = "Research Monitor"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/security/research
-
-/obj/item/circuitboard/computer/robotics
-	name = "Robotics Control"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/robotics
 
 /obj/item/circuitboard/computer/teleporter
 	name = "Teleporter"

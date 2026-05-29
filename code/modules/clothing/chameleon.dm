@@ -32,39 +32,7 @@
 		button_icon_state = "drone_camogear_mask"
 
 /datum/action/item_action/chameleon/drone/togglehatmask/Trigger(trigger_flags)
-	if(!IsAvailable(feedback = TRUE))
-		return
-
-	// No point making the code more complicated if no non-drone
-	// is ever going to use one of these
-
-	var/mob/living/basic/drone/D
-
-	if(isdrone(owner))
-		D = owner
-	else
-		return
-
-	// The drone unEquip() proc sets head to null after dropping
-	// an item, so we need to keep a reference to our old headgear
-	// to make sure it's deleted.
-	var/obj/old_headgear = target
-	var/obj/new_headgear
-
-	if(istype(old_headgear, /obj/item/clothing/head/chameleon/drone))
-		new_headgear = new /obj/item/clothing/mask/chameleon/drone()
-	else if(istype(old_headgear, /obj/item/clothing/mask/chameleon/drone))
-		new_headgear = new /obj/item/clothing/head/chameleon/drone()
-	else
-		to_chat(owner, span_warning("You shouldn't be able to toggle a camogear helmetmask if you're not wearing it."))
-	if(new_headgear)
-		// Force drop the item in the headslot, even though
-		// it's has TRAIT_NODROP
-		D.dropItemToGround(target, TRUE)
-		qdel(old_headgear)
-		// where is `ITEM_SLOT_HEAD` defined? WHO KNOWS
-		D.equip_to_slot(new_headgear, ITEM_SLOT_HEAD)
-	return 1
+	return
 
 
 /datum/action/chameleon_outfit

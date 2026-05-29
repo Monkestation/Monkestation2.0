@@ -713,10 +713,6 @@
 		if(QDELETED(our_mob))
 			to_chat(usr, span_danger("Subject was deleted already. Transform canceled."))
 			return
-		message_admins(span_danger("Admin [key_name_admin(usr)] AIized [key_name_admin(our_mob)]!"))
-		log_admin("[key_name(usr)] AIized [key_name(our_mob)].")
-		our_mob.AIize(our_mob.client, move)
-
 	else if(href_list["makerobot"])
 		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_admin_robotize, locate(href_list["makerobot"]))
 
@@ -1093,9 +1089,6 @@
 			return
 		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/show_skill_panel, target_mind)
 
-	else if(href_list["borgpanel"])
-		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/borg_panel, locate(href_list["borgpanel"]))
-
 	else if(href_list["initmind"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1236,13 +1229,7 @@
 								var/mob/living/L = usr
 								var/obj/item/I = O
 								L.put_in_hands(I)
-								if(iscyborg(L))
-									var/mob/living/silicon/robot/R = L
-									if(R.model)
-										R.model.add_module(I, TRUE, TRUE)
-										R.activate_module(I)
-
-		if(pod)
+			if(pod)
 			new /obj/effect/pod_landingzone(target, pod)
 
 		if (number == 1)

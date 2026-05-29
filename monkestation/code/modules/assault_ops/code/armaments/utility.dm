@@ -69,8 +69,4 @@
 	item_type = /obj/item/flashlight/emp
 	cost = 2
 
-/datum/armament_entry/assault_operatives/utility/borg
-	name = "Saboteur Cyborg Beacon"
-	description = "A single-use beacon that summons a saboteur cyborg to assist alongside you on your mission."
-	item_type = /obj/item/antag_spawner/assault_operative
-	cost = 25
+

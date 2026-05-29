@@ -28,21 +28,9 @@
 
 /// Actually perform an action
 /datum/ai_planning_subtree/random_speech/proc/speak(datum/ai_controller/controller)
-	var/audible_emotes_length = emote_hear?.len
-	var/non_audible_emotes_length = emote_see?.len
-	var/speak_lines_length = speak?.len
 
-	var/total_choices_length = audible_emotes_length + non_audible_emotes_length + speak_lines_length
 
-	var/random_number_in_range = rand(1, total_choices_length)
-	var/sound_to_play = length(sound) > 0 ? pick(sound) : null
 
-	if(random_number_in_range <= audible_emotes_length)
-		controller.queue_behavior(/datum/ai_behavior/perform_emote, pick(emote_hear), sound_to_play)
-	else if(random_number_in_range <= (audible_emotes_length + non_audible_emotes_length))
-		controller.queue_behavior(/datum/ai_behavior/perform_emote, pick(emote_see))
-	else
-		controller.queue_behavior(/datum/ai_behavior/perform_speech, pick(speak), sound_to_play)
 
 /datum/ai_planning_subtree/random_speech/insect
 	speech_chance = 5

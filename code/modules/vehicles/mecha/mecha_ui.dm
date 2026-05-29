@@ -22,7 +22,7 @@
 			ui_status_user_is_advanced_tool_user(user),
 		)
 	if(isAI(user))
-		mob_specific_status = ui_status_silicon_has_access(user, src)
+		mob_specific_status = UI_CLOSE
 	if(isbrain(user))
 		mob_specific_status = ui_status_user_inside(user, src)
 	return min(common_status, mob_specific_status)

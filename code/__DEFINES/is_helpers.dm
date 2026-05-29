@@ -141,7 +141,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define issilicon(A) (istype(A, /mob/living/silicon))
 #define isAI(A) (istype(A, /mob/living/silicon/ai))
 #define iscyborg(A) (istype(A, /mob/living/silicon/robot))
-#define ispAI(A) (istype(A, /mob/living/silicon/pai))
+#define ispAI(A) (FALSE)
 
 ///This is used to see if you have Silicon access. This includes things like Admins, Drones, Bots, and Human wands.
 #define HAS_SILICON_ACCESS(possible_silicon) (HAS_TRAIT(possible_silicon, TRAIT_SILICON_ACCESS) || isAdminGhostAI(possible_silicon))
@@ -182,7 +182,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isslime(A) (istype(A, /mob/living/basic/slime))
 
-#define isdrone(A) (istype(A, /mob/living/basic/drone))
+#define isdrone(A) (FALSE)
 
 GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 	/mob/living/simple_animal/pet/cat,

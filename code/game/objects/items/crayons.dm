@@ -1061,16 +1061,6 @@
 	charges = INFINITE_CHARGES
 
 /obj/item/toy/crayon/spraycan/borg/use_charges(mob/user, amount = 1, requires_full = TRUE, override_infinity = FALSE)
-	if(!iscyborg(user))
-		to_chat(user, span_notice("How did you get this?"))
-		qdel(src)
-		return FALSE
-
-	var/mob/living/silicon/robot/borgy = user
-	// 25 is our cost per unit of paint, making it cost 25 energy per
-	// normal tag, 50 per window, and 250 per attack
-	if(!borgy.cell?.use(amount * 25))
-		return FALSE
 	return ..()
 
 

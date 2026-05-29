@@ -289,35 +289,6 @@
 				break
 	hacking_module.charge_message(src, drain_total)
 
-//BORG//
-/mob/living/silicon/robot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!ninja || !hacking_module || (ROLE_NINJA in faction))
-		return NONE
-
-	to_chat(src, span_danger("Warni-***BZZZZZZZZZRT*** UPLOADING SPYDERPATCHER VERSION 9.5.2..."))
-	INVOKE_ASYNC(src, PROC_REF(ninjadrain_charge), ninja, hacking_module)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
-
-/mob/living/silicon/robot/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!do_after(ninja, 6 SECONDS, target = src, hidden = TRUE))
-		return
-	spark_system.start()
-	playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	to_chat(src, span_danger("UPLOAD COMPLETE. NEW CYBORG MODEL DETECTED.  INSTALLING..."))
-	faction = list(ROLE_NINJA)
-	bubble_icon = "syndibot"
-	UnlinkSelf()
-	ionpulse = TRUE
-	laws = new /datum/ai_laws/ninja_override()
-	model.transform_to(pick(/obj/item/robot_model/syndicate, /obj/item/robot_model/syndicate_medical, /obj/item/robot_model/saboteur))
-
-	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
-	if(!ninja_antag)
-		return
-	var/datum/objective/cyborg_hijack/objective = locate() in ninja_antag.objectives
-	if(objective)
-		objective.completed = TRUE
-
 //CARBON MOBS//
 /mob/living/carbon/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module)

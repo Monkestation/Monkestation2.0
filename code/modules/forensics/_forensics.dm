@@ -112,11 +112,6 @@
 	if(!isliving(suspect))
 		if(!iseyemob(suspect))
 			return
-		if(isaicamera(suspect))
-			var/mob/eye/camera/ai/ai_camera = suspect
-			if(!ai_camera.ai)
-				return
-			suspect = ai_camera.ai
 	add_hiddenprint(suspect)
 	if(ishuman(suspect))
 		var/mob/living/carbon/human/human_suspect = suspect
@@ -204,11 +199,6 @@
 	if(!isliving(suspect))
 		if(!iseyemob(suspect))
 			return
-		if(isaicamera(suspect))
-			var/mob/eye/camera/ai/ai_camera = suspect
-			if(!ai_camera.ai)
-				return
-			suspect = ai_camera.ai
 	if(!suspect.key)
 		return
 	var/has_gloves = ""

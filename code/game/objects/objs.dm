@@ -145,7 +145,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	else
 		obj_flags &= ~IN_USE
 
-/obj/proc/updateDialog(update_viewers = TRUE,update_ais = TRUE)
+/obj/proc/updateDialog(update_viewers = TRUE)
 	// Check that people are actually using the machine. If not, don't update anymore.
 	if(obj_flags & IN_USE)
 		var/is_in_use = FALSE
@@ -154,12 +154,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 				if ((M.client && M.machine == src))
 					is_in_use = TRUE
 					src.interact(M)
-		var/ai_in_use = FALSE
-		if(update_ais)
-			ai_in_use = AutoUpdateAI(src)
-
-		if(update_viewers && update_ais) //State change is sure only if we check both
-			if(!ai_in_use && !is_in_use)
+		if(update_viewers)
+			if(!is_in_use)
 				obj_flags &= ~IN_USE
 
 

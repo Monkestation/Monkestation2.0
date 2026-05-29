@@ -12,8 +12,6 @@
 			continue
 		required_items_to_unlock |= item.item //allows deconning to unlock.
 
-	required_items_to_unlock |= /obj/item/malf_upgrade // MONKESTATION ADDITION -- The malf upgrade disk can now be used to get illegal technology
-
 /datum/techweb_node/syndicate_basic
 	id = "syndicate_basic"
 	display_name = "Illegal Technology"

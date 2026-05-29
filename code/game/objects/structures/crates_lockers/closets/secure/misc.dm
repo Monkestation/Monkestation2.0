@@ -21,8 +21,7 @@
 /obj/structure/closet/secure_closet/ert_com/populate_contents_immediate()
 	. = ..()
 
-	// Traitor steal objective
-	new /obj/item/aicard(src)
+	// Traitor steal objective - AI card removed
 
 /obj/structure/closet/secure_closet/ert_sec
 	name = "emergency response team security locker"

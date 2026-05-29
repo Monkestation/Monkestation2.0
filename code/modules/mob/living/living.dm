@@ -203,11 +203,7 @@
 		var/mob/living/carbon/human/human = M
 		if((human.istate & ISTATE_HARM))
 			return TRUE
-	//if they are a cyborg, and they're alive and in combat mode, block pushing
-	if(iscyborg(M))
-		var/mob/living/silicon/robot/borg = M
-		if((borg.istate & ISTATE_HARM) && borg.stat != DEAD)
-			return TRUE
+
 	//anti-riot equipment is also anti-push
 	for(var/obj/item/I in M.held_items)
 		if(!isclothing(M))
@@ -1459,25 +1455,16 @@
 
 	var/list/item_contents = list()
 
-	if(iscyborg(src))
-		var/mob/living/silicon/robot/Robot = src
-		// Disconnect AI's in shells
-		if(Robot.connected_ai)
-			Robot.connected_ai.disconnect_shell()
-		QDEL_NULL(Robot.mmi)
-		Robot.notify_ai(AI_NOTIFICATION_NEW_BORG)
-	else
-		for(var/obj/item/item in src)
-			if(!dropItemToGround(item))
-				qdel(item)
-				continue
-			item_contents += item
+	for(var/obj/item/item in src)
+		if(!dropItemToGround(item))
+			qdel(item)
+			continue
+		item_contents += item
 
 	var/mob/living/new_mob
 
 	var/static/list/possible_results = list(
 		WABBAJACK_MONKEY,
-		WABBAJACK_ROBOT,
 		WABBAJACK_SLIME,
 		WABBAJACK_XENO,
 		WABBAJACK_HUMAN,
@@ -1490,26 +1477,6 @@
 	switch(what_to_randomize)
 		if(WABBAJACK_MONKEY)
 			new_mob = new /mob/living/carbon/human/species/monkey(loc)
-
-		if(WABBAJACK_ROBOT)
-			var/static/list/robot_options = list(
-				/mob/living/silicon/robot/disconnected = 200,
-				/mob/living/basic/drone/polymorphed = 200,
-				/mob/living/silicon/robot/model/syndicate = 100,
-				/mob/living/silicon/robot/model/syndicate/medical = 100,
-				/mob/living/silicon/robot/model/syndicate/saboteur = 100,
-			)
-
-			var/picked_robot = pick_weight(robot_options)
-			new_mob = new picked_robot(loc)
-			if(issilicon(new_mob))
-				var/mob/living/silicon/robot/created_robot = new_mob
-				new_mob.gender = gender
-				new_mob.SetInvisibility(INVISIBILITY_NONE)
-				new_mob.job = JOB_CYBORG
-				created_robot.mmi.transfer_identity(src) //Does not transfer key/client.
-				created_robot.clear_inherent_laws(announce = FALSE)
-				created_robot.clear_zeroth_law(announce = FALSE)
 
 		if(WABBAJACK_SLIME)
 			new_mob = new /mob/living/basic/slime/random(loc)

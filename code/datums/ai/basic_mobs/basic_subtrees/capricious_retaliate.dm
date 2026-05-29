@@ -58,8 +58,6 @@
 
 /// Called if we try but fail to target something
 /datum/ai_behavior/capricious_retaliate/proc/failed_targeting(datum/ai_controller/controller, atom/pawn, ignore_faction)
-	finish_action(controller, FALSE, ignore_faction)
-	pawn.visible_message(span_notice("[pawn] grumbles.")) // We're pissed off but with no outlet to vent our frustration upon
 
 /datum/ai_behavior/capricious_retaliate/finish_action(datum/ai_controller/controller, succeeded, ignore_faction)
 	. = ..()

@@ -630,11 +630,7 @@
 		return BATON_ATTACK_DONE
 
 /obj/item/melee/baton/security/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
-	if(iscyborg(loc))
-		var/mob/living/silicon/robot/robot = loc
-		if(!robot || !robot.cell || !robot.cell.use(cell_hit_cost))
-			return FALSE
-	else if(!deductcharge(cell_hit_cost))
+	if(!deductcharge(cell_hit_cost))
 		return FALSE
 	stun_override = 0 //Avoids knocking people down prematurely.
 	return ..()

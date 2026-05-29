@@ -49,11 +49,4 @@
 	if(!owner || !istype(owner) || !owner.client || !word_list.value)
 		return
 
-	if(current_type == PORT_TYPE_STRING)
-		var/words_list = splittext(trim(word_list.value), " ")
 
-		for(var/word in words_list)
-			play_vox_word_legacy(word, only_listener = owner)
-	else
-		for(var/word in word_list.value)
-			play_vox_word_legacy(word, only_listener = owner)

@@ -9,7 +9,7 @@
 	var/static/list/selectable_assets = list(
 		"Elite Monkey Strike Team (Distraction/Sabotage)" = /obj/item/antag_spawner/loadout/monkey_crash,
 		"Ricky's Mauler (Defensive)" = /obj/item/antag_spawner/loadout/monkey_man/ricky,
-		"Syndicate Medical Cyborg (Support)" = /obj/item/antag_spawner/nuke_ops/borg_tele/medical,
+
 		"Missile Targeter (Offensive)" = /obj/item/missile_targeter,
 	)
 	return selectable_assets

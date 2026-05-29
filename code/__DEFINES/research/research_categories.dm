@@ -91,14 +91,6 @@
 #define RND_SUBCATEGORY_EQUIPMENT_KITCHEN "/Bar & Kitchen Equipment"
 #define RND_SUBCATEGORY_EQUIPMENT_MISC "/Miscellaneous Equipment"
 
-#define RND_CATEGORY_AI "/Artificial Intelligence"
-#define RND_SUBCATEGORY_AI_CORE "/AI Construction"
-#define RND_SUBCATEGORY_AI_CORE_MODULES "/Core AI Modules"
-#define RND_SUBCATEGORY_AI_DANGEROUS_MODULES "/Dangerous AI Modules"
-#define RND_SUBCATEGORY_AI_LAW_MANIPULATION "/AI Law Manipulation"
-#define RND_SUBCATEGORY_AI_MISC "/Miscellaneous AI Items"
-#define RND_SUBCATEGORY_AI_UPGRADES "/AI Upgrades"
-
 #define RND_CATEGORY_MODULAR_COMPUTERS "/Modular Computers"
 #define RND_SUBCATEGORY_MODULAR_COMPUTERS_FRAMES "/Frames"
 #define RND_SUBCATEGORY_MODULAR_COMPUTERS_PARTS "/Parts"

@@ -102,26 +102,6 @@
 		release(TRUE, FALSE)
 		return
 
-/obj/item/clothing/head/mob_holder/drone/Initialize(mapload, mob/living/M, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags = NONE)
-	//If we're not being put onto a drone, end it all
-	if(!isdrone(M))
-		return INITIALIZE_HINT_QDEL
-	return ..()
-
-/obj/item/clothing/head/mob_holder/drone/deposit(mob/living/L)
-	. = ..()
-	if(!isdrone(L))
-		qdel(src)
-	name = "drone (hiding)"
-	desc = "This drone is scared and has curled up into a ball!"
-
-/obj/item/clothing/head/mob_holder/drone/update_visuals(mob/living/L)
-	var/mob/living/basic/drone/drone = L
-	if(!drone)
-		return ..()
-	icon = 'icons/mob/silicon/drone.dmi'
-	icon_state = "[drone.visualAppearance]_hat"
-
 /obj/item/clothing/head/mob_holder/destructible
 
 /obj/item/clothing/head/mob_holder/destructible/release(del_on_release = TRUE, display_messages = TRUE, delete_mob = FALSE)

@@ -33,17 +33,6 @@
 	finish_action(controller, succeeded = FALSE, target_key = target_key, hiding_location_key = hiding_location_key)
 
 /datum/ai_behavior/run_away_from_target/proc/plot_path_away_from(datum/ai_controller/controller, atom/target)
-	var/turf/target_destination = get_turf(controller.pawn)
-	for (var/i in 1 to run_distance)
-		var/turf/test_destination = get_ranged_target_turf_direct(controller.pawn, target, range = i, offset = 180)
-		var/list/airlocks = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock)
-		if (test_destination.is_blocked_turf(exclude_mobs = TRUE, source_atom = controller.pawn, ignore_atoms = airlocks))
-			break
-		target_destination = test_destination
-	if (target_destination == get_turf(controller.pawn))
-		return FALSE
-	set_movement_target(controller, target_destination)
-	return TRUE
 
 /datum/ai_behavior/run_away_from_target/finish_action(datum/ai_controller/controller, succeeded, target_key, hiding_location_key)
 	. = ..()

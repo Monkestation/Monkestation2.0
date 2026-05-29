@@ -43,7 +43,6 @@
 	controller.clear_blackboard_key(target_key)
 
 /datum/ai_behavior/targeted_mob_ability/proc/get_ability_to_use(datum/ai_controller/controller, ability_key)
-	return controller.blackboard[ability_key]
 
 /**
  * Attempts to move into the provided range and then use a mob's cooldown ability on a target

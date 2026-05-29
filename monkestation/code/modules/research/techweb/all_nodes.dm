@@ -365,12 +365,6 @@
 /datum/techweb_node/chemical_weapons
 	discount_experiments = list(/datum/experiment/scanning/random/casing = TECHWEB_DISCOUNT_MINOR * 2.5)
 
-/datum/techweb_node/ai_basic
-	discount_experiments = list(/datum/experiment/scanning/random/shell_scan = TECHWEB_DISCOUNT_MINOR)
-
-/datum/techweb_node/ai_adv
-	discount_experiments = list(/datum/experiment/scanning/random/shell_scan = TECHWEB_DISCOUNT_MINOR * 3)
-
 /datum/techweb_node/robotics
 	discount_experiments = list(/datum/experiment/scanning/random/bot_scan = TECHWEB_DISCOUNT_MINOR * 2.5)
 

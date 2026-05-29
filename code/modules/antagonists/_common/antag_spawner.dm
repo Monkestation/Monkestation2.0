@@ -176,62 +176,6 @@
 	pod_style = STYLE_HONK
 	use_subtypes = FALSE
 
-//////SYNDICATE BORG
-/obj/item/antag_spawner/nuke_ops/borg_tele
-	name = "syndicate cyborg beacon"
-	desc = "A single-use beacon designed to quickly launch reinforcement cyborgs into the field."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "locator"
-
-/obj/item/antag_spawner/nuke_ops/borg_tele/assault
-	name = "syndicate assault cyborg beacon"
-	borg_to_spawn = "Assault"
-
-/obj/item/antag_spawner/nuke_ops/borg_tele/medical
-	name = "syndicate medical beacon"
-	borg_to_spawn = "Medical"
-
-/obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
-	name = "syndicate saboteur beacon"
-	borg_to_spawn = "Saboteur"
-
-/obj/item/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T, kind, datum/mind/user)
-	var/mob/living/silicon/robot/borg
-	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop,TRUE)
-	if(!creator_op)
-		return
-	var/obj/structure/closet/supplypod/pod = setup_pod()
-	switch(borg_to_spawn)
-		if("Medical")
-			borg = new /mob/living/silicon/robot/model/syndicate/medical()
-		if("Saboteur")
-			borg = new /mob/living/silicon/robot/model/syndicate/saboteur()
-		else
-			borg = new /mob/living/silicon/robot/model/syndicate() //Assault borg by default
-
-	var/brainfirstname = pick(GLOB.first_names_male)
-	if(prob(50))
-		brainfirstname = pick(GLOB.first_names_female)
-	var/brainopslastname = pick(GLOB.last_names)
-	if(creator_op.nuke_team.syndicate_name)  //the brain inside the syndiborg has the same last name as the other ops.
-		brainopslastname = creator_op.nuke_team.syndicate_name
-	var/brainopsname = "[brainfirstname] [brainopslastname]"
-
-	borg.mmi.name = "[initial(borg.mmi.name)]: [brainopsname]"
-	borg.mmi.brain.name = "[brainopsname]'s brain"
-	borg.mmi.brainmob.real_name = brainopsname
-	borg.mmi.brainmob.name = brainopsname
-	borg.real_name = borg.name
-
-	borg.PossessByPlayer(C.key)
-
-	var/datum/antagonist/nukeop/new_borg = new()
-	new_borg.send_to_spawnpoint = FALSE
-	borg.mind.add_antag_datum(new_borg,creator_op.nuke_team)
-	borg.mind.special_role = "Syndicate Cyborg"
-	borg.forceMove(pod)
-	new /obj/effect/pod_landingzone(get_turf(src), pod)
-
 ///////////SLAUGHTER DEMON
 
 /obj/item/antag_spawner/slaughter_demon //Warning edgiest item in the game

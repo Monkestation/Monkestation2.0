@@ -7,8 +7,7 @@
 /datum/surgery_step/replace_limb
 	name = "replace limb"
 	implements = list(
-		/obj/item/bodypart = 100,
-		/obj/item/borg/apparatus/organ_storage = 100)
+		/obj/item/bodypart = 100)
 	time = 32
 	var/obj/item/bodypart/target_limb
 
@@ -17,8 +16,6 @@
 	if(HAS_TRAIT(target, TRAIT_NO_AUGMENTS))
 		to_chat(user, span_warning("[target] cannot be augmented!"))
 		return SURGERY_STEP_FAIL
-	if(istype(tool, /obj/item/borg/apparatus/organ_storage) && istype(tool.contents[1], /obj/item/bodypart))
-		tool = tool.contents[1]
 	var/obj/item/bodypart/aug = tool
 	if(IS_ORGANIC_LIMB(aug))
 		to_chat(user, span_warning("That's not an augment, silly!"))
@@ -67,12 +64,7 @@
 
 /datum/surgery_step/replace_limb/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/bodypart/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(target_limb)
-		if(istype(tool, /obj/item/borg/apparatus/organ_storage))
-			tool.icon_state = initial(tool.icon_state)
-			tool.desc = initial(tool.desc)
-			tool.cut_overlays()
-			tool = tool.contents[1]
-		if(istype(tool) && user.temporarilyRemoveItemFromInventory(tool))
+		if(user.temporarilyRemoveItemFromInventory(tool))
 			if(!tool.replace_limb(target))
 				display_results(
 					user,

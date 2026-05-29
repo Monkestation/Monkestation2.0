@@ -137,6 +137,7 @@
 		var/seconds_left = max(0, (T.cooldown_timer - world.time) / 10)
 		return "[round(seconds_left)]"
 
+/* // REMOVED - Phase 4: No more AI doomsday device
 /obj/effect/countdown/doomsday
 	name = "doomsday countdown"
 
@@ -146,6 +147,7 @@
 		return
 	else if(DD.timing)
 		return "<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[DD.seconds_remaining()]</div>"
+*/
 
 /obj/effect/countdown/anomaly
 	name = "anomaly countdown"

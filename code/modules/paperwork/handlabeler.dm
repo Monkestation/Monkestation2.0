@@ -137,9 +137,6 @@
 		// 50 per label. Magical cyborg paper doesn't come cheap.
 		var/cost = diff * 50
 
-		// If the cyborg manages to use a module without a cell, they get the paper
-		// for free.
-		user.cell?.use(cost)
 
 	return .
 

@@ -108,8 +108,4 @@
 			if(!module)
 				return
 			module.pin(usr)
-		if("eject_pai")
-			if (!ishuman(usr))
-				return
-			remove_pai(usr)
 	return TRUE

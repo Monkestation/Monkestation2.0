@@ -65,8 +65,6 @@
 	var/list/blacklisted_items = list(
 		/obj/item/organ,
 		/obj/item/mmi,
-		/obj/item/pai_card,
-		/obj/item/aicard,
 		/obj/item/card,
 		/obj/item/radio,
 		/obj/item/disk/nuclear, // Woah there

@@ -347,10 +347,6 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/narsie = list(LANGUAGE_ATOM),
 	)
 
-/datum/language_holder/drone
-	understood_languages = list(/datum/language/drone = list(LANGUAGE_ATOM))
-	spoken_languages = list(/datum/language/drone = list(LANGUAGE_ATOM))
-	blocked_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
 
 /datum/language_holder/drone/syndicate
 	blocked_languages = null

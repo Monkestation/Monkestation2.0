@@ -77,10 +77,6 @@
 			var/obj/item/stock_parts/power_store/cell/cell = affected
 			cell.give(FESTIVUS_RECHARGE_VALUE)
 			cell.update_appearance()
-		if(istype(affected, /mob/living/silicon/robot))
-			var/mob/living/silicon/robot/robot = affected
-			if(robot.cell)
-				robot.cell.give(FESTIVUS_RECHARGE_VALUE)
 		if(istype(affected, /obj/machinery/power/apc))
 			var/obj/machinery/power/apc/apc_target = affected
 			if(apc_target.cell)

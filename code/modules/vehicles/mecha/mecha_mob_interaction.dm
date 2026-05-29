@@ -114,31 +114,6 @@
 		var/mob/living/brain/brain = M
 		UnregisterSignal(brain, COMSIG_MOB_RETRIEVE_ACCESS)
 		mob_container = brain.container
-	else if(isAI(M))
-		var/mob/living/silicon/ai/AI = M
-		//stop listening to this signal, as the static update is now handled by the eyeobj's setLoc
-		AI.eyeobj?.UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
-		AI.eyeobj?.forceMove(newloc) //kick the eye out as well
-		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
-			if(!AI.linked_core) //if the victim AI has no core
-				AI.investigate_log("has been gibbed by being forced out of their mech by another AI.", INVESTIGATE_DEATHS)
-				AI.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
-			AI = null
-			mecha_flags &= ~SILICON_PILOT
-			return
-		else
-			if(!AI.linked_core)
-				if(!silent)
-					to_chat(AI, span_userdanger("Inactive core destroyed. Unable to return."))
-				AI.linked_core = null
-				return
-			if(!silent)
-				to_chat(AI, span_notice("Returning to core..."))
-			AI.controlled_equipment = null
-			AI.remote_control = null
-			mob_container = AI
-			newloc = get_turf(AI.linked_core)
-			qdel(AI.linked_core)
 	else
 		return ..()
 	var/mob/living/ejector = M
@@ -180,11 +155,6 @@
 	update_appearance()
 
 /obj/vehicle/sealed/mecha/container_resist_act(mob/living/user)
-	if(isAI(user))
-		var/mob/living/silicon/ai/AI = user
-		if(!AI.can_shunt)
-			to_chat(AI, span_notice("You can't leave a mech after dominating it!."))
-			return FALSE
 	to_chat(user, span_notice("You begin the ejection procedure. Equipment is disabled during this process. Hold still to finish ejecting."))
 	is_currently_ejecting = TRUE
 	if(do_after(user, has_gravity() ? exit_delay : 0 , target = src))

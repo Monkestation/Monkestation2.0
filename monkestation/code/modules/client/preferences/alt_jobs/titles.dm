@@ -9,13 +9,6 @@
 	var/list/alt_titles = null
 
 
-/datum/job/ai
-	alt_titles = list(
-		"AI",
-		"Station Intelligence",
-		"Automated Overseer"
-	)
-
 /datum/job/assistant
 	alt_titles = list(
 		"Assistant",
@@ -192,14 +185,6 @@
 		"Journalist",
 		"Archivist",
 		"Radio Host",
-	)
-
-/datum/job/cyborg
-	alt_titles = list(
-		"Cyborg",
-		"Robot",
-		"Android",
-		"Servitor",
 	)
 
 /datum/job/detective

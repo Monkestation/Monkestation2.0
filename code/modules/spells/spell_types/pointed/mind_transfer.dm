@@ -32,7 +32,6 @@
 	var/static/list/mob/living/blacklisted_mobs = typecacheof(list(
 		/mob/living/basic/demon/slaughter,
 		/mob/living/brain,
-		/mob/living/silicon/pai,
 		/mob/living/simple_animal/hostile/megafauna,
 	))
 

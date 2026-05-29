@@ -50,7 +50,6 @@
 		/obj/item/tank/jetpack,
 		/obj/item/gun/energy/wormhole_projector,
 		/obj/item/hand_tele,
-		/obj/item/aicard,
 	)
 	armor_type = /datum/armor/hardsuit/science
 	hardsuit_helmet = /obj/item/clothing/head/helmet/space/hardsuit/toxins

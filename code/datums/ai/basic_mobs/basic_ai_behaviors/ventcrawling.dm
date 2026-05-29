@@ -54,79 +54,34 @@
 
 /// Figure out an exit vent that we should head towards. If we don't have one, default to the entry vent. If they're all kaput, we die.
 /datum/ai_behavior/crawl_through_vents/proc/calculate_exit_vent(datum/ai_controller/controller, target_key)
-	var/obj/machinery/atmospherics/components/unary/vent_pump/returnable_vent
-	var/obj/machinery/atmospherics/components/unary/vent_pump/vent_we_entered_through = controller.blackboard[target_key] || controller.blackboard[BB_ENTRY_VENT_TARGET]
 
-	var/datum/pipeline/entry_vent_parent = vent_we_entered_through.parents[1]
-	var/list/potential_exits = list()
 
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent in entry_vent_parent.other_atmos_machines)
-		if(is_vent_valid(vent))
-			potential_exits.Add(vent)
 
-	if(length(potential_exits))
-		returnable_vent = pick(potential_exits)
-		return returnable_vent
 
 	// if we're here, we're in "what the flarp" mode... okay maybe we can default to the vent we entered in.
-	returnable_vent = vent_we_entered_through
-	if(is_vent_valid(vent_we_entered_through))
 		// AH WHAT THE FUCK. okay, maybe we're not inside the vents yet? let's return null and we can pick up on that based on the wider context of the proc that invokes it.
-		return null
 
-	return returnable_vent // we return null in case something yonked between then and now so it's all good man
 
 /// We've had enough horsing around in the vents, it's time to get out.
 /datum/ai_behavior/crawl_through_vents/proc/exit_the_vents(datum/ai_controller/controller, target_key)
-	var/obj/machinery/atmospherics/components/unary/vent_pump/emergency_vent // vent we will scramble to search for in case plan A is a bust (exit vent)
-	var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = controller.blackboard[BB_EXIT_VENT_TARGET]
-	var/mob/living/living_pawn = controller.pawn
 
-	if(!HAS_TRAIT(living_pawn, TRAIT_MOVE_VENTCRAWLING) && isturf(get_turf(living_pawn))) // we're out of the vents, so no need to do an exit
-		finish_action(controller, TRUE, target_key) // assume that we got yeeted out somehow and call this so we can halt the suicide pill timer.
-		return
 
-	living_pawn.forceMove(exit_vent)
-	if(!living_pawn.can_enter_vent(exit_vent, provide_feedback = FALSE))
 		// oh shit, something happened while we were waiting on that timer. let's figure out a different way to get out of here.
-		emergency_vent = calculate_exit_vent(controller)
-		if(isnull(emergency_vent))
 			// it's joever. we cooked too hard.
-			suicide_pill(controller, target_key)
-			return
 
-		controller.set_blackboard_key(BB_EXIT_VENT_TARGET, emergency_vent) // assign and go again
-		addtimer(CALLBACK(src, PROC_REF(exit_the_vents), controller), (rand(controller.blackboard[BB_LOWER_VENT_TIME_LIMIT], controller.blackboard[BB_UPPER_VENT_TIME_LIMIT]) / 2)) // we're in danger mode, so scurry out at half the time it would normally take.
-		return
 
-	living_pawn.handle_ventcrawl(exit_vent)
-	if(HAS_TRAIT(living_pawn, TRAIT_MOVE_VENTCRAWLING)) // how'd we fail? what the fuck
-		stack_trace("We failed to exit the vents, even though we should have been fine? This is very weird.")
-		suicide_pill() // all of the prior checks say we should have definitely made it through, but we didn't. dammit.
-		return
 
-	finish_action(controller, TRUE, target_key) // we did it! we went into the vents and out of the vents. poggers.
 
 /// Incredibly stripped down version of the overarching `can_enter_vent` proc on `/mob, just meant for rapid rechecking of a vent. Will be TRUE if not blocked, FALSE otherwise.
 /datum/ai_behavior/crawl_through_vents/proc/is_vent_valid(obj/machinery/atmospherics/components/unary/vent_pump/checkable)
-	return !QDELETED(checkable) && !checkable.welded
 
 /// Aw fuck, we may have been bested somehow. Regardless of what we do, we can't exit through a vent! Let's end our misery and prevent useless endless calculations.
 /datum/ai_behavior/crawl_through_vents/proc/suicide_pill(datum/ai_controller/controller, target_key)
-	var/mob/living/living_pawn = controller.pawn
 
-	if(istype(living_pawn))
-		finish_action(controller, FALSE, target_key)
 
-		if(isnull(living_pawn.client)) // only call death if we don't have a client because maybe their natural intelligence can pick up where our AI calculations have failed
-			living_pawn.death(TRUE) // call gibbed as true because we are never coming back it is so fucking joever
 
-		return
 
-	if(QDELETED(living_pawn)) // we got deleted by some other means, just presume the action is a wash and get outta here
-		return
 
-	qdel(living_pawn) // failover, we really should've been caught in the istype() but lets just bow out of existing at this point
 
 
 /datum/ai_behavior/crawl_through_vents/finish_action(datum/ai_controller/controller, succeeded, target_key)

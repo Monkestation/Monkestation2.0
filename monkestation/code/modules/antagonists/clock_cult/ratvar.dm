@@ -109,22 +109,6 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 		the_turf = get_step(the_atom, the_atom.dir) //please don't slam into a window like a bird, Ratvar
 	forceMove(the_turf)
 
-/obj/ratvar/attack_ghost(mob/user)
-	. = ..()
-	if(is_banned_from(user.ckey, list(ROLE_CLOCK_CULTIST)))
-		return
-	var/mob/living/basic/drone/created_drone = new /mob/living/basic/drone/cogscarab(get_turf(src))
-	created_drone.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
-	if(user.mind)
-		user.mind.transfer_to(created_drone, TRUE)
-	else if(isobserver(user))
-		created_drone.PossessByPlayer(user.key)
-		created_drone.mind_initialize()
-	else
-		qdel(created_drone)
-		return
-	created_drone.mind.add_antag_datum(/datum/antagonist/clock_cultist)
-
 /obj/ratvar/proc/consume(atom/consumed)
 	consumed.ratvar_act()
 

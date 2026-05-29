@@ -44,8 +44,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
 	var/robot_arm = /obj/item/bodypart/arm/right/robot
-	///The inserted (if any) pAI in this bot.
-	var/obj/item/pai_card/paicard
+
 	///The type of bot it is, for radio control.
 	var/bot_type = NONE
 	///All initial access this bot started with.
@@ -148,8 +147,8 @@ GLOBAL_LIST_INIT(command_strings, list(
 	update_appearance()
 
 /mob/living/basic/bot/proc/get_mode()
-	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
-		return span_bold("[paicard ? "pAI Controlled" : "Autonomous"]")
+	if(client)
+		return span_bold("Autonomous")
 
 	if(!(bot_mode_flags & BOT_MODE_ON))
 		return span_bad("Inactive")
@@ -161,7 +160,7 @@ GLOBAL_LIST_INIT(command_strings, list(
  */
 /mob/living/basic/bot/proc/get_mode_ui()
 	if(client)
-		return paicard ? "pAI Controlled" : "Autonomous"
+		return "Autonomous"
 
 	if(!(bot_mode_flags & BOT_MODE_ON))
 		return "Inactive"
@@ -197,7 +196,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	GLOB.bots_list -= src
 	calling_ai_ref = null
 	clear_path_hud()
-	QDEL_NULL(paicard)
 	QDEL_NULL(pa_system)
 	QDEL_NULL(internal_radio)
 	QDEL_NULL(access_card)
@@ -205,9 +203,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /// Allows this bot to be controlled by a ghost, who will become its mind
 /mob/living/basic/bot/proc/enable_possession(user, mapload = FALSE)
-	if (paicard)
-		balloon_alert(user, "already sapient!")
-		return
 	can_be_possessed = TRUE
 	var/can_announce = !mapload && COOLDOWN_FINISHED(src, offer_ghosts_cooldown)
 	AddComponent(
@@ -276,8 +271,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	return TRUE
 
 /mob/living/basic/bot/death(gibbed)
-	if(paicard)
-		ejectpai()
 	explode()
 	return ..()
 
@@ -325,12 +318,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 		. += span_notice("Its control panel is [bot_access_flags & BOT_CONTROL_PANEL_OPEN ? "unlocked" : "locked"].")
 		if(!(bot_access_flags & BOT_COVER_EMAGGED) && (issilicon(user) || user.Adjacent(src)))
 			. += span_info("Alt-click [issilicon(user) ? "" : "or use your ID on "]it to [bot_access_flags & BOT_CONTROL_PANEL_OPEN ? "" : "un"]lock its control panel.")
-	if(isnull(paicard))
-		return
-	. += span_notice("It has a pAI device installed.")
-	if(!(bot_access_flags & BOT_MAINTS_PANEL_OPEN))
-		. += span_info("You can use a <b>hemostat</b> to remove it.")
-
 /mob/living/basic/bot/updatehealth()
 	. = ..()
 	diag_hud_set_bothealth()
@@ -413,25 +400,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		unlock_with_id(user)
 		return
 
-	if(istype(attacking_item, /obj/item/pai_card))
-		insertpai(user, attacking_item)
-		return
-
-	if(attacking_item.tool_behaviour != TOOL_HEMOSTAT || !paicard)
-		return ..()
-
-	if(bot_access_flags & BOT_MAINTS_PANEL_OPEN)
-		balloon_alert(user, "open the access panel!")
-		return
-
-	balloon_alert(user, "removing pAI...")
-	if(!do_after(user, 3 SECONDS, target = src) || !paicard)
-		return
-
-	user.visible_message(span_notice("[user] uses [attacking_item] to pull [paicard] out of [initial(src.name)]!"), \
-		span_notice("You pull [paicard] out of [initial(src.name)] with [attacking_item]."))
-
-	ejectpai(user)
+	return ..()
 
 /mob/living/basic/bot/attacked_by(obj/item/I, mob/living/user)
 	if(I.force > 0 && I.damtype != STAMINA && stat != DEAD)
@@ -454,10 +423,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(. & EMP_PROTECT_SELF)
 		return
 	new /obj/effect/temp_visual/emp(loc)
-	if(!QDELETED(paicard))
-		paicard.emp_act(severity)
-		src.visible_message(span_notice("[paicard] flies out of [initial(src.name)]!"), span_warning("You are forcefully ejected from [initial(src.name)]!"))
-		ejectpai()
 
 	if (QDELETED(src))
 		return
@@ -543,7 +508,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/proc/bot_control(command, mob/user, list/user_access = list())
 	if(!(bot_mode_flags & BOT_MODE_ON) || bot_access_flags & BOT_COVER_EMAGGED || !(bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Emagged bots do not respect anyone's authority! Bots with their remote controls off cannot get commands.
 		return TRUE //ACCESS DENIED
-	if(client && command != "ejectpai")
+	if(client)
 		bot_control_message(command, user)
 	// process control input
 	switch(command)
@@ -554,8 +519,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 			bot_mode_flags |= BOT_MODE_AUTOPATROL
 		if("summon")
 			summon_bot(user, user_access = user_access)
-		if("ejectpai")
-			eject_pai_remote(user)
 
 
 /mob/living/basic/bot/proc/bot_control_message(command, user)
@@ -572,7 +535,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	data["locked"] = !(bot_access_flags & BOT_CONTROL_PANEL_OPEN)
 	data["settings"] = list()
 	if((bot_access_flags & BOT_CONTROL_PANEL_OPEN) || issilicon(user) || isAdminGhostAI(user))
-		data["settings"]["pai_inserted"] = !isnull(paicard)
 		data["settings"]["allow_possession"] = bot_mode_flags & BOT_MODE_GHOST_CONTROLLABLE
 		data["settings"]["possession_enabled"] = can_be_possessed
 		data["settings"]["airplane_mode"] = !(bot_mode_flags & BOT_MODE_REMOTE_ENABLED)
@@ -629,11 +591,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 			bot_reset()
 			to_chat(src, span_userdanger("Software restored to standard."))
 			to_chat(src, span_boldnotice(possessed_message))
-		if("eject_pai")
-			if(!paicard)
-				return
-			to_chat(the_user, span_notice("You eject [paicard] from [initial(src.name)]."))
-			ejectpai(the_user)
 		if("toggle_personality")
 			if (can_be_possessed)
 				disable_possession(the_user)
@@ -660,76 +617,12 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 	return FALSE
 
-/// Places a pAI in control of this mob
-/mob/living/basic/bot/proc/insertpai(mob/user, obj/item/pai_card/card)
-	if(!QDELETED(paicard))
-		balloon_alert(user, "slot occupied!")
-		return
-	if(key)
-		balloon_alert(user, "personality already present!")
-		return
-	if(!(bot_access_flags & BOT_COVER_MAINTS_OPEN))
-		balloon_alert(user, "slot inaccessible!")
-		return
-	if(!(bot_mode_flags & BOT_MODE_GHOST_CONTROLLABLE))
-		balloon_alert(user, "incompatible firmware!")
-		return
-	if(isnull(card.pai?.mind))
-		balloon_alert(user, "pAI is inactive!")
-		return
-	if(!user.transferItemToLoc(card, src))
-		return
-	paicard = card
-	disable_possession()
-	paicard.pai.fold_in()
-	copy_languages(paicard.pai, source_override = LANGUAGE_PAI)
-	var/datum/language_holder/source_holder = get_language_holder()
-	source_holder?.selected_language = paicard.pai.get_selected_language()
-	user.visible_message(span_notice("[user] inserts [card] into [src]!"), span_notice("You insert [card] into [src]."))
-	paicard.pai.mind.transfer_to(src)
-	to_chat(src, span_notice("You sense your form change as you are uploaded into [src]."))
-	name = paicard.pai.name
-	faction = user.faction.Copy()
-	log_combat(user, paicard.pai, "uploaded to [initial(src.name)],")
-	return TRUE
+
 
 /mob/living/basic/bot/ghost()
-	if(stat != DEAD) // Only ghost if we're doing this while alive, the pAI probably isn't dead yet.
-		return ..()
-	if(paicard && (!client || stat == DEAD))
-		ejectpai()
+	return ..()
 
-/// Ejects a pAI from this bot
-/mob/living/basic/bot/proc/ejectpai(mob/user = null, announce = TRUE)
-	if(QDELETED(paicard))
-		return
 
-	if(!QDELETED(paicard.pai))
-		if(isnull(mind))
-			mind.transfer_to(paicard.pai)
-		else
-			paicard.pai.PossessByPlayer(key)
-	else
-		ghostize(FALSE) // The pAI card that just got ejected was dead.
-
-	key = null
-	paicard.forceMove(drop_location())
-	var/to_log = user ? user : src
-	log_combat(to_log, paicard.pai, "ejected [user ? "from [initial(name)]" : ""].")
-	if(announce)
-		to_chat(paicard.pai, span_notice("You feel your control fade as [paicard] ejects from [initial(name)]."))
-	paicard = null
-	name = initial(name)
-	faction = initial(faction)
-	remove_all_languages(source = LANGUAGE_PAI)
-	get_selected_language()
-
-/// Ejects the pAI remotely.
-/mob/living/basic/bot/proc/eject_pai_remote(mob/user)
-	if(!allowed(user) || !paicard)
-		return
-	speak("Ejecting personality chip.", radio_channel)
-	ejectpai(user)
 
 /mob/living/basic/bot/Login()
 	. = ..()

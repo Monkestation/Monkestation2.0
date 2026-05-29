@@ -28,16 +28,10 @@
 
 ///signal called by the pawn hitting something after a throw
 /datum/ai_controller/cursed/proc/on_throw_hit(datum/source, atom/hit_atom, datum/thrownthing/throwingdatum)
-	SIGNAL_HANDLER
-	if(!iscarbon(hit_atom))
-		return
 	//equipcode has sleeps all over it.
-	INVOKE_ASYNC(src, PROC_REF(try_equipping_to_target_slot), hit_atom)
 
 ///signal called by picking up the pawn, will try to equip to where it should actually be and start the curse
 /datum/ai_controller/cursed/proc/on_equip(datum/source, mob/equipper, slot)
-	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(try_equipping_to_target_slot), equipper, slot)
 
 /**
  * curse of hunger component; for very hungry items.
@@ -48,25 +42,6 @@
  * * slot_already_in: the slot the item is already in before this was called, possibly null but at least in hands if picked up
  */
 /datum/ai_controller/cursed/proc/try_equipping_to_target_slot(mob/living/carbon/curse_victim, slot_already_in)
-	var/obj/item/item_pawn = pawn
-	var/attempted_slot = blackboard[BB_TARGET_SLOT]
-	if(slot_already_in && (attempted_slot & slot_already_in)) //thanks for making it easy
-		what_a_horrible_night_to_have_a_curse()
-		return
-	if(attempted_slot & ITEM_SLOT_HANDS) //hands needs some different checks
-		curse_victim.drop_all_held_items()
-		if(curse_victim.put_in_hands(item_pawn, del_on_fail = FALSE))
-			to_chat(curse_victim, span_danger("[item_pawn] leaps into your hands!"))
-			what_a_horrible_night_to_have_a_curse()
-		return
-	var/obj/item/blocking = curse_victim.get_item_by_slot(attempted_slot)
-	if(!curse_victim.dropItemToGround(blocking, silent = TRUE))
-		return //cannot equip to this person so whatever just keep whacking them until they die or fugg off
-	curse_victim.equip_to_slot_if_possible(item_pawn, attempted_slot, qdel_on_fail = FALSE, disable_warning = FALSE)
-	to_chat(curse_victim, span_danger("[item_pawn] equips [item_pawn.p_them()]self onto you!"))
-	what_a_horrible_night_to_have_a_curse()
 
 ///proc called when the cursed object successfully attaches itself to someone, removing the cursed element and by extension the ai itself
 /datum/ai_controller/cursed/proc/what_a_horrible_night_to_have_a_curse()
-	var/obj/item/item_pawn = pawn
-	item_pawn.RemoveElement(/datum/element/cursed)

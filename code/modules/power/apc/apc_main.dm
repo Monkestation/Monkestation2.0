@@ -222,12 +222,12 @@
 	update_appearance()
 
 /obj/machinery/power/apc/Destroy()
+	/* // Phase 4
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
+	*/
 	disconnect_from_area()
 	QDEL_NULL(alarm_manager)
-	if(occupier)
-		malfvacate(TRUE)
 	if(wires)
 		QDEL_NULL(wires)
 	if(cell)
@@ -341,7 +341,7 @@
 		"coverLocked" = coverlocked,
 		"remoteAccess" = (user == remote_control_user),
 		"siliconUser" = HAS_SILICON_ACCESS(user),
-		"malfStatus" = get_malf_status(user),
+		"malfStatus" = APC_AI_NO_MALF,
 		"emergencyLights" = !emergency_lights,
 		"nightshiftLights" = nightshift_lights,
 		"disable_nightshift_toggle" = low_power_nightshift_lights,
@@ -460,15 +460,7 @@
 			if(HAS_SILICON_ACCESS(user))
 				overload_lighting()
 				. = TRUE
-		if("hack")
-			if(get_malf_status(user))
-				malfhack(user)
-		if("occupy")
-			if(get_malf_status(user))
-				malfoccupy(user)
-		if("deoccupy")
-			if(get_malf_status(user))
-				malfvacate()
+
 		if("reboot")
 			failure_timer = 0
 			force_update = FALSE

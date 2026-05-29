@@ -190,14 +190,6 @@
 		var/obj/item/overslot = overslotting_parts[part]
 		overslot.forceMove(drop_location())
 		overslotting_parts[part] = null
-	if(ai_assistant)
-		if(ispAI(ai_assistant))
-			INVOKE_ASYNC(src, PROC_REF(remove_pai), /* user = */ null, /* forced = */ TRUE) // async to appease spaceman DMM because the branch we don't run has a do_after
-		else
-			for(var/datum/action/action as anything in actions)
-				if(action.owner == ai_assistant)
-					action.Remove(ai_assistant)
-			new /obj/item/mod/ai_minicard(drop_location(), ai_assistant)
 	return ..()
 
 /obj/item/mod/control/examine(mob/user)
@@ -365,12 +357,6 @@
 
 // Makes use of tool act to prevent shoving stuff into our internal storage
 /obj/item/mod/control/tool_act(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, /obj/item/pai_card))
-		if(!open)
-			balloon_alert(user, "open the cover first!")
-			return NONE // shoves the card in the storage anyways
-		insert_pai(user, tool)
-		return ITEM_INTERACT_SUCCESS
 	if(istype(tool, /obj/item/mod/paint))
 		var/obj/item/mod/paint/paint_kit = tool
 		if(active || activating)

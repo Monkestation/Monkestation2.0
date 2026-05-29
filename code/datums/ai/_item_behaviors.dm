@@ -46,8 +46,6 @@
 	reset_blackboard(controller, succeeded, target_key, throw_count_key)
 
 /datum/ai_behavior/item_move_close_and_attack/proc/reset_blackboard(datum/ai_controller/controller, succeeded, target_key, throw_count_key)
-	controller.clear_blackboard_key(target_key)
-	controller.set_blackboard_key(throw_count_key, 0)
 
 /datum/ai_behavior/item_move_close_and_attack/ghostly
 	attack_sound = 'sound/items/haunted/ghostitemattack.ogg'

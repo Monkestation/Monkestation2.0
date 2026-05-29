@@ -34,18 +34,12 @@
  * Gets passed all of the arguments from `setup`
  */
 /datum/ai_behavior/step_towards_turf/proc/find_destination_turf()
-	return null
 
 /**
  * Figure out where we're going to move to, which isn't all the way to the destination in one go
  */
 /datum/ai_behavior/step_towards_turf/proc/plot_movement(datum/ai_controller/controller, turf/target_turf)
-	var/distance_to_destination = get_dist(controller.pawn, target_turf)
-	if (distance_to_destination <= step_distance)
-		return target_turf
 
-	var/direction_to_destination = get_dir(controller.pawn, target_turf)
-	return get_ranged_target_turf(controller.pawn, direction_to_destination, step_distance)
 
 // We actually only wanted the movement so if we've arrived we're done
 /datum/ai_behavior/step_towards_turf/perform(seconds_per_tick, datum/ai_controller/controller, area_key, turf_key)

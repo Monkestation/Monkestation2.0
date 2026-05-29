@@ -80,7 +80,6 @@
 		/obj/item/lightreplacer,
 		/obj/item/holosign_creator,
 		/obj/item/soap/nanotrasen,
-		/obj/item/reagent_containers/spray/cyborg_drying,
 		/obj/item/mop/advanced,
 		/obj/item/paint/paint_remover,
 		/obj/item/reagent_containers/cup/beaker/large,
@@ -92,7 +91,6 @@
 		return FALSE
 	to_chat(usr, span_notice("You unlock [src]'s integrated deluxe cleaning supplies!"))
 	items_list += WEAKREF(new /obj/item/soap/syndie(src)) //We add not replace.
-	items_list += WEAKREF(new /obj/item/reagent_containers/spray/cyborg_lube(src))
 	obj_flags |= EMAGGED
 	return TRUE
 
@@ -126,7 +124,6 @@
 	items_to_create = list(
 		/obj/item/emergency_bed/silicon,
 		/obj/item/sensor_device,
-		/obj/item/reagent_containers/borghypo/paramedic,
 	)
 
 /obj/item/organ/internal/cyberimp/arm/item_set/atmospherics

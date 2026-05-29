@@ -264,9 +264,6 @@
 		return
 	var/list/cybernetics_to_give = job_to_cybernetic[job.type]
 	if(!cybernetics_to_give)
-		if(isAI(spawned))
-			var/mob/living/silicon/ai/ai = spawned
-			ai.eyeobj.relay_speech = TRUE //surveillance upgrade. the ai gets cybernetics too.
 		return
 	if(!islist(cybernetics_to_give))
 		cybernetics_to_give = list(cybernetics_to_give)

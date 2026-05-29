@@ -316,10 +316,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		return
 	switch (action)
 		if ("select_person")
-			var/mob/living/silicon/ai/AI = usr
-			if(!istype(AI))
-				return
-			AI.ai_tracking_tool.track_name(AI, params["name"])
+			return
 
 GLOBAL_DATUM_INIT(crewmonitor_command, /datum/crewmonitor/command, new)
 

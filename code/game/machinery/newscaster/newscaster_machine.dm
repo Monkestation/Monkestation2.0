@@ -571,30 +571,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	var/obj/item/photo/photo = user.is_holding_item_of_type(/obj/item/photo)
 	if(photo)
 		current_image = photo.picture
-	if(issilicon(user))
-		var/obj/item/camera/siliconcam/targetcam
-		if(isAI(user))
-			var/mob/living/silicon/ai/R = user
-			targetcam = R.aicamera
-		else if(ispAI(user))
-			var/mob/living/silicon/pai/R = user
-			if(R.aicamera)
-				targetcam = R.aicamera
-		else if(iscyborg(user))
-			var/mob/living/silicon/robot/R = user
-			if(R.connected_ai)
-				targetcam = R.connected_ai.aicamera
-			else
-				targetcam = R.aicamera
-		else
-			to_chat(user, span_warning("You cannot interface with silicon photo uploading!"))
-		if(!targetcam.stored.len)
-			to_chat(usr, span_boldannounce("No images saved."))
-			return
-		var/datum/picture/selection = targetcam.selectpicture(user)
-		if(selection)
-			current_image = selection
-
 /**
  * This takes all current feed stories and messages, and prints them onto a newspaper, after checking that the newscaster has been loaded with paper.
  * The newscaster then prints the paper to the floor.

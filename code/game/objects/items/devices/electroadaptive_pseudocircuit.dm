@@ -27,22 +27,14 @@
 		"[span_notice("Serves as a substitute for <b>fire/air alarm</b>, <b>firelock</b>, and <b>APC</b> electronics.")]\n"+\
 		span_notice("It can also be used on an APC with no power cell to <b>fabricate a low-capacity cell</b> at a high power cost.")
 
-/obj/item/electroadaptive_pseudocircuit/proc/adapt_circuit(mob/living/silicon/robot/R, circuit_cost = 0)
-	if(QDELETED(R) || !istype(R))
-		return
-	if(!R.cell)
-		to_chat(R, span_warning("You need a power cell installed for that."))
-		return
-	if(!R.cell.use(circuit_cost))
-		to_chat(R, span_warning("You don't have the energy for that (you need [display_energy(circuit_cost)].)"))
-		return
+/obj/item/electroadaptive_pseudocircuit/proc/adapt_circuit(mob/living/user, circuit_cost = 0)
 	if(recharging)
-		to_chat(R, span_warning("[src] needs some time to recharge first."))
+		to_chat(user, span_warning("[src] needs some time to recharge first."))
 		return
 	if(!circuits)
-		to_chat(R, span_warning("You need more material. Use [src] on existing simple circuits to break them down."))
+		to_chat(user, span_warning("You need more material. Use [src] on existing simple circuits to break them down."))
 		return
-	playsound(R, 'sound/items/rped.ogg', 50, TRUE)
+	playsound(user, 'sound/items/rped.ogg', 50, TRUE)
 	recharging = TRUE
 	circuits--
 	maptext = MAPTEXT(circuits)

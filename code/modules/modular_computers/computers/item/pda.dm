@@ -83,8 +83,7 @@
 		. += mutable_appearance(initial(icon), "id_overlay")
 	if(light_on)
 		. += mutable_appearance(initial(icon), "light_overlay")
-	if(inserted_pai)
-		. += mutable_appearance(initial(icon), "pai_inserted")
+
 
 /obj/item/modular_computer/pda/attack_ai(mob/user)
 	to_chat(user, span_notice("It doesn't feel right to snoop around like that..."))
@@ -304,21 +303,11 @@
 		/datum/computer_file/program/messenger,
 	)
 
-	///Ref to the RoboTact app. Important enough to borgs to deserve a ref.
-	var/datum/computer_file/program/robotact/robotact
+
 	///IC log that borgs can view in their personal management app
 	var/list/borglog = list()
 	///Ref to the silicon we're installed in. Set by the silicon itself during its creation.
 	var/mob/living/silicon/silicon_owner
-
-/obj/item/modular_computer/pda/silicon/cyborg
-	starting_programs = list(
-		/datum/computer_file/program/filemanager,
-		/datum/computer_file/program/robotact,
-		/datum/computer_file/program/borg_monitor,
-		/datum/computer_file/program/atmosscan,
-		/datum/computer_file/program/crew_manifest,
-	)
 
 /obj/item/modular_computer/pda/silicon/ai
 	max_idle_programs = 12
@@ -357,73 +346,12 @@
 	return FALSE
 
 /obj/item/modular_computer/pda/silicon/get_ntnet_status()
-	//No borg found
 	if(!silicon_owner)
 		return FALSE
-	// no AIs/pAIs
-	var/mob/living/silicon/robot/cyborg_check = silicon_owner
-	if(!istype(cyborg_check))
-		return ..()
-	//lockdown restricts borg networking
-	if(cyborg_check.lockcharge)
-		return FALSE
-	//borg cell dying restricts borg networking
-	if(!cyborg_check.cell || cyborg_check.cell.charge == 0)
-		return FALSE
-
 	return ..()
 
-/**
- * Returns a ref to the RoboTact app, creating the app if need be.
- *
- * The RoboTact app is important for borgs, and so should always be available.
- * This proc will look for it in the tablet's robotact var, then check the
- * hard drive if the robotact var is unset, and finally attempt to create a new
- * copy if the hard drive does not contain the app. If the hard drive rejects
- * the new copy (such as due to lack of space), the proc will crash with an error.
- * RoboTact is supposed to be undeletable, so these will create runtime messages.
- */
-/obj/item/modular_computer/pda/silicon/proc/get_robotact()
-	if(robotact)
-		return robotact
-	robotact = find_file_by_name("robotact")
-	if(robotact)
-		return robotact
-	stack_trace("Cyborg [silicon_owner] ( [silicon_owner.type] ) was somehow missing their self-manage app in their tablet. A new copy has been created.")
-	robotact = new(src)
-	if(store_file(robotact))
-		return robotact
-	qdel(robotact)
-	robotact = null
-	CRASH("Cyborg [silicon_owner]'s tablet hard drive rejected recieving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
 
-//Makes the light settings reflect the borg's headlamp settings
-/obj/item/modular_computer/pda/silicon/cyborg/ui_data(mob/user)
-	. = ..()
-	.["has_light"] = TRUE
-	if(iscyborg(silicon_owner))
-		var/mob/living/silicon/robot/robo = silicon_owner
-		.["light_on"] = robo.lamp_enabled
-		.["comp_light_color"] = robo.lamp_color
 
-//Makes the flashlight button affect the borg rather than the tablet
-/obj/item/modular_computer/pda/silicon/toggle_flashlight(mob/user)
-	if(!silicon_owner || QDELETED(silicon_owner))
-		return FALSE
-	if(iscyborg(silicon_owner))
-		var/mob/living/silicon/robot/robo = silicon_owner
-		robo.toggle_headlamp()
-	return TRUE
-
-//Makes the flashlight color setting affect the borg rather than the tablet
-/obj/item/modular_computer/pda/silicon/set_flashlight_color(color)
-	if(!silicon_owner || QDELETED(silicon_owner) || !color)
-		return FALSE
-	if(iscyborg(silicon_owner))
-		var/mob/living/silicon/robot/robo = silicon_owner
-		robo.lamp_color = color
-		robo.toggle_headlamp(FALSE, TRUE)
-	return TRUE
 
 /obj/item/modular_computer/pda/silicon/ui_state(mob/user)
 	return GLOB.reverse_contained_state
@@ -445,17 +373,7 @@
 			if(AIapc)
 				AIapc.energy_fail(45, forced = TRUE)
 				do_sparks(4, FALSE, AIapc)
-	else if(ispAI(silicon_owner))
-		silicon_owner.emp_act(EMP_HEAVY)
 	else //how did this happen cyborgs shouldnt have messengers, oh well!
 		silicon_owner.Paralyze(5 SECONDS)
 
-/obj/item/modular_computer/pda/silicon/cyborg/syndicate
-	icon_state = "tablet-silicon-syndicate"
-	device_theme = PDA_THEME_SYNDICATE
 
-/obj/item/modular_computer/pda/silicon/cyborg/syndicate/Initialize(mapload)
-	. = ..()
-	if(iscyborg(silicon_owner))
-		var/mob/living/silicon/robot/robo = silicon_owner
-		robo.lamp_color = COLOR_RED //Syndicate likes it red

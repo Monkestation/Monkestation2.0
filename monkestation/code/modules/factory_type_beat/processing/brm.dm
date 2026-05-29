@@ -224,30 +224,6 @@
 		end_processing()
 	update_appearance(UPDATE_ICON_STATE)
 
-/obj/machinery/brm/attack_ai_secondary(mob/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || panel_open)
-		return
-	if(!anchored)
-		balloon_alert(user, "unanchored!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	toggle_auto_on(user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/machinery/brm/attack_robot_secondary(mob/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || panel_open)
-		return
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(!anchored)
-		balloon_alert(user, "unanchored!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	toggle_auto_on(user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /obj/machinery/brm/process()
 	if(!toggled_on)
 		return PROCESS_KILL

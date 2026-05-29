@@ -66,12 +66,7 @@
 	finish_action(controller, FALSE)
 
 /datum/ai_behavior/find_hunt_target/proc/valid_dinner(mob/living/source, atom/dinner, radius)
-	if(isliving(dinner))
-		var/mob/living/living_target = dinner
-		if(living_target.stat == DEAD) //bitch is dead
-			return FALSE
 
-	return can_see(source, dinner, radius)
 
 /// Hunts down a specific atom type.
 /datum/ai_behavior/hunt_target
@@ -101,18 +96,8 @@
 		finish_action(controller, TRUE, hunting_target_key, hunting_cooldown_key)
 
 /datum/ai_behavior/hunt_target/proc/target_caught(mob/living/hunter, atom/hunted)
-	if(isliving(hunted)) // Are we hunting a living mob?
-		var/mob/living/living_target = hunted
-		hunter.manual_emote("chomps [living_target]!")
-		living_target.investigate_log("has been killed by [key_name(hunter)].", INVESTIGATE_DEATHS)
-		living_target.death()
 
-	else if(IS_EDIBLE(hunted))
-		hunted.attack_animal(hunter)
 
-	else // We're hunting an object, and should delete it instead of killing it. Mostly useful for decal bugs like ants or spider webs.
-		hunter.manual_emote("chomps [hunted]!")
-		qdel(hunted)
 
 /datum/ai_behavior/hunt_target/finish_action(datum/ai_controller/controller, succeeded, hunting_target_key, hunting_cooldown_key)
 	. = ..()

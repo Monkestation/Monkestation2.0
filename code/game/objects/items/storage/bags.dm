@@ -440,10 +440,6 @@
 		I_copy.layer = FLOAT_LAYER
 		. += I_copy
 
-/obj/item/storage/bag/tray/cyborg_unequip(mob/user)
-	. = ..()
-	atom_storage.remove_all(drop_location())
-
 /obj/item/storage/bag/tray/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	update_appearance()

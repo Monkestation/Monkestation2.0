@@ -215,7 +215,6 @@
 	value_mode = VALUE_MODE_NUM
 	default = list( //DEFAULTS
 	/mob/living/simple_animal = 1,
-	/mob/living/silicon/pai = 1,
 	/mob/living/carbon/alien/adult/hunter = -1,
 	/mob/living/carbon/alien/adult/royal/praetorian = 1,
 	/mob/living/carbon/alien/adult/royal/queen = 3

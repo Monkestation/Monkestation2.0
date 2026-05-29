@@ -687,36 +687,16 @@
 		steal_objective.find_target()
 		objectives += steal_objective
 
-	var/list/active_ais = active_ais()
-	if(active_ais.len && prob(100/GLOB.joined_player_list.len))
-		var/datum/objective/destroy/destroy_objective = new
-		destroy_objective.owner = owner
-		destroy_objective.find_target()
-		objectives += destroy_objective
+	if(prob(70))
+		var/datum/objective/assassinate/kill_objective = new
+		kill_objective.owner = owner
+		kill_objective.find_target()
+		objectives += kill_objective
 	else
-		if(prob(70))
-			var/datum/objective/assassinate/kill_objective = new
-			kill_objective.owner = owner
-			kill_objective.find_target()
-			objectives += kill_objective
-		else
-			var/datum/objective/maroon/maroon_objective = new
-			maroon_objective.owner = owner
-
-
-			if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
-				var/datum/objective/escape/escape_with_identity/identity_theft = new
-				identity_theft.owner = owner
-				identity_theft.find_target()
-				identity_theft.update_explanation_text()
-				escape_objective_possible = FALSE
-				maroon_objective.target = identity_theft.target || maroon_objective.find_target()
-				maroon_objective.update_explanation_text()
-				objectives += maroon_objective
-				objectives += identity_theft
-			else
-				maroon_objective.find_target()
-				objectives += maroon_objective
+		var/datum/objective/maroon/maroon_objective = new
+		maroon_objective.owner = owner
+		maroon_objective.find_target()
+		objectives += maroon_objective
 
 	if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
 		if(prob(50))

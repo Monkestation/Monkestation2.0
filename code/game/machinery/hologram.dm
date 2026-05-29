@@ -318,11 +318,6 @@ Possible to do for anyone motivated enough:
 
 	switch(action)
 		if("AIrequest")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/ai_user = usr
-				ai_user.eyeobj.setLoc(get_turf(src))
-				to_chat(usr, span_info("AIs can not request AI presence. Jumping instead."))
-				return
 			if(last_request + 200 < world.time)
 				last_request = world.time
 				to_chat(usr, span_info("You requested an AI's presence."))
@@ -469,35 +464,6 @@ Possible to do for anyone motivated enough:
 	for(var/datum/holocall/holocall_to_disconnect as anything in holo_calls)
 		holocall_to_disconnect.Disconnect(src)
 
-/obj/machinery/holopad/attack_ai_secondary(mob/living/silicon/ai/user)
-	if (!istype(user))
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
-	if (!on_network)
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
-	/*There are pretty much only three ways to interact here.
-	I don't need to check for client since they're clicking on an object.
-	This may change in the future but for now will suffice.*/
-	if(!LAZYLEN(masters) || !masters[user])//If there is no hologram, possibly make one.
-		activate_holo(user)
-	else//If there is a hologram, remove it, and jump to your last location.
-		clear_holo(user)
-		if(user.lastloc)//only jump to your last location if your lastloc is set, which only sets if you projected from a request message.
-			user.eyeobj.setLoc(user.lastloc)
-			user.lastloc = null
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/machinery/holopad/AICtrlClick(mob/living/silicon/ai/user)
-	if (!istype(user))
-		return
-	if (!on_network)
-		return
-	if(!LAZYLEN(masters) || !masters[user])//If there is no hologram, then this button does nothing.
-		return
-	else//If there is a hologram, remove it, but dont jump to your last location.
-		user.lastloc = null
-		clear_holo(user)
-	return
-
 //this really should not be processing by default with how common holopads are
 //everything in here can start processing if need be once first set and stop processing after being unset
 /obj/machinery/holopad/process()
@@ -535,28 +501,15 @@ Possible to do for anyone motivated enough:
 
 
 /obj/machinery/holopad/proc/activate_holo(mob/living/user)
-	var/mob/living/silicon/ai/AI = user
-	if(!istype(AI))
-		AI = null
-
 	if(is_operational)//If the projector has power
-		if(AI && istype(AI.current, /obj/machinery/holopad))
-			to_chat(user, "[span_danger("ERROR:")] \black Image feed in progress.")
-			return
-
-		// What to pull our appearance out of
 		var/obj/effect/overlay/holo_pad_hologram/hologram = new(loc)//Spawn a blank effect at the location.
-		var/atom/work_off = AI?.hologram_appearance || user
 
-		hologram.icon = work_off.icon
-		hologram.icon_state = work_off.icon_state
-		hologram.copy_overlays(work_off, TRUE)
+		hologram.icon = user.icon
+		hologram.icon_state = user.icon_state
+		hologram.copy_overlays(user, TRUE)
 		hologram.makeHologram()
 
-		if(AI)
-			AI.eyeobj.setLoc(get_turf(src)) //ensure the AI camera moves to the holopad
-		else //make it like real life
-			hologram.Impersonation = user
+		hologram.Impersonation = user
 		hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 		hologram.layer = FLY_LAYER //Above all the other objects/mobs. Or the vast majority of them.
 		SET_PLANE_EXPLICIT(hologram, ABOVE_GAME_PLANE, src)
@@ -575,11 +528,6 @@ Possible to do for anyone motivated enough:
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/holopad/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
-	if(speaker && LAZYLEN(masters) && !radio_freq)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
-		for(var/mob/living/silicon/ai/master in masters)
-			if(masters[master] && speaker != master)
-				master.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)
-
 	for(var/datum/holocall/holocall_to_update as anything in holo_calls)
 		if(holocall_to_update.connected_holopad == src)//if we answered this call originating from another holopad
 			if(speaker == holocall_to_update.hologram && holocall_to_update.user.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
@@ -621,9 +569,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	LAZYSET(masters, owner, h)
 	LAZYSET(holorays, owner, new /obj/effect/overlay/holoray(loc))
 	set_can_hear_flags(CAN_HEAR_MASTERS)
-	var/mob/living/silicon/ai/AI = owner
-	if(istype(AI))
-		AI.current = src
 	SetLightsAndPower()
 	update_holoray(owner, get_turf(loc))
 	return TRUE
@@ -651,9 +596,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	update_appearance(UPDATE_ICON)
 
 /obj/machinery/holopad/proc/unset_holo(mob/living/user)
-	var/mob/living/silicon/ai/AI = user
-	if(istype(AI) && AI.current == src)
-		AI.current = null
 	LAZYREMOVE(masters, user) // Discard AI from the list of those who use holopad
 	if(!LAZYLEN(masters))
 		set_can_hear_flags(CAN_HEAR_MASTERS, set_flag = FALSE)

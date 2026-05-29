@@ -101,10 +101,6 @@
 	admin_note = "Force 30 no-drop, extremely robust."
 	description = "It's an energy sword, in your arm. Pretty decent for getting past stop-searches and assassinating people. Comes loaded in a Syndicate brand autosurgeon to boot!"
 
-/datum/opposing_force_equipment/implants_illegal/baton
-	name = "Baton Arm Implant"
-	item_type = /obj/item/autosurgeon/syndicate/baton
-
 /datum/opposing_force_equipment/implants_illegal/flash
 	name = "Flash Arm Implant"
 	item_type = /obj/item/autosurgeon/syndicate/flash

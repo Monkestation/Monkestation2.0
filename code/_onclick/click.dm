@@ -89,7 +89,7 @@
 		return
 
 	var/list/modifiers = params2list(params)
-	if(!client?.holder && (isobserver(clicked_on) || isaicamera(clicked_on)) && clicked_on.invisibility > see_invisible)
+	if(!client?.holder && isobserver(clicked_on) && clicked_on.invisibility > see_invisible)
 		message_admins("[ADMIN_LOOKUPFLW(src)] clicked on [key_name_admin(clicked_on)] ([clicked_on?.type]) [ADMIN_FLW(clicked_on)], which they should not be able to see!")
 		log_admin_private("[key_name(src)] clicked on [key_name(clicked_on)] ([clicked_on?.type]), which they should not be able to see!")
 

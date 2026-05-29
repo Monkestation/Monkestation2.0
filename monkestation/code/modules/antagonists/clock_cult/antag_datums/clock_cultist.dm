@@ -41,8 +41,6 @@
 	if(give_slab && ishuman(current))
 		give_clockwork_slab(current)
 	current.log_message("has been converted to the cult of Ratvar!", LOG_ATTACK, color="#960000")
-	if(issilicon(current))
-		handle_silicon_conversion(current)
 	return ..() //have to call down here so objectives display correctly
 
 /datum/antagonist/clock_cultist/greet()
@@ -84,7 +82,7 @@
 	current.faction |= FACTION_CLOCK
 	current.grant_language(/datum/language/ratvar, source = LANGUAGE_CULTIST)
 	current.add_traits(list(TRAIT_MAGICALLY_GIFTED, TRAIT_NO_MINDSWAP), REF(src))
-	if(ishuman(current) || iscogscarab(current)) //only human and cogscarabs would need a recall ability
+	if(ishuman(current)) //only human and cogscarabs would need a recall ability
 		recall.Grant(current)
 
 	owner_turf_healing = current.AddComponent(/datum/component/turf_healing, healing_types = list(TOX = (iscarbon(current) ? 4 : 1)), healing_turfs = GLOB.clock_turf_types)
@@ -185,25 +183,7 @@
 	recall.mark_item(slab)
 	to_chat(owner.current, span_brass("You re-attune yourself to a new Clockwork Slab."))
 
-/datum/antagonist/clock_cultist/proc/handle_silicon_conversion(mob/living/silicon/converted_silicon)
-	if(isAI(converted_silicon))
-		var/mob/living/silicon/ai/converted_ai = converted_silicon
-		converted_ai.disconnect_shell()
-		for(var/mob/living/silicon/robot/borg in converted_ai.connected_robots)
-			borg.set_connected_ai(null)
-		var/mutable_appearance/ai_clock = mutable_appearance('monkestation/icons/mob/clock_cult/clockwork_mobs.dmi', "aiframe")
-		converted_ai.add_overlay(ai_clock)
 
-	else if(iscyborg(converted_silicon))
-		var/mob/living/silicon/robot/converted_borg = converted_silicon
-		converted_borg.UnlinkSelf()
-		converted_borg.set_clockwork(TRUE)
-
-	if(converted_silicon.laws && istype(converted_silicon.laws, /datum/ai_laws/ratvar))
-		return
-	converted_silicon.laws = new /datum/ai_laws/ratvar
-	converted_silicon.laws.associate(converted_silicon)
-	converted_silicon.show_laws()
 
 ///remove clock cult items from their inventory by dropping them
 /datum/antagonist/clock_cultist/proc/handle_equipment_removal()

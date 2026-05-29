@@ -126,7 +126,6 @@
 	var/brains = 0
 	var/other_players = 0
 	var/living_skipped = 0
-	var/drones = 0
 	var/security = 0
 	var/security_dead = 0
 	for(var/mob/checked_mob in GLOB.mob_list)
@@ -136,9 +135,6 @@
 				continue
 			else if(checked_mob.mind && !isbrain(checked_mob) && !isobserver(checked_mob))
 				if(checked_mob.stat != DEAD)
-					if(isdrone(checked_mob))
-						drones++
-						continue
 					if(is_centcom_level(checked_mob.z) && is_centcom_area(checked_mob))
 						living_skipped++
 						continue
@@ -172,7 +168,7 @@
 	dat += "<BR><b><font color='green'>Living Players:|[living_players_connected] active|[living_players - living_players_connected] disconnected|</font></b>"
 	dat += "<BR><b><font color='#e29300'>Antagonists Players:|[antagonists] ingame|[antagonists-antagonists_dead] alive|[antagonists_dead] dead|</font></b>"
 	dat += "<BR><b><font color='#860e03'>Security Players:|[security] ingame|[security-security_dead] alive|[security_dead] dead|</font></b>"
-	dat += "<BR><b><font color='#bf42f4'>SKIPPED \[On centcom Z-level\]: [living_skipped] living players|[drones] living drones|</font></b>"
+	dat += "<BR><b><font color='#bf42f4'>SKIPPED \[On centcom Z-level\]: [living_skipped] living players|</font></b>"
 	dat += "<BR><b><font color='red'>Dead/Observing players:|[observers_connected] active|[observers - observers_connected] disconnected|[brains] brains|</font></b>"
 	if(other_players)
 		dat += "<BR>[span_userdanger("[other_players] players in invalid state or the statistics code is bugged!")]"

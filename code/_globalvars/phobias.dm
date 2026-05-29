@@ -65,7 +65,6 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/basic/pet/penguin,
 	)),
 	"conspiracies" = typecacheof(list(
-		/mob/living/basic/drone,
 		/mob/living/basic/pet/penguin,
 		/mob/living/simple_animal/bot/secbot,
 	)),
@@ -77,7 +76,6 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	"lizards" = typecacheof(list(/mob/living/basic/lizard)),
 	"skeletons" = typecacheof(list(/mob/living/basic/skeleton)),
 	"robots" = typecacheof(list(
-		/mob/living/basic/drone,
 		/mob/living/silicon/ai,
 		/mob/living/silicon/robot,
 		/mob/living/simple_animal/bot,
@@ -108,7 +106,6 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	)),
 	"conspiracies" = typecacheof(list(
 		/mob/living/simple_animal/bot/secbot,
-		/mob/living/basic/drone,
 		/mob/living/basic/pet/penguin,
 	)),
 	"birds" = typecacheof(list(
@@ -230,11 +227,8 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	)),
 
 	"robots" = typecacheof(list(
-		/obj/item/ai_module,
-		/obj/item/aicard,
 		/obj/item/toy/figure/borg,
 		/obj/item/toy/talking/ai,
-		/obj/machinery/computer/upload,
 		/obj/machinery/recharge_station,
 		/obj/structure/statue/diamond/ai1,
 		/obj/structure/statue/diamond/ai2,
@@ -310,11 +304,8 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/toy/plush/lizard_plushie,
 	)),
 	"robots" = typecacheof(list(
-		/obj/item/ai_module,
-		/obj/item/aicard,
 		/obj/item/toy/figure/borg,
 		/obj/item/toy/talking/ai,
-		/obj/machinery/computer/upload,
 		/obj/machinery/recharge_station,
 		/obj/structure/statue/diamond/ai1,
 		/obj/structure/statue/diamond/ai2,

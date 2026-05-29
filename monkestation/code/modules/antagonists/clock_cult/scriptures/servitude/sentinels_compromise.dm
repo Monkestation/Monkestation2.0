@@ -26,10 +26,6 @@
 	if(!istype(healed_mob) || !IS_CLOCK(invoker) || !IS_CLOCK(healed_mob))
 		return FALSE
 
-	if(iscogscarab(invoker))
-		to_chat(invoker, span_warning("Your form is too frail to take the burden of another."))
-		return FALSE
-
 	if(!do_after(invoker, invocation_time, healed_mob))
 		return FALSE
 

@@ -61,43 +61,4 @@
 			data["alarms"] += list(nominal_category)
 	return data
 
-/datum/station_alert/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.)
-		return
 
-	switch(action)
-		if("select_camera")
-			var/mob/living/silicon/ai/ai = usr
-			if(!istype(ai))
-				return
-
-			var/list/alarms = listener.alarms
-			var/list/alerts = list()
-			for(var/alarm_type in alarms)
-				alerts += alarms[alarm_type]
-
-			var/list/our_alert = locate(params["alert"]) in alerts
-			if(!length(our_alert))
-				return
-			var/chosen_alert = alerts[our_alert]
-			var/list/cameras = chosen_alert[2]
-			if(!length(cameras))
-				return
-			var/list/named_cameras = list()
-			for(var/obj/machinery/camera/camera in cameras)
-				named_cameras[camera.c_tag] = camera
-
-			var/chosen_camera
-			if(length(named_cameras) == 1)
-				chosen_camera = named_cameras[1]
-			else
-				chosen_camera = tgui_input_list(ai, "Choose a camera to jump to", "Camera Selection", named_cameras)
-				if(isnull(chosen_camera))
-					return
-			var/obj/machinery/camera/selected_camera = named_cameras[chosen_camera]
-			if(!selected_camera.can_use())
-				to_chat(ai, span_warning("Camera is unavailable!"))
-				return
-			ai.switchCamera(selected_camera)
-			return TRUE

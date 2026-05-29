@@ -311,19 +311,7 @@
 			selected_image = selected_photo.picture_name
 			return TRUE
 
-		if("PDA_siliconSelectPhoto")
-			if(!issilicon(usr))
-				return FALSE
-			var/mob/living/silicon/user = usr
-			if(!user.aicamera)
-				return FALSE
-			var/datum/picture/selected_photo = user.aicamera.selectpicture(user)
-			if(!selected_photo)
-				return FALSE
-			SSassets.transport.register_asset(TEMP_IMAGE_PATH(REF(src)), selected_photo.picture_image)
-			selected_image = TEMP_IMAGE_PATH(REF(src))
-			update_pictures_for_all()
-			return TRUE
+
 		if("PDA_soundSet")
 			var/new_sound = params["sound"]
 			if(!(new_sound in GLOB.pda_ringtone_sounds))
@@ -681,8 +669,6 @@
 			viewing_messages_of = REF(chat)
 
 	var/list/mob/living/receievers = list()
-	if(computer.inserted_pai)
-		receievers += computer.inserted_pai.pai
 	if(computer.loc && isliving(computer.loc))
 		receievers += computer.loc
 

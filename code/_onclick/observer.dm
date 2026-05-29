@@ -55,8 +55,6 @@
 	if(user.client)
 		if(user.gas_scan && atmos_scan(user=user, target=src, silent=TRUE))
 			return TRUE
-		else if(isAdminGhostAI(user))
-			attack_ai(user)
 		else if(user.client.prefs.read_preference(/datum/preference/toggle/inquisitive_ghost))
 			user.examinate(src)
 	return FALSE

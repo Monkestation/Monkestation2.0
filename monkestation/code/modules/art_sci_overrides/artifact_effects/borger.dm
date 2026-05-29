@@ -53,7 +53,6 @@
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), carbon_target, 'sound/effects/cartoon_pop.ogg', 70), timer)
 		addtimer(CALLBACK(carbon_target, TYPE_PROC_REF(/mob/living/, spin), 4, 1), timer - 0.4 SECONDS)
 		timer += 2 SECONDS
-	addtimer(CALLBACK(carbon_target, TYPE_PROC_REF(/mob/, Robotize)), timer + 5)
 	COOLDOWN_START(src, borg_cooldown, 10 SECONDS)
 
 /datum/artifact_effect/borger/proc/eat_limb(mob/living/carbon/victim)

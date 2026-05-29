@@ -233,7 +233,6 @@ GLOBAL_LIST_INIT(royale_super_rare_loot, list(
 ///misc loot, things that are not useful on their own/are jokes
 GLOBAL_LIST_INIT(royale_misc_loot, list(
 		/obj/item/banhammer = 1,
-		/obj/item/ai_module/zeroth/automalf = 1,
 		/obj/item/bedsheet/random = 1,
 		/obj/item/bikehorn/golden = 1,
 		/obj/item/bikehorn/airhorn = 1,
@@ -263,8 +262,7 @@ GLOBAL_LIST_INIT(royale_misc_loot, list(
 		/obj/item/megaphone/clown = 1, //comms still work so annoy everyone
 		/obj/item/melee/beesword = 1,
 		/obj/item/melee/powerfist = 1,
-		/obj/item/reagent_containers/borghypo/syndicate = 1, //usable by non-borgs, it just wont recharge
-		list(/obj/item/robot_suit/prebuilt = 1, /obj/item/mmi/posibrain = 1) = 1,
+
 		/obj/item/sbeacondrop/clownbomb = 1,
 		/obj/item/storage/backpack/duffelbag/clown/syndie = 1,
 		/obj/item/storage/backpack/duffelbag/clown/cream_pie = 1,

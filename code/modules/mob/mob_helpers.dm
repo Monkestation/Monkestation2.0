@@ -219,10 +219,7 @@
 		return FALSE
 
 
-	// Returns TRUE if AI has a zeroth law *and* either has a special role *or* an antag datum.
-	if(isAI(M))
-		var/mob/living/silicon/ai/A = M
-		return (A.laws?.zeroth && (A.mind?.special_role || !isnull(M.mind?.antag_datums)))
+
 
 	if(M.mind?.special_role)
 		return TRUE
@@ -253,8 +250,7 @@
 /mob/living/silicon/robot/is_antag(blacklisted_antag_flags)
 	return FALSE
 
-/mob/living/silicon/ai/is_antag(blacklisted_antag_flags)
-	return ..() && !!(laws?.zeroth) // AIs only count as antags if they have a zeroth law (apparently)
+
 
 /**
  * Fancy notifications for ghosts

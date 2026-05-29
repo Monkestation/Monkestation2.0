@@ -37,7 +37,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 		/datum/action/innate/clockcult/add_warp_area,
 	)
 	///We reference this from outside a bit so it gets its own ref
-	var/datum/action/control_host/cogscarab/control_action
+	var/datum/action/control_host/control_action
 	///how many cogs we have
 	var/cogs = 0
 	///our interal radio
@@ -59,14 +59,6 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	for(var/datum/action/our_action as anything in granted_actions)
 		our_action = new our_action(src)
 		our_action.Grant(src)
-
-/mob/living/eminence/mind_initialize()
-	. = ..()
-	if(control_action)
-		return
-
-	control_action = new(src)
-	control_action.Grant(src)
 
 /mob/living/eminence/Destroy()
 	QDEL_LIST(actions)

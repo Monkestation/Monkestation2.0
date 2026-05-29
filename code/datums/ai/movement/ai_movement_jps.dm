@@ -31,11 +31,7 @@
 	return loop
 
 /datum/ai_movement/jps/proc/repath_incoming(datum/move_loop/has_target/jps/source)
-	SIGNAL_HANDLER
-	var/datum/ai_controller/controller = source.extra_info
 
-	source.access = controller.get_access()
-	source.minimum_distance = controller.get_minimum_distance()
 
 /datum/ai_movement/jps/bot
 	max_pathing_attempts = 25

@@ -705,40 +705,6 @@
 		SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		return ..()
 
-	if(istype(target,/mob/living/silicon/robot))
-		var/mob/living/silicon/robot/candidate = target
-		if(candidate.mmi || candidate.shell)
-			channeling = TRUE
-			user.visible_message(span_danger("A dark cloud emanates from [user]'s hand and swirls around [candidate]!"))
-			playsound(T, 'sound/machines/airlock_alien_prying.ogg', 80, TRUE)
-			var/prev_color = candidate.color
-			candidate.color = "black"
-			if(!do_after(user, 9 SECONDS, target = candidate))
-				channeling = FALSE
-				candidate.color = prev_color
-				return
-			candidate.undeploy()
-			candidate.emp_act(EMP_HEAVY)
-			var/construct_class = show_radial_menu(user, src, GLOB.construct_radial_images, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
-			if(!check_menu(user) || QDELETED(candidate))
-				channeling = FALSE
-				candidate.color = prev_color
-				return
-			candidate.grab_ghost()
-			user.visible_message(span_danger("The dark cloud recedes from what was formerly [candidate], revealing a\n [construct_class]!"))
-			make_new_construct_from_class(construct_class, THEME_CULT, candidate, user, FALSE, T)
-			uses--
-			qdel(candidate)
-			channeling = FALSE
-			return ..()
-
-		uses--
-		to_chat(user, span_warning("A dark cloud emanates from you hand and swirls around [candidate] - twisting it into a construct shell!"))
-		new /obj/structure/constructshell(T)
-		SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
-		qdel(candidate)
-		return ..()
-
 	if(istype(target,/obj/machinery/door/airlock))
 		channeling = TRUE
 		playsound(T, 'sound/machines/airlockforced.ogg', 50, TRUE)

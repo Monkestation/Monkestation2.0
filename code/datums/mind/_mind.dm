@@ -402,23 +402,6 @@
 		target_antag.submit_player_objective(retain_existing = !replace_existing, retain_escape = !replace_escape, force = TRUE)
 		log_admin("[key_name(usr)] prompted [current] to enter their own objectives for [target_antag].")
 
-	else if (href_list["silicon"])
-		switch(href_list["silicon"])
-			if("unemag")
-				var/mob/living/silicon/robot/R = current
-				if (istype(R))
-					R.SetEmagged(0)
-					message_admins("[key_name_admin(usr)] has unemag'ed [R].")
-					log_admin("[key_name(usr)] has unemag'ed [R].")
-
-			if("unemagcyborgs")
-				if(isAI(current))
-					var/mob/living/silicon/ai/ai = current
-					for (var/mob/living/silicon/robot/R in ai.connected_robots)
-						R.SetEmagged(0)
-					message_admins("[key_name_admin(usr)] has unemag'ed [ai]'s Cyborgs.")
-					log_admin("[key_name(usr)] has unemag'ed [ai]'s Cyborgs.")
-
 	else if(href_list["edit_obj_tc"])
 		var/datum/traitor_objective/objective = locate(href_list["edit_obj_tc"])
 		if(!istype(objective))

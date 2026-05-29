@@ -265,15 +265,6 @@ monkestation end */
 	modified_event.weight *= weight_multiplier
 	modified_event.max_occurrences += max_occurrences_modifier
 
-/datum/station_trait/random_event_weight_modifier/ion_storms
-	name = "Ionic Stormfront"
-	report_message = "An ionic stormfront is passing over your station's system. Expect an increased likelihood of ion storms afflicting your station's silicon units."
-	trait_type = STATION_TRAIT_NEGATIVE
-	trait_flags = NONE
-	weight = 3
-	event_control_path = /datum/round_event_control/ion_storm
-	weight_multiplier = 2
-
 /datum/station_trait/random_event_weight_modifier/rad_storms
 	name = "Radiation Stormfront"
 	report_message = "A radioactive stormfront is passing through your station's system. Expect an increased likelihood of radiation storms passing over your station, as well the potential for multiple radiation storms to occur during your shift."

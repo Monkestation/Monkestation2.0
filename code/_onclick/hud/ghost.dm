@@ -38,14 +38,6 @@
 	var/mob/dead/observer/G = usr
 	G.dead_tele()
 
-/atom/movable/screen/ghost/pai
-	name = "pAI Candidate"
-	icon_state = "pai"
-
-/atom/movable/screen/ghost/pai/Click()
-	var/mob/dead/observer/G = usr
-	G.register_pai()
-
 /atom/movable/screen/ghost/minigames_menu
 	name ="Minigames"
 	icon_state = "minigames"
@@ -72,10 +64,6 @@
 
 	using = new /atom/movable/screen/ghost/teleport(null, src)
 	using.screen_loc = ui_ghost_teleport
-	static_inventory += using
-
-	using = new /atom/movable/screen/ghost/pai(null, src)
-	using.screen_loc = ui_ghost_pai
 	static_inventory += using
 
 	using = new /atom/movable/screen/ghost/minigames_menu(null, src)

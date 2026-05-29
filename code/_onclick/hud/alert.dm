@@ -885,10 +885,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!.)
 		return
 
-	var/mob/living/silicon/ai/ai_owner = owner
-	var/turf/target_turf = get_turf(target)
-	if(target_turf)
-		ai_owner.eyeobj.setLoc(target_turf)
+
 
 //MECHS
 

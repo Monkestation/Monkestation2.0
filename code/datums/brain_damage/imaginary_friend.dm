@@ -156,14 +156,6 @@
 	if(!appearance_job)
 		appearance_job = SSjob.GetJob(JOB_ASSISTANT)
 
-	if(istype(appearance_job, /datum/job/ai))
-		human_image = icon('icons/mob/silicon/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
-		return
-
-	if(istype(appearance_job, /datum/job/cyborg))
-		human_image = icon('icons/mob/silicon/robots.dmi', icon_state = "robot")
-		return
-
 	human_image = get_flat_human_icon(null, appearance_job, appearance_from_prefs)
 
 /// Returns all member clients of the imaginary_group

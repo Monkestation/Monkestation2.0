@@ -188,7 +188,6 @@
 	update_charge_action()
 
 	RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(on_borg_charge))
 	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_electrocute))
 
 /obj/item/circuit_component/bci_core/proc/on_organ_removed(datum/source, mob/living/carbon/owner)
@@ -199,17 +198,8 @@
 
 	UnregisterSignal(owner, list(
 		COMSIG_ATOM_EXAMINE,
-		COMSIG_PROCESS_BORGCHARGER_OCCUPANT,
 		COMSIG_LIVING_ELECTROCUTE_ACT,
 	))
-
-/obj/item/circuit_component/bci_core/proc/on_borg_charge(datum/source, amount)
-	SIGNAL_HANDLER
-
-	if (isnull(parent.cell))
-		return
-
-	parent.cell.give(amount)
 
 /obj/item/circuit_component/bci_core/proc/on_electrocute(datum/source, shock_damage, siemens_coefficient, flags)
 	SIGNAL_HANDLER

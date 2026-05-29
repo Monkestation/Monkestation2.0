@@ -4,15 +4,9 @@
 
 ///Returns true or false depending on if the target can be attacked by the mob
 /datum/targeting_strategy/proc/can_attack(mob/living/living_mob, atom/target, vision_range)
-	return
 
 ///Returns something the target might be hiding inside of
 /datum/targeting_strategy/proc/find_hidden_mobs(mob/living/living_mob, atom/target)
-	var/atom/target_hiding_location
-	var/atom/target_loc = target.loc
-	if(istype(target_loc, /obj/structure/closet) || istype(target_loc, /obj/machinery/disposal) || istype(target_loc, /obj/machinery/sleeper))
-		target_hiding_location = target_loc
-	return target_hiding_location
 
 /datum/targeting_strategy/basic
 	/// When we do our basic faction check, do we look for exact faction matches?
@@ -102,9 +96,6 @@
 
 /// Returns true if the mob and target share factions
 /datum/targeting_strategy/basic/proc/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
-	if (controller.blackboard[BB_ALWAYS_IGNORE_FACTION] || controller.blackboard[BB_TEMPORARILY_IGNORE_FACTION])
-		return FALSE
-	return living_mob.faction_check_atom(the_target, exact_match = check_factions_exactly)
 
 /// Subtype more forgiving for items.
 /// Careful, this can go wrong and keep a mob hyper-focused on an item it can't lose aggro on

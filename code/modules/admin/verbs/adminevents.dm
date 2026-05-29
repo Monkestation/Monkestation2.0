@@ -32,7 +32,6 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, FALSE, "Headset 
 
 /client/proc/admin_headset_message(mob/target in GLOB.mob_list, sender = null)
 	var/mob/living/carbon/human/human_recipient
-	var/mob/living/silicon/silicon_recipient
 
 	if(!check_rights(R_ADMIN))
 		return
@@ -43,13 +42,8 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, FALSE, "Headset 
 		if(!istype(human_recipient.ears, /obj/item/radio/headset))
 			to_chat(usr, "The person you are trying to contact is not wearing a headset.", confidential = TRUE)
 			return
-	else if(issilicon(target))
-		silicon_recipient = target
-		if(!istype(silicon_recipient.radio, /obj/item/radio))
-			to_chat(usr, "The silicon you are trying to contact does not have a radio installed.", confidential = TRUE)
-			return
 	else
-		to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human or /mob/living/silicon", confidential = TRUE)
+		to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human", confidential = TRUE)
 		return
 
 	if (!sender)
@@ -108,22 +102,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_direct_narrate, R_ADMIN, FALSE, "Direct Na
 	admin_ticket_log(target, log_msg) // MONKESTATION EDIT - tgui tickets
 	BLACKBOX_LOG_ADMIN_VERB("Direct Narrate")
 
-ADMIN_VERB(cmd_admin_add_freeform_ai_law, R_ADMIN, FALSE, "Add Custom AI Law", "Add a custom law to the Silicons.", ADMIN_CATEGORY_EVENTS)
-	var/input = input(user, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text | null
-	if(!input)
-		return
 
-	log_admin("Admin [key_name(user)] has added a new AI law - [input]")
-	message_admins("Admin [key_name_admin(user)] has added a new AI law - [input]")
-
-	var/show_log = tgui_alert(user, "Show ion message?", "Message", list("Yes", "No"))
-	var/announce_ion_laws = (show_log == "Yes" ? 100 : 0)
-
-	var/datum/round_event/ion_storm/add_law_only/ion = new
-	ion.announce_chance = announce_ion_laws
-	ion.ionMessage = input
-	ion.start() // Monkeystation Edit: Fixes AI law additions.
-	BLACKBOX_LOG_ADMIN_VERB("Add Custom AI Law")
 
 ADMIN_VERB(call_shuttle, R_ADMIN, FALSE, "Call Shuttle", "Force a shuttle call with additional modifiers.", ADMIN_CATEGORY_EVENTS)
 	if(EMERGENCY_AT_LEAST_DOCKED)

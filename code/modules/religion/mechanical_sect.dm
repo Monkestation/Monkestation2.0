@@ -13,17 +13,6 @@
 	max_favor = 2500
 
 /datum/religion_sect/mechanical/sect_bless(mob/living/target, mob/living/chap)
-	if(iscyborg(target))
-		var/mob/living/silicon/robot/R = target
-		var/charge_amt = 50
-		if(target.mind?.holy_role == HOLY_ROLE_HIGHPRIEST)
-			charge_amt *= 2
-		R.cell?.charge += charge_amt
-		R.visible_message(span_notice("[chap] charges [R] with the power of [GLOB.deity]!"))
-		to_chat(R, span_boldnotice("You are charged by the power of [GLOB.deity]!"))
-		R.add_mood_event("blessing", /datum/mood_event/blessing)
-		playsound(chap, 'sound/effects/bang.ogg', 25, TRUE, -1)
-		return TRUE
 	if(!ishuman(target))
 		return
 	var/mob/living/carbon/human/blessed = target

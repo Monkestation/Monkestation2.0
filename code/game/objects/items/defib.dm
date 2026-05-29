@@ -687,15 +687,7 @@
 	req_defib = FALSE
 
 /obj/item/shockpaddles/cyborg/attack(mob/M, mob/user)
-	if(iscyborg(user))
-		var/mob/living/silicon/robot/R = user
-		if(R.emagged)
-			combat = TRUE
-		else
-			combat = FALSE
-	else
-		combat = FALSE
-
+	combat = FALSE
 	. = ..()
 
 /obj/item/shockpaddles/syndicate

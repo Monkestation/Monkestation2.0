@@ -1037,9 +1037,6 @@
 			update_appearance()
 			return TRUE
 
-	else if(istype(C, /obj/item/pai_cable))
-		var/obj/item/pai_cable/cable = C
-		cable.plugin(src, user)
 	else if(istype(C, /obj/item/airlock_painter))
 		change_paintjob(C, user)
 	else if(istype(C, /obj/item/card/id/fake_card))

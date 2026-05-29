@@ -581,11 +581,6 @@
 /obj/item/radio/borg/resetChannels()
 	. = ..()
 
-	var/mob/living/silicon/robot/R = loc
-	if(istype(R))
-		for(var/ch_name in R.model.radio_channels)
-			channels[ch_name] = TRUE
-
 /obj/item/radio/borg/syndicate
 	syndie = TRUE
 	keyslot = /obj/item/encryptionkey/syndicate

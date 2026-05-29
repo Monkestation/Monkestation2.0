@@ -95,10 +95,6 @@
 	if(mob.remote_control) //we're controlling something, our movement is relayed to it
 		return mob.remote_control.relaymove(mob, direct)
 
-	if(isAI(mob))
-		var/mob/living/silicon/ai/smoovin_ai = mob
-		return smoovin_ai.AIMove(direct)
-
 	if(Process_Grab()) //are we restrained by someone's grip?
 		return
 

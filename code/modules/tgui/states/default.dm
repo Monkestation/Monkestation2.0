@@ -36,19 +36,5 @@ GLOBAL_DATUM_INIT(default_state, /datum/ui_state/default, new)
 		return UI_INTERACTIVE
 	return UI_DISABLED // Otherwise they can keep the UI open.
 
-/mob/living/silicon/ai/default_can_use_topic(src_object)
-	. = shared_ui_interaction(src_object)
-	if(. < UI_INTERACTIVE)
-		return
 
-	// The AI can interact with anything it can see nearby, or with cameras while wireless control is enabled.
-	if(!control_disabled && can_see(src_object))
-		return UI_INTERACTIVE
-	return UI_CLOSE
 
-/mob/living/silicon/pai/default_can_use_topic(src_object)
-	// pAIs can only use themselves and the owner's radio.
-	if((src_object == src || src_object == radio) && !stat)
-		return UI_INTERACTIVE
-	else
-		return min(..(), UI_UPDATE)

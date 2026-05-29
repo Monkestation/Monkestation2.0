@@ -526,12 +526,6 @@
 		. += "It's covered in ants!"
 
 // Allows Silicons to disable thermal sensor
-/obj/machinery/firealarm/BorgCtrlClick(mob/living/silicon/robot/user)
-	if(get_dist(src,user) <= user.interaction_range)
-		AICtrlClick(user)
-		return
-	return ..()
-
 /obj/machinery/firealarm/AICtrlClick(mob/living/silicon/robot/user)
 	if(obj_flags & EMAGGED)
 		to_chat(user, span_warning("The control circuitry of [src] appears to be malfunctioning."))

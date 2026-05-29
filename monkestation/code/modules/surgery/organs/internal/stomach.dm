@@ -78,11 +78,9 @@
 
 /obj/item/organ/internal/stomach/synth/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
-	RegisterSignal(receiver, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(on_borg_charge))
 
 /obj/item/organ/internal/stomach/synth/Remove(mob/living/carbon/stomach_owner, special)
 	. = ..()
-	UnregisterSignal(stomach_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
 
 ///Handles charging the synth from borg chargers
 /obj/item/organ/internal/stomach/synth/proc/on_borg_charge(datum/source, amount)

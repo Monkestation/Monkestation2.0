@@ -5,7 +5,6 @@
 	/datum/round_event_control/gravity_generator_blackout = 4, \
 	/datum/round_event_control/communications_blackout = 6, \
 	/datum/round_event_control/electrical_storm = 2, \
-	/datum/round_event_control/ion_storm = 6, \
 	/datum/round_event_control/grey_tide = 3, \
 	/datum/round_event_control/grid_check = 6, \
 	/datum/round_event_control/scrubber_overflow/catastrophic = 4, \

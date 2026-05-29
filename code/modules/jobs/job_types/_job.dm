@@ -232,20 +232,6 @@
 /mob/living/proc/on_job_equipping(datum/job/equipping, datum/preferences/used_pref)
 	return
 
-/mob/living/silicon/robot/on_job_equipping(datum/job/equipping, datum/preferences/used_pref)
-	var/list/loadout_datums = loadout_list_to_datums(used_pref?.loadout_list)
-	var/obj/item/hat_to_use = null
-
-	// We want the last hat in the list to match the behaviour of humanoid loadouts
-	for (var/datum/loadout_item/head/item in loadout_datums)
-		if (ispath(item.item_path, /obj/item))
-			var/obj/item/hat = new item.item_path()
-			if (hat.slot_flags & ITEM_SLOT_HEAD)
-				hat_to_use = hat
-
-	if (hat_to_use)
-		place_on_head(hat_to_use)
-
 #define VERY_LATE_ARRIVAL_TOAST_PROB 20
 
 /mob/living/carbon/human/on_job_equipping(datum/job/equipping, datum/preferences/used_pref)
@@ -646,51 +632,7 @@
 			real_name = species.random_name(gender, TRUE)
 	dna.update_dna_identity()
 
-/mob/living/silicon/ai/apply_prefs_job(client/player_client, datum/job/job)
-	if(GLOB.current_anonymous_theme)
-		fully_replace_character_name(real_name, GLOB.current_anonymous_theme.anonymous_ai_name(TRUE))
-		return
-	apply_pref_name(/datum/preference/name/ai, player_client) // This proc already checks if the player is appearance banned.
-	set_core_display_icon(null, player_client)
-	apply_pref_emote_display(player_client)
-	apply_pref_hologram_display(player_client)
-
-/mob/living/silicon/robot/apply_prefs_job(client/player_client, datum/job/job)
-	if(mmi)
-		var/organic_name
-		if(GLOB.current_anonymous_theme)
-			organic_name = GLOB.current_anonymous_theme.anonymous_name(src)
-		else if(player_client.prefs.read_preference(/datum/preference/choiced/random_name) == RANDOM_ENABLED || CONFIG_GET(flag/force_random_names) || is_banned_from(player_client.ckey, "Appearance"))
-			if(!player_client)
-				return // Disconnected while checking the appearance ban.
-
-			var/species_type = player_client.prefs.read_preference(/datum/preference/choiced/species)
-			var/datum/species/species = new species_type
-			organic_name = species.random_name(player_client.prefs.read_preference(/datum/preference/choiced/gender), TRUE)
-		else
-			if(!player_client)
-				return // Disconnected while checking the appearance ban.
-			organic_name = player_client.prefs.read_preference(/datum/preference/name/real_name)
-
-		// monkestation edit start
-		/* original
-		mmi.name = "[initial(mmi.name)]: [organic_name]"
-		if(mmi.brain)
-			mmi.brain.name = "[organic_name]'s brain"
-		if(mmi.brainmob)
-			mmi.brainmob.real_name = organic_name //the name of the brain inside the cyborg is the robotized human's name.
-			mmi.brainmob.name = organic_name
-		*/
-		qdel(mmi)
-		mmi = make_mmi(positronic=(player_client.prefs.read_preference(/datum/preference/choiced/silicon_brain) == "Positronic"), organic_name=organic_name)
-		// monkestation edit end
-
-	// If this checks fails, then the name will have been handled during initialization.
-	if(!GLOB.current_anonymous_theme && player_client.prefs.read_preference(/datum/preference/name/cyborg) != DEFAULT_CYBORG_NAME)
-		apply_pref_name(/datum/preference/name/cyborg, player_client)
-
 	// monkestation edit start
-	TryConnectToAI() // needs to happen before the client is transfered to the mob
 	// monkestation edit end
 
 /**

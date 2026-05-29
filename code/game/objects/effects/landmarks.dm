@@ -221,7 +221,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/ai/after_round_start()
 	if(latejoin_active && !used)
-		new /obj/structure/ai_core/latejoin_inactive(loc)
+		return // AI core spawn removed - Phase 4
 	return ..()
 
 /obj/effect/landmark/start/ai/secondary

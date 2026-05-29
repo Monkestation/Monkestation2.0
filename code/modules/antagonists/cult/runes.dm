@@ -383,9 +383,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			return FALSE
 		sacrificial.grab_ghost()
 		make_new_construct_from_class(construct_class, THEME_CULT, sacrificial, invokers[1], TRUE, get_turf(src))
-		var/mob/living/silicon/robot/sacriborg = sacrificial
 		sacrificial.log_message("was sacrificed as a cyborg.", LOG_GAME)
-		sacriborg.mmi = null
 		qdel(sacrificial)
 		return TRUE
 	if(sacrificial && (signal_result & DUST_SACRIFICE)) // No soulstone when dusted

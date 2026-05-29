@@ -297,7 +297,7 @@
 	if(!chambered)
 		balloon_alert(user, "no arrow nocked!")
 		return
-	if(!do_after(user, 0.5 SECONDS * (iscogscarab(user) ? COGSCARAB_BOW_DRAW_TIME_MULT : 1), src))
+	if(!do_after(user, 0.5 SECONDS, src))
 		return
 	balloon_alert(user, "[drawn ? "string released" : "string drawn"]")
 	drawn = !drawn

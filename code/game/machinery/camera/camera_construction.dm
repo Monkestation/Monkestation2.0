@@ -180,20 +180,6 @@
 				user.changeNext_move(CLICK_CD_MELEE)
 
 				for(var/mob/potential_viewer as anything in GLOB.player_list)
-					if(isAI(potential_viewer))
-						var/mob/living/silicon/ai/ai = potential_viewer
-						if(ai.control_disabled || (ai.stat == DEAD))
-							continue
-
-						ai.log_talk(itemname, LOG_VICTIM, tag="Pressed to camera from [key_name(user)]", log_globally=FALSE)
-						ai.last_tablet_note_seen = "<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>"
-
-						if(user.name == "Unknown")
-							to_chat(ai, "[span_name(user)] holds <a href='byond://?_src_=usr;show_tablet=1;'>\a [itemname]</a> up to one of your cameras ...")
-						else
-							to_chat(ai, "<b><a href='byond://?src=[REF(ai)];track=[html_encode(user.name)]'>[user]</a></b> holds <a href='byond://?_src_=usr;last_shown_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
-						continue
-
 					if (potential_viewer.client?.eye == src)
 						to_chat(potential_viewer, "[span_name("[user]")] holds \a [itemname] up to one of the cameras ...")
 						potential_viewer.log_talk(itemname, LOG_VICTIM, tag="Pressed to camera from [key_name(user)]", log_globally=FALSE)
@@ -222,22 +208,6 @@
 				// This is backwards, but cameras don't store a list of people that are looking through them,
 				// and we'll have to iterate this list anyway so we can use it to pull out AIs too.
 				for(var/mob/potential_viewer in GLOB.player_list)
-					// All AIs view through cameras, so we need to check them regardless.
-					if(isAI(potential_viewer))
-						var/mob/living/silicon/ai/ai = potential_viewer
-						if(ai.control_disabled || (ai.stat == DEAD))
-							continue
-
-						ai.log_talk(item_name, LOG_VICTIM, tag="Pressed to camera from [key_name(user)]", log_globally=FALSE)
-						log_paper("[key_name(user)] held [last_shown_paper] up to [src], requesting [key_name(ai)] read it.")
-
-						if(user.name == "Unknown")
-							to_chat(ai, "[span_name(user.name)] holds <a href='byond://?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to one of your cameras ...")
-						else
-							to_chat(ai, "<b><a href='byond://?src=[REF(ai)];track=[html_encode(user.name)]'>[user]</a></b> holds <a href='byond://?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to one of your cameras ...")
-						continue
-
-					// If it's not an AI, eye if the client's eye is set to the camera. I wonder if this even works anymore with tgui camera apps and stuff?
 					if (potential_viewer.client?.eye == src)
 						log_paper("[key_name(user)] held [last_shown_paper] up to [src], and [key_name(potential_viewer)] may read it.")
 						potential_viewer.log_talk(item_name, LOG_VICTIM, tag="Pressed to camera from [key_name(user)]", log_globally=FALSE)

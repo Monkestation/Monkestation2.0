@@ -36,7 +36,6 @@
 	mail_goodies = list(
 		/obj/item/storage/box/monkeycubes = 30,
 		/obj/item/circuitboard/machine/sleeper/party = 3,
-		/obj/item/borg/upgrade/ai = 2
 	)
 
 	family_heirlooms = list(/obj/item/toy/plush/slimeplushie)

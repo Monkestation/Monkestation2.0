@@ -229,20 +229,12 @@
 /obj/item/mod/core/standard/proc/on_wearer_set(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	RegisterSignal(mod.wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(on_borg_charge))
 	RegisterSignal(mod, COMSIG_MOD_WEARER_UNSET, PROC_REF(on_wearer_unset))
 
 /obj/item/mod/core/standard/proc/on_wearer_unset(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(mod.wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
 	UnregisterSignal(mod, COMSIG_MOD_WEARER_UNSET)
-
-/obj/item/mod/core/standard/proc/on_borg_charge(datum/source, amount)
-	SIGNAL_HANDLER
-
-	add_charge(amount)
-	mod.update_charge_alert()
 
 /obj/item/mod/core/ethereal
 	name = "MOD ethereal core"

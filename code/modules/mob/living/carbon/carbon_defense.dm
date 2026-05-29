@@ -149,10 +149,10 @@
 		return
 	affecting.force_wound_upwards(/datum/wound/bleed_internal, wound_source = user)
 
-/mob/living/carbon/attack_drone(mob/living/basic/drone/user)
+/mob/living/carbon/attack_drone(mob/living/user)
 	return //so we don't call the carbon's attack_hand().
 
-/mob/living/carbon/attack_drone_secondary(mob/living/basic/drone/user)
+/mob/living/carbon/attack_drone_secondary(mob/living/user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE

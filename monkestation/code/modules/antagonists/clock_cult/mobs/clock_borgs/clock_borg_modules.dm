@@ -22,28 +22,6 @@
 	QDEL_NULL(scripture_ref)
 	return ..()
 
-/obj/item/clock_module/attack_self(mob/user, modifiers)
-	. = ..()
-
-	if(!IS_CLOCK(user))
-		to_chat(user, span_warning("Looks like something broke, as your not meant to have this. Go tell someone who can fix it."))
-		return FALSE
-
-	var/mob/living/silicon/robot/our_borg = user
-	if(!istype(our_borg) || !scripture_datum)
-		return FALSE
-
-	var/obj/item/clockwork/clockwork_slab/internal_slab = our_borg.internal_clock_slab
-	if(!internal_slab)
-		to_chat(user, span_userdanger("You dont have an internal slab, this should not be the case and you should tell an admin with an ahelp(f1)."))
-		return FALSE
-
-	if(internal_slab.invoking_scripture || (scripture_datum.power_cost > SSthe_ark.clock_power))
-		to_chat(user, span_brass("You fail to invoke [name]."))
-		return FALSE
-
-	scripture_datum.begin_invoke(user, internal_slab, TRUE)
-
 /obj/item/clock_module/abscond
 	scripture_datum = /datum/scripture/abscond
 

@@ -11,7 +11,6 @@
 	)
 	ignored += typesof(/mob/eye/imaginary_friend)
 	ignored += typesof(/mob/living/simple_animal/pet/gondola/gondolapod)
-	ignored += typesof(/mob/living/silicon/robot/model)
 	ignored += typesof(/mob/eye/camera/remote/base_construction)
 	ignored += typesof(/mob/eye/camera/remote/shuttle_docker)
 	for (var/mob_type in typesof(/mob) - ignored)

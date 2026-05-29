@@ -227,8 +227,6 @@ SUBSYSTEM_DEF(points_of_interest)
 		return 0
 	if(iseyemob(target))
 		return 1
-	if(ispAI(target))
-		return 2
 	if(iscyborg(target))
 		return 3
 	if(ishuman(target))

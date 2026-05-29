@@ -32,7 +32,7 @@
 	if(!IsAvailable(feedback = TRUE))
 		return FALSE
 
-	var/mob/living/basic/drone/droney = owner
+	var/mob/living/droney = owner
 
 	// The drone unEquip() proc sets head to null after dropping
 	// an item, so we need to keep a reference to our old headgear

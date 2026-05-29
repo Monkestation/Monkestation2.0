@@ -83,119 +83,52 @@ multiple modular subtrees with behaviors
 
 ///Sets the current movement target, with an optional param to override the movement behavior
 /datum/ai_controller/proc/set_movement_target(source, atom/target, datum/ai_movement/new_movement)
-	movement_target_source = source
-	current_movement_target = target
-	if(new_movement)
-		change_ai_movement_type(new_movement)
 
 ///Overrides the current ai_movement of this controller with a new one
 /datum/ai_controller/proc/change_ai_movement_type(datum/ai_movement/new_movement)
-	ai_movement = SSai_movement.movement_types[new_movement]
 
 ///Completely replaces the planning_subtrees with a new set based on argument provided, list provided must contain specifically typepaths
 /datum/ai_controller/proc/replace_planning_subtrees(list/typepaths_of_new_subtrees)
-	planning_subtrees = typepaths_of_new_subtrees
-	init_subtrees()
 
 ///Loops over the subtrees in planning_subtrees and looks at the ai_controllers to grab a reference, ENSURE planning_subtrees ARE TYPEPATHS AND NOT INSTANCES/REFERENCES BEFORE EXECUTING THIS
 /datum/ai_controller/proc/init_subtrees()
-	if(!LAZYLEN(planning_subtrees))
-		return
-	var/list/temp_subtree_list = list()
-	for(var/subtree in planning_subtrees)
-		var/subtree_instance = SSai_controllers.ai_subtrees[subtree]
-		temp_subtree_list += subtree_instance
-	planning_subtrees = temp_subtree_list
 
 ///Proc to move from one pawn to another, this will destroy the target's existing controller.
 /datum/ai_controller/proc/PossessPawn(atom/new_pawn)
-	if(pawn) //Reset any old signals
-		UnpossessPawn(FALSE)
 
-	if(istype(new_pawn.ai_controller)) //Existing AI, kill it.
-		QDEL_NULL(new_pawn.ai_controller)
 
-	if(TryPossessPawn(new_pawn) & AI_CONTROLLER_INCOMPATIBLE)
-		qdel(src)
-		CRASH("[src] attached to [new_pawn] but these are not compatible!")
 
-	pawn = new_pawn
-	pawn.ai_controller = src
 
-	var/turf/pawn_turf = get_turf(pawn)
-	if(pawn_turf)
-		SSai_controllers.ai_controllers_by_zlevel[pawn_turf.z] += src
 
-	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_POSSESSED_PAWN)
 
-	reset_ai_status()
-	RegisterSignal(pawn, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_changed_z_level))
-	RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
-	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
-	RegisterSignal(pawn, COMSIG_QDELETING, PROC_REF(on_pawn_qdeleted))
 
-	our_cells = new(interesting_dist, interesting_dist, 1)
-	set_new_cells()
 
-	RegisterSignal(pawn, COMSIG_MOVABLE_MOVED, PROC_REF(update_grid))
 
 /datum/ai_controller/proc/update_grid(datum/source, datum/spatial_grid_cell/new_cell)
-	SIGNAL_HANDLER
 
-	set_new_cells()
 
 /datum/ai_controller/proc/set_new_cells()
-	if(isnull(our_cells))
-		return
 
-	var/turf/our_turf = get_turf(pawn)
 
-	if(isnull(our_turf))
-		return
 
-	var/list/cell_collections = our_cells.recalculate_cells(our_turf)
 
-	for(var/datum/old_grid as anything in cell_collections[2])
-		UnregisterSignal(old_grid, list(SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)))
 
-	for(var/datum/spatial_grid_cell/new_grid as anything in cell_collections[1])
-		RegisterSignal(new_grid, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_client_enter))
-		RegisterSignal(new_grid, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_client_exit))
 
-	recalculate_idle()
 
 /datum/ai_controller/proc/should_idle()
-	if(!can_idle || isnull(our_cells))
-		return FALSE
 
-	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
-		if(locate(/mob/living) in grid.client_contents)
-			return FALSE
-	return TRUE
 
 /datum/ai_controller/proc/recalculate_idle()
-	if(ai_status == AI_STATUS_OFF)
-		return
-	if(should_idle())
-		set_ai_status(AI_STATUS_IDLE)
 
 /datum/ai_controller/proc/on_client_enter(datum/source, list/target_list)
-	SIGNAL_HANDLER
 
-	if (!(locate(/mob/living) in target_list))
-		return
 
-	if(ai_status == AI_STATUS_IDLE)
-		set_ai_status(AI_STATUS_ON)
 
 /datum/ai_controller/proc/on_client_exit(datum/source, datum/exited)
-	SIGNAL_HANDLER
 
-	recalculate_idle()
 
 /// Sets the AI on or off based on current conditions, call to reset after you've manually disabled it somewhere
 /datum/ai_controller/proc/reset_ai_status()
-	set_ai_status(get_expected_ai_status())
 
 /**
  * Gets the AI status we expect the AI controller to be on at this current moment.
@@ -204,82 +137,26 @@ multiple modular subtrees with behaviors
  */
 /datum/ai_controller/proc/get_expected_ai_status()
 
-	if (!ismob(pawn))
-		return AI_STATUS_ON
 
-	var/mob/living/mob_pawn = pawn
-	if(!continue_processing_when_client && mob_pawn.client)
-		return AI_STATUS_OFF
 
-	if(mob_pawn.stat == DEAD)
-		if(ai_traits & CAN_ACT_WHILE_DEAD)
-			return AI_STATUS_ON
-		return AI_STATUS_OFF
 
-	var/turf/pawn_turf = get_turf(mob_pawn)
 #ifdef TESTING
-	if(!pawn_turf)
-		CRASH("AI controller [src] controlling pawn ([pawn]) is not on a turf.")
 #endif
-	if(!length(SSmobs.clients_by_zlevel[pawn_turf?.z]))
-		return AI_STATUS_OFF
-	if(should_idle())
-		return AI_STATUS_IDLE
-	return AI_STATUS_ON
 
 /datum/ai_controller/proc/get_current_turf()
-	var/mob/living/mob_pawn = pawn
-	var/turf/pawn_turf = get_turf(mob_pawn)
-	to_chat(world, "[pawn_turf]")
 
 ///Called when the AI controller pawn changes z levels, we check if there's any clients on the new one and wake up the AI if there is.
 /datum/ai_controller/proc/on_changed_z_level(atom/source, turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	SIGNAL_HANDLER
-	if (ismob(pawn))
-		var/mob/mob_pawn = pawn
-		if((mob_pawn?.client && !continue_processing_when_client))
-			return
-	if(old_turf)
-		SSai_controllers.ai_controllers_by_zlevel[old_turf.z] -= src
-	if(new_turf)
-		SSai_controllers.ai_controllers_by_zlevel[new_turf.z] += src
-		var/new_level_clients = length(SSmobs.clients_by_zlevel[new_turf.z]) // monkestation edit: x.len -> length(x)
-		if(new_level_clients)
-			set_ai_status(AI_STATUS_IDLE)
-		else
-			set_ai_status(AI_STATUS_OFF)
 
 ///Abstract proc for initializing the pawn to the new controller
 /datum/ai_controller/proc/TryPossessPawn(atom/new_pawn)
-	return
 
 ///Proc for deinitializing the pawn to the old controller
 /datum/ai_controller/proc/UnpossessPawn(destroy)
-	if(isnull(pawn))
-		return // instantiated without an applicable pawn, fine
 
-	set_ai_status(AI_STATUS_OFF)
-	UnregisterSignal(pawn, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE, COMSIG_QDELETING))
-	if(ai_movement.moving_controllers[src])
-		ai_movement.stop_moving_towards(src)
-	var/turf/pawn_turf = get_turf(pawn)
-	if(pawn_turf)
-		SSai_controllers.ai_controllers_by_zlevel[pawn_turf.z] -= src
-	if(ai_status)
-		SSai_controllers.ai_controllers_by_status[ai_status] -= src
-		SSai_controllers.currentrun -= src
-	pawn.ai_controller = null
-	pawn = null
-	if(destroy)
-		qdel(src)
 
 ///Returns TRUE if the ai controller can actually run at the moment.
 /datum/ai_controller/proc/able_to_run()
-	if(HAS_TRAIT(pawn, TRAIT_AI_PAUSED))
-		return FALSE
-	if(world.time < paused_until)
-		return FALSE
-	return TRUE
 
 ///Runs any actions that are currently running
 /datum/ai_controller/process(seconds_per_tick)
@@ -339,152 +216,52 @@ multiple modular subtrees with behaviors
 
 ///Determines whether the AI can currently make a new plan
 /datum/ai_controller/proc/able_to_plan()
-	. = TRUE
-	if(QDELETED(pawn))
-		return FALSE
-	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
-		if(!(current_behavior.behavior_flags & AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION)) //We have a behavior that blocks planning
-			. = FALSE
-			break
 
 ///This is where you decide what actions are taken by the AI.
 /datum/ai_controller/proc/SelectBehaviors(seconds_per_tick)
-	SHOULD_NOT_SLEEP(TRUE) //Fuck you don't sleep in procs like this.
-	if(!COOLDOWN_FINISHED(src, failed_planning_cooldown))
-		return FALSE
 
-	LAZYINITLIST(current_behaviors)
-	LAZYCLEARLIST(planned_behaviors)
 
-	if(LAZYLEN(planning_subtrees))
-		for(var/datum/ai_planning_subtree/subtree as anything in planning_subtrees)
-			if(subtree.SelectBehaviors(src, seconds_per_tick) == SUBTREE_RETURN_FINISH_PLANNING)
-				break
 
-	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_PICKED_BEHAVIORS, current_behaviors, planned_behaviors)
-	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
-		if(LAZYACCESS(planned_behaviors, current_behavior))
-			continue
-		var/list/arguments = list(src, FALSE)
-		var/list/stored_arguments = behavior_args[type]
-		if(stored_arguments)
-			arguments += stored_arguments
-		current_behavior.finish_action(arglist(arguments))
 
 ///This proc handles changing ai status, and starts/stops processing if required.
 /datum/ai_controller/proc/set_ai_status(new_ai_status)
-	if(ai_status == new_ai_status)
-		return FALSE //no change
 
 	//remove old status, if we've got one
-	if(ai_status)
-		SSai_controllers.ai_controllers_by_status[ai_status] -= src
-		SSai_controllers.currentrun -= src
-	ai_status = new_ai_status
-	SSai_controllers.ai_controllers_by_status[new_ai_status] += src
-	switch(ai_status)
-		if(AI_STATUS_ON)
-			START_PROCESSING(SSai_behaviors, src)
-		if(AI_STATUS_OFF, AI_STATUS_IDLE)
-			STOP_PROCESSING(SSai_behaviors, src)
-			CancelActions()
 
 /datum/ai_controller/proc/PauseAi(time)
-	paused_until = world.time + time
 
 /datum/ai_controller/proc/modify_cooldown(datum/ai_behavior/behavior, new_cooldown)
-	behavior_cooldowns[behavior.type] = new_cooldown
 
 ///Call this to add a behavior to the stack.
 /datum/ai_controller/proc/queue_behavior(behavior_type, ...)
-	var/datum/ai_behavior/behavior = GET_AI_BEHAVIOR(behavior_type)
-	if(!behavior)
-		CRASH("Behavior [behavior_type] not found.")
-	var/list/arguments = args.Copy()
-	arguments[1] = src
 
-	if(LAZYACCESS(current_behaviors, behavior)) ///It's still in the plan, don't add it again to current_behaviors but do keep it in the planned behavior list so its not cancelled
-		LAZYADDASSOC(planned_behaviors, behavior, TRUE)
-		return
 
-	if(!behavior.setup(arglist(arguments)))
-		return
-	LAZYADDASSOC(current_behaviors, behavior, TRUE)
-	LAZYADDASSOC(planned_behaviors, behavior, TRUE)
-	arguments.Cut(1, 2)
-	if(length(arguments))
-		behavior_args[behavior_type] = arguments
-	else
-		behavior_args -= behavior_type
-	SEND_SIGNAL(src, AI_CONTROLLER_BEHAVIOR_QUEUED(behavior_type), arguments)
 
 /datum/ai_controller/proc/ProcessBehavior(seconds_per_tick, datum/ai_behavior/behavior)
-	var/list/arguments = list(seconds_per_tick, src)
-	var/list/stored_arguments = behavior_args[behavior.type]
-	if(stored_arguments)
-		arguments += stored_arguments
-	behavior.perform(arglist(arguments))
 
 /datum/ai_controller/proc/CancelActions()
-	if(!LAZYLEN(current_behaviors))
-		return
-	for(var/i in current_behaviors)
-		var/datum/ai_behavior/current_behavior = i
-		var/list/arguments = list(src, FALSE)
-		var/list/stored_arguments = behavior_args[current_behavior.type]
-		if(stored_arguments)
-			arguments += stored_arguments
-		current_behavior.finish_action(arglist(arguments))
 
 /// Turn the controller on or off based on if you're alive, we only register to this if the flag is present so don't need to check again
 /datum/ai_controller/proc/on_stat_changed(mob/living/source, new_stat)
-	SIGNAL_HANDLER
-	reset_ai_status()
 
 /datum/ai_controller/proc/on_sentience_gained()
-	SIGNAL_HANDLER
-	UnregisterSignal(pawn, COMSIG_MOB_LOGIN)
-	if(!continue_processing_when_client)
-		set_ai_status(AI_STATUS_OFF) //Can't do anything while player is connected
-	RegisterSignal(pawn, COMSIG_MOB_LOGOUT, PROC_REF(on_sentience_lost))
 
 /datum/ai_controller/proc/on_sentience_lost()
-	SIGNAL_HANDLER
-	UnregisterSignal(pawn, COMSIG_MOB_LOGOUT)
-	set_ai_status(AI_STATUS_IDLE) //Can't do anything while player is connected
-	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 
 // Turn the controller off the controller if the pawn has been qdeleted
 /datum/ai_controller/proc/on_pawn_qdeleted()
-	SIGNAL_HANDLER
-	set_ai_status(AI_STATUS_OFF)
-	set_movement_target(type, null)
-	if(ai_movement.moving_controllers[src])
-		ai_movement.stop_moving_towards(src)
 
 /// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding. Return the access list you want to use
 /datum/ai_controller/proc/get_access()
-	return
 
 ///Returns the minimum required distance to preform one of our current behaviors. Honestly this should just be cached or something but fuck you
 /datum/ai_controller/proc/get_minimum_distance()
-	var/minimum_distance = max_target_distance
 	// right now I'm just taking the shortest minimum distance of our current behaviors, at some point in the future
 	// we should let whatever sets the current_movement_target also set the min distance and max path length
 	// (or at least cache it on the controller)
-	for(var/datum/ai_behavior/iter_behavior as anything in current_behaviors)
-		if(iter_behavior.required_distance < minimum_distance)
-			minimum_distance = iter_behavior.required_distance
-	return minimum_distance
 
 /// Returns true if we have a blackboard key with the provided key and it is not qdeleting
 /datum/ai_controller/proc/blackboard_key_exists(key)
-	var/datum/key_value = blackboard[key]
-	if (isdatum(key_value))
-		return !QDELETED(key_value)
-	if (islist(key_value))
-		return length(key_value) > 0
-	return !!key_value
 
 /**
  * Used to manage references to datum by AI controllers
@@ -534,19 +311,10 @@ multiple modular subtrees with behaviors
  */
 /datum/ai_controller/proc/set_blackboard_key(key, thing)
 	// Assume it is an error when trying to set a value overtop a list
-	if(islist(blackboard[key]))
-		CRASH("set_blackboard_key attempting to set a blackboard value to key [key] when it's a list!")
 	// Don't do anything if it's already got this value
-	if (blackboard[key] == thing)
-		return
 
 	// Clear existing values
-	if(!isnull(blackboard[key]))
-		clear_blackboard_key(key)
 
-	TRACK_AI_DATUM_TARGET(thing, key)
-	blackboard[key] = thing
-	post_blackboard_key_set(key)
 
 /**
  * Helper to force a key to be a certain thing no matter what's already there
@@ -561,11 +329,7 @@ multiple modular subtrees with behaviors
  * * thing - a value to set the blackboard key to.
  */
 /datum/ai_controller/proc/override_blackboard_key(key, thing)
-	if(blackboard[key] == thing)
-		return
 
-	clear_blackboard_key(key)
-	set_blackboard_key(key, thing)
 
 /**
  * Sets the key at index thing to the passed value
@@ -577,16 +341,8 @@ multiple modular subtrees with behaviors
  * * value - what to set the inner list's value to
  */
 /datum/ai_controller/proc/set_blackboard_key_assoc(key, thing, value)
-	if(!islist(blackboard[key]))
-		CRASH("set_blackboard_key_assoc called on non-list key [key]!")
 	// Don't do anything if it's already got this value
-	if (blackboard[key][thing] == value)
-		return
 
-	TRACK_AI_DATUM_TARGET(thing, key)
-	TRACK_AI_DATUM_TARGET(value, key)
-	blackboard[key][thing] = value
-	post_blackboard_key_set(key)
 
 /**
  * Similar to [proc/set_blackboard_key_assoc] but operates under the assumption the key is a lazylist (so it will create a list)
@@ -597,23 +353,13 @@ multiple modular subtrees with behaviors
  * * value - what to set the inner list's value to
  */
 /datum/ai_controller/proc/set_blackboard_key_assoc_lazylist(key, thing, value)
-	LAZYINITLIST(blackboard[key])
 	// Don't do anything if it's already got this value
-	if (blackboard[key][thing] == value)
-		return
 
-	TRACK_AI_DATUM_TARGET(thing, key)
-	TRACK_AI_DATUM_TARGET(value, key)
-	blackboard[key][thing] = value
-	post_blackboard_key_set(key)
 
 /**
  * Called after we set a blackboard key, forwards signal information.
  */
 /datum/ai_controller/proc/post_blackboard_key_set(key)
-	if (isnull(pawn))
-		return
-	SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_SET(key))
 
 /**
  * Adds the passed "thing" to the associated key
@@ -624,8 +370,6 @@ multiple modular subtrees with behaviors
  * * thing - a value to set the blackboard key to.
  */
 /datum/ai_controller/proc/add_blackboard_key(key, thing)
-	TRACK_AI_DATUM_TARGET(thing, key)
-	blackboard[key] += thing
 
 /**
  * Similar to [proc/add_blackboard_key], but performs an insertion rather than an add
@@ -635,10 +379,6 @@ multiple modular subtrees with behaviors
  * * thing - a value to set the blackboard key to.
  */
 /datum/ai_controller/proc/insert_blackboard_key(key, thing)
-	if(!islist(blackboard[key]))
-		CRASH("insert_blackboard_key called on non-list key [key]!")
-	TRACK_AI_DATUM_TARGET(thing, key)
-	blackboard[key] |= thing
 
 /**
  * Adds the passed "thing" to the associated key, assuming key is intended to be a lazylist (so it will create a list)
@@ -648,9 +388,6 @@ multiple modular subtrees with behaviors
  * * thing - a value to set the blackboard key to.
  */
 /datum/ai_controller/proc/add_blackboard_key_lazylist(key, thing)
-	LAZYINITLIST(blackboard[key])
-	TRACK_AI_DATUM_TARGET(thing, key)
-	blackboard[key] += thing
 
 /**
  * Similar to [proc/insert_blackboard_key_lazylist], but performs an insertion / or rather than an add
@@ -659,9 +396,6 @@ multiple modular subtrees with behaviors
  * * thing - a value to set the blackboard key to.
  */
 /datum/ai_controller/proc/insert_blackboard_key_lazylist(key, thing)
-	LAZYINITLIST(blackboard[key])
-	TRACK_AI_DATUM_TARGET(thing, key)
-	blackboard[key] |= thing
 
 /**
  * Adds the value to the inner list at key with the inner key set to "thing"
@@ -672,11 +406,6 @@ multiple modular subtrees with behaviors
  * * value - what to set the inner list's value to
  */
 /datum/ai_controller/proc/add_blackboard_key_assoc(key, thing, value)
-	if(!islist(blackboard[key]))
-		CRASH("add_blackboard_key_assoc called on non-list key [key]!")
-	TRACK_AI_DATUM_TARGET(thing, key)
-	TRACK_AI_DATUM_TARGET(value, key)
-	blackboard[key][thing] += value
 
 
 /**
@@ -688,10 +417,6 @@ multiple modular subtrees with behaviors
  * * value - what to set the inner list's value to
  */
 /datum/ai_controller/proc/add_blackboard_key_assoc_lazylist(key, thing, value)
-	LAZYINITLIST(blackboard[key])
-	TRACK_AI_DATUM_TARGET(thing, key)
-	TRACK_AI_DATUM_TARGET(value, key)
-	blackboard[key][thing] += value
 
 /**
  * Clears the passed key, resetting it to null
@@ -701,13 +426,6 @@ multiple modular subtrees with behaviors
  * * key - A blackboard key
  */
 /datum/ai_controller/proc/clear_blackboard_key(key)
-	if(isnull(blackboard[key]))
-		return
-	CLEAR_AI_DATUM_TARGET(blackboard[key], key)
-	blackboard[key] = null
-	if(isnull(pawn))
-		return
-	SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(key))
 
 /**
  * Remove the passed thing from the associated blackboard key
@@ -718,61 +436,25 @@ multiple modular subtrees with behaviors
  * * thing - a value to set the blackboard key to.
  */
 /datum/ai_controller/proc/remove_thing_from_blackboard_key(key, thing)
-	var/associated_value = blackboard[key]
-	if(thing == associated_value)
-		stack_trace("remove_thing_from_blackboard_key was called un-necessarily in a situation where clear_blackboard_key would suffice. ")
-		clear_blackboard_key(key)
-		return
 
-	if(!islist(associated_value))
-		CRASH("remove_thing_from_blackboard_key called with an invalid \"thing\" argument ([thing]). \
-			(The associated value of the passed key is not a list and is also not the passed thing, meaning it is clearing an unintended value.)")
 
-	for(var/inner_key in associated_value)
-		if(inner_key == thing)
 			// flat list
-			CLEAR_AI_DATUM_TARGET(thing, key)
-			associated_value -= thing
-			return
-		else if(associated_value[inner_key] == thing)
 			// assoc list
-			CLEAR_AI_DATUM_TARGET(thing, key)
-			associated_value -= inner_key
-			return
 
-	CRASH("remove_thing_from_blackboard_key called with an invalid \"thing\" argument ([thing]). \
-		(The passed value is not tracked in the passed list.)")
 
 /// Signal proc to go through every key and remove the datum from all keys it finds
 /datum/ai_controller/proc/sig_remove_from_blackboard(datum/source)
-	SIGNAL_HANDLER
 
-	var/list/list/remove_queue = list(blackboard)
-	var/index = 1
-	while(index <= length(remove_queue))
-		var/list/next_to_clear = remove_queue[index]
-		for(var/inner_value in next_to_clear)
-			var/associated_value = next_to_clear[inner_value]
 			// We are a lists of lists, add the next value to the queue so we can handle references in there
 			// (But we only need to bother checking the list if it's not empty.)
-			if(islist(inner_value) && length(inner_value))
-				UNTYPED_LIST_ADD(remove_queue, inner_value)
 
 			// We found the value that's been deleted. Clear it out from this list
-			else if(inner_value == source)
-				next_to_clear -= inner_value
 
 			// We are an assoc lists of lists, the list at the next value so we can handle references in there
 			// (But again, we only need to bother checking the list if it's not empty.)
-			if(islist(associated_value) && length(associated_value))
-				UNTYPED_LIST_ADD(remove_queue, associated_value)
 
 			// We found the value that's been deleted, it was an assoc value. Clear it out entirely
-			else if(associated_value == source)
-				next_to_clear -= inner_value
-				SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(inner_value))
 
-		index += 1
 
 #undef TRACK_AI_DATUM_TARGET
 #undef CLEAR_AI_DATUM_TARGET

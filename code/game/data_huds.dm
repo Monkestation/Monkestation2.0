@@ -86,13 +86,6 @@
 /datum/atom_hud/data/human/simian
 	hud_icons = list(SIMIAN_HUD)
 
-/datum/atom_hud/ai_detector/show_to(mob/new_viewer)
-	. = ..()
-	if(!new_viewer || hud_users_all_z_levels.len != 1)
-		return
-	for(var/mob/eye/camera/ai/eye as anything in GLOB.camera_eyes)
-		eye.update_ai_detect_hud()
-
 /* MED/SEC/DIAG HUD HOOKS */
 
 /*
@@ -445,41 +438,6 @@ Diagnostic HUDs!
 			holder.icon_state = "hudoffline"
 		else
 			holder.icon_state = "huddead2"
-
-//Borgie battery tracking!
-/mob/living/silicon/robot/proc/diag_hud_set_borgcell()
-	var/image/holder = hud_list[DIAG_BATT_HUD]
-	holder.pixel_z = get_cached_height() - world.icon_size
-	if(cell)
-		var/chargelvl = (cell.charge/cell.maxcharge)
-		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
-	else
-		holder.icon_state = "hudnobatt"
-
-//borg-AI shell tracking
-/mob/living/silicon/robot/proc/diag_hud_set_aishell() //Shows tracking beacons on the mech
-	var/image/holder = hud_list[DIAG_TRACK_HUD]
-	holder.pixel_z = get_cached_height() - world.icon_size
-	if(!shell) //Not an AI shell
-		holder.icon_state = null
-		set_hud_image_inactive(DIAG_TRACK_HUD)
-		return
-	else if(deployed) //AI shell in use by an AI
-		holder.icon_state = "hudtrackingai"
-	else //Empty AI shell
-		holder.icon_state = "hudtracking"
-	set_hud_image_active(DIAG_TRACK_HUD)
-
-//AI side tracking of AI shell control
-/mob/living/silicon/ai/proc/diag_hud_set_deployed() //Shows tracking beacons on the mech
-	var/image/holder = hud_list[DIAG_TRACK_HUD]
-	holder.pixel_z = get_cached_height() - world.icon_size
-	if(!deployed_shell)
-		holder.icon_state = null
-		set_hud_image_inactive(DIAG_TRACK_HUD)
-	else //AI is currently controlling a shell
-		holder.icon_state = "hudtrackingai"
-		set_hud_image_active(DIAG_TRACK_HUD)
 
 /*~~~~~~~~~~~~~~~~~~~~
 	BIG STOMPY MECHS

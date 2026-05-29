@@ -42,17 +42,6 @@
 
 /// Swat at someone we don't like but won't hurt
 /datum/ai_behavior/basic_melee_attack/dog/proc/paw_harmlessly(mob/living/living_pawn, atom/target, seconds_per_tick)
-	if(!SPT_PROB(20, seconds_per_tick))
-		return
-	living_pawn.do_attack_animation(target, ATTACK_EFFECT_DISARM)
-	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-	target.visible_message(span_danger("[living_pawn] paws ineffectually at [target]!"), span_danger("[living_pawn] paws ineffectually at you!"))
 
 /// Let them know we mean business
 /datum/ai_behavior/basic_melee_attack/dog/proc/growl_at(mob/living/living_pawn, atom/target, seconds_per_tick)
-	if(!SPT_PROB(15, seconds_per_tick))
-		return
-	living_pawn.manual_emote("[pick("barks", "growls", "stares")] menacingly at [target]!")
-	if(!SPT_PROB(40, seconds_per_tick))
-		return
-	playsound(living_pawn, pick('sound/creatures/dog/growl1.ogg', 'sound/creatures/dog/growl2.ogg'), 50, TRUE, -1)

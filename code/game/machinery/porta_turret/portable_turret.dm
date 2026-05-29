@@ -266,12 +266,6 @@ DEFINE_BITFIELD(turret_flags, list(
 		"allow_manual_control" = FALSE,
 		"lasertag_turret" = istype(src, /obj/machinery/porta_turret/lasertag),
 	)
-	if(issilicon(user))
-		data["silicon_user"] = TRUE
-		if(!manual_control)
-			var/mob/living/silicon/S = user
-			if(S.hack_software)
-				data["allow_manual_control"] = TRUE
 	return data
 
 /obj/machinery/porta_turret/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -482,16 +476,11 @@ DEFINE_BITFIELD(turret_flags, list(
 
 			var/mob/living/silicon/sillycone = A
 
-			if(ispAI(A))
-				continue
-
 			if(iscyborg(sillycone))
 				var/mob/living/silicon/robot/sillyconerobot = A
 				if(sillyconerobot.stat != CONSCIOUS)
 					continue
 				if(in_faction(sillyconerobot)) // borgs in faction are friendly
-					continue
-				if((ROLE_SYNDICATE in faction) && sillyconerobot.emagged) // special case: emagged station borgs are friendly to syndicate turrets
 					continue
 
 				targets += sillyconerobot

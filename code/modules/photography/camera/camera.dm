@@ -157,7 +157,7 @@
 			to_chat(user, span_warning("Invalid holodisk target."))
 			return ITEM_INTERACT_BLOCKING
 
-	var/through_camera_console = findtext(LAZYACCESS(modifiers, SCREEN_LOC), "camera_console") || isAI(user) || isaicamera(user)
+	var/through_camera_console = findtext(LAZYACCESS(modifiers, SCREEN_LOC), "camera_console")
 	if(!can_target(interacting_with, user, through_camera_console))
 		return ITEM_INTERACT_BLOCKING
 	if(!photo_taken(interacting_with, user, through_camera_console))

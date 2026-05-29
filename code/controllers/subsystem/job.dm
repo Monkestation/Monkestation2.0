@@ -372,29 +372,6 @@ SUBSYSTEM_DEF(job)
 //		AssignRole(candidate, job, do_eligibility_checks = FALSE) //monkestation removal
 		handle_temp_assignments(candidate, job) //monkestation edit
 
-/// Attempts to fill out all available AI positions.
-/datum/controller/subsystem/job/proc/fill_ai_positions()
-	var/datum/job/ai_job = GetJob(JOB_AI)
-	if(!ai_job)
-		return
-	// In byond for(in to) loops, the iteration is inclusive so we need to stop at ai_job.total_positions - 1
-	for(var/i in ai_job.current_positions to ai_job.total_positions - 1)
-		for(var/level in level_order)
-			var/list/candidates = list()
-			candidates = FindOccupationCandidates(ai_job, level)
-			if(candidates.len)
-				var/mob/dead/new_player/candidate = pick(candidates)
-				// Eligibility checks done as part of FindOccupationCandidates
-//monkestation removal start
-//				if(AssignRole(candidate, GetJobType(/datum/job/ai), do_eligibility_checks = FALSE))
-//					break
-//monkestation removal end
-//monkestation edit start
-				if(handle_temp_assignments(candidate, GetJobType(/datum/job/ai)))
-					break
-//monkestation edit end
-
-
 /** Proc DivideOccupations
  *  fills var "assigned_role" for all ready players.
  *  This proc must not have any side effect besides of modifying "assigned_role".
@@ -452,11 +429,6 @@ SUBSYSTEM_DEF(job)
 	JobDebug("DO, Running Head Check")
 	FillHeadPosition()
 	JobDebug("DO, Head Check end")
-
-	// Fill out any remaining AI positions.
-	JobDebug("DO, Running AI Check")
-	fill_ai_positions()
-	JobDebug("DO, AI Check end")
 
 	//Other jobs are now checked
 	JobDebug("DO, Running standard job assignment")

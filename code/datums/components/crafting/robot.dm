@@ -2,7 +2,6 @@
 	name = "ED209"
 	result = /mob/living/simple_animal/bot/secbot/ed209
 	reqs = list(
-		/obj/item/robot_suit = 1,
 		/obj/item/clothing/head/helmet = 1,
 		/obj/item/clothing/suit/armor/vest = 1,
 		/obj/item/bodypart/leg/left/robot = 1,
@@ -155,40 +154,6 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 6 SECONDS //Has a four second do_after when building manually
 	category = CAT_ROBOT
-
-/datum/crafting_recipe/aitater
-	name = "intelliTater"
-	result = /obj/item/aicard/aitater
-	time = 3 SECONDS
-	tool_behaviors = list(TOOL_WIRECUTTER)
-	reqs = list(
-		/obj/item/aicard = 1,
-		/obj/item/food/grown/potato = 1,
-		/obj/item/stack/cable_coil = 5,
-	)
-	parts = list(/obj/item/aicard = 1)
-	category = CAT_ROBOT
-
-/datum/crafting_recipe/aitater/aispook
-	name = "intelliLantern"
-	result = /obj/item/aicard/aispook
-	reqs = list(
-		/obj/item/aicard = 1,
-		/obj/item/food/grown/pumpkin = 1,
-		/obj/item/stack/cable_coil = 5,
-	)
-
-/datum/crafting_recipe/aitater/on_craft_completion(mob/user, atom/result)
-	var/obj/item/aicard/new_card = result
-	var/obj/item/aicard/base_card = result.contents[1]
-	var/mob/living/silicon/ai = base_card.AI
-
-	if(ai)
-		base_card.AI = null
-		ai.forceMove(new_card)
-		new_card.AI = ai
-		new_card.update_appearance()
-	qdel(base_card)
 
 /datum/crafting_recipe/mod_core_standard
 	name = "MOD core (Standard)"

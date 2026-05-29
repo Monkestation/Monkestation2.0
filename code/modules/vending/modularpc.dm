@@ -13,7 +13,7 @@
 		/obj/item/modular_computer/pda = 4,
 	)
 	premium = list(
-		/obj/item/pai_card = 2,
+
 	)
 	refill_canister = /obj/item/vending_refill/modularpc
 	default_price = PAYCHECK_CREW

@@ -40,7 +40,7 @@
 		client.images += active_static_images
 
 /// Remove a camera eye from the chunk
-/datum/camerachunk/proc/remove(mob/eye/camera/ai/eye)
+/datum/camerachunk/proc/remove(mob/eye/camera/eye)
 	eye.visibleCameraChunks -= src
 	seenby -= eye
 
@@ -110,7 +110,7 @@
 		obscuredTurfs -= visible_turf
 
 	for(var/turf/obscured_turf as anything in newly_obscured_turfs)
-		if(obscuredTurfs[obscured_turf] || istype(obscured_turf, /turf/open/ai_visible))
+		if(obscuredTurfs[obscured_turf])
 			continue
 
 		var/image/static_image = turfs[obscured_turf]
@@ -149,10 +149,6 @@
 		for(var/obj/machinery/camera/camera in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z_level)))
 			if(camera.can_use() && (!camnet.networks || LAZYLEN(camera.network & camnet.networks)))
 				local_cameras += camera
-
-		for(var/mob/living/silicon/sillycone in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z_level)))
-			if(sillycone.builtInCamera?.can_use() && (!camnet.networks || LAZYLEN(sillycone.builtInCamera.network & camnet.networks)))
-				local_cameras += sillycone.builtInCamera
 
 		for(var/obj/vehicle/sealed/mecha/mech in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z_level)))
 			if(mech.chassis_camera?.can_use())

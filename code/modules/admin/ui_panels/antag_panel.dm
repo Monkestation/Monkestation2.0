@@ -61,17 +61,7 @@ GLOBAL_VAR(antag_prototypes)
 	var/common_commands = "<span>Common Commands:</span>"
 	if(ishuman(current))
 		common_commands += "<a href='byond://?src=[REF(src)];common=undress'>undress</a>"
-	else if(iscyborg(current))
-		var/mob/living/silicon/robot/R = current
-		if(R.emagged)
-			common_commands += "<a href='byond://?src=[REF(src)];silicon=Unemag'>Unemag</a>"
-	else if(isAI(current))
-		var/mob/living/silicon/ai/A = current
-		if (A.connected_robots.len)
-			for (var/mob/living/silicon/robot/R in A.connected_robots)
-				if (R.emagged)
-					common_commands += "<a href='byond://?src=[REF(src)];silicon=unemagcyborgs'>Unemag slaved cyborgs</a>"
-					break
+
 	return common_commands
 
 /datum/mind/proc/get_special_statuses()
@@ -80,11 +70,6 @@ GLOBAL_VAR(antag_prototypes)
 		result += "<span class='bad'>No body!</span>"
 	if(current && HAS_TRAIT(current, TRAIT_MINDSHIELD))
 		result += "<span class='good'>Mindshielded</span>"
-	//Move these to mob
-	if(iscyborg(current))
-		var/mob/living/silicon/robot/robot = current
-		if (robot.emagged)
-			result += "<span class='bad'>Emagged</span>"
 	return result.Join(" | ")
 
 /datum/mind/proc/traitor_panel()

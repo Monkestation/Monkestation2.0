@@ -460,23 +460,6 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 				return FALSE
 	return TRUE
 
-/datum/objective/robot_army
-	name = "robot army"
-	explanation_text = "Have at least eight active cyborgs synced to you."
-	martyr_compatible = FALSE
-
-/datum/objective/robot_army/check_completion()
-	var/counter = 0
-	var/list/datum/mind/owners = get_owners()
-	for(var/datum/mind/M in owners)
-		if(!M.current || !isAI(M.current))
-			continue
-		var/mob/living/silicon/ai/A = M.current
-		for(var/mob/living/silicon/robot/R in A.connected_robots)
-			if(R.stat != DEAD)
-				counter++
-	return counter >= 8
-
 /datum/objective/escape
 	name = "escape"
 	explanation_text = "Escape on the shuttle or an escape pod alive and without being in custody."
@@ -840,17 +823,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 	martyr_compatible = TRUE
 
 /datum/objective/destroy/find_target(dupe_search_range, list/blacklist)
-	var/list/possible_targets = active_ais(TRUE)
-	possible_targets -= blacklist
-	var/mob/living/silicon/ai/target_ai
-	var/opt_in_disabled = CONFIG_GET(flag/disable_antag_opt_in_preferences) // NOVA EDIT ADDITION - ANTAG OPT-IN
-	for (var/mob/living/silicon/ai/possible_target as anything in shuffle(possible_targets))
-		if (!opt_in_disabled && !opt_in_valid(possible_target))
-			continue
-		target_ai = possible_target
-	target = target_ai.mind
-	update_explanation_text()
-	return target
+	return FALSE
 
 /datum/objective/destroy/check_completion()
 	if(target?.current)
@@ -865,13 +838,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 		explanation_text = "Free objective."
 
 /datum/objective/destroy/admin_edit(mob/admin)
-	var/list/possible_targets = active_ais(1)
-	if(possible_targets.len)
-		var/mob/new_target = input(admin,"Select target:", "Objective target") as null|anything in sort_names(possible_targets)
-		target = new_target.mind
-	else
-		to_chat(admin, span_boldwarning("No active AIs with minds."))
-	update_explanation_text()
+	to_chat(admin, span_boldwarning("No active AIs with minds."))
 
 /datum/objective/steal_n_of_type
 	name = "steal five of"

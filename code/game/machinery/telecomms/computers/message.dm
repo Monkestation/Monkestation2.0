@@ -97,9 +97,7 @@
 		if(MSG_MON_SCREEN_MAIN)
 			data["password"] = password
 			data["status"] = linkedServer ? linkedServer.on : FALSE
-			// Check is AI or cyborg malf
-			var/mob/living/silicon/silicon_user = user
-			data["is_malf"] = istype(silicon_user) && silicon_user.hack_software
+			data["is_malf"] = FALSE
 
 		if(MSG_MON_SCREEN_LOGS)
 			var/list/message_list = list()

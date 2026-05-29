@@ -119,10 +119,6 @@ GLOBAL_LIST_INIT(loadout_pocket_items, generate_loadout_items(/datum/loadout_ite
 	name = "Mime Lighter"
 	item_path = /obj/item/lighter/mime
 
-/datum/loadout_item/pocket_items/paicard
-	name = "Personal AI Device"
-	item_path = /obj/item/pai_card
-
 /datum/loadout_item/pocket_items/cigarettes
 	name = "Cigarette Pack"
 	item_path = /obj/item/storage/fancy/cigarettes

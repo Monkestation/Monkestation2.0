@@ -24,16 +24,11 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 		if(!istype(AI) || AI.stat == DEAD)
 			continue
-		if(AI.deployed_shell)
-			AI.deployed_shell.undeploy()
 		AI.change_mob_type(/mob/living/silicon/robot , null, null)
 		AI.gib()
 
 	for(var/mob/living/silicon/robot/robot in GLOB.player_list)
 		if(!istype(robot) || robot.stat == DEAD)
-			continue
-		if(robot.shell)
-			robot.gib()
 			continue
 		robot.make_scottish()
 	addtimer(CALLBACK(SSshuttle.emergency, TYPE_PROC_REF(/obj/docking_port/mobile/emergency, request), null, 1), 50)

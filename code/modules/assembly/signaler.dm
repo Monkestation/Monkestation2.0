@@ -200,6 +200,4 @@
 	return
 
 /obj/item/assembly/signaler/internal/can_interact(mob/user)
-	if(ispAI(user))
-		return TRUE
 	. = ..()

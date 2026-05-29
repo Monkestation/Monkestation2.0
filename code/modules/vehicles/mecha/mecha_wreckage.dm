@@ -14,10 +14,9 @@
 	var/salvage_num = 5
 	var/list/crowbar_salvage = list()
 	var/wires_removed = FALSE
-	var/mob/living/silicon/ai/AI //AIs to be salvaged
 	var/list/parts
 
-/obj/structure/mecha_wreckage/Initialize(mapload, mob/living/silicon/ai/AI_pilot)
+/obj/structure/mecha_wreckage/Initialize(mapload)
 	. = ..()
 	if(parts)
 		for(var/i in 1 to 2)
@@ -28,27 +27,13 @@
 			var/part = pick(parts)
 			welder_salvage += part
 		parts = null
-	if(!AI_pilot) //Type-checking for this is already done in mecha/Destroy()
-		return
-	AI = AI_pilot
-	AI.apply_damage(150, BURN) //Give the AI a bit of damage from the "shock" of being suddenly shut down
-	INVOKE_ASYNC(AI, TYPE_PROC_REF(/mob/living/silicon, death)) //The damage is not enough to kill the AI, but to be 'corrupted files' in need of repair.
-	AI.forceMove(src) //Put the dead AI inside the wreckage for recovery
-	add_overlay(mutable_appearance('icons/obj/weapons/guns/projectiles.dmi', "green_laser")) //Overlay for the recovery beacon
-	AI.controlled_equipment = null
-	AI.remote_control = null
 
 /obj/structure/mecha_wreckage/Destroy()
-	if(AI)
-		QDEL_NULL(AI)
 	QDEL_LIST(crowbar_salvage)
 	return ..()
 
 /obj/structure/mecha_wreckage/examine(mob/user)
 	. = ..()
-	if(!AI)
-		return
-	. += span_notice("The AI recovery beacon is active.")
 
 /obj/structure/mecha_wreckage/welder_act(mob/living/user, obj/item/I)
 	..()
@@ -88,26 +73,6 @@
 		crowbar_salvage -= S
 		return
 	to_chat(user, span_notice("You don't see anything that can be pried with [I]!"))
-
-/obj/structure/mecha_wreckage/transfer_ai(interaction, mob/user, mob/living/silicon/ai/ai_mob, obj/item/aicard/card)
-	if(!..())
-		return
-
-	//Proc called on the wreck by the AI card.
-	if(interaction != AI_TRANS_TO_CARD) //AIs can only be transferred in one direction, from the wreck to the card.
-		return
-	if(!AI) //No AI in the wreck
-		to_chat(user, span_warning("No AI backups found."))
-		return
-	cut_overlays() //Remove the recovery beacon overlay
-	AI.forceMove(card) //Move the dead AI to the card.
-	card.AI = AI
-	if(AI.client) //AI player is still in the dead AI and is connected
-		to_chat(AI, span_notice("The remains of your file system have been recovered on a mobile storage device."))
-	else //Give the AI a heads-up that it is probably going to get fixed.
-		AI.notify_ghost_cloning("You have been recovered from the wreckage!", source = card)
-	to_chat(user, "[span_boldnotice("Backup files recovered")]: [AI.name] ([rand(1000,9999)].exe) salvaged from [name] and stored within local memory.")
-	AI = null
 
 /obj/structure/mecha_wreckage/gygax
 	name = "\improper Gygax wreckage"

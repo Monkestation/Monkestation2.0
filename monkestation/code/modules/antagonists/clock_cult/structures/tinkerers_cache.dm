@@ -118,12 +118,6 @@
 	power_use = 400
 	allowed_on_reebe = FALSE
 
-/datum/tinker_cache_item/borg_shell
-	name = "Clockwork Cyborg Shell"
-	item_path = /obj/item/robot_suit/prebuilt/clockwork
-	power_use = 750
-	allowed_on_reebe = FALSE
-
 /datum/tinker_cache_item/replica_fabricator
 	name = "Replica Fabricator"
 	item_path = /obj/item/clockwork/replica_fabricator

@@ -70,17 +70,7 @@
 
 /// Actually deliver the fetched item to the target, if we still have it
 /datum/ai_behavior/deliver_fetched_item/proc/deliver_item(datum/ai_controller/controller, return_target, storage_key)
-	var/mob/pawn = controller.pawn
-	var/obj/item/carried_item = controller.blackboard[storage_key]
-	if(QDELETED(carried_item) || carried_item.loc != pawn)
-		pawn.visible_message(span_notice("[pawn] looks around as if [pawn.p_they()] [pawn.p_have()] lost something."))
-		finish_action(controller, FALSE)
-		return
 
-	pawn.visible_message(span_notice("[pawn] delivers [carried_item] to [return_target]."))
-	carried_item.forceMove(get_turf(return_target))
-	controller.clear_blackboard_key(storage_key)
-	return TRUE
 
 /**
  * The alternate second half of fetching, attack the item if we can eat it.

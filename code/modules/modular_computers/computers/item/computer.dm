@@ -19,8 +19,6 @@
 	var/obj/item/computer_disk/inserted_disk
 	///The power cell the computer uses to run on.
 	var/obj/item/stock_parts/power_store/cell/internal_cell = /obj/item/stock_parts/power_store/cell
-	///A pAI currently loaded into the modular computer.
-	var/obj/item/pai_card/inserted_pai
 	///Does the console update the crew manifest when the ID is removed?
 	var/crew_manifest_update = FALSE
 
@@ -156,8 +154,6 @@
 
 	if(istype(inserted_disk))
 		QDEL_NULL(inserted_disk)
-	if(istype(inserted_pai))
-		QDEL_NULL(inserted_pai)
 	if(computer_id_slot)
 		QDEL_NULL(computer_id_slot)
 
@@ -199,10 +195,6 @@
 		return NONE
 
 	if(remove_id(user))
-		return CLICK_ACTION_SUCCESS
-
-	if(istype(inserted_pai)) // Remove pAI
-		remove_pai(user)
 		return CLICK_ACTION_SUCCESS
 
 	for(var/datum/computer_file/files as anything in stored_files)
@@ -407,10 +399,6 @@
 	if(computer_id_slot) // ID get removed first before pAIs
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID"
 		. = CONTEXTUAL_SCREENTIP_SET
-	else if(inserted_pai)
-		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove pAI"
-		. = CONTEXTUAL_SCREENTIP_SET
-
 	if(inserted_disk)
 		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove Disk"
 		. = CONTEXTUAL_SCREENTIP_SET
@@ -445,8 +433,6 @@
 		if(ishuman(loc))
 			var/mob/living/carbon/human/human_wearer = loc
 			human_wearer.sec_hud_set_ID()
-	if(inserted_pai == gone)
-		update_appearance(UPDATE_ICON)
 	if(inserted_disk == gone)
 		inserted_disk = null
 		update_appearance(UPDATE_ICON)
@@ -826,10 +812,6 @@
 			return ITEM_INTERACT_BLOCKING
 		return inserted_id.insert_money(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING // If we do, try and put that attacking object in
 
-	// Inserting a pAI
-	if(istype(tool, /obj/item/pai_card) && pai_act(user, tool))
-		return ITEM_INTERACT_SUCCESS
-
 	if(istype(tool, /obj/item/stock_parts/power_store/cell))
 		if(internal_cell)
 			to_chat(user, span_warning("You try to connect \the [tool] to \the [src], but its connectors are occupied."))
@@ -902,7 +884,6 @@
 
 /obj/item/modular_computer/deconstruct(disassembled = TRUE)
 	var/atom/droploc = drop_location()
-	remove_pai()
 	eject_file_contents()
 	src.eject_stored_items(droploc)
 	if (!disassembled)
@@ -937,32 +918,6 @@
 ///Returns a string of what to send at the end of messenger's messages.
 /obj/item/modular_computer/proc/get_messenger_ending()
 	return "Sent from my PDA"
-
-/obj/item/modular_computer/proc/pai_act(mob/user, obj/item/pai_card/card)
-	if(inserted_pai)
-		return ITEM_INTERACT_BLOCKING
-	if(!user.transferItemToLoc(card, src))
-		return ITEM_INTERACT_BLOCKING
-	inserted_pai = card
-	balloon_alert(user, "inserted pai")
-	if(inserted_pai.pai)
-		inserted_pai.pai.give_messenger_ability()
-	update_appearance(UPDATE_ICON)
-	return ITEM_INTERACT_SUCCESS
-
-/obj/item/modular_computer/proc/remove_pai(mob/user)
-	if(!inserted_pai)
-		return FALSE
-	if(inserted_pai.pai)
-		inserted_pai.pai.remove_messenger_ability()
-	if(user)
-		user.put_in_hands(inserted_pai)
-		balloon_alert(user, "removed pAI")
-	else
-		inserted_pai.forceMove(drop_location())
-	inserted_pai = null
-	update_appearance(UPDATE_ICON)
-	return TRUE
 
 /// Get all stored files, including external disk files optionaly
 /obj/item/modular_computer/proc/get_files(include_disk_files = FALSE)

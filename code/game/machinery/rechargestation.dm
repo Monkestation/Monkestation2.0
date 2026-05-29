@@ -71,8 +71,6 @@
 
 
 /obj/machinery/recharge_station/process(seconds_per_tick)
-	if(occupant)
-		process_occupant(seconds_per_tick)
 	return 1
 
 /obj/machinery/recharge_station/relaymove(mob/living/user, direction)
@@ -154,10 +152,4 @@
 	icon_state = "borgcharger[state_open ? 0 : (occupant ? 1 : 2)]"
 	return ..()
 
-/obj/machinery/recharge_station/proc/process_occupant(seconds_per_tick)
-	if(!occupant)
-		return
-	var/main_draw = use_energy(recharge_speed * seconds_per_tick, force = FALSE) //Pulls directly from the Powernet to dump into the cell
-	if(!main_draw)
-		return
-	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, main_draw, repairs, sendmats)
+

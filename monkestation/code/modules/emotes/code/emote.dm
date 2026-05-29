@@ -104,7 +104,7 @@
 	muzzle_ignore = TRUE
 	hands_use_check = TRUE
 	vary = TRUE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
+	mob_type_allowed_typecache = list(/mob/living/carbon)
 
 /datum/emote/living/clap1/get_sound(mob/living/user)
 	return pick('monkestation/code/modules/emotes/sound/claponce1.ogg',

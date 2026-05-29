@@ -470,13 +470,6 @@
 	if(!held_to_camera)
 		return FALSE
 
-	if(isAI(user))
-		var/mob/living/silicon/ai/ai_user = user
-		if(ai_user.control_disabled || (ai_user.stat == DEAD))
-			return FALSE
-
-		return TRUE
-
 	if(user.client?.eye != held_to_camera)
 		return FALSE
 

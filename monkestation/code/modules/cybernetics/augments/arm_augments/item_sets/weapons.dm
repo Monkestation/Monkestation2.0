@@ -77,11 +77,6 @@
 		active_item.set_light_on(FALSE)
 	return ..()
 
-/obj/item/organ/internal/cyberimp/arm/item_set/baton
-	name = "arm electrification implant"
-	desc = "An illegal combat implant that allows the user to administer disabling shocks from their arm."
-	items_to_create = list(/obj/item/borg/stun)
-
 /obj/item/organ/internal/cyberimp/arm/item_set/mantis
 	name = "C.H.R.O.M.A.T.A. mantis blade implants"
 	desc = "High tech mantis blade implants, easily portable weapon, that has a high wound potential."

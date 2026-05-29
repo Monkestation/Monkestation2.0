@@ -26,8 +26,6 @@
 	var/is_ipc_mode = FALSE // monkestation edit PR #5133
 	/// The visual countdown effect
 	var/obj/effect/countdown/transformer/countdown
-	/// Who the master AI is that created this factory
-	var/mob/living/silicon/ai/master_ai
 
 /obj/machinery/transformer/Initialize(mapload)
 	. = ..()
@@ -50,14 +48,6 @@
 /obj/machinery/transformer/Destroy()
 	QDEL_NULL(countdown)
 	. = ..()
-
-// monkestation edit start PR #5133
-/obj/machinery/transformer/attack_ai_secondary(mob/user, list/modifiers)
-	. = ..()
-	is_ipc_mode = !is_ipc_mode
-	var/settings_message = is_ipc_mode ? "IPC's" : "Cyborgs"
-	to_chat(user, span_notice("Factory is now producing: [settings_message]"))
-// monkestation edit end PR #5133
 
 /obj/machinery/transformer/update_icon_state()
 	if(machine_stat & (BROKEN|NOPOWER) || cooldown == 1)
@@ -118,29 +108,8 @@
 	use_energy(active_power_usage) // Use a lot of power.
 
 	// monkestation edit start PR #5133
-	if(is_ipc_mode || HAS_MIND_TRAIT(victim, TRAIT_UNBORGABLE)) // can't escape by just being unborgable
+	if(is_ipc_mode || HAS_MIND_TRAIT(victim, TRAIT_UNBORGABLE))
 		victim.set_species(/datum/species/ipc)
-		if(master_ai && victim.get_organ_by_type(/obj/item/organ/internal/brain) && !victim?.mind.has_antag_datum(/datum/antagonist/infected_ipc))
-			var/datum/brain_trauma/special/infected_ipc/trauma = victim.gain_trauma(/datum/brain_trauma/special/infected_ipc)
-			trauma.link_and_add_antag(master_ai.mind)
+		if(victim.get_organ_by_type(/obj/item/organ/internal/brain))
 		victim.heal_damage_type(max(0, 80 - victim.getBruteLoss()), BRUTE)
-	else
-		var/mob/living/silicon/robot/new_borg = victim.Robotize()
-		new_borg.cell = new /obj/item/stock_parts/power_store/cell/upgraded/plus(new_borg, robot_cell_charge)
-
-		// So he can't jump out the gate right away.
-		new_borg.SetLockdown()
-		if(master_ai && new_borg.connected_ai != master_ai)
-			new_borg.set_connected_ai(master_ai)
-			new_borg.lawsync()
-			new_borg.lawupdate = TRUE
-			log_silicon("[key_name(new_borg)] resynced to [key_name(master_ai)]")
-		addtimer(CALLBACK(src, PROC_REF(unlock_new_robot), new_borg), 5 SECONDS)
 	// monkestation edit end PR #5133
-
-/obj/machinery/transformer/proc/unlock_new_robot(mob/living/silicon/robot/new_borg)
-	playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE)
-	sleep(3 SECONDS)
-	if(new_borg)
-		new_borg.SetLockdown(FALSE)
-		new_borg.notify_ai(AI_NOTIFICATION_NEW_BORG)

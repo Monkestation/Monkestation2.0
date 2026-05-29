@@ -228,12 +228,7 @@
 			if(prob(50))
 				new /obj/effect/temp_visual/revenant(thing.loc)
 			thing.emag_act(caster)
-	// Only works on cyborgs, not AI!
-	for(var/mob/living/silicon/robot/cyborg in victim)
-		playsound(cyborg, 'sound/machines/warning-buzzer.ogg', 50, TRUE)
-		new /obj/effect/temp_visual/revenant(cyborg.loc)
-		cyborg.spark_system.start()
-		cyborg.emp_act(EMP_HEAVY)
+
 
 /datum/action/cooldown/spell/aoe/revenant/malfunction/get_things_to_cast_on(atom/center)
 	var/static/list/target_typecache

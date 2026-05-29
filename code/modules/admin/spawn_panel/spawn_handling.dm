@@ -149,12 +149,6 @@
 			var/obj/item/created_item = created_atom
 			living_target.put_in_hands(created_item)
 
-			if(iscyborg(living_target))
-				var/mob/living/silicon/robot/target_robot = living_target
-				if(target_robot.model)
-					target_robot.model.add_module(created_item, TRUE, TRUE)
-					target_robot.activate_module(created_item)
-
 	if(pod)
 		new /obj/effect/pod_landingzone(target, pod)
 

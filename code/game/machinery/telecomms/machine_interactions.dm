@@ -237,10 +237,6 @@
 // Returns a multitool from a user depending on their mobtype.
 
 /obj/machinery/telecomms/proc/get_multitool(mob/user)
-	if(isAI(user)) //AIs have an internal multitool they use instead.
-		var/mob/living/silicon/ai/U = user
-		return U.aiMulti
-
 	var/obj/item/held_item = user.get_active_held_item()
 	if(QDELETED(held_item))
 		return

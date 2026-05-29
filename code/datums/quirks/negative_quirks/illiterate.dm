@@ -6,4 +6,4 @@
 	mob_trait = TRAIT_ILLITERATE
 	medical_record_text = "Patient is not literate."
 	hardcore_value = 8
-	mail_goodies = list(/obj/item/pai_card) // can read things for you
+	mail_goodies = list()

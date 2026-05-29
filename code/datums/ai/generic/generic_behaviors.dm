@@ -155,31 +155,11 @@
 	try_to_give_item(controller, living_target, held_item, actually_give = TRUE)
 
 /datum/ai_behavior/give/proc/try_to_give_item(datum/ai_controller/controller, mob/living/target, obj/item/held_item, actually_give)
-	if(QDELETED(held_item) || QDELETED(target))
-		finish_action(controller, FALSE)
-		return FALSE
 
-	var/has_left_pocket = target.can_equip(held_item, ITEM_SLOT_LPOCKET)
-	var/has_right_pocket = target.can_equip(held_item, ITEM_SLOT_RPOCKET)
-	var/has_valid_hand
 
-	for(var/hand_index in target.get_empty_held_indexes())
-		if(target.can_put_in_hand(held_item, hand_index))
-			has_valid_hand = TRUE
-			break
 
-	if(!has_left_pocket && !has_right_pocket && !has_valid_hand)
-		finish_action(controller, FALSE)
-		return FALSE
 
-	if(!actually_give)
-		return TRUE
 
-	if(!has_valid_hand || prob(50))
-		target.equip_to_slot_if_possible(held_item, (!has_left_pocket ? ITEM_SLOT_RPOCKET : (prob(50) ? ITEM_SLOT_LPOCKET : ITEM_SLOT_RPOCKET)))
-	else
-		target.put_in_hands(held_item)
-	finish_action(controller, TRUE)
 
 
 /datum/ai_behavior/consume
@@ -257,10 +237,6 @@
 
 /// A proc representing when the mob is pushed to actually attack the target. Again, subtypes can be used to represent different attacks from different animals, or it can be some other generic behavior
 /datum/ai_behavior/attack/proc/attack(datum/ai_controller/controller, mob/living/living_target)
-	var/mob/living/living_pawn = controller.pawn
-	if(!istype(living_pawn))
-		return
-	living_pawn.ClickOn(living_target, list())
 
 /// This behavior involves attacking a target.
 /datum/ai_behavior/follow

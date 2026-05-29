@@ -277,61 +277,6 @@
 	log_dynamic("[key_name(M)] was selected by the [name] ruleset and has been made into a midround traitor.")
 	return TRUE
 
-/// Midround Malf AI Ruleset (From Living)
-/datum/dynamic_ruleset/midround/malf
-	name = "Malfunctioning AI"
-	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
-	antag_datum = /datum/antagonist/malf_ai
-	antag_flag = ROLE_MALF_MIDROUND
-	antag_flag_override = ROLE_MALF
-	enemy_roles = list(
-		JOB_CHEMIST,
-		JOB_CHIEF_ENGINEER,
-		JOB_HEAD_OF_SECURITY,
-		JOB_RESEARCH_DIRECTOR,
-		JOB_SCIENTIST,
-		JOB_SECURITY_OFFICER,
-		JOB_WARDEN,
-	)
-	exclusive_roles = list(JOB_AI)
-	required_enemies = list(4,4,4,4,4,4,2,2,2,0)
-	required_candidates = 1
-	minimum_players = 25
-	weight = 2
-	cost = 10
-	required_type = /mob/living/silicon/ai
-	blocking_rules = list(/datum/dynamic_ruleset/roundstart/malf_ai)
-
-/datum/dynamic_ruleset/midround/malf/trim_candidates()
-	..()
-	candidates = living_players
-	for(var/mob/living/player in candidates)
-		if(!isAI(player))
-			candidates -= player
-			continue
-
-		if(is_centcom_level(player.z))
-			candidates -= player
-			continue
-
-		if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
-			candidates -= player
-
-/datum/dynamic_ruleset/midround/malf/execute()
-	if(!candidates || !candidates.len)
-		return FALSE
-	var/mob/living/silicon/ai/new_malf_ai = pick_n_take(candidates)
-	assigned += new_malf_ai.mind
-	var/datum/antagonist/malf_ai/malf_antag_datum = new
-	new_malf_ai.mind.special_role = antag_flag
-	new_malf_ai.mind.add_antag_datum(malf_antag_datum)
-	if(prob(MALF_ION_PROB))
-		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", ANNOUNCER_IONSTORM)
-		if(prob(REPLACE_LAW_WITH_ION_PROB))
-			new_malf_ai.replace_random_law(generate_ion_law(), list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION), LAW_ION)
-		else
-			new_malf_ai.add_ion_law(generate_ion_law())
-	return TRUE
 
 /// Midround Wizard Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/from_ghosts/wizard

@@ -135,17 +135,7 @@
 	ui_color = "#7cc46a"
 	nation_prefixes = list("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
 
-/datum/job_department/silicon
-	department_name = DEPARTMENT_SILICON
-	department_bitflags = DEPARTMENT_BITFLAG_SILICON
-	department_head = /datum/job/ai
-	department_experience_type = EXP_TYPE_SILICON
-	display_order = 10
-	label_class = "silicon"
-	ui_color = "#5dbda0"
 
-/datum/job_department/silicon/generate_nation_name()
-	return "United Nations" //For nations ruleset specifically, because all other sources of nation creation cannot choose silicons
 
 /// Catch-all department for undefined jobs.
 /datum/job_department/undefined

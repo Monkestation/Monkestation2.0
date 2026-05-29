@@ -2135,10 +2135,6 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 
 	upgrade_forge(user)
 
-/obj/structure/reagent_forge/attack_robot(mob/living/user)
-	. = ..()
-	upgrade_forge(user)
-
 /obj/structure/reagent_forge/proc/upgrade_forge(mob/living/user, forced = FALSE)
 	var/level_to_upgrade_to
 

@@ -47,18 +47,13 @@
 /datum/team/nation/proc/generate_nation_objectives(are_we_hostile = TRUE, datum/team/nation/target_nation)
 
 	var/datum/objective/fluff
-	if(istype(department, /datum/job_department/silicon))
-		// snowflake but silicons have their own goals
-		fluff = new /datum/objective/united_nations()
-
-	else
-		dangerous_nation = are_we_hostile
-		if(dangerous_nation && target_nation)
-			var/datum/objective/destroy = new /datum/objective/destroy_nation(null, target_nation)
-			destroy.team = src
-			objectives += destroy
-			target_nation.war_declared(src) //they need to possibly get an objective back
-		fluff = new /datum/objective/separatist_fluff(null, name)
+	dangerous_nation = are_we_hostile
+	if(dangerous_nation && target_nation)
+		var/datum/objective/destroy = new /datum/objective/destroy_nation(null, target_nation)
+		destroy.team = src
+		objectives += destroy
+		target_nation.war_declared(src)
+	fluff = new /datum/objective/separatist_fluff(null, name)
 
 	fluff.team = src
 	objectives += fluff
@@ -101,11 +96,6 @@
 //give ais their role as UN
 /datum/antagonist/separatist/apply_innate_effects(mob/living/mob_override)
 	. = ..()
-	var/mob/living/silicon/ai/united_nations_ai = mob_override || owner.current
-	if(isAI(united_nations_ai))
-		united_nations_ai.laws = new /datum/ai_laws/united_nations()
-		united_nations_ai.laws.associate(united_nations_ai)
-		united_nations_ai.show_laws()
 
 /datum/antagonist/separatist/on_removal()
 	remove_objectives()

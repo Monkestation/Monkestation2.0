@@ -57,11 +57,6 @@
 	description = "A language that consists of the sound of periodic gusts of spore-filled air being released."
 	language = /datum/language/mushroom
 
-/datum/opposing_force_equipment/language/drone
-	name = "Drone language"
-	description = "A heavily encoded damage control coordination stream, with special flags for hats."
-	language = /datum/language/drone
-
 /datum/opposing_force_equipment/language/beachbum
 	name = "Beachtongue language"
 	description = "An ancient language from the distant Beach Planet. People magically learn to speak it under the influence of space drugs."

@@ -244,7 +244,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		//And another
 		/obj/item/slimecross/recurring,
 		//This should be obvious
-		/obj/machinery/doomsday_device,
 		//Yet more templates
 		/obj/machinery/restaurant_portal,
 		//Template type
@@ -316,8 +315,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	ignore += typesof(/obj/effect/anomaly/grav/high)
 	//See above
 	ignore += typesof(/obj/effect/timestop)
-	//Invoke async in init, skippppp
-	ignore += typesof(/mob/living/silicon/robot/model)
+
 	//This lad also sleeps
 	ignore += typesof(/obj/item/hilbertshotel)
 	//this boi spawns turf changing stuff, and it stacks and causes pain. Let's just not

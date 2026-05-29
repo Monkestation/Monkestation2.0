@@ -17,14 +17,12 @@
 
 /obj/item/organ/internal/stomach/ethereal/on_insert(mob/living/carbon/stomach_owner)
 	. = ..()
-	RegisterSignal(stomach_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(charge))
 	RegisterSignal(stomach_owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_electrocute))
 	RegisterSignal(stomach_owner, COMSIG_LIVING_HOMEOSTASIS, PROC_REF(handle_temp))
 	RegisterSignal(stomach_owner, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(blood))
 
 /obj/item/organ/internal/stomach/ethereal/on_remove(mob/living/carbon/stomach_owner)
 	. = ..()
-	UnregisterSignal(stomach_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
 	UnregisterSignal(stomach_owner, COMSIG_LIVING_ELECTROCUTE_ACT)
 	UnregisterSignal(stomach_owner, COMSIG_LIVING_HOMEOSTASIS)
 	UnregisterSignal(stomach_owner, COMSIG_HUMAN_ON_HANDLE_BLOOD)

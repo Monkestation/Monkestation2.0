@@ -247,13 +247,6 @@
 
 /datum/antagonist/traitor/proc/forge_single_generic_objective()
 	if(prob(MAROON_PROB))
-		var/list/active_ais = active_ais()
-		if(active_ais.len && prob(DESTROY_AI_PROB(GLOB.joined_player_list.len)))
-			var/datum/objective/destroy/destroy_objective = new()
-			destroy_objective.owner = owner
-			destroy_objective.find_target()
-			return destroy_objective
-
 		if(prob(KILL_PROB))
 			var/datum/objective/assassinate/kill_objective = new()
 			kill_objective.owner = owner

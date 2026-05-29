@@ -49,52 +49,7 @@
 		GLOB.pre_setup_antags += M.mind
 	return TRUE
 
-//////////////////////////////////////////////
-//                                          //
-//            MALFUNCTIONING AI             //
-//                                          //
-//////////////////////////////////////////////
 
-/datum/dynamic_ruleset/roundstart/malf_ai
-	name = "Malfunctioning AI"
-	antag_flag = ROLE_MALF
-	antag_datum = /datum/antagonist/malf_ai
-	minimum_required_age = 14
-	exclusive_roles = list(JOB_AI)
-	required_candidates = 1
-	weight = 3
-	cost = 18
-	minimum_players = 25
-	requirements = list(90,80,80,70,60,40,30,20,10,10)
-	antag_cap = 1
-	flags = HIGH_IMPACT_RULESET
-
-/datum/dynamic_ruleset/roundstart/malf_ai/ready(forced)
-	var/datum/job/ai_job = SSjob.GetJobType(/datum/job/ai)
-
-	// If we're not forced, we're going to make sure we can actually have an AI in this shift,
-	if(!forced && min(ai_job.total_positions - ai_job.current_positions, ai_job.spawn_positions) <= 0)
-		log_dynamic("FAIL: [src] could not run, because there is nobody who wants to be an AI")
-		return FALSE
-
-	return ..()
-
-/datum/dynamic_ruleset/roundstart/malf_ai/pre_execute(population)
-	. = ..()
-
-	var/datum/job/ai_job = SSjob.GetJobType(/datum/job/ai)
-	// Maybe a bit too pedantic, but there should never be more malf AIs than there are available positions, spawn positions or antag cap allocations.
-	var/num_malf = min(get_antag_cap(population), min(ai_job.total_positions - ai_job.current_positions, ai_job.spawn_positions))
-	for (var/i in 1 to num_malf)
-		if(candidates.len <= 0)
-			break
-		var/mob/new_malf = pick_n_take(candidates)
-		assigned += new_malf.mind
-		new_malf.mind.special_role = ROLE_MALF
-		GLOB.pre_setup_antags += new_malf.mind
-		// We need an AI for the malf roundstart ruleset to execute. This means that players who get selected as malf AI get priority, because antag selection comes before role selection.
-		LAZYADDASSOC(SSjob.dynamic_forced_occupations, new_malf, "AI")
-	return TRUE
 
 //////////////////////////////////////////
 //                                      //
@@ -716,8 +671,7 @@
 	. = ..()
 	//notably assistant is not in this list to prevent the round turning into BARBARISM instantly, and silicon is in this list for UN
 	var/list/department_types = list(
-		/datum/job_department/silicon, //united nations
-		/datum/job_department/cargo,
+/datum/job_department/cargo,
 		/datum/job_department/engineering,
 		/datum/job_department/medical,
 		/datum/job_department/science,
@@ -728,7 +682,7 @@
 	for(var/department_type in department_types)
 		create_separatist_nation(department_type, announcement = FALSE, dangerous = FALSE, message_admins = FALSE)
 
-	GLOB.round_default_lawset = /datum/ai_laws/united_nations
+
 
 //////////////////////////////////////////////
 //                                          //

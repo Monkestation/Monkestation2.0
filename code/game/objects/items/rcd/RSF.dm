@@ -157,23 +157,13 @@ RSF
 
 ///A helper proc. checks to see if we can afford the amount of charge that is passed, and if we can docs the charge from our base, and returns TRUE. If we can't we return FALSE
 /obj/item/rsf/proc/use_matter(charge, mob/user)
-	if(iscyborg(user))
-		var/mob/living/silicon/robot/R = user
-		var/end_charge = R.cell.charge - charge
-		if(end_charge < 0)
-			to_chat(user, span_warning("You do not have enough power to use [src]."))
-			icon_state = spent_icon_state
-			return FALSE
-		R.cell.charge = end_charge
-		return TRUE
-	else
-		if(matter - 1 < 0)
-			to_chat(user, span_warning("\The [src] doesn't have enough [discriptor] left."))
-			icon_state = spent_icon_state
-			return FALSE
-		matter--
-		to_chat(user, span_notice("\The [src] now holds [matter]/[max_matter] [discriptor]."))
-		return TRUE
+	if(matter - 1 < 0)
+		to_chat(user, span_warning("\The [src] doesn't have enough [discriptor] left."))
+		icon_state = spent_icon_state
+		return FALSE
+	matter--
+	to_chat(user, span_notice("\The [src] now holds [matter]/[max_matter] [discriptor]."))
+	return TRUE
 
 ///Helper proc that iterates through all the things we are allowed to spawn on, and sees if the passed atom is one of them
 /obj/item/rsf/proc/is_allowed(atom/to_check)
@@ -203,10 +193,7 @@ RSF
 	return TRUE
 
 /obj/item/rsf/cookiesynth/attack_self(mob/user)
-	var/mob/living/silicon/robot/P = null
-	if(iscyborg(user))
-		P = user
-	if(((obj_flags & EMAGGED) || (P?.emagged)) && !toxin)
+	if((obj_flags & EMAGGED) && !toxin)
 		toxin = TRUE
 		to_dispense = /obj/item/food/cookie/sleepy
 		to_chat(user, span_alert("Cookie Synthesizer hacked."))

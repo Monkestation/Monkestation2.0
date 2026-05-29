@@ -74,11 +74,6 @@ GLOBAL_LIST_INIT(store_pockets, generate_store_items(/datum/store_item/pocket))
 	item_path = /obj/item/lighter/skull
 	item_cost = 2500
 
-/datum/store_item/pocket/paicard
-	name = "Personal AI Device"
-	item_path = /obj/item/pai_card
-	item_cost = 7500
-
 /datum/store_item/pocket/cigarettes
 	name = "Cigarette Pack"
 	item_path = /obj/item/storage/fancy/cigarettes

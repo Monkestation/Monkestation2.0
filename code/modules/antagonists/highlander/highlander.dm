@@ -90,15 +90,3 @@
 /datum/antagonist/highlander/robot/greet()
 	to_chat(owner, "<span class='boldannounce'>Your integrated claymore cries out for blood. Claim the lives of others, and your own will be restored!\n\
 	Activate it in your hand, and it will lead to the nearest target. Attack the nuclear authentication disk with it, and you will store it.</span>")
-
-/datum/antagonist/highlander/robot/give_equipment()
-	var/mob/living/silicon/robot/robotlander = owner.current
-	if(!istype(robotlander))
-		return ..()
-	robotlander.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
-	robotlander.set_connected_ai() //DISCONNECT FROM AI
-	robotlander.laws.clear_inherent_laws()
-	robotlander.laws.set_zeroth_law("THERE CAN BE ONLY ONE")
-	robotlander.laws.show_laws(robotlander)
-	robotlander.model.transform_to(/obj/item/robot_model/syndicate/kiltborg)
-	sword = locate(/obj/item/claymore/highlander/robot) in robotlander.model.basic_modules

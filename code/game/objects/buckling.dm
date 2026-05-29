@@ -40,20 +40,6 @@
 	carried_mob.forceMove(get_turf(src))
 	return mouse_buckle_handling(carried_mob, user)
 
-//literally just the above extension of attack_hand(), but for silicons instead (with an adjacency check, since attack_robot() being called doesn't mean that you're adjacent to something)
-/atom/movable/attack_robot(mob/living/user)
-	. = ..()
-	if(.)
-		return
-	if(Adjacent(user) && can_buckle && has_buckled_mobs())
-		if(length(buckled_mobs) > 1)
-			var/mob/living/unbuckled = tgui_input_list(user, "Who do you wish to unbuckle?", "Unbuckle", sort_names(buckled_mobs))
-			if(isnull(unbuckled))
-				return
-			return user_unbuckle_mob(unbuckled,user)
-		else
-			return user_unbuckle_mob(buckled_mobs[1], user)
-
 /atom/movable/mouse_drop_receive(atom/dropped, mob/user, params)
 	return mouse_buckle_handling(dropped, user)
 

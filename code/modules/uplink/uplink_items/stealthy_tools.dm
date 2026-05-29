@@ -5,16 +5,6 @@
 /datum/uplink_item/stealthy_tools
 	category = /datum/uplink_category/stealthy_tools
 
-/datum/uplink_item/stealthy_tools/ai_detector
-	name = "Artificial Intelligence Detector"
-	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it, and can be \
-			activated to display their exact viewing location. Knowing when \
-			an artificial intelligence is watching you is useful for knowing when to maintain cover, and finding nearby \
-			blind spots can help you identify escape routes."
-	item = /obj/item/multitool/ai_detect
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
-	cost = 1
-
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon Projector"
 	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't \

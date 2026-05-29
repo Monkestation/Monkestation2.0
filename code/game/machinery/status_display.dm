@@ -507,29 +507,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 
-/obj/machinery/status_display/ai/attack_ai(mob/living/silicon/ai/user)
-	if(!isAI(user))
-		return
-	var/list/choices = list()
-	for(var/emotion_const in GLOB.ai_status_display_emotes)
-		var/icon_state = GLOB.ai_status_display_emotes[emotion_const]
-		choices[emotion_const] = image(icon = 'icons/obj/machines/status_display.dmi', icon_state = icon_state)
-
-	var/emotion_result = show_radial_menu(user, src, choices, tooltips = TRUE)
-	for(var/_emote in typesof(/datum/emote/ai/emotion_display))
-		var/datum/emote/ai/emotion_display/emote = _emote
-		if(initial(emote.emotion) == emotion_result)
-			user.emote(initial(emote.key))
-			break
-
-/obj/machinery/status_display/ai/process()
-	if(machine_stat & NOPOWER)
-		update_appearance()
-		return PROCESS_KILL
-
-	set_picture(GLOB.ai_status_display_emotes[emotion])
-	return PROCESS_KILL
-
 /obj/item/circuit_component/status_display
 	display_name = "Status Display"
 	desc = "Output text and pictures to a status display."

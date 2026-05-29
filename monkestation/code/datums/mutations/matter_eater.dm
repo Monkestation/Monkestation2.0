@@ -411,9 +411,6 @@
 	hungry_boy.visible_message(span_danger("[hungry_boy] eats [src]."))
 	var/list/mobs_to_vomit = list()
 	for(var/mob/living/occupant as anything in occupants)
-		if(isAI(occupant))
-			continue
-
 		mobs_to_vomit += occupant
 
 	if(length(mobs_to_vomit))
@@ -438,23 +435,6 @@
 	death()
 	hungry_boy.visible_message(span_danger("[hungry_boy] eats [src]."))
 	return EAT_SUCCESS
-
-/mob/living/silicon/ai/get_eaten(mob/living/carbon/human/hungry_boy, datum/action/cooldown/spell/pointed/consumption/ability, eat_time = health + 1)
-	if(is_anchored)
-		eat_time *= 2
-	return ..()
-
-/mob/living/silicon/robot/get_eaten(mob/living/carbon/human/hungry_boy, datum/action/cooldown/spell/pointed/consumption/ability, eat_time = health + 1)
-	eat_time *= 2
-	. = ..()
-	if(. != EAT_SUCCESS || isnull(mmi) || isnull(mind) || isnull(mmi.brainmob)) // No, we can't use dump_into_mmi()
-		return
-
-	if(mmi.brainmob.stat == DEAD)
-		mmi.brainmob.set_stat(CONSCIOUS)
-	mind.transfer_to(mmi.brainmob)
-	mmi.update_appearance()
-	return mmi
 
 /mob/living/carbon/human/get_eaten(mob/living/carbon/human/hungry_boy, datum/action/cooldown/spell/pointed/consumption/ability, eat_time = health + 1)
 	var/obj/item/bodypart/limb = get_bodypart(hungry_boy.zone_selected)

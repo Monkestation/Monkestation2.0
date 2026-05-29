@@ -289,13 +289,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 	emped = 0 //Resets the consecutive EMP count
 	addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 10 SECONDS)
 
-/obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
-	if (!istype(user))
-		return
-	if (!can_use())
-		return
-	user.switchCamera(src)
-
 /obj/machinery/camera/proc/setViewRange(num = 7)
 	src.view_range = num
 	camnet.updateVisibility(src, 0)
@@ -466,10 +459,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 	return see
 
 /obj/machinery/camera/proc/Togglelight(on=0)
-	for(var/mob/living/silicon/ai/A in GLOB.ai_list)
-		for(var/obj/machinery/camera/cam in A.lit_cameras)
-			if(cam == src)
-				return
 	if(on)
 		set_light(AI_CAMERA_LUMINOSITY)
 	else

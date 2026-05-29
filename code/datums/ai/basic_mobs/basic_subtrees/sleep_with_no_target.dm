@@ -29,4 +29,3 @@
 
 /// Disables AI, override to do additional things or something else
 /datum/ai_behavior/sleep_after_targetless_time/proc/enter_sleep(datum/ai_controller/controller)
-	controller.set_ai_status(AI_STATUS_OFF)

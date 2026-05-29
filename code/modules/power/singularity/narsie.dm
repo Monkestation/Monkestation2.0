@@ -125,7 +125,7 @@
 	if(is_banned_from(user.ckey, list(ROLE_CULTIST)))
 		return
 
-	var/mob/living/basic/drone/created_drone = new /mob/living/basic/construct/harvester(get_turf(src))
+	var/mob/living/basic/construct/harvester/created_drone = new /mob/living/basic/construct/harvester(get_turf(src))
 	created_drone.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 	if(user.mind)
 		user.mind.transfer_to(created_drone, TRUE)

@@ -1,3 +1,11 @@
+/// Defaults to attack_hand. Override it when you don't want drones to do same stuff as humans.
+/atom/proc/attack_drone(mob/living/user, list/modifiers)
+	attack_hand(user, modifiers)
+
+/// Defaults to attack_hand_secondary.
+/atom/proc/attack_drone_secondary(mob/living/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
+
 /// Checks for RIGHT_CLICK in modifiers and runs resolve_right_click_attack if so. Returns TRUE if normal chain blocked.
 /mob/living/proc/right_click_attack_chain(atom/target)
 	if (!(istate & ISTATE_SECONDARY))
@@ -246,54 +254,11 @@
 
 
 /*
-	Drones
-*/
-
-/mob/living/basic/drone/resolve_unarmed_attack(atom/attack_target, proximity_flag, list/modifiers)
-	attack_target.attack_drone(src, modifiers)
-
-/mob/living/basic/drone/resolve_right_click_attack(atom/target, list/modifiers)
-	return target.attack_drone_secondary(src, modifiers)
-
-/// Defaults to attack_hand. Override it when you don't want drones to do same stuff as humans.
-/atom/proc/attack_drone(mob/living/basic/drone/user, list/modifiers)
-	attack_hand(user, modifiers)
-
-/**
- * Called when a maintenance drone right clicks an atom.
- * Defaults to attack_hand_secondary.
- * When overriding it, remember that it ought to return a SECONDARY_ATTACK_* value.
- */
-/atom/proc/attack_drone_secondary(mob/living/basic/drone/user, list/modifiers)
-	return attack_hand_secondary(user, modifiers)
-
-/*
 	Brain
 */
 
 /mob/living/brain/UnarmedAttack(atom/attack_target, proximity_flag)//Stops runtimes due to attack_animal being the default
 	return
-
-
-/*
-	pAI
-*/
-
-/mob/living/silicon/pai/resolve_unarmed_attack(atom/attack_target, list/modifiers)
-	attack_target.attack_pai(src, modifiers)
-
-/mob/living/silicon/pai/resolve_right_click_attack(atom/target, list/modifiers)
-	return target.attack_pai_secondary(src, modifiers)
-
-/atom/proc/attack_pai(mob/user, list/modifiers)
-	return
-
-/**
- * Called when a pAI right clicks an atom.
- * Returns a SECONDARY_ATTACK_* value.
- */
-/atom/proc/attack_pai_secondary(mob/user, list/modifiers)
-	return SECONDARY_ATTACK_CALL_NORMAL
 
 /*
 	Simple animals

@@ -53,11 +53,7 @@
 	if(radio_freq)
 		var/atom/movable/virtualspeaker/V = speaker
 
-		if(isAI(V.source))
-			var/mob/living/silicon/ai/S = V.source
-			to_follow = S.eyeobj
-		else
-			to_follow = V.source
+		to_follow = V.source
 	var/link = FOLLOW_LINK(src, to_follow)
 	// Create map text prior to modifying message for goonchat
 	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))

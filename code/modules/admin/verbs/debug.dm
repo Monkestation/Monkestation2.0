@@ -18,7 +18,6 @@ ADMIN_VERB(cmd_admin_robotize, R_FUN, FALSE, "Make Cyborg", ADMIN_VERB_NO_DESCRI
 		to_chat(user, span_boldnotice("Wait until the game starts"))
 		return
 	log_admin("[key_name(user)] has robotized [target.key].")
-	INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, Robotize))
 
 /client/proc/poll_type_to_del(search_string)
 	var/list/types = get_fancy_list_of_atom_types()

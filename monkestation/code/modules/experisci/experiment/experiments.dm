@@ -14,12 +14,6 @@
 	possible_types = list(/obj/item/grenade/chem_grenade/large/bioterrorfoam, /obj/item/grenade/chem_grenade/large/tuberculosis,) //Any special grenade casings.
 	traits = EXPERIMENT_TRAIT_DESTRUCTIVE
 
-/datum/experiment/scanning/random/shell_scan
-	name = "Artifical Shell Analysis"
-	description = "Our AI's B.O.R.I.S. shells have been suffering from ionic interference. Scan an AI shell for data, and we'll share some of our findings with your station."
-	total_requirement = 1
-	possible_types = list(/mob/living/silicon/robot/shell)
-
 /datum/experiment/scanning/random/bot_scan
 	name = "Bot Scan Analysis"
 	description = "Central is curious at the potential of replacing the workforce with robots. Create a few and begin the replacement of your coworkers."

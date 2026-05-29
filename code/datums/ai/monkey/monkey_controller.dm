@@ -97,102 +97,35 @@ have ways of interacting with a specific mob and control it.
 	return ..()
 
 /datum/ai_controller/monkey/proc/set_trip_mode(mode = TRUE)
-	var/mob/living/carbon/regressed_monkey = pawn
-	var/brain = regressed_monkey.get_organ_slot(ORGAN_SLOT_BRAIN)
-	if(istype(brain, /obj/item/organ/internal/brain/primate)) // In case we are a monkey AI in a human brain by who was previously controlled by a client but it now not by some marvel
-		var/obj/item/organ/internal/brain/primate/monkeybrain = brain
-		monkeybrain.tripping = mode
 
 ///re-used behavior pattern by monkeys for finding a weapon
 /datum/ai_controller/monkey/proc/TryFindWeapon()
-	var/mob/living/living_pawn = pawn
 
-	if(!(locate(/obj/item) in living_pawn.held_items))
-		set_blackboard_key(BB_MONKEY_BEST_FORCE_FOUND, 0)
 
-	if(blackboard[BB_MONKEY_GUN_NEURONS_ACTIVATED] && (locate(/obj/item/gun) in living_pawn.held_items))
 		// We have a gun, what could we possibly want?
-		return FALSE
 
-	var/obj/item/weapon
-	var/list/nearby_items = list()
-	for(var/obj/item/item in oview(2, living_pawn))
-		nearby_items += item
 
-	for(var/obj/item/item in living_pawn.held_items) // If we've got some garbage in out hands thats going to stop us from effectivly attacking, we should get rid of it.
-		if(item.force < 2)
-			living_pawn.dropItemToGround(item)
 
-	weapon = GetBestWeapon(src, nearby_items, living_pawn.held_items)
 
-	var/pickpocket = FALSE
-	for(var/mob/living/carbon/human/human in oview(5, living_pawn))
-		var/obj/item/held_weapon = GetBestWeapon(src, human.held_items + weapon, living_pawn.held_items)
-		if(held_weapon == weapon) // It's just the same one, not a held one
-			continue
-		pickpocket = TRUE
-		weapon = held_weapon
 
-	if(!weapon || (weapon in living_pawn.held_items))
-		return FALSE
 
-	if(weapon.force < 2) // our bite does 2 damage on avarage, no point in settling for anything less
-		return FALSE
 
-	set_blackboard_key(BB_MONKEY_PICKUPTARGET, weapon)
-	set_movement_target(type, weapon)
-	if(pickpocket)
-		queue_behavior(/datum/ai_behavior/monkey_equip/pickpocket)
-	else
-		queue_behavior(/datum/ai_behavior/monkey_equip/ground)
-	return TRUE
 
 ///Reactive events to being hit
 /datum/ai_controller/monkey/proc/retaliate(mob/living/living_mob)
 	// just to be safe
-	if(QDELETED(living_mob))
-		return
 
-	add_blackboard_key_assoc(BB_MONKEY_ENEMIES, living_mob, MONKEY_HATRED_AMOUNT)
-	if(HAS_TRAIT(living_mob, TRAIT_MONKEYFRIEND))
-		REMOVE_TRAIT(living_mob, TRAIT_MONKEYFRIEND, SPECIES_TRAIT)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(monkeyfriend_check), living_mob), 60 SECONDS)
 
 /proc/monkeyfriend_check(mob/living/user)
-	var/obj/item/clothing/suit/costume/monkeysuit/S
-	var/obj/item/clothing/mask/gas/monkeymask/M
-	var/list/equipped = user.get_equipped_items(FALSE)
-	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		if(TRAIT_MONKEYFRIEND in carbon_user?.dna?.species.inherent_traits)
-			ADD_TRAIT(user, TRAIT_MONKEYFRIEND, SPECIES_TRAIT)
-	if(((M in equipped) && (S in equipped)))
-		ADD_TRAIT(user, TRAIT_MONKEYFRIEND, CLOTHING_TRAIT)
 
 /datum/ai_controller/monkey/proc/on_attacked(datum/source, mob/attacker)
-	SIGNAL_HANDLER
-	if(prob(MONKEY_RETALIATE_PROB))
-		retaliate(attacker)
 
 /datum/ai_controller/monkey/proc/on_startpulling(datum/source, atom/movable/puller, state, force)
-	SIGNAL_HANDLER
-	var/mob/living/living_pawn = pawn
-	if(!IS_DEAD_OR_INCAP(living_pawn) && prob(MONKEY_PULL_AGGRO_PROB)) // nuh uh you don't pull me!
-		retaliate(living_pawn.pulledby)
-		return TRUE
 
 /datum/ai_controller/monkey/proc/on_try_syringe(datum/source, mob/user)
-	SIGNAL_HANDLER
 	// chance of monkey retaliation
-	if(prob(MONKEY_SYRINGE_RETALIATION_PROB))
-		retaliate(user)
 
 /datum/ai_controller/monkey/proc/on_attempt_cuff(datum/source, mob/user)
-	SIGNAL_HANDLER
 	// chance of monkey retaliation
-	if(prob(MONKEY_CUFF_RETALIATION_PROB))
-		retaliate(user)
 
 /datum/ai_controller/monkey/proc/update_movespeed(mob/living/pawn)
-	SIGNAL_HANDLER
-	movement_delay = pawn.cached_multiplicative_slowdown

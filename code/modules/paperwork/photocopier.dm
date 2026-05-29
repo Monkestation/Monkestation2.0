@@ -167,20 +167,6 @@
 				to_chat(ass, span_notice("You feel a slight pressure on your ass."))
 			return TRUE
 
-		// AI printing photos from their saved images.
-		if("ai_photo")
-			if(check_busy(usr))
-				return FALSE
-			var/mob/living/silicon/ai/tempAI = usr
-			if(!length(tempAI.aicamera.stored))
-				to_chat(usr, span_boldannounce("No images saved."))
-				return
-			var/datum/picture/selection = tempAI.aicamera.selectpicture(usr)
-			var/obj/item/photo/photo = new(loc, selection) // AI prints color photos only.
-			give_pixel_offset(photo)
-			toner_cartridge.charges -= PHOTO_TONER_USE
-			return TRUE
-
 		// Switch between greyscale and color photos
 		if("color_mode")
 			if(params["mode"] in list(PHOTO_GREYSCALE, PHOTO_COLOR))
@@ -380,8 +366,6 @@
 		temp_img = icon('icons/ass/assalien.png')
 	else if(issilicon(ass))
 		temp_img = icon('icons/ass/assmachine.png')
-	else if(isdrone(ass)) //Drones are hot
-		temp_img = icon('icons/ass/assdrone.png')
 
 	var/obj/item/photo/copied_ass = new /obj/item/photo(loc)
 	var/datum/picture/toEmbed = new(name = "[ass]'s Ass", desc = "You see [ass]'s ass on the photo.", image = temp_img)

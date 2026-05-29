@@ -71,30 +71,11 @@
 	return FALSE
 
 
-/datum/saymode/binary //everything that uses .b (silicons, drones)
-	key = MODE_KEY_BINARY
-	mode = MODE_BINARY
-
-/datum/saymode/binary/handle_message(mob/living/user, message, datum/language/language)
-	if(isdrone(user))
-		var/mob/living/basic/drone/drone_user = user
-		drone_user.drone_chat(message)
-		return FALSE
-	if(user.binarycheck())
-		user.robot_talk(message)
-		return FALSE
-	return FALSE
-
-
 /datum/saymode/holopad
 	key = "h"
 	mode = MODE_HOLOPAD
 
 /datum/saymode/holopad/handle_message(mob/living/user, message, datum/language/language)
-	if(isAI(user))
-		var/mob/living/silicon/ai/AI = user
-		AI.holopad_talk(message, language)
-		return FALSE
 	return TRUE
 
 /datum/saymode/mafia

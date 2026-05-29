@@ -68,15 +68,6 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 					else
 						mob_data["job"] = "Unknown"
 					mob_data["species"] = H.dna.species.name
-				else if(issilicon(L))
-					category = "silicons"
-					if(isAI(L))
-						mob_data["module"] = "AI"
-					else if(ispAI(L))
-						mob_data["module"] = "pAI"
-					else if(iscyborg(L))
-						var/mob/living/silicon/robot/R = L
-						mob_data["module"] = (R.model ? R.model.name : "Null Model")
 				else
 					category = "others"
 					mob_data["typepath"] = M.type
@@ -395,8 +386,6 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	if(nanotrasen_rep_status)
 		parts += nanotrasen_rep_report()
 
-	//AI laws
-	parts += law_report()
 
 	CHECK_TICK
 
@@ -565,46 +554,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	parts += "</div>"
 	return parts
 
-/datum/controller/subsystem/ticker/proc/law_report()
-	var/list/parts = list()
-	var/borg_spacer = FALSE //inserts an extra linebreak to separate AIs from independent borgs, and then multiple independent borgs.
-	//Silicon laws report
-	for (var/i in GLOB.ai_list)
-		var/mob/living/silicon/ai/aiPlayer = i
-		var/datum/mind/aiMind = aiPlayer.deployed_shell?.mind || aiPlayer.mind
-		if(aiMind)
-			var/show_key = GLOB.roundend_hidden_ckeys[ckey(aiMind.key)]
-			parts += "<b>[aiPlayer.name]</b>[show_key ? " (Played by: <b>[aiMind.key]</b>)" : null]'s laws [aiPlayer.stat != DEAD ? "at the end of the round" : "when it was [span_redtext("deactivated")]"] were:"
-			parts += aiPlayer.laws.get_law_list(include_zeroth=TRUE)
 
-		parts += "<b>Total law changes: [aiPlayer.law_change_counter]</b>"
-
-		if (aiPlayer.connected_robots.len)
-			var/borg_num = aiPlayer.connected_robots.len
-			parts += "<br><b>[aiPlayer.real_name]</b>'s minions were:"
-			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
-				borg_num--
-				if(robo.mind)
-					var/show_key = GLOB.roundend_hidden_ckeys[ckey(robo.mind.key)]
-					parts += "<b>[robo.name]</b>[show_key ? " (Played by: <b>[robo.mind.key]</b>)" : null][robo.stat == DEAD ? " [span_redtext("(Deactivated)")]" : ""][borg_num ?", ":""]"
-		if(!borg_spacer)
-			borg_spacer = TRUE
-
-	for (var/mob/living/silicon/robot/robo in GLOB.silicon_mobs)
-		if (!robo.connected_ai && robo.mind)
-			var/show_key = GLOB.roundend_hidden_ckeys[ckey(robo.mind.key)]
-			parts += "[borg_spacer?"<br>":""]<b>[robo.name]</b>[show_key ? " (Played by: <b>[robo.mind.key]</b>)" : null] [(robo.stat != DEAD)? "[span_greentext("survived")] as an AI-less borg!" : "was [span_redtext("unable to survive")] the rigors of being a cyborg without an AI."] Its laws were:"
-
-			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
-				parts += robo.laws.get_law_list(include_zeroth=TRUE)
-
-			if(!borg_spacer)
-				borg_spacer = TRUE
-
-	if(parts.len)
-		return "<div class='panel stationborder'>[parts.Join("<br>")]</div>"
-	else
-		return ""
 
 /datum/controller/subsystem/ticker/proc/goal_report()
 	var/list/parts = list()

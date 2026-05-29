@@ -91,12 +91,12 @@
 		if(damage_done > 0)
 			L.amount_grown = min(L.amount_grown + damage_done, L.max_grown)
 
-/mob/living/simple_animal/attack_drone(mob/living/basic/drone/user)
+/mob/living/simple_animal/attack_drone(mob/living/user)
 	if(user.istate & ISTATE_HARM) //No kicking dogs even as a rogue drone. Use a weapon.
 		return
 	return ..()
 
-/mob/living/simple_animal/attack_drone_secondary(mob/living/basic/drone/user)
+/mob/living/simple_animal/attack_drone_secondary(mob/living/user)
 	if(user.istate & ISTATE_HARM)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()

@@ -19,7 +19,6 @@
 /obj/item/modular_computer/pda/roboticist
 	starting_programs = list(
 		/datum/computer_file/program/robocontrol,
-		/datum/computer_file/program/borg_monitor,
 	)
 
 /obj/item/modular_computer/pda/psychologist

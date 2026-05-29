@@ -32,8 +32,6 @@
 	update_static_data_for_all_viewers()
 
 /obj/item/modular_computer/ui_state(mob/user)
-	if(inserted_pai && (user == inserted_pai.pai))
-		return GLOB.contained_state
 	return ..()
 
 /obj/item/modular_computer/interact(mob/user)
@@ -85,7 +83,6 @@
 		data += active_program.ui_data(user)
 		return data
 
-	data["pai"] = inserted_pai
 	data["has_light"] = has_light
 	data["light_on"] = light_on
 	data["comp_light_color"] = comp_light_color
@@ -103,9 +100,7 @@
 	data["removable_media"] = list()
 	if(inserted_disk)
 		data["removable_media"] += "Eject Disk"
-	var/datum/computer_file/program/ai_restorer/airestore_app = locate() in stored_files
-	if(airestore_app?.stored_card)
-		data["removable_media"] += "intelliCard"
+	// AI restorer removed - Phase 4
 
 	data["programs"] = list()
 	for(var/datum/computer_file/program/program in stored_files)
@@ -214,16 +209,6 @@
 			imprint_id()
 			UpdateDisplay()
 			playsound(src, 'sound/machines/terminal_processing.ogg', 15, TRUE)
-
-		if("PC_Pai_Interact")
-			switch(params["option"])
-				if("eject")
-					if(!ishuman(usr))
-						return
-					remove_pai(usr)
-				if("interact")
-					inserted_pai.attack_self(usr)
-			return TRUE
 
 	if(active_program)
 		return active_program.ui_act(action, params, ui, state)

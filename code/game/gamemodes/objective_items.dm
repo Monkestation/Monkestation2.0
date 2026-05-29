@@ -497,24 +497,11 @@
 /datum/objective_item/steal/supermatter/target_exists()
 	return GLOB.main_supermatter_engine != null
 
-// Doesn't need item_owner = (JOB_AI) because this handily functions as a murder objective if there isn't one
-/datum/objective_item/steal/functionalai
-	name = "a functional AI"
-	targetitem = /obj/item/aicard
-	difficulty = SPY_ITEM_IMPOSSIBLE
-	steal_hint = "An intellicard (or MODsuit) containing an active, functional AI."
-
-/datum/objective_item/steal/functionalai/New()
-	. = ..()
-	altitems += typesof(/obj/item/mod/control) // only here so we can account for AIs tucked away in a MODsuit.
 
 /datum/objective_item/steal/functionalai/check_special_completion(obj/item/potential_storage)
 	var/mob/living/silicon/ai/being
 
-	if(istype(potential_storage, /obj/item/aicard))
-		var/obj/item/aicard/card = potential_storage
-		being = card.AI // why is this one capitalized and the other one not? i wish i knew.
-	else if(istype(potential_storage, /obj/item/mod/control))
+	if(istype(potential_storage, /obj/item/mod/control))
 		var/obj/item/mod/control/suit = potential_storage
 		if(isAI(suit.ai_assistant))
 			being = suit.ai_assistant

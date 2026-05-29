@@ -63,7 +63,6 @@
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
 			new /obj/item/clothing/shoes/chameleon/noslip(src) // 2 tc
 			new /obj/item/computer_disk/syndicate/camera_app(src) // 1 tc
-			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
 			new /obj/item/storage/box/syndie_kit/mulligan(src) // 4 tc
 			new /obj/item/switchblade(src) //I'll count this as 2 tc
@@ -118,12 +117,9 @@
 			new /obj/item/implanter/storage(src) // 8 tc
 
 		if(KIT_HACKER) //L-L--LOOK AT YOU, HACKER
-			new /obj/item/ai_module/syndicate(src) // 4 tc
 			new /obj/item/card/emag(src) // 4 tc
 			new /obj/item/card/emag/doorjack(src) // 3 tc
 			new /obj/item/encryptionkey/binary(src) // 5 tc
-			new /obj/item/ai_module/toy_ai(src) // ~6 tc
-			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/computer_disk/syndicate/camera_app(src) // 1 tc
 			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
@@ -402,7 +398,6 @@
 			new /obj/item/jammer(src)
 			new /obj/item/crowbar/power/syndicate(src)
 			new /obj/item/clothing/mask/balaclava(src)
-			new /obj/item/multitool/ai_detect(src)
 
 		if(KIT_ROOKIE_RAIDER)
 			new /obj/item/gun/ballistic/automatic/pistol/sol/evil(src)

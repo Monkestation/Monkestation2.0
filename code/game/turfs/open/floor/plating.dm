@@ -96,17 +96,7 @@
 				var/obj/item/stack/tile/tile = C
 				tile.place_tile(src, user)
 			else
-				if(!iscyborg(user))
-					balloon_alert(user, "too damaged, use a welding tool!")
-				else
-					balloon_alert(user, "too damaged, use a welding or plating repair tool!")
-		else if(istype(C, /obj/item/cautery/prt)) //plating repair tool
-			if((broken || burnt) && C.use_tool(src, user, 0, volume=80))
-				to_chat(user, span_danger("You fix some dents on the broken plating."))
-				icon_state = base_icon_state
-				burnt = FALSE
-				broken = FALSE
-				update_appearance()
+				balloon_alert(user, "too damaged, use a welding tool!")
 		else if(istype(C, /obj/item/stack/sheet/plasteel) && upgradable) //Reinforcement!
 			if(!broken && !burnt)
 				var/obj/item/stack/sheet/sheets = C

@@ -571,32 +571,6 @@
 	restricted = TRUE
 	refundable = TRUE
 
-/datum/uplink_item/support/reinforcement/assault_borg
-	name = "Syndicate Assault Cyborg"
-	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel. \
-			Comes equipped with a self-resupplying LMG, a grenade launcher, energy sword, emag, pinpointer, flash and crowbar."
-	item = /obj/item/antag_spawner/nuke_ops/borg_tele/assault
-	cost = 65
-	restricted = TRUE
-
-/datum/uplink_item/support/reinforcement/medical_borg
-	name = "Syndicate Medical Cyborg"
-	desc = "A combat medical cyborg. Has limited offensive potential, but makes more than up for it with its support capabilities. \
-			It comes equipped with a nanite hypospray, a medical beamgun, combat defibrillator, full surgical kit including an energy saw, an emag, pinpointer and flash. \
-			Thanks to its organ storage bag, it can perform surgery as well as any humanoid."
-	item = /obj/item/antag_spawner/nuke_ops/borg_tele/medical
-	cost = 35
-	restricted = TRUE
-
-/datum/uplink_item/support/reinforcement/saboteur_borg
-	name = "Syndicate Saboteur Cyborg"
-	desc = "A streamlined engineering cyborg, equipped with covert modules. Also incapable of leaving the welder in the shuttle. \
-			Aside from regular Engineering equipment, it comes with a special destination tagger that lets it traverse disposals networks. \
-			Its chameleon projector lets it disguise itself as a Nanotrasen cyborg, on top it has thermal vision and a pinpointer."
-	item = /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
-	cost = 35
-	restricted = TRUE
-
 /datum/uplink_item/support/gygax
 	name = "Dark Gygax Exosuit"
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent \
