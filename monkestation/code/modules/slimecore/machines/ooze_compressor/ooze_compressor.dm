@@ -196,6 +196,30 @@
 	. = ..()
 	if(. || !can_interact(user))
 		return
+	return attack_try_change_recipe(user)
+
+/obj/machinery/plumbing/ooze_compressor/attack_hand_secondary(mob/living/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || !can_interact(user))
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	attack_secondary_try_change_recipe()
+
+/obj/machinery/plumbing/ooze_compressor/attack_robot(mob/user, modifiers)
+	. = ..()
+	if(. || !can_interact(user))
+		return
+	return attack_try_change_recipe(user)
+
+/obj/machinery/plumbing/ooze_compressor/attack_robot_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || !can_interact(user))
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	attack_secondary_try_change_recipe()
+
+/// Handles the interaction for both attack_hand and attack_robot.
+/obj/machinery/plumbing/ooze_compressor/proc/attack_try_change_recipe(mob/living/user)
 	if(!anchored)
 		balloon_alert(user, "unanchored!")
 		return TRUE
@@ -205,12 +229,10 @@
 	if(change_recipe(user))
 		reagents.clear_reagents()
 		return TRUE
+	return FALSE
 
-/obj/machinery/plumbing/ooze_compressor/attack_hand_secondary(mob/living/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || !can_interact(user))
-		return
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/// Handles the interaction for both attack_hand_secondary and attack_robot_secondary.
+/obj/machinery/plumbing/ooze_compressor/proc/attack_secondary_try_change_recipe(mob/living/user)
 	if(!anchored)
 		balloon_alert(user, "unanchored!")
 		return
@@ -221,7 +243,8 @@
 			reagents.clear_reagents()
 		update_power_usage()
 		balloon_alert_to_viewers("cancelled recipe")
-	else if(change_recipe(user, TRUE))
+		return
+	if(change_recipe(user, TRUE))
 		reagents.clear_reagents()
 
 /obj/machinery/plumbing/ooze_compressor/click_ctrl(mob/user)
