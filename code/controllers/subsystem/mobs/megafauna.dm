@@ -3,3 +3,6 @@ MOBS_SUBSYSTEM_DEF(megafauna)
 	name = "Megafauna Mobs"
 	priority = FIRE_PRIORITY_MEGAFAUNA_MOBS
 	flags = SS_KEEP_TIMING | SS_NO_INIT
+
+/datum/controller/subsystem/mobs/megafauna/fire(resumed)
+	return

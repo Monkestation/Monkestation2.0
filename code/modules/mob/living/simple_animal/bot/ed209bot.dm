@@ -35,24 +35,7 @@
 	return TRUE
 
 /mob/living/simple_animal/bot/secbot/ed209/handle_automated_action()
-	var/judgement_criteria = judgement_criteria()
-	var/list/targets = list()
-	for(var/mob/living/carbon/nearby_carbon in view(7, src)) //Let's find us a target
-		var/threatlevel = 0
-		if(nearby_carbon.incapacitated())
-			continue
-		threatlevel = nearby_carbon.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, PROC_REF(check_for_weapons)))
-		if(threatlevel < 4 )
-			continue
-		var/dst = get_dist(src, nearby_carbon)
-		if(dst <= 1 || dst > 7)
-			continue
-		targets += nearby_carbon
-	if(targets.len > 0)
-		var/mob/living/carbon/all_targets = pick(targets)
-		if(all_targets.stat != DEAD && !all_targets.handcuffed) //we don't shoot people who are dead, cuffed or lying down.
-			shoot_at(all_targets)
-	..()
+	return
 
 /mob/living/simple_animal/bot/secbot/ed209/proc/set_weapon()  //used to update the projectile type and firing sound
 	shoot_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'

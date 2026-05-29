@@ -3796,9 +3796,6 @@
 	pixel_x = 30;
 	req_access = list("minisat")
 	},
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -7662,7 +7659,6 @@
 /area/station/cargo/sorting)
 "cON" = (
 /obj/structure/table,
-/obj/item/pai_card,
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "cOQ" = (
@@ -13361,9 +13357,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "eSd" = (
-/obj/machinery/computer/robotics{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -18020,8 +18013,6 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "gAU" = (
 /obj/structure/table,
-/obj/item/aicard,
-/obj/item/ai_module/reset,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "gBe" = (
@@ -23250,7 +23241,6 @@
 /area/station/maintenance/disposal/incinerator)
 "inH" = (
 /obj/structure/table/wood,
-/obj/item/pai_card,
 /turf/open/floor/wood,
 /area/station/service/library)
 "inL" = (
@@ -23524,12 +23514,6 @@
 	},
 /turf/open/space,
 /area/space)
-"ise" = (
-/obj/effect/turf_decal/bot,
-/obj/item/robot_suit,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/science/robotics/lab)
 "isn" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -26928,16 +26912,6 @@
 	dir = 1
 	},
 /area/station/service/chapel)
-"jvO" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable/layer3,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "jvQ" = (
 /obj/machinery/door/window/left/directional/north{
 	name = "Petting Zoo"
@@ -34948,9 +34922,6 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "mjH" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -39407,7 +39378,6 @@
 	pixel_x = -2;
 	pixel_y = 6
 	},
-/obj/item/pai_card,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
@@ -40029,15 +39999,6 @@
 /obj/effect/turf_decal/trimline/dark_red/filled/line,
 /turf/open/floor/iron,
 /area/station/security/warden)
-"nTJ" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/aisat/exterior)
 "nTK" = (
 /obj/machinery/newscaster/directional/south,
 /obj/machinery/light/directional/south,
@@ -45961,9 +45922,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "pWR" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -49237,7 +49195,6 @@
 /obj/item/storage/briefcase/secure,
 /obj/item/clothing/mask/cigarette/cigar,
 /obj/item/radio/off,
-/obj/item/aicard,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "rdT" = (
@@ -54933,9 +54890,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/item/aicard,
-/obj/item/pai_card,
-/obj/item/circuitboard/aicore,
 /obj/machinery/keycard_auth/directional/north{
 	pixel_x = -5
 	},
@@ -56929,10 +56883,6 @@
 /obj/structure/sign/picture_frame/showroom/four{
 	pixel_x = 8;
 	pixel_y = 32
-	},
-/obj/item/pai_card{
-	desc = "A real Nanotrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
-	name = "\improper Nanotrasen-brand personal AI device exhibit"
 	},
 /turf/open/floor/wood,
 /area/station/command/corporate_showroom)
@@ -59510,7 +59460,6 @@
 /area/station/service/chapel/office)
 "uGt" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/ai_all,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "uGx" = (
@@ -59664,10 +59613,6 @@
 	},
 /obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/cell_charger,
-/obj/item/borg/upgrade/rename{
-	pixel_x = 3;
-	pixel_y = 18
-	},
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "uJm" = (
@@ -98286,7 +98231,7 @@ kFS
 wmg
 ctn
 reL
-ise
+lhT
 wqh
 ekB
 aJa
@@ -124459,7 +124404,7 @@ aaa
 bhc
 mgj
 piw
-jvO
+tSP
 wNm
 oKA
 art
@@ -126772,7 +126717,7 @@ aaa
 aaa
 aaa
 aMq
-nTJ
+onr
 bgn
 aaa
 aaa

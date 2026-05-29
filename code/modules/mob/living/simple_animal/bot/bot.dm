@@ -344,35 +344,7 @@
 	return //we use a different hud
 
 /mob/living/simple_animal/bot/handle_automated_action() //Master process which handles code common across most bots.
-	diag_hud_set_botmode()
-
-	if (ignorelistcleanuptimer % 300 == 0) // Every 300 actions, clean up the ignore list from old junk
-		for(var/ref in ignore_list)
-			var/atom/referredatom = locate(ref)
-			if (!referredatom || !istype(referredatom) || QDELETED(referredatom))
-				ignore_list -= ref
-		ignorelistcleanuptimer = 1
-	else
-		ignorelistcleanuptimer++
-
-	if(!(bot_mode_flags & BOT_MODE_ON) || client)
-		return FALSE
-
-	if(commissioned && COOLDOWN_FINISHED(src, next_salute_check))
-		COOLDOWN_START(src, next_salute_check, BOT_COMMISSIONED_SALUTE_DELAY)
-		for(var/mob/living/simple_animal/bot/B in view(5, src))
-			if(!B.commissioned && B.bot_mode_flags & BOT_MODE_ON)
-				visible_message("<b>[B]</b> performs an elaborate salute for [src]!")
-				break
-
-	switch(mode) //High-priority overrides are processed first. Bots can do nothing else while under direct command.
-		if(BOT_RESPONDING) //Called by the AI.
-			call_mode()
-			return FALSE
-		if(BOT_SUMMON) //Called to a location
-			summon_step()
-			return FALSE
-	return TRUE //Successful completion. Used to prevent child process() continuing if this one is ended early.
+	return
 
 
 /mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/user, list/modifiers)

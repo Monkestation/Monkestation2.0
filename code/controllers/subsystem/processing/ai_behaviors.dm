@@ -12,22 +12,7 @@ PROCESSING_SUBSYSTEM_DEF(ai_behaviors)
 	var/list/targeting_strategies
 
 /datum/controller/subsystem/processing/ai_behaviors/Initialize()
-	SetupAIBehaviors()
-	SetupTargetingStrats()
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/processing/ai_behaviors/Recover()
-	SetupAIBehaviors()
-	SetupTargetingStrats()
-
-/datum/controller/subsystem/processing/ai_behaviors/proc/SetupAIBehaviors()
-	ai_behaviors = list()
-	for(var/behavior_type in subtypesof(/datum/ai_behavior))
-		var/datum/ai_behavior/ai_behavior = new behavior_type
-		ai_behaviors[behavior_type] = ai_behavior
-
-/datum/controller/subsystem/processing/ai_behaviors/proc/SetupTargetingStrats()
-	targeting_strategies = list()
-	for(var/target_type in subtypesof(/datum/targeting_strategy))
-		var/datum/targeting_strategy/target_start = new target_type
-		targeting_strategies[target_type] = target_start
+	return

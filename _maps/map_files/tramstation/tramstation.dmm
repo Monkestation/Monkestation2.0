@@ -8150,9 +8150,6 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation/entertainment)
 "byF" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/camera/directional/south{
 	c_tag = "Secure - AI Antechamber North";
@@ -13704,15 +13701,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/cargo/office)
-"dki" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
-/obj/structure/cable,
-/turf/open/floor/circuit,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "dkl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -16167,13 +16155,10 @@
 "dXC" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/table/wood/fancy/blue,
-/obj/item/ai_module/supplied/freeform,
-/obj/effect/spawner/random/aimodule/neutral,
 /obj/machinery/door/window/left/directional/east{
 	name = "Neutral Modules";
 	req_access = list("rd")
 	},
-/obj/item/ai_module/core/freeformcore,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "dXL" = (
@@ -17826,7 +17811,6 @@
 /area/station/science/xenobiology)
 "exJ" = (
 /obj/structure/table/wood,
-/obj/item/ai_module/toy_ai,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "exN" = (
@@ -20277,7 +20261,6 @@
 /obj/item/hand_labeler,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/knife/kitchen,
-/obj/effect/mob_spawn/ghost_role/drone/bar,
 /turf/open/floor/iron/cafeteria,
 /area/station/common/night_club)
 "fmS" = (
@@ -20623,10 +20606,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison)
-"ftk" = (
-/obj/machinery/drone_dispenser/preloaded,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/science)
 "ftm" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -21076,9 +21055,6 @@
 /turf/open/floor/grass,
 /area/station/science/lower)
 "fyX" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -22602,9 +22578,6 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "fYw" = (
-/obj/machinery/computer/upload/borg{
-	dir = 8
-	},
 /obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -22962,9 +22935,6 @@
 /area/station/security/execution/education)
 "gfV" = (
 /obj/structure/table/wood/fancy/green,
-/obj/effect/spawner/round_default_module,
-/obj/item/ai_module/core/full/crewsimov,
-/obj/item/ai_module/core/full/crewsimovpp,
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "gfW" = (
@@ -26462,8 +26432,6 @@
 /area/station/engineering/gravity_generator)
 "hkF" = (
 /obj/structure/table,
-/obj/item/aicard,
-/obj/item/ai_module/reset,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "hkN" = (
@@ -30455,9 +30423,6 @@
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "ixC" = (
-/obj/machinery/computer/upload/ai{
-	dir = 8
-	},
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -30984,14 +30949,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
-"iGM" = (
-/obj/structure/table/wood,
-/obj/item/pai_card{
-	desc = "A real Nanotrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
-	name = "\improper Nanotrasen-brand personal AI device exhibit"
-	},
-/turf/open/floor/wood,
-/area/station/command/meeting_room)
 "iGV" = (
 /obj/machinery/door/airlock/corporate{
 	id_tag = "Repdoor";
@@ -31718,14 +31675,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
-"iSh" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
-/obj/structure/cable,
-/turf/open/floor/circuit,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "iSo" = (
 /obj/machinery/light_switch/directional/south,
 /obj/structure/disposalpipe/segment{
@@ -35011,7 +34960,6 @@
 	dir = 8
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
-/obj/item/pai_card,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "jSj" = (
@@ -39834,14 +39782,6 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
-"loF" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
-/obj/structure/cable,
-/turf/open/floor/circuit,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "loJ" = (
 /obj/structure/fireaxecabinet/mechremoval/directional/north,
 /obj/structure/reagent_dispensers/fueltank,
@@ -41514,9 +41454,6 @@
 /turf/closed/wall,
 /area/station/cargo/sorting)
 "lSW" = (
-/obj/machinery/computer/robotics{
-	dir = 1
-	},
 /obj/structure/sign/calendar/directional/south,
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/cafeteria,
@@ -41899,7 +41836,6 @@
 "lYT" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/item/aicard,
 /obj/item/multitool,
 /turf/open/floor/carpet,
 /area/station/command/bridge)
@@ -47436,7 +47372,6 @@
 	dir = 1
 	},
 /obj/machinery/newscaster/directional/north,
-/obj/item/pai_card,
 /obj/structure/sign/directions/cryo/directional/east{
 	pixel_y = 32
 	},
@@ -47954,12 +47889,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
-"nSf" = (
-/obj/structure/table,
-/obj/item/pai_card,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/station/commons/fitness/recreation)
 "nSi" = (
 /obj/structure/beebox,
 /turf/open/floor/grass,
@@ -54403,12 +54332,6 @@
 /obj/item/clothing/under/rank/civilian/janitor/maid,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
-"pRo" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/robot_suit,
-/turf/open/floor/iron/dark,
-/area/station/science/robotics/lab)
 "pRu" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "cargoupperbelt"
@@ -56735,17 +56658,10 @@
 /area/station/service/chapel/office)
 "qDb" = (
 /obj/structure/table/wood/fancy/green,
-/obj/effect/spawner/random/aimodule/harmless,
-/obj/item/ai_module/supplied/freeform{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/item/ai_module/reset,
 /obj/item/radio/intercom/directional/east{
 	frequency = 1447;
 	name = "ai intercom"
 	},
-/obj/item/ai_module/core/full/asimovpp,
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "qDc" = (
@@ -59745,7 +59661,6 @@
 	pixel_y = 4
 	},
 /obj/structure/table,
-/obj/item/pai_card,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
@@ -62095,14 +62010,10 @@
 "slu" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/table/wood/fancy/red,
-/obj/item/ai_module/reset/purge,
-/obj/effect/spawner/random/aimodule/harmful,
 /obj/machinery/door/window/left/directional/east{
 	name = "Dangerous Modules";
 	req_access = list("rd")
 	},
-/obj/item/ai_module/supplied/crimereligion,
-/obj/item/ai_module/zeroth/coderedmartiallaw,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "slx" = (
@@ -64862,8 +64773,6 @@
 "tbK" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/aicard,
-/obj/item/circuitboard/aicore,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -69594,7 +69503,6 @@
 	dir = 8
 	},
 /obj/structure/table/glass,
-/obj/item/pai_card,
 /turf/open/floor/iron/white,
 /area/station/science/lower)
 "uze" = (
@@ -73924,7 +73832,6 @@
 /area/station/engineering/break_room)
 "vIg" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/ai_all,
 /obj/effect/turf_decal/trimline/white/filled/line,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark,
@@ -129485,7 +129392,7 @@ aNq
 nNk
 nNk
 nNk
-iSh
+nNk
 nNk
 nNk
 nNk
@@ -130775,7 +130682,7 @@ uTg
 vCQ
 uTg
 qtZ
-dki
+mxm
 oWI
 oWI
 bhx
@@ -132056,7 +131963,7 @@ mwL
 mwL
 mwL
 mwL
-loF
+mwL
 mwL
 mwL
 mwL
@@ -164591,7 +164498,7 @@ qyZ
 qyZ
 qyZ
 qyZ
-iGM
+exJ
 vMZ
 uVo
 dVd
@@ -166944,7 +166851,7 @@ qOF
 qOF
 fwF
 tou
-nSf
+gij
 wdZ
 gij
 gWo
@@ -188789,7 +188696,7 @@ soq
 lpT
 soq
 soq
-ftk
+kNS
 kNS
 kNS
 kNS
@@ -190070,7 +189977,7 @@ idO
 gyP
 fAA
 okn
-pRo
+muZ
 uSP
 jXr
 uKv

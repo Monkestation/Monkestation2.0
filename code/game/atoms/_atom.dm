@@ -249,8 +249,8 @@
 	if(custom_materials)
 		set_custom_materials(custom_materials)
 
-	if(ispath(ai_controller))
-		ai_controller = new ai_controller(src)
+	//if(ispath(ai_controller))
+	//	ai_controller = new ai_controller(src)
 
 	return INITIALIZE_HINT_NORMAL
 
@@ -299,8 +299,8 @@
 		overlays.Cut()
 
 	LAZYNULL(managed_overlays)
-	if(ai_controller)
-		QDEL_NULL(ai_controller)
+	//if(ai_controller)
+	//	QDEL_NULL(ai_controller)
 	if(light)
 		QDEL_NULL(light)
 	if (length(light_sources))

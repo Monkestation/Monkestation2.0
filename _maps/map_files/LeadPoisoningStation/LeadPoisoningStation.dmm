@@ -1534,9 +1534,6 @@
 /turf/open/floor/carpet/grimey,
 /area/station/service/bar/backroom)
 "aOJ" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/machinery/camera/directional/east{
 	c_tag = "AI Satellite - Starboard"
 	},
@@ -2853,12 +2850,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
-"bxN" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/computer/upload/borg,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/ai_upload)
 "bxW" = (
 /obj/structure/railing/wooden_fencing,
 /turf/open/floor/plating,
@@ -5408,12 +5399,6 @@
 	dir = 4;
 	name = "High-Risk Modules";
 	req_access = list("captain")
-	},
-/obj/effect/spawner/random/aimodule/harmful{
-	pixel_y = -16
-	},
-/obj/item/ai_module/reset/purge{
-	pixel_y = 11
 	},
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/circuit/red,
@@ -10373,8 +10358,6 @@
 /area/station/engineering/atmos)
 "fbD" = (
 /obj/structure/table,
-/obj/item/circuitboard/aicore,
-/obj/item/aicard,
 /turf/open/floor/iron/cafeteria,
 /area/station/command/heads_quarters/rd)
 "fbV" = (
@@ -12910,7 +12893,6 @@
 	dir = 8
 	},
 /obj/effect/spawner/random/techstorage/command_all,
-/obj/effect/spawner/random/techstorage/ai_all,
 /obj/effect/spawner/random/techstorage/rnd_secure_all,
 /obj/structure/rack,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -16045,7 +16027,6 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/table/reinforced,
-/obj/item/pai_card,
 /turf/open/floor/iron,
 /area/station/science/lobby)
 "hKp" = (
@@ -18426,9 +18407,6 @@
 /obj/machinery/flasher/directional/south{
 	id = "AI";
 	pixel_x = 26
-	},
-/obj/machinery/ai_slipper{
-	uses = 10
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -24375,7 +24353,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/drone_dispenser/preloaded,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
 	},
@@ -38764,9 +38741,6 @@
 /area/station/science/lobby)
 "sxE" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/spawner/random/aimodule/harmless,
-/obj/effect/spawner/random/aimodule/harmless,
-/obj/effect/spawner/random/aimodule/harmless,
 /obj/structure/table/wood/fancy/green,
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -40991,9 +40965,6 @@
 /turf/open/floor/iron/diagonal,
 /area/station/security/prison)
 "tBl" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/machinery/camera/directional/west{
 	c_tag = "AI Satellite - Port"
 	},
@@ -41831,7 +41802,6 @@
 /area/station/command/heads_quarters/cmo)
 "tWP" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/computer/upload/ai,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -42589,10 +42559,6 @@
 	name = "Core Modules";
 	req_access = list("captain")
 	},
-/obj/effect/spawner/random/aimodule/neutral{
-	pixel_y = -16
-	},
-/obj/item/ai_module/core/freeformcore,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -48266,9 +48232,6 @@
 /area/station/maintenance/port/central)
 "xbj" = (
 /obj/structure/table/reinforced,
-/obj/item/pai_card,
-/obj/item/pai_card,
-/obj/item/pai_card,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
@@ -49081,8 +49044,6 @@
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/structure/table,
-/obj/item/aicard,
-/obj/item/ai_module/reset,
 /turf/open/floor/iron,
 /area/station/engineering/storage/tech)
 "xuh" = (
@@ -82624,7 +82585,7 @@ boq
 aHu
 aHu
 ivP
-bxN
+tWP
 gQN
 qOH
 qOH

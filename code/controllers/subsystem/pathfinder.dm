@@ -25,40 +25,7 @@ SUBSYSTEM_DEF(pathfinder)
 // This is another one of those subsystems (hey lighting) in which one "Run" means fully processing a queue
 // We'll use a copy for this just to be nice to people reading the mc panel
 /datum/controller/subsystem/pathfinder/fire(resumed)
-	if(!resumed)
-		src.currentrun = active_pathing.Copy()
-		src.currentmaps = deep_copy_list(source_to_maps)
-
-	// Dies of sonic speed from caching datum var reads
-	var/list/currentrun = src.currentrun
-	while(length(currentrun))
-		var/datum/pathfind/path = currentrun[length(currentrun)]
-		if(!path.search_step()) // Something's wrong
-			path.early_exit()
-			currentrun.len--
-			continue
-		if(MC_TICK_CHECK)
-			return
-		path.finished()
-		// Next please
-		currentrun.len--
-
-	// Go over our existing pathmaps, clear out the ones we aren't using
-	var/list/currentmaps = src.currentmaps
-	var/oldest_time = world.time - MAP_REUSE_SLOWEST
-	while(length(currentmaps))
-		var/turf/source = currentmaps[length(currentmaps)]
-		var/list/datum/path_map/owned_maps = currentmaps[source]
-		for(var/datum/path_map/map as anything in owned_maps)
-			if(map.creation_time < oldest_time && !map.building)
-				source_to_maps[source] -= map
-			owned_maps.len--
-			if(MC_TICK_CHECK)
-				return
-		if(!length(source_to_maps[source]))
-			source_to_maps -= source
-
-		currentmaps.len--
+	return
 
 /// Initiates a pathfind. Returns true if we're good, FALSE if something's failed
 /datum/controller/subsystem/pathfinder/proc/pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish)

@@ -35,21 +35,7 @@
 	return ..()
 
 /mob/living/simple_animal/bot/vibebot/handle_automated_action()
-	. = ..()
-	if(!.)
-		return
-
-	if(bot_mode_flags & BOT_MODE_ON)
-		vibe_ability.Trigger()
-
-	if(!(bot_mode_flags & BOT_MODE_AUTOPATROL))
-		return
-
-	switch(mode)
-		if(BOT_IDLE, BOT_START_PATROL)
-			start_patrol()
-		if(BOT_PATROL)
-			bot_patrol()
+	return
 
 /mob/living/simple_animal/bot/vibebot/turn_off()
 	vibe_ability.remove_colors()

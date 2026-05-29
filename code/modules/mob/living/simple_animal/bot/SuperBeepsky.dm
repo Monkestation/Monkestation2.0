@@ -66,46 +66,7 @@
 
 
 /mob/living/simple_animal/bot/secbot/grievous/handle_automated_action()
-	if(!(bot_mode_flags & BOT_MODE_ON))
-		return
-	switch(mode)
-		if(BOT_IDLE) // idle
-			update_appearance()
-			SSmove_manager.stop_looping(src)
-			look_for_perp() // see if any criminals are in range
-			if(!mode && bot_mode_flags & BOT_MODE_AUTOPATROL) // still idle, and set to patrol
-				mode = BOT_START_PATROL // switch to patrol mode
-		if(BOT_HUNT) // hunting for perp
-			update_appearance()
-			playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
-			// general beepsky doesn't give up so easily, jedi scum
-			if(frustration >= 20)
-				SSmove_manager.stop_looping(src)
-				back_to_idle()
-				return
-			if(target) // make sure target exists
-				if(Adjacent(target) && isturf(target.loc)) // if right next to perp
-					target_lastloc = target.loc //stun_attack() can clear the target if they're dead, so this needs to be set first
-					stun_attack(target)
-					set_anchored(TRUE)
-					return
-				else // not next to perp
-					var/turf/olddist = get_dist(src, target)
-					SSmove_manager.move_to(src, target, 1, 4)
-					if((get_dist(src, target)) >= (olddist))
-						frustration++
-					else
-						frustration = 0
-			else
-				back_to_idle()
-
-		if(BOT_START_PATROL)
-			look_for_perp()
-			start_patrol()
-
-		if(BOT_PATROL)
-			look_for_perp()
-			bot_patrol()
+	return
 
 /mob/living/simple_animal/bot/secbot/grievous/look_for_perp()
 	set_anchored(FALSE)

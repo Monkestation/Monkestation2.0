@@ -110,11 +110,7 @@
 		bike_horn()
 
 /mob/living/simple_animal/bot/secbot/honkbot/handle_automated_action()
-	. = ..()
-	if(!.)
-		return
-	if(!limiting_spam && prob(30))
-		bike_horn()
+	return
 
 /mob/living/simple_animal/bot/secbot/honkbot/start_handcuffing(mob/living/carbon/current_target)
 	. = ..()

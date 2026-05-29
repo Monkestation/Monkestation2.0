@@ -10,14 +10,7 @@ MOVEMENT_SUBSYSTEM_DEF(ai_movement)
 	var/list/movement_types
 
 /datum/controller/subsystem/movement/ai_movement/Initialize()
-	SetupAIMovementInstances()
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/movement/ai_movement/Recover()
-	SetupAIMovementInstances()
-
-/datum/controller/subsystem/movement/ai_movement/proc/SetupAIMovementInstances()
-	movement_types = list()
-	for(var/key in subtypesof(/datum/ai_movement))
-		var/datum/ai_movement/ai_movement = new key
-		movement_types[key] = ai_movement
+	return

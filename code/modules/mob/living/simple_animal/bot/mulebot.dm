@@ -481,8 +481,7 @@
 	diag_hud_set_mulebotcell()
 
 /mob/living/simple_animal/bot/mulebot/handle_automated_action()
-	if(!(bot_mode_flags & BOT_MODE_ON))
-		return
+	return
 	if(!has_power())
 		turn_off()
 		return

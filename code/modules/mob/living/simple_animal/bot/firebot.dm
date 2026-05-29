@@ -168,43 +168,7 @@
 	return FALSE
 
 /mob/living/simple_animal/bot/firebot/handle_automated_action()
-	if(!..())
-		return
-
-	if(IsStun() || IsParalyzed())
-		old_target_fire = target_fire
-		target_fire = null
-		mode = BOT_IDLE
-		return
-
-	if(prob(1) && target_fire == null)
-		var/list/messagevoice = list("No fires detected." = 'sound/voice/firebot/nofires.ogg',
-		"Only you can prevent station fires." = 'sound/voice/firebot/onlyyou.ogg',
-		"Temperature nominal." = 'sound/voice/firebot/tempnominal.ogg',
-		"Keep it cool." = 'sound/voice/firebot/keepitcool.ogg')
-		var/message = pick(messagevoice)
-		speak(message)
-		playsound(src, messagevoice[message], 50)
-
-	// Couldn't reach the target, reset and try again ignoring the old one
-	if(frustration > 8)
-		old_target_fire = target_fire
-		soft_reset()
-
-	// We extinguished our target or it was deleted
-	if(QDELETED(target_fire) || !is_burning(target_fire) || isdead(target_fire))
-		target_fire = null
-		var/scan_range = (stationary_mode ? 1 : DEFAULT_SCAN_RANGE)
-
-		var/list/things_to_extinguish = list()
-		if(extinguish_people)
-			things_to_extinguish += list(/mob/living)
-
-		if(target_fire == null && extinguish_fires)
-			things_to_extinguish += list(/turf/open)
-
-		target_fire = scan(things_to_extinguish, old_target_fire, scan_range) // Scan for burning turfs second
-		old_target_fire = target_fire
+	return
 
 	// Target reached ENGAGE WATER CANNON
 	if(target_fire && (get_dist(src, target_fire) <= (bot_cover_flags & BOT_COVER_EMAGGED ? 1 : 2))) // Make the bot spray water from afar when not emagged

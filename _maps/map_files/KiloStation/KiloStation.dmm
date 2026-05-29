@@ -200,9 +200,6 @@
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai)
 "abF" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -651,7 +648,6 @@
 	pixel_x = -3;
 	pixel_y = -6
 	},
-/obj/effect/mob_spawn/ghost_role/drone/bar,
 /turf/open/floor/iron/dark/textured,
 /area/station/service/abandoned_gambling_den)
 "agy" = (
@@ -6788,9 +6784,6 @@
 	},
 /area/station/ai_monitored/turret_protected/ai)
 "cdX" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -6905,7 +6898,6 @@
 "cfK" = (
 /obj/structure/table,
 /obj/structure/cable,
-/obj/effect/spawner/random/aimodule/harmless,
 /turf/open/floor/circuit/green{
 	luminosity = 2
 	},
@@ -7003,9 +6995,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "cgJ" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/effect/turf_decal/box,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -10546,7 +10535,6 @@
 /obj/item/folder{
 	pixel_x = -4
 	},
-/obj/item/pai_card,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -20107,7 +20095,6 @@
 "gkz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/drone_dispenser/preloaded,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "gkC" = (
@@ -22920,16 +22907,6 @@
 /obj/structure/sign/directions/ptl/directional/south,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/ce)
-"hhc" = (
-/obj/machinery/computer/aifixer{
-	dir = 1
-	},
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/station/command/heads_quarters/rd)
 "hhn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -27026,9 +27003,6 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "ioK" = (
-/obj/machinery/computer/upload/borg{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -28070,9 +28044,6 @@
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "iBD" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/effect/turf_decal/box,
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/corner{
@@ -32501,7 +32472,6 @@
 "jUa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/machinery/drone_dispenser/preloaded,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "jUz" = (
@@ -33929,15 +33899,10 @@
 "kvo" = (
 /obj/structure/table,
 /obj/machinery/firealarm/directional/west,
-/obj/item/ai_module/reset{
-	pixel_x = 2;
-	pixel_y = 3
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/item/ai_module/supplied/freeform,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "kvB" = (
@@ -35083,7 +35048,6 @@
 "kLS" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/drone_dispenser/preloaded,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "kMe" = (
@@ -35467,7 +35431,6 @@
 /area/station/maintenance/disposal/incinerator)
 "kRU" = (
 /obj/structure/table,
-/obj/item/pai_card,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
@@ -37034,16 +36997,9 @@
 /obj/item/computer_disk/ordnance,
 /obj/item/computer_disk/ordnance,
 /obj/item/computer_disk/ordnance,
-/obj/item/circuitboard/aicore{
-	pixel_y = 5
-	},
 /obj/item/hand_labeler,
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/light/directional/west,
-/obj/item/pai_card{
-	pixel_x = 6
-	},
-/obj/item/aicard,
 /obj/item/taperecorder{
 	pixel_x = -6;
 	pixel_y = 6
@@ -41072,8 +41028,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/item/aicard,
-/obj/item/ai_module/reset,
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
 /obj/machinery/airalarm/directional/east,
@@ -41149,9 +41103,6 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
 "mHd" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/effect/turf_decal/box,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -43530,7 +43481,6 @@
 /area/station/security/prison/garden)
 "nwh" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/ai_all,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/circuit/green{
 	luminosity = 2
@@ -53588,14 +53538,12 @@
 "qHT" = (
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/effect/spawner/random/aimodule/neutral,
 /obj/machinery/door/window{
 	base_state = "right";
 	icon_state = "right";
 	name = "Core Modules";
 	req_access = list("rd")
 	},
-/obj/item/ai_module/core/freeformcore,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "qHV" = (
@@ -55539,13 +55487,9 @@
 "rmL" = (
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/effect/spawner/random/aimodule/harmful,
 /obj/machinery/door/window/brigdoor/left/directional/south{
 	name = "High-Risk Modules";
 	req_access = list("rd")
-	},
-/obj/item/ai_module/reset/purge{
-	pixel_y = 11
 	},
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -59890,13 +59834,10 @@
 	},
 /obj/item/radio/intercom/directional/west,
 /obj/machinery/light/cold/directional/west,
-/obj/effect/spawner/round_default_module,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/item/ai_module/core/full/crewsimov,
-/obj/item/ai_module/core/full/crewsimovpp,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "sHm" = (
@@ -62676,9 +62617,6 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/crew_quarters/bar)
 "tCh" = (
-/obj/machinery/computer/robotics{
-	dir = 1
-	},
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
@@ -64514,9 +64452,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "uiE" = (
-/obj/machinery/ai_slipper{
-	uses = 8
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
@@ -65249,7 +65184,6 @@
 /area/station/science/xenobiology)
 "usV" = (
 /obj/structure/table/wood,
-/obj/item/pai_card,
 /turf/open/floor/wood/tile,
 /area/station/service/library)
 "usX" = (
@@ -69211,9 +69145,6 @@
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "vFk" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/effect/turf_decal/box,
 /obj/machinery/flasher/directional/north{
 	id = "AI";
@@ -70643,9 +70574,6 @@
 	pixel_x = -6;
 	pixel_y = 2
 	},
-/obj/item/aicard{
-	pixel_x = 4
-	},
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
 /obj/machinery/light/directional/north,
@@ -71278,9 +71206,6 @@
 /turf/open/floor/iron,
 /area/station/ai_monitored/command/storage/eva)
 "wjs" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/effect/turf_decal/box,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -75327,9 +75252,6 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/abandon_cafeteria)
 "xxJ" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/effect/turf_decal/box,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -76309,9 +76231,6 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "xQU" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
 /obj/effect/turf_decal/box,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -77183,13 +77102,6 @@
 /obj/machinery/microwave,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
-"ycd" = (
-/obj/machinery/computer/upload/ai{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/ai_upload)
 "ych" = (
 /turf/closed/wall/r_wall,
 /area/station/security/detectives_office)
@@ -112447,7 +112359,7 @@ reT
 lLl
 wDh
 ssg
-ycd
+ioK
 slo
 iqk
 skM
@@ -116529,7 +116441,7 @@ nzz
 gVt
 lfd
 dlc
-hhc
+tCh
 imS
 saE
 jeU

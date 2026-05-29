@@ -234,59 +234,10 @@
 	return
 
 /mob/living/simple_animal/proc/handle_automated_movement()
-	set waitfor = FALSE
-	if(stop_automated_movement || !wander)
-		return
-	if(!isturf(loc) && !allow_movement_on_non_turfs)
-		return
-	if(!(mobility_flags & MOBILITY_MOVE)) //This is so it only moves if it's not inside a closet, gentics machine, etc.
-		return TRUE
-
-	turns_since_move++
-	if(turns_since_move < turns_per_move)
-		return TRUE
-	if(stop_automated_movement_when_pulled && pulledby) //Some animals don't move when pulled
-		return TRUE
-	var/anydir = pick(GLOB.cardinals)
-	if(Process_Spacemove(anydir))
-		Move(get_step(src, anydir), anydir)
-		turns_since_move = 0
-	return TRUE
+	return
 
 /mob/living/simple_animal/proc/handle_automated_speech(override)
-	set waitfor = FALSE
-	if(speak_chance)
-		if(prob(speak_chance) || override)
-			if(speak?.len)
-				if((emote_hear?.len) || (emote_see?.len))
-					var/length = speak.len
-					if(emote_hear?.len)
-						length += emote_hear.len
-					if(emote_see?.len)
-						length += emote_see.len
-					var/randomValue = rand(1,length)
-					if(randomValue <= speak.len)
-						say(pick(speak), forced = "automated speech")
-					else
-						randomValue -= speak.len
-						if(emote_see && randomValue <= emote_see.len)
-							manual_emote(pick(emote_see))
-						else
-							manual_emote(pick(emote_hear))
-				else
-					say(pick(speak), forced = "automated speech")
-			else
-				if(!(emote_hear?.len) && (emote_see?.len))
-					manual_emote(pick(emote_see))
-				if((emote_hear?.len) && !(emote_see?.len))
-					manual_emote(pick(emote_hear))
-				if((emote_hear?.len) && (emote_see?.len))
-					var/length = emote_hear.len + emote_see.len
-					var/pick = rand(1,length)
-					if(pick <= emote_see.len)
-						manual_emote(pick(emote_see))
-					else
-						manual_emote(pick(emote_hear))
+	return
 
 /mob/living/simple_animal/proc/environment_air_is_safe()
 	. = TRUE

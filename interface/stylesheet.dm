@@ -147,22 +147,10 @@ h1.alert, h2.alert		{color: #000000;}
 .clown					{color: #FF69Bf;	font-size: 3;	font-family: "Comic Sans MS", cursive, sans-serif;	font-weight: bold;}
 .singing				{font-family: "Trebuchet MS", cursive, sans-serif; font-style: italic;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif;	font-style: italic;}
-.hypnophrase			{color: #3bb5d3;	font-weight: bold;	animation: hypnocolor infinite; animation-direction: alternate;}
-	@keyframes hypnocolor {
-		0%		{color: #0d0d0d;}
-		25%		{color: #410194;}
-		50%		{color: #7f17d8;}
-		75%		{color: #410194;}
-		100%	{color: #3bb5d3;}
-}
+.hypnophrase			{color: #3bb5d3;	font-weight: bold;}
 
 
-.phobia			{color: #dd0000;	font-weight: bold;	animation: phobia 750ms infinite;}
-	@keyframes phobia {
-		0%		{color: #0d0d0d;}
-		50%		{color: #dd0000;}
-		100%	{color: #0d0d0d;}
-}
+.phobia			{color: #dd0000;	font-weight: bold;}
 
 .icon					{height: 1em;	width: auto;}
 
@@ -220,20 +208,7 @@ h1.alert, h2.alert		{color: #000000;}
 	font-size: 6;
 	font-weight: bold;
 	font-style: italic;
-	animation: ratvarcolor 5000ms infinite;
 }
-@keyframes ratvarcolor {
-	0% { color: #0d0d0d; }
-	9% { color: #BE8700; }
-	18% { color: #0d0d0d; }
-	27% { color: #42474D; }
-	36% { color: #0d0d0d; }
-	45% { color: #AF0AAF; }
-	54% { color: #0d0d0d; }
-	63% { color: #1E8CE1; }
-	72% { color: #0d0d0d; }
-	81% { color: #DAAA18; }
-	90% { color: #0d0d0d; }
 	100% { color: #6E001A; }
 }
 .brown					{color: #3d2009;}
