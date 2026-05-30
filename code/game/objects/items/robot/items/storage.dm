@@ -81,7 +81,7 @@
 		return FALSE
 	if(istype(storing_item))
 		return FALSE
-	if(HAS_TRAIT(atom, TRAIT_NODROP))
+	if(HAS_TRAIT(storing_item, TRAIT_NODROP))
 		return
 	if(storing_item == user)
 		if(istype(storing_item.loc, /mob/living/silicon/robot))
