@@ -810,18 +810,13 @@
 	var/datum/weakref/energy_shield_ref
 
 /obj/item/robot_model/miner/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
-	var/datum/action/cooldown/borg_sight_vision/sight_vision_meson = new(loc)
 	. = ..()
 	if(!.)
 		return
+	var/datum/action/cooldown/borg_sight_vision/sight_vision_meson = new(loc)
 	sight_vision_meson.Grant(loc)
 	sight_vision_ref = WEAKREF(sight_vision_meson)
-
-/obj/item/robot_model/miner/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
 	var/datum/action/cooldown/cyborg_miner_shield/energy_shield_action = new(loc)
-	. = ..()
-	if(!.)
-		return
 	energy_shield_action.Grant(loc)
 	energy_shield_ref = WEAKREF(energy_shield_action)
 
@@ -1098,10 +1093,10 @@
 	canDispose = TRUE
 
 /obj/item/robot_model/saboteur/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
-	var/datum/action/cooldown/borg_sight_vision/thermal/sight_vision_thermal = new(loc)
 	. = ..()
 	if(!.)
 		return
+	var/datum/action/cooldown/borg_sight_vision/thermal/sight_vision_thermal = new(loc)
 	sight_vision_thermal.Grant(loc)
 	sight_vision_ref = WEAKREF(sight_vision_thermal)
 
