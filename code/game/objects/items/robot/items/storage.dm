@@ -76,19 +76,21 @@
 	return is_type_in_list(atom, storable)
 
 /// Attempts to put the item into the apparatus.
-/obj/item/borg/apparatus/proc/put_in_apparatus(atom/atom, mob/user)
+/obj/item/borg/apparatus/proc/put_in_apparatus(obj/item/storing_item, mob/user)
 	if(stored)
+		return FALSE
+	if(istype(storing_item))
 		return FALSE
 	if(HAS_TRAIT(atom, TRAIT_NODROP))
 		return
-	if(atom == user)
-		if(istype(atom.loc, /mob/living/silicon/robot))
+	if(storing_item == user)
+		if(istype(storing_item.loc, /mob/living/silicon/robot))
 			return FALSE
-		else if(istype(atom.loc, /obj/item/robot_model))
+		else if(istype(storing_item.loc, /obj/item/robot_model))
 			return FALSE
-	if(!itemcheck(atom))
+	if(!itemcheck(storing_item))
 		return FALSE
-	var/obj/item/item = atom
+	var/obj/item/item = storing_item
 	item.forceMove(src)
 	stored = item
 	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
