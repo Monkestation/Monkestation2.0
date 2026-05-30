@@ -387,13 +387,7 @@
 /obj/item/borg/handheld_jaunter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return try_teleport_to(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
 
-/obj/item/borg/handheld_jaunter/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	return try_teleport_to(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
-
 /obj/item/borg/handheld_jaunter/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return try_teleport_to(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
-
-/obj/item/borg/handheld_jaunter/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	return try_teleport_to(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
 
 /// Opens a portal and tries to teleport from one place to another.
