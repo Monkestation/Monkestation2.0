@@ -203,7 +203,7 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || !can_interact(user))
 		return
 	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	attack_secondary_try_change_recipe()
+	attack_secondary_try_change_recipe(user)
 
 /obj/machinery/plumbing/ooze_compressor/attack_robot(mob/user, modifiers)
 	. = ..()
@@ -216,7 +216,7 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || !can_interact(user))
 		return
 	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	attack_secondary_try_change_recipe()
+	attack_secondary_try_change_recipe(user)
 
 /// Handles the interaction for both attack_hand and attack_robot.
 /obj/machinery/plumbing/ooze_compressor/proc/attack_try_change_recipe(mob/living/user)
