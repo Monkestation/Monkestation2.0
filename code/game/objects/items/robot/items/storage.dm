@@ -73,10 +73,7 @@
 /obj/item/borg/apparatus/proc/itemcheck(atom/atom)
 	if(is_type_in_list(atom, blacklisted_storables))
 		return FALSE
-	for(var/storable_type in storable)
-		if(istype(atom, storable_type))
-			return TRUE
-	return FALSE
+	return is_type_in_list(atom, storable)
 
 /// Attempts to put the item into the apparatus.
 /obj/item/borg/apparatus/proc/put_in_apparatus(atom/atom, mob/user)
