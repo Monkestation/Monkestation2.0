@@ -1155,3 +1155,18 @@
 	item_path = /obj/item/clothing/mask/animal/frog
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+//ZBunz
+/datum/loadout_item/pocket_items/donator/shark_axolotl
+	name = "Pet Delivery Beacon - Shark Axolotl"
+	item_path = /obj/item/choice_beacon/pet/donator/shark_axolotl
+	ckeywhitelist = list("ZBunz")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/effects/shark_axolotl
+	name = "Shark Axolotl Transformation"
+	item_path = /obj/item/effect_granter/donator/shark_axolotl
+	ckeywhitelist = list("ZBunz")
+	donator_only = TRUE
+	requires_purchase = FALSE

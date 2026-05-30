@@ -106,3 +106,23 @@ GLOBAL_LIST_INIT(pronouns_required, list(
 	return TRUE
 
 #undef MAX_PRONOUNS
+
+/datum/preference/toggle/twitch_public
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "twitch_public"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/toggle/twitch_public/is_accessible(datum/preferences/preferences)
+	if(preferences.parent?.persistent_client?.twitch?.access_rank < 1)
+		return FALSE
+	return ..()
+
+/datum/preference/toggle/patreon_public
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "patreon_public"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/toggle/patreon_public/is_accessible(datum/preferences/preferences)
+	if(preferences.parent?.persistent_client?.patreon?.access_rank < 1)
+		return FALSE
+	return ..()

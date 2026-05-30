@@ -19,6 +19,19 @@
 				cell.use(cell.charge)
 			return
 
+	if(istype(attacking_object, /obj/item/borg/apparatus/circuit) && opened)
+		var/obj/item/borg/apparatus/circuit/robo_hand = attacking_object
+		if(robo_hand.stored == null)
+			if(cell)
+				user.visible_message(span_notice("[user] removes [cell] from [src]!"))
+				balloon_alert(user, "cell removed")
+				cell.update_appearance()
+				user.put_in_hands(cell)
+				cell = null
+				charging = APC_NOT_CHARGING
+				update_appearance()
+				return
+
 	if(issilicon(user) && get_dist(src,user) > 1)
 		return attack_hand(user)
 

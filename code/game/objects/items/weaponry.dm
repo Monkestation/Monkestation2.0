@@ -121,6 +121,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	max_integrity = 200
 	armor_type = /datum/armor/item_claymore
 	resistance_flags = FIRE_PROOF
+	tool_behaviour = TOOL_KNIFE // what is a sword but a big knife
 
 /datum/armor/item_claymore
 	fire = 100
@@ -299,13 +300,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/robot //BLOODTHIRSTY BORGS NOW COME IN PLAID
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "claymore_cyborg"
-	var/mob/living/silicon/robot/robot
 
 /obj/item/claymore/highlander/robot/Initialize(mapload)
-	var/obj/item/robot_model/kiltkit = loc
-	robot = kiltkit.loc
 	. = ..()
-	if(!istype(robot))
+	if(!iscyborg(loc))
 		return INITIALIZE_HINT_QDEL
 
 /obj/item/claymore/highlander/robot/process()

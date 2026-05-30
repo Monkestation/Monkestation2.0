@@ -1,0 +1,12 @@
+author: "TheColorCyan"
+delete-after: True
+changes:
+  - qol: "clock cultists can see if APC already has a cog in it by examining"
+  - balance: "kindle and vanguard can be invoked when moving"
+  - balance: "bronze armor now has it's helmet attached to it, instead of being separate (like a hood)"
+  - balance: "bronze armor gives pressure resistance when empowered"
+  - balance: "bronze armor is now thick material"
+  - balance: "bronze helmet now completely hides your face, and gives pepperspray protection"
+  - balance: "bronze shoes are now noslips"
+  - balance: "clock armaments spell no longer gives bronze boots"
+  - bugfix: "fixed a bug that allowed quickbound clock cult spells to bypass power cost and make power go into negative values"

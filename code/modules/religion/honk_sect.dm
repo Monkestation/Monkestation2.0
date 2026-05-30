@@ -142,6 +142,7 @@
 	desc = "H.O.N.K"
 	ritual_length = 6.7 SECONDS
 	invoke_msg = "HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK!"
+	favor_cost = 10000
 
 /datum/religion_rites/honk_mech/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	. = ..()
