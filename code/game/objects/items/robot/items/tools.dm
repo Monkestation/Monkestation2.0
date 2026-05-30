@@ -400,14 +400,14 @@
 		user.balloon_alert(user, "out of view!")
 		return FALSE
 
-	var/turf/target_turf = get_turf(target)
-	if(isclosedturf(target_turf)) // Teleporting into dense stuff is fine as long it isn't a wall.
+	if(target.density)
 		return FALSE
 
 	adjust_charge(-1)
 	COOLDOWN_START(src, recharge_cooldown, clamp(COOLDOWN_TIMELEFT(src, recharge_cooldown), 2 SECONDS, 4 SECONDS)) // Active use shall potentially delay it.
 
 	var/turf/current_turf = get_turf(user)
+	var/turf/target_turf = get_turf(target)
 	var/obj/effect/portal/inorganic/tunnel = new(current_turf, 1.5 SECONDS, null, FALSE, target_turf)
 	if(tunnel.teleport(user))
 		playsound(user, 'sound/magic/blink.ogg', 25, TRUE)
