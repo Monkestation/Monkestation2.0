@@ -189,6 +189,10 @@
 	var/cap_on = TRUE
 	var/cap_lost = FALSE
 
+/obj/item/reagent_containers/cup/fuelcanister/Initialize(mapload, vol)
+	. = ..()
+	register_context()
+
 /obj/item/reagent_containers/cup/fuelcanister/examine(mob/user)
 	. = ..()
 	. += span_notice("It's [cap_on ? "capped" : "uncapped"].")
@@ -202,6 +206,7 @@
 
 	if(!cap_lost)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = cap_on ? "Close" : "Open"
+		screentip_change = TRUE
 
 	if(istype(held_item, /obj/item/weldingtool) && reagents.total_volume)
 		context[SCREENTIP_CONTEXT_LMB] = "Refuel"
