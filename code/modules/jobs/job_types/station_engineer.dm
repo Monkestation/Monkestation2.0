@@ -60,10 +60,6 @@
 	pda_slot = ITEM_SLOT_LPOCKET
 	skillchips = list(/obj/item/skillchip/job/engineer)
 
-	backpack_contents = list(
-		/obj/item/construction/rcd/loaded,
-	)
-
 #ifndef UNIT_TESTS
 /datum/outfit/job/engineer/New()
 	. = ..()
