@@ -129,27 +129,25 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/slime_compressor/crowbar_act(mob/living/user, obj/item/tool)
-	. = NONE
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/slime_compressor/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
 	if(active)
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(default_deconstruction_screwdriver(user, "[icon_state]_open", initial(icon_state), tool))
 		clear_recipe()
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/slime_compressor/wrench_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
 	if(active)
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(default_unfasten_wrench(user, tool))
 		clear_recipe()
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/slime_compressor/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
 	if(. || !can_interact(user))
 		return
 	if(!anchored)
