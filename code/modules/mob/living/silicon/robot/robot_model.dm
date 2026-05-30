@@ -388,6 +388,8 @@
 		/obj/item/weldingtool/largetank/cyborg,
 		/obj/item/borg/cyborg_omnitool/engineering,
 		/obj/item/borg/cyborg_omnitool/engineering,
+		/obj/item/lightreplacer,
+		/obj/item/borg/apparatus/circuit,
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
 		/obj/item/assembly/signaler/cyborg,
@@ -407,7 +409,7 @@
 	)
 	cyborg_base_icon = "engineer"
 	model_select_icon = "engineer"
-	model_traits = list(TRAIT_NEGATES_GRAVITY)
+	model_traits = list(TRAIT_NEGATES_GRAVITY, TRAIT_KNOW_ENGI_WIRES, TRAIT_KNOW_ROBO_WIRES)
 	hat_offset = -4
 	badge_offset = -4
 
@@ -458,6 +460,7 @@
 		/obj/item/holosign_creator,
 		/obj/item/reagent_containers/spray/cyborg_drying,
 		/obj/item/wirebrush,
+		/obj/item/pushbroom/cyborg,
 	)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(
@@ -1037,6 +1040,7 @@
 		/obj/item/weldingtool/largetank/cyborg,
 		/obj/item/borg/cyborg_omnitool/engineering/syndie,
 		/obj/item/borg/cyborg_omnitool/engineering/syndie,
+		/obj/item/borg/apparatus/circuit,
 		/obj/item/analyzer,
 		/obj/item/stack/sheet/iron,
 		/obj/item/stack/sheet/glass,
@@ -1048,10 +1052,11 @@
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/borg_chameleon,
 		/obj/item/card/emag,
+		/obj/item/borg/charger,
 	)
 	cyborg_base_icon = "synd_engi"
 	model_select_icon = "malf"
-	model_traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY)
+	model_traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY, TRAIT_KNOW_ENGI_WIRES, TRAIT_KNOW_ROBO_WIRES)
 	hat_offset = -4
 	badge_offset = -4
 	canDispose = TRUE
@@ -1081,8 +1086,8 @@
 
 /obj/item/robot_model/syndicate/kiltborg/do_transform_delay() //AUTO-EQUIPPING THESE TOOLS ANY EARLIER CAUSES RUNTIMES OH YEAH
 	. = ..()
-	robot.equip_to_slot(locate(/obj/item/claymore/highlander/robot) in basic_modules, 1)
-	robot.equip_to_slot(locate(/obj/item/pinpointer/nuke) in basic_modules, 2)
+	robot.put_in_hand(locate(/obj/item/claymore/highlander/robot) in basic_modules, 1)
+	robot.put_in_hand(locate(/obj/item/pinpointer/nuke) in basic_modules, 2)
 	robot.place_on_head(new /obj/item/clothing/head/beret/highlander(robot)) //THE ONLY PART MORE IMPORTANT THAN THE SWORD IS THE HAT
 	ADD_TRAIT(robot.hat, TRAIT_NODROP, HIGHLANDER_TRAIT)
 

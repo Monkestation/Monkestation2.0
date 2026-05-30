@@ -1,0 +1,8 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - image: "New sprites for the hunter's revolver, by infrared_baron."
+  - rscadd: "The hunter's revolver can now also be used to stab people."
+  - rscadd: "The bloodsilver bullet debuff now causes abilities to hurt you with \"recoil\" while you're afflicted."
+  - rscadd: "Bloodsilver bullets now forcefully deactivate various monster abilities - such as fleshmend, caretaker's refuge, changeling adrenaline, darkness adaptation and such, alongside pausing changeling chemical regeneration, and preventing jaunts."
+  - bugfix: "Bloodsilver bullets now ricochet, as was likely originally intended."
