@@ -1,0 +1,1264 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aS" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/food/salad/ketchup_fried_rice,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
+"by" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/machinery/door/airlock/freezer,
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"db" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/effect/mob_spawn/corpse/human/cook,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"di" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/food/salad/pineapple_friedrice,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
+"eh" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/food/salad/ketchup_fried_rice,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"eU" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/item/toy/plush/shrimp{
+	desc = "You're telling me THIS GUY is bing chilling?";
+	name = "Chillbert"
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"fg" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"fn" = (
+/mob/living/basic/festivus{
+	desc = "How can a shrimp grip this thing, anyway?"
+	},
+/turf/open/floor/light{
+	currentcolor = "#FFFFFF"
+	},
+/area/ruin/space/has_grav/powered/shrimp)
+"ip" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/machinery/light/floor/has_bulb/red,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"ir" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/item/reagent_containers/condiment/rice,
+/obj/item/reagent_containers/condiment/rice,
+/obj/item/toy/plush/shrimp{
+	desc = "You're telling me THIS GUY aided a massacre?";
+	name = "Aiden"
+	},
+/obj/effect/gibspawner/human,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"iT" = (
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"jf" = (
+/obj/structure/chair/wood{
+	icon_state = "wooden_chair_toppled"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
+"jq" = (
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/shrimp)
+"jr" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/food/salad/hawaiian_fried_rice,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
+"jV" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/flashlight/flare/candle/infinite,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
+"jY" = (
+/obj/effect/gibspawner/human,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"kv" = (
+/obj/structure/statue/shrimp,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
+"lC" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
+"lS" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
+"mt" = (
+/obj/item/knife/butcher,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"nu" = (
+/obj/item/kirbyplants/random/dead,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
+"nQ" = (
+/obj/structure/table,
+/obj/item/food/salad/egg_fried_rice{
+	name = "shrimp fried special rice";
+	food_quality = 100
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"nS" = (
+/obj/effect/spawner/structure/window/reinforced/indestructible,
+/obj/structure/window_sill,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"oc" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/food/salad/hurricane_rice,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"oP" = (
+/obj/item/toy/plush/shrimp/golden,
+/obj/machinery/light/floor/has_bulb/red,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"pb" = (
+/obj/structure/table,
+/obj/item/reagent_containers/condiment/rice/small_ration,
+/obj/item/toy/plush/shrimp{
+	name = "Abett"
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"pr" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/obj/item/toy/plush/shrimp{
+	desc = "You're telling me THIS GUY eats his own rice?"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
+"sh" = (
+/obj/structure/lattice,
+/obj/structure/fluff/fokoff_sign,
+/turf/open/space/basic,
+/area/ruin/space/shrimptennas)
+"sw" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/shrimp)
+"uZ" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"wh" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/item/reagent_containers/condiment/rice,
+/obj/item/reagent_containers/condiment/rice,
+/obj/item/reagent_containers/condiment/rice,
+/obj/item/reagent_containers/condiment/rice,
+/obj/effect/mob_spawn/corpse/human/damaged,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"wF" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/service/glass,
+/obj/effect/mapping_helpers/airlock/access/any,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/shrimp)
+"wG" = (
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"yv" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"yy" = (
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"zL" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 3
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"Ar" = (
+/obj/structure/chair/wood{
+	icon_state = "wooden_chair_toppled";
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
+"Cv" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/food/salad/simple_fried_noodles,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
+"CD" = (
+/obj/machinery/door/airlock/service/glass,
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"De" = (
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
+"DF" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/ruin/space/shrimptennas)
+"DO" = (
+/obj/effect/mob_spawn/corpse/human/cook,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"DT" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"Fx" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/paper/fluff/spaceruins/shrimp/menu,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"Ga" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/space/has_grav/powered/shrimp)
+"Gs" = (
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/toy/plush/shrimp/golden{
+	golden = 0;
+	name = "imitation golden shrimp plushie";
+	desc = "You're telling me THIS GUY is imprisoned for no reason? And that it's not even real gold?!"
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"GM" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"IP" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
+"Jg" = (
+/obj/machinery/oven/range,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"Kv" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/bowl,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"LM" = (
+/obj/effect/mob_spawn/corpse/human/cook,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"Mk" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/flashlight/flare/candle/infinite,
+/turf/open/floor/carpet,
+/area/space)
+"MN" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/powered)
+"Nx" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/obj/machinery/light/floor/has_bulb/red,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"OX" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
+"OY" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/obj/item/toy/plush/shrimp{
+	desc = "You're telling me THIS GUY eats his own rice?"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
+"Pj" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
+"Pk" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/paper/fluff/spaceruins/shrimp/menu,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
+"PB" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/powered/shrimp)
+"Tp" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/food/salad/mediterranean_fried_rice,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
+"Tu" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/food/salad/ricepudding,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"TQ" = (
+/obj/item/toy/plush/shrimp{
+	desc = "You're telling me THIS GUY dances on this pole?"
+	},
+/turf/open/floor/light{
+	currentcolor = "#FFFFFF"
+	},
+/area/ruin/space/has_grav/powered/shrimp)
+"TY" = (
+/obj/structure/statue/shrimp,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"UZ" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/access/any,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/shrimp)
+"WM" = (
+/obj/machinery/door/airlock/service,
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"Xl" = (
+/obj/effect/mob_spawn/corpse/human/cook,
+/obj/effect/gibspawner/human,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
+"YH" = (
+/turf/template_noop,
+/area/template_noop)
+"YI" = (
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
+
+(1,1,1) = {"
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+"}
+(2,1,1) = {"
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+DF
+DF
+DF
+DF
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+"}
+(3,1,1) = {"
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+DF
+DF
+YH
+YH
+DF
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+"}
+(4,1,1) = {"
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+DF
+DF
+YH
+YH
+YH
+DF
+DF
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+"}
+(5,1,1) = {"
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+DF
+DF
+YH
+YH
+YH
+YH
+YH
+DF
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+"}
+(6,1,1) = {"
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+sh
+DF
+DF
+YH
+YH
+YH
+YH
+YH
+YH
+DF
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+"}
+(7,1,1) = {"
+YH
+YH
+YH
+YH
+YH
+PB
+UZ
+PB
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+DF
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+"}
+(8,1,1) = {"
+YH
+YH
+YH
+YH
+PB
+Ga
+sw
+Ga
+PB
+DF
+DF
+DF
+DF
+DF
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+"}
+(9,1,1) = {"
+YH
+YH
+YH
+PB
+OX
+Ga
+wF
+Ga
+kv
+PB
+YH
+YH
+YH
+DF
+DF
+DF
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+"}
+(10,1,1) = {"
+YH
+YH
+PB
+OX
+De
+De
+De
+De
+De
+PB
+YH
+YH
+YH
+YH
+YH
+DF
+DF
+DF
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+"}
+(11,1,1) = {"
+YH
+PB
+OX
+De
+jq
+jq
+jq
+De
+IP
+PB
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+DF
+DF
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+"}
+(12,1,1) = {"
+YH
+PB
+Pj
+De
+jq
+fn
+jq
+De
+De
+PB
+PB
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+DF
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+"}
+(13,1,1) = {"
+YH
+PB
+De
+De
+TQ
+jq
+jq
+lS
+Ar
+De
+PB
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+DF
+YH
+YH
+YH
+YH
+YH
+YH
+"}
+(14,1,1) = {"
+YH
+PB
+De
+Ar
+De
+De
+De
+jr
+YI
+De
+PB
+YH
+YH
+DF
+DF
+YH
+YH
+YH
+YH
+DF
+YH
+YH
+YH
+YH
+YH
+YH
+"}
+(15,1,1) = {"
+YH
+PB
+De
+De
+De
+De
+De
+Mk
+Pk
+IP
+PB
+DF
+DF
+DF
+YH
+YH
+YH
+YH
+DF
+DF
+YH
+PB
+PB
+YH
+YH
+YH
+"}
+(16,1,1) = {"
+YH
+PB
+De
+De
+OY
+lS
+De
+lC
+pr
+De
+PB
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+PB
+wh
+PB
+YH
+YH
+"}
+(17,1,1) = {"
+YH
+PB
+Pj
+De
+Pk
+aS
+De
+De
+De
+De
+PB
+YH
+DF
+DF
+DF
+YH
+YH
+YH
+YH
+YH
+YH
+PB
+DO
+PB
+PB
+YH
+"}
+(18,1,1) = {"
+YH
+PB
+kv
+De
+Tp
+jV
+De
+De
+lS
+lS
+PB
+DF
+DF
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+PB
+mt
+Xl
+PB
+YH
+"}
+(19,1,1) = {"
+YH
+YH
+PB
+De
+jf
+lC
+De
+De
+Pk
+jV
+PB
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+PB
+PB
+oP
+ir
+PB
+YH
+"}
+(20,1,1) = {"
+YH
+YH
+PB
+De
+De
+De
+Ar
+De
+di
+Cv
+PB
+PB
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+PB
+uZ
+fg
+LM
+PB
+YH
+"}
+(21,1,1) = {"
+YH
+YH
+PB
+Pj
+De
+jV
+Pk
+De
+lC
+lC
+kv
+PB
+PB
+YH
+YH
+YH
+YH
+YH
+YH
+PB
+PB
+by
+PB
+PB
+PB
+YH
+"}
+(22,1,1) = {"
+YH
+YH
+PB
+De
+De
+YI
+Tp
+De
+De
+De
+IP
+PB
+PB
+PB
+PB
+YH
+YH
+PB
+PB
+PB
+uZ
+yv
+PB
+YH
+YH
+YH
+"}
+(23,1,1) = {"
+YH
+YH
+PB
+nu
+De
+lC
+lC
+De
+De
+De
+De
+CD
+yy
+iT
+PB
+PB
+PB
+PB
+jY
+uZ
+Nx
+PB
+PB
+YH
+YH
+YH
+"}
+(24,1,1) = {"
+YH
+YH
+YH
+PB
+De
+De
+De
+De
+Fx
+wG
+Tu
+PB
+yy
+zL
+WM
+fg
+fg
+fg
+ip
+yv
+PB
+PB
+YH
+YH
+YH
+YH
+"}
+(25,1,1) = {"
+YH
+YH
+YH
+PB
+Pj
+De
+De
+De
+oc
+yy
+yy
+yy
+yy
+DT
+Ga
+db
+yy
+yy
+yy
+PB
+PB
+YH
+YH
+YH
+YH
+YH
+"}
+(26,1,1) = {"
+YH
+YH
+YH
+PB
+kv
+De
+De
+De
+eh
+yy
+Kv
+Kv
+yy
+yy
+Ga
+db
+jY
+yy
+PB
+PB
+YH
+YH
+YH
+YH
+YH
+YH
+"}
+(27,1,1) = {"
+YH
+YH
+YH
+YH
+PB
+PB
+eh
+wG
+wG
+yy
+Kv
+nQ
+yy
+yy
+Ga
+eU
+GM
+yy
+PB
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+"}
+(28,1,1) = {"
+YH
+YH
+YH
+YH
+YH
+PB
+yy
+yy
+yy
+yy
+Kv
+pb
+yy
+yy
+Ga
+Ga
+PB
+PB
+PB
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+"}
+(29,1,1) = {"
+YH
+YH
+YH
+YH
+YH
+PB
+PB
+PB
+Jg
+yy
+yy
+yy
+yy
+yy
+nS
+Gs
+PB
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+"}
+(30,1,1) = {"
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+PB
+PB
+PB
+yy
+yy
+yy
+TY
+PB
+PB
+PB
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+"}
+(31,1,1) = {"
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+MN
+PB
+PB
+PB
+PB
+PB
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+"}
+(32,1,1) = {"
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+YH
+"}
