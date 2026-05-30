@@ -440,7 +440,7 @@
 	materials = list(/datum/material/glass = 2000, /datum/material/gold = 4000)
 	build_path = /obj/item/processing_card
 	category = list("AI Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/memory_card_1
 	name = "AI Memory board (Tier 1)"
@@ -449,4 +449,4 @@
 	materials = list(/datum/material/glass = 2000, /datum/material/gold = 4000)
 	build_path = /obj/item/memory_card
 	category = list("AI Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE

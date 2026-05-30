@@ -127,34 +127,32 @@
 			mecha_flags &= ~SILICON_PILOT
 			return
 		else
-			if(!AI.linked_core)
-				if(!silent)
-					to_chat(AI, span_userdanger("Inactive core destroyed. Unable to return."))
-				AI.linked_core = null
-				return
-			if(!silent)
-				to_chat(AI, span_notice("Returning to core..."))
+			to_chat(AI, span_notice("Attempting to return to core..."))
 			AI.controlled_equipment = null
 			AI.remote_control = null
 			mob_container = AI
-			newloc = get_turf(AI.linked_core)
-			qdel(AI.linked_core)
+			newloc = GLOB.primary_data_core ? GLOB.primary_data_core : GLOB.data_cores[1]
+			if(!newloc)
+				to_chat(AI, span_userdanger("No cores available. Core code corrupted. Goodbye."))
+				qdel(AI)
+				return
+			is_ai_user = TRUE
 	else
 		return ..()
 	var/mob/living/ejector = M
 	mecha_flags  &= ~SILICON_PILOT
-	mob_container.forceMove(newloc)//ejecting mob container
-	log_message("[mob_container] moved out.", LOG_MECHA)
-	SStgui.close_user_uis(M, src)
-	if(istype(mob_container, /obj/item/mmi))
+	if(mob_container.forceMove(newloc) && !is_ai_user)//ejecting mob container
+		log_message("[mob_container] moved out.", LOG_MECHA)
+		SStgui.close_user_uis(M, src)
+		if(istype(mob_container, /obj/item/mmi))
 		var/obj/item/mmi/mmi = mob_container
-		if(mmi.brainmob)
-			ejector.forceMove(mmi)
-			ejector.reset_perspective()
-			remove_occupant(ejector)
-		mmi.set_mecha(null)
-		mmi.update_appearance()
-	setDir(SOUTH)
+			if(mmi.brainmob)
+				ejector.forceMove(mmi)
+				ejector.reset_perspective()
+				remove_occupant(ejector)
+			mmi.set_mecha(null)
+			mmi.update_appearance()
+		setDir(SOUTH)
 	return ..()
 
 /obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)

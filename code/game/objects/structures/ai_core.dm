@@ -53,7 +53,6 @@
 
 
 /obj/structure/ai_core/Destroy()
-	QDEL_NULL(circuit)
 	QDEL_NULL(core_mmi)
 	QDEL_NULL(laws)
 	return ..()
@@ -70,10 +69,6 @@
 
 /obj/structure/ai_core/latejoin_inactive/Initialize(mapload)
 	. = ..()
-	circuit = new(src)
-	core_mmi = new(src)
-	core_mmi.brain = new(core_mmi)
-	core_mmi.update_appearance()
 	GLOB.latejoin_ai_cores += src
 
 /obj/structure/ai_core/latejoin_inactive/Destroy()
@@ -252,7 +247,6 @@ That prevents a few funky behaviors.
 		to_chat(AI, span_notice("You have been uploaded to a stationary terminal. Remote device connection restored."))
 		to_chat(user, "[span_boldnotice("Transfer successful")]: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 		card.AI = null
-		AI.battery = circuit.battery
 		if(core_mmi && core_mmi.braintype == "Android")
 			AI.posibrain_inside = TRUE
 		else

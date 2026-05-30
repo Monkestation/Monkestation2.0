@@ -27,6 +27,7 @@
 
 /datum/job/ai/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
+	var/mob/living/silicon/ai/AI = H
 	AI.relocate(TRUE)
 
 	var/total_available_cpu = GLOB.ai_os.total_cpu - GLOB.ai_os.total_cpu_assigned()

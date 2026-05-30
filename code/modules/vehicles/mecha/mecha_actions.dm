@@ -28,7 +28,6 @@
 		return
 	if(!chassis || !(owner in chassis.occupants))
 		return
-	var/is_ai_user = FALSE
 	chassis.container_resist_act(owner)
 
 /datum/action/vehicle/sealed/mecha/mech_toggle_cabin_seal
