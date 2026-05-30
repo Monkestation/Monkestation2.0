@@ -138,7 +138,7 @@
 	return TRUE
 
 /datum/religion_rites/honk_mech
-	name = "Summon Honkmech"
+	name = "Summon SPECIAL Honkmech"
 	desc = "H.O.N.K"
 	ritual_length = 6.7 SECONDS
 	invoke_msg = "HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK!"
