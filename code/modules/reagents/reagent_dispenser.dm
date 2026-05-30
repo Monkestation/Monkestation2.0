@@ -248,7 +248,6 @@
 	desc = "A tank full of firefighting foam."
 	icon_state = "foam"
 	reagent_id = /datum/reagent/firefighting_foam
-	tank_volume = 500
 	openable = TRUE
 	can_buckle = TRUE //Monkestation edit start
 	buckle_lying = 0
