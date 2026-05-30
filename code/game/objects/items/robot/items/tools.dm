@@ -421,7 +421,7 @@
 	if(maximum_charges > current_charges)
 		START_PROCESSING(SSobj, src)
 	else
-  		STOP_PROCESSING(SSobj, src)
+		STOP_PROCESSING(SSobj, src)
 	if(loc)
 		playsound(loc, 'sound/magic/charge.ogg', 50, TRUE)
 		if(ismob(loc))
