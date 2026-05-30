@@ -205,7 +205,7 @@
 	var/screentip_change = FALSE
 
 	if(!cap_lost)
-		context[SCREENTIP_CONTEXT_ALT_LMB] = cap_on ? "Close" : "Open"
+		context[SCREENTIP_CONTEXT_ALT_LMB] = cap_on ? "Open" : "Close"
 		screentip_change = TRUE
 
 	if(istype(held_item, /obj/item/weldingtool) && reagents.total_volume)
