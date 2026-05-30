@@ -582,7 +582,7 @@
 	return ..()
 
 /obj/item/vacuum_pack/backpack/dropped(mob/user)
-	..()
+	. = ..()
 	remove_nozzle()
 
 /obj/item/vacuum_pack/backpack/equipped(mob/user, slot)
