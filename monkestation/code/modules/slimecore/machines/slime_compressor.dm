@@ -1,16 +1,3 @@
-#define CROSSBREED_BASE_PATHS list(\
-/datum/compressor_recipe/crossbreed/burning,\
-/datum/compressor_recipe/crossbreed/charged,\
-/datum/compressor_recipe/crossbreed/chilling,\
-/datum/compressor_recipe/crossbreed/consuming,\
-/datum/compressor_recipe/crossbreed/industrial,\
-/datum/compressor_recipe/crossbreed/prismatic,\
-/datum/compressor_recipe/crossbreed/regenerative,\
-/datum/compressor_recipe/crossbreed/reproductive,\
-/datum/compressor_recipe/crossbreed/selfsustaining,\
-/datum/compressor_recipe/crossbreed/stabilized,\
-)
-
 #define COMPRESSOR_BASE_EXTRACT_AMOUNT 5
 #define COMPRESSOR_BASE_COMPRESS_TIME 40 SECONDS
 
@@ -72,7 +59,7 @@
 			choice_to_datum |= list("[initial(stored_recipe.output_item.name)]" = stored_recipe)
 
 	if(!length(cross_breed_choices))
-		for(var/datum/compressor_recipe/listed as anything in CROSSBREED_BASE_PATHS)
+		for(var/datum/compressor_recipe/listed as anything in (subtypesof(/datum/compressor_recipe/crossbreed)))
 			var/datum/compressor_recipe/stored_recipe = new listed
 			var/obj/item/slimecross/crossbreed = stored_recipe.output_item
 			var/image/new_image = image(icon = initial(stored_recipe.output_item.icon), icon_state = initial(stored_recipe.output_item.icon_state))
@@ -114,18 +101,18 @@
 
 /obj/machinery/slime_compressor/examine(mob/living/user)
 	. = ..()
-	if (!current_recipe)
+	if(!current_recipe)
 		return
-	if (base_complete && cross_complete)
+	if(base_complete && cross_complete)
 		. += span_notice("The extract is ready to be made!")
 		return
-	if (active)
+	if(active)
 		. += span_notice("The machine is currently working!")
 		return
 	. += span_notice("The recipe requires:")
-	if (!base_complete)
+	if(!base_complete)
 		. += span_notice("[base_slime_required.name] slime as base.")
-	if (!cross_complete && cross_slime_required)
+	if(!cross_complete && cross_slime_required)
 		. += span_notice("[cross_slime_required.name] slime for cross.")
 
 /obj/machinery/slime_compressor/update_icon_state()
@@ -171,7 +158,7 @@
 	if(!current_recipe)
 		if(change_recipe(user))
 			return TRUE
-	if (!base_complete || (!cross_complete && cross_slime_required))
+	if(!base_complete || (!cross_complete && cross_slime_required))
 		return TRUE
 	compress_recipe()
 
@@ -231,7 +218,7 @@
  * Move all mobs in our contents out
  */
 /obj/machinery/slime_compressor/proc/remove_slimes_inside()
-	for (var/mob/living/victim in mobs_inside)
+	for(var/mob/living/victim in mobs_inside)
 		if(!isslime(victim))
 			continue
 		victim.forceMove(get_turf(src))
@@ -242,11 +229,11 @@
  * After, we move the mob inside
  */
 /obj/machinery/slime_compressor/hitby(atom/movable/hit_by, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	if (active)
+	if(active)
 		return
-	if (!isslime(hit_by))
+	if(!isslime(hit_by))
 		return ..()
-	if (!current_recipe)
+	if(!current_recipe)
 		return ..()
 	var/mob/living/basic/slime/slime = hit_by
 	if(!check_recipe(slime))
@@ -259,11 +246,11 @@
  * Check if the slime fits the recipe we have set
  */
 /obj/machinery/slime_compressor/proc/check_recipe(mob/living/basic/slime/slime)
-	if (!isslime(slime))
+	if(!isslime(slime))
 		return FALSE
 	// Cleaner slimes split very fast so it would make it...too easy
 	for(var/datum/slime_trait/trait in slime.slime_traits)
-		if (istype(trait,/datum/slime_trait/cleaner))
+		if(istype(trait,/datum/slime_trait/cleaner))
 			say("Slime incompatible!")
 			return FALSE
 	var/datum/slime_color/color = slime.current_color
@@ -277,7 +264,7 @@
 		base_complete = TRUE
 		return TRUE
 	// Crossbreed extracts can only be made with adult slimes
-	else if (istype (color, cross_slime_required) && !cross_complete)
+	else if(istype(color, cross_slime_required) && !cross_complete)
 		if(slime.slime_flags & ADULT_SLIME)
 			cross_complete = TRUE
 			return TRUE
@@ -324,7 +311,7 @@
 				continue
 			total_extract_amount += slime.slime_extract_bonus
 			// Baby slimes only make half of the extracts
-			if (!(slime.slime_flags & ADULT_SLIME))
+			if(!(slime.slime_flags & ADULT_SLIME))
 				total_extract_amount *= 0.5
 
 		for(var/i in 1 to total_extract_amount)
@@ -332,11 +319,11 @@
 	else
 		new current_recipe.output_item(drop_location())
 		// Chance to have a bonus extract based on parts tier
-		if (prob(bonus_extract_chance))
+		if(prob(bonus_extract_chance))
 			new current_recipe.output_item(drop_location())
 	active = FALSE
 
-	for (var/mob/living/victim in mobs_inside)
+	for(var/mob/living/victim in mobs_inside)
 		if(!isslime(victim))
 			continue
 		qdel(victim)
@@ -354,10 +341,10 @@
 		return FALSE
 
 	// somehow...?
-	if (!length(mobs_inside))
+	if(!length(mobs_inside))
 		return FALSE
 
-	if (!directly_use_energy(active_power_usage))
+	if(!directly_use_energy(active_power_usage))
 		say("Not enough energy!")
 		return FALSE
 
@@ -393,6 +380,5 @@
 		playsound(src, pick(slime_blender), rand(35, 50), TRUE, mixer_channel = CHANNEL_VOICES)
 		playsound(src, 'sound/machines/blender.ogg', 80, TRUE, mixer_channel = CHANNEL_MACHINERY)
 
-#undef CROSSBREED_BASE_PATHS
 #undef COMPRESSOR_BASE_EXTRACT_AMOUNT
 #undef COMPRESSOR_BASE_COMPRESS_TIME
