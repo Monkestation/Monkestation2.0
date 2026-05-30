@@ -1,0 +1,5 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - balance: "rubbershot has the same speed as other ballistics."
+  - balance: "lowered the cost of rubbershot ammo boxes to 2 TC from 3 in the uplink."
