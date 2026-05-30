@@ -355,15 +355,15 @@
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/reagent_containers/borghypo/medical/hypo in borg.model.modules)
-		hypo.upgrade_hypo()
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
+		hypo.upgrade()
 
 /obj/item/borg/upgrade/hypospray/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/reagent_containers/borghypo/medical/hypo in borg.model.modules)
-		hypo.remove_hypo_upgrade()
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
+		hypo.downgrade()
 
 /obj/item/borg/upgrade/hypospray/expanded
 	name = "medical cyborg expanded hypospray"
@@ -678,15 +678,6 @@
 	model_type = list(/obj/item/robot_model/medical)
 	model_flags = BORG_MODEL_MEDICAL
 	items_to_add = list(/obj/item/borg/apparatus/beaker/extra)
-
-/obj/item/borg/upgrade/broomer
-	name = "experimental push broom"
-	desc = "An experimental push broom used for efficiently pushing refuse."
-	icon_state = "module_janitor"
-	require_model = TRUE
-	model_type = list(/obj/item/robot_model/janitor)
-	model_flags = BORG_MODEL_JANITOR
-	items_to_add = list(/obj/item/pushbroom/cyborg)
 
 /obj/item/borg/upgrade/uwu
 	name = "cyborg UwU-speak \"upgrade\""

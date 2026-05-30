@@ -1,6 +1,0 @@
-author: "LettuceGuardian"
-delete-after: True
-changes:
-  - balance: "The bogseo SMG fires in a slow auto mode."
-  - bugfix: "Modular laser carbine default firemode can now shoot 14 bursts before running out."
-  - bugfix: "Flare firemode being borderline infinite."

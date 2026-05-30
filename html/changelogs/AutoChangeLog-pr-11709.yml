@@ -1,7 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - bugfix: "Highlander Cyborgs no longer have an invisible module HUD icon and thus can access their inventory."
-  - bugfix: "Highlander Cyborgs now automatically equips their sword and pinpointer as intended."
-  - bugfix: "Cyborgs that are (admin) spawned with a model already loaded now uses the correct icon state for its module HUD."
-  - image: "Highlander Cyborg Module HUD Icon"

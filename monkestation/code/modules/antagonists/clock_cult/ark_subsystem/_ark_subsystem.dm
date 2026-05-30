@@ -38,6 +38,8 @@ PROCESSING_SUBSYSTEM_DEF(the_ark)
 	var/list/clockwork_marauders = list()
 	///A list of all the areas on reebe
 	var/list/reebe_areas = list()
+	///Cooldown for updating action buttons of mobs in the cult
+	COOLDOWN_DECLARE(action_button_update)
 
 /datum/controller/subsystem/processing/the_ark/Initialize()
 	initialized = TRUE
@@ -63,13 +65,17 @@ PROCESSING_SUBSYSTEM_DEF(the_ark)
 ///try and adjust our clock_power, returns FALSE if it would put us above our max_clock_power or below 0, set always_adjust to TRUE to make us instead just adjust to be within bounds
 /datum/controller/subsystem/processing/the_ark/proc/adjust_clock_power(amount, always_adjust = FALSE)
 	var/new_total = clock_power + amount
-	if(always_adjust)
-		clock_power = clamp(new_total, 0, max_clock_power)
-		return TRUE
 
-	if(new_total > max_clock_power || new_total < 0)
+	if(!always_adjust && (new_total > max_clock_power || new_total < 0))
 		return FALSE
+
 	clock_power = new_total
+
+	if(COOLDOWN_FINISHED(src, action_button_update))
+		for (var/datum/mind/member in GLOB.main_clock_cult.members)
+			member.current.update_mob_action_buttons(UPDATE_BUTTON_STATUS)
+		COOLDOWN_START(src, action_button_update, 1 SECOND)
+
 	return TRUE
 
 ///same as adjust_clock_power() but much simpler as this does not have a max amount and is somewhat static, set only_check to TRUE to skip the actual adjustment step
