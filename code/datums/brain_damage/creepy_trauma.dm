@@ -120,6 +120,7 @@
 /datum/brain_trauma/special/obsessed/proc/find_obsession()
 	var/list/viable_minds = list() //The first list, which excludes hijinks
 	var/list/possible_targets = list() //The second list, which filters out silicons and simplemobs
+	var/list/exemption_list = list() //A list of all targets, subtracting targets who are exempt from being an Obsession target through preferences. special_pool will still be picked first
 	var/static/list/trait_obsessions = list(
 		JOB_MIME = TRAIT_MIME_FAN,
 		JOB_CLOWN = TRAIT_CLOWN_ENJOYER,
@@ -148,15 +149,20 @@
 			if (trait_obsessions[job] != null && HAS_TRAIT(owner, trait_obsessions[job]))
 				special_pool += possible_target.current
 			possible_targets += possible_target.current
+			exemption_list += possible_target.current
 			//check if they are exempt from being an obsession target
 			var/mob/living/carbon/human/exempt_target = possible_target
 			if(exempt_target.obsession_target == 0)
-				possible_targets -= exempt_target
-				special_pool -= exempt_target
+				exemption_list -= exempt_target
 
 	//Do we have any special target?
 	if(length(special_pool))
 		chosen_victim = pick(special_pool)
+		return chosen_victim
+
+	//Prioritize picking those who are eligible to roll being the target of an Obsession in preferences
+	if(length(exemption_list))
+		chosen_victim = pick(exemption_list)
 		return chosen_victim
 
 	//If not, pick any other ordinary target
