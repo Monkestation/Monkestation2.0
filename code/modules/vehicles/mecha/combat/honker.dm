@@ -36,6 +36,16 @@
 	squeak = !squeak
 
 
+/obj/vehicle/sealed/mecha/honker/loaded
+	equip_by_category = list(
+		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/honker,
+		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove,
+		MECHA_UTILITY = list(),
+		MECHA_POWER = list(),
+		MECHA_ARMOR = list(),
+	)
+
+
 //DARK H.O.N.K.
 
 /obj/vehicle/sealed/mecha/honker/dark

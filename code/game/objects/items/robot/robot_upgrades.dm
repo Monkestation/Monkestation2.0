@@ -64,7 +64,7 @@
 	for(var/item_to_remove in items)
 		var/obj/item/module_item = locate(item_to_remove) in borg.model.modules
 		if(module_item)
-			borg.model.remove_module(module_item, TRUE)
+			borg.model.remove_module(module_item)
 	return TRUE
 
 /obj/item/borg/upgrade/rename
@@ -174,8 +174,8 @@
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/janitor)
 	model_flags = BORG_MODEL_JANITOR
-	items_to_add = list(/obj/item/storage/bag/trash/bluespace/cyborg)
-	items_to_remove = list(/obj/item/storage/bag/trash/cyborg)
+	items_to_add = list(/obj/item/storage/bag/trash/bluespace)
+	items_to_remove = list(/obj/item/storage/bag/trash)
 
 /obj/item/borg/upgrade/amop
 	name = "janitor cyborg advanced mop"
@@ -185,7 +185,7 @@
 	model_type = list(/obj/item/robot_model/janitor)
 	model_flags = BORG_MODEL_JANITOR
 	items_to_add = list(/obj/item/mop/advanced)
-	items_to_remove = list(/obj/item/mop/cyborg)
+	items_to_remove = list(/obj/item/mop)
 
 /obj/item/borg/upgrade/prt
 	name = "janitor cyborg plating repair tool"
@@ -652,14 +652,23 @@
 	icon_state = "module_honk"
 	new_model = /obj/item/robot_model/clown
 
-/obj/item/borg/upgrade/circuit_app
-	name = "circuit manipulation apparatus"
-	desc = "An engineering cyborg upgrade allowing for manipulation of circuit boards."
+/obj/item/borg/upgrade/extra_sheet_manipulator
+	name = "secondary material manipulation apparatus"
+	desc = "A supplementary apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles."
 	icon_state = "module_engineer"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
-	items_to_add = list(/obj/item/borg/apparatus/circuit)
+	items_to_add = list(/obj/item/borg/apparatus/sheet_manipulator/extra)
+
+/obj/item/borg/upgrade/charger
+	name = "power connector"
+	desc = "An energy probe that can charge batteries and energy-dependent weapons (using the cyborg battery, in both directions), as well as recharge the cyborg from all types of chargers, the effectiveness depends on the components of the machine"
+	icon_state = "module_engineer"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/engineering)
+	model_flags = BORG_MODEL_ENGINEERING
+	items_to_add = list(/obj/item/borg/charger)
 
 /obj/item/borg/upgrade/beaker_app
 	name = "beaker storage apparatus"

@@ -318,6 +318,196 @@
 	icon_state = "toolkit_engiborg_multitool"
 	toolspeed = 0.5
 
+//Tricorder
+//The tricorder is a child of a multitool, atmosanalyzer and health scaner
+
+/obj/item/multitool/tricorder
+	name = "Tricorder"
+	desc = "A multifunctional device that can perform a wide range of tasks. Some functionality can be expanded using highly specialized analyzers."
+	icon = 'icons/obj/advanced_device.dmi'
+	icon_state = "tricorder"
+	worn_icon_state = "electronic"
+	flags_1 = CONDUCT_1
+	slot_flags = ITEM_SLOT_BELT
+	item_flags = NOBLUDGEON
+	tool_behaviour = TOOL_MULTITOOL
+	usesound = 'sound/weapons/etherealhit.ogg'
+	toolspeed = 0.2
+	throwforce = 3
+	w_class = WEIGHT_CLASS_TINY
+	throw_speed = 3
+	throw_range = 7
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 3, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3)
+
+	var/medical_tricorder = FALSE		// if TRUE tricorder can work as health scaner T1
+	var/chemical_tricorder = FALSE		// if TRUE tricorder can work as chemical scaner, but cutted version
+	var/long_range_tricorder = FALSE	// if TRUE tricorder can work as long range gas analyzer
+
+////////// Upgrades V1 //////////
+/obj/item/multitool/tricorder/item_interaction(mob/living/user, obj/item/item_to_insert, list/modifiers)
+	if(istype(item_to_insert, /obj/item/healthanalyzer))
+		if(!medical_tricorder)
+			medical_tricorder = TRUE
+			to_chat(user, span_notice("You connect the improved sensors from the [item_to_insert] to the tricorder."))
+			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+			qdel(item_to_insert)
+		else
+			to_chat(user, span_warning("This modification has already been installed here."))
+
+	if(istype(item_to_insert, /obj/item/ph_meter))
+		if(!chemical_tricorder)
+			chemical_tricorder = TRUE
+			to_chat(user, span_notice("You connect the improved sensors from the [item_to_insert] to the tricorder."))
+			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+			qdel(item_to_insert)
+		else
+			to_chat(user, span_warning("This modification has already been installed here."))
+
+	if(istype(item_to_insert, /obj/item/analyzer/ranged))
+		if(!long_range_tricorder)
+			long_range_tricorder = TRUE
+			to_chat(user, span_notice("You connect the long range sensors from the [item_to_insert] to the tricorder."))
+			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+			qdel(item_to_insert)
+		else
+			to_chat(user, span_warning("This modification has already been installed here."))
+
+/obj/item/multitool/tricorder/examine(mob/user)
+	. = ..()
+	. += span_notice("Improved health sensors [medical_tricorder ? "<b>are installed.</b>" : "are <b>not</b> installed."]")
+	. += span_notice("Improved chemical sensors [chemical_tricorder ? "<b>are installed.</b>" : "are <b>not</b> installed."]")
+	. += span_notice("Long range sensors [long_range_tricorder ? "<b>are installed.</b>" : "are <b>not</b> installed."]")
+
+/obj/item/multitool/tricorder/suicide_act(mob/living/carbon/user)
+	user.visible_message(span_suicide("[user] tries to conduct an in-depth analysis of [user.p_them()]self!"))
+	return BRUTELOSS
+
+/obj/item/multitool/tricorder/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+////////// Upgrades V2 //////////
+	if(istype(interacting_with, /obj/item/healthanalyzer) && can_see(user, interacting_with, 1))
+		if(!medical_tricorder)
+			medical_tricorder = TRUE
+			to_chat(user, span_notice("You connect the improved sensors from the [interacting_with] to the tricorder."))
+			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+			qdel(interacting_with)
+		else
+			to_chat(user, span_warning("This modification has already been installed here."))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(interacting_with, /obj/item/ph_meter) && can_see(user, interacting_with, 1))
+		if(!chemical_tricorder)
+			chemical_tricorder = TRUE
+			to_chat(user, span_notice("You connect the improved sensors from the [interacting_with] to the tricorder."))
+			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+			qdel(interacting_with)
+		else
+			to_chat(user, span_warning("This modification has already been installed here."))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(interacting_with, /obj/item/analyzer/ranged) && can_see(user, interacting_with, 1))
+		if(!long_range_tricorder)
+			long_range_tricorder = TRUE
+			to_chat(user, span_notice("You connect the long range sensors from the [interacting_with] to the tricorder."))
+			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+			qdel(interacting_with)
+		else
+			to_chat(user, span_warning("This modification has already been installed here."))
+		return ITEM_INTERACT_SUCCESS
+
+////////// Prevent scan //////////
+	// TCOMs
+	if(istype(interacting_with, /obj/machinery/telecomms) && can_see(user, interacting_with, long_range_tricorder? 15 : 1))
+		return
+
+////////// Scan //////////
+	// Health scan Mob
+	if(istype(interacting_with, /mob/living) && can_see(user, interacting_with, 1))
+		var/mob/living/mob = interacting_with
+		if(medical_tricorder)
+			healthscan(user, mob)
+		else
+			lesserhealthscan(user, mob)
+
+		// Rad scan Mob
+		if(SEND_SIGNAL(mob, COMSIG_GEIGER_COUNTER_SCAN, user, src) & COMSIG_GEIGER_COUNTER_SCAN_SUCCESSFUL)
+			return ITEM_INTERACT_SUCCESS
+		to_chat(user, span_notice("[isliving(mob) ? "Subject" : "Target"] is free of radioactive contamination."))
+		return ITEM_INTERACT_SUCCESS
+
+	// Anomaly
+	if(istype(interacting_with, /obj/effect/anomaly) && can_see(user, interacting_with, long_range_tricorder? 15 : 1))
+		var/obj/effect/anomaly/anomaly = interacting_with
+		anomaly.analyzer_act(user, src)
+		return ITEM_INTERACT_SUCCESS
+
+	// Chem scan item
+	if(chemical_tricorder)
+		if(is_reagent_container(interacting_with))
+			var/obj/item/reagent_containers/cont = interacting_with
+			if(!LAZYLEN(cont.reagents.reagent_list))
+				return NONE
+			var/list/out_message = list()
+			to_chat(user, "<i>The chemistry meter beeps and displays:</i>")
+			out_message += "<b>Total volume: [round(cont.volume, 0.01)], Current temperature: [round(cont.reagents.chem_temp, 0.1)]K Total pH: [round(cont.reagents.ph, 0.01)]\n"
+			out_message += "Chemicals found in [interacting_with.name]:</b>\n"
+			if(cont.reagents.is_reacting)
+				out_message += "[span_warning("A reaction appears to be occuring currently.")]<span class='notice'>\n"
+			for(var/datum/reagent/reagent in cont.reagents.reagent_list)
+				if(reagent.purity < reagent.inverse_chem_val && reagent.inverse_chem) //If the reagent is impure
+					var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
+					out_message += "[span_warning("Inverted reagent detected: ")]<span class='notice'><b>[round(reagent.volume, 0.01)]u of [inverse_reagent.name]</b>, <b>Purity:</b> [round(1 - reagent.purity, 0.000001)*100]%, <b>Overdose:</b> [inverse_reagent.overdose_threshold]u, <b>Current pH:</b> [reagent.ph].\n"
+				else
+					out_message += "<b>[round(reagent.volume, 0.01)]u of [reagent.name]</b>, <b>Purity:</b> [round(reagent.purity, 0.000001)*100]%, <b>Overdose:</b> [reagent.overdose_threshold]u, <b>Current pH:</b> [reagent.ph].\n"
+			to_chat(user, boxed_message(span_notice("[out_message.Join()]")))
+			SEND_SIGNAL(interacting_with, COMSIG_ON_REAGENT_SCAN, user)
+			return ITEM_INTERACT_SUCCESS
+
+	// Atmos scan 1
+	if(!HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION) && can_see(user, interacting_with, long_range_tricorder? 15 : 1))
+		atmos_scan(user, (interacting_with.return_analyzable_air() ? interacting_with : get_turf(interacting_with)))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/item/multitool/tricorder/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	// Chem scan Mob
+	if(istype(interacting_with, /mob/living) && can_see(user, interacting_with, 1))
+		var/mob/living/mob = interacting_with
+		if(medical_tricorder && !user.is_blind())
+			chemscan(user, mob)
+
+////////// Long range scan //////////
+/obj/item/multitool/tricorder/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION) && can_see(user, interacting_with, long_range_tricorder? 15 : 1))
+		if((get_dist(user, interacting_with) > 1) && long_range_tricorder)
+			interacting_with.Beam(user, icon='icons/effects/beam_advanced.dmi', icon_state = "med_scan", time = 5)
+			playsound(src, 'sound/items/pip.ogg', 25, FALSE, 2)
+		return interact_with_atom(interacting_with, user, modifiers)
+
+	//If medical_tricorder is set to FALSE then the tricorder will not be as effective as a regular medical scanner
+/obj/item/proc/lesserhealthscan(mob/user, mob/living/M)
+	if(isliving(user) && (user.incapacitated() || user.is_blind()))
+		return
+	//Damage specifics
+	var/oxy_damage = M.getOxyLoss()
+	var/tox_damage = M.getToxLoss()
+	var/fire_damage = M.getFireLoss()
+	var/brute_damage = M.getBruteLoss()
+	var/brain_status = M.get_organ_loss(ORGAN_SLOT_BRAIN)
+
+	// Status Readout
+	// Tricorder can detect damage but can only give estimates in most cases
+	//Temperature
+	to_chat(user, span_info("Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)"))
+	//Brute
+	to_chat(user, "\t <font color='#ff0202'>*</font> Brute: <font color='#FF8000'>[brute_damage > 100 ? "<font color='#ff0202'>Critical</font>" : brute_damage > 75 ? "Serious" : brute_damage > 50 ? "High" : brute_damage > 25 ? "Medium" : brute_damage > 0 ? "Low" : "<font color='#00aeff'>Null</font>"] level</font></span>")
+	//Burn
+	to_chat(user, "\t <font color='#FF8000'>*</font> Burn: <font color='#FF8000'>[fire_damage > 100 ? "<font color='#ff0202'>Critical</font>" : fire_damage > 75 ? "Serious" : fire_damage > 50 ? "High" : fire_damage > 25 ? "Medium" : fire_damage > 0 ? "Low" : "<font color='#00aeff'>Null</font>"] level</font></span>")
+	//Oxygen
+	to_chat(user, "\t <font color='#00aeff'>*</font> Oxygen: <font color='#FF8000'>[oxy_damage > 100 ? "<font color='#ff0202'>Critical</font>" : oxy_damage > 75 ? "Serious" : oxy_damage > 50 ? "High" : oxy_damage > 25 ? "Medium" : oxy_damage > 0 ? "Low" : "<font color='#00aeff'>Null</font>"] level</font></span>")
+	//Toxin
+	to_chat(user, "\t <font color='#33ff00'>*</font> Toxins: <font color='#FF8000'>[tox_damage > 100 ? "<font color='#ff0202'>Critical</font>" : tox_damage > 75 ? "Serious" : tox_damage > 50 ? "High" : tox_damage > 25 ? "Medium" : tox_damage > 0 ? "Low" : "<font color='#00aeff'>Null</font>"] level</font></span>")
+	//Brain
+	to_chat(user, "\t <font color='#ed0dd9'>*</font> Brain: <font color='#FF8000'>[brain_status >= 200 ? "<font color='#ff0202'>Critical Damaged</font>" : brain_status > 100 ? "High Damaged" : brain_status > 0 ? "Low Damaged" : "<font color='#00aeff'>Normal</font>"]</font></span>")
+
 #undef PROXIMITY_NEAR
 #undef PROXIMITY_NONE
 #undef PROXIMITY_ON_SCREEN

@@ -178,7 +178,10 @@
  */
 /datum/component/religious_tool/proc/generate_available_sects(mob/user)
 	var/list/sects_to_pick = list()
-	for(var/path in subtypesof(/datum/religion_sect))
+	for(var/datum/religion_sect/each_sect in GLOB.religion_sect_datums)
+		var/path = each_sect.type
+		if(!each_sect.starter)
+			continue
 		var/list/sect = list()
 		var/datum/religion_sect/not_a_real_instance_rs = path
 		sect["name"] = initial(not_a_real_instance_rs.name)

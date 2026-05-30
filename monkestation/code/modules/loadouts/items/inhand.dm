@@ -86,3 +86,11 @@ GLOBAL_LIST_INIT(loadout_inhand_items, generate_loadout_items(/datum/loadout_ite
 /datum/loadout_item/inhand/satchel/deforest_backpack
 	name = "Deforest Backpack"
 	item_path = /obj/item/storage/backpack/medic/deforest
+
+/datum/loadout_item/inhand/umbrella
+	name = "Umbrella (recolorable)"
+	item_path = /obj/item/umbrella/consistent
+
+/datum/loadout_item/inhand/parasol
+	name = "Parasol"
+	item_path = /obj/item/umbrella/parasol

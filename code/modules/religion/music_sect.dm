@@ -1,3 +1,22 @@
+/datum/religion_sect/music
+	name = "Festival"
+	quote = "Everything follows a rhythm- The heartbeat of the universe!"
+	desc = "Make wonderful music! Sooth or serrate your friends and foes with the beat."
+	tgui_icon = "music"
+	altar_icon_state = "convertaltar-festival"
+	alignment = ALIGNMENT_GOOD
+	candle_overlay = FALSE
+	rites_list = list(
+		/datum/religion_rites/song_tuner/evangelism,
+		/datum/religion_rites/song_tuner/nullwave,
+		/datum/religion_rites/song_tuner/pain,
+		/datum/religion_rites/song_tuner/lullaby,
+	)
+
+/datum/religion_sect/music/on_conversion(mob/living/chap)
+	. = ..()
+	new /obj/item/choice_beacon/music(get_turf(chap))
+
 ///prototype for rites that tune a song.
 /datum/religion_rites/song_tuner
 	name = "Tune Song"
