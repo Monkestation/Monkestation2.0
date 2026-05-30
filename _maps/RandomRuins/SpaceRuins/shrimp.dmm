@@ -15,6 +15,9 @@
 "db" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /obj/effect/mob_spawn/corpse/human/cook,
+/obj/item/food/meat/cutlet/plain/human,
+/obj/item/food/meat/cutlet/plain/human,
+/obj/item/food/meat/cutlet/plain/human,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "di" = (
@@ -47,6 +50,14 @@
 	currentcolor = "#FFFFFF"
 	},
 /area/ruin/space/has_grav/powered/shrimp)
+"hA" = (
+/obj/effect/mine/explosive/light,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/powered/shrimp)
+"hB" = (
+/obj/structure/statue/shrimp,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
 "ip" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/machinery/light/floor/has_bulb/red,
@@ -73,6 +84,10 @@
 	},
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/shrimp)
+"jp" = (
+/obj/structure/lattice,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space/shrimptennas)
 "jq" = (
 /turf/open/floor/carpet/black,
 /area/ruin/space/has_grav/powered/shrimp)
@@ -89,10 +104,6 @@
 "jY" = (
 /obj/effect/gibspawner/human,
 /turf/open/floor/iron/cafeteria,
-/area/ruin/space/has_grav/powered/shrimp)
-"kv" = (
-/obj/structure/statue/shrimp,
-/turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/shrimp)
 "lC" = (
 /obj/structure/chair/wood{
@@ -118,7 +129,8 @@
 /obj/structure/table,
 /obj/item/food/salad/egg_fried_rice{
 	name = "shrimp fried special rice";
-	food_quality = 100
+	food_quality = 100;
+	desc = "As simple as fried rice gets: rice, egg, soy sauce, and possibly human meat. Simple, elegant, and infinitely customisable."
 	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
@@ -154,6 +166,10 @@
 	},
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/shrimp)
+"qI" = (
+/obj/structure/statue/shrimp,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/shrimp)
 "sh" = (
 /obj/structure/lattice,
 /obj/structure/fluff/fokoff_sign,
@@ -175,6 +191,10 @@
 /obj/item/reagent_containers/condiment/rice,
 /obj/item/reagent_containers/condiment/rice,
 /obj/effect/mob_spawn/corpse/human/damaged,
+/obj/item/food/meat/cutlet/plain/human,
+/obj/item/food/meat/cutlet/plain/human,
+/obj/item/food/meat/cutlet/plain/human,
+/obj/item/food/meat/slab/human,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "wF" = (
@@ -244,7 +264,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "Ga" = (
-/turf/closed/wall/mineral/titanium/interior,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ruin/space/has_grav/powered/shrimp)
 "Gs" = (
 /obj/structure/table/reinforced/plasmarglass,
@@ -259,6 +279,10 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
+"Hg" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
 "IP" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/carpet,
@@ -283,7 +307,7 @@
 /turf/open/floor/carpet,
 /area/space)
 "MN" = (
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ruin/powered)
 "Nx" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -314,6 +338,14 @@
 /obj/item/paper/fluff/spaceruins/shrimp/menu,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/shrimp)
+"Ps" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/effect/mob_spawn/corpse/human/cook,
+/obj/item/food/meat/slab/human,
+/obj/item/food/meat/slab/human,
+/obj/item/food/meat/slab/human,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
 "PB" = (
 /turf/closed/wall/mineral/titanium,
 /area/ruin/space/has_grav/powered/shrimp)
@@ -335,10 +367,11 @@
 	currentcolor = "#FFFFFF"
 	},
 /area/ruin/space/has_grav/powered/shrimp)
-"TY" = (
-/obj/structure/statue/shrimp,
-/turf/open/floor/iron/cafeteria,
-/area/ruin/space/has_grav/powered/shrimp)
+"UM" = (
+/obj/structure/lattice,
+/obj/structure/billboard/shrimp,
+/turf/open/space/basic,
+/area/ruin/space/shrimptennas)
 "UZ" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/external/ruin,
@@ -467,7 +500,7 @@ YH
 YH
 YH
 DF
-DF
+UM
 YH
 YH
 YH
@@ -513,7 +546,7 @@ YH
 YH
 YH
 YH
-YH
+Hg
 sh
 DF
 DF
@@ -540,9 +573,9 @@ YH
 YH
 YH
 YH
-PB
+Ga
 UZ
-PB
+Ga
 YH
 YH
 YH
@@ -566,13 +599,13 @@ YH
 YH
 YH
 YH
-YH
-PB
+Ga
+Ga
 Ga
 sw
 Ga
-PB
-DF
+Ga
+jp
 DF
 DF
 DF
@@ -593,14 +626,14 @@ YH
 (9,1,1) = {"
 YH
 YH
-YH
-PB
+Ga
+Ga
 OX
 Ga
 wF
 Ga
-kv
-PB
+qI
+Ga
 YH
 YH
 YH
@@ -620,15 +653,15 @@ YH
 "}
 (10,1,1) = {"
 YH
-YH
-PB
+Ga
+Ga
 OX
 De
 De
 De
 De
 De
-PB
+Ga
 YH
 YH
 YH
@@ -648,7 +681,7 @@ YH
 "}
 (11,1,1) = {"
 YH
-PB
+Ga
 OX
 De
 jq
@@ -656,7 +689,7 @@ jq
 jq
 De
 IP
-PB
+Ga
 YH
 YH
 YH
@@ -676,7 +709,7 @@ YH
 "}
 (12,1,1) = {"
 YH
-PB
+Ga
 Pj
 De
 jq
@@ -684,8 +717,8 @@ fn
 jq
 De
 De
-PB
-PB
+Ga
+Ga
 YH
 YH
 YH
@@ -704,7 +737,7 @@ YH
 "}
 (13,1,1) = {"
 YH
-PB
+Ga
 De
 De
 TQ
@@ -713,7 +746,7 @@ jq
 lS
 Ar
 De
-PB
+Ga
 YH
 YH
 YH
@@ -732,7 +765,7 @@ YH
 "}
 (14,1,1) = {"
 YH
-PB
+Ga
 De
 Ar
 De
@@ -741,7 +774,7 @@ De
 jr
 YI
 De
-PB
+Ga
 YH
 YH
 DF
@@ -760,7 +793,7 @@ YH
 "}
 (15,1,1) = {"
 YH
-PB
+Ga
 De
 De
 De
@@ -769,7 +802,7 @@ De
 Mk
 Pk
 IP
-PB
+Ga
 DF
 DF
 DF
@@ -781,14 +814,14 @@ DF
 DF
 YH
 PB
+hA
 PB
-YH
 YH
 YH
 "}
 (16,1,1) = {"
 YH
-PB
+Ga
 De
 De
 OY
@@ -797,7 +830,7 @@ De
 lC
 pr
 De
-PB
+Ga
 YH
 YH
 YH
@@ -816,7 +849,7 @@ YH
 "}
 (17,1,1) = {"
 YH
-PB
+Ga
 Pj
 De
 Pk
@@ -825,7 +858,7 @@ De
 De
 De
 De
-PB
+Ga
 YH
 DF
 DF
@@ -836,7 +869,7 @@ YH
 YH
 YH
 YH
-PB
+hA
 DO
 PB
 PB
@@ -844,8 +877,8 @@ YH
 "}
 (18,1,1) = {"
 YH
-PB
-kv
+Ga
+qI
 De
 Tp
 jV
@@ -853,7 +886,7 @@ De
 De
 lS
 lS
-PB
+Ga
 DF
 DF
 YH
@@ -867,13 +900,13 @@ YH
 PB
 mt
 Xl
-PB
+hA
 YH
 "}
 (19,1,1) = {"
 YH
-YH
-PB
+Ga
+Ga
 De
 jf
 lC
@@ -881,7 +914,7 @@ De
 De
 Pk
 jV
-PB
+Ga
 YH
 YH
 YH
@@ -901,7 +934,7 @@ YH
 (20,1,1) = {"
 YH
 YH
-PB
+Ga
 De
 De
 De
@@ -909,8 +942,8 @@ Ar
 De
 di
 Cv
-PB
-PB
+Ga
+Ga
 YH
 YH
 YH
@@ -929,7 +962,7 @@ YH
 (21,1,1) = {"
 YH
 YH
-PB
+Ga
 Pj
 De
 jV
@@ -937,9 +970,9 @@ Pk
 De
 lC
 lC
-kv
-PB
-PB
+qI
+Ga
+Ga
 YH
 YH
 YH
@@ -951,13 +984,13 @@ PB
 by
 PB
 PB
-PB
+hA
 YH
 "}
 (22,1,1) = {"
 YH
 YH
-PB
+Ga
 De
 De
 YI
@@ -966,10 +999,10 @@ De
 De
 De
 IP
-PB
-PB
-PB
-PB
+Ga
+Ga
+Ga
+Ga
 YH
 YH
 PB
@@ -985,7 +1018,7 @@ YH
 (23,1,1) = {"
 YH
 YH
-PB
+Ga
 nu
 De
 lC
@@ -997,7 +1030,7 @@ De
 CD
 yy
 iT
-PB
+Ga
 PB
 PB
 PB
@@ -1013,8 +1046,8 @@ YH
 (24,1,1) = {"
 YH
 YH
-YH
-PB
+Ga
+Ga
 De
 De
 De
@@ -1042,7 +1075,7 @@ YH
 YH
 YH
 YH
-PB
+Ga
 Pj
 De
 De
@@ -1070,8 +1103,8 @@ YH
 YH
 YH
 YH
-PB
-kv
+Ga
+qI
 De
 De
 De
@@ -1082,7 +1115,7 @@ Kv
 yy
 yy
 Ga
-db
+Ps
 jY
 yy
 PB
@@ -1098,9 +1131,9 @@ YH
 YH
 YH
 YH
-YH
-PB
-PB
+Ga
+Ga
+Ga
 eh
 wG
 wG
@@ -1128,7 +1161,7 @@ YH
 YH
 YH
 YH
-PB
+Ga
 yy
 yy
 yy
@@ -1139,7 +1172,7 @@ yy
 yy
 Ga
 Ga
-PB
+Ga
 PB
 PB
 YH
@@ -1156,9 +1189,9 @@ YH
 YH
 YH
 YH
-PB
-PB
-PB
+Ga
+Ga
+Ga
 Jg
 yy
 yy
@@ -1167,7 +1200,7 @@ yy
 yy
 nS
 Gs
-PB
+Ga
 YH
 YH
 YH
@@ -1186,16 +1219,16 @@ YH
 YH
 YH
 YH
-PB
-PB
-PB
+Ga
+Ga
+Ga
 yy
 yy
 yy
-TY
-PB
-PB
-PB
+hB
+Ga
+Ga
+Ga
 YH
 YH
 YH
@@ -1217,11 +1250,11 @@ YH
 YH
 YH
 MN
-PB
-PB
-PB
-PB
-PB
+Ga
+Ga
+Ga
+Ga
+Ga
 YH
 YH
 YH
