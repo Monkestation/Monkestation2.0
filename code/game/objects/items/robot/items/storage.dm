@@ -79,6 +79,8 @@
 /obj/item/borg/apparatus/proc/put_in_apparatus(obj/item/storing_item, mob/user)
 	if(stored)
 		return FALSE
+	if(!istype(storing_item))
+		return FALSE
 	if(HAS_TRAIT(storing_item, TRAIT_NODROP))
 		return
 	if(storing_item == user)
