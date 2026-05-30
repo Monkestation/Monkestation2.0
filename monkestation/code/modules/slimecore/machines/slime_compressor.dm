@@ -324,8 +324,6 @@
 	active = FALSE
 
 	for(var/mob/living/victim in mobs_inside)
-		if(!isslime(victim))
-			continue
 		qdel(victim)
 
 	clear_recipe()
