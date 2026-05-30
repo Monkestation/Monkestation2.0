@@ -12,6 +12,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
+"bD" = (
+/obj/machinery/light/blacklight/directional/south,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
 "db" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /obj/effect/mob_spawn/corpse/human/cook,
@@ -51,9 +55,10 @@
 	},
 /area/ruin/space/has_grav/powered/shrimp)
 "hA" = (
-/obj/effect/mine/explosive/light,
-/turf/closed/wall/mineral/titanium,
-/area/ruin/space/has_grav/powered/shrimp)
+/obj/structure/lattice,
+/obj/structure/billboard/shrimp,
+/turf/open/space/basic,
+/area/ruin/space/shrimptennas)
 "hB" = (
 /obj/structure/statue/shrimp,
 /turf/open/floor/iron/cafeteria,
@@ -118,7 +123,12 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/shrimp)
 "mt" = (
-/obj/item/knife/butcher,
+/obj/item/knife/butcher{
+	color = "#c26f6f";
+	name = "shrimpy's cleaver";
+	desc = "This bad boy can chop up a DOZEN human chefs..";
+	hitsound = 'sound/effects/kero.ogg'
+	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "nu" = (
@@ -166,6 +176,10 @@
 	},
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/shrimp)
+"qH" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
 "qI" = (
 /obj/structure/statue/shrimp,
 /turf/open/floor/carpet,
@@ -276,13 +290,10 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "GM" = (
-/obj/machinery/light/directional/east,
+/obj/effect/gibspawner/human,
+/obj/machinery/light/floor/has_bulb/red,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
-"Hg" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/template_noop)
 "IP" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/carpet,
@@ -367,17 +378,20 @@
 	currentcolor = "#FFFFFF"
 	},
 /area/ruin/space/has_grav/powered/shrimp)
-"UM" = (
-/obj/structure/lattice,
-/obj/structure/billboard/shrimp,
-/turf/open/space/basic,
-/area/ruin/space/shrimptennas)
+"TZ" = (
+/obj/machinery/light/blacklight/directional/north,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/powered/shrimp)
 "UZ" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/access/any,
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/shrimp)
+"VS" = (
+/obj/machinery/light/blacklight/directional/east,
+/turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "WM" = (
 /obj/machinery/door/airlock/service,
@@ -500,7 +514,7 @@ YH
 YH
 YH
 DF
-UM
+hA
 YH
 YH
 YH
@@ -546,7 +560,7 @@ YH
 YH
 YH
 YH
-Hg
+qH
 sh
 DF
 DF
@@ -814,7 +828,7 @@ DF
 DF
 YH
 PB
-hA
+PB
 PB
 YH
 YH
@@ -869,7 +883,7 @@ YH
 YH
 YH
 YH
-hA
+PB
 DO
 PB
 PB
@@ -900,7 +914,7 @@ YH
 PB
 mt
 Xl
-hA
+PB
 YH
 "}
 (19,1,1) = {"
@@ -984,7 +998,7 @@ PB
 by
 PB
 PB
-hA
+PB
 YH
 "}
 (22,1,1) = {"
@@ -1113,10 +1127,10 @@ yy
 Kv
 Kv
 yy
-yy
+bD
 Ga
 Ps
-jY
+GM
 yy
 PB
 PB
@@ -1144,7 +1158,7 @@ yy
 yy
 Ga
 eU
-GM
+yy
 yy
 PB
 YH
@@ -1162,7 +1176,7 @@ YH
 YH
 YH
 Ga
-yy
+TZ
 yy
 yy
 yy
@@ -1223,7 +1237,7 @@ Ga
 Ga
 Ga
 yy
-yy
+VS
 yy
 hB
 Ga
