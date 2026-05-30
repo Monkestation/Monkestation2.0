@@ -711,6 +711,7 @@
 	var/upgrade_type
 
 /obj/item/disk/vacuum_upgrade/proc/on_upgrade(obj/item/vacuum_pack/vaccum)
+	return
 
 /obj/item/disk/vacuum_upgrade/stasis
 	name = "vacuum pack stasis upgrade disk"
