@@ -33,22 +33,6 @@
 	item_flags = NOBLUDGEON | ABSTRACT
 	slot_flags = NONE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	/// Conversion list of type to name for examine.
-	var/static/list/name_of_mobs = list(
-		/mob/living/carbon/human/species/monkey = "monkey",
-		/mob/living/basic/cockroach/rockroach = "rock roach",
-		/mob/living/basic/cockroach/iceroach = "ice roach",
-		/mob/living/basic/xenofauna/meatbeast = "meat beast",
-		/mob/living/basic/xenofauna/diyaab = "diyaab",
-		/mob/living/basic/xenofauna/thinbug = "thin bug",
-		/mob/living/basic/cockroach/recursive = "recursive roach",
-		/mob/living/basic/xenofauna/thoom = "thoom",
-		/mob/living/basic/xenofauna/greeblefly = "greeblefly",
-		/mob/living/basic/xenofauna/lavadog = "lava dog",
-		/mob/living/basic/xenofauna/voxslug = "strange slug",
-		/mob/living/basic/xenofauna/possum = "possum",
-		/mob/living/basic/xenofauna/dron = "semi-organic bug",
-	)
 	/// The mob we have selected with attack_self_alternate.
 	var/selected_creature = /mob/living/carbon/human/species/monkey // Shoot monkeys by default until something else is chosen.
 	/// Can this item be used by itself to do what it intends to do?
@@ -283,10 +267,10 @@
 		. += span_notice("It is hotwired to fire [selective_mode ? "selectively" : "indiscriminately"].")
 	if(!linked)
 		return
+	var/atom/typed_selected_creature = selected_creature
 	. += span_notice("Right click in hand to select the type of creature to spawn.")
-	. += span_info("It is currently set to spawn a [name_of_mobs[selected_creature]].")
+	. += span_info("It is currently set to spawn a [initial(typed_selected_creature.name)].")
 	. += span_info("It has [linked.stored_matter] unit\s of biomass.")
-
 
 /// Tries to suck our target.
 /obj/item/vacuum_pack/proc/do_suck(atom/movable/target, mob/user)
@@ -373,7 +357,7 @@
 	else
 		var/list/items = list()
 		var/list/items_stored = list()
-		for(var/atom/movable/stored_obj in stored) 
+		for(var/atom/movable/stored_obj in stored)
 			var/image/stored_image = image(icon = stored_obj.icon, icon_state = stored_obj.icon_state)
 			stored_image.color = stored_obj.color
 			items += list(stored_obj.name = stored_image)
