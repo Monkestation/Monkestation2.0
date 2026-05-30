@@ -526,3 +526,26 @@
   Tractor-Maam:
   - rscadd: Inserting paper with writing on it into your PDA requires a confirmation.
   - rscadd: Added the MOD megaphone module to Cargo Goodies for 250cr.
+2026-05-30:
+  Absolucy:
+  - image: New sprites for the hunter's revolver, by infrared_baron.
+  - rscadd: The hunter's revolver can now also be used to stab people.
+  - rscadd: The bloodsilver bullet debuff now causes abilities to hurt you with "recoil"
+      while you're afflicted.
+  - rscadd: Bloodsilver bullets now forcefully deactivate various monster abilities
+      - such as fleshmend, caretaker's refuge, changeling adrenaline, darkness adaptation
+      and such, alongside pausing changeling chemical regeneration, and preventing
+      jaunts.
+  - bugfix: Bloodsilver bullets now ricochet, as was likely originally intended.
+  TheColorCyan:
+  - qol: clock cultists can see if APC already has a cog in it by examining
+  - balance: kindle and vanguard can be invoked when moving
+  - balance: bronze armor now has it's helmet attached to it, instead of being separate
+      (like a hood)
+  - balance: bronze armor gives pressure resistance when empowered
+  - balance: bronze armor is now thick material
+  - balance: bronze helmet now completely hides your face, and gives pepperspray protection
+  - balance: bronze shoes are now noslips
+  - balance: clock armaments spell no longer gives bronze boots
+  - bugfix: fixed a bug that allowed quickbound clock cult spells to bypass power
+      cost and make power go into negative values

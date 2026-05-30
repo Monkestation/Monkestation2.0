@@ -1,0 +1,6 @@
+author: "TheColorCyan"
+delete-after: True
+changes:
+  - balance: "(Melbert) Codex Cicatrix is now a tier 1 heretic knowledge, and can not be drafted."
+  - balance: "(Melbert) Upon being successfully sacrificed by a heretic all other heretics lose you as a target, and you can no longer be (re)rolled as a target by other heretics."
+  - balance: "Cosmic expansion range is back to 3x3"

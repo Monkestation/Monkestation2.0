@@ -2398,6 +2398,7 @@
 #include "code\game\objects\items\extinguisher.dm"
 #include "code\game\objects\items\fireaxe.dm"
 #include "code\game\objects\items\flamethrower.dm"
+#include "code\game\objects\items\gems.dm"
 #include "code\game\objects\items\generic_beacon.dm"
 #include "code\game\objects\items\giant_straw.dm"
 #include "code\game\objects\items\gift.dm"
