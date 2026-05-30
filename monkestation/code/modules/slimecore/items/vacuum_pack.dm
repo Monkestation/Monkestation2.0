@@ -679,7 +679,7 @@
 			to_chat(pack.loc, span_notice("[src] snaps back onto [pack]."))
 		destination = pack
 		pack.selecting_radial_target = FALSE
-	. = ..()
+	return ..()
 
 /obj/item/vacuum_nozzle/attack_self(mob/user, modifiers)
 	. = ..()
