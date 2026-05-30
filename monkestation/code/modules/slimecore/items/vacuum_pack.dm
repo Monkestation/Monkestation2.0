@@ -723,7 +723,7 @@
 	upgrade_type = VACUUM_PACK_UPGRADE_HEALING
 
 /obj/item/disk/vacuum_upgrade/healing/on_upgrade(obj/item/vacuum_pack/vaccum)
-	START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSobj, vaccum)
 
 /obj/item/disk/vacuum_upgrade/capacity
 	name = "vacuum pack capacity upgrade disk"
