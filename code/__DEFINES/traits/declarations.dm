@@ -407,6 +407,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Given to mobs which have been implanted with a sponsorship implant
 #define TRAIT_SPONSOR_IMPLANT "sponsor_implant"
 
+/// Given by the bloodsilver status effect - so we can check the trait instead of status effects.
+#define TRAIT_BLOODSILVER_CURSE "bloodsilver_curse"
+
 /// Lets us scan reagents
 #define TRAIT_REAGENT_SCANNER "reagent_scanner"
 /// Lets us scan machine parts and tech unlocks
