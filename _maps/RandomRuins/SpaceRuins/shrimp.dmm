@@ -90,7 +90,6 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/shrimp)
 "jp" = (
-/obj/structure/lattice,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ruin/space/shrimptennas)
 "jq" = (
@@ -179,7 +178,7 @@
 "qH" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/ruin/space/shrimptennas)
 "qI" = (
 /obj/structure/statue/shrimp,
 /turf/open/floor/carpet,
