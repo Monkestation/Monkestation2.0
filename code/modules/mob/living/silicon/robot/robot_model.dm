@@ -432,6 +432,13 @@
 	/// The sight mode given when toggled.
 	var/given_sight_mode = BORGMESON
 
+/datum/action/cooldown/borg_sight_vision/Remove(mob/removed_from)
+	if(active)
+		var/mob/living/silicon/robot/cyborg_owner = owner
+		cyborg_owner.sight_mode = 0
+		cyborg_owner.update_sight()
+	return ..()
+
 /datum/action/cooldown/borg_sight_vision/Activate()
 	var/mob/living/silicon/robot/cyborg_owner = owner
 	active = !active
@@ -821,7 +828,6 @@
 	energy_shield_ref = WEAKREF(energy_shield_action)
 
 /obj/item/robot_model/miner/Destroy()
-	QDEL_NULL(mining_scanner)
 	QDEL_NULL(energy_shield_ref)
 	return ..()
 
