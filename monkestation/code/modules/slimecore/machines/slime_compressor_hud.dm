@@ -81,7 +81,7 @@
 			hover_popup.info_maptext.maptext_width = world.icon_size * 3
 			hover_popup.info_maptext.maptext_x = -world.icon_size
 			maptext = "[base_complete? "1" : "0"]/1 [base_slime_required.name] slime"
-			if (cross_slime_required)
+			if(cross_slime_required)
 				hover_popup.info_maptext.maptext_height = world.icon_size
 				maptext_cross = "[cross_complete? "1" : "0"]/1 [cross_slime_required.name] slime"
 	hover_popup.info_maptext.maptext = MAPTEXT_TINY_UNICODE("<span style='text-align:center'>[maptext]</span>\
