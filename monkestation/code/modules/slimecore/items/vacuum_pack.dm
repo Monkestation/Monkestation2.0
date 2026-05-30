@@ -582,7 +582,7 @@
 	return ..()
 
 /obj/item/vacuum_pack/backpack/dropped(mob/user)
-	..()
+	. = ..()
 	remove_nozzle()
 
 /obj/item/vacuum_pack/backpack/equipped(mob/user, slot)
@@ -679,7 +679,7 @@
 			to_chat(pack.loc, span_notice("[src] snaps back onto [pack]."))
 		destination = pack
 		pack.selecting_radial_target = FALSE
-	. = ..()
+	return ..()
 
 /obj/item/vacuum_nozzle/attack_self(mob/user, modifiers)
 	. = ..()
@@ -711,6 +711,7 @@
 	var/upgrade_type
 
 /obj/item/disk/vacuum_upgrade/proc/on_upgrade(obj/item/vacuum_pack/vaccum)
+	return
 
 /obj/item/disk/vacuum_upgrade/stasis
 	name = "vacuum pack stasis upgrade disk"

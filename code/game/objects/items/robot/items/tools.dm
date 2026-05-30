@@ -418,12 +418,10 @@
 	if(!amount)
 		return
 	current_charges = clamp(current_charges + amount, 0, maximum_charges)
-	if(datum_flags & DF_ISPROCESSING)
-		if(maximum_charges == current_charges)
-			STOP_PROCESSING(SSobj, src)
+	if(maximum_charges > current_charges)
+		START_PROCESSING(SSobj, src)
 	else
-		if(maximum_charges > current_charges)
-			START_PROCESSING(SSobj, src)
+  		STOP_PROCESSING(SSobj, src)
 	if(loc)
 		playsound(loc, 'sound/magic/charge.ogg', 50, TRUE)
 		if(ismob(loc))

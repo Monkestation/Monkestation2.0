@@ -73,17 +73,19 @@
 /obj/item/borg/apparatus/proc/itemcheck(atom/atom)
 	if(is_type_in_list(atom, blacklisted_storables))
 		return FALSE
-	for(var/storable_type in storable)
-		if(istype(atom, storable_type))
-			return TRUE
-	return FALSE
+	return is_type_in_list(atom, storable)
 
 /// Attempts to put the item into the apparatus.
 /obj/item/borg/apparatus/proc/put_in_apparatus(atom/atom, mob/user)
 	if(stored)
 		return FALSE
-	if((istype(atom.loc, /mob/living/silicon/robot) && (atom == user)) || (istype(atom.loc, /obj/item/robot_model) && (atom == user)) || HAS_TRAIT(atom, TRAIT_NODROP))
-		return FALSE // Borgs should not be grabbing their own modules.
+	if(HAS_TRAIT(atom, TRAIT_NODROP))
+		return
+	if(atom == user)
+		if(istype(atom.loc, /mob/living/silicon/robot))
+    			return FALSE
+    		else if(istype(atom.loc, /obj/item/robot_model)
+        		return FALSE
 	if(!itemcheck(atom))
 		return FALSE
 	var/obj/item/item = atom
