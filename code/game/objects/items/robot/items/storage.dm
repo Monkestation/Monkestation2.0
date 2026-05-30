@@ -84,7 +84,7 @@
 	if(atom == user)
 		if(istype(atom.loc, /mob/living/silicon/robot))
 			return FALSE
-    	else if(istype(atom.loc, /obj/item/robot_model))
+		else if(istype(atom.loc, /obj/item/robot_model))
 			return FALSE
 	if(!itemcheck(atom))
 		return FALSE
