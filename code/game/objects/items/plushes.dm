@@ -18,7 +18,7 @@
 	var/obj/item/toy/plush/plush_child
 	var/obj/item/toy/plush/paternal_parent //who initiated creation
 	var/obj/item/toy/plush/maternal_parent //who owns, see love()
-	var/static/list/breeding_blacklist = typecacheof(/obj/item/toy/plush/carpplushie/dehy_carp, /obj/item/toy/plush/shrimp/golden)
+	var/static/list/breeding_blacklist = typecacheof(/obj/item/toy/plush/carpplushie/dehy_carp, )
 	var/list/scorned = list() //who the plush hates
 	var/list/scorned_by = list() //who hates the plush, to remove external references on Destroy()
 	var/heartbroken = FALSE
@@ -901,10 +901,13 @@
 	var/golden = FALSE
 	// Whether it has shrimp fried a man yet
 	var/suishrimp = FALSE
+	// How many men we've fried
+	var/suishrimp_count = 0
+
 
 /obj/item/toy/plush/shrimp/examine(mob/user)
 	. = ..()
-	if(has_fried)
+	if(has_fried && !suishrimp)
 		. += span_notice("[p_Theyre()] all tuckered out.")
 	if(suishrimp)
 		. += span_notice("[p_Theyre()] ready.")
@@ -928,8 +931,15 @@
 	new_rice.name = "bloody shrimp fried rice"
 	new_rice.desc = "A classic Japanese comfort food, made with sausage, veggies, worchestershire sauce, rice- oh, and of course, the blood of [user]."
 	new /obj/effect/temp_visual/shrimp_frying_rice(get_turf(user))
+	suishrimp_count++
 	user.dust(just_ash = FALSE, drop_items = TRUE)
 
+	if(suishrimp_count == 1)
+		desc = "This shrimp has krilled a man."
+	if(suishrimp_count == 2)
+		desc = "This shrimp has krilled two men. And many more to come."
+	if(suishrimp_count > 3)
+		desc = "This shrimp has krilled [suishrimp_count] men. Nothing can stop its rampage."
 	return MANUAL_SUICIDE
 
 /obj/item/toy/plush/shrimp/golden
@@ -1055,8 +1065,10 @@
 
 	if(golden)
 		has_fried = FALSE
+		new_rice.food_quality = 100 // masterchef
 	else
 		has_fried = TRUE
+		new_rice.food_quality = 20 // medicorechef
 	target_reagents.remove_reagent(/datum/reagent/consumable/rice, 30)
 	playsound(get_turf(new_rice), 'sound/effects/kero.ogg', 75, frequency = 0.5)
 	user.do_attack_animation(interacting_with)
