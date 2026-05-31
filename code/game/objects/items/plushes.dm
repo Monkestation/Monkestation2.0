@@ -18,7 +18,7 @@
 	var/obj/item/toy/plush/plush_child
 	var/obj/item/toy/plush/paternal_parent //who initiated creation
 	var/obj/item/toy/plush/maternal_parent //who owns, see love()
-	var/static/list/breeding_blacklist = typecacheof(/obj/item/toy/plush/carpplushie/dehy_carp, )
+	var/static/list/breeding_blacklist = typecacheof(list(/obj/item/toy/plush/carpplushie/dehy_carp, /obj/item/toy/plush/shrimp/golden))
 	var/list/scorned = list() //who the plush hates
 	var/list/scorned_by = list() //who hates the plush, to remove external references on Destroy()
 	var/heartbroken = FALSE
@@ -907,7 +907,10 @@
 
 /obj/item/toy/plush/shrimp/examine(mob/user)
 	. = ..()
-	if(has_fried && !suishrimp)
+	if(suishrimp)
+		. += span_notice("[p_Theyre()] ready.")
+		return
+	if(has_fried)
 		. += span_notice("[p_Theyre()] all tuckered out.")
 	if(suishrimp)
 		. += span_notice("[p_Theyre()] ready.")
