@@ -223,7 +223,7 @@
 	name = "Clock Cultist (Preview only)"
 
 	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/clockwork
+	suit = /obj/item/clothing/suit/hooded/clockwork
 	head = /obj/item/clothing/head/helmet/clockwork
 	l_hand = /obj/item/clockwork/weapon/brass_sword
 
