@@ -1,5 +1,0 @@
-author: "Mantle, Melbert"
-delete-after: True
-changes:
-  - rscadd: "Ported Spy Thiefs from TG, a lower threat antag, which are inspired by the antagonist of the same name on goon. Spies run around and steal stuff, in exchange for rewards, but get no other powers to help them do so."
-  - bugfix: "Stealing (for progtot, or spys) the cargo granted stamp now actually works."

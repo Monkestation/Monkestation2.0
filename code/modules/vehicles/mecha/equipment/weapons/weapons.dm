@@ -47,8 +47,12 @@
 	. = ..()//start the cooldown early because of sleeps
 	for(var/i in 1 to projectiles_per_shot)
 		//in case we run out of energy mid-burst, such as emp
-		if((energy_drain && !chassis.has_charge(energy_drain)) || (astype(src, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic)?.projectiles <= 0))
+		if(energy_drain && !chassis.has_charge(energy_drain))
 			break
+		if(istype(src, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic))
+			var/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/ballistic = src
+			if(ballistic.projectiles <= 0)
+				break
 		var/spread = 0
 		if(variance)
 			if(randomspread)

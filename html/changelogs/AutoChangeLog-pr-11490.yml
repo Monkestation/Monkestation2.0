@@ -1,5 +1,0 @@
-author: "big-boss-crate"
-delete-after: True
-changes:
-  - rscadd: "added a multitude of cosmetic outfits from LC13 (most EGO sprites done by InsightfulParasite, thank you to them)"
-  - rscadd: "added the EGOdrobe, a new vending machine whose restock you can buy through a hacked cargo console in the Imports section (this is what sells you the new outfits)"

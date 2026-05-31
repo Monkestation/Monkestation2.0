@@ -141,7 +141,7 @@
 	breakout_time = 90 SECONDS
 	open_sound = 'sound/effects/shovel_dig.ogg'
 	close_sound = 'sound/effects/shovel_dig.ogg'
-	cutting_tool = /obj/item/shovel
+	cutting_tool_behaviour = TOOL_SHOVEL
 	can_install_electronics = FALSE
 	paint_jobs = null
 
@@ -208,7 +208,7 @@
 /obj/structure/closet/crate/grave/tool_interact(obj/item/S, mob/living/carbon/user)
 	if(!(user.istate & ISTATE_HARM)) //checks to attempt to dig the grave, must be done with combat mode off only.
 		if(!opened)
-			if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
+			if(S.tool_behaviour == TOOL_SHOVEL)
 				to_chat(user, span_notice("You start start to dig open \the [src]  with \the [S]..."))
 				if (do_after(user,20, target = src))
 					grave_dug_open = TRUE
@@ -228,7 +228,7 @@
 			return 1
 
 	else if(((user.istate & ISTATE_HARM)) && opened) //checks to attempt to remove the grave entirely.
-		if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
+		if(S.tool_behaviour == TOOL_SHOVEL)
 			to_chat(user, span_notice("You start to remove \the [src]  with \the [S]."))
 			if (do_after(user,15, target = src))
 				to_chat(user, span_notice("You remove \the [src]  completely."))
