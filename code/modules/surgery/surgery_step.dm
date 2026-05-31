@@ -104,10 +104,20 @@
 
 	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod) * target.mob_surgery_speed_mod
 	var/modded_time = time * speed_mod
+	var/slowdown_time = time * SURGERY_SLOWDOWN_CAP_MULTIPLIER
 
+	fail_prob = modded_time - slowdown_time//if modded_time > time * modifier, then fail_prob = modded_time - time*modifier. starts at 0, caps at 99
+	if(user == target)
+		fail_prob += 50
+	if((get_location_modifier(target) < 0.8))//if the surgery is not on a operating table or stasis bed, incur a 10% penalty
+		fail_prob += 10
+	if(!HAS_TRAIT(user, TRAIT_NO_FAIL_CHANCE))//if the person doing surgery does not have latex gloves, incure a 15% failure penalty
+		fail_prob += 15
+	if(surgery.speed_modifier > 0)//for chemical related surgery speed buffs, adds a reduction in failure chance
+		fail_prob -= 15
+	fail_prob = min(max(0, fail_prob), 99)//minimum of 0 and maximum of 99
 
-	fail_prob = min(max(0, modded_time - (time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)),99)//if modded_time > time * modifier, then fail_prob = modded_time - time*modifier. starts at 0, caps at 99
-	modded_time = min(modded_time, time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)//also if that, then cap modded_time at time*modifier
+	modded_time = min(modded_time, slowdown_time)//also if that, then cap modded_time at time*modifier
 
 	if(iscyborg(user))//any immunities to surgery slowdown should go in this check.
 		modded_time = (time * tool.toolspeed) //Monkestation edit, allows borgs to have better surgery speed
