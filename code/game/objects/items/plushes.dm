@@ -908,12 +908,11 @@
 /obj/item/toy/plush/shrimp/examine(mob/user)
 	. = ..()
 	if(suishrimp)
-		. += span_notice("[p_Theyre()] ready.")
+		. += span_notice("[p_Theyre()] ready.") // i give up for now
 		return
 	if(has_fried)
 		. += span_notice("[p_Theyre()] all tuckered out.")
-	if(suishrimp)
-		. += span_notice("[p_Theyre()] ready.")
+		return
 	else
 		. += span_notice("[p_Theyre()] ready to fry some rice.")
 
