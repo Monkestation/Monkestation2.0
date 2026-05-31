@@ -23,6 +23,9 @@
 	//Used for upgrading this into R-Plating
 	var/upgradable = TRUE
 
+	//If we can slice apart this plating
+	var/can_slice_apart = TRUE
+
 /turf/open/floor/plating/broken_states()
 	return list("damaged1", "damaged2", "damaged4")
 
@@ -126,9 +129,9 @@
 					balloon_alert(user, "too damaged, use a welding or plating repair tool!")
 
 
-/turf/open/floor/plating/welder_act(mob/living/user, obj/item/I)
+/turf/open/floor/plating/welder_act(mob/living/user, obj/item/item)
 	..()
-	if((broken || burnt) && I.use_tool(src, user, 0, volume=80))
+	if((broken || burnt) && item.use_tool(src, user, 0, volume=80))
 		to_chat(user, span_danger("You fix some dents on the broken plating."))
 		icon_state = base_icon_state
 		burnt = FALSE
@@ -136,6 +139,24 @@
 		update_appearance()
 
 	return TRUE
+
+/turf/open/floor/plating/welder_act_secondary(mob/living/user, obj/item/item)
+	if(!can_slice_apart)
+		return FALSE
+	if(!item.tool_start_check(user, amount=3))
+		return FALSE
+	user.visible_message(span_notice("[user] begins slicing apart \the [src]..."),
+		span_notice("You begin cutting \the [src] apart with \the [item]..."),
+		span_hear("You hear welding."))
+	if(!item.use_tool(src, user, 10 SECONDS, volume=80))
+		return FALSE
+	user.visible_message(span_notice("[user] slices apart \the [src]."),
+	span_notice("You cut \the [src] apart with \the [item]."),
+	span_hear("You hear welding."))
+	new /obj/item/stack/tile/iron/large(src)
+	attempt_lattice_replacement(1)
+	return TRUE
+
 
 #undef PLATE_REINFORCE_COST
 
@@ -147,6 +168,7 @@
 	desc = "Thin, fragile flooring created with metal foam."
 	icon_state = "foam_plating"
 	upgradable = FALSE
+	can_slice_apart = FALSE
 
 /turf/open/floor/plating/foam/burn_tile()
 	return //jetfuel can't melt steel foam
@@ -215,6 +237,7 @@
 	baseturfs = /turf/open/floor/plating
 	rcd_proof = TRUE
 	upgradable = FALSE
+	can_slice_apart = FALSE
 	rust_resistance = RUST_RESISTANCE_REINFORCED
 
 	//Used to track which stage of deconstruction the plate is currently in, Intact > Bolts Loosened > Cut
