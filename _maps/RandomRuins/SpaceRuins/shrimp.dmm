@@ -141,6 +141,7 @@
 	food_quality = 100;
 	desc = "As simple as fried rice gets: rice, egg, soy sauce, and possibly human meat. Simple, elegant, and infinitely customisable."
 	},
+/obj/item/gps/spaceruin,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "nS" = (
