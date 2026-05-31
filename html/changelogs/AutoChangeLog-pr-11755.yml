@@ -1,0 +1,4 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - bugfix: "engineering cyborgs can recharge their light replacer in cyborg rechargers again."

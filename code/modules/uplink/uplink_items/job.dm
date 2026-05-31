@@ -40,6 +40,7 @@
 	item = /obj/item/clothing/under/color/grey/ancient
 	cost = 25
 	restricted_roles = list(JOB_ASSISTANT)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 	surplus = 0
 
 /datum/uplink_item/role_restricted/oldtoolboxclean
@@ -49,6 +50,7 @@
 	cost = 2
 	restricted_roles = list(JOB_ASSISTANT)
 	surplus = 0
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/maintenance_battle_tank
 	name = "Maintenance Battle Tank Blueprints"
@@ -65,6 +67,7 @@
 	restricted_roles = list(JOB_CLOWN)
 	illegal_tech = FALSE
 	surplus = 0 //monkestation edit: from 25 to 0
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/clownsuperpin
 	name = "Super Ultra Hilarious Firing Pin"
@@ -74,6 +77,7 @@
 	restricted_roles = list(JOB_CLOWN)
 	illegal_tech = FALSE
 	surplus = 0 //monkestation edit: from 25 to 0
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/syndimmi
 	name = "Syndicate Brand MMI"
@@ -90,6 +94,7 @@
 	item = /obj/item/hot_potato/syndicate
 	cost = 4
 	restricted_roles = list(JOB_COOK, JOB_BOTANIST, JOB_CLOWN, JOB_MIME)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/combat_baking
 	name = "Combat Bakery Kit"
@@ -126,6 +131,7 @@
 	cost = 14
 	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
 	surplus = 50
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/meathook
 	name = "Butcher's Meat Hook"
@@ -155,6 +161,7 @@
 	progression_minimum = 10 MINUTES
 	item = /obj/item/reagent_containers/medipen/magillitis
 	cost = 15
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
 
 /datum/uplink_item/role_restricted/gorillacubes
@@ -195,6 +202,7 @@
 	progression_minimum = 30 MINUTES
 	cost = 14
 	item = /obj/item/storage/box/hug/reverse_revolver
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 	restricted_roles = list(JOB_CLOWN)
 
 /datum/uplink_item/role_restricted/pressure_mod
@@ -216,6 +224,7 @@
 	cost = 12
 	item = /obj/item/storage/box/syndie_kit/mimery
 	restricted_roles = list(JOB_MIME)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 	surplus = 0
 
 /datum/uplink_item/role_restricted/laser_arm
@@ -241,6 +250,7 @@
 	progression_minimum = 10 MINUTES
 	cost = 10
 	item = /obj/item/pneumatic_cannon/pie/selfcharge
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 	restricted_roles = list(JOB_CLOWN)
 
 /datum/uplink_item/role_restricted/clown_bomb
@@ -273,6 +283,7 @@
 	progression_minimum = 5 MINUTES
 	item = /obj/vehicle/sealed/car/clowncar
 	cost = 25
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 	restricted_roles = list(JOB_CLOWN)
 	surplus = 10
 
@@ -291,6 +302,7 @@
 	cost = 25
 	surplus = 0
 	restricted_roles = list(JOB_CHAPLAIN)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/concealed_weapon_bay
 	name = "Concealed Weapon Bay"
@@ -315,6 +327,7 @@
 	cost = 10
 	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_XENOBIOLOGIST) //Monkestation edit: xenobiology
 	surplus = 10
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/blastcannon
 	name = "Blast Cannon"
@@ -326,6 +339,7 @@
 	item = /obj/item/gun/blastcannon
 	cost = 14 //High cost because of the potential for extreme damage in the hands of a skilled scientist.
 	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 	surplus = 5
 
 /datum/uplink_item/role_restricted/evil_seedling
@@ -333,6 +347,7 @@
 	desc = "A rare seed we have recovered that grows into a dangerous species that will aid you with your tasks!"
 	item = /obj/item/seeds/seedling/evil
 	cost = 8
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 	restricted_roles = list(JOB_BOTANIST)
 
 //Boombots ported from monkestation 1
@@ -363,6 +378,7 @@
 	item = /obj/item/storage/toolbox/guncase/monkeycase
 	cost = 4
 	limited_stock = 3
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 	restricted_roles = list(JOB_ASSISTANT, JOB_MIME, JOB_CLOWN)
 	refundable = FALSE
 
@@ -390,6 +406,7 @@
 	cost = 25
 	item = /obj/item/storage/box/clonearmy
 	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR, JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER) // Experimental cloners were traditionally bought by cargo.
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 ///I know this probably isn't the right place to put it, but I don't know where I should put it, and I can move it later.
 /obj/item/disk/clonearmy
@@ -439,6 +456,7 @@
 	desc = "This plant data disk contains the genetic blueprint for the Catalytic Inhibitor Serum gene.\
 			enabling plants to produce a serum that halts all internal chemical reactions"
 	item = /obj/item/disk/plantgene/syndicate
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 	cost = 17
 	restricted_roles = list(JOB_BOTANIST)
 

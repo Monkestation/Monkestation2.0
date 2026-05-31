@@ -1,0 +1,5 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - qol: "closets and crates have to be cut in combat mode."
+  - bugfix: "fixed up closet/crate cutting code to work off tool behaviour."
