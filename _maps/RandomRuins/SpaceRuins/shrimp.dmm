@@ -8,8 +8,11 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/obj/machinery/door/airlock/freezer,
-/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/obj/machinery/door/puzzle/keycard{
+	puzzle_id = "shrimproom";
+	name = "shrimpy door";
+	desc = "This door only opens when a keycard is swiped. It looks virtually indestructible. You could always vandalize the restaurant to get around it, though."
+	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "bD" = (
@@ -17,11 +20,12 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "db" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
-/obj/effect/mob_spawn/corpse/human/cook,
 /obj/item/food/meat/cutlet/plain/human,
 /obj/item/food/meat/cutlet/plain/human,
 /obj/item/food/meat/cutlet/plain/human,
+/obj/structure/closet/secure_closet/freezer/empty,
+/obj/effect/mob_spawn/corpse/human/damaged,
+/obj/effect/mob_spawn/corpse/human/damaged,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "di" = (
@@ -35,13 +39,8 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "eU" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
-/obj/item/toy/plush/shrimp{
-	desc = "You're telling me THIS GUY is bing chilling?";
-	name = "Chillbert"
-	},
-/turf/open/floor/iron/cafeteria,
-/area/ruin/space/has_grav/powered/shrimp)
+/turf/closed/indestructible/event/rock,
+/area/template_noop)
 "fg" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/iron/cafeteria,
@@ -80,7 +79,8 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "iT" = (
-/obj/effect/decal/cleanable/blood/gibs/body,
+/obj/structure/closet/secure_closet/freezer/fridge/all_access,
+/obj/effect/mob_spawn/corpse/human/cook,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "jf" = (
@@ -144,8 +144,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "nS" = (
-/obj/effect/spawner/structure/window/reinforced/indestructible,
-/obj/structure/window_sill,
+/obj/effect/spawner/structure/window/reinforced/damaged,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "oc" = (
@@ -203,11 +202,11 @@
 /obj/item/reagent_containers/condiment/rice,
 /obj/item/reagent_containers/condiment/rice,
 /obj/item/reagent_containers/condiment/rice,
-/obj/effect/mob_spawn/corpse/human/damaged,
 /obj/item/food/meat/cutlet/plain/human,
 /obj/item/food/meat/cutlet/plain/human,
 /obj/item/food/meat/cutlet/plain/human,
 /obj/item/food/meat/slab/human,
+/obj/effect/mob_spawn/corpse/human/damaged,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "wF" = (
@@ -236,7 +235,6 @@
 	dir = 3
 	},
 /obj/effect/decal/cleanable/blood,
-/obj/effect/decal/cleanable/blood/gibs/core,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "Ar" = (
@@ -264,11 +262,11 @@
 /turf/open/space/basic,
 /area/ruin/space/shrimptennas)
 "DO" = (
-/obj/effect/mob_spawn/corpse/human/cook,
-/turf/open/floor/iron/cafeteria,
-/area/ruin/space/has_grav/powered/shrimp)
-"DT" = (
-/obj/effect/decal/cleanable/blood,
+/obj/item/toy/plush/shrimp{
+	desc = "You're telling me THIS GUY is bing chilling?";
+	name = "Chillbert"
+	},
+/obj/structure/closet/secure_closet/freezer/empty,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "Fx" = (
@@ -286,10 +284,15 @@
 	name = "imitation golden shrimp plushie";
 	desc = "You're telling me THIS GUY is imprisoned for no reason? And that it's not even real gold?!"
 	},
+/obj/item/keycard/hilbert{
+	color = "#fbaaad";
+	name = "Shrimpy keycard";
+	desc = "A shrimpy keycard. Probably unlocks the backroom door, so you don't have to vandalize the restaurant.";
+	puzzle_id = "shrimproom"
+	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "GM" = (
-/obj/effect/gibspawner/human,
 /obj/machinery/light/floor/has_bulb/red,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
@@ -307,8 +310,8 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "LM" = (
-/obj/effect/mob_spawn/corpse/human/cook,
 /obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/mob_spawn/corpse/human/damaged,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "Mk" = (
@@ -349,11 +352,11 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/shrimp)
 "Ps" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
-/obj/effect/mob_spawn/corpse/human/cook,
 /obj/item/food/meat/slab/human,
 /obj/item/food/meat/slab/human,
 /obj/item/food/meat/slab/human,
+/obj/structure/closet/secure_closet/freezer/empty,
+/obj/effect/mob_spawn/corpse/human/damaged,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "PB" = (
@@ -390,6 +393,7 @@
 /area/ruin/space/has_grav/powered/shrimp)
 "VS" = (
 /obj/machinery/light/blacklight/directional/east,
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/powered/shrimp)
 "WM" = (
@@ -797,11 +801,11 @@ YH
 YH
 YH
 DF
-YH
-YH
-YH
-YH
-YH
+eU
+eU
+eU
+eU
+eU
 YH
 "}
 (15,1,1) = {"
@@ -825,11 +829,11 @@ YH
 YH
 DF
 DF
-YH
+eU
 PB
 PB
 PB
-YH
+eU
 YH
 "}
 (16,1,1) = {"
@@ -853,12 +857,12 @@ YH
 YH
 YH
 YH
-YH
+eU
 PB
 wh
 PB
-YH
-YH
+eU
+eU
 "}
 (17,1,1) = {"
 YH
@@ -881,12 +885,12 @@ YH
 YH
 YH
 YH
-YH
+eU
 PB
-DO
+yy
 PB
 PB
-YH
+eU
 "}
 (18,1,1) = {"
 YH
@@ -908,13 +912,13 @@ YH
 YH
 YH
 YH
-YH
-YH
+eU
+eU
 PB
 mt
 Xl
 PB
-YH
+eU
 "}
 (19,1,1) = {"
 YH
@@ -936,13 +940,13 @@ YH
 YH
 YH
 YH
-YH
+eU
 PB
 PB
 oP
 ir
 PB
-YH
+eU
 "}
 (20,1,1) = {"
 YH
@@ -964,13 +968,13 @@ YH
 YH
 YH
 YH
-YH
+eU
 PB
 uZ
 fg
 LM
 PB
-YH
+eU
 "}
 (21,1,1) = {"
 YH
@@ -998,7 +1002,7 @@ by
 PB
 PB
 PB
-YH
+eU
 "}
 (22,1,1) = {"
 YH
@@ -1024,9 +1028,9 @@ PB
 uZ
 yv
 PB
-YH
-YH
-YH
+eU
+eU
+eU
 "}
 (23,1,1) = {"
 YH
@@ -1042,7 +1046,7 @@ De
 De
 CD
 yy
-iT
+yy
 Ga
 PB
 PB
@@ -1098,7 +1102,7 @@ yy
 yy
 yy
 yy
-DT
+yy
 Ga
 db
 yy
@@ -1156,9 +1160,9 @@ nQ
 yy
 yy
 Ga
-eU
 yy
 yy
+DO
 PB
 YH
 YH
@@ -1184,7 +1188,7 @@ pb
 yy
 yy
 Ga
-Ga
+nS
 Ga
 PB
 PB
@@ -1235,7 +1239,7 @@ YH
 Ga
 Ga
 Ga
-yy
+iT
 VS
 yy
 hB
