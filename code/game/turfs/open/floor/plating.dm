@@ -148,7 +148,7 @@
 	user.visible_message(span_notice("[user] begins slicing apart \the [src]..."),
 		span_notice("You begin cutting \the [src] apart with \the [item]..."),
 		span_hear("You hear welding."))
-	if(!item.use_tool(src, user, 10 SECONDS, volume=80))
+	if(!item.use_tool(src, user, 15 SECONDS, volume=80))
 		return FALSE
 	user.visible_message(span_notice("[user] slices apart \the [src]."),
 	span_notice("You cut \the [src] apart with \the [item]."),
