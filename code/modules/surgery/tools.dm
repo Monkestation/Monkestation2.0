@@ -729,4 +729,4 @@
 				to_chat(user, span_notice("Where did he go?"))
 				return
 			to_chat(user, span_notice("Performing artificial ventilation!"))
-			mob.adjustOxyLoss(-15)
+			mob.adjustOxyLoss(-7.5)

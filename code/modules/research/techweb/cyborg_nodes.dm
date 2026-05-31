@@ -51,6 +51,7 @@
 		"borg_upgrade_surgical_database",
 		"borg_upgrade_surgicalomnitool",
 		"borg_upgrade_advanalyzer",
+		"borg_upgrade_breathingbag"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)

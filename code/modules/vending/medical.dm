@@ -32,8 +32,8 @@
 			"name" = "Hyposprays",
 			"icon" = "syringe",
 			"products" = list(
-				/obj/item/hypospray = 5,
-				/obj/item/storage/medkit/hypospray = 3,
+				/obj/item/hypospray = 3,
+				/obj/item/storage/medkit/hypospray = 2,
 				/obj/item/storage/medkit/hypospray/advanced = 1,
 				/obj/item/storage/lockbox/vialbox = 5,
 			),
@@ -44,7 +44,7 @@
 		/obj/item/clothing/head/helmet/toggleable/justice/medical = 2,
 	)
 	premium = list(
-		/obj/item/healthanalyzer/range = 3,
+		/obj/item/healthanalyzer/range = 2,
 		/obj/item/reagent_containers/medipen = 3,
 		/obj/item/storage/belt/medical = 3,
 		/obj/item/sensor_device = 2,
