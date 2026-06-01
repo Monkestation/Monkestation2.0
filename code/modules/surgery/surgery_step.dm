@@ -111,8 +111,10 @@
 		fail_prob += 50
 	if((get_location_modifier(target) < 0.8))//if the surgery is not on a operating table or stasis bed, incur a 10% penalty
 		fail_prob += 10
-	if(!HAS_TRAIT(user, TRAIT_NO_FAIL_CHANCE))//if the person doing surgery does not have latex gloves, incure a 15% failure penalty
+	if(!HAS_TRAIT(user, TRAIT_NO_FAIL_CHANCE))//if the person doing surgery does not have latex gloves, incure a 15% failure penalty. If you have gloves, gain a 5% bonus
 		fail_prob += 15
+	else
+		fail_prob -= 5
 	if(surgery.speed_modifier > 0)//for chemical related surgery speed buffs, adds a reduction in failure chance
 		fail_prob -= 15
 	fail_prob = min(max(0, fail_prob), 99)//minimum of 0 and maximum of 99
