@@ -1,4 +1,0 @@
-author: "Cujo"
-delete-after: True
-changes:
-  - qol: "Cleans up stasis bed examine text."
