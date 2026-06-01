@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(fleshmass_recipes, list ( \
 	new/datum/stack_recipe("pile of gibs", /obj/effect/decal/cleanable/blood/gibs/core, 3, time = 0, one_per_turf = FALSE, on_solid_ground = TRUE, category = CAT_MISC), \
 	new/datum/stack_recipe("pool of blood", /obj/effect/decal/cleanable/blood/splatter/stacking, 2, time = 0, one_per_turf = FALSE, on_solid_ground = TRUE, category = CAT_MISC), \
 	new/datum/stack_recipe("slab of monkey meat", /obj/item/food/meat/slab/monkey, 2, time = 0, one_per_turf = FALSE, on_solid_ground = FALSE, category = CAT_MISC), \
-	))
+))
 
 /obj/item/stack/sheet/fleshmass/get_main_recipes()
 	. = ..()
