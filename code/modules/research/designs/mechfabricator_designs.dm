@@ -1311,7 +1311,7 @@
 	build_path = /obj/item/borg/upgrade/breathingbag
 	materials = list(
 		/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT* 1,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1,
 		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2
 	)
 	construction_time = 120

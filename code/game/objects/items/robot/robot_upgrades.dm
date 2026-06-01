@@ -791,7 +791,7 @@
 	desc = "An upgrade allowing the medical module to assist a patient with breathing."
 	icon_state = "module_medical"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical) // The fact that syndicate medical doesn't get advanced stock suprises me just as much as you.
+	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
 	model_flags = BORG_MODEL_MEDICAL
 	items_to_add = list(/obj/item/breathing_bag)
 
