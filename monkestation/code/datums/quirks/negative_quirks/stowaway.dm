@@ -9,8 +9,6 @@
 	var/mob/living/carbon/human/stowaway = quirk_holder
 	var/obj/item/card/id/realid = stowaway.get_item_by_slot(ITEM_SLOT_ID) //No ID
 	qdel(realid)
-	var/obj/item/radio/headset/headset = stowaway.get_item_by_slot(ITEM_SLOT_EARS) //No headset
-	qdel(headset)
 
 	for(var/obj/item/modular_computer/pda/pda in stowaway.contents)
 		qdel(pda)
