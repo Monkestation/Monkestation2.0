@@ -312,7 +312,7 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 		),
 		list(
 			"parent_knowledge" = knowledge_tier4,
-			"probabilities" = list("1" = 0, "2" = 0, "3" = 40, "4" = 60, "5" = 0),
+			"probabilities" = list("1" = 0, "2" = 0, "3" = 20, "4" = 60, "5" = 20),
 			HKT_DEPTH = HKT_DEPTH_DRAFT_4,
 		)
 	)
