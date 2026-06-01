@@ -143,6 +143,11 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		mind_ref = person.mind,
 	)
 
+	// OCULIS PORT START - they're in /datum/record/locked now, we can return
+	if(is_hidden_stowaway)
+		return
+	// OCULIS PORT END
+
 	var/datum/record/crew/crewfile = new (
 		age = person.age,
 		blood_type = "[person.get_blood_type() || "None"]",
