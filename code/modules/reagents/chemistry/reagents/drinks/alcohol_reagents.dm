@@ -332,6 +332,7 @@
 	taste_description = "dry alcohol"
 	ph = 3.25
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	liquid_fire_power = 5
 
 /datum/reagent/consumable/ethanol/wine
 	name = "Wine"
@@ -360,7 +361,7 @@
 
 /datum/reagent/consumable/ethanol/lizardwine
 	name = "Lizard Wine"
-	description = "An alcoholic beverage from Space China, made by infusing lizard tails in ethanol."
+	description = "An alcoholic beverage from Space China, made by infusing lizard tails in ethanol and herbs."
 	color = "#7E4043" // rgb: 126, 64, 67
 	boozepwr = 45
 	quality = DRINK_FANTASTIC
@@ -3037,6 +3038,20 @@
 	taste_description = "the aloha state"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	liquid_fire_power = 2
+
+/datum/reagent/consumable/ethanol/pulque
+	name = "Pulque"
+	description = "Also known as agave wine or octli, this drink is made from fermented aguamiel, the sap of the agave plant."
+	taste_description = "slightly sweet and acidic"
+	color = "#dce2ded0" // rgb: 220, 226, 222
+	boozepwr = 10
+	addiction_types = list(/datum/addiction/hallucinogens = 1)
+	liquid_fire_power = 0
+
+/datum/reagent/consumable/ethanol/pulque/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	. = ..()
+	drinker.adjust_hallucinations(1.5 SECONDS)
+	drinker.adjust_drugginess(5 SECONDS)
 
 #undef ALCOHOL_EXPONENT
 #undef ALCOHOL_THRESHOLD_MODIFIER

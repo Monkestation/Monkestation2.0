@@ -27,7 +27,8 @@
 	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/berryjuice = 0)
 	tastes = list("berry" = 1)
-	distill_reagent = /datum/reagent/consumable/ethanol/gin
+	distill_reagent = null
+	wine_power = 30
 
 // Poison Berries
 /obj/item/seeds/berry/poison
@@ -216,4 +217,4 @@
 	icon_state = "lanternfruit"
 	foodtypes = FRUIT
 	tastes = list("tv static" = 1, "sour pear" = 1, "grapefruit" = 1)
-	distill_reagent = /datum/reagent/consumable/ethanol/fruit_wine
+	distill_reagent = /datum/reagent/consumable/liquidelectricity

@@ -16,7 +16,7 @@
 	icon_dead = "poppy-dead"
 	genes = list(/datum/plant_gene/trait/preserved)
 	possible_mutations = list(/datum/hydroponics/plant_mutation/geranium, /datum/hydroponics/plant_mutation/lily)
-	reagents_add = list(/datum/reagent/medicine/c2/libital = 0.2, /datum/reagent/consumable/nutriment = 0.05)
+	reagents_add = list(/datum/reagent/medicine/painkiller/morphine = 0.2, /datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/food/grown/poppy
 	seed = /obj/item/seeds/poppy
@@ -27,7 +27,7 @@
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
-	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
+	distill_reagent = /datum/reagent/medicine/painkiller/morphine
 	greyscale_config = /datum/greyscale_config/flower_simple
 	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
 	greyscale_colors = "#d23838"
@@ -341,3 +341,54 @@
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
+
+// Agave
+/obj/item/seeds/agave
+	name = "pack of agave seeds"
+	desc = "These seeds grow into agave, also known as maguey."
+	icon_state = "seed-agave"
+	species = "agave"
+	plantname = "Agave"
+	product = /obj/item/food/grown/agave
+	lifespan = 40
+	endurance = 25
+	production = 1
+	yield = 40
+	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	possible_mutations = list(/datum/hydroponics/plant_mutation/blueagave)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/consumable/sugar = 0.05)
+
+/obj/item/food/grown/agave
+	seed = /obj/item/seeds/agave
+	name = "agave"
+	desc = "Cut leaves from the agave plant. Used to make pulque and mezcal."
+	icon_state = "agave"
+	bite_consumption_mod = 3
+	foodtypes = VEGETABLES
+	distill_reagent = /datum/reagent/consumable/ethanol/pulque
+
+// Blue Agave
+/obj/item/seeds/blueagave
+	name = "pack of blue agave seeds"
+	desc = "These seeds grow into blue agave, famously distilled into tequila."
+	icon_state = "seed-blueagave"
+	species = "blue agave"
+	plantname = "Blue Agave"
+	product = /obj/item/food/grown/blueagave
+	lifespan = 60
+	endurance = 15
+	production = 1
+	yield = 60
+	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/consumable/sugar = 0.1)
+
+/obj/item/food/grown/blueagave
+	seed = /obj/item/seeds/blueagave
+	name = "blue agave"
+	desc = "Cut leaves from blue agave. Can be distilled into tequila in a wooden barrel."
+	icon_state = "blueagave"
+	bite_consumption_mod = 3
+	foodtypes = VEGETABLES
+	distill_reagent = /datum/reagent/consumable/ethanol/tequila

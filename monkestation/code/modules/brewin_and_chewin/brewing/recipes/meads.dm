@@ -5,5 +5,5 @@
 	brewed_amount = 4
 
 	cargo_valuation = 3000
-	brew_time = 6 MINUTES
+	brew_time = 3 MINUTES
 

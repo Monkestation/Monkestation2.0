@@ -817,3 +817,63 @@
 	)
 	new /obj/structure/bouncy_castle(gored.loc, gored)
 	gored.gib(TRUE, TRUE, TRUE) //no brain, no organs, no bodyparts
+
+//distilled from maintenance moss
+/datum/reagent/drug/maint/milk
+	name = "Maintenance Milk"
+	description = "The musty remnants of distilled maintenance moss. It hurts your tongue when you eat it, but creates healing peptides. Used to make maintenance goo."
+	color = "#c3d1c5bd"
+	overdose_threshold = 25
+	addiction_types = list(/datum/addiction/maintenance_drugs = 5)
+
+/datum/reagent/drug/maint/milk/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_TONGUE, 0.5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	if(SPT_PROB(3.5, seconds_per_tick))
+		affected_mob.emote(pick("gag","twitch_s","drool","sway","tremble"))
+	..()
+	. = TRUE
+
+/datum/reagent/drug/maint/milk/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_TONGUE, 1.5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_STOMACH, 1.5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	..()
+	. = TRUE
+
+/datum/reagent/drug/maint/milk/on_transfer(atom/A, methods=INGEST, trans_volume)
+	if(!(methods & INGEST) || (!iscarbon(A) && !istype(A, /obj/item/organ/internal/stomach)) )
+		return
+
+	A.reagents.remove_reagent(/datum/reagent/reagent/drug/maint/milk, trans_volume * 0.05)
+	A.reagents.add_reagent(/datum/reagent/medicine/metafactor, trans_volume * 0.1) //Less than half as effective as probital
+
+	..()
+
+/datum/reagent/drug/maint/goo
+	name = "Maintenance Goo"
+	description = "Maintenance milk bound with maintenence powder and refined into a grey slurry. In very small amounts it can heal organ damage, but quickly causes problems when overdosed."
+	color = "#4b524cbd"
+	overdose_threshold = 6
+	addiction_types = list(/datum/addiction/maintenance_drugs = 30)
+
+	/datum/reagent/drug/maint/goo/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_TONGUE, -1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, -1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_EARS, -1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, -1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, -1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_STOMACH, -1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_SPLEEN, -1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, -1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+		if(SPT_PROB(3.5, seconds_per_tick))
+			affected_mob.emote(pick("twitch","twitch_s"))
+	..()
+	. = TRUE
+
+	/datum/reagent/drug/maint/goo/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+		affected_mob.blood_volume -= 1.2 * seconds_per_tick
+		if(SPT_PROB(3.5, seconds_per_tick))
+			affected_mob.emote(pick("gag","gasp","scream"))
+			affected_mob.adjustOxyLoss(3 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	..()
+	. = TRUE

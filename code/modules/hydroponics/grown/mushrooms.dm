@@ -23,13 +23,13 @@
 	growthstages = 4
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-	reagents_add = list(/datum/reagent/medicine/painkiller/morphine = 0.35, /datum/reagent/medicine/c2/multiver = 0.35, /datum/reagent/consumable/nutriment = 0)
+	reagents_add = list(/datum/reagent/medicine/c2/libital = 0.35, /datum/reagent/medicine/c2/multiver = 0.35, /datum/reagent/consumable/nutriment = 0)
 	graft_gene = /datum/plant_gene/trait/plant_type/fungal_metabolism
 
 /obj/item/food/grown/mushroom/reishi
 	seed = /obj/item/seeds/reishi
 	name = "reishi"
-	desc = "<I>Ganoderma lucidum</I>: A special fungus known for its medicinal and stress relieving properties."
+	desc = "<I>Ganoderma lucidum</I>: A special fungus known for its medicinal properties."
 	icon_state = "reishi"
 
 // Fly Amanita
@@ -351,3 +351,55 @@
 	icon_state = "odious_puffball"
 	tastes = list("rotten garlic" = 2, "mushroom" = 1, "spores" = 1)
 	wine_power = 50
+
+/obj/item/seeds/glosscup
+	name = "pack of glosscup spores"
+	desc = "These meaty spores were once a prized commodity in Tizira, but they've lost their popularity in favor of meatwheat due to the laborious process needed to make them edible and a highly protective industry mostly owned by Tiziran nobility."
+	icon_state = "mycelium-glosscup"
+	species = "glosscup"
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	icon_grow = "glosscup-grow"
+	icon_dead = "glosscup-dead"
+	icon_harvest = "glosscup-harvest"
+	growthstages = 5
+	plantname = "Glosscup"
+	product = /obj/item/food/grown/mushroom/glosscup
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/tictooth)
+	reagents_add = list(/datum/reagent/yuck = 0.05, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.1)
+
+/obj/item/food/grown/mushroom/glosscup
+	seed = /obj/item/seeds/glosscup
+	name = "glosscup"
+	desc = "A mildly toxic staple crop from Tizira, glosscups are believed to have once been a carnivorous plant. Bred to create multiple funnels out of one shoot, the plant eventually 'strangles', unable to swallow with its cups, and tries to pull them back to the stem. The resulting tissue damage, or 'puckers', give it its glossy finish and converts some of its toxins into sugar."
+	icon_state = "glosscup"
+	tastes = list("bitter egg" = 1)
+	wine_power = 30
+
+/obj/item/seeds/tictooth
+	name = "pack of tictooth funnel spores"
+	desc = "These spores grow into a big tictooth funnel, a curious Moffic staple."
+	icon_state = "mycelium-tictooth"
+	species = "tictooth"
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	icon_grow = "tictooth-grow"
+	icon_dead = "tictooth-dead"
+	icon_harvest = "tictooth-harvest"
+	growthstages = 5
+	plantname = "Tictooth Funnel"
+	product = /obj/item/grown/tictooth
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
+	reagents_add = list(/datum/reagent/toxin/spore = 0.2, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/bone_dust = 0.05)
+
+/obj/item/grown/tictooth
+	seed = /obj/item/seeds/tictooth
+	name = "tictooth"
+	desc = "The 'tooth' of a tictooth funnel. Careful not to cut yourself! Inedible in this state, it can be processed into a variety of goods. These strange plants are from the Moffic fleet, but genetic studies show they descend from the glosscup family. Not even the Moffs can say when they got their hands on it, though."
+	icon_state = "tictooth"
+
+/obj/item/grown/tictooth/welder_act(mob/living/user, obj/item/I)
+	if(I.use_tool(src, user, 0, volume=50))
+		to_chat(user, span_notice("You melt [src] down into a glass shard."))
+		new /obj/item/shard(user.drop_location())
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS

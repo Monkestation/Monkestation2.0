@@ -56,8 +56,29 @@
 	desc = "It's a tangy fruit."
 	icon_state = "orange"
 	foodtypes = ORANGES
+	trash_type = /obj/item/grown/orangepeel
 	juice_results = list(/datum/reagent/consumable/orangejuice = 0)
-	distill_reagent = /datum/reagent/consumable/ethanol/triple_sec
+
+/obj/item/food/grown/citrus/orange/generate_trash(atom/location)
+	. = ..()
+	var/obj/item/grown/orangepeel/peel = .
+	if(istype(peel))
+		peel.grind_results = list(/datum/reagent/medicine/orange_peel = peel.seed.potency * 0.2)
+		peel.juice_results = list(/datum/reagent/medicine/orange_peel = peel.seed.potency * 0.2)
+
+//Orange Peel
+/obj/item/grown/orangepeel
+	seed = /obj/item/seeds/orange
+	name = "orange peel"
+	desc = "A peel from an orange."
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
+	icon_state = "orange_peel"
+	inhand_icon_state = "orange_peel"
+	w_class = WEIGHT_CLASS_TINY
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 3
 
 // Lemon
 /obj/item/seeds/lemon

@@ -83,3 +83,10 @@
 	icon_harvest = "CoffeeLatte-G4"
 	icon_dead = "CoffeeLatte-G0"
 	icon_grow = "CoffeeLatte-G"
+
+/obj/item/seeds/blueagave //default naming doesnt seem to like blue agave for some reason
+	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	icon_harvest = "blueagave-harvest"
+	icon_grow = "blueagave-grow"
+	icon_dead = "blueagave-dead"

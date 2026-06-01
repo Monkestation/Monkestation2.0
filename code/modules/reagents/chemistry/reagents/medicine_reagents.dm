@@ -1684,3 +1684,16 @@ MONKESTATION REMOVAL END
 /datum/reagent/medicine/painkiller/robopiates/on_mob_end_metabolize(mob/living/affected_mob)
 	affected_mob.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	..()
+
+/datum/reagent/medicine/orange_peel
+	name = "Pulped Orange Peel"
+	description = "Orange Peel is full of antioxidants that help promote brain health."
+	reagent_state = LIQUID
+	color = "#C78300" // rgb: 199, 131, 0
+	taste_description = "horribly chewy, bitter pulp"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/medicine/orange_peel/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.2 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags) //treats brain damage enough to counteract brain tumor damage
+	..()

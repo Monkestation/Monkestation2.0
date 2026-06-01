@@ -2,7 +2,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 
 /obj/structure/fermentation_keg
 	name = "fermentation keg"
-	desc = "A simple keg that is meant for making booze."
+	desc = "A keg used to ferment crops and reagents into booze that can be shipped for export or packaged with a bottling kit."
 
 	icon = 'monkestation/code/modules/brewin_and_chewin/icons/objects.dmi'
 	icon_state = "barrel_tapless"
@@ -72,7 +72,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	for(var/obj/item/food/grown/G in produce_list)
 		if(G.type in selected_recipe?.needed_crops)
 			var/amount = recipe_crop_stocks[G.type] || 0
-			var/added_item = round(min(10, max(1, G.seed.potency / 10)))
+			var/added_item = floor(min(100, max(1, G.seed.potency / 10)))
 			recipe_crop_stocks[G.type] = amount + added_item
 			qdel(G)
 
@@ -83,7 +83,15 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 			recipe_crop_stocks[item.type] = amount + added_item
 			qdel(item)
 
-	. = ..()
+	if(attacking_item.get_sharpness())
+		user.balloon_alert(user, "forcing apart...")
+		if(attacking_item.use_tool(src, user, 3 SECONDS, volume = 50))
+			attacking_item.play_tool_sound(src, 50)
+			deconstruct(TRUE)
+			soundloop.stop()
+			new /obj/item/stack/sheet/mineral/wood(user.loc, 8)
+
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/fermentation_keg/examine(mob/user)
 	. =..()

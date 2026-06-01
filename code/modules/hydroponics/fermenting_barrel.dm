@@ -1,6 +1,6 @@
 /obj/structure/fermenting_barrel
 	name = "wooden barrel"
-	desc = "A large wooden barrel. You can ferment fruits and such inside it, or just use it to hold reagents."
+	desc = "A large wooden barrel used to distill crops and hold or dispense reagents."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "barrel"
 	base_icon_state = "barrel"

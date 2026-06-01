@@ -31,9 +31,9 @@
 	pre_reqs = /datum/reagent/consumable/vinegar
 	display_name = "Universal Enzymes"
 	brewed_amount = 1
-	needed_crops = list(/obj/item/food/grown/grass = 120, /obj/item/food/grown/pineapple = 30, /obj/item/food/grown/citrus/orange = 30)
+	needed_crops = list(/obj/item/food/grown/grass = 600, /obj/item/food/grown/pineapple = 150, /obj/item/food/grown/citrus/orange = 150)
 	needed_reagents = list(/datum/reagent/water = 30, /datum/reagent/consumable/ethanol = 60)
 
 	cargo_valuation = 7500
-	brew_time = 6 MINUTES
+	brew_time = 3 MINUTES
 

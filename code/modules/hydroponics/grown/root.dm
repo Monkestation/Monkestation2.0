@@ -106,3 +106,28 @@
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
 	wine_power = 60
+
+// Ginger
+/obj/item/seeds/ginger
+	name = "pack of ginger seeds"
+	desc = "These seeds grow into ginger plants, cultivated for their roots."
+	icon_state = "seed-ginger"
+	species = "ginger"
+	plantname = "Ginger"
+	product = /obj/item/food/grown/ginger
+	maturation = 10
+	production = 1
+	yield = 50
+	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	possible_mutations = list()
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.01, /datum/reagent/consumable/sol_dry = 0.05)
+
+/obj/item/food/grown/ginger
+	seed = /obj/item/seeds/ginger
+	name = "ginger root"
+	desc = "Ginger root is a major component of many beverages due to its distinct taste."
+	icon_state = "redbeet"
+	bite_consumption_mod = 2
+	foodtypes = VEGETABLES
+	distill_reagent = /datum/reagent/consumable/sol_dry
