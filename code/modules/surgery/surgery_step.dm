@@ -107,7 +107,7 @@
 	var/slowdown_time = time * SURGERY_SLOWDOWN_CAP_MULTIPLIER
 
 	fail_prob = modded_time - slowdown_time//if modded_time > time * modifier, then fail_prob = modded_time - time*modifier. starts at 0, caps at 99
-	if(user == target)
+	if(user == target && surgery.requires_bodypart_type != 2)//If doing self surgery & the limb is non robotic, apply a 50% penalty.
 		fail_prob += 50
 	if((get_location_modifier(target) < 0.8))//if the surgery is not on a operating table or stasis bed, incur a 10% penalty
 		fail_prob += 10
@@ -115,7 +115,7 @@
 		fail_prob += 15
 	else
 		fail_prob -= 5
-	if(surgery.speed_modifier > 0)//for chemical related surgery speed buffs, adds a reduction in failure chance
+	if(surgery.speed_modifier > 0 || HAS_TRAIT(target, TRAIT_ANALGESIA))//for chemical related surgery speed buffs, adds a reduction in failure chance. also checks for painkillers
 		fail_prob -= 15
 	fail_prob = min(max(0, fail_prob), 99)//minimum of 0 and maximum of 99
 
