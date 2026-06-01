@@ -116,7 +116,7 @@
 	inhand_icon_state = "greyscale_gloves"
 	armor_type = /datum/armor/nitrile
 	greyscale_colors = "#99eeff"
-	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
+	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED, TRAIT_STERILE)
 
 /datum/armor/nitrile
 	bio = 100
