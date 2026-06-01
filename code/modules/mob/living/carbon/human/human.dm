@@ -182,14 +182,19 @@
 		id_examine += "<div class='img_by_text_container'>"
 		id_examine += "[id_icon]"
 		id_examine += "<div class='img_text'>"
-		id_examine += jointext(list(
-			"&bull; Name: [id_name || "Unknown"]",
-			"&bull; Job: [id_job || "Unassigned"]",
-			"&bull; Age: [id_age || "Unknown"]",
-			"&bull; Gender: [id_gender || "Unknown"]",
-			"&bull; Blood Type: [id_blood_type || "?"]",
-			"&bull; Species: [id_species || "Unknown"]",
-		), "<br>")
+		if(id_job == "Stowaway")
+			id_examine += jointext(list(
+				"&bull; Name: [id_name || "Unknown"]",
+			), "<br>")
+		else
+			id_examine += jointext(list(
+				"&bull; Name: [id_name || "Unknown"]",
+				"&bull; Job: [id_job || "Unassigned"]",
+				"&bull; Age: [id_age || "Unknown"]",
+				"&bull; Gender: [id_gender || "Unknown"]",
+				"&bull; Blood Type: [id_blood_type || "?"]",
+				"&bull; Species: [id_species || "Unknown"]",
+			), "<br>")
 		id_examine += "</div>" // container
 		id_examine += "</div>" // text
 

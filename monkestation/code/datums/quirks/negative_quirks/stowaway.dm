@@ -7,8 +7,13 @@
 
 /datum/quirk/stowaway/add_unique()
 	var/mob/living/carbon/human/stowaway = quirk_holder
-	var/obj/item/card/id/trashed = stowaway.get_item_by_slot(ITEM_SLOT_ID) //No ID
-	qdel(trashed)
+	var/obj/item/card/id/realid = stowaway.get_item_by_slot(ITEM_SLOT_ID) //No ID
+	qdel(realid)
+	var/obj/item/radio/headset/headset = stowaway.get_item_by_slot(ITEM_SLOT_EARS) //No headset
+	qdel(headset)
+
+	for(var/obj/item/modular_computer/pda/pda in stowaway.contents)
+		qdel(pda)
 
 	var/obj/item/card/id/fake_card/card = new(quirk_holder.drop_location()) //a fake ID with two uses for maint doors
 	quirk_holder.equip_to_slot_if_possible(card, ITEM_SLOT_ID)
@@ -23,7 +28,7 @@
 
 /datum/quirk/stowaway/post_add()
 	to_chat(quirk_holder, span_boldnotice("You've awoken to find yourself inside [GLOB.station_name] without real identification!"))
-	addtimer(CALLBACK(quirk_holder.mind, TYPE_PROC_REF(/datum/mind, remove_from_manifest)), 5 SECONDS)
+	force_stowaway_unassigned_role(quirk_holder, quirk_holder.client)
 
 /obj/item/card/id/fake_card //not a proper ID but still shares a lot of functions
 	name = "\"ID Card\""
@@ -45,7 +50,7 @@
 /obj/item/card/id/fake_card/proc/register_name(mob/living/carbon/human/quirk_holder)
 	registered_name = quirk_holder.real_name
 	name = "[quirk_holder.real_name]'s \"ID Card\""
-	assignment = quirk_holder.mind.assigned_role.title
+	assignment = "Stowaway"
 
 /obj/item/card/id/fake_card/proc/used()
 	uses--
@@ -91,7 +96,8 @@
 	if(previous_role?.title)
 		SSjob.FreeRole(previous_role.title)
 
-	person.mind.set_assigned_role(SSjob.GetJobType(/datum/job/unassigned))
+	person.mind.set_assigned_role(SSjob.GetJobType(/datum/job/stowaway))
+	person.job = "Stowaway"
 
 /proc/process_stowaway_latejoin(mob/living/carbon/human/person, datum/job/current_job, client/person_client)
 	if(!person?.mind || !is_stowaway(person, person_client))
