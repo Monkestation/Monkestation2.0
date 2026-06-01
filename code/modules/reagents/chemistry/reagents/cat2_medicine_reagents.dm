@@ -464,8 +464,8 @@
 	var/burn_heal_amt = -1.25
 	/// Wether or not this version of synth can unhusk burnt bodies
 	var/unhusks = TRUE
-	/// Wether or not this version of synth deals toxin damage as it tends brute and burn damage
-	var/dealstoxin = TRUE
+	/// How much tox damage is dealt per unit of health healed
+	var/toxmutipler = 0.66
 
 /datum/reagent/medicine/c2/synthflesh/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
 	. = ..()
@@ -485,8 +485,7 @@
 	for(var/i in carbies.all_wounds)
 		var/datum/wound/iter_wound = i
 		iter_wound.on_synthflesh(reac_volume)
-	if(dealstoxin)
-		carbies.adjustToxLoss((harmies+burnies)*(0.5 + (0.25*(1-creation_purity))), required_biotype = affected_biotype) //0.5 - 0.75
+	carbies.adjustToxLoss((harmies+burnies)*(toxmutipler), required_biotype = affected_biotype)
 	if(show_message)
 		to_chat(carbies, span_danger("You feel your burns and bruises healing! It stings like hell!"))
 	carbies.add_mood_event("painful_medicine", /datum/mood_event/painful_medicine)
@@ -583,7 +582,7 @@
 ///Biocellulose, a weaker version of synthflesh that doesnt cause toxin damage but also cannot unhusk
 /datum/reagent/medicine/c2/synthflesh/biocellulose
 	name = "Biocellulose"
-	description = "A weaker, biological version of synthflesh that heals brute and burn, and doesnt cause toxin damage, but cannot unhusk. Touch application only."
+	description = "A weaker, biological version of synthflesh that heals brute and burn, at the cost of causing more toxin damage, and being unable to unhusk. Touch application only."
 	reagent_state = LIQUID
 	color = "#ee5c5c"
 	ph = 7.2
@@ -591,4 +590,4 @@
 	brute_heal_amt = -0.75
 	burn_heal_amt = -0.75
 	unhusks = FALSE
-	dealstoxin = FALSE
+	toxmutipler = 0.8
