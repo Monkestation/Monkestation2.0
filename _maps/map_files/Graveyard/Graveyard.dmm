@@ -42679,7 +42679,6 @@
 /obj/item/clothing/under/rank/centcom/officer/skirt,
 /obj/item/clothing/under/rank/centcom/intern,
 /obj/item/clothing/under/rank/centcom/commander,
-/obj/item/clothing/under/rank/centcom/centcom_skirt,
 /obj/item/clothing/head/hats/centcom_cap,
 /obj/item/clothing/head/hats/centhat,
 /obj/item/clothing/glasses/sunglasses,
@@ -43436,6 +43435,10 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
+"qRv" = (
+/obj/effect/landmark/navigate_destination/dockesc,
+/turf/open/floor/stone,
+/area/graveyard/surface/structures/departurepark)
 "qRB" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
@@ -160174,7 +160177,7 @@ rzX
 dOv
 wIT
 uNX
-uNX
+qRv
 wip
 awV
 ecc

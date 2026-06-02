@@ -29147,16 +29147,14 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter)
 "iUO" = (
+/obj/structure/closet/secure_closet/hydroponics,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/green/opposingcorners{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/effect/turf_decal/siding/white/corner{
-	dir = 8
-	},
-/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
-/area/station/service/hydroponics)
+/area/station/commons/lounge)
 "iUS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
@@ -31962,7 +31960,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
-/area/station/service/hydroponics)
+/area/station/commons/lounge)
 "jPc" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "QMLoad2"
@@ -33955,8 +33953,8 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/chair/stool/bar/directional/north,
 /obj/structure/cable,
+/obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/eighties,
 /area/station/commons/lounge)
 "ksO" = (
@@ -37394,18 +37392,15 @@
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "lvc" = (
-/obj/effect/landmark/start/botanist,
+/obj/structure/closet/secure_closet/hydroponics,
 /obj/effect/turf_decal/tile/green/opposingcorners{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/structure/sign/calendar/directional/north,
-/obj/machinery/camera{
-	c_tag = "Service - Botany Equipment";
-	dir = 9
-	},
+/obj/machinery/newscaster/directional/south,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
-/area/station/service/hydroponics)
+/area/station/commons/lounge)
 "lvh" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron,
@@ -37477,10 +37472,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/vending/wardrobe/hydro_wardrobe,
+/obj/structure/closet/secure_closet/hydroponics,
+/obj/structure/sign/clock/directional/east,
 /turf/open/floor/iron,
-/area/station/service/hydroponics)
+/area/station/commons/lounge)
 "lvQ" = (
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -40911,10 +40906,10 @@
 	dir = 6
 	},
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/chair/stool/bar/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/eighties,
 /area/station/commons/lounge)
 "mCZ" = (
@@ -41202,6 +41197,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
+"mHv" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
 "mHw" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
@@ -44060,12 +44062,14 @@
 /turf/open/floor/iron,
 /area/station/security/prison/mess)
 "nyt" = (
-/obj/machinery/door/window/left/directional/west{
-	req_access = list("hydroponics");
-	name = "Hydroponics Equipment"
+/obj/effect/turf_decal/tile/green/opposingcorners{
+	dir = 1
 	},
-/turf/open/floor/iron/half,
-/area/station/service/hydroponics)
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/vending/wardrobe/hydro_wardrobe,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
 "nyy" = (
 /obj/item/radio/intercom/directional/west,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -45698,14 +45702,18 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness)
 "nUp" = (
+/obj/effect/landmark/start/botanist,
 /obj/effect/turf_decal/tile/green/opposingcorners{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/structure/closet/secure_closet/hydroponics,
-/obj/structure/sign/clock/directional/east,
+/obj/structure/sign/calendar/directional/north,
+/obj/machinery/camera{
+	c_tag = "Service - Botany Equipment";
+	dir = 9
+	},
 /turf/open/floor/iron,
-/area/station/service/hydroponics)
+/area/station/commons/lounge)
 "nUr" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -47922,15 +47930,8 @@
 /turf/open/floor/stone,
 /area/station/smithing)
 "oCS" = (
-/obj/structure/closet/secure_closet/hydroponics,
-/obj/effect/turf_decal/tile/green/opposingcorners{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/machinery/newscaster/directional/south,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron,
-/area/station/service/hydroponics)
+/turf/open/space/basic,
+/area/space)
 "oCT" = (
 /obj/item/instrument/harmonica,
 /obj/structure/flora/bush/fullgrass/style_random,
@@ -50099,6 +50100,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/computer/slot_machine{
+	name = "two-armed bandit"
+	},
 /turf/open/floor/stone,
 /area/station/commons/lounge)
 "pmn" = (
@@ -52934,14 +52938,12 @@
 /turf/open/floor/plating,
 /area/station/security/prison/safe)
 "qfu" = (
-/obj/structure/closet/secure_closet/hydroponics,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/effect/turf_decal/tile/green/opposingcorners{
-	dir = 1
+/obj/machinery/door/window/left/directional/west{
+	req_access = list("hydroponics");
+	name = "Hydroponics Equipment"
 	},
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron,
-/area/station/service/hydroponics)
+/turf/open/floor/iron/half,
+/area/station/commons/lounge)
 "qfw" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -56348,10 +56350,7 @@
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/hos)
 "rhh" = (
-/obj/item/radio/intercom/directional/east,
-/obj/machinery/computer/slot_machine{
-	name = "two-armed bandit"
-	},
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/wood/large,
 /area/station/commons/lounge)
 "rhi" = (
@@ -56404,7 +56403,6 @@
 /obj/machinery/camera/directional/east{
 	c_tag = "Service - Gambling Lounge"
 	},
-/obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/wood/large,
 /area/station/commons/lounge)
 "rhY" = (
@@ -60745,12 +60743,16 @@
 /turf/open/floor/iron,
 /area/mine/eva/lower)
 "sAc" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
+/obj/effect/turf_decal/tile/green/opposingcorners{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron,
-/area/station/service/hydroponics)
+/area/station/commons/lounge)
 "sAC" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/iron/dark,
@@ -176744,10 +176746,10 @@ thA
 thA
 thA
 iDt
-rcY
-scw
-scw
-ojh
+gFX
+exw
+exw
+exw
 oYx
 elQ
 urC
@@ -177001,10 +177003,10 @@ thA
 thA
 thA
 iDt
-rcY
-scw
-xMq
-xCa
+exw
+wOP
+gAN
+hIh
 kRn
 fKy
 sCZ
@@ -177258,10 +177260,10 @@ thA
 thA
 iDt
 iDt
-xMq
-xMq
-xMq
 exw
+bpG
+ehz
+fKd
 ksO
 syE
 jwm
@@ -177515,10 +177517,10 @@ thA
 iDt
 iDt
 iDt
-gFX
 exw
-exw
-exw
+ekU
+xbH
+fKd
 spl
 bdr
 lEH
@@ -177772,10 +177774,10 @@ thA
 iDt
 iDt
 xMq
-exw
-wOP
-gAN
-hIh
+xdf
+nyt
+qfu
+sAc
 keB
 bdr
 lEH
@@ -178029,10 +178031,10 @@ thA
 xMq
 xMq
 xMq
-exw
-bpG
-ehz
-fKd
+xdf
+nUp
+mHv
+jPa
 dXH
 lmm
 bTI
@@ -178286,10 +178288,10 @@ xMq
 xMq
 xMq
 xMq
-exw
-ekU
-xbH
-fKd
+xdf
+iUO
+lvO
+lvc
 gyw
 gXe
 gXe
@@ -178543,10 +178545,10 @@ sBy
 sBy
 sBy
 sBy
-exw
-lvO
-nyt
-iUO
+xdf
+xdf
+xdf
+xdf
 exw
 ivr
 hEl
@@ -178800,10 +178802,10 @@ kDJ
 cwd
 uHa
 gLo
-exw
-lvc
-sAc
-jPa
+qMe
+cSc
+xdf
+xdf
 exw
 mpU
 mpU
@@ -179057,9 +179059,9 @@ lUy
 teR
 tiX
 kZc
-exw
-qfu
-nUp
+oCS
+oCS
+oCS
 oCS
 exw
 esn
@@ -179314,10 +179316,10 @@ eSF
 sWC
 sBy
 ibi
-exw
-exw
-exw
-exw
+oCS
+oCS
+oCS
+oCS
 kll
 hhb
 cjK
@@ -179571,10 +179573,10 @@ cCd
 rzA
 sBy
 qjK
-qMe
-cSc
-exw
-exw
+oCS
+oCS
+oCS
+oCS
 exw
 nGb
 fPK

@@ -70947,17 +70947,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "qIc" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	name = "Departures Lounge"
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/duct,
+/obj/effect/turf_decal/loading_area,
 /obj/effect/landmark/navigate_destination/dockesc,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -87696,10 +87686,9 @@
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos)
 "uIK" = (
-/obj/effect/landmark/navigate_destination/dockesc,
 /obj/effect/turf_decal/delivery,
 /obj/structure/sign/warning/vacuum/directional/south,
-/turf/open/floor/iron,
+/turf/open/space/basic,
 /area/station/hallway/secondary/exit/departure_lounge)
 "uIM" = (
 /obj/machinery/door/firedoor,
@@ -145809,7 +145798,7 @@ jkH
 sXI
 jkH
 jRt
-cPj
+qIc
 etI
 ikx
 bmU
@@ -146303,7 +146292,7 @@ arU
 dkL
 arU
 bDv
-qIc
+dgJ
 vaK
 vaK
 gFW

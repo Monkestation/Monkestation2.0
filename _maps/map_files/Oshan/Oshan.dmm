@@ -23183,7 +23183,6 @@
 	name = "Departures"
 	},
 /obj/structure/cable,
-/obj/effect/landmark/navigate_destination/dockesc,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -44992,6 +44991,16 @@
 "nQI" = (
 /turf/closed/wall/r_wall,
 /area/station/science/genetics)
+"nQO" = (
+/obj/structure/fans/tiny/forcefield{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external{
+	name = "Departures"
+	},
+/obj/effect/landmark/navigate_destination/dockesc,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/hallway/secondary/exit/departure_lounge)
 "nQT" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -116500,7 +116509,7 @@ neR
 wbH
 wsk
 mCe
-xpi
+nQO
 gpo
 vrP
 vrP
