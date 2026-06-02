@@ -130,6 +130,7 @@ monkestation edit end */
 	message = "salutes."
 	message_param = "salutes to %t."
 	hands_use_check = TRUE
+	muzzle_ignore = TRUE
 	sound = 'sound/creatures/salute.ogg'
 	cooldown = 1 SECOND
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
