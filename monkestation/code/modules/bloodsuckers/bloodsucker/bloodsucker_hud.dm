@@ -1,3 +1,5 @@
+/// dead center
+#define UI_THICKENING_DISPLAY "WEST:6,CENTER:0"
 /// 1 tile down
 #define UI_BLOOD_DISPLAY "WEST:6,CENTER-1:0"
 /// 2 tiles down
@@ -19,13 +21,25 @@
 	icon_state = "rank"
 	screen_loc = UI_VAMPRANK_DISPLAY
 
-/// Update Blood Counter + Rank Counter
-/datum/antagonist/bloodsucker/proc/update_hud()
-	var/valuecolor
+/atom/movable/screen/bloodsucker/thickening_counter
+	name = "Blood Thickening"
+	icon_state = "thickening"
+	screen_loc = UI_THICKENING_DISPLAY
+	var/closed = FALSE //boolean to tell us the icon state instead of making icon state conditionals cause i don't wanna do that
+
+/atom/movable/screen/bloodsucker/thickening_counter/proc/change_state()
+	if(closed)
+		icon_state = "[initial(icon_state)]_close"
+	else
+		icon_state = "[initial(icon_state)]_open"
+
+/// Update counters with values, colors and other information (Current: Blood, Rank, Thickening)
+/datum/antagonist/bloodsucker/proc/update_hud(seconds_per_tick = 0) // seconds_per_tick: used to make sure animation run somewhat smoothly without cutting
+	var/valuecolor = "#da5959" //red = very bad <-> white = doing good
+	if(bloodsucker_blood_volume > BLOOD_VOLUME_BAD)
+		valuecolor = "#FFAAAA"
 	if(bloodsucker_blood_volume > BLOOD_VOLUME_SAFE)
 		valuecolor = "#FFDDDD"
-	else if(bloodsucker_blood_volume > BLOOD_VOLUME_BAD)
-		valuecolor = "#FFAAAA"
 
 	blood_display?.maptext = FORMAT_BLOODSUCKER_HUD_TEXT(valuecolor, bloodsucker_blood_volume)
 
@@ -37,6 +51,21 @@
 		vamprank_display.maptext = FORMAT_BLOODSUCKER_HUD_TEXT(valuecolor, bloodsucker_level)
 
 
+	if(!QDELETED(thickening_display))
+		if(!thickening_display.closed)
+			thickening_display.maptext = FORMAT_BLOODSUCKER_HUD_TEXT(valuecolor, blood_level_gain)
+			if(blood_level_gain >= get_level_cost())
+				thickening_display.closed = TRUE
+				thickening_display.maptext = null
+				addtimer(CALLBACK(thickening_display, TYPE_PROC_REF(/atom/movable/screen/bloodsucker/thickening_counter, change_state)), seconds_per_tick) //animations
+		else
+			if(blood_level_gain < get_level_cost())
+				thickening_display.closed = FALSE
+				addtimer(CALLBACK(thickening_display, TYPE_PROC_REF(/atom/movable/screen/bloodsucker/thickening_counter, change_state)), seconds_per_tick)
+				thickening_display.maptext = FORMAT_BLOODSUCKER_HUD_TEXT(valuecolor, blood_level_gain)
+
+/// dead center
+#undef UI_THICKENING_DISPLAY
 /// 1 tile down
 #undef UI_BLOOD_DISPLAY
 /// 2 tiles down
