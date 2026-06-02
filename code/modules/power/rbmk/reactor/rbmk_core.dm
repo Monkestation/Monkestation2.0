@@ -15,7 +15,7 @@
 	pixel_x = -32
 	pixel_y = -32
 
-	layer = OBJ_LAYER - 1
+	layer = 2.6
 	plane = GAME_PLANE
 
 	var/obj/machinery/atmospherics/components/unary/rbmk/inlet/inlet = null
