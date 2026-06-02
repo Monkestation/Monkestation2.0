@@ -7,11 +7,11 @@
 
 /datum/quirk/stowaway/add_unique()
 	var/mob/living/carbon/human/stowaway = quirk_holder
+	stowaway.delete_equipment()
+	stowaway.equip_outfit_and_loadout(/datum/outfit/job/stowaway, stowaway.client.prefs, FALSE, /datum/job/stowaway) //Loadout items and stowaway gear
+
 	var/obj/item/card/id/realid = stowaway.get_item_by_slot(ITEM_SLOT_ID) //No ID
 	qdel(realid)
-
-	for(var/obj/item/modular_computer/pda/pda in stowaway.contents)
-		qdel(pda)
 
 	var/obj/item/card/id/fake_card/card = new(quirk_holder.drop_location()) //a fake ID with two uses for maint doors
 	quirk_holder.equip_to_slot_if_possible(card, ITEM_SLOT_ID)
@@ -40,7 +40,7 @@
 	registered_account = null
 	create_bank_on_init = FALSE
 	accepts_accounts = FALSE
-	registered_name = "Nohbdy"
+	registered_name = "Nobody"
 	access = list(ACCESS_MAINT_TUNNELS)
 	///How many doors the fake card can open before it becomes completely torn up.
 	var/uses = 2
