@@ -28,26 +28,8 @@
 	item_path = /obj/item/slime_mutation_syringe/never_evolving
 	cost = 2500
 
-/datum/slime_store_item/noooze_mutation
-	name = "No Ooze Mutation Syringe"
-	desc = "Adds the No Ooze Slime mutation to a single slime."
-	item_path = /obj/item/slime_mutation_syringe/never_ooze
-	cost = 2500
-
 /datum/slime_store_item/random_color_mutator
 	name = "Random Color Mutation Syringe"
 	desc = "Mutates a single slime into a possible mutation."
 	item_path = /obj/item/slime_mutation_syringe/random_color
-	cost = 3000
-
-/datum/slime_store_item/soda_slime
-	name = "Soda Slime Mutation Syringe"
-	desc = "Adds the soda slime mutation to a single slime."
-	item_path = /obj/item/slime_mutation_syringe/soda_slime
-	cost = 3000
-
-/datum/slime_store_item/beer_slime
-	name = "Beer Slime Mutation Syringe"
-	desc = "Adds the beer slime mutation to a single slime."
-	item_path = /obj/item/slime_mutation_syringe/beer_slime
 	cost = 3000

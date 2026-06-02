@@ -8461,7 +8461,6 @@
 /area/station/maintenance/port/aft)
 "cyh" = (
 /obj/machinery/light/floor/has_bulb,
-/obj/machinery/duct,
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -11226,10 +11225,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/construction)
-"dmj" = (
-/obj/machinery/duct,
-/turf/open/floor/stone,
-/area/station/science/xenobiology)
 "dms" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plating,
@@ -12770,14 +12765,6 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
-"dLr" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "4";
-	dir = 1;
-	pixel_y = 0
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "dLv" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -20059,13 +20046,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/prison/mess)
-"gdf" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "6";
-	dir = 2
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "gdg" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/components/unary/passive_vent{
@@ -21068,7 +21048,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "gtP" = (
@@ -21591,13 +21570,6 @@
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
-"gCo" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "1";
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "gCu" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
@@ -26045,13 +26017,6 @@
 /obj/structure/anvil,
 /turf/open/floor/wood,
 /area/station/smithing)
-"hZT" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "5";
-	dir = 2
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "iag" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
@@ -34798,13 +34763,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
-"kGV" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "2";
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "kHb" = (
 /obj/structure/closet/secure_closet/personal{
 	anchored = 1
@@ -39216,7 +39174,6 @@
 /area/station/commons/dorms)
 "maO" = (
 /obj/machinery/light/floor/has_bulb,
-/obj/machinery/duct,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -40263,13 +40220,6 @@
 	dir = 4
 	},
 /area/station/security/brig/entrance)
-"mqK" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "3";
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "mqO" = (
 /obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plating,
@@ -40692,10 +40642,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/security/prison/safe)
-"myS" = (
-/obj/machinery/duct,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "myZ" = (
 /obj/structure/lattice/catwalk,
 /turf/open/openspace/icemoon/keep_below,
@@ -40813,7 +40759,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/structure/cable,
-/obj/machinery/duct,
 /obj/structure/liquid_barrier,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
@@ -42034,10 +41979,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/work)
-"mVO" = (
-/obj/machinery/duct,
-/turf/open/floor/iron/white,
-/area/station/science/xenobiology)
 "mVY" = (
 /obj/effect/spawner/random/trash/mess,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -47396,7 +47337,7 @@
 "ouP" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/machinery/plumbing/ooze_compressor,
+/obj/machinery/slime_compressor,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "ouX" = (
@@ -47606,14 +47547,6 @@
 /obj/structure/table,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
-"oyt" = (
-/obj/machinery/duct,
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/stone,
-/area/station/science/xenobiology)
 "oyy" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 1
@@ -58854,10 +58787,6 @@
 	},
 /turf/open/floor/iron/large,
 /area/station/commons/storage/primary)
-"rXD" = (
-/obj/machinery/duct,
-/turf/open/floor/glass/reinforced,
-/area/station/science/xenobiology)
 "rXX" = (
 /obj/machinery/door/airlock/external{
 	name = "Labor Camp Shuttle Airlock";
@@ -59299,7 +59228,6 @@
 "sfv" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "sfy" = (
@@ -187841,20 +187769,20 @@ eLb
 tkP
 abe
 abe
-hZT
-myS
-myS
-oyt
-myS
-myS
-mqK
 abe
 abe
 abe
-oyt
-myS
-myS
-gCo
+lGB
+abe
+abe
+abe
+abe
+abe
+abe
+lGB
+abe
+abe
+abe
 abe
 abe
 rnQ
@@ -188101,14 +188029,14 @@ abe
 abe
 abe
 bUK
-oyt
+lGB
 ibX
 abe
 abe
 abe
 abe
 dJx
-oyt
+lGB
 gND
 abe
 abe
@@ -188607,22 +188535,22 @@ pMF
 mqe
 hRC
 euM
-mVO
+pMF
 sfv
 mAP
-dmj
-rXD
-rXD
-rXD
-rXD
-rXD
-rXD
-rXD
-rXD
-rXD
-rXD
-rXD
-rXD
+clW
+fvk
+fvk
+fvk
+fvk
+fvk
+fvk
+fvk
+fvk
+fvk
+fvk
+fvk
+fvk
 fvk
 fvk
 fvk
@@ -189129,14 +189057,14 @@ abe
 abe
 abe
 xqu
-oyt
+lGB
 wUz
 abe
 abe
 abe
 abe
 rxM
-oyt
+lGB
 wnB
 abe
 abe
@@ -189383,20 +189311,20 @@ iQM
 qLY
 abe
 abe
-gdf
-myS
-myS
-oyt
-myS
-myS
-dLr
 abe
 abe
 abe
-oyt
-myS
-myS
-kGV
+lGB
+abe
+abe
+abe
+abe
+abe
+abe
+lGB
+abe
+abe
+abe
 abe
 abe
 pjr

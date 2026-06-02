@@ -502,14 +502,6 @@
 "agW" = (
 /turf/open/floor/iron/textured,
 /area/station/maintenance/starboard/aft)
-"agX" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "1";
-	dir = 1
-	},
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "aha" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -4227,10 +4219,6 @@
 /obj/effect/mapping_helpers/mail_sorting/service/library,
 /turf/open/floor/wood/large,
 /area/station/hallway/primary/central/fore)
-"biy" = (
-/obj/machinery/duct,
-/turf/open/floor/carpet/neon/simple/pink,
-/area/station/science/xenobiology)
 "biU" = (
 /obj/structure/table,
 /obj/item/clipboard,
@@ -7472,18 +7460,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/command/bridge)
-"ckQ" = (
-/obj/machinery/duct,
-/obj/machinery/light/neon_lining{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 8
-	},
-/turf/open/floor/iron/white/textured_edge{
-	dir = 4
-	},
-/area/station/science/xenobiology)
 "clk" = (
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/iron/textured,
@@ -9139,16 +9115,6 @@
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/textured_large,
 /area/station/command/gateway)
-"cKl" = (
-/obj/machinery/duct,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/light/neon_lining{
-	dir = 8
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "cKH" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor/iron_smooth,
@@ -14067,14 +14033,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/station/engineering/atmos/hfr_room)
-"ecx" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "3";
-	dir = 1
-	},
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "ecy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -14157,13 +14115,6 @@
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/common/cryopods)
-"edL" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "5"
-	},
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "eef" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -15732,7 +15683,6 @@
 	sortType = 28
 	},
 /obj/effect/mapping_helpers/mail_sorting/science/xenobiology,
-/obj/machinery/duct,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/xenobiology)
 "ezT" = (
@@ -15793,7 +15743,7 @@
 /obj/structure/sign/warning/biohazard/directional/south,
 /obj/effect/turf_decal/bot_red,
 /obj/machinery/light/cold/directional/south,
-/obj/machinery/plumbing/ooze_compressor,
+/obj/machinery/slime_compressor,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},
@@ -26328,13 +26278,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/genetics)
-"hyK" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/duct,
-/turf/open/floor/iron/white/textured_large,
-/area/station/science/xenobiology)
 "hyV" = (
 /turf/open/floor/iron/textured,
 /area/station/maintenance/aft/greater)
@@ -31927,7 +31870,6 @@
 /area/station/security/checkpoint/engineering)
 "iZa" = (
 /obj/effect/landmark/event_spawn,
-/obj/machinery/duct,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/xenobiology)
 "iZl" = (
@@ -38372,13 +38314,6 @@
 	},
 /turf/open/floor/carpet/cyan,
 /area/station/commons/dorms)
-"kJT" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "6"
-	},
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "kJW" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -49567,18 +49502,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/textured,
 /area/station/maintenance/department/science/xenobiology)
-"nQy" = (
-/obj/machinery/duct,
-/obj/machinery/light/neon_lining{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 4
-	},
-/turf/open/floor/iron/white/textured_edge{
-	dir = 8
-	},
-/area/station/science/xenobiology)
 "nQG" = (
 /obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/floor/iron/textured,
@@ -49937,11 +49860,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/textured_edge,
 /area/station/cargo/office)
-"nUm" = (
-/obj/machinery/duct,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "nUy" = (
 /obj/effect/turf_decal/trimline/green/filled/warning,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -50717,16 +50635,6 @@
 	},
 /turf/open/floor/iron/textured_large,
 /area/station/maintenance/department/security/greater)
-"ohh" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/duct,
-/turf/open/floor/iron/white/textured_large,
-/area/station/science/xenobiology)
 "ohi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/item/paper_bin{
@@ -52033,7 +51941,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/effect/turf_decal/bot_red,
 /obj/structure/sign/poster/contraband/arc_slimes/directional/south,
-/obj/machinery/plumbing/ooze_compressor,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},
@@ -59570,10 +59477,6 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/command/gateway)
 "qBt" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "2";
-	dir = 1
-	},
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -67058,14 +66961,6 @@
 	},
 /turf/open/floor/carpet/stellar,
 /area/station/service/chapel/office)
-"sHp" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "4";
-	dir = 1
-	},
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "sHu" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 9
@@ -70681,10 +70576,6 @@
 	},
 /turf/open/floor/iron/textured,
 /area/station/maintenance/disposal/incinerator)
-"tAl" = (
-/obj/machinery/duct,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "tAn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -75097,13 +74988,6 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
-"uKe" = (
-/obj/machinery/duct,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "uKg" = (
 /obj/machinery/door/poddoor/incinerator_atmos_aux,
 /turf/open/floor/engine,
@@ -75269,14 +75153,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/solars/port/aft)
-"uNu" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/machinery/duct,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/iron/white/textured_large,
-/area/station/science/xenobiology)
 "uNy" = (
 /obj/structure/bed{
 	dir = 4
@@ -78078,16 +77954,6 @@
 	},
 /turf/open/floor/carpet/cyan,
 /area/station/command/heads_quarters/blueshield)
-"vEz" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/duct,
-/turf/open/floor/iron/white/textured_large,
-/area/station/science/xenobiology)
 "vEH" = (
 /obj/machinery/vending/tool,
 /obj/effect/turf_decal/bot,
@@ -80856,16 +80722,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/textured,
 /area/station/maintenance/aft/greater)
-"wsk" = (
-/obj/machinery/duct,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/light/neon_lining{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "wsl" = (
 /obj/machinery/vending/autodrobe,
 /obj/effect/turf_decal/bot,
@@ -82203,18 +82059,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/textured,
 /area/station/maintenance/disposal/incinerator)
-"wKq" = (
-/obj/machinery/light/neon_lining{
-	dir = 4
-	},
-/obj/machinery/duct,
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 4
-	},
-/turf/open/floor/iron/white/textured_edge{
-	dir = 8
-	},
-/area/station/science/xenobiology)
 "wKt" = (
 /turf/open/floor/vault,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -85328,18 +85172,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
-"xGk" = (
-/obj/machinery/light/neon_lining{
-	dir = 8
-	},
-/obj/machinery/duct,
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 8
-	},
-/turf/open/floor/iron/white/textured_edge{
-	dir = 4
-	},
-/area/station/science/xenobiology)
 "xGr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/garbage,
@@ -106304,7 +106136,7 @@ eUU
 iMC
 tDI
 rjU
-hyK
+aLt
 eBk
 oMs
 ddS
@@ -106561,7 +106393,7 @@ uVp
 oaZ
 dLE
 shd
-hyK
+aLt
 oAD
 oMs
 jTu
@@ -106817,7 +106649,7 @@ sYU
 uiw
 xXU
 xlZ
-ohh
+uNG
 dfq
 swL
 oMs
@@ -107060,21 +106892,21 @@ mIm
 lAp
 dVY
 uiw
-edL
-tAl
-nUm
-uKe
-tAl
-ecx
+qBt
 uiw
 xXU
 dVY
-tAl
-agX
+uiw
+qBt
+uiw
+xXU
+dVY
+uiw
+qBt
 uiw
 xXU
 mIy
-ohh
+uNG
 vJY
 gmL
 oMs
@@ -107321,12 +107153,12 @@ raP
 raP
 mEC
 cXP
-wsk
+raP
 raP
 raP
 irO
 iVS
-wsk
+raP
 raP
 raP
 hbZ
@@ -107578,12 +107410,12 @@ meR
 meR
 meR
 meR
-biy
 meR
 meR
 meR
 meR
-biy
+meR
+meR
 meR
 meR
 jKr
@@ -107835,17 +107667,17 @@ tvP
 iIn
 iIn
 iIn
-ckQ
+iIn
 sLA
 iIn
 iIn
 iIn
-xGk
+iIn
 gbf
 iIn
 iIn
 bka
-vEz
+bxT
 pgM
 oMs
 uOt
@@ -108092,17 +107924,17 @@ kxA
 kxA
 kxA
 kxA
-uNu
-uNu
-uNu
-uNu
-uNu
-uNu
-uNu
-uNu
-uNu
+kxA
+kxA
+kxA
+kxA
+kxA
+kxA
+kxA
+kxA
+kxA
 iZa
-vEz
+bxT
 cQJ
 oMs
 sYg
@@ -108349,12 +108181,12 @@ uyE
 kHC
 kHC
 kHC
-nQy
+kHC
 bwJ
 kHC
 kHC
 kHC
-wKq
+kHC
 jcW
 kHC
 kHC
@@ -108606,12 +108438,12 @@ meR
 meR
 meR
 meR
-biy
 meR
 meR
 meR
 meR
-biy
+meR
+meR
 meR
 meR
 meR
@@ -108863,12 +108695,12 @@ lXQ
 lXQ
 ibR
 dgw
-cKl
+lXQ
 lXQ
 lXQ
 pBo
 jSr
-cKl
+lXQ
 lXQ
 lXQ
 fPB
@@ -109116,16 +108948,16 @@ bMr
 sAL
 dVY
 uiw
-kJT
-tAl
-nUm
-uKe
-tAl
-sHp
+qBt
 uiw
 xXU
 dVY
-tAl
+uiw
+qBt
+uiw
+xXU
+dVY
+uiw
 qBt
 uiw
 xXU
