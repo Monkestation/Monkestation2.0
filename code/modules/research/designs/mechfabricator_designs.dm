@@ -1290,7 +1290,6 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
 
-
 /datum/design/borg_upgrade_pinpointer
 	name = "Crew Pinpointer"
 	id = "borg_upgrade_pinpointer"
