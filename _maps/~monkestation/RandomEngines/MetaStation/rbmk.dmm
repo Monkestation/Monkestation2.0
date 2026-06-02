@@ -47,12 +47,14 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "eg" = (
+/obj/structure/grille,
 /obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "eH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/window/reinforced/plasma/plastitanium,
+/obj/structure/grille,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "eI" = (
@@ -81,12 +83,15 @@
 	id = "engrbmk";
 	name = "Radiation Chamber Shutters"
 	},
+/obj/structure/grille,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "hT" = (
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/turf/template_noop,
-/area/template_noop)
+/obj/structure/window/reinforced/plasma/plastitanium,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
+/obj/structure/grille,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "iY" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green,
@@ -100,6 +105,7 @@
 "jw" = (
 /obj/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/grille,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "jy" = (
@@ -126,10 +132,12 @@
 /obj/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/grille,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "lX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green,
+/obj/structure/grille,
 /obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -224,9 +232,10 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter/room)
 "tg" = (
-/obj/item/storage/toolbox/mechanical,
-/turf/template_noop,
-/area/space/nearstation)
+/obj/structure/window/reinforced/plasma/plastitanium,
+/obj/structure/grille,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "tp" = (
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 8
@@ -280,8 +289,9 @@
 /turf/open/floor/engine/insulation/airless,
 /area/station/engineering/supermatter)
 "vM" = (
-/obj/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
+/obj/structure/grille,
+/obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "vY" = (
@@ -595,6 +605,7 @@
 	id = "engrbmk";
 	name = "Radiation Chamber Shutters"
 	},
+/obj/structure/grille,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "NN" = (
@@ -660,6 +671,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green,
 /obj/structure/window/reinforced/plasma/plastitanium,
+/obj/structure/grille,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "QX" = (
@@ -841,7 +853,7 @@ xA
 xA
 "}
 (3,1,1) = {"
-hT
+kK
 kK
 kK
 kK
@@ -868,7 +880,7 @@ xA
 xA
 "}
 (4,1,1) = {"
-hT
+kK
 kK
 kK
 kK
@@ -898,7 +910,7 @@ xA
 MT
 qz
 MT
-eg
+tg
 MT
 Lv
 gO
@@ -1114,16 +1126,16 @@ xA
 xA
 xA
 xA
-tg
+xA
 MT
 Qq
 Pg
-eg
+tg
 MT
-eg
+tg
 kO
-eg
-vM
+tg
+hT
 je
 MT
 eH
