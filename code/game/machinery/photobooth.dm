@@ -160,6 +160,7 @@
 /obj/machinery/photobooth/proc/finish_taking_pictures(mob/user)
 	taking_pictures = FALSE
 
+	//Code for updating existing record
 	if (find_record(occupant.name))
 		if (GLOB.manifest.change_pictures(occupant.name, occupant, add_height_chart = add_height_chart))
 			balloon_alert_to_viewers("records updated!")
