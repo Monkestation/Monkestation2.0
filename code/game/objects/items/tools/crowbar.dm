@@ -144,6 +144,7 @@
 	desc = "A pocket sized redesign of the Syndicate jaws of death, made for operatives. Can be used to force open airlocks in its crowbar configuration."
 	icon_state = "jaws_syndie"
 	inhand_icon_state = "minijaws"
+	worn_icon_state = "minijaws"
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 	force_opens = TRUE
@@ -234,6 +235,7 @@
 	desc = "Quite similar to the jaws of life, this tool combines the utility of a crowbar and a set of wirecutters without the hydraulic force required to pry open doors."
 	icon_state = "jaws_sci"
 	inhand_icon_state = "scijaws"
+	worn_icon_state = "scijaws"
 	force_opens = FALSE
 
 /obj/item/crowbar/power/death
@@ -241,5 +243,6 @@
 	desc = "A syndicate-powered refitting of Nanotrasen's standard jaws of life. Can be used to force open airlocks in its crowbar configuration."
 	icon_state = "jaws_death"
 	inhand_icon_state = "jawsofdeath"
+	worn_icon_state = "jawsofdeath"
 	toolspeed = 0.5
 	force_opens = TRUE
