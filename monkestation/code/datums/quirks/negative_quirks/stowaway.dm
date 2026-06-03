@@ -95,7 +95,7 @@
 		SSjob.FreeRole(previous_role.title)
 
 	person.mind.set_assigned_role(SSjob.GetJobType(/datum/job/stowaway))
-	person.job = "Stowaway"
+	person.job = JOB_STOWAWAY
 
 /proc/process_stowaway_latejoin(mob/living/carbon/human/person, datum/job/current_job, client/person_client)
 	if(!person?.mind || !is_stowaway(person, person_client))
