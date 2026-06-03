@@ -1699,6 +1699,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"aCp" = (
+/obj/effect/landmark/navigate_destination/dockesc,
+/turf/open/genturf,
+/area/icemoon/underground/unexplored/rivers/deep)
 "aCr" = (
 /obj/structure/closet/crate/hydroponics,
 /obj/item/paper/guides/jobs/hydroponics,
@@ -9629,6 +9633,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/landmark/navigate_destination{
+	location = "Evacuation"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "cMN" = (
@@ -113006,7 +113013,7 @@ oSU
 oSU
 oSU
 oSU
-oSU
+aCp
 oSU
 oSU
 oSU

@@ -3606,7 +3606,6 @@
 "biA" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/delivery,
-/obj/effect/landmark/navigate_destination/dockesc,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "bjr" = (
@@ -19892,6 +19891,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/effect/landmark/navigate_destination{
+	location = "Evacuation"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "hen" = (
@@ -30737,6 +30739,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
+"kIM" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external{
+	name = "Departure Lounge Airlock"
+	},
+/obj/effect/landmark/navigate_destination/dockesc,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "kIR" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -97627,7 +97638,7 @@ opk
 krc
 bVB
 ltx
-sou
+kIM
 hQu
 cSv
 qVo
