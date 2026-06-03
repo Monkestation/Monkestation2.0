@@ -49,8 +49,7 @@
 	)
 	design_ids = list(
 		"borg_upgrade_charger",
-		"borg_upgrade_extra_sheet_manipulator",
-		"borg_upgrade_bs_rped"
+		"borg_upgrade_extra_sheet_manipulator"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
