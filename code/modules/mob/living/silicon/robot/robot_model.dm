@@ -726,7 +726,6 @@
 		/obj/item/borg/cyborg_omnitool/medical,
 		/obj/item/borg/cyborg_omnitool/medical,
 		/obj/item/blood_filter,
-		/obj/item/breathing_bag, // MS: biocore-ambu
 		/obj/item/extinguisher/mini,
 		/obj/item/emergency_bed/silicon,
 		/obj/item/borg/cyborghug/medical,

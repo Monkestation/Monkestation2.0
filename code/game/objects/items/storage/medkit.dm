@@ -140,7 +140,7 @@
 	if(empty)
 		return
 	var/list/items_inside = list(
-		/obj/item/healthanalyzer/range = 1,
+		/obj/item/healthanalyzer = 1,
 		/obj/item/stack/medical/gauze/twelve = 1,
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,
@@ -325,7 +325,7 @@
 
 /obj/item/storage/medkit/hypospray
 	name = "hypospray chemical kit"
-	desc = "An basic kit containing a hypospray and vials for most situations. Now 100% smaller, for 100% more hypospray per hypospray!"
+	desc = "An basic kit containing vials for most situations. Now 100% smaller, for 100% more hypospray per hypospray!"
 	icon_state = "hypobasic"
 	custom_price = PAYCHECK_COMMAND * 3
 	discountable = FALSE
