@@ -41,7 +41,8 @@
 /datum/uplink_item/melees/doublesword
 	name = "Double-Bladed Energy Sword"
 	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
-			all energy projectiles, but requires two hands to wield. It also struggles to protect you from tackles."
+			all energy projectiles along with most other attacks, but requires two hands to wield. It also struggles to protect you from tackles. \
+			The grip is difficult to handle and cannot be operated by hulks, and its ridges make it impossible to hold with an anti-drop implant or sticky glue."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/dualsaber
 	cost = 16

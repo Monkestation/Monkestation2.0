@@ -57,6 +57,9 @@
 		for(var/obj/item/held_item as anything in owner.held_items)
 			if(!held_item)
 				continue
+			if (istype(held_item, /obj/item/dualsaber))
+				to_chat(owner, span_notice("You can't seem to get a good grip on the [held_item]."))
+				continue
 			stored_items += held_item
 			to_chat(owner, span_notice("Your [owner.get_held_index_name(owner.get_held_index_of_item(held_item))]'s grip tightens."))
 			ADD_TRAIT(held_item, TRAIT_NODROP, IMPLANT_TRAIT)
