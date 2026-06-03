@@ -1127,34 +1127,6 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
 	)
 
-/datum/design/borg_upgrade_selfrepair
-	name = "Self-Repair Module"
-	id = "borg_upgrade_selfrepair"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/selfrepair
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5
-	)
-	construction_time = 8 SECONDS
-	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
-	)
-
-/datum/design/borg_upgrade_expand
-	name = "Expand Module"
-	id = "borg_upgrade_expand"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/expand
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 100,
-		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.5
-	)
-	construction_time = 12 SECONDS
-	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
-	)
-
 /datum/design/borg_syndicate_module
 	name = "Illegal Modules"
 	id = "borg_syndicate_module"
@@ -1170,20 +1142,6 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
 
-/datum/design/borg_upgrade_uwu
-	name = "Cyborg UwU-speak \"Upgrade\""
-	id = "borg_upgrade_cringe"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/uwu
-	materials = list(
-		/datum/material/gold = SHEET_MATERIAL_AMOUNT,
-		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 0.5,
-		/datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 0.25
-	)
-	construction_time = 12 SECONDS
-	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
-	)
 
 /datum/design/borg_transform_clown
 	name = "Clown Module"
@@ -1200,9 +1158,19 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
 
-//
-// Cyborg Upgrades (Medical)
-//
+/datum/design/borg_upgrade_selfrepair
+	name = "Self-Repair Module"
+	id = "borg_upgrade_selfrepair"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/selfrepair
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5
+	)
+	construction_time = 8 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
+	)
 
 /datum/design/borg_upgrade_expandedsynthesiser
 	name = "Expanded Hypospray Synthesiser"
@@ -1262,65 +1230,6 @@
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
 		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2
-	)
-	construction_time = 4 SECONDS
-	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
-	)
-
-/datum/design/borg_upgrade_beaker_app
-	name = "Secondary Beaker Storage"
-	id = "borg_upgrade_beakerapp"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/beaker_app
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25
-	) // Includes cost of printing a large beaker.
-	construction_time = 12 SECONDS
-	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
-	)
-
-/datum/design/borg_upgrade_pinpointer
-	name = "Crew Pinpointer"
-	id = "borg_upgrade_pinpointer"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/pinpointer
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.5,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.5
-	)
-	construction_time = 12 SECONDS
-	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
-	)
-
-/datum/design/borg_upgrade_advanalyzer
-	name = "Advanced Health Analyzer"
-	id = "borg_upgrade_advanalyzer"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/adv_healthanalyzer
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25,
-		/datum/material/silver = SHEET_MATERIAL_AMOUNT,
-		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.75
-	)
-	construction_time = 12 SECONDS
-	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
-	)
-
-/datum/design/borg_upgrade_surgicalomnitool
-	name = "Advanced Surgical Omnitool Upgrade"
-	id = "borg_upgrade_surgicalomnitool"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/surgery_omnitool
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75,
-		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75
 	)
 	construction_time = 4 SECONDS
 	category = list(
@@ -1437,6 +1346,66 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
 	)
 
+
+/datum/design/borg_upgrade_beaker_app
+	name = "Secondary Beaker Storage"
+	id = "borg_upgrade_beakerapp"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/beaker_app
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25
+	) // Includes cost of printing a large beaker.
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	)
+
+/datum/design/borg_upgrade_pinpointer
+	name = "Crew Pinpointer"
+	id = "borg_upgrade_pinpointer"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/pinpointer
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.5
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	)
+
+/datum/design/borg_upgrade_advanalyzer
+	name = "Advanced Health Analyzer"
+	id = "borg_upgrade_advanalyzer"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/adv_healthanalyzer
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.75
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	)
+
+/datum/design/borg_upgrade_surgicalomnitool
+	name = "Advanced Surgical Omnitool Upgrade"
+	id = "borg_upgrade_surgicalomnitool"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/surgery_omnitool
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	)
+
 /datum/design/borg_upgrade_nvgmeson
 	name = "Nightvision Meson Sight"
 	id = "borg_upgrade_nvmeson"
@@ -1452,6 +1421,35 @@
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING,
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING,
+	)
+
+/datum/design/borg_upgrade_expand
+	name = "Expand Module"
+	id = "borg_upgrade_expand"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/expand
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 100,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.5
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
+	)
+
+/datum/design/borg_upgrade_uwu
+	name = "Cyborg UwU-speak \"Upgrade\""
+	id = "borg_upgrade_cringe"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/uwu
+	materials = list(
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 0.5,
+		/datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 0.25
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
 
 //
