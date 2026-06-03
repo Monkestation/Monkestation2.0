@@ -24,23 +24,6 @@
 // Cyborg Upgrades
 //
 
-/datum/techweb_node/cyborg_upgrades_utility
-	id = "cyborg_upgrades_utility"
-	display_name = "Cyborg Upgrades: Utility"
-	description = "Enabling compatibility of our most basic technology for usage within cyborgs."
-	prereq_ids = list(
-		"cyborg",
-		"adv_robotics"
-	)
-	design_ids = list(
-		"borg_upgrade_selfrepair",
-		"borg_upgrade_thrusters",
-		"borg_upgrade_expand",
-		"borg_upgrade_clamp", // Cargo is so lacking that they don't get their own techweb node.
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
-	announce_channels = list(RADIO_CHANNEL_SCIENCE)
-
 /datum/techweb_node/cyborg_upgrades_mining
 	id = "cyborg_upgrades_mining"
 	display_name = "Cyborg Upgrades: Mining"
@@ -55,41 +38,6 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
-
-/datum/techweb_node/cyborg_upgrades_janitor
-	id = "cyborg_upgrades_janitor"
-	display_name = "Cyborg Upgrades: Janitorial"
-	description = "Enabling compatibility of our janitorial technology for usage within cyborgs."
-	prereq_ids = list(
-		"janitor",
-		"adv_robotics"
-	)
-	design_ids = list(
-		"borg_upgrade_advancedmop",
-		"borg_upgrade_prt",
-		"borg_upgrade_trashofholding"
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
-	announce_channels = list(RADIO_CHANNEL_SCIENCE)
-
-/datum/techweb_node/cyborg_upgrades_security
-	id = "cyborg_upgrades_security"
-	display_name = "Cyborg Upgrades: Security"
-	description =  "Enabling compatibility of our weaponry technology for usage within cyborgs."
-	prereq_ids = list(
-		"weaponry",
-		"adv_robotics"
-	)
-	design_ids = list(
-		"borg_upgrade_disablercooler"
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
-	announce_channels = list(RADIO_CHANNEL_SCIENCE)
-
-/datum/techweb_node/cyborg_upgrades_security/New()
-	. = ..()
-	if(CONFIG_GET(flag/disable_secborg))
-		hidden = TRUE // Node begone!
 
 /datum/techweb_node/cyborg_upgrades_engineering
 	id = "cyborg_upgrades_engineering"
@@ -124,6 +72,60 @@
 		"borg_upgrade_pinpointer",
 		"borg_upgrade_surgical_database",
 		"borg_upgrade_surgicalomnitool"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
+
+
+/datum/techweb_node/cyborg_upgrades_utility
+	id = "cyborg_upgrades_utility"
+	display_name = "Cyborg Upgrades: Utility"
+	description = "Enabling compatibility of our most basic technology for usage within cyborgs."
+	prereq_ids = list(
+		"cyborg",
+		"adv_robotics"
+	)
+	design_ids = list(
+		"borg_upgrade_selfrepair",
+		"borg_upgrade_thrusters",
+		"borg_upgrade_expand",
+		"borg_upgrade_clamp", // Cargo is so lacking that they don't get their own techweb node.
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
+
+/datum/techweb_node/cyborg_upgrades_security
+	id = "cyborg_upgrades_security"
+	display_name = "Cyborg Upgrades: Security"
+	description =  "Enabling compatibility of our weaponry technology for usage within cyborgs."
+	prereq_ids = list(
+		"weaponry",
+		"adv_robotics"
+	)
+	design_ids = list(
+		"borg_upgrade_disablercooler"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
+
+/datum/techweb_node/cyborg_upgrades_security/New()
+	. = ..()
+	if(CONFIG_GET(flag/disable_secborg))
+		hidden = TRUE // Node begone!
+
+
+/datum/techweb_node/cyborg_upgrades_janitor
+	id = "cyborg_upgrades_janitor"
+	display_name = "Cyborg Upgrades: Janitorial"
+	description = "Enabling compatibility of our janitorial technology for usage within cyborgs."
+	prereq_ids = list(
+		"janitor",
+		"adv_robotics"
+	)
+	design_ids = list(
+		"borg_upgrade_advancedmop",
+		"borg_upgrade_prt",
+		"borg_upgrade_trashofholding"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
