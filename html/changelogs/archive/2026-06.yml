@@ -3,3 +3,32 @@
   - image: fixed the arms on the prototype engineering modsuit.
   - image: fixes the arms on the volt modsuit.
   - bugfix: the sound effect for saluting will ignore if you're mute.
+2026-06-02:
+  SirNightKnight:
+  - qol: sinew fishing line is reinforced.
+2026-06-03:
+  JupiterJaeden:
+  - spellcheck: Updates the description of the silver cuffs and the silver cuff resisting
+      message to be a bit more accurate.
+  - code_imp: Removes the old (now redundant) check for removing the silver cuff status
+      effect.
+  - bugfix: Fixes a bug where you would be stuck with the cuff resisting do_after
+      bar (preventing you from doing many things) even after having your cuffs removed
+      by someone else.
+  - balance: Prevent bloodsuckers gaining blood thickening by feeding off each other.
+  - bugfix: Fixes a bug where torpor would not trigger in a vampire's coffin from
+      them having wounds.
+  - qol: Makes the feed message clearer to the victim about the effect on their character's
+      memory.
+  - bugfix: Masquerade no longer automatically disables itself on entering softcrit
+      (as the power description text implies) - although it can still be manually
+      disabled, and it does automatically disable on death.
+  - bugfix: Fixes a bug where you could not use brawn to break cuffs while buckled
+      to something.
+  - spellcheck: Updates the power description on veil of many faces to explain it
+      a little more and give some advice on its usage.
+  Shoddd:
+  - balance: honk sect mech ritual is now possible and gives you a very special mech
+  byondsucks:
+  - balance: High threat antags now 4/5 the next round's high threat weights instead
+      of halving them, also removes weight decay from roundstart high threat antags.
