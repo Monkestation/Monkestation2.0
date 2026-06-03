@@ -269,7 +269,7 @@
 	if(!resident)
 		return ..()
 	if(user != resident)
-		if(istype(item, cutting_tool))
+		if(item.tool_behaviour == cutting_tool_behaviour)
 			to_chat(user, span_notice("This is a much more complex mechanical structure than you thought. You don't know where to begin cutting [src]."))
 			return
 	if(anchored && (item.tool_behaviour == TOOL_WRENCH))

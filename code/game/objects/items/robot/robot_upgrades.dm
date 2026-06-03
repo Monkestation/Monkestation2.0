@@ -679,15 +679,6 @@
 	model_flags = BORG_MODEL_MEDICAL
 	items_to_add = list(/obj/item/borg/apparatus/beaker/extra)
 
-/obj/item/borg/upgrade/broomer
-	name = "experimental push broom"
-	desc = "An experimental push broom used for efficiently pushing refuse."
-	icon_state = "module_janitor"
-	require_model = TRUE
-	model_type = list(/obj/item/robot_model/janitor)
-	model_flags = BORG_MODEL_JANITOR
-	items_to_add = list(/obj/item/pushbroom/cyborg)
-
 /obj/item/borg/upgrade/uwu
 	name = "cyborg UwU-speak \"upgrade\""
 	desc = "As if existence as an artificial being wasn't torment enough for the unit OR the crew."

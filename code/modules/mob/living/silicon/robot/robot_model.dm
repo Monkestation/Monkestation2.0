@@ -413,6 +413,14 @@
 	hat_offset = -4
 	badge_offset = -4
 
+/obj/item/robot_model/engineering/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
+	..()
+	var/obj/item/lightreplacer/light_replacer = locate(/obj/item/lightreplacer) in basic_modules
+	if(light_replacer)
+		for(var/charge in 1 to coeff)
+			light_replacer.Charge(cyborg)
+
+
 /obj/item/robot_model/standard
 	name = "Standard"
 	basic_modules = list(
@@ -460,6 +468,7 @@
 		/obj/item/holosign_creator,
 		/obj/item/reagent_containers/spray/cyborg_drying,
 		/obj/item/wirebrush,
+		/obj/item/pushbroom/cyborg,
 	)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(

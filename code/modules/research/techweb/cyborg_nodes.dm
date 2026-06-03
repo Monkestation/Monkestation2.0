@@ -62,7 +62,6 @@
 	prereq_ids = list("adv_robotics", "cyborg")
 	design_ids = list(
 		"borg_upgrade_advancedmop",
-		"borg_upgrade_broomer",
 		"borg_upgrade_expand",
 		"borg_upgrade_prt",
 		"borg_upgrade_selfrepair",
