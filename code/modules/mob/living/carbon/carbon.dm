@@ -239,11 +239,11 @@
 
 /mob/living/carbon/proc/cuff_resist_check_continue()
 	var/obj/item/handcuffs = get_item_by_slot(ITEM_SLOT_HANDCUFFED)
-	if (handcuffs?.item_flags & BEING_REMOVED)
+	if(handcuffs?.item_flags & BEING_REMOVED)
 		return TRUE
 
 	var/obj/item/legcuffs = get_item_by_slot(ITEM_SLOT_LEGCUFFED)
-	if (legcuffs?.item_flags & BEING_REMOVED)
+	if(legcuffs?.item_flags & BEING_REMOVED)
 		return TRUE
 
 	return FALSE
