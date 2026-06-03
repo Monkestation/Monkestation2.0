@@ -414,6 +414,14 @@
 	hat_offset = -4
 	badge_offset = -4
 
+/obj/item/robot_model/engineering/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
+	..()
+	var/obj/item/lightreplacer/light_replacer = locate(/obj/item/lightreplacer) in basic_modules
+	if(light_replacer)
+		for(var/charge in 1 to coeff)
+			light_replacer.Charge(cyborg)
+
+
 /obj/item/robot_model/standard
 	name = "Standard"
 	basic_modules = list(
