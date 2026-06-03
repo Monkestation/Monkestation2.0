@@ -1158,6 +1158,72 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
 
+/datum/design/borg_upgrade_science_apparatus_improvement_robotics
+	name = "Robotics Apparatus Improvement"
+	id = "borg_upgrade_science_apparatus_improvement_robotics"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/science_apparatus_improvement/robotics
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 2.5
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SCIENCE
+	)
+
+/datum/design/borg_upgrade_science_apparatus_improvement_ordnance
+	name = "Ordnance Apparatus Improvement"
+	id = "borg_upgrade_science_apparatus_improvement_ordnance"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/science_apparatus_improvement/ordnance
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SCIENCE
+	)
+
+/datum/design/borg_upgrade_science_apparatus_improvement_circuits
+	name = "Circuit Apparatus Improvement"
+	id = "borg_upgrade_science_apparatus_improvement_circuits"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/science_apparatus_improvement/circuits
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SCIENCE
+	)
+/obj/item/borg/upgrade/science_apparatus_improvement/circuits
+
+/datum/design/borg_upgrade_science_xenobiology
+	name = "Xenobiology Tools"
+	id = "borg_upgrade_science_xenobiology"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/science_xenobiology
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SCIENCE
+	)
+
 /datum/design/borg_upgrade_selfrepair
 	name = "Self-Repair Module"
 	id = "borg_upgrade_selfrepair"
@@ -1308,18 +1374,27 @@
 	)
 	search_metadata = "boris"
 
-/datum/design/borg_upgrade_rped
-	name = "Rapid Part Exchange Device"
-	id = "borg_upgrade_rped"
+/datum/design/borg_upgrade_bs_rped
+	name = "Bluespace Rapid Part Exchange Device"
+	id = "borg_upgrade_bs_rped"
 	build_type = MECHFAB
+<<<<<<< HEAD
 	build_path = /obj/item/borg/upgrade/rped
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5
+=======
+	build_path = /obj/item/borg/upgrade/bs_rped
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 2.5
+>>>>>>> 062162b28219e7283245e9f6fe17305e042996e0
 	)
 	construction_time = 12 SECONDS
 	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING,
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SCIENCE
 	)
 
 /datum/design/borg_upgrade_extra_sheet_manipulator

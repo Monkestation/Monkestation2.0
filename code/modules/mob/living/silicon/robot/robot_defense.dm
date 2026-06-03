@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 				place_on_head(attacking_item)
 		return
 
-	if(istype(attacking_item, /obj/item/clothing/accessory/badge))
+	if(istype(attacking_item, /obj/item/clothing/accessory/badge) && model.badge_offset != INFINITY)
 		to_chat(user, span_notice("You begin to decorate [src] with [attacking_item]..."))
 		to_chat(src, span_notice("[user] is pinning [attacking_item] onto you..."))
 		if(do_after(user, 3 SECONDS, target = src))

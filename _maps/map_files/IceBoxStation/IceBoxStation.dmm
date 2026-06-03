@@ -29216,7 +29216,7 @@
 "iVT" = (
 /obj/structure/table/glass,
 /obj/item/disk/vacuum_upgrade/biomass,
-/obj/item/vacuum_pack,
+/obj/item/vacuum_pack/backpack,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "iVU" = (
@@ -54486,7 +54486,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/table/glass,
 /obj/item/disk/vacuum_upgrade/biomass,
-/obj/item/vacuum_pack,
+/obj/item/vacuum_pack/backpack,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "qEx" = (

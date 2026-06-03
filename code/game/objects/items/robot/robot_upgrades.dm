@@ -591,14 +591,54 @@
 		borg.hasExpanded = FALSE
 		borg.update_transform(0.5)
 
-/obj/item/borg/upgrade/rped
-	name = "engineering cyborg RPED"
-	desc = "A rapid part exchange device for the engineering cyborg."
+/obj/item/borg/upgrade/bs_rped
+	name = "engineering cyborg bluespace RPED"
+	desc = "A bluespace rapid part exchange device for the engineering cyborg."
 	icon_state = "module_engineer"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur, /obj/item/robot_model/science)
 	model_flags = BORG_MODEL_ENGINEERING
-	items_to_add = list(/obj/item/storage/part_replacer/cyborg)
+
+/obj/item/borg/upgrade/bs_rped/action(mob/living/silicon/robot/borg, user = usr)
+	. = ..()
+	if(!.)
+		return
+
+	var/obj/item/storage/part_replacer/cyborg/rped = locate() in borg.model.modules
+	if(isnull(rped))
+		to_chat(user, span_warning("This cyborg doesn't have a rapid part exchange device to upgrade!"))
+		return FALSE
+
+	install_items(borg, user, list(/obj/item/storage/part_replacer/bluespace))
+	var/obj/item/storage/part_replacer/bluespace/brped = locate() in borg.model.modules
+	var/move_location = borg.drop_location()
+	brped.atom_storage.silent_for_user = TRUE
+	for(var/obj/item in rped)
+		if(!brped.atom_storage.attempt_insert(item, borg, TRUE))
+			item.forceMove(move_location)
+	brped.atom_storage.silent_for_user = initial(brped.atom_storage.silent_for_user)
+	remove_items(borg, user, list(/obj/item/storage/part_replacer/cyborg))
+	return TRUE
+
+/obj/item/borg/upgrade/bs_rped/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
+	. = ..()
+	if(!.)
+		return
+
+	var/obj/item/storage/part_replacer/bluespace/brped = locate() in borg.model.modules
+	if(isnull(brped))
+		return FALSE
+
+	install_items(borg, user, list(/obj/item/storage/part_replacer/cyborg))
+	var/obj/item/storage/part_replacer/cyborg/rped = locate() in borg.model.modules
+	var/move_location = borg.drop_location()
+	rped.atom_storage.silent_for_user = TRUE
+	for(var/obj/item in brped)
+		if(!rped.atom_storage.attempt_insert(item, borg, TRUE))
+			item.forceMove(move_location)
+	rped.atom_storage.silent_for_user = initial(rped.atom_storage.silent_for_user)
+	remove_items(borg, user, list(/obj/item/storage/part_replacer/bluespace))
+	return TRUE
 
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"
@@ -643,12 +683,15 @@
 
 /obj/item/borg/upgrade/transform/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if(. && new_model)
-		borg.model.transform_to(new_model, FALSE)
+	if(!.)
+		return
+	if(!new_model)
+		return FALSE
+	borg.model.transform_to(new_model, FALSE)
 
 /obj/item/borg/upgrade/transform/clown
 	name = "borg model picker (Clown)"
-	desc = "Allows you to to turn a cyborg into a clown, honk."
+	desc = "Allows you to turn a cyborg into a clown, honk."
 	icon_state = "module_honk"
 	new_model = /obj/item/robot_model/clown
 
@@ -702,7 +745,7 @@
 			Allowing the cyborg to signal nanites in crew."
 	icon_state = "module_peace"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/peacekeeper, /obj/item/robot_model/security)
+	model_type = list(/obj/item/robot_model/peacekeeper, /obj/item/robot_model/security, /obj/item/robot_model/science)
 	model_flags = BORG_MODEL_PEACEKEEPER
 	items_to_add = list(/obj/item/nanite_remote/cyborg)
 
@@ -766,7 +809,7 @@
 
 /obj/item/borg/upgrade/adv_healthanalyzer
 	name = "health analyzer upgrade"
-	desc = "An updated sensor and driver kit for medical cyborgs. Allowing the cyborg unit to preform more in-depth analysis of patients."
+	desc = "An updated sensor and driver kit for medical cyborgs. Allowing the cyborg unit to perform more in-depth analysis of patients."
 	icon_state = "module_medical"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical) // The fact that syndicate medical doesn't get advanced stock suprises me just as much as you.
@@ -812,3 +855,96 @@
 		return .
 	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
 		omnitool.set_upgraded(FALSE)
+
+//
+// Science Cyborgs
+//
+
+// This is a base item which should be inherited from.
+/obj/item/borg/upgrade/science_apparatus_improvement
+	name = "science apparatus upgrade"
+	desc = "An upgrade for science cyborgs that enables them to hold and manipulate more items with their apparatus."
+	icon_state = "module_science"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/science)
+	model_flags = BORG_MODEL_SCIENCE
+	var/list/storables_to_add = list()
+
+/obj/item/borg/upgrade/science_apparatus_improvement/action(mob/living/silicon/robot/borg, mob/living/user = usr)
+	. = ..()
+	if(!.)
+		return .
+	var/obj/item/borg/apparatus/circuit/science/apparatus = locate() in borg.model.modules
+	if(isnull(apparatus))
+		to_chat(user, span_warning("This cyborg doesn't have an apparatus to upgrade!"))
+		return FALSE
+	if(!length(storables_to_add))
+		to_chat(user, span_warning("This upgrade doesn't seem to do anything!"))
+		return FALSE
+	apparatus.storable |= storables_to_add
+
+/obj/item/borg/upgrade/science_apparatus_improvement/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
+	. = ..()
+	if(!.)
+		return .
+	var/obj/item/borg/apparatus/circuit/science/apparatus = locate() in borg.model.modules
+	if(isnull(apparatus))
+		return FALSE
+	if(!length(storables_to_add))
+		return FALSE
+	apparatus.storable -= storables_to_add
+
+/obj/item/borg/upgrade/science_apparatus_improvement/robotics
+	name = "science robotics upgrade"
+	desc = "An upgrade for science cyborgs that enables them to hold and manipulate robotics-related items."
+	storables_to_add = list(
+		/obj/item/borg/upgrade,
+		/obj/item/mmi,
+		/obj/item/assembly/flash,
+		/obj/item/bodypart/arm/left/robot,
+		/obj/item/bodypart/arm/right/robot,
+		/obj/item/bodypart/leg/left/robot,
+		/obj/item/bodypart/leg/right/robot,
+		/obj/item/bodypart/chest/robot,
+		/obj/item/bodypart/head/robot
+	)
+
+/obj/item/borg/upgrade/science_apparatus_improvement/ordnance
+	name = "science ordnance upgrade"
+	desc = "An upgrade for science cyborgs that enables them to hold and manipulate ordnance-related items."
+	items_to_add = list(
+		/obj/item/pipe_dispenser
+	)
+	storables_to_add = list(
+		/obj/item/tank/internals,
+		/obj/item/transfer_valve
+	)
+
+/obj/item/borg/upgrade/science_apparatus_improvement/circuits
+	name = "science circuits upgrade"
+	desc = "An upgrade for science cyborgs that enables them to hold and manipulate circuits-related items."
+	items_to_add = list(
+		/obj/item/multitool/circuit
+	)
+	storables_to_add = list(
+		/obj/item/circuit_component,
+		/obj/item/shell,
+		/obj/item/usb_cable,
+		/obj/item/keyboard_shell,
+		/obj/item/wiremod_scanner,
+		/obj/item/integrated_circuit,
+		/obj/item/mod/module/circuit,
+	)
+
+/obj/item/borg/upgrade/science_xenobiology
+	name = "science xenobiology upgrade"
+	desc = "An upgrade for science cyborgs that enables them to perform work in xenobiology."
+	icon_state = "module_science"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/science)
+	model_flags = BORG_MODEL_SCIENCE
+	items_to_add = list(
+		/obj/item/vacuum_pack,
+		/obj/item/storage/bag/xeno,
+		/obj/item/construction/plumbing/research
+	)

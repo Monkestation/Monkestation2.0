@@ -50,7 +50,7 @@
 	design_ids = list(
 		"borg_upgrade_charger",
 		"borg_upgrade_extra_sheet_manipulator",
-		"borg_upgrade_rped"
+		"borg_upgrade_bs_rped"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
@@ -133,10 +133,12 @@
 	display_name = "Cyborg Upgrades: Bluespace"
 	description = "Enabling compatibility of our bluespace technology for usage within cyborgs."
 	prereq_ids = list(
+		"cyborg_upgrades_engineering",
 		"cyborg_upgrades_mining",
 		"practical_bluespace"
 	)
 	design_ids = list(
+		"borg_upgrade_bs_rped",
 		"borg_upgrade_holding"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
