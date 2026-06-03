@@ -1105,7 +1105,7 @@
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		/datum/material/gold = SHEET_MATERIAL_AMOUNT,
-		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 0.5,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 0.5
 	)
 	construction_time = 4 SECONDS
 	category = list(
