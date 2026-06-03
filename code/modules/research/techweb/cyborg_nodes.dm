@@ -36,7 +36,7 @@
 		"borg_upgrade_diamonddrill",
 		"borg_upgrade_lavaproof",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2) // Very few upgrades shall be cheap.
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/cyborg_upgrades_engineering
@@ -73,7 +73,7 @@
 		"borg_upgrade_surgical_database",
 		"borg_upgrade_surgicalomnitool"
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS) // Lots of upgrades shall be regular cost.
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/cyborg_upgrades_utility
