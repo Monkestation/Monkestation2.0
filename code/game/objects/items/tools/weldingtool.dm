@@ -36,7 +36,7 @@
 	/// Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/status = TRUE
 	/// The max amount of fuel the welder can hold
-	var/max_fuel = 30
+	var/max_fuel = 20
 	/// Does the welder start with fuel.
 	var/starting_fuel = TRUE
 	/// Whether or not we're changing the icon based on fuel left.
@@ -331,7 +331,7 @@
 	name = "industrial welding tool"
 	desc = "A slightly larger welder with a larger tank."
 	icon_state = "indwelder"
-	max_fuel = 60
+	max_fuel = 40
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
 
 /obj/item/weldingtool/largetank/empty
