@@ -1,0 +1,8 @@
+2026-06-01:
+  SirNightKnight:
+  - image: fixed the arms on the prototype engineering modsuit.
+  - image: fixes the arms on the volt modsuit.
+  - bugfix: the sound effect for saluting will ignore if you're mute.
+2026-06-02:
+  SirNightKnight:
+  - qol: sinew fishing line is reinforced.

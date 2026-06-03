@@ -1,0 +1,4 @@
+author: "byondsucks"
+delete-after: True
+changes:
+  - balance: "High threat antags now 4/5 the next round's high threat weights instead of halving them, also removes weight decay from roundstart high threat antags."

@@ -13,7 +13,7 @@
 	material_drop = /obj/item/stack/sheet/cloth
 	delivery_icon = null //unwrappable
 	anchorable = FALSE
-	cutting_tool = null // Bodybags are not deconstructed by cutting
+	cutting_tool_behaviour = null // Bodybags are not deconstructed by cutting
 	can_weld_shut = FALSE
 	can_install_electronics = FALSE
 	drag_slowdown = 0
