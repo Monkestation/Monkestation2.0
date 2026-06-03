@@ -160,38 +160,43 @@
 /obj/machinery/photobooth/proc/finish_taking_pictures(mob/user)
 	taking_pictures = FALSE
 
-	if (!find_record(occupant.name))
-		if (ishuman(occupant))
-			var/mob/living/carbon/human/human_occupant = occupant
-
-			investigate_log("[key_name(user)] created a new record named [human_occupant.get_face_name()]", INVESTIGATE_RECORDS)
-
-			var/mutable_appearance/char_appearance = new(human_occupant.appearance)
-			var/person_gender = "Other"
-			if(human_occupant.gender == "male")
-				person_gender = "Male"
-			if(human_occupant.gender == "female")
-				person_gender = "Female"
-
-			var/datum/record/crew/new_record = new (
-				age = human_occupant.age,
-				blood_type = "[human_occupant.get_blood_type() || "None"]",
-				character_appearance = char_appearance,
-				dna_string = human_occupant.dna.unique_enzymes,
-				fingerprint = md5(human_occupant.dna.unique_identity),
-				gender = person_gender,
-				name = human_occupant.get_face_name(),
-				rank = human_occupant.get_assignment("Unassigned", "Unassigned", FALSE),
-				species = human_occupant.dna.species.name,
-				trim = human_occupant.get_assignment("Unassigned", "Unassigned", FALSE),
-			)
-
-			new_record.recreate_manifest_photos(add_height_chart)
-			balloon_alert_to_viewers("new record created!")
+	if (find_record(occupant.name))
+		if (GLOB.manifest.change_pictures(occupant.name, occupant, add_height_chart = add_height_chart))
+			balloon_alert_to_viewers("records updated!")
 		else
 			balloon_alert_to_viewers("failed to update records!")
-	else if (GLOB.manifest.change_pictures(occupant.name, occupant, add_height_chart = add_height_chart))
-		balloon_alert_to_viewers("records updated!")
+
+		open_machine()
+		return
+
+	//Code for creating new record
+	if (ishuman(occupant))
+		var/mob/living/carbon/human/human_occupant = occupant
+
+		investigate_log("[key_name(user)] created a new record named [human_occupant.get_face_name()]", INVESTIGATE_RECORDS)
+
+		var/mutable_appearance/char_appearance = new(human_occupant.appearance)
+		var/person_gender = "Other"
+		if(human_occupant.gender == "male")
+			person_gender = "Male"
+		if(human_occupant.gender == "female")
+			person_gender = "Female"
+
+		var/datum/record/crew/new_record = new (
+			age = human_occupant.age,
+			blood_type = "[human_occupant.get_blood_type() || "None"]",
+			character_appearance = char_appearance,
+			dna_string = human_occupant.dna.unique_enzymes,
+			fingerprint = md5(human_occupant.dna.unique_identity),
+			gender = person_gender,
+			name = human_occupant.get_face_name(),
+			rank = human_occupant.get_assignment("Unassigned", "Unassigned", FALSE),
+			species = human_occupant.dna.species.name,
+			trim = human_occupant.get_assignment("Unassigned", "Unassigned", FALSE),
+		)
+
+		new_record.recreate_manifest_photos(add_height_chart)
+		balloon_alert_to_viewers("new record created!")
 	else
 		balloon_alert_to_viewers("failed to update records!")
 
