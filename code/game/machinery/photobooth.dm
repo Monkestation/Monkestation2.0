@@ -33,7 +33,10 @@
  */
 /obj/machinery/photobooth/security
 	name = "security photobooth"
-	desc = "A machine with some drapes and a camera, used to update security record photos. Requires Security access to use, and adds a height chart to the person."
+	desc = "A machine with some drapes and a camera, used to update security record photos or add new individuals to the crew manifest. \
+	Requires Security access to use, and adds a height chart to the person. \
+	It will automatically gather some basic information about the occupant when adding new manifest entries, \
+	including their displayed job, their DNA, species, and fingerprints."
 	circuit = /obj/item/circuitboard/machine/photobooth/security
 	req_one_access = list(ACCESS_SECURITY)
 	color = COLOR_LIGHT_GRAYISH_RED
@@ -60,7 +63,7 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(occupant)
 		if(allowed(user))
-			start_taking_pictures()
+			start_taking_pictures(user)
 		else
 			balloon_alert(user, "access denied!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -125,7 +128,7 @@
  * Handles the effects of taking pictures of the user, calling finish_taking_pictures
  * to actually update the records.
  */
-/obj/machinery/photobooth/proc/start_taking_pictures()
+/obj/machinery/photobooth/proc/start_taking_pictures(mob/user)
 	taking_pictures = TRUE
 	if(obj_flags & EMAGGED)
 		var/mob/living/carbon/carbon_occupant = occupant
@@ -136,7 +139,7 @@
 			sleep(0.2 SECONDS)
 		if(carbon_occupant)
 			carbon_occupant.emote("scream")
-		finish_taking_pictures()
+		finish_taking_pictures(user)
 		return
 	if(!do_after(occupant, 2 SECONDS, src, timed_action_flags = IGNORE_HELD_ITEM)) //gives them time to put their hand items away.
 		taking_pictures = FALSE
@@ -151,15 +154,47 @@
 	if(!do_after(occupant, 2 SECONDS, src, timed_action_flags = IGNORE_HELD_ITEM))
 		taking_pictures = FALSE
 		return
-	finish_taking_pictures()
+	finish_taking_pictures(user)
 
 ///Updates the records (if possible), giving feedback, and spitting the user out if all's well.
-/obj/machinery/photobooth/proc/finish_taking_pictures()
+/obj/machinery/photobooth/proc/finish_taking_pictures(mob/user)
 	taking_pictures = FALSE
-	if(!GLOB.manifest.change_pictures(occupant.name, occupant, add_height_chart = add_height_chart))
-		balloon_alert(occupant, "record not found!")
-		return
-	balloon_alert(occupant, "records updated")
+
+	if (!find_record(occupant.name))
+		if (ishuman(occupant))
+			var/mob/living/carbon/human/human_occupant = occupant
+
+			investigate_log("[key_name(user)] created a new record named [occupant.name]", INVESTIGATE_RECORDS)
+
+			var/mutable_appearance/char_appearance = new(human_occupant.appearance)
+			var/person_gender = "Other"
+			if(human_occupant.gender == "male")
+				person_gender = "Male"
+			if(human_occupant.gender == "female")
+				person_gender = "Female"
+
+			var/datum/record/crew/new_record = new (
+				age = human_occupant.age,
+				blood_type = "[human_occupant.get_blood_type() || "None"]",
+				character_appearance = char_appearance,
+				dna_string = human_occupant.dna.unique_enzymes,
+				fingerprint = md5(human_occupant.dna.unique_identity),
+				gender = person_gender,
+				name = human_occupant.get_face_name(),
+				rank = human_occupant.get_assignment("Unassigned", "Unassigned", FALSE),
+				species = human_occupant.dna.species.name,
+				trim = human_occupant.get_assignment("Unassigned", "Unassigned", FALSE),
+			)
+
+			new_record.recreate_manifest_photos(add_height_chart)
+			balloon_alert_to_viewers("new record created!")
+		else
+			balloon_alert_to_viewers("failed to update records!")
+	else if (GLOB.manifest.change_pictures(occupant.name, occupant, add_height_chart = add_height_chart))
+		balloon_alert_to_viewers("records updated!")
+	else
+		balloon_alert_to_viewers("failed to update records!")
+
 	open_machine()
 
 ///Mimicing the camera, gives a flash effect by turning the light on and calling flash_end.
@@ -228,4 +263,4 @@
 	if(machine.taking_pictures)
 		balloon_alert(activator, "machine busy!")
 		return
-	machine.start_taking_pictures()
+	machine.start_taking_pictures(activator)
