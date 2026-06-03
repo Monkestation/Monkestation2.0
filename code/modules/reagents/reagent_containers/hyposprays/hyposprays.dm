@@ -165,23 +165,6 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		balloon_alert(user, "no vial!")
 		return ITEM_INTERACT_BLOCKING
 
-/obj/item/hypospray/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!istype(interacting_with, /obj/item/reagent_containers))
-		return NONE
-	var/obj/item/reagent_containers/interacting_item = interacting_with
-	if(!is_type_in_list(interacting_item, allowed_containers) || is_type_in_list(interacting_item, blacklist_containers))
-		balloon_alert(user, "won't fit!")
-		return ITEM_INTERACT_BLOCKING
-	if(!user.transferItemToLoc(interacting_item, src))
-		return ITEM_INTERACT_BLOCKING
-	if(vial != null && !unload_vial(user, TRUE))
-		return ITEM_INTERACT_BLOCKING
-	vial = interacting_item
-	last_vial_maximum = vial.reagents.maximum_volume
-	user.visible_message(span_notice("[user] loads a vial into [src]."), span_notice("You have loaded [vial] into [src]."))
-	playsound(src, load_sound, 50, 1)
-	return ITEM_INTERACT_SUCCESS
-
 /obj/item/hypospray/proc/cycle_transfer_amount(mob/user, direction = FORWARD)
 	var/list_len = length(possible_transfer_amounts)
 	if(!list_len)
@@ -412,14 +395,6 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	spray_other = 0.5 SECONDS
 	blacklist_containers = NONE
 	upgrade_flags = HYPO_UPGRADE_PIERCING
-
-/obj/item/hypospray/scientific
-	name = "scientific hypospray"
-	desc = "A variant of the DeForest Medical Corporation hypospray that is not quite as good as the original counterpart, but serves as an adequate tool for transferring reagents."
-	inject_other = 3 SECONDS // The same exact speed as a syringe.
-	spray_other = 3 SECONDS
-	draw_other = 3 SECONDS
-	default_vial = /obj/item/reagent_containers/cup/vial
 
 //combat
 

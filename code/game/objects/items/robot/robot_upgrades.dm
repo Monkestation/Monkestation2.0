@@ -948,14 +948,3 @@
 		/obj/item/storage/bag/xeno,
 		/obj/item/construction/plumbing/research
 	)
-
-/obj/item/borg/upgrade/science_hypospray
-	name = "science hypospray upgrade"
-	desc = "An upgrade for science cyborgs that significantly improves their reagent transfer capabilities."
-	icon_state = "module_science"
-	require_model = TRUE
-	model_type = list(/obj/item/robot_model/science)
-	model_flags = BORG_MODEL_SCIENCE
-	items_to_add = list(
-		/obj/item/hypospray/scientific
-	)

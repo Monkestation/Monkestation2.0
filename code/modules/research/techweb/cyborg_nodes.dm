@@ -86,8 +86,7 @@
 		"borg_upgrade_science_apparatus_improvement_robotics",
 		"borg_upgrade_science_apparatus_improvement_ordnance",
 		"borg_upgrade_science_apparatus_improvement_circuits",
-		"borg_upgrade_science_xenobiology",
-		"borg_upgrade_science_hypospray"
+		"borg_upgrade_science_xenobiology"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
