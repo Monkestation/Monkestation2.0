@@ -713,7 +713,10 @@
 		var/mob/living/mob = interacting_with
 		if(mob == user)
 			return
-		if (mob.is_mouth_covered())
+		if(mob.stat == DEAD || HAS_TRAIT(mob, TRAIT_FAKEDEATH))
+			to_chat(user, span_warning("They are dead!"))
+			return
+		if(mob.is_mouth_covered())
 			to_chat(user, span_warning("To perform mechanical ventilation, the patient must be unmasked!"))
 			return
 		to_chat(user, span_notice("Applying a breathing mask to [mob] face."))
@@ -729,4 +732,4 @@
 				to_chat(user, span_notice("Where did he go?"))
 				return
 			to_chat(user, span_notice("Performing artificial ventilation!"))
-			mob.adjustOxyLoss(-7.5)
+			mob.adjustOxyLoss(-10)
