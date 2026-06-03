@@ -766,7 +766,7 @@
 
 /obj/item/borg/upgrade/adv_healthanalyzer
 	name = "health analyzer upgrade"
-	desc = "An updated sensor and driver kit for medical cyborgs. Allowing the cyborg unit to preform more in-depth analysis of patients."
+	desc = "An updated sensor and driver kit for medical cyborgs. Allowing the cyborg unit to perform more in-depth analysis of patients."
 	icon_state = "module_medical"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical) // The fact that syndicate medical doesn't get advanced stock suprises me just as much as you.
