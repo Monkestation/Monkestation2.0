@@ -113,7 +113,6 @@
 	if(CONFIG_GET(flag/disable_secborg))
 		hidden = TRUE // Node begone!
 
-
 /datum/techweb_node/cyborg_upgrades_janitor
 	id = "cyborg_upgrades_janitor"
 	display_name = "Cyborg Upgrades: Janitorial"
