@@ -1142,7 +1142,6 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
 
-
 /datum/design/borg_transform_clown
 	name = "Clown Module"
 	id = "borg_transform_clown"
@@ -1216,8 +1215,8 @@
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5,
-		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
-		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.5,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.5
 	)
 	construction_time = 12 SECONDS
 	category = list(
