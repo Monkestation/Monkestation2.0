@@ -164,7 +164,7 @@
 		if (ishuman(occupant))
 			var/mob/living/carbon/human/human_occupant = occupant
 
-			investigate_log("[key_name(user)] created a new record named [occupant.name]", INVESTIGATE_RECORDS)
+			investigate_log("[key_name(user)] created a new record named [human_occupant.get_face_name()]", INVESTIGATE_RECORDS)
 
 			var/mutable_appearance/char_appearance = new(human_occupant.appearance)
 			var/person_gender = "Other"
