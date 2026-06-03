@@ -1066,6 +1066,67 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
 
+/datum/design/borg_upgrade_disablercooler
+	name = "Rapid Disabler Cooling Module"
+	id = "borg_upgrade_disablercooler"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/disablercooler
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SECURITY
+	)
+
+/datum/design/borg_upgrade_diamonddrill
+	name = "Diamond Drill"
+	id = "borg_upgrade_diamonddrill"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/ddrill
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT
+	)
+	construction_time = 8 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
+	)
+
+/datum/design/borg_upgrade_holding
+	name = "Ore Satchel of Holding"
+	id = "borg_upgrade_holding"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/soh
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 0.5,
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
+	)
+
+/datum/design/borg_upgrade_lavaproof
+	name = "Lavaproof Tracks"
+	id = "borg_upgrade_lavaproof"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/lavaproof
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.5
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
+	)
+
 /datum/design/borg_upgrade_selfrepair
 	name = "Self-Repair Module"
 	id = "borg_upgrade_selfrepair"
@@ -1137,75 +1198,6 @@
 	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
-	)
-
-//
-// Cyborg Upgrades (Mining)
-//
-
-/datum/design/borg_upgrade_diamonddrill
-	name = "Diamond Drill"
-	id = "borg_upgrade_diamonddrill"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/ddrill
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 3,
-		/datum/material/diamond = SHEET_MATERIAL_AMOUNT
-	)
-	construction_time = 8 SECONDS
-	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
-	)
-
-/datum/design/borg_upgrade_holding
-	name = "Ore Satchel of Holding"
-	id = "borg_upgrade_holding"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/soh
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
-		/datum/material/gold = SHEET_MATERIAL_AMOUNT,
-		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 0.5,
-	)
-	construction_time = 4 SECONDS
-	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
-	)
-
-/datum/design/borg_upgrade_lavaproof
-	name = "Lavaproof Tracks"
-	id = "borg_upgrade_lavaproof"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/lavaproof
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
-		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2,
-		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.5
-	)
-	construction_time = 12 SECONDS
-	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
-	)
-
-//
-// Cyborg Upgrades (Security)
-//
-
-/datum/design/borg_upgrade_disablercooler
-	name = "Rapid Disabler Cooling Module"
-	id = "borg_upgrade_disablercooler"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/disablercooler
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 3,
-		/datum/material/gold = SHEET_MATERIAL_AMOUNT,
-		/datum/material/diamond = SHEET_MATERIAL_AMOUNT
-	)
-	construction_time = 12 SECONDS
-	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SECURITY
 	)
 
 //
