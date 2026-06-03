@@ -1020,7 +1020,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 //
-// Cyborg Upgrades (All)
+// Cyborg Upgrades
 //
 
 /datum/design/borg_upgrade_rename
@@ -1236,28 +1236,6 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
 
-//
-// Cyborg Upgrades (Peacekeeper)
-//
-
-/datum/design/borg_upgrade_nanite_remote
-	name = "Cyborg Nanite Remote"
-	id = "borg_upgrade_nanite_remote"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/nanite_remote
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5
-	)
-	construction_time = 8 SECONDS
-	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_PEACEKEEPER
-	)
-
-//
-// Cyborg Upgrades (Janitor)
-//
-
 /datum/design/borg_upgrade_trashofholding
 	name = "Trash Bag of Holding"
 	id = "borg_upgrade_trashofholding"
@@ -1300,9 +1278,35 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
 	)
 
-//
-// Cyborg Upgrades (Engineering)
-//
+/datum/design/borg_upgrade_expand
+	name = "Expand Module"
+	id = "borg_upgrade_expand"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/expand
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 100,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.5
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
+	)
+
+/datum/design/boris_ai_controller
+	name = "B.O.R.I.S. AI-Cyborg Remote Control"
+	id = "borg_ai_control"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/ai
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.2
+	)
+	construction_time = 50
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
+	)
+	search_metadata = "boris"
 
 /datum/design/borg_upgrade_rped
 	name = "Rapid Part Exchange Device"
@@ -1345,7 +1349,6 @@
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
 	)
-
 
 /datum/design/borg_upgrade_beaker_app
 	name = "Secondary Beaker Storage"
@@ -1391,21 +1394,6 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
 
-/datum/design/borg_upgrade_surgicalomnitool
-	name = "Advanced Surgical Omnitool Upgrade"
-	id = "borg_upgrade_surgicalomnitool"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/surgery_omnitool
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75,
-		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75
-	)
-	construction_time = 4 SECONDS
-	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
-	)
-
 /datum/design/borg_upgrade_nvgmeson
 	name = "Nightvision Meson Sight"
 	id = "borg_upgrade_nvmeson"
@@ -1423,18 +1411,19 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING,
 	)
 
-/datum/design/borg_upgrade_expand
-	name = "Expand Module"
-	id = "borg_upgrade_expand"
+/datum/design/borg_upgrade_surgicalomnitool
+	name = "Advanced Surgical Omnitool Upgrade"
+	id = "borg_upgrade_surgicalomnitool"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/expand
+	build_path = /obj/item/borg/upgrade/surgery_omnitool
 	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 100,
-		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.5
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75
 	)
-	construction_time = 12 SECONDS
+	construction_time = 4 SECONDS
 	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
 
 /datum/design/borg_upgrade_uwu
@@ -1452,25 +1441,19 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
 
-//
-// Cyborg Upgrades (Misc)
-//
-
-/datum/design/boris_ai_controller
-	name = "B.O.R.I.S. AI-Cyborg Remote Control"
-	id = "borg_ai_control"
+/datum/design/borg_upgrade_nanite_remote
+	name = "Cyborg Nanite Remote"
+	id = "borg_upgrade_nanite_remote"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/ai
+	build_path = /obj/item/borg/upgrade/nanite_remote
 	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75,
-		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.2
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5
 	)
-	construction_time = 50
+	construction_time = 8 SECONDS
 	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_PEACEKEEPER
 	)
-	search_metadata = "boris"
 
 /datum/design/mmi
 	name = "Man-Machine Interface"
