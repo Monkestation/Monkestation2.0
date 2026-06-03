@@ -18968,7 +18968,7 @@
 /area/station/commons/vacant_room/commissary)
 "eRi" = (
 /obj/machinery/computer/prisoner/gulag_teleporter_computer{
-	dir = 4
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -28815,6 +28815,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
+/obj/machinery/photobooth/security,
 /turf/open/floor/iron,
 /area/station/security/processing)
 "hZc" = (
