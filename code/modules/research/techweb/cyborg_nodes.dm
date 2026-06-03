@@ -36,7 +36,7 @@
 		"borg_upgrade_diamonddrill",
 		"borg_upgrade_lavaproof",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/cyborg_upgrades_engineering
@@ -52,7 +52,7 @@
 		"borg_upgrade_extra_sheet_manipulator",
 		"borg_upgrade_rped"
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/cyborg_upgrades_medical
@@ -75,7 +75,6 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
-
 
 /datum/techweb_node/cyborg_upgrades_utility
 	id = "cyborg_upgrades_utility"
@@ -105,7 +104,7 @@
 	design_ids = list(
 		"borg_upgrade_disablercooler"
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/cyborg_upgrades_security/New()
@@ -126,7 +125,7 @@
 		"borg_upgrade_prt",
 		"borg_upgrade_trashofholding"
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/cyborg_upgrades_bluespace
