@@ -959,7 +959,3 @@
 	items_to_add = list(
 		/obj/item/hypospray/scientific
 	)
-	items_to_remove = list(
-		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/dropper
-	)
