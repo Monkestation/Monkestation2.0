@@ -27,6 +27,7 @@
 /datum/quirk/stowaway/post_add()
 	to_chat(quirk_holder, span_boldnotice("You've awoken to find yourself inside [GLOB.station_name] without real identification!"))
 	force_stowaway_unassigned_role(quirk_holder, quirk_holder.client)
+	return_stowaway_heirloom(quirk_holder)
 
 /obj/item/card/id/fake_card //not a proper ID but still shares a lot of functions
 	name = "\"ID Card\""
@@ -105,4 +106,13 @@
 		SSquirks.AssignQuirks(person, person_client)
 
 	force_stowaway_unassigned_role(person, person_client)
+
 //OCULIS PORT END
+
+/proc/return_stowaway_heirloom(mob/living/carbon/human/stowaway) //reset family heirloom real quick so it respawns
+	if(!stowaway.has_quirk(/datum/quirk/item_quirk/family_heirloom))
+		return
+	stowaway.remove_quirk(/datum/quirk/item_quirk/family_heirloom)
+	stowaway.add_quirk(/datum/quirk/item_quirk/family_heirloom)
+
+
