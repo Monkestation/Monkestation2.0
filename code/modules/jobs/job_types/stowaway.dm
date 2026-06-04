@@ -3,7 +3,7 @@
  **/
 
 /datum/job/stowaway
-	title = "Stowaway"
+	title = JOB_STOWAWAY
 	rpg_title = "Wanderer"
 	paycheck = PAYCHECK_ZERO
 	outfit = /datum/outfit/job/stowaway
@@ -25,7 +25,7 @@
 	)
 
 /datum/outfit/job/stowaway
-	name = "Stowaway"
+	name = JOB_STOWAWAY
 	jobtype = /datum/job/stowaway
 	uniform = /obj/item/clothing/under/color/grey
 	belt = /obj/item/storage/bag/trash/stowaway

@@ -182,7 +182,7 @@
 		id_examine += "<div class='img_by_text_container'>"
 		id_examine += "[id_icon]"
 		id_examine += "<div class='img_text'>"
-		if(id_job == "Stowaway")
+		if(id_job == JOB_STOWAWAY)
 			id_examine += jointext(list(
 				"&bull; Name: [id_name || "Unknown"]",
 			), "<br>")
