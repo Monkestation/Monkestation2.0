@@ -122,3 +122,10 @@
 	unique = TRUE
 	slot_flags = ITEM_SLOT_BELT
 	grind_results = list(/datum/reagent/drug/maint/tar = 5, /datum/reagent/cellulose = 3)
+
+/obj/item/soap/homemade/stowaway
+	name = "ancient bar of soap"
+	desc = "This bar of soap looks dried, like it hasn't seen use in decades."
+	grind_results = list(/datum/reagent/consumable/liquidgibs = 3, /datum/reagent/lye = 3, /datum/reagent/sulfur = 3, /datum/reagent/fuel = 3, /datum/reagent/blood = 3)
+	cleanspeed = 8 SECONDS //comically slow
+	uses = 7 //rapidly disintegrates
