@@ -8,14 +8,19 @@
 	paycheck = PAYCHECK_ZERO
 	outfit = /datum/outfit/job/stowaway
 	allow_bureaucratic_error = FALSE
-	family_heirlooms = list(
-		/obj/item/toy/katana,
-		/obj/item/crowbar/large/emergency, //RIP your belt slot
-		/obj/item/knife/shiv,
+	family_heirlooms = list( //vaguely ordered from least to most useful
 		/obj/item/book/greytider_ninja,
+		/obj/item/trash/candle,
+		/obj/item/dice/d1,
+		/obj/item/paper/crumpled,
 		/obj/item/toy/talking/owl,
 		/obj/item/toy/talking/griffin,
+		/obj/item/staff/stick,
+		/obj/item/toy/katana,
+		/obj/item/pillow,
+		/obj/item/knife/shiv,
 		/obj/item/pen,
+		/obj/item/soap/homemade, //through the power of not cleaning themselves, the stowaways have passed this bar down for generations
 		/obj/item/modular_computer/pda, //JACKPOT!!
 	)
 

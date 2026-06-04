@@ -49,7 +49,7 @@
 /obj/item/card/id/fake_card/proc/register_name(mob/living/carbon/human/quirk_holder)
 	registered_name = quirk_holder.real_name
 	name = "[quirk_holder.real_name]'s \"ID Card\""
-	assignment = "Stowaway"
+	assignment = JOB_STOWAWAY
 
 /obj/item/card/id/fake_card/proc/used()
 	uses--
@@ -118,7 +118,7 @@
 /obj/item/book/greytider_ninja
 	name = "greytider ninja manifesto"
 	icon_state ="greyninjabook"
-	desc = "The ancient decrees of the greytider ninja, written in a long-lost form of maintenance scrawl. These priceless pages describe thousands of robustings, slips, knife embeds, and disposals rides. The pages are saturated with maintenance tar and can stick right to your belt or your back."
+	desc = "The ancient decrees of the greytider ninja, written in a long-lost form of maintenance scrawl. These priceless pages describe thousands of robustings, slips, knife embeds, and disposals rides. The pages are saturated with maintenance tar and can stick right to your belt."
 	unique = TRUE
 	slot_flags = ITEM_SLOT_BELT
 	grind_results = list(/datum/reagent/drug/maint/tar = 5, /datum/reagent/cellulose = 3)
