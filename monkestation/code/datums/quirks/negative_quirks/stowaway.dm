@@ -6,17 +6,14 @@
 	icon = FA_ICON_SUITCASE
 
 /datum/quirk/stowaway/add_unique()
-	var/mob/living/carbon/human/stowaway = quirk_holder
-	stowaway.delete_equipment()
-	if(prob(20))
-		stowaway.adjust_drunk_effect(50) //What did I DO last night?
 	var/obj/structure/closet/selected_closet = get_unlocked_closed_locker() //Find your new home
 	if(selected_closet)
-		stowaway.forceMove(selected_closet) //Move in
-		stowaway.Sleeping(5 SECONDS)
+		quirk_holder.forceMove(selected_closet) //Move in
 
 /datum/quirk/stowaway/post_add()
 	var/mob/living/carbon/human/stowaway = quirk_holder
+	stowaway.delete_equipment()
+	stowaway.Sleeping(5 SECONDS)
 	stowaway.equip_outfit_and_loadout(/datum/outfit/job/stowaway, stowaway.client.prefs, FALSE, /datum/job/stowaway) //Loadout items and stowaway gear
 
 	var/obj/item/card/id/realid = stowaway.get_item_by_slot(ITEM_SLOT_ID) //No ID
@@ -25,6 +22,10 @@
 	var/obj/item/card/id/fake_card/card = new(quirk_holder.drop_location()) //a fake ID with two uses for maint doors
 	quirk_holder.equip_to_slot_if_possible(card, ITEM_SLOT_ID)
 	card.register_name(quirk_holder)
+
+	if(prob(20))
+		stowaway.adjust_drunk_effect(50) //What did I DO last night?
+
 	to_chat(quirk_holder, span_boldnotice("You've awoken to find yourself inside [GLOB.station_name] without real identification!"))
 	force_stowaway_unassigned_role(quirk_holder, quirk_holder.client)
 	return_stowaway_heirloom(quirk_holder)

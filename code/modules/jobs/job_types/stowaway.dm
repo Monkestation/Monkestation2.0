@@ -16,9 +16,9 @@
 		/obj/item/toy/talking/owl,
 		/obj/item/toy/talking/griffin,
 		/obj/item/soap/homemade/stowaway, //through the power of not cleaning themselves, the stowaways have passed this bar down for generations
-		/obj/item/staff/stick,
 		/obj/item/toy/katana,
 		/obj/item/pillow,
+		/obj/item/bong,
 		/obj/item/knife/shiv,
 		/obj/item/pen,
 		/obj/item/modular_computer/pda, //JACKPOT!!
