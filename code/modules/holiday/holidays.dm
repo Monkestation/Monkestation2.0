@@ -94,7 +94,7 @@
 		if(PATTERN_RANDOM)
 			return "#[random_short_color()]"
 		if(PATTERN_RAINBOW)
-			var/datum/holiday/pride_week/rainbow_datum = new()
+			var/datum/holiday/pride_month/rainbow_datum = new()
 			return rainbow_datum.get_holiday_colors(thing_to_color, PATTERN_DEFAULT)
 	if(!length(GLOB.holidays))
 		return
@@ -386,12 +386,11 @@
 	begin_month = JUNE
 	holiday_hat = /obj/item/clothing/head/costume/garland
 
-/datum/holiday/pride_week
-	name = PRIDE_WEEK
+/datum/holiday/pride_month
+	name = PRIDE_MONTH
 	begin_month = JUNE
-	// Stonewall was June 28th, this captures its week.
-	begin_day = 23
-	end_day = 29
+	begin_day = 1
+	end_day = 30
 	holiday_colors = list(
 		COLOR_PRIDE_PURPLE,
 		COLOR_PRIDE_BLUE,
@@ -400,6 +399,18 @@
 		COLOR_PRIDE_ORANGE,
 		COLOR_PRIDE_RED,
 	)
+
+/datum/holiday/pride_month/celebrate()
+	. = ..()
+	SSticker.OnRoundstart(CALLBACK(src, PROC_REF(become_gay_destroyer_of_worlds)))
+
+/datum/holiday/pride_month/proc/become_gay_destroyer_of_worlds()
+	for(var/i in 1 to length(GLOB.meta_gas_info[/datum/gas/plasma][META_GAS_OVERLAY][1])) //I DON'T LIKE EM PUTTING CHEMICALS IN THE GAS THAT TURN THE FRIGGIN PLASMA GAY!
+		var/obj/effect/overlay/gas/G = GLOB.meta_gas_info[/datum/gas/plasma][META_GAS_OVERLAY][1][i]
+		G.icon_state = "pridesma"
+		animate(G, color = rgb(255, 0, 0), time = 5, loop = -1)
+		animate(color = rgb(0, 255, 0), time = 5, loop = -1)
+		animate(color = rgb(0, 0, 255), time = 5, loop = -1)
 
 // JULY
 
