@@ -7,6 +7,7 @@
 
 /datum/quirk/stowaway/add_unique()
 	var/mob/living/carbon/human/stowaway = quirk_holder
+	stowaway.delete_equipment()
 	if(prob(20))
 		stowaway.adjust_drunk_effect(50) //What did I DO last night?
 	var/obj/structure/closet/selected_closet = get_unlocked_closed_locker() //Find your new home
@@ -16,7 +17,6 @@
 
 /datum/quirk/stowaway/post_add()
 	var/mob/living/carbon/human/stowaway = quirk_holder
-	stowaway.delete_equipment()
 	stowaway.equip_outfit_and_loadout(/datum/outfit/job/stowaway, stowaway.client.prefs, FALSE, /datum/job/stowaway) //Loadout items and stowaway gear
 
 	var/obj/item/card/id/realid = stowaway.get_item_by_slot(ITEM_SLOT_ID) //No ID
