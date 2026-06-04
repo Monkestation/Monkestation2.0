@@ -388,6 +388,7 @@
 		/obj/item/weldingtool/largetank/cyborg,
 		/obj/item/borg/cyborg_omnitool/engineering,
 		/obj/item/borg/cyborg_omnitool/engineering,
+		/obj/item/storage/part_replacer/cyborg,
 		/obj/item/lightreplacer,
 		/obj/item/borg/apparatus/circuit,
 		/obj/item/t_scanner,
@@ -412,6 +413,14 @@
 	model_traits = list(TRAIT_NEGATES_GRAVITY, TRAIT_KNOW_ENGI_WIRES, TRAIT_KNOW_ROBO_WIRES)
 	hat_offset = -4
 	badge_offset = -4
+
+/obj/item/robot_model/engineering/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
+	..()
+	var/obj/item/lightreplacer/light_replacer = locate(/obj/item/lightreplacer) in basic_modules
+	if(light_replacer)
+		for(var/charge in 1 to coeff)
+			light_replacer.Charge(cyborg)
+
 
 /obj/item/robot_model/standard
 	name = "Standard"
@@ -976,6 +985,53 @@
 			qdel(button)
 	return ..()
 
+/obj/item/robot_model/science
+	name = "Science"
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/extinguisher/mini,
+		/obj/item/borg/cyborg_omnitool/engineering,
+		/obj/item/weldingtool/largetank/cyborg,
+		/obj/item/stack/cable_coil,
+		/obj/item/storage/part_replacer/cyborg,
+		/obj/item/experi_scanner,
+		/obj/item/nanite_scanner, // Nanite remote not included because it is an upgrade.
+		/obj/item/borg/apparatus/sheet_manipulator, // This is needed for material scans.
+		/obj/item/borg/apparatus/circuit/science,
+		/obj/item/analyzer,
+		/obj/item/assembly/signaler, // Ordiance is an upgrade.
+		/obj/item/borg/apparatus/beaker,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/borg/apparatus/organ_storage/limb, // They need to be able to hold limbs to hit artifacts with it.
+	)
+	emag_modules = list(
+		/obj/item/borg/handheld_jaunter,
+	)
+	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
+	cyborg_base_icon = "science"
+	model_select_icon = "science"
+	hat_offset = 3
+	badge_offset = 3
+	borg_skins = list(
+		"Science" = list(
+			SKIN_ICON_STATE = "science"
+		),
+		"Eyebot" = list(
+			SKIN_ICON_STATE = "science_eyebot",
+			SKIN_LIGHT_KEY = "science_eyebot",
+			SKIN_HAT_OFFSET = INFINITY,
+			SKIN_BADGE_OFFSET = INFINITY
+		),
+		"Drone" = list(
+			SKIN_ICON_STATE = "science_drone",
+			SKIN_ICON_STATE = "science_drone",
+			SKIN_HAT_OFFSET = INFINITY,
+			SKIN_BADGE_OFFSET = INFINITY
+		)
+	)
+
+
 /obj/item/robot_model/syndicate
 	name = "Syndicate Assault"
 	basic_modules = list(
@@ -1040,6 +1096,7 @@
 		/obj/item/weldingtool/largetank/cyborg,
 		/obj/item/borg/cyborg_omnitool/engineering/syndie,
 		/obj/item/borg/cyborg_omnitool/engineering/syndie,
+		/obj/item/storage/part_replacer/cyborg,
 		/obj/item/borg/apparatus/circuit,
 		/obj/item/analyzer,
 		/obj/item/stack/sheet/iron,

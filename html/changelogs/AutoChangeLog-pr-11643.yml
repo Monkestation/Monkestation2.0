@@ -1,0 +1,9 @@
+author: "Melbert, SirNightKnight"
+delete-after: True
+changes:
+  - balance: "added a wind up to the taser projectile instead of the gun firing it."
+  - balance: "you can resist or use help intent on yourself or others to remove taser electrodes."
+  - balance: "slightly decreased the energy cost of taser projectiles so there's some extra charge for the taser charge drain."
+  - balance: "energy armor and shock absorber modules negate the effects of tasers."
+  - balance: "being tased while wet will burn you."
+  - image: "fixed the multiphase energy gun always showing as full when in taser mode."

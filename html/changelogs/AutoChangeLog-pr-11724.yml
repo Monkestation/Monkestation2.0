@@ -1,0 +1,13 @@
+author: "Runian"
+delete-after: True
+changes:
+  - rscadd: "Science Cyborg model and various upgrades for it."
+  - rscadd: "New techweb node containing science cyborg upgrades."
+  - qol: "Vacuum pack's nozzle can now directly install upgrades to the vacuum pack by interacting with the upgrade with the nozzle."
+  - balance: "Silicons now can use the tank dispenser if they're adjacent to it."
+  - balance: "Engineering and Saboteur Cyborg now starts with a RPED."
+  - balance: "Engineering & Mining Cyborg Upgrades are now locked behind Applied Bluespace Research."
+  - balance: "RPED cyborg upgrade has been renamed, replaced, and cost adjusted to be a BRPED cyborg upgrade."
+  - image: "Science Cyborg Skins (default + 2), Module, and Upgrade Sprite"
+  - spellcheck: "Corrected various typos and culled repeated words from xenobiology vacuum pack's feedback."
+  - refactor: "Xenobiology's vacuum pack has been refactored so that it can be used without requiring a backpack if needed."
