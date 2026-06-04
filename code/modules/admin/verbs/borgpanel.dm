@@ -3,8 +3,12 @@ ADMIN_VERB(borg_panel, R_ADMIN, FALSE, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPT
 	borgpanel.ui_interact(user.mob)
 
 /datum/borgpanel
+	/// The cyborg that we are interacting with.
 	var/mob/living/silicon/robot/borg
+	/// The user that has the borg panel open.
 	var/user
+	/// All cyborg upgrades that are valid to be used.
+	var/static/list/obj/item/borg/upgrade/valid_upgrades = null
 
 /datum/borgpanel/New(to_user, mob/living/silicon/robot/to_borg)
 	if(!istype(to_borg))
@@ -14,6 +18,27 @@ ADMIN_VERB(borg_panel, R_ADMIN, FALSE, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPT
 	if (!user)
 		CRASH("Borg panel attempted to open to a mob without a client")
 	borg = to_borg
+	if(!valid_upgrades)
+		var/list/excluded_upgrades = list(
+			// Base upgrades
+			/obj/item/borg/upgrade/hypospray,
+			/obj/item/borg/upgrade/transform,
+			/obj/item/borg/upgrade/modkit,
+			/obj/item/borg/upgrade/modkit/aoe,
+			// Not practical to use
+			/obj/item/borg/upgrade/defib/backpack,
+			/obj/item/borg/upgrade/modkit/trigger_guard,
+			/obj/item/borg/upgrade/rename
+		)
+		valid_upgrades = list()
+		for(var/obj/item/borg/upgrade/upgrade_typepath as anything in subtypesof(/obj/item/borg/upgrade) - excluded_upgrades)
+			if(istype(upgrade_typepath, /obj/item/borg/upgrade/modkit))
+				var/obj/item/borg/upgrade/modkit/modkit_typepath = upgrade_typepath
+				if(modkit_typepath.minebot_exclusive)
+					continue
+			if(istype(upgrade_typepath, /obj/item/borg/upgrade/transform))
+				continue
+			valid_upgrades += new upgrade_typepath() // We need to create them to initialize list variables.
 
 /datum/borgpanel/ui_state(mob/user)
 	return ADMIN_STATE(R_ADMIN)
@@ -36,14 +61,13 @@ ADMIN_VERB(borg_panel, R_ADMIN, FALSE, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPT
 		"scrambledcodes" = borg.scrambledcodes
 	)
 	.["upgrades"] = list()
-	for (var/upgradetype in subtypesof(/obj/item/borg/upgrade)-/obj/item/borg/upgrade/hypospray) //hypospray is a dummy parent for hypospray upgrades
-		var/obj/item/borg/upgrade/upgrade = upgradetype
-		if (initial(upgrade.model_type) && !is_type_in_list(borg.model, initial(upgrade.model_type))) // Upgrade requires a different model
+	for(var/obj/item/borg/upgrade/upgrade_item as anything in valid_upgrades)
+		if(upgrade_item.model_type && !is_type_in_list(borg.model, upgrade_item.model_type))
 			continue
 		var/installed = FALSE
-		if (locate(upgradetype) in borg)
+		if(locate(upgrade_item.type) in borg.upgrades)
 			installed = TRUE
-		.["upgrades"] += list(list("name" = initial(upgrade.name), "installed" = installed, "type" = upgradetype))
+		.["upgrades"] += list(list("name" = initial(upgrade_item.name), "installed" = installed, "type" = upgrade_item.type))
 	.["laws"] = borg.laws ? borg.laws.get_law_list(include_zeroth = TRUE, render_html = FALSE) : list()
 	.["channels"] = list()
 	for (var/k in GLOB.radiochannels)
@@ -132,18 +156,19 @@ ADMIN_VERB(borg_panel, R_ADMIN, FALSE, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPT
 			log_silicon("[key_name(user)] renamed [key_name(borg)] to [new_name].")
 			borg.fully_replace_character_name(borg.real_name,new_name)
 		if ("toggle_upgrade")
-			var/upgradepath = text2path(params["upgrade"])
-			var/obj/item/borg/upgrade/installedupgrade = locate(upgradepath) in borg
-			if (installedupgrade)
-				message_admins("[key_name_admin(user)] removed the [installedupgrade] upgrade from [ADMIN_LOOKUPFLW(borg)].")
-				log_silicon("[key_name(user)] removed the [installedupgrade] upgrade from [key_name(borg)].")
-				qdel(installedupgrade) // see [mob/living/silicon/robot/on_upgrade_deleted()].
+			var/upgrade_typepath = text2path(params["upgrade"])
+			var/obj/item/borg/upgrade/installed_upgrade = locate(upgrade_typepath) in borg.upgrades
+			if(installed_upgrade)
+				message_admins("[key_name_admin(user)] removed [installed_upgrade] upgrade from [ADMIN_LOOKUPFLW(borg)].")
+				log_silicon("[key_name(user)] removed [installed_upgrade] upgrade from [key_name(borg)].")
+				qdel(installed_upgrade) // See [mob/living/silicon/robot/on_upgrade_deleted()].
 			else
-				var/obj/item/borg/upgrade/upgrade = new upgradepath(borg)
-				upgrade.action(borg, user)
-				borg.upgrades += upgrade
-				message_admins("[key_name_admin(user)] added the [upgrade] borg upgrade to [ADMIN_LOOKUPFLW(borg)].")
-				log_silicon("[key_name(user)] added the [upgrade] borg upgrade to [key_name(borg)].")
+				var/obj/item/borg/upgrade/new_upgrade = new upgrade_typepath(borg)
+				if(borg.add_to_upgrades(new_upgrade, user))
+					message_admins("[key_name_admin(user)] added [new_upgrade] borg upgrade to [ADMIN_LOOKUPFLW(borg)].")
+					log_silicon("[key_name(user)] added [new_upgrade] borg upgrade to [key_name(borg)].")
+				else
+					qdel(new_upgrade) // Failure means the upgrade was dropped to the floor.
 		if ("toggle_radio")
 			var/channel = params["channel"]
 			if (channel in borg.radio.channels) // We're removing a channel
