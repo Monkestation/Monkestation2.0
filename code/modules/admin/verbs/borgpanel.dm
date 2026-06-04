@@ -36,8 +36,6 @@ ADMIN_VERB(borg_panel, R_ADMIN, FALSE, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPT
 				var/obj/item/borg/upgrade/modkit/modkit_typepath = upgrade_typepath
 				if(modkit_typepath.minebot_exclusive)
 					continue
-			if(istype(upgrade_typepath, /obj/item/borg/upgrade/transform))
-				continue
 			valid_upgrades += new upgrade_typepath() // We need to create them to initialize list variables.
 
 /datum/borgpanel/ui_state(mob/user)
