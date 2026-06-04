@@ -115,4 +115,10 @@
 	stowaway.remove_quirk(/datum/quirk/item_quirk/family_heirloom)
 	stowaway.add_quirk(/datum/quirk/item_quirk/family_heirloom)
 
-
+/obj/item/book/greytider_ninja
+	name = "greytider ninja manifesto"
+	icon_state ="greyninjabook"
+	desc = "The ancient decrees of the greytider ninja, written in a long-lost form of maintenance scrawl. These priceless pages describe thousands of robustings, slips, knife embeds, and disposals rides. The pages are saturated with maintenance tar and can stick right to your belt or your back."
+	unique = TRUE
+	slot_flags = ITEM_SLOT_BELT
+	grind_results = list(/datum/reagent/drug/maint/tar = 5, /datum/reagent/cellulose = 3)

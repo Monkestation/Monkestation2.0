@@ -8,7 +8,16 @@
 	paycheck = PAYCHECK_ZERO
 	outfit = /datum/outfit/job/stowaway
 	allow_bureaucratic_error = FALSE
-	family_heirlooms = list(/obj/item/toy/cards/deck, /obj/item/lighter, /obj/item/dice/d20)
+	family_heirlooms = list(
+		/obj/item/toy/katana,
+		/obj/item/crowbar/large/emergency, //RIP your belt slot
+		/obj/item/knife/shiv,
+		/obj/item/book/greytider_ninja,
+		/obj/item/toy/talking/owl,
+		/obj/item/toy/talking/griffin,
+		/obj/item/pen,
+		/obj/item/modular_computer/pda, //JACKPOT!!
+	)
 
 /datum/outfit/job/stowaway
 	name = "Stowaway"
