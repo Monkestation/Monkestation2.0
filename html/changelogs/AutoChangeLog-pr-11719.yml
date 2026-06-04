@@ -1,9 +1,0 @@
-author: "drgnmstrc"
-delete-after: True
-changes:
-  - rscadd: "hybrid cutters for science, a crowbar+wirecutter without prying available with experimental tools"
-  - rscadd: "jaws of death for traitors and operatives for 3 tc, faster speed but same size as regular jaws"
-  - qol: "renamed syndicate jaws of life to compact jaws of death"
-  - qol: "made exp. welding torches and hand drills available to science, hybrid cutters to engineering"
-  - bugfix: "fixed the syndicate hypospray being erroneously unavailable"
-  - image: "resprite of the jaws of life and compact jaws of death"

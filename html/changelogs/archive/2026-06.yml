@@ -32,3 +32,46 @@
   byondsucks:
   - balance: High threat antags now 4/5 the next round's high threat weights instead
       of halving them, also removes weight decay from roundstart high threat antags.
+2026-06-04:
+  Cujo:
+  - balance: Using medical tools for IPC or robotic limbs surgery is now actually
+      usable rather than having a 1% success rate.
+  JupiterJaeden:
+  - balance: Most body bags no longer have a drag slowdown or a zip-up timer. Bluespace
+      body bags retain a small 1 second zip-up timer.
+  Melbert, SirNightKnight:
+  - balance: added a wind up to the taser projectile instead of the gun firing it.
+  - balance: you can resist or use help intent on yourself or others to remove taser
+      electrodes.
+  - balance: slightly decreased the energy cost of taser projectiles so there's some
+      extra charge for the taser charge drain.
+  - balance: energy armor and shock absorber modules negate the effects of tasers.
+  - balance: being tased while wet will burn you.
+  - image: fixed the multiphase energy gun always showing as full when in taser mode.
+  Runian:
+  - spellcheck: Fixes a typo in medical cyborg health analyzer upgrade's description.
+  - rscadd: Science Cyborg model and various upgrades for it.
+  - rscadd: New techweb node containing science cyborg upgrades.
+  - qol: Vacuum pack's nozzle can now directly install upgrades to the vacuum pack
+      by interacting with the upgrade with the nozzle.
+  - balance: Silicons now can use the tank dispenser if they're adjacent to it.
+  - balance: Engineering and Saboteur Cyborg now starts with a RPED.
+  - balance: Engineering & Mining Cyborg Upgrades are now locked behind Applied Bluespace
+      Research.
+  - balance: RPED cyborg upgrade has been renamed, replaced, and cost adjusted to
+      be a BRPED cyborg upgrade.
+  - image: Science Cyborg Skins (default + 2), Module, and Upgrade Sprite
+  - spellcheck: Corrected various typos and culled repeated words from xenobiology
+      vacuum pack's feedback.
+  - refactor: Xenobiology's vacuum pack has been refactored so that it can be used
+      without requiring a backpack if needed.
+  drgnmstrc:
+  - rscadd: hybrid cutters for science, a crowbar+wirecutter without prying available
+      with experimental tools
+  - rscadd: jaws of death for traitors and operatives for 3 tc, faster speed but same
+      size as regular jaws
+  - qol: renamed syndicate jaws of life to compact jaws of death
+  - qol: made exp. welding torches and hand drills available to science, hybrid cutters
+      to engineering
+  - bugfix: fixed the syndicate hypospray being erroneously unavailable
+  - image: resprite of the jaws of life and compact jaws of death
