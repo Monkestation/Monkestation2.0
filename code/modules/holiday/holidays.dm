@@ -408,9 +408,9 @@
 	for(var/i in 1 to length(GLOB.meta_gas_info[/datum/gas/plasma][META_GAS_OVERLAY][1])) //I DON'T LIKE EM PUTTING CHEMICALS IN THE GAS THAT TURN THE FRIGGIN PLASMA GAY!
 		var/obj/effect/overlay/gas/G = GLOB.meta_gas_info[/datum/gas/plasma][META_GAS_OVERLAY][1][i]
 		G.icon_state = "pridesma"
-		animate(G, color = rgb(255, 0, 0), time = 5, loop = -1)
-		animate(color = rgb(0, 255, 0), time = 5, loop = -1)
-		animate(color = rgb(0, 0, 255), time = 5, loop = -1)
+		animate(G, color = rgb(255, 0, 0), time = 1 SECOND, loop = -1)
+		animate(color = rgb(0, 255, 0), time = 1 SECOND, loop = -1)
+		animate(color = rgb(0, 0, 255), time = 1 SECOND, loop = -1)
 
 // JULY
 
