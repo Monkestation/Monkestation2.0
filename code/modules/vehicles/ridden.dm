@@ -70,3 +70,10 @@
 /obj/vehicle/ridden/zap_act(power, zap_flags)
 	zap_buckle_check(power)
 	return ..()
+
+/obj/vehicle/ridden/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
+	if(usr == buckled_mob)
+		. = ..()
+	else
+		if(do_after(usr, 1 SECONDS))
+			. = ..()
