@@ -32,7 +32,7 @@
 	)
 	external_organs = list(
 		/obj/item/organ/external/antennae/ipc = "None",
-		/datum/bodypart_overlay/mutant/ipc_screen = "Blank",
+		/obj/item/organ/external/ipc_screen = "Blank",
 	)
 
 	mutant_bodyparts = list("ipc_chassis")

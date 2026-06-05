@@ -169,16 +169,18 @@
 		limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
 	return TRUE
 
-/obj/item/mod/paint/proc/color_ipc(mob/living/target, mob/living/user)
+/obj/item/mod/paint/proc/color_ipc(mob/living/carbon/target, mob/living/user)
 	var/reskin = tgui_input_list(user, "Which chassis do you want to use?", "Chassis Change", GLOB.ipc_chassis_list)
 	var/color_choice = tgui_color_picker(user, "Which color do you want your Chassis to be", "Color Change")
 	if(!reskin)
 		return
 	if(!color_choice)
 		return
-	var/mob/living/carbon/human/ipc = target
-	ipc.dna.features["ipc_chassis"] = reskin
-	ipc.update_body()
+	target.dna.features["ipc_chassis"] = reskin
+	for(var/obj/item/bodypart/bodypart as anything in target.bodyparts) //Override bodypart data as necessary
+		if(QDELETED(bodypart))
+			return
+		bodypart.update_limb()
 
 #undef MODPAINT_MAX_COLOR_VALUE
 #undef MODPAINT_MIN_COLOR_VALUE

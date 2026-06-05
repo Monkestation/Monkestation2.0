@@ -39,7 +39,7 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/ipc_screen
 
 /datum/bodypart_overlay/mutant/ipc_screen
-	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
+	layers = EXTERNAL_FRONT
 	feature_key = "ipc_screen"
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR_SECONDARY
