@@ -113,7 +113,7 @@
 	overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main/guaranteed)
 
 /mob/proc/trigger_lootbox_on_self()
-	src.overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main)
+	return overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main)
 
 /obj/item/lootbox
 	name = "lootbox"
