@@ -75,6 +75,15 @@
 	bantype = JOB_CYBORG
 	desc = "Restructures the subject cells into a Cyborg. Cure: Synthetic Cleaner"
 
+/datum/symptom/transformation/jungle_fever
+	name = "Jungle Fever"
+	new_form = /mob/living/carbon/human/species/monkey
+	bantype = ROLE_MONKEY_HELMET
+	desc = "Restructures the subject cells into a Monkey. Cure: Pulped Banana"
+
+/datum/symptom/transformation/jungle_fever/activate(mob/living/carbon/mob)
+	mob.monkeyize() // so that they keep the virus
+
 /datum/symptom/transformation/xeno
 	name = "Xenomorph Transformation"
 	new_form = /mob/living/carbon/alien/adult/hunter

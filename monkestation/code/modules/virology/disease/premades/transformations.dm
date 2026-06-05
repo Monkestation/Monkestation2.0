@@ -131,3 +131,24 @@
 	. = ..()
 	if(mob.has_reagent(/datum/reagent/medicine/system_cleaner, 1))
 		cure()
+
+/datum/disease/acute/premade/jungle_fever
+	name = "Jungle Fever"
+	form = "Ape Cells"
+	origin = "Ape Colonies"
+	category = DISEASE_MONKEY
+
+	symptoms = list(
+		new /datum/symptom/transformation/jungle_fever
+	)
+	spread_flags = DISEASE_SPREAD_BLOOD
+	robustness = 75
+
+	infectionchance = 20
+	infectionchance_base = 20
+	stage_variance = 0
+
+/datum/disease/acute/premade/jungle_fever/activate(mob/living/mob, starved, seconds_per_tick)
+	. = ..()
+	if(mob.has_reagent(/datum/reagent/medicine/coagulant/banana_peel, 1)) // mmmmh banana
+		cure()
