@@ -1,24 +1,25 @@
 /// All of the default reagent lists for each hypospray along with hacked variants.
 #define BASE_MEDICAL_REAGENTS list(\
-		/datum/reagent/medicine/c2/aiuri,\
-		/datum/reagent/medicine/c2/convermol,\
-		/datum/reagent/medicine/epinephrine,\
 		/datum/reagent/medicine/c2/libital,\
+		/datum/reagent/medicine/c2/aiuri,\
 		/datum/reagent/medicine/c2/multiver,\
+		/datum/reagent/medicine/epinephrine,\
 		/datum/reagent/medicine/salglu_solution,\
-		/datum/reagent/medicine/antipathogenic/spaceacillin\
+		/datum/reagent/medicine/antipathogenic/spaceacillin,\
+		/datum/reagent/toxin/formaldehyde,\
 	)
 
 #define EXPANDED_MEDICAL_REAGENTS list(\
-		/datum/reagent/medicine/haloperidol,\
-		/datum/reagent/medicine/inacusiate,\
-		/datum/reagent/medicine/mannitol,\
-		/datum/reagent/medicine/mutadone,\
-		/datum/reagent/medicine/oculine,\
+		/datum/reagent/medicine/sal_acid,\
 		/datum/reagent/medicine/oxandrolone,\
 		/datum/reagent/medicine/pen_acid,\
+		/datum/reagent/medicine/nanopaste,\
+		/datum/reagent/medicine/oculine,\
+		/datum/reagent/medicine/inacusiate,\
+		/datum/reagent/medicine/mannitol,\
+		/datum/reagent/medicine/haloperidol,\
+		/datum/reagent/medicine/mutadone,\
 		/datum/reagent/medicine/rezadone,\
-		/datum/reagent/medicine/sal_acid\
 	)
 
 #define HACKED_MEDICAL_REAGENTS list(\
@@ -75,9 +76,13 @@
 	)
 
 #define BASE_SYNDICATE_REAGENTS list(\
+		/datum/reagent/medicine/oculine,\
 		/datum/reagent/medicine/inacusiate,\
 		/datum/reagent/medicine/painkiller/morphine,\
 		/datum/reagent/medicine/potass_iodide,\
+		/datum/reagent/medicine/pen_acid,\
+		/datum/reagent/medicine/mutadone,\
+		/datum/reagent/medicine/nanopaste,\
 		/datum/reagent/medicine/syndicate_nanites\
 	)
 
@@ -131,14 +136,18 @@
 	var/max_volume_per_reagent = 30
 	/// An associated list of reagents that we can use and how much volume is remaining for it. Indexed via the reagent's typepath.
 	var/list/datum/reagent/stored_reagents = list()
-	/// The reagent typepath we've selected to dispense.
+	/// The reagent typepath we've selected to dispense with LEFT MOUSE BUTTON.
 	var/datum/reagent/selected_reagent_typepath
+	/// The reagent typepath we've selected to dispense with RIGHT MOUSE BUTTON.
+	var/datum/reagent/selected_reagent_typepath_alt
 	/// The recipe that we are actively recording, if any.
 	var/list/recording_recipe
 	/// An associated list of the recipes that have been saved. Indexed via the string ID of the recipe.
 	var/list/saved_recipes = list()
-	/// The recipe we've selected to dispense.
+	/// The recipe we've selected to dispense with LEFT MOUSE BUTTON.
 	var/selected_recipe_id
+	/// The recipe we've selected to dispense with RIGHT MOUSE BUTTON.
+	var/selected_recipe_id_alt
 	/// The theme for our UI.
 	var/tgui_theme = PDA_THEME_NTOS
 	/// Should we play a sound upon injecting someone?
@@ -163,29 +172,79 @@
 	charge_timer = 0
 	regenerate_reagents(stored_reagents, initial(amount_per_transfer_from_this))
 
-/obj/item/reagent_containers/borghypo/attack(mob/living/target_mob, mob/user)
-	var/mob/living/carbon/injectee = target_mob
+/// LEFT MOUSE BUTTON interaction with living mobs (injection)
+/obj/item/reagent_containers/borghypo/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with))
+		return NONE
+
+	var/mob/living/carbon/injectee = interacting_with
 	if(!istype(injectee))
-		return
-	if(!has_reagents_for_injection(user)) // Gives balloon alerts.
-		return
-	if(!injectee.reagents) // They should have reagents, but just in case.
+		return NONE
+
+	if(!has_reagents_for_injection_left(user))
+		return ITEM_INTERACT_BLOCKING
+	if(!injectee.reagents)
 		balloon_alert(user, "unable to inject!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(!injectee.try_inject(user, user.zone_selected, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE | (bypass_protection ? INJECT_CHECK_PENETRATE_THICK : 0)))
 		balloon_alert(user, "[parse_zone(user.zone_selected)] is blocked!")
-		return
-	var/datum/reagents/reagent_injector = create_reagent_injector()
+		return ITEM_INTERACT_BLOCKING
+
+	var/datum/reagents/reagent_injector = create_reagent_injector_left()
 	to_chat(injectee, span_warning("You feel a tiny prick!"))
-	to_chat(user, span_notice("You inject [injectee] with the injector ([selected_reagent_typepath ? selected_reagent_typepath.name : selected_recipe_id])."))
-	balloon_alert(user, "[reagent_injector.total_volume] unit\s injected")
+	to_chat(user, span_notice("You inject [injectee] with the injector ([get_injection_name_left()])."))
+	balloon_alert(user, "[get_injection_name_left()] [reagent_injector.total_volume] unit\s injected")
 	reagent_injector.trans_to(injectee, reagent_injector.total_volume, transfered_by = user, methods = INJECT)
-	log_combat(user, injectee, "injected", src, "(CHEMICALS: [reagent_injector])")
+	log_combat(user, injectee, "injected", src, "(CHEMICALS: [get_injection_name_left()])")
 	if(injection_sound)
 		playsound(injectee, injection_sound, 20, TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/// RIGHT MOUSE BUTTON interaction with living mobs (injection)
+/obj/item/reagent_containers/borghypo/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with))
+		return NONE
+
+	var/mob/living/carbon/injectee = interacting_with
+	if(!istype(injectee))
+		return NONE
+
+	if(!has_reagents_for_injection_right(user))
+		return ITEM_INTERACT_BLOCKING
+	if(!injectee.reagents)
+		balloon_alert(user, "unable to inject!")
+		return ITEM_INTERACT_BLOCKING
+	if(!injectee.try_inject(user, user.zone_selected, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE | (bypass_protection ? INJECT_CHECK_PENETRATE_THICK : 0)))
+		balloon_alert(user, "[parse_zone(user.zone_selected)] is blocked!")
+		return ITEM_INTERACT_BLOCKING
+
+	var/datum/reagents/reagent_injector = create_reagent_injector_right()
+	to_chat(injectee, span_warning("You feel a tiny prick!"))
+	to_chat(user, span_notice("You inject [injectee] with the injector ([get_injection_name_right()])."))
+	balloon_alert(user, "[get_injection_name_right()] [reagent_injector.total_volume] unit\s injected")
+	reagent_injector.trans_to(injectee, reagent_injector.total_volume, transfered_by = user, methods = INJECT)
+	log_combat(user, injectee, "injected", src, "(CHEMICALS: [get_injection_name_right()])")
+	if(injection_sound)
+		playsound(injectee, injection_sound, 20, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/borghypo/attack_self(mob/user)
 	ui_interact(user)
+
+/// Helper procs for getting injection names
+/obj/item/reagent_containers/borghypo/proc/get_injection_name_left()
+	if(selected_reagent_typepath)
+		return selected_reagent_typepath.name
+	if(selected_recipe_id)
+		return selected_recipe_id
+	return "nothing"
+
+/obj/item/reagent_containers/borghypo/proc/get_injection_name_right()
+	if(selected_reagent_typepath_alt)
+		return selected_reagent_typepath_alt.name
+	if(selected_recipe_id_alt)
+		return selected_recipe_id_alt
+	return "nothing"
 
 /// Adds a list of reagents that can be produced.
 /obj/item/reagent_containers/borghypo/proc/add_reagent_list(list/datum/reagent/reagent_typepaths)
@@ -202,6 +261,8 @@
 		stored_reagents -= reagent_typepath
 		if(selected_reagent_typepath == reagent_typepath)
 			selected_reagent_typepath = null
+		if(selected_reagent_typepath_alt == reagent_typepath)
+			selected_reagent_typepath_alt = null
 
 /// Regenerates the supply of multiple reagents (if they're not full already).
 /obj/item/reagent_containers/borghypo/proc/regenerate_reagents(list/datum/reagent/reagents_typepaths_to_regen, amount)
@@ -225,8 +286,8 @@
 		return
 	stored_reagents[reagent_typepath] = clamp(reagent_volume - amount, 0, max_volume_per_reagent)
 
-/// Checks if the hypospray has enough reagents to perform an injection.
-/obj/item/reagent_containers/borghypo/proc/has_reagents_for_injection(user)
+/// Checks if the hypospray has enough reagents for LEFT injection.
+/obj/item/reagent_containers/borghypo/proc/has_reagents_for_injection_left(user)
 	if(selected_reagent_typepath)
 		var/stored_volume = stored_reagents[selected_reagent_typepath]
 		if(!stored_volume || amount_per_transfer_from_this > stored_volume)
@@ -249,11 +310,38 @@
 				balloon_alert(user, "not enough [reagent_name]!")
 				return FALSE
 		return TRUE
-	balloon_alert(user, "no reagent selected!")
+	balloon_alert(user, "no left reagent selected!")
 	return FALSE
 
-/// Creates the reagents.
-/obj/item/reagent_containers/borghypo/proc/create_reagent_injector()
+/// Checks if the hypospray has enough reagents for RIGHT injection.
+/obj/item/reagent_containers/borghypo/proc/has_reagents_for_injection_right(user)
+	if(selected_reagent_typepath_alt)
+		var/stored_volume = stored_reagents[selected_reagent_typepath_alt]
+		if(!stored_volume || amount_per_transfer_from_this > stored_volume)
+			balloon_alert(user, "not enough [selected_reagent_typepath_alt.name]!")
+			return FALSE
+		return TRUE
+	if(selected_recipe_id_alt)
+		var/recipe_information = saved_recipes[selected_recipe_id_alt]
+		if(!recipe_information)
+			to_chat(user, span_warning("Couldn't find recipe ") + span_boldwarning(selected_recipe_id_alt) + span_warning("!"))
+			return FALSE
+		for(var/reagent_name in recipe_information)
+			var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(reagent_name)]
+			if(!reagent_typepath)
+				balloon_alert(user, "[reagent_name] not found!")
+				return FALSE
+			var/reagent_volume = recipe_information[reagent_name]
+			var/stored_volume = stored_reagents[reagent_typepath]
+			if(!stored_volume || reagent_volume > stored_volume)
+				balloon_alert(user, "not enough [reagent_name]!")
+				return FALSE
+		return TRUE
+	balloon_alert(user, "no right reagent selected!")
+	return FALSE
+
+/// Creates the reagents for LEFT injection.
+/obj/item/reagent_containers/borghypo/proc/create_reagent_injector_left()
 	var/datum/reagents/reagent_injector = new(possible_transfer_amounts[length(possible_transfer_amounts)], new_flags = NO_REACT)
 	if(selected_reagent_typepath)
 		reagent_injector.add_reagent(selected_reagent_typepath, amount_per_transfer_from_this, reagtemp = dispensed_temperature, no_react = TRUE)
@@ -266,7 +354,24 @@
 					continue
 				var/recipe_volume = recipe_information[reagent_name]
 				reagent_injector.add_reagent(reagent_typepath, recipe_volume, reagtemp = dispensed_temperature, no_react = TRUE)
-	// We do not need to worry about excess reagents as they do not get added past the reagent's maximum volume.
+	for(var/datum/reagent/added_reagent in reagent_injector.reagent_list)
+		deplete_reagent(added_reagent.type, added_reagent.volume)
+	return reagent_injector
+
+/// Creates the reagents for RIGHT injection.
+/obj/item/reagent_containers/borghypo/proc/create_reagent_injector_right()
+	var/datum/reagents/reagent_injector = new(possible_transfer_amounts[length(possible_transfer_amounts)], new_flags = NO_REACT)
+	if(selected_reagent_typepath_alt)
+		reagent_injector.add_reagent(selected_reagent_typepath_alt, amount_per_transfer_from_this, reagtemp = dispensed_temperature, no_react = TRUE)
+	else if(selected_recipe_id_alt)
+		var/recipe_information = saved_recipes[selected_recipe_id_alt]
+		if(recipe_information)
+			for(var/reagent_name in recipe_information)
+				var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(reagent_name)]
+				if(!reagent_typepath)
+					continue
+				var/recipe_volume = recipe_information[reagent_name]
+				reagent_injector.add_reagent(reagent_typepath, recipe_volume, reagtemp = dispensed_temperature, no_react = TRUE)
 	for(var/datum/reagent/added_reagent in reagent_injector.reagent_list)
 		deplete_reagent(added_reagent.type, added_reagent.volume)
 	return reagent_injector
@@ -307,14 +412,21 @@
 	data["amount"] = amount_per_transfer_from_this
 	var/list/available_reagents = list()
 	for(var/datum/reagent/reagent_typepath as anything in stored_reagents)
+		var/display_name = reagent_typepath.display_name_short \
+		? reagent_typepath.display_name_short \
+		: reagent_typepath.name
+
 		available_reagents.Add(list(list(
-			"name" = reagent_typepath.name,
+			"name" = display_name,	// take an alternative name if the usual one is too long
+			"full_name" = reagent_typepath.name,
 			"description" = reagent_typepath.description,
 			"volume" = round(stored_reagents[reagent_typepath], 0.01),
 		)))
 	data["reagents"] = available_reagents
-	data["selectedReagent"] = selected_reagent_typepath?.name
-	data["selectedRecipeId"] = selected_recipe_id
+	data["selectedReagentLeft"] = selected_reagent_typepath?.name
+	data["selectedReagentRight"] = selected_reagent_typepath_alt?.name
+	data["selectedRecipeIdLeft"] = selected_recipe_id
+	data["selectedRecipeIdRight"] = selected_recipe_id_alt
 	data["saved_recipes"] = saved_recipes
 	data["recording"] = !isnull(recording_recipe)
 	data["recordingRecipe"] = recording_recipe
@@ -331,7 +443,7 @@
 
 	var/mob/user = ui.user
 	switch(action)
-		if("select_reagent")
+		if("select_reagent_left")
 			playsound(src, 'sound/effects/pop.ogg', 50, 0)
 			var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(params["reagent_name"])]
 			if(!isnull(stored_reagents[reagent_typepath]))
@@ -340,11 +452,22 @@
 				else
 					selected_reagent_typepath = reagent_typepath
 					selected_recipe_id = null
+					balloon_alert(user, "Left: [selected_reagent_typepath.name]")
+			. = TRUE
+
+		if("select_reagent_right")
+			playsound(src, 'sound/effects/pop.ogg', 50, 0)
+			var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(params["reagent_name"])]
+			if(!isnull(stored_reagents[reagent_typepath]))
+				if(recording_recipe)
+					recording_recipe[params["reagent_name"]] += amount_per_transfer_from_this
+				else
+					selected_reagent_typepath_alt = reagent_typepath
+					selected_recipe_id_alt = null
+					balloon_alert(user, "Right: [selected_reagent_typepath_alt.name]")
 			. = TRUE
 
 		if("set_amount")
-			// It is intentional that they can transfer an amount that is not defined in `possible_transfer_amounts`.
-			// As long they are between the minimum and maximum, it is a feature as we allow for custom value.
 			amount_per_transfer_from_this = clamp(round(text2num(params["amount"]), 1), possible_transfer_amounts[1], possible_transfer_amounts[length(possible_transfer_amounts)])
 			. = TRUE
 
@@ -377,20 +500,33 @@
 			// If we've selected the recipe we're deleting, un-select it!
 			if(selected_recipe_id == recipe_name)
 				selected_recipe_id = null
+			if(selected_recipe_id_alt == recipe_name)
+				selected_recipe_id_alt = null
 			saved_recipes -= recipe_name
 			. = TRUE
 
-		if("select_recipe")
-			// Make sure we actually have a recipe saved with the given name before setting it!
+		if("select_recipe_left")
 			var/recipe_name = params["recipe"]
 			var/selectedRecipe = saved_recipes[recipe_name]
 			if(!selectedRecipe)
 				to_chat(user, span_warning("\The [src] cannot find the recipe ") + span_boldwarning(recipe_name) + span_warning("!"))
 				return
 			playsound(user, 'sound/effects/pop.ogg', 50, 0)
-			balloon_alert(user, "now injecting: '[recipe_name]'")
+			balloon_alert(user, "Left recipe: '[recipe_name]'")
 			selected_recipe_id = recipe_name
 			selected_reagent_typepath = null
+			. = TRUE
+
+		if("select_recipe_right")
+			var/recipe_name = params["recipe"]
+			var/selectedRecipe = saved_recipes[recipe_name]
+			if(!selectedRecipe)
+				to_chat(user, span_warning("\The [src] cannot find the recipe ") + span_boldwarning(recipe_name) + span_warning("!"))
+				return
+			playsound(user, 'sound/effects/pop.ogg', 50, 0)
+			balloon_alert(user, "Right recipe: '[recipe_name]'")
+			selected_recipe_id_alt = recipe_name
+			selected_reagent_typepath_alt = null
 			. = TRUE
 
 		if("reaction_lookup")
@@ -401,10 +537,24 @@
 					beaker_apparatus.stored.reagents.ui_interact(cyborg)
 					. = TRUE
 
+/obj/item/reagent_containers/borghypo/examine(mob/user)
+	. = ..()
+	. += "Left mouse button: [selected_reagent_typepath ? "[selected_reagent_typepath.name]" : (selected_recipe_id ? "recipe '[selected_recipe_id]'" : "nothing")]"
+	. += "Right mouse button: [selected_reagent_typepath_alt ? "[selected_reagent_typepath_alt.name]" : (selected_recipe_id_alt ? "recipe '[selected_recipe_id_alt]'" : "nothing")]"
+	. += span_notice("Alt+Click to change transfer amount. Currently set to [amount_per_transfer_from_this]u.")
+
+/obj/item/reagent_containers/borghypo/click_alt(mob/living/user)
+	var/new_amount = tgui_input_number(user, "Enter new transfer amount:", "Transfer Amount", amount_per_transfer_from_this, possible_transfer_amounts[length(possible_transfer_amounts)], possible_transfer_amounts[1])
+	if(new_amount)
+		amount_per_transfer_from_this = clamp(round(new_amount, 1), possible_transfer_amounts[1], possible_transfer_amounts[length(possible_transfer_amounts)])
+		balloon_alert(user, "[amount_per_transfer_from_this]u per shot")
+	return CLICK_ACTION_SUCCESS
+
 /// Medical cyborg hypospray.
 /obj/item/reagent_containers/borghypo/medical
 	default_reagent_types = BASE_MEDICAL_REAGENTS
 	expanded_reagent_types = EXPANDED_MEDICAL_REAGENTS
+	possible_transfer_amounts = list(1, 2, 5, 10, 20, 30)
 
 /obj/item/reagent_containers/borghypo/medical/hacked
 	icon_state = "borghypo_s"
@@ -412,11 +562,13 @@
 	default_reagent_types = HACKED_MEDICAL_REAGENTS
 	expanded_reagent_types = null
 	injection_sound = null
+	possible_transfer_amounts = list(1, 2, 5, 10)
 
 /// Peacekeeper cyborg hypospray.
 /obj/item/reagent_containers/borghypo/peace
 	name = "Peace Hypospray"
 	default_reagent_types = BASE_PEACE_REAGENTS
+	possible_transfer_amounts = list(1, 2, 5, 10, 20)
 
 /obj/item/reagent_containers/borghypo/peace/hacked
 	desc = "Everything's peaceful in death!"
@@ -424,6 +576,7 @@
 	tgui_theme = "syndicate"
 	default_reagent_types = HACKED_PEACE_REAGENTS
 	injection_sound = null
+	possible_transfer_amounts = list(1, 2, 5, 10)
 
 /// Clown cyborg hypospray.
 /obj/item/reagent_containers/borghypo/clown
@@ -455,6 +608,7 @@
 	recharge_time = 2 SECONDS
 	default_reagent_types = BASE_SYNDICATE_REAGENTS
 	bypass_protection = TRUE
+	possible_transfer_amounts = list(1, 2, 5, 10)
 
 /// Paramedic toolset hypospray.
 /obj/item/reagent_containers/borghypo/paramedic
@@ -476,21 +630,36 @@
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP // Water stays wet. Ice stays ice.
 	default_reagent_types = BASE_SERVICE_REAGENTS
 
-/obj/item/reagent_containers/borghypo/borgshaker/attack(mob/living/target_mob, mob/user)
-	return // No injecting people with this.
-
+/// LEFT MOUSE BUTTON - interaction with the cup (pour)
 /obj/item/reagent_containers/borghypo/borgshaker/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!interacting_with.is_refillable())
 		return NONE
-	if(!has_reagents_for_injection(user)) // Gives balloon alerts.
+	if(!has_reagents_for_injection_left(user))
 		return ITEM_INTERACT_BLOCKING
 	if(interacting_with.reagents.total_volume >= interacting_with.reagents.maximum_volume)
 		balloon_alert(user, "it's full!")
 		return ITEM_INTERACT_BLOCKING
-	var/datum/reagents/reagent_injector = create_reagent_injector()
+	var/datum/reagents/reagent_injector = create_reagent_injector_left()
 	balloon_alert(user, "[reagent_injector.total_volume] unit\s poured")
 	reagent_injector.trans_to(interacting_with, reagent_injector.total_volume, transfered_by = user)
 	return ITEM_INTERACT_SUCCESS
+
+/// RIGHT MOUSE BUTTON - interaction with the cup (pour)
+/obj/item/reagent_containers/borghypo/borgshaker/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!interacting_with.is_refillable())
+		return NONE
+	if(!has_reagents_for_injection_right(user))
+		return ITEM_INTERACT_BLOCKING
+	if(interacting_with.reagents.total_volume >= interacting_with.reagents.maximum_volume)
+		balloon_alert(user, "it's full!")
+		return ITEM_INTERACT_BLOCKING
+	var/datum/reagents/reagent_injector = create_reagent_injector_right()
+	balloon_alert(user, "[reagent_injector.total_volume] unit\s poured")
+	reagent_injector.trans_to(interacting_with, reagent_injector.total_volume, transfered_by = user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/reagent_containers/borghypo/borgshaker/attack(mob/living/target_mob, mob/user)
+	return // No injecting people with this.
 
 /obj/item/reagent_containers/borghypo/borgshaker/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -506,12 +675,14 @@
 		if(ispath(reagent_typepath, /datum/reagent/consumable/ethanol))
 			alcohol_reagents.Add(list(list(
 				"name" = reagent_typepath.name,
+				"full_name" = reagent_typepath.name,
 				"description" = reagent_typepath.description,
 				"volume" = round(stored_reagents[reagent_typepath], 0.01)
 			)))
 			continue
 		drink_reagents.Add(list(list(
 			"name" = reagent_typepath.name,
+			"full_name" = reagent_typepath.name,
 			"description" = reagent_typepath.description,
 			"volume" = round(stored_reagents[reagent_typepath], 0.01)
 		)))
@@ -521,8 +692,10 @@
 	data["amount"] = amount_per_transfer_from_this
 	data["reagents_alc"] = alcohol_reagents
 	data["reagents_nonalc"] = drink_reagents
-	data["selectedReagent"] = selected_reagent_typepath?.name
-	data["selectedRecipeId"] = selected_recipe_id
+	data["selectedReagentLeft"] = selected_reagent_typepath?.name
+	data["selectedReagentRight"] = selected_reagent_typepath_alt?.name
+	data["selectedRecipeIdLeft"] = selected_recipe_id
+	data["selectedRecipeIdRight"] = selected_recipe_id_alt
 	data["saved_recipes"] = saved_recipes
 	data["recording"] = !isnull(recording_recipe)
 	data["recordingRecipe"] = recording_recipe
@@ -543,6 +716,30 @@
 		return
 	var/mob/user = ui.user
 	switch(action)
+		if("select_reagent_left")
+			playsound(src, 'sound/effects/pop.ogg', 50, 0)
+			var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(params["reagent_name"])]
+			if(!isnull(stored_reagents[reagent_typepath]))
+				if(recording_recipe)
+					recording_recipe[params["reagent_name"]] += amount_per_transfer_from_this
+				else
+					selected_reagent_typepath = reagent_typepath
+					selected_recipe_id = null
+					balloon_alert(user, "Left: [selected_reagent_typepath.name]")
+			. = TRUE
+
+		if("select_reagent_right")
+			playsound(src, 'sound/effects/pop.ogg', 50, 0)
+			var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(params["reagent_name"])]
+			if(!isnull(stored_reagents[reagent_typepath]))
+				if(recording_recipe)
+					recording_recipe[params["reagent_name"]] += amount_per_transfer_from_this
+				else
+					selected_reagent_typepath_alt = reagent_typepath
+					selected_recipe_id_alt = null
+					balloon_alert(user, "Right: [selected_reagent_typepath_alt.name]")
+			. = TRUE
+
 		if("reaction_lookup")
 			if(iscyborg(user))
 				var/mob/living/silicon/robot/cyborg = user

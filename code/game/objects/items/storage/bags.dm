@@ -556,6 +556,54 @@
 		/obj/item/swab,
 		))
 
+/*
+ *  Medical Cyborg bag
+ */
+
+/obj/item/storage/bag/med_cyborg_bag
+	name = "medical bag"
+	desc = "Medical bag for storing chemical glasses, medicines, limbs, implants, blood-bags and chem-bags."
+	icon = 'icons/obj/medical/chemical.dmi'
+	icon_state = "cyborgbag"
+	worn_icon_state = "cyborgbag"
+	resistance_flags = FLAMMABLE
+	storage_type = /datum/storage/bag/med_cyborg_bag
+
+// Internal storage processes
+/datum/storage/bag/med_cyborg_bag
+	max_total_storage = 200
+	max_slots = 100
+	max_specific_storage = WEIGHT_CLASS_NORMAL
+
+/datum/storage/bag/med_cyborg_bag/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+	set_holdable(list(
+		/obj/item/bodypart,
+		/obj/item/organ,
+		/obj/item/reagent_containers/cup,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/blood,
+		/obj/item/reagent_containers/chem_pack,
+		/obj/item/reagent_containers/medipen,
+		/obj/item/reagent_containers/medigel,
+		/obj/item/reagent_containers/pill,
+		/obj/item/stack/medical
+		))
+
+/datum/storage/bag/med_cyborg_bag/handle_enter(datum/source, obj/item/arrived)
+	. = ..()
+	if(istype(arrived, /obj/item/organ))
+		ADD_TRAIT(arrived, TRAIT_NO_ORGAN_DECAY, CYBORG_ITEM_TRAIT)
+
+/datum/storage/bag/med_cyborg_bag/handle_exit(datum/source, obj/item/gone)
+	. = ..()
+	if(istype(gone, /obj/item/organ))
+		REMOVE_TRAIT(gone, TRAIT_NO_ORGAN_DECAY, CYBORG_ITEM_TRAIT)
+
+/*
+ *  Сonstruction bag (contains assembly, electronics, meteor_shield_capsule, stock_parts, mats stack)
+ */
+
 /obj/item/storage/bag/construction
 	name = "construction bag"
 	icon = 'icons/obj/tools.dmi'

@@ -357,3 +357,52 @@
 		/obj/item/crowbar/cyborg,
 		/obj/item/multitool/cyborg,
 	)
+
+///// 	Internal cyborg IV drip /////
+/obj/machinery/iv_drip/cyborg
+	name = "cyborg IV drip"
+	desc = "Special modification for cyborgs. An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers."
+	var/obj/item/cyborg_iv_drip/iv_drip_item
+
+	// Transmogrification inner part
+/obj/machinery/iv_drip/cyborg/update_appearance()
+	. = ..()
+	iv_drip_item?.icon_state = icon_state
+	iv_drip_item?.overlays = overlays
+
+/obj/item/cyborg_iv_drip
+	name = "cyborg IV drip"
+	desc = "Special modification for cyborgs. An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers."
+	icon = 'icons/obj/medical/iv_drip.dmi'
+	icon_state = "iv_drip"
+	base_icon_state = "iv_drip"
+	w_class = WEIGHT_CLASS_SMALL
+	var/obj/machinery/iv_drip/cyborg/internal_iv_drip
+
+/obj/item/cyborg_iv_drip/Initialize()
+	. = ..()
+	internal_iv_drip = new /obj/machinery/iv_drip/cyborg(src)
+	internal_iv_drip.iv_drip_item = src
+
+/obj/item/cyborg_iv_drip/Destroy()
+	QDEL_NULL(internal_iv_drip)
+	return ..()
+
+	// Transmogrification external part
+/obj/item/cyborg_iv_drip/attack_self(mob/user)	// interface
+	return internal_iv_drip.ui_interact(user)
+
+/obj/item/cyborg_iv_drip/interact_with_atom(atom/target, mob/living/user, list/modifiers)	// connection
+	return internal_iv_drip.mouse_drop_dragged(target, user)
+
+/obj/item/cyborg_iv_drip/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)	// disabling
+	return internal_iv_drip.detach_iv()
+
+/obj/item/cyborg_iv_drip/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)	// container
+	return internal_iv_drip.attackby(attacking_item, user, modifiers, attack_modifiers)
+
+/obj/item/cyborg_iv_drip/click_alt(mob/user)	// speed
+	return internal_iv_drip.click_alt(user)
+
+/obj/item/cyborg_iv_drip/examine(mob/user)		// examine
+	return internal_iv_drip.examine(user)

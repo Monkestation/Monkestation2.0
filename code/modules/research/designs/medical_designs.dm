@@ -375,6 +375,18 @@
 		)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/iv_drip_tele
+	name = "Telescopic IV drip"
+	desc = "Collapsible dropper for blood transfusion and medications. It fits very comfortably in two hands."
+	id = "iv_drip_tele"
+	build_path = /obj/item/iv_drip_item
+	build_type = PROTOLATHE | AWAY_LATHE | COLONY_FABRICATOR
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2000, /datum/material/plastic = 2000)
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
+		)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /datum/design/medical_spray_bottle
 	name = "Medical Spray Bottle"
 	desc = "A traditional spray bottle used to generate a fine mist. Not to be confused with a medspray."

@@ -7,7 +7,7 @@
 	var/blood_type = null
 	var/labelled = FALSE
 	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
-	reagent_flags = DRAWABLE | DRAINABLE
+	reagent_flags = DRAWABLE | DRAINABLE | TRANSPARENT
 
 /obj/item/reagent_containers/blood/Initialize(mapload, vol)
 	. = ..()

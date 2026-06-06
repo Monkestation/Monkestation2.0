@@ -58,6 +58,12 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/hand_labeler/proc/apply_label(atom/interacting_with, mob/living/user, list/modifiers)
+	// substitution of the concept - handling the storage, not the manipulator
+	if(istype(interacting_with, /obj/item/borg/apparatus))
+		var/obj/item/borg/apparatus/robo_hand = interacting_with
+		if(robo_hand.stored)
+			interacting_with = robo_hand.stored
+
 	if(!labels_left)
 		balloon_alert(user, "no labels left!")
 		return FALSE

@@ -27,6 +27,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/name = ""
 	/// nor do they have descriptions
 	var/description = ""
+	/// The name used in some interfaces if the usual name is too long (14+ letters).
+	var/display_name_short
 	///J/(K*mol)
 	var/specific_heat = SPECIFIC_HEAT_DEFAULT
 	/// used by taste messages

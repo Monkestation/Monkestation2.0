@@ -7,7 +7,7 @@
 ///Minimum possible IV drip transfer rate in units per second
 #define MIN_IV_TRANSFER_RATE 0
 ///Maximum possible IV drip transfer rate in units per second
-#define MAX_IV_TRANSFER_RATE 5
+#define MAX_IV_TRANSFER_RATE 10
 ///Default IV drip transfer rate in units per second
 #define DEFAULT_IV_TRANSFER_RATE 5
 //Alert shown to mob the IV is still connected
@@ -23,11 +23,11 @@
 	///icon_state for the reagent fill overlay
 	var/fill_icon_state = "reagent"
 	///The thresholds used to determine the reagent fill icon
-	var/list/fill_icon_thresholds = list(0,10,25,50,75,80,90)
+	var/list/fill_icon_thresholds = list(0,10,25,50,75,80,100)
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	use_power = NO_POWER_USE
-	interaction_flags_mouse_drop = NEED_HANDS
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 
 	///What are we sticking our needle in?
 	var/mob/attached
@@ -186,6 +186,13 @@
 		to_chat(user, span_warning("You can't do that!"))
 		return
 	if(!get_reagents())
+		if(target == user && Adjacent(user)) // fold iv drip
+			user.visible_message(span_notice("[user] fold [src.name].") , span_notice("Fold [src.name]."))
+			var/obj/machinery/iv_drip/B = new /obj/item/iv_drip_item(get_turf(src))
+			user.put_in_hands(B)
+			playsound(src, 'sound/weapons/batonextend.ogg', 100, TRUE)
+			qdel(src)
+			return
 		to_chat(user, span_warning("There's nothing attached to the IV drip!"))
 		return
 	if(!target.is_injectable(user))
@@ -198,18 +205,28 @@
 	user.visible_message(span_warning("[user] attaches [src] to [target]."), span_notice("You attach [src] to [target]."))
 	attach_iv(target, user)
 
+/obj/machinery/iv_drip/attack_robot(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
+
+/obj/machinery/iv_drip/attack_robot_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
+
 /obj/machinery/iv_drip/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(use_internal_storage)
 		return ..()
 
 	if(is_type_in_typecache(attacking_item, drip_containers) || IS_EDIBLE(attacking_item))
+		var/swap_item
 		if(reagent_container)
-			to_chat(user, span_warning("[reagent_container] is already loaded on [src]!"))
-			return
+			swap_item = reagent_container
+//			to_chat(user, span_warning("[reagent_container] is already loaded on [src]!"))
+//			return
 		if(!user.transferItemToLoc(attacking_item, src))
 			return
 		reagent_container = attacking_item
-		to_chat(user, span_notice("You attach [attacking_item] to [src]."))
+		if(swap_item)
+			usr.put_in_hands(swap_item)
+		to_chat(user, span_notice("You [mode ? "swap" : "attach"] [attacking_item] to [src]."))
 		user.log_message("attached a [attacking_item] to [src] at [AREACOORD(src)] containing ([reagent_container.reagents.get_reagent_log_string()])", LOG_ATTACK)
 		add_fingerprint(user)
 		update_appearance(UPDATE_ICON)
@@ -285,7 +302,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!ishuman(user))
+	if(!ishuman(user) && !iscyborg(user))
 		return
 	if(attached)
 		visible_message(span_notice("[attached] is detached from [src]."))
@@ -311,6 +328,7 @@
 	target.throw_alert(ALERT_IV_CONNECTED, /atom/movable/screen/alert/iv_connected)
 	attached = target
 	START_PROCESSING(SSmachines, src)
+	playsound(src, 'sound/health/needle.ogg', 80, TRUE)
 	update_appearance(UPDATE_ICON)
 
 	SEND_SIGNAL(src, COMSIG_IV_ATTACH, target)
@@ -322,6 +340,7 @@
 		attached.clear_alert(ALERT_IV_CONNECTED, /atom/movable/screen/alert/iv_connected)
 	SEND_SIGNAL(src, COMSIG_IV_DETACH, attached)
 	attached = null
+	playsound(src, 'sound/health/needle_reversed.ogg', 80, TRUE)
 	update_appearance(UPDATE_ICON)
 
 /// Get the reagents used by IV drip
@@ -344,7 +363,7 @@
 		if(attached)
 			visible_message(span_warning("[attached] is detached from [src]."))
 			detach_iv()
-		reagent_container.forceMove(drop_location())
+		usr.put_in_hands(reagent_container)
 		reagent_container = null
 		update_appearance(UPDATE_ICON)
 
@@ -373,6 +392,8 @@
 
 /obj/machinery/iv_drip/examine(mob/user)
 	. = ..()
+	if(!istype(src, /obj/machinery/iv_drip/cyborg))
+		. += span_nicegreen("You can <b>fold</b> the IV drip, by <b>dragging</b> its sprite over <b>yourself</b>.")
 	if(get_dist(user, src) > 2)
 		return
 	. += "[src] is [mode ? "injecting" : "taking blood"]."
@@ -386,6 +407,80 @@
 	else
 		. += span_notice("No chemicals are attached.")
 	. += span_notice("[attached ? attached : "Nothing"] is connected.")
+
+///// Telescopic IV drip
+/obj/item/iv_drip_item
+	name = "telescopic IV drip"
+	desc = "Collapsible dropper for blood transfusion and medications. It fits very comfortably in two hands."
+	icon = 'icons/obj/medical/iv_drip.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/iv_drip_tele_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/iv_drip_tele_right.dmi'
+	icon_state = "iv_drip_item0"
+	base_icon_state = "iv_drip_item"
+	force = 5
+	w_class = WEIGHT_CLASS_NORMAL
+	max_integrity = 200
+	resistance_flags = FIRE_PROOF
+	wound_bonus = 0
+	bare_wound_bonus = 0
+	var/wielded = FALSE
+	/// How much damage to do unwielded
+	var/force_unwielded = 5
+	/// How much damage to do wielded
+	var/force_wielded = 15
+
+/obj/item/iv_drip_item/examine(mob/user)
+	. = ..()
+	. += span_notice("You can set up the dropper by <b>right-clicking</b> on an empty tile OR expand IV drip right <b>in hands</b>.")
+
+/obj/item/iv_drip_item/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = force_unwielded, \
+		force_wielded = force_wielded, \
+		wieldsound = 'sound/weapons/batonextend.ogg', \
+		unwieldsound = 'sound/weapons/batonextend.ogg', \
+		icon_wielded = "[base_icon_state]1", \
+		)
+	update_appearance()
+
+/obj/item/iv_drip_item/update_icon_state()
+	icon_state = "[base_icon_state]0"
+	return ..()
+
+// 	Discarding
+/obj/item/iv_drip_item/interact_with_atom(atom/movable/interacting_with, mob/living/user)
+	. = ..()
+	if(!istype(interacting_with))
+		return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		return
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+		return
+
+	if(!interacting_with.anchored)
+		var/atom/throw_target = get_edge_target_turf(interacting_with, user.dir)
+		var/whack_speed = (prob(60) ? 1 : 4)
+		interacting_with.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE)
+
+// 	Put it back in its place
+/obj/item/iv_drip_item/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isopenturf(interacting_with))
+		playsound(src, 'sound/weapons/batonextend.ogg', 100, TRUE)
+		deploy_iv_drip(user, interacting_with)
+	else
+		return ..()
+
+/obj/item/iv_drip_item/proc/deploy_iv_drip(mob/user, atom/location)
+	var/obj/machinery/iv_drip/R = new /obj/machinery/iv_drip(location)
+	R.add_fingerprint(user)
+	qdel(src)
+
+/obj/item/iv_drip_item/attack_robot(mob/user, list/modifiers)
+	new /obj/machinery/iv_drip (src.drop_location())
+	qdel(src)
+
+////////////
 
 /datum/crafting_recipe/iv_drip
 	name = "IV drip"

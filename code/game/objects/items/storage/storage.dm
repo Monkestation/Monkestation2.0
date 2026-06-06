@@ -94,3 +94,12 @@
 /// Don't do anything stupid, please
 /obj/item/storage/proc/get_types_to_preload()
 	return
+
+// Open the bag by clicking on it with an empty manipulator
+/obj/item/storage/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(user) && istype(tool) && istype(tool, /obj/item/borg/apparatus))
+		var/obj/item/borg/apparatus/robo_hand = tool
+		if(!robo_hand.stored)
+			atom_storage.open_storage(user)
+			return
+	. = ..()

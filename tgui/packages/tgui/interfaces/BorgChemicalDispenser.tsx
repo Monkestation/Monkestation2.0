@@ -1,6 +1,7 @@
 import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import {
+  Box,
   Button,
   Flex,
   LabeledList,
@@ -8,9 +9,13 @@ import {
   Section,
   Slider,
   Stack,
+  Tooltip,
 } from '../components';
 import { Window } from '../layouts';
 
+/**
+ * BackEnd Context data
+ */
 type GeneralContext = {
   theme: string;
   amount: number;
@@ -19,20 +24,29 @@ type GeneralContext = {
   maxTransferVolume: number;
   maxReagentVolume: number;
   reagents: Reagent[];
-  selectedReagent?: string;
-  saved_recipes: Record<string, number>;
-  selectedRecipeId?: string;
+  selectedReagentLeft?: string;
+  selectedReagentRight?: string;
+  saved_recipes: Record<string, Record<string, number>>;
+  selectedRecipeIdLeft?: string;
+  selectedRecipeIdRight?: string;
   recording: boolean;
   recordingRecipe: string[];
   canReagentSearch: boolean;
 };
 
+/**
+ * Reagent: name, storage capacity, description.
+ */
 export type Reagent = {
   name: string;
+  full_name: string;
   volume: number;
   description: string;
 };
 
+/**
+ * The main component (body) of the Borg chemical Hypospray interface.
+ */
 export const BorgChemicalDispenser = () => {
   const { act, data } = useBackend<GeneralContext>();
   const {
@@ -45,13 +59,38 @@ export const BorgChemicalDispenser = () => {
     saved_recipes,
     recordingRecipe,
     reagents,
-    selectedReagent,
-    selectedRecipeId,
+    selectedReagentLeft,
+    selectedReagentRight,
+    selectedRecipeIdLeft,
+    selectedRecipeIdRight,
     canReagentSearch,
   } = data;
 
+  // Height calculation for the right column (chemicals)
+  const reagentBaseCount = 7; // 7 chemicals fit in 400px
+  const reagentBaseHeight = 400; // Minimum height for chemicals
+  const reagentPerPixel = 10; // 10px for each chemical over the base
+  const rightColumnHeight =
+    reagentBaseHeight +
+    Math.max(0, reagents.length - reagentBaseCount) * reagentPerPixel;
+
+  // Height calculation for the left column (recipes)
+  const recipeBaseCount = 4; // 4 recipes fit into the base height
+  const recipeBaseHeight = 400; // Base height (same as chemicals)
+  const recipePerPixel = 44; // 44px for each recipe over the base
+  const leftColumnHeight =
+    recipeBaseHeight +
+    Math.max(0, Object.keys(saved_recipes).length - recipeBaseCount) *
+      recipePerPixel;
+
+  // Total window height = maximum of two columns, but not less than 400 and not more than 800
+  const dynamicHeight = Math.min(
+    800,
+    Math.max(400, Math.max(leftColumnHeight, rightColumnHeight)),
+  );
+
   return (
-    <Window width={680} height={610} theme={theme}>
+    <Window width={560} height={dynamicHeight} theme={theme}>
       <Window.Content>
         <Stack fill>
           <Stack.Item grow>
@@ -74,11 +113,19 @@ export const BorgChemicalDispenser = () => {
                       recordAct={() => act('record_recipe')}
                       cancelAct={() => act('cancel_recording')}
                       saveAct={() => act('save_recording')}
-                      dispenseAct={(recipe) => act('select_recipe', { recipe })}
+                      dispenseActLeft={(recipe) =>
+                        act('select_recipe_left', { recipe })
+                      }
+                      dispenseActRight={(recipe) =>
+                        act('select_recipe_right', { recipe })
+                      }
                       removeAct={(recipe) => act('remove_recipe', { recipe })}
-                      getDispenseButtonSelected={(recipe) => {
-                        return selectedRecipeId === recipe;
-                      }}
+                      getDispenseButtonSelectedLeft={(recipe) =>
+                        selectedRecipeIdLeft === recipe
+                      }
+                      getDispenseButtonSelectedRight={(recipe) =>
+                        selectedRecipeIdRight === recipe
+                      }
                     />
                   </Stack.Item>
                   <Stack.Item basis="40%">
@@ -93,13 +140,17 @@ export const BorgChemicalDispenser = () => {
               sectionTitle={'Chemicals'}
               maximumChemicalVolume={maxReagentVolume}
               chemicals={reagents}
-              dispenseAct={(reagentName) => {
-                act('select_reagent', {
-                  reagent_name: reagentName,
-                });
+              dispenseActLeft={(reagentName) => {
+                act('select_reagent_left', { reagent_name: reagentName });
               }}
-              chemicalButtonSelect={(reagentName) =>
-                selectedReagent === reagentName
+              dispenseActRight={(reagentName) => {
+                act('select_reagent_right', { reagent_name: reagentName });
+              }}
+              chemicalButtonSelectLeft={(reagentName) =>
+                selectedReagentLeft === reagentName
+              }
+              chemicalButtonSelectRight={(reagentName) =>
+                selectedReagentRight === reagentName
               }
               offerReagentSearch={true}
               disableReagentSearch={!canReagentSearch}
@@ -111,16 +162,16 @@ export const BorgChemicalDispenser = () => {
   );
 };
 
+/**
+ * The hypospray settings component.
+ * Allows you to select the injection volume as from preset buttons,
+ * and through the slider for an arbitrary value.
+ */
 export const BorgHypoSettings = (props: {
-  /** The dispense amount the user has currently selected. */
   selectedAmount: number;
-  /** Available amounts for this dispenser to use. */
   availableAmounts: number[];
-  /** The minimum allowed selectable amount. Used for the slider UI element. */
   minAmount: number;
-  /** The maximum allowed selectable amount. Used for the slider UI element. */
   maxAmount: number;
-  /** Called when the user tries to change the dispensed amount. Arg is the amount the user is trying to set it to. */
   amountAct: (amount: number) => void;
 }) => {
   const { selectedAmount, availableAmounts, minAmount, maxAmount, amountAct } =
@@ -144,7 +195,7 @@ export const BorgHypoSettings = (props: {
             ))}
           </Stack>
         </LabeledList.Item>
-        <LabeledList.Item label="Custom Amount">
+        <LabeledList.Item label="Custom">
           <Slider
             step={1}
             stepPixelSize={30}
@@ -159,23 +210,21 @@ export const BorgHypoSettings = (props: {
   );
 };
 
+/**
+ * Recipe management component (chem cocktails).
+ * Allows you to record, save, select (LMB/RMB) and delete recipes.
+ */
 export const BorgHypoRecipes = (props: {
-  /** Associated list of saved recipe macros. */
-  recipes: Record<string, number>;
-  /** The current recipe macro that's being recorded, if any. We assume we aren't recording a recipe if this is undefined! */
+  recipes: Record<string, Record<string, number>>;
   recordingRecipe: string[];
-  /** Called when the user attempts to start a recipe recording. */
   recordAct: () => void;
-  /** Called when the user attempts to cancel a recipe recording. */
   cancelAct: () => void;
-  /** Called when the user attempts to save a recipe recording. */
   saveAct: () => void;
-  /** Called when the user attempts to use a recipe macro. */
-  dispenseAct: (recipe: string) => void;
-  /** Called when a recipe dispense button is checking whether or not it will appear "selected". Arg is the ID of the button's reagent. Defaults to false if undefined. */
-  getDispenseButtonSelected?: (recipe: string) => BooleanLike;
-  /** Called when the user attempts to remove a recipe macro. */
+  dispenseActLeft: (recipe: string) => void;
+  dispenseActRight: (recipe: string) => void;
   removeAct: (recipe: string) => void;
+  getDispenseButtonSelectedLeft?: (recipe: string) => BooleanLike;
+  getDispenseButtonSelectedRight?: (recipe: string) => BooleanLike;
 }) => {
   const {
     recipes,
@@ -183,13 +232,28 @@ export const BorgHypoRecipes = (props: {
     recordAct,
     cancelAct,
     saveAct,
-    dispenseAct,
-    getDispenseButtonSelected,
+    dispenseActLeft,
+    dispenseActRight,
     removeAct,
+    getDispenseButtonSelectedLeft,
+    getDispenseButtonSelectedRight,
   } = props;
 
   const isRecording: boolean = !!recordingRecipe;
   const recipeData = Object.keys(recipes).sort();
+
+  // Formatting the composition of a recipe for a tooltip
+  const formatRecipeTooltip = (recipeContents: Record<string, number>) => {
+    return (
+      <div>
+        {Object.entries(recipeContents).map(([reagentName, volume], index) => (
+          <div key={index}>
+            {volume}u of {reagentName}
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <Section
@@ -223,38 +287,69 @@ export const BorgHypoRecipes = (props: {
       }
     >
       {recipeData.length
-        ? recipeData.map((recipe) => (
-            <Stack key={recipe}>
-              <Stack.Item grow>
-                <Button
-                  fluid
-                  icon="flask"
-                  selected={
-                    getDispenseButtonSelected
-                      ? getDispenseButtonSelected(recipe)
-                      : undefined
-                  }
-                  onClick={() => dispenseAct(recipe)}
-                >
-                  {recipe}
-                </Button>
-              </Stack.Item>
-              <Stack.Item>
-                <Button.Confirm
-                  icon="trash"
-                  confirmIcon="triangle-exclamation"
-                  confirmContent={''}
-                  color="bad"
-                  onClick={() => removeAct(recipe)}
-                />
-              </Stack.Item>
-            </Stack>
-          ))
+        ? recipeData.map((recipe) => {
+            const recipeContents = recipes[recipe];
+            const tooltipContent = formatRecipeTooltip(recipeContents);
+
+            return (
+              <Stack key={recipe} m={0.5}>
+                {/* Left mouse button (LMB)*/}
+                <Stack.Item grow>
+                  <Button
+                    fluid
+                    icon="flask"
+                    color={
+                      getDispenseButtonSelectedLeft?.(recipe)
+                        ? 'green'
+                        : 'default'
+                    }
+                    onClick={() => dispenseActLeft(recipe)}
+                    tooltip={tooltipContent}
+                    tooltipPosition="bottom-start"
+                  >
+                    {recipe} (LMB)
+                  </Button>
+                </Stack.Item>
+
+                {/* Right mouse button (RMB)*/}
+                <Stack.Item>
+                  <Button
+                    fluid
+                    color={
+                      getDispenseButtonSelectedRight?.(recipe)
+                        ? 'orange'
+                        : 'default'
+                    }
+                    onClick={() => dispenseActRight(recipe)}
+                    tooltip={tooltipContent}
+                    tooltipPosition="bottom-start"
+                  >
+                    RMB
+                  </Button>
+                </Stack.Item>
+
+                {/* Recipe deletion button */}
+                <Stack.Item>
+                  <Button.Confirm
+                    icon="trash"
+                    confirmIcon="triangle-exclamation"
+                    confirmContent={''}
+                    color="bad"
+                    onClick={() => removeAct(recipe)}
+                  />
+                </Stack.Item>
+              </Stack>
+            );
+          })
         : ''}
     </Section>
   );
 };
 
+/**
+ * The component for displaying the currently recorded recipe.
+ * Shows a list of reagents and their volumes added to the recipe.
+ */
 export const BorgHypoRecipeDisplay = () => {
   const { data } = useBackend<GeneralContext>();
   const { recordingRecipe } = data;
@@ -282,20 +377,20 @@ export const BorgHypoRecipeDisplay = () => {
   );
 };
 
+/**
+ * A component for displaying a list of available chemicals.
+ * Each reagent has two selection buttons: for the left (LMB) and right (RMB) mouse buttons.
+ * It also supports the search for reagents through an external container.
+ */
 export const BorgHypoChemicals = (props: {
-  /** The title of the section. */
   sectionTitle: string;
-  /** The maximum amount of each reagent. */
   maximumChemicalVolume: number;
-  /** All reagents that should be given a dispense button.  */
   chemicals: Reagent[];
-  /** Called when the user clicks on a reagent dispense button. Arg is the name of the button's reagent. */
-  dispenseAct: (reagentName: string) => void;
-  /** Optional callback that returns whether or not a reagent dispense button will appear "activated". Arg is the name of the button's reagent. */
-  chemicalButtonSelect?: (reagentName: string) => BooleanLike;
-  /** Optional boolean that gives a button to perform Reagent Search. */
+  dispenseActLeft: (reagentName: string) => void;
+  dispenseActRight: (reagentName: string) => void;
+  chemicalButtonSelectLeft?: (reagentName: string) => BooleanLike;
+  chemicalButtonSelectRight?: (reagentName: string) => BooleanLike;
   offerReagentSearch?: boolean;
-  /** Optional boolean that disables Reagent Search from being clicked on. */
   disableReagentSearch?: boolean;
 }) => {
   const { act } = useBackend();
@@ -303,11 +398,14 @@ export const BorgHypoChemicals = (props: {
     chemicals,
     maximumChemicalVolume,
     sectionTitle,
-    dispenseAct,
-    chemicalButtonSelect,
+    dispenseActLeft,
+    dispenseActRight,
+    chemicalButtonSelectLeft,
+    chemicalButtonSelectRight,
     offerReagentSearch,
     disableReagentSearch,
   } = props;
+
   return (
     <Section
       title={sectionTitle}
@@ -331,34 +429,58 @@ export const BorgHypoChemicals = (props: {
     >
       {chemicals.map((reagent) => (
         <Flex key={reagent.name} m={0.5}>
-          <Flex.Item grow>
+          <Flex.Item grow mr={1}>
             <ProgressBar value={reagent.volume / maximumChemicalVolume}>
               <Flex>
                 <Flex.Item grow textAlign={'left'}>
-                  {reagent.name}
+                  <Tooltip
+                    content={
+                      <Box backgroundColor="#1a1a1a" p={1}>
+                        <Box color="green" bold>
+                          {reagent.full_name}
+                        </Box>
+                        <Box color="label" mt={0.5}>
+                          {reagent.description}
+                        </Box>
+                      </Box>
+                    }
+                    position="bottom-start"
+                  >
+                    <span style={{ cursor: 'help' }}>
+                      <i
+                        className="fas fa-syringe"
+                        style={{ marginRight: '6px' }}
+                      />
+                      {reagent.name}
+                    </span>
+                  </Tooltip>
                 </Flex.Item>
                 <Flex.Item>{`${reagent.volume}u`}</Flex.Item>
               </Flex>
             </ProgressBar>
           </Flex.Item>
-          <Flex.Item mx={1}>
+
+          <Flex.Item textAlign={'right'} mr={0.5}>
             <Button
-              icon={'info-circle'}
+              content={'LMB'}
               textAlign={'center'}
-              tooltip={reagent.description}
+              color={
+                chemicalButtonSelectLeft?.(reagent.name) ? 'green' : 'default'
+              }
+              onClick={() => dispenseActLeft(reagent.name)}
+              tooltip="Select for left mouse button"
             />
           </Flex.Item>
+
           <Flex.Item textAlign={'right'}>
             <Button
-              icon={'syringe'}
-              content={'Select'}
+              content={'RMB'}
               textAlign={'center'}
-              selected={
-                chemicalButtonSelect
-                  ? chemicalButtonSelect(reagent.name)
-                  : false
+              color={
+                chemicalButtonSelectRight?.(reagent.name) ? 'orange' : 'default'
               }
-              onClick={() => dispenseAct(reagent.name)}
+              onClick={() => dispenseActRight(reagent.name)}
+              tooltip="Select for right mouse button"
             />
           </Flex.Item>
         </Flex>

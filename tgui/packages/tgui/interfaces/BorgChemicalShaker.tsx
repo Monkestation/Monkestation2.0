@@ -19,11 +19,14 @@ type GeneralContext = {
   maxReagentVolume: number;
   reagents_alc: Reagent[];
   reagents_nonalc: Reagent[];
-  selectedReagent?: string;
-  saved_recipes: Record<string, number>;
-  selectedRecipeId?: string;
+  selectedReagentLeft?: string;
+  selectedReagentRight?: string;
+  saved_recipes: Record<string, Record<string, number>>;
+  selectedRecipeIdLeft?: string;
+  selectedRecipeIdRight?: string;
   recording: boolean;
   recordingRecipe: string[];
+  canReagentSearch: boolean;
 };
 
 export const BorgChemicalShaker = () => {
@@ -39,8 +42,10 @@ export const BorgChemicalShaker = () => {
     recordingRecipe,
     reagents_alc,
     reagents_nonalc,
-    selectedReagent,
-    selectedRecipeId,
+    selectedReagentLeft,
+    selectedReagentRight,
+    selectedRecipeIdLeft,
+    selectedRecipeIdRight,
     canReagentSearch,
   } = data;
 
@@ -68,11 +73,19 @@ export const BorgChemicalShaker = () => {
                       recordAct={() => act('record_recipe')}
                       cancelAct={() => act('cancel_recording')}
                       saveAct={() => act('save_recording')}
-                      dispenseAct={(recipe) => act('select_recipe', { recipe })}
+                      dispenseActLeft={(recipe) =>
+                        act('select_recipe_left', { recipe })
+                      }
+                      dispenseActRight={(recipe) =>
+                        act('select_recipe_right', { recipe })
+                      }
                       removeAct={(recipe) => act('remove_recipe', { recipe })}
-                      getDispenseButtonSelected={(recipe) => {
-                        return selectedRecipeId === recipe;
-                      }}
+                      getDispenseButtonSelectedLeft={(recipe) =>
+                        selectedRecipeIdLeft === recipe
+                      }
+                      getDispenseButtonSelectedRight={(recipe) =>
+                        selectedRecipeIdRight === recipe
+                      }
                     />
                   </Stack.Item>
                   <Stack.Item basis="40%">
@@ -89,13 +102,17 @@ export const BorgChemicalShaker = () => {
                   sectionTitle={'Alcoholic'}
                   maximumChemicalVolume={maxReagentVolume}
                   chemicals={reagents_alc}
-                  dispenseAct={(reagentName) => {
-                    act('select_reagent', {
-                      reagent_name: reagentName,
-                    });
+                  dispenseActLeft={(reagentName) => {
+                    act('select_reagent_left', { reagent_name: reagentName });
                   }}
-                  chemicalButtonSelect={(reagentName) =>
-                    selectedReagent === reagentName
+                  dispenseActRight={(reagentName) => {
+                    act('select_reagent_right', { reagent_name: reagentName });
+                  }}
+                  chemicalButtonSelectLeft={(reagentName) =>
+                    selectedReagentLeft === reagentName
+                  }
+                  chemicalButtonSelectRight={(reagentName) =>
+                    selectedReagentRight === reagentName
                   }
                 />
               </Stack.Item>
@@ -104,13 +121,17 @@ export const BorgChemicalShaker = () => {
                   sectionTitle={'Non-Alcoholic'}
                   maximumChemicalVolume={maxReagentVolume}
                   chemicals={reagents_nonalc}
-                  dispenseAct={(reagentName) => {
-                    act('select_reagent', {
-                      reagent_name: reagentName,
-                    });
+                  dispenseActLeft={(reagentName) => {
+                    act('select_reagent_left', { reagent_name: reagentName });
                   }}
-                  chemicalButtonSelect={(reagentName) =>
-                    selectedReagent === reagentName
+                  dispenseActRight={(reagentName) => {
+                    act('select_reagent_right', { reagent_name: reagentName });
+                  }}
+                  chemicalButtonSelectLeft={(reagentName) =>
+                    selectedReagentLeft === reagentName
+                  }
+                  chemicalButtonSelectRight={(reagentName) =>
+                    selectedReagentRight === reagentName
                   }
                   offerReagentSearch={true}
                   disableReagentSearch={!canReagentSearch}
