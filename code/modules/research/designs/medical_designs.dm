@@ -660,7 +660,7 @@
 		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4.5
 	)
 	construction_time = 2 SECONDS
-	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/surgery
+	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/surgery/alien
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
 	)
