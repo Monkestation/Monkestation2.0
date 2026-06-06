@@ -13,9 +13,9 @@
 	fuel_amount = 800
 	fuel_consumption = 1
 
-	reactivity = 16
-	flux_multiplier = 1.25
+	reactivity = 18
+	flux_multiplier = 1.9
 	radiation_multiplier = 3.0
-	thermal_multiplier = 1.4
+	thermal_multiplier = 2.6
 
 

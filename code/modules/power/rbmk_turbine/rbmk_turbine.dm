@@ -18,7 +18,12 @@
 #define RBMK_TURBINE_DAMAGE_FLOW_MULT 1.5
 #define RBMK_TURBINE_DAMAGE_MAX_PER_TICK 8
 
-#define RBMK_TURBINE_SOUND_VOLUME 22
+#define RBMK_TURBINE_SOUND_VOLUME 24
+#define RBMK_TURBINE_SOUND_MIN_RANGE 5
+#define RBMK_TURBINE_SOUND_MAX_RANGE 10
+#define RBMK_TURBINE_SOUND_FALLOFF_DISTANCE 4
+#define RBMK_TURBINE_SOUND_FALLOFF_EXPONENT 2
+
 #define RBMK_TURBINE_ICON_STATE "turbine"
 
 
@@ -136,22 +141,28 @@
 
 
 /obj/machinery/power/rbmk_turbine/proc/update_turbine_sound()
-	if(running && rpm > 0)
-		if(!turbine_soundloop)
-			turbine_soundloop = new /datum/looping_sound/rbmk_turbine(src, TRUE)
-
-		var/rpm_ratio = CLAMP01(rpm / max(RBMK_TURBINE_MAX_RPM, 1))
-
-		turbine_soundloop.volume = RBMK_TURBINE_SOUND_VOLUME
-		turbine_soundloop.extra_range = clamp(5 + round(rpm_ratio * 5), 5, 10)
-		turbine_soundloop.falloff_distance = 2
-		turbine_soundloop.falloff_exponent = 7
-
+	if(!running || rpm <= 0 || machine_stat & BROKEN)
+		if(turbine_soundloop)
+			turbine_soundloop.stop()
+			QDEL_NULL(turbine_soundloop)
 		return
 
-	if(turbine_soundloop)
-		turbine_soundloop.stop()
-		QDEL_NULL(turbine_soundloop)
+	if(!turbine_soundloop)
+		turbine_soundloop = new /datum/looping_sound/rbmk_turbine(src, TRUE)
+
+	var/rpm_ratio = CLAMP01(rpm / max(RBMK_TURBINE_MAX_RPM, 1))
+
+	// Keep startup, mid-loop, and shutdown at the same volume.
+	turbine_soundloop.volume = RBMK_TURBINE_SOUND_VOLUME
+
+	// Range scales with turbine speed, but volume stays constant.
+	turbine_soundloop.extra_range = clamp(
+		RBMK_TURBINE_SOUND_MIN_RANGE + round(rpm_ratio * 5),
+		RBMK_TURBINE_SOUND_MIN_RANGE,
+		RBMK_TURBINE_SOUND_MAX_RANGE
+	)
+	turbine_soundloop.falloff_distance = RBMK_TURBINE_SOUND_FALLOFF_DISTANCE
+	turbine_soundloop.falloff_exponent = RBMK_TURBINE_SOUND_FALLOFF_EXPONENT
 
 
 /obj/machinery/power/rbmk_turbine/proc/get_generator_integrity_percent()
@@ -244,6 +255,7 @@
 /obj/machinery/power/rbmk_turbine/proc/wake_turbine_ports()
 	if(inlet)
 		SSair.add_to_active(inlet)
+
 	if(outlet)
 		SSair.add_to_active(outlet)
 
@@ -251,12 +263,14 @@
 /obj/machinery/power/rbmk_turbine/proc/get_inlet_mix()
 	if(length(inlet?.airs) < 1)
 		return null
+
 	return inlet.airs[1]
 
 
 /obj/machinery/power/rbmk_turbine/proc/get_outlet_mix()
 	if(length(outlet?.airs) < 1)
 		return null
+
 	return outlet.airs[1]
 
 
@@ -516,4 +530,8 @@
 #undef RBMK_TURBINE_DAMAGE_FLOW_MULT
 #undef RBMK_TURBINE_DAMAGE_MAX_PER_TICK
 #undef RBMK_TURBINE_SOUND_VOLUME
+#undef RBMK_TURBINE_SOUND_MIN_RANGE
+#undef RBMK_TURBINE_SOUND_MAX_RANGE
+#undef RBMK_TURBINE_SOUND_FALLOFF_DISTANCE
+#undef RBMK_TURBINE_SOUND_FALLOFF_EXPONENT
 #undef RBMK_TURBINE_ICON_STATE

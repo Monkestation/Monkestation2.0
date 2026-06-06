@@ -22,6 +22,56 @@
 	var/depleted_icon_state = "rod_empty"
 	var/depleted_description = "An empty fuel rod ready for packing."
 
+	/// Constant item radiation while outside the reactor.
+	var/item_radiation_range = 2
+	var/item_radiation_threshold = 0.55
+	var/item_radiation_chance = 25
+	var/item_radiation_intensity = 35
+	var/item_radiation_pulse_interval = 3 SECONDS
+	var/last_item_radiation_pulse = 0
+
+
+/obj/item/rbmk/fuel_rod/Initialize(mapload)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+
+/obj/item/rbmk/fuel_rod/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+
+/obj/item/rbmk/fuel_rod/process(seconds_per_tick)
+	emit_item_radiation()
+
+
+/obj/item/rbmk/fuel_rod/proc/is_inside_reactor()
+	return istype(loc, /obj/machinery/rbmk/reactor)
+
+
+/obj/item/rbmk/fuel_rod/proc/emit_item_radiation()
+	if(is_inside_reactor())
+		return
+
+	if(world.time < last_item_radiation_pulse + item_radiation_pulse_interval)
+		return
+
+	var/turf/current_turf = get_turf(src)
+	if(!current_turf)
+		return
+
+	last_item_radiation_pulse = world.time
+
+	radiation_pulse(
+		src,
+		item_radiation_range,
+		item_radiation_threshold,
+		item_radiation_chance,
+		0,
+		item_radiation_intensity,
+		TRUE
+	)
+
 
 /obj/item/rbmk/fuel_rod/proc/deplete_rod()
 	active = FALSE

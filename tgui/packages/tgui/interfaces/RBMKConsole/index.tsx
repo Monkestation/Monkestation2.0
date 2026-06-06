@@ -1,6 +1,13 @@
 import { useBackend, useLocalState } from '../../backend';
 import { Window } from '../../layouts';
-import { Tabs, Flex, Button, Box, LabeledList } from '../../components';
+import {
+  Tabs,
+  Flex,
+  Button,
+  Box,
+  LabeledList,
+  ProgressBar,
+} from '../../components';
 
 import RBMKOverview from './overview';
 import RBMKControls from './controls';
@@ -21,18 +28,42 @@ const RBMKCascadeLockout = () => {
 
   const status = data?.supermatter_cascade_status || 'CONTROL LOCKOUT';
   const timeLeft = Number(data?.supermatter_cascade_time_left ?? 0);
+  const maxTime = Math.max(
+    Number(data?.supermatter_cascade_time_total ?? 600),
+    timeLeft,
+    1,
+  );
   const finalCountdown = Boolean(data?.supermatter_cascade_final_countdown);
+  const countdownPercent = Math.max(
+    0,
+    Math.min(100, Math.round((timeLeft / maxTime) * 100)),
+  );
 
   return (
     <Box className="RBMKConsole__CascadeLockout">
-      <Box className="RBMKConsole__CascadeLock">🔒</Box>
+      <Box className="RBMKConsole__CascadeHeader">
+        <Box className="RBMKConsole__CascadeSeal">☭</Box>
 
-      <Box className="RBMKConsole__CascadeTitle">
-        Syndicate Override Active
+        <Box className="RBMKConsole__CascadeHeaderText">
+          <Box className="RBMKConsole__CascadeTitle">
+            SYNDICATE OVERRIDE ACTIVE
+          </Box>
+
+          <Box className="RBMKConsole__CascadeSubtitle">
+            Supermatter Rod Cascade Control Lockout
+          </Box>
+        </Box>
+
+        <Box className="RBMKConsole__CascadeLock">🔒</Box>
       </Box>
 
-      <Box className="RBMKConsole__CascadeSubtitle">
-        Supermatter Rod Cascade Control Lockout
+      <Box
+        className={
+          finalCountdown
+            ? 'RBMKConsole__CascadeWarning RBMKConsole__CascadeWarning--final'
+            : 'RBMKConsole__CascadeWarning'
+        }>
+        REMOTE REACTOR CONTROL HAS BEEN FORCIBLY DISABLED
       </Box>
 
       <Box
@@ -44,20 +75,42 @@ const RBMKCascadeLockout = () => {
         {formatDeciseconds(timeLeft)}
       </Box>
 
+      <ProgressBar
+        value={countdownPercent}
+        maxValue={100}
+        ranges={{
+          good: [66, 100],
+          yellow: [33, 66],
+          bad: [12, 33],
+          purple: [0, 12],
+        }}>
+        Cascade lockout timer
+      </ProgressBar>
+
       <Box className="RBMKConsole__CascadeStatus">{status}</Box>
 
       <Box className="RBMKConsole__CascadeInfo">
         <LabeledList>
-          <LabeledList.Item label="Console">
-            Remote reactor control disabled
+          <LabeledList.Item label="Console Status">
+            Remote operation locked out
           </LabeledList.Item>
+
           <LabeledList.Item label="Required Action">
-            Manually remove the supermatter fuel rod
+            Manually extract the supermatter fuel rod
           </LabeledList.Item>
+
+          <LabeledList.Item label="Access Method">
+            Fuel rod extraction tool required
+          </LabeledList.Item>
+
           <LabeledList.Item label="Recovery">
-            Automatic SCRAM after successful rod removal
+            Automatic AZ-5 shutdown after successful rod removal
           </LabeledList.Item>
         </LabeledList>
+      </Box>
+
+      <Box className="RBMKConsole__CascadeFooter">
+        WARNING: Cascade progression cannot be halted from this console.
       </Box>
     </Box>
   );
@@ -81,8 +134,8 @@ export const RBMKConsole = () => {
 
   return (
     <Window theme="soviet" width={832} height={576}>
-      <Window.Content className="RBMKConsole">
-        <Flex direction="column" height="100%">
+      <Window.Content className="RBMKConsole" scrollable>
+        <Flex direction="column" gap={1}>
           <Flex.Item>
             <Tabs>
               <Tabs.Tab
@@ -132,14 +185,12 @@ export const RBMKConsole = () => {
             </Tabs>
           </Flex.Item>
 
-          <Flex.Item grow basis={0}>
-            <Box height="100%" overflowY="auto">
-              {tab === 'overview' && <RBMKOverview />}
-              {tab === 'controls' && <RBMKControls />}
-              {tab === 'rods' && <RBMKRods />}
-              {tab === 'graphs' && <RBMKGraphs />}
-              {tab === 'generators' && <RBMKGenerators />}
-            </Box>
+          <Flex.Item>
+            {tab === 'overview' && <RBMKOverview />}
+            {tab === 'controls' && <RBMKControls />}
+            {tab === 'rods' && <RBMKRods />}
+            {tab === 'graphs' && <RBMKGraphs />}
+            {tab === 'generators' && <RBMKGenerators />}
           </Flex.Item>
         </Flex>
       </Window.Content>
