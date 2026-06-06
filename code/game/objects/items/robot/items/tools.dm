@@ -358,6 +358,98 @@
 		/obj/item/multitool/cyborg,
 	)
 
+/obj/item/borg/handheld_jaunter
+	name = "experimental jaunter"
+	desc = "An experimental module that briefly creates a wormhole for accurate jaunting that has shown no side effects for inorganic matter."
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "cyborg_jaunter"
+	/// How many charges do we have right now?
+	var/current_charges = 2
+	/// How many charges can we store at a time?
+	var/maximum_charges = 2
+	/// The cooldown that tracks when to restore a charge.
+	COOLDOWN_DECLARE(recharge_cooldown)
+
+/obj/item/borg/handheld_jaunter/Destroy(force)
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/borg/handheld_jaunter/examine(mob/user)
+	. = ..()
+	. += span_notice("It has <b>[current_charges]</b> out of [maximum_charges] charges left.")
+
+/obj/item/borg/handheld_jaunter/process(seconds_per_tick)
+	if(!COOLDOWN_FINISHED(src, recharge_cooldown))
+		return
+	adjust_charge(1)
+	COOLDOWN_START(src, recharge_cooldown, 4 SECONDS)
+
+/obj/item/borg/handheld_jaunter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return try_teleport_to(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
+
+/obj/item/borg/handheld_jaunter/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return try_teleport_to(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
+
+/// Opens a portal and tries to teleport from one place to another.
+/obj/item/borg/handheld_jaunter/proc/try_teleport_to(atom/target, mob/living/user)
+	if(!current_charges)
+		user.balloon_alert(user, "no charges!")
+		return FALSE
+
+	if(!user.client || !(target in view(user.client.view, user)))
+		user.balloon_alert(user, "out of view!")
+		return FALSE
+
+	if(target.density)
+		return FALSE
+
+	adjust_charge(-1)
+	COOLDOWN_START(src, recharge_cooldown, clamp(COOLDOWN_TIMELEFT(src, recharge_cooldown), 2 SECONDS, 4 SECONDS)) // Active use shall potentially delay it.
+
+	var/turf/current_turf = get_turf(user)
+	var/turf/target_turf = get_turf(target)
+	var/obj/effect/portal/inorganic/tunnel = new(current_turf, 1.5 SECONDS, null, FALSE, target_turf)
+	if(tunnel.teleport(user))
+		playsound(user, 'sound/magic/blink.ogg', 25, TRUE)
+		current_turf.Beam(target_turf, "light_beam", time = 0.5 SECONDS)
+	return TRUE
+
+/obj/item/borg/handheld_jaunter/proc/adjust_charge(amount)
+	if(!amount)
+		return
+	current_charges = clamp(current_charges + amount, 0, maximum_charges)
+	if(maximum_charges > current_charges)
+		START_PROCESSING(SSobj, src)
+	else
+		STOP_PROCESSING(SSobj, src)
+	if(loc)
+		playsound(loc, 'sound/magic/charge.ogg', 50, TRUE)
+		if(ismob(loc))
+			balloon_alert(loc, "[current_charges]/[maximum_charges] charges!")
+
+/obj/effect/portal/inorganic
+	name = "wormhole"
+	desc = "It looks highly unstable; It could close at any moment."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "anom"
+	mech_sized = TRUE
+	light_on = FALSE
+	wibbles = FALSE
+
+/obj/effect/portal/inorganic/teleport(atom/movable/M, force = FALSE)
+	. = ..()
+	if(!.)
+		return
+	if(issilicon(M) || !isliving(M))
+		return
+	var/mob/living/living_mob = M
+	if(living_mob.mob_biotypes & MOB_ORGANIC)
+		living_mob.adjust_confusion(8 SECONDS)
+		living_mob.adjust_dizzy(8 SECONDS)
+		shake_camera(living_mob, 2 SECONDS, 1)
+		ADD_TRAIT(living_mob, TRAIT_POOR_AIM, type)
+		addtimer(TRAIT_CALLBACK_REMOVE(living_mob, TRAIT_POOR_AIM, type), 8 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+
 ///// 	Internal cyborg IV drip /////
 /obj/machinery/iv_drip/cyborg
 	name = "cyborg IV drip"
