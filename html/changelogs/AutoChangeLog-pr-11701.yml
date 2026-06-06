@@ -1,0 +1,4 @@
+author: "JupiterJaeden"
+delete-after: True
+changes:
+  - balance: "Most body bags no longer have a drag slowdown or a zip-up timer. Bluespace body bags retain a small 1 second zip-up timer."

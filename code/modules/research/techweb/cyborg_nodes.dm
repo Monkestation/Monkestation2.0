@@ -24,12 +24,12 @@
 	id = "cyborg_upg_engiminer"
 	display_name = "Cyborg Upgrades: Engineering & Mining"
 	description = "Engineering and Mining upgrades for cyborgs."
-	prereq_ids = list("adv_engi", "basic_mining", "cyborg")
+	prereq_ids = list("practical_bluespace", "adv_engi", "basic_mining", "cyborg")
 	design_ids = list(
 		"borg_upgrade_diamonddrill",
 		"borg_upgrade_holding",
 		"borg_upgrade_lavaproof",
-		"borg_upgrade_rped",
+		"borg_upgrade_bs_rped",
 		"borg_upgrade_extra_sheet_manipulator",
 		"borg_upgrade_charger",
 		"borg_upgrade_nvmeson"
@@ -76,6 +76,20 @@
 	. = ..()
 	if(!CONFIG_GET(flag/disable_secborg))
 		design_ids += "borg_upgrade_disablercooler"
+
+/datum/techweb_node/cyborg_upg_science
+	id = "cyborg_upg_science"
+	display_name = "Cyborg Upgrades: Science"
+	description = "They're taking our jobs!"
+	prereq_ids = list("cyborg_upg_med", "cyborg_upg_engiminer")
+	design_ids = list(
+		"borg_upgrade_science_apparatus_improvement_robotics",
+		"borg_upgrade_science_apparatus_improvement_ordnance",
+		"borg_upgrade_science_apparatus_improvement_circuits",
+		"borg_upgrade_science_xenobiology"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 // Implants root node
 /datum/techweb_node/subdermal_implants
