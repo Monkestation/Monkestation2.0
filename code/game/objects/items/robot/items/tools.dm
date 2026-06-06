@@ -170,7 +170,7 @@
 	name = "cyborg omni-toolset"
 	desc = "You shouldn't see this in-game normally."
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg"
+	icon_state = "toolkit_mediborg"
 	/// Our tools (list of item typepaths).
 	var/list/obj/item/omni_toolkit = list()
 	/// Map of solid objects internally used by the omni-tool.
