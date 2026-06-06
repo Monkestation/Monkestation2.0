@@ -243,7 +243,6 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_DISCOUNT_MINOR * 2.5)
 
-
 /datum/techweb_node/alien_cyber_implants
 	id = "alien_cyber_implants"
 	display_name = "Alien Cybernetic Implants"
