@@ -98,7 +98,7 @@
 	icon_state = "jetpack"
 	module_type = MODULE_TOGGLE
 	complexity = 3
-	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.05
 	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/jetpack)
 	cooldown_time = 0.5 SECONDS
@@ -777,7 +777,7 @@
 
 /obj/item/mod/module/shock_absorber
 	name = "MOD shock absorption module"
-	desc = "A module that makes the user resistant to the knockdown inflicted by Stun Batons."
+	desc = "A module that makes the user resistant to stun batons and tasers."
 	icon_state = "no_baton"
 	complexity = 1
 	use_energy_cost = DEFAULT_CHARGE_DRAIN
@@ -785,10 +785,12 @@
 
 /obj/item/mod/module/shock_absorber/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_BATON_RESISTANCE, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_TASER_RESISTANCE, MOD_TRAIT)
 	RegisterSignal(mod.wearer, COMSIG_LIVING_MINOR_SHOCK, PROC_REF(mob_batoned))
 
 /obj/item/mod/module/shock_absorber/on_suit_deactivation(deleting)
 	REMOVE_TRAIT(mod.wearer, TRAIT_BATON_RESISTANCE, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_TASER_RESISTANCE, MOD_TRAIT)
 	UnregisterSignal(mod.wearer, COMSIG_LIVING_MINOR_SHOCK)
 
 /obj/item/mod/module/shock_absorber/proc/mob_batoned(datum/source)
@@ -797,3 +799,25 @@
 	var/datum/effect_system/lightning_spread/sparks = new /datum/effect_system/lightning_spread
 	sparks.set_up(number = 5, cardinals_only = TRUE, location = mod.wearer.loc)
 	sparks.start()
+
+/obj/item/mod/module/hearing_protection
+	name = "MOD hearing protection module"
+	desc = "A module that protects the users ears from loud sounds"
+	complexity = 0
+	removable = FALSE
+	incompatible_modules = list(/obj/item/mod/module/hearing_protection)
+	/* required_slots = list(ITEM_SLOT_HEAD) */
+
+/obj/item/mod/module/hearing_protection/on_suit_activation()
+	var/obj/item/clothing/head_cover = mod.helmet /* mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES) */
+	if(istype(head_cover))
+		head_cover.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
+		var/datum/component/wearertargeting/earprotection/protection = head_cover.GetComponent(/datum/component/wearertargeting/earprotection)
+		protection.on_equip(src, mod.wearer, ITEM_SLOT_HEAD)
+
+/obj/item/mod/module/hearing_protection/on_suit_deactivation(deleting = FALSE)
+	if(deleting)
+		return
+	var/obj/item/clothing/head_cover = mod.helmet /* mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES) */
+	if(istype(head_cover))
+		qdel(head_cover.GetComponent(/datum/component/wearertargeting/earprotection))

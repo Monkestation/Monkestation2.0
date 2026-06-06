@@ -24,13 +24,14 @@
 	id = "cyborg_upg_engiminer"
 	display_name = "Cyborg Upgrades: Engineering & Mining"
 	description = "Engineering and Mining upgrades for cyborgs."
-	prereq_ids = list("adv_engi", "basic_mining", "cyborg")
+	prereq_ids = list("practical_bluespace", "adv_engi", "basic_mining", "cyborg")
 	design_ids = list(
-		"borg_upgrade_circuitapp",
 		"borg_upgrade_diamonddrill",
 		"borg_upgrade_holding",
 		"borg_upgrade_lavaproof",
-		"borg_upgrade_rped",
+		"borg_upgrade_bs_rped",
+		"borg_upgrade_extra_sheet_manipulator",
+		"borg_upgrade_charger",
 		"borg_upgrade_nvmeson"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
@@ -47,7 +48,7 @@
 		"borg_upgrade_expandedsynthesiser",
 		"borg_upgrade_piercinghypospray",
 		"borg_upgrade_pinpointer",
-		"borg_upgrade_surgicalprocessor",
+		"borg_upgrade_surgical_database",
 		"borg_upgrade_surgicalomnitool",
 		"borg_upgrade_advanalyzer",
 	)
@@ -61,7 +62,6 @@
 	prereq_ids = list("adv_robotics", "cyborg")
 	design_ids = list(
 		"borg_upgrade_advancedmop",
-		"borg_upgrade_broomer",
 		"borg_upgrade_expand",
 		"borg_upgrade_prt",
 		"borg_upgrade_selfrepair",
@@ -77,6 +77,20 @@
 	if(!CONFIG_GET(flag/disable_secborg))
 		design_ids += "borg_upgrade_disablercooler"
 
+/datum/techweb_node/cyborg_upg_science
+	id = "cyborg_upg_science"
+	display_name = "Cyborg Upgrades: Science"
+	description = "They're taking our jobs!"
+	prereq_ids = list("cyborg_upg_med", "cyborg_upg_engiminer")
+	design_ids = list(
+		"borg_upgrade_science_apparatus_improvement_robotics",
+		"borg_upgrade_science_apparatus_improvement_ordnance",
+		"borg_upgrade_science_apparatus_improvement_circuits",
+		"borg_upgrade_science_xenobiology"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
+
 // Implants root node
 /datum/techweb_node/subdermal_implants
 	id = "subdermal_implants"
@@ -87,6 +101,8 @@
 		"c38_trac",
 		"implant_chem",
 		"implant_tracking",
+		"implant_exile",
+		"implant_bluespace",
 		"implantcase",
 		"implanter",
 		"locator",
@@ -128,9 +144,7 @@
 	design_ids = list(
 		"ci-antidrop",
 		"ci-antistun",
-		"ci-thermals",
-		"ci-thrusters",
-		"ci-xray",
+		"ci-thrusters"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
@@ -200,6 +214,23 @@
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/cyber_organs_upgraded/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_DISCOUNT_MINOR)
+
+/datum/techweb_node/illegal_combat_implants
+	id = "illegal_combat_implants"
+	display_name = "Illegal Combat Cybernetic Implants"
+	description = "Illegal military grade combat implants to improve performance."
+	prereq_ids = list("combat_cyber_implants", "syndicate_basic")
+	design_ids = list(
+		"ci-thermals",
+		"ci-xray"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
+
+/datum/techweb_node/illegal_combat_implants/New()
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_DISCOUNT_MINOR)

@@ -1,4 +1,0 @@
-author: "ercrowther"
-delete-after: True
-changes:
-  - bugfix: "fixed hyposprays deleting containers when in crit"

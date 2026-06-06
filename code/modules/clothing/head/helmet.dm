@@ -162,7 +162,9 @@
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEEYES|HIDEMASK
+	flags_inv = HIDEEARS|HIDEHAIR
+	desc_controls = "Alt-Click to flip the visor."
+	var/flipped_visor = FALSE
 
 /datum/armor/helmet_alt
 	melee = 15
@@ -177,6 +179,24 @@
 /obj/item/clothing/head/helmet/alt/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
+
+/obj/item/clothing/head/helmet/alt/click_alt(mob/user)
+	flipped_visor = !flipped_visor
+	balloon_alert(user, "visor flipped")
+	// base_icon_state is modified for seclight attachment component
+	base_icon_state = "[initial(base_icon_state)][flipped_visor ? "-novisor" : ""]"
+	icon_state = base_icon_state
+	if(flipped_visor)
+		flags_cover &= ~(HEADCOVERSEYES|HEADCOVERSMOUTH|PEPPERPROOF)
+		flags_inv &= ~(HIDEEARS|HIDEHAIR)
+		playsound(src, SFX_VISOR_DOWN, 20, TRUE, -1)
+	else
+		flags_cover |= (HEADCOVERSEYES|HEADCOVERSMOUTH|PEPPERPROOF)
+		flags_inv |= (HIDEEARS|HIDEHAIR)
+		playsound(src, SFX_VISOR_UP, 20, TRUE, -1)
+	user.update_worn_glasses()
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/helmet/marine
 	name = "tactical combat helmet"

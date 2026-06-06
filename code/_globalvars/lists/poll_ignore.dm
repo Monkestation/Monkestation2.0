@@ -25,6 +25,7 @@
 #define POLL_IGNORE_PAI "pai"
 #define POLL_IGNORE_POSIBRAIN "posibrain"
 #define POLL_IGNORE_POSSESSED_BLADE "possessed_blade"
+#define POLL_IGNORE_HOLYUNDEAD "holy_undead"
 #define POLL_IGNORE_PYROSLIME "slime"
 #define POLL_IGNORE_RAW_PROPHET "raw_prophet"
 #define POLL_IGNORE_REGAL_RAT "regal_rat"

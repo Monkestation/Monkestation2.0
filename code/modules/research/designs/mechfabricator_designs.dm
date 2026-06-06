@@ -1122,6 +1122,72 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
 
+/datum/design/borg_upgrade_science_apparatus_improvement_robotics
+	name = "Robotics Apparatus Improvement"
+	id = "borg_upgrade_science_apparatus_improvement_robotics"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/science_apparatus_improvement/robotics
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 2.5
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SCIENCE
+	)
+
+/datum/design/borg_upgrade_science_apparatus_improvement_ordnance
+	name = "Ordnance Apparatus Improvement"
+	id = "borg_upgrade_science_apparatus_improvement_ordnance"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/science_apparatus_improvement/ordnance
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SCIENCE
+	)
+
+/datum/design/borg_upgrade_science_apparatus_improvement_circuits
+	name = "Circuit Apparatus Improvement"
+	id = "borg_upgrade_science_apparatus_improvement_circuits"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/science_apparatus_improvement/circuits
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SCIENCE
+	)
+/obj/item/borg/upgrade/science_apparatus_improvement/circuits
+
+/datum/design/borg_upgrade_science_xenobiology
+	name = "Xenobiology Tools"
+	id = "borg_upgrade_science_xenobiology"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/science_xenobiology
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SCIENCE
+	)
+
 /datum/design/borg_upgrade_selfrepair
 	name = "Self-Repair Module"
 	id = "borg_upgrade_selfrepair"
@@ -1166,11 +1232,11 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
 
-/datum/design/borg_upgrade_surgicalprocessor
-	name = "Surgical Processor"
-	id = "borg_upgrade_surgicalprocessor"
+/datum/design/borg_upgrade_surgical_database
+	name = "Surgical Database"
+	id = "borg_upgrade_surgical_database"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/processor
+	build_path = /obj/item/borg/upgrade/surgical_database
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT*2, /datum/material/silver =SHEET_MATERIAL_AMOUNT*2)
 	construction_time = 40
 	category = list(
@@ -1233,23 +1299,39 @@
 	)
 	search_metadata = "boris"
 
-/datum/design/borg_upgrade_rped
-	name = "Rapid Part Exchange Device"
-	id = "borg_upgrade_rped"
+/datum/design/borg_upgrade_bs_rped
+	name = "Bluespace Rapid Part Exchange Device"
+	id = "borg_upgrade_bs_rped"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/rped
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*5, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5)
+	build_path = /obj/item/borg/upgrade/bs_rped
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 2.5
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING,
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SCIENCE
+	)
+
+/datum/design/borg_upgrade_extra_sheet_manipulator
+	name = "Secondary Material Manipulation Apparatus"
+	id = "borg_upgrade_extra_sheet_manipulator"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/extra_sheet_manipulator
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT, /datum/material/titanium =SMALL_MATERIAL_AMOUNT*5)
 	construction_time = 120
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
 	)
 
-/datum/design/borg_upgrade_circuit_app
-	name = "Circuit Manipulator"
-	id = "borg_upgrade_circuitapp"
+/datum/design/borg_upgrade_charger
+	name = "Power Connector"
+	id = "borg_upgrade_charger"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/circuit_app
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT, /datum/material/titanium =SMALL_MATERIAL_AMOUNT*5)
+	build_path = /obj/item/borg/upgrade/charger
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT, /datum/material/plasma =SMALL_MATERIAL_AMOUNT*5)
 	construction_time = 120
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
@@ -1275,17 +1357,6 @@
 	construction_time = 120
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
-	)
-
-/datum/design/borg_upgrade_broomer
-	name = "Experimental Push Broom"
-	id = "borg_upgrade_broomer"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/broomer
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*2, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
-	construction_time = 120
-	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
 	)
 
 /datum/design/borg_upgrade_advanalyzer
@@ -1540,14 +1611,6 @@
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*3, /datum/material/silver =SHEET_MATERIAL_AMOUNT, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 	research_icon_state = "medical-plating"
-
-/datum/design/mod_plating/security
-	name = "MOD Security Plating"
-	id = "mod_plating_security"
-	build_path = /obj/item/mod/construction/plating/security
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*3, /datum/material/uranium =SHEET_MATERIAL_AMOUNT, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	research_icon_state = "security-plating"
 
 /datum/design/mod_plating/cosmohonk
 	name = "MOD Cosmohonk Plating"
