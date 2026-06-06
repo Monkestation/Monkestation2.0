@@ -140,9 +140,11 @@
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/crowbar/power/syndicate
-	name = "Syndicate jaws of life"
-	desc = "A pocket sized re-engineered copy of Nanotrasen's standard jaws of life. Can be used to force open airlocks in its crowbar configuration."
+	name = "compact jaws of death"
+	desc = "A pocket sized redesign of the Syndicate jaws of death, made for operatives. Can be used to force open airlocks in its crowbar configuration."
 	icon_state = "jaws_syndie"
+	inhand_icon_state = "minijaws"
+	worn_icon_state = "minijaws"
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 	force_opens = TRUE
@@ -227,3 +229,20 @@
 
 /obj/item/crowbar/mechremoval/proc/extra_checks(obj/vehicle/sealed/mecha/mech, mech_dir)
 	return HAS_TRAIT(src, TRAIT_WIELDED) && LAZYLEN(mech.occupants) && mech.dir == mech_dir
+
+/obj/item/crowbar/power/science
+	name = "hybrid cutters" // hybrid between crowbar and wirecutters
+	desc = "Quite similar to the jaws of life, this tool combines the utility of a crowbar and a set of wirecutters without the hydraulic force required to pry open doors."
+	icon_state = "jaws_sci"
+	inhand_icon_state = "scijaws"
+	worn_icon_state = "scijaws"
+	force_opens = FALSE
+
+/obj/item/crowbar/power/death
+	name = "jaws of death"
+	desc = "A syndicate-powered refitting of Nanotrasen's standard jaws of life. Can be used to force open airlocks in its crowbar configuration."
+	icon_state = "jaws_death"
+	inhand_icon_state = "jawsofdeath"
+	worn_icon_state = "jawsofdeath"
+	toolspeed = 0.5
+	force_opens = TRUE
