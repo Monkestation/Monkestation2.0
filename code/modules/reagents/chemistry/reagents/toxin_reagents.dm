@@ -229,7 +229,7 @@
 		affected_mob.adjustToxLoss(rand(20, 30) * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		. = TRUE
 	else if(SPT_PROB(23, seconds_per_tick))
-		affected_mob.heal_bodypart_damage(5)
+		affected_mob.heal_bodypart_damage(5 * REM * seconds_per_tick)
 		. = TRUE
 	..()
 
