@@ -382,28 +382,49 @@ extra range addition
 			'monkestation/sound/effects/tapshoes/tapwood1.ogg',
 			'monkestation/sound/effects/tapshoes/tapwood2.ogg',
 			'monkestation/sound/effects/tapshoes/tapwood3.ogg',
-			'monkestation/sound/effects/tapshoes/tapwood4.ogg',
-		), 100, 0),
+			'monkestation/sound/effects/tapshoes/tapwood4.ogg',), 45, 0),
 		FOOTSTEP_FLOOR = list(list(
 			'monkestation/sound/effects/tapshoes/tapmetal1.ogg',
 			'monkestation/sound/effects/tapshoes/tapmetal2.ogg',
 			'monkestation/sound/effects/tapshoes/tapmetal3.ogg',
-			'monkestation/sound/effects/tapshoes/tapmetal4.ogg',
-		), 75, -1),
-		FOOTSTEP_PLATING = list(list(), 100, 1),
+			'monkestation/sound/effects/tapshoes/tapmetal4.ogg',), 15, -1),
+		FOOTSTEP_PLATING = list(list(
+				'monkestation/sound/effects/tapshoes/plateB1.ogg',
+				'monkestation/sound/effects/tapshoes/plateB2.ogg',
+				'monkestation/sound/effects/tapshoes/plateB3.ogg',
+				'monkestation/sound/effects/tapshoes/plateB4.ogg',), 45, 1),
 		FOOTSTEP_CARPET = list(list(
 			'monkestation/sound/effects/tapshoes/tapcarpet1.ogg',
 			'monkestation/sound/effects/tapshoes/tapcarpet2.ogg',
 			'monkestation/sound/effects/tapshoes/tapcarpet3.ogg',
-			'monkestation/sound/effects/tapshoes/tapcarpet4.ogg',
-		), 75, -1),
-		FOOTSTEP_SAND = list(list(), 75, 0),
-		FOOTSTEP_GRASS = list(list(), 75, 0),
-		FOOTSTEP_WATER = list(list(), 100, 1),
-		FOOTSTEP_LAVA = list(list(), 100, 0),
+			'monkestation/sound/effects/tapshoes/tapcarpet4.ogg',), 90, -1),
+		FOOTSTEP_SAND = list(list(
+			'monkestation/sound/effects/tapshoes/tapsand1.ogg',
+			'monkestation/sound/effects/tapshoes/tapsand2.ogg',
+			'monkestation/sound/effects/tapshoes/tapsand3.ogg',
+			'monkestation/sound/effects/tapshoes/tapsand4.ogg',), 75, 0),
+		FOOTSTEP_GRASS = list(list(
+			'sound/effects/footstep/water1.ogg',
+			'sound/effects/footstep/water2.ogg',
+			'sound/effects/footstep/water3.ogg',
+			'sound/effects/footstep/water4.ogg'), 75, 0),
+		FOOTSTEP_WATER = list(list(
+			'sound/effects/footstep/water1.ogg',
+			'sound/effects/footstep/water2.ogg',
+			'sound/effects/footstep/water3.ogg',
+			'sound/effects/footstep/water4.ogg'), 100, 1),
+		FOOTSTEP_LAVA = list(list(
+			'sound/effects/footstep/lava1.ogg',
+			'sound/effects/footstep/lava2.ogg',
+			'sound/effects/footstep/lava3.ogg'), 100, 0),
 		FOOTSTEP_MEAT = list(list(
 			'sound/effects/meatslap.ogg'), 100, 0),
-		FOOTSTEP_CATWALK = list(list(), 100, 1),
+		FOOTSTEP_CATWALK = list(list(
+			'sound/effects/footstep/catwalk1.ogg',
+			'sound/effects/footstep/catwalk2.ogg',
+			'sound/effects/footstep/catwalk3.ogg',
+			'sound/effects/footstep/catwalk4.ogg',
+			'sound/effects/footstep/catwalk5.ogg'), 100, 1),
 		FOOTSTEP_BALL = list(list(
 			'monkestation/sound/effects/ballpit.ogg'), 100, 0),
 	)
