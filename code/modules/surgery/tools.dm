@@ -24,7 +24,12 @@
 
 /obj/item/retractor/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_retractor"
+	icon_state = "toolkit_mediborg_retractor"
+
+/obj/item/retractor/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_retractor_alien"
+	toolspeed = 0.25
 
 /obj/item/hemostat
 	name = "hemostat"
@@ -54,7 +59,12 @@
 
 /obj/item/hemostat/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_hemostat"
+	icon_state = "toolkit_mediborg_hemostat"
+
+/obj/item/hemostat/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_hemostat_alien"
+	toolspeed = 0.25
 
 /obj/item/cautery
 	name = "cautery"
@@ -87,7 +97,12 @@
 
 /obj/item/cautery/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_cautery"
+	icon_state = "toolkit_mediborg_cautery"
+
+/obj/item/cautery/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_cautery_alien"
+	toolspeed = 0.25
 
 /obj/item/cautery/advanced
 	name = "searing tool"
@@ -191,7 +206,12 @@
 
 /obj/item/surgicaldrill/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_drill"
+	icon_state = "toolkit_mediborg_drill"
+
+/obj/item/surgicaldrill/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_drill_alien"
+	toolspeed = 0.25
 
 /obj/item/scalpel
 	name = "scalpel"
@@ -244,7 +264,12 @@
 /obj/item/scalpel/cyborg
 	desc = "Ultra-sharp blade attached directly to your servos for extra-accuracy."
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_scalpel"
+	icon_state = "toolkit_mediborg_scalpel"
+
+/obj/item/scalpel/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_scalpel_alien"
+	toolspeed = 0.25
 
 /obj/item/circular_saw
 	name = "circular saw"
@@ -294,7 +319,12 @@
 
 /obj/item/circular_saw/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_saw"
+	icon_state = "toolkit_mediborg_saw"
+
+/obj/item/circular_saw/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_saw_alien"
+	toolspeed = 0.25
 
 /obj/item/surgical_drapes
 	name = "surgical drapes"
@@ -314,7 +344,7 @@
 
 /obj/item/surgical_drapes/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_surgicaldrapes"
+	icon_state = "toolkit_mediborg_surgicaldrapes"
 
 /obj/item/surgical_processor
 	name = "surgical processor"
@@ -588,7 +618,12 @@
 
 /obj/item/bonesetter/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_bonesetter"
+	icon_state = "toolkit_mediborg_bonesetter"
+
+/obj/item/bonesetter/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_bonesetter_alien"
+	toolspeed = 0.25
 
 /obj/item/blood_filter
 	name = "blood filter"
