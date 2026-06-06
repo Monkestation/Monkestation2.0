@@ -77,8 +77,6 @@
 
 /datum/symptom/transformation/jungle_fever
 	name = "Jungle Fever"
-	new_form = /mob/living/carbon/human/species/monkey
-	bantype = ROLE_MONKEY_HELMET
 	desc = "Restructures the subject cells into a Monkey. Cure: Pulped Banana"
 
 /datum/symptom/transformation/jungle_fever/activate(mob/living/carbon/mob)
