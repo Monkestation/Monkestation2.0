@@ -318,7 +318,7 @@
 	if(!(replaced_tool_typepath in omni_toolkit))
 		return
 	var/tool_currently_used = FALSE
-	if(istype(reference, replaced_tool_typepath))
+	if(reference == replaced_tool_typepath)
 		tool_currently_used = TRUE
 		set_internal_tool(null)
 	var/obj/item/tool_previously_used = atoms[replaced_tool_typepath]
