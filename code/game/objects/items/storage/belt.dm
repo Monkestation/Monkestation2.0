@@ -444,9 +444,9 @@
 
 /obj/item/storage/belt/mining/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 6
+	atom_storage.max_slots = 7
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 20
+	atom_storage.max_total_storage = 24
 	atom_storage.set_holdable(list(
 		/obj/item/analyzer,
 		/obj/item/clothing/gloves,

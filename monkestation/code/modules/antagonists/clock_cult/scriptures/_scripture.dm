@@ -18,6 +18,8 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	var/cogs_required = 0
 	/// Time required to invoke this while standing still
 	var/invocation_time = 0
+	/// If we can cast it while moving
+	var/can_cast_while_moving = FALSE
 	/// Text said during invocation, automatically translates to Ratvarian
 	var/list/invocation_text = list()
 	/// Icon state of the action button
@@ -147,6 +149,10 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 		to_chat(invoker, span_warning("Something blocks you from invoking scriptures."))
 		return FALSE
 
+	if(power_cost > SSthe_ark.clock_power)
+		invoker.balloon_alert(invoker, "not enough power!")
+		return FALSE
+
 	var/invokers = 0
 	if(locate(/obj/item/toy/plush/ratplush) in range(1, invoker)) //ratvar plushies count as an invoker
 		invokers++
@@ -196,7 +202,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 	var/true_invocation_time = get_true_invocation_time()
 	recital(true_invocation_time)
-	if(do_after(invoking_mob, true_invocation_time, invoking_mob, extra_checks = CALLBACK(src, PROC_REF(check_special_requirements), invoking_mob), hidden = TRUE))
+	if(do_after(invoking_mob, true_invocation_time, invoking_mob, can_cast_while_moving ? IGNORE_USER_LOC_CHANGE : null, extra_checks = CALLBACK(src, PROC_REF(check_special_requirements), invoking_mob), hidden = TRUE))
 		invoke()
 
 		to_chat(invoking_mob, span_brass("You invoke <b>[name]</b>."))

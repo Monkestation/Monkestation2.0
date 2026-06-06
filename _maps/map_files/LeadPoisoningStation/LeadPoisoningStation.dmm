@@ -49721,9 +49721,9 @@
 /area/station/command/bridge)
 "xMr" = (
 /obj/structure/table/glass,
-/obj/item/vacuum_pack,
-/obj/item/vacuum_pack,
-/obj/item/vacuum_pack,
+/obj/item/vacuum_pack/backpack,
+/obj/item/vacuum_pack/backpack,
+/obj/item/vacuum_pack/backpack,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},

@@ -379,3 +379,198 @@
   Tractor-Maam:
   - bugfix: silicons can no longer have their integrated PDA permanently bricked by
       receiving a PDA bomb.
+2026-05-23:
+  Mantlecrawler:
+  - balance: The mining point cost of busted necropolis chests has been raised by
+      25%
+  - qol: Examining a ID card will now show its amounts of bitrunning and mining points,
+      should it have any.
+  - rscadd: Seclites can now be bought from the mining points vendor
+  - rscadd: 5 prefilled sandbags can now be bought from the mining points vendor
+  - balance: Explorer's vest now has 7 slots and 24 max weight
+  TheColorCyan:
+  - refactor: refactored multi-hit component, now you have to right-click one tile
+      or more away from yourself, and it no longer works when directly clicking things
+      or clicking a tile right near you
+  - balance: using multi-hit now applies slowdown for a very short duration
+  - bugfix: fixed baseball bats kneecapping not working
+2026-05-24:
+  Absolucy:
+  - bugfix: Fixed Patreon and Twitch subscriber icons not showing next to your username
+      in OOC. This has seemingly never worked despite being in the code for like 3
+      years at this point.
+  - rscadd: Added preferences (under the "CHAT" section) to disable your OOC messages
+      having said icons.
+  - rscadd: Websocket metadata now also passes along URLs to chat styles and such.
+  Runian:
+  - rscadd: Miner Cyborgs now have an energy shield that they can toggle, but only
+      works in low-pressure environments. It reduces inbound damage by 50%, but consumes
+      a hefty amount of energy each time.
+  - bugfix: Cyborgs now always get their overlays whenever their appearance updates.
+2026-05-25:
+  Absolucy:
+  - bugfix: Hopefully fixed infinitely stacking salt piles that would kill the FPS
+      of anyone unfortunate enough to be nearby.
+  - bugfix: Salt piles will no longer spawn in mid-air / on groundless turfs.
+2026-05-26:
+  SirNightKnight:
+  - balance: lowered the zip up time of regular bodybags to 0.5 seconds
+  - image: resprited the engineering hardsuit.
+2026-05-27:
+  CheffieGithub:
+  - bugfix: Fixed an edge case issue with forced movement
+  EnterTheJake:
+  - bugfix: Wraith and Night Vision Modules now work again.
+  FelineMistress:
+  - rscadd: RCD can build firelocks, buttons, cameras.
+  - rscadd: New button installation mechanics. Up to 4 buttons can be installed on
+      one wall. 6 different colors.
+  - rscadd: New RCD more capacious matter cartridges. +3 to the existing one. They
+      require more materials.
+  - rscadd: Engi-borg get new power connector module and additional mats manipulator
+      upgrades.
+  - rscadd: Circuit manipulator can pickup signalers and batteries
+  - qol: Engi-borg get circuit manipulation apparatus roundstart and lightreplaser.
+  - qol: Broader description of the manipulators. Description of the object being
+      held is shown, and not the manipulator itself.
+  - qol: Engi-borg now sees wires hints.
+  - qol: Handless Borgs visors. To activate/deactivate need to press the button on
+      the top panel.
+  - qol: Multi-charging station board to RnD
+  - sound: charger sounds
+  - image: RCD cartridges, new Buttons
+  JupiterJaeden:
+  - qol: You can now open firelocks and depowered doors by using left click with combat
+      mode both on and off. Attacking is still possible by right-clicking in combat
+      mode.
+  - qol: Exile & bluespace grounding implants, like the other security implants, are
+      now printable with the subdermal implants tech node.
+  Laiko44:
+  - rscadd: New bloodling ascended form. Big, more max biomass, and you can't devolve
+      anymore.
+  - rscadd: 'New bloodling ability: Meatspace Travel, letting you teleport to meat
+      tiles.'
+  - rscadd: 'New bloodling ability: Bolster, restoring biomass if you''re standing
+      on a meat tile.'
+  - image: Modified the flesh tiles the bloodling ascension makes.
+  - image: Recolored and slightly modified the bloodling ascension cocoon to fit with
+      other bloodling sprites.
+  - image: New sprite for Meatspace Travel.
+  - image: New sprite for the ascended bloodling.
+  Shoddd:
+  - rscadd: 5 new religious sects for the chaplain. Necromancy Sect, Cult Sect, Clown
+      Sect, Nature Sect, and admin only Shadow Sect
+  - rscadd: Chaplains altar can now be unanchored, you can only perform rituals in
+      holy places however! (blessed tiles or chapel)
+  - rscadd: ports Holy skateboard nullrod from TGstation, made by Loafin34
+  - rscadd: ports Holy Cross nullrod from Yogstation, made by ynot01
+  - balance: Chaplain default armor is now only 35 melee prot, and doesn't block shove
+      knockdowns
+  - balance: Chaplain adept suit is now 25 melee armor but 100 fire armor
+  - balance: Chaplain clock and stone armor is 50 melee armor, with a 20% slowdown
+      and blocks shove knockdowns
+  - balance: Chaplain archer armor is now 30 melee, 15 bullet, laser, and energy armor
+  Tractor-Maam:
+  - rscadd: Silicons may be PDA bombed again, creating a disrupting effect instead
+      of an explosion.
+2026-05-28:
+  JupiterJaeden:
+  - balance: Experimental cloning pod board is removed from cargo and the normal sci
+      techweb. Still accessible via traitor uplink or via the illegal technology research.
+  LettuceGuardian:
+  - balance: The bogseo SMG fires in a slow auto mode.
+  - bugfix: Modular laser carbine default firemode can now shoot 14 bursts before
+      running out.
+  - bugfix: Flare firemode being borderline infinite.
+  PokerfaceCactus:
+  - qol: Made broom part of Janiborgs stock loadout.
+  Runian:
+  - bugfix: Being wabbajacked into a standard cyborg no longer (briefly) connects
+      you to the AI, if any.
+  - bugfix: AIs no longer have "ghost" connections from people that get wabbajacked
+      into a station cyborg.
+  - bugfix: Highlander Cyborgs no longer have an invisible module HUD icon and thus
+      can access their inventory.
+  - bugfix: Highlander Cyborgs now automatically equips their sword and pinpointer
+      as intended.
+  - bugfix: Cyborgs that are (admin) spawned with a model already loaded now uses
+      the correct icon state for its module HUD.
+  - image: Highlander Cyborg Module HUD Icon
+  - bugfix: The alive/dead icon (only seen by diagnostic hud) on cyborgs now correctly
+      updates when they die.
+  Runian, Ryumi:
+  - rscadd: Cyborg hyposprays now support recipes.
+  - qol: Cyborg shaker now shows the total remaining volume and the description of
+      the reagent.
+  - qol: All cyborg hyposprays now supports Reagent Search if applicable.
+  - balance: Non-hacked cyborg hypospray now make a sound on injection similar to
+      medi-pens.
+  - balance: Cyborg hyposprays, including paramedic's variant, may now transfer any
+      amount of reagents between 1u to 5u.
+  - balance: Cyborg shaker may now transfer any amount of reagents between 1u to 100u.
+  - balance: Centcom cyborg shaker now recharges its reagents incredibly fast with
+      reduced cost.
+  - refactor: Refactors how cyborg hypospray handles reagents.
+  Shoddd:
+  - balance: powerfist is now 10 tc down from 14
+  suffering intensifies:
+  - balance: ashwalkers can now do the evolution ritual every 15 minutes instead of
+      every 20
+2026-05-29:
+  Mantlecrawler:
+  - balance: Devitt tank can no longer be discounted, or bought before 30 minutes
+      in
+  - balance: Devitt can no longer be gotten by BBs
+  Shoddd:
+  - balance: awakened dragon needs a t4 grab to necksnap
+  Tractor-Maam:
+  - rscadd: Inserting paper with writing on it into your PDA requires a confirmation.
+  - rscadd: Added the MOD megaphone module to Cargo Goodies for 250cr.
+2026-05-30:
+  Absolucy:
+  - image: New sprites for the hunter's revolver, by infrared_baron.
+  - rscadd: The hunter's revolver can now also be used to stab people.
+  - rscadd: The bloodsilver bullet debuff now causes abilities to hurt you with "recoil"
+      while you're afflicted.
+  - rscadd: Bloodsilver bullets now forcefully deactivate various monster abilities
+      - such as fleshmend, caretaker's refuge, changeling adrenaline, darkness adaptation
+      and such, alongside pausing changeling chemical regeneration, and preventing
+      jaunts.
+  - bugfix: Bloodsilver bullets now ricochet, as was likely originally intended.
+  TheColorCyan:
+  - qol: clock cultists can see if APC already has a cog in it by examining
+  - balance: kindle and vanguard can be invoked when moving
+  - balance: bronze armor now has it's helmet attached to it, instead of being separate
+      (like a hood)
+  - balance: bronze armor gives pressure resistance when empowered
+  - balance: bronze armor is now thick material
+  - balance: bronze helmet now completely hides your face, and gives pepperspray protection
+  - balance: bronze shoes are now noslips
+  - balance: clock armaments spell no longer gives bronze boots
+  - bugfix: fixed a bug that allowed quickbound clock cult spells to bypass power
+      cost and make power go into negative values
+2026-05-31:
+  Cujo:
+  - qol: Cleans up stasis bed examine text.
+  Gboster, Qwertytoforty, tommysalami3, rick hick:
+  - rscadd: Added a hardmode version of hierophant/ashdrake/colossus
+  - rscadd: Hardmode can be engaged by using a weapon with the HRD-MDE injector addon
+      on a megafauna, 500 points per one.
+  Shoddd:
+  - rscdel: Disables Pro-tagonista Syndrome
+  SirNightKnight:
+  - balance: rubbershot has the same speed as other ballistics.
+  - balance: lowered the cost of rubbershot ammo boxes to 2 TC from 3 in the uplink.
+  - balance: slashers are no longer clumsy, instead they can't use guns.
+  - qol: closets and crates have to be cut in combat mode.
+  - bugfix: fixed up closet/crate cutting code to work off tool behaviour.
+  TheColorCyan:
+  - balance: (Melbert) Codex Cicatrix is now a tier 1 heretic knowledge, and can not
+      be drafted.
+  - balance: (Melbert) Upon being successfully sacrificed by a heretic all other heretics
+      lose you as a target, and you can no longer be (re)rolled as a target by other
+      heretics.
+  - balance: Cosmic expansion range is back to 3x3
+  Tractor-Maam:
+  - bugfix: engineering cyborgs can recharge their light replacer in cyborg rechargers
+      again.

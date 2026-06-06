@@ -777,7 +777,7 @@
 
 /obj/item/mod/module/shock_absorber
 	name = "MOD shock absorption module"
-	desc = "A module that makes the user resistant to the knockdown inflicted by Stun Batons."
+	desc = "A module that makes the user resistant to stun batons and tasers."
 	icon_state = "no_baton"
 	complexity = 1
 	use_energy_cost = DEFAULT_CHARGE_DRAIN
@@ -785,10 +785,12 @@
 
 /obj/item/mod/module/shock_absorber/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_BATON_RESISTANCE, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_TASER_RESISTANCE, MOD_TRAIT)
 	RegisterSignal(mod.wearer, COMSIG_LIVING_MINOR_SHOCK, PROC_REF(mob_batoned))
 
 /obj/item/mod/module/shock_absorber/on_suit_deactivation(deleting)
 	REMOVE_TRAIT(mod.wearer, TRAIT_BATON_RESISTANCE, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_TASER_RESISTANCE, MOD_TRAIT)
 	UnregisterSignal(mod.wearer, COMSIG_LIVING_MINOR_SHOCK)
 
 /obj/item/mod/module/shock_absorber/proc/mob_batoned(datum/source)

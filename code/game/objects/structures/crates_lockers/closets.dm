@@ -57,7 +57,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	var/max_mob_size = MOB_SIZE_HUMAN //Biggest mob_size accepted by the container
 	var/mob_storage_capacity = 3 // how many human sized mob/living can fit together inside a closet.
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate then open it in a populated area to crash clients.
-	var/cutting_tool = /obj/item/weldingtool
+	var/cutting_tool_behaviour = TOOL_WELDER
 	var/open_sound = 'sound/machines/closet_open.ogg'
 	var/close_sound = 'sound/machines/closet_close.ogg'
 	var/open_sound_volume = 35
@@ -834,7 +834,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 			update_appearance(bit_flag)
 
 	else if(opened)
-		if(istype(weapon, cutting_tool))
+		if(weapon.tool_behaviour == cutting_tool_behaviour && user.istate & ISTATE_HARM)
 			if(weapon.tool_behaviour == TOOL_WELDER)
 				if(!weapon.tool_start_check(user, amount=0))
 					return
@@ -844,13 +844,13 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 					if(!opened)
 						return
 					user.visible_message(span_notice("[user] slices apart \the [src]."),
-									span_notice("You cut \the [src] apart weaponith \the [weapon]."),
-									span_hear("You hear weaponelding."))
+									span_notice("You cut \the [src] apart with \the [weapon]."),
+									span_hear("You hear welding."))
 					deconstruct(TRUE)
 				return
 			else // for example cardboard box is cut weaponith weaponirecutters
 				user.visible_message(span_notice("[user] cut apart \the [src]."), \
-									span_notice("You cut \the [src] apart weaponith \the [weapon]."))
+									span_notice("You cut \the [src] apart with \the [weapon]."))
 				deconstruct(TRUE)
 				return
 		if ((user.istate & ISTATE_HARM))

@@ -112,3 +112,35 @@
 			continue
 		return TRUE
 	return FALSE
+
+/mob/living/basic/lightgeist/photogeist
+	name = "photogeist"
+	icon_state = "photogeist"
+	icon_living = "photogeist"
+	faction = list(FACTION_PLANTS, FACTION_VINES)
+	initial_language_holder = /datum/language_holder/photogeist //only speak plant language, understand it and common
+	maxHealth = 10 //tough enough to resist a punch or something small, since they cost a fair bit of favor.
+	health = 10
+	light_outer_range = 6
+	melee_damage_upper = 3
+
+/obj/effect/mob_spawn/ghost_role/photogeist
+	name = "dormant photogeist"
+	prompt_name = "photogeist"
+	desc = "A strange plant creature. It seems to be peacefully sleeping, and its mere presence soothes your nerves."
+	icon = 'icons/mob/simple/animal.dmi'
+	icon_state = "dormantphotogeist"
+	density = FALSE
+	anchored = FALSE
+	dont_be_a_shit = FALSE
+
+	mob_type = /mob/living/basic/lightgeist/photogeist
+	mob_name = "photogeist"
+	you_are_text = "You are a photogeist, a peaceful creature summoned by a plant god"
+	flavour_text = "Try to prevent plant creatures from dying and listen to your summoner otherwise."
+
+/obj/effect/mob_spawn/ghost_role/photogeist/Initialize(mapload)
+	. = ..()
+	var/area/A = get_area(src)
+	if(A)
+		notify_ghosts("A photogeist has been summoned in [A.name].", 'sound/effects/shovel_dig.ogg', source = src, action = NOTIFY_JUMP)
