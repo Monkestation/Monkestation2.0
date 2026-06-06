@@ -223,12 +223,11 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(SPT_PROB(5, seconds_per_tick))
-		if(!HAS_TRAIT(affected_mob, TRAIT_TOXINLOVER) && !HAS_TRAIT(affected_mob, TRAIT_TOXIMMUNE))
-			to_chat(affected_mob, span_danger("Your insides are burning!"))
-		affected_mob.adjustToxLoss(rand(20, 30), FALSE, required_biotype = affected_biotype)
+	if(!HAS_TRAIT(affected_mob, TRAIT_TOXINLOVER) && !HAS_TRAIT(affected_mob, TRAIT_TOXIMMUNE))
+		to_chat(affected_mob, span_danger("Your insides are burning!"))
+		affected_mob.adjustToxLoss(rand(1, 4) * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		. = TRUE
-	else if(SPT_PROB(23, seconds_per_tick))
+	if(SPT_PROB(23, seconds_per_tick))
 		affected_mob.heal_bodypart_damage(5)
 		. = TRUE
 	..()
