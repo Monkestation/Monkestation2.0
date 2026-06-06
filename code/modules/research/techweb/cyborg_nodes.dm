@@ -70,7 +70,7 @@
 		"borg_upgrade_piercinghypospray",
 		"borg_upgrade_pinpointer",
 		"borg_upgrade_surgical_database",
-		"borg_upgrade_surgicalomnitool"
+		"borg_upgrade_surgical_omnitool_advanced"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS) // Lots of upgrades shall be regular cost.
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
@@ -153,6 +153,20 @@
 	)
 	design_ids = list(
 		"borg_upgrade_nvmeson"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
+
+/datum/techweb_node/cyborg_upgrades_alien
+	id = "cyborg_upgrades_alien"
+	display_name = "Cyborg Upgrades: Alien"
+	description = "Enabling compatibility of our alien technology for usage within cyborgs."
+	prereq_ids = list(
+		"cyborg_upgrades_medical",
+		"alien_bio"
+	)
+	design_ids = list(
+		"borg_upgrade_surgical_omnitool_alien"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)

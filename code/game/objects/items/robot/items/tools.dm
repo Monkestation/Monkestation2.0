@@ -210,7 +210,10 @@
  */
 /obj/item/borg/cyborg_omnitool/proc/set_internal_tool(obj/item/tool)
 	SHOULD_NOT_OVERRIDE(TRUE)
-
+	if(!tool)
+		reference = null
+		tool_behaviour = initial(tool_behaviour)
+		return
 	for(var/obj/item/internal_tool as anything in omni_toolkit)
 		if(internal_tool == tool)
 			reference = internal_tool
@@ -309,6 +312,24 @@
 			continue
 		tool.toolspeed = upgraded ? initial(tool.toolspeed) * 0.5 : initial(tool.toolspeed)
 	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
+
+/// Replaces an existing tool with a new tool.
+/obj/item/borg/cyborg_omnitool/proc/replace_tool(replaced_tool_typepath, replacement_tool_typepath)
+	if(!(replaced_tool_typepath in omni_toolkit))
+		return
+	var/tool_currently_used = FALSE
+	if(istype(reference, replaced_tool_typepath))
+		tool_currently_used = TRUE
+		set_internal_tool(null)
+	var/obj/item/tool_previously_used = atoms[replaced_tool_typepath]
+	if(!QDELETED(tool_previously_used))
+		qdel(tool_previously_used)
+	atoms -= replaced_tool_typepath
+	omni_toolkit -= replaced_tool_typepath
+	omni_toolkit += replacement_tool_typepath
+	if(tool_currently_used)
+		set_internal_tool(replacement_tool_typepath)
+		update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/borg/cyborg_omnitool/medical
 	name = "surgical omni-toolset"
