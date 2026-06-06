@@ -141,7 +141,7 @@
 	symptoms = list(
 		new /datum/symptom/transformation/jungle_fever
 	)
-	spread_flags = DISEASE_SPREAD_BLOOD
+	spread_flags = DISEASE_SPREAD_CONTACT_SKIN
 	robustness = 75
 
 	infectionchance = 20
