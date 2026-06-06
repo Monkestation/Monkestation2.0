@@ -208,7 +208,7 @@
 	start_sound = 'sound/rbmk/turbine_start.ogg'
 	start_length = 16 SECONDS
 	mid_sounds = list('sound/rbmk/turbine_mid.ogg')
-	mid_length = 18 SECONDS
+	mid_length = 4 SECONDS
 	end_sound = 'sound/rbmk/turbine_end.ogg'
 	volume = 24
 	extra_range = 8
