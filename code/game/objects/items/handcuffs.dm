@@ -640,13 +640,13 @@
 		qdel(src)
 
 /obj/item/restraints/legcuffs/beartrap/energy/emp_act(severity)
-	do_sparks(rand(1,3), FALSE, src)
-	if(!ismob(loc))
+	do_sparks(rand(1, 3), FALSE, src)
+	visible_message(span_warning("\The [src] overloads!"))
+	if(!isturf(loc))
 		do_sparks(1, TRUE, src)
 		qdel(src)
-	if(isturf(loc))
-		close_trap()
-	visible_message(span_warning("\The [src] overloads!"))
+		return
+	close_trap()
 
 /obj/item/restraints/legcuffs/beartrap/energy/attack_hand(mob/user, list/modifiers)
 	dissipate()
