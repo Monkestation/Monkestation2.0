@@ -1426,7 +1426,7 @@
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.1,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.02,
 		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.3,
-		/datum/material/bluespace= SHEET_MATERIAL_AMOUNT * 0.2
+		/datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 0.2
 	)
 	construction_time = 12 SECONDS
 	category = list(
