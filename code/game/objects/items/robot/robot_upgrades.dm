@@ -788,6 +788,15 @@
 	model_flags = BORG_MODEL_CARGO
 	items_to_add = list(/obj/item/borg/hydraulic_clamp/better)
 
+/obj/item/borg/upgrade/condiment_synthesizer
+	name = "Service Cyborg Condiment Synthesiser"
+	desc = "An upgrade to the service model cyborg, allowing it to produce solid condiments."
+	icon_state = "module_service"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
+	items_to_add = list(/obj/item/reagent_containers/borghypo/condiment_synthesizer)
+
 /// This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
 // A reusable tool that can bring borgs back to life. They gotta be repaired first, though.
 /obj/item/borg_restart_board
