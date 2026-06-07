@@ -1,0 +1,4 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - bugfix: "added back the science cyborg upgrade tech node which was accidently removed."
