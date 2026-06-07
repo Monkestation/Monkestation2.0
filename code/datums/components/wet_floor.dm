@@ -6,7 +6,8 @@
 	var/list/time_left_list //In deciseconds.
 	var/static/mutable_appearance/permafrost_overlay = mutable_appearance('icons/effects/water.dmi', "ice_floor")
 	var/static/mutable_appearance/ice_overlay = mutable_appearance('icons/turf/overlays.dmi', "snowfloor")
-	var/static/mutable_appearance/water_overlay = mutable_appearance('icons/effects/water.dmi', "wet_floor_static")
+	var/static/mutable_appearance/water_overlay = mutable_appearance('icons/effects/water.dmi', "wet_floor")
+	var/static/mutable_appearance/lube_overlay = mutable_appearance('icons/effects/water.dmi', "wet_floor_static")
 	var/static/mutable_appearance/generic_turf_overlay = mutable_appearance('icons/effects/water.dmi', "wet_static")
 	var/current_overlay
 	var/permanent = FALSE
@@ -59,6 +60,8 @@
 				intended = permafrost_overlay
 			if(TURF_WET_ICE)
 				intended = ice_overlay
+			if(TURF_WET_LUBE)
+				intended = lube_overlay
 			else
 				intended = water_overlay
 	if(current_overlay != intended)
