@@ -1,0 +1,6 @@
+author: "TheColorCyan"
+delete-after: True
+changes:
+  - balance: "wave of desperation no longer appears in draft and is shop only"
+  - balance: "ashen passage no longer appears in draft and is shop only"
+  - balance: "Tier 4 draft chances adjusted, tier 5 spells are no longer guaranteed and its more likely to pull tier 4, with small chance for tier 3 and 5. No changes for lock heretic, tier 5 is still guaranteed."
