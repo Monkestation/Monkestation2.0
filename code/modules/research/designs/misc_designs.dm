@@ -831,7 +831,14 @@
 	desc = "A rubber padded trap used to catch criminals non-lethally. Relies on security record data to function."
 	id = "security_trap"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/plasma =SMALL_MATERIAL_AMOUNT*5, /datum/material/titanium =SMALL_MATERIAL_AMOUNT*5, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5, /datum/material/gold =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
+		/datum/material/plasma =SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/titanium =SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/silver =SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/gold =SMALL_MATERIAL_AMOUNT*5,
+	)
 	build_path = /obj/item/restraints/legcuffs/beartrap/security
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
