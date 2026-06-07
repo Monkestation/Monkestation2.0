@@ -730,6 +730,7 @@
 		gas_analyzer.desc = /obj/item/analyzer/ranged::desc
 		gas_analyzer.icon_state = /obj/item/analyzer/ranged::icon_state
 		gas_analyzer.ranged_scan_distance = /obj/item/analyzer/ranged::ranged_scan_distance
+		gas_analyzer.update_appearance()
 
 /obj/item/borg/upgrade/ranged_analyzer/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
@@ -740,6 +741,7 @@
 		gas_analyzer.desc = initial(gas_analyzer.desc)
 		gas_analyzer.icon_state = initial(gas_analyzer.icon_state)
 		gas_analyzer.ranged_scan_distance = initial(gas_analyzer.ranged_scan_distance)
+		gas_analyzer.update_appearance()
 
 /obj/item/borg/upgrade/beaker_app
 	name = "beaker storage apparatus"
