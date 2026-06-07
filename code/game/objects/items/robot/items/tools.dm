@@ -474,7 +474,7 @@
 	. = ITEM_INTERACT_BLOCKING
 	var/datum/component/artifact/artifact_component = interacting_with.GetComponent(/datum/component/artifact)
 	if(!artifact_component)
-		user.balloon_alert(user, "not an artfact!")
+		user.balloon_alert(user, "not an artifact!")
 		return
 	var/item_interact_result = sticker_to_apply.interact_with_atom(interacting_with, user, modifiers)
 	if(item_interact_result & ITEM_INTERACT_SUCCESS)
