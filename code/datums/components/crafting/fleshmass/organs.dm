@@ -1,4 +1,13 @@
 /datum/crafting_recipe/organ
+	reqs = list(
+		/obj/item/stack/sheet/cloth = 4,
+		/obj/item/stack/sheet/fleshmass = 6,
+	)
+	time = 1.5 SECONDS
+	category = CAT_ORGANS
+	always_available = FALSE
+
+/datum/crafting_recipe/organ/heart
 	name = "Human Heart"
 	result = /obj/item/organ/internal/heart
 	reqs = list(
