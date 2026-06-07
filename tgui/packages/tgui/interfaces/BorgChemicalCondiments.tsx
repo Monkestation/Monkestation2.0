@@ -44,7 +44,7 @@ export const BorgChemicalCondiments = () => {
   } = data;
 
   return (
-    <Window width={680} height={610} theme={theme}>
+    <Window width={550} height={610} theme={theme}>
       <Window.Content>
         <Stack fill>
           <Stack.Item grow>
