@@ -589,13 +589,12 @@
 	default_reagent_types += BASE_CENTCOM_REAGENTS
 	. = ..()
 
-
 /obj/item/reagent_containers/borghypo/condiment_synthesizer
 	name = "condiment synthesizer"
 	desc = "An advanced condiment synthesizer."
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "flour"
-	possible_transfer_amounts = list(1, 5, 10, 20)
+	possible_transfer_amounts = list(1, 5, 10, 20, 30)
 	charge_cost = 0.04 * STANDARD_CELL_CHARGE // 2x of borgshaker.
 	recharge_time = 6 SECONDS // 2x of borgshaker.
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
