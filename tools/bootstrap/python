@@ -25,6 +25,9 @@ PythonDir="$Cache/python-$PythonVersion"
 PythonExe="$PythonDir/python.exe"
 Log="$Cache/last-command.log"
 
+echo "$PythonVersion"
+echo "$PythonDir"
+
 # If a portable Python for Windows is not present, search on $PATH.
 if [ "$(uname)" = "Linux" ] || [ ! -f "$PythonExe" ]; then
 	# Strip the "App Execution Aliases" from $PATH. Even if the user installed
