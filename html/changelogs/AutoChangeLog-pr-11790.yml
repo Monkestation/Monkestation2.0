@@ -1,0 +1,4 @@
+author: "Runian"
+delete-after: True
+changes:
+  - bugfix: "BorgPanel now allows admins to upgrade cyborgs with their model-specific upgrades."

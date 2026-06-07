@@ -1,0 +1,4 @@
+author: "cam_dev"
+delete-after: True
+changes:
+  - rscadd: "triple-citrus now heals toxins at the same rate as lime juice with a 50% higher chance to proc"
