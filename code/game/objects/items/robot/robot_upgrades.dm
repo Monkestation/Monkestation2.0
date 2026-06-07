@@ -725,7 +725,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	for(var/obj/obj/item/analyzer/gas_analyzer in borg.model.modules)
+	for(var/obj/item/analyzer/gas_analyzer in borg.model.modules)
 		gas_analyzer.name = /obj/item/analyzer/ranged::name
 		gas_analyzer.desc = /obj/item/analyzer/ranged::desc
 		gas_analyzer.icon_state = /obj/item/analyzer/ranged::icon_state
@@ -735,7 +735,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	for(var/obj/obj/item/analyzer/gas_analyzer in borg.model.modules)
+	for(var/obj/item/analyzer/gas_analyzer in borg.model.modules)
 		gas_analyzer.name = initial(gas_analyzer.name)
 		gas_analyzer.desc = initial(gas_analyzer.desc)
 		gas_analyzer.icon_state = initial(gas_analyzer.icon_state)
