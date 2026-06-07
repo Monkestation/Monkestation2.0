@@ -1,4 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - bugfix: "The alive/dead icon (only seen by diagnostic hud) on cyborgs now correctly updates when they die."

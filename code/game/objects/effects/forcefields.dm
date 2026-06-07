@@ -100,6 +100,11 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 	var/reflects_projectiles = FALSE
 	/// The person who summoned the cosmic field.
 	var/datum/weakref/summoner
+	/// Projectile types to always allow through.
+	var/list/allowed_projectiles = list(
+		/obj/projectile/magic/star_ball,
+		/obj/projectile/bullet/bloodsilver,
+	)
 
 /obj/effect/forcefield/cosmic_field/Initialize(mapload, flags = MAGIC_RESISTANCE)
 	. = ..()
@@ -144,7 +149,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 	return ..()
 
 /obj/effect/forcefield/cosmic_field/proc/should_reflect_projectile(obj/projectile/bullet)
-	if(istype(bullet, /obj/projectile/magic/star_ball))
+	if(is_type_in_list(bullet, allowed_projectiles))
 		return FALSE
 	if(IS_WEAKREF_OF(bullet.firer, summoner))
 		return FALSE
@@ -184,7 +189,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 	SIGNAL_HANDLER
 	if(isprojectile(thing))
 		var/obj/projectile/bullet = thing
-		if(!istype(bullet, /obj/projectile/magic/star_ball)) // Don't slow down star balls
+		if(!is_type_in_list(bullet, allowed_projectiles)) // Don't slow down star balls
 			try_reflect_projectile(bullet)
 		return
 
@@ -198,7 +203,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 	SIGNAL_HANDLER
 	if(isprojectile(thing))
 		var/obj/projectile/bullet = thing
-		if(istype(bullet, /obj/projectile/magic/star_ball)) // Don't speed up star balls
+		if(is_type_in_list(bullet, allowed_projectiles)) // Don't speed up star balls
 			return
 		bullet.paused = FALSE
 		if(!HAS_TRAIT(bullet, TRAIT_REFLECTED_BY_COSMIC_FIELD)) // stays ourple if it's reflected instead of stopped
