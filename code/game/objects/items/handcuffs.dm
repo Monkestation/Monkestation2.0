@@ -543,7 +543,6 @@
 
 	set_arm(FALSE, user, FALSE)
 
-
 	return ..()
 
 /// Extra checks for if the trap should close on the victim. Used by subtypes mostly.
