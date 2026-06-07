@@ -679,6 +679,7 @@
 #include "code\_globalvars\lists\ores_spawned.dm"
 #include "code\_globalvars\lists\poll_ignore.dm"
 #include "code\_globalvars\lists\quirks.dm"
+#include "code\_globalvars\lists\reagents.dm"
 #include "code\_globalvars\lists\rtd.dm"
 #include "code\_globalvars\lists\silo.dm"
 #include "code\_globalvars\lists\typecache.dm"

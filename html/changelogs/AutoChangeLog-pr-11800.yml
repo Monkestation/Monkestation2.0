@@ -1,0 +1,5 @@
+author: "Runian"
+delete-after: True
+changes:
+  - bugfix: "Service cyborgs can now select b33r from their hacked cyborg shaker."
+  - code_imp: "Name-to-reagent is now sorted alphabetically, keeps whitespace, and its case preserved."

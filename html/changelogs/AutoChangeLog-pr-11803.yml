@@ -1,0 +1,4 @@
+author: "Runian"
+delete-after: True
+changes:
+  - rscadd: "New engineering cyborg upgrade that increases the range of their analyzer on-par with a long ranged analyzer."

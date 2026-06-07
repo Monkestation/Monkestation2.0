@@ -1,0 +1,4 @@
+author: "If-the-world-was-burning"
+delete-after: True
+changes:
+  - map: "the escape shuttle dock and evacuations are now listed seperately on the navigation hud, and named more consistently"
