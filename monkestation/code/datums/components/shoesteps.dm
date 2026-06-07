@@ -4,7 +4,7 @@
 /datum/component/shoesteps
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/list/custom_sounds = list()
-	var/sounds = TRUE
+	var/sounds = FALSE // So shoe noises arent activated on spawn.
 
 /datum/component/shoesteps/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
@@ -28,7 +28,7 @@
 
 /datum/component/shoesteps/proc/toggle_sounds(mob/living/carbon/clicker)
 	if(!DOING_INTERACTION(clicker, DOAFTER_SOURCE_SHOESTEP_TOGGLE))
-		if(do_after(clicker, 1.5 SECONDS, interaction_key = DOAFTER_SOURCE_SHOESTEP_TOGGLE))
+		if(do_after(clicker, 1 SECOND, interaction_key = DOAFTER_SOURCE_SHOESTEP_TOGGLE))
 			sounds = !sounds
 			to_chat(clicker, span_warning("You turn the noisemaker [sounds ? "on" : "off"]."))
 
