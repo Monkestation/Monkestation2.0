@@ -61,6 +61,22 @@
 		/datum/reagent/consumable/ethanol/tequila, /datum/reagent/consumable/ethanol/triple_sec, /datum/reagent/consumable/ethanol/vermouth,\
 		/datum/reagent/consumable/ethanol/vodka, /datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/wine,\
 	)
+
+#define EXPANDED_SERVICE_REAGENTS list(\
+	/datum/reagent/consumable/blackpepper,\
+	/datum/reagent/consumable/coco,\
+	/datum/reagent/consumable/cornmeal,\
+	/datum/reagent/consumable/nutriment/fat/oil,\
+	/datum/reagent/consumable/corn_starch,\
+	/datum/reagent/consumable/eggwhite,\
+	/datum/reagent/consumable/eggyolk,\
+	/datum/reagent/consumable/flour,\
+	/datum/reagent/consumable/rice,\
+	/datum/reagent/consumable/sugar,\
+	/datum/reagent/consumable/salt,\
+	/datum/reagent/consumable/vanilla,\
+)
+
 #define HACKED_SERVICE_REAGENTS list(\
 		/datum/reagent/toxin/fakebeer,\
 		/datum/reagent/consumable/ethanol/fernet,\
@@ -613,6 +629,7 @@
 #undef BASE_PEACE_REAGENTS
 #undef HACKED_PEACE_REAGENTS
 #undef BASE_SERVICE_REAGENTS
+#undef EXPANDED_SERVICE_REAGENTS
 #undef HACKED_SERVICE_REAGENTS
 #undef BASE_CLOWN_REAGENTS
 #undef HACKED_CLOWN_REAGENTS
