@@ -504,13 +504,10 @@
 		spring_trap(user, def_zone = hand_zone)
 		return
 
-	var/is_expert = FALSE
-	if(user.mind?.get_skill_level(/datum/skill/cleaning) >= SKILL_LEVEL_MASTER)
-		is_expert = TRUE
-	if(!is_expert)
-		if(!do_after(user, 3 SECONDS, src))
-			user.balloon_alert(user, "interrupted!")
-			return
+	var/is_expert = user.mind?.get_skill_level(/datum/skill/cleaning) >=  SKILL_LEVEL_MASTER
+	if(!is_expert && !do_after(user, 3 SECONDS, src))
+		user.balloon_alert(user, "interrupted!")
+		return
 
 	set_arm(!armed, user, FALSE)
 
