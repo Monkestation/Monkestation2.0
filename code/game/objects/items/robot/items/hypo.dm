@@ -66,7 +66,7 @@
 	/datum/reagent/consumable/blackpepper,\
 	/datum/reagent/consumable/coco,\
 	/datum/reagent/consumable/cornmeal,\
-	/datum/reagent/consumable/nutriment/fat/oil,\
+	/datum/reagent/consumable/cooking_oil,\
 	/datum/reagent/consumable/corn_starch,\
 	/datum/reagent/consumable/eggwhite,\
 	/datum/reagent/consumable/eggyolk,\
