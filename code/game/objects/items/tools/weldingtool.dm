@@ -36,7 +36,7 @@
 	/// Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/status = TRUE
 	/// The max amount of fuel the welder can hold
-	var/max_fuel = 20
+	var/max_fuel = 30
 	/// Does the welder start with fuel.
 	var/starting_fuel = TRUE
 	/// Whether or not we're changing the icon based on fuel left.
@@ -174,7 +174,7 @@
 /obj/item/weldingtool/afterattack(atom/target, mob/user, click_parameters)
 	if(!isOn())
 		return
-	use(1)
+	use(2)
 	var/turf/location = get_turf(user)
 	location.hotspot_expose(700, 50, 1)
 	if(QDELETED(target) || !isliving(target)) // can't ignite something that doesn't exist
@@ -331,7 +331,7 @@
 	name = "industrial welding tool"
 	desc = "A slightly larger welder with a larger tank."
 	icon_state = "indwelder"
-	max_fuel = 40
+	max_fuel = 60
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
 
 /obj/item/weldingtool/largetank/empty
@@ -347,7 +347,7 @@
 	name = "emergency welding tool"
 	desc = "A miniature welder used during emergencies."
 	icon_state = "miniwelder"
-	max_fuel = 10
+	max_fuel = 15
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.3, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.1)
 	change_icons = FALSE
