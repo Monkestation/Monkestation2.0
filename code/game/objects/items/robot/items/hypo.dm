@@ -300,7 +300,7 @@
 			to_chat(user, span_warning("Couldn't find recipe ") + span_boldwarning(selected_recipe_id) + span_warning("!"))
 			return FALSE
 		for(var/reagent_name in recipe_information)
-			var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(reagent_name)]
+			var/datum/reagent/reagent_typepath = GLOB.name2reagent[reagent_name]
 			if(!reagent_typepath)
 				balloon_alert(user, "[reagent_name] not found!")
 				return FALSE
@@ -349,7 +349,7 @@
 		var/recipe_information = saved_recipes[selected_recipe_id]
 		if(recipe_information)
 			for(var/reagent_name in recipe_information)
-				var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(reagent_name)]
+				var/datum/reagent/reagent_typepath = GLOB.name2reagent[reagent_name]
 				if(!reagent_typepath)
 					continue
 				var/recipe_volume = recipe_information[reagent_name]
@@ -445,7 +445,7 @@
 	switch(action)
 		if("select_reagent_left")
 			playsound(src, 'sound/effects/pop.ogg', 50, 0)
-			var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(params["reagent_name"])]
+			var/datum/reagent/reagent_typepath = GLOB.name2reagent[params["reagent_name"]]
 			if(!isnull(stored_reagents[reagent_typepath]))
 				if(recording_recipe)
 					recording_recipe[params["reagent_name"]] += amount_per_transfer_from_this
@@ -487,7 +487,7 @@
 				return
 			if(name && recording_recipe)
 				for(var/reagent_name in recording_recipe)
-					var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(reagent_name)]
+					var/datum/reagent/reagent_typepath = GLOB.name2reagent[reagent_name]
 					if(isnull(stored_reagents[reagent_typepath]))
 						to_chat(user, span_warning("\The [src] cannot find ") + span_boldwarning(reagent_name) + span_warning("!"))
 						return
