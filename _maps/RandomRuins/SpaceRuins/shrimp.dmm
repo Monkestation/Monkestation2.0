@@ -10,7 +10,7 @@
 	},
 /obj/machinery/door/puzzle/keycard{
 	puzzle_id = "shrimproom";
-	name = "shrimpy door";
+	name = "Shrimpy Door";
 	desc = "This door only opens when a keycard is swiped. It looks virtually indestructible. You could always vandalize the restaurant to get around it, though."
 	},
 /turf/open/floor/iron/cafeteria,
