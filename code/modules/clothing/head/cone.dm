@@ -23,19 +23,18 @@
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
 
 /obj/item/clothing/head/cone/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
-	. = ..()
 	if(!isturf(interacting_with) || isgroundlessturf(interacting_with))
-		return
+		return NONE
 	var/turf/zoned_turf = interacting_with
 
 	if(zoned_turf.density)
-		return
+		return NONE
 
 	var/obj/item/clothing/head/cone/selected_cone = locate() in contents
 	if(!selected_cone)
 		selected_cone = src
 	if(!(user.dropItemToGround(selected_cone)))
-		return
+		return NONE
 	var/clickx
 	var/clicky
 
@@ -49,3 +48,4 @@
 	update_hats()
 
 	playsound(selected_cone, 'sound/items/cardboard_tube.ogg', 100, TRUE, -3)
+	return ITEM_INTERACT_SUCCESS
