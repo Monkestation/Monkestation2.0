@@ -307,18 +307,18 @@
 	enemy_types = list(/datum/status_effect/fire_handler/fire_stacks)
 	stack_limit = MAX_FIRE_STACKS * 1.5
 	stack_modifier = -2
-	/// do we use special particles
-	var/special_particles = FALSE
+	/// particles applied
+	var/particles/applied_particles = /particles/droplets
 
 /datum/status_effect/fire_handler/wet_stacks/on_apply()
 	. = ..()
-	if(!special_particles)
-		owner.add_shared_particles(/particles/droplets)
+	var/obj/effect/abstract/shared_particle_holder/particles = owner.add_shared_particles(applied_particles, "wet_particles")
+	if(particles)
+		adjust_particles(particles)
 
 /datum/status_effect/fire_handler/wet_stacks/on_remove()
 	. = ..()
-	if(!special_particles)
-		owner.remove_shared_particles(/particles/droplets)
+	owner.remove_shared_particles("wet_particles")
 
 /datum/status_effect/fire_handler/wet_stacks/tick(seconds_between_ticks)
 	for(var/enemy_type in enemy_types)
@@ -335,29 +335,24 @@
 	if(stacks <= 0)
 		qdel(src)
 
+/datum/status_effect/fire_handler/wet_stacks/proc/adjust_particles(obj/effect/abstract/shared_particle_holder/particle_holder)
+	return
+
 /datum/status_effect/fire_handler/wet_stacks/oozeling
 	id = "oozeling_wet_stacks"
 	enemy_types = list(/datum/status_effect/fire_handler/fire_stacks, /datum/status_effect/fire_handler/wet_stacks)
-	special_particles = TRUE
+	applied_particles = /particles/droplets/slime
 
-/datum/status_effect/fire_handler/wet_stacks/oozeling/on_apply()
-	. = ..()
-	var/color
+/datum/status_effect/fire_handler/wet_stacks/oozeling/adjust_particles(obj/effect/abstract/shared_particle_holder/particle_holder)
+	var/color = COLOR_LIME
+	if(!particle_holder)
+		return
 	if(isoozeling(owner))
 		var/mob/living/carbon/human/oozie = owner
 		var/datum/color_palette/generic_colors/colors = oozie.dna.color_palettes[/datum/color_palette/generic_colors]
 		color = colors.mutant_color
-	if(!color)
-		color = COLOR_LIME
 
-	var/obj/effect/abstract/shared_particle_holder/oozeling_droplets = owner.add_shared_particles(/particles/droplets/slime, "oozeling_droplets_[owner.real_name]")
-
-	oozeling_droplets.color = color
-
-/datum/status_effect/fire_handler/wet_stacks/oozeling/on_remove()
-	. = ..()
-	owner.remove_shared_particles(/particles/droplets/slime)
-
+	particle_holder.color = color
 
 /datum/status_effect/fire_handler/wet_stacks/oozeling/tick(seconds_between_ticks)
 	for(var/enemy_type in enemy_types)
