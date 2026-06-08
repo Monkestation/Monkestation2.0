@@ -389,10 +389,10 @@ extra range addition
 			'monkestation/sound/effects/tapshoes/tapmetal3.ogg',
 			'monkestation/sound/effects/tapshoes/tapmetal4.ogg',), 12, -1),
 		FOOTSTEP_PLATING = list(list(
-				'monkestation/sound/effects/tapshoes/plateB1.ogg',
-				'monkestation/sound/effects/tapshoes/plateB2.ogg',
-				'monkestation/sound/effects/tapshoes/plateB3.ogg',
-				'monkestation/sound/effects/tapshoes/plateB4.ogg',), 36, 1),
+			'monkestation/sound/effects/tapshoes/plateB1.ogg',
+			'monkestation/sound/effects/tapshoes/plateB2.ogg',
+			'monkestation/sound/effects/tapshoes/plateB3.ogg',
+			'monkestation/sound/effects/tapshoes/plateB4.ogg',), 36, 1),
 		FOOTSTEP_CARPET = list(list(
 			'monkestation/sound/effects/tapshoes/tapcarpet1.ogg',
 			'monkestation/sound/effects/tapshoes/tapcarpet2.ogg',
