@@ -82,7 +82,7 @@
 		if(!slime_wetness || slime_wetness?.stacks != slime_wetness.stack_limit)
 			slime.adjust_wet_stacks(1, /datum/status_effect/fire_handler/wet_stacks/oozeling)
 			update_hud(slime)
-		if(slime_wetness?.stacks > 9 && slime_wetness?.stacks <= 10)
+		if(slime_wetness?.stacks > 9 && slime_wetness?.stacks <= HYDROPHOBIA_WETNESS_STACKS)
 			slime.balloon_alert(slime, "membrane restored!")
 			playsound(slime, 'sound/surgery/organ1.ogg', 80, TRUE)
 			slime.visible_message(

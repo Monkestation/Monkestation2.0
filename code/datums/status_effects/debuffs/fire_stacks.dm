@@ -374,3 +374,7 @@
 		adjust_stacks(-0.5 * seconds_between_ticks)
 	if(stacks <= 0)
 		qdel(src)
+
+/datum/status_effect/fire_handler/wet_stacks/oozeling/get_examine_text()
+	if(stacks >= HYDROPHOBIA_WETNESS_STACKS)
+		return span_purple("[owner.p_They()] [owner.p_are()] oozing out an oily coating onto [owner.p_their()] outer membrane, water rolling right off.")

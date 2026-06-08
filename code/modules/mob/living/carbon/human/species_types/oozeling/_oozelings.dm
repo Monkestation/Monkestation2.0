@@ -120,7 +120,7 @@
 	if(!slime_wetness)
 		return FALSE
 
-	if(slime_wetness.stacks >= 10)
+	if(slime_wetness.stacks >= HYDROPHOBIA_WETNESS_STACKS)
 		slime.adjust_wet_stacks(-5, /datum/status_effect/fire_handler/wet_stacks/oozeling)
 		return TRUE
 
