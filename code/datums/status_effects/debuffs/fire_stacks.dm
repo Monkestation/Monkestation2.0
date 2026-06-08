@@ -372,6 +372,7 @@
 
 	if(owner.stat == DEAD || !isoozeling(owner))
 		adjust_stacks(-0.5 * seconds_between_ticks)
+
 	if(stacks <= 0)
 		qdel(src)
 
