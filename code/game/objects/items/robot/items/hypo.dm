@@ -456,7 +456,7 @@
 				else
 					selected_reagent_typepath = reagent_typepath
 					selected_recipe_id = null
-					balloon_alert(user, "Left: [selected_reagent_typepath.name]")
+					balloon_alert(user, "left: [selected_reagent_typepath.name]")
 			. = TRUE
 
 		if("select_reagent_right")
@@ -474,7 +474,7 @@
 				else
 					selected_reagent_typepath_alt = reagent_typepath
 					selected_recipe_id_alt = null
-					balloon_alert(user, "Right: [selected_reagent_typepath_alt.name]")
+					balloon_alert(user, "right: [selected_reagent_typepath_alt.name]")
 			. = TRUE
 
 		if("set_amount")
@@ -522,7 +522,7 @@
 				to_chat(user, span_warning("\The [src] cannot find the recipe ") + span_boldwarning(recipe_name) + span_warning("!"))
 				return
 			playsound(user, 'sound/effects/pop.ogg', 50, 0)
-			balloon_alert(user, "Left recipe: '[recipe_name]'")
+			balloon_alert(user, "left recipe: '[recipe_name]'")
 			selected_recipe_id = recipe_name
 			selected_reagent_typepath = null
 			. = TRUE
@@ -534,7 +534,7 @@
 				to_chat(user, span_warning("\The [src] cannot find the recipe ") + span_boldwarning(recipe_name) + span_warning("!"))
 				return
 			playsound(user, 'sound/effects/pop.ogg', 50, 0)
-			balloon_alert(user, "Right recipe: '[recipe_name]'")
+			balloon_alert(user, "right recipe: '[recipe_name]'")
 			selected_recipe_id_alt = recipe_name
 			selected_reagent_typepath_alt = null
 			. = TRUE
@@ -739,7 +739,7 @@
 				else
 					selected_reagent_typepath = reagent_typepath
 					selected_recipe_id = null
-					balloon_alert(user, "Left: [selected_reagent_typepath.name]")
+					balloon_alert(user, "left: [selected_reagent_typepath.name]")
 			. = TRUE
 
 		if("select_reagent_right")
@@ -757,7 +757,7 @@
 				else
 					selected_reagent_typepath_alt = reagent_typepath
 					selected_recipe_id_alt = null
-					balloon_alert(user, "Right: [selected_reagent_typepath_alt.name]")
+					balloon_alert(user, "right: [selected_reagent_typepath_alt.name]")
 			. = TRUE
 
 		if("reaction_lookup")

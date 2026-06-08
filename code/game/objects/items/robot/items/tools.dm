@@ -475,7 +475,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/obj/machinery/iv_drip/cyborg/internal_iv_drip
 
-/obj/item/cyborg_iv_drip/Initialize()
+/obj/item/cyborg_iv_drip/Initialize(mapload)
 	. = ..()
 	internal_iv_drip = new /obj/machinery/iv_drip/cyborg(src)
 	internal_iv_drip.iv_drip_item = src
