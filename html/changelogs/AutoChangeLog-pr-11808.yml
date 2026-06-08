@@ -1,0 +1,5 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - bugfix: "gave all security related plasmaman proper security gloves."
+  - bugfix: "plasmamen blueshields start with tackling gloves."

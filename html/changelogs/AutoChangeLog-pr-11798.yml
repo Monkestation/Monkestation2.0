@@ -1,6 +1,0 @@
-author: "TheColorCyan"
-delete-after: True
-changes:
-  - bugfix: "fixed fenrir shotgun inhand sprite"
-  - bugfix: "spider eggs hatching will now teleport your ghost to the cluster"
-  - bugfix: "fixes non-sentient minebots not being able to enter combat mode"

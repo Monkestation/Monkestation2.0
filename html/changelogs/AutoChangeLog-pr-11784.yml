@@ -1,9 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - rscadd: "6 new cyborg upgrade techweb nodes to further separate existing cyborg upgrades: Engineering, Mining, Bluespace, Nightvision, Janitorial, and Security."
-  - rscdel: "The combined techweb node of \"Cyborg Upgrades: Engineering and Mining\" no longer exists."
-  - balance: "Various designs and prerequisites for existing cyborg upgrade techweb nodes have been adjusted to better match what designs they unlocks and what is needed to unlock it."
-  - balance: "The techweb node for mining cyborg upgrades requires Advanced Mining Technology."
-  - balance: "The point cost for some cyborg upgrade techweb nodes have been reduced to account for the separation and reduction of unlocked designs per node."
-  - balance: "The material cost for Janiborg's plating repair tool upgrade and Mediborg's beaker storage apparatus upgrade has been slightly increased."

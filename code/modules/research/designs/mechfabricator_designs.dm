@@ -1417,6 +1417,22 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
 	)
 
+/datum/design/borg_upgrade_ranged_analyzer
+	name = "Ranged Analyzer"
+	id = "borg_upgrade_ranged_analyzer"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/ranged_analyzer
+	materials = list( // Same cost as a ranged analyzer.
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.1,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.02,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.3,
+		/datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 0.2
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
+	)
+
 /datum/design/borg_upgrade_beaker_app
 	name = "Secondary Beaker Storage"
 	id = "borg_upgrade_beakerapp"
