@@ -1,0 +1,10 @@
+author: "timothymtorres, SirNightKnight"
+delete-after: True
+changes:
+  - balance: "balance: Beartraps are now much more lethal and can cause wounds. Space OSHA has also issued a warning that any clumsy people should avoid handling them after repeated mishaps."
+  - balance: "beartraps have a chance to be set off by items and projectiles if they are forceful enough."
+  - balance: "beartraps take time to arm and disarm. beartraps must be disarmed before being picked up."
+  - balance: "adds security traps. non-lethal bear traps that work off security records."
+  - balance: "barbed bear traps have a 30 second breakout time like other bear traps."
+  - spellcheck: "correctly gendered bear traps to be non-plural."
+  - bugfix: "bear traps respect armor."

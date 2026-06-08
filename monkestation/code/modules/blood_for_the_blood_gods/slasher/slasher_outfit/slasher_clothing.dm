@@ -137,23 +137,6 @@
 	SSwardrobe.provide_type(/obj/item/restraints/legcuffs/beartrap/slasher, src)
 	SSwardrobe.provide_type(/obj/item/restraints/legcuffs/beartrap/slasher, src)
 
-/obj/item/restraints/legcuffs/beartrap/slasher
-	name = "barbed bear trap"
-	breakouttime = 2 SECONDS
-	alpha = 160
-	var/datum/antagonist/slasher/slasher_owner
-
-/obj/item/restraints/legcuffs/beartrap/slasher/Destroy()
-	if(slasher_owner)
-		slasher_owner.linked_traps -= src
-	return ..()
-
-/obj/item/restraints/legcuffs/beartrap/slasher/proc/set_slasher(datum/antagonist/slasher/slasherdatum)
-	if(slasher_owner)
-		slasher_owner.linked_traps -= src
-	slasher_owner = slasherdatum
-	if(slasher_owner)
-		slasher_owner.linked_traps += src
 
 /obj/item/storage/belt/slasher/cluwne
 	name = "cluwne's trap fanny pack"
