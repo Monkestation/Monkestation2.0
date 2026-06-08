@@ -713,7 +713,7 @@
 		var/mob/living/mob = interacting_with
 		if(mob == user)
 			return
-		if(mob.stat == DEAD || HAS_TRAIT(mob, TRAIT_FAKEDEATH))
+		if(!mob.appears_alive())
 			to_chat(user, span_warning("They are dead!"))
 			return
 		if(mob.is_mouth_covered())
