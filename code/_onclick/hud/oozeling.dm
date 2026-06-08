@@ -10,13 +10,13 @@
 /obj/item/organ/internal/heart/slime/proc/update_hud(mob/living/carbon/human/slime)
 	var/color_value
 	var/datum/status_effect/fire_handler/wet_stacks/oozeling/slime_wetness = slime.has_status_effect(/datum/status_effect/fire_handler/wet_stacks/oozeling)
-	switch(slime_wetness?.stacks)
+	switch(slime_wetness ? slime_wetness.stacks : 0)
 		if(0 to 9)
 			color_value = "#d84d54"
 		if(10 to 19)
-			color_value = "#caeeff"
+			color_value = "#caffca"
 		if(20 to INFINITY)
-			color_value = "#54baf5"
+			color_value = "#5ac745"
 
 	slime_wetness_display?.maptext = FORMAT_SLIME_HUD_MAPTEXT(color_value, slime_wetness?.stacks)
 
