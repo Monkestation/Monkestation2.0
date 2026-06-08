@@ -159,6 +159,7 @@
 	if(slime.nutrition <= NUTRITION_LEVEL_STARVING)
 		if(!eating)
 			slime.blood_volume = max(slime.blood_volume - (4 * seconds_per_tick), 0)
+			slime.adjust_nutrition(3 * seconds_per_tick)
 		if(COOLDOWN_FINISHED(src, starvation_alert_cooldown))
 			to_chat(slime, span_danger("You're starving! Get some food!"))
 			slime.balloon_alert(slime, "you're starving!")
