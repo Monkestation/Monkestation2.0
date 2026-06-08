@@ -102,17 +102,17 @@ export const BorgChemicalShaker = () => {
                   sectionTitle={'Alcoholic'}
                   maximumChemicalVolume={maxReagentVolume}
                   chemicals={reagents_alc}
-                  dispenseActLeft={(reagentName) => {
-                    act('select_reagent_left', { reagent_name: reagentName });
+                  dispenseActLeft={(reagentId) => {
+                    act('select_reagent_left', { reagent_id: reagentId });
                   }}
-                  dispenseActRight={(reagentName) => {
-                    act('select_reagent_right', { reagent_name: reagentName });
+                  dispenseActRight={(reagentId) => {
+                    act('select_reagent_right', { reagent_id: reagentId });
                   }}
-                  chemicalButtonSelectLeft={(reagentName) =>
-                    selectedReagentLeft === reagentName
+                  chemicalButtonSelectLeft={(reagentId) =>
+                    selectedReagentLeft === reagentId
                   }
-                  chemicalButtonSelectRight={(reagentName) =>
-                    selectedReagentRight === reagentName
+                  chemicalButtonSelectRight={(reagentId) =>
+                    selectedReagentRight === reagentId
                   }
                 />
               </Stack.Item>
@@ -121,17 +121,17 @@ export const BorgChemicalShaker = () => {
                   sectionTitle={'Non-Alcoholic'}
                   maximumChemicalVolume={maxReagentVolume}
                   chemicals={reagents_nonalc}
-                  dispenseActLeft={(reagentName) => {
-                    act('select_reagent_left', { reagent_name: reagentName });
+                  dispenseActLeft={(reagentId) => {
+                    act('select_reagent_left', { reagent_id: reagentId });
                   }}
-                  dispenseActRight={(reagentName) => {
-                    act('select_reagent_right', { reagent_name: reagentName });
+                  dispenseActRight={(reagentId) => {
+                    act('select_reagent_right', { reagent_id: reagentId });
                   }}
-                  chemicalButtonSelectLeft={(reagentName) =>
-                    selectedReagentLeft === reagentName
+                  chemicalButtonSelectLeft={(reagentId) =>
+                    selectedReagentLeft === reagentId
                   }
-                  chemicalButtonSelectRight={(reagentName) =>
-                    selectedReagentRight === reagentName
+                  chemicalButtonSelectRight={(reagentId) =>
+                    selectedReagentRight === reagentId
                   }
                   offerReagentSearch={true}
                   disableReagentSearch={!canReagentSearch}

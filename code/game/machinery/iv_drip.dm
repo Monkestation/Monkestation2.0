@@ -22,8 +22,10 @@
 	base_icon_state = "iv_drip"
 	///icon_state for the reagent fill overlay
 	var/fill_icon_state = "reagent"
+	///icon_state for the beaker state overlay
+	var/beaker_icon_state = "beaker"
 	///The thresholds used to determine the reagent fill icon
-	var/list/fill_icon_thresholds = list(0,10,25,50,75,80,100)
+	var/list/fill_icon_thresholds = list(0,10,25,50,75,90,100)
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	use_power = NO_POWER_USE
@@ -166,7 +168,10 @@
 	if(!reagent_container)
 		return
 
-	. += attached ? "beakeractive" : "beakeridle"
+	if(istype(src, /obj/machinery/iv_drip/cyborg))
+		. += attached ? "left_stretch" : "left_loose"
+
+	. += attached ? "[beaker_icon_state]_active" : "[beaker_icon_state]_idle"
 	var/datum/reagents/container_reagents = get_reagents()
 	if(!container_reagents)
 		return
@@ -176,7 +181,7 @@
 		if(ROUND_UP(100 * container_reagents.total_volume / container_reagents.maximum_volume) >= fill_icon_thresholds[i])
 			threshold = i
 	if(threshold)
-		var/fill_name = "[fill_icon_state][fill_icon_thresholds[threshold]]"
+		var/fill_name = "[fill_icon_state]_[fill_icon_thresholds[threshold]]"
 		var/mutable_appearance/filling = mutable_appearance(icon, fill_name)
 		filling.color = mix_color_from_reagents(container_reagents.reagent_list)
 		. += filling
@@ -219,8 +224,6 @@
 		var/swap_item
 		if(reagent_container)
 			swap_item = reagent_container
-//			to_chat(user, span_warning("[reagent_container] is already loaded on [src]!"))
-//			return
 		if(!user.transferItemToLoc(attacking_item, src))
 			return
 		reagent_container = attacking_item

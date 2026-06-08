@@ -40,6 +40,7 @@ type GeneralContext = {
 export type Reagent = {
   name: string;
   full_name: string;
+  id: string;
   volume: number;
   description: string;
 };
@@ -67,17 +68,17 @@ export const BorgChemicalDispenser = () => {
   } = data;
 
   // Height calculation for the right column (chemicals)
-  const reagentBaseCount = 7; // 7 chemicals fit in 400px
-  const reagentBaseHeight = 400; // Minimum height for chemicals
-  const reagentPerPixel = 10; // 10px for each chemical over the base
+  const reagentBaseCount = 7;
+  const reagentBaseHeight = 400;
+  const reagentPerPixel = 10;
   const rightColumnHeight =
     reagentBaseHeight +
     Math.max(0, reagents.length - reagentBaseCount) * reagentPerPixel;
 
   // Height calculation for the left column (recipes)
-  const recipeBaseCount = 4; // 4 recipes fit into the base height
-  const recipeBaseHeight = 400; // Base height (same as chemicals)
-  const recipePerPixel = 44; // 44px for each recipe over the base
+  const recipeBaseCount = 4;
+  const recipeBaseHeight = 400;
+  const recipePerPixel = 44;
   const leftColumnHeight =
     recipeBaseHeight +
     Math.max(0, Object.keys(saved_recipes).length - recipeBaseCount) *
@@ -140,17 +141,17 @@ export const BorgChemicalDispenser = () => {
               sectionTitle={'Chemicals'}
               maximumChemicalVolume={maxReagentVolume}
               chemicals={reagents}
-              dispenseActLeft={(reagentName) => {
-                act('select_reagent_left', { reagent_name: reagentName });
+              dispenseActLeft={(reagentId) => {
+                act('select_reagent_left', { reagent_id: reagentId });
               }}
-              dispenseActRight={(reagentName) => {
-                act('select_reagent_right', { reagent_name: reagentName });
+              dispenseActRight={(reagentId) => {
+                act('select_reagent_right', { reagent_id: reagentId });
               }}
-              chemicalButtonSelectLeft={(reagentName) =>
-                selectedReagentLeft === reagentName
+              chemicalButtonSelectLeft={(reagentId) =>
+                selectedReagentLeft === reagentId
               }
-              chemicalButtonSelectRight={(reagentName) =>
-                selectedReagentRight === reagentName
+              chemicalButtonSelectRight={(reagentId) =>
+                selectedReagentRight === reagentId
               }
               offerReagentSearch={true}
               disableReagentSearch={!canReagentSearch}
@@ -386,10 +387,10 @@ export const BorgHypoChemicals = (props: {
   sectionTitle: string;
   maximumChemicalVolume: number;
   chemicals: Reagent[];
-  dispenseActLeft: (reagentName: string) => void;
-  dispenseActRight: (reagentName: string) => void;
-  chemicalButtonSelectLeft?: (reagentName: string) => BooleanLike;
-  chemicalButtonSelectRight?: (reagentName: string) => BooleanLike;
+  dispenseActLeft: (reagentId: string) => void;
+  dispenseActRight: (reagentId: string) => void;
+  chemicalButtonSelectLeft?: (reagentId: string) => BooleanLike;
+  chemicalButtonSelectRight?: (reagentId: string) => BooleanLike;
   offerReagentSearch?: boolean;
   disableReagentSearch?: boolean;
 }) => {
@@ -428,7 +429,7 @@ export const BorgHypoChemicals = (props: {
       }
     >
       {chemicals.map((reagent) => (
-        <Flex key={reagent.name} m={0.5}>
+        <Flex key={reagent.id} m={0.5}>
           <Flex.Item grow mr={1}>
             <ProgressBar value={reagent.volume / maximumChemicalVolume}>
               <Flex>
@@ -465,9 +466,9 @@ export const BorgHypoChemicals = (props: {
               content={'LMB'}
               textAlign={'center'}
               color={
-                chemicalButtonSelectLeft?.(reagent.name) ? 'green' : 'default'
+                chemicalButtonSelectLeft?.(reagent.id) ? 'green' : 'default'
               }
-              onClick={() => dispenseActLeft(reagent.name)}
+              onClick={() => dispenseActLeft(reagent.id)}
               tooltip="Select for left mouse button"
             />
           </Flex.Item>
@@ -477,9 +478,9 @@ export const BorgHypoChemicals = (props: {
               content={'RMB'}
               textAlign={'center'}
               color={
-                chemicalButtonSelectRight?.(reagent.name) ? 'orange' : 'default'
+                chemicalButtonSelectRight?.(reagent.id) ? 'orange' : 'default'
               }
-              onClick={() => dispenseActRight(reagent.name)}
+              onClick={() => dispenseActRight(reagent.id)}
               tooltip="Select for right mouse button"
             />
           </Flex.Item>

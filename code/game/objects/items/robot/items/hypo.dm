@@ -327,7 +327,7 @@
 			to_chat(user, span_warning("Couldn't find recipe ") + span_boldwarning(selected_recipe_id_alt) + span_warning("!"))
 			return FALSE
 		for(var/reagent_name in recipe_information)
-			var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(reagent_name)]
+			var/datum/reagent/reagent_typepath = GLOB.name2reagent[reagent_name]
 			if(!reagent_typepath)
 				balloon_alert(user, "[reagent_name] not found!")
 				return FALSE
@@ -367,7 +367,7 @@
 		var/recipe_information = saved_recipes[selected_recipe_id_alt]
 		if(recipe_information)
 			for(var/reagent_name in recipe_information)
-				var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(reagent_name)]
+				var/datum/reagent/reagent_typepath = GLOB.name2reagent[reagent_name]
 				if(!reagent_typepath)
 					continue
 				var/recipe_volume = recipe_information[reagent_name]
@@ -412,19 +412,17 @@
 	data["amount"] = amount_per_transfer_from_this
 	var/list/available_reagents = list()
 	for(var/datum/reagent/reagent_typepath as anything in stored_reagents)
-		var/display_name = reagent_typepath.display_name_short \
-		? reagent_typepath.display_name_short \
-		: reagent_typepath.name
-
+		var/display_name = reagent_typepath.display_name_short ? reagent_typepath.display_name_short : reagent_typepath.name
 		available_reagents.Add(list(list(
-			"name" = display_name,	// take an alternative name if the usual one is too long
+			"name" = display_name,
 			"full_name" = reagent_typepath.name,
+			"id" = "[reagent_typepath]",
 			"description" = reagent_typepath.description,
 			"volume" = round(stored_reagents[reagent_typepath], 0.01),
 		)))
 	data["reagents"] = available_reagents
-	data["selectedReagentLeft"] = selected_reagent_typepath?.name
-	data["selectedReagentRight"] = selected_reagent_typepath_alt?.name
+	data["selectedReagentLeft"] = selected_reagent_typepath ? "[selected_reagent_typepath]" : null
+	data["selectedReagentRight"] = selected_reagent_typepath_alt ? "[selected_reagent_typepath_alt]" : null
 	data["selectedRecipeIdLeft"] = selected_recipe_id
 	data["selectedRecipeIdRight"] = selected_recipe_id_alt
 	data["saved_recipes"] = saved_recipes
@@ -445,10 +443,16 @@
 	switch(action)
 		if("select_reagent_left")
 			playsound(src, 'sound/effects/pop.ogg', 50, 0)
-			var/datum/reagent/reagent_typepath = GLOB.name2reagent[params["reagent_name"]]
-			if(!isnull(stored_reagents[reagent_typepath]))
+			var/datum/reagent/reagent_typepath
+
+			if(params["reagent_id"])
+				reagent_typepath = text2path(params["reagent_id"])
+			else if(params["reagent_name"])
+				reagent_typepath = GLOB.name2reagent[params["reagent_name"]]
+
+			if(reagent_typepath && stored_reagents[reagent_typepath])
 				if(recording_recipe)
-					recording_recipe[params["reagent_name"]] += amount_per_transfer_from_this
+					recording_recipe[reagent_typepath.name] += amount_per_transfer_from_this
 				else
 					selected_reagent_typepath = reagent_typepath
 					selected_recipe_id = null
@@ -457,10 +461,16 @@
 
 		if("select_reagent_right")
 			playsound(src, 'sound/effects/pop.ogg', 50, 0)
-			var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(params["reagent_name"])]
-			if(!isnull(stored_reagents[reagent_typepath]))
+			var/datum/reagent/reagent_typepath
+
+			if(params["reagent_id"])
+				reagent_typepath = text2path(params["reagent_id"])
+			else if(params["reagent_name"])
+				reagent_typepath = GLOB.name2reagent[params["reagent_name"]]
+
+			if(reagent_typepath && stored_reagents[reagent_typepath])
 				if(recording_recipe)
-					recording_recipe[params["reagent_name"]] += amount_per_transfer_from_this
+					recording_recipe[reagent_typepath.name] += amount_per_transfer_from_this
 				else
 					selected_reagent_typepath_alt = reagent_typepath
 					selected_recipe_id_alt = null
@@ -480,7 +490,7 @@
 			. = TRUE
 
 		if("save_recording")
-			var/name = tgui_input_text(ui.user, "What do you want to name this recipe?", "Recipe Name?", "Recipe Name", 30) // They should be short and concise.
+			var/name = tgui_input_text(ui.user, "What do you want to name this recipe?", "Recipe Name?", "Recipe Name", 30)
 			if(ui_status(user, state) != UI_INTERACTIVE)
 				return
 			if(saved_recipes[name] && tgui_alert(ui.user, "\"[name]\" already exists, do you want to overwrite it?",, list("No", "Yes")) != "Yes")
@@ -671,29 +681,27 @@
 	var/list/alcohol_reagents = list()
 	var/list/drink_reagents = list()
 	for(var/datum/reagent/reagent_typepath as anything in stored_reagents)
-		// Split the reagents into alcoholic / non-alcoholic.
-		if(ispath(reagent_typepath, /datum/reagent/consumable/ethanol))
-			alcohol_reagents.Add(list(list(
-				"name" = reagent_typepath.name,
-				"full_name" = reagent_typepath.name,
-				"description" = reagent_typepath.description,
-				"volume" = round(stored_reagents[reagent_typepath], 0.01)
-			)))
-			continue
-		drink_reagents.Add(list(list(
-			"name" = reagent_typepath.name,
+		var/display_name = reagent_typepath.display_name_short ? reagent_typepath.display_name_short : reagent_typepath.name
+		var/reagent_data = list(
+			"name" = display_name,
 			"full_name" = reagent_typepath.name,
+			"id" = "[reagent_typepath]",
 			"description" = reagent_typepath.description,
 			"volume" = round(stored_reagents[reagent_typepath], 0.01)
-		)))
+		)
+		// Split the reagents into alcoholic / non-alcoholic.
+		if(ispath(reagent_typepath, /datum/reagent/consumable/ethanol))
+			alcohol_reagents.Add(list(reagent_data))
+		else
+			drink_reagents.Add(list(reagent_data))
 
 	var/list/data = list()
 	data["theme"] = tgui_theme
 	data["amount"] = amount_per_transfer_from_this
 	data["reagents_alc"] = alcohol_reagents
 	data["reagents_nonalc"] = drink_reagents
-	data["selectedReagentLeft"] = selected_reagent_typepath?.name
-	data["selectedReagentRight"] = selected_reagent_typepath_alt?.name
+	data["selectedReagentLeft"] = selected_reagent_typepath ? "[selected_reagent_typepath]" : null
+	data["selectedReagentRight"] = selected_reagent_typepath_alt ? "[selected_reagent_typepath_alt]" : null
 	data["selectedRecipeIdLeft"] = selected_recipe_id
 	data["selectedRecipeIdRight"] = selected_recipe_id_alt
 	data["saved_recipes"] = saved_recipes
@@ -718,10 +726,16 @@
 	switch(action)
 		if("select_reagent_left")
 			playsound(src, 'sound/effects/pop.ogg', 50, 0)
-			var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(params["reagent_name"])]
-			if(!isnull(stored_reagents[reagent_typepath]))
+			var/datum/reagent/reagent_typepath
+
+			if(params["reagent_id"])
+				reagent_typepath = text2path(params["reagent_id"])
+			else if(params["reagent_name"])
+				reagent_typepath = GLOB.name2reagent[params["reagent_name"]]
+
+			if(reagent_typepath && stored_reagents[reagent_typepath])
 				if(recording_recipe)
-					recording_recipe[params["reagent_name"]] += amount_per_transfer_from_this
+					recording_recipe[reagent_typepath.name] += amount_per_transfer_from_this
 				else
 					selected_reagent_typepath = reagent_typepath
 					selected_recipe_id = null
@@ -730,10 +744,16 @@
 
 		if("select_reagent_right")
 			playsound(src, 'sound/effects/pop.ogg', 50, 0)
-			var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(params["reagent_name"])]
-			if(!isnull(stored_reagents[reagent_typepath]))
+			var/datum/reagent/reagent_typepath
+
+			if(params["reagent_id"])
+				reagent_typepath = text2path(params["reagent_id"])
+			else if(params["reagent_name"])
+				reagent_typepath = GLOB.name2reagent[params["reagent_name"]]
+
+			if(reagent_typepath && stored_reagents[reagent_typepath])
 				if(recording_recipe)
-					recording_recipe[params["reagent_name"]] += amount_per_transfer_from_this
+					recording_recipe[reagent_typepath.name] += amount_per_transfer_from_this
 				else
 					selected_reagent_typepath_alt = reagent_typepath
 					selected_recipe_id_alt = null

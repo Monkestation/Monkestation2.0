@@ -454,6 +454,10 @@
 /obj/machinery/iv_drip/cyborg
 	name = "cyborg IV drip"
 	desc = "Special modification for cyborgs. An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers."
+	icon_state = "iv_drip_cyborg"
+	base_icon_state = "iv_drip_cyborg"
+	fill_icon_state = "reagent_cyborg"
+	beaker_icon_state = "beaker_cyborg"
 	var/obj/item/cyborg_iv_drip/iv_drip_item
 
 	// Transmogrification inner part
@@ -466,8 +470,8 @@
 	name = "cyborg IV drip"
 	desc = "Special modification for cyborgs. An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers."
 	icon = 'icons/obj/medical/iv_drip.dmi'
-	icon_state = "iv_drip"
-	base_icon_state = "iv_drip"
+	icon_state = "iv_drip_cyborg"
+	base_icon_state = "iv_drip_cyborg"
 	w_class = WEIGHT_CLASS_SMALL
 	var/obj/machinery/iv_drip/cyborg/internal_iv_drip
 
@@ -493,8 +497,8 @@
 /obj/item/cyborg_iv_drip/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)	// container
 	return internal_iv_drip.attackby(attacking_item, user, modifiers, attack_modifiers)
 
-/obj/item/cyborg_iv_drip/click_alt(mob/user)	// speed
-	return internal_iv_drip.click_alt(user)
+/obj/item/cyborg_iv_drip/click_alt(mob/user)	// eject
+	return internal_iv_drip.eject_beaker(user)
 
 /obj/item/cyborg_iv_drip/examine(mob/user)		// examine
 	return internal_iv_drip.examine(user)
