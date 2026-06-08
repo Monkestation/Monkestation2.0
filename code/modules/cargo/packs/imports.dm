@@ -257,3 +257,12 @@
 	contains = list()
 	crate_type = /obj/structure/closet/crate/coffin/sarcophagus
 	crate_name = "Sarcophagus"
+
+/datum/supply_pack/imports/egosuit_restock
+	name = "Box of Enkephalin"
+	desc = "A box of some weird green liquid that seems to be the \
+	same shape as a vending machine resupply canister."
+	cost = CARGO_CRATE_VALUE * 4
+	contraband = TRUE
+	contains = list(/obj/item/vending_refill/egosuit)
+	crate_name = "enkephalin crate"

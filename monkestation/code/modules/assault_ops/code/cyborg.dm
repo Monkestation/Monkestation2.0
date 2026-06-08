@@ -116,10 +116,6 @@
 	flags_1 = NONE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-/obj/item/pinpointer/operative_cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
-
 /obj/item/pinpointer/operative_cyborg/cyborg_unequip(mob/user)
 	if(!active)
 		return

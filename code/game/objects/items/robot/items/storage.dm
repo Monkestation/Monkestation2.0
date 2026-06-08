@@ -5,8 +5,10 @@
 	icon_state = "hugmodule"
 	/// The item stored inside of this apparatus
 	var/obj/item/stored
-	/// Whitelist of types allowed in this apparatus
+	/// Whitelist of types (and its subtypes) that are allowed in this apparatus.
 	var/list/storable = list()
+	/// Blacklist of types (and its subtypes) that are not allowed in this apparatus.
+	var/list/blacklisted_storables = list()
 
 /obj/item/borg/apparatus/Initialize(mapload)
 	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, PROC_REF(safedecon))
@@ -48,6 +50,7 @@
 	if(!stored || !issilicon(user))
 		return ..()
 	stored.attack_self(user)
+
 /obj/item/borg/apparatus/attack_self_secondary(mob/living/silicon/robot/user)
 	if(!stored || !issilicon(user))
 		return ..()
@@ -66,24 +69,33 @@
 	else
 		return ..()
 
+/// Checks if the item is allowed to be inside of the apparatus.
 /obj/item/borg/apparatus/proc/itemcheck(atom/atom)
-	for(var/storable_type in storable)
-		if(istype(atom, storable_type))
-			return TRUE
-	return FALSE
+	if(is_type_in_list(atom, blacklisted_storables))
+		return FALSE
+	return is_type_in_list(atom, storable)
 
-/obj/item/borg/apparatus/proc/put_in_apparatus(atom/atom, mob/user)
-	if(!stored)
-		if(istype(atom.loc, /mob/living/silicon/robot) || istype(atom.loc, /obj/item/robot_model) || HAS_TRAIT(atom, TRAIT_NODROP))
-			return FALSE // Borgs should not be grabbing their own modules
-		if(itemcheck(atom))
-			var/obj/item/item = atom
-			item.forceMove(src)
-			stored = item
-			RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
-			update_appearance()
-			return TRUE
-	return FALSE
+/// Attempts to put the item into the apparatus.
+/obj/item/borg/apparatus/proc/put_in_apparatus(obj/item/storing_item, mob/user)
+	if(stored)
+		return FALSE
+	if(!istype(storing_item))
+		return FALSE
+	if(HAS_TRAIT(storing_item, TRAIT_NODROP))
+		return
+	if(storing_item == user)
+		if(istype(storing_item.loc, /mob/living/silicon/robot))
+			return FALSE
+		else if(istype(storing_item.loc, /obj/item/robot_model))
+			return FALSE
+	if(!itemcheck(storing_item))
+		return FALSE
+	var/obj/item/item = storing_item
+	item.forceMove(src)
+	stored = item
+	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
+	update_appearance()
+	return TRUE
 
 /obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, params)
 	if(LAZYACCESS(params, RIGHT_CLICK))
@@ -136,19 +148,12 @@
 	QDEL_NULL(stored)
 	return ..()
 
-/obj/item/borg/apparatus/beaker/examine()
-	. = ..()
+/obj/item/borg/apparatus/beaker/examine(mob/user)
 	if(stored)
-		var/obj/item/reagent_containers/reagent_container = stored
-		. += "The apparatus currently has [reagent_container] secured, which contains:"
-		if(length(reagent_container.reagents.reagent_list))
-			for(var/datum/reagent/reagent in reagent_container.reagents.reagent_list)
-				. += "[reagent.volume] units of [reagent.name]"
-		else
-			. += "Nothing."
-
-		. += span_notice(" <i>Right-clicking</i> will splash the beaker on the ground.")
-	. += span_notice(" <i>Alt-click</i> will drop the currently stored beaker. ")
+		to_chat(user, span_nicegreen(" <i>Alt-click</i> will drop the currently stored beaker."))
+		to_chat(user, span_nicegreen(" <i>Right-clicking</i> will splash the beaker on the ground."))
+		return stored.examine(user)
+	return ..()
 
 /obj/item/borg/apparatus/beaker/update_overlays()
 	. = ..()
@@ -218,15 +223,11 @@
 	storable = list(/obj/item/organ,
 					/obj/item/bodypart)
 
-/obj/item/borg/apparatus/organ_storage/examine()
-	. = ..()
-	. += "The organ bag currently contains:"
+/obj/item/borg/apparatus/organ_storage/examine(mob/user)
 	if(stored)
-		var/obj/item/organ = stored
-		. += organ.name
-	else
-		. += "Nothing."
-	. += span_notice(" <i>Alt-click</i> will drop the currently stored organ. ")
+		to_chat(user, span_nicegreen(" <i>Alt-click</i> will drop the currently stored organ."))
+		return stored.examine(user)
+	return ..()
 
 /obj/item/borg/apparatus/organ_storage/update_overlays()
 	. = ..()
@@ -260,12 +261,19 @@
 	desc = "A container for holding and application of various monster organs."
 	storable = list(/obj/item/organ/internal/monster_core)
 
+/obj/item/borg/apparatus/organ_storage/limb
+	name = "limb storage bag"
+	desc = "A container for holding limbs."
+	storable = list(/obj/item/bodypart)
+
 ///Apparatus to allow Engineering/Sabo borgs to manipulate any material sheets.
 /obj/item/borg/apparatus/sheet_manipulator
 	name = "material manipulation apparatus"
 	desc = "An apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles."
 	icon_state = "borg_stack_apparatus"
 	storable = list(/obj/item/stack/sheet,
+					/obj/item/stack/rods,
+					/obj/item/stack/ore/bluespace_crystal,
 					/obj/item/stack/tile)
 
 /obj/item/borg/apparatus/sheet_manipulator/Initialize(mapload)
@@ -288,19 +296,25 @@
 		. += stored_copy
 	. += arm
 
-/obj/item/borg/apparatus/sheet_manipulator/examine()
-	. = ..()
+/obj/item/borg/apparatus/sheet_manipulator/examine(mob/user)
 	if(stored)
-		. += "The apparatus currently has [stored] secured."
-	. += span_notice(" <i>Alt-click</i> will drop the currently stored sheets. ")
+		to_chat(user, span_nicegreen(" <i>Alt-click</i> will drop the currently stored sheets."))
+		return stored.examine(user)
+	return ..()
+
+/obj/item/borg/apparatus/sheet_manipulator/extra
+	name = "secondary material manipulation apparatus"
+	desc = "A supplementary apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles."
 
 ///Apparatus allowing Engineer/Sabo borgs to manipulate Machine and Computer circuit boards
 /obj/item/borg/apparatus/circuit
-	name = "circuit manipulation apparatus"
-	desc = "A special apparatus for carrying and manipulating circuit boards."
+	name = "electronics manipulation apparatus"
+	desc = "A special apparatus for carrying and manipulating electronics like circuit boards, cells, stock parts, signalers and etc."
 	icon_state = "borg_hardware_apparatus"
 	storable = list(/obj/item/circuitboard,
-				/obj/item/electronics)
+				/obj/item/electronics,
+				/obj/item/stock_parts,
+				/obj/item/assembly)
 
 /obj/item/borg/apparatus/circuit/Initialize(mapload)
 	update_appearance()
@@ -320,16 +334,35 @@
 		. += stored_copy
 	. += arm
 
-/obj/item/borg/apparatus/circuit/examine()
-	. = ..()
+/obj/item/borg/apparatus/circuit/examine(mob/user)
 	if(stored)
-		. += "The apparatus currently has [stored] secured."
-	. += span_notice(" <i>Alt-click</i> will drop the currently stored circuit. ")
+		to_chat(user, span_nicegreen(" <i>Alt-click</i> will drop the currently stored circuit."))
+		return stored.examine(user)
+	return ..()
 
 /obj/item/borg/apparatus/circuit/pre_attack(atom/atom, mob/living/user, params)
 	if(istype(atom, /obj/item/ai_module) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
 		to_chat(user, span_warning("This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up."))
 	return ..()
+
+/obj/item/borg/apparatus/circuit/science
+	name = "science manipulation apparatus"
+	desc = "A special apparatus for carrying various stock parts, disks, assemblies, and even artifacts!"
+	storable = list(
+		/obj/item/stock_parts,
+		/obj/item/assembly,
+		/obj/item/disk,
+		/obj/item/artifact_item,
+		/obj/item/artifact_item_tiny,
+		/obj/item/gun/magic/artifact,
+		/obj/item/melee/artifact,
+		/obj/item/artifact_summon_wand,
+		/obj/item/slime_mutation_syringe,
+		/obj/item/borg_restart_board
+	)
+	blacklisted_storables = list(
+		/obj/item/disk/nuclear
+	)
 
 //apparatus to allow borgs to cook
 /obj/item/borg/apparatus/cooking
@@ -353,11 +386,11 @@
 	update_appearance()
 	return ..()
 
-/obj/item/borg/apparatus/cooking/examine()
-	. = ..()
+/obj/item/borg/apparatus/cooking/examine(mob/user)
 	if(stored)
-		. += "The apparatus currently has [stored] secured."
-	. += span_notice("<i>Alt-click</i> will drop the currently secured item.")
+		to_chat(user, span_nicegreen(" <i>Alt-click</i> will drop the currently stored item."))
+		return stored.examine(user)
+	return ..()
 
 /obj/item/borg/apparatus/cooking/update_overlays()
 	. = ..()

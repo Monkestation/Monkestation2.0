@@ -97,17 +97,6 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
-/datum/techweb_node/adv_beam_weapons
-	id = "adv_beam_weapons"
-	display_name = "Advanced Beam Weaponry"
-	description = "Various advanced beam weapons"
-	prereq_ids = list("beam_weapons")
-	design_ids = list(
-		"beamrifle",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
-	announce_channels = list(RADIO_CHANNEL_SECURITY)
-
 /datum/techweb_node/radioactive_weapons
 	id = "radioactive_weapons"
 	display_name = "Radioactive Weaponry"

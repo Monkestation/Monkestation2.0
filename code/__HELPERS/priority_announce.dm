@@ -202,7 +202,7 @@
 	var/sound_to_play = !isnull(sound_override) ? sound_override : 'sound/misc/notice2.ogg'
 
 	for(var/mob/target in players)
-		if(isnewplayer(target) || !target.can_hear())
+		if(isnewplayer(target) || HAS_TRAIT(target, TRAIT_DEAF))
 			continue
 
 		to_chat(target, announcement)

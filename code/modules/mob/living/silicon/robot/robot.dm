@@ -22,10 +22,6 @@
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_GOT_DAMPENED), PROC_REF(on_dampen))
 
-	robot_modules_background = new()
-	robot_modules_background.icon_state = "block"
-	SET_PLANE_EXPLICIT(robot_modules_background, HUD_PLANE, src)
-
 	inv1 = new /atom/movable/screen/robot/module1()
 	inv2 = new /atom/movable/screen/robot/module2()
 	inv3 = new /atom/movable/screen/robot/module3()
@@ -42,12 +38,12 @@
 	model = new /obj/item/robot_model(src)
 	model.rebuild_modules()
 
-	if(lawupdate)
+	if(!laws)
 		make_laws()
-		for (var/law in laws.inherent)
+		for(var/law in laws.inherent)
 			lawcheck += law
-		if(!TryConnectToAI())
-			lawupdate = FALSE
+	if(lawupdate && !TryConnectToAI())
+		lawupdate = FALSE
 
 	if(!scrambledcodes && !builtInCamera)
 		builtInCamera = new (src)
@@ -170,33 +166,10 @@
 		to_chat(src,span_userdanger("ERROR: Lockdown is engaged. Please disengage lockdown to pick module."))
 		return
 
-	if(!length(GLOB.cyborg_model_list))
-		GLOB.cyborg_model_list = list(
-			"Engineering" = /obj/item/robot_model/engineering,
-			"Medical" = /obj/item/robot_model/medical,
-			"Cargo" = /obj/item/robot_model/cargo, //monkestation edit
-			"Miner" = /obj/item/robot_model/miner,
-			"Janitor" = /obj/item/robot_model/janitor,
-			"Service" = /obj/item/robot_model/service,
-			"Standard" = /obj/item/robot_model/standard,
-		)
-		if(!CONFIG_GET(flag/disable_peaceborg))
-			GLOB.cyborg_model_list["Peacekeeper"] = /obj/item/robot_model/peacekeeper
-		if(!CONFIG_GET(flag/disable_secborg))
-			GLOB.cyborg_model_list["Security"] = /obj/item/robot_model/security
-
 	//monkestation edit start
-	for(var/model in GLOB.cyborg_model_list)
-		// Creating the lists here since we know all the model icons will need them right after.
-		GLOB.cyborg_all_models_icon_list[model] = list()
+	initialize_cyborg_model_lists()
 
 	// Create radial menu for choosing borg model
-	if(!length(GLOB.cyborg_base_models_icon_list))
-		for(var/option in GLOB.cyborg_model_list)
-			var/obj/item/robot_model/model = GLOB.cyborg_model_list[option]
-			var/model_icon = initial(model.cyborg_base_icon)
-			GLOB.cyborg_base_models_icon_list[option] = image(icon = 'monkestation/icons/mob/robots.dmi', icon_state = model_icon)
-
 	var/input_model = show_radial_menu(src, src, GLOB.cyborg_base_models_icon_list, radius = 42)
 	if(!input_model || model.type != /obj/item/robot_model)
 		return
@@ -304,15 +277,14 @@
 /mob/living/silicon/robot/regenerate_icons()
 	return update_icons()
 
-/mob/living/silicon/robot/update_icons()
-	cut_overlays()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	icon_state = model.cyborg_base_icon
-	if(stat != DEAD && !(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
+/mob/living/silicon/robot/update_overlays()
+	. = ..()
+	if(stat != DEAD && !(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed() || low_power_mode)) // Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_enabled || lamp_doom)
 			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]" : "[model.cyborg_base_icon]"]_l"
+			eye_lights.color = lamp_doom ? COLOR_RED : lamp_color
 			set_light_range(max(MINIMUM_USEFUL_LIGHT_RANGE, lamp_intensity))
 			set_light_color(lamp_doom ? COLOR_RED : lamp_color) //Red for doomsday killborgs, borg's choice otherwise
 			SET_PLANE_EXPLICIT(eye_lights, ABOVE_LIGHTING_PLANE, src) //glowy eyes
@@ -321,31 +293,34 @@
 			eye_lights.color = COLOR_WHITE
 			SET_PLANE_EXPLICIT(eye_lights, ABOVE_GAME_PLANE, src)
 		eye_lights.icon = icon
-		add_overlay(eye_lights)
-
+		. += eye_lights
 	if(opened)
 		if(wiresexposed)
-			add_overlay("ov-opencover +w")
+			. += "ov-opencover +w"
 		else if(cell)
-			add_overlay("ov-opencover +c")
+			. += "ov-opencover +c"
 		else
-			add_overlay("ov-opencover -c")
+			. += "ov-opencover -c"
 	if(hat)
 		var/mutable_appearance/head_overlay = hat.build_worn_icon(default_layer = 20, default_icon_file = 'icons/mob/clothing/head/default.dmi')
 		head_overlay.pixel_z += model.hat_offset
-		add_overlay(head_overlay)
+		. += head_overlay
 	if(worn_badge)
 		var/mutable_appearance/accessory_overlay = mutable_appearance(worn_badge.worn_icon, worn_badge.icon_state)
 		accessory_overlay.pixel_z += model.badge_offset
-		add_overlay(accessory_overlay)
+		. += accessory_overlay
+
+/mob/living/silicon/robot/update_icons()
+	icon_state = model.cyborg_base_icon
 	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/silicon/robot/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer)
 		return ..()
-	cut_overlay(eye_lights)
-	SET_PLANE_EXPLICIT(eye_lights, PLANE_TO_TRUE(eye_lights.plane), src)
-	add_overlay(eye_lights)
+	if(eye_lights)
+		cut_overlay(eye_lights)
+		SET_PLANE_EXPLICIT(eye_lights, PLANE_TO_TRUE(eye_lights.plane), src)
+		add_overlay(eye_lights)
 	return ..()
 
 /mob/living/silicon/robot/proc/self_destruct(mob/user)
@@ -529,6 +504,10 @@
 
 	dump_into_mmi(drop_to)
 
+	// Remove upgrades.
+	for(var/obj/item/borg/upgrade/I in upgrades)
+		I.forceMove(get_turf(src))
+
 	qdel(src)
 
 
@@ -572,6 +551,8 @@
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - New cyborg shell detected: <a href='byond://?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
 		if(AI_NOTIFICATION_CYBORG_DISCONNECTED) //Tampering with the wires
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Remote telemetry lost with [name].")]<br>")
+		if(AI_NOTIFICATION_CYBORG_DEATH)
+			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Cyborg unit failure detected: <a href='byond://?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
 
 /mob/living/silicon/robot/can_perform_action(atom/movable/target, action_bitflags)
 	if(lockcharge || low_power_mode)
@@ -667,11 +648,11 @@
 		if(health <= -maxHealth) //die only once
 			death()
 			toggle_headlamp(1)
-			return
-		if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsKnockdown() || IsParalyzed())
-			set_stat(UNCONSCIOUS)
 		else
-			set_stat(CONSCIOUS)
+			if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsKnockdown() || IsParalyzed())
+				set_stat(UNCONSCIOUS)
+			else
+				set_stat(CONSCIOUS)
 	diag_hud_set_status()
 	diag_hud_set_health()
 	diag_hud_set_aishell()
@@ -705,14 +686,10 @@
 /mob/living/silicon/robot/proc/ResetModel()
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
 	drop_all_held_items()
-	shown_robot_modules = FALSE
 
 	for(var/obj/item/storage/bag in model.contents) // drop all of the items that may be stored by the cyborg
 		for(var/obj/item in bag)
 			item.forceMove(drop_location())
-
-	if(hud_used)
-		hud_used.update_robot_modules_display()
 
 	if (hasExpanded)
 		hasExpanded = FALSE
@@ -785,11 +762,13 @@
 		mmi = null
 
 ///Use this to add upgrades to robots. It'll register signals for when the upgrade is moved or deleted, if not single use.
-/mob/living/silicon/robot/proc/add_to_upgrades(obj/item/borg/upgrade/new_upgrade, mob/user)
+/mob/living/silicon/robot/proc/add_to_upgrades(obj/item/borg/upgrade/new_upgrade, user)
 	if(new_upgrade in upgrades)
 		return FALSE
-	if(!user.temporarilyRemoveItemFromInventory(new_upgrade)) //calling the upgrade's dropped() proc /before/ we add action buttons
-		return FALSE
+	if(ismob(user))
+		var/mob/mob_user = user
+		if(!mob_user.temporarilyRemoveItemFromInventory(new_upgrade)) // Calling the upgrade's dropped() proc /before/ we add action buttons.
+			return FALSE
 	if(!new_upgrade.action(src, user))
 		to_chat(user, span_danger("Upgrade error."))
 		new_upgrade.forceMove(loc) //gets lost otherwise
@@ -805,6 +784,7 @@
 	RegisterSignal(new_upgrade, COMSIG_MOVABLE_MOVED, PROC_REF(remove_from_upgrades))
 	RegisterSignal(new_upgrade, COMSIG_QDELETING, PROC_REF(on_upgrade_deleted))
 	logevent("Hardware [new_upgrade] installed successfully.")
+	return TRUE
 
 ///Called when an upgrade is moved outside the robot. So don't call this directly, use forceMove etc.
 /mob/living/silicon/robot/proc/remove_from_upgrades(obj/item/borg/upgrade/old_upgrade)

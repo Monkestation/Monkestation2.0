@@ -44,24 +44,8 @@
 /area/ruin/powered/reebe/city)
 "gu" = (
 /obj/structure/table/bronze,
-/obj/item/clothing/suit/clockwork{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/clothing/suit/clockwork,
-/obj/item/clothing/suit/clockwork{
-	pixel_x = -4;
-	pixel_y = -4
-	},
-/obj/item/clothing/head/helmet/clockwork{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/clothing/head/helmet/clockwork,
-/obj/item/clothing/head/helmet/clockwork{
-	pixel_x = -4;
-	pixel_y = -4
-	},
+/obj/item/clothing/suit/hooded/clockwork,
+/obj/item/clothing/suit/hooded/clockwork,
 /turf/open/indestructible/reebe_flooring/flat,
 /area/ruin/powered/reebe/city)
 "gL" = (
@@ -224,7 +208,7 @@
 /area/ruin/powered/reebe/city)
 "FK" = (
 /obj/structure/table/bronze,
-/obj/item/clothing/suit/clockwork/cloak,
+/obj/item/clothing/suit/hooded/clockwork/speed,
 /turf/open/indestructible/reebe_flooring/flat,
 /area/ruin/powered/reebe/city)
 "FY" = (
@@ -317,7 +301,7 @@
 /area/ruin/powered/reebe/city)
 "TL" = (
 /obj/structure/table/bronze,
-/obj/item/clothing/suit/clockwork/speed,
+/obj/item/clothing/suit/hooded/clockwork/cloak,
 /turf/open/indestructible/reebe_flooring/flat,
 /area/ruin/powered/reebe/city)
 "Vi" = (

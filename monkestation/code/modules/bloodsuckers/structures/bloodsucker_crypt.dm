@@ -381,7 +381,6 @@
 		// Convert to Vassal!
 		bloodsuckerdatum.AddBloodVolume(-TORTURE_CONVERSION_COST)
 		if(bloodsuckerdatum.make_vassal(target))
-			remove_loyalties(target)
 			SEND_SIGNAL(bloodsuckerdatum, COMSIG_BLOODSUCKER_MADE_VASSAL, user, target)
 
 /obj/structure/bloodsucker/vassalrack/proc/do_torture(mob/living/user, mob/living/carbon/target, mult = 1, tool = null)
@@ -419,12 +418,11 @@
 		return FALSE
 
 	held_item?.play_tool_sound(target)
-	target.visible_message(
-		span_danger("[user] performs a ritual, spilling some of [target]'s blood from [target.p_their()] [selected_bodypart.name] and shaking [target.p_them()] up!"),
-		span_userdanger("[user] performs a ritual, spilling some blood from your [selected_bodypart.name], shaking you up!")
-	)
 
-	INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, emote), "scream")
+	if(target.has_status_effect(/datum/status_effect/heretic_passive/moon))
+		INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, emote), "laugh")
+	else
+		INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, emote), "scream")
 	target.set_timed_status_effect(5 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 	target.apply_damages(brute = torture_dmg_brute, burn = torture_dmg_burn, def_zone = selected_bodypart.body_zone)
 	//Torture succeeded. You may torture again.
@@ -464,14 +462,11 @@
 		balloon_alert(user, "target has no mind!")
 		return VASSALIZATION_BANNED
 
+	if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
+		return VASSALIZATION_BANNED
+
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = IS_BLOODSUCKER(user)
 	return bloodsuckerdatum.AmValidAntag(target)
-
-/obj/structure/bloodsucker/vassalrack/proc/remove_loyalties(mob/living/target)
-	// Find Mind Implant & Destroy
-	for(var/obj/item/implant/implant as anything in target.implants)
-		if(istype(implant, /obj/item/implant/mindshield) && implant.removed(target, silent = TRUE))
-			qdel(implant)
 
 /obj/structure/bloodsucker/vassalrack/proc/reset_progress()
 	convert_progress = initial(convert_progress)

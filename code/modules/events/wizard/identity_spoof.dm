@@ -4,6 +4,8 @@
 	typepath = /datum/round_event/wizard/identity_spoof
 	max_occurrences = 1
 	description = "Makes everyone dressed up like a wizard."
+	min_wizard_trigger_potency = 3
+	max_wizard_trigger_potency = 100
 
 /datum/round_event_control/wizard/identity_spoof/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
 	. = ..()

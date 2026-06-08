@@ -20,8 +20,15 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	inhand_icon_change = FALSE
 	///ready to launch a beam attack?
 	COOLDOWN_DECLARE(moonbeam_fire)
+
+/obj/item/melee/trick_weapon/darkmoon/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(enabled && isinhands)
+		. += mutable_appearance(icon_file, "[base_icon_state]_glow")
+		. += emissive_appearance(icon_file, "[base_icon_state]_glow_e", src)
 
 /obj/item/melee/trick_weapon/darkmoon/on_transform(obj/item/source, mob/user, active)
 	. = ..()

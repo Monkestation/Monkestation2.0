@@ -23,6 +23,10 @@
 	del_on_death = TRUE
 	death_message = "vanishes into thin air! It was a fake!"
 
+/mob/living/simple_animal/hostile/illusion/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_preattack))
+
 /mob/living/simple_animal/hostile/illusion/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 	if(world.time > life_span)
@@ -62,6 +66,10 @@
 		clone.copy_parent(parent_mob, 80, health/2, melee_damage_upper, multiply_chance/2)
 		clone.GiveTarget(living_target)
 
+/// Signal handler for when we attack something. Hook for replicating on standard behavior, with additional behavior on subtypes.
+/mob/living/simple_animal/hostile/illusion/proc/on_preattack(mob/living/source, atom/attacked_target)
+	SIGNAL_HANDLER
+
 ///////Actual Types/////////
 
 /mob/living/simple_animal/hostile/illusion/escape
@@ -97,3 +105,11 @@
 /mob/living/simple_animal/hostile/illusion/blob/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_BLOB_ALLY, INNATE_TRAIT)
+
+/// instead of hitting with heavy object, we shove 'em
+/mob/living/simple_animal/hostile/illusion/shover
+
+/mob/living/simple_animal/hostile/illusion/shover/on_preattack(mob/living/source, atom/attacked_target)
+	. = ..()
+	if(disarm(attacked_target))
+		return COMPONENT_HOSTILE_NO_ATTACK
