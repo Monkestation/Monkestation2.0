@@ -64,7 +64,6 @@
 
 #define EXPANDED_SERVICE_REAGENTS list(\
 	/datum/reagent/consumable/blackpepper,\
-	/datum/reagent/consumable/coco,\
 	/datum/reagent/consumable/cornmeal,\
 	/datum/reagent/consumable/cooking_oil,\
 	/datum/reagent/consumable/corn_starch,\
@@ -74,7 +73,9 @@
 	/datum/reagent/consumable/rice,\
 	/datum/reagent/consumable/sugar,\
 	/datum/reagent/consumable/salt,\
-	/datum/reagent/consumable/vanilla,\
+	/datum/reagent/consumable/soysauce,\
+	/datum/reagent/consumable/ketchup,\
+	/datum/reagent/consumable/mayonnaise,\
 )
 
 #define HACKED_SERVICE_REAGENTS list(\
