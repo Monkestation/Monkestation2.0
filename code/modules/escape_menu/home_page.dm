@@ -29,10 +29,10 @@
 			null,
 			/* hud_owner = */ null,
 			/* escape_menu = */ src,
-			/* button_text = */ "Open Lootbox",
+			/* button_text = */ "Open Lootbox Menu",
 			/* offset = */ list(-186, 28),
 			/* font_size = */ 24,
-			/* on_click_callback = */ CALLBACK(src, PROC_REF(try_open_lootbox)),
+			/* on_click_callback = */ CALLBACK(src, PROC_REF(try_open_lootbox_menu)),
 		)
 	)
 
@@ -188,8 +188,8 @@
 /datum/escape_menu/proc/home_resume()
 	qdel(src)
 
-/datum/escape_menu/proc/try_open_lootbox()
-	client?.try_open_or_buy_lootbox()
+/datum/escape_menu/proc/try_open_lootbox_menu()
+	new /datum/lootbox_menu(client, client?.mob)
 
 /datum/escape_menu/proc/start_redeem()
 	client?.redeem_code()

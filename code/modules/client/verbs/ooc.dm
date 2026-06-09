@@ -269,6 +269,14 @@ ADMIN_VERB(reset_ooc_color, R_FUN, FALSE, "Reset Player OOC Color", "Returns pla
 
 	new /datum/job_report_menu(src, usr)
 
+// Lootbox Menu
+/client/proc/lootbox_menu()
+	set name = "Open Lootbox Menu"
+	set category = "OOC"
+	set desc = "View, open, and manage your lootboxes."
+
+	new /datum/lootbox_menu(src, usr)
+
 // Ignore verb
 /client/verb/select_ignore()
 	set name = "Ignore"
