@@ -29761,7 +29761,7 @@
 "gUN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/structure/tank_holder/oxygen/red,
+/obj/structure/tank_holder/oxygen/yellow,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
 /area/station/tcommsat/server)
