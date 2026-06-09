@@ -22,7 +22,7 @@
 		"emergency_oxygen_engi",
 		"emergency_oxygen",
 		"nitrogen_tank",
-		//"emergency_nitrogen_engi",
+		//"emergency_nitrogen_engi", //incase you wanna add a nitrogen breathing species uncomment these
 		//"emergency_nitrogen",
 		"emitter",
 		"firealarm_electronics",
