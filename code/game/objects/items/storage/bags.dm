@@ -93,17 +93,6 @@
 		new /obj/effect/spawner/random/trash/garbage(src)
 	update_icon_state()
 
-/obj/item/storage/bag/trash/stowaway
-
-/obj/item/storage/bag/trash/stowaway/PopulateContents()
-	new /obj/item/weldingtool/mini(src)
-	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/tank/internals/emergency_oxygen(src)
-	new /obj/item/reagent_containers/medipen(src)
-	new /obj/effect/spawner/random/trash/garbage(src)
-	new /obj/effect/spawner/random/trash/garbage(src)
-	update_icon_state()
-
 /obj/item/storage/bag/trash/bluespace
 	name = "trash bag of holding"
 	desc = "The latest and greatest in custodial convenience, a trashbag that is capable of holding vast quantities of garbage."

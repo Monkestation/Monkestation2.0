@@ -28,12 +28,12 @@
 	name = JOB_STOWAWAY
 	jobtype = /datum/job/stowaway
 	uniform = /obj/item/clothing/under/color/grey
-	belt = /obj/item/storage/bag/trash/stowaway
 	l_pocket = /obj/item/radio
+
+	backpack = /obj/item/storage/bag/trash/stowaway
+	satchel = /obj/item/storage/bag/trash/stowaway
+	duffelbag = /obj/item/storage/bag/trash/stowaway
 
 	shoes = null
 	ears = null
-
-	backpack = null
-	satchel = null
-	duffelbag = null
+	belt = null

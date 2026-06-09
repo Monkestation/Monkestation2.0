@@ -130,3 +130,17 @@
 	grind_results = list(/datum/reagent/consumable/liquidgibs = 3, /datum/reagent/lye = 3, /datum/reagent/sulfur = 3, /datum/reagent/fuel = 3, /datum/reagent/blood = 3)
 	cleanspeed = 8 SECONDS //comically slow
 	uses = 7 //rapidly disintegrates
+
+/obj/item/storage/bag/trash/stowaway
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS | ITEM_SLOT_BACK //spawning on the back for backpack spawned items
+	worn_icon = 'icons/mob/clothing/belt.dmi'
+	worn_icon_state = "trashbag"
+
+/obj/item/storage/bag/trash/stowaway/PopulateContents()
+	new /obj/item/weldingtool/mini(src)
+	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/tank/internals/emergency_oxygen(src)
+	new /obj/item/reagent_containers/medipen(src)
+	new /obj/effect/spawner/random/trash/garbage(src)
+	new /obj/effect/spawner/random/trash/garbage(src)
+	update_icon_state()
