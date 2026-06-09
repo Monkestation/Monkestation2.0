@@ -128,7 +128,7 @@
 /turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "xA" = (
-/obj/effect/forcefield/arena_shuttle,
+/obj/structure/forcefield/arena_shuttle,
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "yX" = (

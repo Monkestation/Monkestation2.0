@@ -201,7 +201,7 @@
 	. = list()
 	var/list/turfs = RANGE_TURFS(area_size, center_turf) ^ RANGE_TURFS(area_size + 1, center_turf)
 	for(var/turf/T as anything in turfs)
-		. += new /obj/effect/forcefield/asteroid_magnet(T)
+		. += new /obj/structure/forcefield/asteroid_magnet(T)
 
 /// Generates the random map for the magnet.
 /obj/machinery/asteroid_magnet/proc/GenerateMap(initial = TRUE)

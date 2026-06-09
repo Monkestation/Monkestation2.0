@@ -17,7 +17,7 @@
 
 	summon_amount = 9
 	summon_radius = 1
-	summon_type = list(/obj/effect/forcefield/cosmic_field)
+	summon_type = list(/obj/structure/forcefield/cosmic_field)
 	/// The range at which people will get marked with a star mark.
 	var/star_mark_range = 7
 	/// Effect for when the spell triggers
@@ -45,7 +45,7 @@
 		target_turfs += get_ranged_target_turf(target_turf, direction, 3)
 	return target_turfs
 
-/datum/action/cooldown/spell/conjure/cosmic_expansion/post_summon(obj/effect/forcefield/cosmic_field/summoned_object, atom/cast_on)
+/datum/action/cooldown/spell/conjure/cosmic_expansion/post_summon(obj/structure/forcefield/cosmic_field/summoned_object, atom/cast_on)
 	. = ..()
 	if(isstargazer(owner))
 		summoned_object.reflects_projectiles()

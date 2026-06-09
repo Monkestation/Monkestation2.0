@@ -176,7 +176,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
 "aR" = (
-/obj/effect/forcefield/cult,
+/obj/structure/forcefield/cult,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -188,7 +188,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
 "aV" = (
-/obj/effect/forcefield/cult,
+/obj/structure/forcefield/cult,
 /turf/open/lava/smooth{
 	desc = "Looks hot.";
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7";
@@ -1470,7 +1470,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "vX" = (
-/obj/effect/forcefield/cult,
+/obj/structure/forcefield/cult,
 /turf/open/misc/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},

@@ -66,7 +66,7 @@
 	mineralAmt = 1
 	scan_state = "rock_BScrystal"
 
-/obj/effect/forcefield/asteroid_magnet
+/obj/structure/forcefield/asteroid_magnet
 	name = "magnetic field"
 	desc = "This looks dangerous."
 	icon = 'goon/icons/obj/effects.dmi'

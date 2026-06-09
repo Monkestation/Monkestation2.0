@@ -27,7 +27,7 @@
 /datum/action/cooldown/spell/pointed/projectile/star_blast/ready_projectile(obj/projectile/to_fire, atom/target, mob/user, iteration)
 	. = ..()
 	projectile_weakref = WEAKREF(to_fire)
-	to_fire.AddElement(cosmic_trail_based_on_passive(user), /obj/effect/forcefield/cosmic_field/fast)
+	to_fire.AddElement(cosmic_trail_based_on_passive(user), /obj/structure/forcefield/cosmic_field/fast)
 
 /datum/action/cooldown/spell/pointed/projectile/star_blast/apply_button_overlay(atom/movable/screen/movable/action_button/current_button, force)
 	var/obj/projectile/magic/star_ball/active_ball = projectile_weakref?.resolve()
@@ -63,7 +63,7 @@
 	for(var/turf/spawn_turf in range(1, get_turf(owner)))
 		if(spawn_turf.density)
 			continue
-		create_cosmic_field(spawn_turf, owner, /obj/effect/forcefield/cosmic_field/star_blast)
+		create_cosmic_field(spawn_turf, owner, /obj/structure/forcefield/cosmic_field/star_blast)
 	for(var/mob/living/nearby_mob in view(2, owner))
 		if(nearby_mob == owner || nearby_mob == summoner?.resolve())
 			continue

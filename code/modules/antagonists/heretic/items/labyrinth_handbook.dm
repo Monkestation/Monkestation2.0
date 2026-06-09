@@ -1,27 +1,20 @@
-/obj/effect/forcefield/wizard/heretic
+/obj/structure/forcefield/wizard/heretic
 	name = "labyrinth pages"
-	desc = "A field of papers flying in the air, repulsing heathens with impossible force."
+	desc = "A field of papers flying in the air, stopping heathens with impossible force."
 	icon_state = "lintel"
-	initial_duration = 15 SECONDS
+	initial_duration = 15 SECONDS //was 15, charge time is still 15
+	uses_integrity = 1
+	max_integrity = 60
+	integrity_failure = 0
+	obj_flags = CAN_BE_HIT
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 
-/obj/effect/forcefield/wizard/heretic/CanAllowThrough(atom/movable/mover, border_dir)
-	if(istype(mover.throwing?.thrower, /obj/effect/forcefield/wizard/heretic))
+/obj/structure/forcefield/wizard/heretic/CanAllowThrough(atom/movable/mover, border_dir)
+	if(istype(mover.throwing?.thrower, /obj/structure/forcefield/wizard/heretic))
 		return TRUE
 	return ..()
 
-/obj/effect/forcefield/wizard/heretic/Bumped(mob/living/bumpee)
-	. = ..()
-	if(ismecha(bumpee))
-		var/obj/vehicle/sealed/mecha/mecha = bumpee
-		mecha.emp_act(EMP_LIGHT) // lol
-		return
-	if(!isliving(bumpee) || IS_HERETIC_OR_MONSTER(bumpee))
-		return
-	var/throwtarget = get_edge_target_turf(loc, get_dir(loc, get_step_away(bumpee, loc)))
-	bumpee.safe_throw_at(throwtarget, 10, 10, src, force = MOVE_FORCE_EXTREMELY_STRONG)
-	visible_message(span_danger("[src] repulses [bumpee] in a storm of paper!"))
-
-///A heretic item that spawns a barrier at the clicked turf, 3 uses
+///A heretic item that spawns a barrier at the clicked turf, 5 uses
 /obj/item/heretic_labyrinth_handbook
 	name = "labyrinth handbook"
 	desc = "A book containing the laws and regulations of the Locked Labyrinth, penned on an unknown substance. Its pages squirm and strain, looking to lash out and escape."
@@ -39,7 +32,7 @@
 	drop_sound = 'sound/items/handling/book_drop.ogg'
 	pickup_sound = 'sound/items/handling/book_pickup.ogg'
 	///what type of barrier do we spawn when used
-	var/barrier_type = /obj/effect/forcefield/wizard/heretic
+	var/barrier_type = /obj/structure/forcefield/wizard/heretic
 	/// Current charges remaining
 	var/charges = 5
 	/// Max possible amount of charges
@@ -53,7 +46,7 @@
 	. = ..()
 	if(!IS_HERETIC_OR_MONSTER(user))
 		return
-	. += span_hypnophrase("Materializes a barrier upon any tile in sight, which only you can pass through. Lasts 8 seconds.")
+	. += span_hypnophrase("Materializes a barrier upon any tile in sight, which only you can pass through. Lasts 15 seconds.")
 	. += span_notice("It has <b>[charges]</b> charge\s remaining.")
 
 /obj/item/heretic_labyrinth_handbook/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)

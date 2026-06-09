@@ -193,7 +193,7 @@
 			if(combo_counter == 3)
 				if(target.mind && target.stat != DEAD)
 					increase_combo_duration()
-					source.AddElement(cosmic_trail_based_on_passive(source), /obj/effect/forcefield/cosmic_field/fast)
+					source.AddElement(cosmic_trail_based_on_passive(source), /obj/structure/forcefield/cosmic_field/fast)
 		third_target = second_target
 	second_target = WEAKREF(target)
 
@@ -201,7 +201,7 @@
 /datum/heretic_knowledge/blade_upgrade/cosmic/proc/reset_combo(mob/living/source)
 	second_target = null
 	third_target = null
-	source.RemoveElement(cosmic_trail_based_on_passive(source), /obj/effect/forcefield/cosmic_field/fast)
+	source.RemoveElement(cosmic_trail_based_on_passive(source), /obj/structure/forcefield/cosmic_field/fast)
 	combo_duration = combo_duration_amount
 	combo_counter = 0
 	new /obj/effect/temp_visual/cosmic_cloud(get_turf(source))
