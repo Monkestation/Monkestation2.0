@@ -1,1 +1,2 @@
 /obj/item/tank/internals/oxygen/yellow : /obj/item/tank/internals/oxygen/red{@OLD}
+/obj/structure/tank_holder/oxygen/yellow : /obj/structure/tank_holder/oxygen/red{@OLD}
