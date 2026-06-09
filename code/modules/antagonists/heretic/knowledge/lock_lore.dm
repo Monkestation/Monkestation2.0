@@ -164,7 +164,7 @@
 	gain_text = "The Concierge scribbled my name into the Handbook. \"Welcome to your new home, fellow Steward.\""
 	required_atoms = list(
 		/obj/item/toy/crayon = 1,
-		/obj/item/book = 1,,
+		/obj/item/book = 1,
 		/obj/item/multitool = 1,
 	)
 	result_atoms = list(/obj/item/heretic_labyrinth_handbook)
