@@ -6,10 +6,6 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Manage Cargo Union", "View the Cargo 
 ///The time Command has to stop a demand.
 #define COMMAND_DELAY (3 MINUTES)
 
-//TODO:
-// SPRITES: UnionStand.scss background should have low alpha instead of the weird color scheme. Mail collector unique sprite.
-// Finish adding all the union demands (Access-locked Vendors)
-
 /datum/union
 	///Name of the Union.
 	var/name = "Cargo Union"
