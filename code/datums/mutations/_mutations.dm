@@ -22,7 +22,7 @@
 	var/layer_used = MUTATIONS_LAYER
 	/// To restrict mutation to only certain species
 	var/list/species_allowed
-	/// To blacklist a species from a certain species
+	/// To blacklist mutation from a certain species
 	var/list/species_blacklist
 	/// Minimum health required to acquire the mutation
 	var/health_req

@@ -312,13 +312,16 @@
 
 /datum/status_effect/fire_handler/wet_stacks/on_apply()
 	. = ..()
-	var/obj/effect/abstract/shared_particle_holder/particles = owner.add_shared_particles(applied_particles, "wet_particles")
+	var/obj/effect/abstract/shared_particle_holder/particles = owner.add_shared_particles(applied_particles, get_particle_key())
 	if(particles)
 		adjust_particles(particles)
 
 /datum/status_effect/fire_handler/wet_stacks/on_remove()
 	. = ..()
-	owner.remove_shared_particles("wet_particles")
+	owner.remove_shared_particles(get_particle_key())
+
+/datum/status_effect/fire_handler/wet_stacks/proc/get_particle_key()
+	return id
 
 /datum/status_effect/fire_handler/wet_stacks/tick(seconds_between_ticks)
 	for(var/enemy_type in enemy_types)
@@ -370,6 +373,9 @@
 
 	if(stacks <= 0)
 		qdel(src)
+
+/datum/status_effect/fire_handler/wet_stacks/oozeling/get_particle_key()
+	return "[id][owner.tag]"
 
 /datum/status_effect/fire_handler/wet_stacks/oozeling/get_examine_text()
 	if(stacks >= HYDROPHOBIA_WETNESS_STACKS)
