@@ -278,6 +278,7 @@
 /datum/status_effect/cat_water_sprayed
 	duration = 0.5 SECONDS
 	alert_type = null
+	id = "cat_water_sprayed"
 
 /datum/status_effect/cat_water_sprayed/on_apply()
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
