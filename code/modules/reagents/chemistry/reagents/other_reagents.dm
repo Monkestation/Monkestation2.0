@@ -279,19 +279,17 @@
 	duration = 0.5 SECONDS
 	alert_type = null
 
-/datum/status_effect/cat_water_sprayed/on_creation(mob/living/new_owner)
-	if(HAS_TRAIT(new_owner, TRAIT_FEARLESS))
-		return FALSE
-	return ..()
-
 /datum/status_effect/cat_water_sprayed/on_apply()
-	. = ..()
+	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
+		return FALSE
+
 	owner.set_eye_blur_if_lower(3 SECONDS)
 	owner.set_confusion_if_lower(5 SECONDS)
 
 	owner.add_mood_event("watersprayed", /datum/mood_event/watersprayed/cat)
-
 	INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), pick("hiss", "scream"))
+
+	return TRUE
 
 /datum/reagent/water/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
