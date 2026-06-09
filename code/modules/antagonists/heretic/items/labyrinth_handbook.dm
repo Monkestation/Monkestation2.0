@@ -2,17 +2,25 @@
 	name = "labyrinth pages"
 	desc = "A field of papers flying in the air, stopping heathens with impossible force."
 	icon_state = "lintel"
-	initial_duration = 15 SECONDS //was 15, charge time is still 15
+	initial_duration = 15 SECONDS
 	uses_integrity = 1
 	max_integrity = 60
 	integrity_failure = 0
 	obj_flags = CAN_BE_HIT
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	var/paper_sound = 'sound/items/handling/paper_drop.ogg'
 
 /obj/structure/forcefield/wizard/heretic/CanAllowThrough(atom/movable/mover, border_dir)
 	if(istype(mover.throwing?.thrower, /obj/structure/forcefield/wizard/heretic))
 		return TRUE
 	return ..()
+
+/obj/structure/forcefield/wizard/heretic/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	. = ..()
+	user.visible_message(span_notice("[user] rips at [src]."), \
+		span_notice("You attempt to rip apart [src] to no avail."))
+	playsound(src, paper_sound, 20, TRUE)
+	return TRUE //monkestation edit
 
 ///A heretic item that spawns a barrier at the clicked turf, 5 uses
 /obj/item/heretic_labyrinth_handbook

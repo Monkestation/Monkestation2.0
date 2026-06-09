@@ -160,11 +160,11 @@
 	desc = "Author a Labyrinth Handbook.<br>\
 		It can materialize a barricade at range that only you and people resistant to magic can pass.<br>\
 		Has 5 charges which regenerate over time."
-	transmute_text = "Transmute a crayon, a wooden plank, and a multitool."
+	transmute_text = "Transmute a crayon, a book, and a multitool."
 	gain_text = "The Concierge scribbled my name into the Handbook. \"Welcome to your new home, fellow Steward.\""
 	required_atoms = list(
 		/obj/item/toy/crayon = 1,
-		/obj/item/stack/sheet/mineral/wood = 1,
+		/obj/item/book = 1,,
 		/obj/item/multitool = 1,
 	)
 	result_atoms = list(/obj/item/heretic_labyrinth_handbook)
