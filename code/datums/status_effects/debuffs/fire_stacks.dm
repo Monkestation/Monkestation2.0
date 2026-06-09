@@ -347,9 +347,9 @@
 	applied_particles = /particles/droplets/slime
 
 /datum/status_effect/fire_handler/wet_stacks/oozeling/adjust_particles(obj/effect/abstract/shared_particle_holder/particle_holder)
-	var/color = COLOR_LIME
 	if(!particle_holder)
 		return
+	var/color = COLOR_LIME
 	if(isoozeling(owner))
 		var/mob/living/carbon/human/oozie = owner
 		var/datum/color_palette/generic_colors/colors = oozie.dna.color_palettes[/datum/color_palette/generic_colors]
