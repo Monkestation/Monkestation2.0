@@ -100,7 +100,7 @@ GLOBAL_DATUM_INIT(language_holder_adjustor, /datum/language_holder_adjustor, new
 	for(var/language in mutual_understanding)
 		for(var/source in mutual_understanding[language])
 			// if this mutual understanding comes from a language, and that language is blocked, skip it
-			if(LAZYACCESS(blocked_languages, source))
+			if(LAZYACCESS(blocked_understanding, source))
 				continue
 			if(!best_mutual_languages[language] || best_mutual_languages[language] < mutual_understanding[language][source])
 				best_mutual_languages[language] = mutual_understanding[language][source]
@@ -186,37 +186,43 @@ GLOBAL_DATUM_INIT(language_holder_adjustor, /datum/language_holder_adjustor, new
 	return TRUE
 
 /// Adds a single language or list of languages to the blocked language list.
-/datum/language_holder/proc/add_blocked_language(languages, source = LANGUAGE_MIND)
+/datum/language_holder/proc/add_blocked_language(languages, language_flags = ALL, source = LANGUAGE_MIND)
 	if(!islist(languages))
 		languages = list(languages)
 
 	for(var/language in languages)
-		LAZYORASSOCLIST(blocked_languages, language, source)
+		if(language_flags & SPOKEN_LANGUAGE)
+			LAZYORASSOCLIST(blocked_speaking, language, source)
+		if(language_flags & UNDERSTOOD_LANGUAGE)
+			LAZYORASSOCLIST(blocked_understanding, language, source)
 	calculate_best_mutual_language()
 	return TRUE
 
 /// Removes a single language or list of languages from the blocked language list.
-/datum/language_holder/proc/remove_blocked_language(languages, source = LANGUAGE_MIND)
+/datum/language_holder/proc/remove_blocked_language(languages, language_flags = ALL, source = LANGUAGE_MIND)
 	if(!islist(languages))
 		languages = list(languages)
 
 	for(var/language in languages)
 		if(source == LANGUAGE_ALL)
-			LAZYREMOVE(blocked_languages, language)
+			if(language_flags & SPOKEN_LANGUAGE)
+				LAZYREMOVE(blocked_speaking, language)
+			if(language_flags & UNDERSTOOD_LANGUAGE)
+				LAZYREMOVE(blocked_understanding, language)
 		else
-			LAZYREMOVEASSOC(blocked_languages, language, source)
+			if(language_flags & SPOKEN_LANGUAGE)
+				LAZYREMOVEASSOC(blocked_speaking, language, source)
+			if(language_flags & UNDERSTOOD_LANGUAGE)
+				LAZYREMOVEASSOC(blocked_understanding, language, source)
 	calculate_best_mutual_language()
 	return TRUE
 
 /// Checks if you have the language passed.
 /datum/language_holder/proc/has_language(language, flag_to_check = UNDERSTOOD_LANGUAGE)
-	if(language in blocked_languages)
-		return FALSE
-
 	var/list/langs_to_check = list()
-	if(flag_to_check & SPOKEN_LANGUAGE)
+	if(flag_to_check & SPOKEN_LANGUAGE && !LAZYACCESS(blocked_speaking, language))
 		langs_to_check |= spoken_languages
-	if(flag_to_check & UNDERSTOOD_LANGUAGE)
+	if(flag_to_check & UNDERSTOOD_LANGUAGE && !LAZYACCESS(blocked_understanding, language))
 		langs_to_check |= understood_languages
 
 	return language in langs_to_check
@@ -235,7 +241,7 @@ GLOBAL_DATUM_INIT(language_holder_adjustor, /datum/language_holder_adjustor, new
 	for(var/lang in spoken_languages)
 		var/datum/language/language = lang
 		var/priority = initial(language.default_priority)
-		if((!highest_priority || (priority > highest_priority)) && !(language in blocked_languages))
+		if((!highest_priority || (priority > highest_priority)) && !(language in blocked_speaking))
 			if(can_speak_language(language))
 				selected_language = language
 				highest_priority = priority
@@ -280,8 +286,10 @@ GLOBAL_DATUM_INIT(language_holder_adjustor, /datum/language_holder_adjustor, new
 			grant_language(language, UNDERSTOOD_LANGUAGE, from_holder.understood_languages[language])
 		for(var/language in from_holder.spoken_languages)
 			grant_language(language, SPOKEN_LANGUAGE, from_holder.spoken_languages[language])
-		for(var/language in from_holder.blocked_languages)
-			add_blocked_language(language, from_holder.blocked_languages[language])
+		for(var/language in from_holder.blocked_speaking)
+			add_blocked_language(language, SPOKEN_LANGUAGE, from_holder.blocked_speaking[language])
+		for(var/language in from_holder.blocked_understanding)
+			add_blocked_language(language, UNDERSTOOD_LANGUAGE, from_holder.blocked_understanding[language])
 	return TRUE
 
 /// Transfers all mind languages to the supplied language holder.
@@ -294,10 +302,14 @@ GLOBAL_DATUM_INIT(language_holder_adjustor, /datum/language_holder_adjustor, new
 		if(LANGUAGE_MIND in spoken_languages[language])
 			remove_language(language, SPOKEN_LANGUAGE, LANGUAGE_MIND)
 			to_holder.grant_language(language, SPOKEN_LANGUAGE, LANGUAGE_MIND)
-	for(var/language in blocked_languages)
-		if(LANGUAGE_MIND in blocked_languages[language])
-			remove_blocked_language(language, LANGUAGE_MIND)
-			to_holder.add_blocked_language(language, LANGUAGE_MIND)
+	for(var/language in blocked_speaking)
+		if(LANGUAGE_MIND in blocked_speaking[language])
+			remove_blocked_language(language, SPOKEN_LANGUAGE, LANGUAGE_MIND)
+			to_holder.add_blocked_language(language, SPOKEN_LANGUAGE, LANGUAGE_MIND)
+	for(var/language in blocked_understanding)
+		if(LANGUAGE_MIND in blocked_understanding[language])
+			remove_blocked_language(language, UNDERSTOOD_LANGUAGE, LANGUAGE_MIND)
+			to_holder.add_blocked_language(language, UNDERSTOOD_LANGUAGE, LANGUAGE_MIND)
 	for(var/language in mutual_understanding)
 		var/mind_understanding = mutual_understanding[language][LANGUAGE_MIND]
 		if(mind_understanding > 0)
