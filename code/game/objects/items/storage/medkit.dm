@@ -56,6 +56,7 @@
 		/obj/item/cautery,
 		/obj/item/hemostat,
 		/obj/item/blood_filter,
+		/obj/item/breathing_bag,
 		/obj/item/shears,
 		/obj/item/geiger_counter,
 		/obj/item/clothing/neck/stethoscope,
@@ -139,7 +140,7 @@
 	if(empty)
 		return
 	var/list/items_inside = list(
-		/obj/item/healthanalyzer = 1,
+		/obj/item/healthanalyzer/range = 1,
 		/obj/item/stack/medical/gauze/twelve = 1,
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,

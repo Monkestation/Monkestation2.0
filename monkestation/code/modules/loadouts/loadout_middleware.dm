@@ -11,10 +11,19 @@
 		"select_color" = PROC_REF(select_color),
 	)
 
+/datum/preference_middleware/loadout/get_ui_assets()
+	return list(
+		get_asset_datum(/datum/asset/json/loadout_items)
+	)
+
 /datum/preference_middleware/loadout/get_ui_static_data()
+	. = list(
+		"extra_tabs" = list(),
+		"available_items" = list(),
+	)
 	#ifndef UNIT_TESTS
 	if (preferences.current_window != PREFERENCE_WINDOW_CHARACTERS)
-		return list()
+		return
 	#endif
 	// [name] is the name of the tab that contains all the corresponding contents.
 	// [title] is the name at the top of the list of corresponding contents.
@@ -25,28 +34,12 @@
 	//  - [contents.is_greyscale], whether the item can be greyscaled in the UI
 	//  - [contents.tooltip_text], any additional tooltip text that hovers over the item's select button
 
-	var/list/loadout_tabs = list()
-	loadout_tabs += list(list("name" = "Belt", "title" = "Belt Slot Items", "contents" = list_to_data(GLOB.loadout_belts)))
-	loadout_tabs += list(list("name" = "Ears", "title" = "Ear Slot Items", "contents" = list_to_data(GLOB.loadout_ears)))
-	loadout_tabs += list(list("name" = "Glasses", "title" = "Glasses Slot Items", "contents" = list_to_data(GLOB.loadout_glasses)))
-	loadout_tabs += list(list("name" = "Gloves", "title" = "Glove Slot Items", "contents" = list_to_data(GLOB.loadout_gloves)))
-	loadout_tabs += list(list("name" = "Head", "title" = "Head Slot Items", "contents" = list_to_data(GLOB.loadout_helmets)))
-	loadout_tabs += list(list("name" = "Mask", "title" = "Mask Slot Items", "contents" = list_to_data(GLOB.loadout_masks)))
-	loadout_tabs += list(list("name" = "Neck", "title" = "Neck Slot Items", "contents" = list_to_data(GLOB.loadout_necks)))
-	loadout_tabs += list(list("name" = "Shoes", "title" = "Shoe Slot Items", "contents" = list_to_data(GLOB.loadout_shoes)))
-	loadout_tabs += list(list("name" = "Suit", "title" = "Suit Slot Items", "contents" = list_to_data(GLOB.loadout_exosuits)))
-	loadout_tabs += list(list("name" = "Jumpsuit", "title" = "Uniform Slot Items", "contents" = list_to_data(GLOB.loadout_jumpsuits)))
-	loadout_tabs += list(list("name" = "Formal", "title" = "Uniform Slot Items (cont)", "contents" = list_to_data(GLOB.loadout_undersuits)))
-	loadout_tabs += list(list("name" = "Misc. Under", "title" = "Uniform Slot Items (cont)", "contents" = list_to_data(GLOB.loadout_miscunders)))
-	loadout_tabs += list(list("name" = "Accessory", "title" = "Uniform Accessory Slot Items", "contents" = list_to_data(GLOB.loadout_accessory)))
-	loadout_tabs += list(list("name" = "Inhand", "title" = "In-hand Items", "contents" = list_to_data(GLOB.loadout_inhand_items)))
-	loadout_tabs += list(list("name" = "Toys", "title" = "Toys! ([MAX_ALLOWED_MISC_ITEMS] max)", "contents" = list_to_data(GLOB.loadout_toys)))
-	loadout_tabs += list(list("name" = "Plushies", "title" = "Adorable little plushies! ([MAX_ALLOWED_PLUSHIES] max)", "contents" = list_to_data(GLOB.loadout_plushies)))
-	loadout_tabs += list(list("name" = "Other", "title" = "Backpack Items ([MAX_ALLOWED_MISC_ITEMS] max)", "contents" = list_to_data(GLOB.loadout_pocket_items)))
-	loadout_tabs += list(list("name" = "Effects", "title" = "Unique Effects", "contents" = list_to_data(GLOB.loadout_effects)))
-	loadout_tabs += list(list("name" = "Unusuals", "title" = "Unusual Hats", "contents" = convert_stored_unusuals_to_data()))
+	.["extra_tabs"] += list(list("name" = "Unusuals", "title" = "Unusual Hats", "contents" = convert_stored_unusuals_to_data()))
 
-	return list("loadout_tabs" = loadout_tabs)
+	for(var/item_path, item in GLOB.all_loadout_datums)
+		var/datum/loadout_item/loadout_item = item
+		if(is_item_allowed(loadout_item))
+			.["available_items"] += "[item_path]"
 
 /datum/preference_middleware/loadout/get_ui_data(mob/user)
 	. = ..()
@@ -68,6 +61,25 @@
 	data["total_coins"] = preferences.metacoins
 
 	return data
+
+/datum/preference_middleware/loadout/proc/is_item_allowed(datum/loadout_item/item)
+	var/client/parent_client = preferences?.parent
+	if(!parent_client)
+		return FALSE
+	if(!is_admin(parent_client))
+		if(!isnull(item.ckeywhitelist) && !(preferences.parent_ckey in item.ckeywhitelist))
+			return FALSE
+		if(item.admin_only)
+			return FALSE
+		if(item.mentor_only && !is_mentor(parent_client))
+			return FALSE
+		if(item.donator_only && !parent_client.persistent_client.patreon?.is_donator() && !parent_client.persistent_client.twitch?.is_donator())
+			return FALSE
+	if(item.required_season && !check_holidays(item.required_season))
+		return FALSE
+	if(item.requires_purchase && !(item.item_path in preferences.inventory))
+		return FALSE
+	return TRUE
 
 /datum/preference_middleware/loadout/proc/return_item(list/params)
 	var/datum/loadout_item/interacted_item
@@ -144,63 +156,6 @@
 	var/datum/tgui/ui = SStgui.get_open_ui(user, preferences)
 	ui.send_update()
 	preferences.character_preview_view?.update_body()
-
-/datum/preference_middleware/proc/list_to_data(list_of_datums)
-	if(!LAZYLEN(list_of_datums) || QDELETED(preferences)|| QDELETED(preferences.parent))
-		return
-
-	var/list/formatted_list = new(length(list_of_datums))
-
-	var/array_index = 1
-	for(var/datum/loadout_item/item as anything in list_of_datums)
-		if(QDELETED(preferences) || QDELETED(preferences.parent))
-			return
-
-		#ifndef UNIT_TESTS
-		if(!isnull(item.ckeywhitelist)) //These checks are also performed in the backend.
-			if(!(preferences.parent_ckey in item.ckeywhitelist) && !is_admin(preferences.parent))
-				formatted_list.len--
-				continue
-
-		if(item.donator_only) //These checks are also performed in the backend.
-			if((!preferences.parent.persistent_client.patreon?.is_donator() && !preferences.parent.persistent_client.twitch?.is_donator()) && !is_admin(preferences.parent))
-				formatted_list.len--
-				continue
-
-		if(item.mentor_only) //These checks are also performed in the backend.
-			if(!is_mentor(preferences.parent) && !is_admin(preferences.parent))
-				formatted_list.len--
-				continue
-
-		if(item.admin_only) //These checks are also performed in the backend.
-			if(!is_admin(preferences.parent))
-				formatted_list.len--
-				continue
-
-		if(item.required_season && !check_holidays(item.required_season))
-			formatted_list.len--
-			continue
-
-		if(item.requires_purchase && !(item.item_path in preferences.inventory))
-			formatted_list.len--
-			continue
-		#endif
-		var/atom/loadout_atom = item.item_path
-
-		var/list/formatted_item = list()
-		formatted_item["name"] = item.name
-		formatted_item["path"] = item.item_path
-		formatted_item["is_greyscale"] = !!(initial(loadout_atom.greyscale_config) && initial(loadout_atom.greyscale_colors) && (initial(loadout_atom.flags_1) & IS_PLAYER_COLORABLE_1))
-		formatted_item["is_renamable"] = item.can_be_named
-		formatted_item["is_job_restricted"] = !isnull(item.restricted_roles)
-		formatted_item["is_donator_only"] = !isnull(item.donator_only)
-		formatted_item["is_ckey_whitelisted"] = !isnull(item.ckeywhitelist)
-		if(LAZYLEN(item.additional_tooltip_contents))
-			formatted_item["tooltip_text"] = item.additional_tooltip_contents.Join("\n")
-
-		formatted_list[array_index++] = formatted_item
-
-	return formatted_list
 
 /datum/preference_middleware/proc/convert_stored_unusuals_to_data()
 	var/list/data = preferences.extra_stat_inventory["unusual"]

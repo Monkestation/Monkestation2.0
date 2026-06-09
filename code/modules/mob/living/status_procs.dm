@@ -816,4 +816,4 @@
 
 /// Helper to check if we seem to be alive or not
 /mob/living/proc/appears_alive()
-	return health >= 0 && !HAS_TRAIT(src, TRAIT_FAKEDEATH)
+	return stat != DEAD && !HAS_TRAIT(src, TRAIT_FAKEDEATH)

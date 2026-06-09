@@ -682,6 +682,10 @@
 	icon_state = "hair_shavedpart"
 
 /datum/sprite_accessory/hair/shortbangs
+	name = "Short Bangs 2"
+	icon_state = "hair_shortbangs2"
+
+/datum/sprite_accessory/hair/shortbangs2
 	name = "Short Bangs"
 	icon_state = "hair_shortbangs"
 
@@ -836,6 +840,14 @@
 /datum/sprite_accessory/hair/ziegler
 	name = "Ziegler"
 	icon_state = "hair_ziegler"
+
+/datum/sprite_accessory/hair/slick
+	name = "Slick"
+	icon_state = "hair_slick"
+
+/datum/sprite_accessory/hair/macho
+	name = "Macho"
+	icon_state = "hair_macho"
 
 /*
 /////////////////////////////////////

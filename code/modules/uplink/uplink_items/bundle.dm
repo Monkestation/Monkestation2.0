@@ -14,6 +14,7 @@
 	item = ABSTRACT_UPLINK_ITEM
 	cost = 0
 	cost_override_string = "Varies"
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/bundles_tc/random/purchase(mob/user, datum/uplink_handler/handler, atom/movable/source)
 	var/list/possible_items = list()
@@ -58,7 +59,7 @@
 	item = /obj/item/storage/box/syndicate/bundle_a
 	cost = 25
 	stock_key = UPLINK_SHARED_STOCK_KITS
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
 
 /datum/uplink_item/bundles_tc/bundle_b
 	name = "Syndi-kit Special"
@@ -70,7 +71,7 @@
 	item = /obj/item/storage/box/syndicate/bundle_b
 	cost = 25
 	stock_key = UPLINK_SHARED_STOCK_KITS
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
 
 /datum/uplink_item/bundles_tc/surplus
 	name = "Syndicate Surplus Crate"
@@ -79,10 +80,10 @@
 			Contents are sorted to always be worth 100 TC. The Syndicate will only provide one surplus item per agent."
 	item = /obj/structure/closet/crate // will be replaced in purchase()
 	cost = 25
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	/// Value of items inside the crate in TC
-	var/crate_tc_value = 50
+	var/crate_tc_value = 75
 	/// crate that will be used for the surplus crate
 	var/crate_type = /obj/structure/closet/crate
 
@@ -153,7 +154,7 @@
 	item = /obj/structure/closet/crate/syndicrate
 	progression_minimum = 30 MINUTES
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
-	crate_tc_value = 150 // teamwork makes the dream work?
+	crate_tc_value = 200 // teamwork makes the dream work?
 	crate_type = /obj/structure/closet/crate/syndicrate
 
 /// edited version of fill crate for super surplus to ensure it can only be unlocked with the syndicrate key
@@ -176,7 +177,7 @@
 	cost = 25
 	item = /obj/item/syndicrate_key
 	progression_minimum = 30 MINUTES
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 
 /datum/uplink_item/bundles_tc/contract_kit

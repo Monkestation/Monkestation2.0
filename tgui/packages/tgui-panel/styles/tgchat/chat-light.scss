@@ -269,6 +269,16 @@ a:visited {
   background: yellow;
 }
 
+.Chat__highlight {
+  color: oklch(from var(--highlight-color) min(l, 0.45) c h);
+  background: oklch(from var(--highlight-color) min(l, 0.45) c h / 25%);
+}
+
+.ChatMessage--highlighted {
+  border-left-color: oklch(from var(--highlight-color) min(l, 0.45) c h);
+  background: oklch(from var(--highlight-color) min(l, 0.45) c h / 14%);
+}
+
 h1,
 h2,
 h3,
@@ -1078,6 +1088,46 @@ h2.alert {
   height: auto;
   margin-right: 12px;
   margin-top: 6px;
+}
+
+.img_by_text_container .img_text {
+  flex-grow: 1;
+}
+
+// Provides a horizontal bar with text in the middle
+// I got this off stackoverflow
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #111a27;
+}
+
+.separator:not(:empty)::before {
+  margin-right: 0.25em;
+}
+
+.separator:not(:empty)::after {
+  margin-left: 0.25em;
+}
+
+// Used to display images besides text
+.img_by_text_container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.img_by_text_container img {
+  width: 2.5em; // a css guru can probably dehardcode this later
+  height: auto;
+  margin-right: 12px;
 }
 
 .img_by_text_container .img_text {

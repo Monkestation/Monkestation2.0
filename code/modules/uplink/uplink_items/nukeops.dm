@@ -718,10 +718,10 @@
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 	restricted = TRUE
 
-/datum/uplink_item/device_tools/syndie_jaws_of_life
-	name = "Syndicate Jaws of Life"
-	desc = "Based on a Nanotrasen model, this powerful tool can be used as both a crowbar and a pair of wirecutters. \
-	In its crowbar configuration, it can be used to force open airlocks. Very useful for entering the station or its departments."
+/datum/uplink_item/device_tools/compact_jaws_of_death
+	name = "Compact Jaws of Death"
+	desc = "A compacted version of the jaws of death, this powerful tool serves as both a crowbar and a pair of wirecutters. \
+	In its crowbar configuration, it can force open airlocks. Very useful for entering the station or its departments."
 	item = /obj/item/crowbar/power/syndicate
 	cost = 4
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS

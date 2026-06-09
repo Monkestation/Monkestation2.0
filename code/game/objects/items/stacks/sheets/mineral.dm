@@ -104,6 +104,9 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	. = ..()
 	. += span_notice("You can build a sandbag by right clicking on an empty floor.")
 
+/obj/item/stack/sheet/mineral/sandbags/five
+	amount = 5
+
 /obj/item/emptysandbag
 	name = "empty sandbag"
 	desc = "A bag to be filled with sand."

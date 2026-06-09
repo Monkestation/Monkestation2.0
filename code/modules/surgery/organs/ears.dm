@@ -28,6 +28,18 @@
 	// Multiplier for both long term and short term ear damage
 	var/damage_multiplier = 1
 
+/obj/item/organ/internal/ears/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+	. = ..()
+	if(.)
+		REMOVE_TRAIT(receiver, TRAIT_DEAF, NO_EARS)
+
+/obj/item/organ/internal/ears/Remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	// Do not apply with special flag, even if it would ultimately be redundant by new ears being hot-swapped in.
+	// This is so we don't trip signal_addtrait when hot-swapping ears, which could cause inappropriate behavior like nuking sound effects.
+	if(!special)
+		ADD_TRAIT(organ_owner, TRAIT_DEAF, NO_EARS)
+
 /obj/item/organ/internal/ears/get_status_appendix(advanced, add_tooltips)
 	if(owner.stat == DEAD || !HAS_TRAIT(owner, TRAIT_DEAF))
 		return

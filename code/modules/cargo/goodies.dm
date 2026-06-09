@@ -373,7 +373,14 @@
 	name = "Shrimp Plushie"
 	desc = "It really is just that shrimple."
 	cost = PAYCHECK_CREW * 4
-	contains = list(/obj/item/toy/plush/shrimp)
+	contains = list(/obj/item/toy/plush/shrimp
+
+/datum/supply_pack/goody/modmegaphone
+	name = "MOD Megaphone Module"
+	desc = "Contains one MOD mounted megaphone to force underlings to pay attention."
+	cost = PAYCHECK_COMMAND * 2.5
+	access_view = ACCESS_COMMAND
+	contains = list(/obj/item/mod/module/megaphone)
 
 /datum/supply_pack/goody/spacerbook
 	name = "Union-Approved Spacer Manual"
