@@ -118,3 +118,14 @@
   cam_dev:
   - rscadd: triple-citrus now heals toxins at the same rate as lime juice with a 50%
       higher chance to proc
+2026-06-08:
+  Holoo-1, SirNightKnight:
+  - bugfix: fixed camera static not being removed for console users when it was observed
+      by AI and console user
+  Mantlecrawler:
+  - rscadd: Fleshmass plants, to botany. Mutated from poppies that have atleast 20
+      lifespan and 60 endurance, with a yield between 80-120
+  SirNightKnight:
+  - bugfix: gave all security related plasmaman proper security gloves.
+  - bugfix: plasmamen blueshields start with tackling gloves.
+  - bugfix: added back the science cyborg upgrade tech node which was accidently removed.

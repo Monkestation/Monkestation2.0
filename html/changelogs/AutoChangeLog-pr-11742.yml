@@ -1,0 +1,7 @@
+author: "Banement"
+delete-after: True
+changes:
+  - rscadd: "Adds the shrimp space ruin, where you can find the ONLY golden shrimp that fries UNLIMITED rice."
+  - rscadd: "Adds shrimp statues. And shrimp billboards."
+  - balance: "Added the golden shrimp plushie to the breeding blacklist. THERE CAN ONLY BE ONE!"
+  - sound: "Added shrimp restaurant ambient."
