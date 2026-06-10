@@ -3,9 +3,9 @@
 
 /datum/action/changeling/augmented_eyesight
 	name = "Augmented Eyesight"
-	desc = "Creates more light sensing rods in our eyes, allowing our vision to penetrate most blocking objects. \
+	desc = "Creates more light sensing rods in our eyes, allowing our vision to penetrate most blocking objects and see in the dark. \
 		Protects our vision from flashes while inactive."
-	helptext = "Grants us x-ray vision or flash protection. \
+	helptext = "Grants us x-ray and night vision or flash protection. \
 		We will become a lot more vulnerable to flash-based devices while x-ray vision is active."
 	button_icon_state = "augmented_eyesight"
 	chemical_cost = 0
@@ -46,7 +46,7 @@
 		ADD_TRAIT(user, TRAIT_XRAY_VISION, REF(src))
 		ling_eyes.lighting_cutoff = LIGHTING_CUTOFF_MEDIUM // Adds barely usable, kinda shit night vision
 		ling_eyes.flash_protect = FLASH_PROTECTION_SENSITIVE
-		to_chat(user, span_changeling("We adjust our eyes to sense prey through walls."))
+		to_chat(user, span_changeling("We adjust our eyes to sense prey through walls and absorb more light."))
 
 	user.update_sight()
 	return TRUE
