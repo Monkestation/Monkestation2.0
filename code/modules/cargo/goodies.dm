@@ -373,7 +373,7 @@
 	name = "Shrimp Plushie"
 	desc = "It really is just that shrimple."
 	cost = PAYCHECK_CREW * 4
-	contains = list(/obj/item/toy/plush/shrimp
+	contains = list(/obj/item/toy/plush/shrimp)
 
 /datum/supply_pack/goody/modmegaphone
 	name = "MOD Megaphone Module"
