@@ -184,22 +184,22 @@
 
 /datum/looping_sound/rbmk_reactor_low
 	mid_sounds = list('sound/rbmk/reactor_hum_low.ogg')
-	mid_length = 15 SECONDS
+	mid_length = 4 SECONDS
 	volume = 0
-	extra_range = 6
-	falloff_distance = 2
-	falloff_exponent = 6
+	extra_range = 8
+	falloff_distance = 4
+	falloff_exponent = 2
 	ignore_walls = FALSE
 	pressure_affected = FALSE
 	vary = FALSE
 
 /datum/looping_sound/rbmk_reactor_high
 	mid_sounds = list('sound/rbmk/reactor_hum_high.ogg')
-	mid_length = 10 SECONDS
+	mid_length = 4 SECONDS
 	volume = 0
-	extra_range = 8
-	falloff_distance = 2
-	falloff_exponent = 7
+	extra_range = 11
+	falloff_distance = 4
+	falloff_exponent = 2.5
 	ignore_walls = FALSE
 	pressure_affected = FALSE
 	vary = FALSE
@@ -208,8 +208,23 @@
 	start_sound = 'sound/rbmk/turbine_start.ogg'
 	start_length = 16 SECONDS
 	mid_sounds = list('sound/rbmk/turbine_mid.ogg')
-	mid_length = 18 SECONDS
+	mid_length = 4 SECONDS
 	end_sound = 'sound/rbmk/turbine_end.ogg'
 	volume = 24
 	extra_range = 8
+	falloff_distance = 4
+	falloff_exponent = 2
+	ignore_walls = FALSE
+	pressure_affected = FALSE
 	vary = FALSE
+  
+/datum/looping_sound/charger
+	start_sound = 'sound/machines/charger/charger_start.ogg'
+	start_length = 20
+	start_volume = 30
+	mid_sounds = list('sound/machines/charger/charger_mid.ogg')
+	mid_length = 30
+	volume = 15
+	falloff_distance = 3
+	falloff_exponent = 5
+	extra_range = 4

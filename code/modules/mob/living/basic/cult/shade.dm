@@ -69,3 +69,6 @@
 		stone.capture_shade(src, user)
 	else
 		. = ..()
+
+/mob/living/basic/shade/holy
+	theme = THEME_HOLY

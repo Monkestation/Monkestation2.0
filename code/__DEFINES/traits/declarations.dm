@@ -153,6 +153,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Prefer to use [/mob/living/proc/check_stun_immunity] over checking for this trait exactly.
 #define TRAIT_STUNIMMUNE "stun_immunity"
 #define TRAIT_BATON_RESISTANCE "baton_resistance"
+#define TRAIT_TASER_RESISTANCE "taser_resistance"
 /// Anti Dual-baton cooldown bypass exploit.
 #define TRAIT_IWASBATONED "iwasbatoned"
 #define TRAIT_SLEEPIMMUNE "sleep_immunity"
@@ -406,6 +407,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Given to mobs which have been implanted with a sponsorship implant
 #define TRAIT_SPONSOR_IMPLANT "sponsor_implant"
+
+/// Given by the bloodsilver status effect - so we can check the trait instead of status effects.
+#define TRAIT_BLOODSILVER_CURSE "bloodsilver_curse"
 
 /// Lets us scan reagents
 #define TRAIT_REAGENT_SCANNER "reagent_scanner"

@@ -792,6 +792,10 @@
 		if(ACCESS_COMMAND in access)
 			var/datum/bank_account/linked_dept = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			. += "The [linked_dept.account_holder] linked to the ID reports a balance of [linked_dept.account_balance] cr."
+		if(registered_account.mining_points)
+			. += span_notice("The account linked to the ID has [registered_account.mining_points] mining points available.")
+		if(registered_account.bitrunning_points)
+			. += span_notice("The account linked to the ID has [registered_account.bitrunning_points] bitrunning points available.")
 
 	if(HAS_TRAIT(user, TRAIT_ID_APPRAISER))
 		. += HAS_TRAIT(src, TRAIT_JOB_FIRST_ID_CARD) ? span_boldnotice("Hmm... yes, this ID was issued from Central Command!") : span_boldnotice("This ID was created in this sector, not by Central Command.")

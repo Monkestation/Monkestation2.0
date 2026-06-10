@@ -10,12 +10,12 @@
 	rod_type = "thorium"
 	rod_color = "lightblue"
 
-	fuel_amount = 1200
+	fuel_amount = 1150
 	fuel_consumption = 1
 
-	reactivity = 8
-	flux_multiplier = 0.8
-	radiation_multiplier = 1.4
-	thermal_multiplier = 0.8
+	reactivity = 9
+	flux_multiplier = 1.1
+	radiation_multiplier = 1.2
+	thermal_multiplier = 1
 
 

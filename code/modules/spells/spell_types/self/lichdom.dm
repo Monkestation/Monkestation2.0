@@ -14,6 +14,8 @@
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_STATION|SPELL_REQUIRES_MIND
 	spell_max_level = 1
+	// used by lesser lichdom for chaplain sect
+	var/lesser = FALSE
 
 /datum/action/cooldown/spell/lichdom/can_cast_spell(feedback = TRUE)
 	. = ..()

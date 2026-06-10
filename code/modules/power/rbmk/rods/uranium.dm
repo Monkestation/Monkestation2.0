@@ -10,11 +10,11 @@
 	rod_type = "uranium"
 	rod_color = "green"
 
-	fuel_amount = 1000
+	fuel_amount = 900
 	fuel_consumption = 1
 
-	reactivity = 12
-	flux_multiplier = 1.0
+	reactivity = 14
+	flux_multiplier = 1.5
 	radiation_multiplier = 2.5
-	thermal_multiplier = 1.2
+	thermal_multiplier = 1.3
 

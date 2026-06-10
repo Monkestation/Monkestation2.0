@@ -160,6 +160,80 @@
 	)
 
 
+/obj/machinery/rbmk/reactor/proc/try_spawn_flux_anomaly()
+	if(meltdown_in_progress || !running || !has_active_fuel_rods())
+		return
+
+	if(flux < RBMK_FLUX_ANOMALY_THRESHOLD)
+		return
+
+	var/flux_anomaly_ratio = CLAMP01((flux - RBMK_FLUX_ANOMALY_THRESHOLD) / max(RBMK_MAX_FLUX - RBMK_FLUX_ANOMALY_THRESHOLD, 1))
+	var/current_cooldown = RBMK_FLUX_ANOMALY_COOLDOWN_LOW
+
+	if(flux_anomaly_ratio >= 0.75)
+		current_cooldown = RBMK_FLUX_ANOMALY_COOLDOWN_EXTREME
+	else if(flux_anomaly_ratio >= 0.35)
+		current_cooldown = RBMK_FLUX_ANOMALY_COOLDOWN_HIGH
+
+	if(last_flux_anomaly_spawn + current_cooldown > world.time)
+		return
+
+	var/spawn_chance = round(8 + (flux_anomaly_ratio * 27))
+	var/anomaly_range = round(4 + (flux_anomaly_ratio * 7))
+
+	if(!prob(spawn_chance))
+		return
+
+	var/turf/reactor_turf = get_turf(src)
+	if(!reactor_turf)
+		return
+
+	var/list/valid_turfs = list()
+
+	for(var/turf/open/open_turf in orange(anomaly_range, reactor_turf))
+		if(open_turf.density)
+			continue
+
+		valid_turfs += open_turf
+
+	if(!length(valid_turfs))
+		return
+
+	var/turf/spawn_turf = pick(valid_turfs)
+
+	last_flux_anomaly_spawn = world.time
+	flux_anomaly_cooldown = current_cooldown
+
+	new /obj/effect/anomaly/flux(spawn_turf, rand(25 SECONDS, 35 SECONDS), FALSE, FLUX_NO_EMP)
+
+	visible_message(span_warning("A harmonic flux distortion forms near [src]!"))
+
+
+/obj/machinery/rbmk/reactor/proc/start_meltdown_fallout()
+	if(rbmk_fallout_active)
+		return
+
+	rbmk_fallout_active = TRUE
+	rbmk_fallout_radius = 0
+	rbmk_fallout_next_spread = world.time
+
+	GLOB.rbmk_fallout_reactors |= src
+
+	if(!(locate(/datum/weather/rbmk_fallout) in SSweather.processing))
+		SSweather.run_weather(/datum/weather/rbmk_fallout)
+
+
+/obj/machinery/rbmk/reactor/proc/process_meltdown_fallout()
+	if(!rbmk_fallout_active)
+		return
+
+	if(world.time < rbmk_fallout_next_spread)
+		return
+
+	rbmk_fallout_radius = min(rbmk_fallout_radius + RBMK_FALLOUT_RADIUS_STEP, RBMK_FALLOUT_MAX_RADIUS)
+	rbmk_fallout_next_spread = world.time + RBMK_FALLOUT_SPREAD_INTERVAL
+
+
 /obj/machinery/rbmk/reactor/proc/check_hard_meltdown_conditions()
 	if(meltdown_in_progress)
 		return
@@ -170,6 +244,7 @@
 
 /obj/machinery/rbmk/reactor/process()
 	if(meltdown_in_progress || reactor_integrity <= 0)
+		process_meltdown_fallout()
 		reset_reaction_state()
 		rod_motion_in_progress = FALSE
 		update_reactor_icon()
@@ -268,6 +343,8 @@
 	var/extra_void_coefficient = update_void_coefficient()
 	flux = clamp(flux * (1 + extra_void_coefficient), 0, RBMK_MAX_FLUX)
 
+	try_spawn_flux_anomaly()
+
 	radiation = clamp(
 		total_radiation + (flux * RBMK_RADIATION_FLUX_MULT) + (temperature * RBMK_RADIATION_TEMP_MULT),
 		0,
@@ -276,13 +353,14 @@
 
 	emit_real_radiation()
 
+	rbmk_coolant_exchange()
+
 	if(coolant_internal)
 		var/tritium_delta = flux * (RBMK_TRITIUM_RATE * 400)
 		if(tritium_delta > 0)
 			coolant_internal.assert_gases(/datum/gas/tritium)
 			coolant_internal.gases[/datum/gas/tritium][MOLES] += tritium_delta
 
-	rbmk_coolant_exchange()
 	rbmk_update_pressure()
 	rbmk_sample_coolant()
 	rbmk_sample_reactor_temperature()

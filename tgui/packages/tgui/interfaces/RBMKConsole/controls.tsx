@@ -113,7 +113,7 @@ export const RBMKControls = () => {
             icon="radiation"
             color="bad"
             bold
-            content="AZ-5 SCRAM"
+            content="☢AZ-5☢"
             tooltip="Emergency full rod insertion."
             style={{
               fontSize: '1.2em',

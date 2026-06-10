@@ -78,6 +78,13 @@
 	var/decay_check_interval = 2 SECONDS
 	var/last_decay_check = 0
 
+	var/last_flux_anomaly_spawn = 0
+	var/flux_anomaly_cooldown = RBMK_FLUX_ANOMALY_COOLDOWN_LOW
+
+	var/rbmk_fallout_active = FALSE
+	var/rbmk_fallout_radius = 0
+	var/rbmk_fallout_next_spread = 0
+
 	var/supermatter_cascade_active = FALSE
 	var/obj/item/rbmk/fuel_rod/supermatter/supermatter_rod = null
 
@@ -169,6 +176,11 @@
 	meltdown_in_progress = FALSE
 	last_decay_check = 0
 
+	rbmk_fallout_active = FALSE
+	rbmk_fallout_radius = 0
+	rbmk_fallout_next_spread = 0
+	GLOB.rbmk_fallout_reactors -= src
+
 	supermatter_cascade_active = FALSE
 	supermatter_rod = null
 
@@ -207,6 +219,7 @@
 	supermatter_rod = null
 	supermatter_cascade_active = FALSE
 	active_welder_repairers = null
+	GLOB.rbmk_fallout_reactors -= src
 
 	if(low_soundloop)
 		low_soundloop.stop()
@@ -432,19 +445,24 @@
 
 
 /obj/machinery/rbmk/reactor/proc/apply_rod_tool_knockback(mob/living/user, cascade_extraction = FALSE)
-	if(!user)
+	if(!user || QDELETED(user))
 		return
 
 	if(!cascade_extraction && temperature <= RBMK_ROD_TOOL_HOT_KNOCKBACK_TEMP)
 		return
 
 	var/knockback_range = cascade_extraction ? RBMK_ROD_TOOL_CASCADE_KNOCKBACK_RANGE : RBMK_ROD_TOOL_HOT_KNOCKBACK_RANGE
-	var/turf/throw_target = get_edge_target_turf(user, get_dir(src, user))
+	var/throw_speed = cascade_extraction ? 5 : 3
+	var/turf/target_turf = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
 
-	visible_message(span_danger("[src] violently vents superheated gas as the rod is extracted!"))
-	playsound(src, 'sound/effects/explosionfar.ogg', 70, TRUE)
+	visible_message(span_danger("[src] violently vents superheated pressure as the rod is extracted!"))
+	playsound(src, 'sound/effects/explosion1.ogg', 70, TRUE)
 
-	user.throw_at(throw_target, knockback_range, 2, src)
+	shake_camera(user, 0.2 SECONDS, 5)
+	user.Disorient(cascade_extraction ? 8 SECONDS : 3 SECONDS)
+	user.stamina.adjust(cascade_extraction ? -25 : -10)
+
+	user.throw_at(target_turf, knockback_range, throw_speed, src)
 
 
 /obj/machinery/rbmk/reactor/proc/finish_remove_rod(obj/item/rbmk/fuel_rod/fuel_rod, mob/user = null)

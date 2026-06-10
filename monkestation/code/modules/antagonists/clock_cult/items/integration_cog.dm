@@ -1,5 +1,3 @@
-#define HALLUCINATION_COG_CHANCE 20
-
 /obj/item/clockwork/integration_cog
 	name = "integration cog"
 	desc = "A small cog that seems to spin by its own acord when left alone."
@@ -49,23 +47,3 @@
 		for(var/obj/item/clockwork/clockwork_slab/slab as anything in GLOB.clockwork_slabs)
 			slab.cogs++
 		GLOB.current_eminence?.cogs++
-
-
-/obj/machinery/power/apc
-	/// If this APC has given a reward for being coggered before
-	var/clock_cog_rewarded = FALSE
-	/// Reference to the cog inside
-	var/integration_cog = null
-
-/obj/machinery/power/apc/Destroy()
-	QDEL_NULL(integration_cog)
-	return ..()
-
-/obj/machinery/power/apc/examine_more(mob/user)
-	. = ..()
-	if(isliving(user))
-		var/mob/living/living_user = user
-		if(panel_open && (integration_cog || (living_user.has_status_effect(/datum/status_effect/hallucination) && prob(HALLUCINATION_COG_CHANCE))))
-			. += span_brass("A small cogwheel is inside of it.")
-
-#undef HALLUCINATION_COG_CHANCE

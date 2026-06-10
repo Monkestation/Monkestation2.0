@@ -61,8 +61,8 @@
 
 		low_soundloop.volume = step_volume_toward(low_soundloop.volume, low_target_volume, 1)
 		low_soundloop.extra_range = low_target_range
-		low_soundloop.falloff_distance = 2
-		low_soundloop.falloff_exponent = 6
+		low_soundloop.falloff_distance = 4
+		low_soundloop.falloff_exponent = 2
 	else if(low_soundloop)
 		low_soundloop.stop()
 		QDEL_NULL(low_soundloop)
@@ -74,8 +74,8 @@
 
 		high_soundloop.volume = step_volume_toward(high_soundloop.volume, high_target_volume, 1)
 		high_soundloop.extra_range = high_target_range
-		high_soundloop.falloff_distance = 2
-		high_soundloop.falloff_exponent = 7
+		high_soundloop.falloff_distance = 4
+		high_soundloop.falloff_exponent = 2.5
 	else if(high_soundloop)
 		high_soundloop.stop()
 		QDEL_NULL(high_soundloop)
