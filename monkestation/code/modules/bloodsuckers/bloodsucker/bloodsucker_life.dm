@@ -21,7 +21,7 @@
 	// Standard Updates
 
 	SEND_SIGNAL(src, COMSIG_BLOODSUCKER_ON_LIFETICK)
-	INVOKE_ASYNC(src, PROC_REF(update_hud), seconds_per_tick)
+	INVOKE_ASYNC(src, PROC_REF(update_hud))
 
 /datum/antagonist/bloodsucker/proc/handle_blood()
 	SIGNAL_HANDLER
