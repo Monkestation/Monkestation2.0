@@ -2,8 +2,8 @@
 #define PRINTOUT_MISSING "Missing"
 #define PRINTOUT_RAPSHEET "Rapsheet"
 #define PRINTOUT_WANTED "Wanted"
-/// Editing this will cause UI issues.
-#define MAX_CRIME_NAME_LEN 24
+/// Editing this will cause UI issues unless you also edit the CrimeWatcher.tsx UI.
+#define MAX_CRIME_NAME_LEN 39
 
 /obj/machinery/computer/records/security
 	name = "security records console"
@@ -509,4 +509,3 @@
 #undef PRINTOUT_MISSING
 #undef PRINTOUT_RAPSHEET
 #undef PRINTOUT_WANTED
-#undef MAX_CRIME_NAME_LEN
