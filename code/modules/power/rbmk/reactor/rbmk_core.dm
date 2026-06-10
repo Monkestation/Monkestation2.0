@@ -7,6 +7,7 @@
 	anchored = TRUE
 	density = FALSE
 	mouse_opacity = MOUSE_OPACITY_ICON
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 	bound_width = 96
 	bound_height = 96
@@ -153,13 +154,11 @@
 
 	return FALSE
 
-
 /obj/machinery/rbmk/reactor/ex_act(severity, target)
-	if(meltdown_in_progress)
-		return FALSE
+	return FALSE
 
-	return ..()
-
+/obj/machinery/rbmk/reactor/deconstruct(disassembled = TRUE)
+	return
 
 /obj/machinery/rbmk/reactor/Initialize(mapload)
 	. = ..()
