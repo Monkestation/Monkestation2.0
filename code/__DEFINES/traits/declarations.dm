@@ -1484,5 +1484,5 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// For if a body has been dissected, to prevent repeats.
 #define TRAIT_BORER_DISSECTION "borer_dissection"
 
- // Iris/Oculis port: Extra language point.
+/// Iris/Oculis port: Extra language point.
 #define TRAIT_LINGUIST "Linguist"
