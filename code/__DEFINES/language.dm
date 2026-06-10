@@ -52,3 +52,4 @@
 // Iris/Oculis port: they use both sets (language_understood and understood_language and the two spoken defines) for whatever reason. I ain't asking questions. I'm just hobbling stuff together like a good monke contributor.
 #define LANGUAGE_UNDERSTOOD	1
 #define LANGUAGE_SPOKEN	2
+#define MAX_LANGUAGES_NORMAL 4

@@ -1,5 +1,3 @@
-#define MAX_LANGUAGES_NORMAL 4
-
 /datum/asset/spritesheet/languages
 	name = "languages"
 	early = TRUE
