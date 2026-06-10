@@ -76,6 +76,7 @@
 	/datum/reagent/consumable/soysauce,\
 	/datum/reagent/consumable/ketchup,\
 	/datum/reagent/consumable/mayonnaise,\
+	/datum/reagent/consumable/bbqsauce,\
 )
 
 #define HACKED_SERVICE_REAGENTS list(\
