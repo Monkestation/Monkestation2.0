@@ -431,22 +431,6 @@
 	desc = "A white and green beret denoting one's allegiance to Interdyne Pharmaceutics."
 	greyscale_colors = "#FFFFFF#198019"
 
-/obj/item/clothing/head/hats/syndicate/interdyne_deckofficer_black
-	name = "black deck officer's cap"
-	desc = "A black officer's cap that demands discipline from the one who wears it."
-	icon_state = "ip_officercap_black"
-	armor_type = /datum/armor/sec_navywarden
-	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/head.dmi'
-
-/obj/item/clothing/head/hats/syndicate/interdyne_deckofficer_white
-	name = "white deck officer's cap"
-	desc = "A white officer's cap that demands discipline from the one who wears it."
-	icon_state = "ip_officercap_white"
-	armor_type = /datum/armor/sec_navywarden
-	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/head.dmi'
-
 /obj/item/clothing/head/bio_hood/interdyne
 	name = "interdyne biosuit helmet"
 	desc = "An Interdyne Pharmaceutics biosuit helmet designed to keep the wearer safe from biohazardous materials."
