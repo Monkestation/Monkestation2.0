@@ -1,5 +1,5 @@
 /obj/machinery/bomb_actualizer
-	name = "Bomb Actualizer"
+	name = "bomb actualizer"
 	desc = "An advanced machine capable of releasing the normally bluespace-inhibited destructive potential of a bomb assembly... or so the sticker says"
 	circuit = /obj/item/circuitboard/machine/bomb_actualizer
 	icon = 'icons/obj/machines/research.dmi'

@@ -147,7 +147,8 @@
 		bloodsuckerdatum_power.give_masquerade_infraction()
 
 	if(!HAS_MIND_TRAIT(feed_target, TRAIT_BLOODSUCKER_ALIGNED) && !IS_MONSTERHUNTER(feed_target))
-		to_chat(feed_target, span_reallybig(span_hypnophrase("Huh? What just happened? You don't remember the last few moments")))
+		to_chat(feed_target, span_reallybig(span_hypnophrase("Huh? What just happened? You don't remember the last few moments...")))
+		to_chat(feed_target, span_notice("(You do not remember that you have been fed on, the identity of the person who just fed on you, or the fact that they are a vampire. If you already knew this person was a vampire from before your current encounter with them, however, you retain memory of that.)"))
 	feed_target.Immobilize(2 SECONDS)
 	feed_target.remove_status_effect(/datum/status_effect/feed_regen)
 	owner.add_traits(list(TRAIT_MUTE, TRAIT_IMMOBILIZED), FEED_TRAIT)
