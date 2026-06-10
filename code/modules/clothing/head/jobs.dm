@@ -491,11 +491,8 @@
 
 /obj/item/clothing/head/beret/science/robo
 	name = "robotics beret"
-	icon_state = "beret_badge"
 	desc = "A sleek black beret designed with high-durability nano-mesh fiber - or so the roboticists claim."
-	greyscale_config = /datum/greyscale_config/beret_badge
-	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#3E3E48#88242D"
+	greyscale_colors = "#3E3E48"
 
 /obj/item/clothing/head/beret/science/rd
 	desc = "A purple badge with the insignia of the Research Director attached. For the paper-shuffler in you!"
@@ -524,18 +521,12 @@
 /obj/item/clothing/head/beret/medical/virologist
 	name = "virologist beret"
 	desc = "Sneezing in this expensive beret would be a waste of a good beret."
-	icon_state = "beret_badge"
-	greyscale_config = /datum/greyscale_config/beret_badge
-	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#FFFFFF#198019"
+	greyscale_colors = "#198019"
 
 /obj/item/clothing/head/beret/medical/chemist
 	name = "chemist beret"
 	desc = "Not acid-proof!"
-	icon_state = "beret_badge"
-	greyscale_config = /datum/greyscale_config/beret_badge
-	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#FFFFFF#D15B1B"
+	greyscale_colors = "#D15B1B"
 
 /obj/item/clothing/head/beret/medical/deforest
 	name = "Deforest Beret"
@@ -590,10 +581,7 @@
 /obj/item/clothing/head/beret/atmos
 	name = "atmospheric beret"
 	desc = "While \"pipes\" and \"style\" might not rhyme, this beret sure makes you feel like they should!"
-	icon_state = "beret_badge"
-	greyscale_config = /datum/greyscale_config/beret_badge
-	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#59D7FF#ffe12f"
+	greyscale_colors = "#59D7FF"
 	flags_1 = NONE
 
 //Cargo
