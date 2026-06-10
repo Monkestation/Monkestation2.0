@@ -48,7 +48,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/list/fail_reasons
 
 	/// Do not instantiate if type matches this
-	var/abstract_type = /datum/unit_test
+	abstract_type = /datum/unit_test
 
 	var/static/datum/space_level/reservation
 

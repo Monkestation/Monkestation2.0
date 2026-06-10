@@ -1,3 +1,40 @@
+/*!Language holders will either exist in an atom/movable. Creation of language holders happens
+automatically when they are needed, for example when something tries to speak.
+Where a mind is available, the mind language holder will be the one "in charge". The mind holder
+will update its languages based on the atom holder, and will get updated as part of
+transformations and other events that cause new languages to become available.
+
+Every language holder has three lists of languages (and sources for each of them):
+- understood_languages
+- spoken_languages
+- blocked_languages
+
+Understood languages let you understand them, spoken languages lets you speak them
+(if your tongue is compatible), and blocked languages will let you do neither no matter
+what the source of the language is.
+
+Language holders are designed to mostly only ever require the use the helpers in atom/movable
+to achieve your goals, but it is also possible to work on them directly if needed. Any adding
+and removing of languages and sources should only happen through the procs, as directly changing
+these will mess something up somewhere down the line.
+
+All atom movables have the initial_language_holder var which allows you to set the default language
+holder to create. For example, /datum/language_holder/alien will give you xenocommon and a block for
+galactic common. Human species also have a default language holder var that will be updated on
+species change, initial_species_holder.
+
+Key procs
+* [grant_language](atom/movable.html#proc/grant_language)
+* [remove_language](atom/movable.html#proc/remove_language)
+* [add_blocked_language](atom/movable.html#proc/add_blocked_language)
+* [remove_blocked_language](atom/movable.html#proc/remove_blocked_language)
+* [grant_all_languages](atom/movable.html#proc/grant_all_languages)
+* [remove_all_languages](atom/movable.html#proc/remove_all_languages)
+* [has_language](atom/movable.html#proc/has_language)
+* [can_speak_language](atom/movable.html#proc/can_speak_language)
+* [get_selected_language](atom/movable.html#proc/get_selected_language)
+*/
+
 /datum/language_holder
 	/// Lazyassoclist of all understood languages
 	var/list/understood_languages
@@ -76,6 +113,29 @@ GLOBAL_DATUM_INIT(language_holder_adjustor, /datum/language_holder_adjustor, new
 /datum/language_holder/proc/adjust_languages_to_prefs(datum/preferences/preferences, mob/living/carbon/human/new_crewmember)
 	// no prefs? then don't remove any languages
 	if(!preferences)
+		return
+
+	// remove the innate languages (like common, and other species languages) and instead use the language prefs
+	// do not remove any languages granted by spawners, which are denoted by source = LANGUAGE_SPAWNER
+	remove_languages_by_source(list(LANGUAGE_MIND, LANGUAGE_ATOM, LANGUAGE_SPECIES, LANGUAGE_TONGUE))
+	selected_language = null // reset it to recalculate after applying our prefs
+
+	for(var/lang_path in preferences.languages)
+		grant_language(lang_path, (preferences.languages[lang_path] == LANGUAGE_SPOKEN ? ALL : UNDERSTOOD_LANGUAGE))
+
+	get_selected_language()
+
+/// Removes every language whose source(s) match the provided source list arg
+/datum/language_holder/proc/remove_languages_by_source(list/sources)
+	if(!length(sources))
+		return
+	for(var/language in understood_languages)
+		for(var/source in sources)
+			remove_language(language, ALL, source)
+	// in most cases spoken_languages should be empty by now, but just in case we should remove what's left
+	for(var/language in spoken_languages)
+		for(var/source in sources)
+			remove_language(language, ALL, source)
 
 /// Helper to get all the partial understanding from the passed language
 /// Does effectively nothing if given a language already understood
@@ -650,16 +710,9 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 	. = ..()
 	if(.)
 		return
-
-	// remove the innate languages (like common, and other species languages) and instead use the language prefs
-	// do not remove any languages granted by spawners, which are denoted by source = LANGUAGE_SPAWNER
-	remove_languages_by_source(list(LANGUAGE_MIND, LANGUAGE_ATOM, LANGUAGE_SPECIES, LANGUAGE_TONGUE))
-	selected_language = null // reset it to recalculate after applying our prefs
-
-	for(var/lang_path in preferences.languages)
-		grant_language(lang_path, (preferences.languages[lang_path] == LANGUAGE_SPOKEN ? ALL : UNDERSTOOD_LANGUAGE))
-
-	get_selected_language()
+	var/mob/living/basic/cortical_borer/cortical_owner = owner
+	if(istype(cortical_owner))
+		return cortical_owner.human_host?.get_language_holder()?.has_language(language, flag_to_check)
 
 /datum/language_holder/apid
 	understood_languages = list(
@@ -713,11 +766,6 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 	for(var/language in spoken_languages)
 		for(var/source in sources)
 			remove_language(language, ALL, source)
-
-//************************************************
-//*        Specific language holders              *
-//*      Use atom language sources only.           *
-//************************************************/
 
 /// Modularized the Cyborg and AI language_holder, add here the languages that you want them to be able to speak and understand.
 /datum/language_holder/synthetic/
