@@ -19,6 +19,9 @@
 	meltdown_in_progress = TRUE
 	meltdown_announced = TRUE
 
+	// Start permanent creeping fallout before the explosion happens.
+	start_meltdown_fallout()
+
 	scrammed = TRUE
 	control_rod_depth = RBMK_CONTROL_ROD_MAX
 	reset_reaction_state()
@@ -138,8 +141,12 @@
 
 
 /obj/machinery/rbmk/reactor/proc/meltdown_explosions()
+	var/turf/epicenter = get_turf(src)
+	if(!epicenter)
+		return
+
 	explosion(
-		src,
+		epicenter,
 		RBMK_MELTDOWN_DEV_RANGE,
 		RBMK_MELTDOWN_HEAVY_RANGE,
 		RBMK_MELTDOWN_LIGHT_RANGE,
@@ -147,7 +154,7 @@
 		TRUE
 	)
 
-	new /obj/effect/hotspot(loc)
+	new /obj/effect/hotspot(epicenter)
 	temperature = max(temperature, RBMK_TEMP_DAMAGE_RAMP * 2)
 
 
