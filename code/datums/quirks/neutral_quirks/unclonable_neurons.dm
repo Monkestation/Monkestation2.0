@@ -6,4 +6,11 @@
 	gain_text = span_notice("Your brain feels fuzzy.")
 	lose_text = span_notice("Your brain feels less fuzzy.")
 	medical_record_text = "Subject's brain neurons are too short to be scanned by a cloner."
-	mob_trait = TRAIT_NO_CLONE
+
+/datum/quirk/uncloneable/post_add()
+	if(quirk_holder.mind)
+		ADD_TRAIT(quirk_holder.mind, TRAIT_NO_CLONE, QUIRK_TRAIT)
+
+/datum/quirk/uncloneable/remove()
+	if(quirk_holder.mind)
+		REMOVE_TRAIT(quirk_holder.mind, TRAIT_NO_CLONE, QUIRK_TRAIT)
