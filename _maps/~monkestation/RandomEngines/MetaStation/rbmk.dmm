@@ -152,6 +152,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"kP" = (
+/obj/structure/window_sill,
+/obj/structure/grille/window_sill,
+/obj/structure/window/reinforced/plasma/plastitanium,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/turf/open/floor/engine,
+/area)
 "lX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green,
 /obj/structure/window_sill,
@@ -226,7 +233,7 @@
 /obj/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
+/area)
 "qx" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -732,17 +739,22 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "Sh" = (
-/obj/structure/window_sill,
-/obj/structure/grille/window_sill,
-/obj/structure/window/reinforced/plasma/plastitanium,
-/obj/machinery/atmospherics/components/unary/portables_connector{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/turf/open/floor/engine,
+/obj/item/rbmk/fuel_rod/uranium,
+/obj/item/rbmk/fuel_rod/uranium,
+/obj/item/rbmk/fuel_rod/uranium,
+/obj/item/rbmk/fuel_rod/uranium,
+/obj/item/rbmk/fuel_rod/uranium,
+/obj/item/rbmk/fuel_rod/uranium,
+/obj/item/rbmk/fuel_rod/uranium,
+/obj/item/rbmk/fuel_rod/uranium,
+/obj/item/rbmk/fuel_rod/uranium,
+/obj/item/rbmk/fuel_rod/uranium,
+/obj/item/rbmk/fuel_rod/uranium,
+/obj/item/rbmk/fuel_rod/uranium,
+/turf/open/floor/engine/insulation,
 /area/station/engineering/supermatter/room)
 "Sw" = (
 /obj/effect/turf_decal/stripes/line{
@@ -755,6 +767,9 @@
 /obj/machinery/camera/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
+"Ti" = (
+/turf/template_noop,
+/area)
 "Ui" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
@@ -1051,7 +1066,7 @@ zC
 NA
 dc
 gO
-uU
+Sh
 yn
 yn
 yn
@@ -1324,8 +1339,8 @@ eg
 eg
 eg
 hT
-Sh
 hT
+kP
 qs
 qs
 MT
@@ -1483,7 +1498,7 @@ xA
 xA
 xA
 xA
-xA
+Ti
 xA
 xA
 xA
