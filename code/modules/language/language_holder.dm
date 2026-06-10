@@ -755,18 +755,6 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 	. = ..()
 	grant_all_languages()
 
-/// Removes every language whose source(s) match the provided source list arg
-/datum/language_holder/proc/remove_languages_by_source(list/sources)
-	if(!length(sources))
-		return
-	for(var/language in understood_languages)
-		for(var/source in sources)
-			remove_language(language, ALL, source)
-	// in most cases spoken_languages should be empty by now, but just in case we should remove what's left
-	for(var/language in spoken_languages)
-		for(var/source in sources)
-			remove_language(language, ALL, source)
-
 /// Modularized the Cyborg and AI language_holder, add here the languages that you want them to be able to speak and understand.
 /datum/language_holder/synthetic/
 	understood_languages = list()
