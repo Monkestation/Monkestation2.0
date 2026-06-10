@@ -45,7 +45,7 @@
 		var/datum/reagent/temp = GLOB.chemical_reagents_list[reagent]
 		if(temp)
 			var/chemname = temp.name
-			chemicals.Add(list(list("title" = chemname, "id" = ckey(temp.name))))
+			chemicals.Add(list(list("title" = chemname, "id" = temp.name)))
 	data["chemicals"] = chemicals
 
 	return data
@@ -69,7 +69,7 @@
 				return
 			var/reagent_name = params["reagent"]
 			var/reagent = GLOB.name2reagent[reagent_name]
-			if(!(reagent in cortical_owner.known_chemicals))
+			if(!(cortical_owner.known_chemicals.Find(reagent)))
 				return
 
 			cortical_owner.reagent_holder.reagents.add_reagent(reagent, cortical_owner.injection_rate_current, added_purity = 1)

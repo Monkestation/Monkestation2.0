@@ -1,6 +1,0 @@
-author: "SirNightKnight"
-delete-after: True
-changes:
-  - balance: "if an explosion originates from someone whose jaunting it forces them out of the jaunt and creates a tear in the fabric of reality ontop of them."
-  - balance: "made chem explosions originate from their reagent holder instead of always the turf the reagent holder atom is on."
-  - spellcheck: "corrected the capitalization on the naming of the bomb actualizer"

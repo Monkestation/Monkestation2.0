@@ -1,0 +1,7 @@
+author: "Siro"
+delete-after: True
+changes:
+  - rscadd: "New tap_shoe sfx. Similar to heels or tap dancer shoes."
+  - sound: "tap_shoes added to subtypes shoes/heels, shoes/laceup, shoes/fancy_heels, and shoes/high_heels"
+  - qol: "Noisemaker default is disabled so you must actively enable them if you want to hear them."
+  - qol: "do_after timer to enable/disable reduced to 1 Second from 1.5 Seconds"
