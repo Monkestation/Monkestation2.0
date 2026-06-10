@@ -788,6 +788,15 @@
 	model_flags = BORG_MODEL_CARGO
 	items_to_add = list(/obj/item/borg/hydraulic_clamp/better)
 
+/obj/item/borg/upgrade/condiment_synthesizer
+	name = "service cyborg condiment synthesiser"
+	desc = "An upgrade for service model cyborgs that allows them to produce solid condiments."
+	icon_state = "module_service"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
+	items_to_add = list(/obj/item/reagent_containers/borghypo/condiment_synthesizer)
+
 /// This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
 // A reusable tool that can bring borgs back to life. They gotta be repaired first, though.
 /obj/item/borg_restart_board
@@ -834,8 +843,34 @@
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_ENGINEERING
-	items_to_add = list(/obj/item/borg/sight/meson/nightvision)
-	items_to_remove = list(/obj/item/borg/sight/meson)
+
+/obj/item/borg/upgrade/nvmeson/action(mob/living/silicon/robot/borg, user = usr)
+	. = ..()
+	if(!.)
+		return .
+	var/datum/action/cooldown/borg_sight_vision/sight_vision_action = borg.model.sight_vision_ref?.resolve()
+	if(isnull(sight_vision_action))
+		return FALSE
+	if(sight_vision_action.given_sight_mode == BORGNVMESON)
+		to_chat(user, span_warning("This cyborg already has night vision!"))
+		return FALSE
+
+	sight_vision_action.name = "Toggle Night Vision Meson Vision"
+	sight_vision_action.button_icon_state = "nvgmeson"
+	sight_vision_action.change_sight_mode(BORGNVMESON)
+	sight_vision_action.build_all_button_icons()
+
+/obj/item/borg/upgrade/nvmeson/deactivate(mob/living/silicon/robot/borg, user = usr)
+	. = ..()
+	if(!.)
+		return .
+	var/datum/action/cooldown/borg_sight_vision/sight_vision_action = borg.model.sight_vision_ref?.resolve()
+	if(isnull(sight_vision_action))
+		return FALSE
+	sight_vision_action.name = initial(sight_vision_action.name)
+	sight_vision_action.button_icon_state = initial(sight_vision_action.button_icon_state)
+	sight_vision_action.change_sight_mode(initial(sight_vision_action.given_sight_mode))
+	sight_vision_action.build_all_button_icons()
 
 /obj/item/borg/upgrade/adv_healthanalyzer
 	name = "health analyzer upgrade"

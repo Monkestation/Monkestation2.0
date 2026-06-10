@@ -502,3 +502,36 @@
 
 /obj/item/cyborg_iv_drip/examine(mob/user)		// examine
 	return internal_iv_drip.examine(user)
+  
+///// 	Artifact sticker /////
+/obj/item/borg/artifact_sticker_holder
+	name = "analysis form holder"
+	desc = "An built-in holder that automatically generates artifact analysis forms to write on and label artifacts with!"
+	icon = 'icons/obj/service/bureaucracy.dmi'
+	icon_state = "analysisbin1"
+	base_icon_state = "analysisbin"
+	/// The sticker that we are holding.
+	var/obj/item/sticker/analysis_form/sticker_to_apply
+
+/obj/item/borg/artifact_sticker_holder/Initialize(mapload)
+	. = ..()
+	sticker_to_apply = new(src)
+
+/obj/item/borg/artifact_sticker_holder/Destroy(force)
+	QDEL_NULL(sticker_to_apply)
+	return ..()
+
+/obj/item/borg/artifact_sticker_holder/attackby(obj/item/item, mob/user, params)
+	sticker_to_apply.attackby(item, user, params)
+
+/obj/item/borg/artifact_sticker_holder/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ITEM_INTERACT_BLOCKING
+	var/datum/component/artifact/artifact_component = interacting_with.GetComponent(/datum/component/artifact)
+	if(!artifact_component)
+		user.balloon_alert(user, "not an artifact!")
+		return
+	var/item_interact_result = sticker_to_apply.interact_with_atom(interacting_with, user, modifiers)
+	if(item_interact_result & ITEM_INTERACT_SUCCESS)
+		// Need to create a new sticker since the last one was used up.
+		sticker_to_apply = new(src)
+		return ITEM_INTERACT_SUCCESS
