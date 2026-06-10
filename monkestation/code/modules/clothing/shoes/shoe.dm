@@ -87,6 +87,10 @@
 	greyscale_config_worn = /datum/greyscale_config/heels_worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
+/obj/item/clothing/shoes/heels/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/shoesteps/tap_shoes)
+
 /obj/item/clothing/shoes/heels/syndicate
 	name = "heels"
 	desc = "A both professional and stylish pair of footwear that are shockingly comfortable to walk in. They have have been sharpened to allow them to be used as a rudimentary weapon."
