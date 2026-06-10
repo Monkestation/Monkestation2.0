@@ -516,7 +516,10 @@
 /obj/item/clothing/head/beret/medical/cmo
 	name = "chief medical officer beret"
 	desc = "A beret in a distinct surgical turquoise!"
-	greyscale_colors = "#5EB8B8"
+	icon_state = "beret_badge"
+	greyscale_config = /datum/greyscale_config/beret_badge
+	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
+	greyscale_colors = "#5EB8B8#c9cbcb"
 
 /obj/item/clothing/head/beret/medical/virologist
 	name = "virologist beret"
