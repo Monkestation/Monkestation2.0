@@ -86,6 +86,21 @@
 			adjust_stacks(override_effect.stacks)
 			qdel(override_effect)
 
+/datum/status_effect/fire_handler/proc/check_enemy_stacks()
+	for(var/enemy_type in enemy_types)
+		var/datum/status_effect/fire_handler/enemy_effect = owner.has_status_effect(enemy_type)
+		if(!enemy_effect)
+			continue
+		var/cur_stacks = stacks
+		adjust_stacks(-abs(enemy_effect.stacks * enemy_effect.stack_modifier / stack_modifier))
+		enemy_effect.adjust_stacks(-abs(cur_stacks * stack_modifier / enemy_effect.stack_modifier))
+		if(enemy_effect.stacks <= 0)
+			qdel(enemy_effect)
+
+	if(stacks <= 0)
+		qdel(src)
+		return
+
 /**
  * Setter and adjuster procs for firestacks
  *
@@ -156,19 +171,7 @@
 		qdel(src)
 		return TRUE
 
-	for(var/enemy_type in enemy_types)
-		var/datum/status_effect/fire_handler/enemy_effect = owner.has_status_effect(enemy_type)
-		if(!enemy_effect)
-			continue
-		var/cur_stacks = stacks
-		adjust_stacks(-abs(enemy_effect.stacks * enemy_effect.stack_modifier / stack_modifier))
-		enemy_effect.adjust_stacks(-abs(cur_stacks * stack_modifier / enemy_effect.stack_modifier))
-		if(enemy_effect.stacks <= 0)
-			qdel(enemy_effect)
-
-	if(stacks <= 0)
-		qdel(src)
-		return TRUE
+	check_enemy_stacks()
 
 	if(!on_fire)
 		return TRUE
@@ -324,17 +327,10 @@
 	return id
 
 /datum/status_effect/fire_handler/wet_stacks/tick(seconds_between_ticks)
-	for(var/enemy_type in enemy_types)
-		var/datum/status_effect/fire_handler/enemy_effect = owner.has_status_effect(enemy_type)
-		if(!enemy_effect)
-			continue
-		var/cur_stacks = stacks
-		adjust_stacks(-abs(enemy_effect.stacks * enemy_effect.stack_modifier / stack_modifier))
-		enemy_effect.adjust_stacks(-abs(cur_stacks * stack_modifier / enemy_effect.stack_modifier))
-		if(enemy_effect.stacks <= 0)
-			qdel(enemy_effect)
+	check_enemy_stacks()
 
 	adjust_stacks(-0.5 * seconds_between_ticks)
+
 	if(stacks <= 0)
 		qdel(src)
 
@@ -358,15 +354,7 @@
 	particle_holder.color = color
 
 /datum/status_effect/fire_handler/wet_stacks/oozeling/tick(seconds_between_ticks)
-	for(var/enemy_type in enemy_types)
-		var/datum/status_effect/fire_handler/enemy_effect = owner.has_status_effect(enemy_type)
-		if(!enemy_effect)
-			continue
-		var/cur_stacks = stacks
-		adjust_stacks(-abs(enemy_effect.stacks * enemy_effect.stack_modifier / stack_modifier))
-		enemy_effect.adjust_stacks(-abs(cur_stacks * stack_modifier / enemy_effect.stack_modifier))
-		if(enemy_effect.stacks <= 0)
-			qdel(enemy_effect)
+	check_enemy_stacks()
 
 	if(owner.stat == DEAD || !isoozeling(owner))
 		adjust_stacks(-0.5 * seconds_between_ticks)
