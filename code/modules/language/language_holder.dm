@@ -406,6 +406,13 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 	blocked_speaking = list(/datum/language/common = list(LANGUAGE_ATOM))
 	blocked_understanding = list(/datum/language/common = list(LANGUAGE_ATOM))
 
+/datum/language_holder/photogeist
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/sylvan = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(/datum/language/sylvan = list(LANGUAGE_ATOM))
+
 /datum/language_holder/lizard
 	understood_languages = list(
 		/datum/language/common = list(LANGUAGE_ATOM),
