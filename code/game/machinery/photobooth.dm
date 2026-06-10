@@ -190,7 +190,7 @@
 			dna_string = human_occupant.dna.unique_enzymes,
 			fingerprint = md5(human_occupant.dna.unique_identity),
 			gender = person_gender,
-			name = human_occupant.get_face_name(),
+			name = human_occupant.get_visible_name(FALSE),
 			rank = human_occupant.get_assignment("Unassigned", "Unassigned", FALSE),
 			species = human_occupant.dna.species.name,
 			trim = human_occupant.get_assignment("Unassigned", "Unassigned", FALSE),
