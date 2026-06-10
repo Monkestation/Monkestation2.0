@@ -429,6 +429,9 @@
 /obj/item/clothing/head/beret/medical/nova/interdyne
 	name = "interdyne beret"
 	desc = "A white and green beret denoting one's allegiance to Interdyne Pharmaceutics."
+	icon_state = "beret_badge"
+	greyscale_config = /datum/greyscale_config/beret_badge
+	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#FFFFFF#198019"
 
 /obj/item/clothing/head/bio_hood/interdyne
