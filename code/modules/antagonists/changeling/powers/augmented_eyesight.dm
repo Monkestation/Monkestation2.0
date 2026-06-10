@@ -44,7 +44,7 @@
 	else
 		active = TRUE
 		ADD_TRAIT(user, TRAIT_XRAY_VISION, REF(src))
-		ling_eyes.lighting_cutoff = LIGHTING_CUTOFF_MEDIUM // Adds barely usable, kinda shit night vision
+		ling_eyes.lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 		ling_eyes.flash_protect = FLASH_PROTECTION_SENSITIVE
 		to_chat(user, span_changeling("We adjust our eyes to sense prey through walls and absorb more light."))
 
