@@ -176,12 +176,6 @@
 			print_record(user, target, params)
 			return TRUE
 
-		if("set_note")
-			var/note = strip_html_full(params["note"], MAX_MESSAGE_LEN)
-			investigate_log("[key_name(user)] has changed the security note of record: \"[target]\" from \"[target.security_note]\" to \"[note]\".", INVESTIGATE_RECORDS)
-			target.security_note = note
-			return TRUE
-
 		if("set_wanted")
 			var/wanted_status = params["status"]
 			if(!wanted_status || !(wanted_status in WANTED_STATUSES()))
