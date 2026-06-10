@@ -1019,17 +1019,19 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/////////////////////////////////////////
-//////////////Borg Upgrades//////////////
-/////////////////////////////////////////
+//
+// Cyborg Upgrades
+//
 
 /datum/design/borg_upgrade_rename
 	name = "Rename Board"
 	id = "borg_upgrade_rename"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/rename
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5)
-	construction_time = 120
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5
+	)
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
@@ -1039,8 +1041,11 @@
 	id = "borg_upgrade_restart"
 	build_type = MECHFAB
 	build_path = /obj/item/borg_restart_board
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*10, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5)
-	construction_time = 120
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5
+	)
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
@@ -1050,8 +1055,13 @@
 	id = "borg_upgrade_thrusters"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/thrusters
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*5, /datum/material/glass =SHEET_MATERIAL_AMOUNT*3, /datum/material/plasma =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/uranium =SHEET_MATERIAL_AMOUNT*3)
-	construction_time = 120
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 3
+	)
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
@@ -1061,8 +1071,13 @@
 	id = "borg_upgrade_disablercooler"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/disablercooler
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*10, /datum/material/glass =SHEET_MATERIAL_AMOUNT*3, /datum/material/gold =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)
-	construction_time = 120
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT
+	)
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SECURITY
 	)
@@ -1072,8 +1087,12 @@
 	id = "borg_upgrade_diamonddrill"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/ddrill
-	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5, /datum/material/glass =SHEET_MATERIAL_AMOUNT*3, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)
-	construction_time = 80
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT
+	)
+	construction_time = 8 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
 	)
@@ -1083,8 +1102,12 @@
 	id = "borg_upgrade_holding"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/soh
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*5, /datum/material/gold =SHEET_MATERIAL_AMOUNT, /datum/material/uranium =HALF_SHEET_MATERIAL_AMOUNT)
-	construction_time = 40
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 0.5
+	)
+	construction_time = 4 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
 	)
@@ -1094,8 +1117,12 @@
 	id = "borg_upgrade_lavaproof"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/lavaproof
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*5, /datum/material/plasma =SHEET_MATERIAL_AMOUNT*2, /datum/material/titanium =SHEET_MATERIAL_AMOUNT * 2.5)
-	construction_time = 120
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.5
+	)
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
 	)
@@ -1105,8 +1132,12 @@
 	id = "borg_syndicate_module"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/syndicate
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*7.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT*7.5, /datum/material/diamond =SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 120
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 5
+	)
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
@@ -1116,8 +1147,12 @@
 	id = "borg_transform_clown"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/transform/clown
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*7.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT*7.5, /datum/material/bananium =HALF_SHEET_MATERIAL_AMOUNT)
-	construction_time = 120
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/bananium = SHEET_MATERIAL_AMOUNT * 0.5
+	)
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
@@ -1180,8 +1215,8 @@
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5,
-		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
-		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.5,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.5
 	)
 	construction_time = 12 SECONDS
 	category = list(
@@ -1193,8 +1228,11 @@
 	id = "borg_upgrade_selfrepair"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/selfrepair
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*7.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT*7.5)
-	construction_time = 80
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5
+	)
+	construction_time = 8 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
@@ -1204,8 +1242,13 @@
 	id = "borg_upgrade_expandedsynthesiser"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/hypospray/expanded
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*7.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT*7.5, /datum/material/plasma =SHEET_MATERIAL_AMOUNT*4, /datum/material/uranium =SHEET_MATERIAL_AMOUNT*4)
-	construction_time = 80
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 4
+	)
+	construction_time = 8 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
@@ -1215,10 +1258,16 @@
 	id = "borg_upgrade_piercinghypospray"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/piercing_hypospray
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*7.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT*7.5, /datum/material/titanium =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/diamond =SHEET_MATERIAL_AMOUNT * 1.5)
-	construction_time = 80
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 1.5
+	)
+	construction_time = 8 SECONDS
 	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL,
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_PEACEKEEPER
 	)
 
 /datum/design/borg_upgrade_defibrillator
@@ -1226,8 +1275,13 @@
 	id = "borg_upgrade_defibrillator"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/defib
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*4, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver =SHEET_MATERIAL_AMOUNT*2, /datum/material/gold =SHEET_MATERIAL_AMOUNT * 1.5)
-	construction_time = 80
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 1.5
+	)
+	construction_time = 8 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
@@ -1237,8 +1291,12 @@
 	id = "borg_upgrade_surgical_database"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/surgical_database
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT*2, /datum/material/silver =SHEET_MATERIAL_AMOUNT*2)
-	construction_time = 40
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2
+	)
+	construction_time = 4 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
@@ -1248,8 +1306,11 @@
 	id = "borg_upgrade_trashofholding"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/tboh
-	materials = list(/datum/material/gold =SHEET_MATERIAL_AMOUNT, /datum/material/uranium =HALF_SHEET_MATERIAL_AMOUNT)
-	construction_time = 40
+	materials = list(
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 0.5
+	)
+	construction_time = 4 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
 	)
@@ -1259,8 +1320,11 @@
 	id = "borg_upgrade_advancedmop"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/amop
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT, /datum/material/glass =SHEET_MATERIAL_AMOUNT)
-	construction_time = 40
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT
+	)
+	construction_time = 4 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
 	)
@@ -1270,8 +1334,11 @@
 	id = "borg_upgrade_prt"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/prt
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.125, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*0.75) //same price as a cautery
-	construction_time = 40
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75
+	) // Same price as a cautery.
+	construction_time = 4 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
 	)
@@ -1281,8 +1348,11 @@
 	id = "borg_upgrade_expand"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/expand
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*100, /datum/material/titanium =SHEET_MATERIAL_AMOUNT * 2.5)
-	construction_time = 120
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 100,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.5
+	)
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
@@ -1292,7 +1362,11 @@
 	id = "borg_ai_control"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/ai
-	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*1.2, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold =SMALL_MATERIAL_AMOUNT * 2)
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.2
+	)
 	construction_time = 50
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
@@ -1307,7 +1381,7 @@
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5,
-		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 2.5
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.25
 	)
 	construction_time = 12 SECONDS
 	category = list(
@@ -1320,8 +1394,11 @@
 	id = "borg_upgrade_extra_sheet_manipulator"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/extra_sheet_manipulator
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT, /datum/material/titanium =SMALL_MATERIAL_AMOUNT*5)
-	construction_time = 120
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.5
+	)
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
 	)
@@ -1331,8 +1408,27 @@
 	id = "borg_upgrade_charger"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/charger
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT, /datum/material/plasma =SMALL_MATERIAL_AMOUNT*5)
-	construction_time = 120
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.5
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
+	)
+
+/datum/design/borg_upgrade_ranged_analyzer
+	name = "Ranged Analyzer"
+	id = "borg_upgrade_ranged_analyzer"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/ranged_analyzer
+	materials = list( // Same cost as a ranged analyzer.
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.1,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.02,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.3,
+		/datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 0.2
+	)
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
 	)
@@ -1342,8 +1438,11 @@
 	id = "borg_upgrade_beakerapp"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/beaker_app
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT*1.125) //Need glass for the new beaker too
-	construction_time = 120
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25
+	) // Includes cost of printing a large beaker.
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
@@ -1353,8 +1452,11 @@
 	id = "borg_upgrade_pinpointer"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/pinpointer
-	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
-	construction_time = 120
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.5
+	)
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
@@ -1365,12 +1467,12 @@
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/adv_healthanalyzer
 	materials = list(
-		/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT*1.25,
-		/datum/material/silver =SHEET_MATERIAL_AMOUNT,
-		/datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.75
 	)
-	construction_time = 120
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
@@ -1380,16 +1482,81 @@
 	id = "borg_upgrade_nvmeson"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/nvmeson
-	materials = list( // Same as regular NVG mesons
-		/datum/material/iron = SMALL_MATERIAL_AMOUNT*6,
-		/datum/material/glass = SMALL_MATERIAL_AMOUNT*6,
-		/datum/material/plasma = SMALL_MATERIAL_AMOUNT*3.5,
-		/datum/material/uranium =HALF_SHEET_MATERIAL_AMOUNT,
+	materials = list( // Same cost as regular NVG mesons.
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 1.75,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 0.5,
 	)
-	construction_time = 120
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING,
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING,
+	)
+
+/datum/design/borg_upgrade_surgicalomnitool
+	name = "Advanced Surgical Omnitool Upgrade"
+	id = "borg_upgrade_surgicalomnitool"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/surgery_omnitool
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	)
+
+/datum/design/borg_upgrade_uwu
+	name = "Cyborg UwU-speak \"Upgrade\""
+	id = "borg_upgrade_cringe"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/uwu
+	materials = list(
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 0.5,
+		/datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 0.25
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
+	)
+
+/datum/design/borg_upgrade_nanite_remote
+	name = "Cyborg Nanite Remote"
+	id = "borg_upgrade_nanite_remote"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/nanite_remote
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5
+	)
+	construction_time = 8 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_PEACEKEEPER
+	)
+
+/datum/design/borg_upgrade_nanite_remote/New()
+	. = ..()
+	if(!CONFIG_GET(flag/disable_secborg))
+		category += list(RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SECURITY)
+
+/datum/design/borg_upgrade_condiment_synthesizer
+	name = "Condiment Synthesizer"
+	id = "borg_upgrade_condiment_synthesizer"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/condiment_synthesizer
+	materials = list( // Cheaper than mediborg's expanded hypospray synthesiser.
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 6,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 3
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
 	)
 
 /datum/design/mmi

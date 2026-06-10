@@ -32,3 +32,156 @@
   byondsucks:
   - balance: High threat antags now 4/5 the next round's high threat weights instead
       of halving them, also removes weight decay from roundstart high threat antags.
+2026-06-04:
+  Cujo:
+  - balance: Using medical tools for IPC or robotic limbs surgery is now actually
+      usable rather than having a 1% success rate.
+  JupiterJaeden:
+  - balance: Most body bags no longer have a drag slowdown or a zip-up timer. Bluespace
+      body bags retain a small 1 second zip-up timer.
+  Melbert, SirNightKnight:
+  - balance: added a wind up to the taser projectile instead of the gun firing it.
+  - balance: you can resist or use help intent on yourself or others to remove taser
+      electrodes.
+  - balance: slightly decreased the energy cost of taser projectiles so there's some
+      extra charge for the taser charge drain.
+  - balance: energy armor and shock absorber modules negate the effects of tasers.
+  - balance: being tased while wet will burn you.
+  - image: fixed the multiphase energy gun always showing as full when in taser mode.
+  Runian:
+  - spellcheck: Fixes a typo in medical cyborg health analyzer upgrade's description.
+  - rscadd: Science Cyborg model and various upgrades for it.
+  - rscadd: New techweb node containing science cyborg upgrades.
+  - qol: Vacuum pack's nozzle can now directly install upgrades to the vacuum pack
+      by interacting with the upgrade with the nozzle.
+  - balance: Silicons now can use the tank dispenser if they're adjacent to it.
+  - balance: Engineering and Saboteur Cyborg now starts with a RPED.
+  - balance: Engineering & Mining Cyborg Upgrades are now locked behind Applied Bluespace
+      Research.
+  - balance: RPED cyborg upgrade has been renamed, replaced, and cost adjusted to
+      be a BRPED cyborg upgrade.
+  - image: Science Cyborg Skins (default + 2), Module, and Upgrade Sprite
+  - spellcheck: Corrected various typos and culled repeated words from xenobiology
+      vacuum pack's feedback.
+  - refactor: Xenobiology's vacuum pack has been refactored so that it can be used
+      without requiring a backpack if needed.
+  drgnmstrc:
+  - rscadd: hybrid cutters for science, a crowbar+wirecutter without prying available
+      with experimental tools
+  - rscadd: jaws of death for traitors and operatives for 3 tc, faster speed but same
+      size as regular jaws
+  - qol: renamed syndicate jaws of life to compact jaws of death
+  - qol: made exp. welding torches and hand drills available to science, hybrid cutters
+      to engineering
+  - bugfix: fixed the syndicate hypospray being erroneously unavailable
+  - image: resprite of the jaws of life and compact jaws of death
+2026-06-07:
+  If-the-world-was-burning:
+  - map: the escape shuttle dock and evacuations are now listed seperately on the
+      navigation hud, and named more consistently
+  LettuceGuardian:
+  - balance: Bogseo firerate adjusted to 0.3 seconds
+  Runian:
+  - bugfix: BorgPanel now allows admins to upgrade cyborgs with their model-specific
+      upgrades.
+  - bugfix: Service cyborgs can now select b33r from their hacked cyborg shaker.
+  - code_imp: Name-to-reagent is now sorted alphabetically, keeps whitespace, and
+      its case preserved.
+  - rscadd: '6 new cyborg upgrade techweb nodes to further separate existing cyborg
+      upgrades: Engineering, Mining, Bluespace, Nightvision, Janitorial, and Security.'
+  - rscdel: 'The combined techweb node of "Cyborg Upgrades: Engineering and Mining"
+      no longer exists.'
+  - balance: Various designs and prerequisites for existing cyborg upgrade techweb
+      nodes have been adjusted to better match what designs they unlocks and what
+      is needed to unlock it.
+  - balance: The techweb node for mining cyborg upgrades requires Advanced Mining
+      Technology.
+  - balance: The point cost for some cyborg upgrade techweb nodes have been reduced
+      to account for the separation and reduction of unlocked designs per node.
+  - balance: The material cost for Janiborg's plating repair tool upgrade and Mediborg's
+      beaker storage apparatus upgrade has been slightly increased.
+  - rscadd: New engineering cyborg upgrade that increases the range of their analyzer
+      on-par with a long ranged analyzer.
+  Shoddd:
+  - bugfix: Satyrs can now dash again
+  SirNightKnight:
+  - image: modsuit control units are layered on the same layer as backpacks.
+  TheColorCyan:
+  - balance: wave of desperation no longer appears in draft and is shop only
+  - balance: ashen passage no longer appears in draft and is shop only
+  - balance: Tier 4 draft chances adjusted, tier 5 spells are no longer guaranteed
+      and its more likely to pull tier 4, with small chance for tier 3 and 5. No changes
+      for lock heretic, tier 5 is still guaranteed.
+  - bugfix: fixed fenrir shotgun inhand sprite
+  - bugfix: spider eggs hatching will now teleport your ghost to the cluster
+  - bugfix: fixes non-sentient minebots not being able to enter combat mode
+  cam_dev:
+  - rscadd: triple-citrus now heals toxins at the same rate as lime juice with a 50%
+      higher chance to proc
+2026-06-08:
+  Holoo-1, SirNightKnight:
+  - bugfix: fixed camera static not being removed for console users when it was observed
+      by AI and console user
+  Mantlecrawler:
+  - rscadd: Fleshmass plants, to botany. Mutated from poppies that have atleast 20
+      lifespan and 60 endurance, with a yield between 80-120
+  SirNightKnight:
+  - bugfix: gave all security related plasmaman proper security gloves.
+  - bugfix: plasmamen blueshields start with tackling gloves.
+  - bugfix: added back the science cyborg upgrade tech node which was accidently removed.
+2026-06-09:
+  Absolucy:
+  - bugfix: Fixed titanium/plastitanium not being rustable at all.
+  Banement:
+  - rscadd: Adds the shrimp space ruin, where you can find the ONLY golden shrimp
+      that fries UNLIMITED rice.
+  - rscadd: Adds shrimp statues. And shrimp billboards.
+  - balance: Added the golden shrimp plushie to the breeding blacklist. THERE CAN
+      ONLY BE ONE!
+  - sound: Added shrimp restaurant ambient.
+  Mantlecrawler:
+  - rscadd: Abandoned IPCs, a new midround antagonist.
+  Runian:
+  - qol: Cyborg sight items (e.g. mesons / thermals) are an innate action to the cyborg
+      model(s) rather than having to be equipped as an item first.
+  - bugfix: The sight vision provided by cyborg sight actions no longer stays active
+      between model resets.
+  - bugfix: Mining cyborgs no longer have a second mining scanner inside of them.
+  Shoddd:
+  - rscadd: adds jungle fever symptom, admin only
+  SirNightKnight:
+  - balance: if an explosion originates from someone whose jaunting it forces them
+      out of the jaunt and creates a tear in the fabric of reality ontop of them.
+  - balance: made chem explosions originate from their reagent holder instead of always
+      the turf the reagent holder atom is on.
+  - spellcheck: corrected the capitalization on the naming of the bomb actualizer
+  - image: added the slick hairstyle.
+  - image: added the macho hairstyle.
+  timothymtorres, SirNightKnight:
+  - balance: 'balance: Beartraps are now much more lethal and can cause wounds. Space
+      OSHA has also issued a warning that any clumsy people should avoid handling
+      them after repeated mishaps.'
+  - balance: beartraps have a chance to be set off by items and projectiles if they
+      are forceful enough.
+  - balance: beartraps take time to arm and disarm. beartraps must be disarmed before
+      being picked up.
+  - balance: adds security traps. non-lethal bear traps that work off security records.
+  - balance: barbed bear traps have a 30 second breakout time like other bear traps.
+  - spellcheck: correctly gendered bear traps to be non-plural.
+  - bugfix: bear traps respect armor.
+2026-06-10:
+  Runian:
+  - rscadd: 'A new techweb node for service cyborg upgrades: "Cyborg Upgrades: Service"'
+  - rscadd: A new cyborg upgrade for the service model that lets them synthesize condiments
+      primarily used for cooking.
+  - image: Sprite for service cyborg upgrades.
+  SirNightKnight:
+  - balance: removed RCDs from outfit of station engineers
+  - bugfix: fixed the borer chemical injector not working.
+  Siro:
+  - rscadd: New tap_shoe sfx. Similar to heels or tap dancer shoes.
+  - sound: tap_shoes added to subtypes shoes/heels, shoes/laceup, shoes/fancy_heels,
+      and shoes/high_heels
+  - qol: Noisemaker default is disabled so you must actively enable them if you want
+      to hear them.
+  - qol: do_after timer to enable/disable reduced to 1 Second from 1.5 Seconds
