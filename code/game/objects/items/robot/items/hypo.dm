@@ -61,6 +61,24 @@
 		/datum/reagent/consumable/ethanol/tequila, /datum/reagent/consumable/ethanol/triple_sec, /datum/reagent/consumable/ethanol/vermouth,\
 		/datum/reagent/consumable/ethanol/vodka, /datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/wine,\
 	)
+
+#define EXPANDED_SERVICE_REAGENTS list(\
+	/datum/reagent/consumable/blackpepper,\
+	/datum/reagent/consumable/cornmeal,\
+	/datum/reagent/consumable/cooking_oil,\
+	/datum/reagent/consumable/corn_starch,\
+	/datum/reagent/consumable/eggwhite,\
+	/datum/reagent/consumable/eggyolk,\
+	/datum/reagent/consumable/flour,\
+	/datum/reagent/consumable/rice,\
+	/datum/reagent/consumable/sugar,\
+	/datum/reagent/consumable/salt,\
+	/datum/reagent/consumable/soysauce,\
+	/datum/reagent/consumable/ketchup,\
+	/datum/reagent/consumable/mayonnaise,\
+	/datum/reagent/consumable/bbqsauce,\
+)
+
 #define HACKED_SERVICE_REAGENTS list(\
 		/datum/reagent/toxin/fakebeer,\
 		/datum/reagent/consumable/ethanol/fernet,\
@@ -573,12 +591,46 @@
 	default_reagent_types += BASE_CENTCOM_REAGENTS
 	. = ..()
 
+/obj/item/reagent_containers/borghypo/condiment_synthesizer
+	name = "condiment synthesizer"
+	desc = "An advanced condiment synthesizer."
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "flour"
+	possible_transfer_amounts = list(1, 5, 10, 20, 30)
+	charge_cost = 0.04 * STANDARD_CELL_CHARGE // 2x of borgshaker.
+	recharge_time = 6 SECONDS // 2x of borgshaker.
+	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
+	default_reagent_types = EXPANDED_SERVICE_REAGENTS
+
+/obj/item/reagent_containers/borghypo/condiment_synthesizer/attack(mob/living/target_mob, mob/user)
+	return
+
+/obj/item/reagent_containers/borghypo/condiment_synthesizer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!interacting_with.is_refillable())
+		return NONE
+	if(!has_reagents_for_injection(user)) // Gives balloon alerts.
+		return ITEM_INTERACT_BLOCKING
+	if(interacting_with.reagents.total_volume >= interacting_with.reagents.maximum_volume)
+		balloon_alert(user, "it's full!")
+		return ITEM_INTERACT_BLOCKING
+	var/datum/reagents/reagent_injector = create_reagent_injector()
+	balloon_alert(user, "[reagent_injector.total_volume] unit\s poured")
+	reagent_injector.trans_to(interacting_with, reagent_injector.total_volume, transfered_by = user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/reagent_containers/borghypo/condiment_synthesizer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "BorgChemicalCondiments", "Integrated Condiment Dispenser")
+		ui.open()
+
 #undef BASE_MEDICAL_REAGENTS
 #undef EXPANDED_MEDICAL_REAGENTS
 #undef HACKED_MEDICAL_REAGENTS
 #undef BASE_PEACE_REAGENTS
 #undef HACKED_PEACE_REAGENTS
 #undef BASE_SERVICE_REAGENTS
+#undef EXPANDED_SERVICE_REAGENTS
 #undef HACKED_SERVICE_REAGENTS
 #undef BASE_CLOWN_REAGENTS
 #undef HACKED_CLOWN_REAGENTS
