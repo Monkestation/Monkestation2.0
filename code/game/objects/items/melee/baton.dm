@@ -615,10 +615,10 @@
 
 	var/convertible = TRUE //if it can be converted with a conversion kit
 
-	/// How long the baton has been active
-	var/time_on = 0
-	/// At what time this stun baton automatically turns off. Set to 0 to disable
-	var/cutoff_time = 1 MINUTE
+	/// How long the baton has been active in storage
+	var/time_on_in_storage = 0
+	/// At what time this stun baton automatically turns off when in storage. Set to 0 to disable
+	var/cutoff_time = 30 SECONDS
 
 /datum/armor/baton_security
 	bomb = 50
@@ -776,7 +776,7 @@
 	drop_sound = inactive_drop_sound
 	pickup_sound = inactive_pickup_sound
 	on_stun_sound = null
-	time_on = 0
+	time_on_in_storage = 0
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/melee/baton/security/proc/deductcharge(deducted_charge)
@@ -792,12 +792,17 @@
 
 /obj/item/melee/baton/security/process(seconds_per_tick)
 	if(!active)
+		STOP_PROCESSING(SSobj, src)
 		return
-	time_on += seconds_per_tick SECONDS
-	if(!(time_on >= cutoff_time))
+	if(!(item_flags & IN_STORAGE)) // if its in storage dont count it
+		time_on_in_storage = 0
 		return
-	visible_message(span_warning("\The [src] fizzles and automatically turns off!"))
-	time_on = 0
+	time_on_in_storage += seconds_per_tick SECONDS
+	if(!(time_on_in_storage >= cutoff_time))
+		return
+	playsound(src, 'sound/weapons/magout.ogg', 40, TRUE)
+	visible_message(span_warning("\The [src] fizzles and automatically turns off in storage!"))
+	time_on_in_storage = 0
 	turn_off()
 
 
@@ -816,7 +821,7 @@
 		if(active && cooldown_check <= world.time && !check_parried(target, user))
 			finalize_baton_attack(target, user, modifiers, in_attack_chain = FALSE)
 			if(active)
-				if(prob(50))
+				if(prob(75))
 					do_sparks(rand(1,3), FALSE, src)
 				if(target.ignite_mob())
 					do_sparks(rand(3,5), FALSE, src)
@@ -912,6 +917,7 @@
 	cell_hit_cost = STANDARD_CELL_CHARGE * 1.5
 	active_changes_inhand = FALSE
 	stun_on_harmbaton = FALSE
+	context_living_rmb_active = "Attack"
 	var/obj/item/assembly/igniter/sparkler
 	///Determines whether or not we can improve the cattleprod into a new type. Prevents turning the cattleprod subtypes into different subtypes, or wasting materials on making it....another version of itself.
 	var/can_upgrade = TRUE
@@ -1034,6 +1040,7 @@
 	can_upgrade = FALSE
 	light_color = LIGHT_COLOR_INTENSE_RED
 	stun_on_harmbaton = TRUE
+	context_living_rmb_active = "Harmful Stun"
 
 /obj/item/melee/baton/security/cattleprod/telecrystalprod/clumsy_check(mob/living/carbon/human/user)
 	. = ..()
