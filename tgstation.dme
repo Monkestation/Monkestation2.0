@@ -7096,7 +7096,6 @@
 #include "monkestation\code\modules\antagonists\contractor\datums\contractor_support.dm"
 #include "monkestation\code\modules\antagonists\contractor\datums\mind_datum.dm"
 #include "monkestation\code\modules\antagonists\contractor\datums\outfit.dm"
-#include "monkestation\code\modules\antagonists\contractor\items\baton.dm"
 #include "monkestation\code\modules\antagonists\contractor\items\boxes.dm"
 #include "monkestation\code\modules\antagonists\contractor\items\misc.dm"
 #include "monkestation\code\modules\antagonists\contractor\items\modsuit\modsuit.dm"
