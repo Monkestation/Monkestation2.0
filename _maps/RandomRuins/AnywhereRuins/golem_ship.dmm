@@ -208,10 +208,7 @@
 /area/ruin/powered/golem_ship)
 "mX" = (
 /obj/structure/table,
-<<<<<<< HEAD
 /obj/item/blueprints/golem,
-=======
->>>>>>> 48c949e44d1ad5d3c77fd8fb7f5330a5b5995166
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "nz" = (
@@ -344,13 +341,6 @@
 /area/ruin/powered/golem_ship)
 "un" = (
 /obj/structure/table/wood,
-<<<<<<< HEAD
-=======
-/obj/item/areaeditor/blueprints/golem{
-	pixel_y = 3;
-	pixel_x = -2
-	},
->>>>>>> 48c949e44d1ad5d3c77fd8fb7f5330a5b5995166
 /obj/structure/light_construct/small/directional/east,
 /turf/open/floor/wood,
 /area/ruin/powered/golem_ship)
