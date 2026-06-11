@@ -796,7 +796,7 @@
 	time_on += seconds_per_tick SECONDS
 	if(!(time_on >= cutoff_time))
 		return
-	visible_message(span_warning("The [src] fizzles and automatically turns off!"))
+	visible_message(span_warning("\The [src] fizzles and automatically turns off!"))
 	time_on = 0
 	turn_off()
 
@@ -819,6 +819,7 @@
 				if(prob(50))
 					do_sparks(rand(1,3), FALSE, src)
 				if(target.ignite_mob())
+					do_sparks(rand(3,5), FALSE, src)
 					message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(target)] on fire with [src] at [AREACOORD(user)]")
 					user.log_message("set [key_name(target)] on fire with [src].", LOG_ATTACK)
 	else if(!(user.istate & ISTATE_HARM))
