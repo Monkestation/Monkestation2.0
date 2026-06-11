@@ -14,6 +14,8 @@
 	var/list/enemy_types
 	/// What status effect types do we merge into if they exist. Ignored when forced.
 	var/list/merge_types
+	/// What turf will remove our status effect
+	var/turf/enemy_turf
 	/// What status effect types do we override if they exist. These are simply deleted when forced.
 	var/list/override_types
 	/// For how much firestacks does one our stack count
@@ -30,7 +32,7 @@
 /datum/status_effect/fire_handler/on_creation(mob/living/new_owner, new_stacks, forced = FALSE)
 	. = ..()
 	var/turf/source_turf = get_turf(owner)
-	if(istype(source_turf, /turf/open/floor/plating/ocean))
+	if(istype(source_turf, enemy_turf))
 		qdel(src)
 		return
 
@@ -86,7 +88,13 @@
 			adjust_stacks(override_effect.stacks)
 			qdel(override_effect)
 
-/datum/status_effect/fire_handler/proc/check_enemy_stacks()
+/datum/status_effect/fire_handler/proc/check_enemy()
+	var/turf/source_turf = get_turf(owner)
+
+	if(istype(source_turf, enemy_turf))
+		qdel(src)
+		return FALSE
+
 	for(var/enemy_type in enemy_types)
 		var/datum/status_effect/fire_handler/enemy_effect = owner.has_status_effect(enemy_type)
 		if(!enemy_effect)
@@ -99,7 +107,9 @@
 
 	if(stacks <= 0)
 		qdel(src)
-		return
+		return FALSE
+
+	return TRUE
 
 /**
  * Setter and adjuster procs for firestacks
@@ -149,6 +159,7 @@
 
 	enemy_types = list(/datum/status_effect/fire_handler/wet_stacks, /datum/status_effect/fire_handler/wet_stacks/oozeling)
 	stack_modifier = 1
+	enemy_turf = /turf/open/floor/plating/ocean
 
 	/// If we're on fire
 	var/on_fire = FALSE
@@ -166,12 +177,8 @@
 	return "[owner.p_They()] [owner.p_are()] covered in something flammable."
 
 /datum/status_effect/fire_handler/fire_stacks/tick(seconds_between_ticks, times_fired)
-	var/turf/source_turf = get_turf(owner)
-	if(istype(source_turf, /turf/open/floor/plating/ocean))
-		qdel(src)
+	if(!check_enemy())
 		return TRUE
-
-	check_enemy_stacks()
 
 	if(!on_fire)
 		return TRUE
@@ -310,6 +317,7 @@
 	enemy_types = list(/datum/status_effect/fire_handler/fire_stacks)
 	stack_limit = MAX_FIRE_STACKS * 1.5
 	stack_modifier = -2
+	enemy_turf = /turf/open/lava
 	/// particles applied
 	var/particles/applied_particles = /particles/droplets
 
@@ -327,7 +335,8 @@
 	return id
 
 /datum/status_effect/fire_handler/wet_stacks/tick(seconds_between_ticks)
-	check_enemy_stacks()
+	if(!check_enemy())
+		return TRUE
 
 	adjust_stacks(-0.5 * seconds_between_ticks)
 
@@ -354,7 +363,8 @@
 	particle_holder.color = color
 
 /datum/status_effect/fire_handler/wet_stacks/oozeling/tick(seconds_between_ticks)
-	check_enemy_stacks()
+	if(!check_enemy())
+		return TRUE
 
 	if(owner.stat == DEAD || !isoozeling(owner))
 		adjust_stacks(-0.5 * seconds_between_ticks)
