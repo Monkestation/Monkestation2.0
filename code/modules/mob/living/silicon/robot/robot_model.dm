@@ -1041,6 +1041,9 @@
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/borg/apparatus/organ_storage/limb, // They need to be able to hold limbs to hit artifacts with it.
+		/obj/item/borg/artifact_sticker_holder,
+		/obj/item/pen/fountain
+
 	)
 	emag_modules = list(
 		/obj/item/borg/handheld_jaunter,

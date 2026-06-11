@@ -129,3 +129,66 @@
   - bugfix: gave all security related plasmaman proper security gloves.
   - bugfix: plasmamen blueshields start with tackling gloves.
   - bugfix: added back the science cyborg upgrade tech node which was accidently removed.
+2026-06-09:
+  Absolucy:
+  - bugfix: Fixed titanium/plastitanium not being rustable at all.
+  Banement:
+  - rscadd: Adds the shrimp space ruin, where you can find the ONLY golden shrimp
+      that fries UNLIMITED rice.
+  - rscadd: Adds shrimp statues. And shrimp billboards.
+  - balance: Added the golden shrimp plushie to the breeding blacklist. THERE CAN
+      ONLY BE ONE!
+  - sound: Added shrimp restaurant ambient.
+  Mantlecrawler:
+  - rscadd: Abandoned IPCs, a new midround antagonist.
+  Runian:
+  - qol: Cyborg sight items (e.g. mesons / thermals) are an innate action to the cyborg
+      model(s) rather than having to be equipped as an item first.
+  - bugfix: The sight vision provided by cyborg sight actions no longer stays active
+      between model resets.
+  - bugfix: Mining cyborgs no longer have a second mining scanner inside of them.
+  Shoddd:
+  - rscadd: adds jungle fever symptom, admin only
+  SirNightKnight:
+  - balance: if an explosion originates from someone whose jaunting it forces them
+      out of the jaunt and creates a tear in the fabric of reality ontop of them.
+  - balance: made chem explosions originate from their reagent holder instead of always
+      the turf the reagent holder atom is on.
+  - spellcheck: corrected the capitalization on the naming of the bomb actualizer
+  - image: added the slick hairstyle.
+  - image: added the macho hairstyle.
+  timothymtorres, SirNightKnight:
+  - balance: 'balance: Beartraps are now much more lethal and can cause wounds. Space
+      OSHA has also issued a warning that any clumsy people should avoid handling
+      them after repeated mishaps.'
+  - balance: beartraps have a chance to be set off by items and projectiles if they
+      are forceful enough.
+  - balance: beartraps take time to arm and disarm. beartraps must be disarmed before
+      being picked up.
+  - balance: adds security traps. non-lethal bear traps that work off security records.
+  - balance: barbed bear traps have a 30 second breakout time like other bear traps.
+  - spellcheck: correctly gendered bear traps to be non-plural.
+  - bugfix: bear traps respect armor.
+2026-06-10:
+  Runian:
+  - rscadd: 'A new techweb node for service cyborg upgrades: "Cyborg Upgrades: Service"'
+  - rscadd: A new cyborg upgrade for the service model that lets them synthesize condiments
+      primarily used for cooking.
+  - image: Sprite for service cyborg upgrades.
+  SirNightKnight:
+  - balance: removed RCDs from outfit of station engineers
+  - bugfix: fixed the borer chemical injector not working.
+  Siro:
+  - rscadd: New tap_shoe sfx. Similar to heels or tap dancer shoes.
+  - sound: tap_shoes added to subtypes shoes/heels, shoes/laceup, shoes/fancy_heels,
+      and shoes/high_heels
+  - qol: Noisemaker default is disabled so you must actively enable them if you want
+      to hear them.
+  - qol: do_after timer to enable/disable reduced to 1 Second from 1.5 Seconds
+2026-06-11:
+  tattax:
+  - qol: adds a visual indicator for blood thickening (bloodsucker rank up via blood)
+  - qol: makes blood full! bloodsucker feed text a bit easier to read
+  - bugfix: fixes bloodsucker maptext going not following the gradient when below
+      bad blood
+  - code_imp: made some to_chats easier to see

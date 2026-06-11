@@ -1,6 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - qol: "Cyborg sight items (e.g. mesons / thermals) are an innate action to the cyborg model(s) rather than having to be equipped as an item first."
-  - bugfix: "The sight vision provided by cyborg sight actions no longer stays active between model resets."
-  - bugfix: "Mining cyborgs no longer have a second mining scanner inside of them."
