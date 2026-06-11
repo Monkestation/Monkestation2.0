@@ -776,6 +776,7 @@
 	drop_sound = inactive_drop_sound
 	pickup_sound = inactive_pickup_sound
 	on_stun_sound = null
+	time_on = 0
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/melee/baton/security/proc/deductcharge(deducted_charge)
