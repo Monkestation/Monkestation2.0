@@ -618,7 +618,7 @@
 	/// How long the baton has been active in storage
 	var/time_on_in_storage = 0
 	/// At what time this stun baton automatically turns off when in storage. Set to 0 to disable
-	var/cutoff_time = 30 SECONDS
+	var/cutoff_time = 0
 
 /datum/armor/baton_security
 	bomb = 50
