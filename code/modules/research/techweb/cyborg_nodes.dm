@@ -142,6 +142,20 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
+/datum/techweb_node/cyborg_upgrades_service
+	id = "cyborg_upgrades_service"
+	display_name = "Cyborg Upgrades: Service"
+	description = "Enabling compatibility of our service technology for usage within cyborgs."
+	prereq_ids = list(
+		"bio_process",
+		"adv_robotics"
+	)
+	design_ids = list(
+		"borg_upgrade_condiment_synthesizer"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
+
 /datum/techweb_node/cyborg_upgrades_bluespace
 	id = "cyborg_upgrades_bluespace"
 	display_name = "Cyborg Upgrades: Bluespace"
