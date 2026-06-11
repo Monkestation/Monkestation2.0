@@ -36,7 +36,7 @@
 	/// The volume of the above.
 	var/on_stun_volume = 75
 	/// Do we animate the "hit" when stunning something?
-	var/stun_animation = TRUE
+	var/stun_animation = FALSE
 	/// Whether the stun attack is logged. Only relevant for abductor batons, which have different modes.
 	var/log_stun_attack = TRUE
 	/// Boolean on whether people with chunky fingers can use this baton.
@@ -432,6 +432,8 @@
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	active_force = 16
 
+	stun_animation = TRUE
+
 	unfolded_drop_sound = 'sound/items/baton/contractor_baton_unfolded_pickup.ogg'
 	unfolded_pickup_sound = 'sound/items/baton/contractor_baton_unfolded_pickup.ogg'
 
@@ -583,6 +585,7 @@
 	on_stun_volume = 50
 	active = FALSE
 	context_living_rmb_active = "Harmful Stun"
+	stun_animation = TRUE
 
 	light_outer_range = 1.5
 	light_system = OVERLAY_LIGHT
@@ -898,13 +901,13 @@
 	worn_icon_state = null
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	w_class = WEIGHT_CLASS_HUGE
 	force = 3
 	throwforce = 5
 	cell_hit_cost = 2000
 	throw_stun_chance = 10
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
+	cell_hit_cost = STANDARD_CELL_CHARGE * 1.5
 	active_changes_inhand = FALSE
 	stun_on_harmbaton = FALSE
 	var/obj/item/assembly/igniter/sparkler
@@ -995,7 +998,6 @@
 /obj/item/melee/baton/security/cattleprod/teleprod
 	name = "teleprod"
 	desc = "A prod with a bluespace crystal on the end. The crystal doesn't look too fun to touch."
-	w_class = WEIGHT_CLASS_NORMAL
 	icon_state = "teleprod"
 	base_icon_state = "teleprod"
 	inhand_icon_state = "teleprod"
@@ -1015,11 +1017,12 @@
 	if(!. || target.move_resist >= MOVE_FORCE_OVERPOWERING)
 		return
 	do_teleport(target, get_turf(target), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
+	target.adjust_disgust(15)	//Two teleports is safe
+	target.adjust_confusion(3 SECONDS)
 
 /obj/item/melee/baton/security/cattleprod/telecrystalprod
 	name = "snatcherprod"
 	desc = "A prod with a telecrystal on the end. It sparks with a desire for theft and subversion."
-	w_class = WEIGHT_CLASS_NORMAL
 	icon_state = "telecrystalprod"
 	base_icon_state = "telecrystalprod"
 	inhand_icon_state = "telecrystalprod"
