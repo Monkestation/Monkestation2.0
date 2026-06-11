@@ -461,7 +461,8 @@
 	var/obj/item/cyborg_iv_drip/iv_drip_item
 
 /obj/machinery/iv_drip/cyborg/Destroy() // I dont know how it can be destroyed, but who cares
-	QDEL_NULL(iv_drip_item)
+	if(!QDELETED(iv_drip_item))
+		QDEL_NULL(iv_drip_item)
 	return ..()
 
 // Transmogrification inner part
@@ -485,7 +486,8 @@
 	internal_iv_drip.iv_drip_item = src
 
 /obj/item/cyborg_iv_drip/Destroy()
-	QDEL_NULL(internal_iv_drip)
+	if(!QDELETED(internal_iv_drip))
+		QDEL_NULL(internal_iv_drip)
 	return ..()
 
 // Transmogrification external part
