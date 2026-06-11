@@ -83,8 +83,7 @@
 	for(var/datum/stock_part/manipulator/manipulators in component_parts)
 		manipulator_rating += manipulators.tier
 		for(var/i in 1 to manipulators.tier)
-			if(i <= possible_chems.len)
-				available_chems |= possible_chems[i]
+			available_chems |= possible_chems[i]
 
 	reset_chem_buttons()
 
@@ -246,7 +245,7 @@
 
 		// Chems in blood
 		var/list/blood_chems = list()
-		if(mob_occupant.reagents && mob_occupant.reagents.reagent_list.len)
+		if(mob_occupant.reagents && length(mob_occupant.reagents.reagent_list))
 			for(var/datum/reagent/reagent in mob_occupant.reagents.reagent_list)
 				if(reagent.chemical_flags & REAGENT_INVISIBLE) //Don't show hidden chems on scanners
 					continue

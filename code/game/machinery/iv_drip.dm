@@ -228,9 +228,10 @@
 			return
 		reagent_container = attacking_item
 		if(swap_item)
-			usr.put_in_hands(swap_item)
+			user.put_in_hands(swap_item)
 		to_chat(user, span_notice("You [mode ? "swap" : "attach"] [attacking_item] to [src]."))
 		user.log_message("attached a [attacking_item] to [src] at [AREACOORD(src)] containing ([reagent_container.reagents.get_reagent_log_string()])", LOG_ATTACK)
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		add_fingerprint(user)
 		update_appearance(UPDATE_ICON)
 		return
@@ -317,7 +318,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 ///called when an IV is attached
-/obj/machinery/iv_drip/proc/attach_iv(mob/target, mob/user)
+/obj/machinery/iv_drip/proc/attach_iv(atom/target, mob/user)
 	if(isliving(target))
 		user.visible_message(span_warning("[usr] begins attaching [src] to [target]..."), span_warning("You begin attaching [src] to [target]."))
 		if(!do_after(usr, 1 SECONDS, target))
@@ -328,7 +329,9 @@
 	var/datum/reagents/container = get_reagents()
 	log_combat(usr, target, "attached", src, "containing: ([container.get_reagent_log_string()])")
 	add_fingerprint(usr)
-	target.throw_alert(ALERT_IV_CONNECTED, /atom/movable/screen/alert/iv_connected)
+	if(isliving(target))
+		var/mob/living/mooob = target
+		mooob.throw_alert(ALERT_IV_CONNECTED, /atom/movable/screen/alert/iv_connected)
 	attached = target
 	START_PROCESSING(SSmachines, src)
 	playsound(src, 'sound/health/needle.ogg', 80, TRUE)
@@ -340,7 +343,9 @@
 /obj/machinery/iv_drip/proc/detach_iv()
 	if(attached)
 		visible_message(span_notice("[attached] is detached from [src]."))
-		attached.clear_alert(ALERT_IV_CONNECTED, /atom/movable/screen/alert/iv_connected)
+		if(isliving(attached))
+			var/mob/living/mooob = attached
+			mooob.clear_alert(ALERT_IV_CONNECTED, /atom/movable/screen/alert/iv_connected)
 	SEND_SIGNAL(src, COMSIG_IV_DETACH, attached)
 	attached = null
 	playsound(src, 'sound/health/needle_reversed.ogg', 80, TRUE)
@@ -452,30 +457,32 @@
 	return ..()
 
 // 	Discarding
-/obj/item/iv_drip_item/interact_with_atom(atom/movable/interacting_with, mob/living/user)
+/obj/item/iv_drip_item/afterattack(atom/movable/target, mob/user, proximity)
 	. = ..()
-	if(!istype(interacting_with))
+	if(!istype(target))
 		return
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		return
-	if(!HAS_TRAIT(src, TRAIT_WIELDED))
-		return
+		return NONE
 
-	if(!interacting_with.anchored)
-		var/atom/throw_target = get_edge_target_turf(interacting_with, user.dir)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+		return NONE
+
+	if(!target.anchored)
+		var/atom/throw_target = get_edge_target_turf(target, user.dir)
 		var/whack_speed = (prob(60) ? 1 : 4)
-		interacting_with.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE)
+		target.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE)
+		user.changeNext_move(CLICK_CD_MELEE)
 
 // 	Put it back in its place
 /obj/item/iv_drip_item/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(isopenturf(interacting_with))
-		playsound(src, 'sound/weapons/batonextend.ogg', 100, TRUE)
-		deploy_iv_drip(user, interacting_with)
-	else
-		return ..()
+	if(!isopenturf(interacting_with))
+		return NONE
+	playsound(src, 'sound/weapons/batonextend.ogg', 100, TRUE)
+	deploy_iv_drip(user, interacting_with)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/iv_drip_item/proc/deploy_iv_drip(mob/user, atom/location)
-	var/obj/machinery/iv_drip/R = new /obj/machinery/iv_drip(location)
+	var/obj/machinery/iv_drip/R = new(location)
 	R.add_fingerprint(user)
 	qdel(src)
 

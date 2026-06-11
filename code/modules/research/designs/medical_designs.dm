@@ -381,7 +381,7 @@
 	id = "iv_drip_tele"
 	build_path = /obj/item/iv_drip_item
 	build_type = PROTOLATHE | AWAY_LATHE | COLONY_FABRICATOR
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2000, /datum/material/plastic = 2000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
 		)

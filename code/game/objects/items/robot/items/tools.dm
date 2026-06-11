@@ -460,7 +460,11 @@
 	beaker_icon_state = "beaker_cyborg"
 	var/obj/item/cyborg_iv_drip/iv_drip_item
 
-	// Transmogrification inner part
+/obj/machinery/iv_drip/cyborg/Destroy() // I dont know how it can be destroyed, but who cares
+	QDEL_NULL(iv_drip_item)
+	return ..()
+
+// Transmogrification inner part
 /obj/machinery/iv_drip/cyborg/update_appearance()
 	. = ..()
 	iv_drip_item?.icon_state = icon_state
@@ -484,25 +488,31 @@
 	QDEL_NULL(internal_iv_drip)
 	return ..()
 
-	// Transmogrification external part
-/obj/item/cyborg_iv_drip/attack_self(mob/user)	// interface
+// Transmogrification external part
+/obj/item/cyborg_iv_drip/attack_self(mob/user)
+	// Interface
 	return internal_iv_drip.ui_interact(user)
 
-/obj/item/cyborg_iv_drip/interact_with_atom(atom/target, mob/living/user, list/modifiers)	// connection
+/obj/item/cyborg_iv_drip/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	// Connection
 	return internal_iv_drip.mouse_drop_dragged(target, user)
 
-/obj/item/cyborg_iv_drip/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)	// disabling
+/obj/item/cyborg_iv_drip/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	// Disabling
 	return internal_iv_drip.detach_iv()
 
-/obj/item/cyborg_iv_drip/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)	// container
+/obj/item/cyborg_iv_drip/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	// Container
 	return internal_iv_drip.attackby(attacking_item, user, modifiers, attack_modifiers)
 
-/obj/item/cyborg_iv_drip/click_alt(mob/user)	// eject
+/obj/item/cyborg_iv_drip/click_alt(mob/user)
+	// Eject
 	return internal_iv_drip.eject_beaker(user)
 
-/obj/item/cyborg_iv_drip/examine(mob/user)		// examine
+/obj/item/cyborg_iv_drip/examine(mob/user)
+	// Examine
 	return internal_iv_drip.examine(user)
-  
+
 ///// 	Artifact sticker /////
 /obj/item/borg/artifact_sticker_holder
 	name = "analysis form holder"

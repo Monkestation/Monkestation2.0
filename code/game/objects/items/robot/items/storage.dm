@@ -177,7 +177,6 @@
 
 /// Secondary attack spills the content of the beaker.
 /obj/item/borg/apparatus/beaker/mouse_drop_dragged(atom/target, mob/living/silicon/robot/user)
-//obj/item/borg/apparatus/beaker/pre_attack_secondary(atom/target, mob/living/silicon/robot/user)
 	var/obj/item/reagent_containers/stored_beaker = stored
 	if(!stored_beaker)
 		return ..()

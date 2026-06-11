@@ -97,9 +97,12 @@
 
 // Open the bag by clicking on it with an empty manipulator
 /obj/item/storage/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(user) && istype(tool) && istype(tool, /obj/item/borg/apparatus))
-		var/obj/item/borg/apparatus/robo_hand = tool
-		if(!robo_hand.stored)
-			atom_storage.open_storage(user)
-			return
-	. = ..()
+	if(!istype(user) || !istype(tool))
+		return NONE
+	if(!istype(tool, /obj/item/borg/apparatus))
+		return NONE
+	var/obj/item/borg/apparatus/robo_hand = tool
+	if(robo_hand.stored)
+		return ITEM_INTERACT_BLOCKING
+	atom_storage.open_storage(user)
+	return ITEM_INTERACT_SUCCESS

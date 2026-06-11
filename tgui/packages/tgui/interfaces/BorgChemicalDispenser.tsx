@@ -65,6 +65,7 @@ export const BorgChemicalDispenser = () => {
     selectedRecipeIdLeft,
     selectedRecipeIdRight,
     canReagentSearch,
+    chemicals_section_title,
   } = data;
 
   // Height calculation for the right column (chemicals)
@@ -138,7 +139,7 @@ export const BorgChemicalDispenser = () => {
           </Stack.Item>
           <Stack.Item grow={1.25}>
             <BorgHypoChemicals
-              sectionTitle={'Chemicals'}
+              sectionTitle={chemicals_section_title || 'Chemicals'}
               maximumChemicalVolume={maxReagentVolume}
               chemicals={reagents}
               dispenseActLeft={(reagentId) => {

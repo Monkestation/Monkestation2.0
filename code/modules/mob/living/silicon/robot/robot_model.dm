@@ -769,13 +769,11 @@
 		/obj/item/borg/cyborg_omnitool/medical,
 		/obj/item/blood_filter,
 		/obj/item/breathing_bag, // MS: biocore-ambu
-		/obj/item/cyborg_iv_drip,
 		/obj/item/extinguisher/mini,
 		/obj/item/emergency_bed/silicon,
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/stack/medical/gauze,
 		/obj/item/stack/medical/bone_gel,
-		/obj/item/storage/bag/med_cyborg_bag,
 		/obj/item/borg/apparatus/organ_storage,
 		/obj/item/hand_labeler/borg,
 		/obj/item/borg/lollipop,

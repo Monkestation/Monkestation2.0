@@ -338,9 +338,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/can_insert(obj/item/to_insert, mob/user, messages = TRUE, force = STORAGE_NOT_LOCKED)
 	// substitution of the concept - handling the storage, not the manipulator
 	if(istype(to_insert, /obj/item/borg/apparatus))
-		var/obj/item/borg/apparatus/robo_hand = to_insert
-		if(robo_hand.stored)
-			to_insert = robo_hand.stored
+		to_insert = to_insert.get_proxy_attacker_for(to_insert)
 
 	if(QDELETED(to_insert) || !istype(to_insert))
 		return FALSE
@@ -441,9 +439,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	// substitution of the concept - handling the storage, not the manipulator
 	if(istype(to_insert, /obj/item/borg/apparatus))
-		var/obj/item/borg/apparatus/robo_hand = to_insert
-		if(robo_hand.stored)
-			to_insert = robo_hand.stored
+		to_insert = to_insert.get_proxy_attacker_for(to_insert)
 
 	if(!can_insert(to_insert, user, force = force))
 		return FALSE

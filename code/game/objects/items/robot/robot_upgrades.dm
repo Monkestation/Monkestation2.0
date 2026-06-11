@@ -744,13 +744,25 @@
 		gas_analyzer.update_appearance()
 
 /obj/item/borg/upgrade/beaker_app
-	name = "beaker storage apparatus"
-	desc = "A supplementary beaker storage apparatus for medical cyborgs."
+	name = "chemical kit upgrade"
+	desc = "A supplementary beaker storage apparatus and medical bag for medical cyborgs."
 	icon_state = "module_medical"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/medical)
 	model_flags = BORG_MODEL_MEDICAL
-	items_to_add = list(/obj/item/borg/apparatus/beaker/extra)
+	items_to_add = list(
+		/obj/item/borg/apparatus/beaker/extra,
+		/obj/item/storage/bag/med_cyborg_bag,
+		)
+
+/obj/item/borg/upgrade/iv_drip
+	name = "integrated IV-drip upgrade"
+	desc = "Special modification for cyborgs. An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers."
+	icon_state = "module_medical"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/medical)
+	model_flags = BORG_MODEL_MEDICAL
+	items_to_add = list(/obj/item/cyborg_iv_drip)
 
 /obj/item/borg/upgrade/uwu
 	name = "cyborg UwU-speak \"upgrade\""

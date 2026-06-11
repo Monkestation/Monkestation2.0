@@ -1699,20 +1699,17 @@ MONKESTATION REMOVAL END
 	affected_bodytype = MOB_ROBOTIC
 
 /datum/reagent/medicine/nanopaste/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	var/list/organic_parts = affected_mob.get_damaged_bodyparts(TRUE,TRUE, required_bodytype = BODYTYPE_ORGANIC)
-	if(!organic_parts.len)
-		affected_mob.adjustBruteLoss(-3 * REM * seconds_per_tick, FALSE, required_bodytype = BODYTYPE_ROBOTIC)
-		affected_mob.adjustFireLoss(-3 * REM * seconds_per_tick, FALSE, required_bodytype = BODYTYPE_ROBOTIC)
-	else
-		affected_mob.adjustBruteLoss(-1.5 * REM * seconds_per_tick, FALSE, required_bodytype = BODYTYPE_ROBOTIC)
-		affected_mob.adjustFireLoss(-1.5 * REM * seconds_per_tick, FALSE, required_bodytype = BODYTYPE_ROBOTIC)
-	..()
-	. = TRUE
+	var/healing  = length(organic_parts) ? 1.5 : 3
+	affected_mob.adjustBruteLoss(-healing  * REM * seconds_per_tick, FALSE, required_bodytype = BODYTYPE_ROBOTIC)
+	affected_mob.adjustFireLoss(-healing  * REM * seconds_per_tick, FALSE, required_bodytype = BODYTYPE_ROBOTIC)
+	return TRUE
 
 /datum/reagent/medicine/nanopaste/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, FALSE, FALSE)
 	if(SPT_PROB(13, seconds_per_tick))
 		affected_mob.reagents.remove_reagent(/datum/reagent/medicine/nanopaste, 1 * REM * seconds_per_tick)
 		affected_mob.vomit(20)
-	..()
-	. = TRUE
+	return TRUE

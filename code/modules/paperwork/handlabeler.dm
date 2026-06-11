@@ -59,10 +59,10 @@
 
 /obj/item/hand_labeler/proc/apply_label(atom/interacting_with, mob/living/user, list/modifiers)
 	// substitution of the concept - handling the storage, not the manipulator
+	var/obj/item/borg/apparatus/robo_hand
 	if(istype(interacting_with, /obj/item/borg/apparatus))
-		var/obj/item/borg/apparatus/robo_hand = interacting_with
-		if(robo_hand.stored)
-			interacting_with = robo_hand.stored
+		robo_hand = interacting_with
+		interacting_with = robo_hand.get_proxy_attacker_for(interacting_with)
 
 	if(!labels_left)
 		balloon_alert(user, "no labels left!")
@@ -88,6 +88,8 @@
 	stick_label.stick_to_atom(interacting_with, cursor_x, cursor_y)
 	playsound(interacting_with, 'sound/items/handling/component_pickup.ogg', 20, TRUE)
 	labels_left--
+	if(robo_hand)
+		robo_hand.update_appearance()
 	return TRUE
 
 /obj/item/hand_labeler/interact(mob/user)

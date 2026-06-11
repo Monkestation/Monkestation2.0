@@ -85,6 +85,7 @@
 	icon_state = "asclepius_dormant"
 	inhand_icon_state = "asclepius_dormant"
 	var/activated = FALSE
+	/// Bite cooldown
 	var/busy = FALSE
 
 /obj/item/rod_of_asclepius/Initialize(mapload)
@@ -153,43 +154,55 @@
 
 
 /obj/item/rod_of_asclepius/interact_with_atom(mob/living/victum, mob/living/user)
-	if(activated)
-		if(victum.stat == DEAD)
-			to_chat(user, span_notice("I'm starting the resurrection ritual of the [victum]."))
-			playsound(user, 'sound/health/resurect_cast.ogg', 100, TRUE)
-			if(do_after(user, 10 SECONDS, target = victum))
-				to_chat(user, span_warning("The Rod blooms with tiny leaves!"))
-			else
-				to_chat(user, span_warning("The ritual is interrupted!"))
-				return
+	if(!activated)
+		return NONE
 
-			if(HAS_TRAIT(victum, TRAIT_SUICIDED))
-				victum.visible_message(span_warning("[user] tears off a tiny leaf from the Rod and puts it in his mouth [victum], but the body does not react..."))
-				return
+	if(victum.stat == DEAD)
+		to_chat(user, span_notice("I'm starting the resurrection ritual of the [victum]."))
+		playsound(user, 'sound/health/resurect_cast.ogg', 100, TRUE)
+		if(!do_after(user, 10 SECONDS, target = victum))
+			to_chat(user, span_warning("The ritual is interrupted!"))
+			return ITEM_INTERACT_BLOCKING
 
-			if(victum.getBruteLoss()+victum.getFireLoss() >= 200 || HAS_TRAIT(victum, TRAIT_HUSK))
-				victum.visible_message(span_warning("[user] tears off a tiny leaf from the Rod and puts it in his mouth [victum], the body convulses briefly, and then freezes again."))
-				victum.do_jitter_animation(10)
-				return
-			victum.visible_message(span_warning("[user] tears off a tiny leaf from the Rod and puts it in his mouth [victum], the body begins to convulse!"))
+		user.do_attack_animation(victum)
+		to_chat(user, span_warning("The Rod blooms with tiny leaves!"))
+
+		if(HAS_TRAIT(victum, TRAIT_SUICIDED))
+			victum.visible_message(span_warning("[user] tears off a tiny leaf from the Rod and puts it in his mouth [victum], but the body does not react..."))
+			return ITEM_INTERACT_SUCCESS
+
+		if(victum.getBruteLoss() + victum.getFireLoss() >= 200 || HAS_TRAIT(victum, TRAIT_HUSK))
+			victum.visible_message(span_warning("[user] tears off a tiny leaf from the Rod and puts it in his mouth [victum], the body convulses briefly, and then freezes again."))
 			victum.do_jitter_animation(10)
-			addtimer(CALLBACK(victum, TYPE_PROC_REF(/mob/living/carbon, do_jitter_animation), 10), 4 SECONDS)
-			addtimer(CALLBACK(victum, TYPE_PROC_REF(/mob/living/carbon, do_jitter_animation), 10), 8 SECONDS)
-			addtimer(CALLBACK(victum, TYPE_PROC_REF(/mob/living, do_strange_reagent_revival), 10), 7 SECONDS)
-			..()
+			return ITEM_INTERACT_SUCCESS
 
-		else
-			if(!busy)
-				user.visible_message(span_warning("The snake wrapping around the hand of [user] makes a short jerk and bites [victum]! The victim's face instantly blurs into a silly but very peaceful face!"))
-				playsound(user, 'sound/health/snake_shhh.ogg', 80, TRUE)
-				victum.reagents?.add_reagent(/datum/reagent/pax, 1)
-				busy = TRUE
-				addtimer(CALLBACK(src, PROC_REF(reload), 10), 5 SECONDS)
-			return ..()
-	else
-		return ..()
+		victum.visible_message(span_warning("[user] tears off a tiny leaf from the Rod and puts it in his mouth [victum], the body begins to convulse!"))
+		victum.do_jitter_animation(10)
+		addtimer(CALLBACK(victum, TYPE_PROC_REF(/mob/living/carbon, do_jitter_animation), 10), 4 SECONDS)
+		addtimer(CALLBACK(victum, TYPE_PROC_REF(/mob/living/carbon, do_jitter_animation), 10), 8 SECONDS)
+		addtimer(CALLBACK(victum, TYPE_PROC_REF(/mob/living, do_strange_reagent_revival), 10), 7 SECONDS)
+		return ITEM_INTERACT_SUCCESS
+
+	if(busy)
+		return NONE
+
+	if(!victum.can_inject())
+		user.visible_message(span_warning("The snake is not able to bite through [victum]'s skin!"))
+		return NONE
+
+	user.visible_message(span_warning("The snake wrapping around the hand of [user] makes a short jerk and bites [victum]! The victim's face instantly blurs into a silly but very peaceful face!"))
+	playsound(user, 'sound/health/snake_shhh.ogg', 80, TRUE)
+	victum.reagents?.add_reagent(/datum/reagent/pax, 0.5)
+	victum.reagents?.add_reagent(/datum/reagent/peaceborg/confuse, 5)
+	victum.adjust_jitter_up_to(10 SECONDS, 30 SECONDS)
+	user.do_attack_animation(victum)
+	busy = TRUE
+	addtimer(CALLBACK(src, PROC_REF(reload), user), 5 SECONDS)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/rod_of_asclepius/proc/reload(mob/living/user)
+	if(QDELETED(src))
+		return
 	busy = FALSE
 	user.visible_message(span_notice("The snake has calmed down and is ready to sting again."))
 	playsound(user, 'sound/health/zvuk-zmeya.ogg', 80, TRUE)

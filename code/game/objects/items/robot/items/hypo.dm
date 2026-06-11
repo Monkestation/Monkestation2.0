@@ -170,6 +170,8 @@
 	var/tgui_theme = PDA_THEME_NTOS
 	/// Should we play a sound upon injecting someone?
 	var/injection_sound = 'sound/items/autoinjector.ogg'
+	/// Name of the chemicals section in the UI
+	var/chemicals_section_title = "Chemicals"
 
 /obj/item/reagent_containers/borghypo/Initialize(mapload)
 	. = ..()
@@ -439,6 +441,7 @@
 			"volume" = round(stored_reagents[reagent_typepath], 0.01),
 		)))
 	data["reagents"] = available_reagents
+	data["chemicals_section_title"] = chemicals_section_title
 	data["selectedReagentLeft"] = selected_reagent_typepath ? "[selected_reagent_typepath]" : null
 	data["selectedReagentRight"] = selected_reagent_typepath_alt ? "[selected_reagent_typepath_alt]" : null
 	data["selectedRecipeIdLeft"] = selected_recipe_id
@@ -508,7 +511,7 @@
 			. = TRUE
 
 		if("save_recording")
-			var/name = tgui_input_text(ui.user, "What do you want to name this recipe?", "Recipe Name?", "Recipe Name", 30)
+			var/name = tgui_input_text(ui.user, "What do you want to name this recipe?", "Recipe Name?", "Recipe Name", 12)
 			if(ui_status(user, state) != UI_INTERACTIVE)
 				return
 			if(saved_recipes[name] && tgui_alert(ui.user, "\"[name]\" already exists, do you want to overwrite it?",, list("No", "Yes")) != "Yes")
@@ -818,6 +821,7 @@
 	recharge_time = 6 SECONDS // 2x of borgshaker.
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 	default_reagent_types = EXPANDED_SERVICE_REAGENTS
+	chemicals_section_title = "Condiments"
 
 /obj/item/reagent_containers/borghypo/condiment_synthesizer/attack(mob/living/target_mob, mob/user)
 	return
@@ -825,12 +829,25 @@
 /obj/item/reagent_containers/borghypo/condiment_synthesizer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!interacting_with.is_refillable())
 		return NONE
-	if(!has_reagents_for_injection(user)) // Gives balloon alerts.
+	if(!has_reagents_for_injection_left(user))
 		return ITEM_INTERACT_BLOCKING
 	if(interacting_with.reagents.total_volume >= interacting_with.reagents.maximum_volume)
 		balloon_alert(user, "it's full!")
 		return ITEM_INTERACT_BLOCKING
-	var/datum/reagents/reagent_injector = create_reagent_injector()
+	var/datum/reagents/reagent_injector = create_reagent_injector_left()
+	balloon_alert(user, "[reagent_injector.total_volume] unit\s poured")
+	reagent_injector.trans_to(interacting_with, reagent_injector.total_volume, transfered_by = user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/reagent_containers/borghypo/condiment_synthesizer/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!interacting_with.is_refillable())
+		return NONE
+	if(!has_reagents_for_injection_right(user))
+		return ITEM_INTERACT_BLOCKING
+	if(interacting_with.reagents.total_volume >= interacting_with.reagents.maximum_volume)
+		balloon_alert(user, "it's full!")
+		return ITEM_INTERACT_BLOCKING
+	var/datum/reagents/reagent_injector = create_reagent_injector_right()
 	balloon_alert(user, "[reagent_injector.total_volume] unit\s poured")
 	reagent_injector.trans_to(interacting_with, reagent_injector.total_volume, transfered_by = user)
 	return ITEM_INTERACT_SUCCESS
@@ -838,7 +855,7 @@
 /obj/item/reagent_containers/borghypo/condiment_synthesizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "BorgChemicalCondiments", "Integrated Condiment Dispenser")
+		ui = new(user, src, "BorgChemicalDispenser", "Integrated Condiment Dispenser")
 		ui.open()
 
 #undef BASE_MEDICAL_REAGENTS
