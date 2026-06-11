@@ -9,7 +9,7 @@
 	desc = "An antique looking rifle that looks immaculate despite being clearly very old."
 	slot_flags = ITEM_SLOT_BACK
 	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_worn.dmi'
+	worn_icon = 'icons/mob/clothing/back/lionhunter.dmi'
 	icon_state = "lionhunter"
 	inhand_icon_state = "lionhunter"
 	worn_icon_state = "lionhunter"
