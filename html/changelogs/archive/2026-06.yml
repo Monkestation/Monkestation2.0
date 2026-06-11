@@ -185,3 +185,10 @@
   - qol: Noisemaker default is disabled so you must actively enable them if you want
       to hear them.
   - qol: do_after timer to enable/disable reduced to 1 Second from 1.5 Seconds
+2026-06-11:
+  tattax:
+  - qol: adds a visual indicator for blood thickening (bloodsucker rank up via blood)
+  - qol: makes blood full! bloodsucker feed text a bit easier to read
+  - bugfix: fixes bloodsucker maptext going not following the gradient when below
+      bad blood
+  - code_imp: made some to_chats easier to see

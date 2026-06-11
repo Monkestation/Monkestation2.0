@@ -1,0 +1,5 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - balance: "cattleprods are normal sized but take 1.5 more charge than stun batons."
+  - balance: "bluespace crystals and teleprods make the victim confused and disgusted when they teleport"
