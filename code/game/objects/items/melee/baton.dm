@@ -617,7 +617,7 @@
 
 	/// How long the baton has been active
 	var/time_on = 0
-	/// At what time this stun baton automatically turns off
+	/// At what time this stun baton automatically turns off. Set to 0 to disable
 	var/cutoff_time = 1 MINUTE
 
 /datum/armor/baton_security
@@ -792,7 +792,7 @@
 /obj/item/melee/baton/security/process(seconds_per_tick)
 	if(!active)
 		return
-	time_on += seconds_per_tick
+	time_on += seconds_per_tick SECONDS
 	if(!(time_on >= cutoff_time))
 		return
 	visible_message(span_warning("The [src] fizzles and automatically turns off!"))
