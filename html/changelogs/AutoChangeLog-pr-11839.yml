@@ -1,0 +1,4 @@
+author: "Shoddd"
+delete-after: True
+changes:
+  - balance: "Ashen robes no longer give TRAIT_SUPPRESS_NOFIRE"
