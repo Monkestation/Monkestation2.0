@@ -39,6 +39,10 @@
 	item_path = /obj/item/borg/upgrade/modkit/minebot_passthrough
 	cost_per_order = 1000
 
+/datum/orderable_item/accelerator/friendly_fire
+	item_path = /obj/item/borg/upgrade/modkit/human_passthrough
+	cost_per_order = 925
+
 /datum/orderable_item/accelerator/chasis
 	item_path = /obj/item/borg/upgrade/modkit/chassis_mod
 	cost_per_order = 250
