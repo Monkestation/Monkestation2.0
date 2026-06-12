@@ -625,13 +625,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if (mode == CHARACTER_ROLE_MODE_SIMPLE || mode == CHARACTER_ROLE_MODE_PER_CHAR)
 		return read_preference(/datum/preference/name/real_name)
 
-	var/i = 0
-
 	enabled_character_names = ""
 
-	for (var/character_slot in enabled_characters)
-		i += 1
-		var/name = get_character_name(character_slot)
+	for (var/i in 1 to length(enabled_characters))
+		var/name = get_character_name(enabled_characters[i])
 
 		if (!isnull(name))
 			if (i == 1)
@@ -810,7 +807,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		var/slot = choice
 		prefs.save_character()
 		prefs.switch_to_slot(slot)
-
+		prefs.save_character()
+		prefs.switch_to_slot(choice)
 /datum/preferences/proc/tmp_change_character_slot()
 	var/choice = pick_character_tgui_list(latejoin_overrride_character)
 	if(choice)

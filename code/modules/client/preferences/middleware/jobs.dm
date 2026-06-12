@@ -14,7 +14,7 @@
 	else
 		job_prefs = preferences.job_preferences_character
 
-	if (length(job_prefs) > 0)
+	if(length(job_prefs))
 		job_prefs.Cut()
 		return TRUE
 
