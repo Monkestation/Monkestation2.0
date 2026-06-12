@@ -151,6 +151,7 @@
 #define SPRINT_PER_TICK 0.5
 #define SPRINT_PER_STEP 20
 /mob/living/silicon/ai/proc/AIMove(direction)
+	var/mob/living/silicon/ai/user
 	var/max_sprint = user.max_camera_sprint
 	// yeah this has to update in real time now as it can be upgraded. Let's hope being able to do so doesn't break anything. It sounds like there\
 	are limitations with the current system, hopefully they're not too crippling.
