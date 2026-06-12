@@ -39,7 +39,7 @@
 		JOB_CHAPLAIN,
 		JOB_CURATOR,
 	)
-	required_enemies = 6
+	required_enemies = 5
 	min_players = 20
 	weight = 5
 	maximum_antags = 2

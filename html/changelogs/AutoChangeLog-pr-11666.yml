@@ -1,5 +1,0 @@
-author: "Gboster, Qwertytoforty, tommysalami3, rick hick"
-delete-after: True
-changes:
-  - rscadd: "Added a hardmode version of hierophant/ashdrake/colossus"
-  - rscadd: "Hardmode can be engaged by using a weapon with the HRD-MDE injector addon on a megafauna, 500 points per one."

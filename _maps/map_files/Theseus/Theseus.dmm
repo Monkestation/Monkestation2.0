@@ -10150,6 +10150,18 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating/rust,
 /area/station/maintenance/starboard/aft)
+"cZN" = (
+/obj/machinery/door/airlock/external{
+	name = "Departure Lounge Airlock"
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/landmark/navigate_destination/dockesc,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "cZR" = (
 /turf/closed/wall,
 /area/station/security/execution/transfer)
@@ -38515,8 +38527,8 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/apc/cell_10k,
 /obj/machinery/airalarm/directional/east,
-/obj/item/vacuum_pack,
-/obj/item/vacuum_pack,
+/obj/item/vacuum_pack/backpack,
+/obj/item/vacuum_pack/backpack,
 /obj/item/disk/vacuum_upgrade/biomass,
 /obj/item/disk/vacuum_upgrade/biomass,
 /obj/item/storage/box/monkeycubes{
@@ -56313,7 +56325,6 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Departures Lounge"
 	},
-/obj/effect/landmark/navigate_destination/dockesc,
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -70198,6 +70209,16 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/wood/tile,
 /area/station/service/library/artgallery)
+"uoX" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/landmark/navigate_destination{
+	location = "Evacuation"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "upb" = (
 /obj/structure/table,
 /obj/item/storage/backpack/duffelbag/med/surgery{
@@ -122992,7 +123013,7 @@ uPa
 cGg
 are
 stS
-oaM
+uoX
 unU
 hTG
 oOn
@@ -124036,7 +124057,7 @@ jvc
 jvc
 rry
 rry
-iCE
+cZN
 loa
 mcY
 hxc
