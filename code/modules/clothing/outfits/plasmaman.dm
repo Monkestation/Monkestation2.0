@@ -12,7 +12,7 @@
 	name = "Security Plasmaman"
 
 	uniform = /obj/item/clothing/under/plasmaman/security
-	gloves = /obj/item/clothing/gloves/color/plasmaman/black
+	gloves = /obj/item/clothing/gloves/color/black/security
 	head = /obj/item/clothing/head/helmet/space/plasmaman/security
 	mask = /obj/item/clothing/mask/gas/sechailer/plasmaman
 
@@ -27,7 +27,7 @@
 	name = "Warden Plasmaman"
 
 	uniform = /obj/item/clothing/under/plasmaman/security/warden
-	gloves = /obj/item/clothing/gloves/color/plasmaman/black
+	gloves = /obj/item/clothing/gloves/color/black/security
 	head = /obj/item/clothing/head/helmet/space/plasmaman/security/warden
 	mask = /obj/item/clothing/mask/gas/sechailer/plasmaman
 
@@ -203,7 +203,7 @@
 	name = "Head of Security Plasmaman"
 
 	uniform = /obj/item/clothing/under/plasmaman/security/head_of_security
-	gloves = /obj/item/clothing/gloves/color/plasmaman/black
+	gloves = /obj/item/clothing/gloves/color/black/security
 	head = /obj/item/clothing/head/helmet/space/plasmaman/security/head_of_security
 	mask = /obj/item/clothing/mask/gas/sechailer/plasmaman
 

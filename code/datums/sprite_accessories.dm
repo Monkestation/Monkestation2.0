@@ -841,6 +841,14 @@
 	name = "Ziegler"
 	icon_state = "hair_ziegler"
 
+/datum/sprite_accessory/hair/slick
+	name = "Slick"
+	icon_state = "hair_slick"
+
+/datum/sprite_accessory/hair/macho
+	name = "Macho"
+	icon_state = "hair_macho"
+
 /*
 /////////////////////////////////////
 /  =---------------------------=    /

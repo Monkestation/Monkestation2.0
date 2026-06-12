@@ -41,7 +41,7 @@
 	resistance_flags = FLAMMABLE
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 4
-	cutting_tool = /obj/item/crowbar
+	cutting_tool_behaviour = TOOL_CROWBAR
 
 /obj/machinery/smartfridge/wooden
 	name = "Debug Wooden Smartfridge"

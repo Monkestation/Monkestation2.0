@@ -549,3 +549,28 @@
   - balance: clock armaments spell no longer gives bronze boots
   - bugfix: fixed a bug that allowed quickbound clock cult spells to bypass power
       cost and make power go into negative values
+2026-05-31:
+  Cujo:
+  - qol: Cleans up stasis bed examine text.
+  Gboster, Qwertytoforty, tommysalami3, rick hick:
+  - rscadd: Added a hardmode version of hierophant/ashdrake/colossus
+  - rscadd: Hardmode can be engaged by using a weapon with the HRD-MDE injector addon
+      on a megafauna, 500 points per one.
+  Shoddd:
+  - rscdel: Disables Pro-tagonista Syndrome
+  SirNightKnight:
+  - balance: rubbershot has the same speed as other ballistics.
+  - balance: lowered the cost of rubbershot ammo boxes to 2 TC from 3 in the uplink.
+  - balance: slashers are no longer clumsy, instead they can't use guns.
+  - qol: closets and crates have to be cut in combat mode.
+  - bugfix: fixed up closet/crate cutting code to work off tool behaviour.
+  TheColorCyan:
+  - balance: (Melbert) Codex Cicatrix is now a tier 1 heretic knowledge, and can not
+      be drafted.
+  - balance: (Melbert) Upon being successfully sacrificed by a heretic all other heretics
+      lose you as a target, and you can no longer be (re)rolled as a target by other
+      heretics.
+  - balance: Cosmic expansion range is back to 3x3
+  Tractor-Maam:
+  - bugfix: engineering cyborgs can recharge their light replacer in cyborg rechargers
+      again.
