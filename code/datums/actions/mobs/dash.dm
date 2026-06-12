@@ -34,7 +34,7 @@
 					valid = FALSE
 					continue
 				for(var/atom/structure in T.contents)
-					if(!isliving(structure) && !structure.CanAllowThrough(owner) && structure != owner )
+					if(!isliving(structure) && !structure.CanAllowThrough(owner) && structure != owner)
 						valid = FALSE
 			if(valid)
 				accessable_turfs[check_turf] = turf_dist_to_target
