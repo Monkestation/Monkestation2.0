@@ -784,7 +784,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return default_randomization
 
-/datum/preferences/proc/pick_character_tgui_list(current_slot_num, title="Select a character slot")
+/datum/preferences/proc/pick_character_tgui_list(current_slot_num, title)
 	var/list/characters = create_character_profiles()
 	var/list/options = list()
 	var/current_slot
@@ -803,7 +803,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		to_chat(parent, span_warning("You have no characters."))
 		return
 
-	var/choice = tgui_input_list(parent, "Select a character slot", "Change Character Slot", options, current_slot)
+	var/choice = tgui_input_list(parent, "Select a character slot", title, options, current_slot)
 
 	if(!choice)
 		return
@@ -816,18 +816,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	set desc = "Changes the active character slot. This is no different than clicking the preferred character slot in the Character Setup menu."
 	set category = "OOC"
 
-	var/choice = prefs.pick_character_tgui_list(prefs.active_slot)
+	if (prefs.read_preference(/datum/preference/choiced/character_role_select_mode) != CHARACTER_ROLE_MODE_SIMPLE)
+		return prefs.tmp_change_character_slot()
+
+	var/choice = prefs.pick_character_tgui_list(prefs.active_slot, "Change Character Slot")
 	if(choice)
 		prefs.save_character()
 		prefs.switch_to_slot(choice)
+
 /datum/preferences/proc/tmp_change_character_slot()
-	var/choice = pick_character_tgui_list(latejoin_overrride_character)
+	var/choice = pick_character_tgui_list(latejoin_overrride_character, "Set Override Character")
 	if(choice)
 		latejoin_overrride_character = choice
 		enabled_character_names = null
 
 /datum/preferences/proc/set_default_character()
-	var/choice = pick_character_tgui_list(latejoin_overrride_character, title="Change Default Character")
+	var/choice = pick_character_tgui_list(latejoin_overrride_character, "Change Default Character")
 	if(choice)
 		default_character = choice
 		enabled_character_names = null
