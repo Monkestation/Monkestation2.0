@@ -585,7 +585,7 @@
 /obj/item/reagent_containers/borghypo/medical
 	default_reagent_types = BASE_MEDICAL_REAGENTS
 	expanded_reagent_types = EXPANDED_MEDICAL_REAGENTS
-	possible_transfer_amounts = list(1, 2, 5, 10, 20, 30)
+	possible_transfer_amounts = list(1, 2, 2.5, 5, 10, 15)
 
 /obj/item/reagent_containers/borghypo/medical/hacked
 	icon_state = "borghypo_s"
@@ -599,7 +599,7 @@
 /obj/item/reagent_containers/borghypo/peace
 	name = "Peace Hypospray"
 	default_reagent_types = BASE_PEACE_REAGENTS
-	possible_transfer_amounts = list(1, 2, 5, 10, 20)
+	possible_transfer_amounts = list(1, 2, 2.5, 5, 10, 15)
 
 /obj/item/reagent_containers/borghypo/peace/hacked
 	desc = "Everything's peaceful in death!"
