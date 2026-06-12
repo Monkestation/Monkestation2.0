@@ -804,9 +804,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/choice = prefs.pick_character_tgui_list(prefs.active_slot)
 	if(choice)
-		var/slot = choice
-		prefs.save_character()
-		prefs.switch_to_slot(slot)
 		prefs.save_character()
 		prefs.switch_to_slot(choice)
 /datum/preferences/proc/tmp_change_character_slot()
