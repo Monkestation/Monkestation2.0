@@ -458,6 +458,14 @@
 	color = "#FFEBEB"
 	ph = 7.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	/// How much brute damage is healed on application, times the application amount
+	var/brute_heal_amt = -1.25
+	/// how much burn damage is healed on application, times the application amount
+	var/burn_heal_amt = -1.25
+	/// Wether or not this version of synth can unhusk burnt bodies
+	var/unhusks = TRUE
+	/// How much tox damage is dealt per unit of health healed
+	var/toxmutipler = 0.66
 
 /datum/reagent/medicine/c2/synthflesh/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
 	. = ..()
@@ -469,20 +477,20 @@
 		if(istype(humans.dna.species, /datum/species/ipc))
 			return
 	if(carbies.stat == DEAD)
-		show_message = 0
+		show_message = FALSE
 	if(!(methods & (PATCH|TOUCH|VAPOR)))
 		return
-	var/harmies = min(carbies.getBruteLoss(), carbies.adjustBruteLoss(-1.25 * reac_volume, required_bodytype = affected_bodytype)*-1)
-	var/burnies = min(carbies.getFireLoss(), carbies.adjustFireLoss(-1.25 * reac_volume, required_bodytype = affected_bodytype)*-1)
+	var/harmies = min(carbies.getBruteLoss(), carbies.adjustBruteLoss(brute_heal_amt * reac_volume, required_bodytype = affected_bodytype)*-1)
+	var/burnies = min(carbies.getFireLoss(), carbies.adjustFireLoss(burn_heal_amt * reac_volume, required_bodytype = affected_bodytype)*-1)
 	for(var/i in carbies.all_wounds)
 		var/datum/wound/iter_wound = i
 		iter_wound.on_synthflesh(reac_volume)
-	carbies.adjustToxLoss((harmies+burnies)*(0.5 + (0.25*(1-creation_purity))), required_biotype = affected_biotype) //0.5 - 0.75
+	carbies.adjustToxLoss((harmies+burnies)*(toxmutipler), required_biotype = affected_biotype)
 	if(show_message)
 		to_chat(carbies, span_danger("You feel your burns and bruises healing! It stings like hell!"))
 	carbies.add_mood_event("painful_medicine", /datum/mood_event/painful_medicine)
 
-	if(!HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, BURN) || carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD)
+	if(!HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, BURN) || carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD || !unhusks)
 		return
 	var/synthflesh_amount = carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) // Yes, this includes the amount we've added from our gel
 	if(methods & TOUCH) //touch does not apply chems to blood, we want to combine the two volumes before attempting to unhusk
@@ -532,7 +540,7 @@
 
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	H.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.25 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
-	if(H.health <= HEALTH_THRESHOLD_CRIT && H.health > (H.crit_threshold + HEALTH_THRESHOLD_FULLCRIT * (2 * normalise_creation_purity()))) //we cannot save someone below our lowered crit threshold.
+	if(H.health <= H.crit_threshold && H.health > (H.crit_threshold + H.hardcrit_threshold * (2 * normalise_creation_purity()))) //we cannot save someone below our lowered crit threshold.
 
 		H.adjustToxLoss(-2 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		H.adjustBruteLoss(-2 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
@@ -549,7 +557,7 @@
 		if(SPT_PROB(18, seconds_per_tick))
 			to_chat(H,span_danger("Your body is trying to give up, but your heart is still beating!"))
 
-	if(H.health <= (H.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*(2*normalise_creation_purity()))) //certain death below this threshold
+	if(H.health <= (H.crit_threshold + H.hardcrit_threshold*(2*normalise_creation_purity()))) //certain death below this threshold
 		REMOVE_TRAIT(H, TRAIT_STABLEHEART, type) //we have to remove the stable heart trait before we give them a heart attack
 		to_chat(H,span_danger("You feel something rupturing inside your chest!"))
 		H.emote("scream")
@@ -570,4 +578,16 @@
 
 
 /******NICHE******/
-//todo
+//todo (it was never todone)
+///Biocellulose, a weaker version of synthflesh that doesnt cause toxin damage but also cannot unhusk
+/datum/reagent/medicine/c2/synthflesh/biocellulose
+	name = "Biocellulose"
+	description = "A weaker, biological version of synthflesh that heals brute and burn, at the cost of causing more toxin damage, and being unable to unhusk. Touch application only."
+	reagent_state = LIQUID
+	color = "#ee5c5c"
+	ph = 7.2
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	brute_heal_amt = -0.75
+	burn_heal_amt = -0.75
+	unhusks = FALSE
+	toxmutipler = 0.8

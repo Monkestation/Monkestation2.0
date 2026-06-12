@@ -32,20 +32,31 @@
 
 /obj/machinery/plumbing/slime_grinder/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	if(length(soon_to_be_crushed) && !GRINDING_SOME_SLIMES)
-		Shake(6, 6, 10 SECONDS)
-		GRINDING_SOME_SLIMES = TRUE
-		var/datum/looping_sound/microwave/new_loop = new(src)
-		new_loop.start()
-		screams_of_the_damned()
-		addtimer(CALLBACK(src, PROC_REF(screams_of_the_damned)), 3 SECONDS)
-		addtimer(CALLBACK(src, PROC_REF(screams_of_the_damned)), 6 SECONDS)
-		addtimer(CALLBACK(src, PROC_REF(screams_of_the_damned)), 9 SECONDS)
-		machine_do_after_visable(src, 10 SECONDS)
-		GRINDING_SOME_SLIMES = FALSE
-		new_loop.stop()
-		playsound(src, 'sound/machines/blender.ogg', 50, TRUE)
-		grind_slimes()
+	start_grinding_slimes()
+
+/obj/machinery/plumbing/slime_grinder/attack_robot(mob/user, modifiers)
+	. = ..()
+	start_grinding_slimes()
+
+/// Begins the process of grinding any slimes inside.
+/obj/machinery/plumbing/slime_grinder/proc/start_grinding_slimes()
+	if(!length(soon_to_be_crushed))
+		return
+	if(GRINDING_SOME_SLIMES)
+		return
+	Shake(6, 6, 10 SECONDS)
+	GRINDING_SOME_SLIMES = TRUE
+	var/datum/looping_sound/microwave/new_loop = new(src)
+	new_loop.start()
+	screams_of_the_damned()
+	addtimer(CALLBACK(src, PROC_REF(screams_of_the_damned)), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(screams_of_the_damned)), 6 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(screams_of_the_damned)), 9 SECONDS)
+	machine_do_after_visable(src, 10 SECONDS)
+	GRINDING_SOME_SLIMES = FALSE
+	new_loop.stop()
+	playsound(src, 'sound/machines/blender.ogg', 50, TRUE)
+	grind_slimes()
 
 /obj/machinery/plumbing/slime_grinder/proc/screams_of_the_damned()
 	for(var/mob/living/basic/slime/slime as anything in soon_to_be_crushed)
@@ -68,7 +79,7 @@
 			'monkestation/code/modules/slimecore/sounds/slimeblender13.ogg',
 			'monkestation/code/modules/slimecore/sounds/slimeblender15.ogg',
 		)
-		playsound(src, pick(slime_blender), rand(35, 50), TRUE, mixer_channel = CHANNEL_MOB_SOUNDS)
+		playsound(src, pick(slime_blender), rand(35, 50), TRUE, mixer_channel = CHANNEL_VOICES)
 		playsound(src, 'sound/machines/blender.ogg', 80, TRUE, mixer_channel = CHANNEL_MACHINERY)
 
 /obj/machinery/plumbing/slime_grinder/proc/grind_slimes()

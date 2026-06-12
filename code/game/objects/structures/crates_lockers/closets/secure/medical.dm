@@ -42,6 +42,7 @@
 	new /obj/item/clothing/gloves/latex/nitrile(src)
 	new /obj/item/storage/belt/medical(src)
 	new /obj/item/clothing/glasses/hud/health(src)
+	new /obj/item/breathing_bag(src)
 	return
 
 /obj/structure/closet/secure_closet/psychology
@@ -90,12 +91,13 @@
 	new /obj/item/storage/photo_album/cmo(src)
 	new /obj/item/storage/lockbox/medal/med(src)
 	new /obj/item/extrapolator(src) //MONKESTATION EDIT:
+	new /obj/item/storage/lockbox/vialbox/hypo_deluxe(src)
 
 /obj/structure/closet/secure_closet/chief_medical/populate_contents_immediate()
 	. = ..()
 
 	// Traitor steal objective
-	new /obj/item/reagent_containers/hypospray/cmo(src)
+	new /obj/item/hypospray/cmo(src)
 
 /obj/structure/closet/secure_closet/animal
 	name = "animal control locker"

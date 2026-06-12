@@ -63,14 +63,14 @@
 	return
 
 /obj/item/clockwork/weapon/proc/check_turf(check_override)
-	return (SEND_SIGNAL(src, COMSIG_CHECK_TURF_CLOCKWORK, check_override) & COMPONENT_CHECKER_VALID_TURF)
+	return (SEND_SIGNAL(src, COMSIG_CHECK_TURF_CLOCKWORK, check_override || get_turf(src)) & COMPONENT_CHECKER_VALID_TURF)
 
 /obj/item/clockwork/weapon/brass_spear
 	name = "brass spear"
 	desc = "A razor-sharp spear made of brass. It thrums with barely-contained energy."
 	base_icon_state = "ratvarian_spear"
 	icon_state = "ratvarian_spear0"
-	embedding = list("max_damage_mult" = 15, "armour_block" = 80)
+	embed_type = /datum/embedding/brass_spear
 	throwforce = 40
 	force = 7
 	armour_penetration = 40
@@ -80,6 +80,9 @@
 	var/datum/action/cooldown/spell/summon_spear/our_summon = new
 	///weakref to our current holder
 	var/datum/weakref/current_holder
+
+/datum/embedding/brass_spear
+	impact_pain_mult = 15
 
 /obj/item/clockwork/weapon/brass_spear/Initialize(mapload)
 	. = ..()
@@ -191,6 +194,7 @@
 	sharpness = FALSE
 	hitsound = 'sound/weapons/smash.ogg'
 	block_chance = 10
+	COOLDOWN_DECLARE(knockback_cooldown)
 
 /obj/item/clockwork/weapon/brass_battlehammer/Initialize(mapload)
 	. = ..()
@@ -201,11 +205,12 @@
 	)
 
 /obj/item/clockwork/weapon/brass_battlehammer/mob_hit_effect(mob/living/target, mob/living/user, thrown = FALSE)
-	if((!thrown && !HAS_TRAIT(src, TRAIT_WIELDED)) || !istype(target))
+	if((!thrown && !HAS_TRAIT(src, TRAIT_WIELDED)) || !istype(target) || !COOLDOWN_FINISHED(src, knockback_cooldown))
 		return
 
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 	target.throw_at(throw_target, thrown ? HAMMER_THROW_FLING_DISTANCE : HAMMER_FLING_DISTANCE, 4)
+	COOLDOWN_START(src, knockback_cooldown, 15 SECONDS)
 
 /obj/item/clockwork/weapon/brass_battlehammer/update_icon_state()
 	icon_state = "[base_icon_state]0"
@@ -228,11 +233,11 @@
 	if(!COOLDOWN_FINISHED(src, emp_cooldown))
 		return
 
-	COOLDOWN_START(src, emp_cooldown, 30 SECONDS)
+	COOLDOWN_START(src, emp_cooldown, 25 SECONDS)
 
 	target.emp_act(EMP_LIGHT)
 	new /obj/effect/temp_visual/emp/pulse(get_turf(target))
-	addtimer(CALLBACK(src, PROC_REF(send_message), user), 30 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(send_message), user), 25 SECONDS)
 	to_chat(user, span_brass("You strike [target] with an electromagnetic pulse!"))
 	playsound(user, 'sound/magic/lightningshock.ogg', 40)
 
@@ -260,7 +265,7 @@
 	icon = 'monkestation/icons/obj/clock_cult/clockwork_weapons.dmi'
 	lefthand_file = 'monkestation/icons/mob/clock_cult/clockwork_lefthand.dmi'
 	righthand_file = 'monkestation/icons/mob/clock_cult/clockwork_righthand.dmi'
-	icon_state = "bow_clockwork_unchambered_undrawn"
+	icon_state = "bow_clockwork"
 	inhand_icon_state = "clockwork_bow"
 	base_icon_state = "bow_clockwork"
 	force = 10
@@ -277,13 +282,6 @@
 	AddElement(/datum/element/clockwork_pickup)
 	AddComponent(/datum/component/turf_checker, GLOB.clock_turf_types, COMSIG_CHECK_TURF_CLOCKWORK)
 
-/obj/item/gun/ballistic/bow/clockwork/afterattack(atom/target, mob/living/user, flag, params, passthrough)
-	if(!drawn || !chambered)
-		to_chat(user, span_notice("[src] must be drawn to fire a shot!"))
-		return
-
-	return ..()
-
 /obj/item/gun/ballistic/bow/clockwork/can_trigger_gun(mob/living/user, akimbo_usage)
 	return IS_CLOCK(user) //clock cultists should always be able to use their weapons
 
@@ -296,36 +294,32 @@
 	recharge_time = initial(recharge_time)
 
 /obj/item/gun/ballistic/bow/clockwork/attack_self(mob/living/user)
-	if(drawn || !chambered)
+	if(!chambered)
+		balloon_alert(user, "no arrow nocked!")
 		return
-
 	if(!do_after(user, 0.5 SECONDS * (iscogscarab(user) ? COGSCARAB_BOW_DRAW_TIME_MULT : 1), src))
 		return
-
-	to_chat(user, span_notice("You draw back the bowstring."))
-	drawn = TRUE
-	playsound(src, 'sound/weapons/draw_bow.ogg', 75, 0) //gets way too high pitched if the freq varies
-	update_icon()
+	balloon_alert(user, "[drawn ? "string released" : "string drawn"]")
+	drawn = !drawn
+	playsound(src, 'sound/items/weapons/gun/bow/bow_draw.ogg', 25, TRUE)
+	update_appearance()
 
 /// Recharges a bolt, done after the delay in shoot_live_shot
 /obj/item/gun/ballistic/bow/clockwork/proc/recharge_bolt()
-	var/obj/item/ammo_casing/caseless/arrow/clockbolt/bolt = new
+	var/obj/item/ammo_casing/arrow/clockbolt/bolt = new
 	magazine.give_round(bolt)
-	chambered = bolt
+	chambered = magazine.get_round()
+	drawn = FALSE
 	update_icon()
 
 /obj/item/gun/ballistic/bow/clockwork/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	return
 
-/obj/item/gun/ballistic/bow/clockwork/update_icon_state()
-	. = ..()
-	icon_state = "[base_icon_state]_[chambered ? "chambered" : "unchambered"]_[drawn ? "drawn" : "undrawn"]"
-
 /obj/item/ammo_box/magazine/internal/bow/clockwork
-	ammo_type = /obj/item/ammo_casing/caseless/arrow/clockbolt
+	ammo_type = /obj/item/ammo_casing/arrow/clockbolt
 	start_empty = FALSE
 
-/obj/item/ammo_casing/caseless/arrow/clockbolt
+/obj/item/ammo_casing/arrow/clockbolt
 	name = "energy bolt"
 	desc = "An arrow made from a strange energy."
 	icon = 'monkestation/icons/obj/clock_cult/ammo.dmi'
@@ -338,6 +332,7 @@
 	icon_state = "arrow_energy"
 	damage = 25
 	damage_type = BURN
+	armour_penetration = 15
 
 //double damage to non clockwork structures and machines(if we rework reebe itself this will no longer be needed)
 /obj/projectile/energy/clockbolt/on_hit(atom/target, blocked, pierce_hit)

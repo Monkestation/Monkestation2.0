@@ -179,33 +179,34 @@
 	else
 		. += text("Systems nonfunctional.")
 
-/mob/living/silicon/pai/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == hacking_cable)
-		untrack_pai()
-		untrack_thing(hacking_cable)
-		hacking_cable = null
-		SStgui.update_user_uis(src)
-		if(!QDELETED(card))
-			card.update_appearance()
-	if(deleting_atom == atmos_analyzer)
+/mob/living/silicon/pai/Exited(atom/movable/gone, direction)
+	if(gone == atmos_analyzer)
 		atmos_analyzer = null
-	if(deleting_atom == aicamera)
+	else if(gone == aicamera)
 		aicamera = null
-	if(deleting_atom == internal_gps)
+	else if(gone == internal_gps)
 		internal_gps = null
-	if(deleting_atom == instrument)
+	else if(gone == instrument)
 		instrument = null
-	if(deleting_atom == newscaster)
+	else if(gone == newscaster)
 		newscaster = null
-	if(deleting_atom == signaler)
+	else if(gone == signaler)
 		signaler = null
 	return ..()
+
+/mob/living/silicon/pai/proc/on_hacking_cable_del(atom/source)
+	SIGNAL_HANDLER
+	untrack_pai()
+	untrack_thing(hacking_cable)
+	hacking_cable = null
+	SStgui.update_user_uis(src)
+	if(!QDELETED(card))
+		card.update_appearance()
 
 /mob/living/silicon/pai/Initialize(mapload)
 	. = ..()
 	if(istype(loc, /obj/item/modular_computer))
 		give_messenger_ability()
-	START_PROCESSING(SSfastprocess, src)
 	GLOB.pai_list += src
 	make_laws()
 	for(var/law in laws.inherent)
@@ -232,7 +233,8 @@
 	laws = new /datum/ai_laws/pai()
 	return TRUE
 
-/mob/living/silicon/pai/process(seconds_per_tick)
+/mob/living/silicon/pai/Life(seconds_per_tick, times_fired)
+	. = ..()
 	holochassis_health = clamp((holochassis_health + (HOLOCHASSIS_REGEN_PER_SECOND * seconds_per_tick)), -50, HOLOCHASSIS_MAX_HEALTH)
 
 /mob/living/silicon/pai/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
@@ -293,7 +295,7 @@
  * 	or FALSE if the pAI is not being carried.
  */
 /mob/living/silicon/pai/proc/get_holder()
-	var/mob/holder = recursive_loc_check(card, /mob)
+	var/mob/holder = recursive_loc_check(card, /mob/living/carbon)
 	if(isnull(holder))
 		return FALSE
 	return holder

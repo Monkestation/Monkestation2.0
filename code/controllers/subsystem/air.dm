@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(air)
 	init_order = INIT_ORDER_AIR
 	priority = FIRE_PRIORITY_AIR
 	wait = 0.5 SECONDS
-	flags = SS_BACKGROUND
+	flags = SS_BACKGROUND | SS_DYNAMIC
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/cached_cost = 0
@@ -320,7 +320,7 @@ SUBSYSTEM_DEF(air)
 		currentrun.len--
 		if(!M)
 			atmos_machinery -= M
-		if(M.process_atmos() == PROCESS_KILL)
+		if(M.process_atmos(wait * 0.1) == PROCESS_KILL)
 			stop_processing_machine(M)
 		if(MC_TICK_CHECK)
 			return
@@ -882,6 +882,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 	data["display_max"] = FALSE
 	#endif
 	data["showing_user"] = user.hud_used.atmos_debug_overlays
+	data["background"] = !!(flags & SS_BACKGROUND)
 	return data
 
 /datum/controller/subsystem/air/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -924,4 +925,13 @@ GLOBAL_LIST_EMPTY(colored_images)
 				user.client.images += GLOB.colored_images
 			else
 				user.client.images -= GLOB.colored_images
+			return TRUE
+		if("set_background")
+			var/status = params["status"]
+			if(isnull(status))
+				return
+			if(set_background_mode(status))
+				log_admin("[key_name(ui.user)] [status ? "enabled" : "disabled"] backgrounding for the Atmospherics subsystem.")
+				message_admins("[key_name_admin(ui.user)] [status ? "enabled" : "disabled"] backgrounding for the Atmospherics subsystem.")
+				SStgui.update_uis(src)
 			return TRUE

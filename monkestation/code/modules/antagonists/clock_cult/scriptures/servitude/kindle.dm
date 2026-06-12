@@ -12,10 +12,10 @@
 	invocation_text = list("Divinity, show them your light!")
 	after_use_text = "Let the power flow through you!"
 	slab_overlay = "volt"
-	use_time = 15 SECONDS
+	use_time = 0
 	cogs_required = 1
 	category = SPELLTYPE_SERVITUDE
-
+	can_cast_while_moving = TRUE
 
 /datum/scripture/slab/kindle/apply_effects(mob/living/hit_mob)
 	if(!istype(hit_mob))

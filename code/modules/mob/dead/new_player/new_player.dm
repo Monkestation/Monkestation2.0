@@ -264,7 +264,7 @@
 	var/atom/destination
 	var/obj/effect/oshan_launch_point/player/picked_point
 
-	if(length(GLOB.oshan_launch_points))
+	if(length(GLOB.oshan_launch_points) && !mind.assigned_role.oshan_normal_latejoin)
 		picked_point = pick(GLOB.oshan_launch_points)
 		destination = get_edge_target_turf(picked_point, picked_point.map_edge_direction)
 	else
@@ -322,7 +322,8 @@
 		if(SSshuttle.arrivals)
 			SSshuttle.arrivals.QueueAnnounce(humanc, chosen_rank)
 		else
-			announce_arrival(humanc, chosen_rank)
+			if(!HAS_TRAIT(character, TRAIT_STOWAWAY))
+				announce_arrival(humanc, chosen_rank)
 		AddEmploymentContract(humanc)
 
 		humanc.increment_scar_slot()

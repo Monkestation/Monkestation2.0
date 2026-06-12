@@ -349,3 +349,30 @@
 /obj/item/clothing/under/rank/security/officer/spacepol/beatcop
 	icon_state = "spacepolice_families"
 	inhand_icon_state = null
+
+//////////////////////
+// PRIVATE SECURITY //
+//////////////////////
+
+/obj/item/clothing/under/rank/security/private
+	name = "private security turtleneck"
+	desc = "A tactical turtleneck for the privates of Nanotrasen's private security force."
+	icon_state = "private"
+	inhand_icon_state = "b_suit"
+	armor_type = /datum/armor/security_head_of_security
+
+/obj/item/clothing/under/rank/security/private/corporal
+	name = "private security jumpsuit"
+	desc = "A tactical security jumpsuit for the corporals of Nanotrasen's private security force, complete with Nanotrasen belt buckle."
+	icon_state = "corporal"
+
+/obj/item/clothing/under/rank/security/private/sergeant
+	name = "silver private security jumpsuit"
+	desc = "A tactical security jumpsuit for the sergeants of Nanotrasen's private security force, complete with Nanotrasen belt buckle."
+	icon_state = "sergeant"
+
+/obj/item/clothing/under/rank/security/private/lieutenant
+	name = "gold private security jumpsuit"
+	desc = "A tactical security jumpsuit for the lieutenants of Nanotrasen's private security force, complete with Nanotrasen belt buckle."
+	icon_state = "lieutenant"
+

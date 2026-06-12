@@ -329,7 +329,7 @@
 		if (length(law) > 0)
 			if (!(law in hackedcheck))
 				law_display = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawh=[index]'>[law_display] [ion_num()]:</A> <font color='#660000'>[law]</font><BR>"}
+			list += {"<A href='byond://?src=[REF(src)];lawh=[index]'>[law_display] [ion_num()]:</A> <font color='#aa0000'>[law]</font><BR>"}
 
 	for (var/index in 1 to length(laws.ion))
 		law_display = "Yes"
@@ -359,7 +359,9 @@
 			number++
 	list += {"<br><br><A href='byond://?src=[REF(src)];laws=1'>State Laws</A>"}
 
-	usr << browse(list, "window=laws")
+	var/datum/browser/browser = new(usr, "laws")
+	browser.set_content(list)
+	browser.open()
 
 /mob/living/silicon/proc/ai_roster()
 	if(!client)
@@ -442,7 +444,7 @@
 /mob/living/silicon/handle_high_gravity(gravity, seconds_per_tick, times_fired)
 	return
 
-/mob/living/silicon/rust_heretic_act()
+/mob/living/silicon/rust_heretic_act(rust_strength)
 	adjustBruteLoss(500)
 
 /mob/living/silicon/on_floored_start()
@@ -513,3 +515,9 @@
 	law_list += laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
 	for(var/borg_laws in law_list)
 		. += borg_laws
+
+/mob/living/silicon/body_temperature_damage(datum/gas_mixture/environment, seconds_per_tick, times_fired)
+	return
+
+/mob/living/silicon/body_temperature_alerts()
+	return

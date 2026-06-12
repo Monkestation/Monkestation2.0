@@ -129,7 +129,7 @@
 		/datum/material/plastic =SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/silver =SMALL_MATERIAL_AMOUNT*5,
 	)
-	build_path = /obj/item/clothing/head/utility/hardhat/red/upgraded
+	build_path = /obj/item/clothing/head/utility/hardhat/upgraded
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
 	)
@@ -825,6 +825,25 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 	autolathe_exportable = FALSE
+
+/datum/design/security_trap
+	name = "Security Trap"
+	desc = "A rubber padded trap used to catch criminals non-lethally. Relies on security record data to function."
+	id = "security_trap"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
+		/datum/material/plasma =SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/titanium =SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/silver =SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/gold =SMALL_MATERIAL_AMOUNT*5,
+	)
+	build_path = /obj/item/restraints/legcuffs/beartrap/security
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/zipties
 	name = "Zipties"

@@ -678,6 +678,22 @@
 		/datum/stock_part/micro_laser = 1,
 		/datum/stock_part/manipulator = 1,)
 
+/obj/item/circuitboard/machine/bookbinder
+	name = "Book Binder"
+	greyscale_colors = CIRCUIT_COLOR_GENERIC
+	build_path = /obj/machinery/bookbinder
+	req_components = list(
+		/datum/stock_part/manipulator = 1,
+	)
+
+/obj/item/circuitboard/machine/libraryscanner
+	name = "Book Scanner"
+	greyscale_colors = CIRCUIT_COLOR_GENERIC
+	build_path = /obj/machinery/libraryscanner
+	req_components = list(
+		/datum/stock_part/scanning_module = 1,
+	)
+
 //Medical
 
 /obj/item/circuitboard/machine/chem_dispenser
@@ -1014,7 +1030,8 @@
 	name = "Mecha Orbital Pad"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/mechpad
-	req_components = list()
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 5,) //you are sending a giant behemoth of a machine (that also does 80 falling damage in multi-z) into a plate
 
 /obj/item/circuitboard/machine/botpad
 	name = "Bot Orbital Pad"
@@ -1312,6 +1329,22 @@
 	name = "\improper Departmental Techfab - Cargo"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 	build_path = /obj/machinery/rnd/production/techfab/department/cargo
+
+//Tram
+/obj/item/circuitboard/machine/crossing_signal
+	name = "Crossing Signal"
+	build_path = /obj/machinery/transport/crossing_signal
+	req_components = list(
+		/datum/stock_part/micro_laser = 1,
+	)
+
+/obj/item/circuitboard/machine/guideway_sensor
+	name = "Guideway Sensor"
+	build_path = /obj/machinery/transport/guideway_sensor
+	req_components = list(
+		/obj/item/assembly/prox_sensor = 1,
+	)
+
 //Misc
 /obj/item/circuitboard/machine/sheetifier
 	name = "Sheet-meister 2000"

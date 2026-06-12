@@ -392,6 +392,10 @@
 		data["sending_virus"] = sending_virus
 	return data
 
+/datum/computer_file/program/messenger/ui_assets(mob/user)
+	. = ..()
+	. += get_asset_datum(/datum/asset/spritesheet_batched/chat)
+
 //////////////////////
 // MESSAGE HANDLING //
 //////////////////////
@@ -474,7 +478,7 @@
 	if(!check_pda_message_against_filter(message, sender))
 		return null
 
-	return message
+	return emoji_parse(message)
 
 /// Sends a message to targets via PDA. When sending to everyone, set `everyone` to true so the message is formatted accordingly
 /datum/computer_file/program/messenger/proc/send_message(mob/living/sender, message, list/targets, everyone = FALSE)
@@ -683,7 +687,9 @@
 		receievers += computer.loc
 
 	for(var/mob/living/messaged_mob as anything in receievers)
-		if((messaged_mob.stat >= UNCONSCIOUS) || !messaged_mob.is_literate())
+		if(isnull(messaged_mob))
+			continue
+		if(QDELING(messaged_mob) || (messaged_mob.stat >= UNCONSCIOUS) || !messaged_mob.is_literate())
 			receievers -= messaged_mob
 			continue
 		var/reply_href = signal.data["rigged"] ? "explode" : "message"
@@ -704,10 +710,16 @@
 			sender_title = "<a href='byond://?src=[REF(messaged_mob)];track=[html_encode(sender_name)]'>[sender_title]</a>"
 
 		var/inbound_message = "[signal.format_message()]"
-		inbound_message = emoji_parse(inbound_message)
 
 		var/photo_message = signal.data["photo"] ? " (<a href='byond://?src=[REF(src)];choice=[photo_href];skiprefresh=1;target=[REF(chat)]'>Photo Attached</a>)" : ""
-		to_chat(messaged_mob, span_infoplain("[icon2html(computer, messaged_mob)] <b>PDA message from [sender_title], </b>\"[inbound_message]\"[photo_message] [reply]"))
+//Check if the mob can hear or has hard of hearing and rolls a 25% chance to receive the message
+		var/list/ignored_mobs = list()
+		if(HAS_TRAIT(messaged_mob, TRAIT_DEAF) || (HAS_TRAIT(messaged_mob, TRAIT_HARD_OF_HEARING) && rand(0, 3) != 0))
+			to_chat(messaged_mob, span_infoplain("You feel your PDA vibrate."))
+			receievers -= messaged_mob
+			ignored_mobs += messaged_mob
+		else
+			to_chat(messaged_mob, span_infoplain("[icon2html(computer, messaged_mob)] <b>PDA message from [sender_title], </b>\"[inbound_message]\"[photo_message] [reply]"))
 
 	if (alert_able && (!alert_silenced || is_rigged))
 		computer.ring(ringtone, receievers)

@@ -53,8 +53,8 @@
 	var/total_brute = user.getBruteLoss_nonProsthetic()
 	var/total_burn = user.getFireLoss_nonProsthetic()
 	var/total_damage = total_brute + total_burn
-	/// Checks - Not daylight & Has more than 10 Brute/Burn & not already in Torpor
-	if((total_damage >= 10 || typecached_item_in_list(user.organs, yucky_organ_typecache) || length(user.get_missing_limbs()) > 0) && !is_in_torpor())
+	/// Checks - Not already in torpor and has over 10 damage, bad organs, missing limbs, or wounds
+	if((total_damage >= 10 || typecached_item_in_list(user.organs, yucky_organ_typecache) || length(user.get_missing_limbs()) > 0 || length(user.all_wounds) > 0) && !is_in_torpor())
 		torpor_begin()
 
 /datum/antagonist/bloodsucker/proc/check_end_torpor()

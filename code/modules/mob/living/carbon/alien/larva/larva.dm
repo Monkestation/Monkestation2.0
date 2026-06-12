@@ -38,7 +38,7 @@
 		src.health = 100
 		ADD_TRAIT(src, TRAIT_NEUTERED, INNATE_TRAIT)
 		src.remove_blocked_language(/datum/language/common)
-		src.grant_language(/datum/language/common, TRUE, FALSE)
+		src.grant_language(/datum/language/common)
 	else
 		var/datum/action/cooldown/alien/larva_evolve/evolution = new(src)
 		evolution.Grant(src)

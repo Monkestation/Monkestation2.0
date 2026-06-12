@@ -128,9 +128,9 @@
 	projectile_wound_bonus = 15
 	pin = /obj/item/firing_pin/implant/pindicate
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/riot/evil
+
 /obj/item/gun/ballistic/shotgun/riot/sol/evil/unrestricted
 	pin = /obj/item/firing_pin
-
 // Automatic Shotguns//
 
 /obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user)
@@ -568,6 +568,8 @@
 	worn_icon_state = "protokshotgunauto"
 	icon_state = "protokshotgunauto"
 	slot_flags = ITEM_SLOT_BACK
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
 	burst_size = 1
 	fire_delay = 0
 	base_pixel_x = -2

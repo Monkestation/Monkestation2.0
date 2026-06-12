@@ -35,6 +35,7 @@
 			"products" = list(
 				/obj/item/clothing/mask/balaclava = 4,
 				/obj/item/clothing/mask/thermal_balaclava = 4,
+				/obj/item/clothing/mask/thermal_balaclava/alt = 4,
 			),
 		),
 		list(
@@ -49,6 +50,12 @@
 				/obj/item/clothing/under/rank/security/officer/blueshirt = 2,
 				/obj/item/clothing/under/rank/security/officer/formal = 3,
 				/obj/item/clothing/under/rank/security/utility = 3,
+				/obj/item/clothing/accessory/armband/deputy = 4,
+				/obj/item/clothing/accessory/armband/cargo = 2,
+				/obj/item/clothing/accessory/armband/engine = 2,
+				/obj/item/clothing/accessory/armband/medblue = 2,
+				/obj/item/clothing/accessory/armband/hydro = 2,
+				/obj/item/clothing/accessory/armband/science = 2,
 			),
 		),
 		list(
@@ -514,6 +521,7 @@
 	)
 	premium = list(
 		/obj/item/clothing/suit/chaplainsuit/bishoprobe = 1,
+		/obj/item/clothing/suit/chaplainsuit/bishoprobe/black = 1,
 		/obj/item/clothing/head/chaplain/bishopmitre = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe
@@ -649,11 +657,11 @@
 		/obj/item/clothing/gloves/combat = 3,
 		/obj/item/clothing/glasses/sunglasses = 3,
 		/obj/item/clothing/under/rank/centcom/commander = 3,
-		/obj/item/clothing/under/rank/centcom/centcom_skirt = 3,
+		/obj/item/clothing/under/rank/centcom/commander/skirt = 3,
 		/obj/item/clothing/under/rank/centcom/intern = 3,
 		/obj/item/clothing/under/rank/centcom/official = 3,
 		/obj/item/clothing/under/rank/centcom/officer = 3,
-		/obj/item/clothing/under/rank/centcom/officer_skirt = 3,
+		/obj/item/clothing/under/rank/centcom/officer/skirt = 3,
 		/obj/item/clothing/suit/armor/centcom_formal = 3,
 		/obj/item/clothing/suit/space/officer = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/centcom = 3,

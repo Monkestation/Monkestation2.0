@@ -182,6 +182,7 @@
 		key = new_character.key
 
 	if(new_character.mind) //disassociate any mind currently in our new body's mind variable
+		new_character.mind.UnregisterSignal(new_character, COMSIG_LIVING_DEATH)
 		new_character.mind.set_current(null)
 
 	var/mob/living/old_current = current

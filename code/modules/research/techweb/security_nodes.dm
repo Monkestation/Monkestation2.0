@@ -5,6 +5,7 @@
 	prereq_ids = list("base")
 	design_ids = list(
 		"bola_energy",
+		"security_trap",
 		"evidencebag",
 		"pepperspray",
 		"seclite",
@@ -25,6 +26,7 @@
 		"pin_testing",
 		"tele_shield",
 		"mag_autorifle_rub", //monkestation edit: autorifles
+		"lasershell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	discount_experiments = list(/datum/experiment/ordnance/explosive/pressurebomb = TECHWEB_TIER_2_POINTS)
@@ -92,17 +94,6 @@
 	design_ids = list(
 		"temp_gun",
 		"xray_laser",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
-	announce_channels = list(RADIO_CHANNEL_SECURITY)
-
-/datum/techweb_node/adv_beam_weapons
-	id = "adv_beam_weapons"
-	display_name = "Advanced Beam Weaponry"
-	description = "Various advanced beam weapons"
-	prereq_ids = list("beam_weapons")
-	design_ids = list(
-		"beamrifle",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SECURITY)

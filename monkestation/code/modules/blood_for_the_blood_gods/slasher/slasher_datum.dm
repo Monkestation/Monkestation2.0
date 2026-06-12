@@ -115,8 +115,8 @@
 	slasher_monitor.show_hud(owner.current)
 
 	ADD_TRAIT(current_mob, TRAIT_BATON_RESISTANCE, "slasher")
-	ADD_TRAIT(current_mob, TRAIT_CLUMSY, "slasher")
-	ADD_TRAIT(current_mob, TRAIT_DUMB, "slasher")
+	ADD_TRAIT(current_mob, TRAIT_NOGUNS, "slasher")
+	ADD_TRAIT(current_mob, TRAIT_ILLITERATE, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_LIMBATTACHMENT, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_SLASHER, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_VIRUSIMMUNE, "slasher")

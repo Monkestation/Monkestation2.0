@@ -156,7 +156,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	. += span_notice("You look closer through the core's hazy interior and see...")
 	if(length(stored_items))
 		for(var/atom/movable/item as anything in stored_items)
-			. += " [ma2html(item, user)] <a href='byond://?src=[REF(src)];core_item=[REF(item)]'>[item.get_examine_name(user)]</a>"
+			. += " [item.get_examine_icon(user)] <a href='byond://?src=[REF(src)];core_item=[REF(item)]'>[item.get_examine_name(user)]</a>"
 		. += span_notice("floating inside...")
 	else
 		. += span_notice("...nothing of interest.")
@@ -358,16 +358,16 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 			brainmob.get_language_holder()?.copy_languages(stored_language_holder)
 
 		membrane_mur.Grant(brainmob)
-		var/datum/antagonist/changeling/target_ling = brainmob.mind?.has_antag_datum(/datum/antagonist/changeling)
+		var/datum/antagonist/changeling/target_ling = brainmob?.mind?.has_antag_datum(/datum/antagonist/changeling)
 
 		// TODO: convert these to use a signal or some shit ~Lucy
-		if(target_ling)
+		if(target_ling && !HAS_TRAIT(brainmob.mind, TRAIT_NO_SPECIAL_REVIVAL))
 			if(target_ling.oozeling_revives > 0)
 				target_ling.oozeling_revives--
 				to_chat(brainmob, span_changeling("You begin gathering your energy. You will revive in 30 seconds."))
 				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE, POLICY_ANTAGONISTIC_REVIVAL), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
 
-		if(IS_BLOODSUCKER(brainmob))
+		if(IS_BLOODSUCKER(brainmob) && !HAS_TRAIT(brainmob.mind, TRAIT_NO_SPECIAL_REVIVAL))
 			var/datum/antagonist/bloodsucker/target_bloodsucker = brainmob.mind.has_antag_datum(/datum/antagonist/bloodsucker)
 			if(target_bloodsucker.bloodsucker_blood_volume >= OOZELING_MIN_REVIVE_BLOOD_THRESHOLD)
 				to_chat(brainmob, span_notice("You begin recollecting yourself. You will rise again in 3 minutes."))
@@ -594,6 +594,9 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		if(isnull(brainmob.client))
 			user?.balloon_alert(user, "this brain does not contain a mind!")
 			return null
+		if(HAS_TRAIT(brainmob.mind, TRAIT_NO_SPECIAL_REVIVAL))
+			user?.balloon_alert(user, "this brain can't be revived!")
+			return null
 
 	if(ismob(loc))
 		var/mob/holder = loc
@@ -664,7 +667,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	if(policy)
 		to_chat(new_body, policy, avoid_highlighting = TRUE)
 
-	SEND_SIGNAL(mind, COMSIG_OOZELING_REVIVED, new_body, src)
+	SEND_SIGNAL(mind, COMSIG_OOZELING_REVIVED, new_body, src, nugget)
 	return new_body
 
 /obj/item/organ/internal/brain/slime/Topic(href, list/href_list)

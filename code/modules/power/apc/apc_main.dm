@@ -14,6 +14,7 @@
 ///Charge percentage at which the APC icon indicates discharging
 #define APC_CHANNEL_ALARM_TRESHOLD 75
 #define ROUNDSTART_APC_CHARGE 95
+#define HALLUCINATION_COG_CHANCE 20
 
 /obj/machinery/power/apc
 	name = "area power controller"
@@ -140,6 +141,10 @@
 	var/no_charge = FALSE
 	/// Used for apc helper called full_charge to make apc's charge at 100% meter.
 	var/full_charge = FALSE
+	/// If this APC has given a reward for being coggered before
+	var/clock_cog_rewarded = FALSE
+	/// Reference to the cog inside
+	var/integration_cog = null
 	armor_type = /datum/armor/power_apc
 
 /datum/armor/power_apc
@@ -234,6 +239,8 @@
 		QDEL_NULL(cell)
 	if(terminal)
 		disconnect_terminal()
+	if(integration_cog)
+		QDEL_NULL(integration_cog)
 	return ..()
 
 /obj/machinery/power/apc/on_saboteur(datum/source, disrupt_duration)
@@ -273,14 +280,14 @@
 	area.apc = null
 	area = null
 
-/obj/machinery/power/apc/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == cell)
+/obj/machinery/power/apc/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
 		cell = null
 		charging = APC_NOT_CHARGING
 		update_appearance()
 		if(!QDELING(src))
 			SStgui.update_uis(src)
-	return ..()
 
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()
@@ -309,6 +316,17 @@
 
 	if(issilicon(user))
 		. += span_notice("Ctrl-Click the APC to switch the breaker [ operating ? "off" : "on"].")
+
+	if(integration_cog && IS_CLOCK(user))
+		. += span_brass("This APC has an integration cog installed.")
+
+/obj/machinery/power/apc/examine_more(mob/user)
+	. = ..()
+	if(!isliving(user))
+		return
+	var/mob/living/living_user = user
+	if(panel_open && (integration_cog || (living_user.has_status_effect(/datum/status_effect/hallucination) && prob(HALLUCINATION_COG_CHANCE))))
+		. += span_brass("A small cogwheel is inside of it.")
 
 /obj/machinery/power/apc/deconstruct(disassembled = TRUE)
 	if(flags_1 & NODECONSTRUCT_1)
@@ -764,3 +782,4 @@
 #undef APC_CHANNEL_EQUIP_TRESHOLD
 #undef APC_CHANNEL_ALARM_TRESHOLD
 #undef ROUNDSTART_APC_CHARGE
+#undef HALLUCINATION_COG_CHANCE

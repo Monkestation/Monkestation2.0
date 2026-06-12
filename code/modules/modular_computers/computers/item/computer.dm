@@ -240,7 +240,7 @@
 /obj/item/modular_computer/get_id_examine_strings(mob/user)
 	. = ..()
 	if(computer_id_slot)
-		. += "\The [src] is displaying [computer_id_slot]."
+		. += "[src] is displaying [computer_id_slot]:"
 		. += computer_id_slot.get_id_examine_strings(user)
 
 /obj/item/modular_computer/proc/print_text(text_to_print, paper_title = "")
@@ -315,6 +315,8 @@
 	return TRUE
 
 /obj/item/modular_computer/mouse_drop_dragged(atom/over_object, mob/user)
+	if(isobserver(user))
+		return
 	if(!istype(over_object, /atom/movable/screen))
 		return attack_self(user)
 
@@ -527,7 +529,7 @@
 	playsound(src, sound, 50, TRUE)
 	loc.visible_message(span_notice("<img class='icon' src='\ref[src]'> \The [src] displays a [origin.filedesc] notification: [html_encode(alerttext)]"), vision_distance = vision_distance, push_appearance = src)
 
-/obj/item/modular_computer/proc/ring(ringtone, list/balloon_alertees) // bring bring
+/obj/item/modular_computer/proc/ring(ringtone, list/balloon_alertees, list/ignored_mobs) // bring bring
 	if(!use_energy(check_programs = FALSE))
 		return
 	// Get the messenger app's new sound settings || Monkestation Addition START
@@ -543,7 +545,7 @@
 	else
 		playsound(src, sound_to_play, 50, TRUE, mixer_channel = CHANNEL_RINGTONES) // Monkestation change
 	ringtone = "*[ringtone]*"
-	audible_message(ringtone)
+	audible_message(ringtone, ignored_mobs = ignored_mobs)
 	for(var/mob/living/alertee in balloon_alertees)
 		alertee.balloon_alert(alertee, ringtone)
 
@@ -829,8 +831,6 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/stock_parts/power_store/cell))
-		if(ismachinery(loc))
-			return ITEM_INTERACT_BLOCKING
 		if(internal_cell)
 			to_chat(user, span_warning("You try to connect \the [tool] to \the [src], but its connectors are occupied."))
 			return ITEM_INTERACT_BLOCKING
@@ -854,13 +854,13 @@
 			return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/paper))
-		//MONKESTATION EDIT START
-		// Don't allow plastic cards (including the spare ID safe code biscuits!) to be inserted
+		var/obj/item/paper/attacking_paper = tool
 		if(istype(tool, /obj/item/paper/paperslip/corporate))
 			return ITEM_INTERACT_BLOCKING
-		//MONKESTATION EDIT END
 		if(stored_paper >= max_paper)
 			balloon_alert(user, "no more room!")
+			return ITEM_INTERACT_BLOCKING
+		if(!attacking_paper.is_empty() && tgui_alert(user, "\the [attacking_paper] has contents on it! Are you sure you want to recycle it?", "Recycling", list("Yes", "No")) != "Yes")
 			return ITEM_INTERACT_BLOCKING
 		if(!user.temporarilyRemoveItemFromInventory(tool))
 			return FALSE

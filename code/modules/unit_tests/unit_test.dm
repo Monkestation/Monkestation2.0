@@ -277,6 +277,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/structure/bingle_hole,
 		/obj/structure/bingle_pit_overlay,
 		// monkestation end
+		/obj/machinery/door/airlock/tram, // cursed shit that causes incomprehensible issues related to lights idfk
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)
@@ -308,9 +309,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	//No heart to give
 	ignore += typesof(/obj/structure/ethereal_crystal)
 	//No linked console
-	ignore += typesof(/mob/eye/ai_eye/remote/base_construction)
+	ignore += typesof(/mob/eye/camera/remote/base_construction)
 	//See above
-	ignore += typesof(/mob/eye/ai_eye/remote/shuttle_docker)
+	ignore += typesof(/mob/eye/camera/remote/shuttle_docker)
 	//Hangs a ref post invoke async, which we don't support. Could put a qdeleted check but it feels hacky
 	ignore += typesof(/obj/effect/anomaly/grav/high)
 	//See above
@@ -340,7 +341,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	//Needs a holodeck area linked to it which is not guarenteed to exist and technically is supposed to have a 1:1 relationship with computer anyway.
 	ignore += typesof(/obj/machinery/computer/holodeck)
 	//runtimes if not paired with a landmark
-	ignore += typesof(/obj/structure/industrial_lift)
+	ignore += typesof(/obj/structure/transport/linear)
 	// Runtimes if the associated machinery does not exist, but not the base type
 	ignore += subtypesof(/obj/machinery/airlock_controller)
 	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.

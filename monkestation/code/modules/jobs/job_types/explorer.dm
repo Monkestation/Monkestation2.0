@@ -34,6 +34,9 @@
 		"Explorer",
 		"Expeditionist",
 		"Scavenger",
+		"Astronaut",
+		"Asteroid Miner",
+		"Space Miner",
 	)
 	rpg_title = "Adventurer"
 	job_flags = STATION_JOB_FLAGS | JOB_CANNOT_BE_TARGET | JOB_NO_PLANETARY
@@ -47,7 +50,7 @@
 	backpack_contents = list(
 		/obj/item/flashlight/seclite = 1,
 		/obj/item/knife/combat/survival = 1,
-		/obj/item/mining_voucher = 1,
+		/obj/item/explorer_voucher = 1,
 		/obj/item/gun/energy/recharge/kinetic_accelerator = 1,
 		/obj/item/t_scanner/adv_mining_scanner/lesser = 1,
 		/obj/item/cargo_teleporter = 1,
@@ -57,7 +60,7 @@
 	ears = /obj/item/radio/headset/headset_cargo/mining
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/workboots/mining
-	l_pocket = /obj/item/reagent_containers/hypospray/medipen/survival
+	l_pocket = /obj/item/reagent_containers/medipen/survival
 	r_pocket = /obj/item/storage/bag/ore //causes issues if spawned in backpack
 
 	backpack = /obj/item/storage/backpack/explorer

@@ -29,7 +29,6 @@
 	)
 	departmental_flags =  DEPARTMENT_BITFLAG_SCIENCE
 
-
 /datum/design/board/clonescanner	//hippie end, re-add cloning
 	name = "Cloning Scanner"
 	desc = "Allows for the construction of circuit boards used to build a Cloning Scanner."

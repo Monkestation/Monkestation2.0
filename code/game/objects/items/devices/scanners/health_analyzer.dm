@@ -32,6 +32,8 @@
 	var/scanmode = SCANMODE_HEALTH
 	/// Advanced health analyzer
 	var/advanced = FALSE
+	/// Scans from a distance
+	var/works_from_distance = FALSE
 	/// If this analyzer will give a bonus to wound treatments apon woundscan.
 	var/give_wound_treatment_bonus = FALSE
 	var/last_scan_text
@@ -137,7 +139,7 @@
  * tochat - Whether to immediately post the result into the chat of the user, otherwise it will return the results.
  */
 /proc/healthscan(mob/user, mob/living/target, mode = SCANNER_VERBOSE, advanced = FALSE, tochat = TRUE)
-	if(user.incapacitated())
+	if(user.incapacitated(IGNORE_SOFTCRIT))
 		return
 
 	// the final list of strings to render
@@ -164,10 +166,10 @@
 	// Husk detection
 	if(HAS_TRAIT(target, TRAIT_HUSK))
 		if(advanced)
-			if(HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
-				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("severe burns", "Tend burns and apply a de-husking agent, such as [/datum/reagent/medicine/c2/synthflesh::name].", tochat)].</span><br>"
-			else if (HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
+			if (HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
 				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("desiccation", "Irreparable. Under normal circumstances, revival can only proceed via brain transplant or special surgies.", tochat)].</span><br>"
+			else if(HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
+				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("severe burns", "Tend burns and apply a de-husking agent, such as [/datum/reagent/medicine/c2/synthflesh::name].", tochat)].</span><br>"
 			else
 				render_list += "<span class='alert ml-1'>Subject has been husked by mysterious causes.</span>\n"
 
@@ -184,7 +186,7 @@
 		render_list += "<span class='alert ml-1'><b>Subject will suffer highly abnormal hemorrhaging from laceration or surgical incension.</b></span>\n"
 
 	// monkestation edit: DNR Quirk, i mean it also technically will count for all other defib blacklist reasons.
-	if(HAS_TRAIT(target, TRAIT_DEFIB_BLACKLISTED))
+	if(target.mind && HAS_TRAIT(target.mind, TRAIT_DEFIB_BLACKLISTED))
 		render_list += "<span class='alert ml-1'><b>Subject is blacklisted from resuscitation and cannot be defibrillated[target.stat == DEAD ? "" : " after dying"].</b></span>\n"
 	// monkestation end
 
@@ -344,7 +346,7 @@
 		var/list/cyberimps
 		for(var/obj/item/organ/internal/cyberimp/cyberimp in humantarget.organs)
 			if(IS_ROBOTIC_ORGAN(cyberimp) && !(cyberimp.organ_flags & ORGAN_HIDDEN))
-				LAZYADD(cyberimps, cyberimp.get_examine_string(user))
+				LAZYADD(cyberimps, cyberimp.examine_title(user))
 		if(LAZYLEN(cyberimps))
 			if(!render)
 				render_list += "<hr>"
@@ -426,7 +428,7 @@
 		if(istype(disease, /datum/disease/acute))
 			var/datum/disease/acute/acute_disease = disease
 			acute_disease.Refresh_Acute()
-			if(!((disease.visibility_flags & HIDDEN_SCANNER) && (disease.disease_flags & DISEASE_ANALYZED) && !(disease.disease_flags & DISEASE_DORMANT)))
+			if(!(disease.visibility_flags & HIDDEN_SCANNER) && (disease.disease_flags & DISEASE_ANALYZED) && !(disease.disease_flags & DISEASE_DORMANT))
 				if(disease.severity == DISEASE_SEVERITY_POSITIVE || DISEASE_SEVERITY_NONTHREAT)
 					render_list += "<span class='info ml-1'><b>[acute_disease.origin] disease detected</b>\n\
 					<div class='ml-2'>Name: [acute_disease.real_name()].\nType: [disease.get_spread_string()].\nStage: [disease.stage]/[disease.max_stages].</div>\
@@ -437,7 +439,7 @@
 					</span>"
 
 		else
-			if(!((disease.visibility_flags & HIDDEN_SCANNER) && (disease.disease_flags & DISEASE_ANALYZED) && !(disease.disease_flags & DISEASE_DORMANT)))
+			if(!(disease.visibility_flags & HIDDEN_SCANNER) && (disease.disease_flags & DISEASE_ANALYZED) && !(disease.disease_flags & DISEASE_DORMANT))
 				render_list += "<span class='alert ml-1'><b>Warning: [disease.form] disease detected</b>\n\
 				<div class='ml-2'>Name: [disease.name].\nType: [disease.get_spread_string()].\nStage: [disease.stage]/[disease.max_stages].\nPossible Cure: [disease.cure_text]</div>\
 				</span>"
@@ -530,10 +532,55 @@
 	to_chat(user, mode == SCANNER_VERBOSE ? "The scanner now shows specific limb damage." : "The scanner no longer shows limb damage.")
 	return CLICK_ACTION_SUCCESS
 
+	// Long range
+/obj/item/healthanalyzer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!works_from_distance)
+		return NONE
+
+	if(!istype(interacting_with, /mob/living))
+		return NONE
+
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION) || !can_see(user, interacting_with, 15))
+		return NONE
+
+	interacting_with.Beam(user, icon = 'icons/effects/beam_advanced.dmi', icon_state = "med_scan", time = 0.5 SECONDS)
+	playsound(src, 'sound/items/pip.ogg', 25, FALSE, 2)
+	attack(interacting_with, user)
+
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/healthanalyzer/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!works_from_distance)
+		return NONE
+
+	if(!istype(interacting_with, /mob/living))
+		return NONE
+
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION) || !can_see(user, interacting_with, 15))
+		return NONE
+
+	interacting_with.Beam(user, icon = 'icons/effects/beam_advanced.dmi', icon_state = "med_scan", time = 0.5 SECONDS)
+	playsound(src, 'sound/items/pip.ogg', 25, FALSE, 2)
+	attack_secondary(interacting_with, user)
+
+	return ITEM_INTERACT_SUCCESS
+
+///////////////////////////////////////////
+
+/obj/item/healthanalyzer/range
+	name = "remote health analyzer"
+	desc = "A hand-held medical scanner for detecting patient's vital signs from a distance. Limited edition from NT medical department."
+	icon = 'icons/obj/advanced_device.dmi'
+	icon_state = "health_range"
+	works_from_distance = TRUE
+	custom_premium_price = PAYCHECK_CREW * 6
+
 /obj/item/healthanalyzer/advanced
 	name = "advanced health analyzer"
+	icon = 'icons/obj/advanced_device.dmi'
 	icon_state = "health_adv"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
+	works_from_distance = TRUE
 	advanced = TRUE
 
 #define AID_EMOTION_NEUTRAL "neutral"
@@ -577,6 +624,11 @@
 
 //Cyborgs can use an integrated health analyzer even if they cant see
 /obj/item/healthanalyzer/cyborg
+	name = "remote health analyzer"
+	desc = "A hand-held medical scanner for detecting patient's vital signs from a distance. Limited edition from NT medical department."
+	icon = 'icons/obj/advanced_device.dmi'
+	icon_state = "health_range"
+	works_from_distance = TRUE
 
 /obj/item/healthanalyzer/cyborg/attack_self(mob/user)
 	if(!user.can_read(src, READING_CHECK_LITERACY))

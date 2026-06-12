@@ -112,18 +112,21 @@
 	. += "It has [pictures_left] photos left."
 
 //user can be atom or mob
-/obj/item/camera/proc/can_target(atom/target, mob/user)
+/obj/item/camera/proc/can_target(atom/target, mob/user, through_camera_console)
 	if(!on || blending || !pictures_left)
 		return FALSE
 	var/turf/T = get_turf(target)
 	if(!T)
 		return FALSE
+	if(through_camera_console && GLOB.cameranet.checkTurfVis(T))
+		return TRUE
 	if(istype(user))
-		if(isAI(user) && !GLOB.cameranet.checkTurfVis(T))
-			return FALSE
-		else if(user.client && !(get_turf(target) in get_hear(user.client.view, user)))
+		if(user.client && !(get_turf(target) in get_hear(user.client.view, user)))
 			return FALSE
 		else if(!(get_turf(target) in get_hear(world.view, user)))
+			return FALSE
+	else if(isliving(loc))
+		if(!(get_turf(target) in view(world.view, loc)))
 			return FALSE
 	else //user is an atom or null
 		if(!(get_turf(target) in view(world.view, user || src)))
@@ -154,20 +157,21 @@
 			to_chat(user, span_warning("Invalid holodisk target."))
 			return ITEM_INTERACT_BLOCKING
 
-	if(!can_target(interacting_with, user))
+	var/through_camera_console = findtext(LAZYACCESS(modifiers, SCREEN_LOC), "camera_console") || isAI(user) || isaicamera(user)
+	if(!can_target(interacting_with, user, through_camera_console))
 		return ITEM_INTERACT_BLOCKING
-	if(!photo_taken(interacting_with, user))
+	if(!photo_taken(interacting_with, user, through_camera_console))
 		return ITEM_INTERACT_BLOCKING
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/camera/proc/photo_taken(atom/target, mob/user)
+/obj/item/camera/proc/photo_taken(atom/target, mob/user, through_camera_console)
 
 	on = FALSE
 	addtimer(CALLBACK(src, PROC_REF(cooldown)), cooldown)
 
 	icon_state = state_off
 
-	INVOKE_ASYNC(src, PROC_REF(captureimage), target, user, picture_size_x - 1, picture_size_y - 1)
+	INVOKE_ASYNC(src, PROC_REF(captureimage), target, user, picture_size_x - 1, picture_size_y - 1, through_camera_console)
 	return TRUE
 
 /obj/item/camera/proc/cooldown()
@@ -181,7 +185,7 @@
 	to_chat(user, P.desc)
 	qdel(P)
 
-/obj/item/camera/proc/captureimage(atom/target, mob/user, size_x = 1, size_y = 1)
+/obj/item/camera/proc/captureimage(atom/target, mob/user, size_x = 1, size_y = 1, through_camera_console)
 	if(flash_enabled)
 		set_light_on(TRUE)
 		addtimer(CALLBACK(src, PROC_REF(flash_end)), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
@@ -203,7 +207,6 @@
 	var/list/mobs = list()
 	var/blueprints = FALSE
 	var/clone_area = SSmapping.request_turf_block_reservation(size_x * 2 + 1, size_y * 2 + 1, 1)
-	var/cameranet_user = isAI(user)// || istype(viewer, /mob/eye/camera)
 
 	var/width = size_x * 2 + 1
 	var/height = size_y * 2 + 1
@@ -213,7 +216,7 @@
 			if(!placeholder)
 				break
 
-		if(placeholder && ((cameranet_user && GLOB.cameranet.checkTurfVis(placeholder)) || (placeholder in seen)))
+		if(placeholder && ((through_camera_console && GLOB.cameranet.checkTurfVis(placeholder)) || (placeholder in seen)))
 			turfs += placeholder
 			for(var/mob/M in placeholder)
 				mobs += M
@@ -252,27 +255,30 @@
 		printpicture(user, picture)
 
 /obj/item/camera/proc/printpicture(mob/user, datum/picture/picture) //Normal camera proc for creating photos
-	if(!user)
-		return
 	pictures_left--
 	var/obj/item/photo/new_photo = new(get_turf(src), picture)
-	if(in_range(new_photo, user) && user.put_in_hands(new_photo)) //needed because of TK
-		to_chat(user, span_notice("[pictures_left] photos left."))
+	if(user)
+		if(in_range(new_photo, user) && user.put_in_hands(new_photo)) //needed because of TK
+			to_chat(user, span_notice("[pictures_left] photos left."))
 
-	if(can_customise)
-		var/customise = tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
-		if(customise == "Yes")
-			var/name1 = tgui_input_text(user, "Set a name for this photo, or leave blank.", "Name", max_length = 32)
-			var/desc1 = tgui_input_text(user, "Set a description to add to photo, or leave blank.", "Description", max_length = 128)
-			var/caption = tgui_input_text(user, "Set a caption for this photo, or leave blank.", "Caption", max_length = 256)
-			if(name1)
-				picture.picture_name = name1
-			if(desc1)
-				picture.picture_desc = "[desc1] - [picture.picture_desc]"
-			if(caption)
-				picture.caption = caption
-		else if(default_picture_name)
-			picture.picture_name = default_picture_name
+		if(can_customise)
+			var/customise = tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
+			if(customise == "Yes")
+				var/name1 = tgui_input_text(user, "Set a name for this photo, or leave blank.", "Name", max_length = 32)
+				var/desc1 = tgui_input_text(user, "Set a description to add to photo, or leave blank.", "Description", max_length = 128)
+				var/caption = tgui_input_text(user, "Set a caption for this photo, or leave blank.", "Caption", max_length = 256)
+				if(name1)
+					picture.picture_name = name1
+				if(desc1)
+					picture.picture_desc = "[desc1] - [picture.picture_desc]"
+				if(caption)
+					picture.caption = caption
+			else if(default_picture_name)
+				picture.picture_name = default_picture_name
+	else if(isliving(loc))
+		var/mob/living/holder = loc
+		if(holder.put_in_hands(new_photo))
+			to_chat(holder, span_notice("[pictures_left] photos left."))
 
 	new_photo.set_picture(picture, TRUE, TRUE)
 	if(CONFIG_GET(flag/picture_logging_camera))
@@ -338,6 +344,6 @@
 			return
 	if(!camera.can_target(target))
 		return
-	INVOKE_ASYNC(camera, TYPE_PROC_REF(/obj/item/camera, captureimage), target, null, camera.picture_size_y  - 1, camera.picture_size_y - 1)
+	INVOKE_ASYNC(camera, TYPE_PROC_REF(/obj/item/camera, captureimage), target, null, camera.picture_size_x  - 1, camera.picture_size_y - 1)
 
 #undef CAMERA_PICTURE_SIZE_HARD_LIMIT

@@ -21,29 +21,29 @@ monke end */
 /**
  * Checks if the mob contains chems we can filter
  *
- * If the blood filter's whitelist is empty this checks if the mob contains any chems
- * If the whitelist contains chems it checks if any chems in the mob match chems in the whitelist
+ * If the blood filter's blacklist is not empty this checks that the mob contains any chems not in the blacklist
+ * Otherwise, if the blacklist is empty this always returns true
  *
  * Arguments:
  * * target - The mob to check the chems of
- * * bloodfilter - The blood filter to check the whitelist of
+ * * bloodfilter - The blood filter to check the blacklist of
  */
 /datum/surgery_step/filter_blood/proc/has_filterable_chems(mob/living/carbon/target, obj/item/blood_filter/bloodfilter)
 	if(!length(target.reagents?.reagent_list))
 		return FALSE
 
-	if(!length(bloodfilter.whitelist))
+	if(!length(bloodfilter.blacklist))
 		return TRUE
 
 	for(var/datum/reagent/chem as anything in target.reagents.reagent_list)
-		if(chem.type in bloodfilter.whitelist)
+		if(!(chem.type in bloodfilter.blacklist))
 			return TRUE
 
 	return FALSE
 
 /datum/surgery_step/filter_blood
 	name = "Filter blood (blood filter)"
-	implements = list(/obj/item/blood_filter = 95)
+	implements = list(TOOL_BLOODFILTER = 95)
 	repeatable = TRUE
 	time = 2.5 SECONDS
 	success_sound = 'sound/machines/ping.ogg'

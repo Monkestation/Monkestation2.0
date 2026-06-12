@@ -122,7 +122,6 @@
 	variance = 25 // 6 pellets for 10 stam and 2 damage each
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
 
-
 /obj/item/ammo_casing/shotgun/dragonsbreath
 	name = "dragonsbreath shell"
 	desc = "A shotgun shell which fires a spread of incendiary pellets."
@@ -188,14 +187,23 @@
 	variance = 35
 	can_be_printed = FALSE
 
-/obj/item/ammo_casing/shotgun/laserslug
+/obj/item/ammo_casing/shotgun/scatterlaser
 	name = "scatter laser shell"
 	desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a scatter laser weapon in a ballistic package."
 	icon_state = "lshell"
-	projectile_type = /obj/projectile/beam/weak
+	projectile_type = /obj/projectile/beam/scatter
 	pellets = 6
 	variance = 35
 	can_be_printed = FALSE
+
+/obj/item/ammo_casing/shotgun/scatterlaser/emp_act(severity)
+	. = ..()
+	if(isnull(loaded_projectile) || !prob(40/severity))
+		return
+	name = "malfunctioning laser shell"
+	desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a scatter laser weapon in a ballistic package. The capacitor powering this assembly appears to be smoking."
+	projectile_type = /obj/projectile/beam/scatter/pathetic
+	loaded_projectile = new projectile_type(src)
 
 /obj/item/ammo_casing/shotgun/techshell
 	name = "unloaded technological shell"
@@ -335,10 +343,12 @@
 	pellets = 36
 	variance = 25
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_death
+	can_be_printed = FALSE
 
 /obj/item/ammo_casing/shotgun/buckshot/hundred
 	pellets = 600
 	variance = 25
+	can_be_printed = FALSE
 
 
 // for the mining autoshotgun

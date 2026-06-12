@@ -55,25 +55,31 @@
 	var/list/ride_offset_y = list("north" = 4, "south" = 4, "east" = 3, "west" = 3)
 	///List of skins the borg can be reskinned to, optional
 	var/list/borg_skins
+	/// Weakref to the ability that toggles their sight vision, if any.
+	var/datum/weakref/sight_vision_ref
 
 /obj/item/robot_model/Initialize(mapload)
 	. = ..()
+	robot = loc
+	create_storage(storage_type = /datum/storage/cyborg_internal_storage)
+	// src is what we store items visible to borgs, we'll store things in the bot itself otherwise.
 	for(var/path in basic_modules)
-		var/obj/item/new_module = new path(src)
+		var/obj/item/new_module = new path(robot)
 		basic_modules += new_module
 		basic_modules -= path
 	for(var/path in emag_modules)
-		var/obj/item/new_module = new path(src)
+		var/obj/item/new_module = new path(robot)
 		emag_modules += new_module
 		emag_modules -= path
 //monkestation edit start
 	for(var/path in clock_modules)
-		var/obj/item/new_module = new path(src)
+		var/obj/item/new_module = new path(robot)
 		clock_modules += new_module
 		clock_modules -= path
 //monkestation edit end
 
 /obj/item/robot_model/Destroy()
+	QDEL_NULL(sight_vision_ref)
 	basic_modules.Cut()
 	emag_modules.Cut()
 	modules.Cut()
@@ -105,22 +111,21 @@
 	if(added_module.loc != src)
 		added_module.forceMove(src)
 	modules += added_module
-	ADD_TRAIT(added_module, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 	added_module.mouse_opacity = MOUSE_OPACITY_OPAQUE
+	added_module.obj_flags |= ABSTRACT
 	if(nonstandard)
 		added_modules += added_module
 	if(requires_rebuild)
 		rebuild_modules()
 	return added_module
 
-/obj/item/robot_model/proc/remove_module(obj/item/removed_module, delete_after)
+/obj/item/robot_model/proc/remove_module(obj/item/removed_module)
 	basic_modules -= removed_module
 	modules -= removed_module
 	emag_modules -= removed_module
 	added_modules -= removed_module
 	rebuild_modules()
-	if(delete_after)
-		qdel(removed_module)
+	qdel(removed_module)
 
 /obj/item/robot_model/proc/rebuild_modules() //builds the usable module list from the modules we have
 	var/mob/living/silicon/robot/cyborg = loc
@@ -128,7 +133,9 @@
 		return
 	var/list/held_modules = cyborg.held_items.Copy()
 	var/active_module = cyborg.module_active
-	cyborg.drop_all_held_items()
+	//move everything out of the model's inventory
+	for(var/obj/item/module as anything in modules)
+		module.forceMove(robot)
 	modules = list()
 	for(var/obj/item/module in basic_modules)
 		add_module(module, FALSE, FALSE)
@@ -144,13 +151,13 @@
 	//monkestation edit end
 	for(var/obj/item/module in added_modules)
 		add_module(module, FALSE, FALSE)
+	cyborg.drop_all_held_items()
 	for(var/module in held_modules)
 		if(module)
-			cyborg.equip_module_to_slot(module, held_modules.Find(module))
+			cyborg.put_in_hand(module, held_modules.Find(module))
 	if(active_module)
 		cyborg.select_module(held_modules.Find(active_module))
-	if(cyborg.hud_used)
-		cyborg.hud_used.update_robot_modules_display()
+	atom_storage.refresh_views()
 
 /obj/item/robot_model/proc/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
 	SHOULD_CALL_PARENT(TRUE)
@@ -229,7 +236,6 @@
 /obj/item/robot_model/proc/transform_to(new_config_type, forced = FALSE)
 	var/mob/living/silicon/robot/cyborg = loc
 	var/obj/item/robot_model/new_model = new new_config_type(cyborg)
-	new_model.robot = cyborg
 	cyborg.icon = 'icons/mob/silicon/robots.dmi' //reset our icon to default, but before a new custom icon may be applied by be_transformed_to
 	if(!new_model.be_transformed_to(src, forced))
 		if(!cyborg.client)
@@ -294,6 +300,7 @@
 		cyborg.worn_badge.forceMove(drop_location())
 
 	cyborg.cut_overlays()
+	LAZYNULL(cyborg.managed_overlays) // Or else our overlays won't get re-added (since we are likely to have exact same overlays).
 	cyborg.setDir(SOUTH)
 	do_transform_delay()
 
@@ -317,8 +324,6 @@
 	cyborg.updatehealth()
 	cyborg.update_icons()
 	cyborg.notify_ai(AI_NOTIFICATION_NEW_MODEL)
-	if(cyborg.hud_used)
-		cyborg.hud_used.update_robot_modules_display()
 	SSblackbox.record_feedback("tally", "cyborg_modules", 1, cyborg.model)
 
 /**
@@ -379,16 +384,15 @@
 	name = "Engineering"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
-		/obj/item/borg/sight/meson,
 		/obj/item/construction/rcd/borg,
 		/obj/item/pipe_dispenser,
 		/obj/item/extinguisher,
 		/obj/item/weldingtool/largetank/cyborg,
-		/obj/item/screwdriver/cyborg,
-		/obj/item/wrench/cyborg,
-		/obj/item/crowbar/cyborg,
-		/obj/item/wirecutters/cyborg,
-		/obj/item/multitool/cyborg,
+		/obj/item/borg/cyborg_omnitool/engineering,
+		/obj/item/borg/cyborg_omnitool/engineering,
+		/obj/item/storage/part_replacer/cyborg,
+		/obj/item/lightreplacer,
+		/obj/item/borg/apparatus/circuit,
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
 		/obj/item/assembly/signaler/cyborg,
@@ -408,9 +412,86 @@
 	)
 	cyborg_base_icon = "engineer"
 	model_select_icon = "engineer"
-	model_traits = list(TRAIT_NEGATES_GRAVITY)
+	model_traits = list(TRAIT_NEGATES_GRAVITY, TRAIT_KNOW_ENGI_WIRES, TRAIT_KNOW_ROBO_WIRES)
 	hat_offset = -4
 	badge_offset = -4
+
+/obj/item/robot_model/engineering/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
+	..()
+	var/obj/item/lightreplacer/light_replacer = locate(/obj/item/lightreplacer) in basic_modules
+	if(light_replacer)
+		for(var/charge in 1 to coeff)
+			light_replacer.Charge(cyborg)
+
+/obj/item/robot_model/engineering/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
+	var/datum/action/cooldown/borg_sight_vision/sight_vision_meson = new(loc)
+	. = ..()
+	if(!.)
+		return
+	sight_vision_meson.Grant(loc)
+	sight_vision_ref = WEAKREF(sight_vision_meson)
+
+/datum/action/cooldown/borg_sight_vision
+	name = "Toggle Meson Vision"
+	button_icon = 'icons/mob/silicon/robot_items.dmi'
+	button_icon_state = "meson"
+	/// Is this currently active?
+	var/active = FALSE
+	/// The sight mode given when toggled.
+	var/given_sight_mode = BORGMESON
+
+/datum/action/cooldown/borg_sight_vision/Remove(mob/removed_from)
+	if(active)
+		var/mob/living/silicon/robot/cyborg_owner = owner
+		cyborg_owner.sight_mode = 0
+		cyborg_owner.update_sight()
+	return ..()
+
+/datum/action/cooldown/borg_sight_vision/Activate()
+	var/mob/living/silicon/robot/cyborg_owner = owner
+	active = !active
+	cyborg_owner.sight_mode = active ? given_sight_mode : 0
+	cyborg_owner.update_sight()
+
+/// Changes the sight mode and updates the cyborg's vision accordingly.
+/datum/action/cooldown/borg_sight_vision/proc/change_sight_mode(new_sight_mode)
+	if(given_sight_mode == new_sight_mode)
+		return
+	given_sight_mode = new_sight_mode
+	if(!active)
+		return
+	var/mob/living/silicon/robot/cyborg_owner = owner
+	cyborg_owner.sight_mode = given_sight_mode
+	cyborg_owner.update_sight()
+
+/obj/item/robot_model/standard
+	name = "Standard"
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/reagent_containers/borghypo/epi, // Buffed slightly by letting them dispense salglu. Can help humans better at the cost of a smaller welding tank so they can't just heal all the time. Feels more in line with what's expectted of borgs nowdays.
+		/obj/item/healthanalyzer,
+		/obj/item/wrench/cyborg,
+		/obj/item/crowbar/cyborg,
+		/obj/item/stack/sheet/iron,
+		/obj/item/stack/tile/iron/base/cyborg,
+		/obj/item/weldingtool/mini, // Why on gods green earth did they have a full cyborg welder before?
+		/obj/item/extinguisher/mini, // Likewise, why could they put out fires as good as engineering borgs? They are jacks of all trades, master of none.
+		/obj/item/pickaxe,
+		/obj/item/t_scanner/adv_mining_scanner,
+		/obj/item/soap/nanotrasen,
+		/obj/item/borg/cyborghug,
+		/obj/item/storage/bag/tray,
+		// Zipties have been removed because why god would you let them become security 2.
+	)
+	emag_modules = list(
+		/obj/item/melee/energy/sword/cyborg, //I don't think there was any reason to use cyborg specific esword with this? They both act functionally the same.
+	)
+	cyborg_base_icon = "robot"
+	model_select_icon = "standard"
+	model_traits = list(TRAIT_NEGATES_GRAVITY)
+	hat_offset = -3
+	badge_offset = -3
+
 
 /obj/item/robot_model/janitor
 	name = "Janitor"
@@ -420,16 +501,17 @@
 		/obj/item/crowbar/cyborg,
 		/obj/item/stack/tile/iron/base/cyborg,
 		/obj/item/soap/nanotrasen/cyborg,
-		/obj/item/storage/bag/trash/cyborg,
+		/obj/item/storage/bag/trash,
 		/obj/item/melee/flyswatter,
 		/obj/item/extinguisher/mini,
-		/obj/item/mop/cyborg,
+		/obj/item/mop,
 		/obj/item/reagent_containers/cup/bucket,
 		/obj/item/paint/paint_remover,
-		/obj/item/lightreplacer/cyborg,
+		/obj/item/lightreplacer,
 		/obj/item/holosign_creator,
 		/obj/item/reagent_containers/spray/cyborg_drying,
 		/obj/item/wirebrush,
+		/obj/item/pushbroom/cyborg,
 	)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(
@@ -683,15 +765,10 @@
 		/obj/item/borg/apparatus/beaker,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/surgical_drapes,
-		/obj/item/retractor, //Monke edit start: remove augment tools
-		/obj/item/hemostat,
-		/obj/item/cautery,
-		/obj/item/surgicaldrill,
-		/obj/item/scalpel,
-		/obj/item/circular_saw, //Monke edit end: remove augment tools
-		/obj/item/bonesetter,
+		/obj/item/borg/cyborg_omnitool/medical,
+		/obj/item/borg/cyborg_omnitool/medical,
 		/obj/item/blood_filter,
+		/obj/item/breathing_bag, // MS: biocore-ambu
 		/obj/item/extinguisher/mini,
 		/obj/item/emergency_bed/silicon,
 		/obj/item/borg/cyborghug/medical,
@@ -718,7 +795,7 @@
 	name = "Miner"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
-		/obj/item/borg/sight/meson,
+		/obj/item/t_scanner/adv_mining_scanner/cyborg,
 		/obj/item/storage/bag/ore/cyborg,
 		/obj/item/pickaxe/drill/cyborg,
 		/obj/item/shovel,
@@ -744,16 +821,56 @@
 		"Spider Miner" = list(SKIN_ICON_STATE = "spidermin", SKIN_BADGE_OFFSET = -8),
 		"Lavaland Miner" = list(SKIN_ICON_STATE = "miner"),
 	)
-	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes. //fuck you
+	/// Reference to the energy shield action.
+	var/datum/weakref/energy_shield_ref
 
-/obj/item/robot_model/miner/rebuild_modules()
+/obj/item/robot_model/miner/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
 	. = ..()
-	if(!mining_scanner)
-		mining_scanner = new(src)
+	if(!.)
+		return
+	var/datum/action/cooldown/borg_sight_vision/sight_vision_meson = new(loc)
+	sight_vision_meson.Grant(loc)
+	sight_vision_ref = WEAKREF(sight_vision_meson)
+	var/datum/action/cooldown/cyborg_miner_shield/energy_shield_action = new(loc)
+	energy_shield_action.Grant(loc)
+	energy_shield_ref = WEAKREF(energy_shield_action)
 
 /obj/item/robot_model/miner/Destroy()
-	QDEL_NULL(mining_scanner)
+	QDEL_NULL(energy_shield_ref)
 	return ..()
+
+/datum/action/cooldown/cyborg_miner_shield
+	name = "Toggle Energy Shield"
+	desc = "Toggles an energy shield that consumes your cell's power to reduce incoming damage. Only works in low-pressure environments."
+	button_icon = 'icons/mob/silicon/robot_items.dmi'
+	button_icon_state = "module_miner"
+	/// Is the shield active?
+	var/active = FALSE
+	/// The overlay to update with.
+	var/mutable_appearance/shield_overlay
+
+/datum/action/cooldown/cyborg_miner_shield/New(Target, original)
+	. = ..()
+	shield_overlay = mutable_appearance('icons/mecha/durand_shield.dmi', "borg_shield")
+
+/datum/action/cooldown/cyborg_miner_shield/Activate()
+	var/mob/living/silicon/robot/borg = owner
+	if(!active && !borg.cell.charge())
+		borg.balloon_alert(borg, "no charge!")
+		return
+	active = !active
+	if(active)
+		playsound(borg, 'sound/mecha/mech_shield_raise.ogg', 50, FALSE)
+		RegisterSignal(borg, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_shield_overlay_update), override = TRUE)
+	else
+		playsound(borg, 'sound/mecha/mech_shield_drop.ogg', 50, FALSE)
+		UnregisterSignal(borg, COMSIG_ATOM_UPDATE_OVERLAYS)
+	borg.update_appearance()
+
+/datum/action/cooldown/cyborg_miner_shield/proc/on_shield_overlay_update(atom/source, list/overlays)
+	SIGNAL_HANDLER
+	if(active)
+		overlays += shield_overlay
 
 /obj/item/robot_model/peacekeeper
 	name = "Peacekeeper"
@@ -840,7 +957,7 @@
 		// Monkestation edit end
 		/obj/item/rsf,
 		/obj/item/instrument/guitar,
-		/obj/item/instrument/piano_synth/robot,
+		/obj/item/instrument/piano_synth,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/lighter,
 		/obj/item/storage/bag/tray,
@@ -905,6 +1022,56 @@
 			qdel(button)
 	return ..()
 
+/obj/item/robot_model/science
+	name = "Science"
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/extinguisher/mini,
+		/obj/item/borg/cyborg_omnitool/engineering,
+		/obj/item/weldingtool/largetank/cyborg,
+		/obj/item/stack/cable_coil,
+		/obj/item/storage/part_replacer/cyborg,
+		/obj/item/experi_scanner,
+		/obj/item/nanite_scanner, // Nanite remote not included because it is an upgrade.
+		/obj/item/borg/apparatus/sheet_manipulator, // This is needed for material scans.
+		/obj/item/borg/apparatus/circuit/science,
+		/obj/item/analyzer,
+		/obj/item/assembly/signaler, // Ordiance is an upgrade.
+		/obj/item/borg/apparatus/beaker,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/borg/apparatus/organ_storage/limb, // They need to be able to hold limbs to hit artifacts with it.
+		/obj/item/borg/artifact_sticker_holder,
+		/obj/item/pen/fountain
+
+	)
+	emag_modules = list(
+		/obj/item/borg/handheld_jaunter,
+	)
+	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
+	cyborg_base_icon = "science"
+	model_select_icon = "science"
+	hat_offset = 3
+	badge_offset = 3
+	borg_skins = list(
+		"Science" = list(
+			SKIN_ICON_STATE = "science"
+		),
+		"Eyebot" = list(
+			SKIN_ICON_STATE = "science_eyebot",
+			SKIN_LIGHT_KEY = "science_eyebot",
+			SKIN_HAT_OFFSET = INFINITY,
+			SKIN_BADGE_OFFSET = INFINITY
+		),
+		"Drone" = list(
+			SKIN_ICON_STATE = "science_drone",
+			SKIN_ICON_STATE = "science_drone",
+			SKIN_HAT_OFFSET = INFINITY,
+			SKIN_BADGE_OFFSET = INFINITY
+		)
+	)
+
+
 /obj/item/robot_model/syndicate
 	name = "Syndicate Assault"
 	basic_modules = list(
@@ -928,7 +1095,7 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	cyborg.faction -= FACTION_SILICON //ai turrets
 
-/obj/item/robot_model/syndicate/remove_module(obj/item/removed_module, delete_after)
+/obj/item/robot_model/syndicate/remove_module(obj/item/removed_module)
 	..()
 	var/mob/living/silicon/robot/cyborg = loc
 	cyborg.faction |= FACTION_SILICON //ai is your bff now!
@@ -940,14 +1107,9 @@
 		/obj/item/reagent_containers/borghypo/syndicate,
 		/obj/item/shockpaddles/syndicate/cyborg,
 		/obj/item/healthanalyzer/cyborg,
-		/obj/item/surgical_drapes,
-		/obj/item/retractor/augment, //monkestation edit start: Augmented tools
-		/obj/item/hemostat/augment,
-		/obj/item/cautery/augment,
-		/obj/item/surgicaldrill/augment,
-		/obj/item/scalpel/augment, //monkestation edit: Augmented tools
+		/obj/item/borg/cyborg_omnitool/medical/upgraded,
+		/obj/item/borg/cyborg_omnitool/medical/upgraded,
 		/obj/item/melee/energy/sword/cyborg/saw,
-		/obj/item/bonesetter,
 		/obj/item/blood_filter,
 		/obj/item/emergency_bed/silicon,
 		/obj/item/crowbar/cyborg,
@@ -966,18 +1128,16 @@
 	name = "Syndicate Saboteur"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
-		/obj/item/borg/sight/thermal,
 		/obj/item/construction/rcd/borg/syndicate,
 		/obj/item/pipe_dispenser,
 		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/extinguisher,
 		/obj/item/weldingtool/largetank/cyborg,
-		/obj/item/screwdriver/nuke,
-		/obj/item/wrench/cyborg,
-		/obj/item/crowbar/cyborg,
-		/obj/item/wirecutters/cyborg,
+		/obj/item/borg/cyborg_omnitool/engineering/syndie,
+		/obj/item/borg/cyborg_omnitool/engineering/syndie,
+		/obj/item/storage/part_replacer/cyborg,
+		/obj/item/borg/apparatus/circuit,
 		/obj/item/analyzer,
-		/obj/item/multitool/cyborg,
 		/obj/item/stack/sheet/iron,
 		/obj/item/stack/sheet/glass,
 		/obj/item/borg/apparatus/sheet_manipulator,
@@ -988,13 +1148,27 @@
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/borg_chameleon,
 		/obj/item/card/emag,
+		/obj/item/borg/charger,
 	)
 	cyborg_base_icon = "synd_engi"
 	model_select_icon = "malf"
-	model_traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY)
+	model_traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY, TRAIT_KNOW_ENGI_WIRES, TRAIT_KNOW_ROBO_WIRES)
 	hat_offset = -4
 	badge_offset = -4
 	canDispose = TRUE
+
+/obj/item/robot_model/saboteur/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
+	. = ..()
+	if(!.)
+		return
+	var/datum/action/cooldown/borg_sight_vision/thermal/sight_vision_thermal = new(loc)
+	sight_vision_thermal.Grant(loc)
+	sight_vision_ref = WEAKREF(sight_vision_thermal)
+
+/datum/action/cooldown/borg_sight_vision/thermal
+	name = "Toggle Thermal Vision"
+	button_icon_state = "thermal"
+	given_sight_mode = BORGTHERM
 
 /obj/item/robot_model/syndicate/kiltborg
 	name = "Highlander"
@@ -1021,8 +1195,8 @@
 
 /obj/item/robot_model/syndicate/kiltborg/do_transform_delay() //AUTO-EQUIPPING THESE TOOLS ANY EARLIER CAUSES RUNTIMES OH YEAH
 	. = ..()
-	robot.equip_module_to_slot(locate(/obj/item/claymore/highlander/robot) in basic_modules, 1)
-	robot.equip_module_to_slot(locate(/obj/item/pinpointer/nuke) in basic_modules, 2)
+	robot.put_in_hand(locate(/obj/item/claymore/highlander/robot) in basic_modules, 1)
+	robot.put_in_hand(locate(/obj/item/pinpointer/nuke) in basic_modules, 2)
 	robot.place_on_head(new /obj/item/clothing/head/beret/highlander(robot)) //THE ONLY PART MORE IMPORTANT THAN THE SWORD IS THE HAT
 	ADD_TRAIT(robot.hat, TRAIT_NODROP, HIGHLANDER_TRAIT)
 
@@ -1047,7 +1221,7 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/hand_labeler/borg,
 		/obj/item/rsf/deluxe/cyborg,
-		/obj/item/instrument/piano_synth/robot,
+		/obj/item/instrument/piano_synth,
 		/obj/item/lighter,
 		/obj/item/storage/bag/tray,
 		/obj/item/reagent_containers/borghypo/borgshaker/centcom,

@@ -141,6 +141,7 @@
 	return ..()
 
 /datum/antagonist/changeling/apply_innate_effects(mob/living/mob_override)
+	. = ..()
 	var/mob/mob_to_tweak = mob_override || owner.current
 	if(!isliving(mob_to_tweak))
 		return
@@ -152,6 +153,7 @@
 	RegisterSignal(living_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_fullhealed))
 	RegisterSignal(living_mob, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 	RegisterSignals(living_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), PROC_REF(on_click_sting))
+	ADD_TRAIT(mob_to_tweak, TRAIT_NO_MINDSWAP, CHANGELING_TRAIT)
 
 	if(living_mob.hud_used)
 		var/datum/hud/hud_used = living_mob.hud_used
@@ -203,9 +205,11 @@
 	ling_hud.show_hud(ling_hud.hud_version)
 
 /datum/antagonist/changeling/remove_innate_effects(mob/living/mob_override)
+	. = ..()
 	var/mob/living/living_mob = mob_override || owner.current
 	handle_clown_mutation(living_mob, removing = FALSE)
 	UnregisterSignal(living_mob, list(COMSIG_MOB_LOGIN, COMSIG_LIVING_LIFE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
+	REMOVE_TRAIT(living_mob, TRAIT_NO_MINDSWAP, CHANGELING_TRAIT)
 
 	if(living_mob.hud_used)
 		var/datum/hud/hud_used = living_mob.hud_used
@@ -272,6 +276,9 @@
  */
 /datum/antagonist/changeling/proc/on_life(datum/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
+
+	if(HAS_TRAIT(source, TRAIT_BLOODSILVER_CURSE)) // no chem regeneration while under the effects of a bloodsilver bullet.
+		return
 
 	var/delta_time = DELTA_WORLD_TIME(SSclient_mobs)
 
@@ -567,6 +574,7 @@
 
 	// Grab the target's sechut icon.
 	new_profile.id_icon = target.wear_id?.get_sechud_job_icon_state()
+	new_profile.id = target.wear_id?.GetID()
 
 	var/list/slots = list("head", "wear_mask", "wear_neck", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)
@@ -778,6 +786,15 @@
 
 	chosen_dna.copy_dna(user.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 
+	// Snowflake to carry over anime implants
+	if(user.has_quirk(/datum/quirk/anime))
+		user.remove_quirk(/datum/quirk/anime)
+
+	for(var/datum/quirk/target_quirk as anything in chosen_profile.quirks)
+		if(istype(target_quirk, /datum/quirk/anime))
+			user.add_quirk(/datum/quirk/anime)
+			break
+
 	for(var/obj/item/bodypart/limb as anything in user.bodyparts)
 		limb.update_limb(is_creating = TRUE)
 
@@ -854,9 +871,11 @@
 		new_flesh_item.worn_icon = chosen_profile.worn_icon_list[slot]
 		new_flesh_item.worn_icon_state = chosen_profile.worn_icon_state_list[slot]
 
-		if(istype(new_flesh_item, /obj/item/changeling/id) && chosen_profile.id_icon)
+		if(istype(new_flesh_item, /obj/item/changeling/id) && chosen_profile.id_icon && chosen_profile.id)
 			var/obj/item/changeling/id/flesh_id = new_flesh_item
 			flesh_id.hud_icon = chosen_profile.id_icon
+			flesh_id.stored_name = chosen_profile.id.registered_name
+			flesh_id.stored_job = chosen_profile.id.assignment
 
 		if(equip)
 			user.equip_to_slot_or_del(new_flesh_item, slot2slot[slot])
@@ -869,6 +888,7 @@
 			attempted_fake_scar.fake = TRUE
 
 	user.regenerate_icons()
+	user.name = user.get_visible_name()
 	current_profile = chosen_profile
 
 /datum/antagonist/changeling/proc/query_for_monster_hunter(datum/source, list/prey)
@@ -912,6 +932,8 @@
 	var/socks
 	/// The colour of the socks worn by profile source
 	var/socks_color //MONKESTATION EDIT
+	/// ID worn
+	var/obj/item/card/id/id
 	/// A list of paths for any skill chips the profile source had installed
 	var/list/skillchips = list()
 	/// What scars the profile sorce had, in string form (like persistent scars)
