@@ -17,7 +17,7 @@
 	return ..()
 
 /obj/machinery/ai/proc/valid_holder()
-	if(machine_stat & (BROKEN|NOPOWER|EMPED))
+	if(machine_stat & (BROKEN|EMPED) || !has_power())
 		return FALSE
 
 	var/turf/T = get_turf(src)
@@ -31,6 +31,9 @@
 	if(env.return_temperature() > GLOB.ai_os.get_temp_limit() || !env.heat_capacity())
 		return FALSE
 	return TRUE
+
+/obj/machinery/ai/proc/has_power()
+	return !(machine_stat & (NOPOWER))
 
 /obj/machinery/ai/proc/get_holder_status()
 	if(machine_stat & (BROKEN|NOPOWER|EMPED))

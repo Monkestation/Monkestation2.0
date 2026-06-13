@@ -1018,6 +1018,7 @@
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/stack/cable_coil = 2,
+		/obj/item/stock_parts/power_store/cell/high = 1,
 	)
 
 /obj/item/circuitboard/machine/teleporter_hub

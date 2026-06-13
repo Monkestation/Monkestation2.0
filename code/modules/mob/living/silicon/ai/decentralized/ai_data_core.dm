@@ -1,6 +1,8 @@
 GLOBAL_LIST_EMPTY(data_cores)
 GLOBAL_VAR_INIT(primary_data_core, null)
 
+#define CELL_POWERUSE_MULTIPLIER 0.025
+
 /obj/machinery/ai/data_core
 	name = "AI Data Core"
 	desc = "A complicated computer system capable of emulating the neural functions of an organic being at near-instantanous speeds."
@@ -24,6 +26,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	var/heat_modifier = 1
 	//Power modifier, power modified by this. Be aware this indirectly changes heat since power => heat
 	var/power_modifier = 1
+	var/obj/item/stock_parts/power_store/cell/integrated_battery
 
 /obj/machinery/ai/data_core/Initialize(mapload)
 	. = ..()
@@ -57,6 +60,9 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		new_power_mod -= (C.rating - 1) / 50 //Max -24% at tier 4 parts, min -0% at tier 1
 
+	for(var/obj/item/stock_parts/power_store/cell/cell_used in component_parts)
+		integrated_battery = cell_used
+
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		new_heat_mod -= (M.rating - 1) / 15 //Max -40% at tier 4 parts, min -0% at tier 1
 
@@ -78,12 +84,20 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 		for(var/law in AI.laws.get_law_list(include_zeroth = TRUE))
 			. += law
 
-/obj/machinery/ai/data_core/attackby(obj/item/O, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", base_icon_state, O))
+/obj/machinery/ai/data_core/attackby(obj/item/weapon, mob/user, params)
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", base_icon_state, weapon))
 		return TRUE
 
-	if(default_deconstruction_crowbar(O))
+	if(default_deconstruction_crowbar(weapon))
 		return TRUE
+
+	if(panel_open && istype(weapon, /obj/item/stock_parts/power_store/cell) && user.transferItemToLoc(weapon, src))
+		if(!user.put_in_hands(integrated_battery))
+			integrated_battery.forceMove(drop_location())
+		to_chat(user, span_notice("You replace [integrated_battery] with [weapon]."))
+		RefreshParts()
+		return TRUE
+
 	return ..()
 
 /obj/machinery/ai/data_core/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
@@ -104,6 +118,8 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	if(valid_holder())
 		valid_ticks++
 		use_power = ACTIVE_POWER_USE
+		if(machine_stat & NOPOWER)
+			integrated_battery.use(active_power_usage * CELL_POWERUSE_MULTIPLIER)
 		warning_sent = FALSE
 	else
 		valid_ticks--
@@ -116,17 +132,41 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 			for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
 				AI.playsound_local(AI, 'sound/machines/engine_alert2.ogg', 30)
 
-	if(machine_stat & (BROKEN|NOPOWER|EMPED))
+	if((machine_stat & (BROKEN|EMPED)) || !has_power())
 		return
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/env = T.return_air()
+	if(!env.total_moles())
+		return
+
+	var/temp_active_usage = (machine_stat & NOPOWER) ? idle_power_usage * CELL_POWERUSE_MULTIPLIER : active_power_usage * CELL_POWERUSE_MULTIPLIER
+	var/temperature_increase = (temp_active_usage / AI_HEATSINK_CAPACITY) * heat_modifier //1 CPU = 1000W. Heat capacity = somewhere around 3000-4000. Aka we generate 0.25 - 0.33 K per second, per CPU.
+	env.temperature += max((temperature_increase * AI_TEMPERATURE_MULTIPLIER), TCMB)
+	T.immediate_calculate_adjacent_turfs()
+
+/*
+	var/port_capacity = env.heat_capacity()
+	if(port_capacity)
+		var/temperature_increase = (active_power_usage / port_capacity) * heat_modifier //1 CPU = 1000W. Heat capacity = somewhere around 3000-4000. Aka we generate 0.25 - 0.33 K per second, per CPU.
+		env.temperature = max(((env.return_temperature() + temperature_increase) * AI_TEMPERATURE_MULTIPLIER), TCMB)
+*/
+/*
 	if(env.heat_capacity())
 		var/temperature_increase = (active_power_usage / env.heat_capacity()) * heat_modifier //1 CPU = 1000W. Heat capacity = somewhere around 3000-4000. Aka we generate 0.25 - 0.33 K per second, per CPU.
 		env.temperature_share(null, OPEN_HEAT_TRANSFER_COEFFICIENT, env.return_temperature() + temperature_increase * AI_TEMPERATURE_MULTIPLIER) //assume all input power is dissipated
-		T.air_update_turf()
+		T.air_update_turf(update = TRUE)
+*/
+
+/obj/machinery/ai/data_core/has_power()
+	if((machine_stat & (NOPOWER)) && integrated_battery)
+		if(integrated_battery.charge > (active_power_usage * CELL_POWERUSE_MULTIPLIER))
+			return TRUE
+	else
+		return TRUE
+	return FALSE
 
 /obj/machinery/ai/data_core/proc/can_transfer_ai()
-	if(machine_stat & (BROKEN|NOPOWER|EMPED))
+	if(machine_stat & (BROKEN|EMPED) || !has_power())
 		return FALSE
 	if(!valid_data_core())
 		return FALSE
@@ -141,7 +181,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	. = ..()
 	if(!valid_data_core())
 		return
-	if(machine_stat & (BROKEN|NOPOWER|EMPED))
+	if((machine_stat & (BROKEN|EMPED)) || !has_power())
 		icon_state = "core-offline"
 	else
 		icon_state = "core"
@@ -176,3 +216,5 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 			to_chat(user, span_alert("ERROR: AI flush is in progress, cannot execute transfer protocol."))
 			return FALSE
 	return TRUE
+
+#undef CELL_POWERUSE_MULTIPLIER
