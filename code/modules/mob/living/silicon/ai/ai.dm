@@ -148,6 +148,8 @@
 	//We only check every X ticks
 	var/cameraMemoryTickCount = 0
 
+	///Did we get the death prompt?
+	var/is_dying = FALSE
 	///Multiplier for amount of points gained when passively using CPU for science
 	var/research_point_booster = 1
 
@@ -600,7 +602,7 @@
 		if(!GLOB.cameranet.checkCameraVis(M))
 			to_chat(src, span_warning("Exosuit is no longer near active cameras."))
 			return
-		if(!isturf(loc))
+		if(!isvalidAIloc(loc))
 			to_chat(src, span_warning("You aren't in your core!"))
 			return
 		if(M)
@@ -941,6 +943,7 @@
 			to_chat(user, span_warning("No intelligence patterns detected."))
 			return
 		ShutOffDoomsdayDevice()
+		builtInCamera.toggle_cam(user)
 		ai_restore_power()//So the AI initially has power.
 		control_disabled = TRUE //Can't control things remotely if you're stuck in a card!
 		interaction_range = 0

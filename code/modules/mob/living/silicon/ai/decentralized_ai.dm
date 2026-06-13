@@ -25,16 +25,20 @@
 
 
 /mob/living/silicon/ai/proc/relocate(silent = FALSE)
+	if(is_dying)
+		return
 	if(!silent)
 		to_chat(src, span_userdanger("Connection to data core lost. Attempting to reaquire connection..."))
 
 	if(!GLOB.data_cores.len)
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/silicon/ai, death_prompt))
+		is_dying = TRUE
 		return
 
 	var/obj/machinery/ai/data_core/new_data_core = available_ai_cores()
 	if(!new_data_core || (new_data_core && !new_data_core.can_transfer_ai()))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/silicon/ai, death_prompt))
+		is_dying = TRUE
 		return
 
 	if(!silent)
@@ -54,6 +58,7 @@
 	if(available_ai_cores())
 		to_chat(src, span_usernotice("Yes! I am alive!"))
 		relocate(TRUE)
+		is_dying = FALSE
 		return
 	to_chat(src, span_notice("They need me. No.. I need THEM."))
 	sleep(0.5 SECONDS)

@@ -41,8 +41,11 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	var/list/all_ais = GLOB.ai_list.Copy()
 
 	for(var/mob/living/silicon/ai/AI in contents)
+		if(AI.is_dying)
+			continue
 		all_ais -= AI
-		AI.relocate()
+		if(!AI.is_dying)
+			AI.relocate()
 
 	to_chat(all_ais, span_userdanger("Warning! Data Core brought offline in [get_area(src)]! Please verify that no malicious actions were taken."))
 	return ..()
@@ -60,22 +63,6 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	heat_modifier = new_heat_mod
 	power_modifier = new_power_mod
 	active_power_usage = AI_DATA_CORE_POWER_USAGE * power_modifier
-
-/obj/machinery/ai/data_core/process()
-	valid_ticks = clamp(valid_ticks, 0, MAX_AI_DATA_CORE_TICKS)
-
-	if(valid_holder())
-		valid_ticks++
-		use_power = ACTIVE_POWER_USE
-		warning_sent = FALSE
-	else
-		valid_ticks--
-		if(valid_ticks <= 0)
-			use_power = IDLE_POWER_USE
-		if(!warning_sent && COOLDOWN_FINISHED(src, warning_cooldown))
-			warning_sent = TRUE
-			COOLDOWN_START(src, warning_cooldown, AI_DATA_CORE_WARNING_COOLDOWN)
-			to_chat(GLOB.ai_list, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Please contact technical support."))
 
 /obj/machinery/ai/data_core/examine(mob/user)
 	. = ..()
@@ -112,7 +99,23 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	return FALSE
 
 /obj/machinery/ai/data_core/process_atmos()
-	. = ..()
+	valid_ticks = clamp(valid_ticks, 0, MAX_AI_DATA_CORE_TICKS)
+
+	if(valid_holder())
+		valid_ticks++
+		use_power = ACTIVE_POWER_USE
+		warning_sent = FALSE
+	else
+		valid_ticks--
+		if(valid_ticks <= 0)
+			use_power = IDLE_POWER_USE
+		if(!warning_sent && COOLDOWN_FINISHED(src, warning_cooldown))
+			warning_sent = TRUE
+			COOLDOWN_START(src, warning_cooldown, AI_DATA_CORE_WARNING_COOLDOWN)
+			to_chat(GLOB.ai_list, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Please contact technical support."))
+			for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
+				AI.playsound_local(AI, 'sound/machines/engine_alert2.ogg', 30)
+
 	if(machine_stat & (BROKEN|NOPOWER|EMPED))
 		return
 	var/turf/T = get_turf(src)
