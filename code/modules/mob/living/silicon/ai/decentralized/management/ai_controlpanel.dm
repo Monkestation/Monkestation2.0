@@ -73,7 +73,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		if(!AI)
 			return ..()
 		var/obj/item/surveillance_upgrade/upgrade = W
-		upgrade.afterattack(AI, user)
+		upgrade.interact_with_atom(AI, user)
 
 	if(istype(W, /obj/item/malf_upgrade))
 		if(!authenticated)
@@ -83,7 +83,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		if(!AI)
 			return ..()
 		var/obj/item/malf_upgrade/upgrade = W
-		upgrade.afterattack(AI, user)
+		upgrade.interact_with_atom(AI, user)
 
 	return ..()
 

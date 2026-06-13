@@ -48,12 +48,10 @@
 	icon_state = "datadisk3"
 
 
-/obj/item/malf_upgrade/pre_attack(atom/A, mob/living/user, proximity)
-	if(!proximity)
-		return ..()
-	if(!isAI(A))
-		return ..()
-	var/mob/living/silicon/ai/AI = A
+/obj/item/malf_upgrade/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isAI(interacting_with))
+		return
+	var/mob/living/silicon/ai/AI = interacting_with
 	if(AI.malf_picker)
 		AI.malf_picker.processing_time += 50
 		to_chat(AI, span_userdanger("[user] has attempted to upgrade you with combat software that you already possess. You gain 50 points to spend on Malfunction Modules instead."))
@@ -66,7 +64,7 @@
 		message_admins("[ADMIN_LOOKUPFLW(user)] has upgraded [ADMIN_LOOKUPFLW(AI)] with a [src].")
 	to_chat(user, span_notice("You install [src], upgrading [AI]."))
 	qdel(src)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 
 //Lipreading
@@ -77,12 +75,10 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "datadisk3"
 
-/obj/item/surveillance_upgrade/pre_attack(atom/A, mob/living/user, proximity)
-	if(!proximity)
-		return ..()
-	if(!isAI(A))
-		return ..()
-	var/mob/living/silicon/ai/AI = A
+/obj/item/surveillance_upgrade/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isAI(interacting_with))
+		return
+	var/mob/living/silicon/ai/AI = interacting_with
 	if(AI.eyeobj)
 		AI.eyeobj.relay_speech = TRUE
 		to_chat(AI, span_userdanger("[user] has upgraded you with surveillance software!"))
@@ -91,7 +87,7 @@
 	user.log_message("has upgraded [key_name(AI)] with a [src].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] has upgraded [ADMIN_LOOKUPFLW(AI)] with a [src].")
 	qdel(src)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 //Lipreading
 /obj/item/aiupgrade/surveillance_upgrade

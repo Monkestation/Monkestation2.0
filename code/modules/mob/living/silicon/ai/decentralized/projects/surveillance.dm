@@ -22,7 +22,7 @@
 /mob/living/silicon/ai/proc/choose_camera_target()
 	set name = "Choose Camera Memory Target"
 	set category = "AI Commands"
-	set desc = "Select a target for the camera memory tracker. Case sensitive. "
+	set desc = "Select a target for the camera memory tracker. Case sensitive."
 	var/target = stripped_input(usr, "Please enter target name (Leave empty for cancel):", "Camera Tracker", "", MAX_NAME_LEN)
 	if(!target)
 		cameraMemoryTarget = null

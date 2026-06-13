@@ -39,7 +39,19 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	..()
 
 /obj/machinery/ai/data_core/process()
-	calculate_validity()
+	valid_ticks = clamp(valid_ticks, 0, MAX_AI_DATA_CORE_TICKS)
+
+	if(valid_holder())
+		valid_ticks++
+		use_power = ACTIVE_POWER_USE
+		warning_sent = FALSE
+	else
+		valid_ticks--
+		if(valid_ticks <= 0)
+			use_power = IDLE_POWER_USE
+		if(!warning_sent)
+			warning_sent = TRUE
+			to_chat(GLOB.ai_list, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Please contact technical support."))
 
 /obj/machinery/ai/data_core/examine(mob/user)
 	. = ..()
@@ -71,21 +83,6 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	if(valid_ticks > 0)
 		return TRUE
 	return FALSE
-
-/obj/machinery/ai/data_core/proc/calculate_validity()
-	valid_ticks = clamp(valid_ticks, 0, MAX_AI_DATA_CORE_TICKS)
-
-	if(valid_holder())
-		valid_ticks++
-		use_power = ACTIVE_POWER_USE
-		warning_sent = FALSE
-	else
-		valid_ticks--
-		if(valid_ticks <= 0)
-			use_power = IDLE_POWER_USE
-		if(!warning_sent)
-			warning_sent = TRUE
-			to_chat(GLOB.ai_list, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Please contact technical support."))
 
 /obj/machinery/ai/data_core/process_atmos()
 	. = ..()

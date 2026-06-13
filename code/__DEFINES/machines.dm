@@ -32,6 +32,8 @@
 #define BASE_MACHINE_IDLE_CONSUMPTION (100 WATTS)
 ///Base global power consumption for active machines. The unit is ambiguous (joules or watts) depending on the use case for dynamic users.
 #define BASE_MACHINE_ACTIVE_CONSUMPTION (BASE_MACHINE_IDLE_CONSUMPTION * 10)
+///Base power usage for most things AI core related, as they are more power hungry than most machines.
+#define AI_DATA_CORE_POWER_USAGE (BASE_MACHINE_IDLE_CONSUMPTION * 7.5)
 
 /// Bitflags for a machine's preferences on when it should start processing. For use with machinery's `processing_flags` var.
 #define START_PROCESSING_ON_INIT (1<<0) /// Indicates the machine will automatically start processing right after it's `Initialize()` is ran.
