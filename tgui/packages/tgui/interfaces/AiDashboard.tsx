@@ -178,7 +178,7 @@ const AvailableProjects = (props) => {
         {categories.map((category, index) => (
           <Tabs.Tab
             key={index}
-            selected={!search ? selectedCategory === category : null}
+            selected={!search ? selectedCategory === category : undefined}
             onClick={() => setCategory(category)}
           >
             {category}
@@ -308,7 +308,9 @@ const CompletedProjects = (props) => {
         {categories.map((category, index) => (
           <Tabs.Tab
             key={index}
-            selected={!searchCompleted ? selectedCategory === category : null}
+            selected={
+              !searchCompleted ? selectedCategory === category : undefined
+            }
             onClick={() => setCategory(category)}
           >
             {category}
@@ -480,7 +482,6 @@ const NetworkingResources = (props) => {
                 })
               }
               disabled={data.human_only}
-              tooltip={tooltipDisabled}
             />
             <Button
               height={1.75}

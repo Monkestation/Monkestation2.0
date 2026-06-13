@@ -15,10 +15,11 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 	var/speed = 1
+	var/max_speed = 10
 	var/base_power_usage = AI_BASE_POWER_PER_CPU
 	var/power_multiplier = 1
-
 	var/max_power_multiplier = 1
+
 	var/growth_scale = 1
 
 	//Multipliers

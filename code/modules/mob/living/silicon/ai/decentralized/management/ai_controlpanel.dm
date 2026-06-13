@@ -212,13 +212,14 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	stop_download(TRUE)
 
 /obj/machinery/computer/ai_control_console/proc/stop_download(silent = FALSE)
-	if(downloading)
-		if(!silent)
-			to_chat(downloading, span_userdanger("Download stopped."))
-		downloading = null
-		user_downloading = null
-		download_progress = 0
-		download_warning = FALSE
+	if(!downloading)
+		return
+	if(!silent)
+		to_chat(downloading, span_userdanger("Download stopped."))
+	downloading = null
+	user_downloading = null
+	download_progress = 0
+	download_warning = FALSE
 
 /obj/machinery/computer/ai_control_console/proc/upload_ai(silent = FALSE)
 	to_chat(intellicard.AI, span_notice("You are being uploaded. Please stand by..."))

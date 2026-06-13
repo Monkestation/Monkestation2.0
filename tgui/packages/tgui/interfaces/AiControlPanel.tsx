@@ -82,7 +82,7 @@ export const AiControlPanel = (props) => {
                   setCode('');
                   act('clear_for_use', { control_code: value });
                 }}
-                onChange={(e, value) => {
+                onChange={(value) => {
                   setCode(value);
                 }}
               />
@@ -206,6 +206,12 @@ export const AiControlPanel = (props) => {
                     <Button
                       icon="sign-out-alt"
                       color="bad"
+                      tooltip={
+                        !can_log_out
+                          ? 'This console has administrator privileges and cannot be logged out of.'
+                          : null
+                      }
+                      disabled={!can_log_out}
                       onClick={() => act('log_out')}
                     >
                       Log Out
@@ -224,17 +230,16 @@ export const AiControlPanel = (props) => {
                       value={download_progress}
                       maxValue={100}
                     />
-                    <Button
+                    <Button.Confirm
                       mt={0.5}
                       fluid
                       color="bad"
                       icon="stop"
-                      tooltip="WARNING"
                       textAlign="center"
                       onClick={() => act('stop_download')}
                     >
                       Cancel Download
-                    </Button>
+                    </Button.Confirm>
                     {!!current_ai_ref && current_ai_ref === downloading_ref && (
                       <Button
                         color="average"

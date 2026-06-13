@@ -17,8 +17,10 @@ type Data = {
   overclock_progress: number;
   has_cpu: BooleanLike;
   speed: number;
-  last_values: LastValuesData[];
+  max_speed: number;
   power_multiplier: number;
+  max_power_multiplier: number;
+  last_values: LastValuesData[];
   power_usage: number;
 };
 
@@ -34,8 +36,10 @@ export const AiOverclocking = (props) => {
     overclock_progress,
     has_cpu,
     speed,
-    last_values = [],
+    max_speed,
     power_multiplier,
+    max_power_multiplier,
+    last_values = [],
     power_usage,
   } = data;
 
@@ -47,13 +51,18 @@ export const AiOverclocking = (props) => {
   };
 
   return (
-    <Window width={600} height={550}>
+    <Window width={600} height={345}>
       <Window.Content scrollable>
         {(!overclock_progress && (
           <Section
             title="Overclocking"
             buttons={
-              <Button color="bad" icon="eject" onClick={() => act('eject_cpu')}>
+              <Button
+                color="bad"
+                icon="eject"
+                disabled={!has_cpu}
+                onClick={() => act('eject_cpu')}
+              >
                 Eject CPU
               </Button>
             }
@@ -106,6 +115,7 @@ export const AiOverclocking = (props) => {
                         minValue={0.1}
                         maxValue={1}
                         step={0.1}
+                        disabled={speed === max_speed}
                         onChange={(value) => setIncrement(value)}
                       />
                     </LabeledList.Item>
@@ -113,6 +123,7 @@ export const AiOverclocking = (props) => {
                       {speed}THz &nbsp;
                       <Button
                         icon="minus"
+                        disabled={speed === 0}
                         onClick={() =>
                           act('set_speed', {
                             new_speed: speed - increment,
@@ -122,7 +133,7 @@ export const AiOverclocking = (props) => {
                       <NumberInput
                         value={speed}
                         minValue={1}
-                        maxValue={10}
+                        maxValue={max_speed}
                         onChange={(value) =>
                           act('set_speed', {
                             new_speed: value,
@@ -131,6 +142,7 @@ export const AiOverclocking = (props) => {
                       />
                       <Button
                         icon="plus"
+                        disabled={speed === max_speed}
                         onClick={() =>
                           act('set_speed', {
                             new_speed: speed + increment,
@@ -142,6 +154,7 @@ export const AiOverclocking = (props) => {
                       {power_multiplier}x ({power_usage}W)&nbsp;
                       <Button
                         icon="minus"
+                        disabled={power_multiplier === 0}
                         onClick={() =>
                           act('set_power', {
                             new_power:
@@ -154,7 +167,7 @@ export const AiOverclocking = (props) => {
                       <NumberInput
                         value={power_multiplier}
                         minValue={0.5}
-                        maxValue={5}
+                        maxValue={max_power_multiplier}
                         onChange={(value) =>
                           act('set_power', {
                             new_power: value,
@@ -163,6 +176,7 @@ export const AiOverclocking = (props) => {
                       />
                       <Button
                         icon="plus"
+                        disabled={power_multiplier === max_power_multiplier}
                         onClick={() =>
                           act('set_power', {
                             new_power: power_multiplier + increment,

@@ -59,6 +59,7 @@
 			to_chat(user, span_warning("There's already a CPU inserted!"))
 			return ..()
 		var/obj/item/ai_cpu/CPU = I
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 		inserted_cpu = CPU
 		CPU.forceMove(src)
 		return FALSE
@@ -80,7 +81,9 @@
 
 	if(inserted_cpu)
 		data["speed"] = inserted_cpu.speed
+		data["max_speed"] = inserted_cpu.max_speed
 		data["power_multiplier"] = inserted_cpu.power_multiplier
+		data["max_power_multiplier"] = inserted_cpu.max_power_multiplier
 		data["power_usage"] = inserted_cpu.get_power_usage()
 		var/time_left_percent = COOLDOWN_TIMELEFT(src, overclocking_timer)/OVERCLOCKING_DURATION
 		data["overclock_progress"] = overclocking ? time_left_percent : FALSE
@@ -98,6 +101,7 @@
 		if("eject_cpu")
 			if(!inserted_cpu)
 				return
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 			inserted_cpu.speed = initial(inserted_cpu.speed)
 			inserted_cpu.power_multiplier = initial(inserted_cpu.power_multiplier)
 			inserted_cpu.forceMove(drop_location(src))
@@ -109,6 +113,9 @@
 			var/new_speed = params["new_speed"]
 			if(!isnum(new_speed))
 				return
+			if(new_speed > inserted_cpu.max_speed)
+				inserted_cpu.speed = inserted_cpu.max_speed
+				return
 			inserted_cpu.speed = new_speed
 			. = TRUE
 		if("set_power")
@@ -116,6 +123,9 @@
 				return
 			var/new_power = params["new_power"]
 			if(!isnum(new_power))
+				return
+			if(new_power > inserted_cpu.max_power_multiplier)
+				inserted_cpu.power_multiplier = inserted_cpu.max_power_multiplier
 				return
 			inserted_cpu.power_multiplier = new_power
 			. = TRUE

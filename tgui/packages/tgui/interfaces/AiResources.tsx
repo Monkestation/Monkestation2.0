@@ -23,7 +23,7 @@ type Data = {
   authenticated: BooleanLike;
   username: string;
   user_image: string;
-  has_access: BooleanLike;
+  has_access: boolean;
   human_only: BooleanLike;
   ais: AiData[];
 };
@@ -220,57 +220,55 @@ export const AiResources = (props) => {
           <Section title="Welcome">
             <Stack align="center" justify="center" mt="0.5rem">
               <Stack.Item>
-                <Fragment>
-                  {(user_image && (
-                    <Fragment style={`position:relative`}>
-                      <img
-                        src={user_image}
-                        width="125px"
-                        height="125px"
-                        style={`-ms-interpolation-mode: nearest-neighbor;
+                {(user_image && (
+                  <Fragment style={{ position: 'relative' }}>
+                    <img
+                      src={user_image}
+                      width="125px"
+                      height="125px"
+                      style={`-ms-interpolation-mode: nearest-neighbor;
                         border-radius: 50%; border: 3px solid white;
                         margin-right:-125px`}
-                      />
-                      <img
-                        src="scanlines.png"
-                        width="125px"
-                        height="125px"
-                        style={`-ms-interpolation-mode: nearest-neighbor;
-                        border-radius: 50%; border: 3px solid white;opacity: 0.3;`}
-                      />
-                    </Fragment>
-                  )) || (
-                    <Icon
-                      name="user-circle"
-                      verticalAlign="middle"
-                      size="4.5"
-                      mr="1rem"
                     />
-                  )}
-                  <Box inline fontSize="18px" bold>
-                    {username ? username : 'Unknown'}
-                  </Box>
-                  <NoticeBox
-                    success={has_access}
-                    danger={!has_access}
-                    textAlign="center"
-                    mt="1.5rem"
+                    <img
+                      src="scanlines.png"
+                      width="125px"
+                      height="125px"
+                      style={`-ms-interpolation-mode: nearest-neighbor;
+                        border-radius: 50%; border: 3px solid white;opacity: 0.3;`}
+                    />
+                  </Fragment>
+                )) || (
+                  <Icon
+                    name="user-circle"
+                    verticalAlign="middle"
+                    size={4.5}
+                    mr="1rem"
+                  />
+                )}
+                <Box inline fontSize="18px" bold>
+                  {username ? username : 'Unknown'}
+                </Box>
+                <NoticeBox
+                  success={has_access}
+                  danger={!has_access}
+                  textAlign="center"
+                  mt="1.5rem"
+                >
+                  {has_access ? 'Access Granted' : 'Access Denied'}
+                </NoticeBox>
+                <Box textAlign="center">
+                  <Button
+                    icon="sign-in-alt"
+                    color={has_access ? 'good' : 'bad'}
+                    fluid
+                    onClick={() => {
+                      act('log_in');
+                    }}
                   >
-                    {has_access ? 'Access Granted' : 'Access Denied'}
-                  </NoticeBox>
-                  <Box textAlign="center">
-                    <Button
-                      icon="sign-in-alt"
-                      color={has_access ? 'good' : 'bad'}
-                      fluid
-                      onClick={() => {
-                        act('log_in');
-                      }}
-                    >
-                      Log In
-                    </Button>
-                  </Box>
-                </Fragment>
+                    Log In
+                  </Button>
+                </Box>
               </Stack.Item>
             </Stack>
           </Section>

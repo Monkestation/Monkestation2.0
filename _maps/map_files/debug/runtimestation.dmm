@@ -1758,8 +1758,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "hj" = (
-/obj/machinery/ai/data_core,
 /obj/machinery/camera/autoname/directional/west,
+/obj/machinery/rack_creator,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/medical/coldroom)
 "hD" = (
@@ -1935,6 +1935,13 @@
 /obj/item/debug/omnitool,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"nV" = (
+/obj/structure/cable,
+/obj/machinery/computer/ai_control_console{
+	dir = 1
+	},
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/station/medical/coldroom)
 "od" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -2519,6 +2526,10 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"LX" = (
+/obj/item/aicard,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/station/medical/coldroom)
 "Mh" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -2560,6 +2571,14 @@
 /obj/machinery/chem_recipe_debug,
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
+"Nr" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/item/paper/ai_control_code,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/station/medical/coldroom)
 "Ns" = (
 /obj/machinery/door/airlock/public/glass,
 /obj/structure/cable,
@@ -6842,7 +6861,7 @@ Mw
 lt
 qB
 qB
-qB
+LX
 Mw
 aa
 aa
@@ -6932,8 +6951,8 @@ vf
 wY
 ha
 zN
-zN
-Ck
+Nr
+nV
 MG
 Mw
 aa
