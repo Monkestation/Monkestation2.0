@@ -13,6 +13,7 @@
 	key = "r"
 	default_priority = 10
 	spans = list(SPAN_ROBOT)
+	secret = TRUE
 
 /datum/language/ratvar/scramble_sentence(input, list/mutual_languages)
 	return text2ratvar(input)

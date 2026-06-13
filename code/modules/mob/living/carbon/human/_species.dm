@@ -1,6 +1,6 @@
 GLOBAL_LIST_EMPTY(roundstart_races)
 ///List of all roundstart languages by path
-GLOBAL_LIST_EMPTY(roundstart_languages)
+GLOBAL_LIST_EMPTY(uncommon_roundstart_languages)
 
 /// An assoc list of species types to their features (from get_features())
 GLOBAL_LIST_EMPTY(features_by_species)
@@ -59,6 +59,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Use a [language holder datum][/datum/language_holder] typepath in this var.
 	/// Should never be null.
 	var/datum/language_holder/species_language_holder = /datum/language_holder/human_basic
+	/// Iris/Oculis port: Adding a language type to this in the form of /datum/language will allow the language to be displayed in preferences for that species, even if it is a secret language.
+	/// Currently unused.
+	var/list/language_prefs_whitelist
 	/**
 	  * Visible CURRENT bodyparts that are unique to a species.
 	  * DO NOT USE THIS AS A LIST OF ALL POSSIBLE BODYPARTS AS IT WILL FUCK
@@ -272,19 +275,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/list/selectable_species = list()
 
 	for(var/species_type in subtypesof(/datum/species))
-		var/datum/species/species = new species_type
+		var/datum/species/species = GLOB.species_prototypes[species_type]
 		if(species.check_roundstart_eligible())
-			selectable_species += species.id
-			var/datum/language_holder/temp_holder = new species.species_language_holder
-			for(var/datum/language/spoken_languages as anything in temp_holder.understood_languages)
-				if(spoken_languages in GLOB.roundstart_languages)
-					continue
-				GLOB.roundstart_languages += spoken_languages
-			qdel(temp_holder)
-			qdel(species)
+			selectable_species[species.id] = TRUE // NOVA EDIT CHANGE - Make assoc for fast lookup - ORIGINAL: selectable_species += species.id
+			var/datum/language_holder/temp_holder = GLOB.prototype_language_holders[species.species_language_holder]
+			for(var/datum/language/spoken_language as anything in temp_holder.understood_languages)
+				GLOB.uncommon_roundstart_languages |= spoken_language
 
+	GLOB.uncommon_roundstart_languages -= /datum/language/common
 	if(!selectable_species.len)
-		selectable_species += SPECIES_HUMAN
+		selectable_species[SPECIES_HUMAN] = TRUE // NOVA EDIT CHANGE - ORIGINAL: selectable_species += SPECIES_HUMAN
 
 	return selectable_species
 
@@ -510,7 +510,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * * old_species - The species that the carbon used to be before becoming this race, used for regenerating organs.
  * * pref_load - Preferences to be loaded from character setup, loads in preferred mutant things like bodyparts, digilegs, skin color, etc.
  */
-/datum/species/proc/on_species_gain(mob/living/carbon/human/C, datum/species/old_species, pref_load)
+/datum/species/proc/on_species_gain(mob/living/carbon/human/C, datum/species/old_species, pref_load, regenerate_icons = TRUE, replace_missing = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 	// Drop the items the new species can't wear
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN_PRE, src, old_species)
@@ -580,10 +580,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		C.grant_language(language, UNDERSTOOD_LANGUAGE, LANGUAGE_SPECIES)
 	for(var/language in gaining_holder.spoken_languages)
 		C.grant_language(language, SPOKEN_LANGUAGE, LANGUAGE_SPECIES)
-	for(var/language in gaining_holder.blocked_languages)
-		C.add_blocked_language(language, LANGUAGE_SPECIES)
+	for(var/language in gaining_holder.blocked_speaking)
+		C.add_blocked_language(language, SPOKEN_LANGUAGE, LANGUAGE_SPECIES)
+	for(var/language in gaining_holder.blocked_understanding)
+		C.add_blocked_language(language, UNDERSTOOD_LANGUAGE, LANGUAGE_SPECIES)
+	if(regenerate_icons)
+		C.regenerate_icons()
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
+
+	properly_gained = TRUE
 
 	properly_gained = TRUE
 
@@ -634,14 +640,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	C.maxHealth = C.maxHealth / maxhealthmod
 
-		// Removes all languages previously associated with [LANGUAGE_SPECIES], gaining our new species will add new ones back
+	// Removes all languages previously associated with [LANGUAGE_SPECIES], gaining our new species will add new ones back
 	var/datum/language_holder/losing_holder = GLOB.prototype_language_holders[species_language_holder]
 	for(var/language in losing_holder.understood_languages)
 		C.remove_language(language, UNDERSTOOD_LANGUAGE, LANGUAGE_SPECIES)
 	for(var/language in losing_holder.spoken_languages)
 		C.remove_language(language, SPOKEN_LANGUAGE, LANGUAGE_SPECIES)
-	for(var/language in losing_holder.blocked_languages)
-		C.remove_blocked_language(language, LANGUAGE_SPECIES)
+	for(var/language in losing_holder.blocked_speaking)
+		C.remove_blocked_language(language, SPOKEN_LANGUAGE, LANGUAGE_SPECIES)
+	for(var/language in losing_holder.blocked_understanding)
+		C.remove_blocked_language(language, UNDERSTOOD_LANGUAGE, LANGUAGE_SPECIES)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 

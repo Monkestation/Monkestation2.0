@@ -23,4 +23,5 @@
 
 	mutual_understanding = list(
 		/datum/language/ashtongue = 80,
+		/datum/language/spacer = 5,
 	)

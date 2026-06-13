@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 
 /datum/heretic_knowledge_tree_column
 	///Used to determine if this is a side path or a main path
-	var/abstract_type = /datum/heretic_knowledge_tree_column
+	abstract_type = /datum/heretic_knowledge_tree_column
 	///Route that symbolizes what path this is, MUST be unique between paths
 	var/route = PATH_START
 	var/icon_state = "dark_blade"

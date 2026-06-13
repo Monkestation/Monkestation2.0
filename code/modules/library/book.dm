@@ -92,6 +92,7 @@
 
 	user.add_mood_event("book_nerd", /datum/mood_event/book_nerd)
 	user.mind.book_titles_read[starting_title] = TRUE
+	user.mind?.adjust_experience(/datum/skill/language, 15) // NOVA EDIT ADDITION - you'd need to read 150 books to get to legendary...
 
 /obj/item/book/attack_self(mob/user)
 	if(!can_read_book(user))

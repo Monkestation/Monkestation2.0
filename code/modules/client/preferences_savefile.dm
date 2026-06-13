@@ -311,6 +311,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Load prefs
 	job_preferences = save_data?["job_preferences"]
 
+	//Load languages
+	var/list/save_languages = SANITIZE_LIST(save_data["languages"])
+	for(var/language in save_languages)
+		var/value = save_languages[language]
+		save_languages -= language
+
+		if(istext(language))
+			language = _text2path(language)
+		save_languages[language] = value
+	languages = save_languages
+
 	//Quirks
 	all_quirks = save_data?["all_quirks"]
 
@@ -374,6 +385,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Write prefs
 	save_data["job_preferences"] = job_preferences
+
+	//Languages
+	save_data["languages"] = languages
 
 	//Quirks
 	save_data["all_quirks"] = all_quirks

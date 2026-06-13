@@ -12,3 +12,4 @@
 	additional_syllable_high = 0
 	default_priority = 10
 	icon_state = "aphasia"
+	secret = TRUE

@@ -33,7 +33,7 @@
 	layer = LOBBY_BUTTON_LAYER
 	screen_loc = "TOP,CENTER"
 	/// Do not instantiate if type matches this.
-	var/abstract_type = /atom/movable/screen/lobby
+	abstract_type = /atom/movable/screen/lobby
 	var/here
 	/// If true we will create this button every time the HUD is generated
 	var/always_create = TRUE

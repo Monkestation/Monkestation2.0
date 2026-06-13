@@ -381,3 +381,9 @@
 	cost = PAYCHECK_COMMAND * 2.5
 	access_view = ACCESS_COMMAND
 	contains = list(/obj/item/mod/module/megaphone)
+
+/datum/supply_pack/goody/spacerbook
+	name = "Union-Approved Spacer Manual"
+	desc = "Bridge the language gap with those weird aliens today!"
+	cost = PAYCHECK_CREW * 2
+	contains = list(/obj/item/language_manual/spacer_manual)

@@ -1,3 +1,5 @@
+// monkestation edit start - removed because of language menu
+/* original
 /datum/quirk/foreigner
 	name = "Foreigner"
 	// monkestation edit original: desc = "You're not from around here. You don't know Galactic Common!"
@@ -10,8 +12,7 @@
 	medical_record_text = "Patient does not understand Galactic Common and may require an interpreter."
 	mail_goodies = list(/obj/item/taperecorder) // for translation
 
-// monkestation edit start
-/* original
+
 /datum/quirk/foreigner/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.add_blocked_language(/datum/language/common)
@@ -23,11 +24,11 @@
 	human_holder.remove_blocked_language(/datum/language/common)
 	if(ishumanbasic(human_holder))
 		human_holder.remove_language(/datum/language/uncommon)
-*/
 /datum/quirk/foreigner/add_unique(client/client_source)
 	. = ..()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	quirk_holder.remove_language(/datum/language/common, source = LANGUAGE_ALL)
 	if(ishumanbasic(human_holder))
 		human_holder.grant_language(/datum/language/uncommon, source = LANGUAGE_QUIRK)
+*/
 // monkestation edit end

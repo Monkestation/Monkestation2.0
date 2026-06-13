@@ -15,3 +15,4 @@
 	default_priority = 20
 
 	icon_state = "drone"
+	secret = TRUE
