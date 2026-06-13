@@ -82,7 +82,7 @@
 	///How fast you move your camera
 	var/sprint = 10
 	var/last_moved = 0
-	var/acceleration = TRUE
+	var/acceleration = FALSE
 	var/max_camera_sprint = MAX_SPRINT
 
 	var/mob/living/silicon/robot/deployed_shell = null //For shell control

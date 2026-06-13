@@ -14,7 +14,6 @@
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(
-		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT,
 	)
 

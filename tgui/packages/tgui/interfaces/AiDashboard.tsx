@@ -44,9 +44,21 @@ export const AiDashboard = (props) => {
   const amount_of_cpu = current_cpu ? current_cpu * max_cpu : 0;
 
   return (
-    <Window width={800} height={600} title="Dashboard">
+    <Window width={650} height={600} title="Dashboard">
       <Window.Content scrollable>
-        <Section title={'Status'}>
+        <Section
+          title={'Status'}
+          buttons={
+            <Button
+              onClick={() => act('toggle_contribute_cpu')}
+              color={data.contribute_spare_cpu ? 'good' : 'bad'}
+              icon={data.contribute_spare_cpu ? 'toggle-on' : 'toggle-off'}
+            >
+              {!data.contribute_spare_cpu ? 'NOT ' : null}Contributing Spare CPU
+              to Research
+            </Button>
+          }
+        >
           <LabeledControls>
             <LabeledControls.Item label="System Integrity">
               <ProgressBar
@@ -168,6 +180,7 @@ const AvailableProjects = (props) => {
       title="Available Projects"
       buttons={
         <Input
+          fluid
           value={search}
           placeholder="Search.."
           onChange={(value) => setSearch(value)}
@@ -294,7 +307,7 @@ const CompletedProjects = (props) => {
             checked={activeProjectsOnly}
             onClick={() => setActiveProjectsOnly(!activeProjectsOnly)}
           >
-            See Runnable Projects Only
+            Runnable Projects Only
           </Button.Checkbox>
           <Input
             value={searchCompleted}
@@ -464,64 +477,22 @@ const NetworkingResources = (props) => {
           </Button>
         }
       >
-        <LabeledList.Item>
-          CPU Capacity:
-          <Stack>
-            <ProgressBar minValue={0} value={data.current_cpu} maxValue={1}>
-              {amount_of_cpu} THz
-            </ProgressBar>
-            <NumberInput
-              width="60px"
-              unit="%"
-              value={data.current_cpu * 100}
-              minValue={0}
-              maxValue={100}
-              onChange={(value) =>
-                act('set_cpu', {
-                  amount_cpu: Math.round((value / 100) * 100) / 100,
-                })
-              }
-              disabled={data.human_only}
-            />
-            <Button
-              height={1.75}
-              icon="arrow-up"
-              onClick={() => act('max_cpu_assign')}
-              disabled={data.human_only}
-              tooltip={tooltipDisabled}
-            >
-              Max
-            </Button>
-          </Stack>
-        </LabeledList.Item>
-        <LabeledList.Item>
-          RAM Capacity:
-          <Stack>
-            <ProgressBar
-              minValue={0}
-              value={data.current_ram}
-              maxValue={data.max_ram}
-            >
-              {data.current_ram} TB
-            </ProgressBar>
-            <Button
-              mr={1}
-              ml={1}
-              height={1.75}
-              icon="plus"
-              onClick={() => act('add_ram')}
-              disabled={data.human_only}
-              tooltip={tooltipDisabled}
-            />
-            <Button
-              height={1.75}
-              icon="minus"
-              onClick={() => act('remove_ram')}
-              disabled={data.human_only}
-              tooltip={tooltipDisabled}
-            />
-          </Stack>
-        </LabeledList.Item>
+        CPU Capacity:
+        <Stack>
+          <ProgressBar minValue={0} value={data.current_cpu} maxValue={1}>
+            {amount_of_cpu} THz
+          </ProgressBar>
+        </Stack>
+        RAM Capacity:
+        <Stack>
+          <ProgressBar
+            minValue={0}
+            value={data.current_ram}
+            maxValue={data.max_ram}
+          >
+            {data.current_ram} TB
+          </ProgressBar>
+        </Stack>
       </Section>
     </Section>
   );

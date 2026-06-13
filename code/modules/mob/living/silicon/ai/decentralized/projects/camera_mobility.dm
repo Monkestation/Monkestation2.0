@@ -10,11 +10,8 @@
 	. = ..(force_run)
 	if(!.)
 		return .
-	ai.max_camera_sprint *= 2
-	ai.sprint *= 2
-
+	ai.acceleration = TRUE
 
 /datum/ai_project/camera_speed/stop()
-	ai.max_camera_sprint *= 0.5
-	ai.sprint *= 0.5
-	..()
+	ai.acceleration = initial(ai.acceleration)
+	return ..()

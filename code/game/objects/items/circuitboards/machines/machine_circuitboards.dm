@@ -919,7 +919,7 @@
 
 /obj/item/circuitboard/machine/circuit_imprinter/department/netmin
 	name = "Departmental Circuit Imprinter - Network Admin"
-	icon_state = "science"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/rnd/production/circuit_imprinter/department/netmin
 
 /obj/item/circuitboard/machine/cyborgrecharger
@@ -991,7 +991,7 @@
 
 /obj/item/circuitboard/machine/server_cabinet
 	name = "Server Cabinet"
-	icon_state = "science"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/ai/server_cabinet
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
@@ -1002,7 +1002,7 @@
 
 /obj/item/circuitboard/machine/rack_creator
 	name = "Rack Creator"
-	icon_state = "science"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/rack_creator
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 2,
@@ -1011,7 +1011,7 @@
 
 /obj/item/circuitboard/machine/ai_data_core
 	name = "AI Data Core"
-	icon_state = "science"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/ai/data_core
 	req_components = list(
 		/obj/item/stock_parts/capacitor = 4,
@@ -1020,6 +1020,11 @@
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/stock_parts/power_store/cell/high = 1,
 	)
+
+/obj/item/circuitboard/machine/ai_core_display
+	name = "AI Core Display"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/status_display/ai_core
 
 /obj/item/circuitboard/machine/teleporter_hub
 	name = "Teleporter Hub"

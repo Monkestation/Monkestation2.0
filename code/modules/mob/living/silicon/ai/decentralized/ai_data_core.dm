@@ -75,6 +75,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	power_modifier = new_power_mod
 	active_power_usage = AI_DATA_CORE_POWER_USAGE * power_modifier
 
+//NOTE: See /obj/machinery/status_display/examine in ai_core_display.dm
 /obj/machinery/ai/data_core/examine(mob/user)
 	. = ..()
 	var/holder_status = get_holder_status()
@@ -85,7 +86,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	. += "Core temperature: <b>[core_temp] K</b>"
 	. += "<b>Networked AI Laws:</b>"
 	for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
-		var/active_status = !AI.mind ? "([span_warning("OFFLINE")])" : ""
+		var/active_status = "(Core: [FOLLOW_LINK(user, AI.loc)], Eye: [FOLLOW_LINK(user, AI.eyeobj)])"
 		. += "<b>[AI] [active_status] has the following laws: </b>"
 		for(var/law in AI.laws.get_law_list(include_zeroth = TRUE))
 			. += law

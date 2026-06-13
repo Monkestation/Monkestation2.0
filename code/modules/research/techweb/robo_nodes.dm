@@ -70,6 +70,7 @@
 		"mecha_tracking_ai_control",
 		"server_cabinet",
 		"ai_data_core",
+		"ai_core_display",
 		"ai_server_overview",
 		"ram1",
 		"basic_ai_cpu",
