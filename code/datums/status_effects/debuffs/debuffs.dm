@@ -45,6 +45,10 @@
 	///Boolean that, if TRUE, will prevent the person getting this effect from dropping items.
 	var/prevent_drop = FALSE
 
+/datum/status_effect/incapacitating/knockdown/on_creation(mob/living/new_owner, set_duration, prevent_drop)
+	src.prevent_drop = prevent_drop
+	. = ..()
+
 /datum/status_effect/incapacitating/knockdown/on_apply()
 	. = ..()
 	if(!.)

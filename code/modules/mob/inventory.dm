@@ -167,6 +167,8 @@
 		I.do_pickup_animation(src)
 	if(get_item_for_held_index(hand_index))
 		dropItemToGround(get_item_for_held_index(hand_index), force = TRUE)
+		if(QDELING(I)) // DROPDEL
+			return FALSE
 	I.forceMove(src)
 	held_items[hand_index] = I
 	SET_PLANE_EXPLICIT(I, ABOVE_HUD_PLANE, src)
