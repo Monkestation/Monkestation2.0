@@ -1,5 +1,25 @@
 GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list()))
 
+/**
+ * A nested list of fish types and traits that they can spontaneously manifest with associated probabilities
+ * e.g. list(/obj/item/fish = list(/datum/fish_trait = 100), etc...)
+ */
+GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
+
+/proc/populate_spontaneous_fish_traits()
+	var/list/list = list()
+	for(var/trait_path in GLOB.fish_traits)
+		var/datum/fish_trait/trait = GLOB.fish_traits[trait_path]
+		if(isnull(trait.spontaneous_manifest_types))
+			continue
+		var/list/trait_typecache = zebra_typecacheof(trait.spontaneous_manifest_types) - /obj/item/fish
+		for(var/fish_type in trait_typecache)
+			var/trait_prob = trait_typecache[fish_type]
+			if(!trait_prob)
+				continue
+			LAZYSET(list[fish_type], trait_path, trait_typecache[fish_type])
+	return list
+
 /datum/fish_trait
 	var/name = "Unnamed Trait"
 	/// Description of the trait in the fishing catalog and scanner
@@ -8,6 +28,8 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	var/list/incompatible_traits
 	/// The probability this trait can be inherited by offsprings when both mates have it
 	var/inheritability = 100
+	/// A list of fish types and traits that they can spontaneously manifest with associated probabilities
+	var/list/spontaneous_manifest_types
 	/// Same as above, but for when only one has it.
 	var/diff_traits_inheritability = 50
 	/// fishes of types within this list are granted to have this trait, no matter the probability

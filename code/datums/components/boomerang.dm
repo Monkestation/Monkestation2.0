@@ -39,11 +39,10 @@
  */
 /datum/component/boomerang/proc/prepare_throw(datum/source, datum/thrownthing/thrown_thing, spin)
 	SIGNAL_HANDLER
-	if(thrower_easy_catch_enabled && thrown_thing?.thrower)
-		if(iscarbon(thrown_thing.thrower))
-			var/mob/living/carbon/Carbon = thrown_thing.thrower
-			Carbon.throw_mode_on(THROW_MODE_TOGGLE)
-	return
+	var/mob/thrower = thrown_thing.thrower
+	if(thrower_easy_catch_enabled && iscarbon(thrower))
+		var/mob/living/carbon/carbon_mob = thrower
+		carbon_mob.throw_mode_on(THROW_MODE_TOGGLE)
 
 /**
  * Proc that triggers when the thrown boomerang hits an object.

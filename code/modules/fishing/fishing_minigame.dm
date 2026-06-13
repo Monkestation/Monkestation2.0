@@ -154,8 +154,8 @@
 
 	completion_loss += user.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)/5
 
-	if(special_effects & FISHING_MINIGAME_RULE_KILL && ispath(reward_path,/obj/item/fish))
-		RegisterSignal(comp.fish_source, COMSIG_FISH_SOURCE_REWARD_DISPENSED, PROC_REF(hurt_fish))
+	//if(special_effects & FISHING_MINIGAME_RULE_KILL && ispath(reward_path,/obj/item/fish))
+		//RegisterSignal(comp.fish_source, COMSIG_FISH_SOURCE_REWARD_DISPENSED, PROC_REF(hurt_fish))
 
 	difficulty += comp.fish_source.calculate_difficulty(reward_path, rod, user, src)
 	difficulty = clamp(round(difficulty), FISHING_EASY_DIFFICULTY - 5, 100)

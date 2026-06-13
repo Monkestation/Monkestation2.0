@@ -1496,5 +1496,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// For if a body has been dissected, to prevent repeats.
 #define TRAIT_BORER_DISSECTION "borer_dissection"
 
+///Trait given to turfs or objects that can be fished from
+//#define TRAIT_FISHING_SPOT "fishing_spot"
+///Trait given to mobs that can fish without a rod
+#define TRAIT_PROFOUND_FISHER "profound_fisher"
 ///This trait prevents the fishing spot from being linked to the fish-porter when a multitool is being used.
 #define TRAIT_UNLINKABLE_FISHING_SPOT "unlinkable_fishing_spot"
+
+/// Does this item bypass ranged armor checks?
+#define TRAIT_BYPASS_RANGED_ARMOR "bypass_ranged_armor"

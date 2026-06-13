@@ -52,7 +52,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 4,
 		/datum/reagent/consumable/nutriment/vitamin = 3,
-		/datum/reagent/consumable/nutriment/fat/oil = 2,
+		/datum/reagent/consumable/quality_oil = 2,
 	)
 	bite_consumption = 4.5
 

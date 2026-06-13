@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		/obj/item/fish/gunner_jellyfish = FISH_ICON_JELLYFISH,
 		/obj/item/fish/holo/crab = FISH_ICON_CRAB,
 		/obj/item/fish/holo/puffer = FISH_ICON_CHUNKY,
-		/obj/item/fish/jumpercable = FISH_ICON_ELECTRIC,
+		/*/obj/item/fish/jumpercable = FISH_ICON_ELECTRIC,*/
 		/obj/item/fish/lavaloop = FISH_ICON_WEAPON,
 		/obj/item/fish/mastodon = FISH_ICON_BONE,
 		/obj/item/fish/pufferfish = FISH_ICON_CHUNKY,
@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		/obj/item/fish/starfish = FISH_ICON_STAR,
 		/obj/item/fish/stingray = FISH_ICON_WEAPON,
 		/obj/item/fish/swordfish = FISH_ICON_WEAPON,
-		/obj/item/fish/zipzap = FISH_ICON_ELECTRIC,
+		/*/obj/item/fish/zipzap = FISH_ICON_ELECTRIC,*/
 		/obj/item/seeds/grass = FISH_ICON_SEED,
 		/obj/item/seeds/random = FISH_ICON_SEED,
 		/obj/item/storage/wallet = FISH_ICON_COIN,
@@ -90,6 +90,10 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 
 ///Called when src is set as the fish source of a fishing spot component
 /datum/fish_source/proc/on_fishing_spot_init(/datum/component/fishing_spot/spot)
+	return
+
+///Called whenever a fishing spot with this fish source attached is deleted
+/datum/fish_source/proc/on_fishing_spot_del(datum/component/fishing_spot/spot)
 	return
 
 /// Can we fish in this spot at all. Returns DENIAL_REASON or null if we're good to go

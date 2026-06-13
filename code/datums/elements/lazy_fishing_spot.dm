@@ -15,6 +15,7 @@
 		CRASH("Lazy fishing spot has incorrect configuration passed in: [configuration].")
 	src.configuration = configuration
 
+	ADD_TRAIT(target, TRAIT_FISHING_SPOT, REF(src))
 	RegisterSignal(target, COMSIG_PRE_FISHING, PROC_REF(create_fishing_spot))
 	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(link_to_fish_porter))
 	RegisterSignal(target, COMSIG_FISH_RELEASED_INTO, PROC_REF(fish_released))
@@ -23,6 +24,7 @@
 	UnregisterSignal(target, COMSIG_PRE_FISHING)
 	UnregisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
 	UnregisterSignal(target, COMSIG_FISH_RELEASED_INTO)
+	REMOVE_TRAIT(target, TRAIT_FISHING_SPOT, REF(src))
 	return ..()
 
 /datum/element/lazy_fishing_spot/proc/create_fishing_spot(datum/source)

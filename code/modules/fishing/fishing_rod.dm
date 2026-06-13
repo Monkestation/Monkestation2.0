@@ -36,6 +36,9 @@
 	/// The default color for the reel overlay if no line is equipped.
 	var/default_line_color = "gray"
 
+	///should there be a fishing line?
+	var/display_fishing_line = TRUE
+
 	///The name of the icon state of the reel overlay
 	var/reel_overlay = "reel_overlay"
 
@@ -156,9 +159,11 @@
 
 /// Generates the fishing line visual from the current user to the target and updates inhands
 /obj/item/fishing_rod/proc/create_fishing_line(atom/movable/target, target_py = null)
+	if(!display_fishing_line)
+		return null
 	var/mob/user = loc
 	if(!istype(user))
-		return
+		return null
 	if(fishing_line)
 		QDEL_NULL(fishing_line)
 	var/beam_color = line?.line_color || default_line_color
@@ -232,7 +237,7 @@
 
 /// If the line to whatever that is is clear and we're not already busy, try fishing in it
 /obj/item/fishing_rod/proc/cast_line(atom/target, mob/user)
-	if(casting || currently_hooked || proximity_flag)
+	if(casting || currently_hooked)
 		return
 	if(!hook)
 		balloon_alert(user, "install a hook first!")
@@ -249,8 +254,8 @@
 	cast_projectile.original = target
 	cast_projectile.fired_from = src
 	cast_projectile.firer = user
-	cast_projectile.impacted = list(user = TRUE)
-	cast_projectile.preparePixelProjectile(target, user)
+	cast_projectile.impacted = list(WEAKREF(user) = TRUE)
+	cast_projectile.aim_projectile(target, user)
 	cast_projectile.fire()
 
 /// Called by hook projectile when hitting things

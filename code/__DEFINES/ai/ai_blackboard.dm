@@ -145,6 +145,8 @@
 
 ///Text we display when we befriend someone
 #define BB_FRIENDLY_MESSAGE "friendly_message"
+///our fishing target
+#define BB_FISHING_TARGET "fishing_target"
 
 // Keys used by one and only one behavior
 // Used to hold state without making bigass lists

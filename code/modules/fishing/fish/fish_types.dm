@@ -703,10 +703,10 @@
 /obj/item/fish/swordfish
 	name = "swordfish"
 	desc = "A large billfish, most famous for its elongated bill, while also fairly popular for cooking, and as a fearsome weapon in the hands of a veteran spess-fisherman."
-	icon = 'icons/obj/structures/aquarium/wide.dmi'
+	icon = 'icons/obj/aquarium_wide.dmi'
 	icon_state = "swordfish"
 	inhand_icon_state = "swordfish"
-	dedicated_in_aquarium_icon = 'icons/obj/structures/aquarium/fish.dmi'
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium.dmi'
 	dedicated_in_aquarium_icon_state = "swordfish_small"
 	force = 18
 	sharpness = SHARP_EDGED
@@ -800,11 +800,11 @@
 /obj/item/fish/chainsawfish
 	name = "chainsawfish"
 	desc = "A very, very angry bioweapon, whose sole purpose is to rip and tear."
-	icon = 'icons/obj/structures/aquarium/wide.dmi'
+	icon = 'icons/obj/aquarium_wide.dmi'
 	icon_state = "chainsawfish"
 	inhand_icon_state = "chainsawfish"
 	icon_state_dead = "chainsawfish_dead"
-	dedicated_in_aquarium_icon = 'icons/obj/structures/aquarium/fish.dmi'
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium.dmi'
 	dedicated_in_aquarium_icon_state = "chainsaw_small"
 	force = 22
 	demolition_mod = 1.5
@@ -961,3 +961,77 @@
 	)
 	fillet_type = /obj/item/food/meat/slab/rawcrab
 	random_case_rarity = FISH_RARITY_NOPE
+
+
+/obj/item/fish/lavaloop
+	name = "lavaloop fish"
+	desc = "Due to its curvature, it can be used as make-shift boomerang."
+	icon_state = "lava_loop"
+	sprite_width = 3
+	sprite_height = 5
+	average_size = 30
+	average_weight = 500
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	required_fluid_type = AQUARIUM_FLUID_ANY_WATER //if we can survive hot lava and freezing plasrivers, we can survive anything
+	fish_movement_type = /datum/fish_movement/zippy
+	min_pressure = HAZARD_LOW_PRESSURE
+	required_temperature_min = MIN_AQUARIUM_TEMP+30
+	required_temperature_max = MIN_AQUARIUM_TEMP+35
+	aquarium_vc_color = "#ce7e1d"
+	fish_traits = list(
+		/datum/fish_trait/carnivore,
+		/datum/fish_trait/heavy,
+	)
+	hitsound = null
+	throwforce = 5
+	beauty = FISH_BEAUTY_GOOD
+	///maximum bonus damage when winded up
+	var/maximum_bonus = 25
+
+/obj/item/fish/lavaloop/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_BYPASS_RANGED_ARMOR, INNATE_TRAIT)
+	AddComponent(/datum/component/boomerang, throw_range, TRUE)
+	AddComponent(\
+		/datum/component/throwbonus_on_windup,\
+		maximum_bonus = maximum_bonus,\
+		windup_increment_speed = 2,\
+		throw_text = "starts cooking in your hands, it may explode soon!",\
+		pass_maximum_callback = CALLBACK(src, PROC_REF(explode_on_user)),\
+		apply_bonus_callback = CALLBACK(src, PROC_REF(on_fish_land)),\
+		sound_on_success = 'sound/weapons/parry.ogg',\
+		effect_on_success = /obj/effect/temp_visual/guardian/phase,\
+	)
+
+/obj/item/fish/lavaloop/proc/explode_on_user(mob/living/user)
+	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
+	active_arm?.dismember()
+	to_chat(user, span_warning("[src] explodes!"))
+	playsound(src, 'sound/effects/explosion1.ogg', 40, TRUE)
+	user.flash_act(1, 1)
+	qdel(src)
+
+/obj/item/fish/lavaloop/proc/on_fish_land(mob/living/target, bonus_value)
+	if(!istype(target))
+		return FALSE
+	return (target.mob_size >= MOB_SIZE_LARGE)
+
+/obj/item/fish/lavaloop/plasma_river
+	maximum_bonus = 30
+
+/obj/item/fish/lavaloop/plasma_river/explode_on_user(mob/living/user)
+	playsound(src, 'sound/effects/explosion1.ogg', 40, TRUE)
+	user.flash_act(1, 1)
+	user.apply_status_effect(/datum/status_effect/ice_block_talisman, 5 SECONDS)
+	qdel(src)
+
+/obj/item/fish/lavaloop/plasma_river/on_fish_land(mob/living/target, bonus_value)
+	if(!istype(target))
+		return FALSE
+	if(target.mob_size < MOB_SIZE_LARGE)
+		return FALSE
+	var/freeze_timer = (bonus_value * 0.1)
+	if(freeze_timer <= 0)
+		return FALSE
+	target.apply_status_effect(/datum/status_effect/ice_block_talisman, freeze_timer SECONDS)
+	return FALSE

@@ -385,6 +385,18 @@
 	for(var/trait_type in fish_traits)
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
 		incompatible_traits |= trait.incompatible_traits
+
+	///some traits can spontaneously manifest for some fishes. These have higher priorities than other traits
+	var/list/potential_spontaneous_traits = GLOB.spontaneous_fish_traits[type]
+	for(var/trait_type in potential_spontaneous_traits)
+		if(!prob(potential_spontaneous_traits[trait_type]))
+			continue
+		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
+		if(length(fish_traits & trait.incompatible_traits))
+			continue
+		fish_traits |= trait_type
+		incompatible_traits |= trait.incompatible_traits
+
 	/**
 	 * shuffle the traits, so, in the case of incompatible traits, we don't have to choose which to discard.
 	 * Instead we let the random numbers do it for us in a first come, first served basis.
