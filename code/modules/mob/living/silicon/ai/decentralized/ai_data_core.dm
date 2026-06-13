@@ -16,6 +16,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	use_power = IDLE_POWER_USE
 	critical_machine = TRUE
 
+	var/disableheat = FALSE
 	var/primary = FALSE
 	var/valid_ticks = MAX_AI_DATA_CORE_TICKS //Limited to MAX_AI_DATA_CORE_TICKS. Decrement by 1 every time we have an invalid tick, opposite when valid
 	var/warning_sent = FALSE
@@ -77,6 +78,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 		. += span_warning("Machinery non-functional. Reason: [holder_status]")
 	if(!isobserver(user))
 		return
+	. += "Core temperature: <b>[core_temp] K</b>"
 	. += "<b>Networked AI Laws:</b>"
 	for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
 		var/active_status = !AI.mind ? "([span_warning("OFFLINE")])" : ""
@@ -112,7 +114,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 		return TRUE
 	return FALSE
 
-/obj/machinery/ai/data_core/process_atmos()
+/obj/machinery/ai/data_core/process()
 	valid_ticks = clamp(valid_ticks, 0, MAX_AI_DATA_CORE_TICKS)
 
 	if(valid_holder())
@@ -132,30 +134,10 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 			for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
 				AI.playsound_local(AI, 'sound/machines/engine_alert2.ogg', 30)
 
-	if((machine_stat & (BROKEN|EMPED)) || !has_power())
-		return
-	var/turf/T = get_turf(src)
-	var/datum/gas_mixture/env = T.return_air()
-	if(!env.total_moles())
-		return
-
-	var/temp_active_usage = (machine_stat & NOPOWER) ? idle_power_usage * CELL_POWERUSE_MULTIPLIER : active_power_usage * CELL_POWERUSE_MULTIPLIER
-	var/temperature_increase = (temp_active_usage / AI_HEATSINK_CAPACITY) * heat_modifier //1 CPU = 1000W. Heat capacity = somewhere around 3000-4000. Aka we generate 0.25 - 0.33 K per second, per CPU.
-	env.temperature += max((temperature_increase * AI_TEMPERATURE_MULTIPLIER), TCMB)
-	T.immediate_calculate_adjacent_turfs()
-
-/*
-	var/port_capacity = env.heat_capacity()
-	if(port_capacity)
-		var/temperature_increase = (active_power_usage / port_capacity) * heat_modifier //1 CPU = 1000W. Heat capacity = somewhere around 3000-4000. Aka we generate 0.25 - 0.33 K per second, per CPU.
-		env.temperature = max(((env.return_temperature() + temperature_increase) * AI_TEMPERATURE_MULTIPLIER), TCMB)
-*/
-/*
-	if(env.heat_capacity())
-		var/temperature_increase = (active_power_usage / env.heat_capacity()) * heat_modifier //1 CPU = 1000W. Heat capacity = somewhere around 3000-4000. Aka we generate 0.25 - 0.33 K per second, per CPU.
-		env.temperature_share(null, OPEN_HEAT_TRANSFER_COEFFICIENT, env.return_temperature() + temperature_increase * AI_TEMPERATURE_MULTIPLIER) //assume all input power is dissipated
-		T.air_update_turf(update = TRUE)
-*/
+	if(!(machine_stat & (BROKEN|EMPED)) && has_power() && !disableheat)
+		var/temp_active_usage = (machine_stat & NOPOWER) ? idle_power_usage * CELL_POWERUSE_MULTIPLIER : active_power_usage * CELL_POWERUSE_MULTIPLIER
+		var/temperature_increase = (temp_active_usage / AI_HEATSINK_CAPACITY) * heat_modifier //1 CPU = 1000W. Heat capacity = somewhere around 3000-4000. Aka we generate 0.25 - 0.33 K per second, per CPU.
+		core_temp += temperature_increase * AI_TEMPERATURE_MULTIPLIER
 
 /obj/machinery/ai/data_core/has_power()
 	if((machine_stat & (NOPOWER)) && integrated_battery)

@@ -87,8 +87,10 @@
 	data["location_name"] = get_area(current_turf)
 
 	data["location_coords"] = "[current_turf.x], [current_turf.y], [current_turf.z]"
-	var/datum/gas_mixture/env = current_turf.return_air()
-	data["temperature"] = env.return_temperature()
+
+	if(isAI(owner))
+		var/obj/machinery/ai/current_machine = owner.loc
+		data["temperature"] = current_machine.core_temp ? current_machine.core_temp : 0
 
 	for(var/datum/ai_project/AP as anything in available_projects)
 		data["available_projects"] += list(list(

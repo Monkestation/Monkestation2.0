@@ -66,18 +66,14 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 
 	idle_power_usage = initial(idle_power_usage) * power_modifier
 
-/obj/machinery/ai/server_cabinet/process_atmos()
+/obj/machinery/ai/server_cabinet/process()
 	valid_ticks = clamp(valid_ticks, 0, MAX_AI_EXPANSION_TICKS)
 	if(valid_holder())
 		var/total_usage = (cached_power_usage * power_modifier)
 		use_energy(total_usage)
 
-		var/turf/T = get_turf(src)
-		var/datum/gas_mixture/env = T.return_air()
-		if(env.heat_capacity())
-			var/temperature_increase = (total_usage / env.heat_capacity()) * heat_modifier //1 CPU = 1000W. Heat capacity = somewhere around 3000-4000. Aka we generate 0.25 - 0.33 K per second, per CPU.
-			env.temperature_share(null, OPEN_HEAT_TRANSFER_COEFFICIENT, env.return_temperature() + temperature_increase * AI_TEMPERATURE_MULTIPLIER) //assume all input power is dissipated
-			T.air_update_turf()
+		var/temperature_increase = (total_usage / AI_HEATSINK_CAPACITY)* heat_modifier
+		core_temp += temperature_increase * AI_TEMPERATURE_MULTIPLIER
 
 		valid_ticks++
 		if(!was_valid_holder)
@@ -96,7 +92,6 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 			cut_overlays()
 			hardware_synced = FALSE
 			GLOB.ai_os.update_hardware()
-
 
 /obj/machinery/ai/server_cabinet/update_overlays()
 	. = ..()
