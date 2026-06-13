@@ -655,3 +655,13 @@
 		'sound/magic/voiddeflect02.ogg',
 		'sound/magic/voiddeflect03.ogg',
 	)
+
+/datum/sound_effect/reel
+	key = SFX_REEL
+	file_paths = list(
+		'sound/items/reel1.ogg',
+		'sound/items/reel2.ogg',
+		'sound/items/reel3.ogg',
+		'sound/items/reel4.ogg',
+		'sound/items/reel5.ogg',
+	)

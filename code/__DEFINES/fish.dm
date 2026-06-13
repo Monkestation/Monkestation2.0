@@ -5,6 +5,7 @@
 
 // Baseline fishing difficulty levels
 #define FISHING_DEFAULT_DIFFICULTY 15
+#define FISHING_EASY_DIFFICULTY 10
 
 /// Difficulty modifier when bait is fish's favorite
 #define FAV_BAIT_DIFFICULTY_MOD -5
@@ -14,6 +15,11 @@
 #define SETTLER_DIFFICULTY_MOD -5
 
 #define FISH_TRAIT_MINOR_DIFFICULTY_BOOST 5
+
+///Slot defines for the fishing rod and its equipment
+#define ROD_SLOT_BAIT "bait"
+#define ROD_SLOT_LINE "line"
+#define ROD_SLOT_HOOK "hook"
 
 #define ADDITIVE_FISHING_MOD "additive"
 #define MULTIPLICATIVE_FISHING_MOD "multiplicative"
@@ -42,19 +48,25 @@
 #define FISHING_LINE_REINFORCED (1 << 1)
 /// Much like FISHING_HOOK_ENSNARE but for the fishing line.
 #define FISHING_LINE_BOUNCY (1 << 2)
+/// The sorta opposite of FISHING_LINE_BOUNCY. It makes it slower to gain completion and faster to lose it.
+#define FISHING_LINE_STIFF (1 << 3)
+///Skip the biting phase and go straight to the fishing phase.
+#define FISHING_LINE_AUTOREEL (1 << 4)
 
 ///Keeps the bait from falling from gravity, instead allowing the player to move the bait down with right click.
-#define FISHING_MINIGAME_RULE_BIDIRECTIONAL (1 << 2)
+#define FISHING_MINIGAME_RULE_BIDIRECTIONAL (1 << 0)
 ///Prevents the player from losing the minigame when the completion reaches 0
-#define FISHING_MINIGAME_RULE_NO_ESCAPE (1 << 3)
+#define FISHING_MINIGAME_RULE_NO_ESCAPE (1 << 1)
 ///Automatically kills the fish after a while, at the cost of killing it
-#define FISHING_MINIGAME_RULE_KILL (1 << 4)
+#define FISHING_MINIGAME_RULE_KILL (1 << 2)
 ///Prevents the fishing skill from having an effect on the minigame and experience from being awarded
-#define FISHING_MINIGAME_RULE_NO_EXP (1 << 5)
+#define FISHING_MINIGAME_RULE_NO_EXP (1 << 3)
 ///If enabled, the minigame will occasionally screw around and invert the velocity of the bait
-#define FISHING_MINIGAME_RULE_ANTIGRAV (1 << 6)
+#define FISHING_MINIGAME_RULE_ANTIGRAV (1 << 4)
 ///Will filp the minigame hud for the duration of the effect
-#define FISHING_MINIGAME_RULE_FLIP (1 << 7)
+#define FISHING_MINIGAME_RULE_FLIP (1 << 5)
+///Skip the biting phase and go straight to the minigame, avoiding the penalty for having slow reflexes.
+#define FISHING_MINIGAME_AUTOREEL (1 << 6)
 
 ///all the effects that are active and will last for a few seconds before triggering a cooldown
 #define FISHING_MINIGAME_ACTIVE_EFFECTS (FISHING_MINIGAME_RULE_ANTIGRAV|FISHING_MINIGAME_RULE_FLIP)
@@ -150,3 +162,12 @@
 //Minigame defines
 /// The height of the minigame slider. Not in pixels, but minigame units.
 #define FISHING_MINIGAME_AREA 1000
+
+#define FISH_BEAUTY_DISGUSTING -500
+#define FISH_BEAUTY_UGLY -300
+#define FISH_BEAUTY_BAD -200
+#define FISH_BEAUTY_NULL 0
+#define FISH_BEAUTY_GENERIC 250
+#define FISH_BEAUTY_GOOD 450
+#define FISH_BEAUTY_GREAT 600
+#define FISH_BEAUTY_EXCELLENT 700

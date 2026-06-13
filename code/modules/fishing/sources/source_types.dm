@@ -129,6 +129,7 @@
 	)
 	fish_count_regen = list(
 		/obj/item/fish/swordfish = 5 MINUTES,
+	)
 
 	catalog_description = "Ocean dimension (Fishing portal generator)"
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
@@ -166,6 +167,7 @@
 	)
 	fish_count_regen = list(
 		/obj/item/fish/chainsawfish = 7 MINUTES,
+	)
 	catalog_description = "Syndicate dimension (Fishing portal generator)"
 	radial_name = "Syndicate"
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
@@ -340,7 +342,7 @@
 	fish_counts = list(
 		/obj/item/storage/wallet/money = 2,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY - 5 //For beginners
+	fishing_difficulty = FISHING_EASY_DIFFICULTY //For beginners
 
 /datum/fish_source/holographic
 	catalog_description = "Holographic water"
@@ -353,7 +355,7 @@
 		/obj/item/fish/holo/checkered = 5,
 		/obj/item/fish/holo/halffish = 5,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY - 5
+	fishing_difficulty = FISHING_EASY_DIFFICULTY //For beginners
 
 /datum/fish_source/holographic/on_fishing_spot_init(datum/component/fishing_spot/spot)
 	ADD_TRAIT(spot.parent, TRAIT_UNLINKABLE_FISHING_SPOT, REF(src)) //You would have to be inside the holodeck anyway...
@@ -398,5 +400,6 @@
 
 	fish_count_regen = list(
 		/obj/item/fish/mastodon = 8 MINUTES,
+	)
 
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15

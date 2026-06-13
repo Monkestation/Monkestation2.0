@@ -73,6 +73,7 @@
 	)
 	required_temperature_min = MIN_AQUARIUM_TEMP+12
 	required_temperature_max = MIN_AQUARIUM_TEMP+30
+	beauty = FISH_BEAUTY_GOOD
 
 // Saltwater fish below
 
@@ -104,6 +105,7 @@
 	compatible_types = list(/obj/item/fish/clownfish)
 	food = /datum/reagent/lube
 	fishing_difficulty_modifier = 5
+	beauty = FISH_BEAUTY_GREAT
 
 /obj/item/fish/cardinal
 	name = "cardinalfish"
@@ -162,6 +164,7 @@
 	required_temperature_max = MIN_AQUARIUM_TEMP+28
 
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/toxic)
+	beauty = FISH_BEAUTY_GOOD
 
 /obj/item/fish/lanternfish
 	name = "lanternfish"
@@ -179,6 +182,7 @@
 	fish_traits = list(/datum/fish_trait/nocturnal)
 	required_temperature_min = MIN_AQUARIUM_TEMP+2 //My source is that the water at a depth 6600 feet is pretty darn cold.
 	required_temperature_max = MIN_AQUARIUM_TEMP+18
+	beauty = FISH_BEAUTY_NULL
 
 //Tiziran Fish
 /obj/item/fish/dwarf_moonfish
@@ -192,6 +196,7 @@
 	average_weight = 1000
 	required_temperature_min = MIN_AQUARIUM_TEMP+20
 	required_temperature_max = MIN_AQUARIUM_TEMP+30
+	beauty = FISH_BEAUTY_GOOD
 
 /obj/item/fish/gunner_jellyfish
 	name = "gunner jellyfish"
@@ -202,6 +207,7 @@
 	fillet_type = /obj/item/food/fishmeat/gunner_jellyfish
 	required_temperature_min = MIN_AQUARIUM_TEMP+24
 	required_temperature_max = MIN_AQUARIUM_TEMP+32
+	beauty = FISH_BEAUTY_GOOD
 
 /obj/item/fish/needlefish
 	name = "needlefish"
@@ -263,6 +269,7 @@
 	)
 	evolution_types = list(/datum/fish_evolution/ice_chrab)
 	compatible_types = list(/obj/item/fish/chasm_crab/ice)
+	beauty = FISH_BEAUTY_GOOD
 
 /obj/item/fish/chasm_crab/ice
 	name = "arctic chrab"
@@ -273,13 +280,7 @@
 	required_temperature_max = MIN_AQUARIUM_TEMP+15
 	evolution_types = list(/datum/fish_evolution/chasm_chrab)
 	compatible_types = list(/obj/item/fish/chasm_crab)
-
-/obj/item/storage/box/fish_debug
-	name = "box full of fish"
-
-/obj/item/storage/box/fish_debug/PopulateContents()
-	for(var/fish_type in subtypesof(/obj/item/fish))
-		new fish_type(src)
+	beauty = FISH_BEAUTY_GREAT
 
 /obj/item/fish/donkfish
 	name = "donk co. company patent donkfish"
@@ -292,6 +293,7 @@
 	fish_traits = list(/datum/fish_trait/yucky)
 	required_temperature_min = MIN_AQUARIUM_TEMP+15
 	required_temperature_max = MIN_AQUARIUM_TEMP+28
+	beauty = FISH_BEAUTY_EXCELLENT
 
 /obj/item/fish/emulsijack
 	name = "toxic emulsijack"
@@ -303,6 +305,7 @@
 	fish_traits = list(/datum/fish_trait/emulsijack)
 	required_temperature_min = MIN_AQUARIUM_TEMP+5
 	required_temperature_max = MIN_AQUARIUM_TEMP+40
+	beauty = FISH_BEAUTY_BAD
 
 /obj/item/fish/ratfish
 	name = "ratfish"
@@ -323,6 +326,7 @@
 			"Value" = DAIRY
 		)
 	)
+	beauty = FISH_BEAUTY_DISGUSTING
 
 /obj/item/fish/ratfish/Initialize(mapload)
 	. = ..()
@@ -346,6 +350,7 @@
 	required_temperature_min = MIN_AQUARIUM_TEMP+10
 	required_temperature_max = MIN_AQUARIUM_TEMP+40
 	evolution_types = list(/datum/fish_evolution/purple_sludgefish)
+	beauty = FISH_BEAUTY_NULL
 
 /obj/item/fish/sludgefish/purple
 	name = "purple sludgefish"
@@ -383,6 +388,7 @@
 		),
 	)
 	required_temperature_min = MIN_AQUARIUM_TEMP+20
+	beauty = FISH_BEAUTY_GREAT
 
 /obj/item/fish/boned
 	name = "unmarine bonemass"
@@ -405,6 +411,7 @@
 	average_weight = 2000
 	death_text = "%SRC stops moving." //It's dead... or is it?
 	evolution_types = list(/datum/fish_evolution/mastodon)
+	beauty = FISH_BEAUTY_UGLY
 
 /obj/item/fish/mastodon
 	name = "unmarine mastodon"
@@ -433,6 +440,7 @@
 	average_weight = 5000
 	death_text = "%SRC stops moving."
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/revival, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
+	beauty = FISH_BEAUTY_BAD
 
 /obj/item/fish/holo
 	name = "holographic goldfish"
@@ -482,6 +490,7 @@
 	sprite_height = 8
 	average_size = 60
 	average_weight = 1000
+	beauty = FISH_BEAUTY_GOOD
 
 /obj/item/fish/holo/angel
 	name = "holographic angelfish"
@@ -505,6 +514,7 @@
 	icon_state = "checkered" //it's a meta joke, buddy.
 	dedicated_in_aquarium_icon_state = "checkered_small"
 	sprite_width = 4
+	beauty = FISH_BEAUTY_NULL
 
 /obj/item/fish/holo/halffish
 	name = "holographic half-fish"
@@ -514,6 +524,7 @@
 	sprite_height = 4
 	sprite_width = 10
 	average_size = 50
+	beauty = FISH_BEAUTY_UGLY
 
 /obj/item/fish/starfish
 	name = "cosmostarfish"
@@ -535,6 +546,7 @@
 	grind_results = list(/datum/reagent/bluespace = 10)
 	fillet_type = null
 	fish_traits = list(/datum/fish_trait/antigrav, /datum/fish_trait/mixotroph)
+	beauty = FISH_BEAUTY_GREAT
 
 /obj/item/fish/starfish/Initialize(mapload)
 	. = ..()
