@@ -6,6 +6,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	desc = "A complicated computer system capable of emulating the neural functions of an organic being at near-instantanous speeds."
 	icon = 'icons/obj/machines/ai_core.dmi'
 	icon_state = "core-offline"
+	base_icon_state = "core"
 
 	circuit = /obj/item/circuitboard/machine/ai_data_core
 	active_power_usage = AI_DATA_CORE_POWER_USAGE
@@ -90,7 +91,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 			. += law
 
 /obj/machinery/ai/data_core/attackby(obj/item/O, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "hub_o", "hub", O))
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", base_icon_state, O))
 		return TRUE
 
 	if(default_deconstruction_crowbar(O))
