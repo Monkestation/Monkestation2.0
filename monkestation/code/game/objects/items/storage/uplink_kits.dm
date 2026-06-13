@@ -1,6 +1,4 @@
-#define KIT_ITEM_CATEGORY_SUPPORT "support"
-#define KIT_ITEM_CATEGORY_WEAPONS "weapons"
-#define KIT_ITEM_CATEGORY_MISC "misc"
+
 /obj/item/storage/box/syndie_kit/imp_hard_spear
 	name = "hardlight spear implant box"
 	desc = "Remember your promise."
@@ -49,6 +47,10 @@
 		/obj/item/clothing/neck/tie/bunnytie/syndicate = 1,
 		/obj/item/clothing/shoes/heels/syndicate = 1,)
 	generate_items_inside(items_inside, src)
+
+#define KIT_ITEM_CATEGORY_SUPPORT "support"
+#define KIT_ITEM_CATEGORY_WEAPONS "weapons"
+#define KIT_ITEM_CATEGORY_MISC "misc"
 
 /obj/item/storage/box/syndie_kit/contractor_loadout
 	name = "Standard Loadout"
@@ -169,6 +171,10 @@
 	new /obj/item/lighter(src)
 	new /obj/item/jammer(src)
 
+#undef KIT_ITEM_CATEGORY_SUPPORT
+#undef KIT_ITEM_CATEGORY_WEAPONS
+#undef KIT_ITEM_CATEGORY_MISC
+
 /obj/item/storage/box/clonearmy
 	name = "Syndicate clone army kit"
 	desc = "A box containing everything you need to make a clone army. The disk inside cunningly disguised as a DNA data disk is used to give all clones a directive they must follow."
@@ -253,6 +259,11 @@
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/medipen/deforest/occuisate(src)
 
-#undef KIT_ITEM_CATEGORY_SUPPORT
-#undef KIT_ITEM_CATEGORY_WEAPONS
-#undef KIT_ITEM_CATEGORY_MISC
+/obj/item/storage/box/syndie_kit/buster
+	name = "Buster kit"
+	desc = "A box with a combat-grade arm prosthetic and three monkey cubes to be used as training dummies."
+
+/obj/item/storage/box/syndie_kit/buster/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/food/monkeycube(src)
+	new /obj/item/bodypart/arm/left/robot/buster(src)

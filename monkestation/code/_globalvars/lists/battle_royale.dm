@@ -153,6 +153,7 @@ GLOBAL_LIST_INIT(royale_rare_loot, list(
 		/obj/item/card/emag/bluespace = 1,
 		/obj/item/book/granter/martial/plasma_fist = 1, //this will end great im sure
 		/obj/item/book/granter/martial/cqc = 1,
+		/obj/item/bodypart/arm/left/robot/buster = 1,
 		/obj/item/autosurgeon/syndicate/anti_stun = 1,
 		/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset = 2,
 		/obj/item/autosurgeon/syndicate/laser_arm = 1,

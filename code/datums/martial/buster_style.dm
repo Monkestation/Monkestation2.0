@@ -154,16 +154,16 @@
 	var/arm_index
 	var/hand_phrase = "begin to tense up."
 
-/datum/action/cooldown/spell/touch/buster/can_cast_spell(feedback = TRUE)
+/datum/action/cooldown/spell/touch/buster/before_cast(atom/cast_on)
 	. = ..()
-	if(!.)
-		return
+	if(. & SPELL_CANCEL_CAST)
+		return .
 
 	var/mob/living/O = owner
 	var/obj/item/bodypart/limb = O.get_bodypart(arm_index % 2 ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)
 	if(!limb || limb.bodypart_disabled)
 		to_chat(owner, span_warning("Your [limb.name] isn't in a functional state right now!"))
-		return FALSE
+		return . | SPELL_CANCEL_CAST
 
 /datum/action/cooldown/spell/touch/buster/create_hand(mob/living/carbon/cast_on)
 	SHOULD_CALL_PARENT(FALSE)
@@ -297,7 +297,7 @@
 	var/datum/weakref/atom_to_throw
 	var/initial_throw_damage = 15
 	var/living_crash_damage = 7
-	var/object_crash_damage = 25
+	var/object_crash_damage = 50
 
 /datum/action/cooldown/spell/touch/buster/grapple/remove_hand(mob/living/hand_owner, reset_cooldown_after)
 	. = ..()
@@ -396,6 +396,7 @@
 	// animate(thrown, time = 0.2 SECONDS, pixel_y = 0) //to get it back to normal since it was lifted before
 	if(isliving(cached_thrown)) //throwing someone by whatever limb and ripping it off if it's hurt enough
 		var/mob/living/tossedliving = cached_thrown
+		ADD_TRAIT(tossedliving, TRAIT_UNDENSE, BUSTER_SOURCE) // For the sake of noncarbons not playing nice with lying down
 		harm(user, tossedliving, initial_throw_damage)
 
 		var/obj/item/bodypart/limb_to_hit = tossedliving.get_bodypart(user.zone_selected)
@@ -415,6 +416,9 @@
 					span_userdanger("[user] tears your tail off!")) //"I'm taking this back."
 				tail.Remove(tossedliving)
 				// user.put_in_hands(T)
+	else if(cached_thrown.density)
+		ADD_TRAIT(cached_thrown, TRAIT_UNDENSE, BUSTER_SOURCE) // doesn't do anything but needed for restoring density
+		cached_thrown.set_density(FALSE)
 
 	cached_thrown.visible_message(span_bolddanger("[user] throws [cached_thrown]!"), span_userdanger("[user] throws you!"))
 	if(prob(5))
@@ -422,7 +426,6 @@
 	user.spin(4, 1)
 
 	cached_thrown.SpinAnimation(0.5 SECONDS, 1)
-	ADD_TRAIT(cached_thrown, TRAIT_UNDENSE, BUSTER_SOURCE)
 	var/datum/move_loop/loop = SSmove_manager.throw_at(cached_thrown, target, maxrange = 7, delay = 0.01 SECONDS)
 	RegisterSignal(cached_thrown, COMSIG_MOVABLE_MOVED_FROM_LOOP, PROC_REF(soar_on_moved_from_loop))
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(soar_post_move))
@@ -453,15 +456,16 @@
 			RegisterSignal(new_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(soar_post_move))
 			RegisterSignal(new_loop, COMSIG_QDELETING, PROC_REF(loop_qdeleted))
 		else if(non_living_type_check(impacted_atom)) // Scoop up obstacles if theyre not nailed down
+			if(!impacted_atom.density)
+				continue
 			harm(null, source) // Impacting stuff hurts
 			harm(null, impacted_atom)
 			if(QDELETED(impacted_atom) || impacted_atom.anchored)
 				continue
 
 			impacted_atom.SpinAnimation(0.5 SECONDS, 1)
-			if(impacted_atom.density)
-				ADD_TRAIT(impacted_atom, TRAIT_UNDENSE, BUSTER_SOURCE) // doesn't do anything but needed for restoring density
-				impacted_atom.set_density(FALSE)
+			ADD_TRAIT(impacted_atom, TRAIT_UNDENSE, BUSTER_SOURCE) // doesn't do anything but needed for restoring density
+			impacted_atom.set_density(FALSE)
 			var/datum/move_loop/new_loop = SSmove_manager.throw_at(impacted_atom, loop.target, maxrange = loop.maxrange - loop.dist_travelled, delay = 0.01 SECONDS)
 			RegisterSignal(new_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(soar_post_move))
 			RegisterSignal(new_loop, COMSIG_QDELETING, PROC_REF(loop_qdeleted))
@@ -706,47 +710,45 @@
 	/// Used to check which arm this martial art is connected to
 	var/arm_index
 
-/datum/action/cooldown/spell/conjure_item/buster_wire/can_cast_spell(feedback)
+/datum/action/cooldown/spell/conjure_item/buster_wire/before_cast(atom/cast_on)
 	. = ..()
-	if(!.)
-		return
+	if(. & SPELL_CANCEL_CAST)
+		return .
 
 	if(owner.get_held_items_for_side(arm_index % 2 ? LEFT_HANDS : RIGHT_HANDS))
 		to_chat(owner, span_warning("Your [arm_index % 2 ? "left" : "right"] hand is full!"))
-		return FALSE
+		return . | SPELL_CANCEL_CAST
 	var/mob/living/O = owner
 	var/obj/item/bodypart/limb = O.get_bodypart(arm_index % 2 ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)
 	if(!limb || limb.bodypart_disabled)
 		to_chat(owner, span_warning("Your [limb.name] isn't in a functional state right now!"))
-		return FALSE
+		return . | SPELL_CANCEL_CAST
 
-/datum/action/cooldown/spell/conjure_item/buster_wire/post_created(mob/cast_on, atom/created)
+/datum/action/cooldown/spell/conjure_item/buster_wire/post_created(mob/cast_on, obj/item/created)
 	// THIS SUCKS A LOT
 	cast_on.temporarilyRemoveItemFromInventory(created, force = TRUE)
 	if(!cast_on.put_in_hand(created, arm_index))
 		qdel(created)
 		reset_spell_cooldown()
-
-/datum/action/cooldown/spell/conjure_item/buster_wire/make_item(atom/caster)
-	. = ..()
-	var/obj/item/made_item = .
-	RegisterSignal(made_item, COMSIG_PROJECTILE_ON_HIT, PROC_REF(qdel_source))
+		return
+	created.item_flags |= DROPDEL
+	RegisterSignal(created, COMSIG_PROJECTILE_ON_HIT, PROC_REF(qdel_source))
+	RegisterSignal(created, COMSIG_QDELETING, PROC_REF(upon_item_qdel))
 
 /datum/action/cooldown/spell/conjure_item/buster_wire/proc/qdel_source(datum/source)
 	SIGNAL_HANDLER
 	qdel(source)
+
+/datum/action/cooldown/spell/conjure_item/buster_wire/proc/upon_item_qdel(datum/source)
+	SIGNAL_HANDLER
 	StartCooldown()
 
 /obj/item/gun/magic/hook/buster
 	ammo_type = /obj/item/ammo_casing/magic/hook/buster
 
-/obj/item/gun/magic/hook/buster/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
-
 /obj/item/gun/magic/hook/buster/on_thrown(mob/living/carbon/user, atom/target)
 	try_fire_gun(target, user)
-	return ..()
+	return
 
 /obj/item/ammo_casing/magic/hook/buster
 	projectile_type = /obj/projectile/hook/buster
@@ -768,7 +770,7 @@
 	carbon_firer.apply_status_effect(STATUS_EFFECT_DOUBLEDOWN)
 	if(isobj(target))
 		var/obj/target_object = target
-		if(target_object.anchored)
+		if(target_object.anchored && !isitem(target_object))
 			zip(carbon_firer, target)
 		else
 			carbon_firer.throw_mode_on()
@@ -832,7 +834,9 @@
 	. = ..()
 	if(. & SPELL_CANCEL_CAST)
 		return
-	if(!do_after(cast_on, charge_time, timed_action_flags = IGNORE_USER_LOC_CHANGE))
+	if(is_action_active())
+		return . | SPELL_CANCEL_CAST
+	if(!do_after(cast_on, charge_time, timed_action_flags = IGNORE_USER_LOC_CHANGE, interaction_key = BUSTER_SOURCE))
 		return . | SPELL_CANCEL_CAST
 
 /datum/action/cooldown/spell/touch/buster/megabuster/create_hand(mob/living/carbon/cast_on)
@@ -855,7 +859,7 @@
 		caster.say(pick("+FUCK YOU!!!+", "+Jackpot!+"), forced = "buster fist")
 	playsound(victim, 'sound/effects/gravhit.ogg', 60, 1)
 	var/turf/victim_turf = get_turf(victim)
-	new /obj/effect/temp_visual/explosion/fast(victim_turf, 4, COLOR_WHITE, TRUE)
+	new /obj/effect/temp_visual/explosion/fast(victim_turf, 4, COLOR_WHITE)
 	SSexplosions.shake_the_room(victim_turf, 1, 7, 0.5, 0.25, FALSE) // make this move very loud and noticeable
 
 	if(isliving(victim))
@@ -911,6 +915,8 @@
 	for(var/atom/movable/impacted_atom as anything in next_turf)
 		if(impacted_atom.move_packet || impacted_atom == owner)
 			continue
+		if(HasElement(impacted_atom, /datum/element/undertile))
+			continue
 
 		if(isliving(impacted_atom)) // If the thrown mass hits a person then they get tossed
 			var/mob/living/impacted_living = impacted_atom
@@ -960,7 +966,9 @@
 
 /obj/item/melee/touch_attack/buster_mega/Initialize(mapload, datum/action/cooldown/spell/spell)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(timed_out), spell.owner), 5 SECONDS, TIMER_STOPPABLE|TIMER_DELETE_ME)
+	var/datum/action/spell_instance = spell_which_made_us.resolve()
+	if(spell_instance)
+		addtimer(CALLBACK(src, PROC_REF(timed_out), spell_instance.owner), 5 SECONDS, TIMER_STOPPABLE|TIMER_DELETE_ME)
 
 /obj/item/melee/touch_attack/buster_mega/proc/timed_out(mob/spell_owner)
 	if(QDELETED(spell_owner))

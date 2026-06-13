@@ -3,7 +3,6 @@
 	name = "buster left arm"
 	desc = "A robotic arm designed explicitly for combat and providing the user with extreme power. <b>It can be configured by hand to fit on the opposite arm.</b>"
 	limb_id = "buster"
-	inhand_icon_state = "left_buster_arm"
 	icon = 'icons/mob/augmentation/augments_buster.dmi'
 	icon_static = 'icons/mob/augmentation/augments_buster.dmi'
 	icon_state = "buster_l_arm"
@@ -45,7 +44,6 @@
 	name = "buster right arm"
 	desc = "A robotic arm designed explicitly for combat and providing the user with extreme power. <b>It can be configured by hand to fit on the opposite arm.</b>"
 	limb_id = "buster"
-	inhand_icon_state = "right_buster_arm"
 	icon = 'icons/mob/augmentation/augments_buster.dmi'
 	icon_static = 'icons/mob/augmentation/augments_buster.dmi'
 	icon_state = "buster_r_arm"
