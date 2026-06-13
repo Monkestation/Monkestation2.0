@@ -19,4 +19,5 @@
 	spawning = 0.3
 	lifespan = 2 SECONDS
 	fade = 0.75 SECONDS
+	color = "#ffffff"
 	gravity = list(0, -0.02)
