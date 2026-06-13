@@ -38,22 +38,24 @@ GLOBAL_LIST_EMPTY(expansion_card_holders)
 	..()
 
 /obj/machinery/ai/expansion_card_holder/process()
-
 	if(valid_holder())
-
 		var/power_multiple = total_cpu ** (8/9)
-
 		var/total_usage = (power_multiple * BASE_POWER_PER_CPU) + POWER_PER_CARD * installed_cards.len
-		use_power(total_usage)
-
-		var/turf/T = get_turf(src)
-		var/datum/gas_mixture/env = T.return_air()
-		if(env.heat_capacity())
-			env.set_temperature(env.return_temperature() + total_usage / env.heat_capacity()) //assume all input power is dissipated
+		use_energy(total_usage)
 	else if(was_valid_holder)
 		was_valid_holder = FALSE
 		cut_overlays()
 		GLOB.ai_os.update_hardware()
+
+/obj/machinery/ai/expansion_card_holder/process_atmos()
+	. = ..()
+	if(!valid_holder())
+		return .
+	var/turf/T = get_turf(src)
+	var/datum/gas_mixture/env = T.return_air()
+	if(env.heat_capacity())
+		env.temperature_share(null, OPEN_HEAT_TRANSFER_COEFFICIENT, env.return_temperature() + total_usage / env.heat_capacity()) //assume all input power is dissipated
+
 
 /obj/machinery/ai/expansion_card_holder/valid_holder()
 	if(machine_stat & (BROKEN|NOPOWER|EMPED))
