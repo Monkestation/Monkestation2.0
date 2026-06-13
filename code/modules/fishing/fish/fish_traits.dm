@@ -14,6 +14,8 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	var/list/guaranteed_inheritance_types
 	/// Depending on the value, fish with trait will be reported as more or less difficult in the catalog.
 	var/added_difficulty = 0
+	/// Reagents added to the fish when gained
+	var/list/reagents_to_add
 
 /// Difficulty modifier from this mod, needs to return a list with two values
 /datum/fish_trait/proc/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
@@ -31,7 +33,11 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /// Applies some special qualities to the fish that has been spawned
 /datum/fish_trait/proc/apply_to_fish(obj/item/fish/fish)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	if(reagents_to_add)
+		for(var/reagent in reagents_to_add)
+			add_to_reagents(fish, reagent, reagents_to_add[reagent])
+		RegisterSignal(fish, COMSIG_ATOM_PROCESSED, PROC_REF(process_reagents))
 
 /// Proc used by both the predator and necrophage traits.
 /datum/fish_trait/proc/eat_fish(obj/item/fish/predator, obj/item/fish/prey)
@@ -40,6 +46,43 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	predator.loc.visible_message(span_warning(message))
 	SEND_SIGNAL(prey, COMSIG_FISH_EATEN_BY_OTHER_FISH, predator)
 	qdel(prey)
+
+/// Proc that inserts a reagent to the grind_results list of the fish. You'll still have to set the processed comsig proc yourself.
+/datum/fish_trait/proc/add_to_reagents(obj/item/fish/fish, reagent_type, amount)
+	LAZYINITLIST(fish.grind_results)
+	fish.grind_results.Insert(1, reagent_type)
+	fish.grind_results[reagent_type] = amount
+
+/// Proc that handles adding reagents from the trait to the fillets from butchered fish.
+/datum/fish_trait/proc/process_reagents(obj/item/fish/source, mob/living/user, obj/item/process_item, list/results)
+	SIGNAL_HANDLER
+	var/results_with_reagents = 0
+	for(var/atom/result as anything in results)
+		if(result.reagents)
+			results_with_reagents++
+	if(!results_with_reagents)
+		return
+	for(var/reagent in reagents_to_add)
+		var/amount = round(source.grind_results[reagent] / results_with_reagents, 0.1)
+		for(var/atom/result as anything in results)
+			result.reagents?.add_reagent(reagent, amount)
+
+/// Proc that adds or changes the venomous when the fish size and/or weight are updated
+/datum/fish_trait/proc/add_venom(obj/item/fish/source, venom_path, new_weight, mult = 0.25)
+	if(source.size)
+		var/old_amount = max(round((source.weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR) * mult, 0.1), mult)
+		source.RemoveElement(/datum/element/venomous, venom_path, old_amount)
+
+	var/new_amount = max(round((new_weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR) * mult, 0.1), mult)
+	source.AddElement(/datum/element/venomous, venom_path, new_amount)
+
+/// Proc that changes the venomous element based on if the fish is alive or dead (basically dead fish are weaker).
+/datum/fish_trait/proc/change_venom_on_death(obj/item/fish/source, venom_path, live_mult, dead_mult)
+	var/live_amount = max(round((source.weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR) * live_mult, 0.1), live_mult)
+	var/dead_amount = max(round((source.weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR) * dead_mult, 0.1), dead_mult)
+	var/is_dead = source.status == FISH_DEAD
+	source.RemoveElement(/datum/element/venomous, venom_path, is_dead ? live_amount : dead_amount)
+	source.AddElement(/datum/element/venomous, venom_path, is_dead ? dead_amount : live_amount)
 
 /datum/fish_trait/wary
 	name = "Wary"
@@ -72,7 +115,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 		return
 	if(HAS_TRAIT(rod.bait, TRAIT_OMNI_BAIT))
 		return
-	if(HAS_TRAIT(rod.bait, TRAIT_GOOD_QUALITY_BAIT) || HAS_TRAIT(rod.bait, TRAIT_GREAT_QUALITY_BAIT))
+	if(!HAS_TRAIT(rod.bait, TRAIT_GOOD_QUALITY_BAIT) && !HAS_TRAIT(rod.bait, TRAIT_GREAT_QUALITY_BAIT))
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 
 
@@ -88,6 +131,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 
 /datum/fish_trait/nocturnal/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(check_light))
 
 /datum/fish_trait/nocturnal/proc/check_light(obj/item/fish/source, seconds_per_tick)
@@ -103,7 +147,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	catalog_description = "This fish tends to stay near the waterbed.";
 
 /datum/fish_trait/heavy/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/minigame)
-	minigame.fish_idle_velocity -= 10
+	minigame.mover.fish_idle_velocity -= 10
 
 /datum/fish_trait/carnivore
 	name = "Carnivore"
@@ -144,6 +188,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	catalog_description = "This fish emits an invisible toxin that emulsifies other fish for it to feed on."
 
 /datum/fish_trait/emulsijack/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(emulsify))
 	ADD_TRAIT(fish, TRAIT_RESIST_EMULSIFY, FISH_TRAIT_DATUM)
 
@@ -167,6 +212,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	incompatible_traits = list(/datum/fish_trait/vegan)
 
 /datum/fish_trait/necrophage/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(eat_dead_fishes))
 
 /datum/fish_trait/necrophage/proc/eat_dead_fishes(obj/item/fish/source, seconds_per_tick)
@@ -186,6 +232,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	diff_traits_inheritability = 25
 
 /datum/fish_trait/parthenogenesis/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_SELF_REPRODUCE, FISH_TRAIT_DATUM)
 
 /**
@@ -199,7 +246,18 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	incompatible_traits = list(/datum/fish_trait/crossbreeder)
 
 /datum/fish_trait/no_mating/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_NO_MATING, FISH_TRAIT_DATUM)
+
+///Prevent offsprings of fish with this trait from being of the same type (unless self-mating or the partner also has the trait)
+/datum/fish_trait/recessive
+	name = "Recessive"
+	catalog_description = "If crossbred, offsprings will always be of the mate species, unless it also possess the trait."
+	diff_traits_inheritability = 0
+
+/datum/fish_trait/no_mating/apply_to_fish(obj/item/fish/fish)
+	. = ..()
+	ADD_TRAIT(fish, TRAIT_FISH_RECESSIVE, FISH_TRAIT_DATUM)
 
 /datum/fish_trait/revival
 	diff_traits_inheritability = 15
@@ -208,6 +266,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	guaranteed_inheritance_types = list(/obj/item/fish/boned, /obj/item/fish/mastodon)
 
 /datum/fish_trait/revival/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_STATUS_CHANGED, PROC_REF(check_status))
 
 /datum/fish_trait/revival/proc/check_status(obj/item/fish/source)
@@ -231,6 +290,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	incompatible_traits = list(/datum/fish_trait/vegan)
 
 /datum/fish_trait/predator/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(eat_fishes))
 
 /datum/fish_trait/predator/proc/eat_fishes(obj/item/fish/source, seconds_per_tick)
@@ -239,7 +299,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 		return
 	var/obj/structure/aquarium/aquarium = source.loc
 	for(var/obj/item/fish/victim in aquarium.get_fishes(TRUE, source))
-		if(victim.size < source.size * 0.75) // It's a big fish eat small fish world
+		if(victim.size < source.size * 0.7) // It's a big fish eat small fish world
 			continue
 		if(victim.status != FISH_ALIVE || victim == source || HAS_TRAIT(victim, TRAIT_YUCKY_FISH) || SPT_PROB(80, seconds_per_tick))
 			continue
@@ -249,31 +309,33 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 /datum/fish_trait/yucky
 	name = "Yucky"
 	catalog_description = "This fish tastes so repulsive, other fishes won't try to eat it."
+	reagents_to_add = list(/datum/reagent/yuck)
 
 /datum/fish_trait/yucky/apply_to_fish(obj/item/fish/fish)
-	RegisterSignal(fish, COMSIG_ATOM_PROCESSED, PROC_REF(add_yuck))
+	. = ..()
 	ADD_TRAIT(fish, TRAIT_YUCKY_FISH, FISH_TRAIT_DATUM)
-	LAZYSET(fish.grind_results, /datum/reagent/yuck, 3)
-
-/datum/fish_trait/yucky/proc/add_yuck(obj/item/fish/source, mob/living/user, obj/item/process_item, list/results)
-	var/amount = source.grind_results[/datum/reagent/yuck] / length(results)
-	for(var/atom/result as anything in results)
-		result.reagents?.add_reagent(/datum/reagent/yuck, amount)
 
 /datum/fish_trait/toxic
 	name = "Toxic"
-	catalog_description = "This fish contains toxins in its liver. Feeding it to predatory fishes or people is not reccomended."
+	catalog_description = "This fish contains toxins. Feeding it to predatory fishes or people is not reccomended."
 	diff_traits_inheritability = 25
+	reagents_to_add = list(/datum/reagent/toxin/tetrodotoxin = 2.5)
 
 /datum/fish_trait/toxic/apply_to_fish(obj/item/fish/fish)
-	RegisterSignal(fish, COMSIG_ATOM_PROCESSED, PROC_REF(add_toxin))
+	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_EATEN_BY_OTHER_FISH, PROC_REF(on_eaten))
-	LAZYSET(fish.grind_results, /datum/reagent/toxin/tetrodotoxin, 0.5)
 
-/datum/fish_trait/toxic/proc/add_toxin(obj/item/fish/source, mob/living/user, obj/item/process_item, list/results)
-	var/amount = source.grind_results[ /datum/reagent/toxin/tetrodotoxin] / length(results)
-	for(var/atom/result as anything in results)
-		result.reagents?.add_reagent( /datum/reagent/toxin/tetrodotoxin, amount)
+/datum/fish_trait/toxic/proc/make_venomous(obj/item/fish/source, new_size, new_weight)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
+		return
+	add_venom(source, /datum/reagent/toxin/tetrodotoxin, new_weight, mult = source.status == FISH_DEAD ? 0.1 : 0.25)
+
+/datum/fish_trait/toxic/proc/on_status_change(obj/item/fish/source)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
+		return
+	change_venom_on_death(source, /datum/reagent/toxin/tetrodotoxin, 0.25, 0.1)
 
 /datum/fish_trait/toxic/proc/on_eaten(obj/item/fish/source, obj/item/fish/predator)
 	if(HAS_TRAIT(predator, TRAIT_FISH_TOXIN_IMMUNE))
@@ -296,6 +358,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	diff_traits_inheritability = 40
 
 /datum/fish_trait/toxin_immunity/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_TOXIN_IMMUNE, FISH_TRAIT_DATUM)
 
 /datum/fish_trait/crossbreeder
@@ -306,6 +369,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	incompatible_traits = list(/datum/fish_trait/no_mating)
 
 /datum/fish_trait/crossbreeder/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_CROSSBREEDER, FISH_TRAIT_DATUM)
 
 /datum/fish_trait/aggressive
@@ -315,6 +379,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	catalog_description = "This fish is agressively territorial, and may attack fish that come close to it."
 
 /datum/fish_trait/aggressive/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(try_attack_fish))
 
 /datum/fish_trait/aggressive/proc/try_attack_fish(obj/item/fish/source, seconds_per_tick)
@@ -339,6 +404,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	added_difficulty = 5
 
 /datum/fish_trait/lubed/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	fish.AddComponent(/datum/component/slippery, 8 SECONDS, SLIDE|GALOSHES_DONT_HELP)
 
 /datum/fish_trait/lubed/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/minigame)
@@ -352,6 +418,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	catalog_description = "This fish has developed a primitive adaptation to life on both land and water."
 
 /datum/fish_trait/amphibious/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_AMPHIBIOUS, FISH_TRAIT_DATUM)
 	if(fish.required_fluid_type == AQUARIUM_FLUID_AIR)
 		fish.required_fluid_type = AQUARIUM_FLUID_FRESHWATER
@@ -364,6 +431,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	incompatible_traits = list(/datum/fish_trait/predator, /datum/fish_trait/necrophage)
 
 /datum/fish_trait/antigrav/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_NO_HUNGER, FISH_TRAIT_DATUM)
 
 /datum/fish_trait/antigrav
@@ -371,10 +439,52 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	inheritability = 75
 	diff_traits_inheritability = 25
 	catalog_description = "This fish will invert the gravity of the bait at random. May fall upward outside after being caught."
-	added_difficulty = 15
+	added_difficulty = 20
 
 /datum/fish_trait/antigrav/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/minigame)
 	minigame.special_effects |= FISHING_MINIGAME_RULE_ANTIGRAV
 
 /datum/fish_trait/antigrav/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	fish.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
+
+/datum/fish_trait/stinger
+	name = "Stinger"
+	inheritability = 80
+	diff_traits_inheritability = 35
+	catalog_description = "This fish is equipped with a sharp stringer or bill capable of delivering damage and toxins."
+	spontaneous_manifest_types = list(/obj/item/fish/stingray = 100, /obj/item/fish/swordfish = 100, /obj/item/fish/chainsawfish = 100)
+
+/datum/fish_trait/stinger/apply_to_fish(obj/item/fish/fish)
+	. = ..()
+	ADD_TRAIT(fish, TRAIT_FISH_STINGER, FISH_TRAIT_DATUM)
+	RegisterSignal(fish, COMSIG_FISH_FORCE_UPDATED, PROC_REF(on_force_updated))
+
+/datum/fish_trait/stinger/proc/on_force_updated(obj/item/fish/fish, weight_rank, bonus_or_malus)
+	SIGNAL_HANDLER
+	fish.force += 1 + fish.w_class + bonus_or_malus
+
+/datum/fish_trait/toxic_barbs
+	name = "Toxic Barbs"
+	catalog_description = "This fish' stinger, bill or otherwise, is coated with simple, yet effetive venom."
+	spontaneous_manifest_types = list(/obj/item/fish/stingray = 35)
+
+/datum/fish_trait/toxic_barbs/apply_to_fish(obj/item/fish/fish)
+	. = ..()
+	RegisterSignal(fish, COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, PROC_REF(make_venomous))
+	RegisterSignal(fish, COMSIG_FISH_STATUS_CHANGED, PROC_REF(on_status_change))
+
+/datum/fish_trait/toxic_barbs/proc/make_venomous(obj/item/fish/source, new_size, new_weight)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
+		///Remove the trait from the fish so it doesn't show on the analyzer as it doesn't do anything on stingerless ones.
+		source.fish_traits -= type
+		UnregisterSignal(source, list(COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, COMSIG_FISH_STATUS_CHANGED))
+		return
+	add_venom(source, /datum/reagent/toxin/venom, new_weight, mult = source.status == FISH_DEAD ? 0.3 : 0.7)
+
+/datum/fish_trait/toxic_barbs/proc/on_status_change(obj/item/fish/source)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
+		return
+	change_venom_on_death(source, /datum/reagent/toxin/venom, 0.7, 0.3)

@@ -15,6 +15,13 @@
 	fish_source.on_fishing_spot_init()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(handle_attackby))
 	RegisterSignal(parent, COMSIG_FISHING_ROD_CAST, PROC_REF(handle_cast))
+	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(link_to_fish_porter))
+	RegisterSignal(parent, COMSIG_FISH_RELEASED_INTO, PROC_REF(fish_released))
+	ADD_TRAIT(parent, TRAIT_FISHING_SPOT, REF(src))
+
+/datum/component/fishing_spot/Destroy()
+	REMOVE_TRAIT(parent, TRAIT_FISHING_SPOT, REF(src))
+	return ..()
 
 /datum/component/fishing_spot/proc/handle_cast(datum/source, obj/item/fishing_rod/rod, mob/user)
 	SIGNAL_HANDLER
@@ -51,3 +58,13 @@
 	var/datum/fishing_challenge/challenge = new(src, result, rod, user)
 	fish_source.pre_challenge_started(rod, user, challenge)
 	challenge.start(user)
+
+/datum/component/fishing_spot/proc/link_to_fish_porter(atom/source, mob/user, obj/item/multitool/tool)
+	SIGNAL_HANDLER
+	if(istype(tool.buffer, /obj/machinery/fishing_portal_generator))
+		var/obj/machinery/fishing_portal_generator/portal = tool.buffer
+		return portal.link_fishing_spot(fish_source, source, user)
+
+/datum/component/fishing_spot/proc/fish_released(datum/source, obj/item/fish/fish, mob/living/releaser)
+	SIGNAL_HANDLER
+	fish_source.readd_fish(fish, releaser)

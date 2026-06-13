@@ -16,6 +16,14 @@
 	clawfootstep = FOOTSTEP_WATER
 	heavyfootstep = FOOTSTEP_WATER
 	astar_weight = 75
+	var/datum/fish_source/fishing_datum = /datum/fish_source/river
+
+/turf/open/water/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color)
+	AddElement(/datum/element/watery_tile)
+	if(!isnull(fishing_datum))
+		AddElement(/datum/element/lazy_fishing_spot, fishing_datum)
 
 /turf/open/water/station
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
@@ -37,6 +45,7 @@
 /turf/open/water/beach/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/ocean/beach)
+	ADD_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
 
 //Same turf, but instead used in the Beach Biodome
 /turf/open/water/beach/biodome

@@ -299,6 +299,5 @@
 	new /obj/item/aquarium_prop/rocks(src)
 	new /obj/item/aquarium_prop/seaweed(src)
 
-	new /obj/item/fish/goldfish(src)
 	new /obj/item/fish/angelfish(src)
 	new /obj/item/fish/guppy(src)

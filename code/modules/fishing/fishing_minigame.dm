@@ -5,16 +5,6 @@
 // UI minigame phase
 #define MINIGAME_PHASE 3
 
-/// The height of the minigame slider. Not in pixels, but minigame units.
-#define FISHING_MINIGAME_AREA 1000
-/// Any lower than this, and the target position of the fish is considered null
-#define FISH_TARGET_MIN_DISTANCE 6
-/// The friction applied to fish jumps, so that it decelerates over time
-#define FISH_FRICTION_MULT 0.9
-/// Used to decide whether the fish can jump in a certain direction
-#define FISH_SHORT_JUMP_MIN_DISTANCE 100
-/// The maximum distance for a short jump
-#define FISH_SHORT_JUMP_MAX_DISTANCE 200
 // Acceleration mod when bait is over fish
 #define FISH_ON_BAIT_ACCELERATION_MULT 0.6
 /// The minimum velocity required for the bait to bounce
@@ -39,8 +29,6 @@
 	var/start_time
 	/// Is it finished (either by win/lose or window closing)
 	var/completed = FALSE
-	/// Fish AI type to use
-	var/fish_ai = FISH_AI_DUMB
 	/// Rule modifiers (eg weighted bait)
 	var/special_effects = NONE
 	/// A list of possible active minigame effects. If not empty, one will be picked from time to time.
@@ -85,8 +73,6 @@
 	var/fish_position = 0
 	/// The position of the bait on the minigame slider
 	var/bait_position = 0
-	/// The current speed the fish is moving at
-	var/fish_velocity = 0
 	/// The current speed the bait is moving at
 	var/bait_velocity = 0
 
@@ -96,23 +82,7 @@
 	var/completion_loss = 6
 	/// How much completion is gained per second when the bait area is intersecting with the fish's
 	var/completion_gain = 5
-
-	/// How likely the fish is to perform a standard jump, then multiplied by difficulty
-	var/short_jump_chance = 2.25
-	/// How likely the fish is to perform a long jump, then multiplied by difficulty
-	var/long_jump_chance = 0.0625
-	/// The speed limit for the short jump
-	var/short_jump_velocity_limit = 400
-	/// The speed limit for the long jump
-	var/long_jump_velocity_limit = 200
-	/// The current speed limit used
-	var/current_velocity_limit = 200
-	/// The base velocity of the fish, which may affect jump distances and falling speed.
-	var/fish_idle_velocity = 0
-	/// A position on the slider the fish wants to get to
-	var/target_position
-	/// If true, the fish can jump while a target position is set, thus overriding it
-	var/can_interrupt_move = TRUE
+	var/datum/fish_movement/mover
 
 	/// Whether the bait is idle or reeling up or down (left and right click)
 	var/reeling_state = REELING_STATE_IDLE
@@ -139,21 +109,16 @@
 	/// Fish minigame properties
 	if(ispath(reward_path,/obj/item/fish))
 		var/obj/item/fish/fish = reward_path
-		fish_ai = initial(fish.fish_ai_type)
-		switch(fish_ai)
-			if(FISH_AI_ZIPPY) // Keeps on jumping
-				short_jump_chance *= 3
-			if(FISH_AI_SLOW) // Only does long jump, and doesn't change direction until it gets there
-				short_jump_chance = 0
-				long_jump_chance = 1.5
-				long_jump_velocity_limit = 150
-				long_jump_velocity_limit = FALSE
+		var/movement_path = initial(fish.fish_movement_type)
+		mover = new movement_path(src)
 		// Apply fish trait modifiers
 		var/list/fish_list_properties = collect_fish_properties()
 		var/list/fish_traits = fish_list_properties[fish][NAMEOF(fish, fish_traits)]
 		for(var/fish_trait in fish_traits)
 			var/datum/fish_trait/trait = GLOB.fish_traits[fish_trait]
 			trait.minigame_mod(rod, user, src)
+	else
+		mover = new /datum/fish_movement(src)
 	/// Enable special parameters
 	if(rod.line)
 		if(rod.line.fishing_line_traits & FISHING_LINE_BOUNCY)

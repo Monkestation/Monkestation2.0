@@ -10,6 +10,11 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	rust_resistance = RUST_RESISTANCE_REINFORCED
 
+/turf/open/misc/beach/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/sand)
+	ADD_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
+
 /turf/open/misc/beach/ex_act(severity, target)
 	return
 

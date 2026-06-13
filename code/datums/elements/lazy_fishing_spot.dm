@@ -16,9 +16,13 @@
 	src.configuration = configuration
 
 	RegisterSignal(target, COMSIG_PRE_FISHING, PROC_REF(create_fishing_spot))
+	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(link_to_fish_porter))
+	RegisterSignal(target, COMSIG_FISH_RELEASED_INTO, PROC_REF(fish_released))
 
 /datum/element/lazy_fishing_spot/Detach(datum/target)
 	UnregisterSignal(target, COMSIG_PRE_FISHING)
+	UnregisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
+	UnregisterSignal(target, COMSIG_FISH_RELEASED_INTO)
 	return ..()
 
 /datum/element/lazy_fishing_spot/proc/create_fishing_spot(datum/source)
@@ -26,3 +30,16 @@
 
 	source.AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[configuration])
 	Detach(source)
+
+/datum/element/lazy_fishing_spot/proc/link_to_fish_porter(atom/source, mob/user, obj/item/multitool/tool)
+	SIGNAL_HANDLER
+	if(!istype(tool.buffer, /obj/machinery/fishing_portal_generator))
+		return
+	var/datum/fish_source/fish_source = GLOB.preset_fish_sources[configuration]
+	var/obj/machinery/fishing_portal_generator/portal = tool.buffer
+	return portal.link_fishing_spot(fish_source, source, user)
+
+/datum/element/lazy_fishing_spot/proc/fish_released(datum/source, obj/item/fish/fish, mob/living/releaser)
+	SIGNAL_HANDLER
+	var/datum/fish_source/fish_source = GLOB.preset_fish_sources[configuration]
+	fish_source.readd_fish(fish, releaser)

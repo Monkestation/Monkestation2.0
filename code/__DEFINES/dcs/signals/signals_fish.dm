@@ -33,3 +33,10 @@
 #define COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE "fishing_spot_interrupt_challenge"
 
 #define COMSIG_FISHING_LINE_SNAPPED "fishing_line_snapped"
+
+///From /obj/item/fish/interact_with_atom_secondary, sent to the target: (fish)
+#define COMSIG_FISH_RELEASED_INTO "fish_released_into"
+///From /obj/item/fish/update_size_and_weight: (new_size, new_weight)
+#define COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT "fish_update_size_and_weight"
+///From /obj/item/fish/update_fish_force: (weight_rank, bonus_malus)
+#define COMSIG_FISH_FORCE_UPDATED "fish_force_updated"

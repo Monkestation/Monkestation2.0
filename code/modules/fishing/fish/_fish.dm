@@ -8,15 +8,19 @@
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
 	inhand_icon_state = "fish_normal"
 	force = 6
+	throwforce = 6
+	throw_range = 8
+
 	attack_verb_continuous = list("slaps", "whacks")
 	attack_verb_simple = list("slap", "whack")
 	hitsound = 'sound/weapons/slap.ogg'
 	///The grind results of the fish. They scale with the weight of the fish.
-	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/consumable/liquidgibs = 5)
+	grind_results = list(/datum/reagent/blood = 5, /datum/reagent/consumable/liquidgibs = 5)
 	obj_flags = UNIQUE_RENAME
+	item_flags = IMMUTABLE_SLOW|SLOWS_WHILE_IN_HAND
 
 	/// Resulting width of aquarium visual icon - default size of "fish_greyscale" state
-	var/sprite_width = 3
+	var/sprite_width = 5
 	/// Resulting height of aquarium visual icon - default size of "fish_greyscale" state
 	var/sprite_height = 3
 
@@ -97,8 +101,8 @@
 	 */
 	var/list/fish_traits = list()
 
-	/// Fishing behaviour
-	var/fish_ai_type = FISH_AI_DUMB
+	/// path to datums that dictate how the fish moves during the fishing minigame
+	var/fish_movement_type = /datum/fish_movement
 
 	/// Base additive modifier to fishing difficulty
 	var/fishing_difficulty_modifier = 0
@@ -124,6 +128,9 @@
 	var/weight
 	/// Average weight for this fish type in grams
 	var/average_weight = 1000
+
+	///The general deviation from the average weight and size this fish has in the wild
+	var/weight_size_deviation = 0.2
 
 	/// When outside of an aquarium, these gases that are checked (as well as pressure and temp) to assert if the environment is safe or not.
 	var/list/safe_air_limits = list(
@@ -160,6 +167,34 @@
 		progenitors = full_capitalize(name) //default value
 
 	register_evolutions()
+	register_item_context()
+
+/obj/item/fish/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(HAS_TRAIT(source, TRAIT_CATCH_AND_RELEASE))
+		context[SCREENTIP_CONTEXT_RMB] = "Release"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
+
+/obj/item/fish/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!HAS_TRAIT(interacting_with, TRAIT_CATCH_AND_RELEASE))
+		return NONE
+	if(HAS_TRAIT(src, TRAIT_NODROP))
+		balloon_alert(user, "it's stuck to your hand!")
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "releasing fish...")
+	if(!do_after(src, 3 SECONDS, interacting_with))
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "fish released")
+	var/goodbye_text = "Bye bye [name]."
+	if(status == FISH_DEAD && !HAS_MIND_TRAIT(user, TRAIT_NAIVE))
+		goodbye_text = "May it rest in peace..."
+	user.visible_message(span_notice("[user] releases [src] into [interacting_with]"), \
+		span_notice("You release [src] into [interacting_with]. [goodbye_text]"), \
+		span_notice("You hear a splash."))
+	playsound(interacting_with, 'sound/effects/splash.ogg', 50)
+	SEND_SIGNAL(interacting_with, COMSIG_FISH_RELEASED_INTO, src)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/fish/update_icon_state()
 	if(status == FISH_DEAD && icon_state_dead)
@@ -172,13 +207,13 @@
 	if(!istype(item, /obj/item/fish_feed))
 		return ..()
 	if(!item.reagents.total_volume)
-		balloon_alert(user, "[item] is empty!")
+		balloon_alert(user, "[item.name] is empty!")
 		return TRUE
 	if(status == FISH_DEAD)
 		balloon_alert(user, "[src] is dead!")
 		return TRUE
 	feed(item.reagents)
-	balloon_alert(user, "fed [src]")
+	balloon_alert(user, "fed [name]")
 	return TRUE
 
 /obj/item/fish/examine(mob/user)
@@ -188,7 +223,7 @@
 	. += span_notice("It weighs [weight] g.")
 
 ///Randomizes weight and size.
-/obj/item/fish/proc/randomize_size_and_weight(base_size = average_size, base_weight = average_weight, deviation = 0.2)
+/obj/item/fish/proc/randomize_size_and_weight(base_size = average_size, base_weight = average_weight, deviation = weight_size_deviation)
 	var/size_deviation = 0.2 * base_size
 	var/new_size = round(clamp(gaussian(base_size, size_deviation), average_size * 1/MAX_FISH_DEVIATION_COEFF, average_size * MAX_FISH_DEVIATION_COEFF))
 
@@ -199,37 +234,124 @@
 
 ///Updates weight and size, along with weight class, number of fillets you can get and grind results.
 /obj/item/fish/proc/update_size_and_weight(new_size = average_size, new_weight = average_weight)
-	if(size && fillet_type)
-		RemoveElement(/datum/element/processable, TOOL_KNIFE, fillet_type, num_fillets, 0.5 SECONDS, screentip_verb = "Cut")
+	SEND_SIGNAL(src, COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, new_size, new_weight)
+	if(size)
+		if(fillet_type)
+			RemoveElement(/datum/element/processable, TOOL_KNIFE, fillet_type, num_fillets, 0.5 SECONDS * num_fillets, screentip_verb = "Cut")
+		if(size > FISH_SIZE_TWO_HANDS_REQUIRED)
+			qdel(GetComponent(/datum/component/two_handed))
 	size = new_size
+	var/init_icon_state = initial(inhand_icon_state)
 	switch(size)
 		if(0 to FISH_SIZE_TINY_MAX)
-			w_class = WEIGHT_CLASS_TINY
-			inhand_icon_state = "fish_small"
+			if(!init_icon_state)
+				inhand_icon_state = "fish_small"
+			update_weight_class(WEIGHT_CLASS_TINY)
 		if(FISH_SIZE_TINY_MAX to FISH_SIZE_SMALL_MAX)
-			inhand_icon_state = "fish_small"
-			w_class = WEIGHT_CLASS_SMALL
+			if(!init_icon_state)
+				inhand_icon_state = "fish_small"
+			update_weight_class(WEIGHT_CLASS_SMALL)
 		if(FISH_SIZE_SMALL_MAX to FISH_SIZE_NORMAL_MAX)
-			inhand_icon_state = "fish_normal"
-			w_class = WEIGHT_CLASS_NORMAL
+			if(!init_icon_state)
+				inhand_icon_state = "fish_normal"
+			update_weight_class(WEIGHT_CLASS_NORMAL)
 		if(FISH_SIZE_NORMAL_MAX to FISH_SIZE_BULKY_MAX)
-			inhand_icon_state = "fish_bulky"
-			w_class = WEIGHT_CLASS_BULKY
-		if(FISH_SIZE_BULKY_MAX to INFINITY)
-			inhand_icon_state = "fish_huge"
-			w_class = WEIGHT_CLASS_HUGE
+			if(!init_icon_state)
+				inhand_icon_state = "fish_bulky"
+			update_weight_class(WEIGHT_CLASS_BULKY)
+		if(FISH_SIZE_BULKY_MAX to FISH_SIZE_HUGE_MAX)
+			if(!init_icon_state)
+				inhand_icon_state = "fish_huge"
+			update_weight_class(WEIGHT_CLASS_HUGE)
+		if(FISH_SIZE_HUGE_MAX to INFINITY)
+			if(!init_icon_state)
+				inhand_icon_state = "fish_huge"
+			update_weight_class(WEIGHT_CLASS_GIGANTIC)
+
+	if(size > FISH_SIZE_TWO_HANDS_REQUIRED)
+		inhand_icon_state = "[inhand_icon_state]_wielded"
+		AddComponent(/datum/component/two_handed, require_twohands = TRUE)
+
 	if(fillet_type)
 		var/init_fillets = initial(num_fillets)
 		var/amount = max(round(init_fillets * size / FISH_FILLET_NUMBER_SIZE_DIVISOR, 1), 1)
 		num_fillets = amount
-		AddElement(/datum/element/processable, TOOL_KNIFE, fillet_type, num_fillets, 0.5 SECONDS, screentip_verb = "Cut")
+		AddElement(/datum/element/processable, TOOL_KNIFE, fillet_type, num_fillets, 0.5 SECONDS * num_fillets, screentip_verb = "Cut")
 
 	if(weight)
 		for(var/reagent_type in grind_results)
 			grind_results[reagent_type] /= FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1)
 	weight = new_weight
+
+	if(weight >= FISH_WEIGHT_SLOWDOWN)
+		slowdown = round(((weight/FISH_WEIGHT_SLOWDOWN_DIVISOR)**FISH_WEIGHT_SLOWDOWN_EXPONENT)-1.3, 0.1)
+		drag_slowdown = round(slowdown * 0.5, 1)
+	else
+		slowdown = 0
+		drag_slowdown = 0
+	if(ismob(loc))
+		var/mob/mob = loc
+		mob.update_equipment_speed_mods()
+
 	for(var/reagent_type in grind_results)
 		grind_results[reagent_type] *= FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1)
+
+	update_fish_force()
+
+///Reset weapon-related variables of this items and recalculates those values based on the fish weight and size.
+/obj/item/fish/proc/update_fish_force()
+	force = initial(force)
+	throwforce = initial(throwforce)
+	throw_range = initial(throw_range)
+	demolition_mod = initial(demolition_mod)
+	attack_verb_continuous = initial(attack_verb_continuous)
+	attack_verb_simple = initial(attack_verb_simple)
+	hitsound = initial(hitsound)
+	damtype = initial(damtype)
+	attack_speed = initial(attack_speed)
+	block_chance = initial(block_chance)
+	armour_penetration = initial(armour_penetration)
+	wound_bonus = initial(wound_bonus)
+	bare_wound_bonus = initial(bare_wound_bonus)
+	toolspeed = initial(toolspeed)
+
+	var/weight_rank = max(round(1 + log(2, weight/FISH_WEIGHT_FORCE_DIVISOR), 1), 1)
+
+	throw_range -= weight_rank
+	get_force_rank()
+
+	var/bonus_malus = weight_rank - w_class
+	if(bonus_malus)
+		calculate_fish_force_bonus(bonus_malus)
+
+	throwforce = force
+
+	SEND_SIGNAL(src, COMSIG_FISH_FORCE_UPDATED, weight_rank, bonus_malus)
+
+///A proc that makes the fish slightly stronger or weaker if there's a noticeable discrepancy between size and weight.
+/obj/item/fish/proc/calculate_fish_force_bonus(bonus_malus)
+	demolition_mod += bonus_malus * 0.1
+	attack_speed += bonus_malus * 0.1
+	force = round(force * (1 + bonus_malus * 0.1), 0.1)
+
+/obj/item/fish/proc/get_force_rank()
+	switch(w_class)
+		if(WEIGHT_CLASS_TINY)
+			force -= 3
+			attack_speed -= 0.1 SECONDS
+		if(WEIGHT_CLASS_NORMAL)
+			force += 2
+		if(WEIGHT_CLASS_BULKY)
+			force += 5
+			attack_speed += 0.1 SECONDS
+		if(WEIGHT_CLASS_HUGE)
+			force += 9
+			attack_speed += 0.2 SECONDS
+			demolition_mod += 0.2
+		if(WEIGHT_CLASS_GIGANTIC)
+			force += 13
+			attack_speed += 0.4 SECONDS
+			demolition_mod += 0.4
 
 /**
  * This proc has fish_traits list populated with fish_traits paths from three different lists:
@@ -351,7 +473,7 @@
 
 	SEND_SIGNAL(src, COMSIG_FISH_LIFE, seconds_per_tick)
 
-/obj/item/fish/proc/set_status(new_status)
+/obj/item/fish/proc/set_status(new_status, silent = FALSE)
 	if(status == new_status)
 		return
 	switch(new_status)
@@ -365,12 +487,14 @@
 			status = FISH_DEAD
 			STOP_PROCESSING(SSobj, src)
 			stop_flopping()
-			var/message = span_notice(replacetext(death_text, "%SRC", "[src]"))
-			if(isaquarium(loc))
-				loc.visible_message(message)
-			else
-				visible_message(message)
+			if(!silent)
+				var/message = span_notice(replacetext(death_text, "%SRC", "[src]"))
+				if(isaquarium(loc))
+					loc.visible_message(message)
+				else
+					visible_message(message)
 	update_appearance()
+	update_fish_force()
 	SEND_SIGNAL(src, COMSIG_FISH_STATUS_CHANGED)
 
 /obj/item/fish/proc/use_lazarus(datum/source, obj/item/lazarus_injector/injector, mob/user)
@@ -447,7 +571,7 @@
 		return FALSE
 	if(!being_targeted && length(aquarium.get_fishes()) >= AQUARIUM_MAX_BREEDING_POPULATION)
 		return FALSE
-	return aquarium.allow_breeding && health >= initial(health) * 0.8 && stable_population > 1 && world.time >= breeding_wait
+	return aquarium.allow_breeding && health >= initial(health) * 0.8 && stable_population >= 1 && world.time >= breeding_wait
 
 #undef AQUARIUM_MAX_BREEDING_POPULATION
 
@@ -484,36 +608,47 @@
 					second_fish = other_fish
 					break
 
-	if(!second_fish && !HAS_TRAIT(src, TRAIT_FISH_SELF_REPRODUCE))
-		return FALSE
+	if(!second_fish)
+		if(!HAS_TRAIT(src, TRAIT_FISH_SELF_REPRODUCE))
+			return FALSE
+		if(length(aquarium.tracked_fish_by_type[type]) >= stable_population)
+			return FALSE
+
+	if(PERFORM_ALL_TESTS(fish_breeding) && second_fish && !length(evolution_types))
+		return create_offspring(second_fish.type, second_fish)
 
 	var/chosen_type
 	var/datum/fish_evolution/chosen_evolution
-	if(PERFORM_ALL_TESTS(fish_breeding) && second_fish && !length(evolution_types))
-		chosen_type = second_fish.type
-	else
-		var/list/possible_evolutions = list()
-		for(var/evolution_type in evolution_types)
+	var/list/possible_evolutions = list()
+	for(var/evolution_type in evolution_types)
+		var/datum/fish_evolution/evolution = GLOB.fish_evolutions[evolution_type]
+		if(evolution.check_conditions(src, second_fish, aquarium))
+			possible_evolutions += evolution
+	if(second_fish?.evolution_types)
+		var/secondary_evolutions = (second_fish.evolution_types - evolution_types)
+		for(var/evolution_type in secondary_evolutions)
 			var/datum/fish_evolution/evolution = GLOB.fish_evolutions[evolution_type]
 			if(evolution.check_conditions(src, second_fish, aquarium))
 				possible_evolutions += evolution
-		if(second_fish?.evolution_types)
-			var/secondary_evolutions = (second_fish.evolution_types - evolution_types)
-			for(var/evolution_type in secondary_evolutions)
-				var/datum/fish_evolution/evolution = GLOB.fish_evolutions[evolution_type]
-				if(evolution.check_conditions(second_fish, src, aquarium))
-					possible_evolutions += evolution
-
-		if(length(possible_evolutions))
-			chosen_evolution = pick(possible_evolutions)
-			chosen_type = chosen_evolution.new_fish_type
-		else if(second_fish)
-			if(length(aquarium.tracked_fish_by_type[type]) >= stable_population)
+	if(length(possible_evolutions))
+		chosen_evolution = pick(possible_evolutions)
+		chosen_type = chosen_evolution.new_fish_type
+	else if(second_fish)
+		var/recessive = HAS_TRAIT(src, TRAIT_FISH_RECESSIVE)
+		var/recessive_partner = HAS_TRAIT(second_fish, TRAIT_FISH_RECESSIVE)
+		if(length(aquarium.tracked_fish_by_type[type]) >= stable_population)
+			if(recessive_partner && !recessive)
+				return FALSE
+			chosen_type = second_fish.type
+		else
+			if(recessive && !recessive_partner)
 				chosen_type = second_fish.type
+			else if(recessive_partner && !recessive)
+				chosen_type = type
 			else
 				chosen_type = pick(second_fish.type, type)
-		else
-			chosen_type = type
+	else
+		chosen_type = type
 
 	return create_offspring(chosen_type, second_fish, chosen_evolution)
 
