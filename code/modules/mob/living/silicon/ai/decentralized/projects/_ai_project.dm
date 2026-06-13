@@ -10,8 +10,6 @@ GLOBAL_LIST_EMPTY(ai_projects)
 	var/research_cost = 0
 	var/ram_required = 0
 	var/running = FALSE
-	//Text for canResearch()
-	var/research_requirements_text = "None"
 	//list of typepaths of required projects
 	var/research_requirements
 

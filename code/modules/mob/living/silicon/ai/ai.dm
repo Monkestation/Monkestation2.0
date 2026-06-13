@@ -1037,7 +1037,6 @@
 	to_chat(src, "In the top left corner of the screen you will find the Malfunction Modules button, where you can purchase various abilities, from upgraded surveillance to station ending doomsday devices.")
 	to_chat(src, "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds.")
 	malf_picker = new /datum/module_picker
-	add_verb_ai(/mob/living/silicon/ai/proc/toggle_download)
 	if(!IS_MALF_AI(src)) //antagonists have their modules built into their antag info panel. this is for adminbus and the combat upgrade
 		modules_action = new(malf_picker)
 		modules_action.Grant(src)

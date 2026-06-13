@@ -11,7 +11,7 @@
 		return FALSE
 	return new_data_core
 
-/mob/living/silicon/ai/proc/toggle_download()
+/mob/living/silicon/ai/verb/toggle_download()
 	set category = "AI Commands"
 	set name = "Toggle Download"
 	set desc = "Allow or disallow carbon lifeforms to download you from an AI control console."
@@ -21,8 +21,6 @@
 	var/mob/living/silicon/ai/A = usr
 	A.can_download = !A.can_download
 	to_chat(A, span_warning("You [A.can_download ? "enable" : "disable"] read/write permission to your memorybanks! You [A.can_download ? "CAN" : "CANNOT"] be downloaded!"))
-
-
 
 /mob/living/silicon/ai/proc/relocate(silent = FALSE)
 	if(is_dying)

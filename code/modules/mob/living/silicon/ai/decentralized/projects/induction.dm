@@ -3,7 +3,6 @@
 	description = "This research functions as a prerequisite for other induction research such as remote borg charging and APC emergency power."
 	research_cost = 1500
 	ram_required = 0
-	research_requirements_text = "None"
 	can_be_run = FALSE
 	category = AI_PROJECT_INDUCTION
 
@@ -12,7 +11,6 @@
 	description = "This ability will allow you to charge any visible cyborgs by 33%"
 	research_cost = 2500
 	ram_required = 0
-	research_requirements_text = "Bluespace Induction Basics"
 	research_requirements = list(/datum/ai_project/induction_basic)
 	category = AI_PROJECT_INDUCTION
 
@@ -38,7 +36,6 @@
 	description = "This ability will allow you to charge any visible APCs by 33%"
 	research_cost = 2500
 	ram_required = 0
-	research_requirements_text = "Bluespace Induction Basics"
 	research_requirements = list(/datum/ai_project/induction_basic)
 	category = AI_PROJECT_INDUCTION
 

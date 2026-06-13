@@ -3,8 +3,7 @@
 	description = "Using experimental image enhancing algorithms will allow you to examine humans."
 	research_cost = 4000
 	ram_required = 4
-	research_requirements_text = "Advanced Security HUD & Advanced Medical & Diagnostic HUD"
-	research_requirements = list(/datum/ai_project/security_hud, /datum/ai_project/diag_med_hud)
+	research_requirements = list(/datum/ai_project/diag_med_hud)
 	category = AI_PROJECT_SURVEILLANCE
 
 /datum/ai_project/examine_humans/run_project(force_run = FALSE)

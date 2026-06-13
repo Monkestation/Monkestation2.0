@@ -3,7 +3,6 @@
 	description = "Using experimental long range passive sensors should allow you to detect various implants such as loyalty implants and tracking implants."
 	research_cost = 1250
 	ram_required = 2
-	research_requirements_text = "None"
 	category = AI_PROJECT_HUDS
 
 /datum/ai_project/security_hud/run_project(force_run = FALSE)
@@ -29,7 +28,6 @@
 	description = "Various data processing optimizations should allow you to gain extra knowledge about users when your medical and diagnostic hud is active."
 	research_cost = 1000
 	ram_required = 1
-	research_requirements_text = "None"
 	category = AI_PROJECT_HUDS
 
 /datum/ai_project/diag_med_hud/run_project(force_run = FALSE)

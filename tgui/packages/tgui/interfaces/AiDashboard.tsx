@@ -259,7 +259,7 @@ const AvailableProjects = (props) => {
             <Box inline bold>
               Research Requirements:&nbsp;
             </Box>
-            <Box inline>{project.research_requirements}</Box>
+            <Box inline>{project.research_requirements || 'None'}</Box>
             <Box mb={1}>{project.description}</Box>
             <ProgressBar
               value={project.research_progress / project.research_cost}

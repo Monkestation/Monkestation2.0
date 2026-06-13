@@ -2584,6 +2584,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/medical/medbay)
+"NH" = (
+/obj/machinery/status_display/ai_core,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/station/medical/coldroom)
 "NZ" = (
 /obj/machinery/rnd/production/protolathe/department,
 /turf/open/floor/iron,
@@ -6766,7 +6770,7 @@ dZ
 wU
 im
 wU
-qB
+NH
 hj
 xr
 Cc

@@ -3,7 +3,6 @@
 	description = "By varying the current levels in the lighting subsystems of your servers, you can make pretty colors."
 	research_cost = 500
 	ram_required = 0
-	research_requirements_text = "None"
 	category = AI_PROJECT_MISC
 
 /datum/ai_project/rgb/run_project(force_run = FALSE)

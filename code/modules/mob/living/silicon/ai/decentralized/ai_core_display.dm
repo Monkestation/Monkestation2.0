@@ -2,12 +2,9 @@
 /obj/machinery/status_display/ai_core
 	name = "\improper AI core display"
 	desc = "A big screen which the AI can use to present a self-chosen image of itself. NOTE: For display purposes only. Is not capable of hosting an AI."
-
-	icon = 'icons/mob/ai.dmi'
+	icon = 'icons/mob/silicon/ai.dmi'
 	icon_state = "ai-empty"
-
 	circuit = /obj/item/circuitboard/machine/ai_core_display
-
 	density = TRUE
 
 	var/mode = SD_BLANK
@@ -19,7 +16,7 @@
 
 /obj/machinery/status_display/ai_core/Destroy()
 	GLOB.ai_core_displays.Remove(src)
-	. = ..()
+	return ..()
 
 //NOTE: See /obj/machinery/ai/data_core/examine in ai_data_core.dm
 /obj/machinery/status_display/examine(mob/user)

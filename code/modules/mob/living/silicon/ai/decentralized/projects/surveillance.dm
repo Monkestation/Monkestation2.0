@@ -3,7 +3,6 @@
 	description = "Using complex LSTM nodes it is possible to automatically detect when a tagged individual enters camera visiblity."
 	research_cost = 2500
 	ram_required = 3
-	research_requirements_text = "Examination Upgrade"
 	research_requirements = list(/datum/ai_project/examine_humans)
 	category = AI_PROJECT_SURVEILLANCE
 
