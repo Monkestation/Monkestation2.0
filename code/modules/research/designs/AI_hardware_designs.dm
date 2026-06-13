@@ -61,10 +61,11 @@
 	id = "basic_ai_cpu"
 	build_type = IMPRINTER
 	materials = list(
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 8,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
 	)
 	build_path = /obj/item/ai_cpu
+	construction_time = 5 SECONDS
 	category = list(
 		RND_CATEGORY_MODULAR_COMPUTERS + RND_SUBCATEGORY_MODULAR_COMPUTERS_PARTS
 	)
@@ -75,7 +76,7 @@
 	id = "advanced_ai_cpu"
 	build_type = IMPRINTER
 	materials = list(
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 4,
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
 		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 2,
 	)
@@ -90,12 +91,13 @@
 	id = "bluespace_ai_cpu"
 	build_type = IMPRINTER
 	materials = list(
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 14,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 8,
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
 		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 4,
 		/datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 2,
 	)
 	build_path = /obj/item/ai_cpu/bluespace
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MODULAR_COMPUTERS + RND_SUBCATEGORY_MODULAR_COMPUTERS_PARTS
 	)
@@ -106,11 +108,12 @@
 	id = "experimental_ai_cpu"
 	build_type = IMPRINTER
 	materials = list(
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 12,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 6,
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
 		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 6,
 	)
 	build_path = /obj/item/ai_cpu/experimental
+	construction_time = 7.5 SECONDS
 	category = list(
 		RND_CATEGORY_MODULAR_COMPUTERS + RND_SUBCATEGORY_MODULAR_COMPUTERS_PARTS
 	)
