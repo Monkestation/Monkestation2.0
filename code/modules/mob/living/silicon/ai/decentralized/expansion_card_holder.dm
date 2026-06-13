@@ -38,11 +38,7 @@ GLOBAL_LIST_EMPTY(expansion_card_holders)
 	..()
 
 /obj/machinery/ai/expansion_card_holder/process()
-	if(valid_holder())
-		var/power_multiple = total_cpu ** (8/9)
-		var/total_usage = (power_multiple * BASE_POWER_PER_CPU) + POWER_PER_CARD * installed_cards.len
-		use_energy(total_usage)
-	else if(was_valid_holder)
+	if(was_valid_holder)
 		was_valid_holder = FALSE
 		cut_overlays()
 		GLOB.ai_os.update_hardware()
@@ -51,6 +47,9 @@ GLOBAL_LIST_EMPTY(expansion_card_holders)
 	. = ..()
 	if(!valid_holder())
 		return .
+	var/power_multiple = total_cpu ** (8/9)
+	var/total_usage = (power_multiple * BASE_POWER_PER_CPU) + POWER_PER_CARD * installed_cards.len
+	use_energy(total_usage)
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/env = T.return_air()
 	if(env.heat_capacity())

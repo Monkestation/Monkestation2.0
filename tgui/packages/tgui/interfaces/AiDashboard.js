@@ -1,4 +1,4 @@
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Tabs, ProgressBar, Section, Divider, LabeledControls, NumberInput, Input, LabeledList, Flex } from '../components';
 import { Window } from '../layouts';

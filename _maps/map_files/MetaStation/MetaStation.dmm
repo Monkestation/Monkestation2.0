@@ -55547,7 +55547,6 @@
 	},
 /obj/item/aicard,
 /obj/item/pai_card,
-/obj/item/circuitboard/aicore,
 /obj/machinery/keycard_auth/directional/north{
 	pixel_x = -5
 	},
