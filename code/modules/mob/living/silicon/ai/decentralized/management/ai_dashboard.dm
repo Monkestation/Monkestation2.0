@@ -319,7 +319,6 @@
 		remaining_cpu -= cpu_usage[I]
 
 	if(remaining_cpu > 0 && contribute_spare_cpu)
-		var/points = max(round(AI_RESEARCH_PER_CPU * (remaining_cpu * current_cpu) * owner.research_point_booster), 0)
 		var/points = max(round(AI_RESEARCH_PER_CPU * (remaining_cpu * current_cpu) * owner.research_point_booster, 0.1), 0)
 
 		if(crypto_mining)

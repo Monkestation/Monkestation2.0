@@ -7,7 +7,6 @@
 	icon_keyboard = "tech_key"
 	icon_screen = "ai-fixer"
 	light_color = LIGHT_COLOR_PINK
-
 	circuit = /obj/item/circuitboard/computer/ai_server_overview
 
 	var/obj/item/ai_cpu/inserted_cpu = null
@@ -16,7 +15,8 @@
 	COOLDOWN_DECLARE(overclocking_timer)
 
 /obj/machinery/computer/ai_overclocking/process()
-	if(!..())
+	. = ..()
+	if(!.)
 		if(inserted_cpu)
 			inserted_cpu.forceMove(drop_location(src))
 			overclocking = FALSE
@@ -65,8 +65,8 @@
 
 	return ..()
 
-
 /obj/machinery/computer/ai_overclocking/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "AiOverclocking", name)
