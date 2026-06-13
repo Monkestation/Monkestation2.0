@@ -60,14 +60,12 @@ export const AiDashboard = (props) => {
               >
                 {(integrity + 100) * 0.5}%
               </ProgressBar>
-              System Integrity
             </LabeledControls.Item>
-            <LabeledControls.Item label="Uplink Location">
+            <LabeledControls.Item label="Current Uplink Location">
               <Box bold color="average">
                 {location_name}
                 <Box>({location_coords})</Box>
               </Box>
-              Current Uplink Location
             </LabeledControls.Item>
             <LabeledControls.Item label="Uplink Temperature">
               <ProgressBar
@@ -81,12 +79,11 @@ export const AiDashboard = (props) => {
               >
                 {temperature}K
               </ProgressBar>
-              Uplink Temperature
             </LabeledControls.Item>
           </LabeledControls>
           <Divider />
           <LabeledControls>
-            <LabeledControls.Item label="CPU Power">
+            <LabeledControls.Item label="Utilized CPU Power">
               <ProgressBar
                 ranges={{
                   good: [used_cpu * 0.7, Infinity],
@@ -99,9 +96,8 @@ export const AiDashboard = (props) => {
                 {used_cpu ? used_cpu * 100 : 0}% (
                 {used_cpu ? used_cpu * amount_of_cpu : 0}/{amount_of_cpu} THz)
               </ProgressBar>
-              Utilized CPU Power
             </LabeledControls.Item>
-            <LabeledControls.Item label="RAM Capacity">
+            <LabeledControls.Item label="Utilized RAM Capacity">
               <ProgressBar
                 ranges={{
                   good: [data.current_ram * 0.7, Infinity],
@@ -113,7 +109,6 @@ export const AiDashboard = (props) => {
               >
                 {data.used_ram ? data.used_ram : 0}/{data.current_ram} TB
               </ProgressBar>
-              Utilized RAM Capacity
             </LabeledControls.Item>
           </LabeledControls>
         </Section>
@@ -163,7 +158,7 @@ const AvailableProjects = (props) => {
   const { act, data } = useBackend<AvailableProjectsData>();
   const { categories, available_projects, used_cpu } = data;
 
-  const [search, setSearch] = useState(null);
+  const [search, setSearch] = useState('');
   const [selectedCategory, setCategory] = useState(categories[0]);
 
   const remaining_cpu = (1 - used_cpu) * 100;
@@ -175,7 +170,7 @@ const AvailableProjects = (props) => {
         <Input
           value={search}
           placeholder="Search.."
-          onChange={(e, value) => setSearch(value)}
+          onChange={(value) => setSearch(value)}
         />
       }
     >
@@ -286,7 +281,7 @@ const CompletedProjects = (props) => {
   const { act, data } = useBackend<CompletedProjectsData>();
   const { categories, completed_projects } = data;
 
-  const [searchCompleted, setSearchCompleted] = useState(null);
+  const [searchCompleted, setSearchCompleted] = useState('');
   const [activeProjectsOnly, setActiveProjectsOnly] = useState(true);
   const [selectedCategory, setCategory] = useState(data.categories[0]);
 
@@ -304,7 +299,7 @@ const CompletedProjects = (props) => {
           <Input
             value={searchCompleted}
             placeholder="Search.."
-            onInput={(e, value) => setSearchCompleted(value)}
+            onChange={(value) => setSearchCompleted(value)}
           />
         </Fragment>
       }
