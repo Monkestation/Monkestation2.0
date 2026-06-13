@@ -966,7 +966,7 @@
 
 /obj/item/melee/touch_attack/buster_mega/Initialize(mapload, datum/action/cooldown/spell/spell)
 	. = ..()
-	var/datum/action/spell_instance = spell_which_made_us.resolve()
+	var/datum/action/spell_instance = spell_which_made_us?.resolve()
 	if(spell_instance)
 		addtimer(CALLBACK(src, PROC_REF(timed_out), spell_instance.owner), 5 SECONDS, TIMER_STOPPABLE|TIMER_DELETE_ME)
 
