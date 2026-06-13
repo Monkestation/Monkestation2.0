@@ -248,6 +248,11 @@
 	icon_state = "devitt-broken"
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 
+/obj/structure/mecha_wreckage/maintenance_battle_tank
+	name = "\improper Maintenance Battle Tank Wreckage"
+	icon = 'icons/mecha/supertanks.dmi'
+	icon_state = "maintenance_battle_tank-broken"
+	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 
 /obj/structure/mecha_wreckage/vendozer
 	name = "\improper Vendozer Wreckage"

@@ -650,6 +650,24 @@
 	ammo_type = MECHA_AMMO_LIGHTTANK
 	mech_flags = EXOSUIT_MODULE_TANK
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/maintenance_battle_cannon
+	name = "D-10T cannon"
+	desc = "A 100mm cannon, developed through many manhours of the brightest in the Soviet Union, somehow fabricated by you with trash on a spacestation."
+	icon = 'icons/mecha/supertanks.dmi'
+	icon_state = "maintenance_battle_cannon"
+	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	harmful = TRUE
+	projectile = /obj/projectile/bullet/rocket/sentinelshell
+	equip_cooldown = 8 SECONDS
+	projectiles = 20
+	projectiles_cache = 10
+	projectiles_cache_max = 40
+	projectiles_per_shot = 1
+	variance = 10
+	randomspread = 3
+	ammo_type = MECHA_AMMO_SENTINEL
+	mech_flags = EXOSUIT_MODULE_TANK
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/sentinelcannon
 	name = "Sentinel Cannon"
 	desc = "A large artillery cannon affixed to a turret."

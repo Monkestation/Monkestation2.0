@@ -52,6 +52,13 @@
 	surplus = 0
 	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
+/datum/uplink_item/role_restricted/maintenance_battle_tank
+	name = "Maintenance Battle Tank Blueprints"
+	desc = "One of our archivists found these mad scribblings from Eastern Kentucky 400 years ago, we translated it from hill billy and now you can assemble... whatever it is."
+	item = /obj/item/book/granter/crafting_recipe/maintenance_battle_tank
+	cost = 20
+	restricted_roles = list(JOB_STATION_ENGINEER, JOB_ASSISTANT)
+
 /datum/uplink_item/role_restricted/clownpin
 	name = "Ultra Hilarious Firing Pin"
 	desc = "A firing pin that, when inserted into a gun, makes that gun only usable by clowns and clumsy people and makes that gun honk whenever anyone tries to fire it."
