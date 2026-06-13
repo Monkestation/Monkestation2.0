@@ -350,6 +350,7 @@
 	id = "oozeling_wet_stacks"
 	enemy_types = list(/datum/status_effect/fire_handler/fire_stacks, /datum/status_effect/fire_handler/wet_stacks)
 	applied_particles = /particles/droplets/slime
+	enemy_turf = /turf/open/floor/plating/ocean
 
 /datum/status_effect/fire_handler/wet_stacks/oozeling/adjust_particles(obj/effect/abstract/shared_particle_holder/particle_holder)
 	if(!particle_holder)
