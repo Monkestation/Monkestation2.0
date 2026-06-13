@@ -107,6 +107,7 @@
 
 /obj/vehicle/sealed/mecha/mob_exit(mob/M, silent = FALSE, randomstep = FALSE, forced = FALSE)
 	var/atom/movable/mob_container
+	var/is_ai_user = FALSE
 	var/turf/newloc = get_turf(src)
 	if(ishuman(M))
 		mob_container = M
@@ -127,34 +128,40 @@
 			mecha_flags &= ~SILICON_PILOT
 			return
 		else
-			if(!AI.linked_core)
-				if(!silent)
-					to_chat(AI, span_userdanger("Inactive core destroyed. Unable to return."))
-				AI.linked_core = null
-				return
 			if(!silent)
-				to_chat(AI, span_notice("Returning to core..."))
+				to_chat(AI, span_notice("Attempting to return to core..."))
 			AI.controlled_equipment = null
 			AI.remote_control = null
 			mob_container = AI
-			newloc = get_turf(AI.linked_core)
-			qdel(AI.linked_core)
+			newloc = null
+			if(GLOB.primary_data_core)
+				newloc = GLOB.primary_data_core
+			else if(LAZYLEN(GLOB.data_cores))
+				newloc = GLOB.data_cores[1]
+
+			if(!istype(newloc, /obj/machinery/ai/data_core))
+				to_chat(AI, span_userdanger("No cores available. Core code corrupted."))
+			is_ai_user = TRUE
 	else
 		return ..()
 	var/mob/living/ejector = M
 	mecha_flags  &= ~SILICON_PILOT
-	mob_container.forceMove(newloc)//ejecting mob container
-	log_message("[mob_container] moved out.", LOG_MECHA)
-	SStgui.close_user_uis(M, src)
-	if(istype(mob_container, /obj/item/mmi))
-		var/obj/item/mmi/mmi = mob_container
-		if(mmi.brainmob)
-			ejector.forceMove(mmi)
-			ejector.reset_perspective()
-			remove_occupant(ejector)
-		mmi.set_mecha(null)
-		mmi.update_appearance()
-	setDir(SOUTH)
+	if(mob_container.forceMove(newloc))//ejecting mob container
+		log_message("[mob_container] moved out.", LOG_MECHA)
+		SStgui.close_user_uis(M, src)
+		if(istype(mob_container, /obj/item/mmi))
+			var/obj/item/mmi/mmi = mob_container
+			if(mmi.brainmob)
+				ejector.forceMove(mmi)
+				ejector.reset_perspective()
+				remove_occupant(ejector)
+			mmi.set_mecha(null)
+			mmi.update_appearance()
+		setDir(SOUTH)
+		if(is_ai_user)
+			var/mob/living/silicon/ai/AI = occupant
+			AI.relocate(TRUE)
+
 	return ..()
 
 /obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)

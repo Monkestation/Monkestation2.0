@@ -11,41 +11,22 @@
 	return ..()
 
 /mob/living/silicon/ai/blob_act(obj/structure/blob/B)
-	if (stat != DEAD)
-		adjustBruteLoss(60)
-		updatehealth()
-		return TRUE
+	return FALSE
+
+/mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	return FALSE
 
 /mob/living/silicon/ai/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	disconnect_shell()
-	if (prob(30))
-		switch(pick(1,2))
-			if(1)
-				view_core()
-			if(2)
-				SSshuttle.requestEvac(src,"ALERT: Energy surge detected in AI core! Station integrity may be compromised! Initiati--%m091#ar-BZZT")
+	return
 
 /mob/living/silicon/ai/ex_act(severity, target)
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
-			gib()
-		if(EXPLODE_HEAVY)
-			if (stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
-		if(EXPLODE_LIGHT)
-			if (stat != DEAD)
-				adjustBruteLoss(30)
-
-
+	return
 
 /mob/living/silicon/ai/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	return // no eyes, no flashing
+
+/mob/living/silicon/ai/bullet_act(obj/item/projectile/Proj)
+	return
 
 /mob/living/silicon/ai/emag_act(mob/user, obj/item/card/emag/emag_card) ///emags access panel lock, so you can crowbar it without robotics access or consent
 	. = ..()

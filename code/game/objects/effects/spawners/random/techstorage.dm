@@ -126,7 +126,6 @@
 	loot = list(
 		/obj/item/circuitboard/computer/aiupload,
 		/obj/item/circuitboard/computer/borgupload,
-		/obj/item/circuitboard/aicore,
 	)
 
 /obj/effect/spawner/random/techstorage/command_all

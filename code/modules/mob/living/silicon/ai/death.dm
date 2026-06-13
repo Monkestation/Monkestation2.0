@@ -33,6 +33,8 @@
 
 	ShutOffDoomsdayDevice()
 
+	GLOB.ai_os.remove_ai(src)
+
 	if(gibbed)
 		make_mmi_drop_and_transfer()
 

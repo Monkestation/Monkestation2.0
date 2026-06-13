@@ -88,6 +88,8 @@
 		speaker.log_message("made a vocal announcement with the following message: [message].", LOG_GAME)
 		speaker.log_talk(message, LOG_SAY, tag = "VOX Announcement")
 		minor_announce(capitalize(message), "[name_override || default_name(speaker)] announces:", should_play_sound = FALSE)
+		if(istype(loc, /obj/machinery/ai/data_core))
+			origin_turf = loc
 	if(isnull(check_hearing))
 		check_hearing = src.check_hearing
 	if(isnull(origin_turf))

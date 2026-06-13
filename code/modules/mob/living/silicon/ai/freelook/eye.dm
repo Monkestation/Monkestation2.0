@@ -15,6 +15,7 @@
 
 /mob/eye/camera/ai/Initialize(mapload)
 	. = ..()
+	update_appearance()
 	update_ai_detect_hud()
 
 /mob/eye/camera/ai/Destroy()
@@ -86,7 +87,7 @@
 /mob/eye/camera/ai/setLoc(destination, force_update = FALSE)
 	if(!ai)
 		return
-	if(!isturf(ai.loc))
+	if(!(isturf(ai.loc) || istype(ai.loc, /obj/machinery/ai/data_core)))
 		return
 
 	. = ..()
@@ -135,6 +136,8 @@
 /mob/eye/camera/ai/proc/examinate_check(mob/user, atom/source)
 	SIGNAL_HANDLER
 	if(user.client.eye == src)
+		if(ishuman(source) && !ai.canExamineHumans)
+			return
 		return COMPONENT_ALLOW_EXAMINATE
 
 /atom/proc/move_camera_by_click()
@@ -149,35 +152,35 @@
 // This will move the AIEye. It will also cause lights near the eye to light up, if toggled.
 // This is handled in the proc below this one.
 #define SPRINT_PER_TICK 0.5
-#define MAX_SPRINT 50
 #define SPRINT_PER_STEP 20
-/mob/living/silicon/ai/proc/AIMove(direction)
-	if(last_moved && last_moved + 1 < world.timeofday)
+
+/client/proc/AIMove(direction, mob/living/silicon/ai/user)
+	if(user.last_moved && user.last_moved + 1 < world.timeofday)
 		// Decay sprint based off how long it took us to input this next move
-		var/missed_sprint = max((world.timeofday + 1) - last_moved, 0) * SPRINT_PER_TICK
-		sprint = max(sprint - missed_sprint * 7, initial(sprint))
+		var/missed_sprint = max((world.timeofday + 1) - user.last_moved, 0) * SPRINT_PER_TICK
+		user.sprint = max(user.sprint - missed_sprint * 7, initial(user.sprint))
 
 	// We move a full step, at least. Can't glide more with our current movement mode, so this is how I have to live
 	var/step_count = 0
-	for(var/i = 0; i < max(sprint, initial(sprint)); i += SPRINT_PER_STEP)
+	for(var/i = 0; i < max(user.sprint, initial(user.sprint)); i += SPRINT_PER_STEP)
 		step_count += 1
-		var/turf/step = get_turf(get_step(eyeobj, direction))
+		var/turf/step = get_turf(get_step(user.eyeobj, direction))
 		if(step)
-			eyeobj.setLoc(step)
+			user.eyeobj.setLoc(step)
 
 	// I'd like to make this scale with the steps we take, but it like, just can't
 	// So we're doin this instead
-	eyeobj.glide_size = world.icon_size
+	user.eyeobj.glide_size = world.icon_size
 
-	last_moved = world.timeofday
+	user.last_moved = world.timeofday
 	if(acceleration)
-		sprint = min(sprint + SPRINT_PER_TICK, MAX_SPRINT)
+		user.sprint = min(user.sprint + SPRINT_PER_TICK, user.max_camera_sprint)
 	else
-		sprint = initial(sprint)
+		user.sprint = initial(user.sprint)
 
 	ai_tracking_tool.reset_tracking()
+
 #undef SPRINT_PER_STEP
-#undef MAX_SPRINT
 #undef SPRINT_PER_TICK
 
 // Return to the Core.

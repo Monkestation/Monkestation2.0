@@ -2,16 +2,6 @@
 //////////AI Module Disks//////////
 ///////////////////////////////////
 
-/datum/design/board/aicore
-	name = "AI Core Board"
-	desc = "Allows for the construction of circuit boards used to build new AI cores."
-	id = "aicore"
-	build_path = /obj/item/circuitboard/aicore
-	category = list(
-		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
 /datum/design/board/safeguard_module
 	name = "Safeguard Module"
 	desc = "Allows for the construction of a Safeguard AI Module."
@@ -440,3 +430,26 @@
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+//AI CPU + RAM
+/datum/design/board/processing_card_1
+	name = "AI CPU board (Tier 1)"
+	desc = "Allows for the construction of a basic AI processing board."
+	id = "ai_cpu_1"
+	materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 4)
+	build_path = /obj/item/processing_card
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
+	)
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/memory_card_1
+	name = "AI Memory board (Tier 1)"
+	desc = "Allows for the construction of a basic AI memory board."
+	id = "ai_memory_1"
+	materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 4)
+	build_path = /obj/item/memory_card
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
+	)
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE

@@ -10,8 +10,8 @@
 	max_integrity = 500
 	var/state = EMPTY_CORE
 	var/datum/ai_laws/laws
-	var/obj/item/circuitboard/aicore/circuit
 	var/obj/item/mmi/core_mmi
+	var/can_deconstruct = FALSE
 
 /obj/structure/ai_core/Initialize(mapload)
 	. = ..()
@@ -20,70 +20,27 @@
 
 /obj/structure/ai_core/examine(mob/user)
 	. = ..()
-	if(!anchored)
-		if(state != EMPTY_CORE)
-			. += span_notice("It has some <b>bolts</b> that could be tightened.")
-		else
-			. += span_notice("It has some <b>bolts</b> that could be tightened. The frame can be <b>melted</b> down.")
+	if(anchored)
+		return .
+	if(state != EMPTY_CORE)
+		. += span_notice("It has some <b>bolts</b> that could be tightened.")
 	else
-		switch(state)
-			if(EMPTY_CORE)
-				. += span_notice("There is a <b>slot</b> for a circuit board, its <b>bolts</b> can be loosened.")
-			if(CIRCUIT_CORE)
-				. += span_notice("The circuit board can be <b>screwed</b> into place or <b>pried</b> out.")
-			if(SCREWED_CORE)
-				. += span_notice("The frame can be <b>wired</b>, the circuit board can be <b>unfastened</b>.")
-			if(CABLED_CORE)
-				if(!core_mmi)
-					. += span_notice("There are wires which could be hooked up to an <b>MMI or positronic brain</b>, or <b>cut</b>.")
-				else
-					var/accept_laws = TRUE
-					if(core_mmi.laws.id != DEFAULT_AI_LAWID || !core_mmi.brainmob || !core_mmi.brainmob?.mind)
-						accept_laws = FALSE
-					. += span_notice("There is a <b>slot</b> for a reinforced glass panel, the [AI_CORE_BRAIN(core_mmi)] could be <b>pried</b> out.[accept_laws ? " A law module can be <b>swiped</b> across." : ""]")
-			if(GLASS_CORE)
-				. += span_notice("The monitor [core_mmi?.brainmob?.mind && !suicide_check() ? "and neural interface " : ""]can be <b>screwed</b> in, the panel can be <b>pried</b> out.")
-			if(AI_READY_CORE)
-				. += span_notice("The monitor's connection can be <b>cut</b>[core_mmi?.brainmob?.mind && !suicide_check() ? " the neural interface can be <b>screwed</b> in." : "."]")
+		. += span_notice("It has some <b>bolts</b> that could be tightened. The frame can be <b>melted</b> down.")
 
 /obj/structure/ai_core/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(gone == circuit)
-		circuit = null
-		if((state != GLASS_CORE) && (state != AI_READY_CORE))
-			state = EMPTY_CORE
-			update_appearance()
 	if(gone == core_mmi)
 		core_mmi = null
 		update_appearance()
 
 /obj/structure/ai_core/Destroy()
-	QDEL_NULL(circuit)
 	QDEL_NULL(core_mmi)
 	QDEL_NULL(laws)
 	return ..()
 
-/obj/structure/ai_core/deactivated
-	icon_state = "ai-empty"
-	anchored = TRUE
-	state = AI_READY_CORE
-
-/obj/structure/ai_core/deactivated/Initialize(mapload, skip_mmi_creation = FALSE, posibrain = FALSE)
-	. = ..()
-	circuit = new(src)
-	if(skip_mmi_creation)
-		return
-	if(posibrain)
-		core_mmi = new/obj/item/mmi/posibrain(src, /* autoping = */ FALSE)
-	else
-		core_mmi = new(src)
-		core_mmi.brain = new(core_mmi)
-		core_mmi.update_appearance()
-
 /obj/structure/ai_core/latejoin_inactive
-	name = "networked AI core"
-	desc = "This AI core is connected by bluespace transmitters to NTNet, allowing for an AI personality to be downloaded to it on the fly mid-shift."
-	icon_state = "ai-empty"
+	name = "networked AI beacon"
+	desc = "This machine is connected by bluespace transmitters to NTNet, allowing for an AI personality to be downloaded to it on the fly mid-shift."
 	anchored = TRUE
 	state = AI_READY_CORE
 	var/available = TRUE
@@ -177,159 +134,6 @@
 				return
 			else
 				return ..()
-	else
-		switch(state)
-			if(EMPTY_CORE)
-				if(istype(P, /obj/item/circuitboard/aicore))
-					if(!user.transferItemToLoc(P, src))
-						return
-					playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-					balloon_alert(user, "circuit board inserted")
-					update_appearance()
-					state = CIRCUIT_CORE
-					circuit = P
-					return
-			if(CIRCUIT_CORE)
-				if(P.tool_behaviour == TOOL_SCREWDRIVER)
-					P.play_tool_sound(src)
-					balloon_alert(user, "board screwed into place")
-					state = SCREWED_CORE
-					update_appearance()
-					return
-				if(P.tool_behaviour == TOOL_CROWBAR)
-					P.play_tool_sound(src)
-					balloon_alert(user, "circuit board removed")
-					state = EMPTY_CORE
-					circuit.forceMove(loc)
-					return
-			if(SCREWED_CORE)
-				if(P.tool_behaviour == TOOL_SCREWDRIVER && circuit)
-					P.play_tool_sound(src)
-					balloon_alert(user, "circuit board unfastened")
-					state = CIRCUIT_CORE
-					update_appearance()
-					return
-				if(istype(P, /obj/item/stack/cable_coil))
-					var/obj/item/stack/cable_coil/C = P
-					if(C.get_amount() >= 5)
-						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-						balloon_alert(user, "adding cables to frame...")
-						if(do_after(user, 2 SECONDS, target = src) && state == SCREWED_CORE && C.use(5))
-							balloon_alert(user, "added cables to frame.")
-							state = CABLED_CORE
-							update_appearance()
-					else
-						balloon_alert(user, "need five lengths of cable!")
-					return
-			if(CABLED_CORE)
-				if(P.tool_behaviour == TOOL_WIRECUTTER)
-					if(core_mmi)
-						balloon_alert(user, "remove the [AI_CORE_BRAIN(core_mmi)] first!")
-					else
-						P.play_tool_sound(src)
-						balloon_alert(user, "cables removed")
-						state = SCREWED_CORE
-						update_appearance()
-						new /obj/item/stack/cable_coil(drop_location(), 5)
-					return
-
-				if(istype(P, /obj/item/stack/sheet/rglass))
-					if(!core_mmi)
-						balloon_alert(user, "add a brain first!")
-						return
-					var/obj/item/stack/sheet/rglass/G = P
-					if(G.get_amount() >= 2)
-						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-						balloon_alert(user, "adding glass panel...")
-						if(do_after(user, 2 SECONDS, target = src) && state == CABLED_CORE && G.use(2))
-							balloon_alert(user, "added glass panel")
-							state = GLASS_CORE
-							update_appearance()
-					else
-						balloon_alert(user, "need two sheets of reinforced glass!")
-					return
-
-				if(istype(P, /obj/item/ai_module))
-					if(!core_mmi)
-						balloon_alert(user, "no brain installed!")
-						return
-					if(!core_mmi.brainmob || !core_mmi.brainmob?.mind || suicide_check())
-						balloon_alert(user, "[AI_CORE_BRAIN(core_mmi)] is inactive!")
-						return
-					if(core_mmi.laws.id != DEFAULT_AI_LAWID)
-						balloon_alert(user, "[AI_CORE_BRAIN(core_mmi)] already has set laws!")
-						return
-					var/obj/item/ai_module/module = P
-					module.install(laws, user)
-					return
-
-				if(istype(P, /obj/item/mmi) && !core_mmi)
-					var/obj/item/mmi/M = P
-					if(!M.brain_check(user))
-						var/install = tgui_alert(user, "This [AI_CORE_BRAIN(M)] is inactive, would you like to make an inactive AI?", "Installing AI [AI_CORE_BRAIN(M)]", list("Yes", "No"))
-						if(install != "Yes")
-							return
-						if(M.brainmob && HAS_TRAIT(M.brainmob, TRAIT_SUICIDED))
-							to_chat(user, span_warning("[M.name] is completely useless!"))
-							return
-						if(!user.transferItemToLoc(M, src))
-							return
-						core_mmi = M
-						balloon_alert(user, "added [AI_CORE_BRAIN(core_mmi)] to frame")
-						update_appearance()
-						return
-
-					var/mob/living/brain/B = M.brainmob
-					if(!CONFIG_GET(flag/allow_ai) || (is_banned_from(B.ckey, JOB_AI) && !QDELETED(src) && !QDELETED(user) && !QDELETED(M) && !QDELETED(user) && Adjacent(user)))
-						if(!QDELETED(M))
-							to_chat(user, span_warning("This [M.name] does not seem to fit!"))
-						return
-					if(!user.transferItemToLoc(M,src))
-						return
-
-					core_mmi = M
-					balloon_alert(user, "added [AI_CORE_BRAIN(core_mmi)] to frame")
-					update_appearance()
-					return
-
-				if(P.tool_behaviour == TOOL_CROWBAR && core_mmi)
-					P.play_tool_sound(src)
-					balloon_alert(user, "removed [AI_CORE_BRAIN(core_mmi)]")
-					core_mmi.forceMove(loc)
-					return
-
-			if(GLASS_CORE)
-				if(P.tool_behaviour == TOOL_CROWBAR)
-					P.play_tool_sound(src)
-					balloon_alert(user, "removed glass panel")
-					state = CABLED_CORE
-					update_appearance()
-					new /obj/item/stack/sheet/rglass(loc, 2)
-					return
-
-				if(P.tool_behaviour == TOOL_SCREWDRIVER)
-					if(suicide_check())
-						to_chat(user, span_warning("The brain installed is completely useless."))
-						return
-					P.play_tool_sound(src)
-					balloon_alert(user, "connected monitor[core_mmi?.brainmob?.mind ? " and neural network" : ""]")
-					if(core_mmi.brainmob?.mind)
-						ai_structure_to_mob()
-					else
-						state = AI_READY_CORE
-						update_appearance()
-					return
-
-			if(AI_READY_CORE)
-				if(istype(P, /obj/item/aicard))
-					return //handled by /obj/structure/ai_core/transfer_ai()
-
-				if(P.tool_behaviour == TOOL_WIRECUTTER)
-					P.play_tool_sound(src)
-					balloon_alert(user, "disconnected monitor")
-					state = GLASS_CORE
-					update_appearance()
-					return
 	return ..()
 
 /obj/structure/ai_core/proc/ai_structure_to_mob()
@@ -387,17 +191,6 @@
 			icon_state = "ai-empty"
 	return ..()
 
-/obj/structure/ai_core/deconstruct(disassembled = TRUE)
-	if(state >= GLASS_CORE)
-		new /obj/item/stack/sheet/rglass(loc, 2)
-	if(state >= CABLED_CORE)
-		new /obj/item/stack/cable_coil(loc, 5)
-	if(circuit)
-		circuit.forceMove(loc)
-		circuit = null
-	new /obj/item/stack/sheet/plasteel(loc, 4)
-	qdel(src)
-
 /// Quick proc to call to see if the brainmob inside of us has suicided. Returns TRUE if we have, FALSE in any other scenario.
 /obj/structure/ai_core/proc/suicide_check()
 	if(isnull(core_mmi) || isnull(core_mmi.brainmob))
@@ -446,9 +239,5 @@ That prevents a few funky behaviors.
 		qdel(src)
 	else //If for some reason you use an empty card on an empty AI terminal.
 		to_chat(user, span_alert("There is no AI loaded on this terminal."))
-
-/obj/item/circuitboard/aicore
-	name = "AI core (AI Core Board)" //Well, duh, but best to be consistent
-	var/battery = 200 //backup battery for when the AI loses power. Copied to/from AI mobs when carding, and placed here to avoid recharge via deconning the core
 
 #undef AI_CORE_BRAIN
