@@ -156,6 +156,7 @@
 #define ORGAN_SLOT_EXTERNAL_HORNS "horns"
 #define ORGAN_SLOT_EXTERNAL_WINGS "wings"
 #define ORGAN_SLOT_EXTERNAL_ANTENNAE "antennae"
+#define ORGAN_SLOT_EXTERNAL_SCREEN "screen"
 #define ORGAN_SLOT_EXTERNAL_BODYMARKINGS "bodymarkings"
 #define ORGAN_SLOT_EXTERNAL_POD_HAIR "pod_hair"
 #define ORGAN_SLOT_EXTERNAL_ANIME_HEAD "anime_head"
@@ -165,7 +166,6 @@
 #define ORGAN_SLOT_EXTERNAL_FLORAN_LEAVES "floran_leaves"
 #define ORGAN_SLOT_EXTERNAL_FLUFF "fluff"
 #define ORGAN_SLOT_EXTERNAL_FEATHERS "feathers"
-#define ORGAN_SLOT_EXTERNAL_SCREEN "screen"
 
 /// Xenomorph organ slots
 #define ORGAN_SLOT_XENO_ACIDGLAND "acid_gland"
