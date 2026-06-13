@@ -933,8 +933,9 @@
 			RegisterSignal(new_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(soar_post_move))
 			RegisterSignal(new_loop, COMSIG_QDELETING, PROC_REF(loop_qdeleted))
 		else if(non_living_type_check(impacted_atom))
-			harm(null, source, living_collision_dam)
 			harm(null, impacted_atom, object_collision_damage)
+			if(impacted_atom.density)
+				harm(null, source, living_collision_dam)
 
 /datum/action/cooldown/spell/touch/buster/megabuster/proc/soar_post_move(datum/move_loop/has_target/source, result, delay)
 	SIGNAL_HANDLER
