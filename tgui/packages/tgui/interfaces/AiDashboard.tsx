@@ -149,7 +149,7 @@ type AvailableProjectData = {
   assigned_cpu: number;
   research_cost: number;
   ram_required: number;
-  research_requirements: number;
+  research_requirements: string;
   description: string;
   research_progress: number;
 };

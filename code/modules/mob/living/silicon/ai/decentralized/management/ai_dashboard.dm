@@ -93,6 +93,12 @@
 		data["temperature"] = current_machine.core_temp ? current_machine.core_temp : 0
 
 	for(var/datum/ai_project/AP as anything in available_projects)
+		var/research_requirements
+		for(var/datum/ai_project/requirement as anything in AP.research_requirements)
+			if(isnull(research_requirements))
+				research_requirements = requirement::name
+			else
+				research_requirements += ", [requirement::name]"
 		data["available_projects"] += list(list(
 			"name" = AP.name,
 			"description" = AP.description,
@@ -101,10 +107,9 @@
 			"research_cost" = AP.research_cost,
 			"research_progress" = AP.research_progress,
 			"assigned_cpu" = cpu_usage[AP.name] ? cpu_usage[AP.name] : 0,
-			"research_requirements" = AP.research_requirements,
+			"research_requirements" = research_requirements,
 			"category" = AP.category,
 		))
-
 
 	var/list/ability_paths = list()
 	data["completed_projects"] = list()

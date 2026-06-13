@@ -47,11 +47,15 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	for(var/mob/living/silicon/ai/AI in contents)
 		if(AI.is_dying)
 			continue
-		all_ais -= AI
 		if(!AI.is_dying)
 			AI.relocate()
 
-	to_chat(all_ais, span_userdanger("Warning! Data Core brought offline in [get_area(src)]! Please verify that no malicious actions were taken."))
+	for(var/mob/living/silicon/ai/AI in all_ais)
+		if(!AI.mind && AI.deployed_shell.mind)
+			to_chat(AI.deployed_shell, span_userdanger("Warning! Data Core brought offline in [get_area(src)]! Please verify that no malicious actions were taken."))
+		else
+			to_chat(AI, span_userdanger("Warning! <A HREF=?src=[REF(AI)];go_to_machine=[REF(src)]>Data Core</A> brought offline in [get_area(src)]! Please verify that no malicious actions were taken."))
+
 	return ..()
 
 /obj/machinery/ai/data_core/RefreshParts()
@@ -132,6 +136,10 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 			COOLDOWN_START(src, warning_cooldown, AI_DATA_CORE_WARNING_COOLDOWN)
 			to_chat(GLOB.ai_list, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Please contact technical support."))
 			for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
+				if(!AI.mind && AI.deployed_shell.mind)
+					to_chat(AI.deployed_shell, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
+				else
+					to_chat(AI, span_userdanger("<A HREF=?src=[REF(AI)];go_to_machine=[REF(src)]>Data core</A> in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
 				AI.playsound_local(AI, 'sound/machines/engine_alert2.ogg', 30)
 
 	if(!(machine_stat & (BROKEN|EMPED)) && has_power() && !disableheat)
