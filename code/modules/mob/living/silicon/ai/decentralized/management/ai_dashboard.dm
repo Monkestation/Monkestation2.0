@@ -222,10 +222,10 @@
 		total_cpu_used += cpu_usage[I]
 
 
-	if((1 - total_cpu_used) > amount)
-		cpu_usage[project.name] = amount
-		return TRUE
-	return FALSE
+	if(amount > (1 - total_cpu_used))
+		return FALSE
+	cpu_usage[project.name] = amount
+	return TRUE
 
 
 /datum/ai_dashboard/proc/run_project(datum/ai_project/project)

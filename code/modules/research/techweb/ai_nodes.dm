@@ -4,7 +4,7 @@
 	display_name = "Advanced Neural Processing"
 	description = "Using breakthroughs in high-efficiency fabrication it should be possible to drastically increase the speed of Neural Processing Units, at the cost of increased power consumption."
 	design_ids = list("advanced_ai_cpu")
-	prereq_ids = list("high_efficiency", "ai")
+	prereq_ids = list("high_efficiency", "ai_basic")
 	research_costs = list(TECHWEB_POINT_TYPE_AI = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/ai_cpu_experimental
@@ -28,7 +28,7 @@
 	display_name = "High Capacity Memory Sticks"
 	description = "Further advances in memory production should allow higher density sticks."
 	design_ids = list("ram2")
-	prereq_ids = list("high_efficiency", "ai")
+	prereq_ids = list("high_efficiency", "ai_basic")
 	research_costs = list(TECHWEB_POINT_TYPE_AI = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/ai_ram_hyper
@@ -53,14 +53,14 @@
 	id = "ai_cpu_2"
 	display_name = "Improved CPU Sockets"
 	description = "Refinements in general data theory should allow the mounting of an extra CPU core in each AI server rack."
-	prereq_ids = list("ai")
+	prereq_ids = list("ai_basic")
 	research_costs = list(TECHWEB_POINT_TYPE_AI = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/ai_ram_1
 	id = "ai_ram_2"
 	display_name = "Improved Memory Bus"
 	description = "Refinements in general data theory should allow the addition of another memory stick in each AI server rack."
-	prereq_ids = list("ai")
+	prereq_ids = list("ai_basic")
 	research_costs = list(TECHWEB_POINT_TYPE_AI = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/ai_architecture_256
