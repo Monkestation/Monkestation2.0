@@ -1959,6 +1959,10 @@
 "qn" = (
 /turf/open/space/basic,
 /area/space/shipbreak)
+"qB" = (
+/obj/machinery/ai/data_core,
+/turf/open/floor/plating,
+/area/station/construction)
 "qF" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -2484,6 +2488,10 @@
 /obj/item/disk/tech_disk/debug,
 /turf/open/floor/iron,
 /area/station/science)
+"PM" = (
+/obj/effect/landmark/start/ai,
+/turf/open/floor/plating,
+/area/station/construction)
 "Qi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -2555,6 +2563,10 @@
 /obj/machinery/door/poddoor,
 /turf/open/floor/engine,
 /area/station/hallway/secondary/entry)
+"Tp" = (
+/obj/machinery/ai/data_core/primary,
+/turf/open/floor/plating,
+/area/station/construction)
 "Tt" = (
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
@@ -6260,7 +6272,7 @@ dn
 XE
 dn
 dn
-dn
+qB
 dn
 XE
 dn
@@ -6535,9 +6547,9 @@ dn
 dn
 XE
 dn
+PM
 dn
-dn
-dn
+Tp
 XE
 dn
 dn
@@ -6812,7 +6824,7 @@ dn
 XE
 dn
 dn
-dn
+qB
 dn
 XE
 dn

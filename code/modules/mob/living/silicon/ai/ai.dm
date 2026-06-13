@@ -213,7 +213,7 @@
 	nanite_menu.Grant(src)
 	nanite_remote.Grant(src)
 
-	if(isturf(loc))
+	if(isvalidAIloc(loc))
 		add_verb(src, list(
 			/mob/living/silicon/ai/proc/ai_network_change,
 			/mob/living/silicon/ai/proc/ai_hologram_change,
@@ -234,10 +234,13 @@
 
 	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_AI_ACCESS, TRAIT_HANDS_BLOCKED), INNATE_TRAIT)
 
+	var/z_used = z
+	if(istype(loc, /obj/machinery/ai/data_core))
+		z_used = loc.z
 	var/static/list/alert_areas
 	if(isnull(alert_areas))
 		alert_areas = (GLOB.the_station_areas + typesof(/area/mine))
-	if(is_station_level(z))
+	if(is_station_level(z_used))
 		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), SSmapping.levels_by_trait(ZTRAIT_STATION), alert_areas, camera_view = TRUE)
 	else
 		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), (SSmapping.levels_by_trait(ZTRAIT_STATION) + z), alert_areas, camera_view = TRUE)
@@ -489,22 +492,6 @@
 	SIGNAL_HANDLER
 	if(eyeobj)
 		eyeobj.glide_size = new_glide_size
-
-/mob/living/silicon/ai/verb/toggle_anchor()
-	set category = "AI Commands"
-	set name = "Toggle Floor Bolts"
-	if(!isturf(loc)) // if their location isn't a turf
-		return // stop
-	if(stat == DEAD)
-		return
-	if(incapacitated())
-		if(battery < 50)
-			to_chat(src, span_warning("Insufficient backup power!"))
-			return
-		battery = battery - 50
-		to_chat(src, span_notice("You route power from your backup battery to move the bolts."))
-	flip_anchored()
-	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
 
 /mob/living/silicon/ai/proc/flip_anchored()
 	if(is_anchored)

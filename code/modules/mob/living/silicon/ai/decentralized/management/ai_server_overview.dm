@@ -10,6 +10,7 @@
 	circuit = /obj/item/circuitboard/computer/ai_server_overview
 
 /obj/machinery/computer/ai_server_console/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "AiServerConsole", name)

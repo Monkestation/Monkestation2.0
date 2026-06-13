@@ -1,4 +1,4 @@
-#define AI_DOWNLOAD_PER_PROCESS 0.5
+GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 
 /obj/machinery/computer/ai_control_console
 	name = "\improper AI control console"
@@ -11,6 +11,9 @@
 
 	authenticated = FALSE
 
+	var/cleared_for_use = FALSE //Have we inserted the RDs code to unlock upload/download?
+	var/one_time_password_used = FALSE //Did we use the one time password to log in? If so disallow logging out.
+
 	var/obj/item/aicard/intellicard
 
 	var/mob/living/silicon/ai/downloading
@@ -19,6 +22,11 @@
 	var/download_warning = FALSE
 
 	circuit = /obj/item/circuitboard/computer/ai_upload_download
+
+/obj/machinery/computer/ai_control_console/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		cleared_for_use = TRUE
 
 /obj/machinery/computer/ai_control_console/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/aicard))
@@ -57,6 +65,26 @@
 		to_chat(user, span_notice("AI succesfully uploaded."))
 		return FALSE
 
+	if(istype(W, /obj/item/surveillance_upgrade))
+		if(!authenticated)
+			to_chat(user, span_warning("You need to be logged in to do this!"))
+			return ..()
+		var/mob/living/silicon/ai/AI = input("Select an AI", "Select an AI", null, null) as null|anything in GLOB.ai_list
+		if(!AI)
+			return ..()
+		var/obj/item/surveillance_upgrade/upgrade = W
+		upgrade.afterattack(AI, user)
+
+	if(istype(W, /obj/item/malf_upgrade))
+		if(!authenticated)
+			to_chat(user, span_warning("You need to be logged in to do this!"))
+			return ..()
+		var/mob/living/silicon/ai/AI = input("Select an AI", "Select an AI", null, null) as null|anything in GLOB.ai_list
+		if(!AI)
+			return ..()
+		var/obj/item/malf_upgrade/upgrade = W
+		upgrade.afterattack(AI, user)
+
 	return ..()
 
 /obj/machinery/computer/ai_control_console/emag_act(mob/user)
@@ -85,6 +113,7 @@
 
 
 /obj/machinery/computer/ai_control_console/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "AiControlPanel", name)
@@ -92,6 +121,12 @@
 
 /obj/machinery/computer/ai_control_console/ui_data(mob/living/carbon/human/user)
 	var/list/data = list()
+
+	if(!cleared_for_use)
+		data["cleared_for_use"] = FALSE
+		return data
+
+	data["cleared_for_use"] = TRUE
 
 	data["authenticated"] = authenticated
 
@@ -103,6 +138,8 @@
 	if(isAdminGhostAI(user))
 		data["username"] = user.client.holder.admin_signature
 		data["has_access"] = TRUE
+
+	data["can_log_out"] = !one_time_password_used
 
 	if(ishuman(user) && !(obj_flags & EMAGGED))
 		var/username = user.get_authentification_name("Unknown")
@@ -170,6 +207,7 @@
 	if(intellicard)
 		downloading.transfer_ai(AI_TRANS_TO_CARD, user_downloading, null, intellicard)
 		intellicard.forceMove(get_turf(src))
+		intellicard.update_appearance()
 		intellicard = null
 	stop_download(TRUE)
 
@@ -188,9 +226,38 @@
 	intellicard.AI.control_disabled = FALSE
 	intellicard.AI.relocate(TRUE)
 	intellicard.AI = null
+	intellicard.update_appearance()
 
 /obj/machinery/computer/ai_control_console/ui_act(action, params)
 	if(..())
+		return
+
+	if(!cleared_for_use)
+		if(action == "clear_for_use")
+			var/code = text2num(params["control_code"])
+
+			var/length_of_number = round(log(10, code) + 1)
+			if(length_of_number < 6)
+				to_chat(usr, span_warning("Incorrect code. Too short"))
+				return
+
+			if(length_of_number > 6)
+				to_chat(usr, span_warning("Incorrect code. Too long"))
+				return
+
+
+			if(!GLOB.ai_control_code)
+				return
+
+			if(!is_station_level(z))
+				to_chat(usr, span_warning("Unable to connect to NT Servers. Please verify you are onboard the station."))
+				return
+
+			if(code == text2num(GLOB.ai_control_code))
+				cleared_for_use = TRUE
+			else
+				to_chat(usr, span_warning("Incorrect code. Make sure you have the latest one."))
+
 		return
 
 	if(!authenticated)
@@ -211,10 +278,37 @@
 
 			if(check_access(H.get_idcard()))
 				authenticated = TRUE
+		if(action == "log_in_control_code")
+			var/code = text2num(params["control_code"])
+
+			var/length_of_number = round(log(10, code) + 1)
+			if(length_of_number < 6)
+				to_chat(usr, span_warning("Incorrect code. Too short."))
+				return
+
+			if(length_of_number > 6)
+				to_chat(usr, span_warning("Incorrect code. Too long."))
+				return
+
+			if(!GLOB.ai_control_code)
+				return
+
+			if(code == text2num(GLOB.ai_control_code))
+				cleared_for_use = TRUE
+				authenticated = TRUE
+				one_time_password_used = TRUE
+				var/msg = "<h4>Warning!</h4><br>We have detected usage of the AI Control Code for unlocking a console at coordinates ([src.x], [src.y], [src.z]) by [usr.name]. Please verify that this is correct. Be aware we have cancelled the current control code.<br>\
+				If needed a new code can be printed at a communications console."
+				priority_announce(msg, sender_override = "Central Cyber Security Update", has_important_message = TRUE, encode_text = FALSE)
+				GLOB.ai_control_code = null
+			else
+				to_chat(usr, span_warning("Incorrect code. Make sure you have the latest one."))
 		return
 
 	switch(action)
 		if("log_out")
+			if(one_time_password_used)
+				return
 			authenticated = FALSE
 			. = TRUE
 		if("upload_intellicard")
@@ -259,4 +353,11 @@
 			if(usr == downloading)
 				finish_download()
 
-#undef AI_DOWNLOAD_PER_PROCESS
+/obj/item/paper/ai_control_code
+	name = "paper - 'AI control code'"
+
+/obj/item/paper/ai_control_code/Initialize(mapload)
+	. = ..()
+	add_raw_text("<center><h2>Daily AI Control Key Reset</h2></center><br>The new authentication key is '[GLOB.ai_control_code]'.<br>\
+		Please keep this a secret and away from the clown.<br>This code may be invalidated if a new one is requested.")
+	update_appearance()

@@ -1,7 +1,5 @@
 GLOBAL_LIST_EMPTY(data_cores)
 GLOBAL_VAR_INIT(primary_data_core, null)
-#define MAX_AI_DATA_CORE_TICKS 15
-
 
 /obj/machinery/ai/data_core
 	name = "AI Data Core"
@@ -10,23 +8,20 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	icon_state = "hub"
 
 	circuit = /obj/item/circuitboard/machine/ai_data_core
+	active_power_usage = AI_DATA_CORE_POWER_USAGE
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 10
+	use_power = IDLE_POWER_USE
 
 	var/primary = FALSE
-
 	var/valid_ticks = MAX_AI_DATA_CORE_TICKS //Limited to MAX_AI_DATA_CORE_TICKS. Decrement by 1 every time we have an invalid tick, opposite when valid
-
 	var/warning_sent = FALSE
 
 /obj/machinery/ai/data_core/Initialize()
-	..()
+	. = ..()
 	GLOB.data_cores += src
 	if(primary && !GLOB.primary_data_core)
 		GLOB.primary_data_core = src
 	update_appearance()
-
-/obj/machinery/ai/data_core/process()
-	calculate_validity()
-
 
 /obj/machinery/ai/data_core/Destroy()
 	GLOB.data_cores -= src
@@ -43,6 +38,9 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 
 	..()
 
+/obj/machinery/ai/data_core/process()
+	calculate_validity()
+
 /obj/machinery/ai/data_core/examine(mob/user)
 	. = ..()
 	if(!isobserver(user))
@@ -54,6 +52,19 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 		for(var/law in AI.laws.get_law_list(include_zeroth = TRUE))
 			. += law
 
+/obj/machinery/ai/data_core/attackby(obj/item/O, mob/user, params)
+	if(default_deconstruction_screwdriver(user, "hub_o", "hub", O))
+		return TRUE
+
+	if(default_deconstruction_crowbar(O))
+		return TRUE
+	return ..()
+
+/obj/machinery/ai/data_core/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
+	. = ..()
+	for(var/mob/living/silicon/ai/AI in contents)
+		AI.disconnect_shell()
+
 /obj/machinery/ai/data_core/proc/valid_data_core()
 	if(!is_reebe_level(z) && !is_station_level(z))
 		return FALSE
@@ -64,18 +75,28 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 /obj/machinery/ai/data_core/proc/calculate_validity()
 	valid_ticks = clamp(valid_ticks, 0, MAX_AI_DATA_CORE_TICKS)
 
-	if(machine_stat & (BROKEN|NOPOWER|EMPED))
-		return FALSE
-
 	if(valid_holder())
 		valid_ticks++
+		use_power = ACTIVE_POWER_USE
 		warning_sent = FALSE
 	else
 		valid_ticks--
-		warning_sent = TRUE
-		to_chat(GLOB.ai_list, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Please contact technical support."))
+		if(valid_ticks <= 0)
+			use_power = IDLE_POWER_USE
+		if(!warning_sent)
+			warning_sent = TRUE
+			to_chat(GLOB.ai_list, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Please contact technical support."))
 
-
+/obj/machinery/ai/data_core/process_atmos()
+	. = ..()
+	if(machine_stat & (BROKEN|NOPOWER|EMPED))
+		return
+	var/turf/T = get_turf(src)
+	var/datum/gas_mixture/env = T.return_air()
+	if(env.heat_capacity())
+		var/temperature_increase = active_power_usage / env.heat_capacity() //1 CPU = 1000W. Heat capacity = somewhere around 3000-4000. Aka we generate 0.25 - 0.33 K per second, per CPU.
+		env.temperature_share(null, OPEN_HEAT_TRANSFER_COEFFICIENT, env.return_temperature() + temperature_increase * AI_TEMPERATURE_MULTIPLIER) //assume all input power is dissipated
+		T.air_update_turf()
 
 /obj/machinery/ai/data_core/proc/can_transfer_ai()
 	if(machine_stat & (BROKEN|NOPOWER|EMPED))
@@ -86,7 +107,8 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 
 /obj/machinery/ai/data_core/proc/transfer_AI(mob/living/silicon/ai/AI)
 	AI.forceMove(src)
-	AI.eyeobj.forceMove(get_turf(src))
+	if(AI.eyeobj)
+		AI.eyeobj.forceMove(get_turf(src))
 
 /obj/machinery/ai/data_core/update_overlays()
 	. = ..()
