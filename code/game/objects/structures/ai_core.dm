@@ -49,7 +49,6 @@
 
 /obj/structure/ai_core/latejoin_inactive/Initialize(mapload)
 	. = ..()
-	circuit = new(src)
 	core_mmi = new(src)
 	core_mmi.brain = new(core_mmi)
 	core_mmi.update_appearance()
@@ -213,6 +212,7 @@ That prevents a few funky behaviors.
 			return FALSE
 	return TRUE
 
+/* Unused for now, just here for reference
 /obj/structure/ai_core/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(state != AI_READY_CORE || !..())
 		return
@@ -239,5 +239,6 @@ That prevents a few funky behaviors.
 		qdel(src)
 	else //If for some reason you use an empty card on an empty AI terminal.
 		to_chat(user, span_alert("There is no AI loaded on this terminal."))
+*/
 
 #undef AI_CORE_BRAIN

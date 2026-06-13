@@ -37,7 +37,7 @@
 		data["username"] = borg.name
 		data["has_access"] = TRUE
 
-	if(IsAdminGhost(user))
+	if(isAdminGhostAI(user))
 		data["username"] = user.client.holder.admin_signature
 		data["has_access"] = TRUE
 
@@ -46,7 +46,7 @@
 		data["username"] = user.get_authentification_name("Unknown")
 		if(username != "Unknown")
 			var/datum/data/record/record
-			for(var/RP in GLOB.data_core.general)
+			for(var/RP in GLOB.manifest.general)
 				var/datum/data/record/R = RP
 
 				if(!istype(R))
@@ -106,7 +106,7 @@
 				authenticated = TRUE
 				return
 
-			if(IsAdminGhost(usr))
+			if(isAdminGhostAI(usr))
 				authenticated = TRUE
 
 			if(obj_flags & EMAGGED)

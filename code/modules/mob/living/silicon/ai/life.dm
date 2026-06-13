@@ -4,7 +4,7 @@
 	//Being dead doesn't mean your temperature never changes
 
 	if(dashboard)
-		dashboard.tick(seconds)
+		dashboard.tick(seconds_per_tick)
 
 	if(malfhack?.aidisabled)
 		deltimer(malfhacking)

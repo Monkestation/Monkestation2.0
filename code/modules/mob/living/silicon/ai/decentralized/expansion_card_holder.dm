@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(expansion_card_holders)
 	roundstart = mapload
 	installed_cards = list()
 	GLOB.expansion_card_holders += src
-	update_icon()
+	update_appearance()
 
 /obj/machinery/ai/expansion_card_holder/Destroy()
 	installed_cards = list()
@@ -56,7 +56,7 @@ GLOBAL_LIST_EMPTY(expansion_card_holders)
 		GLOB.ai_os.update_hardware()
 
 /obj/machinery/ai/expansion_card_holder/valid_holder()
-	if(stat & (BROKEN|NOPOWER|EMPED))
+	if(machine_stat & (BROKEN|NOPOWER|EMPED))
 		return FALSE
 
 	var/turf/T = get_turf(src)
@@ -70,16 +70,16 @@ GLOBAL_LIST_EMPTY(expansion_card_holders)
 	if(env.return_temperature() > TEMP_LIMIT || !env.heat_capacity())
 		return FALSE
 	if(!was_valid_holder)
-		update_icon()
+		update_appearance()
 	was_valid_holder = TRUE
 	return TRUE
 
-/obj/machinery/ai/expansion_card_holder/update_icon()
-	cut_overlays()
+/obj/machinery/ai/expansion_card_holder/update_overlays()
+	. = ..()
 
-	if(!(stat & (BROKEN|NOPOWER|EMPED)))
-		var/mutable_appearance/on_overlay = mutable_appearance(icon, "[initial(icon_state)]_on")
-		add_overlay(on_overlay)
+	if(machine_stat & (BROKEN|NOPOWER|EMPED))
+		return .
+	. += mutable_appearance(icon, "[initial(icon_state)]_on")
 
 /obj/machinery/ai/expansion_card_holder/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/processing_card) || istype(W, /obj/item/memory_card))

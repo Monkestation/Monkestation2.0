@@ -285,7 +285,6 @@
 	current = null
 	bot_ref = null
 	controlled_equipment = null
-	linked_core = null
 	apc_override = null
 	if(ai_voicechanger)
 		ai_voicechanger.owner = null
@@ -518,15 +517,6 @@
 		move_resist = MOVE_FORCE_OVERPOWERING
 		status_flags &= ~CANPUSH //we dont want the core to be push-able when anchored
 		ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
-
-/mob/living/silicon/ai/proc/ai_mob_to_structure()
-	disconnect_shell()
-	ShutOffDoomsdayDevice()
-	var/obj/structure/ai_core/deactivated/ai_core = new(get_turf(src), /* skip_mmi_creation = */ TRUE)
-	if(!make_mmi_drop_and_transfer(ai_core.core_mmi, the_core = ai_core))
-		return FALSE
-	qdel(src)
-	return TRUE
 
 /mob/living/silicon/ai/proc/make_mmi_drop_and_transfer(obj/item/mmi/the_mmi, the_core)
 	// monkestation edit start

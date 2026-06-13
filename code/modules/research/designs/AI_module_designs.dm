@@ -441,7 +441,7 @@
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/memory_card_1
 	name = "AI Memory board (Tier 1)"
@@ -452,4 +452,4 @@
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE

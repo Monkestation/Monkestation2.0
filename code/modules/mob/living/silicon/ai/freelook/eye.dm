@@ -173,12 +173,12 @@
 	user.eyeobj.glide_size = world.icon_size
 
 	user.last_moved = world.timeofday
-	if(acceleration)
+	if(user.acceleration)
 		user.sprint = min(user.sprint + SPRINT_PER_TICK, user.max_camera_sprint)
 	else
 		user.sprint = initial(user.sprint)
 
-	ai_tracking_tool.reset_tracking()
+	user.ai_tracking_tool.reset_tracking()
 
 #undef SPRINT_PER_STEP
 #undef SPRINT_PER_TICK

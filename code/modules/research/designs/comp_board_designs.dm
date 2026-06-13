@@ -387,7 +387,7 @@
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
 	)
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/ai_server_overview
 	name = "Computer Design (AI Server Overview Console)"
@@ -397,7 +397,7 @@
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
 	)
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/ai_resource_distribution
 	name = "Computer Design (AI Resource Distribution Console)"
@@ -407,4 +407,4 @@
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
 	)
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE

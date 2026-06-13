@@ -1135,7 +1135,7 @@
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 	)
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/ai_data_core
 	name = "Machine Design (AI Data Core Board)"
@@ -1145,7 +1145,7 @@
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 	)
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/exoscanner
 	name = "Scanner Array Board"

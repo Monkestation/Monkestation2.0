@@ -165,7 +165,7 @@
 #define ui_ai_announcement "CENTER+1:-32,SOUTH:6"
 #define ui_ai_shuttle "CENTER+2:-32,SOUTH:6"
 #define ui_ai_state_laws "CENTER+3:-32,SOUTH:6"
-#define ui_ai_pda_send "CENTER+4:-32,SOUTH:6"
+#define ui_ai_mod_int "CENTER+4:-32,SOUTH:6"
 #define ui_ai_pda_log "CENTER+5:-32,SOUTH:6"
 #define ui_ai_take_picture "CENTER+6:-32,SOUTH:6"
 #define ui_ai_view_images "CENTER+7:-32,SOUTH:6"

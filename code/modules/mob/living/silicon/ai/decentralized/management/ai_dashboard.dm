@@ -188,7 +188,7 @@ GLOBAL_VAR_INIT(sent_crash_message, FALSE)
 
 
 //Stuff is handled in here per tick :)
-/datum/ai_dashboard/proc/tick(seconds)
+/datum/ai_dashboard/proc/tick(seconds_per_tick)
 	var/current_cpu = GLOB.ai_os.cpu_assigned[owner] ? GLOB.ai_os.cpu_assigned[owner] : 0
 	var/current_ram = GLOB.ai_os.ram_assigned[owner] ? GLOB.ai_os.ram_assigned[owner] : 0
 
@@ -237,7 +237,7 @@ GLOBAL_VAR_INIT(sent_crash_message, FALSE)
 	for(var/project_being_researched in cpu_usage)
 		if(!cpu_usage[project_being_researched])
 			continue
-		var/used_cpu = round(cpu_usage[project_being_researched] * seconds, 1)
+		var/used_cpu = round(cpu_usage[project_being_researched] * seconds_per_tick, 1)
 		var/datum/ai_project/project = get_project_by_name(project_being_researched, TRUE)
 		if(!project)
 			cpu_usage[project_being_researched] = 0

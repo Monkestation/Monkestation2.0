@@ -121,7 +121,12 @@
 		AI.eyeobj?.UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 		AI.eyeobj?.forceMove(newloc) //kick the eye out as well
 		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
-			if(!AI.linked_core) //if the victim AI has no core
+			newloc = null
+			if(GLOB.primary_data_core)
+				newloc = GLOB.primary_data_core
+			else if(LAZYLEN(GLOB.data_cores))
+				newloc = GLOB.data_cores[1]
+			if(!istype(newloc, /obj/machinery/ai/data_core))
 				AI.investigate_log("has been gibbed by being forced out of their mech by another AI.", INVESTIGATE_DEATHS)
 				AI.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
 			AI = null
@@ -159,7 +164,7 @@
 			mmi.update_appearance()
 		setDir(SOUTH)
 		if(is_ai_user)
-			var/mob/living/silicon/ai/AI = occupant
+			var/mob/living/silicon/ai/AI = ejector
 			AI.relocate(TRUE)
 
 	return ..()

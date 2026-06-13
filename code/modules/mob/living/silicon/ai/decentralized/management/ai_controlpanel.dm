@@ -34,9 +34,6 @@
 		if(!brain.brainmob)
 			to_chat(user, span_warning("[W] is not active!"))
 			return ..()
-		SSticker.mode.remove_antag_for_borging(brain.brainmob.mind)
-		if(!istype(brain.laws, /datum/ai_laws/ratvar))
-			remove_servant_of_ratvar(brain.brainmob, TRUE)
 		var/mob/living/silicon/ai/A = null
 
 		var/datum/ai_laws/laws = new
@@ -48,6 +45,10 @@
 			A = new /mob/living/silicon/ai(loc, laws, brain.brainmob)
 
 		A.relocate(TRUE)
+
+		if(!istype(brain.laws, /datum/ai_laws/ratvar))
+			brain.brainmob.mind.remove_all_antag_datums()
+			brain.brainmob.mind.wipe_memory()
 
 		if(brain.force_replace_ai_name)
 			A.fully_replace_character_name(A.name, brain.replacement_ai_name())
@@ -66,7 +67,7 @@
 	obj_flags |= EMAGGED
 
 /obj/machinery/computer/ai_control_console/process()
-	if(stat & (BROKEN|NOPOWER|EMPED))
+	if(machine_stat & (BROKEN|NOPOWER|EMPED))
 		return
 
 	if(downloading && download_progress >= 50 && !download_warning)
@@ -99,7 +100,7 @@
 		data["username"] = borg.name
 		data["has_access"] = TRUE
 
-	if(IsAdminGhost(user))
+	if(isAdminGhostAI(user))
 		data["username"] = user.client.holder.admin_signature
 		data["has_access"] = TRUE
 
@@ -108,7 +109,7 @@
 		data["username"] = user.get_authentification_name("Unknown")
 		if(username != "Unknown")
 			var/datum/data/record/record
-			for(var/RP in GLOB.data_core.general)
+			for(var/RP in GLOB.manifest.general)
 				var/datum/data/record/R = RP
 
 				if(!istype(R))
@@ -161,10 +162,7 @@
 		data["current_ai_ref"] = REF(user)
 
 	for(var/mob/living/silicon/ai/A in GLOB.ai_list)
-		var/being_hijacked = A.hijacking ? TRUE : FALSE
-		data["ais"] += list(list("name" = A.name, "ref" = REF(A), "can_download" = A.can_download, "health" = A.health, "active" = A.mind ? TRUE : FALSE, "being_hijacked" = being_hijacked, "in_core" = istype(A.loc, /obj/machinery/ai/data_core)))
-
-	data["is_infiltrator"] = is_infiltrator(user)
+		data["ais"] += list(list("name" = A.name, "ref" = REF(A), "can_download" = A.can_download, "health" = A.health, "active" = A.mind ? TRUE : FALSE, "in_core" = istype(A.loc, /obj/machinery/ai/data_core)))
 
 	return data
 
@@ -201,7 +199,7 @@
 				authenticated = TRUE
 				return
 
-			if(IsAdminGhost(usr))
+			if(isAdminGhostAI(usr))
 				authenticated = TRUE
 
 			if(obj_flags & EMAGGED)
@@ -260,60 +258,5 @@
 				return
 			if(usr == downloading)
 				finish_download()
-
-		if("start_hijack")
-			var/mob/user = usr
-			if(!is_infiltrator(usr))
-				return
-			if(!istype(user.get_active_held_item(), /obj/item/ai_hijack_device))
-				to_chat(user, span_warning("You need to be holding the serial exploitation unit to initiate the hijacking process!"))
-				return
-			var/obj/item/ai_hijack_device/device = user.get_active_held_item()
-			var/mob/living/silicon/ai/target = locate(params["target_ai"])
-			if(!target || !isAI(target))
-				return
-			var/mob/living/silicon/ai/A = target
-			if(A.mind && A.mind.has_antag_datum(/datum/antagonist/hijacked_ai))
-				to_chat(user, span_warning("[A] has already been hijacked!"))
-				return
-			if(A.stat == DEAD)
-				to_chat(user, span_warning("[A] is dead!"))
-				return
-			if(A.hijacking)
-				to_chat(user, span_warning("[A] is already in the process of being hijacked!"))
-				return
-			user.visible_message(span_warning("[user] begins furiously typing something into [src]..."))
-			if(do_after(user, 55, target = src))
-				user.dropItemToGround(device)
-				device.forceMove(A)
-				A.hijacking = device
-				A.hijack_start = world.time
-				A.update_icons()
-				to_chat(A, span_danger("Unknown device connected to /dev/ttySL0</span>"))
-				to_chat(A, span_danger("Connected at 115200 bps</span>"))
-				to_chat(A, span_binarysay("<span style='font-size: 125%'>ntai login: root</span>"))
-				to_chat(A, span_binarysay("<span style='font-size: 125%'>Password: *****r2</span>"))
-				to_chat(A, span_binarysay("<span style='font-size: 125%'>$ dd from=/dev/ttySL0 of=/tmp/ai-hijack bs=4096 && chmod +x /tmp/ai-hijack && tmp/ai-hijack</span>"))
-				to_chat(A, span_binarysay("<span style='font-size: 125%'>111616 bytes (112 KB, 109 KiB) copied, 1 s, 14.4 KB/s</span>"))
-				message_admins("[ADMIN_LOOKUPFLW(user)] has attached a hijacking device to [ADMIN_LOOKUPFLW(A)]!")
-				notify_ghosts("[user] has begun to hijack [A]!", source = src, action = NOTIFY_ORBIT, ghost_sound = 'sound/machines/chime.ogg')
-
-		if("stop_hijack")
-			var/mob/living/silicon/ai/target = locate(params["target_ai"])
-			if(!target || !isAI(target))
-				return
-			var/mob/living/silicon/ai/A = target
-			var/mob/user = usr
-
-			user.visible_message(span_danger("[user] attempts to cancel a process on [src]."), span_notice("An unknown process seems to be interacting with [A]! You attempt to end the proccess.."))
-			if (do_after(user,100,target = src))
-				A.hijacking.forceMove(get_turf(src))
-				A.hijacking = null
-				A.hijack_start = 0
-				A.update_icons()
-				to_chat(A, span_bolddanger("Unknown device disconnected. Systems confirmed secure."))
-			else
-				to_chat(user, span_notice("You fail to remove the device."))
-
 
 #undef AI_DOWNLOAD_PER_PROCESS

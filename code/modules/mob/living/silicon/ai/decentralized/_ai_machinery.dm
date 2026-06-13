@@ -8,7 +8,7 @@
 	density = TRUE
 
 /obj/machinery/ai/proc/valid_holder()
-	if(stat & (BROKEN|NOPOWER|EMPED))
+	if(machine_stat & (BROKEN|NOPOWER|EMPED))
 		return FALSE
 
 	var/turf/T = get_turf(src)

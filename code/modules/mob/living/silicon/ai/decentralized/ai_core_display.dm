@@ -3,7 +3,7 @@
 	name = "\improper AI core display"
 	desc = "A small screen which the AI can use to present itself."
 
-	icon = 'icons/mob/ai.dmi'
+	icon = 'icons/mob/silicon/ai.dmi'
 	icon_state = "ai-empty"
 
 	density = TRUE
@@ -32,7 +32,7 @@
 
 
 /obj/machinery/status_display/ai_core/process()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		icon = initial(icon)
 		icon_state = initial(icon_state)
 		return PROCESS_KILL

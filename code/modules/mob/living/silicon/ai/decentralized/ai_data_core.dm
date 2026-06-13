@@ -22,7 +22,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	GLOB.data_cores += src
 	if(primary && !GLOB.primary_data_core)
 		GLOB.primary_data_core = src
-	update_icon()
+	update_appearance()
 
 /obj/machinery/ai/data_core/process()
 	calculate_validity()
@@ -55,7 +55,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 			. += law
 
 /obj/machinery/ai/data_core/proc/valid_data_core()
-	if(!is_reebe(z) && !is_station_level(z))
+	if(!is_reebe_level(z) && !is_station_level(z))
 		return FALSE
 	if(valid_ticks > 0)
 		return TRUE
@@ -64,7 +64,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 /obj/machinery/ai/data_core/proc/calculate_validity()
 	valid_ticks = clamp(valid_ticks, 0, MAX_AI_DATA_CORE_TICKS)
 
-	if(stat & (BROKEN|NOPOWER|EMPED))
+	if(machine_stat & (BROKEN|NOPOWER|EMPED))
 		return FALSE
 
 	if(valid_holder())
@@ -78,7 +78,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 
 
 /obj/machinery/ai/data_core/proc/can_transfer_ai()
-	if(stat & (BROKEN|NOPOWER|EMPED))
+	if(machine_stat & (BROKEN|NOPOWER|EMPED))
 		return FALSE
 	if(!valid_data_core())
 		return FALSE
@@ -88,12 +88,11 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	AI.forceMove(src)
 	AI.eyeobj.forceMove(get_turf(src))
 
-/obj/machinery/ai/data_core/update_icon()
-	cut_overlays()
-
-	if(!(stat & (BROKEN|NOPOWER|EMPED)))
-		var/mutable_appearance/on_overlay = mutable_appearance(icon, "[initial(icon_state)]_on")
-		add_overlay(on_overlay)
+/obj/machinery/ai/data_core/update_overlays()
+	. = ..()
+	if(machine_stat & (BROKEN|NOPOWER|EMPED))
+		return
+	. += mutable_appearance(icon, "[initial(icon_state)]_on")
 
 
 /obj/machinery/ai/data_core/primary
