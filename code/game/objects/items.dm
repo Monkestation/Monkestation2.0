@@ -618,7 +618,7 @@
 			storage_turf = get_turf(loc)
 		if(!loc.atom_storage.remove_single(user, src, user, silent = TRUE))
 			return
-	if(QDELETED(src)) //moving it out of the storage destroyed it.
+	if(QDELING(src) || QDELETED(src)) //moving it out of the storage destroyed it.
 		return
 
 	if(storage_turf)

@@ -230,6 +230,7 @@
 	icon_state = "explosion"
 	light_system = COMPLEX_LIGHT
 	duration = 25
+	pixel_y = -32
 	///smoke wave particle holder
 	var/obj/effect/abstract/particle_holder/smoke_wave
 	///explosion smoke particle holder
