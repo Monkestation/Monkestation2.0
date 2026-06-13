@@ -75,7 +75,7 @@ export const AiResources = (props, context) => {
                               <ProgressBar minValue={0} value={data.total_cpu * ai.assigned_cpu}
                                 maxValue={data.total_cpu} >{data.total_cpu * ai.assigned_cpu} THz
                               </ProgressBar>
-                              <NumberInput width="60px" unit="%" value={ai.assigned_cpu * 100} minValue={0} maxValue={remaining_cpu + (ai.assigned_cpu * 100)} onChange={(e, value) => act('set_cpu', {
+                              <NumberInput width="60px" unit="%" value={ai.assigned_cpu * 100} minValue={0} maxValue={remaining_cpu + (ai.assigned_cpu * 100)} onChange={(value) => act('set_cpu', {
                                 targetAI: ai.ref,
                                 amount_cpu: Math.round((value / 100) * 100) / 100,
                               })} />
