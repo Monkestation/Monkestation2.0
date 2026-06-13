@@ -32,10 +32,7 @@
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/silicon/ai, death_prompt))
 		return
 
-
-
 	var/obj/machinery/ai/data_core/new_data_core = available_ai_cores()
-
 	if(!new_data_core || (new_data_core && !new_data_core.can_transfer_ai()))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/silicon/ai, death_prompt))
 		return

@@ -26,7 +26,7 @@
 
 
 /datum/ai_dashboard/proc/is_interactable(mob/user)
-	if(IsAdminGhost(user))
+	if(isAdminGhostAI(user))
 		return TRUE
 	if(user != owner || owner.incapacitated())
 		return FALSE

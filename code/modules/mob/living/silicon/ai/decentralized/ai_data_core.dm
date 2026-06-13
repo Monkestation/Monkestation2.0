@@ -113,8 +113,21 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 		return
 	. += mutable_appearance(icon, "[initial(icon_state)]_on")
 
-
 /obj/machinery/ai/data_core/primary
 	name = "primary AI Data Core"
 	desc = "A complicated computer system capable of emulating the neural functions of a human at near-instantanous speeds. This one has a scrawny and faded note saying: 'Primary AI Data Core'"
 	primary = TRUE
+
+/*
+ * This is a good place for AI-related object verbs so I'm sticking it here.
+ * If adding stuff to this, don't forget that an AI need to cancel_camera() whenever it physically moves to a different location.
+ * That prevents a few funky behaviors.
+ */
+///The type of interaction, the player performing the operation, the AI itself, and the card object, if any.
+/atom/proc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
+	SHOULD_CALL_PARENT(TRUE)
+	if(istype(card))
+		if(card.flush)
+			to_chat(user, span_alert("ERROR: AI flush is in progress, cannot execute transfer protocol."))
+			return FALSE
+	return TRUE

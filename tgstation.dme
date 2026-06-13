@@ -2720,7 +2720,6 @@
 #include "code\game\objects\items\tools\painter\airlock_painter.dm"
 #include "code\game\objects\items\tools\painter\decal_painter.dm"
 #include "code\game\objects\items\tools\painter\paintable_decals.dm"
-#include "code\game\objects\structures\ai_core.dm"
 #include "code\game\objects\structures\aliens.dm"
 #include "code\game\objects\structures\bedsheet_bin.dm"
 #include "code\game\objects\structures\billboard.dm"

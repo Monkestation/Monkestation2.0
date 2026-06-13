@@ -212,24 +212,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Cyborg"
 	icon_state = "Cyborg"
 
-/obj/effect/landmark/start/ai
-	name = "AI"
-	icon_state = "AI"
-	delete_after_roundstart = FALSE
-	var/primary_ai = TRUE
-	var/latejoin_active = TRUE
-
-/obj/effect/landmark/start/ai/after_round_start()
-	if(latejoin_active && !used)
-		new /obj/structure/ai_core/latejoin_inactive(loc)
-	return ..()
-
-/obj/effect/landmark/start/ai/secondary
-	icon = 'icons/effects/landmarks_static.dmi'
-	icon_state = "ai_spawn"
-	primary_ai = FALSE
-	latejoin_active = FALSE
-
 //Department Security spawns
 
 /obj/effect/landmark/start/depsec
