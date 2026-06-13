@@ -192,3 +192,19 @@
   - bugfix: fixes bloodsucker maptext going not following the gradient when below
       bad blood
   - code_imp: made some to_chats easier to see
+2026-06-12:
+  Shoddd:
+  - balance: Ashen robes no longer give TRAIT_SUPPRESS_NOFIRE
+  SirNightKnight:
+  - bugfix: factory chemical synthesizers work again.
+  - balance: cattleprods are normal sized but take 1.5 more charge than stun batons.
+  - balance: bluespace crystals and teleprods make the victim confused and disgusted
+      when they teleport
+  Siro:
+  - bugfix: Properly uses the grass SFX when walking on grass while using tap_shoes.
+      Oops.
+  cam_dev:
+  - image: added back sprite for lionhunter rifle
+2026-06-13:
+  Shoddd:
+  - bugfix: satyrs can headbutt mobs once again

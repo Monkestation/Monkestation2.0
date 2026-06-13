@@ -1,4 +1,0 @@
-author: "Siro"
-delete-after: True
-changes:
-  - bugfix: "Properly uses the grass SFX when walking on grass while using tap_shoes. Oops."
