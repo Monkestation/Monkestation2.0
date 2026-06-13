@@ -222,7 +222,7 @@ const AvailableProjects = (props) => {
                 <Button
                   icon="arrow-up"
                   disabled={used_cpu === 1}
-                  onChange={(value) =>
+                  onClick={() =>
                     act('max_cpu', {
                       project_name: project.name,
                     })

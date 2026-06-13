@@ -14,7 +14,7 @@
 	if(!env)
 		return FALSE
 	var/total_moles = env.total_moles()
-	if(istype(T, /turf/open/space) || total_moles < 10)
+	if(isspaceturf(T) || total_moles < 10)
 		return FALSE
 
 	if(env.return_temperature() > AI_TEMP_LIMIT || !env.heat_capacity())

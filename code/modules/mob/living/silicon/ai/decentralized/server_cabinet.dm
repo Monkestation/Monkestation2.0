@@ -32,7 +32,7 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 
 
 /obj/machinery/ai/server_cabinet/Initialize(mapload)
-	..()
+	. = ..()
 	roundstart = mapload
 	installed_racks = list()
 	GLOB.server_cabinets += src
@@ -43,7 +43,7 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 	GLOB.server_cabinets -= src
 	//Recalculate all the CPUs and RAM :)
 	GLOB.ai_os.update_hardware()
-	..()
+	return ..()
 
 /obj/machinery/ai/server_cabinet/process()
 	. = ..()
@@ -79,6 +79,7 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 
 
 /obj/machinery/ai/server_cabinet/update_overlays()
+	. = ..()
 	if(installed_racks.len > 0)
 		. += mutable_appearance(icon, "[base_icon_state]_top")
 	if(installed_racks.len > 1)
@@ -94,42 +95,52 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 
 /obj/machinery/ai/server_cabinet/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/server_rack))
-		if(installed_racks.len >= max_racks)
-			to_chat(user, span_warning("[src] cannot fit the [W]!"))
-			return ..()
-		to_chat(user, span_notice("You install [W] into [src]."))
-		W.forceMove(src)
-		installed_racks += W
-		var/obj/item/server_rack/rack = W
-		total_cpu += rack.get_cpu()
-		total_ram += rack.get_ram()
-		cached_power_usage += rack.get_power_usage()
-		GLOB.ai_os.update_hardware()
-		use_power = ACTIVE_POWER_USE
-		update_appearance()
+		install_rack(user, W)
 		return FALSE
 	if(W.tool_behaviour == TOOL_CROWBAR)
-		if(installed_racks.len)
-			var/turf/T = get_turf(src)
-			for(var/obj/item/C in installed_racks)
-				C.forceMove(T)
-			installed_racks.len = 0
-			total_cpu = 0
-			total_ram = 0
-			cached_power_usage = 0
-			GLOB.ai_os.update_hardware()
-			to_chat(user, span_notice("You remove all the racks from [src]"))
-			use_power = IDLE_POWER_USE
-			update_appearance()
+		if(remove_racks(user))
 			return FALSE
-		else
-			if(default_deconstruction_crowbar(W))
-				return TRUE
+		else if(default_deconstruction_crowbar(W))
+			return TRUE
 
-	if(default_deconstruction_screwdriver(user, "expansion_bus_o", "expansion_bus", W))
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]_o", base_icon_state, W))
 		return TRUE
 
 	return ..()
+
+/obj/machinery/ai/server_cabinet/proc/install_rack(mob/living/user, obj/item/server_rack/new_rack)
+	if(installed_racks.len >= max_racks)
+		if(user)
+			to_chat(user, span_warning("[src] cannot fit [new_rack]!"))
+		return FALSE
+	if(user)
+		to_chat(user, span_notice("You install [new_rack] into [src]."))
+	new_rack.forceMove(src)
+	LAZYADD(installed_racks, new_rack)
+	total_cpu += new_rack.get_cpu()
+	total_ram += new_rack.get_ram()
+	cached_power_usage += new_rack.get_power_usage()
+	GLOB.ai_os.update_hardware()
+	use_power = ACTIVE_POWER_USE
+	update_appearance()
+	return TRUE
+
+/obj/machinery/ai/server_cabinet/proc/remove_racks(mob/living/user)
+	if(!length(installed_racks))
+		return FALSE
+	var/turf/turf_dropped = drop_location()
+	for(var/obj/item/server_rack/rack as anything in installed_racks)
+		rack.forceMove(turf_dropped)
+		LAZYREMOVE(installed_racks, rack)
+	total_cpu = 0
+	total_ram = 0
+	cached_power_usage = 0
+	GLOB.ai_os.update_hardware()
+	if(user)
+		to_chat(user, span_notice("You remove all the racks from [src]"))
+	use_power = IDLE_POWER_USE
+	update_appearance()
+	return TRUE
 
 /obj/machinery/ai/server_cabinet/examine()
 	. = ..()
@@ -141,12 +152,6 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 		. += "There is a rack installed with a processing capacity of [R.get_cpu()]THz and a memory capacity of [R.get_ram()]TB"
 	. += "Use a crowbar to remove all currently inserted racks."
 
-
 /obj/machinery/ai/server_cabinet/prefilled/Initialize(mapload)
-	..()
-	var/obj/item/server_rack/roundstart/rack = new(src)
-	total_cpu += rack.get_cpu()
-	total_ram += rack.get_ram()
-	cached_power_usage += rack.get_power_usage()
-	installed_racks += rack
-	GLOB.ai_os.update_hardware()
+	. = ..()
+	install_rack(new_rack = new /obj/item/server_rack/roundstart(src))
