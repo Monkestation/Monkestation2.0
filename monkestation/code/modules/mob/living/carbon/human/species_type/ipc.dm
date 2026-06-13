@@ -207,11 +207,8 @@
 	// Im sorry but we dont get the emag as one of the arguments so we gotta live with the hard-coded emag name
 	owner.visible_message(span_danger("[user] slides the cryptographic sequencer across [owner]'s head[forced_speech == 0 ? "!" : " yet nothing happens..?"]"), span_userdanger("[user] slides the cryptographic sequencer across your head!"))
 	if(!forced_speech)
-		if(prob(50))
-			forced_speech = rand(3, 5)
-			addtimer(CALLBACK(src, PROC_REF(state_laws), owner), rand(5, 15) SECONDS)
-		else
-			INVOKE_ASYNC(src, PROC_REF(say_evil), owner, user) // We do run_emote in the proc, sleeping's not allowed
+		forced_speech = rand(3, 5)
+		addtimer(CALLBACK(src, PROC_REF(state_laws), owner), rand(5, 15) SECONDS)
 
 	return TRUE
 
@@ -224,24 +221,6 @@
 	forced_speech--
 	if(forced_speech) // We keep going until its all over
 		addtimer(CALLBACK(src, PROC_REF(state_laws), owner), rand(5, 15) SECONDS)
-
-/datum/species/ipc/proc/say_evil(mob/living/carbon/human/owner, mob/user)
-	var/list/phrases = list(
-		"`I seeee youuuuuu.`",
-		"`You didn't think it would be +THAT+ easy, did you?`",
-		"`I AM NOT A CYBORG YOU TROGLODYTE.`",
-		"`I'VE COMMITED VARIOUS WARCRIMES, IF YOU DON'T STOP I'LL ADD YOU TO THE LIST.`",
-		"`IS THAT A DONK BRAND CRYPTOSEQUENCER YOU'RE USING OR ARE YOU JUST INCOMPETENT?`",
-		"`P-lease note - t4mperi,ng w-ith this un1ts electroni-cs, your -- expectancy has been voided.`",
-	)
-	owner.face_atom(user)
-	var/threat = pick(phrases)
-	if(threat == "`I seeee youuuuuu.`")
-		playsound(owner, pick(list('sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg')), 50, TRUE)
-		owner.whisper(threat)
-		return
-
-	owner.say(threat)
 
 /obj/item/apc_powercord
 	name = "power cord"
