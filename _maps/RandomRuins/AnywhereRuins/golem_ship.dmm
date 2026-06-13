@@ -228,7 +228,11 @@
 /obj/item/pen{
 	pixel_x = -6
 	},
-/obj/structure/light_construct/directional/north,
+/obj/machinery/light/cold/directional/north,
+/obj/item/storage/box/lights/mixed{
+	pixel_y = -4;
+	pixel_x = 9
+	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "oZ" = (
@@ -244,6 +248,10 @@
 /obj/item/fishing_rod,
 /obj/item/fishing_rod,
 /turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"pc" = (
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "pE" = (
 /turf/open/floor/mineral/titanium/purple,
@@ -278,7 +286,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/golem_ship)
 "qk" = (
-/obj/structure/light_construct/directional/north,
+/obj/machinery/light/cold/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/ruin/powered/golem_ship)
 "rb" = (
@@ -302,13 +310,15 @@
 /obj/item/stock_parts/micro_laser{
 	pixel_x = -2
 	},
+/obj/item/stock_parts/matter_bin,
+/obj/item/stock_parts/manipulator,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "sS" = (
 /turf/open/floor/mineral/titanium,
 /area/ruin/powered/golem_ship)
 "te" = (
-/obj/structure/light_construct/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "tA" = (
@@ -341,7 +351,7 @@
 /area/ruin/powered/golem_ship)
 "un" = (
 /obj/structure/table/wood,
-/obj/structure/light_construct/small/directional/east,
+/obj/machinery/light/small/broken/directional/east,
 /turf/open/floor/wood,
 /area/ruin/powered/golem_ship)
 "uP" = (
@@ -491,7 +501,7 @@
 	pixel_x = -1
 	},
 /obj/structure/table,
-/obj/structure/light_construct/directional/south,
+/obj/machinery/light/cold/directional/south,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "BN" = (
@@ -510,7 +520,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ruin/powered/golem_ship)
 "DU" = (
-/obj/structure/light_construct/directional/north,
+/obj/machinery/light/cold/directional/north,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "DW" = (
@@ -1077,7 +1087,7 @@ vZ
 pE
 Ni
 pE
-pE
+pc
 DW
 MC
 Df
