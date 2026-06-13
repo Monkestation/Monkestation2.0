@@ -14,6 +14,7 @@
 		"rangedanalyzer",
 		"searingtool",
 		"adv_fire_extinguisher",
+		"hybridcutters", //science jaws
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/material/hard/one = TECHWEB_TIER_2_POINTS)
@@ -30,6 +31,7 @@
 		"rcd_upgrade_frames",
 		"rcd_upgrade_furnishing",
 		"rcd_upgrade_simple_circuits",
+		"rcd_ammo_mega_large",
 		"rpd_upgrade_unwrench",
 	)
 
@@ -42,6 +44,7 @@
 	description = "Unlocks new RCD designs."
 	design_ids = list(
 		"rcd_upgrade_silo_link",
+		"rcd_ammo_ultra_large",
 	)
 	prereq_ids = list(
 		"bluespace_travel",

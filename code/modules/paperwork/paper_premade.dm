@@ -136,6 +136,30 @@
 	<br> Best of luck!
 	<br> Josh."}
 
+
+/obj/item/paper/fluff/spaceruins/shrimp/menu
+	name = "Rice to KRILL For"
+	color = "#f39d8e"
+	desc = "Seems to be the menu for this place?"
+	default_raw_text = {"WELCOME TO "Rice to KRILL For!" You can tell what we think of our cooking!
+	<br>Our rice is fried by only the finest shrimps in the galaxy! Please take a look at our menu, it's rather shrimple!
+	<br>
+	<br>Shrimp Fried Rice: 100cr
+	<br>
+	<br>Shrimp Fried Rice: 100cr
+	<br>
+	<br>Shrimp Fried Rice: 100cr
+	<br>
+	<br>Shrimp Fried Rice: 100cr
+	<br>
+	<br>Shrimp Fried Rice: 100cr
+	<br>
+	<br>Shrimp Fried Rice: 100cr
+	<br>
+	<br>Shrimp Fried Rice: 100cr
+	<br>
+	<br>Shrimp Fried Special Rice: 101cr"}
+
 /// instructions for nuclear operatives on how to use their medipen
 
 /obj/item/paper/fluff/operative
