@@ -917,6 +917,11 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/rnd/production/circuit_imprinter/department/science
 
+/obj/item/circuitboard/machine/circuit_imprinter/department/netmin
+	name = "Departmental Circuit Imprinter - Network Admin"
+	icon_state = "science"
+	build_path = /obj/machinery/rnd/production/circuit_imprinter/department/netmin
+
 /obj/item/circuitboard/machine/cyborgrecharger
 	name = "Cyborg Recharger"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
@@ -984,18 +989,27 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/rnd/production/techfab/department/science
 
-/obj/item/circuitboard/machine/expansion_card_holder
-	name = "Expansion Card Bus (Machine Board)"
+/obj/item/circuitboard/machine/server_cabinet
+	name = "Server Cabinet"
 	icon_state = "science"
-	build_path = /obj/machinery/ai/expansion_card_holder
+	build_path = /obj/machinery/ai/server_cabinet
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 4,
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stack/sheet/glass = 2,
 	)
 
+/obj/item/circuitboard/machine/rack_creator
+	name = "Rack Creator"
+	icon_state = "science"
+	build_path = /obj/machinery/rack_creator
+	req_components = list(
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/reagent_containers/cup/beaker = 2,
+	)
+
 /obj/item/circuitboard/machine/ai_data_core
-	name = "AI Data Core (Machine Board)"
+	name = "AI Data Core"
 	icon_state = "science"
 	build_path = /obj/machinery/ai/data_core
 	req_components = list(

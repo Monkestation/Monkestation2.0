@@ -448,17 +448,17 @@
 	build_path = /obj/machinery/computer/mechpad
 
 /obj/item/circuitboard/computer/ai_upload_download
-	name = "AI Control Console (Computer Board)"
+	name = "AI Control Console"
 	icon_state = "science"
 	build_path = /obj/machinery/computer/ai_control_console
 
 /obj/item/circuitboard/computer/ai_server_overview
-	name = "AI Server Overview Console (Computer Board)"
+	name = "AI Server Overview Console"
 	icon_state = "science"
 	build_path = /obj/machinery/computer/ai_server_console
 
 /obj/item/circuitboard/computer/ai_resource_distribution
-	name = "AI Resource Distribution Console (Computer Board)"
+	name = "AI Resource Distribution Console"
 	icon_state = "science"
 	build_path = /obj/machinery/computer/ai_resource_distribution
 

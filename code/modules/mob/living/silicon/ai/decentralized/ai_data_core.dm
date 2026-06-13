@@ -16,7 +16,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	var/valid_ticks = MAX_AI_DATA_CORE_TICKS //Limited to MAX_AI_DATA_CORE_TICKS. Decrement by 1 every time we have an invalid tick, opposite when valid
 	var/warning_sent = FALSE
 
-/obj/machinery/ai/data_core/Initialize()
+/obj/machinery/ai/data_core/Initialize(mapload)
 	. = ..()
 	GLOB.data_cores += src
 	if(primary && !GLOB.primary_data_core)

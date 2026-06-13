@@ -1127,23 +1127,33 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
-/datum/design/board/expansion_card_holder
-	name = "Machine Design (Expansion Card Bus Board)"
-	desc = "The circuit board for an expansion card bus."
-	id = "expansion_card_holder"
-	build_path = /obj/item/circuitboard/machine/expansion_card_holder
+/datum/design/board/server_cabinet
+	name = "Server Cabinet Board"
+	desc = "The circuit board for a server cabinet."
+	id = "server_cabinet"
+	build_path = /obj/item/circuitboard/machine/server_cabinet
 	category = list(
-		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/ai_data_core
-	name = "Machine Design (AI Data Core Board)"
+	name = "AI Data Core Board"
 	desc = "The circuit board for an AI data core."
 	id = "ai_data_core"
 	build_path = /obj/item/circuitboard/machine/ai_data_core
 	category = list(
-		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/rack_creator
+	name = "Rack Creator Board"
+	desc = "The circuit board for a rack creator."
+	id = "rack_creator"
+	build_path = /obj/item/circuitboard/machine/rack_creator
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 

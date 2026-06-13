@@ -36,10 +36,10 @@
 	var/mob/living/silicon/ai/ai_spawn = spawned
 	ai_spawn.relocate(TRUE)
 
-	var/total_available_cpu = GLOB.ai_os.total_cpu - GLOB.ai_os.total_cpu_assigned()
+	var/total_available_cpu = 1 - GLOB.ai_os.total_cpu_assigned()
 	var/total_available_ram = GLOB.ai_os.total_ram - GLOB.ai_os.total_ram_assigned()
 
-	GLOB.ai_os.add_cpu(ai_spawn, total_available_cpu)
+	GLOB.ai_os.set_cpu(ai_spawn, total_available_cpu)
 	GLOB.ai_os.add_ram(ai_spawn, total_available_ram)
 	ai_spawn.log_current_laws()
 

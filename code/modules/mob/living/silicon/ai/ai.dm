@@ -148,6 +148,9 @@
 	//We only check every X ticks
 	var/cameraMemoryTickCount = 0
 
+	///Multiplier for amount of points gained when passively using CPU for science
+	var/research_point_booster = 1
+
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai, shunted)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
@@ -608,6 +611,14 @@
 			return
 
 		paper_note.show_through_camera(usr)
+	if(href_list["instant_download"])
+		if(!href_list["console"])
+			return
+		var/obj/machinery/computer/ai_control_console/C = locate(href_list["console"])
+		if(!C)
+			return
+		if(C.downloading == src)
+			C.finish_download()
 
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
