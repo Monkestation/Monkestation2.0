@@ -11868,24 +11868,6 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "cnR" = (
-/obj/item/radio/intercom/directional/north{
-	freerange = 1;
-	listening = 0;
-	name = "Custom Channel";
-	pixel_x = 8
-	},
-/obj/item/radio/intercom/directional/east{
-	freerange = 1;
-	listening = 0;
-	name = "Common Channel"
-	},
-/obj/item/radio/intercom/directional/south{
-	freerange = 1;
-	frequency = 1447;
-	listening = 0;
-	name = "Private Channel";
-	pixel_x = 8
-	},
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom{
 	dir = 8
 	},
@@ -24810,11 +24792,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/cargo/storage)
-"eJD" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/components/unary/passive_vent,
-/turf/open/floor/circuit/telecomms,
-/area/station/ai_monitored/turret_protected/ai)
 "eJF" = (
 /obj/item/radio/intercom/directional/south,
 /obj/structure/extinguisher_cabinet/directional/west,
@@ -77437,24 +77414,6 @@
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "oUJ" = (
-/obj/item/radio/intercom/directional/north{
-	freerange = 1;
-	listening = 0;
-	name = "Custom Channel";
-	pixel_x = -8
-	},
-/obj/item/radio/intercom/directional/west{
-	freerange = 1;
-	listening = 0;
-	name = "Common Channel"
-	},
-/obj/item/radio/intercom/directional/south{
-	freerange = 1;
-	frequency = 1447;
-	listening = 0;
-	name = "Private Channel";
-	pixel_x = -8
-	},
 /obj/machinery/ai/server_cabinet/prefilled,
 /turf/open/floor/circuit/green/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
@@ -77771,11 +77730,11 @@
 	},
 /area/station/engineering/storage)
 "oYB" = (
-/obj/item/kirbyplants/random,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment,
+/obj/item/kirbyplants/random/dead/research_director,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/rd)
 "oYL" = (
@@ -81157,6 +81116,7 @@
 /area/station/science/lab)
 "pHz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/passive_vent,
 /turf/open/floor/circuit/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
 "pHB" = (
@@ -82012,6 +81972,10 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/courtroom)
+"pPN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/circuit/telecomms,
+/area/station/ai_monitored/turret_protected/ai)
 "pPO" = (
 /obj/machinery/door/airlock/security{
 	name = "Court Cell"
@@ -224035,7 +223999,7 @@ mtk
 dFU
 svu
 heN
-pHz
+pPN
 dFU
 pBV
 dFU
@@ -224293,7 +224257,7 @@ dFU
 rVh
 bLR
 kGE
-eJD
+pHz
 toK
 vDV
 toK
@@ -225076,11 +225040,11 @@ ulx
 qXU
 oIO
 ecQ
-ulx
-ulx
-ulx
-ulx
-ulx
+fZI
+fZI
+fZI
+fZI
+fZI
 ulx
 ulx
 ulx
@@ -225333,11 +225297,11 @@ qXU
 iub
 xfa
 lWy
-ulx
-ulx
-ulx
-ulx
-ulx
+fZI
+fZI
+fZI
+fZI
+fZI
 ulx
 ulx
 ulx
@@ -225590,11 +225554,11 @@ van
 xfa
 ecQ
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+fZI
+fZI
+fZI
+fZI
+fZI
 ulx
 ulx
 ulx
@@ -225847,11 +225811,11 @@ ecQ
 haT
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+fZI
+fZI
+fZI
+fZI
+fZI
 ulx
 ulx
 ulx
@@ -226104,11 +226068,11 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+fZI
+fZI
+fZI
+fZI
+fZI
 ulx
 ulx
 ulx
@@ -226361,11 +226325,11 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+fZI
+fZI
+fZI
+fZI
+fZI
 ulx
 ulx
 ulx
@@ -226618,11 +226582,11 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+fZI
+fZI
+fZI
+fZI
+fZI
 ulx
 ulx
 ulx
@@ -226875,11 +226839,11 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+fZI
+fZI
+fZI
+fZI
+fZI
 ulx
 ulx
 ulx
