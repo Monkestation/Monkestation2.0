@@ -196,10 +196,6 @@
 
 // Language menu
 	using = new /atom/movable/screen/language_menu(null, src)
-	if(owner?.client.prefs.read_preference(/datum/preference/toggle/widescreen))
-		using.screen_loc = ui_ai_language_menu_widescreen
-	else
-		using.screen_loc = ui_ai_language_menu
 	using.screen_loc = ui_ai_language_menu
 	static_inventory += using
 
@@ -210,10 +206,7 @@
 
 //Dashboard
 	using = new /atom/movable/screen/ai/dashboard(null, src)
-	if(owner?.client.prefs.read_preference(/datum/preference/toggle/widescreen))
-		using.screen_loc = ui_ai_dashboard_widescreen
-	else
-		using.screen_loc = ui_ai_dashboard
+	using.screen_loc = ui_ai_dashboard
 
 	static_inventory += using
 
@@ -287,16 +280,10 @@
 
 //Multicamera mode
 	using = new /atom/movable/screen/ai/multicam(null, src)
-	if(owner?.client.prefs.read_preference(/datum/preference/toggle/widescreen))
-		using.screen_loc = ui_ai_multicam_widescreen
-	else
-		using.screen_loc = ui_ai_multicam
+	using.screen_loc = ui_ai_multicam
 	static_inventory += using
 
 //Add multicamera camera
 	using = new /atom/movable/screen/ai/add_multicam(null, src)
-	if(owner?.client.prefs.read_preference(/datum/preference/toggle/widescreen))
-		using.screen_loc = ui_ai_add_multicam_widescreen
-	else
-		using.screen_loc = ui_ai_add_multicam
+	using.screen_loc = ui_ai_add_multicam
 	static_inventory += using
