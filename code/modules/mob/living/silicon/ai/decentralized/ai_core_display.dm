@@ -36,6 +36,12 @@
 		for(var/law in AI.laws.get_law_list(include_zeroth = TRUE))
 			. += law
 
+/obj/machinery/status_display/ai_core/wrench_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(!default_unfasten_wrench(user, tool, 4 SECONDS))
+		return ITEM_INTERACT_BLOCKING
+	return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/status_display/ai_core/attack_ai(mob/living/silicon/ai/user)
 	if(isAI(user))
 		user.pick_icon()

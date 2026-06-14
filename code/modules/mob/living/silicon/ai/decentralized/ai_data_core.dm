@@ -103,22 +103,21 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_LMB] = "[(panel_open ? "Close" : "Open")] Panel"
 		return CONTEXTUAL_SCREENTIP_SET
-	if(panel_open)
-		if(held_item.tool_behaviour == TOOL_CROWBAR)
-			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
-			return CONTEXTUAL_SCREENTIP_SET
-		if(istype(held_item, /obj/item/stock_parts/power_store/cell))
-			context[SCREENTIP_CONTEXT_LMB] = "Replace Batteries"
-			return CONTEXTUAL_SCREENTIP_SET
-		if(held_item.tool_behaviour == TOOL_WRENCH)
-			context[SCREENTIP_CONTEXT_LMB] = (anchored ? "Unanchor" : "Anchor Down")
-			return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/stock_parts/power_store/cell))
+		context[SCREENTIP_CONTEXT_LMB] = "Replace Batteries"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = (anchored ? "Unanchor" : "Anchor Down")
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/ai/data_core/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/stock_parts/power_store/cell))
 		return NONE
 	if(!panel_open)
-		balloon_alert(user, "panel must be opened!")
+		balloon_alert(user, "panel closed!")
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
@@ -135,21 +134,23 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 
 /obj/machinery/ai/data_core/crowbar_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
+	if(!panel_open)
+		balloon_alert(user, "panel closed!")
+		return .
+	balloon_alert_to_viewers("deconstructing...")
 	if(!tool.use_tool(src, user, 4 SECONDS))
 		return .
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	default_deconstruction_crowbar(tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/ai/data_core/wrench_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
 	if(!panel_open)
+		balloon_alert(user, "panel closed!")
 		return .
-	balloon_alert(user, "[!anchored ? "tightening" : "loosening"] bolts...")
-	balloon_alert(src, "bolts being [!anchored ? "tightened" : "loosened"]...")
-	if(!tool.default_unfasten_wrench(src, user, 4 SECONDS))
+	balloon_alert_to_viewers("[!anchored ? "tightening" : "loosening"] bolts...")
+	if(!default_unfasten_wrench(user, tool, 4 SECONDS))
 		return ITEM_INTERACT_BLOCKING
-	balloon_alert(user, "bolts [anchored ? "tightened" : "loosened"]")
-	balloon_alert(src, "bolts [anchored ? "tightened" : "loosened"]")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/ai/data_core/attack_ai(mob/living/silicon/ai/user)
