@@ -67,7 +67,7 @@
 	uniform = /obj/item/clothing/under/rank/engineering/signal_tech
 	suit = /obj/item/clothing/suit/hooded/wintercoat/engineering/signal_tech
 	belt = /obj/item/storage/belt/utility/full/engi
-	ears = /obj/item/radio/headset/headset_eng
+	ears = /obj/item/radio/headset/headset_network
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/workboots
 
