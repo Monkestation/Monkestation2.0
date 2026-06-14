@@ -129,8 +129,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/bridge_assistant
 	name = "Bridge Assistant"
-	icon_state = JOB_ASSISTANT //icon_state is case sensitive. why are all of these capitalized? because fuck you that's why
-	color = COLOR_NAVY //IM LAZY OKAY
+	icon_state = JOB_BRIDGE_ASSISTANT //icon_state is case sensitive. why are all of these capitalized? because fuck you that's why
 
 /obj/effect/landmark/start/detective
 	name = "Detective"

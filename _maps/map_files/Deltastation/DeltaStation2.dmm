@@ -52424,6 +52424,7 @@
 	req_access = list("rd");
 	name = "Core Modules"
 	},
+/obj/effect/spawner/random/aimodule/neutral,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "mlo" = (
@@ -57389,9 +57390,6 @@
 	dir = 4;
 	name = "High-Risk Modules";
 	req_access = list("rd")
-	},
-/obj/effect/spawner/random/aimodule/harmful{
-	pixel_y = -16
 	},
 /obj/item/ai_module/reset/purge{
 	pixel_y = 11
@@ -91818,9 +91816,6 @@
 	name = "Core Modules";
 	req_access = list("rd")
 	},
-/obj/effect/spawner/random/aimodule/neutral{
-	pixel_y = -16
-	},
 /obj/item/ai_module/core/freeformcore,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -100908,6 +100903,7 @@
 	name = "High-Risk Modules";
 	req_access = list("rd")
 	},
+/obj/effect/spawner/random/aimodule/harmful,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "xOI" = (
