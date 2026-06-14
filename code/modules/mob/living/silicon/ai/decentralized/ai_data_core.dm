@@ -145,9 +145,6 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 
 /obj/machinery/ai/data_core/wrench_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
-	if(!panel_open)
-		balloon_alert(user, "panel closed!")
-		return .
 	balloon_alert_to_viewers("[!anchored ? "tightening" : "loosening"] bolts...")
 	if(!default_unfasten_wrench(user, tool, 4 SECONDS))
 		return ITEM_INTERACT_BLOCKING
