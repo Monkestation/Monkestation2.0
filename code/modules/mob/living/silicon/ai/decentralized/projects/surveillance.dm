@@ -1,6 +1,6 @@
 /datum/ai_project/camera_tracker
 	name = "Camera Memory Tracker"
-	description = "Using complex LSTM nodes it is possible to automatically detect when a tagged individual enters camera visiblity."
+	description = "Using complex LSTM nodes it is possible to automatically detect when a tagged individual enters camera visibility."
 	research_cost = 2500
 	ram_required = 3
 	research_requirements = list(/datum/ai_project/examine_humans)
