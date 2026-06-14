@@ -58725,8 +58725,8 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "nMq" = (
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/photobooth/security,
 /turf/open/floor/iron/dark,
 /area/station/security/processing)
 "nMw" = (
