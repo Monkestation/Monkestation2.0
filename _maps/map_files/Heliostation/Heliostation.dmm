@@ -2645,7 +2645,7 @@
 	id = "AI";
 	pixel_x = -26
 	},
-/turf/open/floor/circuit/green,
+/turf/open/floor/circuit/green/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
 "anN" = (
 /obj/structure/rack,
