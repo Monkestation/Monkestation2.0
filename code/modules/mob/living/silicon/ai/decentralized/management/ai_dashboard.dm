@@ -1,16 +1,18 @@
 /datum/ai_dashboard
 	var/mob/living/silicon/ai/owner
 
-	var/available_projects
-
 	//What we're currently using, not what we're being granted by the ai data core
 	var/list/cpu_usage
 	var/list/ram_usage
 	var/free_ram = 0
 
-	var/completed_projects
+	///Lazylist of all AI projects we can start.
+	var/list/available_projects
+	///Lazylist of all AI projects we're currently researching.
+	var/list/running_projects
+	///Lazylist of all AI projects we've completed.
+	var/list/completed_projects
 
-	var/running_projects
 	///Should we be contributing spare CPU to generate research points?
 	var/contribute_spare_cpu = TRUE
 	///Are we using 50% of our spare CPU to mine bitcoin?
@@ -28,6 +30,15 @@
 
 	for(var/path in subtypesof(/datum/ai_project))
 		available_projects += new path(owner, src)
+
+/datum/ai_dashboard/Destroy(force)
+	owner = null
+	cpu_usage = null
+	ram_usage = null
+	QDEL_NULL(available_projects)
+	QDEL_NULL(completed_projects)
+	QDEL_NULL(running_projects)
+	return ..()
 
 
 /datum/ai_dashboard/proc/is_interactable(mob/user)
@@ -103,7 +114,7 @@
 			"name" = AP.name,
 			"description" = AP.description,
 			"ram_required" = AP.ram_required,
-			"available" = AP.canResearch(),
+			"available" = AP.can_research(),
 			"research_cost" = AP.research_cost,
 			"research_progress" = AP.research_progress,
 			"assigned_cpu" = cpu_usage[AP.name] ? cpu_usage[AP.name] : 0,
@@ -142,9 +153,11 @@
 	return data
 
 /datum/ai_dashboard/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	if(..())
+	. = ..()
+	if(.)
 		return
-	if(!is_interactable(usr))
+	var/mob/user = ui.user
+	if(!is_interactable(user))
 		return
 
 	switch(action)
@@ -198,6 +211,7 @@
 		if("toggle_contribute_cpu")
 			contribute_spare_cpu = !contribute_spare_cpu
 			to_chat(owner, span_notice("You now[contribute_spare_cpu ? "" : " DO NOT"] contribute spare CPU to generating research points."))
+			. = TRUE
 
 /datum/ai_dashboard/proc/get_project_by_name(project_name, only_available = FALSE)
 	for(var/datum/ai_project/AP as anything in available_projects)
@@ -211,7 +225,7 @@
 	return FALSE
 
 /datum/ai_dashboard/proc/set_project_cpu(datum/ai_project/project, amount)
-	if(!project.canResearch())
+	if(!project.can_research())
 		return FALSE
 
 	if(amount < 0)

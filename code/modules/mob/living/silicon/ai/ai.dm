@@ -293,6 +293,7 @@
 	QDEL_NULL(aiMulti)
 	QDEL_NULL(alert_control)
 	QDEL_NULL(ai_tracking_tool)
+	QDEL_NULL(dashboard)
 	QDEL_NULL(nanite_menu)
 	QDEL_NULL(nanite_remote)
 	malfhack = null

@@ -28,13 +28,13 @@ GLOBAL_LIST_EMPTY(ai_projects)
 	var/datum/ai_dashboard/dashboard
 
 /datum/ai_project/New(new_ai, new_dash)
+	. = ..()
 	ai = new_ai
 	dashboard = new_dash
 	if(!ai || !dashboard)
 		qdel(src)
-	..()
 
-/datum/ai_project/proc/canResearch()
+/datum/ai_project/proc/can_research()
 	if(!research_requirements)
 		return TRUE
 	for(var/P in research_requirements)
