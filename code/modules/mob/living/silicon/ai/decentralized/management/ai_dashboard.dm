@@ -141,7 +141,7 @@
 
 	return data
 
-/datum/ai_dashboard/ui_act(action, params)
+/datum/ai_dashboard/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return
 	if(!is_interactable(usr))

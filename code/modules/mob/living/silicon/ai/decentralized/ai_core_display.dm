@@ -20,11 +20,10 @@
 	return ..()
 
 //NOTE: See /obj/machinery/ai/data_core/examine in ai_data_core.dm
-/obj/machinery/status_display/examine(mob/user)
+/obj/machinery/status_display/ai_core/examine(mob/user)
 	. = ..()
 	if(!isobserver(user))
 		return
-	. += "<b>NOTE: Does not contain the AI. Look for AI Data Cores to find the *actual* location of the AI</b>"
 	. += "<b>Networked AI Laws:</b>"
 	for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
 		var/active_status = "(Core: [FOLLOW_LINK(user, AI.loc)], Eye: [FOLLOW_LINK(user, AI.eyeobj)])"
@@ -48,9 +47,12 @@
 	if(new_icon_state)
 		icon_state = new_icon_state
 
-
 /obj/machinery/status_display/ai_core/process()
 	if(machine_stat & NOPOWER)
 		icon = initial(icon)
 		icon_state = initial(icon_state)
 		return PROCESS_KILL
+
+/obj/machinery/status_display/ai_core/matriarch/Initialize(mapload)
+	. = ..()
+	set_ai(resolve_ai_icon("Angel"))

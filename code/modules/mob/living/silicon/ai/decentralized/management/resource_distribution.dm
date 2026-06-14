@@ -95,7 +95,7 @@
 
 	return data
 
-/obj/machinery/computer/ai_resource_distribution/ui_act(action, params)
+/obj/machinery/computer/ai_resource_distribution/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return
 

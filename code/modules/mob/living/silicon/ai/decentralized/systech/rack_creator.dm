@@ -212,7 +212,7 @@
 			. = SSresearch.science_tech.isNodeResearchedID("ai_ram_4")
 
 
-/obj/machinery/rack_creator/ui_act(action, params)
+/obj/machinery/rack_creator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return
 
