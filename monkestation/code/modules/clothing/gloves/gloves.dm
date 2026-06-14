@@ -43,7 +43,7 @@
 	worn_icon = 'monkestation/icons/mob/clothing/gloves.dmi'
 	icon_state = "surgeonlatex"
 	armor_type = /datum/armor/surgeon
-	clothing_traits = list(TRAIT_PERFECT_SURGEON, TRAIT_FASTMED)
+	clothing_traits = list(TRAIT_FASTMED, TRAIT_STERILE)
 	custom_premium_price = PAYCHECK_CREW * 6
 
 /datum/armor/surgeon
