@@ -17,6 +17,7 @@
 
 	ADD_TRAIT(target, TRAIT_FISHING_SPOT, REF(src))
 	RegisterSignal(target, COMSIG_PRE_FISHING, PROC_REF(create_fishing_spot))
+	RegisterSignal(target, COMSIG_NPC_FISHING, PROC_REF(return_glob_fishing_spot))
 	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(link_to_fish_porter))
 	RegisterSignal(target, COMSIG_FISH_RELEASED_INTO, PROC_REF(fish_released))
 
@@ -24,6 +25,7 @@
 	UnregisterSignal(target, COMSIG_PRE_FISHING)
 	UnregisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
 	UnregisterSignal(target, COMSIG_FISH_RELEASED_INTO)
+	UnregisterSignal(target, list(COMSIG_PRE_FISHING, COMSIG_NPC_FISHING))
 	REMOVE_TRAIT(target, TRAIT_FISHING_SPOT, REF(src))
 	return ..()
 
@@ -45,3 +47,6 @@
 	SIGNAL_HANDLER
 	var/datum/fish_source/fish_source = GLOB.preset_fish_sources[configuration]
 	fish_source.readd_fish(fish, releaser)
+
+/datum/element/lazy_fishing_spot/proc/return_glob_fishing_spot(datum/source, list/fish_spot_container)
+	fish_spot_container[NPC_FISHING_SPOT] = GLOB.preset_fish_sources[configuration]

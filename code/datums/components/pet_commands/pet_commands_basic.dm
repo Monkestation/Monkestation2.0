@@ -7,8 +7,7 @@
 /datum/pet_command/idle
 	command_name = "Stay"
 	command_desc = "Command your pet to stay idle in this location."
-	radial_icon = 'icons/obj/objects.dmi'
-	radial_icon_state = "dogbed"
+	radial_icon_state = "halt"
 	speech_commands = list("sit", "stay", "stop")
 	command_feedback = "sits"
 
@@ -22,8 +21,7 @@
 /datum/pet_command/free
 	command_name = "Loose"
 	command_desc = "Allow your pet to resume its natural behaviours."
-	radial_icon = 'icons/mob/actions/actions_spells.dmi'
-	radial_icon_state = "repulse"
+	radial_icon_state = "free"
 	speech_commands = list("free", "loose")
 	command_feedback = "relaxes"
 
@@ -38,8 +36,7 @@
 /datum/pet_command/follow
 	command_name = "Follow"
 	command_desc = "Command your pet to accompany you."
-	radial_icon = 'icons/testing/turf_analysis.dmi'
-	radial_icon_state = "red_arrow"
+	radial_icon_state = "follow"
 	speech_commands = list("heel", "follow")
 	command_feedback = "follows"
 
@@ -58,8 +55,7 @@
 /datum/pet_command/play_dead
 	command_name = "Play Dead"
 	command_desc = "Play a macabre trick."
-	radial_icon = 'icons/mob/simple/pets.dmi'
-	radial_icon_state = "puppy_dead"
+	radial_icon_state = "play_dead"
 	speech_commands = list("play dead") // Don't get too creative here, people talk about dying pretty often
 
 /datum/pet_command/play_dead/execute_action(datum/ai_controller/controller)
@@ -104,8 +100,7 @@
 /datum/pet_command/point_targeting/attack
 	command_name = "Attack"
 	command_desc = "Command your pet to attack things that you point out to it."
-	radial_icon = 'icons/effects/effects.dmi'
-	radial_icon_state = "bite"
+	radial_icon_state = "attack"
 
 	speech_commands = list("attack", "sic", "kill")
 	command_feedback = "growl"
@@ -146,8 +141,7 @@
 /datum/pet_command/point_targeting/breed
 	command_name = "Breed"
 	command_desc = "Command your pet to attempt to breed with a partner."
-	radial_icon = 'icons/mob/simple/animal.dmi'
-	radial_icon_state = "heart"
+	radial_icon_state = "breed"
 	speech_commands = list("breed", "consummate")
 	var/datum/ai_behavior/reproduce_behavior = /datum/ai_behavior/make_babies
 
@@ -185,6 +179,8 @@
 	pointed_reaction = "and growls"
 	/// Blackboard key where a reference to some kind of mob ability is stored
 	var/pet_ability_key
+	/// The AI behavior to use for the ability
+	var/ability_behavior = /datum/ai_behavior/pet_use_ability
 
 /datum/pet_command/point_targeting/use_ability/execute_action(datum/ai_controller/controller)
 	if (!pet_ability_key)
@@ -194,7 +190,7 @@
 		return
 	// We don't check if the target exists because we want to 'sit attentively' if we've been instructed to attack but not given one yet
 	// We also don't check if the cooldown is over because there's no way a pet owner can know that, the behaviour will handle it
-	controller.queue_behavior(/datum/ai_behavior/pet_use_ability, pet_ability_key, BB_CURRENT_PET_TARGET)
+		controller.queue_behavior(ability_behavior, pet_ability_key, BB_CURRENT_PET_TARGET)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/pet_command/protect_owner
@@ -247,3 +243,28 @@
 		return
 	if(isliving(attacker) && can_see(owner, attacker, protect_range))
 		set_command_active(owner, attacker)
+
+/**
+ * # Fish command: command the mob to fish at the next fishing spot you point at. Requires the profound fisher component
+ */
+/datum/pet_command/point_targeting/fish
+	command_name = "Fish"
+	command_desc = "Command your pet to try fishing at a nearby fishing spot."
+	radial_icon_state = "fish"
+	speech_commands = list("fish")
+
+// Refuse to target things we can't target, chiefly other friends
+/datum/pet_command/point_targeting/fish/set_command_target(mob/living/parent, atom/target)
+	if (!target)
+		return
+	if(!parent.ai_controller || !HAS_TRAIT(parent, TRAIT_PROFOUND_FISHER))
+		return
+	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(/datum/targeting_strategy/fishing)
+	if (!targeter?.can_attack(parent, target))
+		parent.balloon_alert_to_viewers("shakes head!")
+		return
+	return ..()
+
+/datum/pet_command/point_targeting/fish/execute_action(datum/ai_controller/controller)
+	controller.queue_behavior(/datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target_combat_mode, BB_CURRENT_PET_TARGET)
+	return SUBTREE_RETURN_FINISH_PLANNING

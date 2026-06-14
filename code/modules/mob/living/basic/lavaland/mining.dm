@@ -26,6 +26,16 @@
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), INNATE_TRAIT)
 	if (kill_count)
 		AddElement(/datum/element/mob_killed_tally, "mobs_killed_mining")
+	add_ranged_armour()
+	if(crusher_loot)
+		AddElement(\
+			/datum/element/crusher_loot,\
+			trophy_type = crusher_loot,\
+			drop_mod = crusher_drop_chance,\
+			drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
+		)
+
+/mob/living/basic/mining/proc/add_ranged_armour()
 	AddElement(\
 		/datum/element/ranged_armour,\
 		minimum_projectile_force = 30,\
@@ -34,10 +44,3 @@
 		minimum_thrown_force = 20,\
 		throw_blocked_message = throw_blocked_message,\
 	)
-	if(crusher_loot)
-		AddElement(\
-			/datum/element/crusher_loot,\
-			trophy_type = crusher_loot,\
-			drop_mod = crusher_drop_chance,\
-			drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
-		)

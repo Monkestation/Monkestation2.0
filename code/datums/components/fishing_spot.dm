@@ -17,6 +17,7 @@
 	RegisterSignal(parent, COMSIG_FISHING_ROD_CAST, PROC_REF(handle_cast))
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(link_to_fish_porter))
 	RegisterSignal(parent, COMSIG_FISH_RELEASED_INTO, PROC_REF(fish_released))
+	RegisterSignal(parent, COMSIG_NPC_FISHING, PROC_REF(return_fishing_spot))
 	ADD_TRAIT(parent, TRAIT_FISHING_SPOT, REF(src))
 
 /datum/component/fishing_spot/Destroy()
@@ -70,3 +71,6 @@
 /datum/component/fishing_spot/proc/fish_released(datum/source, obj/item/fish/fish, mob/living/releaser)
 	SIGNAL_HANDLER
 	fish_source.readd_fish(fish, releaser)
+
+/datum/component/fishing_spot/proc/return_fishing_spot(datum/source, list/fish_spot_container)
+	fish_spot_container[NPC_FISHING_SPOT] = fish_source

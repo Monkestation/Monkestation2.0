@@ -1,9 +1,20 @@
+#define SHRIMP_HARM_RESPONSES list(\
+	"*me stares blankly.",\
+	"*me stares shrimply.",\
+	"*me gives a confused look.",\
+	"*me chitters unpleasantly.",\
+)
+
 /datum/ai_controller/basic_controller/lobstrosity
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_LOBSTROSITY_EXPLOIT_TRAITS = list(TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT),
-		BB_LOBSTROSITY_FINGER_LUST = 0
+		BB_LOBSTROSITY_FINGER_LUST = 0,
+		BB_LOBSTROSITY_NAIVE_HUNTER = FALSE,
+		BB_BASIC_MOB_FLEE_DISTANCE = 8,
+		BB_OWNER_SELF_HARM_RESPONSES = SHRIMP_HARM_RESPONSES,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -11,6 +22,32 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/hoard_fingers,
+		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/targeted_mob_ability/lobster,
+		/datum/ai_planning_subtree/flee_target/lobster,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/lobster,
+		/datum/ai_planning_subtree/find_food,
+		/datum/ai_planning_subtree/find_and_hunt_target/lobster_fishing,
+		/datum/ai_planning_subtree/find_fingers,
+	)
+///Ensure that juveline lobstrosities witll charge at things they can reach.
+/datum/ai_controller/basic_controller/lobstrosity/juvenile
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+		BB_TARGET_MINIMUM_STAT = SOFT_CRIT,
+		BB_LOBSTROSITY_EXPLOIT_TRAITS = list(TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT),
+		BB_LOBSTROSITY_FINGER_LUST = 0,
+		BB_LOBSTROSITY_NAIVE_HUNTER = TRUE,
+		BB_BASIC_MOB_FLEE_DISTANCE = 4,
+		BB_OWNER_SELF_HARM_RESPONSES = SHRIMP_HARM_RESPONSES,
+	)
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/random_speech/insect,
+		/datum/ai_planning_subtree/hoard_fingers,
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability/lobster,
 		/datum/ai_planning_subtree/flee_target/lobster,
@@ -22,10 +59,42 @@
 	)
 	ai_traits = PAUSE_DURING_DO_AFTER
 
+///A subtype of juvenile lobster AI that has the target_retaliate behaviour instead of simple_find_target
+/datum/ai_controller/basic_controller/lobstrosity/juvenile/calm
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/random_speech/insect,
+		/datum/ai_planning_subtree/hoard_fingers,
+		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/targeted_mob_ability/lobster/juvenile,
+		/datum/ai_planning_subtree/flee_target/lobster,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/lobster,
+		/datum/ai_planning_subtree/find_food,
+		/datum/ai_planning_subtree/find_and_hunt_target/lobster_fishing,
+		/datum/ai_planning_subtree/find_fingers,
+	)
+
+///A subtype of juvenile lobster AI that has the capricious_retaliate behaviour instead of simple_find_target
+/datum/ai_controller/basic_controller/lobstrosity/juvenile/capricious
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/random_speech/insect,
+		/datum/ai_planning_subtree/hoard_fingers,
+		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/capricious_retaliate,
+		/datum/ai_planning_subtree/targeted_mob_ability/lobster/juvenile,
+		/datum/ai_planning_subtree/flee_target/lobster,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/lobster,
+		/datum/ai_planning_subtree/find_food,
+		/datum/ai_planning_subtree/find_and_hunt_target/lobster_fishing,
+		/datum/ai_planning_subtree/find_fingers,
+	)
+
 /datum/ai_planning_subtree/find_and_hunt_target/lobster_fishing
 	target_key = BB_FISHING_TARGET
 	hunt_targets = list(/turf/open/lava)
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target
+	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target_combat_mode
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/lobster
 	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/lobster
@@ -49,11 +118,14 @@
 	if (isnull(target) || !istype(target))
 		return ..()
 	var/is_vulnerable = FALSE
-	for (var/trait in controller.blackboard[BB_LOBSTROSITY_EXPLOIT_TRAITS])
-		if (!HAS_TRAIT(target, trait))
-			continue
+	if(controller.blackboard[BB_LOBSTROSITY_NAIVE_HUNTER] && target.body_position == LYING_DOWN)
 		is_vulnerable = TRUE
-		break
+	else
+		for (var/trait in controller.blackboard[BB_LOBSTROSITY_EXPLOIT_TRAITS])
+			if (!HAS_TRAIT(target, trait))
+				continue
+			is_vulnerable = TRUE
+			break
 	if (!is_vulnerable)
 		controller.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, FALSE)
 	if (!controller.blackboard[BB_BASIC_MOB_STOP_FLEEING])
@@ -78,6 +150,12 @@
 	if(isnull(target))
 		return ..()
 
+	if(isliving(target))
+		var/mob/living/living_target = target
+		if(controller.blackboard[BB_LOBSTROSITY_NAIVE_HUNTER] && living_target.body_position == LYING_DOWN)
+			controller.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, TRUE)
+			return
+
 	for (var/trait in controller.blackboard[BB_LOBSTROSITY_EXPLOIT_TRAITS])
 		if (!HAS_TRAIT(target, trait))
 			continue
@@ -100,6 +178,9 @@
 	if(QDELETED(target) || in_range(controller.pawn, target))
 		return FALSE
 	return ..()
+
+/datum/ai_planning_subtree/targeted_mob_ability/lobster/juvenile
+	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/min_range/short
 
 /// Look for loose arms lying around
 /datum/ai_planning_subtree/find_fingers
@@ -232,3 +313,4 @@
 
 #undef FLEE_TO_RANGE
 #undef MAX_LOBSTROSITY_PATIENCE
+#undef SHRIMP_HARM_RESPONSES

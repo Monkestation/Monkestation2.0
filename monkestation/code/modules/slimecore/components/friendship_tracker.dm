@@ -95,7 +95,7 @@
 
 		var/alist/offset_to_add = get_icon_dimensions(source.icon)
 		var/y_position = offset_to_add["height"] + 1
-		var/obj/effect/overlay/happiness_overlay/hearts = new(null, clicker)
+		var/obj/effect/overlay/happiness_overlay_slime/hearts = new(null, clicker)
 		var/lowest_level = friendship_levels[1]
 		var/lowest_level_value = friendship_levels[lowest_level]
 		hearts.pixel_y = y_position
@@ -111,7 +111,7 @@
 		hearts.image = new_image
 
 
-/obj/effect/overlay/happiness_overlay
+/obj/effect/overlay/happiness_overlay_slime
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE
@@ -126,7 +126,7 @@
 	var/full_icon = "full_heart"
 	var/empty_icon = "empty_heart"
 
-/obj/effect/overlay/happiness_overlay/New(loc, mob/living/clicker)
+/obj/effect/overlay/happiness_overlay_slime/New(loc, mob/living/clicker)
 	. = ..()
 	if(!clicker)
 		return
@@ -134,17 +134,17 @@
 	RegisterSignal(clicker.client, COMSIG_CLIENT_HOVER_NEW, PROC_REF(clear_view))
 	stored_client = clicker.client
 
-/obj/effect/overlay/happiness_overlay/Destroy(force)
+/obj/effect/overlay/happiness_overlay_slime/Destroy(force)
 	stored_client?.images -= image
 	image = null
 	stored_client = null
 	return ..()
 
-/obj/effect/overlay/happiness_overlay/proc/set_hearts(happiness_percentage)
+/obj/effect/overlay/happiness_overlay_slime/proc/set_hearts(happiness_percentage)
 	hearts_percentage = happiness_percentage
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/effect/overlay/happiness_overlay/update_overlays()
+/obj/effect/overlay/happiness_overlay_slime/update_overlays()
 	. = ..()
 	var/static/list/heart_positions = list(-24, -16, -8, 0, 8, 16, 24)
 	var/display_amount = round(length(heart_positions) * hearts_percentage, 1)
@@ -154,5 +154,5 @@
 		display_icon.pixel_x = heart_positions[index]
 		. += display_icon
 
-/obj/effect/overlay/happiness_overlay/proc/clear_view()
+/obj/effect/overlay/happiness_overlay_slime/proc/clear_view()
 	qdel(src)
