@@ -77,7 +77,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/bitrunner
 	name = "Bitrunner"
-	icon_state = "Bitrunner"
+	icon_state = JOB_BITRUNNER
 
 /obj/effect/landmark/start/bartender
 	name = "Bartender"
@@ -193,7 +193,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/virologist
 	name = "Pathologist"
-	icon_state = "Virologist"
+	icon_state = JOB_VIROLOGIST
 
 /obj/effect/landmark/start/psychologist
 	name = "Psychologist"

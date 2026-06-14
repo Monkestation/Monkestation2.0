@@ -917,11 +917,6 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/rnd/production/circuit_imprinter/department/science
 
-/obj/item/circuitboard/machine/circuit_imprinter/department/netmin
-	name = "Departmental Circuit Imprinter - Network Admin"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/rnd/production/circuit_imprinter/department/netmin
-
 /obj/item/circuitboard/machine/cyborgrecharger
 	name = "Cyborg Recharger"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
