@@ -297,7 +297,7 @@
 		var/mob/living/silicon/robot/new_borg = new /mob/living/silicon/robot/nocell(get_turf(loc), user)
 		if(!new_borg)
 			return ITEM_INTERACT_BLOCKING
-		if(inserting_mmi.laws && overrides_cyborg_laws)
+		if(inserting_mmi.laws && inserting_mmi.overrides_cyborg_laws)
 			aisync = FALSE
 			lawsync = FALSE
 			new_borg.laws = inserting_mmi.laws
