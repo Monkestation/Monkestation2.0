@@ -36,8 +36,9 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 		GLOB.primary_data_core = src
 	RefreshParts()
 	update_appearance()
+	register_context()
 
-/obj/machinery/ai/data_core/Destroy()
+/obj/machinery/ai/data_core/Destroy(force)
 	GLOB.data_cores -= src
 	if(GLOB.primary_data_core == src)
 		GLOB.primary_data_core = null
@@ -76,47 +77,101 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 
 	heat_modifier = new_heat_mod
 	power_modifier = new_power_mod
-	active_power_usage = AI_DATA_CORE_POWER_USAGE * power_modifier
+	active_power_usage = (AI_DATA_CORE_POWER_USAGE * power_modifier)
 
-//NOTE: See /obj/machinery/status_display/examine in ai_core_display.dm
 /obj/machinery/ai/data_core/examine(mob/user)
 	. = ..()
 	var/holder_status = get_holder_status()
 	if(holder_status)
 		. += span_warning("Machinery non-functional. Reason: [holder_status]")
-	if(!isobserver(user))
-		return
-	. += "Core temperature: <b>[core_temp] K</b>"
-	. += "<b>Networked AI Laws:</b>"
-	for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
-		var/active_status = "(Core: [FOLLOW_LINK(user, AI.loc)], Eye: [FOLLOW_LINK(user, AI.eyeobj)])"
-		. += "<b>[AI] [active_status] has the following laws: </b>"
-		for(var/law in AI.laws.get_law_list(include_zeroth = TRUE))
-			. += law
+	. += span_notice("Its floor <b>bolts</b> are [anchored ? "tightened" : "loose"].")
 
-/obj/machinery/ai/data_core/attackby(obj/item/weapon, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", base_icon_state, weapon))
-		return TRUE
+	if(isobserver(user))
+		. += "Core temperature: <b>[core_temp] K</b>"
 
-	if(default_deconstruction_crowbar(weapon))
-		return TRUE
+	. += "<b>The monitor lists the following AIs:</b>"
+	for(var/mob/living/silicon/ai/AI in contents)
+		. += "<b>[AI.name]</b>"
+		if(isobserver(user))
+			. += "<b>[AI] (Core: [FOLLOW_LINK(user, AI.loc)], Eye: [FOLLOW_LINK(user, AI.eyeobj)])</b>"
+		. += AI.examine(user)
 
-	if(panel_open && istype(weapon, /obj/item/stock_parts/power_store/cell) && user.transferItemToLoc(weapon, src))
-		if(!user.put_in_hands(integrated_battery))
-			integrated_battery.forceMove(drop_location())
-		to_chat(user, span_notice("You replace [integrated_battery] with [weapon]."))
-		RefreshParts()
-		return TRUE
+/obj/machinery/ai/data_core/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(isnull(held_item))
+		return NONE
 
-	return ..()
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "[(panel_open ? "Close" : "Open")] Panel"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(panel_open)
+		if(held_item.tool_behaviour == TOOL_CROWBAR)
+			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+			return CONTEXTUAL_SCREENTIP_SET
+		if(istype(held_item, /obj/item/stock_parts/power_store/cell))
+			context[SCREENTIP_CONTEXT_LMB] = "Replace Batteries"
+			return CONTEXTUAL_SCREENTIP_SET
+		if(held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = (anchored ? "Unanchor" : "Anchor Down")
+			return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/ai/data_core/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stock_parts/power_store/cell))
+		return NONE
+	if(!panel_open)
+		balloon_alert(user, "panel must be opened!")
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.put_in_hands(integrated_battery))
+		integrated_battery.forceMove(drop_location())
+	balloon_alert(user, "batteries swapped")
+	RefreshParts()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/ai/data_core/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", base_icon_state, tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/ai/data_core/crowbar_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(!tool.use_tool(src, user, 4 SECONDS))
+		return .
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/ai/data_core/wrench_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(!panel_open)
+		return .
+	balloon_alert(user, "[!anchored ? "tightening" : "loosening"] bolts...")
+	balloon_alert(src, "bolts being [!anchored ? "tightened" : "loosened"]...")
+	if(!tool.default_unfasten_wrench(src, user, 4 SECONDS))
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "bolts [anchored ? "tightened" : "loosened"]")
+	balloon_alert(src, "bolts [anchored ? "tightened" : "loosened"]")
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/ai/data_core/attack_ai(mob/living/silicon/ai/user)
+	if((user in src) || user.nuking)
+		return ..()
+	if(!valid_data_core())
+		balloon_alert(user, "not a valid core!")
+		return ..()
+	if(do_after(user, 4 SECONDS, src, interaction_key = DOAFTER_SOURCE_AI_SHUNTING) && valid_data_core())
+		transfer_AI(user)
+		playsound(src, 'sound/items/pip.ogg', 25, FALSE, 2)
+		balloon_alert(user, "shunted!")
 
 /obj/machinery/ai/data_core/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
 	for(var/mob/living/silicon/ai/AI in contents)
 		AI.disconnect_shell()
 
-/obj/machinery/ai/data_core/proc/valid_data_core()
-	if(!is_reebe_level(z) && !is_station_level(z))
+/obj/machinery/ai/data_core/proc/valid_data_core(mob/living/silicon/ai/user)
+	if(is_reebe_level(z) && !IS_CLOCK(user))
+		return FALSE
+	if(!is_station_level(z) && !is_station_level(get_turf(user)))
 		return FALSE
 	if(valid_ticks > 0)
 		return TRUE
@@ -166,7 +221,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	return TRUE
 
 /obj/machinery/ai/data_core/proc/transfer_AI(mob/living/silicon/ai/AI)
-	AI.forceMove(src) //AI.forceMove(get_turf(src))
+	AI.forceMove(src)
 	if(AI.eyeobj)
 		AI.eyeobj.setLoc(get_turf(src))
 
@@ -195,6 +250,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	name = "primary AI Data Core"
 	desc = "A complicated computer system capable of emulating the neural functions of a human at near-instantanous speeds. This one has a scrawny and faded note saying: 'Primary AI Data Core'"
 	primary = TRUE
+	circuit = /obj/item/circuitboard/machine/ai_data_core/primary
 
 /*
  * This is a good place for AI-related object verbs so I'm sticking it here.

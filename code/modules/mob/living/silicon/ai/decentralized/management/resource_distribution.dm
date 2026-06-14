@@ -10,12 +10,14 @@
 	authenticated = FALSE
 	var/human_only = FALSE
 
-/obj/machinery/computer/ai_resource_distribution/emag_act(mob/user)
+/obj/machinery/computer/ai_resource_distribution/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
-	to_chat(user, span_warning("You bypass the access restrictions"))
-	authenticated = TRUE
 	obj_flags |= EMAGGED
+	authenticated = TRUE
+	if(user)
+		balloon_alert(user, "access restrictions bypassed")
 
 /obj/machinery/computer/ai_resource_distribution/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -26,7 +28,6 @@
 
 /obj/machinery/computer/ai_resource_distribution/ui_data(mob/living/carbon/human/user)
 	var/list/data = list()
-
 	data["authenticated"] = authenticated
 
 	if(issilicon(user))
@@ -38,7 +39,11 @@
 		data["username"] = user.client.holder.admin_signature
 		data["has_access"] = TRUE
 
-	if(ishuman(user) && !(obj_flags & EMAGGED))
+	if(obj_flags & EMAGGED)
+		data["username"] = "ERROR"
+		data["has_access"] = TRUE
+	else if(ishuman(user))
+		data["has_access"] = allowed(user)
 		var/username = user.get_authentification_name("Unknown")
 		data["username"] = user.get_authentification_name("Unknown")
 		if(username != "Unknown")
@@ -63,11 +68,9 @@
 					SSassets.transport.send_assets(user, list("photo_[md5]_cropped.png" = picture))
 
 					data["user_image"] = SSassets.transport.get_asset_url("photo_[md5]_cropped.png")
-		data["has_access"] = check_access(user.get_idcard())
-
-	if(obj_flags & EMAGGED)
-		data["username"] = "ERROR"
-		data["has_access"] = TRUE
+	else
+		data["has_access"] = allowed(user)
+		data["username"] = user.name
 
 	if(!authenticated)
 		return data
@@ -96,30 +99,19 @@
 	return data
 
 /obj/machinery/computer/ai_resource_distribution/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
+	var/mob/user = ui.user
 	if(!authenticated)
 		if(action == "log_in")
-			if(issilicon(usr))
+			if(allowed(user) || (obj_flags & EMAGGED))
 				authenticated = TRUE
-				return
-
-			if(isAdminGhostAI(usr))
-				authenticated = TRUE
-
-			if(obj_flags & EMAGGED)
-				authenticated = TRUE
-
-			var/mob/living/carbon/human/H = usr
-			if(!istype(H))
-				return
-
-			if(check_access(H.get_idcard()))
-				authenticated = TRUE
+				return TRUE
 		return
 
-	var/is_human = ishuman(usr)
+	var/is_human = ishuman(user)
 
 	switch(action)
 		if("log_out")
@@ -139,7 +131,7 @@
 			if(!istype(target_ai))
 				return
 			if(human_only && !is_human)
-				to_chat(usr, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
+				to_chat(user, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
 				return
 
 			var/amount = params["amount_cpu"]
@@ -153,7 +145,7 @@
 			if(!istype(target_ai))
 				return
 			if(human_only && !is_human)
-				to_chat(usr, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
+				to_chat(user, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
 				return
 
 			var/amount = (1 - GLOB.ai_os.total_cpu_assigned()) + GLOB.ai_os.cpu_assigned[target_ai]
@@ -165,7 +157,7 @@
 			if(!istype(target_ai))
 				return
 			if(human_only && !is_human)
-				to_chat(usr, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
+				to_chat(user, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
 				return
 
 			if(GLOB.ai_os.total_ram_assigned() >= GLOB.ai_os.total_ram)
@@ -178,7 +170,7 @@
 			if(!istype(target_ai))
 				return
 			if(human_only && !is_human)
-				to_chat(usr, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
+				to_chat(user, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
 				return
 
 			var/current_ram = GLOB.ai_os.ram_assigned[target_ai]
@@ -189,7 +181,7 @@
 			. = TRUE
 		if("toggle_human_status")
 			if(!is_human)
-				to_chat(usr, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
+				to_chat(user, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
 				return
 			human_only = !human_only
-			to_chat(usr, span_notice("This console is now operable by [human_only ? "humans only." : "humans and silicons."]"))
+			to_chat(user, span_notice("This console is now operable by [human_only ? "humans only." : "humans and silicons."]"))

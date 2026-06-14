@@ -516,18 +516,6 @@
 	if(eyeobj)
 		eyeobj.glide_size = new_glide_size
 
-/mob/living/silicon/ai/proc/flip_anchored()
-	if(is_anchored)
-		is_anchored = !is_anchored
-		move_resist = MOVE_FORCE_NORMAL
-		status_flags |= CANPUSH //we want the core to be push-able when un-anchored
-		REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
-	else
-		is_anchored = !is_anchored
-		move_resist = MOVE_FORCE_OVERPOWERING
-		status_flags &= ~CANPUSH //we dont want the core to be push-able when anchored
-		ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
-
 /mob/living/silicon/ai/Topic(href, href_list)
 	..()
 	if(usr != src)

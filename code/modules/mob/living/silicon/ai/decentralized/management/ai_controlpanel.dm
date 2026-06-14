@@ -26,23 +26,25 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	if(mapload)
 		cleared_for_use = TRUE
 
-/obj/machinery/computer/ai_control_console/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/aicard))
+/obj/machinery/computer/ai_control_console/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/aicard))
 		if(intellicard)
 			to_chat(user, span_warning("There's already an IntelliCard inserted!"))
-			return ..()
-		if(user.transferItemToLoc(W, src))
-			to_chat(user, span_notice("You insert [W]."))
-			intellicard = W
-		return FALSE
-	if(istype(W, /obj/item/mmi))
+			return ITEM_INTERACT_BLOCKING
+		if(user.transferItemToLoc(tool, src))
+			to_chat(user, span_notice("You insert [tool]."))
+			intellicard = tool
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+
+	if(istype(tool, /obj/item/mmi))
 		if(!authenticated)
 			to_chat(user, span_warning("You need to be logged in to do this!"))
-			return ..()
-		var/obj/item/mmi/brain = W
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/mmi/brain = tool
 		if(!brain.brainmob)
-			to_chat(user, span_warning("[W] is not active!"))
-			return ..()
+			to_chat(user, span_warning("[tool] is not active!"))
+			return ITEM_INTERACT_BLOCKING
 		var/mob/living/silicon/ai/A = null
 
 		var/datum/ai_laws/laws = new
@@ -61,38 +63,38 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 			A.fully_replace_character_name(A.name, brain.replacement_ai_name())
 
 		SSblackbox.record_feedback("amount", "ais_created", 1)
-		qdel(W)
+		qdel(tool)
 		to_chat(user, span_notice("AI succesfully uploaded."))
-		return FALSE
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(W, /obj/item/surveillance_upgrade))
+	if(istype(tool, /obj/item/surveillance_upgrade))
 		if(!authenticated)
 			to_chat(user, span_warning("You need to be logged in to do this!"))
-			return ..()
-		var/mob/living/silicon/ai/AI = input("Select an AI", "Select an AI", null, null) as null|anything in GLOB.ai_list
+			return ITEM_INTERACT_BLOCKING
+		var/mob/living/silicon/ai/AI = tgui_input_list(user, "Select an AI", "Select an AI", GLOB.ai_list)
 		if(!AI)
-			return ..()
-		var/obj/item/surveillance_upgrade/upgrade = W
-		upgrade.interact_with_atom(AI, user)
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/surveillance_upgrade/upgrade = tool
+		return upgrade.interact_with_atom(AI, user)
 
-	if(istype(W, /obj/item/malf_upgrade))
+	if(istype(tool, /obj/item/malf_upgrade))
 		if(!authenticated)
 			to_chat(user, span_warning("You need to be logged in to do this!"))
-			return ..()
-		var/mob/living/silicon/ai/AI = input("Select an AI", "Select an AI", null, null) as null|anything in GLOB.ai_list
+			return ITEM_INTERACT_BLOCKING
+		var/mob/living/silicon/ai/AI = tgui_input_list(user, "Select an AI", "Select an AI", GLOB.ai_list)
 		if(!AI)
-			return ..()
-		var/obj/item/malf_upgrade/upgrade = W
-		upgrade.interact_with_atom(AI, user)
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/malf_upgrade/upgrade = tool
+		return upgrade.interact_with_atom(AI, user)
 
-	return ..()
-
-/obj/machinery/computer/ai_control_console/emag_act(mob/user)
+/obj/machinery/computer/ai_control_console/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
-	to_chat(user, span_warning("You bypass the access restrictions"))
 	authenticated = TRUE
 	obj_flags |= EMAGGED
+	if(user)
+		balloon_alert(user, "access restrictions bypassed")
 
 /obj/machinery/computer/ai_control_console/process()
 	if(machine_stat & (BROKEN|NOPOWER|EMPED))
@@ -121,27 +123,28 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 
 /obj/machinery/computer/ai_control_console/ui_data(mob/living/carbon/human/user)
 	var/list/data = list()
-
 	if(!cleared_for_use)
 		data["cleared_for_use"] = FALSE
 		return data
 
 	data["cleared_for_use"] = TRUE
-
 	data["authenticated"] = authenticated
 
 	if(issilicon(user))
 		var/mob/living/silicon/borg = user
 		data["username"] = borg.name
 		data["has_access"] = TRUE
-
 	if(isAdminGhostAI(user))
 		data["username"] = user.client.holder.admin_signature
 		data["has_access"] = TRUE
 
 	data["can_log_out"] = !one_time_password_used
 
-	if(ishuman(user) && !(obj_flags & EMAGGED))
+	if(obj_flags & EMAGGED)
+		data["username"] = "ERROR"
+		data["has_access"] = TRUE
+	else if(ishuman(user))
+		data["has_access"] = allowed(user)
 		var/username = user.get_authentification_name("Unknown")
 		data["username"] = user.get_authentification_name("Unknown")
 		if(username != "Unknown")
@@ -166,11 +169,9 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 					SSassets.transport.send_assets(user, list("photo_[md5]_cropped.png" = picture))
 
 					data["user_image"] = SSassets.transport.get_asset_url("photo_[md5]_cropped.png")
-		data["has_access"] = check_access(user.get_idcard())
-
-	if(obj_flags & EMAGGED)
-		data["username"] = "ERROR"
-		data["has_access"] = TRUE
+	else
+		data["has_access"] = allowed(user)
+		data["username"] = user.name
 
 	if(!authenticated)
 		return data
@@ -239,7 +240,8 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	intellicard.update_appearance()
 
 /obj/machinery/computer/ai_control_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	var/mob/user = ui.user
@@ -274,22 +276,10 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 
 	if(!authenticated)
 		if(action == "log_in")
-			if(issilicon(user))
+			if(allowed(user) || (obj_flags & EMAGGED))
 				authenticated = TRUE
-				return
-
-			if(isAdminGhostAI(user))
-				authenticated = TRUE
-
-			if(obj_flags & EMAGGED)
-				authenticated = TRUE
-
-			var/mob/living/carbon/human/H = user
-			if(!istype(H))
-				return
-
-			if(check_access(H.get_idcard()))
-				authenticated = TRUE
+				return TRUE
+			return .
 		if(action == "log_in_control_code")
 			var/code = text2num(params["control_code"])
 
@@ -309,7 +299,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 				cleared_for_use = TRUE
 				authenticated = TRUE
 				one_time_password_used = TRUE
-				var/msg = "<h4>Warning!</h4><br>We have detected usage of the AI Control Code for unlocking a console at coordinates ([src.x], [src.y], [src.z]) by [usr.name]. Please verify that this is correct. Be aware we have cancelled the current control code.<br>\
+				var/msg = "<h4>Warning!</h4><br>We have detected usage of the AI Control Code for unlocking a console at coordinates ([src.x], [src.y], [src.z]) by [user.name]. Please verify that this is correct. Be aware we have cancelled the current control code.<br>\
 				If needed a new code can be printed at a communications console."
 				priority_announce(msg, sender_override = "Central Cyber Security Update", has_important_message = TRUE, encode_text = FALSE)
 				GLOB.ai_control_code = null

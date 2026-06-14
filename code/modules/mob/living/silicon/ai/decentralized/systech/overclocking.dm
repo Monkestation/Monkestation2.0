@@ -53,18 +53,17 @@
 		inserted_cpu.power_multiplier = initial(inserted_cpu.power_multiplier)
 	return ..()
 
-/obj/machinery/computer/ai_overclocking/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/ai_cpu))
-		if(inserted_cpu)
-			to_chat(user, span_warning("There's already a CPU inserted!"))
-			return ..()
-		var/obj/item/ai_cpu/CPU = I
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-		inserted_cpu = CPU
-		CPU.forceMove(src)
-		return FALSE
-
-	return ..()
+/obj/machinery/computer/ai_overclocking/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/ai_cpu))
+		return
+	if(inserted_cpu)
+		balloon_alert(user, "CPU already inserted!")
+		return ITEM_INTERACT_BLOCKING
+	var/obj/item/ai_cpu/CPU = tool
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	inserted_cpu = CPU
+	CPU.forceMove(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/ai_overclocking/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()

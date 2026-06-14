@@ -1016,6 +1016,9 @@
 		/obj/item/stock_parts/power_store/cell/high = 1,
 	)
 
+/obj/item/circuitboard/machine/ai_data_core/primary
+	name = "Primary AI Data Core"
+
 /obj/item/circuitboard/machine/ai_core_display
 	name = "AI Core Display"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE

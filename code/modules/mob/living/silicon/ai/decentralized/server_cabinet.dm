@@ -43,8 +43,9 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 	GLOB.server_cabinets += src
 	RefreshParts()
 	update_appearance()
+	register_context()
 
-/obj/machinery/ai/server_cabinet/Destroy()
+/obj/machinery/ai/server_cabinet/Destroy(force)
 	installed_racks = list()
 	GLOB.server_cabinets -= src
 	//Recalculate all the CPUs and RAM :)
@@ -66,6 +67,21 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 	power_modifier = new_power_mod
 
 	idle_power_usage = initial(idle_power_usage) * power_modifier
+
+/obj/machinery/ai/server_cabinet/examine(mob/user)
+	. = ..()
+	var/holder_status = get_holder_status()
+	if(holder_status)
+		. += span_warning("Machinery non-functional. Reason: [holder_status]")
+	if(!valid_ticks)
+		. += span_notice("A small screen is displaying the words 'OFFLINE.'")
+	. += span_notice("The machine has [length(installed_racks)] racks out of a maximum of [max_racks] installed.")
+	. += span_notice("Current Power Usage Multiplier: [span_bold("[power_modifier * 100]%")]")
+	. += span_notice("Current Heat Multiplier: [span_bold("[heat_modifier * 100]%")]")
+
+	for(var/obj/item/server_rack/R as anything in installed_racks)
+		. += span_notice("There is a rack installed with a processing capacity of [R.get_cpu()]THz and a memory capacity of [R.get_ram()]TB. Uses [R.get_power_usage()]W")
+	. += span_notice("Use a crowbar to remove all currently inserted racks.")
 
 /obj/machinery/ai/server_cabinet/process()
 	valid_ticks = clamp(valid_ticks, 0, MAX_AI_EXPANSION_TICKS)
@@ -109,28 +125,49 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 		if(length(installed_racks) > 1)
 			. += mutable_appearance(icon, "[base_icon_state]_bottom_on")
 
-/obj/machinery/ai/server_cabinet/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/server_rack))
-		install_rack(user, W)
-		return FALSE
-	if(W.tool_behaviour == TOOL_CROWBAR)
-		if(remove_racks(user))
-			return FALSE
-		else if(default_deconstruction_crowbar(W))
-			return TRUE
+/obj/machinery/ai/server_cabinet/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/server_rack))
+		install_rack(user, tool)
+		return ITEM_INTERACT_SUCCESS
 
-	if(default_deconstruction_screwdriver(user, "[base_icon_state]_o", base_icon_state, W))
-		return TRUE
+/obj/machinery/ai/server_cabinet/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(length(installed_racks))
+		balloon_alert(user, "remove racks!")
+		return .
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]_o", base_icon_state, tool))
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+/obj/machinery/ai/server_cabinet/crowbar_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(remove_racks(user))
+		tool.play_tool_sound(src, 50)
+		return ITEM_INTERACT_SUCCESS
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/ai/server_cabinet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(isnull(held_item))
+		return NONE
+
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "[(panel_open ? "Close" : "Open")] Panel"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/server_rack))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert Rack"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(panel_open && (held_item.tool_behaviour == TOOL_CROWBAR))
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/ai/server_cabinet/proc/install_rack(mob/living/user, obj/item/server_rack/new_rack)
 	if(length(installed_racks) >= max_racks)
 		if(user)
-			to_chat(user, span_warning("[src] cannot fit [new_rack]!"))
+			balloon_alert(user, "doesn't fit!")
 		return FALSE
 	if(user)
-		to_chat(user, span_notice("You install [new_rack] into [src]."))
+		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+		balloon_alert(user, "installed rack")
 	new_rack.forceMove(src)
 	LAZYADD(installed_racks, new_rack)
 	total_cpu += new_rack.get_cpu()
@@ -153,25 +190,10 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 	cached_power_usage = 0
 	GLOB.ai_os.update_hardware()
 	if(user)
-		to_chat(user, span_notice("You remove all the racks from [src]"))
+		balloon_alert(user, "racks removed")
 	use_power = IDLE_POWER_USE
 	update_appearance()
 	return TRUE
-
-/obj/machinery/ai/server_cabinet/examine()
-	. = ..()
-	var/holder_status = get_holder_status()
-	if(holder_status)
-		. += span_warning("Machinery non-functional. Reason: [holder_status]")
-	if(!valid_ticks)
-		. += span_notice("A small screen is displaying the words 'OFFLINE.'")
-	. += span_notice("The machine has [length(installed_racks)] racks out of a maximum of [max_racks] installed.")
-	. += span_notice("Current Power Usage Multiplier: [span_bold("[power_modifier * 100]%")]")
-	. += span_notice("Current Heat Multiplier: [span_bold("[heat_modifier * 100]%")]")
-
-	for(var/obj/item/server_rack/R in installed_racks)
-		. += span_notice("There is a rack installed with a processing capacity of [R.get_cpu()]THz and a memory capacity of [R.get_ram()]TB. Uses [R.get_power_usage()]W")
-	. += span_notice("Use a crowbar to remove all currently inserted racks.")
 
 /obj/machinery/ai/server_cabinet/prefilled/Initialize(mapload)
 	. = ..()

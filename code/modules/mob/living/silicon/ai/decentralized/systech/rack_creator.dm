@@ -3,6 +3,7 @@
 	desc = "Combines RAM modules and CPUs to create a stand-alone rack for usage in artificial intelligence systems."
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "circuit_imprinter"
+	base_icon_state = "circuit_imprinter"
 	layer = BELOW_OBJ_LAYER
 
 	density = TRUE
@@ -21,17 +22,15 @@
 
 
 /obj/machinery/rack_creator/Initialize(mapload)
+	. = ..()
 	rmat = AddComponent(/datum/component/remote_materials, "rackcreator", mapload)
 	rmat.set_local_size(200000)
 	RefreshParts()
-	return ..()
+	register_context()
 
 
 /obj/machinery/rack_creator/RefreshParts()
 	. = ..()
-	calculate_efficiency()
-
-/obj/machinery/rack_creator/proc/calculate_efficiency()
 	efficiency_coeff = 1
 	var/total_rating = 1.2
 	for(var/datum/stock_part/manipulator/M in component_parts)
@@ -40,7 +39,6 @@
 		efficiency_coeff = INFINITY
 	else
 		efficiency_coeff = 1/total_rating
-
 
 /obj/machinery/rack_creator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -119,7 +117,7 @@
 
 /obj/machinery/rack_creator/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials)
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
 	)
 
 /obj/machinery/rack_creator/proc/check_resources()
@@ -141,7 +139,6 @@
 
 /obj/machinery/rack_creator/proc/output_available_resources()
 	var/datum/component/material_container/materials = rmat.mat_container
-
 	var/list/material_data = list()
 
 	if(materials)
@@ -165,26 +162,43 @@
 	return null
 
 
-/obj/machinery/rack_creator/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/ai_cpu))
-		var/obj/item/ai_cpu/CPU = I
-		if(length(inserted_cpus) >= AI_MAX_CPUS_PER_RACK)
-			to_chat(user, span_warning("This rack cannot fit anymore CPUs!"))
-			return ..()
-		if(slotUnlockedCPU(length(inserted_cpus) + 1))
-			inserted_cpus += CPU
-			CPU.forceMove(src)
-			return FALSE
-		else
-			to_chat(user, span_warning("This socket has not been researched!"))
-			return ..()
-
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]_t", initial(icon_state), I))
-		return
-	if(default_deconstruction_crowbar(I))
+/obj/machinery/rack_creator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/ai_cpu))
 		return
 
-	return ..()
+	if(length(inserted_cpus) >= AI_MAX_CPUS_PER_RACK)
+		to_chat(user, span_warning("This rack cannot fit anymore CPUs!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!slotUnlockedCPU(length(inserted_cpus) + 1))
+		to_chat(user, span_warning("This socket has not been researched!"))
+		return ITEM_INTERACT_BLOCKING
+	inserted_cpus += tool
+	tool.forceMove(src)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/rack_creator/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]_t", base_icon_state, tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/rack_creator/crowbar_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/rack_creator/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(isnull(held_item))
+		return NONE
+
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "[(panel_open ? "Close" : "Open")] Panel"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/ai_cpu))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert CPU"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(panel_open && (held_item.tool_behaviour == TOOL_CROWBAR))
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/rack_creator/proc/slotUnlockedCPU(slot_number)
 	switch(slot_number)
@@ -194,7 +208,6 @@
 			. = SSresearch.science_tech.isNodeResearchedID("ai_cpu_2")
 		if(3)
 			. = SSresearch.science_tech.isNodeResearchedID("ai_cpu_3")
-
 		if(4)
 			. = SSresearch.science_tech.isNodeResearchedID("ai_cpu_4")
 
@@ -211,27 +224,29 @@
 
 
 /obj/machinery/rack_creator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
+	var/mob/user = ui.user
 	switch(action)
 		if("insert_cpu")
 			if(length(inserted_cpus) >= AI_MAX_CPUS_PER_RACK)
-				to_chat(usr, span_warning("This rack cannot fit anymore CPUs!"))
+				to_chat(user, span_warning("This rack cannot fit anymore CPUs!"))
 				return
-			var/atom/I = usr.get_active_held_item()
+			var/atom/I = user.get_active_held_item()
 			if(!I)
-				to_chat(usr, span_warning("You're not currently holding a CPU!"))
+				to_chat(user, span_warning("You're not currently holding a CPU!"))
 				return
 			if(!istype(I, /obj/item/ai_cpu))
-				to_chat(usr, span_warning("You're not currently holding a CPU!"))
+				to_chat(user, span_warning("You're not currently holding a CPU!"))
 				return
 			var/obj/item/ai_cpu/cpu = I
 			if(slotUnlockedCPU(length(inserted_cpus) + 1))
 				inserted_cpus += cpu
 				cpu.forceMove(src)
 			else
-				to_chat(usr, span_warning("This socket has not been researched!"))
+				to_chat(user, span_warning("This socket has not been researched!"))
 				return
 			. = TRUE
 		if("remove_cpu")
@@ -246,7 +261,7 @@
 			. = TRUE
 		if("insert_ram")
 			if(length(ram_expansions) >= AI_MAX_RAM_PER_RACK)
-				to_chat(usr, span_warning("This rack cannot fit anymore RAM expansions!"))
+				to_chat(user, span_warning("This rack cannot fit anymore RAM expansions!"))
 				return
 			var/ram_type = params["ram_type"]
 			if(!ram_type)
@@ -262,7 +277,7 @@
 				))
 				ram_expansions += stats
 			else
-				to_chat(usr, span_warning("This socket has not been researched!"))
+				to_chat(user, span_warning("This socket has not been researched!"))
 				return
 
 			. = TRUE
@@ -299,7 +314,6 @@
 				new_rack.contained_cpus += CPU
 			inserted_cpus = list()
 
-
 			var/total_ram = 0
 			for(var/RAM in ram_expansions)
 				for(var/mat in RAM["cost"])
@@ -317,4 +331,4 @@
 /obj/machinery/rack_creator/proc/finalize_post(obj/item/server_rack/rack)
 	if(!rack)
 		return
-	rack.forceMove(get_turf(src))
+	rack.forceMove(drop_location())

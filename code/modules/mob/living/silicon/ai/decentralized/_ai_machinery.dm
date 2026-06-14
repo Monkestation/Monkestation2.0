@@ -14,7 +14,7 @@
 	. = ..()
 	SSair.start_processing_machine(src)
 
-/obj/machinery/ai/Destroy()
+/obj/machinery/ai/Destroy(force)
 	SSair.stop_processing_machine(src)
 	return ..()
 

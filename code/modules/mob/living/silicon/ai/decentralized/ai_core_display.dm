@@ -20,7 +20,6 @@
 	GLOB.ai_core_displays.Remove(src)
 	return ..()
 
-//NOTE: See /obj/machinery/ai/data_core/examine in ai_data_core.dm
 /obj/machinery/status_display/ai_core/examine(mob/user)
 	. = ..()
 	if(!isobserver(user))

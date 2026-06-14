@@ -21,9 +21,6 @@
 	if(icon_exists(icon, "[base_icon]_death_transition"))
 		flick("[base_icon]_death_transition", src)
 
-	if(is_anchored)
-		flip_anchored()
-
 	if(eyeobj)
 		eyeobj.setLoc(get_turf(src))
 		set_eyeobj_visible(FALSE)
