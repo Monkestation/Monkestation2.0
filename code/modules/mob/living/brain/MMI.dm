@@ -5,20 +5,25 @@
 	icon_state = "mmi_off"
 	base_icon_state = "mmi"
 	w_class = WEIGHT_CLASS_NORMAL
+	/// Should an name need to be auto-generated, it will have this prefix.
 	var/braintype = "Cyborg"
-	var/obj/item/radio/radio = null //Let's give it a radio.
-	var/mob/living/brain/brainmob = null //The current occupant.
-	var/mob/living/silicon/robot = null //Appears unused.
-	var/obj/vehicle/sealed/mecha = null //This does not appear to be used outside of reference in mecha.dm.
-	var/obj/item/organ/internal/brain/brain = null //The actual brain
+	/// The brain organ that is currently occupying us.
+	var/obj/item/organ/internal/brain/brain = null
+	/// The mob that is currently occupying us. Derived from the brain organ.
+	var/mob/living/brain/brainmob = null
+	/// The radio that the occupying mob can use.
+	var/obj/item/radio/radio = null
+	/// The mech that we currently are occupying.
+	var/obj/vehicle/sealed/mecha = null
+	/// The laws that we currently have.
 	var/datum/ai_laws/laws = new()
-	var/force_replace_ai_name = FALSE
-	var/overrides_aicore_laws = FALSE // Whether the laws on the MMI, if any, override possible pre-existing laws loaded on the AI core.
+	/// Should this MMI be used to create an AI, should our laws become the new AI's laws?
+	var/overrides_aicore_laws = FALSE
 
 /obj/item/mmi/Initialize(mapload)
 	. = ..()
-	radio = new(src) //Spawns a radio inside the MMI.
-	radio.set_broadcasting(FALSE) //researching radio mmis turned the robofabs into radios because this didnt start as 0.
+	radio = new(src)
+	radio.set_broadcasting(FALSE) // Leaving this on meant that people were printing this as always-on handheld radios. Not good.
 	laws.set_laws_config()
 
 /obj/item/mmi/Destroy()

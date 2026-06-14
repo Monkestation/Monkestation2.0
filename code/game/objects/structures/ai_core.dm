@@ -352,8 +352,6 @@
 	if(malf_datum)
 		malf_datum.add_law_zero()
 
-	if(core_mmi.force_replace_ai_name)
-		ai_mob.fully_replace_character_name(ai_mob.name, core_mmi.replacement_ai_name())
 	if(core_mmi.braintype == "Android")
 		ai_mob.posibrain_inside = TRUE
 	deadchat_broadcast(" has been brought online at <b>[get_area_name(ai_mob, format_text = TRUE)]</b>.", span_name("[ai_mob]"), follow_target = ai_mob, message_type = DEADCHAT_ANNOUNCEMENT)
