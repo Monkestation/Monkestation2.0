@@ -69,13 +69,14 @@
 		UnregisterSignal(tracked_mob, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE))
 	if(track && !isliving(track))
 		tracked_mob = null
-		return
+		return FALSE
 	tracked_mob = track
 	if(tracked_mob)
 		RegisterSignal(tracked_mob, COMSIG_QDELETING, PROC_REF(target_deleted))
 		RegisterSignal(tracked_mob, COMSIG_MOVABLE_MOVED, PROC_REF(target_moved))
 		RegisterSignal(tracked_mob, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(glide_size_changed))
-		attempt_track()
+		return attempt_track()
+	return FALSE
 
 /datum/trackable/proc/target_deleted(datum/source)
 	SIGNAL_HANDLER

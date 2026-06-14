@@ -57,7 +57,7 @@
 	access_log += "\[[get_timestamp()]\] [user_name] [entry]"
 
 /obj/machinery/computer/telecomms/traffic/ui_interact(mob/user, datum/tgui/ui)
-	if(is_banned_from(user.ckey, JOB_SIGNAL_TECHNICIAN))
+	if(is_banned_from(user.ckey, JOB_NETWORK_ADMIN))
 		to_chat(user, span_warning("You are banned from using the NTSL console"))
 		return "You are banned from using NTSL."
 
@@ -179,7 +179,7 @@
 		servers.Add(new_server)
 
 /obj/machinery/computer/telecomms/traffic/proc/compile_all(mob/user)
-	if(is_banned_from(user.ckey, JOB_SIGNAL_TECHNICIAN))
+	if(is_banned_from(user.ckey, JOB_NETWORK_ADMIN))
 		return list("You are banned from using NTSL.")
 	if(!length(servers))
 		return list("No servers detected.")

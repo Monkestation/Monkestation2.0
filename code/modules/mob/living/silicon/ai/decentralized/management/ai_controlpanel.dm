@@ -1,0 +1,371 @@
+GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
+
+/obj/machinery/computer/ai_control_console
+	name = "\improper AI control console"
+	desc = "Used for accessing the central AI repository from which AIs can be downloaded or uploaded."
+	req_access = list(ACCESS_RD)
+	circuit = /obj/item/circuitboard/computer/ai_upload_download
+	icon_keyboard = "tech_key"
+	icon_screen = "ai-fixer"
+	light_color = LIGHT_COLOR_PINK
+
+	authenticated = FALSE
+
+	var/cleared_for_use = FALSE //Have we inserted the RDs code to unlock upload/download?
+	var/one_time_password_used = FALSE //Did we use the one time password to log in? If so disallow logging out.
+
+	var/obj/item/aicard/intellicard
+
+	var/mob/living/silicon/ai/downloading
+	var/mob/user_downloading
+	var/download_progress = 0
+	var/download_warning = FALSE
+
+/obj/machinery/computer/ai_control_console/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		cleared_for_use = TRUE
+
+/obj/machinery/computer/ai_control_console/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/aicard))
+		if(intellicard)
+			to_chat(user, span_warning("There's already an IntelliCard inserted!"))
+			return ITEM_INTERACT_BLOCKING
+		if(user.transferItemToLoc(tool, src))
+			to_chat(user, span_notice("You insert [tool]."))
+			intellicard = tool
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+
+	if(istype(tool, /obj/item/mmi))
+		if(!authenticated)
+			to_chat(user, span_warning("You need to be logged in to do this!"))
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/mmi/brain = tool
+		if(!brain.brainmob)
+			to_chat(user, span_warning("[tool] is not active!"))
+			return ITEM_INTERACT_BLOCKING
+		var/mob/living/silicon/ai/A = null
+
+		var/datum/ai_laws/laws = new
+		laws.set_laws_config()
+
+		if (brain.overrides_aicore_laws)
+			A = new /mob/living/silicon/ai(loc, brain.laws, brain.brainmob)
+		else
+			A = new /mob/living/silicon/ai(loc, laws, brain.brainmob)
+		A.relocate(TRUE)
+
+		if(!istype(brain.laws, /datum/ai_laws/ratvar) && brain.brainmob.mind)
+			brain.brainmob.mind.remove_all_antag_datums()
+			brain.brainmob.mind.wipe_memory()
+		if(brain.force_replace_ai_name)
+			A.fully_replace_character_name(A.name, brain.replacement_ai_name())
+
+		SSblackbox.record_feedback("amount", "ais_created", 1)
+		qdel(tool)
+		to_chat(user, span_notice("AI succesfully uploaded."))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/surveillance_upgrade))
+		if(!authenticated)
+			to_chat(user, span_warning("You need to be logged in to do this!"))
+			return ITEM_INTERACT_BLOCKING
+		var/mob/living/silicon/ai/AI = tgui_input_list(user, "Select an AI", "Select an AI", GLOB.ai_list)
+		if(!AI)
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/surveillance_upgrade/upgrade = tool
+		return upgrade.interact_with_atom(AI, user)
+
+	if(istype(tool, /obj/item/malf_upgrade))
+		if(!authenticated)
+			to_chat(user, span_warning("You need to be logged in to do this!"))
+			return ITEM_INTERACT_BLOCKING
+		var/mob/living/silicon/ai/AI = tgui_input_list(user, "Select an AI", "Select an AI", GLOB.ai_list)
+		if(!AI)
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/malf_upgrade/upgrade = tool
+		return upgrade.interact_with_atom(AI, user)
+
+/obj/machinery/computer/ai_control_console/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+	if(obj_flags & EMAGGED)
+		return
+	authenticated = TRUE
+	obj_flags |= EMAGGED
+	if(user)
+		balloon_alert(user, "access restrictions bypassed")
+
+/obj/machinery/computer/ai_control_console/process()
+	if(machine_stat & (BROKEN|NOPOWER|EMPED))
+		return
+
+	if(downloading && download_progress >= 50 && !download_warning)
+		var/turf/T = get_turf(src)
+		to_chat(downloading, span_userdanger("Warning! Download is 50% completed! Download location: [get_area(src)] ([T.x], [T.y], [T.z])!"))
+		download_warning = TRUE
+	if(downloading && download_progress >= 100)
+		finish_download()
+
+	if(downloading)
+		if(!downloading.can_download)
+			stop_download()
+			return
+		download_progress += AI_DOWNLOAD_PER_PROCESS * downloading.downloadSpeedModifier
+
+
+/obj/machinery/computer/ai_control_console/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "AiControlPanel", name)
+		ui.open()
+
+/obj/machinery/computer/ai_control_console/ui_data(mob/living/carbon/human/user)
+	var/list/data = list()
+	if(!cleared_for_use)
+		data["cleared_for_use"] = FALSE
+		return data
+
+	data["cleared_for_use"] = TRUE
+	data["authenticated"] = authenticated
+
+	if(issilicon(user))
+		var/mob/living/silicon/borg = user
+		data["username"] = borg.name
+		data["has_access"] = TRUE
+	if(isAdminGhostAI(user))
+		data["username"] = user.client.holder.admin_signature
+		data["has_access"] = TRUE
+
+	data["can_log_out"] = !one_time_password_used
+
+	if(obj_flags & EMAGGED)
+		data["username"] = "ERROR"
+		data["has_access"] = TRUE
+	else if(ishuman(user))
+		data["has_access"] = allowed(user)
+		var/username = user.get_authentification_name("Unknown")
+		data["username"] = user.get_authentification_name("Unknown")
+		if(username != "Unknown")
+			var/datum/data/record/record
+			for(var/RP in GLOB.manifest.general)
+				var/datum/data/record/R = RP
+
+				if(!istype(R))
+					continue
+				if(R.fields["name"] == username)
+					record = R
+					break
+			if(record)
+				if(istype(record.fields["photo_front"], /obj/item/photo))
+					var/obj/item/photo/P1 = record.fields["photo_front"]
+					var/icon/picture = icon(P1.picture.picture_image)
+					picture.Crop(10, 32, 22, 22)
+					var/md5 = md5(fcopy_rsc(picture))
+
+					if(!SSassets.cache["photo_[md5]_cropped.png"])
+						SSassets.transport.register_asset("photo_[md5]_cropped.png", picture)
+					SSassets.transport.send_assets(user, list("photo_[md5]_cropped.png" = picture))
+
+					data["user_image"] = SSassets.transport.get_asset_url("photo_[md5]_cropped.png")
+	else
+		data["has_access"] = allowed(user)
+		data["username"] = user.name
+
+	if(!authenticated)
+		return data
+
+	data["intellicard"] = intellicard
+	if(intellicard && intellicard.AI)
+		data["intellicard_ai"] = intellicard.AI.real_name
+		data["intellicard_ai_health"] = intellicard.AI.health
+	else
+		data["intellicard_ai"] = null
+		data["intellicard_ai_health"] = 0
+
+	data["can_upload"] = available_ai_cores()
+
+	if(downloading)
+		data["downloading"] = downloading.real_name
+		data["download_progress"] = download_progress
+		data["downloading_ref"] = REF(downloading)
+	else
+		data["downloading"] = null
+		data["download_progress"] = 0
+
+	data["ais"] = list()
+	data["current_ai_ref"] = null
+	if(isAI(user))
+		data["current_ai_ref"] = REF(user)
+
+	for(var/mob/living/silicon/ai/A in GLOB.ai_list)
+		data["ais"] += list(list(
+			"name" = A.name,
+			"ref" = REF(A),
+			"can_download" = A.can_download,
+			"health" = A.health,
+			"active" = A.mind ? TRUE : FALSE,
+			"in_core" = istype(A.loc, /obj/machinery/ai/data_core),
+		))
+
+	return data
+
+/obj/machinery/computer/ai_control_console/proc/finish_download()
+	if(!is_station_level(z))
+		return
+	if(intellicard)
+		downloading.transfer_ai(AI_TRANS_TO_CARD, user_downloading, null, intellicard)
+		intellicard.forceMove(get_turf(src))
+		intellicard.update_appearance()
+		intellicard = null
+	stop_download(TRUE)
+
+/obj/machinery/computer/ai_control_console/proc/stop_download(silent = FALSE)
+	if(!downloading)
+		return
+	if(!silent)
+		to_chat(downloading, span_userdanger("Download stopped."))
+	downloading = null
+	user_downloading = null
+	download_progress = 0
+	download_warning = FALSE
+
+/obj/machinery/computer/ai_control_console/proc/upload_ai(silent = FALSE)
+	to_chat(intellicard.AI, span_notice("You are being uploaded. Please stand by..."))
+	intellicard.AI.radio_enabled = TRUE
+	intellicard.AI.control_disabled = FALSE
+	intellicard.AI.relocate(TRUE)
+	intellicard.AI = null
+	intellicard.update_appearance()
+
+/obj/machinery/computer/ai_control_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+
+	var/mob/user = ui.user
+
+	if(!cleared_for_use)
+		if(action == "clear_for_use")
+			var/code = text2num(params["control_code"])
+
+			var/length_of_number = round(log(10, code) + 1)
+			if(length_of_number < 6)
+				to_chat(user, span_warning("Incorrect code. Too short"))
+				return
+
+			if(length_of_number > 6)
+				to_chat(user, span_warning("Incorrect code. Too long"))
+				return
+
+
+			if(!GLOB.ai_control_code)
+				return
+
+			if(!is_station_level(z))
+				to_chat(user, span_warning("Unable to connect to NT Servers. Please verify you are onboard the station."))
+				return
+
+			if(code == text2num(GLOB.ai_control_code))
+				cleared_for_use = TRUE
+			else
+				to_chat(user, span_warning("Incorrect code. Make sure you have the latest one."))
+
+		return
+
+	if(!authenticated)
+		if(action == "log_in")
+			if(allowed(user) || (obj_flags & EMAGGED))
+				authenticated = TRUE
+				return TRUE
+			return .
+		if(action == "log_in_control_code")
+			var/code = text2num(params["control_code"])
+
+			var/length_of_number = round(log(10, code) + 1)
+			if(length_of_number < 6)
+				to_chat(user, span_warning("Incorrect code. Too short."))
+				return
+
+			if(length_of_number > 6)
+				to_chat(user, span_warning("Incorrect code. Too long."))
+				return
+
+			if(!GLOB.ai_control_code)
+				return
+
+			if(code == text2num(GLOB.ai_control_code))
+				cleared_for_use = TRUE
+				authenticated = TRUE
+				one_time_password_used = TRUE
+				var/msg = "<h4>Warning!</h4><br>We have detected usage of the AI Control Code for unlocking a console at coordinates ([src.x], [src.y], [src.z]) by [user.name]. Please verify that this is correct. Be aware we have cancelled the current control code.<br>\
+				If needed a new code can be printed at a communications console."
+				priority_announce(msg, sender_override = "Central Cyber Security Update", has_important_message = TRUE, encode_text = FALSE)
+				GLOB.ai_control_code = null
+			else
+				to_chat(user, span_warning("Incorrect code. Make sure you have the latest one."))
+		return
+
+	switch(action)
+		if("log_out")
+			if(one_time_password_used)
+				return
+			authenticated = FALSE
+			. = TRUE
+		if("upload_intellicard")
+			if(!intellicard || downloading)
+				return
+			if(!intellicard.AI)
+				return
+			upload_ai()
+
+		if("eject_intellicard")
+			if(issilicon(user))
+				to_chat(user, span_warning("You're unable to remotely eject the IntelliCard!"))
+				return
+			stop_download()
+			user.transferItemToLoc(intellicard, drop_location())
+			intellicard = null
+
+		if("stop_download")
+			if(isAI(user))
+				to_chat(user, span_warning("You need physical access to stop the download!"))
+				return
+			if(!is_station_level(z))
+				to_chat(user, span_warning("No connection. Try again later."))
+				return
+			stop_download()
+
+		if("start_download")
+			if(!intellicard || downloading)
+				return
+			var/mob/living/silicon/ai/target = locate(params["download_target"])
+			if(!target || !istype(target))
+				return
+			if(!istype(target.loc, /obj/machinery/ai/data_core))
+				return
+			if(!target.can_download)
+				return
+			if(!is_station_level(z))
+				to_chat(user, span_warning("No connection. Try again later."))
+				return
+			downloading = target
+			to_chat(downloading, span_userdanger("Warning! Someone is attempting to download you from [get_area(src)]! (<a href='byond://?src=[REF(downloading)];instant_download=1;console=[REF(src)]'>Click here to finish download instantly</a>)"))
+			user_downloading = user
+			download_progress = 0
+			. = TRUE
+		if("skip_download")
+			if(!downloading)
+				return
+			if(user == downloading)
+				finish_download()
+
+/obj/item/paper/ai_control_code
+	name = "paper - 'AI control code'"
+
+/obj/item/paper/ai_control_code/Initialize(mapload)
+	. = ..()
+	add_raw_text("<center><h2>Daily AI Control Key Reset</h2></center><br>The new authentication key is '[GLOB.ai_control_code]'.<br>\
+		Please keep this a secret and away from the clown.<br>This code may be invalidated if a new one is requested.")
+	update_appearance()

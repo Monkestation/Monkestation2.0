@@ -378,3 +378,23 @@
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_COMMAND
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_ENGINEERING //Monkestation edit: Engi circuit
+
+/datum/design/board/ai_server_overview
+	name = "Computer Design (AI Server Overview Console)"
+	desc = "Allows for the construction of circuit boards used to build an AI Server Overview console."
+	id = "ai_server_overview"
+	build_path = /obj/item/circuitboard/computer/ai_server_overview
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/ai_resource_distribution
+	name = "Computer Design (AI Resource Distribution Console)"
+	desc = "Allows for the construction of circuit boards used to build an AI Resource Distribution console."
+	id = "ai_resource_distribution"
+	build_path = /obj/item/circuitboard/computer/ai_resource_distribution
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE

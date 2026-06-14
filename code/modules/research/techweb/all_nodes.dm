@@ -34,6 +34,7 @@
 		"chisel",
 		"circuit_imprinter_offstation",
 		"circuit_imprinter",
+		"rack_creator",
 		"circuit",
 		"circuitgreen",
 		"circuitred",

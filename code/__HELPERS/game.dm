@@ -90,6 +90,10 @@
 			return TRUE
 
 		else if(isliving(player_mind.current))
+			if(isAI(player_mind.current))
+				var/mob/living/silicon/ai/AI = player_mind.current
+				if(AI.is_dying)
+					return FALSE
 			return (player_mind.current.stat != DEAD)
 
 	return FALSE

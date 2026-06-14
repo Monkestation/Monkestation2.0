@@ -3,20 +3,23 @@
 		return
 	//Being dead doesn't mean your temperature never changes
 
+	if(dashboard)
+		dashboard.tick(seconds_per_tick)
+
 	if(malfhack?.aidisabled)
 		deltimer(malfhacking)
 		// This proc handles cleanup of screen notifications and
 		// messenging the client
 		malfhacked(malfhack)
 
-	if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
+	if(isvalidAIloc(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
 		view_core()
 
 	if(machine)
 		machine.check_eye(src)
 
 	// Handle power damage (oxy)
-	if(aiRestorePowerRoutine)
+	if(aiRestorePowerRoutine && !available_ai_cores())
 		// Lost power
 		if (!battery)
 			to_chat(src, span_warning("Your backup battery's output drops below usable levels. It takes only a moment longer for your systems to fail, corrupted and unusable."))
@@ -39,6 +42,14 @@
 
 	else if(!aiRestorePowerRoutine)
 		ai_lose_power()
+
+	if(cameraMemoryTarget)
+		if(cameraMemoryTickCount >= AI_CAMERA_MEMORY_TICKS)
+			cameraMemoryTickCount = 0
+			if(ai_tracking_tool.set_tracked_mob(cameraMemoryTarget))
+				to_chat(src, span_notice("Tracked target [cameraMemoryTarget] found visible on cameras. Tracking disabled."))
+				cameraMemoryTarget = 0
+		cameraMemoryTickCount++
 
 /mob/living/silicon/ai/proc/lacks_power()
 	var/turf/T = get_turf(src)
@@ -91,8 +102,8 @@
 	to_chat(src, span_notice("Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection."))
 	end_multicam()
 	sleep(5 SECONDS)
-	var/turf/T = get_turf(src)
-	var/area/AIarea = get_area(src)
+	var/turf/T = get_turf(loc)
+	var/area/AIarea = get_area(loc)
 	if(AIarea?.power_equip)
 		if(!isspaceturf(T))
 			ai_restore_power()
@@ -101,7 +112,7 @@
 	sleep(2 SECONDS)
 	to_chat(src, span_notice("Emergency control system online. Verifying connection to power network."))
 	sleep(5 SECONDS)
-	T = get_turf(src)
+	T = get_turf(loc)
 	if(isspaceturf(T))
 		to_chat(src, span_alert("Unable to verify! No power connection detected!"))
 		setAiRestorePowerRoutine(POWER_RESTORATION_SEARCH_APC)
@@ -112,8 +123,8 @@
 
 	var/PRP //like ERP with the code, at least this stuff is no more 4x sametext
 	for (PRP=1, PRP <= 4, PRP++)
-		T = get_turf(src)
-		AIarea = get_area(src)
+		T = get_turf(loc)
+		AIarea = get_area(loc)
 		if(AIarea)
 			theAPC = AIarea.apc
 		if (!theAPC)
@@ -163,7 +174,8 @@
 /mob/living/silicon/ai/proc/ai_lose_power()
 	disconnect_shell()
 	setAiRestorePowerRoutine(POWER_RESTORATION_START)
-	adjust_temp_blindness(2 SECONDS)
+	if(!available_ai_cores())
+		adjust_temp_blindness(2 SECONDS)
 	update_sight()
 	to_chat(src, span_alert("You've lost power!"))
 	addtimer(CALLBACK(src, PROC_REF(start_RestorePowerRoutine)), 20)

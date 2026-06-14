@@ -15,6 +15,7 @@
 
 /mob/eye/camera/ai/Initialize(mapload)
 	. = ..()
+	update_appearance()
 	update_ai_detect_hud()
 
 /mob/eye/camera/ai/Destroy()
@@ -86,7 +87,7 @@
 /mob/eye/camera/ai/setLoc(destination, force_update = FALSE)
 	if(!ai)
 		return
-	if(!isturf(ai.loc))
+	if(!(isvalidAIloc(ai.loc)))
 		return
 
 	. = ..()
@@ -135,6 +136,8 @@
 /mob/eye/camera/ai/proc/examinate_check(mob/user, atom/source)
 	SIGNAL_HANDLER
 	if(user.client.eye == src)
+		if(ishuman(source) && !ai.canExamineHumans)
+			return
 		return COMPONENT_ALLOW_EXAMINATE
 
 /atom/proc/move_camera_by_click()
@@ -149,8 +152,8 @@
 // This will move the AIEye. It will also cause lights near the eye to light up, if toggled.
 // This is handled in the proc below this one.
 #define SPRINT_PER_TICK 0.5
-#define MAX_SPRINT 50
 #define SPRINT_PER_STEP 20
+
 /mob/living/silicon/ai/proc/AIMove(direction)
 	if(last_moved && last_moved + 1 < world.timeofday)
 		// Decay sprint based off how long it took us to input this next move
@@ -167,17 +170,17 @@
 
 	// I'd like to make this scale with the steps we take, but it like, just can't
 	// So we're doin this instead
-	eyeobj.glide_size = world.icon_size
+	eyeobj.glide_size = ICON_SIZE_ALL
 
 	last_moved = world.timeofday
 	if(acceleration)
-		sprint = min(sprint + SPRINT_PER_TICK, MAX_SPRINT)
+		sprint = min(sprint + SPRINT_PER_TICK, max_camera_sprint)
 	else
 		sprint = initial(sprint)
 
 	ai_tracking_tool.reset_tracking()
+
 #undef SPRINT_PER_STEP
-#undef MAX_SPRINT
 #undef SPRINT_PER_TICK
 
 // Return to the Core.
@@ -191,7 +194,7 @@
 		ai_tracking_tool.reset_tracking()
 	unset_machine()
 
-	if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
+	if(isvalidAIloc(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
 		to_chat(src, "ERROR: Eyeobj not found. Creating new eye...")
 		stack_trace("AI eye object wasn't found! Location: [loc] / Eyeobj: [eyeobj] / QDELETED: [QDELETED(eyeobj)] / Eye loc: [eyeobj?.loc]")
 		QDEL_NULL(eyeobj)

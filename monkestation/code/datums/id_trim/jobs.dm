@@ -118,7 +118,7 @@
 	job = /datum/job/nanotrasen_representative
 
 /datum/id_trim/job/signal_technician
-	assignment = JOB_SIGNAL_TECHNICIAN
+	assignment = JOB_NETWORK_ADMIN
 	intern_alt_name = "Junior Signal Technician"
 	trim_state = "trim_signaltech"
 	department_color = COLOR_ENGINEERING_ORANGE

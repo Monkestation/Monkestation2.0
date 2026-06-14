@@ -211,7 +211,7 @@
 	. = ..()
 	post_machine_initialize()
 
-/obj/machinery/Destroy()
+/obj/machinery/Destroy(force)
 	SSmachines.unregister_machine(src)
 	end_processing()
 	dump_inventory_contents()
