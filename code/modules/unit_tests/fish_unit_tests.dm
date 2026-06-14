@@ -59,6 +59,83 @@
 		if(fish_scan.required_atoms[scan_key] > scannable_fishes)
 			TEST_FAIL("[fish_scan.type] has requirements higher than the number of scannable fish types in the game: [scannable_fishes]")
 
+///dummy fish item used for the tests, as well with related subtypes and datums.
+/obj/item/fish/testdummy
+	grind_results = list()
+	average_weight = FISH_GRIND_RESULTS_WEIGHT_DIVISOR * 2
+	average_size = FISH_SIZE_BULKY_MAX
+	num_fillets = 2
+	fish_traits = list(/datum/fish_trait/dummy)
+	stable_population = INFINITY
+	breeding_timeout = 0
+
+/obj/item/fish/testdummy/two
+	fish_traits = list(/datum/fish_trait/dummy/two)
+
+/datum/fish_trait/dummy
+	incompatible_traits = list(/datum/fish_trait/dummy/two)
+	inheritability = 100
+	diff_traits_inheritability = 100
+
+/datum/fish_trait/dummy/apply_to_fish(obj/item/fish/fish)
+	ADD_TRAIT(fish, TRAIT_FISH_TESTING, FISH_TRAIT_DATUM)
+	fish.grind_results[/datum/reagent] = 10
+
+/datum/fish_trait/dummy/two
+	incompatible_traits = list(/datum/fish_trait/dummy)
+
+/obj/structure/aquarium/traits
+	allow_breeding = TRUE
+	var/obj/item/fish/testdummy/crossbreeder/crossbreeder
+	var/obj/item/fish/testdummy/cloner/cloner
+	var/obj/item/fish/testdummy/sterile/sterile
+
+/obj/structure/aquarium/traits/Initialize(mapload)
+	. = ..()
+	crossbreeder = new(src)
+	cloner = new(src)
+	sterile = new(src)
+
+/obj/item/fish/testdummy/crossbreeder
+	fish_traits = list(/datum/fish_trait/crossbreeder)
+
+/obj/item/fish/testdummy/cloner
+	fish_traits = list(/datum/fish_trait/parthenogenesis)
+
+/obj/item/fish/testdummy/sterile
+	fish_traits = list(/datum/fish_trait/no_mating)
+
+/obj/structure/aquarium/evolution
+	allow_breeding = TRUE
+	var/obj/item/fish/testdummy/evolve/evolve
+	var/obj/item/fish/testdummy/evolve_two/evolve_two
+
+/obj/structure/aquarium/evolution/Initialize(mapload)
+	. = ..()
+	evolve = new(src)
+	evolve_two = new(src)
+
+/obj/item/fish/testdummy/evolve
+	compatible_types = list(/obj/item/fish/testdummy/evolve_two)
+	evolution_types = list(/datum/fish_evolution/dummy)
+
+/obj/item/fish/testdummy/evolve_two
+	compatible_types = list(/obj/item/fish/testdummy/evolve)
+	evolution_types = list(/datum/fish_evolution/dummy/two)
+
+/datum/fish_evolution/dummy
+	probability = 200 //Guaranteed chance even if halved.
+	new_fish_type = /obj/item/fish/clownfish
+	new_traits = list(/datum/fish_trait/dummy/two)
+	removed_traits = list(/datum/fish_trait/dummy)
+
+/datum/fish_evolution/dummy/two
+	new_fish_type = /obj/item/fish/goldfish
+
+/datum/fish_evolution/dummy/two/New()
+	. = ..()
+	probability = 0 //works around the global list initialization skipping abstract/impossible evolutions.
+
 // we want no default spawns in this unit test
 /datum/chasm_detritus/restricted/bodies/no_defaults
 	default_contents_chance = 0
