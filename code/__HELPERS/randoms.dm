@@ -48,10 +48,10 @@
 /proc/ion_num() //! is at the start to prevent us from changing say modes via get_message_mode()
 	return "![pick("!","@","#","$","%","^","&")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")]"
 
-///Returns a string for a random nuke code
+///Returns a string for a random nuke code, we exclude 0 from the results due to messiness with TGUI.
 /proc/random_nukecode(max_length = 5)
-	var/val = rand(0, (10 ** max_length - 1))
+	var/val = rand(1, (10 ** max_length - 1))
 	var/str = "[val]"
 	while(length(str) < max_length)
 		str = "0" + str
-	. = str
+	. = "[val]"

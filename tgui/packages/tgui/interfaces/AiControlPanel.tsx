@@ -1,4 +1,3 @@
-import { KEY_ENTER } from 'common/keycodes';
 import type { BooleanLike } from 'common/react';
 import { Fragment, useState } from 'react';
 import { useBackend } from '../backend';
@@ -68,7 +67,7 @@ export const AiControlPanel = (props) => {
 
   if (!cleared_for_use) {
     return (
-      <Window width={500} height={450}>
+      <Window width={500} height={400}>
         <Window.Content scrollable>
           <Section title="Authentication">
             <Box textAlign="center">

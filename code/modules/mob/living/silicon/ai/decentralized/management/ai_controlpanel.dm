@@ -36,6 +36,9 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		intellicard = W
 		return FALSE
 	if(istype(W, /obj/item/mmi))
+		if(!authenticated)
+			to_chat(user, span_warning("You need to be logged in to do this!"))
+			return ..()
 		var/obj/item/mmi/brain = W
 		if(!brain.brainmob)
 			to_chat(user, span_warning("[W] is not active!"))
@@ -49,15 +52,14 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 			A = new /mob/living/silicon/ai(loc, brain.laws, brain.brainmob)
 		else
 			A = new /mob/living/silicon/ai(loc, laws, brain.brainmob)
-
 		A.relocate(TRUE)
 
-		if(!istype(brain.laws, /datum/ai_laws/ratvar))
+		if(!istype(brain.laws, /datum/ai_laws/ratvar) && brain.brainmob.mind)
 			brain.brainmob.mind.remove_all_antag_datums()
 			brain.brainmob.mind.wipe_memory()
-
 		if(brain.force_replace_ai_name)
 			A.fully_replace_character_name(A.name, brain.replacement_ai_name())
+
 		SSblackbox.record_feedback("amount", "ais_created", 1)
 		qdel(W)
 		to_chat(user, span_notice("AI succesfully uploaded."))
@@ -197,7 +199,14 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		data["current_ai_ref"] = REF(user)
 
 	for(var/mob/living/silicon/ai/A in GLOB.ai_list)
-		data["ais"] += list(list("name" = A.name, "ref" = REF(A), "can_download" = A.can_download, "health" = A.health, "active" = A.mind ? TRUE : FALSE, "in_core" = istype(A.loc, /obj/machinery/ai/data_core)))
+		data["ais"] += list(list(
+			"name" = A.name,
+			"ref" = REF(A),
+			"can_download" = A.can_download,
+			"health" = A.health,
+			"active" = A.mind ? TRUE : FALSE,
+			"in_core" = istype(A.loc, /obj/machinery/ai/data_core),
+		))
 
 	return data
 
@@ -233,17 +242,19 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	if(..())
 		return
 
+	var/mob/user = ui.user
+
 	if(!cleared_for_use)
 		if(action == "clear_for_use")
 			var/code = text2num(params["control_code"])
 
 			var/length_of_number = round(log(10, code) + 1)
 			if(length_of_number < 6)
-				to_chat(usr, span_warning("Incorrect code. Too short"))
+				to_chat(user, span_warning("Incorrect code. Too short"))
 				return
 
 			if(length_of_number > 6)
-				to_chat(usr, span_warning("Incorrect code. Too long"))
+				to_chat(user, span_warning("Incorrect code. Too long"))
 				return
 
 
@@ -251,29 +262,29 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 				return
 
 			if(!is_station_level(z))
-				to_chat(usr, span_warning("Unable to connect to NT Servers. Please verify you are onboard the station."))
+				to_chat(user, span_warning("Unable to connect to NT Servers. Please verify you are onboard the station."))
 				return
 
 			if(code == text2num(GLOB.ai_control_code))
 				cleared_for_use = TRUE
 			else
-				to_chat(usr, span_warning("Incorrect code. Make sure you have the latest one."))
+				to_chat(user, span_warning("Incorrect code. Make sure you have the latest one."))
 
 		return
 
 	if(!authenticated)
 		if(action == "log_in")
-			if(issilicon(usr))
+			if(issilicon(user))
 				authenticated = TRUE
 				return
 
-			if(isAdminGhostAI(usr))
+			if(isAdminGhostAI(user))
 				authenticated = TRUE
 
 			if(obj_flags & EMAGGED)
 				authenticated = TRUE
 
-			var/mob/living/carbon/human/H = usr
+			var/mob/living/carbon/human/H = user
 			if(!istype(H))
 				return
 
@@ -284,11 +295,11 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 
 			var/length_of_number = round(log(10, code) + 1)
 			if(length_of_number < 6)
-				to_chat(usr, span_warning("Incorrect code. Too short."))
+				to_chat(user, span_warning("Incorrect code. Too short."))
 				return
 
 			if(length_of_number > 6)
-				to_chat(usr, span_warning("Incorrect code. Too long."))
+				to_chat(user, span_warning("Incorrect code. Too long."))
 				return
 
 			if(!GLOB.ai_control_code)
@@ -303,7 +314,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 				priority_announce(msg, sender_override = "Central Cyber Security Update", has_important_message = TRUE, encode_text = FALSE)
 				GLOB.ai_control_code = null
 			else
-				to_chat(usr, span_warning("Incorrect code. Make sure you have the latest one."))
+				to_chat(user, span_warning("Incorrect code. Make sure you have the latest one."))
 		return
 
 	switch(action)
@@ -320,19 +331,19 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 			upload_ai()
 
 		if("eject_intellicard")
-			if(issilicon(usr))
-				to_chat(usr, span_warning("You're unable to remotely eject the IntelliCard!"))
+			if(issilicon(user))
+				to_chat(user, span_warning("You're unable to remotely eject the IntelliCard!"))
 				return
 			stop_download()
 			intellicard.forceMove(get_turf(src))
 			intellicard = null
 
 		if("stop_download")
-			if(isAI(usr))
-				to_chat(usr, span_warning("You need physical access to stop the download!"))
+			if(isAI(user))
+				to_chat(user, span_warning("You need physical access to stop the download!"))
 				return
 			if(!is_station_level(z))
-				to_chat(usr, span_warning("No connection. Try again later."))
+				to_chat(user, span_warning("No connection. Try again later."))
 				return
 			stop_download()
 
@@ -347,17 +358,17 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 			if(!target.can_download)
 				return
 			if(!is_station_level(z))
-				to_chat(usr, span_warning("No connection. Try again later."))
+				to_chat(user, span_warning("No connection. Try again later."))
 				return
 			downloading = target
 			to_chat(downloading, span_userdanger("Warning! Someone is attempting to download you from [get_area(src)]! (<a href='?src=[REF(downloading)];instant_download=1;console=[REF(src)]'>Click here to finish download instantly</a>)"))
-			user_downloading = usr
+			user_downloading = user
 			download_progress = 0
 			. = TRUE
 		if("skip_download")
 			if(!downloading)
 				return
-			if(usr == downloading)
+			if(user == downloading)
 				finish_download()
 
 /obj/item/paper/ai_control_code
