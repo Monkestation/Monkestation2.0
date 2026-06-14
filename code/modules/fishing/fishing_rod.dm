@@ -611,12 +611,16 @@
 	. = ..()
 	our_line = owner.create_fishing_line(src)
 
+/obj/projectile/fishing_cast/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
+	QDEL_NULL(owner.fishing_line) //we need to delete the old beam datum, otherwise it won't let you fish.
+	owner.casting = FALSE //set the casting value to false so we don't delete the new fishing line (different target) on Destroy()
+
 /obj/projectile/fishing_cast/Destroy()
 	. = ..()
-	QDEL_NULL(our_line)
+	if(owner?.casting)
+		owner.casting = FALSE
 	owner?.casting = FALSE
-
-
 
 /datum/beam/fishing_line
 	// Is the fishing rod held in left side hand

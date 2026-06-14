@@ -35,10 +35,10 @@
 
 /datum/element/lazy_fishing_spot/proc/link_to_fish_porter(atom/source, mob/user, obj/item/multitool/tool)
 	SIGNAL_HANDLER
-	if(!istype(tool.buffer, /obj/machinery/fishing_portal_generator))
+	if(!istype(multitool_get_buffer(tool), /obj/machinery/fishing_portal_generator))
 		return
 	var/datum/fish_source/fish_source = GLOB.preset_fish_sources[configuration]
-	var/obj/machinery/fishing_portal_generator/portal = tool.buffer
+	var/obj/machinery/fishing_portal_generator/portal = multitool_get_buffer(tool)
 	return portal.link_fishing_spot(fish_source, source, user)
 
 /datum/element/lazy_fishing_spot/proc/fish_released(datum/source, obj/item/fish/fish, mob/living/releaser)

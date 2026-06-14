@@ -63,8 +63,8 @@
 
 /datum/component/fishing_spot/proc/link_to_fish_porter(atom/source, mob/user, obj/item/multitool/tool)
 	SIGNAL_HANDLER
-	if(istype(tool.buffer, /obj/machinery/fishing_portal_generator))
-		var/obj/machinery/fishing_portal_generator/portal = tool.buffer
+	if(istype(multitool_get_buffer(tool), /obj/machinery/fishing_portal_generator))
+		var/obj/machinery/fishing_portal_generator/portal = multitool_get_buffer(tool)
 		return portal.link_fishing_spot(fish_source, source, user)
 
 /datum/component/fishing_spot/proc/fish_released(datum/source, obj/item/fish/fish, mob/living/releaser)

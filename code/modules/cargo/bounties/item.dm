@@ -22,7 +22,7 @@
 		return FALSE
 	return shipped_count < required_count
 
-datum/bounty/item/ship(obj/shipped)
+/datum/bounty/item/ship(obj/shipped)
 	if(!applies_to(shipped))
 		return FALSE
 	if(istype(shipped,/obj/item/stack))

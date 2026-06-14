@@ -65,7 +65,7 @@
 	if(machine_stat & NOPOWER)
 		balloon_alert(user, "no power!")
 		return ITEM_INTERACT_BLOCKING
-	var/unlink = tool.buffer == src
+	var/unlink = multitool_get_buffer(tool) == src
 	tool.set_buffer(unlink ? null : src)
 	balloon_alert(user, "fish-porter [unlink ? "un" : ""]linked")
 	if(!unlink)
