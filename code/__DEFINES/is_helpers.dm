@@ -121,6 +121,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isteratoma(A) (is_species(A, /datum/species/teratoma)) //Monkestation Addition
 #define isapid(A) (is_species(A, /datum/species/apid)) //Monkestation Addition
 #define issimianspecies(A) (is_species(A, /datum/species/monkey/simian))
+#define isnabber(A) (is_species(A, /datum/species/nabber))
 
 //More carbon mobs
 #define isalien(A) (istype(A, /mob/living/carbon/alien))

@@ -207,3 +207,8 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	apply_organ_damage(40/severity)
+
+/obj/item/organ/internal/ears/nabber
+	name = "nabber ears"
+	icon = 'icons/obj/medical/organs/nabber_organs.dmi'
+	icon_state = "ears"

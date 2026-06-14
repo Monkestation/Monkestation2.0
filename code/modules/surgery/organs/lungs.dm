@@ -1143,6 +1143,21 @@
 	breath_out.gases[/datum/gas/oxygen][MOLES] += gas_breathed
 	breath_out.gases[/datum/gas/hydrogen][MOLES] += gas_breathed * 2
 
+/obj/item/organ/internal/lungs/nabber
+	name = "spiracle lungs" //Insects breathe differently
+	icon = 'icons/obj/medical/organs/nabber_organs.dmi'
+	icon_state = "lungs"
+
+	cold_level_warning_threshold = 180
+	cold_level_hazard_threshold = 140
+	cold_level_danger_threshold = 100
+
+	heat_level_warning_threshold = 300
+	heat_level_hazard_threshold = 440
+	heat_level_danger_threshold = 600
+
+	safe_plasma_min = 0 //they heal oxygen damage from liquid plasma
+
 #undef BREATH_RELATIONSHIP_INITIAL_GAS
 #undef BREATH_RELATIONSHIP_CONVERT
 #undef BREATH_RELATIONSHIP_MULTIPLIER

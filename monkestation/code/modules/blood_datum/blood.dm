@@ -358,3 +358,8 @@ PROCESSING_SUBSYSTEM_DEF(blood_drying)
 /datum/blood_type/crew/bloodsucker
 	name = "B++"
 	reagent_type = /datum/reagent/blood/bloodsucker
+
+/datum/blood_type/crew/nabber
+	name = "H"
+	compatible_types = list(/datum/blood_type/crew/nabber)
+	//Maybe make it a unique color

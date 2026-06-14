@@ -703,6 +703,16 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 								/datum/language/wawa = list(LANGUAGE_MIND))
 	spoken_languages = list(/datum/language/wawa = list(LANGUAGE_MIND))
 
+/datum/language_holder/nabber
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/serpentid = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/serpentid = list(LANGUAGE_ATOM),
+	)
+
 /datum/language_holder/empty
 	understood_languages = null
 	spoken_languages = null

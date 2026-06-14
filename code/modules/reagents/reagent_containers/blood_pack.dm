@@ -75,6 +75,13 @@
 /obj/item/reagent_containers/blood/spider
 	blood_type = /datum/blood_type/crew/spider
 
+/obj/item/reagent_containers/blood/nabber
+	blood_type = /datum/blood_type/crew/nabber
+
+/obj/item/reagent_containers/blood/nabber/examine()
+	. = ..()
+	. += span_notice("A thick blood with traces of plasma. The label says it's meant for Serpentids.")
+
 /obj/item/reagent_containers/blood/snail
 	blood_type = /datum/blood_type/snail
 
