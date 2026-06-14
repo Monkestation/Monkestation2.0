@@ -387,7 +387,7 @@
 	. = ..()
 	SStgui.update_uis(src)
 
-/obj/machinery/smartfridge/ui_act(action, params)
+/obj/machinery/smartfridge/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

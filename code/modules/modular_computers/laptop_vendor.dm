@@ -44,7 +44,7 @@
 		total_price = 199
 	return FALSE
 
-/obj/machinery/lapvend/ui_act(action, params)
+/obj/machinery/lapvend/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

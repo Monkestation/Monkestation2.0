@@ -606,7 +606,7 @@
 	data["beakerContents"] = beakerContents
 	return data
 
-/obj/machinery/cryo_cell/ui_act(action, params)
+/obj/machinery/cryo_cell/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
