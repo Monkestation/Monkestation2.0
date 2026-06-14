@@ -28893,8 +28893,8 @@
 /area/centcom/central_command_areas/admin)
 "qIf" = (
 /obj/machinery/status_display/ai_core{
-    name = "MATRIARCH";
-    emotion = "Angel"
+	name = "MATRIARCH";
+	emotion = "Angel"
 },
 /turf/open/floor/circuit/green/anim,
 /area/centcom/central_command_areas/admin)
