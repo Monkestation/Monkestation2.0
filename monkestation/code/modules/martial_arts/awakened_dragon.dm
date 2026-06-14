@@ -23,7 +23,6 @@
 	var/titled_name
 	var/list/datum/weakref/all_bodies = list()
 	instant_grab = TRUE
-	snap_grab_state = GRAB_NECK //you can kill people a little faster
 	damage_sharpness = TRUE
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/can_deflect(mob/living/carp_user, check_intent = TRUE)

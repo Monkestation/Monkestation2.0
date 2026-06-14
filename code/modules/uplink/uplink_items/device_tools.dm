@@ -345,6 +345,8 @@
 	cost = 40
 	surplus = 0 // Two person item
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
+	cant_discount = TRUE
+	progression_minimum = 30 MINUTES
 
 /datum/uplink_item/device_tools/dehy_carp
 	name = "Dehydrated Space Carp"
@@ -361,12 +363,19 @@
 
 /datum/uplink_item/device_tools/syndicate_hypospray
 	name = "Syndicate Hypospray"
-	desc = "A advanced hypospray, used to inject chemicals into yourself or other people, based off of stolen designs. Capable of loading large vials, and piercing armor."
+	desc = "An advanced hypospray based off stolen designs that injects chemicals into yourself or other people. Capable of loading large vials and piercing armor."
 	item = /obj/item/hypospray/combat
 	cost = 3
 
-/datum/uplink_item/device_tools/syndicate_hypospray
+/datum/uplink_item/device_tools/syndicate_hypospray_vials
 	name = "Syndicate Combat Hypospray Vials"
 	desc = "A box containing 6 bluespace vials, and a beaker full of premixed healing chems."
 	item = /obj/item/storage/box/evilmeds/evilhypos
 	cost = 1
+
+/datum/uplink_item/device_tools/jaws_of_death
+	name = "Jaws of Death"
+	desc = "Based on a Nanotrasen model, this powerful tool can be used as both a crowbar and a pair of wirecutters. \
+	In its crowbar configuration, it can be used to force open airlocks. Very useful for entering the station or its departments."
+	item = /obj/item/crowbar/power/death
+	cost = 3

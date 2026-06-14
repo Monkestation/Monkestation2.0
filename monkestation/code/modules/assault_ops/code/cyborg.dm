@@ -87,7 +87,6 @@
 /obj/item/robot_model/saboteur/operative
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
-		/obj/item/borg/sight/thermal,
 		/obj/item/construction/rcd/borg/syndicate,
 		/obj/item/pipe_dispenser,
 		/obj/item/extinguisher,
@@ -115,10 +114,6 @@
 	desc = "An integrated tracking device, jury-rigged to search for living assault operatives."
 	flags_1 = NONE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-
-/obj/item/pinpointer/operative_cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/pinpointer/operative_cyborg/cyborg_unequip(mob/user)
 	if(!active)

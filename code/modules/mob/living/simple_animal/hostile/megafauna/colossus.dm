@@ -55,6 +55,7 @@
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
 	death_message = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
+	hardmode_reward = /obj/item/gem/colossus
 	/// Spiral shots ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/colossus/spiral_shots
 	/// Random shots ablity
@@ -93,25 +94,69 @@
 	QDEL_NULL(dir_shots)
 	return ..()
 
+/mob/living/simple_animal/hostile/megafauna/colossus/activate_hardmode()
+	. = ..()
+	spiral_shots.projectile_type = /obj/projectile/colossus/fast
+	random_shots.projectile_type = /obj/projectile/colossus/fast
+	random_shots.projectile_amount *= 2
+	shotgun_blast.projectile_type = /obj/projectile/colossus/fast
+	shotgun_blast.telegraph_time *= 0.5
+	dir_shots.projectile_type = /obj/projectile/colossus/fast
+	dir_shots.boosted = TRUE
+	dir_shots.firing_time *= 0.5
+
+/mob/living/simple_animal/hostile/megafauna/colossus/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(!hardmode || QDELETED(src) || is_mining_level(new_turf.z))
+		return
+
+	var/list/mining_levels = SSmapping.levels_by_trait(ZTRAIT_MINING)
+	if(!mining_levels.len)
+		return
+	INVOKE_ASYNC(src, PROC_REF(teleport_away), pick(mining_levels))
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/teleport_away(target_z = 1)
+	var/turf/target_turf
+	for(var/i in 1 to 100)
+		target_turf = locate(rand(1,255), rand(1,255), target_z)
+		if(istype(target_turf, /turf/open/misc/asteroid))
+			break
+
+	var/datum/effect_system/spark_spread/quantum/sparks = new()
+	sparks.set_up(5, 1, loc)
+	sparks.start()
+	playsound(loc, 'sound/magic/blink.ogg', 50, TRUE)
+	visible_message(span_boldwarning("[src] vanishes with blue sparks!"))
+
+	forceMove(target_turf)
+	sparks = new()
+	sparks.set_up(5, 1, target_turf)
+	sparks.start()
+	playsound(target_turf, 'sound/magic/blink.ogg', 50, TRUE)
+	visible_message(span_boldwarning("[src] appears with blue sparks dancing around them!"))
+	adjustHealth(-2500)
+
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
 	anger_modifier = clamp(((maxHealth - health) / 40), 0, 20)
 
 	if(client)
 		return
 
-	if(enrage(target))
-		if(move_to_delay == initial(move_to_delay))
-			visible_message(span_colossus("\"<b>You can't dodge.</b>\""))
-		ranged_cooldown = world.time + 3 SECONDS
-		telegraph()
-		dir_shots.fire_in_directions(src, target, GLOB.alldirs)
-		move_to_delay = 3
-		return
-	else
-		move_to_delay = initial(move_to_delay)
+	if(!hardmode)
+		if(enrage(target))
+			if(move_to_delay == initial(move_to_delay))
+				visible_message(span_colossus("\"<b>You can't dodge.</b>\""))
+			ranged_cooldown = world.time + 3 SECONDS
+			telegraph()
+			dir_shots.fire_in_directions(src, target, GLOB.alldirs)
+			move_to_delay = 3
+			return
+		else
+			move_to_delay = initial(move_to_delay)
 
 	if(health <= maxHealth / 10 && final_available)
-		final_available = FALSE
+		if(!hardmode)
+			final_available = FALSE
 		colossus_final.Trigger(target = target)
 	else if(prob(20 + anger_modifier)) //Major attack
 		spiral_shots.Trigger(target = target)
@@ -210,6 +255,9 @@
 			SSexplosions.med_mov_atom += target
 		else
 			SSexplosions.medturf += target
+
+/obj/projectile/colossus/fast
+	speed = 1
 
 ///Anomolous Crystal///
 

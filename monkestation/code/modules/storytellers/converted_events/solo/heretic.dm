@@ -39,7 +39,7 @@
 		JOB_WARDEN,
 		JOB_CHAPLAIN,
 	)
-	required_enemies = 6
+	required_enemies = 5
 	weight = 5
 	min_players = 20
 

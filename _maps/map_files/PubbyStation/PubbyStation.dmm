@@ -16669,8 +16669,8 @@
 /obj/structure/table/glass,
 /obj/item/disk/vacuum_upgrade/biomass,
 /obj/item/disk/vacuum_upgrade/biomass,
-/obj/item/vacuum_pack,
-/obj/item/vacuum_pack,
+/obj/item/vacuum_pack/backpack,
+/obj/item/vacuum_pack/backpack,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "bqH" = (
@@ -32501,6 +32501,18 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
+"fFy" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/effect/landmark/navigate_destination{
+	location = "Evacuation"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "fFF" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
@@ -53586,10 +53598,10 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/effect/landmark/navigate_destination/dockesc,
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port"
 	},
+/obj/effect/landmark/navigate_destination/dockesc,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
 "wDx" = (
@@ -76719,7 +76731,7 @@ aRB
 aRB
 aOs
 aML
-xUX
+fFy
 bcl
 aOs
 hXW

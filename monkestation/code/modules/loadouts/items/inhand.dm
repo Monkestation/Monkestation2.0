@@ -89,7 +89,7 @@ GLOBAL_LIST_INIT(loadout_inhand_items, generate_loadout_items(/datum/loadout_ite
 
 /datum/loadout_item/inhand/umbrella
 	name = "Umbrella (recolorable)"
-	item_path = /obj/item/umbrella
+	item_path = /obj/item/umbrella/consistent
 
 /datum/loadout_item/inhand/parasol
 	name = "Parasol"

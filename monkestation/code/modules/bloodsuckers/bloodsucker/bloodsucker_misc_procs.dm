@@ -38,7 +38,10 @@
 	if(!silent)
 		owner.current.playsound_local(null, 'monkestation/sound/bloodsuckers/lunge_warn.ogg', 100, FALSE, pressure_affected = FALSE)
 		to_chat(owner.current, span_cultboldtalic("You have broken the Masquerade!"))
-		to_chat(owner.current, span_warning("Bloodsucker Tip: When you break the Masquerade, you become open for termination by fellow Bloodsuckers, and your Vassals are no longer completely loyal to you, as other Bloodsuckers can steal them for themselves!"))
+		to_chat(owner.current, span_warning(
+			"Bloodsucker Tip: When you break the Masquerade, you become open for termination by fellow Bloodsuckers, \
+			and your Vassals are no longer completely loyal to you, as other Bloodsuckers can steal them for themselves!")
+		)
 		SEND_GLOBAL_SIGNAL(COMSIG_BLOODSUCKER_BROKE_MASQUERADE, src)
 	broke_masquerade = TRUE
 	antag_hud_name = "masquerade_broken"
@@ -58,7 +61,10 @@
 	if(masquerade_infractions >= 3)
 		break_masquerade()
 	else
-		to_chat(owner.current, span_cultbold("You violated the Masquerade! Break the Masquerade [3 - masquerade_infractions] more times and you will become a criminal to the Bloodsucker's Cause!"))
+		to_chat(owner.current, span_cultbold(
+			"You violated the Masquerade! \
+			Break the Masquerade [3 - masquerade_infractions] more times and you will become a criminal to the Bloodsucker's Cause!")
+		)
 
 /datum/antagonist/bloodsucker/proc/RankUp()
 	if(!owner?.current)
@@ -70,7 +76,10 @@
 		return
 	// Spend Rank Immediately?
 	if(!istype(owner.current.loc, /obj/structure/closet/crate/coffin))
-		to_chat(owner, span_notice("<EM>You have grown more ancient! Sleep in a coffin (or put your Favorite Vassal on a persuasion rack for Ventrue) that you have claimed to thicken your blood and become more powerful.</EM>"))
+		to_chat(owner, span_notice(
+			"<EM>You have grown more ancient! \
+			Sleep in a coffin (or put your Favorite Vassal on a persuasion rack for Ventrue) that you have claimed to thicken your blood and become more powerful.</EM>")
+		)
 		if(bloodsucker_level_unspent >= 2)
 			to_chat(owner, span_announce("Bloodsucker Tip: If you cannot find or steal a coffin to use, you can build one from wood or metal."))
 		return
@@ -122,7 +131,10 @@
 	// Checks if we have drunk enough blood from the living to allow us to gain a level up as well as checking if we have enough blood to actually use on the level up
 	if(blood_level_gain < level_cost || bloodsucker_blood_volume < level_cost)
 		return
-	if(tgui_alert(owner.current, "You have drunk enough blood from the living to thicken your blood, this will cost you [level_cost] blood and give you another level", "Thicken your blood?", list("Yes", "No")) != "Yes") //asks user if they want to spend their blood on a level
+	if(tgui_alert(owner.current,
+		"You have drunk enough blood from the living to thicken your blood, this will cost you [level_cost] blood and give you another level",
+		"Thicken your blood?", list("Yes", "No")) != "Yes"
+	) //asks user if they want to spend their blood on a level
 		return
 	// check again to make sure nothing weird has happened in between
 	level_cost = get_level_cost()
