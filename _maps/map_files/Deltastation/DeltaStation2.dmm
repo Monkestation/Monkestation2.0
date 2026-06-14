@@ -1180,7 +1180,6 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter/room)
 "anC" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Access"
 	},
@@ -16051,7 +16050,6 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/storage)
 "dNg" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Antechamber"
 	},
@@ -37133,7 +37131,6 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "iGI" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "MiniSat Maintenance"
 	},
@@ -42303,7 +42300,6 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
 "jQL" = (
@@ -43157,12 +43153,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/courtroom)
-"kan" = (
-/obj/machinery/porta_turret/ai,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/firealarm/directional/east,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "kaw" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/sandy_dirt,
@@ -50548,7 +50538,6 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical/medsci)
 "lKC" = (
-/obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
 	name = "MiniSat Chamber"
@@ -51385,7 +51374,6 @@
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "lUB" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
 	name = "MiniSat Upload"
 	},
@@ -75295,12 +75283,6 @@
 	},
 /turf/open/floor/carpet/grimey,
 /area/station/service/chapel/office)
-"rKC" = (
-/obj/item/kirbyplants/random,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/firealarm/directional/west,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "rKF" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -81822,7 +81804,6 @@
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/bomb)
 "tnG" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "MiniSat Antechamber"
 	},
@@ -83510,11 +83491,6 @@
 /obj/effect/landmark/start/librarian,
 /turf/open/floor/carpet/green,
 /area/station/service/library)
-"tHQ" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/firealarm/directional/south,
-/turf/open/floor/iron/dark/telecomms,
-/area/station/ai_monitored/turret_protected/ai)
 "tHV" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/department/medical/morgue)
@@ -85660,7 +85636,6 @@
 "uhG" = (
 /obj/machinery/porta_turret/ai,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/firealarm/directional/north,
 /obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -110565,7 +110540,7 @@ tfp
 lMy
 dQG
 vWN
-tHQ
+kXJ
 bPC
 uNh
 bTu
@@ -111856,7 +111831,7 @@ dKK
 asa
 uQY
 asa
-kan
+qTF
 bPC
 uhG
 yaW
@@ -112369,7 +112344,7 @@ bPC
 uNh
 upp
 hzJ
-rKC
+uNh
 tIb
 bPC
 cdt
