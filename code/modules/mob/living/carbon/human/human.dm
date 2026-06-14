@@ -382,7 +382,7 @@
 				return
 
 			if(href_list["add_crime"])
-				var/crime_name = tgui_input_text(human_user, "Crime name", "Security HUD")
+				var/crime_name = tgui_input_text(human_user, "Crime name", "Security HUD", max_length = MAX_CRIME_NAME_LEN)
 				if(!target_record || !crime_name || !allowed_access || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 
