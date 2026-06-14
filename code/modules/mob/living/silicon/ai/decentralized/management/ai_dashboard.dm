@@ -35,9 +35,12 @@
 	owner = null
 	cpu_usage = null
 	ram_usage = null
-	QDEL_NULL(available_projects)
-	QDEL_NULL(completed_projects)
-	QDEL_NULL(running_projects)
+	if(LAZYLEN(available_projects))
+		QDEL_NULL(available_projects)
+	if(LAZYLEN(completed_projects))
+		QDEL_NULL(completed_projects)
+	if(LAZYLEN(running_projects))
+		QDEL_NULL(running_projects)
 	return ..()
 
 
