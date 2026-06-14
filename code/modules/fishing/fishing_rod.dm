@@ -550,7 +550,7 @@
 	ui_description = "This rod has an infinite supply of synth-bait. Also doubles as an Experi-Scanner for fish."
 	icon_state = "fishing_rod_science"
 	reel_overlay = "reel_science"
-	bait = /obj/item/food/bait/doughball/synthetic
+	bait = /obj/item/food/bait/doughball/synthetic/unconsumable
 
 /obj/item/fishing_rod/tech/Initialize(mapload)
 	. = ..()

@@ -1,4 +1,6 @@
 /datum/fish_source/ocean
+	radial_state = "seaboat"
+	overlay_state = "portal_ocean"
 	fish_table = list(
 		FISHING_DUD = 15,
 		/obj/item/coin/gold = 7,
@@ -22,10 +24,14 @@
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
 
 /datum/fish_source/ocean/beach
+	radial_state = "palm_beach"
+	overlay_state = "portal_beach"
 	catalog_description = "Beach shore water"
 
 /datum/fish_source/ice_fishing
 	catalog_description = "Ice-covered water"
+	radial_state = "ice"
+	overlay_state = "portal_ocean"
 	fish_table = list(
 		FISHING_DUD = 4,
 		/obj/item/fish/arctic_char = 5,
@@ -37,6 +43,8 @@
 
 /datum/fish_source/river
 	catalog_description = "River water"
+	radial_state = "river"
+	overlay_state = "portal_river"
 	fish_table = list(
 		FISHING_DUD = 4,
 		/obj/item/fish/goldfish = 5,
@@ -52,6 +60,7 @@
 
 /datum/fish_source/sand
 	catalog_description = "Sand"
+	radial_state = "palm_beach"
 	fish_table = list(
 		FISHING_DUD = 8,
 		/obj/item/fish/sand_crab = 10,
@@ -63,6 +72,7 @@
 
 /datum/fish_source/cursed_spring
 	catalog_description = null //it's a secret (sorta, I know you're reading this)
+	radial_state = "cursed"
 	fish_table = list(
 		FISHING_DUD = 2,
 		/obj/item/fish/soul = 3,
@@ -279,6 +289,8 @@
 /datum/fish_source/lavaland
 	catalog_description = "Lava vents"
 	background = "background_lavaland"
+	radial_state = "lava"
+	overlay_state = "portal_lava"
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/stack/ore/slag = 20,
@@ -323,6 +335,7 @@
 
 /datum/fish_source/moisture_trap
 	catalog_description = "Moisture trap basins"
+	radial_state = "garbage"
 	fish_table = list(
 		FISHING_DUD = 20,
 		/obj/item/fish/ratfish = 10,
@@ -332,6 +345,7 @@
 
 /datum/fish_source/toilet
 	catalog_description = "Station toilets"
+	radial_state = "toilet"
 	duds = list("ewww... nothing", "it was nothing", "it was toilet paper", "it was flushed away", "the hook is empty", "where's the damn money?!")
 	fish_table = list(
 		FISHING_DUD = 18,
@@ -382,6 +396,8 @@
 
 /datum/fish_source/oil_well
 	catalog_description = "Oil wells"
+	radial_state = "oil"
+	overlay_state = "portal_chasm" //close enough to pitch black
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/boned = 10,

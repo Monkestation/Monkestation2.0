@@ -50,3 +50,16 @@
 				CRASH("Unknown bait identifier in fish favourite/disliked list")
 	else
 		return HAS_TRAIT(bait, identifier)
+
+/**
+ * Bound to the tech fishing rod, from which cannot be removed,
+ * Bait-related preferences and traits, both negative and positive,
+ * should be ignored by this bait.
+ * Otherwise it'd be hard/impossible to cath some fish with it,
+ * making that rod a shoddy choice in the long run.
+ */
+/obj/item/food/bait/doughball/synthetic/unconsumable
+
+/obj/item/food/bait/doughball/synthetic/unconsumable/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_BAIT_UNCONSUMABLE, INNATE_TRAIT)
