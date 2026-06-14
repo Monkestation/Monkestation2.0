@@ -5779,7 +5779,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,

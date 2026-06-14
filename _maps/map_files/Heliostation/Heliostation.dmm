@@ -67428,7 +67428,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "sCJ" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 8
 	},
 /turf/open/floor/circuit/telecomms,

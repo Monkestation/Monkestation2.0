@@ -434,7 +434,7 @@
 	network = list("minisat")
 	},
 /obj/machinery/light/directional/east,
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 8
 	},
 /turf/open/floor/iron/white/telecomms,

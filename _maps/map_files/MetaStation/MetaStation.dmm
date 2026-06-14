@@ -54501,7 +54501,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/primary/central)
 "sLN" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 8
 	},
 /turf/open/floor/circuit/green/telecomms,

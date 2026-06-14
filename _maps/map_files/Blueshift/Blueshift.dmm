@@ -11868,7 +11868,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "cnR" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 8
 	},
 /turf/open/floor/circuit/green/telecomms,

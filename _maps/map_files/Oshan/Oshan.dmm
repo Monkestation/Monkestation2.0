@@ -61618,7 +61618,7 @@
 /turf/open/floor/grass,
 /area/station/engineering/atmos)
 "sUA" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 8
 	},
 /turf/open/floor/circuit/red/telecomms,
