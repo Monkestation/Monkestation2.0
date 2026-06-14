@@ -335,7 +335,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 				to_chat(user, span_warning("You're unable to remotely eject the IntelliCard!"))
 				return
 			stop_download()
-			intellicard.forceMove(get_turf(src))
+			user.transferItemToLoc(intellicard, drop_location())
 			intellicard = null
 
 		if("stop_download")

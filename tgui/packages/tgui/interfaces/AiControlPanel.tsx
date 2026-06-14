@@ -164,7 +164,7 @@ export const AiControlPanel = (props) => {
                             <Button
                               color="good"
                               icon="upload"
-                              disabled={can_upload}
+                              disabled={!can_upload}
                               tooltip={
                                 !can_upload
                                   ? 'A common cause of upload being unavailable is a lack of any active AI data cores.'
