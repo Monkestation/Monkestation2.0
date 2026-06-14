@@ -6,7 +6,7 @@
 /obj/structure/aquarium
 	name = "aquarium"
 	density = TRUE
-	anchored = TRUE
+	anchored = FALSE
 
 	icon = 'icons/obj/aquarium.dmi'
 	icon_state = "aquarium_base"
@@ -19,7 +19,7 @@
 	var/max_fluid_temp = MAX_AQUARIUM_TEMP
 
 	/// Can fish reproduce in this quarium.
-	var/allow_breeding = FALSE
+	var/allow_breeding = TRUE
 
 	var/glass_icon_state = "aquarium_glass"
 	var/broken_glass_icon_state = "aquarium_glass_broken"

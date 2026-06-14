@@ -50,8 +50,9 @@
 	if(!do_after(living_parent, fishing_speed, target = target) && !QDELETED(fish_spot))
 		qdel(lure)
 		return
-	var/reward_loot = pick_weight(fish_spot.fish_table)
-	fish_spot.dispense_reward(reward_loot, parent, target)
+	var/reward_loot = fish_spot.roll_reward(our_rod, parent)
+	if(ispath(reward_loot))
+		fish_spot.dispense_reward(reward_loot, parent, target)
 	playsound(lure, 'sound/effects/bigsplash.ogg', 100)
 	qdel(lure)
 

@@ -117,7 +117,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 
 
 	// Difficulty modifier added by the fisher's skill level
-	if(!challenge || !(challenge.special_effects & FISHING_MINIGAME_RULE_NO_EXP))
+	if(!(challenge?.special_effects & FISHING_MINIGAME_RULE_NO_EXP))
 		. += fisherman.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)
 
 	// Difficulty modifier added by the rod
