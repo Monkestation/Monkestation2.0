@@ -135,12 +135,11 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 		if(!warning_sent && COOLDOWN_FINISHED(src, warning_cooldown))
 			warning_sent = TRUE
 			COOLDOWN_START(src, warning_cooldown, AI_DATA_CORE_WARNING_COOLDOWN)
-			to_chat(GLOB.ai_list, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Please contact technical support."))
 			for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
 				if(!AI.mind && AI.deployed_shell.mind)
-					to_chat(AI.deployed_shell, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
-				else
 					to_chat(AI, span_userdanger("<A HREF=?src=[REF(AI)];go_to_machine=[REF(src)]>Data core</A> in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
+				else
+					to_chat(AI.deployed_shell, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
 				AI.playsound_local(AI, 'sound/machines/engine_alert2.ogg', 30)
 
 	if(!(machine_stat & (BROKEN|EMPED)) && has_power() && !disableheat)

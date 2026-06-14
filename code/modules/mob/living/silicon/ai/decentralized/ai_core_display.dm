@@ -14,6 +14,7 @@
 	. = ..()
 	if(is_station_level(z))
 		GLOB.ai_core_displays.Add(src)
+	set_ai(resolve_ai_icon(emotion))
 
 /obj/machinery/status_display/ai_core/Destroy()
 	GLOB.ai_core_displays.Remove(src)
@@ -52,7 +53,3 @@
 		icon = initial(icon)
 		icon_state = initial(icon_state)
 		return PROCESS_KILL
-
-/obj/machinery/status_display/ai_core/matriarch/Initialize(mapload)
-	. = ..()
-	set_ai(resolve_ai_icon("Angel"))

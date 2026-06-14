@@ -8227,7 +8227,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
 "cvh" = (
-/obj/effect/landmark/start/ai,
+/obj/machinery/ai/data_core/primary,
 /obj/item/radio/intercom/directional/west{
 	freerange = 1;
 	listening = 0;
@@ -43313,7 +43313,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/effect/landmark/start/signal_technician,
+/obj/effect/landmark/start/network_admin,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "nnl" = (

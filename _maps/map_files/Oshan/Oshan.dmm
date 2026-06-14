@@ -44245,7 +44245,7 @@
 /area/station/maintenance/starboard/central)
 "nDN" = (
 /obj/structure/chair/office,
-/obj/effect/landmark/start/signal_technician,
+/obj/effect/landmark/start/network_admin,
 /turf/open/floor/iron/dark/textured,
 /area/station/tcommsat/computer)
 "nDP" = (
@@ -45728,7 +45728,7 @@
 	pixel_y = 4;
 	frequency = 1447
 	},
-/obj/effect/landmark/start/ai,
+/obj/machinery/ai/data_core/primary,
 /obj/machinery/button/door/directional/north{
 	id = "AI Core shutters";
 	name = "AI Core Shutters Toggle";
@@ -62727,7 +62727,7 @@
 	dir = 8
 	},
 /obj/structure/chair/office,
-/obj/effect/landmark/start/signal_technician,
+/obj/effect/landmark/start/network_admin,
 /turf/open/floor/iron/dark/textured,
 /area/station/tcommsat/computer)
 "tmS" = (

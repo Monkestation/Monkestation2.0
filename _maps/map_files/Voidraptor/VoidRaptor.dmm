@@ -12169,7 +12169,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
-/obj/effect/landmark/start/signal_technician,
+/obj/effect/landmark/start/network_admin,
 /turf/open/floor/engine,
 /area/station/tcommsat/computer)
 "dDf" = (
@@ -31166,7 +31166,7 @@
 	pixel_x = 31;
 	pixel_y = 4
 	},
-/obj/effect/landmark/start/ai,
+/obj/machinery/ai/data_core/primary,
 /obj/machinery/turretid{
 	icon_state = "control_stun";
 	name = "AI Chamber turret control";

@@ -31769,7 +31769,7 @@
 	name = "Common Channel";
 	pixel_y = 4
 	},
-/obj/effect/landmark/start/ai,
+/obj/machinery/ai/data_core/primary,
 /obj/machinery/button/door/directional/north{
 	id = "AI Core shutters";
 	name = "AI Core Shutters Toggle";
@@ -70580,7 +70580,7 @@
 	},
 /obj/machinery/light/small/directional/east,
 /obj/item/radio/intercom/directional/east,
-/obj/effect/landmark/start/signal_technician,
+/obj/effect/landmark/start/network_admin,
 /obj/structure/chair/office,
 /turf/open/floor/engine,
 /area/station/tcommsat/computer)

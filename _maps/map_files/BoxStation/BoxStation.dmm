@@ -19432,7 +19432,7 @@
 	listening = 0;
 	name = "Private Channel"
 	},
-/obj/effect/landmark/start/ai,
+/obj/machinery/ai/data_core/primary,
 /obj/machinery/button/door/directional/south{
 	pixel_x = -24;
 	req_access = list("ai_upload");
@@ -72507,7 +72507,7 @@
 /obj/structure/chair/office/light{
 	dir = 1
 	},
-/obj/effect/landmark/start/signal_technician,
+/obj/effect/landmark/start/network_admin,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "xjx" = (

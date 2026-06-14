@@ -18083,7 +18083,7 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
-/obj/effect/landmark/start/signal_technician,
+/obj/effect/landmark/start/network_admin,
 /turf/open/floor/iron/terracotta,
 /area/station/tcommsat/computer)
 "iHp" = (
@@ -18540,7 +18540,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "iSk" = (
-/obj/effect/landmark/start/ai,
+/obj/machinery/ai/data_core/primary,
 /obj/machinery/button/door/directional/south{
 	id = "aicoredoor";
 	name = "AI Chamber Access Control";
@@ -42435,7 +42435,7 @@
 /obj/structure/chair/office{
 	dir = 1
 	},
-/obj/effect/landmark/start/signal_technician,
+/obj/effect/landmark/start/network_admin,
 /turf/open/floor/iron/terracotta,
 /area/station/tcommsat/computer)
 "ukw" = (
