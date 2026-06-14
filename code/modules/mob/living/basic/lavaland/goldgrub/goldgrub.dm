@@ -34,7 +34,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/grub_spit,
-		/datum/pet_command/follow,
+		/datum/pet_command/follow/start_active,
 		/datum/pet_command/point_targeting/fetch,
 	)
 	/// Do we have emissives?

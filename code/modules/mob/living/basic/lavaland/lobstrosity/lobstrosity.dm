@@ -78,7 +78,7 @@
 		/datum/pet_command/free,
 		/datum/pet_command/point_targeting/attack,
 		charge_command,
-		/datum/pet_command/follow,
+		/datum/pet_command/follow/start_active,
 		/datum/pet_command/point_targeting/fish,
 	)
 	AddComponent(/datum/component/happiness)

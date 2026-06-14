@@ -115,7 +115,7 @@
 		/datum/pet_command/free,
 		/datum/pet_command/point_targeting/attack,
 		/datum/pet_command/point_targeting/breed/gutlunch,
-		/datum/pet_command/follow,
+		/datum/pet_command/follow/start_active,
 		/datum/pet_command/point_targeting/fetch,
 		/datum/pet_command/mine_walls,
 	)
