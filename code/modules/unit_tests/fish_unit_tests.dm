@@ -85,6 +85,15 @@
 /datum/fish_trait/dummy/two
 	incompatible_traits = list(/datum/fish_trait/dummy)
 
+/obj/item/fish/testdummy/crossbreeder
+	fish_traits = list(/datum/fish_trait/crossbreeder)
+
+/obj/item/fish/testdummy/cloner
+	fish_traits = list(/datum/fish_trait/parthenogenesis)
+
+/obj/item/fish/testdummy/sterile
+	fish_traits = list(/datum/fish_trait/no_mating)
+
 /obj/structure/aquarium/traits
 	allow_breeding = TRUE
 	var/obj/item/fish/testdummy/crossbreeder/crossbreeder
@@ -96,25 +105,6 @@
 	crossbreeder = new(src)
 	cloner = new(src)
 	sterile = new(src)
-
-/obj/item/fish/testdummy/crossbreeder
-	fish_traits = list(/datum/fish_trait/crossbreeder)
-
-/obj/item/fish/testdummy/cloner
-	fish_traits = list(/datum/fish_trait/parthenogenesis)
-
-/obj/item/fish/testdummy/sterile
-	fish_traits = list(/datum/fish_trait/no_mating)
-
-/obj/structure/aquarium/evolution
-	allow_breeding = TRUE
-	var/obj/item/fish/testdummy/evolve/evolve
-	var/obj/item/fish/testdummy/evolve_two/evolve_two
-
-/obj/structure/aquarium/evolution/Initialize(mapload)
-	. = ..()
-	evolve = new(src)
-	evolve_two = new(src)
 
 /obj/item/fish/testdummy/evolve
 	compatible_types = list(/obj/item/fish/testdummy/evolve_two)
@@ -137,6 +127,16 @@
 	. = ..()
 	probability = 0 //works around the global list initialization skipping abstract/impossible evolutions.
 
+/obj/structure/aquarium/evolution
+	allow_breeding = TRUE
+	var/obj/item/fish/testdummy/evolve/evolve
+	var/obj/item/fish/testdummy/evolve_two/evolve_two
+
+/obj/structure/aquarium/evolution/Initialize(mapload)
+	. = ..()
+	evolve = new(src)
+	evolve_two = new(src)
+
 ///A test that checks that fishing portals can be linked and function as expected
 /datum/unit_test/fish_portal_gen_linking
 
@@ -154,7 +154,7 @@
 	portal.activate(fish_source, user)
 	TEST_ASSERT(!portal.active, "[portal] was activated with a fish source from an unlinked fishing spot")
 	portal.multitool_act(user, tool)
-	TEST_ASSERT_EQUAL(tool.buffer, portal, "[portal] wasn't set as buffer for [tool]")
+	TEST_ASSERT_EQUAL(get_multitool_buffer(tool), portal, "[portal] wasn't set as buffer for [tool]")
 	tool.melee_attack_chain(user, fishing_spot)
 	TEST_ASSERT_EQUAL(LAZYACCESS(portal.linked_fishing_spots, fishing_spot), fish_source, "We tried linking [portal] to the fishing spot but didn't succeed.")
 	portal.activate(fish_source, user)
