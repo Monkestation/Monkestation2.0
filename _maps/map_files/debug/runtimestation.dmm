@@ -2069,6 +2069,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
+"tl" = (
+/obj/machinery/computer/ai_resource_distribution{
+	dir = 1
+	},
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/station/medical/coldroom)
 "tB" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/south,
@@ -7049,7 +7055,7 @@ Mw
 kt
 AF
 Ck
-qB
+tl
 Mw
 aa
 aa
