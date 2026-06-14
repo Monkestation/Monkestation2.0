@@ -51599,6 +51599,10 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/mask/surgical,
+/obj/item/healthanalyzer{
+	pixel_y = 5;
+	pixel_x = 5
+	},
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "pfh" = (
@@ -64893,6 +64897,7 @@
 	amount = 15
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/hand_labeler,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "tcH" = (
@@ -68580,11 +68585,7 @@
 	c_tag = "Science - Robotics Surgery";
 	network = list("ss13","rd")
 	},
-/obj/item/healthanalyzer{
-	pixel_y = 5;
-	pixel_x = 5
-	},
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray/deployed,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "ukT" = (
@@ -80440,6 +80441,14 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
+"xPu" = (
+/obj/machinery/smartfridge/organ,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "robotics2";
+	name = "Robotics Lab Shutters"
+	},
+/turf/open/floor/plating,
+/area/station/science/robotics/lab)
 "xPH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/tank,
@@ -191352,7 +191361,7 @@ ked
 rrm
 meu
 jxK
-ccO
+xPu
 vGt
 rlu
 hBK
