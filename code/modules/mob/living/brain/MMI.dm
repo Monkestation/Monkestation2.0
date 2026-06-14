@@ -304,7 +304,7 @@
 	holder.update_from_mmi()
 	if(brainmob && brainmob.mind)
 		brainmob.mind.transfer_to(H)
-	holder.insert(H)
+	holder.Insert(H)
 	return TRUE
 
 /obj/item/mmi/syndie
