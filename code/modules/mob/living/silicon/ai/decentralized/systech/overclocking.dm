@@ -33,13 +33,13 @@
 		var/overclock_result = inserted_cpu.valid_overclock()
 		if(overclock_result == SUCCESSFUL_OVERCLOCK)
 			say("Overclock stable.")
-			if(inserted_cpu.last_overclocking_values.len + 1 >= 6)
+			if(length(inserted_cpu.last_overclocking_values) + 1 >= 6)
 				pop(inserted_cpu.last_overclocking_values)
 			inserted_cpu.last_overclocking_values += list(list("speed" = inserted_cpu.speed, "power" = inserted_cpu.power_multiplier, "valid" = TRUE))
 			inserted_cpu.forceMove(drop_location(src))
 			inserted_cpu = null
 		else
-			if(inserted_cpu.last_overclocking_values.len + 1 >= 6)
+			if(length(inserted_cpu.last_overclocking_values) + 1 >= 6)
 				pop(inserted_cpu.last_overclocking_values)
 			say("Unstable overclock.")
 			say("Possible reason: [overclock_result]")

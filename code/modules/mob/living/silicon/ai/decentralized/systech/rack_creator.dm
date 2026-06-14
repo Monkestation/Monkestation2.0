@@ -92,19 +92,18 @@
 		data["total_ram"] += RAM["capacity"]
 
 
-	data["power_usage"] += ram_expansions.len * AI_POWER_PER_CARD
+	data["power_usage"] += length(ram_expansions) * AI_POWER_PER_CARD
 
 	data["possible_ram"] = list()
-	for(var/ram_d in subtypesof(/datum/design/ram))
-		var/datum/design/ram/D = ram_d
+	for(var/datum/design/ram/D as anything in subtypesof(/datum/design/ram))
 		D = SSresearch.techweb_design_by_id(initial(D.id))
 		var/materials_string
-		for(var/mat in D.materials)
+		for(var/mat in D.ram_materials)
 			var/datum/material/M = mat
 			if(!materials_string)
-				materials_string += "[M.name]: [D.materials[mat] / efficiency_coeff]"
+				materials_string += "[M.name]: [D.ram_materials[mat] / efficiency_coeff]"
 			else
-				materials_string += ", [M.name]: [D.materials[mat] / efficiency_coeff]"
+				materials_string += ", [M.name]: [D.ram_materials[mat] / efficiency_coeff]"
 		data["possible_ram"] += list(list("name" = D.name, "capacity" = D.capacity, "cost" = materials_string,"id" = D.id, "unlocked" = SSresearch.science_tech.isDesignResearchedID(D.id) ? TRUE : FALSE))
 
 	data["unlocked_ram"] = 1
@@ -130,11 +129,10 @@
 			var/datum/material/M = mat
 			total_cost[M] += RAM["cost"][M] / efficiency_coeff
 
-	if(!total_cost.len)
+	if(!length(total_cost))
 		return -1
 
 	var/datum/component/material_container/materials = rmat.mat_container
-
 	if(materials.has_materials(total_cost))
 		return total_cost
 	return FALSE
@@ -170,10 +168,10 @@
 /obj/machinery/rack_creator/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/ai_cpu))
 		var/obj/item/ai_cpu/CPU = I
-		if(inserted_cpus.len >= AI_MAX_CPUS_PER_RACK)
+		if(length(inserted_cpus) >= AI_MAX_CPUS_PER_RACK)
 			to_chat(user, span_warning("This rack cannot fit anymore CPUs!"))
 			return ..()
-		if(slotUnlockedCPU(inserted_cpus.len + 1))
+		if(slotUnlockedCPU(length(inserted_cpus) + 1))
 			inserted_cpus += CPU
 			CPU.forceMove(src)
 			return FALSE
@@ -218,7 +216,7 @@
 
 	switch(action)
 		if("insert_cpu")
-			if(inserted_cpus.len >= AI_MAX_CPUS_PER_RACK)
+			if(length(inserted_cpus) >= AI_MAX_CPUS_PER_RACK)
 				to_chat(usr, span_warning("This rack cannot fit anymore CPUs!"))
 				return
 			var/atom/I = usr.get_active_held_item()
@@ -229,7 +227,7 @@
 				to_chat(usr, span_warning("You're not currently holding a CPU!"))
 				return
 			var/obj/item/ai_cpu/cpu = I
-			if(slotUnlockedCPU(inserted_cpus.len + 1))
+			if(slotUnlockedCPU(length(inserted_cpus) + 1))
 				inserted_cpus += cpu
 				cpu.forceMove(src)
 			else
@@ -240,14 +238,14 @@
 			var/index = params["cpu_index"]
 			if(!index)
 				return
-			if(index > inserted_cpus.len || index < 1)
+			if(index > length(inserted_cpus) || index < 1)
 				return
 			var/obj/item/ai_cpu/cpu = inserted_cpus[index]
 			inserted_cpus -= cpu
 			cpu.forceMove(get_turf(src))
 			. = TRUE
 		if("insert_ram")
-			if(ram_expansions.len >= AI_MAX_RAM_PER_RACK)
+			if(length(ram_expansions) >= AI_MAX_RAM_PER_RACK)
 				to_chat(usr, span_warning("This rack cannot fit anymore RAM expansions!"))
 				return
 			var/ram_type = params["ram_type"]
@@ -256,8 +254,12 @@
 			var/datum/design/ram/D = SSresearch.science_tech.isDesignResearchedID(ram_type)
 			if(!D)
 				return
-			if(slotUnlockedRAM(ram_expansions.len + 1))
-				var/list/stats = list(list("name" = D.name,"capacity" = D.capacity, "cost" = D.materials))
+			if(slotUnlockedRAM(length(ram_expansions) + 1))
+				var/list/stats = list(list(
+					"name" = D.name,
+					"capacity" = D.capacity,
+					"cost" = D.ram_materials,
+				))
 				ram_expansions += stats
 			else
 				to_chat(usr, span_warning("This socket has not been researched!"))
@@ -268,13 +270,13 @@
 			var/index = params["ram_index"]
 			if(!index)
 				return
-			if(index > ram_expansions.len || index < 1)
+			if(index > length(ram_expansions) || index < 1)
 				return
 			ram_expansions.Cut(index, index + 1)
 			. = TRUE
 
 		if("finalize")
-			if(!ram_expansions.len && !inserted_cpus.len)
+			if(!length(ram_expansions) && !length(inserted_cpus))
 				say("No RAM nor CPUs inserted. Process aborted.")
 				return
 			var/datum/component/material_container/materials = rmat.mat_container
@@ -304,7 +306,6 @@
 					new_rack.custom_materials[mat] += RAM["cost"][mat]
 
 				total_ram += RAM["capacity"]
-
 
 			new_rack.contained_ram = total_ram
 			ram_expansions = list()

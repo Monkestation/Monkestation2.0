@@ -1,30 +1,28 @@
 /datum/design/ram
-	name = "RAM design"
-	desc = "This is a bug!"
-	id = "default_ram"
+	id = DESIGN_ID_IGNORE
 	build_type = RACK_CREATOR
 	category = list()
 	research_icon ='icons/obj/module.dmi'
 	research_icon_state = "std_mod"
-	materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
-
+	materials = list()
 	var/capacity = 0
+	var/list/ram_materials
 
 /datum/design/ram/ram1
-	name = "standard memory"
+	name = "Standard Memory"
 	desc = "Salvaged from decommisioned experiments at NT-CONLAB."
 	id = "ram1"
-	materials = list(
+	ram_materials = list(
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
 	)
 	capacity = 1
 
 /datum/design/ram/ram2
-	name = "high-capacity memory"
+	name = "High-capacity Memory"
 	desc = "Further refinements allow high-capacity memory at normal performance."
 	id = "ram2"
-	materials = list(
+	ram_materials = list(
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
 		/datum/material/silver = SHEET_MATERIAL_AMOUNT,
@@ -32,10 +30,10 @@
 	capacity = 2
 
 /datum/design/ram/ram3
-	name = "hyper-capacity memory"
+	name = "Hyper-capacity Memory"
 	desc = "Understanding and manipulation of near-atomic matter allows increased capacity with no noticeable performance degradation."
 	id = "ram3"
-	materials = list(
+	ram_materials = list(
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 4,
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
 		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2,
@@ -44,10 +42,10 @@
 	capacity = 3
 
 /datum/design/ram/ram4
-	name = "bluespace memory"
+	name = "Bluespace Memory"
 	desc = "Using bluespace based technology it's possible to make increase RAM capacity without decreasing speed."
 	id = "ram4"
-	materials = list(
+	ram_materials = list(
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 8,
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 8,
 		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 4,
@@ -57,7 +55,7 @@
 	capacity = 4
 
 /datum/design/cpu_basic
-	name = "neural processing unit"
+	name = "Neural Processing Unit"
 	id = "basic_ai_cpu"
 	build_type = IMPRINTER
 	materials = list(
@@ -72,7 +70,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENTAL_BITFLAG_NETMIN
 
 /datum/design/cpu_advanced
-	name = "advanced neural processing unit"
+	name = "Advanced Neural Processing Unit"
 	id = "advanced_ai_cpu"
 	build_type = IMPRINTER
 	materials = list(
@@ -87,7 +85,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENTAL_BITFLAG_NETMIN
 
 /datum/design/cpu_bluespace
-	name = "bluespace neural processing unit"
+	name = "Bluespace Neural Processing Unit"
 	id = "bluespace_ai_cpu"
 	build_type = IMPRINTER
 	materials = list(
@@ -104,7 +102,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENTAL_BITFLAG_NETMIN
 
 /datum/design/cpu_experimental
-	name = "experimental neural processing unit"
+	name = "Experimental Neural Processing Unit"
 	id = "experimental_ai_cpu"
 	build_type = IMPRINTER
 	materials = list(

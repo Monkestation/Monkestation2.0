@@ -1,5 +1,5 @@
 /proc/available_ai_cores()
-	if(!GLOB.data_cores.len)
+	if(!length(GLOB.data_cores))
 		return FALSE
 	var/obj/machinery/ai/data_core/new_data_core = GLOB.primary_data_core
 	if(!new_data_core || !new_data_core.can_transfer_ai())
@@ -28,7 +28,7 @@
 	if(!silent)
 		to_chat(src, span_userdanger("Connection to data core lost. Attempting to reaquire connection..."))
 
-	if(!GLOB.data_cores.len)
+	if(!length(GLOB.data_cores))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/silicon/ai, death_prompt))
 		is_dying = TRUE
 		return

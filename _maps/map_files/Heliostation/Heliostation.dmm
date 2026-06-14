@@ -26501,9 +26501,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/south,
-/turf/open/floor/iron/dark/smooth_edge{
-	dir = 8
-	},
+/turf/open/floor/iron/dark/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
 "cXU" = (
 /obj/machinery/door/airlock/external{
@@ -39820,7 +39818,7 @@
 	dir = 4
 	},
 /obj/structure/sign/warning/secure_area/directional/south,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
 "ijS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible{

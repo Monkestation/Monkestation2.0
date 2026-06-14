@@ -9,14 +9,15 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 
 	circuit = /obj/item/circuitboard/machine/server_cabinet
 
-	var/list/installed_racks
-
-	var/total_cpu = 0
-	var/total_ram = 0
 	//Idle power usage when no cards inserted. Not free running idle my friend
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.01
 	//We manually calculate how power the cards + CPU give, so this is accounted for by that
 	active_power_usage = 0
+
+	var/list/installed_racks
+
+	var/total_cpu = 0
+	var/total_ram = 0
 
 	var/cached_power_usage = 0
 

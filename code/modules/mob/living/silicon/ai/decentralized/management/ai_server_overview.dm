@@ -26,7 +26,7 @@
 			"working" = holder.valid_holder(),
 			"total_cpu" = holder.total_cpu,
 			"ram" = holder.total_ram,
-			"card_capacity" = "[holder.installed_racks.len]/[holder.max_racks]",
+			"card_capacity" = "[length(holder.installed_racks)]/[holder.max_racks]",
 			"temp" = env.return_temperature(),
 		))
 
