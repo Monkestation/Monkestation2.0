@@ -193,7 +193,7 @@
 	if(!get_reagents())
 		if(target == user && Adjacent(user)) // fold iv drip
 			user.visible_message(span_notice("[user] fold [src.name].") , span_notice("Fold [src.name]."))
-			var/obj/machinery/iv_drip/B = new /obj/item/iv_drip_item(get_turf(src))
+			var/obj/item/iv_drip_item/B = new get_turf(src)
 			user.put_in_hands(B)
 			playsound(src, 'sound/weapons/batonextend.ogg', 100, TRUE)
 			qdel(src)
