@@ -1050,7 +1050,7 @@
 
 
 /obj/item/fish/lavaloop
-	name = "lavaloop fish"
+	name = "lavaloop"
 	desc = "Due to its curvature, it can be used as make-shift boomerang."
 	icon_state = "lava_loop"
 	sprite_width = 3
@@ -1061,13 +1061,15 @@
 	required_fluid_type = AQUARIUM_FLUID_ANY_WATER //if we can survive hot lava and freezing plasrivers, we can survive anything
 	fish_movement_type = /datum/fish_movement/zippy
 	min_pressure = HAZARD_LOW_PRESSURE
-	required_temperature_min = MIN_AQUARIUM_TEMP+30
-	required_temperature_max = MIN_AQUARIUM_TEMP+35
+	required_temperature_min = MIN_AQUARIUM_TEMP+40
+	required_temperature_max = MAX_AQUARIUM_TEMP+900
 	aquarium_vc_color = "#ce7e1d"
 	fish_traits = list(
 		/datum/fish_trait/carnivore,
 		/datum/fish_trait/heavy,
 	)
+	compatible_types = list(/obj/item/fish/lavaloop/plasma_river)
+	evolution_types = list(/datum/fish_evolution/plasmaloop)
 	hitsound = null
 	throwforce = 5
 	beauty = FISH_BEAUTY_GOOD
@@ -1103,7 +1105,14 @@
 	return (target.mob_size >= MOB_SIZE_LARGE)
 
 /obj/item/fish/lavaloop/plasma_river
+	name = "plasmaloop"
+	desc = "A lavaloop that has evolved to survive in cold liquid plasma. Can be used as make-shift boomerang."
 	maximum_bonus = 30
+	icon_state = "plasma_loop"
+	dedicated_in_aquarium_icon_state = /obj/item/fish/lavaloop::icon_state + "_small"
+	required_temperature_min = MIN_AQUARIUM_TEMP - 100
+	required_temperature_max = MIN_AQUARIUM_TEMP+80
+	evolution_types = list(/datum/fish_evolution/lavaloop)
 
 /obj/item/fish/lavaloop/plasma_river/explode_on_user(mob/living/user)
 	playsound(src, 'sound/effects/explosion1.ogg', 40, TRUE)
