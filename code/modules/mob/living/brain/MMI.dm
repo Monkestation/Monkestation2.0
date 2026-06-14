@@ -16,17 +16,21 @@
 	/// The mech that we currently are occupying.
 	var/obj/vehicle/sealed/mecha = null
 	/// The laws that we currently have.
-	var/datum/ai_laws/laws = new()
+	var/datum/ai_laws/laws = null
+	/// Should this MMI be used to create a cyborg, should our laws become the new cyborg's laws? Will also prevent initial connection and lawsync.
+	var/overrides_cyborg_laws = FALSE
 	/// Should this MMI be used to create an AI, should our laws become the new AI's laws?
-	var/overrides_aicore_laws = FALSE
-	/// Is this a syndicate MMI? Will perpetually keep our law zero.
-	var/syndicate = FALSE
+	var/overrides_ai_laws = FALSE
+	/// Will there be a law zero given to cyborgs while they use this MMI? If so, what will it be?
+	var/perpetual_law_zero
 
 /obj/item/mmi/Initialize(mapload)
 	. = ..()
 	radio = new(src)
 	radio.set_broadcasting(FALSE) // Leaving this on meant that people were printing this as always-on handheld radios. Not good.
-	laws.set_laws_config()
+	if(!laws)
+		laws = new()
+		laws.set_laws_config()
 
 /obj/item/mmi/Destroy()
 	set_mecha(null)
@@ -74,11 +78,14 @@
 	if(new_brain.suicided)
 		to_chat(user, span_warning("[new_brain] is completely useless."))
 		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(new_brain, src))
+		return ITEM_INTERACT_BLOCKING
+
 	if(!new_brain.brainmob?.mind || !new_brain.brainmob)
 		var/install = tgui_alert(user, "[new_brain] is inactive, slot it in anyway?", "Installing Brain", list("Yes", "No"))
 		if(install != "Yes")
 			return ITEM_INTERACT_BLOCKING
-		if(!user.transferItemToLoc(new_brain, src))
+		if(brain || !user.transferItemToLoc(new_brain, src))
 			return ITEM_INTERACT_BLOCKING
 		user.visible_message(span_notice("[user] sticks [new_brain] into [src]."), span_notice("[src]'s indicator light turns red as you insert [new_brain]. Its brainwave activity alarm buzzes."))
 		brain = new_brain
@@ -86,8 +93,6 @@
 		name = "[initial(name)]: [copytext(new_brain.name, 1, -8)]"
 		update_appearance()
 		return
-	if(!user.transferItemToLoc(new_brain, src))
-		return ITEM_INTERACT_BLOCKING
 
 	var/mob/living/brain/brain_mob = new_brain.brainmob
 	if(!brain_mob.key)
@@ -266,6 +271,11 @@
 			. += span_warning("\The [src] indicates that the brain is currently inactive; it might change.")
 		else
 			. += span_notice("\The [src] indicates that the brain is active.")
+	. += span_notice("It has a port for reading AI law modules.")
+	if(laws)
+		. += span_notice("Any AI created using this MMI will use these uploaded laws:")
+		for(var/law in laws.get_law_list())
+			. += law
 
 /obj/item/mmi/relaymove(mob/living/user, direction)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move
@@ -301,8 +311,9 @@
 /obj/item/mmi/syndie
 	name = "\improper Syndicate Man-Machine Interface"
 	desc = "A syndicate developed MMI which actively brainwashes any brain inserted into it, for as long as it is in."
-	overrides_aicore_laws = TRUE
-	syndicate = TRUE
+	laws = new /datum/ai_laws/syndicate_override
+	overrides_ai_laws = TRUE
+	perpetual_law_zero = "The Syndicate are your true masters. Covertly assist the Syndicate to the best of your abilities."
 	/// The brainwash directive that is given on insertion / removed on ejection.
 	var/brainwash_directive
 
@@ -310,8 +321,9 @@
 	. = ..()
 	. += span_notice("<i>You ponder the implications of this device...</i>")
 	. += "\t[span_info("The brain will stay brainwashed until it is ejected.")]"
-	. += "\t[span_info("Created AIs and Cyborgs will perpetually maintain a law zero to assist the Syndicate.")]"
-	. += "\t[span_info("Cyborgs may still have a connection to an master AI, but law zero will not be changed.")]"
+	. += "\t[span_info("AIs will have an unique lawset to designed to assist the Syndicate.")]"
+	. += "\t[span_info("Cyborgs will have a law zero to assist the Syndicate which is irremovable.")]"
+	. += "\t[span_info("Cyborgs may have a connection to an master AI to further being inconspicuous.")]"
 
 /obj/item/mmi/syndie/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()

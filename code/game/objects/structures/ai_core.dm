@@ -341,7 +341,7 @@
 		SSblackbox.record_feedback("amount", "ais_created", 1)
 	var/mob/living/silicon/ai/ai_mob = null
 
-	if(core_mmi.overrides_aicore_laws)
+	if(core_mmi.overrides_ai_laws)
 		ai_mob = new /mob/living/silicon/ai(loc, core_mmi.laws, the_brainmob)
 		core_mmi.laws = null //MMI's law datum is being donated, so we need the MMI to let it go or the GC will eat it
 	else

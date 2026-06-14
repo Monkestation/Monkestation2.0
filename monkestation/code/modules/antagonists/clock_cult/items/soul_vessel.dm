@@ -11,13 +11,14 @@
 	new_mob_message = span_notice("The Soul Vessel starts making a steady ticking sound.")
 	dead_message = span_deadsay("It's gears are not moving.")
 	recharge_message = span_warning("The gears of the Soul Vessel are already spinning.")
+	laws = new /datum/ai_laws/ratvar
+	overrides_cyborg_laws = TRUE
 	///Should we add the clock cultist antag datum on being entered by a player
 	var/give_clock_cultist = TRUE
 
 /obj/item/mmi/posibrain/soul_vessel/Initialize(mapload, autoping)
 	. = ..()
 	AddElement(/datum/element/clockwork_description, span_brass("A vessel used to hold the souls of the dead, can be converted into a cogscarab shell."))
-	laws = new /datum/ai_laws/ratvar()
 	radio.set_on(FALSE)
 	if(!brainmob) //we might be forcing someone into it right away
 		set_brainmob(new /mob/living/brain(src))
