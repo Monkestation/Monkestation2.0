@@ -368,7 +368,7 @@
 /mob/living/silicon/ai/proc/add_verb_ai(addedVerb)
 	view_core() //A BYOND bug requires you to be viewing your core before your verbs update
 	add_verb(src, addedVerb)
-	if(istype(loc, /obj/machinery/ai/data_core)) //A BYOND bug requires you to be viewing your core before your verbs update, remove this if unecessary :D
+	if(istype(loc, /obj/machinery/ai/data_core)) //A BYOND bug requires you to be viewing your core before your verbs update
 		var/obj/machinery/ai/data_core/core = loc
 		forceMove(get_turf(loc))
 		view_core()

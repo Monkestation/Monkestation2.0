@@ -16,20 +16,26 @@
 /datum/ai_project/camera_tracker/stop()
 	ai.canCameraMemoryTrack = FALSE
 	remove_verb(ai, /mob/living/silicon/ai/proc/choose_camera_target)
-	..()
+	return ..()
 
 /mob/living/silicon/ai/proc/choose_camera_target()
 	set name = "Choose Camera Memory Target"
 	set category = "AI Commands"
 	set desc = "Select a target for the camera memory tracker. Case sensitive."
-	var/target = stripped_input(usr, "Please enter target name (Leave empty for cancel):", "Camera Tracker", "", MAX_NAME_LEN)
+
+	if(incapacitated())
+		return
+	var/target = tgui_input_text(usr, "Please enter the target's full name:", "Camera Tracker", "", MAX_NAME_LEN)
 	if(!target)
+		to_chat(usr, span_warning("Cancelled all targets."))
 		cameraMemoryTarget = null
 		return
-	if(cameraMemoryTarget)
-		to_chat(usr, span_warning("Old target discarded. Exclusively tracking new target."))
-	else
-		to_chat(usr, span_notice("Now tracking new target, [target]."))
 
-	cameraMemoryTarget = target
+	cameraMemoryTarget = findname(target)
+	if(isnull(cameraMemoryTarget))
+		to_chat(usr, span_warning("Failed to find anyone named [target]."))
+	else
+		to_chat(usr, span_notice("Now tracking [target]."))
+
 	cameraMemoryTickCount = 0
+	return

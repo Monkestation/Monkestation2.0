@@ -29,6 +29,8 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	var/power_modifier = 1
 	var/obj/item/stock_parts/power_store/cell/integrated_battery
 
+	var/insert_ai_inside = TRUE
+
 /obj/machinery/ai/data_core/Initialize(mapload)
 	. = ..()
 	GLOB.data_cores += src
@@ -57,6 +59,9 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 			to_chat(AI, span_userdanger("Warning! <A HREF=?src=[REF(AI)];go_to_machine=[REF(src)]>Data Core</A> brought offline in [get_area(src)]! Please verify that no malicious actions were taken."))
 
 	return ..()
+
+/obj/machinery/ai/data_core/JoinPlayerHere(mob/M, buckle)
+	return
 
 /obj/machinery/ai/data_core/RefreshParts()
 	. = ..()
@@ -163,9 +168,21 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	return TRUE
 
 /obj/machinery/ai/data_core/proc/transfer_AI(mob/living/silicon/ai/AI)
-	AI.forceMove(src)
+	AI.forceMove(src) //AI.forceMove(get_turf(src))
 	if(AI.eyeobj)
-		AI.eyeobj.forceMove(get_turf(src))
+		AI.eyeobj.setLoc(get_turf(src))
+
+/mob/living/silicon/ai/proc/insert_into_core(obj/machinery/ai/data_core/core)
+	view_core()
+	forceMove(core)
+	if(eyeobj)
+		eyeobj.setLoc(get_turf(core))
+	if(istype(loc, /obj/machinery/ai/data_core))
+		var/obj/machinery/ai/data_core/core = loc
+		forceMove(get_turf(loc))
+		view_core()
+		sleep(1)
+		forceMove(core)
 
 /obj/machinery/ai/data_core/update_icon_state()
 	. = ..()

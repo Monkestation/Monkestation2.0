@@ -36,7 +36,7 @@
 			if(length(inserted_cpu.last_overclocking_values) + 1 >= 6)
 				pop(inserted_cpu.last_overclocking_values)
 			inserted_cpu.last_overclocking_values += list(list("speed" = inserted_cpu.speed, "power" = inserted_cpu.power_multiplier, "valid" = TRUE))
-			inserted_cpu.forceMove(drop_location(src))
+			inserted_cpu.forceMove(drop_location())
 			inserted_cpu = null
 		else
 			if(length(inserted_cpu.last_overclocking_values) + 1 >= 6)
@@ -94,7 +94,8 @@
 
 
 /obj/machinery/computer/ai_overclocking/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -104,7 +105,7 @@
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 			inserted_cpu.speed = initial(inserted_cpu.speed)
 			inserted_cpu.power_multiplier = initial(inserted_cpu.power_multiplier)
-			inserted_cpu.forceMove(drop_location(src))
+			inserted_cpu.forceMove(drop_location())
 			inserted_cpu = null
 			. = TRUE
 		if("set_speed")

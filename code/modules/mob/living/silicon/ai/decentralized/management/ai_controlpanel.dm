@@ -31,9 +31,9 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		if(intellicard)
 			to_chat(user, span_warning("There's already an IntelliCard inserted!"))
 			return ..()
-		to_chat(user, span_notice("You insert [W]."))
-		W.forceMove(src)
-		intellicard = W
+		if(user.transferItemToLoc(W, src))
+			to_chat(user, span_notice("You insert [W]."))
+			intellicard = W
 		return FALSE
 	if(istype(W, /obj/item/mmi))
 		if(!authenticated)
