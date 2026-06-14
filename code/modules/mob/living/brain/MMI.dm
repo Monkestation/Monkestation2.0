@@ -288,6 +288,25 @@
 		return FALSE
 	return TRUE
 
+/obj/item/mmi/attempt_become_organ(obj/item/organ/external/parent,mob/living/carbon/human/H)
+	if(!brainmob)
+		return FALSE
+//	if(!parent)
+//		log_debug("Attempting to insert into a null parent!")
+//		return FALSE
+//	if(H.get_int_organ(/obj/item/organ/internal/brain))
+//		// one brain at a time
+//		return FALSE
+	var/obj/item/organ/internal/brain/positronic/holder = new()
+//	holder.parent_organ = parent.limb_name
+	forceMove(holder)
+	holder.stored_mmi = src
+	holder.update_from_mmi()
+	if(brainmob && brainmob.mind)
+		brainmob.mind.transfer_to(H)
+	holder.insert(H)
+	return TRUE
+
 /obj/item/mmi/syndie
 	name = "\improper Syndicate Man-Machine Interface"
 	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs and AIs created with it."

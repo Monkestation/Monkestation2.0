@@ -25,6 +25,10 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 	///Can be set to tell ghosts what the brain will be used for
 	var/ask_role = ""
+	///Does this positronic need a master set before being activated
+	var/requires_master = TRUE
+	///Who will this positronic serve if placed in a IRC body
+	var/mob/living/carbon/human/imprinted_master = null
 	///Role assigned to the newly created mind
 	var/posibrain_job_path = /datum/job/positronic_brain
 	///World time tick when ghost polling will be available again
@@ -39,6 +43,10 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/searching = FALSE
 	///List of all ckeys who has already entered this posibrain once before.
 	var/list/ckeys_entered = list()
+
+/obj/item/mmi/posibrain/Destroy()
+	imprinted_master = null
+	return ..()
 
 ///Notify ghosts that the posibrain is up for grabs
 /obj/item/mmi/posibrain/proc/ping_ghosts(msg, newlymade)
@@ -65,6 +73,10 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		return
 	if(next_ask > world.time)
 		to_chat(user, recharge_message)
+		return
+	if(requires_master && !imprinted_master)
+		to_chat(user, span_notice("You press your thumb on [src] and imprint your user information."))
+		imprinted_master = user
 		return
 	//Start the process of requesting a new ghost.
 	to_chat(user, begin_activation_message)
@@ -125,6 +137,11 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(HAS_TRAIT(brainmob, TRAIT_SUICIDED)) //clear suicide status if the old occupant suicided.
 		brainmob.set_suicide(FALSE)
 	transfer_personality(user)
+
+/obj/item/mmi/posibrain/attempt_become_organ(obj/item/organ/external/parent, mob/living/carbon/human/H)
+	if(..())
+		if(imprinted_master)
+			to_chat(H, span_danger("You are permanently imprinted to [imprinted_master], obey [imprinted_master]'s every order and assist [imprinted_master.p_them()] in completing [imprinted_master.p_their()] goals at any cost."))
 
 /obj/item/mmi/posibrain/transfer_identity(mob/living/carbon/transfered_user)
 	name = "[initial(name)] ([transfered_user])"
@@ -215,3 +232,39 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/mmi/posibrain/add_mmi_overlay()
 	return
+
+// Used for an positronic brain being installed into a IRC/IPC.
+/obj/item/organ/internal/brain/positronic
+	name = "compact positronic brain"
+	slot = ORGAN_SLOT_BRAIN
+	zone = BODY_ZONE_CHEST
+	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES | ORGAN_VITAL
+	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
+	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves. It has an IPC serial number engraved on the top. It is usually slotted into the chest of synthetic crewmembers. It is not compatible with standard Posibrain/MMI interfaces, and must be placed into an MMI to be made compatible." // to inform the user that this is, in fact, not a real posibrain, but is an organ posibrain.
+	icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi'
+	icon_state = "posibrain-ipc"
+	//destroy_on_removal = TRUE
+
+	var/obj/item/mmi/stored_mmi
+
+/obj/item/organ/internal/brain/positronic/Destroy()
+	QDEL_NULL(stored_mmi)
+	return ..()
+
+/obj/item/organ/internal/brain/positronic/remove(mob/living/user, special = 0)
+	if(!special)
+		if(stored_mmi)
+			. = stored_mmi
+			if(owner.mind)
+				owner.mind.transfer_to(stored_mmi.brainmob)
+			stored_mmi.forceMove(get_turf(owner))
+			stored_mmi = null
+	return ..()
+
+/obj/item/organ/internal/brain/positronic/proc/update_from_mmi()
+	if(!stored_mmi)
+		return
+	name = initial(stored_mmi.name)
+	desc = stored_mmi.desc
+	icon = stored_mmi.icon
+	icon_state = stored_mmi.icon_state

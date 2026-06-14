@@ -151,3 +151,73 @@
 		preop_sound = tool.usesound
 
 	return TRUE
+
+/datum/surgery_step/robotics/manipulate_robotic_organs/install_mmi
+	name = "insert robotic brain"
+	implements = list(/obj/item/mmi = 100)
+
+/datum/surgery_step/robotics/manipulate_robotic_organs/install_mmi/preop(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(target_zone != BODY_ZONE_CHEST)
+		to_chat(user, SPAN_NOTICE("You must target the chest cavity."))
+
+		return FALSE
+
+	var/obj/item/organ/external/affected = target.get_organ(target_zone)
+	var/obj/item/mmi/M = tool
+
+	if(!affected)
+		return FALSE
+
+	if(!istype(M))
+		return FALSE
+
+	if(!M.brainmob || !M.brainmob.client || !M.brainmob.ckey || M.brainmob.stat >= DEAD)
+		to_chat(user, span_danger("That brain is not usable."))
+		return FALSE
+
+	if(!affected.is_robotic())
+		to_chat(user, span_danger("You cannot install a computer brain into a meat enclosure."))
+		return FALSE
+
+	if(!isipc(target))
+		to_chat(user, span_danger("[tool] cannot be installed into an organic body, as it is not designed to operate the complex biological systems of one!"))
+		return FALSE
+
+	if(!target.dna.species)
+		to_chat(user, span_danger("You have no idea what species this person is. Report this on the bug tracker."))
+		return FALSE
+
+	if(!target.dna.species.has_organ["brain"])
+		to_chat(user, span_danger("You're pretty sure [target.dna.species.name_plural] don't normally have a brain."))
+		return FALSE
+
+	if(target.get_int_organ(/obj/item/organ/internal/brain))
+		to_chat(user, span_danger("Your subject already has a brain."))
+		return FALSE
+
+	user.visible_message(
+		"[user] starts installing \the [tool] into [target]'s [affected.name].",
+		"You start installing \the [tool] into [target]'s [affected.name]."
+	)
+	return ..()
+
+
+/datum/surgery_step/robotics/manipulate_robotic_organs/install_mmi/success(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	var/obj/item/organ/external/affected = target.get_organ(target_zone)
+	user.visible_message(
+		span_notice("[user] has installed [tool] into [target]'s [affected.name]."),
+		span_notice("You have installed [tool] into [target]'s [affected.name]."),
+	)
+
+	var/obj/item/mmi/M = tool
+
+	user.temporarilyRemoveItemFromInventory(tool)
+	M.attempt_become_organ(affected,target)
+	return ..()
+
+/datum/surgery_step/robotics/manipulate_robotic_organs/install_mmi/failure(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	..()
+	user.visible_message(
+		span_warning("[user]'s hand slips!"),
+		span_warning("Your hand slips!"),
+	)
