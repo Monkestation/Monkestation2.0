@@ -111,7 +111,6 @@
 			if(obj_flags & EMAGGED)
 				authenticated = TRUE
 
-
 			var/mob/living/carbon/human/H = usr
 			if(!istype(H))
 				return

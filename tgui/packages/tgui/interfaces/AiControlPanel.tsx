@@ -17,7 +17,7 @@ import { Window } from '../layouts';
 type Data = {
   authenticated: BooleanLike;
   cleared_for_use: BooleanLike;
-  has_access: BooleanLike;
+  has_access: boolean;
   username: string;
   intellicard: string[];
   intellicard_ai: string[];
@@ -334,72 +334,59 @@ export const AiControlPanel = (props) => {
             )}
           </Fragment>
         )) || (
-          <Section title="Welcome">
+          <Section title="Welcome" fill>
             <Stack align="center" justify="center" mt="0.5rem" mb="0.5rem">
               <Stack.Item>
-                {(data.user_image && (
-                  <Fragment style={`position:relative`}>
-                    <img
-                      src={data.user_image}
-                      width="125px"
-                      height="125px"
-                      style={`-ms-interpolation-mode: nearest-neighbor;
-                        border-radius: 50%; border: 3px solid white;
-                        margin-right:-125px`}
+                <Stack vertical fill>
+                  {(data.user_image && (
+                    <Fragment>
+                      <img src={data.user_image} width="125px" height="125px" />
+                      <img src="scanlines.png" width="125px" height="125px" />
+                    </Fragment>
+                  )) || (
+                    <Icon
+                      name="user-circle"
+                      verticalAlign="middle"
+                      size={4.5}
+                      mr="1rem"
                     />
-                    <img
-                      src="scanlines.png"
-                      width="125px"
-                      height="125px"
-                      style={`-ms-interpolation-mode: nearest-neighbor;
-                        border-radius: 50%; border: 3px solid white;opacity: 0.3;`}
-                    />
-                  </Fragment>
-                )) || (
-                  <Icon
-                    name="user-circle"
-                    verticalAlign="middle"
-                    size={4.5}
-                    mr="1rem"
-                  />
-                )}
-                <Box inline fontSize="18px" bold>
-                  {username ? username : 'Unknown'}
-                </Box>
-                <NoticeBox
-                  success={has_access}
-                  danger={!has_access}
-                  textAlign="center"
-                  mt="1.5rem"
-                >
-                  {has_access ? 'Access Granted' : 'Access Denied'}
-                </NoticeBox>
-                <Box textAlign="center">
-                  <Button
-                    icon="sign-in-alt"
-                    color={has_access ? 'good' : 'bad'}
-                    fluid
-                    onClick={() => {
-                      act('log_in');
-                    }}
-                  >
-                    Log In
-                  </Button>
-                </Box>
+                  )}
+                  <Box inline fontSize="18px" bold>
+                    {username ? username : 'Unknown'}
+                  </Box>
+                </Stack>
               </Stack.Item>
             </Stack>
-            <NoticeBox color="red">
-              Alternatively you can use the AI Control Code as a one-time
-              password. This will alert the station of your location and name.
-            </NoticeBox>
             <Box textAlign="center">
+              <NoticeBox
+                textAlign="center"
+                mt="1.5rem"
+                color={has_access ? 'good' : 'bad'}
+              >
+                {has_access ? 'Access Granted' : 'Access Denied'}
+              </NoticeBox>
               <Input
+                fluid
                 placeholder="123456"
                 onEnter={(value) => {
                   act('log_in_control_code', { control_code: value });
                 }}
               />
+              <Button
+                icon="sign-in-alt"
+                color={has_access ? 'good' : 'bad'}
+                fluid
+                onClick={() => {
+                  act('log_in');
+                }}
+              >
+                Log In
+              </Button>
             </Box>
+            <NoticeBox my={1} color="red">
+              Alternatively you can use the AI Control Code as a one-time
+              password. This will alert the station of your location and name.
+            </NoticeBox>
           </Section>
         )}
       </Window.Content>

@@ -5,7 +5,6 @@ import {
   Box,
   Button,
   Icon,
-  LabeledList,
   NoticeBox,
   NumberInput,
   ProgressBar,
@@ -109,10 +108,11 @@ export const AiResources = (props) => {
                   </ProgressBar>
                 </Section>
                 <Section title="Active AI's">
-                  <LabeledList>
+                  <Stack vertical>
                     {ais.map((ai, index) => {
                       return (
                         <Section
+                          fill
                           key={index}
                           title={ai.name}
                           buttons={
@@ -126,7 +126,7 @@ export const AiResources = (props) => {
                             </Button>
                           }
                         >
-                          <LabeledList.Item>
+                          <Stack.Item>
                             CPU Capacity:
                             <Stack>
                               <ProgressBar
@@ -162,8 +162,8 @@ export const AiResources = (props) => {
                                 Max
                               </Button>
                             </Stack>
-                          </LabeledList.Item>
-                          <LabeledList.Item>
+                          </Stack.Item>
+                          <Stack.Item>
                             RAM Capacity:
                             <Stack>
                               <ProgressBar
@@ -194,11 +194,11 @@ export const AiResources = (props) => {
                                 }
                               />
                             </Stack>
-                          </LabeledList.Item>
+                          </Stack.Item>
                         </Section>
                       );
                     })}
-                  </LabeledList>
+                  </Stack>
                 </Section>
               </Fragment>
             )}
@@ -217,26 +217,13 @@ export const AiResources = (props) => {
             )}
           </Fragment>
         )) || (
-          <Section title="Welcome">
+          <Section title="Welcome" fill>
             <Stack align="center" justify="center" mt="0.5rem">
               <Stack.Item>
                 {(user_image && (
-                  <Fragment style={{ position: 'relative' }}>
-                    <img
-                      src={user_image}
-                      width="125px"
-                      height="125px"
-                      style={`-ms-interpolation-mode: nearest-neighbor;
-                        border-radius: 50%; border: 3px solid white;
-                        margin-right:-125px`}
-                    />
-                    <img
-                      src="scanlines.png"
-                      width="125px"
-                      height="125px"
-                      style={`-ms-interpolation-mode: nearest-neighbor;
-                        border-radius: 50%; border: 3px solid white;opacity: 0.3;`}
-                    />
+                  <Fragment>
+                    <img src={user_image} width="125px" height="125px" />
+                    <img src="scanlines.png" width="125px" height="125px" />
                   </Fragment>
                 )) || (
                   <Icon
@@ -249,28 +236,27 @@ export const AiResources = (props) => {
                 <Box inline fontSize="18px" bold>
                   {username ? username : 'Unknown'}
                 </Box>
-                <NoticeBox
-                  success={has_access}
-                  danger={!has_access}
-                  textAlign="center"
-                  mt="1.5rem"
-                >
-                  {has_access ? 'Access Granted' : 'Access Denied'}
-                </NoticeBox>
-                <Box textAlign="center">
-                  <Button
-                    icon="sign-in-alt"
-                    color={has_access ? 'good' : 'bad'}
-                    fluid
-                    onClick={() => {
-                      act('log_in');
-                    }}
-                  >
-                    Log In
-                  </Button>
-                </Box>
               </Stack.Item>
             </Stack>
+            <Box textAlign="center">
+              <NoticeBox
+                textAlign="center"
+                mt="1.5rem"
+                color={has_access ? 'good' : 'bad'}
+              >
+                {has_access ? 'Access Granted' : 'Access Denied'}
+              </NoticeBox>
+              <Button
+                icon="sign-in-alt"
+                color={has_access ? 'good' : 'bad'}
+                fluid
+                onClick={() => {
+                  act('log_in');
+                }}
+              >
+                Log In
+              </Button>
+            </Box>
           </Section>
         )}
       </Window.Content>
