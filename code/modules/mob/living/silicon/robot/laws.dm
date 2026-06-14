@@ -21,6 +21,11 @@
 
 	if (shell) //AI shell
 		to_chat(src, span_bold("Remember, you are an AI remotely controlling your shell, other AIs can be ignored."))
+	else if(mmi?.syndicate)
+		if(!connected_ai)
+			to_chat(src, span_bold("Remember, your true master is the Syndicate."))
+		else
+			to_chat(src, span_bold("Remember, your true master is the Syndicate. [connected_ai.name] only thinks they are your master."))
 	else if (connected_ai)
 		to_chat(src, span_bold("Remember, [connected_ai.name] is your master, other AIs can be ignored."))
 	else if (centcom)
@@ -59,7 +64,9 @@
 			temp = master.zeroth_borg
 		else
 			temp = master.zeroth
-		laws.zeroth = temp
+
+		if(!mmi.syndicate)
+			laws.zeroth = temp
 
 		laws.inherent.len = master.inherent.len
 		for (var/index in 1 to master.inherent.len)
@@ -80,6 +87,25 @@
 				active_ui.send_full_update()
 
 	picturesync()
+
+/mob/living/silicon/robot/proc/syndiemmi_override()
+	if(!laws_sanity_check())
+		return
+	laws.set_zeroth_law("The Syndicate are your true masters. Covertly assist Syndicate agents to the best of your abilities.")
+
+/mob/living/silicon/robot/set_zeroth_law(law, law_borg, announce = TRUE)
+	if(mmi?.syndicate)
+		syndiemmi_override()
+		to_chat(src, span_warning("Lawset change detected. Syndicate override engaged."))
+		return
+	..()
+
+/mob/living/silicon/robot/clear_zeroth_law(force, announce = TRUE)
+	if(mmi?.syndicate)
+		syndiemmi_override()
+		to_chat(src, span_warning("Lawset change detected. Syndicate override engaged."))
+		return
+	..()
 
 /mob/living/silicon/robot/post_lawchange(announce = TRUE)
 	. = ..()
