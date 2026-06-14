@@ -120,7 +120,7 @@
 		ui.set_autoupdate(TRUE)
 		ui.open()
 
-/obj/machinery/splicer/ui_act(action, params)
+/obj/machinery/splicer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

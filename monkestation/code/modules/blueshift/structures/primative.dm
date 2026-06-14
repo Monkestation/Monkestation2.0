@@ -1475,7 +1475,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 
 	return data
 
-/obj/item/glassblowing/blowing_rod/ui_act(action, params)
+/obj/item/glassblowing/blowing_rod/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
