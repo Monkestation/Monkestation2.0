@@ -241,7 +241,7 @@
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 	spell_max_level = 1
 	invocation_type = INVOCATION_NONE
-	wall_type = /obj/effect/forcefield/psychic
+	wall_type = /obj/structure/forcefield/psychic
 
 /datum/action/cooldown/spell/forcewall/psychic_wall/spawn_wall(turf/cast_turf)
 	. = ..()

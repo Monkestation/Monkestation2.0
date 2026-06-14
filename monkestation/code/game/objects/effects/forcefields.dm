@@ -1,4 +1,4 @@
-/obj/effect/forcefield/cosmic_field/CanAllowThrough(atom/movable/mover, border_dir)
+/obj/structure/forcefield/cosmic_field/CanAllowThrough(atom/movable/mover, border_dir)
 	if(isprojectile(mover))
 		var/obj/projectile/projectile = mover
 		if(isliving(projectile.firer))

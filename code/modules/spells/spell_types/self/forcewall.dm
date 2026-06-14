@@ -13,7 +13,7 @@
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 
 	/// The typepath to the wall we create on cast.
-	var/wall_type = /obj/effect/forcefield/wizard
+	var/wall_type = /obj/structure/forcefield/wizard
 
 /datum/action/cooldown/spell/forcewall/cast(atom/cast_on)
 	. = ..()
@@ -40,7 +40,7 @@
 	cooldown_time = 40 SECONDS
 	invocation_type = INVOCATION_NONE
 
-	wall_type = /obj/effect/forcefield/cult
+	wall_type = /obj/structure/forcefield/cult
 
 /datum/action/cooldown/spell/forcewall/mime
 	name = "Invisible Blockade"
@@ -64,7 +64,7 @@
 	invocation_self_message = span_notice("You form a blockade in front of yourself.")
 	spell_max_level = 1
 
-	wall_type = /obj/effect/forcefield/mime/advanced
+	wall_type = /obj/structure/forcefield/mime/advanced
 
 /datum/action/cooldown/spell/forcewall/mime/before_cast(atom/cast_on)
 	. = ..()

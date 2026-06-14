@@ -81,7 +81,7 @@ Chilling extracts:
 	user.visible_message(span_danger("[src] melts like quicksilver, and surrounds [user] in a wall!"))
 	for(var/turf/T in orange(get_turf(user),1))
 		if(get_dist(get_turf(user), T) > 0)
-			new /obj/effect/forcefield/slimewall(T)
+			new /obj/structure/forcefield/slimewall(T)
 	..()
 
 /obj/item/slimecross/chilling/yellow
@@ -349,5 +349,5 @@ Chilling extracts:
 	for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
 		for(var/turf/area_turf as anything in zlevel_turfs)
 			for(var/obj/machinery/door/airlock/door in area_turf)
-				new /obj/effect/forcefield/slimewall/rainbow(door.loc)
+				new /obj/structure/forcefield/slimewall/rainbow(door.loc)
 	return ..()

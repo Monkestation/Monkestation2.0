@@ -114,7 +114,7 @@ Slimecrossing Items
 	max_integrity = 60
 
 //Melting Gel Wall - Chilling Metal
-/obj/effect/forcefield/slimewall
+/obj/structure/forcefield/slimewall
 	name = "solidified gel"
 	desc = "A mass of solidified slime gel - completely impenetrable, but it's melting away!"
 	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
@@ -124,7 +124,7 @@ Slimecrossing Items
 	initial_duration = 10 SECONDS
 
 //Rainbow barrier - Chilling Rainbow
-/obj/effect/forcefield/slimewall/rainbow
+/obj/structure/forcefield/slimewall/rainbow
 	name = "rainbow barrier"
 	desc = "Despite others' urgings, you probably shouldn't taste this."
 	icon_state = "rainbowbarrier"

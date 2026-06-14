@@ -232,11 +232,11 @@
 	if(isstargazer(target))
 		return
 	ADD_TRAIT(target, TRAIT_NO_TELEPORT, REF(src))
-	target.AddElement(cosmic_effect_trail, /obj/effect/forcefield/cosmic_field/star_touch)
+	target.AddElement(cosmic_effect_trail, /obj/structure/forcefield/cosmic_field/star_touch)
 
 /// What to remove when the beam disconnects from a target
 /datum/status_effect/cosmic_beam/proc/on_beam_release(mob/living/target)
 	if(isstargazer(target))
 		return
 	REMOVE_TRAIT(target, TRAIT_NO_TELEPORT, REF(src))
-	target.RemoveElement(cosmic_effect_trail, /obj/effect/forcefield/cosmic_field/star_touch)
+	target.RemoveElement(cosmic_effect_trail, /obj/structure/forcefield/cosmic_field/star_touch)

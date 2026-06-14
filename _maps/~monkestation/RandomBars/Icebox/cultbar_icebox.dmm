@@ -118,7 +118,7 @@
 /obj/item/toy/plush/ratplush{
 	name = "Imprisoned God"
 	},
-/obj/effect/forcefield/cult/permanent,
+/obj/structure/forcefield/cult/permanent,
 /turf/open/floor/cult,
 /area/station/service/bar)
 "gn" = (

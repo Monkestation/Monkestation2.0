@@ -571,7 +571,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/hunter)
 "FC" = (
-/obj/effect/forcefield/psychic{
+/obj/structure/forcefield/psychic{
 	initial_duration = 0
 	},
 /obj/structure/lattice,
@@ -598,7 +598,7 @@
 /area/shuttle/hunter)
 "Gr" = (
 /obj/structure/lattice,
-/obj/effect/forcefield/psychic{
+/obj/structure/forcefield/psychic{
 	initial_duration = 0
 	},
 /turf/template_noop,

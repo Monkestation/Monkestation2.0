@@ -225,7 +225,7 @@
 
 /datum/status_effect/heretic_passive/cosmic/tick(seconds_between_ticks)
 	. = ..()
-	if(locate(/obj/effect/forcefield/cosmic_field) in get_turf(owner))
+	if(locate(/obj/structure/forcefield/cosmic_field) in get_turf(owner))
 		var/delta_time = DELTA_WORLD_TIME(SSclient_mobs) * 0.5 // SSmobs.wait is 2 secs, so this should be halved.
 		owner.stamina?.adjust(15 * delta_time/* , updating_stamina = FALSE */)
 
@@ -237,8 +237,8 @@
  * * Optional `creator`: Checks if the passed mob has a cosmic passive. Upgrades the cosmic field based on their passive level
  * * Optional `type`: Makes a specific type of cosmic field if we don't want the default
  */
-/proc/create_cosmic_field(loc, mob/living/creator, type = /obj/effect/forcefield/cosmic_field)
-	var/obj/effect/forcefield/cosmic_field/new_field
+/proc/create_cosmic_field(loc, mob/living/creator, type = /obj/structure/forcefield/cosmic_field)
+	var/obj/structure/forcefield/cosmic_field/new_field
 	new_field = new type(loc)
 
 	if(!creator || !ismob(creator))

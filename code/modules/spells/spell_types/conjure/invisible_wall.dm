@@ -20,7 +20,7 @@
 	spell_max_level = 1
 
 	summon_radius = 0
-	summon_type = list(/obj/effect/forcefield/mime)
+	summon_type = list(/obj/structure/forcefield/mime)
 	summon_lifespan = 30 SECONDS
 
 /datum/action/cooldown/spell/conjure/invisible_wall/before_cast(atom/cast_on)

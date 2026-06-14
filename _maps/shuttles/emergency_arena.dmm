@@ -34,11 +34,11 @@
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
 "n" = (
-/obj/effect/forcefield/arena_shuttle_entrance,
+/obj/structure/forcefield/arena_shuttle_entrance,
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
 "o" = (
-/obj/effect/forcefield/arena_shuttle_entrance,
+/obj/structure/forcefield/arena_shuttle_entrance,
 /obj/docking_port/mobile/emergency{
 	name = "The Arena"
 	},

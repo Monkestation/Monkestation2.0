@@ -257,17 +257,17 @@
 	has_gravity = STANDARD_GRAVITY
 	requires_power = FALSE
 
-/obj/effect/forcefield/arena_shuttle
+/obj/structure/forcefield/arena_shuttle
 	name = "portal"
 	initial_duration = 0
 	var/list/warp_points = list()
 
-/obj/effect/forcefield/arena_shuttle/Initialize(mapload)
+/obj/structure/forcefield/arena_shuttle/Initialize(mapload)
 	. = ..()
 	for(var/obj/effect/landmark/shuttle_arena_safe/exit in GLOB.landmarks_list)
 		warp_points += exit
 
-/obj/effect/forcefield/arena_shuttle/Bumped(atom/movable/AM)
+/obj/structure/forcefield/arena_shuttle/Bumped(atom/movable/AM)
 	if(!isliving(AM))
 		return
 
@@ -294,12 +294,12 @@
 	name = "\proper the arena"
 	desc = "A lava filled battlefield."
 
-/obj/effect/forcefield/arena_shuttle_entrance
+/obj/structure/forcefield/arena_shuttle_entrance
 	name = "portal"
 	initial_duration = 0
 	var/list/warp_points = list()
 
-/obj/effect/forcefield/arena_shuttle_entrance/Bumped(atom/movable/AM)
+/obj/structure/forcefield/arena_shuttle_entrance/Bumped(atom/movable/AM)
 	if(!isliving(AM))
 		return
 

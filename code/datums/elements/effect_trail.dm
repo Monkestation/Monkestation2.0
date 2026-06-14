@@ -8,7 +8,7 @@
 	/// The effect used for the trail generation.
 	var/chosen_effect
 
-/datum/element/effect_trail/Attach(datum/target, chosen_effect = /obj/effect/forcefield/cosmic_field)
+/datum/element/effect_trail/Attach(datum/target, chosen_effect = /obj/structure/forcefield/cosmic_field)
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
@@ -48,14 +48,14 @@
 
 /datum/element/effect_trail/cosmic_field/Attach(datum/target, chosen_effect)
 	. = ..()
-	if(!ispath(chosen_effect, /obj/effect/forcefield/cosmic_field))
+	if(!ispath(chosen_effect, /obj/structure/forcefield/cosmic_field))
 		stack_trace("Tried to attach a cosmic_field effect trail with a non-cosmic field as the chosen effect")
 
 /datum/element/effect_trail/cosmic_field/generate_effect(atom/movable/target_object)
 	var/turf/open/open_turf = get_turf(target_object)
 	if(!istype(open_turf))
 		return
-	var/obj/effect/forcefield/cosmic_field/new_field = new chosen_effect(open_turf)
+	var/obj/structure/forcefield/cosmic_field/new_field = new chosen_effect(open_turf)
 	if(isliving(target_object))
 		new_field.summoner = WEAKREF(target_object)
 
