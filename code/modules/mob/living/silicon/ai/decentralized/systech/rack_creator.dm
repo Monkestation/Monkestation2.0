@@ -34,8 +34,8 @@
 /obj/machinery/rack_creator/proc/calculate_efficiency()
 	efficiency_coeff = 1
 	var/total_rating = 1.2
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		total_rating = clamp(total_rating - (M.rating * 0.1), 0, 1)
+	for(var/datum/stock_part/manipulator/M in component_parts)
+		total_rating = clamp(total_rating - (M.tier * 0.1), 0, 1)
 	if(total_rating == 0)
 		efficiency_coeff = INFINITY
 	else

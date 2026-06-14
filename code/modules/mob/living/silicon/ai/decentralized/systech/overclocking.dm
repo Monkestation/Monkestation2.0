@@ -145,3 +145,5 @@
 			inserted_cpu.speed = initial(inserted_cpu.speed)
 			inserted_cpu.power_multiplier = initial(inserted_cpu.power_multiplier)
 			. = TRUE
+
+#undef OVERCLOCKING_DURATION

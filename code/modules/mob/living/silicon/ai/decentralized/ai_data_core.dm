@@ -62,14 +62,14 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	. = ..()
 	var/new_heat_mod = 1
 	var/new_power_mod = 1
-	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		new_power_mod -= (C.rating - 1) / 50 //Max -24% at tier 4 parts, min -0% at tier 1
+	for(var/datum/stock_part/capacitor/C in component_parts)
+		new_power_mod -= (C.tier - 1) / 50 //Max -24% at tier 4 parts, min -0% at tier 1
 
 	for(var/obj/item/stock_parts/power_store/cell/cell_used in component_parts)
 		integrated_battery = cell_used
 
-	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		new_heat_mod -= (M.rating - 1) / 15 //Max -40% at tier 4 parts, min -0% at tier 1
+	for(var/datum/stock_part/matter_bin/M in component_parts)
+		new_heat_mod -= (M.tier - 1) / 15 //Max -40% at tier 4 parts, min -0% at tier 1
 
 	heat_modifier = new_heat_mod
 	power_modifier = new_power_mod

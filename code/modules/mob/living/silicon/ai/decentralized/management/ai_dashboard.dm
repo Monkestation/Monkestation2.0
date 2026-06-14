@@ -22,25 +22,22 @@
 	if(!istype(new_owner))
 		qdel(src)
 	owner = new_owner
-	available_projects = list()
-	completed_projects = list()
-	running_projects = list()
 	cpu_usage = list()
 	ram_usage = list()
 
 	for(var/path in subtypesof(/datum/ai_project))
-		available_projects += new path(owner, src)
+		LAZYADD(available_projects, new path(owner, src))
 
 /datum/ai_dashboard/Destroy(force)
 	owner = null
 	cpu_usage = null
 	ram_usage = null
 	if(LAZYLEN(available_projects))
-		QDEL_NULL(available_projects)
+		QDEL_LIST(available_projects)
 	if(LAZYLEN(completed_projects))
-		QDEL_NULL(completed_projects)
+		QDEL_LIST(completed_projects)
 	if(LAZYLEN(running_projects))
-		QDEL_NULL(running_projects)
+		QDEL_LIST(running_projects)
 	return ..()
 
 
@@ -286,8 +283,8 @@
 
 
 /datum/ai_dashboard/proc/finish_project(datum/ai_project/project, notify_user = TRUE)
-	available_projects -= project
-	completed_projects += project
+	LAZYREMOVE(available_projects, project)
+	LAZYADD(completed_projects, project)
 	cpu_usage[project.name] = 0
 	project.finish()
 	if(notify_user)

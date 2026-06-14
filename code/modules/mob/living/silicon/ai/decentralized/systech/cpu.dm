@@ -97,3 +97,5 @@
 
 	minimum_growth = 0.5 //Basically linear at this point
 	maximum_growth = 4.5 //max speed achievable at 2.2x power consumption.
+
+#undef OVERCLOCK_MIN_POWER_MULT

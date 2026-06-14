@@ -55,11 +55,11 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 	. = ..()
 	var/new_heat_mod = 1
 	var/new_power_mod = 1
-	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		new_power_mod -= (C.rating - 1) / 40 //Max -15% at tier 4 parts, min -0% at tier 1
+	for(var/datum/stock_part/capacitor/C in component_parts)
+		new_power_mod -= (C.tier - 1) / 40 //Max -15% at tier 4 parts, min -0% at tier 1
 
-	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		new_heat_mod -= (M.rating - 1) / 30 //Max -20% at tier 4 parts, min -0% at tier 1
+	for(var/datum/stock_part/matter_bin/M in component_parts)
+		new_heat_mod -= (M.tier - 1) / 30 //Max -20% at tier 4 parts, min -0% at tier 1
 	//68% total heat reduction in total at tier 4
 
 	heat_modifier = new_heat_mod
