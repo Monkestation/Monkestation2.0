@@ -1054,11 +1054,15 @@
 	if(ismovable(new_eye))
 		if(new_eye != GLOB.ai_camera_room_landmark)
 			end_multicam()
+		if(eyeobj)
+			client.set_eye(eyeobj)
+			view_core()
+		else
+			client.set_eye(new_eye)
 		client.perspective = EYE_PERSPECTIVE
-		client.set_eye(new_eye)
 	else
 		end_multicam()
-		if(isturf(loc) || istype(loc, /obj/machinery/ai/data_core))
+		if(isvalidAIloc(loc))
 			if(eyeobj)
 				client.set_eye(eyeobj)
 				client.perspective = EYE_PERSPECTIVE
