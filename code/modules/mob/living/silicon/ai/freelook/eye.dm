@@ -87,7 +87,7 @@
 /mob/eye/camera/ai/setLoc(destination, force_update = FALSE)
 	if(!ai)
 		return
-	if(!(isturf(ai.loc) || istype(ai.loc, /obj/machinery/ai/data_core)))
+	if(!(isvalidAIloc(ai.loc)))
 		return
 
 	. = ..()

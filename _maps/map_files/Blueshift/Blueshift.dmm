@@ -24810,6 +24810,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/cargo/storage)
+"eJD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/passive_vent,
+/turf/open/floor/circuit/telecomms,
+/area/station/ai_monitored/turret_protected/ai)
 "eJF" = (
 /obj/item/radio/intercom/directional/south,
 /obj/structure/extinguisher_cabinet/directional/west,
@@ -65506,11 +65511,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/security/prison/upper)
-"mFG" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/components/unary/passive_vent,
-/turf/open/floor/circuit/telecomms,
-/area/station/ai_monitored/turret_protected/ai)
 "mFI" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 4
@@ -93050,7 +93050,7 @@
 "rXc" = (
 /obj/structure/cable,
 /obj/machinery/power/smes/super/full,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
 "rXe" = (
 /obj/machinery/iv_drip,
@@ -224286,7 +224286,7 @@ dFU
 rVh
 bLR
 kGE
-mFG
+eJD
 toK
 vDV
 toK

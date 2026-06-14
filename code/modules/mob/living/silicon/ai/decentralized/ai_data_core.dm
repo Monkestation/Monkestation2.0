@@ -172,9 +172,9 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	if(!valid_data_core())
 		return
 	if((machine_stat & (BROKEN|EMPED)) || !has_power())
-		icon_state = "core-offline"
+		icon_state = "[base_icon_state]-offline"
 	else
-		icon_state = "core"
+		icon_state = base_icon_state
 
 /obj/machinery/ai/data_core/proc/partytime()
 	if(TimerID)
