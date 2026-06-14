@@ -25,6 +25,7 @@ ADMIN_VERB(borg_panel, R_ADMIN, FALSE, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPT
 			/obj/item/borg/upgrade/transform,
 			/obj/item/borg/upgrade/modkit,
 			/obj/item/borg/upgrade/modkit/aoe,
+			/obj/item/borg/upgrade/surgery_omnitool,
 			// Not practical to use
 			/obj/item/borg/upgrade/defib/backpack,
 			/obj/item/borg/upgrade/modkit/trigger_guard,

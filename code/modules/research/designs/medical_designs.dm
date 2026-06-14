@@ -647,6 +647,25 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/cyberimp_alien_surgical
+	name = "Alien Surgical Arm Implant"
+	desc = "A set of alien surgical tools hidden behind a concealed panel on the user's arm."
+	id = "ci-surgery-alien"
+	build_type = MECHFAB
+	materials = list( // Cost of all alien tools combined + arbitrary glass cost.
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 14,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 5.5,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4.5
+	)
+	construction_time = 2 SECONDS
+	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/surgery/alien
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /datum/design/cyberimp_toolset
 	name = "Toolset Arm Implant"
 	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm."

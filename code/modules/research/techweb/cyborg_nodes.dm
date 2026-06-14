@@ -71,7 +71,7 @@
 		"borg_upgrade_piercinghypospray",
 		"borg_upgrade_pinpointer",
 		"borg_upgrade_surgical_database",
-		"borg_upgrade_surgicalomnitool"
+		"borg_upgrade_surgical_omnitool_advanced"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS) // Lots of upgrades shall be regular cost.
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
@@ -186,6 +186,20 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
+/datum/techweb_node/cyborg_upgrades_alien
+	id = "cyborg_upgrades_alien"
+	display_name = "Cyborg Upgrades: Alien"
+	description = "Enabling compatibility of our alien technology for usage within cyborgs."
+	prereq_ids = list(
+		"cyborg_upgrades_medical",
+		"alien_bio"
+	)
+	design_ids = list(
+		"borg_upgrade_surgical_omnitool_alien"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
+
 //
 // Implants
 //
@@ -268,6 +282,22 @@
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL, RADIO_CHANNEL_ENGINEERING)
 
 /datum/techweb_node/adv_cyber_implants/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_DISCOUNT_MINOR * 2.5)
+
+/datum/techweb_node/alien_cyber_implants
+	id = "alien_cyber_implants"
+	display_name = "Alien Cybernetic Implants"
+	description = "Alien-sourced cybernetic implants."
+	prereq_ids = list("adv_cyber_implants", "alien_bio")
+	design_ids = list(
+		"ci-surgery-alien"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
+
+/datum/techweb_node/alien_cyber_implants/New()
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_DISCOUNT_MINOR * 2.5)

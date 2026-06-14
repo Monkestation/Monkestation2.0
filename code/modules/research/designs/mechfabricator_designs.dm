@@ -1494,15 +1494,32 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING,
 	)
 
-/datum/design/borg_upgrade_surgicalomnitool
+/datum/design/borg_upgrade_surgical_omnitool_advanced
 	name = "Advanced Surgical Omnitool Upgrade"
-	id = "borg_upgrade_surgicalomnitool"
+	id = "borg_upgrade_surgical_omnitool_advanced"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/surgery_omnitool
+	build_path = /obj/item/borg/upgrade/surgery_omnitool/advanced
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75,
 		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	)
+
+/datum/design/borg_upgrade_surgical_omnitool_alien
+	name = "Alien Surgical Omnitool Upgrade"
+	id = "borg_upgrade_surgical_omnitool_alien"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/surgery_omnitool/alien
+	materials = list( // Cost of all alien tools combined + arbitrary glass cost.
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 14,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 5.5,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4.5
 	)
 	construction_time = 4 SECONDS
 	category = list(

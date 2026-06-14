@@ -63,6 +63,19 @@
 		/obj/item/knife/combat/cyborg,
 	)
 
+/obj/item/organ/internal/cyberimp/arm/item_set/surgery/alien
+	name = "alien surgical toolset implant"
+	desc = "A set of alien surgical tools hidden behind a concealed panel on the user's arm."
+	items_to_create = list(
+		/obj/item/retractor/alien,
+		/obj/item/hemostat/alien,
+		/obj/item/cautery/alien,
+		/obj/item/surgicaldrill/alien,
+		/obj/item/scalpel/alien,
+		/obj/item/circular_saw/alien,
+		/obj/item/surgical_drapes,
+	)
+
 /obj/item/organ/internal/cyberimp/arm/item_set/cook
 	name = "kitchenware toolset implant"
 	desc = "A set of kitchen tools hidden behind a concealed panel on the user's arm."
