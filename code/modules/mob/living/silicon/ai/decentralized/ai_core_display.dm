@@ -12,7 +12,8 @@
 
 /obj/machinery/status_display/ai_core/Initialize(mapload)
 	. = ..()
-	GLOB.ai_core_displays.Add(src)
+	if(is_station_level(z))
+		GLOB.ai_core_displays.Add(src)
 
 /obj/machinery/status_display/ai_core/Destroy()
 	GLOB.ai_core_displays.Remove(src)
