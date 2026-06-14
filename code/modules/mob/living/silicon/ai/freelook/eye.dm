@@ -154,31 +154,31 @@
 #define SPRINT_PER_TICK 0.5
 #define SPRINT_PER_STEP 20
 
-/client/proc/AIMove(direction, mob/living/silicon/ai/user)
-	if(user.last_moved && user.last_moved + 1 < world.timeofday)
+/mob/living/silicon/ai/proc/AIMove(direction)
+	if(last_moved && last_moved + 1 < world.timeofday)
 		// Decay sprint based off how long it took us to input this next move
-		var/missed_sprint = max((world.timeofday + 1) - user.last_moved, 0) * SPRINT_PER_TICK
-		user.sprint = max(user.sprint - missed_sprint * 7, initial(user.sprint))
+		var/missed_sprint = max((world.timeofday + 1) - last_moved, 0) * SPRINT_PER_TICK
+		sprint = max(sprint - missed_sprint * 7, initial(sprint))
 
 	// We move a full step, at least. Can't glide more with our current movement mode, so this is how I have to live
 	var/step_count = 0
-	for(var/i = 0; i < max(user.sprint, initial(user.sprint)); i += SPRINT_PER_STEP)
+	for(var/i = 0; i < max(sprint, initial(sprint)); i += SPRINT_PER_STEP)
 		step_count += 1
-		var/turf/step = get_turf(get_step(user.eyeobj, direction))
+		var/turf/step = get_turf(get_step(eyeobj, direction))
 		if(step)
-			user.eyeobj.setLoc(step)
+			eyeobj.setLoc(step)
 
 	// I'd like to make this scale with the steps we take, but it like, just can't
 	// So we're doin this instead
-	user.eyeobj.glide_size = world.icon_size
+	eyeobj.glide_size = ICON_SIZE_ALL
 
-	user.last_moved = world.timeofday
-	if(user.acceleration)
-		user.sprint = min(user.sprint + SPRINT_PER_TICK, user.max_camera_sprint)
+	last_moved = world.timeofday
+	if(acceleration)
+		sprint = min(sprint + SPRINT_PER_TICK, max_camera_sprint)
 	else
-		user.sprint = initial(user.sprint)
+		sprint = initial(sprint)
 
-	user.ai_tracking_tool.reset_tracking()
+	ai_tracking_tool.reset_tracking()
 
 #undef SPRINT_PER_STEP
 #undef SPRINT_PER_TICK

@@ -207,7 +207,6 @@
 //Dashboard
 	using = new /atom/movable/screen/ai/dashboard(null, src)
 	using.screen_loc = ui_ai_dashboard
-
 	static_inventory += using
 
 //Camera list

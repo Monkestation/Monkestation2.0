@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isaicore(A) (istype(A, /obj/machinery/ai/data_core))
 
-#define isvalidAIloc(A) ((isturf(A) || isaicore(A)))
+#define isvalidAIloc(A) (isturf(A) || isaicore(A))
 
 #define isasteroidturf(A) (istype(A, /turf/open/misc/asteroid))
 

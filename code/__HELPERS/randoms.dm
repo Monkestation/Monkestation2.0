@@ -54,4 +54,4 @@
 	var/str = "[val]"
 	while(length(str) < max_length)
 		str = "0" + str
-	. = "[val]"
+	. = str
