@@ -248,7 +248,6 @@
 	icon_state = "devitt-broken"
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 
-
 /obj/structure/mecha_wreckage/vendozer
 	name = "\improper Vendozer Wreckage"
 	icon = 'icons/mecha/largetanks.dmi'

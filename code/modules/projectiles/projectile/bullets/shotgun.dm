@@ -333,7 +333,7 @@
 
 /obj/projectile/bullet/scattershot
 	icon_state = "pellet"
-	damage = 24
+	damage = 25
 
 
 //Breaching Ammo

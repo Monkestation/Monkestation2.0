@@ -39,7 +39,3 @@
 		"\"Vending machines are great for armor. Who knew?\"",
 		"\"Too large to assemble directly, will need to craft intermediaries.\"",
 	)
-
-/obj/item/book/granter/crafting_recipe/vendozer/recoil(mob/living/user)
-	to_chat(user, span_warning("The book ignites in rage and fury, incinerating itself before you can read it."))
-	qdel(src)

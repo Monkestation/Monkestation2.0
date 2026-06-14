@@ -4,7 +4,7 @@
 	icon_state = "durand"
 	base_icon_state = "durand"
 	movedelay = 4
-	max_integrity = 400
+	max_integrity = 350
 	armor_type = /datum/armor/mecha_durand
 	max_temperature = 30000
 	force = 40

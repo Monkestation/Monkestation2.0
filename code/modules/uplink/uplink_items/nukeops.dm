@@ -430,20 +430,6 @@
 	purchasable_from = UPLINK_NUKE_OPS
 	illegal_tech = FALSE
 
-/datum/uplink_item/ammo/mech/bag
-	name = "Mech Support Kit Bag"
-	desc = "A duffel bag containing ammo for four full reloads of the scattershotm which is equipped on standard Dark Gygax exosuits. Also comes with some support equipment for maintaining the mech, including tools and an inducer. Contains a Bluespace Comprression kit for easier logistics."
-	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/mech
-	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS
-
-/datum/uplink_item/ammo/mauler/bag
-	name = "Mauler Ammo Bag"
-	desc = "A duffel bag containing ammo for three full reloads of the LMG and SRM-8 missile laucher that are equipped on a standard Mauler exosuit. Contains two Bluespace Comprression kits for easier logistics."
-	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/mauler
-	cost = 8
-	purchasable_from = UPLINK_NUKE_OPS
-
 /datum/uplink_item/explosives/bombanana
 	name = "Bombanana"
 	desc = "A banana with an explosive taste! discard the peel quickly, as it will explode with the force of a Syndicate minibomb \
@@ -600,31 +586,31 @@
 /datum/uplink_item/support/gygax
 	name = "Dark Gygax Exosuit"
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent \
-			for hit-and-run style attacks. Features a scattershot shotgun, armor boosters against melee and ranged attacks, ion thrusters and a Tesla energy array."
-	item = /obj/vehicle/sealed/mecha/gygax/dark/loaded
-	cost = 80
+			for hit-and-run style attacks. Features armor boosters against melee and ranged attacks, and Ion Thrusters, MUST BUY WEAPONS TO ATTACH!!"
+	item = /obj/vehicle/sealed/mecha/gygax/dark
+	cost = 60
 	surplus = 40
 
 /datum/uplink_item/support/honker
 	name = "Dark H.O.N.K."
 	desc = "A clown combat mech equipped with bombanana peel and tearstache grenade launchers, as well as the ubiquitous HoNkER BlAsT 5000."
 	item = /obj/vehicle/sealed/mecha/honker/dark/loaded
-	cost = 80
-	surplus = 60
+	cost = 60
+	surplus = 30
 	purchasable_from = UPLINK_CLOWN_OPS
 
 /datum/uplink_item/support/mauler
 	name = "Mauler Exosuit"
 	desc = "A massive and incredibly deadly military-grade exosuit. Features long-range targeting, thrust vectoring \
-			and deployable smoke. Comes equipped with an LMG, scattershot carbine, missile rack, an antiprojectile armor booster and a Tesla energy array."
-	item = /obj/vehicle/sealed/mecha/marauder/mauler/loaded
-	cost = 140
+			and deployable smoke. MUST BUY WEAPONS TO ATTACH!!"
+	item = /obj/vehicle/sealed/mecha/marauder/mauler
+	cost = 80
 
 /datum/uplink_item/support/sentinel
 	name = "Sentinel Exosuit"
 	desc = "A Superheavy Seige walker fitted with a giant cannon in a turret, great for annihalating stations."
 	item = /obj/vehicle/sealed/mecha/sentinel/syntinel
-	cost = 175
+	cost = 90
 
 /datum/uplink_item/support/sentinelammo
 	name = "Sentinel Ammo"
@@ -632,11 +618,101 @@
 	item = /obj/item/mecha_ammo/sentinel
 	cost = 10
 
+/datum/uplink_item/support/lmg
+	name = "Ultra AC 2"
+	desc = "A weapon for combat exosuits. Shoots a rapid, three shot burst."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
+	cost = 6
+
+/datum/uplink_item/support/lmgammo
+	name = "Ultra AC 2 Ammo"
+	desc = "A box of linked ammunition, designed for the Ultra AC 2 exosuit weapon."
+	item = /obj/item/mecha_ammo/lmg
+	cost = 2
+
+/datum/uplink_item/support/carbine
+	name = "\improper FNX-99 \"Hades\" Carbine"
+	desc = "A weapon for combat exosuits. Shoots incendiary bullets."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
+	cost = 4
+
+/datum/uplink_item/support/carbineammo
+	name = "\improper FNX-99 \"Hades\" Carbine Ammo"
+	desc = "A box of incendiary ammunition for use with exosuit weapons."
+	item = /obj/item/mecha_ammo/incendiary
+	cost = 1
+
+/datum/uplink_item/support/shotgun
+	name = "\improper LBX AC 10 \"Scattershot\""
+	desc = "A weapon for combat exosuits. Shoots a spread of pellets."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
+	cost = 4
+
+/datum/uplink_item/support/shotgunammo
+	name = "\improper LBX AC 10 \"Scattershot\" Ammo"
+	desc = "A box of scaled-up buckshot, for use in exosuit shotguns."
+	item = /obj/item/mecha_ammo/scattershot
+	cost = 1
+
+/datum/uplink_item/support/heavy
+	name = "Executor Mech Rifle"
+	desc = "A weapon for combat exosuits. Its armor piercing rounds bring down men and mech alike."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/heavy
+	cost = 8
+
+/datum/uplink_item/support/heavyammo
+	name = "Executor Mech Rifle Ammo"
+	desc = "A box of large caliber rounds, used with the Executor Mech Rifle & Hotchiss Rotary Cannon."
+	item = /obj/item/mecha_ammo/heavy
+	cost = 3
+
+/datum/uplink_item/support/mini
+	name = "\improper Avtomat AC 3"
+	desc = "An SSC-designed weapon for combat exosuits licensed by NT, stolen by the Syndicate. Fires a small caliber at considerable speed."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/minigun
+	cost = 6
+
+/datum/uplink_item/support/miniammo
+	name = "\improper Avtomat AC 3 Ammo"
+	desc = "A box of linked ammunition, designed for the Avtomat AC 3 exosuit weapon."
+	item = /obj/item/mecha_ammo/minigun
+	cost = 1
+
+/datum/uplink_item/support/rotary
+	name = "Hotchkiss Rotary Cannon"
+	desc = "A very expensive and complicated Rotary Cannon for combat exosuits."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rotary
+	cost = 30
+
+/datum/uplink_item/support/flamethrower
+	name = "\improper FNX-100 \"Conflagrator\" Flamethrower"
+	desc = "A modified FNX-99 Hades carbine that sacrifices its incendary bullets to be a full flamethrower."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/flamethrower
+	cost = 3
+
+/datum/uplink_item/support/flamethrowerammo
+	name = "Flamethrower Fuel Drum"
+	desc = "A drum of incendiary jelly, used with the FNX-100."
+	item = /obj/item/mecha_ammo/flamer
+	cost = 1
+
+/datum/uplink_item/support/missilerack
+	name = "\improper SRM-8 missile rack"
+	desc = "A weapon for combat exosuits. Launches short range missiles."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
+	cost = 8
+
+/datum/uplink_item/support/missilerackammo
+	name = "Short Range Missiles"
+	desc = "A box of large missiles, ready for loading into an SRM-8 exosuit missile rack."
+	item = /obj/item/mecha_ammo/missiles_srm
+	cost = 5
+
 /datum/uplink_item/support/devitt
 	name = "Devitt Mk3 Light Tank"
 	desc = "An ancient tank found in the wearhouse, comes prepared with a cannon and machinegun. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
 	item = /obj/vehicle/sealed/mecha/devitt
-	cost = 80
+	cost = 70
 
 /datum/uplink_item/support/lighttankammo
 	name = "40mm cannon ammo"

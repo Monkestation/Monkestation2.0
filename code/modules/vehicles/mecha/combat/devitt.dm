@@ -4,7 +4,7 @@
 	icon = 'icons/mecha/tanks.dmi'
 	icon_state = "devitt_0_0"
 	base_icon_state = "devitt"
-	max_integrity = 470 // its a hunk of steel that didnt need to be limited by mecha legs
+	max_integrity = 420 // its a hunk of steel that didnt need to be limited by mecha legs
 	force = 25 // only 4 shot but since its fast it can get a bunch of hits off
 	movedelay = 1.3
 	step_energy_drain = 40
@@ -16,8 +16,8 @@
 	armor_type = /datum/armor/devitt //its neigh on immune to bullets, but explosives and melee will ruin it.
 	internal_damage_threshold = 35 //Its old but no electronics
 	wreckage = /obj/structure/mecha_wreckage/devitt
-	var/crushdmglower = 3
-	var/crushdmgupper = 7
+	var/crushdmglower = 4
+	var/crushdmgupper = 6
 //	max_occupants = 2 // gunner + Driver otherwise it would be OP
 	mech_type = EXOSUIT_MODULE_TANK
 	equip_by_category = list(
