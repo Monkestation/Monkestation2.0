@@ -1,4 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - bugfix: "Cyborgs now correctly can interact with wall mounted intercoms."
