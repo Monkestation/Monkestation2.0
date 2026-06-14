@@ -205,3 +205,6 @@
       Oops.
   cam_dev:
   - image: added back sprite for lionhunter rifle
+2026-06-13:
+  Shoddd:
+  - bugfix: satyrs can headbutt mobs once again

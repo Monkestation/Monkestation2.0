@@ -70,7 +70,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/deployed,
 /turf/open/floor/iron/white,
 /area/station/science/robotics)
 "abC" = (
@@ -6897,6 +6897,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"cgD" = (
+/obj/structure/lattice,
+/obj/item/hand_labeler,
+/turf/open/floor/plating/ocean/rock,
+/area/ocean)
 "cgN" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -13739,6 +13744,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/execution/transfer)
+"ekd" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "robopriv";
+	name = "Robotics Privacy Shutter"
+	},
+/obj/machinery/smartfridge/organ,
+/turf/open/floor/plating,
+/area/station/science/robotics)
 "ekn" = (
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /obj/effect/turf_decal/siding/purple{
@@ -20634,7 +20648,7 @@
 /obj/effect/decal/cleanable/plasma,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/closet/crate/mod,
+/obj/machinery/vending/robotics,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "gqY" = (
@@ -23616,6 +23630,7 @@
 /obj/item/storage/belt/utility/full,
 /obj/item/stack/cable_coil,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/hand_labeler,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "hnS" = (
@@ -24390,6 +24405,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 1
 	},
+/obj/item/hand_labeler,
 /turf/open/floor/plating/ocean/ironsand,
 /area/ocean)
 "hBl" = (
@@ -28061,6 +28077,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/structure/closet/crate/mod,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "iJU" = (
@@ -99268,7 +99285,7 @@ lCI
 lCI
 sYV
 uYm
-yam
+cgD
 meJ
 meJ
 meJ
@@ -99525,7 +99542,7 @@ slL
 slL
 slL
 hBg
-yam
+cgD
 meJ
 meJ
 meJ
@@ -115904,7 +115921,7 @@ uzj
 uzj
 blR
 hzI
-blR
+ekd
 blR
 uzj
 uzj

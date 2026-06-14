@@ -1,0 +1,10 @@
+author: "wonderinghost"
+delete-after: True
+changes:
+  - map: "robotics now have robovend deluxe, organ fridges, and label makers to their departments"
+  - map: "[thesius] medbay has new hall to make robotics more accessible"
+  - map: "[thesius] medbay surgery now has polarizable windows in surgery room"
+  - map: "[blueshift] places welding tank in robotics in a less annoying place"
+  - refactor: "refactored robovend deluxe to have more content"
+  - code_imp: "reduces cost of limb shears from 700c to 500c"
+  - code_imp: "roboticists now have research app"

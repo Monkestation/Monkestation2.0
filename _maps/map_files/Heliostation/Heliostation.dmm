@@ -39133,6 +39133,7 @@
 /obj/item/assembly/flash/handheld{
 	pixel_x = -15
 	},
+/obj/item/hand_labeler,
 /turf/open/floor/iron/smooth_edge,
 /area/station/science/robotics/lab)
 "hUM" = (
@@ -43083,6 +43084,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron/freezer,
 /area/station/security/lockers)
+"jrK" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "robotics";
+	name = "Robotics Lab Shutters"
+	},
+/obj/machinery/smartfridge/organ,
+/turf/open/floor/plating,
+/area/station/science/robotics/lab)
 "jrL" = (
 /turf/closed/wall/r_wall,
 /area/station/solars/starboard/aft)
@@ -68023,6 +68033,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/effect/decal/cleanable/oil,
 /turf/open/floor/iron/smooth,
 /area/station/science/robotics/lab)
 "sNC" = (
@@ -68032,7 +68043,7 @@
 /obj/machinery/light/no_nightlight/directional/east,
 /obj/structure/table/reinforced,
 /obj/structure/cable,
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/deployed,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/robotics/lab)
 "sNL" = (
@@ -79654,7 +79665,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "xkW" = (
-/obj/effect/decal/cleanable/oil,
 /obj/machinery/light/small/directional/west,
 /obj/machinery/requests_console/directional/west{
 	department = "Robotics";
@@ -79662,6 +79672,7 @@
 	},
 /obj/effect/mapping_helpers/requests_console/ore_update,
 /obj/effect/mapping_helpers/requests_console/supplies,
+/obj/machinery/vending/robotics,
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
@@ -125386,7 +125397,7 @@ buR
 mnK
 buR
 buR
-cLh
+jrK
 hUx
 wMn
 tFA

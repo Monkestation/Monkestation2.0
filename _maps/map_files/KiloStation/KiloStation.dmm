@@ -36673,21 +36673,11 @@
 /turf/closed/wall,
 /area/station/maintenance/port/greater)
 "lpH" = (
-/obj/structure/rack,
 /obj/effect/turf_decal/bot,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/multitool,
-/obj/item/storage/toolbox/electrical,
-/obj/item/multitool{
-	pixel_x = 4
-	},
-/obj/item/reagent_containers/cup/beaker/large,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/vending/robotics,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "lpK" = (
@@ -41012,6 +41002,13 @@
 /obj/item/clothing/glasses/welding,
 /obj/structure/noticeboard/directional/north,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/item/multitool{
+	pixel_x = 4
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "mGz" = (
@@ -42392,6 +42389,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)
+"nee" = (
+/obj/machinery/smartfridge/organ,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "robotics_shutters";
+	name = "Robotics Privacy Shutters"
+	},
+/turf/open/floor/plating,
+/area/station/science/robotics/lab)
 "nep" = (
 /obj/structure/cable,
 /obj/machinery/modular_computer/preset/command,
@@ -46578,7 +46583,7 @@
 /obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 1
 	},
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/deployed,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
@@ -60812,6 +60817,7 @@
 	pixel_x = -6
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/item/hand_labeler,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "sWs" = (
@@ -76419,6 +76425,9 @@
 /obj/machinery/airalarm/directional/west,
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/machinery/light/directional/north,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/storage/toolbox/electrical,
+/obj/item/multitool,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "xTj" = (
@@ -113626,7 +113635,7 @@ rlT
 vnZ
 nNW
 lpH
-mWS
+nee
 baz
 sIq
 tWg

@@ -27055,6 +27055,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/circuitboard/mecha/ripley/main,
 /obj/item/circuitboard/mecha/ripley/peripherals,
+/obj/item/hand_labeler,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "jtZ" = (
@@ -48152,6 +48153,11 @@
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
+"qAL" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/vending/robotics,
+/turf/open/floor/iron/dark,
+/area/station/science/robotics/lab)
 "qAN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -48284,6 +48290,7 @@
 /area/station/maintenance/port/aft)
 "qDy" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "qDz" = (
@@ -59639,6 +59646,15 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
+"uyJ" = (
+/obj/machinery/smartfridge/organ,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "roboticsprivacy";
+	name = "Robotics Shutters"
+	},
+/turf/open/floor/plating,
+/area/station/science/robotics/lab)
 "uza" = (
 /turf/closed/wall/r_wall,
 /area/station/security/prison/visit)
@@ -64438,7 +64454,7 @@
 "wij" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/purple/half/contrasted,
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/deployed,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "wiu" = (
@@ -98595,7 +98611,7 @@ nyy
 tBB
 usg
 fma
-ebV
+uyJ
 dZb
 ebV
 fma
@@ -99887,7 +99903,7 @@ eut
 uBy
 cCs
 qDy
-reL
+qAL
 cRW
 eut
 kwy
