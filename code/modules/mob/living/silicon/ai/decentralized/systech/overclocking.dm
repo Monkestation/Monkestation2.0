@@ -57,7 +57,7 @@
 	if(!istype(tool, /obj/item/ai_cpu))
 		return
 	if(inserted_cpu)
-		balloon_alert(user, "CPU already inserted!")
+		balloon_alert(user, "cpu already inserted!")
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/ai_cpu/CPU = tool
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
