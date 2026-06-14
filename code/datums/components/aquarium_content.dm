@@ -77,7 +77,7 @@
 	/// The original value of the beauty this component had when initialized
 	var/original_beauty
 
-/datum/component/aquarium_content/Initialize(animation_getter, animation_update_signals)
+/datum/component/aquarium_content/Initialize(animation_getter, animation_update_signals, beauty)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 

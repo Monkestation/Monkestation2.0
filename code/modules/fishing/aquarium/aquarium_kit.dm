@@ -112,7 +112,7 @@
 
 /obj/item/aquarium_prop/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/aquarium_content, icon, beauty = beauty)
+	AddComponent(/datum/component/aquarium_content, beauty = beauty)
 
 /obj/item/aquarium_prop/rocks
 	name = "rocks"
