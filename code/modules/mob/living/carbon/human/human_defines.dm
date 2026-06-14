@@ -108,6 +108,9 @@
 	/// Normally set by `/datum/preference/toggle/persistent_scars/apply_to_human`.
 	var/persistent_scars
 
+	///Preferences check to determine if a character is capable or not of being the target of an Obsession.
+	var/obsession_target
+
 	/// Base height of the mob, modified by stuff like dwarfism or species
 	VAR_PRIVATE/base_mob_height = HUMAN_HEIGHT_MEDIUM
 	/// Actual height of the mob. Don't touch this one, it is set via update_mob_height()

@@ -3912,6 +3912,7 @@
 #include "code\modules\client\preferences\multiz_parallax.dm"
 #include "code\modules\client\preferences\multiz_performance.dm"
 #include "code\modules\client\preferences\names.dm"
+#include "code\modules\client\preferences\obsession_target.dm"
 #include "code\modules\client\preferences\ooc.dm"
 #include "code\modules\client\preferences\operative_species.dm"
 #include "code\modules\client\preferences\paint_color.dm"
