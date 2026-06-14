@@ -199,7 +199,7 @@ export const BorgHypoSettings = (props: {
         </LabeledList.Item>
         <LabeledList.Item label="Custom">
           <Slider
-            step={1}
+            step={0.5}
             stepPixelSize={30}
             value={selectedAmount}
             minValue={minAmount}

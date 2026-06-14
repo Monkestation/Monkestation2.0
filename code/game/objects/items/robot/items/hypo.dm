@@ -499,7 +499,8 @@
 			. = TRUE
 
 		if("set_amount")
-			amount_per_transfer_from_this = clamp(round(text2num(params["amount"]), 1), possible_transfer_amounts[1], possible_transfer_amounts[length(possible_transfer_amounts)])
+			var/new_amount = text2num(params["amount"])
+			amount_per_transfer_from_this = clamp(new_amount, possible_transfer_amounts[1], possible_transfer_amounts[length(possible_transfer_amounts)])
 			. = TRUE
 
 		if("record_recipe")
