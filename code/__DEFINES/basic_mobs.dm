@@ -28,3 +28,5 @@
 
 ///keeps track of how many gutlunches are born
 GLOBAL_VAR_INIT(gutlunch_count, 0)
+///this mob suffers depression
+#define BB_BASIC_DEPRESSED "basic_depressed"

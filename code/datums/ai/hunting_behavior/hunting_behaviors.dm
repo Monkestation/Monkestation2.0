@@ -126,22 +126,28 @@
 /datum/ai_behavior/hunt_target/unarmed_attack_target
 	///do we toggle combat mode before interacting with the object?
 	var/switch_combat_mode = FALSE
+	var/switch_to_istate = null
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/target_caught(mob/living/hunter, obj/structure/cable/hunted)
 	hunter.UnarmedAttack(hunted, TRUE)
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/finish_action(datum/ai_controller/controller, succeeded, hunting_target_key, hunting_cooldown_key)
 	. = ..()
-	if(!switch_combat_mode)
-		return
 	var/mob/living/living_pawn = controller.pawn
-	living_pawn.istate = initial(living_pawn.istate)
+	if(switch_combat_mode)
+		living_pawn.istate = initial(living_pawn.istate)
+	if(switch_to_istate != null)
+		living_pawn.istate = switch_to_istate
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/switch_combat_mode
 	switch_combat_mode = TRUE
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target
 	always_reset_target = TRUE
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target_combat_mode
+	always_reset_target = TRUE
+	switch_to_istate = ISTATE_BLOCKING
 
 /datum/ai_behavior/hunt_target/use_ability_on_target
 	always_reset_target = TRUE

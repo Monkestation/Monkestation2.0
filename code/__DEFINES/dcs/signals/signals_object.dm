@@ -253,3 +253,6 @@
 /// Sent from /obj/effect/rune/convert/try_sacrifice_item(obj/effect/rune/convert/rune)
 #define COMSIG_ITEM_CULT_SACRIFICE "item_cult_sacrifice"
 	#define COMPONENT_SACRIFICE_SUCCESSFUL (1<<0)
+
+/// From /obj/item/multitool/remove_buffer(): (buffer)
+#define COMSIG_MULTITOOL_REMOVE_BUFFER "multitool_remove_buffer"

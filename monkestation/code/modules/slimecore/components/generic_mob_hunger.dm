@@ -106,7 +106,7 @@
 
 	var/alist/offset_to_add = get_icon_dimensions(source.icon)
 	var/y_position = offset_to_add["height"] + 8 // this renders above any health ones
-	var/obj/effect/overlay/happiness_overlay/hunger/hearts = new(null, clicker)
+	var/obj/effect/overlay/happiness_overlay_slime/hearts = new(null, clicker)
 	hearts.pixel_y = y_position
 	hearts.set_hearts(current_hunger / max_hunger)
 	var/image/new_image = new(source)
@@ -120,6 +120,6 @@
 	clicker.client.images += new_image
 	hearts.image = new_image
 
-/obj/effect/overlay/happiness_overlay/hunger
+/obj/effect/overlay/happiness_overlay_slime/hunger
 	full_icon = "full_hunger"
 	empty_icon = "empty_hunger"

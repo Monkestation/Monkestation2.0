@@ -12,9 +12,19 @@
 		fish_source = configuration
 	else
 		return COMPONENT_INCOMPATIBLE
-	fish_source.on_fishing_spot_init()
+	fish_source.on_fishing_spot_init(src)
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(handle_attackby))
 	RegisterSignal(parent, COMSIG_FISHING_ROD_CAST, PROC_REF(handle_cast))
+	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(link_to_fish_porter))
+	RegisterSignal(parent, COMSIG_FISH_RELEASED_INTO, PROC_REF(fish_released))
+	RegisterSignal(parent, COMSIG_NPC_FISHING, PROC_REF(return_fishing_spot))
+	ADD_TRAIT(parent, TRAIT_FISHING_SPOT, REF(src))
+
+/datum/component/fishing_spot/Destroy()
+	REMOVE_TRAIT(parent, TRAIT_FISHING_SPOT, REF(src))
+	fish_source.on_fishing_spot_del(src)
+	fish_source = null
+	return ..()
 
 /datum/component/fishing_spot/proc/handle_cast(datum/source, obj/item/fishing_rod/rod, mob/user)
 	SIGNAL_HANDLER
@@ -33,7 +43,7 @@
 	var/obj/item/fishing_rod/rod = possibly_rod
 	if(!istype(rod))
 		return
-	if(HAS_TRAIT(user,TRAIT_GONE_FISHING) || rod.currently_hooked)
+	if(HAS_TRAIT(user,TRAIT_GONE_FISHING) || rod.fishing_line)
 		user.balloon_alert(user, "already fishing")
 		return COMPONENT_NO_AFTERATTACK
 	var/denial_reason = fish_source.reason_we_cant_fish(rod, user)
@@ -51,3 +61,16 @@
 	var/datum/fishing_challenge/challenge = new(src, result, rod, user)
 	fish_source.pre_challenge_started(rod, user, challenge)
 	challenge.start(user)
+
+/datum/component/fishing_spot/proc/link_to_fish_porter(atom/source, mob/user, obj/item/multitool/tool)
+	SIGNAL_HANDLER
+	if(istype(multitool_get_buffer(tool), /obj/machinery/fishing_portal_generator))
+		var/obj/machinery/fishing_portal_generator/portal = multitool_get_buffer(tool)
+		return portal.link_fishing_spot(fish_source, source, user)
+
+/datum/component/fishing_spot/proc/fish_released(datum/source, obj/item/fish/fish, mob/living/releaser)
+	SIGNAL_HANDLER
+	fish_source.readd_fish(fish, releaser)
+
+/datum/component/fishing_spot/proc/return_fishing_spot(datum/source, list/fish_spot_container)
+	fish_spot_container[NPC_FISHING_SPOT] = fish_source

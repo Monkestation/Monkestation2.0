@@ -1,6 +1,12 @@
 // Aquarium related signals
 #define COMSIG_AQUARIUM_SURFACE_CHANGED "aquarium_surface_changed"
 #define COMSIG_AQUARIUM_FLUID_CHANGED "aquarium_fluid_changed"
+///Called on aquarium/attackby: (aquarium)
+#define COMSIG_TRY_INSERTING_IN_AQUARIUM "item_try_inserting_in_aquarium"
+	///The item will be inserted into the aquarium
+	#define COMSIG_CAN_INSERT_IN_AQUARIUM (1<<0)
+	///The item won't be inserted into the aquarium, but will early return attackby anyway.
+	#define COMSIG_CANNOT_INSERT_IN_AQUARIUM (1<<1)
 
 // Fish signals
 #define COMSIG_FISH_STATUS_CHANGED "fish_status_changed"
@@ -19,6 +25,9 @@
 
 /// Called when you try to use fishing rod on anything
 #define COMSIG_PRE_FISHING "pre_fishing"
+/// Called when an ai-controlled mob interacts with the fishing spot
+#define COMSIG_NPC_FISHING "npc_fishing"
+	#define NPC_FISHING_SPOT 1
 
 /// Sent by the target of the fishing rod cast
 #define COMSIG_FISHING_ROD_CAST "fishing_rod_cast"
@@ -28,8 +37,17 @@
 #define COMSIG_FISHING_ROD_CAUGHT_FISH "fishing_rod_caught_fish"
 /// From /obj/item/fishing_rod/proc/hook_item(): (reward, user)
 #define COMSIG_FISHING_ROD_HOOKED_ITEM "fishing_rod_hooked_item"
+/// From /datum/fish_source/proc/use_slot(), sent to the slotted item: (obj/item/fishing_rod/rod)
+#define COMSIG_FISHING_EQUIPMENT_SLOTTED "fishing_equipment_slotted"
 
 /// Sent when the challenge is to be interrupted: (reason)
 #define COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE "fishing_spot_interrupt_challenge"
 
 #define COMSIG_FISHING_LINE_SNAPPED "fishing_line_snapped"
+
+///From /obj/item/fish/interact_with_atom_secondary, sent to the target: (fish)
+#define COMSIG_FISH_RELEASED_INTO "fish_released_into"
+///From /obj/item/fish/update_size_and_weight: (new_size, new_weight)
+#define COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT "fish_update_size_and_weight"
+///From /obj/item/fish/update_fish_force: (weight_rank, bonus_malus)
+#define COMSIG_FISH_FORCE_UPDATED "fish_force_updated"
