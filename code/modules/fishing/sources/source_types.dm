@@ -93,6 +93,7 @@
 		/obj/item/fish/three_eyes = 3,
 	)
 	catalog_description = "Aquarium dimension (Fishing portal generator)"
+	radial_state = "fish_tank"
 	///The name of this option shown in the radial menu on the fishing portal generator
 	var/radial_name = "Aquarium"
 
