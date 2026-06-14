@@ -1433,15 +1433,31 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
 	)
 
+/datum/design/borg_upgrade_iv_drip
+	name = "Integrated IV-drip"
+	desc = "Special modification for cyborgs. An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers."
+	id = "borg_upgrade_iv_drip"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/iv_drip
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1,
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	)
+
 /datum/design/borg_upgrade_beaker_app
-	name = "Secondary Beaker Storage"
+	name = "Chemical kit upgrade"
+	desc = "A supplementary beaker storage apparatus and medical bag for medical cyborgs."
 	id = "borg_upgrade_beakerapp"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/beaker_app
 	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25
-	) // Includes cost of printing a large beaker.
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.5
+	)
 	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL

@@ -14,6 +14,9 @@
 	else
 		deploy_bodybag(user, get_turf(src))
 
+/obj/item/bodybag/attack_robot(mob/user, list/modifiers)
+	deploy_bodybag(user, get_turf(src))
+
 /obj/item/bodybag/interact_with_atom(atom/interacting_with, mob/living/user, flags)
 	if(isopenturf(interacting_with))
 		deploy_bodybag(user, interacting_with)

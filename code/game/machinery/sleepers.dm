@@ -23,6 +23,10 @@
 	///Message sent when a user enters the machine.
 	var/enter_message = span_boldnotice("You feel cool air surround you. You go numb as your senses turn inward.")
 
+	///Сurrent dose
+	var/inject_amount = 10
+	///Available dose options
+	var/list/available_amounts = list(1, 5, 10, 15, 20)
 	///List of currently available chems.
 	var/list/available_chems = list()
 	///Used when emagged to scramble which chem is used, eg: mutadone -> morphine
@@ -30,25 +34,32 @@
 	///All chems this sleeper will get, depending on the parts inside.
 	var/list/possible_chems = list(
 		list(
-			/datum/reagent/medicine/epinephrine,
-			/datum/reagent/medicine/painkiller/morphine,
-			/datum/reagent/medicine/c2/convermol,
-			/datum/reagent/medicine/c2/libital,
+			/datum/reagent/medicine/c2/libital, // line 1
 			/datum/reagent/medicine/c2/aiuri,
+			/datum/reagent/medicine/c2/multiver,
+			/datum/reagent/medicine/salbutamol,
+			/datum/reagent/medicine/epinephrine, // line 2
+			/datum/reagent/medicine/painkiller/morphine,
 		),
 		list(
 			/datum/reagent/medicine/oculine,
 			/datum/reagent/medicine/inacusiate,
+			/datum/reagent/medicine/salglu_solution,  // line 3
+			/datum/reagent/medicine/antipathogenic/spaceacillin,
 		),
 		list(
-			/datum/reagent/medicine/c2/multiver,
+			/datum/reagent/medicine/sal_acid,
+			/datum/reagent/medicine/oxandrolone,
+			/datum/reagent/medicine/pen_acid, // line 4
 			/datum/reagent/medicine/mutadone,
 			/datum/reagent/medicine/mannitol,
-			/datum/reagent/medicine/salbutamol,
-			/datum/reagent/medicine/pen_acid,
 		),
 		list(
-			/datum/reagent/medicine/omnizine,
+			/datum/reagent/medicine/neurine,
+			/datum/reagent/medicine/omnizine, // line 5
+			/datum/reagent/medicine/nanopaste,
+			/datum/reagent/medicine/coagulant,
+			/datum/reagent/toxin/radiomagnetic_disruptor,
 		),
 	)
 
@@ -60,14 +71,17 @@
 
 /obj/machinery/sleeper/RefreshParts()
 	. = ..()
-	var/matterbin_rating
+	var/matterbin_rating = 0
 	for(var/datum/stock_part/matter_bin/matterbins in component_parts)
 		matterbin_rating += matterbins.tier
-	efficiency = initial(efficiency) * matterbin_rating
-	min_health = initial(min_health) * matterbin_rating
+
+	efficiency = initial(efficiency) * max(matterbin_rating, 1)
+	min_health = initial(min_health) * max(matterbin_rating, 1)
 
 	available_chems.Cut()
+	var/manipulator_rating = 0
 	for(var/datum/stock_part/manipulator/manipulators in component_parts)
+		manipulator_rating += manipulators.tier
 		for(var/i in 1 to manipulators.tier)
 			available_chems |= possible_chems[i]
 
@@ -94,11 +108,13 @@
 /obj/machinery/sleeper/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(!state_open && !panel_open)
 		flick("[initial(icon_state)]-anim", src)
+		playsound(src, 'sound/effects/servostep.ogg', 50, 0)
 	return ..()
 
 /obj/machinery/sleeper/close_machine(mob/user, density_to_set = TRUE)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		flick("[initial(icon_state)]-anim", src)
+		playsound(src, 'sound/effects/servostep.ogg', 50, 0)
 		..()
 		var/mob/living/mob_occupant = occupant
 		if(mob_occupant && mob_occupant.stat != DEAD)
@@ -182,15 +198,20 @@
 	var/list/data = list()
 	data["occupied"] = !!occupant
 	data["open"] = state_open
+	data["available_amounts"] = available_amounts
+	data["inject_amount"] = inject_amount
 
 	data["chems"] = list()
 	for(var/chem in available_chems)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[chem]
+		var/display_name = R.display_name_short ? R.display_name_short : R.name
 		data["chems"] += list(
 			list(
-				"name" = R.name,
+				"name" = display_name,	// take an alternative name if the usual one is too long
+				"full_name" = R.name,
 				"id" = R.type,
 				"allowed" = chem_allowed(chem),
+				"description" = R.description,
 			),
 		)
 
@@ -220,6 +241,22 @@
 		data["occupant"]["fireLoss"] = mob_occupant.getFireLoss()
 		data["occupant"]["cloneLoss"] = mob_occupant.getCloneLoss()
 		data["occupant"]["brainLoss"] = mob_occupant.get_organ_loss(ORGAN_SLOT_BRAIN)
+		data["occupant"]["blood_volume"] = mob_occupant.blood_volume
+
+		// Chems in blood
+		var/list/blood_chems = list()
+		if(mob_occupant.reagents && length(mob_occupant.reagents.reagent_list))
+			for(var/datum/reagent/reagent in mob_occupant.reagents.reagent_list)
+				if(reagent.chemical_flags & REAGENT_INVISIBLE) //Don't show hidden chems on scanners
+					continue
+				var/display_volume = round(reagent.volume, 0.001)
+				blood_chems += list(list(
+					"name" = reagent.name,
+					"volume" = display_volume,
+					"overdosed" = reagent.overdosed
+				))
+		data["occupant"]["blood_chems"] = blood_chems
+
 		data["occupant"]["reagents"] = list()
 		if(mob_occupant.reagents && mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
@@ -238,7 +275,6 @@
 	. = ..()
 	if(.)
 		return
-	playsound(src, 'sound/items/hypospray.ogg', 50, TRUE, 2)
 
 	var/mob/living/mob_occupant = occupant
 	check_nap_violations()
@@ -256,9 +292,16 @@
 			if(mob_occupant.health < min_health && !ispath(chem, /datum/reagent/medicine/epinephrine))
 				return
 			if(inject_chem(chem, usr))
+				playsound(src, 'sound/items/hypospray.ogg', 50, TRUE, 2)
 				. = TRUE
 				if((obj_flags & EMAGGED) && prob(5))
 					to_chat(usr, span_warning("Chemical system re-route detected, results may not be as expected!"))
+		if("set_amount")
+			var/new_amount = text2num(params["amount"])
+			if(new_amount in available_amounts)
+				playsound(src, 'sound/effects/pop.ogg', 50, 0)
+				inject_amount = new_amount
+				. = TRUE
 
 /obj/machinery/sleeper/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -274,16 +317,20 @@
 
 /obj/machinery/sleeper/proc/inject_chem(chem, mob/user)
 	if((chem in available_chems) && chem_allowed(chem))
-		occupant.reagents.add_reagent(chem_buttons[chem], 10) //emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
-		if(user)
-			log_combat(user, occupant, "injected [chem] into", addition = "via [src]")
-		return TRUE
+		//dosage of medications
+		var/actual_amount = min(inject_amount, 20 * efficiency - occupant.reagents.get_reagent_amount(chem))
+		if(actual_amount > 0)
+			occupant.reagents.add_reagent(chem_buttons[chem], actual_amount)
+			if(user)
+				log_combat(user, occupant, "injected [actual_amount] units of [chem] into", addition = "via [src]")
+			return TRUE
+	return FALSE
 
 /obj/machinery/sleeper/proc/chem_allowed(chem)
 	var/mob/living/mob_occupant = occupant
 	if(!mob_occupant || !mob_occupant.reagents)
 		return
-	var/amount = mob_occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
+	var/amount = mob_occupant.reagents.get_reagent_amount(chem) + inject_amount <= 20 * efficiency
 	var/occ_health = mob_occupant.health > min_health || chem == /datum/reagent/medicine/epinephrine
 	return amount && occ_health
 

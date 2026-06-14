@@ -129,6 +129,10 @@
 	icon_state = "borg_beaker_apparatus"
 	storable = list(/obj/item/reagent_containers/cup/beaker,
 					/obj/item/reagent_containers/cup/tube,
+					/obj/item/reagent_containers/blood,
+					/obj/item/reagent_containers/chem_pack,
+					/obj/item/reagent_containers/cup/glass/waterbottle,
+					/obj/item/reagent_containers/cup/vial,
 					/obj/item/weapon/virusdish,
 					/obj/item/reagent_containers/cup/bottle,)
 
@@ -172,7 +176,7 @@
 	. += arm
 
 /// Secondary attack spills the content of the beaker.
-/obj/item/borg/apparatus/beaker/pre_attack_secondary(atom/target, mob/living/silicon/robot/user)
+/obj/item/borg/apparatus/beaker/mouse_drop_dragged(atom/target, mob/living/silicon/robot/user)
 	var/obj/item/reagent_containers/stored_beaker = stored
 	if(!stored_beaker)
 		return ..()
