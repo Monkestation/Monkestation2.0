@@ -8,10 +8,13 @@
 	item_flags = NONE
 	obj_flags = UNIQUE_RENAME
 	weapon_weight = WEAPON_LIGHT
-	var/mob/holder
-	var/max_mod_capacity = 100
-	var/list/modkits = list()
 	gun_flags = NOT_A_REAL_GUN
+	///List of all mobs that projectiles fired from this gun will ignore.
+	var/list/ignored_mob_types
+	///List of all modkits currently in the kinetic accelerator.
+	var/list/obj/item/borg/upgrade/modkit/modkits = list()
+	///The max capacity of modkits the PKA can have installed at once.
+	var/max_mod_capacity = 100
 	var/disablemodification = FALSE //monkeedit - stops removal and addition of mods
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/add_bayonet_point()
@@ -56,18 +59,16 @@
 	if(max_mod_capacity)
 		. += "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining."
 		. += span_info("You can use a <b>crowbar</b> to remove all modules or <b>right-click</b> with an empty hand to remove a specific one.")
-		for(var/A in modkits)
-			var/obj/item/borg/upgrade/modkit/M = A
-			. += span_notice("There is \a [M] installed, using <b>[M.cost]%</b> capacity.")
+		for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in modkits)
+			. += span_notice("There is \a [modkit_upgrade] installed, using <b>[modkit_upgrade.cost]%</b> capacity.")
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/crowbar_act(mob/living/user, obj/item/I)
 	. = TRUE
 	if(modkits.len && !disablemodification) //monkeedit
 		to_chat(user, span_notice("You pry all the modifications out."))
 		I.play_tool_sound(src, 100)
-		for(var/a in modkits)
-			var/obj/item/borg/upgrade/modkit/M = a
-			M.forceMove(drop_location()) //uninstallation handled in Exited(), or /mob/living/silicon/robot/remove_from_upgrades() for borgs
+		for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in modkits)
+			modkit_upgrade.forceMove(drop_location()) //uninstallation handled in Exited(), or /mob/living/silicon/robot/remove_from_upgrades() for borgs
 	else
 		to_chat(user, span_notice("There are no modifications currently installed."))
 
@@ -131,16 +132,14 @@
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/proc/get_remaining_mod_capacity()
 	var/current_capacity_used = 0
-	for(var/A in modkits)
-		var/obj/item/borg/upgrade/modkit/M = A
-		current_capacity_used += M.cost
+	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in modkits)
+		current_capacity_used += modkit_upgrade.cost
 	return max_mod_capacity - current_capacity_used
 
-/obj/item/gun/energy/recharge/kinetic_accelerator/proc/modify_projectile(obj/projectile/kinetic/K)
-	K.kinetic_gun = src //do something special on-hit, easy!
-	for(var/A in modkits)
-		var/obj/item/borg/upgrade/modkit/M = A
-		M.modify_projectile(K)
+/obj/item/gun/energy/recharge/kinetic_accelerator/proc/modify_projectile(obj/projectile/kinetic/kinetic_projectile)
+	kinetic_projectile.kinetic_gun = src //do something special on-hit, easy!
+	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in modkits)
+		modkit_upgrade.modify_projectile(kinetic_projectile)
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/cyborg
 	icon_state = "kineticgun_b"
@@ -298,9 +297,8 @@
 		return FALSE
 	if(denied_type)
 		var/number_of_denied = 0
-		for(var/A in KA.modkits)
-			var/obj/item/borg/upgrade/modkit/M = A
-			if(istype(M, denied_type))
+		for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in KA.modkits)
+			if(istype(modkit_upgrade, denied_type))
 				number_of_denied++
 			if(number_of_denied >= maximum_of_type)
 				. = FALSE
@@ -433,6 +431,8 @@
 				M.gets_drilled(K.firer, TRUE)
 	if(modifier)
 		for(var/mob/living/L in range(1, target_turf) - K.firer - target)
+			if(is_type_in_typecache(L, KA.ignored_mob_types))
+				continue
 			var/armor = L.run_armor_check(K.def_zone, K.armor_flag, "", "", K.armour_penetration)
 			L.apply_damage(K.damage*modifier, K.damage_type, K.def_zone, armor)
 			to_chat(L, span_userdanger("You're struck by a [K.name]!"))
@@ -474,7 +474,9 @@
 				var/turf/closed/mineral/M = T
 				M.gets_drilled(K.firer, TRUE)
 	if(modifier)
-		for(var/mob/living/L in range(2, target_turf) - K.firer - target)
+		for(var/mob/living/L in range(2, target_turf) - K.firer - target )
+			if(is_type_in_typecache(L, KA.ignored_mob_types))
+				continue
 			var/armor = L.run_armor_check(K.def_zone, K.armor_flag, "", "", K.armour_penetration)
 			L.apply_damage(K.damage*modifier, K.damage_type, K.def_zone, armor)
 			to_chat(L, span_userdanger("You're struck by a [K.name]!"))
@@ -500,7 +502,30 @@
 /obj/item/borg/upgrade/modkit/minebot_passthrough
 	name = "minebot passthrough"
 	desc = "Causes kinetic accelerator shots to pass through minebots."
+	denied_type = /obj/item/borg/upgrade/modkit/human_passthrough
 	cost = 0
+
+/obj/item/borg/upgrade/modkit/minebot_passthrough/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user, transfer_to_loc)
+	. = ..()
+	LAZYADD(KA.ignored_mob_types, typecacheof(/mob/living/basic/mining_drone))
+
+/obj/item/borg/upgrade/modkit/minebot_passthrough/uninstall(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
+	. = ..()
+	LAZYREMOVE(KA.ignored_mob_types, typecacheof(/mob/living/basic/mining_drone))
+
+/obj/item/borg/upgrade/modkit/human_passthrough
+	name = "human passthrough"
+	desc = "Causes kinetic accelerator shots to pass through humans, good for preventing friendly fire."
+	denied_type = /obj/item/borg/upgrade/modkit/minebot_passthrough
+	cost = 0
+
+/obj/item/borg/upgrade/modkit/human_passthrough/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user, transfer_to_loc)
+	. = ..()
+	LAZYADD(KA.ignored_mob_types, typecacheof(/mob/living/carbon/human))
+
+/obj/item/borg/upgrade/modkit/human_passthrough/uninstall(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
+	. = ..()
+	LAZYREMOVE(KA.ignored_mob_types, typecacheof(/mob/living/carbon/human))
 
 //Tendril-unique modules
 /obj/item/borg/upgrade/modkit/cooldown/repeater
