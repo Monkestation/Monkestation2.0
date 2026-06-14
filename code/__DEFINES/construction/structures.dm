@@ -94,3 +94,6 @@
 #define CAMERA_STATE_WIRED 3
 ///The camera assembly is finished construction fully, and is currently chilling in the camera machine.
 #define CAMERA_STATE_FINISHED 4
+
+#define SIGNBOARD_WIDTH (world.icon_size * 3.5)
+#define SIGNBOARD_HEIGHT (world.icon_size * 2.5)

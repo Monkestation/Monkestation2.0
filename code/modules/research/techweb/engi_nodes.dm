@@ -142,6 +142,7 @@
 		"holosignatmos",
 		"holosignrestaurant",
 		"holosignbar",
+		"union_stand",
 		"inducer",
 		"inducer_eng",
 		"tray_goggles",
@@ -151,6 +152,12 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_ENGINEERING)
+
+/datum/techweb_node/emp_basic/New()
+	. = ..()
+	var/datum/station_trait/busted_union/union_busted = locate() in SSstation.station_traits
+	if(union_busted)
+		design_ids -= "union_stand"
 
 /datum/techweb_node/emp_adv
 	id = "emp_adv"

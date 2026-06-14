@@ -323,7 +323,8 @@
 			else
 				new_points_held = round(new_points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER))
 		use_energy(active_power_usage)
-		points_held = points_held + new_points_held
+		if(GLOB.cargo_union.demand_is_implemented(/datum/union_demand/boulder_payouts))
+			points_held = points_held + new_points_held
 
 		//puts back materials that couldn't be processed
 		chosen_boulder.set_custom_materials(rejected_mats)
@@ -331,7 +332,7 @@
 		//break the boulder down if we have processed all its materials
 		if(!length(chosen_boulder.custom_materials))
 			playsound(loc, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-			if(istype(chosen_boulder, /obj/item/boulder/artifact))
+			if(istype(chosen_boulder, /obj/item/boulder/artifact) && GLOB.cargo_union.demand_is_implemented(/datum/union_demand/boulder_payouts))
 				points_held = round((points_held + MINER_POINT_MULTIPLIER) * MINING_POINT_MACHINE_MULTIPLIER) /// Artifacts give bonus points!
 			chosen_boulder.break_apart()
 			return TRUE //We've processed all the materials in the boulder, so we can just destroy it in break_apart.
@@ -367,7 +368,8 @@
 				else
 					new_points_held = round(new_points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER))
 			use_energy(active_power_usage)
-			points_held = points_held + new_points_held
+			if(GLOB.cargo_union.demand_is_implemented(/datum/union_demand/boulder_payouts))
+				points_held = points_held + new_points_held
 
 			//puts back materials that couldn't be processed
 			exotic.set_custom_materials(rejected_mats)

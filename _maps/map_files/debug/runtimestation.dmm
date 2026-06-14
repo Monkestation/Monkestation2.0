@@ -1342,6 +1342,7 @@
 /area/space)
 "fq" = (
 /obj/machinery/camera/autoname/directional/west,
+/obj/machinery/union_stand,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "fr" = (
