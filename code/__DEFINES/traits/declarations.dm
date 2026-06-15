@@ -1124,6 +1124,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_RECESSIVE "fish_recessive"
 ///This fish comes equipped with a stinger (increased damage and potentially venomous if also toxic)
 #define TRAIT_FISH_STINGER "fish_stinger"
+///The traits of this fish have been edited by a fish gene-gun at least once. It'll die the next time the fish genegun is used on them.
+#define TRAIT_FISH_GENEGUNNED "fish_genegunned"
 
 /// Trait given to angelic constructs to let them purge cult runes
 #define TRAIT_ANGELIC "angelic"

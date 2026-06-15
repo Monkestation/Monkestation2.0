@@ -131,3 +131,16 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	required_experiments = list(/datum/experiment/scanning/fish)
 	announce_channels = list(RADIO_CHANNEL_SERVICE)
+
+/datum/techweb_node/marine_util
+	id = "marine_util"
+	display_name = "Marine Utility"
+	description = "Fish are nice to look at and all, but they can be put to use."
+	prereq_ids = list("fishing")
+	design_ids = list(
+		"fish_genegun",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	// only available if you've done the first fishing experiment (thus unlocking fishing tech), but not a strict requirement to get the tech
+	discount_experiments = list(/datum/experiment/scanning/fish/second = TECHWEB_TIER_3_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SERVICE)

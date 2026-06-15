@@ -1094,6 +1094,18 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/fish_genegun
+	name = "Fish Gene Gun"
+	desc = "A device designed to inject or extract traits to and from fish. Also compatible with most aquatic-adjacent creatures."
+	id = "fish_genegun"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 4, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 3, /datum/material/diamond = SMALL_MATERIAL_AMOUNT * 2)
+	build_path = /obj/item/fish_genegun
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE
+
 /////////////////////////////////////////
 /////////Coffeemaker Stuff///////////////
 /////////////////////////////////////////

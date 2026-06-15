@@ -224,6 +224,9 @@
 	. += span_notice("It's [size] cm long.")
 	. += span_notice("It weighs [weight] g.")
 
+	if(HAS_TRAIT(src, TRAIT_FISH_GENEGUNNED))
+		. += span_warning("It has been edited by a fish genegun. It will die if edited again.")
+
 ///Randomizes weight and size.
 /obj/item/fish/proc/randomize_size_and_weight(base_size = average_size, base_weight = average_weight, deviation = weight_size_deviation)
 	var/size_deviation = 0.2 * base_size
