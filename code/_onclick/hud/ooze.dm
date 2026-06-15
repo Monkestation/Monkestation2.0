@@ -1,5 +1,5 @@
 ///Hud type with targeting dol and a nutrition bar
-/datum/hud/ooze/New(mob/living/owner)
+/datum/hud/living/ooze/New(mob/living/owner)
 	. = ..()
 
 	zone_select = new /atom/movable/screen/zone_sel(null, src)
