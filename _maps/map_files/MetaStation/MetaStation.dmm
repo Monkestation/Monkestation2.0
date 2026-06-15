@@ -51065,6 +51065,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"rAI" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/machinery/photocopier{
+	pixel_y = 3
+	},
+/turf/open/floor/iron,
+/area/station/security/office)
 "rAW" = (
 /turf/closed/wall,
 /area/station/security/prison/work)
@@ -58530,15 +58539,13 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "ufX" = (
-/obj/machinery/photocopier{
-	pixel_y = 3
-	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/photobooth/security,
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "ugd" = (
@@ -99596,7 +99603,7 @@ fOw
 nQC
 ikZ
 pBL
-iGj
+rAI
 iGj
 iGj
 vdi
