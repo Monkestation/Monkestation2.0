@@ -869,9 +869,3 @@
 			act.button_icon_state = "mech_lights_off"
 		balloon_alert(occupant, "toggled lights [mecha_flags & LIGHTS_ON ? "on":"off"]")
 		act.build_all_button_icons()
-
-/obj/vehicle/sealed/mecha/emag_act(mob/user, obj/item/card/emag/emag_card)
-	src.dna_lock = null
-	src.mecha_flags &= ~ID_LOCK_ON
-	src.mech_type = ALL
-	return TRUE

@@ -236,10 +236,6 @@
 		var/obj/item/mecha_parts/part = tool
 		return part.try_attach_part(user, src, FALSE)
 
-	if(istype(tool, /obj/item/card/emag))
-		src.emag_act()
-		return ITEM_INTERACT_SUCCESS
-
 	if(is_wire_tool(tool) && (mecha_flags & PANEL_OPEN))
 		if(wires.interact(user))
 			return ITEM_INTERACT_SUCCESS
