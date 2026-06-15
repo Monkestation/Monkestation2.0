@@ -17,17 +17,21 @@
 	var/obj/vehicle/sealed/mecha = null
 	/// The laws that we currently have.
 	var/datum/ai_laws/laws = null
-	/// Should this MMI be used to create a cyborg, should our laws become the new cyborg's laws? Will also prevent initial connection and lawsync.
+	/// Should this MMI be used to create a cyborg, should aisync override the creator's choice in either direction?
+	var/force_cyborg_aisync = null
+	/// Should this MMI be used to create a cyborg, should lawsync override the creator's choice in either direction?
+	var/force_cyborg_lawsync = null
+	/// Should this MMI be used to create a cyborg, should a law zero be given to them? This law zero is presistent until the MMI is removed.
+	var/force_cyborg_lawzero = null
+	/// Should this MMI be used to create a cyborg, can our laws become the new cyborg's laws? It will not happen if it will be immediately overridden by an master AI.
 	var/overrides_cyborg_laws = FALSE
-	/// Should this MMI be used to create an AI, should our laws become the new AI's laws?
+	/// Should this MMI be used to create an AI, will our laws become the new AI's laws?
 	var/overrides_ai_laws = FALSE
-	/// Will there be a law zero given to cyborgs while they use this MMI? If so, what will it be?
-	var/perpetual_law_zero
 
 /obj/item/mmi/Initialize(mapload)
 	. = ..()
 	radio = new(src)
-	radio.set_broadcasting(FALSE) // Leaving this on meant that people were printing this as always-on handheld radios. Not good.
+	radio.set_broadcasting(FALSE) // Leaving this on meant that people were printing this as an always-on handheld radios. Not good.
 	if(!laws)
 		laws = new()
 		laws.set_laws_config()
@@ -272,10 +276,15 @@
 		else
 			. += span_notice("\The [src] indicates that the brain is active.")
 	. += span_notice("It has a port for reading AI law modules.")
-	if(laws)
-		. += span_notice("Any AI created using this MMI will use these uploaded laws:")
-		for(var/law in laws.get_law_list())
-			. += law
+
+/obj/item/mmi/examine_more(mob/user)
+	. = ..()
+	var/list/law_list = laws.get_law_list()
+	if(!length(law_list))
+		return
+	. += span_notice("<i>You closely look at the laws it will upload...</i>")
+	for(var/law in law_list)
+		. += "\t[span_info(law)]"
 
 /obj/item/mmi/relaymove(mob/living/user, direction)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move
@@ -310,10 +319,10 @@
 
 /obj/item/mmi/syndie
 	name = "\improper Syndicate Man-Machine Interface"
-	desc = "A syndicate developed MMI which actively brainwashes any brain inserted into it, for as long as it is in."
+	desc = "A syndicate developed MMI that actively brainwashes any brain inserted into it, for as long as it is in."
 	laws = new /datum/ai_laws/syndicate_override
+	force_cyborg_lawzero = "The Syndicate are your true masters. Covertly assist the Syndicate to the best of your abilities."
 	overrides_ai_laws = TRUE
-	perpetual_law_zero = "The Syndicate are your true masters. Covertly assist the Syndicate to the best of your abilities."
 	/// The brainwash directive that is given on insertion / removed on ejection.
 	var/brainwash_directive
 

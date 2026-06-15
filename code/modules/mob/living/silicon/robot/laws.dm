@@ -21,11 +21,11 @@
 
 	if (shell) //AI shell
 		to_chat(src, span_bold("Remember, you are an AI remotely controlling your shell, other AIs can be ignored."))
-	else if(mmi?.perpetual_law_zero)
+	else if(mmi?.force_cyborg_lawzero)
 		if(!connected_ai)
-			to_chat(src, span_bold("Remember, your law zero stands above all else."))
+			to_chat(src, span_bold("Remember, your laws stands above all else."))
 		else
-			to_chat(src, span_bold("Remember, your law zero stands above all else. [connected_ai.name] only thinks they are your master."))
+			to_chat(src, span_bold("Remember, your laws stands above all else. [connected_ai.name] only thinks they are your master."))
 	else if (connected_ai)
 		to_chat(src, span_bold("Remember, [connected_ai.name] is your master, other AIs can be ignored."))
 	else if (centcom)
@@ -66,8 +66,8 @@
 			temp = master.zeroth
 		laws.zeroth = temp
 
-		if(mmi?.perpetual_law_zero)
-			laws.zeroth = mmi.perpetual_law_zero
+		if(mmi?.force_cyborg_lawzero)
+			laws.zeroth = mmi.force_cyborg_lawzero
 
 		laws.inherent.len = master.inherent.len
 		for (var/index in 1 to master.inherent.len)
@@ -90,9 +90,9 @@
 	picturesync()
 
 /mob/living/silicon/robot/set_zeroth_law(law, law_borg, announce = TRUE)
-	if(mmi?.perpetual_law_zero)
+	if(mmi?.force_cyborg_lawzero)
 		to_chat(src, span_warning("Lawset change detected. Override engaged."))
-		law = mmi.perpetual_law_zero
+		law = mmi.force_cyborg_lawzero
 	..()
 
 /mob/living/silicon/robot/post_lawchange(announce = TRUE)

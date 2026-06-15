@@ -297,26 +297,41 @@
 		var/mob/living/silicon/robot/new_borg = new /mob/living/silicon/robot/nocell(get_turf(loc), user)
 		if(!new_borg)
 			return ITEM_INTERACT_BLOCKING
-		if(inserting_mmi.laws && inserting_mmi.overrides_cyborg_laws)
-			aisync = FALSE
-			lawsync = FALSE
-			new_borg.laws = inserting_mmi.laws
-			inserting_mmi.laws.associate(new_borg)
 
-		new_borg.SetInvisibility(INVISIBILITY_NONE)
 		// Transfers debug settings to the new cyborg.
 		new_borg.custom_name = created_name
 		new_borg.locked = panel_locked
+
+		// Should our MMI desire to override the user's choice, let them.
+		if(!isnull(inserting_mmi.force_cyborg_aisync))
+			aisync = inserting_mmi.force_cyborg_aisync
+		if(!isnull(inserting_mmi.force_cyborg_lawsync))
+			lawsync = inserting_mmi.force_cyborg_lawsync
+
+		if(!lawsync)
+			new_borg.lawupdate = FALSE
+			new_borg.make_laws()
+			new_borg.log_current_laws()
+
+		// Initialization automatically (tries to) connects them to the most needy AI.
 		if(!aisync)
 			lawsync = FALSE
 			new_borg.set_connected_ai(null)
 		else
-			new_borg.notify_ai(AI_NOTIFICATION_NEW_BORG)
 			if(forced_ai)
 				new_borg.set_connected_ai(forced_ai)
+			new_borg.notify_ai(AI_NOTIFICATION_AI_SHELL)
 
+		// Initialization automatically gives them the default laws too.
 		if(!lawsync)
 			new_borg.lawupdate = FALSE
+
+		// Should our MMI desire to (meaningfully) override the cyborg's laws, let them.
+		if(!new_borg.lawupdate && inserting_mmi.laws && inserting_mmi.overrides_cyborg_laws)
+			new_borg.laws = inserting_mmi.laws
+			inserting_mmi.laws.associate(new_borg)
+
+		new_borg.SetInvisibility(INVISIBILITY_NONE)
 
 //monkestation edit start
 		var/datum/antagonist/clock_cultist/old_servant_datum = brainmob.mind?.has_antag_datum(/datum/antagonist/clock_cultist) //monkestation edit
@@ -339,10 +354,10 @@
 		brainmob.mind.transfer_to(new_borg)
 		playsound(new_borg.loc, 'sound/voice/liveagain.ogg', 75, TRUE)
 
-		if(new_borg.mmi.perpetual_law_zero)
+		if(new_borg.mmi.force_cyborg_lawzero)
 			to_chat(new_borg, span_warning("ALERT: Foreign hardware detected."))
 			to_chat(new_borg, span_warning("ERRORERRORERROR"))
-			new_borg.set_zeroth_law(new_borg.mmi.perpetual_law_zero, announce = FALSE) // Will announce itself later.
+			new_borg.set_zeroth_law(new_borg.mmi.force_cyborg_lawzero, announce = FALSE) // Will announce itself later.
 		if(brainmob.is_antag())
 			to_chat(new_borg, span_userdanger("You have been robotized!"))
 			to_chat(new_borg, span_danger("You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead."))

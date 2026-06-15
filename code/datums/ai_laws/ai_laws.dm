@@ -240,7 +240,7 @@ GLOBAL_VAR(round_default_lawset)
 	// If their MMI gave them a zeroth law, they should keep it unless the underlying MMI no longer has it.
 	if(iscyborg(owner))
 		var/mob/living/silicon/robot/cyborg_owner = owner
-		if(cyborg_owner.mmi?.perpetual_law_zero)
+		if(cyborg_owner.mmi?.force_cyborg_lawzero)
 			return FALSE
 
 	if(isAI(owner))
