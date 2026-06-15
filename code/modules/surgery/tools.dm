@@ -504,7 +504,7 @@
 	attack_verb_continuous = list("shears", "snips")
 	attack_verb_simple = list("shear", "snip")
 	sharpness = SHARP_EDGED
-	custom_premium_price = PAYCHECK_CREW * 14
+	custom_premium_price = PAYCHECK_CREW * 10
 
 /obj/item/shears/attack(mob/living/amputee, mob/living/user)
 	if(!iscarbon(amputee) || (user.istate & ISTATE_HARM))
