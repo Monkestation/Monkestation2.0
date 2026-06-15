@@ -23,9 +23,9 @@
 		to_chat(src, span_bold("Remember, you are an AI remotely controlling your shell, other AIs can be ignored."))
 	else if(mmi?.force_cyborg_lawzero)
 		if(!connected_ai)
-			to_chat(src, span_bold("Remember, your laws stands above all else."))
+			to_chat(src, span_bold("Remember, your zeroth law stands above all else."))
 		else
-			to_chat(src, span_bold("Remember, your laws stands above all else. [connected_ai.name] only thinks they are your master."))
+			to_chat(src, span_bold("Remember, your zeroth law stands above all else. While you may be connected to [connected_ai.name], they do not share/know about your zeroth law nor are you required to listen to them."))
 	else if (connected_ai)
 		to_chat(src, span_bold("Remember, [connected_ai.name] is your master, other AIs can be ignored."))
 	else if (centcom)
