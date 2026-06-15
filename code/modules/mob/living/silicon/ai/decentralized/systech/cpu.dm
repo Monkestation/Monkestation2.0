@@ -33,8 +33,6 @@
 
 	var/list/last_overclocking_values = list()
 
-
-
 /obj/item/ai_cpu/Initialize(mapload)
 	growth_scale = rand(minimum_growth * 100, maximum_growth * 100) / 100
 	max_power_multiplier = (rand(minimum_max_power * 100, maximum_max_power * 100) / 100) * power_multiplier
@@ -73,16 +71,7 @@
 	icon_state = "cpuboard_adv"
 
 	speed = 2
-	power_multiplier = 1.75 * AI_BASE_POWER_PER_CPU
-
-
-/obj/item/ai_cpu/bluespace
-	name = "bluespace neural processing unit"
-	desc = "A processor specialized in the tasks that a neural network such as the AI might perform. For usage in server racks only. This chip exploits advances in bluespace technology to shrink components even further."
-	icon_state = "cpuboard_super"
-
-	speed = 3
-	base_power_usage = 2.5 * AI_BASE_POWER_PER_CPU
+	power_multiplier = /obj/item/ai_cpu::power_multiplier * 1.75
 
 /obj/item/ai_cpu/experimental
 	name = "experimental neural processing unit"
@@ -90,12 +79,20 @@
 	icon_state = "cpuboard_adv"
 
 	speed = 2
-	base_power_usage = 2 * AI_BASE_POWER_PER_CPU
+	base_power_usage = /obj/item/ai_cpu::power_multiplier * 2
 
 	minimum_max_power = 1.1
 	maximum_max_power = 2.5
 
 	minimum_growth = 0.5 //Basically linear at this point
 	maximum_growth = 4.5 //max speed achievable at 2.2x power consumption.
+
+/obj/item/ai_cpu/bluespace
+	name = "bluespace neural processing unit"
+	desc = "A processor specialized in the tasks that a neural network such as the AI might perform. For usage in server racks only. This chip exploits advances in bluespace technology to shrink components even further."
+	icon_state = "cpuboard_super"
+
+	speed = 3
+	base_power_usage = /obj/item/ai_cpu::power_multiplier * 2.5
 
 #undef OVERCLOCK_MIN_POWER_MULT

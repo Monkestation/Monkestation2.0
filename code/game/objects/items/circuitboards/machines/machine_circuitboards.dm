@@ -989,8 +989,8 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/ai/server_cabinet
 	req_components = list(
-		/obj/item/stock_parts/matter_bin = 2,
-		/obj/item/stock_parts/capacitor = 2,
+		/datum/stock_part/matter_bin = 2,
+		/datum/stock_part/capacitor = 2,
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/stack/cable_coil = 1,
 	)
@@ -1000,7 +1000,8 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/rack_creator
 	req_components = list(
-		/obj/item/stock_parts/manipulator = 2,
+		/datum/stock_part/matter_bin = 2,
+		/datum/stock_part/manipulator = 1,
 		/obj/item/reagent_containers/cup/beaker = 2,
 	)
 
@@ -1009,8 +1010,8 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/ai/data_core
 	req_components = list(
-		/obj/item/stock_parts/capacitor = 4,
-		/obj/item/stock_parts/matter_bin = 2,
+		/datum/stock_part/capacitor = 4,
+		/datum/stock_part/matter_bin = 2,
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/stock_parts/power_store/cell/high = 1,

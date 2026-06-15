@@ -35,7 +35,6 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 	///Power modifier, power modified by this. Be aware this indirectly changes heat since power => heat
 	var/power_modifier = 1
 
-
 /obj/machinery/ai/server_cabinet/Initialize(mapload)
 	. = ..()
 	roundstart = mapload
@@ -56,11 +55,11 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 	. = ..()
 	var/new_heat_mod = 1
 	var/new_power_mod = 1
-	for(var/datum/stock_part/capacitor/C in component_parts)
-		new_power_mod -= (C.tier - 1) / 40 //Max -15% at tier 4 parts, min -0% at tier 1
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		new_power_mod -= (capacitor.tier - 1) / 40 //Max -15% at tier 4 parts, min -0% at tier 1
 
-	for(var/datum/stock_part/matter_bin/M in component_parts)
-		new_heat_mod -= (M.tier - 1) / 30 //Max -20% at tier 4 parts, min -0% at tier 1
+	for(var/datum/stock_part/matter_bin/bin in component_parts)
+		new_heat_mod -= (bin.tier - 1) / 30 //Max -20% at tier 4 parts, min -0% at tier 1
 	//68% total heat reduction in total at tier 4
 
 	heat_modifier = new_heat_mod

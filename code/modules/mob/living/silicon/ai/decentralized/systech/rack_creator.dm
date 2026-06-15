@@ -10,35 +10,40 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
+	circuit = /obj/item/circuitboard/machine/rack_creator
 
 	var/list/inserted_cpus = list()
 
 	var/list/ram_expansions = list() //List containing numbers corresponding to the amount of RAM that stick adds.
 
-	circuit = /obj/item/circuitboard/machine/rack_creator
-
-	var/datum/component/remote_materials/rmat
+	var/datum/component/material_container/materials
 	var/efficiency_coeff = 1
 
 
 /obj/machinery/rack_creator/Initialize(mapload)
+	materials = AddComponent( \
+		/datum/component/material_container, \
+		SSmaterials.materials_by_category[MAT_CATEGORY_RACK_CREATOR], \
+		0, \
+		MATCONTAINER_EXAMINE, \
+	)
 	. = ..()
-	rmat = AddComponent(/datum/component/remote_materials, "rackcreator", mapload)
-	rmat.set_local_size(200000)
 	RefreshParts()
 	register_context()
 
 
 /obj/machinery/rack_creator/RefreshParts()
 	. = ..()
-	efficiency_coeff = 1
+	var/mat_capacity = 0
+	for(var/datum/stock_part/matter_bin/new_matter_bin in component_parts)
+		mat_capacity += new_matter_bin.tier * 25 * SHEET_MATERIAL_AMOUNT
+	materials.max_amount = mat_capacity
+
 	var/total_rating = 1.2
 	for(var/datum/stock_part/manipulator/M in component_parts)
 		total_rating = clamp(total_rating - (M.tier * 0.1), 0, 1)
-	if(total_rating == 0)
-		efficiency_coeff = INFINITY
-	else
-		efficiency_coeff = 1/total_rating
+	efficiency_coeff = round(total_rating, 0.1)
+	update_static_data_for_all_viewers()
 
 /obj/machinery/rack_creator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -46,10 +51,15 @@
 		ui = new(user, src, "AiRackCreator", name)
 		ui.open()
 
+/obj/machinery/rack_creator/ui_static_data(mob/user)
+	var/list/data = list()
+	data["SHEET_MATERIAL_AMOUNT"] = SHEET_MATERIAL_AMOUNT
+	return data
+
 /obj/machinery/rack_creator/ui_data(mob/living/carbon/human/user)
 	var/list/data = list()
 
-	data["materials"] = output_available_resources()
+	data["materials"] = materials.ui_data()
 	data["can_print"] = check_resources()
 
 	data["cpus"] = list()
@@ -59,11 +69,18 @@
 	for(var/obj/item/ai_cpu/CPU in inserted_cpus)
 		var/cpu_power_usage = CPU.get_power_usage()
 		var/cpu_efficiency = CPU.get_efficiency()
-		var/cpu_list = list(list("speed" = CPU.speed, "efficiency" = cpu_efficiency, "power_usage" = cpu_power_usage))
+		var/cpu_list = list(list(
+			"speed" = CPU.speed,
+			"efficiency" = cpu_efficiency,
+			"power_usage" = cpu_power_usage,
+		))
 		data["cpus"] += cpu_list
 		data["total_cpu"] += CPU.speed
 		data["power_usage"] += cpu_power_usage
-		power_usage_unweighted += list(list("usage" = cpu_power_usage, "efficiency" = cpu_efficiency))
+		power_usage_unweighted += list(list(
+			"usage" = cpu_power_usage,
+			"efficiency" = cpu_efficiency,
+		))
 
 	var/total_efficiency = 1
 	if(data["power_usage"])
@@ -81,9 +98,9 @@
 		for(var/mat in RAM["cost"])
 			var/datum/material/M = mat
 			if(!materials_string)
-				materials_string += "[M.name]: [RAM["cost"][mat] / efficiency_coeff]"
+				materials_string += "[M.name]: [RAM["cost"][mat] * efficiency_coeff]"
 			else
-				materials_string += ", [M.name]: [RAM["cost"][mat] / efficiency_coeff]"
+				materials_string += ", [M.name]: [RAM["cost"][mat] * efficiency_coeff]"
 
 		var/ram_list = list(list("capacity" = RAM["capacity"], "name" = RAM["name"], "cost" = materials_string))
 		data["ram"] += ram_list
@@ -99,10 +116,16 @@
 		for(var/mat in D.ram_materials)
 			var/datum/material/M = mat
 			if(!materials_string)
-				materials_string += "[M.name]: [D.ram_materials[mat] / efficiency_coeff]"
+				materials_string += "[M.name]: [D.ram_materials[mat] * efficiency_coeff]"
 			else
-				materials_string += ", [M.name]: [D.ram_materials[mat] / efficiency_coeff]"
-		data["possible_ram"] += list(list("name" = D.name, "capacity" = D.capacity, "cost" = materials_string,"id" = D.id, "unlocked" = SSresearch.science_tech.isDesignResearchedID(D.id) ? TRUE : FALSE))
+				materials_string += ", [M.name]: [D.ram_materials[mat] * efficiency_coeff]"
+		data["possible_ram"] += list(list(
+			"name" = D.name,
+			"capacity" = D.capacity,
+			"cost" = materials_string,
+			"id" = D.id,
+			"unlocked" = SSresearch.science_tech.isDesignResearchedID(D.id) ? TRUE : FALSE,
+		))
 
 	data["unlocked_ram"] = 1
 	data["unlocked_cpu"] = 1
@@ -125,42 +148,13 @@
 	for(var/RAM in ram_expansions)
 		for(var/mat in RAM["cost"])
 			var/datum/material/M = mat
-			total_cost[M] += RAM["cost"][M] / efficiency_coeff
+			total_cost[M] += RAM["cost"][M] * efficiency_coeff
 
 	if(!length(total_cost))
 		return -1
-
-	var/datum/component/material_container/materials = rmat.mat_container
 	if(materials.has_materials(total_cost))
 		return total_cost
 	return FALSE
-
-
-
-/obj/machinery/rack_creator/proc/output_available_resources()
-	var/datum/component/material_container/materials = rmat.mat_container
-	var/list/material_data = list()
-
-	if(materials)
-		for(var/mat_id in materials.materials)
-			var/datum/material/M = mat_id
-			var/list/material_info = list()
-			var/amount = materials.materials[mat_id]
-
-			material_info = list(
-				"name" = M.name,
-				"ref" = REF(M),
-				"amount" = amount,
-				"sheets" = round(amount / SHEET_MATERIAL_AMOUNT),
-				"removable" = amount >= SHEET_MATERIAL_AMOUNT
-			)
-
-			material_data += list(material_info)
-
-		return material_data
-
-	return null
-
 
 /obj/machinery/rack_creator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/ai_cpu))
@@ -294,12 +288,8 @@
 			if(!length(ram_expansions) && !length(inserted_cpus))
 				say("No RAM nor CPUs inserted. Process aborted.")
 				return
-			var/datum/component/material_container/materials = rmat.mat_container
 			if (!materials)
-				say("No access to material storage, please contact the quartermaster.")
-				return FALSE
-			if (rmat.on_hold())
-				say("Mineral access is on hold, please contact the quartermaster.")
+				stack_trace("[src] somehow does not have an internal material storage.")
 				return FALSE
 			var/total_cost = check_resources()
 			if(!total_cost)

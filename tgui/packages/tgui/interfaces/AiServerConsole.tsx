@@ -43,11 +43,11 @@ export const AiServerConsole = () => {
                 <ProgressBar
                   ranges={{
                     good: [-Infinity, 250],
-                    average: [250, 750],
-                    bad: [750, Infinity],
+                    average: [250, 500],
+                    bad: [500, Infinity],
                   }}
                   value={server.temp}
-                  maxValue={750}
+                  maxValue={500}
                 >
                   {server.temp}K
                 </ProgressBar>

@@ -411,7 +411,7 @@
 		. += list(list("Systems nonfunctional"))
 		return
 	. += list(list("System integrity: [(health + 100) * 0.5]%"))
-	if(isturf(loc)) //only show if we're "in" a core
+	if(isvalidAIloc(loc)) //only show if we're "in" a core
 		. += list(list("Backup Power: [battery * 0.5]%"))
 	. += list(list("Connected cyborgs: [length(connected_robots)]"))
 	for(var/r in connected_robots)
@@ -957,7 +957,7 @@
 	return can_see(target) && ..() //stop AIs from leaving windows open and using then after they lose vision
 
 /mob/living/silicon/ai/proc/can_see(atom/A)
-	if(isturf(loc) || istype(loc, /obj/machinery/ai/data_core)) //AI in core, check if on cameras
+	if(isvalidAIloc(loc)) //AI in core, check if on cameras
 		//get_turf_pixel() is because APCs in maint aren't actually in view of the inner camera
 		//apc_override is needed here because AIs use their own APC when depowered
 		return ((GLOB.cameranet && GLOB.cameranet.checkTurfVis(get_turf_pixel(A))) || (A == apc_override))

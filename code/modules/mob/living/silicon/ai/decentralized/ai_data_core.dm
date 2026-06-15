@@ -4,7 +4,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 #define CELL_POWERUSE_MULTIPLIER 0.025
 
 /obj/machinery/ai/data_core
-	name = "AI Data Core"
+	name = "AI data core"
 	desc = "A complicated computer system capable of emulating the neural functions of an organic being at near-instantanous speeds."
 	icon = 'icons/obj/machines/ai_core.dmi'
 	icon_state = "core-offline"
@@ -50,6 +50,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 			continue
 		if(!AI.is_dying)
 			AI.relocate()
+
 
 	for(var/mob/living/silicon/ai/AI in all_ais)
 		if(!AI.mind && AI.deployed_shell.mind)
@@ -151,11 +152,15 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/ai/data_core/attack_ai(mob/living/silicon/ai/user)
-	if((user in src) || user.nuking)
+	if((user in src))
 		return ..()
 	if(!valid_data_core())
 		balloon_alert(user, "not a valid core!")
 		return ..()
+	if(user.nuking)
+		var/confirmation_alert = tgui_alert(user, "Shunting will disable the doomsday device, are you sure you wish to do this?", "Really shunt?", list("Shunt", "Cancel"))
+		if(confirmation_alert != "Shunt")
+			return
 	if(do_after(user, 4 SECONDS, src, interaction_key = DOAFTER_SOURCE_AI_SHUNTING) && valid_data_core())
 		transfer_AI(user)
 		playsound(src, 'sound/items/pip.ogg', 25, FALSE, 2)
@@ -219,6 +224,8 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	return TRUE
 
 /obj/machinery/ai/data_core/proc/transfer_AI(mob/living/silicon/ai/AI)
+	if(AI.nuking)
+		AI.ShutOffDoomsdayDevice()
 	AI.forceMove(src)
 	if(AI.eyeobj)
 		AI.eyeobj.setLoc(get_turf(src))
@@ -245,7 +252,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 		deltimer(TimerID)
 
 /obj/machinery/ai/data_core/primary
-	name = "primary AI Data Core"
+	name = "primary AI data core"
 	desc = "A complicated computer system capable of emulating the neural functions of a human at near-instantanous speeds. This one has a scrawny and faded note saying: 'Primary AI Data Core'"
 	primary = TRUE
 	circuit = /obj/item/circuitboard/machine/ai_data_core/primary

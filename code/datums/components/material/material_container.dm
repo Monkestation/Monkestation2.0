@@ -722,7 +722,7 @@
 			"name" = material.name,
 			"ref" = REF(material),
 			"amount" = amount,
-			"color" = material.greyscale_colors
+			"color" = material.greyscale_colors,
 		))
 
 	return data

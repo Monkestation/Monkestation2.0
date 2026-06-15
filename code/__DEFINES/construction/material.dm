@@ -21,6 +21,8 @@
 #define MAT_CATEGORY_RIGID "rigid material"
 /// Materials that can be used to craft items
 #define MAT_CATEGORY_ITEM_MATERIAL "item material"
+/// Materials that can be used to craft items
+#define MAT_CATEGORY_RACK_CREATOR "rack creator"
 /**
  * Materials that can also be used to craft items for designs that require two custom mats.
  * This is mainly a work around to the fact we can't (easily) have the same category show

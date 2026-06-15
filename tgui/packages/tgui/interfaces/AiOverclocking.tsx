@@ -51,7 +51,7 @@ export const AiOverclocking = (props) => {
   };
 
   return (
-    <Window width={600} height={345}>
+    <Window width={400} height={400}>
       <Window.Content scrollable>
         {(!overclock_progress && (
           <Section
@@ -72,6 +72,7 @@ export const AiOverclocking = (props) => {
                 <Collapsible title="Past Results">
                   {last_values.map((result, index) => (
                     <Section
+                      fill
                       key={index}
                       title={`Result #${index + 1}`}
                       buttons={
@@ -98,6 +99,7 @@ export const AiOverclocking = (props) => {
                 </Collapsible>
                 <Section
                   title="Settings"
+                  fill
                   buttons={
                     <Button
                       color="good"
