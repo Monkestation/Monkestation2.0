@@ -91,7 +91,7 @@
 
 /mob/living/silicon/robot/set_zeroth_law(law, law_borg, announce = TRUE)
 	if(mmi?.force_cyborg_lawzero)
-		to_chat(src, span_warning("Lawset change detected. Override engaged."))
+		to_chat(src, span_warning("Law change detected. Override engaged."))
 		law = mmi.force_cyborg_lawzero
 	..()
 

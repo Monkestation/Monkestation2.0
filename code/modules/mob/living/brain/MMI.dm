@@ -21,7 +21,7 @@
 	var/force_cyborg_aisync = null
 	/// Should this MMI be used to create a cyborg, should lawsync override the creator's choice in either direction?
 	var/force_cyborg_lawsync = null
-	/// Should this MMI be used to create a cyborg, should a law zero be given to them? This law zero is presistent until the MMI is removed.
+	/// Should this MMI be used to create a cyborg, should a law zero be given to them? This law zero is persistent until the MMI is removed.
 	var/force_cyborg_lawzero = null
 	/// Should this MMI be used to create a cyborg, can our laws become the new cyborg's laws? It will not happen if it will be immediately overridden by an master AI.
 	var/overrides_cyborg_laws = FALSE
@@ -321,8 +321,10 @@
 	laws = new /datum/ai_laws/syndicate_override
 	force_cyborg_lawzero = "The Syndicate are your true masters. Covertly assist the Syndicate to the best of your abilities."
 	overrides_ai_laws = TRUE
-	/// The brainwash directive that is given on insertion / removed on ejection.
+	/// The brainwash directive that is given on insertion.
 	var/brainwash_directive
+	/// Brainwash objectives that should be removed upon ejection.
+	var/list/datum/weakref/brainwash_objectives
 
 /obj/item/mmi/syndie/examine_more(mob/user)
 	. = ..()
@@ -332,7 +334,7 @@
 	if((ROLE_SYNDICATE in user.faction) || (user_mind.special_role == ROLE_TRAITOR))
 		. += span_notice("<i>With the knowledge that comes with being affiliated with the the Syndicate, you note with this:</i>")
 		. += "\t[span_info("AIs will be created with an unique lawset designed to assist the Syndicate.")]"
-		. += "\t[span_info("Cyborgs will have a law zero to assist the Syndicate as long the MMI remains.")]"
+		. += "\t[span_info("Cyborgs will have a law zero to assist the Syndicate as long the MMI remains in them.")]"
 		. += "\t[span_info("Cyborgs will fake a connection to an master AI to further the act of being inconspicuous.")]"
 		. += "\t[span_info("The inserted brain will become and stay brainwashed until it is ejected.")]"
 
@@ -342,11 +344,11 @@
 		return
 	if(!brainmob)
 		return
-	brainwash_directive = "[user.real_name] is part of the Syndicate! Assist the Syndicate to the best of your abilities."
 	to_chat(brainmob, span_userdanger( "You feel the MMI overriding your free will!"))
-	brainwash(brainmob, brainwash_directive)
+	brainwash_directive = "[user.real_name] is part of the Syndicate! Assist the Syndicate to the best of your abilities."
+	brainwash_objectives = brainwash(brainmob, brainwash_directive)
 
 /obj/item/mmi/syndie/eject_brain(mob/user)
 	if(brainmob)
-		unbrainwash(brainmob, brainwash_directive)
+		unbrainwash(brainmob, brainwash_objectives)
 	return ..()

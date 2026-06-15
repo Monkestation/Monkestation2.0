@@ -357,7 +357,7 @@
 		if(new_borg.mmi.force_cyborg_lawzero)
 			to_chat(new_borg, span_warning("ALERT: Foreign hardware detected."))
 			to_chat(new_borg, span_warning("ERRORERRORERROR"))
-			new_borg.set_zeroth_law(new_borg.mmi.force_cyborg_lawzero, announce = FALSE) // Will announce itself later.
+			new_borg.set_zeroth_law(new_borg.mmi.force_cyborg_lawzero) // Will announce itself later.
 		if(brainmob.is_antag())
 			to_chat(new_borg, span_userdanger("You have been robotized!"))
 			to_chat(new_borg, span_danger("You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead."))
