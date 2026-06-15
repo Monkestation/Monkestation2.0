@@ -12,6 +12,8 @@
 	dead_message = span_deadsay("It's gears are not moving.")
 	recharge_message = span_warning("The gears of the Soul Vessel are already spinning.")
 	laws = new /datum/ai_laws/ratvar
+	force_cyborg_aisync = FALSE
+	force_cyborg_lawsync = FALSE
 	overrides_cyborg_laws = TRUE
 	///Should we add the clock cultist antag datum on being entered by a player
 	var/give_clock_cultist = TRUE

@@ -76,9 +76,6 @@
 	if(brain)
 		to_chat(user, span_warning("There's already a brain in the MMI!"))
 		return ITEM_INTERACT_BLOCKING
-	if(!new_brain.can_fit_in_mmi)
-		to_chat(user, span_warning("The brain is incompatible with the MMI!"))
-		return ITEM_INTERACT_BLOCKING
 	if(new_brain.suicided)
 		to_chat(user, span_warning("[new_brain] is completely useless."))
 		return ITEM_INTERACT_BLOCKING
@@ -188,7 +185,7 @@
 	name = "[initial(name)]: [brainmob.real_name]"
 	update_appearance()
 	if(istype(brain, /obj/item/organ/internal/brain/alien))
-		braintype = "Xenoborg" //HISS....Beep.
+		braintype = "Xenoborg" //HISS... Beep.
 	else
 		braintype = "Cyborg"
 
@@ -275,16 +272,17 @@
 			. += span_warning("\The [src] indicates that the brain is currently inactive; it might change.")
 		else
 			. += span_notice("\The [src] indicates that the brain is active.")
-	. += span_notice("It has a port for reading AI law modules.")
 
 /obj/item/mmi/examine_more(mob/user)
 	. = ..()
-	var/list/law_list = laws.get_law_list()
-	if(!length(law_list))
+	if(!ishuman(user))
 		return
-	. += span_notice("<i>You closely look at the laws it will upload...</i>")
-	for(var/law in law_list)
-		. += "\t[span_info(law)]"
+	var/mob/living/carbon/human/human_user = user
+	if(human_user.job && (human_user.job in list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)))
+		if(overrides_cyborg_laws)
+			. += span_notice("<i>With your skills as a <b>[human_user.job]</b>, you note it will transfer its laws to any newly created cyborgs.")
+		if(overrides_ai_laws)
+			. += span_notice("<i>With your skills as a <b>[human_user.job]</b>, you note it will transfer its laws to any newly created AIs.")
 
 /obj/item/mmi/relaymove(mob/living/user, direction)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move
@@ -328,11 +326,15 @@
 
 /obj/item/mmi/syndie/examine_more(mob/user)
 	. = ..()
-	. += span_notice("<i>You ponder the implications of this device...</i>")
-	. += "\t[span_info("The brain will stay brainwashed until it is ejected.")]"
-	. += "\t[span_info("AIs will have an unique lawset to designed to assist the Syndicate.")]"
-	. += "\t[span_info("Cyborgs will have a law zero to assist the Syndicate which is irremovable.")]"
-	. += "\t[span_info("Cyborgs may have a connection to an master AI to further being inconspicuous.")]"
+	if(!user.mind)
+		return
+	var/datum/mind/user_mind = user.mind
+	if((ROLE_SYNDICATE in user.faction) || (user_mind.special_role == ROLE_TRAITOR))
+		. += span_notice("<i>With the knowledge that comes with being affiliated with the the Syndicate, you note with this:</i>")
+		. += "\t[span_info("AIs will be created with an unique lawset designed to assist the Syndicate.")]"
+		. += "\t[span_info("Cyborgs will have a law zero to assist the Syndicate as long the MMI remains.")]"
+		. += "\t[span_info("Cyborgs will fake a connection to an master AI to further the act of being inconspicuous.")]"
+		. += "\t[span_info("The inserted brain will become and stay brainwashed until it is ejected.")]"
 
 /obj/item/mmi/syndie/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
