@@ -351,13 +351,13 @@
 		new_borg.updatename(brainmob.client)
 		// This canonizes that MMI'd cyborgs have memories of their previous life
 		brainmob.add_mob_memory(/datum/memory/was_cyborged, protagonist = brainmob.mind, deuteragonist = user)
+		if(new_borg.mmi.force_cyborg_lawzero)
+			new_borg.set_zeroth_law(new_borg.mmi.force_cyborg_lawzero) // Has to be done before mind transfer as law announcement occurs on mind transfer.
 		brainmob.mind.transfer_to(new_borg)
 		playsound(new_borg.loc, 'sound/voice/liveagain.ogg', 75, TRUE)
-
 		if(new_borg.mmi.force_cyborg_lawzero)
 			to_chat(new_borg, span_warning("ALERT: Foreign hardware detected."))
 			to_chat(new_borg, span_warning("ERRORERRORERROR"))
-			new_borg.set_zeroth_law(new_borg.mmi.force_cyborg_lawzero) // Will announce itself later.
 		if(brainmob.is_antag())
 			to_chat(new_borg, span_userdanger("You have been robotized!"))
 			to_chat(new_borg, span_danger("You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead."))
