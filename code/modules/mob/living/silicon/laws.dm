@@ -115,9 +115,8 @@
 	laws.associate(src)
 
 /mob/living/silicon/proc/clear_zeroth_law(force, announce = TRUE)
-	if(!laws_sanity_check())
-		return
-	var/zeroth = laws.zeroth
-	if(laws.clear_zeroth_law(force))
-		lawcheck -= zeroth
-	post_lawchange(announce)
+	if(laws_sanity_check())
+		var/zeroth = laws.zeroth
+		if(laws.clear_zeroth_law(force))
+			lawcheck -= zeroth
+		post_lawchange(announce)
