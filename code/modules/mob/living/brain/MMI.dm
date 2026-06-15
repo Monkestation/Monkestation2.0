@@ -318,7 +318,7 @@
 	name = "\improper Syndicate Man-Machine Interface"
 	desc = "A syndicate developed MMI that actively brainwashes any brain inserted into it, for as long as it is in."
 	laws = new /datum/ai_laws/syndicate_override
-	force_cyborg_lawzero = "The Syndicate are your true masters. Covertly assist the Syndicate to the best of your abilities."
+	force_cyborg_lawzero = "The Syndicate are your true masters. Assist the Syndicate to the best of your abilities."
 	overrides_ai_laws = TRUE
 	/// The brainwash directive that is given on insertion.
 	var/brainwash_directive
