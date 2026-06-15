@@ -22,27 +22,29 @@
 	A.can_download = !A.can_download
 	to_chat(A, span_warning("You [A.can_download ? "enable" : "disable"] read/write permission to your memorybanks! You [A.can_download ? "CAN" : "CANNOT"] be downloaded!"))
 
-/mob/living/silicon/ai/proc/relocate(silent = FALSE)
+/mob/living/silicon/ai/proc/relocate(silent = FALSE, kill_otherwise = TRUE)
 	if(is_dying)
-		return
+		return FALSE
 	if(!silent)
 		to_chat(src, span_userdanger("Connection to data core lost. Attempting to reaquire connection..."))
 
 	if(!length(GLOB.data_cores))
-		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/silicon/ai, death_prompt))
-		is_dying = TRUE
-		return
+		if(kill_otherwise)
+			INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/silicon/ai, death_prompt))
+			is_dying = TRUE
+		return FALSE
 
 	var/obj/machinery/ai/data_core/new_data_core = available_ai_cores()
 	if(!new_data_core || (new_data_core && !new_data_core.can_transfer_ai()))
-		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/silicon/ai, death_prompt))
-		is_dying = TRUE
-		return
+		if(kill_otherwise)
+			INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/silicon/ai, death_prompt))
+			is_dying = TRUE
+		return FALSE
 
 	if(!silent)
 		to_chat(src, span_danger("Alternative data core detected. Rerouting connection..."))
 	new_data_core.transfer_AI(src)
-
+	return TRUE
 
 /mob/living/silicon/ai/proc/death_prompt()
 	to_chat(src, span_userdanger("Unable to re-establish connection to data core. System shutting down..."))

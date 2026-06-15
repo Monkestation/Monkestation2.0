@@ -34,6 +34,8 @@
 
 	radio = /obj/item/radio/headset/silicon/ai
 	can_buckle_to = FALSE
+	///Boolean on whether the AI is in a magically powered area AKA. places with power but no APC (shuttles).
+	var/technically_unpowered = FALSE
 	var/battery = 200 //emergency power if the AI's APC is off
 	var/list/network = list(CAMERANET_NETWORK_SS13)
 	var/obj/machinery/camera/current
@@ -929,26 +931,28 @@
 	set_autosay()
 
 /mob/living/silicon/ai/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	if(interaction == AI_TRANS_TO_CARD)//The only possible interaction. Upload AI mob to a card.
-		if(!can_be_carded)
-			to_chat(user, span_boldwarning("Transfer failed."))
-			return
-		disconnect_shell() //If the AI is controlling a borg, force the player back to core!
-		if(!mind)
-			to_chat(user, span_warning("No intelligence patterns detected."))
-			return
-		ShutOffDoomsdayDevice()
-		builtInCamera.toggle_cam(user)
-		ai_restore_power()//So the AI initially has power.
-		control_disabled = TRUE //Can't control things remotely if you're stuck in a card!
-		interaction_range = 0
-		radio_enabled = FALSE //No talking on the built-in radio for you either!
-		forceMove(card)
-		card.AI = src
-		to_chat(src, "You have been downloaded to a mobile storage device. Remote device connection severed.")
-		to_chat(user, "[span_boldnotice("Transfer successful")]: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+	if(interaction != AI_TRANS_TO_CARD)//The only possible interaction. Upload AI mob to a card.
+		return
+	if(!can_be_carded)
+		to_chat(user, span_boldwarning("Transfer failed."))
+		return
+	disconnect_shell() //If the AI is controlling a borg, force the player back to core!
+	if(!mind)
+		to_chat(user, span_warning("No intelligence patterns detected."))
+		return
+	ShutOffDoomsdayDevice()
+	builtInCamera.toggle_cam(user)
+	ai_restore_power()//So the AI initially has power.
+	control_disabled = TRUE //Can't control things remotely if you're stuck in a card!
+	interaction_range = 0
+	radio_enabled = FALSE //No talking on the built-in radio for you either!
+	forceMove(card)
+	card.AI = src
+	to_chat(src, "You have been downloaded to a mobile storage device. Remote device connection severed.")
+	to_chat(user, "[span_boldnotice("Transfer successful")]: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 
 /mob/living/silicon/ai/can_perform_action(atom/movable/target, action_bitflags)
 	if(control_disabled)

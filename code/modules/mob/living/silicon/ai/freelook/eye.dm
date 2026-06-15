@@ -89,6 +89,8 @@
 		return
 	if(!(isvalidAIloc(ai.loc)))
 		return
+	if(ai.technically_unpowered && !(ai in destination)) //can't move while unpowered
+		return
 
 	. = ..()
 

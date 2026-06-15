@@ -24,6 +24,7 @@
 		if (!battery)
 			to_chat(src, span_warning("Your backup battery's output drops below usable levels. It takes only a moment longer for your systems to fail, corrupted and unusable."))
 			adjustOxyLoss(200)
+			return
 		else
 			battery--
 	else
@@ -31,17 +32,24 @@
 		if (battery < 200)
 			battery++
 
-	if(!lacks_power())
-		var/area/home = get_area(src)
-		if(home.powered(AREA_USAGE_EQUIP))
-			home.apc?.terminal?.use_energy(500 WATTS * seconds_per_tick, channel = AREA_USAGE_EQUIP)
-
-		if(aiRestorePowerRoutine >= POWER_RESTORATION_SEARCH_APC)
-			ai_restore_power()
+	if(lacks_power())
+		if(!aiRestorePowerRoutine)
+			ai_lose_power()
 			return
 
-	else if(!aiRestorePowerRoutine)
-		ai_lose_power()
+	var/area/home = get_area(src)
+	if(!home.apc)
+		if(!technically_unpowered)
+			ai_deactivate_power()
+		return
+	else if(technically_unpowered)
+		ai_reactivate_power()
+
+	if(home.powered(AREA_USAGE_EQUIP))
+		home.apc?.terminal?.use_energy(500 WATTS * seconds_per_tick, channel = AREA_USAGE_EQUIP)
+
+	if(aiRestorePowerRoutine >= POWER_RESTORATION_SEARCH_APC)
+		ai_restore_power()
 
 	if(cameraMemoryTarget)
 		if(cameraMemoryTickCount >= AI_CAMERA_MEMORY_TICKS)
@@ -174,8 +182,22 @@
 /mob/living/silicon/ai/proc/ai_lose_power()
 	disconnect_shell()
 	setAiRestorePowerRoutine(POWER_RESTORATION_START)
-	if(!available_ai_cores())
-		adjust_temp_blindness(2 SECONDS)
-	update_sight()
 	to_chat(src, span_alert("You've lost power!"))
+	if(relocate(silent = FALSE, kill_otherwise = FALSE)) //see about moving to one with power.
+		return
+	adjust_temp_blindness(2 SECONDS)
+	update_sight()
 	addtimer(CALLBACK(src, PROC_REF(start_RestorePowerRoutine)), 20)
+
+///Called when an AI is moved into an area that has power but no APC (shuttles, mostly)
+/mob/living/silicon/ai/proc/ai_deactivate_power()
+	disconnect_shell()
+	view_core()
+	ai_tracking_tool.set_tracked_mob(src)
+	technically_unpowered = TRUE
+	to_chat(src, span_alert("You've lost access to an APC!"))
+
+///Called when an AI is unpowered but has been moved into an area with power
+/mob/living/silicon/ai/proc/ai_reactivate_power()
+	technically_unpowered = FALSE
+	ai_tracking_tool.set_tracked_mob(null)
