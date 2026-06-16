@@ -42050,6 +42050,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
+"ueT" = (
+/obj/effect/landmark/navigate_destination{
+	location = "Evacuation"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "ueW" = (
 /obj/machinery/door/window{
 	base_state = "rightsecure";
@@ -49600,9 +49606,9 @@
 /area/station/command/bridge)
 "xMr" = (
 /obj/structure/table/glass,
-/obj/item/vacuum_pack,
-/obj/item/vacuum_pack,
-/obj/item/vacuum_pack,
+/obj/item/vacuum_pack/backpack,
+/obj/item/vacuum_pack/backpack,
+/obj/item/vacuum_pack/backpack,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
@@ -95638,7 +95644,7 @@ jHB
 xRY
 gzU
 saK
-hHZ
+ueT
 hHZ
 ifq
 jHB
@@ -98966,13 +98972,13 @@ jHB
 jHB
 jiz
 jHB
-jiz
-jHB
-dVi
-jHB
-dVi
-jHB
 cul
+jHB
+dVi
+jHB
+dVi
+jHB
+jiz
 jHB
 jiz
 jHB

@@ -9628,6 +9628,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/landmark/navigate_destination{
+	location = "Evacuation"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "cMN" = (
@@ -29181,7 +29184,7 @@
 "iVT" = (
 /obj/structure/table/glass,
 /obj/item/disk/vacuum_upgrade/biomass,
-/obj/item/vacuum_pack,
+/obj/item/vacuum_pack/backpack,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "iVU" = (
@@ -54419,7 +54422,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/table/glass,
 /obj/item/disk/vacuum_upgrade/biomass,
-/obj/item/vacuum_pack,
+/obj/item/vacuum_pack/backpack,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "qEx" = (

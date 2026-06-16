@@ -4699,6 +4699,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/navigate_destination{
+	location = "Evacuation"
+	},
 /turf/open/floor/iron/dark/diagonal,
 /area/station/hallway/secondary/exit/departure_lounge)
 "bzA" = (
@@ -23142,7 +23145,6 @@
 	name = "Departures"
 	},
 /obj/structure/cable,
-/obj/effect/landmark/navigate_destination/dockesc,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -47191,6 +47193,16 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured,
 /area/station/service/hydroponics)
+"ozY" = (
+/obj/structure/fans/tiny/forcefield{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external{
+	name = "Departures"
+	},
+/obj/effect/landmark/navigate_destination/dockesc,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/hallway/secondary/exit/departure_lounge)
 "oAn" = (
 /obj/machinery/status_display/door_timer{
 	id = "Cell 2";
@@ -72404,8 +72416,8 @@
 	},
 /obj/effect/turf_decal/trimline/purple/filled/corner,
 /obj/structure/table,
-/obj/item/vacuum_pack,
-/obj/item/vacuum_pack,
+/obj/item/vacuum_pack/backpack,
+/obj/item/vacuum_pack/backpack,
 /obj/item/disk/vacuum_upgrade/biomass,
 /obj/item/disk/vacuum_upgrade/biomass,
 /turf/open/floor/iron/white,
@@ -116376,7 +116388,7 @@ neR
 wbH
 wsk
 mCe
-xpi
+ozY
 gpo
 vrP
 vrP

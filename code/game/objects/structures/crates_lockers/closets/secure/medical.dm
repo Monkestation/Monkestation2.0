@@ -42,6 +42,7 @@
 	new /obj/item/clothing/gloves/latex/nitrile(src)
 	new /obj/item/storage/belt/medical(src)
 	new /obj/item/clothing/glasses/hud/health(src)
+	new /obj/item/breathing_bag(src)
 	return
 
 /obj/structure/closet/secure_closet/psychology

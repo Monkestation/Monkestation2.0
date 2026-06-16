@@ -351,6 +351,30 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/biocorrector
+	name = "Bio-corrector"
+	desc = "The latest medical prototype with a bone gel synthesizer. It sets bones, cleanses blood and lymph. The application of bone gel is possible only with invasive intervention."
+	id = "biocorrector"
+	build_path = /obj/item/blood_filter/advanced
+	build_type = PROTOLATHE | AWAY_LATHE | COLONY_FABRICATOR
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 4, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 2, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3)
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
+		)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/breathing_bag
+	name = "Ambu Bag"
+	desc = "Also known as a breathing bag, it is a mechanical manual device for performing artificial lung ventilation."
+	id = "breathing_bag"
+	build_path = /obj/item/breathing_bag
+	build_type = PROTOLATHE | AWAY_LATHE | COLONY_FABRICATOR
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
+		)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /datum/design/medical_spray_bottle
 	name = "Medical Spray Bottle"
 	desc = "A traditional spray bottle used to generate a fine mist. Not to be confused with a medspray."
@@ -446,7 +470,7 @@
 	id = "surgery_tray"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/silver =SHEET_MATERIAL_AMOUNT)
-	build_path = "/obj/item/surgery_tray/craftable"
+	build_path = /obj/item/surgery_tray/craftable
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
 	)
@@ -896,27 +920,51 @@
 
 /datum/design/implant_chem
 	name = "Chemical Implant Case"
-	desc = "A glass case containing an implant."
+	desc = "A glass case containing a chemical implant."
 	id = "implant_chem"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*7)
 	build_path = /obj/item/implantcase/chem
 	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_MISC
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_SECURITY
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/implant_tracking
 	name = "Tracking Implant Case"
-	desc = "A glass case containing an implant."
+	desc = "A glass case containing a tracking implant."
 	id = "implant_tracking"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/implantcase/tracking
 	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_MISC
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_SECURITY
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/implant_bluespace
+	name = "Bluespace Grounding Implant Case"
+	desc = "A glass case containing a teleport blocker implant."
+	id = "implant_bluespace"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 3)
+	build_path = /obj/item/implantcase/teleport_blocker
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_SECURITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/implant_exile
+	name = "Exile Implant Case"
+	desc = "A glass case containing an exile implant."
+	id = "implant_exile"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 3)
+	build_path = /obj/item/implantcase/exile
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_SECURITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 //Cybernetic organs and also limbs AAUGH
 

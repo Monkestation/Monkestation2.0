@@ -64,6 +64,7 @@
 #define ROLE_BINGLE "Bingle"
 #define ROLE_BINGLE_MIDROUND "Bingle (Midround)"
 #define ROLE_WILLING_HOST "Willing Host"
+#define ROLE_ABANDONED_IPC "Abandoned IPC"
 // Latejoin roles
 #define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
 #define ROLE_PROVOCATEUR "Provocateur"
@@ -86,6 +87,7 @@
 #define ROLE_REVENANT "Revenant"
 #define ROLE_OVERTHROW "Syndicate Mutineer" //Role removed, left here for safety.
 #define ROLE_SENTIENCE "Sentience Potion Spawn"
+#define ROLE_HOLY_SUMMONED "Holy Summoned"
 #define ROLE_SOULTRAPPED_HERETIC "Soultrapped Heretic"
 #define ROLE_PYROCLASTIC_SLIME "Pyroclastic Anomaly Slime"
 #define ROLE_MIND_TRANSFER "Mind Transfer Potion"
@@ -204,6 +206,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_TERATOMA = 0,
 	ROLE_JUNIOR_LONE_OPERATIVE = 0,
 	ROLE_BINGLE = 0,
+	ROLE_ABANDONED_IPC = 0,
 //darkspawns role classes
 	ROLE_DARKSPAWN_WARLOCK = 0,
 	ROLE_DARKSPAWN_SCOUT = 0,

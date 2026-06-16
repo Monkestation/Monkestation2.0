@@ -76,6 +76,8 @@
 	var/atom/movable/screen/bloodsucker/blood_counter/blood_display
 	///Vampire level display HUD
 	var/atom/movable/screen/bloodsucker/rank_counter/vamprank_display
+	///Blood thickening HUD, keeps track of blood needed to rank up
+	var/atom/movable/screen/bloodsucker/thickening_counter/thickening_display
 
 	var/obj/effect/abstract/bloodsucker_tracker_holder/tracker
 
@@ -164,6 +166,7 @@
 	RegisterSignal(current_mob, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(current_mob, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(handle_blood))
 	RegisterSignal(current_mob, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(on_update_sight))
+	RegisterSignal(current_mob, COMSIG_LIVING_BLOODSILVER_HIT, PROC_REF(on_bloodsilver_hit))
 	handle_clown_mutation(current_mob, mob_override ? null : "As a vampiric clown, you are no longer a danger to yourself. Your clownish nature has been subdued by your thirst for blood.")
 	add_team_hud(current_mob)
 	current_mob.clear_mood_event("vampcandle")
@@ -195,7 +198,7 @@
 /datum/antagonist/bloodsucker/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
-	UnregisterSignal(current_mob, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_ON_HANDLE_BLOOD, COMSIG_MOB_UPDATE_SIGHT, SIGNAL_REMOVETRAIT(TRAIT_SHADED), COMSIG_MOB_LOGIN))
+	UnregisterSignal(current_mob, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_ON_HANDLE_BLOOD, COMSIG_MOB_UPDATE_SIGHT, SIGNAL_REMOVETRAIT(TRAIT_SHADED), COMSIG_MOB_LOGIN, COMSIG_LIVING_BLOODSILVER_HIT))
 	handle_clown_mutation(current_mob, removing = FALSE)
 	current_mob.remove_language(/datum/language/vampiric, source = LANGUAGE_BLOODSUCKER)
 
@@ -207,8 +210,10 @@
 		var/datum/hud/hud_used = current_mob.hud_used
 		hud_used.infodisplay -= blood_display
 		hud_used.infodisplay -= vamprank_display
+		hud_used.infodisplay -= thickening_display
 		QDEL_NULL(blood_display)
 		QDEL_NULL(vamprank_display)
+		QDEL_NULL(thickening_display)
 
 /datum/antagonist/bloodsucker/after_body_transfer(mob/living/old_body, mob/living/new_body)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), new_body), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
@@ -228,6 +233,9 @@
 
 	vamprank_display = new /atom/movable/screen/bloodsucker/rank_counter(null, bloodsucker_hud)
 	bloodsucker_hud.infodisplay += vamprank_display
+
+	thickening_display = new /atom/movable/screen/bloodsucker/thickening_counter(null, bloodsucker_hud)
+	bloodsucker_hud.infodisplay += thickening_display
 
 	bloodsucker_hud.show_hud(bloodsucker_hud.hud_version)
 	UnregisterSignal(owner.current, COMSIG_MOB_HUD_CREATED)
@@ -603,6 +611,10 @@
 	user.add_sight(SEE_MOBS)
 	user.lighting_cutoff = max(user.lighting_cutoff, LIGHTING_CUTOFF_HIGH)
 	user.lighting_color_cutoffs = blend_cutoff_colors(user.lighting_color_cutoffs, list(25, 8, 5))
+
+/datum/antagonist/bloodsucker/proc/on_bloodsilver_hit(mob/living/source)
+	SIGNAL_HANDLER
+	DisableAllPowers(forced = TRUE)
 
 /datum/status_effect/silver_cuffed
 	id = "silver cuffed"
