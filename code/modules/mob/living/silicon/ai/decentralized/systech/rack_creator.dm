@@ -36,7 +36,7 @@
 	. = ..()
 	var/mat_capacity = 0
 	for(var/datum/stock_part/matter_bin/new_matter_bin in component_parts)
-		mat_capacity += new_matter_bin.tier * 25 * SHEET_MATERIAL_AMOUNT
+		mat_capacity += new_matter_bin.tier * 40 * SHEET_MATERIAL_AMOUNT
 	materials.max_amount = mat_capacity
 
 	var/total_rating = 1.2
@@ -316,6 +316,13 @@
 
 			flick("circuit_imprinter_ani", src)
 			addtimer(CALLBACK(src, PROC_REF(finalize_post), new_rack), 1.5 SECONDS)
+			. = TRUE
+		if("remove_mat")
+			var/datum/material/material = locate(params["ref"])
+			var/amount = text2num(params["amount"])
+			materials.retrieve_sheets(amount, material, drop_location())
+
+			SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
 			. = TRUE
 
 /obj/machinery/rack_creator/proc/finalize_post(obj/item/server_rack/rack)
