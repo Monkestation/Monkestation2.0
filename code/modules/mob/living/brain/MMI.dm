@@ -27,6 +27,10 @@
 	var/overrides_cyborg_laws = FALSE
 	/// Should this MMI be used to create an AI, will our laws become the new AI's laws?
 	var/overrides_ai_laws = FALSE
+	/// Should the inserted brain become brainwashed? If so, what is the objective?
+	var/brainwash_directive
+	/// Holds the brainwash objectives that should be removed upon brain's ejection.
+	var/list/datum/weakref/brainwash_objectives
 
 /obj/item/mmi/Initialize(mapload)
 	. = ..()
@@ -117,6 +121,8 @@
 	brain = new_brain
 	brain.organ_flags |= ORGAN_FROZEN
 
+	try_brainwash(user)
+
 	name = "[initial(name)]: [brainmob.real_name]"
 	update_appearance()
 	if(istype(brain, /obj/item/organ/internal/brain/alien))
@@ -145,6 +151,7 @@
 
 /obj/item/mmi/proc/eject_brain(mob/user)
 	if(brainmob)
+		try_unbrainwash()
 		brainmob.container = null //Reset brainmob mmi var.
 		brainmob.forceMove(brain) //Throw mob into brain.
 		brainmob.set_stat(DEAD)
@@ -314,16 +321,32 @@
 		return FALSE
 	return TRUE
 
+/// Gets the brainwash directive.
+/obj/item/mmi/proc/get_updated_brainwash_directive(mob/living/user)
+	return
+
+/// Brainwashes the brainmob if we can do it.
+/obj/item/mmi/proc/try_brainwash(mob/living/user)
+	if(user)
+		brainwash_directive = get_updated_brainwash_directive(user)
+	if(!brainwash_directive || !brainmob)
+		return
+	to_chat(brainmob, span_userdanger( "You feel the MMI overriding your free will!"))
+	brainwash_objectives = brainwash(brainmob, brainwash_directive)
+
+/// Undoes any brainwashing that we've done.
+/obj/item/mmi/proc/try_unbrainwash()
+	if(!brainwash_objectives || !brainmob)
+		return
+	unbrainwash(brainmob, brainwash_objectives)
+	brainwash_objectives = null
+
 /obj/item/mmi/syndie
 	name = "\improper Syndicate Man-Machine Interface"
 	desc = "A syndicate developed MMI that actively brainwashes any brain inserted into it, for as long as it is in."
 	laws = new /datum/ai_laws/syndicate_override
 	force_cyborg_lawzero = "The Syndicate are your true masters. Assist the Syndicate to the best of your abilities."
 	overrides_ai_laws = TRUE
-	/// The brainwash directive that is given on insertion.
-	var/brainwash_directive
-	/// Brainwash objectives that should be removed upon ejection.
-	var/list/datum/weakref/brainwash_objectives
 
 /obj/item/mmi/syndie/examine_more(mob/user)
 	. = ..()
@@ -332,22 +355,10 @@
 	var/datum/mind/user_mind = user.mind
 	if((ROLE_SYNDICATE in user.faction) || (user_mind.special_role == ROLE_TRAITOR))
 		. += span_notice("<i>With the knowledge that comes with being affiliated with the the Syndicate, you note with this:</i>")
+		. += "\t[span_info("The inserted brain will become and stay brainwashed as long it is in MMI form.")]"
 		. += "\t[span_info("AIs will be created with an unique lawset designed to assist the Syndicate.")]"
 		. += "\t[span_info("Cyborgs will have a law zero to assist the Syndicate as long the MMI remains in them.")]"
 		. += "\t[span_info("Cyborgs will fake a connection to an master AI to further the act of being inconspicuous.")]"
-		. += "\t[span_info("The inserted brain will become and stay brainwashed until it is ejected.")]"
 
-/obj/item/mmi/syndie/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
-	if(. != ITEM_INTERACT_SUCCESS)
-		return
-	if(!brainmob)
-		return
-	to_chat(brainmob, span_userdanger( "You feel the MMI overriding your free will!"))
-	brainwash_directive = "[user.real_name] is part of the Syndicate! Assist the Syndicate to the best of your abilities."
-	brainwash_objectives = brainwash(brainmob, brainwash_directive)
-
-/obj/item/mmi/syndie/eject_brain(mob/user)
-	if(brainmob)
-		unbrainwash(brainmob, brainwash_objectives)
-	return ..()
+/obj/item/mmi/syndie/get_updated_brainwash_directive(mob/living/user)
+	return "[user.real_name] is part of the Syndicate! Assist the Syndicate to the best of your abilities."

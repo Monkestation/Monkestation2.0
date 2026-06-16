@@ -352,7 +352,8 @@
 		// This canonizes that MMI'd cyborgs have memories of their previous life
 		brainmob.add_mob_memory(/datum/memory/was_cyborged, protagonist = brainmob.mind, deuteragonist = user)
 		if(new_borg.mmi.force_cyborg_lawzero)
-			new_borg.set_zeroth_law(new_borg.mmi.force_cyborg_lawzero) // Has to be done before mind transfer as law announcement occurs on mind transfer.
+			new_borg.set_zeroth_law(new_borg.mmi.force_cyborg_lawzero, announce = FALSE) // Has to be done before mind transfer as law announcement occurs on mind transfer.
+		new_borg.mmi.try_unbrainwash()
 		brainmob.mind.transfer_to(new_borg)
 		playsound(new_borg.loc, 'sound/voice/liveagain.ogg', 75, TRUE)
 		if(new_borg.mmi.force_cyborg_lawzero)

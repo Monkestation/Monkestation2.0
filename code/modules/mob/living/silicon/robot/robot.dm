@@ -528,7 +528,7 @@
 			removing.brainmob.set_stat(CONSCIOUS)
 		mind.transfer_to(removing.brainmob)
 		removing.update_appearance()
-
+		removing.try_brainwash()
 	else
 		to_chat(src, span_boldannounce("Oops! Something went very wrong, your MMI was unable to receive your mind. \
 			You have been ghosted. Please make a bug report so we can fix this bug."))
