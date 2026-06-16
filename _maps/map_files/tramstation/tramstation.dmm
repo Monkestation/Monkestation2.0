@@ -30762,7 +30762,8 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
-/obj/machinery/computer/ai_overclocking,
+/obj/machinery/rack_creator,
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "iDP" = (
@@ -35023,6 +35024,7 @@
 /obj/machinery/computer/telecomms/traffic{
 	dir = 1
 	},
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "jSZ" = (
@@ -41796,15 +41798,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/science/minisat,
 /turf/open/floor/iron/dark,
 /area/station/science/lower)
-"lXR" = (
-/obj/machinery/door/airlock/command/glass{
-	name = "Control Room"
-	},
-/obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/effect/mapping_helpers/airlock/access/any/command/general,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
-/turf/open/floor/iron,
-/area/station/tcommsat/computer)
 "lXW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -48671,6 +48664,7 @@
 /obj/machinery/computer/ai_server_console{
 	dir = 4
 	},
+/obj/effect/turf_decal/box/red,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "off" = (
@@ -51372,6 +51366,7 @@
 	dir = 1;
 	network = "tcommsat"
 	},
+/obj/effect/turf_decal/box/red,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "pbr" = (
@@ -55445,7 +55440,8 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/machinery/rack_creator,
+/obj/machinery/computer/ai_overclocking,
+/obj/effect/turf_decal/box/red,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "qjD" = (
@@ -57165,6 +57161,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/announcement_system,
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "qIL" = (
@@ -58230,6 +58227,7 @@
 	dir = 1
 	},
 /obj/machinery/status_display/evac/directional/east,
+/obj/effect/turf_decal/box/red,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "qYU" = (
@@ -65548,6 +65546,7 @@
 /obj/machinery/computer/ai_resource_distribution{
 	dir = 4
 	},
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "tlP" = (
@@ -73766,6 +73765,8 @@
 "vGs" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/rnd/production/circuit_imprinter/department/netmin,
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "vGt" = (
@@ -108609,7 +108610,7 @@ xTF
 jIG
 dwR
 ich
-lXR
+dwR
 dwR
 ngp
 dwR

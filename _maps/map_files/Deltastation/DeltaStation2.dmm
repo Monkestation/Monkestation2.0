@@ -20639,6 +20639,7 @@
 "eQH" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
+/obj/item/book/manual/wiki/tcomms,
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "eQK" = (
@@ -31659,7 +31660,11 @@
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/wood,
-/obj/item/kirbyplants/random,
+/obj/machinery/microwave{
+	desc = "Cooks and boils stuff, somehow.";
+	pixel_x = -3;
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "hsa" = (
@@ -37149,9 +37154,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "iGN" = (
-/obj/structure/table/wood,
-/obj/item/folder/blue,
-/obj/item/pen,
+/obj/machinery/rnd/production/circuit_imprinter/department/netmin,
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "iGT" = (
@@ -43775,7 +43778,10 @@
 /turf/open/floor/plating,
 /area/station/medical/pharmacy)
 "kgs" = (
-/obj/structure/filingcabinet/security,
+/obj/structure/table/wood,
+/obj/item/folder/blue,
+/obj/item/pen,
+/obj/item/paper/monitorkey,
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "kgx" = (
@@ -67285,7 +67291,6 @@
 /obj/item/radio{
 	pixel_y = 5
 	},
-/obj/item/book/manual/wiki/tcomms,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "pPp" = (
@@ -82604,7 +82609,6 @@
 /obj/machinery/computer/message_monitor{
 	dir = 4
 	},
-/obj/item/paper/monitorkey,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/requests_console/directional/west{
 	name = "Telecomms Requests Console";
@@ -102416,13 +102420,8 @@
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "yiC" = (
-/obj/structure/table/wood,
-/obj/machinery/microwave{
-	desc = "Cooks and boils stuff, somehow.";
-	pixel_x = -3;
-	pixel_y = 5
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/filingcabinet/security,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "yiE" = (

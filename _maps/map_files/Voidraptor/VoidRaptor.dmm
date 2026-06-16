@@ -5638,7 +5638,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
-/obj/machinery/computer/ai_resource_distribution,
+/obj/machinery/rnd/production/circuit_imprinter/department/netmin,
 /turf/open/floor/circuit/green,
 /area/station/tcommsat/computer)
 "bHi" = (
@@ -6009,10 +6009,10 @@
 /area/station/cargo/miningoffice)
 "bNv" = (
 /obj/machinery/firealarm/directional/east,
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
-	dir = 8
-	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/computer/ai_resource_distribution{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/station/tcommsat/computer)
 "bNy" = (
@@ -15368,11 +15368,11 @@
 /area/station/commons/dorms)
 "evv" = (
 /obj/item/radio/intercom/directional/south,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/machinery/computer/telecomms/server{
 	dir = 1;
 	network = "tcommsat"
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
 /area/station/tcommsat/computer)
 "evE" = (
@@ -18890,11 +18890,10 @@
 /turf/open/floor/iron/textured_large,
 /area/station/command/heads_quarters/hos)
 "ftL" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/obj/effect/turf_decal/bot,
 /obj/machinery/computer/telecomms/traffic{
 	dir = 4
 	},
+/obj/effect/turf_decal/bot_red,
 /turf/open/floor/engine,
 /area/station/tcommsat/computer)
 "fub" = (
@@ -34976,6 +34975,9 @@
 "jOc" = (
 /obj/structure/sign/warning/electric_shock/directional/south,
 /obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "jOe" = (
@@ -44119,11 +44121,11 @@
 /area/station/maintenance/port/greater)
 "mnF" = (
 /obj/machinery/airalarm/directional/south,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/machinery/computer/telecomms/monitor{
 	dir = 1;
 	network = "tcommsat"
 	},
+/obj/effect/turf_decal/bot_red,
 /turf/open/floor/engine,
 /area/station/tcommsat/computer)
 "mnI" = (
@@ -46882,7 +46884,6 @@
 /area/station/engineering/atmos)
 "ncg" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/machinery/computer/message_monitor{
 	dir = 4
 	},
@@ -57031,10 +57032,10 @@
 /turf/open/floor/iron/textured,
 /area/station/science/research/abandoned)
 "pTY" = (
-/obj/effect/turf_decal/bot,
 /obj/machinery/computer/ai_server_console{
 	dir = 4
 	},
+/obj/effect/turf_decal/bot_red,
 /turf/open/floor/engine,
 /area/station/tcommsat/computer)
 "pUe" = (
@@ -64598,7 +64599,6 @@
 /turf/closed/wall,
 /area/station/medical/treatment_center)
 "rXD" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "rXI" = (
@@ -72684,12 +72684,6 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/starboard/aft)
-"ugx" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/turf/open/floor/plating,
-/area/station/tcommsat/computer)
 "ugz" = (
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
@@ -77697,6 +77691,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "vyc" = (
@@ -115324,7 +115319,7 @@ qDk
 ecY
 lMj
 qHx
-ugx
+vII
 vII
 sHv
 dQi

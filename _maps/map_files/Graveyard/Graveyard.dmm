@@ -7975,7 +7975,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/office)
 "cZH" = (
-/obj/machinery/computer/telecomms/traffic,
+/obj/machinery/rnd/production/circuit_imprinter/department/netmin,
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "cZT" = (
@@ -19126,9 +19126,9 @@
 /area/station/security/checkpoint/supply)
 "hvp" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/wiki/tcomms,
-/obj/item/folder/blue,
-/obj/item/pen,
+/obj/machinery/microwave{
+	pixel_y = 4
+	},
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "hvq" = (
@@ -26205,8 +26205,8 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "kmf" = (
-/obj/structure/table/wood,
 /obj/machinery/light/small/directional/west,
+/obj/machinery/announcement_system,
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "kmh" = (
@@ -26536,7 +26536,9 @@
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "ktQ" = (
-/obj/machinery/announcement_system,
+/obj/machinery/computer/telecomms/traffic{
+	dir = 4
+	},
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "ktS" = (
@@ -28203,10 +28205,14 @@
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "kXy" = (
-/obj/machinery/microwave{
+/obj/structure/table/wood,
+/obj/item/multitool,
+/obj/item/radio/off{
 	pixel_y = 4
 	},
-/obj/structure/table/wood,
+/obj/item/screwdriver{
+	pixel_y = 10
+	},
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "kXC" = (
@@ -29367,9 +29373,6 @@
 /area/station/maintenance/fore/greater)
 "lvB" = (
 /obj/machinery/light_switch/directional/north,
-/obj/structure/showcase/cyborg/old{
-	pixel_y = 20
-	},
 /obj/machinery/computer/ai_overclocking,
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
@@ -35771,7 +35774,7 @@
 /area/station/hallway/primary/aft)
 "nRO" = (
 /obj/machinery/status_display/ai/directional/north,
-/obj/machinery/computer/ai_resource_distribution,
+/obj/machinery/computer/ai_server_console,
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "nRP" = (
@@ -52084,10 +52087,14 @@
 /turf/open/floor/iron/dark/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
 "umK" = (
-/obj/structure/showcase/cyborg/old{
-	pixel_y = 20
-	},
 /obj/machinery/rack_creator,
+/obj/machinery/requests_console/directional/north{
+	name = "Telecomms Requests Console";
+	department = "Telecomms Admin"
+	},
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/information,
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "umX" = (
@@ -56487,9 +56494,7 @@
 "vXR" = (
 /obj/machinery/light/small/directional/east,
 /obj/item/radio/intercom/directional/north,
-/obj/machinery/computer/ai_server_console{
-	dir = 8
-	},
+/obj/machinery/computer/ai_resource_distribution,
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "vXX" = (
@@ -58250,12 +58255,9 @@
 "wGr" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/table/wood,
-/obj/item/radio/off{
-	pixel_y = 4
-	},
-/obj/item/screwdriver{
-	pixel_y = 10
-	},
+/obj/item/folder/blue,
+/obj/item/book/manual/wiki/tcomms,
+/obj/item/pen,
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "wGw" = (
@@ -61985,13 +61987,6 @@
 	pixel_y = 6
 	},
 /obj/structure/table/wood,
-/obj/machinery/requests_console/directional/south{
-	department = "Telecomms Admin";
-	name = "Telecomms Requests Console";
-	assistance_requestable = 1;
-	anon_tips_receiver = 1;
-	can_send_announcements = 1
-	},
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "ybP" = (

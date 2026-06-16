@@ -68882,13 +68882,11 @@
 	},
 /area/station/security/prison/safe)
 "nnE" = (
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
 /obj/structure/noticeboard/directional/east,
 /obj/machinery/camera/autoname/directional/east{
 	network = list("ss13","tcomms")
 	},
+/obj/machinery/rnd/production/circuit_imprinter/department/netmin,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "nnG" = (
@@ -98450,6 +98448,7 @@
 /obj/structure/table,
 /obj/item/book/manual/wiki/tcomms,
 /obj/item/radio/off,
+/obj/item/paper_bin,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "sXV" = (
@@ -124725,6 +124724,7 @@
 "xVo" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/light/directional/north,
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "xVt" = (

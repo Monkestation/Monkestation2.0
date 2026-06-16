@@ -2002,10 +2002,6 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/large,
 /area/station/cargo/miningoffice)
-"aES" = (
-/obj/machinery/rack_creator,
-/turf/open/floor/iron/dark,
-/area/station/tcommsat/computer)
 "aEU" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -9091,6 +9087,9 @@
 "cJW" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
+	},
+/mob/living/basic/bot/cleanbot{
+	name = "Soapficcer Cleansky"
 	},
 /turf/open/floor/iron/dark/smooth_half,
 /area/station/ai_monitored/turret_protected/aisat_interior)
@@ -16464,7 +16463,9 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/light/cold/directional/south,
 /obj/machinery/status_display/ai/directional/south,
-/obj/item/kirbyplants/organic/plant21,
+/obj/machinery/computer/ai_resource_distribution{
+	dir = 1
+	},
 /turf/open/floor/wood/large,
 /area/station/tcommsat/computer)
 "eRG" = (
@@ -17120,7 +17121,6 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
-/obj/structure/railing,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/computer/telecomms/monitor{
 	network = "tcommsat";
@@ -17135,6 +17135,7 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/mob/living/simple_animal/bot/secbot/pingsky,
 /turf/open/floor/iron/dark/small,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "faJ" = (
@@ -29692,12 +29693,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/science/research)
-"iNt" = (
-/obj/machinery/computer/ai_server_console{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/station/tcommsat/computer)
 "iNv" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -31946,8 +31941,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/obj/structure/railing,
 /obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/rack_creator,
 /turf/open/floor/wood/large,
 /area/station/tcommsat/computer)
 "jvj" = (
@@ -32775,14 +32770,15 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "jGG" = (
-/obj/structure/table,
 /obj/machinery/light/cold/directional/north,
 /obj/machinery/requests_console/directional/north{
 	name = "Telecomms Requests Console";
 	department = "Telecomms Admin"
 	},
 /obj/effect/mapping_helpers/requests_console/announcement,
-/obj/item/radio,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/information,
+/obj/machinery/rnd/production/circuit_imprinter/department/netmin,
 /turf/open/floor/iron/dark/small,
 /area/station/tcommsat/computer)
 "jGP" = (
@@ -36644,12 +36640,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
-"kMd" = (
-/obj/machinery/computer/ai_resource_distribution{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/station/tcommsat/computer)
 "kMl" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -37901,14 +37891,13 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/upper)
 "lck" = (
-/obj/structure/table,
-/obj/item/book/manual/wiki/tcomms{
-	pixel_x = 10;
-	pixel_y = -1
+/obj/machinery/camera/directional/north{
+	c_tag = "MiniSat External South";
+	network = list("minisat")
 	},
-/obj/item/book/manual/wiki/robotics_cyborgs,
-/turf/open/floor/iron/dark,
-/area/station/tcommsat/computer)
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "lco" = (
 /obj/machinery/computer/atmos_control/mix_tank,
 /obj/effect/turf_decal/box,
@@ -38127,9 +38116,11 @@
 	c_tag = "MiniSat Antechamber";
 	network = list("minisat")
 	},
-/mob/living/simple_animal/bot/secbot/pingsky,
 /obj/item/radio/intercom/directional/south{
 	pixel_y = -40
+	},
+/obj/machinery/computer/ai_server_console{
+	dir = 1
 	},
 /turf/open/floor/wood/large,
 /area/station/tcommsat/computer)
@@ -40008,6 +39999,9 @@
 "lKa" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
+	},
+/mob/living/simple_animal/bot/floorbot{
+	name = "Offixer Tilesky"
 	},
 /turf/open/floor/iron/dark/smooth_half,
 /area/station/ai_monitored/turret_protected/aisat_interior)
@@ -42220,17 +42214,6 @@
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/port)
-"mqF" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/mob/living/simple_animal/bot/floorbot{
-	name = "Offixer Tilesky"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/cable,
-/turf/open/floor/wood/large,
-/area/station/tcommsat/computer)
 "mqP" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 6
@@ -42616,7 +42599,9 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/light/cold/directional/south,
 /obj/machinery/status_display/evac/directional/south,
-/obj/item/kirbyplants/organic/plant21,
+/obj/machinery/computer/ai_overclocking{
+	dir = 1
+	},
 /turf/open/floor/wood/large,
 /area/station/tcommsat/computer)
 "mxe" = (
@@ -45615,17 +45600,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
-"nom" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/mob/living/basic/bot/cleanbot{
-	name = "Soapficcer Cleansky"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/cable,
-/turf/open/floor/wood/large,
-/area/station/tcommsat/computer)
 "not" = (
 /turf/closed/wall/r_wall,
 /area/station/hallway/primary/starboard)
@@ -46342,9 +46316,6 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/exit/departure_lounge)
-"nxj" = (
-/turf/open/floor/iron/dark,
-/area/station/tcommsat/computer)
 "nxr" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -48309,13 +48280,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/command)
-"ofe" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "MiniSat External South";
-	network = list("minisat")
-	},
-/turf/open/space/basic,
-/area/space)
 "ofh" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -61520,12 +61484,6 @@
 /obj/machinery/ai/data_core,
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/science/server)
-"sdi" = (
-/obj/machinery/computer/ai_overclocking{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/station/tcommsat/computer)
 "sdl" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
 /obj/effect/spawner/random/maintenance/three,
@@ -114355,9 +114313,9 @@ tyK
 lDi
 vXr
 eRW
-nxj
 sTr
 sTr
+obu
 obu
 xuj
 aRb
@@ -114612,9 +114570,9 @@ xeM
 adi
 fam
 uYM
-nxj
-kMd
 sTr
+obu
+laO
 laO
 laO
 sly
@@ -114866,12 +114824,12 @@ gIA
 gIA
 gIA
 dwI
-mqF
+kyR
 eRz
 sTr
-nxj
-iNt
 sTr
+obu
+laO
 laO
 laO
 sly
@@ -115126,10 +115084,10 @@ pHB
 kyR
 lfV
 sTr
-nxj
-lck
 sTr
-ofe
+lck
+laO
+laO
 laO
 jOm
 jOm
@@ -115380,12 +115338,12 @@ gIA
 gIA
 gIA
 gNq
-nom
+kyR
 mxc
 sTr
-nxj
-sdi
 sTr
+obu
+laO
 laO
 gPF
 sly
@@ -115640,9 +115598,9 @@ jGG
 bVH
 jvc
 iDG
-nxj
-aES
 sTr
+obu
+laO
 laO
 laO
 sly
@@ -115897,9 +115855,9 @@ qHR
 kaA
 tyc
 anP
-nxj
 sTr
 sTr
+obu
 obu
 xuj
 aRb

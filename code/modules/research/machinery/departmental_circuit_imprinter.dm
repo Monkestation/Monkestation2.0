@@ -20,5 +20,5 @@
 	name = "hardware printer"
 	desc = "Exclusively manufactures hardware for the Network Admin."
 	circuit = /obj/item/circuitboard/machine/circuit_imprinter/department/netmin
-	allowed_department_flags = DEPARTMENTAL_BITFLAG_NETMIN
+	allowed_department_flags = DEPARTMENT_BITFLAG_NETMIN
 	payment_department = ACCOUNT_ENG

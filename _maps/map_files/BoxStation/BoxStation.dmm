@@ -4188,7 +4188,7 @@
 	name = "engineering camera"
 	},
 /obj/item/radio/intercom/directional/south,
-/obj/structure/filingcabinet,
+/obj/machinery/rnd/production/circuit_imprinter/department/netmin,
 /turf/open/floor/iron/dark/side,
 /area/station/tcommsat/computer)
 "brY" = (
@@ -34708,6 +34708,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
+"lfS" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark/side,
+/area/station/tcommsat/computer)
 "lfT" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/atmospherics/components/unary/portables_connector{
@@ -67907,7 +67911,7 @@
 /area/station/service/bar)
 "vLQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
-/obj/item/kirbyplants/random,
+/obj/structure/filingcabinet,
 /turf/open/floor/iron/dark/side,
 /area/station/tcommsat/computer)
 "vLR" = (
@@ -103051,7 +103055,7 @@ hkf
 rrg
 saY
 pzP
-cZl
+lfS
 fxk
 seu
 pxw

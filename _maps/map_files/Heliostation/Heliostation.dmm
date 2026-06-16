@@ -81853,6 +81853,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/machinery/rnd/production/circuit_imprinter/department/netmin,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "ycL" = (

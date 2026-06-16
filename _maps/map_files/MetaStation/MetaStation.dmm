@@ -7561,10 +7561,14 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "cJx" = (
-/obj/machinery/microwave{
+/obj/structure/table/wood,
+/obj/item/multitool,
+/obj/item/radio/off{
 	pixel_y = 4
 	},
-/obj/structure/table/wood,
+/obj/item/screwdriver{
+	pixel_y = 10
+	},
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "cJL" = (
@@ -14803,10 +14807,14 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "fme" = (
-/obj/structure/showcase/cyborg/old{
-	pixel_y = 20
-	},
 /obj/machinery/rack_creator,
+/obj/machinery/requests_console/directional/north{
+	name = "Telecomms Requests Console";
+	department = "Telecomms Admin"
+	},
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/information,
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "fmn" = (
@@ -31270,7 +31278,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "kRk" = (
-/obj/machinery/announcement_system,
+/obj/machinery/computer/telecomms/traffic{
+	dir = 4
+	},
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "kRx" = (
@@ -40266,12 +40276,9 @@
 "nQL" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/table/wood,
-/obj/item/radio/off{
-	pixel_y = 4
-	},
-/obj/item/screwdriver{
-	pixel_y = 10
-	},
+/obj/item/folder/blue,
+/obj/item/book/manual/wiki/tcomms,
+/obj/item/pen,
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "nQU" = (
@@ -59806,15 +59813,8 @@
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "uBz" = (
-/obj/structure/table/wood,
 /obj/machinery/light/small/directional/west,
-/obj/machinery/requests_console/directional/north{
-	name = "Telecomms Requests Console";
-	department = "Telecomms Admin"
-	},
-/obj/effect/mapping_helpers/requests_console/announcement,
-/obj/effect/mapping_helpers/requests_console/assistance,
-/obj/effect/mapping_helpers/requests_console/information,
+/obj/machinery/announcement_system,
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "uBC" = (
@@ -66871,9 +66871,6 @@
 /area/station/cargo/quartermaster)
 "wZk" = (
 /obj/machinery/light_switch/directional/north,
-/obj/structure/showcase/cyborg/old{
-	pixel_y = 20
-	},
 /obj/machinery/computer/ai_overclocking,
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
@@ -68515,9 +68512,9 @@
 /area/station/medical/chemistry)
 "xCS" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/wiki/tcomms,
-/obj/item/folder/blue,
-/obj/item/pen,
+/obj/machinery/microwave{
+	pixel_y = 4
+	},
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "xDa" = (
@@ -69788,7 +69785,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "xZY" = (
-/obj/machinery/computer/telecomms/traffic,
+/obj/machinery/rnd/production/circuit_imprinter/department/netmin,
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "yaf" = (

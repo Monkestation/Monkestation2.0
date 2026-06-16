@@ -17883,6 +17883,10 @@
 /obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
 /turf/open/floor/iron/diagonal,
 /area/station/command/bridge)
+"iBz" = (
+/obj/structure/filingcabinet,
+/turf/open/floor/iron/dark/telecomms,
+/area/station/tcommsat/server)
 "iBD" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -46376,9 +46380,7 @@
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/secondary/command)
 "wdJ" = (
-/obj/structure/filingcabinet{
-	pixel_x = 3
-	},
+/obj/machinery/rnd/production/circuit_imprinter/department/netmin,
 /turf/open/floor/iron/terracotta,
 /area/station/tcommsat/computer)
 "wdL" = (
@@ -87048,7 +87050,7 @@ elp
 eQq
 iZU
 bXw
-glp
+iBz
 glp
 glp
 eku

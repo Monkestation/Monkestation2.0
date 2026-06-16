@@ -26318,9 +26318,6 @@
 /turf/open/floor/plating,
 /area/station/tcommsat/computer)
 "cmf" = (
-/obj/item/storage/toolbox/mechanical,
-/obj/item/radio,
-/obj/structure/table,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -26404,6 +26401,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/turf_decal/box/red,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "cmv" = (
@@ -26412,6 +26410,7 @@
 	network = "tcommsat"
 	},
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "cmw" = (
@@ -32234,6 +32233,8 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/rnd/production/circuit_imprinter/department/netmin,
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "fsA" = (
@@ -39322,6 +39323,7 @@
 /obj/machinery/computer/ai_server_console{
 	dir = 1
 	},
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "ltJ" = (
@@ -43952,6 +43954,10 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/computer/ai_overclocking{
+	dir = 4
+	},
+/obj/effect/turf_decal/box/red,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "pmq" = (
@@ -47592,9 +47598,8 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
 	},
-/obj/machinery/computer/ai_resource_distribution{
-	dir = 1
-	},
+/obj/structure/table,
+/obj/item/flashlight/lamp,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "scK" = (
@@ -48641,7 +48646,9 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
 	},
-/obj/machinery/computer/ai_overclocking,
+/obj/structure/table,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/radio,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "sWj" = (
@@ -53450,8 +53457,10 @@
 /area/station/hallway/primary/central/fore)
 "wuk" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
-/obj/structure/table,
-/obj/item/flashlight/lamp,
+/obj/machinery/computer/ai_resource_distribution{
+	dir = 1
+	},
+/obj/effect/turf_decal/box/red,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "wum" = (
