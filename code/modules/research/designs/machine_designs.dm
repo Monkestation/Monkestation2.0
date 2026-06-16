@@ -412,16 +412,27 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING //Monkestation edit: Engi circuit
 
-/datum/design/board/circuit_imprinter
-	name = "Circuit Imprinter Board"
+/datum/design/board/circuit_imprinter_science
+	name = "Science Circuit Imprinter Board"
 	desc = "The circuit board for a circuit imprinter."
-	id = "circuit_imprinter"
+	id = "circuit_imprinter_sci"
 	build_type = IMPRINTER
-	build_path = /obj/item/circuitboard/machine/circuit_imprinter
+	build_path = /obj/item/circuitboard/machine/circuit_imprinter/department/science
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_FAB
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/circuit_imprinter_engineering
+	name = "Engineering Circuit Imprinter Board"
+	desc = "The circuit board for a circuit imprinter."
+	id = "circuit_imprinter_eng"
+	build_type = IMPRINTER
+	build_path = /obj/item/circuitboard/machine/circuit_imprinter/department/engineering
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_FAB
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/circuit_imprinter/offstation
 	name = "Ancient Circuit Imprinter Board"
