@@ -50,7 +50,7 @@
 
 	alt_titles = list(
 		JOB_NETWORK_ADMIN,
-		"Signal Technician",
+		JOB_SIGNAL_TECHNICIAN,
 		"Telecomunications Engineer",
 	)
 

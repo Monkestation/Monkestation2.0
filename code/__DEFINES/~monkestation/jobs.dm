@@ -1,5 +1,6 @@
 #define JOB_SECURITY_ASSISTANT "Security Assistant"
 
+#define JOB_SIGNAL_TECHNICIAN "Signal Technician"
 #define JOB_NETWORK_ADMIN "Network Admin"
 
 #define JOB_NANOTRASEN_REPRESENTATIVE "Nanotrasen Representative"
