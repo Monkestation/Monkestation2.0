@@ -94,7 +94,7 @@
 
 	. = ..()
 
-	if(reset_tracking)
+	if(reset_tracking && ai.ai_tracking_tool)
 		ai.ai_tracking_tool.reset_tracking()
 	if(ai.client && !ai.multicam_on)
 		ai.client.set_eye(src)
