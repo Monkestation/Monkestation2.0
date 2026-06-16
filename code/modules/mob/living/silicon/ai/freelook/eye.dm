@@ -84,16 +84,18 @@
 	active_hud_list[AI_DETECT_HUD] = new_images
 	hud.add_atom_to_hud(src)
 
-/mob/eye/camera/ai/setLoc(destination, force_update = FALSE)
+/mob/eye/camera/ai/setLoc(destination, force_update = FALSE, reset_tracking = TRUE)
 	if(!ai)
 		return
 	if(!(isvalidAIloc(ai.loc)))
 		return
-	if(ai.technically_unpowered && !(ai in destination)) //can't move while unpowered
+	if(ai.technically_unpowered && !(ai.loc in destination)) //can't move while unpowered
 		return
 
 	. = ..()
 
+	if(reset_tracking)
+		ai.ai_tracking_tool.reset_tracking()
 	if(ai.client && !ai.multicam_on)
 		ai.client.set_eye(src)
 	update_ai_detect_hud()
@@ -147,7 +149,6 @@
 		return
 	var/mob/living/silicon/ai/AI = usr
 	if(AI.eyeobj && (AI.multicam_on || (AI.client.eye == AI.eyeobj)) && (AI.eyeobj.z == z))
-		AI.ai_tracking_tool.reset_tracking()
 		if (isvalidAIloc(loc) || isturf(src))
 			AI.eyeobj.setLoc(src)
 
@@ -180,8 +181,6 @@
 	else
 		sprint = initial(sprint)
 
-	ai_tracking_tool.reset_tracking()
-
 #undef SPRINT_PER_STEP
 #undef SPRINT_PER_TICK
 
@@ -192,8 +191,6 @@
 		H.clear_holo(src)
 	else
 		current = null
-	if(ai_tracking_tool)
-		ai_tracking_tool.reset_tracking()
 	unset_machine()
 
 	if(isvalidAIloc(loc) && (QDELETED(eyeobj) || !eyeobj.loc))

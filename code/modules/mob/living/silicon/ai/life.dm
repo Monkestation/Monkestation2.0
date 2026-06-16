@@ -54,7 +54,7 @@
 	if(cameraMemoryTarget)
 		if(cameraMemoryTickCount >= AI_CAMERA_MEMORY_TICKS)
 			cameraMemoryTickCount = 0
-			if(ai_tracking_tool.set_tracked_mob(cameraMemoryTarget))
+			if(ai_tracking_tool.set_tracked_target(cameraMemoryTarget))
 				to_chat(src, span_notice("Tracked target [cameraMemoryTarget] found visible on cameras. Tracking disabled."))
 				cameraMemoryTarget = 0
 		cameraMemoryTickCount++
@@ -193,11 +193,11 @@
 /mob/living/silicon/ai/proc/ai_deactivate_power()
 	disconnect_shell()
 	view_core()
-	ai_tracking_tool.set_tracked_mob(src)
+	ai_tracking_tool.set_tracked_target(src) //track the data core we're in
 	technically_unpowered = TRUE
 	to_chat(src, span_alert("You've lost access to an APC!"))
 
 ///Called when an AI is unpowered but has been moved into an area with power
 /mob/living/silicon/ai/proc/ai_reactivate_power()
 	technically_unpowered = FALSE
-	ai_tracking_tool.set_tracked_mob(null)
+	ai_tracking_tool.set_tracked_target(null)

@@ -151,7 +151,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	else
 		..()
 
-/mob/eye/camera/ai/pic_in_pic/setLoc(turf/destination, force_update = FALSE)
+/mob/eye/camera/ai/pic_in_pic/setLoc(turf/destination, force_update = FALSE, reset_tracking = TRUE)
 	if (destination)
 		abstract_move(destination)
 	else

@@ -267,7 +267,6 @@
 	switch(_key)
 		if("`", "0")
 			if(cam_prev)
-				ai_tracking_tool.reset_tracking()
 				eyeobj.setLoc(cam_prev)
 			return
 		if("1", "2", "3", "4", "5", "6", "7", "8", "9")
@@ -278,7 +277,6 @@
 				return
 			if(cam_hotkeys[_key]) //if this is false, no hotkey for this slot exists.
 				cam_prev = eyeobj.loc
-				ai_tracking_tool.reset_tracking()
 				eyeobj.setLoc(cam_hotkeys[_key])
 				return
 	return ..()
@@ -505,10 +503,10 @@
 	ai_tracking_tool.track_input(src)
 
 ///Called when an AI finds their tracking target.
-/mob/living/silicon/ai/proc/on_track_target(datum/trackable/source, mob/living/target)
+/mob/living/silicon/ai/proc/on_track_target(datum/trackable/source, atom/movable/target)
 	SIGNAL_HANDLER
 	if(eyeobj)
-		eyeobj.setLoc(get_turf(target))
+		eyeobj.setLoc(get_turf(target), reset_tracking = FALSE)
 	else
 		view_core()
 
@@ -538,12 +536,12 @@
 		var/mob/living/silicon/robot/cyborg = locate(href_list["track_cyborg"]) in connected_robots
 		if(!cyborg)
 			return
-		ai_tracking_tool.set_tracked_mob(cyborg)
+		ai_tracking_tool.set_tracked_target(cyborg)
 	if(href_list["track_ipc"])
 		var/mob/living/carbon/human/connected_ipc = locate(href_list["track_ipc"]) in connected_ipcs
 		if(!connected_ipc)
 			return
-		ai_tracking_tool.set_tracked_mob(connected_ipc)
+		ai_tracking_tool.set_tracked_target(connected_ipc)
 	if (href_list["mach_close"])
 		var/t1 = "window=[href_list["mach_close"]]"
 		unset_machine()
@@ -630,8 +628,6 @@
 		view_core()
 		return
 
-	ai_tracking_tool.reset_tracking()
-
 	// ok, we're alive, camera is good and in our network...
 	eyeobj.setLoc(get_turf(C))
 	return TRUE
@@ -703,10 +699,10 @@
 /mob/living/silicon/ai/proc/ai_network_change()
 	set category = "AI Commands"
 	set name = "Jump To Network"
-	unset_machine()
-	ai_tracking_tool.reset_tracking()
-	var/cameralist[0]
 
+	unset_machine()
+
+	var/cameralist[0]
 	if(incapacitated())
 		return
 
