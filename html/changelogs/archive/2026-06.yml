@@ -220,3 +220,20 @@
   - refactor: refactored robovend deluxe to have more content
   - code_imp: reduces cost of limb shears from 700c to 500c
   - code_imp: roboticists now have research app
+2026-06-15:
+  JohnFulpWillard:
+  - bugfix: Heliostation now has a Command vending machine in the Bridge.
+  JupiterJaeden:
+  - rscadd: The security photobooth can now be used to add new people on to the crew
+      manifest. Just put them in and take pictures as normal, and the crew records
+      will be updated with the new entry! Perfect for stowaways and other visitors
+      to the station.
+  - spellcheck: Updates the description of the security photobooth.
+  - map: Adds security photobooths to every brig map.
+  - code_imp: Updates the get_visible_name() helper to actually use the add_id_name
+      variable as intended (previously unused).
+  Shoddd:
+  - bugfix: bloodling hivemind no longer works while dead
+  - bugfix: bloodlings become properly space proof over level 2
+  TealSeer:
+  - bugfix: fixed CSS-related errors in BYOND 516.1681+

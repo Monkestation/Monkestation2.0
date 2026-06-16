@@ -1,5 +1,0 @@
-author: "Shoddd"
-delete-after: True
-changes:
-  - bugfix: "bloodling hivemind no longer works while dead"
-  - bugfix: "bloodlings become properly space proof over level 2"

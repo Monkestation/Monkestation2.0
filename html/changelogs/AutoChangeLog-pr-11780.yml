@@ -1,7 +1,0 @@
-author: "JupiterJaeden"
-delete-after: True
-changes:
-  - rscadd: "The security photobooth can now be used to add new people on to the crew manifest. Just put them in and take pictures as normal, and the crew records will be updated with the new entry! Perfect for stowaways and other visitors to the station."
-  - spellcheck: "Updates the description of the security photobooth."
-  - map: "Adds security photobooths to every brig map."
-  - code_imp: "Updates the get_visible_name() helper to actually use the add_id_name variable as intended (previously unused)."
