@@ -16625,6 +16625,7 @@
 /obj/structure/cable/layer1,
 /obj/structure/cable/layer3,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/ai)
 "eTq" = (
@@ -62789,6 +62790,7 @@
 /obj/structure/cable/layer1,
 /obj/structure/cable/layer3,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/ai)
 "sxo" = (
@@ -72936,8 +72938,8 @@
 	name = "AI Chamber Entrance Shutters"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/ai_upload,
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/holosign/barrier/atmos/sturdy,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai)
 "vyU" = (

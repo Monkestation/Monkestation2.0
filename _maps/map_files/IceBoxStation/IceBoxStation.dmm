@@ -17820,7 +17820,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
 "frq" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Antechamber"
 	},
@@ -18247,7 +18246,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "fyr" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
 	name = "AI Core"
 	},
@@ -35377,7 +35375,6 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "kQz" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -40889,7 +40886,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "mCw" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Chamber Observation"
 	},
@@ -41808,7 +41804,6 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "mRI" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Chamber Hallway"
 	},
@@ -65082,7 +65077,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/chapel)
 "tWp" = (
-/obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

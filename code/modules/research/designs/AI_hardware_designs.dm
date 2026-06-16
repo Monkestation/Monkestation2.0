@@ -84,6 +84,22 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_NETMIN
 
+/datum/design/cpu_experimental
+	name = "Experimental Neural Processing Unit"
+	id = "experimental_ai_cpu"
+	build_type = IMPRINTER
+	materials = list(
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 6,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 6,
+	)
+	build_path = /obj/item/ai_cpu/experimental
+	construction_time = 7.5 SECONDS
+	category = list(
+		RND_CATEGORY_MODULAR_COMPUTERS + RND_SUBCATEGORY_MODULAR_COMPUTERS_PARTS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_NETMIN
+
 /datum/design/cpu_bluespace
 	name = "Bluespace Neural Processing Unit"
 	id = "bluespace_ai_cpu"
@@ -96,22 +112,6 @@
 	)
 	build_path = /obj/item/ai_cpu/bluespace
 	construction_time = 10 SECONDS
-	category = list(
-		RND_CATEGORY_MODULAR_COMPUTERS + RND_SUBCATEGORY_MODULAR_COMPUTERS_PARTS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_NETMIN
-
-/datum/design/cpu_experimental
-	name = "Experimental Neural Processing Unit"
-	id = "experimental_ai_cpu"
-	build_type = IMPRINTER
-	materials = list(
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 6,
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
-		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 6,
-	)
-	build_path = /obj/item/ai_cpu/experimental
-	construction_time = 7.5 SECONDS
 	category = list(
 		RND_CATEGORY_MODULAR_COMPUTERS + RND_SUBCATEGORY_MODULAR_COMPUTERS_PARTS
 	)

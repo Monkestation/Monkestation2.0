@@ -10776,7 +10776,6 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "dTq" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Antechamber"
 	},
@@ -23236,7 +23235,6 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "ikC" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "MiniSat Maintenance"
 	},
@@ -25466,7 +25464,6 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "iRY" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Foyer"
 	},
@@ -42969,7 +42966,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/command/general,
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
@@ -56770,7 +56766,6 @@
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "txh" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "MiniSat Maintenance"
 	},

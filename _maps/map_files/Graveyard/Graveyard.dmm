@@ -24762,7 +24762,6 @@
 /turf/open/floor/iron,
 /area/station/security/holding_cell)
 "jFg" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Antechamber"
 	},
@@ -52909,7 +52908,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/command/general,
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
@@ -56035,7 +56033,6 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "vPQ" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Foyer"
 	},
@@ -57288,7 +57285,6 @@
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "wnz" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "MiniSat Maintenance"
 	},
@@ -58554,7 +58550,6 @@
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
 "wMy" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "MiniSat Maintenance"
 	},
