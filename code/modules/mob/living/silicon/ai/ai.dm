@@ -239,7 +239,7 @@
 	GLOB.ai_list += src
 	GLOB.shuttle_caller_list += src
 
-	builtInCamera = new (src)
+	builtInCamera = new(src)
 	builtInCamera.network = list(CAMERANET_NETWORK_SS13)
 
 	ai_tracking_tool = new(src)

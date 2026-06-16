@@ -35,7 +35,7 @@
 	if(lacks_power())
 		if(!aiRestorePowerRoutine)
 			ai_lose_power()
-			return
+		return
 
 	var/area/home = get_area(src)
 	if(!home.apc)
@@ -181,10 +181,10 @@
 
 /mob/living/silicon/ai/proc/ai_lose_power()
 	disconnect_shell()
-	setAiRestorePowerRoutine(POWER_RESTORATION_START)
-	to_chat(src, span_alert("You've lost power!"))
 	if(relocate(silent = FALSE, kill_otherwise = FALSE)) //see about moving to one with power.
 		return
+	to_chat(src, span_alert("You've lost power!"))
+	setAiRestorePowerRoutine(POWER_RESTORATION_START)
 	adjust_temp_blindness(2 SECONDS)
 	update_sight()
 	addtimer(CALLBACK(src, PROC_REF(start_RestorePowerRoutine)), 20)

@@ -49,9 +49,8 @@
 		builtInCamera = new (src)
 		builtInCamera.c_tag = real_name
 		builtInCamera.network = list(CAMERANET_NETWORK_SS13)
-		builtInCamera.internal_light = FALSE
 		if(wires.is_cut(WIRE_CAMERA))
-			builtInCamera.camera_enabled = 0
+			builtInCamera.toggle_cam(null, displaymessage = FALSE)
 	update_icons()
 	. = ..()
 

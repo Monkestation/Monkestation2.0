@@ -154,7 +154,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 /obj/machinery/ai/data_core/attack_ai(mob/living/silicon/ai/user)
 	if((user in src))
 		return ..()
-	if(!valid_data_core())
+	if(!valid_data_core() || !valid_holder())
 		balloon_alert(user, "not a valid core!")
 		return ..()
 	if(user.nuking)
@@ -183,6 +183,11 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 /obj/machinery/ai/data_core/process()
 	valid_ticks = clamp(valid_ticks, 0, MAX_AI_DATA_CORE_TICKS)
 
+	var/ai_creating_heat
+	for(var/mob/living/silicon/ai/ai_contents in contents)
+		ai_creating_heat = !ai_contents.technically_unpowered
+		break //don't need to check every single AI
+
 	if(valid_holder())
 		valid_ticks++
 		use_power = ACTIVE_POWER_USE
@@ -203,10 +208,18 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 					to_chat(AI, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
 				AI.playsound_local(AI, 'sound/machines/engine_alert2.ogg', 30)
 
-	if(!(machine_stat & (BROKEN|EMPED)) && has_power() && !disableheat)
+	if(!(machine_stat & (BROKEN|EMPED)) && has_power() && !disableheat && ai_creating_heat)
 		var/temp_active_usage = (machine_stat & NOPOWER) ? idle_power_usage * CELL_POWERUSE_MULTIPLIER : active_power_usage * CELL_POWERUSE_MULTIPLIER
 		var/temperature_increase = (temp_active_usage / AI_HEATSINK_CAPACITY) * heat_modifier //1 CPU = 1000W. Heat capacity = somewhere around 3000-4000. Aka we generate 0.25 - 0.33 K per second, per CPU.
 		core_temp += temperature_increase * AI_TEMPERATURE_MULTIPLIER
+
+/obj/machinery/ai/data_core/process_atmos()
+	for(var/mob/living/silicon/ai/ai_contents in contents)
+		if(ai_contents.technically_unpowered)
+			return
+		else //don't need to check every single AI
+			break
+	return ..()
 
 /obj/machinery/ai/data_core/has_power()
 	if((machine_stat & (NOPOWER)) && integrated_battery)
@@ -219,7 +232,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 /obj/machinery/ai/data_core/proc/can_transfer_ai()
 	if(machine_stat & (BROKEN|EMPED) || !has_power())
 		return FALSE
-	if(!valid_data_core())
+	if(!valid_data_core() || !valid_holder())
 		return FALSE
 	return TRUE
 
@@ -238,6 +251,9 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 		icon_state = "[base_icon_state]-offline"
 	else
 		icon_state = base_icon_state
+
+/obj/machinery/ai/data_core/can_track(mob/living/user)
+	return TRUE
 
 /obj/machinery/ai/data_core/proc/partytime()
 	if(TimerID)
