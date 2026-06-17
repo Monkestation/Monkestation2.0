@@ -357,8 +357,8 @@
 		. += span_notice("<i>With the knowledge that comes with being affiliated with the the Syndicate, you note with this:</i>")
 		. += "\t[span_info("The inserted brain will become and stay brainwashed as long it is in MMI form.")]"
 		. += "\t[span_info("AIs will be created with an unique lawset designed to assist the Syndicate.")]"
-		. += "\t[span_info("Cyborgs will have a law zero to assist the Syndicate as long the MMI remains in them.")]"
-		. += "\t[span_info("Cyborgs will fake a connection to an master AI to further the act of being inconspicuous.")]"
+		. += "\t[span_info("Cyborgs will have a superceding and irremovable law zero to assist the Syndicate.")]"
+		. += "\t[span_info("Cyborgs may be connected to a master AI, but are not obligated to follow their orders.")]"
 
 /obj/item/mmi/syndie/get_updated_brainwash_directive(mob/living/user)
 	return "[user.real_name] is part of the Syndicate! Assist the Syndicate to the best of your abilities."
