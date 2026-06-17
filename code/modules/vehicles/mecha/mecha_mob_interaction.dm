@@ -107,8 +107,8 @@
 
 /obj/vehicle/sealed/mecha/mob_exit(mob/M, silent = FALSE, randomstep = FALSE, forced = FALSE)
 	var/atom/movable/mob_container
-	var/is_ai_user = FALSE
 	var/turf/newloc = get_turf(src)
+	var/moved_already = FALSE
 	if(ishuman(M))
 		mob_container = M
 	else if(isbrain(M))
@@ -122,11 +122,7 @@
 		AI.eyeobj?.forceMove(newloc) //kick the eye out as well
 		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
 			newloc = null
-			if(GLOB.primary_data_core)
-				newloc = GLOB.primary_data_core
-			else if(LAZYLEN(GLOB.data_cores))
-				newloc = GLOB.data_cores[1]
-			if(!istype(newloc, /obj/machinery/ai/data_core))
+			if(!AI.relocate(silent = TRUE, kill_otherwise = FALSE))
 				AI.investigate_log("has been gibbed by being forced out of their mech by another AI.", INVESTIGATE_DEATHS)
 				AI.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
 			AI = null
@@ -139,19 +135,19 @@
 			AI.remote_control = null
 			mob_container = AI
 			newloc = null
-			if(GLOB.primary_data_core)
-				newloc = GLOB.primary_data_core
-			else if(LAZYLEN(GLOB.data_cores))
-				newloc = GLOB.data_cores[1]
-
-			if(!istype(newloc, /obj/machinery/ai/data_core))
+			if(AI.relocate(silent = TRUE, kill_otherwise = FALSE))
+				moved_already = TRUE
+			else
 				to_chat(AI, span_userdanger("No cores available. Core code corrupted."))
-			is_ai_user = TRUE
 	else
 		return ..()
 	var/mob/living/ejector = M
-	mecha_flags  &= ~SILICON_PILOT
-	if(mob_container.forceMove(newloc))//ejecting mob container
+	mecha_flags &= ~SILICON_PILOT
+	if(!moved_already)//ejecting mob container
+		if(mob_container.forceMove(newloc))
+			moved_already = TRUE
+
+	if(moved_already)
 		log_message("[mob_container] moved out.", LOG_MECHA)
 		SStgui.close_user_uis(M, src)
 		if(istype(mob_container, /obj/item/mmi))
@@ -163,9 +159,6 @@
 			mmi.set_mecha(null)
 			mmi.update_appearance()
 		setDir(SOUTH)
-		if(is_ai_user)
-			var/mob/living/silicon/ai/AI = ejector
-			AI.relocate(TRUE)
 
 	return ..()
 

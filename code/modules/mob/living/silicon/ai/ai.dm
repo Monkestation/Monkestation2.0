@@ -34,6 +34,9 @@
 
 	radio = /obj/item/radio/headset/silicon/ai
 	can_buckle_to = FALSE
+
+	///If this is set, this is the last data core this AI was in before deploying into something.
+	var/obj/machinery/ai/data_core/last_used_data_core
 	///Boolean on whether the AI is in a magically powered area AKA. places with power but no APC (shuttles).
 	var/technically_unpowered = FALSE
 	var/battery = 200 //emergency power if the AI's APC is off
@@ -301,6 +304,7 @@
 	current = null
 	bot_ref = null
 	controlled_equipment = null
+	last_used_data_core = null
 	apc_override = null
 	if(ai_voicechanger)
 		ai_voicechanger.owner = null
@@ -595,6 +599,7 @@
 			to_chat(src, span_warning("You aren't in your core!"))
 			return
 		if(M)
+			last_used_data_core = loc //your current core is the last one that we'll try to go back to later.
 			M.transfer_ai(AI_MECH_HACK, src, usr) //Called om the mech itself.
 	if(href_list["show_paper_note"])
 		var/obj/item/paper/paper_note = locate(href_list["show_paper_note"])

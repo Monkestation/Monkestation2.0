@@ -28,6 +28,13 @@
 	if(!silent)
 		to_chat(src, span_userdanger("Connection to data core lost. Attempting to reaquire connection..."))
 
+	if(last_used_data_core && !QDELETED(last_used_data_core))
+		if(last_used_data_core.can_transfer_ai())
+			last_used_data_core.transfer_AI(src)
+			return
+	//it's gone pal
+	last_used_data_core = null
+
 	if(!length(GLOB.data_cores))
 		if(kill_otherwise)
 			INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/silicon/ai, death_prompt))
