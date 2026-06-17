@@ -32,10 +32,10 @@
 			"name" = "Hyposprays",
 			"icon" = "syringe",
 			"products" = list(
-				/obj/item/hypospray = 5,
-				/obj/item/storage/medkit/hypospray = 3,
+				/obj/item/hypospray = 2,
+				/obj/item/storage/medkit/hypospray = 2,
 				/obj/item/storage/medkit/hypospray/advanced = 1,
-				/obj/item/storage/lockbox/vialbox = 5,
+				/obj/item/storage/lockbox/vialbox = 3,
 			),
 		))
 	contraband = list(
