@@ -5,6 +5,7 @@
 	prereq_ids = list("base")
 	design_ids = list(
 		"bola_energy",
+		"security_trap",
 		"evidencebag",
 		"pepperspray",
 		"seclite",

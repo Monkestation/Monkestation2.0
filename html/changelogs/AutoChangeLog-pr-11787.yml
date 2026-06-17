@@ -1,0 +1,5 @@
+author: "Mantlecrawler"
+delete-after: True
+changes:
+  - rscadd: "Plasma is now rainbow during pride month"
+  - config: "Pride week is now pride month, through the entirety of June."
