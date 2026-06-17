@@ -129,6 +129,9 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 
 /obj/machinery/ai/data_core/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
+	balloon_alert_to_viewers("screwing panel...")
+	if(!tool.use_tool(src, user, 4 SECONDS))
+		return .
 	if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", base_icon_state, tool))
 		return ITEM_INTERACT_SUCCESS
 
