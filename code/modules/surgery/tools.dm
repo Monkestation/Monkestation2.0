@@ -714,7 +714,7 @@
 	if(target.is_mouth_covered())
 		to_chat(user, span_warning("To perform mechanical ventilation, the patient must be unmasked!"))
 		return ITEM_INTERACT_BLOCKING
-	if(target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKEDEATH))
+	if(!target.appears_alive())
 		to_chat(user, span_warning("To perform mechanical ventilation, the patient must be alive!"))
 		return FALSE
 	to_chat(user, span_notice("Applying a breathing mask to [target] face."))
