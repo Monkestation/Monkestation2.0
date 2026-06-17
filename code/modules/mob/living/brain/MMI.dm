@@ -17,9 +17,9 @@
 	var/obj/vehicle/sealed/mecha = null
 	/// The laws that we currently have.
 	var/datum/ai_laws/laws = null
-	/// Should this MMI be used to create a cyborg, should aisync override the creator's choice in either direction?
+	/// Should this MMI be used to create a cyborg, should this override the aisync setting in either direction?
 	var/force_cyborg_aisync = null
-	/// Should this MMI be used to create a cyborg, should lawsync override the creator's choice in either direction?
+	/// Should this MMI be used to create a cyborg, should this override the lawsync setting in either direction?
 	var/force_cyborg_lawsync = null
 	/// Should this MMI be used to create a cyborg, should a law zero be given to them? This law zero is persistent until the MMI is removed.
 	var/force_cyborg_lawzero = null
