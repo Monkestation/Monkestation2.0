@@ -79,6 +79,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 
 	upgradable = FALSE
 	attachment_holes = FALSE
+	can_slice_apart = FALSE
 
 	resistance_flags = INDESTRUCTIBLE
 

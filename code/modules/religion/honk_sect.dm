@@ -138,15 +138,15 @@
 	return TRUE
 
 /datum/religion_rites/honk_mech
-	name = "Summon Honkmech"
+	name = "Summon SPECIAL Honkmech"
 	desc = "H.O.N.K"
 	ritual_length = 6.7 SECONDS
-	invoke_msg = "OH THANK YOU GREAT HONK MOTHER FOR MAKING THIS POSSIBLE!!" // I don't see how you'd do this without 'honk mothers' help
-	favor_cost = 10001 // Intentionally one more than the max, because I think thats really funny, you can already make a honk mech by this point if you just summon pure bananium.
+	invoke_msg = "HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK!"
+	favor_cost = 10000
 
 /datum/religion_rites/honk_mech/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	. = ..()
 	var/altar_turf = get_turf(religious_tool)
-	new /obj/vehicle/sealed/mecha/honker/loaded (altar_turf)
+	new /obj/item/toy/mecha/honk (altar_turf)
 	playsound(altar_turf, 'sound/items/party_horn.ogg', 50, TRUE)
 	return TRUE
