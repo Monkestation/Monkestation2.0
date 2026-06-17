@@ -94,7 +94,7 @@
 	)
 
 /datum/surgery/organ_manipulation/mechanic/mmi
-	name = "MMI installation"
+	name = "Cybernetic brain installation"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
 	surgery_flags =  SURGERY_REQUIRE_LIMB
 	possible_locs = list(BODY_ZONE_CHEST)
@@ -103,7 +103,7 @@
 		/datum/surgery_step/open_hatch,
 		/datum/surgery_step/mechanic_unwrench,
 		/datum/surgery_step/prepare_electronics,
-		/datum/surgery_step/install_mmi,
+		/datum/surgery_step/install_brain,
 		/datum/surgery_step/mechanic_wrench,
 		/datum/surgery_step/mechanic_close,
 	)

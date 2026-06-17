@@ -288,20 +288,12 @@
 		return FALSE
 	return TRUE
 
-/obj/item/mmi/attempt_become_organ(obj/item/organ/external/parent,mob/living/carbon/human/H)
+/obj/item/mmi/attempt_become_organ(obj/item/bodypart/parent, mob/living/carbon/human/H)
 	if(!brainmob)
 		return FALSE
-//	if(!parent)
-//		log_debug("Attempting to insert into a null parent!")
-//		return FALSE
-//	if(H.get_int_organ(/obj/item/organ/internal/brain))
-//		// one brain at a time
-//		return FALSE
 	var/obj/item/organ/internal/brain/positronic/holder = new()
-//	holder.parent_organ = parent.limb_name
 	forceMove(holder)
 	holder.stored_mmi = src
-	holder.update_from_mmi()
 	if(brainmob && brainmob.mind)
 		brainmob.mind.transfer_to(H)
 	holder.Insert(H)
@@ -316,3 +308,4 @@
 	. = ..()
 	laws = new /datum/ai_laws/syndicate_override()
 	radio.set_on(FALSE)
+// waiting for https://github.com/Monkestation/Monkestation2.0/pull/11874 to be merged then do attempt become organ stuff

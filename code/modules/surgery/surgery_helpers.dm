@@ -77,5 +77,5 @@
 	return TRUE
 
 // Called when a limb containing this object is placed back on a body
-/atom/movable/proc/attempt_become_organ(obj/item/organ/external/parent,mob/living/carbon/human/H)
+/atom/movable/proc/attempt_become_organ(obj/item/organ/external/parent, mob/living/carbon/human/H)
 	return TRUE
