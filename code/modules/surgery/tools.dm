@@ -741,6 +741,6 @@
 		return FALSE
 	if(target.is_mouth_covered())
 		return FALSE
-	if(target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKEDEATH))
+	if(!target.appears_alive())
 		return FALSE
 	return TRUE
