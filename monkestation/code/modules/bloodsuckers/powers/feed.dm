@@ -244,7 +244,8 @@
 		warning_target_bloodvol = feed_target.blood_volume
 
 	if(bloodsuckerdatum_power.bloodsucker_blood_volume >= bloodsuckerdatum_power.max_blood_volume && !notified_overfeeding)
-		user.balloon_alert(owner, "full on blood! Anything more we drink now will be burnt on quicker healing")
+		user.balloon_alert(owner, "full on blood!")
+		to_chat(user, span_boldnotice("Your blood is full. Anything more we drink now will be burnt on quicker healing."))
 		notified_overfeeding = TRUE
 	if(feed_target.blood_volume <= 0)
 		user.balloon_alert(owner, "no blood left!")

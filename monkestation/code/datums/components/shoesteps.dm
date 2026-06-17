@@ -404,10 +404,10 @@ extra range addition
 			'monkestation/sound/effects/tapshoes/tapsand3.ogg',
 			'monkestation/sound/effects/tapshoes/tapsand4.ogg',), 75, 0),
 		FOOTSTEP_GRASS = list(list(
-			'sound/effects/footstep/water1.ogg',
-			'sound/effects/footstep/water2.ogg',
-			'sound/effects/footstep/water3.ogg',
-			'sound/effects/footstep/water4.ogg'), 75, 0),
+			'sound/effects/footstep/grass1.ogg',
+			'sound/effects/footstep/grass2.ogg',
+			'sound/effects/footstep/grass3.ogg',
+			'sound/effects/footstep/grass4.ogg'), 75, 0),
 		FOOTSTEP_WATER = list(list(
 			'sound/effects/footstep/water1.ogg',
 			'sound/effects/footstep/water2.ogg',

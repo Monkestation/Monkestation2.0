@@ -185,3 +185,69 @@
   - qol: Noisemaker default is disabled so you must actively enable them if you want
       to hear them.
   - qol: do_after timer to enable/disable reduced to 1 Second from 1.5 Seconds
+2026-06-11:
+  tattax:
+  - qol: adds a visual indicator for blood thickening (bloodsucker rank up via blood)
+  - qol: makes blood full! bloodsucker feed text a bit easier to read
+  - bugfix: fixes bloodsucker maptext going not following the gradient when below
+      bad blood
+  - code_imp: made some to_chats easier to see
+2026-06-12:
+  Shoddd:
+  - balance: Ashen robes no longer give TRAIT_SUPPRESS_NOFIRE
+  SirNightKnight:
+  - bugfix: factory chemical synthesizers work again.
+  - balance: cattleprods are normal sized but take 1.5 more charge than stun batons.
+  - balance: bluespace crystals and teleprods make the victim confused and disgusted
+      when they teleport
+  Siro:
+  - bugfix: Properly uses the grass SFX when walking on grass while using tap_shoes.
+      Oops.
+  cam_dev:
+  - image: added back sprite for lionhunter rifle
+2026-06-13:
+  Shoddd:
+  - bugfix: satyrs can headbutt mobs once again
+2026-06-14:
+  Runian:
+  - bugfix: Cyborgs now correctly can interact with wall mounted intercoms.
+  wonderinghost:
+  - map: robotics now have robovend deluxe, organ fridges, and label makers to their
+      departments
+  - map: '[thesius] medbay has new hall to make robotics more accessible'
+  - map: '[thesius] medbay surgery now has polarizable windows in surgery room'
+  - map: '[blueshift] places welding tank in robotics in a less annoying place'
+  - refactor: refactored robovend deluxe to have more content
+  - code_imp: reduces cost of limb shears from 700c to 500c
+  - code_imp: roboticists now have research app
+2026-06-15:
+  JohnFulpWillard:
+  - bugfix: Heliostation now has a Command vending machine in the Bridge.
+  JupiterJaeden:
+  - rscadd: The security photobooth can now be used to add new people on to the crew
+      manifest. Just put them in and take pictures as normal, and the crew records
+      will be updated with the new entry! Perfect for stowaways and other visitors
+      to the station.
+  - spellcheck: Updates the description of the security photobooth.
+  - map: Adds security photobooths to every brig map.
+  - code_imp: Updates the get_visible_name() helper to actually use the add_id_name
+      variable as intended (previously unused).
+  Shoddd:
+  - bugfix: bloodling hivemind no longer works while dead
+  - bugfix: bloodlings become properly space proof over level 2
+  TealSeer:
+  - bugfix: fixed CSS-related errors in BYOND 516.1681+
+2026-06-16:
+  PotatoTomahto:
+  - rscadd: ashwalkers now have access to bungo fruit
+  SirNightKnight:
+  - rscadd: you can slice apart base floor plating with welding tools.
+  - bugfix: you can tip over flashed cyborgs.
+2026-06-17:
+  Mantlecrawler:
+  - rscadd: Plasma is now rainbow during pride month
+  - config: Pride week is now pride month, through the entirety of June.
+  SirNightKnight:
+  - balance: removed crate content ashing when the locks are broken.
+  jlsnow301, SirNightKnight:
+  - bugfix: The library console has been refactored. Report any issues in the github!

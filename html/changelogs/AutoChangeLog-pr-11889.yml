@@ -1,0 +1,7 @@
+author: "Cujo"
+delete-after: True
+changes:
+  - balance: "Reduces number of hyposprays in medical vendor (5->2)"
+  - balance: "Reduces number of hypospray kits in medical vendor (3->2)"
+  - balance: "Reduces number of vial boxes in medical vendor (5->3)"
+  - rscdel: "Removes hypospray kits from medical wall vendors"
