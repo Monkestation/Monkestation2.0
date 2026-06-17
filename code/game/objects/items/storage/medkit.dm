@@ -325,7 +325,7 @@
 
 /obj/item/storage/medkit/hypospray
 	name = "hypospray chemical kit"
-	desc = "An basic kit containing vials for most situations. Now 100% smaller, for 100% more hypospray per hypospray!"
+	desc = "An basic kit containing a hypospray and vials for most situations. Now 100% smaller, for 100% more hypospray per hypospray!"
 	icon_state = "hypobasic"
 	custom_price = PAYCHECK_COMMAND * 3
 	discountable = FALSE
