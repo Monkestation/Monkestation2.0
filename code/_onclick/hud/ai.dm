@@ -84,7 +84,8 @@
 	icon_state = "dashboard"
 
 /atom/movable/screen/ai/dashboard/Click()
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/mob/living/silicon/ai/AI = usr
 	AI.dashboard.ui_interact(AI)

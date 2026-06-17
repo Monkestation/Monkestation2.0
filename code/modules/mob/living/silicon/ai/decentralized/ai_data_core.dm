@@ -51,7 +51,6 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 		if(!AI.is_dying)
 			AI.relocate()
 
-
 	for(var/mob/living/silicon/ai/AI in all_ais)
 		if(!AI.mind && AI.deployed_shell.mind)
 			to_chat(AI.deployed_shell, span_userdanger("Warning! Data Core brought offline in [get_area(src)]! Please verify that no malicious actions were taken."))

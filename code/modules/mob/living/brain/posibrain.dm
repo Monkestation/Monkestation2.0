@@ -214,7 +214,6 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(istype(O, /obj/item/ai_module))
 		var/obj/item/ai_module/M = O
 		M.install(laws, user)
-	return
 
 /obj/item/mmi/posibrain/add_mmi_overlay()
 	return

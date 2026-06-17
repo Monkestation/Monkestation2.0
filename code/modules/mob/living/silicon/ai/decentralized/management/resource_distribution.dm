@@ -103,6 +103,8 @@
 	if(.)
 		return
 
+	playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
+
 	var/mob/user = ui.user
 	if(!authenticated)
 		if(action == "log_in")

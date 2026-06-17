@@ -17,7 +17,6 @@
 
 	var/tier = 1
 
-
 /obj/item/memory_card
 	name = "AI Memory Card"
 	desc = "An external memory card for crucial AI process management."

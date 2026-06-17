@@ -34,6 +34,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		if(user.transferItemToLoc(tool, src))
 			to_chat(user, span_notice("You insert [tool]."))
 			intellicard = tool
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
 			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING
 
@@ -65,6 +66,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		SSblackbox.record_feedback("amount", "ais_created", 1)
 		qdel(tool)
 		to_chat(user, span_notice("AI succesfully uploaded."))
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/surveillance_upgrade))
@@ -74,6 +76,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		var/mob/living/silicon/ai/AI = tgui_input_list(user, "Select an AI", "Select an AI", GLOB.ai_list)
 		if(!AI)
 			return ITEM_INTERACT_BLOCKING
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
 		var/obj/item/surveillance_upgrade/upgrade = tool
 		return upgrade.interact_with_atom(AI, user)
 
@@ -84,6 +87,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		var/mob/living/silicon/ai/AI = tgui_input_list(user, "Select an AI", "Select an AI", GLOB.ai_list)
 		if(!AI)
 			return ITEM_INTERACT_BLOCKING
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
 		var/obj/item/malf_upgrade/upgrade = tool
 		return upgrade.interact_with_atom(AI, user)
 
@@ -96,7 +100,11 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	if(user)
 		balloon_alert(user, "access restrictions bypassed")
 
-/obj/machinery/computer/ai_control_console/process()
+/obj/machinery/computer/ai_control_console/click_alt(mob/user)
+	eject_intellicard(user)
+	return CLICK_ACTION_SUCCESS
+
+/obj/machinery/computer/ai_control_console/process(seconds_per_tick)
 	if(machine_stat & (BROKEN|NOPOWER|EMPED))
 		return
 
@@ -111,7 +119,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		if(!downloading.can_download)
 			stop_download()
 			return
-		download_progress += AI_DOWNLOAD_PER_PROCESS * downloading.downloadSpeedModifier
+		download_progress += (AI_DOWNLOAD_PER_PROCESS * seconds_per_tick * downloading.downloadSpeedModifier)
 
 
 /obj/machinery/computer/ai_control_console/ui_interact(mob/user, datum/tgui/ui)
@@ -211,14 +219,23 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 
 	return data
 
+/obj/machinery/computer/ai_control_console/proc/eject_intellicard(mob/living/user)
+	if(issilicon(user))
+		to_chat(user, span_warning("You're unable to remotely eject [intellicard]!"))
+		return FALSE
+	stop_download()
+	if(!user.put_in_hands(intellicard))
+		intellicard.forceMove(drop_location())
+	intellicard = null
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, FALSE)
+	return TRUE
+
 /obj/machinery/computer/ai_control_console/proc/finish_download()
 	if(!is_station_level(z))
 		return
 	if(intellicard)
+		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 		downloading.transfer_ai(AI_TRANS_TO_CARD, user_downloading, null, intellicard)
-		intellicard.forceMove(get_turf(src))
-		intellicard.update_appearance()
-		intellicard = null
 	stop_download(TRUE)
 
 /obj/machinery/computer/ai_control_console/proc/stop_download(silent = FALSE)
@@ -232,6 +249,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	download_warning = FALSE
 
 /obj/machinery/computer/ai_control_console/proc/upload_ai(silent = FALSE)
+	playsound(src, 'sound/machines/terminal_processing.ogg', 25, FALSE)
 	to_chat(intellicard.AI, span_notice("You are being uploaded. Please stand by..."))
 	intellicard.AI.radio_enabled = TRUE
 	intellicard.AI.control_disabled = FALSE
@@ -277,6 +295,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	if(!authenticated)
 		if(action == "log_in")
 			if(allowed(user) || (obj_flags & EMAGGED))
+				playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
 				authenticated = TRUE
 				return TRUE
 			return .
@@ -311,6 +330,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		if("log_out")
 			if(one_time_password_used)
 				return
+			playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
 			authenticated = FALSE
 			. = TRUE
 		if("upload_intellicard")
@@ -321,12 +341,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 			upload_ai()
 
 		if("eject_intellicard")
-			if(issilicon(user))
-				to_chat(user, span_warning("You're unable to remotely eject the IntelliCard!"))
-				return
-			stop_download()
-			user.transferItemToLoc(intellicard, drop_location())
-			intellicard = null
+			return eject_intellicard(user)
 
 		if("stop_download")
 			if(isAI(user))
@@ -336,6 +351,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 				to_chat(user, span_warning("No connection. Try again later."))
 				return
 			stop_download()
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
 
 		if("start_download")
 			if(!intellicard || downloading)
@@ -350,6 +366,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 			if(!is_station_level(z))
 				to_chat(user, span_warning("No connection. Try again later."))
 				return
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 			downloading = target
 			to_chat(downloading, span_userdanger("Warning! Someone is attempting to download you from [get_area(src)]! (<a href='byond://?src=[REF(downloading)];instant_download=1;console=[REF(src)]'>Click here to finish download instantly</a>)"))
 			user_downloading = user

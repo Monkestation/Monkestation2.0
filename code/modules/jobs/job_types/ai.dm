@@ -56,7 +56,7 @@
 /datum/job/ai/special_check_latejoin(client/C)
 	if(!do_special_check)
 		return TRUE
-	if(GLOB.ai_list.len >= total_positions)
+	if(length(GLOB.ai_list) >= total_positions)
 		return FALSE
 	for(var/obj/machinery/ai/data_core/core as anything in GLOB.data_cores)
 		if(istype(core))

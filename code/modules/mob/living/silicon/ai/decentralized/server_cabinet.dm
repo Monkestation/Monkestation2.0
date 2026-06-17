@@ -82,7 +82,7 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 		. += span_notice("There is a rack installed with a processing capacity of [R.get_cpu()]THz and a memory capacity of [R.get_ram()]TB. Uses [R.get_power_usage()]W")
 	. += span_notice("Use a crowbar to remove all currently inserted racks.")
 
-/obj/machinery/ai/server_cabinet/process()
+/obj/machinery/ai/server_cabinet/process(seconds_per_tick)
 	valid_ticks = clamp(valid_ticks, 0, MAX_AI_EXPANSION_TICKS)
 	if(valid_holder())
 		var/total_usage = (cached_power_usage * power_modifier)

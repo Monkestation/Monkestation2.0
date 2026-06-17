@@ -1,4 +1,5 @@
-import { Fragment, useState } from 'react';
+import { toFixed } from 'common/math';
+import { Fragment } from 'react';
 import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import {
@@ -49,8 +50,6 @@ export const AiResources = (props) => {
     ais = [],
   } = data;
 
-  const [tab, setTab] = useState(1);
-
   const remaining_cpu = total_cpu - total_assigned_cpu;
   const remaining_ram = total_ram - total_assigned_ram;
 
@@ -94,7 +93,8 @@ export const AiResources = (props) => {
                 }}
                 maxValue={1}
               >
-                {remaining_cpu}/{total_cpu} THz ({remaining_cpu * 100}%)
+                {toFixed(remaining_cpu)}/{toFixed(total_cpu)} THz (
+                {toFixed(remaining_cpu * 100)}%)
               </ProgressBar>
             </Section>
             <Section title="Cloud RAM Resources">
@@ -144,7 +144,7 @@ export const AiResources = (props) => {
                             unit="%"
                             value={ai.assigned_cpu * 100}
                             minValue={0}
-                            maxValue={remaining_cpu + ai.assigned_cpu * 100}
+                            maxValue={(remaining_cpu + ai.assigned_cpu) * 100}
                             onChange={(value) =>
                               act('set_cpu', {
                                 targetAI: ai.ref,

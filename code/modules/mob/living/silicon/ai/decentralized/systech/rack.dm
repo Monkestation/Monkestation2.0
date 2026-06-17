@@ -17,13 +17,13 @@
 		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT,
 	)
 
-	var/list/contained_cpus = list()
+	var/list/obj/item/ai_cpu/contained_cpus = list()
 	var/contained_ram = 0
 
 /obj/item/server_rack/examine(mob/user)
 	. = ..()
 	var/total = get_cpu()
-	for(var/obj/item/ai_cpu/CPU in contained_cpus)
+	for(var/obj/item/ai_cpu/CPU as anything in contained_cpus)
 		. += span_notice("It has [CPU] installed. Running at [CPU.speed]THz and consuming [CPU.get_power_usage()]W.")
 	. += span_notice("For a total CPU speed of [total]THz")
 	. += span_notice("----------------------")
@@ -32,7 +32,7 @@
 
 /obj/item/server_rack/proc/get_cpu()
 	var/amount = 0
-	for(var/obj/item/ai_cpu/CPU in contained_cpus)
+	for(var/obj/item/ai_cpu/CPU as anything in contained_cpus)
 		amount += CPU.speed
 	return amount
 
@@ -41,7 +41,7 @@
 
 /obj/item/server_rack/proc/get_power_usage()
 	var/usage = 0
-	for(var/obj/item/ai_cpu/CPU in contained_cpus)
+	for(var/obj/item/ai_cpu/CPU as anything in contained_cpus)
 		usage += CPU.get_power_usage()
 	usage += contained_ram * AI_POWER_PER_CARD
 	return usage

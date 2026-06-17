@@ -19,7 +19,6 @@
 	var/datum/component/material_container/materials
 	var/efficiency_coeff = 1
 
-
 /obj/machinery/rack_creator/Initialize(mapload)
 	materials = AddComponent( \
 		/datum/component/material_container, \
@@ -30,7 +29,6 @@
 	. = ..()
 	RefreshParts()
 	register_context()
-
 
 /obj/machinery/rack_creator/RefreshParts()
 	. = ..()
@@ -215,7 +213,6 @@
 			. = SSresearch.science_tech.isNodeResearchedID("ai_ram_3")
 		if(4)
 			. = SSresearch.science_tech.isNodeResearchedID("ai_ram_4")
-
 
 /obj/machinery/rack_creator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

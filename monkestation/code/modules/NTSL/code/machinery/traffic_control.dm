@@ -113,7 +113,8 @@
 
 	if(.)
 		return
-	playsound(src, "terminal_type", 15, FALSE)
+
+	playsound(src, SFX_TERMINAL_TYPE, 15, FALSE)
 	switch(action)
 		if("refresh_servers")
 			refresh_servers()

@@ -117,7 +117,6 @@ GLOBAL_DATUM_INIT(ai_os, /datum/ai_os, new)
 
 	update_allocations()
 
-
 /datum/ai_os/proc/clear_ai_resources(mob/living/silicon/ai/AI)
 	if(!AI || !istype(AI))
 		return

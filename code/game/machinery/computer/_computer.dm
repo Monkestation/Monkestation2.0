@@ -37,7 +37,7 @@
 
 	power_change()
 
-/obj/machinery/computer/process()
+/obj/machinery/computer/process(seconds_per_tick)
 	if(machine_stat & (NOPOWER|BROKEN))
 		return FALSE
 	return TRUE
