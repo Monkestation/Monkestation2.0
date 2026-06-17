@@ -1047,7 +1047,7 @@
 	if(ismovable(new_eye))
 		if(new_eye != GLOB.ai_camera_room_landmark)
 			end_multicam()
-		if(eyeobj)
+		if(istype(new_eye, /obj/machinery/ai/data_core)) //trying to set your perspective to the 'core' will instead go to the eye.
 			client.set_eye(eyeobj)
 			view_core()
 		else
