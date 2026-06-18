@@ -102,8 +102,9 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 
 	. += "<b>The monitor lists the following AIs:</b>"
 	for(var/mob/living/silicon/ai/AI in contents)
-		. += "<b>[AI.name]</b>"
-		if(isobserver(user))
+		if(!isobserver(user))
+			. += "<b>[AI.name]</b>"
+		else
 			. += "<b>[AI] (Core: [FOLLOW_LINK(user, AI.loc)], Eye: [FOLLOW_LINK(user, AI.eyeobj)])</b>"
 		. += AI.examine(user)
 
