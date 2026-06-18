@@ -731,7 +731,7 @@
 			continue
 		if(HAS_TRAIT(target, TRAIT_NOBREATH))
 			continue
-		target.adjustOxyLoss(-15)
+		target.adjustOxyLoss(-10)
 
 /// Checks if the target can be interacted with.
 /obj/item/breathing_bag/proc/can_repeat_healing(mob/living/user, mob/living/target, delay_length)

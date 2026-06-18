@@ -1,4 +1,0 @@
-author: "Barrel"
-delete-after: True
-changes:
-  - bugfix: "Blood Siphon will no longer kill you if you use it on an oozeling/ethereal."

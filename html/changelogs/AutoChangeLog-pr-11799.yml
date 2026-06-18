@@ -1,4 +1,0 @@
-author: "Cujo"
-delete-after: True
-changes:
-  - balance: "Slime jelly now deals consistent tox damage (1-4) per second"
