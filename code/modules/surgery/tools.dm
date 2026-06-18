@@ -711,11 +711,11 @@
 	if(user == interacting_with || !user.Adjacent(interacting_with) || !isliving(interacting_with))
 		return NONE
 	var/mob/living/target = interacting_with
-	if(target.is_mouth_covered())
-		to_chat(user, span_warning("To perform mechanical ventilation, the patient must be unmasked!"))
-		return ITEM_INTERACT_BLOCKING
 	if(!target.appears_alive())
 		to_chat(user, span_warning("To perform mechanical ventilation, the patient must be alive!"))
+		return ITEM_INTERACT_BLOCKING
+	if(target.is_mouth_covered())
+		to_chat(user, span_warning("To perform mechanical ventilation, the patient must be unmasked!"))
 		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("Applying a breathing mask to [target] face."))
 	if(!can_repeat_healing(user, target, 3 SECONDS))
@@ -739,8 +739,8 @@
 		return FALSE
 	if(!user.Adjacent(target))
 		return FALSE
-	if(target.is_mouth_covered())
-		return FALSE
 	if(!target.appears_alive())
+		return FALSE
+	if(target.is_mouth_covered())
 		return FALSE
 	return TRUE
