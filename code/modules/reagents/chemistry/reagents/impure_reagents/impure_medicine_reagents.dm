@@ -890,7 +890,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/aranesp
 	name = "Epoetin Alfa"
-	description = "Synthetic medication that induces blood regeneration, liver healing and wound clotting in patients. Causes adverse side effects when excessively used over time."
+	description = "Synthetic medication that induces blood regeneration and wound clotting in patients. \
+		Causes adverse side effects, including arterial damage and migraines when excessively used over time."
 	color = "#dee4ff"
 	metabolization_rate = 0.25 * REM
 	overdose_threshold = 20
@@ -901,16 +902,15 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(overdosed)
 		return
 	var/need_mob_update
-	need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, -1 * REM * seconds_per_tick)
+	var/datum/wound/bloodiest_wound
 	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
-		if(iter_wound.blood_flow)
-			if(affected_mob.reagents.has_reagent(/datum/reagent/medicine/coagulant, 3))
-				return
-			else
-				affected_mob.reagents.add_reagent(/datum/reagent/medicine/coagulant, 0.2 * REM * seconds_per_tick)
+		if(iter_wound.blood_flow && iter_wound.blood_flow > bloodiest_wound?.blood_flow)
+			bloodiest_wound = iter_wound
+	bloodiest_wound?.adjust_blood_flow(-0.1 * REM * seconds_per_tick)
 
 	if(affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
-		need_mob_update += affected_mob.blood_volume += min(3 * seconds_per_tick, BLOOD_VOLUME_NORMAL)
+		need_mob_update += affected_mob.blood_volume += min(1 * seconds_per_tick, BLOOD_VOLUME_NORMAL)
+	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, 0.2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 
 	switch(current_cycle)
 		if(10)
