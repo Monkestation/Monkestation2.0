@@ -35,6 +35,7 @@
 			"products" = list(
 				/obj/item/clothing/mask/balaclava = 4,
 				/obj/item/clothing/mask/thermal_balaclava = 4,
+				/obj/item/clothing/mask/thermal_balaclava/alt = 4,
 			),
 		),
 		list(
@@ -520,6 +521,7 @@
 	)
 	premium = list(
 		/obj/item/clothing/suit/chaplainsuit/bishoprobe = 1,
+		/obj/item/clothing/suit/chaplainsuit/bishoprobe/black = 1,
 		/obj/item/clothing/head/chaplain/bishopmitre = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe

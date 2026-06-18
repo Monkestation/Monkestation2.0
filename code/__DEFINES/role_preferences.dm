@@ -28,6 +28,7 @@
 #define ROLE_DARKSPAWN_FIGHTER "Fighter"
 #define ROLE_DARKSPAWN_WARLOCK "Warlock"
 #define ROLE_DARKSPAWN_SCOUT "Scout"
+#define ROLE_SPY "Spy"
 
 // Midround roles
 #define ROLE_ABDUCTOR "Abductor"
@@ -85,6 +86,8 @@
 #define ROLE_REVENANT "Revenant"
 #define ROLE_OVERTHROW "Syndicate Mutineer" //Role removed, left here for safety.
 #define ROLE_SENTIENCE "Sentience Potion Spawn"
+#define ROLE_HOLY_SUMMONED "Holy Summoned"
+#define ROLE_SOULTRAPPED_HERETIC "Soultrapped Heretic"
 #define ROLE_PYROCLASTIC_SLIME "Pyroclastic Anomaly Slime"
 #define ROLE_MIND_TRANSFER "Mind Transfer Potion"
 #define ROLE_POSIBRAIN "Posibrain"
@@ -103,6 +106,8 @@
 #define ROLE_SLAUGHTER_DEMON "Slaughter Demon"
 #define ROLE_WIZARD_APPRENTICE "apprentice"
 #define ROLE_SYNDICATE_MONKEY "Syndicate Monkey Agent"
+
+#define ROLE_WISHGRANTER_AVATAR "Wishgranter Avatar"
 
 //Spawner roles
 #define ROLE_ANCIENT_CREW "Ancient Crew"
@@ -162,6 +167,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_ASSAULT_OPERATIVE = 14,
 	ROLE_BLOODLING = 15,
 	ROLE_DARKSPAWN = 14,
+	ROLE_SPY = 0,
 
 	// Midround
 	ROLE_ABDUCTOR = 0,
@@ -216,6 +222,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	// I'm not too sure why these are here, but they're not moving.
 	ROLE_PAI = 0,
 	ROLE_SENTIENCE = 0,
+	ROLE_SOULTRAPPED_HERETIC = 0,
 ))
 
 //Job defines for what happens when you fail to qualify for any job during job selection

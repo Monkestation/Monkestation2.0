@@ -156,7 +156,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	. += span_notice("You look closer through the core's hazy interior and see...")
 	if(length(stored_items))
 		for(var/atom/movable/item as anything in stored_items)
-			. += " [ma2html(item, user)] <a href='byond://?src=[REF(src)];core_item=[REF(item)]'>[item.get_examine_name(user)]</a>"
+			. += " [item.get_examine_icon(user)] <a href='byond://?src=[REF(src)];core_item=[REF(item)]'>[item.get_examine_name(user)]</a>"
 		. += span_notice("floating inside...")
 	else
 		. += span_notice("...nothing of interest.")
@@ -667,7 +667,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	if(policy)
 		to_chat(new_body, policy, avoid_highlighting = TRUE)
 
-	SEND_SIGNAL(mind, COMSIG_OOZELING_REVIVED, new_body, src)
+	SEND_SIGNAL(mind, COMSIG_OOZELING_REVIVED, new_body, src, nugget)
 	return new_body
 
 /obj/item/organ/internal/brain/slime/Topic(href, list/href_list)

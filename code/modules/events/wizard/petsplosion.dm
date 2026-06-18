@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(petsplosion_candidates, typecacheof(list(
 	name = "Petsplosion"
 	weight = 2
 	typepath = /datum/round_event/wizard/petsplosion
-	max_occurrences = 1 //Exponential growth is nothing to sneeze at!
+	max_occurrences = 2 //Exponential growth is nothing to sneeze at!
 	earliest_start = 0 MINUTES
 	description = "Rapidly multiplies the animals on the station."
 	min_wizard_trigger_potency = 0

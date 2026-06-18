@@ -31,7 +31,7 @@
 	icon_state = "pool"
 
 
-/turf/open/floor/iron/pool/rust_heretic_act()
+/turf/open/floor/iron/pool/rust_heretic_act(rust_strength)
 	return
 
 /turf/open/floor/elevated
@@ -46,7 +46,7 @@
 	liquid_height = 30
 	turf_height = 30
 
-/turf/open/floor/elevated/rust_heretic_act()
+/turf/open/floor/elevated/rust_heretic_act(rust_strength)
 	return
 
 /turf/open/floor/lowered
@@ -62,5 +62,5 @@
 	turf_height = -30
 
 
-/turf/open/floor/lowered/rust_heretic_act()
+/turf/open/floor/lowered/rust_heretic_act(rust_strength)
 	return

@@ -62,9 +62,6 @@
 		return TRUE
 	return ..()
 
-/datum/species/floran/randomize_features(mob/living/carbon/human_mob)
-	randomize_external_organs(human_mob)
-
 /datum/species/floran/get_species_description()
 	return "Plant-based humanoids, they are extremely violent carnivores with no central government or power structure, \
 	split into numerous tribes spread across the universe, each led by a Greenfinger. \

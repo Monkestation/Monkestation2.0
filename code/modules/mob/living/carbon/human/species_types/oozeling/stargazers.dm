@@ -46,6 +46,8 @@
 	if(recipient.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
 		to_chat(telepath, span_warning("As you reach into [recipient]'s mind, you are stopped by a mental blockage. It seems you've been foiled."))
 		return
+	if(telepath.client?.prefs?.read_preference(/datum/preference/toggle/autopunctuation))
+		msg = autopunct_bare(capitalize(msg))
 	log_directed_talk(telepath, recipient, msg, LOG_SAY, "slime telepathy")
 	recipient.balloon_alert(recipient, "you hear an alien voice in your head...")
 	to_chat(recipient, "[span_notice("You hear an alien voice in your head... ")]<font color=#008CA2>[msg]</font>")

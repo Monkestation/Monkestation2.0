@@ -130,7 +130,6 @@
 		GLOB.station_turfs -= src
 	return ..()
 
-
 /turf/closed/wall/examine(mob/user)
 	. += ..()
 	. += deconstruction_hints(user)
@@ -445,13 +444,13 @@
 
 	add_overlay(dent_decals)
 
-/turf/closed/wall/rust_heretic_act()
+/turf/closed/wall/rust_turf(magic = FALSE)
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		ScrapeAway()
-		return
-	if(prob(70))
-		new /obj/effect/temp_visual/glowing_rune(src)
+		return TRUE
+
 	return ..()
+
 
 /turf/closed/wall/metal_foam_base
 	girder_type = /obj/structure/foamedmetal

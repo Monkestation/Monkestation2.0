@@ -283,7 +283,7 @@
 
 /obj/item/ammo_casing/energy/cybersun_big_kill
 	projectile_type = /obj/projectile/beam/cybersun_laser
-	e_cost = LASER_SHOTS(5, STANDARD_CELL_CHARGE)
+	e_cost = LASER_SHOTS(28, STANDARD_CELL_CHARGE)
 	select_name = "Kill"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/laser_firing/laser.ogg'
 
@@ -417,7 +417,7 @@
 
 /obj/item/ammo_casing/energy/cybersun_small_disabler
 	projectile_type = /obj/projectile/beam/cybersun_laser/disable_bounce
-	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
+	e_cost = LASER_SHOTS(14, STANDARD_CELL_CHARGE)
 	select_name = "Disable"
 	harmful = FALSE
 
@@ -443,7 +443,7 @@
 
 /obj/item/ammo_casing/energy/cybersun_small_launcher
 	projectile_type = /obj/projectile/beam/cybersun_laser/flare
-	e_cost = LASER_SHOTS(5, 1000)
+	e_cost = LASER_SHOTS(3, STANDARD_CELL_CHARGE)
 	select_name = "Flare"
 
 /obj/projectile/beam/cybersun_laser/flare
@@ -1139,20 +1139,6 @@
 		"Compact Combat Shotgun" = /obj/item/gun/ballistic/shotgun/automatic/combat/compact,
 	)
 	return selectable_guns
-
-
-// Steal Objective, not just for Lawbringer but all their guns
-/datum/objective_item/steal/hosgun
-	name = "the head of security's personal weapon"
-	targetitem = /obj/item/choice_beacon/hos
-	excludefromjob = list(JOB_HEAD_OF_SECURITY)
-	altitems = list(/obj/item/gun/ballistic/shotgun/automatic/combat/compact, /obj/item/gun/energy/e_gun/lawbringer, /obj/item/gun/energy/e_gun/hos)
-	item_owner = list(JOB_HEAD_OF_SECURITY)
-	exists_on_map = TRUE
-
-/obj/item/choice_beacon/hos/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/choice_beacon/hos)
-
 
 //THE MANUAL//
 /obj/item/paper/guides/lawbringer

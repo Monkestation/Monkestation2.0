@@ -48,6 +48,10 @@
 #define COMSIG_MOVABLE_THROW_LANDED "movable_throw_landed"
 ///from base of atom/movable/on_changed_z_level(): (turf/old_turf, turf/new_turf, same_z_layer)
 #define COMSIG_MOVABLE_Z_CHANGED "movable_ztransit"
+/// from /atom/movable/can_z_move(): (turf/start, turf/destination)
+#define COMSIG_CAN_Z_MOVE "movable_can_z_move"
+	/// Return to block z movement
+	#define COMPONENT_CANT_Z_MOVE (1<<0)
 ///called before hearing a message from atom/movable/Hear():
 #define COMSIG_MOVABLE_PRE_HEAR "movable_pre_hear"
 	///cancel hearing the message because we're doing something else presumably
@@ -119,3 +123,6 @@
 #define COMSIG_MOVABLE_CHASM_DROPPED "movable_chasm_dropped"
 	/// Stop it from actually dropping into the chasm
 	#define COMPONENT_NO_CHASM_DROP (1<<0)
+
+/// Sent to movables when they are being stolen by a spy: (mob/living/spy, datum/spy_bounty/bounty)
+#define COMSIG_MOVABLE_SPY_STEALING "movable_spy_stealing"

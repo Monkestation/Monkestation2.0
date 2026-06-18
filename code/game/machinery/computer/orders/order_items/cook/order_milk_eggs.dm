@@ -60,11 +60,6 @@
 	item_path = /obj/item/food/canned/larvae
 	cost_per_order = 20
 
-/datum/orderable_item/milk_eggs/canned_tomatoes
-	name = "Canned San Marzano Tomatoes"
-	item_path = /obj/item/food/canned/tomatoes
-	cost_per_order = 30
-
 /datum/orderable_item/milk_eggs/canned_pine_nuts
 	name = "Canned Pine Nuts"
 	item_path = /obj/item/food/canned/pine_nuts

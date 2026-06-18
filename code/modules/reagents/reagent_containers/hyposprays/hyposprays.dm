@@ -190,7 +190,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	if(vial)
 		if(!can_remove_vials)
 			return FALSE
-		if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
+		if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING|IGNORE_SOFTCRIT))
 			return FALSE
 		if(!silent)
 			to_chat(user, span_notice("You remove the [vial] from [src]."))
@@ -206,7 +206,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 /obj/item/hypospray/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	if(isnull(held_item))
+	if(held_item == src)
 		context[SCREENTIP_CONTEXT_LMB] = "Change mode"
 		context[SCREENTIP_CONTEXT_RMB] = "Remove vial"
 		if(upgrade_flags & HYPO_UPGRADE_NOZZLE)
@@ -356,7 +356,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 				span_userdanger("[user] is trying to take a blood sample from you!"),
 			)
 		if(use_delay)
-			if(!do_after(user, use_delay, user, living_target))
+			if(!do_after(user, use_delay, living_target))
 				return ITEM_INTERACT_BLOCKING
 
 		if(living_target.transfer_blood_to(vial, transfer_amount))

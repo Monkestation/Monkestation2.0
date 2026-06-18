@@ -1,7 +1,8 @@
-import type { BooleanLike } from 'common/react';
-import { capitalizeFirst } from 'common/string';
+import { Button, Stack } from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+import { capitalizeFirst } from 'tgui-core/string';
+
 import { useBackend } from '../../backend';
-import { Button, Stack } from '../../components';
 import { IconDisplay } from './IconDisplay';
 import type { SearchGroup, SearchItem } from './types';
 
@@ -17,7 +18,7 @@ type Props =
       group: SearchGroup;
     };
 
-export const LootBox = (props: Props) => {
+export function LootBox(props: Props) {
   const { act, data } = useBackend<Data>();
   const { is_blind } = data;
 
@@ -74,4 +75,4 @@ export const LootBox = (props: Props) => {
   if (is_blind) return content;
 
   return content;
-};
+}

@@ -70,15 +70,18 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 ///Proc to process the disease and decide on whether to advance, cure or make the sympthoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
 /datum/disease/proc/stage_act(seconds_per_tick, times_fired)
 	var/slowdown = HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
+	var/cure_mod
+	var/bad_immune = HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY) ? 2 : 1
 
 	if(has_cure())
-		if(SPT_PROB(cure_chance, seconds_per_tick))
+		cure_mod = cure_chance / bad_immune
+		if(SPT_PROB(cure_mod, seconds_per_tick))
 			update_stage(max(stage - 1, 1))
 
-		if(disease_flags & CURABLE && SPT_PROB(cure_chance, seconds_per_tick))
+		if(disease_flags & CURABLE && SPT_PROB(cure_mod, seconds_per_tick))
 			cure()
 			return FALSE
-	else if(SPT_PROB(stage_prob*slowdown, seconds_per_tick))
+	else if(SPT_PROB(stage_prob*slowdown*bad_immune, seconds_per_tick))
 		update_stage(min(stage + 1, max_stages))
 
 	return !carrier
@@ -208,7 +211,14 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 	return D
 
 /datum/disease/proc/after_add()
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	if(isnull(affected_mob))
+		return
+	if(HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY))
+		if(disease_flags & DISEASE_DORMANT)
+			disease_flags &= ~DISEASE_DORMANT
+		for(var/datum/symptom/symptom as anything in symptoms)
+			symptom.power *= 2
 
 
 /datum/disease/proc/GetDiseaseID()

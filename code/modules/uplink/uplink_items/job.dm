@@ -38,8 +38,9 @@
 	name = "Ancient Jumpsuit"
 	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you."
 	item = /obj/item/clothing/under/color/grey/ancient
-	cost = 20
+	cost = 25
 	restricted_roles = list(JOB_ASSISTANT)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 	surplus = 0
 
 /datum/uplink_item/role_restricted/oldtoolboxclean
@@ -49,6 +50,7 @@
 	cost = 2
 	restricted_roles = list(JOB_ASSISTANT)
 	surplus = 0
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/clownpin
 	name = "Ultra Hilarious Firing Pin"
@@ -58,15 +60,17 @@
 	restricted_roles = list(JOB_CLOWN)
 	illegal_tech = FALSE
 	surplus = 0 //monkestation edit: from 25 to 0
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/clownsuperpin
 	name = "Super Ultra Hilarious Firing Pin"
 	desc = "Like the ultra hilarious firing pin, except the gun you insert this pin into explodes when someone who isn't clumsy or a clown tries to fire it."
-	cost = 7
+	cost = 4
 	item = /obj/item/firing_pin/clown/ultra/selfdestruct
 	restricted_roles = list(JOB_CLOWN)
 	illegal_tech = FALSE
 	surplus = 0 //monkestation edit: from 25 to 0
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/syndimmi
 	name = "Syndicate Brand MMI"
@@ -83,6 +87,7 @@
 	item = /obj/item/hot_potato/syndicate
 	cost = 4
 	restricted_roles = list(JOB_COOK, JOB_BOTANIST, JOB_CLOWN, JOB_MIME)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/combat_baking
 	name = "Combat Bakery Kit"
@@ -110,6 +115,7 @@
 	cost = 5
 	item = /obj/item/reverse_bear_trap
 	restricted_roles = list(JOB_CLOWN)
+	surplus = 60
 
 /datum/uplink_item/role_restricted/modified_syringe_gun
 	name = "Modified Syringe Gun"
@@ -117,6 +123,8 @@
 	item = /obj/item/gun/syringe/dna
 	cost = 14
 	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
+	surplus = 50
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/meathook
 	name = "Butcher's Meat Hook"
@@ -146,6 +154,7 @@
 	progression_minimum = 10 MINUTES
 	item = /obj/item/reagent_containers/medipen/magillitis
 	cost = 15
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
 
 /datum/uplink_item/role_restricted/gorillacubes
@@ -186,6 +195,7 @@
 	progression_minimum = 30 MINUTES
 	cost = 14
 	item = /obj/item/storage/box/hug/reverse_revolver
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 	restricted_roles = list(JOB_CLOWN)
 
 /datum/uplink_item/role_restricted/pressure_mod
@@ -207,6 +217,7 @@
 	cost = 12
 	item = /obj/item/storage/box/syndie_kit/mimery
 	restricted_roles = list(JOB_MIME)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 	surplus = 0
 
 /datum/uplink_item/role_restricted/laser_arm
@@ -232,6 +243,7 @@
 	progression_minimum = 10 MINUTES
 	cost = 10
 	item = /obj/item/pneumatic_cannon/pie/selfcharge
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 	restricted_roles = list(JOB_CLOWN)
 
 /datum/uplink_item/role_restricted/clown_bomb
@@ -263,7 +275,8 @@
 	// Plus, it costs all your TC, and it's not an instant kill tool.
 	progression_minimum = 5 MINUTES
 	item = /obj/vehicle/sealed/car/clowncar
-	cost = 20
+	cost = 25
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 	restricted_roles = list(JOB_CLOWN)
 	surplus = 10
 
@@ -279,9 +292,10 @@
 	lock_other_purchases = TRUE
 	cant_discount = TRUE
 	item = /obj/item/his_grace
-	cost = 20
+	cost = 25
 	surplus = 0
 	restricted_roles = list(JOB_CHAPLAIN)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/concealed_weapon_bay
 	name = "Concealed Weapon Bay"
@@ -306,6 +320,7 @@
 	cost = 10
 	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_XENOBIOLOGIST) //Monkestation edit: xenobiology
 	surplus = 10
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/blastcannon
 	name = "Blast Cannon"
@@ -317,6 +332,7 @@
 	item = /obj/item/gun/blastcannon
 	cost = 14 //High cost because of the potential for extreme damage in the hands of a skilled scientist.
 	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 	surplus = 5
 
 /datum/uplink_item/role_restricted/evil_seedling
@@ -324,6 +340,7 @@
 	desc = "A rare seed we have recovered that grows into a dangerous species that will aid you with your tasks!"
 	item = /obj/item/seeds/seedling/evil
 	cost = 8
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 	restricted_roles = list(JOB_BOTANIST)
 
 //Boombots ported from monkestation 1
@@ -334,7 +351,7 @@
 			to remove these from your person will be in for an explosive surprise, to boot. \
 			Remember to activate them for the fun to begin. "
 	item = /obj/item/clothing/shoes/magboots/boomboots
-	cost = 20
+	cost = 25
 	restricted_roles = list(JOB_CLOWN)
 
 /datum/uplink_item/role_restricted/monkey_agent
@@ -354,5 +371,185 @@
 	item = /obj/item/storage/toolbox/guncase/monkeycase
 	cost = 4
 	limited_stock = 3
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 	restricted_roles = list(JOB_ASSISTANT, JOB_MIME, JOB_CLOWN)
 	refundable = FALSE
+
+/datum/uplink_item/role_restricted/velvetfu
+	name = "Velvet-Fu VHS tape"
+	desc = "Velvet-Fu is a knock-off Hollywood Martial Art.\n\
+			Has a notice, 'Removes the ability to Grab/Push'.\n\
+			Has been modified to beam its knowledge directly into your eyes, removing the need for a TV."
+	item = /obj/item/book/granter/martial/velvetfu
+	cost = 8
+	restricted_roles = list(JOB_JANITOR)
+
+/datum/uplink_item/role_restricted/minibible
+	name = "Miniature Bible"
+	desc = "We understand it can be difficult to carry out some of our missions. Here is some spiritual counsel in a small package."
+	progression_minimum = 5 MINUTES
+	cost = 1
+	item = /obj/item/book/bible/mini
+	restricted_roles = list(JOB_CHAPLAIN, JOB_CLOWN)
+
+/datum/uplink_item/role_restricted/clonekit
+	name = "Clone Army Kit"
+	desc = "Everything you need for a clone army, armaments not included."
+	progression_minimum = 5 MINUTES
+	cost = 25
+	item = /obj/item/storage/box/clonearmy
+	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR, JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER) // Experimental cloners were traditionally bought by cargo.
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
+
+///I know this probably isn't the right place to put it, but I don't know where I should put it, and I can move it later.
+/obj/item/disk/clonearmy
+	name = "DNA data disk" //Cunning disguise.
+	var/objective = ""
+	icon_state = "datadisk0"
+
+/obj/item/disk/clonearmy/Initialize(mapload)
+	. = ..()
+	icon_state = "datadisk[rand(0,7)]"
+	add_overlay("datadisk_gene")
+
+/obj/item/disk/clonearmy/attack_self(mob/user)
+	var/targName = tgui_input_text(user, "Enter a directive for the evil clones.", "Clone Directive Entry", objective, CONFIG_GET(number/max_law_len), TRUE)
+	if(!targName)
+		return
+	if(is_ic_filtered(targName))
+		to_chat(user, span_warning("Error: Directive contains invalid text."))
+		return
+	var/list/soft_filter_result = is_soft_ooc_filtered(targName)
+	if(soft_filter_result)
+		if(tgui_alert(user,"Your directive contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+			return
+		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for a clone directive. Directive: \"[html_encode(targName)]\"")
+		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for a clone directive. Directive: \"[targName]\"")
+	objective = targName
+	..()
+
+/obj/item/disk/clonearmy/attack()
+	return
+
+/obj/item/disk/clonearmy/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	var/atom/A = target
+	if(!proximity)
+		return
+	if(!istype(A, /obj/machinery/clonepod/experimental))
+		return
+	to_chat(user, "You upload the directive to the experimental cloner.")
+	var/obj/machinery/clonepod/experimental/pod = target
+	pod.custom_objective = objective
+	pod.RefreshParts()
+	pod.locked = TRUE // The pod shouldn't be eligible for cloner event.
+
+/datum/uplink_item/role_restricted/syndicate_plant_gene
+	name = "Catalytic Inhibitor Serum Plant Data Disk"
+	desc = "This plant data disk contains the genetic blueprint for the Catalytic Inhibitor Serum gene.\
+			enabling plants to produce a serum that halts all internal chemical reactions"
+	item = /obj/item/disk/plantgene/syndicate
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
+	cost = 17
+	restricted_roles = list(JOB_BOTANIST)
+
+/datum/uplink_item/role_restricted/power_gloves
+	name = "Power Gloves"
+	desc = "Are the Engineers on your station creating too much power? Use this to set them in their place. T-ray scanner not included"
+	cost = 8
+	item = /obj/item/clothing/gloves/color/yellow/power_gloves
+	restricted_roles = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN)
+
+/datum/uplink_item/role_restricted/tunnel_khans
+	name = "Tunnel Khans Care Package"
+	desc = "A... questionably packed box written on with gray crayon. It's really hard to read. We hope that your assistant mind can comprehend it better than us."
+	cost = 13
+	item = /obj/item/storage/box/syndie_kit/khan_package
+	restricted_roles = list(JOB_ASSISTANT)
+
+/datum/uplink_item/role_restricted/acid_spit
+	name = "Refined Matter Eater Mutator"
+	desc = "A mutator containing the recently refined \"Matter Eater\" mutation from clowns. \
+		The strain was refined to only cause 20 genetic instability instead of 40 in an undisclosed amount of time. \
+		Be cautious as it can be detected using genetic scanners and is curable with mutadone."
+	cost = 3
+	item = /obj/item/dnainjector/syndicate_matter_eater
+	restricted_roles = list(JOB_GENETICIST)
+
+/datum/uplink_item/role_restricted/acid_spit
+	name = "Acid Spit Mutator"
+	desc = "A mutator containing the recently extracted \"acid spit\" mutation from xenomorphs. \
+		The strain was refined over many months until the point of only causing 20 genetic instability instead of 70. \
+		Be cautious as it can be detected using genetic scanners and is curable with mutadone."
+	cost = 8
+	item = /obj/item/dnainjector/acid_spit
+	restricted_roles = list(JOB_GENETICIST)
+
+/datum/uplink_item/role_restricted/xray
+	name = "Refined X-Ray Vision Mutator Box"
+	desc = "A mutator containing a refined X-ray mutation allowing you to see through walls at the cost of eye health. \
+		The strain was refined over many weeks until the point of only causing 40 genetic instability instead of 60. \
+		Be cautious as it can be detected using genetic scanners and is curable with mutadone. \
+		This package also includes 3 oculine medipens to negate the negative effects of the mutation upon your body."
+	cost = 8
+	item = /obj/item/storage/box/syndie_kit/xray
+	restricted_roles = list(JOB_GENETICIST)
+
+/datum/uplink_item/role_restricted/laser_eyes
+	name = "Stabilized Laser Eyes Mutator Box"
+	desc = "A mutator containing the recently discovered \"laser eyes\" mutation. \
+		The strain was refined over 2 minutes in elite syndicate laboratories until the point of only causing 40 genetic instability instead of 60. \
+		Be cautious as it can be detected using genetic scanners and is curable with mutadone. \
+		This package also includes 3 oculine medipens to negate the negative effects of the mutation upon your body."
+	cost = 8
+	item = /obj/item/storage/box/syndie_kit/laser_eyes
+	restricted_roles = list(JOB_GENETICIST)
+
+/datum/uplink_item/role_restricted/corrupted_mender
+	name = "Corrupted Mending Touch Mutator"
+	desc = "A mutator containing a \"Mending Touch\" mutation, we have used special methods in order to make it able to smite anyone. \
+		However this mending touch mutation causes 50 instability instead of 35 due to high complexity. \
+		Be cautious as it can be detected using genetic scanners and is curable with mutadone."
+	cost = 12
+	item = /obj/item/dnainjector/syndicate_mending_touch
+	restricted_roles = list(JOB_GENETICIST)
+
+/datum/uplink_item/role_restricted/stabilizer_chromosome
+	name = "Stabilizer Chromosome"
+	desc = "A chromosome that reduces mutation instability by 20%. Whilst able to be found in people it is rather rare at a 6% chance. \
+		For this reason we are offering you this rare opportunity of a lifetime for a low cost."
+	cost = 2
+	surplus = 0
+	item = /obj/item/chromosome/stabilizer
+	restricted_roles = list(JOB_GENETICIST)
+	illegal_tech = FALSE
+
+/datum/uplink_item/role_restricted/synchronizer_chromosome
+	name = "Synchronizer Chromosome"
+	desc = "A chromosome that reduces downsides of negative effects on mutations by 50% or hides visual effects of certain mutations. \
+		Due to not being easily mass-producable we are offering this chromosome to you agent for increased damage to the station."
+	cost = 1
+	surplus = 0
+	item = /obj/item/chromosome/synchronizer
+	restricted_roles = list(JOB_GENETICIST)
+	illegal_tech = FALSE
+
+/datum/uplink_item/role_restricted/power_chromosome
+	name = "Power Chromosome"
+	desc = "A chromosome that increases mutation power by 50% or unlocks more powerful effects for specific mutations. \
+		Due to not being easily mass-producable we are offering this chromosome to you agent for increased damage to the station."
+	cost = 1
+	surplus = 0
+	item = /obj/item/chromosome/power
+	restricted_roles = list(JOB_GENETICIST)
+	illegal_tech = FALSE
+
+/datum/uplink_item/role_restricted/energy_chromosome
+	name = "Energetic Chromosome"
+	desc = "A chromosome that reduces action mutation cooldowns by 50% or increases chances of random mutation effects. \
+		Due to not being easily mass-producable we are offering this chromosome to you agent for increased damage to the station."
+	cost = 1
+	surplus = 0
+	item = /obj/item/chromosome/energy
+	restricted_roles = list(JOB_GENETICIST)
+	illegal_tech = FALSE
