@@ -716,7 +716,7 @@
 		return ITEM_INTERACT_BLOCKING
 	if(!target.appears_alive())
 		to_chat(user, span_warning("To perform mechanical ventilation, the patient must be alive!"))
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("Applying a breathing mask to [target] face."))
 	if(!can_repeat_healing(user, target, 3 SECONDS))
 		return ITEM_INTERACT_BLOCKING
