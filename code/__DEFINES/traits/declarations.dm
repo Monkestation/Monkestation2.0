@@ -799,7 +799,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This movable atom has the explosive block element
 #define TRAIT_BLOCKING_EXPLOSIVES "blocking_explosives"
 
-/// This turf contains something using split visiblity
+/// This turf contains something using split visibility
 /* #define TRAIT_CONTAINS_SPLITVIS "contains_splitvis" */
 
 ///Lava will be safe to cross while it has this trait.

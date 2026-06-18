@@ -243,3 +243,24 @@
   SirNightKnight:
   - rscadd: you can slice apart base floor plating with welding tools.
   - bugfix: you can tip over flashed cyborgs.
+2026-06-17:
+  Mantlecrawler:
+  - rscadd: Plasma is now rainbow during pride month
+  - config: Pride week is now pride month, through the entirety of June.
+  SirNightKnight:
+  - balance: removed crate content ashing when the locks are broken.
+  jlsnow301, SirNightKnight:
+  - bugfix: The library console has been refactored. Report any issues in the github!
+2026-06-18:
+  Barrel:
+  - bugfix: Blood Siphon will no longer kill you if you use it on an oozeling/ethereal.
+  Cujo:
+  - balance: Slime jelly now deals consistent tox damage (1-4) per second
+  - balance: Reduces number of hyposprays in medical vendor (5->2)
+  - balance: Reduces number of hypospray kits in medical vendor (3->2)
+  - balance: Reduces number of vial boxes in medical vendor (5->3)
+  - rscdel: Removes hypospray kits from medical wall vendors
+  JohnFulpWillard:
+  - spellcheck: visiblity -> visibility
+  sufferingintensifies:
+  - map: the free golem ship is now updated to the /TG/station version

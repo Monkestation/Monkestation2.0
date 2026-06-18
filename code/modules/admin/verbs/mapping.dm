@@ -1,4 +1,4 @@
-ADMIN_VERB_VISIBILITY(camera_view, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(camera_view, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(camera_view, R_DEBUG, FALSE, "Camera Range Display", "Shows the range of cameras on the station.", ADMIN_CATEGORY_MAPPING)
 	var/on = FALSE
 	for(var/turf/T in world)
@@ -18,7 +18,7 @@ ADMIN_VERB(camera_view, R_DEBUG, FALSE, "Camera Range Display", "Shows the range
 #ifdef TESTING
 GLOBAL_LIST_EMPTY(dirty_vars)
 
-ADMIN_VERB_VISIBILITY(see_dirty_varedits, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(see_dirty_varedits, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(see_dirty_varedits, R_DEBUG, FALSE, "Dirty Varedits", "Shows all dirty varedits.", ADMIN_CATEGORY_MAPPING)
 	var/list/dat = list()
 	dat += "<h3>Abandon all hope ye who enter here</h3><br><br>"
@@ -30,7 +30,7 @@ ADMIN_VERB(see_dirty_varedits, R_DEBUG, FALSE, "Dirty Varedits", "Shows all dirt
 	popup.open()
 #endif
 
-ADMIN_VERB_VISIBILITY(sec_camera_report, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(sec_camera_report, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(sec_camera_report, R_DEBUG, FALSE, "Camera Report", "Get a printout of all camera issues.", ADMIN_CATEGORY_MAPPING)
 	var/list/obj/machinery/camera/CL = list()
 
@@ -64,7 +64,7 @@ ADMIN_VERB(sec_camera_report, R_DEBUG, FALSE, "Camera Report", "Get a printout o
 	user << browse(output,"window=airreport;size=1000x500")
 	BLACKBOX_LOG_ADMIN_VERB("Show Camera Report")
 
-ADMIN_VERB_VISIBILITY(intercom_view, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(intercom_view, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(intercom_view, R_DEBUG, FALSE, "Intercom Range Display", "Shows the range of intercoms on the station.", ADMIN_CATEGORY_MAPPING)
 	var/static/intercom_range_display_status = FALSE
 	intercom_range_display_status = !intercom_range_display_status
@@ -79,7 +79,7 @@ ADMIN_VERB(intercom_view, R_DEBUG, FALSE, "Intercom Range Display", "Shows the r
 					new /obj/effect/abstract/marker/intercom(turf)
 	BLACKBOX_LOG_ADMIN_VERB("Show Intercom Range")
 
-ADMIN_VERB_VISIBILITY(show_map_reports, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(show_map_reports, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(show_map_reports, R_DEBUG, FALSE, "Show Map Reports", "Displays a list of map reports.", ADMIN_CATEGORY_MAPPING)
 	var/dat = {"<b>List of all map reports:</b><br>"}
 
@@ -88,7 +88,7 @@ ADMIN_VERB(show_map_reports, R_DEBUG, FALSE, "Show Map Reports", "Displays a lis
 
 	user << browse(HTML_SKELETON(dat), "window=map_reports")
 
-ADMIN_VERB_VISIBILITY(cmd_show_at_list, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(cmd_show_at_list, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(cmd_show_at_list, R_DEBUG, FALSE, "Show roundstart AT list", "Displays a list of active turfs coordinates at roundstart.", ADMIN_CATEGORY_MAPPING)
 	var/dat = {"<b>Coordinate list of Active Turfs at Roundstart</b>
 		<br>Real-time Active Turfs list you can see in Air Subsystem at active_turfs var<br>"}
@@ -102,7 +102,7 @@ ADMIN_VERB(cmd_show_at_list, R_DEBUG, FALSE, "Show roundstart AT list", "Display
 
 	BLACKBOX_LOG_ADMIN_VERB("Show Roundstart Active Turfs")
 
-ADMIN_VERB_VISIBILITY(cmd_show_at_markers, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(cmd_show_at_markers, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(cmd_show_at_markers, R_DEBUG, FALSE, "Show roundstart AT markers", "Places a marker on all active-at-roundstart turfs.", ADMIN_CATEGORY_MAPPING)
 	var/count = 0
 	for(var/obj/effect/abstract/marker/at/AT in GLOB.all_abstract_markers)
@@ -120,15 +120,15 @@ ADMIN_VERB(cmd_show_at_markers, R_DEBUG, FALSE, "Show roundstart AT markers", "P
 	BLACKBOX_LOG_ADMIN_VERB("Show Roundstart Active Turf Markers")
 
 ADMIN_VERB(enable_mapping_verbs, R_DEBUG, FALSE, "Enable Mapping Verbs", "Enable all mapping verbs.", ADMIN_CATEGORY_MAPPING)
-	SSadmin_verbs.update_visibility_flag(user, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG, TRUE)
+	SSadmin_verbs.update_visibility_flag(user, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG, TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Enable Debug Verbs")
 
-ADMIN_VERB_VISIBILITY(disable_mapping_verbs, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(disable_mapping_verbs, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(disable_mapping_verbs, R_DEBUG, FALSE, "Disable Mapping Verbs", "Disable all mapping verbs.", ADMIN_CATEGORY_MAPPING)
-	SSadmin_verbs.update_visibility_flag(user, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG, FALSE)
+	SSadmin_verbs.update_visibility_flag(user, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG, FALSE)
 	BLACKBOX_LOG_ADMIN_VERB("Disable Debug Verbs")
 
-ADMIN_VERB_VISIBILITY(count_objects_on_z_level, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(count_objects_on_z_level, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(count_objects_on_z_level, R_DEBUG, FALSE, "Count Objects On Z-Level", "Counts the number of objects of a certain type on a specific z-level.", ADMIN_CATEGORY_MAPPING)
 	var/level = input(user, "Which z-level?","Level?") as text|null
 	if(!level)
@@ -166,7 +166,7 @@ ADMIN_VERB(count_objects_on_z_level, R_DEBUG, FALSE, "Count Objects On Z-Level",
 	to_chat(world, "There are [count] objects of type [type_path] on z-level [num_level]", confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Count Objects Zlevel")
 
-ADMIN_VERB_VISIBILITY(count_objects_all, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(count_objects_all, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(count_objects_all, R_DEBUG, FALSE, "Count Objects All", "Counts the number of objects of a certain type in the game world.", ADMIN_CATEGORY_MAPPING)
 	var/type_text = input(user, "Which type path?","") as text | null
 	if(!type_text)
@@ -185,7 +185,7 @@ ADMIN_VERB(count_objects_all, R_DEBUG, FALSE, "Count Objects All", "Counts the n
 	BLACKBOX_LOG_ADMIN_VERB("Count Objects All")
 
 GLOBAL_VAR_INIT(say_disabled, FALSE)
-ADMIN_VERB_VISIBILITY(disable_communication, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(disable_communication, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(disable_communication, R_DEBUG, FALSE, "Disable all communication verbs", "Disables all communication verbs.", ADMIN_CATEGORY_MAPPING)
 	GLOB.say_disabled = !GLOB.say_disabled
 	if(GLOB.say_disabled)
@@ -193,7 +193,7 @@ ADMIN_VERB(disable_communication, R_DEBUG, FALSE, "Disable all communication ver
 	else
 		message_admins("[key_name_admin(user)] used 'Disable all communication verbs', restoring all communication methods.")
 
-ADMIN_VERB_VISIBILITY(create_mapping_job_icons, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(create_mapping_job_icons, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(create_mapping_job_icons, R_DEBUG, FALSE, "Generate job landmarks icons", "Generates job starting location landmarks.", ADMIN_CATEGORY_MAPPING)
 	var/icon/final = icon()
 	var/mob/living/carbon/human/dummy/D = new(locate(1,1,1)) //spawn on 1,1,1 so we don't have runtimes when items are deleted
@@ -220,7 +220,7 @@ ADMIN_VERB(create_mapping_job_icons, R_DEBUG, FALSE, "Generate job landmarks ico
 		final.Insert(icon('icons/hud/screen_gen.dmi', "x[x_number == 1 ? "" : x_number]"), "x[x_number == 1 ? "" : x_number]")
 	fcopy(final, "icons/mob/landmarks.dmi")
 
-ADMIN_VERB_VISIBILITY(debug_z_levels, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(debug_z_levels, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(debug_z_levels, R_DEBUG, FALSE, "Debug Z-Levels", "Displays a list of all z-levels and their linkages.", ADMIN_CATEGORY_MAPPING)
 	to_chat(user, boxed_message(gather_z_level_information(append_grid = TRUE)), confidential = TRUE)
 
@@ -284,7 +284,7 @@ ADMIN_VERB(debug_z_levels, R_DEBUG, FALSE, "Debug Z-Levels", "Displays a list of
 
 	return messages.Join("\n")
 
-ADMIN_VERB_VISIBILITY(station_food_debug, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(station_food_debug, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(station_food_debug, R_DEBUG, FALSE, "Count Station Food", "Counts the number of food items on the station.", ADMIN_CATEGORY_MAPPING)
 	var/list/foodcount = list()
 	for(var/obj/item/food/fuck_me in world)
@@ -306,7 +306,7 @@ ADMIN_VERB(station_food_debug, R_DEBUG, FALSE, "Count Station Food", "Counts the
 	popup.set_content(page_contents)
 	popup.open()
 
-ADMIN_VERB_VISIBILITY(station_stack_debug, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(station_stack_debug, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(station_stack_debug, R_DEBUG, FALSE, "Count Station Stacks", "Count the stacks of materials on station.", ADMIN_CATEGORY_MAPPING)
 	var/list/stackcount = list()
 	for(var/obj/item/stack/fuck_me in world)
@@ -328,7 +328,7 @@ ADMIN_VERB(station_stack_debug, R_DEBUG, FALSE, "Count Station Stacks", "Count t
 	popup.set_content(page_contents)
 	popup.open()
 
-ADMIN_VERB_VISIBILITY(check_for_obstructed_atmospherics, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(check_for_obstructed_atmospherics, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(check_for_obstructed_atmospherics, R_DEBUG, FALSE, "Check For Obstructed Atmospherics", "Checks for obstructions on atmospherics machines.", ADMIN_CATEGORY_MAPPING)
 	message_admins(span_adminnotice("[key_name_admin(user)] is checking for obstructed atmospherics through the debug command."))
 	BLACKBOX_LOG_ADMIN_VERB("Check For Obstructed Atmospherics")
