@@ -14,19 +14,11 @@
 		mind.active = TRUE
 		mind.set_current(src)
 
-	if((client.player_age != -1) && client.player_age <= CONFIG_GET(number/minimum_age) && !(client.ckey in GLOB.interviews.approved_ckeys))
-		client.interviewee = TRUE
+	var/required_living_minutes = CONFIG_GET(number/panic_bunker_living)
+	var/living_minutes = client.get_exp_living(TRUE)
 
-	// Check if user should be added to interview queue
-	if(!client.holder && CONFIG_GET(flag/panic_bunker) && CONFIG_GET(flag/panic_bunker_interview) && !(client.ckey in GLOB.interviews.approved_ckeys))
-		var/required_living_minutes = CONFIG_GET(number/panic_bunker_living)
-		var/living_minutes = client.get_exp_living(TRUE)
-		if(!CONFIG_GET(flag/minimum_account_age))
-			if(required_living_minutes >= living_minutes)
-				client.interviewee = FALSE
-		else
-			if(client.account_age <= CONFIG_GET(number/minimum_age))
-				client.interviewee = TRUE
+	if(living_minutes >= required_living_minutes && !(ckey in GLOB.interviews.approved_ckeys))
+		client.interviewee = TRUE
 
 	. = ..()
 	if(!. || !client)
