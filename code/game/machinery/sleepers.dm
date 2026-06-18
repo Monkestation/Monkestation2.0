@@ -114,6 +114,7 @@
 /obj/machinery/sleeper/mouse_drop_receive(atom/target, mob/user, params)
 	if(!iscarbon(target))
 		return
+	do_after(user, 1 SECOND)
 	close_machine(target)
 
 /obj/machinery/sleeper/screwdriver_act(mob/living/user, obj/item/I)
