@@ -71,7 +71,6 @@
 		"borg_upgrade_piercinghypospray",
 		"borg_upgrade_pinpointer",
 		"borg_upgrade_surgical_database",
-		"borg_upgrade_surgicalomnitool",
 		"borg_upgrade_advanalyzer",
 		"borg_upgrade_breathingbag",
 		"borg_upgrade_surgicalomnitool"
