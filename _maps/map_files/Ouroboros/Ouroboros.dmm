@@ -8439,6 +8439,20 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"cAC" = (
+/obj/machinery/door/airlock/external{
+	name = "Departure Shuttle Airlock";
+	space_dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
+/obj/effect/landmark/navigate_destination/dockesc,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/exit/departure_lounge)
 "cAF" = (
 /obj/machinery/telecomms/processor/preset_one,
 /turf/open/floor/circuit/green/telecomms/mainframe,
@@ -23202,10 +23216,10 @@
 /obj/structure/table/glass,
 /obj/machinery/light/cold/directional/east,
 /obj/item/radio/intercom/directional/east,
-/obj/item/vacuum_pack,
-/obj/item/vacuum_pack,
-/obj/item/vacuum_pack,
-/obj/item/vacuum_pack,
+/obj/item/vacuum_pack/backpack,
+/obj/item/vacuum_pack/backpack,
+/obj/item/vacuum_pack/backpack,
+/obj/item/vacuum_pack/backpack,
 /obj/item/disk/vacuum_upgrade/biomass,
 /obj/item/disk/vacuum_upgrade/biomass,
 /obj/item/disk/vacuum_upgrade/biomass,
@@ -29629,8 +29643,13 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "iMU" = (
-/obj/effect/landmark/navigate_destination,
-/turf/open/floor/glass/reinforced,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/navigate_destination{
+	location = "Evacuation"
+	},
+/turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "iMX" = (
 /obj/structure/closet/boxinggloves,
@@ -64871,6 +64890,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/machinery/photobooth/security,
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 1
 	},
@@ -190702,7 +190722,7 @@ xTS
 tbr
 esc
 cNF
-cNF
+iMU
 cNF
 cNF
 rYy
@@ -190959,7 +190979,7 @@ cKF
 cNF
 cNF
 mVp
-iMU
+mVp
 mVp
 xId
 dXv
@@ -193269,7 +193289,7 @@ gnw
 iCn
 rsC
 qAz
-aQd
+cAC
 tbE
 sOP
 lZf

@@ -568,6 +568,8 @@
 	worn_icon_state = "protokshotgunauto"
 	icon_state = "protokshotgunauto"
 	slot_flags = ITEM_SLOT_BACK
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
 	burst_size = 1
 	fire_delay = 0
 	base_pixel_x = -2

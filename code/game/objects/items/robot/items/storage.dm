@@ -5,8 +5,10 @@
 	icon_state = "hugmodule"
 	/// The item stored inside of this apparatus
 	var/obj/item/stored
-	/// Whitelist of types allowed in this apparatus
+	/// Whitelist of types (and its subtypes) that are allowed in this apparatus.
 	var/list/storable = list()
+	/// Blacklist of types (and its subtypes) that are not allowed in this apparatus.
+	var/list/blacklisted_storables = list()
 
 /obj/item/borg/apparatus/Initialize(mapload)
 	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, PROC_REF(safedecon))
@@ -48,6 +50,7 @@
 	if(!stored || !issilicon(user))
 		return ..()
 	stored.attack_self(user)
+
 /obj/item/borg/apparatus/attack_self_secondary(mob/living/silicon/robot/user)
 	if(!stored || !issilicon(user))
 		return ..()
@@ -66,24 +69,33 @@
 	else
 		return ..()
 
+/// Checks if the item is allowed to be inside of the apparatus.
 /obj/item/borg/apparatus/proc/itemcheck(atom/atom)
-	for(var/storable_type in storable)
-		if(istype(atom, storable_type))
-			return TRUE
-	return FALSE
+	if(is_type_in_list(atom, blacklisted_storables))
+		return FALSE
+	return is_type_in_list(atom, storable)
 
-/obj/item/borg/apparatus/proc/put_in_apparatus(atom/atom, mob/user)
-	if(!stored)
-		if((istype(atom.loc, /mob/living/silicon/robot) && (atom == user)) || (istype(atom.loc, /obj/item/robot_model) && (atom == user)) || HAS_TRAIT(atom, TRAIT_NODROP))
-			return FALSE // Borgs should not be grabbing their own modules
-		if(itemcheck(atom))
-			var/obj/item/item = atom
-			item.forceMove(src)
-			stored = item
-			RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
-			update_appearance()
-			return TRUE
-	return FALSE
+/// Attempts to put the item into the apparatus.
+/obj/item/borg/apparatus/proc/put_in_apparatus(obj/item/storing_item, mob/user)
+	if(stored)
+		return FALSE
+	if(!istype(storing_item))
+		return FALSE
+	if(HAS_TRAIT(storing_item, TRAIT_NODROP))
+		return
+	if(storing_item == user)
+		if(istype(storing_item.loc, /mob/living/silicon/robot))
+			return FALSE
+		else if(istype(storing_item.loc, /obj/item/robot_model))
+			return FALSE
+	if(!itemcheck(storing_item))
+		return FALSE
+	var/obj/item/item = storing_item
+	item.forceMove(src)
+	stored = item
+	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
+	update_appearance()
+	return TRUE
 
 /obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, params)
 	if(LAZYACCESS(params, RIGHT_CLICK))
@@ -249,6 +261,11 @@
 	desc = "A container for holding and application of various monster organs."
 	storable = list(/obj/item/organ/internal/monster_core)
 
+/obj/item/borg/apparatus/organ_storage/limb
+	name = "limb storage bag"
+	desc = "A container for holding limbs."
+	storable = list(/obj/item/bodypart)
+
 ///Apparatus to allow Engineering/Sabo borgs to manipulate any material sheets.
 /obj/item/borg/apparatus/sheet_manipulator
 	name = "material manipulation apparatus"
@@ -327,6 +344,25 @@
 	if(istype(atom, /obj/item/ai_module) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
 		to_chat(user, span_warning("This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up."))
 	return ..()
+
+/obj/item/borg/apparatus/circuit/science
+	name = "science manipulation apparatus"
+	desc = "A special apparatus for carrying various stock parts, disks, assemblies, and even artifacts!"
+	storable = list(
+		/obj/item/stock_parts,
+		/obj/item/assembly,
+		/obj/item/disk,
+		/obj/item/artifact_item,
+		/obj/item/artifact_item_tiny,
+		/obj/item/gun/magic/artifact,
+		/obj/item/melee/artifact,
+		/obj/item/artifact_summon_wand,
+		/obj/item/slime_mutation_syringe,
+		/obj/item/borg_restart_board
+	)
+	blacklisted_storables = list(
+		/obj/item/disk/nuclear
+	)
 
 //apparatus to allow borgs to cook
 /obj/item/borg/apparatus/cooking

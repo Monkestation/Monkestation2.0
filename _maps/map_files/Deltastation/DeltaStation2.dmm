@@ -23239,8 +23239,8 @@
 	},
 /obj/item/storage/box/petridish,
 /obj/effect/turf_decal/siding/purple,
-/obj/item/vacuum_pack,
-/obj/item/vacuum_pack,
+/obj/item/vacuum_pack/backpack,
+/obj/item/vacuum_pack/backpack,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "fva" = (
@@ -24196,7 +24196,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "fHD" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/smartfridge/organ,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 4;
 	id = "roboticsprivacy";
@@ -46174,6 +46174,18 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
+"kKZ" = (
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/landmark/navigate_destination/dockesc,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "kLa" = (
 /obj/effect/spawner/random/engineering/tank,
 /obj/effect/turf_decal/bot,
@@ -46744,6 +46756,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/engine/atmos)
+"kSI" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/vending/robotics,
+/turf/open/floor/iron/dark,
+/area/station/science/robotics/lab)
 "kSR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -58713,8 +58733,8 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "nMq" = (
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/photobooth/security,
 /turf/open/floor/iron/dark,
 /area/station/security/processing)
 "nMw" = (
@@ -70947,18 +70967,12 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "qIc" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	name = "Departures Lounge"
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable,
 /obj/machinery/duct,
-/obj/effect/landmark/navigate_destination/dockesc,
+/obj/effect/landmark/navigate_destination{
+	location = "Evacuation"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "qIf" = (
@@ -75978,6 +75992,7 @@
 /obj/item/toy/figure/roboticist{
 	pixel_y = 4
 	},
+/obj/item/hand_labeler,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "rRS" = (
@@ -87696,7 +87711,6 @@
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos)
 "uIK" = (
-/obj/effect/landmark/navigate_destination/dockesc,
 /obj/effect/turf_decal/delivery,
 /obj/structure/sign/warning/vacuum/directional/south,
 /turf/open/floor/iron,
@@ -93432,7 +93446,7 @@
 /obj/structure/sign/departments/medbay/alt/directional/south,
 /obj/machinery/light/cold/directional/east,
 /obj/machinery/status_display/evac/directional/east,
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/deployed,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "wdl" = (
@@ -134432,7 +134446,7 @@ dOk
 dOk
 ozE
 hGz
-pRk
+kSI
 lsl
 iYC
 xFI
@@ -145810,7 +145824,7 @@ sXI
 jkH
 jRt
 cPj
-etI
+kKZ
 ikx
 bmU
 mvj
@@ -146303,8 +146317,8 @@ arU
 dkL
 arU
 bDv
+dgJ
 qIc
-vaK
 vaK
 gFW
 qBf

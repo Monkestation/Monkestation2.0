@@ -10,6 +10,7 @@
 	category = SPELLTYPE_PRESERVATION
 	cogs_required = 2
 	power_cost = STANDARD_CELL_CHARGE * 0.15
+	can_cast_while_moving = TRUE
 
 /datum/scripture/slab/vanguard/apply_effects(atom/applied_atom)
 	return FALSE

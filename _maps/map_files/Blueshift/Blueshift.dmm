@@ -1721,7 +1721,7 @@
 	dir = 10
 	},
 /obj/item/radio/intercom/directional/west,
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/deployed,
 /turf/open/floor/iron/white,
 /area/station/science/robotics)
 "arA" = (
@@ -7945,24 +7945,14 @@
 /turf/open/floor/noslip,
 /area/station/maintenance/gag_room)
 "bAV" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/caution/stand_clear,
-/obj/machinery/door/airlock/external{
-	name = "External Docking Port"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
 /obj/effect/landmark/navigate_destination{
-	location = "Escape"
+	location = "Evacuation"
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "bAZ" = (
 /obj/structure/table/glass,
@@ -9108,32 +9098,8 @@
 	},
 /area/station/command/gateway)
 "bMn" = (
-/obj/structure/rack,
-/obj/item/circuitboard/mecha/ripley/main,
-/obj/item/circuitboard/mecha/ripley/peripherals,
-/obj/item/storage/medkit,
-/obj/item/storage/medkit,
-/obj/item/storage/medkit,
-/obj/item/healthanalyzer,
-/obj/item/healthanalyzer,
-/obj/item/healthanalyzer,
-/obj/item/stack/cable_coil,
-/obj/item/stack/cable_coil,
-/obj/item/stack/cable_coil,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/prox_sensor,
-/obj/item/assembly/prox_sensor,
-/obj/item/assembly/prox_sensor,
-/obj/item/assembly/prox_sensor,
-/obj/item/assembly/prox_sensor,
 /obj/machinery/camera/autoname/directional/north,
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/science/robotics/lab)
 "bMr" = (
@@ -13405,6 +13371,30 @@
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/machinery/firealarm/directional/south,
+/obj/item/assembly/prox_sensor,
+/obj/item/assembly/prox_sensor,
+/obj/item/assembly/prox_sensor,
+/obj/item/assembly/prox_sensor,
+/obj/item/assembly/prox_sensor,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
+/obj/item/healthanalyzer,
+/obj/item/healthanalyzer,
+/obj/item/healthanalyzer,
+/obj/item/storage/medkit,
+/obj/item/storage/medkit,
+/obj/item/storage/medkit,
+/obj/item/circuitboard/mecha/ripley/peripherals,
+/obj/item/circuitboard/mecha/ripley/main,
 /turf/open/floor/mineral/plastitanium,
 /area/station/science/robotics/lab)
 "cAV" = (
@@ -30231,6 +30221,14 @@
 	dir = 9
 	},
 /area/station/commons/fitness/recreation)
+"fNt" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "roboticsprivacy";
+	name = "Robotics Shutters"
+	},
+/obj/machinery/smartfridge/organ,
+/turf/open/floor/plating,
+/area/station/science/robotics)
 "fNu" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -42885,6 +42883,7 @@
 /obj/item/stock_parts/power_store/cell/high,
 /obj/item/stock_parts/power_store/cell/high,
 /obj/item/stock_parts/power_store/cell/high,
+/obj/item/hand_labeler,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "imm" = (
@@ -46932,13 +46931,6 @@
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/structure/closet/wardrobe/robotics_black,
-/obj/item/clothing/glasses/welding,
-/obj/item/storage/belt/utility,
-/obj/item/clothing/suit/hooded/techpriest,
-/obj/item/clothing/head/hooded/techpriest,
-/obj/item/storage/fancy/candle_box,
-/obj/effect/turf_decal/bot_red,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "jco" = (
@@ -54288,6 +54280,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
+/obj/machinery/photobooth/security,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -63999,7 +63992,6 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/science/robotics/lab)
 "mpg" = (
@@ -64499,7 +64491,13 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engineering/engine_aft_starboard)
 "mvr" = (
-/obj/machinery/smartfridge/organ,
+/obj/effect/turf_decal/bot_red,
+/obj/structure/closet/wardrobe/robotics_black,
+/obj/item/storage/fancy/candle_box,
+/obj/item/clothing/suit/hooded/techpriest,
+/obj/item/clothing/head/hooded/techpriest,
+/obj/item/storage/belt/utility,
+/obj/item/clothing/glasses/welding,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "mvD" = (
@@ -76264,9 +76262,9 @@
 /obj/item/disk/vacuum_upgrade/biomass,
 /obj/item/disk/vacuum_upgrade/biomass,
 /obj/item/disk/vacuum_upgrade/biomass,
-/obj/item/vacuum_pack,
-/obj/item/vacuum_pack,
-/obj/item/vacuum_pack,
+/obj/item/vacuum_pack/backpack,
+/obj/item/vacuum_pack/backpack,
+/obj/item/vacuum_pack/backpack,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "oJC" = (
@@ -98022,6 +98020,24 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/aux_eva)
+"sUn" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/caution/stand_clear,
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/landmark/navigate_destination/dockesc,
+/turf/open/floor/iron/dark,
+/area/station/hallway/secondary/exit/departure_lounge)
 "sUs" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/cable,
@@ -109850,9 +109866,9 @@
 /obj/item/disk/vacuum_upgrade/biomass,
 /obj/item/disk/vacuum_upgrade/biomass,
 /obj/item/disk/vacuum_upgrade/biomass,
-/obj/item/vacuum_pack,
-/obj/item/vacuum_pack,
-/obj/item/vacuum_pack,
+/obj/item/vacuum_pack/backpack,
+/obj/item/vacuum_pack/backpack,
+/obj/item/vacuum_pack/backpack,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "vfe" = (
@@ -144276,13 +144292,13 @@ dTd
 dTd
 iZi
 cFU
-wiF
+sUn
 nKo
 cOE
 iqG
 wDB
 nKo
-bAV
+wiF
 xKQ
 wiF
 nKo
@@ -147106,7 +147122,7 @@ dTd
 hyx
 xYH
 oil
-psQ
+bAV
 fdW
 gXL
 met
@@ -221628,7 +221644,7 @@ vVN
 xKX
 nrx
 lir
-sXt
+fNt
 kyI
 sXt
 lir

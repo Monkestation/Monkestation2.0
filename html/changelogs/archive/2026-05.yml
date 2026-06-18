@@ -516,3 +516,61 @@
   suffering intensifies:
   - balance: ashwalkers can now do the evolution ritual every 15 minutes instead of
       every 20
+2026-05-29:
+  Mantlecrawler:
+  - balance: Devitt tank can no longer be discounted, or bought before 30 minutes
+      in
+  - balance: Devitt can no longer be gotten by BBs
+  Shoddd:
+  - balance: awakened dragon needs a t4 grab to necksnap
+  Tractor-Maam:
+  - rscadd: Inserting paper with writing on it into your PDA requires a confirmation.
+  - rscadd: Added the MOD megaphone module to Cargo Goodies for 250cr.
+2026-05-30:
+  Absolucy:
+  - image: New sprites for the hunter's revolver, by infrared_baron.
+  - rscadd: The hunter's revolver can now also be used to stab people.
+  - rscadd: The bloodsilver bullet debuff now causes abilities to hurt you with "recoil"
+      while you're afflicted.
+  - rscadd: Bloodsilver bullets now forcefully deactivate various monster abilities
+      - such as fleshmend, caretaker's refuge, changeling adrenaline, darkness adaptation
+      and such, alongside pausing changeling chemical regeneration, and preventing
+      jaunts.
+  - bugfix: Bloodsilver bullets now ricochet, as was likely originally intended.
+  TheColorCyan:
+  - qol: clock cultists can see if APC already has a cog in it by examining
+  - balance: kindle and vanguard can be invoked when moving
+  - balance: bronze armor now has it's helmet attached to it, instead of being separate
+      (like a hood)
+  - balance: bronze armor gives pressure resistance when empowered
+  - balance: bronze armor is now thick material
+  - balance: bronze helmet now completely hides your face, and gives pepperspray protection
+  - balance: bronze shoes are now noslips
+  - balance: clock armaments spell no longer gives bronze boots
+  - bugfix: fixed a bug that allowed quickbound clock cult spells to bypass power
+      cost and make power go into negative values
+2026-05-31:
+  Cujo:
+  - qol: Cleans up stasis bed examine text.
+  Gboster, Qwertytoforty, tommysalami3, rick hick:
+  - rscadd: Added a hardmode version of hierophant/ashdrake/colossus
+  - rscadd: Hardmode can be engaged by using a weapon with the HRD-MDE injector addon
+      on a megafauna, 500 points per one.
+  Shoddd:
+  - rscdel: Disables Pro-tagonista Syndrome
+  SirNightKnight:
+  - balance: rubbershot has the same speed as other ballistics.
+  - balance: lowered the cost of rubbershot ammo boxes to 2 TC from 3 in the uplink.
+  - balance: slashers are no longer clumsy, instead they can't use guns.
+  - qol: closets and crates have to be cut in combat mode.
+  - bugfix: fixed up closet/crate cutting code to work off tool behaviour.
+  TheColorCyan:
+  - balance: (Melbert) Codex Cicatrix is now a tier 1 heretic knowledge, and can not
+      be drafted.
+  - balance: (Melbert) Upon being successfully sacrificed by a heretic all other heretics
+      lose you as a target, and you can no longer be (re)rolled as a target by other
+      heretics.
+  - balance: Cosmic expansion range is back to 3x3
+  Tractor-Maam:
+  - bugfix: engineering cyborgs can recharge their light replacer in cyborg rechargers
+      again.

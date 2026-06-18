@@ -27767,7 +27767,7 @@
 /area/centcom/central_command_areas/adminroom)
 "oLl" = (
 /obj/structure/table/glass/plasmaglass,
-/obj/item/vacuum_pack,
+/obj/item/vacuum_pack/backpack,
 /obj/item/disk/vacuum_upgrade/biomass,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
