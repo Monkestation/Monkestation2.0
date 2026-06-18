@@ -35,8 +35,6 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	var/door_anim_time = 1.5 // set to 0 to make the door not animate at all
 	/// Paint jobs for this closet, crates are a subtype of closet so they override these values
 	var/list/paint_jobs = TRUE
-	/// Chance for an item inside to get ashed upon the destruction of the lock
-	var/ash_chance = 0
 	/// Controls whether a door overlay should be applied using the icon_door value as the icon state
 	var/enable_door_overlay = TRUE
 	var/has_opened_overlay = TRUE
@@ -1039,14 +1037,6 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	welded = FALSE //applies to all lockers
 	locked = FALSE //applies to critter crates and secure lockers only
 	broken = TRUE //applies to secure lockers only
-	for(var/obj/item/broken as anything in src.contents)
-		if(!istype(broken, /mob))
-			if(prob(ash_chance))
-				QDEL_NULL(broken)
-				new /obj/effect/decal/cleanable/ash(src.loc)
-				if(istype(broken, /obj/item/ammo_box))
-					if(prob(25))
-						explosion(src, 0, 0, 2, 0, 2)
 	open(force = TRUE, special_effects = FALSE)
 
 /obj/structure/closet/attack_hand_secondary(mob/user, modifiers)
