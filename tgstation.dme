@@ -4343,7 +4343,8 @@
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_drink.dm"
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_egg.dm"
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_frozen.dm"
-#include "code\modules\food_and_drinks\recipes\tablecraft\recipes_goblin.dm"
+// Uncomment when sprites are done in part 2
+//#include "code\modules\food_and_drinks\recipes\tablecraft\recipes_goblin.dm"
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_guide.dm"
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_lizard.dm"
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_martian.dm"
@@ -7541,7 +7542,8 @@
 #include "monkestation\code\modules\botany\components\plant_growing.dm"
 #include "monkestation\code\modules\botany\components\plant_growth_holder.dm"
 #include "monkestation\code\modules\botany\components\plant_tray_overlays.dm"
-#include "monkestation\code\modules\botany\new_seeds\goblin_plants.dm"
+// Uncomment when sprites are done in part 2
+// #include "monkestation\code\modules\botany\new_seeds\goblin_plants.dm"
 #include "monkestation\code\modules\botany\new_seeds\mutations.dm"
 #include "monkestation\code\modules\botany\new_seeds\seeds.dm"
 #include "monkestation\code\modules\botany\plant_icon_overrides\crops.dm"

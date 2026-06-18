@@ -32,7 +32,8 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/dog
 
-	butcher_results = list(/obj/item/food/meat/slab/glerm = 2, /obj/item/food/glermtail/raw = 1)
+	// Uncomment when sprites are done in part 2
+	// butcher_results = list(/obj/item/food/meat/slab/glerm = 2, /obj/item/food/glermtail/raw = 1)
 
 /mob/living/basic/gatosh/glerm/cool
 	name = "\improper cool glerm"
