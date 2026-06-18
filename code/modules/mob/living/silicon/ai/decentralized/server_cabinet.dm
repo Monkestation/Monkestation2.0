@@ -85,12 +85,6 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 /obj/machinery/ai/server_cabinet/process(seconds_per_tick)
 	valid_ticks = clamp(valid_ticks, 0, MAX_AI_EXPANSION_TICKS)
 	if(valid_holder())
-		var/total_usage = (cached_power_usage * power_modifier)
-		use_energy(total_usage)
-
-		var/temperature_increase = (total_usage / AI_HEATSINK_CAPACITY)* heat_modifier
-		core_temp += temperature_increase * AI_TEMPERATURE_MULTIPLIER
-
 		valid_ticks++
 		if(!was_valid_holder)
 			update_appearance()
@@ -108,6 +102,18 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 			cut_overlays()
 			hardware_synced = FALSE
 			GLOB.ai_os.update_hardware()
+
+/obj/machinery/ai/server_cabinet/process_atmos()
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!valid_holder())
+		return FALSE
+	var/total_usage = (cached_power_usage * power_modifier)
+	use_energy(total_usage)
+	var/temperature_increase = (total_usage / AI_HEATSINK_CAPACITY)* heat_modifier
+	core_temp += temperature_increase * AI_TEMPERATURE_MULTIPLIER
+	return TRUE
 
 /obj/machinery/ai/server_cabinet/update_overlays()
 	. = ..()

@@ -198,34 +198,43 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 /obj/machinery/ai/data_core/process()
 	valid_ticks = clamp(valid_ticks, 0, MAX_AI_DATA_CORE_TICKS)
 
-	var/ai_creating_heat
-	for(var/mob/living/silicon/ai/ai_contents in contents)
-		ai_creating_heat = !ai_contents.technically_unpowered
-		break //don't need to check every single AI
-
 	if(valid_holder())
 		valid_ticks++
 		use_power = ACTIVE_POWER_USE
 		if(machine_stat & NOPOWER)
 			integrated_battery.use(active_power_usage * CELL_POWERUSE_MULTIPLIER)
 		COOLDOWN_RESET(src, warning_cooldown)
-	else
-		valid_ticks--
-		if(valid_ticks <= 0)
-			use_power = IDLE_POWER_USE
-		if(COOLDOWN_FINISHED(src, warning_cooldown))
-			COOLDOWN_START(src, warning_cooldown, AI_DATA_CORE_WARNING_COOLDOWN)
-			for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
-				if(!AI.mind && AI.deployed_shell.mind)
-					to_chat(AI.deployed_shell, span_userdanger("<A HREF=?src=[REF(AI)];go_to_machine=[REF(src)]>Data core</A> in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
-				else
-					to_chat(AI, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
-				AI.playsound_local(AI, 'sound/machines/engine_alert2.ogg', 30)
+		return
 
-	if(!(machine_stat & (BROKEN|EMPED)) && has_power() && !disableheat && ai_creating_heat)
-		var/temp_active_usage = (machine_stat & NOPOWER) ? idle_power_usage * CELL_POWERUSE_MULTIPLIER : active_power_usage * CELL_POWERUSE_MULTIPLIER
-		var/temperature_increase = (temp_active_usage / AI_HEATSINK_CAPACITY) * heat_modifier //1 CPU = 1000W. Heat capacity = somewhere around 3000-4000. Aka we generate 0.25 - 0.33 K per second, per CPU.
-		core_temp += temperature_increase * AI_TEMPERATURE_MULTIPLIER
+	valid_ticks--
+	if(valid_ticks <= 0)
+		use_power = IDLE_POWER_USE
+	if(COOLDOWN_FINISHED(src, warning_cooldown))
+		COOLDOWN_START(src, warning_cooldown, AI_DATA_CORE_WARNING_COOLDOWN)
+		for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
+			if(!AI.mind && AI.deployed_shell.mind)
+				to_chat(AI.deployed_shell, span_userdanger("<A HREF=?src=[REF(AI)];go_to_machine=[REF(src)]>Data core</A> in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
+			else
+				to_chat(AI, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
+			AI.playsound_local(AI, 'sound/machines/engine_alert2.ogg', 30)
+
+/obj/machinery/ai/data_core/process_atmos()
+	. = ..()
+	if(!.)
+		return FALSE
+
+	var/ai_creating_heat
+	for(var/mob/living/silicon/ai/ai_contents in contents)
+		ai_creating_heat = !ai_contents.technically_unpowered
+		break //don't need to check every single AI
+
+	if((machine_stat & (BROKEN|EMPED)) || !has_power() || disableheat || !ai_creating_heat)
+		return FALSE
+
+	var/temp_active_usage = (machine_stat & NOPOWER) ? idle_power_usage * CELL_POWERUSE_MULTIPLIER : active_power_usage * CELL_POWERUSE_MULTIPLIER
+	var/temperature_increase = (temp_active_usage / AI_HEATSINK_CAPACITY) * heat_modifier //1 CPU = 1000W. Heat capacity = somewhere around 3000-4000. Aka we generate 0.25 - 0.33 K per second, per CPU.
+	core_temp += temperature_increase * AI_TEMPERATURE_MULTIPLIER
+	return TRUE
 
 /obj/machinery/ai/data_core/process_atmos()
 	for(var/mob/living/silicon/ai/ai_contents in contents)

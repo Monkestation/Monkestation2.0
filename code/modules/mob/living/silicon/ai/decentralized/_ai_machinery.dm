@@ -21,16 +21,17 @@
 //Cooling happens here
 /obj/machinery/ai/process_atmos()
 	if((machine_stat & (BROKEN|EMPED)) || !has_power())
-		return
+		return FALSE
 	var/turf/T = get_turf(src)
 	if(!T || isspaceturf(T))
-		return
+		return FALSE
 	var/datum/gas_mixture/env = T.return_air()
 	if(!env.total_moles())
-		return
+		return FALSE
 	var/new_temp = env.temperature_share(null, AI_HEATSINK_COEFF, core_temp, AI_HEATSINK_CAPACITY)
 	core_temp = new_temp
 	T.air_update_turf(FALSE, FALSE)
+	return TRUE
 
 /obj/machinery/ai/proc/valid_holder()
 	if(machine_stat & (BROKEN|EMPED) || !has_power())
