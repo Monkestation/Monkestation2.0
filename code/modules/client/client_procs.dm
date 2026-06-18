@@ -920,7 +920,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		message_admins(span_adminnotice("Proxy Detection: [key_name_admin(src)] Overwatch detected this is a [string]"))
 		interviewee = TRUE
 
-	if(ckey in GLOB.interviews.approved_ckeys || living_minutes >= required_living_minutes)
+	if((ckey in GLOB.interviews.approved_ckeys) || living_minutes >= required_living_minutes)
 		return FALSE
 
 	return failed
