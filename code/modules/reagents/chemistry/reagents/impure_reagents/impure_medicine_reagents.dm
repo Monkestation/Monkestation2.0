@@ -901,7 +901,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	if(overdosed)
 		return
-	var/need_mob_update
 	var/datum/wound/bloodiest_wound
 	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
 		if(iter_wound.blood_flow && iter_wound.blood_flow > bloodiest_wound?.blood_flow)
@@ -909,8 +908,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	bloodiest_wound?.adjust_blood_flow(-0.1 * REM * seconds_per_tick)
 
 	if(affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
-		need_mob_update += affected_mob.blood_volume += min(1 * seconds_per_tick, BLOOD_VOLUME_NORMAL)
-	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, 0.2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+		affected_mob.blood_volume += min(1 * seconds_per_tick, BLOOD_VOLUME_NORMAL)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, 0.2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 
 	switch(current_cycle)
 		if(10)
@@ -953,10 +952,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 				to_chat(affected_mob, span_warning("Your breathing becomes weak and raspy, you can barely stay conscious!"))
 				affected_mob.reagents.add_reagent(/datum/reagent/toxin/histamine, 6 * REM * seconds_per_tick)
 				affected_mob.losebreath += 3
-				need_mob_update = TRUE
-
-	if(need_mob_update)
-		return TRUE
 
 /datum/reagent/inverse/aranesp/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
