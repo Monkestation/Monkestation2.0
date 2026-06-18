@@ -898,6 +898,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/proc/check_overwatch()
 	var/failed = FALSE
+	var/required_living_minutes = CONFIG_GET(number/panic_bunker_living)
+	var/living_minutes = client.get_exp_living(TRUE)
 	SSoverwatch.CollectClientData(src)
 	failed = SSoverwatch.HandleClientAccessCheck(src)
 	SSoverwatch.HandleASNbanCheck(src)
