@@ -108,7 +108,7 @@
 	var/obj/item/clothing/gloves/latex/gloves = user.get_item_by_slot(ITEM_SLOT_GLOVES)
 
 	fail_prob = min(max(0, modded_time - slowdown_time), 99) //Puts a minimum of 0 and max of 99 here to prevent ghetto surgery causing there to be 99%+ chance of failure
-	if(user == target && surgery.requires_bodypart_type != 2)//If doing self surgery & the limb is non robotic, apply a 50% penalty.
+	if(user == target && surgery.requires_bodypart_type == 1)//If doing self surgery & the limb is organic, apply a 50% penalty.
 		fail_prob += 50
 	if((get_location_modifier(target) < 0.8))//if the surgery is not on a operating table or stasis bed, incur a 10% penalty
 		fail_prob += 10
