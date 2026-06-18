@@ -792,8 +792,7 @@
 
 /obj/item/melee/baton/security/process(seconds_per_tick)
 	if(!active)
-		STOP_PROCESSING(SSobj, src)
-		return
+		return PROCESS_KILL
 	if(!(item_flags & IN_STORAGE)) // if its in storage dont count it
 		time_on_in_storage = 0
 		return
