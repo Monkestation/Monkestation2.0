@@ -17,7 +17,7 @@
 	var/required_living_minutes = CONFIG_GET(number/panic_bunker_living)
 	var/living_minutes = client.get_exp_living(TRUE)
 
-	if(living_minutes >= required_living_minutes && !(ckey in GLOB.interviews.approved_ckeys))
+	if(living_minutes < required_living_minutes && !(ckey in GLOB.interviews.approved_ckeys))
 		client.interviewee = TRUE
 
 	. = ..()
