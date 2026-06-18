@@ -4325,6 +4325,8 @@
 /turf/open/floor/engine,
 /area/station/science/cytology)
 "bnM" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/small,
 /area/station/tcommsat/computer)
 "bnX" = (

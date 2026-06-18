@@ -19,7 +19,6 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	var/disableheat = FALSE
 	var/primary = FALSE
 	var/valid_ticks = MAX_AI_DATA_CORE_TICKS //Limited to MAX_AI_DATA_CORE_TICKS. Decrement by 1 every time we have an invalid tick, opposite when valid
-	var/warning_sent = FALSE
 	COOLDOWN_DECLARE(warning_cooldown)
 
 	var/TimerID //party time
@@ -34,6 +33,8 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	GLOB.data_cores += src
 	if(primary && !GLOB.primary_data_core)
 		GLOB.primary_data_core = src
+	if(mapload)
+		integrated_battery = new /obj/item/stock_parts/power_store/cell/high(src)
 	RefreshParts()
 	update_appearance()
 	register_context()
@@ -62,6 +63,9 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 /obj/machinery/ai/data_core/JoinPlayerHere(mob/M, buckle)
 	return
 
+/obj/machinery/ai/data_core/get_cell()
+	return integrated_battery
+
 /obj/machinery/ai/data_core/RefreshParts()
 	. = ..()
 	var/new_heat_mod = 1
@@ -69,15 +73,22 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	for(var/datum/stock_part/capacitor/C in component_parts)
 		new_power_mod -= (C.tier - 1) / 50 //Max -24% at tier 4 parts, min -0% at tier 1
 
-	for(var/obj/item/stock_parts/power_store/cell/cell_used in component_parts)
-		integrated_battery = cell_used
-
 	for(var/datum/stock_part/matter_bin/M in component_parts)
 		new_heat_mod -= (M.tier - 1) / 15 //Max -40% at tier 4 parts, min -0% at tier 1
 
 	heat_modifier = new_heat_mod
 	power_modifier = new_power_mod
 	active_power_usage = (AI_DATA_CORE_POWER_USAGE * power_modifier)
+
+/obj/machinery/ai/data_core/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(istype(arrived, /obj/item/stock_parts/power_store/cell))
+		integrated_battery = arrived
+
+/obj/machinery/ai/data_core/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == integrated_battery)
+		integrated_battery = null
 
 /obj/machinery/ai/data_core/examine(mob/user)
 	. = ..()
@@ -107,7 +118,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(istype(held_item, /obj/item/stock_parts/power_store/cell))
-		context[SCREENTIP_CONTEXT_LMB] = "Replace Batteries"
+		context[SCREENTIP_CONTEXT_LMB] = (integrated_battery) ? "Replace Batteries" : "Add Batteries"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(held_item.tool_behaviour == TOOL_WRENCH)
 		context[SCREENTIP_CONTEXT_LMB] = (anchored ? "Unanchor" : "Anchor Down")
@@ -119,18 +130,19 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	if(!panel_open)
 		balloon_alert(user, "panel closed!")
 		return ITEM_INTERACT_BLOCKING
+	if(integrated_battery)
+		user.put_in_hands(integrated_battery)
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
-	if(!user.put_in_hands(integrated_battery))
-		integrated_battery.forceMove(drop_location())
 	balloon_alert(user, "batteries swapped")
 	RefreshParts()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/ai/data_core/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
+	tool.play_tool_sound(src, 50)
 	balloon_alert_to_viewers("screwing panel...")
-	if(!tool.use_tool(src, user, 4 SECONDS))
+	if(!tool.use_tool(src, user, 2 SECONDS))
 		return .
 	if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", base_icon_state, tool))
 		return ITEM_INTERACT_SUCCESS
@@ -195,13 +207,12 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 		use_power = ACTIVE_POWER_USE
 		if(machine_stat & NOPOWER)
 			integrated_battery.use(active_power_usage * CELL_POWERUSE_MULTIPLIER)
-		warning_sent = FALSE
+		COOLDOWN_RESET(src, warning_cooldown)
 	else
 		valid_ticks--
 		if(valid_ticks <= 0)
 			use_power = IDLE_POWER_USE
-		if(!warning_sent && COOLDOWN_FINISHED(src, warning_cooldown))
-			warning_sent = TRUE
+		if(COOLDOWN_FINISHED(src, warning_cooldown))
 			COOLDOWN_START(src, warning_cooldown, AI_DATA_CORE_WARNING_COOLDOWN)
 			for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
 				if(!AI.mind && AI.deployed_shell.mind)
