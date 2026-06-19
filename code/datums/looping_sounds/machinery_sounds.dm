@@ -56,7 +56,6 @@
 	end_sound = 'sound/machines/fryer/deep_fryer_emerge.ogg'
 	volume = 15
 
-
 /datum/looping_sound/grill
 	mid_sounds = list('sound/machines/grill/grillsizzle.ogg')
 	mid_length = 18 SECONDS
@@ -146,7 +145,7 @@
 	falloff_exponent = 20
 
 /datum/looping_sound/firealarm
-	mid_sounds = list('sound/machines/FireAlarm1.ogg' , 'sound/machines/FireAlarm2.ogg', 'sound/machines/FireAlarm3.ogg', 'sound/machines/FireAlarm4.ogg')
+	mid_sounds = list('sound/machines/FireAlarm1.ogg', 'sound/machines/FireAlarm2.ogg', 'sound/machines/FireAlarm3.ogg', 'sound/machines/FireAlarm4.ogg')
 	mid_length = 2.4 SECONDS
 	volume = 30
 
@@ -217,7 +216,7 @@
 	ignore_walls = FALSE
 	pressure_affected = FALSE
 	vary = FALSE
-  
+
 /datum/looping_sound/charger
 	start_sound = 'sound/machines/charger/charger_start.ogg'
 	start_length = 20
