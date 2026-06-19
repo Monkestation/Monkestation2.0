@@ -89,9 +89,12 @@ GLOBAL_DATUM_INIT(ai_os, /datum/ai_os, new)
 /datum/ai_os/proc/set_cpu(mob/living/silicon/ai/AI, amount)
 	if(!AI)
 		return
-	if(amount > 1 || amount < 0)
+	if(amount < 0)
 		return
 	if(!istype(AI))
+		return
+	//total cpu - (current AIs CPU + CPU we're giving) > total_cpu
+	if(GLOB.ai_os.total_cpu_assigned() - (GLOB.ai_os.cpu_assigned[AI] + amount) > total_cpu)
 		return
 	cpu_assigned[AI] = amount
 	update_allocations()

@@ -26,5 +26,5 @@
 		to_chat(owner, span_warning("You must be in your core to do this!"))
 		return
 	for(var/obj/machinery/ai/data_core/core in GLOB.data_cores)
-		tesla_zap(core, 2, 15000, (ZAP_MOB_STUN|ZAP_MOB_DAMAGE))
+		tesla_zap(core, 2, (8 KILO JOULES), (ZAP_MOB_STUN|ZAP_MOB_DAMAGE))
 		core.use_energy(core.idle_power_usage)

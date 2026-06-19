@@ -55,9 +55,9 @@ export const AiResources = (props) => {
 
   return (
     <Window width={500} height={450}>
-      <Window.Content scrollable>
+      <Window.Content>
         {(!!authenticated && (
-          <Fragment>
+          <Stack vertical fill>
             <Section
               title="Cloud CPU Resources"
               buttons={
@@ -91,13 +91,13 @@ export const AiResources = (props) => {
                   average: [0.4, 0.8],
                   bad: [-Infinity, 0.4],
                 }}
-                maxValue={1}
+                maxValue={total_cpu}
               >
                 {toFixed(remaining_cpu)}/{toFixed(total_cpu)} THz (
                 {toFixed(remaining_cpu * 100)}%)
               </ProgressBar>
             </Section>
-            <Section title="Cloud RAM Resources">
+            <Section my={-2} title="Cloud RAM Resources">
               <ProgressBar
                 ranges={{
                   good: [total_ram * 0.8, Infinity],
@@ -110,7 +110,7 @@ export const AiResources = (props) => {
                 {remaining_ram} TB
               </ProgressBar>
             </Section>
-            <Section title="Active AI's">
+            <Section title="Active AI's" style={{ overflowY: 'auto' }}>
               <Stack vertical>
                 {ais.map((ai, index) => {
                   return (
@@ -134,22 +134,21 @@ export const AiResources = (props) => {
                         <Stack>
                           <ProgressBar
                             minValue={0}
-                            value={total_cpu * ai.assigned_cpu}
+                            value={ai.assigned_cpu}
                             maxValue={total_cpu}
                           >
-                            {total_cpu * ai.assigned_cpu} THz
+                            {ai.assigned_cpu} THz
                           </ProgressBar>
                           <NumberInput
                             width="60px"
-                            unit="%"
-                            value={ai.assigned_cpu * 100}
+                            unit="THz"
+                            value={ai.assigned_cpu}
                             minValue={0}
-                            maxValue={(remaining_cpu + ai.assigned_cpu) * 100}
+                            maxValue={remaining_cpu + ai.assigned_cpu}
                             onChange={(value) =>
                               act('set_cpu', {
                                 targetAI: ai.ref,
-                                amount_cpu:
-                                  Math.round((value / 100) * 100) / 100,
+                                amount_cpu: Math.round((value / 100) * 100),
                               })
                             }
                           />
@@ -203,7 +202,7 @@ export const AiResources = (props) => {
                 })}
               </Stack>
             </Section>
-          </Fragment>
+          </Stack>
         )) || (
           <Section title="Welcome" fill>
             <Stack align="center" justify="center" mt="0.5rem">

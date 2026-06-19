@@ -23,6 +23,9 @@ type Data = {
   location_name: string;
   location_coords: string;
   temperature: number;
+  human_only: BooleanLike;
+  current_ram: number;
+  max_ram: number;
 };
 
 export const AiDashboard = (props) => {
@@ -39,8 +42,6 @@ export const AiDashboard = (props) => {
   } = data;
 
   const [tab, setTab] = useState(1);
-
-  const amount_of_cpu = current_cpu ? current_cpu * max_cpu : 0;
 
   return (
     <Window width={650} height={600} title="Dashboard">
@@ -101,11 +102,11 @@ export const AiDashboard = (props) => {
                   average: [used_cpu * 0.3, used_cpu * 0.7],
                   bad: [0, used_cpu * 0.3],
                 }}
-                value={data.used_cpu * amount_of_cpu}
-                maxValue={amount_of_cpu}
+                value={data.used_cpu * current_cpu}
+                maxValue={current_cpu}
               >
                 {used_cpu ? used_cpu * 100 : 0}% (
-                {used_cpu ? used_cpu * amount_of_cpu : 0}/{amount_of_cpu} THz)
+                {used_cpu ? used_cpu * current_cpu : 0}/{current_cpu} THz)
               </ProgressBar>
             </LabeledControls.Item>
             <LabeledControls.Item label="Utilized RAM Capacity">
@@ -454,10 +455,11 @@ const AbilityCharging = (props) => {
 };
 
 const NetworkingResources = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<Data>();
 
-  const amount_of_cpu = data.current_cpu ? data.current_cpu * data.max_cpu : 0;
-  const tooltipDisabled = data.human_only
+  const { current_cpu, current_ram, max_ram, human_only } = data;
+
+  const tooltipDisabled = human_only
     ? 'Locked by organics. Please request their assistance.'
     : '';
 
@@ -469,7 +471,7 @@ const NetworkingResources = (props) => {
           <Button
             icon="trash"
             onClick={() => act('clear_ai_resources')}
-            disabled={data.human_only}
+            disabled={human_only}
             tooltip={tooltipDisabled}
           >
             Clear AI Resources
@@ -478,18 +480,14 @@ const NetworkingResources = (props) => {
       >
         CPU Capacity:
         <Stack>
-          <ProgressBar minValue={0} value={data.current_cpu} maxValue={1}>
-            {amount_of_cpu} THz
+          <ProgressBar minValue={0} value={current_cpu} maxValue={1}>
+            {current_cpu} THz
           </ProgressBar>
         </Stack>
         RAM Capacity:
         <Stack>
-          <ProgressBar
-            minValue={0}
-            value={data.current_ram}
-            maxValue={data.max_ram}
-          >
-            {data.current_ram} TB
+          <ProgressBar minValue={0} value={current_ram} maxValue={max_ram}>
+            {current_ram} TB
           </ProgressBar>
         </Stack>
       </Section>

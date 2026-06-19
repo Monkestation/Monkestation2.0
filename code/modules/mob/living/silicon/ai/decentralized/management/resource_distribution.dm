@@ -137,7 +137,7 @@
 				return
 
 			var/amount = params["amount_cpu"]
-			if(amount > 1 || amount < 0)
+			if(!isnum(amount) || amount < 0)
 				return
 			GLOB.ai_os.set_cpu(target_ai, amount)
 			. = TRUE
@@ -150,7 +150,7 @@
 				to_chat(user, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
 				return
 
-			var/amount = (1 - GLOB.ai_os.total_cpu_assigned()) + GLOB.ai_os.cpu_assigned[target_ai]
+			var/amount = (GLOB.ai_os.total_cpu - GLOB.ai_os.total_cpu_assigned()) + GLOB.ai_os.cpu_assigned[target_ai]
 			GLOB.ai_os.set_cpu(target_ai, amount)
 			. = TRUE
 

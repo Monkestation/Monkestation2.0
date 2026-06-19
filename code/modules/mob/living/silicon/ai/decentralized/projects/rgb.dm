@@ -10,7 +10,7 @@
 	if(!.)
 		return .
 	for(var/obj/machinery/ai/data_core/datacores in GLOB.data_cores)
-		if(!datacores.TimerID)
+		if(!datacores.party_time)
 			datacores.partytime()
 
 
