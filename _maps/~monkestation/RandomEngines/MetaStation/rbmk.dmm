@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "af" = (
 /obj/structure/window/reinforced/plasma/plastitanium,
-/obj/structure/grille,
+/obj/structure/grille/window_sill,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "bM" = (
@@ -148,17 +148,10 @@
 /obj/structure/window_sill,
 /obj/structure/grille/window_sill,
 /obj/structure/window/reinforced/plasma/plastitanium,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"kP" = (
-/obj/structure/window_sill,
-/obj/structure/grille/window_sill,
-/obj/structure/window/reinforced/plasma/plastitanium,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/turf/open/floor/engine,
-/area)
 "lX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green,
 /obj/structure/window_sill,
@@ -190,10 +183,9 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "nu" = (
-/obj/machinery/power/rbmk_turbine,
-/obj/structure/cable,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
+/obj/structure/grille/window_sill,
+/turf/template_noop,
+/area/space/nearstation)
 "nM" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -205,11 +197,9 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "og" = (
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/camera/directional/south,
 /obj/structure/sign/warning/radiation/directional/south,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "oJ" = (
@@ -233,7 +223,7 @@
 /obj/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/engine,
-/area)
+/area/station/engineering/supermatter/room)
 "qx" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -252,8 +242,8 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "rY" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "sB" = (
@@ -403,9 +393,8 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "zq" = (
-/obj/structure/cable,
 /obj/machinery/light/directional/south,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "zC" = (
@@ -429,9 +418,8 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "Bc" = (
-/obj/structure/cable,
 /obj/machinery/airalarm/directional/south,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "Bo" = (
@@ -577,9 +565,10 @@
 /area/station/engineering/supermatter/room)
 "Jo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/machinery/light/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "JY" = (
@@ -767,21 +756,17 @@
 /obj/machinery/camera/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
-"Ti" = (
-/turf/template_noop,
-/area)
 "Ui" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "Uv" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "UK" = (
@@ -1026,7 +1011,7 @@ RU
 MT
 xA
 xA
-xA
+nu
 xA
 xA
 xA
@@ -1051,8 +1036,8 @@ KS
 bY
 Vn
 MT
-xA
-xA
+nu
+nu
 xA
 xA
 xA
@@ -1078,7 +1063,7 @@ KS
 bY
 Yf
 KS
-xA
+nu
 xA
 xA
 xA
@@ -1232,7 +1217,7 @@ KS
 KS
 BQ
 Jo
-rY
+Ui
 Ui
 og
 MT
@@ -1287,7 +1272,7 @@ KS
 cK
 rY
 KS
-nu
+cK
 zq
 MT
 tA
@@ -1315,7 +1300,7 @@ KS
 zi
 KS
 KS
-zi
+KS
 MT
 bM
 SS
@@ -1340,7 +1325,7 @@ eg
 eg
 hT
 hT
-kP
+hT
 qs
 qs
 MT
@@ -1498,7 +1483,7 @@ xA
 xA
 xA
 xA
-Ti
+xA
 xA
 xA
 xA
