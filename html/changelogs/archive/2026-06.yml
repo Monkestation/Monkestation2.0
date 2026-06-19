@@ -264,3 +264,15 @@
   - spellcheck: visiblity -> visibility
   sufferingintensifies:
   - map: the free golem ship is now updated to the /TG/station version
+2026-06-19:
+  Cujo:
+  - balance: Medkits no longer have ranged health analzyers, instead have normal non-ranged
+      ones.
+  - balance: Ranged health analyzers quantity in medical vendors reduced (3->2).
+  - balance: Ambu bags are no longer roundstart tech. No longer in medical doctor
+      lockers, surgical trays, or medical cyborgs. It will need to be researched and
+      printed, or the upgrade for cyborgs to use it.
+  - rscadd: Medical cyborgs can now get an Ambu bag upgrade module
+  - balance: Ambu bags oxygen healing has been reduced (15->10)
+  Tractor-Maam:
+  - spellcheck: being clumsy with a scanner wand no longer misgenders you
