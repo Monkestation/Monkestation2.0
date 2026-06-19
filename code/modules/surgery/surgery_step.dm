@@ -111,13 +111,13 @@
 	if(user == target && surgery.requires_bodypart_type == 1)//If doing self surgery & the limb is organic, apply a 50% penalty.
 		fail_prob += 50
 	if((get_location_modifier(target) < 0.8))//if the surgery is not on a operating table or stasis bed, incur a 10% penalty
-		fail_prob += 10
+		fail_prob += 15
 	if(gloves && istype(gloves, /obj/item/clothing/gloves/latex/surgical))//For black latex gloves, 20% buff to surgery success
 		fail_prob -= 20
 	else if(HAS_TRAIT(user, TRAIT_STERILE))//For regular latex gloves, give a 5% bonus. If not, incure a 15% failure penalty.
 		fail_prob -= 5
 	else
-		fail_prob += 15
+		fail_prob += 10
 	if(surgery.speed_modifier > 0 || HAS_TRAIT(target, TRAIT_ANALGESIA))//for chemical related surgery speed buffs, adds a reduction in failure chance. also checks for painkillers
 		fail_prob -= 15
 	fail_prob = min(max(0, fail_prob), 99)//minimum of 0 and maximum of 99
