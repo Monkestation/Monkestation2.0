@@ -114,7 +114,11 @@
 /obj/machinery/sleeper/mouse_drop_receive(atom/target, mob/user, params)
 	if(!iscarbon(target))
 		return
-	do_after(user, 1 SECOND)
+	target.visible_message(span_warning("[user] starts buckling [target] to [src]!"),\
+			span_userdanger("[user] starts buckling you to [src]!"),\
+			span_hear("You hear metal clanking."))
+	if(!do_after(user, 1 SECONDS, target))
+		return FALSE
 	close_machine(target)
 
 /obj/machinery/sleeper/screwdriver_act(mob/living/user, obj/item/I)
