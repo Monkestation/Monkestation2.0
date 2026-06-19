@@ -106,10 +106,8 @@
 	return ..()
 
 /mob/living/basic/mining_drone/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	. = ..()
-
-	if(. ||( user.istate & ISTATE_HARM))
-		return
+	if(user.istate & ISTATE_HARM)
+		return ..()
 	set_combat_mode(!(istate & ISTATE_HARM))
 	balloon_alert(user, "now [(istate & ISTATE_HARM) ? "attacking wildlife" : "collecting loose ore"]")
 

@@ -18067,7 +18067,6 @@
 /obj/machinery/door/airlock/public/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/navigate_destination/dockesc,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
@@ -27807,6 +27806,19 @@
 	},
 /turf/open/misc/dirt/station,
 /area/station/maintenance/department/science)
+"dwg" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/landmark/navigate_destination{
+	location = "Evacuation"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "dws" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/east,
@@ -39148,6 +39160,7 @@
 /obj/item/assembly/flash/handheld{
 	pixel_x = -15
 	},
+/obj/item/hand_labeler,
 /turf/open/floor/iron/smooth_edge,
 /area/station/science/robotics/lab)
 "hUM" = (
@@ -43098,6 +43111,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron/freezer,
 /area/station/security/lockers)
+"jrK" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "robotics";
+	name = "Robotics Lab Shutters"
+	},
+/obj/machinery/smartfridge/organ,
+/turf/open/floor/plating,
+/area/station/science/robotics/lab)
 "jrL" = (
 /turf/closed/wall/r_wall,
 /area/station/solars/starboard/aft)
@@ -58817,6 +58839,18 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"pjO" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port"
+	},
+/obj/effect/landmark/navigate_destination/dockesc,
+/turf/open/floor/iron/textured_edge{
+	dir = 4
+	},
+/area/station/hallway/secondary/exit/departure_lounge)
 "pkh" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -68050,6 +68084,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/effect/decal/cleanable/oil,
 /turf/open/floor/iron/smooth,
 /area/station/science/robotics/lab)
 "sNC" = (
@@ -68059,7 +68094,7 @@
 /obj/machinery/light/no_nightlight/directional/east,
 /obj/structure/table/reinforced,
 /obj/structure/cable,
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/deployed,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/robotics/lab)
 "sNL" = (
@@ -79700,7 +79735,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "xkW" = (
-/obj/effect/decal/cleanable/oil,
 /obj/machinery/light/small/directional/west,
 /obj/machinery/requests_console/directional/west{
 	department = "Robotics";
@@ -79708,6 +79742,7 @@
 	},
 /obj/effect/mapping_helpers/requests_console/ore_update,
 /obj/effect/mapping_helpers/requests_console/supplies,
+/obj/machinery/vending/robotics,
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
@@ -82341,16 +82376,7 @@
 /area/station/maintenance/department/security/upper)
 "ylg" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/rack,
-/obj/item/radio{
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/radio,
-/obj/item/flashlight{
-	pixel_x = 1;
-	pixel_y = 2
-	},
+/obj/machinery/vending/access/command,
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -125436,7 +125462,7 @@ buR
 mnK
 buR
 buR
-cLh
+jrK
 hUx
 wMn
 tFA
@@ -131601,7 +131627,7 @@ aQK
 aQK
 vOt
 tBp
-cec
+dwg
 btF
 bnQ
 dGR
@@ -135964,7 +135990,7 @@ bsp
 cek
 bql
 bsp
-bss
+pjO
 bmm
 boU
 boU
