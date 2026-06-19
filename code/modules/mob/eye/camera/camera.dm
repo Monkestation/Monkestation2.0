@@ -16,6 +16,8 @@
 	var/final/list/datum/camerachunk/visibleCameraChunks = list()
 	/// NxN Range of a single camera chunk.
 	var/static_visibility_range = 16
+	/// The network this eye watches.
+	var/datum/cameranet/camnet
 
 /mob/eye/camera/Initialize(mapload)
 	. = ..()
@@ -71,7 +73,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(use_visibility)
-		GLOB.cameranet.visibility(src)
+		SScameras.update_eye_chunk(src)
 
 /mob/eye/camera/zMove(dir, turf/target, z_move_flags = NONE, recursions_left = 1, list/falling_movs)
 	. = ..()

@@ -19,6 +19,6 @@
 */
 /mob/living/silicon/proc/do_camera_update(oldLoc)
 	if(oldLoc != get_turf(src))
-		GLOB.cameranet.updatePortableCamera(builtInCamera, SILICON_CAMERA_BUFFER)
+		SScameras.camera_moved(builtInCamera, oldLoc, get_turf(src), SILICON_CAMERA_BUFFER)
 	updating = FALSE
 #undef SILICON_CAMERA_BUFFER

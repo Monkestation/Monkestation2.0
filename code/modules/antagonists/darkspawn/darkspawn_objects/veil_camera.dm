@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(thrallnet, /datum/cameranet/darkspawn, new)
+GLOBAL_DATUM(thrallnet, /datum/cameranet)
 //////////////////////////////////////////////////////////////////////////
 //-------------------------Access the veilnet---------------------------//
 //////////////////////////////////////////////////////////////////////////
@@ -22,12 +22,31 @@ GLOBAL_DATUM_INIT(thrallnet, /datum/cameranet/darkspawn, new)
 	. = ..()
 	camnet = GLOB.thrallnet
 	src.set_light(l_power = light_power, l_color = light_color)
+	interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
+
+/obj/machinery/computer/camera_advanced/darkspawn/on_set_is_operational(old_value)
+	return
+
+/obj/machinery/computer/camera_advanced/darkspawn/CreateEye()
+	if(eyeobj)
+		CRASH("Tried to make another eyeobj for some reason. Why?")
+	eyeobj = new /mob/eye/camera/remote/darkspawn(get_turf(src), src)
+	eyeobj.camnet = camnet
+	return TRUE
+
+/mob/eye/camera/remote/darkspawn/update_remote_sight(mob/living/user)
+	user.set_invis_see(SEE_INVISIBLE_LIVING) //can't see ghosts through cameras
+	user.set_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+	return TRUE
 
 /obj/machinery/computer/camera_advanced/darkspawn/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, "[icon_state]_emissive", src)
 
 /obj/machinery/computer/camera_advanced/darkspawn/emp_act(severity)
+	return
+
+/obj/machinery/computer/camera_advanced/darkspawn/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	return
 
 /obj/machinery/computer/camera_advanced/darkspawn/remove_eye_control(mob/living/user)
@@ -90,10 +109,13 @@ GLOBAL_DATUM_INIT(thrallnet, /datum/cameranet/darkspawn, new)
 	armor_type = /datum/armor/machinery_camera
 	flags_1 = NODECONSTRUCT_1
 	network = list(ROLE_DARKSPAWN)
-	view_range = 10
+	view_range = MAX_CAMERA_RANGE
 
 /obj/machinery/camera/darkspawn/default_camera_net()
 	return GLOB.thrallnet
+
+/obj/machinery/camera/darkspawn/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	return
 
 /obj/machinery/camera/darkspawn/emp_act(severity, reset_time = 10)
 	return
