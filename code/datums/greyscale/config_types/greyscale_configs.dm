@@ -1258,16 +1258,6 @@
 	icon_file = 'monkestation/icons/mob/clothing/head_32x48.dmi'
 	json_config = 'code/datums/greyscale/json_configs/playbunny_ears_worn.json'
 
-/datum/greyscale_config/big_manipulator
-	name = "Big Manipulator"
-	icon_file = 'monkestation/code/modules/factory_type_beat/icons/big_manipulator_core.dmi'
-	json_config = 'code/datums/greyscale/json_configs/big_manipulator.json'
-
-/datum/greyscale_config/manipulator_hand
-	name = "Manipulator Hand"
-	icon_file = 'monkestation/code/modules/factory_type_beat/icons/big_manipulator_hand.dmi'
-	json_config = 'code/datums/greyscale/json_configs/manipulator_hand.json'
-
 /datum/greyscale_config/linjacket
 	name = "Tassled Jacket"
 	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
@@ -1332,3 +1322,13 @@
 	name = "green_jester_shoes"
 	icon_file = 'monkestation/icons/mob/clothing/feet.dmi'
 	json_config = 'code/datums/greyscale/json_configs/green_jester_shoes_worn.json'
+
+/datum/greyscale_config/big_manipulator
+	name = "Big Manipulator"
+	icon_file = 'icons/obj/machines/big_manipulator_parts/big_manipulator_core.dmi'
+	json_config = 'code/datums/greyscale/json_configs/big_manipulator.json'
+
+/datum/greyscale_config/manipulator_arm
+	name = "Manipulator Arm"
+	icon_file = 'icons/obj/machines/big_manipulator_parts/big_manipulator_hand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/manipulator_arm.json'
