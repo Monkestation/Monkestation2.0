@@ -39600,13 +39600,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "mgu" = (
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/power_store/cell/high,
-/obj/machinery/ecto_sniffer{
-	pixel_x = 6;
-	pixel_y = 6
-	},
+/obj/machinery/vending/robotics,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "mgD" = (
@@ -52903,6 +52897,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/machinery/duct,
+/obj/machinery/photobooth/security,
 /turf/open/floor/iron,
 /area/station/security/processing)
 "qeW" = (
@@ -60690,7 +60685,7 @@
 "szh" = (
 /obj/structure/table,
 /obj/machinery/light/directional/north,
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/deployed,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "szk" = (
@@ -68901,6 +68896,12 @@
 	pixel_x = -3
 	},
 /obj/machinery/newscaster/directional/east,
+/obj/machinery/ecto_sniffer{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/stock_parts/power_store/cell/high,
+/obj/machinery/cell_charger,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "veJ" = (
@@ -72123,6 +72124,15 @@
 	},
 /turf/open/floor/iron/smooth_edge,
 /area/station/command/heads_quarters/rd)
+"wgg" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "robotics";
+	name = "Robotics Lab Shutters"
+	},
+/obj/machinery/smartfridge/organ,
+/turf/open/floor/plating,
+/area/station/science/robotics/lab)
 "wgk" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance,
@@ -73495,6 +73505,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/item/hand_labeler,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "wBp" = (
@@ -255149,7 +255160,7 @@ lso
 rNQ
 lso
 aop
-yar
+wgg
 kKI
 rIU
 rCX

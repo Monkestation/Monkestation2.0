@@ -208,3 +208,71 @@
 2026-06-13:
   Shoddd:
   - bugfix: satyrs can headbutt mobs once again
+2026-06-14:
+  Runian:
+  - bugfix: Cyborgs now correctly can interact with wall mounted intercoms.
+  wonderinghost:
+  - map: robotics now have robovend deluxe, organ fridges, and label makers to their
+      departments
+  - map: '[thesius] medbay has new hall to make robotics more accessible'
+  - map: '[thesius] medbay surgery now has polarizable windows in surgery room'
+  - map: '[blueshift] places welding tank in robotics in a less annoying place'
+  - refactor: refactored robovend deluxe to have more content
+  - code_imp: reduces cost of limb shears from 700c to 500c
+  - code_imp: roboticists now have research app
+2026-06-15:
+  JohnFulpWillard:
+  - bugfix: Heliostation now has a Command vending machine in the Bridge.
+  JupiterJaeden:
+  - rscadd: The security photobooth can now be used to add new people on to the crew
+      manifest. Just put them in and take pictures as normal, and the crew records
+      will be updated with the new entry! Perfect for stowaways and other visitors
+      to the station.
+  - spellcheck: Updates the description of the security photobooth.
+  - map: Adds security photobooths to every brig map.
+  - code_imp: Updates the get_visible_name() helper to actually use the add_id_name
+      variable as intended (previously unused).
+  Shoddd:
+  - bugfix: bloodling hivemind no longer works while dead
+  - bugfix: bloodlings become properly space proof over level 2
+  TealSeer:
+  - bugfix: fixed CSS-related errors in BYOND 516.1681+
+2026-06-16:
+  PotatoTomahto:
+  - rscadd: ashwalkers now have access to bungo fruit
+  SirNightKnight:
+  - rscadd: you can slice apart base floor plating with welding tools.
+  - bugfix: you can tip over flashed cyborgs.
+2026-06-17:
+  Mantlecrawler:
+  - rscadd: Plasma is now rainbow during pride month
+  - config: Pride week is now pride month, through the entirety of June.
+  SirNightKnight:
+  - balance: removed crate content ashing when the locks are broken.
+  jlsnow301, SirNightKnight:
+  - bugfix: The library console has been refactored. Report any issues in the github!
+2026-06-18:
+  Barrel:
+  - bugfix: Blood Siphon will no longer kill you if you use it on an oozeling/ethereal.
+  Cujo:
+  - balance: Slime jelly now deals consistent tox damage (1-4) per second
+  - balance: Reduces number of hyposprays in medical vendor (5->2)
+  - balance: Reduces number of hypospray kits in medical vendor (3->2)
+  - balance: Reduces number of vial boxes in medical vendor (5->3)
+  - rscdel: Removes hypospray kits from medical wall vendors
+  JohnFulpWillard:
+  - spellcheck: visiblity -> visibility
+  sufferingintensifies:
+  - map: the free golem ship is now updated to the /TG/station version
+2026-06-19:
+  Cujo:
+  - balance: Medkits no longer have ranged health analzyers, instead have normal non-ranged
+      ones.
+  - balance: Ranged health analyzers quantity in medical vendors reduced (3->2).
+  - balance: Ambu bags are no longer roundstart tech. No longer in medical doctor
+      lockers, surgical trays, or medical cyborgs. It will need to be researched and
+      printed, or the upgrade for cyborgs to use it.
+  - rscadd: Medical cyborgs can now get an Ambu bag upgrade module
+  - balance: Ambu bags oxygen healing has been reduced (15->10)
+  Tractor-Maam:
+  - spellcheck: being clumsy with a scanner wand no longer misgenders you
