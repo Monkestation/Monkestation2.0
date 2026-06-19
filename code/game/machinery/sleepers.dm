@@ -120,7 +120,7 @@
 		span_hear("You hear metal clanking."),
 	)
 	if(!do_after(user, 1 SECONDS, target))
-		return FALSE
+		return
 	close_machine(target)
 
 /obj/machinery/sleeper/screwdriver_act(mob/living/user, obj/item/I)
