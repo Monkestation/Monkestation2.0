@@ -617,7 +617,7 @@
 		else
 			maybe_monkey.vomit(blood = TRUE, stun = TRUE)
 			to_chat(maybe_monkey, span_danger("You vomit out blood, making you feel grossly monkeyish."))
-	new /mob/living/carbon/human/species/monkey/angry(location, TRUE)
+	new /mob/living/carbon/human/species/monkey/angry/nohelmet(location, TRUE)
 
 //water electrolysis
 /datum/chemical_reaction/electrolysis
