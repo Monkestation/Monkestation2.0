@@ -44,12 +44,10 @@
 
 		COOLDOWN_START(src, last_tox_damage, RADIATION_TOX_INTERVAL)
 
-		//Goblin Edit Begin
-		if (HAS_TRAIT(parent, TRAIT_GOBLIN_METABOLISM))
+		if(HAS_TRAIT(parent, TRAIT_GOBLIN_METABOLISM))
 			start_goblin_burn_splotch_timer()
 		else
 			start_burn_splotch_timer()
-		//Goblin Edit End
 
 		human_parent.throw_alert(ALERT_IRRADIATED, /atom/movable/screen/alert/irradiated)
 
