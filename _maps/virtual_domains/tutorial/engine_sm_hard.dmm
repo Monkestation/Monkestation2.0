@@ -1,0 +1,2982 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ar" = (
+/obj/structure/table/glass,
+/obj/machinery/cell_charger_multi,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"aH" = (
+/obj/effect/turf_decal/trimline/yellow/arrow_cw{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"aI" = (
+/obj/effect/turf_decal/trimline/blue/end,
+/obj/machinery/shower/directional/south,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"aM" = (
+/obj/structure/table/rolling,
+/obj/item/toy/cards/deck,
+/turf/open/floor/plastic,
+/area/virtual_domain/powered_lighting)
+"aO" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Supermatter Engine Room"
+	},
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"aP" = (
+/turf/template_noop,
+/area/virtual_domain/powered_lighting)
+"aR" = (
+/obj/structure/chair/plastic{
+	dir = 1;
+	pixel_x = -4
+	},
+/obj/machinery/light/small/warm/directional/south,
+/turf/open/floor/plastic,
+/area/virtual_domain/powered_lighting)
+"bb" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/suit/hazardvest{
+	pixel_x = -6
+	},
+/obj/item/clothing/suit/hazardvest{
+	pixel_x = -3
+	},
+/obj/item/storage/belt/utility/full/engi,
+/obj/item/storage/belt/utility/full/engi,
+/obj/item/clothing/head/utility/hardhat{
+	pixel_y = 7;
+	pixel_x = 8
+	},
+/obj/item/clothing/head/utility/hardhat{
+	pixel_y = 7;
+	pixel_x = -5
+	},
+/obj/structure/sign/poster/official/safety_eye_protection/directional/east,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"bi" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 8
+	},
+/obj/machinery/mentor_machine,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"ci" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/virtual_domain/powered_lighting)
+"ct" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"cw" = (
+/obj/structure/closet/toolcloset,
+/obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"cK" = (
+/obj/structure/sign/directions/ptl/directional/east,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"dc" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"dm" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"dG" = (
+/obj/machinery/light/small/maintenance/directional/east,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"dY" = (
+/obj/structure/sign/clock/directional/north,
+/obj/structure/table,
+/obj/item/storage/fancy/donut_box/random,
+/obj/effect/turf_decal/siding/thinplating/dark,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"dZ" = (
+/obj/item/banner/engineering/mundane,
+/obj/effect/turf_decal/siding/yellow{
+	dir = 10
+	},
+/obj/structure/sign/directions/engineering/directional/north,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"ev" = (
+/obj/item/banner/engineering/mundane,
+/obj/effect/turf_decal/siding/yellow{
+	dir = 6
+	},
+/obj/structure/sign/directions/engineering/directional/north,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"eP" = (
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/electrical,
+/obj/structure/sign/warning/secure_area/directional/east,
+/obj/structure/rack,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"fA" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/item/clothing/suit/utility/fire/atmos,
+/obj/structure/rack,
+/obj/item/clothing/mask/gas/atmos{
+	pixel_y = -3;
+	pixel_x = -4
+	},
+/obj/item/clothing/head/utility/hardhat/welding/atmos{
+	pixel_y = 4;
+	pixel_x = -4
+	},
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"fX" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/structure/tank_holder/extinguisher/advanced,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"gb" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/hedge,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"gq" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 5
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"gN" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"ha" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "PTL Room"
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"hb" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
+/area/space)
+"hD" = (
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"iZ" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"jg" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"jC" = (
+/obj/structure/sign/warning/directional/north,
+/obj/machinery/portable_atmospherics/pump,
+/obj/effect/turf_decal/bot/left,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"jD" = (
+/turf/open/space/basic,
+/area/template_noop)
+"jM" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 9
+	},
+/obj/machinery/vending/mechcomp{
+	onstation = 0
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"jN" = (
+/obj/structure/chair/sofa/bench{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"km" = (
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"kp" = (
+/obj/structure/lattice,
+/obj/effect/spawner/random/structure/grille,
+/turf/open/space/basic,
+/area/space)
+"kr" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/reagent_dispensers/fueltank/large,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"kt" = (
+/obj/structure/closet/emcloset,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"lb" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"lm" = (
+/obj/structure/cable,
+/obj/structure/closet/crate/engineering{
+	name = "Supermatter Crate"
+	},
+/obj/machinery/power/supermatter_crystal/shard/oldstation,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"lx" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 6
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"ly" = (
+/obj/structure/table,
+/obj/item/storage/part_replacer/bluespace/tier4,
+/obj/item/storage/part_replacer/bluespace/tier4{
+	pixel_x = -10
+	},
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"lA" = (
+/obj/item/trash/raisins,
+/obj/machinery/light/small/warm/directional/west,
+/turf/open/floor/plastic,
+/area/virtual_domain/powered_lighting)
+"lJ" = (
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/virtual_domain/powered_lighting)
+"mf" = (
+/obj/structure/sign/calendar/directional/north,
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_x = 12;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_x = 12;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_x = 12;
+	pixel_y = -5
+	},
+/obj/item/newspaper{
+	pixel_x = -4;
+	pixel_y = 9
+	},
+/obj/item/newspaper{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/newspaper{
+	pixel_x = -4;
+	pixel_y = -2
+	},
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 6
+	},
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"mm" = (
+/obj/structure/grille/broken,
+/obj/item/stack/cable_coil/five,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"mp" = (
+/obj/structure/closet/crate/engineering{
+	name = "Thermomachine Crates"
+	},
+/obj/item/circuitboard/machine/thermomachine,
+/obj/item/circuitboard/machine/thermomachine,
+/obj/item/circuitboard/machine/thermomachine,
+/obj/item/circuitboard/machine/thermomachine,
+/obj/item/circuitboard/machine/thermomachine,
+/obj/item/circuitboard/machine/thermomachine,
+/obj/item/circuitboard/machine/thermomachine,
+/obj/item/circuitboard/machine/thermomachine,
+/obj/item/circuitboard/machine/thermomachine,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"mQ" = (
+/turf/closed/wall/r_wall,
+/area/virtual_domain/powered_lighting)
+"mS" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/cup/glass/mug/britcup{
+	pixel_x = 10
+	},
+/obj/item/flashlight/lamp{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"nq" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"ns" = (
+/obj/structure/cable,
+/obj/machinery/power/floodlight,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"nG" = (
+/obj/structure/closet/crate/engineering/electrical{
+	name = "Tesla Coils"
+	},
+/obj/machinery/power/energy_accumulator/tesla_coil,
+/obj/machinery/power/energy_accumulator/tesla_coil,
+/obj/machinery/power/energy_accumulator/tesla_coil,
+/obj/machinery/power/energy_accumulator/tesla_coil,
+/obj/machinery/power/energy_accumulator/tesla_coil,
+/obj/machinery/power/energy_accumulator/tesla_coil,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"ou" = (
+/obj/machinery/mentor_machine,
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"oS" = (
+/obj/structure/table/reinforced,
+/obj/structure/sign/warning/engine_safety/directional/east,
+/obj/item/stack/cable_coil{
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/obj/item/stack/cable_coil{
+	pixel_x = 2;
+	pixel_y = 8
+	},
+/obj/item/clothing/gloves/color/yellow{
+	pixel_x = 1
+	},
+/obj/item/clothing/gloves/color/yellow{
+	pixel_x = -10
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"oU" = (
+/obj/structure/grille/broken,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"oV" = (
+/turf/open/floor/plating/airless,
+/area/space)
+"pd" = (
+/obj/structure/closet/firecloset/full,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 5
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"pP" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/template_noop,
+/area/virtual_domain/powered_lighting)
+"pS" = (
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 4
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -2
+	},
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/structure/rack,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"pU" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"pV" = (
+/obj/effect/turf_decal/siding/yellow,
+/obj/machinery/vending/cigarette{
+	onstation = 0
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"pY" = (
+/obj/machinery/holopad/tutorial,
+/obj/item/disk/holodisk/tutorial/engine_sm_easy/reward,
+/obj/effect/turf_decal/box/blue,
+/turf/open/floor/circuit,
+/area/virtual_domain/powered_lighting)
+"pZ" = (
+/obj/machinery/suit_storage_unit/engine,
+/obj/structure/sign/poster/official/safety_internals/directional/north,
+/obj/effect/turf_decal/stripes,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"qF" = (
+/obj/structure/closet/crate/engineering/electrical{
+	name = "Lights"
+	},
+/obj/item/rcd_ammo/ultra_large,
+/obj/item/rcd_ammo/ultra_large,
+/obj/item/rcd_ammo/ultra_large,
+/obj/item/rcd_ammo/ultra_large,
+/obj/item/rcd_ammo/ultra_large,
+/obj/item/storage/box/lights/mixed,
+/obj/item/lightreplacer/blue,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"qS" = (
+/obj/structure/closet/firecloset,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"ro" = (
+/obj/structure/table,
+/obj/item/construction/rcd/arcd,
+/obj/item/construction/rcd/loaded/upgraded,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"rw" = (
+/turf/open/space,
+/area/space)
+"sb" = (
+/turf/open/floor/holofloor/stairs{
+	dir = 4
+	},
+/area/virtual_domain/powered_lighting)
+"sf" = (
+/obj/structure/closet/mini_fridge,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 8
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"sm" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/trimline/yellow/arrow_cw{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/corner{
+	dir = 4
+	},
+/area/virtual_domain/powered_lighting)
+"sn" = (
+/turf/open/floor/circuit/green/telecomms/mainframe,
+/area/virtual_domain/powered_lighting)
+"sC" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 10
+	},
+/obj/machinery/vending/engineering{
+	onstation = 0
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"tH" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engine Room"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/virtual_domain/powered_lighting)
+"tI" = (
+/obj/structure/closet/radiation,
+/obj/machinery/light/small/directional/north,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"uy" = (
+/obj/structure/chair/plastic{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/virtual_domain/powered_lighting)
+"uB" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	color = "#DE3A3A";
+	dir = 8
+	},
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/floor/iron/freezer,
+/area/virtual_domain/powered_lighting)
+"vq" = (
+/obj/structure/chair/sofa/bench/left{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"vs" = (
+/obj/machinery/light/small/maintenance/directional/west,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"vQ" = (
+/obj/effect/landmark/bitrunning/safehouse_spawn,
+/turf/template_noop,
+/area/virtual_domain/powered_lighting)
+"wC" = (
+/turf/open/floor/circuit,
+/area/virtual_domain/powered_lighting)
+"wP" = (
+/obj/structure/table,
+/obj/machinery/coffeemaker{
+	pixel_y = 11;
+	pixel_x = -5
+	},
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/item/reagent_containers/cup/glass/sillycup{
+	pixel_x = 11;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/cup/glass/sillycup{
+	pixel_x = 11;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"xa" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Supermatter Engine Room"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"xb" = (
+/turf/open/floor/plastic,
+/area/virtual_domain/powered_lighting)
+"xF" = (
+/obj/machinery/computer/security/telescreen/entertainment/directional/east,
+/turf/open/floor/plastic,
+/area/virtual_domain/powered_lighting)
+"yc" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Electrical Room"
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"yh" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"yw" = (
+/obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"yD" = (
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"yU" = (
+/obj/structure/sign/warning/electric_shock/directional/west,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/obj/machinery/modular_computer/preset/engineering{
+	dir = 4
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"yV" = (
+/obj/machinery/vending/access/engi_wardrobe{
+	onstation = 0
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"zk" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/shoes/magboots{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/clothing/shoes/magboots,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"zo" = (
+/obj/item/stack/cable_coil/five,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"zL" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/effect/turf_decal/delivery/white{
+	color = "#52B4E9"
+	},
+/obj/structure/reagent_dispensers/plumbed{
+	dir = 1;
+	name = "engineering water reservoir"
+	},
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"zT" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"AS" = (
+/turf/closed/indestructible/binary,
+/area/space)
+"AU" = (
+/obj/structure/closet/crate/engineering/electrical{
+	name = "Grounding Rods"
+	},
+/obj/machinery/power/energy_accumulator/grounding_rod,
+/obj/machinery/power/energy_accumulator/grounding_rod,
+/obj/machinery/power/energy_accumulator/grounding_rod,
+/obj/machinery/power/energy_accumulator/grounding_rod,
+/obj/machinery/power/energy_accumulator/grounding_rod,
+/obj/machinery/power/energy_accumulator/grounding_rod,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"Bt" = (
+/obj/machinery/computer/records/security{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	color = "#DE3A3A";
+	dir = 4
+	},
+/turf/open/floor/iron/freezer,
+/area/virtual_domain/powered_lighting)
+"Bx" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/powered_lighting)
+"Ca" = (
+/obj/effect/turf_decal/siding/yellow,
+/obj/item/kirbyplants/organic/plant21,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"Ch" = (
+/obj/structure/tank_dispenser,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"Co" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 5
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"Cr" = (
+/obj/item/banner/engineering/mundane,
+/obj/structure/sign/departments/engineering/directional/east,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"CG" = (
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"CL" = (
+/obj/structure/table/reinforced,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/clothing/mask/breath{
+	pixel_x = 4
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"CN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/blue/end{
+	dir = 1
+	},
+/obj/machinery/shower/directional/north,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"CP" = (
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"Dk" = (
+/obj/structure/closet/secure_closet/engineering_electrical,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"DH" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark/corner{
+	dir = 1
+	},
+/area/virtual_domain/powered_lighting)
+"DT" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 10
+	},
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"Ef" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"EC" = (
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"EO" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"EV" = (
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/virtual_domain/powered_lighting)
+"Ft" = (
+/obj/effect/turf_decal/box,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/machinery/recharge_station/fullupgrade,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"FE" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"GO" = (
+/obj/structure/closet/radiation,
+/obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"GV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/virtual_domain/powered_lighting)
+"Hw" = (
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"Hz" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/iron/fifty{
+	pixel_x = -7
+	},
+/obj/item/clothing/glasses/meson/engine{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/clothing/glasses/meson/engine{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"HC" = (
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"Ic" = (
+/obj/structure/reflector,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"Ie" = (
+/obj/structure/sign/poster/contraband/mothic_rations/directional/north,
+/turf/open/floor/circuit/green/telecomms/mainframe,
+/area/virtual_domain/powered_lighting)
+"IF" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 6
+	},
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"IO" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/glass/fifty{
+	pixel_x = -6
+	},
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = 1;
+	pixel_y = -7
+	},
+/obj/item/pipe_dispenser,
+/obj/item/pipe_dispenser{
+	pixel_y = 5
+	},
+/obj/item/holosign_creator/atmos,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"IT" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/hedge,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"IU" = (
+/obj/structure/chair/sofa/bench/right{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"JD" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/corner{
+	dir = 1
+	},
+/area/virtual_domain/powered_lighting)
+"JL" = (
+/obj/structure/sign/poster/official/moth_delam/directional/north,
+/obj/structure/closet/firecloset/full,
+/obj/effect/turf_decal/box,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"Kq" = (
+/turf/open/floor/holofloor/stairs{
+	dir = 8
+	},
+/area/virtual_domain/powered_lighting)
+"Ks" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engine Room"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/virtual_domain/powered_lighting)
+"KD" = (
+/turf/open/space/basic,
+/area/virtual_domain/powered_lighting)
+"KH" = (
+/obj/structure/sign/warning/secure_area/directional/west,
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/machinery/modular_computer/preset/engineering{
+	dir = 4
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"KY" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/trimline/yellow/arrow_cw{
+	dir = 8
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark/corner{
+	dir = 4
+	},
+/area/virtual_domain/powered_lighting)
+"Lf" = (
+/obj/machinery/vending/cola/red{
+	onstation = 0
+	},
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"LV" = (
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/cup/glass/mug/tea{
+	pixel_x = 10
+	},
+/obj/item/flashlight/lamp{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"Ma" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"NM" = (
+/obj/structure/closet/crate/engineering{
+	name = "Emitters Crate"
+	},
+/obj/machinery/power/emitter,
+/obj/machinery/power/emitter,
+/obj/machinery/power/emitter,
+/obj/machinery/power/emitter,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"NS" = (
+/obj/machinery/power/smes/tutorial,
+/turf/open/floor/circuit,
+/area/virtual_domain/powered_lighting)
+"NX" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/head/utility/welding{
+	pixel_x = -9;
+	pixel_y = 9
+	},
+/obj/item/clothing/head/utility/welding{
+	pixel_x = 3;
+	pixel_y = 8
+	},
+/obj/item/weldingtool/experimental{
+	pixel_y = -7
+	},
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"NZ" = (
+/obj/effect/spawner/structure/window/reinforced/damaged,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"Od" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/wall/r_wall,
+/area/virtual_domain/powered_lighting)
+"OC" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"PF" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/turf_decal/box,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"PV" = (
+/obj/structure/lattice,
+/turf/open/space,
+/area/space)
+"Qx" = (
+/obj/structure/table/reinforced,
+/obj/item/flashlight/lamp{
+	pixel_x = -6;
+	pixel_y = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	color = "#DE3A3A";
+	dir = 4
+	},
+/turf/open/floor/iron/freezer,
+/area/virtual_domain/powered_lighting)
+"QI" = (
+/obj/effect/decal/cleanable/piss_stain,
+/turf/open/floor/plastic,
+/area/virtual_domain/powered_lighting)
+"QY" = (
+/turf/open/space/basic,
+/area/space)
+"Ra" = (
+/turf/closed/wall,
+/area/virtual_domain/powered_lighting)
+"Rl" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/virtual_domain/powered_lighting)
+"RE" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/virtual_domain/powered_lighting)
+"RO" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 6
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"Sd" = (
+/obj/structure/cable,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"Sh" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/obj/effect/turf_decal/bot/right,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"Su" = (
+/obj/effect/turf_decal/siding/yellow,
+/obj/structure/chair/sofa/bench/tram/solo,
+/obj/structure/sign/warning/yes_smoking/circle/directional/north,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"SJ" = (
+/obj/structure/table,
+/obj/item/stack/sheet/plasteel/fifty,
+/obj/item/stack/sheet/plasteel/fifty{
+	pixel_x = -9
+	},
+/obj/item/stack/sheet/mineral/diamond/five{
+	pixel_x = -6
+	},
+/obj/item/stack/sheet/mineral/diamond/five,
+/obj/item/stack/sheet/glass/fifty{
+	pixel_x = -6
+	},
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"ST" = (
+/obj/structure/sign/poster/official/moth_hardhat/directional/south,
+/obj/structure/closet/emcloset,
+/obj/effect/turf_decal/box,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"Ty" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"Tz" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 10
+	},
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron/freezer,
+/area/virtual_domain/powered_lighting)
+"Ua" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"UL" = (
+/obj/item/electronics/airlock/old,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"Vg" = (
+/obj/effect/spawner/structure/window/reinforced/damaged,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"Vt" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Engineering Break Room"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"Wg" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	color = "#DE3A3A";
+	dir = 8
+	},
+/obj/item/cardboard_cutout{
+	starting_cutout = "Private Security Officer"
+	},
+/turf/open/floor/iron/freezer,
+/area/virtual_domain/powered_lighting)
+"WN" = (
+/obj/machinery/holopad/tutorial,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/box/red,
+/obj/item/disk/holodisk/tutorial/engine_sm_hard,
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"Xi" = (
+/obj/item/shell/airlock,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
+"Xw" = (
+/obj/structure/closet/crate/bin,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/freezer,
+/area/virtual_domain/powered_lighting)
+"XH" = (
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"XI" = (
+/obj/structure/closet/secure_closet/security,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	color = "#DE3A3A";
+	dir = 5
+	},
+/turf/open/floor/iron/freezer,
+/area/virtual_domain/powered_lighting)
+"XL" = (
+/obj/item/trash/peanuts,
+/turf/open/floor/plastic,
+/area/virtual_domain/powered_lighting)
+"YD" = (
+/obj/structure/chair/plastic{
+	dir = 8;
+	pixel_x = 5
+	},
+/turf/open/floor/plastic,
+/area/virtual_domain/powered_lighting)
+"YE" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Supermatter Engine Room"
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"YS" = (
+/obj/structure/closet/toolcloset,
+/obj/machinery/light/small/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/structure/sign/poster/official/moth_piping/directional/north,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/powered_lighting)
+"YU" = (
+/obj/structure/sign/warning/directional/north,
+/obj/structure/closet/secure_closet/engineering_personal,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"ZC" = (
+/obj/machinery/suit_storage_unit/engine,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/powered_lighting)
+"ZG" = (
+/obj/machinery/vending/engivend{
+	onstation = 0
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/powered_lighting)
+"ZS" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/freezer,
+/area/virtual_domain/powered_lighting)
+
+(1,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+Bx
+Bx
+Bx
+Bx
+Bx
+Bx
+Bx
+Bx
+jD
+jD
+jD
+jD
+jD
+"}
+(2,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+Bx
+Bx
+Bx
+Bx
+Bx
+Bx
+Ra
+Ra
+Ra
+Ra
+Ra
+Ra
+Bx
+jD
+jD
+jD
+jD
+jD
+"}
+(3,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+Bx
+Ra
+Ra
+Ra
+Ra
+Ra
+OC
+XH
+vs
+XH
+XH
+Ra
+Bx
+jD
+jD
+jD
+jD
+jD
+"}
+(4,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+Bx
+Ra
+Xw
+uB
+Wg
+Tz
+Ra
+YU
+Dk
+Kq
+ar
+Ra
+Bx
+jD
+jD
+jD
+jD
+jD
+"}
+(5,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+Bx
+Ra
+XI
+Qx
+Bt
+ZS
+Ra
+gb
+gb
+CG
+gb
+Ra
+Bx
+Bx
+Bx
+Bx
+Bx
+Bx
+"}
+(6,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+jD
+Bx
+Bx
+Bx
+Bx
+Bx
+Bx
+Bx
+Bx
+Bx
+Bx
+Bx
+Bx
+Bx
+Ra
+mQ
+jg
+jg
+mQ
+Ra
+DT
+CG
+CG
+CG
+aP
+aP
+aP
+aP
+aP
+vQ
+Bx
+"}
+(7,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+jD
+Bx
+Ra
+Ra
+Ra
+Ra
+Ra
+Ra
+Ra
+Ra
+Ra
+Ra
+Ra
+Ra
+Ra
+vq
+jN
+jN
+IU
+Ra
+ev
+zT
+CG
+CG
+aP
+aP
+aP
+aP
+aP
+aP
+Bx
+"}
+(8,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+jD
+Bx
+Ra
+Su
+JD
+DH
+JD
+JD
+JD
+JD
+JD
+JD
+JD
+JD
+JD
+JD
+JD
+JD
+JD
+JD
+km
+km
+km
+km
+aP
+aP
+aP
+aP
+aP
+aP
+Bx
+"}
+(9,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+jD
+Bx
+Ra
+pV
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+aP
+aP
+aP
+aP
+aP
+aP
+Bx
+"}
+(10,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+Bx
+Bx
+Ra
+Ca
+sm
+sm
+sm
+sm
+lJ
+sm
+sm
+KY
+sm
+sm
+sm
+sm
+sm
+sm
+sm
+sm
+aH
+aH
+aH
+aH
+aP
+aP
+aP
+aP
+aP
+aP
+Bx
+"}
+(11,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+Bx
+Ra
+Ra
+Ra
+Ra
+Ra
+Ra
+Cr
+lJ
+Cr
+Ra
+Ra
+Ra
+Ra
+Ra
+pd
+Ua
+Ft
+kt
+Ra
+dZ
+zT
+CG
+CG
+aP
+aP
+aP
+aP
+aP
+aP
+Bx
+"}
+(12,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+Bx
+Ra
+sn
+sn
+sn
+sn
+Ra
+Ra
+tH
+Ra
+Ra
+wP
+lA
+Rl
+Ra
+Ra
+Ra
+Ra
+Ra
+Ra
+IF
+CG
+CG
+CG
+aP
+aP
+aP
+aP
+aP
+pP
+Bx
+"}
+(13,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+Bx
+Ra
+Ie
+wC
+pY
+wC
+Ra
+tI
+ci
+cw
+Ra
+dY
+xb
+aM
+uy
+Ra
+Bx
+Bx
+Bx
+Ra
+IT
+IT
+CG
+IT
+Ra
+Bx
+Bx
+Bx
+Bx
+Bx
+Bx
+"}
+(14,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+Bx
+Ra
+sn
+NS
+iZ
+EO
+Ra
+aI
+lJ
+CN
+Ra
+mf
+xb
+YD
+aR
+Ra
+Bx
+jD
+Bx
+Ra
+jC
+Sh
+sb
+PF
+Ra
+Bx
+jD
+jD
+jD
+jD
+jD
+"}
+(15,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+Bx
+Ra
+sn
+wC
+dc
+EO
+Ra
+YS
+RE
+GO
+Ra
+xb
+xF
+XL
+QI
+Ra
+Bx
+jD
+Bx
+OC
+XH
+dG
+XH
+XH
+Ra
+Bx
+jD
+jD
+jD
+jD
+jD
+"}
+(16,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+Bx
+Ra
+sn
+sn
+Ra
+yc
+Ra
+Ra
+Ks
+Ra
+Ra
+Vt
+Ra
+sf
+Lf
+Ra
+Bx
+jD
+Bx
+Ra
+Ra
+Ra
+Ra
+Ra
+Ra
+Bx
+jD
+jD
+jD
+jD
+jD
+"}
+(17,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+Bx
+Ra
+Ra
+Ra
+Ra
+lJ
+yU
+LV
+lJ
+mS
+KH
+EV
+Ra
+Ra
+Ra
+Ra
+Bx
+jD
+Bx
+Bx
+Bx
+Bx
+Bx
+Bx
+Bx
+Bx
+jD
+jD
+jD
+jD
+jD
+"}
+(18,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+Bx
+Ra
+Ra
+Ra
+JL
+lJ
+Co
+RO
+lJ
+gq
+lx
+EV
+ST
+Ra
+Ra
+Ra
+Bx
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(19,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+Bx
+Ra
+ZC
+lJ
+lJ
+lJ
+lJ
+lJ
+lJ
+lJ
+lJ
+lJ
+lJ
+lJ
+fA
+Ra
+Bx
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(20,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+Bx
+Ra
+pZ
+lJ
+jM
+Hz
+Ef
+ou
+WN
+bi
+Ef
+IO
+sC
+lJ
+fX
+Ra
+Bx
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(21,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+Bx
+Ra
+Ch
+lJ
+lb
+pU
+hD
+pU
+nq
+pU
+EC
+pU
+CP
+lJ
+zL
+Ra
+Bx
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(22,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+Bx
+Ra
+kr
+lJ
+NX
+zk
+oS
+ZG
+Ma
+yV
+bb
+eP
+pS
+lJ
+zL
+Ra
+Bx
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(23,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+Bx
+Ra
+gN
+xa
+gN
+Od
+mQ
+gN
+aO
+gN
+mQ
+mQ
+gN
+xa
+Ty
+mQ
+Bx
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(24,1,1) = {"
+jD
+jD
+jD
+jD
+KD
+Bx
+mQ
+yD
+dm
+dm
+dm
+dm
+dm
+dm
+dm
+dm
+dm
+dm
+dm
+yD
+mQ
+Bx
+AS
+AS
+AS
+AS
+AS
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(25,1,1) = {"
+jD
+jD
+jD
+jD
+jD
+Bx
+gN
+yD
+yD
+yD
+yh
+yh
+yD
+yD
+yD
+yD
+yD
+yD
+yD
+yD
+mQ
+mQ
+mQ
+QY
+rw
+rw
+rw
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(26,1,1) = {"
+Bx
+Bx
+Bx
+Bx
+Bx
+Bx
+gN
+yD
+yD
+yh
+yh
+yh
+yD
+yD
+yD
+yD
+yD
+yD
+yh
+yD
+yw
+yD
+yw
+rw
+rw
+rw
+rw
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(27,1,1) = {"
+Bx
+mQ
+mQ
+YE
+mQ
+gN
+mQ
+yD
+yD
+yD
+yD
+yD
+yD
+yD
+yD
+yD
+yD
+yD
+yh
+yD
+mQ
+mQ
+mQ
+QY
+rw
+rw
+rw
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(28,1,1) = {"
+Bx
+mQ
+qS
+Hw
+Hw
+Hw
+YE
+yD
+yD
+yD
+yD
+qF
+yD
+yD
+yD
+yD
+SJ
+yD
+yD
+yh
+mQ
+rw
+rw
+rw
+rw
+rw
+rw
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(29,1,1) = {"
+Bx
+mQ
+Hw
+Hw
+Hw
+Hw
+gN
+yD
+yD
+yh
+yD
+mp
+yD
+lm
+Sd
+yD
+ly
+yD
+yh
+yD
+mQ
+rw
+rw
+rw
+rw
+rw
+rw
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(30,1,1) = {"
+Bx
+mQ
+Hw
+Hw
+Hw
+Hw
+gN
+yD
+yh
+yD
+yD
+NM
+yD
+ns
+yD
+yD
+ro
+yD
+yD
+yD
+mQ
+rw
+rw
+rw
+rw
+rw
+rw
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(31,1,1) = {"
+Bx
+mQ
+Hw
+Hw
+Hw
+Hw
+gN
+yD
+yh
+yD
+yD
+yD
+yh
+yh
+yD
+yD
+yD
+yD
+yD
+yD
+mQ
+QY
+QY
+QY
+QY
+QY
+rw
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(32,1,1) = {"
+Bx
+mQ
+CL
+cK
+Hw
+Hw
+YE
+yD
+yD
+yD
+yD
+yD
+yh
+yD
+AU
+nG
+nG
+yD
+yD
+yD
+FE
+QY
+QY
+QY
+QY
+QY
+rw
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(33,1,1) = {"
+Bx
+mQ
+mQ
+mQ
+ha
+mQ
+mQ
+UL
+yD
+yD
+yD
+yh
+yh
+yD
+yD
+yD
+yh
+yh
+yh
+yD
+gN
+QY
+QY
+QY
+QY
+QY
+rw
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(34,1,1) = {"
+Bx
+Bx
+Bx
+Bx
+Bx
+Bx
+mQ
+Xi
+zo
+yD
+yD
+yD
+yD
+yD
+yD
+yD
+HC
+yD
+yD
+yD
+FE
+QY
+QY
+QY
+QY
+QY
+rw
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(35,1,1) = {"
+AS
+QY
+rw
+rw
+rw
+rw
+mQ
+Vg
+oU
+NZ
+mQ
+mQ
+Vg
+NZ
+oU
+mQ
+mQ
+mm
+Xi
+NZ
+mQ
+QY
+QY
+QY
+QY
+QY
+rw
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(36,1,1) = {"
+AS
+QY
+rw
+rw
+rw
+rw
+mQ
+yD
+yD
+yD
+yD
+yD
+yD
+yD
+yD
+yD
+yD
+yD
+UL
+yD
+mQ
+QY
+QY
+QY
+QY
+QY
+rw
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(37,1,1) = {"
+AS
+QY
+rw
+rw
+rw
+rw
+mQ
+yD
+yh
+yD
+yD
+yD
+yD
+yD
+yh
+yD
+yD
+yh
+yh
+yD
+mQ
+QY
+QY
+QY
+QY
+QY
+rw
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(38,1,1) = {"
+AS
+QY
+rw
+rw
+rw
+rw
+mQ
+yD
+yh
+yD
+yD
+yD
+yh
+yh
+yh
+yD
+yh
+Ic
+Ic
+Ic
+mQ
+QY
+QY
+QY
+QY
+QY
+rw
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(39,1,1) = {"
+AS
+QY
+rw
+rw
+rw
+rw
+mQ
+yD
+yD
+yD
+yD
+yD
+yD
+yD
+yD
+yD
+yh
+Ic
+Ic
+Ic
+mQ
+QY
+QY
+QY
+QY
+QY
+rw
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(40,1,1) = {"
+AS
+QY
+ct
+ct
+ct
+PV
+mQ
+mQ
+mQ
+mQ
+mQ
+mQ
+mQ
+mQ
+mQ
+mQ
+mQ
+mQ
+mQ
+mQ
+mQ
+QY
+QY
+QY
+QY
+QY
+rw
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(41,1,1) = {"
+AS
+QY
+rw
+rw
+rw
+ct
+ct
+PV
+rw
+rw
+ct
+rw
+rw
+rw
+rw
+oV
+rw
+rw
+rw
+rw
+ct
+QY
+QY
+QY
+QY
+QY
+rw
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(42,1,1) = {"
+AS
+QY
+rw
+rw
+rw
+PV
+rw
+rw
+rw
+rw
+ct
+rw
+rw
+rw
+rw
+hb
+rw
+rw
+rw
+rw
+ct
+rw
+rw
+rw
+rw
+rw
+rw
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(43,1,1) = {"
+AS
+QY
+ct
+ct
+kp
+kp
+kp
+ct
+ct
+rw
+kp
+kp
+ct
+ct
+ct
+oV
+ct
+ct
+ct
+kp
+kp
+kp
+ct
+ct
+ct
+ct
+rw
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}
+(44,1,1) = {"
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+AS
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+jD
+"}

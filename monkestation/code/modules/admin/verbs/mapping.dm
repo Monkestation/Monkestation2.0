@@ -10,7 +10,7 @@
 		CHECK_TICK
 	return lighting
 
-ADMIN_VERB_VISIBILITY(export_lighting_info, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(export_lighting_info, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(export_lighting_info, R_DEBUG, FALSE, "Export Lighting Info", "Shows the range of cameras on the station.", ADMIN_CATEGORY_MAPPING)
 	var/list/options = list("All Station Z-Levels")
 	var/turf/our_turf = get_turf(user.mob)

@@ -30,6 +30,7 @@
 	on_inhand_icon_state = "contractor_baton_on"
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	active_force = 16
+	stun_animation = TRUE
 
 	/// Ref to the baton holster, should the baton have one.
 	var/obj/item/mod/module/baton_holster/holster

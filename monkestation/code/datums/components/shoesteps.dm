@@ -4,7 +4,7 @@
 /datum/component/shoesteps
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/list/custom_sounds = list()
-	var/sounds = TRUE
+	var/sounds = FALSE // So shoe noises arent activated on spawn.
 
 /datum/component/shoesteps/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
@@ -28,7 +28,7 @@
 
 /datum/component/shoesteps/proc/toggle_sounds(mob/living/carbon/clicker)
 	if(!DOING_INTERACTION(clicker, DOAFTER_SOURCE_SHOESTEP_TOGGLE))
-		if(do_after(clicker, 1.5 SECONDS, interaction_key = DOAFTER_SOURCE_SHOESTEP_TOGGLE))
+		if(do_after(clicker, 1 SECOND, interaction_key = DOAFTER_SOURCE_SHOESTEP_TOGGLE))
 			sounds = !sounds
 			to_chat(clicker, span_warning("You turn the noisemaker [sounds ? "on" : "off"]."))
 
@@ -375,6 +375,59 @@ extra range addition
 		FOOTSTEP_BALL = list(list(
 			'monkestation/sound/effects/ballpit.ogg'), 100, 0),
 		)
+
+/datum/component/shoesteps/tap_shoes
+	custom_sounds = list(
+		FOOTSTEP_WOOD = list(list(
+			'monkestation/sound/effects/tapshoes/tapwood1.ogg',
+			'monkestation/sound/effects/tapshoes/tapwood2.ogg',
+			'monkestation/sound/effects/tapshoes/tapwood3.ogg',
+			'monkestation/sound/effects/tapshoes/tapwood4.ogg',), 45, 0),
+		FOOTSTEP_FLOOR = list(list(
+			'monkestation/sound/effects/tapshoes/tapmetal1.ogg',
+			'monkestation/sound/effects/tapshoes/tapmetal2.ogg',
+			'monkestation/sound/effects/tapshoes/tapmetal3.ogg',
+			'monkestation/sound/effects/tapshoes/tapmetal4.ogg',), 12, -1),
+		FOOTSTEP_PLATING = list(list(
+			'monkestation/sound/effects/tapshoes/plateB1.ogg',
+			'monkestation/sound/effects/tapshoes/plateB2.ogg',
+			'monkestation/sound/effects/tapshoes/plateB3.ogg',
+			'monkestation/sound/effects/tapshoes/plateB4.ogg',), 36, 1),
+		FOOTSTEP_CARPET = list(list(
+			'monkestation/sound/effects/tapshoes/tapcarpet1.ogg',
+			'monkestation/sound/effects/tapshoes/tapcarpet2.ogg',
+			'monkestation/sound/effects/tapshoes/tapcarpet3.ogg',
+			'monkestation/sound/effects/tapshoes/tapcarpet4.ogg',), 95, -1),
+		FOOTSTEP_SAND = list(list(
+			'monkestation/sound/effects/tapshoes/tapsand1.ogg',
+			'monkestation/sound/effects/tapshoes/tapsand2.ogg',
+			'monkestation/sound/effects/tapshoes/tapsand3.ogg',
+			'monkestation/sound/effects/tapshoes/tapsand4.ogg',), 75, 0),
+		FOOTSTEP_GRASS = list(list(
+			'sound/effects/footstep/grass1.ogg',
+			'sound/effects/footstep/grass2.ogg',
+			'sound/effects/footstep/grass3.ogg',
+			'sound/effects/footstep/grass4.ogg'), 75, 0),
+		FOOTSTEP_WATER = list(list(
+			'sound/effects/footstep/water1.ogg',
+			'sound/effects/footstep/water2.ogg',
+			'sound/effects/footstep/water3.ogg',
+			'sound/effects/footstep/water4.ogg'), 100, 1),
+		FOOTSTEP_LAVA = list(list(
+			'sound/effects/footstep/lava1.ogg',
+			'sound/effects/footstep/lava2.ogg',
+			'sound/effects/footstep/lava3.ogg'), 100, 0),
+		FOOTSTEP_MEAT = list(list(
+			'sound/effects/meatslap.ogg'), 100, 0),
+		FOOTSTEP_CATWALK = list(list(
+			'sound/effects/footstep/catwalk1.ogg',
+			'sound/effects/footstep/catwalk2.ogg',
+			'sound/effects/footstep/catwalk3.ogg',
+			'sound/effects/footstep/catwalk4.ogg',
+			'sound/effects/footstep/catwalk5.ogg'), 100, 1),
+		FOOTSTEP_BALL = list(list(
+			'monkestation/sound/effects/ballpit.ogg'), 100, 0),
+	)
 
 /obj/item/clothing/shoes/clown_shoes/orchestra
 	name = "musical shoes"
