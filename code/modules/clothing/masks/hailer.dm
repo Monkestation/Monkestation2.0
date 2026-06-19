@@ -90,15 +90,20 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 
 /obj/item/clothing/mask/gas/sechailer/swat
 	name = "\improper SWAT mask"
-	desc = "A close-fitting tactical mask with an especially aggressive Compli-o-nator 3000."
+	desc = "A close-fitting tactical mask with an especially aggressive Compli-o-nator 3000. Also has adjustable lens and filters slots to fit on your face!"
 	actions_types = list(/datum/action/item_action/halt)
 	icon_state = "swat"
 	inhand_icon_state = "swat"
 	aggressiveness = AGGR_SHIT_COP
-	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDEEYES | HIDEEARS | HIDEHAIR | HIDESNOUT
+	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDEEYES | HIDEEARS | HIDESNOUT
 	visor_flags_inv = 0
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
+	unique_reskin = list(
+			"Hood" = "swat",
+			"Soviet" = "swat1",
+			"Pig" = "swat2"
+	)
 
 /obj/item/clothing/mask/gas/sechailer/swat/alt
 	name = "\improper SWAT gas mask"
@@ -116,6 +121,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	inhand_icon_state = "spacepol_mask"
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
+	uses_advanced_reskins = FALSE
 
 /obj/item/clothing/mask/gas/sechailer/cyborg
 	name = "security hailer"

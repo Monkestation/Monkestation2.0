@@ -101,6 +101,7 @@
 	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
 	icon_state = "ert"
 	aggressiveness = 1
+	unique_reskin = FALSE
 
 /obj/item/storage/box/survival/ert
 	name = "emergency response survival box"
