@@ -23,6 +23,7 @@ GLOBAL_DATUM(thrallnet, /datum/cameranet)
 	camnet = GLOB.thrallnet
 	src.set_light(l_power = light_power, l_color = light_color)
 	interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
+	actions += new /datum/action/innate/camera_jump/darkspawn/void_eye(src)
 
 /obj/machinery/computer/camera_advanced/darkspawn/on_set_is_operational(old_value)
 	return
@@ -56,6 +57,14 @@ GLOBAL_DATUM(thrallnet, /datum/cameranet)
 //special ability to replace sound effects
 /datum/action/innate/camera_jump/darkspawn
 	name = "Jump To Ally"
+	/// Header for the selection list.
+	var/menu_title = "Allies"
+	/// Prompt for the selection list.
+	var/menu_prompt = "Ally to view"
+
+/// Whether [netcam] belongs in this jump action's list. Allies are thrall bodycams; void eyes are filtered out.
+/datum/action/innate/camera_jump/darkspawn/proc/valid_target(obj/machinery/camera/netcam)
+	return !istype(netcam, /obj/machinery/camera/darkspawn)
 
 /datum/action/innate/camera_jump/darkspawn/Activate()
 	if(!owner || !isliving(owner))
@@ -65,34 +74,37 @@ GLOBAL_DATUM(thrallnet, /datum/cameranet)
 	if(!origin)
 		return
 
-	var/list/L = list()
-
-	for (var/obj/machinery/camera/cam as anything in origin.camnet.cameras)
-		if(length(origin.z_lock) && !(cam.z in origin.z_lock))
-			continue
-		L.Add(cam)
-
 	var/list/T = list()
-
-	for (var/obj/machinery/camera/netcam in L)
-		var/list/tempnetwork = netcam.network & origin.networks
-		if (length(tempnetwork))
-			if(!netcam.c_tag)
-				continue
-			T["[netcam.c_tag][netcam.can_use() ? null : " (Deactivated)"]"] = netcam
+	for(var/obj/machinery/camera/netcam as anything in origin.camnet.cameras)
+		if(length(origin.z_lock) && !(netcam.z in origin.z_lock))
+			continue
+		if(!netcam.c_tag)
+			continue
+		if(!valid_target(netcam))
+			continue
+		if(!length(netcam.network & origin.networks))
+			continue
+		T["[netcam.c_tag][netcam.can_use() ? null : " (Deactivated)"]"] = netcam
 
 	playsound(origin, "crawling_shadows_walk", 25, FALSE)
-	var/camera = tgui_input_list(usr, "Ally to view", "Allies", T)
+	var/camera = tgui_input_list(usr, menu_prompt, menu_title, T)
 	if(isnull(camera))
 		return
-	if(isnull(T[camera]))
-		return
 	var/obj/machinery/camera/final = T[camera]
+	if(isnull(final))
+		return
 	playsound(origin, "crawling_shadows_walk", 25, FALSE)
-	if(final)
-		remote_eye.setLoc(get_turf(final))
-		owner.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
-		owner.clear_fullscreen("flash", 1) //Shorter flash than normal since it's an ~~advanced~~ console!
+	remote_eye.setLoc(get_turf(final))
+	owner.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
+	owner.clear_fullscreen("flash", 1) //Shorter flash than normal since it's an ~~advanced~~ console!
+
+/datum/action/innate/camera_jump/darkspawn/void_eye
+	name = "Jump To Void Eye"
+	menu_title = "Void Eyes"
+	menu_prompt = "Eye to view"
+
+/datum/action/innate/camera_jump/darkspawn/void_eye/valid_target(obj/machinery/camera/netcam)
+	return istype(netcam, /obj/machinery/camera/darkspawn)
 
 //////////////////////////////////////////////////////////////////////////
 //-------------------------Expand the veilnet---------------------------//
@@ -110,6 +122,14 @@ GLOBAL_DATUM(thrallnet, /datum/cameranet)
 	flags_1 = NODECONSTRUCT_1
 	network = list(ROLE_DARKSPAWN)
 	view_range = MAX_CAMERA_RANGE
+
+/obj/machinery/camera/darkspawn/Initialize(mapload)
+	. = ..()
+	var/static/list/eyes_per_area = list()
+	var/area/eye_area = get_area(src)
+	var/number = eyes_per_area[eye_area] + 1
+	eyes_per_area[eye_area] = number
+	c_tag = "[format_text(eye_area.name)] #[number]"
 
 /obj/machinery/camera/darkspawn/default_camera_net()
 	return GLOB.thrallnet
