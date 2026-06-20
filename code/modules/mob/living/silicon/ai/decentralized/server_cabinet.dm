@@ -121,14 +121,17 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 		. += mutable_appearance(icon, "[base_icon_state]_top")
 	if(length(installed_racks) > 1)
 		. += mutable_appearance(icon, "[base_icon_state]_bottom")
-	if(!(machine_stat & (BROKEN|NOPOWER|EMPED)))
-		. += mutable_appearance(icon, "[base_icon_state]_on")
-		if(!valid_ticks)
-			return
-		if(length(installed_racks) > 0)
-			. += mutable_appearance(icon, "[base_icon_state]_top_on")
-		if(length(installed_racks) > 1)
-			. += mutable_appearance(icon, "[base_icon_state]_bottom_on")
+
+	if(machine_stat & (BROKEN|NOPOWER|EMPED))
+		return .
+
+	. += mutable_appearance(icon, "[base_icon_state]_on")
+	if(!valid_ticks)
+		return
+	if(length(installed_racks) > 0)
+		. += mutable_appearance(icon, "[base_icon_state]_top_on")
+	if(length(installed_racks) > 1)
+		. += mutable_appearance(icon, "[base_icon_state]_bottom_on")
 
 /obj/machinery/ai/server_cabinet/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/server_rack))

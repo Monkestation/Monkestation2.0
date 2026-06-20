@@ -24,7 +24,7 @@
 		/datum/component/material_container, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_RACK_CREATOR], \
 		0, \
-		MATCONTAINER_EXAMINE, \
+		MATCONTAINER_EXAMINE|MATCONTAINER_ONLY_STACKS, \
 	)
 	. = ..()
 	RefreshParts()
@@ -304,7 +304,7 @@
 			var/total_ram = 0
 			for(var/RAM in ram_expansions)
 				for(var/mat in RAM["cost"])
-					new_rack.custom_materials[mat] += RAM["cost"][mat]
+					new_rack.custom_materials[mat] += RAM["cost"][mat] * efficiency_coeff
 
 				total_ram += RAM["capacity"]
 

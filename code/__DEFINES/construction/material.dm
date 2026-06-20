@@ -51,6 +51,8 @@
 #define MATCONTAINER_SILENT (1<<3)
 ///Alloys won't be disassembled in its components when inserted.
 #define MATCONTAINER_ACCEPT_ALLOYS (1<<4)
+///Only allows you to recycle stacks. Incompatible with MATCONTAINER_NO_INSERT
+#define MATCONTAINER_ONLY_STACKS (1<<5)
 
 /// Whether a material's mechanical effects should apply to the atom. This is necessary for other flags to work.
 #define MATERIAL_EFFECTS (1<<0)

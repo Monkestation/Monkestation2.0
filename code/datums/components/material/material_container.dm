@@ -470,6 +470,10 @@
 /datum/component/material_container/proc/on_attackby(datum/source, obj/item/weapon, mob/living/user)
 	SIGNAL_HANDLER
 
+	// Only insert stacks with left click
+	if((mat_container_flags & MATCONTAINER_ONLY_STACKS) && !isstack(weapon))
+		return
+
 	//Allows you to attack the machine with iron sheets for e.g.
 	if (!(mat_container_flags & MATCONTAINER_ANY_INTENT) && (user.istate & ISTATE_HARM))
 		return
