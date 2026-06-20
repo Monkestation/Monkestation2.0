@@ -276,3 +276,31 @@
   - balance: Ambu bags oxygen healing has been reduced (15->10)
   Tractor-Maam:
   - spellcheck: being clumsy with a scanner wand no longer misgenders you
+2026-06-20:
+  Barrel, Xackii, mcbalaam:
+  - code_imp: Ported big manipulator from tgstation. Use monkeys as free labor.
+  BobDABuilder9001:
+  - balance: super duper lube makes you slide for wayyyy longer (honk)
+  - balance: super duper lube is blacklisted from lesser strange seeds
+  Cujo:
+  - rscdel: Removes a duplicate shower drain in Tramstation Medical
+  - rscadd: Sleepers now take a second to drag someone inside
+  JupiterJaeden:
+  - qol: Security records notes now allow you to put in punctuation and varied capitalization,
+      Instead Of Always Looking Like This.
+  - qol: The max length of crime names has been extended to fill the available space
+      in the records console UI.
+  - bugfix: Long crime names will no longer be cut off by a few characters when put
+      into the records console.
+  - bugfix: Security huds no longer allow you to put in infinitely long crime names
+      through the examine menu.
+  Singul0:
+  - rscadd: Adds 4 new engineering tutorials, on how to setup all the various engines
+      that power the station and also one on space construction! Try it on the centcom
+      simulation tutorial chamber today!
+  - qol: Remodeled Centcom to make tutorial simulations to be more visible.
+  paganiy, SirNightKnight:
+  - bugfix: fixed cycler shotgun double ammo consumption
+  - bugfix: fixed racking action on the cycler shotgun
+  - bugfix: bounty hunter cycler shotgun now properly fires incendiary rounds from
+      secondary tube

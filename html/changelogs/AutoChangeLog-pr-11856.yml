@@ -1,5 +1,0 @@
-author: "Singul0"
-delete-after: True
-changes:
-  - rscadd: "Adds 4 new engineering tutorials, on how to setup all the various engines that power the station and also one on space construction! Try it on the centcom simulation tutorial chamber today!"
-  - qol: "Remodeled Centcom to make tutorial simulations to be more visible."
