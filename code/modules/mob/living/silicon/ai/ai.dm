@@ -1278,3 +1278,13 @@
 
 /mob/living/silicon/ai/proc/partytime()
 	party_time = TRUE
+	var/obj/machinery/ai/data_core/core = loc
+	if(istype(core))
+		var/current_color = "#[random_color()]"
+		core.set_light(l_outer_range = 7, l_power = 3, l_color = current_color)
+
+/mob/living/silicon/ai/proc/stoptheparty()
+	party_time = FALSE
+	var/obj/machinery/ai/data_core/core = loc
+	if(istype(core))
+		core.set_light(0)
