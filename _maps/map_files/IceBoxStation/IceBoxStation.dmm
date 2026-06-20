@@ -31668,6 +31668,7 @@
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green,
+/obj/machinery/holopad/secure,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "jKN" = (
@@ -41540,7 +41541,6 @@
 /area/station/maintenance/port/greater)
 "mNJ" = (
 /obj/structure/cable,
-/obj/machinery/holopad/secure,
 /obj/effect/turf_decal/tile/dark_green{
 	dir = 4
 	},
