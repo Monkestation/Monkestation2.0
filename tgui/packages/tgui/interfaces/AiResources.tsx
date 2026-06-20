@@ -110,7 +110,7 @@ export const AiResources = (props) => {
                 {remaining_ram} TB
               </ProgressBar>
             </Section>
-            <Section title="Active AI's" style={{ overflowY: 'auto' }}>
+            <Section my={1} title="Active AI's" style={{ overflowY: 'auto' }}>
               <Stack vertical>
                 {ais.map((ai, index) => {
                   return (
