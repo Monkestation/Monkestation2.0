@@ -54,7 +54,19 @@ GLOBAL_DATUM(thrallnet, /datum/cameranet)
 	. = ..()
 	playsound(src, "crawling_shadows_walk", 35, FALSE)
 
-//special ability to replace sound effects
+/obj/machinery/computer/camera_advanced/darkspawn/attack_hand(mob/user, list/modifiers)
+	if(iscarbon(user) && !IS_TEAM_DARKSPAWN(user))
+		var/mob/living/carbon/intruder = user
+		if(TIMER_COOLDOWN_RUNNING(intruder, type))
+			return TRUE
+		TIMER_COOLDOWN_START(intruder, type, 10 SECONDS)
+		intruder.adjust_temp_blindness(5 SECONDS)
+		playsound(src, 'sound/creatures/darkspawn/darkspawn_howl.ogg', 70, TRUE)
+		to_chat(intruder, span_userdanger("You gaze into the orb, and the void gazes back — a thousand eyes snap open at once, and searing darkness floods your sight!"))
+		to_chat(intruder, span_hypnophrase("YOU ARE NOT MEANT TO SEE."))
+		return TRUE
+	return ..()
+
 /datum/action/innate/camera_jump/darkspawn
 	name = "Jump To Ally"
 	/// Header for the selection list.
