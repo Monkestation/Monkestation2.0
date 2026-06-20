@@ -44,7 +44,10 @@
 
 		COOLDOWN_START(src, last_tox_damage, RADIATION_TOX_INTERVAL)
 
-		start_burn_splotch_timer()
+		if(is_species(parent, SPECIES_GOBLIN))
+			start_goblin_burn_splotch_timer()
+		else
+			start_burn_splotch_timer()
 
 		human_parent.throw_alert(ALERT_IRRADIATED, /atom/movable/screen/alert/irradiated)
 
@@ -113,7 +116,12 @@
 	if (!COOLDOWN_FINISHED(src, last_tox_damage))
 		return
 
-	target.apply_damage(RADIATION_TOX_DAMAGE_PER_INTERVAL, TOX)
+	//Goblin Edit Begin
+	if(is_species(parent, SPECIES_GOBLIN))
+		target.apply_damage(RADIATION_TOX_DAMAGE_PER_INTERVAL / 2, TOX) //Goblins take half radiation damage
+	else
+		target.apply_damage(RADIATION_TOX_DAMAGE_PER_INTERVAL, TOX)
+	//Goblin Edit End
 	COOLDOWN_START(src, last_tox_damage, RADIATION_TOX_INTERVAL)
 
 /datum/component/irradiated/proc/start_burn_splotch_timer()
