@@ -36,7 +36,7 @@
 	/// The volume of the above.
 	var/on_stun_volume = 75
 	/// Do we animate the "hit" when stunning something?
-	var/stun_animation = FALSE
+	var/stun_animation = TRUE
 	/// Whether the stun attack is logged. Only relevant for abductor batons, which have different modes.
 	var/log_stun_attack = TRUE
 	/// Boolean on whether people with chunky fingers can use this baton.
@@ -432,8 +432,6 @@
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	active_force = 16
 
-	stun_animation = TRUE
-
 	unfolded_drop_sound = 'sound/items/baton/contractor_baton_unfolded_pickup.ogg'
 	unfolded_pickup_sound = 'sound/items/baton/contractor_baton_unfolded_pickup.ogg'
 
@@ -585,7 +583,6 @@
 	on_stun_volume = 50
 	active = FALSE
 	context_living_rmb_active = "Harmful Stun"
-	stun_animation = TRUE
 
 	light_outer_range = 1.5
 	light_system = OVERLAY_LIGHT
