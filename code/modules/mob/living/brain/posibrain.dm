@@ -233,7 +233,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 /obj/item/mmi/posibrain/add_mmi_overlay()
 	return
 
-/obj/item/mmi/posibrain/ipc/Initialize(mapload, autoping = FALSE) // IPC posi brain, no ping/alert for ghost anytime a IPC is spawned, and radio off by default for balance concerns
+/obj/item/mmi/posibrain/ipc/Initialize(autoping = FALSE) // IPC posi brain, no ping/alert for ghost anytime a IPC is spawned, and radio off by default for balance concerns
 	. = ..()
 	radio.set_on(FALSE)
 
@@ -257,7 +257,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	QDEL_NULL(stored_mmi)
 	return ..()
 
-/obj/item/organ/internal/brain/positronic/Initialize(mapload)
+/obj/item/organ/internal/brain/positronic/Initialize()
 	. = ..()
 	stored_mmi = new /obj/item/mmi/posibrain/ipc(src) // Spawned/roundstart IPCs get a mmi too
 
@@ -334,3 +334,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	desc = "A man-machine interface inserted into the chest. Please bug report if seen."
 	icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi'
 	icon_state = "mmi-ipc"
+
+/obj/item/organ/internal/brain/positronic/mmi/Initialize(mapload)
+	. = ..()
+	stored_mmi = new /obj/item/mmi/ipc(src) // Spawned/roundstart IPCs get a mmi too

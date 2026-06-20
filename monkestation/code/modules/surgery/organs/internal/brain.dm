@@ -697,19 +697,3 @@ ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use t
 	message_admins(msg)
 	admin_ticket_log(new_body, log_msg)
 	BLACKBOX_LOG_ADMIN_VERB("Heal Oozeling Core")
-
-/obj/item/organ/internal/brain/synth
-	name = "compact positronic brain"
-	slot = ORGAN_SLOT_BRAIN
-	zone = BODY_ZONE_CHEST
-	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES | ORGAN_VITAL
-	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
-	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves. It has an IPC serial number engraved on the top. It is usually slotted into the chest of synthetic crewmembers. It is not compatible with standard Posibrain/MMI interfaces, and must be placed into an MMI to be made compatible." // to inform the user that this is, in fact, not a real posibrain, but is an organ posibrain.
-	icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi'
-	icon_state = "posibrain-ipc"
-
-/obj/item/organ/internal/brain/synth/mmi
-	name = "compact man-machine interface"
-	desc = "A compact man-machine interface, perfectly dimensioned to fit in the same slot as a synthetic-compatible positronic brain. Unfortunately, the brain seems to be permanently attached to the circuitry, and it seems relatively sensitive to it's environment. It is usually slotted into the chest of synthetic crewmembers."
-	icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi'
-	icon_state = "mmi-ipc"
