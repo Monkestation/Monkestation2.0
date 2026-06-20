@@ -21,7 +21,6 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	var/valid_ticks = MAX_AI_DATA_CORE_TICKS //Limited to MAX_AI_DATA_CORE_TICKS. Decrement by 1 every time we have an invalid tick, opposite when valid
 	COOLDOWN_DECLARE(warning_cooldown)
 
-	var/party_time //party time
 	//Heat production multiplied by this
 	var/heat_modifier = 1
 	//Power modifier, power modified by this. Be aware this indirectly changes heat since power => heat
@@ -204,8 +203,6 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 		if(machine_stat & NOPOWER)
 			integrated_battery.use(active_power_usage * CELL_POWERUSE_MULTIPLIER)
 		COOLDOWN_RESET(src, warning_cooldown)
-		if(party_time)
-			set_light(l_outer_range = 7, l_power = 3, l_color = "#[random_color()]")
 		return
 
 	valid_ticks--
@@ -279,15 +276,6 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 
 /obj/machinery/ai/data_core/can_track(mob/living/user)
 	return TRUE
-
-/obj/machinery/ai/data_core/proc/partytime()
-	var/current_color = "#[random_color()]"
-	set_light(l_outer_range = 7, l_power = 3, l_color = current_color)
-	party_time = TRUE
-
-/obj/machinery/ai/data_core/proc/stoptheparty()
-	set_light(0)
-	party_time = FALSE
 
 /obj/machinery/ai/data_core/primary
 	name = "primary AI data core"

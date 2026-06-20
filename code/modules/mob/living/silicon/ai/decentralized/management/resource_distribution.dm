@@ -121,6 +121,9 @@
 			. = TRUE
 
 		if("clear_ai_resources")
+			if(!authenticated)
+				balloon_alert(user, "must be logged in!")
+				return ITEM_INTERACT_BLOCKING
 			var/mob/living/silicon/ai/target_ai = locate(params["targetAI"])
 			if(!istype(target_ai))
 				return
@@ -129,6 +132,9 @@
 			. = TRUE
 
 		if("set_cpu")
+			if(!authenticated)
+				balloon_alert(user, "must be logged in!")
+				return ITEM_INTERACT_BLOCKING
 			var/mob/living/silicon/ai/target_ai = locate(params["targetAI"])
 			if(!istype(target_ai))
 				return
@@ -143,6 +149,9 @@
 			. = TRUE
 
 		if("max_cpu")
+			if(!authenticated)
+				balloon_alert(user, "must be logged in!")
+				return ITEM_INTERACT_BLOCKING
 			var/mob/living/silicon/ai/target_ai = locate(params["targetAI"])
 			if(!istype(target_ai))
 				return
@@ -155,6 +164,9 @@
 			. = TRUE
 
 		if("add_ram")
+			if(!authenticated)
+				balloon_alert(user, "must be logged in!")
+				return ITEM_INTERACT_BLOCKING
 			var/mob/living/silicon/ai/target_ai = locate(params["targetAI"])
 			if(!istype(target_ai))
 				return
@@ -168,6 +180,9 @@
 			. = TRUE
 
 		if("remove_ram")
+			if(!authenticated)
+				balloon_alert(user, "must be logged in!")
+				return ITEM_INTERACT_BLOCKING
 			var/mob/living/silicon/ai/target_ai = locate(params["targetAI"])
 			if(!istype(target_ai))
 				return
@@ -182,8 +197,11 @@
 			GLOB.ai_os.remove_ram(target_ai, 1)
 			. = TRUE
 		if("toggle_human_status")
+			if(!authenticated)
+				balloon_alert(user, "must be logged in!")
+				return ITEM_INTERACT_BLOCKING
 			if(!is_human)
 				to_chat(user, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
 				return
 			human_only = !human_only
-			to_chat(user, span_notice("This console is now operable by [human_only ? "humans only." : "humans and silicons."]"))
+			balloon_alert(user, "now [human_only ? "human only" : "allowing silicon"]")

@@ -9,12 +9,9 @@
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/machinery/ai/data_core/datacores in GLOB.data_cores)
-		if(!datacores.party_time)
-			datacores.partytime()
+	ai.partytime()
 
 
 /datum/ai_project/rgb/stop()
-	for(var/obj/machinery/ai/data_core/datacores in GLOB.data_cores)
-		datacores.stoptheparty()
+	ai.stoptheparty()
 	return ..()

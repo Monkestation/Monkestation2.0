@@ -29,10 +29,10 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 /obj/machinery/computer/ai_control_console/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/aicard))
 		if(intellicard)
-			to_chat(user, span_warning("There's already an IntelliCard inserted!"))
+			balloon_alert(user, "intellicard already in!")
 			return ITEM_INTERACT_BLOCKING
 		if(user.transferItemToLoc(tool, src))
-			to_chat(user, span_notice("You insert [tool]."))
+			to_chat(user, span_notice("You insert [tool] into \the [src]."))
 			intellicard = tool
 			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
 			return ITEM_INTERACT_SUCCESS
@@ -40,11 +40,11 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 
 	if(istype(tool, /obj/item/mmi))
 		if(!authenticated)
-			to_chat(user, span_warning("You need to be logged in to do this!"))
+			balloon_alert(user, "must be logged in!")
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/mmi/brain = tool
-		if(!brain.brainmob)
-			to_chat(user, span_warning("[tool] is not active!"))
+		if(!brain.brainmob?.mind)
+			balloon_alert(user, "brain not active!")
 			return ITEM_INTERACT_BLOCKING
 		var/mob/living/silicon/ai/A = null
 
@@ -57,7 +57,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 			A = new /mob/living/silicon/ai(loc, laws, brain.brainmob)
 		A.relocate(TRUE)
 
-		if(!istype(brain.laws, /datum/ai_laws/ratvar) && brain.brainmob.mind)
+		if(!istype(brain.laws, /datum/ai_laws/ratvar))
 			brain.brainmob.mind.remove_all_antag_datums()
 			brain.brainmob.mind.wipe_memory()
 		if(brain.force_replace_ai_name)
@@ -65,13 +65,13 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 
 		SSblackbox.record_feedback("amount", "ais_created", 1)
 		qdel(tool)
-		to_chat(user, span_notice("AI succesfully uploaded."))
+		balloon_alert(user, "ai uploaded")
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/surveillance_upgrade))
 		if(!authenticated)
-			to_chat(user, span_warning("You need to be logged in to do this!"))
+			balloon_alert(user, "must be logged in!")
 			return ITEM_INTERACT_BLOCKING
 		var/mob/living/silicon/ai/AI = tgui_input_list(user, "Select an AI", "Select an AI", GLOB.ai_list)
 		if(!AI)
@@ -82,7 +82,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 
 	if(istype(tool, /obj/item/malf_upgrade))
 		if(!authenticated)
-			to_chat(user, span_warning("You need to be logged in to do this!"))
+			balloon_alert(user, "must be logged in!")
 			return ITEM_INTERACT_BLOCKING
 		var/mob/living/silicon/ai/AI = tgui_input_list(user, "Select an AI", "Select an AI", GLOB.ai_list)
 		if(!AI)
@@ -98,7 +98,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	authenticated = TRUE
 	obj_flags |= EMAGGED
 	if(user)
-		balloon_alert(user, "access restrictions bypassed")
+		balloon_alert(user, "restrictions bypassed")
 
 /obj/machinery/computer/ai_control_console/click_alt(mob/user)
 	eject_intellicard(user)
@@ -236,6 +236,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	if(intellicard)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 		downloading.transfer_ai(AI_TRANS_TO_CARD, user_downloading, null, intellicard)
+		intellicard.update_appearance()
 	stop_download(TRUE)
 
 /obj/machinery/computer/ai_control_console/proc/stop_download(silent = FALSE)

@@ -18,6 +18,12 @@
 	if(machine)
 		machine.check_eye(src)
 
+	if(party_time)
+		var/obj/machinery/ai/data_core/core = loc
+		if(istype(core))
+			var/current_color = "#[random_color()]"
+			core.set_light(l_outer_range = 7, l_power = 3, l_color = current_color)
+
 	// Handle power damage (oxy)
 	if(aiRestorePowerRoutine && !available_ai_cores())
 		// Lost power

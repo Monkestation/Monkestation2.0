@@ -90,6 +90,8 @@
 	var/acceleration = FALSE
 	var/max_camera_sprint = MAX_SPRINT
 
+	var/party_time //party time
+
 	var/mob/living/silicon/robot/deployed_shell = null //For shell control
 	var/datum/action/innate/deploy_shell/deploy_action = new
 	var/datum/action/innate/deploy_last_shell/redeploy_action = new
@@ -1273,3 +1275,6 @@
 
 #undef CALL_BOT_COOLDOWN
 #undef MAX_SPRINT
+
+/mob/living/silicon/ai/proc/partytime()
+	party_time = TRUE
