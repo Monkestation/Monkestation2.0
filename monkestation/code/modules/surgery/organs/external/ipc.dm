@@ -33,13 +33,39 @@
 
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_SCREEN
+	dna_block = DNA_IPC_SCREEN_BLOCK
 
 	preference = "feature_ipc_screen"
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/ipc_screen
+/*
+/obj/item/organ/external/ipc_screen/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+	. = ..()
+	if(!.)
+		return
+	RegisterSignal(receiver, COMSIG_LIVING_DEATH, PROC_REF(bsod_death)) // screen displays bsod on death
+	RegisterSignal(receiver, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
 
+/obj/item/organ/external/ipc_screen/Remove(mob/living/carbon/organ_owner, special, moving)
+	. = ..()
+	UnregisterSignal(organ_owner, list(COMSIG_LIVING_DEATH, COMSIG_LIVING_REVIVE))
+
+/*
+	* Makes the IPC screen switch to BSOD followed by a blank screen
+	*
+	* Arguments:
+	* * transformer - The human that will be affected by the screen change (read: IPC).
+	* * screen_name - The name of the screen to switch the ipc_screen mutant bodypart to. Defaults to BSOD.
+*/
+/obj/item/organ/external/ipc_screen/proc/bsod_death(mob/living/carbon/human/transformer, screen_name = "BSOD")
+	if(!transformer.get_bodypart(BODY_ZONE_HEAD))
+		return
+	saved_screen = change_screen // remember the old screen in case of revival
+	switch_to_screen(transformer, screen_name)
+	addtimer(CALLBACK(src, PROC_REF(switch_to_screen), transformer, "Blank"), 5 SECONDS)
+*/
 /datum/bodypart_overlay/mutant/ipc_screen
-	layers = EXTERNAL_FRONT
+	layers = EXTERNAL_ADJACENT
 	feature_key = "ipc_screen"
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR_SECONDARY

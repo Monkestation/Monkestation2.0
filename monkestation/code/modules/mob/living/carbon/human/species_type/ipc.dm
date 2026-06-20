@@ -102,7 +102,6 @@
 //		change_screen.Grant(C)
 
 	RegisterSignal(C, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
-//	RegisterSignal(C, COMSIG_LIVING_DEATH, PROC_REF(bsod_death)) // screen displays bsod on death, if they have one
 	RegisterSignal(C, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(blood_handled))
 
 /datum/species/ipc/proc/blood_handled(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
@@ -132,7 +131,7 @@
 	*/
 /datum/species/ipc/on_species_loss(mob/living/carbon/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_ATOM_EMAG_ACT, COMSIG_LIVING_DEATH))
+	UnregisterSignal(target, list(COMSIG_ATOM_EMAG_ACT))
 
 /datum/species/ipc/spec_revival(mob/living/carbon/human/revived_ipc)
 	revived_ipc.notify_ghost_cloning("You have been repaired!")

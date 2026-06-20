@@ -233,7 +233,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 /obj/item/mmi/posibrain/add_mmi_overlay()
 	return
 
-/obj/item/mmi/posibrain/ipc/Initialize(mapload, autoping = FALSE) // IPC posi brain, radio off by default and doesn't autoping
+/obj/item/mmi/posibrain/ipc/Initialize(mapload, autoping = FALSE) // IPC posi brain, no ping/alert for ghost anytime a IPC is spawned, and radio off by default for balance concerns
 	. = ..()
 	radio.set_on(FALSE)
 
@@ -259,7 +259,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/organ/internal/brain/positronic/Initialize(mapload)
 	. = ..()
-	stored_mmi = new /obj/item/mmi/posibrain/ipc(src)
+	stored_mmi = new /obj/item/mmi/posibrain/ipc(src) // Spawned/roundstart IPCs get a mmi too
 
 /obj/item/organ/internal/brain/positronic/on_insert(mob/living/carbon/brain_owner)
 	. = ..()
