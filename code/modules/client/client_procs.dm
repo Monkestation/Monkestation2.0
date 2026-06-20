@@ -595,7 +595,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor(src) && !is_admin(src))
+	var/required_living_minutes = CONFIG_GET(number/panic_bunker_living)
+	var/living_minutes = get_exp_living(TRUE)
+
+	if(((player_age != -1) && living_minutes < required_living_minutes && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor(src) && !is_admin(src)))
 		interviewee = TRUE
 		register_for_interview()
 
