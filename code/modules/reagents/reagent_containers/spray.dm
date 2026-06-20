@@ -14,10 +14,14 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 7
-	var/stream_mode = FALSE //whether we use the more focused mode
-	var/current_range = 3 //the range of tiles the sprayer will reach.
-	var/spray_range = 1 //the range of tiles the sprayer will reach when in spray mode.
-	var/stream_range = 3 //the range of tiles the sprayer will reach when in stream mode.
+	/// Whether we use the more focused mode
+	var/stream_mode = FALSE
+	/// The range of tiles the sprayer will reach.
+	var/current_range = 3
+	/// The range of tiles the sprayer will reach when in spray mode.
+	var/spray_range = 1
+	/// The range of tiles the sprayer will reach when in stream mode.
+	var/stream_range = 3
 	var/can_fill_from_container = TRUE
 	/// Are we able to toggle between stream and spray modes, which change the distance and amount sprayed?
 	var/can_toggle_range = TRUE
@@ -25,6 +29,7 @@
 	volume = 250
 	possible_transfer_amounts = list(5,10)
 	var/spray_sound = 'sound/effects/spray2.ogg'
+	/// The value that is used to calculate the speed of the spray in spray()
 	var/spray_speed = 2.5
 
 /obj/item/reagent_containers/spray/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
