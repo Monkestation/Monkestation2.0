@@ -474,7 +474,7 @@
 				var/turf/closed/mineral/M = T
 				M.gets_drilled(K.firer, TRUE)
 	if(modifier)
-		for(var/mob/living/L in range(2, target_turf) - K.firer - target )
+		for(var/mob/living/L in range(2, target_turf) - K.firer - target)
 			if(is_type_in_typecache(L, KA.ignored_mob_types))
 				continue
 			var/armor = L.run_armor_check(K.def_zone, K.armor_flag, "", "", K.armour_penetration)
