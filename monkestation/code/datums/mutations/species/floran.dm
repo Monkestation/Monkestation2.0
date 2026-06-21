@@ -21,7 +21,7 @@
 
 /datum/action/cooldown/spores/Activate(mob/living/carbon/cast_on)
 	. = ..()
-	var/datum/blood_type/blood = cast_on.get_blood_type()
+	var/datum/blood_type/blood = cast_on.get_bloodtype()
 
 	var/blood_path = isnull(blood) ? /datum/reagent/drug/mushroomhallucinogen : blood.reagent_type
 	var/amount = min(cast_on.blood_volume, 15) // We dont need to check if its below 15 realistically since you'd be dead, but whatever

@@ -16,7 +16,7 @@
 /obj/item/organ/internal/heart/slime
 	name = "slime heart"
 
-	heart_bloodtype = /datum/blood_type/slime
+	heart_bloodtype = BLOOD_TYPE_TOX
 	/// Ability given to the owner of the organ
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 	/// Ability given to the owner of the organ

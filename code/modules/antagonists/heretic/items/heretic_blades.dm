@@ -151,10 +151,10 @@
 		max_blood = INFINITY,\
 	)
 
-	/* AddComponent(
+	AddComponent(
 		/datum/component/bloody_spreader,\
 		blood_dna = list("Alien DNA" = get_blood_type(BLOOD_TYPE_XENO)),\
-	) */
+	)
 
 // Path of Void's blade
 /obj/item/melee/sickly_blade/void

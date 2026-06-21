@@ -70,22 +70,34 @@
  * * added_ph - override to force a pH when added
  * * override_base_ph - ingore the present pH of the reagent, and instead use the default (i.e. if buffers/reactions alter it)
  * * ignore splitting - Don't call the process that handles reagent spliting in a mob (impure/inverse) - generally leave this false unless you care about REAGENTS_DONOTSPLIT flags (see reagent defines)
+ * * creation_callback - Callback to invoke when the reagent is created
  */
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = DEFAULT_REAGENT_TEMPERATURE, added_purity = null, added_ph, no_react = FALSE, override_base_ph = FALSE, ignore_splitting = FALSE)
+/datum/reagents/proc/add_reagent(
+	datum/reagent/reagent_type,
+	amount,
+	list/data = null,
+	reagtemp = DEFAULT_REAGENT_TEMPERATURE,
+	added_purity = null,
+	added_ph = null,
+	no_react = FALSE,
+	override_base_ph = FALSE,
+	ignore_splitting = FALSE,
+	datum/callback/creation_callback = null,
+)
 	// Prevents small amount problems, as well as zero and below zero amounts.
 	if(amount <= CHEMICAL_QUANTISATION_LEVEL)
 		return FALSE
 
 	if(!IS_FINITE(amount))
-		stack_trace("non finite amount passed to add reagent [amount] [reagent]")
+		stack_trace("non finite amount passed to add reagent [amount] [reagent_type]")
 		return FALSE
 
-	if(SEND_SIGNAL(src, COMSIG_REAGENTS_PRE_ADD_REAGENT, reagent, amount, reagtemp, data, no_react) & COMPONENT_CANCEL_REAGENT_ADD)
+	if(SEND_SIGNAL(src, COMSIG_REAGENTS_PRE_ADD_REAGENT, reagent_type, amount, reagtemp, data, no_react) & COMPONENT_CANCEL_REAGENT_ADD)
 		return FALSE
 
-	var/datum/reagent/glob_reagent = GLOB.chemical_reagents_list[reagent]
+	var/datum/reagent/glob_reagent = GLOB.chemical_reagents_list[reagent_type]
 	if(!glob_reagent)
-		stack_trace("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
+		stack_trace("[my_atom] attempted to add a reagent called '[reagent_type]' which doesn't exist. ([usr])")
 		return FALSE
 	if(isnull(added_purity)) //Because purity additions can be 0
 		added_purity = glob_reagent.creation_purity //Usually 1
@@ -123,7 +135,7 @@
 
 	//add the reagent to the existing if it exists
 	for(var/datum/reagent/iter_reagent as anything in cached_reagents)
-		if(iter_reagent.type == reagent)
+		if(iter_reagent.type == reagent_type)
 			if(!iter_reagent.can_merge)
 				return
 			if(override_base_ph)
@@ -148,13 +160,15 @@
 			return TRUE
 
 	//otherwise make a new one
-	var/datum/reagent/new_reagent = new reagent(data)
+	var/datum/reagent/new_reagent = new reagent_type(data)
 	cached_reagents += new_reagent
 	new_reagent.holder = src
 	new_reagent.volume = amount
 	new_reagent.purity = added_purity
 	new_reagent.creation_purity = added_purity
 	new_reagent.ph = added_ph
+	if (creation_callback)
+		creation_callback.Invoke(new_reagent)
 	new_reagent.on_new(data)
 
 	if(isliving(my_atom))
@@ -337,14 +351,26 @@
  * * multiplier - multiplies amount of each reagent by this number
  * * preserve_data - if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
  * * no_react - passed through to [/datum/reagents/proc/add_reagent]
- * * mob/transfered_by - used for logging
+ * * mob/transferred_by - used for logging
  * * remove_blacklisted - skips transferring of reagents without REAGENT_CAN_BE_SYNTHESIZED in chemical_flags
  * * methods - passed through to [/datum/reagents/proc/expose_single] and [/datum/reagent/proc/on_transfer]
  * * show_message - passed through to [/datum/reagents/proc/expose_single]
  * * round_robin - if round_robin=TRUE, so transfer 5 from 15 water, 15 sugar and 15 plasma becomes 10, 15, 15 instead of 13.3333, 13.3333 13.3333. Good if you hate floating point errors
  * * ignore_stomach - when using methods INGEST will not use the stomach as the target
  */
-/datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transfered_by, remove_blacklisted = FALSE, methods = NONE, show_message = TRUE, round_robin = FALSE, ignore_stomach = FALSE)
+/datum/reagents/proc/trans_to(
+	obj/target,
+	amount = 1,
+	multiplier = 1,
+	preserve_data = TRUE,
+	no_react = FALSE,
+	mob/transferred_by,
+	remove_blacklisted = FALSE,
+	methods = NONE,
+	show_message = TRUE,
+	round_robin = FALSE,
+	ignore_stomach = FALSE
+)
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
@@ -353,10 +379,10 @@
 
 	var/cached_amount = amount
 	var/atom/target_atom
-	var/datum/reagents/R
+	var/datum/reagents/target_holder
 	if(istype(target, /datum/reagents))
-		R = target
-		target_atom = R.my_atom
+		target_holder = target
+		target_atom = target_holder.my_atom
 	else
 		if(!ignore_stomach && (methods & INGEST) && iscarbon(target))
 			var/mob/living/carbon/eater = target
@@ -364,24 +390,24 @@
 			if(!belly)
 				eater.expel_ingested(my_atom, amount)
 				return
-			R = belly.reagents
+			target_holder = belly.reagents
 			target_atom = belly
 		else if(!target.reagents)
 			return
 		else
-			R = target.reagents
+			target_holder = target.reagents
 			target_atom = target
 
 	//Set up new reagents to inherit the old ongoing reactions
 	if(!no_react)
-		transfer_reactions(R)
+		transfer_reactions(target_holder)
 
-	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
+	amount = min(min(amount, src.total_volume), target_holder.maximum_volume-target_holder.total_volume)
 	var/trans_data = null
 	var/transfer_log = list()
 	var/r_to_send = list()	// Validated list of reagents to be exposed
 	var/reagents_to_remove = list()
-	SEND_SIGNAL(R, COMSIG_REAGENT_PRE_TRANS_TO, src)
+	SEND_SIGNAL(target_holder, COMSIG_REAGENT_PRE_TRANS_TO, src)
 	if(!round_robin)
 		var/part = amount / src.total_volume
 		for(var/datum/reagent/reagent as anything in cached_reagents)
@@ -390,13 +416,13 @@
 			var/transfer_amount = reagent.volume * part
 			if(preserve_data)
 				trans_data = copy_data(reagent)
-			if(reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
+			if(reagent.intercept_reagents_transfer(target_holder, cached_amount))//Use input amount instead.
 				continue
 			if(is_reagent_container(my_atom))
 				var/obj/item/reagent_containers/container = my_atom
-				if(SEND_SIGNAL(R, COMSIG_REAGENT_CACHE_ADD_ATTEMPT, reagent, src, container.amount_per_transfer_from_this))
+				if(SEND_SIGNAL(target_holder, COMSIG_REAGENT_CACHE_ADD_ATTEMPT, reagent, src, container.amount_per_transfer_from_this))
 					return
-			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
+			if(!target_holder.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT, creation_callback = CALLBACK(src, PROC_REF(on_transfer_creation), reagent, target_holder))) //we only handle reaction after every reagent has been transferred.
 				continue
 			if(methods)
 				r_to_send += reagent
@@ -404,9 +430,9 @@
 			reagents_to_remove += reagent
 
 		if(isorgan(target_atom))
-			R.expose_multiple(r_to_send, target, methods, part, show_message)
+			target_holder.expose_multiple(r_to_send, target, methods, part, show_message)
 		else
-			R.expose_multiple(r_to_send, target_atom, methods, part, show_message)
+			target_holder.expose_multiple(r_to_send, target_atom, methods, part, show_message)
 
 		for(var/datum/reagent/reagent as anything in reagents_to_remove)
 			var/transfer_amount = reagent.volume * part
@@ -430,33 +456,36 @@
 				transfer_amount = reagent.volume
 			if(is_reagent_container(my_atom))
 				var/obj/item/reagent_containers/container = my_atom
-				if(SEND_SIGNAL(R, COMSIG_REAGENT_CACHE_ADD_ATTEMPT, reagent, src, container.amount_per_transfer_from_this))
+				if(SEND_SIGNAL(target_holder, COMSIG_REAGENT_CACHE_ADD_ATTEMPT, reagent, src, container.amount_per_transfer_from_this))
 					return
-			if(SEND_SIGNAL(R, COMSIG_REAGENT_CACHE_ADD_ATTEMPT, reagent, src, amount))
+			if(SEND_SIGNAL(target_holder, COMSIG_REAGENT_CACHE_ADD_ATTEMPT, reagent, src, amount))
 				continue
-			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
+			if(!target_holder.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
 				return
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(methods)
 				if(isorgan(target_atom))
-					R.expose_single(reagent, target, methods, transfer_amount, show_message)
+					target_holder.expose_single(reagent, target, methods, transfer_amount, show_message)
 				else
-					R.expose_single(reagent, target_atom, methods, transfer_amount, show_message)
+					target_holder.expose_single(reagent, target_atom, methods, transfer_amount, show_message)
 				reagent.on_transfer(target_atom, methods, transfer_amount * multiplier)
 			remove_reagent(reagent.type, transfer_amount)
 			var/list/reagent_qualities = list(REAGENT_TRANSFER_AMOUNT = transfer_amount, REAGENT_PURITY = reagent.purity)
 			transfer_log[reagent.type] = reagent_qualities
 
-	if(transfered_by && target_atom)
-		target_atom.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
-		log_combat(transfered_by, target_atom, "transferred reagents ([get_external_reagent_log_string(transfer_log)]) from [my_atom] to")
+	if(transferred_by && target_atom)
+		target_atom.add_hiddenprint(transferred_by) //log prints so admins can figure out who touched it last.
+		log_combat(transferred_by, target_atom, "transferred reagents ([get_external_reagent_log_string(transfer_log)]) from [my_atom] to")
 
 	update_total()
-	R.update_total()
+	target_holder.update_total()
 	if(!no_react)
-		R.handle_reactions()
+		target_holder.handle_reactions()
 		src.handle_reactions()
 	return amount
+
+/datum/reagents/proc/on_transfer_creation(datum/reagent/reagent, datum/reagents/target_holder, datum/reagent/new_reagent)
+	SEND_SIGNAL(reagent, COMSIG_REAGENT_ON_TRANSFER, target_holder, new_reagent)
 
 /// Transfer a specific reagent id to the target object
 /datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
@@ -638,7 +667,6 @@
  * * liverless - Stops reagents that aren't set as [/datum/reagent/var/self_consuming] from metabolizing
  */
 /datum/reagents/proc/metabolize_reagent(mob/living/carbon/owner, datum/reagent/reagent, seconds_per_tick, times_fired, can_overdose = FALSE, liverless = FALSE, dead = FALSE)
-	var/need_mob_update = FALSE
 	SEND_SIGNAL(src, COMSIG_REAGENT_METABOLIZE_REAGENT, reagent, seconds_per_tick)
 	if(QDELETED(reagent.holder))
 		return FALSE
@@ -646,29 +674,41 @@
 	if(!owner)
 		owner = reagent.holder.my_atom
 
-	if(owner && reagent && (!dead || (reagent.chemical_flags & REAGENT_DEAD_PROCESS)))
-		if(owner.reagent_check(reagent, seconds_per_tick, times_fired))
-			return
-		if(liverless && !reagent.self_consuming) //need to be metabolized
-			return
-		if(!reagent.metabolizing)
-			reagent.metabolizing = TRUE
-			reagent.on_mob_metabolize(owner)
-		if(can_overdose)
-			if(reagent.overdose_threshold)
-				if(reagent.volume >= reagent.overdose_threshold && !reagent.overdosed)
-					reagent.overdosed = TRUE
-					need_mob_update += reagent.overdose_start(owner)
-					owner.log_message("has started overdosing on [reagent.name] at [reagent.volume] units.", LOG_GAME)
-			for(var/addiction in reagent.addiction_types)
-				owner.mind?.add_addiction_points(addiction, reagent.addiction_types[addiction] * REAGENTS_METABOLISM)
+	if(!owner || !reagent || (dead && !(reagent.chemical_flags & REAGENT_DEAD_PROCESS)))
+		return FALSE
 
-			if(reagent.overdosed)
-				need_mob_update += reagent.overdose_process(owner, seconds_per_tick, times_fired)
-		if(!dead)
-			need_mob_update += reagent.on_mob_life(owner, seconds_per_tick, times_fired)
-	if(dead)
+	if(owner.reagent_tick(reagent, seconds_per_tick, times_fired))
+		return FALSE
+
+	if(liverless && !reagent.self_consuming) //need to be metabolized
+		return FALSE
+
+	var/need_mob_update = FALSE
+	if(!reagent.metabolizing)
+		reagent.metabolizing = TRUE
+		reagent.on_mob_metabolize(owner)
+
+	if(can_overdose && !HAS_TRAIT(owner, TRAIT_OVERDOSEIMMUNE))
+		if(reagent.overdose_threshold && reagent.volume >= reagent.overdose_threshold && !reagent.overdosed)
+			reagent.overdosed = TRUE
+			need_mob_update += reagent.overdose_start(owner)
+			owner.log_message("has started overdosing on [reagent.name] at [reagent.volume] units.", LOG_GAME)
+
+		for(var/addiction in reagent.addiction_types)
+			owner.mind?.add_addiction_points(addiction, reagent.addiction_types[addiction] * REAGENTS_METABOLISM)
+
+		if(reagent.overdosed)
+			need_mob_update += reagent.overdose_process(owner, seconds_per_tick, times_fired)
+
+	reagent.current_cycle++
+	need_mob_update += reagent.on_mob_life(owner, seconds_per_tick, times_fired)
+
+	if(dead && !QDELETED(owner) && !QDELETED(reagent))
 		need_mob_update += reagent.on_mob_dead(owner, seconds_per_tick)
+
+	if(!QDELETED(owner) && !QDELETED(reagent))
+		reagent.metabolize_reagent(owner, seconds_per_tick, times_fired)
+
 	return need_mob_update
 
 /// Signals that metabolization has stopped, triggering the end of trait-based effects
@@ -1276,8 +1316,10 @@
 	// that could possibly eat up a lot of memory needlessly
 	// if most data lists are read-only.
 	if(trans_data["viruses"])
-		var/list/v = trans_data["viruses"]
-		trans_data["viruses"] = v.Copy()
+		var/list/viruses = list()
+		for (var/datum/disease/disease as anything in trans_data["viruses"])
+			viruses += disease.Copy()
+		trans_data["viruses"] = viruses
 
 	return trans_data
 

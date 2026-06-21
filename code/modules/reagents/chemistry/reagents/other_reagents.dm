@@ -1,22 +1,5 @@
 /datum/reagent/blood
-	data = list(
-		// Actually Relevant
-		"viruses" = null, // Refernces to virus datums in this blood
-		"blood_DNA" = null, // DNA of the guy who the blood came from
-		"blood_type" = null, // /datum/blood_type of the blood
-		"resistances" = null, // Viruses the blood is vaccinated against
-		"immunity" = null,
-		// Unused? (but cool)
-		"trace_chem" = null, // Param list of all chems in the blood at the time the sample was taken (type to volume)
-		// Used for podperson shit
-		"mind" = null, // Ref to the mind of the guy who the blood came from
-		"ckey" = null, // Ckey of the guy who the blood came from
-		"gender" = null, // Gender of the guy when the blood was taken
-		"real_name" = null, // Real name of the guy when the blood was taken
-		"cloneable" = null, // Tracks if the guy who the blood came from suicided or not
-		"factions" = null, // Factions the guy who the blood came from was in
-		"quirks" = null, // Quirk typepaths of the guy who the blood came from had
-		)
+	description  = "Blood cells suspended in plasma, the most abundant of which being the hemoglobin-containing red blood cells."
 	name = "Blood"
 	color = COLOR_BLOOD
 	metabolization_rate = 12.5 * REAGENTS_METABOLISM //fast rate so it disappears fast.
@@ -39,65 +22,20 @@
 	desc = "Are you sure this is tomato juice?"
 	icon_state = "glass_red"
 
-/datum/reagent/blood/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
-	. = ..()
-	for(var/datum/disease/strain as anything in data?["viruses"])
-		if(istype(strain, /datum/disease/acute))
-			var/datum/disease/acute/advanced = strain
-			if(methods & (INJECT|INGEST|PATCH))
-				exposed_mob.infect_disease(advanced, TRUE, "(Contact, splashed with infected blood)")
-			if((methods & (TOUCH | VAPOR)) && (advanced.spread_flags & DISEASE_SPREAD_BLOOD))
-				if(exposed_mob.check_bodypart_bleeding(BODY_ZONE_EVERYTHING))
-					exposed_mob.infect_disease(advanced, notes="(Blood, splashed with infected blood)")
-
-	var/datum/blood_type/blood = exposed_mob.get_blood_type()
-	if(blood?.reagent_type == type && ((methods & INJECT) || ((methods & INGEST))))
-		if(data["blood_type"] in blood.compatible_types)
-			exposed_mob.blood_volume = min(exposed_mob.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
-		else
-			exposed_mob.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
-
-		exposed_mob.reagents.remove_reagent(type, reac_volume) // Because we don't want blood to just lie around in the patient's blood, makes no sense.
-
-
 /datum/reagent/blood/on_new(list/data)
 	. = ..()
-	if(istype(data))
-		SetViruses(src, data)
-		color = GLOB.blood_types[data["blood_type"]]?.color || COLOR_BLOOD
+	// If we were artificially created without blood data, we still want to have the blood_reagent element for exposure effects
+	if(!istype(data) || !data["blood_type"])
+		AddElement(/datum/element/blood_reagent, null, get_blood_type(BLOOD_TYPE_UNIVERSAL))
+		return
 
-/datum/reagent/blood/on_merge(list/mix_data)
-	if(data && mix_data)
-		if(data["blood_DNA"] != mix_data["blood_DNA"])
-			data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning if the DNA sample doesn't match.
-		if(data["viruses"] || mix_data["viruses"])
+	var/datum/blood_type/blood_type = data["blood_type"]
+	if(!istype(blood_type))
+		return
 
-			var/list/mix1 = data["viruses"]
-			var/list/mix2 = mix_data["viruses"]
-
-			// Stop issues with the list changing during mixing.
-			var/list/to_mix = list()
-
-			for(var/datum/disease/advance/AD in mix1)
-				to_mix += AD
-			for(var/datum/disease/advance/AD in mix2)
-				to_mix += AD
-
-			var/datum/disease/advance/AD = Advance_Mix(to_mix)
-			if(AD)
-				var/list/preserve = list(AD)
-				for(var/D in data["viruses"])
-					if(!istype(D, /datum/disease/advance))
-						preserve += D
-				data["viruses"] = preserve
-	return 1
-
-/datum/reagent/blood/proc/get_diseases()
-	. = list()
-	if(data && data["viruses"])
-		for(var/thing in data["viruses"])
-			var/datum/disease/D = thing
-			. += D
+	var/blood_color = blood_type.get_color()
+	if(blood_color == BLOOD_COLOR_RED) // If the blood is default red, just use the darker red color for the reagent.
+		color = initial(color)
 
 /datum/reagent/blood/expose_turf(turf/exposed_turf, reac_volume)//splash the blood all over the place
 	. = ..()
@@ -157,9 +95,10 @@
 			infection.cure()
 	LAZYOR(exposed_mob.disease_resistances, data)
 
-/datum/reagent/vaccine/on_merge(list/data)
-	if(istype(data))
-		src.data |= data.Copy()
+/datum/reagent/vaccine/on_merge(list/mix_data, amount)
+	. = ..()
+	if(mix_data)
+		data |= mix_data
 
 /datum/reagent/vaccine/fungal_tb
 	name = "Vaccine (Fungal Tuberculosis)"
@@ -375,6 +314,7 @@
 		to_chat(exposed_mob, span_userdanger("Your mind burns in agony as you feel the light of the Justicar being ripped away from you by something else!")) //monkestation edit
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	// monkestation edit start
 	/* original - this version of the code depends on https://github.com/tgstation/tgstation/pull/78657 which has not been ported yet
 	. = ..()
@@ -591,6 +531,7 @@
 
 
 /datum/reagent/hellwater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	affected_mob.set_fire_stacks(min(affected_mob.fire_stacks + (1.5 * seconds_per_tick), 5))
 	affected_mob.ignite_mob() //Only problem with igniting people is currently the commonly available fire suits make you immune to being on fire
 	affected_mob.adjustToxLoss(0.5*seconds_per_tick, 0)
@@ -1179,11 +1120,6 @@
 	color = "#606060" //pure iron? let's make it violet of course
 	ph = 6
 	restricted = TRUE
-
-/datum/reagent/iron/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
-		affected_mob.blood_volume += 0.25 * seconds_per_tick
-	..()
 
 /datum/reagent/gold
 	name = "Gold"
@@ -1832,7 +1768,7 @@
 	burning_volume = 0.05 //but has a lot of hydrocarbons
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = null
-	default_container = /obj/effect/decal/cleanable/oil
+	default_container = /obj/effect/decal/cleanable/blood/oil
 	liquid_fire_power = 15
 	synthetic_boozepwr = 0
 
@@ -2175,6 +2111,7 @@
 	color = pick(random_color_list)
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(can_colour_mobs)
 		affected_mob.add_atom_colour(color_transition_filter(pick(random_color_list), SATURATION_OVERRIDE), WASHABLE_COLOUR_PRIORITY)
 

@@ -2423,6 +2423,7 @@
 	liquid_fire_power = 0
 
 /datum/reagent/consumable/ethanol/kortara/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	. = ..()
 	if(drinker.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
 		drinker.heal_bodypart_damage(1,0)
 		. = TRUE

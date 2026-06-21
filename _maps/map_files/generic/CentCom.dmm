@@ -7696,7 +7696,7 @@
 	pixel_x = 4;
 	pixel_y = 1
 	},
-/obj/effect/decal/cleanable/oil{
+/obj/effect/decal/cleanable/blood/oil{
 	color = "#0000cc";
 	name = "Strange Fluid";
 	desc = "Something of extradimensional origin had leaked from the potato.";
@@ -8295,7 +8295,7 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/smooth_large,
 /area/centcom/central_command_areas/evacuation/ship)
@@ -9410,7 +9410,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron/smooth_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "azb" = (
@@ -10255,7 +10255,7 @@
 "aBm" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/item/weldingtool/experimental,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
@@ -23117,7 +23117,7 @@
 /area/centcom/central_command_areas/evacuation)
 "gYp" = (
 /obj/item/storage/toolbox/syndicate,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/item/stack/cable_coil,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/expansion_bulldozer)
@@ -25290,7 +25290,7 @@
 /area/centcom/central_command_areas/adminroom)
 "khe" = (
 /obj/effect/spawner/random/structure/chair_flipped,
-/obj/effect/decal/cleanable/blood/pre_dna/ethereal,
+///obj/effect/decal/cleanable/blood/pre_dna/ethereal,
 /turf/open/floor/emissive_test/white,
 /area/centcom/central_command_areas/adminroom)
 "khW" = (
@@ -27320,7 +27320,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "nOi" = (
-/obj/effect/decal/cleanable/blood/pre_dna/ethereal,
+///obj/effect/decal/cleanable/blood/pre_dna/ethereal,
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/adminroom)
 "nPn" = (
@@ -33659,7 +33659,7 @@
 /area/centcom/central_command_areas/prison)
 "yje" = (
 /obj/structure/lattice/catwalk,
-/obj/effect/decal/cleanable/robot_debris/old,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/old,
 /turf/open/misc/asteroid,
 /area/centcom/syndicate_mothership/firebase_trident)
 "yjh" = (

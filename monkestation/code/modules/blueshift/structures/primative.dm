@@ -6,7 +6,7 @@
 	for(var/datum/reagent/juice_typepath as anything in juice_results)
 		if(ispath(juice_typepath))
 			reagents.convert_reagent(/datum/reagent/consumable, juice_typepath, include_source_subtypes = TRUE)
-		reagents.trans_to(target_holder, reagents.total_volume, transfered_by = user)
+		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 
 	return TRUE
 
@@ -20,7 +20,7 @@
 		target_holder.add_reagent_list(grind_results)
 		. = TRUE
 	if(reagents?.total_volume)
-		reagents.trans_to(target_holder, reagents.total_volume, transfered_by = user)
+		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 		. = TRUE
 
 /datum/reagents/proc/convert_reagent(

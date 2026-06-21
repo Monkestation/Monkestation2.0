@@ -7,15 +7,14 @@
 	layer = BELOW_MOB_LAYER
 	bloodiness = BLOOD_AMOUNT_PER_DECAL * 0.2
 	mergeable_decal = FALSE
-	/// Splatter type we create when we bounce on the floor
-	var/obj/effect/decal/cleanable/splatter_type_floor = /obj/effect/decal/cleanable/blood/splatter/stacking
-	/// Splatter type we create when we bump on a wall
-	var/obj/effect/decal/cleanable/splatter_type_wall = /obj/effect/decal/cleanable/blood/splatter/over_window
 	/// Whether or not we transfer our pixel_x and pixel_y to the splatter, only works for floor splatters though
 	var/messy_splatter = TRUE
+	/// The turf we just came from, so we can back up when we hit a wall
+	var/turf/prev_loc
 
 /obj/effect/decal/cleanable/blood/particle/Initialize(mapload)
 	. = ..()
+	prev_loc = loc //Just so we are sure prev_loc exists
 	if(QDELETED(loc))
 		return INITIALIZE_HINT_QDEL
 
@@ -23,6 +22,7 @@
 	return FALSE
 
 /obj/effect/decal/cleanable/blood/particle/proc/start_movement(movement_angle)
+	prev_loc = loc
 	get_or_init_physics()?.set_angle(movement_angle)
 
 /obj/effect/decal/cleanable/blood/particle/proc/get_or_init_physics() as /datum/component/movable_physics
@@ -43,151 +43,49 @@
 /obj/effect/decal/cleanable/blood/particle/proc/on_bounce()
 	if(QDELETED(src))
 		return
-	else if(!isturf(loc) || QDELING(loc) || !splatter_type_floor)
+
+	else if(loc == prev_loc || !isturf(loc) || QDELING(loc))
 		qdel(src)
 		return
 
-	// xenoblood splatter check
-	// note: xenomorphs don't have actual DNA datums, but get_blood_dna_list() still returns list("UNKNOWN DNA" = blood.type)
-	// so yeah, blood_dna will be populated for xenomorphs
-	var/list/blood_dna = GET_ATOM_BLOOD_DNA(src)
-	var/is_xenoblood = FALSE
-	if(blood_dna)
-		for(var/dna_sample in blood_dna)
-			var/blood_type_value = blood_dna[dna_sample]
-			if(blood_type_value == "X*")
-				is_xenoblood = TRUE
-				break
-			var/datum/blood_type/blood = GLOB.blood_types[blood_type_value]
-			if(istype(blood, /datum/blood_type/xenomorph))
-				is_xenoblood = TRUE
-				break
+	for(var/atom/movable/iter_atom in loc)
+		if(iter_atom == src || iter_atom.invisibility || iter_atom.alpha <= 0 || (isobj(iter_atom) && !iter_atom.density))
+			continue
+		iter_atom.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 
-	var/obj/effect/decal/cleanable/splatter
-	if(is_xenoblood)
-		splatter = new /obj/effect/decal/cleanable/xenoblood(loc)
-		if(blood_dna)
-			splatter.add_blood_DNA(blood_dna)
-	else if(!ispath(splatter_type_floor, /obj/effect/decal/cleanable/blood/splatter/stacking))
-		splatter = new splatter_type_floor(loc)
-		splatter.color = color
-		if(messy_splatter)
-			splatter.pixel_x = src.pixel_x
-			splatter.pixel_y = src.pixel_y
-	else
-		var/obj/effect/decal/cleanable/blood/splatter/stacking/stacker = locate(splatter_type_floor) in loc
-		if(!stacker)
-			stacker = new splatter_type_floor(loc)
-			stacker.color = color
-			if(messy_splatter && length(stacker.splat_overlays))
-				var/mutable_appearance/existing_appearance = stacker.splat_overlays[1]
-				existing_appearance.pixel_x = src.pixel_x
-				existing_appearance.pixel_y = src.pixel_y
-			stacker.bloodiness = src.bloodiness
-			stacker.update_appearance(UPDATE_ICON)
-		else
-			var/obj/effect/decal/cleanable/blood/splatter/stacking/other_splatter = new splatter_type_floor()
-			other_splatter.color = color
-			if(messy_splatter && length(other_splatter.splat_overlays))
-				var/mutable_appearance/existing_appearance = other_splatter.splat_overlays[1]
-				existing_appearance.pixel_x = src.pixel_x
-				existing_appearance.pixel_y = src.pixel_y
-			other_splatter.bloodiness = src.bloodiness
-			other_splatter.handle_merge_decal(stacker)
-			qdel(other_splatter)
-		splatter = stacker
-	if(blood_dna && !is_xenoblood)
-		splatter.add_blood_DNA(blood_dna)
+	var/obj/effect/decal/cleanable/blood/splatter/splatter = new(loc, null, GET_ATOM_BLOOD_DNA(src))
+	splatter.adjust_bloodiness(splatter.bloodiness * -0.66)
+	splatter.update_appearance()
 	qdel(src)
 
 /obj/effect/decal/cleanable/blood/particle/proc/on_bump(atom/bumped_atom)
-	if(QDELETED(src) || !isturf(loc) || QDELING(loc) || QDELETED(bumped_atom) || !splatter_type_wall)
+	if(QDELETED(src) || QDELING(loc) || QDELETED(bumped_atom))
 		return
+
+	if(loc == prev_loc)
+		return
+
+	var/obj/effect/decal/cleanable/final_splatter
+
 	if(iswallturf(bumped_atom))
 		//Adjust pixel offset to make splatters appear on the wall
-		var/obj/effect/decal/cleanable/blood/splatter/over_window/final_splatter = new splatter_type_wall(loc)
+		final_splatter = new /obj/effect/decal/cleanable/blood/splatter/over_window(prev_loc, null, GET_ATOM_BLOOD_DNA(src))
 		var/dir_to_wall = get_dir(src, bumped_atom)
 		final_splatter.pixel_x = (dir_to_wall & EAST ? world.icon_size : (dir_to_wall & WEST ? -world.icon_size : 0))
 		final_splatter.pixel_y = (dir_to_wall & NORTH ? world.icon_size : (dir_to_wall & SOUTH ? -world.icon_size : 0))
-		final_splatter.color = color
-		var/list/blood_dna = GET_ATOM_BLOOD_DNA(src)
-		if(blood_dna)
-			final_splatter.add_blood_DNA(blood_dna)
 		qdel(src)
+		return TRUE
+
 	else if(istype(bumped_atom, /obj/structure/window))
 		var/obj/structure/window/the_window = bumped_atom
+
 		if(!the_window.fulltile)
-			return
-		if(the_window.bloodied)
-			qdel(src)
-			return
-		var/obj/effect/decal/cleanable/blood/splatter/over_window/final_splatter = new splatter_type_wall()
+			return FALSE
+
+		final_splatter = new /obj/effect/decal/cleanable/blood/splatter/over_window(prev_loc, null, GET_ATOM_BLOOD_DNA(src))
 		final_splatter.forceMove(the_window)
-		final_splatter.color = color
 		the_window.vis_contents += final_splatter
-		the_window.bloodied = TRUE
 		qdel(src)
+		return TRUE
 
-/// subtype of splatter capable of doing proper "stacking" behavior
-/obj/effect/decal/cleanable/blood/splatter/stacking
-	/// Maximum amount of blood overlays we can have visually
-	var/maximum_splats = 50
-	/// Listing containing overlays of all the splatters we've merged with
-	var/list/splat_overlays = list()
-
-/obj/effect/decal/cleanable/blood/splatter/stacking/proc/add_splat_overlay(mutable_appearance/overlay)
-	splat_overlays |= overlay
-	var/excess_splats = length(splat_overlays) - maximum_splats
-	if(excess_splats > 0)
-		splat_overlays.Cut(1, excess_splats + 1)
-	update_appearance(UPDATE_OVERLAYS)
-
-/obj/effect/decal/cleanable/blood/splatter/stacking/Initialize(mapload, blood_color = COLOR_BLOOD)
-	color = blood_color
-	. = ..()
-	var/mutable_appearance/our_appearance = mutable_appearance(src.icon, src.icon_state)
-	our_appearance.color = src.color
-	our_appearance.pixel_x = src.pixel_x
-	our_appearance.pixel_y = src.pixel_y
-	if(glows)
-		SET_PLANE_EXPLICIT(our_appearance, ABOVE_LIGHTING_PLANE, src)
-	icon_state = null
-	color = null
-	pixel_x = 0
-	pixel_y = 0
-	add_splat_overlay(our_appearance)
-
-/obj/effect/decal/cleanable/blood/splatter/stacking/Destroy()
-	splat_overlays = null
-	return ..()
-
-/obj/effect/decal/cleanable/blood/splatter/stacking/update_overlays()
-	. = ..()
-	. += splat_overlays
-
-/obj/effect/decal/cleanable/blood/splatter/stacking/handle_merge_decal(obj/effect/decal/cleanable/blood/splatter/stacking/merger)
-	. = ..()
-	merger.add_splat_overlay(splat_overlays)
-
-/obj/effect/decal/cleanable/blood/line
-	name = "blood line"
-	desc = "Raining blood, from a lacerated sky, bleeding its horror!"
-	icon_state = "line"
-	random_icon_states = null
-	base_name = "dried blood line"
-	dry_desc = "Creating my structure - Now I shall reign in blood!"
-
-/obj/effect/decal/cleanable/blood/line/Initialize(mapload, direction)
-	if(!isnull(direction))
-		//has to be done before we call replace_decal()
-		setDir(direction)
-	return ..()
-
-/obj/effect/decal/cleanable/blood/line/replace_decal(obj/effect/decal/cleanable/merger)
-	. = ..()
-	if(!.)
-		return
-	//squirts of the same dir are redundant, but not if they're different
-	if(merger.dir != src.dir)
-		return FALSE
-
+	qdel(src)

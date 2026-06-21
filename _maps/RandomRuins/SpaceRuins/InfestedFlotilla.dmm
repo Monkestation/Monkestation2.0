@@ -10,7 +10,7 @@
 "ab" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/effect/decal/cleanable/xenoblood{
+/obj/effect/decal/cleanable/blood/xeno{
 	icon_state = "xltrails_1";
 	dir = 8
 	},
@@ -334,7 +334,7 @@
 /turf/open/floor/carpet/cyan/airless,
 /area/ruin/space/has_grav/infested_flotilla)
 "ci" = (
-/obj/effect/decal/cleanable/xenoblood/xtracks{
+/obj/effect/decal/cleanable/blood/tracks/xeno{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -729,7 +729,7 @@
 /turf/open/floor/iron/dark/textured/airless,
 /area/ruin/space/has_grav/infested_flotilla)
 "em" = (
-/obj/effect/decal/cleanable/xenoblood/xtracks{
+/obj/effect/decal/cleanable/blood/tracks/xeno{
 	dir = 5
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -1019,7 +1019,7 @@
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/infested_flotilla)
 "fQ" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/body,
+/obj/effect/decal/cleanable/blood/gibs/xeno/body,
 /obj/effect/decal/cleanable/greenglow,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/ash,
@@ -1141,8 +1141,8 @@
 	},
 /area/ruin/space/has_grav/infested_flotilla)
 "gB" = (
-/obj/effect/decal/cleanable/xenoblood/xsplatter,
-/obj/effect/decal/cleanable/xenoblood/xtracks,
+/obj/effect/decal/cleanable/blood/splatter/xeno,
+/obj/effect/decal/cleanable/blood/tracks/xeno,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/infested_flotilla)
 "gC" = (
@@ -1430,7 +1430,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "iB" = (
 /obj/effect/spawner/random/trash,
-/obj/effect/decal/cleanable/xenoblood/xtracks,
+/obj/effect/decal/cleanable/blood/tracks/xeno,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/infested_flotilla)
 "iD" = (
@@ -1466,8 +1466,8 @@
 /area/template_noop)
 "iL" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/xenoblood/xgibs/body,
-/obj/effect/decal/cleanable/xenoblood{
+/obj/effect/decal/cleanable/blood/gibs/xeno/body,
+/obj/effect/decal/cleanable/blood/xeno{
 	icon_state = "xltrails_1";
 	dir = 8
 	},
@@ -1638,8 +1638,8 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "jC" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/xenoblood/xgibs,
-/obj/effect/decal/cleanable/xenoblood/xgibs/down,
+/obj/effect/decal/cleanable/blood/gibs/xeno,
+/obj/effect/decal/cleanable/blood/gibs/xeno/down,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_flotilla)
 "jD" = (
@@ -2001,7 +2001,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_flotilla)
 "lD" = (
@@ -2039,7 +2039,7 @@
 /obj/structure/alien/weeds,
 /obj/item/clothing/mask/facehugger/impregnated,
 /obj/effect/spawner/random/maintenance,
-/obj/effect/decal/cleanable/blood/splatter/stacking,
+/obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/blood{
 	icon_state = "floor5-old"
 	},
@@ -2276,8 +2276,8 @@
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/infested_flotilla)
 "mW" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/down,
-/obj/effect/decal/cleanable/xenoblood{
+/obj/effect/decal/cleanable/blood/gibs/xeno/down,
+/obj/effect/decal/cleanable/blood/xeno{
 	icon_state = "xltrails_1";
 	dir = 8
 	},
@@ -2497,7 +2497,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/item/restraints/handcuffs/cable/yellow,
 /turf/open/floor/plating,
@@ -2589,8 +2589,8 @@
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/infested_flotilla)
 "oN" = (
-/obj/effect/decal/cleanable/xenoblood/xtracks,
-/obj/effect/decal/cleanable/xenoblood/xgibs/limb,
+/obj/effect/decal/cleanable/blood/tracks/xeno,
+/obj/effect/decal/cleanable/blood/gibs/xeno/limb,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -3122,7 +3122,7 @@
 	},
 /area/ruin/space/has_grav/infested_flotilla)
 "rq" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/core,
+/obj/effect/decal/cleanable/blood/gibs/xeno/core,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -3501,7 +3501,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "tS" = (
 /obj/item/ammo_casing/shotgun/buckshot/spent,
-/obj/effect/decal/cleanable/xenoblood/xgibs,
+/obj/effect/decal/cleanable/blood/gibs/xeno,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plating,
@@ -3520,7 +3520,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/blood/splatter/stacking,
+/obj/effect/decal/cleanable/blood/splatter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
@@ -3528,7 +3528,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/infested_flotilla)
 "tX" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/core,
+/obj/effect/decal/cleanable/blood/gibs/xeno/core,
 /obj/effect/spawner/random/trash,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/infested_flotilla)
@@ -3878,7 +3878,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_flotilla)
@@ -4437,7 +4437,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_flotilla)
 "zY" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/body,
+/obj/effect/decal/cleanable/blood/gibs/xeno/body,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/airless,
 /area/ruin/space/has_grav/infested_flotilla)
@@ -4695,7 +4695,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "Bl" = (
 /obj/item/ammo_casing/shotgun/buckshot/spent,
-/obj/effect/decal/cleanable/xenoblood{
+/obj/effect/decal/cleanable/blood/xeno{
 	icon_state = "xltrails_1";
 	dir = 8
 	},
@@ -4715,7 +4715,7 @@
 /area/template_noop)
 "Bn" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_flotilla)
@@ -4762,7 +4762,7 @@
 /turf/open/misc/asteroid/airless,
 /area/template_noop)
 "Bw" = (
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /obj/effect/spawner/random/trash,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_flotilla)
@@ -4825,7 +4825,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/infested_flotilla)
 "BM" = (
-/obj/effect/decal/cleanable/xenoblood{
+/obj/effect/decal/cleanable/blood/xeno{
 	icon_state = "xltrails_1";
 	dir = 8
 	},
@@ -4858,7 +4858,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "BS" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
-/obj/effect/decal/cleanable/xenoblood/xgibs,
+/obj/effect/decal/cleanable/blood/gibs/xeno,
 /obj/effect/mob_spawn/corpse/human/russian/ranged,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/infested_flotilla)
@@ -5288,7 +5288,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/spawner/random/trash,
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/infested_flotilla)
 "EG" = (
@@ -5377,7 +5377,7 @@
 /obj/item/ammo_casing/shotgun/buckshot/spent{
 	pixel_x = -11
 	},
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /obj/machinery/light/very_dim/directional/south,
 /turf/open/floor/wood/airless,
 /area/ruin/space/has_grav/infested_flotilla)
@@ -6184,8 +6184,8 @@
 	},
 /area/template_noop)
 "Jg" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/body,
-/obj/effect/decal/cleanable/xenoblood{
+/obj/effect/decal/cleanable/blood/gibs/xeno/body,
+/obj/effect/decal/cleanable/blood/xeno{
 	icon_state = "xltrails_1";
 	dir = 8
 	},
@@ -6206,11 +6206,11 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/xenoblood{
+/obj/effect/decal/cleanable/blood/xeno{
 	icon_state = "xltrails_1";
 	dir = 8
 	},
-/obj/effect/decal/cleanable/xenoblood/xgibs/limb,
+/obj/effect/decal/cleanable/blood/gibs/xeno/limb,
 /obj/item/ammo_casing/shotgun/buckshot/spent{
 	pixel_y = -8
 	},
@@ -6356,7 +6356,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "Kg" = (
 /obj/structure/lattice/catwalk,
-/obj/effect/decal/cleanable/xenoblood/xgibs/core,
+/obj/effect/decal/cleanable/blood/gibs/xeno/core,
 /obj/item/stack/cable_coil/cut,
 /turf/open/space/basic,
 /area/ruin/space/has_grav/infested_flotilla)
@@ -6445,7 +6445,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "KJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/blood/splatter/stacking,
+/obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/iron/kitchen/small,
 /area/ruin/space/has_grav/infested_flotilla)
 "KK" = (
@@ -6712,7 +6712,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/infested_flotilla)
 "MD" = (
-/obj/effect/decal/cleanable/xenoblood/xtracks{
+/obj/effect/decal/cleanable/blood/tracks/xeno{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -6735,7 +6735,7 @@
 /obj/effect/decal/cleanable/blood/gibs/limb{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/xenoblood{
+/obj/effect/decal/cleanable/blood/xeno{
 	icon_state = "xltrails_1";
 	dir = 8
 	},
@@ -8007,7 +8007,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "Uf" = (
 /obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/xenoblood/xgibs,
+/obj/effect/decal/cleanable/blood/gibs/xeno,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/airless,
 /area/ruin/space/has_grav/infested_flotilla)
@@ -8322,7 +8322,7 @@
 "Wc" = (
 /obj/structure/broken_flooring/side/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/xenoblood{
+/obj/effect/decal/cleanable/blood/xeno{
 	icon_state = "xltrails_1";
 	dir = 8
 	},
@@ -8436,7 +8436,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "WY" = (
 /obj/effect/decal/cleanable/blood/line,
-/obj/effect/decal/cleanable/blood/splatter/stacking,
+/obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/airless,
 /area/ruin/space/has_grav/infested_flotilla)
@@ -8466,7 +8466,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "Xp" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/xenoblood/xtracks,
+/obj/effect/decal/cleanable/blood/tracks/xeno,
 /turf/open/floor/iron/textured,
 /area/ruin/space/has_grav/infested_flotilla)
 "Xr" = (
@@ -8498,7 +8498,7 @@
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/has_grav/infested_flotilla)
 "XB" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/core,
+/obj/effect/decal/cleanable/blood/gibs/xeno/core,
 /obj/effect/spawner/random/trash,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
@@ -8557,7 +8557,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/ruin/space/has_grav/infested_flotilla)
 "XS" = (
-/obj/effect/decal/cleanable/xenoblood{
+/obj/effect/decal/cleanable/blood/xeno{
 	icon_state = "xltrails_1";
 	dir = 8
 	},
@@ -8618,8 +8618,8 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/blood,
-/obj/effect/decal/cleanable/xenoblood/xgibs/down,
-/obj/effect/decal/cleanable/xenoblood/xgibs/body,
+/obj/effect/decal/cleanable/blood/gibs/xeno/down,
+/obj/effect/decal/cleanable/blood/gibs/xeno/body,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_flotilla)

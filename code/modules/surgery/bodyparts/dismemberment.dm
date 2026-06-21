@@ -39,6 +39,9 @@
 		playsound(get_turf(owner), 'sound/announcer/vox_fem/swhitenoise.ogg', 60, TRUE)
 // MONKESTATION ADDITION END
 
+	if (can_bleed())
+		limb_owner.bleed(rand(20, 40))
+
 	drop_limb()
 
 	limb_owner.update_equipment_speed_mods() // Update in case speed affecting item unequipped by dismemberment
@@ -52,8 +55,8 @@
 		burn()
 		return TRUE
 	if (can_bleed())
-		add_mob_blood(limb_owner)
 		limb_owner.bleed(rand(20, 40))
+
 	var/direction = pick(GLOB.cardinals)
 	var/t_range = rand(2,max(throw_range/2, 2))
 	var/turf/target_turf = get_turf(src)
@@ -89,6 +92,7 @@
 	update_limb(dropping_limb = TRUE)
 	//limb is out and about, it can't really be considered an implant
 	bodypart_flags &= ~BODYPART_IMPLANTED
+	add_mob_blood(owner)
 	owner.remove_bodypart(src)
 	if(speed_modifier)
 		owner.update_bodypart_speed_modifier()

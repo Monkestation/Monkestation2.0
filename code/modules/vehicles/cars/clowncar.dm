@@ -247,7 +247,7 @@
 ///Deploys oil when the clowncar moves in oil deploy mode
 /obj/vehicle/sealed/car/clowncar/proc/cover_in_oil()
 	SIGNAL_HANDLER
-	new /obj/effect/decal/cleanable/oil/slippery(loc)
+	new /obj/effect/decal/cleanable/blood/oil/slippery(loc)
 
 ///Stops dropping oil after the time has run up
 /obj/vehicle/sealed/car/clowncar/proc/stop_dropping_oil()

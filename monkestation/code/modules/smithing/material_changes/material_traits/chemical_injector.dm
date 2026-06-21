@@ -33,7 +33,7 @@
 	if(iscarbon(target) && doused)
 		var/datum/reagents/reagents = new(1000)
 		reagents.add_reagent(doused_reagent, 7 * (0.01 * host.liquid_flow))
-		reagents.trans_to(target, reagents.total_volume, methods = PATCH, transfered_by = attacker)
+		reagents.trans_to(target, reagents.total_volume, methods = PATCH, transferred_by = attacker)
 		qdel(reagents)
 
 /datum/material_trait/chemical_injector/proc/check_douse(datum/source, atom/movable/target, mob/living/user)

@@ -19,7 +19,7 @@
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("wings" = "None")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
-	exotic_bloodtype = /datum/blood_type/universal
+	exotic_bloodtype = BLOOD_TYPE_VAMPIRE
 	blood_deficiency_drain_rate = BLOOD_DEFICIENCY_MODIFIER // vampires already passively lose blood, so this just makes them lose it slightly more quickly when they have blood deficiency.
 	mutantheart = /obj/item/organ/internal/heart/vampire
 	mutanttongue = /obj/item/organ/internal/tongue/vampire
@@ -176,7 +176,7 @@
 			if(victim.stat == DEAD)
 				to_chat(H, span_warning("You need a living victim!"))
 				return
-			if(!istype(victim.get_blood_type(), /datum/blood_type/crew/human))
+			if(!istype(victim.get_bloodtype(), /datum/blood_type/human))
 				to_chat(H, span_warning("[victim] doesn't have valid blood!"))
 				return
 			COOLDOWN_START(V, drain_cooldown, 3 SECONDS)

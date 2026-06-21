@@ -46,7 +46,7 @@
 	if(QDELETED(blood_bag))
 		owner.balloon_alert(owner, "blood bag needed!")
 		return FALSE
-	if(istype(blood_bag, /obj/item/reagent_containers/blood/o_minus/bloodsucker))
+	if(istype(blood_bag, /obj/item/reagent_containers/blood/universal/bloodsucker))
 		owner.balloon_alert(owner, "already bloodsucker blood!")
 
 	bloodbag = blood_bag
@@ -86,6 +86,6 @@
 		var/mob/living/living_owner = owner
 		living_owner.blood_volume -= 150
 		QDEL_NULL(bloodbag)
-		var/obj/item/reagent_containers/blood/o_minus/bloodsucker/new_bag = new(owner.drop_location())
+		var/obj/item/reagent_containers/blood/universal/bloodsucker/new_bag = new(owner.drop_location())
 		owner.put_in_hands(new_bag)
 		DeactivatePower()

@@ -30,7 +30,7 @@
 /obj/structure/alien/weeds{
 	obj_flags = null
 	},
-/obj/effect/decal/cleanable/xenoblood/xgibs/larva/body,
+/obj/effect/decal/cleanable/blood/gibs/xeno/larva/body,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/arena/actual)
 "lO" = (
@@ -46,7 +46,7 @@
 /obj/structure/alien/weeds{
 	obj_flags = null
 	},
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/arena/actual)
 "qe" = (
@@ -62,7 +62,7 @@
 /obj/structure/alien/weeds{
 	obj_flags = null
 	},
-/obj/effect/decal/cleanable/xenoblood/xgibs/up,
+/obj/effect/decal/cleanable/blood/gibs/xeno/up,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/arena/actual)
 "rX" = (
@@ -106,7 +106,7 @@
 /obj/structure/alien/weeds{
 	obj_flags = null
 	},
-/obj/effect/decal/cleanable/xenoblood/xgibs/body,
+/obj/effect/decal/cleanable/blood/gibs/xeno/body,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/arena/actual)
 "Cy" = (
@@ -160,7 +160,7 @@
 /obj/structure/alien/weeds{
 	obj_flags = null
 	},
-/obj/effect/decal/cleanable/xenoblood/xgibs/core,
+/obj/effect/decal/cleanable/blood/gibs/xeno/core,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/arena/actual)
 "Xl" = (

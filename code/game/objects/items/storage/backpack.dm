@@ -333,8 +333,6 @@
 	AddComponent(
 		/datum/component/bloody_spreader,\
 		blood_left = INFINITY,\
-		blood_dna = list("MEAT DNA" = "MT+"),\
-		diseases = null,\
 	)
 
 /*

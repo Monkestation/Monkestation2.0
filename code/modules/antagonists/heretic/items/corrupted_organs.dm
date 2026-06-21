@@ -127,7 +127,7 @@
 		return
 	var/datum/reagents/extra_reagents = new()
 	extra_reagents.add_reagent(pick(extra_ingredients), amount_added)
-	extra_reagents.trans_to(human, amount_added, transfered_by = src, methods = INJECT)
+	extra_reagents.trans_to(human, amount_added, transferred_by = src, methods = INJECT)
 	if (prob(20))
 		to_chat(human, span_warning("As you take a sip, you feel something bubbling in your stomach..."))
 

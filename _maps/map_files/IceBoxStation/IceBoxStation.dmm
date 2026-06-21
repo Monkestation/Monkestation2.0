@@ -4013,7 +4013,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/mess)
 "blC" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
@@ -4211,7 +4211,7 @@
 /area/station/commons/locker)
 "boM" = (
 /obj/structure/chair/stool/directional/south,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "boO" = (
@@ -13547,7 +13547,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "dZj" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -19308,7 +19308,7 @@
 "fRI" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "fRP" = (
@@ -19322,7 +19322,7 @@
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/starboard/fore)
 "fSj" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "fSm" = (
@@ -26441,7 +26441,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "iep" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
@@ -29569,7 +29569,7 @@
 /area/station/security/prison)
 "jaX" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
@@ -34691,7 +34691,7 @@
 /area/station/maintenance/port/greater)
 "kEB" = (
 /obj/effect/decal/cleanable/generic,
-/obj/effect/decal/cleanable/robot_debris/down,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/down,
 /obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/iron/checker,
 /area/station/maintenance/port/fore)
@@ -44387,7 +44387,7 @@
 /area/station/security/prison/visit)
 "nCt" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron/checker,
 /area/station/maintenance/port/fore)
 "nCu" = (
@@ -54421,7 +54421,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/mine/laborcamp)
 "qDF" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/chapel)
 "qDG" = (
@@ -56171,7 +56171,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/item/wrench,
 /obj/effect/turf_decal/tile/dark{
 	dir = 8
@@ -57605,7 +57605,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "rCB" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -60425,7 +60425,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/security/execution/transfer)
 "svy" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,

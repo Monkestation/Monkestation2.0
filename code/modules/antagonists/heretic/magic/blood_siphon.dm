@@ -43,7 +43,7 @@
 	cast_on.adjustBruteLoss(20)
 	living_owner.adjustBruteLoss(-20)
 
-	var/datum/blood_type/heretic_blood = living_owner.get_blood_type()
+	var/datum/blood_type/heretic_blood = living_owner.get_bloodtype()
 	if(!isnull(heretic_blood))
 		var/transfer_amount = min(cast_on.blood_volume, 20)
 		cast_on.blood_volume -= transfer_amount

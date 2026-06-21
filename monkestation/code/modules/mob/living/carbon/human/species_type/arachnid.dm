@@ -19,7 +19,7 @@
 	mutanttongue = /obj/item/organ/internal/tongue/arachnid
 	mutanteyes = /obj/item/organ/internal/eyes/night_vision/arachnid
 	mutantheart = /obj/item/organ/internal/heart/spider
-	exotic_bloodtype = /datum/blood_type/crew/spider
+	exotic_bloodtype = BLOOD_TYPE_HEMOLYMPH
 	inherent_factions = list(FACTION_SPIDER)
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/arachnid,
@@ -29,13 +29,6 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/arachnid,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/arachnid,
 	)
-
-/datum/species/arachnid/handle_chemical(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
-	if(chem.type == /datum/reagent/toxin/pestkiller)
-		H.adjustToxLoss(3 * REM * seconds_per_tick)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
-		return TRUE
-	return ..()
 
 /datum/species/arachnid/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()

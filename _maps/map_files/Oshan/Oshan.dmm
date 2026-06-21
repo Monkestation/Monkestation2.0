@@ -5297,7 +5297,7 @@
 /obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron/vaporwave,
 /area/station/maintenance/port/central)
 "bGe" = (
@@ -13047,7 +13047,7 @@
 /area/station/engineering/storage/tech)
 "dYK" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil/streak,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "dYM" = (
@@ -21895,7 +21895,7 @@
 /area/station/science/ordnance/testlab)
 "gJF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/iron/vaporwave,
 /area/station/maintenance/port/central)
 "gJG" = (
@@ -24548,7 +24548,7 @@
 /area/station/maintenance/port/central)
 "hDn" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron/vaporwave,
 /area/station/maintenance/port/central)
 "hDo" = (
@@ -27910,7 +27910,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil/streak,
 /turf/open/floor/iron/vaporwave,
 /area/station/maintenance/port/central)
 "iGM" = (
@@ -41621,7 +41621,7 @@
 /turf/open/floor/iron/white/diagonal,
 /area/station/medical/medbay/lobby)
 "mOT" = (
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil/streak,
 /turf/open/floor/iron/vaporwave,
 /area/station/maintenance/port/central)
 "mOU" = (
@@ -54611,7 +54611,7 @@
 /area/station/engineering/atmos/storage/gas)
 "qLT" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/iron/vaporwave,
 /area/station/maintenance/port/central)
 "qMN" = (
@@ -58085,7 +58085,7 @@
 "rQS" = (
 /obj/effect/spawner/random/maintenance,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "rQT" = (
@@ -62591,7 +62591,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "tkI" = (
@@ -64031,7 +64031,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/tcommsat/computer)
 "tGr" = (
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/upper)
 "tGx" = (
@@ -64314,7 +64314,7 @@
 /turf/open/floor/iron/white/textured,
 /area/station/medical/medbay/central)
 "tKZ" = (
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil/streak,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "tLb" = (

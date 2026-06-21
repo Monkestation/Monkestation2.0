@@ -28,7 +28,7 @@
 		return NONE
 	soundloop.start()
 	if(do_after(user, 10 / suck_power SECONDS, interacting_with))
-		interacting_with.reagents.trans_to(user, interacting_with.reagents.maximum_volume, transfered_by = user, methods = INGEST)
+		interacting_with.reagents.trans_to(user, interacting_with.reagents.maximum_volume, transferred_by = user, methods = INGEST)
 		user.visible_message(span_notice("[user] slurps up the [interacting_with] with [user.p_their()] [src]!"), span_notice("You slurp up the [interacting_with] with your [src]!"), span_notice("You hear a loud slurping noise!"))
 	soundloop.stop()
 

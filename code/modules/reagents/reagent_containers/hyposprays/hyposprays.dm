@@ -283,7 +283,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		playsound(src, inject_sound, 50, 1)
 
 	//The actual reagent transfer
-	if(vial.reagents.trans_to(target, transfer_amount, transfered_by = user, methods = INJECT))
+	if(vial.reagents.trans_to(target, transfer_amount, transferred_by = user, methods = INJECT))
 		to_chat(user, span_notice("You inject [transfer_amount] units of the solution. The vial now contains [vial.reagents.total_volume] units."))
 		target.update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -375,7 +375,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		to_chat(user, span_warning("You cannot directly remove reagents from [target]!"))
 		return ITEM_INTERACT_BLOCKING
 
-	if(target.reagents.trans_to(vial.reagents, transfer_amount, transfered_by = user))
+	if(target.reagents.trans_to(vial.reagents, transfer_amount, transferred_by = user))
 		to_chat(user, span_notice("You draw [transfer_amount] units of the solution. The vial now contains [vial.reagents.total_volume] units."))
 		playsound(src, draw_sound, 50, 1)
 		target.update_appearance()

@@ -94,13 +94,14 @@
 ///Resets the atom's color to null, and then sets it to the highest priority colour available
 /atom/proc/update_atom_colour()
 	var/old_filter = cached_color_filter
+	var/old_color = color
 	color = null
 	cached_color_filter = null
 	remove_filter(ATOM_PRIORITY_COLOR_FILTER)
 	REMOVE_KEEP_TOGETHER(src, ATOM_COLOR_TRAIT)
 
 	if (!atom_colours)
-		if (old_filter)
+		if (!(SEND_SIGNAL(src, COMSIG_ATOM_COLOR_UPDATED, old_color || old_filter) & COMPONENT_CANCEL_COLOR_APPEARANCE_UPDATE) && old_filter)
 			update_appearance()
 		return
 
@@ -115,7 +116,7 @@
 			break
 
 	ADD_KEEP_TOGETHER(src, ATOM_COLOR_TRAIT)
-	if (cached_color_filter != old_filter)
+	if (!(SEND_SIGNAL(src, COMSIG_ATOM_COLOR_UPDATED, old_color != color || old_filter != cached_color_filter) & COMPONENT_CANCEL_COLOR_APPEARANCE_UPDATE) && cached_color_filter != old_filter)
 		update_appearance()
 
 /// Same as update_atom_color, but simplifies overlay coloring

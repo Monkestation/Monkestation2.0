@@ -178,60 +178,56 @@ There are several things that need to be remembered:
 
 	//Bloody hands begin
 	if(isnull(gloves))
-		if(blood_in_hands && num_hands > 0)
-			// When byond gives us filters that respect dirs we can just use an alpha mask for this but until then, two icons weeeee
-			var/mutable_appearance/hands_combined = mutable_appearance(layer = -GLOVES_LAYER)
-			hands_combined.color = get_blood_dna_color()
-			if(has_left_hand(check_disabled = FALSE))
-				hands_combined.overlays += mutable_appearance('icons/effects/blood.dmi', "bloodyhands_left")
-			if(has_right_hand(check_disabled = FALSE))
-				hands_combined.overlays += mutable_appearance('icons/effects/blood.dmi', "bloodyhands_right")
-			overlays_standing[GLOVES_LAYER] = hands_combined
-			apply_overlay(GLOVES_LAYER)
+		if(!blood_in_hands || !num_hands || !GET_ATOM_BLOOD_DECAL_LENGTH(src))
+			return
+		// When byond gives us filters that respect dirs we can just use an alpha mask for this but until then, two icons weeeee
+		var/mutable_appearance/hands_combined = mutable_appearance(layer = -GLOVES_LAYER, appearance_flags = KEEP_TOGETHER)
+		if(has_left_hand(check_disabled = FALSE))
+			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_left")
+			blood_overlay.color = get_blood_dna_color()
+			hands_combined.overlays += blood_overlay
+		if(has_right_hand(check_disabled = FALSE))
+			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_right")
+			blood_overlay.color = get_blood_dna_color()
+			hands_combined.overlays += blood_overlay
+		overlays_standing[GLOVES_LAYER] = hands_combined
+		apply_overlay(GLOVES_LAYER)
 		return
 	// Bloody hands end
 
-	if(gloves)
-		var/obj/item/worn_item = gloves
-		update_hud_gloves(worn_item)
-		CHECK_SHOULDNT_RENDER(worn_item, ITEM_SLOT_GLOVES) // monkestation edit: combine TRAIT_ALWAYS_RENDER + TRAIT_NO_WORN_ICON + obscure check into a single define
-		var/icon_file = 'icons/mob/clothing/hands.dmi'
+	var/obj/item/worn_item = gloves
+	update_hud_gloves(worn_item)
 
-		var/mutant_override = FALSE
-		if(dna.species.bodytype & BODYTYPE_CUSTOM)
-			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_GLOVES, gloves)
-			if(species_icon_file)
-				icon_file = species_icon_file
-				mutant_override = TRUE
+	CHECK_SHOULDNT_RENDER(worn_item, ITEM_SLOT_GLOVES)
 
-		var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null)
+	var/icon_file = 'icons/mob/clothing/hands.dmi'
 
-		var/feature_y_offset = 0
-		if(!mutant_override)
-			//needs to be typed, hand_bodyparts can have nulls
-			for (var/obj/item/bodypart/arm/my_hand in hand_bodyparts)
-				var/list/glove_offset = my_hand.worn_glove_offset?.get_offset()
-				if (glove_offset && (!feature_y_offset || glove_offset["y"] > feature_y_offset))
-					feature_y_offset = glove_offset["y"]
+	var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file)
 
-			gloves_overlay.pixel_y += feature_y_offset
+	var/feature_y_offset = 0
+	//needs to be typed, hand_bodyparts can have nulls
+	for (var/obj/item/bodypart/arm/my_hand in hand_bodyparts)
+		var/list/glove_offset = my_hand.worn_glove_offset?.get_offset()
+		if (glove_offset && (!feature_y_offset || glove_offset["y"] > feature_y_offset))
+			feature_y_offset = glove_offset["y"]
 
-			// We dont have any >2 hands human species (and likely wont ever), so theres no point in splitting this because:
-		// It will only run if the left hand OR the right hand is missing, and it wont run if both are missing because you cant wear gloves with no arms
-		// (unless admins mess with this then its their fault)
-		if(num_hands < default_num_hands)
-			var/static/atom/movable/alpha_filter_target
-			if(isnull(alpha_filter_target))
-				alpha_filter_target = new(null)
-			alpha_filter_target.icon = 'icons/effects/effects.dmi'
-			alpha_filter_target.icon_state = "missing[!has_left_hand(check_disabled = FALSE) ? "l" : "r"]"
-			alpha_filter_target.render_target = "*MissGlove [REF(src)] [!has_left_hand(check_disabled = FALSE) ? "L" : "R"]"
-			gloves_overlay.add_overlay(alpha_filter_target)
-			gloves_overlay.filters += filter(type="alpha", render_source=alpha_filter_target.render_target, y=feature_y_offset, flags=MASK_INVERSE)
+	gloves_overlay.pixel_z += feature_y_offset
 
-		overlays_standing[GLOVES_LAYER] = gloves_overlay
+	// We dont have any >2 hands human species (and likely wont ever), so theres no point in splitting this because:
+	// It will only run if the left hand OR the right hand is missing, and it wont run if both are missing because you cant wear gloves with no arms
+	// (unless admins mess with this then its their fault)
+	if(num_hands < default_num_hands)
+		var/static/atom/movable/alpha_filter_target
+		if(isnull(alpha_filter_target))
+			alpha_filter_target = new(null)
+		alpha_filter_target.icon = 'icons/effects/effects.dmi'
+		alpha_filter_target.icon_state = "missing[!has_left_hand(check_disabled = FALSE) ? "l" : "r"]"
+		alpha_filter_target.render_target = "*MissGlove [REF(src)] [!has_left_hand(check_disabled = FALSE) ? "L" : "R"]"
+		gloves_overlay.add_overlay(alpha_filter_target)
+		gloves_overlay.filters += filter(type="alpha", render_source=alpha_filter_target.render_target, y=feature_y_offset, flags=MASK_INVERSE)
+
+	overlays_standing[GLOVES_LAYER] = gloves_overlay
 	apply_overlay(GLOVES_LAYER)
-
 
 /mob/living/carbon/human/update_worn_glasses()
 	remove_overlay(GLASSES_LAYER)

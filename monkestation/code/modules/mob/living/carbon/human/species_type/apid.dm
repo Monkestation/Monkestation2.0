@@ -33,6 +33,7 @@
 
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/apid
+	exotic_bloodtype = BLOOD_TYPE_HEMOLYMPH
 
 	external_organs = list(
 		/obj/item/organ/external/wings/apid = "Normal",
@@ -41,6 +42,7 @@
 
 	mutanteyes = /obj/item/organ/internal/eyes/apid
 	mutanttongue =  /obj/item/organ/internal/tongue/apid
+	mutantliver = /obj/item/organ/internal/liver/apid
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/apid,
@@ -122,13 +124,6 @@
 
 	if(istype(attacking_item, /obj/item/melee/flyswatter))
 		damage_mods += 10 // Yes, a 10x damage modifier
-
-/datum/species/apid/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
-	. = ..()
-	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
-		return
-	if(chem.type == /datum/reagent/toxin/pestkiller)
-		affected.adjustToxLoss(3 * REM * seconds_per_tick)
 
 /datum/species/apid/get_species_description()
 	return "Apids are a race of bipedal bees from the jungle planet of Saltu. Due to their large bodies, they have lost the ability to fly."

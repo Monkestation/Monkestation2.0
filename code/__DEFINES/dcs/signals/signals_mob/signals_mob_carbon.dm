@@ -172,3 +172,6 @@
 #define COMSIG_HUMAN_GOT_PUNCHED "human_got_punched"
 /// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacked, damage, attack_type, obj/item/bodypart/affecting)
 #define COMSIG_HUMAN_PUNCHED "human_punched"
+
+/// From /mob/living/carbon/proc/set_blood_type : (mob/living/carbon/user, datum/blood_type, update_cached_blood_dna_info)
+#define COMSIG_CARBON_CHANGED_BLOOD_TYPE "carbon_set_blood_type"

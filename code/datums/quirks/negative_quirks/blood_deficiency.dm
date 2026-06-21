@@ -46,11 +46,11 @@
 
 	mail_goodies.Cut()
 
-	var/datum/blood_type/new_type = quirk_holder.get_blood_type()
+	var/datum/blood_type/new_type = quirk_holder.get_bloodtype()
 	if(isnull(new_type))
 		return
 
-	if(istype(new_type, /datum/blood_type/crew/human))
+	if(istype(new_type, /datum/blood_type/human))
 		mail_goodies += /obj/item/reagent_containers/blood/o_minus
 		return
 

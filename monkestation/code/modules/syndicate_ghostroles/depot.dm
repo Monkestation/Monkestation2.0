@@ -244,7 +244,7 @@
 	if(stored)
 		QDEL_NULL(radio)
 		stored.forceMove(loc)
-		new /obj/effect/decal/cleanable/oil(loc)
+		new /obj/effect/decal/cleanable/blood/oil(loc)
 	return ..()
 
 /obj/machinery/syndicate_blackbox_recorder/update_icon_state()
