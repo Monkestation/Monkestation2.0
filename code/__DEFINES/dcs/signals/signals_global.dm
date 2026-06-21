@@ -19,6 +19,8 @@
 #define COMSIG_GLOB_EXPLOSION "!explosion"
 /// Called from base of /mob/Initialise : (mob)
 #define COMSIG_GLOB_MOB_CREATED "!mob_created"
+/// Called from /mob/living/silicon/ai/Initialize : (mob)
+#define COMSIG_GLOB_AI_CREATED "!ai_created"
 /// mob died somewhere : (mob/living, gibbed)
 #define COMSIG_GLOB_MOB_DEATH "!mob_death"
 /// global living say plug - use sparingly: (mob/speaker , message)

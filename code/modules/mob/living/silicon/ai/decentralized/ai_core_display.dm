@@ -7,34 +7,33 @@
 	circuit = /obj/item/circuitboard/machine/ai_core_display
 	density = TRUE
 
-	var/mode = SD_BLANK
-	var/emotion = "Neutral"
+	///If this is set, this will be the emotion the display uses, and it will not be able to be edited by an AI. Used for map VV edits.
+	var/custom_emotion
+	///The AI that controls the core display, it changes emotions as they do.
+	var/mob/living/silicon/ai/connected_ai
 
 /obj/machinery/status_display/ai_core/Initialize(mapload)
 	. = ..()
-	if(is_station_level(z))
-		GLOB.ai_core_displays.Add(src)
-	set_ai(resolve_ai_icon(emotion))
+	if(custom_emotion)
+		set_ai(resolve_ai_icon(custom_emotion))
+		return
+
+	if(!length(GLOB.ai_list))
+		RegisterSignal(SSdcs, COMSIG_GLOB_AI_CREATED, PROC_REF(on_ai_creation))
+	else if(length(GLOB.ai_list) == 1)
+		var/mob/living/silicon/ai/living_ai = locate() in GLOB.ai_list
+		connected_ai = living_ai
+		RegisterSignal(connected_ai, COMSIG_AI_ICON_CHANGE, PROC_REF(on_ai_screen_change))
 
 /obj/machinery/status_display/ai_core/Destroy()
-	GLOB.ai_core_displays.Remove(src)
+	connected_ai = null
 	return ..()
 
 /obj/machinery/status_display/ai_core/examine(mob/user)
 	. = ..()
-	if(!isobserver(user))
-		return
-	. += "<b>Networked AI Laws:</b>"
-	for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
-		var/active_status = "(Core: [FOLLOW_LINK(user, AI.loc)], Eye: [FOLLOW_LINK(user, AI.eyeobj)])"
-		if(!AI.mind && AI.deployed_shell)
-			active_status = "(Controlling [FOLLOW_LINK(user, AI.deployed_shell)][AI.deployed_shell.name])"
-		else if(!AI.mind)
-			active_status = "([span_warning("OFFLINE")])"
-
-		. += "<b>[AI] [active_status] has the following laws: </b>"
-		for(var/law in AI.laws.get_law_list(include_zeroth = TRUE))
-			. += law
+	if(!isobserver(user) || isnull(connected_ai))
+		return .
+	connected_ai.examine(user)
 
 /obj/machinery/status_display/ai_core/wrench_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
@@ -53,8 +52,26 @@
 	if(new_icon_state)
 		icon_state = new_icon_state
 
-/obj/machinery/status_display/ai_core/process()
-	if(machine_stat & NOPOWER)
-		icon = initial(icon)
-		icon_state = initial(icon_state)
-		return PROCESS_KILL
+/obj/machinery/status_display/ai_core/on_set_machine_stat(old_value)
+	. = ..()
+	update_appearance(UPDATE_ICON)
+
+/obj/machinery/status_display/ai_core/update_icon_state()
+	. = ..()
+	if(!(machine_stat & NOPOWER))
+		return
+	icon = initial(icon)
+	icon_state = initial(icon_state)
+
+///Called when the first AI of the round is created, as we get automatically assigned to it.
+/obj/machinery/status_display/ai_core/proc/on_ai_creation(atom/source, mob/living/silicon/ai/created_ai)
+	SIGNAL_HANDLER
+	UnregisterSignal(SSdcs, COMSIG_GLOB_AI_CREATED)
+	connected_ai = created_ai
+	RegisterSignal(connected_ai, COMSIG_AI_ICON_CHANGE, PROC_REF(on_ai_screen_change))
+	INVOKE_ASYNC(created_ai, TYPE_PROC_REF(/mob/living/silicon/ai, set_core_display_icon), null, created_ai?.client)
+
+///Called when an AI we're registered to changes their screen, we follow to what icon_used is.
+/obj/machinery/status_display/ai_core/proc/on_ai_screen_change(mob/living/silicon/ai/source, icon_used)
+	SIGNAL_HANDLER
+	set_ai(icon_used)

@@ -265,6 +265,7 @@
 		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), (SSmapping.levels_by_trait(ZTRAIT_STATION) + z), alert_areas, camera_view = TRUE)
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_AI_CREATED, src)
 
 /mob/living/silicon/ai/key_down(_key, client/user)
 	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number
@@ -327,17 +328,13 @@
 /mob/living/silicon/ai/proc/set_core_display_icon(input, client/C)
 	if(client && !C)
 		C = client
+	var/icon_used
 	if(!input && !C?.prefs?.read_preference(/datum/preference/choiced/ai_core_display))
-		for(var/each in GLOB.ai_core_displays) //change status of displays
-			var/obj/machinery/status_display/ai_core/M = each
-			M.set_ai(initial(icon_state))
-			M.update()
+		icon_used = initial(icon_state)
 	else
 		var/preferred_icon = input ? input : C.prefs.read_preference(/datum/preference/choiced/ai_core_display)
-		for(var/each in GLOB.ai_core_displays) //change status of displays
-			var/obj/machinery/status_display/ai_core/M = each
-			M.set_ai(resolve_ai_icon(preferred_icon))
-			M.update()
+		icon_used = resolve_ai_icon(preferred_icon)
+	SEND_SIGNAL(src, COMSIG_AI_ICON_CHANGE, icon_used)
 
 /mob/living/silicon/ai/create_modularInterface()
 	if(!modularInterface)
