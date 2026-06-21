@@ -16,7 +16,6 @@ import { Window } from '../layouts';
 
 type Data = {
   authenticated: BooleanLike;
-  cleared_for_use: BooleanLike;
   has_access: boolean;
   username: string;
   intellicard: string[];
@@ -46,7 +45,6 @@ export const AiControlPanel = (props) => {
   const { act, data } = useBackend<Data>();
   const {
     authenticated,
-    cleared_for_use,
     username,
     has_access,
     intellicard,
@@ -63,34 +61,6 @@ export const AiControlPanel = (props) => {
   } = data;
 
   const [tab, setTab] = useState(1);
-  const [code, setCode] = useState('');
-
-  if (!cleared_for_use) {
-    return (
-      <Window width={500} height={400}>
-        <Window.Content scrollable>
-          <Section title="Authentication">
-            <Box textAlign="center">
-              <NoticeBox>
-                Enter AI control code and press enter. (6 numbers)
-              </NoticeBox>
-              <Input
-                value={code}
-                placeholder="123456"
-                onEnter={(value) => {
-                  setCode('');
-                  act('clear_for_use', { control_code: value });
-                }}
-                onChange={(value) => {
-                  setCode(value);
-                }}
-              />
-            </Box>
-          </Section>
-        </Window.Content>
-      </Window>
-    );
-  }
 
   return (
     <Window width={500} height={330}>

@@ -11,7 +11,6 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 
 	authenticated = FALSE
 
-	var/cleared_for_use = FALSE //Have we inserted the RDs code to unlock upload/download?
 	var/one_time_password_used = FALSE //Did we use the one time password to log in? If so disallow logging out.
 
 	var/obj/item/aicard/intellicard
@@ -20,11 +19,6 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	var/mob/user_downloading
 	var/download_progress = 0
 	var/download_warning = FALSE
-
-/obj/machinery/computer/ai_control_console/Initialize(mapload)
-	. = ..()
-	if(mapload)
-		cleared_for_use = TRUE
 
 /obj/machinery/computer/ai_control_console/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/aicard))
@@ -131,11 +125,6 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 
 /obj/machinery/computer/ai_control_console/ui_data(mob/living/carbon/human/user)
 	var/list/data = list()
-	if(!cleared_for_use)
-		data["cleared_for_use"] = FALSE
-		return data
-
-	data["cleared_for_use"] = TRUE
 	data["authenticated"] = authenticated
 
 	if(issilicon(user))
@@ -265,34 +254,6 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 
 	var/mob/user = ui.user
 
-	if(!cleared_for_use)
-		if(action == "clear_for_use")
-			var/code = text2num(params["control_code"])
-
-			var/length_of_number = round(log(10, code) + 1)
-			if(length_of_number < 6)
-				to_chat(user, span_warning("Incorrect code. Too short"))
-				return
-
-			if(length_of_number > 6)
-				to_chat(user, span_warning("Incorrect code. Too long"))
-				return
-
-
-			if(!GLOB.ai_control_code)
-				return
-
-			if(!is_station_level(z))
-				to_chat(user, span_warning("Unable to connect to NT Servers. Please verify you are onboard the station."))
-				return
-
-			if(code == text2num(GLOB.ai_control_code))
-				cleared_for_use = TRUE
-			else
-				to_chat(user, span_warning("Incorrect code. Make sure you have the latest one."))
-
-		return
-
 	if(!authenticated)
 		if(action == "log_in")
 			if(allowed(user) || (obj_flags & EMAGGED))
@@ -316,7 +277,6 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 				return
 
 			if(code == text2num(GLOB.ai_control_code))
-				cleared_for_use = TRUE
 				authenticated = TRUE
 				one_time_password_used = TRUE
 				var/msg = "<h4>Warning!</h4><br>We have detected usage of the AI Control Code for unlocking a console at coordinates ([src.x], [src.y], [src.z]) by [user.name]. Please verify that this is correct. Be aware we have cancelled the current control code.<br>\
