@@ -8,6 +8,7 @@
 	program_flags = PROGRAM_ON_SYNDINET_STORE
 	tgui_id = "NtosRevelation"
 	program_icon = "magnet"
+	///Boolean on whether the PDA app is currently armed or not.
 	var/armed = FALSE
 
 /datum/computer_file/program/revelation/on_start(mob/living/user)
@@ -35,7 +36,7 @@
 
 	if(cached_computer.internal_cell && prob(25))
 		QDEL_NULL(cached_computer.internal_cell)
-		cached_computer.visible_message(span_notice("\The [cached_computer]'s battery explodes in rain of sparks."))
+		cached_computer.visible_message(span_warning("\The [cached_computer]'s battery explodes in rain of sparks."))
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 		spark_system.start()
 
@@ -54,7 +55,6 @@
 			filedesc = newname
 			return TRUE
 
-
 /datum/computer_file/program/revelation/clone()
 	var/datum/computer_file/program/revelation/temp = ..()
 	temp.armed = armed
@@ -63,6 +63,7 @@
 /datum/computer_file/program/revelation/ui_data(mob/user)
 	var/list/data = list()
 
+	data["filedesc"] = filedesc
 	data["armed"] = armed
 
 	return data
