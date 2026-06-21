@@ -1,3 +1,19 @@
+///Returns a single AI core that is habitable to src
+/mob/living/silicon/ai/proc/find_valid_ai_core() as /obj/machinery/ai/data_core
+	RETURN_TYPE(/obj/machinery/ai/data_core)
+
+	var/turf/ai_turf = get_turf(src)
+	var/obj/machinery/ai/data_core/primary/data_core = locate() in GLOB.data_cores["[ai_turf.z]"]
+	//in the case the primary core is deleted, this is ran before Destroy process is done (for AI relocation), so check QDELETED.
+	if(data_core && data_core.can_transfer_ai(src) && !QDELETED(data_core))
+		return data_core
+
+	for(var/obj/machinery/ai/data_core/other_data_cores in GLOB.data_cores["[ai_turf.z]"])
+		if(other_data_cores.can_transfer_ai(src))
+			return other_data_cores
+
+	return null
+
 /mob/living/silicon/ai/verb/toggle_download()
 	set category = "AI Commands"
 	set name = "Toggle Download"

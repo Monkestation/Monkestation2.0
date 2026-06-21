@@ -222,7 +222,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	return TRUE
 
 /obj/machinery/computer/ai_control_console/proc/finish_download()
-	if(!is_station_level(z))
+	if(!(downloading.loc in GLOB.data_cores["[z]"]))
 		return
 	if(intellicard)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
@@ -310,9 +310,6 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 			if(isAI(user))
 				to_chat(user, span_warning("You need physical access to stop the download!"))
 				return
-			if(!is_station_level(z))
-				to_chat(user, span_warning("No connection. Try again later."))
-				return
 			stop_download()
 			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
 
@@ -322,11 +319,11 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 			var/mob/living/silicon/ai/target = locate(params["download_target"])
 			if(!target || !istype(target))
 				return
-			if(!istype(target.loc, /obj/machinery/ai/data_core))
+			if(!isvalidAIloc(target.loc))
 				return
 			if(!target.can_download)
 				return
-			if(!is_station_level(z))
+			if(!(target.loc in GLOB.data_cores["[z]"]))
 				to_chat(user, span_warning("No connection. Try again later."))
 				return
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)

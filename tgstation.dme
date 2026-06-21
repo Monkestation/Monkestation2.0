@@ -585,7 +585,6 @@
 #include "code\__HELPERS\see_through_maps.dm"
 #include "code\__HELPERS\shell.dm"
 #include "code\__HELPERS\shuttle.dm"
-#include "code\__HELPERS\silicon_ai.dm"
 #include "code\__HELPERS\spatial_info.dm"
 #include "code\__HELPERS\spawns.dm"
 #include "code\__HELPERS\stack_trace.dm"

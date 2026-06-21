@@ -190,7 +190,7 @@ GLOBAL_LIST_EMPTY(data_cores)
 		var/confirmation_alert = tgui_alert(user, "Shunting will disable the doomsday device, are you sure you wish to do this?", "Really shunt?", list("Shunt", "Cancel"))
 		if(confirmation_alert != "Shunt")
 			return
-	if(do_after(user, 4 SECONDS, src, interaction_key = DOAFTER_SOURCE_AI_SHUNTING) && valid_data_core())
+	if(do_after(user, 4 SECONDS, src, interaction_key = DOAFTER_SOURCE_AI_SHUNTING) && valid_data_core(user))
 		transfer_AI(user)
 		playsound(src, 'sound/items/pip.ogg', 25, FALSE, 2)
 		balloon_alert(user, "shunted!")
@@ -206,11 +206,7 @@ GLOBAL_LIST_EMPTY(data_cores)
 
 	var/turf/user_turf = get_turf(user)
 	//If we're on the station, we won't work if the primary is not.
-	if(is_station_level(z))
-		if(!(is_station_level(user_turf.z)))
-			return FALSE
-	//If we're off the z level, we want to have the same z-level.
-	else if(z != user_turf.z)
+	if(!(src in GLOB.data_cores["[user_turf.z]"]))
 		return FALSE
 
 	if(valid_ticks > 0)
