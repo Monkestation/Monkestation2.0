@@ -97,7 +97,7 @@
 
 /obj/item/clothing/gloves/latex
 	name = "latex gloves"
-	desc = "Cheap sterile gloves made from latex. Provides quicker carrying from a good grip."
+	desc = "Cheap sterile gloves made from latex. Provides quicker carrying from a good grip. Its sterile material makes it great for surgery."
 	icon_state = "latex"
 	inhand_icon_state = "latex_gloves"
 	greyscale_colors = null
@@ -111,7 +111,7 @@
 
 /obj/item/clothing/gloves/latex/nitrile
 	name = "nitrile gloves"
-	desc = "Pricy sterile gloves that are thicker than latex. Excellent grip ensures very fast carrying of patients along with the faster use time of various chemical related items."
+	desc = "Pricy sterile gloves that are thicker than latex. Excellent grip ensures very fast carrying of patients along with the faster use time of various chemical related items. Its sterile material makes it great for surgery."
 	icon_state = "nitrile"
 	inhand_icon_state = "greyscale_gloves"
 	armor_type = /datum/armor/nitrile

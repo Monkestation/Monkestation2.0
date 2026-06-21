@@ -38,7 +38,7 @@
 /obj/item/clothing/gloves/latex/surgical
 	name = "Black Latex gloves"
 	desc = "Pricy sterile gloves that are thinner than latex. The lining allows for the person to operate \
-					quicker along with the faster use time of various chemical related items"
+					quicker and with higher success along with the faster use time of various chemical related items."
 	icon = 'monkestation/icons/obj/clothing/gloves.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/gloves.dmi'
 	icon_state = "surgeonlatex"
