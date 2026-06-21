@@ -82,8 +82,6 @@
 	viewing_messages_of = null
 
 /datum/computer_file/program/messenger/Destroy(force)
-	if(!QDELETED(computer))
-		stack_trace("Attempted to qdel messenger of [computer] without qdeling computer, this will cause problems later")
 	remove_messenger(src)
 	return ..()
 

@@ -8,34 +8,36 @@
 	program_flags = PROGRAM_ON_SYNDINET_STORE
 	tgui_id = "NtosRevelation"
 	program_icon = "magnet"
-	var/armed = 0
+	var/armed = FALSE
 
 /datum/computer_file/program/revelation/on_start(mob/living/user)
-	. = ..(user)
+	. = ..()
+	if(!.)
+		return .
 	if(armed)
 		activate()
 
 /datum/computer_file/program/revelation/proc/activate()
-	if(computer)
-		if(istype(computer, /obj/item/modular_computer/pda/silicon)) //If this is a borg's integrated tablet
-			var/obj/item/modular_computer/pda/silicon/modularInterface = computer
-			to_chat(modularInterface.silicon_owner,span_userdanger("SYSTEM PURGE DETECTED/"))
-			addtimer(CALLBACK(modularInterface.silicon_owner, TYPE_PROC_REF(/mob/living/silicon/robot/, death)), 2 SECONDS, TIMER_UNIQUE)
-			return
+	if(!computer)
+		return
+	if(istype(computer, /obj/item/modular_computer/pda/silicon)) //If this is a borg's integrated tablet
+		var/obj/item/modular_computer/pda/silicon/modularInterface = computer
+		to_chat(modularInterface.silicon_owner, span_userdanger("SYSTEM PURGE DETECTED/"))
+		addtimer(CALLBACK(modularInterface.silicon_owner, TYPE_PROC_REF(/mob/living/silicon, death)), 2 SECONDS, TIMER_UNIQUE)
+		return
 
-		computer.visible_message(span_notice("\The [computer]'s screen brightly flashes and loud electrical buzzing is heard."))
-		computer.enabled = FALSE
-		computer.update_appearance()
+	var/obj/item/modular_computer/cached_computer = computer //this becomes null
+	computer.take_damage(25, BRUTE, 0, 0)
+	computer.visible_message(span_warning("\The [computer]'s screen brightly flashes and loud electrical buzzing is heard."))
+	for(var/datum/computer_file/file as anything in computer.stored_files)
+		computer.remove_file(file)
+	cached_computer.shutdown_computer(loud = FALSE)
 
-		QDEL_LIST(computer.stored_files)
-
-		computer.take_damage(25, BRUTE, 0, 0)
-
-		if(computer.internal_cell && prob(25))
-			QDEL_NULL(computer.internal_cell)
-			computer.visible_message(span_notice("\The [computer]'s battery explodes in rain of sparks."))
-			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
-			spark_system.start()
+	if(cached_computer.internal_cell && prob(25))
+		QDEL_NULL(cached_computer.internal_cell)
+		cached_computer.visible_message(span_notice("\The [cached_computer]'s battery explodes in rain of sparks."))
+		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
+		spark_system.start()
 
 /datum/computer_file/program/revelation/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
