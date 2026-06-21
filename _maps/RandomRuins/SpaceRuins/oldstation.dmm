@@ -299,13 +299,13 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
 "bh" = (
-/obj/machinery/computer/old{
-	dir = 4
-	},
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/door/window/brigdoor/right/directional/east,
+/obj/machinery/computer/ai_control_console/oldstation{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "bi" = (
@@ -698,7 +698,7 @@
 /area/ruin/space/ancientstation/delta/hall)
 "cC" = (
 /obj/structure/alien/weeds,
-/obj/item/bodypart/chest,
+/obj/machinery/status_display/ai_core,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "cD" = (
@@ -4527,7 +4527,7 @@
 	listening = 0;
 	name = "Custom Channel"
 	},
-/obj/machinery/status_display/ai_core,
+/obj/machinery/ai/data_core,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "si" = (

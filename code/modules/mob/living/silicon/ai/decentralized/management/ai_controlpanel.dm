@@ -20,6 +20,11 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	var/download_progress = 0
 	var/download_warning = FALSE
 
+/obj/machinery/computer/ai_control_console/oldstation
+	name = "\improper ancient AI control console"
+	req_access = list(ACCESS_AWAY_GENERAL)
+	circuit = /obj/item/circuitboard/computer/ai_upload_download/oldstation
+
 /obj/machinery/computer/ai_control_console/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/aicard))
 		if(intellicard)
