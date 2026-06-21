@@ -55,7 +55,13 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 		else
 			to_chat(AI, span_userdanger("Warning! <A HREF=?src=[REF(AI)];go_to_machine=[REF(src)]>Data Core</A> brought offline in [get_area(src)]! Please verify that no malicious actions were taken."))
 
+	QDEL_NULL(integrated_battery)
+
 	return ..()
+
+/obj/machinery/ai/data_core/on_deconstruction()
+	. = ..()
+	integrated_battery.forceMove(drop_location())
 
 /obj/machinery/ai/data_core/JoinPlayerHere(mob/M, buckle)
 	return
