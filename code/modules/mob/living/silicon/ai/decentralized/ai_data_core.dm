@@ -46,8 +46,6 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	var/list/all_ais = GLOB.ai_list.Copy()
 
 	for(var/mob/living/silicon/ai/AI in contents)
-		if(AI.is_dying)
-			continue
 		if(!AI.is_dying)
 			AI.relocate()
 
