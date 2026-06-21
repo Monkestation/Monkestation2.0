@@ -18,7 +18,7 @@
 	var/list/data = list()
 
 	data["servers"] = list()
-	for(var/obj/machinery/ai/server_cabinet/holder in GLOB.server_cabinets)
+	for(var/obj/machinery/ai/server_cabinet/holder as anything in SSmachines.get_machines_by_type(/obj/machinery/ai/server_cabinet))
 		var/turf/current_turf = get_turf(holder)
 		var/datum/gas_mixture/env = current_turf.return_air()
 		data["servers"] += list(list(

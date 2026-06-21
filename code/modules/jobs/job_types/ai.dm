@@ -35,7 +35,7 @@
 				R.TryConnectToAI()
 	var/mob/living/silicon/ai/ai_spawn = spawned
 	ai_spawn.relocate(TRUE)
-	
+
 	GLOB.ai_os.set_cpu(ai_spawn, GLOB.ai_os.total_cpu)
 	GLOB.ai_os.add_ram(ai_spawn, GLOB.ai_os.total_ram)
 	ai_spawn.log_current_laws()
@@ -44,9 +44,9 @@
 	return get_latejoin_spawn_point()
 
 /datum/job/ai/get_latejoin_spawn_point()
-	for(var/obj/machinery/ai/data_core/core as anything in GLOB.data_cores)
-		if(istype(core))
-			if(core.valid_data_core()) //spawning in will relocate us regardless.
+	for(var/obj/machinery/ai/data_core/core as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ai/data_core))
+		if(istype(core) && is_station_level(get_turf(core)) && !QDELETED(core))
+			if(core.valid_holder()) //spawning in will relocate us regardless.
 				return core
 	return FALSE
 
@@ -55,9 +55,9 @@
 		return TRUE
 	if(length(GLOB.ai_list) >= total_positions)
 		return FALSE
-	for(var/obj/machinery/ai/data_core/core as anything in GLOB.data_cores)
-		if(istype(core))
-			if(core.valid_data_core())
+	for(var/obj/machinery/ai/data_core/core as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ai/data_core))
+		if(istype(core) && is_station_level(get_turf(core)) && !QDELETED(core))
+			if(core.valid_holder())
 				return TRUE
 	return FALSE
 

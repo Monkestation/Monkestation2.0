@@ -177,11 +177,11 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	if(intellicard && intellicard.AI)
 		data["intellicard_ai"] = intellicard.AI.real_name
 		data["intellicard_ai_health"] = intellicard.AI.health
+		data["can_upload"] = intellicard.AI.find_valid_ai_core()
 	else
 		data["intellicard_ai"] = null
 		data["intellicard_ai_health"] = 0
-
-	data["can_upload"] = available_ai_cores()
+		data["can_upload"] = FALSE
 
 	if(downloading)
 		data["downloading"] = downloading.real_name
@@ -196,15 +196,17 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	if(isAI(user))
 		data["current_ai_ref"] = REF(user)
 
-	for(var/mob/living/silicon/ai/A in GLOB.ai_list)
-		data["ais"] += list(list(
-			"name" = A.name,
-			"ref" = REF(A),
-			"can_download" = A.can_download,
-			"health" = A.health,
-			"active" = A.mind ? TRUE : FALSE,
-			"in_core" = istype(A.loc, /obj/machinery/ai/data_core),
-		))
+	var/turf/computer_turf = get_turf(src)
+	for(var/obj/machinery/ai/data_core as anything in GLOB.data_cores["[computer_turf.z]"])
+		for(var/mob/living/silicon/ai/A in data_core.contents)
+			data["ais"] += list(list(
+				"name" = A.name,
+				"ref" = REF(A),
+				"can_download" = A.can_download,
+				"health" = A.health,
+				"active" = !!(A.mind),
+				"in_core" = istype(A.loc, /obj/machinery/ai/data_core),
+			))
 
 	return data
 

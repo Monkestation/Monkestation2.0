@@ -25,7 +25,7 @@
 			core.set_light(l_outer_range = 7, l_power = 3, l_color = current_color)
 
 	// Handle power damage (oxy)
-	if(aiRestorePowerRoutine && !available_ai_cores())
+	if(aiRestorePowerRoutine && !find_valid_ai_core())
 		// Lost power
 		if (!battery)
 			to_chat(src, span_warning("Your backup battery's output drops below usable levels. It takes only a moment longer for your systems to fail, corrupted and unusable."))

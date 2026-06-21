@@ -1,5 +1,5 @@
+///Assoc list of ["z_level"] = list(cores)
 GLOBAL_LIST_EMPTY(data_cores)
-GLOBAL_VAR_INIT(primary_data_core, null)
 
 #define CELL_POWERUSE_MULTIPLIER 0.025
 
@@ -17,7 +17,6 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	critical_machine = TRUE
 
 	var/disableheat = FALSE
-	var/primary = FALSE
 	var/valid_ticks = MAX_AI_DATA_CORE_TICKS //Limited to MAX_AI_DATA_CORE_TICKS. Decrement by 1 every time we have an invalid tick, opposite when valid
 	COOLDOWN_DECLARE(warning_cooldown)
 
@@ -29,39 +28,57 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 
 /obj/machinery/ai/data_core/Initialize(mapload)
 	. = ..()
-	GLOB.data_cores += src
-	if(primary && !GLOB.primary_data_core)
-		GLOB.primary_data_core = src
 	if(mapload)
 		integrated_battery = new /obj/item/stock_parts/power_store/cell/high(src)
+	update_list()
 	RefreshParts()
 	update_appearance()
 	register_context()
 
 /obj/machinery/ai/data_core/Destroy(force)
-	GLOB.data_cores -= src
-	if(GLOB.primary_data_core == src)
-		GLOB.primary_data_core = null
-
-	var/list/all_ais = GLOB.ai_list.Copy()
+	update_list()
 
 	for(var/mob/living/silicon/ai/AI in contents)
 		if(!AI.is_dying)
 			AI.relocate()
 
-	for(var/mob/living/silicon/ai/AI in all_ais)
-		if(!AI.mind && AI.deployed_shell.mind)
-			to_chat(AI.deployed_shell, span_userdanger("Warning! Data Core brought offline in [get_area(src)]! Please verify that no malicious actions were taken."))
-		else
-			to_chat(AI, span_userdanger("Warning! <A HREF=?src=[REF(AI)];go_to_machine=[REF(src)]>Data Core</A> brought offline in [get_area(src)]! Please verify that no malicious actions were taken."))
+	//Other AIs on this level will get alerted
+	for(var/obj/machinery/ai/data_core/other_data_cores in GLOB.data_cores["[z]"])
+		for(var/mob/living/silicon/ai/AI in other_data_cores.contents)
+			if(!AI.mind && AI.deployed_shell.mind)
+				to_chat(AI.deployed_shell, span_userdanger("Warning! Data Core brought offline in [get_area(src)]! Please verify that no malicious actions were taken."))
+			else
+				to_chat(AI, span_userdanger("Warning! <A HREF=?src=[REF(AI)];go_to_machine=[REF(src)]>Data Core</A> brought offline in [get_area(src)]! Please verify that no malicious actions were taken."))
 
 	return ..()
+
+/obj/machinery/ai/data_core/proc/update_list()
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+	var/list/z_list = list()
+	// Multi-Z, station gravity generator generates gravity on all ZTRAIT_STATION z-levels.
+	if(SSmapping.level_trait(T.z, ZTRAIT_STATION))
+		for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+			z_list += z
+	else
+		z_list += T.z
+
+	for(var/z in z_list)
+		if(QDELETED(src))
+			LAZYREMOVE(GLOB.data_cores["[z]"], src)
+		else
+			LAZYADD(GLOB.data_cores["[z]"], src)
 
 /obj/machinery/ai/data_core/JoinPlayerHere(mob/M, buckle)
 	return
 
 /obj/machinery/ai/data_core/get_cell()
 	return integrated_battery
+
+/obj/machinery/ai/data_core/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	update_list()
 
 /obj/machinery/ai/data_core/RefreshParts()
 	. = ..()
@@ -166,7 +183,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 /obj/machinery/ai/data_core/attack_ai(mob/living/silicon/ai/user)
 	if((user in src))
 		return ..()
-	if(!valid_data_core() || !valid_holder())
+	if(!valid_data_core(user) || !valid_holder())
 		balloon_alert(user, "not a valid core!")
 		return ..()
 	if(user.nuking)
@@ -186,8 +203,16 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 /obj/machinery/ai/data_core/proc/valid_data_core(mob/living/silicon/ai/user)
 	if(is_reebe_level(z) && !IS_CLOCK(user))
 		return FALSE
-	if(!is_station_level(z) && !is_station_level(get_turf(user)))
+
+	var/turf/user_turf = get_turf(user)
+	//If we're on the station, we won't work if the primary is not.
+	if(is_station_level(z))
+		if(!(is_station_level(user_turf.z)))
+			return FALSE
+	//If we're off the z level, we want to have the same z-level.
+	else if(z != user_turf.z)
 		return FALSE
+
 	if(valid_ticks > 0)
 		return TRUE
 	return FALSE
@@ -198,7 +223,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	if(valid_holder())
 		valid_ticks++
 		use_power = ACTIVE_POWER_USE
-		if(machine_stat & NOPOWER)
+		if((machine_stat & NOPOWER) && integrated_battery)
 			integrated_battery.use(active_power_usage * CELL_POWERUSE_MULTIPLIER)
 		COOLDOWN_RESET(src, warning_cooldown)
 		return
@@ -233,14 +258,6 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	core_temp += temperature_increase * AI_TEMPERATURE_MULTIPLIER
 	return TRUE
 
-/obj/machinery/ai/data_core/process_atmos()
-	for(var/mob/living/silicon/ai/ai_contents in contents)
-		if(ai_contents.technically_unpowered)
-			return
-		else //don't need to check every single AI
-			break
-	return ..()
-
 /obj/machinery/ai/data_core/has_power()
 	if((machine_stat & (NOPOWER)) && integrated_battery)
 		if(integrated_battery.charge > (active_power_usage * CELL_POWERUSE_MULTIPLIER))
@@ -249,10 +266,10 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 		return TRUE
 	return FALSE
 
-/obj/machinery/ai/data_core/proc/can_transfer_ai()
+/obj/machinery/ai/data_core/proc/can_transfer_ai(mob/living/silicon/ai/user)
 	if(machine_stat & (BROKEN|EMPED) || !has_power())
 		return FALSE
-	if(!valid_data_core() || !valid_holder())
+	if(!valid_data_core(user) || !valid_holder())
 		return FALSE
 	return TRUE
 
@@ -265,7 +282,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 
 /obj/machinery/ai/data_core/update_icon_state()
 	. = ..()
-	if(!valid_data_core())
+	if(!valid_holder())
 		return
 	if((machine_stat & (BROKEN|EMPED)) || !has_power())
 		icon_state = "[base_icon_state]-offline"
@@ -278,7 +295,6 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 /obj/machinery/ai/data_core/primary
 	name = "primary AI data core"
 	desc = "A complicated computer system capable of emulating the neural functions of a human at near-instantanous speeds. This one has a scrawny and faded note saying: 'Primary AI Data Core'"
-	primary = TRUE
 	circuit = /obj/item/circuitboard/machine/ai_data_core/primary
 
 /*

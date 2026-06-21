@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(server_cabinets)
-
 /obj/machinery/ai/server_cabinet
 	name = "Server Cabinet"
 	desc = "A simple cabinet of bPCIe slots for installing server racks."
@@ -39,14 +37,12 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 	. = ..()
 	roundstart = mapload
 	installed_racks = list()
-	GLOB.server_cabinets += src
 	RefreshParts()
 	update_appearance()
 	register_context()
 
 /obj/machinery/ai/server_cabinet/Destroy(force)
 	installed_racks = list()
-	GLOB.server_cabinets -= src
 	//Recalculate all the CPUs and RAM :)
 	GLOB.ai_os.update_hardware()
 	return ..()

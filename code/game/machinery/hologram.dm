@@ -327,7 +327,7 @@ Possible to do for anyone motivated enough:
 				last_request = world.time
 				to_chat(usr, span_info("You requested an AI's presence."))
 				var/area/area = get_area(src)
-				for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
+				for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
 					if(!AI.client)
 						continue
 					to_chat(AI, span_info("Your presence is requested at <a href='byond://?src=[REF(AI)];jump_to_holopad=[REF(src)]'>\the [area]</a>. <a href='byond://?src=[REF(AI)];project_to_holopad=[REF(src)]'>Project Hologram?</a>"))

@@ -39,7 +39,7 @@ GLOBAL_DATUM_INIT(ai_os, /datum/ai_os, new)
 	previous_ram = total_ram
 	total_ram = 0
 	total_cpu = 0
-	for(var/obj/machinery/ai/server_cabinet/C in GLOB.server_cabinets)
+	for(var/obj/machinery/ai/server_cabinet/C as anything in SSmachines.get_machines_by_type(/obj/machinery/ai/server_cabinet))
 		if(!C.valid_holder() && !C.roundstart)
 			continue
 		total_ram += C.total_ram
