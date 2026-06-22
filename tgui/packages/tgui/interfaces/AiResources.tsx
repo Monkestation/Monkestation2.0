@@ -1,5 +1,4 @@
 import { toFixed } from 'common/math';
-import { Fragment } from 'react';
 import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import {
@@ -7,7 +6,6 @@ import {
   Button,
   Icon,
   NoticeBox,
-  NumberInput,
   ProgressBar,
   Section,
   Slider,
