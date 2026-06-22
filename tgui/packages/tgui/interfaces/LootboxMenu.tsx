@@ -135,6 +135,7 @@ export const LootboxMenu = (props) => {
                       <i>Lets go gambling!!!</i>
                     </b>
                     position="center"
+                    disabled={numberLootboxes < 1}
                     color="gold"
                     bold
                     style={{

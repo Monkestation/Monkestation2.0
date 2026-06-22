@@ -1,3 +1,26 @@
+///Takes a user, handles the full process of picking a lootbox item, and adds it to their inventory. Returns the item that was rolled
+/proc/generate_lootbox_item(mob/user, guarentee_unusual = FALSE)
+	var/type_rolled
+	if(!guarentee_unusual)
+		type_rolled = rand(1, 200)
+	else
+		type_rolled = 1
+
+	var/type_string
+	switch(type_rolled)
+		if(1 to 2) //1% chance
+			type_string = "Unusual"
+		if(3 to 4) //1% chance
+			type_string = "High Tier"
+		if(5 to 9) //2% chance
+			type_string = "Medium Tier"
+		if(10 to 16) //3% chance
+			type_string = "Low Tier"
+		else //93% chance
+			type_string = "Loadout Item"
+
+	return return_rolled(type_string, user)
+
 //global because its easier long term
 //also its own file to make it super easy
 //to find and adjust odds of lootbox rolls
@@ -13,22 +36,21 @@
 			if(!pulled_key)
 				pulled_key = "MissingNo." // have fun trying to get this one lol
 			temp.AddComponent(/datum/component/unusual_handler, particle_path = picked_path, fresh_unusual = TRUE, client_ckey = pulled_key)
-
+			to_chat(world, span_boldannounce("[user] has unboxed an [temp.name]!"))
+			if(isliving(user) && !user.put_in_hands(temp))
+				temp.forceMove(get_turf(user))
 			if(user.client?.prefs)
 				user.client.prefs.save_new_unusual(temp)
 
 		//token adding
 		if("High Tier")
-			temp = new /obj/item/coin/antagtoken
-			temp.name = "High Tier Antag Token"
+			temp = new /obj/item/coin/antagtoken/high
 			user.client.client_token_holder.adjust_antag_tokens(HIGH_THREAT, 1)
 		if("Medium Tier")
-			temp = new /obj/item/coin/antagtoken
-			temp.name = "Medium Tier Antag Token"
+			temp = new /obj/item/coin/antagtoken/med
 			user.client.client_token_holder.adjust_antag_tokens(MEDIUM_THREAT, 1)
 		if("Low Tier")
-			temp = new /obj/item/coin/antagtoken
-			temp.name = "Low Tier Antag Token"
+			temp = new /obj/item/coin/antagtoken/low
 			user.client.client_token_holder.adjust_antag_tokens(LOW_THREAT, 1)
 
 		if("Loadout Item")
@@ -52,7 +74,6 @@
 				user.client.prefs.adjust_metacoins(user.ckey, 2500, "Duplicate Loadout Item", donator_multiplier = FALSE)
 				temp.color = COLOR_GRAY
 				temp.name = "Loadout Item [temp.name] (Duplicate)"
-				user.overlay_fullscreen("lb_duplicate", /atom/movable/screen/fullscreen/lootbox_overlay/duplicate)
 			else
 				picked.add_to_user(usr.client)
 				temp.name = "Loadout Item [temp.name]"

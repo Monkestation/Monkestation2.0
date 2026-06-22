@@ -19,11 +19,6 @@
 	layer = FULLSCREEN_LAYER + 0.3
 	screen_loc = "CENTER+1:35, CENTER+2"
 
-/atom/movable/screen/fullscreen/lootbox_overlay/duplicate
-	icon_state = "duplicate"
-	layer = FULLSCREEN_LAYER + 0.4
-	plane = ABOVE_HUD_PLANE
-
 /atom/movable/screen/fullscreen/lootbox_overlay/main
 	mouse_over_pointer = MOUSE_HAND_POINTER
 	///have we already opened? prevents spam clicks
@@ -56,26 +51,8 @@
 	user.overlay_fullscreen("lb_bg", /atom/movable/screen/fullscreen/lootbox_overlay/background)
 	var/atom/movable/screen/fullscreen/lootbox_overlay/item_preview/preview = user.overlay_fullscreen("lb_preview", /atom/movable/screen/fullscreen/lootbox_overlay/item_preview)
 
-	var/type_rolled
-	if(!guarentee_unusual)
-		type_rolled = rand(1, 200)
-	else
-		type_rolled = 1
+	var/obj/item/rolled_item = generate_lootbox_item(user, guarentee_unusual)
 
-	var/type_string
-	switch(type_rolled)
-		if(1 to 2)
-			type_string = "Unusual"
-		if(3 to 4)
-			type_string = "High Tier"
-		if(5 to 9)
-			type_string = "Medium Tier"
-		if(10 to 16)
-			type_string = "Low Tier"
-		else
-			type_string = "Loadout Item"
-
-	var/obj/item/rolled_item = return_rolled(type_string, user)
 	preview.icon_state = rolled_item.icon_state
 	preview.icon =  rolled_item.icon
 	preview.appearance = rolled_item.appearance
@@ -91,10 +68,6 @@
 		message_admins("[user.client.ckey] opened a lootbox and recieved [rolled_item.name]!")
 		logger.Log(LOG_CATEGORY_META, "[user.client.ckey] opened a lootbox and recieved [rolled_item.name]!", list("currency_left" = user.client.prefs.metacoins))
 	preview.filters += filter(type = "drop_shadow", x = 0, y = 0, size= 5, offset = 0, color = "#F0CA85")
-	if(type_string == "Unusual")
-		to_chat(world, span_boldannounce("[user] has unboxed an [rolled_item.name]!"))
-		if(isliving(user) && !user.put_in_hands(rolled_item))
-			rolled_item.forceMove(get_turf(user))
 
 	addtimer(CALLBACK(src, PROC_REF(cleanup), user), 3 SECONDS)
 
@@ -113,14 +86,45 @@
 	overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main/guaranteed)
 
 /mob/proc/trigger_lootbox_on_self()
+	if(screens["lb_main"])
+		return
 	return overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main)
 
 /obj/item/lootbox
 	name = "lootbox"
+	desc = "Check it! Free loot!"
 	icon = 'goon/icons/obj/large_storage.dmi'
 	icon_state = "attachecase-old"
 
+/obj/item/lootbox/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/lootbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(held_item == src)
+		context[SCREENTIP_CONTEXT_LMB] = "Open Lootbox"
+		context[SCREENTIP_CONTEXT_RMB] = "Store Lootbox"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return .
+
 /obj/item/lootbox/attack_self(mob/user, modifiers)
 	. = ..()
+	if(user.screens["lb_main"])
+		return
 	user.trigger_lootbox_on_self()
 	qdel(src)
+
+/obj/item/lootbox/examine(mob/user)
+	. = ..()
+	. += span_info("You can [EXAMINE_HINT("right click")] the box in hand, or [EXAMINE_HINT("left click")] it to open it.")
+
+/obj/item/lootbox/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	if(user.client)
+		user.client.prefs.lootboxes_owned++
+		qdel(src)
+	user.balloon_alert(user, "lootbox stored!")
+	playsound(user, 'sound/items/pshoom.ogg', 50, TRUE)
