@@ -63,7 +63,7 @@ const BASEICONS = {
   'Shaft Miner': 'digging',
   Skeleton: 'skull-crossbones',
   'Station Engineer': 'gears',
-  Stowaway: 'person-through-window', // MONKESTATION ADDITION
+  Stowaway: 'person-through-window',
   'Syndicate Operative': 'dragon',
   Virologist: 'virus',
   Warden: 'handcuffs',

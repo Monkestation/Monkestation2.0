@@ -98,12 +98,11 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 /// Injects a record into the manifest.
 /datum/manifest/proc/inject(mob/living/carbon/human/person, client/person_client, atom/appearance_proxy)
 	set waitfor = FALSE
-	// OCULIS PORT START - unassigned job so we need the check to not early return
+	// unassigned job so we need the check to not early return
 	var/is_hidden_stowaway = is_stowaway(person, person_client)
 
 	if(!is_hidden_stowaway && !(person.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST))
 		return
-	// OCULIS PORT END
 	if(!(person.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST))
 		return
 	//if you're cargo, and not a boss, you're part of the Union.
@@ -143,10 +142,9 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		mind_ref = person.mind,
 	)
 
-	// OCULIS PORT START - they're in /datum/record/locked now, we can return
+	//they're in /datum/record/locked now, we can return
 	if(is_hidden_stowaway)
 		return
-	// OCULIS PORT END
 
 	var/datum/record/crew/crewfile = new (
 		age = person.age,

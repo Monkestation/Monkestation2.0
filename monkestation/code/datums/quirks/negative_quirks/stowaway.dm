@@ -78,7 +78,7 @@
 			. += "It's falling apart!"
 		else
 			. += "It looks frail!"
-//OCULIS PORT START: Removes job assignment and handles latejoin stowaways
+//Removes job assignment and handles latejoin stowaways
 /proc/is_stowaway(mob/living/carbon/human/person, client/person_client)
 	if(!person)
 		return FALSE
@@ -107,8 +107,6 @@
 		SSquirks.AssignQuirks(person, person_client)
 
 	force_stowaway_unassigned_role(person, person_client)
-
-//OCULIS PORT END
 
 /proc/return_stowaway_heirloom(mob/living/carbon/human/stowaway) //reset family heirloom real quick so it respawns
 	if(!stowaway.has_quirk(/datum/quirk/item_quirk/family_heirloom))
@@ -143,4 +141,3 @@
 	new /obj/item/reagent_containers/medipen(src)
 	new /obj/effect/spawner/random/trash/garbage(src)
 	new /obj/effect/spawner/random/trash/garbage(src)
-	update_icon_state()

@@ -344,7 +344,8 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 #define is_scientist_job(job_type) (istype(job_type, /datum/job/scientist))
 #define is_security_officer_job(job_type) (istype(job_type, /datum/job/security_officer))
 #define is_research_director_job(job_type) (istype(job_type, /datum/job/research_director))
-#define is_unassigned_job(job_type) (istype(job_type, /datum/job/unassigned) || istype(job_type, /datum/job/stowaway))
+#define is_unassigned_job(job_type) (istype(job_type, /datum/job/unassigned))
+#define is_stowaway_job(job_type) (istype(job_type, /datum/job/stowaway))
 
 #define isprojectilespell(thing) (istype(thing, /datum/action/cooldown/spell/pointed/projectile))
 #define is_multi_tile_object(atom) (atom.bound_width > world.icon_size || atom.bound_height > world.icon_size)
