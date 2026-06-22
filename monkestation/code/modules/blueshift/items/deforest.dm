@@ -552,6 +552,7 @@
 		/obj/item/storage/pill_bottle,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/bodybag,
+		/obj/item/breathing_bag,
 	))
 
 /obj/item/storage/backpack/deforest_medkit/stocked
@@ -654,6 +655,8 @@
 		/obj/item/wrench/medical,
 		/obj/item/emergency_bed,
 		/obj/item/bodybag,
+		/obj/item/breathing_bag,
+		/obj/item/autopsy_scanner,
 	))
 
 /obj/item/storage/backpack/deforest_surgical/stocked
