@@ -1,4 +1,0 @@
-author: "Cujo"
-delete-after: True
-changes:
-  - rscadd: "Sleepers now take a second to drag someone inside"
