@@ -45,7 +45,7 @@
 		COOLDOWN_START(src, last_tox_damage, RADIATION_TOX_INTERVAL)
 
 		if(is_species(parent, SPECIES_GOBLIN))
-			start_goblin_burn_splotch_timer()
+			addtimer(CALLBACK(src, PROC_REF(give_burn_splotches)), rand(90 SECONDS, 120 SECONDS), TIMER_STOPPABLE) //Goblins get rad burns when they are irradiated for 1.5-2 minutes instead of 0.5-1 minutes
 		else
 			start_burn_splotch_timer()
 
