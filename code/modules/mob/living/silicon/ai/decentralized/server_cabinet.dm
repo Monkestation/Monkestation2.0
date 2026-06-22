@@ -12,6 +12,8 @@
 	//We manually calculate how power the cards + CPU give, so this is accounted for by that
 	active_power_usage = 0
 
+	var/datum/ai_os/linked_os
+
 	var/list/installed_racks
 
 	var/total_cpu = 0
@@ -37,6 +39,11 @@
 	. = ..()
 	roundstart = mapload
 	installed_racks = list()
+	if(!GLOB.ai_os["[z]"])
+		linked_os = new /datum/ai_os(get_turf(src))
+	else
+		linked_os = GLOB.ai_os["[z]"]
+	linked_os.update_hardware()
 	RefreshParts()
 	update_appearance()
 	register_context()
@@ -44,8 +51,20 @@
 /obj/machinery/ai/server_cabinet/Destroy(force)
 	installed_racks = list()
 	//Recalculate all the CPUs and RAM :)
-	GLOB.ai_os.update_hardware()
+	linked_os.update_hardware()
+	linked_os = null
 	return ..()
+
+/obj/machinery/ai/server_cabinet/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	var/datum/ai_os/old_os = GLOB.ai_os["[old_turf.z]"]
+
+	if(!GLOB.ai_os["[new_turf.z]"])
+		linked_os = new /datum/ai_os(get_turf(new_turf))
+	else
+		linked_os = GLOB.ai_os["[new_turf.z]"]
+
+	old_os.update_hardware()
 
 /obj/machinery/ai/server_cabinet/RefreshParts()
 	. = ..()
@@ -87,7 +106,7 @@
 		was_valid_holder = TRUE
 
 		if(!hardware_synced)
-			GLOB.ai_os.update_hardware()
+			linked_os.update_hardware()
 			hardware_synced = TRUE
 	else
 		valid_ticks--
@@ -97,7 +116,7 @@
 			was_valid_holder = FALSE
 			cut_overlays()
 			hardware_synced = FALSE
-			GLOB.ai_os.update_hardware()
+			linked_os.update_hardware()
 
 /obj/machinery/ai/server_cabinet/process_atmos()
 	. = ..()
@@ -177,7 +196,7 @@
 	total_cpu += new_rack.get_cpu()
 	total_ram += new_rack.get_ram()
 	cached_power_usage += new_rack.get_power_usage()
-	GLOB.ai_os.update_hardware()
+	linked_os.update_hardware()
 	use_power = ACTIVE_POWER_USE
 	update_appearance()
 	return TRUE
@@ -192,7 +211,7 @@
 	total_cpu = 0
 	total_ram = 0
 	cached_power_usage = 0
-	GLOB.ai_os.update_hardware()
+	linked_os.update_hardware()
 	if(user)
 		balloon_alert(user, "racks removed")
 	use_power = IDLE_POWER_USE

@@ -69,7 +69,7 @@
 	var/list/data = list()
 
 	var/turf/owner_turf = get_turf(owner)
-	var/datum/ai_os/owner_os = GLOB.ai_os[owner_turf.z]
+	var/datum/ai_os/owner_os = GLOB.ai_os["[owner_turf.z]"]
 
 	data["current_cpu"] = owner_os.cpu_assigned[owner] ? owner_os.cpu_assigned[owner] : 0
 	data["current_ram"] = owner_os.ram_assigned[owner] ? owner_os.ram_assigned[owner] : 0
@@ -258,7 +258,7 @@
 
 /datum/ai_dashboard/proc/run_project(datum/ai_project/project)
 	var/turf/owner_turf = get_turf(owner)
-	var/datum/ai_os/owner_os = GLOB.ai_os[owner_turf.z]
+	var/datum/ai_os/owner_os = GLOB.ai_os["[owner_turf.z]"]
 	var/current_ram = owner_os.ram_assigned[owner] ? owner_os.ram_assigned[owner] : 0
 	current_ram += free_ram
 
@@ -317,7 +317,7 @@
 //Stuff is handled in here per tick :)
 /datum/ai_dashboard/proc/tick(seconds_per_tick)
 	var/turf/owner_turf = get_turf(owner)
-	var/datum/ai_os/owner_os = GLOB.ai_os[owner_turf.z]
+	var/datum/ai_os/owner_os = GLOB.ai_os["[owner_turf.z]"]
 
 	var/current_cpu = owner_os.cpu_assigned[owner] ? owner_os.total_cpu * owner_os.cpu_assigned[owner] : 0
 	var/current_ram = owner_os.ram_assigned[owner] ? owner_os.ram_assigned[owner] : 0

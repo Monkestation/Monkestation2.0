@@ -9,22 +9,19 @@ GLOBAL_LIST_EMPTY(ai_os)
 
 	var/previous_ram = 0
 
-	var/list/cpu_assigned
-	var/list/ram_assigned
+	var/list/cpu_assigned = list()
+	var/list/ram_assigned = list()
 
 	var/temp_limit = AI_TEMP_LIMIT
 
 	var/list/obj/machinery/ai/server_cabinet/cabinets = list()
 	var/list/mob/living/silicon/ai/ai_list = list()
 
-/datum/ai_os/New(obj/machinery/ai/data_core/creator)
+/datum/ai_os/New(obj/machinery/ai/creator)
 	update_list(creator)
-	update_hardware()
-	cpu_assigned = list()
-	ram_assigned = list()
 
 //Taken from gravity generator
-/datum/ai_os/proc/update_list(obj/machinery/ai/data_core/creator)
+/datum/ai_os/proc/update_list(obj/machinery/ai/creator)
 	var/turf/creator_turf = get_turf(creator)
 	if(!creator_turf)
 		return
@@ -37,10 +34,11 @@ GLOBAL_LIST_EMPTY(ai_os)
 		z_list += creator_turf.z
 
 	for(var/z in z_list)
+		//this should never happen but let's be safe.
 		if(QDELETED(src))
-			LAZYREMOVE(GLOB.ai_os["[z]"], src)
+			GLOB.ai_os["[z]"] = null
 		else
-			LAZYADD(GLOB.ai_os["[z]"], src)
+			GLOB.ai_os["[z]"] = src
 
 /datum/ai_os/proc/add_ai(mob/living/silicon/ai/AI)
 	if(AI in ai_list)
@@ -73,8 +71,8 @@ GLOBAL_LIST_EMPTY(ai_os)
 	previous_ram = total_ram
 	total_ram = 0
 	total_cpu = 0
-	for(var/obj/machinery/ai/server_cabinet/C as anything in SSmachines.get_machines_by_type(/obj/machinery/ai/server_cabinet))
-		if(!C.valid_holder() && !C.roundstart)
+	for(var/obj/machinery/ai/server_cabinet/C as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ai/server_cabinet))
+		if((!C.valid_holder() && !C.roundstart) || C.linked_os != src)
 			continue
 		total_ram += C.total_ram
 		total_cpu += C.total_cpu

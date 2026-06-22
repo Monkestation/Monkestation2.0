@@ -8,6 +8,6 @@
 
 /datum/ai_project/coolant_manager/finish()
 	var/turf/turf_on = get_turf(ai)
-	var/datum/ai_os/os_used = GLOB.ai_os[turf_on.z]
+	var/datum/ai_os/os_used = GLOB.ai_os["[turf_on.z]"]
 	if(os_used.temp_limit == AI_TEMP_LIMIT) //Limit to only 1 AI doing it.
 		os_used.temp_limit += 10

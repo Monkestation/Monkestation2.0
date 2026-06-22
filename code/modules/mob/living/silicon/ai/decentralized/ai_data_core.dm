@@ -31,10 +31,9 @@ GLOBAL_LIST_EMPTY(data_cores)
 	if(mapload)
 		integrated_battery = new /obj/item/stock_parts/power_store/cell/high(src)
 	update_list()
-	if(!GLOB.ai_os[z])
+	if(!GLOB.ai_os["[z]"])
 		new /datum/ai_os(get_turf(src))
 	RefreshParts()
-	update_appearance()
 	register_context()
 
 /obj/machinery/ai/data_core/Destroy(force)
@@ -75,24 +74,24 @@ GLOBAL_LIST_EMPTY(data_cores)
 
 /obj/machinery/ai/data_core/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()
-	if(!GLOB.ai_os[new_turf.z])
-		new /datum/ai_os(get_turf(new_turf))
+	var/datum/ai_os/old_os = GLOB.ai_os["[old_turf.z]"]
+	var/datum/ai_os/new_os
+	if(!GLOB.ai_os["[new_turf.z]"])
+		new_os = new /datum/ai_os(get_turf(new_turf))
+	else
+		new_os = GLOB.ai_os["[new_turf.z]"]
 
-	var/datum/ai_os/old_os = GLOB.ai_os[old_turf.z]
-	var/datum/ai_os/new_os = GLOB.ai_os[new_turf.z]
 	for(var/mob/living/silicon/ai/ai_contents as anything in contents)
 		old_os.remove_ai(ai_contents)
 		new_os.add_ai(ai_contents)
+
+	update_list()
 
 /obj/machinery/ai/data_core/JoinPlayerHere(mob/M, buckle)
 	return
 
 /obj/machinery/ai/data_core/get_cell()
 	return integrated_battery
-
-/obj/machinery/ai/data_core/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	. = ..()
-	update_list()
 
 /obj/machinery/ai/data_core/RefreshParts()
 	. = ..()
@@ -289,6 +288,7 @@ GLOBAL_LIST_EMPTY(data_cores)
 	. = AI.forceMove(src)
 	if(AI.eyeobj)
 		AI.eyeobj.setLoc(get_turf(src))
+	update_appearance(UPDATE_ICON)
 	return .
 
 /obj/machinery/ai/data_core/update_icon_state()

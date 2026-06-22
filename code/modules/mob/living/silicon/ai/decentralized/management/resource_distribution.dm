@@ -75,7 +75,7 @@
 	if(!authenticated)
 		return data
 
-	var/datum/ai_os/os_using = GLOB.ai_os[z]
+	var/datum/ai_os/os_using = GLOB.ai_os["[z]"]
 	data["total_cpu"] = os_using.total_cpu
 	data["total_ram"] = os_using.total_ram
 
@@ -114,7 +114,7 @@
 		return
 
 	var/is_human = ishuman(user)
-	var/datum/ai_os/os_using = GLOB.ai_os[z]
+	var/datum/ai_os/os_using = GLOB.ai_os["[z]"]
 
 	switch(action)
 		if("log_out")

@@ -17,8 +17,12 @@
 /obj/machinery/computer/ai_server_console/ui_data(mob/living/carbon/human/user)
 	var/list/data = list()
 
+	var/datum/ai_os/os_used = GLOB.ai_os["[z]"]
+
 	data["servers"] = list()
-	for(var/obj/machinery/ai/server_cabinet/holder as anything in SSmachines.get_machines_by_type(/obj/machinery/ai/server_cabinet))
+	for(var/obj/machinery/ai/server_cabinet/holder as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ai/server_cabinet))
+		if(holder.linked_os != os_used)
+			continue
 		var/turf/current_turf = get_turf(holder)
 		var/datum/gas_mixture/env = current_turf.return_air()
 		data["servers"] += list(list(

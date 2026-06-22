@@ -76,7 +76,7 @@
 /mob/proc/AIize(client/preference_source, move = TRUE)
 	var/valid_core = FALSE
 	for(var/obj/machinery/ai/data_core/core in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ai/data_core))
-		if(core.valid_data_core(src) && is_station_level(get_turf(core)) && !QDELETED(core))
+		if(core.valid_data_core(src) && is_station_level(core.z) && !QDELETED(core))
 			valid_core = TRUE
 			break
 
