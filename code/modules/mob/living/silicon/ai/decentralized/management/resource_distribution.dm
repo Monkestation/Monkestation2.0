@@ -88,13 +88,15 @@
 
 	data["ais"] = list()
 
-	for(var/mob/living/silicon/ai/A in GLOB.ai_list)
-		data["ais"] += list(list(
-			"name" = A.name,
-			"ref" = REF(A),
-			"assigned_cpu" = os_using.cpu_assigned[A] ? os_using.cpu_assigned[A] : 0,
-			"assigned_ram" = os_using.ram_assigned[A] ? os_using.ram_assigned[A] : 0,
-		))
+	var/turf/computer_turf = get_turf(src)
+	for(var/obj/machinery/ai/data_core as anything in GLOB.data_cores["[computer_turf.z]"])
+		for(var/mob/living/silicon/ai/A in data_core.contents)
+			data["ais"] += list(list(
+				"name" = A.name,
+				"ref" = REF(A),
+				"assigned_cpu" = os_using.cpu_assigned[A] ? os_using.cpu_assigned[A] : 0,
+				"assigned_ram" = os_using.ram_assigned[A] ? os_using.ram_assigned[A] : 0,
+			))
 
 	return data
 
@@ -128,6 +130,8 @@
 			var/mob/living/silicon/ai/target_ai = locate(params["targetAI"])
 			if(!istype(target_ai))
 				return
+			if(!(target_ai in os_using.ai_list))
+				return
 
 			os_using.clear_ai_resources(target_ai)
 			. = TRUE
@@ -141,6 +145,8 @@
 				return
 			if(human_only && !is_human)
 				to_chat(user, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
+				return
+			if(!(target_ai in os_using.ai_list))
 				return
 
 			var/amount = params["amount_cpu"]
@@ -159,6 +165,8 @@
 			if(human_only && !is_human)
 				to_chat(user, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
 				return
+			if(!(target_ai in os_using.ai_list))
+				return
 
 			var/amount = (os_using.total_cpu - os_using.total_cpu_assigned()) + os_using.cpu_assigned[target_ai]
 			os_using.set_cpu(target_ai, amount)
@@ -173,6 +181,8 @@
 				return
 			if(human_only && !is_human)
 				to_chat(user, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
+				return
+			if(!(target_ai in os_using.ai_list))
 				return
 
 			if(os_using.total_ram_assigned() >= os_using.total_ram)
@@ -189,6 +199,8 @@
 				return
 			if(human_only && !is_human)
 				to_chat(user, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
+				return
+			if(!(target_ai in os_using.ai_list))
 				return
 
 			var/current_ram = os_using.ram_assigned[target_ai]

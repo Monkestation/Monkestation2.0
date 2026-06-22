@@ -1046,6 +1046,8 @@
 		if(new_eye != GLOB.ai_camera_room_landmark)
 			end_multicam()
 		if(istype(new_eye, /obj/machinery/ai/data_core)) //trying to set your perspective to the 'core' will instead go to the eye.
+			if(isnull(eyeobj))
+				return //not created yet
 			client.set_eye(eyeobj)
 			view_core()
 		else
@@ -1198,9 +1200,13 @@
 	GLOB.cameranet.visibility(moved_eye)
 
 /mob/living/silicon/ai/forceMove(atom/destination)
+	var/turf/current_turf = get_turf(src)
 	. = ..()
 	if(.)
 		end_multicam()
+		var/datum/ai_os/past_os = GLOB.ai_os["[z]"]
+		if(past_os)
+			past_os.remove_ai(src)
 
 /mob/living/silicon/ai/up()
 	set name = "Move Upwards"

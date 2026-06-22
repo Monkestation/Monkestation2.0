@@ -38,7 +38,7 @@
 		if (battery < 200)
 			battery++
 
-	if(lacks_power())
+	if(lacks_power() && !astype(loc, /obj/machinery/ai)?.has_power())
 		if(!aiRestorePowerRoutine)
 			ai_lose_power()
 		return

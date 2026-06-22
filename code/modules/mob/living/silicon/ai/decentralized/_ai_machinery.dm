@@ -7,15 +7,22 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "RD-server-on"
 	density = TRUE
+	///Our linked ai_os
+	var/datum/ai_os/linked_os
 	///Temperature of the ai core itself, this will share with air in the enviroment
 	var/core_temp = CELCIUS_TO_KELVIN(-80)
 
 /obj/machinery/ai/Initialize(mapload)
 	. = ..()
 	SSair.start_processing_machine(src)
+	if(!GLOB.ai_os["[z]"])
+		linked_os = new /datum/ai_os(get_turf(src))
+	else
+		linked_os = GLOB.ai_os["[z]"]
 
 /obj/machinery/ai/Destroy(force)
 	SSair.stop_processing_machine(src)
+	linked_os = null
 	return ..()
 
 //Cooling happens here
@@ -33,6 +40,15 @@
 	T.air_update_turf(FALSE, FALSE)
 	return TRUE
 
+/obj/machinery/ai/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(isnull(new_turf))
+		return
+	if(!GLOB.ai_os["[new_turf.z]"])
+		linked_os = new /datum/ai_os(get_turf(new_turf))
+	else
+		linked_os = GLOB.ai_os["[new_turf.z]"]
+
 /obj/machinery/ai/proc/valid_holder()
 	if(machine_stat & (BROKEN|EMPED) || !has_power())
 		return FALSE
@@ -45,7 +61,8 @@
 	if(isspaceturf(T) || total_moles < 10)
 		return FALSE
 	var/datum/ai_os/os_using = GLOB.ai_os["[z]"]
-
+	if(linked_os != os_using)
+		return FALSE
 	if(core_temp > os_using.get_temp_limit())
 		return FALSE
 	return TRUE
