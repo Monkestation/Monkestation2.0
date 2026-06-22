@@ -595,7 +595,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor(src) && !is_admin(src))
+	var/required_living_minutes = CONFIG_GET(number/panic_bunker_living)
+	var/living_minutes = get_exp_living(TRUE)
+
+	if(((player_age != -1) && living_minutes < required_living_minutes && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor(src) && !is_admin(src)))
 		interviewee = TRUE
 		register_for_interview()
 
@@ -898,6 +901,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/proc/check_overwatch()
 	var/failed = FALSE
+	var/required_living_minutes = CONFIG_GET(number/panic_bunker_living)
+	var/living_minutes = get_exp_living(TRUE)
 	SSoverwatch.CollectClientData(src)
 	failed = SSoverwatch.HandleClientAccessCheck(src)
 	SSoverwatch.HandleASNbanCheck(src)
@@ -914,11 +919,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			if(string)
 				string += ", "
 			string += "Mobile Hostspot IP"
-	if(failed && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor(src) && !is_admin(src))
+	if(failed && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor(src) && !is_admin(src) && living_minutes < required_living_minutes)
 		message_admins(span_adminnotice("Proxy Detection: [key_name_admin(src)] Overwatch detected this is a [string]"))
 		interviewee = TRUE
 
-	if(ckey in GLOB.interviews.approved_ckeys)
+	if((ckey in GLOB.interviews.approved_ckeys) || living_minutes >= required_living_minutes)
 		return FALSE
 
 	return failed

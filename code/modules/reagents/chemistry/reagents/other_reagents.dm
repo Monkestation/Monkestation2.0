@@ -251,7 +251,6 @@
 /**
  * Water reaction to a mob
  */
-#define WAS_SPRAYED "was_sprayed" //monkestation edit
 
 /datum/reagent/water/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume)//Splashing people with water can help put them out!
 	. = ..()
@@ -270,27 +269,28 @@
 		return
 
 	var/mob/living/victim = exposed_mob
-	if((methods & (TOUCH|VAPOR)) && !victim.is_pepper_proof() && !HAS_TRAIT(victim, TRAIT_FEARLESS))
-		victim.set_eye_blur_if_lower(3 SECONDS)
-		victim.set_confusion_if_lower(5 SECONDS)
-		if(ishuman(victim))
-			victim.add_mood_event("watersprayed", /datum/mood_event/watersprayed/cat)
-		victim.update_damage_hud()
-		if(HAS_TRAIT(victim, WAS_SPRAYED))
-			return
-		ADD_TRAIT(victim, WAS_SPRAYED, TRAIT_GENERIC)
-		if(prob(50))
-			INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "hiss")
-		else
-			INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "scream")
-		addtimer(TRAIT_CALLBACK_REMOVE(victim, WAS_SPRAYED, TRAIT_GENERIC), 1 SECONDS)
-	//MONKESTATION EDIT STOP
-
-#undef WAS_SPRAYED //monkestation edit
+	if((methods & (TOUCH|VAPOR)) && !victim.is_pepper_proof())
+		victim.apply_status_effect(/datum/status_effect/cat_water_sprayed)
 
 #undef WATER_TO_WET_STACKS_FACTOR_TOUCH
 #undef WATER_TO_WET_STACKS_FACTOR_VAPOR
 
+/datum/status_effect/cat_water_sprayed
+	duration = 0.5 SECONDS
+	alert_type = null
+	id = "cat_water_sprayed"
+
+/datum/status_effect/cat_water_sprayed/on_apply()
+	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
+		return FALSE
+
+	owner.set_eye_blur_if_lower(3 SECONDS)
+	owner.set_confusion_if_lower(5 SECONDS)
+
+	owner.add_mood_event("watersprayed", /datum/mood_event/watersprayed/cat)
+	INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), pick("hiss", "scream"))
+
+	return TRUE
 
 /datum/reagent/water/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

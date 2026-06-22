@@ -68566,6 +68566,7 @@
 /obj/machinery/gulag_item_reclaimer{
 	pixel_x = 31
 	},
+/obj/machinery/photobooth/security,
 /turf/open/floor/iron,
 /area/station/security/processing)
 "tQY" = (

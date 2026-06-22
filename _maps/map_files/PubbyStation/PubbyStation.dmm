@@ -3553,6 +3553,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/photobooth/security,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "anB" = (

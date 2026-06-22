@@ -52894,6 +52894,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/machinery/duct,
+/obj/machinery/photobooth/security,
 /turf/open/floor/iron,
 /area/station/security/processing)
 "qeW" = (

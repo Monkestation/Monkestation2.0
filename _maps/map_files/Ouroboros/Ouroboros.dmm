@@ -64871,6 +64871,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/machinery/photobooth/security,
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 1
 	},
