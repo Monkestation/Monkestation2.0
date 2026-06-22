@@ -198,7 +198,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 		return TRUE
 	return FALSE
 
-/obj/machinery/ai/data_core/process()
+/obj/machinery/ai/data_core/process(seconds_per_tick)
 	valid_ticks = clamp(valid_ticks, 0, MAX_AI_DATA_CORE_TICKS)
 
 	if(valid_holder())
@@ -212,14 +212,16 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	valid_ticks--
 	if(valid_ticks <= 0)
 		use_power = IDLE_POWER_USE
-	if(COOLDOWN_FINISHED(src, warning_cooldown))
-		COOLDOWN_START(src, warning_cooldown, AI_DATA_CORE_WARNING_COOLDOWN)
-		for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
-			if(!AI.mind && AI.deployed_shell.mind)
-				to_chat(AI.deployed_shell, span_userdanger("<A HREF=?src=[REF(AI)];go_to_machine=[REF(src)]>Data core</A> in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
-			else
-				to_chat(AI, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
-			AI.playsound_local(AI, 'sound/machines/engine_alert2.ogg', 30)
+
+	if(!COOLDOWN_FINISHED(src, warning_cooldown))
+		return
+	COOLDOWN_START(src, warning_cooldown, AI_DATA_CORE_WARNING_COOLDOWN)
+	for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
+		if(!AI.mind && AI.deployed_shell.mind)
+			to_chat(AI.deployed_shell, span_userdanger("<A HREF=?src=[REF(AI)];go_to_machine=[REF(src)]>Data core</A> in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
+		else
+			to_chat(AI, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
+		AI.playsound_local(AI, 'sound/machines/engine_alert2.ogg', 30)
 
 /obj/machinery/ai/data_core/process_atmos()
 	. = ..()
