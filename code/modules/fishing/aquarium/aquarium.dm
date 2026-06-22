@@ -6,7 +6,7 @@
 /obj/structure/aquarium
 	name = "aquarium"
 	density = TRUE
-	anchored = TRUE
+	anchored = FALSE
 
 	icon = 'icons/obj/aquarium.dmi'
 	icon_state = "aquarium_base"
@@ -19,7 +19,7 @@
 	var/max_fluid_temp = MAX_AQUARIUM_TEMP
 
 	/// Can fish reproduce in this quarium.
-	var/allow_breeding = FALSE
+	var/allow_breeding = TRUE
 
 	var/glass_icon_state = "aquarium_glass"
 	var/broken_glass_icon_state = "aquarium_glass_broken"
@@ -32,13 +32,15 @@
 
 	var/list/fluid_types = list(AQUARIUM_FLUID_SALTWATER, AQUARIUM_FLUID_FRESHWATER, AQUARIUM_FLUID_SULPHWATEVER, AQUARIUM_FLUID_AIR)
 
-	var/panel_open = TRUE
+	var/panel_open = FALSE
 
 	///Current layers in use by aquarium contents
 	var/list/used_layers = list()
 
 	/// /obj/item/fish in the aquarium, sorted by type - does not include things with aquarium visuals that are not fish
 	var/list/tracked_fish_by_type
+	/// Var used to keep track of the current beauty of the aquarium, which can be throughfully changed by aquarium content.
+	var/current_beauty = 150
 
 /obj/structure/aquarium/Initialize(mapload)
 	. = ..()
@@ -46,6 +48,8 @@
 	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(track_if_fish))
 	AddElement(/datum/element/relay_attackers)
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
+	if(current_beauty)
+		AddElement(/datum/element/beauty, current_beauty)
 
 /obj/structure/aquarium/proc/track_if_fish(atom/source, atom/initialized)
 	SIGNAL_HANDLER
@@ -132,9 +136,9 @@
 		var/obj/item/stack/sheet/glass/glass = item
 		if(istype(glass))
 			if(glass.get_amount() < 2)
-				to_chat(user, span_warning("You need two glass sheets to fix the case!"))
+				balloon_alert(user, "it needs two sheets!")
 				return
-			to_chat(user, span_notice("You start fixing [src]..."))
+			balloon_alert(user, "fixing the aquarium...")
 			if(do_after(user, 2 SECONDS, target = src))
 				glass.use(2)
 				broken = FALSE
@@ -142,10 +146,18 @@
 				update_appearance()
 			return TRUE
 	else
-		var/datum/component/aquarium_content/content_component = item.GetComponent(/datum/component/aquarium_content)
-		if(content_component && content_component.is_ready_to_insert(src) && user.transferItemToLoc(item, src))
-			update_appearance()
-			return TRUE
+		var/insert_attempt = SEND_SIGNAL(item, COMSIG_TRY_INSERTING_IN_AQUARIUM, src)
+		switch(insert_attempt)
+			if(COMSIG_CAN_INSERT_IN_AQUARIUM)
+				if(!user.transferItemToLoc(item, src))
+					user.balloon_alert(user, "stuck to your hand!")
+					return TRUE
+				balloon_alert(user, "added to aquarium")
+				update_appearance()
+				return TRUE
+			if(COMSIG_CANNOT_INSERT_IN_AQUARIUM)
+				balloon_alert(user, "cannot add to aquarium!")
+				return TRUE
 
 	if(istype(item, /obj/item/fish_feed))
 		if(!item.reagents.total_volume)
@@ -195,24 +207,27 @@
 
 ///Apply mood bonus depending on aquarium status
 /obj/structure/aquarium/proc/admire(mob/living/user)
-	to_chat(user,span_notice("You take a moment to watch [src]."))
-	if(do_after(user, 5 SECONDS, target = src))
-		var/alive_fish = 0
-		var/dead_fish = 0
-		var/list/tracked_fish = get_fishes()
-		for(var/obj/item/fish/fish in tracked_fish)
-			if(fish.status == FISH_ALIVE)
-				alive_fish++
-			else
-				dead_fish++
-		//Check if there are live fish - good mood
-		//All fish dead - bad mood.
-		//No fish - nothing.
-		if(alive_fish > 0)
-			user.add_mood_event("aquarium", /datum/mood_event/aquarium_positive)
-		else if(dead_fish > 0)
-			user.add_mood_event("aquarium", /datum/mood_event/aquarium_negative)
-		// Could maybe scale power of this mood with number/types of fish
+	user.balloon_alert(user, "admiring aquarium...")
+	if(!do_after(user, 5 SECONDS, target = src))
+		return
+	var/alive_fish = 0
+	var/dead_fish = 0
+	var/list/tracked_fish = get_fishes()
+	for(var/obj/item/fish/fish in tracked_fish)
+		if(fish.status == FISH_ALIVE)
+			alive_fish++
+		else
+			dead_fish++
+
+	var/morb = HAS_TRAIT(user, TRAIT_MORBID)
+	//Check if there are live fish - good mood
+	//All fish dead - bad mood.
+	//No fish - nothing.
+	if(alive_fish > 0)
+		user.add_mood_event("aquarium", morb ? /datum/mood_event/morbid_aquarium_bad : /datum/mood_event/aquarium_positive)
+	else if(dead_fish > 0)
+		user.add_mood_event("aquarium", morb ? /datum/mood_event/morbid_aquarium_good : /datum/mood_event/aquarium_negative)
+	// Could maybe scale power of this mood with number/types of fish
 
 /obj/structure/aquarium/ui_data(mob/user)
 	. = ..()
@@ -299,6 +314,5 @@
 	new /obj/item/aquarium_prop/rocks(src)
 	new /obj/item/aquarium_prop/seaweed(src)
 
-	new /obj/item/fish/goldfish(src)
 	new /obj/item/fish/angelfish(src)
 	new /obj/item/fish/guppy(src)

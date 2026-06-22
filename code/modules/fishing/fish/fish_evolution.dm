@@ -46,7 +46,14 @@ GLOBAL_LIST_INIT(fish_evolutions, init_subtypes_w_path_keys(/datum/fish_evolutio
 /datum/fish_evolution/proc/get_evolution_tooltip()
 	. = ""
 	if(required_temperature_min != MIN_AQUARIUM_TEMP || required_temperature_max != MAX_AQUARIUM_TEMP)
-		. = "An aquarium temperature between [required_temperature_min] and [required_temperature_max] is required."
+		var/temp_reqs = ""
+		if(required_temperature_min == 0)
+			temp_reqs = "below [required_temperature_max]"
+		else if(required_temperature_max == INFINITY)
+			temp_reqs = "above [required_temperature_min]"
+		else
+			temp_reqs = "of [required_temperature_min] to [required_temperature_max]"
+		. = "An aquarium temperature [temp_reqs]K is required."
 	if(conditions_note)
 		. += " [conditions_note]"
 	return .
@@ -78,6 +85,7 @@ GLOBAL_LIST_INIT(fish_evolutions, init_subtypes_w_path_keys(/datum/fish_evolutio
 /datum/fish_evolution/purple_sludgefish
 	probability = 5
 	new_fish_type = /obj/item/fish/sludgefish/purple
+	new_traits = list(/datum/fish_trait/recessive)
 	removed_traits = list(/datum/fish_trait/no_mating)
 
 /datum/fish_evolution/mastodon
@@ -85,7 +93,7 @@ GLOBAL_LIST_INIT(fish_evolutions, init_subtypes_w_path_keys(/datum/fish_evolutio
 	probability = 40
 	new_fish_type = /obj/item/fish/mastodon
 	new_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
-	conditions_note = "The fish (and its mate) need to be unusually big both in size and weight."
+	conditions_note = "The fish (and its mate) needs to be unusually big both in size and weight."
 
 /datum/fish_evolution/mastodon/check_conditions(obj/item/fish/source, obj/item/fish/mate, obj/structure/aquarium/aquarium)
 	if((source.size < 144 || source.weight < 4000) || (mate && (mate.size < 144 || mate.weight < 4000)))
@@ -103,3 +111,31 @@ GLOBAL_LIST_INIT(fish_evolutions, init_subtypes_w_path_keys(/datum/fish_evolutio
 	new_fish_type = /obj/item/fish/chasm_crab/ice
 	required_temperature_min = MIN_AQUARIUM_TEMP+9
 	required_temperature_max = MIN_AQUARIUM_TEMP+10
+
+/datum/fish_evolution/three_eyes
+	name = "Three-eyed Goldfish"
+	probability = 3
+	new_fish_type = /obj/item/fish/three_eyes
+	new_traits = list(/datum/fish_trait/recessive)
+
+/datum/fish_evolution/chainsawfish
+	name = "Chainsawfish"
+	probability = 30
+	new_fish_type = /obj/item/fish/chainsawfish
+	new_traits = list(/datum/fish_trait/predator, /datum/fish_trait/aggressive)
+	conditions_note = "The fish needs to be unusually big and aggressive"
+
+/datum/fish_evolution/chainsawfish/check_conditions(obj/item/fish/source, obj/item/fish/mate, obj/structure/aquarium/aquarium)
+	if(source.size >= 60 && source.size >= 1000 && (/datum/fish_trait/aggressive in source.fish_traits))
+		return ..()
+	return FALSE
+
+/datum/fish_evolution/lavaloop
+	probability = 85
+	new_fish_type = /obj/item/fish/lavaloop
+	required_temperature_min = MIN_AQUARIUM_TEMP + 60
+
+/datum/fish_evolution/plasmaloop
+	probability = 85
+	new_fish_type = /obj/item/fish/lavaloop/plasma_river
+	required_temperature_max = MIN_AQUARIUM_TEMP + 60

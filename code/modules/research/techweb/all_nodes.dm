@@ -55,6 +55,7 @@
 		"pocketfireextinguisher",
 		"fax",
 		"fishing_rod",
+		"fish_case",
 		"fishing_line",
 		"fishing_hook",
 		"fishing_portal_generator",

@@ -35,6 +35,7 @@
 	var/fish_type = get_fish_type()
 	if(fish_type)
 		var/obj/item/fish/spawned_fish = new fish_type(null)
+		ADD_TRAIT(spawned_fish, TRAIT_FISH_FROM_CASE, TRAIT_GENERIC)
 		spawned_fish.forceMove(src) // trigger storage.handle_entered
 
 /obj/item/storage/fish_case/proc/get_fish_type()
@@ -107,10 +108,11 @@
 
 	w_class = WEIGHT_CLASS_TINY
 	var/layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
+	var/beauty = 150
 
 /obj/item/aquarium_prop/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/aquarium_content)
+	AddComponent(/datum/component/aquarium_content, beauty = beauty)
 
 /obj/item/aquarium_prop/rocks
 	name = "rocks"
