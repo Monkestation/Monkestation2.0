@@ -3,7 +3,6 @@
 	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_MAGICAL, TAG_CREW_ANTAG)
 	antag_datum = /datum/antagonist/heretic
 	typepath = /datum/round_event/antagonist/heretic
-	shared_occurence_type = SHARED_HIGH_THREAT
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_NANOTRASEN_REPRESENTATIVE,
@@ -41,8 +40,8 @@
 		JOB_CHAPLAIN,
 	)
 	required_enemies = 5
-	weight = 4
-	min_players = 30
+	weight = 5
+	min_players = 45
 
 /datum/round_event_control/antagonist/heretic/get_weight()
 	. = ..()
