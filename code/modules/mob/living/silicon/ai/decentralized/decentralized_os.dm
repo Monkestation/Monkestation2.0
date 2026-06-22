@@ -86,48 +86,31 @@ GLOBAL_DATUM_INIT(ai_os, /datum/ai_os, new)
 
 	to_chat(affected_AIs, span_warning("You have been deducted processing capabilities. Please contact your network administrator if you believe this to be an error."))
 
-/datum/ai_os/proc/set_cpu(mob/living/silicon/ai/AI, amount)
-	if(!AI)
-		return
-	if(amount < 0)
-		return
-	if(!istype(AI))
+/datum/ai_os/proc/set_cpu(mob/living/silicon/ai/AI, amount, update = TRUE)
+	if(!istype(AI) || amount < 0)
 		return
 	//total cpu - (current AIs CPU + CPU we're giving) > total_cpu
 	if(GLOB.ai_os.total_cpu_assigned() - (GLOB.ai_os.cpu_assigned[AI] + amount) > total_cpu)
 		return
 	cpu_assigned[AI] = amount
-	update_allocations()
+	if(update)
+		update_allocations()
 
-/datum/ai_os/proc/add_ram(mob/living/silicon/ai/AI, amount)
-	if(!AI || !amount)
+/datum/ai_os/proc/set_ram(mob/living/silicon/ai/AI, amount, update = TRUE)
+	if(!istype(AI) || amount < 0)
 		return
-	if(!istype(AI))
+	//total ram - (current AIs ram + ram we're giving) > total_ram
+	if(GLOB.ai_os.total_ram_assigned() - (GLOB.ai_os.ram_assigned[AI] + amount) > total_ram)
 		return
-	ram_assigned[AI] += amount
-
-	update_allocations()
-
-/datum/ai_os/proc/remove_ram(mob/living/silicon/ai/AI, amount)
-	if(!AI || !amount)
-		return
-	if(!istype(AI))
-		return
-	if(ram_assigned[AI] - amount < 0)
-		ram_assigned[AI] = 0
-	else
-		ram_assigned[AI] -= amount
-
-	update_allocations()
+	ram_assigned[AI] = amount
+	if(update)
+		update_allocations()
 
 /datum/ai_os/proc/clear_ai_resources(mob/living/silicon/ai/AI)
 	if(!AI || !istype(AI))
 		return
-
-	remove_ram(AI, ram_assigned[AI])
-	cpu_assigned[AI] = 0
-
-	update_allocations()
+	set_ram(AI, amount = 0, update = FALSE)
+	set_cpu(AI, amount = 0, update = TRUE)
 
 /datum/ai_os/proc/get_temp_limit()
 	return temp_limit
