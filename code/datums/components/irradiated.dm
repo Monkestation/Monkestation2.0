@@ -116,12 +116,10 @@
 	if (!COOLDOWN_FINISHED(src, last_tox_damage))
 		return
 
-	//Goblin Edit Begin
 	if(is_species(parent, SPECIES_GOBLIN))
-		target.apply_damage(RADIATION_TOX_DAMAGE_PER_INTERVAL / 2, TOX) //Goblins take half radiation damage
+		target.apply_damage(RADIATION_TOX_DAMAGE_PER_INTERVAL / 2, TOX)
 	else
 		target.apply_damage(RADIATION_TOX_DAMAGE_PER_INTERVAL, TOX)
-	//Goblin Edit End
 	COOLDOWN_START(src, last_tox_damage, RADIATION_TOX_INTERVAL)
 
 /datum/component/irradiated/proc/start_burn_splotch_timer()
