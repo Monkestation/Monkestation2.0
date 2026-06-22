@@ -29049,7 +29049,6 @@
 "iRq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/landmark/start/explorer,
-/obj/item/clothing/suit/hooded/wintercoat/miner,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "iRt" = (
@@ -47885,6 +47884,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"oUk" = (
+/obj/item/clothing/suit/hooded/wintercoat/miner,
+/turf/closed/wall/r_wall,
+/area/station/maintenance/starboard)
 "oUl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/red/directional/west,
@@ -119645,7 +119648,7 @@ shO
 dAQ
 eGD
 rcI
-lDu
+oUk
 xZL
 lKq
 lKq
