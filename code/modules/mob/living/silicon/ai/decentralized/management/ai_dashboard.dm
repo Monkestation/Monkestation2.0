@@ -68,8 +68,11 @@
 /datum/ai_dashboard/ui_data(mob/user)
 	var/list/data = list()
 
-	data["current_cpu"] = GLOB.ai_os.cpu_assigned[owner] ? GLOB.ai_os.cpu_assigned[owner] : 0
-	data["current_ram"] = GLOB.ai_os.ram_assigned[owner] ? GLOB.ai_os.ram_assigned[owner] : 0
+	var/turf/owner_turf = get_turf(owner)
+	var/datum/ai_os/owner_os = GLOB.ai_os[owner_turf.z]
+
+	data["current_cpu"] = owner_os.cpu_assigned[owner] ? owner_os.cpu_assigned[owner] : 0
+	data["current_ram"] = owner_os.ram_assigned[owner] ? owner_os.ram_assigned[owner] : 0
 	data["current_ram"] += free_ram
 
 	var/total_cpu_used = 0
@@ -85,8 +88,8 @@
 	data["used_cpu"] = total_cpu_used
 	data["used_ram"] = total_ram_used
 
-	data["max_cpu"] = GLOB.ai_os.total_cpu
-	data["max_ram"] = GLOB.ai_os.total_ram
+	data["max_cpu"] = owner_os.total_cpu
+	data["max_ram"] = owner_os.total_ram
 
 	data["categories"] = GLOB.ai_project_categories
 	data["available_projects"] = list()
@@ -254,7 +257,9 @@
 
 
 /datum/ai_dashboard/proc/run_project(datum/ai_project/project)
-	var/current_ram = GLOB.ai_os.ram_assigned[owner] ? GLOB.ai_os.ram_assigned[owner] : 0
+	var/turf/owner_turf = get_turf(owner)
+	var/datum/ai_os/owner_os = GLOB.ai_os[owner_turf.z]
+	var/current_ram = owner_os.ram_assigned[owner] ? owner_os.ram_assigned[owner] : 0
 	current_ram += free_ram
 
 	var/total_ram_used = 0
@@ -311,8 +316,11 @@
 
 //Stuff is handled in here per tick :)
 /datum/ai_dashboard/proc/tick(seconds_per_tick)
-	var/current_cpu = GLOB.ai_os.cpu_assigned[owner] ? GLOB.ai_os.total_cpu * GLOB.ai_os.cpu_assigned[owner] : 0
-	var/current_ram = GLOB.ai_os.ram_assigned[owner] ? GLOB.ai_os.ram_assigned[owner] : 0
+	var/turf/owner_turf = get_turf(owner)
+	var/datum/ai_os/owner_os = GLOB.ai_os[owner_turf.z]
+
+	var/current_cpu = owner_os.cpu_assigned[owner] ? owner_os.total_cpu * owner_os.cpu_assigned[owner] : 0
+	var/current_ram = owner_os.ram_assigned[owner] ? owner_os.ram_assigned[owner] : 0
 	current_ram += free_ram
 
 	var/total_ram_used = 0
@@ -320,7 +328,6 @@
 		total_ram_used += ram_usage[I]
 
 	var/reduction_of_resources = FALSE
-
 
 	if(total_ram_used > current_ram)
 		for(var/I in ram_usage)

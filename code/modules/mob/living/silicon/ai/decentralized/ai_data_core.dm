@@ -31,6 +31,8 @@ GLOBAL_LIST_EMPTY(data_cores)
 	if(mapload)
 		integrated_battery = new /obj/item/stock_parts/power_store/cell/high(src)
 	update_list()
+	if(!GLOB.ai_os[z])
+		new /datum/ai_os(get_turf(src))
 	RefreshParts()
 	update_appearance()
 	register_context()
@@ -52,12 +54,13 @@ GLOBAL_LIST_EMPTY(data_cores)
 
 	return ..()
 
+//Taken from gravity generator
 /obj/machinery/ai/data_core/proc/update_list()
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
 	var/list/z_list = list()
-	// Multi-Z, station gravity generator generates gravity on all ZTRAIT_STATION z-levels.
+	// take multi-z into account.
 	if(SSmapping.level_trait(T.z, ZTRAIT_STATION))
 		for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 			z_list += z
@@ -69,6 +72,17 @@ GLOBAL_LIST_EMPTY(data_cores)
 			LAZYREMOVE(GLOB.data_cores["[z]"], src)
 		else
 			LAZYADD(GLOB.data_cores["[z]"], src)
+
+/obj/machinery/ai/data_core/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(!GLOB.ai_os[new_turf.z])
+		new /datum/ai_os(get_turf(new_turf))
+
+	var/datum/ai_os/old_os = GLOB.ai_os[old_turf.z]
+	var/datum/ai_os/new_os = GLOB.ai_os[new_turf.z]
+	for(var/mob/living/silicon/ai/ai_contents as anything in contents)
+		old_os.remove_ai(ai_contents)
+		new_os.add_ai(ai_contents)
 
 /obj/machinery/ai/data_core/JoinPlayerHere(mob/M, buckle)
 	return
@@ -272,9 +286,10 @@ GLOBAL_LIST_EMPTY(data_cores)
 /obj/machinery/ai/data_core/proc/transfer_AI(mob/living/silicon/ai/AI)
 	if(AI.nuking)
 		AI.ShutOffDoomsdayDevice()
-	AI.forceMove(src)
+	. = AI.forceMove(src)
 	if(AI.eyeobj)
 		AI.eyeobj.setLoc(get_turf(src))
+	return .
 
 /obj/machinery/ai/data_core/update_icon_state()
 	. = ..()

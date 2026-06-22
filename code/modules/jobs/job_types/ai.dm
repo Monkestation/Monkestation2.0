@@ -34,10 +34,11 @@
 			if(!R.connected_ai)
 				R.TryConnectToAI()
 	var/mob/living/silicon/ai/ai_spawn = spawned
-	ai_spawn.relocate(TRUE)
+	var/obj/machinery/ai/data_core/relocated_into = ai_spawn.relocate(TRUE)
+	var/datum/ai_os/os_using = GLOB.ai_os[relocated_into.z]
 
-	GLOB.ai_os.set_cpu(ai_spawn, GLOB.ai_os.total_cpu)
-	GLOB.ai_os.add_ram(ai_spawn, GLOB.ai_os.total_ram)
+	os_using.set_cpu(ai_spawn, os_using.total_cpu)
+	os_using.add_ram(ai_spawn, os_using.total_ram)
 	ai_spawn.log_current_laws()
 
 /datum/job/ai/get_roundstart_spawn_point()

@@ -1,4 +1,5 @@
-GLOBAL_DATUM_INIT(ai_os, /datum/ai_os, new)
+///Assoc list of ["z_level"] = ai_os
+GLOBAL_LIST_EMPTY(ai_os)
 
 /datum/ai_os
 	var/name = "Decentralized Resource Management System (DRMS)"
@@ -13,15 +14,48 @@ GLOBAL_DATUM_INIT(ai_os, /datum/ai_os, new)
 
 	var/temp_limit = AI_TEMP_LIMIT
 
-/datum/ai_os/New()
+	var/list/obj/machinery/ai/server_cabinet/cabinets = list()
+	var/list/mob/living/silicon/ai/ai_list = list()
+
+/datum/ai_os/New(obj/machinery/ai/data_core/creator)
+	update_list(creator)
 	update_hardware()
 	cpu_assigned = list()
 	ram_assigned = list()
+
+//Taken from gravity generator
+/datum/ai_os/proc/update_list(obj/machinery/ai/data_core/creator)
+	var/turf/creator_turf = get_turf(creator)
+	if(!creator_turf)
+		return
+	var/list/z_list = list()
+	// take multi-z into account.
+	if(SSmapping.level_trait(creator_turf.z, ZTRAIT_STATION))
+		for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+			z_list += z
+	else
+		z_list += creator_turf.z
+
+	for(var/z in z_list)
+		if(QDELETED(src))
+			LAZYREMOVE(GLOB.ai_os["[z]"], src)
+		else
+			LAZYADD(GLOB.ai_os["[z]"], src)
+
+/datum/ai_os/proc/add_ai(mob/living/silicon/ai/AI)
+	if(AI in ai_list)
+		return
+	ai_list |= AI
+	RegisterSignal(AI, COMSIG_QDELETING, PROC_REF(on_ai_deleted))
 
 /datum/ai_os/proc/remove_ai(mob/living/silicon/ai/AI)
 	cpu_assigned.Remove(AI)
 	ram_assigned.Remove(AI)
 	update_allocations()
+
+/datum/ai_os/proc/on_ai_deleted(datum/source)
+	SIGNAL_HANDLER
+	remove_ai(source)
 
 /datum/ai_os/proc/total_cpu_assigned()
 	var/total = 0
@@ -94,7 +128,7 @@ GLOBAL_DATUM_INIT(ai_os, /datum/ai_os, new)
 	if(!istype(AI))
 		return
 	//total cpu - (current AIs CPU + CPU we're giving) > total_cpu
-	if(GLOB.ai_os.total_cpu_assigned() - (GLOB.ai_os.cpu_assigned[AI] + amount) > total_cpu)
+	if(total_cpu_assigned() - (cpu_assigned[AI] + amount) > total_cpu)
 		return
 	cpu_assigned[AI] = amount
 	update_allocations()
