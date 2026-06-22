@@ -1,9 +1,9 @@
-ADMIN_VERB_VISIBILITY(debug_air_status, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(debug_air_status, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(debug_air_status, R_DEBUG, FALSE, "Debug Air Status" , ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, turf/target in world)
 	atmos_scan(user.mob, target, silent = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Show Air Status")
 
-ADMIN_VERB_VISIBILITY(fix_next_move, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(fix_next_move, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(fix_next_move, R_DEBUG, FALSE, "Fix Next Move", "Unfreezes all frozen mobs.", ADMIN_CATEGORY_DEBUG)
 	var/largest_move_time = 0
 	var/largest_click_time = 0
@@ -30,7 +30,7 @@ ADMIN_VERB(fix_next_move, R_DEBUG, FALSE, "Fix Next Move", "Unfreezes all frozen
 	message_admins("world.time = [world.time]")
 	BLACKBOX_LOG_ADMIN_VERB("Unfreeze Everyone")
 
-ADMIN_VERB_VISIBILITY(radio_report, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(radio_report, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(radio_report, R_DEBUG, FALSE, "Radio Report", "Shows a report of all radio devices and their filters.", ADMIN_CATEGORY_DEBUG)
 	var/output = "<b>Radio Report</b><hr>"
 	for (var/fq in SSradio.frequencies)

@@ -109,6 +109,15 @@
 /// Open the game preferences window
 #define PREFERENCE_WINDOW_GAME_PREFERENCES 1
 
+// Values for /datum/preference/choiced/character_role_select_mode
+#define CHARACTER_ROLE_MODE_SIMPLE 1
+#define CHARACTER_ROLE_MODE_FILTER 2
+#define CHARACTER_ROLE_MODE_PER_CHAR 3
+
+// Values for JobsPage.tsx
+#define JOB_PREFS_OVERALL 1
+#define JOB_PREFS_CHARACTER 2
+
 // Values for /datum/preferences/starting_page
 #define PREFERENCE_PAGE_CHARACTERS -1
 #define PREFERENCE_PAGE_SETTINGS 0

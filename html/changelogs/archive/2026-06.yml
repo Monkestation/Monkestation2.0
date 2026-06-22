@@ -169,3 +169,180 @@
   - balance: barbed bear traps have a 30 second breakout time like other bear traps.
   - spellcheck: correctly gendered bear traps to be non-plural.
   - bugfix: bear traps respect armor.
+2026-06-10:
+  Runian:
+  - rscadd: 'A new techweb node for service cyborg upgrades: "Cyborg Upgrades: Service"'
+  - rscadd: A new cyborg upgrade for the service model that lets them synthesize condiments
+      primarily used for cooking.
+  - image: Sprite for service cyborg upgrades.
+  SirNightKnight:
+  - balance: removed RCDs from outfit of station engineers
+  - bugfix: fixed the borer chemical injector not working.
+  Siro:
+  - rscadd: New tap_shoe sfx. Similar to heels or tap dancer shoes.
+  - sound: tap_shoes added to subtypes shoes/heels, shoes/laceup, shoes/fancy_heels,
+      and shoes/high_heels
+  - qol: Noisemaker default is disabled so you must actively enable them if you want
+      to hear them.
+  - qol: do_after timer to enable/disable reduced to 1 Second from 1.5 Seconds
+2026-06-11:
+  tattax:
+  - qol: adds a visual indicator for blood thickening (bloodsucker rank up via blood)
+  - qol: makes blood full! bloodsucker feed text a bit easier to read
+  - bugfix: fixes bloodsucker maptext going not following the gradient when below
+      bad blood
+  - code_imp: made some to_chats easier to see
+2026-06-12:
+  Shoddd:
+  - balance: Ashen robes no longer give TRAIT_SUPPRESS_NOFIRE
+  SirNightKnight:
+  - bugfix: factory chemical synthesizers work again.
+  - balance: cattleprods are normal sized but take 1.5 more charge than stun batons.
+  - balance: bluespace crystals and teleprods make the victim confused and disgusted
+      when they teleport
+  Siro:
+  - bugfix: Properly uses the grass SFX when walking on grass while using tap_shoes.
+      Oops.
+  cam_dev:
+  - image: added back sprite for lionhunter rifle
+2026-06-13:
+  Shoddd:
+  - bugfix: satyrs can headbutt mobs once again
+2026-06-14:
+  Runian:
+  - bugfix: Cyborgs now correctly can interact with wall mounted intercoms.
+  wonderinghost:
+  - map: robotics now have robovend deluxe, organ fridges, and label makers to their
+      departments
+  - map: '[thesius] medbay has new hall to make robotics more accessible'
+  - map: '[thesius] medbay surgery now has polarizable windows in surgery room'
+  - map: '[blueshift] places welding tank in robotics in a less annoying place'
+  - refactor: refactored robovend deluxe to have more content
+  - code_imp: reduces cost of limb shears from 700c to 500c
+  - code_imp: roboticists now have research app
+2026-06-15:
+  JohnFulpWillard:
+  - bugfix: Heliostation now has a Command vending machine in the Bridge.
+  JupiterJaeden:
+  - rscadd: The security photobooth can now be used to add new people on to the crew
+      manifest. Just put them in and take pictures as normal, and the crew records
+      will be updated with the new entry! Perfect for stowaways and other visitors
+      to the station.
+  - spellcheck: Updates the description of the security photobooth.
+  - map: Adds security photobooths to every brig map.
+  - code_imp: Updates the get_visible_name() helper to actually use the add_id_name
+      variable as intended (previously unused).
+  Shoddd:
+  - bugfix: bloodling hivemind no longer works while dead
+  - bugfix: bloodlings become properly space proof over level 2
+  TealSeer:
+  - bugfix: fixed CSS-related errors in BYOND 516.1681+
+2026-06-16:
+  PotatoTomahto:
+  - rscadd: ashwalkers now have access to bungo fruit
+  SirNightKnight:
+  - rscadd: you can slice apart base floor plating with welding tools.
+  - bugfix: you can tip over flashed cyborgs.
+2026-06-17:
+  Mantlecrawler:
+  - rscadd: Plasma is now rainbow during pride month
+  - config: Pride week is now pride month, through the entirety of June.
+  SirNightKnight:
+  - balance: removed crate content ashing when the locks are broken.
+  jlsnow301, SirNightKnight:
+  - bugfix: The library console has been refactored. Report any issues in the github!
+2026-06-18:
+  Barrel:
+  - bugfix: Blood Siphon will no longer kill you if you use it on an oozeling/ethereal.
+  Cujo:
+  - balance: Slime jelly now deals consistent tox damage (1-4) per second
+  - balance: Reduces number of hyposprays in medical vendor (5->2)
+  - balance: Reduces number of hypospray kits in medical vendor (3->2)
+  - balance: Reduces number of vial boxes in medical vendor (5->3)
+  - rscdel: Removes hypospray kits from medical wall vendors
+  JohnFulpWillard:
+  - spellcheck: visiblity -> visibility
+  sufferingintensifies:
+  - map: the free golem ship is now updated to the /TG/station version
+2026-06-19:
+  Cujo:
+  - balance: Medkits no longer have ranged health analzyers, instead have normal non-ranged
+      ones.
+  - balance: Ranged health analyzers quantity in medical vendors reduced (3->2).
+  - balance: Ambu bags are no longer roundstart tech. No longer in medical doctor
+      lockers, surgical trays, or medical cyborgs. It will need to be researched and
+      printed, or the upgrade for cyborgs to use it.
+  - rscadd: Medical cyborgs can now get an Ambu bag upgrade module
+  - balance: Ambu bags oxygen healing has been reduced (15->10)
+  Tractor-Maam:
+  - spellcheck: being clumsy with a scanner wand no longer misgenders you
+2026-06-20:
+  Barrel, Xackii, mcbalaam:
+  - code_imp: Ported big manipulator from tgstation. Use monkeys as free labor.
+  BobDABuilder9001:
+  - balance: super duper lube makes you slide for wayyyy longer (honk)
+  - balance: super duper lube is blacklisted from lesser strange seeds
+  Cujo:
+  - rscdel: Removes a duplicate shower drain in Tramstation Medical
+  - rscadd: Sleepers now take a second to drag someone inside
+  JupiterJaeden:
+  - qol: Security records notes now allow you to put in punctuation and varied capitalization,
+      Instead Of Always Looking Like This.
+  - qol: The max length of crime names has been extended to fill the available space
+      in the records console UI.
+  - bugfix: Long crime names will no longer be cut off by a few characters when put
+      into the records console.
+  - bugfix: Security huds no longer allow you to put in infinitely long crime names
+      through the examine menu.
+  Singul0:
+  - rscadd: Adds 4 new engineering tutorials, on how to setup all the various engines
+      that power the station and also one on space construction! Try it on the centcom
+      simulation tutorial chamber today!
+  - qol: Remodeled Centcom to make tutorial simulations to be more visible.
+  paganiy, SirNightKnight:
+  - bugfix: fixed cycler shotgun double ammo consumption
+  - bugfix: fixed racking action on the cycler shotgun
+  - bugfix: bounty hunter cycler shotgun now properly fires incendiary rounds from
+      secondary tube
+2026-06-21:
+  SirNightKnight:
+  - rscdel: removed the alternate HOP, captain, CMO RD berets along with the QM berets.
+  - code_imp: cleaned up some beret code overwrites.
+2026-06-22:
+  Mantlecrawler:
+  - rscadd: Becoming a lunatic via the moon heretics ascension now puts a giant moon
+      icon above your head, denoting you as a antag.
+  PotatoTomahto:
+  - balance: Advances in spray bottle technology allow the spray to travel twice as
+      fast
+  Shoddd:
+  - admin: Having over required living minutes lets you skip interviews and VPN interview
+  - balance: removes darkness adapt from lings, augmented eyesight now gives night
+      vision
+  Sorenon:
+  - rscadd: Added three different modes to job selection (Simple, Character Filters,
+      Per Character Priorities)
+  - qol: Moved antag preferences out of character settings since they don't depend
+      on the selected character
+  TheColorCyan, SirNightKnight:
+  - balance: oozelings have inherit slime wetness stacks instead of fire immunity.
+      slime wetness stacks also cancel out regular wetness stacks and protect against
+      water exposure.
+  - balance: removed the oozeling hydrophobia ability.
+  - balance: the radioactive mutation is not compatible with oozeling DNA.
+  - balance: oozelings lose more blood from water exposure
+  - balance: when starving, oozelings will regain nutriment from cannibalizing their
+      own blood
+  byondsucks:
+  - balance: Pride pin no longer gives you a positive moodlet
+  flleeppyy:
+  - rscadd: you can now toggle unlimited tgui windows in preferences.
+  necromanceranne, grungussuss, SirNightKnight:
+  - image: added inhand sprites for when stun batons are on. ported from TG.
+  - rscadd: stun batons and cattle prods emit light when on.
+  - sound: changed sounds for stun baton, stun prod, contractor baton and telescopic
+      baton
+  - code_imp: made it easier to modify turning on and turning off for batons
+  - balance: removed the stun to yourself when harmbatoning with an active stun baton.
+  - balance: stun batons and snatcher apply stun when harmbatoning if active.
+  - code_imp: de-modularized contractor baton code.

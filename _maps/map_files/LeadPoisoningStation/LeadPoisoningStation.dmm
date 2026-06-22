@@ -34830,6 +34830,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/photobooth/security,
 /turf/open/floor/iron/diagonal,
 /area/station/security/brig)
 "qKq" = (
