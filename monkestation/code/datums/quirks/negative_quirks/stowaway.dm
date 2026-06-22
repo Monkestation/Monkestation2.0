@@ -89,7 +89,7 @@
 	return person.has_quirk(/datum/quirk/stowaway) || (all_quirks && ("Stowaway" in all_quirks))
 
 /proc/force_stowaway_unassigned_role(mob/living/carbon/human/person, client/person_client)
-	if(!person?.mind || is_unassigned_job(person.mind.assigned_role))
+	if(!person?.mind || is_stowaway_job(person.mind.assigned_role))
 		return
 
 	var/datum/job/previous_role = person.mind.assigned_role
