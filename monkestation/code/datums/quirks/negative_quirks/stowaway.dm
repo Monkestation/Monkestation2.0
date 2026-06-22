@@ -79,7 +79,7 @@
 		else
 			. += "It looks frail!"
 //Removes job assignment and handles latejoin stowaways
-/proc/is_stowaway(mob/living/carbon/human/person, client/person_client)
+/proc/is_stowaway(mob/living/person, client/person_client)
 	if(!person)
 		return FALSE
 
@@ -88,7 +88,7 @@
 
 	return person.has_quirk(/datum/quirk/stowaway) || (all_quirks && ("Stowaway" in all_quirks))
 
-/proc/force_stowaway_unassigned_role(mob/living/carbon/human/person, client/person_client)
+/proc/force_stowaway_unassigned_role(mob/living/person, client/person_client)
 	if(!person?.mind || is_stowaway_job(person.mind.assigned_role))
 		return
 
@@ -99,7 +99,7 @@
 	person.mind.set_assigned_role(SSjob.GetJobType(/datum/job/stowaway))
 	person.job = JOB_STOWAWAY
 
-/proc/process_stowaway_latejoin(mob/living/carbon/human/person, datum/job/current_job, client/person_client)
+/proc/process_stowaway_latejoin(mob/living/person, datum/job/current_job, client/person_client)
 	if(!person?.mind || !is_stowaway(person, person_client))
 		return
 
@@ -108,7 +108,7 @@
 
 	force_stowaway_unassigned_role(person, person_client)
 
-/proc/return_stowaway_heirloom(mob/living/carbon/human/stowaway) //reset family heirloom real quick so it respawns
+/proc/return_stowaway_heirloom(mob/living/stowaway) //reset family heirloom real quick so it respawns
 	if(!stowaway.has_quirk(/datum/quirk/item_quirk/family_heirloom))
 		return
 	stowaway.remove_quirk(/datum/quirk/item_quirk/family_heirloom)
