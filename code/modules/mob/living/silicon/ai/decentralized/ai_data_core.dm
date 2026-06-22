@@ -1,8 +1,6 @@
 ///Assoc list of ["z_level"] = list(cores)
 GLOBAL_LIST_EMPTY(data_cores)
 
-#define CELL_POWERUSE_MULTIPLIER 0.025
-
 /obj/machinery/ai/data_core
 	name = "AI data core"
 	desc = "A complicated computer system capable of emulating the neural functions of an organic being at near-instantanous speeds."
@@ -314,5 +312,3 @@ GLOBAL_LIST_EMPTY(data_cores)
 			to_chat(user, span_alert("ERROR: AI flush is in progress, cannot execute transfer protocol."))
 			return FALSE
 	return TRUE
-
-#undef CELL_POWERUSE_MULTIPLIER

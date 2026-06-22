@@ -451,6 +451,10 @@
 		// monkestation edit end PR #5133
 	. += list(list("AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]")) //Count of total AI shells
 
+	var/obj/machinery/ai/data_core/ai_location = loc
+	if(istype(ai_location) && ai_location.integrated_battery)
+		. += list(list("Backup battery charge: [ai_location.integrated_battery.percent()]%"))
+
 /mob/living/silicon/ai/proc/ai_call_shuttle()
 	if(control_disabled)
 		to_chat(usr, span_warning("Wireless control is disabled!"))
@@ -1204,7 +1208,7 @@
 	. = ..()
 	if(.)
 		end_multicam()
-		var/datum/ai_os/past_os = GLOB.ai_os["[z]"]
+		var/datum/ai_os/past_os = GLOB.ai_os["[current_turf.z]"]
 		if(past_os)
 			past_os.remove_ai(src)
 

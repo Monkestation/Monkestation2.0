@@ -38,10 +38,12 @@
 		if (battery < 200)
 			battery++
 
-	if(lacks_power() && !astype(loc, /obj/machinery/ai)?.has_power())
-		if(!aiRestorePowerRoutine)
-			ai_lose_power()
-		return
+	if(lacks_power())
+		var/obj/machinery/ai/data_core/ai_location = loc
+		if(!ai_location.integrated_battery?.use(ai_location.active_power_usage * CELL_POWERUSE_MULTIPLIER))
+			if(!aiRestorePowerRoutine)
+				ai_lose_power()
+			return
 
 	var/area/home = get_area(src)
 	if(!home.apc)
