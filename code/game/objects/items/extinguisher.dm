@@ -62,6 +62,7 @@
 	max_water = 30
 	sprite_name = "miniFE"
 	dog_fashion = null
+	tank_holder_icon_state = "holder_extinguisher_mini"
 
 /obj/item/extinguisher/mini/empty
 	starting_water = FALSE

@@ -24165,7 +24165,7 @@
 	pixel_y = 5
 	},
 /obj/item/clothing/head/utility/hardhat/fire,
-/obj/item/tank/internals/oxygen/red{
+/obj/item/tank/internals/oxygen/yellow{
 	pixel_x = 9;
 	pixel_y = -5
 	},
@@ -63650,10 +63650,10 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/obj/item/tank/internals/oxygen/red{
+/obj/item/tank/internals/oxygen/yellow{
 	pixel_x = 3
 	},
-/obj/item/tank/internals/oxygen/red{
+/obj/item/tank/internals/oxygen/yellow{
 	pixel_x = -3
 	},
 /obj/item/wrench,
@@ -74236,7 +74236,7 @@
 	pixel_y = 5
 	},
 /obj/item/clothing/head/utility/hardhat/fire,
-/obj/item/tank/internals/oxygen/red{
+/obj/item/tank/internals/oxygen/yellow{
 	pixel_x = 9;
 	pixel_y = -5
 	},
