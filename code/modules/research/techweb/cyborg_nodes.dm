@@ -71,6 +71,7 @@
 		"borg_upgrade_piercinghypospray",
 		"borg_upgrade_pinpointer",
 		"borg_upgrade_surgical_database",
+		"borg_upgrade_breathingbag",
 		"borg_upgrade_surgicalomnitool"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS) // Lots of upgrades shall be regular cost.
@@ -138,6 +139,20 @@
 		"borg_upgrade_advancedmop",
 		"borg_upgrade_prt",
 		"borg_upgrade_trashofholding"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
+
+/datum/techweb_node/cyborg_upgrades_service
+	id = "cyborg_upgrades_service"
+	display_name = "Cyborg Upgrades: Service"
+	description = "Enabling compatibility of our service technology for usage within cyborgs."
+	prereq_ids = list(
+		"bio_process",
+		"adv_robotics"
+	)
+	design_ids = list(
+		"borg_upgrade_condiment_synthesizer"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)

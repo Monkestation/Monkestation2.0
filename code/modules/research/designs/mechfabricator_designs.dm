@@ -1477,6 +1477,21 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
 
+/datum/design/borg_upgrade_breathingbag
+	name = "Ambu Bag"
+	id = "borg_upgrade_breathingbag"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/breathingbag
+	materials = list(
+		/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1,
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2
+	)
+	construction_time = 120
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	)
+
 /datum/design/borg_upgrade_nvgmeson
 	name = "Nightvision Meson Sight"
 	id = "borg_upgrade_nvmeson"
@@ -1542,6 +1557,22 @@
 	. = ..()
 	if(!CONFIG_GET(flag/disable_secborg))
 		category += list(RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SECURITY)
+
+/datum/design/borg_upgrade_condiment_synthesizer
+	name = "Condiment Synthesizer"
+	id = "borg_upgrade_condiment_synthesizer"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/condiment_synthesizer
+	materials = list( // Cheaper than mediborg's expanded hypospray synthesiser.
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 6,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 3
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
 
 /datum/design/mmi
 	name = "Man-Machine Interface"

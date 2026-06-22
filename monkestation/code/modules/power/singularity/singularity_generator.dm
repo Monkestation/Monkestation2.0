@@ -17,6 +17,9 @@
 	var/energy = 0
 	var/creation_type = /obj/singularity
 
+/obj/machinery/the_singularitygen/tutorial
+	creation_type = /obj/singularity/immovable
+
 /obj/machinery/the_singularitygen/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.tool_behaviour == TOOL_WRENCH)
 		default_unfasten_wrench(user, attacking_item, 0)
@@ -40,3 +43,6 @@
 	icon = 'icons/obj/engine/tesla_generator.dmi'
 	icon_state = "TheSingGen"
 	creation_type = /obj/energy_ball
+
+/obj/machinery/the_singularitygen/tesla/tutorial
+	creation_type = /obj/energy_ball/immovable
