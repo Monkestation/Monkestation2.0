@@ -75,13 +75,13 @@
 	if(!authenticated)
 		return data
 
+	var/datum/ai_os/os_using = GLOB.ai_os[z]
+	data["total_cpu"] = os_using.total_cpu
+	data["total_ram"] = os_using.total_ram
 
-	data["total_cpu"] = GLOB.ai_os.total_cpu
-	data["total_ram"] = GLOB.ai_os.total_ram
 
-
-	data["total_assigned_cpu"] = GLOB.ai_os.total_cpu_assigned()
-	data["total_assigned_ram"] = GLOB.ai_os.total_ram_assigned()
+	data["total_assigned_cpu"] = os_using.total_cpu_assigned()
+	data["total_assigned_ram"] = os_using.total_ram_assigned()
 
 	data["human_only"] = human_only
 
@@ -92,8 +92,8 @@
 		data["ais"] += list(list(
 			"name" = A.name,
 			"ref" = REF(A),
-			"assigned_cpu" = GLOB.ai_os.cpu_assigned[A] ? GLOB.ai_os.cpu_assigned[A] : 0,
-			"assigned_ram" = GLOB.ai_os.ram_assigned[A] ? GLOB.ai_os.ram_assigned[A] : 0,
+			"assigned_cpu" = os_using.cpu_assigned[A] ? os_using.cpu_assigned[A] : 0,
+			"assigned_ram" = os_using.ram_assigned[A] ? os_using.ram_assigned[A] : 0,
 		))
 
 	return data
@@ -114,6 +114,7 @@
 		return
 
 	var/is_human = ishuman(user)
+	var/datum/ai_os/os_using = GLOB.ai_os[z]
 
 	switch(action)
 		if("log_out")
@@ -128,7 +129,7 @@
 			if(!istype(target_ai))
 				return
 
-			GLOB.ai_os.clear_ai_resources(target_ai)
+			os_using.clear_ai_resources(target_ai)
 			. = TRUE
 
 		if("set_cpu")
@@ -145,7 +146,7 @@
 			var/amount = params["amount_cpu"]
 			if(!isnum(amount) || amount < 0)
 				return
-			GLOB.ai_os.set_cpu(target_ai, amount)
+			os_using.set_cpu(target_ai, amount)
 			. = TRUE
 
 		if("max_cpu")
@@ -159,8 +160,8 @@
 				to_chat(user, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
 				return
 
-			var/amount = (GLOB.ai_os.total_cpu - GLOB.ai_os.total_cpu_assigned()) + GLOB.ai_os.cpu_assigned[target_ai]
-			GLOB.ai_os.set_cpu(target_ai, amount)
+			var/amount = (os_using.total_cpu - os_using.total_cpu_assigned()) + os_using.cpu_assigned[target_ai]
+			os_using.set_cpu(target_ai, amount)
 			. = TRUE
 
 		if("add_ram")
@@ -174,9 +175,9 @@
 				to_chat(user, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
 				return
 
-			if(GLOB.ai_os.total_ram_assigned() >= GLOB.ai_os.total_ram)
+			if(os_using.total_ram_assigned() >= os_using.total_ram)
 				return
-			GLOB.ai_os.add_ram(target_ai, 1)
+			os_using.add_ram(target_ai, 1)
 			. = TRUE
 
 		if("remove_ram")
@@ -190,11 +191,11 @@
 				to_chat(user, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
 				return
 
-			var/current_ram = GLOB.ai_os.ram_assigned[target_ai]
+			var/current_ram = os_using.ram_assigned[target_ai]
 
 			if(current_ram <= 0)
 				return
-			GLOB.ai_os.remove_ram(target_ai, 1)
+			os_using.remove_ram(target_ai, 1)
 			. = TRUE
 		if("toggle_human_status")
 			if(!authenticated)

@@ -44,8 +44,9 @@
 	var/total_moles = env.total_moles()
 	if(isspaceturf(T) || total_moles < 10)
 		return FALSE
+	var/datum/ai_os/os_using = GLOB.ai_os[z]
 
-	if(core_temp > GLOB.ai_os.get_temp_limit())
+	if(core_temp > os_using.get_temp_limit())
 		return FALSE
 	return TRUE
 
@@ -64,7 +65,8 @@
 	if(istype(T, /turf/open/space) || total_moles < 10)
 		return AI_MACHINE_NO_MOLES
 
-	if(core_temp > GLOB.ai_os.get_temp_limit())
+	var/datum/ai_os/os_using = GLOB.ai_os[z]
+	if(core_temp > os_using.get_temp_limit())
 		return AI_MACHINE_TOO_HOT
 
 #undef AI_MACHINE_TOO_HOT
