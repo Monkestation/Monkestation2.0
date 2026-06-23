@@ -75155,6 +75155,9 @@
 /obj/effect/mapping_helpers/airlock/access/any/supply/general,
 /obj/effect/mapping_helpers/airlock/access/any/science/general,
 /obj/structure/cable,
+/obj/effect/landmark/navigate_destination{
+	location = "Forge"
+	},
 /turf/open/floor/iron,
 /area/station/smithing)
 "rIY" = (

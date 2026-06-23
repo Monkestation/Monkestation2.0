@@ -53101,12 +53101,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
-"pAv" = (
-/obj/structure/curtain,
-/obj/machinery/shower/directional/north,
-/obj/structure/drain,
-/turf/open/floor/iron/freezer,
-/area/station/commons/toilet)
 "pAA" = (
 /obj/machinery/door/airlock/vault{
 	name = "High Security Vault"
@@ -63664,6 +63658,9 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/supply/general,
 /obj/effect/mapping_helpers/airlock/access/any/science/general,
+/obj/effect/landmark/navigate_destination{
+	location = "Forge"
+	},
 /turf/open/floor/stone,
 /area/station/smithing)
 "sJc" = (
@@ -70331,6 +70328,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/navigate_destination{
+	location = "Auxiliary Base Construction"
+	},
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "uJh" = (
@@ -94230,7 +94230,7 @@ hAD
 veV
 thi
 alO
-pAv
+iBp
 apC
 jXf
 yah
@@ -94744,7 +94744,7 @@ alT
 amr
 alT
 apD
-pAv
+iBp
 apC
 jXf
 yah
@@ -95001,7 +95001,7 @@ hAD
 veV
 thi
 alP
-pAv
+iBp
 apC
 jXf
 yah
@@ -95247,7 +95247,7 @@ lZP
 apC
 thi
 rnL
-pAv
+iBp
 veV
 cDZ
 hAD
@@ -95258,7 +95258,7 @@ hAD
 veV
 thi
 alT
-pAv
+iBp
 apC
 jXf
 yah

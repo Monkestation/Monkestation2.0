@@ -1075,7 +1075,7 @@
 "arm" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/service/forge)
+/area/station/smithing)
 "arz" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/disposalpipe/segment{
@@ -10776,7 +10776,7 @@
 "dkb" = (
 /obj/structure/anvil,
 /turf/open/floor/wood/large,
-/area/station/service/forge)
+/area/station/smithing)
 "dkh" = (
 /obj/effect/turf_decal/tile/bar/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -11147,7 +11147,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/service/forge)
+/area/station/smithing)
 "dqq" = (
 /obj/effect/turf_decal/lunar_sand,
 /obj/effect/decal/cleanable/dirt,
@@ -11627,7 +11627,7 @@
 /area/station/science/genetics)
 "dxt" = (
 /turf/closed/wall/r_wall,
-/area/station/service/forge)
+/area/station/smithing)
 "dxz" = (
 /obj/structure/railing{
 	dir = 1
@@ -14601,7 +14601,7 @@
 /area/station/command/teleporter)
 "eol" = (
 /turf/open/floor/iron,
-/area/station/service/forge)
+/area/station/smithing)
 "eot" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
@@ -16202,7 +16202,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/material_analyzer,
 /turf/open/floor/wood/large,
-/area/station/service/forge)
+/area/station/smithing)
 "eOk" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -20660,7 +20660,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood/large,
-/area/station/service/forge)
+/area/station/smithing)
 "ggO" = (
 /obj/item/storage/medkit/regular,
 /obj/item/storage/box/bodybags{
@@ -24087,7 +24087,7 @@
 "hhP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/station/service/forge)
+/area/station/smithing)
 "hig" = (
 /obj/effect/turf_decal/tile/green/opposingcorners,
 /obj/machinery/newscaster/directional/north,
@@ -27214,7 +27214,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/service/forge)
+/area/station/smithing)
 "icU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -32468,7 +32468,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/service/forge)
+/area/station/smithing)
 "jDo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/event_spawn,
@@ -59071,7 +59071,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/electroplater,
 /turf/open/floor/wood/large,
-/area/station/service/forge)
+/area/station/smithing)
 "rqT" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
@@ -66847,7 +66847,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/service/forge)
+/area/station/smithing)
 "tHZ" = (
 /obj/machinery/camera/directional/west{
 	c_tag = "MiniSat External South-East";
@@ -67138,7 +67138,7 @@
 /area/station/engineering/atmos)
 "tPh" = (
 /turf/closed/wall,
-/area/station/service/forge)
+/area/station/smithing)
 "tPl" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/air_output{
@@ -67951,7 +67951,7 @@
 "uac" = (
 /obj/structure/lattice,
 /turf/open/openspace,
-/area/station/service/forge)
+/area/station/smithing)
 "uay" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Telecomms Storage"
@@ -71215,7 +71215,7 @@
 	},
 /obj/effect/landmark/start/gary/uncommon,
 /turf/open/floor/iron,
-/area/station/service/forge)
+/area/station/smithing)
 "uYc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/directional/west{
@@ -71326,7 +71326,7 @@
 "uZi" = (
 /obj/machinery/arc_forge,
 /turf/open/floor/iron,
-/area/station/service/forge)
+/area/station/smithing)
 "uZk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atm/directional/south,
@@ -76822,7 +76822,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
-/area/station/service/forge)
+/area/station/smithing)
 "wAT" = (
 /obj/item/storage/box/syringes,
 /obj/item/storage/box/beakers{
@@ -77198,7 +77198,7 @@
 "wGG" = (
 /obj/structure/machine/assembly_bench,
 /turf/open/floor/wood/large,
-/area/station/service/forge)
+/area/station/smithing)
 "wGI" = (
 /obj/effect/turf_decal/tile/dark_red/half{
 	dir = 4
@@ -78266,7 +78266,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/service/forge)
+/area/station/smithing)
 "wVQ" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -79180,7 +79180,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/service/forge)
+/area/station/smithing)
 "xlU" = (
 /obj/structure/chair/office,
 /obj/machinery/firealarm/directional/east,

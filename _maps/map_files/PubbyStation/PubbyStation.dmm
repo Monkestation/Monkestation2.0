@@ -50515,6 +50515,9 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/effect/landmark/navigate_destination{
+	location = "Auxiliary Base Construction"
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "umw" = (

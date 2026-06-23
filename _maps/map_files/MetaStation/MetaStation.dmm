@@ -50023,6 +50023,19 @@
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
+"rjn" = (
+/obj/machinery/firealarm/directional/south,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/landmark/navigate_destination{
+	location = "Auxiliary Base Construction"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "rjA" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -57648,6 +57661,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/any/supply/general,
 /obj/effect/mapping_helpers/airlock/access/any/science/general,
+/obj/effect/landmark/navigate_destination{
+	location = "Forge"
+	},
 /turf/open/floor/iron,
 /area/station/smithing)
 "tOZ" = (
@@ -101692,7 +101708,7 @@ weC
 qfp
 wEG
 htd
-ggU
+rjn
 syo
 ezb
 dIV

@@ -14934,6 +14934,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/aux_base,
 /obj/structure/cable,
+/obj/effect/landmark/navigate_destination/common/auxbaseconst,
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "bsb" = (
@@ -63241,6 +63242,7 @@
 	name = "Vault Storage"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/vault,
+/obj/effect/landmark/navigate_destination/vault,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "qTO" = (
@@ -67380,7 +67382,6 @@
 	name = "Vault Door"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/vault,
-/obj/effect/landmark/navigate_destination/vault,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

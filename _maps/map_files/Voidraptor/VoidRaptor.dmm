@@ -1516,7 +1516,7 @@
 "avB" = (
 /obj/machinery/light/cold/directional/south,
 /turf/open/floor/wood/large,
-/area/station/service/forge)
+/area/station/smithing)
 "avD" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/modular_computer/preset/id{
@@ -3303,7 +3303,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood/large,
-/area/station/service/forge)
+/area/station/smithing)
 "aWh" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
@@ -9039,7 +9039,7 @@
 /obj/machinery/arc_forge,
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/stone,
-/area/station/service/forge)
+/area/station/smithing)
 "cJm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/sheet/cardboard,
@@ -13544,7 +13544,7 @@
 "dVJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/large,
-/area/station/service/forge)
+/area/station/smithing)
 "dVS" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -15223,7 +15223,7 @@
 "esF" = (
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/wood/large,
-/area/station/service/forge)
+/area/station/smithing)
 "esH" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -17845,7 +17845,7 @@
 "fez" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/stone,
-/area/station/service/forge)
+/area/station/smithing)
 "feC" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=hall11";
@@ -19871,7 +19871,7 @@
 /obj/structure/anvil,
 /obj/machinery/light_switch/directional/north,
 /turf/open/floor/wood/large,
-/area/station/service/forge)
+/area/station/smithing)
 "fKU" = (
 /obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 4
@@ -20675,7 +20675,7 @@
 	},
 /obj/structure/machine/assembly_bench,
 /turf/open/floor/wood/large,
-/area/station/service/forge)
+/area/station/smithing)
 "fXl" = (
 /obj/docking_port/stationary/random{
 	name = "lavaland";
@@ -27367,7 +27367,7 @@
 /obj/structure/railing/wood,
 /obj/machinery/electroplater,
 /turf/open/floor/wood/large,
-/area/station/service/forge)
+/area/station/smithing)
 "hPi" = (
 /turf/open/floor/iron/textured_large,
 /area/station/command/cc_dock)
@@ -37770,7 +37770,7 @@
 /obj/structure/fake_stairs/wood/directional/east,
 /obj/effect/landmark/start/gary/uncommon,
 /turf/open/floor/wood/large,
-/area/station/service/forge)
+/area/station/smithing)
 "kDA" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -42419,7 +42419,7 @@
 	id = "barbershopcurtains"
 	},
 /turf/open/floor/plating,
-/area/station/service/forge)
+/area/station/smithing)
 "lPJ" = (
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
@@ -49774,8 +49774,11 @@
 /obj/machinery/door/airlock/service/glass{
 	name = "Forge"
 	},
+/obj/effect/landmark/navigate_destination{
+	location = "Forge"
+	},
 /turf/open/floor/iron/vaporwave,
-/area/station/service/forge)
+/area/station/smithing)
 "nST" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/grass,
@@ -62836,7 +62839,7 @@
 "rxT" = (
 /obj/structure/fake_stairs/wood/directional/east,
 /turf/open/floor/wood/large,
-/area/station/service/forge)
+/area/station/smithing)
 "rxV" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -64714,7 +64717,7 @@
 	dir = 6
 	},
 /turf/open/floor/stone,
-/area/station/service/forge)
+/area/station/smithing)
 "sah" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -67920,7 +67923,7 @@
 /obj/structure/cable,
 /obj/machinery/light/cold/directional/south,
 /turf/open/floor/wood/large,
-/area/station/service/forge)
+/area/station/smithing)
 "sRa" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 8;
@@ -69790,6 +69793,7 @@
 /obj/structure/flora/bush/sparsegrass{
 	pixel_x = 8
 	},
+/obj/effect/landmark/navigate_destination/common/auxbaseconst,
 /turf/open/floor/grass,
 /area/station/hallway/primary/central/fore)
 "tqu" = (
@@ -69921,7 +69925,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood/large,
-/area/station/service/forge)
+/area/station/smithing)
 "trA" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Storage"
@@ -73027,7 +73031,7 @@
 "ulb" = (
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/wood/large,
-/area/station/service/forge)
+/area/station/smithing)
 "ull" = (
 /obj/structure/showcase/cyborg/old{
 	dir = 4;
@@ -74075,7 +74079,7 @@
 "uxA" = (
 /obj/machinery/material_analyzer,
 /turf/open/floor/wood/large,
-/area/station/service/forge)
+/area/station/smithing)
 "uxG" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating/airless,
@@ -74150,7 +74154,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood/large,
-/area/station/service/forge)
+/area/station/smithing)
 "uyc" = (
 /obj/machinery/camera/directional/west{
 	c_tag = "Cargo - Mining"
@@ -75788,7 +75792,7 @@
 	dir = 4
 	},
 /turf/open/floor/stone,
-/area/station/service/forge)
+/area/station/smithing)
 "uVG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -76486,7 +76490,7 @@
 /area/station/science/xenobiology)
 "vgt" = (
 /turf/open/floor/wood/large,
-/area/station/service/forge)
+/area/station/smithing)
 "vgy" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -81663,7 +81667,7 @@
 /area/station/science/research)
 "wCO" = (
 /turf/open/floor/stone,
-/area/station/service/forge)
+/area/station/smithing)
 "wCT" = (
 /obj/structure/chair/sofa/bench,
 /obj/effect/turf_decal/siding/wood{
@@ -86359,7 +86363,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/service/forge)
+/area/station/smithing)
 "xWm" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
