@@ -9877,18 +9877,18 @@
 	dir = 8
 	},
 /obj/structure/rack,
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = -4;
 	pixel_y = 6
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 4;
 	pixel_y = 2
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 8
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_y = 4
 	},
 /obj/machinery/door/window/brigdoor/right/directional/west{
@@ -21123,8 +21123,8 @@
 /obj/item/t_scanner,
 /obj/item/t_scanner,
 /obj/item/t_scanner,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metalfoam,
+/obj/item/grenade/chem_grenade/smart_metalfoam,
 /obj/machinery/newscaster/directional/south,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/item/wrench,
@@ -45131,6 +45131,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"qjk" = (
+/obj/structure/closet/crate/trashcart/engineering/filled,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "qjx" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -54787,6 +54791,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
+/obj/structure/closet/crate/trashcart/engineering/filled,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "xja" = (
@@ -90298,7 +90303,7 @@ bZc
 bZJ
 toE
 xiD
-cbW
+qjk
 jPo
 ory
 bXk

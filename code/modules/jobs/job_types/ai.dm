@@ -39,7 +39,7 @@
 	var/datum/ai_os/os_using = GLOB.ai_os["[relocated_into.z]"]
 
 	os_using.set_cpu(ai_spawn, os_using.total_cpu)
-	os_using.add_ram(ai_spawn, os_using.total_ram)
+	os_using.set_ram(ai_spawn, os_using.total_ram)
 	ai_spawn.log_current_laws()
 
 /datum/job/ai/get_roundstart_spawn_point()
@@ -48,7 +48,7 @@
 /datum/job/ai/get_latejoin_spawn_point()
 	for(var/obj/machinery/ai/data_core/core as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ai/data_core))
 		if(istype(core) && is_station_level(core.z) && !QDELETED(core))
-			if(core.valid_holder()) //spawning in will relocate us regardless.
+			if(core.valid_data_core()) //spawning in will relocate us regardless.
 				return core
 	return FALSE
 
@@ -59,7 +59,7 @@
 		return FALSE
 	for(var/obj/machinery/ai/data_core/core as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ai/data_core))
 		if(istype(core) && is_station_level(core.z) && !QDELETED(core))
-			if(core.valid_holder())
+			if(core.valid_data_core())
 				return TRUE
 	return FALSE
 

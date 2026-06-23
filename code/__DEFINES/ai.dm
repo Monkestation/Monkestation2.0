@@ -7,7 +7,7 @@
 
 ///How many ticks can an AI data core store? When this amount of ticks have passed while it's in an INVALID state it can no longer be used by an AI
 #define MAX_AI_DATA_CORE_TICKS 15
-///How many ticks can an expanion bus store. If it reaches 0  the resources will no longer be available.
+///How many ticks can an expanion bus store. If it reaches 0 the resources will no longer be available.
 #define MAX_AI_EXPANSION_TICKS 15
 
 #define CELL_POWERUSE_MULTIPLIER 0.025

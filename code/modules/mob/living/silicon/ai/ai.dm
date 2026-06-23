@@ -303,6 +303,7 @@
 	QDEL_NULL(nanite_menu)
 	QDEL_NULL(nanite_remote)
 	malfhack = null
+	GLOB.ai_os.remove_ai(src)
 	current = null
 	bot_ref = null
 	controlled_equipment = null
