@@ -399,7 +399,7 @@
 		ADD_TRAIT(tossedliving, TRAIT_UNDENSE, BUSTER_SOURCE) // For the sake of noncarbons not playing nice with lying down
 		harm(user, tossedliving, initial_throw_damage)
 
-		var/obj/item/bodypart/limb_to_hit = tossedliving.get_bodypart(user.zone_selected) || tossedliving.get_bodypart(BODY_ZONE_CHEST)
+		var/obj/item/bodypart/limb_to_hit = tossedliving.get_bodypart(user.zone_selected)
 		if(limb_to_hit)
 			if(!(limb_to_hit.body_zone in list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)) && limb_to_hit.get_damage() >= limb_to_hit.max_damage)
 				limb_to_hit.drop_limb()
@@ -573,7 +573,7 @@
 	start of mop section
 ---------------------------------------------------------------*/
 /datum/action/cooldown/mob_cooldown/charge/buster_mop
-	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED|AB_CHECK_LYING
 	transparent_when_unavailable = TRUE
 
 	name = "Mop the Floor"
@@ -876,12 +876,13 @@
 		var/message = span_boldwarning("[caster] blasts [living_victim] with a surge of energy and sends [living_victim.p_them()] flying!")
 		var/self_message = span_userdanger("[caster] hits you with a blast of energy and sends you flying!")
 		var/obj/item/bodypart/limb_to_hit = living_victim.get_bodypart(caster.zone_selected)
-		if(istype(limb_to_hit, /obj/item/bodypart/head))
-			message = "[caster] smashes [caster.p_their()] fist upwards into [living_victim]'s jaw, sending [living_victim.p_them()] flying!"
-		if(!(limb_to_hit.body_zone in list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)) && limb_to_hit.get_damage() >= limb_to_hit.max_damage)
-			limb_to_hit.drop_limb()
-			message = span_boldwarning("[caster] punches [limb_to_hit] clean off with a blast of energy!")
-			self_message = span_userdanger("[caster] blows [limb_to_hit] off with inhuman force!")
+		if(limb_to_hit)
+			if(istype(limb_to_hit, /obj/item/bodypart/head))
+				message = "[caster] smashes [caster.p_their()] fist upwards into [living_victim]'s jaw, sending [living_victim.p_them()] flying!"
+			if(!(limb_to_hit.body_zone in list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)) && limb_to_hit.get_damage() >= limb_to_hit.max_damage)
+				limb_to_hit.drop_limb()
+				message = span_boldwarning("[caster] punches [limb_to_hit] clean off with a blast of energy!")
+				self_message = span_userdanger("[caster] blows [limb_to_hit] off with inhuman force!")
 		living_victim.visible_message(message, self_message)
 		living_victim.Paralyze(BUSTER_STUN_DURATION)
 	else if(non_living_type_check(victim))
@@ -931,7 +932,8 @@
 			harm(null, source, living_collision_dam)
 			harm(null, impacted_living, living_collision_dam)
 			impacted_living.Knockdown(BUSTER_STUN_DURATION)
-			if(impacted_atom.anchored)
+			loop.dist_travelled++
+			if(impacted_living.anchored)
 				continue
 
 			impacted_living.Paralyze(BUSTER_STUN_DURATION, ignore_canstun = TRUE)
@@ -944,6 +946,7 @@
 			harm(null, impacted_atom, object_collision_damage)
 			if(impacted_atom.density)
 				harm(null, source, living_collision_dam)
+				loop.dist_travelled++
 
 /datum/action/cooldown/spell/touch/buster/megabuster/proc/soar_post_move(datum/move_loop/has_target/source, result, delay)
 	SIGNAL_HANDLER
