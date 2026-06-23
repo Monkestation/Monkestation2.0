@@ -122,7 +122,7 @@ GLOBAL_LIST_EMPTY(ai_os)
 	if(!istype(AI) || amount < 0)
 		return
 	//total cpu - (current AIs CPU + CPU we're giving) > total_cpu
-	if(GLOB.ai_os.total_cpu_assigned() - (GLOB.ai_os.cpu_assigned[AI] + amount) > total_cpu)
+	if(total_cpu_assigned() - (cpu_assigned[AI] + amount) > total_cpu)
 		return
 	cpu_assigned[AI] = amount
 	if(update)
@@ -132,7 +132,7 @@ GLOBAL_LIST_EMPTY(ai_os)
 	if(!istype(AI) || amount < 0)
 		return
 	//total ram - (current AIs ram + ram we're giving) > total_ram
-	if(GLOB.ai_os.total_ram_assigned() - (GLOB.ai_os.ram_assigned[AI] + amount) > total_ram)
+	if(total_ram_assigned() - (ram_assigned[AI] + amount) > total_ram)
 		return
 	ram_assigned[AI] = amount
 	if(update)

@@ -1,5 +1,4 @@
 import { toFixed } from 'common/math';
-import { Fragment } from 'react';
 import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import {
@@ -7,9 +6,9 @@ import {
   Button,
   Icon,
   NoticeBox,
-  NumberInput,
   ProgressBar,
   Section,
+  Slider,
   Stack,
 } from '../components';
 import { Window } from '../layouts';
@@ -54,7 +53,7 @@ export const AiResources = (props) => {
   const remaining_ram = total_ram - total_assigned_ram;
 
   return (
-    <Window width={500} height={450}>
+    <Window width={450} height={authenticated ? 400 : 250}>
       <Window.Content>
         {(!!authenticated && (
           <Stack vertical fill>
@@ -110,7 +109,12 @@ export const AiResources = (props) => {
                 {remaining_ram} TB
               </ProgressBar>
             </Section>
-            <Section my={1} title="Active AI's" style={{ overflowY: 'auto' }}>
+            <Section
+              my={1}
+              fill
+              title="Active AI's"
+              style={{ overflowY: 'auto', overflowX: 'hidden' }}
+            >
               <Stack vertical>
                 {ais.map((ai, index) => {
                   return (
@@ -132,66 +136,34 @@ export const AiResources = (props) => {
                       <Stack.Item>
                         CPU Capacity:
                         <Stack>
-                          <ProgressBar
+                          <Slider
                             minValue={0}
-                            value={ai.assigned_cpu}
                             maxValue={total_cpu}
-                          >
-                            {ai.assigned_cpu} THz
-                          </ProgressBar>
-                          <NumberInput
-                            width="60px"
-                            unit="THz"
+                            stepPixelSize={1}
                             value={ai.assigned_cpu}
-                            minValue={0}
-                            maxValue={remaining_cpu + ai.assigned_cpu}
-                            onChange={(value) =>
+                            unit={'THz'}
+                            onChange={(_, value) =>
                               act('set_cpu', {
                                 targetAI: ai.ref,
-                                amount_cpu: Math.round((value / 100) * 100),
+                                amount_cpu: value,
                               })
                             }
                           />
-                          <Button
-                            height={1.75}
-                            icon="arrow-up"
-                            onClick={() =>
-                              act('max_cpu', {
-                                targetAI: ai.ref,
-                              })
-                            }
-                          >
-                            Max
-                          </Button>
                         </Stack>
                       </Stack.Item>
                       <Stack.Item>
                         RAM Capacity:
                         <Stack>
-                          <ProgressBar
+                          <Slider
                             minValue={0}
-                            value={ai.assigned_ram}
                             maxValue={total_ram}
-                          >
-                            {ai.assigned_ram} TB
-                          </ProgressBar>
-                          <Button
-                            mr={1}
-                            ml={1}
-                            height={1.75}
-                            icon="plus"
-                            onClick={() =>
-                              act('add_ram', {
+                            stepPixelSize={1}
+                            value={ai.assigned_ram}
+                            unit={'TB'}
+                            onChange={(_, value) =>
+                              act('set_ram', {
                                 targetAI: ai.ref,
-                              })
-                            }
-                          />
-                          <Button
-                            height={1.75}
-                            icon="minus"
-                            onClick={() =>
-                              act('remove_ram', {
-                                targetAI: ai.ref,
+                                amount_ram: value,
                               })
                             }
                           />
@@ -205,27 +177,33 @@ export const AiResources = (props) => {
           </Stack>
         )) || (
           <Section title="Welcome" fill>
-            <Stack align="center" justify="center" mt="0.5rem">
+            <Stack align="center" justify="center" mt="0.5rem" mb="0.5rem">
               <Stack.Item>
-                {(user_image && (
-                  <Fragment>
-                    <img src={user_image} width="125px" height="125px" />
-                    <img src="scanlines.png" width="125px" height="125px" />
-                  </Fragment>
-                )) || (
-                  <Icon
-                    name="user-circle"
-                    verticalAlign="middle"
-                    size={4.5}
-                    mr="1rem"
-                  />
-                )}
-                <Box inline fontSize="18px" bold>
-                  {username ? username : 'Unknown'}
-                </Box>
+                <Stack vertical fill>
+                  <Box inline fontSize="18px" bold>
+                    {(data.user_image && (
+                      <>
+                        <img
+                          src={data.user_image}
+                          width="125px"
+                          height="125px"
+                        />
+                        <img src="scanlines.png" width="125px" height="125px" />
+                      </>
+                    )) || (
+                      <Icon
+                        name="user-circle"
+                        verticalAlign="middle"
+                        size={4.5}
+                        mr="1rem"
+                      />
+                    )}
+                    {username ? username : 'Unknown'}
+                  </Box>
+                </Stack>
               </Stack.Item>
             </Stack>
-            <Box textAlign="center">
+            <Box textAlign="center" position="bottom">
               <NoticeBox
                 textAlign="center"
                 mt="1.5rem"

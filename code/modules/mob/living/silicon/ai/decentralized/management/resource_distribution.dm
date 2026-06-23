@@ -155,7 +155,7 @@
 			os_using.set_cpu(target_ai, amount)
 			. = TRUE
 
-		if("max_cpu")
+		if("set_ram")
 			if(!authenticated)
 				balloon_alert(user, "must be logged in!")
 				return ITEM_INTERACT_BLOCKING
@@ -167,48 +167,11 @@
 				return
 			if(!(target_ai in os_using.ai_list))
 				return
+			var/amount = params["amount_ram"]
+			if(!isnum(amount) || amount < 0)
+				return
+			os_using.set_ram(target_ai, amount)
 
-			var/amount = (os_using.total_cpu - os_using.total_cpu_assigned()) + os_using.cpu_assigned[target_ai]
-			os_using.set_cpu(target_ai, amount)
-			. = TRUE
-
-		if("add_ram")
-			if(!authenticated)
-				balloon_alert(user, "must be logged in!")
-				return ITEM_INTERACT_BLOCKING
-			var/mob/living/silicon/ai/target_ai = locate(params["targetAI"])
-			if(!istype(target_ai))
-				return
-			if(human_only && !is_human)
-				to_chat(user, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
-				return
-			if(!(target_ai in os_using.ai_list))
-				return
-
-			if(os_using.total_ram_assigned() >= os_using.total_ram)
-				return
-			os_using.add_ram(target_ai, 1)
-			. = TRUE
-
-		if("remove_ram")
-			if(!authenticated)
-				balloon_alert(user, "must be logged in!")
-				return ITEM_INTERACT_BLOCKING
-			var/mob/living/silicon/ai/target_ai = locate(params["targetAI"])
-			if(!istype(target_ai))
-				return
-			if(human_only && !is_human)
-				to_chat(user, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
-				return
-			if(!(target_ai in os_using.ai_list))
-				return
-
-			var/current_ram = os_using.ram_assigned[target_ai]
-
-			if(current_ram <= 0)
-				return
-			os_using.remove_ram(target_ai, 1)
-			. = TRUE
 		if("toggle_human_status")
 			if(!authenticated)
 				balloon_alert(user, "must be logged in!")
