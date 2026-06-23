@@ -122,13 +122,13 @@
 	COOLDOWN_START(src, last_tox_damage, RADIATION_TOX_INTERVAL)
 
 /datum/component/irradiated/proc/start_burn_splotch_timer()
-    var/min_time = RADIATION_BURN_INTERVAL_MIN
-    var/max_time = RADIATION_BURN_INTERVAL_MAX
-    if(is_species(parent, /datum/species/goblin))
-        min_time = RADIATION_BURN_INTERVAL_MIN_GOBLIN
-        max_time = RADIATION_BURN_INTERVAL_MAX_GOBLIN
+var/min_time = RADIATION_BURN_INTERVAL_MIN
+	var/max_time = RADIATION_BURN_INTERVAL_MAX
+	if(is_species(parent, /datum/species/goblin))
+		min_time = RADIATION_BURN_INTERVAL_MIN_GOBLIN
+		max_time = RADIATION_BURN_INTERVAL_MAX_GOBLIN
 
-    burn_splotch_timer_id = addtimer(CALLBACK(src, PROC_REF(give_burn_splotches)), rand(min_time, max_time), TIMER_STOPPABLE)
+	burn_splotch_timer_id = addtimer(CALLBACK(src, PROC_REF(give_burn_splotches)), rand(min_time, max_time), TIMER_STOPPABLE)
 
 /datum/component/irradiated/proc/give_burn_splotches()
 	// This shouldn't be possible, but just in case.
