@@ -32,6 +32,12 @@
 #define BASE_MACHINE_IDLE_CONSUMPTION (100 WATTS)
 ///Base global power consumption for active machines. The unit is ambiguous (joules or watts) depending on the use case for dynamic users.
 #define BASE_MACHINE_ACTIVE_CONSUMPTION (BASE_MACHINE_IDLE_CONSUMPTION * 10)
+///Base power usage for most things AI core related, as they are more power hungry than most machines.
+#define AI_DATA_CORE_POWER_USAGE (BASE_MACHINE_IDLE_CONSUMPTION * 7.5)
+///How much power does a CPU card consume per tick?
+#define AI_BASE_POWER_PER_CPU (BASE_MACHINE_IDLE_CONSUMPTION * 1.5)
+///Multiplied by number of cards to see power consumption per tick. Added to by powerconsumption of CPUs
+#define AI_POWER_PER_CARD (BASE_MACHINE_IDLE_CONSUMPTION * 0.5)
 
 /// Bitflags for a machine's preferences on when it should start processing. For use with machinery's `processing_flags` var.
 #define START_PROCESSING_ON_INIT (1<<0) /// Indicates the machine will automatically start processing right after it's `Initialize()` is ran.
@@ -61,6 +67,7 @@
 #define LIMBGROWER (1<<5) //Uses synthetic flesh
 #define SMELTER (1<<6) //uses various minerals
 #define NANITE_COMPILER (1<<7) //Prints nanite disks
+#define RACK_CREATOR (1<<8) //For AI non-physical AI hardware. (RAM expansions)
 
 //design bitflags for special interactions
 #define BLUE_ALERT_DESIGN (1<<0)

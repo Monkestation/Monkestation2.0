@@ -504,7 +504,7 @@
 	attack_verb_continuous = list("shears", "snips")
 	attack_verb_simple = list("shear", "snip")
 	sharpness = SHARP_EDGED
-	custom_premium_price = PAYCHECK_CREW * 14
+	custom_premium_price = PAYCHECK_CREW * 10
 
 /obj/item/shears/attack(mob/living/amputee, mob/living/user)
 	if(!iscarbon(amputee) || (user.istate & ISTATE_HARM))
@@ -713,7 +713,10 @@
 		var/mob/living/mob = interacting_with
 		if(mob == user)
 			return
-		if (mob.is_mouth_covered())
+		if(!mob.appears_alive())
+			to_chat(user, span_warning("They are dead!"))
+			return
+		if(mob.is_mouth_covered())
 			to_chat(user, span_warning("To perform mechanical ventilation, the patient must be unmasked!"))
 			return
 		to_chat(user, span_notice("Applying a breathing mask to [mob] face."))
@@ -729,4 +732,4 @@
 				to_chat(user, span_notice("Where did he go?"))
 				return
 			to_chat(user, span_notice("Performing artificial ventilation!"))
-			mob.adjustOxyLoss(-15)
+			mob.adjustOxyLoss(-10)

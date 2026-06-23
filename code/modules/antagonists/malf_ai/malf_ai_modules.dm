@@ -62,10 +62,18 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	var/mob/living/silicon/ai/owner_AI
 	/// If we have multiple uses of the same power
 	var/uses
+	/// How many uses can we store up? Only used for non-antag AI upgrade
+	var/max_uses
+	/// Do we delete the ability when we're out of uses?
+	var/delete_on_empty = TRUE
 	/// If we automatically use up uses on each activation
 	var/auto_use_uses = TRUE
 	/// If applicable, the time in deciseconds we have to wait before using any more modules
 	var/cooldown_period
+
+/datum/action/innate/ai/New()
+	. = ..()
+	max_uses = uses
 
 /datum/action/innate/ai/Grant(mob/living/player)
 	. = ..()
@@ -81,6 +89,9 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		return
 
 /datum/action/innate/ai/Trigger(trigger_flags)
+	if(uses <= 0 && !isnull(uses))
+		to_chat(owner, span_warning("[name] has no more uses! Charge it using CPU cycles in your dashboard."))
+		return FALSE
 	. = ..()
 	if(auto_use_uses)
 		adjust_uses(-1)
@@ -92,9 +103,10 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	if(!silent && uses)
 		to_chat(owner, span_notice("[name] now has <b>[uses]</b> use[uses > 1 ? "s" : ""] remaining."))
 	if(uses <= 0)
-		if(initial(uses) > 1) //no need to tell 'em if it was one-use anyway!
+		if(initial(uses) > 1 || !delete_on_empty) //no need to tell 'em if it was one-use anyway!
 			to_chat(owner, span_warning("[name] has run out of uses!"))
-		qdel(src)
+		if(delete_on_empty)
+			qdel(src)
 
 /// Framework for ranged abilities that can have different effects by left-clicking stuff.
 /datum/action/innate/ai/ranged
@@ -107,10 +119,11 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	if(!silent && uses)
 		to_chat(owner, span_notice("[name] now has <b>[uses]</b> use\s remaining."))
 	if(!uses)
-		if(initial(uses) > 1) //no need to tell 'em if it was one-use anyway!
+		if(initial(uses) > 1 || !delete_on_empty) //no need to tell 'em if it was one-use anyway!
 			to_chat(owner, span_warning("[name] has run out of uses!"))
-		Remove(owner)
-		QDEL_IN(src, 10 SECONDS) //let any active timers on us finish up
+		if(delete_on_empty)
+			Remove(owner)
+			QDEL_IN(src, 100) //let any active timers on us finish up
 
 /// The base module type, which holds info about each ability.
 /datum/ai_module
@@ -178,7 +191,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		return
 	if (active || owner_AI.stat == DEAD)
 		return //prevent the AI from activating an already active doomsday or while they are dead
-	if (!isturf(owner_AI.loc))
+	if (!isvalidAIloc(owner_AI.loc))
 		return //prevent AI from activating doomsday while shunted or carded, fucking abusers
 	active = TRUE
 	set_up_us_the_bomb(owner)
@@ -189,12 +202,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	var/pass = prob(10) ? "******" : "hunter2"
 	to_chat(owner, "<span class='small boldannounce'>run -o -a 'selfdestruct'</span>")
 	sleep(0.5 SECONDS)
-	if(QDELETED(owner) || !isturf(owner_AI.loc))
+	if(QDELETED(owner) || !isvalidAIloc(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, "<span class='small boldannounce'>Running executable 'selfdestruct'...</span>")
 	sleep(2 SECONDS)
-	if(QDELETED(owner) || !isturf(owner_AI.loc))
+	if(QDELETED(owner) || !isvalidAIloc(owner_AI.loc))
 		active = FALSE
 		return
 	owner.playsound_local(owner, 'sound/misc/bloblarm.ogg', 50, 0, use_reverb = FALSE)
@@ -202,63 +215,63 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	to_chat(owner, span_boldannounce("This is a class-3 security violation. This incident will be reported to Central Command."))
 	for(var/i in 1 to 3)
 		sleep(2 SECONDS)
-		if(QDELETED(owner) || !isturf(owner_AI.loc))
+		if(QDELETED(owner) || !isvalidAIloc(owner_AI.loc))
 			active = FALSE
 			return
 		to_chat(owner, span_boldannounce("Sending security report to Central Command.....[rand(0, 9) + (rand(20, 30) * i)]%"))
 	sleep(0.3 SECONDS)
-	if(QDELETED(owner) || !isturf(owner_AI.loc))
+	if(QDELETED(owner) || !isvalidAIloc(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, "<span class='small boldannounce'>auth 'akjv9c88asdf12nb' [pass]</span>")
 	owner.playsound_local(owner, 'sound/items/timer.ogg', 50, 0, use_reverb = FALSE)
 	sleep(3 SECONDS)
-	if(QDELETED(owner) || !isturf(owner_AI.loc))
+	if(QDELETED(owner) || !isvalidAIloc(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Credentials accepted. Welcome, akjv9c88asdf12nb."))
 	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0, use_reverb = FALSE)
 	sleep(0.5 SECONDS)
-	if(QDELETED(owner) || !isturf(owner_AI.loc))
+	if(QDELETED(owner) || !isvalidAIloc(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Arm self-destruct device? (Y/N)"))
 	owner.playsound_local(owner, 'sound/misc/compiler-stage1.ogg', 50, 0, use_reverb = FALSE)
 	sleep(2 SECONDS)
-	if(QDELETED(owner) || !isturf(owner_AI.loc))
+	if(QDELETED(owner) || !isvalidAIloc(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, "<span class='small boldannounce'>Y</span>")
 	sleep(1.5 SECONDS)
-	if(QDELETED(owner) || !isturf(owner_AI.loc))
+	if(QDELETED(owner) || !isvalidAIloc(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Confirm arming of self-destruct device? (Y/N)"))
 	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50, 0, use_reverb = FALSE)
 	sleep(1 SECONDS)
-	if(QDELETED(owner) || !isturf(owner_AI.loc))
+	if(QDELETED(owner) || !isvalidAIloc(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, "<span class='small boldannounce'>Y</span>")
 	sleep(2 SECONDS)
-	if(QDELETED(owner) || !isturf(owner_AI.loc))
+	if(QDELETED(owner) || !isvalidAIloc(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Please repeat password to confirm."))
 	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50, 0, use_reverb = FALSE)
 	sleep(1.4 SECONDS)
-	if(QDELETED(owner) || !isturf(owner_AI.loc))
+	if(QDELETED(owner) || !isvalidAIloc(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, "<span class='small boldannounce'>[pass]</span>")
 	sleep(4 SECONDS)
-	if(QDELETED(owner) || !isturf(owner_AI.loc))
+	if(QDELETED(owner) || !isvalidAIloc(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Credentials accepted. Transmitting arming signal..."))
 	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0, use_reverb = FALSE)
 	sleep(3 SECONDS)
-	if(QDELETED(owner) || !isturf(owner_AI.loc))
+	if(QDELETED(owner) || !isvalidAIloc(owner_AI.loc))
 		active = FALSE
 		return
 	if (owner_AI.stat != DEAD)
@@ -674,7 +687,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		C.images -= I
 
 /mob/living/silicon/ai/proc/can_place_transformer(datum/action/innate/ai/place_transformer/action)
-	if(!eyeobj || !isturf(loc) || incapacitated() || !action)
+	if(!eyeobj || !isvalidAIloc(loc) || incapacitated() || !action)
 		return
 	var/turf/middle = get_turf(eyeobj)
 	var/list/turfs = list(middle, locate(middle.x - 1, middle.y, middle.z), locate(middle.x + 1, middle.y, middle.z))
@@ -1179,24 +1192,24 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		return FALSE
 	var/mob/living/silicon/ai/ai_caller = user
 
-	if (ai_caller.incapacitated() || !isturf(ai_caller.loc))
+	if (ai_caller.incapacitated() || !isvalidAIloc(ai_caller.loc))
 		return FALSE
 
 	var/turf/target = get_turf(clicked_on)
 	if (isnull(target))
 		return FALSE
 
-	if (target == ai_caller.loc)
+	if (target == get_turf(ai_caller))
 		target.balloon_alert(ai_caller, "can't roll on yourself!")
 		return FALSE
 
-	var/picked_dir = get_dir(ai_caller, target)
+	var/picked_dir = get_dir(get_turf(ai_caller), target)
 	if (!picked_dir)
 		return FALSE
-	var/turf/temp_target = get_step(ai_caller, picked_dir) // we can move during the timer so we cant just pass the ref
+	var/turf/temp_target = get_step(get_turf(ai_caller), picked_dir) // we can move during the timer so we cant just pass the ref
 
 	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(temp_target, roll_over_time)
-	ai_caller.balloon_alert_to_viewers("rolling...")
+	ai_caller.loc.balloon_alert_to_viewers("rolling...")
 	addtimer(CALLBACK(src, PROC_REF(do_roll_over), ai_caller, picked_dir), roll_over_time)
 
 	adjust_uses(-1)
@@ -1207,17 +1220,17 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	COOLDOWN_START(src, time_til_next_tilt, roll_over_cooldown)
 
 /datum/action/innate/ai/ranged/core_tilt/proc/do_roll_over(mob/living/silicon/ai/ai_caller, picked_dir)
-	if (ai_caller.incapacitated() || !isturf(ai_caller.loc)) // prevents bugs where the ai is carded and rolls
+	if (ai_caller.incapacitated() || !isvalidAIloc(ai_caller.loc)) // prevents bugs where the ai is carded and rolls
 		return
-
-	var/turf/target = get_step(ai_caller, picked_dir) // in case we moved we pass the dir not the target turf
+	var/obj/machinery/ai/data_core/core_inside_of = ai_caller.loc
+	var/turf/target = get_step(core_inside_of, picked_dir) // in case we moved we pass the dir not the target turf
 
 	if (isnull(target))
 		return
 
 	var/paralyze_time = clamp(6 SECONDS, 0 SECONDS, (roll_over_cooldown * 0.9)) //the clamp prevents stunlocking as the max is always a little less than the cooldown between rolls
 
-	return ai_caller.fall_and_crush(target, MALF_AI_ROLL_DAMAGE, MALF_AI_ROLL_CRIT_CHANCE, null, paralyze_time, picked_dir, rotation = get_rotation_from_dir(picked_dir))
+	return core_inside_of.fall_and_crush(target, MALF_AI_ROLL_DAMAGE, MALF_AI_ROLL_CRIT_CHANCE, null, paralyze_time, picked_dir, rotation = get_rotation_from_dir(picked_dir))
 
 /// Used in our radial menu, state-checking proc after the radial menu sleeps
 /datum/action/innate/ai/ranged/core_tilt/proc/radial_check(mob/living/silicon/ai/user)

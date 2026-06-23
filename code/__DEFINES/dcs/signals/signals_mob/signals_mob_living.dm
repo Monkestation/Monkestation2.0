@@ -132,9 +132,6 @@
 /// from mob/living/check_stun_immunity(): (check_flags)
 #define COMSIG_LIVING_GENERIC_STUN_CHECK "living_check_stun"
 	#define COMPONENT_NO_STUN (1<<0) //For all of them
-///from base of /mob/living/can_track(): (mob/user)
-#define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
-	#define COMPONENT_CANT_TRACK (1<<0)
 ///from end of fully_heal(): (heal_flags)
 #define COMSIG_LIVING_POST_FULLY_HEAL "living_post_fully_heal"
 /// from start of /mob/living/handle_breathing(): (seconds_per_tick, times_fired)
@@ -264,3 +261,6 @@
 #define COMSIG_LIVING_LATE_EXAMINE "late_examine"
 
 #define COMSIG_LIVING_BINGLE_EVOLVE "living_bingle_evolve"
+
+/// Sent when the [/datum/status_effect/silver_bullet] status effect is applied or refresh.
+#define COMSIG_LIVING_BLOODSILVER_HIT "living_bloodsilver_hit"

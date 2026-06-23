@@ -43,7 +43,7 @@
 	if(name_override)
 		return name_override
 	if(face_name)
-		if(id_name && (id_name != face_name))
+		if(id_name && (id_name != face_name) && add_id_name)
 			return "[face_name] (as [id_name])"
 		return face_name
 	if(id_name)
@@ -150,7 +150,7 @@
 		return
 
 	var/path = "data/player_saves/[ckey[1]]/[ckey]/scars.sav"
-	var/loaded_char_slot = client.prefs.default_slot
+	var/loaded_char_slot = client.prefs.active_slot
 
 	if(!loaded_char_slot || !fexists(path))
 		return FALSE

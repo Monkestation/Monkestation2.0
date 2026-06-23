@@ -38,20 +38,19 @@
 	model = new /obj/item/robot_model(src)
 	model.rebuild_modules()
 
-	if(lawupdate)
+	if(!laws)
 		make_laws()
-		for (var/law in laws.inherent)
+		for(var/law in laws.inherent)
 			lawcheck += law
-		if(!TryConnectToAI())
-			lawupdate = FALSE
+	if(lawupdate && !TryConnectToAI())
+		lawupdate = FALSE
 
 	if(!scrambledcodes && !builtInCamera)
 		builtInCamera = new (src)
 		builtInCamera.c_tag = real_name
 		builtInCamera.network = list(CAMERANET_NETWORK_SS13)
-		builtInCamera.internal_light = FALSE
 		if(wires.is_cut(WIRE_CAMERA))
-			builtInCamera.camera_enabled = 0
+			builtInCamera.toggle_cam(null, displaymessage = FALSE)
 	update_icons()
 	. = ..()
 
@@ -121,7 +120,7 @@
 		modularInterface.icon_state = "tablet-silicon"
 		modularInterface.icon_state_powered = "tablet-silicon"
 		modularInterface.icon_state_unpowered = "tablet-silicon"
-	modularInterface.update_icon()
+	modularInterface.update_appearance()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
@@ -317,9 +316,10 @@
 /mob/living/silicon/robot/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer)
 		return ..()
-	cut_overlay(eye_lights)
-	SET_PLANE_EXPLICIT(eye_lights, PLANE_TO_TRUE(eye_lights.plane), src)
-	add_overlay(eye_lights)
+	if(eye_lights)
+		cut_overlay(eye_lights)
+		SET_PLANE_EXPLICIT(eye_lights, PLANE_TO_TRUE(eye_lights.plane), src)
+		add_overlay(eye_lights)
 	return ..()
 
 /mob/living/silicon/robot/proc/self_destruct(mob/user)
@@ -647,11 +647,11 @@
 		if(health <= -maxHealth) //die only once
 			death()
 			toggle_headlamp(1)
-			return
-		if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsKnockdown() || IsParalyzed())
-			set_stat(UNCONSCIOUS)
 		else
-			set_stat(CONSCIOUS)
+			if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsKnockdown() || IsParalyzed())
+				set_stat(UNCONSCIOUS)
+			else
+				set_stat(CONSCIOUS)
 	diag_hud_set_status()
 	diag_hud_set_health()
 	diag_hud_set_aishell()
@@ -761,11 +761,13 @@
 		mmi = null
 
 ///Use this to add upgrades to robots. It'll register signals for when the upgrade is moved or deleted, if not single use.
-/mob/living/silicon/robot/proc/add_to_upgrades(obj/item/borg/upgrade/new_upgrade, mob/user)
+/mob/living/silicon/robot/proc/add_to_upgrades(obj/item/borg/upgrade/new_upgrade, user)
 	if(new_upgrade in upgrades)
 		return FALSE
-	if(!user.temporarilyRemoveItemFromInventory(new_upgrade)) //calling the upgrade's dropped() proc /before/ we add action buttons
-		return FALSE
+	if(ismob(user))
+		var/mob/mob_user = user
+		if(!mob_user.temporarilyRemoveItemFromInventory(new_upgrade)) // Calling the upgrade's dropped() proc /before/ we add action buttons.
+			return FALSE
 	if(!new_upgrade.action(src, user))
 		to_chat(user, span_danger("Upgrade error."))
 		new_upgrade.forceMove(loc) //gets lost otherwise
@@ -781,6 +783,7 @@
 	RegisterSignal(new_upgrade, COMSIG_MOVABLE_MOVED, PROC_REF(remove_from_upgrades))
 	RegisterSignal(new_upgrade, COMSIG_QDELETING, PROC_REF(on_upgrade_deleted))
 	logevent("Hardware [new_upgrade] installed successfully.")
+	return TRUE
 
 ///Called when an upgrade is moved outside the robot. So don't call this directly, use forceMove etc.
 /mob/living/silicon/robot/proc/remove_from_upgrades(obj/item/borg/upgrade/old_upgrade)
@@ -852,6 +855,8 @@
 	mainframe.connected_robots |= src
 	lawupdate = TRUE
 	lawsync()
+	if(sensors_on)
+		add_sensors()
 	if(radio && AI.radio) //AI keeps all channels, including Syndie if it is a Traitor
 		if(AI.radio.syndie)
 			radio.make_syndie()
@@ -881,6 +886,7 @@
 /mob/living/silicon/robot/proc/undeploy()
 	if(!deployed || !mind || !mainframe)
 		return
+	remove_sensors()
 	mainframe.UnregisterSignal(src, COMSIG_LIVING_DEATH)
 	mainframe.redeploy_action.Grant(mainframe)
 	mainframe.redeploy_action.last_used_shell = src

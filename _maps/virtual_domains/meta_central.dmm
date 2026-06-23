@@ -622,11 +622,11 @@
 "eV" = (
 /obj/machinery/light/directional/west,
 /obj/structure/table,
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = -4;
 	pixel_y = 6
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 4;
 	pixel_y = 2
 	},

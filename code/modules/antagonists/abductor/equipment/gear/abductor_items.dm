@@ -602,15 +602,15 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/clothing/head/helmet/abductor/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot_flags & slot)
-		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
+		RegisterSignal(user, COMSIG_MOVABLE_CAN_TRACK, PROC_REF(track_person))
 	else
-		UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
+		UnregisterSignal(user, COMSIG_MOVABLE_CAN_TRACK)
 
 /obj/item/clothing/head/helmet/abductor/dropped(mob/living/user)
 	. = ..()
-	UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
+	UnregisterSignal(user, COMSIG_MOVABLE_CAN_TRACK)
 
-/obj/item/clothing/head/helmet/abductor/proc/can_track(datum/source, mob/user)
+/obj/item/clothing/head/helmet/abductor/proc/track_person(datum/source, mob/user)
 	SIGNAL_HANDLER
 
 	return COMPONENT_CANT_TRACK

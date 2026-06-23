@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 				place_on_head(attacking_item)
 		return
 
-	if(istype(attacking_item, /obj/item/clothing/accessory/badge))
+	if(istype(attacking_item, /obj/item/clothing/accessory/badge) && model.badge_offset != INFINITY)
 		to_chat(user, span_notice("You begin to decorate [src] with [attacking_item]..."))
 		to_chat(src, span_notice("[user] is pinning [attacking_item] onto you..."))
 		if(do_after(user, 3 SECONDS, target = src))
@@ -149,6 +149,17 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		add_to_upgrades(U, user)
 		return
 
+	if(istype(attacking_item, /obj/item/borg/apparatus/circuit) && user != src && cell && opened && !wiresexposed)
+		var/obj/item/borg/apparatus/circuit/robo_hand = attacking_item
+		if(robo_hand.stored == null)
+			to_chat(user, span_notice("You remove [cell]."))
+			cell.update_appearance()
+			cell.add_fingerprint(user)
+			user.put_in_hands(cell)
+			update_icons()
+			diag_hud_set_borgcell()
+			return
+
 	if(istype(attacking_item, /obj/item/toner))
 		if(toner >= tonermax)
 			to_chat(user, span_warning("The toner level of [src] is at its highest level possible!"))
@@ -179,9 +190,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(!modularInterface)
 			stack_trace("Cyborg [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 			create_modularInterface()
-		var/obj/item/computer_disk/floppy = attacking_item
-		floppy.forceMove(modularInterface)
-		modularInterface.inserted_disk = floppy
+		if(user.transferItemToLoc(attacking_item, modularInterface))
+			modularInterface.inserted_disk = attacking_item
 		return
 
 	return ..()

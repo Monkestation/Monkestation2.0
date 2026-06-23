@@ -95,7 +95,7 @@
 	var/emag_cooldown = 0
 	var/wiresexposed = FALSE
 
-	///Cyborgs will sync their laws with their AI by default
+	/// Should their laws sync with their master AI? Upon initialization, will try to assign and connect them to an AI.
 	var/lawupdate = TRUE
 	///Used to determine if a borg shows up on the robotics console.  Setting to TRUE hides them.
 	var/scrambledcodes = FALSE
@@ -147,6 +147,9 @@
 /mob/living/silicon/robot/nocell
 	cell = null
 
+/mob/living/silicon/robot/disconnected
+	lawupdate = FALSE
+
 /mob/living/silicon/robot/shell
 	name = "AI Shell"
 	shell = TRUE
@@ -190,6 +193,10 @@
 /mob/living/silicon/robot/model/service
 	set_model = /obj/item/robot_model/service
 	icon_state = "brobot"
+
+/mob/living/silicon/robot/model/science
+	set_model = /obj/item/robot_model/science
+	icon_state = "science"
 
 /mob/living/silicon/robot/model/syndicate
 	icon_state = "synd_sec"

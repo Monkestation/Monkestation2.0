@@ -2492,11 +2492,11 @@
 "nA" = (
 /obj/structure/table,
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/item/storage/box/nri_flares{
+/obj/item/storage/box/flares{
 	pixel_x = -4;
 	pixel_y = 0
 	},
-/obj/item/storage/box/nri_flares{
+/obj/item/storage/box/flares{
 	pixel_x = -4;
 	pixel_y = 4
 	},
@@ -4741,8 +4741,8 @@
 	dir = 10
 	},
 /obj/structure/table/glass,
-/obj/item/vacuum_pack,
-/obj/item/vacuum_pack,
+/obj/item/vacuum_pack/backpack,
+/obj/item/vacuum_pack/backpack,
 /obj/item/disk/vacuum_upgrade/biomass,
 /obj/item/disk/vacuum_upgrade/biomass,
 /turf/open/floor/iron/white/textured,
@@ -4789,8 +4789,8 @@
 /obj/item/mining_scanner,
 /obj/item/mining_scanner,
 /obj/item/mining_scanner,
-/obj/item/storage/box/nri_flares,
-/obj/item/storage/box/nri_flares,
+/obj/item/storage/box/flares,
+/obj/item/storage/box/flares,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "ZL" = (

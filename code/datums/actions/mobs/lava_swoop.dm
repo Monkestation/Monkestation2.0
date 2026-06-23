@@ -11,6 +11,8 @@
 	var/enraged = FALSE
 	/// Check if we are currently swooping
 	var/swooping = FALSE
+	/// Makes us stronger if true
+	var/boosted = FALSE
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/Grant(mob/M)
 	. = ..()
@@ -121,13 +123,14 @@
 	if(!target)
 		return
 	target.visible_message(span_boldwarning("Lava starts to pool up around you!"))
-
+	if(boosted)
+		amount *= 2
 	while(amount > 0)
 		if(QDELETED(target))
 			break
 		var/turf/target_turf = get_turf(target)
-		var/turf/lava_turf = pick(RANGE_TURFS(1, target_turf))
-		var/obj/effect/temp_visual/lava_warning/warn_effect = new /obj/effect/temp_visual/lava_warning(lava_turf, 60) // longer reset time for the lava
+		var/turf/lava_turf = pick(RANGE_TURFS(1 + boosted, target_turf))
+		var/obj/effect/temp_visual/lava_warning/warn_effect = new /obj/effect/temp_visual/lava_warning(lava_turf, boosted ? 18 SECONDS : 6 SECONDS) // longer reset time for the lava
 		warn_effect.owner = owner
 		amount--
 		SLEEP_CHECK_DEATH(delay, owner)
@@ -139,13 +142,13 @@
 	target.visible_message(span_boldwarning("[owner] encases you in an arena of fire!"))
 	var/amount = 3
 	var/turf/center = get_turf(owner)
-	var/list/walled = RANGE_TURFS(3, center) - RANGE_TURFS(2, center)
+	var/list/walled = RANGE_TURFS(3 + boosted, center) - RANGE_TURFS(2 + boosted, center)
 	var/list/drakewalls = list()
 	for(var/turf/T in walled)
 		drakewalls += new /obj/effect/temp_visual/drakewall(T) // no people with lava immunity can just run away from the attack for free
 	var/list/indestructible_turfs = list()
 
-	for(var/turf/turf_target as anything in RANGE_TURFS(2, center))
+	for(var/turf/turf_target as anything in RANGE_TURFS(2 + boosted, center))
 		if(isindestructiblefloor(turf_target))
 			continue
 		if(isindestructiblewall(turf_target))
@@ -157,7 +160,7 @@
 
 	SLEEP_CHECK_DEATH(1 SECONDS, owner) // give them a bit of time to realize what attack is actually happening
 
-	var/list/turfs = RANGE_TURFS(2, center)
+	var/list/turfs = RANGE_TURFS(2 + boosted, center)
 	var/list/mobs_with_clients = list()
 	while(amount > 0)
 		var/list/empty = indestructible_turfs.Copy() // can't place safe turfs on turfs that weren't changed to be open
@@ -165,11 +168,11 @@
 		for(var/turf/T in turfs)
 			for(var/mob/living/L in T.contents)
 				if(L.client)
-					empty += pick(((RANGE_TURFS(2, L) - RANGE_TURFS(1, L)) & turfs) - empty) // picks a turf within 2 of the creature not outside or in the shield
+					empty += pick(((RANGE_TURFS(2 + boosted, L) - RANGE_TURFS(1 + boosted, L)) & turfs) - empty) // picks a turf within 2 of the creature not outside or in the shield
 					any_attack = TRUE
 					mobs_with_clients |= L
 			for(var/obj/vehicle/sealed/mecha/M in T.contents)
-				empty += pick(((RANGE_TURFS(2, M) - RANGE_TURFS(1, M)) & turfs) - empty)
+				empty += pick(((RANGE_TURFS(2 + boosted, M) - RANGE_TURFS(1 + boosted, M)) & turfs) - empty)
 				any_attack = TRUE
 		if(!any_attack) // nothing to attack in the arena, time for enraged attack if we still have a cliented target.
 			for(var/obj/effect/temp_visual/drakewall/D in drakewalls)
