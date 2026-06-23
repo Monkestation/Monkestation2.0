@@ -53,7 +53,7 @@
 		return
 	my_turf.hotspot_expose(500, 100)
 	my_turf.atmos_spawn_air("o2=[oxygen_amount];TEMP=[OXY_CANDLE_RELEASE_TEMP]")
-	fuel = max(fuel - seconds_per_tick * (1 SECONDS), 0)
+	fuel = fuel - seconds_per_tick * (1 SECONDS)
 	if(fuel > 0)
 		return
 	set_light_on(FALSE)
