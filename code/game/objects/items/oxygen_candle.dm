@@ -61,7 +61,7 @@
 	if(!my_turf)
 		return
 	my_turf.hotspot_expose(500, 100)
-	my_turf.atmos_spawn_air("o2=[oxygen_amount];TEMP=[OXY_CANDLE_RELEASE_TEMP]")
+	my_turf.atmos_spawn_air("o2=[oxygen_amount * seconds_per_tick];TEMP=[OXY_CANDLE_RELEASE_TEMP]")
 	fuel = fuel - seconds_per_tick * (1 SECONDS)
 	if(fuel > 0)
 		return
