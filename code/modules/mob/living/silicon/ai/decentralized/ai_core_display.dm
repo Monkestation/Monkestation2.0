@@ -22,8 +22,7 @@
 		RegisterSignal(SSdcs, COMSIG_GLOB_AI_CREATED, PROC_REF(on_ai_creation))
 	else if(length(GLOB.ai_list) == 1)
 		var/mob/living/silicon/ai/living_ai = locate() in GLOB.ai_list
-		connected_ai = living_ai
-		RegisterSignal(connected_ai, COMSIG_AI_ICON_CHANGE, PROC_REF(on_ai_screen_change))
+		assign_ai(living_ai)
 
 /obj/machinery/status_display/ai_core/Destroy()
 	connected_ai = null
@@ -42,7 +41,9 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/status_display/ai_core/attack_ai(mob/living/silicon/ai/user)
-	if(isAI(user))
+	if(isnull(connected_ai))
+		assign_ai(user)
+	if(user == connected_ai)
 		user.pick_icon()
 
 /obj/machinery/status_display/ai_core/proc/set_ai(new_icon_state, new_icon)
@@ -64,12 +65,19 @@
 	icon_state = initial(icon_state)
 
 ///Called when the first AI of the round is created, as we get automatically assigned to it.
-/obj/machinery/status_display/ai_core/proc/on_ai_creation(atom/source, mob/living/silicon/ai/created_ai)
+/obj/machinery/status_display/ai_core/proc/on_ai_creation(atom/source, mob/living/silicon/ai/new_ai)
 	SIGNAL_HANDLER
 	UnregisterSignal(SSdcs, COMSIG_GLOB_AI_CREATED)
-	connected_ai = created_ai
+	assign_ai(new_ai)
+
+/obj/machinery/status_display/ai_core/proc/assign_ai(mob/living/silicon/ai/new_ai)
+	if(connected_ai == new_ai)
+		return
+	if(connected_ai)
+		UnregisterSignal(connected_ai, COMSIG_AI_ICON_CHANGE)
+	connected_ai = new_ai
 	RegisterSignal(connected_ai, COMSIG_AI_ICON_CHANGE, PROC_REF(on_ai_screen_change))
-	INVOKE_ASYNC(created_ai, TYPE_PROC_REF(/mob/living/silicon/ai, set_core_display_icon), null, created_ai?.client)
+	INVOKE_ASYNC(connected_ai, TYPE_PROC_REF(/mob/living/silicon/ai, set_core_display_icon), null, connected_ai?.client)
 
 ///Called when an AI we're registered to changes their screen, we follow to what icon_used is.
 /obj/machinery/status_display/ai_core/proc/on_ai_screen_change(mob/living/silicon/ai/source, icon_used)
