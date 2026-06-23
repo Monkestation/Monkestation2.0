@@ -3,7 +3,7 @@
 
 /obj/machinery/slime_compressor
 	name = "slime compressor"
-	desc = "Machine used to compress slimes into bases for crossbreed extracts."
+	desc = "Machine used to compress slimes into extracts and crossbreeds."
 
 	icon = 'monkestation/code/modules/slimecore/icons/slime_compressor.dmi'
 	icon_state = "compressor"
@@ -101,6 +101,7 @@
 
 /obj/machinery/slime_compressor/examine(mob/living/user)
 	. = ..()
+	. += span_warning("Baby slimes seem to yield less extracts per compression...")
 	if(!current_recipe)
 		return
 	if(base_complete && cross_complete)
