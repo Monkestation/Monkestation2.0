@@ -108,3 +108,4 @@
 	item = /obj/item/storage/box/syndie_kit/buster
 	cost = 20
 	surplus = 0
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS | UPLINK_SPY)
