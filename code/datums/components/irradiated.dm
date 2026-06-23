@@ -44,10 +44,7 @@
 
 		COOLDOWN_START(src, last_tox_damage, RADIATION_TOX_INTERVAL)
 
-		if(is_species(parent, SPECIES_GOBLIN))
-			addtimer(CALLBACK(src, PROC_REF(give_burn_splotches)), rand(90 SECONDS, 120 SECONDS), TIMER_STOPPABLE) //Goblins get rad burns when they are irradiated for 1.5-2 minutes instead of 0.5-1 minutes
-		else
-			start_burn_splotch_timer()
+		start_burn_splotch_timer()
 
 		human_parent.throw_alert(ALERT_IRRADIATED, /atom/movable/screen/alert/irradiated)
 
@@ -123,7 +120,10 @@
 	COOLDOWN_START(src, last_tox_damage, RADIATION_TOX_INTERVAL)
 
 /datum/component/irradiated/proc/start_burn_splotch_timer()
-	addtimer(CALLBACK(src, PROC_REF(give_burn_splotches)), rand(RADIATION_BURN_INTERVAL_MIN, RADIATION_BURN_INTERVAL_MAX), TIMER_STOPPABLE)
+	if(is_species(parent, SPECIES_GOBLIN))
+		addtimer(CALLBACK(src, PROC_REF(give_burn_splotches)), rand(RADIATION_BURN_INTERVAL_MIN * 3, RADIATION_BURN_INTERVAL_MAX * 2), TIMER_STOPPABLE)
+	else
+		addtimer(CALLBACK(src, PROC_REF(give_burn_splotches)), rand(RADIATION_BURN_INTERVAL_MIN, RADIATION_BURN_INTERVAL_MAX), TIMER_STOPPABLE)
 
 /datum/component/irradiated/proc/give_burn_splotches()
 	// This shouldn't be possible, but just in case.
