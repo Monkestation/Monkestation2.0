@@ -918,6 +918,7 @@
 		harm(null, source, living_collision_dam)
 		if(next_turf.uses_integrity)
 			harm(null, next_turf, wall_collision_damage)
+		loop.dist_travelled += flight_distance / 2
 		return
 	for(var/atom/movable/impacted_atom as anything in next_turf)
 		if(impacted_atom.move_packet || impacted_atom == owner)
