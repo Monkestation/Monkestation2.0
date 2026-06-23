@@ -3,7 +3,6 @@
 	desc = "The first three prototypes were discontinued after mass casualty incidents."
 	icon_state = "disco"
 	base_icon_state = "disco"
-	req_access = list(ACCESS_ENGINEERING)
 	anchored = FALSE
 
 	/// Spotlight effects being played
@@ -14,34 +13,31 @@
 /obj/machinery/jukebox/disco/indestructible
 	name = "radiant dance machine mark V"
 	desc = "Now redesigned with data gathered from the extensive disco and plasma research."
-	req_access = null
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/machinery/jukebox/disco/start_playing(datum/media_track/track)
-	. = ..()
-	if(!.)
-		return
-	dance_setup()
-	lights_spin()
-	begin_processing()
+	..()
+	if(!playing) //so it doesnt stack effects
+		dance_setup()
+		lights_spin()
+		begin_processing()
 
 /obj/machinery/jukebox/disco/stop_playing()
-	. = ..()
-	if(!.)
-		return
+	..()
 	QDEL_LIST(spotlights)
 	QDEL_LIST(sparkles)
 	end_processing()
 
 /obj/machinery/jukebox/disco/process()
-	var/dance_num = rand(1, 4) //all will do the same dance
+	if(!playing || !anchored)
+		return PROCESS_KILL
 	for(var/mob/living/dancer in get_hearers_in_view(6, get_turf(src)))
 		if(!(dancer.mobility_flags & MOBILITY_MOVE))
 			continue
 		if(HAS_TRAIT(dancer, TRAIT_DISCO_DANCER))
 			continue
-		dance(dancer, dance_num)
+		dance(dancer, rand(1, 4))
 
 /obj/machinery/jukebox/disco/proc/dance_setup()
 	var/turf/cen = get_turf(src)
@@ -82,7 +78,7 @@
 
 /obj/machinery/jukebox/disco/proc/lights_spin()
 	for(var/i in 1 to 25)
-		if(QDELETED(src) || isnull(current_track))
+		if(QDELETED(src) || !playing)
 			return
 		var/obj/effect/overlay/sparkles/S = new /obj/effect/overlay/sparkles(src)
 		S.alpha = 0
@@ -98,10 +94,12 @@
 				S.pixel_y = 7
 				S.forceMove(get_turf(src))
 		sleep(0.7 SECONDS)
+
 	for(var/s in sparkles)
 		var/obj/effect/overlay/sparkles/reveal = s
 		reveal.alpha = 255
-	while(!isnull(current_track))
+
+	while(playing)
 		for(var/g in spotlights) // The multiples reflects custom adjustments to each colors after dozens of tests
 			var/obj/item/flashlight/spotlight/glow = g
 			if(QDELETED(glow))
@@ -113,11 +111,11 @@
 						glow.set_light_on(FALSE)
 						glow.set_light_color(LIGHT_COLOR_BLUE)
 					else
-						glow.set_light_range_power_color(glow.light_outer_range * DISCO_INFENO_RANGE, glow.light_power * 1.48, LIGHT_COLOR_BLUE)
+						glow.set_light_range_power_color(glow.base_light_outer_range * DISCO_INFENO_RANGE, glow.light_power * 1.48, LIGHT_COLOR_BLUE)
 						glow.set_light_on(TRUE)
 				if(LIGHT_COLOR_BLUE)
 					if(glow.even_cycle)
-						glow.set_light_range_power_color(glow.light_outer_range * DISCO_INFENO_RANGE, glow.light_power * 2, LIGHT_COLOR_GREEN)
+						glow.set_light_range_power_color(glow.base_light_outer_range * DISCO_INFENO_RANGE, glow.light_power * 2, LIGHT_COLOR_GREEN)
 						glow.set_light_on(TRUE)
 					else
 						glow.set_light_on(FALSE)
@@ -127,11 +125,11 @@
 						glow.set_light_on(FALSE)
 						glow.set_light_color(LIGHT_COLOR_ORANGE)
 					else
-						glow.set_light_range_power_color(glow.light_outer_range * DISCO_INFENO_RANGE, glow.light_power * 0.5, LIGHT_COLOR_ORANGE)
+						glow.set_light_range_power_color(glow.base_light_outer_range * DISCO_INFENO_RANGE, glow.light_power * 0.5, LIGHT_COLOR_ORANGE)
 						glow.set_light_on(TRUE)
 				if(LIGHT_COLOR_ORANGE)
 					if(glow.even_cycle)
-						glow.set_light_range_power_color(glow.light_outer_range * DISCO_INFENO_RANGE, glow.light_power * 2.27, LIGHT_COLOR_PURPLE)
+						glow.set_light_range_power_color(glow.base_light_outer_range * DISCO_INFENO_RANGE, glow.light_power * 2.27, LIGHT_COLOR_PURPLE)
 						glow.set_light_on(TRUE)
 					else
 						glow.set_light_on(FALSE)
@@ -141,11 +139,11 @@
 						glow.set_light_on(FALSE)
 						glow.set_light_color(LIGHT_COLOR_BLUEGREEN)
 					else
-						glow.set_light_range_power_color(glow.light_outer_range * DISCO_INFENO_RANGE, glow.light_power * 0.44, LIGHT_COLOR_BLUEGREEN)
+						glow.set_light_range_power_color(glow.base_light_outer_range * DISCO_INFENO_RANGE, glow.light_power * 0.44, LIGHT_COLOR_BLUEGREEN)
 						glow.set_light_on(TRUE)
 				if(LIGHT_COLOR_BLUEGREEN)
 					if(glow.even_cycle)
-						glow.set_light_range(glow.light_outer_range * DISCO_INFENO_RANGE)
+						glow.set_light_range(glow.base_light_outer_range * DISCO_INFENO_RANGE)
 						glow.set_light_color(LIGHT_COLOR_DIM_YELLOW)
 						glow.set_light_on(TRUE)
 					else
@@ -156,12 +154,12 @@
 						glow.set_light_on(FALSE)
 						glow.set_light_color(LIGHT_COLOR_CYAN)
 					else
-						glow.set_light_range(glow.light_outer_range * DISCO_INFENO_RANGE)
+						glow.set_light_range(glow.base_light_outer_range * DISCO_INFENO_RANGE)
 						glow.set_light_color(LIGHT_COLOR_CYAN)
 						glow.set_light_on(TRUE)
 				if(LIGHT_COLOR_CYAN)
 					if(glow.even_cycle)
-						glow.set_light_range_power_color(glow.light_outer_range * DISCO_INFENO_RANGE, glow.light_power * 0.68, COLOR_SOFT_RED)
+						glow.set_light_range_power_color(glow.base_light_outer_range * DISCO_INFENO_RANGE, glow.light_power * 0.68, COLOR_SOFT_RED)
 						glow.set_light_on(TRUE)
 					else
 						glow.set_light_on(FALSE)
