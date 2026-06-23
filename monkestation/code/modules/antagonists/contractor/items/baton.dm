@@ -126,7 +126,7 @@
 	return
 
 /obj/item/baton_upgrade
-	icon = 'monkestation/icons/obj/items/baton_upgrades.dmi'
+	icon = 'icons/obj/items/baton_upgrades.dmi'
 	var/upgrade_flag
 
 /obj/item/baton_upgrade/cuff

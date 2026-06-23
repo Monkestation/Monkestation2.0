@@ -3,8 +3,8 @@
 /obj/item/clothing/suit/hooded/wintercoat/cosmic
 	name = "cosmic winter coat"
 	desc = "A starry winter coat that even glows softly."
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "coatcosmic"
 	worn_icon_state = "coatcosmic"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/cosmic
@@ -13,53 +13,53 @@
 
 /obj/item/clothing/head/hooded/winterhood/cosmic
 	desc = "A starry winter hood."
-	icon = 'monkestation/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	icon_state = "winterhood_cosmic"
 	worn_icon_state = "winterhood_cosmic"
 
 /obj/item/clothing/suit/hooded/wintercoat/ratvar
 	name = "brass winter coat"
 	desc = "A brass-plated button up winter coat. Instead of a zipper tab, it has a brass cog with a tiny red piece of plastic as an inset."
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "coatratvar"
 	worn_icon_state = "coatratvar"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/ratvar
 
 /obj/item/clothing/head/hooded/winterhood/ratvar
 	icon_state = "winterhood_ratvar"
-	icon = 'monkestation/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	desc = "A brass-plated winter hood to keep the cogs in the brain warm and turning."
 
 /obj/item/clothing/suit/hooded/wintercoat/narsie
 	name = "runed winter coat"
 	desc = "A dusty button up winter coat in the tones of oblivion and ash. The zipper pull looks like a single drop of blood."
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "coatnarsie"
 	worn_icon_state = "coatnarsie"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/narsie
 
 /obj/item/clothing/head/hooded/winterhood/narsie
 	desc = "A black winter hood to keep your blood warm and flowing."
-	icon = 'monkestation/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	icon_state = "winterhood_narsie"
 
 /obj/item/clothing/suit/hooded/wintercoat/engineering/signal_tech
 	name = "engineering winter coat"
 	desc = "A surprisingly heavy yellow winter coat with reflective green stripes. It has a small antennae for its zipper tab, and the inside layer is covered with a radiation-resistant silver-nylon blend. Because heat insulation is clearly not a priority."
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "coat_signal_tech"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering/signal_tech
 
 /obj/item/clothing/head/hooded/winterhood/engineering/signal_tech
 	desc = "A yellow winter coat hood. Definitely not enough to keep you warm near the telecommunications servers."
-	icon = 'monkestation/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	icon_state = "winterhood_signal_tech"
 
 // End Of Winter Coat Varients
@@ -69,29 +69,29 @@
 /obj/item/clothing/suit/driscoll
 	name = "driscoll poncho"
 	desc = "Keeping you warm in the harsh cold of space."
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "driscoll_suit"
 
 /obj/item/clothing/suit/morningstar
 	name = "morningstar coat"
 	desc = "This coat costs more than you've ever made in your entire life."
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "morningstar_suit"
 
 /obj/item/clothing/suit/saints
 	name = "Third Street Saints fur coat"
 	desc = "Rated 10 out of 10 in Cosmo for best coat brand."
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "saints_suit"
 
 /obj/item/clothing/suit/phantom
 	name = "phantom thief coat"
 	desc = "Your foes will never see you coming in this stealthy yet stylish getup."
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "phantom_suit"
 
 // End Of Costume Stuff
@@ -101,15 +101,15 @@
 /obj/item/clothing/suit/heartcoat //ITS NOT A WINTER COAT, IT DOES NOT HAVE A HOOD
 	name = "heart coat"
 	desc = "A soft coat with a TailorCo brand on the tag."
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "heartcoat"
 
 /obj/item/clothing/suit/armor/guardmanvest
 	name = "guardman's vest"
 	desc = "It keeps your guts intact, thats really all that matters"
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "guardman_vest"
 
 /obj/item/clothing/suit/armor/guardmanvest/Initialize(mapload)
@@ -119,8 +119,8 @@
 /obj/item/clothing/suit/armor/civilprotection_vest
 	name = "civil protection vest"
 	desc = "Used by rebels and cops alike."
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "civilprotection_vest"
 
 /obj/item/clothing/suit/armor/civilprotection_vest/Initialize(mapload)
@@ -158,8 +158,8 @@
 /obj/item/clothing/suit/armor/secduster
 	name = "security duster"
 	desc = "A standard-issue armored duster that keeps a security officer protected and fashionable."
-	worn_icon = 'monkestation/icons/mob/suit.dmi'
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "cowboy_sec_default"
 	var/obj/item/clothing/mask/breath/sec_bandana/mask
 	var/obj/item/clothing/suit/armor/secduster/suit
@@ -218,8 +218,8 @@
 /obj/item/clothing/suit/jacket/tailcoat //parent type
 	name = "tailcoat"
 	desc = "A coat usually worn by bunny themed waiters and the like."
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "tailcoat"
 	greyscale_colors = "#39393f"
 	greyscale_config = /datum/greyscale_config/tailcoat
@@ -288,8 +288,8 @@
 /obj/item/clothing/suit/wizrobe/magician //Not really a robe but it's MAGIC
 	name = "magician's tailcoat"
 	desc = "A magnificent, gold-lined tailcoat that seems to radiate power."
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "tailcoat_wiz"
 	inhand_icon_state = null
 	flags_inv = null

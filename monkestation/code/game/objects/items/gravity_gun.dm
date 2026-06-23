@@ -3,7 +3,7 @@
 	name = "Gravity Gun"
 	desc = "A gravity gun, can suck in objects and launch them."
 	icon_state = "gravity_gun"
-	icon = 'monkestation/icons/obj/gravity_gun.dmi'
+	icon = 'icons/obj/gravity_gun.dmi'
 	/// Range of the knesis grab.
 	var/grab_range = 5
 	/// Time between us hitting objects with kinesis.

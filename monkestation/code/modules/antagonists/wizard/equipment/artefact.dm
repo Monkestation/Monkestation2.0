@@ -31,9 +31,9 @@
 /obj/item/clothing/head/wizard/bio_suit
 	name = "gem encrusted bio hood"
 	desc = "A hood that protects the head and face from biological contaminants. It's covered in small gemstones."
-	icon = 'monkestation/icons/obj/clothing/head/bio.dmi'
+	icon = 'icons/obj/clothing/head/bio.dmi'
 	icon_state = "bio_wizard"
-	worn_icon = 'monkestation/icons/mob/clothing/head/bio.dmi'
+	worn_icon = 'icons/mob/clothing/head/bio.dmi'
 	worn_icon_state = "bio_wizard"
 	inhand_icon_state = "bio_hood"
 	clothing_flags = THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS | CASTING_CLOTHES
@@ -43,9 +43,9 @@
 /obj/item/clothing/suit/wizrobe/bio_suit
 	name = "gem encrusted bio suit"
 	desc = "A suit that protects against biological contamination. It's covered in small gemstones."
-	icon = 'monkestation/icons/obj/clothing/suits/bio.dmi'
+	icon = 'icons/obj/clothing/suits/bio.dmi'
 	icon_state = "bio_wizard"
-	worn_icon = 'monkestation/icons/mob/clothing/suits/bio.dmi'
+	worn_icon = 'icons/mob/clothing/suits/bio.dmi'
 	worn_icon_state = "bio_wizard"
 	inhand_icon_state = "bio_suit"
 	clothing_flags = THICKMATERIAL | CASTING_CLOTHES

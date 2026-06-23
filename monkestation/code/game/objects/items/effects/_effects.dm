@@ -2,7 +2,7 @@
 	name = "Effect Granter"
 	desc = "Uh you shouldn't see this period if you are its because it hasn't despawned yet contact a coder about this."
 
-	icon = 'monkestation/icons/obj/effect_granters.dmi'
+	icon = 'icons/obj/effect_granters.dmi'
 	icon_state = "none"
 
 	///can this be done as a silicon or ai?

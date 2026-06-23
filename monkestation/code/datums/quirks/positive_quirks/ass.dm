@@ -39,4 +39,4 @@
 /datum/quirk/dummy_thick/proc/on_mob_move()
 	SIGNAL_HANDLER
 	if(prob(33))
-		playsound(quirk_holder, "monkestation/sound/misc/clap_short.ogg", vol = 70, vary = TRUE, extrarange = 5, ignore_walls = TRUE)
+		playsound(quirk_holder, "sound/misc/clap_short.ogg", vol = 70, vary = TRUE, extrarange = 5, ignore_walls = TRUE)

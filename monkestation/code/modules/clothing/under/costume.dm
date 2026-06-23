@@ -1,23 +1,23 @@
 /obj/item/clothing/under/costume/villain
-	alternative_screams = list(	'monkestation/sound/misc/robbie/robbie1.ogg',
-								'monkestation/sound/misc/robbie/robbie2.ogg',
-								'monkestation/sound/misc/robbie/robbie3.ogg',
-								'monkestation/sound/misc/robbie/robbie4.ogg',
-								'monkestation/sound/misc/robbie/robbie5.ogg',
-								'monkestation/sound/misc/robbie/robbie6.ogg',
-								'monkestation/sound/misc/robbie/robbie7.ogg',
-								'monkestation/sound/misc/robbie/robbie8.ogg',
-								'monkestation/sound/misc/robbie/robbie9.ogg',
-								'monkestation/sound/misc/robbie/robbie10.ogg',
-								'monkestation/sound/misc/robbie/robbie11.ogg',
-								'monkestation/sound/misc/robbie/robbie12.ogg',
-								'monkestation/sound/misc/robbie/robbie13.ogg',
-								'monkestation/sound/misc/robbie/robbie14.ogg',
-								'monkestation/sound/misc/robbie/robbie15.ogg')
+	alternative_screams = list(	'sound/misc/robbie/robbie1.ogg',
+								'sound/misc/robbie/robbie2.ogg',
+								'sound/misc/robbie/robbie3.ogg',
+								'sound/misc/robbie/robbie4.ogg',
+								'sound/misc/robbie/robbie5.ogg',
+								'sound/misc/robbie/robbie6.ogg',
+								'sound/misc/robbie/robbie7.ogg',
+								'sound/misc/robbie/robbie8.ogg',
+								'sound/misc/robbie/robbie9.ogg',
+								'sound/misc/robbie/robbie10.ogg',
+								'sound/misc/robbie/robbie11.ogg',
+								'sound/misc/robbie/robbie12.ogg',
+								'sound/misc/robbie/robbie13.ogg',
+								'sound/misc/robbie/robbie14.ogg',
+								'sound/misc/robbie/robbie15.ogg')
 
 /obj/item/clothing/under/costume/skyrat
-	icon = 'monkestation/icons/obj/clothing/skyrat/under/costume.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/skyrat/under/costume.dmi'
+	icon = 'icons/obj/clothing/skyrat/under/costume.dmi'
+	worn_icon = 'icons/mob/clothing/skyrat/under/costume.dmi'
 	can_adjust = FALSE
 
 //My least favorite file. Just... try to keep it sorted. And nothing over the top (The victorian dresses were way too much)
@@ -33,48 +33,48 @@
 /obj/item/clothing/under/costume/deckers/alt //not even going to bother re-pathing this one because its such a unique case of 'TGs item has something but this alt doesnt'
 	name = "deckers maskless outfit"
 	desc = "A decker jumpsuit with neon blue coloring."
-	icon = 'monkestation/icons/obj/clothing/skyrat/under/costume.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/skyrat/under/costume.dmi'
+	icon = 'icons/obj/clothing/skyrat/under/costume.dmi'
+	worn_icon = 'icons/mob/clothing/skyrat/under/costume.dmi'
 	icon_state = "decking_jumpsuit"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/worldchampiongi
 	name = "World Champion Gi"
 	desc = "Only the strongest wears this Gi, everyone else are just using tricks."
-	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'icons/mob/clothing/uniform.dmi'
 	icon_state = "worldchampion_gi"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/streetmime
 	name = "street mime suit"
 	desc = "Although unorthodoxly colorful, it is practical for standing out in space France."
-	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'icons/mob/clothing/uniform.dmi'
 	icon_state = "streetmime"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/milkman
 	name = "milkman suit"
 	desc = "I am the Milkman. My milk is delicious!"
-	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'icons/mob/clothing/uniform.dmi'
 	icon_state = "milkman"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/batter
 	name = "batter uniform"
 	desc = "Purification in Progress."
-	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'icons/mob/clothing/uniform.dmi'
 	icon_state = "batter"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/tragic
 	name = "tragic mime suit"
 	desc = "A skin-tight black suit for theatre actors. You feel the need to remind a doctor to eat food and sleep."
-	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'icons/mob/clothing/uniform.dmi'
 	icon_state = "tragic"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|HANDS|FEET
 	alternate_worn_layer = GLOVES_LAYER
@@ -83,16 +83,16 @@
 /obj/item/clothing/under/costume/harlequin
 	name = "harlequin jumpsuit"
 	desc = "This is what you wear if you wanna be a weird fusion of a clown and mime."
-	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'icons/mob/clothing/uniform.dmi'
 	icon_state = "harlequin"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/bee
 	name = "bee hide costume"
 	desc = "A suit made of beehide"
-	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'icons/mob/clothing/uniform.dmi'
 	icon_state = "bee"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	can_adjust = FALSE
@@ -100,8 +100,8 @@
 /obj/item/clothing/under/costume/cop_mascot
 	name = "policeman mascot suit"
 	desc = "A blue police mascot suit. On the chest is a star badge with an eye in the middle. You feel like you should be chopping people apart with power tools while wearing this."
-	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'icons/mob/clothing/uniform.dmi'
 	icon_state = "cop_mascot"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|HANDS|FEET
 	alternate_worn_layer = GLOVES_LAYER
@@ -110,16 +110,16 @@
 /obj/item/clothing/under/costume/crueltysquad_under
 	name = "CSIJ level I body armor"
 	desc = "Armor used by assassins working for Cruelty Squad, stripped of all of its functions for kids to play with."
-	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'icons/mob/clothing/uniform.dmi'
 	icon_state = "crueltysquad_under"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/infinity_under
 	name = "infinity shorts"
 	desc = "Worn by those who want more matching team colors."
-	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'icons/mob/clothing/uniform.dmi'
 	icon_state = "infinity_shorts"
 	body_parts_covered = CHEST|GROIN|LEGS
 	can_adjust = FALSE
@@ -127,8 +127,8 @@
 /obj/item/clothing/under/costume/bb_dress
 	name = "bb dress"
 	desc = "Howdy, it's me BB. Zines, zines, zines."
-	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'icons/mob/clothing/uniform.dmi'
 	icon_state = "bb_dress"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
@@ -136,8 +136,8 @@
 /obj/item/clothing/under/costume/citizen_uniform
 	name = "citizen uniform"
 	desc = "A blue matching uniform. It makes you feel like you're in a labor camp."
-	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'icons/mob/clothing/uniform.dmi'
 	icon_state = "citizen_uniform"
 	can_adjust = FALSE
 /*
@@ -176,8 +176,8 @@ BUNNY SUITS
 /obj/item/clothing/under/costume/playbunny
 	name = "bunny suit"
 	desc = "The staple of any bunny themed waiters and the like. It has a little cottonball tail too."
-	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'icons/mob/clothing/uniform.dmi'
 	icon_state = "playbunny"
 	greyscale_colors = "#39393f#39393f#ffffff#87502e"
 	greyscale_config = /datum/greyscale_config/bunnysuit
@@ -194,8 +194,8 @@ BUNNY SUITS
 /obj/item/clothing/under/syndicate/syndibunny //heh
 	name = "blood-red bunny suit"
 	desc = "The staple of any bunny themed syndicate assassins. Are those carbon nanotube stockings?"
-	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'icons/mob/clothing/uniform.dmi'
 	icon_state = "syndibunny"
 	body_parts_covered = CHEST|GROIN|LEGS
 

@@ -1,7 +1,7 @@
 /obj/machinery/player_hologram
 	name = "holographic display"
 	desc = "This is how the Observers observe"
-	icon = 'monkestation/icons/obj/machines/holo.dmi'
+	icon = 'icons/obj/machines/holo.dmi'
 	icon_state = "display_base"
 
 	var/mutable_appearance/copied_appearance

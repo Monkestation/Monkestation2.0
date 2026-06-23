@@ -502,7 +502,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /// A preview of a character for use in the preferences menu
 /atom/movable/screen/map_view/char_preview
 	name = "character_preview"
-	icon = 'monkestation/icons/hud/screen_gen64x32.dmi'
+	icon = 'icons/hud/screen_gen64x32.dmi'
 	bound_height = 64
 
 	/// The body that is displayed

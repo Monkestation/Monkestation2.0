@@ -1,6 +1,6 @@
 /obj/item/nanite_scanner
 	name = "nanite scanner"
-	icon = 'monkestation/icons/obj/device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "nanite_scanner"
 	worn_icon_state = "electronic"
 	desc = "A hand-held body scanner able to detect nanites and their programming."

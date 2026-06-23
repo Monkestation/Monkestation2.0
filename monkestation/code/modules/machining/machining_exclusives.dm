@@ -102,8 +102,8 @@
 	icon = 'icons/obj/weapons/guns/minigun.dmi'
 	icon_state = "pulsecaster"
 	inhand_icon_state = "pulsecaster"
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	slowdown = 1
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
@@ -174,7 +174,7 @@
 	icon_state = "mecha_abooster_proj"
 	iconstate_name = "shield"
 	protect_name = "Extra Integrity"
-	icon = 'monkestation/icons/obj/machining_intermediates.dmi'
+	icon = 'icons/obj/machining_intermediates.dmi'
 	icon_state = "hardenedexosuit_part"
 	armor_mod = /datum/armor/mecha_equipment_parts
 	var/extra_integrity_mod = 1.25
@@ -209,7 +209,7 @@
 /obj/item/mecha_parts/mecha_equipment/armor/hardened_exosuit_plate
 	name = "Hardened Exosuit Part"
 	desc = "Hardened armoured plates that hardens the protection of an exosuit, it appears to be custom-made"
-	icon = 'monkestation/icons/obj/machining_intermediates.dmi'
+	icon = 'icons/obj/machining_intermediates.dmi'
 	icon_state = "hardenedexosuit_plate"
 	armor_mod = /datum/armor/mecha_machined_armor
 
@@ -229,7 +229,7 @@
 /obj/item/mecha_parts/mecha_equipment/armor/hardened_exosuit_plate/forged
 	name = "Forged Exosuit Part"
 	desc = "Forged armoured plates that greatly hardens the protection of an exosuit, it appears to be custom-made"
-	icon = 'monkestation/icons/obj/machining_intermediates.dmi'
+	icon = 'icons/obj/machining_intermediates.dmi'
 	icon_state = "forgedexosuit_plate"
 	armor_mod = /datum/armor/mecha_machined_armor_forged
 

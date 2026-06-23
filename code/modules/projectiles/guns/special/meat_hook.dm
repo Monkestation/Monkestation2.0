@@ -89,7 +89,7 @@
 /obj/item/gun/magic/hook/contractor
 	name = "SCORPION hook"
 	desc = "A hardlight hook used to non-lethally pull targets much closer to the user."
-	icon = 'monkestation/icons/obj/guns/magic.dmi'
+	icon = 'icons/obj/guns/magic.dmi'
 	icon_state = "contractor_hook"
 	inhand_icon_state = "" //nah
 	ammo_type = /obj/item/ammo_casing/magic/hook/contractor

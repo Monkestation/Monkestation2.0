@@ -3,7 +3,7 @@
 	desc = "Draw biomass from the ground."
 	cooldown_time = 5 SECONDS
 	shared_cooldown = NONE
-	background_icon = 'monkestation/icons/mob/actions/backgrounds.dmi'
+	background_icon = 'icons/mob/actions/backgrounds.dmi'
 	background_icon_state = "bg_bloodling"
 	button_icon = 'monkestation/code/modules/antagonists/bloodling/sprites/bloodling_abilities.dmi'
 	button_icon_state = "ascend"

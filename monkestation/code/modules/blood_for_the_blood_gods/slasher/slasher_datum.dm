@@ -40,7 +40,7 @@
 	job_rank = ROLE_SLASHER
 	antag_hud_name = "slasher"
 	show_name_in_check_antagonists = TRUE
-	hud_icon = 'monkestation/icons/mob/slasher.dmi'
+	hud_icon = 'icons/mob/slasher.dmi'
 	preview_outfit = /datum/outfit/slasher/slasher
 	show_to_ghosts = TRUE
 	var/give_objectives = TRUE
@@ -159,12 +159,12 @@
 
 	cached_brute_mod = human.dna.species.brutemod
 	current_mob.alpha = 200
-	current_mob.playsound_local(current_mob, 'monkestation/sound/effects/tape_start.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
+	current_mob.playsound_local(current_mob, 'sound/effects/tape_start.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
 
 /datum/antagonist/slasher/proc/on_death(mob/living/source)
 	SIGNAL_HANDLER
 	source.mind.remove_antag_datum(/datum/antagonist/slasher)
-	playsound(source, 'monkestation/sound/effects/tape_end.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
+	playsound(source, 'sound/effects/tape_end.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
 	var/mob/living/carbon/human/source_human = source
 	source_human.delete_equipment()
 
@@ -195,7 +195,7 @@
 
 	to_chat(owner.current, span_announce("Claim the souls of the fallen, the more souls you have, the sharper your blade."))
 	to_chat(owner.current, span_announce("Reject the light, it hides you but makes you vulnerable."))
-	owner.current.playsound_local(null, 'monkestation/sound/ambience/antag/slasher.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
+	owner.current.playsound_local(null, 'sound/ambience/antag/slasher.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
 	owner.announce_objectives()
 
 /datum/antagonist/slasher/proc/LifeTick(mob/living/source, seconds_between_ticks, times_fired)

@@ -105,7 +105,7 @@
 //ported from https://github.com/tgstation/tgstation/pull/74938
 /obj/item/knife/kitchen/silicon
 	name = "Kitchen Toolset"
-	icon = 'monkestation/icons/obj/kitchen.dmi'
+	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "sili_knife"
 	desc = "A breakthrough in synthetic engineering, this tool is a knife programmed to dull when not used for cooking purposes, and can exchange the blade for a rolling pin"
 	force = 0

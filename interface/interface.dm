@@ -190,3 +190,17 @@ GLOBAL_LIST_INIT(important_interface_verbs, list(
 		GLOB.hotkeys_tgui = new /datum/hotkeys_help()
 
 	GLOB.hotkeys_tgui.ui_interact(mob)
+
+/client/verb/show_tickets()
+	set name = "Tickets"
+	set desc = "Show list of tickets"
+	set category = "Admin"
+
+	if(!holder)
+		if(current_ticket && current_ticket.state == AHELP_ACTIVE)
+			current_ticket.TicketPanel()
+			return
+		to_chat(src, span_danger("You have no open tickets!"))
+		return
+
+	GLOB.ahelp_tickets.ui_interact(mob)

@@ -366,7 +366,7 @@
 
 //MONKESTATION ADDITION
 /area/ruin/space/ks13/monke/engineering
-	icon = 'monkestation/icons/area/areas_derelict.dmi'
+	icon = 'icons/area/areas_derelict.dmi'
 
 /area/ruin/space/ks13/monke/engineering/engine_hallway
 	name = "\improper Derelict Engineering Hallway"

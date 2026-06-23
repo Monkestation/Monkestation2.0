@@ -123,10 +123,10 @@
 /obj/item/clothing/head/helmet/surplus
 	name = "surplus helmet"
 	desc = "Standard Security gear. Protects the head from impacts."
-	icon = 'monkestation/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/icons/mob/head.dmi'
-	lefthand_file = 'monkestation/icons/mob/inhands/equipment/helmet_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/equipment/helmet_righthand.dmi'
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/head.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/helmet_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/helmet_righthand.dmi'
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
@@ -272,8 +272,8 @@
 /obj/item/clothing/head/helmet/guardmanhelmet
 	name = "guardman's helmet"
 	desc = "Keeps your brain intact when fighting heretics"
-	icon = 'monkestation/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	icon_state = "guardman_helmet"
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'

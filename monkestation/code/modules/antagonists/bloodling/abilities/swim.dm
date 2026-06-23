@@ -4,7 +4,7 @@
 	cooldown_time = 5 SECONDS
 	biomass_cost = 30
 	shared_cooldown = NONE
-	background_icon = 'monkestation/icons/mob/actions/backgrounds.dmi'
+	background_icon = 'icons/mob/actions/backgrounds.dmi'
 	background_icon_state = "bg_bloodling"
 	button_icon = 'monkestation/code/modules/antagonists/bloodling/sprites/bloodling_abilities.dmi'
 	button_icon_state = "swim"
@@ -26,9 +26,9 @@
 	our_mob.spawn_gibs()
 	var/icon_was = our_mob.icon_state
 	our_mob.icon_state = ""
-	
+
 	sleep(5)
-	
+
 	do_teleport(owner, get_turf(target), no_effects=TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
 	our_mob.spawn_gibs()
 	playsound(get_turf(owner), 'sound/effects/blobattack.ogg', 30)
