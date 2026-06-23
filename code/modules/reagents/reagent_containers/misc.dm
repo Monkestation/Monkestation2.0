@@ -196,7 +196,7 @@
 /obj/item/reagent_containers/cup/fuelcanister/examine(mob/user)
 	. = ..()
 	. += span_notice("It's [cap_on ? "capped" : "uncapped"].")
-	if(src.loc == user)
+	if(loc == user)
 		. += span_notice("It feels [get_volume_description()].")
 
 /obj/item/reagent_containers/cup/fuelcanister/add_context(atom/source, list/context, obj/item/held_item, mob/user)
