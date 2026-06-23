@@ -346,3 +346,6 @@
   - balance: removed the stun to yourself when harmbatoning with an active stun baton.
   - balance: stun batons and snatcher apply stun when harmbatoning if active.
   - code_imp: de-modularized contractor baton code.
+2026-06-23:
+  Shoddd:
+  - balance: pka pistol now has a 210% capacity

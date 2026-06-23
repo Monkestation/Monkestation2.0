@@ -21,6 +21,15 @@
 			range++
 		if(range > 0)
 			return BULLET_ACT_FORCE_PIERCE
+	if(istype(target,/obj/structure/foamedmetal))
+		var/obj/structure/foamedmetal/foamy_metal = target
+		if(!QDELETED(foamy_metal))
+			qdel(foamy_metal)
+		if(mine_range)
+			mine_range--
+			range++
+		if(range > 0)
+			return BULLET_ACT_FORCE_PIERCE
 
 /obj/projectile/plasma/adv
 	damage = 7
