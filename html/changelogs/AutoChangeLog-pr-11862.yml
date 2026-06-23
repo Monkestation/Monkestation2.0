@@ -1,0 +1,10 @@
+author: "Bibby0110, Chubbygummibear, JamieD1, redmoogle, maxion12345, Jupyterkat, Oblisk234, ToasterBiome, LemonInTheDark, JohnFulpWillard"
+delete-after: True
+changes:
+  - rscadd: "AIs are now stored in data cores around the station, destroying an AI requires destroying these cores."
+  - rscadd: "AIs now have CPU they can spend to generate AI research points or on new upgrades, such as being able to examine humans."
+  - rscadd: "Signal Technicians are now Network Admins and work closely with the new AI's mechanics, such as server racks to build extra processing power."
+  - balance: "RD now has Telecomms access (they already have Network access and are close with Telecommunications equipment already)."
+  - balance: "AIs and AI machinery generates heat and must be cooled down, otherwise the AI will suffer. Satellites are now cooled at roundstart now to accompany this (like Telecomms and RnD Servers)."
+  - balance: "AIs can no longer examine humans by default, as it is now an AI project. Examining everything else still works as normal."
+  - bugfix: "Fixed Engineering and Science getting eachother's circuit imprinters."

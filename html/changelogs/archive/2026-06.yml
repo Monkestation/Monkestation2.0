@@ -276,3 +276,76 @@
   - balance: Ambu bags oxygen healing has been reduced (15->10)
   Tractor-Maam:
   - spellcheck: being clumsy with a scanner wand no longer misgenders you
+2026-06-20:
+  Barrel, Xackii, mcbalaam:
+  - code_imp: Ported big manipulator from tgstation. Use monkeys as free labor.
+  BobDABuilder9001:
+  - balance: super duper lube makes you slide for wayyyy longer (honk)
+  - balance: super duper lube is blacklisted from lesser strange seeds
+  Cujo:
+  - rscdel: Removes a duplicate shower drain in Tramstation Medical
+  - rscadd: Sleepers now take a second to drag someone inside
+  JupiterJaeden:
+  - qol: Security records notes now allow you to put in punctuation and varied capitalization,
+      Instead Of Always Looking Like This.
+  - qol: The max length of crime names has been extended to fill the available space
+      in the records console UI.
+  - bugfix: Long crime names will no longer be cut off by a few characters when put
+      into the records console.
+  - bugfix: Security huds no longer allow you to put in infinitely long crime names
+      through the examine menu.
+  Singul0:
+  - rscadd: Adds 4 new engineering tutorials, on how to setup all the various engines
+      that power the station and also one on space construction! Try it on the centcom
+      simulation tutorial chamber today!
+  - qol: Remodeled Centcom to make tutorial simulations to be more visible.
+  paganiy, SirNightKnight:
+  - bugfix: fixed cycler shotgun double ammo consumption
+  - bugfix: fixed racking action on the cycler shotgun
+  - bugfix: bounty hunter cycler shotgun now properly fires incendiary rounds from
+      secondary tube
+2026-06-21:
+  SirNightKnight:
+  - rscdel: removed the alternate HOP, captain, CMO RD berets along with the QM berets.
+  - code_imp: cleaned up some beret code overwrites.
+2026-06-22:
+  Mantlecrawler:
+  - rscadd: Becoming a lunatic via the moon heretics ascension now puts a giant moon
+      icon above your head, denoting you as a antag.
+  PotatoTomahto:
+  - balance: Advances in spray bottle technology allow the spray to travel twice as
+      fast
+  Shoddd:
+  - admin: Having over required living minutes lets you skip interviews and VPN interview
+  - balance: removes darkness adapt from lings, augmented eyesight now gives night
+      vision
+  Sorenon:
+  - rscadd: Added three different modes to job selection (Simple, Character Filters,
+      Per Character Priorities)
+  - qol: Moved antag preferences out of character settings since they don't depend
+      on the selected character
+  TheColorCyan, SirNightKnight:
+  - balance: oozelings have inherit slime wetness stacks instead of fire immunity.
+      slime wetness stacks also cancel out regular wetness stacks and protect against
+      water exposure.
+  - balance: removed the oozeling hydrophobia ability.
+  - balance: the radioactive mutation is not compatible with oozeling DNA.
+  - balance: oozelings lose more blood from water exposure
+  - balance: when starving, oozelings will regain nutriment from cannibalizing their
+      own blood
+  byondsucks:
+  - balance: Pride pin no longer gives you a positive moodlet
+  flleeppyy:
+  - rscadd: you can now toggle unlimited tgui windows in preferences.
+  necromanceranne, grungussuss, SirNightKnight:
+  - image: added inhand sprites for when stun batons are on. ported from TG.
+  - rscadd: stun batons and cattle prods emit light when on.
+  - sound: changed sounds for stun baton, stun prod, contractor baton and telescopic
+      baton
+  - code_imp: made it easier to modify turning on and turning off for batons
+  - balance: removed the stun to yourself when harmbatoning with an active stun baton.
+  - balance: stun batons and snatcher apply stun when harmbatoning if active.
+  - code_imp: de-modularized contractor baton code.
+2026-06-23:
+  Shoddd:
+  - balance: pka pistol now has a 210% capacity

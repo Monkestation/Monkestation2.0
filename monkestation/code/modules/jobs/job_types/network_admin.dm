@@ -1,5 +1,5 @@
 /datum/job/signal_technician
-	title = JOB_SIGNAL_TECHNICIAN
+	title = JOB_NETWORK_ADMIN
 	description = "An agent of order. Make sure Tcomms runs and code in your offtime."
 	department_head = list(JOB_CHIEF_ENGINEER)
 	faction = FACTION_STATION
@@ -45,21 +45,21 @@
 		/obj/item/wrench/bolter = 8,
 		/obj/item/clothing/head/utility/hardhat/upgraded = 1
 	)
-	rpg_title = "Telecommunications goblin"
+	rpg_title = "Telecommunications Goblin"
 	job_flags = STATION_JOB_FLAGS
 
 	alt_titles = list(
+		JOB_NETWORK_ADMIN,
 		JOB_SIGNAL_TECHNICIAN,
-		"Network Admin",
 		"Telecomunications Engineer",
 	)
 
-/obj/effect/landmark/start/signal_technician
-	name = JOB_SIGNAL_TECHNICIAN
-	icon_state = JOB_SIGNAL_TECHNICIAN
+/obj/effect/landmark/start/network_admin
+	name = JOB_NETWORK_ADMIN
+	icon_state = JOB_NETWORK_ADMIN
 
 /datum/outfit/job/signal_tech
-	name = JOB_SIGNAL_TECHNICIAN
+	name = JOB_NETWORK_ADMIN
 	jobtype = /datum/job/signal_technician
 
 	id_trim = /datum/id_trim/job/signal_technician
@@ -67,7 +67,7 @@
 	uniform = /obj/item/clothing/under/rank/engineering/signal_tech
 	suit = /obj/item/clothing/suit/hooded/wintercoat/engineering/signal_tech
 	belt = /obj/item/storage/belt/utility/full/engi
-	ears = /obj/item/radio/headset/headset_eng
+	ears = /obj/item/radio/headset/headset_network
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/workboots
 
@@ -82,7 +82,7 @@
 	skillchips = list(/obj/item/skillchip/job/engineer)
 
 /datum/outfit/plasmaman/signal_tech
-	name = "Signal Technician Plasmaman"
+	name = JOB_NETWORK_ADMIN + " Plasmaman"
 
 	uniform = /obj/item/clothing/under/plasmaman/engineering/signal_tech
 	gloves = /obj/item/clothing/gloves/color/plasmaman/engineer

@@ -736,6 +736,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	always_up = initial(always_up)
 	manual_control = FALSE
 	remote_controller = null
+	if(!QDELETED(src))
+		INVOKE_ASYNC(src, PROC_REF(popDown))
 	return TRUE
 
 /obj/machinery/porta_turret/proc/InterceptClickOn(mob/living/user, params, atom/A)

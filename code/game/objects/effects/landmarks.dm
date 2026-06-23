@@ -77,7 +77,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/bitrunner
 	name = "Bitrunner"
-	icon_state = "Bitrunner"
+	icon_state = JOB_BITRUNNER
 
 /obj/effect/landmark/start/bartender
 	name = "Bartender"
@@ -129,8 +129,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/bridge_assistant
 	name = "Bridge Assistant"
-	icon_state = JOB_ASSISTANT //icon_state is case sensitive. why are all of these capitalized? because fuck you that's why
-	color = COLOR_NAVY //IM LAZY OKAY
+	icon_state = JOB_BRIDGE_ASSISTANT
 
 /obj/effect/landmark/start/detective
 	name = "Detective"
@@ -194,7 +193,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/virologist
 	name = "Pathologist"
-	icon_state = "Virologist"
+	icon_state = JOB_VIROLOGIST
 
 /obj/effect/landmark/start/psychologist
 	name = "Psychologist"
@@ -211,24 +210,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/cyborg
 	name = "Cyborg"
 	icon_state = "Cyborg"
-
-/obj/effect/landmark/start/ai
-	name = "AI"
-	icon_state = "AI"
-	delete_after_roundstart = FALSE
-	var/primary_ai = TRUE
-	var/latejoin_active = TRUE
-
-/obj/effect/landmark/start/ai/after_round_start()
-	if(latejoin_active && !used)
-		new /obj/structure/ai_core/latejoin_inactive(loc)
-	return ..()
-
-/obj/effect/landmark/start/ai/secondary
-	icon = 'icons/effects/landmarks_static.dmi'
-	icon_state = "ai_spawn"
-	primary_ai = FALSE
-	latejoin_active = FALSE
 
 //Department Security spawns
 

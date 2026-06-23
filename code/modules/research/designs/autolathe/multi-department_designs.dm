@@ -223,6 +223,18 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
 
+/datum/design/fuelcanister
+	name = "Fuel Canister"
+	id = "fuel_canister"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/reagent_containers/cup/fuelcanister
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
+
 /datum/design/boxcutter
 	name = "Boxcutter"
 	id = "boxcutter"
