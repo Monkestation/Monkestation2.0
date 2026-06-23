@@ -1007,7 +1007,7 @@
 "acC" = (
 /obj/structure/sign{
 	name = "wall";
-	icon = 'monkestation/icons/turf/walls/reinforced_wall.dmi';
+	icon = 'icons/turf/walls/reinforced_wall.dmi';
 	icon_state = "reinforced_wall-12";
 	pixel_y = -32
 	},
@@ -1309,7 +1309,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/sign{
 	name = "wall";
-	icon = 'monkestation/icons/turf/walls/reinforced_wall.dmi';
+	icon = 'icons/turf/walls/reinforced_wall.dmi';
 	icon_state = "reinforced_wall-3";
 	desc = "Effectively impervious to conventional methods of destruction.";
 	pixel_x = 32
@@ -12325,7 +12325,7 @@
 /area/centcom/central_command_areas/admin_hangout)
 "aGX" = (
 /obj/item/kirbyplants/random{
-	icon = 'monkestation/icons/obj/plants.dmi';
+	icon = 'icons/obj/plants.dmi';
 	icon_state = "plant-28"
 	},
 /turf/open/floor/fakespace,
@@ -18316,7 +18316,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/sign{
 	name = "wall";
-	icon = 'monkestation/icons/turf/walls/reinforced_wall.dmi';
+	icon = 'icons/turf/walls/reinforced_wall.dmi';
 	icon_state = "reinforced_wall-3";
 	desc = "Effectively impervious to conventional methods of destruction.";
 	pixel_x = 32
@@ -25056,7 +25056,7 @@
 	},
 /obj/structure/sign{
 	name = "wall";
-	icon = 'monkestation/icons/turf/walls/reinforced_wall.dmi';
+	icon = 'icons/turf/walls/reinforced_wall.dmi';
 	icon_state = "reinforced_wall-12";
 	pixel_y = -32
 	},
@@ -26128,7 +26128,7 @@
 	},
 /obj/machinery/light/floor/has_bulb,
 /obj/item/kirbyplants/random{
-	icon = 'monkestation/icons/obj/plants.dmi';
+	icon = 'icons/obj/plants.dmi';
 	icon_state = "plant-28"
 	},
 /turf/open/floor/fakespace,
@@ -26562,7 +26562,7 @@
 	},
 /obj/machinery/light/floor/has_bulb,
 /obj/item/kirbyplants/random{
-	icon = 'monkestation/icons/obj/plants.dmi';
+	icon = 'icons/obj/plants.dmi';
 	icon_state = "plant-28"
 	},
 /turf/open/floor/fakespace,
@@ -27869,7 +27869,7 @@
 	layer = 2.8
 	},
 /obj/item/kirbyplants/random{
-	icon = 'monkestation/icons/obj/plants.dmi';
+	icon = 'icons/obj/plants.dmi';
 	icon_state = "plant-28"
 	},
 /turf/open/floor/fakespace,
@@ -31429,7 +31429,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/sign{
 	name = "wall";
-	icon = 'monkestation/icons/turf/walls/reinforced_wall.dmi';
+	icon = 'icons/turf/walls/reinforced_wall.dmi';
 	icon_state = "reinforced_wall-3";
 	desc = "Effectively impervious to conventional methods of destruction.";
 	pixel_x = 32
@@ -31837,7 +31837,7 @@
 "vsR" = (
 /obj/structure/sign{
 	name = "wall";
-	icon = 'monkestation/icons/turf/walls/reinforced_wall.dmi';
+	icon = 'icons/turf/walls/reinforced_wall.dmi';
 	icon_state = "reinforced_wall-12";
 	pixel_y = -32
 	},
