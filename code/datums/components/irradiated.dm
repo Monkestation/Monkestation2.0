@@ -6,6 +6,8 @@
 #define RADIATION_BURN_SPLOTCH_DAMAGE 11
 #define RADIATION_BURN_INTERVAL_MIN (30 SECONDS)
 #define RADIATION_BURN_INTERVAL_MAX (60 SECONDS)
+#define RADIATION_BURN_INTERVAL_MIN_GOBLIN (90 SECONDS)
+#define RADIATION_BURN_INTERVAL_MAX_GOBLIN (120 SECONDS)
 
 // Showers process on SSmachines
 #define RADIATION_CLEAN_IMMUNITY_TIME (SSMACHINES_DT + (1 SECONDS))
@@ -120,10 +122,13 @@
 	COOLDOWN_START(src, last_tox_damage, RADIATION_TOX_INTERVAL)
 
 /datum/component/irradiated/proc/start_burn_splotch_timer()
-	if(is_species(parent, SPECIES_GOBLIN))
-		addtimer(CALLBACK(src, PROC_REF(give_burn_splotches)), rand(RADIATION_BURN_INTERVAL_MIN * 3, RADIATION_BURN_INTERVAL_MAX * 2), TIMER_STOPPABLE)
-	else
-		addtimer(CALLBACK(src, PROC_REF(give_burn_splotches)), rand(RADIATION_BURN_INTERVAL_MIN, RADIATION_BURN_INTERVAL_MAX), TIMER_STOPPABLE)
+    var/min_time = RADIATION_BURN_INTERVAL_MIN
+    var/max_time = RADIATION_BURN_INTERVAL_MAX
+    if(is_species(parent, /datum/species/goblin))
+        min_time = RADIATION_BURN_INTERVAL_MIN_GOBLIN
+        max_time = RADIATION_BURN_INTERVAL_MAX_GOBLIN
+
+    burn_splotch_timer_id = addtimer(CALLBACK(src, PROC_REF(give_burn_splotches)), rand(min_time, max_time), TIMER_STOPPABLE)
 
 /datum/component/irradiated/proc/give_burn_splotches()
 	// This shouldn't be possible, but just in case.
@@ -208,6 +213,8 @@
 #undef RADIATION_BURN_SPLOTCH_DAMAGE
 #undef RADIATION_BURN_INTERVAL_MIN
 #undef RADIATION_BURN_INTERVAL_MAX
+#undef RADIATION_BURN_INTERVAL_MIN_GOBLIN
+#undef RADIATION_BURN_INTERVAL_MAX_GOBLIN
 #undef RADIATION_CLEAN_IMMUNITY_TIME
 #undef RADIATION_IMMEDIATE_TOX_DAMAGE
 #undef RADIATION_TOX_INTERVAL
