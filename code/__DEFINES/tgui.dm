@@ -11,6 +11,8 @@
 #define TGUI_WINDOW_SOFT_LIMIT 5
 /// Maximum number of open windows
 #define TGUI_WINDOW_HARD_LIMIT 9
+/// Maximum number of open windows when user has prefs set to unlimited, basically infinite you dont need 99 windows.
+#define TGUI_WINDOW_UNLIMITED_LIMIT 99
 
 /// Maximum ping timeout allowed to detect zombie windows
 #define TGUI_PING_TIMEOUT (4 SECONDS)

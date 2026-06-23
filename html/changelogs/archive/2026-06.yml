@@ -304,3 +304,45 @@
   - bugfix: fixed racking action on the cycler shotgun
   - bugfix: bounty hunter cycler shotgun now properly fires incendiary rounds from
       secondary tube
+2026-06-21:
+  SirNightKnight:
+  - rscdel: removed the alternate HOP, captain, CMO RD berets along with the QM berets.
+  - code_imp: cleaned up some beret code overwrites.
+2026-06-22:
+  Mantlecrawler:
+  - rscadd: Becoming a lunatic via the moon heretics ascension now puts a giant moon
+      icon above your head, denoting you as a antag.
+  PotatoTomahto:
+  - balance: Advances in spray bottle technology allow the spray to travel twice as
+      fast
+  Shoddd:
+  - admin: Having over required living minutes lets you skip interviews and VPN interview
+  - balance: removes darkness adapt from lings, augmented eyesight now gives night
+      vision
+  Sorenon:
+  - rscadd: Added three different modes to job selection (Simple, Character Filters,
+      Per Character Priorities)
+  - qol: Moved antag preferences out of character settings since they don't depend
+      on the selected character
+  TheColorCyan, SirNightKnight:
+  - balance: oozelings have inherit slime wetness stacks instead of fire immunity.
+      slime wetness stacks also cancel out regular wetness stacks and protect against
+      water exposure.
+  - balance: removed the oozeling hydrophobia ability.
+  - balance: the radioactive mutation is not compatible with oozeling DNA.
+  - balance: oozelings lose more blood from water exposure
+  - balance: when starving, oozelings will regain nutriment from cannibalizing their
+      own blood
+  byondsucks:
+  - balance: Pride pin no longer gives you a positive moodlet
+  flleeppyy:
+  - rscadd: you can now toggle unlimited tgui windows in preferences.
+  necromanceranne, grungussuss, SirNightKnight:
+  - image: added inhand sprites for when stun batons are on. ported from TG.
+  - rscadd: stun batons and cattle prods emit light when on.
+  - sound: changed sounds for stun baton, stun prod, contractor baton and telescopic
+      baton
+  - code_imp: made it easier to modify turning on and turning off for batons
+  - balance: removed the stun to yourself when harmbatoning with an active stun baton.
+  - balance: stun batons and snatcher apply stun when harmbatoning if active.
+  - code_imp: de-modularized contractor baton code.
