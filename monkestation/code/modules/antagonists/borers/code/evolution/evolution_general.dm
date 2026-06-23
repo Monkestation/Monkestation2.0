@@ -27,21 +27,35 @@
 	gain_text = "Of the biggest ones, a few have managed to resist the effects of sugar. Truly concerning if we wish to keep them contained."
 	evo_cost = 5
 	tier = 6
+	unlocked_evolutions = list(/datum/borer_evolution/acidic_boring)
+
 
 /datum/borer_evolution/sugar_immunity/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
 	. = ..()
 	cortical_owner.upgrade_flags |= BORER_SUGAR_IMMUNE
 
-/datum/borer_evolution/synthetic_borer
-	name = "Synthetic Boring"
-	desc = "Gain the ability to take synthetic humans as a host as well."
+/datum/borer_evolution/acidic_boring
+	name = "Acidic Boring"
+	desc = "Gain the ability to bore through thick clothing, through the use of acid."
+	gain_text = "Over time, some became painful to the touch, later identififed to be acid on their skin."
+	evo_cost = 4
+	tier = 7
+
+/datum/borer_evolution/acidic_boring/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
+	. = ..()
+	cortical_owner.upgrade_flags |= BORER_ACID_SKIN
+
+/datum/borer_evolution/advanced_borer
+	name = "Advanced Boring"
+	desc = "Gain the ability to take more complex lifeforms as hosts. Namely, changlings and IPCs."
 	gain_text = "Now, we used robots to take care of the worms when they're alive, but one day... they all went haywire. Security took them down, closer inspection showed that the worms managed their way into the processing units."
 	evo_cost = 6
 	tier = 6
 
-/datum/borer_evolution/synthetic_borer/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
+/datum/borer_evolution/advanced_borer/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
 	. = ..()
 	cortical_owner.organic_restricted = FALSE
+	cortical_owner.changeling_restricted = FALSE
 
 /datum/borer_evolution/synthetic_chems_positive
 	name = "Synthetic Chemicals (+)"

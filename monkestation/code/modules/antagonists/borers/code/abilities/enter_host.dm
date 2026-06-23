@@ -78,7 +78,7 @@
 				to_chat(cortical_owner, span_warning("[listed_human] has incompatible biology with us!"))
 				continue
 		// hosts cannot have bio protected headgear
-		if(check_for_bio_protection(listed_human) == TRUE)
+		if(check_for_bio_protection(listed_human) && !(cortical_owner.upgrade_flags & BORER_ACID_SKIN))
 			to_chat(cortical_owner, span_warning("[listed_human] has too hard of a helmet to crawl inside of their ear!"))
 			continue
 		usable_hosts += listed_human
@@ -97,7 +97,7 @@
 
 /datum/action/cooldown/borer/choosing_host/proc/enter_host(mob/living/carbon/human/singular_host)
 	var/mob/living/basic/cortical_borer/cortical_owner = owner
-	if(check_for_bio_protection(singular_host))
+	if(check_for_bio_protection(singular_host) && !(cortical_owner.upgrade_flags & BORER_ACID_SKIN))
 		owner.balloon_alert(owner, "target head too protected!")
 		return
 	if(singular_host.has_borer())

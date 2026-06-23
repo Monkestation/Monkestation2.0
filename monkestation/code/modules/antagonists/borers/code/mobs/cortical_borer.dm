@@ -1,6 +1,6 @@
-GLOBAL_VAR_INIT(objective_egg_borer_number, 2)
-GLOBAL_VAR_INIT(objective_egg_egg_number, 5)
-GLOBAL_VAR_INIT(objective_willing_hosts, 2)
+GLOBAL_VAR_INIT(objective_egg_borer_number, rand(2, 4))
+GLOBAL_VAR_INIT(objective_egg_egg_number, rand(3, 8))
+GLOBAL_VAR_INIT(objective_willing_hosts, rand(2, 4))
 
 GLOBAL_VAR_INIT(successful_egg_number, 0)
 GLOBAL_LIST_EMPTY(willing_hosts)
@@ -170,6 +170,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 		/datum/reagent/toxin/formaldehyde,
 		/datum/reagent/toxin/heparin,
 		/datum/reagent/toxin/mindbreaker,
+		/datum/reagent/toxin/plasma,
 	)
 	/// Blacklisted chemicals - separate from chemicals that cannot be synthesized, borers specifically cannot learn these
 	var/list/blacklisted_chemicals = list()
@@ -240,8 +241,8 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	var/blood_chems_learned = 0
 	/// We dont want to spam the chat
 	var/deathgasp_once = FALSE
-	// The limit to the chemical and stat evolution
-	var/limited_borer = 10
+	/// The limit to the chemical and stat evolution
+	var/max_point_storage = 10
 	/// Borers can only enter biologicals if true
 	var/organic_restricted = TRUE
 	/// Borers are unable to enter changelings if true
@@ -277,6 +278,9 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 
 	/// Skips unique borer status tab text, used for unique borer subtypes with their own status tabs
 	var/skip_status_tab = FALSE
+
+	/// Holds the borer's "Learn Blood Chemical" ability, if theyve evolved it
+	var/datum/action/cooldown/borer/learn_bloodchemical/chemical_copy
 
 /mob/living/basic/cortical_borer/can_track(mob/living/user)
 	return FALSE // The validhunt box machines are onto us, we cannot let them track us
@@ -565,14 +569,14 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 
 	var/maturity_threshold = calculate_maturation_discounts()
 	if(!chem_point_gained && maturity_age >= maturity_threshold)
-		if(chemical_evolution < limited_borer) //you can only have a default of 10 at a time
+		if(chemical_evolution < max_point_storage) //you can only have a default of 10 at a time
 			chemical_evolution++
 			to_chat(src, span_notice("You gain a chemical evolution point. Spend it to learn a new chemical!"))
 		else
 			to_chat(src, span_warning("You were unable to gain a chemical evolution point due to having the max!"))
 		chem_point_gained = TRUE
 	if(maturity_age >= (maturity_threshold * 2))
-		if(stat_evolution < limited_borer)
+		if(stat_evolution < max_point_storage)
 			stat_evolution++
 			to_chat(src, span_notice("You gain a stat evolution point. Spend it to become stronger!"))
 		else

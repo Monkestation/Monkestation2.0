@@ -112,7 +112,7 @@
 	tier = 5
 	unlocked_evolutions = list(
 		/datum/borer_evolution/sugar_immunity,
-		/datum/borer_evolution/synthetic_borer,
+		/datum/borer_evolution/advanced_borer,
 		/datum/borer_evolution/synthetic_chems_negative,
 	)
 	added_action = /datum/action/cooldown/borer/empowered_offspring
