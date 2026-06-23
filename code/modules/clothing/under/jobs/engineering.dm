@@ -74,8 +74,8 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/under/rank/engineering/signal_tech
-	name = "signal technician's jumpsuit"
-	desc = "It's an orange high visibility jumpsuit with green stripes worn by signal technicians. Made from fire resistant materials."
+	name = "network admin's jumpsuit"
+	desc = "It's an orange high visibility jumpsuit with green stripes worn by network admins. Made from fire resistant materials."
 	icon = 'icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'icons/mob/clothing/uniform.dmi'
 	icon_state = "signal_tech"

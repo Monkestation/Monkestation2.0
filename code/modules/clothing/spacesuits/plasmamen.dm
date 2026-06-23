@@ -416,8 +416,8 @@
 	icon_state = "bitrunner_envirohelm"
 
 /obj/item/clothing/head/helmet/space/plasmaman/signal_tech
-	name = "signal technician plasma envirosuit helmet"
-	desc = "A space-worthy helmet specially designed for signal technician plasmamen, the usual purple stripes being replaced by a unique bright green."
+	name = "network admin's plasma envirosuit helmet"
+	desc = "A space-worthy helmet specially designed for network admin plasmamen, the usual purple stripes being replaced by a unique bright green."
 	icon_state = "signal_tech_envirohelm"
 	inhand_icon_state = null
 

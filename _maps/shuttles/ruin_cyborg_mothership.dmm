@@ -642,7 +642,6 @@
 /area/shuttle/ruin/cyborg_mothership)
 "HK" = (
 /mob/living/basic/hivebot,
-/obj/item/circuitboard/aicore,
 /obj/structure/cable,
 /turf/open/floor/circuit/green/airless,
 /area/shuttle/ruin/cyborg_mothership)
@@ -839,7 +838,7 @@
 /area/shuttle/ruin/cyborg_mothership)
 "TZ" = (
 /obj/item/radio/intercom/directional/south,
-/obj/structure/ai_core,
+/obj/machinery/status_display/ai_core,
 /turf/open/floor/circuit/green/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "Uq" = (

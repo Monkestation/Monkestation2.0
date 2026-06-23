@@ -108,6 +108,12 @@
 		return TRUE
 	return ACCESS_CAPTAIN in authorize_access
 
+/// Are we NOT a silicon, AND we're logged in as a head
+/obj/machinery/computer/communications/proc/authenticated_as_non_silicon_head(mob/user)
+	if(issilicon(user))
+		return FALSE
+	return ACCESS_COMMAND in authorize_access
+
 /// Are we a silicon, OR logged in?
 /obj/machinery/computer/communications/proc/authenticated(mob/user)
 	if (issilicon(user))
@@ -494,6 +500,15 @@
 			SSjob.safe_code_requested = TRUE
 			SSjob.safe_code_timer_id = addtimer(CALLBACK(SSjob, TYPE_PROC_REF(/datum/controller/subsystem/job, send_spare_id_safe_code), pod_location), 120 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
 			minor_announce("Due to staff shortages, your station has been approved for delivery of access codes to secure the Captain's Spare ID. Delivery via drop pod at [get_area(pod_location)]. ETA 120 seconds.")
+		if("printAIControlCode")
+			if(authenticated_as_non_silicon_head(usr))
+				if(!COOLDOWN_FINISHED(src, important_action_cooldown))
+					return
+				playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
+				GLOB.ai_control_code = random_nukecode(6)
+				new /obj/item/paper/ai_control_code(loc)
+				COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
+				priority_announce("The AI Control Code been printed by [authorize_name]. All previous codes have been invalidated.", "Central Tech Support", SSstation.announcer.get_rand_report_sound())
 
 /obj/machinery/computer/communications/proc/emergency_access_cooldown(mob/user)
 	if(toggle_uses == toggle_max_uses) //you have used up free uses already, do it one more time and start a cooldown

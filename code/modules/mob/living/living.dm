@@ -1313,9 +1313,9 @@
 
 /// Checks if this mob can be actively tracked by cameras / AI.
 /// Can optionally be passed a user, which is the mob who is tracking src.
-/mob/living/proc/can_track(mob/living/user)
+/atom/movable/proc/can_track(mob/living/user)
 	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
-	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_TRACK, user) & COMPONENT_CANT_TRACK)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_CAN_TRACK, user) & COMPONENT_CANT_TRACK)
 		return FALSE
 	if(!isnull(user) && src == user)
 		return FALSE
@@ -1328,12 +1328,18 @@
 		return FALSE
 	if(is_away_level(T.z))
 		return FALSE
-	if(onSyndieBase() && !(ROLE_SYNDICATE in user?.faction))
-		return FALSE
 	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
 	if(!GLOB.cameranet.checkCameraVis(src))
 		return FALSE
 	return TRUE
+
+/mob/living/can_track(mob/living/user)
+	. = ..()
+	if(!.)
+		return .
+	if(onSyndieBase() && !(ROLE_SYNDICATE in user?.faction))
+		return FALSE
+	return .
 
 /mob/living/proc/harvest(mob/living/user) //used for extra objects etc. in butchering
 	return
