@@ -13,11 +13,6 @@
 	light_system = OVERLAY_LIGHT
 	light_outer_range = 2
 	heat = 1000
-	var/pulled = FALSE
-	/// how long does this burn for?
-	var/fuel = 1 MINUTE
-	var/oxygen_amount = 10
-	var/on_damage = 6
 	pressure_resistance = 10
 	/// If the cord is pulled and we are active
 	var/pulled = FALSE
