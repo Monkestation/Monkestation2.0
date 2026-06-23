@@ -19,7 +19,7 @@
 	/// how long does this burn for?
 	var/fuel = 1 MINUTE
 	/// Amount of oxygen per second
-	var/oxygen_amount = 10
+	var/oxygen_amount = 5
 	/// Damage after ignition, note damtype is BURN
 	var/on_damage = 6
 
