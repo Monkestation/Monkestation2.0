@@ -106,6 +106,6 @@
 	from the arm which momentarily keeps victims in place. Due to its unorthodox nature, the box includes 3 monkey cubes to familiarize the user with the arm functions. Users are \
 	warned that the arm renders them unable to wear gloves."
 	item = /obj/item/storage/box/syndie_kit/buster
-	cost = 20
+	cost = 16
 	surplus = 0
-	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS | UPLINK_SPY)
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS)

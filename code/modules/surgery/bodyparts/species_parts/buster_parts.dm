@@ -6,6 +6,8 @@
 	icon = 'icons/mob/augmentation/augments_buster.dmi'
 	icon_static = 'icons/mob/augmentation/augments_buster.dmi'
 	icon_state = "buster_l_arm"
+	hp_percent_to_dismemberable = 1
+	wound_resistance = 5
 	var/datum/martial_art/buster_style/style = new
 
 /obj/item/bodypart/arm/left/robot/buster/try_attach_limb(mob/living/carbon/new_arm_owner, special)
@@ -17,6 +19,10 @@
 /obj/item/bodypart/arm/left/robot/buster/drop_limb(special, dismembered, violent)
 	style.remove(owner)
 	return ..()
+
+/obj/item/bodypart/arm/left/robot/buster/dismember(dam_type, silent, wounding_type, sound)
+	. = ..()
+	qdel(src)
 
 /obj/item/bodypart/arm/left/robot/buster/attack_self(mob/user, modifiers)
 	. = ..()
@@ -47,6 +53,8 @@
 	icon = 'icons/mob/augmentation/augments_buster.dmi'
 	icon_static = 'icons/mob/augmentation/augments_buster.dmi'
 	icon_state = "buster_r_arm"
+	hp_percent_to_dismemberable = 1
+	wound_resistance = 5
 	var/datum/martial_art/buster_style/style = new
 
 /obj/item/bodypart/arm/right/robot/buster/try_attach_limb(mob/living/carbon/new_arm_owner, special)
@@ -59,6 +67,10 @@
 	style.remove(owner)
 	return ..()
 
+/obj/item/bodypart/arm/right/robot/buster/dismember(dam_type, silent, wounding_type, sound)
+	. = ..()
+	qdel(src)
+
 /obj/item/bodypart/arm/right/robot/buster/attack_self(mob/user, modifiers)
 	. = ..()
 	if(!ishuman(user) || !user.mind)
@@ -67,7 +79,7 @@
 		to_chat(user, span_warning("You are already dedicated to using [user.mind.martial_art.name]!"))
 		return
 	playsound(user,'sound/effects/phasein.ogg', 20, 1)
-	to_chat(user, span_notice("You bump the prosthetic near your shoulder. In a flurry faster than your eyes can follow, it takes the place of your left arm!"))
+	to_chat(user, span_notice("You bump the prosthetic near your shoulder. In a flurry faster than your eyes can follow, it takes the place of your right arm!"))
 	replace_limb(user)
 
 /obj/item/bodypart/arm/right/robot/buster/attack_self_secondary(mob/user, modifiers)

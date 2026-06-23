@@ -399,23 +399,22 @@
 		ADD_TRAIT(tossedliving, TRAIT_UNDENSE, BUSTER_SOURCE) // For the sake of noncarbons not playing nice with lying down
 		harm(user, tossedliving, initial_throw_damage)
 
-		var/obj/item/bodypart/limb_to_hit = tossedliving.get_bodypart(user.zone_selected)
-		if(!limb_to_hit)
-			limb_to_hit = tossedliving.get_bodypart(BODY_ZONE_CHEST)
-		if(!(limb_to_hit.body_zone in list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)) && limb_to_hit.get_damage() >= limb_to_hit.max_damage)
-			limb_to_hit.drop_limb()
-			playsound(user,	'sound/misc/desecration-01.ogg', 20, 1)
-			tossedliving.visible_message(span_warning("[user] throws [tossedliving] by [limb_to_hit], severing it from [tossedliving.p_them()]!"), \
-				span_userdanger("[user] tears [limb_to_hit] off!"))
-			// user.put_in_hands(limb_to_hit)
-		else if(limb_to_hit.body_zone == BODY_ZONE_CHEST && limb_to_hit.get_damage() >= (limb_to_hit.max_damage * 0.8)) //targetting the chest works for tail removal too but who cares
-			var/obj/item/organ/tail = tossedliving.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
-			if(tail)
-				playsound(user, 'sound/misc/desecration-02.ogg', 20, 1)
-				tossedliving.visible_message(span_warning("[user] throws [tossedliving] by [tossedliving.p_their()] tail, severing it from [tossedliving.p_them()]!"), \
-					span_userdanger("[user] tears your tail off!")) //"I'm taking this back."
-				tail.Remove(tossedliving)
-				// user.put_in_hands(T)
+		var/obj/item/bodypart/limb_to_hit = tossedliving.get_bodypart(user.zone_selected) || tossedliving.get_bodypart(BODY_ZONE_CHEST)
+		if(limb_to_hit)
+			if(!(limb_to_hit.body_zone in list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)) && limb_to_hit.get_damage() >= limb_to_hit.max_damage)
+				limb_to_hit.drop_limb()
+				playsound(user,	'sound/misc/desecration-01.ogg', 20, 1)
+				tossedliving.visible_message(span_warning("[user] throws [tossedliving] by [limb_to_hit], severing it from [tossedliving.p_them()]!"), \
+					span_userdanger("[user] tears [limb_to_hit] off!"))
+				// user.put_in_hands(limb_to_hit)
+			else if(limb_to_hit.body_zone == BODY_ZONE_CHEST && limb_to_hit.get_damage() >= (limb_to_hit.max_damage * 0.8)) //targetting the chest works for tail removal too but who cares
+				var/obj/item/organ/tail = tossedliving.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+				if(tail)
+					playsound(user, 'sound/misc/desecration-02.ogg', 20, 1)
+					tossedliving.visible_message(span_warning("[user] throws [tossedliving] by [tossedliving.p_their()] tail, severing it from [tossedliving.p_them()]!"), \
+						span_userdanger("[user] tears your tail off!")) //"I'm taking this back."
+					tail.Remove(tossedliving)
+					// user.put_in_hands(T)
 	else if(cached_thrown.density)
 		ADD_TRAIT(cached_thrown, TRAIT_UNDENSE, BUSTER_SOURCE) // doesn't do anything but needed for restoring density
 		cached_thrown.set_density(FALSE)
@@ -438,6 +437,7 @@
 	if(!loop.lifetime)
 		return
 	var/turf/next_turf = get_step(source, direction)
+	var/impacted = FALSE
 	for(var/atom/movable/impacted_atom in next_turf.contents)
 		if(impacted_atom.move_packet || impacted_atom == owner)
 			continue
@@ -446,6 +446,7 @@
 			var/mob/living/impacted_living = impacted_atom
 			harm(null, impacted_living)
 			impacted_living.Knockdown(BUSTER_STUN_DURATION)
+			impacted = TRUE
 			if(impacted_atom.anchored)
 				continue
 
@@ -460,6 +461,7 @@
 				continue
 			harm(null, source) // Impacting stuff hurts
 			harm(null, impacted_atom)
+			impacted = TRUE
 			if(QDELETED(impacted_atom) || impacted_atom.anchored)
 				continue
 
@@ -469,6 +471,9 @@
 			var/datum/move_loop/new_loop = SSmove_manager.throw_at(impacted_atom, loop.target, maxrange = loop.maxrange - loop.dist_travelled, delay = 0.01 SECONDS)
 			RegisterSignal(new_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(soar_post_move))
 			RegisterSignal(new_loop, COMSIG_QDELETING, PROC_REF(loop_qdeleted))
+
+	if(impacted)
+		playsound(source, 'sound/weapons/punch1.ogg', 50, TRUE)
 
 /datum/action/cooldown/spell/touch/buster/grapple/proc/loop_qdeleted(datum/move_loop/source)
 	SIGNAL_HANDLER
@@ -615,6 +620,8 @@
 	playsound(user,'sound/effects/gravhit.ogg', 20, 1)
 	user.apply_status_effect(STATUS_EFFECT_DOUBLEDOWN)
 	user.stop_pulling()
+	if(user.buckled)
+		user.buckled.unbuckle_mob(user, force = TRUE)
 	if(prob(5))
 		user.say("+Let's go for a walk, little chicky!+", forced = "buster fist")
 	on_moved(user, get_turf(user), user.dir)
@@ -758,7 +765,7 @@
 	name = "hook"
 	damage = 0
 	armour_penetration = 100
-	range = 8
+	range = 10
 	knockdown_time = 0
 	chain_iconstate = "wire"
 
@@ -826,8 +833,8 @@
 	var/flight_distance = 8
 	var/living_punched_damage = 30
 	var/living_collision_dam = 20
-	var/object_punched_damage = 200
-	var/object_collision_damage = 100
+	var/object_punched_damage = 400
+	var/object_collision_damage = 120
 	var/wall_collision_damage = 300
 
 /datum/action/cooldown/spell/touch/buster/megabuster/before_cast(atom/cast_on)
