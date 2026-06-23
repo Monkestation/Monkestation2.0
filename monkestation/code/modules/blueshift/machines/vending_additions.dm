@@ -79,7 +79,6 @@
 /obj/machinery/vending/wardrobe/atmos_wardrobe
 	products_monke = list(
 		/obj/item/clothing/glasses/meson/engine = 2,
-		/obj/item/clothing/head/beret/atmos = 4,
 	)
 
 /obj/machinery/vending/access/wardrobe_cargo
@@ -100,7 +99,6 @@
 
 /obj/machinery/vending/wardrobe/robo_wardrobe
 	products_monke = list(
-		/obj/item/clothing/head/beret/science/fancy/robo = 2,
 		/obj/item/tank/internals/anesthetic = 2,
 		/obj/item/clothing/mask/breath = 2,
 		/obj/item/reagent_containers/cup/bottle/morphine = 2,
@@ -134,11 +132,6 @@
 /obj/machinery/vending/cart
 	products_monke = list(
 		/obj/item/radio/headset/headset_srv = 3,
-	)
-
-/obj/machinery/vending/wardrobe/viro_wardrobe
-	products_monke = list(
-		/obj/item/clothing/head/beret/medical/virologist = 2,
 	)
 
 /obj/machinery/vending/wardrobe/det_wardrobe

@@ -30724,7 +30724,6 @@
 /obj/structure/curtain,
 /obj/machinery/shower/directional/north,
 /obj/structure/drain,
-/obj/structure/drain,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "iBx" = (

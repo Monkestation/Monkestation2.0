@@ -61,7 +61,7 @@ GLOBAL_LIST_INIT(pre_round_items, init_pre_round_items())
 	if(!user_prefs.metacoins)
 		user_prefs.load_metacoins(user.client.ckey)
 
-	.["selected_character"] = user_prefs.read_preference(/datum/preference/name/real_name)
+	.["selected_character"] = user_prefs.get_enabled_character_names()
 
 	if(!isnull(bought_item))
 		.["balance"] = user_prefs.metacoins - bought_item::item_cost
