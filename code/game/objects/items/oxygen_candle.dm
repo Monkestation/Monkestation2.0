@@ -75,7 +75,7 @@
 	hitsound = initial(hitsound)
 	force = initial(force)
 	damtype = initial(damtype)
-	STOP_PROCESSING(SSobj, src)
+	return PROCESS_KILL
 
 /obj/item/oxygen_candle/Destroy()
 	STOP_PROCESSING(SSobj, src)
