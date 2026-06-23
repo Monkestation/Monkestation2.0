@@ -15,7 +15,8 @@
 /obj/machinery/status_display/ai_core/Initialize(mapload)
 	. = ..()
 	if(custom_emotion)
-		set_ai(resolve_ai_icon(custom_emotion))
+		custom_emotion = resolve_ai_icon(custom_emotion)
+		set_ai(custom_emotion)
 		return
 
 	if(!length(GLOB.ai_list))
@@ -26,6 +27,7 @@
 
 /obj/machinery/status_display/ai_core/Destroy()
 	connected_ai = null
+	custom_emotion = null
 	return ..()
 
 /obj/machinery/status_display/ai_core/examine(mob/user)
@@ -59,27 +61,37 @@
 
 /obj/machinery/status_display/ai_core/update_icon_state()
 	. = ..()
-	if(!(machine_stat & NOPOWER))
-		return
-	icon = initial(icon)
-	icon_state = initial(icon_state)
-
-///Called when the first AI of the round is created, as we get automatically assigned to it.
-/obj/machinery/status_display/ai_core/proc/on_ai_creation(atom/source, mob/living/silicon/ai/new_ai)
-	SIGNAL_HANDLER
-	UnregisterSignal(SSdcs, COMSIG_GLOB_AI_CREATED)
-	assign_ai(new_ai)
+	if(machine_stat & NOPOWER)
+		icon = initial(icon)
+		icon_state = initial(icon_state)
+		return .
+	set_ai(custom_emotion)
+	return .
 
 /obj/machinery/status_display/ai_core/proc/assign_ai(mob/living/silicon/ai/new_ai)
 	if(connected_ai == new_ai)
 		return
 	if(connected_ai)
-		UnregisterSignal(connected_ai, COMSIG_AI_ICON_CHANGE)
+		UnregisterSignal(connected_ai, list(COMSIG_QDELETING, COMSIG_AI_ICON_CHANGE))
 	connected_ai = new_ai
+	RegisterSignal(connected_ai, COMSIG_QDELETING, PROC_REF(on_ai_deleting))
 	RegisterSignal(connected_ai, COMSIG_AI_ICON_CHANGE, PROC_REF(on_ai_screen_change))
 	INVOKE_ASYNC(connected_ai, TYPE_PROC_REF(/mob/living/silicon/ai, set_core_display_icon), null, connected_ai?.client)
+
+///Called when the first AI of the round is created, as we get automatically assigned to it.
+/obj/machinery/status_display/ai_core/proc/on_ai_creation(atom/source, mob/living/silicon/ai/new_ai)
+	SIGNAL_HANDLER
+	if(connected_ai)
+		return
+	assign_ai(new_ai)
+
+///Called when our assigned AI is being deleted.
+/obj/machinery/status_display/ai_core/proc/on_ai_deleting(mob/living/silicon/ai/source, icon_used)
+	SIGNAL_HANDLER
+	connected_ai = null
 
 ///Called when an AI we're registered to changes their screen, we follow to what icon_used is.
 /obj/machinery/status_display/ai_core/proc/on_ai_screen_change(mob/living/silicon/ai/source, icon_used)
 	SIGNAL_HANDLER
-	set_ai(icon_used)
+	custom_emotion = icon_used
+	set_ai(custom_emotion)
