@@ -364,10 +364,11 @@
 /obj/item/reagent_containers/cup/fuelcanister/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
 	if(!(user.istate & ISTATE_HARM))
-		return
+		return NONE
+		
 	if(cap_on)
 		to_chat(user, span_warning("\The [src] is capped!"))
-		return
+		return NONE
 	if(!reagents.total_volume)
 		to_chat(user, span_warning("\The [src] is empty!"))
 		return ITEM_INTERACT_BLOCKING
