@@ -122,9 +122,9 @@
 	COOLDOWN_START(src, last_tox_damage, RADIATION_TOX_INTERVAL)
 
 /datum/component/irradiated/proc/start_burn_splotch_timer()
-var/min_time = RADIATION_BURN_INTERVAL_MIN
+	var/min_time = RADIATION_BURN_INTERVAL_MIN
 	var/max_time = RADIATION_BURN_INTERVAL_MAX
-	if(is_species(parent, /datum/species/goblin))
+	if(is_species(parent, SPECIES_GOBLIN))
 		min_time = RADIATION_BURN_INTERVAL_MIN_GOBLIN
 		max_time = RADIATION_BURN_INTERVAL_MAX_GOBLIN
 
