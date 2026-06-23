@@ -19,6 +19,15 @@
 	var/oxygen_amount = 10
 	var/on_damage = 6
 	pressure_resistance = 10
+	/// If the cord is pulled and we are active
+	var/pulled = FALSE
+	/// how long does this burn for?
+	var/fuel = 1 MINUTE
+	/// Amount of oxygen per second
+	var/oxygen_amount = 10
+	/// Damage after ignition, note damtype is BURN
+	var/on_damage = 6
+
 
 /obj/item/oxygen_candle/attack(mob/living/carbon/victim, mob/living/carbon/user)
 	if(!isliving(victim))
