@@ -6,7 +6,7 @@
 	element_flags = ELEMENT_BESPOKE | COMPONENT_DUPE_HIGHLANDER
 	argument_hash_start_idx = 2
 
-	///the invisiblity trait applied, like TRAIT_T_RAY_VISIBLE
+	///the invisibility trait applied, like TRAIT_T_RAY_VISIBLE
 	var/invisibility_trait
 	///level of invisibility applied when under a tile. Could be INVISIBILITY_OBSERVER if you still want it to be visible to ghosts
 	var/invisibility_level
