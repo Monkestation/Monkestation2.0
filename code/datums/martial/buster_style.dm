@@ -826,9 +826,9 @@
 	var/flight_distance = 8
 	var/living_punched_damage = 30
 	var/living_collision_dam = 20
-	var/object_punched_damage = 150
-	var/object_collision_damage = 50
-	var/wall_collision_damage = 200
+	var/object_punched_damage = 200
+	var/object_collision_damage = 100
+	var/wall_collision_damage = 300
 
 /datum/action/cooldown/spell/touch/buster/megabuster/before_cast(atom/cast_on)
 	. = ..()
