@@ -3,7 +3,8 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 	"Lift" = "balaclava1_up",
 	"Tight" = "balaclava1",
 	"Loose" = "balaclava2",
-	"Open" = "balaclava3",
+	"Loose over Nose" = "balaclava3",
+	"Open" = "balaclava4",
 ))
 
 /obj/item/clothing/mask/balaclava
@@ -28,7 +29,8 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 		"Lift" = image(icon = src.icon, icon_state = "balaclava1_up"),
 		"Tight" = image(icon = src.icon, icon_state = "balaclava1"),
 		"Loose" = image(icon = src.icon, icon_state = "balaclava2"),
-		"Open" = image(icon = src.icon, icon_state = "balaclava3"),
+		"Loose over Nose" = image(icon = src.icon, icon_state = "balaclava3"),
+		"Open" = image(icon = src.icon, icon_state = "balaclava4"),
 		)
 
 /obj/item/clothing/mask/balaclava/ui_action_click(mob/user)
@@ -53,6 +55,9 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 				flags_inv |= visor_flags_inv
 			if("Loose")
 				handling_text = "loosen"
+				flags_inv |= visor_flags_inv
+			if("Loose over Nose")
+				handling_text = "readjust"
 				flags_inv |= visor_flags_inv
 			if("Open")
 				handling_text = "open"
