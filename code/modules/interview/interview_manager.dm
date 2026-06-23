@@ -30,7 +30,6 @@ GLOBAL_DATUM_INIT(interviews, /datum/interview_manager, new)
 	approved_ckeys = json
 
 /datum/interview_manager/Destroy(force)
-	SSpersistence.save_keys(approved_ckeys)
 	QDEL_LIST(open_interviews)
 	QDEL_LIST(interview_queue)
 	QDEL_LIST(closed_interviews)
