@@ -16,8 +16,6 @@
 								'sound/misc/robbie/robbie15.ogg')
 
 /obj/item/clothing/under/costume/skyrat
-	icon = 'icons/obj/clothing/skyrat/under/costume.dmi'
-	worn_icon = 'icons/mob/clothing/skyrat/under/costume.dmi'
 	can_adjust = FALSE
 
 //My least favorite file. Just... try to keep it sorted. And nothing over the top (The victorian dresses were way too much)
@@ -33,8 +31,6 @@
 /obj/item/clothing/under/costume/deckers/alt //not even going to bother re-pathing this one because its such a unique case of 'TGs item has something but this alt doesnt'
 	name = "deckers maskless outfit"
 	desc = "A decker jumpsuit with neon blue coloring."
-	icon = 'icons/obj/clothing/skyrat/under/costume.dmi'
-	worn_icon = 'icons/mob/clothing/skyrat/under/costume.dmi'
 	icon_state = "decking_jumpsuit"
 	can_adjust = FALSE
 
