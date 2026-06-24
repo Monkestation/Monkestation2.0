@@ -228,8 +228,6 @@
 
 /mob/living/simple_animal/hostile/megafauna/proc/warn_players(list/targets)
 	playsound(src, rawr_sound, 100, extrarange = 5, falloff_distance = (vision_range + 2))
-	for(var/mob/living/shake_target as anything in targets)
-		shake_camera(shake_target, 2 SECONDS)
 	if(prob(0.1))
 		visible_message(span_userdanger("[src] roars loudly, visibly being annoyed with your presence!"))
 		return
