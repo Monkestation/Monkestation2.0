@@ -104,11 +104,11 @@
 	. += span_warning("Baby slimes seem to yield less extracts per compression...")
 	if(!current_recipe)
 		return
-	if(base_complete && cross_complete)
-		. += span_notice("The extract is ready to be made!")
-		return
 	if(active)
 		. += span_notice("The machine is currently working!")
+		return
+	if((base_complete && !cross_slime_required) || (base_complete && (cross_complete && cross_slime_required)))
+		. += span_notice("The extract is ready to be made!")
 		return
 	. += span_notice("The recipe requires:")
 	if(!base_complete)
@@ -249,15 +249,16 @@
  * After, we move the mob inside
  */
 /obj/machinery/slime_compressor/hitby(atom/movable/hit_by, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	if(active)
-		return
 	if(!isslime(hit_by))
 		return ..()
+	// don't take damage from slimes
+	if(active)
+		return
 	if(!current_recipe)
-		return ..()
+		return
 	var/mob/living/basic/slime/slime = hit_by
 	if(!check_recipe(slime))
-		return ..()
+		return
 	slime.forceMove(src)
 	mobs_inside += slime
 	manage_hud_as_needed()
