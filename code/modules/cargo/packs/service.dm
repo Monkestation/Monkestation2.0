@@ -308,3 +308,12 @@
 		/obj/item/storage/box/lethalshot,
 		/obj/item/magazine_shuffler,
 	)
+
+/datum/supply_pack/service/dance_machine
+	name = "Dance Machine Crate"
+	desc = "Contains one radiant dance machine. Dance like your local megacorporation isn't watching you."
+	cost = CARGO_CRATE_VALUE * 25 //if this gets spammed everywhere it might lag clients out
+	contains = list(/obj/machinery/jukebox/disco)
+	crate_name = "dance machine crate"
+	crate_type = /obj/structure/closet/crate/large
+	contraband = TRUE
