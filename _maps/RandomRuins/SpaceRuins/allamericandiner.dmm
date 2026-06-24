@@ -186,9 +186,7 @@
 /obj/effect/turf_decal/siding/green{
 	dir = 1
 	},
-/obj/machinery/jukebox{
-	active = 1
-	},
+/obj/machinery/jukebox,
 /obj/effect/turf_decal/siding/brown,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
