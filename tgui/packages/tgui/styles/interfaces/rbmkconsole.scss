@@ -1,0 +1,225 @@
+.RBMKConsole {
+  background: #8b0000;
+  color: #f8f8f8;
+
+  background-image: url('../../assets/hammer_sickle.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 45%;
+
+  box-shadow: inset 0 0 200px rgba(255, 215, 0, 0.15);
+
+  .Section {
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    border-radius: 8px;
+  }
+
+  .RoundGauge {
+    border: 2px solid #ffd700;
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
+
+    .RoundGauge__value {
+      color: #ffd700;
+      font-weight: bold;
+    }
+
+    .RoundGauge__needle {
+      background: #ffd700;
+    }
+  }
+
+  .Knob {
+    border: 2px solid #ffd700;
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+
+    .Knob__needle {
+      background: #ffd700;
+    }
+  }
+
+  button {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid #ffd700;
+    color: #ffd700;
+
+    &:hover {
+      background: rgba(255, 215, 0, 0.25);
+    }
+  }
+
+  .RBMKConsole__CascadeLockout {
+    min-height: 100%;
+    padding: 1.25rem;
+    text-align: center;
+
+    background-image:
+      radial-gradient(circle at center, rgba(255, 0, 0, 0.22), transparent 62%),
+      url('../../assets/syndicate.svg'),
+      linear-gradient(to bottom, rgba(80, 0, 0, 0.92), rgba(10, 0, 0, 0.96));
+
+    background-repeat: no-repeat, no-repeat, no-repeat;
+
+    background-position: center, center, center;
+
+    background-size:
+      100% 100%,
+      55%,
+      100% 100%;
+
+    border: 2px solid rgba(255, 40, 40, 0.75);
+    border-radius: 10px;
+    box-shadow:
+      inset 0 0 80px rgba(255, 0, 0, 0.18),
+      0 0 22px rgba(255, 0, 0, 0.22);
+  }
+
+  .RBMKConsole__CascadeHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    margin-bottom: 1rem;
+    padding: 0.85rem 1rem;
+
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 48, 48, 0.65);
+    border-radius: 8px;
+    box-shadow: inset 0 0 28px rgba(255, 0, 0, 0.12);
+  }
+
+  .RBMKConsole__CascadeSeal {
+    min-width: 44px;
+    font-size: 38px;
+    line-height: 1;
+    color: #ffd700;
+    text-shadow:
+      0 0 8px rgba(255, 215, 0, 0.85),
+      0 0 18px rgba(255, 0, 0, 0.35);
+  }
+
+  .RBMKConsole__CascadeHeaderText {
+    flex: 1;
+    text-align: center;
+  }
+
+  .RBMKConsole__CascadeLock {
+    min-width: 44px;
+    font-size: 34px;
+    line-height: 1;
+    color: #ff3030;
+    text-shadow:
+      0 0 8px rgba(255, 0, 0, 0.9),
+      0 0 22px rgba(255, 0, 0, 0.45);
+  }
+
+  .RBMKConsole__CascadeTitle {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #ff3030;
+    text-transform: uppercase;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.65);
+  }
+
+  .RBMKConsole__CascadeSubtitle {
+    margin-top: 0.35rem;
+    color: #ffb3b3;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .RBMKConsole__CascadeWarning {
+    margin-bottom: 1rem;
+    padding: 0.6rem 0.85rem;
+
+    background: rgba(160, 0, 0, 0.5);
+    border: 1px solid rgba(255, 48, 48, 0.75);
+    border-radius: 6px;
+
+    color: #ffdddd;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(255, 0, 0, 0.45);
+  }
+
+  .RBMKConsole__CascadeWarning--final {
+    background: rgba(220, 0, 0, 0.72);
+    color: #ffffff;
+    animation: rbmk-cascade-pulse 0.7s infinite alternate;
+  }
+
+  .RBMKConsole__CascadeTimer {
+    margin: 1rem 0;
+    font-size: 68px;
+    font-weight: bold;
+    color: #ffd700;
+    letter-spacing: 4px;
+    text-shadow:
+      0 0 10px rgba(255, 215, 0, 0.85),
+      0 0 24px rgba(255, 215, 0, 0.35);
+  }
+
+  .RBMKConsole__CascadeTimer--final {
+    color: #ff3030;
+    text-shadow:
+      0 0 10px rgba(255, 0, 0, 0.9),
+      0 0 28px rgba(255, 0, 0, 0.55);
+    animation: rbmk-cascade-pulse 0.7s infinite alternate;
+  }
+
+  .RBMKConsole__CascadeStatus {
+    display: inline-block;
+    margin: 1rem 0;
+    padding: 0.45rem 0.9rem;
+
+    background: rgba(0, 0, 0, 0.65);
+    border: 1px solid rgba(255, 48, 48, 0.8);
+    border-radius: 6px;
+
+    color: #ff7070;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .RBMKConsole__CascadeInfo {
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 48, 48, 0.35);
+    border-radius: 8px;
+
+    text-align: left;
+  }
+
+  .RBMKConsole__CascadeFooter {
+    margin-top: 1rem;
+    padding-top: 0.85rem;
+
+    border-top: 1px solid rgba(255, 48, 48, 0.35);
+
+    color: #ffaaaa;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  @keyframes rbmk-cascade-pulse {
+    from {
+      transform: scale(1);
+      opacity: 0.85;
+    }
+
+    to {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+  }
+}

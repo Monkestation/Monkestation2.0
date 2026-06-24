@@ -93,6 +93,51 @@
 	"Nanotrasen Star Observation Association", 'sound/misc/airraid.ogg')
 	return TRUE
 
+/datum/sm_delam/cascade/proc/rbmk_cascade(atom/origin)
+	set waitfor = FALSE
+
+	if(!origin)
+		return FALSE
+
+	message_admins("[origin] triggered an RBMK supermatter cascade. [ADMIN_VERBOSEJMP(origin)]")
+	origin.investigate_log("triggered an RBMK supermatter cascade.", INVESTIGATE_ENGINE)
+
+	// RBMK cascade handoff should immediately become Lambda.
+	// Do not call effect_emergency_state() here, because it replays emergency/airraid behavior.
+	if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_GAMMA)
+		SSsecurity_level.set_level(SEC_LEVEL_GAMMA)
+
+	// Give the reactor explosion tick room to finish before the cascade effects begin.
+	sleep(1)
+
+	effect_cascade_demoralize()
+
+	// Spread player-wide messages and announcements across separate ticks to reduce handoff hitching.
+	sleep(1)
+
+	priority_announce(
+		"A Type-C resonance shift event has occurred in your sector. Scans indicate local oscillation flux affecting spatial and gravitational substructure. \
+		Multiple resonance hotspots have formed. Please standby.",
+		"Nanotrasen Star Observation Association",
+		ANNOUNCER_SPANOMALIES,
+	)
+
+	sleep(2 SECONDS)
+	effect_strand_shuttle()
+
+	sleep(5 SECONDS)
+	var/obj/cascade_portal/rift = effect_evac_rift_start()
+	if(rift)
+		RegisterSignal(rift, COMSIG_QDELETING, PROC_REF(end_round_holder))
+
+	SSsupermatter_cascade.can_fire = TRUE
+	SSsupermatter_cascade.cascade_initiated = TRUE
+
+	if(rift)
+		effect_crystal_mass_from_origin(origin, rift)
+
+	return TRUE
+
 /// Signal calls cant sleep, we gotta do this.
 /datum/sm_delam/cascade/proc/end_round_holder()
 	SIGNAL_HANDLER

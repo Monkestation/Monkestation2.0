@@ -75,6 +75,7 @@
 // MONKESTATION ADDITION START
 @include meta.load-css('./themes/clockwork.scss');
 @include meta.load-css('./themes/admintickets.scss');
+@include meta.load-css('./themes/soviet.scss');
 // MONKESTATION ADDITION END
 
 @include meta.load-css('./themes/chicken_book.scss');
