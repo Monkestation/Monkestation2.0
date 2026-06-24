@@ -3,6 +3,8 @@
 	RETURN_TYPE(/obj/machinery/ai/data_core)
 
 	var/turf/ai_turf = get_turf(src)
+	if(isnull(ai_turf))
+		return null
 	var/obj/machinery/ai/data_core/primary/data_core = locate() in GLOB.data_cores["[ai_turf.z]"]
 	//in the case the primary core is deleted, this is ran before Destroy process is done (for AI relocation), so check QDELETED.
 	if(data_core && data_core.can_transfer_ai(src) && !QDELETED(data_core))
