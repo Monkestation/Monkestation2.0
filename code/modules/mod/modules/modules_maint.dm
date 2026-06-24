@@ -117,6 +117,7 @@
 	icon_state = "rave_visor"
 	complexity = 1
 	overlay_state_inactive = "module_rave"
+
 	/// The client colors applied to the wearer.
 	var/datum/client_colour/rave_screen
 	/// The current element in the rainbow_order list we are on.
@@ -137,19 +138,23 @@
 
 /obj/item/mod/module/visor/rave/Initialize(mapload)
 	. = ..()
-	var/list/songs = SSmedia_tracks.jukebox_tracks
+	for(var/datum/media_track/song in SSmedia_tracks.jukebox_tracks)
+		songs += song.title
+		songs[song.title] = song
+
 	if(length(songs))
-		var/song_name = pick(songs)
-		selection = songs[song_name]
+		var/random_song_title = pick(songs)
+		selection = songs[random_song_title]
 
 /obj/item/mod/module/visor/rave/on_activation()
 	. = ..()
 	if(!.)
 		return
+
 	rave_screen = mod.wearer.add_client_colour(/datum/client_colour/rave)
 	rave_screen.update_colour(rainbow_order[rave_number])
 	if(selection)
-		mod.wearer.playsound_local(get_turf(src), null, 50, channel = CHANNEL_JUKEBOX, sound_to_use = sound(selection.url), use_reverb = FALSE)
+		mod?.wearer?.client?.tgui_panel?.play_music(selection.url, null)
 
 /obj/item/mod/module/visor/rave/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
@@ -177,12 +182,14 @@
 /obj/item/mod/module/visor/rave/get_configuration()
 	. = ..()
 	if(length(songs))
-		.["selection"] = add_ui_configuration("Song", "list", selection.title, songs)
+		.["selection"] = add_ui_configuration("Song", "list", selection.title, assoc_to_keys(songs))
 
 /obj/item/mod/module/visor/rave/configure_edit(key, value)
 	switch(key)
 		if("selection")
 			if(active)
+				return
+			if(QDELETED(src))
 				return
 			selection = songs[value]
 

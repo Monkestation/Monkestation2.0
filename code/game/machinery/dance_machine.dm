@@ -5,6 +5,8 @@
 	base_icon_state = "disco"
 	anchored = FALSE
 
+	/// if the machine is doing it's disco thing
+	var/being_radiant = FALSE
 	/// Spotlight effects being played
 	VAR_PRIVATE/list/obj/item/flashlight/spotlight/spotlights = list()
 	/// Sparkle effects being played
@@ -18,19 +20,22 @@
 
 /obj/machinery/jukebox/disco/start_playing(datum/media_track/track)
 	..()
-	if(!playing) //so it doesnt stack effects
+	if(!being_radiant) //so it doesnt stack effects
 		dance_setup()
 		lights_spin()
 		begin_processing()
+		being_radiant = TRUE
 
 /obj/machinery/jukebox/disco/stop_playing()
 	..()
 	QDEL_LIST(spotlights)
 	QDEL_LIST(sparkles)
 	end_processing()
+	being_radiant = FALSE
 
 /obj/machinery/jukebox/disco/process()
 	if(!playing || !anchored)
+		stop_playing()
 		return PROCESS_KILL
 	for(var/mob/living/dancer in get_hearers_in_view(6, get_turf(src)))
 		if(!(dancer.mobility_flags & MOBILITY_MOVE))

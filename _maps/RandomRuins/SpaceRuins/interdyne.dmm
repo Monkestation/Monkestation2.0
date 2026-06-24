@@ -841,7 +841,7 @@
 "Fw" = (
 /obj/machinery/light/blacklight/directional/north,
 /obj/structure/cable,
-/obj/machinery/dance_machine,
+/obj/machinery/jukebox,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "FC" = (

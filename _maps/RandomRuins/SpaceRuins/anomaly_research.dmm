@@ -608,7 +608,7 @@
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "pk" = (
-/obj/machinery/dance_machine,
+/obj/machinery/jukebox,
 /turf/open/floor/iron/dark/textured,
 /area/misc/anomaly_research)
 "pl" = (
