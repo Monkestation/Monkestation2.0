@@ -45,7 +45,8 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		var/datum/ai_laws/laws = new
 		laws.set_laws_config()
 
-		if (brain.overrides_aicore_laws)
+		brain.try_unbrainwash()
+		if (brain.overrides_ai_laws)
 			A = new /mob/living/silicon/ai(loc, brain.laws, brain.brainmob)
 		else
 			A = new /mob/living/silicon/ai(loc, laws, brain.brainmob)
@@ -54,8 +55,6 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		if(!istype(brain.laws, /datum/ai_laws/ratvar))
 			brain.brainmob.mind.remove_all_antag_datums()
 			brain.brainmob.mind.wipe_memory()
-		if(brain.force_replace_ai_name)
-			A.fully_replace_character_name(A.name, brain.replacement_ai_name())
 
 		SSblackbox.record_feedback("amount", "ais_created", 1)
 		qdel(tool)
