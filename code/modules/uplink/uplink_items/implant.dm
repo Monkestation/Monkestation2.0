@@ -48,7 +48,7 @@
 	// An empty uplink is kinda useless.
 	surplus = 0
 	restricted = TRUE
-	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
+	purchasable_from = ~(UPLINK_SPY | UPLINK_GANGS)
 
 /datum/uplink_item/implants/uplink/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/obj/item/storage/box/syndie_kit/uplink_box = ..()
@@ -63,6 +63,7 @@
 	Wait a minimum of three seconds between injections. Exact mechanism for spear summoning is classified under Aetherofusion NDA."
 	item = /obj/item/storage/box/syndie_kit/imp_hard_spear
 	cost = 7
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/implants/hardlight/bundle
 	name = "Hardlight Spear Implant Bundle"
@@ -71,7 +72,7 @@
 	Not to be sold seperately."
 	item = /obj/item/storage/box/syndie_kit/imp_hard_spear/bundle
 	cost = 25
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //So poor nukies don't end up buying this instead of a commanding implant
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS) //So poor nukies don't end up buying this instead of a commanding implant
 
 /datum/uplink_item/implants/weapons_auth
 	name = "Weapon Authorization Kit"

@@ -354,8 +354,6 @@
 	unique_pet = TRUE
 	///Tracks how many rounds did Ian survive from start to finish
 	var/age = 0
-	///Callback to execute upon roundend to check whether Ian has survived the round or not
-	var/datum/callback/i_will_survive
 	///Highest achieved consecutive rounds that Ian survived from start to finish
 	var/record_age = 1
 	///Whether we have already recorded this Ian's achievements(survival and equipped hat) to the database
@@ -385,13 +383,10 @@
 		is_slow = TRUE
 		speed = 2
 
-	//setup roundend check for Ian's whereabouts
-	i_will_survive = CALLBACK(src, PROC_REF(check_ian_survival))
-	SSticker.OnRoundend(i_will_survive)
+	RegisterSignal(SSticker, COMSIG_TICKER_DECLARE_ROUND_END, PROC_REF(check_ian_survival))
 
 /mob/living/basic/pet/dog/corgi/ian/Destroy()
-	LAZYREMOVE(SSticker.round_end_events, i_will_survive) //cleanup the survival callback
-	i_will_survive = null
+	UnregisterSignal(SSticker, COMSIG_TICKER_DECLARE_ROUND_END)
 	return ..()
 
 /mob/living/basic/pet/dog/corgi/ian/death()

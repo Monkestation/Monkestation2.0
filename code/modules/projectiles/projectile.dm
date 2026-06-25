@@ -342,7 +342,7 @@
  * Called when the projectile hits something
  *
  * By default parent call will always return [BULLET_ACT_HIT] (unless qdeleted)
- * so it is save to assume a successful hit in children (though not necessarily successfully damaged - it could've been blocked)
+ * so it is safe to assume a successful hit in children (though not necessarily successfully damaged - it could've been blocked)
  *
  * Arguments
  * * target - thing hit

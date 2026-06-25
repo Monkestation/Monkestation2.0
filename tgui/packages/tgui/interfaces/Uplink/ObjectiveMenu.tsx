@@ -26,7 +26,7 @@ export type Objective = {
   progression_reward: number;
   telecrystal_reward: number;
   telecrystal_penalty: number;
-  contractor_rep?: number;
+  extra_rewards?: string;
   ui_buttons?: ObjectiveUiButton[];
   objective_state: ObjectiveState;
   original_progression: number;
@@ -299,7 +299,7 @@ const ObjectiveFunction = (
       telecrystalReward={objective.telecrystal_reward}
       telecrystalPenalty={objective.telecrystal_penalty}
       progressionReward={objective.progression_reward}
-      contractorRep={objective.contractor_rep}
+      extraRewards={objective.extra_rewards}
       objectiveState={objective.objective_state}
       originalProgression={objective.original_progression}
       hideTcRep={false}
@@ -346,7 +346,7 @@ type ObjectiveElementProps = {
   description: string;
   telecrystalReward: number;
   progressionReward: number;
-  contractorRep?: number;
+  extraRewards?: string;
   uiButtons?: ReactNode;
   objectiveState?: ObjectiveState;
   originalProgression: number;
@@ -367,7 +367,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
     uiButtons = null,
     telecrystalReward,
     progressionReward,
-    contractorRep,
+    extraRewards,
     objectiveState,
     telecrystalPenalty,
     handleCompletion,
@@ -459,7 +459,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
                     textAlign="center"
                   >
                     {telecrystalReward} TC,
-                    {contractorRep ? ` ${contractorRep} REP,` : ''}
+                    {extraRewards ? ` ${extraRewards},` : ''}
                     <Box ml={1} as="span">
                       {calculateProgression(progressionReward)} Threat Level
                       {Math.abs(progressionDiff) > 10 && (

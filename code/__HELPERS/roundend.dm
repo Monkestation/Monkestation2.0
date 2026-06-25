@@ -239,9 +239,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 
 	INVOKE_ASYNC(Tracy, TYPE_PROC_REF(/datum/tracy, flush))
 
-	for(var/datum/callback/roundend_callbacks as anything in round_end_events)
-		roundend_callbacks.InvokeAsync()
-	LAZYCLEARLIST(round_end_events)
+	SEND_SIGNAL(src, COMSIG_TICKER_DECLARE_ROUND_END, was_forced)
 
 	var/speed_round = (STATION_TIME_PASSED() <= 10 MINUTES)
 

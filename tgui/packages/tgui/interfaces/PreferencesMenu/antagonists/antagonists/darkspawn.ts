@@ -12,14 +12,15 @@ const Darkspawn: Antagonist = {
   name: 'Darkspawn',
   description: [
     multiline`
-      It’s hard to recall what you once were. Star cycles passed again and again as you slumbered in the Void.
+      It’s hard to recall what you once were.
+      Star cycles passed again and again as you slumbered in the Void.
       Eventually, the emptiness touched something.
-      You fabricated a shoddy disguise from your first victim, and now countless minds tug at your attention.
+      You fabricated a shoddy disguise from your first victim,
+      and now countless minds tug at your attention.
     `,
     DARKSPAWN_MECHANICAL_DESCRIPTION,
   ],
   category: Category.Roundstart,
-  priority: -1,
 };
 
 export default Darkspawn;

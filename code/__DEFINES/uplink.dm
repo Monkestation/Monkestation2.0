@@ -11,6 +11,10 @@
 
 /// Can be randomly given to spies for their bounties
 #define UPLINK_SPY (1 << 4)
+
+/// This item is purchasable to gangs
+#define UPLINK_GANGS (1 << 5)
+
 /// the uplink flag for contractors
 #define UPLINK_CONTRACTORS (1 << 6)
 

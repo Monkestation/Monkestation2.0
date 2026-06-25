@@ -4,7 +4,7 @@
 	damage = 5
 	damage_type = TOX
 	stamina = 20
-	knockdown = 2 SECONDS //monkestation edit: replaced 10 second paralyze with thise
+	knockdown = 2 SECONDS //monkestation edit: replaced 10 second paralyze with this
 	armor_flag = BIO
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/neurotoxin
 
@@ -14,7 +14,6 @@
 		damage = 0
 		stamina = 0
 	return ..()
-
 
 /obj/projectile/neurotoxin/damaging //for ai controlled aliums
 	damage = 30

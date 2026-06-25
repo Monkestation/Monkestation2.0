@@ -95,6 +95,12 @@
 	SIGNAL_HANDLER
 	stored_lock_code = new_code
 
+//doesnt spawn with paper and a pen
+/obj/item/storage/briefcase/secure/empty
+
+/obj/item/storage/briefcase/secure/empty/PopulateContents()
+	return
+
 ///Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
 /obj/item/storage/briefcase/secure/syndie
 	force = 15

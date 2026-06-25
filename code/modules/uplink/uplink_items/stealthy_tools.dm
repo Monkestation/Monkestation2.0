@@ -28,6 +28,7 @@
 			This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. This is the deluxe edition, which has unlimited uses."
 	item = /obj/item/language_manual/codespeak_manual/unlimited
 	cost = 3
+	purchasable_from = ~UPLINK_GANGS //maybe give them a limited version
 
 /datum/uplink_item/stealthy_tools/emplight
 	name = "EMP Flashlight"

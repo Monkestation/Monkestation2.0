@@ -1,5 +1,5 @@
 /datum/uplink_category/badassery
-	name = "Badassery" // Being a badass is not pointless
+	name = "(pointless) Badassery" //noted as pointless so new players dont waste their TC on them
 	weight = 0
 
 /datum/uplink_item/badass
@@ -65,6 +65,7 @@
 	progression_minimum = 5 MINUTES
 	restricted = TRUE
 	illegal_tech = FALSE
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/badass/costumes/clown
 	name = "Clown Costume"

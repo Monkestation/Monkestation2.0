@@ -4,7 +4,7 @@
 
 /datum/uplink_item/ammo
 	category = /datum/uplink_category/ammo
-	surplus = 40
+	surplus = 20
 
 /datum/uplink_item/ammo/toydarts
 	name = "Donksoft Riot Pistol Ammunition Case"
@@ -65,9 +65,8 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/ammo_box/a357
 	cost = 4
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS)
 	illegal_tech = FALSE
-
 
 /datum/uplink_item/ammo/lighttankammo
 	name = "40mm cannon ammo"
@@ -82,6 +81,55 @@
 	item = /obj/item/mecha_ammo/makeshift/lighttankmg
 	cost = 2
 	purchasable_from = ~UPLINK_SPY
+
+/datum/uplink_item/ammo/a40mm
+	name = "Box of 40mm HE Grenades"
+	desc = "A box of four 40mm HE grenades. For use with a grenade launcher."
+	cost = 5
+	item = /obj/item/storage/fancy/a40mm_box
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS)
+
+/datum/uplink_item/ammo/a40mm/rubber
+	name = "Box of 40mm Rubber Slug Shells"
+	desc = "A box of four 40mm rubber slug shells. For use with a grenade launcher."
+	cost = 2
+	item = /obj/item/storage/fancy/a40mm_box/rubber
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS)
+
+/datum/uplink_item/ammo/a40mm/incendiary
+	name = "Box of 40mm Incendiary Grenades"
+	desc = "A box of four 40mm incendiary grenades. For use with a grenade launcher."
+	cost = 5
+	item = /obj/item/storage/fancy/a40mm_box/incendiary
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS)
+
+/datum/uplink_item/ammo/a40mm/smoke
+	name = "Box of 40mm Smoke Grenades"
+	desc = "A box of four 40mm smoke grenades. For use with a grenade launcher."
+	cost = 1
+	item = /obj/item/storage/fancy/a40mm_box/smoke
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS)
+
+/datum/uplink_item/ammo/a40mm/stun
+	name = "Box of 40mm Stun Grenades"
+	desc = "A box of four 40mm stun grenades. For use with a grenade launcher."
+	cost = 3
+	item = /obj/item/storage/fancy/a40mm_box/stun
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS)
+
+/datum/uplink_item/ammo/a40mm/hedp
+	name = "Box of 40mm HEDP Grenades"
+	desc = "A box of four 40mm HEDP grenades. For use with a grenade launcher."
+	cost = 5
+	item = /obj/item/storage/fancy/a40mm_box/hedp
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS)
+
+/datum/uplink_item/ammo/a40mm/frag
+	name = "Box of 40mm Fragmentation Grenades"
+	desc = "A box of four 40mm fragmentation grenades. For use with a grenade launcher."
+	cost = 5
+	item = /obj/item/storage/fancy/a40mm_box/frag
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS)
 
 /datum/uplink_item/ammo/trickshot
 	name = "Trickshot Shell Box"

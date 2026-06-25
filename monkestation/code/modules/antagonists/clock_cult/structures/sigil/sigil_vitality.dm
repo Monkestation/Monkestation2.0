@@ -54,7 +54,7 @@
 			var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 				"Do you want to play as a [affected_mob.real_name], an inactive clock cultist?",
 				role = ROLE_CLOCK_CULTIST,
-				poll_time = 5 SECONDS,
+				poll_time = 10 SECONDS,
 				checked_target = affected_mob,
 				alert_pic = affected_mob,
 				role_name_text = "clock cultist"

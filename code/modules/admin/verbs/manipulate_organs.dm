@@ -62,7 +62,7 @@ ADMIN_VERB(manipulate_organs, R_DEBUG, FALSE, "Manipulate Organs", "Manipulate t
 				O.Remove(carbon_victim)
 			else
 				I = organ
-				I.removed(carbon_victim)
+				I.removed(carbon_victim, forced = TRUE) //monkestation edit: adds forced
 
 			organ.forceMove(get_turf(carbon_victim))
 

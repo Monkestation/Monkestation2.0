@@ -47,6 +47,7 @@
 			Can also be used in-hand to 'claim' it, granting you priest-like abilities -- no training required!"
 	item = /obj/item/book/bible/syndicate
 	cost = 5
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/device_tools/tram_remote
 	name = "Tram Remote Control"
@@ -81,6 +82,7 @@
 			Each use drains a small amount of blood."
 	item = /obj/item/storage/box/syndie_kit/syndicate_teleporter
 	cost = 5
+	purchasable_from = ~UPLINK_GANGS //might give gangs their own version of this because funny
 
 /datum/uplink_item/device_tools/camera_app
 	name = "SyndEye Program"
@@ -96,6 +98,7 @@
 			After hacking a certain number of airlocks, the device will require some time to recharge."
 	item = /obj/item/card/emag/doorjack
 	cost = 3
+	purchasable_from = ~UPLINK_GANGS //if you want access find someone who can get you in, your a conversion antagonist
 
 /datum/uplink_item/device_tools/frame
 	name = "F.R.A.M.E. disk"
@@ -106,7 +109,7 @@
 	item = /obj/item/computer_disk/virus/frame
 	cost = 4
 	restricted = TRUE
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS) //monkestation edit: adds UPLINK_GANGS
 
 /datum/uplink_item/device_tools/frame/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	. = ..()
@@ -122,7 +125,7 @@
 	cost = 1
 	surplus = 0
 	restricted = TRUE
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS)
 
 /datum/uplink_item/device_tools/failsafe/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/datum/component/uplink/uplink = source.GetComponent(/datum/component/uplink)
@@ -168,6 +171,7 @@
 	restricted = TRUE
 	cost = 7
 	limited_stock = 1
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/device_tools/binary
 	name = "Binary Translator Key"
@@ -214,12 +218,14 @@
 	desc = "A modified flash able to hypnotize targets. If the target is not in a mentally vulnerable state, it will only confuse and pacify them temporarily."
 	item = /obj/item/assembly/flash/hypnotic
 	cost = 7
+	purchasable_from = ~UPLINK_GANGS //if you want to convert people then add them to your gang
 
 /datum/uplink_item/device_tools/hypnotic_grenade
 	name = "Hypnotic Grenade"
 	desc = "A modified flashbang grenade able to hypnotize targets. The sound portion of the flashbang causes hallucinations, and will allow the flash to induce a hypnotic trance to viewers."
 	item = /obj/item/grenade/hypnotic
 	cost = 12
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Power Beacon"
@@ -231,7 +237,7 @@
 	item = /obj/item/sbeacondrop
 	cost = 10
 	surplus = 50 // not while there isnt one on any station, monkestation edit: from 0 to 50, we have them
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS)
 
 /datum/uplink_item/device_tools/powersink
 	name = "Power Sink"
@@ -263,6 +269,7 @@
 			Comes with 5 charges."
 	item = /obj/item/compression_kit
 	cost = 5
+	purchasable_from = ~UPLINK_GANGS //too strong with tommyguns
 
 /datum/uplink_item/device_tools/guardian
 	name = "Holoparasites"
@@ -272,7 +279,7 @@
 	item = /obj/item/guardian_creator/tech
 	cost = 15
 	surplus = 40
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //might disable these for gangs
 	restricted = TRUE
 	refundable = TRUE
 
@@ -302,7 +309,7 @@
 	desc = "A contract abusing a loophole found by plasmamen to invade halls with harmful gases \
 			without repercussion or warning, garnering no attention from any higher powers. \
 			Has to be signed by purchaser to be considered valid."
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY | UPLINK_GANGS)
 	item = /obj/item/card/plasma_license
 	cost = 25
 
@@ -344,7 +351,7 @@
 	item = /obj/vehicle/sealed/mecha/devitt
 	cost = 40
 	surplus = 0 // Two person item
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY | UPLINK_GANGS)
 	cant_discount = TRUE
 	progression_minimum = 30 MINUTES
 

@@ -37,10 +37,10 @@
 	// Self charging vars
 
 	/// Whether or not our gun charges its own cell on a timer.
-	var/selfcharge = 0
+	var/selfcharge = FALSE
 	/// The amount of time between instances of cell self recharge
 	var/charge_timer = 0
-	/// The amount of seconds_per_tick during process() before the gun charges itself
+	/// How many seconds between each self charge
 	var/charge_delay = 8
 	/// The amount restored by the gun to the cell per self charge tick
 	var/self_charge_amount = STANDARD_ENERGY_GUN_SELF_CHARGE_RATE
@@ -108,10 +108,10 @@
 /obj/item/gun/energy/proc/add_notes_energy()
 	var/list/readout = list()
 	// Make sure there is something to actually retrieve
-	if(!ammo_type.len)
+	if(!length(ammo_type))
 		return
 	var/obj/projectile/exam_proj
-	readout += "\nStandard models of this projectile weapon have [span_warning("[ammo_type.len] mode\s")]."
+	readout += "\nStandard models of this projectile weapon have [span_warning("[length(ammo_type)] mode\s")]"
 	readout += "Our heroic interns have shown that one can theoretically stay standing after..."
 	if(projectile_damage_multiplier <= 0)
 		readout += "a theoretically infinite number of shots on [span_warning("every")] mode due to esoteric or nonexistent offensive potential."
@@ -170,7 +170,7 @@
 		update_appearance()
 
 /obj/item/gun/energy/attack_self(mob/living/user as mob)
-	if(ammo_type.len > 1 && can_select)
+	if(length(ammo_type) > 1 && can_select)
 		select_fire(user)
 	return ..()
 
