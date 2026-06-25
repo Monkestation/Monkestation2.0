@@ -47,7 +47,7 @@
 
 /datum/status_effect/incapacitating/knockdown/on_creation(mob/living/new_owner, set_duration, prevent_drop)
 	src.prevent_drop = prevent_drop
-	. = ..()
+	return ..()
 
 /datum/status_effect/incapacitating/knockdown/on_apply()
 	. = ..()

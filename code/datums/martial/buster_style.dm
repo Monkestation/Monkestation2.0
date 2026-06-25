@@ -186,9 +186,10 @@
 		var/obj/item/bodypart/limb_to_hit = target_living.get_bodypart(user?.zone_selected)
 		var/armor = target_living.run_armor_check(limb_to_hit, MELEE, armour_penetration = 35)
 		target_living.apply_damage(damage, BRUTE, limb_to_hit, armor, wound_bonus = CANT_WOUND)
-	else
-		if(target.uses_integrity)
-			target.take_damage(damage)
+		return
+
+	if(target.uses_integrity)
+		target.take_damage(damage)
 
 /datum/action/cooldown/spell/touch/buster/proc/non_living_type_check(atom/thing)
 	return isstructure(thing) || ismachinery(thing) || ismecha(thing)
@@ -491,19 +492,17 @@
 	if(QDELETED(moving))
 		return
 
-	if(result != MOVELOOP_SUCCESS)
-		if(result == MOVELOOP_FAILURE && moving.loc != source.target)
-			harm(null, moving)
-			if(isanimal_or_basicmob(moving))
-				var/mob/living/moving_living = moving
-				if(moving_living.stat == DEAD)
-					moving_living.gib()
+	if(result == MOVELOOP_SUCCESS && isliving(moving))
+		var/mob/living/moved_living = moving
+		moved_living.Knockdown(BUSTER_STUN_DURATION)
+		moved_living.Immobilize(BUSTER_STUN_DURATION, ignore_canstun = TRUE)
+	else if(result == MOVELOOP_FAILURE && moving.loc != source.target)
+		harm(null, moving)
+		if(isanimal_or_basicmob(moving))
+			var/mob/living/moving_living = moving
+			if(moving_living.stat == DEAD)
+				moving_living.gib()
 		qdel(source)
-	else
-		if(isliving(moving))
-			var/mob/living/moved_living = moving
-			moved_living.Knockdown(BUSTER_STUN_DURATION)
-			moved_living.Immobilize(BUSTER_STUN_DURATION, ignore_canstun = TRUE)
 
 /obj/item/melee/touch_attack/buster_grapple
 	name = "grapple"
@@ -603,7 +602,8 @@
 		return FALSE
 	var/mob/living/O = owner
 	var/obj/item/bodypart/limb = O.get_bodypart(arm_index % 2 ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)
-	if(!limb || limb.bodypart_disabled)
+	var/mob/living/L = owner
+	var/obj/item/bodypart/limb = L.get_bodypart(arm_index % 2 ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)
 		to_chat(owner, span_warning("Your [limb.name] isn't in a functional state right now!"))
 		return FALSE
 	// target_atom is actually the user since click_to_activate = FALSE
@@ -640,7 +640,7 @@
 /datum/action/cooldown/mob_cooldown/charge/buster_mop/on_moved(atom/source, atom/oldloc, movement_dir)
 	var/found = FALSE
 	var/turf/current_turf = get_turf(source)
-	for(var/mob/living/target in current_turf.contents)
+	for(var/mob/living/target in current_turf)
 		if(target == owner)
 			continue
 		hit_target(source, target, charge_damage, movement_dir)
@@ -653,7 +653,7 @@
 
 /datum/action/cooldown/mob_cooldown/charge/buster_mop/DestroySurroundings(atom/movable/charger, movement_dir)
 	var/turf/next_turf = get_step(charger, movement_dir || charger.dir)
-	for(var/obj/object in next_turf.contents)
+	for(var/obj/object in next_turf)
 		if(!object.Adjacent(charger))
 			continue
 		if(!ismachinery(object) && !isstructure(object))
@@ -675,7 +675,7 @@
 
 /datum/action/cooldown/mob_cooldown/charge/buster_mop/proc/drag_front_under(mob/living/charger)
 	var/turf/next_turf = get_step(charger, charger.dir)
-	for(var/mob/living/target in next_turf.contents)
+	for(var/mob/living/target in next_turf)
 		if(target == owner)
 			continue
 		if(isanimal_or_basicmob(target) && target.stat == DEAD)
@@ -725,8 +725,8 @@
 	if(owner.get_held_items_for_side(arm_index % 2 ? LEFT_HANDS : RIGHT_HANDS))
 		to_chat(owner, span_warning("Your [arm_index % 2 ? "left" : "right"] hand is full!"))
 		return . | SPELL_CANCEL_CAST
-	var/mob/living/O = owner
-	var/obj/item/bodypart/limb = O.get_bodypart(arm_index % 2 ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)
+	var/mob/living/L = owner
+	var/obj/item/bodypart/limb = L.get_bodypart(arm_index % 2 ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)
 	if(!limb || limb.bodypart_disabled)
 		to_chat(owner, span_warning("Your [limb.name] isn't in a functional state right now!"))
 		return . | SPELL_CANCEL_CAST
@@ -755,7 +755,6 @@
 
 /obj/item/gun/magic/hook/buster/on_thrown(mob/living/carbon/user, atom/target)
 	try_fire_gun(target, user)
-	return
 
 /obj/item/ammo_casing/magic/hook/buster
 	projectile_type = /obj/projectile/hook/buster
@@ -908,7 +907,6 @@
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(soar_post_move))
 	RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(loop_qdeleted))
 	soar_on_moved_from_loop(victim, loop, victim.dir, direction)
-	return
 
 /datum/action/cooldown/spell/touch/buster/megabuster/proc/soar_on_moved_from_loop(atom/movable/source, datum/move_loop/has_target/throw_at/loop, old_dir, direction)
 	SIGNAL_HANDLER
