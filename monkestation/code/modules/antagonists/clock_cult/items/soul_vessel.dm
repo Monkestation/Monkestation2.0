@@ -15,6 +15,7 @@
 	force_cyborg_aisync = FALSE
 	force_cyborg_lawsync = FALSE
 	overrides_cyborg_laws = TRUE
+	can_update_laws = FALSE
 	///Should we add the clock cultist antag datum on being entered by a player
 	var/give_clock_cultist = TRUE
 
