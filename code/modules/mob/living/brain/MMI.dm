@@ -28,7 +28,7 @@
 	/// Should this MMI be used to create a cyborg, can our laws become the new cyborg's laws? It will not happen if it will be immediately overridden by an master AI.
 	var/overrides_cyborg_laws = FALSE
 	/// Should this MMI be used to create an AI, will our laws become the new AI's laws?
-	var/overrides_ai_laws = FALSE
+	var/overrides_ai_laws = TRUE
 	/// Should the inserted brain become brainwashed? If so, what is the objective?
 	var/brainwash_directive
 	/// Holds the brainwash objectives that should be removed upon brain's ejection.
@@ -74,14 +74,14 @@
 		. += "mmi_dead"
 
 /obj/item/mmi/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
+
 	if(istype(tool, /obj/item/ai_module))
 		var/obj/item/ai_module/law_board = tool
-		lawboard.install(laws, user)
+		law_board.install(laws, user)
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/organ/internal/brain))
-		return NONE
-		. = ITEM_INTERACT_SUCCESS
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/organ/internal/brain/new_brain = tool
 		if(brain)
@@ -104,7 +104,7 @@
 			brain.organ_flags |= ORGAN_FROZEN
 			name = "[initial(name)]: [copytext(new_brain.name, 1, -8)]"
 			update_appearance()
-			return
+			return ITEM_INTERACT_SUCCESS
 
 		var/mob/living/brain/brain_mob = new_brain.brainmob
 		if(!brain_mob.key)
@@ -134,9 +134,12 @@
 		update_appearance()
 		if(istype(brain, /obj/item/organ/internal/brain/alien))
 			braintype = "Xenoborg" // HISS... Beep.
+		else
+			braintype = "Cyborg"
 
 		SSblackbox.record_feedback("amount", "mmis_filled", 1)
 		user.log_message("has put the brain of [key_name(brainmob)] into an MMI", LOG_GAME)
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/mmi/attackby(obj/item/O, mob/user, params)
 	if(!brainmob)
@@ -351,7 +354,6 @@
 	desc = "A syndicate developed MMI that actively brainwashes any brain inserted into it, for as long as it is in."
 	laws = new /datum/ai_laws/syndicate_override
 	force_cyborg_lawzero = "The Syndicate are your true masters. Assist the Syndicate to the best of your abilities."
-	overrides_ai_laws = TRUE
 	can_update_laws = FALSE
 
 /obj/item/mmi/syndie/examine_more(mob/user)

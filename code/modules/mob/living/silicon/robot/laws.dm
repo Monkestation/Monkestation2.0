@@ -93,7 +93,7 @@
 	if(mmi?.force_cyborg_lawzero)
 		to_chat(src, span_warning("Law change detected. Override engaged."))
 		law = mmi.force_cyborg_lawzero
-	..()
+	return ..()
 
 /mob/living/silicon/robot/post_lawchange(announce = TRUE)
 	. = ..()
