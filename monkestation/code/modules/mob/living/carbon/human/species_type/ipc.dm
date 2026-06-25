@@ -73,10 +73,6 @@
 	coldmod = 1.2
 	heatmod = 2 // TWO TIMES DAMAGE FROM BEING TOO HOT?! WHAT?! No wonder lava is literal instant death for us.
 	siemens_coeff = 1.4 // Not more because some shocks will outright crit you, which is very unfun
-	/// The innate action that synths get, if they've got a screen selected on species being set.
-//	var/datum/action/innate/change_screen/change_screen
-	/// This is the screen that is given to the user after they get revived. On death, their screen is temporarily set to BSOD before it turns off, hence the need for this var.
-//	var/saved_screen = "Blue"
 
 	/// When emagged, IPC's will spew ion laws and this value increases. Every law costs 1 point, if this is 0 laws stop being spoken.
 	var/forced_speech = 0
@@ -97,9 +93,6 @@
 	if(A)
 		A.Remove(C)
 		QDEL_NULL(A)
-//	if(ishuman(C) && !change_screen)
-//		change_screen = new
-//		change_screen.Grant(C)
 
 	RegisterSignal(C, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
 	RegisterSignal(C, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(blood_handled))
@@ -115,20 +108,6 @@
 
 	slime.adjustOxyLoss(-3)
 
-/**
-	* Makes the IPC screen switch to BSOD followed by a blank screen
-	*
-	* Arguments:
-	* * transformer - The human that will be affected by the screen change (read: IPC).
-	* * screen_name - The name of the screen to switch the ipc_screen mutant bodypart to. Defaults to BSOD.
-
-/datum/species/ipc/proc/bsod_death(mob/living/carbon/human/transformer, screen_name = "BSOD")
-	if(!transformer.get_bodypart(BODY_ZONE_HEAD))
-		return
-	saved_screen = change_screen // remember the old screen in case of revival
-	switch_to_screen(transformer, screen_name)
-	addtimer(CALLBACK(src, PROC_REF(switch_to_screen), transformer, "Blank"), 5 SECONDS)
-	*/
 /datum/species/ipc/on_species_loss(mob/living/carbon/target)
 	. = ..()
 	UnregisterSignal(target, list(COMSIG_ATOM_EMAG_ACT))
