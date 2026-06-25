@@ -36,7 +36,7 @@
 		user_active_arm.unarmed_damage_high += 0.1
 
 /obj/item/clothing/gloves/latex/surgical
-	name = "Black Latex gloves"
+	name = "black latex gloves"
 	desc = "Pricy sterile gloves that are thinner than latex. The lining allows for the person to operate \
 					quicker along with the faster use time of various chemical related items"
 	icon = 'monkestation/icons/obj/clothing/gloves.dmi'
@@ -61,3 +61,46 @@
 	worn_icon = 'monkestation/icons/mob/clothing/gloves.dmi'
 	icon = 'monkestation/icons/obj/clothing/gloves.dmi'
 	alternate_worn_layer = ABOVE_SUIT_LAYER
+
+/obj/item/clothing/gloves/color/black/dimensional
+	desc = "These gloves function as a dimensonal weapon storage using bluespace compression technology. It doesn't muffle surrounding sound; why would it?"
+
+/obj/item/clothing/gloves/color/black/dimensional/Initialize(mapload)
+	. = ..()
+	create_storage(storage_type = /datum/storage/dimensional_gloves)
+
+/datum/storage/dimensional_gloves
+	max_specific_storage = WEIGHT_CLASS_GIGANTIC
+	max_total_storage = WEIGHT_CLASS_GIGANTIC * 6
+	max_slots = 6
+
+/datum/storage/dimensional_gloves/New(atom/parent, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, allow_quick_empty, collection_mode, attack_hand_interact)
+	. = ..()
+	set_holdable(can_hold_list = list(
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/gun,
+		/obj/item/knife,
+		/obj/item/melee,
+		/obj/item/nullrod,
+		/obj/item/energy_katana,
+		/obj/item/throwing_star,
+		/obj/item/shield,
+		/obj/item/spear,
+		/obj/item/dualsaber,
+		/obj/item/fireaxe,
+		/obj/item/flamethrower,
+		/obj/item/chainsaw,
+		/obj/item/pitchfork,
+		/obj/item/pneumatic_cannon,
+		/obj/item/soulscythe,
+		/obj/item/claymore,
+		/obj/item/katana,
+		/obj/item/switchblade,
+		/obj/item/cane,
+		/obj/item/highfrequencyblade,), \
+
+		cant_hold_list = list(
+			/obj/item/gun/magic, // no magic
+		)
+	)
