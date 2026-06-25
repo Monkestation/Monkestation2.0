@@ -18,23 +18,24 @@
 	///How much damage to do when detonating
 	var/detonation_damage = 50
 
-/datum/status_effect/painted/on_creation(mob/living/new_owner, applied_stacks = 1, obj/projectile/paintball/ball)
+/datum/status_effect/painted/on_creation(mob/living/new_owner, applied_stacks = 1)
 	stacks = applied_stacks
 	removable_tick = world.time + resistant_duration
 	return ..()
 
 /datum/status_effect/painted/on_apply()
 	check_detonation()
+	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(owner_cleaned))
 	return TRUE
 
-/datum/status_effect/painted/refresh(effect, applied_stacks = 1, obj/projectile/paintball/ball)
+/datum/status_effect/painted/on_remove()
+	UnregisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT)
+
+/datum/status_effect/painted/refresh(effect, applied_stacks = 1)
 	removable_tick = world.time + resistant_duration
 	if(stacks < max_stacks)
 		stacks += applied_stacks
 		check_detonation()
-	else if(istype(ball)) //bit jank, but this is the best way I can think of for now to do triple damage from paintballs
-		owner.apply_damage(ball.damage * 2, ball.damage_type, owner.check_hit_limb_zone_name(ball.def_zone))
-		owner.stamina?.adjust(-ball.stamina * 2)
 
 /datum/status_effect/painted/proc/check_detonation()
 	if(stacks < max_stacks)
@@ -47,3 +48,11 @@
 		owner.adjustBruteLoss(detonation_damage, TRUE, TRUE)
 	else
 		owner.stamina.adjust(-detonation_damage)
+
+/datum/status_effect/painted/proc/owner_cleaned(mob/living/cleaned, clean_types)
+	SIGNAL_HANDLER
+	if(!(clean_types & CLEAN_TYPE_HARD_DECAL) || world.time < removable_tick)
+		return
+
+	qdel(src)
+	return COMPONENT_CLEANED

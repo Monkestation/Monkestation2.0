@@ -1,11 +1,11 @@
 //gun that shoots paintballs
-//status effect that stops cleaning
 //the powercell of the gun is simply linked to the inserted paint container, players should never see the actual cell
 /obj/item/gun/energy/paint_gun
-	name = "Paintball Gun"
+	name = "Paintball Pistol"
 	desc = "A gun designed to compress paint into small orbs and shoot them out at high speeds."
 	can_charge = FALSE
 	dead_cell = TRUE //we manage cell charge ourselves
+	ammo_type = list(/obj/item/ammo_casing/energy/paint)
 	///The canister currently inserted into us, effectively our magazine
 	var/obj/item/paint_gun_canister/canister
 	///Is our canister internal
@@ -17,7 +17,10 @@
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS) //buh
 	if(internal_canister && !isdatum(canister))
-		canister = (canister ? new canister() : new /obj/item/paint_gun_canister())
+		canister = (canister ? new canister(src) : new /obj/item/paint_gun_canister(src))
+		canister.set_gun(src)
+		set_canister(canister)
+		update_appearance()
 
 /obj/item/gun/energy/paint_gun/get_cell(atom/movable/interface, mob/user)
 	return //from an outside perspective we dont have a cell
@@ -82,11 +85,15 @@
 		balloon_alert(user, "canister unloaded")
 	update_appearance()
 
+/obj/item/gun/energy/paint_gun/shotgun
+	can_select = FALSE
+
 
 //need to put this somewhere else, idk where, maybe magazines
 /obj/item/paint_gun_canister
 	name = "Paint Canister"
-	desc = "A container for paint, dont know what else you would expect."
+	desc = "A container of pressurized paint, dont know what else you would expect."
+	w_class = WEIGHT_CLASS_SMALL
 	///The color of paint stored within us
 	var/stored_paint_color
 	///How much paint is stored within us
@@ -100,7 +107,12 @@
 
 /obj/item/paint_gun_canister/Initialize(mapload, paint_color = COLOR_WHITE)
 	stored_paint_color = paint_color
+	paint = max_paint
 	return ..()
+
+/obj/item/paint_gun_canister/examine(mob/user)
+	. = ..()
+	. += "It currently contains [paint == 1 ? "1 unit" : "[paint] units"] of paint and has a maximum capacity of [max_paint]."
 
 /obj/item/paint_gun_canister/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(try_fill(user, tool))
@@ -130,7 +142,7 @@
 /obj/item/paint_gun_canister/proc/adjust_paint(adjust_by)
 	paint = clamp(paint + adjust_by, 0, max_paint)
 	if(gun)
-		gun.cell.charge = paint //manually set charge so we dont recurse with signals
+		gun.cell?.charge = paint //manually set charge so we dont recurse with signals
 
 /obj/item/paint_gun_canister/proc/try_fill(mob/living/user, obj/item/tool)
 	var/paint_needed = max_paint - paint
@@ -167,6 +179,18 @@
 /obj/item/paint_gun_canister/proc/cell_power_change(obj/item/stock_parts/power_store/cell/changed)
 	SIGNAL_HANDLER
 	paint = changed.charge
+
+//direct upgrade of normal canisters, simply holds more paint
+/obj/item/paint_gun_canister/expanded
+	name = "Bluespace Paint Canister"
+	max_paint = 48
+	desc = "A container using bluespace technology to fit more paint into the same small package as a standard paint canister."
+
+//holds more paint but doesnt fit in some guns and is more bulky
+/obj/item/paint_gun_canister/large
+	w_class = WEIGHT_CLASS_NORMAL
+	max_paint = 64
+	canister_flags = LARGE_PAINT_GUN_CANISTER
 
 /*/obj/item/paint_gun_canister/empty_magazine()
 	if(paint <= 0)

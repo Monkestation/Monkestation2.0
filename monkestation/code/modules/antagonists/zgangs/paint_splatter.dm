@@ -1,57 +1,121 @@
-/obj/effect/paint_splatter
+/obj/effect/decal/paint_splatter
 	name = "paint"
 	desc = "A puddle of paint spilled on the floor, someone should probably clean this up."
 	icon = null //we dont actually have an icon, our appearance is handled by a mutable appearance
 	layer = SIGIL_LAYER
-	///Are we still loading
-	var/is_loading = TRUE
+	turf_loc_check = FALSE //this gets handled by the SSgangs creation procs
 	///Ref to our visual holder
 	var/obj/effect/abstract/paint_splatter_visual_holder/holder
+	///The color of paint we are, used to ensure things dont touch the value if we dont want them to
+	var/paint_color
 	///The world.time we were created at
 	var/creation_timestamp = 0
 	///alist of visual holders keyed to their id string
 	var/static/alist/visual_holders_by_key = alist()
 
-/obj/effect/paint_splatter/Initialize(mapload, our_color)
+/obj/effect/decal/paint_splatter/Initialize(mapload, our_color)
 	..()
-	color = our_color
+	paint_color = our_color //change this to its own var
+	creation_timestamp = world.time
 	for(var/card_dir in GLOB.cardinals)
 		var/turf/dir_turf = get_step(src, card_dir)
 		if(dir_turf)
 			RegisterSignal(dir_turf, COMSIG_PAINT_SPLATTER_UPDATE, PROC_REF(adjacent_paint_update))
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/paint_splatter/LateInitialize(mapload_arg)
+/obj/effect/decal/paint_splatter/LateInitialize(mapload_arg)
+	new_state()
+
+/obj/effect/decal/paint_splatter/Destroy(force)
+	for(var/card_dir in GLOB.cardinals)
+		UnregisterSignal(get_step(src, card_dir), COMSIG_PAINT_SPLATTER_UPDATE)
+	var/turf/our_turf = get_turf(src)
+	SEND_SIGNAL(our_turf, COMSIG_PAINT_SPLATTER_UPDATE, src)
+	appearance = null //its technically a ref, so just to be safe
+	holder = null
+	return ..()
+
+/obj/effect/decal/paint_splatter/NeverShouldHaveComeHere(turf/here_turf)
+	return isgroundlessturf(here_turf) && !GET_TURF_BELOW(here_turf)
+
+/obj/effect/decal/paint_splatter/wash(clean_types)
+	. = ..()
+	if(. || (clean_types & CLEAN_TYPE_HARD_DECAL))
+		qdel(src)
+		return TRUE
+	return .
+
+///Call this whenever we have a full state change, color and/or creation_timestamp overwritten
+/obj/effect/decal/paint_splatter/proc/new_state(check_for_holder = TRUE)
+	var/list/adjacent = list()
+	var/turf/our_turf = get_turf(src)
+	SEND_SIGNAL(our_turf, COMSIG_PAINT_SPLATTER_UPDATE, src, adjacent)
+	if(check_for_holder && holder)
+		return
+
 	var/alist/connections = alist()
-	var/adjacent = SEND_SIGNAL(get_turf(src), COMSIG_PAINT_SPLATTER_UPDATE, src, connections)
-	is_loading = FALSE
+	for(var/obj/effect/decal/paint_splatter/splatter in adjacent)
+		check_state_value(splatter, connections)
+	change_appearance(connections)
 
-//check this always has proper access to its datums so no NREs
-/obj/effect/paint_splatter/proc/adjacent_paint_update(turf/sent_from, /obj/effect/paint_splatter/updating, alist/connections)
-	SIGNAL_HANDLER
+///Manually grab adjacent paint splatters and then update our visuals
+/obj/effect/decal/paint_splatter/proc/do_manual_visuals()
+	var/alist/vis_list = alist()
+	for(var/card_dir in GLOB.cardinals)
+		var/obj/effect/decal/paint_splatter/splatter = locate() in get_step(src, card_dir)
+		if(splatter)
+			check_state_value(splatter, vis_list)
+	change_appearance(vis_list)
 
-/obj/effect/paint_splatter/proc/change_appearance(alist/new_appearance)
-	var/new_key = SSgangs.get_paint_visual_string(color, new_appearance)
+///Set our appearance based on the passed alist
+/obj/effect/decal/paint_splatter/proc/change_appearance(alist/new_appearance)
+	var/new_key = get_visual_string(paint_color, new_appearance)
 	var/obj/effect/abstract/paint_splatter_visual_holder/new_holder = visual_holders_by_key[new_key]
 	if(!new_holder)
-		new_holder = new /obj/effect/abstract/paint_splatter_visual_holder(null, color, new_appearance)
+		new_holder = new /obj/effect/abstract/paint_splatter_visual_holder(null, paint_color, new_appearance)
 		new_holder.string_id = new_key
 		visual_holders_by_key[new_key] = new_holder
 
+	holder = new_holder
 	appearance = new_holder.appearance
+	update_appearance()
 
-/obj/effect/paint_splatter/proc/check_state_value(obj/effect/paint_splatter/connected_to, alist/current_list)
-	var/new_value = connected_to.color
-	if(QDELETED(other_thing))
+///Get the passed connections list in key form
+/obj/effect/decal/paint_splatter/proc/get_visual_string(passed_color, alist/connections)
+	. = "[passed_color]" //stringcasting to ensure nothing runtimes
+	for(var/dir_value in GLOB.cardinals) //iterate over cardinals to ensure constant ordering
+		var/dir_data = connections[dir_value]
+		if(!dir_data)
+			continue
+		. += "[dir_value]" + "[dir_data]"
+	return .
+
+///Check the state value for us and an adjacent splatter, if it differs from current value then operate in place on current_list and return TRUE
+/obj/effect/decal/paint_splatter/proc/check_state_value(obj/effect/decal/paint_splatter/connected_to, alist/current_list)
+	var/new_value = connected_to.paint_color
+	if(QDELETED(connected_to))
 		new_value = null
-	else if(thing.color == other_thing.color || creation_timestamp => connected_to.creation_timestamp)
-		new_value = color
+	else if(paint_color == connected_to.paint_color || creation_timestamp >= connected_to.creation_timestamp)
+		new_value = paint_color
 
 	var/dir_to = get_dir(src, connected_to)
 	if(new_value != current_list[dir_to])
 		current_list[dir_to] = new_value
 		return TRUE
 	return FALSE
+
+/obj/effect/decal/paint_splatter/proc/adjacent_paint_update(turf/sent_from, obj/effect/decal/paint_splatter/updating, list/adjacent)
+	SIGNAL_HANDLER
+	if(adjacent)
+		adjacent += src
+
+	if(!holder)
+		do_manual_visuals() //we need to have visuals for whatever we got the signal from
+		return
+
+	var/alist/app_copy = holder.connections.Copy()
+	if(check_state_value(updating, app_copy))
+		change_appearance(app_copy)
 
 //TODO: convert these to a datum that just holds the appearance as a mutable
 ///The visual holder for paint splatters, these should be singletons
@@ -73,12 +137,12 @@
 	. = ..()
 	color = base_color
 	connections = connections_list
-	var/icon_state_value = 15
+	var/icon_state_value = NONE
 	var/list/images
 	if(length(connections_list))
 		images = list()
 		for(var/dir_value, dir_data in connections_list)
-			icon_state_value -= dir_value
+			icon_state_value &= dir_value
 			if(!istext(dir_data) || dir_data == base_color)
 				continue
 			var/image/edge = image('icons/effects/paint_splatter.dmi', src, "edge-[dir_value]") //technically we could probably just rotate this but ehh
@@ -98,5 +162,5 @@
 
 /proc/test_holder(turf/spawn_at)
 	var/obj/effect/abstract/paint_splatter_visual_holder/holder = new /obj/effect/abstract/paint_splatter_visual_holder(spawn_at, COLOR_RED, alist(1 = COLOR_GREEN, 2 = COLOR_BLUE, 4 = COLOR_RED, 8 = COLOR_PURPLE))
-	var/obj/effect/paint_splatter/splatter = new(get_step(spawn_at, WEST))
+	var/obj/effect/decal/paint_splatter/splatter = new(get_step(spawn_at, WEST))
 	splatter.appearance = holder.appearance

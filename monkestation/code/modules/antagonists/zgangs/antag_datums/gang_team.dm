@@ -32,8 +32,8 @@
 	var/list/visible_enemy_huds = list()
 	///How many telecrystals do we generate each minute
 	var/passive_tc = 0
-	///How many tiles have we painted
-	var/painted_tiles = 0
+	///Paint splatters keyed to the area they are in
+	var/alist/paint_by_area = alist()
 
 /datum/team/gang/New(starting_members)
 	. = ..()
@@ -48,6 +48,7 @@
 
 	if(length(SSgangs.possible_gang_colors))
 		gang_color = pick_n_take(SSgangs.possible_gang_colors)
+		SSgangs.gangs_by_color[gang_color] = src
 	else
 		stack_trace("Gang created with no remaining possible_gang_colors.")
 
@@ -100,6 +101,7 @@
 	report += "<br>"
 	report += "(Members used [used_telecrystals] TC) [purchases]"
 	report += "<br>"
+	var/painted_tiles // REDO THIS GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 	report += "The gang claimed [painted_tiles] tiles."
 	report += span_big("<br>The gang had a total of [rep] Reputation.")
 	return "<div class='panel redborder'>[report.Join("<br>")]</div>"
@@ -155,6 +157,33 @@
 	RegisterSignal(tracked_objective, COMSIG_TRAITOR_OBJECTIVE_FAILED, PROC_REF(handle_tracked_objective))
 	RegisterSignal(tracked_objective, COMSIG_TRAITOR_OBJECTIVE_COMPLETED, PROC_REF(handle_completed_objective))
 
+///Take control of an area
+/datum/team/gang/proc/take_area(area/taken_area, forced)
+	if(!taken_area)
+		CRASH("[src] calling take_area() without a passed taken_area.")
+
+	var/obj/effect/decal/cleanable/crayon/gang/controlling_tag = SSgangs.gang_tags_by_area[taken_area]
+	var/datum/team/gang/area_owner = controlling_tag?.gang_owner
+	if(area_owner == src || (area_owner && !area_owner.lose_area(taken_area, forced, area_owner)))
+		return FALSE
+
+	SEND_SIGNAL(src, COMSIG_GANG_TOOK_AREA, taken_area)
+	claimed_areas += taken_area.type
+	return TRUE
+
+///Cause a gang to lose control of an area, passed_owner is for if we have already found the owner of the passed area
+/datum/team/gang/proc/lose_area(area/lost_area, forced, passed_owner)
+	if(!lost_area)
+		CRASH("[src] calling lose_area() without a passed lost_area.")
+
+	var/datum/team/gang/area_owner = passed_owner || src
+	if(area_owner != src || (!forced && (lost_area.type in permanently_claimed_areas)))
+		return FALSE
+
+	SEND_SIGNAL(src, COMSIG_GANG_LOST_AREA, lost_area)
+	claimed_areas -= lost_area.type
+	return TRUE
+
 /datum/team/gang/proc/handle_completed_objective(datum/traitor_objective/gang/tracked_objective)
 	SIGNAL_HANDLER
 	unallocated_tc += tracked_objective.telecrystal_reward
@@ -166,43 +195,49 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(tracked_objective, list(COMSIG_TRAITOR_OBJECTIVE_FAILED, COMSIG_TRAITOR_OBJECTIVE_COMPLETED))
 
+///Called when a tracked implant is qdeled
 /datum/team/gang/proc/on_tracked_qdel(datum/source, force)
 	SIGNAL_HANDLER
 	stop_tracking_implant(source)
 
+///Called when a tracked implant is implanted
 /datum/team/gang/proc/on_tracked_implanted(datum/source, mob/living/target, mob/user, silent, force)
 	SIGNAL_HANDLER
 	if(IS_IN_GANG(user, src)) //if user is one of our members then we would just be tracking the implant again right away
 		return
 	stop_tracking_implant(source)
 
-///Take control of an area
-/datum/team/gang/proc/take_area(area/taken_area, forced)
-	if(!taken_area)
-		CRASH("[src] calling take_area() without a passed taken_area.")
+///Called when a splatter of ours is destroyed(just a wrapper for SSgangs.gang_lose_splatter)
+/datum/team/gang/proc/splatter_destroyed(obj/effect/decal/paint_splatter/destroyed, force)
+	SIGNAL_HANDLER
+	SSgangs.gang_lose_splatter(destroyed, src)
 
-	var/datum/team/gang/area_owner = GLOB.gang_controlled_areas[taken_area]
-	if(area_owner == src || (area_owner && !area_owner.lose_area(taken_area, forced, area_owner)))
-		return FALSE
+///Called when a splatter updates
+/datum/team/gang/proc/splatter_update(turf/sent_from, obj/effect/decal/paint_splatter/updating, list/adjacent)
+	SIGNAL_HANDLER
+	if(updating.paint_color == gang_color)
+		return
 
-	SEND_SIGNAL(src, COMSIG_GANG_TOOK_AREA, taken_area)
-	GLOB.gang_controlled_areas[taken_area] = src
-	claimed_areas += taken_area.type
-	return TRUE
+	SSgangs.gang_lose_splatter(updating, src)
 
-///Cause a gang to lose control of an area, passed_owner is for if we have already found the owner of the passed area
-/datum/team/gang/proc/lose_area(area/lost_area, forced, passed_owner)
-	if(!lost_area)
-		CRASH("[src] calling lose_area() without a passed lost_area.")
+///Called when a splatter exits an area
+/datum/team/gang/proc/splatter_exited_area(obj/effect/decal/paint_splatter/exiting, area/old_area)
+	SIGNAL_HANDLER
+	var/area/new_area = get_area(exiting)
+	if(old_area == new_area)
+		return
 
-	var/datum/team/gang/area_owner = passed_owner || GLOB.gang_controlled_areas[lost_area]
-	if(area_owner != src || (!forced && (lost_area.type in permanently_claimed_areas)))
-		return FALSE
+	var/list/paint_list = paint_by_area[old_area]
+	if(paint_list)
+		paint_list -= exiting
+		if(!length(paint_list))
+			paint_by_area -= old_area
 
-	SEND_SIGNAL(src, COMSIG_GANG_LOST_AREA, lost_area)
-	GLOB.gang_controlled_areas -= lost_area
-	claimed_areas -= lost_area.type
-	return TRUE
+	var/list/new_paint_list = paint_by_area[new_area]
+	if(new_paint_list)
+		new_paint_list += exiting
+	else
+		paint_by_area[new_area] = list(exiting)
 
 ///set up all our stuff for our gang_data, if there is already another gang then we wont pick from their blacklisted types for our data. forced_type will just set our data to whats passed
 /*/datum/team/gang/proc/set_gang_info(datum/gang_data/forced_type)

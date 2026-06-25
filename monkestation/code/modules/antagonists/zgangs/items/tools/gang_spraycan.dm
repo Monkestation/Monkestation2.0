@@ -1,11 +1,11 @@
-///Assoc list of gang controlled areas with values of the gang that controls them
-GLOBAL_LIST_EMPTY(gang_controlled_areas)
 //might be possible to combine this with double assoc stuff
 ///Assoc list of all tag decals keyed to the area they are in
 //GLOBAL_LIST_EMPTY(tag_decals_by_area) //MIGHT NOT BE NEEDED
 
 #define TIMES_CLEANED_TO_REMOVE 5
 #define ALPHA_TO_REMOVE_WHEN_CLEANED 50
+#define REP_WHEN_PAINTED_OVER 1
+#define TC_WHEN_PAINTED_OVER 0.4
 /obj/item/toy/crayon/spraycan/gang
 	///Will we try to tag instead of our normal function if used by a gang member
 	var/tagging_mode = TRUE
@@ -77,13 +77,13 @@ GLOBAL_LIST_EMPTY(gang_controlled_areas)
 		balloon_alert(user, "this area is not valid to take control of.")
 		return FALSE
 
-	var/datum/team/gang/controlling_gang = GLOB.gang_controlled_areas[target_area]
+	var/obj/effect/decal/cleanable/crayon/gang/controlling_tag = SSgangs.gang_tags_by_area[target_area]
+	var/datum/team/gang/controlling_gang = controlling_tag?.gang_owner
 	if(controlling_gang == antag_datum.gang_team)
 		balloon_alert(user, "we already control this area.")
 		return FALSE
 
-	var/obj/effect/decal/cleanable/crayon/gang/controlling_tag = locate(/obj/effect/decal/cleanable/crayon/gang) in target //target will always be a turf by this point
-	if(controlling_gang && !controlling_tag)
+	if(controlling_tag && get_turf(controlling_tag) != target)
 		balloon_alert(user, "an enemy gang has a tag elsewhere in this area blocking claiming it! Find it and spray over it.")
 		return FALSE
 	else if(!resistant_coating_charges && controlling_tag?.resistant)
@@ -98,8 +98,8 @@ GLOBAL_LIST_EMPTY(gang_controlled_areas)
 	if(controlling_tag) //give rep and TC
 		controlling_tag.overridden = TRUE
 		qdel(controlling_tag)
-		gang_team.rep += 1
-		gang_team.unallocated_tc += 0.4 //MAKE THESE BE A DEFINE
+		gang_team.rep += REP_WHEN_PAINTED_OVER
+		gang_team.unallocated_tc += TC_WHEN_PAINTED_OVER
 
 	var/obj/effect/decal/cleanable/crayon/gang/created_tag = new(target, gang_team.gang_color, gang_team.gang_tag, "[gang_team.gang_tag] tag", \
 																null, null, gang_team, target_area, TRUE)
@@ -132,31 +132,33 @@ GLOBAL_LIST_EMPTY(gang_controlled_areas)
 	var/overridden = FALSE
 	///ref to the gang that owns us
 	var/datum/team/gang/gang_owner
+	///our original area, used to stop harddels
+	var/area/original_area
 
 /obj/effect/decal/cleanable/crayon/gang/Initialize(mapload, main, type, e_name, graf_rot, alt_icon, datum/team/gang/passed_gang, area/passed_area, already_taken)
 	. = ..()
-	if(passed_gang) //if a gang was passed then SSgangs will already have been init
-		SSgangs.gang_tags_by_area[passed_area] = src
-		gang_owner = passed_gang
-		if(already_taken)
-			return
+	if(!passed_gang) //if a gang was passed then SSgangs will already have been init
+		return
 
-		var/area/our_area = passed_area || get_area(src)
-		if(our_area)
-			passed_gang.take_area(our_area) //need to move this to be a check
+	SSgangs.gang_tags_by_area[passed_area] = src
+	gang_owner = passed_gang
+	if(already_taken)
+		return
+
+	original_area = passed_area || get_area(src)
+	if(original_area)
+		passed_gang.take_area(original_area) //need to move this to be a check
 
 /obj/effect/decal/cleanable/crayon/gang/Destroy()
 	if(length(SSgangs.gang_tags_by_area))
-		SSgangs.gang_tags_by_area -= get_area(src)
+		SSgangs.gang_tags_by_area -= original_area
 
 	if(overridden)
 		return ..()
 
-	var/area/our_area = get_area(src)
-	if(gang_owner)
-		gang_owner.lose_area(our_area, passed_owner = gang_owner)
-	else //dont know how this happened but lets still clear the area just to be safe
-		GLOB.gang_controlled_areas -= our_area
+	gang_owner?.lose_area(original_area, passed_owner = gang_owner)
+	original_area = null
+	gang_owner = null
 	return ..()
 
 /obj/effect/decal/cleanable/crayon/gang/wash(clean_types)
@@ -176,3 +178,5 @@ GLOBAL_LIST_EMPTY(gang_controlled_areas)
 
 #undef TIMES_CLEANED_TO_REMOVE
 #undef ALPHA_TO_REMOVE_WHEN_CLEANED
+#undef REP_WHEN_PAINTED_OVER
+#undef TC_WHEN_PAINTED_OVER

@@ -1,4 +1,4 @@
-#define DESIRED_AREAS_PER_TC_PER_MINUTE 30
+#define DESIRED_AREAS_PER_TC_PER_MINUTE 20
 #define DESIRED_AREAS_PER_THREAT_PER_MINUTE 4
 #define MINUTE_MULT 0.167 //based on how many times we fire, currently 1/6 as we fire 6 times per minute
 #define TC_PER_MINUTE_PER_REPRESENTATION 0.05
@@ -25,8 +25,10 @@ PROCESSING_SUBSYSTEM_DEF(gangs)
 	var/list/possible_gang_colors
 	///assoc list of gang outfit items with key values of how much representation they provide
 	var/alist/gang_outfits = alist() //starts as a list so we dont need to init the entire SS for a single peice of clothing getting spawned
-	///a typecache of turfs that cannot be painted
-	var/list/blacklisted_paint_turfs
+	///alist of gangs keyed to their color
+	var/alist/gangs_by_color
+	///alist of all areas that have gang paint in them
+	var/alist/gang_painted_areas
 
 /datum/controller/subsystem/processing/gangs/PreInit()
 	. = ..()
@@ -38,13 +40,8 @@ PROCESSING_SUBSYSTEM_DEF(gangs)
 	all_gangs_by_tag = alist()
 	cached_extra_rep = list()
 	gang_tags_by_area = alist()
-	blacklisted_paint_turfs = typecacheof(list(
-		/turf/open/space,
-		/turf/open/chasm,
-		/turf/open/lava,
-		/turf/open/water,
-		/turf/open/openspace,
-	))
+	gangs_by_color = alist()
+	gang_painted_areas = alist()
 	//19 possible tags, you really shouldnt need more then this
 	all_gang_tags = list(
 		"Omni",
@@ -91,7 +88,6 @@ PROCESSING_SUBSYSTEM_DEF(gangs)
 		COLOR_SOFT_RED,
 	)
 
-	RegisterSignal(SSticker, COMSIG_TICKER_DECLARE_ROUND_END, PROC_REF(calculate_painted_tiles))
 	gang_area_multipliers = list(
 	/area/station/command = 2,
 	/area/station/security = 2,
@@ -111,9 +107,10 @@ PROCESSING_SUBSYSTEM_DEF(gangs)
 	if(!log_cooldown)
 		log_cooldown = world.time + 5 MINUTES
 
-	var/list/given_rewards = list()
+	//give rewards for gang representation
+	var/alist/given_rewards = alist()
 	for(var/datum/team/gang/gang_team in all_gangs)
-		var/list/temp = list("tc" = gang_team.passive_tc * MINUTE_MULT, "rep" = 0)
+		var/alist/temp = alist("tc" = gang_team.passive_tc * MINUTE_MULT, "rep" = 0)
 		given_rewards[gang_team] = temp
 		var/tc_pointer = &temp["tc"] //cant wait to find out this is actually slower then just accessing key value each time because BYOND is magical
 		var/rep_pointer = &temp["rep"]
@@ -123,13 +120,27 @@ PROCESSING_SUBSYSTEM_DEF(gangs)
 			*tc_pointer += member.total_representation * tc_mult
 			*rep_pointer += member.total_representation * rep_mult
 
-	for(var/area, owner in GLOB.gang_controlled_areas) //might want to use this to give gangs a printout of their controlled areas
-		var/list/rewards = given_rewards[owner]
-		var/area_mult = gang_area_multipliers[area] || MINUTE_MULT
-		//note these values assume we are running on time, might be able to make these be based on SPT
-		rewards["tc"] += area_mult / DESIRED_AREAS_PER_TC_PER_MINUTE
-		rewards["rep"] += area_mult / DESIRED_AREAS_PER_THREAT_PER_MINUTE
+	//give rewards for claimed areas
+	var/list/temp_shuffle = shuffle(all_gangs) //tiebreaker, because whoever is iterated over first will win
+	for(var/area/painted_area in gang_painted_areas)
+		var/datum/team/gang/winner
+		var/current_highscore = 0
+		for(var/datum/team/gang/paint_gang in temp_shuffle)
+			var/tile_amount = length(paint_gang.paint_by_area[painted_area])
+			if(tile_amount && tile_amount > current_highscore)
+				winner = paint_gang
+				current_highscore = tile_amount
+		given_rewards[winner]["rep"] += (gang_area_multipliers[painted_area] || MINUTE_MULT) / DESIRED_AREAS_PER_THREAT_PER_MINUTE
 
+	//give rewards for tagged areas
+	for(var/area, area_tag in gang_tags_by_area) //might want to use this to give gangs a printout of their controlled areas
+		var/obj/effect/decal/cleanable/crayon/gang/typed_tag = area_tag
+		var/datum/team/gang/owner = typed_tag.gang_owner
+		var/list/rewards = given_rewards[owner]
+		//note these values assume we are running on time, might be able to make these be based on SPT
+		rewards["tc"] += (gang_area_multipliers[area] || MINUTE_MULT) / DESIRED_AREAS_PER_TC_PER_MINUTE
+
+	//actually hand out the rewards
 	for(var/datum/team/gang/gang_team in given_rewards)
 		var/rep_value = given_rewards[gang_team]["rep"] + (cached_extra_rep[gang_team] || 0)
 		var/rounded_rep_value = round(rep_value, 0.1)
@@ -137,9 +148,7 @@ PROCESSING_SUBSYSTEM_DEF(gangs)
 
 		gang_team.unallocated_tc = round((gang_team.unallocated_tc + given_rewards[gang_team]["tc"]), 0.001)
 		gang_team.rep = round(rounded_rep_value + gang_team.rep, 0.1)
-
-	for(var/datum/team/gang/gang_datum in all_gangs)
-		gang_datum.update_handler_rep()
+		gang_team.update_handler_rep()
 
 	//if this ends up being kept the code for this can be improved
 	if(world.time >= log_cooldown)
@@ -148,58 +157,87 @@ PROCESSING_SUBSYSTEM_DEF(gangs)
 		for(var/datum/team/gang/g in all_gangs)
 			text += "[g.name]: [g.rep] "
 		text += "at: [DisplayTimeText(world.time)]"
-		log_game(text)
+		log_traitor(text)
 
-///Calculate and give out the rep for painted tiles, called at round end
-/datum/controller/subsystem/processing/gangs/proc/calculate_painted_tiles()
-	var/list/datum/team/gang/gangs_by_color = list()
-	for(var/datum/team/gang/gang_team in SSgangs.all_gangs)
-		gangs_by_color[gang_team.gang_color] = gang_team
-
-	for(var/turf/station_turf in GLOB.station_turfs)
-		gangs_by_color[station_turf.atom_colours?[WASHABLE_COLOUR_PRIORITY]]?.painted_tiles++
-
-	for(var/datum/team/gang/gang_team in all_gangs)
-		gang_team.rep += gang_team.painted_tiles % PAINTED_TILES_PER_REP
-
-///Apply paint to an atom, wont do anything if passed something besides a turf or a mob
+///Apply paint to an atom, if passed a non mob or turf atom then we target that atoms turf
 ///Stacks is for the painted status effect if we are applying to a mob
 /datum/controller/subsystem/processing/gangs/proc/paint_atom(atom/target, color, stacks = 1)
 	if(!color)
-		return
+		return FALSE
 
-	if(isturf(target))
-		return paint_turf(target, color)
-	else if(ismob(target))
+	if(ismob(target))
 		return paint_mob(target, color, stacks)
+
+	if(!isturf(target))
+		target = get_turf(target)
+	return paint_turf(target, color)
 
 ///Apply paint of the passed color to a turf, then claim it for the gang of that color
 /datum/controller/subsystem/processing/gangs/proc/paint_turf(turf/target, color)
-	if(!isturf(target) || (blacklisted_paint_turfs && is_type_in_typecache(target, blacklisted_paint_turfs)))
+	if(!isturf(target) || (isgroundlessturf(target) && !GET_TURF_BELOW(target)))
 		return FALSE
 
-/datum/controller/subsystem/processing/gangs/proc/paint_mob(mob/living/target, color, stacks = 1)
+	. = target
+	var/obj/effect/decal/paint_splatter/splatter = locate() in target
+	if(splatter)
+		var/old_color = splatter.paint_color
+		splatter.paint_color = color
+		splatter.creation_timestamp = world.time
+		splatter.new_state(FALSE)
+		if(old_color == color) //even if its the same color we still want to apply overlays for the adjacent tiles
+			return
 
-/datum/controller/subsystem/processing/gangs/proc/get_paint_visual_string(color, alist/connections)
-	. = "[color]" //stringcasting to ensure nothing runtimes
-	for(var/dir_value in GLOB.cardinals) //iterate over cardinals to ensure constant ordering
-		var/dir_data = connections[dir_value]
-		if(!dir_data)
-			continue
-		. += "[dir_value]" + "[dir_data]"
-	return .
+		gang_lose_splatter(splatter, gangs_by_color[old_color])
+	else
+		splatter = new(target, color)
 
-/datum/controller/subsystem/processing/gangs/proc/do_smooth(atom/smoothed) //this is probably overengineered
-	var/static/list/to_smooth = list()
-	var/static/is_running
-	to_smooth += smoothed
-	if(is_running)
+	var/datum/team/gang/owner = gangs_by_color[color]
+	if(!owner)
 		return
 
-	is_running = TRUE
-	sleep(0)
-//	do_smoothing(to_smooth)
-	is_running = FALSE
+	owner.RegisterSignal(splatter, COMSIG_QDELETING, TYPE_PROC_REF(/datum/team/gang, splatter_destroyed))
+	owner.RegisterSignal(target, COMSIG_PAINT_SPLATTER_UPDATE, TYPE_PROC_REF(/datum/team/gang, splatter_update))
+	owner.RegisterSignal(splatter, COMSIG_EXIT_AREA, TYPE_PROC_REF(/datum/team/gang, splatter_exited_area))
+	var/area/splatter_area = get_area(splatter)
+	var/list/paint_list = owner.paint_by_area[splatter_area]
+	if(paint_list)
+		paint_list += splatter
+	else
+		owner.paint_by_area[splatter_area] = list(splatter)
+		if(!gang_painted_areas[splatter_area])
+			gang_painted_areas[splatter_area] = 1
+		else
+			gang_painted_areas[splatter_area] += 1
+
+/datum/controller/subsystem/processing/gangs/proc/paint_mob(mob/living/target, color, stacks = 1)
+	if(!istype(target))
+		return FALSE
+
+	var/datum/antagonist/gang_member/gang_target = IS_GANGMEMBER(target)
+	if(gang_target.gang_team?.gang_color == color)
+		return FALSE
+	. = target
+	target.apply_status_effect(/datum/status_effect/painted, stacks)
+
+/datum/controller/subsystem/processing/gangs/proc/gang_lose_splatter(obj/effect/decal/paint_splatter/lost, datum/team/gang/loser, transferring = FALSE)
+	if(!loser)
+		return
+
+	loser.UnregisterSignal(lost, list(COMSIG_QDELETING, COMSIG_EXIT_AREA))
+	loser.UnregisterSignal(get_turf(lost), COMSIG_PAINT_SPLATTER_UPDATE)
+	var/area/lost_area = get_area(lost)
+	var/list/paint_list = loser.paint_by_area[lost_area]
+	if(!paint_list)
+		return
+
+	paint_list -= lost
+	if(length(paint_list))
+		return
+
+	loser.paint_by_area -= lost_area
+	gang_painted_areas[lost_area] -= 1
+	if(!transferring && gang_painted_areas[lost_area] <= 0)
+		gang_painted_areas -= lost_area
 
 ///Call to add a piece of clothing to gang_outfits
 /datum/controller/subsystem/processing/gangs/proc/register_gang_clothing(obj/item/clothing/registered, value = 1)
