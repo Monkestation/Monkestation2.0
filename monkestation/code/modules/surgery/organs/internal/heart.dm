@@ -78,8 +78,11 @@
 			to_chat(slime, span_danger("You feel drained!"))
 
 	var/datum/status_effect/fire_handler/wet_stacks/oozeling/slime_wetness = slime.has_status_effect(/datum/status_effect/fire_handler/wet_stacks/oozeling)
-	if(!slime_wetness || slime_wetness?.stacks != slime_wetness.stack_limit)
-		if(slime.blood_volume >= BLOOD_VOLUME_OKAY && slime.wet_stacks < DAMAGE_WATER_STACKS * 4)
+	var/datum/status_effect/fire_handler/wet_stacks/wetness = slime.has_status_effect(/datum/status_effect/fire_handler/wet_stacks)
+	if(slime_wetness?.stacks != slime_wetness.stack_limit && wetness?.stacks < DAMAGE_WATER_STACKS * 4)
+		if(slime.blood_volume >= BLOOD_VOLUME_OKAY)
+
+
 			slime.adjust_wet_stacks(1, /datum/status_effect/fire_handler/wet_stacks/oozeling)
 
 			if(slime_wetness?.stacks > 9 && slime_wetness?.stacks <= HYDROPHOBIA_WETNESS_STACKS)
