@@ -65,7 +65,7 @@
 	damage = 3
 	stamina = 8
 	ricochets_max = 4
-	ricochet_chance = 66
+	ricochet_chance = 75
 	ricochet_decay_chance = 1
 	ricochet_decay_damage = 0.9
 	ricochet_auto_aim_angle = 10
@@ -77,8 +77,8 @@
 
 /datum/embedding/stingball
 	embed_chance = 55
-	fall_chance = 2
-	jostle_chance = 7
+	fall_chance = 5
+	jostle_chance = 10
 	ignore_throwspeed_threshold = TRUE
 	pain_stam_pct = 0.7
 	pain_mult = 3

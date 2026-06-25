@@ -36,7 +36,7 @@
 		/obj/item/coin/antagtoken = 1,
 		/obj/item/clothing/gloves/color/black/security/blu = 1,
 		/obj/item/clothing/gloves/tackler = 5,
-		/obj/item/grenade/stingbang = 1,
+		/obj/item/grenade/stingbang = 5,
 		/obj/item/watertank/pepperspray = 2,
 		/obj/item/storage/belt/holster/energy = 4,
 		/obj/item/holosign_creator/security = 2,
