@@ -58,7 +58,7 @@
 
 	. = HANDLE_BLOOD_NO_NUTRITION_DRAIN|HANDLE_BLOOD_NO_EFFECTS
 
-	if(slime.blood_volume <= 0)
+	if(slime.blood_volume <= BLOOD_VOLUME_SURVIVE * 0.5)
 		slime.blood_volume += JELLY_REGEN_RATE_EMPTY * seconds_per_tick
 		slime.adjustBruteLoss(2.5 * seconds_per_tick)
 		to_chat(slime, span_danger("You feel empty!"))
@@ -79,7 +79,7 @@
 
 	var/datum/status_effect/fire_handler/wet_stacks/oozeling/slime_wetness = slime.has_status_effect(/datum/status_effect/fire_handler/wet_stacks/oozeling)
 	if(!slime_wetness || slime_wetness?.stacks != slime_wetness.stack_limit)
-		if(slime.blood_volume >= BLOOD_VOLUME_OKAY)
+		if(slime.blood_volume >= BLOOD_VOLUME_OKAY && slime.wet_stacks < DAMAGE_WATER_STACKS * 4)
 			slime.adjust_wet_stacks(1, /datum/status_effect/fire_handler/wet_stacks/oozeling)
 
 			if(slime_wetness?.stacks > 9 && slime_wetness?.stacks <= HYDROPHOBIA_WETNESS_STACKS)
