@@ -32100,7 +32100,9 @@
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
 	},
-/obj/effect/landmark/navigate_destination/tools,
+/obj/effect/landmark/navigate_destination{
+	location = "Auxiliary Tool Storage"
+	},
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "hwK" = (
@@ -35459,6 +35461,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/landmark/navigate_destination/tools,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "ilU" = (
@@ -53249,7 +53252,6 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Primary Tool Storage"
 	},
-/obj/effect/landmark/navigate_destination,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},

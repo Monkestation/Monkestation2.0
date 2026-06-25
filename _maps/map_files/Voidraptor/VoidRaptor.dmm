@@ -19601,6 +19601,9 @@
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 1
 	},
+/obj/effect/landmark/navigate_destination{
+	location = "Auxiliary Tool Storage"
+	},
 /turf/open/floor/iron/textured_corner{
 	dir = 1
 	},
@@ -69709,7 +69712,6 @@
 /obj/structure/flora/bush/sparsegrass{
 	pixel_x = 8
 	},
-/obj/effect/landmark/navigate_destination/common/auxbaseconst,
 /turf/open/floor/grass,
 /area/station/hallway/primary/central/fore)
 "tqu" = (

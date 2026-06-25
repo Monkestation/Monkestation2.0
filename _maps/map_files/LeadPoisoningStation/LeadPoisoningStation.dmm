@@ -49902,12 +49902,6 @@
 	dir = 4
 	},
 /area/station/science/xenobiology)
-"xPX" = (
-/obj/effect/landmark/navigate_destination,
-/turf/open/floor/plating/plasma{
-	initial_gas_mix = "plasma=700;TEMP=293.15"
-	},
-/area/station/maintenance/port/central)
 "xPZ" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /obj/item/reagent_containers/cup/watering_can,
@@ -50575,6 +50569,9 @@
 /area/station/science/research)
 "ygO" = (
 /obj/structure/necropolis_arch,
+/obj/effect/landmark/navigate_destination{
+	location = "Forge"
+	},
 /turf/open/floor/fakebasalt,
 /area/station/maintenance/starboard/greater)
 "ygR" = (
@@ -81690,7 +81687,7 @@ xif
 xif
 xif
 xif
-xPX
+xif
 xif
 xif
 fNs

@@ -50039,19 +50039,6 @@
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
-"rjn" = (
-/obj/machinery/firealarm/directional/south,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/landmark/navigate_destination{
-	location = "Auxiliary Base Construction"
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "rjA" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -51318,10 +51305,12 @@
 	name = "Auxiliary Tool Storage"
 	},
 /obj/effect/landmark/event_spawn,
-/obj/effect/landmark/navigate_destination,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/effect/landmark/navigate_destination{
+	location = "Auxiliary Tool Storage"
+	},
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "rEy" = (
@@ -62319,6 +62308,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/navigate_destination/tools,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "vvK" = (
@@ -101669,7 +101659,7 @@ weC
 qfp
 wEG
 htd
-rjn
+ggU
 syo
 ezb
 dIV
