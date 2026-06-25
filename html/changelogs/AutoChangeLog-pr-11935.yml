@@ -1,0 +1,6 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - rscadd: "added alternate styling options for balaclavas along with letting them be equipped to the neckslot."
+  - rscdel: "removed the tactical balaclava."
+  - rscdel: "removed all thermal balaclavas from sec."

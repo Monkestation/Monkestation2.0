@@ -2660,6 +2660,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison/visit)
+"aTz" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/east,
+/obj/structure/closet/crate/trashcart/engineering/filled,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "aTB" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
@@ -15636,14 +15644,14 @@
 	dir = 6
 	},
 /obj/structure/table,
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = -9;
 	pixel_y = 18
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_y = 18
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 9;
 	pixel_y = 18
 	},
@@ -28250,6 +28258,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/execution)
+"jcA" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/structure/closet/crate/trashcart/engineering/filled,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "jcB" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
@@ -55660,7 +55675,7 @@
 	},
 /obj/structure/sign/poster/official/safety_internals/directional/east,
 /obj/structure/table,
-/obj/item/storage/box/smart_metal_foam{
+/obj/item/storage/box/smart_metalfoam{
 	pixel_x = 4;
 	pixel_y = 7
 	},
@@ -107690,8 +107705,8 @@ fbT
 ppP
 tfN
 oYQ
-qzl
-sgJ
+jcA
+aTz
 qzl
 fpn
 xOH
