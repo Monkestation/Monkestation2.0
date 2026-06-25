@@ -46,7 +46,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/dualsaber
 	cost = 16
-	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_SKY | UPLINK_GANGS)
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_SPY | UPLINK_GANGS)
 
 /datum/uplink_item/melee/doublesword/get_discount_value(discount_type)
 	switch(discount_type)
