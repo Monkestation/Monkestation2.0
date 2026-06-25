@@ -190,9 +190,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(!modularInterface)
 			stack_trace("Cyborg [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 			create_modularInterface()
-		var/obj/item/computer_disk/floppy = attacking_item
-		floppy.forceMove(modularInterface)
-		modularInterface.inserted_disk = floppy
+		if(user.transferItemToLoc(attacking_item, modularInterface))
+			modularInterface.inserted_disk = attacking_item
 		return
 
 	return ..()

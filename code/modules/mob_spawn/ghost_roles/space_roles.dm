@@ -263,7 +263,7 @@
 	r_pocket = /obj/item/flashlight
 	belt = /obj/item/storage/belt/utility/full/engi
 	backpack_contents = list(
-		/obj/item/grenade/chem_grenade/smart_metal_foam = 3,
+		/obj/item/grenade/chem_grenade/smart_metalfoam = 3,
 		/obj/item/inducer = 1,
 	)
 	id_trim = /datum/id_trim/job/away/old/freeminer/engineer

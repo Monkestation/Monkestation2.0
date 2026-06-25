@@ -16695,7 +16695,7 @@
 /turf/open/floor/engine/vacuum,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
 "aSI" = (
-/obj/structure/ai_core/deactivated{
+/obj/machinery/status_display/ai_core{
 	desc = "The framework for an artificial intelligence core. You have a strange feeling it might start calling you darling any moment now"
 	},
 /turf/open/floor/bitrunning_transport,
@@ -29068,8 +29068,9 @@
 /turf/open/misc/asteroid,
 /area/centcom/central_command_areas/admin)
 "qIf" = (
-/obj/structure/ai_core/deactivated{
-	name = "MATRIARCH"
+/obj/machinery/status_display/ai_core{
+	name = "MATRIARCH";
+	emotion = "Angel"
 	},
 /turf/open/floor/circuit/green/anim,
 /area/centcom/central_command_areas/admin)
