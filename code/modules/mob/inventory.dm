@@ -162,8 +162,6 @@
 /mob/proc/put_in_hand(obj/item/I, hand_index, forced = FALSE, ignore_anim = TRUE)
 	if(hand_index == null || !length(held_items) || (!forced && !can_put_in_hand(I, hand_index)))
 		return FALSE
-	if(QDELETED(I))
-		return FALSE
 	if(isturf(I.loc) && !ignore_anim)
 		I.do_pickup_animation(src)
 	if(get_item_for_held_index(hand_index))
@@ -195,7 +193,7 @@
 	return FALSE //nonliving mobs don't have hands
 
 /mob/living/put_in_hand_check(obj/item/I)
-	if(istype(I) && (((mobility_flags & MOBILITY_PICKUP) || ((stat >= SOFT_CRIT && (stat != DEAD && stat != UNCONSCIOUS && stat != HARD_CRIT)))) || (I.item_flags & ABSTRACT)) \
+	if(istype(I) && !QDELETED(I) && (((mobility_flags & MOBILITY_PICKUP) || ((stat >= SOFT_CRIT && (stat != DEAD && stat != UNCONSCIOUS && stat != HARD_CRIT)))) || (I.item_flags & ABSTRACT)) \
 		&& !(SEND_SIGNAL(src, COMSIG_LIVING_TRY_PUT_IN_HAND, I) & COMPONENT_LIVING_CANT_PUT_IN_HAND))
 		return TRUE
 	return FALSE

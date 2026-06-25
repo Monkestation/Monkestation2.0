@@ -806,6 +806,18 @@
 		return TRUE
 	return FALSE
 
+/datum/move_loop/has_target/throw_at/proc/get_next_turf()
+	var/turf/next
+	if (dist_travelled <= max(dist_x, dist_y)) //if we haven't reached the target yet we home in on it, otherwise we use the initial direction
+		next = get_step(moving, get_dir(moving, target))
+	else
+		next = get_step(moving, init_dir)
+
+	if (!pure_diagonal && !diagonals_first) // not a purely diagonal trajectory and we don't want all diagonal moves to be done first
+		if (diagonal_error >= 0 && max(dist_x,dist_y) - dist_travelled != 1) //we do a step forward unless we're right before the target
+			next = get_step(moving, dx)
+	return next
+
 /datum/move_loop/has_target/throw_at/move()
 	if(dist_travelled >= maxrange || moving.loc == target)
 		lifetime = 0

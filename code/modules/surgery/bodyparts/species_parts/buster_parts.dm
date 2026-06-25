@@ -8,7 +8,13 @@
 	icon_state = "buster_l_arm"
 	hp_percent_to_dismemberable = 1
 	wound_resistance = 5
-	var/datum/martial_art/buster_style/style = new
+	brute_modifier = 0.4
+	burn_modifier = 0.4
+	var/datum/martial_art/buster_style/style = new()
+
+/obj/item/bodypart/arm/left/robot/buster/Destroy()
+	QDEL_NULL(style)
+	. = ..()
 
 /obj/item/bodypart/arm/left/robot/buster/try_attach_limb(mob/living/carbon/new_arm_owner, special)
 	. = ..()
@@ -55,7 +61,13 @@
 	icon_state = "buster_r_arm"
 	hp_percent_to_dismemberable = 1
 	wound_resistance = 5
-	var/datum/martial_art/buster_style/style = new
+	brute_modifier = 0.4
+	burn_modifier = 0.4
+	var/datum/martial_art/buster_style/style = new()
+
+/obj/item/bodypart/arm/right/robot/buster/Destroy()
+	QDEL_NULL(style)
+	. = ..()
 
 /obj/item/bodypart/arm/right/robot/buster/try_attach_limb(mob/living/carbon/new_arm_owner, special)
 	. = ..()

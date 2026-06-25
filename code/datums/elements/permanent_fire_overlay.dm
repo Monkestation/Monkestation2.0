@@ -27,6 +27,7 @@
 	if(isnull(created_overlay))
 		return
 
-	if(fire_color)
+	if(fire_color) // fire overlays are cached
+		created_overlay = new(created_overlay)
 		created_overlay.color = fire_color
 	overlays |= created_overlay

@@ -9,14 +9,22 @@
 	id = MARTIALART_BUSTERSTYLE
 	help_verb = /mob/living/carbon/human/proc/buster_style_help
 
-	var/datum/action/cooldown/spell/touch/buster/slam/slam_action = new()
-	var/datum/action/cooldown/spell/touch/buster/grapple/grapple_action = new()
-	var/datum/action/cooldown/mob_cooldown/charge/buster_mop/mop_action = new()
-	var/datum/action/cooldown/spell/conjure_item/buster_wire/wire_action = new()
-	var/datum/action/cooldown/spell/touch/buster/megabuster/megabuster_action = new()
+	var/datum/action/cooldown/spell/touch/buster/slam/slam_action
+	var/datum/action/cooldown/spell/touch/buster/grapple/grapple_action
+	var/datum/action/cooldown/mob_cooldown/charge/buster_mop/mop_action
+	var/datum/action/cooldown/spell/conjure_item/buster_wire/wire_action
+	var/datum/action/cooldown/spell/touch/buster/megabuster/megabuster_action
 
 	/// Used to check which arm this martial art is connected to
 	var/arm_index
+
+/datum/martial_art/buster_style/New()
+	. = ..()
+	slam_action = new(src)
+	grapple_action = new(src)
+	mop_action = new(src)
+	wire_action = new(src)
+	megabuster_action = new(src)
 
 /datum/martial_art/buster_style/teach(mob/living/carbon/owner, make_temporary = FALSE, arm_index)
 	if(!istype(owner))
@@ -159,8 +167,8 @@
 	if(. & SPELL_CANCEL_CAST)
 		return .
 
-	var/mob/living/O = owner
-	var/obj/item/bodypart/limb = O.get_bodypart(arm_index % 2 ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)
+	var/mob/living/living_owner = owner
+	var/obj/item/bodypart/limb = living_owner.get_bodypart(arm_index % 2 ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)
 	if(!limb || limb.bodypart_disabled)
 		to_chat(owner, span_warning("Your [limb.name] isn't in a functional state right now!"))
 		return . | SPELL_CANCEL_CAST
@@ -358,7 +366,6 @@
 
 		grabbed_object.visible_message(span_warning("[message]!"))
 		set_atom_to_throw(grabbed_object)
-		grabbed_object.forceMove(get_turf(caster))
 		SSmove_manager.home_onto(grabbed_object, caster, timeout = GRAPPLE_DRAG_TIME)
 	else if(isliving(victim))
 		var/mob/living/living_victim = victim
@@ -368,7 +375,7 @@
 		caster.apply_status_effect(STATUS_EFFECT_DOUBLEDOWN)
 		playsound(caster, 'sound/effects/servostep.ogg', 60, FALSE, -1)
 
-		var/obj/structure/bed/grip/grabbing_bed = new(get_turf(caster))
+		var/obj/structure/bed/grip/grabbing_bed = new(get_turf(victim))
 		living_victim.visible_message(span_warning("[caster] grabs [living_victim] and lifts [living_victim.p_them()] off the ground!"), \
 			span_userdanger("[caster] grapples you and lifts you up into the air! Resist [caster.p_their()] grip!"))
 		set_atom_to_throw(living_victim)
@@ -430,14 +437,14 @@
 	RegisterSignal(cached_thrown, COMSIG_MOVABLE_MOVED_FROM_LOOP, PROC_REF(soar_on_moved_from_loop))
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(soar_post_move))
 	RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(loop_qdeleted))
-	soar_on_moved_from_loop(cached_thrown, loop, cached_thrown.dir, get_dir(cached_thrown, target))
+	soar_on_moved_from_loop(cached_thrown, loop)
 	return TRUE
 
 /datum/action/cooldown/spell/touch/buster/grapple/proc/soar_on_moved_from_loop(atom/movable/source, datum/move_loop/has_target/throw_at/loop, old_dir, direction)
 	SIGNAL_HANDLER
 	if(!loop.lifetime)
 		return
-	var/turf/next_turf = get_step(source, direction)
+	var/turf/next_turf = loop.get_next_turf()
 	var/impacted = FALSE
 	for(var/atom/movable/impacted_atom in next_turf.contents)
 		if(impacted_atom.move_packet || impacted_atom == owner)
@@ -572,23 +579,22 @@
 	start of mop section
 ---------------------------------------------------------------*/
 /datum/action/cooldown/mob_cooldown/charge/buster_mop
-	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED|AB_CHECK_LYING
-	transparent_when_unavailable = TRUE
-
 	name = "Mop the Floor"
 	desc = "Launch forward and drag whoever's in front of you on the ground. The \
 			longer the target is dragged the more damage they are inflicted with."
 	button_icon = 'icons/mob/actions/actions_arm.dmi'
 	button_icon_state = "mop"
 	cooldown_time = 4 SECONDS
+
 	click_to_activate = FALSE
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED|AB_CHECK_LYING
+	transparent_when_unavailable = TRUE
 
 	charge_delay = 0
 	charge_past = 4
 	charge_distance = 5
 	charge_speed = 0.1 SECONDS
 	destroy_objects = FALSE
-
 	charge_damage = 8
 	var/living_crash_damage = 16
 	var/object_crash_damage = 5
@@ -600,12 +606,13 @@
 	if(owner.get_held_items_for_side(arm_index % 2 ? LEFT_HANDS : RIGHT_HANDS))
 		to_chat(owner, span_warning("Your [arm_index % 2 ? "left" : "right"] hand is full!"))
 		return FALSE
-	var/mob/living/O = owner
-	var/obj/item/bodypart/limb = O.get_bodypart(arm_index % 2 ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)
-	var/mob/living/L = owner
-	var/obj/item/bodypart/limb = L.get_bodypart(arm_index % 2 ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)
+
+	var/mob/living/living_owner = owner
+	var/obj/item/bodypart/limb = living_owner.get_bodypart(arm_index % 2 ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)
+	if(!limb || limb.bodypart_disabled)
 		to_chat(owner, span_warning("Your [limb.name] isn't in a functional state right now!"))
 		return FALSE
+
 	// target_atom is actually the user since click_to_activate = FALSE
 	target_atom = get_step(target_atom, target_atom.dir)
 	return ..()
@@ -695,6 +702,14 @@
 	start of wire section
 ---------------------------------------------------------------*/
 /datum/action/cooldown/spell/conjure_item/buster_wire
+	name = "Wire Snatch"
+	desc = "Extend a wire for reeling in foes from a distance, immobilizing them on hit. \
+			Anchored targets that are hit will pull you towards them instead."
+	button_icon = 'icons/obj/lavaland/artefacts.dmi'
+	button_icon_state = "hook"
+	cooldown_time = 5 SECONDS
+	item_type = /obj/item/gun/magic/hook/buster
+
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
 	transparent_when_unavailable = TRUE
 	background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
@@ -705,14 +720,6 @@
 	invocation_type = INVOCATION_NONE
 	spell_requirements = SPELL_REQUIRES_HUMAN
 	antimagic_flags = NONE
-
-	name = "Wire Snatch"
-	desc = "Extend a wire for reeling in foes from a distance, immobilizing them on hit. \
-			Anchored targets that are hit will pull you towards them instead."
-	button_icon = 'icons/obj/lavaland/artefacts.dmi'
-	button_icon_state = "hook"
-	cooldown_time = 5 SECONDS
-	item_type = /obj/item/gun/magic/hook/buster
 
 	/// Used to check which arm this martial art is connected to
 	var/arm_index
@@ -725,8 +732,8 @@
 	if(owner.get_held_items_for_side(arm_index % 2 ? LEFT_HANDS : RIGHT_HANDS))
 		to_chat(owner, span_warning("Your [arm_index % 2 ? "left" : "right"] hand is full!"))
 		return . | SPELL_CANCEL_CAST
-	var/mob/living/L = owner
-	var/obj/item/bodypart/limb = L.get_bodypart(arm_index % 2 ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)
+	var/mob/living/living_owner = owner
+	var/obj/item/bodypart/limb = living_owner.get_bodypart(arm_index % 2 ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)
 	if(!limb || limb.bodypart_disabled)
 		to_chat(owner, span_warning("Your [limb.name] isn't in a functional state right now!"))
 		return . | SPELL_CANCEL_CAST
@@ -906,13 +913,13 @@
 	RegisterSignal(victim, COMSIG_MOVABLE_MOVED_FROM_LOOP, PROC_REF(soar_on_moved_from_loop))
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(soar_post_move))
 	RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(loop_qdeleted))
-	soar_on_moved_from_loop(victim, loop, victim.dir, direction)
+	soar_on_moved_from_loop(victim, loop)
 
 /datum/action/cooldown/spell/touch/buster/megabuster/proc/soar_on_moved_from_loop(atom/movable/source, datum/move_loop/has_target/throw_at/loop, old_dir, direction)
 	SIGNAL_HANDLER
 	if(!loop.lifetime)
 		return
-	var/turf/next_turf = get_step(source, direction)
+	var/turf/next_turf = loop.get_next_turf()
 	if(iswallturf(next_turf))
 		harm(null, source, living_collision_dam)
 		if(next_turf.uses_integrity)
