@@ -5199,7 +5199,7 @@
 /area/centcom/syndicate_mothership/control)
 "anV" = (
 /turf/closed/indestructible/rock,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "anX" = (
 /obj/structure/hedge,
 /obj/effect/turf_decal/siding/dark{
@@ -8873,7 +8873,7 @@
 /area/centcom/syndicate_mothership/control)
 "axV" = (
 /turf/closed/indestructible/syndicate,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "axW" = (
 /obj/structure/bookcase/random/reference/wizard,
 /turf/open/floor/engine/cult,
@@ -10270,7 +10270,7 @@
 /area/centcom/central_command_areas/hall)
 "aBs" = (
 /turf/open/misc/asteroid,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "aBt" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
@@ -19487,7 +19487,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/red,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "bhS" = (
 /obj/structure/table/wood,
 /obj/machinery/microwave,
@@ -19497,7 +19497,7 @@
 /obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "biy" = (
 /obj/structure/flora/bush/sparsegrass/style_2,
 /turf/open/misc/dirt/jungle/dark/arena,
@@ -19544,7 +19544,7 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "blf" = (
 /obj/machinery/light/neon_lining{
 	icon_state = "pink2_1"
@@ -19610,7 +19610,7 @@
 /obj/structure/table,
 /obj/item/pizzabox/pineapple,
 /turf/open/floor/carpet/red,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "bog" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/food/pie/berryclafoutis,
@@ -19790,7 +19790,7 @@
 "bBh" = (
 /obj/structure/table,
 /turf/open/floor/carpet/red,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "bBD" = (
 /obj/structure/railing/wood{
 	color = "#55342b";
@@ -19815,7 +19815,7 @@
 	},
 /obj/machinery/light/cold/directional/north,
 /turf/open/misc/asteroid,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "bDP" = (
 /obj/item/toy/plush/pooba_bee_plush,
 /turf/open/floor/plating,
@@ -19844,7 +19844,7 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "bGz" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
@@ -19942,7 +19942,7 @@
 	},
 /obj/structure/shipping_container/cybersun,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "bLX" = (
 /obj/structure/rack,
 /obj/item/clothing/gloves/color/orange,
@@ -20020,7 +20020,7 @@
 	},
 /obj/machinery/light/cold/directional/south,
 /turf/open/misc/asteroid,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "bUi" = (
 /obj/structure/sign/painting/library{
 	pixel_x = -4;
@@ -20382,7 +20382,7 @@
 "cyj" = (
 /obj/machinery/suit_storage_unit/industrial/assault_operative,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "cyp" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/dark,
@@ -20529,7 +20529,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "cIl" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
@@ -20553,7 +20553,7 @@
 /obj/effect/turf_decal/delivery/white,
 /obj/machinery/door/puzzle/keycard/assault_ops_chemistry,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "cLJ" = (
 /obj/structure/mirror/magic{
 	pixel_y = 28
@@ -20943,7 +20943,7 @@
 "dqh" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "dra" = (
 /obj/effect/portal/permanent{
 	layer = 2;
@@ -20982,7 +20982,7 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "dsU" = (
 /turf/open/floor/mineral/titanium/purple,
 /area/centcom/central_command_areas/admin)
@@ -21041,7 +21041,7 @@
 /obj/machinery/vending/cigarette/syndicate,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "dyd" = (
 /obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/trimline/tram/arrow_ccw,
@@ -21123,7 +21123,7 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 4
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "dEL" = (
 /obj/machinery/computer,
 /obj/machinery/light/directional/north,
@@ -21132,7 +21132,7 @@
 "dGn" = (
 /obj/machinery/chem_master,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "dGs" = (
 /obj/structure/railing/wooden_fence{
 	dir = 10
@@ -21246,7 +21246,7 @@
 /obj/effect/landmark/start/assaultop,
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /turf/open/floor/catwalk_floor/iron_smooth,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "dRH" = (
 /obj/structure/chair/plastic{
 	dir = 1
@@ -21277,7 +21277,7 @@
 /area/centcom/central_command_areas/admin)
 "dUR" = (
 /turf/open/floor/carpet/red,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "dUV" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -21414,7 +21414,7 @@
 "eiE" = (
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron/smooth_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "eiY" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/carpet/neon/simple/green/nodots,
@@ -21438,7 +21438,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "emD" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -21573,7 +21573,7 @@
 /turf/open/floor/iron/stairs/medium{
 	dir = 1
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "eAl" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -21598,7 +21598,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "eCi" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -21695,7 +21695,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/smooth_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "eIT" = (
 /obj/structure/table/wood/fancy,
 /obj/item/storage/box/coffeepack,
@@ -21752,7 +21752,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "eOH" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 1
@@ -21760,7 +21760,7 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 4
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "ePC" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -21770,7 +21770,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/smooth_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "eRC" = (
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/wood,
@@ -21795,7 +21795,7 @@
 "eVz" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
 /turf/open/floor/plating,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "eVY" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -21977,7 +21977,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/smooth_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "fiJ" = (
 /obj/item/ammo_box/advanced/s12gauge/flechette,
 /obj/item/ammo_box/advanced/s12gauge/flechette,
@@ -22214,7 +22214,7 @@
 	dir = 8
 	},
 /turf/open/misc/asteroid,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "fEU" = (
 /obj/effect/turf_decal/siding/dark,
 /obj/structure/table/reinforced{
@@ -22246,7 +22246,7 @@
 	},
 /obj/item/stack/sheet/mineral/plasma,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "fFH" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
@@ -22303,7 +22303,7 @@
 /turf/closed/indestructible/fakedoor{
 	name = "Base Access"
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "fOv" = (
 /turf/open/floor/carpet/neon/simple/green/nodots,
 /area/centcom/central_command_areas/admin)
@@ -22462,7 +22462,7 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 4
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "gjf" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/flowers_pp,
@@ -22799,7 +22799,7 @@
 	},
 /obj/structure/shipping_container/gorlex,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "gFL" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Jay's Armory"
@@ -23074,7 +23074,7 @@
 "gXq" = (
 /obj/structure/punching_bag,
 /turf/open/floor/plating,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "gXN" = (
 /obj/structure/table/reinforced/titaniumglass,
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -23191,7 +23191,7 @@
 	},
 /obj/machinery/light/cold/directional/south,
 /turf/open/misc/asteroid,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "hfw" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -23275,7 +23275,7 @@
 "hkm" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /turf/open/floor/iron/smooth,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "hkq" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -23434,7 +23434,7 @@
 "hrx" = (
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "hrS" = (
 /obj/machinery/light/directional/north,
 /turf/open/water/arena,
@@ -23569,7 +23569,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "hAP" = (
 /obj/structure/sign{
 	name = "wall";
@@ -23643,7 +23643,7 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 4
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "hCH" = (
 /obj/structure/mineral_door/wood{
 	color = "543e27"
@@ -23664,7 +23664,7 @@
 "hFg" = (
 /obj/effect/turf_decal/box/corners,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "hFy" = (
 /obj/structure/railing/wood{
 	dir = 8
@@ -23683,7 +23683,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "hIB" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/cup/soda_cans/cola{
@@ -23706,7 +23706,7 @@
 	pixel_y = 9
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "hJW" = (
 /obj/structure/sign{
 	name = "wall";
@@ -23820,7 +23820,7 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "hNa" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -23909,7 +23909,7 @@
 /area/centcom/central_command_areas/admin)
 "hVj" = (
 /turf/open/floor/iron/stairs/right,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "hWu" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	icon_state = "siding_thinplating_corner"
@@ -24036,7 +24036,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/red,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "ihy" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 5
@@ -24318,7 +24318,7 @@
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "iDX" = (
 /turf/open/floor/catwalk_floor/iron_smooth,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "iFp" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -24448,7 +24448,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/smooth_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "iLo" = (
 /obj/structure/table/wood,
 /obj/item/food/spaghetti/shoyu_tonkotsu_ramen,
@@ -24522,7 +24522,7 @@
 "iQV" = (
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron/smooth_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "iRM" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 8
@@ -24534,7 +24534,7 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "iSA" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -24662,7 +24662,7 @@
 	dir = 1
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "jcy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -24711,7 +24711,7 @@
 "jhk" = (
 /obj/structure/marker_beacon/teal,
 /turf/open/misc/asteroid,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "jhU" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L2"
@@ -24795,7 +24795,7 @@
 "jpy" = (
 /obj/effect/baseturf_helper/asteroid,
 /turf/closed/indestructible/syndicate,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "jpD" = (
 /obj/item/kirbyplants/organic/plant16,
 /obj/machinery/light/floor/has_bulb,
@@ -24830,7 +24830,7 @@
 	layer = 2.6
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "jth" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -25007,7 +25007,7 @@
 /obj/item/gun/syringe/syndicate,
 /obj/machinery/light/cold/directional/west,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "jFK" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/siding/wideplating_new/dark{
@@ -25458,7 +25458,7 @@
 /turf/open/floor/iron/stairs/left{
 	dir = 4
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "kqs" = (
 /obj/structure/sign{
 	name = "wall";
@@ -25471,7 +25471,7 @@
 /area/centcom/central_command_areas/adminroom)
 "kqQ" = (
 /turf/open/floor/iron/stairs/left,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "krE" = (
 /obj/structure/table/wood,
 /obj/item/gun/ballistic/revolver/russian{
@@ -25548,7 +25548,7 @@
 "kyh" = (
 /obj/machinery/vending/tool,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "kyZ" = (
 /obj/structure/chair/sofa/right{
 	dir = 8
@@ -25725,7 +25725,7 @@
 "kLl" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /turf/open/floor/iron/smooth_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "kMj" = (
 /obj/structure/flora/grass/jungle/b/style_4,
 /turf/open/misc/dirt/jungle/dark/arena,
@@ -25848,7 +25848,7 @@
 /turf/open/floor/iron/stairs/left{
 	dir = 1
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "kUJ" = (
 /turf/open/floor/mineral/bananium,
 /area/centcom/central_command_areas/admin)
@@ -25913,7 +25913,7 @@
 /turf/open/floor/iron/stairs/medium{
 	dir = 4
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "lcF" = (
 /obj/machinery/light/floor/has_bulb,
 /obj/structure/flora/bush/large/style_3,
@@ -26138,7 +26138,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/smooth_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "lxG" = (
 /obj/structure/lattice/catwalk,
 /obj/item/storage/backpack/duffelbag/clown/syndie{
@@ -26165,7 +26165,7 @@
 /area/centcom/central_command_areas/admin)
 "lBd" = (
 /turf/open/floor/iron/smooth_corner,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "lCG" = (
 /obj/effect/turf_decal/siding/white,
 /obj/effect/turf_decal/siding/white{
@@ -26281,14 +26281,14 @@
 "lNv" = (
 /obj/machinery/chem_dispenser/fullupgrade,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "lNO" = (
 /obj/structure/signboard{
 	locked = 1;
 	sign_text = "Your armament points is effectively your uplink, use it in-hand!"
 	},
 /turf/open/floor/iron/smooth_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "lOv" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -26338,7 +26338,7 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "lXp" = (
 /obj/machinery/computer/monitor{
 	dir = 8
@@ -26403,7 +26403,7 @@
 /obj/structure/sink/kitchen/directional/west,
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "mcg" = (
 /obj/machinery/photocopier/gratis{
 	pixel_y = -3
@@ -26950,7 +26950,7 @@
 "ncQ" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
 /turf/open/floor/iron/smooth,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "neL" = (
 /obj/machinery/flasher/directional/west,
 /obj/structure/table,
@@ -26982,7 +26982,7 @@
 /area/centcom/central_command_areas/adminroom)
 "nhm" = (
 /turf/open/floor/iron/stairs/medium,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "nia" = (
 /obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
 /obj/structure/rack,
@@ -27008,7 +27008,7 @@
 	},
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "nmQ" = (
 /obj/structure/fans/tiny/forcefield{
 	color = "#276c87";
@@ -27036,7 +27036,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "npK" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/flora/grass/brown/style_random,
@@ -27088,7 +27088,7 @@
 	},
 /obj/machinery/light/cold/directional/north,
 /turf/open/misc/asteroid,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "nwp" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 10
@@ -27264,7 +27264,7 @@
 /area/centcom/central_command_areas/admin)
 "nIX" = (
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "nJi" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -27280,7 +27280,7 @@
 "nKh" = (
 /obj/machinery/chem_heater/withbuffer,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "nNv" = (
 /obj/structure/window/spawner/directional/west,
 /obj/structure/closet/secure_closet/freezer/fridge,
@@ -27357,7 +27357,7 @@
 	width = 27
 	},
 /turf/open/floor/plating,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "nVa" = (
 /obj/machinery/fax/messageadmins{
 	visible_to_network = 0;
@@ -27393,7 +27393,7 @@
 /turf/open/floor/iron/stairs/right{
 	dir = 4
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "nWo" = (
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 1
@@ -27437,7 +27437,7 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "obi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/gorlex_recruitment/directional/south,
@@ -27515,7 +27515,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "ogy" = (
 /obj/effect/turf_decal/syndicateemblem/bottom/left,
 /turf/open/floor/mineral/plastitanium/red,
@@ -27585,7 +27585,7 @@
 /obj/effect/turf_decal/bot_white,
 /obj/item/clothing/suit/armor/vest,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "ojY" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -27641,7 +27641,7 @@
 "opw" = (
 /obj/structure/closet/l3closet/security,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "oqj" = (
 /obj/structure/cable,
 /turf/open/misc/asteroid,
@@ -27746,7 +27746,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "oxI" = (
 /obj/structure/window/spawner/directional/east,
 /obj/structure/flora/tree/palm/style_random,
@@ -27805,7 +27805,7 @@
 "oDh" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "oDI" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 8
@@ -27855,7 +27855,7 @@
 /area/centcom/syndicate_mothership/firebase_trident)
 "oHu" = (
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "oHE" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark/textured_large,
@@ -27863,7 +27863,7 @@
 "oHU" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "oJi" = (
 /obj/structure/mirror/magic{
 	pixel_y = 28
@@ -28136,7 +28136,7 @@
 "pfR" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /turf/open/misc/asteroid,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "pgc" = (
 /obj/structure/marker_beacon/burgundy,
 /obj/effect/turf_decal/stripes/line{
@@ -28184,7 +28184,7 @@
 /area/centcom/central_command_areas/admin)
 "plB" = (
 /turf/open/floor/iron/smooth,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "pmQ" = (
 /obj/structure/table/reinforced/plasmarglass,
 /obj/item/toy/plush/admin/veth,
@@ -28232,7 +28232,7 @@
 /obj/item/mop,
 /obj/structure/mop_bucket,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "psX" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -28291,7 +28291,7 @@
 /obj/structure/closet/crate/cardboard/tiziran,
 /obj/item/storage/box/tiziran_meats,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "pxi" = (
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/hall)
@@ -28391,7 +28391,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/red,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "pEi" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -28660,7 +28660,7 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 4
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "qbE" = (
 /obj/effect/turf_decal/siding/dark,
 /obj/machinery/light/directional/west,
@@ -28709,7 +28709,7 @@
 /turf/open/floor/iron/stairs/left{
 	dir = 8
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "qfb" = (
 /obj/effect/spawner/random/entertainment/arcade{
 	dir = 8
@@ -28742,7 +28742,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/smooth,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "qgu" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/flora/grass/jungle/b/style_4,
@@ -28900,10 +28900,10 @@
 /turf/open/floor/iron/stairs/right{
 	dir = 1
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "qwu" = (
 /turf/open/floor/plating,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "qxw" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/structure/sign/poster/contraband/syndicate_recruitment/directional/north,
@@ -29010,7 +29010,7 @@
 /obj/item/reagent_containers/cup/glass/bottle/lizardwine,
 /obj/machinery/light/cold/directional/west,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "qDb" = (
 /obj/machinery/light/directional/east{
 	dir = 2
@@ -29092,7 +29092,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron/smooth_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "qKg" = (
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /obj/machinery/door/airlock/wood{
@@ -29224,7 +29224,7 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "qTv" = (
 /obj/structure/window/reinforced/tinted/spawner/directional/west,
 /obj/effect/turf_decal/raven/one,
@@ -29324,7 +29324,7 @@
 /area/centcom/central_command_areas/admin)
 "rdl" = (
 /turf/closed/indestructible/opsglass,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "rdp" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/effect/turf_decal/siding/wood/corner{
@@ -29598,7 +29598,7 @@
 	},
 /obj/structure/shipping_container/kosmologistika,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "rHO" = (
 /obj/machinery/door/poddoor/shutters/indestructible{
 	dir = 8
@@ -29636,7 +29636,7 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 4
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "rKS" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/item/defibrillator/compact/loaded{
@@ -29725,12 +29725,12 @@
 	dir = 10
 	},
 /turf/open/floor/iron/smooth_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "rQH" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/machinery/light/cold/directional/east,
 /turf/open/misc/asteroid,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "rQR" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Cassiel's Office"
@@ -29789,7 +29789,7 @@
 	pixel_y = 8
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "rUF" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Vault G-07"
@@ -29832,7 +29832,7 @@
 /area/centcom/tdome/observation)
 "rXO" = (
 /turf/open/floor/iron/smooth_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "rXY" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
@@ -29977,7 +29977,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/syndicate,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "ser" = (
 /obj/structure/chair/comfy/black{
 	dir = 1
@@ -30180,7 +30180,7 @@
 /area/centcom/central_command_areas/admin)
 "sAG" = (
 /turf/open/floor/iron/smooth_edge,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "sBv" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -30190,7 +30190,7 @@
 /obj/effect/turf_decal/bot_white,
 /obj/structure/sign/poster/contraband/free_drone/directional/north,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "sDY" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/dj_station,
@@ -30376,7 +30376,7 @@
 	},
 /obj/structure/shipping_container/vitezstvi,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "sSL" = (
 /obj/structure/barricade/wooden/crude,
 /obj/effect/spawner/random/trash/cigbutt,
@@ -30399,7 +30399,7 @@
 "sUM" = (
 /obj/structure/chair/plastic,
 /turf/open/floor/iron/smooth,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "sVb" = (
 /obj/item/pickaxe/drill/jackhammer{
 	pixel_x = 15;
@@ -30571,7 +30571,7 @@
 /obj/machinery/light/cold/directional/south,
 /obj/item/clothing/suit/armor/vest,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "tnm" = (
 /obj/machinery/light/directional/east{
 	dir = 2
@@ -30738,7 +30738,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/smooth,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "tzv" = (
 /obj/machinery/light/neon_lining{
 	dir = 1;
@@ -30905,13 +30905,13 @@
 	},
 /obj/machinery/light/cold/directional/east,
 /turf/open/misc/asteroid,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "tGO" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
 /turf/open/floor/iron/smooth_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "tGP" = (
 /obj/structure/table/greyscale,
 /obj/item/gun/energy/e_gun/advtaser,
@@ -31062,7 +31062,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/smooth,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "tXl" = (
 /obj/effect/turf_decal/syndicateemblem/top/right,
 /turf/open/floor/mineral/plastitanium/red,
@@ -31093,7 +31093,7 @@
 	},
 /obj/machinery/light/cold/directional/west,
 /turf/open/misc/asteroid,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "tZn" = (
 /obj/item/storage/box/donkpockets,
 /obj/item/storage/box/donkpockets,
@@ -31275,7 +31275,7 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "uuh" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
@@ -31344,7 +31344,7 @@
 /turf/open/floor/iron/smooth_corner{
 	dir = 4
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "uAX" = (
 /obj/effect/turf_decal/siding/dark_green,
 /turf/open/floor/iron/dark/small,
@@ -31422,7 +31422,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "uHB" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
@@ -31629,7 +31629,7 @@
 /turf/open/floor/iron/stairs/right{
 	dir = 8
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "uYG" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L8"
@@ -31712,7 +31712,7 @@
 /obj/machinery/light/cold/directional/north,
 /obj/item/clothing/suit/armor/vest,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "vho" = (
 /turf/open/floor/iron/freezer,
 /area/centcom/central_command_areas/prison)
@@ -31723,11 +31723,11 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "viC" = (
 /obj/structure/hedge,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "vjt" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -31788,7 +31788,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "voH" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 8
@@ -31922,7 +31922,7 @@
 	},
 /obj/effect/turf_decal/box/corners,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "vBk" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -32054,7 +32054,7 @@
 	system_id = "goldeneyebase"
 	},
 /turf/closed/indestructible/syndicate,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "vKN" = (
 /obj/structure/flora/bush/stalky,
 /turf/open/misc/dirt/station,
@@ -32157,7 +32157,7 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 4
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "vQj" = (
 /obj/structure/sign{
 	name = "wall";
@@ -32302,7 +32302,7 @@
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "wco" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
@@ -32528,7 +32528,7 @@
 	pixel_y = 11
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "wvU" = (
 /obj/structure/flora/bush/pale/style_3,
 /turf/open/misc/dirt/station,
@@ -32617,7 +32617,7 @@
 /turf/open/floor/iron/stairs/medium{
 	dir = 8
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "wAE" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
 /turf/open/floor/iron/dark/diagonal,
@@ -32820,7 +32820,7 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "wSw" = (
 /obj/structure/showcase/machinery/tv,
 /turf/open/floor/carpet/red,
@@ -32996,7 +32996,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "xiF" = (
 /obj/effect/turf_decal/trimline/red/real_red/filled/line{
 	dir = 4
@@ -33130,7 +33130,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/machinery/light/cold/directional/west,
 /turf/open/misc/asteroid,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "xrS" = (
 /obj/structure/chair/sofa/corp/left{
 	dir = 8
@@ -33304,7 +33304,7 @@
 	name = "Kahn"
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "xJQ" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/coffeepack/robusta{
@@ -33386,7 +33386,7 @@
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "xPO" = (
 /obj/structure/sign/painting/library{
 	pixel_x = 0;
@@ -33411,7 +33411,7 @@
 "xSw" = (
 /obj/machinery/door/poddoor/shutters/indestructible,
 /turf/open/floor/plating,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "xSB" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
@@ -33431,7 +33431,7 @@
 /obj/machinery/light/cold/directional/north,
 /obj/item/clothing/suit/armor/vest,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "xTk" = (
 /obj/effect/turf_decal/siding/dark_green{
 	dir = 8
@@ -33528,7 +33528,7 @@
 /obj/item/storage/box/mothic_rations,
 /obj/item/storage/box/mothic_rations,
 /turf/open/floor/iron/dark/textured_large,
-/area/cruiser_dock)
+/area/centcom/syndicate_mothership/golden_eye)
 "xWQ" = (
 /obj/structure/chair/office/light,
 /turf/open/floor/plastic,
