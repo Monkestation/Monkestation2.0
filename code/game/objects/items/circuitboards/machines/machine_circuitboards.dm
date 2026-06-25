@@ -917,6 +917,16 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/rnd/production/circuit_imprinter/department/science
 
+/obj/item/circuitboard/machine/circuit_imprinter/department/engineering
+	name = "Departmental Circuit Imprinter - Engineering"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/rnd/production/circuit_imprinter/department/engineering
+
+/obj/item/circuitboard/machine/circuit_imprinter/department/netmin
+	name = "Hardware Printer"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/rnd/production/circuit_imprinter/department/netmin
+
 /obj/item/circuitboard/machine/cyborgrecharger
 	name = "Cyborg Recharger"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
@@ -983,6 +993,46 @@
 	name = "\improper Departmental Techfab - Science"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/rnd/production/techfab/department/science
+
+/obj/item/circuitboard/machine/server_cabinet
+	name = "Server Cabinet"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/ai/server_cabinet
+	req_components = list(
+		/datum/stock_part/matter_bin = 2,
+		/datum/stock_part/capacitor = 2,
+		/obj/item/stack/sheet/glass = 2,
+		/obj/item/stack/cable_coil = 1,
+	)
+
+/obj/item/circuitboard/machine/rack_creator
+	name = "Rack Creator"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/rack_creator
+	req_components = list(
+		/datum/stock_part/matter_bin = 2,
+		/datum/stock_part/manipulator = 1,
+		/obj/item/reagent_containers/cup/beaker = 2,
+	)
+
+/obj/item/circuitboard/machine/ai_data_core
+	name = "AI Data Core"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/ai/data_core
+	req_components = list(
+		/datum/stock_part/capacitor = 4,
+		/datum/stock_part/matter_bin = 2,
+		/obj/item/stack/sheet/glass = 2,
+		/obj/item/stack/cable_coil = 2,
+	)
+
+/obj/item/circuitboard/machine/ai_data_core/primary
+	name = "Primary AI Data Core"
+
+/obj/item/circuitboard/machine/ai_core_display
+	name = "AI Core Display"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/status_display/ai_core
 
 /obj/item/circuitboard/machine/teleporter_hub
 	name = "Teleporter Hub"

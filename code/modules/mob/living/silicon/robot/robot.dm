@@ -49,9 +49,8 @@
 		builtInCamera = new (src)
 		builtInCamera.c_tag = real_name
 		builtInCamera.network = list(CAMERANET_NETWORK_SS13)
-		builtInCamera.internal_light = FALSE
 		if(wires.is_cut(WIRE_CAMERA))
-			builtInCamera.camera_enabled = 0
+			builtInCamera.toggle_cam(null, displaymessage = FALSE)
 	update_icons()
 	. = ..()
 
@@ -121,7 +120,7 @@
 		modularInterface.icon_state = "tablet-silicon"
 		modularInterface.icon_state_powered = "tablet-silicon"
 		modularInterface.icon_state_unpowered = "tablet-silicon"
-	modularInterface.update_icon()
+	modularInterface.update_appearance()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
@@ -856,6 +855,8 @@
 	mainframe.connected_robots |= src
 	lawupdate = TRUE
 	lawsync()
+	if(sensors_on)
+		add_sensors()
 	if(radio && AI.radio) //AI keeps all channels, including Syndie if it is a Traitor
 		if(AI.radio.syndie)
 			radio.make_syndie()
@@ -885,6 +886,7 @@
 /mob/living/silicon/robot/proc/undeploy()
 	if(!deployed || !mind || !mainframe)
 		return
+	remove_sensors()
 	mainframe.UnregisterSignal(src, COMSIG_LIVING_DEATH)
 	mainframe.redeploy_action.Grant(mainframe)
 	mainframe.redeploy_action.last_used_shell = src

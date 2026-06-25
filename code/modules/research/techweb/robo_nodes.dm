@@ -65,10 +65,16 @@
 	description = "AI unit research."
 	prereq_ids = list("adv_robotics")
 	design_ids = list(
-		"aicore",
 		"borg_ai_control",
 		"intellicard",
 		"mecha_tracking_ai_control",
+		"server_cabinet",
+		"ai_data_core",
+		"ai_core_display",
+		"ai_server_overview",
+		"ram1",
+		"basic_ai_cpu",
+		"ai_resource_distribution",
 		"aifixer",
 		"reset_module",
 		"asimov_module",

@@ -17,6 +17,8 @@
 	var/obj/vehicle/sealed/mecha = null
 	/// The laws that we currently have.
 	var/datum/ai_laws/laws = null
+	/// Can we use a lawboard to change the laws of this MMI?
+	var/can_update_laws = TRUE
 	/// Should this MMI be used to create a cyborg, should this override the aisync setting in either direction?
 	var/force_cyborg_aisync = null
 	/// Should this MMI be used to create a cyborg, should this override the lawsync setting in either direction?
@@ -72,66 +74,69 @@
 		. += "mmi_dead"
 
 /obj/item/mmi/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(tool, /obj/item/organ/internal/brain))
-		return NONE
-	. = ITEM_INTERACT_SUCCESS
-	user.changeNext_move(CLICK_CD_MELEE)
-	var/obj/item/organ/internal/brain/new_brain = tool
-	if(brain)
-		to_chat(user, span_warning("There's already a brain in the MMI!"))
-		return ITEM_INTERACT_BLOCKING
-	if(new_brain.suicided)
-		to_chat(user, span_warning("[new_brain] is completely useless."))
-		return ITEM_INTERACT_BLOCKING
-	if(!user.transferItemToLoc(new_brain, src))
-		return ITEM_INTERACT_BLOCKING
+	if(istype(tool, /obj/item/ai_module))
+		var/obj/item/ai_module/law_board = tool
+		lawboard.install(laws, user)
+		return ITEM_INTERACT_SUCCESS
 
-	if(!new_brain.brainmob?.mind || !new_brain.brainmob)
-		var/install = tgui_alert(user, "[new_brain] is inactive, slot it in anyway?", "Installing Brain", list("Yes", "No"))
-		if(install != "Yes")
+	if(istype(tool, /obj/item/organ/internal/brain))
+		return NONE
+		. = ITEM_INTERACT_SUCCESS
+		user.changeNext_move(CLICK_CD_MELEE)
+		var/obj/item/organ/internal/brain/new_brain = tool
+		if(brain)
+			to_chat(user, span_warning("There's already a brain in the MMI!"))
 			return ITEM_INTERACT_BLOCKING
-		if(brain || !user.transferItemToLoc(new_brain, src))
+		if(new_brain.suicided)
+			to_chat(user, span_warning("[new_brain] is completely useless."))
 			return ITEM_INTERACT_BLOCKING
-		user.visible_message(span_notice("[user] sticks [new_brain] into [src]."), span_notice("[src]'s indicator light turns red as you insert [new_brain]. Its brainwave activity alarm buzzes."))
+		if(!user.transferItemToLoc(new_brain, src))
+			return ITEM_INTERACT_BLOCKING
+
+		if(!new_brain.brainmob?.mind || !new_brain.brainmob)
+			var/install = tgui_alert(user, "[new_brain] is inactive, slot it in anyway?", "Installing Brain", list("Yes", "No"))
+			if(install != "Yes")
+				return ITEM_INTERACT_BLOCKING
+			if(brain || !user.transferItemToLoc(new_brain, src))
+				return ITEM_INTERACT_BLOCKING
+			user.visible_message(span_notice("[user] sticks [new_brain] into [src]."), span_notice("[src]'s indicator light turns red as you insert [new_brain]. Its brainwave activity alarm buzzes."))
+			brain = new_brain
+			brain.organ_flags |= ORGAN_FROZEN
+			name = "[initial(name)]: [copytext(new_brain.name, 1, -8)]"
+			update_appearance()
+			return
+
+		var/mob/living/brain/brain_mob = new_brain.brainmob
+		if(!brain_mob.key)
+			brain_mob.notify_ghost_cloning("Someone has put your brain in a MMI!", source = src)
+		user.visible_message(span_notice("[user] sticks \a [new_brain] into [src]."), span_notice("[src]'s indicator light turn on as you insert [new_brain]."))
+		set_brainmob(new_brain.brainmob)
+		new_brain.brainmob = null
+		brainmob.forceMove(src)
+		brainmob.container = src
+
+		if(new_brain.suicided || HAS_TRAIT(brainmob, TRAIT_SUICIDED)) // Brain is from a suicider.
+			to_chat(user, span_warning("[src]'s indicator light turns red and its brainwave activity alarm beeps softly. Perhaps you should check [new_brain] again."))
+			playsound(src, 'sound/machines/triple_beep.ogg', 5, TRUE)
+		else if(new_brain.organ_flags & ORGAN_FAILING) // The brain organ completely failed.
+			to_chat(user, span_warning("[src]'s indicator light turns yellow and its brain integrity alarm beeps softly. Perhaps you should check [new_brain] for damage."))
+			playsound(src, 'sound/machines/synth_no.ogg', 5, TRUE)
+		else // Good to use!
+			brainmob.set_stat(CONSCIOUS) // We manually revive the brain mob.
+
+		brainmob.reset_perspective()
 		brain = new_brain
 		brain.organ_flags |= ORGAN_FROZEN
-		name = "[initial(name)]: [copytext(new_brain.name, 1, -8)]"
+
+		try_brainwash(user)
+
+		name = "[initial(name)]: [brainmob.real_name]"
 		update_appearance()
-		return
+		if(istype(brain, /obj/item/organ/internal/brain/alien))
+			braintype = "Xenoborg" // HISS... Beep.
 
-	var/mob/living/brain/brain_mob = new_brain.brainmob
-	if(!brain_mob.key)
-		brain_mob.notify_ghost_cloning("Someone has put your brain in a MMI!", source = src)
-	user.visible_message(span_notice("[user] sticks \a [new_brain] into [src]."), span_notice("[src]'s indicator light turn on as you insert [new_brain]."))
-	set_brainmob(new_brain.brainmob)
-	new_brain.brainmob = null
-	brainmob.forceMove(src)
-	brainmob.container = src
-
-	if(new_brain.suicided || HAS_TRAIT(brainmob, TRAIT_SUICIDED)) // Brain is from a suicider.
-		to_chat(user, span_warning("[src]'s indicator light turns red and its brainwave activity alarm beeps softly. Perhaps you should check [new_brain] again."))
-		playsound(src, 'sound/machines/triple_beep.ogg', 5, TRUE)
-	else if(new_brain.organ_flags & ORGAN_FAILING) // The brain organ completely failed.
-		to_chat(user, span_warning("[src]'s indicator light turns yellow and its brain integrity alarm beeps softly. Perhaps you should check [new_brain] for damage."))
-		playsound(src, 'sound/machines/synth_no.ogg', 5, TRUE)
-	else // Good to use!
-		brainmob.set_stat(CONSCIOUS) // We manually revive the brain mob.
-
-	brainmob.reset_perspective()
-	brain = new_brain
-	brain.organ_flags |= ORGAN_FROZEN
-
-	try_brainwash(user)
-
-	name = "[initial(name)]: [brainmob.real_name]"
-	update_appearance()
-	if(istype(brain, /obj/item/organ/internal/brain/alien))
-		braintype = "Xenoborg" // HISS... Beep.
-	else
-		braintype = "Cyborg"
-
-	SSblackbox.record_feedback("amount", "mmis_filled", 1)
-	user.log_message("has put the brain of [key_name(brainmob)] into an MMI", LOG_GAME)
+		SSblackbox.record_feedback("amount", "mmis_filled", 1)
+		user.log_message("has put the brain of [key_name(brainmob)] into an MMI", LOG_GAME)
 
 /obj/item/mmi/attackby(obj/item/O, mob/user, params)
 	if(!brainmob)
@@ -347,6 +352,7 @@
 	laws = new /datum/ai_laws/syndicate_override
 	force_cyborg_lawzero = "The Syndicate are your true masters. Assist the Syndicate to the best of your abilities."
 	overrides_ai_laws = TRUE
+	can_update_laws = FALSE
 
 /obj/item/mmi/syndie/examine_more(mob/user)
 	. = ..()

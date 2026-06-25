@@ -172,7 +172,6 @@
 	inhand_y_dimension = 32
 	worn_icon_state = "cshotgun"
 	w_class = WEIGHT_CLASS_HUGE
-	semi_auto = TRUE
 	projectile_damage_multiplier = 1.2
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube
 	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
@@ -186,7 +185,7 @@
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/bounty
 	name = "bounty cycler shotgun"
 	desc = "An advanced shotgun with two separate magazine tubes. This one shows signs of bounty hunting customization, meaning it likely has a dual rubber shot/fire slug load."
-	//alt_accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube/fire   monkestation edit
+	alt_accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube/fire
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/examine(mob/user)
 	. = ..()
@@ -202,7 +201,7 @@
 	return ..()
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/attack_self(mob/living/user)
-	if(!chambered && magazine.contents.len)
+	if(!chambered && get_ammo())
 		rack()
 	else
 		toggle_tube(user)
