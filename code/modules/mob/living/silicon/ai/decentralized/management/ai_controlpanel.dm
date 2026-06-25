@@ -52,9 +52,9 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 			A = new /mob/living/silicon/ai(loc, laws, brain.brainmob)
 		A.relocate(TRUE)
 
-		if(!istype(brain.laws, /datum/ai_laws/ratvar))
-			brain.brainmob.mind.remove_all_antag_datums()
-			brain.brainmob.mind.wipe_memory()
+		if(!istype(A.laws, /datum/ai_laws/ratvar))
+			A.mind.remove_all_antag_datums()
+			A.mind.wipe_memory()
 
 		SSblackbox.record_feedback("amount", "ais_created", 1)
 		qdel(tool)
