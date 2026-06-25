@@ -1,0 +1,5 @@
+author: "HoggyHart"
+delete-after: True
+changes:
+  - bugfix: "Displays the current names of items in custom vendors instead of initial names"
+  - qol: "Added distinction in custom vendor ui for item instances with the same path but different names or prices"

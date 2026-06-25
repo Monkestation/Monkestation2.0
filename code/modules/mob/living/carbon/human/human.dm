@@ -52,15 +52,15 @@
 /mob/living/carbon/human/proc/setup_organless_effects()
 	// All start without eyes, and get them via set species
 	become_blind(NO_EYES)
+	// And no ears, and get them via set species
+	ADD_TRAIT(src, TRAIT_DEAF, NO_EARS)
 	// Mobs cannot taste anything without a tongue; the tongue organ removes this on Insert
 	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 	// No lungs until you get lungs
 	apply_status_effect(/datum/status_effect/lungless)
 
 /mob/living/carbon/human/proc/setup_human_dna()
-	//initialize dna. for spawned humans; overwritten by other code
-	randomize_human(src)
-	dna.initialize_dna()
+	randomize_human(src, randomize_mutations = TRUE)
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
@@ -110,6 +110,91 @@
 			to_chat(usr, span_warning("You can't reach that! Something is covering it."))
 			return
 
+	if(href_list["see_id"])
+		var/mob/viewer = usr
+		var/can_see_still = (viewer in viewers(src))
+
+		var/obj/item/id_slot = wear_id
+		var/obj/item/card/id/id = wear_id?.GetID()
+
+		var/same_id = id && (href_list["id_ref"] == REF(id) || href_list["id_name"] == id.registered_name)
+
+		if(istype(id_slot, /obj/item/changeling/id))
+			var/obj/item/changeling/id/flesh_id = id_slot
+			same_id = id_slot && (href_list["id_ref"] == REF(id) || href_list["id_name"] == flesh_id.stored_name)
+
+		if(!same_id && can_see_still)
+			to_chat(viewer, span_notice("[p_They()] [p_are()] no longer wearing that ID card."))
+			return
+
+		var/viable_time = can_see_still ? 3 MINUTES : 1 MINUTES // assuming 3min is the length of a hop line visit - give some leeway if they're still in sight
+		if(!same_id || (text2num(href_list["examine_time"]) + viable_time) < world.time)
+			to_chat(viewer, span_notice("You don't have that good of a memory. Examine [p_them()] again."))
+			return
+		if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+			to_chat(viewer, span_notice("You can't make out that ID anymore."))
+			return
+		if(!isobserver(viewer) && get_dist(viewer, src) > ID_EXAMINE_DISTANCE + 1) // leeway, ignored if the viewer is a ghost
+			to_chat(viewer, span_notice("You can't make out that ID from here."))
+			return
+
+		var/id_name
+		var/id_age
+		var/id_job
+		var/id_blood_type
+		var/id_gender
+		var/id_species
+		var/id_icon
+
+		if(istype(id_slot, /obj/item/changeling/id))
+			var/obj/item/changeling/id/flesh_id = id_slot
+			id_name = flesh_id.stored_name
+			id_job = flesh_id.stored_job
+			// Since we get actual name from ID might as well try to pull their records
+			var/datum/record/crew/record = find_record(id_name)
+			id_age = record?.age
+			id_blood_type = record?.blood_type
+			id_gender = record?.gender
+			id_species = record?.species
+			id_icon = jointext(flesh_id.get_id_examine_strings(viewer), "")
+		else
+			id_name = id.registered_name
+			id_age = id.registered_age
+			id_job = id.assignment
+			// Should probably be recorded on the ID, but this is easier (albiet more restrictive) on chameleon ID users
+			var/datum/record/crew/record = find_record(id_name)
+			id_blood_type = record?.blood_type
+			id_gender = record?.gender
+			id_species = record?.species
+			id_icon = jointext(id.get_id_examine_strings(viewer), "")
+
+			// Fill in some blanks for chameleon IDs to maintain the illusion of a real ID
+			if(istype(id, /obj/item/card/id/advanced/chameleon))
+				id_gender ||= gender
+				id_species ||= dna.species.name
+				id_blood_type ||= get_blood_type()
+
+			if(istype(id, /obj/item/card/id/advanced))
+				var/obj/item/card/id/advanced/advancedID = id
+				id_job = advancedID.trim_assignment_override || id_job
+
+		var/id_examine = span_slightly_larger(separator_hr("This is <em>[src]'s ID card</em>."))
+		id_examine += "<div class='img_by_text_container'>"
+		id_examine += "[id_icon]"
+		id_examine += "<div class='img_text'>"
+		id_examine += jointext(list(
+			"&bull; Name: [id_name || "Unknown"]",
+			"&bull; Job: [id_job || "Unassigned"]",
+			"&bull; Age: [id_age || "Unknown"]",
+			"&bull; Gender: [id_gender || "Unknown"]",
+			"&bull; Blood Type: [id_blood_type || "?"]",
+			"&bull; Species: [id_species || "Unknown"]",
+		), "<br>")
+		id_examine += "</div>" // container
+		id_examine += "</div>" // text
+
+		to_chat(viewer, boxed_message(span_info(id_examine)))
+
 ///////HUDs///////
 	if(href_list["hud"])
 		if(!ishuman(usr))
@@ -119,7 +204,7 @@
 		if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD) && !HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
 			return
 		if((text2num(href_list["examine_time"]) + 1 MINUTES) < world.time)
-			to_chat(human_user, "[span_notice("It's too late to use this now!")]")
+			to_chat(human_user, span_notice("It's too late to use this now!"))
 			return
 		var/datum/record/crew/target_record = find_record(perpname)
 		if(href_list["photo_front"] || href_list["photo_side"])
@@ -297,7 +382,7 @@
 				return
 
 			if(href_list["add_crime"])
-				var/crime_name = tgui_input_text(human_user, "Crime name", "Security HUD")
+				var/crime_name = tgui_input_text(human_user, "Crime name", "Security HUD", max_length = MAX_CRIME_NAME_LEN)
 				if(!target_record || !crime_name || !allowed_access || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 
@@ -667,13 +752,15 @@
 				dna.remove_mutation(existing_mutation.name, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR, MUTATION_SOURCE_TIMED_INJECTOR))
 	return ..()
 
-/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
+/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1, knockdown = FALSE)
 	if(blood && HAS_TRAIT(src, TRAIT_NOBLOOD) && !HAS_TRAIT(src, TRAIT_TOXINLOVER))
 		if(message)
 			visible_message(span_warning("[src] dry heaves!"), \
 							span_userdanger("You try to throw up, but there's nothing in your stomach!"))
 		if(stun)
 			Stun(20 SECONDS)
+		if(knockdown)
+			Knockdown(20 SECONDS)
 		return 1
 	..()
 
@@ -891,10 +978,8 @@
 	var/highest_deficiency = max(lethal_deficiency, stamina_deficiency)
 	if(lethal_deficiency >= 40 || stamina_deficiency >= 60)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE, multiplicative_slowdown = highest_deficiency / 75)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, update = TRUE, multiplicative_slowdown = highest_deficiency / 25)
 	else if(LAZYACCESS(movespeed_modification, "[/datum/movespeed_modifier/damage_slowdown]"))
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE)
-		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, update = TRUE)
 
 /mob/living/carbon/human/pre_stamina_change(diff as num, forced)
 	. = ..()
@@ -1064,6 +1149,9 @@
 /mob/living/carbon/human/species/skeleton
 	race = /datum/species/skeleton
 
+/mob/living/carbon/human/species/skeleton/fragile
+	race = /datum/species/skeleton/fragile
+
 /mob/living/carbon/human/species/snail
 	race = /datum/species/snail
 
@@ -1072,6 +1160,9 @@
 
 /mob/living/carbon/human/species/zombie
 	race = /datum/species/zombie
+
+/mob/living/carbon/human/species/zombie/fragile
+	race = /datum/species/zombie/fragile
 
 /mob/living/carbon/human/species/zombie/infectious
 	race = /datum/species/zombie/infectious

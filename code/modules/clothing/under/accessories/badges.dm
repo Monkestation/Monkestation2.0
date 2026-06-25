@@ -314,7 +314,7 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 		var/mob/living/carbon/human/holder = source
 		var/obj/item/clothing/under/uniform = src.loc
 		if(holder.w_uniform == uniform && user != holder && user.CanReach(holder, view_only = TRUE))
-			examine_list += "[ma2html(src, user)]<a href='byond://?src=[REF(src)];strip_scryer=1;clothing=[REF(uniform)];holder=[REF(source)]'>[src.get_examine_name(user)] (Click to strip)</a>"
+			examine_list += "[get_examine_icon(user)] <a href='byond://?src=[REF(src)];strip_scryer=1;clothing=[REF(uniform)];holder=[REF(source)]'>[src.get_examine_name(user)] (Click to strip)</a>"
 
 /obj/item/clothing/accessory/scryer_accessory/Topic(href, list/href_list)
 	. = ..()
@@ -327,6 +327,10 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	if(QDELETED(src) || QDELETED(remover) || QDELETED(wearer) || QDELETED(uniform))
 		return
 	if(DOING_INTERACTION_WITH_TARGET(remover, wearer) || (wearer.w_uniform != uniform) || src.loc != uniform)
+		return
+	if(!remover.can_perform_action(wearer, NEED_DEXTERITY | NEED_HANDS | FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
+		return
+	if(!remover.CanReach(wearer))
 		return
 	remover.visible_message(
 		span_warning("[remover] begins removing [src] from [wearer]."),

@@ -175,7 +175,6 @@ DEFINE_BITFIELD(status_flags, list(
 GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 	/obj/item/gun)))
 
-
 //Combat object defines
 
 /// The minimum value of an item's throw_speed for it to embed (Unless it has embedded_ignore_throwspeed_threshold set to 1)
@@ -216,8 +215,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 #define TOTAL_BODYPART_COUNT 6
 
-GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-
 #define BODY_ZONE_PRECISE_EYES "eyes"
 #define BODY_ZONE_PRECISE_MOUTH "mouth"
 #define BODY_ZONE_PRECISE_GROIN "groin"
@@ -225,6 +222,13 @@ GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 #define BODY_ZONE_PRECISE_R_HAND "r_hand"
 #define BODY_ZONE_PRECISE_L_FOOT "l_foot"
 #define BODY_ZONE_PRECISE_R_FOOT "r_foot"
+
+// These lists are ordered as bodyparts would be ordered
+GLOBAL_LIST_INIT(all_body_zones, list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+GLOBAL_LIST_INIT(limb_zones, list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+GLOBAL_LIST_INIT(all_precise_body_zones, list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_PRECISE_R_FOOT))
 
 //We will round to this value in damage calculations.
 #define DAMAGE_PRECISION 0.1

@@ -45,7 +45,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/pull_icon
 	var/atom/movable/screen/rest_icon
 	var/atom/movable/screen/throw_icon
-	var/atom/movable/screen/module_store_icon
 
 	var/list/static_inventory = list() //the screen objects which are static
 	var/list/toggleable_inventory = list() //the screen objects which can be hidden
@@ -231,7 +230,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	QDEL_NULL(listed_actions)
 	QDEL_LIST(floating_actions)
 
-	QDEL_NULL(module_store_icon)
 	QDEL_LIST(static_inventory)
 	QDEL_LIST(team_finder_arrows)
 
@@ -441,12 +439,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/mob/screenmob = viewmob || mymob
 	hidden_inventory_update(screenmob)
 
-/datum/hud/robot/show_hud(version = 0, mob/viewmob)
-	. = ..()
-	if(!.)
-		return
-	update_robot_modules_display()
-
 /datum/hud/proc/hidden_inventory_update()
 	return
 
@@ -499,12 +491,20 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		static_inventory += hand_box
 		hand_box.update_appearance()
 
-	var/i = 1
-	for(var/atom/movable/screen/swap_hand/SH in static_inventory)
-		SH.screen_loc = ui_swaphand_position(mymob,!(i % 2) ? 2: 1)
-		i++
-	for(var/atom/movable/screen/human/equip/E in static_inventory)
-		E.screen_loc = ui_equip_position(mymob)
+	var/num_of_swaps = 0
+	for(var/atom/movable/screen/swap_hand/swap_hands in static_inventory)
+		num_of_swaps += 1
+
+	var/hand_num = 1
+	for(var/atom/movable/screen/swap_hand/swap_hands in static_inventory)
+		var/hand_ind = RIGHT_HANDS
+		if (num_of_swaps > 1)
+			hand_ind = IS_LEFT_INDEX(hand_num) ? LEFT_HANDS : RIGHT_HANDS
+		swap_hands.screen_loc = ui_swaphand_position(mymob, hand_ind)
+		hand_num += 1
+
+	for(var/atom/movable/screen/human/equip/equip in static_inventory)
+		equip.screen_loc = ui_equip_position(mymob)
 
 	if(ismob(mymob) && mymob.hud_used == src)
 		show_hud(hud_version)

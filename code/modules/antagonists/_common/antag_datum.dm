@@ -84,6 +84,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 	///The list of keys that are valid to see our antag hud/of huds we can see
 	var/list/hud_keys
 
+	/// If set, the info button's background icon state will be set to this.
+	var/info_background_icon_state
+	/// If set, the info button's overlay icon state will be set to this.
+	var/info_overlay_icon_state
+
 /datum/antagonist/New()
 	GLOB.antagonists += src
 	typecache_datum_blacklist = typecacheof(typecache_datum_blacklist)
@@ -142,7 +147,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
+	if(. || isobserver(ui.user))
 		return
 	switch(action)
 		if("change_objectives")
@@ -151,6 +156,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/ui_state(mob/user)
 	return GLOB.always_state
+
+/datum/antagonist/ui_status(mob/user, datum/ui_state/state)
+	if(isobserver(user) && (antag_flags & FLAG_ANTAG_OBSERVER_VISIBLE_PANEL))
+		return UI_UPDATE
+	if(user.mind != owner)
+		return UI_CLOSE
+	return ..()
 
 /datum/antagonist/ui_static_data(mob/user)
 	var/list/data = list()
@@ -174,7 +186,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!.)
 		return
 
-	target.ui_interact(owner)
+	target.ui_interact(usr || owner)
 
 /datum/action/antag_info/IsAvailable(feedback = FALSE)
 	if(!target)
@@ -270,6 +282,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 		CRASH("[src] ran on_gain() on a mind without a mob")
 	if(ui_name)//in the future, this should entirely replace greet.
 		info_button = new(src)
+		if(antag_flags & FLAG_ANTAG_OBSERVER_VISIBLE_PANEL)
+			info_button.show_to_observers = TRUE
+			info_button.allow_observer_click = TRUE
+		if(info_background_icon_state)
+			info_button.background_icon_state = info_background_icon_state
+		if(info_overlay_icon_state)
+			info_button.overlay_icon_state = info_overlay_icon_state
 		info_button.Grant(owner.current)
 		info_button_ref = WEAKREF(info_button)
 	if(!silent)
@@ -278,7 +297,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 			to_chat(owner.current, span_boldnotice("For more info, read the panel. \
 				You can always come back to it using the button in the top left."))
 			// uses a timer so it doesn't block, but still gives time for the rest of on_gain() to do its thing
-			addtimer(CALLBACK(info_button, TYPE_PROC_REF(/datum/action, Trigger)), 0.1 SECONDS)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, ui_interact), owner.current), 0.1 SECONDS)
 		var/type_policy = get_policy("[type]") // path to text
 		if(type_policy)
 			to_chat(owner.current, type_policy)

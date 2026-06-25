@@ -81,13 +81,59 @@
 #define PATH_VOID "Void Path"
 #define PATH_BLADE "Blade Path"
 #define PATH_COSMIC "Cosmic Path"
-#define PATH_KNOCK "Knock Path"
+#define PATH_LOCK "Lock Path"
 #define PATH_MOON "Moon Path"
+
+//Heretic knowledge tree defines
+#define HKT_NEXT "next"
+#define HKT_BAN "ban"
+#define HKT_DEPTH "depth"
+#define HKT_PURCHASED_DEPTH "purchased_depth"
+#define HKT_ROUTE "route"
+#define HKT_UI_BGR "ui_bgr"
+#define HKT_COST "cost"
+#define HKT_CATEGORY "category"
+/// Only present for already researched knowledge.
+#define HKT_INSTANCE "instance"
+/// unique identifier most commonly used for identifying what knowledge is researchable
+#define HKT_ID "id"
+
+#define BGR_SIDE "node_side"
+
+#define MAGIC_RESISTANCE_MOON (MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND)
 
 /// Defines are used in /proc/has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
 #define HERETIC_NO_HEART_ORGAN -1
 #define HERETIC_NO_LIVING_HEART 0
 #define HERETIC_HAS_LIVING_HEART 1
+
+#define HERETIC_DRAFT_TIER_MAX 5
+
+/// The default drain speed for heretic rift's, anything below this will be considered a fast drain, and be very noticeable and cause a overlay
+#define HERETIC_RIFT_DEFAULT_DRAIN_SPEED 10 SECONDS
+
+/// Sources of knowledge purchased for heretics, used for positioning in the UI
+#define HERETIC_KNOWLEDGE_TREE "tree"
+#define HERETIC_KNOWLEDGE_SHOP "shop"
+#define HERETIC_KNOWLEDGE_DRAFT "draft"
+#define HERETIC_KNOWLEDGE_START "start"
+
+/// defines for the depths of the heretic knowledge tree nodes
+#define HKT_DEPTH_START 2
+#define HKT_DEPTH_TIER_1 3
+#define HKT_DEPTH_DRAFT_1 4
+#define HKT_DEPTH_TIER_2 5
+#define HKT_DEPTH_DRAFT_2 6
+#define HKT_DEPTH_ROBES 7
+#define HKT_DEPTH_TIER_3 8
+#define HKT_DEPTH_DRAFT_3 9
+#define HKT_DEPTH_ARMOR 10
+#define HKT_DEPTH_TIER_4 11
+#define HKT_DEPTH_DRAFT_4 12
+#define HKT_DEPTH_ASCENSION 13
+
+#define HERETIC_CAN_ASCEND "can_ascend"
+
 
 /// A define used in ritual priority for heretics.
 #define MAX_KNOWLEDGE_PRIORITY 100
@@ -143,6 +189,9 @@
 
 /// JSON string file for all of our heretic influence flavors
 #define HERETIC_INFLUENCE_FILE "antagonist_flavor/heretic_influences.json"
+
+/// JSON file containing spy objectives
+#define SPY_OBJECTIVE_FILE "antagonist_flavor/spy_objective.json"
 
 ///employers that are from the syndicate
 GLOBAL_LIST_INIT(syndicate_employers, list(
@@ -209,9 +258,6 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a traitor
 #define IS_TRAITOR(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/traitor))
 
-/// Checks if the given mob is a blood cultist
-#define IS_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
-
 ///Checks if the given mob is an evil clone
 #define IS_EVIL_CLONE(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/evil_clone))
 
@@ -221,14 +267,32 @@ GLOBAL_LIST_INIT(ai_employers, list(
 //Tells whether or not someone is a space ninja
 #define IS_SPACE_NINJA(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/ninja))
 
+/**
+ * Cult checks
+ */
+
+/// Checks if the given mob is a blood cultist
+#define IS_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult) || HAS_TRAIT(mob, TRAIT_ACT_AS_CULTIST))
+
+/// Checks if the given mob is a blood cultist and is guaranteed to return the datum if possible - will cause issues with above trait
+#define GET_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
+
+/// Checks if the mob is a sentient or non-sentient cultist
+#define IS_CULTIST_OR_CULTIST_MOB(mob) ((IS_CULTIST(mob)) || (mob.faction.Find(FACTION_CULT)))
+
+/**
+ * Heretic checks
+ */
+
 /// Checks if the given mob is a heretic.
-#define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
-/// Check if the given mob is a heretic monster.
-#define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+#define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic) || HAS_TRAIT(mob, TRAIT_ACT_AS_HERETIC))
+/// Checks if the given mob is a heretic and is guaranteed to return the datum if possible - will cause issues with above trait
+#define GET_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
+
 /// Check if the given mob is a  lunatic
 #define IS_LUNATIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/lunatic))
 /// Checks if the given mob is either a heretic, heretic monster or a lunatic.
-#define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || IS_HERETIC_MONSTER(mob) || IS_LUNATIC(mob))
+#define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || HAS_TRAIT(mob, TRAIT_HERETIC_SUMMON) || IS_LUNATIC(mob))
 /// Checks if the given mob is in the mansus realm
 #define IS_IN_MANSUS(mob) (istype(get_area(mob), /area/centcom/heretic_sacrifice))
 
@@ -246,6 +310,9 @@ GLOBAL_LIST_INIT(ai_employers, list(
 
 /// Checks if the given mob is a abductee.
 #define IS_ABDUCTEE(mob) (mob.mind?.has_antag_datum(/datum/antagonist/abductee))
+
+/// Checks if the given mob is a spy.
+#define IS_SPY(mob) (mob.mind?.has_antag_datum(/datum/antagonist/spy))
 
 // Antag resource defines
 #define ANTAG_RESOURCE_DARKSPAWN "psi"
@@ -272,6 +339,8 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define OBJECTIVE_ITEM_TYPE_NORMAL "normal"
 /// Only appears in traitor objectives
 #define OBJECTIVE_ITEM_TYPE_TRAITOR "traitor"
+/// Only appears for spy bounties
+#define OBJECTIVE_ITEM_TYPE_SPY "spy"
 
 // Progression traitor defines
 
@@ -350,6 +419,7 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_BINGLES "Bingles"
 #define ANTAG_GROUP_DARKSPAWN "Darkspawn"
 #define ANTAG_GROUP_DEVILS "Infernal Agents"
+#define ANTAG_GROUP_ABANDONED_IPC "Abandoned IPC"
 
 #define HUNTER_PACK_COPS "Spacepol Officers"
 #define HUNTER_PACK_RUSSIAN "Russian Smugglers"
@@ -371,6 +441,8 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define FLAG_ANTAG_CAP_SINGLE (1 << 4)
 /// If set then we ignore mobs being human or not for antag point counting
 #define FLAG_ANTAG_CAP_IGNORE_HUMANITY (1 << 5)
+/// Antag's panel action button and the UI therein is viewable by observers
+#define FLAG_ANTAG_OBSERVER_VISIBLE_PANEL (1 << 6)
 
 #define FREEDOM_IMPLANT_CHARGES 4
 
@@ -401,3 +473,12 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define BATON_CUFF 2
 #define BATON_PROBE 3
 #define BATON_MODES 4
+
+// Spy bounty difficulties
+/// Can easily be accomplished by any job without any specialized tools, people won't really miss these things
+#define SPY_DIFFICULTY_EASY "Easy"
+/// Requires some specialized tools, knowledge, or access to accomplish, may require getting into conflict with the crew
+#define SPY_DIFFICULTY_MEDIUM "Medium"
+/// Very difficult to accomplish, almost guaranteed to require crew conflict
+#define SPY_DIFFICULTY_HARD "Hard"
+

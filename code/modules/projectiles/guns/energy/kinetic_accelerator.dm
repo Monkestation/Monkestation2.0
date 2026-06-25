@@ -182,7 +182,7 @@
 	base_icon_state = "kineticpistol"
 	recharge_time = 2 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/glock)
-	max_mod_capacity = 200
+	max_mod_capacity = 210
 
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/railgun
@@ -262,6 +262,8 @@
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_MINER
+	// Most modkits are supposed to allow duplicates. The ones that don't should be blocked by PKA code anyways.
+	allow_duplicates = TRUE
 	var/denied_type = null
 	var/maximum_of_type = 1
 	var/cost = 30
@@ -620,6 +622,25 @@
 	KA.trigger_guard = TRIGGER_GUARD_NORMAL
 	..()
 
+/obj/item/borg/upgrade/modkit/hardmode
+	name = "HRD-MDE accelerator injector"
+	desc = "An experimental attachment to a kinetic accelerator that can make megafauna crystallize a core, making them harder."
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
+	icon_state = "crevice_shard"
+	cost = 0
+	denied_type = /obj/item/borg/upgrade/modkit/hardmode
+
+/obj/item/borg/upgrade/modkit/hardmode/examine_more(mob/user)
+	. = ..()
+	. += span_notice("An experimental injector developed by the Nanotrasen Science Division used to force a megafauna to crystallize a core.")
+	. += span_notice("Due to the crystallization process the megafauna becomes much stronger, however the core can be extracted post-death.")
+	. += span_notice("A use for crystallized cores has not yet been found, but many experienced miners show them off just like trophies.")
+
+/obj/item/borg/upgrade/modkit/hardmode/projectile_strike(obj/projectile/kinetic/K, turf/target_turf, mob/living/simple_animal/hostile/megafauna/target, obj/item/gun/energy/recharge/kinetic_accelerator/KA)
+	if(istype(target) && target.hardmode_reward != null && !target.hardmode && !is_station_level(target.z))
+		target.activate_hardmode()
+		log_combat(KA, target, "turned on hardmode for", src)
+		qdel(src)
 
 //Cosmetic
 

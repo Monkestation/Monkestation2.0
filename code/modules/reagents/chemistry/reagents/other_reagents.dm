@@ -251,7 +251,6 @@
 /**
  * Water reaction to a mob
  */
-#define WAS_SPRAYED "was_sprayed" //monkestation edit
 
 /datum/reagent/water/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume)//Splashing people with water can help put them out!
 	. = ..()
@@ -270,27 +269,28 @@
 		return
 
 	var/mob/living/victim = exposed_mob
-	if((methods & (TOUCH|VAPOR)) && !victim.is_pepper_proof() && !HAS_TRAIT(victim, TRAIT_FEARLESS))
-		victim.set_eye_blur_if_lower(3 SECONDS)
-		victim.set_confusion_if_lower(5 SECONDS)
-		if(ishuman(victim))
-			victim.add_mood_event("watersprayed", /datum/mood_event/watersprayed/cat)
-		victim.update_damage_hud()
-		if(HAS_TRAIT(victim, WAS_SPRAYED))
-			return
-		ADD_TRAIT(victim, WAS_SPRAYED, TRAIT_GENERIC)
-		if(prob(50))
-			INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "hiss")
-		else
-			INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "scream")
-		addtimer(TRAIT_CALLBACK_REMOVE(victim, WAS_SPRAYED, TRAIT_GENERIC), 1 SECONDS)
-	//MONKESTATION EDIT STOP
-
-#undef WAS_SPRAYED //monkestation edit
+	if((methods & (TOUCH|VAPOR)) && !victim.is_pepper_proof())
+		victim.apply_status_effect(/datum/status_effect/cat_water_sprayed)
 
 #undef WATER_TO_WET_STACKS_FACTOR_TOUCH
 #undef WATER_TO_WET_STACKS_FACTOR_VAPOR
 
+/datum/status_effect/cat_water_sprayed
+	duration = 0.5 SECONDS
+	alert_type = null
+	id = "cat_water_sprayed"
+
+/datum/status_effect/cat_water_sprayed/on_apply()
+	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
+		return FALSE
+
+	owner.set_eye_blur_if_lower(3 SECONDS)
+	owner.set_confusion_if_lower(5 SECONDS)
+
+	owner.add_mood_event("watersprayed", /datum/mood_event/watersprayed/cat)
+	INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), pick("hiss", "scream"))
+
+	return TRUE
 
 /datum/reagent/water/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -391,7 +391,7 @@
 				removed_any = TRUE
 				qdel(BS)
 			if(removed_any)
-				to_chat(affected_mob, span_cult_large("Your blood rites falter as holy water scours your body!"))
+				to_chat(affected_mob, span_cultlarge("Your blood rites falter as holy water scours your body!"))
 
 	if(data["deciseconds_metabolized"] >= (25 SECONDS)) // 10 units
 		affected_mob.adjust_stutter_up_to(4 SECONDS * REM * seconds_per_tick, 20 SECONDS)
@@ -401,7 +401,7 @@
 			if(prob(10))
 				affected_mob.visible_message(span_danger("[affected_mob] starts having a seizure!"), span_userdanger("You have a seizure!"))
 				affected_mob.Unconscious(12 SECONDS)
-				to_chat(affected_mob, span_cult_large("[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
+				to_chat(affected_mob, span_cultlarge("[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
 					"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")]."))
 		else if(HAS_TRAIT(affected_mob, TRAIT_EVIL) && SPT_PROB(25, seconds_per_tick)) //Congratulations, your committment to evil has now made holy water a deadly poison to you!
 			if(!IS_CULTIST(affected_mob) || affected_mob.mind?.holy_role != HOLY_ROLE_PRIEST)
@@ -2823,13 +2823,13 @@
 		drinker.adjust_drowsiness(-10 * REM * seconds_per_tick)
 		drinker.AdjustAllImmobility(-40 * REM * seconds_per_tick)
 		drinker.stamina.adjust(10 * REM * seconds_per_tick, TRUE)
-		drinker.adjustToxLoss(-2 * REM * seconds_per_tick, FALSE, forced = TRUE)
-		drinker.adjustOxyLoss(-2 * REM * seconds_per_tick, FALSE)
-		drinker.adjustBruteLoss(-2 * REM * seconds_per_tick, FALSE)
-		drinker.adjustFireLoss(-2 * REM * seconds_per_tick, FALSE)
+		drinker.adjustToxLoss(-3 * REM * seconds_per_tick, FALSE, forced = TRUE)
+		drinker.adjustOxyLoss(-3 * REM * seconds_per_tick, FALSE)
+		drinker.adjustBruteLoss(-3 * REM * seconds_per_tick, FALSE)
+		drinker.adjustFireLoss(-3 * REM * seconds_per_tick, FALSE)
 		drinker.fully_heal(HEAL_NEGATIVE_DISEASES)
 		if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
-			drinker.blood_volume += 3 * REM * seconds_per_tick
+			drinker.blood_volume += 4 * REM * seconds_per_tick
 	else
 		drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * seconds_per_tick, 150)
 		drinker.adjustToxLoss(2 * REM * seconds_per_tick, FALSE)

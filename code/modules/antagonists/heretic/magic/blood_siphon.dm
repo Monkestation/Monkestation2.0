@@ -9,9 +9,9 @@
 	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 35 SECONDS
+	cooldown_time = 15 SECONDS
 
-	invocation = "FL'MS O'ET'RN'ITY."
+	invocation = "FL'MS O' 'T'RN'TY."
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
@@ -36,36 +36,32 @@
 
 	cast_on.visible_message(
 		span_danger("[cast_on] turns pale as a red glow envelops [cast_on.p_them()]!"),
-		span_danger("You pale as a red glow enevelops you!"),
+		span_danger("You pale as a red glow envelops you!"),
 	)
 
 	var/mob/living/living_owner = owner
 	cast_on.adjustBruteLoss(20)
 	living_owner.adjustBruteLoss(-20)
 
-	if(!cast_on.blood_volume || !living_owner.blood_volume)
-		return TRUE
-
-	cast_on.blood_volume -= 20
-	if(living_owner.blood_volume < BLOOD_VOLUME_MAXIMUM) // we dont want to explode from casting
-		living_owner.blood_volume += 20
+	var/datum/blood_type/heretic_blood = living_owner.get_blood_type()
+	if(!isnull(heretic_blood))
+		var/transfer_amount = min(cast_on.blood_volume, 20)
+		cast_on.blood_volume -= transfer_amount
+		living_owner.blood_volume = min(living_owner.blood_volume + transfer_amount, BLOOD_VOLUME_MAXIMUM)
 
 	if(!iscarbon(cast_on) || !iscarbon(owner))
 		return TRUE
 
 	var/mob/living/carbon/carbon_target = cast_on
 	var/mob/living/carbon/carbon_user = owner
-	for(var/obj/item/bodypart/bodypart as anything in carbon_user.bodyparts)
+	for(var/obj/item/bodypart/bodypart as anything in carbon_user.get_bodyparts())
 		for(var/datum/wound/iter_wound as anything in bodypart.wounds)
 			if(prob(50))
 				continue
-			var/obj/item/bodypart/target_bodypart = locate(bodypart.type) in carbon_target.bodyparts
+			var/obj/item/bodypart/target_bodypart = carbon_target.get_bodypart(bodypart.body_zone)
 			if(!target_bodypart)
 				continue
 			iter_wound.remove_wound()
 			iter_wound.apply_wound(target_bodypart)
-
-	owner.log_message("used [name] on [key_name(cast_on)]", LOG_ATTACK)
-	cast_on.log_message("was hit by [key_name(owner)] with [name]", LOG_VICTIM, log_globally = FALSE)
 
 	return TRUE

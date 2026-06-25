@@ -56,6 +56,7 @@
 		/obj/item/cautery,
 		/obj/item/hemostat,
 		/obj/item/blood_filter,
+		/obj/item/breathing_bag,
 		/obj/item/shears,
 		/obj/item/geiger_counter,
 		/obj/item/clothing/neck/stethoscope,

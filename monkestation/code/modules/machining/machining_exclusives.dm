@@ -30,6 +30,7 @@
 	gun = new(src)
 	battery = new(src)
 	START_PROCESSING(SSobj, src)
+	AddElement(/datum/element/drag_pickup)
 
 /obj/item/pulsepack/Destroy()
 	//we do this check as a precaution (read: pass checks) since the backpack itself should have already deleted this
@@ -201,8 +202,10 @@
 	chassis.max_integrity += applied_integrity
 
 /obj/item/mecha_parts/mecha_equipment/armor/hardened_exosuit_part/detach(atom/moveto)
-	. = ..()
 	chassis.max_integrity -= applied_integrity
+	if(chassis.get_integrity() > chassis.max_integrity)
+		chassis.update_integrity(chassis.max_integrity - (chassis.get_integrity() - chassis.max_integrity)) // If integrity is over its max integrity when removed, lower/set its integ to its new max integ
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/armor/hardened_exosuit_plate
 	name = "Hardened Exosuit Part"

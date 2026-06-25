@@ -4,7 +4,7 @@
 	)
 
 /datum/preference_middleware/antags/get_ui_static_data(mob/user)
-	if (preferences.current_window != PREFERENCE_WINDOW_CHARACTERS)
+	if (preferences.current_window != PREFERENCE_WINDOW_GAME_PREFERENCES)
 		return list()
 
 	var/list/data = list()
@@ -85,6 +85,7 @@
 		ROLE_COMMANDO_OPERATIVE_MIDROUND = /datum/antagonist/nukeop/commando,
 		ROLE_DARKSPAWN = /datum/antagonist/darkspawn,
 		ROLE_GANG_MEMBER = /datum/antagonist/gang_member,
+		ROLE_ABANDONED_IPC = /datum/antagonist/abandoned_ipc,
 		// monkestation end
 	)
 
@@ -154,6 +155,7 @@
 		ROLE_COMMANDO_OPERATIVE_MIDROUND = /datum/antagonist/nukeop/commando,
 		ROLE_DARKSPAWN = /datum/antagonist/darkspawn,
 		ROLE_GANG_MEMBER = /datum/antagonist/gang_member,
+		ROLE_ABANDONED_IPC = /datum/antagonist/abandoned_ipc,
 		// monkestation end
 	)
 

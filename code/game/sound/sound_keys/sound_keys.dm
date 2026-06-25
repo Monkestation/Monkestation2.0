@@ -647,3 +647,11 @@
 		'sound/machines/djstation/tape_asmr18.ogg',
 		'sound/machines/djstation/tape_asmr19.ogg',
 	)
+
+/datum/sound_effect/void_deflect
+	key = SFX_VOID_DEFLECT
+	file_paths = list(
+		'sound/magic/voiddeflect01.ogg',
+		'sound/magic/voiddeflect02.ogg',
+		'sound/magic/voiddeflect03.ogg',
+	)

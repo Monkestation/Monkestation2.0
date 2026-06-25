@@ -228,7 +228,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(!IS_CULTIST(non_cultist))
 			myriad_targets += non_cultist
 
-	if(!length(myriad_targets) && !try_spawn_sword())
+	if(!length(myriad_targets) && !try_sacrifice_item())
 		fail_invoke()
 		return
 
@@ -336,14 +336,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 	return TRUE
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers, datum/team/cult/cult_team)
-	var/big_sac = FALSE
+	var/target_sac = FALSE
 	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || cult_team.is_sacrifice_target(sacrificial.mind)) && length(invokers) < 3)
 		for(var/invoker in invokers)
-			to_chat(invoker, span_cultitalic("[sacrificial] is too greatly linked to the world! You need three acolytes!"))
-		return FALSE
-
-	var/signal_result = SEND_SIGNAL(sacrificial, COMSIG_LIVING_CULT_SACRIFICED, invokers)
-	if(signal_result & STOP_SACRIFICE)
+			to_chat(invoker, span_cult_italic("[sacrificial] is too greatly linked to the world! You need three acolytes!"))
 		return FALSE
 
 	if(sacrificial.mind)
@@ -353,21 +349,33 @@ structure_check() searches for nearby cultist structures required for the invoca
 				sac_objective.sacced = TRUE
 				sac_objective.clear_sacrifice()
 				sac_objective.update_explanation_text()
-				big_sac = TRUE
+				target_sac = TRUE
 	else
 		LAZYADD(GLOB.sacrificed, WEAKREF(sacrificial))
 
 	new /obj/effect/temp_visual/cult/sac(loc)
 
-	if(!(signal_result & SILENCE_SACRIFICE_MESSAGE))
+	var/signal_result = SEND_SIGNAL(sacrificial, COMSIG_LIVING_CULT_SACRIFICED, invokers, cult_team)
+
+	var/do_message = TRUE
+	if(signal_result & SILENCE_SACRIFICE_MESSAGE)
+		do_message = FALSE
+	if((signal_result & SILENCE_NONTARGET_SACRIFICE_MESSAGE) && !(target_sac))
+		do_message = FALSE
+
+	if(do_message)
 		for(var/invoker in invokers)
-			if(big_sac)
+			if(target_sac)
 				to_chat(invoker, span_cultlarge("\"Yes! This is the one I desire! You have done well.\""))
 				continue
 			if(ishuman(sacrificial) || iscyborg(sacrificial))
 				to_chat(invoker, span_cultlarge("\"I accept this sacrifice.\""))
 			else
 				to_chat(invoker, span_cultlarge("\"I accept this meager sacrifice.\""))
+
+	// post-message
+	if(signal_result & STOP_SACRIFICE)
+		return FALSE
 
 	if(iscyborg(sacrificial))
 		var/construct_class = show_radial_menu(invokers[1], sacrificial, GLOB.construct_radial_images, require_near = TRUE, tooltips = TRUE)
@@ -380,59 +388,50 @@ structure_check() searches for nearby cultist structures required for the invoca
 		sacriborg.mmi = null
 		qdel(sacrificial)
 		return TRUE
-
-	var/obj/item/soulstone/stone = new(loc)
-	if(sacrificial.mind && !HAS_TRAIT(sacrificial, TRAIT_SUICIDED))
-		stone.capture_soul(sacrificial,  invokers[1], forced = TRUE)
-
-	if(sacrificial)
+	if(sacrificial && (signal_result & DUST_SACRIFICE)) // No soulstone when dusted
+		playsound(sacrificial, 'sound/magic/teleport_diss.ogg', 100, TRUE)
+		sacrificial.investigate_log("has been sacrificially dusted by the cult.", INVESTIGATE_DEATHS)
+		sacrificial.dust(TRUE, FALSE, TRUE)
+	else if (sacrificial)
+		var/obj/item/soulstone/stone = new(loc)
+		if(sacrificial.mind && !HAS_TRAIT(sacrificial, TRAIT_SUICIDED))
+			stone.capture_soul(sacrificial,  invokers[1], forced = TRUE)
 		playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, TRUE)
 		sacrificial.investigate_log("has been sacrificially gibbed by the cult.", INVESTIGATE_DEATHS)
-		sacrificial.gib()
+		sacrificial.gib(/* DROP_ALL_REMAINS */)
 
-	try_spawn_sword() // after sharding and gibbing, which potentially dropped a null rod
+	try_sacrifice_item() // after sharding and gibbing, which potentially dropped a sacrificable item
+
 	return TRUE
 
-/// Tries to convert a null rod over the rune to a cult sword
-/obj/effect/rune/convert/proc/try_spawn_sword()
-	for(var/obj/item/nullrod/rod in loc)
-		if(rod.anchored || (rod.resistance_flags & INDESTRUCTIBLE))
+/// Tries to convert a valid item over the rune to something else
+/obj/effect/rune/convert/proc/try_sacrifice_item()
+	for(var/obj/item/checked_item in loc)
+		if(checked_item.anchored || (checked_item.resistance_flags & INDESTRUCTIBLE))
 			continue
 
-		var/num_slain = LAZYLEN(rod.cultists_slain)
-		var/displayed_message = "[rod] glows an unholy red and begins to transform..."
-		if(GET_ATOM_BLOOD_DNA_LENGTH(rod))
-			displayed_message += " The blood of [num_slain] fallen cultist[num_slain == 1 ? "":"s"] is absorbed into [rod]!"
-
-		rod.visible_message(span_cultitalic(displayed_message))
-		switch(num_slain)
-			if(0, 1)
-				animate_spawn_sword(rod, /obj/item/melee/cultblade/dagger)
-			if(2)
-				animate_spawn_sword(rod, /obj/item/melee/cultblade)
-			else
-				animate_spawn_sword(rod, /obj/item/cult_bastard)
-		return TRUE
+		if(SEND_SIGNAL(checked_item, COMSIG_ITEM_CULT_SACRIFICE, src) & COMPONENT_SACRIFICE_SUCCESSFUL)
+			return TRUE
 
 	return FALSE
 
-/// Does an animation of a null rod transforming into a cult sword
-/obj/effect/rune/convert/proc/animate_spawn_sword(obj/item/nullrod/former_rod, new_blade_typepath)
+/// Does an animation of a sacrificable item transforming into something else
+/obj/effect/rune/convert/proc/animate_convert_item(obj/item/old_item, new_movable_typepath)
 	playsound(src, 'sound/effects/magic.ogg', 33, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.66)
-	former_rod.anchored = TRUE
-	former_rod.Shake()
-	animate(former_rod, alpha = 0, transform = matrix(former_rod.transform).Scale(0.01), time = 2 SECONDS, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
-	QDEL_IN(former_rod, 2 SECONDS)
+	old_item.anchored = TRUE
+	old_item.Shake()
+	animate(old_item, alpha = 0, transform = matrix(old_item.transform).Scale(0.01), time = 2 SECONDS, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
+	QDEL_IN(old_item, 2 SECONDS)
 
-	var/obj/item/new_blade = new new_blade_typepath(loc)
-	var/matrix/blade_matrix_on_spawn = matrix(new_blade.transform)
-	new_blade.name = "converted [new_blade.name]"
-	new_blade.anchored = TRUE
-	new_blade.alpha = 0
-	new_blade.transform = matrix(new_blade.transform).Scale(0.01)
-	new_blade.Shake()
-	animate(new_blade, alpha = 255, transform = blade_matrix_on_spawn, time = 2 SECONDS, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
-	addtimer(VARSET_CALLBACK(new_blade, anchored, FALSE), 2 SECONDS)
+	var/atom/movable/new_movable = new new_movable_typepath(loc)
+	var/matrix/matrix_on_spawn = matrix(new_movable.transform)
+	new_movable.name = "converted [new_movable.name]"
+	new_movable.anchored = TRUE
+	new_movable.alpha = 0
+	new_movable.transform = matrix(new_movable.transform).Scale(0.01)
+	new_movable.Shake()
+	animate(new_movable, alpha = 255, transform = matrix_on_spawn, time = 2 SECONDS, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
+	addtimer(VARSET_CALLBACK(new_movable, anchored, FALSE), 2 SECONDS)
 
 /obj/effect/rune/empower
 	cultist_name = "Empower"

@@ -147,6 +147,7 @@
 
 #define ITEM_FIBER_MULTIPLIER 1.2
 #define NON_ITEM_FIBER_MULTIPLIER 1
+#define FIBERS_ALLOWED(clothing) ((clothing) && !(clothing.clothing_flags & BLOCKS_FIBERS))
 
 /// Adds a single fiber
 /datum/forensics/proc/add_fibers(mob/living/carbon/human/suspect)
@@ -154,33 +155,38 @@
 	var/atom/actual_parent = parent.resolve()
 	var/item_multiplier = isitem(actual_parent) ? ITEM_FIBER_MULTIPLIER : NON_ITEM_FIBER_MULTIPLIER
 	if(suspect.wear_suit)
+		if(suspect.wear_suit.clothing_flags & BLOCKS_FIBERS)
+			return TRUE
 		fibertext = "Material from \a [suspect.wear_suit]."
 		if(prob(10 * item_multiplier) && !LAZYACCESS(fibers, fibertext))
 			LAZYSET(fibers, fibertext, fibertext)
 		if(!(suspect.wear_suit.body_parts_covered & CHEST))
-			if(suspect.w_uniform)
+			if(FIBERS_ALLOWED(suspect.w_uniform))
 				fibertext = "Fibers from \a [suspect.w_uniform]."
 				if(prob(12 * item_multiplier) && !LAZYACCESS(fibers, fibertext)) //Wearing a suit means less of the uniform exposed.
 					LAZYSET(fibers, fibertext, fibertext)
 		if(!(suspect.wear_suit.body_parts_covered & HANDS))
-			if(suspect.gloves)
+			if(FIBERS_ALLOWED(suspect.gloves))
 				fibertext = "Material from a pair of [suspect.gloves.name]."
 				if(prob(20 * item_multiplier) && !LAZYACCESS(fibers, fibertext))
 					LAZYSET(fibers, fibertext, fibertext)
 	else if(suspect.w_uniform)
+		if(suspect.w_uniform.clothing_flags & BLOCKS_FIBERS)
+			return TRUE
 		fibertext = "Fibers from \a [suspect.w_uniform]."
 		if(prob(15 * item_multiplier) && !LAZYACCESS(fibers, fibertext))
 			LAZYSET(fibers, fibertext, fibertext)
-		if(suspect.gloves)
+		if(FIBERS_ALLOWED(suspect.gloves))
 			fibertext = "Material from a pair of [suspect.gloves.name]."
 			if(prob(20 * item_multiplier) && !LAZYACCESS(fibers, fibertext))
 				LAZYSET(fibers, fibertext, fibertext)
-	else if(suspect.gloves)
+	else if(FIBERS_ALLOWED(suspect.gloves))
 		fibertext = "Material from a pair of [suspect.gloves.name]."
 		if(prob(20 * item_multiplier) && !LAZYACCESS(fibers, fibertext))
 			LAZYSET(fibers, fibertext, fibertext)
 	return TRUE
 
+#undef FIBERS_ALLOWED
 #undef ITEM_FIBER_MULTIPLIER
 #undef NON_ITEM_FIBER_MULTIPLIER
 

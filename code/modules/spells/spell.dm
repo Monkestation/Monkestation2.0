@@ -251,14 +251,14 @@
 	if(isnull(cast_loc))
 		return null // No magic in nullspace
 
-	if(isturf(cast_loc))
+	if(isvalidAIloc(cast_loc)) //take into account AIs casting from within their core
 		return target // They're just standing around, proceed as normal
 
 	if(HAS_TRAIT(cast_loc, TRAIT_CASTABLE_LOC))
-		/*if(HAS_TRAIT(cast_loc, TRAIT_SPELLS_TRANSFER_TO_LOC) && ismob(cast_loc.loc))
+		if(HAS_TRAIT(cast_loc, TRAIT_SPELLS_TRANSFER_TO_LOC) && ismob(cast_loc.loc))
 			return cast_loc.loc
-		else*/ //monkestation temp removal
-		return cast_loc
+		else
+			return cast_loc
 	// They're in an atom which allows casting, so redirect the caster to loc
 
 	return null

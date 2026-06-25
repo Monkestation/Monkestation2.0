@@ -16,6 +16,8 @@
  */
 GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("stool", /obj/structure/chair/stool, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("chair", /obj/structure/chair, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_FURNITURE),
+	new/datum/stack_recipe("toilet", /obj/structure/toilet, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_FURNITURE),
 	new/datum/stack_recipe("bar stool", /obj/structure/chair/stool/bar, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("bed", /obj/structure/bed, 2, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("double bed", /obj/structure/bed/double, 4, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
@@ -48,6 +50,11 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		new /datum/stack_recipe("bench (left)", /obj/structure/chair/sofa/bench/left, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 		new /datum/stack_recipe("bench (right)", /obj/structure/chair/sofa/bench/right, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 		new /datum/stack_recipe("bench (corner)", /obj/structure/chair/sofa/bench/corner, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("tram bench (solo)", /obj/structure/chair/sofa/bench/tram/solo, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("tram bench (middle)", /obj/structure/chair/sofa/bench/tram, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("tram bench (left)", /obj/structure/chair/sofa/bench/tram/left, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("tram bench (right)", /obj/structure/chair/sofa/bench/tram/right, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("tram bench (corner)", /obj/structure/chair/sofa/bench/tram/corner, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 		)), \
 	new /datum/stack_recipe_list("chess pieces", list( \
 		new /datum/stack_recipe("White Pawn", /obj/structure/chess/whitepawn, 2, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_ENTERTAINMENT), \
@@ -84,9 +91,8 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("raised tile", /obj/item/stack/tile/elevated, 1, 4, 20, category = CAT_TILES), \
 	new/datum/stack_recipe("iron rod", /obj/item/stack/rods, 1, 2, 60, category = CAT_MISC), \
 	null, \
-	new/datum/stack_recipe("wall girders (anchored)", /obj/structure/girder, 2, time = 4 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
+	new/datum/stack_recipe("wall girders (unanchored)", /obj/structure/girder/displaced, 2, time = 2 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, placement_checks = STACK_CHECK_TRAM_FORBIDDEN, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
 	null, \
-	new/datum/stack_recipe("tram wall girders (anchored)", /obj/structure/girder/tram, 2, time = 4 SECONDS, one_per_turf = TRUE, on_solid_ground = FALSE, check_density = FALSE, on_tram = TRUE, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
 	null, \
 	new/datum/stack_recipe("computer frame", /obj/structure/frame/computer, 5, time = 2.5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_EQUIPMENT), \
 	new/datum/stack_recipe("modular console", /obj/machinery/modular_computer, 10, time = 2.5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_EQUIPMENT), \
@@ -255,7 +261,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	if(get_amount() < 2)
 		user.balloon_alert(user, "not enough material!")
 		return ITEM_INTERACT_BLOCKING
-	if(!do_after(user, 4 SECONDS, build_on))
+	if(!do_after(user, 2 SECONDS, build_on))
 		return ITEM_INTERACT_BLOCKING
 	if(build_on.is_blocked_turf())
 		user.balloon_alert(user, "something is blocking the tile!")
@@ -270,7 +276,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
  * Plasteel
  */
 GLOBAL_LIST_INIT(plasteel_recipes, list ( \
-	new/datum/stack_recipe("AI core", /obj/structure/ai_core, 4, time = 5 SECONDS, one_per_turf = TRUE, check_density = FALSE, category = CAT_ROBOT),
 	new/datum/stack_recipe("bomb assembly", /obj/machinery/syndicatebomb/empty, 10, time = 5 SECONDS, check_density = FALSE, category = CAT_CHEMISTRY),
 	new/datum/stack_recipe("Large Gas Tank", /obj/structure/tank_frame, 4, time=1 SECONDS, one_per_turf=TRUE, check_density = FALSE, category = CAT_ATMOSPHERIC),
 	null,
@@ -794,7 +799,9 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	material_type = /datum/material/bone
 
 GLOBAL_LIST_INIT(plastic_recipes, list(
-	new /datum/stack_recipe("plastic floor tile", /obj/item/stack/tile/plastic, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
+	new /datum/stack_recipe("plastic floor tile", /obj/item/stack/tile/plastic, 1, 4, 20, time = 2 SECONDS, check_density = FALSE, category = CAT_TILES), \
+	new /datum/stack_recipe("light tram tile", /obj/item/stack/thermoplastic/light, 1, 4, 20, time = 2 SECONDS, check_density = FALSE, category = CAT_TILES), \
+	new /datum/stack_recipe("dark tram tile", /obj/item/stack/thermoplastic, 1, 4, 20, time = 2 SECONDS, check_density = FALSE, category = CAT_TILES), \
 	new /datum/stack_recipe("folding plastic chair", /obj/structure/chair/plastic, 2, check_density = FALSE, category = CAT_FURNITURE), \
 	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = TRUE, on_solid_ground = TRUE, time = 4 SECONDS, category = CAT_FURNITURE), \
 	new /datum/stack_recipe("water bottle", /obj/item/reagent_containers/cup/glass/waterbottle/empty, check_density = FALSE, category = CAT_CONTAINERS), \

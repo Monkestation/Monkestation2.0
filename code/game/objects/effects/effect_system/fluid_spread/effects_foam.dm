@@ -146,7 +146,7 @@
 	info.pass_flags = PASSTABLE | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE
 	for(var/iter_dir in GLOB.cardinals)
 		var/turf/spread_turf = get_step(src, iter_dir)
-		if(spread_turf?.density || spread_turf.LinkBlockedWithAccess(spread_turf, info))
+		if(spread_turf?.density || location.LinkBlockedWithAccess(spread_turf, info))
 			continue
 
 		var/obj/effect/particle_effect/fluid/foam/foundfoam = locate() in spread_turf //Don't spread foam where there's already foam!
@@ -159,6 +159,7 @@
 			if(HAS_TRAIT(foaming, TRAIT_ON_ELEVATED_SURFACE))
 				continue
 			foam_mob(foaming, seconds_per_tick)
+
 
 		var/obj/effect/particle_effect/fluid/foam/spread_foam = new type(spread_turf, group, src)
 		reagents.copy_to(spread_foam, (reagents.total_volume))
@@ -314,20 +315,28 @@
 	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	name = "foamed metal"
-	desc = "A lightweight foamed metal wall that can be used as base to construct a wall."
+	desc = "A lightweight foamed metal wall that can be used as a base to construct a wall."
 	gender = PLURAL
 	max_integrity = 20
 	can_atmos_pass = ATMOS_PASS_DENSITY
+	pass_flags_self = PASSCLOSEDTURF
 	obj_flags = CAN_BE_HIT | BLOCK_Z_IN_DOWN | BLOCK_Z_IN_UP
 	///Var used to prevent spamming of the construction sound
 	var/next_beep = 0
+	///Do we seal the floor below us aswell?
+	var/foam_floor = TRUE
 
 /obj/structure/foamedmetal/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE, TRUE)
+	if(foam_floor)
+		var/turf/open/location = loc
+		if(isspaceturf(location))
+			location.PlaceOnTop(/turf/open/floor/plating/foam)
 
 /obj/structure/foamedmetal/Destroy()
 	air_update_turf(TRUE, FALSE)
+	playsound(src, 'sound/effects/crackshatter.ogg', 30, TRUE, -4)
 	. = ..()
 
 /obj/structure/foamedmetal/Move()
@@ -350,7 +359,9 @@
 	to_chat(user, span_warning("You hit [src] but bounce off it!"))
 	playsound(src.loc, 'sound/weapons/tap.ogg', 100, TRUE)
 
-/obj/structure/foamedmetal/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/foamedmetal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.istate & ISTATE_HARM)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
 	///A speed modifier for how fast the wall is build
 	var/platingmodifier = 1
 	if(HAS_TRAIT(user, TRAIT_QUICK_BUILD))
@@ -360,24 +371,29 @@
 			playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
 	add_fingerprint(user)
 
-	if(!istype(attacking_item, /obj/item/stack/sheet))
+	if(tool.tool_behaviour == TOOL_MINING)
+		user.visible_message(span_notice("[user] cracks the [src] apart with \the [tool]."), span_notice("You crack the [src] apart with \the [tool]."), span_hear("You hear something scraping against pourous metal."))
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS
+
+	if(!istype(tool, /obj/item/stack/sheet))
 		return ..()
 
-	var/obj/item/stack/sheet/sheet_for_plating = attacking_item
+	var/obj/item/stack/sheet/sheet_for_plating = tool
 	if(istype(sheet_for_plating, /obj/item/stack/sheet/iron))
 		if(sheet_for_plating.get_amount() < 2)
 			to_chat(user, span_warning("You need two sheets of iron to finish a wall on [src]!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		to_chat(user, span_notice("You start adding plating to the foam structure..."))
 		if (do_after(user, 40 * platingmodifier, target = src))
 			if(!sheet_for_plating.use(2))
-				return
+				return ITEM_INTERACT_BLOCKING
 			to_chat(user, span_notice("You add the plating."))
 			var/turf/T = get_turf(src)
 			T.PlaceOnTop(/turf/closed/wall/metal_foam_base)
 			transfer_fingerprints_to(T)
 			qdel(src)
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	add_hiddenprint(user)
 
@@ -431,6 +447,7 @@
 	alpha = 120
 	max_integrity = 10
 	pass_flags_self = PASSGLASS
+	foam_floor = FALSE
 
 /obj/structure/foamedmetal/resin/Initialize(mapload)
 	. = ..()

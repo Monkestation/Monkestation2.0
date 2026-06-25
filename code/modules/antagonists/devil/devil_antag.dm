@@ -29,7 +29,7 @@
 	antagpanel_category = ANTAG_GROUP_DEVILS
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
-	stinger_sound = 'sound/ambience/antag/heretic/heretic_gain.ogg'
+	stinger_sound = 'sound/music/antag/heretic/heretic_gain.ogg'
 	ui_name = "AntagInfoDevil"
 	/// The timer ID for reviving devils
 	var/revival_timer_id = null

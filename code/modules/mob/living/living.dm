@@ -1192,12 +1192,19 @@
 
 /mob/living/resist_grab(moving_resist)
 	. = TRUE
+	// Base chance to escape a grab. Divided by effective grab state
+	var/escape_chance = BASE_GRAB_RESIST_CHANCE /// see defines/combat.dm, this should be baseline 60%
 	if(pulledby.grab_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS))
 		var/altered_grab_state = pulledby.grab_state
 		if((body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) && pulledby.grab_state < GRAB_KILL) //If prone, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
 			altered_grab_state++
-		var/resist_chance = BASE_GRAB_RESIST_CHANCE /// see defines/combat.dm, this should be baseline 60%
-		resist_chance = (resist_chance/altered_grab_state) ///Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
+		if(ishuman(pulledby))
+			var/mob/living/carbon/human/human_puller = pulledby
+			var/datum/martial_art/puller_art = human_puller?.mind.martial_art
+			if(puller_art?.can_use(human_puller))
+				altered_grab_state += puller_art.grab_state_modifier
+				escape_chance += puller_art.grab_escape_chance_modifier
+		var/resist_chance = (escape_chance/altered_grab_state) ///Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
 		if(prob(resist_chance))
 			visible_message(span_danger("[src] breaks free of [pulledby]'s grip!"), \
 							span_danger("You break free of [pulledby]'s grip!"), null, null, pulledby)
@@ -1306,9 +1313,9 @@
 
 /// Checks if this mob can be actively tracked by cameras / AI.
 /// Can optionally be passed a user, which is the mob who is tracking src.
-/mob/living/proc/can_track(mob/living/user)
+/atom/movable/proc/can_track(mob/living/user)
 	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
-	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_TRACK, user) & COMPONENT_CANT_TRACK)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_CAN_TRACK, user) & COMPONENT_CANT_TRACK)
 		return FALSE
 	if(!isnull(user) && src == user)
 		return FALSE
@@ -1321,12 +1328,18 @@
 		return FALSE
 	if(is_away_level(T.z))
 		return FALSE
-	if(onSyndieBase() && !(ROLE_SYNDICATE in user?.faction))
-		return FALSE
 	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
 	if(!GLOB.cameranet.checkCameraVis(src))
 		return FALSE
 	return TRUE
+
+/mob/living/can_track(mob/living/user)
+	. = ..()
+	if(!.)
+		return .
+	if(onSyndieBase() && !(ROLE_SYNDICATE in user?.faction))
+		return FALSE
+	return .
 
 /mob/living/proc/harvest(mob/living/user) //used for extra objects etc. in butchering
 	return
@@ -1486,7 +1499,7 @@
 
 		if(WABBAJACK_ROBOT)
 			var/static/list/robot_options = list(
-				/mob/living/silicon/robot = 200,
+				/mob/living/silicon/robot/disconnected = 200,
 				/mob/living/basic/drone/polymorphed = 200,
 				/mob/living/silicon/robot/model/syndicate = 100,
 				/mob/living/silicon/robot/model/syndicate/medical = 100,
@@ -1500,8 +1513,6 @@
 				new_mob.gender = gender
 				new_mob.SetInvisibility(INVISIBILITY_NONE)
 				new_mob.job = JOB_CYBORG
-				created_robot.lawupdate = FALSE
-				created_robot.connected_ai = null
 				created_robot.mmi.transfer_identity(src) //Does not transfer key/client.
 				created_robot.clear_inherent_laws(announce = FALSE)
 				created_robot.clear_zeroth_law(announce = FALSE)
@@ -1559,6 +1570,8 @@
 				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
 				/mob/living/simple_animal/pet/cat,
 				/mob/living/simple_animal/pet/cat/cak,
+				/mob/living/basic/pony,
+				/mob/living/basic/pony/syndicate,
 			)
 			new_mob = new picked_animal(loc)
 
@@ -2151,9 +2164,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 
-/mob/living/can_hear()
-	. = !HAS_TRAIT(src, TRAIT_DEAF)
-
 /mob/living/set_stat(new_stat)
 	. = ..()
 	if(isnull(.))
@@ -2175,7 +2185,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(HARD_CRIT)
 			if(stat != UNCONSCIOUS)
 				cure_blind(UNCONSCIOUS_TRAIT)
+			REMOVE_TRAIT(src, TRAIT_DEAF, STAT_TRAIT)
 		if(DEAD)
+			REMOVE_TRAIT(src, TRAIT_DEAF, STAT_TRAIT)
 			remove_from_dead_mob_list()
 			add_to_alive_mob_list()
 	switch(stat) //Current stat.
@@ -2200,16 +2212,12 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(HARD_CRIT)
 			if(. != UNCONSCIOUS)
 				become_blind(UNCONSCIOUS_TRAIT)
-			add_traits(list(TRAIT_CRITICAL_CONDITION, TRAIT_POOR_AIM), STAT_TRAIT)
+			add_traits(list(TRAIT_CRITICAL_CONDITION, TRAIT_POOR_AIM, TRAIT_DEAF), STAT_TRAIT)
 		if(DEAD)
+			ADD_TRAIT(src, TRAIT_DEAF, STAT_TRAIT)
 			remove_traits(list(TRAIT_CRITICAL_CONDITION, TRAIT_POOR_AIM), STAT_TRAIT)
 			remove_from_alive_mob_list()
 			add_to_dead_mob_list()
-	if(!can_hear())
-		stop_sound_channel(CHANNEL_AMBIENCE)
-	refresh_looping_ambience()
-
-
 
 ///Reports the event of the change in value of the buckled variable.
 /mob/living/proc/set_buckled(new_buckled)

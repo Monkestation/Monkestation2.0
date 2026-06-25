@@ -1,5 +1,3 @@
-/// How many seconds between each fuel depletion tick ("use" proc)
-#define WELDER_FUEL_BURN_INTERVAL 26
 /obj/item/weldingtool
 	name = "welding tool"
 	desc = "A standard edition welder provided by Nanotrasen."
@@ -38,15 +36,13 @@
 	/// Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/status = TRUE
 	/// The max amount of fuel the welder can hold
-	var/max_fuel = 20
+	var/max_fuel = 30
 	/// Does the welder start with fuel.
 	var/starting_fuel = TRUE
 	/// Whether or not we're changing the icon based on fuel left.
 	var/change_icons = TRUE
 	/// Used in process(), dictates whether or not we're calling STOP_PROCESSING whilst we're not welding.
 	var/can_off_process = FALSE
-	/// When fuel was last removed.
-	var/burned_fuel_for = 0
 
 	var/activation_sound = 'sound/items/welderactivate.ogg'
 	var/deactivation_sound = 'sound/items/welderdeactivate.ogg'
@@ -88,9 +84,7 @@
 	if(welding)
 		force = 15
 		damtype = BURN
-		burned_fuel_for += seconds_per_tick
-		if(burned_fuel_for >= WELDER_FUEL_BURN_INTERVAL)
-			use(TRUE)
+		use(TRUE)
 		update_appearance()
 
 	//Welders left on now use up fuel, but lets not have them run out quite that fast
@@ -125,6 +119,11 @@
 	var/plasmaAmount = reagents.get_reagent_amount(/datum/reagent/toxin/plasma)
 	dyn_explosion(src, plasmaAmount/5, explosion_cause = src) // 20 plasma in a standard welder has a 4 power explosion. no breaches, but enough to kill/dismember holder
 	qdel(src)
+
+/obj/item/weldingtool/cyborg_unequip(mob/user)
+	if(!isOn())
+		return
+	switched_on(user)
 
 /obj/item/weldingtool/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks, interaction_key)
 	var/mutable_appearance/sparks = mutable_appearance('icons/effects/welding_effect.dmi', "welding_sparks", GASFIRE_LAYER, src, ABOVE_LIGHTING_PLANE)
@@ -175,7 +174,7 @@
 /obj/item/weldingtool/afterattack(atom/target, mob/user, click_parameters)
 	if(!isOn())
 		return
-	use(1)
+	use(2)
 	var/turf/location = get_turf(user)
 	location.hotspot_expose(700, 50, 1)
 	if(QDELETED(target) || !isliving(target)) // can't ignite something that doesn't exist
@@ -209,9 +208,6 @@
 /obj/item/weldingtool/use(used = 0)
 	if(!..() || !isOn() || !check_fuel())
 		return FALSE
-
-	if(used > 0)
-		burned_fuel_for = 0
 
 	if(get_fuel() >= used)
 		reagents.remove_reagent(/datum/reagent/fuel, used)
@@ -335,39 +331,26 @@
 	name = "industrial welding tool"
 	desc = "A slightly larger welder with a larger tank."
 	icon_state = "indwelder"
-	max_fuel = 40
+	max_fuel = 60
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
-
-/obj/item/weldingtool/largetank/flamethrower_screwdriver()
-	return
 
 /obj/item/weldingtool/largetank/empty
 	starting_fuel = FALSE
 
 /obj/item/weldingtool/largetank/cyborg
-	name = "integrated welding tool"
 	desc = "An advanced welder designed to be used in robotic systems. Custom framework doubles the speed of welding."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "indwelder_cyborg"
 	toolspeed = 0.5
 
-/obj/item/weldingtool/largetank/cyborg/cyborg_unequip(mob/user)
-	if(!isOn())
-		return
-	switched_on(user)
-
-
 /obj/item/weldingtool/mini
 	name = "emergency welding tool"
 	desc = "A miniature welder used during emergencies."
 	icon_state = "miniwelder"
-	max_fuel = 10
+	max_fuel = 15
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.3, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.1)
 	change_icons = FALSE
-
-/obj/item/weldingtool/mini/flamethrower_screwdriver()
-	return
 
 /obj/item/weldingtool/mini/empty
 	starting_fuel = FALSE
@@ -393,7 +376,7 @@
 	desc = "An upgraded welder based of the industrial welder."
 	icon_state = "upindwelder"
 	inhand_icon_state = "upindwelder"
-	max_fuel = 80
+	max_fuel = 90
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.7, /datum/material/glass=SMALL_MATERIAL_AMOUNT*1.2)
 
 /obj/item/weldingtool/experimental
@@ -401,7 +384,7 @@
 	desc = "An experimental welder capable of self-fuel generation and less harmful to the eyes."
 	icon_state = "exwelder"
 	inhand_icon_state = "exwelder"
-	max_fuel = 40
+	max_fuel = 60
 	custom_materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT*5, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT*1.5, /datum/material/uranium =SMALL_MATERIAL_AMOUNT * 2)
 	change_icons = FALSE
 	can_off_process = TRUE
@@ -416,5 +399,3 @@
 	if(get_fuel() < max_fuel && nextrefueltick < world.time)
 		nextrefueltick = world.time + 10
 		reagents.add_reagent(/datum/reagent/fuel, 1)
-
-#undef WELDER_FUEL_BURN_INTERVAL

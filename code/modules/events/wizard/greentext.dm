@@ -2,11 +2,11 @@
 	name = "Greentext"
 	weight = 4
 	typepath = /datum/round_event/wizard/greentext
-	max_occurrences = 1
+	max_occurrences = 3
 	earliest_start = 0 MINUTES
 	description = "The Green Text appears on the station, tempting people to try and pick it up."
 	min_wizard_trigger_potency = 5
-	max_wizard_trigger_potency = 7
+	max_wizard_trigger_potency = 100
 
 /datum/round_event/wizard/greentext/start()
 

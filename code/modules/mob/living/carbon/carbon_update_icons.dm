@@ -504,7 +504,7 @@
 
 	. = list()
 	if(blocks_emissive != EMISSIVE_BLOCK_NONE && standing)
-		. += emissive_blocker(standing.icon, standing.icon_state, src, alpha = standing.alpha)
+		. += emissive_blocker(standing.icon, standing.icon_state, src)
 	SEND_SIGNAL(src, COMSIG_ITEM_GET_WORN_OVERLAYS, ., standing, isinhands, icon_file)
 
 ///Checks to see if any bodyparts need to be redrawn, then does so. update_limb_data = TRUE redraws the limbs to conform to the owner.

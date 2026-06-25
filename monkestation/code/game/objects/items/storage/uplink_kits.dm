@@ -3,9 +3,18 @@
 #define KIT_ITEM_CATEGORY_MISC "misc"
 /obj/item/storage/box/syndie_kit/imp_hard_spear
 	name = "hardlight spear implant box"
+	desc = "Remember your promise."
 
 /obj/item/storage/box/syndie_kit/imp_hard_spear/PopulateContents()
 	new /obj/item/implanter/hard_spear(src)
+
+/obj/item/storage/box/syndie_kit/imp_hard_spear/bundle
+	name = "hardlight spear implant bundle"
+
+
+/obj/item/storage/box/syndie_kit/imp_hard_spear/bundle/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/implanter/hard_spear(src)
 
 /obj/item/storage/box/syndie_kit/imp_hard_spear/max
 	name = "commanding hardlight spear implant box"

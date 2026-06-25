@@ -17,6 +17,7 @@
 		/obj/item/storage/box/evidence = 6,
 		/obj/item/flashlight/seclite = 4,
 		/obj/item/restraints/legcuffs/bola/energy = 7,
+		/obj/item/restraints/legcuffs/beartrap/security = 4,
 		/obj/item/ammo_box/magazine/m35/rubber = 14,
 		/obj/item/clothing/mask/gas/sechailer = 6,
 		/obj/item/clothing/mask/whistle = 3,
@@ -29,7 +30,6 @@
 		/obj/item/melee/flyswatter = 1,
 		/obj/item/clothing/head/helmet/toggleable/justice = 2,
 		/obj/item/clothing/head/helmet/toggleable/justice/escape = 2,
-		/obj/item/gun/ballistic/revolver/joel = 1,
 	)
 	premium = list(
 		/obj/item/storage/belt/security/webbing = 5,

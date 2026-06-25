@@ -13,7 +13,7 @@
 	material_drop = /obj/item/stack/sheet/cloth
 	delivery_icon = null //unwrappable
 	anchorable = FALSE
-	cutting_tool = null // Bodybags are not deconstructed by cutting
+	cutting_tool_behaviour = null // Bodybags are not deconstructed by cutting
 	can_weld_shut = FALSE
 	can_install_electronics = FALSE
 	drag_slowdown = 0
@@ -25,7 +25,8 @@
 	var/obj/item/bodybag/foldedbag_instance = null
 	/// The tagged name of the bodybag, also used to check if the bodybag IS tagged.
 	var/tag_name
-
+	/// How long it takes to zip up the bag.
+	var/zip_up_time = 0 SECONDS
 	var/tagged = FALSE // so closet code knows to put the tag overlay back
 	can_install_electronics = FALSE
 
@@ -82,6 +83,15 @@
 	. = ..()
 	set_density(FALSE)
 
+/obj/structure/closet/body_bag/before_close(mob/living/user, force)
+	if (zip_up_time == 0 SECONDS)
+		return TRUE
+
+	if(!do_after(user, zip_up_time))
+		return FALSE
+	else
+		return TRUE
+
 /obj/structure/closet/body_bag/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
@@ -131,6 +141,7 @@
 	foldedbag_path = /obj/item/bodybag/bluespace
 	mob_storage_capacity = 15
 	max_mob_size = MOB_SIZE_LARGE
+	zip_up_time = 1 SECONDS
 
 /obj/structure/closet/body_bag/bluespace/attempt_fold(mob/living/carbon/human/the_folder)
 	. = FALSE
@@ -249,7 +260,7 @@
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "prisonerenvirobag"
 	foldedbag_path = /obj/item/bodybag/environmental/prisoner
-	breakout_time = 4 MINUTES // because it's probably about as hard to get out of this as it is to get out of a straightjacket.
+	breakout_time = 2 MINUTES // because it's probably about as hard to get out of this as it is to get out of a straightjacket.
 	/// How long it takes to sinch the bag.
 	var/sinch_time = 10 SECONDS
 	/// Whether or not the bag is sinched. Starts unsinched.
@@ -359,7 +370,7 @@
 	contents_thermal_insulation = 1
 	foldedbag_path = /obj/item/bodybag/environmental/prisoner/syndicate
 	weather_protection = list(TRAIT_WEATHER_IMMUNE)
-	breakout_time = 8 MINUTES
+	breakout_time = 4 MINUTES
 	sinch_time = 20 SECONDS
 
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate/refresh_air()

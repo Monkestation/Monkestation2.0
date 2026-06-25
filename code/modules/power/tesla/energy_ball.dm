@@ -361,6 +361,9 @@
 	else
 		tesla_zap(closest_atom, next_range, power, zap_flags, shocked_targets)
 
+/obj/energy_ball/immovable/can_move(turf/to_move)
+	return FALSE
+
 #undef BIKE
 #undef COIL
 #undef ROD

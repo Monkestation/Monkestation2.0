@@ -75,10 +75,12 @@
 		/obj/item/wirecutters,
 		/obj/item/wrench,
 		/obj/item/spess_knife,
-		/obj/item/melee/sickly_blade/knock, //monkestation edit(maybe)
-		/obj/item/clockwork/replica_fabricator, //monkestation edit
-		/obj/item/clockwork/clockwork_slab, //monkestation edit
-		/obj/item/holotool, //monkestation edit
+		/obj/item/melee/sickly_blade/lock,
+		/obj/item/clockwork/replica_fabricator,
+		/obj/item/clockwork/clockwork_slab,
+		/obj/item/holotool,
+		/obj/item/gun/energy/plasmacutter,
+		/obj/item/rwd,
 	))
 
 /obj/item/storage/belt/utility/chief
@@ -95,10 +97,9 @@
 	SSwardrobe.provide_type(/obj/item/screwdriver/power, src)
 	SSwardrobe.provide_type(/obj/item/crowbar/power, src)
 	SSwardrobe.provide_type(/obj/item/weldingtool/experimental, src)
-	SSwardrobe.provide_type(/obj/item/multitool, src)
+	SSwardrobe.provide_type(/obj/item/multitool/tricorder, src)
 	SSwardrobe.provide_type(/obj/item/stack/cable_coil, src)
 	SSwardrobe.provide_type(/obj/item/extinguisher/mini, src)
-	SSwardrobe.provide_type(/obj/item/analyzer, src)
 
 /obj/item/storage/belt/utility/chief/full/get_types_to_preload()
 	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
@@ -106,8 +107,7 @@
 	to_preload += /obj/item/crowbar/power
 	to_preload += /obj/item/weldingtool/experimental
 	to_preload += /obj/item/extinguisher/mini
-	to_preload += /obj/item/analyzer
-	to_preload += /obj/item/multitool
+	to_preload += /obj/item/multitool/tricorder
 	to_preload += /obj/item/stack/cable_coil
 	return to_preload
 
@@ -257,6 +257,7 @@
 		/obj/item/reagent_containers/syringe,
 		/obj/item/retractor,
 		/obj/item/scalpel,
+		/obj/item/breathing_bag,
 		/obj/item/shears,
 		/obj/item/stack/medical,
 		/obj/item/stack/sticky_tape, //surgical tape
@@ -350,7 +351,7 @@
 	SSwardrobe.provide_type(/obj/item/pinpointer/crew, src)
 	SSwardrobe.provide_type(/obj/item/scalpel/advanced, src)
 	SSwardrobe.provide_type(/obj/item/retractor/advanced, src)
-	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
+	SSwardrobe.provide_type(/obj/item/blood_filter/advanced, src)
 	SSwardrobe.provide_type(/obj/item/cautery/advanced, src)
 	SSwardrobe.provide_type(/obj/item/surgical_drapes, src)
 	update_appearance()
@@ -361,7 +362,7 @@
 	to_preload += /obj/item/pinpointer/crew
 	to_preload += /obj/item/scalpel/advanced
 	to_preload += /obj/item/retractor/advanced
-	to_preload += /obj/item/stack/medical/bone_gel
+	to_preload += /obj/item/blood_filter/advanced
 	to_preload += /obj/item/cautery/advanced
 	to_preload += /obj/item/surgical_drapes
 	return to_preload
@@ -409,12 +410,27 @@
 
 /obj/item/storage/belt/security/webbing
 	name = "security webbing"
-	desc = "Unique and versatile chest rig, can hold security gear."
+	desc = "Unique and versatile chest rig, can hold security gear. This one has limited polychromatic tech."
 	icon_state = "securitywebbing"
 	inhand_icon_state = "securitywebbing"
 	worn_icon_state = "securitywebbing"
 	content_overlays = FALSE
 	custom_premium_price = PAYCHECK_COMMAND * 2 //monkestation edit: 3 to 2
+	uses_advanced_reskins = TRUE
+	unique_reskin = list(
+		"Security Grey" = list(
+			RESKIN_ICON_STATE = "securitywebbing",
+			RESKIN_WORN_ICON_STATE = "securitywebbing",
+		),
+		"Security Black" = list(
+			RESKIN_ICON_STATE = "securitywebbing2",
+			RESKIN_WORN_ICON_STATE = "securitywebbing2",
+		),
+		"Security White" = list(
+			RESKIN_ICON_STATE = "securitywebbing3",
+			RESKIN_WORN_ICON_STATE = "securitywebbing3",
+		),
+	)
 
 /obj/item/storage/belt/security/webbing/Initialize(mapload)
 	. = ..()
@@ -430,9 +446,9 @@
 
 /obj/item/storage/belt/mining/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 6
+	atom_storage.max_slots = 7
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 20
+	atom_storage.max_total_storage = 24
 	atom_storage.set_holdable(list(
 		/obj/item/analyzer,
 		/obj/item/clothing/gloves,
@@ -575,11 +591,22 @@
 
 /obj/item/storage/belt/military
 	name = "chest rig"
-	desc = "A set of tactical webbing worn by Syndicate boarding parties."
+	desc = "A set of tactical webbing worn by Syndicate boarding parties. This one comes with limited polychromatic tech!"
 	icon_state = "militarywebbing"
 	inhand_icon_state = "militarywebbing"
 	worn_icon_state = "militarywebbing"
 	resistance_flags = FIRE_PROOF
+	uses_advanced_reskins = TRUE
+	unique_reskin = list(
+		"Grey" = list(
+			RESKIN_ICON_STATE = "militarywebbing",
+			RESKIN_WORN_ICON_STATE = "militarywebbing",
+		),
+		"Black" = list(
+			RESKIN_ICON_STATE = "militarywebbing2",
+			RESKIN_WORN_ICON_STATE = "militarywebbing2",
+		),
+	)
 
 /obj/item/storage/belt/military/Initialize(mapload)
 	. = ..()
@@ -640,6 +667,8 @@
 	inhand_icon_state = "security"
 	worn_icon_state = "security"
 	content_overlays = TRUE
+	uses_advanced_reskins = FALSE
+	unique_reskin = null
 
 /obj/item/storage/belt/military/abductor/full/PopulateContents()
 	new /obj/item/screwdriver/abductor(src)
@@ -656,6 +685,8 @@
 	icon_state = "military"
 	inhand_icon_state = "security"
 	worn_icon_state = "military"
+	uses_advanced_reskins = FALSE
+	unique_reskin = null
 
 /obj/item/storage/belt/military/assault
 	name = "assault belt"
@@ -663,6 +694,8 @@
 	icon_state = "assaultbelt"
 	inhand_icon_state = "security"
 	worn_icon_state = "assault"
+	uses_advanced_reskins = FALSE
+	unique_reskin = null
 
 /obj/item/storage/belt/military/assault/Initialize(mapload)
 	. = ..()
@@ -741,6 +774,9 @@
 	for(var/obj/item/gun/magic/wand/W in contents) //All wands in this pack come in the best possible condition
 		W.max_charges = initial(W.max_charges)
 		W.charges = W.max_charges
+
+/obj/item/storage/belt/wands/wizard/PopulateContents()
+	new /obj/effect/spawner/set_selector/wand_belt(src)
 
 /obj/item/storage/belt/janitor
 	name = "janibelt"
