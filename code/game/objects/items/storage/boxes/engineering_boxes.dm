@@ -3,31 +3,53 @@
 /obj/item/storage/box/metalfoam
 	name = "box of metal foam grenades"
 	desc = "To be used to rapidly seal hull breaches."
-	illustration = "grenade"
+	illustration = "metalfoam"
+	custom_price = PAYCHECK_COMMAND
 
 /obj/item/storage/box/metalfoam/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/grenade/chem_grenade/metalfoam(src)
 
-/obj/item/storage/box/smart_metal_foam
+/obj/item/storage/box/smart_metalfoam
 	name = "box of smart metal foam grenades"
 	desc = "Used to rapidly seal hull breaches. This variety conforms to the walls of its area."
-	illustration = "grenade"
+	icon_state = "engbox"
+	illustration = "metalfoam"
 
-/obj/item/storage/box/smart_metal_foam/PopulateContents()
+/obj/item/storage/box/smart_metalfoam/PopulateContents()
 	for(var/i in 1 to 7)
-		new/obj/item/grenade/chem_grenade/smart_metal_foam(src)
+		new/obj/item/grenade/chem_grenade/smart_metalfoam(src)
 
-//MONKESTATION EDIT START
 /obj/item/storage/box/nanofrost
 	name = "box of nanofrost grenades"
 	desc = "A box of A NanoFrost™ smoke grenades. Nanotrasen's response to frequent plasma related fires onboard their research stations."
-	illustration = "grenade"
+	icon_state = "engbox"
+	illustration = "nanofrost"
 
 /obj/item/storage/box/nanofrost/PopulateContents()
 	for(var/i in 1 to 7)
 		new/obj/item/grenade/smokebomb/nanofrost(src)
-//MONKESTATION EDIT STOP
+
+// as i have no idea where to put new box types, boxes of oxygen candles go here // i found a place to put this
+/obj/item/storage/box/oxygen_candles
+	name = "box of oxygen candles"
+	desc = "A box full of emergency oxygen candles."
+	icon_state = "internals"
+	illustration = "oxycandle"
+
+/obj/item/storage/box/oxygen_candles/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/oxygen_candle(src)
+
+/obj/item/storage/box/large_oxygen_candles
+	name = "box of large oxygen candles"
+	desc = "A box full of large oxygen candles."
+	icon_state = "engbox"
+	illustration = "oxycandle_large"
+
+/obj/item/storage/box/large_oxygen_candles/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/oxygen_candle/large(src)
 
 /obj/item/storage/box/plastic
 	name = "plastic box"
