@@ -170,7 +170,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 		/datum/reagent/toxin/formaldehyde,
 		/datum/reagent/toxin/heparin,
 		/datum/reagent/toxin/mindbreaker,
-		/datum/reagent/toxin/plasma,
+		/datum/reagent/toxin,
 	)
 	/// Blacklisted chemicals - separate from chemicals that cannot be synthesized, borers specifically cannot learn these
 	var/list/blacklisted_chemicals = list()
