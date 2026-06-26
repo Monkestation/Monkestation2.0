@@ -144,7 +144,7 @@
 /obj/machinery/power/thermoelectric_generator/process()
 	//Setting this number higher just makes the change in power output slower, it doesnt actualy reduce power output cause **math**
 	var/power_output = round(lastgen / 10)
-	add_avail(power_output)
+	add_avail(min(power_output, 100 MW)) // caps at 100 MW
 	lastgenlev = power_output
 	lastgen -= power_output
 	process_engine()
