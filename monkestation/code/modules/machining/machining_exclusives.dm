@@ -30,6 +30,7 @@
 	gun = new(src)
 	battery = new(src)
 	START_PROCESSING(SSobj, src)
+	AddElement(/datum/element/drag_pickup)
 
 /obj/item/pulsepack/Destroy()
 	//we do this check as a precaution (read: pass checks) since the backpack itself should have already deleted this

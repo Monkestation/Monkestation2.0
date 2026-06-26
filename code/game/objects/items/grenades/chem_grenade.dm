@@ -402,6 +402,7 @@
 	name = "metal foam grenade"
 	desc = "Used for emergency sealing of hull breaches."
 	stage = GRENADE_READY
+	custom_price = PAYCHECK_CREW
 
 /obj/item/grenade/chem_grenade/metalfoam/Initialize(mapload)
 	. = ..()
@@ -415,13 +416,31 @@
 	beakers += beaker_one
 	beakers += beaker_two
 
+/obj/item/grenade/chem_grenade/iron_metalfoam
+	name = "heavy duty metal foam grenade"
+	desc = "Used for emergency sealing of hull breaches. Although more costly the large iron content inceases the durability of the sealant."
+	stage = GRENADE_READY
+	custom_price = PAYCHECK_COMMAND
 
-/obj/item/grenade/chem_grenade/smart_metal_foam
+/obj/item/grenade/chem_grenade/iron_metalfoam/Initialize(mapload)
+	. = ..()
+	var/obj/item/reagent_containers/cup/beaker/beaker_one = new(src)
+	var/obj/item/reagent_containers/cup/beaker/beaker_two = new(src)
+
+	beaker_one.reagents.add_reagent(/datum/reagent/iron, 30)
+	beaker_two.reagents.add_reagent(/datum/reagent/foaming_agent, 10)
+	beaker_two.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 10)
+
+	beakers += beaker_one
+	beakers += beaker_two
+
+/obj/item/grenade/chem_grenade/smart_metalfoam
 	name = "smart metal foam grenade"
 	desc = "Used for emergency sealing of hull breaches, while keeping areas accessible."
 	stage = GRENADE_READY
+	custom_premium_price = PAYCHECK_COMMAND
 
-/obj/item/grenade/chem_grenade/smart_metal_foam/Initialize(mapload)
+/obj/item/grenade/chem_grenade/smart_metalfoam/Initialize(mapload)
 	. = ..()
 	var/obj/item/reagent_containers/cup/beaker/large/beaker_one = new(src)
 	var/obj/item/reagent_containers/cup/beaker/beaker_two = new(src)

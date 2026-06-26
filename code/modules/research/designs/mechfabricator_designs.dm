@@ -1493,6 +1493,21 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
 
+/datum/design/borg_upgrade_breathingbag
+	name = "Ambu Bag"
+	id = "borg_upgrade_breathingbag"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/breathingbag
+	materials = list(
+		/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1,
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2
+	)
+	construction_time = 120
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	)
+
 /datum/design/borg_upgrade_nvgmeson
 	name = "Nightvision Meson Sight"
 	id = "borg_upgrade_nvmeson"
