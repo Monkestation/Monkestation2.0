@@ -9,14 +9,14 @@
 /obj/item/clothing/head/helmet/chaplain/solaire
 	name = "solaire helmet"
 	desc = "Now that I am Undead, I have come to this great land to seek my very own sun!"
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
-	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "solaire"
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
 /obj/item/clothing/suit/armor/riot/chaplain/solaire
 	name = "solaire armor"
 	desc = "The sun is a wondrous body. Like a magnificent father! If only I could be so grossly incandescent!"
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "solaire"

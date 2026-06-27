@@ -1,7 +1,7 @@
 /obj/machinery/lathe
 	name = "industrial lathe"
 	desc = "An industrial lathe, a machinery that is rendered semi-obselete with the advent of autolathes. It is however still commonly seen across the spinward sector for small-scale prototyping use."
-	icon = 'monkestation/icons/obj/machines/machining_machinery.dmi'
+	icon = 'icons/obj/machines/machining_machinery.dmi'
 	icon_state = "lathe"
 	pixel_x = -8
 	density = TRUE

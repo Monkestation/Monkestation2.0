@@ -8,7 +8,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 /obj/ratvar
 	name = "ratvar, the Clockwork Justicar"
 	desc = "Oh, that's ratvar!"
-	icon = 'monkestation/icons/obj/clock_cult/512x512.dmi'
+	icon = 'icons/obj/clock_cult/512x512.dmi'
 	icon_state = "ratvar"
 	anchored = TRUE
 	density = FALSE
@@ -49,7 +49,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	GLOB.cult_ratvar = src
 	. = ..()
 	desc = "[text2ratvar("That's Ratvar, the Clockwork Justicar. The great one has risen.")]"
-	sound_to_playing_players('monkestation/sound/effects/ratvar_reveal.ogg', 100)
+	sound_to_playing_players('sound/effects/ratvar_reveal.ogg', 100)
 	send_to_playing_players(span_reallybig(span_ratvar("The bluespace veil gives way to Ratvar, his light shall shine upon all mortals!")))
 	UnregisterSignal(src, COMSIG_ATOM_BSA_BEAM)
 	SSshuttle.registerHostileEnvironment(src)
@@ -62,7 +62,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 
 	var/area/area = get_area(src)
 	if(area)
-		var/mutable_appearance/alert_overlay = mutable_appearance('monkestation/icons/obj/clock_cult/clockwork_effects.dmi', "ratvar_alert")
+		var/mutable_appearance/alert_overlay = mutable_appearance('icons/obj/clock_cult/clockwork_effects.dmi', "ratvar_alert")
 		notify_ghosts(
 			"Ratvar has risen in [area]. Reach out to the Justicar to be given a new shell for your soul.",
 			source = src,

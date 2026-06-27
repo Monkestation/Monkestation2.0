@@ -54,8 +54,8 @@
 /obj/item/clothing/suit/armor/surplus
 	name = "surplus armor vest"
 	desc = "An armored vest that provides decent protection against most types of damage."
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "armorvest"
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"

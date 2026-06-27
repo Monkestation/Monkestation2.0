@@ -1,2 +1,5 @@
 jimbo - Cmpwarrior
 White brig phys labcoats made by Snackulus
+left_green_jester_shoes - Cmpwarrior
+right_green_jester_shoes - Cmpwarrior
+bells_green_jester_shoes - Cmpwarrior

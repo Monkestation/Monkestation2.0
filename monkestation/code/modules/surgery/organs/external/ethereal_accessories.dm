@@ -2,7 +2,7 @@
 	name = "ethereal horns"
 	desc = "These seemingly decorative horns are actually sensory organs, albiet somewhat vegistal ones in their current environment, for detecting nearby electromagnetic fields. They are also extremely sensitive, a fact that which whatever poor ethereal you took these from is probably heavily aware of."
 	icon_state = "ethereal_horns"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 
 	preference = "feature_ethereal_horns"
 	zone = BODY_ZONE_HEAD
@@ -30,7 +30,7 @@
 	name = "ethereal tail"
 	desc = "A severed ethereal tail, it reminds you of a bundle of fiber optic cable."
 	icon_state = "ethereal_horns"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 
 	preference = "feature_ethereal_tail"
 

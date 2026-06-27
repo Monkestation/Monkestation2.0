@@ -1,7 +1,7 @@
 /obj/structure/lattice/clockwork
 	name = "cog lattice"
 	desc = "A lightweight support lattice. These hold the Justicar's station together."
-	icon = 'monkestation/icons/obj/clock_cult/lattice_clockwork.dmi'
+	icon = 'icons/obj/clock_cult/lattice_clockwork.dmi'
 	icon_state = "lattice_clockwork-0"
 	base_icon_state = "lattice_clockwork"
 	smoothing_groups = SMOOTH_GROUP_LATTICE
@@ -15,18 +15,18 @@
 
 /obj/structure/lattice/clockwork/ratvar_act()
 	if(ISODD(x+y)) //this check looks to be broken
-		icon = 'monkestation/icons/obj/clock_cult/lattice_clockwork_large.dmi'
+		icon = 'icons/obj/clock_cult/lattice_clockwork_large.dmi'
 		pixel_x = -9
 		pixel_y = -9
 	else
-		icon = 'monkestation/icons/obj/clock_cult/lattice_clockwork.dmi'
+		icon = 'icons/obj/clock_cult/lattice_clockwork.dmi'
 		pixel_x = 0
 		pixel_y = 0
 	return TRUE
 
 /obj/structure/lattice/catwalk/clockwork
 	name = "clockwork catwalk"
-	icon = 'monkestation/icons/obj/clock_cult/catwalk_clockwork.dmi'
+	icon = 'icons/obj/clock_cult/catwalk_clockwork.dmi'
 	icon_state = "catwalk_clockwork-0"
 	base_icon_state = "catwalk_clockwork"
 	smoothing_flags = SMOOTH_BITMASK
@@ -48,11 +48,11 @@
 
 /obj/structure/lattice/catwalk/clockwork/ratvar_act()
 	if(ISODD(x+y))
-		icon = 'monkestation/icons/obj/clock_cult/catwalk_clockwork_large.dmi'
+		icon = 'icons/obj/clock_cult/catwalk_clockwork_large.dmi'
 		pixel_x = -9
 		pixel_y = -9
 	else
-		icon = 'monkestation/icons/obj/clock_cult/catwalk_clockwork.dmi'
+		icon = 'icons/obj/clock_cult/catwalk_clockwork.dmi'
 		pixel_x = 0
 		pixel_y = 0
 	return TRUE

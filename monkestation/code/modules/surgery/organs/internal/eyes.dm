@@ -1,13 +1,13 @@
 /obj/item/organ/internal/eyes/robotic/clockwork
 	name = "biometallic receptors"
 	desc = "A fragile set of small, mechanical cameras."
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "clockwork_eyeballs"
 
 /obj/item/organ/internal/eyes/night_vision/arachnid
 	name = "arachnid eyes"
 	desc = "So many eyes!"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	eye_icon_state = "arachnideyes"
 	icon_state = "arachnid_eyeballs"
 	overlay_ignore_lighting = TRUE
@@ -39,13 +39,13 @@
 /obj/item/organ/internal/eyes/floran
 	name = "phytoid eyes"
 	desc = "They look like big berries..."
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	eye_icon_state = "floraneyes"
 	icon_state = "floran_eyeballs"
 
 /obj/item/organ/internal/eyes/ethereal
 	name = "crystal eyes"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "crystalline_eyeballs"
 	eye_icon_state = "etherealeyes"
 

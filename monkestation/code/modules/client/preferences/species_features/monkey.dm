@@ -19,7 +19,7 @@
 	return assoc_to_keys_features(GLOB.tails_list_monkey)
 
 /datum/preference/choiced/monkey_tail/icon_for(value)
-	var/icon/monkey_chest = icon('monkestation/icons/mob/species/monkey/bodyparts.dmi', "monkey_chest")
+	var/icon/monkey_chest = icon('icons/mob/species/monkey/bodyparts.dmi', "monkey_chest")
 
 	var/datum/sprite_accessory/tails/monkey/tail = GLOB.tails_list_monkey[value]
 
