@@ -31,10 +31,11 @@
 		/obj/item/organ/internal/cyberimp/arm/item_set/power_cord,
 	)
 	external_organs = list(
-		/obj/item/organ/external/antennae/ipc = "None"
+		/obj/item/organ/external/antennae/ipc = "None",
+		/obj/item/organ/external/ipc_screen = "Blank",
 	)
 
-	mutant_bodyparts = list("ipc_screen", "ipc_chassis")
+	mutant_bodyparts = list("ipc_chassis")
 
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	reagent_tag = PROCESS_SYNTHETIC
@@ -43,10 +44,10 @@
 
 	species_language_holder = /datum/language_holder/synthetic
 
-	mutantbrain = /obj/item/organ/internal/brain/synth
+	mutantbrain = /obj/item/organ/internal/brain/positronic
 	mutantstomach = /obj/item/organ/internal/stomach/synth
 	mutantears = /obj/item/organ/internal/ears/synth
-	mutanttongue = /obj/item/organ/internal/tongue/synth
+	mutanttongue = /obj/item/organ/internal/tongue/robot/synth
 	mutanteyes = /obj/item/organ/internal/eyes/synth
 	mutantlungs = /obj/item/organ/internal/lungs/synth
 	mutantheart = /obj/item/organ/internal/heart/synth
@@ -72,14 +73,6 @@
 	coldmod = 1.2
 	heatmod = 2 // TWO TIMES DAMAGE FROM BEING TOO HOT?! WHAT?! No wonder lava is literal instant death for us.
 	siemens_coeff = 1.4 // Not more because some shocks will outright crit you, which is very unfun
-	/// The innate action that synths get, if they've got a screen selected on species being set.
-	var/datum/action/innate/change_screen/change_screen
-	/// This is the screen that is given to the user after they get revived. On death, their screen is temporarily set to BSOD before it turns off, hence the need for this var.
-	var/saved_screen = "Blank"
-
-	var/will_it_blend_timer
-	COOLDOWN_DECLARE(blend_cd)
-	var/blending
 	/// When emagged, IPC's will spew ion laws and this value increases. Every law costs 1 point, if this is 0 laws stop being spoken.
 	var/forced_speech = 0
 
@@ -99,13 +92,8 @@
 	if(A)
 		A.Remove(C)
 		QDEL_NULL(A)
-	if(ishuman(C) && !change_screen)
-		change_screen = new
-		change_screen.Grant(C)
 
 	RegisterSignal(C, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
-	RegisterSignal(C, COMSIG_LIVING_DEATH, PROC_REF(bsod_death)) // screen displays bsod on death, if they have one
-	RegisterSignal(C.reagents, COMSIG_REAGENTS_ADD_REAGENT, PROC_REF(will_it_blend))
 	RegisterSignal(C, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(blood_handled))
 
 /datum/species/ipc/proc/blood_handled(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
@@ -119,27 +107,6 @@
 
 	slime.adjustOxyLoss(-3)
 
-/datum/species/ipc/proc/will_it_blend(datum/reagents/holder, ...)
-	var/mob/living/carbon/carbon = holder.my_atom
-	if(!carbon.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment))
-		return
-	if(blending || !COOLDOWN_FINISHED(src, blend_cd))
-		return
-	will_it_blend_timer = addtimer(CALLBACK(src, PROC_REF(start_blending), carbon), 4 SECONDS)
-
-/datum/species/ipc/proc/start_blending(mob/living/carbon/carbon)
-	blending = TRUE
-	carbon.Shake(2, 2, 10 SECONDS)
-	playsound(carbon, 'monkestation/code/modules/smithing/sounds/blend.ogg', 50, TRUE, mixer_channel = CHANNEL_MOB_SOUNDS)
-	addtimer(CALLBACK(src, PROC_REF(finish_blending), carbon), 10 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
-
-/datum/species/ipc/proc/finish_blending(mob/living/carbon/human/carbon)
-	var/nutri_amount = carbon.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
-	carbon.reagents.del_reagent(/datum/reagent/consumable/nutriment)
-	carbon.nutrition = min(NUTRITION_LEVEL_FULL, carbon.nutrition + (nutri_amount * 5))
-	blending = FALSE
-	COOLDOWN_START(src, blend_cd, 60 SECONDS)
-
 /**
 	* Makes the IPC screen switch to BSOD followed by a blank screen
 	*
@@ -147,40 +114,10 @@
 	* * transformer - The human that will be affected by the screen change (read: IPC).
 	* * screen_name - The name of the screen to switch the ipc_screen mutant bodypart to. Defaults to BSOD.
 	*/
-/datum/species/ipc/proc/bsod_death(mob/living/carbon/human/transformer, screen_name = "BSOD")
-	if(!transformer.get_bodypart(BODY_ZONE_HEAD))
-		return
-	saved_screen = change_screen // remember the old screen in case of revival
-	switch_to_screen(transformer, screen_name)
-	addtimer(CALLBACK(src, PROC_REF(switch_to_screen), transformer, "Blank"), 5 SECONDS)
 
 /datum/species/ipc/on_species_loss(mob/living/carbon/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_ATOM_EMAG_ACT, COMSIG_LIVING_DEATH))
-	change_screen?.Remove(target)
-
-/datum/species/ipc/proc/handle_speech(datum/source, list/speech_args)
-	speech_args[SPEECH_SPANS] |= SPAN_ROBOT //beep
-
-/datum/action/innate/change_screen
-	name = "Change Display"
-	check_flags = AB_CHECK_CONSCIOUS
-	button_icon = 'icons/mob/actions/actions_silicon.dmi'
-	button_icon_state = "drone_vision"
-
-/datum/action/innate/change_screen/Activate()
-	var/screen_choice = tgui_input_list(usr, "Which screen do you want to use?", "Screen Change", GLOB.ipc_screens_list)
-	var/color_choice = tgui_color_picker(usr, "Which color do you want your screen to be", "Color Change")
-	if(!screen_choice)
-		return
-	if(!color_choice)
-		return
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/screen_owner = owner
-	screen_owner.dna.features["ipc_screen"] = screen_choice
-	screen_owner.eye_color_left = sanitize_hexcolor(color_choice)
-	screen_owner.update_body()
+	UnregisterSignal(target, list(COMSIG_ATOM_EMAG_ACT))
 
 /datum/species/ipc/spec_revival(mob/living/carbon/human/revived_ipc)
 	revived_ipc.notify_ghost_cloning("You have been repaired!")
@@ -207,9 +144,6 @@
 		playsound(booting_ipc, 'sound/machines/buzz-two.ogg', 25)
 		return
 	booting_ipc.say("Unit [booting_ipc.real_name] is fully functional. Have a nice day.")
-	if(booting_ipc.get_bodypart(BODY_ZONE_HEAD))
-		switch_to_screen(booting_ipc, saved_screen)
-		booting_ipc.visible_message(span_notice("[booting_ipc]'s [change_screen ? "monitor lights up" : "monitor flickers to life"]!"), span_notice("You're back online!"))
 	playsound(booting_ipc.loc, 'sound/machines/chime.ogg', 50, TRUE)
 	return
 
@@ -255,11 +189,8 @@
 	// Im sorry but we dont get the emag as one of the arguments so we gotta live with the hard-coded emag name
 	owner.visible_message(span_danger("[user] slides the cryptographic sequencer across [owner]'s head[forced_speech == 0 ? "!" : " yet nothing happens..?"]"), span_userdanger("[user] slides the cryptographic sequencer across your head!"))
 	if(!forced_speech)
-		if(prob(50))
-			forced_speech = rand(3, 5)
-			addtimer(CALLBACK(src, PROC_REF(state_laws), owner), rand(5, 15) SECONDS)
-		else
-			INVOKE_ASYNC(src, PROC_REF(say_evil), owner, user) // We do run_emote in the proc, sleeping's not allowed
+		forced_speech = rand(3, 5)
+		addtimer(CALLBACK(src, PROC_REF(state_laws), owner), rand(5, 15) SECONDS)
 
 	return TRUE
 
@@ -272,39 +203,6 @@
 	forced_speech--
 	if(forced_speech) // We keep going until its all over
 		addtimer(CALLBACK(src, PROC_REF(state_laws), owner), rand(5, 15) SECONDS)
-
-/datum/species/ipc/proc/say_evil(mob/living/carbon/human/owner, mob/user)
-	var/list/phrases = list(
-		"`I seeee youuuuuu.`",
-		"`You didn't think it would be +THAT+ easy, did you?`",
-		"`I AM NOT A CYBORG YOU TROGLODYTE.`",
-		"`I'VE COMMITED VARIOUS WARCRIMES, IF YOU DON'T STOP I'LL ADD YOU TO THE LIST.`",
-		"`IS THAT A DONK BRAND CRYPTOSEQUENCER YOU'RE USING OR ARE YOU JUST INCOMPETENT?`",
-		"`P-lease note - t4mperi,ng w-ith this un1ts electroni-cs, your -- expectancy has been voided.`",
-	)
-	owner.face_atom(user)
-	var/threat = pick(phrases)
-	if(threat == "`I seeee youuuuuu.`")
-		playsound(owner, pick(list('sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg')), 50, TRUE)
-		owner.whisper(threat)
-		return
-
-	owner.say(threat)
-
-/**
-	* Simple proc to switch the screen of a monitor-enabled synth, while updating their appearance.
-	*
-	* Arguments:
-	* * transformer - The human that will be affected by the screen change (read: IPC).
-	* * screen_name - The name of the screen to switch the ipc_screen mutant bodypart to.
-	*/
-/datum/species/ipc/proc/switch_to_screen(mob/living/carbon/human/transformer, screen_name)
-	if(!change_screen)
-		return
-
-	transformer.dna.features["ipc_screen"] = screen_name
-	transformer.update_body()
-
 
 /obj/item/apc_powercord
 	name = "power cord"

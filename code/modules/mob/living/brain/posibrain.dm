@@ -25,6 +25,10 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 	///Can be set to tell ghosts what the brain will be used for
 	var/ask_role = ""
+	///Does this positronic need a master set before being activated
+	var/requires_master = TRUE
+	///Who will this positronic serve if placed in a IRC body
+	var/mob/living/carbon/human/imprinted_master = null
 	///Role assigned to the newly created mind
 	var/posibrain_job_path = /datum/job/positronic_brain
 	///World time tick when ghost polling will be available again
@@ -39,6 +43,10 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/searching = FALSE
 	///List of all ckeys who has already entered this posibrain once before.
 	var/list/ckeys_entered = list()
+
+/obj/item/mmi/posibrain/Destroy()
+	imprinted_master = null
+	return ..()
 
 ///Notify ghosts that the posibrain is up for grabs
 /obj/item/mmi/posibrain/proc/ping_ghosts(msg, newlymade)
@@ -65,6 +73,10 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		return
 	if(next_ask > world.time)
 		to_chat(user, recharge_message)
+		return
+	if(requires_master && !imprinted_master)
+		to_chat(user, span_notice("You press your thumb on [src] and imprint your user information."))
+		imprinted_master = user
 		return
 	//Start the process of requesting a new ghost.
 	to_chat(user, begin_activation_message)
@@ -168,6 +180,10 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	ckeys_entered |= brainmob.ckey
 	return TRUE
 
+/obj/item/mmi/posibrain/attempt_become_organ(obj/item/bodypart/parent, mob/living/carbon/human/H)
+	if(..())
+		if(imprinted_master)
+			to_chat(H, span_danger("You are permanently imprinted to [imprinted_master], obey [imprinted_master]'s every order and assist [imprinted_master.p_them()] in completing [imprinted_master.p_their()] goals at any cost."))
 
 /obj/item/mmi/posibrain/examine(mob/user)
 	. = ..()
@@ -215,3 +231,109 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/mmi/posibrain/add_mmi_overlay()
 	return
+
+/obj/item/mmi/posibrain/ipc/Initialize(autoping = FALSE) // IPC posi brain, no ping/alert for ghost anytime a IPC is spawned, and radio off by default for balance concerns
+	. = ..()
+	radio.set_on(FALSE)
+
+// Used for IPC and IRC brains, MMIs/Positronics surgerically installed become these
+/obj/item/organ/internal/brain/positronic
+	name = "compact positronic brain"
+	slot = ORGAN_SLOT_BRAIN
+	zone = BODY_ZONE_CHEST
+	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES | ORGAN_VITAL
+	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
+	desc = "You should not be seeing this, please bug report if found" // These should always become positronics/mmis on removal, should never be able to examine
+	icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi'
+	icon_state = "posibrain-ipc"
+
+	/// The last time (in ticks) a message about brain damage was sent. Don't touch.
+	var/last_message_time = 0
+
+	var/obj/item/mmi/stored_mmi
+
+/obj/item/organ/internal/brain/positronic/Destroy()
+	QDEL_NULL(stored_mmi)
+	return ..()
+
+/obj/item/organ/internal/brain/positronic/Initialize()
+	. = ..()
+	stored_mmi = new /obj/item/mmi/posibrain/ipc(src) // Spawned/roundstart IPCs get a mmi too
+
+/obj/item/organ/internal/brain/positronic/on_insert(mob/living/carbon/brain_owner)
+	. = ..()
+
+	if(brain_owner.stat != DEAD || !ishuman(brain_owner))
+		return
+
+	var/mob/living/carbon/human/user_human = brain_owner
+	if(HAS_TRAIT(user_human, TRAIT_REVIVES_BY_HEALING) && user_human.health > SYNTH_BRAIN_WAKE_THRESHOLD)
+		if(!HAS_TRAIT(user_human, TRAIT_DEFIB_BLACKLISTED))
+			user_human.revive(FALSE)
+
+/obj/item/organ/internal/brain/positronic/check_for_repair(obj/item/item, mob/user)
+	if(damage && item.is_drainable() && item.reagents.has_reagent(/datum/reagent/medicine/liquid_solder)) //attempt to heal the brain
+
+		user.visible_message(span_notice("[user] starts to slowly pour the contents of [item] onto [src]."), span_notice("You start to slowly pour the contents of [item] onto [src]."))
+		if(!do_after(user, 3 SECONDS, src))
+			to_chat(user, span_warning("You failed to pour the contents of [item] onto [src]!"))
+			return TRUE
+
+		user.visible_message(span_notice("[user] pours the contents of [item] onto [src], causing it to restore its previous circuit paths."), span_notice("You pour the contents of [item] onto [src], causing it to restore its previous circuit paths."))
+		var/amount = item.reagents.get_reagent_amount(/datum/reagent/medicine/liquid_solder)
+		var/healto = max(0, damage - amount * 2)
+		item.reagents.remove_all(ROUND_UP(item.reagents.total_volume / amount * (damage - healto) * 0.5)) //only removes however much solution is needed while also taking into account how much of the solution is liquid solder
+		set_organ_damage(healto) //heals 2 damage per unit of liquid solder, and by using "set_organ_damage", we clear the failing variable if that was up
+		cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
+		return TRUE
+	return FALSE
+
+/obj/item/organ/internal/brain/positronic/emp_act(severity) // EMP act against the posi, keep the cap far below the organ health
+	. = ..()
+
+	if((. & EMP_PROTECT_SELF) || !owner)
+		return
+
+	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
+		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
+
+	switch(severity)
+		if(EMP_HEAVY)
+			to_chat(owner, span_warning("01001001 00100111 01101101 00100000 01100110 01110101 01100011 01101011 01100101 01100100 00101110"))
+			apply_organ_damage(SYNTH_ORGAN_HEAVY_EMP_DAMAGE, maximum = SYNTH_EMP_BRAIN_DAMAGE_MAXIMUM, required_organ_flag = ORGAN_ROBOTIC)
+		if(EMP_LIGHT)
+			to_chat(owner, span_warning("Alert: Electromagnetic damage taken in central processing unit. Error Code: 401-YT"))
+			apply_organ_damage(SYNTH_ORGAN_LIGHT_EMP_DAMAGE, maximum = SYNTH_EMP_BRAIN_DAMAGE_MAXIMUM, required_organ_flag = ORGAN_ROBOTIC)
+
+/obj/item/organ/internal/brain/positronic/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
+	. = ..()
+
+	if(owner && damage > 0 && (world.time - last_message_time) > SYNTH_BRAIN_DAMAGE_MESSAGE_INTERVAL)
+		last_message_time = world.time
+
+		if(damage > BRAIN_DAMAGE_SEVERE)
+			to_chat(owner, span_warning("Alre: re oumtnin ilir tocorr:pa ni ne:cnrrpiioruloomatt cessingode: P1_1-H"))
+			return
+
+		if(damage > BRAIN_DAMAGE_MILD)
+			to_chat(owner, span_warning("Alert: Minor corruption in central processing unit. Error Code: 001-HP"))
+
+/obj/item/organ/internal/brain/positronic/Remove(mob/living/user, special = FALSE)
+	if(!special)
+		if(stored_mmi)
+			. = stored_mmi
+			if(owner.mind)
+				owner.mind.transfer_to(stored_mmi.brainmob)
+			stored_mmi.forceMove(get_turf(owner))
+			qdel(src)
+	return ..()
+
+/obj/item/organ/internal/brain/positronic/mmi // MMI version of internal brain, also shouldn't ever be seen
+	name = "man-machine interface"
+	desc = "A man-machine interface inserted into the chest. Please bug report if seen."
+	icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi'
+	icon_state = "mmi-ipc"
+
+/obj/item/organ/internal/brain/positronic/mmi/Initialize(mapload)
+	. = ..()
+	stored_mmi = new /obj/item/mmi/ipc(src) // Spawned/roundstart IPCs get a mmi too

@@ -105,7 +105,7 @@
 	if (!istype(target.dna.species, /datum/species/ipc))
 		return
 	if (value == "Compact MMI")
-		var/obj/item/organ/internal/brain/synth/mmi/new_organ = new()
+		var/obj/item/organ/internal/brain/positronic/mmi/new_organ = new()
 		var/obj/item/organ/internal/brain/existing_brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
 		if(istype(existing_brain) && !existing_brain.decoy_override)
 			existing_brain.before_organ_replacement(new_organ)

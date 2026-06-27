@@ -97,3 +97,14 @@
 	else
 		to_chat(user, span_warning("[target] has no organic [parse_zone(target_zone)] there!"))
 	return ..()
+
+/datum/surgery/augmentation/mechanical // You can replace already mechanical limbs with new/better ones
+	name = "Augmentation"
+
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/prepare_electronics,
+		/datum/surgery_step/replace_limb,
+	)
