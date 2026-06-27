@@ -13,7 +13,7 @@
 								/datum/reagent/drug/maint/tar, /datum/reagent/drug/maint/sludge,
 								/datum/reagent/medicine/c2/libital, /datum/reagent/medicine/c2/probital,
 								/datum/reagent/medicine/c2/lenturi,/datum/reagent/medicine/c2/aiuri,)
-	button_icon = 'monkestation/icons/mob/actions/florida_man.dmi'
+	button_icon = 'icons/mob/actions/florida_man.dmi'
 	button_icon_state = "lesser_narcomancy"
 
 /datum/action/cooldown/spell/florida_regeneration/cast(mob/living/carbon/cast_on)
@@ -29,7 +29,7 @@
 	desc = "You CAN break those cuffs!"
 	cooldown_time = 2 MINUTES
 	spell_requirements = NONE
-	button_icon = 'monkestation/icons/mob/actions/florida_man.dmi'
+	button_icon = 'icons/mob/actions/florida_man.dmi'
 	button_icon_state = "break_cuffs"
 
 
@@ -57,7 +57,7 @@
 	desc = "Use the power of Florida to push your way through"
 	cooldown_time = 1 MINUTES
 	spell_requirements = NONE
-	button_icon = 'monkestation/icons/mob/actions/florida_man.dmi'
+	button_icon = 'icons/mob/actions/florida_man.dmi'
 	button_icon_state = "sovereign_citizen"
 
 

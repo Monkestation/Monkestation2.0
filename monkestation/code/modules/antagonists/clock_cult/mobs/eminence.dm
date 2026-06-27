@@ -4,7 +4,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	name = "Eminence"
 	real_name = "Eminence"
 	desc = "An entity forever bound to Ratvar, acting upon his will."
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_effects.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_effects.dmi'
 	icon_state = "eminence"
 	mob_biotypes = MOB_SPIRIT
 	mouse_opacity = MOUSE_OPACITY_ICON
@@ -104,7 +104,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 		return
 
 	if(COOLDOWN_FINISHED(src, command_sound_cooldown))
-		send_clock_message(span_bigbrass(message), src, sent_sound = 'monkestation/sound/effects/eminence_command.ogg')
+		send_clock_message(span_bigbrass(message), src, sent_sound = 'sound/effects/eminence_command.ogg')
 		COOLDOWN_START(src, command_sound_cooldown, 30 SECONDS)
 	else
 		send_clock_message(span_bigbrass(message), src)

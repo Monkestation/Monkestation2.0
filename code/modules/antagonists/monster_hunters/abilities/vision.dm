@@ -56,7 +56,7 @@
 	copied_appearance.appearance = input
 	if(istype(input, /mob/living))
 		copied_appearance.cut_overlays()
-		copied_appearance.icon = 'monkestation/icons/mob/rabbit.dmi'
+		copied_appearance.icon = 'icons/mob/rabbit.dmi'
 		copied_appearance.icon_state = "white_rabbit"
 	copied_appearance.color = black_white_matrix
 	copied_appearance.filters += outline_filter(size = 1, color = COLOR_WHITE)

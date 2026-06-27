@@ -1,7 +1,7 @@
 /obj/item/mcobject/signal_output
 	name = "signal output component"
 
-	icon = 'monkestation/icons/obj/mechcomp.dmi'
+	icon = 'icons/obj/mechcomp.dmi'
 	icon_state = "comp_signal"
 	base_icon_state = "comp_signal"
 

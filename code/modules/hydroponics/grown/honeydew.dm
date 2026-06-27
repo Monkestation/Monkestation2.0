@@ -1,7 +1,6 @@
 /obj/item/seeds/watermelon/honeydew
 	name = "pack of honeydew melon seeds"
 	desc = "These seeds grow into sweet honeydew melon plants."
-	icon = 'monkestation/icons/obj/hydroponics/fruit.dmi'
 	icon_state = "honeydew-seed"
 	icon_dead = "honeydew-dead"
 	icon_grow = null
@@ -11,7 +10,7 @@
 	product = /obj/item/food/grown/honeydew
 	lifespan = 60
 	endurance = 40
-	growing_icon = 'monkestation/icons/obj/hydroponics/growing.dmi'
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.1, /datum/reagent/consumable/nutriment = 0.15)
 	rarity = 20
@@ -21,7 +20,7 @@
 	seed = /obj/item/seeds/watermelon/honeydew
 	name = "honeydew melon"
 	desc = "A sweet melon variant that, bizarrely, distills into honey."
-	icon = 'monkestation/icons/obj/hydroponics/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "honeydew"
 	foodtypes = FRUIT
 	distill_reagent = /datum/reagent/consumable/honey

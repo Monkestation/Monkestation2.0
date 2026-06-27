@@ -156,7 +156,7 @@
 
 /obj/effect/world_progressbar
 	///The progress bar visual element.
-	icon = 'monkestation/icons/effects/progessbar.dmi'
+	icon = 'icons/effects/progressbar.dmi'
 	icon_state = "border"
 	plane = RUNECHAT_PLANE
 	layer = FLY_LAYER

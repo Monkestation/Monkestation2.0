@@ -1,7 +1,7 @@
 /obj/structure/closet/crate/coffin/sandstonesarcophagus
 	name = "sandstone sarcophagus"
 	desc = "It's a burial receptacle for the dearly departed. A sARcophaGUS, it usually contains a caDaVER."
-	icon = 'monkestation/icons/obj/sandstone_structures.dmi'
+	icon = 'icons/obj/sandstone_structures.dmi'
 	icon_state = "sarcophagus"
 	base_icon_state = "sarcophagus"
 	resistance_flags = FIRE_PROOF
@@ -17,7 +17,7 @@
 /obj/structure/closet/crate/coffin/sarcophagus
 	name = "Sarcophagus"
 	desc = "It's a burial receptacle for lustrious figures. A reliquary."
-	icon = 'monkestation/icons/obj/sandstone_structures.dmi'
+	icon = 'icons/obj/sandstone_structures.dmi'
 	icon_state = "sarcophagusroyale"
 	base_icon_state = "sarcophagusroyale"
 	resistance_flags = FIRE_PROOF

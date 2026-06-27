@@ -235,6 +235,7 @@ SUBSYSTEM_DEF(job)
 		player.temp_assignment.current_positions--
 	player.temp_assignment = null
 //monkestation edit end
+	player.client.prefs.pick_character_for_job(job)
 	player.mind.set_assigned_role(job)
 	unassigned -= player
 	job.current_positions++

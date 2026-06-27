@@ -8,5 +8,5 @@
 /// Bounty Hunter access, to lock shitters out of easy access to bounty hunter ships. Bounty Hunter access JUST for their ships.
 #define ACCESS_BOUNTY_HUNTER "bounty_hunter"
 
-/// Access to the NTSL console. It's important because only the signal technician and CE should have it.
+/// Access to the NTSL console. It's important because only the network admin and CE should have it.
 #define ACCESS_TCOMMS_ADMIN "tcomms_admin"

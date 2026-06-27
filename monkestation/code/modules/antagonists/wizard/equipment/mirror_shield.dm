@@ -7,12 +7,12 @@
 /obj/item/gun/magic/mirror_shield
 	name = "mirror shield"
 	desc = "A strange mirror adorned with various gemstones. If you look close enough it almost seems as if the surface is... rippling?"
-	icon = 'monkestation/icons/obj/weapons/shields.dmi'
+	icon = 'icons/obj/weapons/shields.dmi'
 	icon_state = "wizard_mirror_shield"
 	inhand_icon_state = "wizard_mirror_shield"
-	lefthand_file = 'monkestation/icons/mob/inhands/equipment/shields_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/equipment/shields_righthand.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/back.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
+	worn_icon = 'icons/mob/clothing/back.dmi'
 	worn_icon_state = "wizard_mirror_shield"
 	force = 20
 	armour_penetration = 25

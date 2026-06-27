@@ -6,7 +6,7 @@
 
 /obj/item/storage/medkit/rayne
 	name = "Rayne Corp Health Analyzer Kit"
-	icon = 'monkestation/icons/obj/rayne_corp/rayne.dmi'
+	icon = 'icons/obj/rayne_corp/rayne.dmi'
 	icon_state = "rayne_medkit"
 	inhand_icon_state = "coronerkit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'

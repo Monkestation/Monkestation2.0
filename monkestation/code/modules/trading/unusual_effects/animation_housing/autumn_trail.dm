@@ -1,6 +1,6 @@
 /datum/component/particle_spewer/movement/falling_leaves
 	unusual_description = "flighty leaves"
-	icon_file = 'monkestation/icons/effects/particle.dmi'
+	icon_file = 'icons/effects/particle.dmi'
 	particle_state = "leaf2"
 	burst_amount = 2
 	duration = 6 SECONDS

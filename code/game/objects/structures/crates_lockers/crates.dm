@@ -186,7 +186,7 @@
 	if(opened)
 		return
 	if(istype(tool, /obj/item/paper) && !manifest)
-		to_chat(user, span_notice("You begin attaching [tool] to [src]..."))
+		to_chat(user, span_notice("You begin attaching \the [tool] to [src]..."))
 		if(!do_after(user, 1 SECOND, target=src))
 			return ITEM_INTERACT_BLOCKING
 		attach_manifest(tool, user)
@@ -195,7 +195,7 @@
 		return
 	if(!(tool.get_sharpness() == SHARP_EDGED))
 		return
-	to_chat(user, span_notice("You begin cutting [manifest] off of [src]..."))
+	to_chat(user, span_notice("You begin cutting \the [manifest] off of [src]..."))
 	if(!do_after(user, 1 SECOND, target=src))
 		return ITEM_INTERACT_BLOCKING
 	tear_manifest(user)
@@ -217,8 +217,8 @@
 
 	manifest.add_stamp(writing_stats["stamp_class"], rand(1, 300), rand(1, 400), stamp_icon_state = writing_stats["stamp_icon_state"])
 	user.visible_message(
-		span_notice("[user] quickly stamps [manifest] with [attacking_item] without looking."),
-		span_notice("You quickly stamp [manifest] with [attacking_item] without looking."),
+		span_notice("[user] quickly stamps \the [manifest] with \the [attacking_item] without looking."),
+		span_notice("You quickly stamp \the [manifest] with \the [attacking_item] without looking."),
 	)
 	playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 	return ITEM_INTERACT_BLOCKING
@@ -283,6 +283,7 @@
 	name = "trash cart"
 	icon_state = "trashcart"
 	base_icon_state = "trashcart"
+	icon_welded = "welded_cart"
 	can_install_electronics = FALSE
 	paint_jobs = null
 
@@ -309,6 +310,72 @@
 		new /obj/effect/spawner/random/trash/garbage(src)
 		if(prob(12))
 			new /obj/item/storage/bag/trash/filled(src)
+
+/obj/structure/closet/crate/trashcart/engineering
+	desc = "A heavy, industrial metal cart with wheels. It's fully fire and acid proof and protects its contents from extreme enviroments. Fancy!"
+	name = "engineering cart"
+	icon_state = "engcart"
+	base_icon_state = "engcart"
+	can_install_electronics = TRUE
+	contents_pressure_protection = 1 // come with me
+	contents_thermal_insulation = 1 // if you want to live
+	armor_type = /datum/armor/structure_cart_engineering
+	pressure_resistance = INFINITY // something something magnetic wheels, of course powered by BS micro crystals. emphasis on BS
+	secure = TRUE
+	locked = TRUE
+	req_access = list(ACCESS_ENGINEERING)
+
+/datum/armor/structure_cart_engineering
+	melee = 20
+	bullet = 10
+	laser = 10
+	bomb = 80
+	fire = 100
+	acid = 100
+
+/obj/structure/closet/crate/trashcart/engineering/closet_update_overlays(list/new_overlays)
+	. = new_overlays
+	if(manifest)
+		var/mutable_appearance/manifest_overlay = mutable_appearance(icon, "engcart_manifest")
+		manifest_overlay.color = manifest?.color
+		. += manifest_overlay
+	if(broken && !no_broken_overlay)
+		. += "engcartemag"
+	else if(locked)
+		. += "engcartr"
+	else if(secure)
+		. += "engcartg"
+	if(opened && lid_icon_state)
+		var/mutable_appearance/lid = mutable_appearance(icon = lid_icon, icon_state = lid_icon_state)
+		lid.pixel_x = lid_x
+		lid.pixel_y = lid_y
+		lid.layer = layer
+		. += lid
+	if(welded)
+		. += icon_welded
+
+/obj/structure/closet/crate/trashcart/engineering/filled/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/storage/box/metalfoam = 1,
+		/obj/item/storage/box/large_oxygen_candles = 1,
+		/obj/item/storage/box/flares = 2,
+		/obj/item/pickaxe = 2,
+		/obj/item/storage/box/nanofrost = 1,
+		/obj/item/extinguisher = 2,
+		/obj/item/storage/medkit/o2 = 1,
+		/obj/item/stack/sheet/iron/fifty = 1,
+		/obj/item/stack/rods/fifty = 1,
+		/obj/item/stack/sheet/glass/fifty = 1,
+		/obj/item/stack/sheet/rglass/fifty = 1,
+		/obj/item/stack/sheet/plasteel/twenty = 1,
+		/obj/item/storage/box/lights/mixed = 1,
+		/obj/item/storage/toolbox/mechanical = 1,
+		/obj/item/storage/toolbox/electrical = 1,
+		/obj/item/inducer/orderable = 1,
+		/obj/item/reagent_containers/cup/fuelcanister/full = 1,
+		/obj/item/clothing/head/cone = 5,
+		/obj/item/rwd/loaded = 1,
+	), src)
 
 /obj/structure/closet/crate/trashcart/laundry
 	name = "laundry cart"

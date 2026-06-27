@@ -4,8 +4,8 @@
 	name = "porcelain mask"
 	desc = "An ill omen of things to come."
 	icon_state = "protector"
-	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
-	icon = 'monkestation/icons/obj/clothing/masks.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
+	icon = 'icons/obj/clothing/masks.dmi'
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT|HIDEHAIR
 
 /obj/item/clothing/mask/sprungle/Initialize(mapload)

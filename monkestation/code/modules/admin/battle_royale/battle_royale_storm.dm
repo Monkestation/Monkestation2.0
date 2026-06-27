@@ -98,7 +98,7 @@
 /obj/effect/royale_storm_effect
 	name = "Battle Royale Storm"
 	desc = "A storm tuned to only affect those directly participating in the battle royale."
-	icon = 'monkestation/icons/effects/effects.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "royale_storm"
 	plane = HIGH_GAME_PLANE
 

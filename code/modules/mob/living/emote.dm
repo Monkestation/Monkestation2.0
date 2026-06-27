@@ -360,11 +360,11 @@
 	if(!issilicon(user))
 		return
 	return pick(
-		'monkestation/sound/voice/screams/silicon/robotAUGH1.ogg',
-		'monkestation/sound/voice/screams/silicon/robotAUGH2.ogg',
-		'monkestation/sound/voice/screams/silicon/robotAUGH3.ogg',
-		'monkestation/sound/voice/screams/silicon/robotAUGH4.ogg',
-		'monkestation/sound/voice/screams/silicon/robotAUGH5.ogg')
+		'sound/voice/screams/silicon/robotAUGH1.ogg',
+		'sound/voice/screams/silicon/robotAUGH2.ogg',
+		'sound/voice/screams/silicon/robotAUGH3.ogg',
+		'sound/voice/screams/silicon/robotAUGH4.ogg',
+		'sound/voice/screams/silicon/robotAUGH5.ogg')
 monkestation edit end */
 
 /datum/emote/living/scream/select_message_type(mob/user, message, intentional)
