@@ -1,7 +1,7 @@
 /obj/item/organ/internal/liver/clockwork
 	name = "biometallic alembic"
 	desc = "A series of small pumps and boilers, designed to facilitate proper metabolism."
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "liver-clock"
 	organ_flags = ORGAN_ROBOTIC
 	alcohol_tolerance = 0

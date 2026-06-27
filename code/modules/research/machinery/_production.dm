@@ -72,7 +72,7 @@
 	if(!stripe_color)
 		return
 
-	var/mutable_appearance/stripe = mutable_appearance('monkestation/icons/obj/machines/research.dmi', "protolathe_stripe[panel_open ? "_t" : ""]")
+	var/mutable_appearance/stripe = mutable_appearance('icons/obj/machines/research.dmi', "protolathe_stripe[panel_open ? "_t" : ""]")
 	stripe.color = stripe_color
 	. += stripe
 
@@ -178,7 +178,7 @@
 	flick_overlay_view(lathe_material_insertion_animation(mat_ref.greyscale_colors), 1.5 SECONDS)
 
 	//now play the progress bar animation
-	flick_overlay_view(mutable_appearance('monkestation/icons/obj/machines/research.dmi', "protolathe_progress"), 1 SECONDS)
+	flick_overlay_view(mutable_appearance('icons/obj/machines/research.dmi', "protolathe_progress"), 1 SECONDS)
 
 ///When materials are instered into local storage
 /obj/machinery/rnd/production/proc/local_material_insert(container, obj/item/item_inserted, last_inserted_id, list/mats_consumed, amount_inserted, atom/context)

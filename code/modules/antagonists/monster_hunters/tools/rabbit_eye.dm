@@ -2,7 +2,7 @@
 	name = "Rabbit Eye"
 	desc = "An item that resonates with trick weapons."
 	icon_state = "rabbit_eye"
-	icon = 'monkestation/icons/obj/items/monster_hunter.dmi'
+	icon = 'icons/obj/items/monster_hunter.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -12,5 +12,5 @@
 		return
 	weapon.upgrade_weapon()
 	balloon_alert(user, "[src] crumbles away...")
-	playsound(src, 'monkestation/sound/effects/weaponsmithing.ogg', vol = 50)
+	playsound(src, 'sound/effects/weaponsmithing.ogg', vol = 50)
 	qdel(src)

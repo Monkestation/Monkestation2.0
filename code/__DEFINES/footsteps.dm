@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(footstep, list(
 		'sound/effects/footstep/catwalk4.ogg',
 		'sound/effects/footstep/catwalk5.ogg'), 100, 1),
 	FOOTSTEP_BALL = list(list(
-		'monkestation/sound/effects/ballpit.ogg'), 100, 0),
+		'sound/effects/ballpit.ogg'), 100, 0),
 ))
 //bare footsteps lists
 GLOBAL_LIST_INIT(barefootstep, list(
@@ -152,7 +152,7 @@ GLOBAL_LIST_INIT(barefootstep, list(
 	FOOTSTEP_MEAT = list(list(
 		'sound/effects/meatslap.ogg'), 100, 0),
 	FOOTSTEP_BALL = list(list(
-		'monkestation/sound/effects/ballpit.ogg'), 100, 0),
+		'sound/effects/ballpit.ogg'), 100, 0),
 ))
 
 //claw footsteps lists
@@ -198,7 +198,7 @@ GLOBAL_LIST_INIT(clawfootstep, list(
 	FOOTSTEP_MEAT = list(list(
 		'sound/effects/meatslap.ogg'), 100, 0),
 	FOOTSTEP_BALL = list(list(
-		'monkestation/sound/effects/ballpit.ogg'), 100, 0),
+		'sound/effects/ballpit.ogg'), 100, 0),
 ))
 
 //heavy footsteps list
@@ -218,6 +218,6 @@ GLOBAL_LIST_INIT(heavyfootstep, list(
 	FOOTSTEP_MEAT = list(list(
 		'sound/effects/meatslap.ogg'), 100, 0),
 	FOOTSTEP_BALL = list(list(
-		'monkestation/sound/effects/ballpit.ogg'), 100, 0),
+		'sound/effects/ballpit.ogg'), 100, 0),
 ))
 

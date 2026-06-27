@@ -12,8 +12,8 @@
 /obj/item/clothing/suit/space/ert
 	name = "emergency response team space suit"
 	desc = "A special space suit designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance." // simple description could use more tho
-	icon = 'monkestation/icons/obj/clothing/ERT/ERT_spacesuit_obj.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/ERT/ERT_spacesuit_worn.dmi'
+	icon = 'icons/obj/clothing/ERT/ERT_spacesuit_obj.dmi'
+	worn_icon = 'icons/mob/clothing/ERT/ERT_spacesuit_worn.dmi'
 	icon_state = "ert-generic"
 	//lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'   do i dare make inhand sprites
 	//righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
@@ -62,8 +62,8 @@
 /obj/item/clothing/head/helmet/space/ert
 	name = "emergency response team space helmet"
 	desc = "A special space helmet designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance."
-	icon = 'monkestation/icons/obj/clothing/ERT/ERT_helmet_obj.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/ERT/ERT_helmet_worn.dmi'
+	icon = 'icons/obj/clothing/ERT/ERT_helmet_obj.dmi'
+	worn_icon = 'icons/mob/clothing/ERT/ERT_helmet_worn.dmi'
 	icon_state = "ert-generic0"
 	//styling
 	var/style = "generic"

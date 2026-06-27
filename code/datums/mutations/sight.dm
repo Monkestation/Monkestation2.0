@@ -176,7 +176,7 @@
 	LE.def_zone = ran_zone(source.zone_selected)
 	LE.aim_projectile(target, source, modifiers)
 	INVOKE_ASYNC(LE, TYPE_PROC_REF(/obj/projectile, fire))
-	playsound(source, 'monkestation/sound/weapons/gun/energy/Laser2.ogg', 75, TRUE)
+	playsound(source, 'sound/weapons/gun/energy/Laser2.ogg', 75, TRUE)
 
 ///Projectile type used by laser eyes
 /obj/projectile/beam/laser/laser_eyes

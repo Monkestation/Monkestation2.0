@@ -141,6 +141,6 @@
 	desc = "A simple semi-formal uniform consisting of a grayish-blue shirt and off-white slacks, paired with a ridiculous, but mandatory, tie."
 	icon_state = "hl_scientist"
 	can_adjust = FALSE
-	alternative_screams = list(	'monkestation/sound/voice/screams/misc/HL1 Scientist/scream_sci0.ogg',
-								'monkestation/sound/voice/screams/misc/HL1 Scientist/scream_sci1.ogg',
-								'monkestation/sound/voice/screams/misc/HL1 Scientist/scream_sci2.ogg')
+	alternative_screams = list(	'sound/voice/screams/misc/HL1 Scientist/scream_sci0.ogg',
+								'sound/voice/screams/misc/HL1 Scientist/scream_sci1.ogg',
+								'sound/voice/screams/misc/HL1 Scientist/scream_sci2.ogg')

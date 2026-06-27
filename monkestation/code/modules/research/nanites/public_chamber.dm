@@ -2,7 +2,7 @@
 	name = "public nanite chamber"
 	desc = "A device that can rapidly implant cloud-synced nanites without an external operator."
 	circuit = /obj/item/circuitboard/machine/public_nanite_chamber
-	icon = 'monkestation/icons/obj/machines/nanite_chamber.dmi'
+	icon = 'icons/obj/machines/nanite_chamber.dmi'
 	icon_state = "nanite_chamber"
 	base_icon_state = "nanite_chamber"
 	layer = ABOVE_WINDOW_LAYER

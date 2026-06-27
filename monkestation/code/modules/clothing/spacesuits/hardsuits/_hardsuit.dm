@@ -5,8 +5,8 @@
 /obj/item/clothing/suit/space/hardsuit
 	name = "hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
-	icon = 'monkestation/icons/obj/clothing/hardsuits/suit.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/hardsuit/hardsuit_body.dmi'
+	icon = 'icons/obj/clothing/hardsuits/suit.dmi'
+	worn_icon = 'icons/mob/clothing/hardsuit/hardsuit_body.dmi'
 	icon_state = "hardsuit-engineering"
 	max_integrity = 300
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT

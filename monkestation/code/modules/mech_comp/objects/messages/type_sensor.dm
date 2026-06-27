@@ -1,7 +1,7 @@
 /obj/item/mcobject/messaging/type_sensor
 	name = "type sensor"
 
-	icon = 'monkestation/icons/obj/mechcomp.dmi'
+	icon = 'icons/obj/mechcomp.dmi'
 	icon_state = "comp_collector"
 	base_icon_state = "comp_collector"
 

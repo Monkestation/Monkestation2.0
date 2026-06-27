@@ -1,7 +1,7 @@
 /obj/item/organ/internal/tongue/robot/clockwork
 	name = "dynamic micro-phonograph"
 	desc = "An old-timey looking device connected to an odd, shifting cylinder."
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "tongueclock"
 
 /obj/item/organ/internal/tongue/robot/clockwork/better
@@ -20,10 +20,10 @@
 	liked_foodtypes = GORE | MEAT | BUGS | GROSS
 
 /obj/item/organ/internal/tongue/arachnid/get_scream_sound()
-	return 'monkestation/sound/voice/screams/arachnid/arachnid_scream.ogg'
+	return 'sound/voice/screams/arachnid/arachnid_scream.ogg'
 
 /obj/item/organ/internal/tongue/arachnid/get_laugh_sound()
-	return 'monkestation/sound/voice/laugh/arachnid/arachnid_laugh.ogg'
+	return 'sound/voice/laugh/arachnid/arachnid_laugh.ogg'
 
 /obj/item/organ/internal/tongue/arachnid/modify_speech(datum/source, list/speech_args) //This is flypeople speech
 	var/static/regex/fly_buzz = new("z+", "g")
@@ -67,29 +67,29 @@
 	//organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES
 
 /obj/item/organ/internal/tongue/synth/get_scream_sound()
-	return 'monkestation/sound/voice/screams/silicon/scream_silicon.ogg'
+	return 'sound/voice/screams/silicon/scream_silicon.ogg'
 
 /obj/item/organ/internal/tongue/synth/get_laugh_sound()
 	if(owner.gender == FEMALE)
 		return pick(
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconF0.ogg',
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconF1.ogg',
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconF2.ogg',
+			'sound/voice/laugh/silicon/laugh_siliconF0.ogg',
+			'sound/voice/laugh/silicon/laugh_siliconF1.ogg',
+			'sound/voice/laugh/silicon/laugh_siliconF2.ogg',
 		)
 	if(owner.gender == MALE)
 		return pick(
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M0.ogg',
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M1.ogg',
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconM2.ogg',
+			'sound/voice/laugh/silicon/laugh_siliconE1M0.ogg',
+			'sound/voice/laugh/silicon/laugh_siliconE1M1.ogg',
+			'sound/voice/laugh/silicon/laugh_siliconM2.ogg',
 		)
 	else
 		return pick(
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M0.ogg',
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M1.ogg',
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconM2.ogg',
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconF0.ogg',
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconF1.ogg',
-			'monkestation/sound/voice/laugh/silicon/laugh_siliconF2.ogg',
+			'sound/voice/laugh/silicon/laugh_siliconE1M0.ogg',
+			'sound/voice/laugh/silicon/laugh_siliconE1M1.ogg',
+			'sound/voice/laugh/silicon/laugh_siliconM2.ogg',
+			'sound/voice/laugh/silicon/laugh_siliconF0.ogg',
+			'sound/voice/laugh/silicon/laugh_siliconF1.ogg',
+			'sound/voice/laugh/silicon/laugh_siliconF2.ogg',
 		)
 
 /obj/item/organ/internal/tongue/synth/can_speak_language(language)

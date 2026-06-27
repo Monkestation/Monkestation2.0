@@ -6,7 +6,7 @@
 /obj/item/pocket_heater
 	name = "pocket heater"
 	desc = "A highly compact electronic heater that fits in your pocket. Mainly used by the members of cold-blooded species on expeditions to frigid environments."
-	icon = 'monkestation/icons/obj/items/pocket_heater.dmi'
+	icon = 'icons/obj/items/pocket_heater.dmi'
 	icon_state = "heater_off"
 	w_class = WEIGHT_CLASS_SMALL
 

@@ -92,7 +92,7 @@
 	name = "Corrupted Mending Touch"
 	desc = "You can now lay your hands on other people to transfer a small amount of their physical injuries to yourself. \
 		This version of the mutation allows you smite anyone as long as you mean to cause HARM to them."
-	button_icon = 'monkestation/icons/mob/actions/actions_genetic.dmi'
+	button_icon = 'icons/mob/actions/actions_genetic.dmi'
 	button_icon_state = "corrupted_mending_touch"
 	always_evil_smite = TRUE
 
