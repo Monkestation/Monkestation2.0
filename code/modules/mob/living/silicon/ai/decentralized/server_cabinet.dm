@@ -135,6 +135,13 @@
 	if(length(installed_racks) > 1)
 		. += mutable_appearance(icon, "[base_icon_state]_bottom_on")
 
+/obj/machinery/ai/server_cabinet/valid_holder()
+	. = ..()
+	//if you have no racks, you generate no heat.
+	if(!length(installed_racks))
+		return FALSE
+	return .
+
 /obj/machinery/ai/server_cabinet/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/server_rack))
 		install_rack(user, tool)

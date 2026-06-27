@@ -83,6 +83,10 @@
 	SIGNAL_HANDLER
 	if(connected_ai)
 		return
+	//Not on our level, we don't care.
+	var/datum/ai_os/os_using = GLOB.ai_os["[z]"]
+	if(isnull(os_using) || !(new_ai in os_using.ai_list))
+		return
 	assign_ai(new_ai)
 
 ///Called when our assigned AI is being deleted.

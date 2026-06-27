@@ -183,8 +183,10 @@
 /area/ruin/space/ancientstation/charlie/bridge)
 "aM" = (
 /obj/structure/alien/weeds,
-/obj/machinery/recharge_station,
-/obj/effect/decal/cleanable/xenoblood/xgibs/up,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/computer/ai_overclocking{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "aN" = (
@@ -288,6 +290,7 @@
 "be" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/ai/server_cabinet,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "bg" = (
@@ -299,13 +302,11 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
 "bh" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/door/window/brigdoor/right/directional/east,
 /obj/machinery/computer/ai_control_console/oldstation{
 	dir = 4
 	},
+/obj/structure/alien/weeds,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "bi" = (
@@ -715,6 +716,9 @@
 "cF" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "cG" = (
@@ -791,6 +795,9 @@
 "cY" = (
 /obj/effect/decal/cleanable/robot_debris,
 /obj/structure/alien/weeds,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "cZ" = (
@@ -1724,6 +1731,7 @@
 "gk" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/old,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "gm" = (
@@ -4112,14 +4120,10 @@
 /area/ruin/space/ancientstation/beta/hall)
 "pd" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/table,
-/obj/machinery/door/window/brigdoor/right/directional/east,
-/obj/machinery/computer/upload/ai{
-	dir = 4;
-	signal = 0
+/obj/machinery/computer/aifixer{
+	dir = 4
 	},
+/obj/structure/alien/weeds,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "pf" = (
@@ -5285,9 +5289,8 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/table,
 /obj/machinery/door/window/brigdoor/right/directional/east,
-/obj/machinery/computer/upload/borg{
+/obj/machinery/computer/upload/ai{
 	dir = 4;
 	signal = 0
 	},
@@ -5667,6 +5670,11 @@
 "zL" = (
 /turf/closed/mineral/random,
 /area/ruin/space/ancientstation/delta/hall)
+"zO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/robot_suit/prebuilt,
+/turf/open/floor/iron/white,
+/area/ruin/space/ancientstation/delta/rnd)
 "Aa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -6746,9 +6754,9 @@
 /area/ruin/space/ancientstation/charlie/bridge)
 "Ih" = (
 /obj/structure/alien/weeds,
-/obj/item/robot_suit/prebuilt,
 /obj/structure/alien/weeds,
 /obj/machinery/camera/autoname/old/directional/north,
+/obj/machinery/recharge_station,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "Ii" = (
@@ -7113,6 +7121,7 @@
 /obj/machinery/light/small/directional/west,
 /obj/structure/alien/weeds,
 /mob/living/basic/alien,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "Kt" = (
@@ -8355,6 +8364,14 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/ancientstation/delta/proto)
+"SH" = (
+/obj/structure/alien/weeds,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/computer/ai_resource_distribution{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
 "SI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -8666,10 +8683,10 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/table,
 /obj/machinery/door/window/brigdoor/right/directional/east,
-/obj/machinery/computer/aifixer{
-	dir = 4
+/obj/machinery/computer/upload/borg{
+	dir = 4;
+	signal = 0
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
@@ -8781,7 +8798,8 @@
 /area/ruin/space/ancientstation/delta/rnd)
 "VG" = (
 /obj/structure/alien/weeds,
-/obj/machinery/recharge_station,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/rack_creator,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "VL" = (
@@ -14879,7 +14897,7 @@ ad
 ad
 VG
 aM
-cC
+SH
 bh
 pd
 wT
@@ -15074,7 +15092,7 @@ aa
 aa
 aa
 ad
-ag
+cC
 aH
 Yc
 cH
@@ -15420,7 +15438,7 @@ En
 Ao
 wx
 Gv
-kw
+zO
 gK
 gQ
 kw

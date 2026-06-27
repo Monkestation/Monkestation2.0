@@ -10,8 +10,6 @@
 ///How many ticks can an expanion bus store. If it reaches 0 the resources will no longer be available.
 #define MAX_AI_EXPANSION_TICKS 15
 
-#define CELL_POWERUSE_MULTIPLIER 0.025
-
 //AI Project Categories.
 #define AI_PROJECT_HUDS "Sensor HUDs"
 #define AI_PROJECT_CAMERAS "Visibility Upgrades"

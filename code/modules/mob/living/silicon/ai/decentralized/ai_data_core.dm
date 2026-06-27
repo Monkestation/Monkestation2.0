@@ -184,7 +184,7 @@ GLOBAL_LIST_EMPTY(data_cores)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/ai/data_core/attack_ai(mob/living/silicon/ai/user)
-	if((user in src))
+	if(user in src)
 		return ..()
 	if(!valid_data_core(user) || !valid_holder())
 		balloon_alert(user, "not a valid core!")
@@ -223,7 +223,7 @@ GLOBAL_LIST_EMPTY(data_cores)
 		valid_ticks++
 		use_power = ACTIVE_POWER_USE
 		if((machine_stat & NOPOWER) && integrated_battery)
-			integrated_battery.use(active_power_usage * CELL_POWERUSE_MULTIPLIER)
+			integrated_battery.use(active_power_usage)
 		COOLDOWN_RESET(src, warning_cooldown)
 		return
 
@@ -252,14 +252,14 @@ GLOBAL_LIST_EMPTY(data_cores)
 	if((machine_stat & (BROKEN|EMPED)) || !has_power() || disableheat || !ai_creating_heat)
 		return FALSE
 
-	var/temp_active_usage = (machine_stat & NOPOWER) ? idle_power_usage * CELL_POWERUSE_MULTIPLIER : active_power_usage * CELL_POWERUSE_MULTIPLIER
+	var/temp_active_usage = (machine_stat & NOPOWER) ? idle_power_usage : active_power_usage
 	var/temperature_increase = (temp_active_usage / AI_HEATSINK_CAPACITY) * heat_modifier //1 CPU = 1000W. Heat capacity = somewhere around 3000-4000. Aka we generate 0.25 - 0.33 K per second, per CPU.
 	core_temp += temperature_increase * AI_TEMPERATURE_MULTIPLIER
 	return TRUE
 
 /obj/machinery/ai/data_core/has_power()
 	if((machine_stat & (NOPOWER)) && integrated_battery)
-		if(integrated_battery.charge > (active_power_usage * CELL_POWERUSE_MULTIPLIER))
+		if(integrated_battery.charge > (active_power_usage))
 			return TRUE
 	else
 		return TRUE

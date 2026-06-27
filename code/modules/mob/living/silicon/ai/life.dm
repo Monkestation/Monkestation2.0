@@ -40,7 +40,7 @@
 
 	if(lacks_power())
 		var/obj/machinery/ai/data_core/ai_location = loc
-		if(!ai_location.integrated_battery?.use(ai_location.active_power_usage * CELL_POWERUSE_MULTIPLIER))
+		if(!ai_location.integrated_battery?.use(ai_location.active_power_usage))
 			if(!aiRestorePowerRoutine)
 				ai_lose_power()
 			return
