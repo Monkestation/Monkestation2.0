@@ -5,7 +5,7 @@
 /obj/structure/cargo_shelf //Crate shelf port from Shiptest: https://github.com/shiptest-ss13/Shiptest/pull/2374
 	name = "Cargo shelf"
 	desc = "It's a shelf! For storing crates!"
-	icon = 'monkestation/icons/obj/structures/shelf.dmi'
+	icon = 'icons/obj/structures/shelf.dmi'
 	icon_state = "shelf_base"
 	density = TRUE
 	anchored = TRUE
@@ -29,7 +29,7 @@
 		else
 			stack_layer  = BELOW_OBJ_LAYER + (0.02 * i) - 0.01 // Make each shelf piece render above the last, but below the crate that should be on it.
 		stack_offset = DEFAULT_SHELF_VERTICAL_OFFSET * i // Make each shelf piece physically above the last.
-		overlays += image(icon = 'monkestation/icons/obj/structures/shelf.dmi', icon_state = "shelf_stack", layer = stack_layer, pixel_y = stack_offset)
+		overlays += image(icon = 'icons/obj/structures/shelf.dmi', icon_state = "shelf_stack", layer = stack_layer, pixel_y = stack_offset)
 	return
 
 /obj/structure/cargo_shelf/Destroy()
@@ -172,7 +172,7 @@
 
 /obj/item/rack_parts/cargo_shelf
 	name = "Cargo shelf parts"
-	icon = 'monkestation/icons/obj/structures/shelf.dmi'
+	icon = 'icons/obj/structures/shelf.dmi'
 	icon_state = "rack_parts"
 	desc = "Parts of a cargo shelf, for storing crates."
 

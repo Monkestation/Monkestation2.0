@@ -1,7 +1,7 @@
 /obj/item/food/honeydewslice
 	name = "honeydew melon slice"
 	desc = "a sweet slice of honeydew"
-	icon = 'monkestation/icons/obj/food/misc.dmi'
+	icon = 'icons/obj/food/misc.dmi'
 	icon_state = "honeydewslice"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/vitamin = 0.25,

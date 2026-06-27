@@ -1,29 +1,29 @@
 /obj/item/clothing/gloves/combat/maid
 	name = "combat maid sleeves"
 	desc = "These 'tactical' gloves and sleeves are fireproof and electrically insulated. Warm to boot."
-	icon = 'monkestation/icons/obj/clothing/gloves.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/gloves.dmi'
+	icon = 'icons/obj/clothing/gloves.dmi'
+	worn_icon = 'icons/mob/clothing/gloves.dmi'
 	icon_state = "syndimaid_arms"
 
 /obj/item/clothing/gloves/crueltysquad_gloves
 	name = "CSIJ level I gloves"
 	desc = "Armor used by assassins working for Cruelty Squad, stripped of all of its functions for kids to play with."
-	icon = 'monkestation/icons/obj/clothing/gloves.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/gloves.dmi'
+	icon = 'icons/obj/clothing/gloves.dmi'
+	worn_icon = 'icons/mob/clothing/gloves.dmi'
 	icon_state = "crueltysquad_gloves"
 
 /obj/item/clothing/gloves/civilprotection_gloves
 	name = "civil protection gloves"
 	desc = "Armored gloves for beating anticitizens."
-	icon = 'monkestation/icons/obj/clothing/gloves.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/gloves.dmi'
+	icon = 'icons/obj/clothing/gloves.dmi'
+	worn_icon = 'icons/mob/clothing/gloves.dmi'
 	icon_state = "civilprotection_gloves"
 
 /obj/item/clothing/gloves/infinity_gloves
 	name = "infinity wristbands"
 	desc = "The bands are oddly moist... let's hope it's not blood."
-	icon = 'monkestation/icons/obj/clothing/gloves.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/gloves.dmi'
+	icon = 'icons/obj/clothing/gloves.dmi'
+	worn_icon = 'icons/mob/clothing/gloves.dmi'
 	icon_state = "infinity_wrist"
 
 /obj/item/clothing/gloves/infinity_gloves/equipped(mob/living/carbon/user, slot)
@@ -38,7 +38,11 @@
 /obj/item/clothing/gloves/latex/surgical
 	name = "Black Latex gloves"
 	desc = "Pricy sterile gloves that are thinner than latex. The lining allows for the person to operate \
+<<<<<<< HEAD
 					quicker and with higher success along with the faster use time of various chemical related items."
+=======
+					quicker and with higher success along with the faster use time of various chemical related items"
+>>>>>>> d25f9ddcaa3d32c399cdf9f5fad07536c9857ed7
 	icon = 'icons/obj/clothing/gloves.dmi'
 	worn_icon = 'icons/mob/clothing/gloves.dmi'
 	icon_state = "surgeonlatex"
@@ -51,13 +55,13 @@
 
 /obj/item/clothing/gloves/tackler/combat/insulated/admiral // Reskin for Abraxis's Admiral set
 	icon_state = "admiral"
-	worn_icon = 'monkestation/icons/mob/clothing/gloves.dmi'
-	icon = 'monkestation/icons/obj/clothing/gloves.dmi'
+	worn_icon = 'icons/mob/clothing/gloves.dmi'
+	icon = 'icons/obj/clothing/gloves.dmi'
 	alternate_worn_layer = ABOVE_SUIT_LAYER
 
 /obj/item/clothing/gloves/admiral // Loadout version of the Abraxis Centcom Admiral gloves
 	name = "black gloves"
 	icon_state = "admiral"
-	worn_icon = 'monkestation/icons/mob/clothing/gloves.dmi'
-	icon = 'monkestation/icons/obj/clothing/gloves.dmi'
+	worn_icon = 'icons/mob/clothing/gloves.dmi'
+	icon = 'icons/obj/clothing/gloves.dmi'
 	alternate_worn_layer = ABOVE_SUIT_LAYER

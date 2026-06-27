@@ -10,7 +10,7 @@
 	break_sound = null
 	debris = null
 	break_message = "The sigil is dispelled."
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_effects.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_effects.dmi'
 	icon_state = "sigilvitality"
 	density = FALSE
 	alpha = 90

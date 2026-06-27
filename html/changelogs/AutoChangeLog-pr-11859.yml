@@ -1,0 +1,7 @@
+author: "Runian"
+delete-after: True
+changes:
+  - balance: "In line with CPR, ambu-bag no longer heals oxygen damage on target that do not breathe normally / do not have lungs."
+  - bugfix: "Ambu-bag now always stops channeling if their target moves out of user's range."
+  - bugfix: "Ambu-bag no longer continues to heal oxygen damage if their target puts on their mask while being healed."
+  - bugfix: "Ambu-bag no longer smacks their target when it succeeds."

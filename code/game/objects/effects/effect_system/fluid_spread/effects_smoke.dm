@@ -267,7 +267,7 @@
 	name = "nanofrost smoke"
 	color = "#B2FFFF"
 	opacity = FALSE
-		/// The radius in which to chill every open turf.
+	/// The radius in which to chill every open turf.
 	var/blast = 0
 	/// The temperature to set the turfs air temperature to.
 	var/temperature = 253.15 // -20C
@@ -313,7 +313,7 @@
 	// Extinguishes everything in the turf
 	for(var/mob/living/potential_tinder in chilly)
 		potential_tinder.extinguish_mob()
-	for(var/obj/item/potential_tinder in chilly)
+	for(var/obj/potential_tinder in chilly)
 		potential_tinder.extinguish()
 
 /obj/effect/particle_effect/fluid/smoke/freezing/process(seconds_per_tick)

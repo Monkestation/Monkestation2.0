@@ -34,7 +34,7 @@
 /obj/machinery/computer/camera_advanced/ratvar/CreateEye()
 	. = ..()
 	eyeobj.use_visibility = TRUE
-	eyeobj.icon = 'monkestation/icons/mob/silicon/cameramob.dmi'
+	eyeobj.icon = 'icons/mob/silicon/cameramob.dmi'
 	eyeobj.icon_state = "ratvar_camera"
 	eyeobj.SetInvisibility(INVISIBILITY_OBSERVER)
 

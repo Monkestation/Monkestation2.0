@@ -5,7 +5,7 @@
 /obj/structure/table/sandstone
 	name = "sandstone table"
 	desc = "Woah! A sandstone TABLE!!"
-	icon = 'monkestation/icons/obj/smooth_structures/sandstone_table.dmi'
+	icon = 'icons/obj/smooth_structures/sandstone_table.dmi'
 	icon_state = "brass_table-0" //brass table is my best friend
 	base_icon_state = "brass_table" //brass table is my best friend
 	resistance_flags = FIRE_PROOF
@@ -18,7 +18,7 @@
 /obj/structure/table/silk
 	name = "silk table"
 	desc = "Really stable. Do not set on fire."
-	icon = 'monkestation/icons/obj/smooth_structures/silk_table.dmi'
+	icon = 'icons/obj/smooth_structures/silk_table.dmi'
 	buildstack = /obj/item/stack/sheet/silk
 	resistance_flags = FLAMMABLE
 	max_integrity = 50

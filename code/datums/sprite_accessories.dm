@@ -841,6 +841,14 @@
 	name = "Ziegler"
 	icon_state = "hair_ziegler"
 
+/datum/sprite_accessory/hair/slick
+	name = "Slick"
+	icon_state = "hair_slick"
+
+/datum/sprite_accessory/hair/macho
+	name = "Macho"
+	icon_state = "hair_macho"
+
 /*
 /////////////////////////////////////
 /  =---------------------------=    /
@@ -1850,7 +1858,7 @@ MONKESTATION EDIT
 //Non-Modular change - Removes monkey tails, adds Simian tails instead.
 /datum/sprite_accessory/tails/monkey/default
 	name = "Monkey"
-	icon = 'monkestation/icons/mob/species/monkey/monkey_tail.dmi' //Original: 'icons/mob/species/monkey/monkey_tail.dmi'
+	icon = 'icons/mob/species/monkey/monkey_tail.dmi' //Original: 'icons/mob/species/monkey/monkey_tail.dmi'
 	icon_state = "default"
 	color_src = MUTANT_COLOR //Original: FALSE
 

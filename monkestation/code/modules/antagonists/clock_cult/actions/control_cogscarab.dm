@@ -1,8 +1,8 @@
 /datum/action/control_host/cogscarab
 	name = "Control Cogscarab"
-	button_icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
+	button_icon = 'icons/obj/clock_cult/clockwork_objects.dmi'
 	button_icon_state = "cogscarab_shell"
-	background_icon = 'monkestation/icons/mob/clock_cult/background_clock.dmi'
+	background_icon = 'icons/mob/clock_cult/background_clock.dmi'
 	background_icon_state = "bg_clock"
 	kill_on_overlord_death = FALSE //an eminence should never die so this is not needed
 	no_host_text = "No cogscarab currently hosting you, try clicking on an empty cogscarb shell."
@@ -17,7 +17,7 @@
 	gain_host(new /mob/living/basic/drone/cogscarab(target_turf))
 
 /datum/action/return_to_overlord/cogscarab
-	button_icon = 'monkestation/icons/obj/clock_cult/clockwork_effects.dmi'
+	button_icon = 'icons/obj/clock_cult/clockwork_effects.dmi'
 	button_icon_state = "eminence"
-	background_icon = 'monkestation/icons/mob/clock_cult/background_clock.dmi'
+	background_icon = 'icons/mob/clock_cult/background_clock.dmi'
 	background_icon_state = "bg_clock"

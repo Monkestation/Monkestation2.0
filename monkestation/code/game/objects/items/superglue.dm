@@ -1,7 +1,7 @@
 /obj/item/syndie_glue
 	name = "bottle of super glue"
 	desc = "A black market brand of high strength adhesive, rarely sold to the public. Do not ingest."
-	icon = 'monkestation/icons/obj/tools.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state	= "glue"
 	w_class = WEIGHT_CLASS_SMALL
 	var/uses = 1
