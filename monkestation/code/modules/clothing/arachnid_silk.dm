@@ -1,7 +1,7 @@
 // For clothing items created with silk from Arachnids.
 /obj/item/clothing/under/silk
-	icon = 'monkestation/icons/obj/clothing/silk.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/silk.dmi'
+	icon = 'icons/obj/clothing/silk.dmi'
+	worn_icon = 'icons/mob/clothing/silk.dmi'
 	can_adjust = FALSE
 
 /obj/item/clothing/under/silk/loincloth

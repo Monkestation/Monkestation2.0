@@ -615,7 +615,7 @@ GLOBAL_LIST_EMPTY(tracker_beacons)
 //=======
 
 /atom/movable/screen/arrow
-	icon = 'monkestation/icons/mob/hud.dmi'
+	icon = 'icons/mob/hud.dmi'
 	icon_state = "hud_arrow"
 	screen_loc = ui_team_finder
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

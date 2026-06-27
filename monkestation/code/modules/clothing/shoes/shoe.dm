@@ -1,71 +1,71 @@
 /obj/item/clothing/shoes/phantom
 	name = "phantom shoes"
 	desc = "Excellent for when you need to do cool flashy flips."
-	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
+	icon = 'icons/obj/clothing/shoes.dmi'
+	worn_icon = 'icons/mob/clothing/feet.dmi'
 	icon_state = "phantom_shoes"
 
 /obj/item/clothing/shoes/saints
 	name = "saints sneakers"
 	desc = "Officially branded Saints sneakers. Incredibly valuable!"
-	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
+	icon = 'icons/obj/clothing/shoes.dmi'
+	worn_icon = 'icons/mob/clothing/feet.dmi'
 	icon_state = "saints_shoes"
 
 /obj/item/clothing/shoes/morningstar
 	name = "morningstar boots"
 	desc = "The most expensive boots on this station. Wearing them dropped the value by about 50%."
-	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
+	icon = 'icons/obj/clothing/shoes.dmi'
+	worn_icon = 'icons/mob/clothing/feet.dmi'
 	icon_state = "morningstar_shoes"
 
 /obj/item/clothing/shoes/driscoll
 	name = "driscoll boots"
 	desc = "A special pair of leather boots, for those who dont need spurs"
-	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
+	icon = 'icons/obj/clothing/shoes.dmi'
+	worn_icon = 'icons/mob/clothing/feet.dmi'
 	icon_state = "driscoll_boots"
 
 /obj/item/clothing/shoes/cowboyboots
 	name = "cowboy boots"
 	desc = "A standard pair of brown cowboy boots."
-	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
+	icon = 'icons/obj/clothing/shoes.dmi'
+	worn_icon = 'icons/mob/clothing/feet.dmi'
 	icon_state = "cowboyboots"
 
 /obj/item/clothing/shoes/cowboyboots/black
 	name = "black cowboy boots"
 	desc = "A pair of black cowboy boots, pretty easy to scuff up."
-	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
+	icon = 'icons/obj/clothing/shoes.dmi'
+	worn_icon = 'icons/mob/clothing/feet.dmi'
 	icon_state = "cowboyboots_black"
 
 /obj/item/clothing/shoes/crueltysquad_shoes
 	name = "CSIJ level I combat boots"
 	desc = "Boots specifically designed to fit into the CSIJ level I body armor."
-	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
+	icon = 'icons/obj/clothing/shoes.dmi'
+	worn_icon = 'icons/mob/clothing/feet.dmi'
 	icon_state = "crueltysquad_shoes"
 
 /obj/item/clothing/shoes/costume_2021/infinity_shoes
 	name = "infinity sneakers"
 	desc = "Even for offbrand sneakers, these are outdated for the Kung Company."
-	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
+	icon = 'icons/obj/clothing/shoes.dmi'
+	worn_icon = 'icons/mob/clothing/feet.dmi'
 	icon_state = "infinity_shoes"
 
 /obj/item/clothing/shoes/bb_slippers
 	name = "bb slippers"
 	desc = "Despite looking like they'd fall off at any moment, they seem to stay on perfectly."
-	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
+	icon = 'icons/obj/clothing/shoes.dmi'
+	worn_icon = 'icons/mob/clothing/feet.dmi'
 	icon_state = "bb_slippers"
 
 /obj/item/clothing/shoes/civilprotection_boots
 	name = "civil protection boots"
 	desc = "for the officers chasing engineers."
-	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
+	icon = 'icons/obj/clothing/shoes.dmi'
+	worn_icon = 'icons/mob/clothing/feet.dmi'
 	icon_state = "civilprotection_boots"
 
 /obj/item/clothing/shoes/civilprotection_boots/Initialize(mapload)//copied from jackboots (should these be a subtype of jackboots?)
@@ -78,14 +78,18 @@
 /obj/item/clothing/shoes/heels
 	name = "heels"
 	desc = "A both professional and stylish pair of footwear that are difficult to walk in."
-	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
+	icon = 'icons/obj/clothing/shoes.dmi'
+	worn_icon = 'icons/mob/clothing/feet.dmi'
 	icon_state = "heels"
 	can_be_tied = FALSE
 	greyscale_colors = "#39393f"
 	greyscale_config = /datum/greyscale_config/heels
 	greyscale_config_worn = /datum/greyscale_config/heels_worn
 	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/shoes/heels/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/shoesteps/tap_shoes)
 
 /obj/item/clothing/shoes/heels/syndicate
 	name = "heels"

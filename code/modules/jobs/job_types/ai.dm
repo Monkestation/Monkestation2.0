@@ -34,63 +34,37 @@
 			if(!R.connected_ai)
 				R.TryConnectToAI()
 	var/mob/living/silicon/ai/ai_spawn = spawned
-	ai_spawn.log_current_laws()
+	ai_spawn.relocate(TRUE)
 
+	GLOB.ai_os.set_cpu(ai_spawn, GLOB.ai_os.total_cpu)
+	GLOB.ai_os.set_ram(ai_spawn, GLOB.ai_os.total_ram)
+	ai_spawn.log_current_laws()
 
 /datum/job/ai/get_roundstart_spawn_point()
 	return get_latejoin_spawn_point()
 
-
 /datum/job/ai/get_latejoin_spawn_point()
-	var/list/primary_spawn_points = list() // Ideal locations.
-	var/list/secondary_spawn_points = list() // Fallback locations.
-	for(var/obj/effect/landmark/start/ai/spawn_point in GLOB.landmarks_list)
-		if(spawn_point.used)
-			secondary_spawn_points += list(spawn_point)
-			continue
-		if(spawn_point.primary_ai)
-			primary_spawn_points = list(spawn_point)
-			break // Bingo.
-		primary_spawn_points += spawn_point
-	var/obj/effect/landmark/start/ai/chosen_spawn_point
-	if(length(primary_spawn_points))
-		chosen_spawn_point = pick(primary_spawn_points)
-	else if(length(secondary_spawn_points))
-		chosen_spawn_point = pick(secondary_spawn_points)
-	else
-		CRASH("Failed to find any AI spawn points.")
-	chosen_spawn_point.used = TRUE
-	return chosen_spawn_point
-
-
-/datum/job/ai/get_latejoin_spawn_point()
-	for(var/obj/structure/ai_core/latejoin_inactive/inactive_core as anything in GLOB.latejoin_ai_cores)
-		if(!inactive_core.is_available())
-			continue
-		GLOB.latejoin_ai_cores -= inactive_core
-		inactive_core.available = FALSE
-		. = inactive_core.loc
-		qdel(inactive_core)
-		return
-	return ..()
-
+	for(var/obj/machinery/ai/data_core/core as anything in GLOB.data_cores)
+		if(istype(core))
+			if(core.valid_data_core()) //spawning in will relocate us regardless.
+				return core
+	return FALSE
 
 /datum/job/ai/special_check_latejoin(client/C)
 	if(!do_special_check)
 		return TRUE
-	for(var/i in GLOB.latejoin_ai_cores)
-		var/obj/structure/ai_core/latejoin_inactive/LAI = i
-		if(istype(LAI))
-			if(LAI.is_available())
+	if(length(GLOB.ai_list) >= total_positions)
+		return FALSE
+	for(var/obj/machinery/ai/data_core/core as anything in GLOB.data_cores)
+		if(istype(core))
+			if(core.valid_data_core())
 				return TRUE
 	return FALSE
-
 
 /datum/job/ai/announce_job(mob/living/joining_mob)
 	. = ..()
 	if(SSticker.HasRoundStarted())
 		minor_announce("[joining_mob] has been downloaded to an empty bluespace-networked AI core at [AREACOORD(joining_mob)].")
-
 
 /datum/job/ai/config_check()
 	return CONFIG_GET(flag/allow_ai)

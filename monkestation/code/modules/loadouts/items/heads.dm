@@ -345,7 +345,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/engi_beret
 	name = "Engineering Beret"
 	item_path = /obj/item/clothing/head/beret/engi
-	restricted_roles = list(JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN, JOB_CHIEF_ENGINEER, JOB_SIGNAL_TECHNICIAN)
+	restricted_roles = list(JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN, JOB_CHIEF_ENGINEER, JOB_NETWORK_ADMIN)
 
 /datum/loadout_item/head/cargo_beret
 	name = "Supply Beret"
@@ -735,7 +735,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 
 /datum/loadout_item/head/beret_robo
 	name = "Roboticist Beret"
-	item_path = /obj/item/clothing/head/beret/science/fancy/robo
+	item_path = /obj/item/clothing/head/beret/science/robo
 	restricted_roles = list(JOB_ROBOTICIST)
 	requires_purchase = FALSE
 

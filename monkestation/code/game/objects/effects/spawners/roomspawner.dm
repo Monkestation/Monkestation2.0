@@ -3,7 +3,7 @@
 
 /obj/effect/spawner/room
 	name = "random room spawner"
-	icon = 'monkestation/icons/effects/landmarks_static.dmi'
+	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "random_room"
 	dir = NORTH
 	var/room_width = 0

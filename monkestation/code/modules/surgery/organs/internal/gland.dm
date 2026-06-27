@@ -1,7 +1,7 @@
 /obj/item/organ/internal/silkgland
 	name = "silk gland"
 	desc = "The silk actually comes out of your wrists, this is just the thing that produces it."
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "arachnid_silkgland"
 	visual = FALSE
 	zone = BODY_ZONE_PRECISE_GROIN
@@ -13,7 +13,7 @@
 	desc = "Create a piece of silk for arts and crafts. Consumes nutrition and cannot be done if starving."
 	check_flags = AB_CHECK_INCAPACITATED | AB_CHECK_CONSCIOUS | AB_CHECK_HANDS_BLOCKED // Can't do it if you're missing your arms!
 	button_icon_state = "web"
-	button_icon = 'monkestation/icons/mob/actions/actions_arachnid.dmi'
+	button_icon = 'icons/mob/actions/actions_arachnid.dmi'
 	overlay_icon_state = "bg_alien_border"
 
 /obj/item/organ/internal/silkgland/Insert(mob/living/carbon/receiver, special, drop_if_replaced)

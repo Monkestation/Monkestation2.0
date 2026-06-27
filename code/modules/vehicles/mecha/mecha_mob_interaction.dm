@@ -108,6 +108,7 @@
 /obj/vehicle/sealed/mecha/mob_exit(mob/M, silent = FALSE, randomstep = FALSE, forced = FALSE)
 	var/atom/movable/mob_container
 	var/turf/newloc = get_turf(src)
+	var/moved_already = FALSE
 	if(ishuman(M))
 		mob_container = M
 	else if(isbrain(M))
@@ -120,41 +121,45 @@
 		AI.eyeobj?.UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 		AI.eyeobj?.forceMove(newloc) //kick the eye out as well
 		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
-			if(!AI.linked_core) //if the victim AI has no core
+			newloc = null
+			if(!AI.relocate(silent = TRUE, kill_otherwise = FALSE))
 				AI.investigate_log("has been gibbed by being forced out of their mech by another AI.", INVESTIGATE_DEATHS)
 				AI.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
 			AI = null
 			mecha_flags &= ~SILICON_PILOT
 			return
 		else
-			if(!AI.linked_core)
-				if(!silent)
-					to_chat(AI, span_userdanger("Inactive core destroyed. Unable to return."))
-				AI.linked_core = null
-				return
 			if(!silent)
-				to_chat(AI, span_notice("Returning to core..."))
+				to_chat(AI, span_notice("Attempting to return to core..."))
 			AI.controlled_equipment = null
 			AI.remote_control = null
 			mob_container = AI
-			newloc = get_turf(AI.linked_core)
-			qdel(AI.linked_core)
+			newloc = null
+			if(AI.relocate(silent = TRUE, kill_otherwise = FALSE))
+				moved_already = TRUE
+			else
+				to_chat(AI, span_userdanger("No cores available. Core code corrupted."))
 	else
 		return ..()
 	var/mob/living/ejector = M
-	mecha_flags  &= ~SILICON_PILOT
-	mob_container.forceMove(newloc)//ejecting mob container
-	log_message("[mob_container] moved out.", LOG_MECHA)
-	SStgui.close_user_uis(M, src)
-	if(istype(mob_container, /obj/item/mmi))
-		var/obj/item/mmi/mmi = mob_container
-		if(mmi.brainmob)
-			ejector.forceMove(mmi)
-			ejector.reset_perspective()
-			remove_occupant(ejector)
-		mmi.set_mecha(null)
-		mmi.update_appearance()
-	setDir(SOUTH)
+	mecha_flags &= ~SILICON_PILOT
+	if(!moved_already)//ejecting mob container
+		if(mob_container.forceMove(newloc))
+			moved_already = TRUE
+
+	if(moved_already)
+		log_message("[mob_container] moved out.", LOG_MECHA)
+		SStgui.close_user_uis(M, src)
+		if(istype(mob_container, /obj/item/mmi))
+			var/obj/item/mmi/mmi = mob_container
+			if(mmi.brainmob)
+				ejector.forceMove(mmi)
+				ejector.reset_perspective()
+				remove_occupant(ejector)
+			mmi.set_mecha(null)
+			mmi.update_appearance()
+		setDir(SOUTH)
+
 	return ..()
 
 /obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)

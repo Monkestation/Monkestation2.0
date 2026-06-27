@@ -1711,10 +1711,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/virtual_domain/powered_lighting)
-"rQ" = (
-/obj/machinery/camera/autoname/directional/north,
-/turf/open/floor/iron,
-/area/virtual_domain/powered_lighting)
 "rR" = (
 /obj/effect/turf_decal/trimline/blue/arrow_cw,
 /turf/open/floor/iron,
@@ -7188,7 +7184,7 @@ tG
 tp
 tp
 Ob
-rQ
+fF
 As
 LX
 iM
@@ -7452,7 +7448,7 @@ Xg
 tp
 tp
 mD
-rQ
+fF
 As
 LX
 iM

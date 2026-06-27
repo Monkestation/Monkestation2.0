@@ -1,9 +1,9 @@
 /obj/item/clothing/mask/translator
 	name = "MonkeTech AutoTranslator"
 	desc = "A small device that will translate speech."
-	icon = 'monkestation/icons/obj/clothing/masks.dmi'
+	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "translator"
-	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
 	worn_icon_state = "translator"
 	slot_flags = ITEM_SLOT_MASK | ITEM_SLOT_NECK
 	var/modifies_speech = TRUE

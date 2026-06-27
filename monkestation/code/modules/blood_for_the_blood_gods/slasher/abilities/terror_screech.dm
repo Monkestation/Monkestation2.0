@@ -14,11 +14,11 @@
 	var/datum/antagonist/slasher/slasherdatum = owner.mind.has_antag_datum(/datum/antagonist/slasher)
 	switch(slasherdatum.slasher_variant)
 		if(VARIANT_SLASHER)
-			playsound(owner, 'monkestation/sound/voice/terror.ogg', 100, falloff_exponent = 0, use_reverb = FALSE)
+			playsound(owner, 'sound/voice/terror.ogg', 100, falloff_exponent = 0, use_reverb = FALSE)
 		if(VARIANT_CLUWNE)
-			playsound(owner, 'monkestation/sound/voice/cluwne-terror.ogg', 100, falloff_exponent = 0, use_reverb = FALSE)
+			playsound(owner, 'sound/voice/cluwne-terror.ogg', 100, falloff_exponent = 0, use_reverb = FALSE)
 		if(VARIANT_BRUTE)
-			playsound(owner, 'monkestation/sound/voice/brute-terror.ogg', 100, falloff_exponent = 0, use_reverb = FALSE)
+			playsound(owner, 'sound/voice/brute-terror.ogg', 100, falloff_exponent = 0, use_reverb = FALSE)
 
 	var/datum/antagonist/slasher/slasher = owner.mind.has_antag_datum(/datum/antagonist/slasher)
 

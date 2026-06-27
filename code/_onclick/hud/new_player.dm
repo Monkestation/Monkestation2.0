@@ -202,7 +202,7 @@
 		var/client/new_client = new_player.client
 		if(new_client)
 			var/highest_job = new_client.prefs.GetHighestJobPreference()
-			var/ready_message = "Readying up as '[new_client.prefs.read_preference(/datum/preference/name/real_name)]'"
+			var/ready_message = "Readying up as '[new_client.prefs.get_enabled_character_names()]'"
 			if(length(highest_job))
 				ready_message += ", Highest occupation setting: [highest_job]"
 			to_chat(new_client, span_notice(ready_message))
@@ -613,7 +613,7 @@
 /atom/movable/screen/lobby/button/ook/Click(location, control, params)
 	. = ..()
 	if(.)
-		SEND_SOUND(usr, 'monkestation/sound/misc/menumonkey.ogg')
+		SEND_SOUND(usr, 'sound/misc/menumonkey.ogg')
 
 /atom/movable/screen/lobby/overflow_alert
 	screen_loc = "TOP:-48,CENTER-2.7"

@@ -130,9 +130,9 @@
 /obj/item/gun/ballistic/automatic/wt550/fss //Slightly worse printable WT-550
 	name = "\improper FSS-550"
 	desc = "A modified printable version of the WT-550 autorifle, in order to be printed by an autolathe, some sacrifices had to be made. Not only does this gun have less stopping power, the magazine doesn't entirely fit, and it takes a bit of force to jam it in or rip it out. Used by Syndicate agents and rebels in more than 50 systems."
-	icon = 'monkestation/icons/obj/guns/guns.dmi'
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthand.dmi'
+	icon = 'icons/obj/guns/guns.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	icon_state = "fss550"
 	inhand_icon_state = "fss"
 	spread = 2
@@ -322,7 +322,7 @@
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/smg_heavy.ogg'
 	can_suppress = TRUE
 	suppressor_x_offset = 9
-	fire_delay = 0.7 SECONDS
+	fire_delay = 0.3 SECONDS
 	burst_size = 1
 	actions_types = list()
 	spread = 14.5
@@ -798,7 +798,7 @@
 /obj/item/gun/ballistic/automatic/quarad_lmg /// Light Machine Gun, lives in the heavy armaments locker
 	name = "\improper Qarad Light Machinegun"
 	desc = "A spotless, if outdated machinegun. The same model was used to great effect against xenomorph incursions in the past, hopefully this one doesn't have any manufacturing defects...."
-	icon = 'monkestation/icons/obj/weapons/guns/guns48x.dmi'
+	icon = 'icons/obj/weapons/guns/guns48x.dmi'
 	icon_state = "outomaties"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_worn.dmi'
 	worn_icon_state = "outomaties"
@@ -850,10 +850,10 @@
 	name = "\improper Suspicious Qarad Light Machinegun"
 	desc = "A heavily modified machinegun, complete with bluespace barrel extender! More bullet per bullet, more barrel per inch!"
 	icon_state = "outomaties_evil"
-	worn_icon = 'monkestation/icons/mob/inhands/gunsx48_worn.dmi'
+	worn_icon = 'icons/mob/inhands/gunsx48_worn.dmi'
 	worn_icon_state = "outomaties_evil"
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthandx48.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthandx48.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthandx48.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthandx48.dmi'
 	inhand_icon_state = "outomaties_evil"
 	spawn_magazine_type = /obj/item/ammo_box/magazine/c65xeno_drum/evil
 	fire_delay = 0.1 SECONDS
@@ -1073,7 +1073,7 @@
 	can_suppress = FALSE
 	burst_size = 0
 	actions_types = list()
-	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
 	casing_ejector = FALSE
 
 

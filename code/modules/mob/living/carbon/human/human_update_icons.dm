@@ -1088,9 +1088,9 @@ generate/load female uniform sprites matching all previously decided variables
 	var/mask_icon = 'icons/effects/cut.dmi'
 	if(icon_width != 0 && icon_height != 0)
 		if(icon_height == 48 && icon_width <= 96)
-			mask_icon = 'monkestation/icons/effects/cut_96x48.dmi'
+			mask_icon = 'icons/effects/cut_96x48.dmi'
 		else if(icon_height == 64 && icon_width <= 64)
-			mask_icon = 'monkestation/icons/effects/cut_64x64.dmi'
+			mask_icon = 'icons/effects/cut_64x64.dmi'
 		else if(icon_height != 32 || icon_width > 32)
 			stack_trace("Bad dimensions (w[icon_width],h[icon_height]) for icon '[appearance.icon]'")
 

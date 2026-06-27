@@ -14,14 +14,14 @@
 
 /datum/quirk/jailbird/add_unique(client/client_source)
 	var/mob/living/carbon/human/jailbird = quirk_holder
-	var/quirk_crime	= pick(world.file2list("monkestation/strings/random_crimes.txt"))
+	var/quirk_crime	= pick(file2list("strings/random_crimes.txt"))
 	to_chat(jailbird, span_boldnotice("You are on parole for the crime of: [quirk_crime]!"))
 	addtimer(CALLBACK(src, PROC_REF(apply_arrest), quirk_crime), 10 SECONDS)
 
 /datum/quirk/jailbird/proc/apply_arrest(crime_name)
 	var/mob/living/carbon/human/jailbird = quirk_holder
 	jailbird.mind.add_memory(/datum/memory/key/on_the_run, crime = crime_name)
-	var/crime = "[pick(world.file2list("monkestation/strings/random_police.txt"))] [(rand(9)+1)] [pick("days", "weeks", "months", "years")] ago"
+	var/crime = "[pick(file2list("strings/random_police.txt"))] [(rand(9)+1)] [pick("days", "weeks", "months", "years")] ago"
 	var/perpname = jailbird.real_name
 	var/datum/record/crew/jailbird_record = find_record(perpname)
 	// remove quirk if we don't even have a record

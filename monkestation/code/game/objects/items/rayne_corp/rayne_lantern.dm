@@ -1,6 +1,6 @@
 /obj/item/flashlight/lantern/rayne
 	name = "lantern"
-	icon = 'monkestation/icons/obj/rayne_corp/rayne.dmi'
+	icon = 'icons/obj/rayne_corp/rayne.dmi'
 	icon_state = "rayne_lantern"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
@@ -10,7 +10,7 @@
 	light_outer_range = 5// luminosity when on
 	light_system = OVERLAY_LIGHT
 	inhand_icon_state = "rayne_lantern"
-	worn_icon = 'monkestation/icons/obj/rayne_corp/rayne.dmi'
+	worn_icon = 'icons/obj/rayne_corp/rayne.dmi'
 	worn_icon_state = "rayne_lantern_worn"
 	slot_flags = ITEM_SLOT_NECK | ITEM_SLOT_BELT
 

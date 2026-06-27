@@ -172,7 +172,6 @@
 	inhand_y_dimension = 32
 	worn_icon_state = "cshotgun"
 	w_class = WEIGHT_CLASS_HUGE
-	semi_auto = TRUE
 	projectile_damage_multiplier = 1.2
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube
 	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
@@ -186,7 +185,7 @@
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/bounty
 	name = "bounty cycler shotgun"
 	desc = "An advanced shotgun with two separate magazine tubes. This one shows signs of bounty hunting customization, meaning it likely has a dual rubber shot/fire slug load."
-	//alt_accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube/fire   monkestation edit
+	alt_accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube/fire
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/examine(mob/user)
 	. = ..()
@@ -202,7 +201,7 @@
 	return ..()
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/attack_self(mob/living/user)
-	if(!chambered && magazine.contents.len)
+	if(!chambered && get_ammo())
 		rack()
 	else
 		toggle_tube(user)
@@ -513,7 +512,7 @@
 	desc = "Dear fucking god, what the fuck even is this!? Theres a green flag with a blue circle and a yellow diamond around it. Some text in the circle says: \"ORDEM E PROGRESSO.\""
 	icon_state = "shotgun_brazil"
 	slot_flags = NONE
-	icon = 'monkestation/icons/obj/guns/48x32guns.dmi'
+	icon = 'icons/obj/guns/48x32guns.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -524,9 +523,9 @@
 	unique_reskin = null
 	recoil = 5
 	weapon_weight = WEAPON_LIGHT
-	fire_sound = 'monkestation/sound/weapons/gun/shotgun/quadfire.ogg'
-	rack_sound = 'monkestation/sound/weapons/gun/shotgun/quadrack.ogg'
-	load_sound = 'monkestation/sound/weapons/gun/shotgun/quadinsert.ogg'
+	fire_sound = 'sound/weapons/gun/shotgun/quadfire.ogg'
+	rack_sound = 'sound/weapons/gun/shotgun/quadrack.ogg'
+	load_sound = 'sound/weapons/gun/shotgun/quadinsert.ogg'
 	fire_sound_volume = 50
 	rack_sound_volume = 50
 	can_be_sawn_off = FALSE
@@ -568,6 +567,8 @@
 	worn_icon_state = "protokshotgunauto"
 	icon_state = "protokshotgunauto"
 	slot_flags = ITEM_SLOT_BACK
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
 	burst_size = 1
 	fire_delay = 0
 	base_pixel_x = -2

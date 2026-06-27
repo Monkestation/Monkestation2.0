@@ -4,12 +4,12 @@
 //greyscale_config
 /datum/greyscale_config/henchmen
 	name = "henchmen"
-	icon_file = 'monkestation/icons/mob/clothing/costumes/henchmen/henchmen_item.dmi'
+	icon_file = 'icons/mob/clothing/costumes/henchmen/henchmen_item.dmi'
 	json_config = 'code/datums/greyscale/json_configs/henchmen.json'
 	expected_colors = 1
 /datum/greyscale_config/henchmen_worn
 	name = "henchmen_worn"
-	icon_file = 'monkestation/icons/mob/clothing/costumes/henchmen/henchmen_worn.dmi'
+	icon_file = 'icons/mob/clothing/costumes/henchmen/henchmen_worn.dmi'
 	json_config = 'code/datums/greyscale/json_configs/henchmen.json'
 	expected_colors = 1
 
@@ -17,8 +17,8 @@
 /obj/item/clothing/head/henchmen_hat
 	name = "henchmen cap"
 	desc = "Alright boss.. I'll handle it."
-	icon = 'monkestation/icons/mob/clothing/costumes/henchmen/henchmen_item.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/costumes/henchmen/henchmen_worn.dmi'
+	icon = 'icons/mob/clothing/costumes/henchmen/henchmen_item.dmi'
+	worn_icon = 'icons/mob/clothing/costumes/henchmen/henchmen_worn.dmi'
 	icon_state = "greyscale_cap"
 	greyscale_colors = "#201b1a"
 	greyscale_config = /datum/greyscale_config/henchmen
@@ -28,8 +28,8 @@
 /obj/item/clothing/suit/jacket/henchmen_coat
 	name = "henchmen coat"
 	desc = "Alright boss.. I'll handle it."
-	icon = 'monkestation/icons/mob/clothing/costumes/henchmen/henchmen_item.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/costumes/henchmen/henchmen_worn.dmi'
+	icon = 'icons/mob/clothing/costumes/henchmen/henchmen_item.dmi'
+	worn_icon = 'icons/mob/clothing/costumes/henchmen/henchmen_worn.dmi'
 	icon_state = "greyscale_coat"
 	greyscale_colors = "#201b1a"
 	greyscale_config = /datum/greyscale_config/henchmen

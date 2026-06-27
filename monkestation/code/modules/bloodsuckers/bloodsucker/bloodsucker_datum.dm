@@ -8,10 +8,10 @@
 	show_name_in_check_antagonists = TRUE
 	can_coexist_with_others = FALSE
 	hijack_speed = 0.5
-	hud_icon = 'monkestation/icons/bloodsuckers/bloodsucker_icons.dmi'
+	hud_icon = 'icons/bloodsuckers/bloodsucker_icons.dmi'
 	ui_name = "AntagInfoBloodsucker"
 	preview_outfit = /datum/outfit/bloodsucker_outfit
-	stinger_sound = 'monkestation/sound/bloodsuckers/BloodsuckerAlert.ogg'
+	stinger_sound = 'sound/bloodsuckers/BloodsuckerAlert.ogg'
 	can_assign_self_objectives = TRUE
 	/// How much blood we have, starting off at default blood levels.
 	var/bloodsucker_blood_volume = BLOOD_VOLUME_NORMAL
@@ -76,6 +76,8 @@
 	var/atom/movable/screen/bloodsucker/blood_counter/blood_display
 	///Vampire level display HUD
 	var/atom/movable/screen/bloodsucker/rank_counter/vamprank_display
+	///Blood thickening HUD, keeps track of blood needed to rank up
+	var/atom/movable/screen/bloodsucker/thickening_counter/thickening_display
 
 	var/obj/effect/abstract/bloodsucker_tracker_holder/tracker
 
@@ -208,8 +210,10 @@
 		var/datum/hud/hud_used = current_mob.hud_used
 		hud_used.infodisplay -= blood_display
 		hud_used.infodisplay -= vamprank_display
+		hud_used.infodisplay -= thickening_display
 		QDEL_NULL(blood_display)
 		QDEL_NULL(vamprank_display)
+		QDEL_NULL(thickening_display)
 
 /datum/antagonist/bloodsucker/after_body_transfer(mob/living/old_body, mob/living/new_body)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), new_body), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
@@ -229,6 +233,9 @@
 
 	vamprank_display = new /atom/movable/screen/bloodsucker/rank_counter(null, bloodsucker_hud)
 	bloodsucker_hud.infodisplay += vamprank_display
+
+	thickening_display = new /atom/movable/screen/bloodsucker/thickening_counter(null, bloodsucker_hud)
+	bloodsucker_hud.infodisplay += thickening_display
 
 	bloodsucker_hud.show_hud(bloodsucker_hud.hud_version)
 	UnregisterSignal(owner.current, COMSIG_MOB_HUD_CREATED)
