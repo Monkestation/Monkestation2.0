@@ -115,9 +115,9 @@
 			fail_prob += 15
 		if(gloves && istype(gloves, /obj/item/clothing/gloves/latex/surgical))//For black latex gloves, 20% buff to surgery success
 			fail_prob -= 20
-		else if(HAS_TRAIT(user, TRAIT_STERILE))//For regular latex gloves, give a 5% bonus. If not, incure a 10% failure penalty.
+		else if(HAS_TRAIT(user, TRAIT_STERILE) || (gloves && (gloves.clothing_flags & STERILE)))//For regular latex gloves or deployed medical modsuits/hardsuits, give a 5% bonus
 			fail_prob -= 5
-		else
+		else // If not, incure a 10% failure penalty.
 			fail_prob += 10
 		if(surgery.speed_modifier > 0 || HAS_TRAIT(target, TRAIT_ANALGESIA))//for chemical related surgery speed buffs, adds a reduction in failure chance. also checks for painkillers
 			fail_prob -= 15
