@@ -79,7 +79,8 @@
 	var/datum/sprite_accessory/screen = GLOB.ipc_screens_list[value]
 
 	var/icon/icon_with_screen = new(ipc_head)
-	icon_with_screen.Blend(icon(screen.icon, "m_ipc_screen_[screen.icon_state]_ADJ"), ICON_OVERLAY)
+	if(screen.icon_state != "none")
+		icon_with_screen.Blend(icon(screen.icon, "m_ipc_screen_[screen.icon_state]_ADJ"), ICON_OVERLAY)
 	icon_with_screen.Scale(64, 64)
 	icon_with_screen.Crop(15, 64, 15 + 31, 64 - 31)
 
