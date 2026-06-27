@@ -65,29 +65,17 @@
 			to_chat(user, span_warning("Sticking an empty MMI into the frame would sort of defeat the purpose."))
 			return ITEM_INTERACT_SUCCESS
 		if(!B.brainmob.key)
-				/*		var/ghost_can_reenter = 0
-
-			if(B.brainmob.mind)
-				for(var/mob/dead/observer/ghost in GLOB.player_list)
-					if(ghost.ghost_flags & GHOST_CAN_REENTER && ghost.mind == B.brainmob.mind)
-						ghost_can_reenter = 1
-						break
-				for(var/mob/living/basic/S in GLOB.player_list)
-					if(HAS_TRAIT(S, TRAIT_RESPAWNABLE))
-						ghost_can_reenter = 1
-						break
-			if(!ghost_can_reenter)
-				to_chat(user, span_notice("[B] is completely unresponsive; there's no point."))
-				return ITEM_INTERACT_SUCCESS
+			to_chat(user, span_warning("This MMI is inactive."))
+			return ITEM_INTERACT_SUCCESS
 
 		if(B.brainmob.stat == DEAD)
 			to_chat(user, span_warning("[B] is dead. Sticking it into the frame would sort of defeat the purpose."))
 			return ITEM_INTERACT_SUCCESS
 
-		if(check_jobban(B.brainmob, "Cyborg") || check_jobban(B.brainmob, "nonhumandept"))
+		if(is_banned_from(B.brainmob.key, list(ROLE_PAI, JOB_CYBORG)))
 			to_chat(user, span_warning("[B] does not seem to fit."))
 			return ITEM_INTERACT_SUCCESS
-*/
+
 		to_chat(user, span_notice("You install [B] in [src]!"))
 
 		user.dropItemToGround()
