@@ -78,14 +78,14 @@
 
 //Burn times for cooking things on a stove.
 //Anything put on a stove for this long becomes a burned mess.
-#define CHEWIN_BURN_TIME_LOW		15 MINUTES
+#define CHEWIN_BURN_TIME_LOW 15 MINUTES
 #define CHEWIN_BURN_TIME_MEDIUM	10 MINUTES
-#define CHEWIN_BURN_TIME_HIGH		5 MINUTES
+#define CHEWIN_BURN_TIME_HIGH 5 MINUTES
 
 //Ignite times for reagents interacting with a stove.
 //The stove will catch fire if left on too long with flammable reagents in any of its holders.
-#define CHEWIN_IGNITE_TIME_LOW		1 HOUR
-#define CHEWIN_IGNITE_TIME_MEDIUM	30 MINUTES
+#define CHEWIN_IGNITE_TIME_LOW 1 HOURS
+#define CHEWIN_IGNITE_TIME_MEDIUM 30 MINUTES
 #define CHEWIN_IGNITE_TIME_HIGH	15 MINUTES
 
 //Determines how much quality is taken from a food each tick when a 'no recipe' response is made.

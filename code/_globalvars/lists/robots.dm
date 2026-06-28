@@ -9,7 +9,7 @@ GLOBAL_LIST_EMPTY(cyborg_base_models_icon_list)
 		var/valid_cyborg_models = list(
 			"Engineering" = /obj/item/robot_model/engineering,
 			"Medical" = /obj/item/robot_model/medical,
-			"Cargo" = /obj/item/robot_model/cargo, //monkestation edit
+			"Cargo" = /obj/item/robot_model/cargo,
 			"Miner" = /obj/item/robot_model/miner,
 			"Janitor" = /obj/item/robot_model/janitor,
 			"Service" = /obj/item/robot_model/service,
@@ -28,9 +28,3 @@ GLOBAL_LIST_EMPTY(cyborg_base_models_icon_list)
 			var/model_icon = initial(model.cyborg_base_icon)
 			valid_base_models[option] = image(icon = 'icons/mob/silicon/robots.dmi', icon_state = model_icon)
 		GLOB.cyborg_base_models_icon_list = valid_base_models
-
-#define CYBORG_ICON_CARGO 'monkestation/code/modules/cargoborg/icons/robots_cargo.dmi'
-
-/// Module is compatible with Cargo Cyborg model
-#define BORG_MODEL_CARGO (BORG_MODEL_ENGINEERING<<1)
-#define RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_CARGO "/Cargo Cyborgs"

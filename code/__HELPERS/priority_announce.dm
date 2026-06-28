@@ -13,7 +13,7 @@
 #define CHAT_ALERT_DEFAULT_SPAN(string) ("<div class='chat_alert_default'>" + string + "</div>")
 #define CHAT_ALERT_COLORED_SPAN(color, string) ("<div class='chat_alert_" + color + "'>" + string + "</div>")
 
-#define ANNOUNCEMENT_COLORS list("default", "green", "blue", "pink", "yellow", "orange", "red", "purple", "grey", "amber", "crimson") // monkestation edit
+#define ANNOUNCEMENT_COLORS list("default", "green", "blue", "pink", "yellow", "orange", "red", "purple", "grey", "amber", "crimson")
 
 /**
  * Make a big red text announcement to
@@ -67,16 +67,14 @@
 			GLOB.news_network.submit_article(text, "Captain's Announcement", "Station Announcements", null)
 		if(ANNOUNCEMENT_TYPE_SYNDICATE)
 			header = MAJOR_ANNOUNCEMENT_TITLE("Syndicate Captain's Announcement")
-		// MONKESTATION ADDITION START
 		if(ANNOUNCEMENT_TYPE_AI)
 			var/mob/living/silicon/ai/sender = usr
 			if(!istype(sender))
 				CRASH("Non-AI tried to send an AI station announcement")
 			header = MAJOR_ANNOUNCEMENT_TITLE("Station Announcement by [sender.name] (AI)")
 			sound_channel = CHANNEL_VOX
-		// MONKESTATION ADDITION END
 		else
-			header += generate_unique_announcement_header(title, sender_override, append_update) // Monkestation edit - update append
+			header += generate_unique_announcement_header(title, sender_override, append_update)
 			sound_channel = CHANNEL_STORYTELLER
 
 	announcement_strings += ANNOUNCEMENT_HEADER(header)
@@ -101,7 +99,7 @@
 		else
 			GLOB.news_network.submit_article(text, "[command_name()][append_update ? " Update" : ""]", "Station Announcements", null)
 
-/proc/print_command_report(text = "", title = null, announce = TRUE, sanitize = TRUE) // monkestation edit - sanitization
+/proc/print_command_report(text = "", title = null, announce = TRUE, sanitize = TRUE)
 	if(!title)
 		title = "Classified [command_name()] Update"
 
@@ -170,10 +168,10 @@
 		message = replacetext_char(selected_level.elevating_to_announcement, "%STATION_NAME%", station_name())
 	else if(current_level_number > previous_level_number)
 		title = "Attention! Security level elevated to [current_level_name]:"
-		message = replacetext_char(selected_level.elevating_to_announcement, "%STATION_NAME%", station_name()) // monkestation edit: add %STATION_NAME% replacement
+		message = replacetext_char(selected_level.elevating_to_announcement, "%STATION_NAME%", station_name())
 	else
 		title = "Attention! Security level lowered to [current_level_name]:"
-		message = replacetext_char(selected_level.lowering_to_announcement, "%STATION_NAME%", station_name()) // monkestation edit: add %STATION_NAME% replacement
+		message = replacetext_char(selected_level.lowering_to_announcement, "%STATION_NAME%", station_name())
 
 	var/list/level_announcement_strings = list()
 	level_announcement_strings += ANNOUNCEMENT_HEADER(MINOR_ANNOUNCEMENT_TITLE(title))
@@ -210,13 +208,27 @@
 			continue
 
 		if(target.client?.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS]"])
-			// monkestation start: volume mixer
 			var/sound/mixed_sound = sound(sound_to_play)
 			if("[sound_channel]" in target.client?.prefs?.channel_volume)
 				mixed_sound.volume = target.client?.prefs?.channel_volume["[sound_channel]"]
 			if(!isnull(target.client))
 				SEND_SOUND(target, mixed_sound)
-			// monkestation end
+
+/proc/send_formatted_admin_message(
+	text,
+	title = "Admin Alert",
+	sound_override = 'sound/effects/adminhelp.ogg',
+	color_override = "red"
+)
+	if(isnull(text))
+		return
+	var/list/announcement_strings = list()
+	announcement_strings += SUBHEADER_ANNOUNCEMENT_TITLE(title)
+	announcement_strings += span_major_announcement_text(text)
+	var/finalized_announcement = create_announcement_div(jointext(announcement_strings, ""), color_override)
+	SEND_ADMINCHAT_MESSAGE(finalized_announcement)
+	if(sound_override)
+		SEND_ADMINS_NOTFICATION_SOUND(sound_override)
 
 #undef MAJOR_ANNOUNCEMENT_TITLE
 #undef MAJOR_ANNOUNCEMENT_TEXT

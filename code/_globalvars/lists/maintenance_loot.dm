@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/trash/candle = 1,
 
 		/obj/item/c_tube = 1,
-		/obj/item/disk/data/random = 1, // monkestation edit: use random dna data disks
+		/obj/item/disk/data/random = 1,
 		/obj/item/folder/yellow = 1,
 		/obj/item/hand_labeler = 1,
 		/obj/item/paper = 1,
@@ -249,7 +249,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		list(//drinks
 			/obj/item/reagent_containers/cup/glass/bottle/vodka = 1,
 			/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola = 1,
-			/obj/item/reagent_containers/cup/glass/drinkingglass/filled/sunset_sarsaparilla = 1, //monkestation edit
+			/obj/item/reagent_containers/cup/glass/drinkingglass/filled/sunset_sarsaparilla = 1,
 			/obj/item/reagent_containers/cup/soda_cans/grey_bull = 1,
 			) = 1,
 		list(//sprayers
@@ -368,20 +368,20 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 			/obj/item/reagent_containers/medipen/salacid = 1,
 			/obj/item/reagent_containers/syringe/contraband/methamphetamine = 1,
 			) = 1,
-		/obj/item/storage/pill_bottle/maintenance_pill/full = 1, //monkestation edit
+		/obj/item/storage/pill_bottle/maintenance_pill/full = 1,
 		) = 1,
 
 	list(//misc
-		/obj/item/book/granter/crafting_recipe/maint_gun/pipegun_prime = 1, //monkestation edit: added maint_gun
+		/obj/item/book/granter/crafting_recipe/maint_gun/pipegun_prime = 1,
 		/obj/item/book/granter/crafting_recipe/trash_cannon = 1,
-		/obj/item/book/granter/crafting_recipe/maint_gun/laser_musket_prime = 1, //monkestation edit
+		/obj/item/book/granter/crafting_recipe/maint_gun/laser_musket_prime = 1,
 		/obj/item/book/granter/sign_language = 1,
 		/obj/item/disk/nuclear/fake = 1,
 		/obj/item/skillchip/brainwashing = 1,
 		/obj/item/tattoo_kit = 1,
 		/obj/item/folder/ancient_paperwork = 1,
-		/obj/item/seeds/tree/money = 1, //monkestation edit
-		/obj/item/disk/design_disk/fss = 1, //monkestation edit
+		/obj/item/seeds/tree/money = 1,
+		/obj/item/disk/design_disk/fss = 1,
 		) = 1,
 
 ))
@@ -389,38 +389,28 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 
 
 GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
-		/* /obj/effect/rune/teleport = 1, */ // monkestation removal: this should really only have /obj/items
 		/obj/item/clothing/head/helmet/abductor = 1,
 		/obj/item/clothing/shoes/jackboots/fast = 1,
 		/obj/item/clothing/suit/armor/reactive/table = 1,
 		/obj/item/dice/d20/fate/stealth/one_use = 1, //Looks like a d20, keep the d20 in the uncommon pool.
 		/obj/item/storage/belt/military/assault/cloak = 1, //this is currently broken and does not recharge
 		/obj/item/spear/grey_tide = 1,
-		/* MONKESTATION EDIT - removal of self antag items from maints loot
-		list(//music
-			/obj/item/instrument/saxophone/spectral = 1,
-			/obj/item/instrument/trombone/spectral = 1,
-			/obj/item/instrument/trumpet/spectral = 1,
-			) = 1,
-		*/ // MONKESTATION EDIT END
 		/obj/item/toy/cards/deck/tarot/haunted = 1,
 		/obj/item/organ/internal/butt/atomic = 1,
 	))
-
 
 GLOBAL_LIST_INIT(maint_fauna, list(//fauna: there be critters living in yer maint tunnels
 		/mob/living/basic/bee/friendly = 1,
 	))
 
-
 //Maintenance loot spawner pools
 #define maint_trash_weight 4500
-#define maint_common_weight 4497 //monkestation edit: from 4500 to 4497
+#define maint_common_weight 4497
 #define maint_uncommon_weight 1400
 #define maint_rarity_weight 99
 #define maint_oddity_weight 2 //1 out of 10,000 would give metastation (180 spawns) a 2 in 111 chance of spawning an oddity per round, similar to xeno egg
 #define maint_holiday_weight 3500 // When holiday loot is enabled, it'll give every loot item a 25% chance of being a holiday item
-#define maint_fauna_weight 150 //monkestation edit: adds friendly maintenance bees, also allows for other maintenance fauna to be coded in.
+#define maint_fauna_weight 150
 #define maint_cursed_die 25 // this is here so that it doesnt throw the die instantly when you are diggin in piles
 //Loot pool used by default maintenance loot spawners
 GLOBAL_LIST_INIT(maintenance_loot, list(

@@ -91,7 +91,8 @@
 #define FACTION_BINGLE "bingle"
 /// Darkspawn
 #define FACTION_DARKSPAWN "darkspawn"
-
+/// Bloodlings and their minions
+#define FACTION_BLOODLING "bloodling"
 /// Cultists and their constructs
 #define FACTION_CULT "cult"
 /// Define for the heretic faction applied to heretics and heretic mobs.

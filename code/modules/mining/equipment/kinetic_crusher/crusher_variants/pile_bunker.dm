@@ -46,7 +46,7 @@
 		span_boldwarning("[user] plants their feet firmly to the ground and  winds up an attack!"),
 		span_boldwarning("You plant your feet firmly to the ground and wind up an attack!"),
 	)
-	if(do_after(user, 1 SECOND, src) && (get_dist(user, target) <= 1))
+	if(do_after(user, 1 SECONDS, src) && (get_dist(user, target) <= 1))
 		armed = FALSE
 		update_appearance()
 		var/datum/status_effect/crusher_damage/C = target.has_status_effect(/datum/status_effect/crusher_damage)

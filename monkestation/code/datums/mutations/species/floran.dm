@@ -16,7 +16,7 @@
 	button_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "smoke"
 
-	cooldown_time = 1 MINUTE
+	cooldown_time = 1 MINUTES
 	check_flags = AB_CHECK_CONSCIOUS
 
 /datum/action/cooldown/spores/Activate(mob/living/carbon/cast_on)

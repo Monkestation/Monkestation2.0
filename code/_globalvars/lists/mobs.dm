@@ -196,3 +196,7 @@ GLOBAL_LIST_INIT_TYPED(species_prototypes, /datum/species, init_species_prototyp
 		if(require_body && QDELETED(mind.current))
 			continue
 		. += mind
+
+///List of ckeys that have seen a blurb of a given key.
+GLOBAL_LIST_EMPTY(blurb_witnesses)
+GLOBAL_LIST_EMPTY(assault_operative_start)

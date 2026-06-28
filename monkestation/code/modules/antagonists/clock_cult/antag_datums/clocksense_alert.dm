@@ -26,7 +26,7 @@
 		return PROCESS_KILL
 
 	var/static/last_process_tick
-	if(!last_process_tick || world.time - last_process_tick > 1 SECOND)
+	if(!last_process_tick || world.time - last_process_tick > 1 SECONDS)
 		static_desc = get_static_desc()
 		last_process_tick = world.time
 	desc = static_desc

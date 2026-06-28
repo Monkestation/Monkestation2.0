@@ -75,9 +75,9 @@
 #define DATA_HUD_ABDUCTOR 7
 #define DATA_HUD_AI_DETECT 8
 #define DATA_HUD_FAN 9
-#define DATA_HUD_PERMIT 10 //monkestation edit
-#define DATA_HUD_SENSORS 11 //monkestation edit
-#define DATA_HUD_CREW 12 //monkestation edit
+#define DATA_HUD_PERMIT 10
+#define DATA_HUD_SENSORS 11
+#define DATA_HUD_CREW 12
 #define DATA_HUD_BORER 13
 #define DATA_HUD_SIMIAN 14
 
@@ -147,3 +147,25 @@
 #define SECHUD_RELIGIOUS_RESPONSE_OFFICER "hudreligiousresponseofficer"
 #define SECHUD_JANITORIAL_RESPONSE_OFFICER "hudjanitorialresponseofficer"
 #define SECHUD_ENTERTAINMENT_RESPONSE_OFFICER "hudentertainmentresponseofficer"
+
+#define SECHUD_SECURITY_ASSISTANT "hudsecass"
+#define SECHUD_BLUESHIELD "hudblueshield"
+#define SECHUD_BARBER "hudbarber"
+#define SECHUD_EXPLORER "hudexplorer"
+#define SECHUD_CHIEF_MEDICAL_OFFICER_AWAY "hudchiefmedicalofficer_away"
+#define SECHUD_CHEF_AWAY "hudchef_away"
+#define SECHUD_EXPLORER_AWAY "hudexplorer_away"
+#define SECHUD_SCIENTIST_AWAY "hudscientist_away"
+#define SECHUD_SECURITY_OFFICER_AWAY "hudsecurityofficer_away"
+#define SECHUD_STATION_ENGINEER_AWAY "hudstationengineer_away"
+#define SECHUD_APC_AWAY "hudapc_away"
+#define SECHUD_ROBOTICIST_AWAY "hudroboticist_away"
+#define SECHUD_SIGNAL_TECHINICAN "hudsignaltech"
+#define SECHUD_CONTRACTOR "hudsyndicatecontractor"
+#define SECHUD_SYNDIECLOWN "hudsyndicateclown"
+#define SECHUD_SPACEPOL "hudspacepol"
+#define SECHUD_BOUNTY_HUNTER "hudbountyhunter"
+#define SECHUD_CYBER_POLICE "hudcyberpolice"
+#define SECHUD_REAPER "hudreaper"
+#define SECHUD_RADIANT "hudradiant"
+#define SECHUD_XENOBIOLOGIST "hudxenobiologist"

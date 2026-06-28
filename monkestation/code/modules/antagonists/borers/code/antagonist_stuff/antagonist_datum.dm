@@ -39,7 +39,7 @@
 	if(isliving(spender) && hosts_mind)
 		hosts_mind.current.unequip_everything()
 		new /obj/effect/holy(hosts_mind.current.loc)
-		QDEL_IN(hosts_mind.current, 1 SECOND)
+		QDEL_IN(hosts_mind.current, 1 SECONDS)
 
 	var/mob/dead/observer/new_borer = spender
 	var/vent = pick(vents)

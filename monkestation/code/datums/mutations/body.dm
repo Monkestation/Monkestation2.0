@@ -514,7 +514,7 @@
 /datum/mutation/dizzy/on_life(seconds_per_tick, times_fired)
 	if(SPT_PROB(2.5 / GET_MUTATION_ENERGY(src), seconds_per_tick))
 		to_chat(owner, span_warning("[pick("You feel dizzy.", "Your head spins.")]"))
-		owner.adjust_dizzy_up_to(1 MINUTE * GET_MUTATION_SYNCHRONIZER(src) * GET_MUTATION_POWER(src), 3 MINUTES)
+		owner.adjust_dizzy_up_to(1 MINUTES * GET_MUTATION_SYNCHRONIZER(src) * GET_MUTATION_POWER(src), 3 MINUTES)
 
 /datum/mutation/ear_cancer
 	name = "Tinnitus"

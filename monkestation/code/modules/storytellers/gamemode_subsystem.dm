@@ -9,7 +9,7 @@ SUBSYSTEM_DEF(gamemode)
 	runlevels = RUNLEVEL_GAME
 	flags = SS_BACKGROUND | SS_KEEP_TIMING
 	priority = 20
-	wait = 1 SECOND
+	wait = 1 SECONDS
 
 	/// List of our event tracks for fast access during for loops, key is the track ID
 	var/list/datum/storyteller_track/event_tracks = list()

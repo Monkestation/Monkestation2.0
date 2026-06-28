@@ -1,7 +1,7 @@
 /datum/action/cooldown/borer/dissection
 	name = "Dissect Corspe"
 	button_icon_state = "mendwound"
-	cooldown_time = 1 MINUTE
+	cooldown_time = 1 MINUTES
 	chemical_cost = 100
 	requires_host = TRUE
 	sugar_restricted = TRUE

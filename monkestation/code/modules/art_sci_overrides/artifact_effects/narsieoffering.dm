@@ -41,7 +41,7 @@
 	user.blood_volume -= yoinked_blood
 	stored_blood += yoinked_blood
 	to_chat(user, span_boldwarning("You are compelled to give blood to the [our_artifact.holder]; and feel your blood volume lower somehow!"))
-	COOLDOWN_START(src, force_take_cooldown, 5 SECOND)
+	COOLDOWN_START(src, force_take_cooldown, 5 SECONDS)
 
 	if(stored_blood < BLOOD_VOLUME_NORMAL*5)
 		return

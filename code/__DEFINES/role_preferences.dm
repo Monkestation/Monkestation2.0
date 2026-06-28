@@ -17,8 +17,8 @@
 #define ROLE_COMMANDO_OPERATIVE "Commando Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
-#define ROLE_CLOCK_CULTIST "Clock Cultist" //monkestation edit
-#define ROLE_BLOODLING "Bloodling" // monkestation edit
+#define ROLE_CLOCK_CULTIST "Clock Cultist"
+#define ROLE_BLOODLING "Bloodling"
 #define ROLE_OPFOR_CANDIDATE "OPFOR Candidate"
 #define ROLE_ASSAULT_OPERATIVE "Assault Operative"
 #define ROLE_DARKSPAWN "Darkspawn"
@@ -95,7 +95,7 @@
 #define ROLE_LAVALAND "Lavaland"
 #define ROLE_LAZARUS_BAD "Slaved Revived Mob"
 #define ROLE_LAZARUS_GOOD "Friendly Revived Mob"
-#define ROLE_BLOODLING_THRALL "Bloodling Thrall" // monkestation edit
+#define ROLE_BLOODLING_THRALL "Bloodling Thrall"
 
 #define ROLE_CLOWN_OPERATIVE "Clown Operative"
 #define ROLE_FREE_GOLEM "Free Golem"
@@ -113,7 +113,7 @@
 //Spawner roles
 #define ROLE_ANCIENT_CREW "Ancient Crew"
 #define ROLE_ASHWALKER "Ash Walker"
-#define ROLE_BAR_DRONE "Bardrone" // monkestation addition
+#define ROLE_BAR_DRONE "Bardrone"
 #define ROLE_BATTLECRUISER_CAPTAIN "Battlecruiser Captain"
 #define ROLE_BATTLECRUISER_CREW "Battlecruiser Crew"
 #define ROLE_FREE_MINER "Free Miner"

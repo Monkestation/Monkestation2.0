@@ -4,11 +4,11 @@
 #define POPCOUNT_ESCAPEES_HUMANONLY "human_escapees"
 #define PERSONAL_LAST_ROUND "personal last round"
 #define SERVER_LAST_ROUND "server last round"
-#define DISCORD_SUPPRESS_NOTIFICATIONS (1 << 12) // monke edit: discord flag for silent messages
+#define DISCORD_SUPPRESS_NOTIFICATIONS (1 << 12)
 
 GLOBAL_LIST_INIT(achievements_unlocked, list())
 
-GLOBAL_LIST_INIT(round_end_images, file2list("data/image_urls.txt")) // MONKEYSTATION EDIT ADDITION PR #11 - update roundend.dm
+GLOBAL_LIST_INIT(round_end_images, file2list("data/image_urls.txt"))
 
 /datum/controller/subsystem/ticker/proc/gather_roundend_feedback()
 	gather_antag_data()

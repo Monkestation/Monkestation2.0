@@ -50,7 +50,7 @@
 	on_apply()
 
 /datum/status_effect/changeling_adrenaline/tick(seconds_between_ticks, times_fired)
-	owner.AdjustAllImmobility(-1 SECOND * seconds_between_ticks)
+	owner.AdjustAllImmobility(-1 SECONDS * seconds_between_ticks)
 	owner.stamina.adjust(STAMINA_MAX / 20 * seconds_between_ticks)
 	owner.set_jitter_if_lower(10 SECONDS)
 	owner.adjustToxLoss(0.5 * seconds_between_ticks) // 10 toxin damage total.
@@ -67,7 +67,7 @@
 
 /datum/status_effect/changeling_panacea
 	id = "changeling_panacea"
-	duration = 1 MINUTE
+	duration = 1 MINUTES
 	show_duration = TRUE
 	tick_interval = 0.2 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/changeling/panacea
@@ -116,7 +116,7 @@
 /datum/status_effect/changeling_panacea/proc/handle_extra_effects()
 	if(!COOLDOWN_FINISHED(src, extra_effects_cooldown))
 		return
-	COOLDOWN_START(src, extra_effects_cooldown, 1 SECOND)
+	COOLDOWN_START(src, extra_effects_cooldown, 1 SECONDS)
 
 	owner.has_borer()?.leave_host()
 

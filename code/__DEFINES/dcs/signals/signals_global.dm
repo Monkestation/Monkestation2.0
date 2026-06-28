@@ -92,10 +92,15 @@
 #define COMSIG_GLOB_ADD_MUSIC_LISTENER "!add_music_listener"
 /// Sent whenever a mob becomes no longer capable of hearing DJ music: (mob/listener)
 #define COMSIG_GLOB_REMOVE_MUSIC_LISTENER "!remove_music_listener"
-//monkestation edit end
 
 /// Global signal sent when darkspawns ascend: (No arguments)
 #define COMSIG_DARKSPAWN_ASCENSION "!darkspawn_ascension"
 
 /// Global signal sent whenever checking to see if there's valid monster hunter targets: (list/prey)
 #define COMSIG_GLOB_MONSTER_HUNTER_QUERY "!monster_hunter_query"
+
+/// Sent whenever a camera network broadcast is started/stopped/updated: (camera_net, is_show_active, announcement)
+#define COMSIG_GLOB_NETWORK_BROADCAST_UPDATED "!network_broadcast_updated"
+
+/// Sent whenever a monster hunter initiates the Wonderland Apocalypse
+#define COMSIG_GLOB_WONDERLAND_APOCALYPSE "!wonderland_apocalypse"

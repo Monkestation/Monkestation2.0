@@ -375,7 +375,7 @@
 
 /datum/status_effect/mayhem
 	id = "Mayhem"
-	duration = 1 MINUTE // monkestation edit
+	duration = 1 MINUTES
 	/// The chainsaw spawned by the status effect
 	var/obj/item/chainsaw/doomslayer/chainsaw
 

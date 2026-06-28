@@ -225,7 +225,7 @@ GLOBAL_LIST_INIT(detective_vest_allowed, list(
 	/obj/item/flashlight,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
-	/obj/item/gun/microfusion, //monkestation edit
+	/obj/item/gun/microfusion,
 	/obj/item/lighter,
 	/obj/item/melee/baton,
 	/obj/item/reagent_containers/spray/pepper,
@@ -245,7 +245,7 @@ GLOBAL_LIST_INIT(security_vest_allowed, list(
 	/obj/item/flashlight,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
-	/obj/item/gun/microfusion, //monkestation edit
+	/obj/item/gun/microfusion,
 	/obj/item/knife/combat,
 	/obj/item/melee/baton,
 	/obj/item/reagent_containers/spray/pepper,
@@ -263,7 +263,7 @@ GLOBAL_LIST_INIT(security_wintercoat_allowed, list(
 	/obj/item/ammo_casing,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
-	/obj/item/gun/microfusion, //monkestation edit
+	/obj/item/gun/microfusion,
 	/obj/item/melee/baton,
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
@@ -279,7 +279,6 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 	/obj/item/melee/cleaving_saw,
 	/obj/item/climbing_hook,
 	/obj/item/flashlight,
-	///obj/item/grapple_gun, // MONKE EDIT: Don't have
 	/obj/item/tank/internals,
 	/obj/item/gun/energy/recharge/kinetic_accelerator,
 	/obj/item/kinetic_crusher,
@@ -290,7 +289,6 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 	/obj/item/pickaxe,
 	/obj/item/resonator,
 	/obj/item/spear,
-	// Monke edit: Allow more things
 	/obj/item/tank/jetpack,
 	/obj/item/gun/ballistic/shotgun/autoshotgun,
 	/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,

@@ -187,7 +187,7 @@
 		return
 	if(istype(tool, /obj/item/paper) && !manifest)
 		to_chat(user, span_notice("You begin attaching \the [tool] to [src]..."))
-		if(!do_after(user, 1 SECOND, target=src))
+		if(!do_after(user, 1 SECONDS, target=src))
 			return ITEM_INTERACT_BLOCKING
 		attach_manifest(tool, user)
 		return ITEM_INTERACT_BLOCKING
@@ -196,7 +196,7 @@
 	if(!(tool.get_sharpness() == SHARP_EDGED))
 		return
 	to_chat(user, span_notice("You begin cutting \the [manifest] off of [src]..."))
-	if(!do_after(user, 1 SECOND, target=src))
+	if(!do_after(user, 1 SECONDS, target=src))
 		return ITEM_INTERACT_BLOCKING
 	tear_manifest(user)
 	return ITEM_INTERACT_BLOCKING

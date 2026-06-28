@@ -264,8 +264,7 @@
 		exposed_mob.incapacitate(1) // startles the felinid, canceling any do_after
 		exposed_mob.add_mood_event("watersprayed", /datum/mood_event/watersprayed)
 
-	//MONKESTATION EDIT START
-	if(!is_cat_enough(exposed_mob, include_all_anime = TRUE))
+	if(!exposed_mob.is_cat_enough(include_all_anime = TRUE))
 		return
 
 	var/mob/living/victim = exposed_mob

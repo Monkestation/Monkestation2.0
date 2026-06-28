@@ -1441,7 +1441,7 @@
 		playsound(src, pick(butt.sound_effect), 50, mixer_channel = CHANNEL_PRUDE)
 
 /mob/living/carbon/proc/gib_fart(freq=0)
-	if (stat == DEAD && world.time - timeofdeath > 1 SECOND)
+	if (stat == DEAD && world.time - timeofdeath > 1 SECONDS)
 		return
 
 	if(HAS_TRAIT(src, TRAIT_LOUD_ASS))

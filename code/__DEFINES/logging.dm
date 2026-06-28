@@ -28,7 +28,7 @@
 #define INVESTIGATE_WIRES "wires"
 #define INVESTIGATE_NANITES "nanites"
 #define INVESTIGATE_ARTIFACT "artifact"
-#define INVESTIGATE_SIGNBOARD "signboard" // monkestation addition
+#define INVESTIGATE_SIGNBOARD "signboard"
 
 // Logging types for log_message()
 #define LOG_ATTACK (1 << 0)
@@ -121,7 +121,7 @@
 #define LOG_CATEGORY_FLOXY "floxy"
 #define LOG_CATEGORY_CAVE_GENERATION "cave-generation"
 #define LOG_CATEGORY_MECHCOMP "mechcomp"
-#define LOG_CATEGORY_NTSL "ntsl" // MONKESTATION ADDITION: NTSL
+#define LOG_CATEGORY_NTSL "ntsl"
 #define LOG_CATEGORY_CLONING "cloning"
 #define LOG_CATEGORY_MUSIC "music"
 #define LOG_CATEGORY_META "currency"
@@ -182,6 +182,9 @@
 #define LOG_CATEGORY_PDA "pda"
 #define LOG_CATEGORY_PDA_CHAT "pda-chat"
 #define LOG_CATEGORY_PDA_COMMENT "pda-comment"
+
+#define LOG_CATEGORY_GAME_LOOC "game-looc"
+#define LOG_CATEGORY_STORYTELLER "storyteller"
 
 #define SCHEMA_VERSION "schema-version"
 

@@ -1,17 +1,17 @@
 /// Minimum cooldown time before we start trying to do effect emotes again.
-#define MIN_EMOTE_COOLDOWN		(10 SECONDS)
+#define MIN_EMOTE_COOLDOWN (10 SECONDS)
 /// Maximum cooldown time before we start trying to do effect emotes again.
-#define MAX_EMOTE_COOLDOWN		(45 SECONDS)
+#define MAX_EMOTE_COOLDOWN (45 SECONDS)
 /// How many seconds are shaved off each tick while holy water is in the victim's system.
-#define HOLY_WATER_CURE_RATE	(5 SECONDS)
-#define CURE_PROTECTION_TIME (1 MINUTE) // Cure protection time limit.
+#define HOLY_WATER_CURE_RATE (5 SECONDS)
+#define CURE_PROTECTION_TIME (1 MINUTES) // Cure protection time limit.
 #define MAX_BLIGHT_STAGES 5 // Max stage blight can reach, each stage increases severity of effects.
 #define CHANCE_TO_WORSEN 5 // Chance the blight increases stage
 
 /datum/status_effect/revenant_blight
 	id = "revenant_blight"
 	duration = 5 MINUTES
-	tick_interval = 1 SECOND // Simulate disease activation(2sec) while making it fire 2x more.
+	tick_interval = 1 SECONDS // Simulate disease activation(2sec) while making it fire 2x more.
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 	remove_on_fullheal = TRUE

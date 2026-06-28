@@ -50,7 +50,7 @@
 	if(!snuffed_something || !COOLDOWN_FINISHED(src, snuff_message_cooldown))
 		return
 
-	COOLDOWN_START(src, snuff_message_cooldown, 1 SECOND)
+	COOLDOWN_START(src, snuff_message_cooldown, 1 SECONDS)
 
 	user.visible_message(
 		message = span_danger("Something dark in [src] lashes out at nearby lights!"),

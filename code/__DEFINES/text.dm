@@ -114,3 +114,5 @@
 #define SPLASH_FILE "splashes.json"
 ///File location for mother hallucination lines
 #define MOTHER_FILE "mother.json"
+/// File location for artifact speech lines
+#define ARTIFACT_FILE "artifact.json"

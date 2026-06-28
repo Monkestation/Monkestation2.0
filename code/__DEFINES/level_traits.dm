@@ -1,10 +1,4 @@
-// Helpers for checking whether a z-level conforms to a specific requirement
-
-// Basic levels
-#define is_centcom_level(z) SSmapping.level_trait(z, ZTRAIT_CENTCOM)
-
 GLOBAL_LIST_EMPTY(station_levels_cache)
-
 // Used to prevent z from being re-evaluated
 GLOBAL_VAR(station_level_z_scratch)
 
@@ -20,6 +14,9 @@ GLOBAL_VAR(station_level_z_scratch)
 			? (GLOB.station_levels_cache[GLOB.station_level_z_scratch] = !!SSmapping.level_trait(GLOB.station_level_z_scratch, ZTRAIT_STATION)) \
 			: GLOB.station_levels_cache[GLOB.station_level_z_scratch] \
 	)
+
+// Basic levels
+#define is_centcom_level(z) SSmapping.level_trait(z, ZTRAIT_CENTCOM)
 
 #define is_mining_level(z) SSmapping.level_trait(z, ZTRAIT_MINING)
 

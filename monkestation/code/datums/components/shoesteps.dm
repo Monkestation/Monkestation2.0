@@ -28,7 +28,7 @@
 
 /datum/component/shoesteps/proc/toggle_sounds(mob/living/carbon/clicker)
 	if(!DOING_INTERACTION(clicker, DOAFTER_SOURCE_SHOESTEP_TOGGLE))
-		if(do_after(clicker, 1 SECOND, interaction_key = DOAFTER_SOURCE_SHOESTEP_TOGGLE))
+		if(do_after(clicker, 1 SECONDS, interaction_key = DOAFTER_SOURCE_SHOESTEP_TOGGLE))
 			sounds = !sounds
 			to_chat(clicker, span_warning("You turn the noisemaker [sounds ? "on" : "off"]."))
 

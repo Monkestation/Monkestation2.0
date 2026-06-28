@@ -442,7 +442,7 @@
 	if(isliving(spender) && hosts_mind)
 		hosts_mind.current.unequip_everything()
 		new /obj/effect/holy(hosts_mind.current.loc)
-		QDEL_IN(hosts_mind.current, 1 SECOND)
+		QDEL_IN(hosts_mind.current, 1 SECONDS)
 	var/mob/living/carbon/human/slasher = new (spawn_loc)
 	slasher.PossessByPlayer(spender_key)
 	slasher.mind.add_antag_datum(/datum/antagonist/slasher)

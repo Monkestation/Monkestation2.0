@@ -762,7 +762,7 @@
 	obj_flags |= EMAGGED
 	mode = MEDICAL_HELMET_EXTREME
 	do_sparks(3, FALSE, src)
-	sleep(1 SECOND)
+	sleep(1 SECONDS)
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 	balloon_alert(user, "safeties shorted!")
 

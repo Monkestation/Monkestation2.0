@@ -42,7 +42,7 @@
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "regurgitate"
 
-	cooldown_time = 1 MINUTE
+	cooldown_time = 1 MINUTES
 	check_flags = AB_CHECK_CONSCIOUS
 	spell_requirements = NONE
 	antimagic_flags = NONE
@@ -392,8 +392,8 @@
 
 /obj/machinery/dna_vault/get_eaten(mob/living/carbon/human/hungry_boy, datum/action/cooldown/spell/pointed/consumption/ability)
 	hungry_boy.visible_message(span_danger("[hungry_boy] begins stuffing [src] into [hungry_boy.p_their()] gaping maw, you estimate it'll take them at least an hour!"))
-	ability.start_biting_animation(src, 1 HOUR)
-	if(!do_after(hungry_boy, 1 HOUR, src))
+	ability.start_biting_animation(src, 1 HOURS)
+	if(!do_after(hungry_boy, 1 HOURS, src))
 		to_chat(hungry_boy, span_danger("You were interrupted before you could eat [src], not really a suprise there."))
 		return EAT_FAILED
 
@@ -505,8 +505,8 @@
 
 /obj/machinery/power/supermatter_crystal/get_eaten(mob/living/carbon/human/hungry_boy, datum/action/cooldown/spell/pointed/consumption/ability)
 	hungry_boy.visible_message(span_danger("[hungry_boy] unhinges their jaw and begins slowly stuffing [src] into [hungry_boy.p_their()] gaping maw!"))
-	ability.start_biting_animation(src, 1 MINUTE)
-	if(!do_after(hungry_boy, 1 MINUTE, src))
+	ability.start_biting_animation(src, 1 MINUTES)
+	if(!do_after(hungry_boy, 1 MINUTES, src))
 		to_chat(hungry_boy, span_danger("You were interrupted before you could eat [src]!"))
 		return EAT_FAILED
 

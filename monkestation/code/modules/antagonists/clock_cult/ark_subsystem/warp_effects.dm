@@ -49,7 +49,7 @@
 					picked_apc.equipment = picked_apc.setsubsystem(1)
 				if(prob(30))
 					picked_apc.environ = picked_apc.setsubsystem(1)
-					addtimer(CALLBACK(picked_apc, TYPE_PROC_REF(/obj/machinery/power/apc, setsubsystem), rand(2, 3)), 1 MINUTE)
+					addtimer(CALLBACK(picked_apc, TYPE_PROC_REF(/obj/machinery/power/apc, setsubsystem), rand(2, 3)), 1 MINUTES)
 				if(!(picked_apc.obj_flags & EMAGGED) && prob(10))
 					playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 					picked_apc.obj_flags |= EMAGGED
@@ -162,7 +162,7 @@
 	name = "Clockwork Spacetime Dist"
 	cooldown_time = 0
 	scramble_radius = 2
-	duration = 1 MINUTE
+	duration = 1 MINUTES
 	spawned_effect_type = /obj/effect/cross_action/spacetime_dist/clock_ark
 
 /obj/effect/cross_action/spacetime_dist/clock_ark

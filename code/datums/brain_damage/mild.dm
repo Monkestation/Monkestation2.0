@@ -342,7 +342,7 @@
 	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/advert_force_speak/on_gain()
-	src.owner.AddComponentFrom(REF(src), /datum/component/advert_force_speak, rand(1 MINUTE))
+	src.owner.AddComponentFrom(REF(src), /datum/component/advert_force_speak, rand(1 MINUTES))
 	return ..()
 
 /datum/brain_trauma/mild/advert_force_speak/on_lose(silent)
