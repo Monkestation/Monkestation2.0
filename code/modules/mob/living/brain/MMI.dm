@@ -301,8 +301,8 @@
 
 /obj/item/mmi/ipc/Initialize() // IPC MMI brain, brain for spawned IPCs with MMI pref, radio off by default for balance concerns
 	. = ..()
+	set_brainmob(new /mob/living/brain(src))
 	radio.set_on(FALSE)
-	brain = new /obj/item/mmi/posibrain/ipc(src)
 
 /obj/item/mmi/syndie
 	name = "\improper Syndicate Man-Machine Interface"

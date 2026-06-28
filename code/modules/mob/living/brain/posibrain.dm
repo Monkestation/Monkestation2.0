@@ -319,14 +319,13 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 			to_chat(owner, span_warning("Alert: Minor corruption in central processing unit. Error Code: 001-HP"))
 
 /obj/item/organ/internal/brain/positronic/Remove(mob/living/user, special = FALSE)
+	. = ..()
 	if(!special)
 		if(stored_mmi)
 			. = stored_mmi
 			if(owner.mind)
 				owner.mind.transfer_to(stored_mmi.brainmob)
-			stored_mmi.forceMove(get_turf(owner))
-			qdel(src)
-	return ..()
+			stored_mmi.forceMove(get_turf(src))
 
 /obj/item/organ/internal/brain/positronic/mmi // MMI version of internal brain, also shouldn't ever be seen
 	name = "man-machine interface"

@@ -326,6 +326,12 @@
 			else
 				flash1 = flash
 			to_chat(user, span_notice("You insert the flash into the eye socket."))
+			if(istype(weapon, /obj/item/stock_parts/manipulator))
+				to_chat(user, span_notice("You install some manipulators and modify the head, creating a functional spider-bot!"))
+				new /mob/living/basic/spiderbot(get_turf(loc))
+				user.dropItemToGround()
+				qdel(weapon)
+				qdel(src)
 			return
 	return ..()
 
