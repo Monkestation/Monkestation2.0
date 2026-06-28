@@ -1,7 +1,7 @@
 /obj/item/grenade/jack
 	name = "jack in the bomb"
 	desc = "Best kids' toy"
-	icon = 'monkestation/icons/obj/items/monster_hunter.dmi'
+	icon = 'icons/obj/items/monster_hunter.dmi'
 	icon_state = "jack_in_the_bomb"
 	inhand_icon_state = "flashbang"
 	worn_icon_state = "grenade"
@@ -22,7 +22,7 @@
 		if(msg)
 			user.balloon_alert(user, "primed [src]!")
 			to_chat(user, span_warning("You prime [src]! [capitalize(DisplayTimeText(det_time))]!"))
-	playsound(src, 'monkestation/sound/weapons/jackinthebomb.ogg', volume, vary = TRUE)
+	playsound(src, 'sound/weapons/jackinthebomb.ogg', volume, vary = TRUE)
 	if(istype(user))
 		user.add_mob_memory(/datum/memory/bomb_planted, protagonist = user, antagonist = src)
 	active = TRUE

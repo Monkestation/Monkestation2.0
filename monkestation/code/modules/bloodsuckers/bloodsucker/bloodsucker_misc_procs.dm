@@ -11,7 +11,7 @@
 	else if(IS_BLOODSUCKER(examiner) || (broke_masquerade && HAS_MIND_TRAIT(examiner, TRAIT_OCCULTIST)))
 		info_to_display = return_full_name()
 	if(info_to_display)
-		var/img_html = "<img class='icon' src='\ref['monkestation/icons/bloodsuckers/vampiric.dmi']?state=bloodsucker'></img>"
+		var/img_html = "<img class='icon' src='\ref['icons/bloodsuckers/vampiric.dmi']?state=bloodsucker'></img>"
 		examine_text += "\[" + span_warning("[img_html] <EM>[info_to_display]</EM>") + "\]"
 
 ///Called when a Bloodsucker buys a power: (power)
@@ -36,7 +36,7 @@
 	if(broke_masquerade)
 		return
 	if(!silent)
-		owner.current.playsound_local(null, 'monkestation/sound/bloodsuckers/lunge_warn.ogg', 100, FALSE, pressure_affected = FALSE)
+		owner.current.playsound_local(null, 'sound/bloodsuckers/lunge_warn.ogg', 100, FALSE, pressure_affected = FALSE)
 		to_chat(owner.current, span_cultboldtalic("You have broken the Masquerade!"))
 		to_chat(owner.current, span_warning(
 			"Bloodsucker Tip: When you break the Masquerade, you become open for termination by fellow Bloodsuckers, \
@@ -154,7 +154,7 @@
 
 /// Animates the power icon above the vampire's head. Returns a reference to the icon to remove it later.
 /atom/movable/proc/do_power_icon_animation(power_icon)
-	var/mutable_appearance/alert = mutable_appearance('monkestation/icons/bloodsuckers/actions_bloodsucker.dmi', power_icon)
+	var/mutable_appearance/alert = mutable_appearance('icons/bloodsuckers/actions_bloodsucker.dmi', power_icon)
 	SET_PLANE_EXPLICIT(alert, ABOVE_LIGHTING_PLANE, src)
 
 	alert.layer = layer + 0.1

@@ -10,7 +10,7 @@
 /obj/item/extraction_pack/contractor
 	name = "black fulton extraction pack"
 	desc = "A modified fulton pack that can be used indoors thanks to Bluespace technology. Favored by Syndicate Contractors."
-	icon = 'monkestation/icons/obj/items/fulton.dmi'
+	icon = 'icons/obj/items/fulton.dmi'
 	can_use_indoors = TRUE
 
 /obj/item/pinpointer

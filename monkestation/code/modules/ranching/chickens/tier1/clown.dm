@@ -35,7 +35,7 @@
 	list_reagents = list(/datum/reagent/water = 50)
 	volume = 50
 	icon_state = "egg"
-	icon = 'monkestation/icons/obj/ranching/eggs.dmi'
+	icon = 'icons/obj/ranching/eggs.dmi'
 	spillable = TRUE
 
 

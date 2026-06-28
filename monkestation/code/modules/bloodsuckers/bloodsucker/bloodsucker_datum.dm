@@ -8,10 +8,10 @@
 	show_name_in_check_antagonists = TRUE
 	can_coexist_with_others = FALSE
 	hijack_speed = 0.5
-	hud_icon = 'monkestation/icons/bloodsuckers/bloodsucker_icons.dmi'
+	hud_icon = 'icons/bloodsuckers/bloodsucker_icons.dmi'
 	ui_name = "AntagInfoBloodsucker"
 	preview_outfit = /datum/outfit/bloodsucker_outfit
-	stinger_sound = 'monkestation/sound/bloodsuckers/BloodsuckerAlert.ogg'
+	stinger_sound = 'sound/bloodsuckers/BloodsuckerAlert.ogg'
 	can_assign_self_objectives = TRUE
 	/// How much blood we have, starting off at default blood levels.
 	var/bloodsucker_blood_volume = BLOOD_VOLUME_NORMAL

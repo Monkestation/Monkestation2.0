@@ -1097,7 +1097,7 @@
 	name = "\improper Ashland Clothing Storage"
 	desc = "A large container, filled with various clothes for the Ash Walkers."
 	product_ads = "Praise the Necropolis"
-	icon = 'monkestation/icons/obj/vending.dmi'
+	icon = 'icons/obj/vending.dmi'
 	icon_state = "ashclothvendor"
 	icon_deny = "necrocrate"
 	use_power = NO_POWER_USE

@@ -20,4 +20,4 @@
 /datum/round_event/anomaly/anomaly_frost/announce(fake)
 	if(isnull(impact_area))
 		impact_area = placer.findValidArea()
-	priority_announce("Frost Anomaly detected in: [impact_area.name]. Brace for the cold.", "Anomaly Alert", 'monkestation/sound/misc/frost_horn.ogg')
+	priority_announce("Frost Anomaly detected in: [impact_area.name]. Brace for the cold.", "Anomaly Alert", 'sound/misc/frost_horn.ogg')

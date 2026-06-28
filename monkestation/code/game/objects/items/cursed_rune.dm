@@ -1,7 +1,7 @@
 /obj/item/bad_luck
 	name = "cursed slab"
 	desc = "An ancient stone slab with writing in an unknown language upon it."
-	icon = 'monkestation/icons/obj/misc.dmi'
+	icon = 'icons/obj/misc.dmi'
 	icon_state ="slab"
 	var/can_curse = 1
 	throw_speed = 2

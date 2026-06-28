@@ -5,7 +5,7 @@
 	var/pose_text
 
 	var/static/mutable_appearance/pose_overlay = mutable_appearance(
-		'monkestation/icons/misc/temporary_flavor_text_indicator.dmi',
+		'icons/misc/temporary_flavor_text_indicator.dmi',
 		"flavor",
 		FLY_LAYER,
 		appearance_flags = (APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART),
