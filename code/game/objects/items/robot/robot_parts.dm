@@ -334,6 +334,7 @@
 		new_borg.SetInvisibility(INVISIBILITY_NONE)
 
 		var/datum/antagonist/clock_cultist/old_servant_datum = brainmob.mind?.has_antag_datum(/datum/antagonist/clock_cultist)
+		if(be_clockwork && old_servant_datum)
 			old_servant_datum.silent = TRUE
 
 		brainmob.mind?.remove_antags_for_borging()
