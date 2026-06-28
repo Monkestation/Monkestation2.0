@@ -333,11 +333,9 @@
 
 		new_borg.SetInvisibility(INVISIBILITY_NONE)
 
-		//monkestation edit start
 		var/datum/antagonist/clock_cultist/old_servant_datum = brainmob.mind?.has_antag_datum(/datum/antagonist/clock_cultist) //monkestation edit
-		if(be_clockwork && old_servant_datum) //monkestation edit
-			old_servant_datum.silent = TRUE //monkestation edit
-		//monkestation edit end
+		if(be_clockwork && old_servant_datum)
+			old_servant_datum.silent = TRUE
 
 		brainmob.mind?.remove_antags_for_borging()
 		new_borg.job = JOB_CYBORG
