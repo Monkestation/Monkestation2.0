@@ -100,7 +100,6 @@
 	icon_state = "toolkit_mediborg_cautery"
 
 /obj/item/cautery/cyborg/alien
-	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "toolkit_mediborg_cautery_alien"
 	toolspeed = 0.25
 
