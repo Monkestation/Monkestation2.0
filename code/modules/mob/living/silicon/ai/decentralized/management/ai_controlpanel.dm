@@ -46,7 +46,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		laws.set_laws_config()
 
 		brain.try_unbrainwash()
-		if (brain.overrides_ai_laws)
+		if(brain.overrides_ai_laws)
 			A = new /mob/living/silicon/ai(loc, brain.laws, brain.brainmob)
 		else
 			A = new /mob/living/silicon/ai(loc, laws, brain.brainmob)
