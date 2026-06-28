@@ -1,4 +1,0 @@
-author: "Shoddd"
-delete-after: True
-changes:
-  - admin: "interview approved ckeys no longer persist"

@@ -2,7 +2,7 @@
 /obj/machinery/prize_vendor
 	name = "Generic Prize Vendor"
 	desc = "Oops, all runtimes!"
-	icon = 'monkestation/icons/obj/machines/prize_vendor.dmi'
+	icon = 'icons/obj/machines/prize_vendor.dmi'
 	icon_state = "prize_vendor"
 	layer = BELOW_OBJ_LAYER
 	max_integrity = 300

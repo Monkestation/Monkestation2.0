@@ -1,7 +1,7 @@
 /obj/machinery/splicer
 	name = "Splicer"
 	desc = "Splices two seeds together."
-	icon = 'monkestation/icons/obj/machines/hydroponics.dmi'
+	icon = 'icons/obj/machines/hydroponics.dmi'
 	base_icon_state = "splicer"
 	icon_state = "splicer"
 	circuit = /obj/item/circuitboard/machine/splicer

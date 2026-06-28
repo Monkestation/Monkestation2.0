@@ -43,6 +43,6 @@
 		span_notice("You mold a [choice] out of your flesh.")
 	)
 	new choice_path(get_turf(owner))
-	playsound(get_turf(owner), 'monkestation/sound/creatures/mimic/mimicabsorb.ogg', 20)
+	playsound(get_turf(owner), 'sound/creatures/mimic/mimicabsorb.ogg', 20)
 	..()
 	return TRUE

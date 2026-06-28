@@ -1,5 +1,5 @@
 /datum/sprite_accessory/goblin_ears
-	icon = 'monkestation/icons/mob/species/goblin/goblin_ears.dmi'
+	icon = 'icons/mob/species/goblin/goblin_ears.dmi'
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
@@ -20,7 +20,7 @@
 	icon_state = "long"
 
 /datum/sprite_accessory/goblin_nose
-	icon = 'monkestation/icons/mob/species/goblin/goblin_nose.dmi'
+	icon = 'icons/mob/species/goblin/goblin_nose.dmi'
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 

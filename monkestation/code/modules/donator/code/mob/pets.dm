@@ -48,7 +48,7 @@
 /mob/living/basic/pet/cirno  //nobody needs to know she's a lizard
 	name = "Cirno"
 	desc = "She is the greatest."
-	icon = 'monkestation/icons/obj/plushes.dmi'
+	icon = 'icons/obj/plushes.dmi'
 	icon_state = "cirno-happy"
 	icon_living = "cirno-happy"
 	icon_dead = "cirno-happy"

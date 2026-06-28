@@ -1,0 +1,4 @@
+author: "Siro"
+delete-after: True
+changes:
+  - code_imp: "Enables Lentslurri to be made by adding it to Lenturi's inversion setting."

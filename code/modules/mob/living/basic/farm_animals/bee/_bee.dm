@@ -10,7 +10,7 @@
 	desc = "Buzzy buzzy bee, stingy sti- Ouch!"
 	icon_state = ""
 	icon_living = ""
-	icon = 'monkestation/icons/mob/simple/bees.dmi' //monkestation edit
+	icon = 'icons/mob/simple/bees_big.dmi' //monkestation edit
 	gender = FEMALE
 	speak_emote = list("buzzes")
 
@@ -159,7 +159,7 @@
 	add_overlay("[icon_base]_base")
 
 	var/static/mutable_appearance/greyscale_overlay
-	greyscale_overlay = greyscale_overlay || mutable_appearance('monkestation/icons/mob/simple/bees.dmi')
+	greyscale_overlay = greyscale_overlay || mutable_appearance('icons/mob/simple/bees_big.dmi')
 	greyscale_overlay.icon_state = "[icon_base]_grey"
 	greyscale_overlay.color = bee_color
 	add_overlay(greyscale_overlay)
@@ -215,7 +215,7 @@
 	desc = "She's the queen of bees, BZZ BZZ!"
 	icon_state = "queen_item"
 	inhand_icon_state = ""
-	icon = 'monkestation/icons/mob/simple/bees.dmi'
+	icon = 'icons/mob/simple/bees_big.dmi'
 	/// The actual mob that our bee item corresponds to
 	var/mob/living/basic/bee/queen/queen
 

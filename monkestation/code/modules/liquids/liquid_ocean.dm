@@ -2,7 +2,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 /area/ocean
 	name = "Ocean"
 
-	icon = 'monkestation/icons/obj/effects/liquid.dmi'
+	icon = 'icons/obj/effects/liquid.dmi'
 	base_icon_state = "ocean"
 	icon_state = "ocean_area"
 	alpha = 120
@@ -67,7 +67,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	gender = PLURAL
 	name = "ocean sand"
 	baseturfs = /turf/open/floor/plating/ocean
-	icon = 'monkestation/icons/turf/seafloor.dmi'
+	icon = 'icons/turf/seafloor.dmi'
 	icon_state = "seafloor"
 	base_icon_state = "seafloor"
 	footstep = FOOTSTEP_SAND
@@ -285,7 +285,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 		var/obj/item/vent_package/attacking = C
 		attacking.deploy(src)
 /obj/effect/abstract/ocean_overlay
-	icon = 'monkestation/icons/obj/effects/liquid.dmi'
+	icon = 'icons/obj/effects/liquid.dmi'
 	icon_state = "ocean"
 	base_icon_state = "ocean"
 	plane = AREA_PLANE //Same as weather, etc.
@@ -316,7 +316,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 /turf/open/floor/plating/ocean/proc/mob_fall(datum/source, mob/M)
 	SIGNAL_HANDLER
 	var/turf/T = source
-	playsound(T, 'monkestation/sound/effects/splash.ogg', 50, 0)
+	playsound(T, 'sound/effects/splash_loud.ogg', 50, 0)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		to_chat(C, span_userdanger("You fall in the water!"))
@@ -336,10 +336,10 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 			arrived.apply_status_effect(/datum/status_effect/ocean_affected)
 	if(prob(30))
 		var/sound_to_play = pick(list(
-			'monkestation/sound/effects/water_wade1.ogg',
-			'monkestation/sound/effects/water_wade2.ogg',
-			'monkestation/sound/effects/water_wade3.ogg',
-			'monkestation/sound/effects/water_wade4.ogg'
+			'sound/effects/water_wade1.ogg',
+			'sound/effects/water_wade2.ogg',
+			'sound/effects/water_wade3.ogg',
+			'sound/effects/water_wade4.ogg'
 			))
 		playsound(T, sound_to_play, 50, 0)
 
@@ -461,7 +461,7 @@ GLOBAL_LIST_EMPTY(the_lever)
 /turf/open/floor/plating/ocean/dark/rock
 	name = "rock"
 	baseturfs = /turf/open/floor/plating/ocean/dark/rock
-	icon = 'monkestation/icons/turf/seafloor.dmi'
+	icon = 'icons/turf/seafloor.dmi'
 	icon_state = "seafloor"
 	base_icon_state = "seafloor"
 	rand_variants = 0
@@ -471,7 +471,7 @@ GLOBAL_LIST_EMPTY(the_lever)
 
 /turf/open/floor/plating/ocean/dark/rock/warm/fissure
 	name = "fissure"
-	icon = 'monkestation/icons/turf/fissure.dmi'
+	icon = 'icons/turf/fissure.dmi'
 	icon_state = "fissure-0"
 	base_icon_state = "fissure"
 	smoothing_flags = SMOOTH_BITMASK
@@ -694,7 +694,7 @@ GLOBAL_LIST_EMPTY(the_lever)
 /turf/open/floor/plating/ocean/rock
 	name = "rock"
 	baseturfs = /turf/open/floor/plating/ocean/dark/rock
-	icon = 'monkestation/icons/turf/seafloor.dmi'
+	icon = 'icons/turf/seafloor.dmi'
 	icon_state = "seafloor"
 	base_icon_state = "seafloor"
 	rand_variants = 0

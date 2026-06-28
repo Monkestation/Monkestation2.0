@@ -66,7 +66,7 @@
 /obj/item/security_voucher
 	name = "security voucher"
 	desc = "A token to redeem a piece of equipment. Use it on a SecTech vendor."
-	icon = 'monkestation/icons/obj/items/security_voucher.dmi'
+	icon = 'icons/obj/items/security_voucher.dmi'
 	icon_state = "security_voucher_primary"
 	w_class = WEIGHT_CLASS_TINY
 

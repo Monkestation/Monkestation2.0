@@ -38,7 +38,7 @@
 	carbon_mob.adjustToxLoss(-40)
 	carbon_mob.adjustFireLoss(-40)
 	carbon_mob.adjustOxyLoss(-40)
-	playsound(get_turf(carbon_mob), 'monkestation/sound/effects/fleshyheal.ogg', 55)
+	playsound(get_turf(carbon_mob), 'sound/effects/fleshyheal.ogg', 55)
 
 	if(carbon_mob.stat != DEAD)
 		return FALSE

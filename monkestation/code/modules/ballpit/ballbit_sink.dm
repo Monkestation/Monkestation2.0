@@ -1,6 +1,6 @@
 /datum/component/player_sink
 	var/max_sinkage = 18
-	var/icon/sinker = icon('monkestation/icons/turf/ballpit.dmi', "sink")
+	var/icon/sinker = icon('icons/turf/ballpit.dmi', "sink")
 
 	///the filters name path for locating
 	var/filter_name = "sinkable"

@@ -2,7 +2,7 @@
 	name = "Storage Cavity"
 	desc = "We evolve smaller organs, allowing us to covertly store things in their place. Opening and closing it isn't very stealthy, though."
 	helptext = "Can store up to 3 small items. IDs can open things from inside. Works in lesser form and while downed. Can be seen and removed via surgery."
-	button_icon = 'monkestation/icons/mob/actions/actions_changeling.dmi'
+	button_icon = 'icons/mob/actions/actions_changeling.dmi'
 	button_icon_state = "storage_cavity"
 	dna_cost = 1
 	req_stat = SOFT_CRIT
@@ -56,7 +56,7 @@
 /obj/item/organ/internal/storage_cavity
 	name = "rigid membrane"
 	desc = "An enlarged protective membrane with rigid walls. It looks like a few things might fit inside."
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "storage_cavity"
 	visual = TRUE
 	zone = BODY_ZONE_CHEST
@@ -184,6 +184,6 @@
 	examine_text += span_bolddanger("[user.p_Their()] chest has a large, open cavity!")
 
 /datum/bodypart_overlay/simple/storage_cavity
-	icon = 'monkestation/icons/mob/species/misc/bodypart_overlay_simple.dmi'
+	icon = 'icons/mob/species/misc/bodypart_overlay_simple.dmi'
 	icon_state = "storage_cavity"
 	layers = EXTERNAL_ADJACENT

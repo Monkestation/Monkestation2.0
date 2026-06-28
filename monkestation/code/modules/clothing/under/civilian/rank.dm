@@ -3,20 +3,20 @@
 //CARGO
 
 /obj/item/clothing/under/rank/cargo/qm
-	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'icons/mob/clothing/uniform.dmi'
 
 /obj/item/clothing/under/rank/cargo/tech
-	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'icons/mob/clothing/uniform.dmi'
 
 //END CARGO
 
 //CIVILIAN
 
 /obj/item/clothing/under/rank/civilian/janitor
-	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'icons/mob/clothing/uniform.dmi'
 
 /obj/item/clothing/under/rank/civilian/janitor/maid //heckin subtypes
 	icon = 'icons/obj/clothing/under/civilian.dmi'

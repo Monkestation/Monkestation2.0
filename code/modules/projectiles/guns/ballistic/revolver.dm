@@ -427,7 +427,7 @@
 	name = "\improper .45 Long Revolver"
 	desc = "A cheap .45 Long Revolver. Pray the timing keeps."
 	icon_state = "45revolver"
-	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	icon = 'icons/obj/guns/guns.dmi'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45l
 	obj_flags = UNIQUE_RENAME
 

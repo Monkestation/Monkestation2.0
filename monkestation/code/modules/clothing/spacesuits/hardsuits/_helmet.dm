@@ -1,8 +1,8 @@
 /obj/item/clothing/head/helmet/space/hardsuit
 	name = "hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
-	icon = 'monkestation/icons/obj/clothing/hardsuits/helmet.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/hardsuit/hardsuit_helm.dmi'
+	icon = 'icons/obj/clothing/hardsuits/helmet.dmi'
+	worn_icon = 'icons/mob/clothing/hardsuit/hardsuit_helm.dmi'
 	icon_state = "hardsuit0-engineering"
 	max_integrity = 300
 	armor_type = /datum/armor/hardsuit

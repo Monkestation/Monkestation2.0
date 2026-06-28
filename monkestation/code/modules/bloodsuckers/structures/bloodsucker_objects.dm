@@ -100,11 +100,11 @@
 /obj/item/stake
 	name = "wooden stake"
 	desc = "A simple wooden stake carved to a sharp point."
-	icon = 'monkestation/icons/bloodsuckers/stakes.dmi'
+	icon = 'icons/bloodsuckers/stakes.dmi'
 	icon_state = "wood"
 	inhand_icon_state = "wood"
-	lefthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
-	righthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_righthand.dmi'
+	lefthand_file = 'icons/bloodsuckers/bloodsucker_lefthand.dmi'
+	righthand_file = 'icons/bloodsuckers/bloodsucker_righthand.dmi'
 	slot_flags = ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_SMALL
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -232,9 +232,9 @@ GLOBAL_LIST_EMPTY_TYPED(kindred_archives, /obj/item/book/kindred)
 	name = "\improper Archive of the Kindred"
 	starting_title = "the Archive of the Kindred"
 	desc = "Cryptic documents explaining hidden truths behind Undead beings. It is said only Curators can decipher what they really mean."
-	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
-	lefthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
-	righthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_righthand.dmi'
+	icon = 'icons/bloodsuckers/vamp_obj.dmi'
+	lefthand_file = 'icons/bloodsuckers/bloodsucker_lefthand.dmi'
+	righthand_file = 'icons/bloodsuckers/bloodsucker_righthand.dmi'
 	icon_state = "kindred_book"
 	inhand_icon_state = "kindred_book"
 	starting_author = "dozens of generations of Curators"

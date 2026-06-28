@@ -95,7 +95,7 @@
 
 //The visual effect of the stargazer
 /obj/effect/stargazer_light
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_objects.dmi'
 	icon_state = "stargazer_closed"
 	pixel_y = 10
 	layer = ABOVE_OBJ_LAYER

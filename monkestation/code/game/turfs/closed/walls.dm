@@ -1,7 +1,7 @@
 /turf/closed/wall/material/silk
 	name = "silk wall"
 	desc = "A silk wall reinforced with iron, still weaker than an iron wall."
-	icon = 'monkestation/icons/turf/walls/silk_wall.dmi'
+	icon = 'icons/turf/walls/silk_wall.dmi'
 	icon_state = "wall-0"
 	base_icon_state = "wall"
 	sheet_type = /obj/item/stack/sheet/silk
@@ -17,7 +17,7 @@
 /obj/structure/falsewall/silk
 	name = "silk wall"
 	desc = "A silk wall reinforced with iron, still weaker than an iron wall."
-	icon = 'monkestation/icons/turf/walls/silk_wall.dmi'
+	icon = 'icons/turf/walls/silk_wall.dmi'
 	icon_state = "wall-0"
 	base_icon_state = "wall"
 	mineral = /obj/item/stack/sheet/silk
