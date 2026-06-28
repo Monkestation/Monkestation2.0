@@ -37,16 +37,51 @@ export const Sleeper = (props) => {
     occupied,
     inject_amount,
     available_amounts,
+    max_custom_storage,
+    standard_chems = [],
+    custom_chems = [],
+    synthesis_active,
+    synthesis_rate,
+    forced_synthesis_chem,
+    forced_synthesis_name,
+    is_synthesizing,
   } = data;
-  const chems = data.chems || [];
+
+  const windowHeight = Math.min(
+    800,
+    Math.max(550, 550 + custom_chems.length * 28),
+  );
+
+  let synthesisTooltip = '';
+  if (synthesis_active && is_synthesizing && forced_synthesis_name) {
+    synthesisTooltip = `Forced: ${forced_synthesis_name} synthesis is ON (${synthesis_rate}u/2s)`;
+  } else if (synthesis_active && is_synthesizing) {
+    synthesisTooltip = `General synthesis is ON (${synthesis_rate}u/2s)`;
+  } else if (synthesis_active && !is_synthesizing) {
+    synthesisTooltip = 'Synthesis paused — all chemicals full';
+  } else {
+    synthesisTooltip = 'Synthesis is OFF — click to start';
+  }
+
+  let forcedText = '';
+  if (synthesis_active && is_synthesizing && forced_synthesis_name) {
+    forcedText = `Forced: ${forced_synthesis_name}`;
+  } else if (synthesis_active && is_synthesizing) {
+    forcedText = 'General synthesis';
+  } else if (synthesis_active && !is_synthesizing) {
+    forcedText = 'Paused (full)';
+  } else {
+    forcedText = 'Synthesis is OFF';
+  }
 
   return (
-    <Window width={560} height={500}>
+    <Window width={560} height={windowHeight}>
       <Window.Content>
         <Stack fill vertical>
-          {/* The upper half: Patient и Blood Chemicals */}
+          {/* THE UPPER HALF: patient and chems in blood */}
           <Stack.Item grow={1}>
             <Stack fill>
+              {/* THE LEFT COLUMN: PATIENT INFORMATION */}
               <Stack.Item basis="50%">
                 <Section
                   title={occupant.name ? occupant.name : 'No Occupant'}
@@ -105,7 +140,6 @@ export const Sleeper = (props) => {
                         >
                           {occupant.brainLoss ? 'Abnormal' : 'Healthy'}
                         </LabeledList.Item>
-
                         <LabeledList.Item label="Blood Volume">
                           <ProgressBar
                             value={occupant.blood_volume || 0}
@@ -123,6 +157,8 @@ export const Sleeper = (props) => {
                   )}
                 </Section>
               </Stack.Item>
+
+              {/* THE RIGHT COLUMN: CHEMICALS IN THE BLOOD */}
               <Stack.Item basis="50%">
                 <Section title="Blood Chemicals" fill>
                   {!occupied ? (
@@ -152,19 +188,34 @@ export const Sleeper = (props) => {
             </Stack>
           </Stack.Item>
 
-          {/* The lower half - Medicines */}
+          {/* THE LOWER HALF: medicines */}
           <Stack.Item>
             <Section
               title="Medicines"
               buttons={
-                <Button
-                  icon={open ? 'door-open' : 'door-closed'}
-                  content={open ? 'Open' : 'Closed'}
-                  onClick={() => act('door')}
-                />
+                <>
+                  <Button
+                    icon="cog"
+                    content={
+                      synthesis_active && is_synthesizing
+                        ? 'Synthesis: ON'
+                        : 'Synthesis: OFF'
+                    }
+                    color={
+                      synthesis_active && is_synthesizing ? 'green' : 'default'
+                    }
+                    tooltip={synthesisTooltip}
+                    onClick={() => act('toggle_synthesis')}
+                  />
+                  <Button
+                    icon={open ? 'door-open' : 'door-closed'}
+                    content={open ? 'Open' : 'Closed'}
+                    onClick={() => act('door')}
+                  />
+                </>
               }
             >
-              {/* Chem amount */}
+              {/* SETTING THE DOSAGE */}
               <Box mb={2}>
                 <Box mb={1} fontSize="12px" color="label">
                   Injection Amount:
@@ -183,36 +234,159 @@ export const Sleeper = (props) => {
                 </Stack>
               </Box>
 
-              {/* Medicine Buttons */}
-              <Box display="flex" flexWrap="wrap" gap="4px">
-                {chems.map((chem) => (
-                  <Tooltip
-                    key={chem.name}
-                    content={
-                      <Box backgroundColor="#1a1a1a" p={1}>
-                        <Box color="green" bold>
-                          {chem.full_name}
+              {/* STANDARD CHEMICALS */}
+              <Box mb={2}>
+                <Box mb={0.5} fontSize="12px" color="label">
+                  Standard Chemicals:
+                </Box>
+                <Box display="flex" flexWrap="wrap" gap="4px">
+                  {standard_chems.map((chem) => (
+                    <Tooltip
+                      key={chem.id}
+                      content={
+                        <Box backgroundColor="#1a1a1a" p={1}>
+                          <Box color="green" bold>
+                            {chem.full_name}
+                          </Box>
+                          <Box color="label" mt={0.5}>
+                            {chem.description}
+                          </Box>
+                          <Box color="good" mt={0.5}>
+                            ♾️ Unlimited
+                          </Box>
                         </Box>
-                        <Box color="label" mt={0.5}>
-                          {chem.description}
-                        </Box>
-                      </Box>
-                    }
-                    position="top"
-                  >
-                    <Button
-                      icon="flask"
-                      content={chem.name}
-                      disabled={!occupied || !chem.allowed}
-                      width="130px"
-                      onClick={() =>
-                        act('inject', {
-                          chem: chem.id,
-                        })
                       }
-                    />
-                  </Tooltip>
-                ))}
+                      position="top"
+                    >
+                      <Button
+                        icon="flask"
+                        content={chem.name}
+                        disabled={!occupied || !chem.allowed}
+                        width="130px"
+                        onClick={() =>
+                          act('inject', {
+                            chem: chem.id,
+                          })
+                        }
+                      />
+                    </Tooltip>
+                  ))}
+                </Box>
+              </Box>
+
+              {/* CUSTOM CHEMICALS */}
+              <Box>
+                <Box mb={0.5} fontSize="12px" color="label">
+                  Custom Chemicals:
+                  <Box
+                    inline
+                    color={
+                      synthesis_active && is_synthesizing ? 'green' : 'default'
+                    }
+                    ml={1}
+                  >
+                    ({forcedText})
+                  </Box>
+                </Box>
+                {custom_chems.length === 0 ? (
+                  <Box color="grey" textAlign="center" mt={1}>
+                    You can add custom chemicals manually.
+                  </Box>
+                ) : (
+                  <Box display="flex" flexDirection="column" gap="4px">
+                    {custom_chems.map((chem) => {
+                      const isForced = chem.id === forced_synthesis_chem;
+                      return (
+                        <Box
+                          key={chem.id}
+                          display="flex"
+                          alignItems="center"
+                          gap="4px"
+                          flexWrap="nowrap"
+                        >
+                          {/* The injection button */}
+                          <Tooltip
+                            content={
+                              <Box backgroundColor="#1a1a1a" p={1}>
+                                <Box color="green" bold>
+                                  {chem.full_name}
+                                </Box>
+                                <Box color="label" mt={0.5}>
+                                  {chem.description}
+                                </Box>
+                                <Box
+                                  color={chem.is_empty ? 'bad' : 'good'}
+                                  mt={0.5}
+                                >
+                                  {chem.is_empty
+                                    ? '⚠ EMPTY'
+                                    : `${chem.storage}u available`}
+                                </Box>
+                              </Box>
+                            }
+                            position="top"
+                          >
+                            <Button
+                              icon="flask"
+                              content={chem.name}
+                              disabled={!occupied || !chem.allowed}
+                              width="130px"
+                              onClick={() =>
+                                act('inject_custom', { chem: chem.id })
+                              }
+                            />
+                          </Tooltip>
+
+                          {/* Stock scale */}
+                          <ProgressBar
+                            value={chem.storage}
+                            maxValue={chem.max_storage}
+                            ranges={{
+                              good: [chem.max_storage * 0.5, Infinity],
+                              average: [
+                                chem.max_storage * 0.25,
+                                chem.max_storage * 0.5,
+                              ],
+                              bad: [0, chem.max_storage * 0.25],
+                            }}
+                            width="264px"
+                          >
+                            {`${chem.storage}u / ${chem.max_storage}u (${chem.percent}%)`}
+                          </ProgressBar>
+
+                          {/* Chemical Synthesis button */}
+                          <Button
+                            icon="bolt"
+                            content="Synthesis"
+                            color={
+                              isForced && synthesis_active ? 'green' : 'default'
+                            }
+                            width="108px"
+                            tooltip={
+                              isForced && synthesis_active
+                                ? 'Forcing synthesis'
+                                : 'Click to force synthesis for this chem. Greatly increases energy consumption.'
+                            }
+                            onClick={() =>
+                              act('force_synthesis', { chem: chem.id })
+                            }
+                          />
+
+                          {/* Line deletion button */}
+                          <Button
+                            icon="times"
+                            color="bad"
+                            width="22px"
+                            tooltip={`Remove ${chem.full_name}`}
+                            onClick={() =>
+                              act('remove_custom_chem', { chem: chem.id })
+                            }
+                          />
+                        </Box>
+                      );
+                    })}
+                  </Box>
+                )}
               </Box>
             </Section>
           </Stack.Item>

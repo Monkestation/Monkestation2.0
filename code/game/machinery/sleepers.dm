@@ -24,13 +24,26 @@
 	var/enter_message = span_boldnotice("You feel cool air surround you. You go numb as your senses turn inward.")
 
 	///Сurrent dose
-	var/inject_amount = 10
+	var/inject_amount = 5
 	///Available dose options
-	var/list/available_amounts = list(1, 5, 10, 15, 20)
+	var/list/available_amounts = list(1, 2, 3, 5, 10, 15, 20)
 	///List of currently available chems.
 	var/list/available_chems = list()
 	///Used when emagged to scramble which chem is used, eg: mutadone -> morphine
 	var/list/chem_buttons
+
+	/// Is the synthesis of custom chemicals enabled?
+	var/synthesis_active = FALSE
+	/// Chemical for accelerated synthesis (null = random)
+	var/forced_synthesis_chem
+	/// Synthesis rate (depends on the capacity)
+	var/synthesis_rate = 0.25
+
+	/// Maximum capacity for each custom chemical (depends on matter_bin)
+	var/max_custom_storage = 50
+	/// Storage of custom chemicals: reagent path -> quantity
+	var/list/custom_chem_storage = list()
+
 	///All chems this sleeper will get, depending on the parts inside.
 	var/list/possible_chems = list(
 		list(
@@ -46,21 +59,59 @@
 			/datum/reagent/medicine/inacusiate,
 			/datum/reagent/medicine/salglu_solution,  // line 3
 			/datum/reagent/medicine/antipathogenic/spaceacillin,
+			/datum/reagent/medicine/potass_iodide,
 		),
 		list(
-			/datum/reagent/medicine/sal_acid,
-			/datum/reagent/medicine/oxandrolone,
+			/datum/reagent/toxin/formaldehyde,
 			/datum/reagent/medicine/pen_acid, // line 4
 			/datum/reagent/medicine/mutadone,
 			/datum/reagent/medicine/mannitol,
 		),
 		list(
-			/datum/reagent/medicine/neurine,
+			/datum/reagent/medicine/diphenhydramine,
 			/datum/reagent/medicine/omnizine, // line 5
 			/datum/reagent/medicine/nanopaste,
 			/datum/reagent/medicine/coagulant,
 			/datum/reagent/toxin/radiomagnetic_disruptor,
 		),
+	)
+
+	/// List of custom chemicals available for addition. >>> ORDER IS IMPORTANT <<<
+	var/list/available_custom_chems = list(
+		// First, declare categories and subtypes
+		/datum/reagent/medicine = TRUE,
+		/datum/reagent/toxin = FALSE,
+		/datum/reagent/consumable = TRUE,
+
+		// Second, declare direct names
+		/datum/reagent/iron = TRUE,
+		/datum/reagent/water = TRUE,
+
+		// Third, we declare exceptions from categories that will overwrite the value.
+		/datum/reagent/toxin/mutagen = TRUE,
+		/datum/reagent/toxin/plasma = TRUE,
+		/datum/reagent/toxin/lipolicide = TRUE,
+	)
+
+	/// Emergency chemicals (can be administered in any condition, including the dead)
+	var/list/emergency_chems = list(
+		/datum/reagent/medicine/epinephrine,
+		/datum/reagent/medicine/atropine,
+		/datum/reagent/medicine/salbutamol,
+		/datum/reagent/medicine/coagulant,
+		/datum/reagent/medicine/rezadone,
+		/datum/reagent/medicine/c2/synthflesh,
+		/datum/reagent/toxin/formaldehyde,
+	)
+	/// Adds a special set of chemicals when using E-mag
+	var/list/emag_chems_to_add = list(
+		/datum/reagent/toxin/cyanide,
+		/datum/reagent/toxin/acid/fluacid,
+		/datum/reagent/toxin/heparin,
+		/datum/reagent/toxin/lexorin,
+		/datum/reagent/toxin/mutetoxin,
+		/datum/reagent/toxin/sodium_thiopental,
+		/datum/reagent/toxin/mutagen,
 	)
 
 /obj/machinery/sleeper/Initialize(mapload)
@@ -71,18 +122,36 @@
 
 /obj/machinery/sleeper/RefreshParts()
 	. = ..()
+	// Matterbin — maximum injection limit, volume of synthesis capacity, minimum acceptable health for work
 	var/matterbin_rating = 0
 	for(var/datum/stock_part/matter_bin/matterbins in component_parts)
 		matterbin_rating += matterbins.tier
 
 	efficiency = initial(efficiency) * max(matterbin_rating, 1)
 	min_health = initial(min_health) * max(matterbin_rating, 1)
+	max_custom_storage = initial(max_custom_storage) * max(matterbin_rating, 1)
 
-	available_chems.Cut()
+	// Capacitor — synthesis rate
+	var/capacitor_rating = 0
+	for(var/datum/stock_part/capacitor/capacitors in component_parts)
+		capacitor_rating += capacitors.tier
+	switch(capacitor_rating)
+		if(2)
+			synthesis_rate = 0.05	// 0.25u / 10sec
+		if(3)
+			synthesis_rate = 0.1	// 0.5u / 10sec
+		if(4)
+			synthesis_rate = 0.2	// 1u / 10sec
+		else
+			synthesis_rate = 0
+
+	// Manipulator — open standard chemicals
 	var/manipulator_rating = 0
 	for(var/datum/stock_part/manipulator/manipulators in component_parts)
 		manipulator_rating += manipulators.tier
-		for(var/i in 1 to manipulators.tier)
+	available_chems.Cut()
+	for(var/i in 1 to manipulator_rating)
+		if(i <= possible_chems.len)
 			available_chems |= possible_chems[i]
 
 	reset_chem_buttons()
@@ -90,6 +159,58 @@
 /obj/machinery/sleeper/update_icon_state()
 	icon_state = "[base_icon_state][state_open ? "-open" : null]"
 	return ..()
+
+/obj/machinery/sleeper/attackby(obj/item/weapon, mob/user, params)
+	if(is_reagent_container(weapon) && weapon.is_open_container())
+		var/obj/item/reagent_containers/container = weapon
+		if(!length(container.reagents.reagent_list))
+			balloon_alert(user, "container is empty!")
+			return
+
+		var/added_any = FALSE
+
+		// It eat all reagents in 1 beaker
+		for(var/datum/reagent/reagent in container.reagents.reagent_list)
+			var/chem_path = reagent.type
+
+			if(!is_chem_allowed(chem_path))
+				continue
+
+			var/current = custom_chem_storage[chem_path] || 0
+			var/space_left = max_custom_storage - current
+
+			if(space_left <= 0)
+				continue
+
+			var/to_add = min(reagent.volume, space_left)
+			container.reagents.remove_reagent(chem_path, to_add)
+			custom_chem_storage[chem_path] = current + to_add
+			added_any = TRUE
+
+		user.do_attack_animation(src)
+		if(added_any)
+			playsound(src, 'sound/effects/pop.ogg', 50, 0)
+			update_appearance()
+			balloon_alert(user, "chemicals added!")
+		else
+			balloon_alert(user, "no compatible chemicals!")
+		return
+
+	return ..()
+
+// Can u add custom chem?
+/obj/machinery/sleeper/proc/is_chem_allowed(chem_path)
+	// Direct name and exceptions
+	for(var/key in available_custom_chems)
+		if(chem_path == key)
+			return available_custom_chems[key]
+
+	// Category
+	for(var/key in available_custom_chems)
+		if(ispath(chem_path, key))
+			return available_custom_chems[key]
+
+	return FALSE
 
 /obj/machinery/sleeper/container_resist_act(mob/living/user)
 	visible_message(span_notice("[occupant] emerges from [src]!"),
@@ -195,7 +316,50 @@
 	. += span_notice("Alt-click [src] to [state_open ? "close" : "open"] it.")
 
 /obj/machinery/sleeper/process()
-	use_energy(idle_power_usage)
+	if(synthesis_active)
+		use_energy(active_power_usage)
+	else
+		use_energy(idle_power_usage)
+
+	if(synthesis_active)
+		perform_synthesis()
+
+/obj/machinery/sleeper/proc/perform_synthesis()
+	if(!length(custom_chem_storage))
+		synthesis_active = FALSE
+		return
+
+	// Get list of incomplete chemicals
+	var/list/not_full_chems = list()
+	for(var/chem in custom_chem_storage)
+		var/current = custom_chem_storage[chem] || 0
+		if(current < max_custom_storage)
+			not_full_chems += chem
+
+	if(!length(not_full_chems))
+		synthesis_active = FALSE
+		return
+
+	// Choosing a chemical for synthesis
+	var/target_chem
+	if(forced_synthesis_chem && (forced_synthesis_chem in not_full_chems))
+		target_chem = forced_synthesis_chem
+	else if(forced_synthesis_chem && !(forced_synthesis_chem in not_full_chems))
+		// The forced chemical is full — we switch to a random one
+		forced_synthesis_chem = null
+		target_chem = pick(not_full_chems)
+	else
+		target_chem = pick(not_full_chems)
+
+	if(!target_chem)
+		return
+
+	var/current = custom_chem_storage[target_chem] || 0
+	var/to_add = min(synthesis_rate, max_custom_storage - current)
+	if(to_add <= 0)
+		return
+
+	custom_chem_storage[target_chem] = current + to_add
 
 /obj/machinery/sleeper/nap_violation(mob/violator)
 	. = ..()
@@ -207,18 +371,65 @@
 	data["open"] = state_open
 	data["available_amounts"] = available_amounts
 	data["inject_amount"] = inject_amount
+	data["max_custom_storage"] = max_custom_storage
+	var/is_synthesizing = FALSE
+	if(synthesis_active)
+		for(var/chem in custom_chem_storage)
+			var/current = custom_chem_storage[chem] || 0
+			if(current < max_custom_storage)
+				is_synthesizing = TRUE
+				break
 
-	data["chems"] = list()
+	data["is_synthesizing"] = is_synthesizing
+	data["synthesis_active"] = synthesis_active
+	data["synthesis_rate"] = synthesis_rate
+	data["forced_synthesis_chem"] = forced_synthesis_chem ? "[forced_synthesis_chem]" : null
+
+	var/forced_name = null
+	if(forced_synthesis_chem)
+		var/datum/reagent/R = GLOB.chemical_reagents_list[forced_synthesis_chem]
+		if(R)
+			forced_name = R.name
+	data["forced_synthesis_name"] = forced_name
+
+	// --- STANDARD CHEMICALS (endless) ---
+	data["standard_chems"] = list()
 	for(var/chem in available_chems)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[chem]
 		var/display_name = R.display_name_short ? R.display_name_short : R.name
-		data["chems"] += list(
+		data["standard_chems"] += list(
 			list(
-				"name" = display_name,	// take an alternative name if the usual one is too long
+				"name" = display_name,
 				"full_name" = R.name,
 				"id" = R.type,
 				"allowed" = chem_allowed(chem),
 				"description" = R.description,
+				"is_standard" = TRUE,
+			),
+		)
+
+	// --- CUSTOM CHEMICALS (finite) ---
+	data["custom_chems"] = list()
+	for(var/chem in custom_chem_storage)
+		var/datum/reagent/R = GLOB.chemical_reagents_list[chem]
+		if(!R)
+			continue
+		var/display_name = R.display_name_short ? R.display_name_short : R.name
+		var/stored = custom_chem_storage[chem] || 0
+		var/percent = round((stored / max_custom_storage) * 100)
+		var/is_empty = stored < inject_amount
+
+		data["custom_chems"] += list(
+			list(
+				"name" = display_name,
+				"full_name" = R.name,
+				"id" = R.type,
+				"allowed" = !is_empty && chem_allowed(chem),
+				"description" = R.description,
+				"storage" = stored,
+				"max_storage" = max_custom_storage,
+				"percent" = percent,
+				"is_empty" = is_empty,
 			),
 		)
 
@@ -292,17 +503,75 @@
 			else
 				open_machine()
 			. = TRUE
+
 		if("inject")
 			var/chem = text2path(params["chem"])
 			if(!is_operational || !mob_occupant || isnull(chem))
 				return
-			if(mob_occupant.health < min_health && !ispath(chem, /datum/reagent/medicine/epinephrine))
+
+			// Emergency chemicals can always be administered, the rest — only if the health is above the threshold.
+			if(!(chem in emergency_chems) && mob_occupant.health < min_health)
+				balloon_alert(usr, "patient too damaged!")
 				return
+
 			if(inject_chem(chem, usr))
 				playsound(src, 'sound/items/hypospray.ogg', 50, TRUE, 2)
 				. = TRUE
-				if((obj_flags & EMAGGED) && prob(5))
-					to_chat(usr, span_warning("Chemical system re-route detected, results may not be as expected!"))
+
+		if("toggle_synthesis")
+			if(!length(custom_chem_storage))
+				balloon_alert(usr, "no custom chemicals!")
+				return
+			synthesis_active = !synthesis_active
+			if(synthesis_active)
+				balloon_alert(usr, "synthesis started")
+			else
+				balloon_alert(usr, "synthesis stopped")
+			. = TRUE
+
+		if("force_synthesis")
+			var/chem = text2path(params["chem"])
+			if(!chem || !(chem in custom_chem_storage))
+				return
+			if(forced_synthesis_chem == chem)
+				forced_synthesis_chem = null
+				balloon_alert(usr, "synthesis: random")
+			else
+				forced_synthesis_chem = chem
+				balloon_alert(usr, "synthesis: [chem]")
+				if(!synthesis_active)
+					synthesis_active = TRUE
+			. = TRUE
+
+		if("inject_custom")
+			var/chem = text2path(params["chem"])
+			if(!is_operational || !mob_occupant || isnull(chem))
+				return
+			var/stored = custom_chem_storage[chem] || 0
+			if(stored < inject_amount)
+				balloon_alert(usr, "not enough!")
+				return
+			var/actual_amount = min(inject_amount, 20 * efficiency - mob_occupant.reagents.get_reagent_amount(chem))
+			if(actual_amount > 0)
+				mob_occupant.reagents.add_reagent(chem, actual_amount)
+				custom_chem_storage[chem] = stored - actual_amount
+				if(usr)
+					log_combat(usr, mob_occupant, "injected [actual_amount] units of custom [chem] into", addition = "via [src]")
+				playsound(src, 'sound/items/hypospray.ogg', 50, TRUE, 2)
+				. = TRUE
+
+		if("remove_custom_chem")
+			var/chem = text2path(params["chem"])
+			if(!chem || !(chem in custom_chem_storage))
+				return
+			if(forced_synthesis_chem == chem)
+				forced_synthesis_chem = null
+			custom_chem_storage -= chem
+			if(!length(custom_chem_storage))
+				synthesis_active = FALSE
+			playsound(src, 'sound/effects/pop.ogg', 50, 0)
+			. = TRUE
+
 		if("set_amount")
 			var/new_amount = text2num(params["amount"])
 			if(new_amount in available_amounts)
@@ -312,14 +581,36 @@
 
 /obj/machinery/sleeper/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
+		balloon_alert(user, "already emagged!")
+		return FALSE
+
+	var/choice = tgui_input_list(user, "Select emag function:", "Sleeper Emag", list(
+		"Scramble Buttons",
+		"Syndicate chemicals kit",
+		"Cancel"
+	))
+
+	if(!choice || choice == "Cancel")
 		return FALSE
 
 	balloon_alert(user, "interface scrambled")
 	obj_flags |= EMAGGED
 
-	var/list/av_chem = available_chems.Copy()
-	for(var/chem in av_chem)
-		chem_buttons[chem] = pick_n_take(av_chem) //no dupes, allow for random buttons to still be correct
+	switch(choice)
+		if("Scramble Buttons")
+			var/list/av_chem = available_chems.Copy()
+			for(var/chem in av_chem)
+				chem_buttons[chem] = pick_n_take(av_chem)
+			to_chat(user, span_warning("Chemical buttons scrambled!"))
+
+		if("Syndicate chemicals kit")
+			available_custom_chems[/datum/reagent/toxin] = TRUE
+
+			for(var/toxin in emag_chems_to_add)
+				if(!(toxin in custom_chem_storage))
+					custom_chem_storage[toxin] = 20
+
+			to_chat(user, span_warning("Toxic chemicals unlocked and added to synthesis data base!"))
 	return TRUE
 
 /obj/machinery/sleeper/proc/inject_chem(chem, mob/user)
@@ -333,13 +624,21 @@
 			return TRUE
 	return FALSE
 
+// Can u inject chem?
 /obj/machinery/sleeper/proc/chem_allowed(chem)
 	var/mob/living/mob_occupant = occupant
 	if(!mob_occupant || !mob_occupant.reagents)
-		return
+		return FALSE
+
 	var/amount = mob_occupant.reagents.get_reagent_amount(chem) + inject_amount <= 20 * efficiency
-	var/occ_health = mob_occupant.health > min_health || chem == /datum/reagent/medicine/epinephrine
-	return amount && occ_health
+	var/occ_health = (chem in emergency_chems) || mob_occupant.health > min_health
+
+	var/has_storage = TRUE
+	if(chem in custom_chem_storage)
+		var/stored = custom_chem_storage[chem] || 0
+		has_storage = stored >= inject_amount
+
+	return amount && occ_health && has_storage
 
 /obj/machinery/sleeper/proc/reset_chem_buttons()
 	obj_flags &= ~EMAGGED
