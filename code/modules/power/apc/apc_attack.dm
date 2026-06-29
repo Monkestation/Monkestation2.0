@@ -261,9 +261,8 @@
 			user.visible_message(span_notice("[user] removes \the [cell] from [src]!"))
 			balloon_alert(user, "cell removed")
 			var/obj/item/stock_parts/power_store/removed_cell = cell
-			user.put_in_hands(removed_cell) // Taking out the cell makes cell null. Thus the variable above.
+			user.put_in_hands(removed_cell) // Makes cell null. Thus the variable above.
 			removed_cell.update_appearance()
-			removed_cell = null
 			charging = APC_NOT_CHARGING
 			update_appearance()
 		return
