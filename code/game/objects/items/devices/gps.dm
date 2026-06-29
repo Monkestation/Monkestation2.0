@@ -130,7 +130,7 @@
 	COOLDOWN_DECLARE(yellow_alert_cooldown)
 	var/can_play_jam_sound = TRUE
 	var/yellow_alerts_issued = 0
-	var/yellow_alerts_issued_maximum = 2
+	var/yellow_alerts_issued_maximum = 3
 	var/yellow_alert_interval = 5 MINUTES
 
 /obj/item/gps/security/Initialize(mapload)
