@@ -1,0 +1,4 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - bugfix: "AI overclocking workstation now has a board of its own, letting it be repaired."
