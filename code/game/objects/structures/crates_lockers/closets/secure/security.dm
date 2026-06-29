@@ -186,6 +186,7 @@
 	new /obj/item/clothing/head/fedora/inspector_hat(src)
 	new /obj/item/card/id/advanced/undercover(src)
 	new /obj/item/gps/security(src)
+	new /obj/item/gps/security(src)
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections locker"
@@ -366,6 +367,7 @@
 	..()
 	new /obj/item/flashlight/seclite(src)
 	new /obj/item/storage/bag/garment/brig_physician(src)
+	new /obj/item/gps/security(src)
 	new /obj/item/clothing/suit/jacket/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/clothing/glasses/blindfold(src)
