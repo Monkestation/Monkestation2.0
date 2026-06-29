@@ -270,6 +270,9 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 	var/obj/item/gps/security/our_gps_device = parent
 
+	our_gps_device.say("Signal sent.")
+	playsound(our_gps_device, 'sound/items/gps/one_ping.ogg', 35, TRUE)
+
 	var/jammed_signal = FALSE
 	for(var/datum/component/gps/item/security_gps/other_gps in get_gps_list_to_alert())
 		if(other_gps.jammed || other_gps.emped)
