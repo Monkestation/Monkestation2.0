@@ -612,6 +612,8 @@
 
 	add_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
 	update_stat()
+	SEND_SIGNAL(src, COMSIG_LIVING_FAKE_DEATH)
+
 
 ///Unignores all slowdowns that lack the IGNORE_NOSLOW flag.
 /mob/living/proc/unignore_slowdown(source)

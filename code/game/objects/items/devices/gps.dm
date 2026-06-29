@@ -141,6 +141,7 @@
 	. = ..()
 	UnregisterSignal(src, COMSIG_GPS_TOGGLED_TRACKING)
 	UnregisterSignal(tracked_mob, COMSIG_LIVING_DEATH)
+	UnregisterSignal(tracked_mob, COMSIG_LIVING_FAKE_DEATH)
 	QDEL_NULL(tracked_mob)
 	QDEL_NULL(gps_component)
 
@@ -164,12 +165,14 @@
 	else
 		yellow_alerts_issued = 0
 		UnregisterSignal(tracked_mob, COMSIG_LIVING_DEATH)
+		UnregisterSignal(tracked_mob, COMSIG_LIVING_FAKE_DEATH)
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/gps/security/process()
 	//look for a mob in either our location
 	if(obj_flags & EMAGGED)
 		UnregisterSignal(tracked_mob, COMSIG_LIVING_DEATH)
+		UnregisterSignal(tracked_mob, COMSIG_LIVING_FAKE_DEATH)
 		tracked_mob = null
 		return PROCESS_KILL
 	var/atom/object = src
@@ -180,6 +183,7 @@
 
 	if(!ismob(object))
 		UnregisterSignal(tracked_mob, COMSIG_LIVING_DEATH)
+		UnregisterSignal(tracked_mob, COMSIG_LIVING_FAKE_DEATH)
 		tracked_mob = null
 		if(COOLDOWN_FINISHED(src, yellow_alert_cooldown))
 			COOLDOWN_START(src, yellow_alert_cooldown, yellow_alert_interval)
@@ -197,8 +201,10 @@
 		return
 
 	UnregisterSignal(tracked_mob, COMSIG_LIVING_DEATH)
+	UnregisterSignal(tracked_mob, COMSIG_LIVING_FAKE_DEATH)
 	tracked_mob = current_mob
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+	RegisterSignal(current_mob, COMSIG_LIVING_FAKE_DEATH, PROC_REF(on_death))
 
 /obj/item/gps/security/proc/on_death()
 	SEND_SIGNAL(src, COMSIG_SEC_GPS_ALERT, "Code RED")
