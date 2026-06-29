@@ -211,6 +211,13 @@
 /obj/machinery/jukebox/unlocked/available_tracks()
 	return SSmedia_tracks.all_tracks
 
+/obj/machinery/jukebox/unlocked/gramophone
+	name = "Space Gramophone"
+	desc = "A old timey looking music player, now hooked up with a bunch of holorecords!"
+	icon = 'monkestation/code/modules/get_off_my_lawn/icons/modern_structures.dmi'
+	icon_state = "gramophone"
+	base_icon_state = "gramophone"
+
 #undef JUKEMODE_PLAY_ONCE
 #undef JUKEMODE_REPEAT_SONG
 #undef JUKEMODE_RANDOM
