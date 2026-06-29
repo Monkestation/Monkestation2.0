@@ -214,7 +214,7 @@
 /obj/machinery/jukebox/unlocked/gramophone
 	name = "Space Gramophone"
 	desc = "A old timey looking music player, now hooked up with a bunch of holorecords!"
-	icon = 'monkestation/code/modules/get_off_my_lawn/icons/modern_structures.dmi'
+	icon = 'icons/obj/old_timey/modern_structures.dmi'
 	icon_state = "gramophone"
 	base_icon_state = "gramophone"
 
