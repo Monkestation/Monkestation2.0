@@ -170,7 +170,7 @@
 
 /obj/item/gps/security/process()
 	//look for a mob in either our location
-	if(obj_flags & EMAGGED)
+	if(obj_flags & EMAGGED || !gps_component.tracking)
 		UnregisterSignal(tracked_mob, COMSIG_LIVING_DEATH)
 		UnregisterSignal(tracked_mob, COMSIG_LIVING_FAKE_DEATH)
 		tracked_mob = null

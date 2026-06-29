@@ -270,28 +270,32 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 	var/obj/item/gps/security/our_gps_device = parent
 
+	var/jammed_signal = FALSE
 	for(var/datum/component/gps/item/security_gps/other_gps in get_gps_list_to_alert())
 		if(other_gps.jammed || other_gps.emped)
 			continue
 		var/obj/item/gps/security/original_alerting_gps_device = other_gps.parent
 		if(is_within_radio_jammer_range(original_alerting_gps_device))
 			continue
-		//var/jammed_signal = FALSE
 		var/datum/component/gps/item/security_gps/jamming_gps = get_jammed_gps()
 		if(jamming_gps)
+			var/turf/actual_gps_turf = get_turf(our_gps_device)
 			our_gps_device = jamming_gps.parent
 			if(our_gps_device.can_play_jam_sound)
 				playsound(our_gps_device, 'sound/items/gps/radio_jammer.ogg', 35, TRUE)
-				our_gps_device.say("[Gibberish("///%<SIGNAL INTERCEPTED>{SEND}source.create_feedback_loop", TRUE, 50)]")
+				our_gps_device.say("[Gibberish("///%<SIGNAL INTERCEPTED>{SEND}source.create_feedback_loop", TRUE, 50)] ([get_area_name(actual_gps_turf, TRUE)]) ([actual_gps_turf.x], [actual_gps_turf.y], [actual_gps_turf.z])")
 				our_gps_device.can_play_jam_sound = FALSE
 				addtimer(CALLBACK(src, PROC_REF(reset_jam_sound), our_gps_device), 1 SECOND)
-			//jammed_signal = TRUE
+			jammed_signal = TRUE
 		var/turf/gps_turf = get_turf(our_gps_device)
-		var/full_alert_text = "Alert. [gpstag]: [alert_text] ([gps_turf.x], [gps_turf.y], [gps_turf.z])"
+		var/full_alert_text = "Alert. [gpstag]: [alert_text] ([get_area_name(gps_turf, TRUE)]) ([gps_turf.x], [gps_turf.y], [gps_turf.z])"
 		// if(jammed_signal)
 		// 	full_alert_text = "Alert. [Gibberish("[gpstag]: [alert_text]", TRUE, 75)] ([gps_turf.x], [gps_turf.y], [gps_turf.z])"
 		original_alerting_gps_device.say(full_alert_text)
 		playsound(original_alerting_gps_device, 'sound/items/gps/one_ping.ogg', 35, TRUE)
+
+	if(tracking && jammed_signal)
+		toggletracking()
 
 /datum/component/gps/item/security_gps/proc/reset_jam_sound(obj/item/gps/security/gps_device)
 	gps_device.can_play_jam_sound = TRUE
