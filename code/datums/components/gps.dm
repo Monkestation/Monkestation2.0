@@ -1,6 +1,3 @@
-#define COMSIG_SEC_GPS_ALERT "sec_gps_alert"
-#define COMSIG_GPS_TOGGLED_TRACKING "gps_tracking_toggled"
-
 ///Global GPS_list. All  GPS components get saved in here for easy reference.
 GLOBAL_LIST_EMPTY(GPS_list)
 ///GPS component. Atoms that have this show up on gps. Pretty simple stuff.
