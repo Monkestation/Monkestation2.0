@@ -115,3 +115,7 @@ GLOBAL_LIST_INIT(loadout_plushies, generate_loadout_items(/datum/loadout_item/pl
 /datum/loadout_item/plushies/scorched_girl
 	name = "Scorched Girl Plushie"
 	item_path = /obj/item/toy/plush/lobotomy/scorched
+
+/datum/loadout_item/plushies/expie
+	name = "Expie Plushie"
+	item_path = /obj/item/toy/plush/expie
