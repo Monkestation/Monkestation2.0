@@ -417,6 +417,8 @@
 		modifier.on_start_game(lobby)
 		lobby += modifier.type
 		modifiers_pool -= modifier.blacklisted_modifiers
+		if(!length(modifiers_pool))
+			return
 
 /datum/deathmatch_modifier/any_loadout
 	name = "Any Loadout Allowed"
