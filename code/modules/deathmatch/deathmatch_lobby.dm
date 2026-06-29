@@ -145,9 +145,9 @@
 	if (!(loadout in loadouts))
 		loadout = loadouts[1]
 	// MONKESTATION EDIT NEW START
-	if(loadout == /datum/outfit/deathmatch_loadout/naked/random)
+	if(loadout == /datum/outfit/deathmatch_loadout/random)
 		if(length(loadouts) > 1)
-			loadout = pick(loadouts - /datum/outfit/deathmatch_loadout/naked/random)
+			loadout = pick(loadouts - /datum/outfit/deathmatch_loadout/random)
 		else
 			loadout = pick(GLOB.deathmatch_game.loadouts)
 	// MONKESTATION EDIT NEW END

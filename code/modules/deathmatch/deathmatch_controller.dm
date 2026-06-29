@@ -26,7 +26,7 @@
 		template = new template()
 		maps[template.name] = template
 		if(length(template.allowed_loadouts) > 1)
-			template.allowed_loadouts.Insert(1, /datum/outfit/deathmatch_loadout/naked/random)
+			template.allowed_loadouts.Insert(1, /datum/outfit/deathmatch_loadout/random)
 		if(max_players < template.max_players)
 			max_players = template.max_players
 	var/datum/lazy_template/deathmatch/random_template = maps[/datum/lazy_template/deathmatch/random::name]
