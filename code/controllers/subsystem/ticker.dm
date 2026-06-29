@@ -210,7 +210,7 @@ SUBSYSTEM_DEF(ticker)
 			SStitle.update_init_text()
 			// MONKESTATION EDIT START - lobby notices
 			if (length(config.lobby_notices))
-				config.ShowLobbyNotices(world)
+				config.show_lobby_notices(world)
 			// MONKESTATION END
 			fire()
 		if(GAME_STATE_PREGAME)

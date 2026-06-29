@@ -17,6 +17,7 @@
 	var/list/mode_names
 	var/list/mode_reports
 	var/list/mode_false_report_weight
+	var/list/lobby_notices
 
 	var/motd
 	var/policy
@@ -96,7 +97,7 @@
 	if (fexists("[directory]/ezdb.txt"))
 		LoadEntries("ezdb.txt")
 	loadmaplist(CONFIG_MAPS_FILE)
-	LoadMisc() // Monkestation edit: other configuration stuff
+	LoadMisc()
 	LoadMOTD()
 	LoadPolicy()
 	LoadChatFilter()
@@ -312,6 +313,9 @@
 		log_admin_private("Config rewrite of [entry_type] to [new_val] attempted by [key_name(usr)]")
 		return
 	return E.ValidateAndSet("[new_val]")
+
+/datum/controller/configuration/proc/LoadMisc()
+	load_important_notices()
 
 /datum/controller/configuration/proc/LoadMOTD()
 	var/list/motd_contents = list()
@@ -571,3 +575,61 @@ Example config:
 		return
 
 	GLOB.relay_config = content["relay"]
+
+/*
+// JSON example of how lobby_notices.json works.
+
+[
+	"this notice will show in both the chatbox, and tgui. will do HTML like the others but using classes that are used in the chatbox will not show in tgui as they are separate",
+	{
+		"TGUI_SAFE": "This shows in tgui! <span style='font-size: 110%'>you can also use html! but not the classes used the chatbox, as said above</span>",
+		"CHATBOX_SAFE": "This shows in tgui! <span class='bold red'>(with special formatting!)</span>."
+	},
+	{
+		"TGUI_SAFE": [
+			"this is the first line",
+			"this is the second line. notice how this object doesn't have a chatbox_safe?",
+			"that means it'll only show in Tgui"
+		]
+	}
+]
+
+*/
+/datum/controller/configuration/proc/load_important_notices()
+	lobby_notices?.Cut()
+	var/rawnotices = file2text("[directory]/lobby_notices.json")
+	if(rawnotices)
+		var/parsed = safe_json_decode(rawnotices)
+		if(!parsed)
+			log_config("JSON parsing failure for lobby_notices.json")
+			DelayedMessageAdmins("JSON parsing failure for lobby_notices.json")
+		else
+			lobby_notices = parsed
+
+/datum/controller/configuration/proc/show_lobby_notices(target)
+	if(!length(config.lobby_notices))
+		return FALSE
+
+	var/final_notices = ""
+	var/do_final_top_separator = FALSE
+	for(var/notice in config.lobby_notices)
+		var/do_separator = FALSE
+		if(islist(notice))
+			var/list/_notice = notice
+			if(_notice["CHATBOX_SAFE"])
+				do_separator = TRUE
+				final_notices = "[final_notices]<br>[_notice["CHATBOX_SAFE"]]"
+		else
+			final_notices = "[final_notices]<br>[notice]"
+			do_separator = TRUE
+
+		if(do_separator)
+			do_final_top_separator = TRUE
+			final_notices = "[final_notices]<hr class='solid'>"
+
+	if(!final_notices)
+		return FALSE
+
+	to_chat(target, "[do_final_top_separator ? "<hr class='solid'>" : ""][final_notices]")
+
+	return TRUE

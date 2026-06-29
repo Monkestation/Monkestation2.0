@@ -245,7 +245,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, FALSE, "Reset Player OOC Color", "Returns pla
 	else
 		to_chat(src, span_notice("The Message of the Day has not been set."))
 
-	config.ShowLobbyNotices(src) // monkestation edit
+	config.show_lobby_notices(src) // monkestation edit
 
 /client/proc/self_notes()
 	set name = "View Admin Remarks"

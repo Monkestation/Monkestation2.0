@@ -126,34 +126,7 @@
 
 	/// Extra A* weight applied to all turfs in this area.
 	var/astar_weight = 0
-
-/**
- * A list of teleport locations
- *
- * Adding a wizard area teleport list because motherfucking lag -- Urist
- * I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game
- */
-GLOBAL_LIST_EMPTY(teleportlocs)
-
-/**
- * Generate a list of turfs you can teleport to from the areas list
- *
- * Includes areas if they're not a shuttle or not not teleport or have no contents
- *
- * The chosen turf is the first item in the areas contents that is a station level
- *
- * The returned list of turfs is sorted by name
- */
-/proc/process_teleport_locs()
-	for(var/area/AR as anything in get_sorted_areas())
-		if(istype(AR, /area/shuttle) || AR.area_flags & NOTELEPORT)
-			continue
-		if(GLOB.teleportlocs[AR.name])
-			continue
-		if (!AR.has_contained_turfs())
-			continue
-		if (is_station_level(AR.z))
-			GLOB.teleportlocs[AR.name] = AR
+	var/auto_renamed
 
 /**
  * Called when an area loads
@@ -161,6 +134,29 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  *  Adds the item to the GLOB.areas_by_type list based on area type
  */
 /area/New()
+	/*
+		This replaces area names that contain nautical terms (fore, port, aft, starboard) with the corresponding cardinal directions,
+		so that the map can be more easily navigated. It also combines cardinal directions that are next to each other into a single word.
+		"[dir] Bow" and "[dir] Quarter" are also replaced with the corresponding ordinal directions.
+	*/
+	// using unicode (x_char) procs here bc I'm scared of how the normal versions might interact with \improper and such
+	var/static/regex/check_regex = regex(@"Fore|Port|Aft|Starboard|Quarter|Bow")
+	var/static/regex/combine_regex = regex(@"(North|South|West|East) (North|South|West|East)", "ig")
+	if(check_regex.Find(name))
+		// corners first
+		name = replacetextEx_char(name, "Port Bow", "Northwest")
+		name = replacetextEx_char(name, "Starboard Bow", "Northeast")
+		name = replacetextEx_char(name, "Port Quarter", "Southwest")
+		name = replacetextEx_char(name, "Starboard Quarter", "Southeast")
+		// then the rest
+		name = replacetextEx_char(name, "Fore", "North")
+		name = replacetextEx_char(name, "Aft", "South")
+		name = replacetextEx_char(name, "Port", "West")
+		name = replacetextEx_char(name, "Starboard", "East")
+		// change stuff like "North East" to "Northeast"
+		name = replacetext_char(name, combine_regex, GLOBAL_PROC_REF(combine_area_names))
+		auto_renamed = name
+
 	// This interacts with the map loader, so it needs to be set immediately
 	// rather than waiting for atoms to initialize.
 	if (area_flags & UNIQUE_AREA)
@@ -169,6 +165,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	energy_usage = new /list(AREA_USAGE_LEN) // Some atoms would like to use power in Initialize()
 	alarm_manager = new(src) // just in case
 	return ..()
+
+/proc/combine_area_names(match, a, b)
+	return "[a][LOWER_TEXT(b)]"
 
 /*
  * Initalize this area
@@ -210,6 +209,34 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/LateInitialize(mapload_arg)
 	power_change() // all machines set to current power level, also updates icon
 	update_beauty()
+
+/**
+ * A list of teleport locations
+ *
+ * Adding a wizard area teleport list because motherfucking lag -- Urist
+ * I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game
+ */
+GLOBAL_LIST_EMPTY(teleportlocs)
+
+/**
+ * Generate a list of turfs you can teleport to from the areas list
+ *
+ * Includes areas if they're not a shuttle or not not teleport or have no contents
+ *
+ * The chosen turf is the first item in the areas contents that is a station level
+ *
+ * The returned list of turfs is sorted by name
+ */
+/proc/process_teleport_locs()
+	for(var/area/AR as anything in get_sorted_areas())
+		if(istype(AR, /area/shuttle) || AR.area_flags & NOTELEPORT)
+			continue
+		if(GLOB.teleportlocs[AR.name])
+			continue
+		if (!AR.has_contained_turfs())
+			continue
+		if (is_station_level(AR.z))
+			GLOB.teleportlocs[AR.name] = AR
 
 /// Generate turfs, including cool cave wall gen
 /area/proc/RunTerrainGeneration()
@@ -625,8 +652,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * If an area has not been renamed, returns the area name. If it has been modified (by blueprints or other means)
  * returns the current name, as well as the initial value, in the format of [Current Location Name (Original Name)]
  */
-
 /area/proc/get_original_area_name()
+	if(auto_renamed)
+		if(name == auto_renamed)
+			return name
+		return "[name] ([auto_renamed])"
+
 	if(name == initial(name))
 		return name
 	return "[name] ([initial(name)])"

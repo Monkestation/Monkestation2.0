@@ -71,6 +71,11 @@
 	name = "Morgue Maintenance"
 	icon_state = "morgue_maint"
 
+/area/station/maintenance/department/medical/pathology
+	name = "Pathology Maintenance"
+	icon_state = "patho_maint"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
 /area/station/maintenance/department/science
 	name = "Science Maintenance"
 	icon_state = "maint_sci"
