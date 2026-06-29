@@ -18,3 +18,11 @@
 		if(borgo.try_sync_laws())
 			to_chat(borgo, span_bold("Your AI has reminded you of your laws:"))
 			borgo.show_laws()
+
+/mob/living/silicon/ai/proc/state_laws_verb()
+	set category = "AI Commands"
+	set name = "State Laws"
+	set desc = "State your laws over the radio."
+	if(alert(src, "State laws over the radio?","Confirm state laws", "Yes", "No") != "Yes")
+		return
+	src.statelaws()

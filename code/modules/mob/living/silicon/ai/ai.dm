@@ -219,6 +219,7 @@
 	spark_system.attach(src)
 
 	add_verb(src, /mob/living/silicon/ai/proc/show_laws_verb)
+	add_verb(src, /mob/living/silicon/ai/proc/state_laws_verb)
 
 	aiMulti = new(src)
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
