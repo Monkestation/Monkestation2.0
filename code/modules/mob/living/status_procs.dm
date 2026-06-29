@@ -527,7 +527,7 @@
 	AdjustImmobilized(-6 SECONDS)
 	if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
 		stamina.adjust(5)
-		if(stamina.current > 15)
+		if(stamina.current >= 15)
 			exit_stamina_stun()
 
 ///////////////////////////////// FROZEN /////////////////////////////////////
