@@ -162,6 +162,7 @@
 	if(tracking && !(obj_flags & EMAGGED))
 		START_PROCESSING(SSobj, src)
 	else
+		yellow_alerts_issued = 0
 		UnregisterSignal(tracked_mob, COMSIG_LIVING_DEATH)
 		STOP_PROCESSING(SSobj, src)
 
@@ -186,6 +187,7 @@
 			yellow_alerts_issued++
 			if(yellow_alerts_issued >= yellow_alerts_issued_maximum && gps_component.tracking)
 				gps_component.toggletracking()
+				yellow_alerts_issued = 0
 				return PROCESS_KILL
 			return
 
