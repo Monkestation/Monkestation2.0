@@ -21,6 +21,10 @@
 #define TOOL_ROLLINGPIN "rolling pin"
 /// Can be used to scrape rust off an any atom; which will result in the Rust Component being qdel'd
 #define TOOL_RUSTSCRAPER "rustscraper"
+#define TOOL_BILLOW "billow"
+#define TOOL_TONG "tong"
+#define TOOL_HAMMER "hammer"
+#define TOOL_BLOWROD "blowrod"
 
 // If delay between the start and the end of tool operation is less than MIN_TOOL_SOUND_DELAY,
 // tool sound is only played when op is started. If not, it's played twice.

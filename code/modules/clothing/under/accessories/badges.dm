@@ -185,7 +185,7 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 /obj/item/clothing/accessory/pride/post_reskin()
 	for(var/pride_name in GLOB.pride_pin_reskins)
 		if(GLOB.pride_pin_reskins[pride_name] == icon_state)
-			name = "[lowertext(pride_name)] pin"
+			name = "[LOWER_TEXT(pride_name)] pin"
 			return
 
 	name = initial(name) // If we somehow fail to find our pride in the global list, just make us generic

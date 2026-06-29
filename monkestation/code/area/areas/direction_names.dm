@@ -34,4 +34,4 @@
 	return ..()
 
 /proc/combine_area_names(match, a, b)
-	return "[a][lowertext(b)]"
+	return "[a][LOWER_TEXT(b)]"

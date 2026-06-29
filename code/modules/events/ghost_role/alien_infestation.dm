@@ -73,7 +73,7 @@
 			poll_time = 20 SECONDS,
 			group = candidates,
 			alert_pic = /mob/living/carbon/alien/larva,
-			role_name_text = lowertext(cast_control.name),
+			role_name_text = LOWER_TEXT(cast_control.name),
 			chat_text_border_icon = /mob/living/carbon/alien/larva
 		)
 

@@ -111,7 +111,7 @@
 		if(!blood)
 			all_blood_names |= "blood"
 			continue
-		all_blood_names |= lowertext(initial(blood.reagent_type.name))
+		all_blood_names |= LOWER_TEXT(initial(blood.reagent_type.name))
 	return english_list(all_blood_names, nothing_text = "blood")
 
 /obj/effect/decal/cleanable/blood/process(seconds_per_tick)

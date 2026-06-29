@@ -75,7 +75,7 @@
 			for(var/word_to_replace, word_replacement in word_replacements)
 				if(islist(word_replacement))
 					word_replacement = pick(word_replacement)
-				if(lowertext(word_to_replace) == lowertext(words[i]))
+				if(LOWER_TEXT(word_to_replace) == LOWER_TEXT(words[i]))
 					words[i] = replacetext_char(words[i], word_to_replace, word_replacement)
 
 		message = jointext(words, " ")

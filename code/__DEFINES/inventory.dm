@@ -188,6 +188,27 @@ DEFINE_BITFIELD(no_equip_flags, list(
 /// The index of the entry in 'afk_thefts' with the time it happened
 #define AFK_THEFT_TIME 3
 
+/// String for items placed into the left pocket.
+#define LOCATION_LPOCKET "in your left pocket"
+/// String for items placed into the right pocket
+#define LOCATION_RPOCKET "in your right pocket"
+/// String for items placed into the backpack.
+#define LOCATION_BACKPACK "in your backpack"
+/// String for items placed into the hands.
+#define LOCATION_HANDS "in your hands"
+/// String for items placed in the glove slot.
+#define LOCATION_GLOVES "on your hands"
+/// String for items placed in the eye/glasses slot.
+#define LOCATION_EYES "covering your eyes"
+/// Items placed in the mask slot.
+#define LOCATION_MASK "covering your face"
+/// String for items placed on the head/hat slot.
+#define LOCATION_HEAD "on your head"
+/// String for items placed in the neck slot.
+#define LOCATION_NECK "around your neck"
+/// String for items placed in the id slot
+#define LOCATION_ID "in your ID slot"
+
 /// A list of things that any suit storage can hold
 /// Should consist of ubiquitous, non-specialized items
 /// or items that are meant to be "suit storage agnostic" as
@@ -317,23 +338,21 @@ GLOBAL_LIST_INIT(science_suit_allowed, list(
 	/obj/item/storage/pill_bottle,
 ))
 
-/// String for items placed into the left pocket.
-#define LOCATION_LPOCKET "in your left pocket"
-/// String for items placed into the right pocket
-#define LOCATION_RPOCKET "in your right pocket"
-/// String for items placed into the backpack.
-#define LOCATION_BACKPACK "in your backpack"
-/// String for items placed into the hands.
-#define LOCATION_HANDS "in your hands"
-/// String for items placed in the glove slot.
-#define LOCATION_GLOVES "on your hands"
-/// String for items placed in the eye/glasses slot.
-#define LOCATION_EYES "covering your eyes"
-/// Items placed in the mask slot.
-#define LOCATION_MASK "covering your face"
-/// String for items placed on the head/hat slot.
-#define LOCATION_HEAD "on your head"
-/// String for items placed in the neck slot.
-#define LOCATION_NECK "around your neck"
-/// String for items placed in the id slot
-#define LOCATION_ID "in your ID slot"
+/// The items the frontier clothing can hold
+GLOBAL_LIST_INIT(colonist_suit_allowed, list(
+	/obj/item/ammo_box,
+	/obj/item/ammo_casing,
+	/obj/item/flashlight,
+	/obj/item/gun,
+	/obj/item/melee,
+	/obj/item/tank/internals,
+	/obj/item/storage/belt/holster,
+	/obj/item/construction,
+	/obj/item/fireaxe,
+	/obj/item/pipe_dispenser,
+	/obj/item/storage/bag,
+	/obj/item/pickaxe,
+	/obj/item/resonator,
+	/obj/item/t_scanner,
+	/obj/item/analyzer,
+))

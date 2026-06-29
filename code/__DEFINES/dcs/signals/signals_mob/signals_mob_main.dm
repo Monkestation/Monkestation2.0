@@ -301,3 +301,8 @@
 
 /// From base of /datum/species/zombie/infectious/proc/set_consumed_flesh(): (new_amount, old_amount)
 #define COMSIG_ZOMBIE_FLESH_ADJUSTED "zombie_flesh_adjusted"
+
+/// Whenever we need to check if a mob is currently inside of soulcatcher.
+#define COMSIG_SOULCATCHER_CHECK_SOUL "soulcatcher_check_soul"
+/// Whenever we need to get the soul of the mob inside of the soulcatcher.
+#define COMSIG_SOULCATCHER_SCAN_BODY "soulcatcher_scan_body"

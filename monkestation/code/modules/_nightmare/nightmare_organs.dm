@@ -4,5 +4,5 @@
 		var/turf/owner_turf = get_turf(owner)
 		if(owner_turf.get_lumcount() < SHADOW_SPECIES_DIM_LIGHT)
 			var/datum/wound/wound = pick(owner.all_wounds)
-			to_chat(owner, span_green("The darkness soothes the [lowertext(wound.name)] in your [wound.limb.plaintext_zone]!"))
+			to_chat(owner, span_green("The darkness soothes the [LOWER_TEXT(wound.name)] in your [wound.limb.plaintext_zone]!"))
 			qdel(wound) // Occasionally heal a random wound while in the dark.

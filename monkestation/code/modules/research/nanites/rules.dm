@@ -122,7 +122,7 @@
 /datum/nanite_rule/damage/check_rule()
 	var/damage_amt = 0
 
-	switch(lowertext(damage_type))
+	switch(LOWER_TEXT(damage_type))
 		if(BRUTE)
 			damage_amt = program.host_mob.getBruteLoss()
 		if(BURN)

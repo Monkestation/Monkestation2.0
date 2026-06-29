@@ -114,16 +114,16 @@
 	slasher_monitor = current_mob.AddComponent(/datum/component/team_monitor, monitor_key, null, tracking_beacon)
 	slasher_monitor.show_hud(owner.current)
 
-	ADD_TRAIT(current_mob, TRAIT_BATON_RESISTANCE, "slasher")
-	ADD_TRAIT(current_mob, TRAIT_NOGUNS, "slasher")
-	ADD_TRAIT(current_mob, TRAIT_ILLITERATE, "slasher")
-	ADD_TRAIT(current_mob, TRAIT_LIMBATTACHMENT, "slasher")
-	ADD_TRAIT(current_mob, TRAIT_SLASHER, "slasher")
-	ADD_TRAIT(current_mob, TRAIT_VIRUSIMMUNE, "slasher")
-	ADD_TRAIT(current_mob, TRAIT_RESISTHEAT, "slasher")
-	ADD_TRAIT(current_mob, TRAIT_RESISTCOLD, "slasher")
-	ADD_TRAIT(current_mob, TRAIT_RESISTLOWPRESSURE, "slasher")
-	ADD_TRAIT(current_mob, TRAIT_RESISTHIGHPRESSURE, "slasher")
+	ADD_TRAIT(current_mob, TRAIT_BATON_RESISTANCE, SLASHER_TRAIT)
+	ADD_TRAIT(current_mob, TRAIT_NOGUNS, SLASHER_TRAIT)
+	ADD_TRAIT(current_mob, TRAIT_ILLITERATE, SLASHER_TRAIT)
+	ADD_TRAIT(current_mob, TRAIT_LIMBATTACHMENT, SLASHER_TRAIT)
+	ADD_TRAIT(current_mob, TRAIT_SLASHER, SLASHER_TRAIT)
+	ADD_TRAIT(current_mob, TRAIT_VIRUSIMMUNE, SLASHER_TRAIT)
+	ADD_TRAIT(current_mob, TRAIT_RESISTHEAT, SLASHER_TRAIT)
+	ADD_TRAIT(current_mob, TRAIT_RESISTCOLD, SLASHER_TRAIT)
+	ADD_TRAIT(current_mob, TRAIT_RESISTLOWPRESSURE, SLASHER_TRAIT)
+	ADD_TRAIT(current_mob, TRAIT_RESISTHIGHPRESSURE, SLASHER_TRAIT)
 
 	var/mob/living/carbon/carbon = current_mob
 	var/obj/item/organ/internal/eyes/slasher/eye = new
@@ -171,7 +171,7 @@
 /datum/antagonist/slasher/on_removal()
 	if(!QDELETED(owner.current))
 		owner.current.clear_fullscreen("slasher_prox", 15)
-		REMOVE_TRAITS_IN(owner.current, "slasher")
+		REMOVE_TRAITS_IN(owner.current, SLASHER_TRAIT)
 		for(var/datum/action/cooldown/slasher/listed_slasher as anything in powers)
 			listed_slasher.Remove(owner.current)
 

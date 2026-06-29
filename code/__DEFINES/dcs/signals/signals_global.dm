@@ -104,3 +104,6 @@
 
 /// Sent whenever a monster hunter initiates the Wonderland Apocalypse
 #define COMSIG_GLOB_WONDERLAND_APOCALYPSE "!wonderland_apocalypse"
+
+/// Sent when supermatter begins its delam countdown/when the suppression system is triggered: (var/trigger_reason)
+#define COMSIG_MAIN_SM_DELAMINATING "delam_time"

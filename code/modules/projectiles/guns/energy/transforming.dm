@@ -595,7 +595,7 @@
 
 	//placeholder code for figuring out a way of making this not an if string
 	//ammo selector v8
-	var/fixed_message = "[lowertext(raw_message)]"
+	var/fixed_message = "[LOWER_TEXT(raw_message)]"
 	if(findtext(fixed_message, regex("(?:detain|disable|stun)")))
 		selectammo(DETAIN, speaker)
 		return TRUE

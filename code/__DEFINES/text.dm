@@ -58,6 +58,10 @@
 /// Removes everything enclose in < and > inclusive of the bracket, and limits the length of the message.
 #define STRIP_HTML_FULL(text, limit) (GLOB.html_tags.Replace(copytext(text, 1, limit), ""))
 
+/// BYOND's string procs don't support being used on datum references (as in it doesn't look for a name for stringification)
+/// We just use this macro to ensure that we will only pass strings to this BYOND-level function without developers needing to really worry about it.
+#define LOWER_TEXT(thing) lowertext(UNLINT("[thing]"))
+
 /// Just like `icon2html` or `ma2html` but for a raw icon and icon_state
 /// (lowercase so we can just pretend this is a proc like icon2html or ma2html)
 #define iconstate2html(icon, icon_state, extra_classes) "<img class='icon [extra_classes]' src='\ref[icon]?state=[url_encode(icon_state)]' style='image-rendering: pixelated; -ms-interpolation-mode: nearest-neighbor'>"

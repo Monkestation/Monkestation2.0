@@ -890,11 +890,11 @@
 		else
 			icon_state = "[planted_seed.icon_grow][planted_seed.growthstages]"
 
-		name = lowertext(planted_seed.plantname)
+		name = LOWER_TEXT(planted_seed.plantname)
 
 	else
 		icon_state = "[planted_seed.icon_grow]1"
-		name = lowertext("harvested [planted_seed.plantname]")
+		name = LOWER_TEXT("harvested [planted_seed.plantname]")
 
 	return ..()
 

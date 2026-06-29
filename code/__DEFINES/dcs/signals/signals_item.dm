@@ -300,3 +300,10 @@
 
 ///Sent by a tumor when its removed
 #define COMSIG_ZOMBIE_TUMOR_REMOVED "zombie_tumor_removed"
+
+/// Sent when an obj/item calls item_use_power: (use_amount, user, check_only)
+#define COMSIG_ITEM_POWER_USE "item_use_power"
+	#define NO_COMPONENT NONE
+	#define COMPONENT_POWER_SUCCESS (1<<0)
+	#define COMPONENT_NO_CELL  (1<<1)
+	#define COMPONENT_NO_CHARGE (1<<2)
