@@ -56,6 +56,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		state = GLOB.default_state
 	src.state = state
 
+	src.uses_overlays = uses_overlays
+
 	var/obj/item/parent_item = parent
 	parent_item.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 	handle_overlay()
@@ -71,8 +73,6 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		src.requires_z_calibration = requires_z_calibration
 	if(islist(calibrate_zs))
 		src.calibrated_zs = calibrate_zs
-
-	src.uses_overlays = uses_overlays
 
 ///Called on COMSIG_ITEM_ATTACK_SELF
 /datum/component/gps/item/proc/interact(datum/source, mob/user)
