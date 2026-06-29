@@ -262,7 +262,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	playsound(our_gps_device, 'sound/items/gps/four_ping.ogg', 50, TRUE)
 	our_gps_device.say("Transmitting distress signal...")
 
-	addtimer(CALLBACK(src, PROC_REF(attempt_to_send_signal), alert_text), 6 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(attempt_to_send_signal), alert_text), 8 SECONDS)
 
 /datum/component/gps/item/security_gps/proc/attempt_to_send_signal(alert_text)
 	if(!tracking || emped || jammed)
