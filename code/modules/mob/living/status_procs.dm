@@ -517,13 +517,18 @@
 
 ///////////////////////// CLEAR STATUS /////////////////////////
 
+/// Reduces a multitude of status effects, heals some stamina damage, and can remove stamina stun.
 /mob/living/proc/adjust_status_effects_on_shake_up()
-	AdjustStun(-60)
-	AdjustKnockdown(-60)
-	AdjustUnconscious(-60)
-	AdjustSleeping(-100)
-	AdjustParalyzed(-60)
-	AdjustImmobilized(-60)
+	AdjustStun(-6 SECONDS)
+	AdjustKnockdown(-6 SECONDS)
+	AdjustUnconscious(-6 SECONDS)
+	AdjustSleeping(-10 SECONDS)
+	AdjustParalyzed(-6 SECONDS)
+	AdjustImmobilized(-6 SECONDS)
+	if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
+		stamina.adjust(5)
+		if(stamina.current > 15)
+			exit_stamina_stun()
 
 ///////////////////////////////// FROZEN /////////////////////////////////////
 
