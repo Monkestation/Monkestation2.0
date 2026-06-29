@@ -12,6 +12,6 @@
 	to_chat(Person,span_ratvar("Why have you come unprepared?"))
 	Person.unequip_everything()
 	Person.Paralyze(15)
-	playsound(target,'monkestation/sound/misc/dagothgod.ogg', 80)
+	playsound(target,'sound/misc/dagothgod.ogg', 80)
 	return
 

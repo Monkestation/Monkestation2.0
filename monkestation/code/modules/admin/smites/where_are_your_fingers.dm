@@ -10,7 +10,7 @@
 		return
 
 	var/mob/living/carbon/carbon_target = target
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), carbon_target, 'monkestation/sound/effects/ggg/whereareyourfingers.mp3', 70), 0 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), carbon_target, 'sound/effects/ggg/whereareyourfingers.mp3', 70), 0 SECONDS)
 
 	for (var/_limb in carbon_target.bodyparts)
 		var/obj/item/bodypart/limb = _limb

@@ -1,7 +1,7 @@
 /obj/item/card/plasma_license
 	name = "License to Plasmaflood"
 	desc = "A charred contract letting the holder flood the halls with any number of airborne gases. Not offically recognized by Nanotrasen."
-	icon = 'monkestation/icons/obj/items/plasmalicense.dmi'
+	icon = 'icons/obj/items/plasmalicense.dmi'
 	icon_state = "plasmalicense"
 	resistance_flags = FIRE_PROOF
 	//For the person who signers the contract

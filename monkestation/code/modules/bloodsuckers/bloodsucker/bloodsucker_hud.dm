@@ -9,7 +9,7 @@
 #define FORMAT_BLOODSUCKER_HUD_TEXT(valuecolor, value) MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[round(value,1)]</font></div>")
 
 /atom/movable/screen/bloodsucker
-	icon = 'monkestation/icons/bloodsuckers/actions_bloodsucker.dmi'
+	icon = 'icons/bloodsuckers/actions_bloodsucker.dmi'
 
 /atom/movable/screen/bloodsucker/blood_counter
 	name = "Blood Consumed"

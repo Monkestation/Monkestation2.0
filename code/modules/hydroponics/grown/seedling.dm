@@ -1,9 +1,9 @@
 /obj/item/seeds/seedling
 	name = "pack of seedling seeds"
 	desc = "These seeds grow into a floral assistant which can help look after other plants!"
+	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "seed-seedling"
-	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
-	icon = 'icons/obj/service/hydroponics/seeds.dmi'
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "seedling"
 	plantname = "Seedling Plant"
 	product = /mob/living/basic/seedling

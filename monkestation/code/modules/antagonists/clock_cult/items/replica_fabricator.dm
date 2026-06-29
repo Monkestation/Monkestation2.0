@@ -4,9 +4,9 @@
 /obj/item/clockwork/replica_fabricator
 	name = "replica fabricator"
 	desc = "A strange, brass device with many twisting cogs and vents."
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
-	lefthand_file = 'monkestation/icons/mob/clock_cult/clockwork_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/clock_cult/clockwork_righthand.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_objects.dmi'
+	lefthand_file = 'icons/mob/clock_cult/clockwork_lefthand.dmi'
+	righthand_file = 'icons/mob/clock_cult/clockwork_righthand.dmi'
 	icon_state = "replica_fabricator"
 	/// List of things that the fabricator can build for the radial menu
 	var/static/list/crafting_possibilities = list(

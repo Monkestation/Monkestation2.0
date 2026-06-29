@@ -1,8 +1,8 @@
 /turf/closed/wall
-	icon = 'monkestation/icons/turf/walls/wall.dmi'
+	icon = 'icons/turf/walls/wall.dmi'
 	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 	smooth_adapters = SMOOTH_ADAPTERS_WALLS_FOR_WALLS
-	var/wall_trim = 'monkestation/icons/turf/walls/wall_trim.dmi'
+	var/wall_trim = 'icons/turf/walls/wall_trim.dmi'
 	var/trim_color
 	var/list/managed_wall_trim = list()
 	var/list/managed_wall_paint = list()
@@ -51,26 +51,26 @@
 		add_overlay(managed_wall_paint)
 
 /turf/closed/wall/r_wall
-	icon = 'monkestation/icons/turf/walls/reinforced_wall.dmi'
+	icon = 'icons/turf/walls/reinforced_wall.dmi'
 	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
-	wall_trim = 'monkestation/icons/turf/walls/reinforced_wall_trim.dmi'
+	wall_trim = 'icons/turf/walls/reinforced_wall_trim.dmi'
 
 /obj/structure/falsewall
-	icon = 'monkestation/icons/turf/walls/wall.dmi'
+	icon = 'icons/turf/walls/wall.dmi'
 	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 	///pulled from the wall
-	var/wall_trim = 'monkestation/icons/turf/walls/wall_trim.dmi'
+	var/wall_trim = 'icons/turf/walls/wall_trim.dmi'
 	var/trim_color
 
 /obj/structure/falsewall/reinforced
-	icon = 'monkestation/icons/turf/walls/reinforced_wall.dmi'
+	icon = 'icons/turf/walls/reinforced_wall.dmi'
 	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 	///pulled from the wall
-	wall_trim = 'monkestation/icons/turf/walls/reinforced_wall_trim.dmi'
+	wall_trim = 'icons/turf/walls/reinforced_wall_trim.dmi'
 
 
 /turf/closed/indestructible/riveted
-	icon = 'monkestation/icons/turf/walls/reinforced_wall.dmi'
+	icon = 'icons/turf/walls/reinforced_wall.dmi'
 	base_icon_state = "reinforced_wall"
 	icon_state = "reinforced_wall-0"
 	smoothing_groups = SMOOTH_GROUP_WALLS

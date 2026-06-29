@@ -2,8 +2,8 @@
 /obj/item/clothing/accessory/badge
 	name = "badge"
 	desc = "A worn badge, how cool of you."
-	icon = 'monkestation/icons/obj/clothing/accessories.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/accessories.dmi'
+	icon = 'icons/obj/clothing/accessories.dmi'
+	worn_icon = 'icons/mob/clothing/accessories.dmi'
 	icon_state = "badge"
 	slot_flags = ITEM_SLOT_NECK
 	attachment_slot = NONE //can be worn while rolled down

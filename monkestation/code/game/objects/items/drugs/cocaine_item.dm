@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/crack
 	name = "crack"
 	desc = "A rock of freebase cocaine, otherwise known as crack."
-	icon = 'monkestation/icons/obj/items/drugs.dmi'
+	icon = 'icons/obj/items/drugs.dmi'
 	icon_state = "crack"
 	volume = 10
 	list_reagents = list(/datum/reagent/drug/cocaine/freebase_cocaine = 10)
@@ -9,7 +9,7 @@
 /obj/item/reagent_containers/crackbrick
 	name = "crack brick"
 	desc = "A brick of crack cocaine. Looks like you'd need something sharp to cut it..."
-	icon = 'monkestation/icons/obj/items/drugs.dmi'
+	icon = 'icons/obj/items/drugs.dmi'
 	icon_state = "crackbrick"
 	volume = 40
 	list_reagents = list(/datum/reagent/drug/cocaine/freebase_cocaine = 40)
@@ -34,7 +34,7 @@
 /obj/item/reagent_containers/cocaine
 	name = "cocaine"
 	desc = "Reenact your favorite scenes from Scarface!"
-	icon = 'monkestation/icons/obj/items/drugs.dmi'
+	icon = 'icons/obj/items/drugs.dmi'
 	icon_state = "cocaine"
 	volume = 5
 	list_reagents = list(/datum/reagent/drug/cocaine = 5)
@@ -80,7 +80,7 @@
 /obj/item/reagent_containers/cocainebrick
 	name = "cocaine brick"
 	desc = "A brick of cocaine. Good for transport! It'd probably break apart in your hands if you tried hard enough."
-	icon = 'monkestation/icons/obj/items/drugs.dmi'
+	icon = 'icons/obj/items/drugs.dmi'
 	icon_state = "cocainebrick"
 	volume = 25
 	list_reagents = list(/datum/reagent/drug/cocaine = 25)
@@ -132,8 +132,8 @@
 /obj/item/seeds/cocaleaf
 	name = "pack of coca leaf seeds"
 	desc = "These seeds grow into coca shrubs. They make you feel energized just looking at them..."
-	icon = 'monkestation/icons/obj/items/drugs.dmi'
-	growing_icon = 'monkestation/icons/obj/hydroponics/growing.dmi'
+	icon = 'icons/obj/items/drugs.dmi'
+	growing_icon = 'icons/obj/hydroponics/growing.dmi'
 	icon_state = "seed-cocaleaf"
 	species = "cocaleaf"
 	plantname = "Coca Leaves"
@@ -150,7 +150,7 @@
 	seed = /obj/item/seeds/cocaleaf
 	name = "coca leaf"
 	desc = "A leaf of the coca shrub, which contains a potent psychoactive alkaloid known as 'cocaine'."
-	icon = 'monkestation/icons/obj/hydroponics/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "cocaleaf"
 	foodtypes = FRUIT //i guess? i mean it grows on trees...
 	tastes = list("leaves" = 1)

@@ -10,5 +10,5 @@
 		/turf/closed/wall = "wall", \
 )
 
-#define SMOOTH_ADAPTERS_ICON 'monkestation/icons/obj/structures/window/adapters.dmi'
+#define SMOOTH_ADAPTERS_ICON 'icons/obj/structures/window/adapters.dmi'
 

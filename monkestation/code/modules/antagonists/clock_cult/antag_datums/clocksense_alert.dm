@@ -2,7 +2,7 @@
 /atom/movable/screen/alert/clockwork/clocksense
 	name = "The Ark of the Clockwork Justicar"
 	desc = "Shows infomation about the Ark of the Clockwork Justicar"
-	icon = 'monkestation/icons/hud/screen_alert.dmi'
+	icon = 'icons/hud/screen_alert.dmi'
 	icon_state = "clockinfo"
 	alerttooltipstyle = "clockwork"
 	///The static info we use so we only have to actually update our data once each tick

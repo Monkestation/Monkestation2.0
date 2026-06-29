@@ -2,7 +2,7 @@
 /obj/structure/gravestone
 	name = "gravestone"
 	desc = "Rest in piss..."
-	icon = 'monkestation/icons/obj/structures/gravestones.dmi'
+	icon = 'icons/obj/structures/gravestones.dmi'
 	icon_state = "gravestone"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	anchored = TRUE

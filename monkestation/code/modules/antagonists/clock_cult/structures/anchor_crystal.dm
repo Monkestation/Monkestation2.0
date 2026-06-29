@@ -10,10 +10,10 @@
 /obj/structure/destructible/clockwork/anchoring_crystal
 	name = "Anchoring Crystal"
 	desc = "A strange crystal that you cant quite seem to focus on."
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_objects.dmi'
 	icon_state = "obelisk"
 	break_message = span_warning("As the Anchoring Crystal shatters you swear you hear a faint scream.")
-	break_sound = 'monkestation/sound/machines/clockcult/ark_damage.ogg'
+	break_sound = 'sound/machines/clockcult/ark_damage.ogg'
 	immune_to_servant_attacks = TRUE
 	clockwork_desc = "This will help anchor reebe to this realm, allowing for greater power."
 	can_rotate = FALSE
@@ -158,7 +158,7 @@
 /obj/structure/destructible/clockwork/anchoring_crystal/proc/on_update_overlays(atom/crystal, list/overlays)
 	SIGNAL_HANDLER
 
-	var/mutable_appearance/shield_appearance = mutable_appearance('monkestation/icons/obj/clock_cult/clockwork_effects.dmi', \
+	var/mutable_appearance/shield_appearance = mutable_appearance('icons/obj/clock_cult/clockwork_effects.dmi', \
 																  overlay_state == SHIELD_BROKEN ? "broken" : "clock_shield", ABOVE_OBJ_LAYER)
 	if(overlay_state == SHIELD_DEFLECT)
 		shield_appearance.icon_state = "clock_shield_deflect"

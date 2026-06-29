@@ -1,8 +1,8 @@
 /obj/item/organ/internal/butt
 	name = "butt"
 	desc = "extremely treasured body part"
-	worn_icon = 'monkestation/icons/obj/worn_butts.dmi' //Wearable on the head
-	icon = 'monkestation/icons/obj/butts.dmi'
+	worn_icon = 'icons/obj/worn_butts.dmi' //Wearable on the head
+	icon = 'icons/obj/butts.dmi'
 	icon_state = "ass"
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_BUTT
@@ -12,7 +12,7 @@
 	hitsound = 'sound/misc/fart1.ogg'
 	body_parts_covered = HEAD
 	slot_flags = ITEM_SLOT_HEAD
-	var/list/sound_effect  = list('sound/misc/fart1.ogg', 'monkestation/sound/effects/fart2.ogg', 'monkestation/sound/effects/fart3.ogg', 'monkestation/sound/effects/fart4.ogg')
+	var/list/sound_effect  = list('sound/misc/fart1.ogg', 'sound/effects/fart2.ogg', 'sound/effects/fart3.ogg', 'sound/effects/fart4.ogg')
 	var/atmos_gas = "miasma=0.25;TEMP=310.15" //310.15 is body temperature
 	var/fart_instability = 1 //Percent chance to lose your rear each fart.
 	var/cooling_down = FALSE
@@ -106,14 +106,14 @@
 	name = "Skeletal Butt"
 	desc = "You don't understand how this works!"
 	atmos_gas = "o2=0.25;TEMP=310.15"
-	sound_effect = list("monkestation/sound/voice/laugh/skeleton/skeleton_laugh.ogg")
+	sound_effect = list("sound/voice/laugh/skeleton/skeleton_laugh.ogg")
 	icon_state =  "skeleass"
 
 //PLASMAMAN ASS
 /obj/item/organ/internal/butt/plasma
 	name = "Plasmaman Butt"
 	desc = "You REALLY don't understand how this works!"
-	sound_effect = list("monkestation/sound/voice/laugh/skeleton/skeleton_laugh.ogg")
+	sound_effect = list("sound/voice/laugh/skeleton/skeleton_laugh.ogg")
 	fart_instability = 5
 	atmos_gas = "plasma=0.25;TEMP=310.15"
 	icon_state = "plasmaass"
@@ -135,7 +135,7 @@
 /obj/effect/immovablerod/butt
 	name = "immovable butt"
 	desc = "No, really, what the fuck is that?"
-	icon = 'monkestation/icons/obj/butts.dmi'
+	icon = 'icons/obj/butts.dmi'
 	icon_state = "ass"
 
 /obj/effect/immovablerod/butt/Initialize(mapload)
@@ -195,7 +195,7 @@
 			hit_target = TRUE
 			break
 	if(!hit_target)
-		user.audible_message("[pick(world.file2list("strings/farts.txt"))]", audible_message_flags = list(CHATMESSAGE_EMOTE = TRUE), ignored_mobs = ignored_mobs)
+		user.audible_message("[pick(file2list("strings/farts.txt"))]", audible_message_flags = list(CHATMESSAGE_EMOTE = TRUE), ignored_mobs = ignored_mobs)
 
 	if(superfart_armed)
 		to_chat(user, span_notice("You decide to disarm your ass by farting slowly. Thank god."))
@@ -234,7 +234,7 @@
 	unequip_everything()
 	Paralyze(1.5 SECONDS)
 	playsound(src, 'sound/magic/lightningshock.ogg', vol = 50, vary = TRUE)
-	playsound(src, 'monkestation/sound/misc/dagothgod.ogg', vol = 80)
+	playsound(src, 'sound/misc/dagothgod.ogg', vol = 80)
 	electrocution_animation(1.5 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(finish_kill_smite), butt, explode), 1.5 SECONDS)
 
@@ -287,14 +287,14 @@
 				new_butt.desc = "hiss!"
 				new_butt.icon_state = "buttbot_xeno"
 
-		playsound(src, pick('sound/misc/fart1.ogg', 'monkestation/sound/effects/fart2.ogg', 'monkestation/sound/effects/fart3.ogg', 'monkestation/sound/effects/fart4.ogg'), 25 ,use_reverb = TRUE, mixer_channel = CHANNEL_PRUDE)
+		playsound(src, pick('sound/misc/fart1.ogg', 'sound/effects/fart2.ogg', 'sound/effects/fart3.ogg', 'sound/effects/fart4.ogg'), 25 ,use_reverb = TRUE, mixer_channel = CHANNEL_PRUDE)
 		qdel(src)
 
 
 /mob/living/simple_animal/bot/buttbot
 	name = "\improper buttbot"
 	desc = "butts"
-	icon = 'monkestation/icons/obj/butts.dmi'
+	icon = 'icons/obj/butts.dmi'
 	icon_state = "buttbot"
 	density = FALSE
 	anchored = FALSE
@@ -318,7 +318,7 @@
 		bot_cover_flags |= BOT_COVER_EMAGGED
 		var/turf/butt = get_turf(src)
 		butt.atmos_spawn_air("miasma=5;TEMP=310.15")
-		playsound(src, pick('sound/misc/fart1.ogg', 'monkestation/sound/effects/fart2.ogg', 'monkestation/sound/effects/fart3.ogg', 'monkestation/sound/effects/fart4.ogg'), 100 ,use_reverb = TRUE, mixer_channel = CHANNEL_PRUDE)
+		playsound(src, pick('sound/misc/fart1.ogg', 'sound/effects/fart2.ogg', 'sound/effects/fart3.ogg', 'sound/effects/fart4.ogg'), 100 ,use_reverb = TRUE, mixer_channel = CHANNEL_PRUDE)
 
 /mob/living/simple_animal/bot/buttbot/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods, message_range)
 	. = ..()
@@ -336,4 +336,4 @@
 			COOLDOWN_RESET(src, repeat_cooldown)
 			return
 		say(joined_text)
-		playsound(src, pick('sound/misc/fart1.ogg', 'monkestation/sound/effects/fart2.ogg', 'monkestation/sound/effects/fart3.ogg', 'monkestation/sound/effects/fart4.ogg'), 25 , use_reverb = TRUE, mixer_channel = CHANNEL_PRUDE)
+		playsound(src, pick('sound/misc/fart1.ogg', 'sound/effects/fart2.ogg', 'sound/effects/fart3.ogg', 'sound/effects/fart4.ogg'), 25 , use_reverb = TRUE, mixer_channel = CHANNEL_PRUDE)

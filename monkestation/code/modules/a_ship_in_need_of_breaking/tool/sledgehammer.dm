@@ -2,7 +2,7 @@
 	name = "sledgehammer"
 	desc = "An hefty tool used for smashing apart windows, machinery, and other structures. Printers beware."
 	icon = 'icons/obj/weapons/hammer.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/back.dmi'
+	worn_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "sledgehammer"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
