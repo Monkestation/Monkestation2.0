@@ -151,10 +151,10 @@
 	return default_can_attach(M, attach_right, user)
 
 /obj/item/mecha_parts/mecha_equipment/proc/default_can_attach(obj/vehicle/sealed/mecha/mech, attach_right = FALSE, mob/user)
-	if(!(mech_flags & mech.mech_type))
+	if(!(mech_flags & mech.mech_type) || !mech.mech_type == ALL)
 		to_chat(user, span_warning("\The [src] is incompatible with [mech]!"))
 		return FALSE
-	if(equipment_slot == MECHA_WEAPON)
+	if(equipment_slot == MECHA_WEAPON || !mech.mech_type == ALL)
 		if(attach_right)
 			if((!isnull(mech.equip_by_category[MECHA_R_ARM]) || !mech.max_equip_by_category[MECHA_R_ARM]) && (!special_attaching_interaction(attach_right, mech, user, checkonly = TRUE)))
 				to_chat(user, span_warning("\The [mech]'s right arm is full![mech.equip_by_category[MECHA_L_ARM] || !mech.max_equip_by_category[MECHA_L_ARM] ? "" : " Try left arm!"]"))
