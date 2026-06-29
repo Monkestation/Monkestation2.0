@@ -194,8 +194,10 @@
 				yellow_alerts_issued = 0
 				return PROCESS_KILL
 			return
+		return
 
 	var/mob/living/current_mob = object
+	yellow_alerts_issued = 0
 
 	if(tracked_mob == current_mob)
 		return
