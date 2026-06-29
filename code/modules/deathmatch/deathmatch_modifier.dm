@@ -47,6 +47,15 @@
 /datum/deathmatch_modifier/proc/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	return
 
+// MONKESTATION EDIT NEW START
+/datum/deathmatch_modifier/random_loadouts
+	name = "Forced random loadouts"
+	description = "Randomizes everyone's loadouts"
+
+/datum/deathmatch_modifier/random_loadouts/on_start_game(datum/deathmatch_lobby/lobby)
+	for(var/key in lobby.players)
+		lobby.players[key]["loadout"] = lobby.loadouts[1]
+// MONKESTATION EDIT NEW END
 /datum/deathmatch_modifier/health
 	name = "Double-Health"
 	description = "Doubles your starting health"

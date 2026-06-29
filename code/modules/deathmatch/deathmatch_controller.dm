@@ -16,9 +16,25 @@
 		CRASH("A deathmatch controller already exists.")
 	GLOB.deathmatch_game = src
 
+	var/max_players = /datum/lazy_template/deathmatch::min_players // MONKESTATION EDIT ADDITION
 	for (var/datum/lazy_template/deathmatch/template as anything in subtypesof(/datum/lazy_template/deathmatch))
+		/* MONKESTATION EDIT OLD START
 		var/map_name = initial(template.name)
 		maps[map_name] = new template
+		MONKESTATION EDIT OLD END */
+	// MONKESTATION EDIT NEW START
+		template = new template()
+		maps[template.name] = template
+		if(length(template.allowed_loadouts) > 1)
+			template.allowed_loadouts.Insert(1, /datum/outfit/deathmatch_loadout/naked/random)
+		if(max_players < template.max_players)
+			max_players = template.max_players
+	var/datum/lazy_template/deathmatch/random_template = maps[/datum/lazy_template/deathmatch/random::name]
+	if(random_template)
+		random_template.max_players = max_players
+	else
+		message_admins("Random deathmatch template not found in deathmatch templates, report dis to coders")
+	// MONKESTATION EDIT NEW END
 	loadouts = subtypesof(/datum/outfit/deathmatch_loadout)
 	modifiers = sortTim(init_subtypes_w_path_keys(/datum/deathmatch_modifier), GLOBAL_PROC_REF(cmp_deathmatch_mods), associative = TRUE)
 

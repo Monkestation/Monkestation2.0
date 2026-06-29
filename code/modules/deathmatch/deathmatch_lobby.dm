@@ -56,6 +56,18 @@
 /datum/deathmatch_lobby/proc/start_game()
 	if (playing)
 		return
+	// MONKESTATION EDIT ADDITION START
+	if(map.type == /datum/lazy_template/deathmatch/random)
+		var/list/available_maps = list()
+		for(var/key in GLOB.deathmatch_game.maps)
+			var/datum/lazy_template/deathmatch/map = GLOB.deathmatch_game.maps[key]
+			if(map.min_players <= length(players) && map.max_players >= length(players))
+				available_maps += map
+		if(length(available_maps))
+			change_map(pick(available_maps))
+		else
+			change_map(GLOB.deathmatch_game.maps[pick(GLOB.deathmatch_game.maps)])
+	// MONKESTATION EDIT ADDITION END
 	if(map.template_in_use)
 		to_chat(get_mob_by_ckey(host), span_warning("This map is currently loading for another lobby. Please wait until that other map finishes loading. It would be a disaster if these two mixed up."))
 		return
@@ -132,6 +144,13 @@
 	var/datum/outfit/deathmatch_loadout/loadout = players_info["loadout"]
 	if (!(loadout in loadouts))
 		loadout = loadouts[1]
+	// MONKESTATION EDIT NEW START
+	if(loadout == /datum/outfit/deathmatch_loadout/naked/random)
+		if(length(loadouts) > 1)
+			loadout = pick(loadouts - /datum/outfit/deathmatch_loadout/naked/random)
+		else
+			loadout = pick(GLOB.deathmatch_game.loadouts)
+	// MONKESTATION EDIT NEW END
 
 	var/mob/living/carbon/human/new_player = new(loc)
 	observer.client?.prefs.safe_transfer_prefs_to(new_player)
@@ -349,7 +368,8 @@
 	.["host"] = is_host
 	.["admin"] = is_admin
 	.["playing"] = playing
-	.["loadouts"] = list("Randomize")
+	// .["loadouts"] = list("Randomize") MONKESTATION EDIT OLD
+	.["loadouts"] = list() // MONKESTATION EDIT NEW -- Randomize got moved into an actual loadout
 	for (var/datum/outfit/deathmatch_loadout/loadout as anything in loadouts)
 		.["loadouts"] += initial(loadout.display_name)
 	.["map"] = list()
@@ -426,9 +446,11 @@
 				return FALSE
 			if (params["player"] != usr.ckey && host != usr.ckey)
 				return FALSE
+			/* MONKESTATION EDIT REMOVAL START -- Randomize got moved into an actual loadout
 			if (params["loadout"] == "Randomize")
 				players[params["player"]]["loadout"] = pick(loadouts)
 				return TRUE
+			MONKESTATION EDIT REMOVAL END */
 			for (var/datum/outfit/deathmatch_loadout/possible_loadout as anything in loadouts)
 				if (params["loadout"] != initial(possible_loadout.display_name))
 					continue

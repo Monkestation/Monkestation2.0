@@ -16,6 +16,14 @@
 	/// whether we are currently being loaded by a lobby
 	var/template_in_use = FALSE
 
+// MONKESTATION EDIT NEW START
+/datum/lazy_template/deathmatch/random // Not an actual template, but close enough
+	name = "Random"
+	desc = "Lets go gambling! (selects a random map, except for those that would force observers)"
+	allowed_loadouts = list(/datum/outfit/deathmatch_loadout/naked/random)
+	map_name = "ragecage"
+	key = "random"
+// MONKESTATION EDIT NEW END
 /datum/lazy_template/deathmatch/ragecage
 	name = "Ragecage"
 	desc = "Fun for the whole family, the classic ragecage."
@@ -39,7 +47,7 @@
 	max_players = 10
 	allowed_loadouts = list(/datum/outfit/deathmatch_loadout/assistant)
 	map_name = "OSHA_violator"
-	key = "OSHA_Violator"
+	key = "OSHA_violator"
 
 /datum/lazy_template/deathmatch/the_brig
 	name = "The Brig"
