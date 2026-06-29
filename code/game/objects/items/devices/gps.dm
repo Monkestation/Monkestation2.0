@@ -3,6 +3,8 @@
 	name = "global positioning system"
 	desc = "Helping lost spacemen find their way through the planets since 2016."
 	icon = 'icons/obj/telescience.dmi'
+	verb_say = "beeps"
+	verb_yell = "blares"
 	icon_state = "gps-c"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
