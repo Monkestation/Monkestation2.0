@@ -32,8 +32,11 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
 	/// UI state of GPS, altering when it can be used.
 	var/datum/ui_state/state = null
+	var/uses_overlays = TRUE
 
 /datum/component/gps/item/proc/handle_overlay()
+	if(!uses_overlays)
+		return
 	var/atom/A = parent
 	A.cut_overlay("working")
 	A.cut_overlay("emp")
@@ -44,7 +47,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		A.add_overlay("working")
 		return
 
-/datum/component/gps/item/Initialize(_gpstag = "COM0", emp_proof = FALSE, state = null, requires_z_calibration, list/calibrate_zs)
+/datum/component/gps/item/Initialize(_gpstag = "COM0", emp_proof = FALSE, state = null, requires_z_calibration, list/calibrate_zs, uses_overlays = TRUE)
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE || !isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -68,6 +71,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		src.requires_z_calibration = requires_z_calibration
 	if(islist(calibrate_zs))
 		src.calibrated_zs = calibrate_zs
+
+	src.uses_overlays = uses_overlays
 
 ///Called on COMSIG_ITEM_ATTACK_SELF
 /datum/component/gps/item/proc/interact(datum/source, mob/user)
