@@ -352,13 +352,9 @@
 					L.put_in_hands(I)
 					. = TRUE
 			else
-				if(iscyborg(L))
-					var/mob/living/silicon/robot/borg = L
-					if(istype(borg.module_active, /obj/item/borg/apparatus/circuit))
-						var/obj/item/borg/apparatus/circuit/robo_hand = borg.module_active
-						I = robo_hand.stored
-				else
-					I = L.get_active_held_item()
+				I = L.get_active_held_item()
+				if(I)
+					I = I.get_proxy_attacker_for(holder, L) // Get the actual item that we want to use (e.g. borg apparatus's stored item).
 				if(isassembly(I))
 					var/obj/item/assembly/A = I
 					if(A.attachable)

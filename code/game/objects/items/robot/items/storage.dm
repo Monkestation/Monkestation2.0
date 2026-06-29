@@ -6,46 +6,36 @@
 	/// The item stored inside of this apparatus
 	var/obj/item/stored
 	/// Whitelist of types (and its subtypes) that are allowed in this apparatus.
-	var/list/storable = list()
+	var/list/whitelist_storables = list()
 	/// Blacklist of types (and its subtypes) that are not allowed in this apparatus.
 	var/list/blacklisted_storables = list()
+	/// Can this interact with various electronics?
+	var/allow_electronics_interaction = FALSE
 
 /obj/item/borg/apparatus/Initialize(mapload)
-	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, PROC_REF(safedecon))
-	return ..()
+	. = ..()
+	if(!iscyborg(loc))
+		return INITIALIZE_HINT_QDEL
+	RegisterSignal(loc, COMSIG_BORG_SAFE_DECONSTRUCT, PROC_REF(safe_deconstruct))
 
 /obj/item/borg/apparatus/Destroy()
-	QDEL_NULL(stored)
+	if(!isnull(stored))
+		QDEL_NULL(stored)
 	return ..()
 
-///If we're safely deconstructed, we put the item neatly onto the ground, rather than deleting it.
-/obj/item/borg/apparatus/proc/safedecon()
-	SIGNAL_HANDLER
-
-	if(stored)
-		stored.forceMove(get_turf(src))
-		stored = null
-
 /obj/item/borg/apparatus/Exited(atom/movable/gone, direction)
-	if(gone == stored) //sanity check
+	if(gone == stored) // Sanity check.
 		UnregisterSignal(stored, COMSIG_ATOM_UPDATED_ICON)
 		stored = null
 	update_appearance()
 	return ..()
 
-///A right-click verb, for those not using hotkey mode.
-/obj/item/borg/apparatus/verb/verb_dropHeld()
-	set category = "Object"
-	set name = "Drop"
+/obj/item/borg/apparatus/examine(mob/user)
+	. = ..()
+	if(stored)
+		. += span_notice("[EXAMINE_HINT("Alt-click")] to drop your stored item.")
 
-	if(usr != loc || !stored)
-		return
-	stored.forceMove(get_turf(usr))
-	return
-
-/**
-* Attack_self will pass for the stored item.
-*/
+// Attack_self will pass for the stored item.
 /obj/item/borg/apparatus/attack_self(mob/living/silicon/robot/user)
 	if(!stored || !issilicon(user))
 		return ..()
@@ -56,7 +46,7 @@
 		return ..()
 	stored.attack_self_secondary(user)
 
-//Alt click drops the stored item.
+// Alt-click drops the stored item.
 /obj/item/borg/apparatus/click_alt(mob/living/silicon/robot/user)
 	if(!stored || !issilicon(user))
 		return CLICK_ACTION_BLOCKING
@@ -66,14 +56,90 @@
 /obj/item/borg/apparatus/get_proxy_attacker_for(atom/target, mob/user)
 	if(stored)
 		return stored
-	else
-		return ..()
+	return ..()
+
+/obj/item/borg/apparatus/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!allow_electronics_interaction)
+		return NONE
+	// Mimicking a hand interaction with certain atoms to pull out batteries.
+	// Closed machines:
+	if(istype(interacting_with, /obj/machinery/cell_charger))
+		var/obj/machinery/cell_charger/charger_machinery = interacting_with
+		if(stored != null || charger_machinery.panel_open)
+			return ITEM_INTERACT_BLOCKING
+		charger_machinery.attack_hand(user)
+		return ITEM_INTERACT_SUCCESS
+	if(istype(interacting_with, /obj/machinery/cell_charger_multi))
+		var/obj/machinery/cell_charger_multi/charger_multi_machinery = interacting_with
+		if(stored != null || charger_multi_machinery.panel_open)
+			return ITEM_INTERACT_BLOCKING
+		charger_multi_machinery.attack_hand(user)
+		return ITEM_INTERACT_SUCCESS
+	// Opened machines:
+	if(istype(interacting_with, /obj/machinery/button))
+		var/obj/machinery/button/button_machinery = interacting_with
+		if(stored != null || !button_machinery.panel_open)
+			return ITEM_INTERACT_BLOCKING
+		button_machinery.attack_hand(user)
+		return ITEM_INTERACT_SUCCESS
+	if(istype(interacting_with, /obj/machinery/space_heater))
+		var/obj/machinery/space_heater/heater_machinery = interacting_with
+		if(stored != null || !heater_machinery.panel_open)
+			return ITEM_INTERACT_BLOCKING
+		heater_machinery.attack_hand(user)
+		return ITEM_INTERACT_SUCCESS
+	if(isapc(interacting_with))
+		var/obj/machinery/power/apc/apc_machinery = interacting_with
+		if(stored != null || !apc_machinery.opened || !apc_machinery.cell)
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/stock_parts/power_store/cell/removed_cell = apc_machinery.cell
+		user.visible_message(span_notice("[user] removes [removed_cell] from [src]!"))
+		balloon_alert(user, "cell removed")
+		removed_cell.update_appearance()
+		user.put_in_hands(removed_cell)
+		apc_machinery.cell = null
+		apc_machinery.charging = APC_NOT_CHARGING
+		apc_machinery.update_appearance()
+		return ITEM_INTERACT_SUCCESS
+	// Cyborgs:
+	if(iscyborg(interacting_with) && interacting_with != user)
+		var/mob/living/silicon/robot/touched_cyborg = interacting_with
+		if(stored != null || !touched_cyborg.cell || !touched_cyborg.opened || touched_cyborg.wiresexposed)
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/stock_parts/power_store/cell/removed_cell = touched_cyborg.cell
+		to_chat(user, span_notice("You remove \the [removed_cell]."))
+		removed_cell.update_appearance()
+		removed_cell.add_fingerprint(user)
+		user.put_in_hands(removed_cell)
+		touched_cyborg.update_icons()
+		touched_cyborg.diag_hud_set_borgcell()
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
+/obj/item/borg/apparatus/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(put_in_apparatus(target, user))
+		return TRUE
+	return ..()
+
+// Eject containers from machines and inserts it into the apparatus.
+/obj/item/borg/apparatus/pre_attack_secondary(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
+	for(var/atom/atom_content in target.contents)
+		if(!is_acceptable_storable(atom_content))
+			continue
+		return target.attack_hand_secondary(user, modifiers)
+	return ..()
+
+/obj/item/borg/apparatus/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(stored)
+		attacking_item.melee_attack_chain(user, stored, modifiers, attack_modifiers)
+		return TRUE
+	return ..()
 
 /// Checks if the item is allowed to be inside of the apparatus.
-/obj/item/borg/apparatus/proc/itemcheck(atom/atom)
-	if(is_type_in_list(atom, blacklisted_storables))
+/obj/item/borg/apparatus/proc/is_acceptable_storable(atom/target)
+	if(is_type_in_list(target, blacklisted_storables))
 		return FALSE
-	return is_type_in_list(atom, storable)
+	return is_type_in_list(target, whitelist_storables)
 
 /// Attempts to put the item into the apparatus.
 /obj/item/borg/apparatus/proc/put_in_apparatus(obj/item/storing_item, mob/user)
@@ -82,29 +148,26 @@
 	if(!istype(storing_item))
 		return FALSE
 	if(HAS_TRAIT(storing_item, TRAIT_NODROP))
-		return
-	if(storing_item == user)
-		if(istype(storing_item.loc, /mob/living/silicon/robot))
-			return FALSE
-		else if(istype(storing_item.loc, /obj/item/robot_model))
-			return FALSE
-	if(!itemcheck(storing_item))
 		return FALSE
-	var/obj/item/item = storing_item
-	item.forceMove(src)
-	stored = item
+	if(istype(storing_item.loc, /obj/item/robot_model)) // Taking stuff from our inventory.
+		return FALSE
+	if(iscyborg(storing_item.loc) && user == storing_item.loc) // Taking stuff from our active module slots.
+		return FALSE
+	if(!is_acceptable_storable(storing_item))
+		return FALSE
+	storing_item.forceMove(src)
+	stored = storing_item
 	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
 	update_appearance()
 	return TRUE
 
-/obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, params)
-	if(LAZYACCESS(params, RIGHT_CLICK))
-		for(var/atom/atom_content in atom.contents)
-			if(itemcheck(atom_content))
-				return atom.attack_hand_secondary(user, params)
-	if(put_in_apparatus(atom, user))
+/// If we're safely deconstructed, we put the item neatly onto the ground, rather than deleting it.
+/obj/item/borg/apparatus/proc/safe_deconstruct()
+	SIGNAL_HANDLER
+	if(!stored)
 		return
-	return ..()
+	stored.forceMove(get_turf(src))
+	stored = null
 
 /**
  * Updates the appearance of the apparatus when the stored object's icon gets updated.
@@ -117,20 +180,25 @@
 	update_appearance()
 	return NONE
 
-/obj/item/borg/apparatus/attackby(obj/item/item, mob/user, params)
-	if(stored)
-		item.melee_attack_chain(user, stored, params)
+/// A right-click verb, for those not using hotkey mode.
+/obj/item/borg/apparatus/verb/verb_drop_stored_item()
+	set category = "Object"
+	set name = "Drop"
+
+	if(usr != loc || !stored)
 		return
-	return ..()
+	stored.forceMove(get_turf(usr))
 
 /obj/item/borg/apparatus/beaker
 	name = "beaker storage apparatus"
 	desc = "A special apparatus for carrying beakers without spilling the contents."
 	icon_state = "borg_beaker_apparatus"
-	storable = list(/obj/item/reagent_containers/cup/beaker,
-					/obj/item/reagent_containers/cup/tube,
-					/obj/item/weapon/virusdish,
-					/obj/item/reagent_containers/cup/bottle,)
+	whitelist_storables = list(
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
+		/obj/item/weapon/virusdish
+	)
 
 /obj/item/borg/apparatus/beaker/Initialize(mapload)
 	add_glass()
@@ -146,13 +214,6 @@
 		var/obj/item/reagent_containers/reagent_container = stored
 		reagent_container.SplashReagents(get_turf(src))
 	QDEL_NULL(stored)
-	return ..()
-
-/obj/item/borg/apparatus/beaker/examine(mob/user)
-	if(stored)
-		to_chat(user, span_nicegreen(" <i>Alt-click</i> will drop the currently stored beaker."))
-		to_chat(user, span_nicegreen(" <i>Right-clicking</i> will splash the beaker on the ground."))
-		return stored.examine(user)
 	return ..()
 
 /obj/item/borg/apparatus/beaker/update_overlays()
@@ -188,11 +249,13 @@
 	name = "beverage storage apparatus"
 	desc = "A special apparatus for carrying drinks without spilling the contents. Will resynthesize any drinks you pour out!"
 	icon_state = "borg_beaker_apparatus"
-	storable = list(/obj/item/reagent_containers/cup/beaker,
-					/obj/item/reagent_containers/cup/bottle,
-					/obj/item/reagent_containers/cup/glass,
-					/obj/item/reagent_containers/condiment,
-					/obj/item/reagent_containers/cup/coffeepot)
+	whitelist_storables = list(
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/glass,
+		/obj/item/reagent_containers/condiment,
+		/obj/item/reagent_containers/cup/coffeepot
+	)
 
 /obj/item/borg/apparatus/beaker/service/add_glass()
 	stored = new /obj/item/reagent_containers/cup/glass/drinkingglass(src)
@@ -220,14 +283,10 @@
 	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "evidenceobj"
 	item_flags = SURGICAL_TOOL
-	storable = list(/obj/item/organ,
-					/obj/item/bodypart)
-
-/obj/item/borg/apparatus/organ_storage/examine(mob/user)
-	if(stored)
-		to_chat(user, span_nicegreen(" <i>Alt-click</i> will drop the currently stored organ."))
-		return stored.examine(user)
-	return ..()
+	whitelist_storables = list(
+		/obj/item/organ,
+		/obj/item/bodypart
+	)
 
 /obj/item/borg/apparatus/organ_storage/update_overlays()
 	. = ..()
@@ -259,22 +318,25 @@
 /obj/item/borg/apparatus/organ_storage/monster
 	name = "core storage bag"
 	desc = "A container for holding and application of various monster organs."
-	storable = list(/obj/item/organ/internal/monster_core)
+	whitelist_storables = list(/obj/item/organ/internal/monster_core)
 
 /obj/item/borg/apparatus/organ_storage/limb
 	name = "limb storage bag"
 	desc = "A container for holding limbs."
-	storable = list(/obj/item/bodypart)
+	whitelist_storables = list(/obj/item/bodypart)
 
 ///Apparatus to allow Engineering/Sabo borgs to manipulate any material sheets.
 /obj/item/borg/apparatus/sheet_manipulator
 	name = "material manipulation apparatus"
 	desc = "An apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles."
 	icon_state = "borg_stack_apparatus"
-	storable = list(/obj/item/stack/sheet,
-					/obj/item/stack/rods,
-					/obj/item/stack/ore/bluespace_crystal,
-					/obj/item/stack/tile)
+	whitelist_storables = list(
+		/obj/item/stack/sheet,
+		/obj/item/stack/rods,
+		/obj/item/stack/ore/bluespace_crystal,
+		/obj/item/stack/tile,
+		/obj/item/flatpacked_machine
+	)
 
 /obj/item/borg/apparatus/sheet_manipulator/Initialize(mapload)
 	update_appearance()
@@ -296,12 +358,6 @@
 		. += stored_copy
 	. += arm
 
-/obj/item/borg/apparatus/sheet_manipulator/examine(mob/user)
-	if(stored)
-		to_chat(user, span_nicegreen(" <i>Alt-click</i> will drop the currently stored sheets."))
-		return stored.examine(user)
-	return ..()
-
 /obj/item/borg/apparatus/sheet_manipulator/extra
 	name = "secondary material manipulation apparatus"
 	desc = "A supplementary apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles."
@@ -311,10 +367,14 @@
 	name = "electronics manipulation apparatus"
 	desc = "A special apparatus for carrying and manipulating electronics like circuit boards, cells, stock parts, signalers and etc."
 	icon_state = "borg_hardware_apparatus"
-	storable = list(/obj/item/circuitboard,
-				/obj/item/electronics,
-				/obj/item/stock_parts,
-				/obj/item/assembly)
+	whitelist_storables = list(
+		/obj/item/circuitboard,
+		/obj/item/electronics,
+		/obj/item/stock_parts,
+		/obj/item/assembly,
+		/obj/item/flatpacked_machine
+	)
+	allow_electronics_interaction = TRUE
 
 /obj/item/borg/apparatus/circuit/Initialize(mapload)
 	update_appearance()
@@ -334,12 +394,6 @@
 		. += stored_copy
 	. += arm
 
-/obj/item/borg/apparatus/circuit/examine(mob/user)
-	if(stored)
-		to_chat(user, span_nicegreen(" <i>Alt-click</i> will drop the currently stored circuit."))
-		return stored.examine(user)
-	return ..()
-
 /obj/item/borg/apparatus/circuit/pre_attack(atom/atom, mob/living/user, params)
 	if(istype(atom, /obj/item/ai_module) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
 		to_chat(user, span_warning("This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up."))
@@ -348,7 +402,7 @@
 /obj/item/borg/apparatus/circuit/science
 	name = "science manipulation apparatus"
 	desc = "A special apparatus for carrying various stock parts, disks, assemblies, and even artifacts!"
-	storable = list(
+	whitelist_storables = list(
 		/obj/item/stock_parts,
 		/obj/item/assembly,
 		/obj/item/disk,
@@ -369,7 +423,7 @@
 	name = "service storage apparatus"
 	desc = "A special apparatus for carrying food, bowls, plates, oven trays, soup pots and paper."
 	icon_state = "borg_service_apparatus"
-	storable = list(
+	whitelist_storables = list(
 		/obj/item/food,
 		/obj/item/paper,
 		/obj/item/plate,
@@ -378,18 +432,12 @@
 		/obj/item/seeds,
 		/obj/item/stack/biocube,
 		/obj/item/folder,
-		/obj/item/clipboard,
+		/obj/item/clipboard
 	)
 
 /obj/item/borg/apparatus/cooking/Initialize(mapload)
 	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
 	update_appearance()
-	return ..()
-
-/obj/item/borg/apparatus/cooking/examine(mob/user)
-	if(stored)
-		to_chat(user, span_nicegreen(" <i>Alt-click</i> will drop the currently stored item."))
-		return stored.examine(user)
 	return ..()
 
 /obj/item/borg/apparatus/cooking/update_overlays()

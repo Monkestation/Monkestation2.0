@@ -131,11 +131,6 @@
 				playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 				deconstruct(src)
 
-		if(istype(attacking_item, /obj/item/borg/apparatus/circuit))
-			var/obj/item/borg/apparatus/circuit/robo_hand = attacking_item
-			if(robo_hand.stored == null)
-				return attack_hand(user)
-
 		update_appearance()
 		return
 
