@@ -96,7 +96,7 @@
  *
  * A. Remove the active disguise.
  *
- * B. Start the process of putting on a disguise.
+ * B. Begin the process of putting on a disguise.
  */
 /obj/item/borg_chameleon/proc/toggle(mob/living/silicon/robot/cyborg_user)
 	if(disguised_cyborg)
