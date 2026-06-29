@@ -32,7 +32,7 @@
 	)
 	external_organs = list(
 		/obj/item/organ/external/antennae/ipc = "None",
-		/obj/item/organ/external/ipc_screen = "Blank",
+		/obj/item/organ/external/ipc_screen = "None",
 	)
 
 	mutant_bodyparts = list("ipc_chassis")
@@ -107,14 +107,6 @@
 
 	slime.adjustOxyLoss(-3)
 
-/**
-	* Makes the IPC screen switch to BSOD followed by a blank screen
-	*
-	* Arguments:
-	* * transformer - The human that will be affected by the screen change (read: IPC).
-	* * screen_name - The name of the screen to switch the ipc_screen mutant bodypart to. Defaults to BSOD.
-	*/
-
 /datum/species/ipc/on_species_loss(mob/living/carbon/target)
 	. = ..()
 	UnregisterSignal(target, list(COMSIG_ATOM_EMAG_ACT))
@@ -122,8 +114,6 @@
 /datum/species/ipc/spec_revival(mob/living/carbon/human/revived_ipc)
 	revived_ipc.notify_ghost_cloning("You have been repaired!")
 	revived_ipc.grab_ghost()
-	revived_ipc.dna.features["ipc_screen"] = "BSOD"
-	revived_ipc.update_body()
 	playsound(revived_ipc, 'monkestation/sound/voice/dialup.ogg', 25)
 	revived_ipc.say("Structural integity passing minimum threshold! Reboot confirmed. Asynchronously handing off [pick("core systems", "central subroutines", "key functions")] to internal subprocessor...")
 	INVOKE_ASYNC(src, PROC_REF(boot_sequence_fluff), revived_ipc) //We have to hand this off to not stall the revive() on the sleep()s.
@@ -144,6 +134,7 @@
 		playsound(booting_ipc, 'sound/machines/buzz-two.ogg', 25)
 		return
 	booting_ipc.say("Unit [booting_ipc.real_name] is fully functional. Have a nice day.")
+
 	playsound(booting_ipc.loc, 'sound/machines/chime.ogg', 50, TRUE)
 	return
 
