@@ -12,6 +12,7 @@
 		"zipties",
 		"dragnet_beacon",
 		"inspector",
+		"telesci_gps_sec",
 		"rubber_c35", //monkestation edit: taco sec
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)

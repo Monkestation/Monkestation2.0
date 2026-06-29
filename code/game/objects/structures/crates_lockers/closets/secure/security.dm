@@ -77,7 +77,7 @@
 	new /obj/item/storage/belt/security/full(src)
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
 	new /obj/item/storage/photo_album/hos(src)
-	new /obj/item/bodycam_upgrade(src) //monkestation edit: Security Liability Act
+	new /obj/item/gps/security(src)
 
 /obj/structure/closet/secure_closet/hos/populate_contents_immediate()
 	. = ..()
@@ -102,7 +102,7 @@
 	new /obj/item/storage/belt/security/full(src)
 	new /obj/item/flashlight/seclite(src)
 	new /obj/item/door_remote/head_of_security(src)
-	new /obj/item/storage/box/bodycamera(src) //monkestation edit: Security Liability Act
+	new /obj/item/gps/security(src)
 	new /obj/item/gun/ballistic/shotgun/automatic/combat/compact(src) //undoing ancient removal
 	new /obj/item/ammo_box/advanced/s12gauge/rubber(src) //he can have some rubber ammo too
 	new /obj/item/megaphone/sec(src)
@@ -122,8 +122,8 @@
 	new /obj/item/radio/headset/headset_sec/alt(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/flashlight/seclite(src)
-	new /obj/item/clothing/mask/balaclava(src) //monkestation edit
-	new /obj/item/bodycam_upgrade(src) //monkestation edit: Security Liability Act
+	new /obj/item/clothing/mask/balaclava(src)
+	new /obj/item/gps/security(src)
 
 /obj/structure/closet/secure_closet/security/sec
 
@@ -179,13 +179,13 @@
 	new /obj/item/reagent_containers/spray/pepper(src)
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
 	new /obj/item/storage/belt/holster/detective/full(src)
-	new /obj/item/storage/belt/holster/detective/full(src) // Monkestation edit : Adding some substance to the detective role
+	new /obj/item/storage/belt/holster/detective/full(src)
 	new /obj/item/pinpointer/crew(src)
 	new /obj/item/binoculars(src)
 	new /obj/item/storage/box/rxglasses/spyglasskit(src)
 	new /obj/item/clothing/head/fedora/inspector_hat(src)
-	new /obj/item/card/id/advanced/undercover(src) // Monkestation edit : Adding some substance to the detective role
-	new /obj/item/bodycam_upgrade(src) //monkestation edit: Security Liability Act
+	new /obj/item/card/id/advanced/undercover(src)
+	new /obj/item/gps/security(src)
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections locker"
