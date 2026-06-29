@@ -805,6 +805,7 @@
 		/obj/item/reagent_containers/spray,
 		/obj/item/soap,
 		/obj/item/wirebrush,
+		/obj/item/access_key,
 	))
 
 /obj/item/storage/belt/janitor/full/PopulateContents()
