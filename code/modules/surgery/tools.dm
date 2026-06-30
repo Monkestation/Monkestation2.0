@@ -721,6 +721,7 @@
 	if(!can_repeat_healing(user, target, 3 SECONDS))
 		return ITEM_INTERACT_BLOCKING
 	. = ITEM_INTERACT_SUCCESS
+	user.do_attack_animation(interacting_with)
 	playsound(user,'sound/items/breathing_bag.ogg', 100, TRUE)
 	for(var/loop_attempt in 1 to 15)
 		if(!can_repeat_healing(user, target, 1 SECONDS))
@@ -731,7 +732,7 @@
 			continue
 		if(HAS_TRAIT(target, TRAIT_NOBREATH))
 			continue
-		target.adjustOxyLoss(-10)
+		target.adjustOxyLoss(-15)
 
 /// Checks if the target can be interacted with.
 /obj/item/breathing_bag/proc/can_repeat_healing(mob/living/user, mob/living/target, delay_length)

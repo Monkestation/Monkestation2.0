@@ -450,6 +450,72 @@
 		ADD_TRAIT(living_mob, TRAIT_POOR_AIM, type)
 		addtimer(TRAIT_CALLBACK_REMOVE(living_mob, TRAIT_POOR_AIM, type), 8 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
+///// 	Internal cyborg IV drip /////
+/obj/machinery/iv_drip/cyborg
+	name = "cyborg IV drip"
+	desc = "Special modification for cyborgs. An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers."
+	icon_state = "iv_drip_cyborg"
+	base_icon_state = "iv_drip_cyborg"
+	fill_icon_state = "reagent_cyborg"
+	beaker_icon_state = "beaker_cyborg"
+	var/obj/item/cyborg_iv_drip/iv_drip_item
+
+/obj/machinery/iv_drip/cyborg/Destroy() // I dont know how it can be destroyed, but who cares
+	if(!QDELETED(iv_drip_item))
+		QDEL_NULL(iv_drip_item)
+	return ..()
+
+// Transmogrification inner part
+/obj/machinery/iv_drip/cyborg/update_appearance()
+	. = ..()
+	iv_drip_item?.icon_state = icon_state
+	iv_drip_item?.overlays = overlays
+
+/obj/item/cyborg_iv_drip
+	name = "cyborg IV drip"
+	desc = "Special modification for cyborgs. An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers."
+	icon = 'icons/obj/medical/iv_drip.dmi'
+	icon_state = "iv_drip_cyborg"
+	base_icon_state = "iv_drip_cyborg"
+	w_class = WEIGHT_CLASS_SMALL
+	var/obj/machinery/iv_drip/cyborg/internal_iv_drip
+
+/obj/item/cyborg_iv_drip/Initialize(mapload)
+	. = ..()
+	internal_iv_drip = new /obj/machinery/iv_drip/cyborg(src)
+	internal_iv_drip.iv_drip_item = src
+
+/obj/item/cyborg_iv_drip/Destroy()
+	if(!QDELETED(internal_iv_drip))
+		QDEL_NULL(internal_iv_drip)
+	return ..()
+
+// Transmogrification external part
+/obj/item/cyborg_iv_drip/attack_self(mob/user)
+	// Interface
+	return internal_iv_drip.ui_interact(user)
+
+/obj/item/cyborg_iv_drip/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	// Connection
+	return internal_iv_drip.mouse_drop_dragged(target, user)
+
+/obj/item/cyborg_iv_drip/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	// Disabling
+	return internal_iv_drip.detach_iv()
+
+/obj/item/cyborg_iv_drip/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	// Container
+	return internal_iv_drip.attackby(attacking_item, user, modifiers, attack_modifiers)
+
+/obj/item/cyborg_iv_drip/click_alt(mob/user)
+	// Eject
+	return internal_iv_drip.eject_beaker(user)
+
+/obj/item/cyborg_iv_drip/examine(mob/user)
+	// Examine
+	return internal_iv_drip.examine(user)
+
+///// 	Artifact sticker /////
 /obj/item/borg/artifact_sticker_holder
 	name = "analysis form holder"
 	desc = "An built-in holder that automatically generates artifact analysis forms to write on and label artifacts with!"

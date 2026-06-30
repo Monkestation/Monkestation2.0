@@ -66,12 +66,12 @@
 	design_ids = list(
 		"borg_upgrade_advanalyzer",
 		"borg_upgrade_beakerapp",
+		"borg_upgrade_iv_drip",
 		"borg_upgrade_defibrillator",
 		"borg_upgrade_expandedsynthesiser",
 		"borg_upgrade_piercinghypospray",
 		"borg_upgrade_pinpointer",
 		"borg_upgrade_surgical_database",
-		"borg_upgrade_breathingbag",
 		"borg_upgrade_surgicalomnitool"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS) // Lots of upgrades shall be regular cost.
