@@ -66,7 +66,7 @@
 
 
 
-/obj/item/clothing/head/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
+/obj/item/clothing/head/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
 	if(isinhands)
 		return

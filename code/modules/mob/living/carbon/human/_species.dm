@@ -25,7 +25,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Ex "[Plasmamen] are weak", "[Mothmen] are strong", "[Lizardpeople] don't like", "[Golems] hate"
 	var/plural_form
 
-	///Whether or not the race has sexual characteristics (biological genders). At the moment this is only FALSE for skeletons and shadows
+	/// Whether or not the race has sexual characteristics (biological genders). At the moment this is only FALSE for skeletons and shadows
 	var/sexes = TRUE
 	///does our chosen bodytype have visual difference
 	var/visual_gender =TRUE

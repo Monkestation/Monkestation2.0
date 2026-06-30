@@ -160,6 +160,8 @@
 	var/list/species_exception = null
 	///This is a bitfield that defines what variations exist for bodyparts like Digi legs. See: code\_DEFINES\inventory.dm
 	var/supports_variations_flags = NONE
+	/// This is a bitfield that defines which bodyshapes this item is capable of rendering, used by build_worn_icon()
+	var/bodyshapes_with_variations = NONE
 
 	///A weakref to the mob who threw the item
 	var/datum/weakref/thrownby = null //I cannot verbally describe how much I hate this var
