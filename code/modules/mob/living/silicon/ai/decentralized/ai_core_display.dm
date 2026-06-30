@@ -19,11 +19,16 @@
 		set_ai(custom_emotion)
 		return
 
-	if(!length(GLOB.ai_list))
-		RegisterSignal(SSdcs, COMSIG_GLOB_AI_CREATED, PROC_REF(on_ai_creation))
-	else if(length(GLOB.ai_list) == 1)
-		var/mob/living/silicon/ai/living_ai = locate() in GLOB.ai_list
-		assign_ai(living_ai)
+	RegisterSignal(SSdcs, COMSIG_GLOB_AI_CREATED, PROC_REF(on_ai_creation))
+
+	//check if there's only 1 AI, we'll assign ourselves to them (if we are on their z-level) if so.
+	if(length(GLOB.ai_list) != 1)
+		return
+	var/mob/living/silicon/ai/living_ai = locate() in GLOB.ai_list
+	var/datum/ai_os/os_using = GLOB.ai_os["[z]"]
+	if(isnull(os_using) || !(living_ai in os_using.ai_list))
+		return
+	assign_ai(living_ai)
 
 /obj/machinery/status_display/ai_core/Destroy()
 	connected_ai = null
