@@ -1,6 +1,4 @@
 /datum/robot_model
-	/// The abstract type. Not used anywhere at the moment.
-	var/abstract_type = /datum/robot_model
 	/// The display name that appears when examining cyborgs.
 	var/name = "Default"
 	/// The icon state that [/atom/movable/screen/robot/module] will use.
@@ -45,32 +43,30 @@
 /datum/robot_model/proc/rebuild_usable_modules()
 	if(!cyborg_owner)
 		return
-
 	usable_modules.Cut()
 	for(var/obj/item/possible_module as anything in basic_modules)
 		if(ispath(possible_module))
 			continue
-		usable_modules += possible_module
+		add_module(possible_module)
 	if(cyborg_owner.emagged)
 		for(var/obj/item/possible_module as anything in emagged_modules)
 			if(ispath(possible_module))
 				continue
-			usable_modules += possible_module
+			add_module(possible_module)
 	if(cyborg_owner.clockwork)
 		for(var/obj/item/possible_module as anything in clockwork_modules)
 			if(ispath(possible_module))
 				continue
-			usable_modules += possible_module
+			add_module(possible_module)
 	for(var/obj/item/possible_module as anything in external_modules)
 		if(ispath(possible_module))
 			continue
-		usable_modules += possible_module
+		add_module(possible_module)
 
 /// Initializes any typepaths for many module lists. This does not include the usable module list.
 /datum/robot_model/proc/initialize_all_modules()
 	if(!cyborg_owner)
 		return
-
 	for(var/obj/item/possible_module as anything in basic_modules)
 		if(!ispath(possible_module))
 			continue
@@ -78,7 +74,6 @@
 		itemized_module.moveToNullspace()
 		basic_modules += itemized_module
 		basic_modules -= possible_module
-
 	for(var/obj/item/possible_module as anything in emagged_modules)
 		if(!ispath(possible_module))
 			continue
@@ -86,7 +81,6 @@
 		itemized_module.moveToNullspace()
 		emagged_modules += itemized_module
 		emagged_modules -= possible_module
-
 	for(var/obj/item/possible_module as anything in clockwork_modules)
 		if(!ispath(possible_module))
 			continue
@@ -94,7 +88,6 @@
 		itemized_module.moveToNullspace()
 		clockwork_modules += itemized_module
 		clockwork_modules -= possible_module
-
 	for(var/obj/item/possible_module as anything in external_modules)
 		if(!ispath(possible_module))
 			continue
@@ -102,6 +95,35 @@
 		itemized_module.moveToNullspace()
 		external_modules += itemized_module
 		external_modules -= possible_module
+
+/// Adds an module.
+/datum/robot_model/proc/add_module(obj/item/module_to_add, externally_added, requires_rebuild)
+	if(isstack(module_to_add))
+		var/obj/item/stack/sheet_module = module_to_add
+		if(ispath(sheet_module.source, /datum/robot_energy_storage))
+			sheet_module.source = get_or_create_estorage(sheet_module.source)
+		if(istype(sheet_module.source))
+			sheet_module.cost = max(sheet_module.cost, 1) // Must not cost 0 to prevent div/0 errors.
+			sheet_module.is_cyborg = TRUE
+	module_to_add.moveToNullspace()
+	module_to_add.mouse_opacity = MOUSE_OPACITY_OPAQUE
+	module_to_add.obj_flags |= ABSTRACT
+	usable_modules += module_to_add
+	if(externally_added)
+		external_modules += module_to_add
+	if(requires_rebuild)
+		rebuild_usable_modules()
+	return module_to_add
+
+/// Removes a module.
+/datum/robot_model/proc/remove_module(obj/item/removed_module)
+	basic_modules -= removed_module
+	emagged_modules -= removed_module
+	clockwork_modules -= removed_module
+	external_modules -= removed_module
+	qdel(removed_module)
+	rebuild_usable_modules()
+
 
 /// Gets an energy storage with a specific type. If it cannot, creates it.
 /datum/robot_model/proc/get_or_create_estorage(estorage_type)
@@ -149,7 +171,6 @@
 			if(!energy_gun.chambered)
 				energy_gun.recharge_newshot() // Try to reload a new shot.
 			continue
-
 	cyborg_owner.toner = cyborg_owner.tonermax
 	return TRUE
 
@@ -184,5 +205,3 @@
 //var/breakable_modules = TRUE
 ///Whether swapping to this configuration should lockcharge the borg
 //var/locked_transform = TRUE
-///Can we be ridden
-// var/allow_riding = TRUE // TODO: this should be a cyborg variable instead

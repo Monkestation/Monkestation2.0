@@ -37,7 +37,7 @@
 
 	apply_skin(current_skin)
 	model = new
-	model.rebuild_modules()
+	model.rebuild_usable_modules()
 
 	if(!laws)
 		make_laws()
@@ -365,7 +365,7 @@
 
 /mob/living/silicon/robot/proc/SetEmagged(new_state)
 	emagged = new_state
-	model.rebuild_modules()
+	model.rebuild_usable_modules()
 	update_icons()
 	if(emagged)
 		throw_alert(ALERT_HACKED, /atom/movable/screen/alert/hacked)
@@ -647,7 +647,7 @@
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
 	drop_all_held_items()
 
-	for(var/obj/item/storage/bag in model.contents) // drop all of the items that may be stored by the cyborg
+	for(var/obj/item/storage/bag in model.usable_modules) // drop all of the items that may be stored by the cyborg
 		for(var/obj/item in bag)
 			item.forceMove(drop_location())
 
@@ -676,11 +676,11 @@
 /mob/living/silicon/robot/proc/update_module_innate()
 	designation = model.name
 	if(hands)
-		hands.icon_state = model.model_select_icon
+		hands.icon_state = model.hud_icon_state
 
 	REMOVE_TRAITS_IN(src, MODEL_TRAIT)
-	if(length(model.model_traits))
-		add_traits(model.model_traits, MODEL_TRAIT)
+	if(length(model.traits))
+		add_traits(model.traits, MODEL_TRAIT)
 
 	INVOKE_ASYNC(src, PROC_REF(updatename))
 
@@ -884,7 +884,7 @@
 
 	if(stat || incapacitated())
 		return
-	if(model && !model.allow_riding)
+	if(!can_be_ridden)
 		M.visible_message(span_boldwarning("Unfortunately, [M] just can't seem to hold onto [src]!"))
 		return
 

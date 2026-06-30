@@ -42,7 +42,7 @@
 	///Whether swapping to this configuration should lockcharge the borg
 	var/locked_transform = TRUE
 	///Can we be ridden
-	var/allow_riding = TRUE
+	var/can_be_ridden = TRUE
 	///Whether the borg can stuff itself into disposals
 	var/canDispose = FALSE
 	///The y offset of the hat worn on our head.
@@ -237,9 +237,7 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	var/obj/item/robot_model/new_model = new new_config_type(cyborg)
 	cyborg.icon = 'icons/mob/silicon/robots.dmi' //reset our icon to default, but before a new custom icon may be applied by be_transformed_to
-	if(!new_model.be_transformed_to(src, forced))
-		if(!cyborg.client)
-			cyborg.pending_model = new_config_type
+	if(!new_model.be_transformed_to(src, forced)) // TODO: change this
 		qdel(new_model)
 		return
 	cyborg.model = new_model

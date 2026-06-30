@@ -5,5 +5,6 @@
 	name = "Syndicate Saboteur"
 	icon_state = "synd_medical"
 	icon_state_light = "synd_medical"
+	bubble_icon = "syndibot"
 	hat_offset = -4
 	badge_offset = -4

@@ -94,7 +94,7 @@
 	dampening_field = new(owner, field_radius, TRUE, src, /datum/dampener_projectile_effects/peacekeeper)
 	RegisterSignal(dampening_field, COMSIG_DAMPENER_CAPTURE, PROC_REF(dampen_projectile))
 	RegisterSignal(dampening_field, COMSIG_DAMPENER_RELEASE, PROC_REF(restore_projectile))
-	owner?.model.allow_riding = FALSE
+	owner?.can_be_ridden = FALSE
 	active = TRUE
 
 /obj/item/borg/projectile_dampen/proc/deactivate_field()
@@ -105,7 +105,7 @@
 
 	var/mob/living/silicon/robot/owner = get_host()
 	if(owner)
-		owner.model.allow_riding = TRUE
+		owner.can_be_ridden = TRUE
 
 /obj/item/borg/projectile_dampen/proc/get_host()
 	if(istype(host))
