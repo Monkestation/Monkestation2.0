@@ -265,6 +265,7 @@
 
 /datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
+	display_name_short = "Saline-Glucose"
 	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage. Can be used as a temporary blood substitute, as well as slowly speeding blood regeneration."
 	reagent_state = LIQUID
 	color = "#DCDCDC"
@@ -1684,3 +1685,31 @@ MONKESTATION REMOVAL END
 /datum/reagent/medicine/painkiller/robopiates/on_mob_end_metabolize(mob/living/affected_mob)
 	affected_mob.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	..()
+
+/datum/reagent/medicine/nanopaste
+	name = "Nanopaste"
+	description = "Repairs damaged mechanical parts of the body. The presence of damaged organic areas of the body slows down the work."
+	reagent_state = LIQUID
+	color = "#55656ac3"
+	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+	overdose_threshold = 25
+	ph = 5
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	process_flags = ORGANIC | SYNTHETIC
+	affected_bodytype = MOB_ROBOTIC
+
+/datum/reagent/medicine/nanopaste/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	var/list/organic_parts = affected_mob.get_damaged_bodyparts(TRUE,TRUE, required_bodytype = BODYTYPE_ORGANIC)
+	var/healing  = length(organic_parts) ? 1.5 : 3
+	affected_mob.adjustBruteLoss(-healing  * REM * seconds_per_tick, FALSE, required_bodytype = BODYTYPE_ROBOTIC)
+	affected_mob.adjustFireLoss(-healing  * REM * seconds_per_tick, FALSE, required_bodytype = BODYTYPE_ROBOTIC)
+	return TRUE
+
+/datum/reagent/medicine/nanopaste/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, FALSE, FALSE)
+	if(SPT_PROB(13, seconds_per_tick))
+		affected_mob.reagents.remove_reagent(/datum/reagent/medicine/nanopaste, 1 * REM * seconds_per_tick)
+		affected_mob.vomit(20)
+	return TRUE

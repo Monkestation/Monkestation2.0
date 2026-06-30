@@ -862,6 +862,7 @@
 	req_components = list(
 		/datum/stock_part/matter_bin = 1,
 		/datum/stock_part/manipulator = 1,
+		/datum/stock_part/capacitor = 1,
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stack/sheet/glass = 2)
 
@@ -870,6 +871,7 @@
 	req_components = list(
 		/datum/stock_part/matter_bin/tier4 = 1,
 		/datum/stock_part/manipulator/tier4 = 1,
+		/datum/stock_part/capacitor/tier4 = 1,
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stack/sheet/glass = 2)
 
