@@ -1,0 +1,4 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - balance: "labyrinth  pages can be passed through if the person has TRAIT_HOLY which holy water gives."

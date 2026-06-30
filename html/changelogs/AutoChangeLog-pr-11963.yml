@@ -1,0 +1,5 @@
+author: "hack-wrench,  SirNightKnight, Ghommie"
+delete-after: True
+changes:
+  - rscadd: "tape recorder now records speaker name."
+  - qol: "gave tape recorders a radio filter toggle."

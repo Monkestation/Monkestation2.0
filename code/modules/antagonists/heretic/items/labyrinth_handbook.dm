@@ -2,6 +2,7 @@
 	name = "labyrinth pages"
 	desc = "A field of papers flying in the air, repulsing heathens with impossible force."
 	icon_state = "lintel"
+	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	initial_duration = 15 SECONDS
 
 /obj/effect/forcefield/wizard/heretic/CanAllowThrough(atom/movable/mover, border_dir)
