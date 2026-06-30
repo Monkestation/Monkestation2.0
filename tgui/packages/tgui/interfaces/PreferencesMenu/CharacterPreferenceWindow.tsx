@@ -6,6 +6,7 @@ import { JobsPage, JobsPageType } from './JobsPage';
 import { LoadoutManager } from './LoadoutPage';
 import { MainPage } from './MainPage';
 import { PageButton } from './PageButton';
+import { LanguagesPage } from './preferences/features/character_preferences/LanguagesMenu';
 import { QuirksPage } from './QuirksPage';
 import { SpeciesPage } from './SpeciesPage';
 
@@ -14,6 +15,7 @@ enum Page {
   Loadout,
   Jobs,
   Species,
+  Languages,
   Quirks,
 }
 
@@ -80,8 +82,12 @@ export const CharacterPreferenceWindow = (props) => {
       pageContents = (
         <SpeciesPage closeSpecies={() => setCurrentPage(Page.Main)} />
       );
-
       break;
+
+    case Page.Languages:
+      pageContents = <LanguagesPage />;
+      break;
+
     case Page.Quirks:
       pageContents = <QuirksPage />;
       break;
@@ -142,6 +148,16 @@ export const CharacterPreferenceWindow = (props) => {
               </PageButton>
             </Stack.Item>
           )}
+
+          <Stack.Item grow>
+            <PageButton
+              currentPage={currentPage}
+              page={Page.Languages}
+              setPage={setCurrentPage}
+            >
+              Languages
+            </PageButton>
+          </Stack.Item>
 
           <Stack.Item grow>
             <PageButton

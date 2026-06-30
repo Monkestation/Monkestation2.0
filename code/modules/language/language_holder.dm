@@ -37,13 +37,14 @@ Key procs
 
 /datum/language_holder
 	/// Lazyassoclist of all understood languages
-	var/list/understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
+	var/list/understood_languages
 	/// Lazyassoclist of languages that can be spoken.
 	/// Tongue organ may also set limits beyond this list.
-	var/list/spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
-	/// Lazyassoclist of blocked languages.
-	/// Used to prevent understanding and speaking certain languages, ie for certain mobs, mutations etc.
-	var/list/blocked_languages
+	var/list/spoken_languages
+	/// Lazyassoclist of languages we are blocked from understanding, used for certain mobs, mutations, quirks, etc.
+	var/list/blocked_understanding
+	/// Lazyassoclist of languages we are blocked from speaking, used for certain mobs, mutations, quirks, etc.
+	var/list/blocked_speaking
 	/// If true, overrides tongue aforementioned limitations.
 	var/omnitongue = FALSE
 	/// Handles displaying the language menu UI.
@@ -63,7 +64,7 @@ Key procs
 /datum/language_holder/New(atom/new_owner)
 	if(new_owner)
 		if(QDELETED(new_owner))
-			CRASH("Langauge holder added to a qdeleting thing, what the fuck [text_ref(new_owner)]")
+			CRASH("Language holder added to a qdeleting thing, what the fuck [text_ref(new_owner)]")
 		if(!ismovable(new_owner))
 			CRASH("Language holder being added to a non-movable thing, this is invalid (was: [new_owner] / [new_owner.type])")
 
@@ -80,6 +81,61 @@ Key procs
 	QDEL_NULL(language_menu)
 	owner = null
 	return ..()
+
+GLOBAL_DATUM_INIT(language_holder_adjustor, /datum/language_holder_adjustor, new)
+
+/// Language code needs to be purged. Make sure, once and for all, that we get the correct languages on spawn.
+/// Every time a crew member joins the adjustor will personally fix their language, because there is too much coupling between mind and language code to do it reliably otherwise.
+/// It has already needed to be fixed like 3 times. This will (hopefully) be the final time.
+/datum/language_holder_adjustor/New()
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(handle_new_player))
+
+/datum/language_holder_adjustor/proc/handle_new_player(datum/source, mob/living/carbon/human/new_crewmember, rank)
+	SIGNAL_HANDLER
+
+	// sanity checking because we really do not want to be causing any runtimes
+	if(!istype(new_crewmember))
+		return
+	if(isnull(new_crewmember.mind))
+		return
+
+	var/datum/language_holder/language_holder = new_crewmember.get_language_holder()
+
+	if(isnull(language_holder))
+		return
+
+	language_holder.adjust_languages_to_prefs(new_crewmember.client?.prefs)
+
+/datum/language_holder_adjustor/Destroy()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
+	return ..()
+
+/datum/language_holder/proc/adjust_languages_to_prefs(datum/preferences/preferences, mob/living/carbon/human/new_crewmember)
+	// no prefs? then don't remove any languages
+	if(!preferences)
+		return
+
+	// remove the innate languages (like common, and other species languages) and instead use the language prefs
+	// do not remove any languages granted by spawners, which are denoted by source = LANGUAGE_SPAWNER
+	remove_languages_by_source(list(LANGUAGE_MIND, LANGUAGE_ATOM, LANGUAGE_SPECIES, LANGUAGE_TONGUE))
+	selected_language = null // reset it to recalculate after applying our prefs
+
+	for(var/lang_path in preferences.languages)
+		grant_language(lang_path, (preferences.languages[lang_path] == LANGUAGE_SPOKEN ? ALL : UNDERSTOOD_LANGUAGE))
+
+	get_selected_language()
+
+/// Removes every language whose source(s) match the provided source list arg
+/datum/language_holder/proc/remove_languages_by_source(list/sources)
+	if(!length(sources))
+		return
+	for(var/language in understood_languages)
+		for(var/source in sources)
+			remove_language(language, ALL, source)
+	// in most cases spoken_languages should be empty by now, but just in case we should remove what's left
+	for(var/language in spoken_languages)
+		for(var/source in sources)
+			remove_language(language, ALL, source)
 
 /// Helper to get all the partial understanding from the passed language
 /// Does effectively nothing if given a language already understood
@@ -104,7 +160,7 @@ Key procs
 	for(var/language in mutual_understanding)
 		for(var/source in mutual_understanding[language])
 			// if this mutual understanding comes from a language, and that language is blocked, skip it
-			if(LAZYACCESS(blocked_languages, source))
+			if(LAZYACCESS(blocked_understanding, source))
 				continue
 			if(!best_mutual_languages[language] || best_mutual_languages[language] < mutual_understanding[language][source])
 				best_mutual_languages[language] = mutual_understanding[language][source]
@@ -190,37 +246,43 @@ Key procs
 	return TRUE
 
 /// Adds a single language or list of languages to the blocked language list.
-/datum/language_holder/proc/add_blocked_language(languages, source = LANGUAGE_MIND)
+/datum/language_holder/proc/add_blocked_language(languages, language_flags = ALL, source = LANGUAGE_MIND)
 	if(!islist(languages))
 		languages = list(languages)
 
 	for(var/language in languages)
-		LAZYORASSOCLIST(blocked_languages, language, source)
+		if(language_flags & SPOKEN_LANGUAGE)
+			LAZYORASSOCLIST(blocked_speaking, language, source)
+		if(language_flags & UNDERSTOOD_LANGUAGE)
+			LAZYORASSOCLIST(blocked_understanding, language, source)
 	calculate_best_mutual_language()
 	return TRUE
 
 /// Removes a single language or list of languages from the blocked language list.
-/datum/language_holder/proc/remove_blocked_language(languages, source = LANGUAGE_MIND)
+/datum/language_holder/proc/remove_blocked_language(languages, language_flags = ALL, source = LANGUAGE_MIND)
 	if(!islist(languages))
 		languages = list(languages)
 
 	for(var/language in languages)
 		if(source == LANGUAGE_ALL)
-			LAZYREMOVE(blocked_languages, language)
+			if(language_flags & SPOKEN_LANGUAGE)
+				LAZYREMOVE(blocked_speaking, language)
+			if(language_flags & UNDERSTOOD_LANGUAGE)
+				LAZYREMOVE(blocked_understanding, language)
 		else
-			LAZYREMOVEASSOC(blocked_languages, language, source)
+			if(language_flags & SPOKEN_LANGUAGE)
+				LAZYREMOVEASSOC(blocked_speaking, language, source)
+			if(language_flags & UNDERSTOOD_LANGUAGE)
+				LAZYREMOVEASSOC(blocked_understanding, language, source)
 	calculate_best_mutual_language()
 	return TRUE
 
 /// Checks if you have the language passed.
 /datum/language_holder/proc/has_language(language, flag_to_check = UNDERSTOOD_LANGUAGE)
-	if(language in blocked_languages)
-		return FALSE
-
 	var/list/langs_to_check = list()
-	if(flag_to_check & SPOKEN_LANGUAGE)
+	if(flag_to_check & SPOKEN_LANGUAGE && !LAZYACCESS(blocked_speaking, language))
 		langs_to_check |= spoken_languages
-	if(flag_to_check & UNDERSTOOD_LANGUAGE)
+	if(flag_to_check & UNDERSTOOD_LANGUAGE && !LAZYACCESS(blocked_understanding, language))
 		langs_to_check |= understood_languages
 
 	return language in langs_to_check
@@ -239,7 +301,7 @@ Key procs
 	for(var/lang in spoken_languages)
 		var/datum/language/language = lang
 		var/priority = initial(language.default_priority)
-		if((!highest_priority || (priority > highest_priority)) && !(language in blocked_languages))
+		if((!highest_priority || (priority > highest_priority)) && !(language in blocked_speaking))
 			if(can_speak_language(language))
 				selected_language = language
 				highest_priority = priority
@@ -284,8 +346,10 @@ Key procs
 			grant_language(language, UNDERSTOOD_LANGUAGE, from_holder.understood_languages[language])
 		for(var/language in from_holder.spoken_languages)
 			grant_language(language, SPOKEN_LANGUAGE, from_holder.spoken_languages[language])
-		for(var/language in from_holder.blocked_languages)
-			add_blocked_language(language, from_holder.blocked_languages[language])
+		for(var/language in from_holder.blocked_speaking)
+			add_blocked_language(language, SPOKEN_LANGUAGE, from_holder.blocked_speaking[language])
+		for(var/language in from_holder.blocked_understanding)
+			add_blocked_language(language, UNDERSTOOD_LANGUAGE, from_holder.blocked_understanding[language])
 	return TRUE
 
 /// Transfers all mind languages to the supplied language holder.
@@ -298,10 +362,14 @@ Key procs
 		if(LANGUAGE_MIND in spoken_languages[language])
 			remove_language(language, SPOKEN_LANGUAGE, LANGUAGE_MIND)
 			to_holder.grant_language(language, SPOKEN_LANGUAGE, LANGUAGE_MIND)
-	for(var/language in blocked_languages)
-		if(LANGUAGE_MIND in blocked_languages[language])
-			remove_blocked_language(language, LANGUAGE_MIND)
-			to_holder.add_blocked_language(language, LANGUAGE_MIND)
+	for(var/language in blocked_speaking)
+		if(LANGUAGE_MIND in blocked_speaking[language])
+			remove_blocked_language(language, SPOKEN_LANGUAGE, LANGUAGE_MIND)
+			to_holder.add_blocked_language(language, SPOKEN_LANGUAGE, LANGUAGE_MIND)
+	for(var/language in blocked_understanding)
+		if(LANGUAGE_MIND in blocked_understanding[language])
+			remove_blocked_language(language, UNDERSTOOD_LANGUAGE, LANGUAGE_MIND)
+			to_holder.add_blocked_language(language, UNDERSTOOD_LANGUAGE, LANGUAGE_MIND)
 	for(var/language in mutual_understanding)
 		var/mind_understanding = mutual_understanding[language][LANGUAGE_MIND]
 		if(mind_understanding > 0)
@@ -335,7 +403,8 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 /datum/language_holder/alien
 	understood_languages = list(/datum/language/xenocommon = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/xenocommon = list(LANGUAGE_ATOM))
-	blocked_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
+	blocked_speaking = list(/datum/language/common = list(LANGUAGE_ATOM))
+	blocked_understanding = list(/datum/language/common = list(LANGUAGE_ATOM))
 
 /datum/language_holder/construct
 	understood_languages = list(
@@ -350,10 +419,12 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 /datum/language_holder/drone
 	understood_languages = list(/datum/language/drone = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/drone = list(LANGUAGE_ATOM))
-	blocked_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
+	blocked_speaking = list(/datum/language/common = list(LANGUAGE_ATOM))
+	blocked_understanding = list(/datum/language/common = list(LANGUAGE_ATOM))
 
 /datum/language_holder/drone/syndicate
-	blocked_languages = null
+	blocked_speaking = null
+	blocked_understanding = null
 
 /datum/language_holder/human_basic
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
@@ -392,7 +463,8 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 /datum/language_holder/lightbringer
 	understood_languages = list(/datum/language/slime = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/slime = list(LANGUAGE_ATOM))
-	blocked_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
+	blocked_speaking = list(/datum/language/common = list(LANGUAGE_ATOM))
+	blocked_understanding = list(/datum/language/common = list(LANGUAGE_ATOM))
 
 /datum/language_holder/photogeist
 	understood_languages = list(
@@ -432,6 +504,15 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/monkey = list(LANGUAGE_ATOM),
 	)
 
+/datum/language_holder/monkey/simian
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/monkey = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/monkey = list(LANGUAGE_ATOM),
+	)
+
 /datum/language_holder/monkey/smart
 	understood_languages = list(
 		/datum/language/common = list(LANGUAGE_ATOM),
@@ -463,59 +544,14 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 /datum/language_holder/venus
 	understood_languages = list(/datum/language/sylvan = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/sylvan = list(LANGUAGE_ATOM))
-	blocked_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
+	blocked_speaking = list(/datum/language/common = list(LANGUAGE_ATOM))
+	blocked_understanding = list(/datum/language/common = list(LANGUAGE_ATOM))
 
 /datum/language_holder/spider
 	understood_languages = list(/datum/language/buzzwords = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/buzzwords = list(LANGUAGE_ATOM))
-	blocked_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
-
-/datum/language_holder/synthetic
-	understood_languages = list(
-		/datum/language/common = list(LANGUAGE_ATOM),
-		/datum/language/uncommon = list(LANGUAGE_ATOM),
-		/datum/language/machine = list(LANGUAGE_ATOM),
-		/datum/language/draconic = list(LANGUAGE_ATOM),
-		/datum/language/moffic = list(LANGUAGE_ATOM),
-		/datum/language/calcic = list(LANGUAGE_ATOM),
-		/datum/language/voltaic = list(LANGUAGE_ATOM),
-		/datum/language/buzzwords = list(LANGUAGE_ATOM),
-		/datum/language/sylvan = list(LANGUAGE_ATOM),
-		/datum/language/slime = list(LANGUAGE_ATOM),
-		/datum/language/mushroom = list(LANGUAGE_ATOM),
-		/datum/language/monkey = list(LANGUAGE_ATOM),
-		/datum/language/goblin = list(LANGUAGE_ATOM),
-		/datum/language/nekomimetic = list(LANGUAGE_ATOM),
-		/datum/language/yangyu = list(LANGUAGE_ATOM),
-	)
-	spoken_languages = list(
-		/datum/language/common = list(LANGUAGE_ATOM),
-		/datum/language/uncommon = list(LANGUAGE_ATOM),
-		/datum/language/machine = list(LANGUAGE_ATOM),
-		/datum/language/draconic = list(LANGUAGE_ATOM),
-		/datum/language/moffic = list(LANGUAGE_ATOM),
-		/datum/language/calcic = list(LANGUAGE_ATOM),
-		/datum/language/voltaic = list(LANGUAGE_ATOM),
-		/datum/language/buzzwords = list(LANGUAGE_ATOM),
-		/datum/language/sylvan = list(LANGUAGE_ATOM),
-		/datum/language/slime = list(LANGUAGE_ATOM),
-		/datum/language/mushroom = list(LANGUAGE_ATOM),
-		/datum/language/monkey = list(LANGUAGE_ATOM),
-		/datum/language/goblin = list(LANGUAGE_ATOM),
-		/datum/language/nekomimetic = list(LANGUAGE_ATOM),
-		/datum/language/yangyu = list(LANGUAGE_ATOM),
-	)
-
-/datum/language_holder/moth
-	understood_languages = list(
-		/datum/language/common = list(LANGUAGE_ATOM),
-		/datum/language/moffic = list(LANGUAGE_ATOM),
-	)
-	spoken_languages = list(
-		/datum/language/common = list(LANGUAGE_ATOM),
-		/datum/language/uncommon = list(LANGUAGE_ATOM),
-		/datum/language/machine = list(LANGUAGE_ATOM),
-	)
+	blocked_speaking = list(/datum/language/common = list(LANGUAGE_ATOM))
+	blocked_understanding = list(/datum/language/common = list(LANGUAGE_ATOM))
 
 /datum/language_holder/moth
 	understood_languages = list(
@@ -679,8 +715,12 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		return cortical_owner.human_host?.get_language_holder()?.has_language(language, flag_to_check)
 
 /datum/language_holder/apid
-	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
-	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/buzzwords = list(LANGUAGE_ATOM))
+	spoken_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/buzzwords = list(LANGUAGE_ATOM))
 
 /datum/language_holder/goblin
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
@@ -714,3 +754,32 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 /datum/language_holder/universal/New()
 	. = ..()
 	grant_all_languages()
+
+/// Modularized the Cyborg and AI language_holder, add here the languages that you want them to be able to speak and understand.
+/datum/language_holder/synthetic/
+	understood_languages = list()
+	spoken_languages = list()
+
+	/// list of [/datum/language]s (typepaths of them) with [/datum/language/var/secret] but still known by our borgs and AIs (not covered by GLOB.uncommon_roundstart_languages)
+	var/static/list/known_secret_languages = list(
+		/datum/language/ashtongue,
+		/datum/language/beachbum,
+		/datum/language/terrum,
+		/datum/language/shadowtongue,
+		/datum/language/wawa,
+	)
+
+/datum/language_holder/synthetic/New(atom/new_owner)
+	. = ..()
+	remove_all_languages() // tabula rasa. we dont need anything from TG in here
+
+	for (var/datum/language/language as anything in GLOB.all_languages)
+		if(language::secret && !(language in GLOB.uncommon_roundstart_languages)) // should align with all languages available to anyone from character preferences
+			continue
+		grant_language(language, source = LANGUAGE_ATOM)
+
+	for (var/datum/language/language as anything in known_secret_languages)
+		grant_language(language, source = LANGUAGE_ATOM)
+
+	if(owner) // may be initialized without one, especially during init
+		get_selected_language()

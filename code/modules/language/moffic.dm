@@ -18,4 +18,8 @@
 	icon_state = "moth"
 	default_priority = 90
 
+	mutual_understanding = list(
+		/datum/language/spacer = 5,
+	)
+
 // Fuck guest accounts, and fuck language testing.

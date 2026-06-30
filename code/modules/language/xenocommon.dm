@@ -11,3 +11,4 @@
 	additional_syllable_low = 0
 	additional_syllable_high = 0
 	icon_state = "xeno"
+	secret = TRUE

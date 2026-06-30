@@ -6,3 +6,8 @@
 	default_priority = 70
 
 	icon_state = "wawa"
+	secret = TRUE
+
+	mutual_understanding = list(
+		/datum/language/spacer = 1,
+	)

@@ -36,6 +36,9 @@
 	/// You can set this to an arbitarily large negative number to make all words only one syllable.
 	var/additional_syllable_high = 3
 
+	/// Iris/Oculis port: Should this be hidden on the language buy menu?
+	var/secret = FALSE
+
 	var/list/spans = list()
 
 	/**

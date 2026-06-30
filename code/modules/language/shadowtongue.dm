@@ -21,3 +21,4 @@
 	)
 	icon_state = "shadow"
 	default_priority = 90
+	secret = TRUE

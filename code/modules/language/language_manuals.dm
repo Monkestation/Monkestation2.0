@@ -61,6 +61,13 @@
 	name = "deluxe codespeak manual"
 	charges = INFINITY
 
+/obj/item/language_manual/spacer_manual
+	name = "union-approved spacer manual"
+	icon_state = "spacerbook"
+	desc = "The book's cover reads: \"Making First Contact - A simple trade jargon that'll help YOU sell to all sorts of weird customers!\""
+	language = /datum/language/spacer
+	flavour_text = "suddenly your mind is filled with trade jargon and simple foreign phrases"
+
 /obj/item/language_manual/roundstart_species
 
 /obj/item/language_manual/roundstart_species/Initialize(mapload)

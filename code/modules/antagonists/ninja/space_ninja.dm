@@ -125,6 +125,18 @@
 	owner.current.mind.special_role = ROLE_NINJA
 	return ..()
 
+/datum/antagonist/ninja/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/owner_mob = mob_override || owner.current
+	var/datum/language_holder/holder = owner_mob.get_language_holder()
+	holder.grant_language(/datum/language/yangyu, source = LANGUAGE_NINJA) //Finally, space japanese for the space ninjas
+	holder.selected_language = /datum/language/yangyu
+
+/datum/antagonist/ninja/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/owner_mob = mob_override || owner.current
+	owner_mob.remove_language(/datum/language/yangyu, source = LANGUAGE_NINJA)
+	return ..()
+
 /datum/antagonist/ninja/admin_add(datum/mind/new_owner,mob/admin)
 	new_owner.set_assigned_role(SSjob.GetJobType(/datum/job/space_ninja))
 	new_owner.special_role = ROLE_NINJA

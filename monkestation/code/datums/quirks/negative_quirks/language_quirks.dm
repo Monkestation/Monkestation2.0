@@ -1,3 +1,4 @@
+/* //Removed: language menu overhaul doesn't really play nicely with these quirks. If someone can figure out a way to make it foolproof I'd love to throw these back in alongside foreigner.
 /datum/quirk/outsider
 	name = "Outsider"
 	desc = "You don't know your species' language. If you are human you know a random language instead of Galactic Common."
@@ -38,3 +39,4 @@
 	for (var/obj/item/clothing/mask/translator/translator in carbon_holder.get_all_gear())
 		carbon_holder.temporarilyRemoveItemFromInventory(translator, force = TRUE, idrop = FALSE)
 		qdel(translator)
+*/

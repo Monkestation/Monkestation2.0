@@ -17,3 +17,4 @@
 	)
 	icon_state = "golem"
 	default_priority = 90
+	secret = TRUE

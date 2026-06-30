@@ -19,7 +19,7 @@
 	/// The minimum round time before this ruleset will show up
 	var/minimum_round_time = 0
 	/// Abstract root value
-	var/abstract_type = /datum/dynamic_ruleset/midround
+	abstract_type = /datum/dynamic_ruleset/midround
 
 /datum/dynamic_ruleset/midround/forget_startup()
 	living_players = list()

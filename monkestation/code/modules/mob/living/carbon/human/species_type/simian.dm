@@ -29,6 +29,7 @@
 	species_race_mutation = /datum/mutation/race/simian
 	give_monkey_species_effects = FALSE
 	knife_butcher_results = null
+	species_language_holder = /datum/language_holder/monkey/simian
 
 /datum/species/monkey/simian/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()

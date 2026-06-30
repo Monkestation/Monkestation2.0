@@ -89,6 +89,14 @@ export type QuirkInfo = {
   quirk_blacklist: string[][];
 };
 
+export type Language = {
+  //Nova-Oculis port
+  description: string;
+  name: string;
+  icon: string;
+  speaking: boolean;
+};
+
 export type LoadoutInfo = {
   user_is_donator: BooleanLike;
   selected_loadout: string[];

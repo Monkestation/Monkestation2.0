@@ -19,6 +19,7 @@
 	new /obj/item/cargo_teleporter(src) // monkestation edit - singular roundstart cargo teleporter
 	new /obj/item/gun/ballistic/shotgun/cargo(src)
 	new /obj/item/storage/box/beanbag(src)
+	new /obj/item/language_manual/spacer_manual(src)
 
 /obj/structure/closet/secure_closet/quartermaster/populate_contents_immediate()
 	. = ..()

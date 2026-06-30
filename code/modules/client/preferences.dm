@@ -77,6 +77,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// ["job title"] = (int) priority
 	var/alist/job_preferences_overall = list()
 
+	/// Associative list, keyed by language typepath, pointing to LANGUAGE_UNDERSTOOD, or LANGUAGE_SPOKEN, for whether we understand or speak the language
+	var/list/languages = list()
+
 	/// The current window, PREFERENCE_TAB_* in [`code/__DEFINES/preferences.dm`]
 	var/current_window = PREFERENCE_WINDOW_CHARACTERS
 	var/starting_page = PREFERENCE_PAGE_CHARACTERS

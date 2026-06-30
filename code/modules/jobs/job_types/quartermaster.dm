@@ -49,6 +49,7 @@
 	backpack_contents = list(
 		/obj/item/boxcutter = 1,
 		/obj/item/universal_scanner = 1,
+		/obj/item/language_manual/spacer_manual = 1,
 	)
 	chameleon_extras = /obj/item/stamp/qm
 	accessory = /obj/item/clothing/accessory/badge/cargo/quartermaster

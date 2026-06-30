@@ -15,3 +15,8 @@
 	"shiver","timbers","matey","swashbuckler"
 	)
 	icon_state = "pirate"
+	secret = TRUE
+
+	mutual_understanding = list(
+		/datum/language/spacer = 20,
+	)
