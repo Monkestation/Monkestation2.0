@@ -142,6 +142,92 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	source_item?.reagents?.add_reagent(/datum/reagent/uranium, source_item.reagents.total_volume*(2/5))
 	return TRUE
 
+/// produced from fission via the RBMK reactor.
+/datum/material/thorium
+	name = "thorium"
+	desc = "A highly radioactive fission by-product."
+	color = rgb(174, 214, 112)
+	greyscale_colors = rgb(174, 214, 112)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+	)
+	sheet_type = /obj/item/stack/sheet/mineral/thorium
+	value_per_unit = 200 / SHEET_MATERIAL_AMOUNT
+	beauty_modifier = 300 / SHEET_MATERIAL_AMOUNT
+	armor_modifiers = list(
+		MELEE = 1.2,
+		BULLET = 1.2,
+		LASER = 0.7,
+		ENERGY = 0.7,
+		BOMB = 1,
+		BIO = 1,
+		FIRE = 1,
+		ACID = 1,
+	)
+	points_per_unit = 0
+
+/datum/material/thorium/on_applied(atom/source, amount, material_flags)
+	. = ..()
+
+	if(isitem(source))
+		return
+
+	source.AddElement(/datum/element/radioactive)
+
+/datum/material/thorium/on_removed(atom/source, amount, material_flags)
+	. = ..()
+
+	if(isitem(source))
+		return
+
+	source.RemoveElement(/datum/element/radioactive)
+
+/// produced from fission via the RBMK reactor.
+/datum/material/plutonium
+	name = "plutonium"
+	desc = "A dangerous radioactive fission by-product."
+	color = rgb(94, 255, 90)
+	greyscale_colors = rgb(94, 255, 90)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+	)
+	sheet_type = /obj/item/stack/sheet/mineral/plutonium
+	value_per_unit = 500 / SHEET_MATERIAL_AMOUNT
+	beauty_modifier = 500 / SHEET_MATERIAL_AMOUNT
+	armor_modifiers = list(
+		MELEE = 1.35,
+		BULLET = 1.25,
+		LASER = 0.55,
+		ENERGY = 0.55,
+		BOMB = 1.1,
+		BIO = 1,
+		FIRE = 1.2,
+		ACID = 1,
+	)
+	points_per_unit = 0
+
+/datum/material/plutonium/on_applied(atom/source, amount, material_flags)
+	. = ..()
+
+	if(isitem(source))
+		return
+
+	source.AddElement(/datum/element/radioactive)
+
+/datum/material/plutonium/on_removed(atom/source, amount, material_flags)
+	. = ..()
+
+	if(isitem(source))
+		return
+
+	source.RemoveElement(/datum/element/radioactive)
+
 ///Adds firestacks on hit (Still needs support to turn into gas on destruction)
 /datum/material/plasma
 	name = "plasma"
