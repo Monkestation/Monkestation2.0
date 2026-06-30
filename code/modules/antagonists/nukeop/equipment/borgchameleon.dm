@@ -97,12 +97,12 @@
 	var/obj/item/robot_model/skin_model = new skin_model_type()
 	if(length(skin_model.borg_skins))
 		var/list/reskin_icons = list()
-			for(var/borg_skin in skin_model.borg_skins)
-				var/list/skin_details = skin_model.borg_skins[borg_skin]
-				reskin_icons[borg_skin] = image(icon = skin_details[SKIN_ICON] || 'icons/mob/silicon/robots.dmi', icon_state = skin_details[SKIN_ICON_STATE])
-			var/skin_name = show_radial_menu(user, src, reskin_icons, radius = 42, require_near = TRUE)
-			if(skin_name)
-				. = skin_model.borg_skins[skin_name].Copy()
+		for(var/borg_skin in skin_model.borg_skins)
+			var/list/skin_details = skin_model.borg_skins[borg_skin]
+			reskin_icons[borg_skin] = image(icon = skin_details[SKIN_ICON] || 'icons/mob/silicon/robots.dmi', icon_state = skin_details[SKIN_ICON_STATE])
+		var/skin_name = show_radial_menu(user, src, reskin_icons, radius = 42, require_near = TRUE)
+		if(skin_name)
+			. = skin_model.borg_skins[skin_name].Copy()
 	qdel(skin_model)
 
 /// Applies the default appearance of a model. If provided, will apply skin details as well.
@@ -174,7 +174,7 @@
 	disguise_as_model(disguised_cyborg, disguise_model_type, disguised_skin_details)
 	RegisterSignals(disguised_cyborg, signal_cache, PROC_REF(disrupt))
 
-/// Removes the disguise.
+/// Removes the disguise and resets the skin to default.
 /obj/item/borg_chameleon/proc/deactivate()
 	STOP_PROCESSING(SSobj, src)
 	if(!disguised_cyborg)
