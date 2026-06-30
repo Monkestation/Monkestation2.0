@@ -428,18 +428,6 @@
 
 /// Holders for the package wrap and the wrapping paper synthetizers.
 
-/datum/robot_energy_storage/package_wrap
-	name ="package wrapper synthetizer"
-	max_energy = 25
-	recharge_rate = 2
-
-
-/datum/robot_energy_storage/wrapping_paper
-	name ="wrapping paper synthetizer"
-	max_energy = 25
-	recharge_rate = 2
-
-
 /obj/item/stack/package_wrap/cyborg
 	name = "integrated package wrapper"
 	is_cyborg = TRUE
