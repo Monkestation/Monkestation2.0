@@ -121,29 +121,39 @@
 	var/total_turbine_power = 0
 	var/total_turbine_integrity = 0
 	var/turbine_count = 0
+	var/generating_turbine_count = 0
 
 	if(!linked_reactor)
 		return list(
 			"turbines" = turbine_data,
 			"total_turbine_power" = 0,
 			"average_turbine_integrity" = 0,
-			"turbine_count" = 0
+			"turbine_count" = 0,
+			"generating_turbine_count" = 0
 		)
 
 	for(var/obj/machinery/power/rbmk_turbine/turbine in range(20, linked_reactor))
 		turbine_count++
 
 		var/integrity_percent = turbine.get_generator_integrity_percent()
-		var/current_power_output = RBMK_ROUND2(turbine.last_power_output)
+		var/turbine_generating = turbine.is_actively_generating()
+		var/current_power_output = turbine_generating ? RBMK_ROUND2(turbine.last_power_output) : 0
 
-		total_turbine_power += current_power_output
+		if(turbine_generating)
+			generating_turbine_count++
+			total_turbine_power += current_power_output
+
 		total_turbine_integrity += integrity_percent
 
 		var/list/current_turbine = list(
+			"ref" = REF(turbine),
 			"name" = turbine.name,
 			"index" = turbine_count,
 			"running" = turbine.running,
+			"generating" = turbine_generating,
 			"broken" = (turbine.machine_stat & BROKEN) ? TRUE : FALSE,
+			"telemetry_stale" = turbine.is_telemetry_stale(),
+			"telemetry_age" = turbine.get_telemetry_age_seconds(),
 			"integrity" = RBMK_ROUND2(integrity_percent),
 			"power_output" = current_power_output,
 			"rpm" = RBMK_ROUND2(turbine.rpm),
@@ -169,7 +179,8 @@
 		"turbines" = turbine_data,
 		"total_turbine_power" = RBMK_ROUND2(total_turbine_power),
 		"average_turbine_integrity" = RBMK_ROUND2(average_turbine_integrity),
-		"turbine_count" = turbine_count
+		"turbine_count" = turbine_count,
+		"generating_turbine_count" = generating_turbine_count
 	)
 
 
@@ -182,6 +193,7 @@
 	data["total_turbine_power"] = turbine_summary["total_turbine_power"]
 	data["average_turbine_integrity"] = turbine_summary["average_turbine_integrity"]
 	data["turbine_count"] = turbine_summary["turbine_count"]
+	data["generating_turbine_count"] = turbine_summary["generating_turbine_count"]
 
 	if(!reactor)
 		data["status"] = "No reactor linked"

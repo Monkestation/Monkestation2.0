@@ -1,5 +1,5 @@
 import type { BooleanLike } from 'common/react';
-import { useBackend, useLocalState } from '../../backend';
+import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -9,10 +9,10 @@ import {
   Section,
   Stack,
   Table,
-} from '../../components';
-import { Window } from '../../layouts';
-import { MaterialAccessBar } from '../Fabrication/MaterialAccessBar';
-import type { Material } from '../Fabrication/Types';
+} from '../components';
+import { Window } from '../layouts';
+import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
+import type { Material } from './Fabrication/Types';
 
 type InsertedRod = {
   name: string;
@@ -383,3 +383,5 @@ export const RBMKFuelProcessor = () => {
     </Window>
   );
 };
+
+export default RBMKFuelProcessor;
