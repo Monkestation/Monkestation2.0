@@ -37,7 +37,7 @@
 	disguised_name = pick(GLOB.ai_names)
 
 /obj/item/borg_chameleon/Destroy()
-	disguised_cyborg = null
+	deactivate()
 	disguised_skin_details = null
 	return ..()
 
