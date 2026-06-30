@@ -72,6 +72,7 @@
 		"ai_data_core",
 		"ai_core_display",
 		"ai_server_overview",
+		"ai_overclocking",
 		"ram1",
 		"basic_ai_cpu",
 		"ai_resource_distribution",

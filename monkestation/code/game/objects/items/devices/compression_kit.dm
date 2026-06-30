@@ -1,7 +1,7 @@
 /obj/item/compression_kit
 	name = "bluespace compression kit"
 	desc = "An illegally modified BSRPED, capable of reducing the size of most items."
-	icon = 'monkestation/icons/obj/tools.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "compression_kit"
 	inhand_icon_state = "BS_RPED"
 	worn_icon_state = "RPED"

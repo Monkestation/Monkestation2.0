@@ -21,7 +21,7 @@
 /obj/item/gps/advanced
 	name = "advanced global positioning system"
 	desc = "An advanced variant of the usual GPS, capable of navigating across vast distances of space without a calibration process."
-	icon = 'monkestation/icons/obj/devices/tracker.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "gps-a"
 	requires_z_calibration = FALSE
 	custom_materials = list(
@@ -32,7 +32,7 @@
 
 /obj/item/gps/medical
 	desc = "A variention on the standard GPS Model, purposed for finding signals of those who have been lost. This one is in blue!"
-	icon = 'monkestation/icons/obj/devices/tracker.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "gps-m"
 	gpstag = "PARA0"
 

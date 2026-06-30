@@ -134,7 +134,7 @@
 
 /obj/effect/landmark/start/brig_physician
 	name = "Brig Physician"
-	icon = 'monkestation/icons/mob/landmarks.dmi'
+	icon = 'icons/mob/landmarks.dmi'
 	icon_state = "Brig Physician"
 
 /obj/effect/landmark/start/nanotrasen_representative

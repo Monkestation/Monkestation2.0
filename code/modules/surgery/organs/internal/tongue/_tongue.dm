@@ -212,20 +212,20 @@
 		'sound/voice/lizard/lizard_scream_1.ogg',
 		'sound/voice/lizard/lizard_scream_2.ogg',
 		'sound/voice/lizard/lizard_scream_3.ogg',
-		'monkestation/sound/voice/screams/lizard/lizard_scream_4.ogg',
+		'sound/voice/screams/lizard/lizard_scream_4.ogg',
 		)
 
 	return pick(
 		'sound/voice/lizard/lizard_scream_1.ogg',
 		'sound/voice/lizard/lizard_scream_2.ogg',
 		'sound/voice/lizard/lizard_scream_3.ogg',
-		'monkestation/sound/voice/screams/lizard/lizard_scream_5.ogg',
+		'sound/voice/screams/lizard/lizard_scream_5.ogg',
 	)
 
 /obj/item/organ/internal/tongue/lizard/get_laugh_sound()
 	if(prob(1))
-		return 'monkestation/sound/voice/weh.ogg'
-	return 'monkestation/sound/voice/laugh/lizard/lizard_laugh.ogg'
+		return 'sound/voice/weh.ogg'
+	return 'sound/voice/laugh/lizard/lizard_laugh.ogg'
 
 /obj/item/organ/internal/tongue/lizard/Initialize(mapload)
 	. = ..()
@@ -492,10 +492,10 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	phomeme_type = pick(phomeme_types)
 
 /obj/item/organ/internal/tongue/bone/get_laugh_sound()
-	return 'monkestation/sound/voice/laugh/skeleton/skeleton_laugh.ogg'
+	return 'sound/voice/laugh/skeleton/skeleton_laugh.ogg'
 
 /obj/item/organ/internal/tongue/bone/get_scream_sound()
-	return 'monkestation/sound/voice/screams/skeleton/scream_skeleton.ogg'
+	return 'sound/voice/screams/skeleton/scream_skeleton.ogg'
 
 
 // Bone tongues can speak all default + calcic
@@ -540,13 +540,13 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	organ_traits = list(TRAIT_SILICON_EMOTES_ALLOWED)
 
 /obj/item/organ/internal/tongue/robot/get_scream_sound()
-	return 'monkestation/sound/voice/screams/silicon/scream_silicon.ogg'
+	return 'sound/voice/screams/silicon/scream_silicon.ogg'
 
 /obj/item/organ/internal/tongue/robot/get_laugh_sound()
 	return pick(
-		'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M0.ogg',
-		'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M1.ogg',
-		'monkestation/sound/voice/laugh/silicon/laugh_siliconM2.ogg',
+		'sound/voice/laugh/silicon/laugh_siliconE1M0.ogg',
+		'sound/voice/laugh/silicon/laugh_siliconE1M1.ogg',
+		'sound/voice/laugh/silicon/laugh_siliconM2.ogg',
 	)
 
 /obj/item/organ/internal/tongue/robot/can_speak_language(language)
@@ -592,7 +592,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	)
 
 /obj/item/organ/internal/tongue/ethereal/get_laugh_sound()
-	return 'monkestation/sound/voice/laugh/ethereal/ethereal_laugh_1.ogg'
+	return 'sound/voice/laugh/ethereal/ethereal_laugh_1.ogg'
 
 // Ethereal tongues can speak all default + voltaic
 /obj/item/organ/internal/tongue/ethereal/get_possible_languages()
@@ -657,7 +657,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 		return (language_path in languages_possible)
 
 /obj/item/organ/internal/tongue/monkey/get_laugh_sound()
-	return 'monkestation/sound/voice/laugh/simian/monkey_laugh_1.ogg'
+	return 'sound/voice/laugh/simian/monkey_laugh_1.ogg'
 
 /obj/item/organ/internal/tongue/moth
 	name = "moth tongue"
@@ -673,9 +673,9 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 
 /obj/item/organ/internal/tongue/moth/get_laugh_sound()
 	return pick(
-		'monkestation/sound/voice/laugh/moth/mothchitter.ogg',
-		'monkestation/sound/voice/laugh/moth/mothlaugh.ogg',
-		'monkestation/sound/voice/laugh/moth/mothsqueak.ogg',
+		'sound/voice/laugh/moth/mothchitter.ogg',
+		'sound/voice/laugh/moth/mothlaugh.ogg',
+		'sound/voice/laugh/moth/mothsqueak.ogg',
 	)
 
 /obj/item/organ/internal/tongue/zombie
@@ -716,11 +716,11 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 		'sound/voice/lizard/lizard_scream_1.ogg',
 		'sound/voice/lizard/lizard_scream_2.ogg',
 		'sound/voice/lizard/lizard_scream_3.ogg',
-		'monkestation/sound/voice/screams/lizard/lizard_scream_5.ogg',
+		'sound/voice/screams/lizard/lizard_scream_5.ogg',
 	)
 
 /obj/item/organ/internal/tongue/floran/get_laugh_sound()
-	return 'monkestation/sound/voice/laugh/lizard/lizard_laugh.ogg'
+	return 'sound/voice/laugh/lizard/lizard_laugh.ogg'
 
 /obj/item/organ/internal/tongue/floran/Initialize(mapload)
 	. = ..()

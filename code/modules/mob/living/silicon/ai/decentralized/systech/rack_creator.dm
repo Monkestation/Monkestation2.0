@@ -13,8 +13,8 @@
 	circuit = /obj/item/circuitboard/machine/rack_creator
 
 	var/list/inserted_cpus = list()
-
-	var/list/ram_expansions = list() //List containing numbers corresponding to the amount of RAM that stick adds.
+	///List containing numbers corresponding to the amount of RAM that stick adds.
+	var/list/ram_expansions = list()
 
 	var/datum/component/material_container/materials
 	var/efficiency_coeff = 1
@@ -93,14 +93,17 @@
 	data["total_ram"] = 0
 	for(var/RAM in ram_expansions)
 		var/materials_string
-		for(var/mat in RAM["cost"])
-			var/datum/material/M = mat
+		for(var/datum/material/mat as anything in RAM["cost"])
 			if(!materials_string)
-				materials_string += "[M.name]: [RAM["cost"][mat] * efficiency_coeff]"
+				materials_string += "[mat::name]: [RAM["cost"][mat] * efficiency_coeff]"
 			else
-				materials_string += ", [M.name]: [RAM["cost"][mat] * efficiency_coeff]"
+				materials_string += ", [mat::name]: [RAM["cost"][mat] * efficiency_coeff]"
 
-		var/ram_list = list(list("capacity" = RAM["capacity"], "name" = RAM["name"], "cost" = materials_string))
+		var/list/ram_list = list(list(
+			"capacity" = RAM["capacity"],
+			"name" = RAM["name"],
+			"cost" = materials_string,
+		))
 		data["ram"] += ram_list
 		data["total_ram"] += RAM["capacity"]
 
@@ -111,12 +114,11 @@
 	for(var/datum/design/ram/D as anything in subtypesof(/datum/design/ram))
 		D = SSresearch.techweb_design_by_id(initial(D.id))
 		var/materials_string
-		for(var/mat in D.ram_materials)
-			var/datum/material/M = mat
+		for(var/datum/material/mat as anything in D.ram_materials)
 			if(!materials_string)
-				materials_string += "[M.name]: [D.ram_materials[mat] * efficiency_coeff]"
+				materials_string += "[mat.name]: [D.ram_materials[mat] * efficiency_coeff]"
 			else
-				materials_string += ", [M.name]: [D.ram_materials[mat] * efficiency_coeff]"
+				materials_string += ", [mat.name]: [D.ram_materials[mat] * efficiency_coeff]"
 		data["possible_ram"] += list(list(
 			"name" = D.name,
 			"capacity" = D.capacity,
@@ -145,8 +147,7 @@
 	var/list/total_cost = list()
 	for(var/RAM in ram_expansions)
 		for(var/mat in RAM["cost"])
-			var/datum/material/M = mat
-			total_cost[M] += RAM["cost"][M] * efficiency_coeff
+			total_cost[mat] += RAM["cost"][mat] * efficiency_coeff
 
 	if(!length(total_cost))
 		return -1
@@ -264,7 +265,7 @@
 				var/list/stats = list(list(
 					"name" = D.name,
 					"capacity" = D.capacity,
-					"cost" = D.ram_materials,
+					"cost" = D.ram_materials.Copy(),
 				))
 				ram_expansions += stats
 			else
@@ -302,16 +303,18 @@
 			inserted_cpus = list()
 
 			var/total_ram = 0
+
+			var/list/new_custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 			for(var/RAM in ram_expansions)
 				for(var/mat in RAM["cost"])
-					new_rack.custom_materials[mat] += RAM["cost"][mat] * efficiency_coeff
-
+					new_custom_materials[mat] += RAM["cost"][mat] * efficiency_coeff
 				total_ram += RAM["capacity"]
 
+			new_rack.set_custom_materials(new_custom_materials)
 			new_rack.contained_ram = total_ram
-			ram_expansions = list()
+			ram_expansions.Cut()
 
-			flick("circuit_imprinter_ani", src)
+			flick("[base_icon_state]_ani", src)
 			addtimer(CALLBACK(src, PROC_REF(finalize_post), new_rack), 1.5 SECONDS)
 			. = TRUE
 		if("remove_mat")

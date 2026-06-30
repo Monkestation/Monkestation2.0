@@ -36,7 +36,7 @@
 	owner.forceMove(land_mark) ///the user remains safe in the wonderland
 	owner.transfer_observers_to(bunny)
 	owner.mind.transfer_to(bunny)
-	playsound(bunny, 'monkestation/sound/magic/paradoxskip.ogg', vol = 100)
+	playsound(bunny, 'sound/magic/paradoxskip.ogg', vol = 100)
 	addtimer(CALLBACK(src, PROC_REF(return_to_station), owner, bunny, theplace), 5 SECONDS)
 	StartCooldown()
 
@@ -48,7 +48,7 @@
 	bunny.transfer_observers_to(user)
 	bunny.mind.transfer_to(user)
 	user.remove_traits(list(TRAIT_NO_TRANSFORM, TRAIT_GODMODE), REF(src))
-	playsound(user, 'monkestation/sound/magic/paradoxskip.ogg', vol = 100)
+	playsound(user, 'sound/magic/paradoxskip.ogg', vol = 100)
 	rabbit = null
 	original_loc = null
 	qdel(bunny)

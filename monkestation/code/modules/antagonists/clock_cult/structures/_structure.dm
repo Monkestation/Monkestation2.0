@@ -2,7 +2,7 @@
 /obj/structure/destructible/clockwork
 	name = "meme structure"
 	desc = "Some frog or something, the fuck?"
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_objects.dmi'
 	icon_state = "rare_pepe"
 	anchored = TRUE
 	density = TRUE

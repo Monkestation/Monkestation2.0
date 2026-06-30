@@ -4,7 +4,7 @@
 /datum/objective/abductee/random
 
 /datum/objective/abductee/random/New()
-	explanation_text = pick(world.file2list("strings/abductee_objectives.txt"))
+	explanation_text = pick(file2list("strings/abductee_objectives.txt"))
 
 /datum/objective/abductee/steal
 	explanation_text = "Steal all"

@@ -1858,7 +1858,7 @@ MONKESTATION EDIT
 //Non-Modular change - Removes monkey tails, adds Simian tails instead.
 /datum/sprite_accessory/tails/monkey/default
 	name = "Monkey"
-	icon = 'monkestation/icons/mob/species/monkey/monkey_tail.dmi' //Original: 'icons/mob/species/monkey/monkey_tail.dmi'
+	icon = 'icons/mob/species/monkey/monkey_tail.dmi' //Original: 'icons/mob/species/monkey/monkey_tail.dmi'
 	icon_state = "default"
 	color_src = MUTANT_COLOR //Original: FALSE
 

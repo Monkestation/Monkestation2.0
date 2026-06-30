@@ -136,7 +136,7 @@
 		var/atom/throw_target = get_edge_target_turf(src, get_dir(M, src))
 		var/atom/throw_target_mob = get_edge_target_turf(M, get_dir(src, M))
 
-		playsound(src, 'monkestation/sound/effects/boing1.ogg', 50)
+		playsound(src, 'sound/effects/boing1.ogg', 50)
 		src.throw_at(throw_target, 20, 3, force = 0)
 		if(has_status_effect(SUGAR_RUSH))
 			M.throw_at(throw_target_mob, 20, 3, force = 0)
@@ -275,7 +275,7 @@
 	if(has_status_effect(SUGAR_RUSH) || has_status_effect(HEN_RUSH))
 		visible_message("<span class='warning'>[src] bounces off  \the [O]!</span>")
 		var/atom/throw_target = get_edge_target_turf(src, turn(get_dir(O, src), rand(-1,1) * 45))
-		playsound(src, 'monkestation/sound/effects/boing1.ogg', 50)
+		playsound(src, 'sound/effects/boing1.ogg', 50)
 		src.throw_at(throw_target, 20, 3, force = 0, gentle = TRUE)
 	return
 
@@ -284,7 +284,7 @@
 	if(has_status_effect(SUGAR_RUSH) || has_status_effect(HEN_RUSH))
 		visible_message("<span class='warning'>[src] bounces off  \the [T]!</span>")
 		var/atom/throw_target = get_edge_target_turf(src, turn(get_dir(T, src), rand(-1,1) * 45))
-		playsound(src, 'monkestation/sound/effects/boing1.ogg', 50)
+		playsound(src, 'sound/effects/boing1.ogg', 50)
 		src.throw_at(throw_target, 20, 3, force = 0, gentle = TRUE)
 	return
 
