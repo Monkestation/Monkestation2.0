@@ -761,3 +761,72 @@
 	adapt_light.forceMove(src)
 	REMOVE_TRAIT(unadapted, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
 	return ..()
+
+/obj/item/organ/internal/eyes/nabber
+	name = "nictating eyes"
+	desc = "Small orange orbs with a pair of welding shield lenses."
+	icon = 'icons/obj/medical/organs/nabber_organs.dmi'
+	icon_state = "eyes"
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+	var/datum/action/cooldown/toggle_welding/shield
+	var/active = FALSE
+
+/obj/item/organ/internal/eyes/nabber/on_insert(mob/living/carbon/eye_recipient)
+	. = ..()
+	shield = new(eye_recipient)
+	shield.button_icon = 'icons/mob/actions/actions_nabber.dmi'
+	shield.button_icon_state = "nabber-shield-0"
+	shield.Grant(eye_recipient)
+	shield.eyes = src
+
+/obj/item/organ/internal/eyes/nabber/proc/toggle_shielding()
+	if(!owner)
+		return
+
+	active = !active
+	playsound(owner, 'sound/machines/click.ogg', 50, TRUE)
+
+	if(active)
+		flash_protect = FLASH_PROTECTION_WELDER
+		tint = 2
+		owner.update_tint()
+		owner.balloon_alert(owner, "Welder eyelids shut!")
+		shield.button_icon_state = "nabber-shield-1"
+		owner.update_action_buttons()
+		return
+
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+	tint = 0
+	owner.update_tint()
+	owner.balloon_alert(owner, "Welder eyelids open!")
+	shield.button_icon_state = "nabber-shield-0"
+	owner.update_action_buttons()
+
+/obj/item/organ/internal/eyes/nabber/Remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
+	. = ..()
+	QDEL_NULL(shield)
+	active = FALSE
+	toggle_shielding()
+
+/datum/action/cooldown/toggle_welding
+	name = "Toggle welding shield"
+	desc = "Toggle your eyes welding shield"
+
+	var/obj/item/organ/internal/eyes/nabber/eyes
+	cooldown_time = 1 SECONDS
+
+/datum/action/cooldown/toggle_welding/Activate()
+	. = ..()
+	var/owner = eyes.owner
+	var/mob/living/carbon/human/nabber = owner
+	if(!do_after(nabber, 1 SECONDS, nabber)) //Makes it so its difficult to abuse these in combat to avoid flashes
+		StartCooldown()
+		nabber.balloon_alert(nabber, "Stand still!")
+		return FALSE
+	eyes.toggle_shielding()
+	StartCooldown()
+
+/datum/action/cooldown/toggle_welding/Destroy()
+	eyes = null
+	return ..()
+
