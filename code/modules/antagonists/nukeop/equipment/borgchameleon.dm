@@ -102,7 +102,8 @@
 			reskin_icons[borg_skin] = image(icon = skin_details[SKIN_ICON] || 'icons/mob/silicon/robots.dmi', icon_state = skin_details[SKIN_ICON_STATE])
 		var/skin_name = show_radial_menu(user, src, reskin_icons, radius = 42, require_near = TRUE)
 		if(skin_name)
-			. = skin_model.borg_skins[skin_name].Copy()
+			var/skin_details = skin_model.borg_skins[skin_name]
+			. = skin_details.Copy()
 	qdel(skin_model)
 
 /// Applies the default appearance of a model. If provided, will apply skin details as well.
