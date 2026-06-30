@@ -862,6 +862,12 @@
 	taste_description = "extreme bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/triple_citrus/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(affected_mob.getToxLoss() && SPT_PROB(15, seconds_per_tick))
+		affected_mob.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
+		. = TRUE
+	..()
+
 /datum/reagent/consumable/grape_soda
 	name = "Grape Soda"
 	description = "Beloved by children and teetotalers."

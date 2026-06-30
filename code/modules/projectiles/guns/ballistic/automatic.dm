@@ -322,7 +322,7 @@
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/smg_heavy.ogg'
 	can_suppress = TRUE
 	suppressor_x_offset = 9
-	fire_delay = 0.7 SECONDS
+	fire_delay = 0.3 SECONDS
 	burst_size = 1
 	actions_types = list()
 	spread = 14.5

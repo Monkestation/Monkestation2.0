@@ -84,6 +84,7 @@
 		ROLE_COMMANDO_OPERATIVE = /datum/antagonist/nukeop/commando,
 		ROLE_COMMANDO_OPERATIVE_MIDROUND = /datum/antagonist/nukeop/commando,
 		ROLE_DARKSPAWN = /datum/antagonist/darkspawn,
+		ROLE_ABANDONED_IPC = /datum/antagonist/abandoned_ipc,
 		// monkestation end
 	)
 
@@ -152,6 +153,7 @@
 		ROLE_COMMANDO_OPERATIVE = /datum/antagonist/nukeop/commando,
 		ROLE_COMMANDO_OPERATIVE_MIDROUND = /datum/antagonist/nukeop/commando,
 		ROLE_DARKSPAWN = /datum/antagonist/darkspawn,
+		ROLE_ABANDONED_IPC = /datum/antagonist/abandoned_ipc,
 		// monkestation end
 	)
 

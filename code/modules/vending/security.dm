@@ -17,6 +17,7 @@
 		/obj/item/storage/box/evidence = 6,
 		/obj/item/flashlight/seclite = 4,
 		/obj/item/restraints/legcuffs/bola/energy = 7,
+		/obj/item/restraints/legcuffs/beartrap/security = 4,
 		/obj/item/ammo_box/magazine/m35/rubber = 14,
 		/obj/item/clothing/mask/gas/sechailer = 6,
 		/obj/item/clothing/mask/whistle = 3,

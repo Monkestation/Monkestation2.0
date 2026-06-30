@@ -775,3 +775,12 @@
 //Infested Flotilla
 /area/ruin/space/has_grav/infested_flotilla
 	name = "Infested Flotilla"
+
+// Shrimp Restaurant
+/area/ruin/space/has_grav/powered/shrimp
+	name = "Shrimp Restaurant"
+	ambientsounds = list('sound/ambience/shrimpmassacre.ogg')
+
+// Specifically for the antennas of the shrimp. im not a shrimxpert.
+/area/ruin/space/shrimptennas
+	name = "Shrimp Outside"
