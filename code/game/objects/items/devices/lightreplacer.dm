@@ -257,8 +257,8 @@
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
 	return new_bulbs
 
-/obj/item/lightreplacer/proc/Charge(mob/user)
-	charge += 1
+/obj/item/lightreplacer/proc/Charge(mob/user, charge_amount = 1)
+	charge += charge_amount
 	if(charge > 3)
 		add_uses(1)
 		charge = 1
