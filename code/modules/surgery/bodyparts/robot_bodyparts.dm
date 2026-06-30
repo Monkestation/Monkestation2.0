@@ -310,6 +310,12 @@
 		. += span_notice("You can remove the seated flash[single_flash ? "":"es"] with a <b>crowbar</b>.")
 
 /obj/item/bodypart/head/robot/attackby(obj/item/weapon, mob/user, params)
+	if(istype(weapon, /obj/item/stock_parts/manipulator))
+		new /mob/living/basic/spiderbot(get_turf(loc))
+		user.dropItemToGround()
+		qdel(weapon)
+		qdel(src)
+		to_chat(user, span_notice("You install some manipulators and modify the head, creating a functional spider-bot!"))
 	if(istype(weapon, /obj/item/assembly/flash/handheld))
 		var/obj/item/assembly/flash/handheld/flash = weapon
 		if(flash1 && flash2)
@@ -326,12 +332,6 @@
 			else
 				flash1 = flash
 			to_chat(user, span_notice("You insert the flash into the eye socket."))
-			if(istype(weapon, /obj/item/stock_parts/manipulator))
-				to_chat(user, span_notice("You install some manipulators and modify the head, creating a functional spider-bot!"))
-				new /mob/living/basic/spiderbot(get_turf(loc))
-				user.dropItemToGround()
-				qdel(weapon)
-				qdel(src)
 			return
 	return ..()
 
