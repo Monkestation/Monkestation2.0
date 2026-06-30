@@ -68,6 +68,7 @@
 
 	var/datum/looping_sound/rbmk_reactor_low/low_soundloop = null
 	var/datum/looping_sound/rbmk_reactor_high/high_soundloop = null
+	var/datum/looping_sound/rbmk_reactor_max/max_soundloop = null
 
 	var/startup_sequence_played = FALSE
 	var/previous_control_rod_depth = RBMK_CONTROL_ROD_MAX
@@ -227,6 +228,10 @@
 	if(high_soundloop)
 		high_soundloop.stop()
 	QDEL_NULL(high_soundloop)
+
+	if(max_soundloop)
+		max_soundloop.stop()
+	QDEL_NULL(max_soundloop)
 
 	rbmk_cleanup_atmos()
 	return ..()

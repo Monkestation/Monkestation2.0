@@ -8,7 +8,8 @@
 #define RBMK_TURBINE_MAX_TEMP_DROP 900
 #define RBMK_TURBINE_MAX_POWER_OUTPUT 5000000
 #define RBMK_TURBINE_MAX_RPM 120000
-#define RBMK_TURBINE_STALE_TIME 2 SECONDS
+#define RBMK_TURBINE_STALE_TIME 10 SECONDS
+#define RBMK_TURBINE_TELEMETRY_CLEAR_TIME 30 SECONDS
 
 #define RBMK_TURBINE_MAX_INTEGRITY 100
 #define RBMK_TURBINE_TEMP_STRESS_THRESHOLD 8000
@@ -122,6 +123,17 @@
 	if(last_generation_time && world.time <= last_generation_time + RBMK_TURBINE_STALE_TIME)
 		return
 
+	running = FALSE
+	rpm = 0
+
+	if(!last_generation_time || world.time > last_generation_time + RBMK_TURBINE_TELEMETRY_CLEAR_TIME)
+		reset_turbine_telemetry()
+
+	update_turbine_icon()
+	update_turbine_sound()
+
+
+/obj/machinery/power/rbmk_turbine/proc/reset_generation_telemetry()
 	last_power_output = 0
 	last_flow_moles = 0
 	last_heat_capacity = 0
@@ -132,8 +144,47 @@
 	rpm = 0
 	running = FALSE
 
-	update_turbine_icon()
-	update_turbine_sound()
+
+/obj/machinery/power/rbmk_turbine/proc/reset_turbine_telemetry()
+	reset_generation_telemetry()
+
+	last_inlet_temperature = 0
+	last_outlet_temperature = 0
+	last_inlet_pressure = 0
+	last_outlet_pressure = 0
+
+
+/obj/machinery/power/rbmk_turbine/proc/is_telemetry_stale()
+	if(!last_generation_time)
+		return TRUE
+
+	return world.time > last_generation_time + RBMK_TURBINE_STALE_TIME
+
+
+/obj/machinery/power/rbmk_turbine/proc/get_telemetry_age_seconds()
+	if(!last_generation_time)
+		return null
+
+	return round((world.time - last_generation_time) / 10, 0.1)
+
+
+/obj/machinery/power/rbmk_turbine/proc/is_actively_generating()
+	if(machine_stat & BROKEN)
+		return FALSE
+
+	if(!last_generation_time)
+		return FALSE
+
+	if(world.time > last_generation_time + RBMK_TURBINE_STALE_TIME)
+		return FALSE
+
+	if(last_power_output <= 0)
+		return FALSE
+
+	if(last_flow_moles <= 0)
+		return FALSE
+
+	return TRUE
 
 
 /obj/machinery/power/rbmk_turbine/proc/update_turbine_icon()
@@ -152,10 +203,7 @@
 
 	var/rpm_ratio = CLAMP01(rpm / max(RBMK_TURBINE_MAX_RPM, 1))
 
-	// Keep startup, mid-loop, and shutdown at the same volume.
 	turbine_soundloop.volume = RBMK_TURBINE_SOUND_VOLUME
-
-	// Range scales with turbine speed, but volume stays constant.
 	turbine_soundloop.extra_range = clamp(
 		RBMK_TURBINE_SOUND_MIN_RANGE + round(rpm_ratio * 5),
 		RBMK_TURBINE_SOUND_MIN_RANGE,
@@ -279,15 +327,7 @@
 
 
 /obj/machinery/power/rbmk_turbine/proc/process_working_gas(datum/gas_mixture/working_mix)
-	last_power_output = 0
-	last_flow_moles = 0
-	last_heat_capacity = 0
-	last_heat_extracted = 0
-	last_temperature_drop = 0
-	last_generator_damage = 0
-	last_overtemp = 0
-	rpm = 0
-	running = FALSE
+	reset_generation_telemetry()
 
 	if(!working_mix || working_mix.total_moles() <= 0)
 		last_outlet_temperature = working_mix?.temperature || 0
@@ -522,6 +562,7 @@
 #undef RBMK_TURBINE_MAX_POWER_OUTPUT
 #undef RBMK_TURBINE_MAX_RPM
 #undef RBMK_TURBINE_STALE_TIME
+#undef RBMK_TURBINE_TELEMETRY_CLEAR_TIME
 #undef RBMK_TURBINE_MAX_INTEGRITY
 #undef RBMK_TURBINE_TEMP_STRESS_THRESHOLD
 #undef RBMK_TURBINE_TEMP_DAMAGE_RAMP

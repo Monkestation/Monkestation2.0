@@ -26,8 +26,12 @@ const getTurbineStatus = (turbine: any) => {
     return 'BROKEN';
   }
 
-  if (turbine.running) {
+  if (turbine.generating || turbine.running) {
     return 'ONLINE';
+  }
+
+  if (turbine.telemetry_stale) {
+    return 'STALE';
   }
 
   return 'IDLE';
@@ -57,6 +61,18 @@ const getOvertempColor = (overtemp: number) => {
   return 'good';
 };
 
+const getTurbineKey = (turbine: any, index: number) => {
+  if (turbine.ref) {
+    return turbine.ref;
+  }
+
+  if (turbine.uid) {
+    return turbine.uid;
+  }
+
+  return `${turbine.name || 'turbine'}-${turbine.index || index + 1}-${index}`;
+};
+
 const RBMKGenerators = () => {
   const { data } = useBackend<any>();
 
@@ -80,7 +96,8 @@ const RBMKGenerators = () => {
           <LabeledList.Item label="Average Generator Integrity">
             <ProgressBar
               value={averageTurbineIntegrity / 100}
-              color={getIntegrityColor(averageTurbineIntegrity)}>
+              color={getIntegrityColor(averageTurbineIntegrity)}
+            >
               {formatNumber(averageTurbineIntegrity, 1)}%
             </ProgressBar>
           </LabeledList.Item>
@@ -99,16 +116,19 @@ const RBMKGenerators = () => {
         const integrity = Number(turbine.integrity || 0);
         const overtemp = Number(turbine.overtemp || 0);
         const status = getTurbineStatus(turbine);
+        const turbineIndex = Number(turbine.index || index + 1);
 
         return (
           <Section
-            key={index}
-            title={`Turbine ${turbine.index || index + 1} - ${status}`}>
+            key={getTurbineKey(turbine, index)}
+            title={`Turbine ${turbineIndex} - ${status}`}
+          >
             <LabeledList>
               <LabeledList.Item label="Generator Integrity">
                 <ProgressBar
                   value={integrity / 100}
-                  color={getIntegrityColor(integrity)}>
+                  color={getIntegrityColor(integrity)}
+                >
                   {formatNumber(integrity, 1)}%
                 </ProgressBar>
               </LabeledList.Item>
@@ -162,6 +182,12 @@ const RBMKGenerators = () => {
               <LabeledList.Item label="Integrity Damage">
                 {formatNumber(turbine.last_damage, 2)}
               </LabeledList.Item>
+
+              {!isNaN(Number(turbine.telemetry_age)) && (
+                <LabeledList.Item label="Telemetry Age">
+                  {formatNumber(turbine.telemetry_age, 1)} s
+                </LabeledList.Item>
+              )}
             </LabeledList>
           </Section>
         );
