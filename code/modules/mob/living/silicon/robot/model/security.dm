@@ -1,0 +1,25 @@
+GENERATE_ROBOT_MODEL(security)
+
+/datum/robot_model/security
+	name = "Security"
+	default_skin = /datum/robot_skin/security/default
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/restraints/handcuffs/cable/zipties,
+		/obj/item/melee/baton/security/loaded,
+		/obj/item/gun/energy/disabler/cyborg,
+		/obj/item/clothing/mask/gas/sechailer/cyborg,
+		/obj/item/extinguisher/mini
+	)
+	emagged_modules = list(
+		/obj/item/gun/energy/laser/cyborg
+	)
+	radio_channels = list(RADIO_CHANNEL_SECURITY)
+	traits = list(TRAIT_PUSHIMMUNE)
+
+/*
+/datum/robot_model/security/do_transform_animation()
+	..()
+	to_chat(loc, "<span class='userdanger'>While you have picked the security model, you still have to follow your laws, NOT Space Law. \
+	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
+*/
