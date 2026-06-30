@@ -11,9 +11,9 @@
 	var/list/blacklisted_storables = list()
 
 /obj/item/borg/apparatus/Initialize(mapload)
-	if(loc)
-		RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, PROC_REF(safedecon))
-	return ..()
+	. = ..()
+	if(iscyborg(loc))
+		RegisterSignal(loc, COMSIG_BORG_SAFE_DECONSTRUCT, PROC_REF(safedecon))
 
 /obj/item/borg/apparatus/Destroy()
 	QDEL_NULL(stored)

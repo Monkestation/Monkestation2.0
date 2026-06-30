@@ -34,12 +34,11 @@
 
 /obj/item/borg_chameleon/Initialize(mapload)
 	. = ..()
-	if(!iscyborg(loc))
-		return INITIALIZE_HINT_QDEL
 	disguised_name = pick(GLOB.ai_names)
 
 /obj/item/borg_chameleon/Destroy()
 	disguised_cyborg = null
+	disguised_skin_details = null
 	return ..()
 
 /obj/item/borg_chameleon/process(seconds_per_tick)
@@ -65,6 +64,7 @@
 
 /obj/item/borg_chameleon/attack_self(mob/user, modifiers)
 	if(!iscyborg(user))
+		to_chat(user, span_notice("This device doesn't seem to work for non-cyborgs."))
 		return
 	var/mob/living/silicon/robot/cyborg_user = user
 	if(!cyborg_user.cell || cyborg_user.cell.charge <= ACTIVATION_COST)
@@ -95,16 +95,15 @@
 /// Offers a radial wheel to the user and tells them to pick and choose one of the cyborg model's skin.
 /obj/item/borg_chameleon/proc/prompt_skin_details(mob/user, obj/item/robot_model/skin_model_type)
 	var/obj/item/robot_model/skin_model = new skin_model_type()
-	if(!length(skin_model.borg_skins))
-		return
-	var/list/reskin_icons = list()
-	for(var/borg_skin in skin_model.borg_skins)
-		var/list/skin_details = skin_model.borg_skins[borg_skin]
-		reskin_icons[borg_skin] = image(icon = skin_details[SKIN_ICON] || 'icons/mob/silicon/robots.dmi', icon_state = skin_details[SKIN_ICON_STATE])
-	var/skin_name = show_radial_menu(user, src, reskin_icons, radius = 42, require_near = TRUE)
-	if(!skin_name)
-		return
-	return skin_model.borg_skins[skin_name]
+	if(length(skin_model.borg_skins))
+		var/list/reskin_icons = list()
+			for(var/borg_skin in skin_model.borg_skins)
+				var/list/skin_details = skin_model.borg_skins[borg_skin]
+				reskin_icons[borg_skin] = image(icon = skin_details[SKIN_ICON] || 'icons/mob/silicon/robots.dmi', icon_state = skin_details[SKIN_ICON_STATE])
+			var/skin_name = show_radial_menu(user, src, reskin_icons, radius = 42, require_near = TRUE)
+			if(skin_name)
+				. = skin_model.borg_skins[skin_name].Copy()
+	qdel(skin_model)
 
 /// Applies the default appearance of a model. If provided, will apply skin details as well.
 /obj/item/borg_chameleon/proc/disguise_as_model(mob/living/silicon/robot/cyborg_user, obj/item/robot_model/skin_model_type, list/skin_details)
