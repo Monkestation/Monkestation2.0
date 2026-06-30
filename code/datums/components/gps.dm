@@ -270,12 +270,19 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 	var/obj/item/gps/security/our_gps_device = parent
 
+	var/area/our_area = get_area(our_gps_device)
+	if(our_area.area_flags & AREA_BLOCKS_OUTGOING_RADIO)
+		return
+
+	if(is_within_radio_jammer_range(our_gps_device))
+		return
+
 	our_gps_device.say("Signal sent.")
 	playsound(our_gps_device, 'sound/items/gps/one_ping.ogg', 35, TRUE)
 
 	var/jammed_signal = FALSE
 	for(var/datum/component/gps/item/security_gps/other_gps in get_gps_list_to_alert())
-		if(other_gps.jammed || other_gps.emped)
+		if(other_gps.jammed)
 			continue
 		var/obj/item/gps/security/original_alerting_gps_device = other_gps.parent
 		if(is_within_radio_jammer_range(original_alerting_gps_device))
@@ -292,8 +299,6 @@ GLOBAL_LIST_EMPTY(GPS_list)
 			jammed_signal = TRUE
 		var/turf/gps_turf = get_turf(our_gps_device)
 		var/full_alert_text = "Alert. [gpstag]: [alert_text] ([get_area_name(gps_turf, TRUE)]) ([gps_turf.x], [gps_turf.y], [gps_turf.z])"
-		// if(jammed_signal)
-		// 	full_alert_text = "Alert. [Gibberish("[gpstag]: [alert_text]", TRUE, 75)] ([gps_turf.x], [gps_turf.y], [gps_turf.z])"
 		original_alerting_gps_device.say(full_alert_text)
 		playsound(original_alerting_gps_device, 'sound/items/gps/one_ping.ogg', 35, TRUE)
 

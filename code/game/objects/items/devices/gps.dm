@@ -169,7 +169,6 @@
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/gps/security/process()
-	//look for a mob in either our location
 	if(obj_flags & EMAGGED || !gps_component.tracking)
 		UnregisterSignal(tracked_mob, COMSIG_LIVING_DEATH)
 		UnregisterSignal(tracked_mob, COMSIG_LIVING_FAKE_DEATH)
@@ -178,6 +177,13 @@
 	var/atom/object = src
 	while(!ismob(object))
 		object = object.loc
+		if(istype(object, /obj/machinery/computer/cryopod)) // someone forgot to turn off their GPS before entering cryo
+			UnregisterSignal(tracked_mob, COMSIG_LIVING_DEATH)
+			UnregisterSignal(tracked_mob, COMSIG_LIVING_FAKE_DEATH)
+			tracked_mob = null
+			if(gps_component.tracking)
+				gps_component.toggletracking()
+			return PROCESS_KILL
 		if(isnull(object))
 			break
 
