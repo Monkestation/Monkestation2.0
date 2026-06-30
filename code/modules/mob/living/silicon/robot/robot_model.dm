@@ -768,12 +768,14 @@
 		/obj/item/borg/cyborg_omnitool/medical,
 		/obj/item/borg/cyborg_omnitool/medical,
 		/obj/item/blood_filter,
+		/obj/item/breathing_bag,
 		/obj/item/extinguisher/mini,
 		/obj/item/emergency_bed/silicon,
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/stack/medical/gauze,
 		/obj/item/stack/medical/bone_gel,
 		/obj/item/borg/apparatus/organ_storage,
+		/obj/item/hand_labeler/borg,
 		/obj/item/borg/lollipop,
 	)
 	radio_channels = list(RADIO_CHANNEL_MEDICAL)
@@ -941,7 +943,6 @@
 		/obj/item/knife/kitchen/silicon,
 		/obj/item/borg/apparatus/cooking,
 		// Monkestation edit end
-		/obj/item/reagent_containers/cup/beaker/large, //I know a shaker is more appropiate but this is for ease of identification
 		/obj/item/reagent_containers/condiment/enzyme,
 		/obj/item/pen,
 		/obj/item/reagent_containers/cup/rag,
@@ -963,6 +964,7 @@
 		/obj/item/reagent_containers/borghypo/borgshaker,
 		/obj/item/borg/lollipop,
 		/obj/item/stack/pipe_cleaner_coil/cyborg,
+		/obj/item/borg/apparatus/beaker,
 		/obj/item/borg/apparatus/beaker/service,
 		/obj/item/chisel,
 		// Monkestation edit start: Botany
@@ -1110,6 +1112,7 @@
 		/obj/item/borg/cyborg_omnitool/medical/upgraded,
 		/obj/item/melee/energy/sword/cyborg/saw,
 		/obj/item/blood_filter,
+		/obj/item/breathing_bag,
 		/obj/item/emergency_bed/silicon,
 		/obj/item/crowbar/cyborg,
 		/obj/item/extinguisher/mini,
@@ -1214,7 +1217,6 @@
 		/obj/item/stamp/void,
 		/obj/item/knife/kitchen/silicon,
 		/obj/item/borg/apparatus/cooking,
-		/obj/item/reagent_containers/cup/beaker/large,
 		/obj/item/reagent_containers/condiment/enzyme,
 		/obj/item/soap/deluxe/centcom/cyborg,
 		/obj/item/extinguisher/mini,
@@ -1224,6 +1226,7 @@
 		/obj/item/lighter,
 		/obj/item/storage/bag/tray,
 		/obj/item/reagent_containers/borghypo/borgshaker/centcom,
+		/obj/item/borg/apparatus/beaker,
 		/obj/item/borg/apparatus/beaker/service,
 	)
 	radio_channels = list(RADIO_CHANNEL_CENTCOM)

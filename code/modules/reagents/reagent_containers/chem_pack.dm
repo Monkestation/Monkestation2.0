@@ -4,7 +4,7 @@
 	icon = 'icons/obj/medical/bloodpack.dmi'
 	icon_state = "chempack"
 	volume = 100
-	reagent_flags = OPENCONTAINER
+	reagent_flags = OPENCONTAINER | TRANSPARENT
 	spillable = TRUE
 	obj_flags = UNIQUE_RENAME
 	resistance_flags = ACID_PROOF
