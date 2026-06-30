@@ -1,5 +1,3 @@
-GENERATE_ROBOT_MODEL(centcom)
-
 /datum/robot_model/centcom
 	name = "CentCom"
 	default_skin = /datum/robot_skin/centcom/default
@@ -25,9 +23,6 @@ GENERATE_ROBOT_MODEL(centcom)
 		/obj/item/lighter,
 		/obj/item/storage/bag/tray,
 		/obj/item/reagent_containers/borghypo/borgshaker/centcom,
-		/obj/item/borg/apparatus/beaker/service,
+		/obj/item/borg/apparatus/beaker/service
 	)
 	radio_channels = list(RADIO_CHANNEL_CENTCOM)
-
-
-// TRAIT_CAN_CLIMB_DISPOSALS for syndicate sabo

@@ -1,5 +1,3 @@
-GENERATE_ROBOT_MODEL(science)
-
 /datum/robot_model/science
 	name = "Science"
 	hud_icon_state = "science"

@@ -1,5 +1,3 @@
-GENERATE_ROBOT_MODEL(standard)
-
 /datum/robot_model/standard
 	name = "Standard"
 	default_skin = /datum/robot_skin/standard/default

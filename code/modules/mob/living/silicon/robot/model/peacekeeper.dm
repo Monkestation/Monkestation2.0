@@ -1,5 +1,3 @@
-GENERATE_ROBOT_MODEL(peacekeeper)
-
 /datum/robot_model/peacekeeper
 	name = "Peacekeeper"
 	hud_icon_state = "standard"

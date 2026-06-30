@@ -1,5 +1,3 @@
-GENERATE_ROBOT_MODEL(medical)
-
 /datum/robot_model/medical
 	name = "Medical"
 	hud_icon_state = "medical"

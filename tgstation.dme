@@ -5362,6 +5362,7 @@
 #include "code\modules\mob\living\silicon\robot\robot.dm"
 #include "code\modules\mob\living\silicon\robot\robot_actions.dm"
 #include "code\modules\mob\living\silicon\robot\robot_defense.dm"
+#include "code\modules\mob\living\silicon\robot\robot_defines_wip.dm"
 #include "code\modules\mob\living\silicon\robot\robot_defines.dm"
 #include "code\modules\mob\living\silicon\robot\robot_model.dm"
 #include "code\modules\mob\living\silicon\robot\robot_movement.dm"

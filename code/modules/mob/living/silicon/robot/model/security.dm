@@ -1,5 +1,3 @@
-GENERATE_ROBOT_MODEL(security)
-
 /datum/robot_model/security
 	name = "Security"
 	default_skin = /datum/robot_skin/security/default

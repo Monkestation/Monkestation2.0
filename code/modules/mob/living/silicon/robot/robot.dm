@@ -35,7 +35,8 @@
 
 	create_modularInterface()
 
-	model = new /obj/item/robot_model(src)
+	apply_skin(current_skin)
+	model = new
 	model.rebuild_modules()
 
 	if(!laws)
@@ -272,46 +273,6 @@
 ///For any special cases for robots after being righted.
 /mob/living/silicon/robot/proc/after_righted(mob/user)
 	return
-
-/mob/living/silicon/robot/regenerate_icons()
-	return update_icons()
-
-/mob/living/silicon/robot/update_overlays()
-	. = ..()
-	if(stat != DEAD && !(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed() || low_power_mode)) // Not dead, not stunned.
-		if(!eye_lights)
-			eye_lights = new()
-		if(lamp_enabled || lamp_doom)
-			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]" : "[model.cyborg_base_icon]"]_l"
-			eye_lights.color = lamp_doom ? COLOR_RED : lamp_color
-			set_light_range(max(MINIMUM_USEFUL_LIGHT_RANGE, lamp_intensity))
-			set_light_color(lamp_doom ? COLOR_RED : lamp_color) //Red for doomsday killborgs, borg's choice otherwise
-			SET_PLANE_EXPLICIT(eye_lights, ABOVE_LIGHTING_PLANE, src) //glowy eyes
-		else
-			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]":"[model.cyborg_base_icon]"]_e"
-			eye_lights.color = COLOR_WHITE
-			SET_PLANE_EXPLICIT(eye_lights, ABOVE_GAME_PLANE, src)
-		eye_lights.icon = icon
-		. += eye_lights
-	if(opened)
-		if(wiresexposed)
-			. += "ov-opencover +w"
-		else if(cell)
-			. += "ov-opencover +c"
-		else
-			. += "ov-opencover -c"
-	if(hat)
-		var/mutable_appearance/head_overlay = hat.build_worn_icon(default_layer = 20, default_icon_file = 'icons/mob/clothing/head/default.dmi')
-		head_overlay.pixel_z += model.hat_offset
-		. += head_overlay
-	if(worn_badge)
-		var/mutable_appearance/accessory_overlay = mutable_appearance(worn_badge.worn_icon, worn_badge.icon_state)
-		accessory_overlay.pixel_z += model.badge_offset
-		. += accessory_overlay
-
-/mob/living/silicon/robot/update_icons()
-	icon_state = model.cyborg_base_icon
-	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/silicon/robot/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer)
@@ -966,10 +927,9 @@
 
 /mob/living/silicon/robot/proc/charge(datum/source, amount, repairs, sendmats)
 	SIGNAL_HANDLER
-	if(model)
-		model.respawn_consumable(src, amount * 0.005)
-		if(sendmats)
-			model.restock_consumable()
+	model.on_cyborg_charge(amount * 0.005)
+	if(sendmats)
+		model.on_cyborg_restock()
 	if(cell)
 		cell.charge = min(cell.charge + amount, cell.maxcharge)
 	if(repairs)

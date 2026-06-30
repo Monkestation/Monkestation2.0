@@ -11,6 +11,10 @@
 	var/icon_state_cover = "ov"
 	/// The icon state of the sprite's head lights.
 	var/icon_state_light = "robot"
+	/// The X offset of the sprite.
+	var/base_pixel_x = 0
+	/// The Y offset of the sprite.
+	var/base_pixel_y = 0
 	/// The X offset of any worn hats. Enables hat wearing if it is not null.
 	var/hat_offset = null
 	/// The X offset of any worn badges. Enables badge wearing if it is not null.
@@ -20,4 +24,4 @@
 	/// The Y offsets for any buckled people.
 	var/list/ride_offset_y = list("north" = 4, "south" = 4, "east" = 3, "west" = 3)
 	/// The traits that are given when using this skin.
-	var/list/traits
+	var/list/traits = list()

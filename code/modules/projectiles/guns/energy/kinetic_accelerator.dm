@@ -284,7 +284,7 @@
 /obj/item/borg/upgrade/modkit/action(mob/living/silicon/robot/R)
 	. = ..()
 	if (.)
-		for(var/obj/item/gun/energy/recharge/kinetic_accelerator/cyborg/H in R.model.modules)
+		for(var/obj/item/gun/energy/recharge/kinetic_accelerator/cyborg/H in R.model.usable_modules)
 			return install(H, usr, FALSE)
 
 /obj/item/borg/upgrade/modkit/proc/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user, transfer_to_loc = TRUE)
@@ -321,7 +321,7 @@
 /obj/item/borg/upgrade/modkit/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		for(var/obj/item/gun/energy/recharge/kinetic_accelerator/cyborg/KA in R.model.modules)
+		for(var/obj/item/gun/energy/recharge/kinetic_accelerator/cyborg/KA in R.model.usable_modules)
 			uninstall(KA)
 
 /obj/item/borg/upgrade/modkit/proc/uninstall(obj/item/gun/energy/recharge/kinetic_accelerator/KA)

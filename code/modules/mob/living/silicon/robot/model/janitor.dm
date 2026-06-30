@@ -1,4 +1,6 @@
-GENERATE_ROBOT_MODEL(janitor)
+/mob/living/silicon/robot/model/janitor
+	model = /datum/robot_model/janitor
+	icon_state = "janitor"
 
 /datum/robot_model/janitor
 	name = "Janitor"

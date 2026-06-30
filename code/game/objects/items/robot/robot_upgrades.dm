@@ -62,7 +62,7 @@
 /// Handles removing items with the module.
 /obj/item/borg/upgrade/proc/remove_items(mob/living/silicon/robot/borg, user = usr, list/items)
 	for(var/item_to_remove in items)
-		var/obj/item/module_item = locate(item_to_remove) in borg.model.modules
+		var/obj/item/module_item = locate(item_to_remove) in borg.model.usable_modules
 		if(module_item)
 			borg.model.remove_module(module_item)
 	return TRUE
@@ -107,7 +107,7 @@
 	. = ..()
 	if(!.)
 		return .
-	var/obj/item/gun/energy/disabler/cyborg/disabler = locate() in borg.model.modules
+	var/obj/item/gun/energy/disabler/cyborg/disabler = locate() in borg.model.usable_modules
 	if(isnull(disabler))
 		to_chat(user, span_warning("There's no disabler in this unit!"))
 		return FALSE
@@ -121,7 +121,7 @@
 	. = ..()
 	if(!.)
 		return .
-	var/obj/item/gun/energy/disabler/cyborg/disabler = locate() in borg.model.modules
+	var/obj/item/gun/energy/disabler/cyborg/disabler = locate() in borg.model.usable_modules
 	if(isnull(disabler))
 		return FALSE
 	disabler.charge_delay = initial(disabler.charge_delay)
@@ -355,14 +355,14 @@
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.usable_modules)
 		hypo.upgrade()
 
 /obj/item/borg/upgrade/hypospray/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.usable_modules)
 		hypo.downgrade()
 
 /obj/item/borg/upgrade/hypospray/expanded
@@ -381,23 +381,23 @@
 	if(!.)
 		return .
 	var/found_hypo = FALSE
-	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.usable_modules)
 		hypo.bypass_protection = TRUE
 		found_hypo = TRUE
 	if(!found_hypo)
 		to_chat(user, span_warning("There are no installed hypospray modules to upgrade with piercing!")) // Check to see if any hyposprays were upgraded.
 		return FALSE
 	// If we are actually going to install the upgrade due to the presence of compatible modules, make sure their emagged counterparts get upgraded too.
-	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.emag_modules)
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.emagged_modules)
 		hypo.bypass_protection = TRUE
 
 /obj/item/borg/upgrade/piercing_hypospray/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.usable_modules)
 		hypo.bypass_protection = initial(hypo.bypass_protection)
-	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.emag_modules)
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.emagged_modules)
 		hypo.bypass_protection = initial(hypo.bypass_protection)
 
 /obj/item/borg/upgrade/defib
@@ -604,13 +604,13 @@
 	if(!.)
 		return
 
-	var/obj/item/storage/part_replacer/cyborg/rped = locate() in borg.model.modules
+	var/obj/item/storage/part_replacer/cyborg/rped = locate() in borg.model.usable_modules
 	if(isnull(rped))
 		to_chat(user, span_warning("This cyborg doesn't have a rapid part exchange device to upgrade!"))
 		return FALSE
 
 	install_items(borg, user, list(/obj/item/storage/part_replacer/bluespace))
-	var/obj/item/storage/part_replacer/bluespace/brped = locate() in borg.model.modules
+	var/obj/item/storage/part_replacer/bluespace/brped = locate() in borg.model.usable_modules
 	var/move_location = borg.drop_location()
 	brped.atom_storage.silent_for_user = TRUE
 	for(var/obj/item in rped)
@@ -625,12 +625,12 @@
 	if(!.)
 		return
 
-	var/obj/item/storage/part_replacer/bluespace/brped = locate() in borg.model.modules
+	var/obj/item/storage/part_replacer/bluespace/brped = locate() in borg.model.usable_modules
 	if(isnull(brped))
 		return FALSE
 
 	install_items(borg, user, list(/obj/item/storage/part_replacer/cyborg))
-	var/obj/item/storage/part_replacer/cyborg/rped = locate() in borg.model.modules
+	var/obj/item/storage/part_replacer/cyborg/rped = locate() in borg.model.usable_modules
 	var/move_location = borg.drop_location()
 	rped.atom_storage.silent_for_user = TRUE
 	for(var/obj/item in brped)
@@ -725,7 +725,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	for(var/obj/item/analyzer/gas_analyzer in borg.model.modules)
+	for(var/obj/item/analyzer/gas_analyzer in borg.model.usable_modules)
 		gas_analyzer.name = /obj/item/analyzer/ranged::name
 		gas_analyzer.desc = /obj/item/analyzer/ranged::desc
 		gas_analyzer.icon_state = /obj/item/analyzer/ranged::icon_state
@@ -736,7 +736,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	for(var/obj/item/analyzer/gas_analyzer in borg.model.modules)
+	for(var/obj/item/analyzer/gas_analyzer in borg.model.usable_modules)
 		gas_analyzer.name = initial(gas_analyzer.name)
 		gas_analyzer.desc = initial(gas_analyzer.desc)
 		gas_analyzer.icon_state = initial(gas_analyzer.icon_state)
@@ -907,14 +907,14 @@
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/healthanalyzer/cyborg/analyzer in borg.model.modules)
+	for(var/obj/item/healthanalyzer/cyborg/analyzer in borg.model.usable_modules)
 		analyzer.upgrade()
 
 /obj/item/borg/upgrade/adv_healthanalyzer/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/healthanalyzer/cyborg/analyzer in borg.model.modules)
+	for(var/obj/item/healthanalyzer/cyborg/analyzer in borg.model.usable_modules)
 		analyzer.downgrade()
 
 /obj/item/borg/upgrade/breathingbag
@@ -939,18 +939,18 @@
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_upgrade in borg.model.modules)
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_upgrade in borg.model.usable_modules)
 		if(omnitool_upgrade.upgraded)
 			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
 			return FALSE
-	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in borg.model.modules)
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in borg.model.usable_modules)
 		omnitool.set_upgraded(TRUE)
 
 /obj/item/borg/upgrade/surgery_omnitool/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/borg/cyborg_omnitool/omnitool in borg.model.modules)
+	for(var/obj/item/borg/cyborg_omnitool/omnitool in borg.model.usable_modules)
 		omnitool.set_upgraded(FALSE)
 
 //
@@ -971,7 +971,7 @@
 	. = ..()
 	if(!.)
 		return .
-	var/obj/item/borg/apparatus/circuit/science/apparatus = locate() in borg.model.modules
+	var/obj/item/borg/apparatus/circuit/science/apparatus = locate() in borg.model.usable_modules
 	if(isnull(apparatus))
 		to_chat(user, span_warning("This cyborg doesn't have an apparatus to upgrade!"))
 		return FALSE
@@ -984,7 +984,7 @@
 	. = ..()
 	if(!.)
 		return .
-	var/obj/item/borg/apparatus/circuit/science/apparatus = locate() in borg.model.modules
+	var/obj/item/borg/apparatus/circuit/science/apparatus = locate() in borg.model.usable_modules
 	if(isnull(apparatus))
 		return FALSE
 	if(!length(storables_to_add))

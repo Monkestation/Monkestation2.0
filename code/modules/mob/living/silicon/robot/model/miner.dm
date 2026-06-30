@@ -1,5 +1,3 @@
-GENERATE_ROBOT_MODEL(miner)
-
 /datum/robot_model/miner
 	name = "Miner"
 	hud_icon_state = "miner"

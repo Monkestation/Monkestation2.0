@@ -23,8 +23,8 @@
 	if(QDELETED(item_module))
 		CRASH("activate_module called with improper item_module")
 
-	if(!(item_module in model.modules))
-		CRASH("activate_module called with item_module not in model.modules")
+	if(!(item_module in model.usable_modules))
+		CRASH("activate_module called with item_module not in model.usable_modules")
 
 	if(activated(item_module))
 		to_chat(src, span_warning("That module is already activated."))
@@ -58,7 +58,7 @@
 
 /mob/living/silicon/robot/doUnEquip(obj/item/item_dropping, force, atom/newloc, no_move, invdrop, silent)
 	//borgs can drop items that aren't part of the module (used for apparatus modules, the stored item isn't a module).
-	if(isnull(model) || !(item_dropping in model.modules))
+	if(isnull(model) || !(item_dropping in model.usable_modules))
 		return ..()
 
 	if(newloc != model)
@@ -92,7 +92,7 @@
 		client.screen |= held
 
 /mob/living/silicon/robot/put_in_hand_check(obj/item/item_equipping)
-	return (item_equipping in model.modules)
+	return (item_equipping in model.usable_modules)
 
 /**
  * Breaks the slot number, changing the icon.
@@ -344,7 +344,7 @@
 	return TRUE
 
 /mob/living/silicon/robot/can_hold_items(obj/item/I)
-	return (I && (I in model.modules)) //Only if it's part of our model.
+	return (I && (I in model.usable_modules)) //Only if it's part of our model.
 
 /**
  * ## Please do not use

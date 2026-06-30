@@ -1,5 +1,3 @@
-GENERATE_ROBOT_MODEL(syndicate)
-
 /datum/robot_model/syndicate
 	name = "Syndicate Assault"
 	hud_icon_state = "malf"

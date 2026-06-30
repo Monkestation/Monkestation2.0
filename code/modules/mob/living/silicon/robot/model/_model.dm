@@ -1,11 +1,8 @@
-#define GENERATE_ROBOT_MODEL(SUFFIX) \
-/mob/living/silicon/robot/model/##SUFFIX{ \
-	set_model = /datum/robot_model/##SUFFIX; \
-} \
-
 /datum/robot_model
+	/// The abstract type. Not used anywhere at the moment.
+	var/abstract_type = /datum/robot_model
 	/// The display name that appears when examining cyborgs.
-	var/name = "Unknown"
+	var/name = "Default"
 	/// The icon state that [/atom/movable/screen/robot/module] will use.
 	var/hud_icon_state = "nomod"
 	/// The default skin to use.
@@ -36,48 +33,75 @@
 /datum/robot_model/New()
 	LAZYOR(available_skins, default_skin)
 
+/datum/robot_model/Destroy()
+	QDEL_NULL(sight_vision_ref)
+	return ..()
+
 /// Gets all modules that should be accessible to the owner.
 /datum/robot_model/proc/get_usable_modules()
 	return usable_modules.Copy()
 
-/// Initializes any typepaths in all module lists.
-/datum/robot_model/proc/initialize_modules()
+/// Rebuilds the usable module list.
+/datum/robot_model/proc/rebuild_usable_modules()
 	if(!cyborg_owner)
 		return
 
 	usable_modules.Cut()
-	for(var/possible_typepath in basic_modules)
-		if(!ispath(possible_typepath))
-			usable_modules += possible_typepath
+	for(var/obj/item/possible_module as anything in basic_modules)
+		if(ispath(possible_module))
 			continue
-		var/obj/item/itemized_module = new possible_typepath(cyborg_owner)
-		usable_modules += itemized_module
+		usable_modules += possible_module
+	if(cyborg_owner.emagged)
+		for(var/obj/item/possible_module as anything in emagged_modules)
+			if(ispath(possible_module))
+				continue
+			usable_modules += possible_module
+	if(cyborg_owner.clockwork)
+		for(var/obj/item/possible_module as anything in clockwork_modules)
+			if(ispath(possible_module))
+				continue
+			usable_modules += possible_module
+	for(var/obj/item/possible_module as anything in external_modules)
+		if(ispath(possible_module))
+			continue
+		usable_modules += possible_module
+
+/// Initializes any typepaths for many module lists. This does not include the usable module list.
+/datum/robot_model/proc/initialize_all_modules()
+	if(!cyborg_owner)
+		return
+
+	for(var/obj/item/possible_module as anything in basic_modules)
+		if(!ispath(possible_module))
+			continue
+		var/obj/item/itemized_module = new possible_module(cyborg_owner) // Some items want to be created on the cyborg first.
+		itemized_module.moveToNullspace()
 		basic_modules += itemized_module
-		basic_modules -= possible_typepath
-	for(var/possible_typepath in emagged_modules)
-		if(!ispath(possible_typepath))
-			usable_modules += possible_typepath
+		basic_modules -= possible_module
+
+	for(var/obj/item/possible_module as anything in emagged_modules)
+		if(!ispath(possible_module))
 			continue
-		var/obj/item/itemized_module = new possible_typepath(cyborg_owner)
-		usable_modules += itemized_module
+		var/obj/item/itemized_module = new possible_module(cyborg_owner)
+		itemized_module.moveToNullspace()
 		emagged_modules += itemized_module
-		emagged_modules -= possible_typepath
-	for(var/possible_typepath in clockwork_modules)
-		if(!ispath(possible_typepath))
-			usable_modules += possible_typepath
+		emagged_modules -= possible_module
+
+	for(var/obj/item/possible_module as anything in clockwork_modules)
+		if(!ispath(possible_module))
 			continue
-		var/obj/item/itemized_module = new possible_typepath(cyborg_owner)
-		usable_modules += itemized_module
+		var/obj/item/itemized_module = new possible_module(cyborg_owner)
+		itemized_module.moveToNullspace()
 		clockwork_modules += itemized_module
-		clockwork_modules -= possible_typepath
-	for(var/possible_typepath  in external_modules)
-		if(!ispath(possible_typepath))
-			usable_modules += possible_typepath
+		clockwork_modules -= possible_module
+
+	for(var/obj/item/possible_module as anything in external_modules)
+		if(!ispath(possible_module))
 			continue
-		var/obj/item/itemized_module = new possible_typepath(cyborg_owner)
-		usable_modules += itemized_module
+		var/obj/item/itemized_module = new possible_module(cyborg_owner)
+		itemized_module.moveToNullspace()
 		external_modules += itemized_module
-		external_modules -= possible_typepath
+		external_modules -= possible_module
 
 /// Gets an energy storage with a specific type. If it cannot, creates it.
 /datum/robot_model/proc/get_or_create_estorage(estorage_type)
@@ -100,13 +124,13 @@
 			flash.update_appearance()
 			continue
 		if(istype(usable_module, /obj/item/reagent_containers/condiment/enzyme))
-			var//obj/item/reagent_containers/condiment/enzyme/enzyme_container = usable_module
+			var/obj/item/reagent_containers/condiment/enzyme/enzyme_container = usable_module
 			enzyme_container.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
 			continue
 		if(istype(usable_module, /obj/item/soap/nanotrasen/cyborg))
 			var/obj/item/soap/nanotrasen/cyborg/cyborg_soap = usable_module
 			if(cyborg_soap.uses < initial(cyborg_soap.uses))
-				soap.uses = min(initial(soap.uses), soap.uses + (ROUND_UP(initial(soap.uses) / 100) * coeff))
+				cyborg_soap.uses = min(initial(cyborg_soap.uses), cyborg_soap.uses + (ROUND_UP(initial(cyborg_soap.uses) / 100) * coeff))
 			continue
 		if(istype(usable_module, /obj/item/hand_labeler/cyborg))
 			var/obj/item/hand_labeler/cyborg/labeler = usable_module
@@ -118,7 +142,7 @@
 			continue
 		if(istype(usable_module, /obj/item/melee/baton/security))
 			var/obj/item/melee/baton/security/security_baton = usable_module
-			security_baton.cell?.charge = baton.cell.maxcharge
+			security_baton.cell?.charge = security_baton.cell.maxcharge
 			continue
 		if(istype(usable_module, /obj/item/gun/energy))
 			var/obj/item/gun/energy/energy_gun = usable_module

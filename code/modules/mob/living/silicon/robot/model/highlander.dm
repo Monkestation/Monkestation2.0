@@ -1,5 +1,3 @@
-GENERATE_ROBOT_MODEL(highlander)
-
 /datum/robot_model/highlander
 	name = "Highlander"
 	hud_icon_state = "kilt"
