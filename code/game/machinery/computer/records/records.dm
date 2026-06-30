@@ -41,7 +41,13 @@
 			if(!field || !(field in target?.vars))
 				return FALSE
 
-			var/value = reject_bad_name(params["value"], allow_numbers = TRUE, max_length = MAX_BROADCAST_LEN, strict = TRUE, cap_after_symbols = FALSE) || "Unknown"
+			var/value = ""
+
+			if (field == "security_note")
+				value = strip_html_full(params["value"], MAX_MESSAGE_LEN)
+			else
+				value = reject_bad_name(params["value"], allow_numbers = TRUE, max_length = MAX_BROADCAST_LEN, strict = TRUE, cap_after_symbols = FALSE) || "Unknown"
+
 			investigate_log("[key_name(user)] changed the field: \"[field]\" with value: \"[target.vars[field]]\" to new value: \"[value]\"", INVESTIGATE_RECORDS)
 			target.vars[field] = value
 
@@ -162,7 +168,7 @@
 		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
 		return FALSE
 
-	if(mugshot.picture.psize_x > world.icon_size || mugshot.picture.psize_y > world.icon_size)
+	if((mugshot.picture.psize_x > world.icon_size || mugshot.picture.psize_y > world.icon_size) && !mugshot.assphoto)
 		balloon_alert(user, "photo too large!")
 		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
 		return FALSE

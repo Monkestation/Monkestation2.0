@@ -8,7 +8,7 @@
 
 GLOBAL_LIST_INIT(achievements_unlocked, list())
 
-GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MONKEYSTATION EDIT ADDITION PR #11 - update roundend.dm
+GLOBAL_LIST_INIT(round_end_images, file2list("data/image_urls.txt")) // MONKEYSTATION EDIT ADDITION PR #11 - update roundend.dm
 
 /datum/controller/subsystem/ticker/proc/gather_roundend_feedback()
 	gather_antag_data()
@@ -270,7 +270,6 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 
 	//Set news report and mode result
 	mode.set_round_result()
-	SSgamemode.round_end_report()
 	SSgamemode.store_roundend_data() // store data on roundend for next round
 
 	to_chat(world, span_infoplain(span_big(span_bold("<BR><BR><BR>The round has ended."))))

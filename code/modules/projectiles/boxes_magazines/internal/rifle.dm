@@ -31,7 +31,7 @@
 /obj/item/ammo_box/magazine/internal/boltaction/harpoon
 	max_ammo = 1
 	caliber = CALIBER_HARPOON
-	ammo_type = /obj/item/ammo_casing/caseless/harpoon
+	ammo_type = /obj/item/ammo_casing/harpoon
 
 /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/normal
 	name = "single round magazine"

@@ -50,6 +50,12 @@
 		to_chat(src, span_warning("Unable to use this blob, find a normal one."))
 		balloon_alert(src, "need normal blob!")
 		return null
+
+	if(!is_valid_turf(tile))
+		to_chat(src, span_warning("Must be placed on a valid station tile."))
+		balloon_alert(src, "invalid tile")
+		return null
+
 	if(needs_node)
 		var/area/area = get_area(src)
 		if(!(area.area_flags & BLOBS_ALLOWED)) //factory and resource blobs must be legit

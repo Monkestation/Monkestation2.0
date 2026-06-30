@@ -47,11 +47,11 @@
 /obj/item/borg/upgrade/modkit/cooldown{
 	pixel_x = -8
 	},
-/obj/item/reagent_containers/hypospray/medipen/survival/luxury{
+/obj/item/reagent_containers/medipen/survival/luxury{
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/hypospray/medipen/survival/luxury{
+/obj/item/reagent_containers/medipen/survival/luxury{
 	pixel_x = 6
 	},
 /turf/open/floor/iron/dark/textured_large,

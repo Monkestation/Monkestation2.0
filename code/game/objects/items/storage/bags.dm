@@ -85,10 +85,6 @@
 			icon_state = "[initial(icon_state)]"
 	return ..()
 
-/obj/item/storage/bag/trash/cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
-
 /obj/item/storage/bag/trash/filled
 
 /obj/item/storage/bag/trash/filled/PopulateContents()
@@ -108,9 +104,6 @@
 	. = ..()
 	atom_storage.max_total_storage = 60
 	atom_storage.max_slots = 60
-
-/obj/item/storage/bag/trash/bluespace/cyborg
-	insertable = FALSE
 
 // -----------------------------
 //        Mining Satchel
@@ -140,23 +133,24 @@
 	atom_storage.set_holdable(list(/obj/item/stack/ore))
 	atom_storage.silent_for_user = TRUE
 
+/obj/item/storage/bag/ore/Destroy()
+	. = ..()
+	stop_listening()
+
 /obj/item/storage/bag/ore/equipped(mob/user)
 	. = ..()
 	if(listeningTo == user)
 		return
-	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-		qdel(connector)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(pickup_ores))
-	connector = AddComponent(/datum/component/connect_loc_behalf, user, loc_connections)
-	listeningTo = user
+	stop_listening()
+	start_listening_to(user)
 
 /obj/item/storage/bag/ore/dropped()
 	. = ..()
-	if(listeningTo)
-		QDEL_NULL(connector)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-		listeningTo = null
+	stop_listening()
+
+/obj/item/storage/bag/ore/cyborg_unequip(mob/user)
+	// Restores functionality where mining cyborgs don't need to actively equip the satchel to pick up ores.
+	start_listening_to(user)
 
 /obj/item/storage/bag/ore/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/boulder))
@@ -213,6 +207,22 @@
 			)
 
 	spam_protection = FALSE
+
+/// Stops listening to the user. Will begin automatically picking up ores.
+/obj/item/storage/bag/ore/proc/stop_listening()
+	if(!listeningTo)
+		return
+	UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	qdel(connector)
+	listeningTo = null
+
+/// Begins listening to the user. Will stop automatically picking up ores.
+/obj/item/storage/bag/ore/proc/start_listening_to(mob/user)
+	if(listeningTo || QDELETED(src))
+		return
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(pickup_ores))
+	connector = AddComponent(/datum/component/connect_loc_behalf, user, loc_connections)
+	listeningTo = user
 
 /obj/item/storage/bag/ore/proc/on_listener_turf_entered(datum/source, atom/movable/thing, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
@@ -430,6 +440,10 @@
 		I_copy.layer = FLOAT_LAYER
 		. += I_copy
 
+/obj/item/storage/bag/tray/cyborg_unequip(mob/user)
+	. = ..()
+	atom_storage.remove_all(drop_location())
+
 /obj/item/storage/bag/tray/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	update_appearance()
@@ -467,6 +481,8 @@
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
+		/obj/item/reagent_containers/cup/vial,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
@@ -498,7 +514,7 @@
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/hypospray/medipen,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/weapon/virusdish,//Monkestation Addition
 		/obj/item/food/monkeycube/mouse,//Monkestation Addition
@@ -522,25 +538,22 @@
 	atom_storage.max_total_storage = 200
 	atom_storage.max_slots = 25
 	atom_storage.set_holdable(list(
-//MONKESTATION EDIT START
 		/obj/item/autoslime,
-//MONKESTATION EDIT END
 		/obj/item/bodypart,
 		/obj/item/food/deadmouse,
 		/obj/item/food/monkeycube,
 		/obj/item/organ,
 		/obj/item/petri_dish,
-		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
+		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
-//MONKESTATION EDIT START
-		/obj/item/slimecross,
-//MONKESTATION EDIT END
 		/obj/item/slime_extract,
+		/obj/item/slimecross,
+		/obj/item/slimepotion,
+		/obj/item/stack/biomass,
 		/obj/item/swab,
-		/obj/item/stack/biomass // monke: make science bags able to hold biomass cubes
 		))
 
 /obj/item/storage/bag/construction
@@ -566,12 +579,12 @@
 	atom_storage.max_slots = 40
 	atom_storage.max_total_storage = 100
 	atom_storage.set_holdable(list(
-		/obj/item/ammo_casing/caseless/harpoon
+		/obj/item/ammo_casing/harpoon
 		))
 
 /obj/item/storage/bag/harpoon_quiver/PopulateContents()
 	for(var/i in 1 to 40)
-		new /obj/item/ammo_casing/caseless/harpoon(src)
+		new /obj/item/ammo_casing/harpoon(src)
 
 /obj/item/storage/bag/rebar_quiver
 	name = "rebar quiver"

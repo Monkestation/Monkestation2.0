@@ -3,13 +3,13 @@
 	roundend_category = "Monster Hunters"
 	antagpanel_category = "Monster Hunter"
 	job_rank = ROLE_MONSTERHUNTER
-	hud_icon = 'monkestation/icons/mob/huds/antag_hud.dmi'
+	hud_icon = 'icons/mob/huds/antag_hud.dmi'
 	antag_hud_name = "hunter"
 	preview_outfit = /datum/outfit/monsterhunter
 	antag_moodlet = /datum/mood_event/monster_hunter
 	show_to_ghosts = TRUE
 	ui_name = "AntagInfoMonsterHunter"
-	stinger_sound = 'monkestation/sound/ambience/antag/monster_hunter.ogg'
+	stinger_sound = 'sound/ambience/antag/monster_hunter.ogg'
 	var/list/datum/action/powers = list()
 	/// Have we chosen a weapon yet?
 	var/weapon_claimed = FALSE
@@ -29,6 +29,7 @@
 		TRAIT_FEARLESS, // to ensure things like fear of heresy or blood or whatever don't fuck them over
 		TRAIT_NOCRITDAMAGE,
 		TRAIT_NOSOFTCRIT,
+		TRAIT_RUSTIMMUNE,
 	)
 	/// A list of traits innately granted to the mind of monster hunters.
 	var/static/list/mind_traits = list(
@@ -253,8 +254,8 @@
 
 /datum/antagonist/monsterhunter/get_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/hunter = new
-	var/icon/white_rabbit = icon('monkestation/icons/mob/rabbit.dmi', "white_rabbit")
-	var/icon/red_rabbit = icon('monkestation/icons/mob/rabbit.dmi', "killer_rabbit")
+	var/icon/white_rabbit = icon('icons/mob/rabbit.dmi', "white_rabbit")
+	var/icon/red_rabbit = icon('icons/mob/rabbit.dmi', "killer_rabbit")
 	var/icon/hunter_icon = render_preview_outfit(/datum/outfit/monsterhunter, hunter)
 
 	var/icon/final_icon = hunter_icon
@@ -380,10 +381,10 @@
 	if(bloodsucker)
 		explanation_text = "Slay the monster known as [target_name], a [bloodsucker.my_clan?.name || "clanless"] Bloodsucker."
 	else if(heretic)
-		if(heretic.heretic_path == PATH_START)
+		if(!heretic.heretic_path || heretic.heretic_path.route == PATH_START)
 			explanation_text = "Slay the monster known as [target_name], a heretic."
 		else
-			explanation_text = "Slay the monster known as [target_name], a heretic of the [heretic.heretic_path]."
+			explanation_text = "Slay the monster known as [target_name], a heretic of the [heretic.heretic_path.route]."
 	else if(target.has_antag_datum(/datum/antagonist/changeling))
 		explanation_text = "Slay the monster known as [target_name], a changeling."
 	else
@@ -405,7 +406,7 @@
 
 /obj/item/clothing/mask/monster_preview_mask
 	name = "Monster Preview Mask"
-	worn_icon = 'monkestation/icons/mob/mask.dmi'
+	worn_icon = 'icons/mob/mask.dmi'
 	worn_icon_state = "monoclerabbit"
 
 /datum/antagonist/monsterhunter/roundend_report()

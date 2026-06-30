@@ -519,8 +519,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delam_procedure, 32)
 
 	log_admin("DELAM: Round timer under 30 minutes! Supermatter will perform an automatic delam suppression at strength 0%.")
 	for(var/client/staff as anything in GLOB.admins)
-		if(staff?.prefs.read_preference(/datum/preference/toggle/comms_notification))
-			SEND_SOUND(staff, sound('sound/misc/server-ready.ogg'))
+		if(staff?.prefs.channel_volume["[CHANNEL_ADMIN_SOUNDS]"])
+			SEND_SOUND(staff, sound('sound/misc/server-ready.ogg', volume = calculate_mixed_volume(staff, 100, CHANNEL_ADMIN_SOUNDS)))
 	message_admins("<font color='[COLOR_ADMIN_PINK]'>DELAM: Round timer under 30 minutes! [ADMIN_VERBOSEJMP(sm)] will perform an automatic delam suppression once integrity reaches 0%. (<a href='byond://?src=[REF(src)];togglesuppression=yes'>TOGGLE AUTOMATIC INTERVENTION)</a>)</font>")
 	sm.station_notified = TRUE
 

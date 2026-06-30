@@ -23,7 +23,7 @@
 		'sound/machines/djstation/machine_track_switch_end5.ogg',
 	)
 	volume = 75
-	channel = CHANNEL_MACHINERY
+	sound_channel = CHANNEL_MACHINERY
 	/// The index of the current sound being played.
 	var/index = 1
 

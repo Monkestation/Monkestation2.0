@@ -97,8 +97,8 @@
 /obj/item/clothing/mask/gas/sechailer/swat/ert
 	name = "\improper emergency response team mask"
 	desc = "A close-fitting tactical mask with a toned down Compli-o-nator 3000. This one is designed for Nanotrasen emergency response teams and has an inbuilt air-freshener. Fancy!"
-	icon = 'monkestation/icons/obj/clothing/masks.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
+	icon = 'icons/obj/clothing/masks.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
 	icon_state = "ert"
 	aggressiveness = 1
 
@@ -266,13 +266,13 @@
 	illustration = "epipen"
 
 /obj/item/storage/box/medipens/advanced/PopulateContents()
-	new /obj/item/reagent_containers/hypospray/medipen/stimpack(src)
-	new /obj/item/reagent_containers/hypospray/medipen/atropine(src)
-	new /obj/item/reagent_containers/hypospray/medipen/blood_loss(src)
-	new /obj/item/reagent_containers/hypospray/medipen/oxandrolone(src)
-	new /obj/item/reagent_containers/hypospray/medipen/salacid(src)
-	new /obj/item/reagent_containers/hypospray/medipen/penacid(src)
-	new /obj/item/reagent_containers/hypospray/medipen/salbutamol(src)
+	new /obj/item/reagent_containers/medipen/stimpack(src)
+	new /obj/item/reagent_containers/medipen/atropine(src)
+	new /obj/item/reagent_containers/medipen/blood_loss(src)
+	new /obj/item/reagent_containers/medipen/oxandrolone(src)
+	new /obj/item/reagent_containers/medipen/salacid(src)
+	new /obj/item/reagent_containers/medipen/penacid(src)
+	new /obj/item/reagent_containers/medipen/salbutamol(src)
 
 /obj/item/storage/box/x4
 	name = "box of x-4 charges (WARNING)"

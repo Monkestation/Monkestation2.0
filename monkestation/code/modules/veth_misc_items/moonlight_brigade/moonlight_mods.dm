@@ -16,7 +16,7 @@
 	slowdown_inactive = 1
 	slowdown_active = 0.5
 	ui_theme = "ntos"
-	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
+	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
@@ -195,10 +195,10 @@
 	default_skin = "brigadeeng"
 
 /datum/armor/mod_theme_moonlight
-	melee = 35
-	bullet = 30
-	laser = 35
-	energy = 35
+	melee = 50
+	bullet = 60
+	laser = 50
+	energy = 50
 	bomb = 55
 	bio = 100
 	fire = 100

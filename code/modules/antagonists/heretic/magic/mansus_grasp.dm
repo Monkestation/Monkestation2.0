@@ -5,7 +5,7 @@
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "mansus_grasp"
-	sound = 'sound/items/welder.ogg'
+	sound = 'sound/items/tools/welder.ogg'
 
 	school = SCHOOL_EVOCATION
 	cooldown_time = 10 SECONDS
@@ -38,11 +38,42 @@
 
 	var/mob/living/living_hit = victim
 	living_hit.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
-	if(iscarbon(victim))
-		var/mob/living/carbon/carbon_hit = victim
-		carbon_hit.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/heretic)
-		carbon_hit.AdjustKnockdown(5 SECONDS)
-		carbon_hit.stamina.adjust(-45)
+	if(!iscarbon(victim))
+		caster.do_attack_animation(victim, used_item = hand)
+		caster.changeNext_move(CLICK_CD_MELEE)
+		return TRUE
+
+	var/mob/living/carbon/carbon_hit = victim
+
+	// Cultists are momentarily disoriented by the stunning aura. Enough for both parties to go 'oh shit' but only a mild combat ability.
+	// Cultists have an identical effect on their stun hand. The heretic's faster spell charge time is made up for by their lack of teammates.
+	if(IS_CULTIST(carbon_hit))
+		carbon_hit.AdjustKnockdown(0.5 SECONDS)
+		carbon_hit.adjust_confusion_up_to(1.5 SECONDS, 3 SECONDS)
+		carbon_hit.adjust_dizzy_up_to(1.5 SECONDS, 3 SECONDS)
+		/* ADD_TRAIT(carbon_hit, TRAIT_NO_SIDE_KICK, REF(src)) // We don't want this to be a good stunning tool, just minor disorientation
+		addtimer(TRAIT_CALLBACK_REMOVE(carbon_hit, TRAIT_NO_SIDE_KICK, REF(src)), 1 SECONDS) */
+
+		var/old_color = carbon_hit.color
+		carbon_hit.color = COLOR_CULT_RED
+		animate(carbon_hit, color = old_color, time = 4 SECONDS, easing = SINE_EASING|EASE_IN)
+		carbon_hit.mob_light(range = 1.5, power = 2.5, color = COLOR_CULT_RED, duration = 0.5 SECONDS)
+		playsound(carbon_hit, 'sound/magic/curse.ogg', 50, TRUE)
+
+		to_chat(caster, span_warning("An unholy force intervenes as you grasp [carbon_hit], absorbing most of the effects!"))
+		to_chat(carbon_hit, span_warning("As [caster] grasps you with eldritch forces, your blood magic absorbs most of the effects!"))
+		carbon_hit.balloon_alert_to_viewers("absorbed!")
+
+		caster.do_attack_animation(carbon_hit, used_item = hand)
+		caster.changeNext_move(CLICK_CD_MELEE)
+		return TRUE
+
+	carbon_hit.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/heretic)
+	carbon_hit.AdjustKnockdown(5 SECONDS/* , daze_amount = 3 SECONDS */)
+	carbon_hit.stamina?.adjust(-65)
+
+	caster.do_attack_animation(carbon_hit, used_item = hand)
+	caster.changeNext_move(CLICK_CD_MELEE)
 
 	return TRUE
 
@@ -51,6 +82,8 @@
 		return SECONDARY_ATTACK_CALL_NORMAL
 
 	if(SEND_SIGNAL(caster, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, victim) & COMPONENT_USE_HAND)
+		caster.do_attack_animation(victim, used_item = hand)
+		caster.changeNext_move(CLICK_CD_MELEE)
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -78,12 +111,12 @@
 /obj/item/melee/touch_attack/mansus_fist/proc/after_clear_rune(obj/effect/target, mob/living/user)
 	new /obj/effect/temp_visual/drawing_heretic_rune/fail(target.loc, target.greyscale_colors)
 	var/datum/action/cooldown/spell/touch/mansus_grasp/grasp = spell_which_made_us?.resolve()
-	grasp?.spell_feedback()
+	grasp?.spell_feedback(user)
 
 	remove_hand_with_no_refund(user)
 
 /obj/item/melee/touch_attack/mansus_fist/ignition_effect(atom/to_light, mob/user)
-	. = span_notice("[user] effortlessly snaps [user.p_their()] fingers near [to_light], igniting it with eldritch energies. Fucking badass!")
+	. = span_rose("[user] effortlessly snaps [user.p_their()] fingers near [to_light], igniting it with eldritch energies. Fucking badass!")
 	remove_hand_with_no_refund(user)
 
 /obj/item/melee/touch_attack/mansus_fist/suicide_act(mob/living/user)

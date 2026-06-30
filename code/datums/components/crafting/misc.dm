@@ -6,6 +6,14 @@
 	result = /obj/item/paper_bin/bundlenatural
 	category = CAT_MISC
 
+/datum/crafting_recipe/clipboard
+	name = "Clipboard"
+	time = 3 SECONDS
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 2, /obj/item/stack/rods = 1)
+	tool_paths = list(/obj/item/wirecutters)
+	result = /obj/item/clipboard
+	category = CAT_MISC
+
 /datum/crafting_recipe/skeleton_key
 	name = "Skeleton Key"
 	time = 3 SECONDS

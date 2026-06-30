@@ -14,6 +14,13 @@
 	result_path = /obj/machinery/camera/autoname/deconstructed
 	wall_external = TRUE
 
+/**
+ * Camera for RCD
+ * Used by rcd and requires less steps.
+ */
+/obj/item/wallframe/camera/wired
+	result_path = /obj/machinery/camera/autoname/wired
+
 /obj/machinery/camera
 	name = "security camera"
 	desc = "It's used to monitor rooms."

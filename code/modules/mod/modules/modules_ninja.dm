@@ -90,13 +90,13 @@
 
 /obj/item/mod/module/welding/camera_vision/on_suit_activation()
 	. = ..()
-	RegisterSignal(mod.wearer, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_CAN_TRACK, PROC_REF(track_person))
 
 /obj/item/mod/module/welding/camera_vision/on_suit_deactivation(deleting = FALSE)
 	. = ..()
-	UnregisterSignal(mod.wearer, COMSIG_LIVING_CAN_TRACK)
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_CAN_TRACK)
 
-/obj/item/mod/module/welding/camera_vision/proc/can_track(datum/source, mob/user)
+/obj/item/mod/module/welding/camera_vision/proc/track_person(datum/source, mob/user)
 	SIGNAL_HANDLER
 
 	return COMPONENT_CANT_TRACK
@@ -322,7 +322,7 @@
 	if(IS_SPACE_NINJA(mod.wearer) && isliving(target))
 		mod.wearer.say("Get over here!", forced = type)
 	var/obj/projectile/net = new /obj/projectile/energy_net(mod.wearer.loc, src)
-	net.preparePixelProjectile(target, mod.wearer)
+	net.aim_projectile(target, mod.wearer)
 	net.firer = mod.wearer
 	playsound(src, 'sound/weapons/punchmiss.ogg', 25, TRUE)
 	INVOKE_ASYNC(net, TYPE_PROC_REF(/obj/projectile, fire))

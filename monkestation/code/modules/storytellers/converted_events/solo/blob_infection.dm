@@ -1,4 +1,4 @@
-/datum/round_event_control/antagonist/solo/blob_infection
+/datum/round_event_control/antagonist/blob_infection
 	name = "Blob Infection"
 	weight = 6
 	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_EXTERNAL, TAG_ALIEN, TAG_CREW_ANTAG)

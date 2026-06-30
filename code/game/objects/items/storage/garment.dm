@@ -39,6 +39,7 @@
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/head/caphat/beret(src)
+	new /obj/item/clothing/head/hats/caphat/armored(src)
 
 /obj/item/storage/bag/garment/hos
 	name = "head of security's garment bag"
@@ -147,6 +148,7 @@
 	new /obj/item/clothing/head/utility/hardhat/welding/white(src)
 	new /obj/item/clothing/neck/cloak/ce(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
+	new /obj/item/clothing/head/beret/engi/ce(src)
 
 /obj/item/storage/bag/garment/quartermaster
 	name = "quartermasters's garment bag"

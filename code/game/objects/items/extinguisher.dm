@@ -20,7 +20,7 @@
 	resistance_flags = FIRE_PROOF
 	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	/// The max amount of water this extinguisher can hold.
-	var/max_water = 50
+	var/max_water = 75
 	/// Does the welder extinguisher start with water.
 	var/starting_water = TRUE
 	/// Cooldown between uses.
@@ -119,6 +119,7 @@
 	chem = /datum/reagent/firefighting_foam
 	tanktype = /obj/structure/reagent_dispensers/foamtank
 	sprite_name = "foam_extinguisher"
+	max_water = 100
 	precision = TRUE
 
 /obj/item/extinguisher/advanced/empty

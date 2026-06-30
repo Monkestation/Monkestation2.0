@@ -108,6 +108,12 @@
 		return TRUE
 	return ACCESS_CAPTAIN in authorize_access
 
+/// Are we NOT a silicon, AND we're logged in as a head
+/obj/machinery/computer/communications/proc/authenticated_as_non_silicon_head(mob/user)
+	if(issilicon(user))
+		return FALSE
+	return ACCESS_COMMAND in authorize_access
+
 /// Are we a silicon, OR logged in?
 /obj/machinery/computer/communications/proc/authenticated(mob/user)
 	if (issilicon(user))
@@ -494,6 +500,15 @@
 			SSjob.safe_code_requested = TRUE
 			SSjob.safe_code_timer_id = addtimer(CALLBACK(SSjob, TYPE_PROC_REF(/datum/controller/subsystem/job, send_spare_id_safe_code), pod_location), 120 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
 			minor_announce("Due to staff shortages, your station has been approved for delivery of access codes to secure the Captain's Spare ID. Delivery via drop pod at [get_area(pod_location)]. ETA 120 seconds.")
+		if("printAIControlCode")
+			if(authenticated_as_non_silicon_head(usr))
+				if(!COOLDOWN_FINISHED(src, important_action_cooldown))
+					return
+				playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
+				GLOB.ai_control_code = random_nukecode(6)
+				new /obj/item/paper/ai_control_code(loc)
+				COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
+				priority_announce("The AI Control Code been printed by [authorize_name]. All previous codes have been invalidated.", "Central Tech Support", SSstation.announcer.get_rand_report_sound())
 
 /obj/machinery/computer/communications/proc/emergency_access_cooldown(mob/user)
 	if(toggle_uses == toggle_max_uses) //you have used up free uses already, do it one more time and start a cooldown
@@ -667,9 +682,9 @@
 
 /obj/machinery/computer/communications/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
-	play_click_sound(user)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
+		play_click_sound(SFX_BUTTON)
 		ui = new(user, src, "CommunicationsConsole")
 		ui.open()
 
@@ -896,7 +911,7 @@
 
 	if (!EMERGENCY_PAST_POINT_OF_NO_RETURN)
 		// If less than a certain percent of the population is ghosts, consider sleeper agents
-		if(num_ghosts < (length(GLOB.clients) * MAX_PERCENT_GHOSTS_FOR_SLEEPER))
+		if(num_ghosts - length(GLOB.current_observers_list) < (length(GLOB.alive_player_list) * MAX_PERCENT_GHOSTS_FOR_SLEEPER))
 			hack_options += HACK_SLEEPER
 
 	var/picked_option = pick(hack_options)
@@ -905,7 +920,7 @@
 	switch(picked_option)
 		if(HACK_PIRATE) // Triggers pirates, which the crew may be able to pay off to prevent
 			priority_announce(
-				"Attention crew: sector monitoring reports a massive jump-trace from an enemy vessel destined for your system. Prepare for imminent hostile contact.",
+				"Attention crew: sector monitoring reports a jump-trace from an enemy vessel destined for your system. Prepare for imminent hostile contact.",
 				"[command_name()] High-Priority Update",
 			)
 
@@ -934,39 +949,17 @@
 
 
 		if(HACK_SLEEPER) // Trigger one or multiple sleeper agents with the crew (or for latejoining crew)
-			// monkestation start: inject storyteller events instead of dynamic rulesets
 			var/event_to_spawn = pick_weight(list(
-				/datum/round_event_control/antagonist/solo/traitor/midround = 75,
+				/datum/round_event_control/antagonist/traitor/midround = 75,
 				// hmmm, let's rarely spawn some non-traitor antags just to spice things up a bit
-				/datum/round_event_control/antagonist/solo/heretic/midround = 15,
-				/datum/round_event_control/antagonist/solo/from_ghosts/wizard = 1
+				/datum/round_event_control/antagonist/heretic/midround = 17,
+				/datum/round_event_control/antagonist/from_ghosts/wizard = 8,
 			))
 			force_event_after(event_to_spawn, "[hacker] hacking a communications console", rand(20 SECONDS, 1 MINUTES))
 			priority_announce(
 				"Attention crew, it appears that someone on your station has hijacked your telecommunications and broadcasted an unknown signal.",
 				"[command_name()] High-Priority Update",
 			)
-			/*
-			var/datum/dynamic_ruleset/midround/sleeper_agent_type = /datum/dynamic_ruleset/midround/from_living/autotraitor
-			var/datum/game_mode/dynamic/dynamic = SSticker.mode
-			var/max_number_of_sleepers = clamp(round(length(GLOB.alive_player_list) / 20), 1, 3)
-			var/num_agents_created = 0
-			for(var/num_agents in 1 to rand(1, max_number_of_sleepers))
-				if(!dynamic.picking_specific_rule(sleeper_agent_type, forced = TRUE, ignore_cost = TRUE))
-					break
-				num_agents_created++
-
-			if(num_agents_created <= 0)
-				// We failed to run any midround sleeper agents, so let's be patient and run latejoin traitor
-				dynamic.picking_specific_rule(/datum/dynamic_ruleset/latejoin/infiltrator, forced = TRUE, ignore_cost = TRUE)
-
-			else
-				// We spawned some sleeper agents, nice - give them a report to kickstart the paranoia
-				priority_announce(
-					"Attention crew, it appears that someone on your station has hijacked your telecommunications and broadcasted an unknown signal.",
-					"[command_name()] High-Priority Update",
-				)
-			*/ // monkestation end
 
 #undef HACK_PIRATE
 #undef HACK_FUGITIVES

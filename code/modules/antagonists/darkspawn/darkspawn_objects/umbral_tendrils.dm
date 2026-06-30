@@ -79,7 +79,7 @@
 	span_velvet("<b>opehhjaoo</b><br>You swing your tendrils towards [target]!"))
 	playsound(user, 'sound/magic/tail_swing.ogg', 50, TRUE)
 	var/obj/projectile/umbral_tendrils/T = new(get_turf(user))
-	T.preparePixelProjectile(target, user)
+	T.aim_projectile(target, user)
 	T.twinned = twin
 	T.firer = user
 	T.fire()

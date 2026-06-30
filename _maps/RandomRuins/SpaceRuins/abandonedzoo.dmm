@@ -140,7 +140,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bi" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/hypospray/medipen/stimpack,
+/obj/item/reagent_containers/medipen/stimpack,
 /obj/item/reagent_containers/cup/bottle/mutagen,
 /obj/item/food/egg/cockatrice,
 /turf/open/floor/iron/dark/side,

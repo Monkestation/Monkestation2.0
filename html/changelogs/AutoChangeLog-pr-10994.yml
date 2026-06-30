@@ -1,4 +1,0 @@
-author: "Cujo"
-delete-after: True
-changes:
-  - bugfix: "Fix messages displayed when applying gauze"

@@ -268,8 +268,12 @@
 	AddElement(/datum/element/hostile_machine)
 
 /obj/vehicle/sealed/mecha/Destroy()
+	var/list/mob/living/silicon/ai/loaded_ais
 	for(var/ejectee in occupants)
-		mob_exit(ejectee, silent = TRUE)
+		if(isAI(ejectee))
+			LAZYADD(loaded_ais, ejectee)
+		else
+			mob_exit(ejectee, silent = TRUE)
 
 	if(LAZYLEN(flat_equipment))
 		for(var/obj/item/mecha_parts/mecha_equipment/equip as anything in flat_equipment)
@@ -278,6 +282,10 @@
 
 	STOP_PROCESSING(SSobj, src)
 	LAZYCLEARLIST(flat_equipment)
+
+	if(LAZYLEN(loaded_ais))
+		for(var/mob/living/silicon/ai/occupant_ai as anything in loaded_ais)
+			occupant_ai.gib() //No wreck, no AI to recover
 
 	QDEL_NULL(ore_box)
 
@@ -323,12 +331,12 @@
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
 			var/mob/living/silicon/ai/ai = occupant
-			if(!ai.linked_core) // we probably shouldnt gib AIs with a core
+			if(!GLOB.primary_data_core && !LAZYLEN(GLOB.data_cores)) // we probably shouldnt gib AIs with a core
 				unlucky_ai = occupant
 				ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
 				ai.gib() //No wreck, no AI to recover
 			else
-				mob_exit(ai,silent = TRUE, forced = TRUE) // so we dont ghost the AI
+				mob_exit(ai, silent = TRUE, forced = TRUE) // so we dont ghost the AI
 			continue
 		mob_exit(occupant, forced = TRUE)
 		if(!isbrain(occupant)) // who would win.. 1 brain vs 1 sleep proc..
@@ -363,7 +371,7 @@
  */
 /obj/vehicle/sealed/mecha/proc/set_safety(mob/user)
 	weapons_safety = !weapons_safety
-	SEND_SOUND(user, sound('sound/machines/beep.ogg', volume = 25))
+	user.playsound_local(src, 'sound/machines/beep.ogg', 25)
 	balloon_alert(user, "equipment [weapons_safety ? "safe" : "ready"]")
 	set_mouse_pointer()
 	SEND_SIGNAL(src, COMSIG_MECH_SAFETIES_TOGGLE, user, weapons_safety)
@@ -425,15 +433,14 @@
 /obj/vehicle/sealed/mecha/get_cell()
 	return cell
 
-/obj/vehicle/sealed/mecha/rust_heretic_act()
+/obj/vehicle/sealed/mecha/rust_heretic_act(rust_strength)
 	take_damage(500,  BRUTE)
 
 /obj/vehicle/sealed/mecha/proc/restore_equipment()
 	equipment_disabled = FALSE
-	for(var/occupant in occupants)
-		var/mob/mob_occupant = occupant
-		SEND_SOUND(mob_occupant, sound('sound/items/timer.ogg', volume=50))
-		to_chat(mob_occupant, span_notice("Equipment control unit has been rebooted successfully."))
+	for(var/mob/occupant as anything in occupants)
+		occupant.playsound_local(src, 'sound/items/timer.ogg', 50)
+		to_chat(occupant, span_notice("Equipment control unit has been rebooted successfully."))
 	set_mouse_pointer()
 
 /obj/vehicle/sealed/mecha/proc/update_part_values() ///Updates the values given by scanning module and capacitor tier, called when a part is removed or inserted.

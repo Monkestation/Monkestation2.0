@@ -1,6 +1,6 @@
 #define MINIMUM_MONSTERS_REQUIRED 2
 
-/datum/round_event_control/antagonist/solo/monsterhunter
+/datum/round_event_control/antagonist/monsterhunter
 	name = "Monster Hunters"
 	track = EVENT_TRACK_MAJOR
 	antag_flag = ROLE_MONSTERHUNTER
@@ -33,8 +33,7 @@
 	prompted_picking = TRUE
 	max_occurrences = 1
 
-
-/datum/round_event_control/antagonist/solo/monsterhunter/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
+/datum/round_event_control/antagonist/monsterhunter/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	. = ..()
 	if(!.)
 		return

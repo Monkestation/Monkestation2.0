@@ -112,3 +112,7 @@
 	color = COLOR_FULL_TONER_BLACK
 	duration = 12 SECONDS
 	amount_to_scale = 12
+
+/obj/effect/temp_visual/circle_wave/void_armor
+	color = COLOR_CYAN
+	amount_to_scale = 4

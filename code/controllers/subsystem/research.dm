@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(research)
 	//TECHWEB STATIC
 	var/list/techweb_nodes = list() //associative id = node datum
 	var/list/techweb_designs = list() //associative id = node datum
-	var/list/datum/design/item_to_design = list() //typepath = list of design datums
+	var/list/list/datum/design/item_to_design = list() //typepath = list of design datums
 
 	///List of all techwebs.
 	var/list/datum/techweb/techwebs = list()
@@ -45,7 +45,8 @@ SUBSYSTEM_DEF(research)
 	///Associated list of all point types that techwebs will have and their respective 'abbreviated' name.
 	var/list/point_types = list(
 		TECHWEB_POINT_TYPE_GENERIC = "Gen. Res.",
-		TECHWEB_POINT_TYPE_NANITES = "Nanite Res."
+		TECHWEB_POINT_TYPE_NANITES = "Nanite Res.",
+		TECHWEB_POINT_TYPE_AI = "AI Res.",
 	)
 	//----------------------------------------------
 	var/list/single_server_income = list(

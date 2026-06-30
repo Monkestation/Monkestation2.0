@@ -521,11 +521,11 @@
 /area/shuttle/syndicate/eva)
 "bl" = (
 /obj/item/clipboard,
-/obj/item/reagent_containers/hypospray/medipen,
-/obj/item/reagent_containers/hypospray/medipen{
+/obj/item/reagent_containers/medipen,
+/obj/item/reagent_containers/medipen{
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/hypospray/medipen{
+/obj/item/reagent_containers/medipen{
 	pixel_y = -6
 	},
 /obj/item/reagent_containers/cup/bottle/multiver,

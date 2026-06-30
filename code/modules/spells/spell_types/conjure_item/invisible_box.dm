@@ -17,7 +17,7 @@
 	invocation_self_message = span_notice("You conjure up an invisible box, large enough to store a few things.")
 	invocation_type = INVOCATION_EMOTE
 
-	spell_requirements = SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_MIME_VOW
+	spell_requirements = SPELL_REQUIRES_MIME_VOW
 	antimagic_flags = NONE
 	spell_max_level = 1
 

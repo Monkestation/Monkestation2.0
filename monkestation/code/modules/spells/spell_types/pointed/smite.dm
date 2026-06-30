@@ -15,11 +15,13 @@
 
 	invocation = "EI NATH!!"
 
+	spell_max_level = 1
+
 	active_msg = "You prepare to smite your foe..."
 	deactive_msg = "You dispel your power."
 
 	/// what type of smites should we be forced to used, if unset then pick normally
-	var/forced_smite_type
+	var/forced_smite_type = HEAVY_SMITE
 	/// what smite type is selected for our currenting casting, have to put it here so we can reference between procs
 	var/smite_type
 	/// list of smites that have a high effect on the target, if a smite is not in one of these lists then it cannot be picked(besides rod which is unique)
@@ -28,11 +30,8 @@
 		/datum/smite/bloodless,
 		/datum/smite/boneless,
 		/datum/smite/brain_damage,
-		/datum/smite/bread,
 		/datum/smite/bsa,
-		/datum/smite/fireball,
 		/datum/smite/gib,
-		/datum/smite/lightning,
 		/datum/smite/nugget,
 		/datum/smite/puzzgrid,
 		/datum/smite/puzzle,
@@ -48,6 +47,8 @@
 		/datum/smite/knot_shoes,
 		/datum/smite/ocky_icky,
 		/datum/smite/scarify,
+		/datum/smite/fireball,
+		/datum/smite/lightning,
 	)
 
 /datum/action/cooldown/spell/pointed/smite/is_valid_target(atom/cast_on)

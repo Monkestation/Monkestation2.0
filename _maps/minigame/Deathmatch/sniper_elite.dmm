@@ -166,7 +166,7 @@
 /area/deathmatch/fullbright)
 "Q" = (
 /obj/structure/rack,
-/obj/item/reagent_containers/hypospray/medipen/stimulants,
+/obj/item/reagent_containers/medipen/stimulants,
 /obj/item/ammo_casing/spent,
 /turf/open/floor/carpet/neon,
 /area/deathmatch/fullbright)

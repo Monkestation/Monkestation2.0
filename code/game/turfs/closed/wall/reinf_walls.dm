@@ -16,6 +16,7 @@
 	max_integrity = 600 //Monkestation edit
 	damage_deflection = 75 // can't be damaged with most conventional weapons or tools Monkestation edit
 	rad_insulation = RAD_HEAVY_INSULATION
+	rust_resistance = RUST_RESISTANCE_REINFORCED
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall. also indicates the temperature at wich the wall will melt (currently only able to melt with H/E pipes)
 	///Dismantled state, related to deconstruction.
 	var/d_state = INTACT
@@ -220,12 +221,10 @@
 	if(the_rcd.canRturf || passed_mode == RCD_WALLFRAME)
 		return ..()
 
-/turf/closed/wall/r_wall/rust_heretic_act()
-	if(prob(50))
-		return
+/turf/closed/wall/r_wall/rust_turf(magic = FALSE)
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
-		ScrapeAway()
-		return
+		ChangeTurf(/turf/closed/wall/rust)
+		return TRUE
 	return ..()
 
 /turf/closed/wall/r_wall/syndicate
@@ -243,6 +242,7 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_SYNDICATE_WALLS
 	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_SYNDICATE_WALLS
+	rust_resistance = RUST_RESISTANCE_TITANIUM
 
 /turf/closed/wall/r_wall/syndicate/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	return FALSE

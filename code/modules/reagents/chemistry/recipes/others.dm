@@ -977,3 +977,8 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
 		new /obj/item/stack/sheet/hauntium(location)
+
+/datum/chemical_reaction/scrunchium
+	results = list(/datum/reagent/scrunchium = 5)
+	required_reagents = list(/datum/reagent/toxin/bonehurtingjuice = 1, /datum/reagent/liquid_dark_matter = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER

@@ -74,7 +74,6 @@
 				"slime_color" = capitalize(slime.current_color.name),
 				"hunger_precent" = slime.hunger_precent,
 				"mutation_chance" = slime.mutation_chance,
-				"accessory" = slime.worn_accessory ? slime.worn_accessory.name : "None",
 			)
 			slime_data["possible_mutations"] = list()
 			for(var/datum/slime_mutation_data/mutation_data as anything in slime.possible_color_mutations)

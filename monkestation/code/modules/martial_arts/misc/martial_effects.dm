@@ -11,6 +11,9 @@
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
 
 
+/datum/status_effect/amok
+	id = STATUS_EFFECT_ID_ABSTRACT
+	alert_type = null
 
 /datum/status_effect/amok/proc/exclusion_check(mob/living/potential_target)
 	return IS_HERETIC_OR_MONSTER(potential_target)

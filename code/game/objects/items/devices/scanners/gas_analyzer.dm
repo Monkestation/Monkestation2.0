@@ -133,6 +133,7 @@
 	atmos_scan(user=user, target=get_turf(src), silent=FALSE)
 	on_analyze(source=src, target=get_turf(src))
 
+
 /obj/item/analyzer/attack_self_secondary(mob/user, modifiers)
 	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
 		return
@@ -241,7 +242,6 @@
 	name = "long-range gas analyzer"
 	icon_state = "analyzerranged"
 	worn_icon_state = "analyzer"
-	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2, /datum/material/gold = SMALL_MATERIAL_AMOUNT*3, /datum/material/bluespace=SMALL_MATERIAL_AMOUNT*2)
 	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 	ranged_scan_distance = 15

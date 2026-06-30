@@ -20,7 +20,7 @@
 		return FALSE
 	if(target.stat != DEAD)
 		return FALSE
-	if(HAS_TRAIT(target, TRAIT_SUICIDED) || HAS_TRAIT(target, TRAIT_HUSK) || HAS_TRAIT(target, TRAIT_DEFIB_BLACKLISTED))
+	if(HAS_TRAIT(target, TRAIT_SUICIDED) || HAS_TRAIT(target, TRAIT_HUSK) || (target.mind && HAS_TRAIT(target.mind, TRAIT_DEFIB_BLACKLISTED)))
 		return FALSE
 	if(target.mob_biotypes & MOB_ROBOTIC) // MONKESTATION ADDITION. If you want to do this to robot carbons, use /datum/surgery/positronic_restoration
 		return FALSE

@@ -1533,7 +1533,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/elevator/left/directional/west{
 	elevator_mode = 1;
-	elevator_linked_id = "tram_upper_center_lift"
+	transport_linked_id = "tram_upper_center_lift"
 	},
 /turf/open/floor/iron,
 /area/template_noop)

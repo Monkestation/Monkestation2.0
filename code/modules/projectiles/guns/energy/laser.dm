@@ -150,11 +150,14 @@
 	icon_state = "scatterlaser"
 	range = 255
 	damage = 6
+	var/size_per_tile = 0.1
+	var/max_scale = 4
 
-/obj/projectile/beam/laser/accelerator/Range()
+/obj/projectile/beam/laser/accelerator/reduce_range()
 	..()
 	damage += 7
-	transform *= 1 + ((damage/7) * 0.2)//20% larger per tile
+	transform = matrix()
+	transform *= min(1 + (maximum_range - range) * size_per_tile, max_scale)
 
 ///X-ray gun
 
@@ -216,11 +219,11 @@
 	shaded_charge = TRUE
 	ammo_x_offset = 1
 	obj_flags = UNIQUE_RENAME
-	can_bayonet = TRUE
-	knife_x_offset = 19
-	knife_y_offset = 13
 	w_class = WEIGHT_CLASS_NORMAL
 	dual_wield_spread = 10 //as intended by the coders
+
+/obj/item/gun/energy/laser/thermal/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 19, offset_y = 13)
 
 /obj/item/gun/energy/laser/thermal/Initialize(mapload)
 	. = ..()

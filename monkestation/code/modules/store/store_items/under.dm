@@ -206,6 +206,14 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 	name = "Tacticool Skirtleneck"
 	item_path = /obj/item/clothing/under/syndicate/tacticool/skirt
 
+/datum/store_item/under/miscellaneous/tacticool_engi_turtleneck
+	name = "Tacticool Engineering Turtleneck"
+	item_path = /obj/item/clothing/under/syndicate/nova/overalls/unarmoured/tacticool
+
+/datum/store_item/under/miscellaneous/tactical_skirt_engi_turtleneck
+	name = "Tacticool Engineering Skirtleneck"
+	item_path = /obj/item/clothing/under/syndicate/nova/overalls/unarmoured/skirt/tacticool
+
 
 /datum/store_item/under/miscellaneous/gladiator
 	name = "Gladiator Uniform"

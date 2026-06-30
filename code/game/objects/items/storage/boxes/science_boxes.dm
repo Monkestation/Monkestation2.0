@@ -68,6 +68,11 @@
 	for(var/i in 1 to 3)
 		new /obj/item/food/monkeycube/gorilla(src)
 
+/obj/item/storage/box/monkeycubes/random
+	name = "monster cube box"
+	desc = "A box containing a bunch of random cubes. Add water and see what you get!"
+	cube_type = /obj/item/food/monkeycube/random
+
 /obj/item/storage/box/stockparts/basic //for ruins where it's a bad idea to give access to an autolathe/protolathe, but still want to make stock parts accessible
 	name = "box of stock parts"
 	desc = "Contains a variety of basic stock parts."

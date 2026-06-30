@@ -23,9 +23,9 @@
 
 	var/damage = 0
 	if(ismonkey(mob)) //monkeys are smaller and thus have less space for human-organ sized tumors
-		damage += 15
+		damage += 15 * power
 	if(mob.getBruteLoss() <= 50)
-		damage += 5
+		damage += 5 * power
 	if(damage > 0)
 		mob.take_overall_damage(brute = damage)
 	mob.visible_message(

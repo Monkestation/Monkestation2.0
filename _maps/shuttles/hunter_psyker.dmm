@@ -533,8 +533,8 @@
 "DJ" = (
 /obj/structure/closet/secure_closet/freezer/meat/open,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/hypospray/medipen/gore,
-/obj/item/reagent_containers/hypospray/medipen/gore,
+/obj/item/reagent_containers/medipen/gore,
+/obj/item/reagent_containers/medipen/gore,
 /turf/open/floor/iron/freezer,
 /area/shuttle/hunter)
 "Ej" = (

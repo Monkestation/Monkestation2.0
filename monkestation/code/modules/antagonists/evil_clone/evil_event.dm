@@ -17,4 +17,4 @@
 			cloner.RefreshParts()
 			found = TRUE
 	if(!found) // Refund if no experimental cloners are found.
-		control.occurrences--
+		control.subtract_occurrence()

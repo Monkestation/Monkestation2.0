@@ -5,6 +5,8 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	name = "\proper space"
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
+	turf_flags = NO_RUST
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
@@ -241,7 +243,7 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 			return TRUE
 	return FALSE
 
-/turf/open/space/rust_heretic_act()
+/turf/open/space/rust_heretic_act(rust_strength)
 	return FALSE
 
 /turf/open/space/attempt_lattice_replacement()

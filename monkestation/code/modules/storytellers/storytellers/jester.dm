@@ -1,6 +1,7 @@
 /datum/storyteller/jester
 	name = "The Jester"
 	desc = "The Jester will create much more events, with higher possibilities of them repeating."
+	star_colour = STARCOLOUR_MIDNIGHTSUN
 	event_repetition_multiplier = 0.8
 	point_gains_multipliers = list(
 		EVENT_TRACK_MUNDANE = 1.2,
@@ -10,5 +11,5 @@
 		EVENT_TRACK_OBJECTIVES = 1
 		)
 	population_min = 40
-	ignores_roundstart = TRUE
 	weight = 2
+	base_antag_points = 5

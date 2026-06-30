@@ -55,9 +55,9 @@ GLOBAL_LIST_INIT_TYPED(vox_voices, /datum/vox_voice, initialize_vox_voices())
 				continue
 			if(isnewplayer(player_mob))
 				continue
-			if(check_hearing && !player_mob.can_hear())
+			if(check_hearing && HAS_TRAIT(player_mob, TRAIT_DEAF))
 				continue
-			if(!player_mob.client?.prefs?.read_preference(/datum/preference/toggle/sound_vox))
+			if(!player_mob.client?.prefs?.channel_volume["[CHANNEL_VOX]"])
 				continue
 			if(!isnull(origin_turf))
 				var/turf/player_turf = get_turf(player_mob)

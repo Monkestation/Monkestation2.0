@@ -16,3 +16,8 @@
 
 /obj/item/clothing/mask/surgical/attack_self(mob/user)
 	adjustmask(user)
+
+/obj/item/clothing/mask/surgical/deforest
+	name = "Deforest Mask"
+	desc = "A Deforest Medical sterile mask, colored a neon orange for easier visibility in harsh conditions."
+	icon_state = "deforest_stertile"

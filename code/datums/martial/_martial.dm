@@ -16,6 +16,12 @@
 	var/timerid
 	/// If set to true this style allows you to punch people despite being a pacifist (for instance Boxing, which does no damage)
 	var/pacifist_style = FALSE
+	/// A modifier to the effective grab state for resist grabs of users of this martial art.
+	/// IE: grab_state_modifier = 1 means passive grabs are aggro grab difficulty, and aggro grabs are neckgrab difficulty.
+	var/grab_state_modifier = 0
+	/// A modifier to the chance of escaping a grab.
+	/// IE: grab_escape_chance_modifier = -10 means 10% less chance to escape a grab
+	var/grab_escape_chance_modifier = 0
 
 /datum/martial_art/serialize_list(list/options, list/semvers)
 	. = ..()
@@ -41,6 +47,43 @@
 
 /datum/martial_art/proc/can_use(mob/living/L)
 	return TRUE
+
+/**
+ * Gets what limb is being used going when punching with this martial art.
+ *
+ * Override get_prefered_attacking_limb() to change the limb used.
+ *
+ * Arguments
+ * * mob/living/martial_artist - The mob using the martial art
+ * * mob/living/target - The target of the attack
+ *
+ * Returns
+ * A bodypart, or null if we want to use default behavior (brain determines, or active hand).
+ */
+/datum/martial_art/proc/get_attacking_limb(mob/living/martial_artist, mob/living/target)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(!can_use(martial_artist))
+		return
+	var/preferred_zone = get_prefered_attacking_limb(martial_artist, target)
+	if(!preferred_zone)
+		return null
+	return martial_artist.get_bodypart(preferred_zone)
+
+/**
+ * Allows martial arts to have a say which limb the user should be striking with.
+ *
+ *
+ * Arguments
+ * * mob/living/martial_artist - The mob using the martial art
+ * * mob/living/target - The target of the attack
+ *
+ * Returns
+ * * A body zone, or null if we have no preference.
+ */
+/datum/martial_art/proc/get_prefered_attacking_limb(mob/living/martial_artist, mob/living/target)
+	SHOULD_CALL_PARENT(FALSE)
+	PROTECTED_PROC(TRUE)
+	return null
 
 /datum/martial_art/proc/add_to_streak(element, mob/living/defender)
 	if(defender != current_target)

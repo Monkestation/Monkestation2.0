@@ -178,12 +178,12 @@
 /obj/item/organ/internal/cyberimp/arm/ammo_counter/Insert(mob/living/carbon/M, special, drop_if_replaced)
 	. = ..()
 	RegisterSignal(M,COMSIG_CARBON_ITEM_PICKED_UP, PROC_REF(add_to_hand))
-	RegisterSignal(M,COMSIG_CARBON_ITEM_DROPPED, PROC_REF(remove_from_hand))
+	RegisterSignal(M,COMSIG_MOB_DROPPED_ITEM, PROC_REF(remove_from_hand))
 
 /obj/item/organ/internal/cyberimp/arm/ammo_counter/Remove(mob/living/carbon/M, special)
 	. = ..()
 	UnregisterSignal(M,COMSIG_CARBON_ITEM_PICKED_UP)
-	UnregisterSignal(M,COMSIG_CARBON_ITEM_DROPPED)
+	UnregisterSignal(M,COMSIG_MOB_DROPPED_ITEM)
 	our_gun = null
 	update_hud_elements()
 

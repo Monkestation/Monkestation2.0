@@ -10,4 +10,4 @@
 
 /datum/symptom/confusion/activate(mob/living/carbon/mob)
 	to_chat(mob, span_warning("You have trouble telling right and left apart all of a sudden!"))
-	mob.adjust_confusion_up_to(1 SECONDS * multiplier, 20 SECONDS)
+	mob.adjust_confusion_up_to(1 SECONDS * power * multiplier, 20 SECONDS)

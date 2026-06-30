@@ -80,12 +80,13 @@
 	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
 		do_hearcheck()
 	var/sound/music_played = sound(soundfile)
+	var/channel_used = issilicon(player) ? CHANNEL_INSTRUMENTS_ROBOT : CHANNEL_INSTRUMENTS
 	for(var/i in hearing_mobs)
 		var/mob/M = i
 		if(player && HAS_TRAIT(player, TRAIT_MUSICIAN) && isliving(M))
 			var/mob/living/L = M
 			L.apply_status_effect(/datum/status_effect/good_music)
-		if(!(M?.client?.prefs.read_preference(/datum/preference/toggle/sound_instruments)))
+		if(!(M?.client?.prefs?.channel_volume["[channel_used]"]))
 			continue
-		M.playsound_local(source, null, volume * using_instrument.volume_multiplier, sound_to_use = music_played, mixer_channel = mixing_channel)
+		M.playsound_local(source, null, volume * using_instrument.volume_multiplier, sound_to_use = music_played, mixer_channel = channel_used)
 		// Could do environment and echo later but not for now

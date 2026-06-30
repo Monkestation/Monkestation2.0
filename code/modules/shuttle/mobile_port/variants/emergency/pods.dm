@@ -109,6 +109,9 @@
 /obj/docking_port/stationary/random/icemoon
 	target_area = /area/icemoon/surface/outdoors/unexplored/rivers/no_monsters
 
+/obj/docking_port/stationary/random/oshan
+	target_area = /area/ocean/generated
+
 //Pod suits/pickaxes
 
 

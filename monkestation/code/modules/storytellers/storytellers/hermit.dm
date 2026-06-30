@@ -2,6 +2,7 @@
 	name = "The Hermit"
 	desc = "The Hermit will create mostly internal conflict around the station, and rarely any external threats."
 	event_repetition_multiplier = 0.7 //Hermit has a smaller event pool, let it repeat a bit more
+	star_colour =  STARCOLOUR_ORANGESTAR
 	point_gains_multipliers = list(
 		EVENT_TRACK_MUNDANE = 1.2,
 		EVENT_TRACK_MODERATE = 1.1,

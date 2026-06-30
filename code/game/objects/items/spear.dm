@@ -12,7 +12,7 @@
 	throwforce = 20
 	throw_speed = 4
 	demolition_mod = 0.75
-	embedding = list("impact_pain_mult" = 2, "remove_pain_mult" = 4, "jostle_chance" = 2.5)
+	embed_type = /datum/embedding/spear
 	armour_penetration = 30
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass= HALF_SHEET_MATERIAL_AMOUNT * 2)
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -31,6 +31,11 @@
 	var/force_unwielded = 10
 	/// How much damage to do wielded
 	var/force_wielded = 18
+
+/datum/embedding/spear
+	impact_pain_mult = 2
+	remove_pain_mult = 4
+	jostle_chance = 2.5
 
 /datum/armor/item_spear
 	fire = 50
@@ -199,10 +204,10 @@
  * Bone Spear
  */
 /obj/item/spear/bonespear //Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
-	icon = 'monkestation/icons/obj/items_and_weapons.dmi' //Monkestation Edit
-	worn_icon = 'monkestation/icons/mob/clothing/back.dmi'
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/melee_righthand.dmi' //End Of Monke Edit
+	icon = 'icons/obj/items_and_weapons.dmi' //Monkestation Edit
+	worn_icon = 'icons/mob/clothing/back.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi' //End Of Monke Edit
 	icon_state = "bone_spear0"
 	base_icon_state = "bone_spear0"
 	icon_prefix = "bone_spear"

@@ -14,7 +14,8 @@
 	var/friendlyName
 	var/savedName
 	var/active = FALSE
-	var/disguise = "engineer"
+	/// The typepath of the robot model that we will be using as a disguise.
+	var/obj/item/robot_model/disguise_model_type = /obj/item/robot_model/engineering
 	var/mob/listeningTo
 	var/static/list/signalCache = list( // list here all signals that should break the camouflage
 			COMSIG_ATOM_ATTACKBY,
@@ -53,6 +54,22 @@
 	else
 		to_chat(user, span_warning("You need at least [display_energy(ACTIVATION_COST)] charge in your cell to use [src]!"))
 
+/obj/item/borg_chameleon/attack_self_secondary(mob/user, modifiers)
+	initialize_cyborg_model_lists()
+	var/input_model = show_radial_menu(user = user, anchor = src, choices = GLOB.cyborg_base_models_icon_list, radius = 42, require_near = TRUE)
+	if(!input_model)
+		return
+	var/obj/item/robot_model/selected_model = GLOB.cyborg_model_list[input_model]
+	if(!selected_model)
+		return
+	disguise_model_type = selected_model
+	to_chat(user, span_notice("The next disguised model will be: [initial(disguise_model_type.name)]."))
+
+/obj/item/borg_chameleon/item_ctrl_click(mob/user)
+	friendlyName = pick(GLOB.ai_names)
+	to_chat(user, span_notice("The next disguised name will be: [friendlyName]."))
+	return CLICK_ACTION_SUCCESS
+
 /obj/item/borg_chameleon/proc/toggle(mob/living/silicon/robot/user)
 	if(active)
 		playsound(src, 'sound/effects/pop.ogg', 100, TRUE, -6)
@@ -68,7 +85,7 @@
 		apply_wibbly_filters(user)
 		if (do_after(user, 5 SECONDS, target = user, hidden = TRUE) && user.cell.use(ACTIVATION_COST))
 			playsound(src, 'sound/effects/bamf.ogg', 100, TRUE, -6)
-			to_chat(user, span_notice("You are now disguised as the Nanotrasen engineering borg \"[friendlyName]\"."))
+			to_chat(user, span_notice("You are now disguised as the Nanotrasen [initial(disguise_model_type.name)] borg \"[friendlyName]\"."))
 			activate(user)
 		else
 			to_chat(user, span_warning("The chameleon field fizzles."))
@@ -88,8 +105,8 @@
 	src.user = user
 	savedName = user.name
 	user.name = friendlyName
-	user.model.cyborg_base_icon = disguise
-	user.model.name = capitalize(disguise)
+	user.model.cyborg_base_icon = initial(disguise_model_type.cyborg_base_icon)
+	user.model.name = initial(disguise_model_type.name)
 	user.bubble_icon = "robot"
 	active = TRUE
 	user.update_icons()

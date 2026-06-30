@@ -62,6 +62,10 @@
 	item_path = /obj/item/storage/box/minertracker
 	cost_per_order = 600
 
+/datum/orderable_item/mining/sandbags
+	item_path = /obj/item/stack/sheet/mineral/sandbags/five
+	cost_per_order = 300
+
 /datum/orderable_item/mining/fulton_core //i really have to wonder why the fulton core and the fulton were not next to each other from the beginning
 	item_path = /obj/item/fulton_core
 	cost_per_order = 400
@@ -81,19 +85,15 @@
 /datum/orderable_item/mining/surplusnecro
 	item_path = /obj/structure/closet/crate/necropolis/surplus
 	desc = "A leftover necropolis crate from the Mining RND storage warehouse. Content quality not guranteed, but you dont need a key."
-	cost_per_order = 5384 //your literally buying a necropolis crate, for no key, and no risk of combat or being dumped in a pit so it costs 3500 to shuttle buy
+	cost_per_order = 6730 //your literally buying a necropolis crate, for no key, and no risk of combat or being dumped in a pit so it costs 4375 to shuttle buy
 
 /datum/orderable_item/mining/conscription_kit
 	item_path = /obj/item/storage/backpack/duffelbag/mining_conscript
 	cost_per_order = 1500
 
-/datum/orderable_item/mining/eva_kit
-	item_path = /obj/item/storage/box/emergency_eva/explorer
-	cost_per_order = 1000
-
-/datum/orderable_item/mining/hardsuit_jetpack_upgrade
-	item_path = /obj/item/jetpack_module
-	cost_per_order = 250
+/datum/orderable_item/mining/seclite
+	item_path = /obj/item/flashlight/seclite
+	cost_per_order = 200
 
 /datum/orderable_item/mining/mining_drone //welcome to the big boy tab fellah
 	item_path = /mob/living/basic/mining_drone
@@ -112,7 +112,7 @@
 	cost_per_order = 1000
 
 /datum/orderable_item/mining/magnetic
-	item_path = /obj/item/reagent_containers/hypospray/medipen/magnet
+	item_path = /obj/item/reagent_containers/medipen/magnet
 	cost_per_order = 250
 
 /datum/orderable_item/mining/ventpointer

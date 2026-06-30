@@ -653,7 +653,7 @@
 	for(var/mob/zlevel_mobs as anything in SSmobs.clients_by_zlevel[z])
 		var/dist_far = get_dist(zlevel_mobs, distant_source)
 		if(dist_far <= long_range && dist_far > range)
-			zlevel_mobs.playsound_local(distant_source, "sound/runtime/hyperspace/[selected_sound]_distance.ogg", 100)
+			zlevel_mobs.playsound_local(distant_source, "sound/runtime/hyperspace/[selected_sound]_distance.ogg", 100, channel = CHANNEL_SHUTTLES)
 		else if(dist_far <= range)
 			var/source
 			if(!engine_list.len)
@@ -665,7 +665,7 @@
 					if(dist_near < closest_dist)
 						source = engines
 						closest_dist = dist_near
-			zlevel_mobs.playsound_local(source, "sound/runtime/hyperspace/[selected_sound].ogg", 100)
+			zlevel_mobs.playsound_local(source, "sound/runtime/hyperspace/[selected_sound].ogg", 100, channel = CHANNEL_SHUTTLES)
 
 // Losing all initial engines should get you 2
 // Adding another set of engines at 0.5 time

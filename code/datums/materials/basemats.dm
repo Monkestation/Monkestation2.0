@@ -4,9 +4,16 @@
 	desc = "Common iron ore often found in sedimentary and igneous layers of the crust."
 	color = "#878687"
 	greyscale_colors = "#878687"
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_RACK_CREATOR = TRUE,
+	)
 	sheet_type = /obj/item/stack/sheet/iron
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
+	mat_rust_resistance = RUST_RESISTANCE_BASIC
 	ore_type = /obj/item/stack/ore/iron
 	mineral_rarity = MATERIAL_RARITY_COMMON
 	points_per_unit = 1 / SHEET_MATERIAL_AMOUNT
@@ -23,7 +30,13 @@
 	greyscale_colors = "#88cdf196"
 	starlight_color = COLOR_STARLIGHT
 	alpha = 150
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_RACK_CREATOR = TRUE,
+	)
 	integrity_modifier = 0.1
 	sheet_type = /obj/item/stack/sheet/glass
 	shard_type = /obj/item/shard
@@ -50,7 +63,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Silver"
 	color = list(255/255, 284/255, 302/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
 	greyscale_colors = "#e3f1f8"
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_RACK_CREATOR = TRUE,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 150 / SHEET_MATERIAL_AMOUNT
@@ -69,7 +88,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	color = list(340/255, 240/255, 50/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //gold is shiny, but not as bright as bananium
 	greyscale_colors = "#dbdd4c"
 	strength_modifier = 1.2
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_RACK_CREATOR = TRUE,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 300 / SHEET_MATERIAL_AMOUNT
@@ -88,7 +113,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Highly pressurized carbon"
 	color = list(48/255, 272/255, 301/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
 	greyscale_colors = "#71c8f784"
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	alpha = 132
 	starlight_color = COLOR_BLUE_LIGHT
@@ -109,7 +139,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Uranium"
 	color = rgb(48, 237, 26)
 	greyscale_colors = rgb(48, 237, 26)
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		AT_CATEGORY_ITEM_MATERIAL = TRUE,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 600 / SHEET_MATERIAL_AMOUNT //It shines so beautiful
@@ -147,7 +182,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Isn't plasma a state of matter? Oh whatever."
 	color = list(298/255, 46/255, 352/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
 	greyscale_colors = "#c162ec"
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	value_per_unit = 200 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 300 / SHEET_MATERIAL_AMOUNT
@@ -183,7 +223,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	greyscale_colors = "#4e7dffC8"
 	alpha = 200
 	starlight_color = COLOR_BLUE
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_ITEM_MATERIAL = TRUE)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_RACK_CREATOR = TRUE,
+	)
 	beauty_modifier = 1000 / SHEET_MATERIAL_AMOUNT
 	sheet_type = /obj/item/stack/sheet/bluespace_crystal
 	value_per_unit = 300 / SHEET_MATERIAL_AMOUNT
@@ -202,7 +246,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Material with hilarious properties"
 	color = list(460/255, 464/255, 0, 0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //obnoxiously bright yellow
 	greyscale_colors = "#ffff00"
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	value_per_unit = 1000 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 1000 / SHEET_MATERIAL_AMOUNT
@@ -233,13 +282,19 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	color = "#b3c0c7"
 	greyscale_colors = "#b3c0c7"
 	strength_modifier = 1.3
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 100 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 1.25, BIO = 1, FIRE = 0.7, ACID = 1)
 	ore_type = /obj/item/stack/ore/titanium
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
+	mat_rust_resistance = RUST_RESISTANCE_TITANIUM
 
 /datum/material/titanium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
@@ -436,6 +491,7 @@ monkestation end */
 	beauty_modifier = 500 / SHEET_MATERIAL_AMOUNT
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
+	mat_rust_resistance = RUST_RESISTANCE_BASIC
 
 /datum/material/sand/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.adjust_disgust(17)
@@ -454,6 +510,7 @@ monkestation end */
 	beauty_modifier = 600 / SHEET_MATERIAL_AMOUNT
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "brick"
+	mat_rust_resistance = RUST_RESISTANCE_BASIC
 
 /datum/material/snow
 	name = "snow"
@@ -467,6 +524,7 @@ monkestation end */
 	beauty_modifier = 600 / SHEET_MATERIAL_AMOUNT
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
+	mat_rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /datum/material/snow/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/water, rand(5, 10))

@@ -11,7 +11,7 @@
 /turf/open/space/basic,
 /area/template_noop)
 "q" = (
-/obj/item/reagent_containers/hypospray/medipen,
+/obj/item/reagent_containers/medipen,
 /obj/effect/decal/cleanable/blood,
 /turf/open/misc/asteroid/airless/tospace,
 /area/template_noop)

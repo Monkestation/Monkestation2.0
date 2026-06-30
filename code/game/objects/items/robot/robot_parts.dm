@@ -297,7 +297,7 @@
 		var/mob/living/silicon/robot/new_borg = new /mob/living/silicon/robot/nocell(get_turf(loc), user)
 		if(!new_borg)
 			return ITEM_INTERACT_BLOCKING
-		if(inserting_mmi.laws && inserting_mmi.laws.id != DEFAULT_AI_LAWID)
+		if(inserting_mmi.laws && inserting_mmi.laws.id != DEFAULT_AI_LAWID && inserting_mmi.override_cyborg_laws)
 			aisync = FALSE
 			lawsync = FALSE
 			new_borg.laws = inserting_mmi.laws
@@ -319,6 +319,11 @@
 			if(inserting_mmi.laws.id == DEFAULT_AI_LAWID)
 				new_borg.make_laws()
 				new_borg.log_current_laws()
+			else if(!inserting_mmi.override_cyborg_laws) // MMI's laws were changed. Do not want to upload them if we say so.
+				// Give random default lawset.
+				new_borg.make_laws()
+				// Obvious warning that their modified laws didn't get passed on.
+				to_chat(user, span_warning("Any laws uploaded to this MMI have not been transferred!"))
 
 //monkestation edit start
 		var/datum/antagonist/clock_cultist/old_servant_datum = brainmob.mind?.has_antag_datum(/datum/antagonist/clock_cultist) //monkestation edit

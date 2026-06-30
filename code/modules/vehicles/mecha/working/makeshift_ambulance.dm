@@ -4,7 +4,6 @@
 	icon = 'icons/mecha/mecha.dmi'
 	icon_state = "pottyambo"
 	base_icon_state = "pottyambo"
-	silicon_icon_state = "null"
 	max_integrity = 125
 	lights_power = 6
 	movedelay = 1.5

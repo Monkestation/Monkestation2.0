@@ -107,7 +107,7 @@
 /obj/effect/client_image_holder/phobetor
 	name = "phobetor tear"
 	desc = "A subdimensional rip in reality, which gives extra-spacial passage to those who have woken from the sleepless dream."
-	image_icon = 'monkestation/icons/effects/phobetor_tear.dmi'
+	image_icon = 'icons/effects/phobetor_tear.dmi'
 	image_state = "phobetor_tear"
 	// Place this above shadows so it always glows.
 	image_layer = ABOVE_MOB_LAYER

@@ -132,6 +132,7 @@
 			return ITEM_INTERACT_FAILURE
 
 		powerdevice = tool
+		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
 
 	else if(istype(tool, /obj/item/stack/sheet/mineral/plasma) && !QDELETED(powerdevice))
@@ -146,13 +147,18 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/item/inducer/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
-	. = NONE
+	. = ..()
 
 	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
 		return
 
 	if((user.istate & ISTATE_HARM) || !istype(interacting_with) || interacting_with.flags_1 & HOLOGRAM_1)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	var/obj/item/stock_parts/power_store/target_cell = interacting_with.get_cell(src, user)
+
+	if(QDELETED(target_cell) || isnull(target_cell))
+		return
 
 	//basic checks
 	if(opened)
@@ -174,11 +180,6 @@
 
 	if(!our_cell.charge)
 		balloon_alert(user, "no charge!")
-		return ITEM_INTERACT_FAILURE
-
-	var/obj/item/stock_parts/power_store/target_cell = interacting_with.get_cell(src, user)
-
-	if(QDELETED(target_cell))
 		return ITEM_INTERACT_FAILURE
 
 	if(!target_cell.used_charge())
@@ -236,6 +237,7 @@
 	icon_state = "inducer-sci"
 	inhand_icon_state = "inducer-sci"
 	desc = "A tool for inductively charging internal power cells. This one has a science color scheme, and is less potent than its engineering counterpart."
+	power_transfer_multiplier = 0.5
 	powerdevice = null
 	opened = TRUE
 

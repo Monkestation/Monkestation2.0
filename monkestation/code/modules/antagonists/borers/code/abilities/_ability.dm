@@ -2,6 +2,9 @@
 /datum/action/cooldown/borer
 	button_icon = 'monkestation/code/modules/antagonists/borers/icons/actions.dmi'
 	cooldown_time = 0
+
+	check_flags = AB_CHECK_INCAPACITATED
+
 	/// Text used to explain the ability more closelly in the antagonist TGUI panel
 	var/ability_explanation = ""
 
@@ -33,7 +36,10 @@
 	name = "[initial(name)][compiled_string]"
 
 /datum/action/cooldown/borer/Trigger(trigger_flags, atom/target)
-	. = ..()
+	if (!IsAvailable(feedback = TRUE))
+		return FALSE
+
+	..()
 
 	// Safety checks
 	if(!iscorticalborer(owner))

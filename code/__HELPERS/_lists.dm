@@ -68,6 +68,8 @@
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 ///Sets the item K to the value V, if the list is null it will initialize it
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
+///Sets the item K to the value V, if the list is null it will initialize it as an alist
+#define LAZYASSOCSET(L, K, V) if(!L) { L = alist(); } L[K] = V;
 ///Sets the length of a lazylist
 #define LAZYSETLEN(L, V) if (!L) { L = list(); } L.len = V;
 ///Returns the length of the list
@@ -90,7 +92,7 @@
 ///Use LAZYLISTDUPLICATE instead if you want it to null with no entries
 #define LAZYCOPY(L) (L ? L.Copy() : list() )
 /// Consider LAZYNULL instead
-#define LAZYCLEARLIST(L) if(L) L.Cut()
+#define LAZYCLEARLIST(L) L?.Cut()
 /// Clears any nulls out of a list, and also turns the list itself null if its empty afterwards.
 #define LAZYCLEARNULLS(L) if(L) { list_clear_nulls(L); if(!length(L)) L = null };
 ///Returns the list if it's actually a valid list, otherwise will initialize it
@@ -560,14 +562,14 @@
  * Useful for weighted random choices (loot tables, syllables in languages, etc.)
  */
 /proc/fill_with_ones(list/list_to_pad)
-	if (!islist(list_to_pad))
+	if(!islist(list_to_pad))
 		return list_to_pad
 
 	var/list/final_list = list()
 
-	for (var/key in list_to_pad)
-		if (list_to_pad[key])
-			final_list[key] = list_to_pad[key]
+	for(var/key, key_value in list_to_pad)
+		if(key_value)
+			final_list[key] = key_value
 		else
 			final_list[key] = 1
 
@@ -985,6 +987,14 @@
 			continue
 		UNTYPED_LIST_ADD(keys, key)
 	return keys
+
+/// Turns an associative list into a flat list of values
+/proc/assoc_to_values(list/key_list)
+	if(!islist(key_list))
+		return null
+	. = list()
+	for(var/key in key_list)
+		. |= LIST_VALUE_WRAP_LISTS(key_list[key])
 
 ///compare two lists, returns TRUE if they are the same
 /proc/compare_list(list/l,list/d)

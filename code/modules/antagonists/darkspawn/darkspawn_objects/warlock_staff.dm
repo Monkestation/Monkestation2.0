@@ -23,6 +23,11 @@
 	/// Flags used for different effects that apply when a projectile hits something
 	var/effect_flags
 
+/obj/item/gun/magic/darkspawn/can_trigger_gun(mob/living/user, akimbo_usage)
+	if(IS_DARKSPAWN_OR_THRALL(user))
+		return TRUE
+	return ..()
+
 /obj/item/gun/magic/darkspawn/examine(mob/user)
 	. = ..()
 	if(isobserver(user) || IS_DARKSPAWN(user))

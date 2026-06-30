@@ -15,7 +15,7 @@
 	if(!isorgan(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	var/obj/item/organ/organ_parent = parent
+	var/obj/item/organ/internal/organ_parent = parent
 	action = new(src)
 	action.Grant(organ_parent.owner)
 
@@ -32,8 +32,8 @@
 	REMOVE_TRAIT(parent, TRAIT_LIVING_HEART, REF(src))
 	UnregisterSignal(parent, list(COMSIG_ORGAN_REMOVED, COMSIG_ORGAN_BEING_REPLACED))
 
-/datum/component/living_heart/PostTransfer()
-	if(!isorgan(parent))
+/datum/component/living_heart/PostTransfer(datum/new_parent)
+	if(!isorgan(new_parent))
 		return COMPONENT_INCOMPATIBLE
 
 /**
@@ -70,18 +70,18 @@
 	desc = "LMB: Chose one of your sacrifice targets to track. RMB: Repeats last target you chose to track."
 	check_flags = AB_CHECK_CONSCIOUS
 	background_icon_state = "bg_heretic"
-	button_icon = 'icons/obj/eldritch.dmi'
+	button_icon = 'icons/obj/antags/eldritch.dmi'
 	button_icon_state = "living_heart"
 	cooldown_time = 4 SECONDS
 
 	/// Tracks whether we were right clicked or left clicked in our last trigger
 	var/right_clicked = FALSE
-	/// The real name of the last mob we tracked
+	/// The real name of the last thing we tracked
 	var/last_tracked_name
 	/// Whether the target radial is currently opened.
 	var/radial_open = FALSE
-	/// Beacon we have on the target
-	var/datum/component/tracking_beacon/target_beacon
+	/// Navigator to our target that we have.
+	var/datum/status_effect/agent_pinpointer/scan/heretic/heretic_pinpointer
 
 /datum/action/cooldown/track_target/Grant(mob/granted)
 	if(!IS_HERETIC(granted))
@@ -101,38 +101,60 @@
 
 	return TRUE
 
-/datum/action/cooldown/track_target/Trigger(trigger_flags, atom/target)
+/datum/action/cooldown/track_target/Trigger(mob/clicker, trigger_flags, atom/target)
 	right_clicked = !!(trigger_flags & TRIGGER_SECONDARY_ACTION)
 	return ..()
 
 /datum/action/cooldown/track_target/Activate(atom/target)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(owner)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
 	var/datum/heretic_knowledge/sac_knowledge = heretic_datum.get_knowledge(/datum/heretic_knowledge/hunt_and_sacrifice)
+
 	if(!LAZYLEN(heretic_datum.current_sac_targets))
 		owner.balloon_alert(owner, "no targets, visit a rune!")
 		StartCooldown(1 SECONDS)
 		return TRUE
 
-	var/list/targets_to_choose = list()
-	var/list/mob/living/living_targets = list()
-	for(var/datum/weakref/target_ref as anything in heretic_datum.current_sac_targets)
-		var/datum/mind/target_mind = target_ref?.resolve()
-		if(QDELETED(target_mind))
+	// Holds a list of `name = image` used to display the radial menu when you left click the living heart
+	var/list/choosable_targets = list()
+	// Holds a list of 'name = atom/thing` used to check if our thing still exists after we've made our selection
+	var/list/possible_tracked_atoms = list()
+
+	// Checks if our heretic has a blade research, and then checks if they have made blades
+	// adds them to our list of target when pulsing the living heart so that you can locate them
+	var/datum/heretic_knowledge/limited_amount/starting/blade_knowledge
+	for(var/datum/potential_knowledge as anything in subtypesof(/datum/heretic_knowledge/limited_amount/starting))
+		blade_knowledge = heretic_datum.get_knowledge(potential_knowledge)
+		if(blade_knowledge)
+			break
+	for(var/datum/weakref/blade_ref as anything in blade_knowledge?.created_items)
+		var/obj/item/melee/sickly_blade/blade = blade_ref.resolve()
+		if(QDELETED(blade))
+			blade_knowledge.created_items -= blade_ref
 			continue
+		if(!istype(blade, /obj/item/melee/sickly_blade))
+			continue // Just in case someone makes a /datum/heretic_knowledge/limited_amount/starting that doesn't create blades
+		if(get(blade, /mob/living) == owner)
+			continue
+		// Means our blade is somewhere, but not on our person, so let's make it trackable
+		choosable_targets[blade.name] = image(icon = blade.icon, icon_state = blade.icon_state)
+		possible_tracked_atoms[blade.name] = blade
+
+	for(var/datum/mind/target_mind as anything in heretic_datum.current_sac_targets)
 		var/mob/living/living_target = target_mind.current
 		if(QDELETED(living_target))
 			continue
 		var/sac_name = trimtext(target_mind.name || living_target.real_name || living_target.name)
-		living_targets[sac_name] = living_target
 		var/mutable_appearance/target_appearance = new(isbrain(living_target) ? living_target.loc : living_target)
 		target_appearance.appearance_flags = KEEP_TOGETHER
 		target_appearance.layer = FLOAT_LAYER
 		target_appearance.plane = FLOAT_PLANE
 		target_appearance.dir = SOUTH
+		target_appearance.alpha = 255
 		target_appearance.pixel_x = living_target.base_pixel_x
 		target_appearance.pixel_y = living_target.base_pixel_y
-		target_appearance.pixel_z = 0 /* living_target.base_pixel_z */
-		targets_to_choose[sac_name] = strip_appearance_underlays(target_appearance)
+		target_appearance.pixel_z = living_target.base_pixel_z
+		choosable_targets[sac_name] = strip_appearance_underlays(target_appearance)
+		possible_tracked_atoms[sac_name] = living_target
 
 	// If we don't have a last tracked name, open a radial to set one.
 	// If we DO have a last tracked name, we skip the radial if they right click the action.
@@ -141,11 +163,12 @@
 		last_tracked_name = show_radial_menu(
 			owner,
 			owner,
-			targets_to_choose,
+			choosable_targets,
 			custom_check = CALLBACK(src, PROC_REF(check_menu)),
 			radius = 40,
 			require_near = TRUE,
 			tooltips = TRUE,
+			autopick_single_option = FALSE
 		)
 		radial_open = FALSE
 
@@ -153,27 +176,23 @@
 	if(isnull(last_tracked_name))
 		return FALSE
 
-	var/mob/living/tracked_mob = living_targets[last_tracked_name]
-	if(QDELETED(tracked_mob))
+	var/atom/tracked_thing = possible_tracked_atoms[last_tracked_name]
+	if(QDELETED(tracked_thing))
 		last_tracked_name = null
 		return FALSE
 
 	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
-	owner.balloon_alert(owner, get_balloon_message(tracked_mob))
-	target_beacon = tracked_mob.AddComponent(/datum/component/tracking_beacon, heretic_datum.monitor_key, _colour = COLOR_GREEN, _always_update = TRUE)
-	addtimer(CALLBACK(src, PROC_REF(remove_beacon)), 3 SECONDS)
+	owner.balloon_alert(owner, get_balloon_message(tracked_thing))
 
 	// Let them know how to sacrifice people if they're able to be sac'd
-	if(tracked_mob.stat == DEAD)
-		to_chat(owner, span_hierophant("[tracked_mob] is dead. Bring them to a transmutation rune \
-			and invoke \"[sac_knowledge.name]\" to sacrifice them!"))
+	if(ismob(tracked_thing))
+		var/mob/tracked_mob = tracked_thing
+		if(tracked_mob.stat == DEAD)
+			to_chat(owner, span_hierophant("[tracked_mob] is dead. Bring [tracked_mob.p_them()] to a transmutation rune \
+				and invoke \"[sac_knowledge.name]\" to sacrifice [tracked_mob.p_them()]!"))
 
 	StartCooldown()
 	return TRUE
-
-/datum/action/cooldown/track_target/proc/remove_beacon()
-	if(target_beacon)
-		QDEL_NULL(target_beacon)
 
 /// Callback for the radial to ensure it's closed when not allowed.
 /datum/action/cooldown/track_target/proc/check_menu()
@@ -184,23 +203,27 @@
 	return TRUE
 
 /// Gets the balloon message for who we're tracking.
-/datum/action/cooldown/track_target/proc/get_balloon_message(mob/living/tracked_mob)
+/datum/action/cooldown/track_target/proc/get_balloon_message(atom/tracked_thing)
 	var/balloon_message = "error text!"
-	var/turf/their_turf = get_turf(tracked_mob)
+	var/turf/their_turf = get_turf(tracked_thing)
 	var/turf/our_turf = get_turf(owner)
 	var/their_z = their_turf?.z
 	var/our_z = our_turf?.z
 
 	var/is_alone = TRUE
-	for(var/mob/living/watcher in view(7, tracked_mob))
-		if(QDELETED(watcher.client) || watcher == tracked_mob)
-			continue
-		if(IS_HERETIC_OR_MONSTER(watcher) || (watcher.mind?.enslaved_to?.resolve() == owner) || HAS_TRAIT(watcher, TRAIT_GHOST_CRITTER))
-			continue
-		if(watcher.stat == DEAD || watcher.is_blind())
-			continue
-		is_alone = FALSE
-		break
+	if(ismob(tracked_thing))
+		var/mob/tracked_mob = tracked_thing
+		for(var/mob/living/watcher in viewers(tracked_mob))
+			if(!watcher.client || watcher == tracked_mob)
+				continue
+			if(IS_HERETIC_OR_MONSTER(watcher) || IS_WEAKREF_OF(owner, watcher.mind?.enslaved_to))
+				continue
+			if(HAS_TRAIT(watcher, TRAIT_GHOST_CRITTER) || isrevenant(watcher))
+				continue
+			if(watcher.stat == DEAD || watcher.is_blind())
+				continue
+			is_alone = FALSE
+			break
 
 	// One of us is in somewhere we shouldn't be
 	if(!our_z || !their_z)
@@ -229,8 +252,8 @@
 		else if(is_away_level(their_z) || is_secret_level(their_z))
 			balloon_message = "beyond the gateway!"
 
-		// On a shuttle
-		else if(is_reserved_level(their_z) && istype(get_area(their_turf), /area/shuttle))
+		// on a shuttle
+		else if(is_reserved_level(their_z) && istype(get_area(tracked_thing), /area/shuttle))
 			balloon_message = "on a shuttle!"
 
 		// They're somewhere we probably can't get too - sacrifice z-level, centcom, etc
@@ -242,19 +265,60 @@
 		var/dist = get_dist(our_turf, their_turf)
 		var/dir = get_dir(our_turf, their_turf)
 
+		var/arrow_color
+
 		switch(dist)
 			if(0 to 15)
 				balloon_message = "very near, [dir2text(dir)]!"
+				arrow_color = COLOR_GREEN
 			if(16 to 31)
 				balloon_message = "near, [dir2text(dir)]!"
+				arrow_color = COLOR_YELLOW
 			if(32 to 127)
 				balloon_message = "far, [dir2text(dir)]!"
+				arrow_color = COLOR_ORANGE
 			else
 				balloon_message = "very far!"
+				arrow_color = COLOR_RED
 
-	if(tracked_mob.stat == DEAD || isbrain(tracked_mob))
-		balloon_message = "they're dead, " + balloon_message
-	else if(is_alone)
-		balloon_message = "they're alone, " + balloon_message
+		if(owner.hud_used)
+			new /atom/movable/screen/navigate_arrow(null, owner.hud_used, their_turf, arrow_color)
+
+	if(ismob(tracked_thing))
+		var/mob/tracked_mob = tracked_thing
+		if(tracked_mob.stat == DEAD)
+			balloon_message = "[tracked_mob.p_theyre()] dead, " + balloon_message
+		else if(is_alone)
+			balloon_message = "[tracked_mob.p_theyre()] alone, " + balloon_message
 
 	return balloon_message
+
+/atom/movable/screen/navigate_arrow
+	icon = 'icons/effects/96x96.dmi'
+	name = "farsight arrow"
+	icon_state = "navigate_arrow_appear"
+	pixel_x = -32
+	pixel_y = -32
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/atom/movable/screen/navigate_arrow/Initialize(mapload, datum/hud/hud_owner, turf/tracked_turf, arrow_color)
+	. = ..()
+	var/mob/owner = get_mob()
+	if (owner)
+		animate(src, transform = matrix(get_angle(owner, tracked_turf), MATRIX_ROTATE), 0.2 SECONDS)
+	screen_loc = around_player
+	color = arrow_color
+	if (hud)
+		hud.infodisplay += src
+		hud.show_hud(hud.hud_version)
+	addtimer(CALLBACK(src, PROC_REF(end_effect)), 1.6 SECONDS)
+
+/atom/movable/screen/navigate_arrow/proc/end_effect()
+	icon_state = "navigate_arrow_disappear"
+	addtimer(CALLBACK(src, PROC_REF(null_arrow)), 0.4 SECONDS)
+
+/atom/movable/screen/navigate_arrow/proc/null_arrow()
+	if (hud)
+		hud.infodisplay -= src
+		hud.show_hud(hud.hud_version)
+	qdel(src)

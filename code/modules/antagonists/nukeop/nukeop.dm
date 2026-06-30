@@ -237,11 +237,6 @@
 	back = /obj/item/mod/control/pre_equipped/empty/syndicate
 	uniform = /obj/item/clothing/under/syndicate
 
-/datum/outfit/nuclear_operative/post_equip(mob/living/carbon/human/H, visualsOnly)
-	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
-	booster.active = TRUE
-	H.update_worn_back()
-
 /datum/outfit/nuclear_operative_elite
 	name = "Nuclear Operative (Elite, Preview only)"
 
@@ -251,9 +246,6 @@
 	r_hand = /obj/item/shield/energy
 
 /datum/outfit/nuclear_operative_elite/post_equip(mob/living/carbon/human/H, visualsOnly)
-	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
-	booster.active = TRUE
-	H.update_worn_back()
 	var/obj/item/shield/energy/shield = locate() in H.held_items
 	shield.icon_state = "[shield.base_icon_state]1"
 	H.update_held_items()

@@ -244,6 +244,14 @@
 /obj/item/gun/ballistic/automatic/pistol/trappiste/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_TRAPPISTE)
 
+/obj/item/gun/ballistic/automatic/pistol/trappiste/damaged
+	desc = "A somewhat rare to see Trappiste pistol firing the high caliber .585 developed by the same company. \
+	Sees rare use mainly due to its tendency to cause severe wrist discomfort. This ones turning mechanism is rusted"
+	fire_delay = 1.7 SECONDS
+
+/obj/item/gun/ballistic/automatic/pistol/trappiste/damaged/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_REMOVED)
+
 /obj/item/gun/ballistic/automatic/pistol/sol/examine(mob/user)
 	. = ..()
 	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
@@ -371,32 +379,31 @@
 /obj/item/gun/ballistic/automatic/pistol/whispering_jester_45
 	name = "\improper Whispering-Jester .45"
 	desc = "A .45 handgun that is designed by Rayne Corp for various people such as jesters, insurgents, and even stealth operatives. The handgun has a built in holosight, suppressor, and laser sight."
-	icon = 'monkestation/icons/obj/weapons/guns/whispering_jester_45/item.dmi'
+	icon = 'icons/obj/weapons/guns/whispering_jester_45/item.dmi'
 	icon_state = "jester"
-	lefthand_file = 'monkestation/icons/obj/weapons/guns/whispering_jester_45/lefthand.dmi'
-	righthand_file = 'monkestation/icons/obj/weapons/guns/whispering_jester_45/righthand.dmi'
+	lefthand_file = 'icons/obj/weapons/guns/whispering_jester_45/lefthand.dmi'
+	righthand_file = 'icons/obj/weapons/guns/whispering_jester_45/righthand.dmi'
 	inhand_icon_state = "jester"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	accepted_magazine_type = /obj/item/ammo_box/magazine/whispering_jester_45_magazine
-	can_bayonet = FALSE
 	can_suppress = FALSE
 	can_unsuppress = FALSE
 	suppressed = TRUE
 	bolt_type = BOLT_TYPE_OPEN
 	bolt_wording = "firearm"
 	fire_delay = 1
-	fire_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_fire.ogg' //Unused, just in case it some how gets un-suppressed.
-	suppressed_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_fire.ogg'
+	fire_sound = 'sound/weapons/gun/whispering_jester_45/jester_fire.ogg' //Unused, just in case it some how gets un-suppressed.
+	suppressed_sound = 'sound/weapons/gun/whispering_jester_45/jester_fire.ogg'
 	suppressed_volume = 60
-	dry_fire_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
-	rack_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
-	lock_back_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
-	bolt_drop_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
-	load_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_mag_in.ogg'
-	load_empty_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_mag_in.ogg'
-	eject_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_mag_out.ogg'
-	eject_empty_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_mag_out.ogg'
+	dry_fire_sound = 'sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
+	rack_sound = 'sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
+	lock_back_sound = 'sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
+	bolt_drop_sound = 'sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
+	load_sound = 'sound/weapons/gun/whispering_jester_45/jester_mag_in.ogg'
+	load_empty_sound = 'sound/weapons/gun/whispering_jester_45/jester_mag_in.ogg'
+	eject_sound = 'sound/weapons/gun/whispering_jester_45/jester_mag_out.ogg'
+	eject_empty_sound = 'sound/weapons/gun/whispering_jester_45/jester_mag_out.ogg'
 
 //april fools edition
 /obj/item/gun/ballistic/automatic/pistol/whispering_jester_45/toyota
@@ -405,7 +412,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	accepted_magazine_type = /obj/item/ammo_box/magazine/whispering_jester_45_magazine/big_lmao
-	can_bayonet = FALSE
 	can_suppress = FALSE
 	can_unsuppress = TRUE
 	suppressed = FALSE
@@ -468,7 +474,7 @@
 
 /obj/item/gun/ballistic/automatic/pistol/paco/add_seclight_point() //Seclite functionality
 	AddComponent(/datum/component/seclite_attachable, \
-		light_overlay_icon = 'monkestation/icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
 		light_overlay = "pacoflight", \
 		overlay_x = 15, \
 		overlay_y = 13)
@@ -498,7 +504,7 @@
 	desc = "The standard issue service pistol of blueshield agents."
 	burst_size = 4
 	fire_delay = 1
-	icon = 'monkestation/icons/obj/weapons/guns/tech9.dmi'
+	icon = 'icons/obj/weapons/guns/tech9.dmi'
 	icon_state = "tech9"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/pistol_light.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m35

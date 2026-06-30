@@ -3,7 +3,7 @@
 	if (!screen || screen.type != type)
 		// needs to be recreated
 		clear_fullscreen(category, FALSE)
-		screens[category] = screen = new type()
+		screens[category] = screen = new type(null, hud_used)
 	else if ((!severity || severity == screen.severity) && (!client || screen.screen_loc != "CENTER-7,CENTER-7" || screen.view == client.view))
 		// doesn't need to be updated
 		return screen
@@ -42,12 +42,11 @@
 
 /mob/proc/clear_fullscreens()
 	for(var/category in screens)
+		var/atom/movable/screen/fullscreen/screen = screens[category]
 		clear_fullscreen(category)
-
-/mob/proc/hide_fullscreens()
-	if(client)
-		for(var/category in screens)
-			client.screen -= screens[category]
+		if(!QDELETED(screen))
+			qdel(screen)
+		screens -= category
 
 /mob/proc/reload_fullscreen()
 	if(client)

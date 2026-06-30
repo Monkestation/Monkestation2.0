@@ -22,6 +22,7 @@
 		JOB_WARDEN,
 	)
 	required_enemies = 5
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event/zombie_meteor_wave
 	start_when = 1

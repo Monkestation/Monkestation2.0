@@ -1,7 +1,7 @@
 ///Defines for the pressure strength of the fist
 #define LOW_PRESSURE 1
-#define MID_PRESSURE 2
-#define HIGH_PRESSURE 3
+#define MID_PRESSURE 1.5
+#define HIGH_PRESSURE 2
 ///Defines for the tank change action
 #define TANK_INSERTING 0
 #define TANK_REMOVING 1
@@ -141,7 +141,7 @@
 	if(!QDELETED(target))
 		var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 
-		target.throw_at(throw_target, 5 * fist_pressure_setting, 0.5 + (fist_pressure_setting / 2))
+		target.throw_at(throw_target, 2 + fist_pressure_setting)
 
 	log_combat(user, target, "power fisted", src)
 

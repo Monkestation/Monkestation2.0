@@ -139,3 +139,6 @@
 	greyscale_config = null
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
+
+/obj/item/umbrella/consistent
+	random_color = FALSE

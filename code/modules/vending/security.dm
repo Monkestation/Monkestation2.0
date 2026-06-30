@@ -17,6 +17,7 @@
 		/obj/item/storage/box/evidence = 6,
 		/obj/item/flashlight/seclite = 4,
 		/obj/item/restraints/legcuffs/bola/energy = 7,
+		/obj/item/restraints/legcuffs/beartrap/security = 4,
 		/obj/item/ammo_box/magazine/m35/rubber = 14,
 		/obj/item/clothing/mask/gas/sechailer = 6,
 		/obj/item/clothing/mask/whistle = 3,
@@ -65,7 +66,7 @@
 /obj/item/security_voucher
 	name = "security voucher"
 	desc = "A token to redeem a piece of equipment. Use it on a SecTech vendor."
-	icon = 'monkestation/icons/obj/items/security_voucher.dmi'
+	icon = 'icons/obj/items/security_voucher.dmi'
 	icon_state = "security_voucher_primary"
 	w_class = WEIGHT_CLASS_TINY
 

@@ -11,7 +11,7 @@
 	/// Which internals tank are we going to use for this box?
 	var/internal_type = /obj/item/tank/internals/emergency_oxygen
 	/// What medipen should be present in this box?
-	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
+	var/medipen_type = /obj/item/reagent_containers/medipen
 	/// Are we crafted?
 	var/crafted = FALSE
 
@@ -86,7 +86,7 @@
 	illustration = "extendedtank"
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
-	medipen_type =  /obj/item/reagent_containers/hypospray/medipen/atropine
+	medipen_type =  /obj/item/reagent_containers/medipen/atropine
 
 /obj/item/storage/box/survival/syndie/PopulateContents()
 	..()
@@ -216,7 +216,7 @@
 /obj/item/storage/box/hug/medical/PopulateContents()
 	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
+	new /obj/item/reagent_containers/medipen(src)
 
 //Clown survival box
 /obj/item/storage/box/survival/hug
@@ -325,7 +325,7 @@
 	illustration = "extendedtank"
 	mask_type = /obj/item/clothing/mask/gas/sechailer/syndicate
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
-	medipen_type =  /obj/item/reagent_containers/hypospray/medipen/atropine
+	medipen_type =  /obj/item/reagent_containers/medipen/atropine
 
 /obj/item/storage/box/survival/operative/PopulateContents()
 	..()

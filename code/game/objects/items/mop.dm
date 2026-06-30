@@ -19,7 +19,6 @@
 	var/max_reagent_volume = 45
 	var/mopspeed = 1.5 SECONDS
 	force_string = "robust... against germs"
-	var/insertable = TRUE
 	var/static/list/clean_blacklist = typecacheof(list(
 		/obj/item/reagent_containers/cup/bucket,
 		/obj/structure/mop_bucket,
@@ -83,10 +82,6 @@
 		val2remove = round(cleaner.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER), 0.1)
 	reagents.remove_all(val2remove) //reaction() doesn't use up the reagents
 
-/obj/item/mop/cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
-
 /obj/item/mop/advanced
 	desc = "The most advanced tool in a custodian's arsenal, complete with a condenser for self-wetting! Just think of all the viscera you will clean up with this!"
 	name = "advanced mop"
@@ -130,9 +125,6 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/mop/advanced/cyborg
-	insertable = FALSE
-
 /obj/item/mop/sharp //Basically a slightly worse spear.
 	desc = "A mop with a sharpened handle. Careful!"
 	name = "sharpened mop"
@@ -140,7 +132,7 @@
 	throwforce = 18
 	throw_speed = 4
 	demolition_mod = 0.75
-	embedding = list("impact_pain_mult" = 2, "remove_pain_mult" = 4, "jostle_chance" = 2.5)
+	embed_type = /datum/embedding/mop
 	armour_penetration = 20
 	armour_ignorance = 10
 	attack_verb_continuous = list("mops", "stabs", "shanks", "jousts")
@@ -148,3 +140,8 @@
 	sharpness = SHARP_EDGED //spears aren't pointy either.  Just assume it's carved into a naginata-style blade
 	wound_bonus = -15
 	bare_wound_bonus = 15
+
+/datum/embedding/mop
+	impact_pain_mult = 2
+	remove_pain_mult = 4
+	jostle_chance = 2.5

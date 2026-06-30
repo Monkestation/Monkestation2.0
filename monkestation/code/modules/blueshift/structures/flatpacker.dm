@@ -12,6 +12,7 @@
 	light_color = LIGHT_COLOR_BRIGHT_YELLOW
 	light_power = 5
 	allowed_buildtypes = COLONY_FABRICATOR
+	production_speed_multiplier = 1
 	/// The item we turn into when repacked
 	var/repacked_type = /obj/item/flatpacked_machine
 	/// The sound loop played while the fabricator is making something

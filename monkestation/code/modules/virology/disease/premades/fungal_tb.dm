@@ -5,7 +5,7 @@
 	category = DISEASE_FUNGUS
 
 	symptoms = list(
-		new /datum/symptom/fungal_tb
+		new /datum/symptom/fungal_tb,
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD|DISEASE_SPREAD_CONTACT_FLUIDS|DISEASE_SPREAD_AIRBORNE
 	robustness = 100

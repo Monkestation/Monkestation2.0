@@ -193,7 +193,7 @@
 	stack = stack + filename_to_test
 
 	log_config("Loading config file [filename]...")
-	var/list/lines = world.file2list("[directory]/[filename]")
+	var/list/lines = file2list("[directory]/[filename]")
 	var/list/_entries = entries
 	for(var/L in lines)
 		L = trim(L)
@@ -288,18 +288,17 @@
 	msg = "Edit"
 	return msg
 
-/datum/controller/configuration/proc/Get(entry_type)
-	var/datum/config_entry/E = entry_type
-	var/entry_is_abstract = initial(E.abstract_type) == entry_type
+/datum/controller/configuration/proc/Get(datum/config_entry/entry_type)
+	var/entry_is_abstract = entry_type::abstract_type == entry_type
 	if(entry_is_abstract)
 		CRASH("Tried to retrieve an abstract config_entry: [entry_type]")
-	E = entries_by_type[entry_type]
-	if(!E)
+	entry_type = entries_by_type[entry_type]
+	if(!entry_type)
 		CRASH("Missing config entry for [entry_type]!")
-	if((E.protection & CONFIG_ENTRY_HIDDEN) && IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Get" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
+	if((entry_type.protection & CONFIG_ENTRY_HIDDEN) && IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Get" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
 		log_admin_private("Config access of [entry_type] attempted by [key_name(usr)]")
 		return
-	return E.config_entry_value
+	return entry_type.config_entry_value
 
 /datum/controller/configuration/proc/Set(entry_type, new_val)
 	var/datum/config_entry/E = entry_type
@@ -367,7 +366,7 @@ Example config:
 /datum/controller/configuration/proc/loadmaplist(filename)
 	log_config("Loading config file [filename]...")
 	filename = "[directory]/[filename]"
-	var/list/Lines = world.file2list(filename)
+	var/list/Lines = file2list(filename)
 
 	var/datum/map_config/currentmap = null
 	for(var/t in Lines)
@@ -464,7 +463,7 @@ Example config:
 	soft_shared_filter_reasons = list()
 	shared_regex_reason = list()
 
-	for (var/line in world.file2list("[directory]/in_character_filter.txt"))
+	for (var/line in file2list("[directory]/in_character_filter.txt"))
 		if (!line)
 			continue
 		if (findtextEx(line, "#", 1, 2))

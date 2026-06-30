@@ -39,7 +39,6 @@ type SeedData = {
   production: number;
   yield: number;
   potency: number;
-  instability: number;
   icon: string;
   icon_state: string;
   volume_mod: number;
@@ -129,20 +128,6 @@ export const SeedExtractor = (props) => {
                     onClick={(e) => setSortField('yield')}
                   >
                     YLD
-                  </Box>
-                </Tooltip>
-              </Table.Cell>
-              <Table.Cell collapsing p={1}>
-                <Tooltip
-                  content={
-                    'Instability: The likelihood of the plant to randomize stats or mutate. Affects quality of resulting food & drinks.'
-                  }
-                >
-                  <Box
-                    style={{ cursor: 'pointer' }}
-                    onClick={(e) => setSortField('instability')}
-                  >
-                    INS
                   </Box>
                 </Tooltip>
               </Table.Cell>
@@ -287,9 +272,6 @@ export const SeedExtractor = (props) => {
                   </Table.Cell>
                   <Table.Cell py={0.5} px={1} collapsing>
                     <Level value={item.yield} max={10} />
-                  </Table.Cell>
-                  <Table.Cell py={0.5} px={1} collapsing>
-                    <Level value={item.instability} max={100} reverse />
                   </Table.Cell>
                   <Table.Cell py={0.5} px={1} collapsing>
                     <Level value={item.endurance} max={100} />

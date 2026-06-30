@@ -271,8 +271,7 @@ SUBSYSTEM_DEF(vote)
 
 		new_voter.persistent_client.player_actions += voting_action
 		generated_actions += voting_action
-
-		if(current_vote.vote_sound && (new_voter.prefs.read_preference(/datum/preference/toggle/sound_announcements)))
+		if(current_vote.vote_sound && (new_voter.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS]"]))
 			SEND_SOUND(new_voter, sound(current_vote.vote_sound, volume = current_vote.vote_sound_volume)) // monkestation edit
 
 	SEND_SIGNAL(src, COMSIG_VOTE_STARTED)
@@ -480,7 +479,7 @@ SUBSYSTEM_DEF(vote)
 /// Datum action given to mobs that allows players to vote on the current vote.
 /datum/action/vote
 	name = "Vote!"
-	button_icon = 'monkestation/icons/hud/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "vote"
 	show_to_observers = FALSE
 

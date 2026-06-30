@@ -32,8 +32,8 @@
 		/obj/item/shard,
 	)
 	AddElement(/datum/element/death_drops, loot)
-	var/datum/action/cooldown/spell/jaunt/mirror_walk/jaunt = new (src)
-	jaunt.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/spell/jaunt/mirror_walk)
+	ADD_TRAIT(src, TRAIT_UNHITTABLE_BY_LASERS, INNATE_TRAIT)
 
 /mob/living/basic/heretic_summon/maid_in_the_mirror/death(gibbed)
 	var/turf/death_turf = get_turf(src)
@@ -51,7 +51,7 @@
 		return
 
 	// If we have health, we take some damage
-	if(health > (maxHealth * 0.125))
+	if(health > (maxHealth * 0.1))
 		visible_message(
 				span_warning("[src] seems to fade in and out slightly."),
 				span_userdanger("[user]'s gaze pierces your every being!"),
@@ -79,3 +79,10 @@
 
 	recent_examiner_refs -= mob_ref
 	heal_overall_damage(5)
+
+/mob/living/basic/heretic_summon/maid_in_the_mirror/melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(!. || !isliving(target))
+		return
+	var/mob/living/living_target = target
+	living_target.apply_status_effect(/datum/status_effect/void_chill, 1)

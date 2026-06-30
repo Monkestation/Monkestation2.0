@@ -1,6 +1,6 @@
 /datum/action/innate/clockcult
-	button_icon = 'monkestation/icons/mob/clock_cult/actions_clock.dmi'
-	background_icon = 'monkestation/icons/mob/clock_cult/background_clock.dmi'
+	button_icon = 'icons/mob/clock_cult/actions_clock.dmi'
+	background_icon = 'icons/mob/clock_cult/background_clock.dmi'
 	background_icon_state = "bg_clock"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
 
@@ -34,6 +34,8 @@
 /datum/action/innate/clockcult/quick_bind/IsAvailable(feedback)
 	if(!IS_CLOCK(owner) || owner.incapacitated())
 		return FALSE
+	if(scripture.power_cost > SSthe_ark.clock_power)
+		return FALSE
 	return ..()
 
 /datum/action/innate/clockcult/quick_bind/Activate()
@@ -47,12 +49,12 @@
 		to_chat(owner, span_brass("You fail to invoke [name]."))
 
 /datum/action/item_action/toggle/clock
-	button_icon = 'monkestation/icons/mob/clock_cult/background_clock.dmi'
+	button_icon = 'icons/mob/clock_cult/background_clock.dmi'
 	background_icon_state = "bg_clock"
 
 /datum/action/cooldown/clock_cult
-	button_icon = 'monkestation/icons/mob/clock_cult/actions_clock.dmi'
-	background_icon = 'monkestation/icons/mob/clock_cult/background_clock.dmi'
+	button_icon = 'icons/mob/clock_cult/actions_clock.dmi'
+	background_icon = 'icons/mob/clock_cult/background_clock.dmi'
 	background_icon_state = "bg_clock"
 
 /datum/action/cooldown/clock_cult/IsAvailable(feedback)

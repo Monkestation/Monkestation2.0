@@ -11,7 +11,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// Whether or not we allow saving/loading. Used for guests, if they're enabled
 	var/load_and_save = TRUE
 	/// Ensures that we always load the last used save, QOL
-	var/default_slot = 1
+	var/active_slot = 1
 	/// The maximum number of slots we're allowed to contain
 	var/max_save_slots = 20
 
@@ -49,8 +49,33 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//Quirk list
 	var/list/all_quirks = list()
 
-	//Job preferences 2.0 - indexed by job title , no key or value implies never
-	var/list/job_preferences = list()
+	/// Used to change which character the player will join as for this specific round
+	/// not saved
+	var/latejoin_overrride_character = 0
+
+	/// Use `get_enabled_character_names()` instead
+	/// not saved
+	var/enabled_character_names = null
+
+	/// Job preferences 2.0 - indexed by job title , no key or value implies never
+	/// Points to either `job_preferences_character` or `job_preferences_overall`
+	/// ["job title"] = priority
+	var/list/job_preferences
+
+	/// The enabled characters for `Character Filters` role selection mode
+	/// [character slot number]
+	var/list/enabled_characters = list()
+
+	/// The default character for `Character Filters` role selection mode
+	var/default_character = 1
+
+	/// Job preferences for the active character
+	/// ["job title"] = (int) priority
+	var/alist/job_preferences_character = list()
+
+	/// Overall job preferences for the `Character Filters` and `Simple` role selection modes
+	/// ["job title"] = (int) priority
+	var/alist/job_preferences_overall = list()
 
 	/// The current window, PREFERENCE_TAB_* in [`code/__DEFINES/preferences.dm`]
 	var/current_window = PREFERENCE_WINDOW_CHARACTERS
@@ -139,7 +164,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(loaded_preferences_successfully)
 		if(load_character())
 			loaded = TRUE
-			return
+
+	var/needs_save = FALSE
+	for(var/channel in GLOB.used_sound_channels)
+		if(isnull(channel_volume["[channel]"]))
+			channel_volume["[channel]"] = 50
+			needs_save = TRUE
+	if(needs_save)
+		save_preferences()
+
+	//If we loaded prefs, we still want to make sure they have all sound channels, now that it's done we can safely early return.
+	if(loaded)
+		return
 	//we couldn't load character data so just randomize the character appearance + name
 	randomise_appearance_prefs() //let's create a random character then - rather than a fat, bald and naked man.
 	if(parent)
@@ -176,15 +212,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		character_preview_view = create_character_preview_view(user)
-
-		var/needs_save = FALSE
-		for(var/channel in GLOB.used_sound_channels)
-			if(isnull(channel_volume["[channel]"]))
-				channel_volume["[channel]"] = 50
-				needs_save = TRUE
-		if(needs_save)
-			save_preferences()
-
 		ui = new(user, src, "PreferencesMenu")
 		ui.set_autoupdate(FALSE)
 		ui.open()
@@ -208,7 +235,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	data["character_preferences"] = compile_character_preferences(user)
 
-	data["active_slot"] = default_slot
+	data["active_slot"] = active_slot
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		data += preference_middleware.get_ui_data(user)
@@ -216,9 +243,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if (current_window == PREFERENCE_WINDOW_GAME_PREFERENCES)
 		var/list/channels = list()
 		for(var/channel in GLOB.used_sound_channels)
+			var/list/channel_info = get_channel_info(channel)
 			channels += list(list(
 				"num" = channel,
-				"name" = get_channel_name(channel),
+				"name" = channel_info[1],
+				"desc" = channel_info[2],
 				"volume" = channel_volume["[channel]"]
 			))
 		data["channels"] = channels
@@ -270,12 +299,23 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return assets
 
-/datum/preferences/proc/set_channel_volume(channel, vol, mob/user)
-	user.update_media_volume(channel)
+/datum/preferences/proc/set_channel_volume(channel, vol)
+	parent.mob.update_media_volume(channel)
 
-	var/sound/S = sound(null, channel = channel, volume = vol)
-	S.status = SOUND_UPDATE
-	SEND_SOUND(usr, S)
+	//we gotta take into account existing sounds repeating/waiting, otherwise we completely wipe looping sounds (such as whitenoise).
+	for(var/sound/S in parent.SoundQuery())
+		//master channel affects all others.
+		if((channel != CHANNEL_MASTER_VOLUME) && (S.channel != channel))
+			continue
+		var/sound/new_sound = sound(
+			null,
+			repeat = S.repeat,
+			wait = S.wait,
+			channel = S.channel,
+			volume = calculate_mixed_volume(parent, S.volume, S.channel),
+		)
+		new_sound.status = SOUND_UPDATE
+		SEND_SOUND(parent.mob, new_sound)
 
 /datum/preferences/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -307,7 +347,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return TRUE
 
 		if ("volume")
-			var/mob/user = ui.user
 			var/channel = text2num(params["channel"])
 			var/volume = text2num(params["volume"])
 			if(isnull(channel))
@@ -319,14 +358,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				CHANNEL_INSTRUMENTS_ROBOT,
 			)
 			if(!(channel in GLOB.proxy_sound_channels)) //if its a proxy we are just wasting time
-				set_channel_volume(channel, volume, user)
+				set_channel_volume(channel, volume)
 
 			else if((channel in instrument_channels))
 				var/datum/song/holder_song = new
 				for(var/used_channel in holder_song.channels_playing)
-					set_channel_volume(used_channel, volume, user)
+					set_channel_volume(used_channel, volume)
 			return TRUE
 
+		if ("set_character_enabled")
+			set_character_enabled(sanitize_integer(params["slot"], 1, max_save_slots, default_character), params["enabled"] != FALSE)
+			return TRUE
 		if ("change_slot")
 			// Save existing character
 			save_character()
@@ -358,6 +400,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			if (istype(requested_preference, /datum/preference/name))
 				tainted_character_profiles = TRUE
+				enabled_character_names = null
 
 			for(var/datum/preference_middleware/preference_middleware as anything in middleware)
 				preference_middleware.post_set_preference(ui.user, requested_preference_key, value)
@@ -488,7 +531,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /// A preview of a character for use in the preferences menu
 /atom/movable/screen/map_view/char_preview
 	name = "character_preview"
-	icon = 'monkestation/icons/hud/screen_gen64x32.dmi'
+	icon = 'icons/hud/screen_gen64x32.dmi'
 	bound_height = 64
 
 	/// The body that is displayed
@@ -528,19 +571,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	QDEL_NULL(body)
 	body = new
 
+
+/datum/preferences/proc/get_character_name(slot)
+	// It won't be updated in the savefile yet, so just read the name directly
+	if (slot == active_slot)
+		return read_preference(/datum/preference/name/real_name)
+
+	var/tree_key = "character[slot]"
+	var/save_data = savefile.get_entry(tree_key)
+	return save_data?["real_name"]
+
 /datum/preferences/proc/create_character_profiles()
 	var/list/profiles = list()
 
 	for (var/index in 1 to max_save_slots)
-		// It won't be updated in the savefile yet, so just read the name directly
-		if (index == default_slot)
-			profiles += read_preference(/datum/preference/name/real_name)
-			continue
-
-		var/tree_key = "character[index]"
-		var/save_data = savefile.get_entry(tree_key)
-		var/name = save_data?["real_name"]
-
+		var/name = get_character_name(index)
 		if (isnull(name))
 			profiles += null
 			continue
@@ -549,26 +594,32 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return profiles
 
-/datum/preferences/proc/set_job_preference_level(datum/job/job, level)
+/datum/preferences/proc/set_job_preference_level(datum/job/job, level, job_prefs_type)
 	if (!job)
 		return FALSE
+
+	var/list/job_prefs
+	if (job_prefs_type == JOB_PREFS_OVERALL)
+		job_prefs = job_preferences_overall
+	if (job_prefs_type == JOB_PREFS_CHARACTER)
+		job_prefs = job_preferences_character
 
 	if (level == JP_HIGH)
 		var/datum/job/overflow_role = SSjob.overflow_role
 		var/overflow_role_title = initial(overflow_role.title)
 
-		for(var/other_job in job_preferences)
-			if(job_preferences[other_job] == JP_HIGH)
+		for(var/other_job in job_prefs)
+			if(job_prefs[other_job] == JP_HIGH)
 				// Overflow role needs to go to NEVER, not medium!
 				if(other_job == overflow_role_title)
-					job_preferences[other_job] = null
+					job_prefs[other_job] = null
 				else
-					job_preferences[other_job] = JP_MEDIUM
+					job_prefs[other_job] = JP_MEDIUM
 
 	if(level == null)
-		job_preferences -= job.title
+		job_prefs -= job.title
 	else
-		job_preferences[job.title] = level
+		job_prefs[job.title] = level
 
 	return TRUE
 
@@ -576,6 +627,72 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	for(var/job in job_preferences)
 		if(job_preferences[job] == JP_HIGH)
 			return job
+
+/datum/preferences/proc/get_enabled_character_names()
+	if (!isnull(enabled_character_names))
+		return enabled_character_names
+
+	if (latejoin_overrride_character != 0)
+		return get_character_name(latejoin_overrride_character) + " (via override)"
+
+	var/mode = read_preference(/datum/preference/choiced/character_role_select_mode)
+	if (mode == CHARACTER_ROLE_MODE_SIMPLE || mode == CHARACTER_ROLE_MODE_PER_CHAR)
+		return read_preference(/datum/preference/name/real_name)
+
+	enabled_character_names = ""
+
+	for (var/i in 1 to length(enabled_characters))
+		var/name = get_character_name(enabled_characters[i])
+
+		if (!isnull(name))
+			if (i == 1)
+				enabled_character_names = name
+			else if (i == length(enabled_characters))
+				enabled_character_names += " or [name]"
+			else
+				enabled_character_names += ", [name]"
+
+	enabled_character_names += " (default: [get_character_name(default_character)])"
+
+	return enabled_character_names
+
+/datum/preferences/proc/set_character_enabled(slot, enable)
+	enabled_character_names = null
+	enabled_characters.RemoveAll(slot)
+	if (enable)
+		if (isnull(savefile.get_entry("character[slot]")))
+			return FALSE
+		enabled_characters.Add(slot)
+		sort_list(enabled_characters)
+	return TRUE
+
+/datum/preferences/proc/pick_character_for_job(datum/job/job)
+	if (latejoin_overrride_character != 0)
+		if (latejoin_overrride_character != active_slot)
+			save_character()
+			switch_to_slot(latejoin_overrride_character)
+		return
+
+	var/mode = read_preference(/datum/preference/choiced/character_role_select_mode)
+	if (mode == CHARACTER_ROLE_MODE_SIMPLE || mode == CHARACTER_ROLE_MODE_PER_CHAR)
+		return
+
+	var/chosen = default_character
+	for (var/character_slot in shuffle(enabled_characters))
+		// It won't be updated in the savefile yet, so just read the name directly
+		if (character_slot == active_slot)
+			if (!isnull(job_preferences_character[job.title]))
+				return
+
+		var/tree_key = "character[character_slot]"
+		var/save_data = savefile.get_entry(tree_key)
+		var/job_prefs = save_data?["job_preferences"]
+		if (islist(job_prefs) && !isnull(job_prefs[job.title]))
+			chosen = character_slot
+			break
+
+	save_character()
+	switch_to_slot(chosen)
 
 /datum/preferences/proc/GetQuirkBalance()
 	var/bal = 0
@@ -667,12 +784,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return default_randomization
 
-/client/verb/change_character_slot()
-	set name = "Change Character Slot"
-	set desc = "Changes the active character slot. This is no different than clicking the preferred character slot in the Character Setup menu."
-	set category = "OOC"
-
-	var/list/characters = prefs.create_character_profiles()
+/datum/preferences/proc/pick_character_tgui_list(current_slot_num, title)
+	var/list/characters = create_character_profiles()
 	var/list/options = list()
 	var/current_slot
 
@@ -681,22 +794,44 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if (isnull(name))
 			continue
 
-		if(prefs.default_slot == i)
+		if(current_slot_num == i)
 			current_slot = name
 
 		options[name] = i
 
 	if(!length(options))
-		to_chat(src, span_warning("You have no characters."))
+		to_chat(parent, span_warning("You have no characters."))
 		return
 
-	var/choice = tgui_input_list(src, "Select a character slot", "Change Character Slot", options, current_slot)
+	var/choice = tgui_input_list(parent, "Select a character slot", title, options, current_slot)
 
 	if(!choice)
 		return
 
-	var/slot = options[choice]
-	prefs.save_character()
-	prefs.switch_to_slot(slot)
-	to_chat(src, span_notice("Selected character '[choice]'"))
+	to_chat(parent, span_notice("Selected character '[choice]'"))
+	return options[choice]
 
+/client/verb/change_character_slot()
+	set name = "Change Character Slot"
+	set desc = "Changes the active character slot. This is no different than clicking the preferred character slot in the Character Setup menu."
+	set category = "OOC"
+
+	if (prefs.read_preference(/datum/preference/choiced/character_role_select_mode) != CHARACTER_ROLE_MODE_SIMPLE)
+		return prefs.tmp_change_character_slot()
+
+	var/choice = prefs.pick_character_tgui_list(prefs.active_slot, "Change Character Slot")
+	if(choice)
+		prefs.save_character()
+		prefs.switch_to_slot(choice)
+
+/datum/preferences/proc/tmp_change_character_slot()
+	var/choice = pick_character_tgui_list(latejoin_overrride_character, "Set Override Character")
+	if(choice)
+		latejoin_overrride_character = choice
+		enabled_character_names = null
+
+/datum/preferences/proc/set_default_character()
+	var/choice = pick_character_tgui_list(latejoin_overrride_character, "Change Default Character")
+	if(choice)
+		default_character = choice
+		enabled_character_names = null

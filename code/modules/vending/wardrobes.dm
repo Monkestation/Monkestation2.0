@@ -33,8 +33,7 @@
 			"name" = "Facewear",
 			"icon" = "mask",
 			"products" = list(
-				/obj/item/clothing/mask/balaclava = 4,
-				/obj/item/clothing/mask/thermal_balaclava = 4,
+				/obj/item/clothing/mask/balaclava = 6,
 			),
 		),
 		list(
@@ -215,6 +214,7 @@
 		/obj/item/clothing/under/rank/engineering/atmospheric_technician = 3,
 		/obj/item/clothing/under/rank/engineering/atmospheric_technician/skirt = 3,
 		/obj/item/clothing/shoes/sneakers/black = 3,
+		/obj/item/clothing/head/beret/atmos = 3,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/atmos_wardrobe
 	payment_department = ACCOUNT_ENG
@@ -239,6 +239,7 @@
 		/obj/item/clothing/gloves/fingerless = 2,
 		/obj/item/clothing/head/soft/black = 2,
 		/obj/item/clothing/mask/bandana/skull/black = 2,
+		/obj/item/clothing/head/beret/science/robo = 2,
 	)
 	contraband = list(
 		/obj/item/clothing/suit/hooded/techpriest = 2,
@@ -520,6 +521,7 @@
 	)
 	premium = list(
 		/obj/item/clothing/suit/chaplainsuit/bishoprobe = 1,
+		/obj/item/clothing/suit/chaplainsuit/bishoprobe/black = 1,
 		/obj/item/clothing/head/chaplain/bishopmitre = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe
@@ -543,6 +545,7 @@
 		/obj/item/storage/backpack/chemistry = 2,
 		/obj/item/storage/backpack/satchel/chem = 2,
 		/obj/item/storage/backpack/duffelbag/chemistry = 2,
+		/obj/item/clothing/head/beret/medical/chemist = 2,
 		/obj/item/storage/bag/chemistry = 2,
 		/obj/item/ph_booklet = 3,
 	)
@@ -593,6 +596,7 @@
 		/obj/item/storage/backpack/satchel/vir = 2,
 		/obj/item/storage/backpack/duffelbag/virology = 2,
 		/obj/item/clothing/gloves/latex/nitrile = 2, // Monkestation addition
+		/obj/item/clothing/head/beret/medical/virologist = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/viro_wardrobe
 	payment_department = ACCOUNT_MED
@@ -655,11 +659,11 @@
 		/obj/item/clothing/gloves/combat = 3,
 		/obj/item/clothing/glasses/sunglasses = 3,
 		/obj/item/clothing/under/rank/centcom/commander = 3,
-		/obj/item/clothing/under/rank/centcom/centcom_skirt = 3,
+		/obj/item/clothing/under/rank/centcom/commander/skirt = 3,
 		/obj/item/clothing/under/rank/centcom/intern = 3,
 		/obj/item/clothing/under/rank/centcom/official = 3,
 		/obj/item/clothing/under/rank/centcom/officer = 3,
-		/obj/item/clothing/under/rank/centcom/officer_skirt = 3,
+		/obj/item/clothing/under/rank/centcom/officer/skirt = 3,
 		/obj/item/clothing/suit/armor/centcom_formal = 3,
 		/obj/item/clothing/suit/space/officer = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/centcom = 3,

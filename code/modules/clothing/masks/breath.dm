@@ -80,3 +80,4 @@
 
 /datum/armor/breath_muzzle
 	bio = 100
+

@@ -69,8 +69,10 @@ GLOBAL_LIST_INIT(loadout_masks, generate_loadout_items(/datum/loadout_item/mask)
 *	JOB-LOCKED
 */
 
-// Ain't a damn thing
-
+/datum/loadout_item/mask/balaclavathermal
+	name = "Thermal Balaclava"
+	item_path = /obj/item/clothing/mask/thermal_balaclava
+	restricted_roles = list(JOB_SECURITY_ASSISTANT, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY, JOB_BLUESHIELD)
 /*
 *	FAMILIES
 */
@@ -140,8 +142,12 @@ GLOBAL_LIST_INIT(loadout_masks, generate_loadout_items(/datum/loadout_item/mask)
 	item_path = /obj/item/clothing/mask/joy/manhunt
 
 /datum/loadout_item/mask/deforest_mask
-	name = "Deforest Mask"
+	name = "Deforest Gas Mask"
 	item_path = /obj/item/clothing/mask/gas/deforest
+
+/datum/loadout_item/mask/deforest_breath_mask
+	name = "Deforest Breath Mask"
+	item_path = /obj/item/clothing/mask/surgical/deforest
 
 /*
 *	DONATOR

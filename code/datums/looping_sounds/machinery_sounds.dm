@@ -180,4 +180,15 @@
 	use_reverb = FALSE
 	falloff_distance = 5
 	falloff_exponent = 1
+	sound_channel = CHANNEL_DELTA_SIRENS
 
+/datum/looping_sound/charger
+	start_sound = 'sound/machines/charger/charger_start.ogg'
+	start_length = 20
+	start_volume = 30
+	mid_sounds = list('sound/machines/charger/charger_mid.ogg')
+	mid_length = 30
+	volume = 15
+	falloff_distance = 3
+	falloff_exponent = 5
+	extra_range = 4

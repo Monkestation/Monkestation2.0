@@ -75,9 +75,6 @@
 /datum/opposing_force_equipment/modsuit_modules/cloak_mod
 	item_type = /obj/item/mod/module/stealth/ninja
 
-/datum/opposing_force_equipment/modsuit_modules/armor_booster
-	item_type = /obj/item/mod/module/armor_booster
-
 /datum/opposing_force_equipment/modsuit_modules/magnetic_harness
 	item_type = /obj/item/mod/module/magnetic_harness
 

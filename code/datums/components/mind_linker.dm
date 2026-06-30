@@ -274,6 +274,9 @@
 	if(!message || QDELETED(src) || QDELETED(owner) || owner.stat == DEAD)
 		return
 
+	if(owner.client?.prefs?.read_preference(/datum/preference/toggle/autopunctuation))
+		message = autopunct_bare(capitalize(message))
+
 	if(QDELETED(linker))
 		to_chat(owner, span_warning("The link seems to have been severed."))
 		return

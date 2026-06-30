@@ -5,7 +5,7 @@ ADMIN_VERB(toggle_game_debug, R_DEBUG, FALSE, "Debug-Game", "Toggles game debugg
 	log_admin("[key_name(user)] [message].")
 	BLACKBOX_LOG_ADMIN_VERB("Toggle Game Debug") // MONKE EDIT renamed this to match the verb.
 
-ADMIN_VERB_VISIBILITY(air_status, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(air_status, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(air_status, R_DEBUG, FALSE, "Air Status In Location", "Gets the air status for your current turf.", ADMIN_CATEGORY_DEBUG)
 	var/turf/user_turf = get_turf(user.mob)
 	if(!isturf(user_turf))
@@ -110,7 +110,7 @@ ADMIN_VERB(cmd_debug_make_powernets, R_DEBUG | R_SERVER, FALSE, "Make Powernets"
 	message_admins("[key_name_admin(user)] has remade the powernets. makepowernets() called.")
 	BLACKBOX_LOG_ADMIN_VERB("Make Powernets")
 
-ADMIN_VERB_VISIBILITY(cmd_admin_grantfullaccess, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(cmd_admin_grantfullaccess, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, FALSE, "Grant Full Access", "Grant full access to a mob.", ADMIN_CATEGORY_DEBUG, mob/M in world)
 	if(!SSticker.HasRoundStarted())
 		to_chat(user, span_boldnotice("Wait until the game starts"))
@@ -197,7 +197,7 @@ ADMIN_VERB(cmd_give_direct_control, R_ADMIN, FALSE, "Give Direct Control", "Give
 	log_admin("[key_name(user)] gave away direct control of [M] to [newkey].")
 	BLACKBOX_LOG_ADMIN_VERB("Give Direct Control")
 
-ADMIN_VERB_VISIBILITY(cmd_admin_areatest, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(cmd_admin_areatest, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(cmd_admin_areatest, R_DEBUG, FALSE, "Test Areas", "Tests the areas for various machinery.", ADMIN_CATEGORY_MAPPING, on_station as num, filter_maint as num)
 	var/list/dat = list()
 	var/list/areas_all = list()
@@ -388,15 +388,15 @@ ADMIN_VERB(cmd_admin_areatest, R_DEBUG, FALSE, "Test Areas", "Tests the areas fo
 	popup.set_content(dat.Join())
 	popup.open()
 
-ADMIN_VERB_VISIBILITY(cmd_admin_areatest_station, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(cmd_admin_areatest_station, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(cmd_admin_areatest_station, R_DEBUG, FALSE, "Test Areas (STATION ONLY)", "Tests the areas for various machinery on station z-levels.", ADMIN_CATEGORY_MAPPING)
 	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/cmd_admin_areatest, /* on_station = */ TRUE)
 
-ADMIN_VERB_VISIBILITY(cmd_admin_areatest_station_no_maintenance, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(cmd_admin_areatest_station_no_maintenance, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(cmd_admin_areatest_station_no_maintenance, R_DEBUG, FALSE, "Test Areas (STATION - NO MAINT)", "Tests the areas for various machinery on station z-levels, excluding maintenance areas.", ADMIN_CATEGORY_MAPPING)
 	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/cmd_admin_areatest, /* on_station = */ TRUE, /* filter_maint = */ TRUE)
 
-ADMIN_VERB_VISIBILITY(cmd_admin_areatest_all, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(cmd_admin_areatest_all, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(cmd_admin_areatest_all, R_DEBUG, FALSE, "Test Areas (ALL)", "Tests the areas for various machinery on all z-levels.", ADMIN_CATEGORY_MAPPING)
 	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/cmd_admin_areatest)
 
@@ -592,7 +592,7 @@ ADMIN_VERB(jump_to_ruin, R_DEBUG, FALSE, "Jump to Ruin", "Displays a list of all
 	to_chat(user, span_name("[template.name]"), confidential = TRUE)
 	to_chat(user, "<span class='italics'>[template.description]</span>", confidential = TRUE)
 
-ADMIN_VERB_VISIBILITY(place_ruin, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(place_ruin, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(place_ruin, R_DEBUG, FALSE, "Spawn Ruin", "Attempt to randomly place a specific ruin.", ADMIN_CATEGORY_MAPPING)
 	var/list/exists = list()
 	for(var/landmark in GLOB.ruin_landmarks)
@@ -698,7 +698,7 @@ ADMIN_VERB(pump_random_event, R_DEBUG, FALSE, "Pump Random Event", "Schedules th
 	BLACKBOX_LOG_ADMIN_VERB("Pump Random Event")
 	log_admin("[key_name(user)] pumped a random event.")
 
-ADMIN_VERB_VISIBILITY(start_line_profiling, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(start_line_profiling, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(start_line_profiling, R_DEBUG, FALSE, "Start Line Profiling", "Starts tracking line by line profiling for code lines that support it.", ADMIN_CATEGORY_PROFILE)
 	LINE_PROFILE_START
 
@@ -706,7 +706,7 @@ ADMIN_VERB(start_line_profiling, R_DEBUG, FALSE, "Start Line Profiling", "Starts
 	BLACKBOX_LOG_ADMIN_VERB("Start Line Profiling")
 	log_admin("[key_name(user)] started line by line profiling.")
 
-ADMIN_VERB_VISIBILITY(stop_line_profiling, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(stop_line_profiling, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(stop_line_profiling, R_DEBUG, FALSE, "Stop Line Profiling", "Stops tracking line by line profiling for code lines that support it.", ADMIN_CATEGORY_PROFILE)
 	LINE_PROFILE_STOP
 
@@ -714,7 +714,7 @@ ADMIN_VERB(stop_line_profiling, R_DEBUG, FALSE, "Stop Line Profiling", "Stops tr
 	BLACKBOX_LOG_ADMIN_VERB("Stop Line Profiling")
 	log_admin("[key_name(user)] stopped line by line profiling.")
 
-ADMIN_VERB_VISIBILITY(show_line_profiling, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(show_line_profiling, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(show_line_profiling, R_DEBUG, FALSE, "Show Line Profiling", "Shows tracked profiling info from code lines that support it.", ADMIN_CATEGORY_PROFILE)
 	var/sortlist = list(
 		"Avg time" = GLOBAL_PROC_REF(cmp_profile_avg_time_dsc),

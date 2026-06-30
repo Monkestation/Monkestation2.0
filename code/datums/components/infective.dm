@@ -125,9 +125,11 @@
 	output_diseases |= diseases
 
 /datum/component/infective/proc/try_infect(mob/living/living, target_zone)
-	if(length(diseases))
-		var/block = living.check_contact_sterility(BODY_ZONE_EVERYTHING)
-		var/list/contact = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
-		if(length(contact) && !block)
-			for(var/datum/disease/acute/V as anything in contact)
-				living.try_contact_infect(V, note="(Skin Contact - (Infective Component), coming from [src.parent])")
+	if(!length(diseases))
+		return
+	var/block = living.check_contact_sterility(BODY_ZONE_EVERYTHING)
+	var/list/contact = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
+	if(!length(contact) || block)
+		return
+	for(var/datum/disease/acute/V as anything in contact)
+		living.try_contact_infect(V, note="(Skin Contact - (Infective Component), coming from [src.parent])")

@@ -26,7 +26,7 @@
 		/datum/job_department/engineering,
 		)
 
-	family_heirlooms = list(/obj/item/clothing/head/utility/hardhat, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
+	family_heirlooms = list(/obj/item/clothing/head/utility/hardhat, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters, /obj/item/storage/belt/utility, /obj/item/clothing/glasses/meson/engine)
 
 	mail_goodies = list(
 		/obj/item/storage/box/lights/mixed = 20,
@@ -55,10 +55,6 @@
 	backpack = /obj/item/storage/backpack/industrial
 	satchel = /obj/item/storage/backpack/satchel/eng
 	duffelbag = /obj/item/storage/backpack/duffelbag/engineering
-
-	backpack_contents = list(
-		/obj/item/construction/rcd/loaded,
-	)
 
 	box = /obj/item/storage/box/survival/engineer
 	pda_slot = ITEM_SLOT_LPOCKET

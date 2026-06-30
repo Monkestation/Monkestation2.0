@@ -13,7 +13,7 @@
 	contraband = list()
 	premium = list()
 */
-
+#define ITEM_HASH(item)(sanitize_css_class_name("[item.name][item.custom_price][item.type]"))
 #define MAX_VENDING_INPUT_AMOUNT 30
 /**
  * # vending record datum
@@ -43,6 +43,8 @@
 	var/list/returned_products
 	///If set, this access is needed to see this vending product.
 	var/access_requirement
+	///Is the item discountable by job discounts
+	var/discountable
 
 /**
  * # vending machines
@@ -380,6 +382,7 @@
 		R.age_restricted = initial(temp.age_restricted)
 		R.colorable = !!(initial(temp.greyscale_config) && initial(temp.greyscale_colors) && (initial(temp.flags_1) & IS_PLAYER_COLORABLE_1))
 		R.category = product_to_category[typepath]
+		R.discountable = temp.discountable
 		if(access_needed)
 			R.access_requirement = access_needed
 		recordlist += R
@@ -745,11 +748,14 @@
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/i in 1 to num_shards)
 				var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
-				shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult = 1, pain_chance = 5)
-				shard.updateEmbedding()
+				var/datum/embedding/embed = shard.get_embed()
+				embed.embed_chance = 100
+				embed.ignore_throwspeed_threshold = TRUE
+				embed.impact_pain_mult = 1
 				carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-				shard.embedding = list()
-				shard.updateEmbedding()
+				embed.embed_chance = initial(embed.embed_chance)
+				embed.ignore_throwspeed_threshold = initial(embed.ignore_throwspeed_threshold)
+				embed.impact_pain_mult = initial(embed.impact_pain_mult)
 			return TRUE
 		if (VENDOR_CRUSH_CRIT_PIN) // pin them beneath the machine until someone untilts it
 			if (!isliving(atom_target))
@@ -979,11 +985,14 @@
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/i in 1 to num_shards)
 				var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
-				shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult = 1, pain_chance = 5)
-				shard.updateEmbedding()
+				var/datum/embedding/embed = shard.get_embed()
+				embed.embed_chance = 100
+				embed.ignore_throwspeed_threshold = TRUE
+				embed.impact_pain_mult = 1
 				carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-				shard.embedding = list()
-				shard.updateEmbedding()
+				embed.embed_chance = initial(embed.embed_chance)
+				embed.ignore_throwspeed_threshold = initial(embed.ignore_throwspeed_threshold)
+				embed.impact_pain_mult = initial(embed.impact_pain_mult)
 			return TRUE
 		if (VENDOR_CRUSH_CRIT_PIN) // pin them beneath the machine until someone untilts it
 			if (!isliving(atom_target))
@@ -1028,10 +1037,12 @@
 			LAZYADD(product_datum.returned_products, inserted_item)
 			return
 
-	if(vending_machine_input[inserted_item.type])
-		vending_machine_input[inserted_item.type]++
+	var/itemhash = ITEM_HASH(inserted_item)
+	if(vending_machine_input[itemhash])
+		vending_machine_input[itemhash]++
 	else
-		vending_machine_input[inserted_item.type] = 1
+		vending_machine_input[itemhash] = 1
+		update_static_data_for_all_viewers()
 	loaded_items++
 
 /obj/machinery/vending/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
@@ -1156,6 +1167,7 @@
 			price = premium ? (record.custom_premium_price || extra_price) : (record.custom_price || default_price),
 			max_amount = record.max_amount,
 			ref = REF(record),
+			discountable = record.discountable,
 		)
 
 		var/atom/printed = record.product_path
@@ -1333,7 +1345,7 @@
 			vend_ready = TRUE
 			return
 		var/datum/bank_account/account = C.registered_account
-		if(account.account_job && account.account_job.paycheck_department == payment_department)
+		if(account.account_job && account.account_job.paycheck_department == payment_department && R.discountable)
 			price_to_use = max(round(price_to_use * DEPARTMENT_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
 		if(coin_records.Find(R) || hidden_records.Find(R))
 			price_to_use = R.custom_premium_price ? R.custom_premium_price : extra_price
@@ -1565,12 +1577,14 @@
 	. = ..()
 	.["access"] = compartmentLoadAccessCheck(user)
 	.["vending_machine_input"] = list()
-	for (var/obj/item/stocked_item as anything in vending_machine_input)
+	for (var/stocked_item in vending_machine_input)
 		if(vending_machine_input[stocked_item] > 0)
 			var/base64
 			var/price = 0
-			for(var/obj/item/stored_item in contents)
-				if(stored_item.type == stocked_item)
+			var/itemname
+			for(var/obj/item/stored_item in contents - component_parts)
+				if(ITEM_HASH(stored_item) == stocked_item)
+					itemname = stored_item.name
 					price = stored_item.custom_price
 					if(!base64) //generate an icon of the item to use in UI
 						if(base64_cache[stored_item.type])
@@ -1580,8 +1594,8 @@
 							base64_cache[stored_item.type] = base64
 					break
 			var/list/data = list(
-				path = stocked_item,
-				name = initial(stocked_item.name),
+				path = stocked_item, //list key is named "path", but actual value is of type "text" from calling ITEM_HASH(). I'm afraid to rename for fear of causing issues
+				name = itemname,
 				price = price,
 				img = base64,
 				amount = vending_machine_input[stocked_item],
@@ -1639,7 +1653,7 @@
 /obj/machinery/vending/custom/proc/vend_act(mob/living/user, list/params)
 	if(!vend_ready)
 		return
-	var/obj/item/choice = text2path(params["item"]) // typepath is a string coming from javascript, we need to convert it back
+	var/choice = params["item"]
 	var/obj/item/dispensed_item
 	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
 	vend_ready = FALSE
@@ -1648,8 +1662,8 @@
 		flick(icon_deny, src)
 		return TRUE
 	var/datum/bank_account/payee = id_card.registered_account
-	for(var/obj/item/stock in contents)
-		if(istype(stock, choice))
+	for(var/obj/item/stock in contents - component_parts)
+		if(choice == ITEM_HASH(stock))
 			dispensed_item = stock
 			break
 	if(!dispensed_item)
@@ -1677,6 +1691,8 @@
 	loaded_items--
 	use_energy(active_power_usage)
 	vending_machine_input[choice] = max(vending_machine_input[choice] - 1, 0)
+	if (vending_machine_input[choice] == 0)
+		vending_machine_input -= list(choice)
 	if(user.CanReach(src) && user.put_in_hands(dispensed_item))
 		to_chat(user, span_notice("You take [dispensed_item.name] out of the slot."))
 	else

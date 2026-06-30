@@ -18,7 +18,8 @@
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/hypospray,
+		/obj/item/hypospray,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/gun/syringe,
@@ -141,7 +142,7 @@
 	armor_type = /datum/armor/armor_secjacket
 
 /obj/item/clothing/suit/toggle/labcoat/paramedic/deforest
-	name = "Hi-Vis Jacket"
+	name = "Deforest Jacket"
 	desc = "A high-visibility jacket designed by Deforest Medical for search and rescue, wool lining and interwoven fabrics make this jacket noticeably thick with a webbing directly attached to hold medical equipment."
 	icon_state = "hivisjacket"
 
@@ -149,10 +150,17 @@
 	. = ..()
 	AddComponent(\
 		/datum/component/toggle_attached_clothing,\
-		deployable_type = /obj/item/clothing/head/soft/paramedic/deforest,\
+		deployable_type = /obj/item/clothing/head/hooded/winterhood/medical/deforest,\
 		equipped_slot = ITEM_SLOT_HEAD,\
 		action_name = "Toggle Hood",\
-		destroy_on_removal = TRUE,\
+		destroy_on_removal = FALSE,\
 		parent_icon_state_suffix = "",\
 		down_overlay_state_suffix = "", \
 	)
+
+/obj/item/clothing/head/hooded/winterhood/medical/deforest
+	name = "Deforest Hood"
+	desc = "A high-visibility hood designed by Deforest Medical for search and rescue, wool lining and interwoven fabrics make this hood noticeably thick."
+	icon_state = "hivishood"
+	worn_icon = 'icons/mob/clothing/head/hats.dmi'
+	icon = 'icons/obj/clothing/head/hats.dmi'

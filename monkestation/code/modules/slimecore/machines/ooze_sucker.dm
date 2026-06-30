@@ -250,12 +250,23 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(anchored)
-		toggle_state()
-		balloon_alert_to_viewers("[turned_on ? "enabled" : "disabled"] ooze sucker")
-	else
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!anchored)
 		balloon_alert(user, "unanchored!")
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return
+	toggle_state()
+	balloon_alert_to_viewers("[turned_on ? "enabled" : "disabled"] ooze sucker")
+
+/obj/machinery/plumbing/ooze_sucker/attack_robot_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!anchored)
+		balloon_alert(user, "unanchored!")
+		return
+	toggle_state()
+	balloon_alert_to_viewers("[turned_on ? "enabled" : "disabled"] ooze sucker")
 
 /obj/machinery/plumbing/ooze_sucker/multitool_act(mob/living/user, obj/item/multitool/multi)
 	multitool_set_buffer(multi, src)
@@ -265,7 +276,7 @@
 /obj/item/disk/sucker_upgrade
 	name = "ooze sucker upgrade disk"
 	desc = "An upgrade disk for an ooze sucker."
-	icon_state = "rndmajordisk"
+	icon_state = "cargodisk"
 
 	/// A message given to the player when they examine a sucker with this installed.
 	var/notice

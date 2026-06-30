@@ -157,6 +157,6 @@
 	has_sensor = NO_SENSORS
 
 /obj/item/clothing/under/rank/medical/paramedic/deforest
-	name = "Hi-vis Uniform"
+	name = "Deforest Uniform"
 	desc = "A high-visibility medical uniform designed by Deforest Medical for search and rescue; pouches and pockets line the vest, ready to hold anything a would-be medic could need."
 	icon_state = "hivisuniform"

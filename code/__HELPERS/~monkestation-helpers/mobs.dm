@@ -9,15 +9,19 @@
 		return target
 	else if(ismob(target))
 		var/mob/mob_target = target
-		if(!QDELETED(mob_target.mind))
+		if(mob_target.mind)
 			return mob_target.mind
 		if(include_last && iscarbon(mob_target))
 			var/mob/living/carbon/carbon_target = mob_target
-			if(!QDELETED(carbon_target.last_mind))
+			if(carbon_target.last_mind)
 				return carbon_target.last_mind
 	else if(istype(target, /obj/item/organ/internal/brain))
+		if(is_oozeling_core(target))
+			var/obj/item/organ/internal/brain/slime/core = target
+			if(core.mind)
+				return core.mind
 		var/obj/item/organ/internal/brain/brain = target
-		if(!QDELETED(brain.brainmob?.mind))
+		if(brain.brainmob?.mind)
 			return brain.brainmob.mind
 
 /proc/is_late_arrival(mob/living/player)

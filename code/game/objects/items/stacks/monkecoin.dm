@@ -2,7 +2,7 @@
 /obj/item/stack/monkecoin
 	name = "monkecoin"
 	singular_name = "monkecoin"
-	icon = 'monkestation/icons/obj/monkecoin.dmi'
+	icon = 'icons/obj/monkecoin.dmi'
 	icon_state = "monkecoin"
 	amount = 1
 	max_amount = INFINITY
@@ -30,7 +30,7 @@
 /obj/item/stack/monkecoin/get_item_credit_value()
 	return (amount*value)
 
-/obj/item/stack/monkecoin/merge(obj/item/stack/S)
+/obj/item/stack/monkecoin/merge(obj/item/stack/S, limit)
 	. = ..()
 	update_desc()
 

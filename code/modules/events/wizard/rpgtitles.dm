@@ -6,7 +6,7 @@
 	earliest_start = 0 MINUTES
 	description = "Everyone gains an RPG title hovering below them."
 	min_wizard_trigger_potency = 4
-	max_wizard_trigger_potency = 7
+	max_wizard_trigger_potency = 100
 
 /datum/round_event/wizard/rpgtitles/start()
 	GLOB.rpgtitle_controller = new /datum/rpgtitle_controller

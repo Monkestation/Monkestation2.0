@@ -46,6 +46,7 @@
 
 /mob/living/basic/bingle/Initialize(mapload, obj/structure/bingle_hole/origin_pit)
 	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(on_space_move))
 	RegisterSignal(src, COMSIG_LIVING_BINGLE_EVOLVE, PROC_REF(evolve))
 	add_traits(bingle_traits, INNATE_TRAIT)
 	set_linked_pit(origin_pit)
@@ -70,13 +71,15 @@
 		gib()
 
 /mob/living/basic/bingle/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
+	. = ..()
+	if (!.)
+		return
 	if(!isliving(target))
-		return ..()
+		return
 	var/mob/living/mob_target = target
 	mob_target.Disorient(3 SECONDS)
 	mob_target.stamina?.adjust(-32)
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
-	return ..()
 
 /mob/living/basic/bingle/mind_initialize()
 	. = ..()
@@ -91,6 +94,13 @@
 	if(adjust_health(-5 * seconds_per_tick, updating_health = FALSE))
 		updatehealth()
 		new /obj/effect/temp_visual/heal(get_turf(src), COLOR_BLUE_LIGHT)
+
+///Called when attempting to move around in space, if it's near a bingles pit it'll act sorta like lattice.
+/mob/living/basic/bingle/proc/on_space_move(atom/source, movement_dir, continuous_move)
+	SIGNAL_HANDLER
+	if(locate(/obj/structure/bingle_pit_overlay) in range(1, get_turf(source)))
+		return COMSIG_MOVABLE_STOP_SPACEMOVE
+	return NONE
 
 /mob/living/basic/bingle/lord
 	name = "bingle lord"

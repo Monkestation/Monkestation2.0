@@ -589,13 +589,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
 		to_chat(src, span_warning("Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you."))
 
-	update_ambience_pref(prefs.read_preference(/datum/preference/toggle/sound_ambience))
+	update_ambience_pref(prefs?.channel_volume["[CHANNEL_AMBIENCE]"])
 
 	//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor(src) && !is_admin(src))
+	var/required_living_minutes = CONFIG_GET(number/panic_bunker_living)
+	var/living_minutes = get_exp_living(TRUE)
+
+	if(((player_age != -1) && living_minutes < required_living_minutes && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor(src) && !is_admin(src)))
 		interviewee = TRUE
 		register_for_interview()
 
@@ -898,6 +901,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/proc/check_overwatch()
 	var/failed = FALSE
+	var/required_living_minutes = CONFIG_GET(number/panic_bunker_living)
+	var/living_minutes = get_exp_living(TRUE)
 	SSoverwatch.CollectClientData(src)
 	failed = SSoverwatch.HandleClientAccessCheck(src)
 	SSoverwatch.HandleASNbanCheck(src)
@@ -914,11 +919,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			if(string)
 				string += ", "
 			string += "Mobile Hostspot IP"
-	if(failed && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor(src) && !is_admin(src))
+	if(failed && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor(src) && !is_admin(src) && living_minutes < required_living_minutes)
 		message_admins(span_adminnotice("Proxy Detection: [key_name_admin(src)] Overwatch detected this is a [string]"))
 		interviewee = TRUE
 
-	if(ckey in GLOB.interviews.approved_ckeys)
+	if((ckey in GLOB.interviews.approved_ckeys) || living_minutes >= required_living_minutes)
 		return FALSE
 
 	return failed
@@ -1142,6 +1147,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	mob.hud_used.screentip_text.update_view()
 	apply_clickcatcher()
 	mob.reload_fullscreen()
+
 	if (isliving(mob))
 		var/mob/living/M = mob
 		M.update_damage_hud()
@@ -1314,6 +1320,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	set name = "Stop Sounds"
 	set category = "OOC"
 	set desc = "Stop Current Sounds"
+
+	current_ambient_sound = null
 	SEND_SOUND(usr, sound(null))
 	tgui_panel?.stop_music()
 	media_player?.stop()

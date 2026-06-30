@@ -37,7 +37,7 @@
 //bidlink2
 /obj/item/effect_granter/donator/cirno
 	name = "Cirno transformation"
-	icon = 'monkestation/icons/obj/plushes.dmi'
+	icon = 'icons/obj/plushes.dmi'
 	icon_state = "cirno-happy"
 	animal_transformation = /mob/living/basic/pet/cirno
 
@@ -174,3 +174,16 @@
 	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
 	icon_state = "mecha_walter"
 	animal_transformation = /mob/living/basic/pet/cyber_mastiff
+
+//Yatosamasensei
+/obj/item/effect_granter/donator/yato_neco_arc
+	name = "Neco-Arc"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "neco_arc"
+	animal_transformation = /mob/living/basic/pet/yato_neco_arc
+
+/obj/item/effect_granter/donator/shark_axolotl
+	name = "Shark Axolotl"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "shark_axolotl"
+	animal_transformation = /mob/living/basic/axolotl/shark_costume

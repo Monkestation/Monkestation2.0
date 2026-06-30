@@ -128,9 +128,13 @@
 			attacking_item.play_tool_sound(src)
 			if(attacking_item.use_tool(src, user, 40))
 				to_chat(user, span_notice("You unsecure the button frame."))
-				transfer_fingerprints_to(new /obj/item/wallframe/button(get_turf(src)))
 				playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-				qdel(src)
+				deconstruct(src)
+
+		if(istype(attacking_item, /obj/item/borg/apparatus/circuit))
+			var/obj/item/borg/apparatus/circuit/robo_hand = attacking_item
+			if(robo_hand.stored == null)
+				return attack_hand(user)
 
 		update_appearance()
 		return
@@ -191,7 +195,7 @@
 	if(!initialized_button)
 		setup_device()
 	add_fingerprint(user)
-	play_click_sound("button")
+	play_click_sound(SFX_BUTTON)
 	if(panel_open)
 		if(device || board)
 			if(device)
@@ -207,14 +211,34 @@
 			to_chat(user, span_notice("You remove electronics from the button frame."))
 
 		else if(can_alter_skin)
-			if(skin == "")
-				skin = "-warning"
-				to_chat(user, span_notice("You change the button frame's front panel to warning lines."))
-			else
-				skin = ""
-				to_chat(user, span_notice("You change the button frame's front panel to default."))
+			to_chat(user, span_notice("You're starting to adjust the color display."))
+			var/static/list/choices = list(
+				"Gray"		= image(icon = 'icons/obj/buttons.dmi', icon_state = "button"),
+				"Green"		= image(icon = 'icons/obj/buttons.dmi', icon_state = "button-green"),
+				"Red"		= image(icon = 'icons/obj/buttons.dmi', icon_state = "button-red"),
+				"Blue"		= image(icon = 'icons/obj/buttons.dmi', icon_state = "button-blue"),
+				"Yellow"	= image(icon = 'icons/obj/buttons.dmi', icon_state = "button-yellow"),
+				"Warning"	= image(icon = 'icons/obj/buttons.dmi', icon_state = "button-warning"),
+				)
+			var/choice = show_radial_menu(user, src, choices, tooltips = TRUE, require_near = TRUE)
+			if(!choice)
+				return
+			switch(choice)
+				if("Gray")
+					skin = ""
+				if("Green")
+					skin = "-green"
+				if("Red")
+					skin = "-red"
+				if("Blue")
+					skin = "-blue"
+				if("Yellow")
+					skin = "-yellow"
+				if("Warning")
+					skin = "-warning"
+			to_chat(user, span_notice("You change the button frame's front panel to [choice]."))
 			update_appearance(UPDATE_ICON)
-			balloon_alert(user, "swapped style")
+			balloon_alert(user, "changed style")
 		return
 
 	if((machine_stat & (NOPOWER|BROKEN)))
@@ -238,6 +262,12 @@
 		device.pulsed(user)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BUTTON_PRESSED, src)
 
+/obj/machinery/button/on_deconstruction(disassembled)
+	var/obj/item/wallframe/button/dropped_frame = new /obj/item/wallframe/button(drop_location())
+	transfer_fingerprints_to(dropped_frame)
+	board = null
+	device = null
+
 /obj/machinery/button/door
 	name = "door button"
 	desc = "A door remote control switch."
@@ -250,6 +280,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/door/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+/obj/machinery/button/door/green
+	icon_state = "button-green"
+
+/obj/machinery/button/door/red
+	icon_state = "button-red"
+
+/obj/machinery/button/door/blue
+	icon_state = "button-blue"
+
+/obj/machinery/button/door/yellow
+	icon_state = "button-yellow"
+
+/obj/machinery/button/door/warning
+	icon_state = "button-warning"
+
 /obj/machinery/button/door/setup_device()
 	if(!device)
 		if(normaldoorcontrol)
@@ -261,6 +306,139 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 			C.sync_doors = sync_doors
 			device = C
 	..()
+
+// RCD fix airlock without electronics
+/obj/machinery/button/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	if(!board && the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS)
+		return list("mode" = RCD_WALLFRAME, "delay" = 2 SECONDS, "cost" = 1)
+	return FALSE
+
+/obj/machinery/button/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_WALLFRAME)	// Add electronics via RCD. Access codes are taken from the RCD.
+			board = the_rcd.airlock_electronics.create_copy(board)
+			balloon_alert(user, "electronics added")
+			user.visible_message(
+				span_notice("[user] fabricates a circuit and places it into [src]."),
+				span_notice("You adapt a airlock circuit and slot it into the assembly."),
+			)
+			if(board.passed_name)	// Naming the button from the RCD graph "Airlock Name"
+				name = board.passed_name
+			update_appearance()
+			return TRUE
+	return FALSE
+
+// New attach
+/obj/item/wallframe/button/attach(turf/on_wall, mob/user)
+	var/button_count = 0
+	var/list/buttons_we_have = list()	// buttons at the same dir
+	for(var/obj/machinery/button/button_we_found in get_turf(user))
+		if(button_we_found?.dir == user.dir)
+			button_count++
+			buttons_we_have += button_we_found
+		if(button_count >= 4)
+			to_chat(user, span_notice("You try to add next button, but there no more room and the wallframe falls to the floor."))
+			return FALSE
+
+	if(result_path)
+		playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
+		user.visible_message(span_notice("[user.name] attaches [src] to the wall."),
+			span_notice("You attach [src] to the wall."),
+			span_hear("You hear clicking."))
+		var/floor_to_wall = get_dir(user, on_wall)
+
+		var/obj/O = new result_path(get_turf(user), floor_to_wall, TRUE)
+		O.setDir(floor_to_wall)
+
+		if(button_count)
+			for(var/obj/machinery/button/current_old_button in buttons_we_have)
+				switch(button_count)
+					if(1)
+						switch(floor_to_wall)	// offset of the already existing first button
+							if(NORTH)
+								current_old_button.pixel_x = -6
+								current_old_button.pixel_y = 24
+							if(SOUTH)
+								current_old_button.pixel_x = -6
+								current_old_button.pixel_y = -24
+							if(EAST)
+								current_old_button.pixel_x = 24
+								current_old_button.pixel_y = 6
+							if(WEST)
+								current_old_button.pixel_x = -24
+								current_old_button.pixel_y = 6
+
+						switch(floor_to_wall)	// offset of the second button
+							if(NORTH)
+								O.pixel_x = 6
+								O.pixel_y = 24
+								break
+							if(SOUTH)
+								O.pixel_x = 6
+								O.pixel_y = -24
+								break
+							if(EAST)
+								O.pixel_x = 24
+								O.pixel_y = -6
+								break
+							if(WEST)
+								O.pixel_x = -24
+								O.pixel_y = -6
+								break
+
+					if(2)	// offset of the third button
+						switch(floor_to_wall)
+							if(NORTH)
+								O.pixel_x = -6
+								O.pixel_y = 36
+								break
+							if(SOUTH)
+								O.pixel_x = -6
+								O.pixel_y = -36
+								break
+							if(EAST)
+								O.pixel_x = 36
+								O.pixel_y = 6
+								break
+							if(WEST)
+								O.pixel_x = -36
+								O.pixel_y = 6
+								break
+
+					if(3)	// offset of the fourth button
+						switch(floor_to_wall)
+							if(NORTH)
+								O.pixel_x = 6
+								O.pixel_y = 36
+								break
+							if(SOUTH)
+								O.pixel_x = 6
+								O.pixel_y = -36
+								break
+							if(EAST)
+								O.pixel_x = 36
+								O.pixel_y = -6
+								break
+							if(WEST)
+								O.pixel_x = -36
+								O.pixel_y = -6
+								break
+
+		else	// default offset of the first button in the middle
+			switch(floor_to_wall)
+				if(NORTH)
+					O.pixel_y = pixel_shift
+				if(SOUTH)
+					O.pixel_y = -pixel_shift
+				if(EAST)
+					O.pixel_x = pixel_shift
+				if(WEST)
+					O.pixel_x = -pixel_shift
+
+		after_attach(O)
+	qdel(src)
+
+////////////////////////////////////////////////////
 
 /obj/machinery/button/door/incinerator_vent_ordmix
 	name = "combustion chamber vent control"
