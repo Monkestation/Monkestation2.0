@@ -7,7 +7,7 @@
 	movedelay = 2
 	step_energy_drain = 4
 	step_energy_drain = 3
-	max_integrity = 200
+	max_integrity = 225
 	armor_type = /datum/armor/mecha_phazon
 	max_temperature = 25000
 	destruction_sleep_duration = 40

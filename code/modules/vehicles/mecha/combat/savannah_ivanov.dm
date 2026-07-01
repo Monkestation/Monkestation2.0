@@ -21,8 +21,8 @@
 	//does not include mmi compatibility
 	mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS
 	mech_type = EXOSUIT_MODULE_SAVANNAH
-	movedelay = 3
-	max_integrity = 450 //really tanky, like damn
+	movedelay = 3.5
+	max_integrity = 500 //really tanky, like damn
 	armor_type = /datum/armor/mecha_savannah_ivanov
 	max_temperature = 30000
 	force = 30

@@ -332,7 +332,6 @@
 	desc="Savannah-Ivanov armor plates. They are uniquely shaped and reinforced to deal with the stresses of two pilots, grandiose leaps, and missiles."
 	icon_state = "savannah_ivanov_armor"
 
-
 // The Vendozer, Needed a spot to put the parts, doesnt have a mech buildup. Has intermediary parts.
 
 /obj/item/mecha_parts/part/vendozer_fl
