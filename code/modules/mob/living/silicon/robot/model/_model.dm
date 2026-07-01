@@ -60,6 +60,7 @@
 /datum/robot_model/Destroy()
 	if(!QDELETED(cyborg_owner))
 		cyborg_owner.drop_all_held_items() // Precaution to make sure everything qdels with no issue.
+		cyborg_owner.internal_inventory.atom_storage.close_all()
 		QDEL_LIST(cyborg_owner.internal_inventory.contents) // Getting rid of all the model's items.
 	usable_modules.Cut()
 	emagged_modules.Cut()
