@@ -62,11 +62,11 @@
 		for(var/key in GLOB.deathmatch_game.maps)
 			var/datum/lazy_template/deathmatch/map = GLOB.deathmatch_game.maps[key]
 			if(map.min_players <= length(players) && map.max_players >= length(players))
-				available_maps += map
+				available_maps += key
 		if(length(available_maps))
 			change_map(pick(available_maps))
 		else
-			change_map(GLOB.deathmatch_game.maps[pick(GLOB.deathmatch_game.maps)])
+			change_map(pick(GLOB.deathmatch_game.maps))
 	// MONKESTATION EDIT ADDITION END
 	if(map.template_in_use)
 		to_chat(get_mob_by_ckey(host), span_warning("This map is currently loading for another lobby. Please wait until that other map finishes loading. It would be a disaster if these two mixed up."))

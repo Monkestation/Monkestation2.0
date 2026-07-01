@@ -29,7 +29,6 @@
 	display_name = "Random"
 	desc = "A randomly selected loadout, how daring."
 // MONKESTATION EDIT ADDITION END
-
 /datum/outfit/deathmatch_loadout/naked
 	name = "Deathmatch: Naked"
 	display_name = "Unarmed, Butt-naked"
