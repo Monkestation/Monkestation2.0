@@ -1336,7 +1336,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to mobs that have the basic eating element
 /* #define TRAIT_MOB_EATER "mob_eater" */
 /// Trait which means whatever has this is dancing by a dance machine
-/* #define TRAIT_DISCO_DANCER "disco_dancer" */
+#define TRAIT_DISCO_DANCER "disco_dancer"
 
 /// Appiled when wizard buy (/datum/spellbook_entry/perks/spalls_lottery) perk.
 /// Give 50/25% chance not spend a spellbook charge on 1/2 cost spell.
