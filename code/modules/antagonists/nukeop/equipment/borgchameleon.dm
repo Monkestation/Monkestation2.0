@@ -15,7 +15,7 @@
 	var/savedName
 	var/active = FALSE
 	/// The typepath of the robot model that we will be using as a disguise.
-	var/obj/item/robot_model/disguise_model_type = /obj/item/robot_model/engineering
+	var/datum/robot_model/disguise_model_type = /datum/robot_model/engineering
 	var/mob/listeningTo
 	var/static/list/signalCache = list( // list here all signals that should break the camouflage
 			COMSIG_ATOM_ATTACKBY,
@@ -59,7 +59,7 @@
 	var/input_model = show_radial_menu(user = user, anchor = src, choices = GLOB.cyborg_base_models_icon_list, radius = 42, require_near = TRUE)
 	if(!input_model)
 		return
-	var/obj/item/robot_model/selected_model = GLOB.cyborg_model_list[input_model]
+	var/datum/robot_model/selected_model = GLOB.cyborg_model_list[input_model]
 	if(!selected_model)
 		return
 	disguise_model_type = selected_model

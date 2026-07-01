@@ -148,7 +148,7 @@
 		return FALSE
 	if(HAS_TRAIT(storing_item, TRAIT_NODROP))
 		return FALSE
-	if(istype(storing_item.loc, /obj/item/robot_model)) // Taking stuff from our inventory.
+	if(istype(storing_item.loc, /datum/robot_model)) // Taking stuff from our inventory.
 		return FALSE
 	if(iscyborg(storing_item.loc) && user == storing_item.loc) // Taking stuff from our active module slots.
 		return FALSE

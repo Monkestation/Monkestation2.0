@@ -60,7 +60,7 @@ component_cell_out_of_charge/component_cell_removed proc using loc where necessa
 		cell_can_be_removed = _cell_can_be_removed
 
 	//So this is shitcode in it's ultimate form. Right now, as far as I can see, this is the only way to handle robot items that would normally use a cell.
-	if(istype(equipment.loc, /obj/item/robot_model)) //Really, I absolutely hate borg code.
+	if(istype(equipment.loc, /datum/robot_model)) //Really, I absolutely hate borg code.
 		inside_robot = TRUE
 	else if(start_with_cell)
 		var/obj/item/stock_parts/power_store/cell/new_cell

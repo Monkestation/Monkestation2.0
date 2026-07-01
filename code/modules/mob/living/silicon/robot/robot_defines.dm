@@ -25,7 +25,7 @@
 	var/datum/robot_skin/current_skin = /datum/robot_skin/standard/default
 
 	///Represents the cyborg's model (engineering, medical, etc.)
-	//var/obj/item/robot_model/model = null
+	//var/datum/robot_model/model = null
 	///Variable to store a cyborg's model type incase someone uses a transform module on a cyborg with no client.
 	//var/pending_model = null
 

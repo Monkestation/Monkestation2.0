@@ -74,8 +74,8 @@ ADMIN_VERB(borg_panel, R_ADMIN, FALSE, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPT
 		.["channels"] += list(list("name" = k, "installed" = (k in borg.radio.channels)))
 	.["cell"] = borg.cell ? list("missing" = FALSE, "maxcharge" = borg.cell.maxcharge, "charge" = borg.cell.charge) : list("missing" = TRUE, "maxcharge" = 1, "charge" = 0)
 	.["modules"] = list()
-	for(var/model_type in typesof(/obj/item/robot_model))
-		var/obj/item/robot_model/model = model_type
+	for(var/model_type in typesof(/datum/robot_model))
+		var/datum/robot_model/model = model_type
 		.["modules"] += list(list(
 			"name" = initial(model.name),
 			"type" = "[model]"

@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(!opened)
 			to_chat(user, span_warning("You must access the cyborg's internals!"))
 			return
-		if(!istype(model, /obj/item/robot_model/medical))
+		if(!istype(model, /datum/robot_model/medical))
 			to_chat(user, span_warning("[src] does not have correct mounting points for a defibrillator!"))
 			return
 		if(stat == DEAD)

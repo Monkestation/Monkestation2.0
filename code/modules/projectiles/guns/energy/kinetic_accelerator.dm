@@ -260,7 +260,7 @@
 	icon_state = "modkit"
 	w_class = WEIGHT_CLASS_SMALL
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/miner)
+	model_type = list(/datum/robot_model/miner)
 	model_flags = BORG_MODEL_MINER
 	// Most modkits are supposed to allow duplicates. The ones that don't should be blocked by PKA code anyways.
 	allow_duplicates = TRUE

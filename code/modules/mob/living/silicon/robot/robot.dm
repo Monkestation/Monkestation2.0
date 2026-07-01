@@ -155,7 +155,7 @@
 	return cell
 
 /mob/living/silicon/robot/proc/pick_model()
-	if(model.type != /obj/item/robot_model)
+	if(model.type != /datum/robot_model)
 		return
 	if(wires.is_cut(WIRE_RESET_MODEL))
 		to_chat(src,span_userdanger("ERROR: Model installer reply timeout. Please check internal connections."))
