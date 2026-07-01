@@ -12,7 +12,7 @@
 	/// The maximum capacity the chamber can hold at T1
 	var/max_capacity = 10
 	/// Seconds it takes to create each seed at T1
-	var/max_cooldown = 1 MINUTES
+	var/max_cooldown = 1 MINUTE
 	/// Number of seeds produced per cycle
 	var/seeds_per_cycle = 1
 	/// Time remaining until next seed is generated
@@ -42,7 +42,7 @@
 
 	max_cooldown = initial(max_cooldown)
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
-		max_cooldown -= max((laser.tier - 1) * (1 MINUTES), 0 MINUTES)
+		max_cooldown = max(max_cooldown - ((laser.tier - 1) * (15 SECONDS)), 5 SECONDS)
 
 	seeds_per_cycle = initial(seeds_per_cycle)
 	for(var/datum/stock_part/manipulator/manipulator in component_parts)
