@@ -2,7 +2,7 @@
 /proc/get_unlocked_closed_locker()
 	var/list/eligible_lockers = list()
 	for(var/obj/structure/closet/closet as anything in GLOB.closets)
-		if(QDELETED(closet) || closet.opened || istype(closet, /obj/structure/closet/secure_closet))
+		if(QDELETED(closet) || closet.opened || istype(closet, /obj/structure/closet/secure_closet) || istype(closet, /obj/structure/closet/crate/secure))
 			continue
 		var/turf/closet_turf = get_turf(closet)
 		if(!closet_turf || !is_station_level(closet_turf.z) || !is_safe_turf(closet_turf, dense_atoms = TRUE))
