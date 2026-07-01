@@ -303,7 +303,7 @@
 /area/ruin/space/ancientstation/charlie/bridge)
 "bh" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/computer/ai_control_console/oldstation{
+/obj/machinery/computer/ai_control_console{
 	dir = 4
 	},
 /obj/structure/alien/weeds,
