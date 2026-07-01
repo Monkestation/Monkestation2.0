@@ -324,8 +324,6 @@
 				span_danger("You suddenly snap back to normal speeds. You feel like you've just been run over by a power loader.")
 			)
 		our_guy.stamina.adjust(-constant_dose_time)
-		if(!HAS_TRAIT(our_guy, TRAIT_TWITCH_ADAPTED))
-			our_guy.adjustOrganLoss(ORGAN_SLOT_HEART, 0.3 * constant_dose_time) // Basically you might die
 
 	if(!our_guy.hud_used)
 		return

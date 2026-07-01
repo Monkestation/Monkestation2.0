@@ -235,14 +235,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SPLEENLESS_METABOLISM "spleenless_metabolism"
 /// Humans with this trait cannot be affected by changeling transformation stings
 #define TRAIT_NO_TRANSFORMATION_STING "no_transformation_sting"
-/// This carbon can't be overdosed by chems
-#define TRAIT_OVERDOSEIMMUNE "overdose_immune"
 /// Humans with this trait cannot be turned into zombies
 #define TRAIT_NO_ZOMBIFY "no_zombify"
 /// Carbons with this trait can't have their DNA copied by diseases nor changelings
 #define TRAIT_NO_DNA_COPY "no_dna_copy"
-/// Carbons with this trait cant have their dna scrambled by genetics or a disease retrovirus.
-#define TRAIT_NO_DNA_SCRAMBLE "no_dna_scramble"
 /// Removes tackle and throwing debuffs from dwarfs
 #define TRAIT_STABLE_DWARF "stable_dwarf"
 /// Makes you heal from radiation received
@@ -521,8 +517,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Being close enough to the supermatter makes it heal at higher temperatures
 // and emit less heat. Present on /mob or /datum/mind
 #define TRAIT_SUPERMATTER_SOOTHER "supermatter_soother"
-/// Mob has fov applied to it
-#define TRAIT_FOV_APPLIED "fov_applied"
 /// Mob is using the scope component
 #define TRAIT_USER_SCOPED "user_scoped"
 /// Mob is unable to feel pain
@@ -676,11 +670,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait that is applied whenever someone or something is glassblowing
 #define TRAIT_CURRENTLY_GLASSBLOWING "currently_glassblowing"
 /// Determines if something can receive healing from a xeno
-#define TRAIT_XENO_HEAL_AURA "trait_xeno_heal_aura"
+#define TRAIT_XENO_HEAL_AURA "xeno_heal_aura"
 /// Source trait for slashers.
 #define TRAIT_SLASHER "slasher"
-/// Trait that changes the ending effects of twitch leaving your system
-#define TRAIT_TWITCH_ADAPTED "twitch_adapted"
 /// Given to the detective, if they have this, they can see syndicate special descriptions.
 #define TRAIT_DETECTIVE "detective_ability"
 
