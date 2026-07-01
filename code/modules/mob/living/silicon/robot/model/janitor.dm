@@ -34,7 +34,7 @@
 /datum/robot_model/janitor/on_model_removed()
 	QDEL_NULL(wash_toggle_ref)
 
-/obj/item/robot_model/janitor/on_model_given()
+/datum/robot_model/janitor/on_model_given()
 	var/datum/action/wash_toggle = new /datum/action/toggle_buffer(cyborg_owner)
 	wash_toggle.Grant(cyborg_owner)
 	wash_toggle_ref = WEAKREF(wash_toggle)
