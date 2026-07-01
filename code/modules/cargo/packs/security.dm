@@ -102,7 +102,6 @@
 	desc = "Contains ten \"stingbang\" grenades, perfect for stopping \
 		riots and playing morally unthinkable pranks."
 	cost = CARGO_CRATE_VALUE * 5
-	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/storage/box/stingbangs = 2)
 	crate_name = "stingbang grenade pack crate"
 
