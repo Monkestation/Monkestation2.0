@@ -95,6 +95,7 @@
 		"deepfryer",
 		"dish_drive",
 		"fat_sucker",
+		"genesischamber",
 		"gibber",
 		"griddle",
 		"microwave",

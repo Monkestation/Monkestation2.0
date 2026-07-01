@@ -246,7 +246,7 @@
 	name = "Lesser Strange Seeds"
 	id = "strange_seeds"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass = 1000)
+	materials = list(/datum/material/biomass = 100)
 	build_path = /obj/item/seeds/random/lesser
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_MATERIALS)
 

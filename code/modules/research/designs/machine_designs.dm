@@ -370,6 +370,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING //Monkestation edit: Engi circuit
 
+/datum/design/board/genesischamber
+	name = "Genesis Chamber Board"
+	desc = "The circuit board for a genesis chamber."
+	id = "genesischamber"
+	build_path = /obj/item/circuitboard/machine/genesischamber
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_BOTANY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/board/hydroponics
 	name = "Hydroponics Tray Board"
 	desc = "The circuit board for a hydroponics tray."
