@@ -247,7 +247,7 @@
 
 /datum/supply_pack/security/grenadelauncher
 	name = "Riot Grenade Launcher Crate"
-	desc = "Local revolution banging on your doorstep? Suppress the masses with this swanky riot control crate. Contains one grenade launcher and two boxes each of flashbangs and teargas grenades. Teargas protection included."
+	desc = "Local revolution banging on your doorstep? Suppress the masses with this swanky riot control crate. Contains one grenade launcher and one box each of flashbangs and teargas grenades. Teargas protection included."
 	cost = CARGO_CRATE_VALUE * 8
 	contains = list(
 		/obj/item/gun/grenadelauncher,
