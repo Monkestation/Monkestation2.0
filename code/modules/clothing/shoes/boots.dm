@@ -71,7 +71,7 @@
 	if(type == /obj/item/clothing/shoes/jackboots/sec/hos)
 		AddComponent(/datum/component/shoesteps/hosboots)
 	else
-		AddComponent(/datum/component/shoesteps/combine_boot_sounds) //MONKESTATION EDIT
+		AddComponent(/datum/component/shoesteps/combine_boot_sounds)
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1

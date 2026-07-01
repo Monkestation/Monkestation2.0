@@ -23,11 +23,11 @@
 	COOLDOWN_DECLARE(last_tox_damage)
 
 /datum/component/irradiated/Initialize()
-	if (!CAN_IRRADIATE(parent))
+	if(!CAN_IRRADIATE(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	// This isn't incompatible, it's just wrong
-	if (HAS_TRAIT(parent, TRAIT_RADIMMUNE))
+	if(HAS_TRAIT(parent, TRAIT_RADIMMUNE))
 		qdel(src)
 		return
 
@@ -37,7 +37,7 @@
 
 	beginning_of_irradiation = world.time
 
-	if (ishuman(parent))
+	if(ishuman(parent))
 		var/mob/living/carbon/human/human_parent = parent
 		human_parent.apply_damage(RADIATION_IMMEDIATE_TOX_DAMAGE, TOX)
 		START_PROCESSING(SSobj, src)
@@ -49,6 +49,8 @@
 		human_parent.throw_alert(ALERT_IRRADIATED, /atom/movable/screen/alert/irradiated)
 
 /datum/component/irradiated/RegisterWithParent()
+	if(!ismob(parent)) // no, you still have to go under the shower
+		RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENT, PROC_REF(on_expose_reagent))
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_clean))
 	RegisterSignal(parent, COMSIG_GEIGER_COUNTER_SCAN, PROC_REF(on_geiger_counter_scan))
 	RegisterSignal(parent, COMSIG_LIVING_HEALTHSCAN, PROC_REF(on_healthscan))
@@ -58,15 +60,16 @@
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_GEIGER_COUNTER_SCAN,
 		COMSIG_LIVING_HEALTHSCAN,
+		COMSIG_ATOM_EXPOSE_REAGENT,
 	))
 
 /datum/component/irradiated/Destroy(force)
 	var/atom/movable/parent_movable = parent
-	if (istype(parent_movable))
+	if(istype(parent_movable))
 		parent_movable.remove_filter("rad_glow")
 
 	var/mob/living/carbon/human/human_parent = parent
-	if (istype(human_parent))
+	if(istype(human_parent))
 		human_parent.clear_alert(ALERT_IRRADIATED)
 
 	REMOVE_TRAIT(parent, TRAIT_IRRADIATED, REF(src))
@@ -77,40 +80,40 @@
 	return ..()
 
 /datum/component/irradiated/process(seconds_per_tick)
-	if (!ishuman(parent))
+	if(!ishuman(parent))
 		return PROCESS_KILL
 
-	if (HAS_TRAIT(parent, TRAIT_RADIMMUNE))
+	if(HAS_TRAIT(parent, TRAIT_RADIMMUNE))
 		qdel(src)
 		return PROCESS_KILL
 
 	var/mob/living/carbon/human/human_parent = parent
-	if (human_parent.getToxLoss() == 0)
+	if(human_parent.getToxLoss() == 0)
 		qdel(src)
 		return PROCESS_KILL
 
-	if (should_halt_effects(parent))
+	if(should_halt_effects(parent))
 		return
 
-	if (human_parent.stat > DEAD)
+	if(human_parent.stat > DEAD)
 		human_parent.dna?.species?.handle_radiation(human_parent, world.time - beginning_of_irradiation, seconds_per_tick)
 
 	process_tox_damage(human_parent, seconds_per_tick)
 
 /datum/component/irradiated/proc/should_halt_effects(mob/living/carbon/human/target)
-	if (HAS_TRAIT(target, TRAIT_STASIS))
+	if(HAS_TRAIT(target, TRAIT_STASIS))
 		return TRUE
 
-	if (HAS_TRAIT(target, TRAIT_HALT_RADIATION_EFFECTS))
+	if(HAS_TRAIT(target, TRAIT_HALT_RADIATION_EFFECTS))
 		return TRUE
 
-	if (!COOLDOWN_FINISHED(src, clean_cooldown))
+	if(!COOLDOWN_FINISHED(src, clean_cooldown))
 		return TRUE
 
 	return FALSE
 
 /datum/component/irradiated/proc/process_tox_damage(mob/living/carbon/human/target, seconds_per_tick)
-	if (!COOLDOWN_FINISHED(src, last_tox_damage))
+	if(!COOLDOWN_FINISHED(src, last_tox_damage))
 		return
 
 	target.apply_damage(RADIATION_TOX_DAMAGE_PER_INTERVAL, TOX)
@@ -121,14 +124,14 @@
 
 /datum/component/irradiated/proc/give_burn_splotches()
 	// This shouldn't be possible, but just in case.
-	if (QDELETED(src))
+	if(QDELETED(src))
 		return
 
 	start_burn_splotch_timer()
 
 	var/mob/living/carbon/human/human_parent = parent
 
-	if (should_halt_effects(parent))
+	if(should_halt_effects(parent))
 		return
 
 	var/obj/item/bodypart/affected_limb = human_parent.get_bodypart(human_parent.get_random_valid_zone())
@@ -150,7 +153,7 @@
 
 /datum/component/irradiated/proc/create_glow()
 	var/atom/movable/parent_movable = parent
-	if (!istype(parent_movable))
+	if(!istype(parent_movable))
 		return
 
 	parent_movable.add_filter("rad_glow", 2, list("type" = "outline", "color" = "#39ff1430", "size" = 2))
@@ -158,7 +161,7 @@
 
 /datum/component/irradiated/proc/start_glow_loop(atom/movable/parent_movable)
 	var/filter = parent_movable.get_filter("rad_glow")
-	if (!filter)
+	if(!filter)
 		return
 
 	animate(filter, alpha = 110, time = 1.5 SECONDS, loop = -1)
@@ -167,10 +170,10 @@
 /datum/component/irradiated/proc/on_clean(datum/source, clean_types)
 	SIGNAL_HANDLER
 
-	if (!(clean_types & CLEAN_TYPE_RADIATION))
+	if(!(clean_types & CLEAN_TYPE_RADIATION))
 		return
 
-	if (isitem(parent))
+	if(isitem(parent))
 		qdel(src)
 		return COMPONENT_CLEANED
 
@@ -179,7 +182,7 @@
 /datum/component/irradiated/proc/on_geiger_counter_scan(datum/source, mob/user, obj/item/geiger_counter/geiger_counter)
 	SIGNAL_HANDLER
 
-	if (isliving(source))
+	if(isliving(source))
 		var/mob/living/living_source = source
 		to_chat(user, span_boldannounce("[icon2html(geiger_counter, user)] Subject is irradiated. Contamination traces back to roughly [DisplayTimeText(world.time - beginning_of_irradiation, 5)] ago. Current toxin levels: [living_source.getToxLoss()]."))
 	else
@@ -193,6 +196,12 @@
 
 	render_list += conditional_tooltip("<span class='alert ml-1'>Subject is irradiated.</span>", "Supply antiradiation or antitoxin, such as [/datum/reagent/medicine/potass_iodide::name] or [/datum/reagent/medicine/pen_acid::name].", tochat)
 	render_list += "<br>"
+
+/datum/component/irradiated/proc/on_expose_reagent(atom/source, datum/reagent/reagent, reac_volume)
+	SIGNAL_HANDLER
+
+	if(istype(reagent, /datum/reagent/medicine/potass_iodide) && reac_volume >= 1)
+		qdel(src)
 
 /atom/movable/screen/alert/irradiated
 	name = "Irradiated"
