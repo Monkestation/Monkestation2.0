@@ -32,7 +32,9 @@
 	if(cyborg_owner)
 		cyborg_owner.faction |= FACTION_SILICON
 		qdel(cyborg_owner.radio)
-		cyborg_owner.radio = new radio(cyborg_owner)
+		var/obj/item/radio/default_radio_typepath = initial(cyborg_owner.radio)
+		if(ispath(default_radio_typepath))
+			cyborg_owner.radio = new default_radio_typepath(cyborg_owner)
 		cyborg_owner.scrambledcodes = initial(cyborg_owner.scrambledcodes)
 		cyborg_owner.maxHealth = initial(cyborg_owner.maxHealth)
 	return ..()

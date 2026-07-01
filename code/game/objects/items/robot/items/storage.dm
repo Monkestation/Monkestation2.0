@@ -452,3 +452,12 @@
 		stored_copy.plane = FLOAT_PLANE
 		. += stored_copy
 	. += arm
+
+/obj/item/storage/cyborg_internal_storage
+	storage_type = /datum/storage/cyborg_internal_storage
+
+/obj/item/storage/cyborg_internal_storage/Initialize(mapload)
+	. = ..()
+	if(!iscyborg(loc))
+		return INITIALIZE_HINT_QDEL
+	AddElement(/datum/element/empprotection, EMP_PROTECT_CONTENTS) // The cyborg will resolve our EMP effects instead.

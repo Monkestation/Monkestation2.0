@@ -20,19 +20,23 @@
 	default_hand_amount = 3
 
 	/**
-	 * The model that we are currently using. Will create and replaced itself on Initialize.
+	 * The model that we are currently using. Will be created & applied upon initialization.
 	 *
 	 * Do not directly set this outside of Initialize! Use [/proc/apply_model] instead!
 	 */
 	var/datum/robot_model/model = /datum/robot_model
 	/**
-	 * The skin that we are currently using.
+	 * The skin that we are currently using. Will be created & applied upon initialization.
 	 *
 	 * Do not directly set this outside of Initialize! Use [/proc/apply_skin] instead!
 	 */
 	var/datum/robot_skin/current_skin = /datum/robot_skin/standard/default
-	/// The inventory where we keep all of our items.
-	var/obj/item/storage/internal_inventory
+	/**
+	 * The storage item that holds all of our model's items. Will be created upon initialization.
+	 *
+	 * Do not directly add items to this. Use the model's [/proc/add_module] instead!
+	 */
+	var/obj/item/storage/internal_inventory = /obj/item/storage/cyborg_internal_storage
 
 	radio = /obj/item/radio/borg
 
@@ -170,78 +174,67 @@
 
 /mob/living/silicon/robot/model
 	model = /datum/robot_model // Unneeded, but it looks neat to have consistent variables.
-	current_skin = /datum/robot_skin/standard/default
 	icon_state = "robot"
+
+/mob/living/silicon/robot/model/Initialize(mapload)
+	current_skin = model.default_skin
+	return ..()
 
 /mob/living/silicon/robot/model/cargo
 	model = /datum/robot_model/cargo
-	current_skin = /datum/robot_skin/cargo/default
 	icon = CYBORG_ICON_CARGO // The icon will change itself later.
 	icon_state = "cargoborg"
 
 /mob/living/silicon/robot/model/centcom
 	model = /datum/robot_model/centcom
-	current_skin = /datum/robot_skin/centcom/default
 	icon_state = "centcomborg"
 
 /mob/living/silicon/robot/model/clown
 	model = /datum/robot_model/clown
-	current_skin = /datum/robot_skin/clown/default
 	icon_state = "clown"
 
 /mob/living/silicon/robot/model/engineering
 	model = /datum/robot_model/engineering
-	current_skin = /datum/robot_skin/engineering/default
 	icon_state = "engineering"
 
 /mob/living/silicon/robot/model/highlander
 	model = /datum/robot_model/highlander
-	current_skin = /datum/robot_skin/highlander/default
 	icon_state = "kilt"
 
 /mob/living/silicon/robot/model/janitor
 	model = /datum/robot_model/janitor
-	current_skin = /datum/robot_skin/janitor/default
 	icon_state = "janitor"
 
 /mob/living/silicon/robot/model/medical
 	model = /datum/robot_model/medical
-	current_skin = /datum/robot_skin/miner/default
 	icon_state = "medical"
 
 /mob/living/silicon/robot/model/miner
 	model = /datum/robot_model/miner
-	current_skin = /datum/robot_skin/miner/default
 	icon_state = "miner"
 
 /mob/living/silicon/robot/model/peacekeeper
 	model = /datum/robot_model/peacekeeper
-	current_skin = /datum/robot_skin/peacekeeper/default
 	icon_state = "peace"
 
 /mob/living/silicon/robot/model/science
 	model = /datum/robot_model/science
-	current_skin = /datum/robot_skin/science/default
 	icon_state = "science"
 
 /mob/living/silicon/robot/model/security
 	model = /datum/robot_model/security
-	current_skin = /datum/robot_skin/security/default
 	icon_state = "security"
 
 /mob/living/silicon/robot/model/service
 	model = /datum/robot_model/service
-	current_skin = /datum/robot_skin/service/default
 	icon_state = "service_m"
 
 /mob/living/silicon/robot/model/standard
 	model = /datum/robot_model/standard
-	current_skin = /datum/robot_skin/standard/default
 	icon_state = "robot"
 
 /mob/living/silicon/robot/model/syndicate
 	model = /datum/robot_model/syndicate
-	current_skin = /datum/robot_skin/standard/default
 	icon_state = "synd_sec"
 	faction = list(ROLE_SYNDICATE)
 	req_access = list(ACCESS_SYNDICATE)
@@ -277,7 +270,6 @@
 
 /mob/living/silicon/robot/model/syndicate/medical
 	model = /datum/robot_model/syndicate_medical
-	current_skin = /datum/robot_skin/syndicate_medical/default
 	icon_state = "synd_medical"
 	playstyle_string = "<span class='big bold'>You are a Syndicate medical cyborg!</span><br>\
 		<b>You are armed with powerful medical tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
@@ -288,7 +280,6 @@
 
 /mob/living/silicon/robot/model/syndicate/saboteur
 	model = /datum/robot_model/syndicate_saboteur
-	current_skin = /datum/robot_skin/syndicate_saboteur/default
 	icon_state = "synd_engi"
 	playstyle_string = "<span class='big bold'>You are a Syndicate saboteur cyborg!</span><br>\
 		<b>You are armed with robust engineering tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \

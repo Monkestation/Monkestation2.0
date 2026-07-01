@@ -33,11 +33,7 @@
 	if(ispath(cell))
 		cell = new cell(src)
 
-	internal_inventory = new /obj/item/storage/cyborg(src)
 	create_modularInterface()
-
-	apply_skin(current_skin, FALSE)
-	apply_model(model, TRUE, FALSE)
 
 	if(!laws)
 		make_laws()
@@ -85,6 +81,10 @@
 
 	log_silicon("New cyborg [key_name(src)] created with [connected_ai ? "master AI: [key_name(connected_ai)]" : "no master AI"]")
 	log_current_laws()
+
+	internal_inventory = new internal_inventory(src) // Since the model's creation will immediately deposit items into our inventory, the inventory must be created first.
+	apply_model(model, should_notify_ai = FALSE)
+	apply_skin(current_skin, FALSE)
 
 	var/static/list/alert_areas
 	if(isnull(alert_areas))
@@ -957,8 +957,8 @@
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		balloon_alert(src, "can't transform right now!")
 		return FALSE
-	apply_skin(chosen_robot_skin)
-	apply_model(chosen_robot_model, TRUE)
+	apply_model(chosen_robot_model)
+	apply_skin(chosen_robot_skin, FALSE)
 
 /// Prompts the cyborg with a radial wheel to pick a model that they want.
 /mob/living/silicon/robot/proc/prompt_model_selection()
@@ -990,26 +990,25 @@
 	return TRUE
 
 /// Applies a model to the cyborg.
-/mob/living/silicon/robot/proc/apply_model(datum/robot_model, performs_animation = FALSE, force_default_skin = FALSE, should_notify_ai = TRUE)
-	drop_all_held_items()
-	// Drops all of the items that may be stored by the cyborg
-	for(var/obj/item/storage/bag in model.usable_modules)
+/mob/living/silicon/robot/proc/apply_model(datum/robot_model/new_robot_model, performs_animation = TRUE, should_notify_ai = TRUE)
+	// Drops all of the items that may be stored by the cyborg.
+	for(var/obj/item/storage/bag in internal_inventory.contents)
 		for(var/obj/item in bag)
 			item.forceMove(drop_location())
-	// Upgrades don't work while if there is a new model now.
+	// Upgrades don't work if there is a new model now.
 	for(var/obj/item/borg/upgrade/upgrade_item in upgrades)
 		upgrade_item.forceMove(get_turf(src))
-	REMOVE_TRAITS_IN(src, MODEL_TRAIT)
-	QDEL_NULL(model)
 
-	model = new robot_model(src)
+	REMOVE_TRAITS_IN(src, MODEL_TRAIT)
+	if(!ispath(model))
+		qdel(model)
+	model = new new_robot_model(src)
+	add_traits(model.traits, MODEL_TRAIT)
+
 	ionpulse = model.innate_ionpulse
 	designation = model.name
-	add_traits(model.traits, MODEL_TRAIT)
 	if(hands)
 		hands.icon_state = model.hud_icon_state
-	if(force_default_skin)
-		apply_skin(model.default_skin, FALSE)
 
 	radio.recalculateChannels()
 	set_modularInterface_theme()
@@ -1017,7 +1016,8 @@
 	diag_hud_set_status()
 	diag_hud_set_borgcell()
 	diag_hud_set_aishell()
-	update_icons()
+	if(should_update_icons)
+		update_icons()
 
 	log_silicon("CYBORG: [key_name(src)] has transformed into the [model.name] model.")
 	logevent("Chassis model has been set to [name].")
@@ -1026,9 +1026,11 @@
 	INVOKE_ASYNC(src, PROC_REF(updatename))
 	if(performs_animation)
 		INVOKE_ASYNC(src, PROC_REF(do_transform_animation))
+	else
+		update_icons()
 
 /// Applies a skin to the cyborg.
-/mob/living/silicon/robot/proc/apply_skin(datum/robot_skin/applied_skin, should_update = TRUE)
+/mob/living/silicon/robot/proc/apply_skin(datum/robot_skin/applied_skin, should_update_icons = TRUE)
 	if(islist(current_skin.traits))
 		remove_traits(current_skin.traits, REF(current_skin))
 	if(ispath(applied_skin))
@@ -1049,7 +1051,7 @@
 		else
 			worn_badge.forceMove(drop_location())
 	add_traits(current_skin.traits, REF(current_skin))
-	if(should_update)
+	if(should_update_icons)
 		update_icons()
 
 /// Resets the model to default.
@@ -1057,7 +1059,8 @@
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
 	logevent("Chassis model has been reset.")
 	log_silicon("CYBORG: [key_name(src)] has reset their cyborg model.")
-	apply_model(/datum/robot_model, FALSE, TRUE)
+	apply_model(/datum/robot_model, should_notify_ai = FALSE)
+	apply_skin(model.default_skin, FALSE)
 	revert_shell()
 	return TRUE
 

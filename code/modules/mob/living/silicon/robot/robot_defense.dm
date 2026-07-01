@@ -301,13 +301,15 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 /mob/living/silicon/robot/emp_act(severity)
 	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	switch(severity)
-		if(1)
-			Stun(160)
-		if(2)
-			Stun(60)
+	if(!(. & EMP_PROTECT_SELF))
+		switch(severity)
+			if(EMP_HEAVY)
+				Stun(16 SECONDS)
+			if(EMP_LIGHT)
+				Stun(6 SECONDS)
+	if(!(. & EMP_PROTECT_CONTENTS))
+		for(var/obj/item/active_module in held_items)
+			active_module.emp_act(active_module)
 
 /mob/living/silicon/robot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(user == src)//To prevent syndieborgs from emagging themselves

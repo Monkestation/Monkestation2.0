@@ -8,21 +8,20 @@
 
 /atom/movable/screen/robot/Click()
 	if(isobserver(usr))
-		return 1
+		return TRUE
+	return FALSE
 
 /atom/movable/screen/robot/module/Click(location, control, params)
 	. = ..()
 	var/mob/living/silicon/robot/robot_owner = hud.mymob
-	if(robot_owner.model.type == /datum/robot_model)
-		if(.)
-			return
-		robot_owner.pick_model()
+	if(!robot_owner.has_model())
+		if(!.)
+			robot_owner.pick_model()
 		return
 	var/list/modifiers = params2list(params)
-	if(robot_owner.module_active && !LAZYACCESS(modifiers, RIGHT_CLICK) && !.)
+	if(robot_owner.get_active_held_item() && !LAZYACCESS(modifiers, RIGHT_CLICK) && !.)
 		robot_owner.uneq_active()
 		return
-
 	// Observers can look at a cyborg's inventory, so we ignore parent return value here, unlike everywhere else.
 	if(usr.active_storage == robot_owner.internal_inventory.atom_storage)
 		robot_owner.internal_inventory.atom_storage.hide_contents(usr)
