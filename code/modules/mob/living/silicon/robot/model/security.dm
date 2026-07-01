@@ -1,5 +1,6 @@
 /datum/robot_model/security
 	name = "Security"
+	hud_icon_state = "security"
 	default_skin = /datum/robot_skin/security/default
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,

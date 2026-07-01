@@ -1,5 +1,6 @@
 /datum/robot_model/standard
 	name = "Standard"
+	hud_icon_state = "standard"
 	default_skin = /datum/robot_skin/standard/default
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,

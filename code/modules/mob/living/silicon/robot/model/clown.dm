@@ -1,6 +1,6 @@
 /datum/robot_model/clown
 	name = "Clown"
-	hud_icon_state = "service"
+	hud_icon_state = "brobot"
 	default_skin = /datum/robot_skin/clown/default
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,

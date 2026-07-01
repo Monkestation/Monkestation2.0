@@ -1,5 +1,6 @@
 /datum/robot_model/service
 	name = "Service"
+	hud_icon_state = "service"
 	default_skin = /datum/robot_skin/service/default
 	available_skins = list(
 		/datum/robot_skin/service/default,
