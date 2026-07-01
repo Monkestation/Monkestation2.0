@@ -98,9 +98,8 @@
 		return
 	var/mob/living/carbon/human/screen_owner = owner
 	var/obj/item/organ/external/ipc_screen/screen = screen_owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_SCREEN)
-	screen_owner.dna.features["ipc_screen"] = screen_choice
-	screen_owner.eye_color_left = sanitize_hexcolor(color_choice)
-	screen_owner.update_body_parts()
+
+	screen.switch_to_screen(owner, screen_choice, color_choice)
 
 /**
 	* Simple proc to switch the screen of a monitor-enabled synth, while updating their appearance.
@@ -109,9 +108,13 @@
 	* * transformer - The human that will be affected by the screen change (read: IPC).
 	* * screen_name - The name of the screen to switch the ipc_screen mutant bodypart to.
 	*/
-/obj/item/organ/external/ipc_screen/proc/switch_to_screen(mob/living/carbon/human/transformer, screen_name)
+/obj/item/organ/external/ipc_screen/proc/switch_to_screen(mob/living/carbon/human/transformer, screen_name, color_choice)
 	if(!change_screen)
 		return
 
-	transformer.dna.features["ipc_screen"] = screen_name
+	var/mob/living/carbon/human/screen_owner = owner
+	var/obj/item/organ/external/ipc_screen/screen = screen_owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_SCREEN)
+	var/datum/bodypart_overlay/mutant/ipc_screen/screen_overlay = screen.bodypart_overlay
+	screen_overlay.set_appearance_from_name(screen_name)
+	screen_owner.eye_color_left = sanitize_hexcolor(color_choice)
 	transformer.update_body()
