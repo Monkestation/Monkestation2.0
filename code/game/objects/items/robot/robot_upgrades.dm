@@ -978,7 +978,7 @@
 	if(!length(storables_to_add))
 		to_chat(user, span_warning("This upgrade doesn't seem to do anything!"))
 		return FALSE
-	apparatus.storable |= storables_to_add
+	apparatus.whitelist_storables |= storables_to_add
 
 /obj/item/borg/upgrade/science_apparatus_improvement/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
@@ -989,7 +989,7 @@
 		return FALSE
 	if(!length(storables_to_add))
 		return FALSE
-	apparatus.storable -= storables_to_add
+	apparatus.whitelist_storables -= storables_to_add
 
 /obj/item/borg/upgrade/science_apparatus_improvement/robotics
 	name = "science robotics upgrade"
