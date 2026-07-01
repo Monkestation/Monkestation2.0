@@ -969,6 +969,7 @@
 		return FALSE
 	apply_model(chosen_robot_model)
 	apply_skin(chosen_robot_skin)
+	return TRUE
 
 /// Prompts the cyborg with a radial wheel to pick a model that they want.
 /mob/living/silicon/robot/proc/prompt_model_selection()
@@ -1035,7 +1036,7 @@
 	INVOKE_ASYNC(src, PROC_REF(updatename))
 
 /// Applies a skin to the cyborg.
-/mob/living/silicon/robot/proc/apply_skin(datum/robot_skin/applied_skin, perform_animations = TRUE, lock_during_animation = TRUE)
+/mob/living/silicon/robot/proc/apply_skin(datum/robot_skin/applied_skin, perform_animations = TRUE, locks_during_animation = TRUE)
 	if(islist(current_skin.traits))
 		remove_traits(current_skin.traits, REF(current_skin))
 	if(ispath(applied_skin))
@@ -1057,10 +1058,10 @@
 			worn_badge.forceMove(drop_location())
 	add_traits(current_skin.traits, REF(current_skin))
 
-	if(perform_animations)
-		start_transform_animation(lock_during_animation)
-	else
+	if(!perform_animations)
 		update_icons()
+		return
+	start_transform_animation(locks_during_animation)
 
 /// Begins the transformation animation.
 /mob/living/silicon/robot/proc/start_transform_animation(lock = TRUE)
