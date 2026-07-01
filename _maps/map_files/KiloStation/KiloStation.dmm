@@ -48023,13 +48023,6 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
-"oYp" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "4";
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "oYr" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
