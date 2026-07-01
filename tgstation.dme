@@ -2452,7 +2452,6 @@
 #include "code\game\objects\items\charter.dm"
 #include "code\game\objects\items\choice_beacon.dm"
 #include "code\game\objects\items\chromosome.dm"
-#include "code\game\objects\items\cigs_lighters.dm"
 #include "code\game\objects\items\cirno_plush.dm"
 #include "code\game\objects\items\climbingrope.dm"
 #include "code\game\objects\items\clown_items.dm"
