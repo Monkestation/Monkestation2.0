@@ -474,7 +474,7 @@
 	},
 /area/template_noop)
 "RA" = (
-/obj/machinery/door/airlock/qm,
+/obj/machinery/door/airlock/command/qm,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

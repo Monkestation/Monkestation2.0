@@ -18915,7 +18915,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	id_tag = "BSdoor";
 	name = "Blueshield's Office"
 	},
@@ -74382,7 +74382,7 @@
 	},
 /obj/machinery/duct,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	name = "Representative's Office"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,

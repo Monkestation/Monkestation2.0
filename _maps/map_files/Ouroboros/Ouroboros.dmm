@@ -2381,7 +2381,7 @@
 /turf/open/openspace,
 /area/station/ai_monitored/turret_protected/aisat/equipment)
 "aLw" = (
-/obj/machinery/door/airlock/hos{
+/obj/machinery/door/airlock/command/hos{
 	name = "Head Of Security's Quarters"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/hos,
@@ -3371,7 +3371,7 @@
 "bbp" = (
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/science/rd,
-/obj/machinery/door/airlock/rd{
+/obj/machinery/door/airlock/command/rd{
 	name = "Research Director's Quarters"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -6114,7 +6114,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	name = "Consultant's Office"
 	},
 /obj/machinery/door/firedoor,
@@ -8954,7 +8954,7 @@
 /area/station/security/lockers)
 "cHX" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	id_tag = "BSdoor";
 	name = "Blueshield's Office"
 	},
@@ -9817,7 +9817,7 @@
 /area/station/construction/mining/aux_base)
 "cWa" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate/glass{
+/obj/machinery/door/airlock/command/corporate/glass{
 	name = "Command Breakroom"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
@@ -10748,7 +10748,7 @@
 /area/station/maintenance/department/security/lower)
 "djD" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/hos{
+/obj/machinery/door/airlock/command/hos{
 	id_tag = "HoSdoor";
 	name = "Head Of Security's Office"
 	},
@@ -13611,7 +13611,7 @@
 /area/station/medical/chemistry)
 "eaO" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate/glass{
+/obj/machinery/door/airlock/command/corporate/glass{
 	name = "Command Hallway"
 	},
 /turf/open/floor/iron/dark/smooth_large,
@@ -14394,7 +14394,7 @@
 "elF" = (
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/science/rd,
-/obj/machinery/door/airlock/rd{
+/obj/machinery/door/airlock/command/rd{
 	name = "Research Director's Office"
 	},
 /obj/structure/cable,
@@ -20013,7 +20013,7 @@
 /area/station/commons/storage/mining)
 "fWA" = (
 /obj/effect/mapping_helpers/airlock/access/all/science/rd,
-/obj/machinery/door/airlock/rd/glass{
+/obj/machinery/door/airlock/command/rd/glass{
 	name = "Server Access"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
@@ -23587,7 +23587,7 @@
 /area/station/commons/dorms)
 "gZS" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	id_tag = "BSdoor";
 	name = "Blueshield's Office"
 	},
@@ -28822,7 +28822,7 @@
 /area/station/commons/storage/mining)
 "izE" = (
 /obj/effect/mapping_helpers/airlock/access/all/engineering/ce,
-/obj/machinery/door/airlock/ce{
+/obj/machinery/door/airlock/command/ce{
 	name = "Chief Engineer's Quarters"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -29447,7 +29447,7 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical)
 "iKr" = (
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	name = "Vacant Office"
 	},
 /obj/structure/cable,
@@ -30698,7 +30698,7 @@
 "jam" = (
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/medical/cmo,
-/obj/machinery/door/airlock/cmo{
+/obj/machinery/door/airlock/command/cmo{
 	name = "Chief Medical Officer's Office"
 	},
 /obj/structure/cable,
@@ -31450,7 +31450,7 @@
 /area/station/maintenance/aft/greater)
 "jmF" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate/glass{
+/obj/machinery/door/airlock/command/corporate/glass{
 	name = "Command Hallway"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -38687,7 +38687,7 @@
 /area/station/hallway/primary/central/aft)
 "loa" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	id_tag = "BSdoor";
 	name = "Blueshield's Quarters"
 	},
@@ -42933,7 +42933,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "mBu" = (
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	name = "Consultant's Quarters"
 	},
 /obj/machinery/door/firedoor,
@@ -43899,7 +43899,7 @@
 "mPk" = (
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
-/obj/machinery/door/airlock/corporate/glass{
+/obj/machinery/door/airlock/command/corporate/glass{
 	name = "Meeting Hall"
 	},
 /obj/structure/cable,
@@ -50222,7 +50222,7 @@
 "oJp" = (
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
-/obj/machinery/door/airlock/corporate/glass{
+/obj/machinery/door/airlock/command/corporate/glass{
 	name = "Meeting Hall"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -53634,7 +53634,7 @@
 /area/station/hallway/primary/central/aft)
 "pLE" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate/glass{
+/obj/machinery/door/airlock/command/corporate/glass{
 	name = "Command Hallway"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -63610,7 +63610,7 @@
 "sIX" = (
 /obj/effect/mapping_helpers/airlock/access/all/science/rd,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/rd{
+/obj/machinery/door/airlock/command/rd{
 	name = "Research Division Server Room"
 	},
 /obj/structure/cable,
@@ -69629,7 +69629,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/door/airlock/ce/glass{
+/obj/machinery/door/airlock/command/ce/glass{
 	name = "Gravity Generator Access"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -70564,7 +70564,7 @@
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "uNW" = (
-/obj/machinery/door/airlock/cmo{
+/obj/machinery/door/airlock/command/cmo{
 	name = "Chief Medical Officer's Quarters"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/cmo,
@@ -74739,7 +74739,7 @@
 "vWL" = (
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/ce,
-/obj/machinery/door/airlock/ce{
+/obj/machinery/door/airlock/command/ce{
 	name = "Chief Engineer's Office"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -81992,7 +81992,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/command/general,
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
-/obj/machinery/door/airlock/ce{
+/obj/machinery/door/airlock/command/ce{
 	name = "MiniSat Access"
 	},
 /obj/effect/turf_decal/stripes/line{

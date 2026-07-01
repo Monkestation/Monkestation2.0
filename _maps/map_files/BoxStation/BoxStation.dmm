@@ -2870,7 +2870,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	name = "Blueshield's Quarters"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
@@ -11060,7 +11060,7 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	id_tag = "bs_bolt";
 	name = "Blueshield's Office"
 	},
@@ -17497,7 +17497,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	id_tag = "nt_rep_office_door";
 	name = "Nanotrasen Representative's Office"
 	},
@@ -30387,7 +30387,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	id_tag = "nt_rep_office_door";
 	name = "Nanotrasen Representative's Office"
 	},
@@ -31016,7 +31016,7 @@
 /obj/structure/cable,
 /obj/machinery/duct,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	id_tag = "bs_bolt";
 	name = "Blueshield's Office"
 	},
@@ -31819,7 +31819,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	name = "Nanotrasen Representative's Office"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
@@ -35176,7 +35176,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	id_tag = "nt_rep_kitchen_door";
 	name = "Nanotrasen Representative's Kitchen"
 	},
@@ -41715,7 +41715,7 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	id_tag = "bsq_to_cq";
 	name = "Blueshield's Quarters to Captain's Quarters"
 	},
@@ -71456,7 +71456,7 @@
 /obj/structure/cable,
 /obj/machinery/duct,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	name = "Nanotrasen Representative's Quarters"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/command/blueshield,

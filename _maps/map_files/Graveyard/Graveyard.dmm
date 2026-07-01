@@ -6196,7 +6196,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "cqN" = (
-/obj/machinery/door/airlock/hos{
+/obj/machinery/door/airlock/command/hos{
 	name = "Head Of Security's Quarters"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -7353,7 +7353,7 @@
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "cMH" = (
-/obj/machinery/door/airlock/hop{
+/obj/machinery/door/airlock/command/hop{
 	id_tag = "HoPdoor";
 	name = "Head Of Personel's Office"
 	},
@@ -19475,7 +19475,7 @@
 /turf/open/floor/wood/large,
 /area/graveyard/surface/structures/church)
 "hBn" = (
-/obj/machinery/door/airlock/hos{
+/obj/machinery/door/airlock/command/hos{
 	id_tag = "HoSdoor";
 	name = "Head Of Security's Office"
 	},
@@ -25515,7 +25515,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "jWJ" = (
-/obj/machinery/door/airlock/captain{
+/obj/machinery/door/airlock/command/captain{
 	name = "Captain's Suite"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -27149,7 +27149,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base)
 "kDA" = (
-/obj/machinery/door/airlock/hop{
+/obj/machinery/door/airlock/command/hop{
 	id_tag = "HoPdoor";
 	name = "Head of Personel's Quarters"
 	},
@@ -35340,7 +35340,7 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "nHy" = (
-/obj/machinery/door/airlock/hop{
+/obj/machinery/door/airlock/command/hop{
 	id_tag = "HoPdoor";
 	name = "Head of Personel's Quarters"
 	},
@@ -39777,7 +39777,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
 "ptl" = (
-/obj/machinery/door/airlock/captain{
+/obj/machinery/door/airlock/command/captain{
 	name = "Captain's Office"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -60274,7 +60274,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "xuP" = (
-/obj/machinery/door/airlock/captain{
+/obj/machinery/door/airlock/command/captain{
 	name = "Captain's Quarters"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -61824,7 +61824,7 @@
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "xYC" = (
-/obj/machinery/door/airlock/captain{
+/obj/machinery/door/airlock/command/captain{
 	name = "Captain's Office"
 	},
 /obj/structure/cable,
