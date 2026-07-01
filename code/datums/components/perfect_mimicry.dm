@@ -32,7 +32,7 @@
 	var/static/list/banned_objects = list(/obj/item/folder/biscuit, /obj/item/modular_computer, /obj/item/card, \
 		/obj/item/holochip, /obj/item/stack, /obj/item/pai_card, /obj/item/organ, /obj/item/lootbox, /obj/item/bodypart
 		) // typecache of banned objects that should absolutely not be mimicked
-	var/list/applied_mob_traits = list(TRAIT_HANDS_BLOCKED, TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED, TRAIT_NOBREATH)
+	var/list/applied_mob_traits = list(TRAIT_HANDS_BLOCKED, TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED, TRAIT_NOBREATH, TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTLOWPRESSURE)
 
 	COOLDOWN_DECLARE(move_cooldown)
 	var/obj/mimicked_object
@@ -138,10 +138,10 @@
 	RegisterSignal(mimicked_object, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(reflect_damage))
 	RegisterSignal(mimicked_object, COMSIG_QDELETING, PROC_REF(on_object_qdel))
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-	owner.forceMove(mimicked_object)
-	mimicked_object.buckle_mob(owner)
 	if(length(applied_mob_traits))
 		owner.add_traits(applied_mob_traits, REF(src))
+	owner.forceMove(mimicked_object)
+	mimicked_object.buckle_mob(owner)
 	if(mimicked_object.atom_storage)
 		fake_storage = new(src)
 		fake_storage.clone_storage(mimicked_object.atom_storage)
