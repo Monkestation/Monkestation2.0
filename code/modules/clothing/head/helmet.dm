@@ -612,9 +612,7 @@
 
 
 /obj/item/clothing/head/helmet/laserproof/IsReflect(def_zone)
-	if(def_zone == "") //something is fucky and this happens every now and then but the damage defaults to the person's chest so this is okayish
-		return TRUE
-	if(!(def_zone in list(BODY_ZONE_HEAD))) //If not shot where ablative is covering you, you don't get the reflection bonus!
+	if(def_zone != BODY_ZONE_HEAD) //If not shot where ablative is covering you, you don't get the reflection bonus!
 		return FALSE
 	return TRUE
 
