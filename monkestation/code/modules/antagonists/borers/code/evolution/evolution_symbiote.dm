@@ -98,7 +98,7 @@
 	tier = 5
 	unlocked_evolutions = list(
 		/datum/borer_evolution/sugar_immunity,
-		/datum/borer_evolution/synthetic_borer,
+		/datum/borer_evolution/advanced_borer,
 		/datum/borer_evolution/synthetic_chems_positive,
 	)
 	added_action = /datum/action/cooldown/borer/revive_host

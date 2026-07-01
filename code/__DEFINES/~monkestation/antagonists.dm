@@ -71,6 +71,8 @@
 #define BORER_ALONE_PRODUCTION (1<<4)
 /// If the borer is energic, used for crawling into various spaces
 #define BORER_ENERGIC (1<<5)
+/// IF the borer has acidic skin, used to bypass thick clothing
+#define BORER_ACID_SKIN (1<<6)
 
 /// If the given mob is a bloodling
 #define IS_BLOODLING(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/bloodling))
