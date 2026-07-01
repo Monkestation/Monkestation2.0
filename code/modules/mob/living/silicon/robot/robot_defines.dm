@@ -195,7 +195,7 @@
 
 /mob/living/silicon/robot/model/engineering
 	model = /datum/robot_model/engineering
-	icon_state = "engineering"
+	icon_state = "engineer"
 
 /mob/living/silicon/robot/model/highlander
 	model = /datum/robot_model/highlander
@@ -223,11 +223,11 @@
 
 /mob/living/silicon/robot/model/security
 	model = /datum/robot_model/security
-	icon_state = "security"
+	icon_state = "sec"
 
 /mob/living/silicon/robot/model/service
 	model = /datum/robot_model/service
-	icon_state = "service_m"
+	icon_state = "brobot"
 
 /mob/living/silicon/robot/model/standard
 	model = /datum/robot_model/standard
