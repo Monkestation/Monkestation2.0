@@ -193,8 +193,8 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 /obj/item/stack/sheet/mineral/thorium
 	name = "thorium"
 	desc = "A highly radioactive fission by-product."
-	icon_state = "sheet-uranium"
-	inhand_icon_state = "sheet-uranium"
+	icon_state = "sheet-thorium"
+	inhand_icon_state = "sheet-thorium"
 	singular_name = "thorium sheet"
 	sheettype = "thorium"
 	mats_per_unit = list(/datum/material/thorium=SHEET_MATERIAL_AMOUNT)
@@ -211,8 +211,8 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 /obj/item/stack/sheet/mineral/plutonium
 	name = "plutonium"
 	desc = "A dangerous radioactive fission by-product."
-	icon_state = "sheet-uranium"
-	inhand_icon_state = "sheet-uranium"
+	icon_state = "sheet-plutonium"
+	inhand_icon_state = "sheet-plutonium"
 	singular_name = "plutonium sheet"
 	sheettype = "plutonium"
 	mats_per_unit = list(/datum/material/plutonium=SHEET_MATERIAL_AMOUNT)

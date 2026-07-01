@@ -10,7 +10,7 @@
 	rod_type = "uranium"
 	rod_color = "green"
 
-	fuel_amount = 900
+	fuel_amount = 500
 	fuel_consumption = 1
 
 	reactivity = 14

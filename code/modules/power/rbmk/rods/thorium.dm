@@ -10,7 +10,7 @@
 	rod_type = "thorium"
 	rod_color = "lightblue"
 
-	fuel_amount = 1150
+	fuel_amount = 800
 	fuel_consumption = 1
 
 	reactivity = 9

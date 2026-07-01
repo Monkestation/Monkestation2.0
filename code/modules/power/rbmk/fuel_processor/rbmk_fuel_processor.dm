@@ -32,10 +32,8 @@
 
 	var/datum/component/remote_materials/materials
 	var/link_on_init = TRUE
-
 	var/obj/item/rbmk/fuel_rod/inserted_rod
 	var/list/output_items = list()
-
 	var/processing = FALSE
 	var/current_process
 	var/process_started_at = 0
@@ -44,16 +42,11 @@
 /obj/machinery/rbmk/fuel_processor/Initialize(mapload)
 	output_items = list()
 
-	materials = AddComponent(
-		/datum/component/remote_materials, \
-		mapload && link_on_init, \
-		mat_container_signals = list( \
-			COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/rbmk/fuel_processor, local_material_insert) ) \
-	)
+	materials = AddComponent(/datum/component/remote_materials, mapload && link_on_init)
 
 	. = ..()
 
-	RegisterSignal(src, COMSIG_SILO_ITEM_CONSUMED, TYPE_PROC_REF(/obj/machinery/rbmk/fuel_processor, silo_material_insert))
+	RegisterSignal(src, COMSIG_SILO_ITEM_CONSUMED, PROC_REF(silo_material_insert))
 
 	update_appearance(UPDATE_ICON)
 	return .
@@ -78,18 +71,12 @@
 
 	process_material_insert(item_inserted, mats_consumed, amount_inserted)
 
-/obj/machinery/rbmk/fuel_processor/proc/local_material_insert(container, obj/item/item_inserted, last_inserted_id, list/mats_consumed, amount_inserted, atom/context)
-	SIGNAL_HANDLER
-
-	process_material_insert(item_inserted, mats_consumed, amount_inserted)
-
 /obj/machinery/rbmk/fuel_processor/proc/process_material_insert(obj/item/item_inserted, list/mats_consumed, amount_inserted)
 	if(directly_use_energy(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.4 * initial(active_power_usage))))
 		if(!processing && !has_output_items() && !inserted_rod && !panel_open)
 			flick("rod_press_load", src)
 
-		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	SStgui.update_uis(src)
 
 /obj/machinery/rbmk/fuel_processor/update_icon_state()
@@ -152,12 +139,16 @@
 	switch(recipe_id)
 		if(RBMK_PROCESSOR_FABRICATE_URANIUM)
 			return "Fabricate uranium fuel rod"
+
 		if(RBMK_PROCESSOR_EXTRACT_THORIUM)
 			return "Extract thorium"
+
 		if(RBMK_PROCESSOR_FABRICATE_THORIUM)
 			return "Fabricate thorium fuel rod"
+
 		if(RBMK_PROCESSOR_EXTRACT_PLUTONIUM)
 			return "Extract plutonium"
+
 		if(RBMK_PROCESSOR_FABRICATE_PLUTONIUM)
 			return "Fabricate plutonium fuel rod"
 
@@ -167,14 +158,18 @@
 	switch(recipe_id)
 		if(RBMK_PROCESSOR_FABRICATE_URANIUM)
 			return "Presses uranium and iron into a fresh starter fuel rod."
+
 		if(RBMK_PROCESSOR_EXTRACT_THORIUM)
 			return "Extracts thorium from a depleted uranium rod and stores the ruined casing."
+
 		if(RBMK_PROCESSOR_FABRICATE_THORIUM)
 			return "Presses thorium and iron into a fresh thorium fuel rod."
+
 		if(RBMK_PROCESSOR_EXTRACT_PLUTONIUM)
 			return "Extracts plutonium from a depleted thorium rod and stores the ruined casing."
+
 		if(RBMK_PROCESSOR_FABRICATE_PLUTONIUM)
-			return "Presses plutonium and iron into a fresh plutonium fuel rod."
+			return "Presses plutonium and iron into a fresh plutium fuel rod."
 
 	return "No description."
 
@@ -209,6 +204,7 @@
 				"name" = "iron",
 				"amount" = RBMK_PROCESSOR_IRON_COST,
 			))
+
 			costs += list(list(
 				"name" = "uranium",
 				"amount" = RBMK_PROCESSOR_FUEL_COST,
@@ -219,6 +215,7 @@
 				"name" = "iron",
 				"amount" = RBMK_PROCESSOR_IRON_COST,
 			))
+
 			costs += list(list(
 				"name" = "thorium",
 				"amount" = RBMK_PROCESSOR_FUEL_COST,
@@ -229,6 +226,7 @@
 				"name" = "iron",
 				"amount" = RBMK_PROCESSOR_IRON_COST,
 			))
+
 			costs += list(list(
 				"name" = "plutonium",
 				"amount" = RBMK_PROCESSOR_FUEL_COST,
@@ -313,12 +311,15 @@
 /obj/machinery/rbmk/fuel_processor/proc/recipe_creates_spent_casing(recipe_id)
 	return recipe_id == RBMK_PROCESSOR_EXTRACT_THORIUM || recipe_id == RBMK_PROCESSOR_EXTRACT_PLUTONIUM
 
-/obj/machinery/rbmk/fuel_processor/proc/get_recipe_block_reason(recipe_id)
+/obj/machinery/rbmk/fuel_processor/proc/get_recipe_block_reason(recipe_id, check_power = TRUE)
 	if(processing)
 		return "Machine is already processing."
 
 	if(machine_stat & BROKEN)
 		return "Machine is broken."
+
+	if(check_power && (machine_stat & NOPOWER))
+		return "Machine has no power."
 
 	if(panel_open)
 		return "Maintenance panel is open."
@@ -336,6 +337,7 @@
 		switch(recipe_id)
 			if(RBMK_PROCESSOR_EXTRACT_THORIUM)
 				return "Requires a depleted uranium fuel rod."
+
 			if(RBMK_PROCESSOR_EXTRACT_PLUTONIUM)
 				return "Requires a depleted thorium fuel rod."
 
@@ -347,6 +349,7 @@
 			return "Linked material storage is unavailable."
 
 		var/list/material_cost = get_recipe_material_cost(recipe_id)
+
 		if(!materials.mat_container.has_materials(material_cost, 1, 1))
 			return "Insufficient linked materials."
 
@@ -354,9 +357,11 @@
 
 /obj/machinery/rbmk/fuel_processor/proc/start_recipe(recipe_id, mob/user)
 	var/block_reason = get_recipe_block_reason(recipe_id)
+
 	if(block_reason)
 		if(user)
 			to_chat(user, span_warning(block_reason))
+
 		return FALSE
 
 	processing = TRUE
@@ -389,21 +394,25 @@
 	process_ends_at = 0
 	update_use_power(IDLE_POWER_USE)
 
-	var/block_reason = get_recipe_block_reason(recipe_id)
+	var/block_reason = get_recipe_block_reason(recipe_id, FALSE)
+
 	if(block_reason)
 		update_appearance(UPDATE_ICON)
 		SStgui.update_uis(src)
 		return
 
 	var/list/material_cost = get_recipe_material_cost(recipe_id)
+
 	if(length(material_cost))
 		materials.use_materials(material_cost, 1, 1, "fabricated", get_recipe_name(recipe_id))
 
 	var/output_type = get_recipe_output_type(recipe_id)
+
 	if(output_type)
 		create_output(output_type)
 
 	var/extracted_sheet_type = get_extracted_sheet_type(recipe_id)
+
 	if(extracted_sheet_type)
 		create_sheet_output(extracted_sheet_type, RBMK_PROCESSOR_RECOVERED_SHEETS)
 
@@ -440,32 +449,38 @@
 	if(processing)
 		if(user)
 			balloon_alert(user, "processing")
+
 		return FALSE
 
 	if(panel_open)
 		if(user)
 			balloon_alert(user, "panel open")
+
 		return FALSE
 
 	if(inserted_rod)
 		if(user)
 			balloon_alert(user, "rod loaded")
+
 		return FALSE
 
 	if(has_output_items())
 		if(user)
 			balloon_alert(user, "output full")
 			to_chat(user, span_warning("Clear the output tray before loading another rod."))
+
 		return FALSE
 
 	if(!fuel_rod.is_depleted())
 		if(user)
 			to_chat(user, span_warning("Fresh fuel rods do not need processing."))
+
 		return FALSE
 
 	if(fuel_rod.rod_type != "uranium" && fuel_rod.rod_type != "thorium")
 		if(user)
 			to_chat(user, span_warning("[fuel_rod] has no viable processing path. Treat it as radioactive waste."))
+
 		return FALSE
 
 	return TRUE
@@ -498,6 +513,7 @@
 	if(processing)
 		if(user)
 			balloon_alert(user, "processing")
+
 		return FALSE
 
 	if(!inserted_rod)
@@ -519,9 +535,11 @@
 	if(processing)
 		if(user)
 			balloon_alert(user, "processing")
+
 		return FALSE
 
 	output_index = text2num("[output_index]")
+
 	if(!output_index)
 		return FALSE
 
@@ -612,10 +630,12 @@
 
 /obj/machinery/rbmk/fuel_processor/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
+
 	if(.)
 		return .
 
 	ui = SStgui.try_update_ui(user, src, ui)
+
 	if(!ui)
 		ui = new(user, src, "RBMKFuelProcessor", name)
 		ui.open()
@@ -638,11 +658,9 @@
 	data["processing"] = processing
 	data["current_process"] = current_process ? get_recipe_name(current_process) : null
 	data["process_progress"] = get_process_progress()
-
 	data["inserted_rod"] = get_inserted_rod_data()
 	data["output_items"] = get_output_items_data()
 	data["recipes"] = get_all_recipe_data()
-
 	data["materials"] = materials?.mat_container ? materials.mat_container.ui_data() : list()
 	data["onHold"] = materials ? materials.on_hold() : FALSE
 
@@ -650,6 +668,7 @@
 
 /obj/machinery/rbmk/fuel_processor/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
+
 	if(.)
 		return .
 
@@ -658,6 +677,7 @@
 	switch(action)
 		if("start")
 			var/recipe_id = params["recipe"]
+
 			if(!istext(recipe_id))
 				return FALSE
 
@@ -674,22 +694,24 @@
 				return FALSE
 
 			var/datum/material/material = locate(params["ref"])
+
 			if(!istype(material))
 				return FALSE
 
 			var/amount = params["amount"]
+
 			if(isnull(amount))
 				return FALSE
 
-			amount = text2num(amount)
-			if(isnull(amount))
-				return FALSE
+			amount = text2num("[amount]")
 
-			if(!directly_use_energy(ROUND_UP((amount / MAX_STACK_SIZE) * 0.4 * initial(active_power_usage))))
-				say("No power to dispense sheets.")
-				return TRUE
+			if(isnull(amount) || amount <= 0)
+				return FALSE
 
 			materials.eject_sheets(material, amount)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+			update_appearance(UPDATE_ICON)
+			SStgui.update_uis(src)
 			return TRUE
 
 	return FALSE
@@ -699,7 +721,6 @@
 #undef RBMK_PROCESSOR_FABRICATE_THORIUM
 #undef RBMK_PROCESSOR_EXTRACT_PLUTONIUM
 #undef RBMK_PROCESSOR_FABRICATE_PLUTONIUM
-
 #undef RBMK_PROCESSOR_IRON_COST
 #undef RBMK_PROCESSOR_FUEL_COST
 #undef RBMK_PROCESSOR_RECOVERED_SHEETS

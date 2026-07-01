@@ -10,7 +10,7 @@
 	rod_type = "plutonium"
 	rod_color = "crimson"
 
-	fuel_amount = 800
+	fuel_amount = 400
 	fuel_consumption = 1
 
 	reactivity = 18
