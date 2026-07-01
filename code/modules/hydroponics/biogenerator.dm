@@ -29,10 +29,10 @@
 	var/max_items = 20
 	/// The current amount of items that can be converted into biomass that the biogenerator is holding.
 	var/current_item_count = 0
-	/// The maximum amount of biomass that will affect the visuals of the biogenerator.
-	var/max_visual_biomass = 5000
-	/// The maximum amount of reagents that the biogenerator can output to a container at once.
-	var/max_output = 50
+	/// The maximum amount of biomass.
+	var/max_biomass = 5000
+	/// The maximum amount of items the biogenerator can make at a time.
+	var/max_output = 10
 	/// The research that is stored within this biogenerator.
 	var/datum/techweb/stored_research
 	/// The different visual categories for the biogenerator, for the tabs.
@@ -115,7 +115,7 @@
 /obj/machinery/biogenerator/update_appearance()
 	. = ..()
 
-	var/power = machine_stat & (NOPOWER|BROKEN) ? 0 : 1 + min(biomass / max_visual_biomass, 1) + (processing & 1)
+	var/power = machine_stat & (NOPOWER|BROKEN) ? 0 : 1 + min(biomass / max_biomass, 1) + (processing & 1)
 	set_light(l_outer_range = MINIMUM_USEFUL_LIGHT_RANGE, l_power = power, l_color = LIGHT_COLOR_CYAN)
 
 
@@ -130,7 +130,7 @@
 
 	if(biomass > 0)
 		// Get current biomass volume adjusted with sine function (more biomass = less frequent icon changes)
-		var/biomass_volume_sin = sin(min(biomass/max_visual_biomass, 1) * 90)
+		var/biomass_volume_sin = sin(min(biomass/max_biomass, 1) * 90)
 		// Round up to get the corresponding overlay icon
 		var/biomass_level = ROUND_UP(biomass_volume_sin * 7)
 		. += mutable_appearance(icon, "[icon_state]_o_biomass_[biomass_level]")
@@ -285,7 +285,7 @@
 	nutriments += ROUND_UP(food_to_convert.reagents.get_multiple_reagent_amounts(nutrient_subtypes))
 	qdel(food_to_convert)
 	current_item_count = max(current_item_count - 1, 0)
-	biomass += nutriments * productivity
+	biomass = min(biomass + (nutriments * productivity), max_biomass)
 
 
 /**
@@ -308,7 +308,7 @@
 	if(materials.len != 1 || materials[1] != GET_MATERIAL_REF(/datum/material/biomass))
 		return FALSE
 
-	var/cost = materials[GET_MATERIAL_REF(/datum/material/biomass)] * amount / efficiency
+	var/cost = materials[GET_MATERIAL_REF(/datum/material/biomass)] * amount
 	if (cost > biomass)
 		return FALSE
 
@@ -440,7 +440,7 @@
 /obj/machinery/biogenerator/ui_static_data(mob/user)
 	var/list/data = list()
 	data["categories"] = list()
-	data["max_visual_biomass"] = max_visual_biomass
+	data["max_biomass"] = max_biomass
 
 	var/categories = show_categories.Copy()
 	for(var/category in categories)
@@ -463,7 +463,7 @@
 				"id" = design.id,
 				"name" = design.name,
 				"is_reagent" = design.make_reagent != null,
-				"cost" = design.materials[GET_MATERIAL_REF(/datum/material/biomass)] / efficiency,
+				"cost" = design.materials[GET_MATERIAL_REF(/datum/material/biomass)],
 			))
 		data["categories"] += list(cat)
 
