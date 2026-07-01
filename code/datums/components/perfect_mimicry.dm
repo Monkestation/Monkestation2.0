@@ -1,6 +1,8 @@
 #define INTEGRITY_PER_WCLASS 10
 
 /mob/living/proc/grant_mimicry()
+	for(var/datum/action/cooldown/mimic_ability/mimic_object/action in src.actions)
+		return
 	var/datum/action/cooldown/mimic_ability/mimic_object/action = new(src)
 	action.Grant(src)
 
@@ -28,7 +30,7 @@
 
 	var/static/list/allowed_objects = list() // typecache of allowed objects to mimic
 	var/static/list/banned_objects = list(/obj/item/folder/biscuit, /obj/item/modular_computer, /obj/item/card, \
-		/obj/item/holochip, /obj/item/stack
+		/obj/item/holochip, /obj/item/stack, /obj/item/pai_card, /obj/item/organ, /obj/item/lootbox, /obj/item/bodypart
 		) // typecache of banned objects that should absolutely not be mimicked
 	var/list/applied_mob_traits = list(TRAIT_HANDS_BLOCKED, TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED, TRAIT_NOBREATH)
 
@@ -105,6 +107,10 @@
 	if(!isitem(target_item))
 		return FALSE
 	if(!target_item.uses_integrity)
+		return FALSE
+	if(target_item.flags_1 & HOLOGRAM_1)
+		return FALSE
+	if(target_item.item_flags & ABSTRACT)
 		return FALSE
 	if(length(banned_objects) && is_type_in_list(target_item, banned_objects))
 		return FALSE
