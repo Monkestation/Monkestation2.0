@@ -47,11 +47,61 @@
 		return ITEM_INTERACT_BLOCKING
 	return ITEM_INTERACT_SUCCESS
 
+#define DISPLAY_REQUEST_TAKEOVER "Hostile takeover"
+#define DISPLAY_REQUEST_NICELY "Request Core"
+#define DISPLAY_REQUEST_CANCEL "Cancel"
+
 /obj/machinery/status_display/ai_core/attack_ai(mob/living/silicon/ai/user)
 	if(isnull(connected_ai))
 		assign_ai(user)
 	if(user == connected_ai)
 		user.pick_icon()
+		return
+	var/datum/ai_os/z_level_os = GLOB.ai_os["[z]"]
+	if(!(user in z_level_os.ai_list)) //ai_os shouldn't be null here cause ai should be assigned
+		user.eyeobj.balloon_alert(user, "not on the z-level!")
+		return
+	var/request_prompt = tgui_alert(user, "It appears this display core is taken by another AI; You can request it relinquishes it to you. \
+		If that doesn't work, you can take it over by force if you have more CPU power than they do.",
+		title = "Display Core Control",
+		buttons = list(DISPLAY_REQUEST_TAKEOVER, DISPLAY_REQUEST_NICELY, DISPLAY_REQUEST_CANCEL))
+	switch(request_prompt)
+		if(DISPLAY_REQUEST_TAKEOVER)
+			hostile_takeover(user)
+			return
+		if(DISPLAY_REQUEST_NICELY)
+			if(tgui_alert(connected_ai, "[user.name] is requesting control of your display AI core at [get_area_name(src)].",
+				title = "Display Core Control",
+				buttons = list("Allow", "Deny"),
+				timeout = 15 SECONDS,
+				) != "Allow")
+				to_chat(user, span_notice("[connected_ai.name] denied your request, however you can still attempt to <a href='byond://?src=[REF(src)];AI_taking_over=[REF(user)];'>forcefully</a> take it over if you wish (and have more CPU than [connected_ai.name])"))
+				return
+			assign_ai(user)
+
+#undef DISPLAY_REQUEST_TAKEOVER
+#undef DISPLAY_REQUEST_NICELY
+#undef DISPLAY_REQUEST_CANCEL
+
+/obj/machinery/status_display/ai_core/Topic(href, href_list)
+	. = ..()
+	if(href_list["AI_taking_over"])
+		var/mob/living/silicon/ai/usurper = locate(href_list["AI_taking_over"])
+		if(!istype(usurper))
+			return
+		hostile_takeover(usurper)
+
+/obj/machinery/status_display/ai_core/proc/hostile_takeover(mob/living/silicon/ai/usurper)
+	var/datum/ai_os/z_level_os = GLOB.ai_os["[z]"]
+	if(z_level_os.cpu_assigned[usurper] > z_level_os.cpu_assigned[connected_ai])
+		to_chat(connected_ai, span_warning("Display core taken over at [get_area_name(src)] by [usurper]!"))
+		assign_ai(usurper)
+	else
+		usurper.eyeobj.balloon_alert(usurper, "CPU power too low!")
+		to_chat(connected_ai,
+			span_warning("[usurper] attempted to take over the display core at [get_area_name(src)], \
+			but it didn't have enough CPU power!")
+		)
 
 /obj/machinery/status_display/ai_core/proc/set_ai(new_icon_state, new_icon)
 	icon = initial(icon)
