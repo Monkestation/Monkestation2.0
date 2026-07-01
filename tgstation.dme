@@ -8823,6 +8823,7 @@
 #include "monkestation\code\modules\storytellers\converted_events\solo\spies.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\traitor.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\wizard.dm"
+#include "monkestation\code\modules\storytellers\converted_events\solo\ghosts\abandoned_ipc.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\ghosts\nuclear_operative_ghost.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\ghosts\paradox_clone.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\ghosts\teratoma.dm"
