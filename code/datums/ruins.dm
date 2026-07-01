@@ -1,5 +1,5 @@
 GLOBAL_LIST_INIT(ruin_config, load_ruin_config())
-#define RUIN_CONFIG_FILE "config/monkestation/ruins.toml"
+#define RUIN_CONFIG_FILE "[global.config.directory]/ruins.toml"
 
 /datum/map_template/ruin
 	//name = "A Chest of Doubloons"

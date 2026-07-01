@@ -263,6 +263,38 @@ exclaim_path = "speak_4_exclaim.ogg"
 allow_random = true
 min_pitch = 0.6
 
+# --------- Custom Sounds ---------
+# [cbat]
+# name = "Door Squeak"
+# path = "config/vocal_barks/cbat"
+
+# [cbat.speak_1]
+# name = "Speak 1"
+# path = "1.speak.ogg"
+# ask_path = "1.question.ogg"
+# exclaim_path = "1.exclaim.ogg"
+# min_pitch = 0.6
+# hidden = true
+# allow_random = false
+
+# [cbat.speak_2]
+# name = "Speak 2"
+# path = "2.speak.ogg"
+# ask_path = "2.question.ogg"
+# exclaim_path = "2.exclaim.ogg"
+# min_pitch = 0.5
+# hidden = true
+# allow_random = false
+
+# [cbat.speak_3]
+# name = "Speak 3"
+# path = "3.speak.ogg"
+# ask_path = "3.question.ogg"
+# exclaim_path = "3.exclaim.ogg"
+# min_pitch = 0.6
+# hidden = true
+# allow_random = false
+
 # Genetics-only/admin-only sounds. These either clash hard with the audio design of the above sounds, or have some other form of audio design issue, but aren't *too* awful as a sometimes thing.
 # Rule of fun very much applies to this section. Audio design is extremely important for the above section, but down here? No gods, no masters, pure anarchy.
 # The min/max variables simply don't apply to these, as only chargen cares about them. As such, there's no need to define those.
