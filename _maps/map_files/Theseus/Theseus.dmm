@@ -32844,6 +32844,7 @@
 /area/station/medical/medbay/central)
 "jFX" = (
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/science/lower)
 "jGa" = (
@@ -49090,6 +49091,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
 /turf/open/floor/iron/white,
 /area/station/science/lower)
 "ooR" = (
@@ -65191,6 +65195,12 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/station/service/hydroponics/garden)
+"sWg" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/science/lower)
 "sWv" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
@@ -78258,7 +78268,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
-	dir = 5
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lower)
@@ -105493,7 +105503,7 @@ gBx
 phq
 phq
 gBx
-wbC
+sWg
 wJg
 jwa
 lLR
