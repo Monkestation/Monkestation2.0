@@ -6,6 +6,8 @@
 	text_lose_indication = "<span class='notice'>Your antenna shrinks back down.</span>"
 	instability = 5
 	difficulty = 8
+	synchronizer_coeff = 1
+	power_coeff = 1
 	var/datum/weakref/radio_weakref
 
 /obj/item/implant/radio/antenna
@@ -38,10 +40,36 @@
 	if(!(type in visual_indicators))
 		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "antenna", -FRONT_MUTATIONS_LAYER+1))//-MUTATIONS_LAYER+1
 
-/* Moved to 'monkestation/code/datums/mutations/antenna.dm'
+/datum/mutation/antenna/setup()
+	. = ..()
+	if(owner && GET_MUTATION_SYNCHRONIZER(src) < 1)
+		owner.update_mutations_overlay()
+
+	if(GET_MUTATION_POWER(src) == 1 || isnull(radio_weakref))
+		return
+
+	var/obj/item/implant/radio/antenna/linked_radio = radio_weakref.resolve()
+	if(!linked_radio)
+		return
+
+	var/list/random_keys = list(
+		/obj/item/encryptionkey/headset_eng,
+		/obj/item/encryptionkey/headset_med,
+		/obj/item/encryptionkey/headset_sci,
+		/obj/item/encryptionkey/headset_cargo,
+		/obj/item/encryptionkey/headset_service,
+	)
+	var/obj/item/encryptionkey/lucky_winner = pick(random_keys) // Let's go gambling!
+	if(linked_radio.radio.keyslot)
+		qdel(linked_radio.radio.keyslot)
+
+	linked_radio.radio.keyslot = new lucky_winner
+	linked_radio.radio.recalculateChannels()
+
 /datum/mutation/antenna/get_visual_indicator()
+	if(GET_MUTATION_SYNCHRONIZER(src) < 1) // Stealth
+		return FALSE
 	return visual_indicators[type][1]
-*/
 
 /datum/mutation/mindreader
 	name = "Mind Reader"
@@ -50,6 +78,7 @@
 	text_gain_indication = "<span class='notice'>You hear distant voices at the corners of your mind.</span>"
 	text_lose_indication = "<span class='notice'>The distant voices fade.</span>"
 	power_path = /datum/action/cooldown/spell/pointed/mindread
+	energy_coeff = 1
 	instability = 40
 	difficulty = 8
 	locked = TRUE

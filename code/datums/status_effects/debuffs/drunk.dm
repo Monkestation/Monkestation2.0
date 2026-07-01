@@ -19,6 +19,14 @@
 	/// The level of drunkness we are currently at.
 	var/drunk_value = 0
 
+/datum/status_effect/inebriated/drunk/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
+
+/datum/status_effect/inebriated/drunk/clear_effects()
+	. = ..()
+	UnregisterSignal(owner, COMSIG_LIVING_CULT_SACRIFICED)
+
 /datum/status_effect/inebriated/on_creation(mob/living/new_owner, drunk_value = 0)
 	. = ..()
 	set_drunk_value(drunk_value, TRUE)
@@ -79,6 +87,13 @@
 /// Side effects done by this level of drunkness on tick.
 /datum/status_effect/inebriated/proc/on_tick_effects()
 	return
+
+/datum/status_effect/inebriated/drunk/proc/on_cult_sacrificed(datum/source, list/mob/living/invokers)
+	SIGNAL_HANDLER
+	if(drunk_value < OLD_MAN_HENDERSON_DRUNKENNESS || owner.stat == DEAD)
+		return NONE
+	owner.visible_message(span_cultitalic("[owner] is unfazed by the rune, grumbling with incoherent drunken annoyance instead!"))
+	return STOP_SACRIFICE
 
 /**
  * Stage 1 of drunk, applied at drunk values between 0 and 6.

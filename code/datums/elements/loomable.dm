@@ -76,7 +76,7 @@
 	if(isstack(source))
 		var/obj/item/stack/stack_we_use = source
 		while(stack_we_use.amount >= required_amount)
-			combine_nearby_stacks(user, stack_we_use) // monkestation edit: automatically merge nearby stacks
+			combine_nearby_stacks(user, stack_we_use)
 			if(!do_after(user, loom_time, target))
 				break
 
@@ -102,3 +102,10 @@
 		new_thing = new resulting_atom(target.drop_location())
 
 	user.balloon_alert_to_viewers("[process_completion_verb] [new_thing]")
+
+/datum/element/loomable/proc/combine_nearby_stacks(atom/target, obj/item/stack/our_stack)
+	for(var/obj/item/stack/nearby_stack in view(1, get_turf(target)))
+		if(our_stack.amount >= our_stack.max_amount)
+			break
+		if(our_stack.can_merge(nearby_stack, inhand = TRUE))
+			nearby_stack.merge(our_stack)

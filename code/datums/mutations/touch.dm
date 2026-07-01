@@ -24,6 +24,13 @@
 
 	to_modify.chain = TRUE
 
+/datum/mutation/shock/far
+	name = "Extended Shock Touch"
+	desc = "The affected can channel excess electricity through their hands without shocking themselves, allowing them to shock others at range."
+	text_gain_indication = span_notice("You feel unlimited power flow through your hands.")
+	power_path = /datum/action/cooldown/spell/touch/shock/far
+	instability = 50
+
 /datum/action/cooldown/spell/touch/shock
 	name = "Shock Touch"
 	desc = "Channel electricity to your hand to shock people with."
@@ -47,6 +54,24 @@
 	hand_path = /obj/item/melee/touch_attack/shock
 	draw_message = span_notice("You channel electricity into your hand.")
 	drop_message = span_notice("You let the electricity from your hand dissipate.")
+
+// All the code below makes it so you can shock someone if they're pulling you whilst you're cuffed
+/datum/action/cooldown/spell/touch/shock/IsAvailable(feedback = FALSE)
+	if(!owner || owner.stat != CONSCIOUS || !owner.pulledby || (next_use_time > world.time))
+		return ..()
+
+	var/mob/living/carbon/human = owner
+	if(istype(human) && !isnull(human.handcuffed))
+		return TRUE
+
+	return ..()
+
+/datum/action/cooldown/spell/touch/shock/cast(mob/living/carbon/cast_on)
+	if(isnull(cast_on.handcuffed) || !cast_on.pulledby)
+		return ..()
+
+	do_hand_hit(null, cast_on.pulledby, cast_on)
+	return TRUE
 
 /datum/action/cooldown/spell/touch/shock/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	if(iscarbon(victim))
@@ -79,12 +104,49 @@
 	to_chat(caster, span_warning("The electricity doesn't seem to affect [victim]..."))
 	return TRUE
 
+/datum/action/cooldown/spell/touch/shock/far
+	name = "Extended Shock Touch"
+	hand_path = /obj/item/melee/touch_attack/shock/far
+
+/datum/action/cooldown/spell/touch/shock/far/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+	. = ..()
+	caster.Beam(victim, icon_state = "red_lightning", time = 1.5 SECONDS)
+
 /obj/item/melee/touch_attack/shock
-	name = "\improper shock touch"
+	name = "shock touch"
 	desc = "This is kind of like when you rub your feet on a shag rug so you can zap your friends, only a lot less safe."
 	icon = 'icons/obj/weapons/hand.dmi'
 	icon_state = "zapper"
 	inhand_icon_state = "zapper"
+
+/obj/item/melee/touch_attack/shock/far
+	name = "extended shock touch"
+
+/obj/item/melee/touch_attack/shock/far/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	var/datum/action/cooldown/spell/touch/hand_spell = spell_which_made_us?.resolve()
+	if(!hand_spell || !hand_spell.can_hit_with_hand(interacting_with, user))
+		return NONE
+
+	if(!can_see(user, interacting_with, 5) || get_dist(interacting_with, user) > 5)
+		user.visible_message(span_notice("[user]'s hand reaches out but nothing happens."))
+		return ITEM_INTERACT_BLOCKING
+
+	hand_spell.do_hand_hit(src, interacting_with, user)
+	if(QDELETED(src))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/item/melee/touch_attack/shock/far/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	var/datum/action/cooldown/spell/touch/hand_spell = spell_which_made_us?.resolve()
+	if(!hand_spell || !hand_spell.can_hit_with_hand(interacting_with, user))
+		return NONE
+
+	if(!can_see(user, interacting_with, 5) || get_dist(interacting_with, user) > 5)
+		user.visible_message(span_notice("[user]'s hand reaches out but nothing happens."))
+		return ITEM_INTERACT_BLOCKING
+
+	hand_spell.do_secondary_hand_hit(src, interacting_with, user)
+	if(QDELETED(src))
+		return ITEM_INTERACT_SUCCESS
 
 /datum/mutation/lay_on_hands
 	name = "Mending Touch"
@@ -95,15 +157,15 @@
 	text_gain_indication = span_notice("Your hand feels blessed!")
 	text_lose_indication = span_notice("Your hand feels secular once more.")
 	power_path = /datum/action/cooldown/spell/touch/lay_on_hands
-//	instability = POSITIVE_INSTABILITY_MAJOR // MONKESTATION EDIT OLD
-	instability = 35 // MONKESTATION EDIT NEW -- AWAITING TG#83439
+	instability = 35
 	energy_coeff = 1
 	power_coeff = 1
 	synchronizer_coeff = 1
+	conflicts = list(/datum/mutation/lay_on_hands/syndicate)
 
 /datum/mutation/lay_on_hands/setup()
 	. = ..()
-	var/datum/action/cooldown/spell/touch/lay_on_hands/to_modify =.
+	var/datum/action/cooldown/spell/touch/lay_on_hands/to_modify = .
 
 	if(!istype(to_modify)) // null or invalid
 		return
@@ -112,6 +174,17 @@
 	to_modify.power_coefficient = GET_MUTATION_POWER(src)
 	// Halves transferred damage if synchronized. (0.5 with synchronizer chromosome)
 	to_modify.synchronizer_coefficient = GET_MUTATION_SYNCHRONIZER(src)
+
+/datum/mutation/lay_on_hands/syndicate
+	name = "Corrupted Mending Touch"
+	desc = "A genetic sequence thats highly corrupted sharing some nucleotides with mending touch, use is not advised."
+	quality = POSITIVE
+	locked = TRUE
+	text_gain_indication = span_notice("Your hand feels strange.")
+	text_lose_indication = span_notice("Your hand feels secular once more.")
+	power_path = /datum/action/cooldown/spell/touch/lay_on_hands/syndicate
+	instability = 50
+	conflicts = list(/datum/mutation/lay_on_hands)
 
 /datum/action/cooldown/spell/touch/lay_on_hands
 	name = "Mending Touch"
@@ -129,6 +202,7 @@
 	hand_path = /obj/item/melee/touch_attack/lay_on_hands
 	draw_message = span_notice("You ready your hand to transfer injuries to yourself.")
 	drop_message = span_notice("You lower your hand.")
+
 	/// Multiplies the amount healed.
 	var/heal_multiplier = 1
 	/// Multiplies the incoming pain from healing. (Halved with synchronizer chromosome)
@@ -139,7 +213,7 @@
 	var/power_coefficient = 1
 	/// The mutation's synchronizer coefficient.
 	var/synchronizer_coefficient = 1
-	var/always_evil_smite = FALSE // MONKESTATION ADDITION -- Traitor version of this uses this
+	var/always_evil_smite = FALSE
 
 /datum/action/cooldown/spell/touch/lay_on_hands/create_hand(mob/living/carbon/cast_on)
 	. = ..()
@@ -170,8 +244,7 @@
 
 	var/hurt_this_guy = determine_if_this_hurts_instead(mendicant, hurtguy)
 
-//	if (hurt_this_guy && HAS_TRAIT(mendicant, TRAIT_PACIFISM) || hurt_this_guy && !mendicant.combat_mode) //Returns if we're a pacifist and we'd hurt them, or we're not in combat mode and we'll hurt them // MONKESTATION EDIT OLD
-	if(hurt_this_guy && HAS_TRAIT(mendicant, TRAIT_PACIFISM) || hurt_this_guy && !(mendicant.istate & ISTATE_HARM)) // MONKESTATION EDIT NEW
+	if(hurt_this_guy && HAS_TRAIT(mendicant, TRAIT_PACIFISM) || hurt_this_guy && !(mendicant.istate & ISTATE_HARM))
 		mendicant.balloon_alert(mendicant, "[hurtguy] would be hurt!")
 		return FALSE
 
@@ -181,8 +254,7 @@
 	// Heal more, hurt a bit more.
 	// If you crunch the numbers it sounds crazy good,
 	// but I think that's a fair reward for combining the efforts of Genetics, Medbay, and Mining to reach a hidden mechanic.
-//	if(HAS_TRAIT_FROM(mendicant, TRAIT_HIPPOCRATIC_OATH, HIPPOCRATIC_OATH_TRAIT)) // MONKESTATION EDIT OLD
-	if(mendicant.has_status_effect(/datum/status_effect/hippocratic_oath)) // MONKESTATION EDIT NEW -- God knows why TRAIT_HIPPOCRATIC_OATH is commented out
+	if(mendicant.has_status_effect(/datum/status_effect/hippocratic_oath))
 		heal_multiplier *= 2
 		pain_multiplier *= 0.5
 		peaceful_message = span_boldnotice("You can feel the magic of the Rod of Aesculapius aiding your efforts!")
@@ -264,9 +336,6 @@
 		hurtguy.balloon_alert(mendicant, "unhurt!")
 
 /datum/action/cooldown/spell/touch/lay_on_hands/proc/do_complicated_heal(mob/living/carbon/mendicant, mob/living/carbon/hurtguy, heal_multiplier, pain_multiplier)
-
-	// Did the transfer work?
-	. = FALSE
 	// Get the hurtguy's limbs and the mendicant's limbs to attempt a 1-1 transfer.
 	var/list/hurt_limbs = hurtguy.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC) + hurtguy.get_wounded_bodyparts(BODYTYPE_ORGANIC)
 	var/list/mendicant_organic_limbs = list()
@@ -277,10 +346,11 @@
 	// If we have no organic available limbs just give up.
 	if(!length(mendicant_organic_limbs))
 		mendicant.balloon_alert(mendicant, "no organic limbs!")
-		return .
+		return FALSE
+
 	if(!length(hurt_limbs))
 		hurtguy.balloon_alert(mendicant, "no damaged organic limbs!")
-		return .
+		return FALSE
 
 	// Counter to make sure we don't take too much from separate limbs
 	var/total_damage_healed = 0
@@ -297,7 +367,6 @@
 		var/burn_damage = min(affected_limb.burn_dam, (35 * heal_multiplier) - brute_damage)
 		if((brute_damage || burn_damage) && total_damage_healed < (35 * heal_multiplier))
 			total_damage_healed += brute_damage + burn_damage
-			. = TRUE
 			var/brute_taken = brute_damage * pain_multiplier
 			var/burn_taken = burn_damage * pain_multiplier
 			// Heal!
@@ -314,12 +383,11 @@
 				if(WOUND_SEVERITY_CRITICAL)
 					if(heal_multiplier < 1.5) // need buffs to transfer crit wounds
 						continue
-			. = TRUE
 			iter_wound.remove_wound()
 			iter_wound.apply_wound(mendicant_transfer_limb)
 
 	if(HAS_TRAIT(mendicant, TRAIT_NOBLOOD))
-		return .
+		return TRUE
 
 	// 10% base
 	var/max_blood_transfer = (BLOOD_VOLUME_NORMAL * 0.10) * heal_multiplier
@@ -328,55 +396,33 @@
 		var/max_blood_to_hurtguy = min(mendicant.blood_volume, BLOOD_VOLUME_NORMAL - hurtguy.blood_volume)
 		var/blood_to_hurtguy = min(max_blood_transfer, max_blood_to_hurtguy)
 		if(!blood_to_hurtguy)
-			return .
-		// We ignore incompatibility here.
-		/* MONKESTATION EDIT OLD
-		mendicant.transfer_blood_to(hurtguy, blood_to_hurtguy, forced = TRUE, ignore_incompatibility = TRUE)
-		to_chat(mendicant, span_notice("Your veins (and brain) feel a bit lighter."))
-		. = TRUE
-		// Because we do our own spin on it!
-		if(hurtguy.get_blood_compatibility(mendicant) == FALSE)
-		*/
-		// MONKESTATION EDIT NEW START
+			return
 		var/datum/blood_type/blood = hurtguy.get_blood_type()
 		to_chat(mendicant, span_notice("Your veins (and brain) feel a bit lighter."))
-		. = TRUE
 		mendicant.blood_volume = min(mendicant.blood_volume - round(blood_to_hurtguy, 0.1), BLOOD_VOLUME_MAXIMUM)
 		hurtguy.blood_volume = min(hurtguy.blood_volume + round(blood_to_hurtguy, 0.1), BLOOD_VOLUME_MAXIMUM)
 		if(!(mendicant.get_blood_type_path() in blood.compatible_types))
-		// MONKESTATION EDIT NEW END
 			hurtguy.adjustToxLoss((blood_to_hurtguy * 0.1) * pain_multiplier) // 1 dmg per 10 blood
 			to_chat(hurtguy, span_notice("Your veins feel thicker, but they itch a bit."))
 		else
 			to_chat(hurtguy, span_notice("Your veins feel thicker!"))
+		return TRUE
 
 	// Too MUCH blood
 	if(hurtguy.blood_volume > BLOOD_VOLUME_MAXIMUM)
 		var/max_blood_to_mendicant = BLOOD_VOLUME_EXCESS - hurtguy.blood_volume
 		var/blood_to_mendicant = min(max_blood_transfer, max_blood_to_mendicant)
 		// mender always gonna have blood
-
-		// We ignore incompatibility here.
-		/* MONKESTATION EDIT OLD
-		hurtguy.transfer_blood_to(mendicant, hurtguy.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE, ignore_incompatibility = TRUE)
-		to_chat(hurtguy, span_notice("Your veins don't feel quite so swollen anymore."))
-		. = TRUE
-		// Because we do our own spin on it!
-		if(mendicant.get_blood_compatibility(hurtguy) == FALSE)
-		*/
-		// MONKESTATION EDIT NEW START
 		var/datum/blood_type/mendicant_blood = mendicant.get_blood_type()
 		to_chat(hurtguy, span_notice("Your veins don't feel quite so swollen anymore."))
-		. = TRUE
 		mendicant.blood_volume = min(mendicant.blood_volume + round(blood_to_mendicant, 0.1), BLOOD_VOLUME_MAXIMUM)
 		hurtguy.blood_volume = min(hurtguy.blood_volume - round(blood_to_mendicant, 0.1), BLOOD_VOLUME_MAXIMUM)
 		if(!(hurtguy.get_blood_type_path() in mendicant_blood.compatible_types))
-		// MONKESTATION EDIT NEW END
 			mendicant.adjustToxLoss((blood_to_mendicant * 0.1) * pain_multiplier) // 1 dmg per 10 blood
 			to_chat(mendicant, span_notice("Your veins swell and itch!"))
 		else
 			to_chat(mendicant, span_notice("Your veins swell!"))
-
+		return TRUE
 
 /datum/action/cooldown/spell/touch/lay_on_hands/proc/determine_if_this_hurts_instead(mob/living/carbon/mendicant, mob/living/hurtguy)
 	var/hurt_this_guy = FALSE
@@ -399,7 +445,6 @@
 	return hurt_this_guy
 
 ///If our target was undead or evil, we blast them with a firey beam rather than healing them. For, you know, 'holy' reasons. When did genes become so morally uptight?
-
 /datum/action/cooldown/spell/touch/lay_on_hands/proc/by_gods_light_i_smite_you(mob/living/carbon/smiter, mob/living/motherfucker_to_hurt, smite_multiplier)
 	var/our_smite_multiplier = smite_multiplier
 	var/evil_smite = HAS_TRAIT(smiter, TRAIT_EVIL) ? TRUE : FALSE
@@ -448,7 +493,24 @@
 	to_chat(motherfucker_to_hurt, span_bolddanger("[smiter] [smite_text_to_target], hurting you!"))
 	motherfucker_to_hurt.emote("scream")
 	new /obj/effect/temp_visual/explosion(get_turf(motherfucker_to_hurt), evil_smite ? LIGHT_COLOR_BLOOD_MAGIC : LIGHT_COLOR_HOLY_MAGIC)
-	. = TRUE
+
+	return TRUE
+
+/datum/action/cooldown/spell/touch/lay_on_hands/syndicate
+	name = "Corrupted Mending Touch"
+	desc = "You can now lay your hands on other people to transfer a small amount of their physical injuries to yourself. \
+		This version of the mutation allows you smite anyone as long as you mean to cause HARM to them."
+	button_icon = 'icons/mob/actions/actions_genetic.dmi'
+	button_icon_state = "corrupted_mending_touch"
+	always_evil_smite = TRUE
+
+/datum/action/cooldown/spell/touch/lay_on_hands/syndicate/determine_if_this_hurts_instead(mob/living/carbon/mendicant, mob/living/hurtguy)
+	if(HAS_TRAIT(mendicant, TRAIT_PACIFISM))
+		return FALSE //always return false if we're pacifist
+
+	. = ..()
+	if(!. && mendicant.istate & ISTATE_HARM)
+		return TRUE
 
 /obj/item/melee/touch_attack/lay_on_hands
 	name = "mending touch"
