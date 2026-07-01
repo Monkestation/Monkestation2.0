@@ -1048,12 +1048,12 @@
 	base_pixel_y = current_skin.base_pixel_y
 	if(hat && isnull(current_skin.hat_offset))
 		if(HAS_TRAIT(hat, TRAIT_NODROP)) // Highlander's hat.
-			qdel(hat)
+			QDEL_NULL(hat)
 		else
 			hat.forceMove(drop_location())
 	if(isnull(current_skin.badge_offset) && worn_badge)
 		if(HAS_TRAIT(worn_badge, TRAIT_NODROP))
-			qdel(worn_badge)
+			QDEL_NULL(worn_badge)
 		else
 			worn_badge.forceMove(drop_location())
 	add_traits(current_skin.traits, REF(current_skin))
