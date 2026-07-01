@@ -15,7 +15,7 @@
 	emagged_modules = list(
 		/obj/item/reagent_containers/borghypo/peace/hacked
 	)
-	clock_modules = list(
+	clockwork_modules = list(
 		/obj/item/clock_module/abscond,
 		/obj/item/clock_module/vanguard,
 		/obj/item/clock_module/kindle,
