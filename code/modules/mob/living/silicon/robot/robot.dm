@@ -1016,8 +1016,6 @@
 	diag_hud_set_status()
 	diag_hud_set_borgcell()
 	diag_hud_set_aishell()
-	if(should_update_icons)
-		update_icons()
 
 	log_silicon("CYBORG: [key_name(src)] has transformed into the [model.name] model.")
 	logevent("Chassis model has been set to [name].")
