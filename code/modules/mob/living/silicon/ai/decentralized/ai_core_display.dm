@@ -59,7 +59,7 @@
 		return
 	var/datum/ai_os/z_level_os = GLOB.ai_os["[z]"]
 	if(!(user in z_level_os.ai_list)) //ai_os shouldn't be null here cause ai should be assigned
-		user.eyeobj.balloon_alert(user, "not on the z-level!")
+		user.eyeobj.balloon_alert(user, "not on the same floor!")
 		return
 	var/request_prompt = tgui_alert(user, "It appears this display core is taken by another AI; You can request it relinquishes it to you. \
 		If that doesn't work, you can take it over by force if you have more CPU power than they do.",
@@ -97,7 +97,7 @@
 		to_chat(connected_ai, span_warning("Display core taken over at [get_area_name(src)] by [usurper]!"))
 		assign_ai(usurper)
 	else
-		usurper.eyeobj.balloon_alert(usurper, "CPU power too low!")
+		usurper.eyeobj.balloon_alert(usurper, "not enough cpu!")
 		to_chat(connected_ai,
 			span_warning("[usurper] attempted to take over the display core at [get_area_name(src)], \
 			but it didn't have enough CPU power!")
