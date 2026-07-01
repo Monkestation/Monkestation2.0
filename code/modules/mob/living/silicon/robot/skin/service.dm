@@ -5,6 +5,15 @@
 	name = "Butler"
 	icon_state = "service_m"
 	icon_state_light = "service_m"
+	icon_state_transform = "service_m_transform"
+	hat_offset = 0
+	badge_offset = -3
+
+/datum/robot_skin/service/waitress
+	name = "Waitress"
+	icon_state = "service_f"
+	icon_state_light = "service_f"
+	icon_state_transform = "service_f_transform"
 	hat_offset = 0
 	badge_offset = -3
 
@@ -12,6 +21,7 @@
 	name = "Bro"
 	icon_state = "brobot"
 	icon_state_light = "brobot"
+	icon_state_transform = "brobot_transform"
 	hat_offset = 0
 	badge_offset = -3
 
@@ -19,6 +29,7 @@
 	name = "Kent"
 	icon_state = "kent"
 	icon_state_light = "medical"
+	icon_state_transform = "kent_transform"
 	hat_offset = 0
 	badge_offset = -3
 
@@ -26,13 +37,7 @@
 	name = "Tophat"
 	icon_state = "tophat"
 	icon_state_light = "tophat"
-	badge_offset = -3
-
-/datum/robot_skin/service/waitress
-	name = "Waitress"
-	icon_state = "service_f"
-	icon_state_light = "service_f"
-	hat_offset = 0
+	icon_state_transform = "tophat_transform"
 	badge_offset = -3
 
 /datum/robot_skin/service/kerfus

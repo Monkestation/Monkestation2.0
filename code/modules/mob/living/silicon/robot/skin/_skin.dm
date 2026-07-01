@@ -11,6 +11,8 @@
 	var/icon_state_cover = "ov"
 	/// The icon state of the sprite's head lights.
 	var/icon_state_light = "robot"
+	/// The icon state of the sprite's transform sequence.
+	var/icon_state_transform = null
 	/// The icon of the chat bubble.
 	var/bubble_icon = "robot"
 	/// The X offset of the sprite.

@@ -5,5 +5,6 @@
 	name = "Janitor"
 	icon_state = "janitor"
 	icon_state_light = "janitor"
+	icon_state_transform = "janitor_transform"
 	hat_offset = -5
 	badge_offset = -2

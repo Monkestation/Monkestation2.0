@@ -7,7 +7,6 @@
 		/obj/item/pinpointer/nuke,
 	)
 	breakable_modules = FALSE
-	locked_transform = FALSE
 	traits = list(TRAIT_PUSHIMMUNE)
 
 /datum/robot_model/highlander/New(mob/living/silicon/robot/new_cyborg_owner)

@@ -6,6 +6,7 @@
 	name = "Technician"
 	icon_state = "cargoborg"
 	icon_state_light = "cargoborg"
+	icon_state_transform = "cargoborg_transform"
 	hat_offset = 0
 	badge_offset = 0
 
@@ -13,6 +14,7 @@
 	name = "Zoomba"
 	icon_state = "zoomba_cargo"
 	icon_state_light = "zoomba_cargo"
+	icon_state_transform = "zoomba_cargo_transform"
 	hat_offset = 3
 	badge_offset = -9
 

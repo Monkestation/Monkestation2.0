@@ -83,8 +83,8 @@
 	log_current_laws()
 
 	internal_inventory = new internal_inventory(src) // Since the model's creation will immediately deposit items into our inventory, the inventory must be created first.
-	apply_model(model, should_notify_ai = FALSE)
-	apply_skin(current_skin, FALSE)
+	apply_model(model, FALSE)
+	apply_skin(current_skin)
 
 	var/static/list/alert_areas
 	if(isnull(alert_areas))
@@ -958,7 +958,7 @@
 		balloon_alert(src, "can't transform right now!")
 		return FALSE
 	apply_model(chosen_robot_model)
-	apply_skin(chosen_robot_skin, FALSE)
+	apply_skin(chosen_robot_skin)
 
 /// Prompts the cyborg with a radial wheel to pick a model that they want.
 /mob/living/silicon/robot/proc/prompt_model_selection()
@@ -990,7 +990,7 @@
 	return TRUE
 
 /// Applies a model to the cyborg.
-/mob/living/silicon/robot/proc/apply_model(datum/robot_model/new_robot_model, performs_animation = TRUE, should_notify_ai = TRUE)
+/mob/living/silicon/robot/proc/apply_model(datum/robot_model/new_robot_model, should_notify_ai = TRUE)
 	// Drops all of the items that may be stored by the cyborg.
 	for(var/obj/item/storage/bag in internal_inventory.contents)
 		for(var/obj/item in bag)
@@ -1021,35 +1021,35 @@
 	logevent("Chassis model has been set to [name].")
 	if(should_notify_ai)
 		notify_ai(AI_NOTIFICATION_NEW_MODEL)
+	SSblackbox.record_feedback("tally", "cyborg_modules", 1, model) // Someone should really change this to "cyborg_models", but it is the blackbox...
 	INVOKE_ASYNC(src, PROC_REF(updatename))
-	if(performs_animation)
-		INVOKE_ASYNC(src, PROC_REF(do_transform_animation))
-	else
-		update_icons()
 
 /// Applies a skin to the cyborg.
-/mob/living/silicon/robot/proc/apply_skin(datum/robot_skin/applied_skin, should_update_icons = TRUE)
+/mob/living/silicon/robot/proc/apply_skin(datum/robot_skin/applied_skin, perform_animations = TRUE, lock_during_animation = TRUE)
 	if(islist(current_skin.traits))
 		remove_traits(current_skin.traits, REF(current_skin))
 	if(ispath(applied_skin))
 		applied_skin = new applied_skin()
 	current_skin = applied_skin
 	icon = current_skin.icon
-	icon_state = applied_skin.icon_state
+	icon_state = current_skin.icon_state
 	base_pixel_x = current_skin.base_pixel_x
 	base_pixel_y = current_skin.base_pixel_y
-	if(hat && isnull(applied_skin.hat_offset))
+	if(hat && isnull(current_skin.hat_offset))
 		if(HAS_TRAIT(hat, TRAIT_NODROP)) // Highlander's hat.
 			qdel(hat)
 		else
 			hat.forceMove(drop_location())
-	if(isnull(applied_skin.badge_offset) && worn_badge)
+	if(isnull(current_skin.badge_offset) && worn_badge)
 		if(HAS_TRAIT(worn_badge, TRAIT_NODROP))
 			qdel(worn_badge)
 		else
 			worn_badge.forceMove(drop_location())
 	add_traits(current_skin.traits, REF(current_skin))
-	if(should_update_icons)
+
+	if(perform_animations)
+		start_transform_animation(lock_during_animation)
+	else
 		update_icons()
 
 /// Resets the model to default.
@@ -1057,34 +1057,43 @@
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
 	logevent("Chassis model has been reset.")
 	log_silicon("CYBORG: [key_name(src)] has reset their cyborg model.")
-	apply_model(/datum/robot_model, should_notify_ai = FALSE)
-	apply_skin(model.default_skin, FALSE)
+	apply_model(/datum/robot_model, FALSE)
+	apply_skin(model.default_skin)
 	revert_shell()
 	return TRUE
 
-/// Prepares and starts the transformation animation.
-/mob/living/silicon/robot/proc/do_transform_animation()
+/// Begins the transformation animation.
+/mob/living/silicon/robot/proc/start_transform_animation(lock = TRUE)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+		return FALSE
 	cut_overlays()
-	LAZYNULL(managed_overlays) // Or else our overlays won't get re-added (since we are likely to have exact same overlays).
+	LAZYNULL(managed_overlays) // This is cleared because overlays won't be re-applied later on since it thinks we still have them.
 	setDir(SOUTH)
-	do_transform_delay()
-
-/// Performs the transformation animation.
-/mob/living/silicon/robot/proc/do_transform_delay()
-	sleep(0.1 SECONDS)
-	flick("[current_skin.icon_state]_transform", src)
-	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
-	if(model.locked_transform)
+	if(current_skin.icon_state_transform)
+		flick(current_skin.icon_state_transform, src)
+	if(lock)
 		SetLockdown(TRUE)
 		set_anchored(TRUE)
-	sleep(0.1 SECONDS)
-	for(var/i in 1 to 4)
-		playsound(src, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
-		sleep(0.7 SECONDS)
-	SetLockdown(FALSE)
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
+	addtimer(CALLBACK(src, PROC_REF(end_transform_animation), lock), 3 SECONDS)
+	INVOKE_ASYNC(src, PROC_REF(do_transform_sound_effects))
+
+/// Concludes the transformation animation.
+/mob/living/silicon/robot/proc/end_transform_animation(unlock = TRUE)
+	if(QDELETED(src) || !HAS_TRAIT_FROM(src, TRAIT_NO_TRANSFORM, REF(src)))
+		return
 	setDir(SOUTH)
-	set_anchored(FALSE)
-	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
+	if(unlock)
+		SetLockdown(FALSE)
+		set_anchored(FALSE)
 	updatehealth()
 	update_icons()
-	SSblackbox.record_feedback("tally", "cyborg_modules", 1, model)
+	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
+
+/// Plays the sound effects associated with the transformation animation.
+/mob/living/silicon/robot/proc/do_transform_sound_effects()
+	for(var/i in 1 to 4)
+		if(QDELETED(src))
+			return
+		playsound(src, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
+		sleep(0.7 SECONDS)

@@ -5,6 +5,7 @@
 	name = "Machinified Doctor"
 	icon_state = "medical"
 	icon_state_light = "medical"
+	icon_state_transform = "medical_transform"
 	hat_offset = 3
 	hat_offset = 0
 
