@@ -1,6 +1,14 @@
 /datum/robot_model/service
 	name = "Service"
 	default_skin = /datum/robot_skin/service/default
+	available_skins = list(
+		/datum/robot_skin/service/default,
+		/datum/robot_skin/service/bro,
+		/datum/robot_skin/service/kent,
+		/datum/robot_skin/service/tophat,
+		/datum/robot_skin/service/waitress,
+		/datum/robot_skin/service/kerfus
+	)
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/knife/kitchen/silicon,

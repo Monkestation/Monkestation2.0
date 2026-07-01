@@ -3,6 +3,10 @@
 	name = "Medical"
 	hud_icon_state = "medical"
 	default_skin = /datum/robot_skin/medical/default
+	available_skins = list(
+		/datum/robot_skin/medical/default,
+		/datum/robot_skin/medical/qualified
+	)
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/healthanalyzer/cyborg,

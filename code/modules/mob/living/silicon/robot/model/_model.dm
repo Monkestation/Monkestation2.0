@@ -6,7 +6,7 @@
 	/// The default skin to use.
 	var/datum/robot_skin/default_skin = /datum/robot_skin/standard/default
 	/// The list of all skins
-	var/list/datum/robot_skin/available_skins = list()
+	var/list/datum/robot_skin/available_skins
 	/// The cyborg that is using this robot model.
 	var/mob/living/silicon/robot/cyborg_owner = null
 	/// The list of modules that can be used by the owner.

@@ -1,6 +1,10 @@
 /datum/robot_model/centcom
 	name = "CentCom"
 	default_skin = /datum/robot_skin/centcom/default
+	available_skins = list(
+		/datum/robot_skin/centcom/default,
+		/datum/robot_skin/centcom/kerfus
+	)
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/gun/energy/disabler/cyborg,

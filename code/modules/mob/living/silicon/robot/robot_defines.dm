@@ -299,6 +299,7 @@
 		<i>Help the operatives secure the disk at all costs!</i></b>"
 
 /mob/living/silicon/robot/model/syndicate/saboteur/operative
+	model = /datum/robot_model/syndicate_saboteur/operative
 	playstyle_string = "<span class='big bold'>You are a Syndicate saboteur cyborg!</span><br>\
 		<b>You are armed with robust engineering tools to aid you in your mission: help the operatives secure the golden eye authentication disks. \
 		Your destination tagger will allow you to stealthily traverse the disposal network across the station \

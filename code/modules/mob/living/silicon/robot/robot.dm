@@ -991,7 +991,7 @@
 	return TRUE
 
 /// Applies a model to the cyborg.
-/mob/living/silicon/robot/proc/apply_model(datum/robot_model, performs_animation = FALSE)
+/mob/living/silicon/robot/proc/apply_model(datum/robot_model, performs_animation = FALSE, force_default_skin = FALSE)
 	drop_all_held_items()
 	// Drops all of the items that may be stored by the cyborg
 	for(var/obj/item/storage/bag in model.usable_modules)
@@ -1014,6 +1014,9 @@
 	if(hands)
 		hands.icon_state = model.hud_icon_state
 
+	if(force_default_skin)
+		apply_skin(new_robot_model.default_skin, FALSE)
+
 	radio.recalculateChannels()
 	set_modularInterface_theme()
 	diag_hud_set_health()
@@ -1028,7 +1031,7 @@
 		INVOKE_ASYNC(new_robot_model, TYPE_PROC_REF(/datum/robot_model, do_transform_animation))
 
 /// Applies a skin to the cyborg.
-/mob/living/silicon/robot/proc/apply_skin(datum/robot_skin/applied_skin)
+/mob/living/silicon/robot/proc/apply_skin(datum/robot_skin/applied_skin, should_update = TRUE)
 	if(islist(current_skin.traits))
 		remove_traits(current_skin.traits, REF(current_skin))
 	if(ispath(applied_skin))
@@ -1049,7 +1052,8 @@
 		else
 			worn_badge.forceMove(drop_location())
 	add_traits(current_skin.traits, REF(current_skin))
-	update_icons()
+	if(should_update)
+		update_icons()
 
 /mob/living/silicon/robot/proc/ResetModel()
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
@@ -1058,7 +1062,7 @@
 	logevent("Chassis model has been reset.")
 	log_silicon("CYBORG: [key_name(src)] has reset their cyborg model.")
 
-	apply_model(/datum/robot_model)
+	apply_model(/datum/robot_model, FALSE, TRUE)
 	revert_shell()
 	return TRUE
 

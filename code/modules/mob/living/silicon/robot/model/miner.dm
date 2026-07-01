@@ -2,6 +2,11 @@
 	name = "Miner"
 	hud_icon_state = "miner"
 	default_skin = /datum/robot_skin/miner/default
+	available_skins = list(
+		/datum/robot_skin/miner/default,
+		/datum/robot_skin/miner/asteroid,
+		/datum/robot_skin/miner/spider
+	)
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/t_scanner/adv_mining_scanner/cyborg,

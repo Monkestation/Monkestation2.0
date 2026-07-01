@@ -3,20 +3,20 @@
 	icon = CYBORG_ICON_CARGO
 
 /datum/robot_skin/cargo/default
-	name = "Cargo"
+	name = "Technician"
 	icon_state = "cargoborg"
 	icon_state_light = "cargoborg"
 	hat_offset = 0
 	badge_offset = 0
 
-/datum/robot_skin/centcom/zoomba
+/datum/robot_skin/cargo/zoomba
 	name = "Zoomba"
 	icon_state = "zoomba_cargo"
 	icon_state_light = "zoomba_cargo"
 	hat_offset = 3
 	badge_offset = -9
 
-/datum/robot_skin/centcom/kerfus
+/datum/robot_skin/cargo/kerfus
 	name = "Cargo Kerfus"
 	icon_state = "kerfus_cargo"
 	icon_state_light = "kerfus_cargo"

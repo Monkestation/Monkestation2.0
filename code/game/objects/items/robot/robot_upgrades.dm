@@ -596,7 +596,7 @@
 	desc = "A bluespace rapid part exchange device for the engineering cyborg."
 	icon_state = "module_engineer"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/engineering, /datum/robot_model/saboteur, /datum/robot_model/science)
+	model_type = list(/datum/robot_model/engineering, /datum/robot_model/syndicate_saboteur, /datum/robot_model/science)
 	model_flags = BORG_MODEL_ENGINEERING
 
 /obj/item/borg/upgrade/bs_rped/action(mob/living/silicon/robot/borg, user = usr)
@@ -700,7 +700,7 @@
 	desc = "A supplementary apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles."
 	icon_state = "module_engineer"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/engineering, /datum/robot_model/saboteur)
+	model_type = list(/datum/robot_model/engineering, /datum/robot_model/syndicate_saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
 	items_to_add = list(/obj/item/borg/apparatus/sheet_manipulator/extra)
 
@@ -718,7 +718,7 @@
 	desc = "An upgrade that improves the standard built-in gas analyzer's range."
 	icon_state = "module_engineer"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/engineering, /datum/robot_model/saboteur) // Engineering-exclusive. Do not give this to science cyborgs.
+	model_type = list(/datum/robot_model/engineering, /datum/robot_model/syndicate_saboteur) // Engineering-exclusive. Do not give this to science cyborgs.
 	model_flags = BORG_MODEL_ENGINEERING
 
 /obj/item/borg/upgrade/ranged_analyzer/action(mob/living/silicon/robot/borg, user = usr)

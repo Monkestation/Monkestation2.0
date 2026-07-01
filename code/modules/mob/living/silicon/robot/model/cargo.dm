@@ -2,6 +2,11 @@
 	name = "cargo"
 	hud_icon_state = "cargo"
 	default_skin = /datum/robot_skin/cargo/default
+	available_skins = list(
+		/datum/robot_skin/cargo/default,
+		/datum/robot_skin/cargo/zoomba,
+		/datum/robot_skin/cargo/kerfus
+	)
 	basic_modules = list(
 		/obj/item/stamp,
 		/obj/item/stamp/denied,

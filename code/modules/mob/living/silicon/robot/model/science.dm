@@ -2,6 +2,11 @@
 	name = "Science"
 	hud_icon_state = "science"
 	default_skin = /datum/robot_skin/science/default
+	available_skins = list(
+		/datum/robot_skin/science/default,
+		/datum/robot_skin/science/eyebot,
+		/datum/robot_skin/science/drone
+	)
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/extinguisher/mini,
