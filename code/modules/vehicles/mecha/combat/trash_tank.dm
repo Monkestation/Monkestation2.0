@@ -8,8 +8,8 @@
 	max_integrity = 200
 	force = 20
 	movedelay = 1.5
-	stepsound = 'monkestation/sound/mecha/tank_treads.ogg'
-	turnsound = 'monkestation/sound/mecha/tank_treads.ogg'
+	stepsound = 'sound/mecha/tank_treads.ogg'
+	turnsound = 'sound/mecha/tank_treads.ogg'
 	mecha_flags = IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE //can't strafe bruv
 	armor_type = /datum/armor/scrap_tank //mediocre armor, do you expect any better?
 	internal_damage_threshold = 60 //Its got shitty durability

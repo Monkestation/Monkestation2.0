@@ -40,7 +40,7 @@
 // this lawset uses the config for the server to add custom AI laws (defaults to asimov)
 /obj/item/ai_module/core/full/custom/Initialize(mapload)
 	. = ..()
-	for(var/line in world.file2list("[global.config.directory]/silicon_laws.txt"))
+	for(var/line in file2list("[global.config.directory]/silicon_laws.txt"))
 		if(!line)
 			continue
 		if(findtextEx(line,"#",1,2))

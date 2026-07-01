@@ -163,3 +163,5 @@ wishgranter_gain.ogg and wishgranter_awaken.ogg by flleeppyy (https://github.com
 
 kero.ogg is taken from Fulpstation
 https://github.com/fulpstation/fulpstation/pull/1109
+
+sound/mecha/tank_treads.ogg is made by 77Pacer -- https://freesound.org/s/425271/ -- License: Creative Commons 0

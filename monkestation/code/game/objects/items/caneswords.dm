@@ -1,9 +1,9 @@
 /obj/item/weapon/cane_sword
 	name = "\improper cane sword"
 	desc = "wrong one silly heads this one dont do damage haha"
-	icon = 'monkestation/icons/obj/caneswords/caneswords.dmi'
-	lefthand_file = 'monkestation/icons/obj/caneswords/caneswordinhandL.dmi'
-	righthand_file = 'monkestation/icons/obj/caneswords/caneswordinhandR.dmi'
+	icon = 'icons/obj/caneswords/caneswords.dmi'
+	lefthand_file = 'icons/obj/caneswords/caneswordinhandL.dmi'
+	righthand_file = 'icons/obj/caneswords/caneswordinhandR.dmi'
 
 /obj/item/weapon/cane_sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	//Swords do not block tackles, body throws, or leaps.
@@ -87,9 +87,9 @@
 /obj/item/storage/canesword
 	name = "canesword"
 	desc = "this is the catch all and the wrong one"
-	icon = 'monkestation/icons/obj/caneswords/caneswords.dmi'
-	lefthand_file = 'monkestation/icons/obj/caneswords/caneswordinhandL.dmi'
-	righthand_file = 'monkestation/icons/obj/caneswords/caneswordinhandR.dmi'
+	icon = 'icons/obj/caneswords/caneswords.dmi'
+	lefthand_file = 'icons/obj/caneswords/caneswordinhandL.dmi'
+	righthand_file = 'icons/obj/caneswords/caneswordinhandR.dmi'
 
 /obj/item/storage/canesword/civ
 	name = "\improper cane"

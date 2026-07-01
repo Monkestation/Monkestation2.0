@@ -1,5 +1,5 @@
 /obj/structure/flora/ocean
-	icon = 'monkestation/icons/obj/flora/ocean_flora.dmi'
+	icon = 'icons/obj/flora/ocean_flora.dmi'
 	var/random_variants = 0
 
 /obj/structure/flora/ocean/Initialize(mapload)
@@ -43,7 +43,7 @@
 /obj/structure/flora/scrap
 	name = "scrap metal"
 	desc = "A huge chunk of metal, rusted and worn. Perhaps it can still be salvaged into something useful."
-	icon = 'monkestation/icons/obj/flora/scrap.dmi'
+	icon = 'icons/obj/flora/scrap.dmi'
 	icon_state = "scrap"
 	anchored = FALSE
 	density = TRUE

@@ -3,7 +3,7 @@
 /obj/item/knife/venom
 	name = "venom knife"
 	desc = "An infamous knife of syndicate design, it has a tiny hole going through the blade to the handle which stores toxins."
-	icon = 'monkestation/icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "venom_knife"
 	force = 12
 	throwforce = 15

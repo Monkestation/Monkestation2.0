@@ -140,7 +140,7 @@
 	if(empty)
 		return
 	var/list/items_inside = list(
-		/obj/item/healthanalyzer/range = 1,
+		/obj/item/healthanalyzer = 1,
 		/obj/item/stack/medical/gauze/twelve = 1,
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,

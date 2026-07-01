@@ -182,7 +182,7 @@
 	base_icon_state = "kineticpistol"
 	recharge_time = 2 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/glock)
-	max_mod_capacity = 200
+	max_mod_capacity = 210
 
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/railgun

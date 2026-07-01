@@ -15,7 +15,7 @@
 	var/list/granted_actions = list()
 
 	/// File that bodypart_overlay_icon_states pulls from.
-	var/list/bodypart_overlay_icon = 'monkestation/icons/mob/species/zombie/special_zombie_overlays.dmi'
+	var/list/bodypart_overlay_icon = 'icons/mob/species/zombie/special_zombie_overlays.dmi'
 
 	/// Associative list of bodypart overlays by body zone.
 	var/list/bodypart_overlay_icon_states = list()
@@ -53,8 +53,8 @@
 /datum/action/cooldown/zombie
 	name = "Zombie Action"
 	desc = "You should not be seeing this."
-	background_icon = 'monkestation/icons/mob/actions/actions_zombie.dmi'
-	button_icon = 'monkestation/icons/mob/actions/actions_zombie.dmi'
+	background_icon = 'icons/mob/actions/actions_zombie.dmi'
+	button_icon = 'icons/mob/actions/actions_zombie.dmi'
 	background_icon_state = "bg_zombie"
 	check_flags = AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
 
@@ -84,7 +84,7 @@
 	name = "Feast"
 	desc = "Consume the flesh of the fallen ones."
 	button_icon_state = "feast"
-	ranged_mousepointer = 'monkestation/icons/effects/mouse_pointers/feast.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/feast.dmi'
 	click_to_activate = TRUE
 	cooldown_time = 5 SECONDS
 

@@ -82,7 +82,7 @@ SUBSYSTEM_DEF(credits)
 
 /datum/controller/subsystem/credits/proc/load_contributors()
 	contributors = list()
-	var/list/lines = world.file2list("[global.config.directory]/contributors.txt")
+	var/list/lines = file2list("[global.config.directory]/contributors.txt")
 	for(var/line in lines)
 		if(!length(line))
 			continue

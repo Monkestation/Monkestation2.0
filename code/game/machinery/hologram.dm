@@ -133,6 +133,9 @@ Possible to do for anyone motivated enough:
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
 	var/proximity_range = 1
+	///just play once god please don't spam it
+	var/play_once = TRUE
+	var/has_played = FALSE
 
 /obj/machinery/holopad/tutorial/Initialize(mapload)
 	. = ..()
@@ -174,10 +177,17 @@ Possible to do for anyone motivated enough:
 		replay_start()
 
 /obj/machinery/holopad/tutorial/HasProximity(atom/movable/AM)
-	if (!isliving(AM))
+	if(!isliving(AM))
+		return
+	if(has_played)
 		return
 	if(!replay_mode && (disk?.record))
 		replay_start()
+
+/obj/machinery/holopad/tutorial/replay_start()
+	. = ..()
+	if(play_once)
+		has_played = TRUE
 
 /obj/machinery/holopad/Initialize(mapload)
 	. = ..()

@@ -504,7 +504,7 @@
 	attack_verb_continuous = list("shears", "snips")
 	attack_verb_simple = list("shear", "snip")
 	sharpness = SHARP_EDGED
-	custom_premium_price = PAYCHECK_CREW * 14
+	custom_premium_price = PAYCHECK_CREW * 10
 
 /obj/item/shears/attack(mob/living/amputee, mob/living/user)
 	if(!iscarbon(amputee) || (user.istate & ISTATE_HARM))
@@ -706,27 +706,41 @@
 	inhand_icon_state = "m_mask"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
 	w_class = WEIGHT_CLASS_SMALL
-	toolspeed = 1
 
 /obj/item/breathing_bag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(istype(interacting_with, /mob/living) && can_see(user, interacting_with, 1))
-		var/mob/living/mob = interacting_with
-		if(mob == user)
+	if(user == interacting_with || !user.Adjacent(interacting_with) || !isliving(interacting_with))
+		return NONE
+	var/mob/living/target = interacting_with
+	if(!target.appears_alive())
+		to_chat(user, span_warning("To perform mechanical ventilation, the patient must be alive!"))
+		return ITEM_INTERACT_BLOCKING
+	if(target.is_mouth_covered())
+		to_chat(user, span_warning("To perform mechanical ventilation, the patient must be unmasked!"))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("Applying a breathing mask to [target] face."))
+	if(!can_repeat_healing(user, target, 3 SECONDS))
+		return ITEM_INTERACT_BLOCKING
+	. = ITEM_INTERACT_SUCCESS
+	playsound(user,'sound/items/breathing_bag.ogg', 100, TRUE)
+	for(var/loop_attempt in 1 to 15)
+		if(!can_repeat_healing(user, target, 1 SECONDS))
 			return
-		if (mob.is_mouth_covered())
-			to_chat(user, span_warning("To perform mechanical ventilation, the patient must be unmasked!"))
-			return
-		to_chat(user, span_notice("Applying a breathing mask to [mob] face."))
-		if(!do_after(user, 3 SECONDS, user))
-			to_chat(user, span_warning("It doesn't work!"))
-			return
-		. = ..()
-		playsound(user,'sound/items/breathing_bag.ogg', 100, TRUE)
-		for(var/ivl in 1 to 15)
-			if(!do_after(user, 1 SECONDS, user))
-				return
-			if(get_dist(user, mob) > 1)
-				to_chat(user, span_notice("Where did he go?"))
-				return
-			to_chat(user, span_notice("Performing artificial ventilation!"))
-			mob.adjustOxyLoss(-15)
+		to_chat(user, span_notice("Performing artificial ventilation!"))
+		// Ventilation will only help if the target can make use of the air that comes with it.
+		if(!target.get_organ_slot(ORGAN_SLOT_LUNGS))
+			continue
+		if(HAS_TRAIT(target, TRAIT_NOBREATH))
+			continue
+		target.adjustOxyLoss(-10)
+
+/// Checks if the target can be interacted with.
+/obj/item/breathing_bag/proc/can_repeat_healing(mob/living/user, mob/living/target, delay_length)
+	if(delay_length && !do_after(user, delay_length, target, IGNORE_TARGET_LOC_CHANGE)) // Target is free to move around a little.
+		return FALSE
+	if(!user.Adjacent(target))
+		return FALSE
+	if(!target.appears_alive())
+		return FALSE
+	if(target.is_mouth_covered())
+		return FALSE
+	return TRUE

@@ -59,7 +59,7 @@
 	sleep(8 SECONDS)
 	priority_announce("Massive bluespace anomaly detected en route to [station_name()]. Brace for impact.")
 	sleep(2 SECONDS)
-	sound_to_playing_players('monkestation/sound/misc/monkeystorm.ogg')
+	sound_to_playing_players('sound/misc/monkeystorm.ogg')
 
 //end monkestation edit
 /datum/round_event/portal_storm
