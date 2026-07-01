@@ -113,7 +113,7 @@
  * and also borg emag code.
  */
 /mob/living/silicon/robot/proc/set_modularInterface_theme()
-	if(istype(model, /obj/item/robot_model/syndicate) || (emagged && !centcom))
+	if(istype(model, /datum/robot_model/syndicate) || (emagged && !centcom))
 		modularInterface.device_theme = PDA_THEME_SYNDICATE
 		modularInterface.icon_state = "tablet-silicon-syndicate"
 	else
@@ -999,7 +999,7 @@
 	for(var/obj/item/borg/upgrade/upgrade_item in upgrades)
 		upgrade_item.forceMove(get_turf(src))
 	REMOVE_TRAITS_IN(src, MODEL_TRAIT)
-	model.on_model_removal()
+	model.on_model_removed()
 	QDEL_NULL(model)
 
 	var/datum/robot_model/new_robot_model = new robot_model(src)
