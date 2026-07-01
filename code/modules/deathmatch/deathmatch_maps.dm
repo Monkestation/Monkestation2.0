@@ -46,8 +46,10 @@
 	desc = "What would Engineering be without an overly complicated engine, with conveyor belts, emitters and shield generators sprinkled about? That's right, not Engineering."
 	max_players = 10
 	allowed_loadouts = list(/datum/outfit/deathmatch_loadout/assistant)
-	map_name = "OSHA_violator"
-	key = "OSHA_violator"
+	//map_name = "OSHA_Violator" MONKESTATION EDIT OLD
+	//key = "OSHA_Violator" MONKESTATION EDIT OLD
+	map_name = "OSHA_Violator" // MONKESTATION EDIT NEW
+	key = "OSHA_Violator" // MONKESTATION EDIT NEW
 
 /datum/lazy_template/deathmatch/the_brig
 	name = "The Brig"
