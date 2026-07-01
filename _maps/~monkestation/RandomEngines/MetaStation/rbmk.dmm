@@ -37,11 +37,10 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "dc" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/components/binary/volume_pump{
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "eg" = (
@@ -182,9 +181,12 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "nu" = (
-/obj/structure/grille/window_sill,
-/turf/template_noop,
-/area/space/nearstation)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green,
+/obj/machinery/atmospherics/components/binary/volume_pump{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "nM" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -346,10 +348,10 @@
 /turf/template_noop,
 /area/space/nearstation)
 "xK" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green,
-/obj/machinery/atmospherics/components/binary/volume_pump{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/rbmk/fuel_processor,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "yn" = (
@@ -575,6 +577,13 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
+"Kr" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "Kt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/table,
@@ -711,8 +720,11 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "RN" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 1
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -916,7 +928,7 @@ Zn
 Zn
 Zn
 Zn
-Zn
+RN
 Zn
 Zn
 Zn
@@ -937,18 +949,18 @@ kK
 kK
 kK
 NA
-dc
+Ey
 iY
 ZC
 ZC
 ZC
 ZC
+nu
 ZC
-ZC
 KS
 KS
 KS
-bY
+xK
 Yf
 MT
 xA
@@ -965,14 +977,14 @@ MT
 af
 MT
 Lv
-gO
+dc
 CG
 pB
 kJ
 wE
 wo
-xK
-RN
+ZC
+KS
 KS
 KS
 bY
@@ -991,8 +1003,8 @@ EU
 JY
 zC
 nd
-dc
-gO
+Ey
+Kr
 uU
 yn
 yn
@@ -1007,7 +1019,7 @@ RU
 MT
 xA
 xA
-nu
+xA
 xA
 xA
 xA
@@ -1018,7 +1030,7 @@ vY
 zC
 zC
 NA
-dc
+Ey
 gO
 uU
 yn
@@ -1032,8 +1044,8 @@ KS
 bY
 Vn
 MT
-nu
-nu
+xA
+xA
 xA
 xA
 xA
@@ -1045,7 +1057,7 @@ vY
 zC
 zC
 NA
-dc
+Ey
 gO
 Sh
 yn
@@ -1059,7 +1071,7 @@ KS
 bY
 Yf
 KS
-nu
+xA
 xA
 xA
 xA
