@@ -112,8 +112,6 @@
 		return
 
 	speak_up("fine")
-	return
-
 
 /obj/item/storage/medkit/rayne/proc/speak_up(json_string, ignores_cooldown = FALSE)
 	if(!json_string)

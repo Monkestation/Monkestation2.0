@@ -43,6 +43,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	return ..()
 
 /obj/structure/fireaxecabinet/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(isdrone(user) && attacking_item.tool_behaviour == TOOL_MULTITOOL)
+		to_chat(src, span_warning("Using [src] could break your laws."))
+		return
+
 	if(iscyborg(user) || attacking_item.tool_behaviour == TOOL_MULTITOOL)
 		toggle_lock(user)
 	else if(attacking_item.tool_behaviour == TOOL_WELDER && !(user.istate & ISTATE_HARM) && !broken)
@@ -130,11 +134,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	. = ..()
 	if(.)
 		return
+
+	if(isdrone(user))
+		to_chat(src, span_warning("Using [src] could break your laws."))
+		return
+
 	if((open || broken) && held_item)
 		user.put_in_hands(held_item)
 		add_fingerprint(user)
 		update_appearance()
 		return
+
 	toggle_open(user)
 
 /obj/structure/fireaxecabinet/attack_hand_secondary(mob/user, list/modifiers)

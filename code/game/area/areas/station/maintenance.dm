@@ -11,6 +11,7 @@
 	ambient_buzz = 'sound/ambience/source_corridor2.ogg'
 	ambient_buzz_vol = 50
 	astar_weight = 10
+	anchor_roundstart_lockers = FALSE
 
 /*
 * Departmental Maintenance
@@ -104,6 +105,11 @@
 	name = "Xenobiology Maintenance"
 	icon_state = "xenomaint"
 	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | XENOBIOLOGY_COMPATIBLE | CULT_PERMITTED
+
+/area/station/maintenance/chicken
+	name = "Ranching Maintenance"
+	icon = 'monkestation/code/modules/blueshift/icons/areas/areas_station.dmi'
+	icon_state = "nightclub_maint"
 
 /*
 * Generic Maintenance Tunnels

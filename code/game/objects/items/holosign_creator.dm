@@ -37,6 +37,12 @@
 		return
 	. += span_notice("It is currently maintaining <b>[length(signs)]/[max_signs]</b> projections.")
 
+/obj/item/holosign_creator/emp_act(severity)
+	. = ..()
+	for(var/obj/structure/holosign/sign as anything in signs)
+		if(prob(90 / severity))
+			qdel(sign)
+
 /obj/item/holosign_creator/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!check_allowed_items(interacting_with, not_inside = TRUE))
 		return NONE

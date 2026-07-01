@@ -15,7 +15,6 @@
 	slot_flags = ITEM_SLOT_NECK | ITEM_SLOT_BELT
 
 /obj/item/flashlight/lantern/rayne/process(seconds_per_tick)
-
 	var/mob/living/user = loc
 	if(!istype(user))
 		return

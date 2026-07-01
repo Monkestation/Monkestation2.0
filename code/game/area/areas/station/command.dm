@@ -67,11 +67,12 @@
 /area/station/command/heads_quarters/rd
 	name = "\improper Research Director's Office"
 	icon_state = "rd_office"
-/* //Monkestation edit - QM is not a head
-/area/station/command/heads_quarters/qm
-	name = "\improper Quartermaster's Office"
-	icon_state = "qm_office"
-*/
+
+/area/station/command/heads_quarters/blueshield
+	name = "Blueshield's Office"
+	icon = 'monkestation/code/modules/blueshift/icons/areas/areas_station.dmi'
+	icon_state = "blueshield"
+
 /*
 * Command - Teleporter
 */

@@ -13,10 +13,15 @@
 	var/datum/dimension_theme/theme
 	/// Effect displaying on the anomaly to represent the theme.
 	var/mutable_appearance/theme_icon
+	/// How many remaining times this anomaly will relocate, before its detonation.
+	var/relocations_left
 
 /obj/effect/anomaly/dimensional/Initialize(mapload, new_lifespan)
 	. = ..()
-	overlays += mutable_appearance('icons/effects/effects.dmi', "dimensional_overlay")
+	if(!isnum(relocations_left))
+		relocations_left = rand(3, 5)
+
+	add_overlay(mutable_appearance('icons/effects/effects.dmi', "dimensional_overlay"))
 
 	animate(src, transform = matrix()*0.85, time = 3, loop = -1)
 	animate(transform = matrix(), time = 3, loop = -1)
@@ -24,6 +29,18 @@
 /obj/effect/anomaly/dimensional/anomalyEffect(seconds_per_tick)
 	. = ..()
 	transmute_area()
+
+/obj/effect/anomaly/dimensional/detonate()
+	. = ..()
+	if(!theme)
+		return
+	visible_message(span_bolddanger("[src] explodes, distorting the space around it in surreal ways!"))
+	var/detonate_range = range + rand(5, 7)
+	var/list/turf/target_turfs = spiral_range_turfs(detonate_range, src)
+	for(var/turf/target in target_turfs)
+		if(prob(15) || QDELING(target)) // the prob is so it looks more erratic
+			continue
+		theme.apply_theme(target)
 
 /**
  * Transforms a turf in our prepared area.
@@ -74,8 +91,14 @@
 	var/turf/new_turf = placer.findValidTurf(new_area)
 
 	priority_announce("Dimensional instability relocated. Expected location: [new_area.name].", "Anomaly Alert")
-	src.forceMove(new_turf)
+	forceMove(new_turf)
 	prepare_area()
+
+	relocations_left--
+
+	if(relocations_left <= 0)
+		detonate()
+		qdel(src)
 
 /obj/effect/temp_visual/transmute_tile_flash
 	icon = 'icons/effects/effects.dmi'

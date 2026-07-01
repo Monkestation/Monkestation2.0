@@ -551,32 +551,41 @@
 	if(welded || operating)
 		return
 
-	if(density)
-		being_held_open = TRUE
-		user.balloon_alert_to_viewers("holding [src] open", "holding [src] open")
-		COOLDOWN_START(src, activation_cooldown, REACTIVATION_DELAY)
-		open()
-		if(QDELETED(user))
-			being_held_open = FALSE
-			return
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(handle_held_open_adjacency))
-		RegisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(handle_held_open_adjacency))
-		RegisterSignal(user, COMSIG_QDELETING, PROC_REF(handle_held_open_adjacency))
-		handle_held_open_adjacency(user)
-	else
+	if(apply_feeble_delay(user, density ? "open" : "close"))
+		return
+
+	if(!density)
 		close()
+		return
+
+	being_held_open = TRUE
+	user.balloon_alert_to_viewers("holding [src] open", "holding [src] open")
+	COOLDOWN_START(src, activation_cooldown, REACTIVATION_DELAY)
+	open()
+
+	if(QDELETED(user))
+		being_held_open = FALSE
+		return
+
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(handle_held_open_adjacency))
+	RegisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(handle_held_open_adjacency))
+	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(handle_held_open_adjacency))
+	handle_held_open_adjacency(user)
 
 /// A simple toggle for firedoors between on and off
 /obj/machinery/door/firedoor/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
 	if(welded || operating)
 		return
 
-	if(density)
-		open()
-		if(active)
-			addtimer(CALLBACK(src, PROC_REF(correct_state)), 2 SECONDS, TIMER_UNIQUE)
-	else
-		close()
+	if(apply_feeble_delay(user, density ? "open" : "close"))
+		return
+
+	if(!density)
+		return
+
+	open()
+	if(active)
+		addtimer(CALLBACK(src, PROC_REF(correct_state)), 2 SECONDS, TIMER_UNIQUE)
 
 /obj/machinery/door/firedoor/proc/handle_held_open_adjacency(mob/user)
 	SIGNAL_HANDLER
@@ -591,6 +600,20 @@
 	UnregisterSignal(user, COMSIG_QDELETING)
 	if(user)
 		user.balloon_alert_to_viewers("released [src]", "released [src]")
+
+/obj/machinery/door/firedoor/proc/apply_feeble_delay(mob/user, action)
+	if(!HAS_TRAIT(user, TRAIT_FEEBLE))
+		return FALSE
+	if(!feeble_callback())
+		return TRUE
+	user.visible_message(span_notice("[user] struggles to [action] the firelock."), \
+		span_notice("You struggle to [action] the firelock."))
+	return !do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, TYPE_PROC_REF(/obj/machinery/door/firedoor, feeble_callback)))
+
+/obj/machinery/door/firedoor/proc/feeble_callback()
+	if(welded || operating)
+		return FALSE
+	return TRUE
 
 /obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)

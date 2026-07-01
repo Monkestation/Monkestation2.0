@@ -35,7 +35,6 @@
 
 	var/list/dent_decals
 
-	//Monkestation edit start
 	max_integrity = 300
 	damage_deflection = 22 // big chunk of solid metal
 	uses_integrity = TRUE
@@ -50,7 +49,6 @@
 	bio = 0
 	acid = 50
 	wound = 0
-//Monkestation edit end
 
 /turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
 	if(dropping != user || !iscarbon(dropping))
@@ -121,7 +119,6 @@
 		fixed_underlay = string_assoc_list(fixed_underlay)
 		underlays += underlay_appearance
 
-	//monkestation edit start
 	if(SSstation_coloring.wall_trims)
 		trim_color = SSstation_coloring.get_default_color()
 
@@ -134,7 +131,6 @@
 	. += ..()
 	. += deconstruction_hints(user)
 
-//monkestation edit start
 /turf/closed/wall/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
 	. = ..()
 	if(.) // add a dent if it took damage
@@ -163,7 +159,6 @@
 	if(damage_flag == MELEE)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 50, TRUE) //Otherwise there's no sound for hitting the wall, since it's just dismantled
 	dismantle_wall(TRUE, TRUE)
-//monkestation edit end
 
 /turf/closed/wall/proc/deconstruction_hints(mob/user)
 	return span_notice("The outer plating is <b>welded</b> firmly in place.")
@@ -210,7 +205,7 @@
 
 /turf/closed/wall/ex_act(severity, target)
 	if(target == src)
-		dismantle_wall(TRUE, TRUE) //monkestation edit
+		dismantle_wall(TRUE, TRUE)
 		return
 
 	switch(severity)
@@ -228,10 +223,8 @@
 
 
 /turf/closed/wall/blob_act(obj/structure/blob/B)
-	//monkestation edit start
 	take_damage(400, BRUTE, MELEE, FALSE)
 	playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-	//monkestation edit end
 
 /turf/closed/wall/attack_paw(mob/living/user, list/modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -242,16 +235,16 @@
 	var/obj/item/bodypart/arm = user.hand_bodyparts[user.active_hand_index]
 	if(!arm)
 		return
+
 	if(arm.bodypart_disabled)
 		return
-	//monkestation edit start
+
 	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 	take_damage(400, BRUTE, MELEE, FALSE)
 	playsound(src, 'sound/effects/bang.ogg', 50, 1)
 	to_chat(user, span_notice("You punch the wall."))
 	hulk_recoil(arm, user)
 	return TRUE
-	//monkestation edit end
 
 /**
  *Deals damage back to the hulk's arm.
@@ -280,7 +273,7 @@
 	playsound(src, 'sound/weapons/genhit.ogg', 25, TRUE)
 	add_fingerprint(user)
 
-/turf/closed/wall/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers) //monkestation edit
+/turf/closed/wall/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))
@@ -293,16 +286,15 @@
 	add_fingerprint(user)
 
 	//the istype cascade has been spread among various procs for easy overriding
-	if(try_clean(attacking_item, user) || try_wallmount(attacking_item, user) || try_decon(attacking_item, user)) //monkestation edit
+	if(try_clean(attacking_item, user) || try_wallmount(attacking_item, user) || try_decon(attacking_item, user))
 		return
 
 	return ..() || (uses_integrity && attacking_item.attack_atom(src, user))
 
 /turf/closed/wall/proc/try_clean(obj/item/W, mob/living/user, turf/T)
-	if(!(user.istate & ISTATE_HARM)) //monkestation edit
+	if(!(user.istate & ISTATE_HARM))
 		return FALSE
 
-	//monkestation edit start
 	if(W.tool_behaviour == TOOL_WELDER)
 		if(!W.tool_start_check(user, amount=0))
 			to_chat(user, span_warning("You need more fuel to repair [src]!"))
@@ -328,7 +320,7 @@
 			dent_decals.Cut()
 			return TRUE
 		return TRUE
-	//monkestation edit end
+
 	return FALSE
 
 /turf/closed/wall/proc/try_wallmount(obj/item/W, mob/user)
@@ -361,23 +353,10 @@
 
 /turf/closed/wall/singularity_pull(S, current_size)
 	. = ..()
-	//monkestation edit start
 	if(current_size >= STAGE_FIVE)
 		take_damage(300, armour_penetration=100) // LORD SINGULOTH CARES NOT FOR YOUR "ARMOR"
 	else if(current_size == STAGE_FOUR)
 		take_damage(150, armour_penetration=100)
-	//monkestation edit end
-
-/* //MONKESTATION REMOVAL: Deprecated, obselete old code proc
-/turf/closed/wall/proc/wall_singularity_pull(current_size)
-	if(current_size >= STAGE_FIVE)
-		if(prob(50))
-			dismantle_wall()
-		return
-	if(current_size == STAGE_FOUR)
-		if(prob(30))
-			dismantle_wall()
-*/
 
 /turf/closed/wall/narsie_act(force, ignore_mobs, probability = 20)
 	. = ..()
@@ -417,12 +396,10 @@
 			return TRUE
 	return FALSE
 
-//monkestation edit start
 /turf/proc/add_dent(denttype, x=rand(-8, 8), y=rand(-8, 8)) // this only exists because turf code is terrible, monkestation
 	return
 
 /turf/closed/wall/add_dent(denttype, x=rand(-8, 8), y=rand(-8, 8))
-//monkestation edit end
 	if(LAZYLEN(dent_decals) >= MAX_DENT_DECALS)
 		return
 
@@ -451,7 +428,6 @@
 
 	return ..()
 
-
 /turf/closed/wall/metal_foam_base
 	girder_type = /obj/structure/foamedmetal
 
@@ -462,6 +438,34 @@
 /turf/closed/wall/Exited(atom/movable/gone, direction)
 	. = ..()
 	SEND_SIGNAL(gone, COMSIG_LIVING_WALL_EXITED, src)
+
+/turf/closed/wall/material/silk
+	name = "silk wall"
+	desc = "A silk wall reinforced with iron, still weaker than an iron wall."
+	icon = 'icons/turf/walls/silk_wall.dmi'
+	icon_state = "wall-0"
+	base_icon_state = "wall"
+	sheet_type = /obj/item/stack/sheet/silk
+	hardness = 80
+	explosive_resistance = 0
+	max_integrity = 100
+	damage_deflection = 5
+	custom_materials = list(/datum/material/silk = SHEET_MATERIAL_AMOUNT*2)
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_SILK_WALLS + SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_SILK_WALLS
+
+/obj/structure/falsewall/silk
+	name = "silk wall"
+	desc = "A silk wall reinforced with iron, still weaker than an iron wall."
+	icon = 'icons/turf/walls/silk_wall.dmi'
+	icon_state = "wall-0"
+	base_icon_state = "wall"
+	mineral = /obj/item/stack/sheet/silk
+	walltype = /turf/closed/wall/material/silk
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_SILK_WALLS + SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_SILK_WALLS
 
 #undef MAX_DENT_DECALS
 #undef LEANING_OFFSET
