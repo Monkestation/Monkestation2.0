@@ -2,7 +2,7 @@
 /obj/machinery/the_singularitygen
 	name = "Gravitational Singularity Generator"
 	desc = "An odd device which produces a Gravitational Singularity when set up."
-	icon = 'monkestation/icons/obj/singularity.dmi'
+	icon = 'icons/obj/singularity.dmi'
 	icon_state = "TheSingGen"
 	anchored = FALSE
 	density = TRUE
@@ -16,6 +16,9 @@
 
 	var/energy = 0
 	var/creation_type = /obj/singularity
+
+/obj/machinery/the_singularitygen/tutorial
+	creation_type = /obj/singularity/immovable
 
 /obj/machinery/the_singularitygen/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.tool_behaviour == TOOL_WRENCH)
@@ -40,3 +43,6 @@
 	icon = 'icons/obj/engine/tesla_generator.dmi'
 	icon_state = "TheSingGen"
 	creation_type = /obj/energy_ball
+
+/obj/machinery/the_singularitygen/tesla/tutorial
+	creation_type = /obj/energy_ball/immovable

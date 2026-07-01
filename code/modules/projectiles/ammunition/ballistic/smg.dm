@@ -31,11 +31,12 @@
 	name = "caseless .45 bullet"
 	desc = "A .45 bullet casing. This one is caseless!"
 	caliber = CALIBER_45
+	can_be_printed = FALSE
 	projectile_type = /obj/projectile/bullet/c45/caseless
 
 /obj/item/ammo_box/c45/caseless
 	name = "ammo box (caseless .45)"
-	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "caseless_45box"
 	ammo_type = /obj/item/ammo_casing/c45_caseless
 	multiple_sprites = AMMO_BOX_FULL_EMPTY

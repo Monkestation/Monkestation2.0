@@ -43,7 +43,7 @@
 	var/crew_hud = DATA_HUD_CREW //MONKE, lets silicons tell who is crew.
 
 	var/law_change_counter = 0
-	var/obj/machinery/camera/builtInCamera = null
+	var/obj/machinery/camera/bodycamera/builtInCamera = null
 	var/updating = FALSE //portable camera camerachunk update
 	///Whether we have been emagged
 	var/emagged = FALSE
@@ -329,7 +329,7 @@
 		if (length(law) > 0)
 			if (!(law in hackedcheck))
 				law_display = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawh=[index]'>[law_display] [ion_num()]:</A> <font color='#660000'>[law]</font><BR>"}
+			list += {"<A href='byond://?src=[REF(src)];lawh=[index]'>[law_display] [ion_num()]:</A> <font color='#aa0000'>[law]</font><BR>"}
 
 	for (var/index in 1 to length(laws.ion))
 		law_display = "Yes"
@@ -359,7 +359,9 @@
 			number++
 	list += {"<br><br><A href='byond://?src=[REF(src)];laws=1'>State Laws</A>"}
 
-	usr << browse(list, "window=laws")
+	var/datum/browser/browser = new(usr, "laws")
+	browser.set_content(list)
+	browser.open()
 
 /mob/living/silicon/proc/ai_roster()
 	if(!client)
@@ -421,16 +423,18 @@
 	diagsensor.show_to(src)
 	crewsensor.show_to(src)
 
-/mob/living/silicon/proc/toggle_sensors()
+/mob/living/silicon/proc/toggle_sensors(silent = FALSE)
 	if(incapacitated())
 		return
 	sensors_on = !sensors_on
 	if (!sensors_on)
-		to_chat(src, span_notice("Sensor overlay deactivated."))
+		if(!silent)
+			to_chat(src, span_notice("Sensor overlay deactivated."))
 		remove_sensors()
 		return
 	add_sensors()
-	to_chat(src, span_notice("Sensor overlay activated."))
+	if(!silent)
+		to_chat(src, span_notice("Sensor overlay activated."))
 
 /mob/living/silicon/proc/GetPhoto(mob/user)
 	if (aicamera)
@@ -442,7 +446,7 @@
 /mob/living/silicon/handle_high_gravity(gravity, seconds_per_tick, times_fired)
 	return
 
-/mob/living/silicon/rust_heretic_act()
+/mob/living/silicon/rust_heretic_act(rust_strength)
 	adjustBruteLoss(500)
 
 /mob/living/silicon/on_floored_start()

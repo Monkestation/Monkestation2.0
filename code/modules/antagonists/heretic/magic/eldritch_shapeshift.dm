@@ -7,15 +7,15 @@
 	overlay_icon_state = "bg_heretic_border"
 
 	school = SCHOOL_FORBIDDEN
-	invocation = "SH'PE"
+	invocation = "SH'PE."
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
 	possible_shapes = list(
 		/mob/living/basic/carp,
 		/mob/living/basic/mouse,
+		/mob/living/simple_animal/pet/cat, /* /mob/living/basic/pet/cat, */
 		/mob/living/basic/pet/dog/corgi,
 		/mob/living/basic/pet/fox,
 		/mob/living/simple_animal/bot/secbot,
-		/mob/living/simple_animal/pet/cat,
 	)

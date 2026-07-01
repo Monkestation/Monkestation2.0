@@ -129,7 +129,7 @@ GLOBAL_VAR(station_nuke_source)
 
 	switch(deconstruction_state)
 		if(NUKESTATE_INTACT)
-			if(istype(weapon, /obj/item/screwdriver/nuke))
+			if(istype(weapon, /obj/item/screwdriver/nuke) || istype(weapon, /obj/item/screwdriver/cyborg/nuke))
 				to_chat(user, span_notice("You start removing [src]'s front panel's screws..."))
 				if(weapon.use_tool(src, user, 6 SECONDS, volume = 100))
 					deconstruction_state = NUKESTATE_UNSCREWED

@@ -44,6 +44,7 @@
 #define DISEASE_SLIME "slime"
 #define DISEASE_MORPH "morph"
 #define DISEASE_ROBOT "robot"
+#define DISEASE_MONKEY "monkey"
 #define DISEASE_COLD "cold"
 #define DISEASE_HEART "heart"
 #define DISEASE_SANDWICH "sandwich"
@@ -53,10 +54,6 @@
 #define DISEASE_SHOCK "shock"
 #define DISEASE_FUNGUS "fungal_spores"
 #define DISEASE_DEBUG "debug"
-
-#define DISEASE_DORMANT (1 << 3)
-#define DISEASE_COPYSTAGE (1<<4)
-#define DISEASE_ANALYZED (1<<5)
 
 #define COMSIG_CRACKER_PUZZLE_FAILURE "cracker_puzzle_failure"
 #define COMSIG_CRACKER_PUZZLE_SUCCESS "cracker_puzzle_success"

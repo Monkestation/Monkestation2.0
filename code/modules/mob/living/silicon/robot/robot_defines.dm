@@ -16,6 +16,8 @@
 	designation = "Default" //used for displaying the prefix & getting the current model of cyborg
 	has_limbs = TRUE
 	hud_type = /datum/hud/robot
+	held_items = list(null, null, null) //we use held_items for the module holding, because that makes sense to do!
+	default_hand_amount = 3
 
 	///Represents the cyborg's model (engineering, medical, etc.)
 	var/obj/item/robot_model/model = null
@@ -69,10 +71,6 @@
 	var/atom/movable/screen/inv3 = null
 	var/atom/movable/screen/hands = null
 
-	///Used to determine whether they have the module menu shown or not
-	var/shown_robot_modules = FALSE
-	var/atom/movable/screen/robot_modules_background
-
 	///Lamp button reference
 	var/atom/movable/screen/robot/lamp/lampButton
 
@@ -85,7 +83,6 @@
 
 	// Modules (tool slots)
 	var/obj/item/module_active = null
-	held_items = list(null, null, null) //we use held_items for the module holding, because that makes sense to do!
 
 	///For checking which modules are disabled or not.
 	var/disabled_modules
@@ -98,7 +95,7 @@
 	var/emag_cooldown = 0
 	var/wiresexposed = FALSE
 
-	///Cyborgs will sync their laws with their AI by default
+	/// Should their laws sync with their master AI? Upon initialization, will try to assign and connect them to an AI.
 	var/lawupdate = TRUE
 	///Used to determine if a borg shows up on the robotics console.  Setting to TRUE hides them.
 	var/scrambledcodes = FALSE
@@ -150,6 +147,9 @@
 /mob/living/silicon/robot/nocell
 	cell = null
 
+/mob/living/silicon/robot/disconnected
+	lawupdate = FALSE
+
 /mob/living/silicon/robot/shell
 	name = "AI Shell"
 	shell = TRUE
@@ -193,6 +193,10 @@
 /mob/living/silicon/robot/model/service
 	set_model = /obj/item/robot_model/service
 	icon_state = "brobot"
+
+/mob/living/silicon/robot/model/science
+	set_model = /obj/item/robot_model/science
+	icon_state = "science"
 
 /mob/living/silicon/robot/model/syndicate
 	icon_state = "synd_sec"

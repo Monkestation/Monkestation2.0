@@ -54,8 +54,8 @@
 /obj/item/clothing/suit/armor/surplus
 	name = "surplus armor vest"
 	desc = "An armored vest that provides decent protection against most types of damage."
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "armorvest"
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
@@ -74,6 +74,12 @@
 /obj/item/clothing/suit/armor/vest/alt/sec/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/toggle_icon)
+
+/obj/item/clothing/suit/armor/vest/alt/sec/private
+	name = "SWAT armor vest"
+	desc = "A Type II armored vest that provides good protection against most types of damage."
+	icon_state = "armor_private_sec"
+	armor_type = /datum/armor/armor_swat
 
 /obj/item/clothing/suit/armor/vest/press
 	name = "press armor vest"
@@ -452,7 +458,7 @@
 
 /datum/armor/armor_swat
 	melee = 40
-	bullet = 40 //monkestation edit, 30 to 40
+	bullet = 40
 	laser = 30
 	energy = 40
 	bomb = 50

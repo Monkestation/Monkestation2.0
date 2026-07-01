@@ -4,9 +4,9 @@
 /obj/item/clockwork/replica_fabricator
 	name = "replica fabricator"
 	desc = "A strange, brass device with many twisting cogs and vents."
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
-	lefthand_file = 'monkestation/icons/mob/clock_cult/clockwork_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/clock_cult/clockwork_righthand.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_objects.dmi'
+	lefthand_file = 'icons/mob/clock_cult/clockwork_lefthand.dmi'
+	righthand_file = 'icons/mob/clock_cult/clockwork_righthand.dmi'
 	icon_state = "replica_fabricator"
 	/// List of things that the fabricator can build for the radial menu
 	var/static/list/crafting_possibilities = list(
@@ -85,7 +85,7 @@
 	if(on_reebe(user))
 		creation_delay_mult += selected_output.reebe_mult
 		if(GLOB.clock_ark?.current_state >= ARK_STATE_ACTIVE)
-			creation_delay_mult += (iscogscarab(user) ? 2.5 : 5)
+			creation_delay_mult += 2
 	if(replaced)
 		creation_delay_mult += selected_output.replacement_mult
 
@@ -273,6 +273,7 @@
 	creation_delay = 14 SECONDS
 	replace_types_of = list(/turf/closed/wall, /turf/closed/wall/r_wall)
 	replacement_mult = -0.2
+	reebe_mult = -0.3 //will see if this becomes an issue
 
 /datum/replica_fabricator_output/turf_output/brass_wall/on_create(obj/created_object, turf/creation_turf, mob/creator)
 	. = ..()
@@ -297,7 +298,6 @@
 	to_create_path = /obj/structure/window/reinforced/clockwork/fulltile
 	creation_delay = 10 SECONDS
 	replace_types_of = list(/obj/structure/window)
-	reebe_mult = 0.2
 
 /datum/replica_fabricator_output/brass_window/on_create(obj/created_object, turf/creation_turf, mob/creator)
 	new /obj/effect/temp_visual/ratvar/window(creation_turf)

@@ -25,6 +25,7 @@
 		"microfusion_gun_attachment_black_camo",
 		"microfusion_gun_attachment_nt_camo",
 		"microfusion_gun_attachment_heatsink",
+		"microfusion_gun_attachment_rgb",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
@@ -68,6 +69,7 @@
 	)
 	design_ids = list(
 		"bluespace_microfusion_cell",
+		"microfusion_cell_attachment_selfcharging",
 		"microfusion_gun_attachment_repeater",
 		"bluespace_microfusion_phase_emitter",
 	)

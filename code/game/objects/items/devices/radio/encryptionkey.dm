@@ -88,6 +88,11 @@
 	greyscale_config = /datum/greyscale_config/encryptionkey_engineering
 	greyscale_colors = "#793a80#dca01b"
 
+/obj/item/encryptionkey/headset_net
+	name = "network admin's radio encryption key"
+	icon_state = "eng_cypherkey"
+	channels = list(RADIO_CHANNEL_SCIENCE = 1, RADIO_CHANNEL_ENGINEERING = 1)
+
 /obj/item/encryptionkey/headset_med
 	name = "medical radio encryption key"
 	icon_state = "cypherkey_medical"
@@ -310,6 +315,16 @@
 	greyscale_config = null
 	greyscale_colors = null
 
+/obj/item/encryptionkey/felinid
+	name = "\improper Felinid translation key"
+	desc = "An encryption key that automatically encodes nekomimetic heard through the radio into common. The signal's rather scratchy."
+	icon_state = "translation_cypherkey"
+	language_data = list(
+		/datum/language/nekomimetic = 100,
+	)
+	greyscale_config = null
+	greyscale_colors = null
+
 /obj/item/encryptionkey/uncommon
 	name = "\improper Uncommon translation key"
 	desc = "An encryption key that automatically encodes Uncommon heard through the radio into common. The signal's rather scratchy."
@@ -326,6 +341,16 @@
 	icon_state = "translation_cypherkey"
 	language_data = list(
 		/datum/language/slime = 100,
+	)
+	greyscale_config = null
+	greyscale_colors = null
+
+/obj/item/encryptionkey/monkey
+	name = "\improper Chimpanzee translation key"
+	desc = "An encryption key that automatically encodes Chimp heard through the radio into common. The signal's rather scratchy."
+	icon_state = "translation_cypherkey"
+	language_data = list(
+		/datum/language/monkey = 100,
 	)
 	greyscale_config = null
 	greyscale_colors = null

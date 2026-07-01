@@ -10,9 +10,6 @@
 		/obj/item/mod/module/storage/syndicate,
 		/obj/item/mod/module/tether,
 	)
-	default_pins = list(
-		/obj/item/mod/module/armor_booster/contractor,
-	)
 
 /obj/item/mod/control/pre_equipped/contractor/upgraded
 	applied_cell = /obj/item/stock_parts/power_store/cell/bluespace
@@ -25,7 +22,6 @@
 		/obj/item/mod/module/storage/syndicate,
 	)
 	default_pins = list(
-		/obj/item/mod/module/armor_booster/contractor,
 		/obj/item/mod/module/baton_holster/preloaded,
 		/obj/item/mod/module/jetpack,
 	)

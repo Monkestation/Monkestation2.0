@@ -74,29 +74,16 @@
 	return src
 
 /mob/proc/AIize(client/preference_source, move = TRUE)
-	var/list/turf/landmark_loc = list()
+	var/valid_core = FALSE
+	for(var/obj/machinery/ai/data_core/core in GLOB.data_cores)
+		if(core.valid_data_core())
+			valid_core = TRUE
+			break
 
-	if(!move)
-		landmark_loc += loc
-	else
-		for(var/obj/effect/landmark/start/ai/sloc in GLOB.landmarks_list)
-			if(locate(/mob/living/silicon/ai) in sloc.loc)
-				continue
-			if(sloc.primary_ai)
-				LAZYCLEARLIST(landmark_loc)
-				landmark_loc += sloc.loc
-				break
-			landmark_loc += sloc.loc
-		if(!length(landmark_loc))
-			to_chat(src, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
-			for(var/obj/effect/landmark/start/ai/sloc in GLOB.landmarks_list)
-				landmark_loc += sloc.loc
+	if(!valid_core)
+		message_admins("No valid data core for [src]. Yell at a mapper! The AI will die.")
 
-	if(!length(landmark_loc))
-		message_admins("Could not find ai landmark for [src]. Yell at a mapper! We are spawning them at their current location.")
-		landmark_loc += loc
-
-	var/mob/living/silicon/ai/our_AI = new /mob/living/silicon/ai(pick(landmark_loc), null, src)
+	var/mob/living/silicon/ai/our_AI = new /mob/living/silicon/ai(loc, null, src)
 	. = our_AI
 
 	if(preference_source)

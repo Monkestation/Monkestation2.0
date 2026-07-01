@@ -614,6 +614,7 @@
 	tick_interval = 10
 	alert_type = /atom/movable/screen/alert/status_effect/trance
 	var/stun = TRUE
+	var/cause_hypnotism = TRUE
 	var/hypnosis_type = /datum/brain_trauma/hypnosis
 
 /atom/movable/screen/alert/status_effect/trance
@@ -629,7 +630,8 @@
 /datum/status_effect/trance/on_apply()
 	if(!iscarbon(owner))
 		return FALSE
-	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, PROC_REF(hypnotize))
+	if(cause_hypnotism)
+		RegisterSignal(owner, COMSIG_MOVABLE_HEAR, PROC_REF(hypnotize))
 	ADD_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
 	owner.add_client_colour(/datum/client_colour/monochrome/trance)
 	owner.visible_message("[stun ? span_warning("[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.") : ""]", \
@@ -654,7 +656,7 @@
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
 
-	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER])
+	if(HAS_TRAIT(owner, TRAIT_DEAF) || owner == hearing_args[HEARING_SPEAKER])
 		return
 
 	var/mob/hearing_speaker = hearing_args[HEARING_SPEAKER]
@@ -671,6 +673,10 @@
 /// Only difference is the resulting trauma can't be cured via nanites/viruses.
 /datum/status_effect/trance/hardened
 	hypnosis_type = /datum/brain_trauma/hypnosis/hardened
+
+///Just for the effects and not the trauma.
+/datum/status_effect/trance/no_hypno
+	cause_hypnotism = FALSE
 
 /datum/status_effect/spasms
 	id = "spasms"

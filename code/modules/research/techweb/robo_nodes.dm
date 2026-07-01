@@ -38,11 +38,13 @@
 /datum/techweb_node/adv_bots
 	id = "adv_bots"
 	display_name = "Advanced Bots Research"
-	description = "Grants access to a special launchpad designed for bots."
+	description = "Grants access to special launchpads designed for bots big and small."
 	prereq_ids = list("robotics")
 	design_ids = list(
 		"botpad",
 		"botpad_remote",
+		"mechpad",
+		"mechpad_console"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
@@ -63,10 +65,17 @@
 	description = "AI unit research."
 	prereq_ids = list("adv_robotics")
 	design_ids = list(
-		"aicore",
 		"borg_ai_control",
 		"intellicard",
 		"mecha_tracking_ai_control",
+		"server_cabinet",
+		"ai_data_core",
+		"ai_core_display",
+		"ai_server_overview",
+		"ai_overclocking",
+		"ram1",
+		"basic_ai_cpu",
+		"ai_resource_distribution",
 		"aifixer",
 		"reset_module",
 		"asimov_module",

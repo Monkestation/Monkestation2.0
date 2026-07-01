@@ -8,8 +8,7 @@ GLOBAL_LIST_EMPTY(enchantment_datums_by_type)
 	var/used_span
 	///A ref to the enchantment datum we are using
 	var/datum/enchantment/used_enchantment
-	///A list of all enchantments
-	var/static/list/all_enchantments = list()
+	//need to add a source ID var
 
 /datum/component/enchanted/Initialize(list/select_enchants_from = subtypesof(/datum/enchantment), used_span = "<span class='purple'>", level_override)
 	if(!isitem(parent))
@@ -18,9 +17,6 @@ GLOBAL_LIST_EMPTY(enchantment_datums_by_type)
 	if(!length(select_enchants_from))
 		stack_trace("[src.type] calling Initialize with unset select_enchants_from.")
 		return COMPONENT_INCOMPATIBLE
-
-	if(!length(all_enchantments))
-		generate_enchantment_datums()
 
 	for(var/entry in select_enchants_from)
 		if(ispath(entry))
@@ -34,7 +30,7 @@ GLOBAL_LIST_EMPTY(enchantment_datums_by_type)
 /datum/component/enchanted/RegisterWithParent()
 	var/list/component_list = used_enchantment.components_by_parent[parent]
 	if(!component_list)
-		used_enchantment.components_by_parent[parent] = list(text_ref(used_enchantment) = src) //used_enchantment is not being taken as a ref?
+		used_enchantment.components_by_parent[parent] = list(used_enchantment = src) //used_enchantment is not being taken as a ref?
 	else
 		component_list[used_enchantment] = src
 	used_enchantment.apply_effect(parent, level)
@@ -50,6 +46,15 @@ GLOBAL_LIST_EMPTY(enchantment_datums_by_type)
 /datum/component/enchanted/Destroy(force)
 	used_enchantment = null
 	return ..()
+
+///Increase the level of this enchantment
+/datum/component/enchanted/proc/increase_level(increase_by, forced)
+	if(!forced && level >= used_enchantment.max_level)
+		return FALSE
+
+	increase_by = min(used_enchantment.max_level - level, increase_by)
+	level += increase_by
+	used_enchantment.apply_effect(parent, increase_by, TRUE)
 
 /datum/component/enchanted/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -77,7 +82,7 @@ GLOBAL_LIST_EMPTY(enchantment_datums_by_type)
 	var/max_level = 1
 	///Typecache of items we are allowed on, generation handled in get_allowed_on
 	var/list/allowed_on
-	///A recursive assoc list keyed as: [parent] = list(text_ref(enchant_component.used_enchantment) = enchant_component)
+	///A recursive assoc list keyed as: [obj/item/parent] = list(enchant_component.used_enchantment = enchant_component)
 	var/static/list/list/datum/component/enchanted/components_by_parent = list()
 
 /datum/enchantment/New()
@@ -106,14 +111,15 @@ GLOBAL_LIST_EMPTY(enchantment_datums_by_type)
 	RETURN_TYPE(/datum/component/enchanted)
 	var/list/parent_list = components_by_parent[parent]
 	if(!parent_list)
-		return FALSE
-	return parent_list[text_ref(src)]
+		return null
+	return parent_list[src]
 
 /datum/enchantment/proc/can_apply_to(obj/item/checked)
 	return allowed_on[checked.type] && examine_description
 
-/datum/enchantment/proc/apply_effect(obj/item/target, level)
-	register_item(target)
+/datum/enchantment/proc/apply_effect(obj/item/target, level, upgrading = FALSE)
+	if(!upgrading)
+		register_item(target)
 
 ///Handle comsig reg here
 /datum/enchantment/proc/register_item(obj/item/target)

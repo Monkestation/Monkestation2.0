@@ -115,7 +115,7 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 //for the portal from the outpost to reebe
 /obj/effect/landmark/abscond_marker
 	name = "abscond marker"
-	icon = 'monkestation/icons/effects/landmarks_static.dmi'
+	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "clockwork_orange"
 
 /obj/effect/landmark/abscond_marker/Initialize(mapload)
@@ -128,15 +128,34 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 
 /obj/effect/servant_blocker
 	name = "servant Blocker"
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_effects.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_effects.dmi'
 	icon_state = "servant_blocker"
 	anchored = TRUE
 
-/obj/effect/servant_blocker/CanPass(atom/movable/mover, border_dir)
-	for(var/mob/held_mob in mover.get_all_contents())
-		if(IS_CLOCK(held_mob))
-			return FALSE
-	return ..()
+// /obj/effect/servant_blocker/CanPass(atom/movable/mover, border_dir)
+// 	for(var/mob/held_mob in mover.get_all_contents())
+// 		if(IS_CLOCK(held_mob))
+// 			return FALSE
+// 	return ..()
+
+/obj/effect/servant_blocker/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if(!iscarbon(mover))
+		if(isvehicle(mover))
+			var/obj/vehicle/toucher = mover
+			for(var/mob/living/carbon/human in toucher.occupants)
+				if(IS_CLOCK(human))
+					return FALSE
+		if(!isstructure(mover))
+			return TRUE
+		var/obj/structure/cargobay = mover
+		for(var/mob/living/stowaway in cargobay.contents)
+			if(IS_CLOCK(stowaway))
+				return FALSE
+	else
+		for(var/mob/held_mob in mover.get_all_contents())
+			if(IS_CLOCK(held_mob))
+				return FALSE
 
 /obj/effect/spawner/structure/window/clockwork
 	name = "brass window spawner"

@@ -1,5 +1,0 @@
-author: "Shoddd"
-delete-after: True
-changes:
-  - balance: "Explorer laser gun now shoots hardlight lasers, disappearing after 6 tiles and being unable to pass through glass but doing 32 damage."
-  - balance: "explorer laser gun can now be cranked while moving and now has a unremovable firing pin"

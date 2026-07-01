@@ -18,7 +18,7 @@
 	slowdown_inactive = 0.5
 	slowdown_active = 0
 	ui_theme = "syndicate"
-	inbuilt_modules = list(/obj/item/mod/module/armor_booster/contractor, /obj/item/mod/module/chameleon/contractor)
+	inbuilt_modules = list(/obj/item/mod/module/chameleon/contractor)
 	allowed_suit_storage = list(
 		/obj/item/flashlight,
 		/obj/item/tank/internals,
@@ -35,8 +35,8 @@
 	)
 	skins = list(
 		"contractor" = list(
-			MOD_ICON_OVERRIDE = 'monkestation/icons/obj/clothing/modsuits/modsuit.dmi',
-			MOD_WORN_ICON_OVERRIDE = 'monkestation/icons/mob/clothing/worn_modsuit.dmi',
+			MOD_ICON_OVERRIDE = 'icons/obj/clothing/modsuit/mod_clothing.dmi',
+			MOD_WORN_ICON_OVERRIDE = 'icons/mob/clothing/worn_modsuit.dmi',
 			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
@@ -64,10 +64,10 @@
 	)
 //ICONS BORKED
 /datum/armor/mod_contractor_armor
-	melee = 30
-	bullet = 35
-	laser = 15
-	energy = 15
+	melee = 50
+	bullet = 55
+	laser = 35
+	energy = 35
 	bomb = 30
 	bio = 40
 	fire = 80

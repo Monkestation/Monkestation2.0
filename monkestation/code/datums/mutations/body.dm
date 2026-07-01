@@ -263,7 +263,7 @@
 
 /datum/mutation/thickskin
 	name = "Thick skin"
-	desc = "The user's skin acquires a leathery texture, and becomes more resilient to harm."
+	desc = "The user's skin acquires a leathery texture, and becomes more resilient to embeds."
 	quality = POSITIVE
 	text_gain_indication = span_notice("Your skin feels dry and heavy.")
 	text_lose_indication = span_notice("Your skin feels soft again...")
@@ -275,31 +275,13 @@
 	. = ..()
 	if(!.)
 		return
-
-	var/datum/armor/owner_armor = owner.get_armor()
-	var/list/armorlist = owner_armor.get_rating_list()
-	armorlist[MELEE] += 10
-	armorlist[BULLET] += 10
-	owner.set_armor(owner_armor.generate_new_with_specific(armorlist))
+	ADD_TRAIT(owner, TRAIT_EMBED_RESISTANCE, GENETIC_MUTATION)
 
 /datum/mutation/thickskin/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
-
-	var/datum/armor/owner_armor = owner.get_armor()
-	var/list/armorlist = owner_armor.get_rating_list()
-	armorlist[MELEE] -= 10
-	armorlist[BULLET] -= 10
-	owner.set_armor(owner_armor.generate_new_with_specific(armorlist))
-
-	if(GET_MUTATION_POWER(src) > 1)
-		REMOVE_TRAIT(owner, TRAIT_EMBED_RESISTANCE, GENETIC_MUTATION)
-
-/datum/mutation/thickskin/setup()
-	. = ..()
-	if(owner && GET_MUTATION_POWER(src) > 1)
-		ADD_TRAIT(owner, TRAIT_EMBED_RESISTANCE, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_EMBED_RESISTANCE, GENETIC_MUTATION)
 
 /datum/mutation/hypermarrow
 	name = "Hyperactive Bone Marrow"
@@ -404,7 +386,7 @@
 
 /datum/mutation/densebones
 	name = "Bone Densification"
-	desc = "A mutation that gives the subject a rare form of increased bone density, making their entire body slightly more resilient to low kinetic blows."
+	desc = "A mutation that gives the subject a rare form of increased bone density, making their entire body harder to wound."
 	quality = POSITIVE
 	text_gain_indication = span_notice("You feel your bones get denser.")
 	text_lose_indication = span_notice("You feel your bones get lighter.")
@@ -416,31 +398,13 @@
 	. = ..()
 	if(!.)
 		return
-
-	var/datum/armor/owner_armor = owner.get_armor()
-	var/list/armorlist = owner_armor.get_rating_list()
-	armorlist[MELEE] += 5
-	armorlist[WOUND] += 10
-	owner.set_armor(owner_armor.generate_new_with_specific(armorlist))
+	ADD_TRAIT(owner, TRAIT_HARDLY_WOUNDED, GENETIC_MUTATION)
 
 /datum/mutation/densebones/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
-
-	var/datum/armor/owner_armor = owner.get_armor()
-	var/list/armorlist = owner_armor.get_rating_list()
-	armorlist[MELEE] -= 5
-	armorlist[WOUND] -= 10
-	owner.set_armor(owner_armor.generate_new_with_specific(armorlist))
-
-	if(GET_MUTATION_POWER(src) > 1)
-		REMOVE_TRAIT(owner, TRAIT_HARDLY_WOUNDED, GENETIC_MUTATION)
-
-/datum/mutation/densebones/setup()
-	. = ..()
-	if(owner && GET_MUTATION_POWER(src) > 1)
-		ADD_TRAIT(owner, TRAIT_HARDLY_WOUNDED, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_HARDLY_WOUNDED, GENETIC_MUTATION)
 
 /datum/mutation/cerebral
 	name = "Cerebral Neuroplasticity"

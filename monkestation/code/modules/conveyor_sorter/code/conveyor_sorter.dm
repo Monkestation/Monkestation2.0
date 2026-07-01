@@ -14,6 +14,18 @@
 	/// This is used for the improved sorter, so that it can use the improved sorter type instead of the normal sorter type.
 	var/conveyor_type = /obj/effect/decal/conveyor_sorter
 
+/obj/item/conveyor_sorter/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/conveyor_sorter/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(held_item == src)
+		context[SCREENTIP_CONTEXT_LMB] = "Place down sorter"
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Reset Sorting List"
+		return CONTEXTUAL_SCREENTIP_SET
+
 /obj/item/conveyor_sorter/Destroy()
 	for(var/deleting_sorters in spawned_sorters)
 		qdel(deleting_sorters)
@@ -21,10 +33,10 @@
 
 /obj/item/conveyor_sorter/examine(mob/user)
 	. = ..()
-	. += span_notice("Use it to place down a conveyor sorter, up to a limit of <b>[max_sorters]</b>.")
-	. += span_notice("This sorter can sort up to <b>[max_items]</b> Items.")
-	. += span_notice("Use Alt-Click to reset the sorting list.")
-	. += span_notice("Attack things to attempt to add to the sorting list.")
+	. += span_notice("[EXAMINE_HINT("Use it inhand")]to place down a conveyor sorter, up to a limit of [EXAMINE_HINT(max_sorters)]")
+	. += span_notice("This sorter can sort up to [EXAMINE_HINT(max_items)] items.")
+	. += span_notice("Use [EXAMINE_HINT("Alt-Click")] to reset the sorting list.")
+	. += span_notice("[EXAMINE_HINT("Click")] on things to attempt to add to the sorting list.")
 
 /obj/item/conveyor_sorter/attack_self(mob/user, modifiers)
 	if(length(spawned_sorters) >= max_sorters)
@@ -35,23 +47,24 @@
 	new_cs.sorting_list = current_sort
 	spawned_sorters += new_cs
 
-/obj/item/conveyor_sorter/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if(target == src)
-		return ..()
-	if(!proximity_flag)
-		return ..()
-	if(!ismovable(target))
-		return ..()
-	if(istype(target, /obj/effect/decal/conveyor_sorter))
+/obj/item/conveyor_sorter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(interacting_with == src)
 		return
-	if(is_type_in_list(target, current_sort))
-		to_chat(user, span_warning("[target] is already in [src]'s sorting list!"))
+	if(!user.can_perform_action(interacting_with, ALLOW_RESTING))
+		return
+	if(!ismovable(interacting_with))
+		return
+	if(istype(interacting_with, /obj/effect/decal/conveyor_sorter))
+		return
+	if(is_type_in_list(interacting_with, current_sort))
+		balloon_alert(user, "[interacting_with] is already in the sorting list")
 		return
 	if(length(current_sort) >= max_items)
-		to_chat(user, span_warning("[src] already has [max_items] things within the sorting list!"))
+		balloon_alert(user, "the sorter's sorting list is at maximum capacity")
 		return
-	current_sort += target.type
-	to_chat(user, span_notice("[target] has been added to [src]'s sorting list."))
+	current_sort += interacting_with.type
+	balloon_alert(user, "[interacting_with] has been added to the sorting list")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/conveyor_sorter/click_alt(mob/user)
 	visible_message("[src] pings, resetting its sorting list!")
@@ -85,6 +98,20 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	register_context()
+
+/obj/effect/decal/conveyor_sorter/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Change sorting direction"
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Reset sorting List"
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove sorter"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/conveyor_sorter))
+		context[SCREENTIP_CONTEXT_LMB] = "Update sorting list"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/effect/decal/conveyor_sorter/Destroy()
 	if(parent_item)
@@ -94,10 +121,10 @@
 
 /obj/effect/decal/conveyor_sorter/examine(mob/user)
 	. = ..()
-	. += span_notice("Attack with conveyor sorter lister to set the sorting list.")
-	. += span_notice("Slap with empty hands to change the sorting direction.")
-	. += span_notice("Alt-Click to reset the sorting list.")
-	. += span_notice("Ctrl-Click to remove.")
+	. += span_notice("[EXAMINE_HINT("Click")] with a conveyor sorter to set the sorting list.")
+	. += span_notice("[EXAMINE_HINT("Click")] with a empty hand to change the sorting direction.")
+	. += span_notice("[EXAMINE_HINT("Alt-Click")] with a empty hand to reset the sorting list.")
+	. += span_notice("[EXAMINE_HINT("Ctrl-Click")] with a empty hand to remove.")
 
 /obj/effect/decal/conveyor_sorter/attack_hand(mob/living/user, list/modifiers)
 	var/user_choice = tgui_input_list(user, "Choose which direction to sort to!", "Direction choice", directions)
@@ -109,29 +136,26 @@
 		return ..()
 
 	setDir(dir)
-
-	visible_message("[src] pings, updating its sorting direction!")
+	balloon_alert(user, "direction updated")
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 
 /obj/effect/decal/conveyor_sorter/attackby(obj/item/used_item, mob/user, params)
 	if(istype(used_item, /obj/item/conveyor_sorter))
 		var/obj/item/conveyor_sorter/cs_item = used_item
 		sorting_list = cs_item.current_sort
-		visible_message("[src] pings, updating its sorting list!")
+		balloon_alert(user, "sorting list updated")
 		playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 		return
 	else
 		return ..()
 
 /obj/effect/decal/conveyor_sorter/click_alt(mob/user)
-	visible_message("[src] pings, resetting its sorting list!")
+	balloon_alert(user, "sorting list reset")
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	sorting_list = list()
 	return CLICK_ACTION_SUCCESS
 
 /obj/effect/decal/conveyor_sorter/click_ctrl(mob/user)
-	visible_message("[src] begins to ping violently!")
-	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	qdel(src)
 
 /obj/effect/decal/conveyor_sorter/proc/on_entered(datum/source, atom/movable/entering_atom)

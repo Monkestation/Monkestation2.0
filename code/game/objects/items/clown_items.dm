@@ -230,10 +230,9 @@
 /obj/item/bikehorn/golden/proc/flip_mobs(mob/living/carbon/M, mob/user)
 	if(!COOLDOWN_FINISHED(src, golden_horn_cooldown))
 		return
-	var/turf/T = get_turf(src)
-	for(M in ohearers(7, T))
-		if(M.can_hear())
-			M.emote("flip")
+	for(var/mob/hearer in ohearers(7, get_turf(src)))
+		if(!HAS_TRAIT(hearer, TRAIT_DEAF))
+			INVOKE_ASYNC(hearer, TYPE_PROC_REF(/mob, emote), "flip")
 	COOLDOWN_START(src, golden_horn_cooldown, 1 SECONDS)
 
 //canned laughter

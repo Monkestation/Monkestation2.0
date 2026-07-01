@@ -30,12 +30,13 @@
 	antagpanel_category = "Drifting Contractor"
 	preview_outfit = /datum/outfit/contractor_preview
 	job_rank = ROLE_DRIFTING_CONTRACTOR
-	hud_icon = 'monkestation/icons/mob/huds/antag_hud.dmi'
+	hud_icon = 'icons/mob/huds/antag_hud.dmi'
 	antag_hud_name = "contractor"
 	antag_moodlet = /datum/mood_event/focused
 	show_to_ghosts = TRUE
 	give_uplink = FALSE
 	suicide_cry = "FOR THE CONTRACTS!!"
+	give_secondary_objectives = TRUE
 	/// The outfit the contractor is equipped with
 	var/contractor_outfit = /datum/outfit/contractor
 

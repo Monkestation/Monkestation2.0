@@ -11,7 +11,7 @@
 	update_icons()
 	if(clockwork)
 		set_light_color(LIGHT_COLOR_CLOCKWORK)
-		scrambledcodes = TRUE //it would be kind of lame if you could just loackdown all the clock borgs
+		scrambledcodes = TRUE //it would be kind of lame if you could just lockdown all the clock borgs
 		if(!internal_clock_slab)
 			internal_clock_slab = new /obj/item/clockwork/clockwork_slab(src)
 	else if(!clockwork)

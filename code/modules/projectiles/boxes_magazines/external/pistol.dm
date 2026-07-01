@@ -62,7 +62,7 @@
 /obj/item/ammo_box/magazine/whispering_jester_45_magazine
 	name = "Whispering-Jester pistol magazine (.45)"
 	desc = "A .45 pistol magazine for the Whispering-Jester handgun. Normaly chambered with caseless 45."
-	icon = 'monkestation/icons/obj/weapons/guns/whispering_jester_45/item.dmi'
+	icon = 'icons/obj/weapons/guns/whispering_jester_45/item.dmi'
 	icon_state = "mag_jester"
 	multiple_sprites = AMMO_BOX_PER_BULLET
 	ammo_type = /obj/item/ammo_casing/c45_caseless
@@ -83,7 +83,7 @@
 	base_icon_state = "9x19p"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = CALIBER_9MM
-	max_ammo = 8
+	max_ammo = 12
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 	multiple_sprite_use_base = TRUE
 

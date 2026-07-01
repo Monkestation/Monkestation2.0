@@ -23,6 +23,10 @@
 	else
 		id = "handmade[REF(src)]"
 
+/obj/machinery/computer/mechpad/examine(mob/user)
+	. = ..()
+	. += span_notice("The launch controls can be [EXAMINE_HINT("activated")] while in an exosuit.")
+
 /obj/machinery/computer/mechpad/proc/connect_launchpad(obj/machinery/mechpad/pad)
 	if(connected_mechpad)
 		return

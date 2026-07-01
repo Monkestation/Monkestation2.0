@@ -12,7 +12,7 @@
 	required_drink_type = /datum/reagent/consumable/sunset_sarsaparilla
 	name = "glass of Sunset Sarsparilla"
 	desc = "Locally sourced from your nearest nuclear wasteland."
-	icon = 'monkestation/icons/obj/drinks/soda.dmi'
+	icon = 'icons/obj/drinks/soda.dmi'
 	icon_state = "sunset_sarsparillaglass"
 
 /datum/reagent/consumable/sunset_sarsaparilla/on_mob_life(mob/living/carbon/drinker, seconds_per_tick)

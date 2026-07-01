@@ -31,12 +31,25 @@
 		mob_species = species
 	. = ..()
 	var/area/init_area = get_area(src)
+
 	if(creator)
 		you_are_text = "You are a golem."
 		flavour_text = "You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools."
 		important_text = "Serve [creator], and assist [creator.p_them()] in completing [creator.p_their()] goals at any cost."
 		owner_ref = WEAKREF(creator)
 		spawner_job_path = /datum/job/servant_golem
+
+	if(isliving(creator))
+		var/mob/living/master = creator
+		if(master.is_antag())
+			notify_ghosts(
+				"\A golem shell has been completed in \the [init_area.name], by an antagonist master.",
+				source = src,
+				action = NOTIFY_PLAY,
+				notify_flags = NOTIFY_CATEGORY_NOFLASH,
+				ignore_key = POLL_IGNORE_GOLEM,
+			)
+			return
 
 	notify_ghosts(
 		"\A golem shell has been completed in \the [init_area.name].",

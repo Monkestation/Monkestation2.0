@@ -95,7 +95,6 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	minutes_per_telecrystal = 6
 
 	possible_items = list(
-		/datum/objective_item/steal/traitor/cargo_budget,
 		/datum/objective_item/steal/traitor/clown_shoes,
 		/datum/objective_item/steal/traitor/lawyers_badge,
 		/datum/objective_item/steal/traitor/chef_moustache,
@@ -109,8 +108,6 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	telecrystal_reward = 2
 
 	possible_items = list(
-		/datum/objective_item/steal/traitor/chief_engineer_belt,
-		/datum/objective_item/steal/traitor/research_director_holotool
 	)
 
 /datum/traitor_objective/steal_item/very_risky
@@ -129,7 +126,6 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 
 	possible_items = list(
 		/datum/objective_item/steal/traitor/captain_modsuit,
-		/datum/objective_item/steal/traitor/captain_spare,
 	)
 
 //monkestation removal start, this was added with biddle traitor and then was just never removed when steal got reworked

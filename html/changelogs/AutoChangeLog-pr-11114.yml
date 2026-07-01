@@ -1,7 +1,0 @@
-author: "SirNightKnight"
-delete-after: True
-changes:
-  - balance: "increased the weight of changelings to 12 from 10."
-  - balance: "changelings don't get a weight penalty for rolling consecutively."
-  - balance: "increased the weight of heretics from 2 to 8."
-  - balance: "heretics, bloodsuckers, and changelings all require enemies to roll."

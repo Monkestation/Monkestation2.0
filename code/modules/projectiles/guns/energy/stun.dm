@@ -6,12 +6,6 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
 	ammo_x_offset = 3
 
-//MONKESTATION EDIT START
-/obj/item/gun/energy/taser/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	playsound(src, 'monkestation/sound/effects/taser_charge.ogg', 45, TRUE, 1)
-	if(do_after(user, 1 SECONDS, timed_action_flags = IGNORE_USER_LOC_CHANGE))
-		return ..()
-
 /obj/item/gun/energy/taser/old
 	name = "old taser gun"
 	desc = "A low-capacity, energy-based stun gun used by security teams to subdue targets at range. There is a piece of tape loosely holding the cell in place..."
@@ -34,8 +28,6 @@
 	else
 		return ..()
 
-//MONKESTATION EDIT STOP
-
 /obj/item/gun/energy/e_gun/advtaser
 	name = "hybrid taser"
 	desc = "A dual-mode taser designed to fire both short-range high-power electrodes and long-range disabler beams."
@@ -43,18 +35,8 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 2
 
-//MONKESTATION EDIT START
 /obj/item/gun/energy/e_gun/advtaser/evil
 	pin = /obj/item/firing_pin/implant/pindicate
-
-/obj/item/gun/energy/e_gun/advtaser/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	if(select == 1)
-		playsound(src, 'monkestation/sound/effects/taser_charge.ogg', 45, TRUE, 1)
-		if(do_after(user, 1 SECONDS, timed_action_flags = IGNORE_USER_LOC_CHANGE))
-			return ..()
-	else
-		return ..()
-//MONKESTATION EDIT STOP
 
 /obj/item/gun/energy/e_gun/advtaser/cyborg
 	name = "cyborg taser"

@@ -490,7 +490,7 @@
 	max_ammo = 16
 
 /obj/item/ammo_box/advanced/s12gauge/bean
-	name = "beanbag Slug ammo box"
+	name = "beanbag slug ammo box"
 	desc = "A box of beanbag slug shells. These are large, singular beanbags that pack a less-lethal punch."
 	icon_state = "bean"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
@@ -567,7 +567,7 @@
 /obj/item/storage/fancy/a40mm_box
 	name = "40mm grenade box"
 	desc = "A metal box designed to hold 40mm grenades."
-	icon =  'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon =  'icons/obj/guns/40mm_grenade.dmi'
 	icon_state = "40mm_box"
 	base_icon_state = "40mm_box"
 	spawn_type = /obj/item/ammo_casing/a40mm

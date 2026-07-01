@@ -103,6 +103,13 @@
 			return I
 	return FALSE
 
+// List version of above proc
+// Returns ret_item, which is either the successfully located item or null
+/mob/proc/is_holding_item_of_types(list/typepaths)
+	for(var/typepath in typepaths)
+		var/ret_item = is_holding_item_of_type(typepath)
+		return ret_item
+
 //Checks if we're holding a tool that has given quality
 //Returns the tool that has the best version of this quality
 /mob/proc/is_holding_tool_quality(quality)
@@ -209,11 +216,12 @@
 	if(QDELETED(I))
 		return FALSE
 
-	// try to put it in a borg apparatus
-	if(istype(src, /mob/living/silicon/robot))
-		for(var/obj/item/borg/apparatus/apparatus in src)
-			if(apparatus.put_in_apparatus(I, src))
-				return TRUE
+	// Cyborg's apparatus is their hand.
+	if(iscyborg(src))
+		var/mob/living/silicon/robot/cyborg_owner = src
+		var/obj/item/borg/apparatus/cyborg_apparatus = cyborg_owner.get_active_held_item()
+		if(istype(cyborg_apparatus) && cyborg_apparatus.put_in_apparatus(I, cyborg_owner))
+			return TRUE
 
 	// If the item is a stack and we're already holding a stack then merge
 	if (isstack(I))
@@ -366,7 +374,7 @@
 		SET_PLANE_EXPLICIT(I, initial(I.plane), newloc)
 		I.appearance_flags &= ~NO_CLIENT_COLOR
 		if(!no_move && !(I.item_flags & DROPDEL)) //item may be moved/qdel'd immedietely, don't bother moving it
-			if (isnull(newloc))
+			if (isnull(newloc) || QDELING(I))
 				I.moveToNullspace()
 			else
 				I.forceMove(newloc)

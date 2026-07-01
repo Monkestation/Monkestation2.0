@@ -23,6 +23,7 @@
 	paycheck = PAYCHECK_NANOTRASEN
 	paycheck_department = ACCOUNT_CC
 
+	mind_traits = list(TRAIT_CAN_HYPNO)
 	liver_traits = list(TRAIT_PRETENDER_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_BLUESHIELD
@@ -91,3 +92,4 @@
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/blueshield
 	uniform = /obj/item/clothing/under/plasmaman/blueshield
+	gloves = /obj/item/clothing/gloves/tackler/combat

@@ -54,21 +54,18 @@
 	return ..()
 
 /datum/component/multi_hit/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(pre_hit_callback))
+	RegisterSignal(parent, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY, PROC_REF(on_ranged_interaction_secondary))
 
 /datum/component/multi_hit/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, COMSIG_ITEM_PRE_ATTACK)
+	UnregisterSignal(parent, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY)
 
-/datum/component/multi_hit/proc/pre_hit_callback(datum/source, obj/item/thing, mob/user, params)
+/datum/component/multi_hit/proc/on_ranged_interaction_secondary(datum/source, mob/user, atom/target, list/modifiers)
 	SIGNAL_HANDLER
 
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You can't bring youself to swing this!"))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-	if(!(user.istate & ISTATE_SECONDARY))
-		return
 
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
@@ -84,6 +81,10 @@
 
 	if(true_starting.density && true_center.density)
 		return
+
+	if(!user.has_movespeed_modifier(/datum/movespeed_modifier/multi_hit))
+		user.add_movespeed_modifier(/datum/movespeed_modifier/multi_hit)
+		addtimer(CALLBACK(user, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/multi_hit), 0.3 SECONDS, TIMER_UNIQUE)
 
 	var/climbing_dir
 	if(attacking_direction == WEST)
@@ -113,12 +114,12 @@
 	for(var/turf/listed_turf as anything in targeted_turfs)
 		if(breaks)
 			break
-		for(var/mob/living/target in listed_turf.contents)
+		for(var/mob/living/living_target in listed_turf.contents)
 			if(pre_hit_callback)
-				pre_hit_callback.Invoke(parent, target, user, targeted_turfs)
-			item_parent.attack(target, user)
+				pre_hit_callback.Invoke(parent, living_target, user, targeted_turfs)
+			item_parent.attack(living_target, user)
 			if(after_hit_callback)
-				after_hit_callback.Invoke(parent, target, user, targeted_turfs)
+				after_hit_callback.Invoke(parent, living_target, user, targeted_turfs)
 			if(!continues_travel)
 				breaks = TRUE
 				break
@@ -145,7 +146,6 @@
 	user.changeNext_move(item_parent.attack_speed * 1.2)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-
 /datum/component/multi_hit/proc/get_attacking_direction(starting_dir, mob/user)
 	switch(user.dir)
 		if(NORTH)
@@ -166,6 +166,8 @@
 			else
 				return NORTH
 
+/datum/movespeed_modifier/multi_hit
+	multiplicative_slowdown = 3
 
 /obj/effect/hit_effect
 	name = "Whoops!"

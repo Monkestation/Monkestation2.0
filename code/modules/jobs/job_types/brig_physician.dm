@@ -27,7 +27,7 @@
 		/datum/job_department/security,
 		)
 
-	family_heirlooms = list(/obj/item/storage/medkit/ancient/heirloom, /obj/item/scalpel, /obj/item/hemostat, /obj/item/circular_saw, /obj/item/retractor, /obj/item/cautery)
+	family_heirlooms = list(/obj/item/storage/medkit/ancient/heirloom, /obj/item/scalpel, /obj/item/hemostat, /obj/item/circular_saw, /obj/item/retractor, /obj/item/cautery, /obj/item/clothing/neck/stethoscope, /obj/item/flashlight/pen, /obj/item/clothing/mask/surgical)
 
 	mail_goodies = list(
 		/obj/item/healthanalyzer/advanced = 15,

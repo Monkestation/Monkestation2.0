@@ -1,6 +1,7 @@
 /datum/status_effect/eldritch
 	id = "heretic_mark"
 	duration = 15 SECONDS
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	on_remove_on_mob_delete = TRUE
@@ -48,23 +49,23 @@
 /**
  * Called when the mark is activated by the heretic.
  */
-/datum/status_effect/eldritch/proc/on_effect(mob/living/activator) // monkestation edit: add "activator" arg to /datum/status_effect/eldritch/proc/on_effect()
+/datum/status_effect/eldritch/proc/on_effect()
 	SHOULD_CALL_PARENT(TRUE)
 
 	playsound(owner, 'sound/magic/repulse.ogg', 75, TRUE)
 	qdel(src) //what happens when this is procced.
 
-//Each mark has diffrent effects when it is destroyed that combine with the mansus grasp effect.
+//Each mark has different effects when it is destroyed that combine with the mansus grasp effect.
 
 // MARK OF FLESH
 
 /datum/status_effect/eldritch/flesh
 	effect_icon_state = "emark1"
 
-/datum/status_effect/eldritch/flesh/on_effect(mob/living/activator) // monkestation edit: add "activator" arg to /datum/status_effect/eldritch/proc/on_effect()
+/datum/status_effect/eldritch/flesh/on_effect()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
-		var/obj/item/bodypart/bodypart = pick(human_owner.bodyparts)
+		var/obj/item/bodypart/bodypart = pick(human_owner.get_bodyparts())
 		human_owner.cause_wound_of_type_and_severity(WOUND_SLASH, bodypart, WOUND_SEVERITY_SEVERE)
 
 	return ..()
@@ -80,10 +81,10 @@
 	. = ..()
 	src.repetitions = max(1, repetition)
 
-/datum/status_effect/eldritch/ash/on_effect(mob/living/activator) // monkestation edit: add "activator" arg to /datum/status_effect/eldritch/proc/on_effect()
+/datum/status_effect/eldritch/ash/on_effect()
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.stamina.adjust(-3 * repetitions) // first one = 15 stam
+		carbon_owner.stamina?.adjust(-6 * repetitions) // first one = 30 stam
 		carbon_owner.adjustFireLoss(3 * repetitions) // first one = 15 burn
 		for(var/mob/living/carbon/victim in shuffle(range(1, carbon_owner)))
 			if(IS_HERETIC(victim) || victim == carbon_owner)
@@ -98,43 +99,19 @@
 /datum/status_effect/eldritch/rust
 	effect_icon_state = "emark3"
 
-/* monkestation removal: reimplemented in [monkestation/code/modules/antagonists/heretic/status_effects/mark_effects.dm]
 /datum/status_effect/eldritch/rust/on_effect()
-	if(iscarbon(owner))
-		var/mob/living/carbon/carbon_owner = owner
-		var/static/list/organs_to_damage = list(
-			ORGAN_SLOT_BRAIN,
-			ORGAN_SLOT_EARS,
-			ORGAN_SLOT_EYES,
-			ORGAN_SLOT_LIVER,
-			ORGAN_SLOT_LUNGS,
-			ORGAN_SLOT_STOMACH,
-			ORGAN_SLOT_HEART,
-		)
-
-		// Roughly 25% of their organs will take a bit of damage
-		for(var/organ_slot in organs_to_damage)
-			if(prob(25)) //monkestation edit begin : Changes rust to not be busted as shit
-				carbon_owner.adjustOrganLoss(organ_slot, 20)
-
-		// And roughly 50% of their items will take a smack, too
-		for(var/obj/item/thing in carbon_owner.get_all_gear())
-			if(!QDELETED(thing) && prob(50))
-				if(!istype(thing, /obj/item/card/id))
-					thing.take_damage(50) //monkestation edit end
-
+	owner.adjust_disgust(100)
+	owner.adjust_confusion(10 SECONDS)
 	return ..()
-monkestation end */
 
 // MARK OF VOID
 
 /datum/status_effect/eldritch/void
 	effect_icon_state = "emark4"
 
-/datum/status_effect/eldritch/void/on_effect(mob/living/activator) // monkestation edit: add "activator" arg to /datum/status_effect/eldritch/proc/on_effect()
-	owner.apply_status_effect(/datum/status_effect/void_chill, 2)
+/datum/status_effect/eldritch/void/on_effect()
+	owner.apply_status_effect(/datum/status_effect/void_chill, 3)
 	owner.adjust_silence(10 SECONDS)
-	owner.adjust_emote_mute(10 SECONDS)
 	return ..()
 
 // MARK OF BLADES
@@ -196,7 +173,7 @@ monkestation end */
 
 	return COMPONENT_CANCEL_THROW
 
-/// Signal proc for [COMSIG_MOVABLE_TELEPORTED] that blocks any teleports from our locked area.
+/// Signal proc for [COMSIG_MOVABLE_TELEPORTING] that blocks any teleports from our locked area.
 /datum/status_effect/eldritch/blade/proc/on_teleport(mob/living/source, atom/destination, channel)
 	SIGNAL_HANDLER
 
@@ -206,7 +183,7 @@ monkestation end */
 	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
 
 	source.Stun(1 SECONDS)
-	return COMPONENT_BLOCK_TELEPORT
+	return TRUE
 
 /// Signal proc for [COMSIG_MOVABLE_MOVED] that blocks any movement out of our locked area
 /datum/status_effect/eldritch/blade/proc/on_move(mob/living/source, turf/old_loc, movement_dir, forced)
@@ -242,10 +219,9 @@ monkestation end */
 	QDEL_NULL(cosmic_diamond)
 	return ..()
 
-/datum/status_effect/eldritch/cosmic/on_effect(mob/living/activator) // monkestation edit: add "activator" arg to /datum/status_effect/eldritch/proc/on_effect()
-	owner.adjust_confusion(7 SECONDS) //monkestation edit
+/datum/status_effect/eldritch/cosmic/on_effect()
 	new teleport_effect(get_turf(owner))
-	new /obj/effect/forcefield/cosmic_field(get_turf(owner))
+	create_cosmic_field(get_turf(owner), owner)
 	do_teleport(
 		owner,
 		get_turf(cosmic_diamond),
@@ -256,21 +232,21 @@ monkestation end */
 	owner.Paralyze(2 SECONDS)
 	return ..()
 
-// MARK OF KNOCK
+// MARK OF LOCK
 
-/datum/status_effect/eldritch/knock
+/datum/status_effect/eldritch/lock
 	effect_icon_state = "emark7"
 	duration = 10 SECONDS
 
-/datum/status_effect/eldritch/knock/on_apply()
+/datum/status_effect/eldritch/lock/on_apply()
 	. = ..()
-	RegisterSignal(owner, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_tried_access))
+	RegisterSignal(owner, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
 
-/datum/status_effect/eldritch/knock/on_remove()
+/datum/status_effect/eldritch/lock/on_remove()
 	UnregisterSignal(owner, COMSIG_MOB_TRIED_ACCESS)
 	return ..()
 
-/datum/status_effect/eldritch/knock/proc/on_tried_access(atom/movable/source_opening)
+/datum/status_effect/eldritch/lock/proc/attempt_access(datum/source, obj/door_attempt)
 	SIGNAL_HANDLER
 	return ACCESS_DISALLOWED
 
@@ -283,10 +259,12 @@ monkestation end */
 
 /datum/status_effect/eldritch/moon/on_apply()
 	. = ..()
+	if(owner.can_block_magic(MAGIC_RESISTANCE_MOON))
+		return FALSE
 	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
 	owner.emote(pick("giggle", "laugh"))
 	owner.balloon_alert(owner, "you feel unable to hurt a soul!")
-	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
+	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
 	return TRUE
 
 /// Checks for damage so the heretic can't just attack them with another weapon whilst they are unable to fight back
@@ -306,7 +284,7 @@ monkestation end */
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
 	owner.balloon_alert(owner, "you feel able to once again strike!")
 
-/datum/status_effect/eldritch/moon/on_effect(mob/living/activator) // monkestation edit: add "activator" arg to /datum/status_effect/eldritch/proc/
+/datum/status_effect/eldritch/moon/on_effect()
 	owner.adjust_confusion(30 SECONDS)
 	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 25, 160)
 	owner.emote(pick("giggle", "laugh"))
@@ -315,7 +293,7 @@ monkestation end */
 
 /datum/status_effect/eldritch/moon/on_remove()
 	. = ..()
-	UnregisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE)
+	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
 
-	// Incase the trait was not removed earlier
+	// In case the trait was not removed earlier
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))

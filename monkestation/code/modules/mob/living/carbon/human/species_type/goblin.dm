@@ -91,14 +91,14 @@
 	return to_add
 
 /obj/item/bodypart/head/goblin
-	icon_greyscale = 'monkestation/icons/mob/species/goblin/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/goblin/bodyparts.dmi'
 	limb_id = SPECIES_GOBLIN
 	is_dimorphic = FALSE
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/chest/goblin
-	icon_greyscale = 'monkestation/icons/mob/species/goblin/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/goblin/bodyparts.dmi'
 	limb_id = SPECIES_GOBLIN
 	is_dimorphic = TRUE
 	speed_modifier = -0.25
@@ -106,25 +106,25 @@
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/arm/left/goblin
-	icon_greyscale = 'monkestation/icons/mob/species/goblin/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/goblin/bodyparts.dmi'
 	limb_id = SPECIES_GOBLIN
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/arm/right/goblin
-	icon_greyscale = 'monkestation/icons/mob/species/goblin/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/goblin/bodyparts.dmi'
 	limb_id = SPECIES_GOBLIN
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/leg/left/goblin
-	icon_greyscale = 'monkestation/icons/mob/species/goblin/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/goblin/bodyparts.dmi'
 	limb_id = SPECIES_GOBLIN
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/leg/right/goblin
-	icon_greyscale = 'monkestation/icons/mob/species/goblin/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/goblin/bodyparts.dmi'
 	limb_id = SPECIES_GOBLIN
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
@@ -133,7 +133,7 @@
 	name = "goblin tongue"
 	disliked_foodtypes = VEGETABLES
 	liked_foodtypes = GORE | MEAT | GROSS
-	var/static/list/speech_replacements = list("ask" = "acks", "asks" = "ackses", new /regex(@"\bx", "g") = "z", new /regex(@"\bX", "g") = "Z", new /regex(@"\bx", "g") = "z", new /regex(@"(?<=[a-z])x", "g") = "cks",  new /regex(@"(?<=[A-Z])x", "g") = "cks",   new /regex(@"(?<=[A-Z])X", "g") = "CKS", ) //Reverses ask to a(c)ks, and changes beginning x's to z's, and x's inside words to "cks"
+	var/static/list/speech_replacements = list( new /regex(@"\bx(?=\w+)", "g") = "z", new /regex(@"\bX(?=\w+)", "g") = "Z", new /regex(@"\bx\b", "g") = "ecks", new /regex(@"\bX\b", "g") = "ECKS", new /regex(@"\Bx", "g") = "cks", new /regex(@"\BX", "g") = "CKS", new /regex(@"\bask", "g") = "acks", , new /regex(@"\bAsk", "g") = "Acks", new /regex(@"\bASK", "g") = "ACKS" ) //Reverses ask to a(c)ks, and changes beginning x's to z's, and x's inside words to "cks"
 
 /obj/item/organ/internal/tongue/goblin/New(class, timer, datum/mutation/copymut)
 	. = ..()
@@ -141,7 +141,7 @@
 
 /obj/item/organ/internal/liver/goblin //Equivilant to an organic tier 2 cybernetic liver
 	name = "green liver"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "goblin_liver"
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	toxTolerance = 5
@@ -150,6 +150,6 @@
 
 /obj/item/organ/internal/spleen/goblin
 	name = "squeedily spooch"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "goblin_spleen"
 	desc = "Eeeeeww...."

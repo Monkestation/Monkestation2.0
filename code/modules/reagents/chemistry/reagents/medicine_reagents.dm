@@ -963,11 +963,11 @@
 		return
 	var/list/tips
 	if(SPT_PROB(50, seconds_per_tick))
-		tips = world.file2list("strings/tips.txt")
+		tips = file2list("strings/tips.txt")
 	if(SPT_PROB(50, seconds_per_tick))
-		tips = world.file2list("strings/sillytips.txt")
+		tips = file2list("strings/sillytips.txt")
 	else
-		tips = world.file2list("strings/chemistrytips.txt")
+		tips = file2list("strings/chemistrytips.txt")
 	var/message = pick(tips)
 	send_tip_of_the_round(affected_mob, message)
 	return ..()

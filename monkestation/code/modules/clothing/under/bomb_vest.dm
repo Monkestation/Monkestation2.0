@@ -2,8 +2,8 @@
 	name = "bomb vest"
 	desc = "A bomb that can be strapped to peoples chest. Cant be taken off by the user..."
 
-	icon = 'monkestation/icons/obj/clothing/bomb_vest.dmi'
-	worn_icon = 'monkestation/icons/obj/clothing/bomb_vest.dmi'
+	icon = 'icons/obj/clothing/bomb_vest.dmi'
+	worn_icon = 'icons/obj/clothing/bomb_vest.dmi'
 	icon_state = "obj_off"
 	worn_icon_state = "worn_off"
 

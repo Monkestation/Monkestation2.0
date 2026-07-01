@@ -69,7 +69,7 @@
 	cost = PAYCHECK_CREW
 
 /datum/armament_entry/company_import/donk/merch/fake_centcom_turtleneck_skirt
-	item_type = /obj/item/clothing/under/rank/centcom/officer_skirt/replica
+	item_type = /obj/item/clothing/under/rank/centcom/officer/skirt/replica
 	cost = PAYCHECK_CREW
 
 /datum/armament_entry/company_import/donk/merch/snack_rig

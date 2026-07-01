@@ -52,9 +52,8 @@ GLOBAL_VAR(ascended_bloodling)
 // It acts a special version of the bloodling which doesnt devolve or evolve but still has biomass
 /mob/living/basic/bloodling/proper/ascending
 	name = "Fleshy Cocoon"
-	icon = 'icons/mob/simple/meteor_heart.dmi'
-	icon_state = "heart"
-	icon_living = "heart"
+	icon_state = "bloodling_ascending"
+	icon_living = "bloodling_ascending"
 	evolution_level = 6
 	initial_powers = list(
 		/datum/action/cooldown/bloodling/absorb,
@@ -135,7 +134,7 @@ GLOBAL_VAR(ascended_bloodling)
 	add_biomass(biomass_max - biomass)
 	ascension_datum = new /datum/bloodling_ascension()
 	ascension_datum.ascend(get_turf(src))
-	src.evolution(5)
+	src.evolution(7)
 	src.gib()
 
 // Ascension stored in a datum, most everything else has large potential issues

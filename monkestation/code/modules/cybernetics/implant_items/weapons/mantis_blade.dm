@@ -127,7 +127,7 @@
 	to_chat(user, span_notice("You stop blocking with your blades."))
 
 /obj/item/mantis_blade/shield/attack(mob/living/target, mob/living/user)
-	if(in_stance)
+	if(in_stance && iscarbon(target))
 		user.disarm(target)
 	else
 		return . = ..()

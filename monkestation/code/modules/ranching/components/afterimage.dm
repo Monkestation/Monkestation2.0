@@ -66,6 +66,7 @@
 	targeted_image.active = TRUE
 	targeted_image.sync_with_parent(parent)
 	targeted_image.loc = null
+	targeted_image.density = FALSE
 
 	if(color_cycle)
 		var/list/rgb_colors = RotateHue(rgb(255, 0, 0), world.time - rest_time * 15)
@@ -85,6 +86,7 @@
 /obj/effect/after_image
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
+	density = FALSE
 	var/finalized_alpha = 100
 	var/active = FALSE
 	var/last_appearance_ref

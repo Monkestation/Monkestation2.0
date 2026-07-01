@@ -105,7 +105,7 @@
  * ```
  */
 /proc/get_useragent(comment)
-	. = "BYOND/[DM_VERSION].[DM_BUILD] ss13-monkestation/[copytext(GLOB.revdata.commit, 0, 8) || "NOCOMMIT"] "
+	. = "BYOND/[DM_VERSION].[DM_BUILD] ss13-monkestation/[copytext(GLOB.revdata.originmastercommit, 0, 8) || "NOCOMMIT"] "
 
 	if (istext(comment))
 		. += " ([comment])"

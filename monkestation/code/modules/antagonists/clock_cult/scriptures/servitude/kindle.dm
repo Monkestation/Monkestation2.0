@@ -12,10 +12,10 @@
 	invocation_text = list("Divinity, show them your light!")
 	after_use_text = "Let the power flow through you!"
 	slab_overlay = "volt"
-	use_time = 15 SECONDS
+	use_time = 0
 	cogs_required = 1
 	category = SPELLTYPE_SERVITUDE
-
+	can_cast_while_moving = TRUE
 
 /datum/scripture/slab/kindle/apply_effects(mob/living/hit_mob)
 	if(!istype(hit_mob))
@@ -140,7 +140,7 @@
 		)
 		to_chat(user, span_userdanger("[target] carefully dodges your [name], remaining completely untouched!"), type = MESSAGE_TYPE_COMBAT)
 		target.balloon_alert(user, "miss!")
-		playsound(target, 'monkestation/sound/effects/miss.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(target, 'sound/effects/miss.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		return TRUE
 	return FALSE
 

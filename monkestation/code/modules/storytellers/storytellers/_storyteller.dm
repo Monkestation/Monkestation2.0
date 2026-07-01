@@ -51,6 +51,8 @@
 	var/always_votable = FALSE
 	///weight this has of being picked for random storyteller/showing up in the vote if not always_votable
 	var/weight = 0
+	/// Determines the "star level" of the storyteller. Effects roundstart report.
+	var/star_colour = STARCOLOUR_ORANGESTAR
 	///the base antag capacity points this storyteller has
 	var/base_antag_points = 0
 

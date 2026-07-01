@@ -57,7 +57,7 @@
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_qdel))
 
 	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(try_embed))
-	//RegisterSignal(parent, COMSIG_ATOM_EXAMINE_TAGS, PROC_REF(examined_tags))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_TAGS, PROC_REF(examined_tags))
 
 /datum/embedding/Destroy(force)
 	if (!parent)

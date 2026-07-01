@@ -3,7 +3,7 @@
 	if (!enabled || !fexists("[global.config.directory]/allowed_ckeys.txt"))
 		return
 	allowed_ckeys.Cut()
-	var/list/lines = world.file2list("[global.config.directory]/allowed_ckeys.txt")
+	var/list/lines = file2list("[global.config.directory]/allowed_ckeys.txt")
 	for(var/line in lines)
 		if(!length(line))
 			continue

@@ -125,6 +125,7 @@
 	tracker = user.overlay_fullscreen("scope", /atom/movable/screen/fullscreen/cursor_catcher/scope, 0)
 	tracker.assign_to_mob(user, range_modifier)
 	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, PROC_REF(stop_zooming))
+	RegisterSignal(user, COMSIG_ATOM_ENTERING, PROC_REF(on_enter_new_loc))
 	START_PROCESSING(SSprojectiles, src)
 	ADD_TRAIT(user, TRAIT_USER_SCOPED, REF(src))
 
@@ -141,7 +142,7 @@
 		return
 
 	STOP_PROCESSING(SSprojectiles, src)
-	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
+	UnregisterSignal(user, list(COMSIG_MOB_SWAP_HANDS, COMSIG_ATOM_ENTERING))
 	if(user.client)
 		animate(user.client, 0.2 SECONDS, pixel_x = 0, pixel_y = 0)
 		user.client.mouse_override_icon = null
@@ -150,6 +151,13 @@
 	user.playsound_local(parent, 'sound/weapons/scope.ogg', 75, TRUE, frequency = -1)
 	tracker = null
 	user.clear_fullscreen("scope")
+
+///Stop scoping if the `newloc` we move to is not a turf
+/datum/component/scope/proc/on_enter_new_loc(datum/source, atom/newloc, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+
+	if(!isturf(newloc))
+		stop_zooming(tracker.owner)
 
 /atom/movable/screen/fullscreen/cursor_catcher/scope
 	icon_state = "scope"

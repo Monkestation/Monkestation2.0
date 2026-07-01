@@ -20,7 +20,6 @@
 	//timer for bounce_cooldown tracking
 	var/bounce_timer = 0
 
-
 /datum/component/throw_bounce/Initialize(bounce_cooldown, bounce_charge_max, bounce_recharge_rate, targeting_range)
 	if(!isitem(parent)) //cant throw non-items
 		return COMPONENT_INCOMPATIBLE
@@ -234,12 +233,18 @@
 
 	moving_to_mob = MOVING_TO_THROWER
 
-//	var/mob/living/thrower_ref = owning_ref.item_thrower?.resolve() might need this still
 	if(owning_ref.item_thrower)
 		addtimer(CALLBACK(SSmove_manager, TYPE_PROC_REF(/datum/controller/subsystem/move_manager, home_onto), src, owning_ref.item_thrower?.resolve(), 1), 1)
 	else
 		owning_ref.finish_bounce(src)
+
+
 #undef MOVING_TO_THROWER
 #undef MOVING_TO_TARGET
 #undef START_PHASING_TIME
 #undef FORCED_MOVE_TO_OWNER_TIME
+
+//TODO: fix this once the projectile refactor is merged
+/*/obj/projectile/throw_bounce_visual
+	projectile_piercing = ALL
+	max_pierces = INFINITY*/

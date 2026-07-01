@@ -45,7 +45,7 @@
 	// NON-MODULAR CHANGES BELOW
 
 	//Default eyes have the side portrait icons on the wrong side, this fixes that.
-	eyes_icon = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
+	eyes_icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	species_race_mutation = /datum/mutation/race
 	///Whether or not this monkey gets the innate effects of running over tables and the gene activated, used to exclude subtypes from getting it.
 	///The reason we block the gene's activation is so you can't "deconvert" from being a monkey subtype.
@@ -73,10 +73,6 @@
 	if(HAS_TRAIT(holder, TRAIT_DWARF))
 		return MONKEY_HEIGHT_DWARF
 	return MONKEY_HEIGHT_MEDIUM
-
-/datum/species/monkey/randomize_features(mob/living/carbon/human/human_mob)
-	randomize_external_organs(human_mob)
-
 /datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
 	// If our hands are not blocked, dont try to bite them
 	if(!HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))

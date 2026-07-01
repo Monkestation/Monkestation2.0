@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/pointed/projectile/furious_steel
 	name = "Furious Steel"
 	desc = "Summon three silver blades which orbit you. \
-		While orbiting you, these blades will protect you from from attacks, but will be consumed on use. \
+		While orbiting you, these blades will protect you from attacks, but will be consumed on use. \
 		Additionally, you can click to fire the blades at a target, dealing damage and causing bleeding."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
@@ -10,7 +10,7 @@
 	sound = 'sound/weapons/guillotine.ogg'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 60 SECONDS
+	cooldown_time = 30 SECONDS
 	invocation = "F'LSH'NG S'LV'R!"
 	invocation_type = INVOCATION_SHOUT
 
@@ -22,6 +22,8 @@
 	projectile_type = /obj/projectile/floating_blade
 	projectile_amount = 3
 
+	///Effect of the projectile that surrounds us while the spell is active
+	var/projectile_effect = /obj/effect/floating_blade
 	/// A ref to the status effect surrounding our heretic on activation.
 	var/datum/status_effect/protective_blades/blade_effect
 
@@ -68,7 +70,7 @@
 		QDEL_NULL(blade_effect)
 
 	var/mob/living/living_user = on_who
-	blade_effect = living_user.apply_status_effect(/datum/status_effect/protective_blades, null, projectile_amount, 25, 0.66 SECONDS)
+	blade_effect = living_user.apply_status_effect(/datum/status_effect/protective_blades, null, projectile_amount, 25, 0.66 SECONDS, projectile_effect)
 	RegisterSignal(blade_effect, COMSIG_QDELETING, PROC_REF(on_status_effect_deleted))
 	RegisterSignal(blade_effect, COMSIG_BLADE_BARRIER_TRIGGERED, PROC_REF(on_status_effect_triggered))
 
@@ -122,10 +124,12 @@
 	sharpness = SHARP_EDGED
 	wound_bonus = 15
 	pass_flags = PASSTABLE | PASSFLAPS
+	/// Color applied as an outline filter on init
+	var/outline_color = "#f8f8ff"
 
 /obj/projectile/floating_blade/Initialize(mapload)
 	. = ..()
-	add_filter("dio_knife", 2, list("type" = "outline", "color" = "#f8f8ff", "size" = 1))
+	add_filter("dio_knife", 2, list("type" = "outline", "color" = outline_color, "size" = 1))
 
 /obj/projectile/floating_blade/prehit_pierce(atom/hit)
 	if(isliving(hit) && isliving(firer))
@@ -144,3 +148,41 @@
 			return PROJECTILE_DELETE_WITHOUT_HITTING
 
 	return ..()
+
+/obj/projectile/floating_blade/haunted
+	name = "ritual blade"
+	icon = 'icons/obj/weapons/khopesh.dmi'
+	icon_state = "render"
+	damage = 35
+	wound_bonus = 25
+	outline_color = "#D7CBCA"
+
+/datum/action/cooldown/spell/pointed/projectile/furious_steel/solo
+	name = "Lesser Furious Steel"
+	cooldown_time = 20 SECONDS
+	projectile_amount = 1
+	active_msg = "You summon forth a blade of furious silver."
+	deactive_msg = "You conceal the blade of furious silver."
+
+/datum/action/cooldown/spell/pointed/projectile/furious_steel/haunted
+	name = "Cursed Steel"
+	desc = "Summon two cursed blades which orbit you. \
+		While orbiting you, these blades will protect you from attacks, but will be consumed on use. \
+		Additionally, you can click to fire the blades at a target, dealing damage and causing bleeding."
+	background_icon_state = "bg_heretic" // kept intentionally
+	overlay_icon_state = "bg_cult_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "cursed_steel"
+	sound = 'sound/weapons/guillotine.ogg'
+
+	cooldown_time = 40 SECONDS
+	invocation = "IA!"
+	invocation_type = INVOCATION_SHOUT
+
+	spell_requirements = NONE
+
+	active_msg = "You summon forth two cursed blades."
+	deactive_msg = "You conceal the cursed blades."
+	projectile_amount = 2
+	projectile_type = /obj/projectile/floating_blade/haunted
+	projectile_effect = /obj/effect/floating_blade/haunted

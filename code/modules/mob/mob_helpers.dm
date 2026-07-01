@@ -399,19 +399,6 @@
 		var/mob/living/T = pick(nearby_mobs)
 		ClickOn(T)
 
-///Can the mob hear
-/mob/proc/can_hear()
-	. = TRUE
-
-/**
- * Examine text for traits shared by multiple types.
- *
- * I wish examine was less copypasted. (oranges say, be the change you want to see buddy)
- */
-/mob/proc/common_trait_examine()
-	if(HAS_TRAIT(src,TRAIT_HUSK))
-		. += span_warning("This body has been reduced to a grotesque husk.")
-
 /**
  * Get the list of keywords for policy config
  *
@@ -544,3 +531,12 @@
 		"[key_name(src)] manually changed selected zone",
 		data,
 	)
+
+/// Returns true if the mob is on a rusty tile, really low level just because we call it in a bunch of unrelated places
+/mob/proc/is_touching_rust(check_flying = FALSE)
+	if (check_flying && (movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
+		return FALSE
+	if (HAS_TRAIT(src, TRAIT_MAGICALLY_PHASED) || (movement_type & VENTCRAWLING))
+		return FALSE
+	var/turf/our_turf = get_turf(src)
+	return HAS_TRAIT(our_turf, TRAIT_RUSTY)

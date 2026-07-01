@@ -59,6 +59,3 @@
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return TRUE
 	return ..()
-
-/datum/species/pod/randomize_features(mob/living/carbon/human_mob)
-	randomize_external_organs(human_mob)

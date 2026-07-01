@@ -7,21 +7,20 @@
 
 	preference = "feature_ipc_antenna"
 
-	bodypart_overlay = /datum/bodypart_overlay/mutant/antennae/ipc
-
+	bodypart_overlay = /datum/bodypart_overlay/mutant/antennae_ipc
 
 /obj/item/organ/external/antennae/ipc/try_burn_antennae(mob/living/carbon/human/human)
 	return
 
-/datum/bodypart_overlay/mutant/antennae/ipc
+/datum/bodypart_overlay/mutant/antennae_ipc
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
 	feature_key = "ipc_antenna"
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR_SECONDARY
 	color_source = ORGAN_COLOR_MUTSECONDARY
 
-/datum/bodypart_overlay/mutant/antennae/ipc/get_global_feature_list()
+/datum/bodypart_overlay/mutant/antennae_ipc/get_global_feature_list()
 	return GLOB.ipc_antennas_list
 
-/datum/bodypart_overlay/mutant/antennae/ipc/get_base_icon_state()
+/datum/bodypart_overlay/mutant/antennae_ipc/get_base_icon_state()
 	return sprite_datum.icon_state

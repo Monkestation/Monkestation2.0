@@ -1,6 +1,0 @@
-author: "Mantlecrawler"
-delete-after: True
-changes:
-  - balance: "Kudzu can no longer be planted on Oshan's sea floor"
-  - bugfix: "Heretics can no longer research blade upgrades from paths other than their main path (You already couldnt research more than one), this prevents a softlock"
-  - bugfix: "Lifebringer anomalies will no longer spawn broken mobs"

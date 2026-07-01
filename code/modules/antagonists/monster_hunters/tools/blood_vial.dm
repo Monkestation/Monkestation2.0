@@ -1,7 +1,7 @@
 /obj/structure/blood_fountain
 	name = "blood fountain"
 	desc = "A huge resevoir of thick blood, perhaps drinking some of it would restore some vigor..."
-	icon = 'monkestation/icons/obj/blood_fountain.dmi'
+	icon = 'icons/obj/blood_fountain.dmi'
 	icon_state = "blood_fountain"
 	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
@@ -24,7 +24,7 @@
 /obj/item/blood_vial
 	name = "blood vial"
 	desc = "Used to collect samples of blood from the dead-still blood fountain."
-	icon = 'monkestation/icons/obj/items/monster_hunter.dmi'
+	icon = 'icons/obj/items/monster_hunter.dmi'
 	base_icon_state = "blood_vial"
 	icon_state = "blood_vial_empty"
 	inhand_icon_state = "beaker"
@@ -48,7 +48,7 @@
 	filled = FALSE
 	user.apply_status_effect(/datum/status_effect/cursed_blood)
 	update_appearance(UPDATE_ICON_STATE)
-	playsound(src, 'monkestation/sound/items/blood_vial_slurp.ogg', vol = 50)
+	playsound(src, 'sound/items/blood_vial_slurp.ogg', vol = 50)
 
 /obj/item/blood_vial/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(interacting_with == user)
@@ -69,6 +69,17 @@
 	show_duration = TRUE
 	processing_speed = STATUS_EFFECT_PRIORITY
 
+	/// A list of status effects to remove on application and each tick.
+	var/list/status_effects_to_remove = list(
+		/datum/status_effect/cloudstruck,
+		/datum/status_effect/corrosion_curse,
+		/datum/status_effect/eldritch,
+		/datum/status_effect/forced_combat,
+		/datum/status_effect/forced_combat/amok,
+		/datum/status_effect/star_mark,
+		/datum/status_effect/void_chill,
+	)
+
 /atom/movable/screen/alert/status_effect/cursed_blood
 	name = "Cursed Blood"
 	desc = "Something foreign is coursing through your veins!"
@@ -78,6 +89,8 @@
 	to_chat(owner, span_warning("You feel a great power surging through you!"))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/cursed_blood)
 	owner.fully_heal(HEAL_NEGATIVE_DISEASES)
+	for(var/status_effect_type in status_effects_to_remove)
+		owner.remove_status_effect(status_effect_type)
 	return TRUE
 
 /datum/status_effect/cursed_blood/on_remove()
@@ -94,6 +107,9 @@
 	owner.stamina.adjust(3.5 * seconds_between_ticks, forced = TRUE)
 	if(needs_update)
 		owner.updatehealth()
+
+	for(var/status_effect_type in status_effects_to_remove)
+		owner.remove_status_effect(status_effect_type)
 
 /datum/movespeed_modifier/cursed_blood
 	multiplicative_slowdown = -0.6

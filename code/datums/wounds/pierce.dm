@@ -75,7 +75,6 @@
 				span_danger("A spray of blood streams from the gash in [victim]'s [limb.plaintext_zone]!"),
 				span_bolddanger("You choke up on a spray of blood from the blow to your [limb.plaintext_zone]!"),
 				vision_distance = COMBAT_MESSAGE_RANGE,
-
 			)
 			victim.bleed(blood_bled)
 			victim.do_splatter_effect(victim.dir)

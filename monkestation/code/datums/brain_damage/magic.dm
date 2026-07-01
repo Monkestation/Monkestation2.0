@@ -4,9 +4,13 @@
 	scan_desc = "extra-sensory paranoia"
 	gain_text = span_warning("You feel like something wants to kill you...")
 	lose_text = span_notice("You no longer feel eyes on your back.")
-	var/max_stalkers = 1
+	/// Type of stalker that is chasing us
+	var/stalker_type = /obj/effect/client_image_holder/stalker_phantom
+	/// Reference to the stalker(s) that is chasing us
 	var/list/obj/effect/client_image_holder/stalker_phantom/stalkers = list()
-	var/close_stalker = FALSE //For heartbeat
+	/// Plays a sound when the stalker is near their victim
+	var/close_stalker = FALSE
+	var/max_stalkers = 1
 
 /datum/brain_trauma/magic/stalker/Destroy()
 	QDEL_LIST(stalkers)
@@ -47,7 +51,7 @@
 /datum/brain_trauma/magic/stalker/proc/create_single_stalker(turf/stalker_source)
 	if(!stalker_source)
 		stalker_source = locate(owner.x + pick(-12, 12), owner.y + pick(-12, 12), owner.z) //random corner
-	var/obj/effect/client_image_holder/stalker_phantom/stalker = new(stalker_source, owner)
+	var/obj/effect/client_image_holder/stalker_phantom/stalker = new stalker_type(stalker_source, owner)
 	RegisterSignal(stalker, COMSIG_QDELETING, PROC_REF(on_phantom_destroyed))
 	stalkers += stalker
 
@@ -89,3 +93,12 @@
 	gain_text = span_warning("You feel like the gods have released the hounds...")
 	lose_text = span_notice("You no longer feel the wrath of the gods watching you.")
 	max_stalkers = 10
+
+// Heretic subtype that replaces the ghost guy with a stargazer
+/datum/brain_trauma/magic/stalker/cosmic
+	stalker_type = /obj/effect/client_image_holder/stalker_phantom/cosmic
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
+
+/obj/effect/client_image_holder/stalker_phantom/cosmic
+	image_icon = 'icons/mob/nonhuman-player/96x96eldritch_mobs.dmi'
+	image_state = "star_gazer"

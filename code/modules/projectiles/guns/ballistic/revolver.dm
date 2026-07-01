@@ -127,6 +127,7 @@
 	alternative_ammo_misfires = TRUE
 	misfire_probability = 0
 	misfire_percentage_increment = 25 //about 1 in 4 rounds, which increases rapidly every shot
+	misfire_probability_cap = 50
 
 	obj_flags = UNIQUE_RENAME
 	unique_reskin = list(
@@ -426,7 +427,7 @@
 	name = "\improper .45 Long Revolver"
 	desc = "A cheap .45 Long Revolver. Pray the timing keeps."
 	icon_state = "45revolver"
-	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	icon = 'icons/obj/guns/guns.dmi'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45l
 	obj_flags = UNIQUE_RENAME
 

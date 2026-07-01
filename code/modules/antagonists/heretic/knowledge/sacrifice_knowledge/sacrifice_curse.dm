@@ -62,26 +62,28 @@
 		return
 
 	var/mob/living/carbon/carbon_owner = owner
-	var/obj/item/bodypart/chest/organ_storage = owner.get_bodypart(BODY_ZONE_CHEST)
+	/* var/obj/item/bodypart/chest/organ_storage = owner.get_bodypart(BODY_ZONE_CHEST)
 	if (isnull(organ_storage))
 		carbon_owner.gib() // IDK how you don't have a chest but you're not getting away that easily
-		return
+		return */
 
 	var/list/removable_organs = list()
-	for(var/obj/item/organ/internal/bodypart_organ in organ_storage.contents)
-		if(bodypart_organ.organ_flags & ORGAN_UNREMOVABLE)
+	for(var/obj/item/organ/internal/bodypart_organ in owner.get_organs_for_zone(BODY_ZONE_CHEST))
+		if(istype(bodypart_organ, /obj/item/organ/internal/brain))
+			continue
+		if(bodypart_organ.organ_flags & (ORGAN_UNREMOVABLE|ORGAN_HIDDEN))
 			continue
 		removable_organs += bodypart_organ
 
 	if (!length(removable_organs))
 		return // This one is a little more possible but they're probably already in pretty bad shape by this point
 
-	var/obj/item/organ/internal/removing_organ = pick(removable_organs)
+	var/obj/item/organ/removing_organ = pick(removable_organs)
 
-	if (carbon_owner.vomit(blood = TRUE))
+	if (carbon_owner.vomit(blood = TRUE, /* vomit_flags = VOMIT_CATEGORY_BLOOD */))
 		carbon_owner.visible_message(span_boldwarning("[carbon_owner] vomits out [carbon_owner.p_their()] [removing_organ]"))
 	else
-		carbon_owner.visible_message(span_boldwarning("[carbon_owner]'s [removing_organ] rips itself out of `[carbon_owner.p_their()] chest!"))
+		carbon_owner.visible_message(span_boldwarning("[carbon_owner]'s [removing_organ] rips itself out of [carbon_owner.p_their()] chest!"))
 
 	removing_organ.Remove(carbon_owner)
 

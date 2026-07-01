@@ -8,7 +8,8 @@
 	gender = NEUTER
 	mob_biotypes = NONE
 
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
+	status_flags = CANPUSH
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	speed = 0
 	melee_attack_cooldown = CLICK_CD_MELEE
@@ -26,6 +27,8 @@
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
 
+	lighting_cutoff = LIGHTING_CUTOFF_HIGH
+
 	istate = ISTATE_HARM
 	ai_controller = null
 	speak_emote = list("screams")
@@ -33,4 +36,5 @@
 
 /mob/living/basic/heretic_summon/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/death_drops, string_list(list(/obj/effect/gibspawner/generic)))
+	AddElement(/datum/element/death_drops, /obj/effect/gibspawner/generic)
+	ADD_TRAIT(src, TRAIT_HERETIC_SUMMON, INNATE_TRAIT)

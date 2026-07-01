@@ -6,7 +6,7 @@
 /obj/structure/trash_pile
 	name = "trash pile"
 	desc = "A heap of dense garbage. Perhaps there is something interesting inside?"
-	icon = 'monkestation/icons/obj/trash_piles.dmi'
+	icon = 'icons/obj/trash_piles.dmi'
 	icon_state = "randompile"
 	density = TRUE
 	anchored = TRUE
@@ -48,7 +48,7 @@
 		'sound/effects/glassbr3.ogg' = 20,
 		'sound/effects/grillehit.ogg' = 20,
 		'sound/effects/hit_on_shattered_glass.ogg' = 20,
-		'monkestation/sound/effects/jingle.ogg' = 50,
+		'sound/effects/jingle.ogg' = 50,
 		'sound/effects/meatslap.ogg' = 50,
 		'sound/effects/quack.ogg' = 20,
 		'sound/effects/rustle1.ogg' = 100,

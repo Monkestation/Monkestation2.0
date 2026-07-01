@@ -13,6 +13,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 	rcd_proof = TRUE
+	rust_resistance = RUST_RESISTANCE_REINFORCED
 	var/floor_tooltip_description = "The reinforcement rods are <b>wrenched</b> firmly in place."
 
 
@@ -231,7 +232,7 @@
 /turf/open/floor/engine/insulation
 	name = "hyper-insulated floor"
 	desc = "Sturdy and completely heat-proof."
-	icon = 'monkestation/icons/turf/insulated_floor.dmi'
+	icon = 'icons/turf/insulated_floor.dmi'
 	icon_state = "insulation"
 	thermal_conductivity = 0
 	heat_capacity = INFINITY

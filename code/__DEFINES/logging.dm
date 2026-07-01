@@ -24,6 +24,7 @@
 #define INVESTIGATE_RADIATION "radiation"
 #define INVESTIGATE_RECORDS "records"
 #define INVESTIGATE_RESEARCH "research"
+#define INVESTIGATE_TRANSPORT "transport"
 #define INVESTIGATE_WIRES "wires"
 #define INVESTIGATE_NANITES "nanites"
 #define INVESTIGATE_ARTIFACT "artifact"
@@ -115,6 +116,7 @@
 #define LOG_CATEGORY_TARGET_ZONE_SWITCH "target-zone-switch"
 #define LOG_CATEGORY_TELECOMMS "telecomms"
 #define LOG_CATEGORY_TOOL "tool"
+#define LOG_CATEGORY_TRANSPORT "transport"
 #define LOG_CATEGORY_VIRUS "virus"
 #define LOG_CATEGORY_FLOXY "floxy"
 #define LOG_CATEGORY_CAVE_GENERATION "cave-generation"
@@ -174,6 +176,7 @@
 #define LOG_CATEGORY_UPLINK_HERETIC "uplink-heretic"
 #define LOG_CATEGORY_UPLINK_MALF "uplink-malf"
 #define LOG_CATEGORY_UPLINK_SPELL "uplink-spell"
+#define LOG_CATEGORY_UPLINK_SPY "uplink-spy"
 
 // PDA categories
 #define LOG_CATEGORY_PDA "pda"

@@ -8,7 +8,7 @@
 		immunity against extremities such as spot and arc welding, solar eclipses, and handheld flashlights."
 	icon_state = "welding"
 	complexity = 1
-	incompatible_modules = list(/obj/item/mod/module/welding, /obj/item/mod/module/armor_booster)
+	incompatible_modules = list(/obj/item/mod/module/welding)
 	overlay_state_inactive = "module_welding"
 
 /obj/item/mod/module/welding/on_suit_activation()
@@ -18,6 +18,18 @@
 	if(deleting)
 		return
 	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
+
+/obj/item/mod/module/welding/syndicate
+	complexity = 0
+	removable = FALSE
+	incompatible_modules = list(/obj/item/mod/module/welding, /obj/item/mod/module/welding/syndicate, /obj/item/mod/module/stealth/wraith)
+	overlay_state_inactive = "module_armorbooster_on"
+	use_mod_colors = TRUE
+	/* mask_worn_overlay = TRUE */
+
+/obj/item/mod/module/welding/syndicate/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
+	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
+	return ..()
 
 ///T-Ray Scan - Scans the terrain for undertile objects.
 /obj/item/mod/module/t_ray

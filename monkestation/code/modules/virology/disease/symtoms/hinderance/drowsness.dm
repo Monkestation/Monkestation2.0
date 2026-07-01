@@ -9,4 +9,4 @@
 	max_multiplier = 10
 
 /datum/symptom/drowsness/activate(mob/living/mob)
-	mob.adjust_drowsiness_up_to(multiplier, 40 SECONDS)
+	mob.adjust_drowsiness_up_to(multiplier * power, 40 SECONDS)

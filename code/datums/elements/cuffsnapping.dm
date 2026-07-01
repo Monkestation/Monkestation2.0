@@ -114,6 +114,8 @@
 		cutter_user.do_attack_animation(target, used_item = cutter)
 		cutter_user.visible_message(span_notice("[cutter_user] cuts [target]'s restraints with [cutter]!"))
 		qdel(target.handcuffed)
+		target.set_handcuffed(null)
+		target.update_handcuffed()
 		playsound(source = get_turf(cutter), soundin = cutter.usesound ? cutter.usesound : cutter.hitsound, vol = cutter.get_clamped_volume(), vary = TRUE)
 
 	return

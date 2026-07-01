@@ -104,6 +104,8 @@
 		return
 	if(!helper.can_perform_action(owner, NEED_HANDS|FORBID_TELEKINESIS_REACH)) // telekinetic removal can be added later
 		return
+	if(!helper.CanReach(owner))
+		return
 
 	var/whose = helper == owner ? "your" : "[owner]'s"
 	var/theirs = helper == owner ? helper.p_their() : "[owner]'s"
@@ -294,10 +296,10 @@
 		user.balloon_alert(patient, "applying gauze...")
 
 	playsound(patient, pick(
-		'monkestation/sound/items/rip1.ogg',
-		'monkestation/sound/items/rip2.ogg',
-		'monkestation/sound/items/rip3.ogg',
-		'monkestation/sound/items/rip4.ogg',
+		'sound/items/rip1.ogg',
+		'sound/items/rip2.ogg',
+		'sound/items/rip3.ogg',
+		'sound/items/rip4.ogg',
 	), 33)
 
 	if(!do_after(user, treatment_delay, target = patient))

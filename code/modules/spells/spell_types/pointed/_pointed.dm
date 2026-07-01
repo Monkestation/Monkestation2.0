@@ -65,16 +65,17 @@
 	return TRUE
 
 /datum/action/cooldown/spell/pointed/InterceptClickOn(mob/living/user, params, atom/target)
-
 	var/atom/aim_assist_target
-	if(aim_assist && isturf(target))
-		// Find any human in the list. We aren't picky, it's aim assist after all
-		aim_assist_target = locate(/mob/living/carbon/human) in target
-		if(!aim_assist_target)
-			// If we didn't find a human, we settle for any living at all
-			aim_assist_target = locate(/mob/living) in target
-
+	if(aim_assist)
+		aim_assist_target = aim_assist(user, target)
 	return ..(user, params, aim_assist_target || target)
+
+/datum/action/cooldown/spell/pointed/proc/aim_assist(mob/living/user, atom/target)
+	if(!isturf(target))
+		return
+
+	// Find any human, or if that fails, any living target
+	return (locate(/mob/living/carbon/human) in target) || (locate(/mob/living) in target)
 
 /datum/action/cooldown/spell/pointed/is_valid_target(atom/cast_on)
 	if(cast_on == owner)

@@ -5,7 +5,7 @@
 	category = DISEASE_SANDWICH
 
 	symptoms = list(
-		new /datum/symptom/death_sandwich
+		new /datum/symptom/death_sandwich,
 	)
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	robustness = 100

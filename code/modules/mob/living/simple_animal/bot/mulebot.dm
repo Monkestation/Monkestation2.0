@@ -86,14 +86,14 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/mulebot)
 	diag_hud_set_mulebotcell()
 
-/mob/living/simple_animal/bot/mulebot/handle_atom_del(atom/A)
-	if(A == load)
+/mob/living/simple_animal/bot/mulebot/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == load)
 		unload(0)
-	if(A == cell)
+	if(gone == cell)
 		turn_off()
 		cell = null
 		diag_hud_set_mulebotcell()
-	return ..()
 
 /mob/living/simple_animal/bot/mulebot/examine(mob/user)
 	. = ..()
@@ -495,6 +495,7 @@
 	if(!speed)//Devide by zero man bad
 		return
 	num_steps = round(10/speed) //10, 5, or 3 steps, depending on how many wires we have cut
+	datum_flags &= ~DF_ISPROCESSING // hacky fix since /mob/living already registers this to another subsystem
 	START_PROCESSING(SSfastprocess, src)
 
 /mob/living/simple_animal/bot/mulebot/process()

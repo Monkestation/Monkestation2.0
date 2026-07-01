@@ -24,9 +24,4 @@
 	item_type = /obj/item/storage/belt/bowie_sheath
 	cost = PAYCHECK_COMMAND * 3
 
-/datum/armament_entry/company_import/blacksteel/blade/shamshir_sabre
-	item_type = /obj/item/storage/belt/sabre/cargo
-	cost = PAYCHECK_COMMAND * 4
-
-
 

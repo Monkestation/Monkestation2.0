@@ -491,7 +491,8 @@
  * returns the net change in damage
  */
 /mob/living/proc/heal_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype = NONE, target_zone = null)
-	. = (adjustBruteLoss(-brute, FALSE) + adjustFireLoss(-burn, FALSE)) //zero as argument for no instant health update
+	. = (adjustBruteLoss(-abs(brute), updating_health = FALSE) + \
+			adjustFireLoss(-abs(burn), updating_health = FALSE))
 	if(!.) // no change, no need to update
 		return FALSE
 	if(updating_health)
@@ -499,25 +500,25 @@
 
 /// damage ONE external organ, organ gets randomly selected from damaged ones.
 /mob/living/proc/take_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype, check_armor = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE)
-	adjustBruteLoss(brute, FALSE) //zero as argument for no instant health update
-	adjustFireLoss(burn, FALSE)
-	if(updating_health)
+	. = (adjustBruteLoss(abs(brute), updating_health = FALSE) + \
+			adjustFireLoss(abs(burn), updating_health = FALSE))
+	if(. && updating_health)
 		updatehealth()
 
 /// heal MANY bodyparts, in random order
 /mob/living/proc/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_bodytype, updating_health = TRUE)
-	adjustBruteLoss(-brute, FALSE) //zero as argument for no instant health update
-	adjustFireLoss(-burn, FALSE)
-	src.stamina.adjust(stamina, FALSE)
-	if(updating_health)
+	. = (adjustBruteLoss(-abs(brute), updating_health = FALSE) + \
+			adjustFireLoss(-abs(burn), updating_health = FALSE))
+	src.stamina.adjust(abs(stamina), FALSE)
+	if(. && updating_health)
 		updatehealth()
 
 /// damage MANY bodyparts, in random order
 /mob/living/proc/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_bodytype)
-	adjustBruteLoss(brute, FALSE) //zero as argument for no instant health update
-	adjustFireLoss(burn, FALSE)
-	src.stamina.adjust(-stamina, FALSE)
-	if(updating_health)
+	. = (adjustBruteLoss(abs(brute), updating_health = FALSE) + \
+			adjustFireLoss(abs(burn), updating_health = FALSE))
+	src.stamina.adjust(-abs(stamina), FALSE)
+	if(. && updating_health)
 		updatehealth()
 
 ///heal up to amount damage, in a given order

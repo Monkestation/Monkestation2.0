@@ -85,7 +85,7 @@
 				/obj/machinery/fishing_portal_generator,
 				/obj/machinery/computer/holodeck,
 				/obj/machinery/elevator_control_panel,
-				/obj/machinery/crossing_signal,
+				/obj/machinery/transport/crossing_signal,
 				/obj/machinery/fax,
 				/obj/machinery/chem_dispenser,
 				/obj/machinery/research/anomaly_refinery,

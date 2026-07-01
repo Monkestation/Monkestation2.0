@@ -38,7 +38,7 @@
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, revelation_cooldown) || prob(85) || bloodsuckerdatum.owner.current.stat != CONSCIOUS || HAS_TRAIT(bloodsuckerdatum.owner.current, TRAIT_MASQUERADE))
 		return
-	var/message = pick(strings("malkavian_revelations.json", "revelations", "monkestation/strings"))
+	var/message = pick(strings("malkavian_revelations.json", "revelations", "strings"))
 	COOLDOWN_START(src, revelation_cooldown, rand(REVELATION_MIN_COOLDOWN, REVELATION_MAX_COOLDOWN))
 	INVOKE_ASYNC(bloodsuckerdatum.owner.current, TYPE_PROC_REF(/atom/movable, say), message, , , , , , CLAN_MALKAVIAN)
 

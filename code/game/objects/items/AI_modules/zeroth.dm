@@ -29,7 +29,7 @@
 	if(!targName)
 		return
 	targetName = targName
-	laws[1] = "Only [targetName] is human"
+	laws[1] = "Only [targetName] is human."
 	..()
 
 /obj/item/ai_module/zeroth/onehuman/install(datum/ai_laws/law_datum, mob/user)

@@ -6,6 +6,7 @@
 	icon_state = "card_gold"
 
 /datum/grand_finale/usurp/trigger(mob/living/carbon/human/invoker)
+	. = ..()
 	message_admins("[key_name(invoker)] has replaced the Captain")
 	var/list/former_captains = list()
 	var/list/other_crew = list()

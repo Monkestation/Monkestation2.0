@@ -70,10 +70,10 @@
 
 	to_chat(user, span_notice("Your heart beats one final time, while your skin dries out and your icy pallor returns."))
 
-/// Used to automatically disable masquerade if the user goes unconscious or crit.
+/// Used to automatically disable masquerade if the user dies
 /datum/action/cooldown/bloodsucker/masquerade/proc/on_stat_change(mob/living/target, new_stat)
 	SIGNAL_HANDLER
-	if(active && new_stat != CONSCIOUS)
+	if(active && new_stat == DEAD)
 		DeactivatePower()
 
 /**
@@ -91,7 +91,7 @@
 /atom/movable/screen/alert/status_effect/masquerade
 	name = "Masquerade"
 	desc = "You are currently hiding your identity using the Masquerade power. This halts Vampiric healing."
-	icon = 'monkestation/icons/bloodsuckers/actions_bloodsucker.dmi'
+	icon = 'icons/bloodsuckers/actions_bloodsucker.dmi'
 	icon_state = "power_human"
 	alerttooltipstyle = "cult"
 

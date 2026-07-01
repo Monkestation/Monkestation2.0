@@ -46,8 +46,13 @@
 	var/newtonian_target = turn(chassis.dir,180)
 	. = ..()//start the cooldown early because of sleeps
 	for(var/i in 1 to projectiles_per_shot)
-		if(energy_drain && !chassis.has_charge(energy_drain))//in case we run out of energy mid-burst, such as emp
+		//in case we run out of energy mid-burst, such as emp
+		if(energy_drain && !chassis.has_charge(energy_drain))
 			break
+		if(istype(src, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic))
+			var/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/ballistic = src
+			if(ballistic.projectiles <= 0)
+				break
 		var/spread = 0
 		if(variance)
 			if(randomspread)
@@ -88,7 +93,7 @@
 	icon_state = "mecha_laser"
 	energy_drain = 30
 	projectile = /obj/projectile/beam/laser
-	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
 	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler
@@ -101,7 +106,7 @@
 	projectile = /obj/projectile/beam/disabler/weak
 	variance = 25
 	projectiles_per_shot = 5
-	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser2.ogg'
+	fire_sound = 'sound/weapons/gun/energy/Laser2.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
 	equip_cooldown = 15
@@ -131,7 +136,7 @@
 	icon_state = "mecha_ion"
 	energy_drain = 120
 	projectile = /obj/projectile/ion
-	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/tesla
 	equip_cooldown = 35
@@ -213,7 +218,7 @@
 	playsound(chassis, 'sound/items/airhorn.ogg', 100, TRUE)
 	to_chat(source, "[icon2html(src, source)]<font color='red' size='5'>[tactile_message]</font>") //monkestation edit
 	for(var/mob/living/carbon/M in ohearers(honk_range, chassis)) //monkestation edit
-		if(!M.can_hear())
+		if(HAS_TRAIT(M, TRAIT_DEAF))
 			continue
 		var/turf/turf_check = get_turf(M)
 		if(isspaceturf(turf_check) && !turf_check.Adjacent(src)) //in space nobody can hear you honk.
@@ -341,9 +346,9 @@
 	icon_state = "mecha_uac2"
 	equip_cooldown = 10
 	projectile = /obj/projectile/bullet/lmg
-	projectiles = 300
-	projectiles_cache = 300
-	projectiles_cache_max = 1200
+	projectiles = 100
+	projectiles_cache = 100
+	projectiles_cache_max = 300
 	projectiles_per_shot = 3
 	variance = 6
 	randomspread = 1

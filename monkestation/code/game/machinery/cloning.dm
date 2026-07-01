@@ -24,9 +24,9 @@
 /obj/machinery/clonepod	//hippie start, re-add cloning
 	name = "cloning pod"
 	desc = "An electronically-lockable pod for growing organic tissue."
-	density = TRUE
-	icon = 'monkestation/icons/obj/machines/cloning.dmi'
+	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "pod_0"
+	density = TRUE
 	req_access = list(ACCESS_GENETICS) //FOR PREMATURE UNLOCKING.
 	verb_say = "states"
 	circuit = /obj/item/circuitboard/machine/clonepod
@@ -493,8 +493,9 @@
 		go_out()
 		log_cloning("[key_name(mob_occupant)] ejected from [src] at [AREACOORD(src)] due to explosion.")
 
-/obj/machinery/clonepod/handle_atom_del(atom/A)
-	if(A == occupant)
+/obj/machinery/clonepod/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == occupant)
 		occupant = null
 		countdown.stop()
 

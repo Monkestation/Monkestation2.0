@@ -1,9 +1,8 @@
 import { exhaustiveCheck } from 'common/exhaustive';
 import { useBackend, useLocalState } from '../../backend';
-import { Button, Stack } from '../../components';
-import { AntagsPage } from './AntagsPage';
-import type { PreferencesMenuData } from './data';
-import { JobsPage } from './JobsPage';
+import { Button, Icon, Stack } from '../../components';
+import { CharacterMode, type PreferencesMenuData } from './data';
+import { JobsPage, JobsPageType } from './JobsPage';
 import { LoadoutManager } from './LoadoutPage';
 import { MainPage } from './MainPage';
 import { PageButton } from './PageButton';
@@ -11,7 +10,6 @@ import { QuirksPage } from './QuirksPage';
 import { SpeciesPage } from './SpeciesPage';
 
 enum Page {
-  Antags,
   Main,
   Loadout,
   Jobs,
@@ -25,6 +23,9 @@ const CharacterProfiles = (props: {
   profiles: (string | null)[];
 }) => {
   const { profiles } = props;
+  const { data } = useBackend<PreferencesMenuData>();
+  const enabled_chars = data.enabled_characters;
+  const mode = data.character_preferences.misc.character_role_select_mode;
 
   return (
     <Stack justify="center" wrap>
@@ -37,6 +38,16 @@ const CharacterProfiles = (props: {
             }}
             fluid
           >
+            {mode === CharacterMode.Filters && profile && (
+              <Icon
+                name={
+                  enabled_chars.includes(slot + 1)
+                    ? 'check-square-o'
+                    : 'square-o'
+                }
+                style={{ float: 'left', padding: '4px 4px 4px 2px' }}
+              />
+            )}
             {profile ?? 'New Character'}
           </Button>
         </Stack.Item>
@@ -53,11 +64,8 @@ export const CharacterPreferenceWindow = (props) => {
   let pageContents;
 
   switch (currentPage) {
-    case Page.Antags:
-      pageContents = <AntagsPage />;
-      break;
     case Page.Jobs:
-      pageContents = <JobsPage />;
+      pageContents = <JobsPage type={JobsPageType.Character} />;
       break;
     case Page.Loadout:
       pageContents = <LoadoutManager />;
@@ -118,29 +126,22 @@ export const CharacterPreferenceWindow = (props) => {
             </PageButton>
           </Stack.Item>
 
-          <Stack.Item grow>
-            <PageButton
-              currentPage={currentPage}
-              page={Page.Jobs}
-              setPage={setCurrentPage}
-            >
-              {/*
+          {data.character_preferences.misc.character_role_select_mode !==
+            CharacterMode.Simple && (
+            <Stack.Item grow>
+              <PageButton
+                currentPage={currentPage}
+                page={Page.Jobs}
+                setPage={setCurrentPage}
+              >
+                {/*
                     Fun fact: This isn't "Jobs" so that it intentionally
                     catches your eyes, because it's really important!
                   */}
-              Occupations
-            </PageButton>
-          </Stack.Item>
-
-          <Stack.Item grow>
-            <PageButton
-              currentPage={currentPage}
-              page={Page.Antags}
-              setPage={setCurrentPage}
-            >
-              Antagonists
-            </PageButton>
-          </Stack.Item>
+                Character Occupations
+              </PageButton>
+            </Stack.Item>
+          )}
 
           <Stack.Item grow>
             <PageButton

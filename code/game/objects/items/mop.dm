@@ -19,7 +19,6 @@
 	var/max_reagent_volume = 45
 	var/mopspeed = 1.5 SECONDS
 	force_string = "robust... against germs"
-	var/insertable = TRUE
 	var/static/list/clean_blacklist = typecacheof(list(
 		/obj/item/reagent_containers/cup/bucket,
 		/obj/structure/mop_bucket,
@@ -83,10 +82,6 @@
 		val2remove = round(cleaner.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER), 0.1)
 	reagents.remove_all(val2remove) //reaction() doesn't use up the reagents
 
-/obj/item/mop/cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
-
 /obj/item/mop/advanced
 	desc = "The most advanced tool in a custodian's arsenal, complete with a condenser for self-wetting! Just think of all the viscera you will clean up with this!"
 	name = "advanced mop"
@@ -129,9 +124,6 @@
 /obj/item/mop/advanced/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
-
-/obj/item/mop/advanced/cyborg
-	insertable = FALSE
 
 /obj/item/mop/sharp //Basically a slightly worse spear.
 	desc = "A mop with a sharpened handle. Careful!"

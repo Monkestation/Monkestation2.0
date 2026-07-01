@@ -96,13 +96,13 @@
 
 /datum/tinker_cache_item/speed_robes
 	name = "Robes Of Divinity"
-	item_path = /obj/item/clothing/suit/clockwork/speed
+	item_path = /obj/item/clothing/suit/hooded/clockwork/speed
 	power_use = 300
 	allowed_on_reebe = FALSE
 
 /datum/tinker_cache_item/invis_cloak
 	name = "Shrouding Cloak"
-	item_path = /obj/item/clothing/suit/clockwork/cloak
+	item_path = /obj/item/clothing/suit/hooded/clockwork/cloak
 	power_use = 300
 	allowed_on_reebe = FALSE
 

@@ -2,7 +2,7 @@
 	name = "Default Clock Cultist"
 
 	uniform = /obj/item/clothing/under/occult //meh.
-	suit = /obj/item/clothing/suit/clockwork/cloak
+	suit = /obj/item/clothing/suit/hooded/clockwork/cloak
 	shoes = /obj/item/clothing/shoes/clockwork
 	gloves = /obj/item/clothing/gloves/clockwork
 	back = /obj/item/storage/backpack/satchel
@@ -20,7 +20,7 @@
 /datum/outfit/clock/armor
 	name = "Armored Clock Cultist"
 
-	suit = /obj/item/clothing/suit/clockwork
+	suit = /obj/item/clothing/suit/hooded/clockwork
 	head = /obj/item/clothing/head/helmet/clockwork
 	glasses = /obj/item/clothing/glasses/clockwork/judicial_visor
 	l_hand = /obj/item/clockwork/weapon/brass_battlehammer
@@ -28,7 +28,7 @@
 /datum/outfit/clock/archer
 	name = "Archer Clock Cultist"
 
-	suit = /obj/item/clothing/suit/clockwork/speed
+	suit = /obj/item/clothing/suit/hooded/clockwork/speed
 	head = /obj/item/clothing/head/helmet/clockwork
 	glasses = /obj/item/clothing/glasses/clockwork/judicial_visor
 	l_hand = /obj/item/gun/ballistic/bow/clockwork
@@ -36,7 +36,7 @@
 /datum/outfit/clock/support
 	name = "Support Clock Cultist"
 
-	suit = /obj/item/clothing/suit/clockwork
+	suit = /obj/item/clothing/suit/hooded/clockwork
 	head = /obj/item/clothing/head/helmet/clockwork
 	glasses = /obj/item/clothing/glasses/clockwork/judicial_visor
 	belt = /obj/item/storage/belt/utility/clock
@@ -54,7 +54,5 @@
 /datum/outfit/clockwork_armaments
 	name = "Clockwork Cultist Base"
 
-	suit = /obj/item/clothing/suit/clockwork
-	shoes = /obj/item/clothing/shoes/clockwork
+	suit = /obj/item/clothing/suit/hooded/clockwork
 	gloves = /obj/item/clothing/gloves/clockwork
-	head = /obj/item/clothing/head/helmet/clockwork

@@ -11,10 +11,9 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 
 /// Builds the list of crew records for all crew members.
 /datum/manifest/proc/build()
-	for(var/i in GLOB.new_player_list)
-		var/mob/dead/new_player/readied_player = i
+	for(var/mob/dead/new_player/readied_player as anything in GLOB.new_player_list)
 		if(readied_player.new_character)
-			log_manifest(readied_player.ckey,readied_player.new_character.mind,readied_player.new_character)
+			log_manifest(readied_player.ckey, readied_player.new_character.mind, readied_player.new_character)
 		if(ishuman(readied_player.new_character))
 			inject(readied_player.new_character)
 		CHECK_TICK
@@ -96,7 +95,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 
 
 /// Injects a record into the manifest.
-/datum/manifest/proc/inject(mob/living/carbon/human/person, client/person_client)
+/datum/manifest/proc/inject(mob/living/carbon/human/person, client/person_client, atom/appearance_proxy)
 	set waitfor = FALSE
 	if(!(person.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST))
 		return
@@ -108,7 +107,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		))
 
 	var/assignment = person.mind.assigned_role.title
-	var/mutable_appearance/character_appearance = new(person.appearance)
+	var/mutable_appearance/character_appearance = new(appearance_proxy?.appearance || person.appearance)
 	var/person_gender = "Other"
 	if(person.gender == "male")
 		person_gender = "Male"

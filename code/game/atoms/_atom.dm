@@ -688,14 +688,6 @@
 	return null
 
 /**
- * This proc is called when an atom in our contents has it's [Destroy][/atom/proc/Destroy] called
- *
- * Default behaviour is to simply send [COMSIG_ATOM_CONTENTS_DEL]
- */
-/atom/proc/handle_atom_del(atom/deleting_atom)
-	SEND_SIGNAL(src, COMSIG_ATOM_CONTENTS_DEL, deleting_atom)
-
-/**
  * the vision impairment to give to the mob whose perspective is set to that atom
  *
  * (e.g. an unfocused camera giving you an impaired vision when looking through it)
@@ -734,22 +726,6 @@
 	The "highest priority" one is always displayed as opposed to the default of
 	"whichever was set last is displayed"
 */
-
-///Resets the atom's color to null, and then sets it to the highest priority colour available
-/atom/proc/update_atom_colour()
-	color = null
-	if(!atom_colours)
-		return
-	for(var/checked_color in atom_colours)
-		if(islist(checked_color))
-			var/list/color_list = checked_color
-			if(color_list.len)
-				color = color_list
-				return
-		else if(checked_color)
-			color = checked_color
-			return
-
 
 /**
  * Wash this atom
