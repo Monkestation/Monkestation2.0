@@ -23,10 +23,6 @@
 	. = ..()
 	RegisterSignal(owner, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
 
-/datum/status_effect/inebriated/drunk/clear_effects()
-	. = ..()
-	UnregisterSignal(owner, COMSIG_LIVING_CULT_SACRIFICED)
-
 /datum/status_effect/inebriated/on_creation(mob/living/new_owner, drunk_value = 0)
 	. = ..()
 	set_drunk_value(drunk_value, TRUE)
@@ -138,6 +134,8 @@
 
 	if(owner.sound_environment_override == SOUND_ENVIRONMENT_PSYCHOTIC)
 		owner.sound_environment_override = SOUND_ENVIRONMENT_NONE
+
+	UnregisterSignal(owner, COMSIG_LIVING_CULT_SACRIFICED)
 
 /datum/status_effect/inebriated/drunk/set_drunk_value(set_to)
 	. = ..()
