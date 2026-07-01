@@ -100,5 +100,5 @@
 	robotlander.laws.clear_inherent_laws()
 	robotlander.laws.set_zeroth_law("THERE CAN BE ONLY ONE")
 	robotlander.laws.show_laws(robotlander)
-	robotlander.apply_model(/datum/robot_model/highlander, TRUE)
+	robotlander.apply_model(/datum/robot_model/highlander, TRUE, TRUE)
 	sword = locate(/obj/item/claymore/highlander/robot) in robotlander.model.basic_modules
