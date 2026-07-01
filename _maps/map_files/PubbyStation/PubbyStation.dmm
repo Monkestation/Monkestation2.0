@@ -43267,6 +43267,10 @@
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/nt_rep)
+"oIh" = (
+/obj/effect/landmark/cargo_mail_machine,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "oJj" = (
 /turf/closed/wall,
 /area/station/maintenance/department/medical)
@@ -55070,6 +55074,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "xsm" = (
@@ -55667,6 +55672,7 @@
 /area/station/cargo/storage)
 "xNS" = (
 /obj/machinery/light/directional/west,
+/obj/machinery/union_stand,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "xNT" = (
@@ -101295,7 +101301,7 @@ aey
 jUX
 tko
 tko
-cCB
+oIh
 mhw
 cCB
 bbG

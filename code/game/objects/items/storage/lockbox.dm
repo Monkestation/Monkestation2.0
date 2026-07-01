@@ -254,7 +254,7 @@
 	req_access = list(ACCESS_QM)
 
 /obj/item/storage/lockbox/medal/cargo/PopulateContents()
-		new /obj/item/clothing/accessory/medal/ribbon/cargo(src)
+	new /obj/item/clothing/accessory/medal/ribbon/cargo(src)
 
 /obj/item/storage/lockbox/medal/service
 	name = "service award box"

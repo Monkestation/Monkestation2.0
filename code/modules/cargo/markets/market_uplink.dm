@@ -206,6 +206,7 @@
 		/datum/market/restock/guns_galore,
 		/datum/market/auction/aftermarket_parts,
 	)
+	custom_premium_price = PAYCHECK_CREW * 2.5
 
 
 /datum/crafting_recipe/blackmarket_uplink
