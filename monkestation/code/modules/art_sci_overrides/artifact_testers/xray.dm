@@ -119,7 +119,7 @@
 		ui = new(user, src, "ArtifactXray", name)
 		ui.open()
 
-/obj/machinery/artifact_xray/ui_act(action, params)
+/obj/machinery/artifact_xray/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
