@@ -25,4 +25,12 @@
 	emagged_modules = list(
 		/obj/item/borg/handheld_jaunter
 	)
+	clockwork_modules = list(
+		/obj/item/clock_module/abscond,
+		/obj/item/gun/ballistic/bow/clockwork,
+		/obj/item/clock_module/kindle,
+		/obj/item/clock_module/vanguard,
+		/obj/item/clock_module/sentinels_compromise,
+		/obj/item/clock_module/sigil_submission
+	)
 	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)

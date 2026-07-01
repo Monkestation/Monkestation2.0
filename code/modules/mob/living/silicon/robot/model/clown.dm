@@ -25,3 +25,8 @@
 		/obj/item/reagent_containers/borghypo/clown/hacked,
 		/obj/item/reagent_containers/spray/waterflower/cyborg/hacked
 	)
+	clockwork_modules = list(
+		/obj/item/clock_module/abscond,
+		/obj/item/clock_module/vanguard,
+		/obj/item/clockwork/weapon/brass_battlehammer
+	)

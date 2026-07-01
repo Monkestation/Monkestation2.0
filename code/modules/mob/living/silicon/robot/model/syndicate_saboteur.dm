@@ -37,7 +37,6 @@
 	sight_vision_thermal.Grant(cyborg_owner)
 	sight_vision_ref = WEAKREF(sight_vision_thermal)
 
-
 /datum/robot_model/saboteur/operative
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,

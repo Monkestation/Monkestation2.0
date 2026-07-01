@@ -31,63 +31,45 @@
 	var/innate_ionpulse = FALSE
 	/// Should our owner be locked while transforming into this model?
 	var/locked_transform = TRUE
-	/// The atom that only exists to have a storage datum for us to use.
-	var/atom/inventory_holder
 	/// The weakref to the ability that toggles their sight vision, if any.
 	var/datum/weakref/sight_vision_ref
 
-/datum/robot_model/New(mob/living/silicon/robot/new_cyborg_owner, has_inventory = TRUE)
-	if(!has_inventory)
-		inventory_holder = new
-		inventory_holder.create_storage(storage_type = /datum/storage/cyborg_internal_storage)
-	if(new_cyborg_owner)
-		cyborg_owner = new_cyborg_owner
-		if(inventory_holder)
-			inventory_holder.atom_storage.set_real_location(cyborg_owner)
-		initialize_all_modules()
-		rebuild_usable_modules()
+/datum/robot_model/New(mob/living/silicon/robot/new_cyborg_owner)
 	LAZYOR(available_skins, default_skin)
+	if(!new_cyborg_owner) // On occasion, we want the datum only.
+		return
+	cyborg_owner = new_cyborg_owner
+	for(var/obj/item/basic_module_typepath as anything in basic_modules)
+		var/obj/item/itemized_module = new basic_module_typepath(cyborg_owner.internal_inventory)
+		basic_modules += itemized_module
+		basic_modules -= basic_module_typepath
+	for(var/obj/item/emagged_module_typepath as anything in emagged_modules)
+		var/obj/item/itemized_module = new emagged_module_typepath(cyborg_owner.internal_inventory)
+		emagged_modules += itemized_module
+		emagged_modules -= emagged_module_typepath
+	for(var/obj/item/clockwork_module_typepath as anything in clockwork_modules)
+		var/obj/item/itemized_module = new clockwork_module_typepath(cyborg_owner.internal_inventory)
+		clockwork_modules += itemized_module
+		clockwork_modules -= clockwork_module_typepath
+	for(var/obj/item/external_module_typepath as anything in external_modules)
+		var/obj/item/itemized_module = new external_module_typepath(cyborg_owner.internal_inventory)
+		external_modules += itemized_module
+		external_modules -= external_module_typepath
+	rebuild_usable_modules()
 
 /datum/robot_model/Destroy()
-	if(inventory_holder)
-		QDEL_NULL(inventory_holder)
+	if(!QDELETED(cyborg_owner))
+		cyborg_owner.drop_all_held_items() // Precaution to make sure everything qdels with no issue.
+		QDEL_LIST(cyborg_owner.internal_inventory.contents) // Getting rid of all the model's items.
+	usable_modules.Cut()
+	emagged_modules.Cut()
+	clockwork_modules.Cut()
+	external_modules.Cut()
+	energy_storages.Cut()
 	QDEL_NULL(sight_vision_ref)
 	return ..()
 
-/// Initializes any typepaths for many module lists. This does not include the usable module list.
-/datum/robot_model/proc/initialize_all_modules()
-	if(!cyborg_owner || !inventory_holder)
-		return
-	for(var/obj/item/possible_module as anything in basic_modules)
-		if(!ispath(possible_module))
-			continue
-		var/obj/item/itemized_module = new possible_module(cyborg_owner) // Some items want to be created on the cyborg first.
-		itemized_module.forceMove(inventory_holder)
-		basic_modules += itemized_module
-		basic_modules -= possible_module
-	for(var/obj/item/possible_module as anything in emagged_modules)
-		if(!ispath(possible_module))
-			continue
-		var/obj/item/itemized_module = new possible_module(cyborg_owner)
-		itemized_module.forceMove(inventory_holder)
-		emagged_modules += itemized_module
-		emagged_modules -= possible_module
-	for(var/obj/item/possible_module as anything in clockwork_modules)
-		if(!ispath(possible_module))
-			continue
-		var/obj/item/itemized_module = new possible_module(cyborg_owner)
-		itemized_module.forceMove(inventory_holder)
-		clockwork_modules += itemized_module
-		clockwork_modules -= possible_module
-	for(var/obj/item/possible_module as anything in external_modules)
-		if(!ispath(possible_module))
-			continue
-		var/obj/item/itemized_module = new possible_module(cyborg_owner)
-		itemized_module.forceMove(inventory_holder)
-		external_modules += itemized_module
-		external_modules -= possible_module
-
-/// Rebuilds the usable module list.
+/// Rebuilds the usable module list in a specific order.
 /datum/robot_model/proc/rebuild_usable_modules()
 	if(!cyborg_owner)
 		return
@@ -117,7 +99,7 @@
 
 /// Adds an module.
 /datum/robot_model/proc/add_module(obj/item/module_to_add, externally_added, requires_rebuild)
-	if(!inventory_holder)
+	if(!cyborg_owner)
 		return
 	if(isstack(module_to_add))
 		var/obj/item/stack/sheet_module = module_to_add
@@ -126,7 +108,7 @@
 		if(istype(sheet_module.source))
 			sheet_module.cost = max(sheet_module.cost, 1) // Must not cost 0 to prevent div/0 errors.
 			sheet_module.is_cyborg = TRUE
-	module_to_add.forceMove(inventory_holder)
+	module_to_add.forceMove(cyborg_owner.internal_inventory)
 	module_to_add.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	module_to_add.obj_flags |= ABSTRACT
 	usable_modules += module_to_add

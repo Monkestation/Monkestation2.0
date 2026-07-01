@@ -23,6 +23,12 @@
 	)
 	emagged_modules = list(
 		/obj/item/stamp/chameleon,
-		/obj/item/borg/paperplane_crossbow,
+		/obj/item/borg/paperplane_crossbow
+	)
+	clockwork_modules = list(
+		/obj/item/clock_module/abscond,
+		/obj/item/gun/ballistic/bow/clockwork,
+		/obj/item/clock_module/stargazer,
+		/obj/item/clock_module/sigil_transmission
 	)
 	radio_channels = list(RADIO_CHANNEL_SUPPLY)

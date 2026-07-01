@@ -27,6 +27,13 @@
 	emagged_modules = list(
 		/obj/item/reagent_containers/spray/cyborg_lube
 	)
+	clockwork_modules = list(
+		/obj/item/clock_module/abscond,
+		/obj/item/clock_module/sigil_submission,
+		/obj/item/clock_module/kindle,
+		/obj/item/clock_module/vanguard,
+		/obj/item/clockwork/weapon/brass_spear
+	)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	/// The weakref to the wash toggle action we own.
 	var/datum/weakref/wash_toggle_ref

@@ -12,6 +12,12 @@
 	emagged_modules = list(
 		/obj/item/gun/energy/laser/cyborg
 	)
+	clockwork_modules = list(
+		/obj/item/clock_module/abscond,
+		/obj/item/clockwork/weapon/brass_spear,
+		/obj/item/clock_module/ocular_warden,
+		/obj/item/clock_module/vanguard
+	)
 	radio_channels = list(RADIO_CHANNEL_SECURITY)
 	traits = list(TRAIT_PUSHIMMUNE)
 

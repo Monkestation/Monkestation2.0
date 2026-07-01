@@ -35,6 +35,15 @@
 	emagged_modules = list(
 		/obj/item/reagent_containers/borghypo/borgshaker/hacked
 	)
+	clockwork_modules = list(
+		/obj/item/clock_module/abscond,
+		/obj/item/clock_module/vanguard,
+		/obj/item/clock_module/sigil_submission,
+		/obj/item/clock_module/kindle,
+		/obj/item/clock_module/sentinels_compromise,
+		/obj/item/clockwork/replica_fabricator
+	)
+
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 
 /datum/robot_model/service/on_model_removed()

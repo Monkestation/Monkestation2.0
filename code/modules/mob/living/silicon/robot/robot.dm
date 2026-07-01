@@ -33,6 +33,7 @@
 	if(ispath(cell))
 		cell = new cell(src)
 
+	internal_inventory = new /obj/item/storage/cyborg(src)
 	create_modularInterface()
 
 	apply_skin(current_skin)
@@ -130,6 +131,7 @@
 	if(shell)
 		GLOB.available_ai_shells -= src
 
+	QDEL_NULL(internal_inventory)
 	QDEL_NULL(modularInterface)
 	QDEL_NULL(wires)
 	QDEL_NULL(model)
@@ -957,7 +959,7 @@
 		balloon_alert(src, "can't transform right now!")
 		return FALSE
 	apply_skin(chosen_robot_skin)
-	apply_model(chosen_robot_model)
+	apply_model(chosen_robot_model, TRUE)
 
 /// Prompts the cyborg with a radial wheel to pick a model that they want.
 /mob/living/silicon/robot/proc/prompt_model_selection()
@@ -972,7 +974,7 @@
 
 /// Prompts the cyborg with a radial wheel to pick a skin that they want.
 /mob/living/silicon/robot/proc/prompt_skin_selection(datum/robot_model/robot_model_typepath)
-	var/datum/robot_model/temporary_robot_model = new robot_model_typepath(inventoryless = TRUE) // We just want one of its list.
+	var/datum/robot_model/temporary_robot_model = new robot_model_typepath() // We just want one of its list.
 	var/list/reskin_icons = list()
 	for(var/datum/robot_skin/robot_skin as anything in temporary_robot_model.available_skins)
 		reskin_icons[robot_skin] = image(icon = robot_skin.icon, icon_state = robot_skin.icon_state)
@@ -1027,10 +1029,10 @@
 
 /// Applies a skin to the cyborg.
 /mob/living/silicon/robot/proc/apply_skin(datum/robot_skin/applied_skin)
-	if(current_skin)
+	if(islist(current_skin.traits))
 		remove_traits(current_skin.traits, REF(current_skin))
 	if(ispath(applied_skin))
-		applied_skin = new
+		applied_skin = new applied_skin()
 	current_skin = applied_skin
 	icon = current_skin.icon
 	icon_state = applied_skin.icon_state
@@ -1059,3 +1061,6 @@
 	apply_model(/datum/robot_model)
 	revert_shell()
 	return TRUE
+
+/obj/item/storage/cyborg
+	storage_type = /datum/storage/cyborg_internal_storage

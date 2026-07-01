@@ -20,6 +20,15 @@
 	emagged_modules = list(
 		/obj/item/borg/stun
 	)
+	clockwork_modules = list(
+		/obj/item/clock_module/abscond,
+		/obj/item/clock_module/vanguard,
+		/obj/item/clock_module/ocular_warden,
+		/obj/item/clock_module/sentinels_compromise,
+		/obj/item/clock_module/sigil_transmission,
+		/obj/item/gun/ballistic/bow/clockwork
+	)
+
 	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
 	traits = list(TRAIT_NEGATES_GRAVITY)
 	/// The weakref to the energy shield toggle action we own.

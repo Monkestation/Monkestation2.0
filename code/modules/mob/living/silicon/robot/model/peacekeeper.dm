@@ -15,6 +15,12 @@
 	emagged_modules = list(
 		/obj/item/reagent_containers/borghypo/peace/hacked
 	)
+	clock_modules = list(
+		/obj/item/clock_module/abscond,
+		/obj/item/clock_module/vanguard,
+		/obj/item/clock_module/kindle,
+		/obj/item/clock_module/sigil_submission
+	)
 	traits = list(TRAIT_PUSHIMMUNE)
 
 /datum/robot_model/peacekeeper/do_transform_animation()

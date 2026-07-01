@@ -1,24 +1,31 @@
 /datum/robot_energy_storage
+	/// The name that is displayed in the status tab.
 	var/name = "Generic energy storage"
+	/// The maximum amount of energy.
 	var/max_energy = 30000
-	var/recharge_rate = 1000
+	/// The current amount of energy.
 	var/energy
-	///Whether this resource should refill from the aether inside a charging station.
+	/// The amount of energy to recharge.
+	var/recharge_rate = 1000
+	/// Is this resource renewable? Renewable resources will refill from the aether, just by charging in a cyborg recharger.
 	var/renewable = TRUE
+	/// If this resource is not renewable, what material should we drain from the cyborg recharger to recharge this?
 	var/datum/material/mat_type
 
 /datum/robot_energy_storage/New(datum/robot_model/model)
 	energy = max_energy
-	if(model)
-		model.energy_storages |= src
-		RegisterSignal(model.cyborg_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
-		RegisterSignal(model, COMSIG_QDELETING, PROC_REF(unregister_from_model))
+	if(!model)
+		return
+	model.energy_storages |= src
+	RegisterSignal(model.cyborg_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+	RegisterSignal(model, COMSIG_QDELETING, PROC_REF(unregister_from_model))
 
 /datum/robot_energy_storage/proc/unregister_from_model(datum/robot_model/model)
 	SIGNAL_HANDLER
-	if(model)
-		model.energy_storages -= src
-		UnregisterSignal(model.cyborg_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
+	if(!model)
+		return
+	model.energy_storages -= src
+	UnregisterSignal(model.cyborg_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
 
 /datum/robot_energy_storage/proc/get_status_tab_item(mob/living/silicon/robot/source, list/items)
 	SIGNAL_HANDLER

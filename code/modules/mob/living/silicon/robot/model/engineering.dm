@@ -29,6 +29,14 @@
 	emagged_modules = list(
 		/obj/item/borg/stun,
 	)
+	clockwork_modules = list(
+		/obj/item/clock_module/abscond,
+		/obj/item/clock_module/ocular_warden,
+		/obj/item/clock_module/tinkerers_cache,
+		/obj/item/clock_module/stargazer,
+		/obj/item/clockwork/replica_fabricator,
+		/obj/item/clock_module/sigil_transmission
+	)
 	radio_channels = list(RADIO_CHANNEL_ENGINEERING)
 	traits = list(TRAIT_NEGATES_GRAVITY, TRAIT_KNOW_ENGI_WIRES, TRAIT_KNOW_ROBO_WIRES)
 

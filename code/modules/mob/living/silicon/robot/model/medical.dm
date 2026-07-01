@@ -26,5 +26,12 @@
 	emagged_modules = list(
 		/obj/item/reagent_containers/borghypo/medical/hacked
 	)
+	clockwork_modules = list(
+		/obj/item/clock_module/abscond,
+		/obj/item/clock_module/sentinels_compromise,
+		/obj/item/clock_module/prosperity_prism,
+		/obj/item/clock_module/vanguard,
+		/obj/item/clock_module/sigil_transmission
+	)
 	radio_channels = list(RADIO_CHANNEL_MEDICAL)
 	traits = list(TRAIT_PUSHIMMUNE)

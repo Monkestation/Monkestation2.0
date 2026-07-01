@@ -22,7 +22,7 @@
  * to put items in, you can click on the slot you took it out from, or use the dedicated "store" button.
  */
 /datum/storage/cyborg_internal_storage/orient_storage()
-	var/mob/living/silicon/robot/cyborg_owner = real_location // TODO: this is shit. god save me
+	var/mob/living/silicon/robot/cyborg_owner = real_location.loc
 	var/datum/robot_model/model = cyborg_owner.model
 
 	var/adjusted_contents = length(model.usable_modules)

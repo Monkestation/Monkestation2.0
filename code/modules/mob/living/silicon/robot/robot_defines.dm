@@ -19,15 +19,20 @@
 	held_items = list(null, null, null) //we use held_items for the module holding, because that makes sense to do!
 	default_hand_amount = 3
 
-	/// The model that we are currently using. Will create and replaced itself on Initialize.
+	/**
+	 * The model that we are currently using. Will create and replaced itself on Initialize.
+	 *
+	 * Do not directly set this outside of Initialize! Use [/proc/apply_model] instead!
+	 */
 	var/datum/robot_model/model = /datum/robot_model
-	/// The skin that we are currently using. Do not directly set this outside of Initialize! Use [/proc/apply_skin] instead!
+	/**
+	 * The skin that we are currently using.
+	 *
+	 * Do not directly set this outside of Initialize! Use [/proc/apply_skin] instead!
+	 */
 	var/datum/robot_skin/current_skin = /datum/robot_skin/standard/default
-
-	///Represents the cyborg's model (engineering, medical, etc.)
-	//var/datum/robot_model/model = null
-	///Variable to store a cyborg's model type incase someone uses a transform module on a cyborg with no client.
-	//var/pending_model = null
+	/// The inventory where we keep all of our items.
+	var/obj/item/storage/internal_inventory
 
 	radio = /obj/item/radio/borg
 
