@@ -20,7 +20,8 @@
 		/obj/item/stack/medical/gauze,
 		/obj/item/stack/medical/bone_gel,
 		/obj/item/borg/apparatus/organ_storage,
-		/obj/item/borg/lollipop
+		/obj/item/borg/lollipop,
+		/obj/item/holosign_creator/medical/treatment_zone
 	)
 	emagged_modules = list(
 		/obj/item/reagent_containers/borghypo/medical/hacked
