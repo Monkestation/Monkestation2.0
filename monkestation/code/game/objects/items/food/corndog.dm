@@ -5,7 +5,7 @@
 	name = "raw sausage on a stick"
 	desc = "Simply put, a sausage on a stick."
 	trash_type = /obj/item/popsicle_stick
-	icon = 'monkestation/icons/obj/food/corndog.dmi'
+	icon = 'icons/obj/food/corndog.dmi'
 	icon_state = "rawsausage_stick"
 	food_reagents = list(
 	/datum/reagent/consumable/nutriment/protein = 5,
@@ -39,7 +39,7 @@
 	trash_type = /obj/item/popsicle_stick
 	name = "raw corndog"
 	desc = "A battered hot dog brimming with potential."
-	icon = 'monkestation/icons/obj/food/corndog.dmi'
+	icon = 'icons/obj/food/corndog.dmi'
 	icon_state = "corndog_raw_stick"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 4,
@@ -70,7 +70,7 @@
 	trash_type = /obj/item/popsicle_stick
 	name = "corndog"
 	desc = "The best thing to come out of 1900s America."
-	icon = 'monkestation/icons/obj/food/corndog.dmi'
+	icon = 'icons/obj/food/corndog.dmi'
 	icon_state = "corndog_stick"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 8,

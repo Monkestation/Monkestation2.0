@@ -1,16 +1,16 @@
 /turf/open/floor/circuit/green/anim/update_icon_state()
-	icon = on ? 'icons/turf/floors.dmi' : 'monkestation/icons/turf/floors.dmi'
+	icon = on ? 'icons/turf/floors.dmi' : 'icons/turf/floors.dmi'
 	return ..()
 
 /turf/open/floor/circuit/red/anim/update_icon_state()
-	icon = on ? 'icons/turf/floors.dmi' : 'monkestation/icons/turf/floors.dmi'
+	icon = on ? 'icons/turf/floors.dmi' : 'icons/turf/floors.dmi'
 	return ..()
 
 /obj/item/stack/tile/sandy_dirt
 	name = "sandy dirt tiles"
 	singular_name = "sandy dirt tile"
 	desc = "A flat tile of dirt."
-	icon = 'monkestation/icons/obj/tiles.dmi'
+	icon = 'icons/obj/tiles.dmi'
 	icon_state = "tile_sandy_dirt"
 	inhand_icon_state = "tile-sepia"
 	turf_type = /turf/open/floor/sandy_dirt
@@ -40,7 +40,7 @@
 	name = "silk floor tile"
 	singular_name = "silk floor tile"
 	desc = "Soft and luxurious."
-	icon = 'monkestation/icons/obj/tiles.dmi'
+	icon = 'icons/obj/tiles.dmi'
 	icon_state = "tile_silk"
 	inhand_icon_state = "tile"
 	turf_type = /turf/open/floor/silk
@@ -52,7 +52,7 @@
 /turf/open/floor/silk
 	name = "silk floor"
 	desc = "Soft and luxurious."
-	icon = 'monkestation/icons/turf/floors.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "silk"
 	floor_tile = /obj/item/stack/tile/silk
 	bullet_bounce_sound = null

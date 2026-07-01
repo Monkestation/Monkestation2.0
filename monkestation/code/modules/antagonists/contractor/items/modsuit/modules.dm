@@ -5,7 +5,7 @@
 		by placing it into the module with the baton in hand. \
 		Remove an inserted baton by using a wrench on the module while it is removed from the suit."
 	icon_state = "holster"
-	icon = 'monkestation/icons/obj/items/modsuit_modules.dmi'
+	icon = 'icons/obj/items/modsuit_modules.dmi'
 	module_type = MODULE_ACTIVE
 	complexity = 3
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
@@ -70,7 +70,7 @@
 			illegal module uses a hardlight hook to forcefully pull \
 			a target towards you at high speed, knocking them down and \
 			partially exhausting them."
-	icon = 'monkestation/icons/obj/guns/magic.dmi'
+	icon = 'icons/obj/guns/magic.dmi'
 	icon_state = "contractor_hook"
 	incompatible_modules = list(/obj/item/mod/module/scorpion_hook)
 	module_type = MODULE_ACTIVE

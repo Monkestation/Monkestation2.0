@@ -1,10 +1,10 @@
 /obj/item/comically_large_spoon
 	name = "comically large spoon"
 	desc = "For when you're only allowed one spoonful of something."
-	icon = 'monkestation/icons/obj/items_and_weapons.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/back.dmi'
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/melee_righthand.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
+	worn_icon = 'icons/mob/clothing/back.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	inhand_icon_state = "comically_large_spoon"
 	base_icon_state = "comically_large_spoon"
 	icon_state = "comically_large_spoon"
@@ -68,7 +68,7 @@
 	return MANUAL_SUICIDE
 
 /obj/item/comically_large_spoon/proc/on_wield(atom/source, mob/living/user)
-	hitsound = 'monkestation/sound/weapons/bat_hit.ogg'
+	hitsound = 'sound/weapons/bat_hit.ogg'
 	block_chance = block_chance_wielded
 	demolition_mod = demolition_mod_wielded
 

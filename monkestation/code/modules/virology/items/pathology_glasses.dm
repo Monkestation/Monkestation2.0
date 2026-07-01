@@ -2,8 +2,8 @@
 	name = "viral analyzer goggles"
 	desc = "A pair of goggles fitted with an analyzer for viral particles and reagents. Comes with a handy toggle for avoiding visual overload."
 
-	icon = 'monkestation/icons/obj/clothing/glasses.dmi'
-	worn_icon = 'monkestation/icons/obj/clothing/eyes.dmi'
+	icon = 'icons/obj/clothing/glasses.dmi'
+	worn_icon = 'icons/obj/clothing/eyes.dmi'
 	icon_state = "pathology_on"
 	worn_icon_state = "pathology_on"
 
@@ -17,8 +17,8 @@
 	name = "viral analyzer glasses"
 	desc = "A pair of sunglasses fitted with an analyzer for viral particles and reagents. Comes with a handy toggle for avoiding visual overload."
 
-	icon = 'monkestation/icons/obj/clothing/glasses.dmi'
-	worn_icon = 'monkestation/icons/obj/clothing/eyes.dmi'
+	icon = 'icons/obj/clothing/glasses.dmi'
+	worn_icon = 'icons/obj/clothing/eyes.dmi'
 	icon_state = "sunhudpatho_on"
 	worn_icon_state = "sunhudpatho_on"
 
@@ -32,8 +32,8 @@
 	name = "night vision viral analyzer goggles"
 	desc = "A pair of night vision goggles fitted with an analyzer for viral particles and reagents. Comes with a handy toggle for avoiding visual overload."
 
-	icon = 'monkestation/icons/obj/clothing/glasses.dmi'
-	worn_icon = 'monkestation/icons/obj/clothing/eyes.dmi'
+	icon = 'icons/obj/clothing/glasses.dmi'
+	worn_icon = 'icons/obj/clothing/eyes.dmi'
 	icon_state = "pathohudnight_on"
 	worn_icon_state = "pathohudnight_on"
 

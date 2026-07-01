@@ -1,7 +1,7 @@
 /obj/item/mmi/posibrain/soul_vessel
 	name = "Soul Vessel"
 	desc = "A cube of gears, made to capture and store the vitality of living beings."
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_objects.dmi'
 	icon_state = "soul_vessel"
 	base_icon_state = "soul_vessel"
 	req_access = list()

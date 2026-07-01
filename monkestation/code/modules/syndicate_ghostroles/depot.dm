@@ -138,11 +138,11 @@
 /obj/item/weldingtool/electric/hacked_raynewelder //depot exclusive gamer loot now, not even necessary
 	name = "modified laser welding tool"
 	desc = "A Rayne corp laser cutter and welder. This one seems to have been refitted by the Syndicate for general salvage use, though the removal of its safety measures has slightly reduced its efficiency."
-	icon = 'monkestation/icons/obj/rayne_corp/rayne.dmi'
+	icon = 'icons/obj/rayne_corp/rayne.dmi'
 	icon_state = "raynewelder"
 	inhand_icon_state = "raynewelder"
-	lefthand_file = 'monkestation/icons/mob/inhands/equipment/engineering_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/equipment/engineering_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/engineering_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/engineering_righthand.dmi'
 	light_power = 1
 	light_color = LIGHT_COLOR_FLARE
 	tool_behaviour = NONE

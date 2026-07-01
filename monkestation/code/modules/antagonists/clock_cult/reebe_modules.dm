@@ -115,7 +115,7 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 //for the portal from the outpost to reebe
 /obj/effect/landmark/abscond_marker
 	name = "abscond marker"
-	icon = 'monkestation/icons/effects/landmarks_static.dmi'
+	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "clockwork_orange"
 
 /obj/effect/landmark/abscond_marker/Initialize(mapload)
@@ -128,7 +128,7 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 
 /obj/effect/servant_blocker
 	name = "servant Blocker"
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_effects.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_effects.dmi'
 	icon_state = "servant_blocker"
 	anchored = TRUE
 

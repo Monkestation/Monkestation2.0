@@ -8036,11 +8036,11 @@
 "cuW" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/holopad,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "cvi" = (
@@ -48106,6 +48106,16 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
+"oYr" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "oYA" = (
 /obj/machinery/cryopod,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -57166,9 +57176,6 @@
 /turf/open/floor/plating,
 /area/station/science/lab)
 "rOR" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -68412,6 +68419,10 @@
 "vuj" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "vuk" = (
@@ -71307,6 +71318,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark/corner{
 	dir = 8
 	},
@@ -106255,7 +106267,7 @@ hRo
 sne
 tUe
 pzC
-maW
+oYr
 wjD
 fNT
 ijQ
