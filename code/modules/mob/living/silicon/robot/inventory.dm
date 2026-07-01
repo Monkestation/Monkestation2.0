@@ -57,7 +57,7 @@
 	transferItemToLoc(item_module, newloc = internal_inventory)
 
 /mob/living/silicon/robot/doUnEquip(obj/item/item_dropping, force, atom/newloc, no_move, invdrop, silent)
-	// Borgs can drop items that aren't directly associated with our model / internal inventory, such as: items from our apparatus module(s).
+	// Cyborgs can drop items that aren't directly associated with our model / internal inventory, such as: items from our apparatus module(s).
 	if(isnull(model) || !(item_dropping in model.usable_modules))
 		return ..()
 

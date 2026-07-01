@@ -26,6 +26,7 @@
 		/obj/item/card/emag,
 		/obj/item/borg/charger
 	)
+	innate_ionpulse = TRUE
 	traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY, TRAIT_KNOW_ENGI_WIRES, TRAIT_KNOW_ROBO_WIRES, TRAIT_CAN_CLIMB_DISPOSALS)
 
 /datum/robot_model/syndicate_saboteur/New(mob/living/silicon/robot/new_cyborg_owner)

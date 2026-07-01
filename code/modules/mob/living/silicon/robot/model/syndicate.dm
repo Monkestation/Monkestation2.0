@@ -12,6 +12,7 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/pinpointer/syndicate_cyborg
 	)
+	innate_ionpulse = TRUE
 	traits = list(TRAIT_PUSHIMMUNE)
 
 /datum/robot_model/syndicate/New(mob/living/silicon/robot/new_cyborg_owner)
