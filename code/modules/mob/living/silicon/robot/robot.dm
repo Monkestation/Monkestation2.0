@@ -36,9 +36,8 @@
 	internal_inventory = new /obj/item/storage/cyborg(src)
 	create_modularInterface()
 
-	apply_skin(current_skin)
-	model = new
-	model.rebuild_usable_modules()
+	apply_skin(current_skin, FALSE)
+	apply_model(model, TRUE, FALSE)
 
 	if(!laws)
 		make_laws()
@@ -991,7 +990,7 @@
 	return TRUE
 
 /// Applies a model to the cyborg.
-/mob/living/silicon/robot/proc/apply_model(datum/robot_model, performs_animation = FALSE, force_default_skin = FALSE)
+/mob/living/silicon/robot/proc/apply_model(datum/robot_model, performs_animation = FALSE, force_default_skin = FALSE, should_notify_ai = TRUE)
 	drop_all_held_items()
 	// Drops all of the items that may be stored by the cyborg
 	for(var/obj/item/storage/bag in model.usable_modules)
@@ -1001,21 +1000,16 @@
 	for(var/obj/item/borg/upgrade/upgrade_item in upgrades)
 		upgrade_item.forceMove(get_turf(src))
 	REMOVE_TRAITS_IN(src, MODEL_TRAIT)
-	model.on_model_removed()
 	QDEL_NULL(model)
 
-	var/datum/robot_model/new_robot_model = new robot_model(src)
-	model = new_robot_model
-	model.on_model_given()
-
+	model = new robot_model(src)
 	ionpulse = model.innate_ionpulse
 	designation = model.name
 	add_traits(model.traits, MODEL_TRAIT)
 	if(hands)
 		hands.icon_state = model.hud_icon_state
-
 	if(force_default_skin)
-		apply_skin(new_robot_model.default_skin, FALSE)
+		apply_skin(model.default_skin, FALSE)
 
 	radio.recalculateChannels()
 	set_modularInterface_theme()
@@ -1026,9 +1020,12 @@
 	update_icons()
 
 	log_silicon("CYBORG: [key_name(src)] has transformed into the [model.name] model.")
+	logevent("Chassis model has been set to [name].")
+	if(should_notify_ai)
+		notify_ai(AI_NOTIFICATION_NEW_MODEL)
 	INVOKE_ASYNC(src, PROC_REF(updatename))
 	if(performs_animation)
-		INVOKE_ASYNC(new_robot_model, TYPE_PROC_REF(/datum/robot_model, do_transform_animation))
+		INVOKE_ASYNC(src, PROC_REF(do_transform_animation))
 
 /// Applies a skin to the cyborg.
 /mob/living/silicon/robot/proc/apply_skin(datum/robot_skin/applied_skin, should_update = TRUE)
@@ -1055,16 +1052,38 @@
 	if(should_update)
 		update_icons()
 
-/mob/living/silicon/robot/proc/ResetModel()
+/// Resets the model to default.
+/mob/living/silicon/robot/proc/reset_model()
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
-	drop_all_held_items()
-
 	logevent("Chassis model has been reset.")
 	log_silicon("CYBORG: [key_name(src)] has reset their cyborg model.")
-
 	apply_model(/datum/robot_model, FALSE, TRUE)
 	revert_shell()
 	return TRUE
 
-/obj/item/storage/cyborg
-	storage_type = /datum/storage/cyborg_internal_storage
+/// Prepares and starts the transformation animation.
+/mob/living/silicon/robot/proc/do_transform_animation()
+	cut_overlays()
+	LAZYNULL(managed_overlays) // Or else our overlays won't get re-added (since we are likely to have exact same overlays).
+	setDir(SOUTH)
+	do_transform_delay()
+
+/// Performs the transformation animation.
+/mob/living/silicon/robot/proc/do_transform_delay()
+	sleep(0.1 SECONDS)
+	flick("[current_skin.icon_state]_transform", src)
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
+	if(model.locked_transform)
+		SetLockdown(TRUE)
+		set_anchored(TRUE)
+	sleep(0.1 SECONDS)
+	for(var/i in 1 to 4)
+		playsound(src, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
+		sleep(0.7 SECONDS)
+	SetLockdown(FALSE)
+	setDir(SOUTH)
+	set_anchored(FALSE)
+	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
+	updatehealth()
+	update_icons()
+	SSblackbox.record_feedback("tally", "cyborg_modules", 1, model)

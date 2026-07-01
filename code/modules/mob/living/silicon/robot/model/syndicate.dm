@@ -14,8 +14,13 @@
 	)
 	traits = list(TRAIT_PUSHIMMUNE)
 
-/datum/robot_model/syndicate/on_model_removed()
-	cyborg_owner.faction |= FACTION_SILICON // AI is your BFF now!
+/datum/robot_model/syndicate/New(mob/living/silicon/robot/new_cyborg_owner)
+	. = ..()
+	if(!cyborg_owner)
+		return
+	cyborg_owner.faction -= FACTION_SILICON
 
-/datum/robot_model/syndicate/on_model_given()
-	cyborg_owner.faction -= FACTION_SILICON // AI hates us!
+/datum/robot_model/syndicate/Destroy()
+	if(cyborg_owner)
+		cyborg_owner.faction |= FACTION_SILICON
+	return ..()

@@ -21,8 +21,14 @@
 	)
 	traits = list(TRAIT_PUSHIMMUNE)
 
-/datum/robot_model/syndicate_medical/on_model_removed()
-	cyborg_owner.faction |= FACTION_SILICON
-
-/datum/robot_model/syndicate_medical/on_model_given()
+/datum/robot_model/syndicate_medical/New(mob/living/silicon/robot/new_cyborg_owner)
+	. = ..()
+	if(!cyborg_owner)
+		return
 	cyborg_owner.faction -= FACTION_SILICON
+
+/datum/robot_model/syndicate_medical/Destroy()
+	if(cyborg_owner)
+		cyborg_owner.faction |= FACTION_SILICON
+	return ..()
+

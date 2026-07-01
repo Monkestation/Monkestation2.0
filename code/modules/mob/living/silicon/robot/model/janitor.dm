@@ -38,13 +38,18 @@
 	/// The weakref to the wash toggle action we own.
 	var/datum/weakref/wash_toggle_ref
 
-/datum/robot_model/janitor/on_model_removed()
-	QDEL_NULL(wash_toggle_ref)
-
-/datum/robot_model/janitor/on_model_given()
+/datum/robot_model/janitor/New(mob/living/silicon/robot/new_cyborg_owner)
+	. = ..()
+	if(!cyborg_owner)
+		return
 	var/datum/action/wash_toggle = new /datum/action/toggle_buffer(cyborg_owner)
 	wash_toggle.Grant(cyborg_owner)
 	wash_toggle_ref = WEAKREF(wash_toggle)
+
+/datum/robot_model/janitor/Destroy()
+	if(cyborg_owner)
+		QDEL_NULL(wash_toggle_ref)
+	return ..()
 
 /datum/robot_model/janitor/on_cyborg_charge(coeff)
 	. = ..()

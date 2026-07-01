@@ -267,13 +267,13 @@
 		modularInterface.imprint_id(job_name = "Cyborg")
 	return ..()
 
+/mob/living/silicon/robot/model/syndicate/reset_model()
+	return // Let them stay on the model forever.
+
 /mob/living/silicon/robot/model/syndicate/proc/show_playstyle()
 	if(!playstyle_string)
 		return
 	to_chat(src, playstyle_string)
-
-/mob/living/silicon/robot/model/syndicate/ResetModel()
-	return
 
 /mob/living/silicon/robot/model/syndicate/medical
 	model = /datum/robot_model/syndicate_medical

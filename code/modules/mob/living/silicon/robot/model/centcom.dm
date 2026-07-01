@@ -31,16 +31,10 @@
 	)
 	radio_channels = list(RADIO_CHANNEL_CENTCOM)
 
-/datum/robot_model/centcom/on_model_removed()
-	qdel(cyborg_owner.GetComponent(/datum/component/personal_crafting/borg))
-	for(var/atom/movable/screen/craft/button in cyborg_owner.hud_used.static_inventory)
-		qdel(button)
-	qdel(cyborg_owner.radio.keyslot)
-	cyborg_owner.radio.recalculateChannels()
-	cyborg_owner.emagged = FALSE
-	cyborg_owner.centcom = FALSE
-
-/datum/robot_model/centcom/on_model_given()
+/datum/robot_model/centcom/New(mob/living/silicon/robot/new_cyborg_owner)
+	. = ..()
+	if(!cyborg_owner)
+		return
 	cyborg_owner.AddComponent(/datum/component/personal_crafting/borg)
 	var/datum/component/personal_crafting/borg/crafting = cyborg_owner.GetComponent(/datum/component/personal_crafting/borg)
 	crafting.forced_mode = TRUE
@@ -60,3 +54,14 @@
 		cyborg_owner.clear_hacked_laws()
 	cyborg_owner.emagged = TRUE
 	cyborg_owner.centcom = TRUE
+
+/datum/robot_model/centcom/Destroy()
+	if(cyborg_owner)
+		qdel(cyborg_owner.GetComponent(/datum/component/personal_crafting/borg))
+		for(var/atom/movable/screen/craft/button in cyborg_owner.hud_used.static_inventory)
+			qdel(button)
+		qdel(cyborg_owner.radio.keyslot)
+		cyborg_owner.radio.recalculateChannels()
+		cyborg_owner.emagged = FALSE
+		cyborg_owner.centcom = FALSE
+	return ..()

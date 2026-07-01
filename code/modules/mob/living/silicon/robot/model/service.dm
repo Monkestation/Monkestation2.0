@@ -55,15 +55,19 @@
 
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 
-/datum/robot_model/service/on_model_removed()
-	qdel(cyborg_owner.GetComponent(/datum/component/personal_crafting/borg))
-	for(var/atom/movable/screen/craft/button in cyborg_owner.hud_used.static_inventory)
-		qdel(button)
+/datum/robot_model/service/Destroy()
+	if(cyborg_owner)
+		qdel(cyborg_owner.GetComponent(/datum/component/personal_crafting/borg))
+		for(var/atom/movable/screen/craft/button in cyborg_owner.hud_used.static_inventory)
+			qdel(button)
+	return ..()
 
-/datum/robot_model/service/on_model_given()
-	cyborg_owner.AddComponent(/datum/component/personal_crafting/borg)
-	var/datum/component/personal_crafting/borg/crafting = cyborg_owner.GetComponent(/datum/component/personal_crafting/borg)
-	crafting.forced_mode = TRUE
-	crafting.mode = TRUE
-	if(cyborg_owner.client)
-		crafting.create_mob_button(cyborg_owner, cyborg_owner.client)
+/datum/robot_model/service/New(mob/living/silicon/robot/new_cyborg_owner)
+	. = ..()
+	if(cyborg_owner)
+		cyborg_owner.AddComponent(/datum/component/personal_crafting/borg)
+		var/datum/component/personal_crafting/borg/crafting = cyborg_owner.GetComponent(/datum/component/personal_crafting/borg)
+		crafting.forced_mode = TRUE
+		crafting.mode = TRUE
+		if(cyborg_owner.client)
+			crafting.create_mob_button(cyborg_owner, cyborg_owner.client)

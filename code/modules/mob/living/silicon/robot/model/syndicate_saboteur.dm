@@ -28,14 +28,19 @@
 	)
 	traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY, TRAIT_KNOW_ENGI_WIRES, TRAIT_KNOW_ROBO_WIRES, TRAIT_CAN_CLIMB_DISPOSALS)
 
-/datum/robot_model/syndicate_saboteur/on_model_removed()
-	cyborg_owner.faction |= FACTION_SILICON
-
-/datum/robot_model/syndicate_saboteur/on_model_given()
+/datum/robot_model/syndicate_saboteur/New(mob/living/silicon/robot/new_cyborg_owner)
+	. = ..()
+	if(!cyborg_owner)
+		return
 	cyborg_owner.faction -= FACTION_SILICON
 	var/datum/action/cooldown/borg_sight_vision/thermal/sight_vision_thermal = new(cyborg_owner)
 	sight_vision_thermal.Grant(cyborg_owner)
 	sight_vision_ref = WEAKREF(sight_vision_thermal)
+
+/datum/robot_model/syndicate_saboteur/Destroy()
+	if(cyborg_owner)
+		cyborg_owner.faction |= FACTION_SILICON
+	return ..()
 
 /datum/robot_model/syndicate_saboteur/operative
 	basic_modules = list(

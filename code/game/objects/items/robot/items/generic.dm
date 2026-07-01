@@ -453,6 +453,9 @@
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_NO_SAFETY_COOLDOWN)
 		user.log_message("used an emagged Cyborg Harm Alarm", LOG_ATTACK)
 
+/obj/item/storage/cyborg
+	storage_type = /datum/storage/cyborg_internal_storage
+
 #undef HUG_MODE_NICE
 #undef HUG_MODE_HUG
 #undef HUG_MODE_SHOCK
