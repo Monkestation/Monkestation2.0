@@ -141,7 +141,7 @@
 		if(SPT_PROB(25, seconds_per_tick))
 			slime.visible_message(span_danger("[slime]'s form begins to lose cohesion, seemingly diluting with the water!"), span_warning("The water starts to dilute your body, dry it off!"))
 
-	else if(wetness.stacks > REGEN_WATER_STACKS && SPT_PROB(25, seconds_per_tick)) //Used for old healing system. Maybe use later? For now increase loss for being soaked.
+	else if(wetness.stacks > REGEN_WATER_STACKS && SPT_PROB(25, seconds_per_tick))
 		to_chat(slime, span_warning("You can't pull your body together, it is dripping wet!"))
 		remove_blood_volume(slime, seconds_per_tick)
 		slime.balloon_alert(slime, "you're dripping wet!")

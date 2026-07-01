@@ -377,5 +377,15 @@
 	return "[id][owner.tag]"
 
 /datum/status_effect/fire_handler/wet_stacks/oozeling/get_examine_text()
-	if(stacks >= HYDROPHOBIA_WETNESS_STACKS)
-		return span_purple("[owner.p_They()] [owner.p_are()] oozing out an oily coating onto [owner.p_their()] outer membrane, water rolling right off.")
+	if(stacks < HYDROPHOBIA_WETNESS_STACKS)
+		return
+	var/ratio = (stacks - HYDROPHOBIA_WETNESS_STACKS) / (stack_limit - HYDROPHOBIA_WETNESS_STACKS) * 100
+	var/msg = "Thin streaks of hydrophobic slime cling to [owner.p_their()] body."
+	switch(ratio)
+		if(76 to 100)
+			msg = "[owner.p_They()] [owner.p_are()] fully enveloped in thick hydrophobic slime."
+		if(51 to 75)
+			msg = "[owner.p_They()] [owner.p_are()] covered in a dense layer of hydrophobic slime."
+		if(26 to 50)
+			msg = "A noticeable layer of hydrophobic slime coats [owner.p_their()] body."
+	return span_purple(msg)
