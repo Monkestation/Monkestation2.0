@@ -37,7 +37,6 @@
 
 /datum/robot_skin/service/kerfus
 	name = "Service Kerfus"
-	icon = CYBORG_ICON_CARGO
 	icon_state = "kerfus_service"
 	icon_state_light = "kerfus_service"
 	hat_offset = 0

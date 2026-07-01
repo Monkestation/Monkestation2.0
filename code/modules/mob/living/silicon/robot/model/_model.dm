@@ -42,6 +42,8 @@
 		inventory_holder.create_storage(storage_type = /datum/storage/cyborg_internal_storage)
 	if(new_cyborg_owner)
 		cyborg_owner = new_cyborg_owner
+		if(inventory_holder)
+			inventory_holder.atom_storage.set_real_location(cyborg_owner)
 		initialize_all_modules()
 		rebuild_usable_modules()
 	LAZYOR(available_skins, default_skin)

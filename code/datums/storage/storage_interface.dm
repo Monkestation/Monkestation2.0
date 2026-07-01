@@ -125,7 +125,7 @@
 
 /// Silicon subtype of storage interface used by their model storage.
 /datum/storage_interface/silicon
-	var/obj/item/robot_model/robot_model
+	var/datum/robot_model/robot_model
 
 /datum/storage_interface/silicon/New(ui_style, datum/storage/parent_storage, mob/user)
 	. = ..()
@@ -150,7 +150,7 @@
 
 	for(var/i in 1 to length(usable_modules))
 		var/atom/movable/item = usable_modules[i]
-		if(item in robot_model.robot.held_items)
+		if(item in robot_model.cyborg_owner.held_items)
 			current_x++
 			if(current_x - screen_start_x < columns)
 				continue

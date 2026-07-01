@@ -168,6 +168,12 @@
 	current_skin = /datum/robot_skin/standard/default
 	icon_state = "robot"
 
+/mob/living/silicon/robot/model/cargo
+	model = /datum/robot_model/cargo
+	current_skin = /datum/robot_skin/cargo/default
+	icon = CYBORG_ICON_CARGO // The icon will change itself later.
+	icon_state = "cargoborg"
+
 /mob/living/silicon/robot/model/centcom
 	model = /datum/robot_model/centcom
 	current_skin = /datum/robot_skin/centcom/default

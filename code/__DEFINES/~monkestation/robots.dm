@@ -7,26 +7,26 @@ GLOBAL_LIST_EMPTY(cyborg_base_models_icon_list)
 /proc/initialize_cyborg_model_lists()
 	if(!length(GLOB.cyborg_model_list))
 		var/valid_cyborg_models = list(
-			"Engineering" = /obj/item/robot_model/engineering,
-			"Medical" = /obj/item/robot_model/medical,
-			"Cargo" = /obj/item/robot_model/cargo, //monkestation edit
-			"Miner" = /obj/item/robot_model/miner,
-			"Janitor" = /obj/item/robot_model/janitor,
-			"Service" = /obj/item/robot_model/service,
-			"Science" = /obj/item/robot_model/science,
-			"Standard" = /obj/item/robot_model/standard,
+			"Engineering" = /datum/robot_model/engineering,
+			"Medical" = /datum/robot_model/medical,
+			"Cargo" = /datum/robot_model/cargo,
+			"Miner" = /datum/robot_model/miner,
+			"Janitor" = /datum/robot_model/janitor,
+			"Service" = /datum/robot_model/service,
+			"Science" = /datum/robot_model/science,
+			"Standard" = /datum/robot_model/standard,
 		)
 		if(!CONFIG_GET(flag/disable_peaceborg))
-			valid_cyborg_models["Peacekeeper"] = /obj/item/robot_model/peacekeeper
+			valid_cyborg_models["Peacekeeper"] = /datum/robot_model/peacekeeper
 		if(!CONFIG_GET(flag/disable_secborg))
-			valid_cyborg_models["Security"] = /obj/item/robot_model/security
+			valid_cyborg_models["Security"] = /datum/robot_model/security
 		GLOB.cyborg_model_list = valid_cyborg_models
 	if(!length(GLOB.cyborg_base_models_icon_list))
 		var/valid_base_models = list()
 		for(var/option in GLOB.cyborg_model_list)
-			var/obj/item/robot_model/model = GLOB.cyborg_model_list[option]
-			var/model_icon = initial(model.cyborg_base_icon)
-			valid_base_models[option] = image(icon = 'icons/mob/silicon/robots.dmi', icon_state = model_icon)
+			var/datum/robot_model/model = GLOB.cyborg_model_list[option]
+			var/datum/robot_skin/skin = model.default_skin
+			valid_base_models[option] = image(icon = skin.icon, icon_state = skin.icon_state)
 		GLOB.cyborg_base_models_icon_list = valid_base_models
 
 #define CYBORG_ICON_CARGO 'monkestation/code/modules/cargoborg/icons/robots_cargo.dmi'
