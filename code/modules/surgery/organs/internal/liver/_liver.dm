@@ -295,6 +295,13 @@
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
 		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
 
+/obj/item/organ/internal/liver/drunkards
+	name = "drunkard's liver"
+
+/obj/item/organ/internal/liver/drunkards/Initialize(mapload, mob_sprite)
+	. = ..()
+	AddComponent(/datum/component/abberant_organ, 200, ORGAN_LIVER, list(/datum/organ_process/reagent_conversion), /datum/organ_trigger/chemical_consume)
+
 #undef HAS_SILENT_TOXIN
 #undef HAS_NO_TOXIN
 #undef HAS_PAINFUL_TOXIN

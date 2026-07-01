@@ -1,35 +1,3 @@
-/datum/surgery_step/heal/proc/get_perfect_information(mob/user, mob/target)
-	if(issilicon(user))
-		return TRUE
-	if(user.is_holding_item_of_type(/obj/item/healthanalyzer))
-		return TRUE
-	for(var/obj/machinery/computer/puter in range(2, target))
-		if(istype(puter, /obj/machinery/computer/operating))
-			var/obj/machinery/computer/operating/op_comp = puter
-			if(op_comp.table?.patient == target)
-				return TRUE
-		if(istype(puter, /obj/machinery/computer/vitals_reader))
-			var/obj/machinery/computer/vitals_reader/vr_comp = puter
-			if(vr_comp.patient == target)
-				return TRUE
-	// melbert todo : add modsuit health analyzer to this
-	return FALSE
-
-/datum/surgery/repair_broken_rib
-	name = "Repair fractured rib (hairline)"
-	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
-	targetable_wound = /datum/wound/blunt/bone/rib_break
-	possible_locs = list(
-		BODY_ZONE_CHEST,
-	)
-	steps = list(
-		/datum/surgery_step/incise,
-		/datum/surgery_step/retract_skin,
-		/datum/surgery_step/clamp_bleeders,
-		/datum/surgery_step/repair_bone_hairline,
-		/datum/surgery_step/close,
-	)
-
 /// Repair internal bleeding
 /datum/surgery/internal_bleeding
 	name = "Repair Internal Bleeding"

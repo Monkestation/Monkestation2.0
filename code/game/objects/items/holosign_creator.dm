@@ -244,7 +244,7 @@
 	icon_state = "signmaker_med"
 	holosign_type = /obj/structure/holosign/barrier/medical
 	creation_time = 3 SECONDS
-	max_signs = 3
+	max_signs = 6
 
 /obj/item/holosign_creator/cyborg
 	name = "Energy Barrier Projector"

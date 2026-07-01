@@ -28,7 +28,6 @@
 
 
 ///// Repair Compound Fracture (Critical)
-///// Repair Compound Fracture (Critical)
 /datum/surgery/repair_bone_compound
 	name = "Repair Compound Fracture"
 	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
@@ -287,5 +286,20 @@
 	qdel(surgery.operated_wound)
 
 	return ..()
+
+/datum/surgery/repair_broken_rib
+	name = "Repair fractured rib (hairline)"
+	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
+	targetable_wound = /datum/wound/blunt/bone/rib_break
+	possible_locs = list(
+		BODY_ZONE_CHEST,
+	)
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/repair_bone_hairline,
+		/datum/surgery_step/close,
+	)
 
 #undef IMPLEMENTS_THAT_FIX_BONES
