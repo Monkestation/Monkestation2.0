@@ -17,9 +17,9 @@
 	)
 	traits = list(TRAIT_PUSHIMMUNE)
 
-/*
 /datum/robot_model/peacekeeper/do_transform_animation()
-	..()
-	to_chat(loc, "<span class='userdanger'>You are an Enforcer and Upholder of your active lawset. \
-	You are not a security member and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>")
-*/
+	. = ..()
+	if(!.)
+		return
+	to_chat(cyborg_owner, span_userdanger("You are an Enforcer and Upholder of your active lawset. \
+		You are not a security member and you are expected to follow orders and prevent harm above all else. Space law means nothing to you."))

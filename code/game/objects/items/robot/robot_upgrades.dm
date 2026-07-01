@@ -687,7 +687,7 @@
 		return
 	if(!new_model)
 		return FALSE
-	borg.model.transform_to(new_model, FALSE)
+	borg.apply_model(new_model, FALSE) // No skins!
 
 /obj/item/borg/upgrade/transform/clown
 	name = "borg model picker (Clown)"

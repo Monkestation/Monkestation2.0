@@ -1,3 +1,4 @@
+
 /datum/robot_model/medical
 	name = "Medical"
 	hud_icon_state = "medical"

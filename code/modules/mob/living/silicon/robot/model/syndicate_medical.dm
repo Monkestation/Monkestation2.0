@@ -21,14 +21,8 @@
 	)
 	traits = list(TRAIT_PUSHIMMUNE)
 
-/*
-/datum/robot_model/syndicate_medical/rebuild_modules()
-	..()
-	var/mob/living/silicon/robot/cyborg = loc
-	cyborg.faction -= FACTION_SILICON //ai turrets
+/datum/robot_model/syndicate_medical/on_model_removed()
+	cyborg_owner.faction |= FACTION_SILICON
 
-/datum/robot_model/syndicate_medical/remove_module(obj/item/removed_module)
-	..()
-	var/mob/living/silicon/robot/cyborg = loc
-	cyborg.faction |= FACTION_SILICON //ai is your bff now!
-*/
+/datum/robot_model/syndicate_medical/on_model_given()
+	cyborg_owner.faction -= FACTION_SILICON

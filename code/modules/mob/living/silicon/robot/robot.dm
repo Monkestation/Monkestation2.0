@@ -157,25 +157,13 @@
 /mob/living/silicon/robot/proc/pick_model()
 	if(model.type != /obj/item/robot_model)
 		return
-
 	if(wires.is_cut(WIRE_RESET_MODEL))
 		to_chat(src,span_userdanger("ERROR: Model installer reply timeout. Please check internal connections."))
 		return
-
 	if(lockcharge == TRUE)
 		to_chat(src,span_userdanger("ERROR: Lockdown is engaged. Please disengage lockdown to pick module."))
 		return
-
-	//monkestation edit start
-	initialize_cyborg_model_lists()
-
-	// Create radial menu for choosing borg model
-	var/input_model = show_radial_menu(src, src, GLOB.cyborg_base_models_icon_list, radius = 42)
-	if(!input_model || model.type != /obj/item/robot_model)
-		return
-
-	model.transform_to(GLOB.cyborg_model_list[input_model])
-	//monkestation edit end
+	prompt_full_transformation()
 
 /// Used to setup the a basic and (somewhat) unique name for the robot.
 /mob/living/silicon/robot/proc/setup_default_name()
@@ -642,48 +630,10 @@
 		modularInterface.imprint_id(name = real_name)
 	custom_name = newname
 
-
-/mob/living/silicon/robot/proc/ResetModel()
-	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
-	drop_all_held_items()
-
-	for(var/obj/item/storage/bag in model.usable_modules) // drop all of the items that may be stored by the cyborg
-		for(var/obj/item in bag)
-			item.forceMove(drop_location())
-
-	if (hasExpanded)
-		hasExpanded = FALSE
-		update_transform(0.5)
-	logevent("Chassis model has been reset.")
-	log_silicon("CYBORG: [key_name(src)] has reset their cyborg model.")
-	model.transform_to(/obj/item/robot_model)
-
-	// Remove upgrades.
-	for(var/obj/item/borg/upgrade/I in upgrades)
-		I.forceMove(get_turf(src))
-
-	ionpulse = FALSE
-	revert_shell()
-
-	return TRUE
-
 /mob/living/silicon/robot/proc/has_model()
-	if(!model || model.type == /obj/item/robot_model)
-		. = FALSE
-	else
-		. = TRUE
-
-/mob/living/silicon/robot/proc/update_module_innate()
-	designation = model.name
-	if(hands)
-		hands.icon_state = model.hud_icon_state
-
-	REMOVE_TRAITS_IN(src, MODEL_TRAIT)
-	if(length(model.traits))
-		add_traits(model.traits, MODEL_TRAIT)
-
-	INVOKE_ASYNC(src, PROC_REF(updatename))
-
+	if(!model || model.type == /datum/robot_model)
+		return FALSE
+	return TRUE
 
 /mob/living/silicon/robot/proc/place_on_head(obj/item/new_hat)
 	if(hat)
@@ -995,3 +945,117 @@
 		unbuckle_mob(buckled_mob)
 	do_sparks(5, 0, src)
 
+/// Prompts the cyborg with what model/skin that they want and applies the changes.
+/mob/living/silicon/robot/proc/prompt_full_transformation()
+	var/datum/robot_model/chosen_robot_model = prompt_model_selection()
+	if(!chosen_robot_model)
+		return FALSE
+	var/datum/robot_skin/chosen_robot_skin = prompt_skin_selection(chosen_robot_model)
+	if(!chosen_robot_skin)
+		return FALSE
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+		balloon_alert(src, "can't transform right now!")
+		return FALSE
+	apply_skin(chosen_robot_skin)
+	apply_model(chosen_robot_model)
+
+/// Prompts the cyborg with a radial wheel to pick a model that they want.
+/mob/living/silicon/robot/proc/prompt_model_selection()
+	initialize_cyborg_model_lists()
+	var/input_model = show_radial_menu(src, src, GLOB.cyborg_base_models_icon_list, custom_check = CALLBACK(src, PROC_REF(check_menu), src), radius = 42, require_near = TRUE)
+	if(!input_model)
+		return FALSE
+	var/datum/robot_model/picked_robot_model = GLOB.cyborg_model_list[input_model]
+	if(!picked_robot_model)
+		return FALSE
+	return picked_robot_model
+
+/// Prompts the cyborg with a radial wheel to pick a skin that they want.
+/mob/living/silicon/robot/proc/prompt_skin_selection(datum/robot_model/robot_model_typepath)
+	var/datum/robot_model/temporary_robot_model = new robot_model_typepath(inventoryless = TRUE) // We just want one of its list.
+	var/list/reskin_icons = list()
+	for(var/datum/robot_skin/robot_skin as anything in temporary_robot_model.available_skins)
+		reskin_icons[robot_skin] = image(icon = robot_skin.icon, icon_state = robot_skin.icon_state)
+	var/datum/robot_skin/picked_robot_skin = show_radial_menu(src, src, reskin_icons, custom_check = CALLBACK(src, PROC_REF(check_menu), src), radius = 42, require_near = TRUE)
+	. = picked_robot_skin
+	qdel(temporary_robot_model)
+
+// Checks if we are allowed to interact with the model/skin radial menu
+/mob/living/silicon/robot/proc/check_menu(mob/living/silicon/robot/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	return TRUE
+
+/// Applies a model to the cyborg.
+/mob/living/silicon/robot/proc/apply_model(datum/robot_model, performs_animation = FALSE)
+	drop_all_held_items()
+	// Drops all of the items that may be stored by the cyborg
+	for(var/obj/item/storage/bag in model.usable_modules)
+		for(var/obj/item in bag)
+			item.forceMove(drop_location())
+	// Upgrades don't work while if there is a new model now.
+	for(var/obj/item/borg/upgrade/upgrade_item in upgrades)
+		upgrade_item.forceMove(get_turf(src))
+	REMOVE_TRAITS_IN(src, MODEL_TRAIT)
+	model.on_model_removal()
+	QDEL_NULL(model)
+
+	var/datum/robot_model/new_robot_model = new robot_model(src)
+	model = new_robot_model
+	model.on_model_given()
+
+	ionpulse = model.innate_ionpulse
+	designation = model.name
+	add_traits(model.traits, MODEL_TRAIT)
+	if(hands)
+		hands.icon_state = model.hud_icon_state
+
+	radio.recalculateChannels()
+	set_modularInterface_theme()
+	diag_hud_set_health()
+	diag_hud_set_status()
+	diag_hud_set_borgcell()
+	diag_hud_set_aishell()
+	update_icons()
+
+	log_silicon("CYBORG: [key_name(src)] has transformed into the [model.name] model.")
+	INVOKE_ASYNC(src, PROC_REF(updatename))
+	if(performs_animation)
+		INVOKE_ASYNC(new_robot_model, TYPE_PROC_REF(/datum/robot_model, do_transform_animation))
+
+/// Applies a skin to the cyborg.
+/mob/living/silicon/robot/proc/apply_skin(datum/robot_skin/applied_skin)
+	if(current_skin)
+		remove_traits(current_skin.traits, REF(current_skin))
+	if(ispath(applied_skin))
+		applied_skin = new
+	current_skin = applied_skin
+	icon = current_skin.icon
+	icon_state = applied_skin.icon_state
+	base_pixel_x = current_skin.base_pixel_x
+	base_pixel_y = current_skin.base_pixel_y
+	if(hat && isnull(applied_skin.hat_offset))
+		if(HAS_TRAIT(hat, TRAIT_NODROP)) // Highlander's hat.
+			qdel(hat)
+		else
+			hat.forceMove(drop_location())
+	if(isnull(applied_skin.badge_offset) && worn_badge)
+		if(HAS_TRAIT(worn_badge, TRAIT_NODROP))
+			qdel(worn_badge)
+		else
+			worn_badge.forceMove(drop_location())
+	add_traits(current_skin.traits, REF(current_skin))
+	update_icons()
+
+/mob/living/silicon/robot/proc/ResetModel()
+	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
+	drop_all_held_items()
+
+	logevent("Chassis model has been reset.")
+	log_silicon("CYBORG: [key_name(src)] has reset their cyborg model.")
+
+	apply_model(/datum/robot_model)
+	revert_shell()
+	return TRUE

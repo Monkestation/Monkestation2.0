@@ -15,9 +15,9 @@
 	radio_channels = list(RADIO_CHANNEL_SECURITY)
 	traits = list(TRAIT_PUSHIMMUNE)
 
-/*
-/datum/robot_model/security/do_transform_animation()
-	..()
-	to_chat(loc, "<span class='userdanger'>While you have picked the security model, you still have to follow your laws, NOT Space Law. \
-	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
-*/
+/datum/robot_model/peacekeeper/do_transform_animation()
+	. = ..()
+	if(!.)
+		return
+	to_chat(cyborg_owner, span_userdanger("While you have picked the security model, you still have to follow your laws, NOT Space Law. \
+		For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to."))

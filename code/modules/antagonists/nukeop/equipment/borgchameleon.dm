@@ -105,7 +105,7 @@
 	src.user = user
 	savedName = user.name
 	user.name = friendlyName
-	user.model.cyborg_base_icon = initial(disguise_model_type.cyborg_base_icon)
+	//user.model.cyborg_base_icon = initial(disguise_model_type.cyborg_base_icon) // TODO: this is a bandaid to stop compile errors until my cute other pr gets merged!! (please merge thx)
 	user.model.name = initial(disguise_model_type.name)
 	user.bubble_icon = "robot"
 	active = TRUE
@@ -125,7 +125,7 @@
 		listeningTo = null
 	do_sparks(5, FALSE, user)
 	user.name = savedName
-	user.model.cyborg_base_icon = initial(user.model.cyborg_base_icon)
+	//user.model.cyborg_base_icon = initial(user.model.cyborg_base_icon)
 	user.model.name = initial(user.model.name)
 	user.bubble_icon = "syndibot"
 	active = FALSE

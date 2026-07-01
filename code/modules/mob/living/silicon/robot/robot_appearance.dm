@@ -1,27 +1,3 @@
-/// Applies a skin to the cyborg.
-/mob/living/silicon/robot/proc/apply_skin(datum/robot_skin/applied_skin)
-	if(current_skin)
-		remove_traits(current_skin.traits, REF(current_skin))
-	if(ispath(applied_skin))
-		applied_skin = new
-	current_skin = applied_skin
-	icon = current_skin.icon
-	icon_state = applied_skin.icon_state
-	base_pixel_x = current_skin.base_pixel_x
-	base_pixel_y = current_skin.base_pixel_y
-	if(hat && isnull(applied_skin.hat_offset))
-		if(HAS_TRAIT(hat, TRAIT_NODROP)) // Highlander's hat.
-			qdel(hat)
-		else
-			hat.forceMove(drop_location())
-	if(isnull(applied_skin.badge_offset) && worn_badge)
-		if(HAS_TRAIT(worn_badge, TRAIT_NODROP))
-			qdel(worn_badge)
-		else
-			worn_badge.forceMove(drop_location())
-	add_traits(current_skin.traits, REF(current_skin))
-	update_icons()
-
 /mob/living/silicon/robot/regenerate_icons()
 	return update_icons()
 

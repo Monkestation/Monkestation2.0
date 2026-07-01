@@ -6,35 +6,26 @@
 		/obj/item/claymore/highlander/robot,
 		/obj/item/pinpointer/nuke,
 	)
+	breakable_modules = FALSE
+	locked_transform = FALSE
 	traits = list(TRAIT_PUSHIMMUNE)
-	// breakable_modules = FALSE
-	// locked_transform = FALSE //GO GO QUICKLY AND SLAUGHTER THEM ALL
 
-/*
-/datum/robot_model/highlander/rebuild_modules()
-	..()
-	var/mob/living/silicon/robot/cyborg = loc
-	cyborg.faction -= FACTION_SILICON //ai turrets
+/datum/robot_model/highlander/on_model_removed()
+	cyborg_owner.faction |= FACTION_SILICON
 
-/datum/robot_model/highlander/remove_module(obj/item/removed_module)
-	..()
-	var/mob/living/silicon/robot/cyborg = loc
-	cyborg.faction |= FACTION_SILICON //ai is your bff now!
+/datum/robot_model/highlander/on_model_given()
+	cyborg_owner.faction -= FACTION_SILICON
+	qdel(cyborg_owner.radio)
+	cyborg_owner.radio = new /obj/item/radio/borg/syndicate(cyborg_owner)
+	cyborg_owner.scrambledcodes = TRUE
+	cyborg_owner.maxHealth = 50 // Die in 3 hits.
+	cyborg_owner.break_cyborg_slot(3)
+	var/obj/item/pinpointer/nuke/nukedisk_pinpointer = locate(/obj/item/pinpointer/nuke) in basic_modules
+	nukedisk_pinpointer.attack_self(cyborg_owner)
 
-/datum/robot_model/highlander/be_transformed_to(obj/item/robot_model/old_model)
+/datum/robot_model/highlander/do_transform_delay()
 	. = ..()
-	qdel(robot.radio)
-	robot.radio = new /obj/item/radio/borg/syndicate(robot)
-	robot.scrambledcodes = TRUE
-	robot.maxHealth = 50 //DIE IN THREE HITS, LIKE A REAL SCOT
-	robot.break_cyborg_slot(3) //YOU ONLY HAVE TWO ITEMS ANYWAY
-	var/obj/item/pinpointer/nuke/diskyfinder = locate(/obj/item/pinpointer/nuke) in basic_modules
-	diskyfinder.attack_self(robot)
-
-/datum/robot_model/highlander/do_transform_delay() //AUTO-EQUIPPING THESE TOOLS ANY EARLIER CAUSES RUNTIMES OH YEAH
-	. = ..()
-	robot.put_in_hand(locate(/obj/item/claymore/highlander/robot) in basic_modules, 1)
-	robot.put_in_hand(locate(/obj/item/pinpointer/nuke) in basic_modules, 2)
-	robot.place_on_head(new /obj/item/clothing/head/beret/highlander(robot)) //THE ONLY PART MORE IMPORTANT THAN THE SWORD IS THE HAT
-	ADD_TRAIT(robot.hat, TRAIT_NODROP, HIGHLANDER_TRAIT)
-*/
+	cyborg_owner.put_in_hand(locate(/obj/item/claymore/highlander/robot) in basic_modules, 1)
+	cyborg_owner.put_in_hand(locate(/obj/item/pinpointer/nuke) in basic_modules, 2)
+	cyborg_owner.place_on_head(new /obj/item/clothing/head/beret/highlander(cyborg_owner))
+	ADD_TRAIT(cyborg_owner.hat, TRAIT_NODROP, HIGHLANDER_TRAIT)

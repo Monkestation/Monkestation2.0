@@ -25,19 +25,13 @@
 	/// The weakref to the energy shield toggle action we own.
 	var/datum/weakref/energy_shield_ref
 
-/datum/robot_model/miner/Destroy()
+/datum/robot_model/miner/on_model_removed()
 	QDEL_NULL(energy_shield_ref)
-	return ..()
 
-/*
-/obj/item/robot_model/miner/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
-	. = ..()
-	if(!.)
-		return
-	var/datum/action/cooldown/borg_sight_vision/sight_vision_meson = new(loc)
-	sight_vision_meson.Grant(loc)
+/datum/robot_model/miner/on_model_given()
+	var/datum/action/cooldown/borg_sight_vision/sight_vision_meson = new(cyborg_owner)
+	sight_vision_meson.Grant(cyborg_owner)
 	sight_vision_ref = WEAKREF(sight_vision_meson)
-	var/datum/action/cooldown/cyborg_miner_shield/energy_shield_action = new(loc)
-	energy_shield_action.Grant(loc)
+	var/datum/action/cooldown/cyborg_miner_shield/energy_shield_action = new(cyborg_owner)
+	energy_shield_action.Grant(cyborg_owner)
 	energy_shield_ref = WEAKREF(energy_shield_action)
-*/

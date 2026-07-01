@@ -31,3 +31,8 @@
 	)
 	radio_channels = list(RADIO_CHANNEL_ENGINEERING)
 	traits = list(TRAIT_NEGATES_GRAVITY, TRAIT_KNOW_ENGI_WIRES, TRAIT_KNOW_ROBO_WIRES)
+
+/datum/robot_model/engineering/on_model_given()
+	var/datum/action/cooldown/borg_sight_vision/sight_vision_meson = new(cyborg_owner)
+	sight_vision_meson.Grant(cyborg_owner)
+	sight_vision_ref = WEAKREF(sight_vision_meson)

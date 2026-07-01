@@ -198,7 +198,7 @@ ADMIN_VERB(borg_panel, R_ADMIN, FALSE, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPT
 		if ("setmodule")
 			var/new_model_path = text2path(params["module"])
 			if (ispath(new_model_path))
-				borg.model.transform_to(new_model_path)
+				borg.apply_model(new_model_path, TRUE)
 				message_admins("[key_name_admin(user)] changed the model of [ADMIN_LOOKUPFLW(borg)] to [new_model_path].")
 				log_silicon("[key_name(user)] changed the model of [key_name(borg)] to [new_model_path].")
 		if ("slavetoai")
