@@ -38,7 +38,7 @@
 	sight_vision_ref = WEAKREF(sight_vision_thermal)
 
 
-/obj/item/robot_model/saboteur/operative
+/datum/robot_model/saboteur/operative
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/construction/rcd/borg/syndicate,
@@ -78,10 +78,12 @@
 	target = null
 	var/list/possible_targets = list()
 	var/turf/here = get_turf(src)
-	for(var/V in get_antag_minds(/datum/antagonist/assault_operative))
-		var/datum/mind/M = V
-		if(ishuman(M.current) && M.current.stat != DEAD)
-			possible_targets |= M.current
+	for(var/datum/mind/antag_mind as anything in get_antag_minds(/datum/antagonist/assault_operative))
+		if(antag_mind.current.stat == DEAD)
+			continue
+		if(!ishuman(antag_mind.current))
+			continue
+		possible_targets |= antag_mind.current
 	var/mob/living/closest_operative = get_closest_atom(/mob/living/carbon/human, possible_targets, here)
 	if(closest_operative)
 		target = closest_operative
