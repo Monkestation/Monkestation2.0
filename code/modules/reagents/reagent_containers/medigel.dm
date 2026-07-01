@@ -113,3 +113,11 @@
 	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 300)
 	can_fill_from_container = FALSE
 	reagent_flags = TRANSPARENT
+
+/obj/item/reagent_containers/medigel/nanopaste
+	name = "medical gel (nanopaste)"
+	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains nanopaste that repairs damaged mechanical parts of the body. The presence of damaged organic areas of the body slows down the work."
+	icon_state = "medigel_purple"
+	current_skin = "medigel_purple"
+	list_reagents = list(/datum/reagent/medicine/nanopaste = 60)
+	custom_price = PAYCHECK_CREW * 5

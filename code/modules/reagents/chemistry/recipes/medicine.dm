@@ -397,3 +397,13 @@
 	results = list(/datum/reagent/medicine/painkiller/robopiates = 3)
 	required_reagents = list(/datum/reagent/silver = 1, /datum/reagent/dinitrogen_plasmide = 1, /datum/reagent/acetone = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_DRUG
+
+/datum/chemical_reaction/medicine/nanopaste
+	results = list(/datum/reagent/medicine/nanopaste = 3)
+	required_reagents = list(/datum/reagent/dinitrogen_plasmide = 1, /datum/reagent/silicon = 1, /datum/reagent/iron = 1)
+	required_catalysts = list(/datum/reagent/fuel/oil = 5)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_HEALING
+	is_cold_recipe = TRUE
+	required_temp = 205
+	optimal_temp = 155
+	overheat_temp = 105
