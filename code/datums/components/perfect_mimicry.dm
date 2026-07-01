@@ -58,11 +58,12 @@
 	new_item.item_flags &= ~(IN_INVENTORY | IN_STORAGE) // Prevent hover outline when mimicking inventory items.
 	if(istype(new_item, /obj/item/storage))
 		var/obj/item/storage/box_item = new_item
-		var/list/contents = box_item?.storage_type.return_inv()
-		box_item?.storage_type.remove_all(update_storage = FALSE)
-		for(var/obj/item/contained_item in contents)
-			qdel(contained_item, TRUE)
-		box_item?.storage_type.refresh_views()
+		if(box_item.preload)
+			var/list/contents = box_item?.storage_type.return_inv()
+			box_item?.storage_type.remove_all(update_storage = FALSE)
+			for(var/obj/item/contained_item in contents)
+				qdel(contained_item, TRUE)
+			box_item?.storage_type.refresh_views()
 
 	new_item.AddComponent(/datum/component/mimic_disguise)
 	if(new_item.uses_integrity) // Mimicked items can break easier
