@@ -42,11 +42,6 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/cell_charger/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/borg/apparatus/circuit) && !panel_open)
-		var/obj/item/borg/apparatus/circuit/robo_hand = attacking_item
-		if(robo_hand.stored == null)
-			return attack_hand(user)
-
 	if(istype(attacking_item, /obj/item/stock_parts/power_store) && !panel_open)
 		if(machine_stat & BROKEN)
 			to_chat(user, span_warning("[src] is broken!"))
