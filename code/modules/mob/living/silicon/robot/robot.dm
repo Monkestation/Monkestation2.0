@@ -946,6 +946,16 @@
 		unbuckle_mob(buckled_mob)
 	do_sparks(5, 0, src)
 
+/// Resets the model to default.
+/mob/living/silicon/robot/proc/reset_model()
+	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
+	logevent("Chassis model has been reset.")
+	log_silicon("CYBORG: [key_name(src)] has reset their cyborg model.")
+	apply_model(/datum/robot_model, FALSE)
+	apply_skin(model.default_skin)
+	revert_shell()
+	return TRUE
+
 /// Prompts the cyborg with what model/skin that they want and applies the changes.
 /mob/living/silicon/robot/proc/prompt_full_transformation()
 	var/datum/robot_model/chosen_robot_model = prompt_model_selection()
@@ -1051,16 +1061,6 @@
 		start_transform_animation(lock_during_animation)
 	else
 		update_icons()
-
-/// Resets the model to default.
-/mob/living/silicon/robot/proc/reset_model()
-	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
-	logevent("Chassis model has been reset.")
-	log_silicon("CYBORG: [key_name(src)] has reset their cyborg model.")
-	apply_model(/datum/robot_model, FALSE)
-	apply_skin(model.default_skin)
-	revert_shell()
-	return TRUE
 
 /// Begins the transformation animation.
 /mob/living/silicon/robot/proc/start_transform_animation(lock = TRUE)
