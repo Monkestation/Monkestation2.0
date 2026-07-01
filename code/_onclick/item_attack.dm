@@ -110,6 +110,8 @@
 /obj/item/proc/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers) //do stuff before attackby!
 	if(SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK, target, user, modifiers, attack_modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
+	if(target.GetComponent(/datum/component/mimic_disguise) && !(user?.istate & (ISTATE_HARM)))
+		return TRUE // Mimicked objects should not be attacked when not trying to harm them.
 	return FALSE //return TRUE to avoid calling attackby after this proc does stuff
 
 /**
