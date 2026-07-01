@@ -63,7 +63,7 @@
 	alternate_worn_layer = ABOVE_SUIT_LAYER
 
 /obj/item/clothing/gloves/color/black/dimensional
-	desc = "These gloves function as a dimensonal weapon storage using bluespace compression technology. It doesn't muffle surrounding sound; why would it?"
+	desc = "These gloves function as a dimensional weapon storage using bluespace compression technology. It doesn't muffle surrounding sound; why would it?"
 
 /obj/item/clothing/gloves/color/black/dimensional/Initialize(mapload)
 	. = ..()
