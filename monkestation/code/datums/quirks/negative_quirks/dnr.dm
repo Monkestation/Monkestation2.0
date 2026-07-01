@@ -13,17 +13,17 @@
 	quirk_holder.mind.add_traits(list(TRAIT_DEFIB_BLACKLISTED, TRAIT_NO_SPECIAL_REVIVAL), QUIRK_TRAIT)
 
 	//can survive a bit longer
-	quirk_holder.hardcrit_threshold -= (MAX_LIVING_HEALTH / 2)
+	quirk_holder.hardcrit_threshold -= HEALTH_THRESHOLD_DNR_FULLCRIT_MODIFIER
 	quirk_holder.dead_threshold -= MAX_LIVING_HEALTH
 	var/obj/item/organ/internal/brain/target_brain = quirk_holder.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(target_brain)
-		target_brain.maxHealth += BRAIN_DAMAGE_SEVERE
+		target_brain.maxHealth += (BRAIN_DAMAGE_MILD * 2)
 
 /datum/quirk/dnr/remove()
 	quirk_holder.mind.remove_traits(list(TRAIT_DEFIB_BLACKLISTED, TRAIT_NO_SPECIAL_REVIVAL), QUIRK_TRAIT)
-	quirk_holder.hardcrit_threshold += (MAX_LIVING_HEALTH / 2)
+	quirk_holder.hardcrit_threshold += HEALTH_THRESHOLD_DNR_FULLCRIT_MODIFIER
 	quirk_holder.dead_threshold += MAX_LIVING_HEALTH
 	var/obj/item/organ/internal/brain/target_brain = quirk_holder.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(target_brain)
-		target_brain.maxHealth -= BRAIN_DAMAGE_SEVERE
+		target_brain.maxHealth -= (BRAIN_DAMAGE_MILD * 2)
 	return ..()
