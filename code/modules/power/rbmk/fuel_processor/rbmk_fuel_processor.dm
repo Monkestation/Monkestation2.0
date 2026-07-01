@@ -24,8 +24,8 @@
 	base_icon_state = "rod_press"
 	density = TRUE
 	anchored = TRUE
-	bound_width = 32
-	bound_height = 96
+	bound_width = 64
+	bound_height = 32
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 300
 	active_power_usage = 1800
