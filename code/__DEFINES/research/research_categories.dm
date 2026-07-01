@@ -162,6 +162,7 @@
 #define RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING "/Mining Cyborgs"
 #define RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_PEACEKEEPER "/Peacekeeper Cyborgs"
 #define RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SCIENCE "/Science Cyborgs"
+#define RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_CARGO "/Cargo Cyborgs"
 
 #define RND_CATEGORY_MODSUITS "/MOD Suits"
 #define RND_SUBCATEGORY_MODUITS_CHASSIS "/Chassis"
@@ -181,7 +182,7 @@
 #define RND_SUBCATEGORY_CYBERNETICS_ORGANS_1 "/Tier 1 Cybernetic Organs"
 #define RND_SUBCATEGORY_CYBERNETICS_ORGANS_2 "/Tier 2 Cybernetic Organs"
 #define RND_SUBCATEGORY_CYBERNETICS_ORGANS_3 "/Tier 3 Cybernetic Organs"
-#define RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS "/Synthetic Organs" //Monkestation addition
+#define RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS "/Synthetic Organs"
 #define RND_SUBCATEGORY_CYBERNETICS_ORGANS_COMBAT "/Combat Cybernetic Organs"
 #define RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC "/Miscellaneous Cybernetic Organs"
 #define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_COMBAT "/Cybernetic Combat Implants"
@@ -205,3 +206,29 @@
 #define RND_CATEGORY_INITIAL "initial"
 #define RND_CATEGORY_HACKED "hacked"
 #define RND_CATEGORY_IMPORTED "/Imported Designs"
+
+// biogenerator
+/// Category for clothing in the organics printer
+#define RND_CATEGORY_AKHTER_CLOTHING "Clothing"
+/// Category for equipment like belts and bags in the organics printer
+#define RND_CATEGORY_AKHTER_EQUIPMENT "Equipment"
+/// Category for resources made by the organics printer
+#define RND_CATEGORY_AKHTER_RESOURCES "Resources"
+/// Category for the seeds the organics printer can make
+#define RND_CATEGORY_AKHTER_SEEDS "Synthesized Seeds"
+
+// med station
+/// Medical items in the deforest medstation
+#define RND_CATEGORY_DEFOREST_MEDICAL "Emergency Medical"
+/// Blood and blood bags
+#define RND_CATEGORY_DEFOREST_BLOOD "Synthesized Blood"
+
+// ration printer
+/// Category for ingredients in the ration printer
+#define RND_CATEGORY_AKHTER_FOODRICATOR_INGREDIENTS "Ingredients"
+/// Category for bags and containers of reagents in the ration printer
+#define RND_CATEGORY_AKHTER_FOODRICATOR_BAGS "Containers"
+/// Category for snacks in the ration printer
+#define RND_CATEGORY_AKHTER_FOODRICATOR_SNACKS "Luxuries"
+/// Category for utensils and whatnot in the ration printer
+#define RND_CATEGORY_AKHTER_FOODRICATOR_UTENSILS "Utensils"

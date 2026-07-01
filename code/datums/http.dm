@@ -16,6 +16,12 @@
 	if(length(args))
 		src.prepare(arglist(args))
 
+/// Helper for `new /datum/http_request` with a return type,
+/// so you can do stuff like `http_request(...).begin_async()`
+/proc/http_request(...) as /datum/http_request
+	RETURN_TYPE(/datum/http_request)
+	return new /datum/http_request(arglist(args))
+
 /datum/http_request/proc/prepare(method, url, body = "", list/headers, output_file)
 	if (!length(headers))
 		headers = json_encode(list("User-Agent" = get_useragent()))

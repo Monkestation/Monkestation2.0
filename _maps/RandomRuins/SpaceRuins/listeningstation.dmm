@@ -1009,7 +1009,7 @@
 /area/template_noop)
 "Cc" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/machinery/door/airlock/security/old{
+/obj/machinery/door/airlock/security{
 	name = "Radio Wing"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
@@ -1365,7 +1365,7 @@
 /area/ruin/space/has_grav/listeningstation/dorms)
 "Lq" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/machinery/door/airlock/security/old{
+/obj/machinery/door/airlock/security{
 	name = "Radio Wing"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,

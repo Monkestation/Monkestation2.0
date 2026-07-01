@@ -20,7 +20,7 @@
 				var/name = GLOB.global_trait_name_map[trait] || trait
 				available_traits[name] = trait
 
-	var/list/chosen_trait_names = tgui_input_checkboxes(usr, "Select which traits you want to [lowertext(add_or_remove)]", "Modify Traits", items = sort_list(assoc_to_keys(available_traits)))
+	var/list/chosen_trait_names = tgui_input_checkboxes(usr, "Select which traits you want to [LOWER_TEXT(add_or_remove)]", "Modify Traits", items = sort_list(assoc_to_keys(available_traits)))
 	if(!chosen_trait_names)
 		return
 	var/list/chosen_traits = list()

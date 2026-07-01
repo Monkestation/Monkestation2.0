@@ -8834,7 +8834,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	id_tag = "BSdoor";
 	name = "Blueshield's Office"
 	},
@@ -67414,7 +67414,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "xhf" = (
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	id_tag = "Repdoor";
 	name = "Representative's Office"
 	},

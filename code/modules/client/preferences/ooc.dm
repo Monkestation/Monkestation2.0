@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(pronouns_required, list(
 	return ""
 
 /datum/preference/text/ooc_pronouns/is_valid(value)
-	value = lowertext(value)
+	value = LOWER_TEXT(value)
 
 	if (!value || trim(value) == "")
 		return TRUE

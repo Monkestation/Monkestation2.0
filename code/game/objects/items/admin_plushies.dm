@@ -214,6 +214,7 @@
 /datum/loadout_item/plushies/gabbie
 	name = "Gabbie Plush"
 	item_path = /obj/item/toy/plush/admin/gabbie
+
 /datum/store_item/plushies/gabbie
 	name = "Gabbie Plush"
 	item_path = /obj/item/toy/plush/admin/gabbie
@@ -222,7 +223,7 @@
 /obj/item/toy/plush/admin/gabbie/examine(mob/user)
 	. = ..()
 	if (user?.ckey == "glyphee")
-		. += span_purple("[EXAMINE_SECTION_BREAK][EXAMINE_HINT("I look good!")]")
+		. += span_purple("<hr>[EXAMINE_HINT("I look good!")]")
 
 /obj/item/toy/plush/admin/gabbie/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/food/deadmouse))
@@ -521,7 +522,7 @@
 	. = ..()
 	var/holder_is_lucy = user?.ckey == plushckey
 	if (holder_is_lucy)
-		. += span_purple("[EXAMINE_SECTION_BREAK][EXAMINE_HINT("IT'S MEE!!!!")]")
+		. += span_purple("<hr>[EXAMINE_HINT("IT'S MEE!!!!")]")
 	if (shaved)
 		. += span_warning("OH GOD [holder_is_lucy ? "I'M" : "SHE'S"] BALD!")
 		if (brushed > 2)

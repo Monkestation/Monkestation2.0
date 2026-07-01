@@ -48,3 +48,5 @@
 
 ///The base modifier a boulder's size grants to the mining skill.
 #define MINING_SKILL_BOULDER_SIZE_XP 10
+
+#define SKILL_TIME_MODIFIER "skill_time_modifier" //ideally added to timers and other do_afters()

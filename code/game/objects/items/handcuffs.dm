@@ -693,7 +693,7 @@
 	update_appearance(UPDATE_ICON)
 	trap_damage = 30
 	do_sparks(3, FALSE, src)
-	sleep(1 SECOND)
+	sleep(1 SECONDS)
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 	if(user)
 		balloon_alert(user, "biometric scanner set!")

@@ -38,7 +38,7 @@
 
 	var/last_position = get_turf(human)
 	human.move_to_error_room()
-	COOLDOWN_START(src,trigger_cd,5 MINUTE)
-	addtimer(CALLBACK(src,PROC_REF(returnthey),human,last_position),5 SECOND)
+	COOLDOWN_START(src,trigger_cd, 5 MINUTES)
+	addtimer(CALLBACK(src,PROC_REF(returnthey),human,last_position),5 SECONDS)
 	return
 

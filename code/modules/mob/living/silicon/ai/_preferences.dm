@@ -114,7 +114,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	"Monkestation",
 	"Facepunch",
 	"Kitty",
-	"Sus", 
+	"Sus",
 	"Marionette",
 	"Company",
 	"Randomgod", // why in gods green earth is AI core images stored in preferences?? who did this??? why???
@@ -130,7 +130,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	else
 		if(input == "Random")
 			input = pick(GLOB.ai_core_display_screens - "Random")
-		return "ai-[lowertext(input)]"
+		return "ai-[LOWER_TEXT(input)]"
 
 /proc/resolve_ai_icon(input)
 	if (input == "Portrait")

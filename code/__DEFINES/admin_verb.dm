@@ -81,7 +81,7 @@ _ADMIN_VERB(verb_path_name, verb_permissions, exact_permissions, verb_name, verb
 #define ADMIN_CATEGORY_EVENTS "Admin.Events"
 #define ADMIN_CATEGORY_FUN "Admin.Fun"
 #define ADMIN_CATEGORY_GAME "Admin.Game"
-#define ADMIN_CATEGORY_LOGGING "Admin.Logging" //MONKE EDIT
+#define ADMIN_CATEGORY_LOGGING "Admin.Logging"
 
 // Special categories that are seperated
 #define ADMIN_CATEGORY_DEBUG "Debug"

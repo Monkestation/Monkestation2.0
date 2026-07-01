@@ -48,5 +48,5 @@ ADMIN_VERB(count_instances, R_DEBUG, FALSE, "Count Atoms/Datums", "Count the num
 		fdel(tmp_path)
 		rustg_file_write(json_encode(result, JSON_PRETTY_PRINT), tmp_path)
 		var/exportable_json = file(tmp_path)
-		DIRECT_OUTPUT(usr, ftp(exportable_json, "[lowertext(option)]_instance_count_round_[GLOB.round_id].json"))
+		DIRECT_OUTPUT(usr, ftp(exportable_json, "[LOWER_TEXT(option)]_instance_count_round_[GLOB.round_id].json"))
 		fdel(tmp_path)

@@ -115,7 +115,7 @@
 #define SPECIES_NIGHTMARE "nightmare"
 #define SPECIES_MONKEY "monkey"
 #define SPECIES_MOTH "moth"
-#define SPECIES_TUNDRA "tundra" //Monkestation Addition
+#define SPECIES_TUNDRA "tundra"
 #define SPECIES_MUSHROOM "mush"
 #define SPECIES_PLASMAMAN "plasmaman"
 #define SPECIES_PODPERSON "pod"
@@ -130,20 +130,26 @@
 #define SPECIES_ZOMBIE "zombie"
 #define SPECIES_ZOMBIE_SHAMBLER "shambler"
 #define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
-#define SPECIES_ZOMBIE_INFECTIOUS_RUNNER "runnerzombie" //Monkestation Addition
-#define SPECIES_ZOMBIE_INFECTIOUS_TANK "tankzombie" //monkestation edit
-#define SPECIES_ZOMBIE_INFECTIOUS_SPITTER "spitterzombie" //monkestation edit
-#define SPECIES_ZOMBIE_INFECTIOUS_BLOATER "bloaterzombie" //monkestation edit
+#define SPECIES_ZOMBIE_INFECTIOUS_RUNNER "runnerzombie"
+#define SPECIES_ZOMBIE_INFECTIOUS_TANK "tankzombie"
+#define SPECIES_ZOMBIE_INFECTIOUS_SPITTER "spitterzombie"
+#define SPECIES_ZOMBIE_INFECTIOUS_BLOATER "bloaterzombie"
 #define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
 #define SPECIES_OOZELING "oozeling"
 #define SPECIES_IPC "ipc"
-#define SPECIES_ONI "oni" //Monkestation Addition
-#define SPECIES_SIMIAN "simian" //Monkestation Addition
-#define SPECIES_GOBLIN "goblin" //Monkestation Addition
-#define SPECIES_FLORAN "floran" //Monkestation Addition
-#define SPECIES_SATYR "satyr" //Monkestation Addition
-#define SPECIES_TERATOMA "teratoma" //Monkestation Addition
+#define SPECIES_ONI "oni"
+#define SPECIES_SIMIAN "simian"
+#define SPECIES_GOBLIN "goblin"
+#define SPECIES_FLORAN "floran"
+#define SPECIES_SATYR "satyr"
+#define SPECIES_TERATOMA "teratoma"
 #define SPECIES_TRAINED_MONKEY "trainedmonkey"
+#define SPECIES_ARACHNIDS "arachnid"
+#define SPECIES_DRACONIC_SKELETON "draconic_skeleton"
+#define SPECIES_WEREWOLF "werewolf"
+#define SPECIES_ORNITHID "ornithid"
+
+
 // Like species IDs, but not specifically attached a species.
 #define BODYPART_ID_ALIEN "alien"
 #define BODYPART_ID_ROBOTIC "robotic"

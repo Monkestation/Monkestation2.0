@@ -143,7 +143,9 @@
 #define span_yell(str) ("<span class='yell'>" + str + "</span>")
 #define span_yellowteamradio(str) ("<span class='yellowteamradio'>" + str + "</span>")
 #define span_center(str) ("<span class='center'>[str]</span>")
-
+#define span_ratvar(str) ("<span class='ratvar'>" + str + "</span>")
+#define span_italics(str) ("<span class='italics'>" + str + "</span>")
+#define span_kbity(str) ("<span class='kbity'>" + str + "</span>")
 #define span_stargazer(str) ("<span class='stargazer'>[str]</span>")
 #define span_stargazer_big(str) ("<span class='stargazer_big'>[str]</span>")
 

@@ -994,7 +994,7 @@
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
 "anM" = (
-/obj/machinery/door/airlock/cmo{
+/obj/machinery/door/airlock/command/cmo{
 	name = "Chief Medical Officer's Quarters"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/cmo,
@@ -8538,7 +8538,7 @@
 /area/station/service/hydroponics)
 "cCA" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/hos{
+/obj/machinery/door/airlock/command/hos{
 	id_tag = "HoSdoor";
 	name = "Head Of Security's Office"
 	},
@@ -11449,7 +11449,7 @@
 /area/station/maintenance/port/aft)
 "duq" = (
 /obj/structure/cable,
-/obj/machinery/door/airlock/security/old{
+/obj/machinery/door/airlock/security{
 	glass = 1;
 	name = "Gamer Den"
 	},
@@ -12419,7 +12419,7 @@
 /area/station/security/office)
 "dGZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	name = "Consultant's Quarters"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -18648,7 +18648,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/hos,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/hos{
+/obj/machinery/door/airlock/command/hos{
 	name = "Head Of Security's Quarters"
 	},
 /obj/machinery/door/firedoor,
@@ -19464,7 +19464,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/security/old/glass{
+/obj/machinery/door/airlock/security/glass{
 	name = "Correction Officer Lounge"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -23750,7 +23750,7 @@
 /area/station/security/execution/education)
 "gPv" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/captain{
+/obj/machinery/door/airlock/command/captain{
 	id_tag = "Capoffice";
 	name = "Captain's Office"
 	},
@@ -24878,7 +24878,7 @@
 "hdK" = (
 /obj/effect/mapping_helpers/airlock/access/any/security/permabrig,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security/old/glass{
+/obj/machinery/door/airlock/security/glass{
 	name = "Prison Wing"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -27132,7 +27132,7 @@
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
 "hLD" = (
-/obj/machinery/door/airlock/captain{
+/obj/machinery/door/airlock/command/captain{
 	name = "Captain's Quarters"
 	},
 /obj/effect/turf_decal/siding/wood{
@@ -30490,7 +30490,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	id_tag = "consultantdoor";
 	name = "Consultant's Office"
 	},
@@ -32902,7 +32902,7 @@
 /turf/open/floor/iron/textured,
 /area/station/maintenance/port/greater)
 "jor" = (
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	name = "Blueshield's Quarters"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -37930,7 +37930,7 @@
 /area/station/medical/medbay/central)
 "kFS" = (
 /obj/effect/mapping_helpers/airlock/access/all/science/rd,
-/obj/machinery/door/airlock/rd/glass{
+/obj/machinery/door/airlock/command/rd/glass{
 	critical_machine = 1;
 	name = "Server Access"
 	},
@@ -43049,7 +43049,7 @@
 /turf/open/floor/iron/textured_large,
 /area/station/engineering/atmos)
 "lXt" = (
-/obj/machinery/door/airlock/hop{
+/obj/machinery/door/airlock/command/hop{
 	name = "Head of Personel's Quarters"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/hop,
@@ -44488,7 +44488,7 @@
 /area/station/construction/mining/aux_base)
 "mvl" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	id_tag = "BSdoor";
 	name = "Blueshield's Office"
 	},
@@ -47332,7 +47332,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/airlock/ce{
+/obj/machinery/door/airlock/command/ce{
 	id_tag = "CEdoor";
 	name = "Chief Engineer's Office"
 	},
@@ -47548,7 +47548,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/airlock/security/old/glass{
+/obj/machinery/door/airlock/security/glass{
 	name = "Firing Range"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -48271,7 +48271,7 @@
 	},
 /area/space/nearstation)
 "nxn" = (
-/obj/machinery/door/airlock/rd{
+/obj/machinery/door/airlock/command/rd{
 	name = "Research Director's Quarters"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/rd,
@@ -54287,7 +54287,7 @@
 /area/station/hallway/secondary/command)
 "pgH" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/ce{
+/obj/machinery/door/airlock/command/ce{
 	name = "Chief Engineer's Quarters"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/ce,
@@ -54743,7 +54743,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/cmo/glass{
+/obj/machinery/door/airlock/command/cmo/glass{
 	name = "Chief Medical Officer's Office"
 	},
 /obj/structure/disposalpipe/segment,
@@ -57377,7 +57377,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/science/rd,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/airlock/rd{
+/obj/machinery/door/airlock/command/rd{
 	name = "Research Division Server Room"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -68139,7 +68139,7 @@
 /turf/open/floor/carpet/purple,
 /area/station/common/night_club)
 "sVg" = (
-/obj/machinery/door/airlock/security/old{
+/obj/machinery/door/airlock/security{
 	glass = 1;
 	name = "Garden"
 	},
@@ -74028,7 +74028,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/landmark/navigate_destination/gateway,
-/obj/machinery/door/airlock/rd{
+/obj/machinery/door/airlock/command/rd{
 	name = "Gateway Atrium"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/command/gateway,
@@ -77340,7 +77340,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/rd/glass{
+/obj/machinery/door/airlock/command/rd/glass{
 	name = "Research Director's Office"
 	},
 /obj/structure/disposalpipe/segment,
@@ -77995,7 +77995,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/machinery/door/airlock/security/old{
+/obj/machinery/door/airlock/security{
 	name = "Education Chamber"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -79494,7 +79494,7 @@
 	id = "hopblast";
 	name = "HoP Blast Door"
 	},
-/obj/machinery/door/airlock/hop{
+/obj/machinery/door/airlock/command/hop{
 	id_tag = "hopdoor";
 	name = "Head of Personel's Office"
 	},

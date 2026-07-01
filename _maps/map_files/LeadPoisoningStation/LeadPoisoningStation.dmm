@@ -27916,7 +27916,7 @@
 /obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
 /obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
 /obj/effect/turf_decal/tile/dark/diagonal_edge,
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	id_tag = "BSdoor";
 	name = "Blueshield's Office"
 	},
@@ -31633,7 +31633,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "peL" = (
-/obj/machinery/door/airlock/corporate{
+/obj/machinery/door/airlock/command/corporate{
 	id_tag = "Repdoor";
 	name = "Representative's Office"
 	},

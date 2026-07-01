@@ -186,7 +186,7 @@
 
 	user.visible_message(
 		message = span_danger("[user]'s flesh shifts, tears and changes, giving way to something even more dangerous!"),
-		self_message = span_alien("Your flesh shifts, tears and changes as you transform into a [lowertext(initial(picked.name))]!"),
+		self_message = span_alien("Your flesh shifts, tears and changes as you transform into a [LOWER_TEXT(initial(picked.name))]!"),
 		blind_message = span_hear("You hear a grotesque cacophony of flesh shifting and tearing!"),
 	)
 

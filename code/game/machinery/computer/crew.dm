@@ -44,7 +44,7 @@
 	. += create_table_notices(list(
 		"name",
 		"job",
-		"is_robot", //MONKESTATION EDIT ADDITION - Displaying robotic species Icon
+		"is_robot",
 		"life_status",
 		"suffocation",
 		"toxin",
@@ -65,7 +65,7 @@
 		var/list/entry = list()
 		entry["name"] = player_record["name"]
 		entry["job"] = player_record["assignment"]
-		entry["is_robot"] = player_record["is_robot"] //MONKESTATION EDIT ADDITION - Displaying robotic species Icon
+		entry["is_robot"] = player_record["is_robot"]
 		entry["life_status"] = player_record["life_status"]
 		entry["suffocation"] = player_record["oxydam"]
 		entry["toxin"] = player_record["toxdam"]
@@ -109,8 +109,8 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_SECURITY_OFFICER_SCIENCE = 15,
 		JOB_SECURITY_OFFICER_SUPPLY = 16,
 		JOB_DETECTIVE = 17,
-		JOB_SECURITY_ASSISTANT = 18, // monkestation edit: add security assistants
-		JOB_BRIG_PHYSICIAN = 19, // monkestation edit: add brig physician
+		JOB_SECURITY_ASSISTANT = 18,
+		JOB_BRIG_PHYSICIAN = 19,
 		// 20-29: Medbay
 		JOB_CHIEF_MEDICAL_OFFICER = 20,
 		JOB_CHEMIST = 21,
@@ -122,17 +122,17 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_SCIENTIST = 31,
 		JOB_ROBOTICIST = 32,
 		JOB_GENETICIST = 33,
-		JOB_XENOBIOLOGIST = 34, // Monkestation Addition:
+		JOB_XENOBIOLOGIST = 34,
 		// 40-49: Engineering
 		JOB_CHIEF_ENGINEER = 40,
 		JOB_STATION_ENGINEER = 41,
 		JOB_ATMOSPHERIC_TECHNICIAN = 42,
-		JOB_NETWORK_ADMIN = 43, // monkestation edit
+		JOB_NETWORK_ADMIN = 43,
 		// 50-59: Cargo
 		JOB_QUARTERMASTER = 50,
 		JOB_SHAFT_MINER = 51,
 		JOB_CARGO_TECHNICIAN = 52,
-		JOB_EXPLORER = 53, //monkestation edit: explorer
+		JOB_EXPLORER = 53,
 		// 60+: Civilian/other
 		JOB_HEAD_OF_PERSONNEL = 60,
 		JOB_BARTENDER = 61,
@@ -145,7 +145,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_JANITOR = 68,
 		JOB_LAWYER = 69,
 		JOB_PSYCHOLOGIST = 71,
-		JOB_BARBER = 72, //monkestation edit: barber
+		JOB_BARBER = 72,
 		// 200-239: Centcom
 		JOB_CENTCOM_ADMIRAL = 200,
 		JOB_CENTCOM = 201,
@@ -176,7 +176,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 /datum/crewmonitor/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
-		ui = new(user, src, "CrewConsoleNova") // MONKESTATION EDIT CHANGE - ORIGINAL: ui = new(user, src, "CrewConsole")
+		ui = new(user, src, "CrewConsoleNova")
 		ui.open()
 
 /datum/crewmonitor/proc/show(mob/M, source)
@@ -200,63 +200,17 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 /datum/crewmonitor/proc/update_data(z)
 	if(data_by_z["[z]"] && last_update["[z]"] && world.time <= last_update["[z]"] + SENSORS_UPDATE_PERIOD)
 		return data_by_z["[z]"]
-	// MONKESTATION EDIT START
+
 	var/nt_net = get_ntnet_wireless_status(z)
-	// MONKESTATION EDIT END
+
 
 	var/list/results = list()
 	for(var/tracked_mob in GLOB.suit_sensors_list | GLOB.nanite_sensors_list)
-		// MONKESTATION EDIT START
-		/* original - modified and moved into get_tracking_level
-		if(!tracked_mob)
-			stack_trace("Null entry in suit sensors or nanite sensors list.")
-			continue
-
-		var/mob/living/tracked_living_mob = tracked_mob
-
-		// Check if z-level is correct
-		var/turf/pos = get_turf(tracked_living_mob)
-
-		// Is our target in nullspace for some reason?
-		if(!pos)
-			stack_trace("Tracked mob has no loc and is likely in nullspace: [tracked_living_mob] ([tracked_living_mob.type])")
-			continue
-
-		// Machinery and the target should be on the same level or different levels of the same station
-		if(pos.z != z && (!is_station_level(pos.z) || !is_station_level(z)) && !HAS_TRAIT(tracked_living_mob, TRAIT_MULTIZ_SUIT_SENSORS))
-			continue
-
-		var/sensor_mode
-
-		// Set sensor level based on whether we're in the nanites list or the suit sensor list.
-		if(tracked_living_mob in GLOB.nanite_sensors_list)
-			sensor_mode = SENSOR_COORDS
-		else
-			var/mob/living/carbon/human/tracked_human = tracked_living_mob
-
-			// Check their humanity.
-			if(!ishuman(tracked_human))
-				stack_trace("Non-human mob is in suit_sensors_list: [tracked_living_mob] ([tracked_living_mob.type])")
-				continue
-
-			// Check they have a uniform
-			var/obj/item/clothing/under/uniform = tracked_human.w_uniform
-			if (!istype(uniform))
-				stack_trace("Human without a suit sensors compatible uniform is in suit_sensors_list: [tracked_human] ([tracked_human.type]) ([uniform?.type])")
-				continue
-
-			// Check if their uniform is in a compatible mode.
-			if((uniform.has_sensor <= NO_SENSORS) || !uniform.sensor_mode)
-				stack_trace("Human without active suit sensors is in suit_sensors_list: [tracked_human] ([tracked_human.type]) ([uniform.type])")
-				continue
-
-			sensor_mode = uniform.sensor_mode
-		*/
 		var/sensor_mode = get_tracking_level(tracked_mob, z, nt_net)
 		if (sensor_mode == SENSOR_OFF)
 			continue
 		var/mob/living/tracked_living_mob = tracked_mob
-		// MONKESTATION EDIT END
+
 
 		// The entry for this human
 		var/list/entry = list(
@@ -279,10 +233,8 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		else if(jobs_only)
 			continue
 
-		// MONKESTATION EDIT ADDITION START - Checking for robotic race
 		if (isipc(tracked_living_mob))
 			entry["is_robot"] = TRUE
-		// MONKESTATION EDIT ADDITION END
 
 		// Current status
 		if (sensor_mode >= SENSOR_LIVING)
@@ -320,6 +272,69 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			if(!istype(AI))
 				return
 			AI.ai_tracking_tool.track_name(AI, params["name"])
+
+/datum/crewmonitor/proc/get_ntnet_wireless_status(z)
+	// NTNet is down and we are not connected via wired connection. No signal.
+	if(!find_functional_ntnet_relay())
+		return NTNET_NO_SIGNAL
+
+	if(is_station_level(z))
+		return NTNET_GOOD_SIGNAL
+	else if(is_mining_level(z))
+		return NTNET_LOW_SIGNAL
+	return NTNET_NO_SIGNAL
+
+/datum/crewmonitor/proc/get_tracking_level(tracked_mob, tracker_z, nt_net, validation=TRUE)
+	if(isnull(tracked_mob))
+		if (validation)
+			stack_trace("Null entry in suit sensors or nanite sensors list.")
+		return SENSOR_OFF
+
+	var/mob/living/tracked_living_mob = tracked_mob
+
+	// Check if z-level is correct
+	var/turf/pos = get_turf(tracked_living_mob)
+
+	// Is our target in nullspace for some reason?
+	if(isnull(pos))
+		if (validation)
+			stack_trace("Tracked mob has no loc and is likely in nullspace: [tracked_living_mob] ([tracked_living_mob.type])")
+		return SENSOR_OFF
+
+	// Radio jammers block sensors.
+	if(is_within_radio_jammer_range(pos))
+		return SENSOR_OFF
+
+	// Machinery and the target should be on the same level or different levels of the same station
+	if(pos.z != tracker_z && !(tracker_z in SSmapping.get_connected_levels(pos.z)) && !(nt_net && get_ntnet_wireless_status(pos.z)) && !HAS_TRAIT(tracked_living_mob, TRAIT_MULTIZ_SUIT_SENSORS))
+		return SENSOR_OFF
+
+	// Set sensor level based on whether we're in the nanites list or the suit sensor list.
+	if(tracked_living_mob in GLOB.nanite_sensors_list)
+		return SENSOR_COORDS
+
+	var/mob/living/carbon/human/tracked_human = tracked_living_mob
+
+	// Check their humanity.
+	if(!ishuman(tracked_human))
+		if (validation)
+			stack_trace("Non-human mob is in suit_sensors_list: [tracked_living_mob] ([tracked_living_mob.type])")
+		return SENSOR_OFF
+
+	// Check they have a uniform
+	var/obj/item/clothing/under/uniform = tracked_human.w_uniform
+	if (!istype(uniform))
+		if (validation)
+			stack_trace("Human without a suit sensors compatible uniform is in suit_sensors_list: [tracked_human] ([tracked_human.type]) ([uniform?.type])")
+		return SENSOR_OFF
+
+	// Check if their uniform is in a compatible mode.
+	if((uniform.has_sensor <= NO_SENSORS) || !uniform.sensor_mode)
+		if (validation)
+			stack_trace("Human without active suit sensors is in suit_sensors_list: [tracked_human] ([tracked_human.type]) ([uniform.type])")
+		return SENSOR_OFF
+
+	return uniform.sensor_mode
 
 GLOBAL_DATUM_INIT(crewmonitor_command, /datum/crewmonitor/command, new)
 

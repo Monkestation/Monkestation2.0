@@ -54,6 +54,7 @@
 	if(!lit)
 		return
 
+	ADD_TRAIT(src, TRAIT_TRASH_ITEM, INNATE_TRAIT)
 	lit = FALSE
 	burnt = TRUE
 	damtype = BRUTE

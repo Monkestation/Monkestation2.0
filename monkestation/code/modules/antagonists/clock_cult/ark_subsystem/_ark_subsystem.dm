@@ -2,7 +2,7 @@
 //#define SERVANT_CAPACITY_TO_GIVE 2 //how many extra servant slots do we give on first charged crystal
 PROCESSING_SUBSYSTEM_DEF(the_ark)
 	name = "The Clockwork Ark"
-	wait = 1 SECOND
+	wait = 1 SECONDS
 	flags = SS_KEEP_TIMING | SS_NO_INIT | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME
 
@@ -74,7 +74,7 @@ PROCESSING_SUBSYSTEM_DEF(the_ark)
 	if(COOLDOWN_FINISHED(src, action_button_update))
 		for (var/datum/mind/member in GLOB.main_clock_cult.members)
 			member.current.update_mob_action_buttons(UPDATE_BUTTON_STATUS)
-		COOLDOWN_START(src, action_button_update, 1 SECOND)
+		COOLDOWN_START(src, action_button_update, 1 SECONDS)
 
 	return TRUE
 

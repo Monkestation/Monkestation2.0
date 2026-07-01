@@ -53,9 +53,9 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		if(length(channels))
 			for(var/i in 1 to length(channels))
 				if(i == 1)
-					avail_chans += "use [MODE_TOKEN_DEPARTMENT] or [GLOB.channel_tokens[channels[i]]] for [lowertext(channels[i])]"
+					avail_chans += "use [MODE_TOKEN_DEPARTMENT] or [GLOB.channel_tokens[channels[i]]] for [LOWER_TEXT(channels[i])]"
 				else
-					avail_chans += "use [GLOB.channel_tokens[channels[i]]] for [lowertext(channels[i])]"
+					avail_chans += "use [GLOB.channel_tokens[channels[i]]] for [LOWER_TEXT(channels[i])]"
 		. += span_notice("A small screen on the headset displays the following available frequencies:\n[english_list(avail_chans)].")
 
 		if(command)
@@ -208,13 +208,19 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
+/obj/item/radio/headset/headset_secmed
+	name = "brig physician radio headset"
+	desc = "This is used by your secure doctor."
+	icon_state = "sec_headset"
+	worn_icon_state = "sec_headset"
+	keyslot = /obj/item/encryptionkey/headset_secmed
+
 /obj/item/radio/headset/headset_eng
 	name = "engineering radio headset"
 	desc = "When the engineers wish to chat like girls."
 	icon_state = "eng_headset"
 	worn_icon_state = "eng_headset"
 	keyslot = /obj/item/encryptionkey/headset_eng
-
 
 /obj/item/radio/headset/headset_network
 	name = "network admins radio headset"
@@ -396,7 +402,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	worn_icon_state = "cent_headset_alt"
 	keyslot2 = null
 
-//monkestation addition start:
 /obj/item/radio/headset/headset_cent/representative
 	name = "\improper nanotrasen representative headset"
 	desc = "A headset used by the lower ranking members of Central Command."
@@ -407,7 +412,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	. = ..()
 	keyslot2 = new /obj/item/encryptionkey/headset_cent/crew/service(src)
 	src.recalculateChannels()
-//monkestation addition end
 
 /obj/item/radio/headset/headset_cent/alt/Initialize(mapload)
 	. = ..()
@@ -417,11 +421,29 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "\proper mini Integrated Subspace Transceiver "
 	subspace_transmission = FALSE
 
-
 /obj/item/radio/headset/silicon/ai
 	name = "\proper Integrated Subspace Transceiver "
 	keyslot2 = new /obj/item/encryptionkey/ai
 	command = TRUE
+
+/obj/item/radio/headset/headset_old
+	name =  "old radio headset"
+	desc =  "A headset years past its prime."
+
+/obj/item/radio/headset/headset_old/alt
+	name =  "old security bowman headset"
+	desc =  "A headset years past its prime. Protects ears from flashbangs."
+	keyslot = /obj/item/encryptionkey/headset_uncommon
+	icon_state = "med_headset_alt"
+	worn_icon_state = "med_headset_alt"
+
+/obj/item/radio/headset/heads/headset_old
+	name =  "\proper old commander headset"
+	desc =  "A authoritative headset years past its prime. Dust cakes its old design."
+
+/obj/item/radio/headset/headset_old/alt/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
 /obj/item/radio/headset/screwdriver_act(mob/living/user, obj/item/tool)
 	user.set_machine(src)

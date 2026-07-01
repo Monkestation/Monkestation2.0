@@ -706,6 +706,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	throwforce = 0
 	grind_results = list(/datum/reagent/carbon = 2)
 
+/obj/item/cigbutt/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_TRASH_ITEM, INNATE_TRAIT)
+
 /obj/item/cigbutt/cigarbutt
 	name = "cigar butt"
 	desc = "A manky old cigar butt."

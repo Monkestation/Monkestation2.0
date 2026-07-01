@@ -36,7 +36,7 @@
 	ignore_damage_types = list(STAMINA),
 	outline_colour = COLOR_PALE_GREEN,
 )
-	if (!isliving(parent))
+	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.regeneration_delay = regeneration_delay
@@ -51,12 +51,14 @@
 /datum/component/regenerator/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_take_damage))
+	RegisterSignals(parent, COMSIG_LIVING_ADJUST_ALL_DAMAGE_TYPES, PROC_REF(on_adjust_damage))
 
 /datum/component/regenerator/UnregisterFromParent()
 	. = ..()
 	if(regeneration_start_timer)
 		deltimer(regeneration_start_timer)
 	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
+	UnregisterSignal(parent, COMSIG_LIVING_ADJUST_ALL_DAMAGE_TYPES)
 	stop_regenerating()
 
 /datum/component/regenerator/Destroy(force)
@@ -69,22 +71,30 @@
 /datum/component/regenerator/proc/on_take_damage(datum/source, damage, damagetype, ...)
 	SIGNAL_HANDLER
 
-	if (damagetype in ignore_damage_types)
+	if(damagetype in ignore_damage_types)
 		return
 	stop_regenerating()
 	regeneration_start_timer = addtimer(CALLBACK(src, PROC_REF(start_regenerating)), regeneration_delay, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 
+/datum/component/regenerator/proc/on_adjust_damage(datum/source, damagetype, damage)
+	SIGNAL_HANDLER
+
+	if(damage > 0)
+		on_take_damage(source, damage, damagetype)
+
 /// Start processing health regeneration, and show animation if provided
 /datum/component/regenerator/proc/start_regenerating()
 	. = TRUE
-	if (!should_be_regenning(parent))
+	if(!should_be_regenning(parent))
 		return FALSE
+
 	var/mob/living/living_parent = parent
 	living_parent.visible_message(span_notice("[living_parent]'s wounds begin to knit closed!"))
 	START_PROCESSING(SSobj, src)
 	regeneration_start_timer = null
-	if (!outline_colour)
+	if(!outline_colour)
 		return
+
 	living_parent.add_filter(REGENERATION_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 0, "size" = 1))
 	var/filter = living_parent.get_filter(REGENERATION_FILTER)
 	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
@@ -98,7 +108,7 @@
 	living_parent.remove_filter(REGENERATION_FILTER)
 
 /datum/component/regenerator/process(seconds_per_tick = SSMOBS_DT)
-	if (!should_be_regenning(parent))
+	if(!should_be_regenning(parent))
 		stop_regenerating()
 		return
 
@@ -130,12 +140,15 @@
 /datum/component/regenerator/proc/should_be_regenning(mob/living/who)
 	if(who.stat == DEAD)
 		return FALSE
+
 	if(heals_wounds && iscarbon(who))
 		var/mob/living/carbon/carbon_who = who
 		if(length(carbon_who.all_wounds) > 0)
 			return TRUE
+
 	if(who.health != who.maxHealth)
 		return TRUE
+
 	return FALSE
 
 #undef REGENERATION_FILTER
