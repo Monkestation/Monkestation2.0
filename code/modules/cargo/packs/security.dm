@@ -389,7 +389,7 @@
 	desc = "Contains three fullbody sets of tough, fireproof suits designed in a joint \
 		effort by IS-ERI and Nanotrasen. Each set contains a suit, helmet, mask, combat belt, \
 		and combat gloves."
-	cost = CARGO_CRATE_VALUE * 9
+	cost = CARGO_CRATE_VALUE * 12 // three times more expensive than regular armor
 	contains = list(/obj/item/clothing/head/helmet/swat/nanotrasen = 3,
 					/obj/item/clothing/suit/armor/swat = 3,
 					/obj/item/clothing/mask/gas/sechailer/swat = 3,

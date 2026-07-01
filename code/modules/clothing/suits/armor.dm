@@ -290,6 +290,7 @@
 	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
 	equip_delay_other = 60
+	tackle_mod = 2
 
 /datum/armor/armor_riot
 	melee = 50
@@ -453,6 +454,8 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	slowdown = 0.5
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	tackle_mod = 2
 
 /obj/item/clothing/suit/armor/swat/Initialize(mapload)
 	. = ..()
