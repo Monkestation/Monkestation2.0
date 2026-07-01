@@ -24,6 +24,7 @@
 
 /datum/bodypart_overlay/mutant/antennae_ipc/get_base_icon_state()
 	return sprite_datum.icon_state
+
 /obj/item/organ/external/ipc_screen
 	name = "IPC screen"
 	desc = "An IPC's screen."
@@ -45,8 +46,6 @@
 	layers = EXTERNAL_ADJACENT
 	feature_key = "ipc_screen"
 	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR_SECONDARY
-	color_source = ORGAN_COLOR_MUTSECONDARY
 
 /datum/bodypart_overlay/mutant/ipc_screen/get_global_feature_list()
 	return GLOB.ipc_screens_list
@@ -98,9 +97,10 @@
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/screen_owner = owner
+	var/obj/item/organ/external/ipc_screen/screen = screen_owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_SCREEN)
 	screen_owner.dna.features["ipc_screen"] = screen_choice
 	screen_owner.eye_color_left = sanitize_hexcolor(color_choice)
-	screen_owner.update_body()
+	screen_owner.update_body_parts()
 
 /**
 	* Simple proc to switch the screen of a monitor-enabled synth, while updating their appearance.
