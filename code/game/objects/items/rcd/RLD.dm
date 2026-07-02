@@ -168,10 +168,12 @@
 				if(!useResource(cost, user))
 					return ITEM_INTERACT_BLOCKING
 				activate()
-				var/obj/machinery/light/L = new /obj/machinery/light(get_turf(winner))
-				L.setDir(get_dir(winner, interacting_with))
-				L.color = color_choice
-				L.set_light_color(color_choice)
+				var/obj/machinery/light/light = new /obj/machinery/light(get_turf(winner))
+				light.setDir(get_dir(winner, interacting_with))
+				light.color = color_choice
+				light.set_light_color(color_choice)
+				var/obj/item/light/tube = light.drop_light_tube()
+				qdel(tube)
 				return ITEM_INTERACT_SUCCESS
 
 			if(isfloorturf(interacting_with))
