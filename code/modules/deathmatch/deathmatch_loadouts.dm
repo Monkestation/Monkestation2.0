@@ -23,12 +23,11 @@
 		var/datum/action/new_ability = new act(user)
 		new_ability.Grant(user)
 
-// MONKESTATION EDIT ADDITION START
 /datum/outfit/deathmatch_loadout/random
 	name = "Deathmatch: Random"
 	display_name = "Random"
 	desc = "A randomly selected loadout, how daring."
-// MONKESTATION EDIT ADDITION END
+
 /datum/outfit/deathmatch_loadout/naked
 	name = "Deathmatch: Naked"
 	display_name = "Unarmed, Butt-naked"
