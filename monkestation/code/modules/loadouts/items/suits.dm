@@ -301,7 +301,7 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	item_path = /obj/item/clothing/suit/jacket/tailcoat/bartender
 	restricted_roles = list(JOB_BARTENDER)
 
-/datum/store_item/suit/armor/vest/capcarapace/tailcoat_captain
+/datum/loadout_item/suit/armor/vest/capcarapace/tailcoat_captain
 	name = "Captain's Tailcoat"
 	item_path = /obj/item/clothing/suit/armor/vest/capcarapace/tailcoat_captain
 	restricted_roles = list(JOB_CAPTAIN)
