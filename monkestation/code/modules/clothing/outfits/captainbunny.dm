@@ -18,7 +18,7 @@
 	acid = 50
 	wound = 5
 
-/obj/item/clothing/under/rank/captain/bunnysuit
+/obj/item/clothing/under/miscellaneous/captainbunnysuit
 	desc = "The staple of any bunny themed captains. Great for securing the disk."
 	name = "captain's bunnysuit"
 	icon_state = "bunnysuit_captain"
@@ -28,7 +28,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS
 	alt_covers_chest = TRUE
 
-/obj/item/clothing/under/rank/captain/bunnysuit/Initialize(mapload)
+/obj/item/clothing/under/miscellaneous/captainbunnysuit/Initialize(mapload)
 	. = ..()
 
 	create_storage(storage_type = /datum/storage/pockets/tiny)
