@@ -1,0 +1,4 @@
+author: "BebeYoshi"
+delete-after: True
+changes:
+  - rscdel: "Removes screenshake from megafauna warning roars."

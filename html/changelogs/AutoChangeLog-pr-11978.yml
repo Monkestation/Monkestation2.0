@@ -1,0 +1,4 @@
+author: "Runian"
+delete-after: True
+changes:
+  - bugfix: "Cyborg radios now have the same hearing range as radio headsets."
