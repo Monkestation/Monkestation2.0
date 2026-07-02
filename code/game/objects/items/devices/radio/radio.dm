@@ -299,10 +299,10 @@
 		return
 	if(!talking_movable.try_speak(message))
 		return
-	//MONKESTATION EDIT START
-	if(istype(get_area(src), /area/centcom/heretic_sacrifice))
+
+	var/area/our_area = get_area(src)
+	if(our_area.area_flags & AREA_BLOCKS_OUTGOING_RADIO)
 		return
-	//MONKESTATION EDIT STOP
 
 	if(use_command)
 		spans |= SPAN_COMMAND

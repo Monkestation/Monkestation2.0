@@ -751,6 +751,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/cell_charger_multi/wall_mounted, 29)
 	AddElement(/datum/element/repackable, undeploy_type, 2 SECONDS)
 	AddElement(/datum/element/manufacturer_examine, COMPANY_KAHRAMAN)
 
+/obj/item/gps/computer/beacon/add_gps_component(mapload = FALSE)
+	var/list/calibrate_zs
+	if(requires_z_calibration) // don't waste time with this if we don't need z-calibration in the first place
+		var/turf/our_turf = get_turf(src)
+		if(our_turf)
+			if(is_station_level(our_turf.z))
+				calibrate_zs = SSmapping.levels_by_trait(ZTRAIT_STATION)
+			else if(mapload)
+				calibrate_zs = list(our_turf.z)
+	AddComponent(/datum/component/gps/item, gpstag, requires_z_calibration = requires_z_calibration, calibrate_zs = calibrate_zs, uses_overlays = FALSE)
+
 /obj/item/flatpacked_machine/gps_beacon
 	name = "packed GPS beacon"
 	icon = 'monkestation/code/modules/blueshift/icons/gps_beacon.dmi'

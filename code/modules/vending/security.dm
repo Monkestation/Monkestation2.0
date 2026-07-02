@@ -22,7 +22,6 @@
 		/obj/item/clothing/mask/gas/sechailer = 6,
 		/obj/item/clothing/mask/whistle = 3,
 		/obj/item/citationinator = 10,
-		/obj/item/bodycam_upgrade = 10,
 	)
 	contraband = list(
 		/obj/item/clothing/glasses/sunglasses = 2,
