@@ -5,6 +5,7 @@
 	limb_id = "buster"
 	icon = 'icons/mob/augmentation/augments_buster.dmi'
 	icon_static = 'icons/mob/augmentation/augments_buster.dmi'
+	icon_state = "left_buster"
 	hp_percent_to_dismemberable = 1
 	wound_resistance = 5
 	brute_modifier = 0.4
@@ -64,7 +65,7 @@
 	limb_id = "buster"
 	icon = 'icons/mob/augmentation/augments_buster.dmi'
 	icon_static = 'icons/mob/augmentation/augments_buster.dmi'
-	icon_state = "buster_r_arm"
+	icon_state = "right_buster"
 	hp_percent_to_dismemberable = 1
 	wound_resistance = 5
 	brute_modifier = 0.4
