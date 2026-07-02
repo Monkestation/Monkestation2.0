@@ -307,7 +307,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Colorable Bunny Ears"
 	item_path = /obj/item/clothing/head/playbunnyears
 
-/datum/store_item/head/hats/caphat/bunnyears_captain
+/datum/loadout_item/head/hats/caphat/bunnyears_captain
 	name = "Captain's Bunny Ears"
 	item_path = /obj/item/clothing/head/hats/caphat/bunnyears_captain
 	restricted_roles = list(JOB_CAPTAIN)
