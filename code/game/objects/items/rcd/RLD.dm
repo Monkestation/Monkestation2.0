@@ -16,7 +16,7 @@
 #define REMOVE_DELAY 15
 
 /obj/item/construction/rld
-	name = "Rapid Lighting Device"
+	name = "rapid lighting device"
 	desc = "A device used to rapidly provide lighting sources to an area. Reload with iron, plasteel, glass or compressed matter cartridges."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rld"
@@ -216,16 +216,6 @@
 			return ITEM_INTERACT_SUCCESS
 
 	return NONE
-
-/obj/item/construction/rld/mini
-	name = "mini-rapid-light-device"
-	desc = "A device used to rapidly provide lighting sources to an area. Reload with iron, plasteel, glass or compressed matter cartridges."
-	icon = 'icons/obj/tools.dmi'
-	icon_state = "rld"
-	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	matter = 100
-	max_matter = 100
 
 #undef LIGHT_TUBE_COST
 #undef FLOOR_LIGHT_COST

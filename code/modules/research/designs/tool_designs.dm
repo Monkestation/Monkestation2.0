@@ -263,13 +263,13 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE // monkestation edit: allow science to print
 
-/datum/design/rld_mini
-	name = "Mini Rapid Light Device (MRLD)"
+/datum/design/rld
+	name = "Rapid Light Device (RLD)"
 	desc = "A tool that can portable and standing lighting orbs and glowsticks."
-	id = "rld_mini"
+	id = "rld_loaded"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*10, /datum/material/glass =SHEET_MATERIAL_AMOUNT*5, /datum/material/plastic =SHEET_MATERIAL_AMOUNT*4, /datum/material/gold =SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/construction/rld/mini
+	build_path = /obj/item/construction/rld
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
 	)
