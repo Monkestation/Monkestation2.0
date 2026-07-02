@@ -314,7 +314,6 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Captain's Bunnysuit"
 	item_path = /obj/item/clothing/under/rank/captain/bunnysuit
 	restricted_roles = list(JOB_CAPTAIN)
-	requires_purchase = TRUE
 
 /datum/loadout_item/under/miscellaneous/hula
 	name = "Hula Skirt"
