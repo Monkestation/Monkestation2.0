@@ -22,6 +22,12 @@
 		/obj/item/clothing/under/rank/captain/nova/imperial/generic/pants = 5,
 		/obj/item/clothing/under/rank/captain/nova/imperial/generic/red = 5,
 	)
+	contraband = list(
+		/obj/item/clothing/head/hats/caphat/bunnyears_captain = 1,
+		/obj/item/clothing/under/rank/captain/bunnysuit = 1,
+		/obj/item/clothing/suit/armor/vest/capcarapace/tailcoat_captain = 1,
+		/obj/item/clothing/neck/tie/bunnytie/captain = 1,
+	)
 
 /obj/item/vending_refill/wardrobe/comm_wardrobe
 	machine_name = "CommDrobe"
