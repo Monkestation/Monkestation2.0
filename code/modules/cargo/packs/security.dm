@@ -411,7 +411,7 @@
 	desc = "Three 12ga riot shotguns, with matching bandoliers for each."
 	cost = CARGO_CRATE_VALUE * 17.5
 	contains = list(
-		/obj/item/gun/ballistic/shotgun/riot/sol = 3,
+		/obj/item/gun/ballistic/shotgun/riot = 3,
 		/obj/item/storage/belt/bandolier = 3,
 	)
 
