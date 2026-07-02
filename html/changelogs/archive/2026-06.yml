@@ -397,3 +397,45 @@
   - qol: increased the reagent capacity of normal and advanced fire extinguishers.
   - bugfix: fixed computers not having the proper pass flags.
   - balance: explosive guardians cannot place traps on stealth boxes.
+2026-06-25:
+  Shoddd:
+  - admin: interview approved ckeys no longer persist
+  Tractor-Maam:
+  - bugfix: the Makeshift Pulse Pack can now be taken off of your back by click-dragging
+      it.
+2026-06-26:
+  HoggyHart:
+  - bugfix: Displays the current names of items in custom vendors instead of initial
+      names
+  - qol: Added distinction in custom vendor ui for item instances with the same path
+      but different names or prices
+  If-the-world-was-burning:
+  - map: Revamped the kilostation mining area to add an ore foundry
+  SirNightKnight:
+  - rscadd: added alternate styling options for balaclavas along with letting them
+      be equipped to the neckslot.
+  - rscdel: removed the tactical balaclava.
+  - rscdel: removed all thermal balaclavas from sec.
+2026-06-28:
+  Runian:
+  - balance: In line with CPR, ambu-bag no longer heals oxygen damage on target that
+      do not breathe normally / do not have lungs.
+  - bugfix: Ambu-bag now always stops channeling if their target moves out of user's
+      range.
+  - bugfix: Ambu-bag no longer continues to heal oxygen damage if their target puts
+      on their mask while being healed.
+  - bugfix: Ambu-bag no longer smacks their target when it succeeds.
+  Singul0:
+  - bugfix: Fixes Bluespace Launchpads "R" button not working.
+  Siro:
+  - code_imp: Enables Lentslurri to be made by adding it to Lenturi's inversion setting.
+2026-06-30:
+  SirNightKnight:
+  - balance: labyrinth  pages can be passed through if the person has TRAIT_HOLY which
+      holy water gives.
+  Tractor-Maam:
+  - bugfix: AI overclocking workstation now has a board of its own, letting it be
+      repaired.
+  hack-wrench,  SirNightKnight, Ghommie:
+  - rscadd: tape recorder now records speaker name.
+  - qol: gave tape recorders a radio filter toggle.

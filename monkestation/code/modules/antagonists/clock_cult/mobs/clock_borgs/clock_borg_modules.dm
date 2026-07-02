@@ -1,7 +1,7 @@
 /obj/item/clock_module
 	name = "ratvarian borg module"
 	desc = "cool."
-	icon = 'monkestation/icons/mob/clock_cult/actions_clock.dmi'
+	icon = 'icons/mob/clock_cult/actions_clock.dmi'
 	icon_state = "Replicant"
 	w_class = WEIGHT_CLASS_NORMAL
 	item_flags = NOBLUDGEON

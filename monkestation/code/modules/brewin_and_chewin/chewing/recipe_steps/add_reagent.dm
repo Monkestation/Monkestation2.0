@@ -63,7 +63,7 @@
 
 	var/trans = our_item.reagents.trans_to(container, our_item.amount_per_transfer_from_this)
 
-	playsound(usr,'monkestation/sound/chemistry/transfer/beakerpour_0-10-1.ogg',50,1)
+	playsound(usr,'sound/chemistry/transfer/beakerpour_0-10-1.ogg',50,1)
 	to_chat(usr, span_notice("You transfer [trans] units to \the [container]."))
 
 	return CHEWIN_SUCCESS

@@ -1,0 +1,10 @@
+author: "Gboster-0"
+delete-after: True
+changes:
+  - rscadd: "\"Random\" is now the default option for deathmatch loadouts"
+  - rscadd: "\"Random\" now randomizes your deathmatch loadout on-spawn instead of in-lobby"
+  - rscadd: "Added an option to pick a random map in deathmatch"
+  - rscadd: "Added a modifier to randomize everyone's loadouts in deathmatch"
+  - qol: "\"Random\" loadout no longer shows up in deathmatches with only 1 loadout"
+  - bugfix: "OSHA Violator map now works in deathmatch"
+  - bugfix: "Random modifiers now work in deathmatch"

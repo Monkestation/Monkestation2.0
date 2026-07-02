@@ -4,8 +4,8 @@
 /obj/item/clothing/neck/tie/bunnytie
 	name = "bowtie collar"
 	desc = "A fancy tie that includes a collar. Looking snazzy!"
-	icon = 'monkestation/icons/obj/clothing/necks.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/neck.dmi'
+	icon = 'icons/obj/clothing/necks.dmi'
+	worn_icon = 'icons/mob/clothing/neck.dmi'
 	icon_state = "bowtie_collar_tied"
 	tie_type = "bowtie_collar"
 	greyscale_colors = "#ffffff#39393f"

@@ -1,3 +1,3 @@
 /mob/living/basic/pet/fox
 	worn_slot_flags = ITEM_SLOT_HEAD
-	head_icon = 'monkestation/icons/mob/pets_held.dmi'
+	head_icon = 'icons/mob/pets_held.dmi'

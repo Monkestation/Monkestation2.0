@@ -2,7 +2,7 @@
 /obj/structure/chair/stool/sandstone
 	name = "sandstone stool"
 	desc = "Apply dummy thick cheeks."
-	icon = 'monkestation/icons/obj/sandstone_structures.dmi'
+	icon = 'icons/obj/sandstone_structures.dmi'
 	icon_state = "stool"
 	resistance_flags = FIRE_PROOF
 	can_buckle = FALSE
@@ -12,7 +12,7 @@
 
 /obj/item/chair/stool/sandstone
 	name = "sandstone stool"
-	icon = 'monkestation/icons/obj/sandstone_structures.dmi'
+	icon = 'icons/obj/sandstone_structures.dmi'
 	icon_state = "stool_toppled"
 	inhand_icon_state = null
 	origin_type = /obj/structure/chair/stool/sandstone
@@ -20,7 +20,7 @@
 
 /obj/structure/chair/silk
 	name = "silk chair"
-	icon = 'monkestation/icons/obj/silk_structures.dmi'
+	icon = 'icons/obj/silk_structures.dmi'
 	icon_state = "chair"
 	buildstacktype = /obj/item/stack/sheet/silk
 	buildstackamount = 3
@@ -30,7 +30,7 @@
 /obj/item/chair/silk
 	name = "silk chair"
 	desc = "It's way too soft for it to make a dent on anything."
-	icon = 'monkestation/icons/obj/silk_structures.dmi'
+	icon = 'icons/obj/silk_structures.dmi'
 	icon_state = "chair_toppled"
 	origin_type = /obj/structure/chair/silk
 	custom_materials = null

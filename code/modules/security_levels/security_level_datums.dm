@@ -120,7 +120,7 @@
 	name_shortform = "ε"
 	announcement_color = "grey" //this was painful
 	number_level = SEC_LEVEL_EPSILON
-	sound = 'monkestation/sound/misc/epsilon.ogg'
+	sound = 'sound/misc/epsilon.ogg'
 	lowering_to_configuration_key = /datum/config_entry/string/alert_epsilon
 	elevating_to_configuration_key = /datum/config_entry/string/alert_epsilon
 	shuttle_call_time_mod = 10 //nobody escapes the station
@@ -169,7 +169,7 @@
 	name_shortform = "γ"
 	announcement_color = "pink" //Its like red, but diffrent.
 	number_level = SEC_LEVEL_GAMMA
-	sound = 'monkestation/sound/misc/gamma.ogg' // Its just the star wars death star alert, but pitched lower and slowed down ever so slightly.
+	sound = 'sound/misc/gamma.ogg' // Its just the star wars death star alert, but pitched lower and slowed down ever so slightly.
 	lowering_to_configuration_key = /datum/config_entry/string/alert_gamma
 	elevating_to_configuration_key = /datum/config_entry/string/alert_gamma
 	shuttle_call_time_mod = 0.5 //Oh god oh fuck things aint looking good.
@@ -185,7 +185,7 @@
 	name_shortform = "λ"
 	announcement_color = "crimson" //Thanking Absolucy for having a bigger brain than me in figuring out colors.
 	number_level = SEC_LEVEL_LAMBDA
-	sound = 'monkestation/sound/misc/lambda.ogg' // Ported over the current (as of this codes time) ss14 gamma alert, renamed because it fits better. Old gamma was better :(
+	sound = 'sound/misc/lambda.ogg' // Ported over the current (as of this codes time) ss14 gamma alert, renamed because it fits better. Old gamma was better :(
 	elevating_to_configuration_key = /datum/config_entry/string/alert_lambda
 	shuttle_call_time_mod = 0.25 //This is as bad as the nuke going off. Everyone is fucked.
 	can_crew_change_alert = FALSE

@@ -424,5 +424,5 @@
 /obj/item/clothing/head/helmet/space/plasmaman/bunny_ears // i would remove this if it wasn't for the fact the bunny wand would kill plasmamen without it - NK
 	name = "bunny eared plasma envirosuit helmet"
 	desc = "An envirohelmet designed for plasmaman bunny themed waiters, it has a pair of bunny ears welded onto the helmet."
-	worn_icon = 'monkestation/icons/mob/clothing/head_32x48.dmi'
+	worn_icon = 'icons/mob/clothing/head_32x48.dmi'
 	icon_state = "bunny_envirohelm"
