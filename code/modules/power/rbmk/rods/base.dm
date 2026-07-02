@@ -18,16 +18,17 @@
 	var/thermal_multiplier = 1.0
 
 	var/active = TRUE
+	var/activated_in_reactor = FALSE
+	var/irradiated = FALSE
 
 	var/depleted_icon_state = "rod_empty"
 	var/depleted_description = "An empty fuel rod ready for packing."
 
-	/// Item radiation while outside the reactor.
-	/// This only runs after the rod is depleted/spent.
 	var/item_radiation_range = 2
 	var/item_radiation_threshold = 0.55
 	var/item_radiation_chance = 25
 	var/item_radiation_intensity = 35
+	var/item_radiation_intensity_activated = 15
 	var/item_radiation_pulse_interval = 3 SECONDS
 	var/last_item_radiation_pulse = 0
 
@@ -35,9 +36,7 @@
 /obj/item/rbmk/fuel_rod/Initialize(mapload)
 	. = ..()
 
-	// Fresh rods should not radiate or process as items.
-	// Only already-spent rods need item processing.
-	if(is_depleted())
+	if(should_process_item_radiation())
 		START_PROCESSING(SSobj, src)
 
 
@@ -47,9 +46,7 @@
 
 
 /obj/item/rbmk/fuel_rod/process(seconds_per_tick)
-	// Safety guard: if this rod somehow starts processing while fresh,
-	// immediately stop processing it.
-	if(!is_depleted())
+	if(!should_process_item_radiation())
 		STOP_PROCESSING(SSobj, src)
 		return
 
@@ -64,8 +61,30 @@
 	return istype(loc, /obj/machinery/rbmk/reactor)
 
 
+/obj/item/rbmk/fuel_rod/proc/is_radioactive_item()
+	return irradiated || is_depleted()
+
+
+/obj/item/rbmk/fuel_rod/proc/should_process_item_radiation()
+	if(!is_radioactive_item())
+		return FALSE
+
+	return TRUE
+
+
+/obj/item/rbmk/fuel_rod/proc/activate_in_reactor()
+	if(activated_in_reactor && irradiated)
+		return
+
+	activated_in_reactor = TRUE
+	irradiated = TRUE
+
+
+	START_PROCESSING(SSobj, src)
+
+
 /obj/item/rbmk/fuel_rod/proc/emit_item_radiation()
-	if(!is_depleted())
+	if(!is_radioactive_item())
 		return
 
 	if(is_inside_reactor())
@@ -80,13 +99,15 @@
 
 	last_item_radiation_pulse = world.time
 
+	var/current_intensity = is_depleted() ? item_radiation_intensity : item_radiation_intensity_activated
+
 	radiation_pulse(
 		src,
 		item_radiation_range,
 		item_radiation_threshold,
 		item_radiation_chance,
 		0,
-		item_radiation_intensity,
+		current_intensity,
 		TRUE
 	)
 
@@ -94,10 +115,11 @@
 /obj/item/rbmk/fuel_rod/proc/deplete_rod()
 	active = FALSE
 	fuel_amount = 0
+	activated_in_reactor = TRUE
+	irradiated = TRUE
 	icon_state = depleted_icon_state
 	desc = depleted_description
 
-	// Once spent, the rod becomes a radioactive item when outside the reactor.
 	START_PROCESSING(SSobj, src)
 
 
@@ -116,6 +138,8 @@
 	if(fuel_amount <= 0)
 		deplete_rod()
 		return get_zero_output()
+
+	activate_in_reactor()
 
 	fuel_amount = max(0, fuel_amount - fuel_consumption)
 

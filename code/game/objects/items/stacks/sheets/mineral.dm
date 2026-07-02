@@ -193,14 +193,17 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 /obj/item/stack/sheet/mineral/thorium
 	name = "thorium"
 	desc = "A highly radioactive fission by-product."
+	icon = 'icons/materials/fission_isotopes.dmi'
 	icon_state = "sheet-thorium"
+	base_icon_state = "sheet-thorium"
 	inhand_icon_state = "sheet-thorium"
 	singular_name = "thorium sheet"
 	sheettype = "thorium"
-	mats_per_unit = list(/datum/material/thorium=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/thorium = SHEET_MATERIAL_AMOUNT)
 	point_value = 0
 	merge_type = /obj/item/stack/sheet/mineral/thorium
 	material_type = /datum/material/thorium
+	novariants = FALSE
 
 /obj/item/stack/sheet/mineral/thorium/five
 	amount = 5
@@ -211,14 +214,17 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 /obj/item/stack/sheet/mineral/plutonium
 	name = "plutonium"
 	desc = "A dangerous radioactive fission by-product."
+	icon = 'icons/materials/fission_isotopes.dmi'
 	icon_state = "sheet-plutonium"
+	base_icon_state = "sheet-plutonium"
 	inhand_icon_state = "sheet-plutonium"
 	singular_name = "plutonium sheet"
 	sheettype = "plutonium"
-	mats_per_unit = list(/datum/material/plutonium=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/plutonium = SHEET_MATERIAL_AMOUNT)
 	point_value = 0
 	merge_type = /obj/item/stack/sheet/mineral/plutonium
 	material_type = /datum/material/plutonium
+	novariants = FALSE
 
 /obj/item/stack/sheet/mineral/plutonium/five
 	amount = 5

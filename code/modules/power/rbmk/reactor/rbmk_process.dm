@@ -125,6 +125,7 @@
 
 	if(actual_control_rod_depth >= RBMK_CONTROL_ROD_MAX)
 		return
+
 	if(radiation <= 0 || flux <= 0)
 		return
 
@@ -280,27 +281,16 @@
 
 	try_play_startup_sequence()
 
-	var/total_flux = 0
-	var/total_radiation = 0
-	var/total_heat = 0
+	var/list/all_fuel_rods = normal_slots + special_slots
 	var/active_rods = 0
 
-	for(var/obj/item/rbmk/fuel_rod/fuel_rod in (normal_slots + special_slots))
-		if(!fuel_rod?.active)
-			continue
-
-		var/list/rod_output = fuel_rod.process_rod()
-		if(!islist(rod_output))
-			continue
-
-		total_flux += rod_output["flux"] || 0
-		total_radiation += rod_output["radiation"] || 0
-		total_heat += rod_output["heat"] || 0
-		active_rods++
+	for(var/obj/item/rbmk/fuel_rod/fuel_rod in all_fuel_rods)
+		if(fuel_rod?.active)
+			active_rods++
 
 	last_tick_rod_count = active_rods
 
-	if(active_rods <= 0 || scrammed)
+	if(active_rods <= 0 || scrammed || actual_control_rod_depth >= RBMK_CONTROL_ROD_MAX)
 		running = FALSE
 
 		rbmk_decay_process()
@@ -319,6 +309,22 @@
 
 		previous_control_rod_depth = control_rod_depth
 		return
+
+	var/total_flux = 0
+	var/total_radiation = 0
+	var/total_heat = 0
+
+	for(var/obj/item/rbmk/fuel_rod/fuel_rod in all_fuel_rods)
+		if(!fuel_rod?.active)
+			continue
+
+		var/list/rod_output = fuel_rod.process_rod()
+		if(!islist(rod_output))
+			continue
+
+		total_flux += rod_output["flux"] || 0
+		total_radiation += rod_output["radiation"] || 0
+		total_heat += rod_output["heat"] || 0
 
 	running = TRUE
 

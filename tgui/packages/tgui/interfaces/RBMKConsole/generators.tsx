@@ -21,9 +21,17 @@ const formatPower = (value: number) => {
   return `${formatNumber(powerValue, 0)} W`;
 };
 
+const formatTemperature = (value: number) => {
+  return `${formatNumber(value, 1)} K`;
+};
+
+const formatPressure = (value: number) => {
+  return `${formatNumber(value, 1)} kPa`;
+};
+
 const getTurbineStatus = (turbine: any) => {
   if (turbine.broken) {
-    return 'BROKEN';
+    return 'OFFLINE';
   }
 
   if (turbine.generating || turbine.running) {
@@ -35,6 +43,21 @@ const getTurbineStatus = (turbine: any) => {
   }
 
   return 'IDLE';
+};
+
+const getStatusColor = (status: string) => {
+  switch (status) {
+    case 'ONLINE':
+      return 'good';
+    case 'IDLE':
+      return 'average';
+    case 'STALE':
+      return 'average';
+    case 'OFFLINE':
+      return 'bad';
+    default:
+      return 'average';
+  }
 };
 
 const getIntegrityColor = (integrity: number) => {
@@ -49,18 +72,6 @@ const getIntegrityColor = (integrity: number) => {
   return 'bad';
 };
 
-const getOvertempColor = (overtemp: number) => {
-  if (overtemp > 1500) {
-    return 'bad';
-  }
-
-  if (overtemp > 0) {
-    return 'average';
-  }
-
-  return 'good';
-};
-
 const getTurbineKey = (turbine: any, index: number) => {
   if (turbine.ref) {
     return turbine.ref;
@@ -70,7 +81,22 @@ const getTurbineKey = (turbine: any, index: number) => {
     return turbine.uid;
   }
 
+  if (turbine.id) {
+    return turbine.id;
+  }
+
   return `${turbine.name || 'turbine'}-${turbine.index || index + 1}-${index}`;
+};
+
+const getPressureDelta = (turbine: any) => {
+  if (turbine.pressure_delta !== undefined && turbine.pressure_delta !== null) {
+    return Number(turbine.pressure_delta || 0);
+  }
+
+  return Math.max(
+    Number(turbine.inlet_pressure || 0) - Number(turbine.outlet_pressure || 0),
+    0
+  );
 };
 
 const RBMKGenerators = () => {
@@ -79,28 +105,44 @@ const RBMKGenerators = () => {
   const turbines = data?.turbines || [];
   const totalTurbinePower = Number(data?.total_turbine_power || 0);
   const averageTurbineIntegrity = Number(data?.average_turbine_integrity || 0);
-  const turbineCount = Number(data?.turbine_count || 0);
+  const turbineCount = Number(data?.turbine_count || turbines.length || 0);
+
+  const onlineTurbines = turbines.filter((turbine: any) => {
+    return getTurbineStatus(turbine) === 'ONLINE';
+  }).length;
+
+  const staleTurbines = turbines.filter((turbine: any) => {
+    return getTurbineStatus(turbine) === 'STALE';
+  }).length;
 
   return (
     <Section title="Generators">
       <Section title="Generator Summary">
         <LabeledList>
-          <LabeledList.Item label="Detected Turbines">
-            {turbineCount}
+          <LabeledList.Item label="Turbines">
+            {onlineTurbines} / {turbineCount} online
           </LabeledList.Item>
 
-          <LabeledList.Item label="Total Power Generation">
+          {!!staleTurbines && (
+            <LabeledList.Item label="Stale Telemetry">
+              <Box color="average">{staleTurbines}</Box>
+            </LabeledList.Item>
+          )}
+
+          <LabeledList.Item label="Total Generation">
             {formatPower(totalTurbinePower)}
           </LabeledList.Item>
 
-          <LabeledList.Item label="Average Generator Integrity">
-            <ProgressBar
-              value={averageTurbineIntegrity / 100}
-              color={getIntegrityColor(averageTurbineIntegrity)}
-            >
-              {formatNumber(averageTurbineIntegrity, 1)}%
-            </ProgressBar>
-          </LabeledList.Item>
+          {!!turbineCount && (
+            <LabeledList.Item label="Average Integrity">
+              <ProgressBar
+                value={averageTurbineIntegrity / 100}
+                color={getIntegrityColor(averageTurbineIntegrity)}
+              >
+                {formatNumber(averageTurbineIntegrity, 1)}%
+              </ProgressBar>
+            </LabeledList.Item>
+          )}
         </LabeledList>
       </Section>
 
@@ -114,16 +156,43 @@ const RBMKGenerators = () => {
 
       {turbines.map((turbine: any, index: number) => {
         const integrity = Number(turbine.integrity || 0);
-        const overtemp = Number(turbine.overtemp || 0);
         const status = getTurbineStatus(turbine);
         const turbineIndex = Number(turbine.index || index + 1);
+        const pressureDelta = getPressureDelta(turbine);
+        const telemetryAge = Number(turbine.telemetry_age);
 
         return (
           <Section
             key={getTurbineKey(turbine, index)}
-            title={`Turbine ${turbineIndex} - ${status}`}
+            title={`Turbine ${turbineIndex}`}
+            buttons={
+              <Box color={getStatusColor(status)} bold>
+                {status}
+              </Box>
+            }
           >
             <LabeledList>
+              <LabeledList.Item label="Power Output">
+                {formatPower(turbine.power_output)}
+              </LabeledList.Item>
+
+              <LabeledList.Item label="RPM">
+                {formatNumber(turbine.rpm, 0)}
+              </LabeledList.Item>
+
+              <LabeledList.Item label="Flow Rate">
+                {formatNumber(turbine.flow_moles, 2)} mol/tick
+              </LabeledList.Item>
+
+              <LabeledList.Item label="Pressure Delta">
+                {formatPressure(pressureDelta)}
+              </LabeledList.Item>
+
+              <LabeledList.Item label="Coolant Temperature">
+                {formatTemperature(turbine.inlet_temperature)} →{' '}
+                {formatTemperature(turbine.outlet_temperature)}
+              </LabeledList.Item>
+
               <LabeledList.Item label="Generator Integrity">
                 <ProgressBar
                   value={integrity / 100}
@@ -133,61 +202,11 @@ const RBMKGenerators = () => {
                 </ProgressBar>
               </LabeledList.Item>
 
-              <LabeledList.Item label="Power Generation">
-                {formatPower(turbine.power_output)}
+              <LabeledList.Item label="Telemetry Age">
+                {Number.isFinite(telemetryAge)
+                  ? `${formatNumber(telemetryAge, 1)} s`
+                  : 'No signal'}
               </LabeledList.Item>
-
-              <LabeledList.Item label="Turbine RPM">
-                {formatNumber(turbine.rpm, 0)}
-              </LabeledList.Item>
-
-              <LabeledList.Item label="Gas Flow">
-                {formatNumber(turbine.flow_moles, 2)} mol/tick
-              </LabeledList.Item>
-
-              <LabeledList.Item label="Inlet Temperature">
-                {formatNumber(turbine.inlet_temperature, 1)} K
-              </LabeledList.Item>
-
-              <LabeledList.Item label="Outlet Temperature">
-                {formatNumber(turbine.outlet_temperature, 1)} K
-              </LabeledList.Item>
-
-              <LabeledList.Item label="Temperature Drop">
-                {formatNumber(turbine.temperature_drop, 1)} K
-              </LabeledList.Item>
-
-              <LabeledList.Item label="Inlet Pressure">
-                {formatNumber(turbine.inlet_pressure, 1)} kPa
-              </LabeledList.Item>
-
-              <LabeledList.Item label="Outlet Pressure">
-                {formatNumber(turbine.outlet_pressure, 1)} kPa
-              </LabeledList.Item>
-
-              <LabeledList.Item label="Heat Capacity">
-                {formatNumber(turbine.heat_capacity, 1)}
-              </LabeledList.Item>
-
-              <LabeledList.Item label="Heat Extracted">
-                {formatNumber(turbine.heat_extracted, 1)}
-              </LabeledList.Item>
-
-              <LabeledList.Item label="Overtemp Above 8000 K">
-                <Box color={getOvertempColor(overtemp)}>
-                  {formatNumber(overtemp, 1)} K
-                </Box>
-              </LabeledList.Item>
-
-              <LabeledList.Item label="Integrity Damage">
-                {formatNumber(turbine.last_damage, 2)}
-              </LabeledList.Item>
-
-              {!isNaN(Number(turbine.telemetry_age)) && (
-                <LabeledList.Item label="Telemetry Age">
-                  {formatNumber(turbine.telemetry_age, 1)} s
-                </LabeledList.Item>
-              )}
             </LabeledList>
           </Section>
         );

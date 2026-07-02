@@ -66,9 +66,7 @@
 	var/current_damage_stage = 0
 	var/image/current_damage_overlay_image = null
 
-	var/datum/looping_sound/rbmk_reactor_low/low_soundloop = null
-	var/datum/looping_sound/rbmk_reactor_high/high_soundloop = null
-	var/datum/looping_sound/rbmk_reactor_max/max_soundloop = null
+	var/datum/looping_sound/rbmk_reactor/reactor_soundloop = null
 
 	var/startup_sequence_played = FALSE
 	var/previous_control_rod_depth = RBMK_CONTROL_ROD_MAX
@@ -113,6 +111,31 @@
 	last_tick_rod_count = 0
 
 
+/obj/machinery/rbmk/reactor/proc/start_reactor_sound()
+	if(reactor_soundloop)
+		return reactor_soundloop
+
+	reactor_soundloop = new /datum/looping_sound/rbmk_reactor(src, TRUE)
+	return reactor_soundloop
+
+
+/obj/machinery/rbmk/reactor/proc/stop_reactor_sound()
+	if(reactor_soundloop)
+		reactor_soundloop.stop()
+
+	QDEL_NULL(reactor_soundloop)
+
+
+/obj/machinery/rbmk/reactor/proc/set_reactor_sound_state(new_state)
+	if(!reactor_soundloop)
+		start_reactor_sound()
+
+	if(!reactor_soundloop)
+		return
+
+	reactor_soundloop.set_sound_state(new_state)
+
+
 /obj/machinery/rbmk/reactor/proc/is_special_rod(obj/item/rbmk/fuel_rod/fuel_rod)
 	return fuel_rod?.rod_type in list("plasma", "telecrystal", "supermatter")
 
@@ -155,11 +178,14 @@
 
 	return FALSE
 
+
 /obj/machinery/rbmk/reactor/ex_act(severity, target)
 	return FALSE
 
+
 /obj/machinery/rbmk/reactor/deconstruct(disassembled = TRUE)
 	return
+
 
 /obj/machinery/rbmk/reactor/Initialize(mapload)
 	. = ..()
@@ -221,17 +247,7 @@
 	active_welder_repairers = null
 	GLOB.rbmk_fallout_reactors -= src
 
-	if(low_soundloop)
-		low_soundloop.stop()
-	QDEL_NULL(low_soundloop)
-
-	if(high_soundloop)
-		high_soundloop.stop()
-	QDEL_NULL(high_soundloop)
-
-	if(max_soundloop)
-		max_soundloop.stop()
-	QDEL_NULL(max_soundloop)
+	stop_reactor_sound()
 
 	rbmk_cleanup_atmos()
 	return ..()
@@ -244,6 +260,7 @@
 	scrammed = TRUE
 	control_rod_depth = RBMK_CONTROL_ROD_MAX
 	reset_reaction_state()
+	stop_reactor_sound()
 	startup_sequence_played = FALSE
 	rod_motion_in_progress = FALSE
 
@@ -417,8 +434,8 @@
 		return
 
 	if(has_fuel_rods())
-		balloon_alert(user, "tool required")
-		to_chat(user, span_warning("You need an RBMK rod handling tool to manually extract fuel rods."))
+		balloon_alert(user, "extractor required")
+		to_chat(user, span_warning("You need an RBMK rod extractor to manually extract fuel rods."))
 		return
 
 	to_chat(user, span_notice("No rods installed."))
@@ -448,25 +465,136 @@
 	return RBMK_ROD_TOOL_REMOVE_TIME_NORMAL
 
 
-/obj/machinery/rbmk/reactor/proc/apply_rod_tool_knockback(mob/living/user, cascade_extraction = FALSE)
-	if(!user || QDELETED(user))
-		return
+/obj/machinery/rbmk/reactor/proc/get_rod_extraction_heat_ratio()
+	if(temperature <= RBMK_ROD_TOOL_HOT_KNOCKBACK_TEMP)
+		return 0
 
+	return CLAMP01((temperature - RBMK_ROD_TOOL_HOT_KNOCKBACK_TEMP) / 6000)
+
+
+/obj/machinery/rbmk/reactor/proc/apply_rod_tool_knockback(mob/living/user, cascade_extraction = FALSE)
 	if(!cascade_extraction && temperature <= RBMK_ROD_TOOL_HOT_KNOCKBACK_TEMP)
 		return
 
-	var/knockback_range = cascade_extraction ? RBMK_ROD_TOOL_CASCADE_KNOCKBACK_RANGE : RBMK_ROD_TOOL_HOT_KNOCKBACK_RANGE
-	var/throw_speed = cascade_extraction ? 5 : 3
-	var/turf/target_turf = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
+	var/turf/source_turf = get_turf(src)
+	if(!source_turf)
+		return
 
-	visible_message(span_danger("[src] violently vents superheated pressure as the rod is extracted!"))
-	playsound(src, 'sound/effects/explosion1.ogg', 70, TRUE)
+	var/heat_ratio = get_rod_extraction_heat_ratio()
 
-	shake_camera(user, 0.2 SECONDS, 5)
-	user.Disorient(cascade_extraction ? 8 SECONDS : 3 SECONDS)
-	user.stamina.adjust(cascade_extraction ? -25 : -10)
+	var/blast_range
+	var/throw_speed
+	var/heavy_impact_range
+	var/light_impact_range
+	var/flash_range
+	var/disorient_time
+	var/stamina_damage
 
-	user.throw_at(target_turf, knockback_range, throw_speed, src)
+	if(cascade_extraction)
+		blast_range = clamp(round(RBMK_ROD_TOOL_CASCADE_KNOCKBACK_RANGE + 2 + (heat_ratio * 4)), RBMK_ROD_TOOL_CASCADE_KNOCKBACK_RANGE, 12)
+		throw_speed = clamp(round(4 + (heat_ratio * 4)), 4, 8)
+		heavy_impact_range = clamp(round(1 + heat_ratio), 1, 2)
+		light_impact_range = clamp(round(3 + (heat_ratio * 3)), 3, 6)
+		flash_range = clamp(round(5 + (heat_ratio * 5)), 5, 10)
+		disorient_time = (6 SECONDS) + round(heat_ratio * 8 SECONDS)
+		stamina_damage = -round(25 + (heat_ratio * 35))
+	else
+		blast_range = clamp(round(RBMK_ROD_TOOL_HOT_KNOCKBACK_RANGE + (heat_ratio * 4)), RBMK_ROD_TOOL_HOT_KNOCKBACK_RANGE, 8)
+		throw_speed = clamp(round(2 + (heat_ratio * 3)), 2, 5)
+		heavy_impact_range = heat_ratio >= 0.85 ? 1 : 0
+		light_impact_range = clamp(round(1 + (heat_ratio * 3)), 1, 4)
+		flash_range = clamp(round(2 + (heat_ratio * 4)), 2, 6)
+		disorient_time = (2 SECONDS) + round(heat_ratio * 4 SECONDS)
+		stamina_damage = -round(8 + (heat_ratio * 22))
+
+	if(cascade_extraction)
+		visible_message(span_danger("[src] erupts in a violent supermatter pressure discharge as the rod is extracted!"))
+	else
+		visible_message(span_danger("[src] violently vents superheated pressure as the rod is extracted!"))
+
+	playsound(src, 'sound/effects/explosion1.ogg', cascade_extraction ? 100 : 80, TRUE)
+
+	explosion(
+		source_turf,
+		devastation_range = 0,
+		heavy_impact_range = heavy_impact_range,
+		light_impact_range = light_impact_range,
+		flash_range = flash_range
+	)
+
+	for(var/mob/living/living_mob in view(blast_range, source_turf))
+		if(QDELETED(living_mob))
+			continue
+
+		var/distance_from_reactor = max(get_dist(source_turf, living_mob), 1)
+		var/effective_throw_range = max(blast_range - distance_from_reactor + 1, 1)
+
+		if(living_mob == user)
+			effective_throw_range += cascade_extraction ? 3 : 1
+
+		blast_throw_living(living_mob, effective_throw_range, throw_speed, stamina_damage, disorient_time)
+
+	for(var/atom/movable/movable_atom in view(blast_range, source_turf))
+		if(QDELETED(movable_atom))
+			continue
+
+		if(movable_atom == src)
+			continue
+
+		if(ismob(movable_atom))
+			continue
+
+		if(movable_atom.anchored)
+			continue
+
+		var/distance_from_reactor = max(get_dist(source_turf, movable_atom), 1)
+		var/effective_throw_range = max(blast_range - distance_from_reactor + 1, 1)
+
+		blast_throw_atom(movable_atom, effective_throw_range, throw_speed)
+
+
+/obj/machinery/rbmk/reactor/proc/blast_throw_living(mob/living/living_mob, throw_range, throw_speed, stamina_damage, disorient_time)
+	if(!living_mob || QDELETED(living_mob))
+		return
+
+	var/turf/source_turf = get_turf(src)
+	var/turf/mob_turf = get_turf(living_mob)
+	if(!source_turf || !mob_turf)
+		return
+
+	var/throw_dir = get_dir(source_turf, mob_turf)
+	if(!throw_dir)
+		throw_dir = pick(NORTH, SOUTH, EAST, WEST)
+
+	var/turf/target_turf = get_edge_target_turf(living_mob, throw_dir)
+	if(!target_turf)
+		return
+
+	shake_camera(living_mob, 0.2 SECONDS, 5)
+	living_mob.Disorient(disorient_time)
+	living_mob.stamina.adjust(stamina_damage)
+
+	living_mob.throw_at(target_turf, throw_range, throw_speed, src)
+
+
+/obj/machinery/rbmk/reactor/proc/blast_throw_atom(atom/movable/thrown_atom, throw_range, throw_speed)
+	if(!thrown_atom || QDELETED(thrown_atom))
+		return
+
+	var/turf/source_turf = get_turf(src)
+	var/turf/atom_turf = get_turf(thrown_atom)
+	if(!source_turf || !atom_turf)
+		return
+
+	var/throw_dir = get_dir(source_turf, atom_turf)
+	if(!throw_dir)
+		throw_dir = pick(NORTH, SOUTH, EAST, WEST)
+
+	var/turf/target_turf = get_edge_target_turf(thrown_atom, throw_dir)
+	if(!target_turf)
+		return
+
+	thrown_atom.throw_at(target_turf, throw_range, throw_speed, src)
 
 
 /obj/machinery/rbmk/reactor/proc/finish_remove_rod(obj/item/rbmk/fuel_rod/fuel_rod, mob/user = null)
@@ -493,6 +621,7 @@
 
 	if(!has_fuel_rods())
 		reset_reaction_state()
+		stop_reactor_sound()
 		startup_sequence_played = FALSE
 		rod_motion_in_progress = FALSE
 
@@ -515,13 +644,13 @@
 
 	user.visible_message(
 		span_notice("[user] starts extracting [fuel_rod] from [src]."),
-		span_notice("You begin extracting [fuel_rod] from [src]..."),
+		span_notice("You clamp the RBMK rod extractor onto [fuel_rod] and begin pulling it from [src]..."),
 		span_hear("You hear heavy mechanical clamping.")
 	)
 
 	if(cascade_extraction)
 		to_chat(user, span_danger("The supermatter rod fights the extractor. Keep pulling!"))
-	else if(temperature > RBMK_ROD_TOOL_HOT_KNOCKBACK_TEMP)
+	else if(temperature >= RBMK_ROD_TOOL_HOT_KNOCKBACK_TEMP)
 		to_chat(user, span_warning("The reactor is dangerously hot. Manual rod extraction may violently vent heat."))
 
 	if(!tool.use_tool(src, user, removal_time, volume = 40))
@@ -541,21 +670,32 @@
 
 /obj/machinery/rbmk/reactor/proc/remove_last_rod(mob/user)
 	if(user)
-		balloon_alert(user, "tool required")
-		to_chat(user, span_warning("You need an RBMK rod handling tool to manually extract fuel rods."))
+		balloon_alert(user, "extractor required")
+		to_chat(user, span_warning("You need an RBMK rod extractor to manually extract fuel rods."))
 
 	return FALSE
 
 
-/obj/machinery/rbmk/reactor/proc/remove_rod_by_slot(slot_kind, slot_index, mob/user = null)
+/obj/machinery/rbmk/reactor/proc/can_remote_extract_rods(mob/user = null)
 	if(meltdown_in_progress || supermatter_cascade_active)
 		if(user)
-			to_chat(user, span_warning("Remote rod extraction is locked out by unsafe reactor conditions. Use a rod handling tool."))
+			balloon_alert(user, "locked out")
+			to_chat(user, span_warning("Remote rod extraction is locked out by unsafe reactor conditions. Use a rod extractor."))
+		playsound(src, 'sound/machines/click.ogg', 35, TRUE)
 		return FALSE
 
-	if(temperature > RBMK_ROD_CONSOLE_SAFE_TEMP_LIMIT)
+	if(temperature >= RBMK_ROD_CONSOLE_SAFE_TEMP_LIMIT)
 		if(user)
-			to_chat(user, span_warning("Remote rod extraction is unsafe above [RBMK_ROD_CONSOLE_SAFE_TEMP_LIMIT] K. Use a rod handling tool."))
+			balloon_alert(user, "too hot")
+			to_chat(user, span_warning("Remote rod extraction is unsafe at or above [RBMK_ROD_CONSOLE_SAFE_TEMP_LIMIT] K. Use a rod extractor."))
+		playsound(src, 'sound/machines/click.ogg', 35, TRUE)
+		return FALSE
+
+	return TRUE
+
+
+/obj/machinery/rbmk/reactor/proc/remove_rod_by_slot(slot_kind, slot_index, mob/user = null)
+	if(!can_remote_extract_rods(user))
 		return FALSE
 
 	var/list/target_slots = (slot_kind == "special") ? special_slots : normal_slots
@@ -575,6 +715,7 @@
 	var/obj/item/rbmk/fuel_rod/supermatter/installed_supermatter_rod = get_installed_supermatter_rod()
 	if(installed_supermatter_rod && fuel_rod != installed_supermatter_rod)
 		if(user)
+			balloon_alert(user, "supermatter first")
 			to_chat(user, span_warning("The supermatter rod is resonating too violently. It must be removed before any other rods can be handled."))
 		return FALSE
 

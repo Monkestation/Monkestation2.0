@@ -1,38 +1,16 @@
-#define RBMK_TURBINE_VOLUME_MAX 1000
-#define RBMK_TURBINE_FLOW_RATE_MIN 0
-#define RBMK_TURBINE_FLOW_RATE_MAX 1000
+#define RBMK_TURBINE_ICON_OFF "Off"
+#define RBMK_TURBINE_ICON_ON "On"
 
-#define RBMK_TURBINE_MINIMUM_WORKING_TEMP 500
-#define RBMK_TURBINE_HEAT_EXTRACTION_RATIO 0.22
-#define RBMK_TURBINE_EFFICIENCY 0.35
-#define RBMK_TURBINE_MAX_TEMP_DROP 900
-#define RBMK_TURBINE_MAX_POWER_OUTPUT 5000000
-#define RBMK_TURBINE_MAX_RPM 120000
-#define RBMK_TURBINE_STALE_TIME 10 SECONDS
-#define RBMK_TURBINE_TELEMETRY_CLEAR_TIME 30 SECONDS
-
-#define RBMK_TURBINE_MAX_INTEGRITY 100
-#define RBMK_TURBINE_TEMP_STRESS_THRESHOLD 8000
-#define RBMK_TURBINE_TEMP_DAMAGE_RAMP 9500
-#define RBMK_TURBINE_TEMP_DAMAGE_BASE 0.35
-#define RBMK_TURBINE_TEMP_DAMAGE_RAMP_MULT 1.15
-#define RBMK_TURBINE_DAMAGE_FLOW_MULT 1.5
-#define RBMK_TURBINE_DAMAGE_MAX_PER_TICK 8
-
-#define RBMK_TURBINE_SOUND_VOLUME 24
-#define RBMK_TURBINE_SOUND_MIN_RANGE 5
-#define RBMK_TURBINE_SOUND_MAX_RANGE 10
-#define RBMK_TURBINE_SOUND_FALLOFF_DISTANCE 4
-#define RBMK_TURBINE_SOUND_FALLOFF_EXPONENT 2
-
-#define RBMK_TURBINE_ICON_STATE "turbine"
+#define RBMK_TURBINE_STALE_TIME (10 SECONDS)
+#define RBMK_TURBINE_TELEMETRY_CLEAR_TIME (30 SECONDS)
 
 
 /obj/machinery/power/rbmk_turbine
 	name = "RBMK turbine"
 	desc = "A heavy turbine assembly designed to convert heated RBMK coolant flow into electrical power."
 	icon = 'icons/obj/machines/rbmk_turbine.dmi'
-	icon_state = RBMK_TURBINE_ICON_STATE
+	icon_state = RBMK_TURBINE_ICON_OFF
+	base_icon_state = RBMK_TURBINE_ICON_OFF
 
 	anchored = TRUE
 	density = TRUE
@@ -57,10 +35,30 @@
 	var/datum/gas_mixture/turbine_internal = null
 	var/datum/looping_sound/rbmk_turbine/turbine_soundloop = null
 
+	var/internal_volume = 1000
+	var/max_flow_rate = 1000
+
+	var/min_working_temperature = 500
+	var/heat_extraction_ratio = 0.22
+	var/generator_efficiency = 0.35
+	var/max_temperature_drop = 900
+	var/max_power_output = 5000000
+	var/max_rpm = 120000
+
+	var/generator_damage_temperature = 4500
+	var/generator_damage_per_1000k = 2
+	var/max_generator_damage_per_tick = 8
+
+	var/sound_volume = 24
+	var/sound_min_range = 5
+	var/sound_max_range = 10
+	var/sound_falloff_distance = 4
+	var/sound_falloff_exponent = 2
+
 	var/running = FALSE
 	var/inlet_open = TRUE
 	var/outlet_open = TRUE
-	var/flow_rate = RBMK_TURBINE_FLOW_RATE_MAX
+	var/flow_rate = 1000
 
 	var/rpm = 0
 	var/last_power_output = 0
@@ -69,13 +67,14 @@
 	var/last_outlet_temperature = 0
 	var/last_inlet_pressure = 0
 	var/last_outlet_pressure = 0
+	var/last_pressure_delta = 0
 	var/last_heat_capacity = 0
 	var/last_heat_extracted = 0
 	var/last_temperature_drop = 0
 	var/last_generation_time = 0
 
-	var/generator_integrity = RBMK_TURBINE_MAX_INTEGRITY
-	var/max_generator_integrity = RBMK_TURBINE_MAX_INTEGRITY
+	var/generator_integrity = 100
+	var/max_generator_integrity = 100
 	var/last_generator_damage = 0
 	var/last_overtemp = 0
 
@@ -83,13 +82,16 @@
 /obj/machinery/power/rbmk_turbine/Initialize(mapload)
 	. = ..()
 
-	generator_integrity = RBMK_TURBINE_MAX_INTEGRITY
-	max_generator_integrity = RBMK_TURBINE_MAX_INTEGRITY
+	icon = 'icons/obj/machines/rbmk_turbine.dmi'
+	base_icon_state = RBMK_TURBINE_ICON_OFF
+	icon_state = RBMK_TURBINE_ICON_OFF
+
+	generator_integrity = max_generator_integrity
 	last_generator_damage = 0
 	last_overtemp = 0
 
 	turbine_internal = new /datum/gas_mixture()
-	turbine_internal.volume = RBMK_TURBINE_VOLUME_MAX
+	turbine_internal.volume = internal_volume
 	turbine_internal.temperature = RBMK_AMBIENT_TEMP
 
 	relink_ports()
@@ -133,6 +135,20 @@
 	update_turbine_sound()
 
 
+/obj/machinery/power/rbmk_turbine/update_icon_state()
+	. = ..()
+
+	if(is_actively_generating())
+		icon_state = RBMK_TURBINE_ICON_ON
+		return
+
+	icon_state = RBMK_TURBINE_ICON_OFF
+
+
+/obj/machinery/power/rbmk_turbine/proc/update_turbine_icon()
+	update_appearance(UPDATE_ICON)
+
+
 /obj/machinery/power/rbmk_turbine/proc/reset_generation_telemetry()
 	last_power_output = 0
 	last_flow_moles = 0
@@ -152,6 +168,11 @@
 	last_outlet_temperature = 0
 	last_inlet_pressure = 0
 	last_outlet_pressure = 0
+	last_pressure_delta = 0
+
+
+/obj/machinery/power/rbmk_turbine/proc/update_pressure_delta()
+	last_pressure_delta = max(last_inlet_pressure - last_outlet_pressure, 0)
 
 
 /obj/machinery/power/rbmk_turbine/proc/is_telemetry_stale()
@@ -187,10 +208,6 @@
 	return TRUE
 
 
-/obj/machinery/power/rbmk_turbine/proc/update_turbine_icon()
-	icon_state = RBMK_TURBINE_ICON_STATE
-
-
 /obj/machinery/power/rbmk_turbine/proc/update_turbine_sound()
 	if(!running || rpm <= 0 || machine_stat & BROKEN)
 		if(turbine_soundloop)
@@ -201,16 +218,16 @@
 	if(!turbine_soundloop)
 		turbine_soundloop = new /datum/looping_sound/rbmk_turbine(src, TRUE)
 
-	var/rpm_ratio = CLAMP01(rpm / max(RBMK_TURBINE_MAX_RPM, 1))
+	var/rpm_ratio = CLAMP01(rpm / max(max_rpm, 1))
 
-	turbine_soundloop.volume = RBMK_TURBINE_SOUND_VOLUME
+	turbine_soundloop.volume = sound_volume
 	turbine_soundloop.extra_range = clamp(
-		RBMK_TURBINE_SOUND_MIN_RANGE + round(rpm_ratio * 5),
-		RBMK_TURBINE_SOUND_MIN_RANGE,
-		RBMK_TURBINE_SOUND_MAX_RANGE
+		sound_min_range + round(rpm_ratio * 5),
+		sound_min_range,
+		sound_max_range
 	)
-	turbine_soundloop.falloff_distance = RBMK_TURBINE_SOUND_FALLOFF_DISTANCE
-	turbine_soundloop.falloff_exponent = RBMK_TURBINE_SOUND_FALLOFF_EXPONENT
+	turbine_soundloop.falloff_distance = sound_falloff_distance
+	turbine_soundloop.falloff_exponent = sound_falloff_exponent
 
 
 /obj/machinery/power/rbmk_turbine/proc/get_generator_integrity_percent()
@@ -219,24 +236,17 @@
 
 /obj/machinery/power/rbmk_turbine/proc/update_generator_integrity(gas_temperature)
 	last_generator_damage = 0
-	last_overtemp = max(gas_temperature - RBMK_TURBINE_TEMP_STRESS_THRESHOLD, 0)
+	last_overtemp = max(gas_temperature - generator_damage_temperature, 0)
 
 	if(machine_stat & BROKEN)
 		return
 
-	if(gas_temperature <= RBMK_TURBINE_TEMP_STRESS_THRESHOLD)
+	if(gas_temperature <= generator_damage_temperature)
 		return
 
-	var/temperature_over_threshold = gas_temperature - RBMK_TURBINE_TEMP_STRESS_THRESHOLD
-	var/damage_amount = (temperature_over_threshold / 1000) * RBMK_TURBINE_TEMP_DAMAGE_BASE
-
-	if(gas_temperature > RBMK_TURBINE_TEMP_DAMAGE_RAMP)
-		var/temperature_over_ramp = gas_temperature - RBMK_TURBINE_TEMP_DAMAGE_RAMP
-		damage_amount += ((temperature_over_ramp / 1000) ** 1.35) * RBMK_TURBINE_TEMP_DAMAGE_RAMP_MULT
-
-	var/flow_ratio = CLAMP01(last_flow_moles / max(flow_rate, 1))
-	damage_amount *= 1 + (flow_ratio * RBMK_TURBINE_DAMAGE_FLOW_MULT)
-	damage_amount = clamp(damage_amount, 0, RBMK_TURBINE_DAMAGE_MAX_PER_TICK)
+	var/temperature_over_limit = gas_temperature - generator_damage_temperature
+	var/damage_amount = (temperature_over_limit / 1000) * generator_damage_per_1000k
+	damage_amount = clamp(damage_amount, 0, max_generator_damage_per_tick)
 
 	if(damage_amount <= 0)
 		return
@@ -263,9 +273,7 @@
 	running = FALSE
 	rpm = 0
 	last_power_output = 0
-
-	visible_message(span_danger("[src] screams as its generator windings burn out!"))
-	playsound(src, 'sound/machines/engine_alert1.ogg', 60, FALSE)
+	last_flow_moles = 0
 
 	set_machine_stat(machine_stat | BROKEN)
 
@@ -273,8 +281,12 @@
 		turbine_soundloop.stop()
 		QDEL_NULL(turbine_soundloop)
 
-	update_turbine_icon()
-	update_turbine_sound()
+	visible_message(span_danger("[src] screams as superheated coolant destroys the turbine assembly!"))
+	playsound(src, 'sound/machines/engine_alert1.ogg', 60, FALSE)
+
+	explosion(get_turf(src), devastation_range = 0, heavy_impact_range = 1, light_impact_range = 2)
+
+	qdel(src)
 
 
 /obj/machinery/power/rbmk_turbine/proc/relink_ports()
@@ -354,18 +366,18 @@
 		update_turbine_sound()
 		return
 
-	var/useful_temperature_delta = max(working_mix.temperature - RBMK_TURBINE_MINIMUM_WORKING_TEMP, 0)
+	var/useful_temperature_delta = max(working_mix.temperature - min_working_temperature, 0)
 	if(useful_temperature_delta <= 0)
 		last_outlet_temperature = working_mix.temperature
 		update_turbine_icon()
 		update_turbine_sound()
 		return
 
-	var/possible_temperature_drop = clamp(useful_temperature_delta * RBMK_TURBINE_HEAT_EXTRACTION_RATIO, 0, RBMK_TURBINE_MAX_TEMP_DROP)
+	var/possible_temperature_drop = clamp(useful_temperature_delta * heat_extraction_ratio, 0, max_temperature_drop)
 	var/possible_heat_extracted = last_heat_capacity * possible_temperature_drop
-	var/possible_power_output = possible_heat_extracted * RBMK_TURBINE_EFFICIENCY
+	var/possible_power_output = possible_heat_extracted * generator_efficiency
 
-	last_power_output = clamp(possible_power_output, 0, RBMK_TURBINE_MAX_POWER_OUTPUT)
+	last_power_output = clamp(possible_power_output, 0, max_power_output)
 
 	if(last_power_output <= 0)
 		last_outlet_temperature = working_mix.temperature
@@ -373,14 +385,14 @@
 		update_turbine_sound()
 		return
 
-	last_heat_extracted = last_power_output / max(RBMK_TURBINE_EFFICIENCY, 0.01)
+	last_heat_extracted = last_power_output / max(generator_efficiency, 0.01)
 	last_temperature_drop = clamp(last_heat_extracted / last_heat_capacity, 0, possible_temperature_drop)
 
 	working_mix.temperature = max(working_mix.temperature - last_temperature_drop, RBMK_AMBIENT_TEMP)
 	last_outlet_temperature = working_mix.temperature
 
-	var/power_ratio = CLAMP01(last_power_output / max(RBMK_TURBINE_MAX_POWER_OUTPUT, 1))
-	rpm = round(sqrt(power_ratio) * RBMK_TURBINE_MAX_RPM)
+	var/power_ratio = CLAMP01(last_power_output / max(max_power_output, 1))
+	rpm = round(sqrt(power_ratio) * max_rpm)
 
 	running = TRUE
 	last_generation_time = world.time
@@ -500,12 +512,13 @@
 	if(!parent_turbine.turbine_internal)
 		return
 
-	var/desired_moles = clamp(parent_turbine.flow_rate, RBMK_TURBINE_FLOW_RATE_MIN, RBMK_TURBINE_FLOW_RATE_MAX)
+	var/desired_moles = clamp(parent_turbine.flow_rate, 0, parent_turbine.max_flow_rate)
 	if(desired_moles <= 0)
 		return
 
 	parent_turbine.last_inlet_pressure = inlet_pipe_mix.return_pressure()
 	parent_turbine.last_inlet_temperature = inlet_pipe_mix.temperature
+	parent_turbine.update_pressure_delta()
 
 	var/datum/gas_mixture/moved_mix = remove_moles_capped(inlet_pipe_mix, desired_moles)
 	if(!moved_mix || moved_mix.total_moles() <= 0)
@@ -530,7 +543,7 @@
 	if(!internal_turbine_mix || internal_turbine_mix.total_moles() <= 0)
 		return
 
-	var/desired_moles = clamp(parent_turbine.flow_rate, RBMK_TURBINE_FLOW_RATE_MIN, RBMK_TURBINE_FLOW_RATE_MAX)
+	var/desired_moles = clamp(parent_turbine.flow_rate, 0, parent_turbine.max_flow_rate)
 	if(desired_moles <= 0)
 		return
 
@@ -543,6 +556,7 @@
 	if(length(airs))
 		airs[1].merge(released_mix)
 		parent_turbine.last_outlet_pressure = airs[1].return_pressure()
+		parent_turbine.update_pressure_delta()
 		update_parents()
 		return
 
@@ -550,29 +564,10 @@
 	if(outlet_turf)
 		outlet_turf.assume_air(released_mix)
 		parent_turbine.last_outlet_pressure = outlet_turf.return_air()?.return_pressure()
+		parent_turbine.update_pressure_delta()
 
 
-#undef RBMK_TURBINE_VOLUME_MAX
-#undef RBMK_TURBINE_FLOW_RATE_MIN
-#undef RBMK_TURBINE_FLOW_RATE_MAX
-#undef RBMK_TURBINE_MINIMUM_WORKING_TEMP
-#undef RBMK_TURBINE_HEAT_EXTRACTION_RATIO
-#undef RBMK_TURBINE_EFFICIENCY
-#undef RBMK_TURBINE_MAX_TEMP_DROP
-#undef RBMK_TURBINE_MAX_POWER_OUTPUT
-#undef RBMK_TURBINE_MAX_RPM
+#undef RBMK_TURBINE_ICON_OFF
+#undef RBMK_TURBINE_ICON_ON
 #undef RBMK_TURBINE_STALE_TIME
 #undef RBMK_TURBINE_TELEMETRY_CLEAR_TIME
-#undef RBMK_TURBINE_MAX_INTEGRITY
-#undef RBMK_TURBINE_TEMP_STRESS_THRESHOLD
-#undef RBMK_TURBINE_TEMP_DAMAGE_RAMP
-#undef RBMK_TURBINE_TEMP_DAMAGE_BASE
-#undef RBMK_TURBINE_TEMP_DAMAGE_RAMP_MULT
-#undef RBMK_TURBINE_DAMAGE_FLOW_MULT
-#undef RBMK_TURBINE_DAMAGE_MAX_PER_TICK
-#undef RBMK_TURBINE_SOUND_VOLUME
-#undef RBMK_TURBINE_SOUND_MIN_RANGE
-#undef RBMK_TURBINE_SOUND_MAX_RANGE
-#undef RBMK_TURBINE_SOUND_FALLOFF_DISTANCE
-#undef RBMK_TURBINE_SOUND_FALLOFF_EXPONENT
-#undef RBMK_TURBINE_ICON_STATE

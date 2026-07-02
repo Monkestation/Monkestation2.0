@@ -13,7 +13,7 @@
 	name = "spent fuel casing"
 	desc = "A contaminated fuel rod casing stripped of useful fissile material. It is not reusable and should be stored as radioactive waste."
 	icon = 'icons/obj/fuel_rod.dmi'
-	icon_state = "rod_empty"
+	icon_state = "empty"
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/machinery/rbmk/fuel_processor

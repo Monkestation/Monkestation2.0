@@ -4,56 +4,23 @@
 
 
 /obj/machinery/rbmk/reactor/proc/stop_reactor_sounds()
-	if(low_soundloop)
-		low_soundloop.stop()
-		QDEL_NULL(low_soundloop)
-
-	if(high_soundloop)
-		high_soundloop.stop()
-		QDEL_NULL(high_soundloop)
-
-	if(max_soundloop)
-		max_soundloop.stop()
-		QDEL_NULL(max_soundloop)
+	stop_reactor_sound()
 
 
 /obj/machinery/rbmk/reactor/proc/update_reactor_sound()
-	var/wants_low_sound = FALSE
-	var/wants_high_sound = FALSE
-	var/wants_max_sound = FALSE
-
 	if(icon_state == "reactor_off" || icon_state == "reactor_slagged")
-		stop_reactor_sounds()
+		stop_reactor_sound()
 		return
 
-	wants_low_sound = TRUE
-
-	if(temperature >= RBMK_TEMP_HOT || icon_state == "reactor_cascade")
-		wants_high_sound = TRUE
-
 	if(temperature >= RBMK_TEMP_MAXSAFE || icon_state == "reactor_overheat" || icon_state == "reactor_meltdown" || icon_state == "reactor_cascade")
-		wants_max_sound = TRUE
+		set_reactor_sound_state(RBMK_SOUND_MAX)
+		return
 
-	if(wants_low_sound)
-		if(!low_soundloop)
-			low_soundloop = new /datum/looping_sound/rbmk_reactor_low(src, TRUE)
-	else if(low_soundloop)
-		low_soundloop.stop()
-		QDEL_NULL(low_soundloop)
+	if(temperature >= RBMK_TEMP_HOT)
+		set_reactor_sound_state(RBMK_SOUND_HIGH)
+		return
 
-	if(wants_high_sound)
-		if(!high_soundloop)
-			high_soundloop = new /datum/looping_sound/rbmk_reactor_high(src, TRUE)
-	else if(high_soundloop)
-		high_soundloop.stop()
-		QDEL_NULL(high_soundloop)
-
-	if(wants_max_sound)
-		if(!max_soundloop)
-			max_soundloop = new /datum/looping_sound/rbmk_reactor_max(src, TRUE)
-	else if(max_soundloop)
-		max_soundloop.stop()
-		QDEL_NULL(max_soundloop)
+	set_reactor_sound_state(RBMK_SOUND_LOW)
 
 
 /obj/machinery/rbmk/reactor/proc/update_reactor_icon()

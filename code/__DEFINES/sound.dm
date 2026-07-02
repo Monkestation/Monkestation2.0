@@ -32,6 +32,8 @@
 #define CHANNEL_DELTA_SIRENS 996
 #define CHANNEL_ADMIN_SOUNDS 995
 #define CHANNEL_SHUTTLES 994
+#define CHANNEL_RBMK_REACTOR 993
+#define CHANNEL_RBMK_TURBINE 992
 
 /// This is the lowest volume that can be used by playsound otherwise it gets ignored
 /// Most sounds around 10 volume can barely be heard. Almost all sounds at 5 volume or below are inaudible

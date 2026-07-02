@@ -18,6 +18,13 @@
 	plane = GAME_PLANE
 
 	var/obj/machinery/rbmk/reactor/linked_reactor = null
+	var/list/linked_turbines = list()
+
+	var/turbine_scan_range = 20
+
+	var/gas_composition_update_delay = 2 SECONDS
+	var/last_gas_composition_update = 0
+	var/list/cached_gas_composition = list()
 
 
 /obj/machinery/computer/rbmk_console/Initialize(mapload)
@@ -30,6 +37,8 @@
 
 /obj/machinery/computer/rbmk_console/Destroy()
 	linked_reactor = null
+	linked_turbines = null
+	cached_gas_composition = null
 	return ..()
 
 
@@ -43,7 +52,21 @@
 			shortest_distance_found = current_distance
 			linked_reactor = reactor
 
+	rescan_turbines()
 	update_appearance(UPDATE_ICON)
+
+
+/obj/machinery/computer/rbmk_console/proc/rescan_turbines()
+	linked_turbines = list()
+
+	if(!linked_reactor)
+		return
+
+	for(var/obj/machinery/power/rbmk_turbine/turbine in range(turbine_scan_range, linked_reactor))
+		if(QDELETED(turbine))
+			continue
+
+		linked_turbines += turbine
 
 
 /obj/machinery/computer/rbmk_console/update_icon_state()
@@ -116,12 +139,25 @@
 	return gas_data
 
 
+/obj/machinery/computer/rbmk_console/proc/get_cached_gas_composition_data(datum/gas_mixture/gas_mix)
+	if(world.time < last_gas_composition_update + gas_composition_update_delay)
+		return cached_gas_composition
+
+	last_gas_composition_update = world.time
+	cached_gas_composition = rbmk_build_gas_composition_data(gas_mix)
+	return cached_gas_composition
+
+
 /obj/machinery/computer/rbmk_console/proc/get_turbine_data()
 	var/list/turbine_data = list()
+	var/list/valid_turbines = list()
+
 	var/total_turbine_power = 0
 	var/total_turbine_integrity = 0
+
 	var/turbine_count = 0
 	var/generating_turbine_count = 0
+	var/stale_turbine_count = 0
 
 	if(!linked_reactor)
 		return list(
@@ -129,47 +165,50 @@
 			"total_turbine_power" = 0,
 			"average_turbine_integrity" = 0,
 			"turbine_count" = 0,
-			"generating_turbine_count" = 0
+			"generating_turbine_count" = 0,
+			"stale_turbine_count" = 0
 		)
 
-	for(var/obj/machinery/power/rbmk_turbine/turbine in range(20, linked_reactor))
+	for(var/obj/machinery/power/rbmk_turbine/turbine as anything in linked_turbines)
+		if(!turbine || QDELETED(turbine))
+			continue
+
+		valid_turbines += turbine
 		turbine_count++
 
 		var/integrity_percent = turbine.get_generator_integrity_percent()
 		var/turbine_generating = turbine.is_actively_generating()
+		var/turbine_stale = turbine.is_telemetry_stale()
 		var/current_power_output = turbine_generating ? RBMK_ROUND2(turbine.last_power_output) : 0
 
 		if(turbine_generating)
 			generating_turbine_count++
 			total_turbine_power += current_power_output
 
+		if(turbine_stale)
+			stale_turbine_count++
+
 		total_turbine_integrity += integrity_percent
 
-		var/list/current_turbine = list(
+		turbine_data += list(list(
 			"ref" = REF(turbine),
 			"name" = turbine.name,
 			"index" = turbine_count,
 			"running" = turbine.running,
 			"generating" = turbine_generating,
 			"broken" = (turbine.machine_stat & BROKEN) ? TRUE : FALSE,
-			"telemetry_stale" = turbine.is_telemetry_stale(),
+			"telemetry_stale" = turbine_stale,
 			"telemetry_age" = turbine.get_telemetry_age_seconds(),
 			"integrity" = RBMK_ROUND2(integrity_percent),
 			"power_output" = current_power_output,
-			"rpm" = RBMK_ROUND2(turbine.rpm),
-			"flow_moles" = RBMK_ROUND2(turbine.last_flow_moles),
+			"rpm" = turbine_generating ? RBMK_ROUND2(turbine.rpm) : 0,
+			"flow_moles" = turbine_generating ? RBMK_ROUND2(turbine.last_flow_moles) : 0,
 			"inlet_temperature" = RBMK_ROUND2(turbine.last_inlet_temperature),
 			"outlet_temperature" = RBMK_ROUND2(turbine.last_outlet_temperature),
-			"inlet_pressure" = RBMK_ROUND2(turbine.last_inlet_pressure),
-			"outlet_pressure" = RBMK_ROUND2(turbine.last_outlet_pressure),
-			"heat_capacity" = RBMK_ROUND2(turbine.last_heat_capacity),
-			"heat_extracted" = RBMK_ROUND2(turbine.last_heat_extracted),
-			"temperature_drop" = RBMK_ROUND2(turbine.last_temperature_drop),
-			"last_damage" = RBMK_ROUND2(turbine.last_generator_damage),
-			"overtemp" = RBMK_ROUND2(turbine.last_overtemp)
-		)
+			"pressure_delta" = RBMK_ROUND2(turbine.last_pressure_delta)
+		))
 
-		turbine_data += list(current_turbine)
+	linked_turbines = valid_turbines
 
 	var/average_turbine_integrity = 0
 	if(turbine_count > 0)
@@ -180,7 +219,8 @@
 		"total_turbine_power" = RBMK_ROUND2(total_turbine_power),
 		"average_turbine_integrity" = RBMK_ROUND2(average_turbine_integrity),
 		"turbine_count" = turbine_count,
-		"generating_turbine_count" = generating_turbine_count
+		"generating_turbine_count" = generating_turbine_count,
+		"stale_turbine_count" = stale_turbine_count
 	)
 
 
@@ -194,6 +234,7 @@
 	data["average_turbine_integrity"] = turbine_summary["average_turbine_integrity"]
 	data["turbine_count"] = turbine_summary["turbine_count"]
 	data["generating_turbine_count"] = turbine_summary["generating_turbine_count"]
+	data["stale_turbine_count"] = turbine_summary["stale_turbine_count"]
 
 	if(!reactor)
 		data["status"] = "No reactor linked"
@@ -230,7 +271,7 @@
 	data["max_radiation"] = RBMK_MAX_RADIATION
 
 	data["flux"] = RBMK_ROUND2(reactor.flux)
-	data["max_flux"] = RBMK_MAX_FLUX
+	data["max_flux"] = max(100, RBMK_MAX_FLUX, round((reactor.flux * 1.25) + 50, 50))
 
 	data["void_coefficient"] = RBMK_ROUND2(reactor.void_coefficient)
 
@@ -268,7 +309,7 @@
 		reactor_temperature_history += RBMK_ROUND2(temperature_value)
 	data["reactor_temperature_history"] = reactor_temperature_history
 
-	data["gas_composition"] = rbmk_build_gas_composition_data(reactor.coolant_internal)
+	data["gas_composition"] = get_cached_gas_composition_data(reactor.coolant_internal)
 
 	data["max_normal_slots"] = reactor.max_normal_slots
 	data["max_special_slots"] = reactor.max_special_slots

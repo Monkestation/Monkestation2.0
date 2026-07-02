@@ -93,4 +93,8 @@
 #define RBMK_FALLOUT_RADIUS_STEP 6
 #define RBMK_FALLOUT_MAX_RADIUS 255
 
+#define RBMK_SOUND_LOW 1
+#define RBMK_SOUND_HIGH 2
+#define RBMK_SOUND_MAX 3
+
 #define RBMK_ROUND2(x) (round((x), 0.01))
