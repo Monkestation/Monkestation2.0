@@ -25,6 +25,7 @@
 	custom_materials = AMMO_MATS_SHOTGUN
 	projectile_type = /obj/projectile/bullet/shotgun_slug
 	bullet_bounce_sound = 'sound/weapons/gun/shotgun/shotgun_shell_bounce.ogg'
+	bullet_bounce_sound_volume = 35
 
 /obj/item/ammo_casing/shotgun/executioner
 	name = "executioner slug"
