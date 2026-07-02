@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(user == src)
 			to_chat(user,  span_notice("You can't seem to manage to place [attacking_item] on your head by yourself!") )
 			return
-		if(hat && HAS_TRAIT(hat, TRAIT_NODROP))
+		if(worn_hat && HAS_TRAIT(worn_hat, TRAIT_NODROP))
 			to_chat(user, span_warning("You can't seem to remove [src]'s existing headwear!"))
 			return
 		to_chat(user, span_notice("You begin to place [attacking_item] on [src]'s head..."))

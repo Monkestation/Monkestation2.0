@@ -21,9 +21,9 @@
 	var/base_pixel_x = 0
 	/// The Y offset of the sprite.
 	var/base_pixel_y = 0
-	/// The X offset of any worn hats. Enables hat wearing if it is not null.
+	/// The X offset of any worn hats. If not null, allows hat to be worn.
 	var/hat_offset = null
-	/// The X offset of any worn badges. Enables badge wearing if it is not null.
+	/// The X offset of any worn badges. If not null, allows badges to be worn.
 	var/badge_offset = null
 	/// The X offsets for any buckled individuals.
 	var/list/ride_offset_x = list("north" = 0, "south" = 0, "east" = -6, "west" = 6)
@@ -37,11 +37,10 @@
 	if(HAS_TRAIT(cyborg_target, TRAIT_NO_TRANSFORM))
 		return FALSE
 	ADD_TRAIT(cyborg_target, TRAIT_NO_TRANSFORM, REF(src))
-	// This is cleared because overlays won't be re-applied later on since it thinks we still have them.
 	cyborg_target.cut_overlays()
-	LAZYNULL(cyborg_target.managed_overlays)
+	LAZYNULL(cyborg_target.managed_overlays) // This is cleared because cutting the overlays isn't enough as it thinks we still have them.
+	cyborg_target.setDir(SOUTH)
 	if(icon_state_transform)
-		cyborg_target.setDir(SOUTH)
 		flick(icon_state_transform, cyborg_target)
 	INVOKE_ASYNC(src, PROC_REF(play_transformation_sounds), cyborg_target)
 	if(!transformation_duration) // No need to immobilize if our transformation is instant.

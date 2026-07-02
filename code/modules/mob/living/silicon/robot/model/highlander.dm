@@ -37,6 +37,5 @@
 		cyborg_owner.maxHealth = initial(cyborg_owner.maxHealth)
 		cyborg_owner.repair_cyborg_slot(BORG_CHOOSE_MODULE_THREE)
 		cyborg_owner.updatehealth()
-		if(!QDELETED(cyborg_owner.hat) && HAS_TRAIT_FROM(cyborg_owner.hat, TRAIT_NODROP, HIGHLANDER_TRAIT))
-			QDEL_NULL(cyborg_owner.hat)
+		cyborg_owner.place_on_head(null)
 	return ..()

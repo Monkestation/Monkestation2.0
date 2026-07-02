@@ -142,8 +142,17 @@
 	var/list/upgrades = list()
 
 	var/hasExpanded = FALSE
-	var/obj/item/hat
-	///Any badge attached to the borg.
+	/**
+	 * The hat that we are wearing and will be part of our overlay.
+	 *
+	 * If our skin does not allow for hats, the hat will not be visible.
+	 */
+	var/obj/item/worn_hat
+	/**
+	 * The badge that we are wearing and will be part of our overlay.
+	 *
+	 * If our skin does not allow for badges, the badge will not be visible.
+	 */
 	var/obj/item/clothing/accessory/badge/worn_badge
 
 	///What types of mobs are allowed to ride/buckle to this mob

@@ -29,8 +29,8 @@
 			. += "[skin.icon_state_cover]-opencover +c"
 		else
 			. += "[skin.icon_state_cover]-opencover -c"
-	if(hat && !isnull(skin.hat_offset))
-		var/mutable_appearance/head_overlay = hat.build_worn_icon(default_layer = 20, default_icon_file = 'icons/mob/clothing/head/default.dmi')
+	if(worn_hat && !isnull(skin.hat_offset))
+		var/mutable_appearance/head_overlay = worn_hat.build_worn_icon(default_layer = 20, default_icon_file = 'icons/mob/clothing/head/default.dmi')
 		head_overlay.pixel_z += skin.hat_offset
 		. += head_overlay
 	if(worn_badge && !isnull(skin.badge_offset))

@@ -252,14 +252,13 @@
 		return FALSE
 	return ..()
 
-
+/// Called when a cyborg is tipped over.
 /mob/living/silicon/robot/proc/after_tip_over(mob/user)
-	if(hat && !HAS_TRAIT(hat, TRAIT_NODROP))
-		hat.forceMove(drop_location())
-
+	if(worn_hat && !HAS_TRAIT(worn_hat, TRAIT_NODROP))
+		place_on_head(null)
 	unbuckle_all_mobs()
 
-///For any special cases for robots after being righted.
+/// For any special cases for robots after being righted.
 /mob/living/silicon/robot/proc/after_righted(mob/user)
 	return
 
@@ -636,18 +635,30 @@
 		return FALSE
 	return TRUE
 
+/// Places a hat on the cyborg.
 /mob/living/silicon/robot/proc/place_on_head(obj/item/new_hat)
-	if(hat)
-		hat.forceMove(get_turf(src))
-	hat = new_hat
-	new_hat.forceMove(src)
+	if(worn_hat)
+		var/obj/item/removed_hat = worn_hat
+		removed_hat.forceMove(drop_location())
+		if(HAS_TRAIT(removed_hat, TRAIT_NODROP))
+			qdel(removed_hat)
+		worn_hat = null
+	if(new_hat)
+		worn_hat = new_hat
+		new_hat.forceMove(src)
 	update_icons()
 
+/// Pins a badge to the cyborg.
 /mob/living/silicon/robot/proc/pin_badge(obj/item/clothing/accessory/badge/new_badge)
 	if(worn_badge)
-		worn_badge.forceMove(get_turf(src))
-	worn_badge = new_badge
-	worn_badge.forceMove(src)
+		var/obj/item/clothing/accessory/badge/removed_badget = worn_badge
+		removed_badget.forceMove(drop_location())
+		if(HAS_TRAIT(removed_badget, TRAIT_NODROP))
+			qdel(removed_badget)
+		worn_badge = null
+	if(new_badge)
+		worn_badge = new_badge
+		worn_badge.forceMove(src)
 	update_icons()
 
 /**
@@ -656,8 +667,8 @@
 */
 /mob/living/silicon/robot/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(hat == gone)
-		hat = null
+	if(worn_hat == gone)
+		worn_hat = null
 		if(!QDELETED(src)) //Don't update icons if we are deleted.
 			update_icons()
 
@@ -1046,16 +1057,10 @@
 	icon_state = skin.icon_state
 	base_pixel_x = skin.base_pixel_x
 	base_pixel_y = skin.base_pixel_y
-	if(hat && isnull(skin.hat_offset))
-		var/obj/item/removed_hat = hat
-		removed_hat.forceMove(drop_location())
-		if(HAS_TRAIT(removed_hat, TRAIT_NODROP))
-			QDEL_NULL(removed_hat)
+	if(isnull(skin.hat_offset) && worn_hat)
+		place_on_head(null)
 	if(isnull(skin.badge_offset) && worn_badge)
-		var/obj/item/clothing/accessory/badge/removed_badge = worn_badge
-		removed_badge.forceMove(drop_location())
-		if(HAS_TRAIT(removed_badge, TRAIT_NODROP))
-			QDEL_NULL(removed_badge)
+		pin_badge(null)
 	if(skin.traits)
 		add_traits(skin.traits, CYBORG_SKIN_TRAIT)
 	if(!perform_animation || !skin.do_transformation_animation(src, lock_animation))
