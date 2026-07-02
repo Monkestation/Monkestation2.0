@@ -2,12 +2,12 @@
 	name = "gramophone"
 	desc = "Okay gramps."
 
-	icon = 'monkestation/code/modules/get_off_my_lawn/icons/modern_structures.dmi'
+	icon = 'icons/obj/old_timey/modern_structures.dmi'
 	icon_state = "gramophone"
 
 
 /obj/structure/chair/sofa/fancy
-	icon = 'monkestation/code/modules/get_off_my_lawn/icons/bed_chair.dmi'
+	icon = 'icons/obj/old_timey/bed_chair.dmi'
 	icon_state = "fancysofa_l"
 
 /obj/structure/chair/sofa/fancy/left

@@ -214,6 +214,12 @@
 	icon_screen = "detective_tv"
 	pass_flags = PASSTABLE
 
+/obj/machinery/computer/security/wooden_tv/wall_mounted
+	name = "wall mounted security camera monitor"
+	desc = "An old, wall mounted, TV hooked into the station's camera network."
+	icon_state = "wall_television"
+	icon_screen = "detective_tv_wall"
+
 /obj/machinery/computer/security/mining
 	name = "outpost camera console"
 	desc = "Used to access the various cameras on the outpost."
