@@ -175,7 +175,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		if(pos.z == curr.z)
 			signal["dist"] = max(get_dist(curr, pos), 0) //Distance between the src and remote GPS turfs
 			signal["degrees"] = round(get_angle(curr, pos)) //0-360 degree directional bearing, for more precision.
-		else if(can_point_to_z_level(pos.z)) // monkestation edit: require calibration to point to remove z-levels
+		else if(can_point_to_z_level(pos.z)) // require calibration to point to remove z-levels
 			var/angle = get_linked_z_angle(curr.z, pos.z)
 			if(!isnull(angle))
 				signal["degrees"] = angle
@@ -259,22 +259,19 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 	var/obj/item/gps/security/our_gps_device = parent
 
-	playsound(our_gps_device, 'sound/items/gps/four_ping.ogg', 50, TRUE)
+	playsound(our_gps_device, 'sound/items/gps/four_ping.ogg', 35, TRUE)
 	our_gps_device.say("Transmitting distress signal...")
 
 	addtimer(CALLBACK(src, PROC_REF(attempt_to_send_signal), alert_text), 15 SECONDS)
 
 /datum/component/gps/item/security_gps/proc/attempt_to_send_signal(alert_text)
-	if(!tracking || emped || jammed)
-		return
-
 	var/obj/item/gps/security/our_gps_device = parent
-
-	var/area/our_area = get_area(our_gps_device)
-	if(our_area.area_flags & AREA_BLOCKS_OUTGOING_RADIO)
+	if(!our_gps_device)
 		return
-
-	if(is_within_radio_jammer_range(our_gps_device))
+	var/area/our_area = get_area(our_gps_device)
+	if(!tracking || emped || jammed || is_within_radio_jammer_range(our_gps_device) || our_area.area_flags & AREA_BLOCKS_OUTGOING_RADIO)
+		our_gps_device.say("Signal failure.")
+		playsound(our_gps_device, 'sound/machines/buzz-sigh.ogg', 35, TRUE)
 		return
 
 	our_gps_device.say("Signal sent.")
