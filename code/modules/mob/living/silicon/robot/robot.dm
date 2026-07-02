@@ -1016,7 +1016,6 @@
 	model = new new_robot_model(src)
 	add_traits(model.traits, MODEL_TRAIT)
 
-	ionpulse = model.innate_ionpulse
 	designation = model.name
 	if(hands)
 		hands.icon_state = model.hud_icon_state
@@ -1036,63 +1035,28 @@
 	INVOKE_ASYNC(src, PROC_REF(updatename))
 
 /// Applies a skin to the cyborg.
-/mob/living/silicon/robot/proc/apply_skin(datum/robot_skin/applied_skin, perform_animations = TRUE, locks_during_animation = TRUE)
-	if(islist(current_skin.traits))
-		remove_traits(current_skin.traits, REF(current_skin))
-	if(ispath(applied_skin))
-		applied_skin = new applied_skin()
-	current_skin = applied_skin
-	icon = current_skin.icon
-	icon_state = current_skin.icon_state
-	base_pixel_x = current_skin.base_pixel_x
-	base_pixel_y = current_skin.base_pixel_y
-	if(hat && isnull(current_skin.hat_offset))
-		hat.forceMove(drop_location())
-		if(HAS_TRAIT(hat, TRAIT_NODROP)) // Highlander's hat.
-			QDEL_NULL(hat)
-	if(isnull(current_skin.badge_offset) && worn_badge)
-		worn_badge.forceMove(drop_location())
-		if(HAS_TRAIT(worn_badge, TRAIT_NODROP))
-			QDEL_NULL(worn_badge)
-	add_traits(current_skin.traits, REF(current_skin))
-
-	if(!perform_animations)
+/mob/living/silicon/robot/proc/apply_skin(datum/robot_skin/new_skin, perform_animations = TRUE, locks_during_animation = TRUE)
+	REMOVE_TRAITS_IN(src, CYBORG_SKIN_TRAIT)
+	if(ispath(new_skin))
+		new_skin = new new_skin()
+	if(!ispath(skin))
+		qdel(skin)
+	skin = new_skin
+	icon = skin.icon
+	icon_state = skin.icon_state
+	base_pixel_x = skin.base_pixel_x
+	base_pixel_y = skin.base_pixel_y
+	if(hat && isnull(skin.hat_offset))
+		var/obj/item/removed_hat = hat
+		removed_hat.forceMove(drop_location())
+		if(HAS_TRAIT(removed_hat, TRAIT_NODROP))
+			QDEL_NULL(removed_hat)
+	if(isnull(skin.badge_offset) && worn_badge)
+		var/obj/item/clothing/accessory/badge/removed_badge = worn_badge
+		removed_badge.forceMove(drop_location())
+		if(HAS_TRAIT(removed_badge, TRAIT_NODROP))
+			QDEL_NULL(removed_badge)
+	if(skin.traits)
+		add_traits(current_skin.traits, CYBORG_SKIN_TRAIT)
+	if(!perform_animation || !skin.do_transformation_animation(src, locks_animation))
 		update_icons()
-		return
-	start_transform_animation(locks_during_animation)
-
-/// Begins the transformation animation.
-/mob/living/silicon/robot/proc/start_transform_animation(lock = TRUE)
-	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
-		return FALSE
-	cut_overlays()
-	LAZYNULL(managed_overlays) // This is cleared because overlays won't be re-applied later on since it thinks we still have them.
-	setDir(SOUTH)
-	if(current_skin.icon_state_transform)
-		flick(current_skin.icon_state_transform, src)
-	if(lock)
-		SetLockdown(TRUE)
-		set_anchored(TRUE)
-	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
-	addtimer(CALLBACK(src, PROC_REF(end_transform_animation), lock), 3 SECONDS)
-	INVOKE_ASYNC(src, PROC_REF(do_transform_sound_effects))
-
-/// Concludes the transformation animation.
-/mob/living/silicon/robot/proc/end_transform_animation(unlock = TRUE)
-	if(QDELETED(src) || !HAS_TRAIT_FROM(src, TRAIT_NO_TRANSFORM, REF(src)))
-		return
-	setDir(SOUTH)
-	if(unlock)
-		SetLockdown(FALSE)
-		set_anchored(FALSE)
-	updatehealth()
-	update_icons()
-	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
-
-/// Plays the sound effects associated with the transformation animation.
-/mob/living/silicon/robot/proc/do_transform_sound_effects()
-	for(var/i in 1 to 4)
-		if(QDELETED(src))
-			return
-		playsound(src, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
-		sleep(0.7 SECONDS)

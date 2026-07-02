@@ -19,7 +19,6 @@
 		/obj/item/gun/medbeam,
 		/obj/item/borg/apparatus/organ_storage
 	)
-	innate_ionpulse = TRUE
 	traits = list(TRAIT_PUSHIMMUNE)
 
 /datum/robot_model/syndicate_medical/New(mob/living/silicon/robot/new_cyborg_owner)

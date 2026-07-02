@@ -27,8 +27,6 @@
 	var/list/traits = list()
 	/// Can our owner temporarily lose module slots on their health?
 	var/breakable_modules = TRUE
-	/// Should our owner automatically get ion pulse?
-	var/innate_ionpulse = FALSE
 	/// The weakref to the ability that toggles their sight vision, if any.
 	var/datum/weakref/sight_vision_ref
 
