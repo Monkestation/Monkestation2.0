@@ -293,6 +293,22 @@
 		return FALSE
 	return TRUE
 
+/obj/item/mmi/attempt_become_organ(obj/item/bodypart/parent, mob/living/carbon/human/H)
+	if(!brainmob)
+		return FALSE
+	var/obj/item/organ/internal/brain/positronic/holder = new()
+	forceMove(holder)
+	holder.stored_mmi = src
+	if(brainmob && brainmob.mind)
+		brainmob.mind.transfer_to(H)
+	holder.Insert(H)
+	return TRUE
+
+/obj/item/mmi/ipc/Initialize(mapload) // IPC MMI brain, brain for spawned IPCs with MMI pref, radio off by default for balance concerns
+	. = ..()
+	set_brainmob(new /mob/living/brain(src))
+	radio.set_on(FALSE)
+
 /obj/item/mmi/syndie
 	name = "\improper Syndicate Man-Machine Interface"
 	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs and AIs created with it."

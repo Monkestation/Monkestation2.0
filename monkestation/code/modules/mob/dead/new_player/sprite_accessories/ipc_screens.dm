@@ -3,6 +3,10 @@
 	color_src = EYE_COLOR // We pull from the eye color for RGB-enabled screens, but some aren't, so they get FALSE.
 	is_emissive = TRUE
 
+/datum/sprite_accessory/ipc_screens/none
+	name = "None"
+	icon_state = "None"
+
 /datum/sprite_accessory/ipc_screens/blue
 	name = "Blue"
 	icon_state = "blue"

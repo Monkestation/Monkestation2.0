@@ -39,6 +39,9 @@
 	slot = "stomach"
 	desc = "A specialised mini reactor, for synthetic use only. Has a low-power mode to ensure baseline functions. Without this, synthetics are unable to stay powered."
 	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES
+	var/blending = FALSE
+	var/will_it_blend_timer
+	COOLDOWN_DECLARE(blend_cd)
 
 /obj/item/organ/internal/stomach/synth/emp_act(severity)
 	. = ..()
@@ -60,22 +63,6 @@
 			apply_organ_damage(SYNTH_ORGAN_LIGHT_EMP_DAMAGE, maxHealth, required_organ_flag = ORGAN_ROBOTIC)
 			to_chat(owner, span_warning("Alert: Minor battery discharge!"))
 
-/datum/design/synth_stomach
-	name = "Synthetic Bio-Reactor"
-	desc = "A specialised mini reactor, for synthetic use only. Has a low-power mode to ensure baseline functions. Without this, synthetics are unable to stay powered."
-	id = "synth_stomach"
-	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-	construction_time = 4 SECONDS
-	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT,
-		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
-	)
-	build_path = /obj/item/organ/internal/stomach/synth
-	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
-
 /obj/item/organ/internal/stomach/synth/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
 	RegisterSignal(receiver, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(on_borg_charge))
@@ -93,3 +80,25 @@
 
 	amount /= 50 // Lowers the charging amount so it isn't instant
 	owner.nutrition = min((owner.nutrition + amount), NUTRITION_LEVEL_ALMOST_FULL) // Makes sure we don't make the synth too full, which would apply the overweight slowdown
+
+/obj/item/organ/internal/stomach/synth/on_life(seconds_per_tick, times_fired)
+	. = ..()
+	var/datum/reagent/nutri = locate(/datum/reagent/consumable/nutriment) in reagents.reagent_list
+	if(!nutri)
+		return
+	if(blending || !COOLDOWN_FINISHED(src, blend_cd))
+		return
+	will_it_blend_timer = addtimer(CALLBACK(src, PROC_REF(start_blending), owner), 4 SECONDS)
+
+/obj/item/organ/internal/stomach/synth/proc/start_blending(mob/living/carbon/carbon)
+	blending = TRUE
+	carbon.Shake(2, 2, 10 SECONDS)
+	playsound(carbon, 'monkestation/code/modules/smithing/sounds/blend.ogg', 50, TRUE, mixer_channel = CHANNEL_MOB_SOUNDS)
+	addtimer(CALLBACK(src, PROC_REF(finish_blending), carbon), 10 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
+
+/obj/item/organ/internal/stomach/synth/proc/finish_blending(mob/living/carbon/human/carbon)
+	var/nutri_amount = carbon.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
+	carbon.reagents.del_reagent(/datum/reagent/consumable/nutriment)
+	carbon.nutrition = min(NUTRITION_LEVEL_FULL, carbon.nutrition + (nutri_amount * 5))
+	blending = FALSE
+	COOLDOWN_START(src, blend_cd, 60 SECONDS)
