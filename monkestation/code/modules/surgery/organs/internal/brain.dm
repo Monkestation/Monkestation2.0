@@ -1,7 +1,7 @@
 /obj/item/organ/internal/brain/clockwork
 	name = "enigmatic gearbox"
 	desc = "An engineer would call this inconcievable wonder of gears and metal a 'black box'"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "brain-clock"
 	organ_flags = ORGAN_ROBOTIC
 	var/robust //Set to true if the robustbits causes brain replacement. Because holy fuck is the CLANG CLANG CLANG CLANG annoying

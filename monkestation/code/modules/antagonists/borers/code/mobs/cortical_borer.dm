@@ -7,8 +7,8 @@ GLOBAL_LIST_EMPTY(willing_hosts)
 
 GLOBAL_LIST_EMPTY(cortical_borers)
 
-GLOBAL_LIST_INIT(borer_first_name, world.file2list("monkestation/code/modules/antagonists/borers/code/first_borer_names.txt"))
-GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/antagonists/borers/code/second_borer_names.txt"))
+GLOBAL_LIST_INIT(borer_first_name, file2list("monkestation/code/modules/antagonists/borers/code/first_borer_names.txt"))
+GLOBAL_LIST_INIT(borer_second_name, file2list("monkestation/code/modules/antagonists/borers/code/second_borer_names.txt"))
 
 /// This divisor controls how fast body temperature changes to match the environment
 #define BODYTEMP_DIVISOR 16

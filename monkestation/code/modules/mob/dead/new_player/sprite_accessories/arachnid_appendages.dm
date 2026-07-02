@@ -1,5 +1,5 @@
 /datum/sprite_accessory/arachnid_appendages
-	icon = 'monkestation/icons/mob/species/arachnid/arachnid_appendages.dmi'
+	icon = 'icons/mob/species/arachnid/arachnid_appendages.dmi'
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 

@@ -266,7 +266,7 @@
 		)
 		to_chat(attacker, span_userdanger("[carp_user] carefully dodges your [touch_weapon], remaining completely untouched!"), type = MESSAGE_TYPE_COMBAT)
 		carp_user.balloon_alert(attacker, "miss!")
-		playsound(carp_user, 'monkestation/sound/effects/miss.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(carp_user, 'sound/effects/miss.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	else
 		carp_user.visible_message(
 			span_danger("[carp_user] twists [attacker]'s arm, sending [attacker.p_their()] [touch_weapon] back towards [attacker.p_them()]!"),

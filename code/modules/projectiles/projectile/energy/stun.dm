@@ -286,7 +286,7 @@
 	// moves the tase beam up or down if the target moves up or down
 	tase_line.RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, TYPE_PROC_REF(/datum/beam, redrawing))
 
-	playsound(firer, 'monkestation/sound/effects/taser_charge.ogg', 45, TRUE, 1)
+	playsound(firer, 'sound/effects/taser_charge.ogg', 45, TRUE, 1)
 
 	addtimer(CALLBACK(src, PROC_REF(start_tase)), 1.5 SECONDS)
 

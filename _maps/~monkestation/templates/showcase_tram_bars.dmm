@@ -158,7 +158,7 @@
 /turf/open/indestructible/bluespace,
 /area/mapping_showcase)
 "Qr" = (
-/obj/effect/landmark/start/ai,
+/obj/machinery/ai/data_core/primary,
 /turf/open/indestructible/bluespace,
 /area/mapping_showcase)
 "QR" = (

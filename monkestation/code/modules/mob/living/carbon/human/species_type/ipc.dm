@@ -114,7 +114,9 @@
 /datum/species/ipc/spec_revival(mob/living/carbon/human/revived_ipc)
 	revived_ipc.notify_ghost_cloning("You have been repaired!")
 	revived_ipc.grab_ghost()
-	playsound(revived_ipc, 'monkestation/sound/voice/dialup.ogg', 25)
+	revived_ipc.dna.features["ipc_screen"] = "BSOD"
+	revived_ipc.update_body()
+	playsound(revived_ipc, 'sound/voice/dialup.ogg', 25)
 	revived_ipc.say("Structural integity passing minimum threshold! Reboot confirmed. Asynchronously handing off [pick("core systems", "central subroutines", "key functions")] to internal subprocessor...")
 	INVOKE_ASYNC(src, PROC_REF(boot_sequence_fluff), revived_ipc) //We have to hand this off to not stall the revive() on the sleep()s.
 

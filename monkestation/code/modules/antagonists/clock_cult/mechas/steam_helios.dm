@@ -80,9 +80,9 @@
 
 /datum/action/vehicle/sealed/mecha/judicial_mark
 	name = "Judicial Mark"
-	button_icon = 'monkestation/icons/mob/clock_cult/actions_clock.dmi'
+	button_icon = 'icons/mob/clock_cult/actions_clock.dmi'
 	button_icon_state = "Judicial Marker"
-	background_icon = 'monkestation/icons/mob/clock_cult/background_clock.dmi'
+	background_icon = 'icons/mob/clock_cult/background_clock.dmi'
 	background_icon_state = "bg_clock"
 	///how often the action can be used
 	var/mark_cooldown = 30 SECONDS
@@ -148,7 +148,7 @@
 	name = "Steam Discharge"
 	button_icon = 'icons/effects/effects.dmi'
 	button_icon_state = "smoke"
-	background_icon = 'monkestation/icons/mob/clock_cult/background_clock.dmi'
+	background_icon = 'icons/mob/clock_cult/background_clock.dmi'
 	background_icon_state = "bg_clock"
 	///how often the action can be used
 	var/discharge_cooldown = 45 SECONDS

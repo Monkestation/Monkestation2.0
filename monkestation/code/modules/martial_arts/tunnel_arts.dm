@@ -211,7 +211,7 @@
 	to_chat(attacker, span_userdanger("[khan_user] carefully dodges your [touch_weapon], remaining completely untouched!"), type = MESSAGE_TYPE_COMBAT)
 	khan_user.balloon_alert(attacker, "miss!")
 	attacker.changeNext_move(CLICK_CD_MELEE)
-	playsound(khan_user, 'monkestation/sound/effects/miss.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(khan_user, 'sound/effects/miss.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	return COMPONENT_NO_AFTERATTACK
 
 /// Verb added to humans who learn the tunnel arts.

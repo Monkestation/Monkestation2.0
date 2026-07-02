@@ -7,7 +7,7 @@
 /obj/item/bodycam_upgrade
 	name = "\improper body camera"
 	desc = "A body camera device attachable to most outerwear. There's an instructions tag if you look a little closer..."
-	icon = 'monkestation/icons/obj/clothing/bodycamera.dmi'
+	icon = 'icons/obj/clothing/bodycamera.dmi'
 	icon_state = "bodycamera"
 
 	///The network we give to the builtin body camera while it's on and active.
@@ -18,7 +18,7 @@
 	 * Sprites by: @Partheo from Yogstation, colors very, very slightly edited.
 	 * A static overlay put onto any clothing item that has the camera installed.
 	 */
-	var/static/mutable_appearance/equipped_overlay = mutable_appearance('monkestation/icons/mob/clothing/bodycamera_overlay.dmi', "bodycamera")
+	var/static/mutable_appearance/equipped_overlay = mutable_appearance('icons/mob/clothing/bodycamera_overlay.dmi', "bodycamera")
 
 /obj/item/bodycam_upgrade/examine_more(mob/user)
 	. = ..()

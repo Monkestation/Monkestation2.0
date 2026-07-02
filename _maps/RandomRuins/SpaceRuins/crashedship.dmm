@@ -456,7 +456,7 @@
 "sr" = (
 /obj/effect/spawner/random/maintenance/four,
 /obj/structure/closet/crate,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metalfoam,
 /obj/item/electronics/airlock,
 /turf/open/floor/plating/airless,
 /area/awaymission/bmpship/aft)

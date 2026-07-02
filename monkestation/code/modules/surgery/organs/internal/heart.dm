@@ -1,7 +1,7 @@
 /obj/item/organ/internal/heart/clockwork //this heart doesnt have the fancy bits normal cyberhearts do. However, it also doesnt fucking kill you when EMPd
 	name = "biomechanical pump"
 	desc = "A complex, multi-valved hydraulic pump, which fits perfectly where a heart normally would."
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "heart-clock"
 	organ_flags = ORGAN_ROBOTIC
 
@@ -21,6 +21,8 @@
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 	/// Ability given to the owner of the organ
 	var/datum/action/innate/retract_limb/retract_limb
+	/// UI to see amount of wetness stacks
+	var/atom/movable/screen/slime_stacks/slime_wetness_display
 
 /obj/item/organ/internal/heart/slime/Destroy()
 	QDEL_NULL(regenerate_limbs)
@@ -36,11 +38,16 @@
 		retract_limb = new
 	retract_limb.Grant(receiver)
 	RegisterSignal(receiver, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(slime_blood))
+	if(receiver.hud_used)
+		on_hud_created(receiver)
+	else
+		RegisterSignal(receiver, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 /obj/item/organ/internal/heart/slime/Remove(mob/living/carbon/heartless, special)
 	. = ..()
 	QDEL_NULL(regenerate_limbs)
 	QDEL_NULL(retract_limb)
+	QDEL_NULL(slime_wetness_display)
 	UnregisterSignal(heartless, COMSIG_HUMAN_ON_HANDLE_BLOOD)
 
 /obj/item/organ/internal/heart/slime/proc/slime_blood(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
@@ -70,6 +77,22 @@
 		if(SPT_PROB(2.5, seconds_per_tick))
 			to_chat(slime, span_danger("You feel drained!"))
 
+	var/datum/status_effect/fire_handler/wet_stacks/oozeling/slime_wetness = slime.has_status_effect(/datum/status_effect/fire_handler/wet_stacks/oozeling)
+	if(!slime_wetness || slime_wetness?.stacks != slime_wetness.stack_limit)
+		if(slime.blood_volume >= BLOOD_VOLUME_OKAY)
+			slime.adjust_wet_stacks(1, /datum/status_effect/fire_handler/wet_stacks/oozeling)
+
+			if(slime_wetness?.stacks > 9 && slime_wetness?.stacks <= HYDROPHOBIA_WETNESS_STACKS)
+				slime.balloon_alert(slime, "membrane restored!")
+				playsound(slime, 'sound/surgery/organ1.ogg', 80, TRUE)
+				slime.visible_message(
+					span_notice("[slime]'s body forms an oily outer membrance!"),
+					span_nicegreen("Your protective membrance regenerates!"),
+				)
+
+		update_hud(slime)
+
+
 	if(slime.blood_volume < BLOOD_VOLUME_BAD)
 		Cannibalize_Body(slime)
 
@@ -98,6 +121,14 @@
 	)
 	qdel(consumed_limb)
 	body.blood_volume += 20
+
+/obj/item/organ/internal/heart/slime/proc/on_hud_created(mob/source)
+	SIGNAL_HANDLER
+
+	var/datum/hud/slime_hud = source.hud_used
+	slime_wetness_display = new(null, slime_hud)
+	slime_hud.infodisplay += slime_wetness_display
+	slime_hud.show_hud(slime_hud.hud_version)
 
 /// REGENERATE LIMBS
 /datum/action/innate/regenerate_limbs

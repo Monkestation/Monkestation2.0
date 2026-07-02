@@ -91,14 +91,14 @@
 	return to_add
 
 /obj/item/bodypart/head/goblin
-	icon_greyscale = 'monkestation/icons/mob/species/goblin/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/goblin/bodyparts.dmi'
 	limb_id = SPECIES_GOBLIN
 	is_dimorphic = FALSE
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/chest/goblin
-	icon_greyscale = 'monkestation/icons/mob/species/goblin/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/goblin/bodyparts.dmi'
 	limb_id = SPECIES_GOBLIN
 	is_dimorphic = TRUE
 	speed_modifier = -0.25
@@ -106,25 +106,25 @@
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/arm/left/goblin
-	icon_greyscale = 'monkestation/icons/mob/species/goblin/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/goblin/bodyparts.dmi'
 	limb_id = SPECIES_GOBLIN
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/arm/right/goblin
-	icon_greyscale = 'monkestation/icons/mob/species/goblin/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/goblin/bodyparts.dmi'
 	limb_id = SPECIES_GOBLIN
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/leg/left/goblin
-	icon_greyscale = 'monkestation/icons/mob/species/goblin/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/goblin/bodyparts.dmi'
 	limb_id = SPECIES_GOBLIN
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/leg/right/goblin
-	icon_greyscale = 'monkestation/icons/mob/species/goblin/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/goblin/bodyparts.dmi'
 	limb_id = SPECIES_GOBLIN
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
@@ -141,7 +141,7 @@
 
 /obj/item/organ/internal/liver/goblin //Equivilant to an organic tier 2 cybernetic liver
 	name = "green liver"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "goblin_liver"
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	toxTolerance = 5
@@ -150,6 +150,6 @@
 
 /obj/item/organ/internal/spleen/goblin
 	name = "squeedily spooch"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "goblin_spleen"
 	desc = "Eeeeeww...."

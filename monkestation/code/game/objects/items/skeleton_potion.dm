@@ -1,7 +1,7 @@
 /obj/item/skeleton_potion
 	name = "strange flask"
 	desc = "A strange flask with grey liquid inside of it."
-	icon = 'monkestation/icons/obj/misc.dmi'
+	icon = 'icons/obj/misc.dmi'
 	icon_state = "skeleton_potion"
 	w_class = WEIGHT_CLASS_SMALL
 

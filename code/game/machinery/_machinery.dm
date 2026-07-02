@@ -211,7 +211,7 @@
 	. = ..()
 	post_machine_initialize()
 
-/obj/machinery/Destroy()
+/obj/machinery/Destroy(force)
 	SSmachines.unregister_machine(src)
 	end_processing()
 	dump_inventory_contents()
@@ -315,7 +315,7 @@
 	set waitfor = FALSE
 	return PROCESS_KILL
 
-/obj/machinery/process()//If you dont use process or power why are you here
+/obj/machinery/process(seconds_per_tick)//If you dont use process or power why are you here
 	return PROCESS_KILL
 
 ///Late process for machines added to SSmachines.processing_late to gather accurate recordings
