@@ -23,6 +23,8 @@
 	to_chat(A, span_warning("You [A.can_download ? "enable" : "disable"] read/write permission to your memorybanks! You [A.can_download ? "CAN" : "CANNOT"] be downloaded!"))
 
 /mob/living/silicon/ai/proc/relocate(silent = FALSE, kill_otherwise = TRUE)
+	if(is_dying)
+		return FALSE
 	if(!silent)
 		to_chat(src, span_userdanger("Connection to data core lost. Attempting to reaquire connection..."))
 
@@ -62,8 +64,8 @@
 	sleep(2 SECONDS)
 	if(available_ai_cores())
 		to_chat(src, span_notice("Connection attempt successful. Beginning file upload."))
-		relocate(TRUE)
 		is_dying = FALSE
+		relocate(TRUE)
 		return
 	to_chat(src, span_warning("Connection attempt failed. No active hosts."))
 	sleep(0.5 SECONDS)
