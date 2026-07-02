@@ -2,7 +2,7 @@
 /obj/item/ipc_core
 	name = "ipc core"
 	desc = "A complex metal chest cavity with standard limb sockets and pseudomuscle anchors."
-	icon = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
+	icon = 'icons/mob/species/ipc/bodyparts.dmi'
 	icon_state = "synth_chest"
 
 /obj/item/ipc_core/Initialize(mapload)
