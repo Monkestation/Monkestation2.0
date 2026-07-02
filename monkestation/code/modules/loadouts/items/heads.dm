@@ -311,7 +311,6 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Captain's Bunny Ears"
 	item_path = /obj/item/clothing/head/hats/caphat/bunnyears_captain
 	restricted_roles = list(JOB_CAPTAIN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/head/propeller_hat
 	name = "Rainbow Propeller Hat"
