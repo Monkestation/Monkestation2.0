@@ -76,7 +76,7 @@ export const Interview = (props) => {
         <NoticeBox info>
           There is a tutorial for our server accessible from the bottom right,
           in the lobby screen, or a written one at
-          <a href="https://wiki.monkestation.com/Tutorial"> our wiki</a>
+          <a href="https://wiki.monkestation.com/Tutorial"> our wiki.</a>
         </NoticeBox>
         {(!read_only && (
           <Section title="Welcome!">
