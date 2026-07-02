@@ -310,7 +310,7 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Colorable Bunny Suit"
 	item_path = /obj/item/clothing/under/costume/playbunny
 
-/datum/store_item/under/rank/captain/bunnysuit
+/datum/loadout_item/under/rank/captain/bunnysuit
 	name = "Captain's Bunnysuit"
 	item_path = /obj/item/clothing/under/rank/captain/bunnysuit
 	restricted_roles = list(JOB_CAPTAIN)
