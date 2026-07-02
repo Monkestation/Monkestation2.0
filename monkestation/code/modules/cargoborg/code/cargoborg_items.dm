@@ -108,9 +108,9 @@
 
 /obj/item/borg/hydraulic_clamp/Initialize(mapload)
 	. = ..()
-	if(iscyborg(loc))
-		cyborg_holding_me = WEAKREF(loc)
-		RegisterSignal(loc, COMSIG_LIVING_DEATH, PROC_REF(empty_contents))
+	if(iscyborg(loc.loc))
+		cyborg_holding_me = WEAKREF(loc.loc)
+		RegisterSignal(loc.loc, COMSIG_LIVING_DEATH, PROC_REF(empty_contents))
 
 /obj/item/borg/hydraulic_clamp/Destroy()
 	var/mob/living/silicon/robot/robot_holder = cyborg_holding_me?.resolve()

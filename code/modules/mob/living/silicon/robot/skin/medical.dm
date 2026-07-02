@@ -6,6 +6,7 @@
 	icon_state = "medical"
 	icon_state_light = "medical"
 	icon_state_transform = "medical_transform"
+	transformation_duration = 3.4 SECONDS
 	hat_offset = 3
 	hat_offset = 0
 

@@ -1,5 +1,5 @@
 /datum/robot_model/cargo
-	name = "cargo"
+	name = "Cargo"
 	hud_icon_state = "cargo"
 	default_skin = /datum/robot_skin/cargo/default
 	available_skins = list(

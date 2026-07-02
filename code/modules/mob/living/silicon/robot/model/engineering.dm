@@ -1,5 +1,5 @@
 /datum/robot_model/engineering
-	name = "engineering"
+	name = "Engineering"
 	hud_icon_state = "engineer"
 	default_skin = /datum/robot_skin/engineering/default
 	basic_modules = list(

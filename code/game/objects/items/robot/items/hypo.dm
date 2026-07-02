@@ -232,8 +232,8 @@
 			continue
 		stored_reagents[reagents_typepath_to_regen] = clamp(reagent_volume + amount, 0, max_volume_per_reagent)
 		total_charge_cost += charge_cost
-	if(iscyborg(loc))
-		var/mob/living/silicon/robot/cyborg = loc
+	if(iscyborg(loc.loc))
+		var/mob/living/silicon/robot/cyborg = loc.loc
 		cyborg.cell?.use(total_charge_cost)
 
 /// Depletes the supply of a reagent.

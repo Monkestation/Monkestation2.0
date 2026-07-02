@@ -6,5 +6,6 @@
 	icon_state = "peace"
 	icon_state_light = "peace"
 	icon_state_transform = "peace_transform"
+	transformation_duration = 5.4 SECONDS
 	hat_offset = -2
 	badge_offset = -2
