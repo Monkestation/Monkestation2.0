@@ -1,0 +1,8 @@
+author: "datlo, Runian"
+delete-after: True
+changes:
+  - rscadd: "Syndicate MMIs now brainwashes the brain inside of it, as long it stays inside."
+  - rscadd: "Syndicate MMIs now allow cyborgs to be connected to an AI, but will give them a law zero to assist the Syndicate. This law zero is irremovable as long they have the Syndicate MMI."
+  - qol: "Roboticists and Research Director can further examine any MMI to see if it will transfer its laws to a newly created cyborg or AI."
+  - qol: "Traitors can further examine the Syndicate MMI to see exactly what it can do."
+  - bugfix: "Newly created cyborgs will no longer notify the wrong AI about their creation if they were forced to have a specific AI."
