@@ -131,6 +131,7 @@
 
 /obj/item/gun/ballistic/shotgun/riot/sol/evil/unrestricted
 	pin = /obj/item/firing_pin
+
 // Automatic Shotguns//
 /obj/item/gun/ballistic/shotgun/automatic
 	fire_sound = 'sound/weapons/gun/shotgun/shotgun_small.ogg'
