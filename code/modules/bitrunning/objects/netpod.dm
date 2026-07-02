@@ -488,5 +488,8 @@
 /obj/machinery/netpod/tutorial_coop
 	bitrunning_id = "tutorial_coop"
 
-/obj/machinery/netpod/tutorial_solo
-	bitrunning_id = "tutorial_solo"
+/obj/machinery/netpod/tutorial_solo_1
+	bitrunning_id = "tutorial_solo_1"
+
+/obj/machinery/netpod/tutorial_solo_2
+	bitrunning_id = "tutorial_solo_2"

@@ -325,6 +325,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	name = "Observer-Start"
 	icon_state = "observer_start"
 
+/obj/effect/landmark/tutorial_start
+	name = "tutorial_start"
+
 //generic maintenance locations
 /obj/effect/landmark/generic_maintenance_landmark
 	name = "generic_maintenance_spawn"

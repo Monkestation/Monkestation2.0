@@ -137,6 +137,9 @@ Possible to do for anyone motivated enough:
 	var/play_once = TRUE
 	var/has_played = FALSE
 
+/obj/machinery/holopad/tutorial/everplaying
+	play_once = FALSE
+
 /obj/machinery/holopad/tutorial/Initialize(mapload)
 	. = ..()
 	if(proximity_range)

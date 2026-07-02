@@ -62,6 +62,9 @@
 	icon_state = "centcom_hall"
 	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA | PASSIVE_AREA
 
+/area/centcom/central_command_areas/hall/tutorial_chamber
+	name = "Tutorial Chamber"
+
 /area/centcom/central_command_areas/admin_hangout
 	name = "Admin Hangout"
 	icon = 'icons/area/areas_centcom.dmi'
