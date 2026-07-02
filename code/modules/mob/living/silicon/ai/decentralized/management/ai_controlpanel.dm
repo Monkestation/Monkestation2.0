@@ -23,6 +23,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 /obj/machinery/computer/ai_control_console/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	if(!is_station_level(z))
+		req_access = null
 		req_one_access = list(ACCESS_AWAY_GENERAL)
 
 /obj/machinery/computer/ai_control_console/item_interaction(mob/living/user, obj/item/tool, list/modifiers)

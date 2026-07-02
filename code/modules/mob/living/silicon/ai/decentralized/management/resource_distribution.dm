@@ -13,6 +13,7 @@
 /obj/machinery/computer/ai_resource_distribution/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	if(!is_station_level(z))
+		req_access = null
 		req_one_access = list(ACCESS_AWAY_GENERAL)
 
 /obj/machinery/computer/ai_resource_distribution/emag_act(mob/user, obj/item/card/emag/emag_card)
