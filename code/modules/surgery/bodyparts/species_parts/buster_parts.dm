@@ -5,12 +5,18 @@
 	limb_id = "buster"
 	icon = 'icons/mob/augmentation/augments_buster.dmi'
 	icon_static = 'icons/mob/augmentation/augments_buster.dmi'
-	icon_state = "buster_l_arm"
 	hp_percent_to_dismemberable = 1
 	wound_resistance = 5
 	brute_modifier = 0.4
 	burn_modifier = 0.4
 	var/datum/martial_art/buster_style/style = new()
+
+/obj/item/bodypart/arm/left/robot/buster/update_limb(dropping_limb, is_creating)
+	if(bodypart_disabled)
+		limb_id = "buster_inactive"
+	else
+		limb_id = initial(limb_id)
+	return ..()
 
 /obj/item/bodypart/arm/left/robot/buster/Destroy()
 	QDEL_NULL(style)
@@ -68,6 +74,13 @@
 /obj/item/bodypart/arm/right/robot/buster/Destroy()
 	QDEL_NULL(style)
 	. = ..()
+
+/obj/item/bodypart/arm/right/robot/buster/update_limb(dropping_limb, is_creating)
+	if(bodypart_disabled)
+		limb_id = "buster_inactive"
+	else
+		limb_id = initial(limb_id)
+	return ..()
 
 /obj/item/bodypart/arm/right/robot/buster/try_attach_limb(mob/living/carbon/new_arm_owner, special)
 	. = ..()
