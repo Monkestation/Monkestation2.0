@@ -181,46 +181,86 @@
 	falloff_exponent = 1
 	sound_channel = CHANNEL_DELTA_SIRENS
 
-/datum/looping_sound/rbmk_reactor_low
+/datum/looping_sound/rbmk_reactor
 	mid_sounds = list('sound/rbmk/reactor_hum_low.ogg')
-	mid_length = 4 SECONDS
+	mid_length = 20 SECONDS
 	volume = 50
+
 	extra_range = 15
-	falloff_distance = 10
-	falloff_exponent = 5
-	ignore_walls = FALSE
 
-/datum/looping_sound/rbmk_reactor_high
-	mid_sounds = list('sound/rbmk/reactor_hum_high.ogg')
-	mid_length = 6 SECONDS
-	volume = 55
-	extra_range = 20
-	falloff_distance = 10
-	falloff_exponent = 5
-	ignore_walls = FALSE
+	sound_channel = CHANNEL_RBMK_REACTOR
+	live_attenuation = TRUE
+	live_attenuation_interval = 0.5 SECONDS
+	live_attenuation_max_distance = 20
+	live_attenuation_mixer_channel = CHANNEL_MACHINERY
 
-/datum/looping_sound/rbmk_reactor_max
-	mid_sounds = list('sound/rbmk/reactor_hum_max.ogg')
-	mid_length = 4 SECONDS
-	volume = 60
-	extra_range = 25
-	falloff_distance = 10
-	falloff_exponent = 5
+	falloff_distance = 5
+	falloff_exponent = 3
 	ignore_walls = FALSE
+	pressure_affected = FALSE
+
+	var/sound_state = RBMK_SOUND_LOW
+
+
+/datum/looping_sound/rbmk_reactor/proc/set_sound_state(new_state)
+	if(sound_state == new_state)
+		return
+
+	sound_state = new_state
+
+	switch(sound_state)
+		if(RBMK_SOUND_MAX)
+			volume = 60
+			live_attenuation_max_distance = 20
+			falloff_distance = 5
+			return
+
+		if(RBMK_SOUND_HIGH)
+			volume = 55
+			live_attenuation_max_distance = 20
+			falloff_distance = 5
+			return
+
+	volume = 50
+	live_attenuation_max_distance = 20
+	falloff_distance = 5
+
+
+/datum/looping_sound/rbmk_reactor/get_sound(_mid_sounds)
+	switch(sound_state)
+		if(RBMK_SOUND_MAX)
+			return 'sound/rbmk/reactor_hum_max.ogg'
+
+		if(RBMK_SOUND_HIGH)
+			return 'sound/rbmk/reactor_hum_high.ogg'
+
+	return 'sound/rbmk/reactor_hum_low.ogg'
 
 /datum/looping_sound/rbmk_turbine
 	start_sound = 'sound/rbmk/turbine_start.ogg'
 	start_length = 16 SECONDS
 	start_volume = 12
+
 	mid_sounds = list('sound/rbmk/turbine_mid.ogg')
-	mid_length = 4 SECONDS
+	mid_length = 12 SECONDS
 	volume = 24
+
 	end_sound = 'sound/rbmk/turbine_end.ogg'
 	end_volume = 12
+    // Legacy fallback if dynamic attenuation is disabled.
 	extra_range = 8
-	falloff_distance = 5
-	falloff_exponent = 5
+
+	// Dynamic attenuation
+	sound_channel = CHANNEL_RBMK_TURBINE
+	live_attenuation = TRUE
+	live_attenuation_interval = 0.5 SECONDS
+	live_attenuation_max_distance = 10
+	live_attenuation_mixer_channel = CHANNEL_MACHINERY
+
+	falloff_distance = 4
+	falloff_exponent = 3
 	ignore_walls = FALSE
+	pressure_affected = FALSE
 
 /datum/looping_sound/charger
 	start_sound = 'sound/machines/charger/charger_start.ogg'
