@@ -427,7 +427,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/maintenance/service)
 "tw" = (
-/obj/machinery/suit_storage_unit,
+/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
@@ -900,7 +900,7 @@
 /area/mine/production)
 "FS" = (
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/machinery/suit_storage_unit,
+/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
