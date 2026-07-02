@@ -256,9 +256,9 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 	name = "Colorable Bunny Suit"
 	item_path = /obj/item/clothing/under/costume/playbunny
 
-/datum/store_item/miscellaneous/captain/bunnysuit
+/datum/store_item/under/miscellaneous/captain/bunnysuit
 	name = "Captain's Bunnysuit"
-	item_path = /obj/item/clothing/under/miscellaneous/captainbunnysuit
+	item_path = item/clothing/under/rank/captain/bunnysuit
 
 /datum/store_item/under/miscellaneous/hula
 	name = "Hula Skirt"
