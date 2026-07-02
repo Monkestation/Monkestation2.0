@@ -17,6 +17,8 @@
 #define MARTIALART_VELVETFU "velvetfu"
 //spider bite, for spys
 #define MARTIALART_SPIDERSBITE "spider's bite"
+#define MARTIALART_JUNGLEARTS "jungle arts"
+
 /// The number of hits required to crit a target
 #define HITS_TO_CRIT(damage) round(100 / damage, 0.1)
 

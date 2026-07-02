@@ -21880,13 +21880,6 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
-"fbc" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "12";
-	dir = 1
-	},
-/turf/open/floor/circuit/red/off,
-/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "fbd" = (
 /mob/living/simple_animal/pet/gondola,
 /turf/open/floor/eighties/red,
@@ -21978,6 +21971,12 @@
 	},
 /turf/open/floor/iron/smooth_large,
 /area/centcom/syndicate_mothership/golden_eye)
+"fiy" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/closed/wall/mineral/titanium,
+/area/centcom/central_command_areas/admin)
 "fiJ" = (
 /obj/item/ammo_box/advanced/s12gauge/flechette,
 /obj/item/ammo_box/advanced/s12gauge/flechette,
@@ -23448,12 +23447,6 @@
 	dir = 8
 	},
 /area/centcom/central_command_areas/evacuation)
-"hsX" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 5
-	},
-/turf/closed/wall/mineral/titanium,
-/area/centcom/central_command_areas/admin)
 "htD" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -24058,12 +24051,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/expansion_bulldozer)
-"ijF" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 9
-	},
-/turf/closed/wall/mineral/titanium,
-/area/centcom/central_command_areas/admin)
 "ijH" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -24184,10 +24171,6 @@
 /obj/machinery/netpod/tutorial_coop,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/hall)
-"itR" = (
-/obj/machinery/plumbing/ooze_compressor,
-/turf/open/floor/engine,
-/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "iuf" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/siding/wood{
@@ -26486,10 +26469,6 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
-"mjS" = (
-/obj/machinery/duct,
-/turf/open/floor/circuit/red/off,
-/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "mkd" = (
 /obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
 /turf/open/floor/iron/dark,
@@ -26548,6 +26527,12 @@
 	},
 /turf/open/floor/carpet/purple,
 /area/centcom/central_command_areas/adminroom)
+"mwE" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/turf/closed/wall/mineral/titanium,
+/area/centcom/central_command_areas/admin)
 "mwV" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -26947,6 +26932,12 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
 /turf/open/floor/iron/smooth,
 /area/centcom/syndicate_mothership/golden_eye)
+"ndp" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/closed/wall/mineral/titanium,
+/area/centcom/central_command_areas/admin)
 "neL" = (
 /obj/machinery/flasher/directional/west,
 /obj/structure/table,
@@ -28527,6 +28518,12 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/adminroom)
+"pOy" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/closed/wall/mineral/titanium,
+/area/centcom/central_command_areas/admin)
 "pOA" = (
 /obj/structure/table/wood,
 /obj/item/toy/plush/duckyplush{
@@ -29196,6 +29193,10 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
+"qQo" = (
+/obj/machinery/slime_compressor,
+/turf/open/floor/engine,
+/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "qQr" = (
 /obj/structure/decorative/shelf/alcohol,
 /turf/open/floor/carpet/red,
@@ -29369,12 +29370,6 @@
 	dir = 5
 	},
 /turf/open/misc/sandy_dirt,
-/area/centcom/central_command_areas/admin)
-"rjG" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 10
-	},
-/turf/closed/wall/mineral/titanium,
 /area/centcom/central_command_areas/admin)
 "rlq" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -30980,10 +30975,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/admin)
-"tRC" = (
-/obj/machinery/duct,
-/turf/open/floor/engine,
-/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "tRW" = (
 /obj/effect/turf_decal/weather/dirt{
 	pixel_y = -1
@@ -32037,12 +32028,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin)
-"vIz" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "13"
-	},
-/turf/open/floor/circuit/red/off,
-/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "vJI" = (
 /obj/machinery/porta_turret/syndicate/assaultops/internal{
 	system_id = "goldeneyebase"
@@ -32574,12 +32559,6 @@
 	dir = 4
 	},
 /turf/open/floor/grass,
-/area/centcom/central_command_areas/admin)
-"wzn" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 6
-	},
-/turf/closed/wall/mineral/titanium,
 /area/centcom/central_command_areas/admin)
 "wzU" = (
 /obj/structure/lattice/catwalk,
@@ -35664,10 +35643,10 @@ qfZ
 auG
 amT
 amT
-vIz
-mjS
-mjS
-fbc
+amT
+amT
+amT
+amT
 aWw
 amT
 aPL
@@ -36176,14 +36155,14 @@ acX
 apE
 avy
 auG
-itR
-tRC
-tRC
-tRC
-tRC
-tRC
-tRC
-itR
+qQo
+ksD
+ksD
+ksD
+ksD
+ksD
+ksD
+ksD
 aPL
 aOL
 aaa
@@ -63769,11 +63748,11 @@ aaa
 aaa
 aOn
 jZA
-wzn
+ndp
 bwZ
 bwZ
 bwZ
-hsX
+pOy
 jZA
 jZA
 jZA
@@ -66082,11 +66061,11 @@ aaa
 aaa
 aOn
 jZA
-rjG
+mwE
 bwZ
 bwZ
 bwZ
-ijF
+fiy
 jZA
 jZA
 wLm
