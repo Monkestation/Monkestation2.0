@@ -308,3 +308,18 @@
 		/obj/item/storage/box/lethalshot,
 		/obj/item/magazine_shuffler,
 	)
+
+/datum/supply_pack/service/genesischamber
+	name = "Genesis Chamber Construction Kit"
+	desc = "Contains most of the machine parts in order to construct the Genesis Chamber for Botany. Bluespace crystals sold separately. Consult your local science division for a bioscrambler anomaly core."
+	cost = CARGO_CRATE_VALUE * 25
+	access = ACCESS_HYDROPONICS
+	contains = list(/obj/item/circuitboard/machine/genesischamber,
+					/obj/item/stock_parts/matter_bin = 1,
+					/obj/item/stock_parts/manipulator = 1,
+					/obj/item/stock_parts/micro_laser = 1,
+					/obj/item/stack/sheet/iron/five,
+					/obj/item/stack/cable_coil,
+					)
+	crate_name = "Genesis Chamber Construction Kit Crate"
+	crate_type = /obj/structure/closet/crate/secure/hydroponics
