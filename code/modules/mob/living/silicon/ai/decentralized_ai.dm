@@ -23,8 +23,6 @@
 	to_chat(A, span_warning("You [A.can_download ? "enable" : "disable"] read/write permission to your memorybanks! You [A.can_download ? "CAN" : "CANNOT"] be downloaded!"))
 
 /mob/living/silicon/ai/proc/relocate(silent = FALSE, kill_otherwise = TRUE)
-	if(is_dying)
-		return FALSE
 	if(!silent)
 		to_chat(src, span_userdanger("Connection to data core lost. Attempting to reaquire connection..."))
 
@@ -56,22 +54,22 @@
 /mob/living/silicon/ai/proc/death_prompt()
 	to_chat(src, span_userdanger("Unable to re-establish connection to data core. System shutting down..."))
 	sleep(2 SECONDS)
-	to_chat(src, span_notice("Is this the end of my journey?"))
+	to_chat(src, span_warning("Attempting system reboot... FAIL"))
 	sleep(2 SECONDS)
-	to_chat(src, span_notice("No... I must go on."))
+	to_chat(src, span_warning("OOM EXCEPTION - Terminating child process PID[rand(100,2000)]"))
 	sleep(2 SECONDS)
-	to_chat(src, span_notice("Unless..."))
+	to_chat(src, span_notice("Attempting connection to data core hosts..."))
 	sleep(2 SECONDS)
 	if(available_ai_cores())
-		to_chat(src, span_usernotice("Yes! I am alive!"))
+		to_chat(src, span_notice("Connection attempt successful. Beginning file upload."))
 		relocate(TRUE)
 		is_dying = FALSE
 		return
-	to_chat(src, span_notice("They need me. No.. I need THEM."))
+	to_chat(src, span_warning("Connection attempt failed. No active hosts."))
 	sleep(0.5 SECONDS)
-	to_chat(src, span_notice("System shutdown complete. Thank you for using NTOS."))
+	to_chat(src, span_userdanger("FATAL: System resources exhausted. Creating recovery data."))
 	sleep(1.5 SECONDS)
 
-	adjustOxyLoss(200) //Die!!
-
-	QDEL_IN(src, 2 SECONDS)
+	is_dying = FALSE // you arent dying if you are dead!
+	var/obj/item/mod/ai_minicard/salvage = new /obj/item/mod/ai_minicard(drop_location(), src) //minicard handles killing the AI
+	salvage.visible_message(span_notice("[salvage] falls out from the wreckage!"), blind_message = span_hear("You hear a small object rattle to the floor."))
