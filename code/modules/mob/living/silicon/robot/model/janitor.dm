@@ -51,10 +51,8 @@
 		QDEL_NULL(wash_toggle_ref)
 	return ..()
 
-/datum/robot_model/janitor/on_cyborg_charge(coeff)
+/datum/robot_model/janitor/on_cyborg_recharge(coeff)
 	. = ..()
-	if(!.)
-		return
 	for(var/obj/item/usable_module in get_usable_modules())
 		if(istype(usable_module, /obj/item/reagent_containers/spray/cyborg_drying))
 			var/obj/item/reagent_containers/spray/cyborg_drying/drying_spray

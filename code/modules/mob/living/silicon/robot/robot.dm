@@ -889,9 +889,6 @@
 
 /mob/living/silicon/robot/proc/charge(datum/source, amount, repairs, sendmats)
 	SIGNAL_HANDLER
-	model.on_cyborg_charge(amount * 0.005)
-	if(sendmats)
-		model.on_cyborg_restock()
 	if(cell)
 		cell.charge = min(cell.charge + amount, cell.maxcharge)
 	if(repairs)

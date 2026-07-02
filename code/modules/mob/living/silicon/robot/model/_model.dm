@@ -35,6 +35,7 @@
 	if(!new_cyborg_owner) // On occasion, we want the datum only.
 		return
 	cyborg_owner = new_cyborg_owner
+	RegisterSignal(cyborg_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(on_cyborg_recharge))
 	for(var/obj/item/basic_module_typepath as anything in basic_modules)
 		var/obj/item/itemized_module = new basic_module_typepath(cyborg_owner.internal_inventory)
 		basic_modules += itemized_module
@@ -55,6 +56,7 @@
 
 /datum/robot_model/Destroy()
 	if(!QDELETED(cyborg_owner))
+		UnregisterSignal(cyborg_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
 		cyborg_owner.drop_all_held_items() // Precaution to make sure everything qdels with no issue.
 		cyborg_owner.internal_inventory.atom_storage.close_all()
 		QDEL_LIST(cyborg_owner.internal_inventory.contents) // Getting rid of all the model's items.
@@ -128,15 +130,15 @@
 /datum/robot_model/proc/get_or_create_estorage(estorage_type)
 	return (locate(estorage_type) in energy_storages) || new estorage_type(src)
 
-/// Recharges renewable energy storages and various modules.
-/datum/robot_model/proc/on_cyborg_charge(coeff = 1)
+/// Called when the cyborg is recharged.
+/datum/robot_model/proc/on_cyborg_recharge(datum/source, amount, repairs, sendmats)
 	SHOULD_CALL_PARENT(TRUE)
-	if(!cyborg_owner)
-		return FALSE
+	var/power_coeff = amount / (200 JOULES)
+	// Renewables:
 	for(var/datum/robot_energy_storage/energy_storage as anything in energy_storages)
 		if(energy_storage.renewable == FALSE)
 			continue
-		energy_storage.energy = min(energy_storage.max_energy, energy_storage.energy + (coeff * energy_storage.recharge_rate))
+		energy_storage.energy = min(energy_storage.max_energy, energy_storage.energy + (power_coeff * energy_storage.recharge_rate))
 	for(var/obj/item/usable_module in get_usable_modules())
 		if(istype(usable_module, /obj/item/assembly/flash))
 			var/obj/item/assembly/flash/flash = usable_module
@@ -146,12 +148,12 @@
 			continue
 		if(istype(usable_module, /obj/item/reagent_containers/condiment/enzyme))
 			var/obj/item/reagent_containers/condiment/enzyme/enzyme_container = usable_module
-			enzyme_container.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
+			enzyme_container.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * power_coeff)
 			continue
 		if(istype(usable_module, /obj/item/soap/nanotrasen/cyborg))
 			var/obj/item/soap/nanotrasen/cyborg/cyborg_soap = usable_module
 			if(cyborg_soap.uses < initial(cyborg_soap.uses))
-				cyborg_soap.uses = min(initial(cyborg_soap.uses), cyborg_soap.uses + (ROUND_UP(initial(cyborg_soap.uses) / 100) * coeff))
+				cyborg_soap.uses = min(initial(cyborg_soap.uses), cyborg_soap.uses + (ROUND_UP(initial(cyborg_soap.uses) / 100) * power_coeff))
 			continue
 		if(istype(usable_module, /obj/item/hand_labeler/cyborg))
 			var/obj/item/hand_labeler/cyborg/labeler = usable_module
@@ -159,7 +161,7 @@
 			continue
 		if(istype(usable_module, /obj/item/lightreplacer))
 			var/obj/item/lightreplacer/light_replacer = usable_module
-			light_replacer.Charge(cyborg_owner, max(1, coeff))
+			light_replacer.Charge(cyborg_owner, max(1, power_coeff))
 			continue
 		if(istype(usable_module, /obj/item/melee/baton/security))
 			var/obj/item/melee/baton/security/security_baton = usable_module
@@ -171,14 +173,11 @@
 				energy_gun.recharge_newshot() // Try to reload a new shot.
 			continue
 	cyborg_owner.toner = cyborg_owner.tonermax
-	return TRUE
-
-/// Restocks non-renewable energy storages that the owner may have.
-/datum/robot_model/proc/on_cyborg_restock()
-	if(!cyborg_owner)
+	// Non-renewables:
+	if(!sendmats)
 		return
 	var/obj/machinery/recharge_station/charger = cyborg_owner.loc
-	if(!istype(charger))
+	if(istype(charger))
 		return
 	var/datum/component/material_container/mat_container = charger.materials.mat_container
 	if(!mat_container || charger.materials.on_hold())
