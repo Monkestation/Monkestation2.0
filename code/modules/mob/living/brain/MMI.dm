@@ -304,7 +304,7 @@
 	holder.Insert(H)
 	return TRUE
 
-/obj/item/mmi/ipc/Initialize() // IPC MMI brain, brain for spawned IPCs with MMI pref, radio off by default for balance concerns
+/obj/item/mmi/ipc/Initialize(mapload) // IPC MMI brain, brain for spawned IPCs with MMI pref, radio off by default for balance concerns
 	. = ..()
 	set_brainmob(new /mob/living/brain(src))
 	radio.set_on(FALSE)
