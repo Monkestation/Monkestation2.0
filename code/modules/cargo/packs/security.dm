@@ -236,8 +236,8 @@
 	name = "Biological Containment Gear Crate"
 	desc = "This crate holds 3 full security bio suits which will protect you from viruses along with 3 viral analyzer goggles and PENLITE barrier projectors to stop the spread."
 	cost = CARGO_CRATE_VALUE * 12
-	contains = list(/obj/item/clothing/head/bio_hood = 3,
-					/obj/item/clothing/suit/bio_suit = 3,
+	contains = list(/obj/item/clothing/head/bio_hood/security = 3,
+					/obj/item/clothing/suit/bio_suit/security = 3,
 					/obj/item/reagent_containers/syringe/antiviral = 3,
 					/obj/item/clothing/gloves/latex/nitrile = 3,
 					/obj/item/clothing/glasses/pathology = 3,
