@@ -76,30 +76,31 @@
 
 /datum/storage/dimensional_gloves/New(atom/parent, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, allow_quick_empty, collection_mode, attack_hand_interact)
 	. = ..()
-	set_holdable(can_hold_list = list(
-		/obj/item/ammo_box,
-		/obj/item/ammo_casing,
-		/obj/item/gun,
-		/obj/item/knife,
-		/obj/item/melee,
-		/obj/item/nullrod,
-		/obj/item/energy_katana,
-		/obj/item/throwing_star,
-		/obj/item/shield,
-		/obj/item/spear,
-		/obj/item/dualsaber,
-		/obj/item/fireaxe,
-		/obj/item/flamethrower,
-		/obj/item/chainsaw,
-		/obj/item/pitchfork,
-		/obj/item/pneumatic_cannon,
-		/obj/item/soulscythe,
-		/obj/item/claymore,
-		/obj/item/katana,
-		/obj/item/switchblade,
-		/obj/item/cane,
-		/obj/item/highfrequencyblade,), \
-
+	set_holdable(
+		can_hold_list = list(
+			/obj/item/ammo_box,
+			/obj/item/ammo_casing,
+			/obj/item/gun,
+			/obj/item/knife,
+			/obj/item/melee,
+			/obj/item/nullrod,
+			/obj/item/energy_katana,
+			/obj/item/throwing_star,
+			/obj/item/shield,
+			/obj/item/spear,
+			/obj/item/dualsaber,
+			/obj/item/fireaxe,
+			/obj/item/flamethrower,
+			/obj/item/chainsaw,
+			/obj/item/pitchfork,
+			/obj/item/pneumatic_cannon,
+			/obj/item/soulscythe,
+			/obj/item/claymore,
+			/obj/item/katana,
+			/obj/item/switchblade,
+			/obj/item/cane,
+			/obj/item/highfrequencyblade,
+		),
 		cant_hold_list = list(
 			/obj/item/gun/magic, // no magic
 		)
