@@ -73,5 +73,6 @@
 	sleep(1.5 SECONDS)
 
 	is_dying = FALSE // you arent dying if you are dead!
-	var/obj/item/mod/ai_minicard/salvage = new /obj/item/mod/ai_minicard(drop_location(), src) //minicard handles killing the AI
-	salvage.visible_message(span_notice("[salvage] falls out from the wreckage!"), blind_message = span_hear("You hear a small object rattle to the floor."))
+	if(!QDELING(src)) //accursed checks
+		var/obj/item/mod/ai_minicard/salvage = new /obj/item/mod/ai_minicard(drop_location(), src) //minicard handles killing the AI
+		salvage.visible_message(span_notice("[salvage] falls out from the wreckage!"), blind_message = span_hear("You hear a small object rattle to the floor."))
