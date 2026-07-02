@@ -38,7 +38,7 @@
 
 /obj/item/borg_chameleon/Initialize(mapload)
 	. = ..()
-	disguise_model_type = disguise_model_type.default_skin
+	disguise_skin_type = disguise_model_type.default_skin
 	disguise_name = pick(GLOB.ai_names)
 
 /obj/item/borg_chameleon/Destroy()
@@ -71,7 +71,7 @@
 		to_chat(user, span_notice("This device doesn't seem to work for non-cyborgs."))
 		return
 	var/mob/living/silicon/robot/cyborg_user = user
-	if(cyborg_user.cell?.charge <= ACTIVATION_COST)
+	if(!cyborg_user.cell || cyborg_user.cell.charge <= ACTIVATION_COST)
 		to_chat(cyborg_user, span_warning("You need at least [display_energy(ACTIVATION_COST)] charge in your cell to use [src]!"))
 		return
 	if(!isturf(cyborg_user.loc))
