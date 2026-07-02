@@ -7750,7 +7750,6 @@
 #include "monkestation\code\modules\clothing\accessories\accessories.dm"
 #include "monkestation\code\modules\clothing\costumes\gnome.dm"
 #include "monkestation\code\modules\clothing\costumes\henchmen.dm"
-#include "monkestation\code\modules\clothing\outfits\captainbunny.dm"
 #include "monkestation\code\modules\clothing\costumes\syndicate.dm"
 #include "monkestation\code\modules\clothing\glasses\glasses.dm"
 #include "monkestation\code\modules\clothing\gloves\gloves.dm"
@@ -9179,4 +9178,5 @@
 #include "monkestation\code\modules\wiremod_chem\housing\_chem_housing.dm"
 #include "monkestation\code\modules\wiremod_chem\housing\chemical_circuit.dm"
 #include "monkestation\code\modules\wiremod_chem\housing\precursor_tank.dm"
+#include "monkestation\code\modules\clothing\outfits\captainbunny.dm"
 // END_INCLUDE
