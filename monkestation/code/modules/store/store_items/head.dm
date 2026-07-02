@@ -163,12 +163,6 @@ GLOBAL_LIST_INIT(store_head, generate_store_items(/datum/store_item/head))
 	item_path = /obj/item/clothing/head/costume/rabbitears
 	item_cost = 3000
 
-/datum/store_item/head/hats/caphat/bunnyears_captain
-	name = "Captain's Bunny Ears"
-	item_path = /obj/item/clothing/head/hats/caphat/bunnyears_captain
-	item_cost = 2500
-// add job locks to everything tomorrow
-
 /datum/store_item/head/bandana
 	name = "Bandana"
 	item_path = /obj/item/clothing/head/costume/pirate/bandana
@@ -322,6 +316,11 @@ GLOBAL_LIST_INIT(store_head, generate_store_items(/datum/store_item/head))
 	name = "Colorable Bunny Ears"
 	item_path = /obj/item/clothing/head/playbunnyears
 	item_cost = 5000
+
+/datum/store_item/head/hats/caphat/bunnyears_captain
+	name = "Captain's Bunny Ears"
+	item_path = /obj/item/clothing/head/hats/caphat/bunnyears_captain
+	item_cost = 2500
 
 /datum/store_item/head/propeller_hat
 	name = "Rainbow Propeller Hat"
