@@ -34,7 +34,7 @@
 	name = "box of stingbangs (WARNING)"
 	desc = "<B>WARNING: These devices are extremely dangerous and can cause severe injuries or death in repeated use.</B>"
 	icon_state = "secbox"
-	illustration = "flashbang"
+	illustration = "stingbang"
 
 /obj/item/storage/box/stingbangs/PopulateContents()
 	for(var/i in 1 to 5)
