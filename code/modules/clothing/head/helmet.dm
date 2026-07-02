@@ -119,18 +119,16 @@
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
-//MONKESTATION EDIT START
 /obj/item/clothing/head/helmet/surplus
 	name = "surplus helmet"
 	desc = "Standard Security gear. Protects the head from impacts."
 	icon = 'icons/obj/clothing/hats.dmi'
-	worn_icon = 'icons/mob/head.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/helmet_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/helmet_righthand.dmi'
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
-//MONKESTATION EDIT STOP
 
 /obj/item/clothing/head/helmet/press
 	name = "press helmet"

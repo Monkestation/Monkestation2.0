@@ -1,9 +1,7 @@
-// monkestation start
 #define CHECK_AHELP_ACTIVE\
 	if(state != AHELP_ACTIVE) { \
 		return;\
 	};
-// monkestation end
 
 /// Client var used for returning the ahelp verb
 /client/var/adminhelptimerid = 0
@@ -145,7 +143,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		C.current_ticket.initiator = C
 		C.current_ticket.AddInteraction("Client reconnected.")
 		SSblackbox.LogAhelp(C.current_ticket.id, "Reconnected", "Client reconnected", C.ckey)
-		SSplexora.aticket_connection(C.current_ticket, FALSE) // monkestation edit: PLEXORA
+		SSplexora.aticket_connection(C.current_ticket, FALSE)
 
 //Dissasociate ticket
 /datum/admin_help_tickets/proc/ClientLogout(client/C)
@@ -155,7 +153,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		//Gotta async this cause clients only logout on destroy, and sleeping in destroy is disgusting
 		INVOKE_ASYNC(SSblackbox, TYPE_PROC_REF(/datum/controller/subsystem/blackbox, LogAhelp), T.id, "Disconnected", "Client disconnected", C.ckey)
 		T.initiator = null
-		SSplexora.aticket_connection(C.current_ticket) // monkestation edit: PLEXORA
+		SSplexora.aticket_connection(C.current_ticket)
 
 //Get a ticket given a ckey
 /datum/admin_help_tickets/proc/CKey2ActiveTicket(ckey)
@@ -213,7 +211,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	/// If any admins were online when the ticket was initialized
 	var/heard_by_no_admins = FALSE
 	/// The collection of interactions with this ticket. Use AddInteraction() or, preferably, admin_ticket_log()
-	// var/list/ticket_interactions // MONKESTATION - variable removed in favor of datum _interactions
+	var/list/_interactions = list()
 	/// Statclick holder for the ticket
 	var/obj/effect/statclick/ahelp/statclick
 	/// Static counter used for generating each ticket ID
@@ -222,8 +220,6 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/list/opening_responders
 	/// Whether this ahelp has sent a webhook or not, and what type
 	var/webhook_sent = WEBHOOK_NONE
-	/// List of player interactions
-	// var/list/player_interactions // MONKESTATION - variable removed in favor of datum _interactions
 	/// List of admin ckeys that are involved, like through responding
 	var/list/admins_involved = list()
 	/// Alist of (ckey:last_type_time) that are currently typing in this ticket, whether through an `input` or tgui. Entries older than 3 seconds are deleted
@@ -231,7 +227,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	/// Has the player replied to this ticket yet?
 	var/player_replied = FALSE
 	COOLDOWN_DECLARE(client_message_cooldown)
-
+	var/handling_admin_ckey
 
 /**
  * Call this on its own to create a ticket, don't manually assign current_ticket
@@ -264,19 +260,98 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	TimeoutVerb()
 
 	statclick = new(null, src)
-	// MONKESTATION START
-	// ticket_interactions = list()
-	// player_interactions = list()
-	// MONKESTATION END
 
 	if(is_bwoink)
 		message_admins("<font color='blue'>Ticket [TicketHref("#[id]")] created</font>")
-		SSplexora.aticket_new(src, msg_raw, is_bwoink, urgent, usr.ckey) // monkestation edit: PLEXORA
+		SSplexora.aticket_new(src, msg_raw, is_bwoink, urgent, usr.ckey)
 	else
-		SSplexora.aticket_new(src, msg_raw, is_bwoink, urgent) // monkestation edit: PLEXORA
+		SSplexora.aticket_new(src, msg_raw, is_bwoink, urgent)
 		MessageNoRecipient(msg_raw, urgent)
 		send_message_to_tgs(html_decode(msg), urgent)
 	GLOB.ahelp_tickets.active_tickets += src
+
+/datum/admin_help/proc/Claim(announce = FALSE)
+	if(!usr.client)
+		return FALSE
+	if(state != AHELP_ACTIVE)
+		to_chat(usr, span_notice("This ticket is not active!"))
+		return
+	if(handling_admin_ckey)
+		if(handling_admin_ckey == usr.ckey)
+			to_chat(usr, span_notice("This ticket is already yours."))
+			return FALSE
+		if(tgui_alert(usr, "This ticket has already been claimed by [handling_admin_ckey], are you sure you wish to continue?", "Confirm", list("Yes", "No")) != "Yes")
+			return FALSE
+
+	handling_admin_ckey = usr.ckey
+
+	var/msg = "[usr.ckey]/([usr]) has been assigned to [TicketHref("ticket #[id]")] as primary admin."
+	message_admins(msg)
+	log_admin_private(msg)
+	AddInteraction(msg)
+
+	if(announce && initiator)
+		to_chat(initiator,
+			type = MESSAGE_TYPE_ADMINPM,
+			html = span_notice("[key_name(usr, TRUE, FALSE)] has taken your ticket and will respond shortly."),
+			confidential = TRUE)
+
+/datum/admin_help/proc/Unclaim(announce = FALSE)
+	if(!usr.client)
+		return FALSE
+	if(state != AHELP_ACTIVE)
+		to_chat(usr, span_notice("This ticket is not active!"))
+		return
+	if(!handling_admin_ckey)
+		to_chat(usr, span_notice("This ticket is not claimed."))
+		return
+	var/msg = "[usr.ckey]/([usr]) has unclaimed [TicketHref("ticket #[id]")]"
+	if(handling_admin_ckey != usr.ckey)
+		if(tgui_alert(usr, "This ticket has already been claimed by [handling_admin_ckey], are you sure you wish to unclaim on their behalf?", "Confirm", list("Yes", "No")) != "Yes")
+			return FALSE
+		msg += " on behalf of [handling_admin_ckey]"
+	msg += "."
+
+	handling_admin_ckey = null
+
+	message_admins(msg)
+	log_admin_private(msg)
+	AddInteraction(msg)
+
+	if(announce && initiator)
+		to_chat(initiator,
+			type = MESSAGE_TYPE_ADMINPM,
+			html = span_notice("The claimant admin of your ticket has been revoked, a new admin will claim it shortly."),
+			confidential = TRUE)
+
+/datum/admin_help/Close(key_name = key_name_admin(usr), silent = FALSE)
+	if(!handling_admin_ckey)
+		Claim(FALSE)
+	. = ..()
+
+/datum/admin_help/Resolve(key_name = key_name_admin(usr), silent = FALSE)
+	if(!handling_admin_ckey)
+		Claim(FALSE)
+	. = ..()
+
+/datum/ticket_log
+	var/datum/admin_help/parent
+	var/gametime
+	var/user
+	var/text
+	var/player_text
+	var/for_admins
+
+/datum/ticket_log/New(datum/admin_help/parent, ckey, text, player_text, for_admins = FALSE)
+	src.gametime = gameTimestamp()
+	src.parent = parent
+	src.for_admins = for_admins
+	src.user = ckey ? ckey : get_fancy_key(usr)
+	src.text = text
+	if(player_text)
+		src.player_text = player_text
+	else if(!for_admins)
+		src.player_text = text
 
 /datum/admin_help/proc/format_embed_discord(message)
 	var/datum/discord_embed/embed = new()
@@ -382,21 +457,15 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	GLOB.ahelp_tickets.resolved_tickets -= src
 	return ..()
 
-// MONKESTATION START
+
 /datum/admin_help/proc/AddInteraction(message, player_message, for_admins = FALSE, ckey = null)
 	_interactions += new /datum/ticket_log(src, ckey, message, player_message, for_admins)
-// MONKESTATION END
+
 	if (!isnull(usr) && usr.ckey != initiator_ckey)
 		admins_involved |= usr.ckey
 		if(heard_by_no_admins)
 			heard_by_no_admins = FALSE
 			send2adminchat(initiator_ckey, "Ticket #[id]: Answered by [key_name(usr)]")
-
-	// MONKESTATION EDIT START - tgui tickets
-	// ticket_interactions += "[time_stamp()]: [formatted_message]"
-	// if (!isnull(player_message))
-	// 	player_interactions += "[time_stamp()]: [player_message]"
-	// MONKESTATION EDIT END
 
 //Removes the ahelp verb and returns it after 2 minutes
 /datum/admin_help/proc/TimeoutVerb()
@@ -448,7 +517,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		<b class='smaller'>[FullMonty(ref_src)]</b>",
 		"boxed_message red_box")
 
-	AddInteraction(msg) // Monkestation edit: datum ticket interactions
+	AddInteraction(msg)
 	log_admin_private("Ticket #[id]: [key_name(initiator)]: [msg]")
 
 	//send this msg to all admins
@@ -500,13 +569,13 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(initiator)
 		initiator.current_ticket = src
 
-	AddInteraction("Reopened by [key_name(usr)]", "Ticket reopened!") // Monkestation edit: datum ticket interactions
+	AddInteraction("Reopened by [key_name(usr)]", "Ticket reopened!")
 	var/msg = span_adminhelp("Ticket [TicketHref("#[id]")] reopened by [key_name_admin(usr)].")
 	message_admins(msg)
 	log_admin_private(msg)
 	SSblackbox.LogAhelp(id, "Reopened", "Reopened by [usr.key]", usr.ckey)
 	SSblackbox.record_feedback("tally", "ahelp_stats", 1, "reopened")
-	SSplexora.aticket_reopened(src, usr.ckey) // monkestation edit: PLEXORA
+	SSplexora.aticket_reopened(src, usr.ckey)
 	TicketPanel() //can only be done from here, so refresh it
 
 //private
@@ -528,7 +597,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	RemoveActive()
 	state = AHELP_CLOSED
 	GLOB.ahelp_tickets.ListInsert(src)
-	AddInteraction("Closed by [key_name(usr)]", "Ticket closed") // Monkestation edit: datum ticket interactions
+	AddInteraction("Closed by [key_name(usr)]", "Ticket closed")
 	if(!silent)
 		SSblackbox.record_feedback("tally", "ahelp_stats", 1, "closed")
 		var/msg = "Ticket [TicketHref("#[id]")] closed by [key_name]."
@@ -546,7 +615,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	addtimer(CALLBACK(initiator, TYPE_PROC_REF(/client, giveadminhelpverb)), 50)
 
-	AddInteraction("Resolved by [key_name(usr)].", "Ticket resolved.") // Monkestation edit: datum ticket interactions
+	AddInteraction("Resolved by [key_name(usr)].", "Ticket resolved.")
 	to_chat(initiator, span_adminhelp("Your ticket has been resolved by an admin. The Adminhelp verb will be returned to you shortly."), confidential = TRUE)
 
 	if(!silent)
@@ -574,7 +643,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/msg = "Ticket [TicketHref("#[id]")] rejected by [key_name]"
 	message_admins(msg)
 	log_admin_private(msg)
-	AddInteraction("Rejected by [key_name(usr)].", "Ticket rejected.") // MONKESTATION EDIT - tgui tickets
+	AddInteraction("Rejected by [key_name(usr)].", "Ticket rejected.")
 	SSblackbox.LogAhelp(id, "Rejected", "Rejected by [usr.key]", null, usr.ckey)
 
 	Close(silent = TRUE)
@@ -594,47 +663,13 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	msg = "Ticket [TicketHref("#[id]")] marked as IC by [key_name]"
 	message_admins(msg)
 	log_admin_private(msg)
-	AddInteraction("Marked as IC issue by [key_name(usr)]", "Marked as IC issue") // MONKESTATION EDIT - tgui tickets
+	AddInteraction("Marked as IC issue by [key_name(usr)]", "Marked as IC issue")
 	SSblackbox.LogAhelp(id, "IC Issue", "Marked as IC issue by [usr.key]", null,  usr.ckey)
 	Resolve(silent = TRUE)
 
 //Show the ticket panel
 /datum/admin_help/proc/TicketPanel()
-	// MONKESTATION EDIT START
 	ui_interact(usr)
-	/*
-	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Ticket #[id]</title></head>")
-	var/ref_src = "[REF(src)]"
-	dat += "<h4>Admin Help Ticket #[id]: [LinkedReplyName(ref_src)]</h4>"
-	dat += "<b>State: [ticket_status()]</b>"
-	dat += "[FOURSPACES][TicketHref("Refresh", ref_src)][FOURSPACES][TicketHref("Re-Title", ref_src, "retitle")]"
-	if(state != AHELP_ACTIVE)
-		dat += "[FOURSPACES][TicketHref("Reopen", ref_src, "reopen")]"
-	dat += "<br><br>Opened at: [gameTimestamp(wtime = opened_at)] (Approx [DisplayTimeText(world.time - opened_at)] ago)"
-	if(closed_at)
-		dat += "<br>Closed at: [gameTimestamp(wtime = closed_at)] (Approx [DisplayTimeText(world.time - closed_at)] ago)"
-	dat += "<br><br>"
-	if(initiator)
-		dat += "<b>Actions:</b> [FullMonty(ref_src)]<br>"
-	else
-		dat += "<b>DISCONNECTED</b>[FOURSPACES][ClosureLinks(ref_src)]<br>"
-	dat += "<br><b>Log:</b><br><br>"
-	for(var/I in ticket_interactions)
-		dat += "[I]<br>"
-
-	// Append any tickets also opened by this user if relevant
-	var/list/related_tickets = GLOB.ahelp_tickets.TicketsByCKey(initiator_ckey)
-	if (related_tickets.len > 1)
-		dat += "<br/><b>Other Tickets by User</b><br/>"
-		for (var/datum/admin_help/related_ticket in related_tickets)
-			if (related_ticket.id == id)
-				continue
-			dat += "[related_ticket.TicketHref("#[related_ticket.id]")] ([related_ticket.ticket_status()]): [related_ticket.name]<br/>"
-	dat += "</html>"
-
-	usr << browse(dat.Join(), "window=ahelp[id];size=750x480")
-	*/
-	// MONKESTATION EDIT END
 
 /**
  * Renders the current status of the ticket into a displayable string
@@ -705,35 +740,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			Resolve()
 
 /datum/admin_help/proc/player_ticket_panel()
-	//MONKESTATION EDIT
 	TicketPanel()
-	/*
-	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Player Ticket</title></head>")
-	dat += "<b>State: "
-	switch(state)
-		if(AHELP_ACTIVE)
-			dat += "<font color='red'>OPEN</font></b>"
-		if(AHELP_RESOLVED)
-			dat += "<font color='green'>RESOLVED</font></b>"
-		if(AHELP_CLOSED)
-			dat += "CLOSED</b>"
-		else
-			dat += "UNKNOWN</b>"
-	dat += "\n[FOURSPACES]<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];player_ticket_panel=1'>Refresh</A>"
-	dat += "<br><br>Opened at: [gameTimestamp("hh:mm:ss", opened_at)] (Approx [DisplayTimeText(world.time - opened_at)] ago)"
-	if(closed_at)
-		dat += "<br>Closed at: [gameTimestamp("hh:mm:ss", closed_at)] (Approx [DisplayTimeText(world.time - closed_at)] ago)"
-	dat += "<br><br>"
-	dat += "<br><b>Log:</b><br><br>"
-	for (var/interaction in player_interactions)
-		dat += "[interaction]<br>"
-
-	var/datum/browser/player_panel = new(usr, "ahelp[id]", 0, 620, 480)
-	player_panel.set_content(dat.Join())
-	player_panel.open()
-	*/
-	// MONKESTATION EDIT END
-
 
 //
 // TICKET STATCLICK
@@ -910,7 +917,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 /// is false if player_message is set, if player_message is not set and this is false, uses message
 /// log_in_blackbox: Whether or not this message with the blackbox system.
 /// If disabled, this message should be logged with a different proc call
-/proc/admin_ticket_log(what, message, player_message, for_admins = TRUE, log_in_blackbox = TRUE) // MONKESTATION EDIT - tgui tickets
+/proc/admin_ticket_log(what, message, player_message, for_admins = TRUE, log_in_blackbox = TRUE)
 	var/client/mob_client
 	var/mob/Mob = what
 	if(istype(Mob))
@@ -918,14 +925,14 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 	else
 		mob_client = what
 	if(istype(mob_client) && mob_client.current_ticket)
-		mob_client.current_ticket.AddInteraction(message, player_message, for_admins)  // MONKESTATION EDIT - tgui tickets
+		mob_client.current_ticket.AddInteraction(message, player_message, for_admins)
 		if(log_in_blackbox)
 			SSblackbox.LogAhelp(mob_client.current_ticket.id, "Interaction", message, mob_client.ckey, usr.ckey)
 		return mob_client.current_ticket
 	if(istext(what)) //ckey
 		var/datum/admin_help/active_admin_help = GLOB.ahelp_tickets.CKey2ActiveTicket(what)
 		if(active_admin_help)
-			active_admin_help.AddInteraction(message, player_message, for_admins) // MONKESTATION EDIT - tgui tickets
+			active_admin_help.AddInteraction(message, player_message, for_admins)
 			if(log_in_blackbox)
 				SSblackbox.LogAhelp(active_admin_help.id, "Interaction", message, what, usr.ckey)
 			return active_admin_help

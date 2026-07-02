@@ -11,6 +11,10 @@
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 62500 //a little over 5 cm thick , 62500 for 1 m by 2.5 m by 0.25 m iron wall. also indicates the temperature at wich the wall will melt (currently only able to melt with H/E pipes)
+	max_integrity = 300
+	damage_deflection = 22 // big chunk of solid metal
+	uses_integrity = TRUE
+	armor_type = /datum/armor/wall
 
 	baseturfs = /turf/open/floor/plating
 
@@ -18,9 +22,11 @@
 
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
-	canSmoothWith = SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
+	smooth_adapters = SMOOTH_ADAPTERS_WALLS_FOR_WALLS
 
 	rcd_memory = RCD_MEMORY_WALL
+
 	///bool on whether this wall can be chiselled into
 	var/can_engrave = TRUE
 	///lower numbers are harder. Used to determine the probability of a hulk smashing through.
@@ -35,10 +41,10 @@
 
 	var/list/dent_decals
 
-	max_integrity = 300
-	damage_deflection = 22 // big chunk of solid metal
-	uses_integrity = TRUE
-	armor_type = /datum/armor/wall
+	/// Wall trim icon file
+	var/wall_trim = 'icons/turf/walls/wall_trim.dmi'
+	/// Trim color
+	var/trim_color = null
 
 /datum/armor/wall
 	melee = 60
@@ -49,59 +55,6 @@
 	bio = 0
 	acid = 50
 	wound = 0
-
-/turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
-	if(dropping != user || !iscarbon(dropping))
-		return
-	var/mob/living/carbon/carbon_mob = dropping
-	if(carbon_mob.is_leaning == TRUE)
-		return
-	if(carbon_mob.pulledby)
-		return
-	if(!carbon_mob.density)
-		return
-	var/turf/checked_turf = get_step(carbon_mob, turn(carbon_mob.dir, 180))
-	if(checked_turf == src)
-		carbon_mob.start_leaning(src)
-
-/mob/living/carbon/proc/start_leaning(obj/wall)
-
-	switch(dir)
-		if(SOUTH)
-			pixel_y += LEANING_OFFSET
-		if(NORTH)
-			pixel_y += -LEANING_OFFSET
-		if(WEST)
-			pixel_x += LEANING_OFFSET
-		if(EAST)
-			pixel_x += -LEANING_OFFSET
-
-	ADD_TRAIT(src, TRAIT_UNDENSE, LEANING_TRAIT)
-	ADD_TRAIT(src, TRAIT_EXPANDED_FOV, LEANING_TRAIT)
-	ADD_TRAIT(src, TRAIT_NO_LEG_AID, LEANING_TRAIT)
-	visible_message(span_notice("[src] leans against \the [wall]!"), \
-						span_notice("You lean against \the [wall]!"))
-	RegisterSignals(src, list(COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_GET_PULLED, COMSIG_MOVABLE_TELEPORTING, COMSIG_LIVING_RESIST), PROC_REF(stop_leaning))
-	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(stop_leaning_dir))
-	update_fov()
-	is_leaning = TRUE
-	update_limbless_locomotion()
-
-/mob/living/carbon/proc/stop_leaning_dir(datum/source, old_dir, new_dir)
-	SIGNAL_HANDLER
-	if(new_dir != old_dir)
-		stop_leaning()
-
-/mob/living/carbon/proc/stop_leaning()
-	SIGNAL_HANDLER
-	UnregisterSignal(src, list(COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_GET_PULLED, COMSIG_MOVABLE_TELEPORTING, COMSIG_ATOM_DIR_CHANGE, COMSIG_LIVING_RESIST))
-	is_leaning = FALSE
-	pixel_y = base_pixel_y + body_position_pixel_x_offset
-	pixel_x = base_pixel_y + body_position_pixel_y_offset
-	REMOVE_TRAIT(src, TRAIT_UNDENSE, LEANING_TRAIT)
-	REMOVE_TRAIT(src, TRAIT_EXPANDED_FOV, LEANING_TRAIT)
-	REMOVE_TRAIT(src, TRAIT_NO_LEG_AID, LEANING_TRAIT)
-	update_fov()
 
 /turf/closed/wall/Initialize(mapload)
 	. = ..()
@@ -160,48 +113,19 @@
 		playsound(src, 'sound/effects/meteorimpact.ogg', 50, TRUE) //Otherwise there's no sound for hitting the wall, since it's just dismantled
 	dismantle_wall(TRUE, TRUE)
 
-/turf/closed/wall/proc/deconstruction_hints(mob/user)
-	return span_notice("The outer plating is <b>welded</b> firmly in place.")
-
-/turf/closed/wall/attack_tk()
-	return
-
-/turf/closed/wall/proc/dismantle_wall(devastated = FALSE, explode = FALSE)
-	if(devastated)
-		devastate_wall()
-	else
-		playsound(src, 'sound/items/welder.ogg', 100, TRUE)
-		var/newgirder = break_wall()
-		if(newgirder) //maybe we don't /want/ a girder!
-			transfer_fingerprints_to(newgirder)
-
-	for(var/obj/O in src.contents) //Eject contents!
-		if(istype(O, /obj/structure/sign/poster))
-			var/obj/structure/sign/poster/P = O
-			INVOKE_ASYNC(P, TYPE_PROC_REF(/obj/structure/sign/poster, roll_and_drop), src)
-	if(decon_type)
-		ChangeTurf(decon_type, flags = CHANGETURF_INHERIT_AIR)
-	else
-		ScrapeAway()
-	QUEUE_SMOOTH_NEIGHBORS(src)
-
-/turf/closed/wall/proc/break_wall()
-	var/area/space/shipbreak/A = get_area(src)
-	if(istype(A)) //if we are actually in the shipbreaking zone...
-		new scrap_type(src, sheet_amount)
-	else
-		new sheet_type(src, sheet_amount)
-	if(girder_type)
-		return new girder_type(src)
-
-/turf/closed/wall/proc/devastate_wall()
-	var/area/space/shipbreak/A = get_area(src)
-	if(istype(A))
-		new scrap_type(src, sheet_amount)
-	else
-		new sheet_type(src, sheet_amount)
-	if(girder_type)
-		new /obj/item/stack/sheet/iron(src)
+/turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
+	if(dropping != user || !iscarbon(dropping))
+		return
+	var/mob/living/carbon/carbon_mob = dropping
+	if(carbon_mob.is_leaning == TRUE)
+		return
+	if(carbon_mob.pulledby)
+		return
+	if(!carbon_mob.density)
+		return
+	var/turf/checked_turf = get_step(carbon_mob, turn(carbon_mob.dir, 180))
+	if(checked_turf == src)
+		carbon_mob.start_leaning(src)
 
 /turf/closed/wall/ex_act(severity, target)
 	if(target == src)
@@ -245,6 +169,88 @@
 	to_chat(user, span_notice("You punch the wall."))
 	hulk_recoil(arm, user)
 	return TRUE
+
+/mob/living/carbon/proc/start_leaning(obj/wall)
+
+	switch(dir)
+		if(SOUTH)
+			pixel_y += LEANING_OFFSET
+		if(NORTH)
+			pixel_y += -LEANING_OFFSET
+		if(WEST)
+			pixel_x += LEANING_OFFSET
+		if(EAST)
+			pixel_x += -LEANING_OFFSET
+
+	ADD_TRAIT(src, TRAIT_UNDENSE, LEANING_TRAIT)
+	ADD_TRAIT(src, TRAIT_EXPANDED_FOV, LEANING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NO_LEG_AID, LEANING_TRAIT)
+	visible_message(span_notice("[src] leans against \the [wall]!"), \
+						span_notice("You lean against \the [wall]!"))
+	RegisterSignals(src, list(COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_GET_PULLED, COMSIG_MOVABLE_TELEPORTING, COMSIG_LIVING_RESIST), PROC_REF(stop_leaning))
+	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(stop_leaning_dir))
+	update_fov()
+	is_leaning = TRUE
+	update_limbless_locomotion()
+
+/mob/living/carbon/proc/stop_leaning_dir(datum/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+	if(new_dir != old_dir)
+		stop_leaning()
+
+/mob/living/carbon/proc/stop_leaning()
+	SIGNAL_HANDLER
+	UnregisterSignal(src, list(COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_GET_PULLED, COMSIG_MOVABLE_TELEPORTING, COMSIG_ATOM_DIR_CHANGE, COMSIG_LIVING_RESIST))
+	is_leaning = FALSE
+	pixel_y = base_pixel_y + body_position_pixel_x_offset
+	pixel_x = base_pixel_y + body_position_pixel_y_offset
+	REMOVE_TRAIT(src, TRAIT_UNDENSE, LEANING_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_EXPANDED_FOV, LEANING_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NO_LEG_AID, LEANING_TRAIT)
+	update_fov()
+
+/turf/closed/wall/proc/deconstruction_hints(mob/user)
+	return span_notice("The outer plating is <b>welded</b> firmly in place.")
+
+/turf/closed/wall/attack_tk()
+	return
+
+/turf/closed/wall/proc/dismantle_wall(devastated = FALSE, explode = FALSE)
+	if(devastated)
+		devastate_wall()
+	else
+		playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+		var/newgirder = break_wall()
+		if(newgirder) //maybe we don't /want/ a girder!
+			transfer_fingerprints_to(newgirder)
+
+	for(var/obj/O in src.contents) //Eject contents!
+		if(istype(O, /obj/structure/sign/poster))
+			var/obj/structure/sign/poster/P = O
+			INVOKE_ASYNC(P, TYPE_PROC_REF(/obj/structure/sign/poster, roll_and_drop), src)
+	if(decon_type)
+		ChangeTurf(decon_type, flags = CHANGETURF_INHERIT_AIR)
+	else
+		ScrapeAway()
+	QUEUE_SMOOTH_NEIGHBORS(src)
+
+/turf/closed/wall/proc/break_wall()
+	var/area/space/shipbreak/A = get_area(src)
+	if(istype(A)) //if we are actually in the shipbreaking zone...
+		new scrap_type(src, sheet_amount)
+	else
+		new sheet_type(src, sheet_amount)
+	if(girder_type)
+		return new girder_type(src)
+
+/turf/closed/wall/proc/devastate_wall()
+	var/area/space/shipbreak/A = get_area(src)
+	if(istype(A))
+		new scrap_type(src, sheet_amount)
+	else
+		new sheet_type(src, sheet_amount)
+	if(girder_type)
+		new /obj/item/stack/sheet/iron(src)
 
 /**
  *Deals damage back to the hulk's arm.
@@ -306,8 +312,8 @@
 				if(W.use_tool(src, user, 0, volume=100))
 					if(iswallturf(src))
 						to_chat(user, span_notice("You fix some dents on the wall."))
-						cut_overlay(dent_decals)
-						dent_decals.Cut()
+						dent_decals = null
+						update_appearance(UPDATE_OVERLAYS)
 			else
 				to_chat(user, span_warning("[src] is intact!"))
 			return TRUE
@@ -413,13 +419,9 @@
 	decal.pixel_x = x
 	decal.pixel_y = y
 
-	if(LAZYLEN(dent_decals))
-		cut_overlay(dent_decals)
-		dent_decals += decal
-	else
-		dent_decals = list(decal)
+	LAZYADD(dent_decals, decal)
 
-	add_overlay(dent_decals)
+	update_appearance(UPDATE_OVERLAYS)
 
 /turf/closed/wall/rust_turf(magic = FALSE)
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
@@ -427,6 +429,26 @@
 		return TRUE
 
 	return ..()
+
+/turf/closed/wall/proc/change_trim_color(color)
+	trim_color = color
+	update_appearance(UPDATE_OVERLAYS)
+
+/turf/closed/wall/update_overlays()
+	. = ..()
+
+	if(length(dent_decals))
+		for(var/mutable_appearance/decal as anything in dent_decals)
+			. += decal
+
+	if(wall_trim)
+		var/mutable_appearance/trim = mutable_appearance(wall_trim, icon_state, layer + 0.01)
+		trim.color = trim_color
+		. += trim
+
+/turf/closed/wall/smooth_icon()
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
 
 /turf/closed/wall/metal_foam_base
 	girder_type = /obj/structure/foamedmetal

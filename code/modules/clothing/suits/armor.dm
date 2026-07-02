@@ -196,13 +196,16 @@
 	flags_inv = 0
 	strip_delay = 80
 
+/obj/item/clothing/suit/armor/hos/trenchcoat/pimpcoat
+	name = "pink armored trenchcoat"
+	desc = "For when an armored trenchcoat isn't pimped out enough."
+	icon_state = "pimpcoat"
+
 /obj/item/clothing/suit/armor/hos/trenchcoat/winter
 	name = "head of security's winter trenchcoat"
 	desc = "A trenchcoat enhanced with a special lightweight kevlar, padded with wool on the collar and inside. You feel strangely lonely wearing this coat."
 	icon_state = "hoswinter"
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-
-///obj/item/clothing/suit/armor/hos/trenchcoat/pimpcoat in monkestation\code\modules\aesthetics\items\clothing.dm
 
 /obj/item/clothing/suit/armor/hos/hos_formal
 	name = "\improper Head of Security's parade jacket"

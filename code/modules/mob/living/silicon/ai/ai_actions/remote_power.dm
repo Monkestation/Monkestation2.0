@@ -8,7 +8,7 @@
 /datum/action/innate/ai/ranged/power_apc
 	name = "Remotely Power APC"
 	desc = "Use to remotely power an APC."
-	button_icon = 'monkestation/code/modules/aesthetics/icons/apc.dmi'
+	button_icon = 'icons/obj/apc.dmi'
 	button_icon_state = "apcewires"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
 	enable_text = span_notice("You prepare to power any APC you see.")

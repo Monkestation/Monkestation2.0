@@ -406,7 +406,7 @@
 
 /obj/item/clothing/mask/monster_preview_mask
 	name = "Monster Preview Mask"
-	worn_icon = 'icons/mob/mask.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
 	worn_icon_state = "monoclerabbit"
 
 /datum/antagonist/monsterhunter/roundend_report()

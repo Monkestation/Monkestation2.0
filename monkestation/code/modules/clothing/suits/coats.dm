@@ -158,7 +158,7 @@
 /obj/item/clothing/suit/armor/secduster
 	name = "security duster"
 	desc = "A standard-issue armored duster that keeps a security officer protected and fashionable."
-	worn_icon = 'icons/mob/suit.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "cowboy_sec_default"
 	var/obj/item/clothing/mask/breath/sec_bandana/mask

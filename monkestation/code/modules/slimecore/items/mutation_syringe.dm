@@ -2,7 +2,7 @@
 	name = "slime mutation syringe"
 	desc = "Infuses a mutation into a slime."
 
-	icon = 'monkestation/code/modules/slimecore/icons/slimes.dmi'
+	icon = 'icons/obj/xenobiology/mutation_syringe.dmi'
 	icon_state = "mutation_syringe"
 
 	w_class = WEIGHT_CLASS_SMALL

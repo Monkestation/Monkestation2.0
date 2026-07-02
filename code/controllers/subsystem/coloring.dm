@@ -22,15 +22,15 @@ SUBSYSTEM_DEF(station_coloring)
 
 /datum/controller/subsystem/station_coloring/Initialize()
 	var/list/color_palette = list(
-		pick(red)          = typesof(/area/station/security),
-		pick(purple)       = typesof(/area/station/science),
-		pick(green)        = list(/area/station/medical/virology) + typesof(/area/station/service) - /area/station/service/bar,
-		pick(blue)         = typesof(/area/station/medical),
-		pick(bar)          = list(/area/station/service/bar),
-		pick(brown)		   = typesof(/area/station/cargo) + typesof(/area/mine),
-		COLOR_WHITE        = typesof(/area/shuttle),
-		COLOR_WHITE        = typesof(/area/centcom),
-		pick(orange)	   = typesof(/area/station/engineering),
+		pick(red) = typesof(/area/station/security),
+		pick(purple) = typesof(/area/station/science),
+		pick(green) = list(/area/station/medical/virology) + typesof(/area/station/service) - /area/station/service/bar,
+		pick(blue) = typesof(/area/station/medical),
+		pick(bar) = list(/area/station/service/bar),
+		pick(brown) = typesof(/area/station/cargo) + typesof(/area/mine),
+		COLOR_WHITE = typesof(/area/shuttle),
+		COLOR_WHITE = typesof(/area/centcom),
+		pick(orange) = typesof(/area/station/engineering),
 	)
 
 	for(var/color in color_palette)
@@ -55,15 +55,15 @@ SUBSYSTEM_DEF(station_coloring)
 
 /datum/controller/subsystem/station_coloring/proc/recolor_areas()
 	var/list/color_palette = list(
-		pick(red)          = typesof(/area/station/security),
-		pick(purple)       = typesof(/area/station/science),
-		pick(green)        = list(/area/station/medical/virology) + typesof(/area/station/service) - /area/station/service/bar,
-		pick(blue)         = typesof(/area/station/medical),
-		pick(bar)          = list(/area/station/service/bar),
-		pick(brown)		   = typesof(/area/station/cargo) + typesof(/area/mine),
-		COLOR_WHITE        = typesof(/area/shuttle),
-		COLOR_WHITE        = typesof(/area/centcom),
-		pick(orange)	   = typesof(/area/station/engineering),
+		pick(red) = typesof(/area/station/security),
+		pick(purple) = typesof(/area/station/science),
+		pick(green) = list(/area/station/medical/virology) + typesof(/area/station/service) - /area/station/service/bar,
+		pick(blue) = typesof(/area/station/medical),
+		pick(bar) = list(/area/station/service/bar),
+		pick(brown) = typesof(/area/station/cargo) + typesof(/area/mine),
+		COLOR_WHITE = typesof(/area/shuttle),
+		COLOR_WHITE = typesof(/area/centcom),
+		pick(orange) = typesof(/area/station/engineering),
 	)
 
 	for(var/color in color_palette)

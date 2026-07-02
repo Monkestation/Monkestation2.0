@@ -23452,9 +23452,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 5
 	},
-/turf/closed/wall/mineral/titanium{
-	paint_color = "#5f6361"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/centcom/central_command_areas/admin)
 "htD" = (
 /obj/effect/turf_decal/sand/plating,
@@ -24064,9 +24062,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
 	},
-/turf/closed/wall/mineral/titanium{
-	paint_color = "#5f6361"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/centcom/central_command_areas/admin)
 "ijH" = (
 /obj/effect/turf_decal/siding/wood{
@@ -29378,9 +29374,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 10
 	},
-/turf/closed/wall/mineral/titanium{
-	paint_color = "#5f6361"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/centcom/central_command_areas/admin)
 "rlq" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -32585,9 +32579,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
 	},
-/turf/closed/wall/mineral/titanium{
-	paint_color = "#5f6361"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/centcom/central_command_areas/admin)
 "wzU" = (
 /obj/structure/lattice/catwalk,

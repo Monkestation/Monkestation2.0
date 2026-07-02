@@ -124,3 +124,23 @@ GLOBAL_LIST_INIT(sheets_to_window_types, zebra_typecacheof(list(
 
 /obj/structure/window_sill/proc/window_build_check(obj/item/stack/stack, min_amt)
 	return !QDELETED(src) && !QDELETED(stack) && stack.get_amount() >= min_amt
+
+/obj/structure/grille/window_sill
+	name = "window grille"
+	desc = "A flimsy framework of iron rods. This one fits a window!"
+	icon = 'icons/obj/structures/window/grille.dmi'
+	icon_state = "grille-0"
+	layer = ABOVE_OBJ_LAYER - 0.01
+	base_icon_state = "grille"
+	canSmoothWith = SMOOTH_GROUP_GRILLE + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WALLS
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_GRILLE
+
+/obj/structure/grille/window_sill/atom_break()
+	. = ..()
+	qdel(src)
+
+/obj/structure/grille/update_overlays(updates=ALL)
+	. = ..()
+	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
+		QUEUE_SMOOTH(src)
