@@ -67,7 +67,7 @@
 		to_chat(user, span_notice("This device doesn't seem to work for non-cyborgs."))
 		return
 	var/mob/living/silicon/robot/cyborg_user = user
-	if(!cyborg_user.cell?.charge <= ACTIVATION_COST)
+	if(!cyborg_user.cell || cyborg_user.cell.charge <= ACTIVATION_COST)
 		to_chat(cyborg_user, span_warning("You need at least [display_energy(ACTIVATION_COST)] charge in your cell to use [src]!"))
 		return
 	if(!isturf(cyborg_user.loc))
