@@ -30,7 +30,7 @@
 	 *
 	 * Do not directly set this outside of Initialize! Use [/proc/apply_skin] instead!
 	 */
-	var/datum/robot_skin/current_skin = /datum/robot_skin/standard/default
+	var/datum/robot_skin/skin = /datum/robot_skin/standard/default
 	/**
 	 * The storage item that holds all of our model's items. Will be created upon initialization.
 	 *
@@ -177,7 +177,7 @@
 	icon_state = "robot"
 
 /mob/living/silicon/robot/model/Initialize(mapload)
-	current_skin = model.default_skin
+	skin = model.default_skin
 	return ..()
 
 /mob/living/silicon/robot/model/cargo

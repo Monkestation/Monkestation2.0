@@ -49,7 +49,6 @@
 	if(should_immobilize)
 		cyborg_target.SetLockdown(TRUE)
 		cyborg_target.set_anchored(TRUE)
-	INVOKE_ASYNC(src, PROC_REF(play_transformation_sounds), cyborg_target)
 	INVOKE_ASYNC(src, PROC_REF(end_transformation_animation), cyborg_target, should_immobilize, transformation_duration) // This works. Timers don't work. Why? I don't know.
 	return TRUE
 

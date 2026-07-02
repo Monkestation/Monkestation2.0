@@ -6,6 +6,7 @@
 	icon_state = "miner"
 	icon_state_light = "miner"
 	icon_state_transform = "miner_transform"
+	transformation_duration = 2.9 SECONDS
 	hat_offset = 0
 	badge_offset = -2
 
@@ -14,6 +15,7 @@
 	icon_state = "minerOLD"
 	icon_state_light = "minerOLD"
 	icon_state_transform = "minerOLD_transform"
+	transformation_duration = 2.9 SECONDS
 	hat_offset = 0
 	badge_offset = -2
 

@@ -84,7 +84,7 @@
 
 	internal_inventory = new internal_inventory(src) // Since the model's creation will immediately deposit items into our inventory, the inventory must be created first.
 	apply_model(model, FALSE)
-	apply_skin(current_skin)
+	apply_skin(skin, FALSE, FALSE)
 
 	var/static/list/alert_areas
 	if(isnull(alert_areas))
@@ -1010,11 +1010,11 @@
 	for(var/obj/item/borg/upgrade/upgrade_item in upgrades)
 		upgrade_item.forceMove(get_turf(src))
 
-	REMOVE_TRAITS_IN(src, MODEL_TRAIT)
+	REMOVE_TRAITS_IN(src, CYBORG_MODEL_TRAIT)
 	if(!ispath(model))
 		qdel(model)
 	model = new new_robot_model(src)
-	add_traits(model.traits, MODEL_TRAIT)
+	add_traits(model.traits, CYBORG_MODEL_TRAIT)
 
 	designation = model.name
 	if(hands)
@@ -1035,7 +1035,7 @@
 	INVOKE_ASYNC(src, PROC_REF(updatename))
 
 /// Applies a skin to the cyborg.
-/mob/living/silicon/robot/proc/apply_skin(datum/robot_skin/new_skin, perform_animations = TRUE, locks_during_animation = TRUE)
+/mob/living/silicon/robot/proc/apply_skin(datum/robot_skin/new_skin, perform_animation = TRUE, lock_animation = TRUE)
 	REMOVE_TRAITS_IN(src, CYBORG_SKIN_TRAIT)
 	if(ispath(new_skin))
 		new_skin = new new_skin()
@@ -1057,6 +1057,6 @@
 		if(HAS_TRAIT(removed_badge, TRAIT_NODROP))
 			QDEL_NULL(removed_badge)
 	if(skin.traits)
-		add_traits(current_skin.traits, CYBORG_SKIN_TRAIT)
-	if(!perform_animation || !skin.do_transformation_animation(src, locks_animation))
+		add_traits(skin.traits, CYBORG_SKIN_TRAIT)
+	if(!perform_animation || !skin.do_transformation_animation(src, lock_animation))
 		update_icons()

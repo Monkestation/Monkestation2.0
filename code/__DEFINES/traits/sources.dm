@@ -279,9 +279,13 @@
 */
 #define NO_TONGUE_TRAIT "no_tongue_trait"
 
-/// Trait granted by [/mob/living/silicon/robot]
+/// Trait granted by [/mob/living/silicon/robot].
 /// Traits applied to a silicon mob by their model.
-#define MODEL_TRAIT "model_trait"
+#define CYBORG_MODEL_TRAIT "model_trait"
+
+/// Trait granted by [/mob/living/silicon/robot].
+/// Traits applied to a silicon mob by their skin.
+#define CYBORG_SKIN_TRAIT "cyborg_skin_trait"
 
 /// Trait granted by [mob/living/silicon/ai]
 /// Applied when the ai anchors itself

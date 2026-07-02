@@ -7,6 +7,7 @@
 	icon_state = "cargoborg"
 	icon_state_light = "cargoborg"
 	icon_state_transform = "cargoborg_transform"
+	transformation_duration = 4.2 SECONDS
 	hat_offset = 0
 	badge_offset = 0
 
@@ -15,6 +16,7 @@
 	icon_state = "zoomba_cargo"
 	icon_state_light = "zoomba_cargo"
 	icon_state_transform = "zoomba_cargo_transform"
+	transformation_duration = 4.4 SECONDS
 	hat_offset = 3
 	badge_offset = -9
 
