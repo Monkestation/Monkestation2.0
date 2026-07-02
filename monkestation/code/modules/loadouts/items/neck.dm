@@ -145,6 +145,11 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 	name = "Colorable Bowtie Collar"
 	item_path = /obj/item/clothing/neck/tie/bunnytie/tied
 
+/datum/store_item/neck/tie/bunnytie/captain
+	name = "Captain's Bowtie Collar"
+	item_path = /obj/item/clothing/neck/tie/bunnytie/captain
+	restricted_roles = list(JOB_CAPTAIN)
+
 /datum/loadout_item/neck/straw_coat
 	name = "Straw Coat"
 	item_path = /obj/item/clothing/neck/straw_coat
