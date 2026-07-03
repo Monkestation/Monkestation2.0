@@ -1327,16 +1327,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/synth_eyes
-	name = "Optical Sensors"
-	desc = "A very basic set of optical sensors, only helping serve against protecting vision from bright lights."
-	id = "synth_eyes"
-	build_path = /obj/item/organ/internal/eyes/synth
-	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC // alongside welding eyes due to being welding proof
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
-
 /datum/design/synth_tongue
 	name = "Synthetic Tongue"
 	desc = "A fully-functional synthetic tongue, encased in soft silicone. Features include high-resolution vocals and taste receptors."
