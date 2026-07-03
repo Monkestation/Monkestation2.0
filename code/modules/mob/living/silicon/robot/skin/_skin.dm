@@ -13,7 +13,7 @@
 	var/icon_state_light = "robot"
 	/// The icon state of the sprite's transform sequence.
 	var/icon_state_transform = null
-	/// The amount of deciseconds it takes for the icon state that is transformation animation to complete.
+	/// The amount of deciseconds to lockdown whoever being transformed; this is usually the time it takes for icon_state_transform to finish.
 	var/transformation_duration = 3 SECONDS
 	/// The icon of the chat bubble.
 	var/bubble_icon = "robot"
