@@ -1,5 +1,0 @@
-author: "SirNightKnight"
-delete-after: True
-changes:
-  - rscadd: "added dance machines as a 5k contraband order in cargo."
-  - bugfix: "updated dance machine and rave visor code to work with the newer jukebox system,"
