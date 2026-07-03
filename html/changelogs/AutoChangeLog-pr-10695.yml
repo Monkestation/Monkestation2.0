@@ -1,6 +1,0 @@
-author: "TheColorCyan"
-delete-after: True
-changes:
-  - rscadd: "Added slime compressor, way to make crossbreed extracts using slimes themselves"
-  - rscdel: "Slimes no longer make ooze"
-  - rscdel: "Equipment related to ooze (ooze suckers, slime grinders. ect. ) are removed"
