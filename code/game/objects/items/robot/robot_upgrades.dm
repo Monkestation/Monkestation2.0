@@ -445,7 +445,7 @@
 	desc = "An upgrade to the Medical model, installing a surgical databank that can record available surgeries and gives instructions on how to perform surgical procedures."
 	icon_state = "module_medical"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/medical, /datum/robot_model/syndicate_medical)
+	model_type = list(/datum/robot_model/medical, /datum/robot_model/syndicate/medical)
 	model_flags = BORG_MODEL_MEDICAL
 	/// Action that looks for nearby objects to load new surgeries from.
 	var/datum/action/database_scanner
@@ -596,7 +596,7 @@
 	desc = "A bluespace rapid part exchange device for the engineering cyborg."
 	icon_state = "module_engineer"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/engineering, /datum/robot_model/syndicate_saboteur, /datum/robot_model/science)
+	model_type = list(/datum/robot_model/engineering, /datum/robot_model/syndicate/saboteur, /datum/robot_model/science)
 	model_flags = BORG_MODEL_ENGINEERING
 
 /obj/item/borg/upgrade/bs_rped/action(mob/living/silicon/robot/borg, user = usr)
@@ -645,7 +645,7 @@
 	desc = "A crew pinpointer module for the medical cyborg. Permits remote access to the crew monitor."
 	icon_state = "module_medical"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/medical, /datum/robot_model/syndicate_medical)
+	model_type = list(/datum/robot_model/medical, /datum/robot_model/syndicate/medical)
 	model_flags = BORG_MODEL_MEDICAL
 	items_to_add = list(/obj/item/pinpointer/crew)
 	var/datum/action/crew_monitor
@@ -701,7 +701,7 @@
 	desc = "A supplementary apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles."
 	icon_state = "module_engineer"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/engineering, /datum/robot_model/syndicate_saboteur)
+	model_type = list(/datum/robot_model/engineering, /datum/robot_model/syndicate/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
 	items_to_add = list(/obj/item/borg/apparatus/sheet_manipulator/extra)
 
@@ -719,7 +719,7 @@
 	desc = "An upgrade that improves the standard built-in gas analyzer's range."
 	icon_state = "module_engineer"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/engineering, /datum/robot_model/syndicate_saboteur) // Engineering-exclusive. Do not give this to science cyborgs.
+	model_type = list(/datum/robot_model/engineering, /datum/robot_model/syndicate/saboteur) // Engineering-exclusive. Do not give this to science cyborgs.
 	model_flags = BORG_MODEL_ENGINEERING
 
 /obj/item/borg/upgrade/ranged_analyzer/action(mob/living/silicon/robot/borg, user = usr)
@@ -901,7 +901,7 @@
 	desc = "An updated sensor and driver kit for medical cyborgs. Allowing the cyborg unit to perform more in-depth analysis of patients."
 	icon_state = "module_medical"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/medical, /datum/robot_model/syndicate_medical) // The fact that syndicate medical doesn't get advanced stock suprises me just as much as you.
+	model_type = list(/datum/robot_model/medical, /datum/robot_model/syndicate/medical) // The fact that syndicate medical doesn't get advanced stock surprises me just as much as you.
 	model_flags = BORG_MODEL_MEDICAL
 
 /obj/item/borg/upgrade/adv_healthanalyzer/action(mob/living/silicon/robot/borg, user = usr)
@@ -923,7 +923,7 @@
 	desc = "An upgrade allowing the medical module to assist a patient with breathing."
 	icon_state = "module_medical"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/medical, /datum/robot_model/syndicate_medical)
+	model_type = list(/datum/robot_model/medical, /datum/robot_model/syndicate/medical)
 	model_flags = BORG_MODEL_MEDICAL
 	items_to_add = list(/obj/item/breathing_bag)
 
@@ -933,7 +933,7 @@
 		surgical omnitool, to be on par with advanced surgical tools, allowing for faster surgery."
 	icon_state = "module_medical"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/medical, /datum/robot_model/syndicate_medical)
+	model_type = list(/datum/robot_model/medical, /datum/robot_model/syndicate/medical)
 	model_flags = BORG_MODEL_MEDICAL
 
 /obj/item/borg/upgrade/surgery_omnitool/action(mob/living/silicon/robot/borg, user = usr)

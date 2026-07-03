@@ -278,7 +278,7 @@
 	to_chat(src, playstyle_string)
 
 /mob/living/silicon/robot/model/syndicate/medical
-	model = /datum/robot_model/syndicate_medical
+	model = /datum/robot_model/syndicate/medical
 	icon_state = "synd_medical"
 	playstyle_string = "<span class='big bold'>You are a Syndicate medical cyborg!</span><br>\
 		<b>You are armed with powerful medical tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
@@ -288,7 +288,7 @@
 		<i>Help the operatives secure the disk at all costs!</i></b>"
 
 /mob/living/silicon/robot/model/syndicate/saboteur
-	model = /datum/robot_model/syndicate_saboteur
+	model = /datum/robot_model/syndicate/saboteur
 	icon_state = "synd_engi"
 	playstyle_string = "<span class='big bold'>You are a Syndicate saboteur cyborg!</span><br>\
 		<b>You are armed with robust engineering tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
@@ -299,7 +299,7 @@
 		<i>Help the operatives secure the disk at all costs!</i></b>"
 
 /mob/living/silicon/robot/model/syndicate/saboteur/operative
-	model = /datum/robot_model/syndicate_saboteur/operative
+	model = /datum/robot_model/syndicate/saboteur/operative
 	playstyle_string = "<span class='big bold'>You are a Syndicate saboteur cyborg!</span><br>\
 		<b>You are armed with robust engineering tools to aid you in your mission: help the operatives secure the golden eye authentication disks. \
 		Your destination tagger will allow you to stealthily traverse the disposal network across the station \

@@ -1,4 +1,4 @@
-/datum/robot_model/syndicate_saboteur
+/datum/robot_model/syndicate/saboteur
 	name = "Syndicate Saboteur"
 	hud_icon_state = "malf"
 	default_skin = /datum/robot_skin/syndicate_saboteur/default
@@ -28,21 +28,15 @@
 	)
 	traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY, TRAIT_KNOW_ENGI_WIRES, TRAIT_KNOW_ROBO_WIRES, TRAIT_CAN_CLIMB_DISPOSALS)
 
-/datum/robot_model/syndicate_saboteur/New(mob/living/silicon/robot/new_cyborg_owner)
+/datum/robot_model/syndicate/saboteur/New(mob/living/silicon/robot/new_cyborg_owner)
 	. = ..()
 	if(!cyborg_owner)
 		return
-	cyborg_owner.faction -= FACTION_SILICON
 	var/datum/action/cooldown/borg_sight_vision/thermal/sight_vision_thermal = new(cyborg_owner)
 	sight_vision_thermal.Grant(cyborg_owner)
 	sight_vision_ref = WEAKREF(sight_vision_thermal)
 
-/datum/robot_model/syndicate_saboteur/Destroy()
-	if(cyborg_owner)
-		cyborg_owner.faction |= FACTION_SILICON
-	return ..()
-
-/datum/robot_model/syndicate_saboteur/operative
+/datum/robot_model/syndicate/saboteur/operative
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/construction/rcd/borg/syndicate,

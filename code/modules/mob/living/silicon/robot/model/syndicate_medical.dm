@@ -1,4 +1,4 @@
-/datum/robot_model/syndicate_medical
+/datum/robot_model/syndicate/medical
 	name = "Syndicate Medical"
 	hud_icon_state = "malf"
 	default_skin = /datum/robot_skin/syndicate_medical/default
@@ -20,15 +20,3 @@
 		/obj/item/borg/apparatus/organ_storage
 	)
 	traits = list(TRAIT_PUSHIMMUNE)
-
-/datum/robot_model/syndicate_medical/New(mob/living/silicon/robot/new_cyborg_owner)
-	. = ..()
-	if(!cyborg_owner)
-		return
-	cyborg_owner.faction -= FACTION_SILICON
-
-/datum/robot_model/syndicate_medical/Destroy()
-	if(cyborg_owner)
-		cyborg_owner.faction |= FACTION_SILICON
-	return ..()
-
