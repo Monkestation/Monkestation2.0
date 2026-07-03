@@ -136,7 +136,6 @@
 /obj/item/gun/ballistic/shotgun/automatic
 	fire_sound = 'sound/weapons/gun/shotgun/shotgun_small.ogg'
 	load_sound = 'sound/weapons/gun/shotgun/shotgun_shell_insert.ogg'
-	fire_sound_volume = 150
 
 /obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user)
 	..()
