@@ -458,3 +458,22 @@
 	new_coin.aim_projectile(target_turf, user)
 	new_coin.fire()
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/gun/energy/photon
+	name = "photon cannon"
+	desc = "A competitive design to the tesla cannon, that instead of charging latent electrons, releases energy into photons. Eye protection is recommended."
+	icon_state = "photon"
+	inhand_icon_state = "tesla"
+	fire_sound = 'sound/weapons/lasercannonfire.ogg'
+	ammo_type = list(/obj/item/ammo_casing/energy/photon)
+	shaded_charge = TRUE
+	weapon_weight = WEAPON_HEAVY
+	light_color = LIGHT_COLOR_DEFAULT
+	light_system = OVERLAY_LIGHT
+	light_power = 2
+	light_outer_range = 1
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 7, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 5)
+
+/obj/item/gun/energy/photon/Initialize(mapload)
+	. = ..()
+	set_light_on(TRUE) // The gun quite literally shoots mini-suns.
