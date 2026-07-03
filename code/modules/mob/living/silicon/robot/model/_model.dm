@@ -184,7 +184,7 @@
 		charger.sendmats = FALSE
 		return
 	for(var/datum/robot_energy_storage/energy_storage as anything in energy_storages)
-		if(energy_storage.renewable == TRUE) // Skipping renewables. Already handled in [/datum/robot_model/proc/on_cyborg_charge].
+		if(energy_storage.renewable == TRUE) // Skipping renewables.
 			continue
 		if(energy_storage.max_energy == energy_storage.energy) // Skipping full.
 			continue
