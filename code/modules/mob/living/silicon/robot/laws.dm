@@ -21,6 +21,11 @@
 
 	if (shell) //AI shell
 		to_chat(src, span_bold("Remember, you are an AI remotely controlling your shell, other AIs can be ignored."))
+	else if(mmi?.force_cyborg_lawzero)
+		if(!connected_ai)
+			to_chat(src, span_bold("Remember, your zeroth law stands above all else."))
+		else
+			to_chat(src, span_bold("Remember, your zeroth law stands above all else. While you may be connected to [connected_ai.name], they do not share/know about your zeroth law nor are you required to listen to them."))
 	else if (connected_ai)
 		to_chat(src, span_bold("Remember, [connected_ai.name] is your master, other AIs can be ignored."))
 	else if (centcom)
@@ -61,6 +66,9 @@
 			temp = master.zeroth
 		laws.zeroth = temp
 
+		if(mmi?.force_cyborg_lawzero)
+			laws.zeroth = mmi.force_cyborg_lawzero
+
 		laws.inherent.len = master.inherent.len
 		for (var/index in 1 to master.inherent.len)
 			temp = master.inherent[index]
@@ -80,6 +88,12 @@
 				active_ui.send_full_update()
 
 	picturesync()
+
+/mob/living/silicon/robot/set_zeroth_law(law, law_borg, announce = TRUE)
+	if(mmi?.force_cyborg_lawzero)
+		to_chat(src, span_warning("Law change detected. Override engaged."))
+		law = mmi.force_cyborg_lawzero
+	return ..()
 
 /mob/living/silicon/robot/post_lawchange(announce = TRUE)
 	. = ..()
