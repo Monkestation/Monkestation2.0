@@ -171,9 +171,6 @@
 
 /datum/species/ipc/proc/on_emag_act(mob/living/carbon/human/owner, mob/user)
 	SIGNAL_HANDLER
-	if(owner == user)
-		to_chat(owner, span_warning("You know better than to use the cryptographic sequencer on yourself."))
-		return FALSE
 	if(owner.stat != CONSCIOUS)
 		to_chat(user, span_warning("The cryptographic sequencer would probably not do anything to [owner] in their current state..."))
 		return
