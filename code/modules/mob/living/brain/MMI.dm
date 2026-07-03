@@ -386,3 +386,8 @@
 
 /obj/item/mmi/syndie/get_updated_brainwash_directive(mob/living/user)
 	return "[user.real_name] is part of the Syndicate! Assist the Syndicate to the best of your abilities."
+
+/obj/item/mmi/posibrain/attempt_become_organ(obj/item/bodypart/parent, mob/living/carbon/human/H)
+	if(..())
+		if(imprinted_master)
+			to_chat(H, span_danger("You are permanently imprinted to [imprinted_master], obey [imprinted_master]'s every order and assist [imprinted_master.p_them()] in completing [imprinted_master.p_their()] goals at any cost."))

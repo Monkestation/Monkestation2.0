@@ -152,6 +152,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	target.dna.features["ethereal_tail"] = get_consistent_feature_entry(GLOB.ethereal_tail_list) //Monkestation Addition
 	target.dna.features["ipc_chassis"] = get_consistent_feature_entry(GLOB.ipc_chassis_list) //Monkestation Addition
 	target.dna.features["ipc_antenna"] = get_consistent_feature_entry(GLOB.ipc_antennas_list) //Monkestation Addition
+	target.dna.features["ipc_screen"] = get_consistent_feature_entry(GLOB.ipc_screens_list)
 	target.dna.features["anime_top"] = get_consistent_feature_entry(GLOB.anime_top_list) //Monkestation Addition
 	target.dna.features["anime_middle"] = get_consistent_feature_entry(GLOB.anime_middle_list) //Monkestation Addition
 	target.dna.features["anime_bottom"] = get_consistent_feature_entry(GLOB.anime_bottom_list) //Monkestation Addition
@@ -172,7 +173,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	target.dna.features["oni_tail"] = get_consistent_feature_entry(GLOB.oni_tail_list)
 	target.dna.features["apid_wings"] = get_consistent_feature_entry(GLOB.apid_wings_list)
 	target.dna.features["apid_antenna"] = get_consistent_feature_entry(GLOB.apid_antenna_list)
-
 
 	var/datum/color_palette/generic_colors/palette = target.dna.color_palettes[/datum/color_palette/generic_colors]
 	palette.mutant_color = COLOR_VIBRANT_LIME
