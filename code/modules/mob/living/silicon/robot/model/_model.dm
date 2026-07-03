@@ -23,7 +23,7 @@
 	var/list/datum/robot_energy_storage/energy_storages = list()
 	/// The radio channels that are given.
 	var/list/radio_channels = list()
-	/// The traits that are given
+	/// The traits that are given.
 	var/list/traits = list()
 	/// Can our owner temporarily lose module slots on their health?
 	var/breakable_modules = TRUE
