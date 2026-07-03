@@ -61,7 +61,7 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 
 /obj/machinery/ai/data_core/on_deconstruction()
 	. = ..()
-	integrated_battery.forceMove(drop_location())
+	integrated_battery?.forceMove(drop_location())
 
 /obj/machinery/ai/data_core/JoinPlayerHere(mob/M, buckle)
 	return
@@ -174,6 +174,9 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 		return ..()
 	if(!valid_data_core() || !valid_holder())
 		balloon_alert(user, "not a valid core!")
+		return ..()
+	if(user.controlled_equipment)
+		balloon_alert(user, "controlling equipment!")
 		return ..()
 	if(user.nuking)
 		var/confirmation_alert = tgui_alert(user, "Shunting will disable the doomsday device, are you sure you wish to do this?", "Really shunt?", list("Shunt", "Cancel"))

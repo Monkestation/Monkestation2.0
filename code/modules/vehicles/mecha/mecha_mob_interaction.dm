@@ -135,10 +135,17 @@
 			AI.remote_control = null
 			mob_container = AI
 			newloc = null
-			if(AI.relocate(silent = TRUE, kill_otherwise = FALSE))
+			if(AI.last_used_data_core && !QDELETED(AI.last_used_data_core))
+				if(AI.last_used_data_core.can_transfer_ai())
+					AI.last_used_data_core.transfer_AI(AI)
+					moved_already = TRUE
+			else if(AI.relocate(silent = TRUE, kill_otherwise = FALSE))
 				moved_already = TRUE
 			else
-				to_chat(AI, span_userdanger("No cores available. Core code corrupted."))
+				to_chat(AI, span_userdanger("No cores available. Enabling controls."))
+				AI.controlled_equipment = src
+				AI.remote_control = src
+				return FALSE
 	else
 		return ..()
 	var/mob/living/ejector = M
