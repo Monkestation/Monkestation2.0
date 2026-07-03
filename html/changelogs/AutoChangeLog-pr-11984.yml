@@ -1,7 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - qol: "Examining any cyborg apparatus will tell you that you can drop the stored item via alt-click."
-  - bugfix: "Cyborg apparatus can no longer take items that are inside of a cyborg's inventory."
-  - bugfix: "Removing an APC's powercell with your hand no longer causes a runtime."
-  - code_imp: "The electronics manipulation apparatus now handles its interactions with machinery/cyborgs within interact_with_atom."

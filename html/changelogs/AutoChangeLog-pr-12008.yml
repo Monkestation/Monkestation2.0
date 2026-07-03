@@ -1,0 +1,4 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - bugfix: "if you wear mask item on your neck it gets covered as if it was a mask item worn on your mask slot."

@@ -1,0 +1,29 @@
+2026-07-01:
+  BebeYoshi:
+  - rscdel: Removes screenshake from megafauna warning roars.
+  JohnFulpWillard:
+  - bugfix: Fixed cabling and piping on Kilo (Telecomms) and Theseus (Science)
+  Mantlecrawler:
+  - rscadd: Expie plushie, from casualties unknown. Now with 100% organic glowfruit
+      stuffing!
+  Moltijoe:
+  - balance: Darkspawns crawling shadows is now slower and squishier, but costs less
+      to buy
+  PotatoTomahto:
+  - qol: janibelt can now hold the janitor access key ring
+  Runian:
+  - bugfix: Cyborg radios now have the same hearing range as radio headsets.
+  - qol: Examining any cyborg apparatus will tell you that you can drop the stored
+      item via alt-click.
+  - bugfix: Cyborg apparatus can no longer take items that are inside of a cyborg's
+      inventory.
+  - bugfix: Removing an APC's powercell with your hand no longer causes a runtime.
+  - code_imp: The electronics manipulation apparatus now handles its interactions
+      with machinery/cyborgs within interact_with_atom.
+  Shoddd:
+  - qol: advanced autoinjectors now list how many uses they have left in description
+  SirNightKnight:
+  - bugfix: fixed a tgui error with the pageselect component.
+  byondsucks:
+  - bugfix: Mythril now has it's fantasy effects, although it is slightly rarer to
+      obtain from icemoon lava now.
