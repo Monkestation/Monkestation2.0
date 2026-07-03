@@ -258,12 +258,10 @@ GLOBAL_LIST_EMPTY(data_cores)
 	return TRUE
 
 /obj/machinery/ai/data_core/has_power()
-	if((machine_stat & (NOPOWER)) && integrated_battery)
+	if((machine_stat & NOPOWER) && integrated_battery)
 		if(integrated_battery.charge > (active_power_usage))
 			return TRUE
-	else
-		return TRUE
-	return FALSE
+	return ..()
 
 /obj/machinery/ai/data_core/proc/can_transfer_ai(mob/living/silicon/ai/user)
 	if(machine_stat & (BROKEN|EMPED) || !has_power())
