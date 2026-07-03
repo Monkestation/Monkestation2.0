@@ -377,8 +377,10 @@
 		if(istype(iter_part, /obj/item/bodypart/head))
 			render_head = TRUE
 
-		bandage_overlay = mutable_appearance(layer = -BANDAGE_LAYER, appearance_flags = KEEP_TOGETHER)
-		upper_bandage_overlay = mutable_appearance(layer = -UPPER_BANDAGE_LAYER, appearance_flags = KEEP_TOGETHER)
+		if(isnull(bandage_overlay))
+			bandage_overlay = mutable_appearance(layer = -BANDAGE_LAYER, appearance_flags = KEEP_TOGETHER)
+		if(isnull(upper_bandage_overlay))
+			upper_bandage_overlay = mutable_appearance(layer = -UPPER_BANDAGE_LAYER, appearance_flags = KEEP_TOGETHER)
 
 		if(iter_part.current_gauze)
 			var/mutable_appearance/limb_bandage_overlay
