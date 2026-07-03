@@ -330,7 +330,8 @@
 	var/mob/living/silicon/ai/unlucky_ai
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
-			var/turf/ai_location_turf = get_turf(occupant)
+			var/mob/living/silicon/ai/ai_occupant = occupant
+			var/turf/ai_location_turf = get_turf(ai_occupant.last_used_data_core || ai_occupant)
 			if(!LAZYLEN(GLOB.data_cores["[ai_location_turf.z]"])) // we probably shouldnt gib AIs with a core
 				unlucky_ai = occupant
 				unlucky_ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)

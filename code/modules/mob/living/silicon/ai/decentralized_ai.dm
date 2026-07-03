@@ -27,14 +27,14 @@
 	A.can_download = !A.can_download
 	to_chat(A, span_warning("You [A.can_download ? "enable" : "disable"] read/write permission to your memorybanks! You [A.can_download ? "CAN" : "CANNOT"] be downloaded!"))
 
-/mob/living/silicon/ai/proc/relocate(silent = FALSE, kill_otherwise = TRUE)
+/mob/living/silicon/ai/proc/relocate(silent = FALSE, kill_otherwise = TRUE, ignore_z_levels = FALSE)
 	if(is_dying)
 		return FALSE
 	if(!silent)
 		to_chat(src, span_userdanger("Connection to data core lost. Attempting to reaquire connection..."))
 
 	if(last_used_data_core && !QDELETED(last_used_data_core))
-		if(last_used_data_core.can_transfer_ai(src))
+		if(last_used_data_core.can_transfer_ai(src, ignore_z_levels))
 			last_used_data_core.transfer_AI(src)
 			return
 	//it's gone pal

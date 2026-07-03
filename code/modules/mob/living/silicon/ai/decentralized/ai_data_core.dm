@@ -189,6 +189,9 @@ GLOBAL_LIST_EMPTY(data_cores)
 	if(!valid_data_core(user) || !valid_holder())
 		balloon_alert(user, "not a valid core!")
 		return ..()
+	if(user.controlled_equipment)
+		balloon_alert(user, "controlling equipment!")
+		return ..()
 	if(user.nuking)
 		var/confirmation_alert = tgui_alert(user, "Shunting will disable the doomsday device, are you sure you wish to do this?", "Really shunt?", list("Shunt", "Cancel"))
 		if(confirmation_alert != "Shunt")
@@ -203,14 +206,15 @@ GLOBAL_LIST_EMPTY(data_cores)
 	for(var/mob/living/silicon/ai/AI in contents)
 		AI.disconnect_shell()
 
-/obj/machinery/ai/data_core/proc/valid_data_core(mob/living/silicon/ai/user)
+/obj/machinery/ai/data_core/proc/valid_data_core(mob/living/silicon/ai/user, ignore_z_levels = FALSE)
 	if(is_reebe_level(z) && !IS_CLOCK(user))
 		return FALSE
 
-	var/turf/user_turf = get_turf(user)
-	//If we're on the station, we won't work if the primary is not.
-	if(!(src in GLOB.data_cores["[user_turf.z]"]))
-		return FALSE
+	if(!ignore_z_levels)
+		var/turf/user_turf = get_turf(user)
+		//If we're on the station, we won't work if the primary is not.
+		if(!(src in GLOB.data_cores["[user_turf.z]"]))
+			return FALSE
 
 	if(valid_ticks > 0)
 		return TRUE
@@ -265,10 +269,10 @@ GLOBAL_LIST_EMPTY(data_cores)
 			return TRUE
 	return ..()
 
-/obj/machinery/ai/data_core/proc/can_transfer_ai(mob/living/silicon/ai/user)
+/obj/machinery/ai/data_core/proc/can_transfer_ai(mob/living/silicon/ai/user, ignore_z_levels = FALSE)
 	if(machine_stat & (BROKEN|EMPED) || !has_power())
 		return FALSE
-	if(!valid_data_core(user) || !valid_holder())
+	if(!valid_data_core(user, ignore_z_levels) || !valid_holder())
 		return FALSE
 	return TRUE
 

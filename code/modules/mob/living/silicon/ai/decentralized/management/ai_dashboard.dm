@@ -104,7 +104,10 @@
 
 	if(isAI(owner))
 		var/obj/machinery/ai/current_machine = owner.loc
-		data["temperature"] = current_machine.core_temp ? current_machine.core_temp : 0
+		if(istype(current_machine))
+			data["temperature"] = current_machine.core_temp ? current_machine.core_temp : 0
+		else
+			data["temperature"] = 0
 
 	for(var/datum/ai_project/AP as anything in available_projects)
 		var/research_requirements
@@ -316,8 +319,15 @@
 
 //Stuff is handled in here per tick :)
 /datum/ai_dashboard/proc/tick(seconds_per_tick)
-	var/turf/owner_turf = get_turf(owner)
+	var/turf/owner_turf
+	if(owner.controlled_equipment && owner.last_used_data_core)
+		owner_turf = get_turf(owner.last_used_data_core)
+	else
+		owner_turf = get_turf(owner)
+
 	var/datum/ai_os/owner_os = GLOB.ai_os["[owner_turf.z]"]
+	if(isnull(owner_os))
+		owner_os = new /datum/ai_os(owner_turf)
 
 	var/current_cpu = owner_os.cpu_assigned[owner] ? owner_os.total_cpu * owner_os.cpu_assigned[owner] : 0
 	var/current_ram = owner_os.ram_assigned[owner] ? owner_os.ram_assigned[owner] : 0
