@@ -47,7 +47,7 @@
 		return ITEM_INTERACT_BLOCKING
 	return ITEM_INTERACT_SUCCESS
 
-#define DISPLAY_REQUEST_TAKEOVER "Hostile takeover"
+#define DISPLAY_REQUEST_TAKEOVER "Hostile Takeover"
 #define DISPLAY_REQUEST_NICELY "Request Core"
 #define DISPLAY_REQUEST_CANCEL "Cancel"
 
