@@ -32,7 +32,7 @@
 	)
 	external_organs = list(
 		/obj/item/organ/external/antennae/ipc = "None",
-		/obj/item/organ/external/ipc_screen = "None",
+		/obj/item/organ/external/ipc_screen = "BSOD",
 	)
 
 	mutant_bodyparts = list("ipc_chassis")
