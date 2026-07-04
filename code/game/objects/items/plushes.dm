@@ -517,8 +517,8 @@
 	greyscale_config = /datum/greyscale_config/plush_lizard
 	attack_verb_continuous = list("claws", "hisses", "tail slaps")
 	attack_verb_simple = list("claw", "hiss", "tail slap")
-	squeak_override = list('monkestation/sound/voice/weh.ogg' = 1) // Monkestation Edit
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	squeak_override = list('sound/voice/weh.ogg' = 1) // Monkestation Edit
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	worn_icon_state = "map_plushie_lizard"
 	slot_flags = ITEM_SLOT_HEAD // Monkestation Edit
 	body_parts_covered = HEAD // Monkestation Edit
@@ -555,7 +555,7 @@
 	// space lizards can't hit people with their tail, it's stuck in their suit
 	attack_verb_continuous = list("claws", "hisses", "bops")
 	attack_verb_simple = list("claw", "hiss", "bops")
-	squeak_override = list('monkestation/sound/voice/weh.ogg' = 1) // Monkestation Edit
+	squeak_override = list('sound/voice/weh.ogg' = 1) // Monkestation Edit
 
 /obj/item/toy/plush/lizard_plushie/space/green
 	desc = "An adorable stuffed toy that resembles a very determined spacefaring green lizardperson. To infinity and beyond, little guy. This one fills you with nostalgia and soul."
@@ -671,7 +671,7 @@
 	attack_verb_simple = list("sting")
 	gender = FEMALE
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	worn_icon_state = "plushie_h"
 	slot_flags = ITEM_SLOT_HEAD // Monkestation Edit
 	body_parts_covered = HEAD // Monkestation Edit
@@ -1093,3 +1093,13 @@
 	. = ..()
 	//Taken directly from Dream Maker Reference on 'animate()' with minor adjustment.
 	animate(src, time = 1.5 SECONDS, alpha = 0, easing = SINE_EASING)
+
+/obj/item/toy/plush/expie // Casualties: Unknown reference
+	name = "expie plushie"
+	desc = "A tag on it reads, \"Made with all natural glowfruit and geofruit stuffing!\""
+	icon_state = "expie"
+	attack_verb_continuous = list("experiments")
+	attack_verb_simple = list("experiment")
+	squeak_override = list(
+		'sound/misc/expie_bark.ogg' = 1
+	)

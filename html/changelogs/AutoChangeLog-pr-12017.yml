@@ -1,0 +1,5 @@
+author: "Runian"
+delete-after: True
+changes:
+  - bugfix: "Projectile dampener no longer causes a runtime trying to forcibly eject people who were buckled to a cyborg."
+  - bugfix: "Cyborg projectile dampener no longer endlessly spams chat when it runs out of power."

@@ -119,7 +119,7 @@
 	if(applied_visual)
 		return
 	var/atom/movable/parent_movable = parent
-	applied_visual = mutable_appearance('monkestation/icons/effects/ranching_text.dmi', "chicken_[method]", FLOAT_LAYER, parent_movable, plane = parent_movable.plane)
+	applied_visual = mutable_appearance('icons/effects/ranching_text.dmi', "chicken_[method]", FLOAT_LAYER, parent_movable, plane = parent_movable.plane)
 	parent_movable.add_overlay(applied_visual)
 	addtimer(CALLBACK(src, PROC_REF(remove_visual)), 3 SECONDS)
 

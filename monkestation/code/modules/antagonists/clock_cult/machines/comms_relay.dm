@@ -1,7 +1,7 @@
 /obj/machinery/telecomms/relay/preset/reebe
 	id = "Hierophant Relay"
 	hide = TRUE
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_objects.dmi'
 	icon_state = "relay"
 	broadcasting = FALSE //It only receives
 	resistance_flags = INDESTRUCTIBLE

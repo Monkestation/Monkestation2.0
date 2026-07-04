@@ -1,0 +1,6 @@
+author: "Runian"
+delete-after: True
+changes:
+  - rscadd: "Cyborg chameleon projector can now choose what skin that their disguised model will use."
+  - qol: "Cyborg chameleon projector can be examined to see how to use it."
+  - code_imp: "Cyborg chameleon projector's code is more readable."

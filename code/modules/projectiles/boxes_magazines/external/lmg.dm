@@ -54,7 +54,7 @@
 	name = "\improper 6.5mm drum magazine"
 	desc = "A hefty 100 round drum of 6.5mm frangible rounds, designed for minimal damage to company property."
 
-	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "c65xeno_drum"
 
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
@@ -69,7 +69,7 @@
 	name = "\improper 6.5mm AP drum magazine"
 	desc = "A hefty 100 round drum of 6.5mm saboted tungsten penetrators, designed to punch through multiple targets. Warning: Liable to break windows."
 
-	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "c65xeno_drumP"
 
 	ammo_type = /obj/item/ammo_casing/c65xeno/pierce
@@ -79,7 +79,7 @@
 	name = "\improper 6.5mm incendiary drum magazine"
 	desc = "A hefty 100 round drum of 6.5mm rounds tipped with an incendiary compound."
 
-	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "c65xeno_drumI"
 
 	ammo_type = /obj/item/ammo_casing/c65xeno/incendiary
@@ -89,7 +89,7 @@
 	name = "\improper 6.5mm FMJ drum magazine"
 	desc = "A hefty 120 round drum of 6.5mm FMJ rounds."
 
-	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "c65xeno_drumevil"
 
 	ammo_type = /obj/item/ammo_casing/c65xeno/evil
@@ -99,7 +99,7 @@
 	name = "\improper 6.5mm UDS drum magazine"
 	desc = "A hefty 120 round drum of 6.5mm Uranium Discarding Sabot rounds. No, NOT depleted uranium. Prepare for your enemies to be irradiated."
 
-	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "c65xeno_drumPevil"
 
 	ammo_type = /obj/item/ammo_casing/c65xeno/pierce/evil
@@ -109,7 +109,7 @@
 	name = "\improper 6.5mm Inferno drum magazine"
 	desc = "A hefty 120 round drum of 6.5mm inferno rounds. They leave a trail of fire as they fly."
 
-	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "c65xeno_drumIevil"
 
 	ammo_type = /obj/item/ammo_casing/c65xeno/incendiary/evil

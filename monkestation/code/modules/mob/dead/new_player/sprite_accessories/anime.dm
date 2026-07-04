@@ -1,6 +1,6 @@
 ///ANIME ACCESSORIES GO HERE
 /datum/sprite_accessory/anime_head
-	icon = 'monkestation/icons/mob/anime/anime_head.dmi'
+	icon = 'icons/mob/anime/anime_head.dmi'
 	color_src = ANIME_COLOR
 
 /datum/sprite_accessory/anime_head/none
@@ -75,7 +75,7 @@
 	icon_state = "playbunny"
 
 /datum/sprite_accessory/anime_middle
-	icon = 'monkestation/icons/mob/anime/anime_middle.dmi'
+	icon = 'icons/mob/anime/anime_middle.dmi'
 	color_src = ANIME_COLOR
 
 /datum/sprite_accessory/anime_middle/none
@@ -111,7 +111,7 @@
 	icon_state = "seraphim"
 
 /datum/sprite_accessory/anime_bottom
-	icon = 'monkestation/icons/mob/anime/anime_bottom.dmi'
+	icon = 'icons/mob/anime/anime_bottom.dmi'
 	color_src = ANIME_COLOR
 
 /datum/sprite_accessory/anime_bottom/none
@@ -195,7 +195,7 @@
 	icon_state = "catbig"
 
 /datum/sprite_accessory/anime_halo
-	icon = 'monkestation/icons/mob/anime/anime_halo.dmi'
+	icon = 'icons/mob/anime/anime_halo.dmi'
 	color_src = ANIME_HALO_COLOR
 	is_emissive = TRUE
 	dimension_x = 32

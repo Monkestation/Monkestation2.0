@@ -97,8 +97,8 @@
 /obj/item/clothing/mask/gas/sechailer/swat/ert
 	name = "\improper emergency response team mask"
 	desc = "A close-fitting tactical mask with a toned down Compli-o-nator 3000. This one is designed for Nanotrasen emergency response teams and has an inbuilt air-freshener. Fancy!"
-	icon = 'monkestation/icons/obj/clothing/masks.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
+	icon = 'icons/obj/clothing/masks.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
 	icon_state = "ert"
 	aggressiveness = 1
 

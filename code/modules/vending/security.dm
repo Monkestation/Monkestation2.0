@@ -36,7 +36,7 @@
 		/obj/item/coin/antagtoken = 1,
 		/obj/item/clothing/gloves/color/black/security/blu = 1,
 		/obj/item/clothing/gloves/tackler = 5,
-		/obj/item/grenade/stingbang = 1,
+		/obj/item/grenade/stingbang = 5,
 		/obj/item/watertank/pepperspray = 2,
 		/obj/item/storage/belt/holster/energy = 4,
 		/obj/item/holosign_creator/security = 2,
@@ -66,7 +66,7 @@
 /obj/item/security_voucher
 	name = "security voucher"
 	desc = "A token to redeem a piece of equipment. Use it on a SecTech vendor."
-	icon = 'monkestation/icons/obj/items/security_voucher.dmi'
+	icon = 'icons/obj/items/security_voucher.dmi'
 	icon_state = "security_voucher_primary"
 	w_class = WEIGHT_CLASS_TINY
 

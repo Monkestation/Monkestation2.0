@@ -14,6 +14,8 @@
 	var/list/enemy_types
 	/// What status effect types do we merge into if they exist. Ignored when forced.
 	var/list/merge_types
+	/// What turf will remove our status effect
+	var/turf/enemy_turf
 	/// What status effect types do we override if they exist. These are simply deleted when forced.
 	var/list/override_types
 	/// For how much firestacks does one our stack count
@@ -30,7 +32,7 @@
 /datum/status_effect/fire_handler/on_creation(mob/living/new_owner, new_stacks, forced = FALSE)
 	. = ..()
 	var/turf/source_turf = get_turf(owner)
-	if(istype(source_turf, /turf/open/floor/plating/ocean))
+	if(istype(source_turf, enemy_turf))
 		qdel(src)
 		return
 
@@ -86,6 +88,29 @@
 			adjust_stacks(override_effect.stacks)
 			qdel(override_effect)
 
+/datum/status_effect/fire_handler/proc/check_enemy()
+	var/turf/source_turf = get_turf(owner)
+
+	if(istype(source_turf, enemy_turf))
+		qdel(src)
+		return FALSE
+
+	for(var/enemy_type in enemy_types)
+		var/datum/status_effect/fire_handler/enemy_effect = owner.has_status_effect(enemy_type)
+		if(!enemy_effect)
+			continue
+		var/cur_stacks = stacks
+		adjust_stacks(-abs(enemy_effect.stacks * enemy_effect.stack_modifier / stack_modifier))
+		enemy_effect.adjust_stacks(-abs(cur_stacks * stack_modifier / enemy_effect.stack_modifier))
+		if(enemy_effect.stacks <= 0)
+			qdel(enemy_effect)
+
+	if(stacks <= 0)
+		qdel(src)
+		return FALSE
+
+	return TRUE
+
 /**
  * Setter and adjuster procs for firestacks
  *
@@ -132,8 +157,9 @@
 	id = "fire_stacks" //fire_stacks and wet_stacks should have different IDs or else has_status_effect won't work
 	remove_on_fullheal = TRUE
 
-	enemy_types = list(/datum/status_effect/fire_handler/wet_stacks)
+	enemy_types = list(/datum/status_effect/fire_handler/wet_stacks, /datum/status_effect/fire_handler/wet_stacks/oozeling)
 	stack_modifier = 1
+	enemy_turf = /turf/open/floor/plating/ocean
 
 	/// If we're on fire
 	var/on_fire = FALSE
@@ -151,13 +177,7 @@
 	return "[owner.p_They()] [owner.p_are()] covered in something flammable."
 
 /datum/status_effect/fire_handler/fire_stacks/tick(seconds_between_ticks, times_fired)
-	var/turf/source_turf = get_turf(owner)
-	if(istype(source_turf, /turf/open/floor/plating/ocean))
-		qdel(src)
-		return TRUE
-
-	if(stacks <= 0)
-		qdel(src)
+	if(!check_enemy())
 		return TRUE
 
 	if(!on_fire)
@@ -295,17 +315,67 @@
 	id = "wet_stacks"
 
 	enemy_types = list(/datum/status_effect/fire_handler/fire_stacks)
-	stack_modifier = -1
+	stack_limit = MAX_FIRE_STACKS * 1.5
+	stack_modifier = -2
+	enemy_turf = /turf/open/lava
+	/// particles applied
+	var/particles/applied_particles = /particles/droplets
 
 /datum/status_effect/fire_handler/wet_stacks/on_apply()
 	. = ..()
-	owner.add_shared_particles(/particles/droplets)
+	var/obj/effect/abstract/shared_particle_holder/particles = owner.add_shared_particles(applied_particles, get_particle_key())
+	if(particles)
+		adjust_particles(particles)
 
 /datum/status_effect/fire_handler/wet_stacks/on_remove()
 	. = ..()
-	owner.remove_shared_particles(/particles/droplets)
+	owner.remove_shared_particles(get_particle_key())
+
+/datum/status_effect/fire_handler/wet_stacks/proc/get_particle_key()
+	return id
 
 /datum/status_effect/fire_handler/wet_stacks/tick(seconds_between_ticks)
+	if(!check_enemy())
+		return TRUE
+
 	adjust_stacks(-0.5 * seconds_between_ticks)
+
 	if(stacks <= 0)
 		qdel(src)
+
+/datum/status_effect/fire_handler/wet_stacks/proc/adjust_particles(obj/effect/abstract/shared_particle_holder/particle_holder)
+	return
+
+/datum/status_effect/fire_handler/wet_stacks/oozeling
+	id = "oozeling_wet_stacks"
+	enemy_types = list(/datum/status_effect/fire_handler/fire_stacks, /datum/status_effect/fire_handler/wet_stacks)
+	applied_particles = /particles/droplets/slime
+	enemy_turf = /turf/open/floor/plating/ocean
+
+/datum/status_effect/fire_handler/wet_stacks/oozeling/adjust_particles(obj/effect/abstract/shared_particle_holder/particle_holder)
+	if(!particle_holder)
+		return
+	var/color = COLOR_LIME
+	if(isoozeling(owner))
+		var/mob/living/carbon/human/oozie = owner
+		var/datum/color_palette/generic_colors/colors = oozie.dna.color_palettes[/datum/color_palette/generic_colors]
+		color = colors.mutant_color
+
+	particle_holder.color = color
+
+/datum/status_effect/fire_handler/wet_stacks/oozeling/tick(seconds_between_ticks)
+	if(!check_enemy())
+		return TRUE
+
+	if(owner.stat == DEAD || !isoozeling(owner))
+		adjust_stacks(-0.5 * seconds_between_ticks)
+
+	if(stacks <= 0)
+		qdel(src)
+
+/datum/status_effect/fire_handler/wet_stacks/oozeling/get_particle_key()
+	return "[id][owner.tag]"
+
+/datum/status_effect/fire_handler/wet_stacks/oozeling/get_examine_text()
+	if(stacks >= HYDROPHOBIA_WETNESS_STACKS)
+		return span_purple("[owner.p_They()] [owner.p_are()] oozing out an oily coating onto [owner.p_their()] outer membrane, water rolling right off.")

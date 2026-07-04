@@ -475,3 +475,6 @@
 /// Special singularity that spawns for shuttle events only
 /obj/singularity/shuttle_event
 	anchored = FALSE
+
+/obj/singularity/immovable/can_move(turf/considered_turf)
+	return FALSE

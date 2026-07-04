@@ -82,3 +82,19 @@
 			"Cracked bloodied" = "cracked_bloodied",
 			"Cracked" = "cracked",
 	)
+
+/obj/item/clothing/mask/rebellion
+	name = "rebellion mask"
+	desc = "Mask that is usually used during rebellions by insurgents. It covers the entire face and makes you unrecognizable."
+	inhand_icon_state = null
+	w_class = WEIGHT_CLASS_SMALL
+	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	custom_price = PAYCHECK_CREW
+	visor_flags = MASKINTERNALS
+	greyscale_colors = COLOR_VERY_LIGHT_GRAY
+	alternate_worn_layer = BENEATH_HAIR_LAYER
+	icon_state = "rebellion_mask"
+	greyscale_config = /datum/greyscale_config/rebellion_mask
+	greyscale_config_worn = /datum/greyscale_config/rebellion_mask/worn
+	flags_1 = IS_PLAYER_COLORABLE_1
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)

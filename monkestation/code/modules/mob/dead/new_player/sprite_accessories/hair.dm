@@ -3,171 +3,171 @@
 	var/vertical_offset = 0
 
 /datum/sprite_accessory/hair/afro3
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Bigger Afro"
 	icon_state = "big_afro"
 	vertical_offset = 3
 
 /datum/sprite_accessory/hair/gigafro
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "GigAfro"
 	icon_state = "giga_fro"
 	locked = TRUE
 	vertical_offset = 21
 
 /datum/sprite_accessory/hair/butters
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Butters"
 	icon_state = "butters"
 
 /datum/sprite_accessory/hair/flippyfringe
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Flippy Fringe"
 	icon_state = "flippy_fringe"
 
 /datum/sprite_accessory/hair/marge
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Marge"
 	icon_state = "marge"
 	vertical_offset = 16
 
 /datum/sprite_accessory/hair/polnareff
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Polnareff"
 	icon_state = "polnareff"
 	vertical_offset = 3
 
 /datum/sprite_accessory/hair/poooooooooolnareff
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Poooooooooolnareff"
 	icon_state = "poooooooooolnareff"
 	locked = TRUE
 	vertical_offset = 15
 
 /datum/sprite_accessory/hair/gigapomp
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Gigapompadour"
 	icon_state = "gigapomp"
 	locked = TRUE
 	vertical_offset = 8
 
 /datum/sprite_accessory/hair/shrinepriestess
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Shrine Priestess"
 	icon_state = "shrine_priestess"
 
 /datum/sprite_accessory/hair/unkemptcurls
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Unkempt Curls"
 	icon_state = "unkempt_curls"
 
 /datum/sprite_accessory/hair/bowpigtails
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Pigtails with Bows"
 	icon_state = "hair_bowpigtails"
 
 /datum/sprite_accessory/hair/silky
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Silky"
 	icon_state = "hair_silky"
 
 /datum/sprite_accessory/hair/archedmohawk
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Arched Mohawk"
 	icon_state = "hair_archedmohawk"
 
 /datum/sprite_accessory/hair/tailedmohawk
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Tailed Mohawk"
 	icon_state = "hair_tailedmohawk"
 
 /datum/sprite_accessory/hair/shortchoppy
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Short Choppy"
 	icon_state = "hair_choppy"
 
 /datum/sprite_accessory/hair/choppylong
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Choppy Long"
 	icon_state = "hair_choppylong"
 
 /datum/sprite_accessory/hair/mullet
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Mullet"
 	icon_state = "hair_mullet"
 
 /datum/sprite_accessory/hair/long_messy
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Long and Messy"
 	icon_state = "long_messy"
 
 /datum/sprite_accessory/hair/long_undercut
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Long Undercut"
 	icon_state = "long_undercut"
 
 /datum/sprite_accessory/hair/alpaca
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Alpaca"
 	icon_state = "alpaca"
 
 /datum/sprite_accessory/hair/monkeyking
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Monkey king"
 	icon_state = "monkey_king"
 
 /datum/sprite_accessory/hair/elitesimian
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Elite simian"
 	icon_state = "elitesimian"
 
 /datum/sprite_accessory/hair/edgerunner
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Edgerunner"
 	icon_state = "edgerunner"
 
 /datum/sprite_accessory/hair/alchemist
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Alchemist"
 	icon_state = "alchemist"
 
 /datum/sprite_accessory/hair/mayrain
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "May Rain"
 	icon_state = "hair_mayrain"
 
 /datum/sprite_accessory/hair/elegantbun
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Elegant Bun"
 	icon_state = "hair_elegantbun"
 
 /datum/sprite_accessory/hair/royalcurl
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Royal Curls"
 	icon_state = "hair_royalcurl"
 
 /datum/sprite_accessory/hair/mermaid
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Mermaid"
 	icon_state = "hair_mermaid"
 
 /datum/sprite_accessory/hair/styledponytail
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Styled Ponytail"
 	icon_state = "hair_styledponytail"
 
 /datum/sprite_accessory/hair/flatpressed
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Flat Pressed"
 	icon_state = "hair_flatpressed"
 
 /datum/sprite_accessory/hair/shortbedhead
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	name = "Short Bed Head"
 	icon_state = "hair_shortbedhead"
 
 /datum/sprite_accessory/hair/monke
-	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 
 /datum/sprite_accessory/hair/monke/pigtails4
 	name = "Pigtails 4"

@@ -23,8 +23,8 @@
 	)
 	skins = list(
 		"waffles" = list(
-			MOD_ICON_OVERRIDE = 'monkestation/icons/obj/clothing/modsuits/modsuit.dmi',
-			MOD_WORN_ICON_OVERRIDE = 'monkestation/icons/mob/clothing/worn_modsuit.dmi',
+			MOD_ICON_OVERRIDE = 'icons/obj/clothing/modsuit/mod_clothing.dmi',
+			MOD_WORN_ICON_OVERRIDE = 'icons/mob/clothing/worn_modsuit.dmi',
 			HELMET_FLAGS = list(
 				UNSEALED_LAYER = NECK_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT,
