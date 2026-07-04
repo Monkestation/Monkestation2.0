@@ -121,6 +121,7 @@
 	module_to_add.forceMove(inventory_holder)
 	module_to_add.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	module_to_add.obj_flags |= ABSTRACT
+	usable_modules += module_to_add
 	if(externally_added)
 		external_modules += module_to_add
 	if(requires_rebuild)
