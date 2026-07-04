@@ -27,3 +27,74 @@
   byondsucks:
   - bugfix: Mythril now has it's fantasy effects, although it is slightly rarer to
       obtain from icemoon lava now.
+2026-07-03:
+  Gboster-0:
+  - rscadd: '"Random" is now the default option for deathmatch loadouts'
+  - rscadd: '"Random" now randomizes your deathmatch loadout on-spawn instead of in-lobby'
+  - rscadd: Added an option to pick a random map in deathmatch
+  - rscadd: Added a modifier to randomize everyone's loadouts in deathmatch
+  - qol: '"Random" loadout no longer shows up in deathmatches with only 1 loadout'
+  - bugfix: OSHA Violator map now works in deathmatch
+  - bugfix: Random modifiers now work in deathmatch
+  JohnFulpWillard:
+  - rscadd: 'Added a new upgrade: Human Passthrough. You can shoot your PKA without
+      having to worry about friendly fire with this, for 750 mining points at your
+      mining vendor.'
+  - bugfix: Minebot passthrough upgrade now properly makes PKAs pass through minebots.
+  MGO, ported by Barrel:
+  - rscadd: Introduces new inverse reagents for Krokodil, Bath Salts, Aranesp, Happiness,
+      Baldium, Colorful Reagent and Gravitum!
+  - rscadd: An alternate reaction output has been added for Monkey Powder. Instead
+      of 1u Water, add 10u Monkey Dust to make an angry monkey!
+  - rscadd: 'Adds a medicine: Naloxone! Requires equal parts Morphine, Hydrogen Peroxide,
+      Bromine and Ethanol to be made. Purges opioid-class reagents, can also help
+      with mitigating drowsiness and breath loss. Also purges good moodlets associated
+      with opiates and replaces them with negative moodlets, so don''t expect your
+      patient to be happy about losing their high!'
+  PotatoTomahto:
+  - rscadd: ports the rebellion mask, purchasable from clothesmate
+  SirNightKnight:
+  - rscadd: added dance machines as a 5k contraband order in cargo.
+  - bugfix: updated dance machine and rave visor code to work with the newer jukebox
+      system,
+  - balance: increased the abundance of stingbangs in the sectech and stingbang crate.
+  - balance: stingbangs release more pellets but the pellets have a higher chance
+      to jostile or fall out on their own.
+  - balance: embedded objects won't cause stamina damage if you have analgesia.
+  - balance: stimulants nullify damage slowdown.
+  - image: gave stingbang boxes their own illustration.
+  - bugfix: if you wear mask item on your neck it gets covered as if it was a mask
+      item worn on your mask slot.
+  TheColorCyan:
+  - rscadd: Added slime compressor, way to make crossbreed extracts using slimes themselves
+  - rscdel: Slimes no longer make ooze
+  - rscdel: Equipment related to ooze (ooze suckers, slime grinders. ect. ) are removed
+  - bugfix: abandoned ipc should actually spawn now
+  byondsucks:
+  - rscadd: Wolves among sheep now has its own warhorn sound effect.
+  datlo, Runian:
+  - rscadd: Syndicate MMIs now brainwashes the brain inside of it, as long it stays
+      inside.
+  - rscadd: Syndicate MMIs now allow cyborgs to be connected to an AI, but will give
+      them a law zero to assist the Syndicate. This law zero is irremovable as long
+      they have the Syndicate MMI.
+  - qol: Roboticists and Research Director can further examine any MMI to see if it
+      will transfer its laws to a newly created cyborg or AI.
+  - qol: Traitors can further examine the Syndicate MMI to see exactly what it can
+      do.
+  - bugfix: Newly created cyborgs will no longer notify the wrong AI about their creation
+      if they were forced to have a specific AI.
+2026-07-04:
+  JohnFulpWillard:
+  - bugfix: Revelations now works as intended
+  Runian:
+  - bugfix: Projectile dampener no longer causes a runtime trying to forcibly eject
+      people who were buckled to a cyborg.
+  - bugfix: Cyborg projectile dampener no longer endlessly spams chat when it runs
+      out of power.
+  - rscadd: Cyborg chameleon projector can now choose what skin that their disguised
+      model will use.
+  - qol: Cyborg chameleon projector can be examined to see how to use it.
+  - code_imp: Cyborg chameleon projector's code is more readable.
+  Shoddd:
+  - balance: hosed quirk no longer recieves assisted breathing trait, now only 2 points

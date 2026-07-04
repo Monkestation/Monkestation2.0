@@ -23,6 +23,11 @@
 		var/datum/action/new_ability = new act(user)
 		new_ability.Grant(user)
 
+/datum/outfit/deathmatch_loadout/random
+	name = "Deathmatch: Random"
+	display_name = "Random"
+	desc = "A randomly selected loadout, how daring."
+
 /datum/outfit/deathmatch_loadout/naked
 	name = "Deathmatch: Naked"
 	display_name = "Unarmed, Butt-naked"
