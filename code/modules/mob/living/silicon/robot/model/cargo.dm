@@ -37,3 +37,4 @@
 		/obj/item/clock_module/sigil_transmission
 	)
 	radio_channels = list(RADIO_CHANNEL_SUPPLY)
+	traits = list(TRAIT_CAN_CLIMB_DISPOSALS)
