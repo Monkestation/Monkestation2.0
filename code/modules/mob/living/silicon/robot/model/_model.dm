@@ -109,7 +109,7 @@
 		cyborg_owner.deactivate_module(cyborg_owner.held_items[module_slot])
 	inventory_holder.atom_storage.refresh_views()
 
-/// Gets all modules.
+/// Gets all modules regardless of their availability.
 /datum/robot_model/proc/get_all_modules()
 	return basic_modules + emagged_modules + clockwork_modules + external_modules
 
