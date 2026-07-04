@@ -49,7 +49,7 @@
 
 /datum/robot_model/janitor/on_cyborg_recharge(coeff)
 	. = ..()
-	for(var/obj/item/usable_module in usable_module)
+	for(var/obj/item/usable_module in usable_modules)
 		if(istype(usable_module, /obj/item/reagent_containers/spray/cyborg_drying))
 			var/obj/item/reagent_containers/spray/cyborg_drying/drying_spray
 			drying_spray.reagents.add_reagent(/datum/reagent/drying_agent, 5 * coeff)
