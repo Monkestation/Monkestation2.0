@@ -3,7 +3,7 @@
 	desc = "A pair of dark blue bunny ears attached to a headband. Worn in lieu of the more traditional bicorn hat."
 	icon_state = "captain"
 	icon = 'icons/obj/clothing/captainbunnyobjsprites/bunny_ears.dmi'
-	worn_icon = 'icons/mob/clothing/costumes/captainBunny/bunny_ears_worn.dmi'
+	worn_icon = 'icons/mob/clothing/costumes/bunnysprites/bunny_ears_worn.dmi'
 	inhand_icon_state = "that"
 	armor_type = /datum/armor/bunny_ears_captain
 	dog_fashion = null
@@ -23,8 +23,8 @@
 	name = "captain's bunnysuit"
 	icon_state = "bunnysuit_captain"
 	inhand_icon_state = null
-	icon = 'icons/obj/clothing/captainbunnyobjsprites/bunnysuits.dmi'
-	worn_icon = 'icons/mob/clothing/costumes/captainBunny/bunnysuits_worn.dmi'
+	icon = 'icons/obj/clothing/bunnysprites/bunnysuits.dmi'
+	worn_icon = 'icons/mob/clothing/costumes/bunnysprites/bunnysuits_worn.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS
 	alt_covers_chest = TRUE
 
@@ -39,7 +39,7 @@
 	icon_state = "captain"
 	inhand_icon_state = null
 	icon = 'icons/obj/clothing/captainbunnyobjsprites/tailcoats.dmi'
-	worn_icon = 'icons/mob/clothing/costumes/captainBunny/tailcoats_worn.dmi'
+	worn_icon = 'icons/mob/clothing/costumes/bunnysprites/tailcoats_worn.dmi'
 	body_parts_covered = CHEST|GROIN|ARMS
 	armor_type = /datum/armor/tailcoat_captain
 	dog_fashion = null
@@ -58,7 +58,7 @@
 	name = "captain's bowtie"
 	desc = "A blue tie that includes a collar. Looking commanding!"
 	icon = 'icons/obj/clothing/captainbunnyobjsprites/neckwear.dmi'
-	worn_icon = 'icons/mob/clothing/costumes/captainBunny/neckwear_worn.dmi'
+	worn_icon = 'icons/mob/clothing/costumes/bunnysprites/neckwear_worn.dmi'
 	icon_state = "bowtie_collar_captain_tied"
 	tie_type = "bowtie_collar_captain"
 	greyscale_colors = null

@@ -27,6 +27,10 @@
 		/obj/item/clothing/under/rank/captain/bunnysuit = 1,
 		/obj/item/clothing/suit/armor/vest/capcarapace/tailcoat_captain = 1,
 		/obj/item/clothing/neck/tie/bunnytie/captain = 1,
+		/obj/item/clothing/head/playbunnyears/hos = 1,
+		/obj/item/clothing/under/rank/security/head_of_security/bunnysuit = 1,
+		/obj/item/clothing/suit/armor/hos_tailcoat = 1,
+		/obj/item/clothing/neck/tie/bunnytie/security = 1,
 	)
 
 /obj/item/vending_refill/wardrobe/comm_wardrobe
