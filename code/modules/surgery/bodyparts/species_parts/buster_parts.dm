@@ -35,6 +35,7 @@
 
 /obj/item/bodypart/arm/left/robot/buster/dismember(dam_type, silent, wounding_type, sound)
 	. = ..()
+	visible_message(span_danger("[src] disintegrates and fades from existence!"))
 	qdel(src)
 
 /obj/item/bodypart/arm/left/robot/buster/attack_self(mob/user, modifiers)
@@ -95,6 +96,7 @@
 
 /obj/item/bodypart/arm/right/robot/buster/dismember(dam_type, silent, wounding_type, sound)
 	. = ..()
+	visible_message(span_danger("[src] disintegrates and fades from existence!"))
 	qdel(src)
 
 /obj/item/bodypart/arm/right/robot/buster/attack_self(mob/user, modifiers)
