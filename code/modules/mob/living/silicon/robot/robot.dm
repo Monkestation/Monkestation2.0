@@ -998,7 +998,7 @@
 	. = picked_robot_skin
 	qdel(temporary_robot_model)
 
-// Checks if we are allowed to interact with the model/skin radial menu
+// Checks if we are allowed to interact with the model/skin radial menu.
 /mob/living/silicon/robot/proc/check_menu(mob/living/silicon/robot/user)
 	if(!istype(user))
 		return FALSE
