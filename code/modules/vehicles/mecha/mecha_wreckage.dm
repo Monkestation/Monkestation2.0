@@ -266,3 +266,9 @@
 	icon = 'icons/mecha/largetanks.dmi'
 	icon_state = "syntinel-broken"
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
+
+/obj/structure/mecha_wreckage/semple
+	name = "\improper Semple Wreckage"
+	icon = 'icons/mecha/tanks.dmi'
+	icon_state = "semple-broken"
+	welder_salvage = list(/obj/item/stack/sheet/iron, /obj/item/stack/rods, /obj/item/pipe)

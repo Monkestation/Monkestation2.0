@@ -340,3 +340,14 @@
 				)
 	crate_name = "Anti-Tank Rocket crate"
 	dangerous = TRUE
+
+/datum/supply_pack/security/armory/ancient_semple
+	name = "Ancient Bob Semple Import"
+	desc = "An incredibly old Bob Semple, supplied by nanotrasen ancient history.. based off the old new zealand model."
+	cost = CARGO_CRATE_VALUE * 75
+	access = ACCESS_HOS
+	access_view = ACCESS_HOS
+	contains = list(/obj/vehicle/sealed/mecha/semple)
+	crate_name = "Rusty History Crate"
+	dangerous = TRUE
+	contraband = TRUE
