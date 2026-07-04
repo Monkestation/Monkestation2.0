@@ -16,7 +16,7 @@
 /datum/storage/cyborg_internal_storage/get_contents_to_show()
 	var/mob/living/silicon/robot/cyborg_owner = real_location.loc
 	var/datum/robot_model/model = cyborg_owner.model
-	return model.get_usable_modules()
+	return model.usable_modules
 
 /**
  * Cyborg internal storage orienting

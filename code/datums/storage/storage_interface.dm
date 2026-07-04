@@ -142,7 +142,7 @@
 	atom/real_location,
 	list/datum/numbered_display/numbered_contents,
 )
-	var/list/usable_modules = cyborg.model.get_usable_modules()
+	var/list/usable_modules = cyborg.model.usable_modules.Copy()
 
 	var/current_x = screen_start_x
 	var/current_y = screen_start_y

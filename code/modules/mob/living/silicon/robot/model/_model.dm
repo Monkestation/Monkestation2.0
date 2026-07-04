@@ -109,9 +109,9 @@
 		cyborg_owner.deactivate_module(cyborg_owner.held_items[module_slot])
 	inventory_holder.atom_storage.refresh_views()
 
-/// Gets all modules that should be accessible to the owner.
-/datum/robot_model/proc/get_usable_modules()
-	return usable_modules.Copy()
+/// Gets all modules.
+/datum/robot_model/proc/get_all_modules()
+	return basic_modules + emagged_modules + clockwork_modules + external_modules
 
 /// Adds an module.
 /datum/robot_model/proc/add_module(obj/item/module_to_add, externally_added, requires_rebuild)
@@ -161,7 +161,7 @@
 		if(energy_storage.renewable == FALSE)
 			continue
 		energy_storage.energy = min(energy_storage.max_energy, energy_storage.energy + (power_coeff * energy_storage.recharge_rate))
-	for(var/obj/item/usable_module in get_usable_modules())
+	for(var/obj/item/usable_module in usable_modules)
 		if(istype(usable_module, /obj/item/assembly/flash))
 			var/obj/item/assembly/flash/flash = usable_module
 			flash.times_used = 0

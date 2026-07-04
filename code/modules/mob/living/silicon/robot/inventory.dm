@@ -57,11 +57,8 @@
 	transferItemToLoc(item_module, newloc = model.inventory_holder)
 
 /mob/living/silicon/robot/doUnEquip(obj/item/item_dropping, force, atom/newloc, no_move, invdrop, silent)
-	if(isnull(model))
-		return ..()
-
-	// Can't unequip things we have never equipped.
-	if(!(item_dropping in contents))
+	// If it is not a module, it is free to drop.
+	if(!has_model() || !(item_dropping in model.get_all_modules()))
 		return ..()
 
 	if(newloc != model.inventory_holder)
