@@ -229,7 +229,7 @@
 	var/mob/living/eat_target = ooze.pulling
 
 	if(!(eat_target.mob_biotypes & MOB_ORGANIC))
-		to_chat(src, span_warning("This creature isn't to my tastes!"))
+		to_chat(ooze, span_warning("This creature isn't to my tastes!"))
 		return FALSE
 	start_consuming(eat_target)
 
