@@ -110,7 +110,9 @@ GLOBAL_LIST_EMPTY(GPS_list)
 ///Calls toggletracking
 /datum/component/gps/item/proc/on_AltClick(datum/source, mob/user)
 	SIGNAL_HANDLER
-
+	if(isobj(parent))
+		var/obj/our_gps_device = parent
+		our_gps_device.add_fingerprint(user)
 	toggletracking(user)
 	return COMPONENT_CANCEL_CLICK_ALT
 
