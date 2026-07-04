@@ -78,6 +78,7 @@
 	bio = 100
 	fire = 50 // that one sympton that lights you on fire is common in plagues
 	acid = 100
+	wound = 10
 
 /obj/item/clothing/suit/bio_suit/security/Initialize(mapload)
 	. = ..()
