@@ -126,7 +126,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///An effect we show to admins and ghosts the percentage of delam we're at
 	var/obj/effect/countdown/supermatter/countdown
 
-	///Only main engines can have their sliver stolen, can trigger cascades, and can spawn stationwide anomalies.
+	///Only main engine sm can cause a cascade. Slivers can now be extracted via shards.
 	var/is_main_engine = FALSE
 	///Our soundloop
 	var/datum/looping_sound/supermatter/soundloop
