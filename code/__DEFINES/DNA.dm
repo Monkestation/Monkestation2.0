@@ -77,9 +77,10 @@
 #define DNA_AVIAN_EARS_BLOCK 18
 #define DNA_AVIAN_TAIL_BLOCK 19
 #define DNA_FEATHER_COLOR_BLOCK 20
+#define DNA_IPC_SCREEN_BLOCK 21
 
 /// This number needs to equal the total number of DNA blocks
-#define DNA_FEATURE_BLOCKS 20
+#define DNA_FEATURE_BLOCKS 21
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8

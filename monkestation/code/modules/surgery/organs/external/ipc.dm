@@ -34,7 +34,7 @@
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_SCREEN
 
-	dna_block = null
+	dna_block = DNA_IPC_SCREEN_BLOCK // dont question it
 
 	preference = "feature_ipc_screen"
 
