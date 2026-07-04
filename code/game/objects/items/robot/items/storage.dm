@@ -14,8 +14,8 @@
 
 /obj/item/borg/apparatus/Initialize(mapload)
 	. = ..()
-	if(iscyborg(loc.loc))
-		RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, PROC_REF(safe_deconstruct))
+	if(iscyborg(loc))
+		RegisterSignal(loc, COMSIG_BORG_SAFE_DECONSTRUCT, PROC_REF(safe_deconstruct))
 
 /obj/item/borg/apparatus/Destroy()
 	if(!isnull(stored))

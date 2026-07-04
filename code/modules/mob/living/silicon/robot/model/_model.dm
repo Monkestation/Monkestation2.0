@@ -40,19 +40,23 @@
 	inventory_holder = new /obj/item/storage/cyborg_internal_storage(cyborg_owner)
 	RegisterSignal(cyborg_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(on_cyborg_recharge))
 	for(var/obj/item/basic_module_typepath as anything in basic_modules)
-		var/obj/item/itemized_module = new basic_module_typepath(inventory_holder)
+		var/obj/item/itemized_module = new basic_module_typepath(cyborg_owner) // It should always be first created in the cyborg...
+		itemized_module.forceMove(inventory_holder) // ... and then moved to trigger [/datum/storage/proc/handle_enter].
 		basic_modules += itemized_module
 		basic_modules -= basic_module_typepath
 	for(var/obj/item/emagged_module_typepath as anything in emagged_modules)
-		var/obj/item/itemized_module = new emagged_module_typepath(inventory_holder)
+		var/obj/item/itemized_module = new emagged_module_typepath(cyborg_owner)
+		itemized_module.forceMove(inventory_holder)
 		emagged_modules += itemized_module
 		emagged_modules -= emagged_module_typepath
 	for(var/obj/item/clockwork_module_typepath as anything in clockwork_modules)
-		var/obj/item/itemized_module = new clockwork_module_typepath(inventory_holder)
+		var/obj/item/itemized_module = new clockwork_module_typepath(cyborg_owner)
+		itemized_module.forceMove(inventory_holder)
 		clockwork_modules += itemized_module
 		clockwork_modules -= clockwork_module_typepath
 	for(var/obj/item/external_module_typepath as anything in external_modules)
-		var/obj/item/itemized_module = new external_module_typepath(inventory_holder)
+		var/obj/item/itemized_module = new external_module_typepath(cyborg_owner)
+		itemized_module.forceMove(inventory_holder)
 		external_modules += itemized_module
 		external_modules -= external_module_typepath
 	rebuild_usable_modules()
@@ -115,10 +119,10 @@
 		if(istype(sheet_module.source))
 			sheet_module.cost = max(sheet_module.cost, 1) // Must not cost 0 to prevent div/0 errors.
 			sheet_module.is_cyborg = TRUE
+	usable_modules += module_to_add
 	module_to_add.forceMove(inventory_holder)
 	module_to_add.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	module_to_add.obj_flags |= ABSTRACT
-	usable_modules += module_to_add
 	if(externally_added)
 		external_modules += module_to_add
 	if(requires_rebuild)
@@ -127,6 +131,10 @@
 
 /// Removes a module.
 /datum/robot_model/proc/remove_module(obj/item/removed_module)
+	for(var/module_slot in 1 to length(cyborg_owner.held_items))
+		if(!cyborg_owner.held_items[module_slot] || cyborg_owner.held_items[module_slot] != removed_module)
+			continue
+		cyborg_owner.deactivate_module(cyborg_owner.held_items[module_slot])
 	basic_modules -= removed_module
 	emagged_modules -= removed_module
 	clockwork_modules -= removed_module
