@@ -27,10 +27,9 @@
 
 /obj/item/organ/external/ipc_screen
 	name = "IPC screen"
-	desc = "An IPC's screen."
-	icon_state = ""
+	desc = "An IPC's screen, can it run doom?"
+	icon_state = "ipc_screen"
 	icon = 'icons/obj/medical/organs/organs.dmi'
-	use_mob_sprite_as_obj_sprite = TRUE
 
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_SCREEN
