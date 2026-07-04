@@ -287,22 +287,6 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_DISCOUNT_MINOR * 2.5)
 
-/datum/techweb_node/alien_cyber_implants
-	id = "alien_cyber_implants"
-	display_name = "Alien Cybernetic Implants"
-	description = "Alien-sourced cybernetic implants."
-	prereq_ids = list("adv_cyber_implants", "alien_bio")
-	design_ids = list(
-		"ci-surgery-alien"
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
-	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
-
-/datum/techweb_node/alien_cyber_implants/New()
-	. = ..()
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
-		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_DISCOUNT_MINOR * 2.5)
-
 /datum/techweb_node/illegal_combat_implants
 	id = "illegal_combat_implants"
 	display_name = "Illegal Combat Cybernetic Implants"
