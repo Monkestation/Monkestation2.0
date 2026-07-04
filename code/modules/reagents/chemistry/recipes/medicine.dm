@@ -407,3 +407,8 @@
 	required_temp = 205
 	optimal_temp = 155
 	overheat_temp = 105
+
+/datum/chemical_reaction/medicine/naloxone
+	results = list(/datum/reagent/medicine/naloxone = 4)
+	required_reagents = list(/datum/reagent/medicine/painkiller/morphine = 1, /datum/reagent/hydrogen_peroxide = 1, /datum/reagent/bromine = 1, /datum/reagent/consumable/ethanol = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER

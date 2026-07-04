@@ -1332,3 +1332,12 @@
 	name = "Manipulator Arm"
 	icon_file = 'icons/obj/machines/big_manipulator_parts/big_manipulator_hand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/manipulator_arm.json'
+
+/datum/greyscale_config/rebellion_mask
+	name = "Rebellion mask"
+	icon_file = 'icons/obj/clothing/masks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/rebellion_mask.json'
+
+/datum/greyscale_config/rebellion_mask/worn
+	name = "Rebellion mask (Worn)"
+	icon_file = 'icons/mob/clothing/mask.dmi'

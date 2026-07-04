@@ -21880,13 +21880,6 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
-"fbc" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "12";
-	dir = 1
-	},
-/turf/open/floor/circuit/red/off,
-/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "fbd" = (
 /mob/living/simple_animal/pet/gondola,
 /turf/open/floor/eighties/red,
@@ -24189,7 +24182,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/hall)
 "itR" = (
-/obj/machinery/plumbing/ooze_compressor,
+/obj/machinery/slime_compressor,
 /turf/open/floor/engine,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "iuf" = (
@@ -26490,10 +26483,6 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
-"mjS" = (
-/obj/machinery/duct,
-/turf/open/floor/circuit/red/off,
-/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "mkd" = (
 /obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
 /turf/open/floor/iron/dark,
@@ -30986,10 +30975,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/admin)
-"tRC" = (
-/obj/machinery/duct,
-/turf/open/floor/engine,
-/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "tRW" = (
 /obj/effect/turf_decal/weather/dirt{
 	pixel_y = -1
@@ -32043,12 +32028,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin)
-"vIz" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "13"
-	},
-/turf/open/floor/circuit/red/off,
-/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "vJI" = (
 /obj/machinery/porta_turret/syndicate/assaultops/internal{
 	system_id = "goldeneyebase"
@@ -35672,10 +35651,10 @@ qfZ
 auG
 amT
 amT
-vIz
-mjS
-mjS
-fbc
+amT
+amT
+amT
+amT
 aWw
 amT
 aPL
@@ -36185,13 +36164,13 @@ apE
 avy
 auG
 itR
-tRC
-tRC
-tRC
-tRC
-tRC
-tRC
-itR
+ksD
+ksD
+ksD
+ksD
+ksD
+ksD
+ksD
 aPL
 aOL
 aaa
