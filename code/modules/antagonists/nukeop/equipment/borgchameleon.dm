@@ -86,10 +86,10 @@
 	var/mob/living/silicon/robot/cyborg_user = user
 	var/datum/robot_model/chosen_robot_model = cyborg_user.prompt_model_selection()
 	if(!chosen_robot_model)
-		return FALSE
+		return
 	var/datum/robot_skin/chosen_robot_skin = cyborg_user.prompt_skin_selection(chosen_robot_model)
 	if(!chosen_robot_skin)
-		return FALSE
+		return
 	disguise_model_type = chosen_robot_model
 	disguise_skin_type = chosen_robot_skin
 	to_chat(user, span_notice("The next disguised model will be: [initial(disguise_model_type.name)]."))
