@@ -67,7 +67,6 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
 	main_feature_name = "IPC Screen"
-	relevant_mutant_bodypart = "ipc_screen"
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/ipc_screen/init_possible_values()
