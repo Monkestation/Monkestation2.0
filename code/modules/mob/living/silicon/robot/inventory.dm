@@ -57,8 +57,11 @@
 	transferItemToLoc(item_module, newloc = model.inventory_holder)
 
 /mob/living/silicon/robot/doUnEquip(obj/item/item_dropping, force, atom/newloc, no_move, invdrop, silent)
-	// Cyborgs can drop items that aren't directly associated with our model / internal inventory, such as: items from our apparatus module(s).
-	if(isnull(model) || !(item_dropping in model.usable_modules))
+	if(isnull(model))
+		return ..()
+
+	// Can't unequip things we have never equipped.
+	if(!(item_dropping in contents))
 		return ..()
 
 	if(newloc != model.inventory_holder)

@@ -103,6 +103,10 @@
 		if(ispath(possible_module))
 			continue
 		add_module(possible_module)
+	for(var/module_slot in 1 to length(cyborg_owner.held_items))
+		if(!cyborg_owner.held_items[module_slot] || (cyborg_owner.held_items[module_slot] in usable_modules))
+			continue
+		cyborg_owner.deactivate_module(cyborg_owner.held_items[module_slot])
 	inventory_holder.atom_storage.refresh_views()
 
 /// Gets all modules that should be accessible to the owner.
@@ -118,7 +122,13 @@
 		if(istype(sheet_module.source))
 			sheet_module.cost = max(sheet_module.cost, 1) // Must not cost 0 to prevent div/0 errors.
 			sheet_module.is_cyborg = TRUE
-	module_to_add.forceMove(inventory_holder)
+	var/holding_this_item_already = FALSE
+	for(var/module_slot in 1 to length(cyborg_owner.held_items))
+		if(!cyborg_owner.held_items[module_slot] || (cyborg_owner.held_items[module_slot] in usable_modules))
+			continue
+		holding_this_item_already = TRUE
+	if(!holding_this_item_already)
+		module_to_add.forceMove(inventory_holder)
 	module_to_add.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	module_to_add.obj_flags |= ABSTRACT
 	usable_modules += module_to_add
@@ -130,16 +140,12 @@
 
 /// Removes a module.
 /datum/robot_model/proc/remove_module(obj/item/removed_module)
-	for(var/module_slot in 1 to length(cyborg_owner.held_items))
-		if(!cyborg_owner.held_items[module_slot] || cyborg_owner.held_items[module_slot] != removed_module)
-			continue
-		cyborg_owner.deactivate_module(cyborg_owner.held_items[module_slot])
 	basic_modules -= removed_module
 	emagged_modules -= removed_module
 	clockwork_modules -= removed_module
 	external_modules -= removed_module
-	qdel(removed_module)
 	rebuild_usable_modules()
+	qdel(removed_module)
 
 /// Gets an energy storage with a specific type. If it cannot, creates it.
 /datum/robot_model/proc/get_or_create_estorage(estorage_type)
@@ -147,6 +153,7 @@
 
 /// Called when the cyborg is recharged.
 /datum/robot_model/proc/on_cyborg_recharge(datum/source, amount, repairs, sendmats)
+	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)
 	var/power_coeff = amount / (200 JOULES)
 	// Renewables:

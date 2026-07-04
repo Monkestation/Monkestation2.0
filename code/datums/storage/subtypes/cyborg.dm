@@ -13,6 +13,11 @@
 /datum/storage/cyborg_internal_storage/attempt_insert(obj/item/to_insert, mob/living/silicon/robot/user, override = FALSE, force = STORAGE_NOT_LOCKED, messages = TRUE)
 	user.deactivate_module(to_insert)
 
+/datum/storage/cyborg_internal_storage/get_contents_to_show()
+	var/mob/living/silicon/robot/cyborg_owner = real_location.loc
+	var/datum/robot_model/model = cyborg_owner.model
+	return model.get_usable_modules()
+
 /**
  * Cyborg internal storage orienting
  * We're using the model's total amount of modules as reference for how many slots we fill,
