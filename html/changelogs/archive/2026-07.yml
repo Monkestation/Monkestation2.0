@@ -84,3 +84,17 @@
       do.
   - bugfix: Newly created cyborgs will no longer notify the wrong AI about their creation
       if they were forced to have a specific AI.
+2026-07-04:
+  JohnFulpWillard:
+  - bugfix: Revelations now works as intended
+  Runian:
+  - bugfix: Projectile dampener no longer causes a runtime trying to forcibly eject
+      people who were buckled to a cyborg.
+  - bugfix: Cyborg projectile dampener no longer endlessly spams chat when it runs
+      out of power.
+  - rscadd: Cyborg chameleon projector can now choose what skin that their disguised
+      model will use.
+  - qol: Cyborg chameleon projector can be examined to see how to use it.
+  - code_imp: Cyborg chameleon projector's code is more readable.
+  Shoddd:
+  - balance: hosed quirk no longer recieves assisted breathing trait, now only 2 points
