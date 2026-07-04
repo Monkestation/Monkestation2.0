@@ -137,7 +137,7 @@
 		usage += projectile_tick_speed_ecost * seconds_per_tick
 		usage += tracked_bullet_cost[projectile] * projectile_damage_tick_ecost_coefficient * seconds_per_tick
 	energy = clamp(energy - usage, 0, maxenergy)
-	if(energy <= 0)
+	if(energy <= 0 && active)
 		deactivate_field()
 		visible_message(span_warning("[src] blinks \"ENERGY DEPLETED\"."))
 
