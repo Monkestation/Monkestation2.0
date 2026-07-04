@@ -31,12 +31,6 @@
 	 * Do not directly set this outside of Initialize! Use [/proc/apply_skin] instead!
 	 */
 	var/datum/robot_skin/skin = /datum/robot_skin/standard/default
-	/**
-	 * The storage item that holds all of our model's items. Will be created upon initialization.
-	 *
-	 * Do not directly add items to this. Use the model's [/proc/add_module] instead!
-	 */
-	var/obj/item/storage/internal_inventory = /obj/item/storage/cyborg_internal_storage
 
 	radio = /obj/item/radio/borg
 

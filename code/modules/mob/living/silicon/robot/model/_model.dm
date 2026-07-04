@@ -9,9 +9,11 @@
 	var/list/datum/robot_skin/available_skins
 	/// The cyborg that is using this robot model.
 	var/mob/living/silicon/robot/cyborg_owner = null
+	/// The storage item that holds all of our items. Will be created only if we have an owner.
+	var/obj/item/storage/inventory_holder
 	/// The list of modules that can be used by the owner.
 	var/list/obj/item/usable_modules = list()
-	/// The list of modules that are given.
+	/// The list of modules that are given by default.
 	var/list/obj/item/basic_modules = list()
 	/// The list of modules that are given only if the cyborg is emagged.
 	var/list/obj/item/emagged_modules = list()
@@ -35,21 +37,22 @@
 	if(!new_cyborg_owner) // On occasion, we want the datum only.
 		return
 	cyborg_owner = new_cyborg_owner
+	inventory_holder = new /obj/item/storage/cyborg_internal_storage(cyborg_owner)
 	RegisterSignal(cyborg_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(on_cyborg_recharge))
 	for(var/obj/item/basic_module_typepath as anything in basic_modules)
-		var/obj/item/itemized_module = new basic_module_typepath(cyborg_owner.internal_inventory)
+		var/obj/item/itemized_module = new basic_module_typepath(inventory_holder)
 		basic_modules += itemized_module
 		basic_modules -= basic_module_typepath
 	for(var/obj/item/emagged_module_typepath as anything in emagged_modules)
-		var/obj/item/itemized_module = new emagged_module_typepath(cyborg_owner.internal_inventory)
+		var/obj/item/itemized_module = new emagged_module_typepath(inventory_holder)
 		emagged_modules += itemized_module
 		emagged_modules -= emagged_module_typepath
 	for(var/obj/item/clockwork_module_typepath as anything in clockwork_modules)
-		var/obj/item/itemized_module = new clockwork_module_typepath(cyborg_owner.internal_inventory)
+		var/obj/item/itemized_module = new clockwork_module_typepath(inventory_holder)
 		clockwork_modules += itemized_module
 		clockwork_modules -= clockwork_module_typepath
 	for(var/obj/item/external_module_typepath as anything in external_modules)
-		var/obj/item/itemized_module = new external_module_typepath(cyborg_owner.internal_inventory)
+		var/obj/item/itemized_module = new external_module_typepath(inventory_holder)
 		external_modules += itemized_module
 		external_modules -= external_module_typepath
 	rebuild_usable_modules()
@@ -57,9 +60,14 @@
 /datum/robot_model/Destroy()
 	if(!QDELETED(cyborg_owner))
 		UnregisterSignal(cyborg_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
-		cyborg_owner.drop_all_held_items() // Precaution to make sure everything qdels with no issue.
-		cyborg_owner.internal_inventory.atom_storage.close_all()
-		QDEL_LIST(cyborg_owner.internal_inventory.contents) // Getting rid of all the model's items.
+		cyborg_owner.drop_all_held_items()
+	if(!QDELETED(inventory_holder))
+		for(var/obj/item/storage/bag in inventory_holder.contents)
+			for(var/obj/item in bag)
+				item.forceMove(inventory_holder.drop_location())
+		inventory_holder.atom_storage.close_all()
+		QDEL_LIST(inventory_holder.contents) // Not sure if this is needed.
+		QDEL_NULL(inventory_holder)
 	usable_modules.Cut()
 	emagged_modules.Cut()
 	clockwork_modules.Cut()
@@ -107,7 +115,7 @@
 		if(istype(sheet_module.source))
 			sheet_module.cost = max(sheet_module.cost, 1) // Must not cost 0 to prevent div/0 errors.
 			sheet_module.is_cyborg = TRUE
-	module_to_add.forceMove(cyborg_owner.internal_inventory)
+	module_to_add.forceMove(inventory_holder)
 	module_to_add.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	module_to_add.obj_flags |= ABSTRACT
 	usable_modules += module_to_add

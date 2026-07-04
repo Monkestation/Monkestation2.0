@@ -460,4 +460,4 @@
 	. = ..()
 	if(!iscyborg(loc))
 		return INITIALIZE_HINT_QDEL
-	AddElement(/datum/element/empprotection, EMP_PROTECT_CONTENTS) // The cyborg will resolve our EMP effects instead.
+	atom_storage.emp_shielded = TRUE // The cyborg will resolve our EMP effects instead.

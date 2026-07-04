@@ -54,7 +54,7 @@
 /// Handles adding items with the module.
 /obj/item/borg/upgrade/proc/install_items(mob/living/silicon/robot/borg, user = usr, list/items)
 	for(var/item_to_add in items)
-		var/obj/item/module_item = new item_to_add(borg.internal_inventory)
+		var/obj/item/module_item = new item_to_add(borg.model.inventory_holder)
 		borg.model.basic_modules += module_item
 		borg.model.add_module(module_item, FALSE, TRUE)
 	return TRUE

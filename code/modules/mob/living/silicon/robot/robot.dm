@@ -82,7 +82,6 @@
 	log_silicon("New cyborg [key_name(src)] created with [connected_ai ? "master AI: [key_name(connected_ai)]" : "no master AI"]")
 	log_current_laws()
 
-	internal_inventory = new internal_inventory(src) // Since the model's creation will immediately deposit items into our inventory, the inventory must be created first.
 	apply_model(model, FALSE)
 	apply_skin(skin, FALSE, FALSE)
 
@@ -130,7 +129,6 @@
 	if(shell)
 		GLOB.available_ai_shells -= src
 
-	QDEL_NULL(internal_inventory)
 	QDEL_NULL(modularInterface)
 	QDEL_NULL(wires)
 	QDEL_NULL(model)
@@ -1010,10 +1008,6 @@
 
 /// Applies a model to the cyborg.
 /mob/living/silicon/robot/proc/apply_model(datum/robot_model/new_robot_model, should_notify_ai = TRUE)
-	// Drops all of the items that may be stored by the cyborg.
-	for(var/obj/item/storage/bag in internal_inventory.contents)
-		for(var/obj/item in bag)
-			item.forceMove(drop_location())
 	// Upgrades don't work if there is a new model now.
 	for(var/obj/item/borg/upgrade/upgrade_item in upgrades)
 		upgrade_item.forceMove(get_turf(src))

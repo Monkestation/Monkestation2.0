@@ -54,14 +54,14 @@
 /// Helper for cyborgs unequipping things.
 /mob/living/silicon/robot/proc/deactivate_module(obj/item/item_module)
 	REMOVE_TRAIT(item_module, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
-	transferItemToLoc(item_module, newloc = internal_inventory)
+	transferItemToLoc(item_module, newloc = model.inventory_holder)
 
 /mob/living/silicon/robot/doUnEquip(obj/item/item_dropping, force, atom/newloc, no_move, invdrop, silent)
 	// Cyborgs can drop items that aren't directly associated with our model / internal inventory, such as: items from our apparatus module(s).
 	if(isnull(model) || !(item_dropping in model.usable_modules))
 		return ..()
 
-	if(newloc != internal_inventory)
+	if(newloc != model.inventory_holder)
 		to_chat(src, span_notice("You can't drop your [item_dropping.name] module."))
 		return FALSE
 
