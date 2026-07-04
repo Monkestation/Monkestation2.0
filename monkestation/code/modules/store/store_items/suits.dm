@@ -305,7 +305,8 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 	name = "Captain's Tailcoat"
 	item_path = /obj/item/clothing/suit/armor/vest/capcarapace/tailcoat_captain
 
-/datum/store_item/suit/jacket/tail_coat/name = "Head of Security's Tailcoat"
+/datum/store_item/suit/armor/vest/hos_tailcoat
+	name = "Head of Security's Tailcoat"
 	item_path = /obj/item/clothing/suit/armor/hos_tailcoat
 
 /*

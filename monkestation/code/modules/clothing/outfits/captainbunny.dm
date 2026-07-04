@@ -2,7 +2,7 @@
 	name = "captain's bunny ears"
 	desc = "A pair of dark blue bunny ears attached to a headband. Worn in lieu of the more traditional bicorn hat."
 	icon_state = "captain"
-	icon = 'icons/obj/clothing/captainbunnyobjsprites/bunny_ears.dmi'
+	icon = 'icons/obj/clothing/bunnysprites/bunny_ears.dmi'
 	worn_icon = 'icons/mob/clothing/costumes/bunnysprites/bunny_ears_worn.dmi'
 	inhand_icon_state = "that"
 	armor_type = /datum/armor/bunny_ears_captain
@@ -38,7 +38,7 @@
 	desc = "A nautical coat usually worn by bunny themed captains. It’s reinforced with genetically modified armored blue rabbit fluff."
 	icon_state = "captain"
 	inhand_icon_state = null
-	icon = 'icons/obj/clothing/captainbunnyobjsprites/tailcoats.dmi'
+	icon = 'icons/obj/clothing/bunnysprites/tailcoats.dmi'
 	worn_icon = 'icons/mob/clothing/costumes/bunnysprites/tailcoats_worn.dmi'
 	body_parts_covered = CHEST|GROIN|ARMS
 	armor_type = /datum/armor/tailcoat_captain
@@ -57,7 +57,7 @@
 /obj/item/clothing/neck/tie/bunnytie/captain
 	name = "captain's bowtie"
 	desc = "A blue tie that includes a collar. Looking commanding!"
-	icon = 'icons/obj/clothing/captainbunnyobjsprites/neckwear.dmi'
+	icon = 'icons/obj/clothing/bunnysprites/neckwear.dmi'
 	worn_icon = 'icons/mob/clothing/costumes/bunnysprites/neckwear_worn.dmi'
 	icon_state = "bowtie_collar_captain_tied"
 	tie_type = "bowtie_collar_captain"

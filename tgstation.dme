@@ -7768,6 +7768,7 @@
 #include "monkestation\code\modules\clothing\neck\neckties.dm"
 #include "monkestation\code\modules\clothing\outfits\bunny.dm"
 #include "monkestation\code\modules\clothing\outfits\captainbunny.dm"
+#include "monkestation\code\modules\clothing\outfits\HoSbunny.dm"
 #include "monkestation\code\modules\clothing\outfits\special.dm"
 #include "monkestation\code\modules\clothing\outfits\standard.dm"
 #include "monkestation\code\modules\clothing\shoes\boots.dm"
