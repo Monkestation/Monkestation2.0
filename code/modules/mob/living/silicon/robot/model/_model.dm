@@ -103,6 +103,7 @@
 		if(ispath(possible_module))
 			continue
 		add_module(possible_module)
+	inventory_holder.atom_storage.refresh_views()
 
 /// Gets all modules that should be accessible to the owner.
 /datum/robot_model/proc/get_usable_modules()
@@ -110,8 +111,6 @@
 
 /// Adds an module.
 /datum/robot_model/proc/add_module(obj/item/module_to_add, externally_added, requires_rebuild)
-	if(!cyborg_owner)
-		return
 	if(isstack(module_to_add))
 		var/obj/item/stack/sheet_module = module_to_add
 		if(ispath(sheet_module.source, /datum/robot_energy_storage))
@@ -119,7 +118,6 @@
 		if(istype(sheet_module.source))
 			sheet_module.cost = max(sheet_module.cost, 1) // Must not cost 0 to prevent div/0 errors.
 			sheet_module.is_cyborg = TRUE
-	usable_modules += module_to_add
 	module_to_add.forceMove(inventory_holder)
 	module_to_add.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	module_to_add.obj_flags |= ABSTRACT
