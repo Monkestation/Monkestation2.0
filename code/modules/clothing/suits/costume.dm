@@ -553,7 +553,6 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/suit/costume/soviet
 	name = "soviet armored coat"
@@ -585,7 +584,6 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/suit/costume/pg
 	name = "powder ganger jacket"
@@ -594,7 +592,6 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/suit/costume/irs
 	name = "internal revenue service jacket"
@@ -603,7 +600,6 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/suit/costume/irs/Initialize(mapload)
 	. = ..()
