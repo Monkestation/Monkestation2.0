@@ -83,7 +83,7 @@
 #define DNA_FEATURE_BLOCKS 21
 
 #define DNA_SEQUENCE_LENGTH 4
-#define DNA_MUTATION_BLOCKS 8
+#define DNA_MUTATION_BLOCKS 9
 #define DNA_UNIQUE_ENZYMES_LEN 32
 
 ///flag for the transfer_flag argument from dna/proc/copy_dna(). This one makes it so the SE is copied too.
