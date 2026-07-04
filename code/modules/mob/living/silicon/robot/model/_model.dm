@@ -157,7 +157,7 @@
 			continue
 		if(istype(usable_module, /obj/item/hand_labeler/cyborg))
 			var/obj/item/hand_labeler/cyborg/labeler = usable_module
-			labeler.labels_left = 30
+			labeler.labels_left = initial(labeler.labels_left)
 			continue
 		if(istype(usable_module, /obj/item/lightreplacer))
 			var/obj/item/lightreplacer/light_replacer = usable_module
