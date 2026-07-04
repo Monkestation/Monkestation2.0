@@ -193,14 +193,14 @@
 	desc = "A special apparatus for carrying beakers without spilling the contents."
 	icon_state = "borg_beaker_apparatus"
 	whitelist_storables = list(
-    /obj/item/reagent_containers/blood,
+		/obj/item/reagent_containers/blood,
 		/obj/item/reagent_containers/chem_pack,
 		/obj/item/reagent_containers/cup/glass/waterbottle,
 		/obj/item/reagent_containers/cup/vial,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
-		/obj/item/weapon/virusdish
+		/obj/item/weapon/virusdish,
 	)
 
 /obj/item/borg/apparatus/beaker/Initialize(mapload)
