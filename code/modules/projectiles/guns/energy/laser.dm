@@ -12,6 +12,9 @@
 /obj/item/gun/energy/laser/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_ALLSTAR)
 
+/obj/item/gun/energy/laser/hitscan
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/hitscan)
+
 /obj/item/gun/energy/laser/lasrifle
 	name = "laser rifle"
 	desc = "An extremely accurate and deadly pulsed laser weapon based upon a vastly older original design. Unfortunately, it's optics were crippled by penny-pinching, so the dropoff is significant."

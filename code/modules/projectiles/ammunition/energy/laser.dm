@@ -2,6 +2,11 @@
 	projectile_type = /obj/projectile/beam/laser
 	e_cost = LASER_SHOTS(12, STANDARD_CELL_CHARGE)
 	select_name = "kill"
+	select_sound = 'sound/weapons/gun/energy/egun_toggle_laser.ogg'
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
+
+/obj/item/ammo_casing/energy/laser/hitscan
+	projectile_type = /obj/projectile/beam/laser/hitscan
 
 /obj/item/ammo_casing/energy/laser/hellfire
 	projectile_type = /obj/projectile/beam/laser/hellfire
@@ -17,6 +22,8 @@
 	projectile_type = /obj/projectile/beam/laser
 	e_cost = LASER_SHOTS(16, STANDARD_CELL_CHARGE)
 	select_name = "kill"
+	select_sound = 'sound/weapons/gun/energy/egun_toggle_laser.ogg'
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
 
 /obj/item/ammo_casing/energy/laser/lasrifle
 	projectile_type = /obj/projectile/beam/laser/lasrifle
@@ -95,11 +102,13 @@
 	e_cost = LASER_SHOTS(200, STANDARD_CELL_CHARGE * 40)
 	select_name = "DESTROY"
 	fire_sound = 'sound/weapons/pulse.ogg'
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
 
 /obj/item/ammo_casing/energy/laser/bluetag
 	projectile_type = /obj/projectile/beam/lasertag/bluetag
 	select_name = "bluetag"
 	harmful = FALSE
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
 
 /obj/item/ammo_casing/energy/laser/bluetag/hitscan
 	projectile_type = /obj/projectile/beam/lasertag/bluetag/hitscan
@@ -108,6 +117,7 @@
 	projectile_type = /obj/projectile/beam/lasertag/redtag
 	select_name = "redtag"
 	harmful = FALSE
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
 
 /obj/item/ammo_casing/energy/laser/redtag/hitscan
 	projectile_type = /obj/projectile/beam/lasertag/redtag/hitscan
@@ -151,7 +161,7 @@
 	slot_flags = null
 	projectile_type = /obj/projectile/beam
 	fire_sound = 'sound/weapons/laser.ogg'
-	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
 
 /obj/item/ammo_casing/laser/Initialize(mapload)
 	. = ..()
