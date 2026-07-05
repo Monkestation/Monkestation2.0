@@ -121,7 +121,7 @@
 		to_chat(user, span_warning("[src] does not need repairing!"))
 		return
 	. = TRUE
-	if (!tool.tool_start_check(user, amount=1)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
+	if(!tool.tool_start_check(user, amount = 1)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
 		return
 	adjustBruteLoss(-5)
 	add_fingerprint(user)
