@@ -361,7 +361,7 @@
 
 		if(crypto_mining)
 			points *= 0.5
-			var/bitcoin_mined = points * (1 - 0.05 * sqrt(points))
+			var/bitcoin_mined = (points * 2) * (1 - 0.04 * sqrt(points))
 			bitcoin_mined = clamp(bitcoin_mined, 0, MAX_AI_BITCOIN_MINED_PER_TICK)
 			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			if(D)
