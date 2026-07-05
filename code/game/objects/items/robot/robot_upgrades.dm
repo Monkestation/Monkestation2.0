@@ -98,7 +98,7 @@
 	desc = "Used to cool a mounted disabler, increasing the potential current in it and thus its recharge rate."
 	icon_state = "module_security"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/security)
+	model_type = list(/obj/item/robot_model/security)
 	model_flags = BORG_MODEL_SECURITY
 	// We handle this in a custom way.
 	allow_duplicates = TRUE
@@ -152,7 +152,7 @@
 	desc = "A diamond drill replacement for the mining model's standard drill."
 	icon_state = "module_miner"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/miner)
+	model_type = list(/obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_MINER
 	items_to_add = list(/obj/item/pickaxe/drill/diamonddrill)
 	items_to_remove = list(/obj/item/pickaxe/drill/cyborg, /obj/item/shovel)
@@ -162,7 +162,7 @@
 	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
 	icon_state = "module_miner"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/miner)
+	model_type = list(/obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_MINER
 	items_to_add = list(/obj/item/storage/bag/ore/holding)
 	items_to_remove = list(/obj/item/storage/bag/ore/cyborg)
@@ -172,7 +172,7 @@
 	desc = "A trash bag of holding replacement for the janiborg's standard trash bag."
 	icon_state = "module_janitor"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/janitor)
+	model_type = list(/obj/item/robot_model/janitor)
 	model_flags = BORG_MODEL_JANITOR
 	items_to_add = list(/obj/item/storage/bag/trash/bluespace)
 	items_to_remove = list(/obj/item/storage/bag/trash)
@@ -182,7 +182,7 @@
 	desc = "An advanced mop replacement for the janiborg's standard mop."
 	icon_state = "module_janitor"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/janitor)
+	model_type = list(/obj/item/robot_model/janitor)
 	model_flags = BORG_MODEL_JANITOR
 	items_to_add = list(/obj/item/mop/advanced)
 	items_to_remove = list(/obj/item/mop)
@@ -192,7 +192,7 @@
 	desc = "A tiny heating device to repair burnt and damaged hull platings with."
 	icon_state = "module_janitor"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/janitor)
+	model_type = list(/obj/item/robot_model/janitor)
 	model_flags = BORG_MODEL_JANITOR
 	items_to_add = list(/obj/item/cautery/prt)
 
@@ -225,7 +225,7 @@
 	icon_state = "module_miner"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | FREEZE_PROOF
 	require_model = TRUE
-	model_type = list(/datum/robot_model/miner)
+	model_type = list(/obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_MINER
 
 /obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/borg, user = usr)
@@ -347,7 +347,7 @@
 		to produce more advanced and complex medical reagents."
 	icon_state = "module_medical"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/medical)
+	model_type = list(/obj/item/robot_model/medical)
 	model_flags = BORG_MODEL_MEDICAL
 	var/list/additional_reagents = list()
 
@@ -406,7 +406,7 @@
 		defibrillator, for on the scene revival."
 	icon_state = "module_medical"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/medical)
+	model_type = list(/obj/item/robot_model/medical)
 	model_flags = BORG_MODEL_MEDICAL
 	items_to_add = list(/obj/item/shockpaddles/cyborg)
 
@@ -445,7 +445,7 @@
 	desc = "An upgrade to the Medical model, installing a surgical databank that can record available surgeries and gives instructions on how to perform surgical procedures."
 	icon_state = "module_medical"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/medical, /datum/robot_model/syndicate/medical)
+	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate/medical)
 	model_flags = BORG_MODEL_MEDICAL
 	/// Action that looks for nearby objects to load new surgeries from.
 	var/datum/action/database_scanner
@@ -596,7 +596,7 @@
 	desc = "A bluespace rapid part exchange device for the engineering cyborg."
 	icon_state = "module_engineer"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/engineering, /datum/robot_model/syndicate/saboteur, /datum/robot_model/science)
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/syndicate/saboteur, /obj/item/robot_model/science)
 	model_flags = BORG_MODEL_ENGINEERING
 
 /obj/item/borg/upgrade/bs_rped/action(mob/living/silicon/robot/borg, user = usr)
@@ -645,7 +645,7 @@
 	desc = "A crew pinpointer module for the medical cyborg. Permits remote access to the crew monitor."
 	icon_state = "module_medical"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/medical, /datum/robot_model/syndicate/medical)
+	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate/medical)
 	model_flags = BORG_MODEL_MEDICAL
 	items_to_add = list(/obj/item/pinpointer/crew)
 	var/datum/action/crew_monitor
@@ -679,7 +679,7 @@
 	name = "borg model picker (Standard)"
 	desc = "Allows you to to turn a cyborg into a standard cyborg."
 	icon_state = "module_general"
-	var/datum/robot_model/new_model = null
+	var/obj/item/robot_model/new_model = null
 
 /obj/item/borg/upgrade/transform/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
@@ -694,14 +694,14 @@
 	name = "borg model picker (Clown)"
 	desc = "Allows you to turn a cyborg into a clown, honk."
 	icon_state = "module_honk"
-	new_model = /datum/robot_model/clown
+	new_model = /obj/item/robot_model/clown
 
 /obj/item/borg/upgrade/extra_sheet_manipulator
 	name = "secondary material manipulation apparatus"
 	desc = "A supplementary apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles."
 	icon_state = "module_engineer"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/engineering, /datum/robot_model/syndicate/saboteur)
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/syndicate/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
 	items_to_add = list(/obj/item/borg/apparatus/sheet_manipulator/extra)
 
@@ -710,7 +710,7 @@
 	desc = "An energy probe that can charge batteries and energy-dependent weapons (using the cyborg battery, in both directions), as well as recharge the cyborg from all types of chargers, the effectiveness depends on the components of the machine"
 	icon_state = "module_engineer"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/engineering)
+	model_type = list(/obj/item/robot_model/engineering)
 	model_flags = BORG_MODEL_ENGINEERING
 	items_to_add = list(/obj/item/borg/charger)
 
@@ -719,7 +719,7 @@
 	desc = "An upgrade that improves the standard built-in gas analyzer's range."
 	icon_state = "module_engineer"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/engineering, /datum/robot_model/syndicate/saboteur) // Engineering-exclusive. Do not give this to science cyborgs.
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/syndicate/saboteur) // Engineering-exclusive. Do not give this to science cyborgs.
 	model_flags = BORG_MODEL_ENGINEERING
 
 /obj/item/borg/upgrade/ranged_analyzer/action(mob/living/silicon/robot/borg, user = usr)
@@ -749,7 +749,7 @@
 	desc = "A supplementary beaker storage apparatus for medical cyborgs."
 	icon_state = "module_medical"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/medical)
+	model_type = list(/obj/item/robot_model/medical)
 	model_flags = BORG_MODEL_MEDICAL
 	items_to_add = list(/obj/item/borg/apparatus/beaker/extra)
 
@@ -776,7 +776,7 @@
 			Allowing the cyborg to signal nanites in crew."
 	icon_state = "module_peace"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/peacekeeper, /datum/robot_model/security, /datum/robot_model/science)
+	model_type = list(/obj/item/robot_model/peacekeeper, /obj/item/robot_model/security, /obj/item/robot_model/science)
 	model_flags = BORG_MODEL_PEACEKEEPER
 	items_to_add = list(/obj/item/nanite_remote/cyborg)
 
@@ -785,7 +785,7 @@
 	desc = "An improved hydraulic clamp that trades its storage quantity to allow for bigger packages to be picked up instead!"
 	icon_state = "module_cargo"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/cargo)
+	model_type = list(/obj/item/robot_model/cargo)
 	model_flags = BORG_MODEL_CARGO
 	items_to_add = list(/obj/item/borg/hydraulic_clamp/better)
 
@@ -794,7 +794,7 @@
 	desc = "An upgrade for service model cyborgs that allows them to produce solid condiments."
 	icon_state = "module_service"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/service)
+	model_type = list(/obj/item/robot_model/service)
 	model_flags = BORG_MODEL_SERVICE
 	items_to_add = list(/obj/item/reagent_containers/borghypo/condiment_synthesizer)
 
@@ -858,14 +858,14 @@
 	name = "borg model picker (CentCom)"
 	desc = "Allows you to to turn a cyborg into a CentCom cyborg."
 	icon_state = "module_general"
-	new_model = /datum/robot_model/centcom
+	new_model = /obj/item/robot_model/centcom
 
 /obj/item/borg/upgrade/nvmeson
 	name = "night vision mesons upgrade"
 	desc = "An augmentation to the standard meson sensor array seen on mining and engineering cyborgs to increase low light visibility."
 	icon_state = "module_engineer"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/engineering, /datum/robot_model/miner)
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_ENGINEERING
 
 /obj/item/borg/upgrade/nvmeson/action(mob/living/silicon/robot/borg, user = usr)
@@ -901,7 +901,7 @@
 	desc = "An updated sensor and driver kit for medical cyborgs. Allowing the cyborg unit to perform more in-depth analysis of patients."
 	icon_state = "module_medical"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/medical, /datum/robot_model/syndicate/medical) // The fact that syndicate medical doesn't get advanced stock surprises me just as much as you.
+	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate/medical) // The fact that syndicate medical doesn't get advanced stock surprises me just as much as you.
 	model_flags = BORG_MODEL_MEDICAL
 
 /obj/item/borg/upgrade/adv_healthanalyzer/action(mob/living/silicon/robot/borg, user = usr)
@@ -923,7 +923,7 @@
 	desc = "An upgrade allowing the medical module to assist a patient with breathing."
 	icon_state = "module_medical"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/medical, /datum/robot_model/syndicate/medical)
+	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate/medical)
 	model_flags = BORG_MODEL_MEDICAL
 	items_to_add = list(/obj/item/breathing_bag)
 
@@ -933,7 +933,7 @@
 		surgical omnitool, to be on par with advanced surgical tools, allowing for faster surgery."
 	icon_state = "module_medical"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/medical, /datum/robot_model/syndicate/medical)
+	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate/medical)
 	model_flags = BORG_MODEL_MEDICAL
 
 /obj/item/borg/upgrade/surgery_omnitool/action(mob/living/silicon/robot/borg, user = usr)
@@ -964,7 +964,7 @@
 	desc = "An upgrade for science cyborgs that enables them to hold and manipulate more items with their apparatus."
 	icon_state = "module_science"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/science)
+	model_type = list(/obj/item/robot_model/science)
 	model_flags = BORG_MODEL_SCIENCE
 	var/list/storables_to_add = list()
 
@@ -1039,7 +1039,7 @@
 	desc = "An upgrade for science cyborgs that enables them to perform work in xenobiology."
 	icon_state = "module_science"
 	require_model = TRUE
-	model_type = list(/datum/robot_model/science)
+	model_type = list(/obj/item/robot_model/science)
 	model_flags = BORG_MODEL_SCIENCE
 	items_to_add = list(
 		/obj/item/vacuum_pack,

@@ -1,4 +1,4 @@
-/datum/robot_model/standard
+/obj/item/robot_model/standard
 	name = "Standard"
 	hud_icon_state = "standard"
 	default_skin = /datum/robot_skin/standard/default

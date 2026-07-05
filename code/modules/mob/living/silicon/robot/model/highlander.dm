@@ -1,4 +1,4 @@
-/datum/robot_model/highlander
+/obj/item/robot_model/highlander
 	name = "Highlander"
 	hud_icon_state = "kilt"
 	default_skin = /datum/robot_skin/highlander/default
@@ -9,7 +9,7 @@
 	breakable_modules = FALSE
 	traits = list(TRAIT_PUSHIMMUNE)
 
-/datum/robot_model/highlander/New(mob/living/silicon/robot/new_cyborg_owner)
+/obj/item/robot_model/highlander/Initialize(mapload)
 	. = ..()
 	if(!cyborg_owner)
 		return
@@ -26,7 +26,7 @@
 		nukedisk_pinpointer.attack_self(cyborg_owner)
 	cyborg_owner.break_cyborg_slot(BORG_CHOOSE_MODULE_THREE)
 
-/datum/robot_model/highlander/Destroy()
+/obj/item/robot_model/highlander/Destroy()
 	if(cyborg_owner)
 		cyborg_owner.faction |= FACTION_SILICON
 		qdel(cyborg_owner.radio)

@@ -1,4 +1,4 @@
-/datum/robot_model/janitor
+/obj/item/robot_model/janitor
 	name = "Janitor"
 	hud_icon_state = "janitor"
 	default_skin = /datum/robot_skin/janitor/default
@@ -34,7 +34,7 @@
 	/// The weakref to the wash toggle action we own.
 	var/datum/weakref/wash_toggle_ref
 
-/datum/robot_model/janitor/New(mob/living/silicon/robot/new_cyborg_owner)
+/obj/item/robot_model/janitor/Initialize(mapload)
 	. = ..()
 	if(!cyborg_owner)
 		return
@@ -42,12 +42,12 @@
 	wash_toggle.Grant(cyborg_owner)
 	wash_toggle_ref = WEAKREF(wash_toggle)
 
-/datum/robot_model/janitor/Destroy()
+/obj/item/robot_model/janitor/Destroy()
 	if(cyborg_owner)
 		QDEL_NULL(wash_toggle_ref)
 	return ..()
 
-/datum/robot_model/janitor/on_cyborg_recharge(coeff)
+/obj/item/robot_model/janitor/on_cyborg_recharge(coeff)
 	. = ..()
 	for(var/obj/item/usable_module in usable_modules)
 		if(istype(usable_module, /obj/item/reagent_containers/spray/cyborg_drying))

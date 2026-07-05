@@ -1,4 +1,4 @@
-/datum/robot_model/miner
+/obj/item/robot_model/miner
 	name = "Miner"
 	hud_icon_state = "miner"
 	default_skin = /datum/robot_skin/miner/default
@@ -39,7 +39,7 @@
 	/// The weakref to the energy shield toggle action we own.
 	var/datum/weakref/energy_shield_ref
 
-/datum/robot_model/miner/New(mob/living/silicon/robot/new_cyborg_owner)
+/obj/item/robot_model/miner/Initialize(mapload)
 	. = ..()
 	if(!cyborg_owner)
 		return
@@ -50,7 +50,7 @@
 	energy_shield_action.Grant(cyborg_owner)
 	energy_shield_ref = WEAKREF(energy_shield_action)
 
-/datum/robot_model/miner/Destroy()
+/obj/item/robot_model/miner/Destroy()
 	if(cyborg_owner)
 		QDEL_NULL(energy_shield_ref)
 	return ..()

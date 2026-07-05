@@ -1,4 +1,4 @@
-/datum/robot_model/clown
+/obj/item/robot_model/clown
 	name = "Clown"
 	hud_icon_state = "brobot"
 	default_skin = /datum/robot_skin/clown/default

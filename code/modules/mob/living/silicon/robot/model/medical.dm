@@ -1,5 +1,5 @@
 
-/datum/robot_model/medical
+/obj/item/robot_model/medical
 	name = "Medical"
 	hud_icon_state = "medical"
 	default_skin = /datum/robot_skin/medical/default

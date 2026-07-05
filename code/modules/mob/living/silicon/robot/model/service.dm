@@ -1,4 +1,4 @@
-/datum/robot_model/service
+/obj/item/robot_model/service
 	name = "Service"
 	hud_icon_state = "service"
 	default_skin = /datum/robot_skin/service/default
@@ -55,14 +55,7 @@
 
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 
-/datum/robot_model/service/Destroy()
-	if(cyborg_owner)
-		qdel(cyborg_owner.GetComponent(/datum/component/personal_crafting/borg))
-		for(var/atom/movable/screen/craft/button in cyborg_owner.hud_used.static_inventory)
-			qdel(button)
-	return ..()
-
-/datum/robot_model/service/New(mob/living/silicon/robot/new_cyborg_owner)
+/obj/item/robot_model/service/Initialize(mapload)
 	. = ..()
 	if(cyborg_owner)
 		cyborg_owner.AddComponent(/datum/component/personal_crafting/borg)
@@ -71,3 +64,10 @@
 		crafting.mode = TRUE
 		if(cyborg_owner.client)
 			crafting.create_mob_button(cyborg_owner, cyborg_owner.client)
+
+/obj/item/robot_model/service/Destroy()
+	if(cyborg_owner)
+		qdel(cyborg_owner.GetComponent(/datum/component/personal_crafting/borg))
+		for(var/atom/movable/screen/craft/button in cyborg_owner.hud_used.static_inventory)
+			qdel(button)
+	return ..()

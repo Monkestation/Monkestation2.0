@@ -14,9 +14,9 @@
 	/// The cyborg that is currently disguised.
 	var/mob/living/silicon/robot/disguised_cyborg
 	/// The typepath of the robot model that we will be using as a disguise.
-	var/datum/robot_model/disguise_model_type = /datum/robot_model/engineering
+	var/obj/item/robot_model/disguise_model_type = /obj/item/robot_model/engineering
 	/// The typepath of the robot model that we previously had before disguising.
-	var/datum/robot_model/original_model_type
+	var/obj/item/robot_model/original_model_type
 	/// The typepath of the robot skin that we will be using as a disguise.
 	var/datum/robot_skin/disguise_skin_type
 	/// The typepath of the robot skin that we previously had before disguising.
@@ -84,7 +84,7 @@
 		to_chat(user, span_notice("This device doesn't seem to work for non-cyborgs."))
 		return
 	var/mob/living/silicon/robot/cyborg_user = user
-	var/datum/robot_model/chosen_robot_model = cyborg_user.prompt_model_selection()
+	var/obj/item/robot_model/chosen_robot_model = cyborg_user.prompt_model_selection()
 	if(!chosen_robot_model)
 		return
 	var/datum/robot_skin/chosen_robot_skin = cyborg_user.prompt_skin_selection(chosen_robot_model)
@@ -100,7 +100,7 @@
 	return CLICK_ACTION_SUCCESS
 
 /// Makes the cyborg appear as if they look like a certain model and certain skin.
-/obj/item/borg_chameleon/proc/apply_appearance_as(mob/living/silicon/robot/cyborg_user, datum/robot_model/disguising_model, datum/robot_skin/disguising_skin)
+/obj/item/borg_chameleon/proc/apply_appearance_as(mob/living/silicon/robot/cyborg_user, obj/item/robot_model/disguising_model, datum/robot_skin/disguising_skin)
 	cyborg_user.model.name = initial(disguising_model.name) // Will fool people examining us.
 	cyborg_user.apply_skin(disguising_skin, FALSE, FALSE)
 

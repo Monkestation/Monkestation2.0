@@ -23,10 +23,10 @@
 		robot_owner.uneq_active()
 		return
 	// Observers can look at a cyborg's inventory, so we ignore parent return value here, unlike everywhere else.
-	if(usr.active_storage == robot_owner.model.inventory_holder.atom_storage)
-		robot_owner.model.inventory_holder.atom_storage.hide_contents(usr)
+	if(usr.active_storage == robot_owner.model.atom_storage)
+		robot_owner.model.atom_storage.hide_contents(usr)
 	else
-		robot_owner.model.inventory_holder.atom_storage.open_storage(usr)
+		robot_owner.model.atom_storage.open_storage(usr)
 	return TRUE
 
 /atom/movable/screen/robot/module1

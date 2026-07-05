@@ -1,4 +1,4 @@
-/datum/robot_model/centcom
+/obj/item/robot_model/centcom
 	name = "CentCom"
 	default_skin = /datum/robot_skin/centcom/default
 	available_skins = list(
@@ -31,7 +31,7 @@
 	)
 	radio_channels = list(RADIO_CHANNEL_CENTCOM)
 
-/datum/robot_model/centcom/New(mob/living/silicon/robot/new_cyborg_owner)
+/obj/item/robot_model/centcom/Initialize(mapload)
 	. = ..()
 	if(!cyborg_owner)
 		return
@@ -55,7 +55,7 @@
 	cyborg_owner.emagged = TRUE
 	cyborg_owner.centcom = TRUE
 
-/datum/robot_model/centcom/Destroy()
+/obj/item/robot_model/centcom/Destroy()
 	if(cyborg_owner)
 		qdel(cyborg_owner.GetComponent(/datum/component/personal_crafting/borg))
 		for(var/atom/movable/screen/craft/button in cyborg_owner.hud_used.static_inventory)

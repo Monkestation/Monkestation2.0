@@ -1,4 +1,4 @@
-/datum/robot_model/security
+/obj/item/robot_model/security
 	name = "Security"
 	hud_icon_state = "security"
 	default_skin = /datum/robot_skin/security/default
@@ -22,7 +22,7 @@
 	radio_channels = list(RADIO_CHANNEL_SECURITY)
 	traits = list(TRAIT_PUSHIMMUNE)
 
-/datum/robot_model/security/New(mob/living/silicon/robot/new_cyborg_owner)
+/obj/item/robot_model/security/Initialize(mapload)
 	. = ..()
 	if(!cyborg_owner)
 		return

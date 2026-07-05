@@ -6,6 +6,7 @@
 	silent = TRUE
 	screen_max_columns = 8
 	storage_type = /datum/storage_interface/silicon
+	emp_shielded = TRUE
 
 /datum/storage/cyborg_internal_storage/can_insert(obj/item/to_insert, mob/living/silicon/robot/user, messages = TRUE, force = STORAGE_NOT_LOCKED)
 	return (to_insert in user.model.usable_modules)
@@ -14,8 +15,7 @@
 	user.deactivate_module(to_insert)
 
 /datum/storage/cyborg_internal_storage/get_contents_to_show()
-	var/mob/living/silicon/robot/cyborg_owner = real_location.loc
-	var/datum/robot_model/model = cyborg_owner.model
+	var/obj/item/robot_model/model = real_location
 	return model.usable_modules
 
 /**
@@ -27,8 +27,7 @@
  * to put items in, you can click on the slot you took it out from, or use the dedicated "store" button.
  */
 /datum/storage/cyborg_internal_storage/orient_storage()
-	var/mob/living/silicon/robot/cyborg_owner = real_location.loc
-	var/datum/robot_model/model = cyborg_owner.model
+	var/obj/item/robot_model/model = real_location
 
 	var/adjusted_contents = length(model.usable_modules)
 	var/list/datum/numbered_display/numbered_contents

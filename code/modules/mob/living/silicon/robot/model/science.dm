@@ -1,4 +1,4 @@
-/datum/robot_model/science
+/obj/item/robot_model/science
 	name = "Science"
 	hud_icon_state = "science"
 	default_skin = /datum/robot_skin/science/default

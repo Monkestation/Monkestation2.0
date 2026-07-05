@@ -1,4 +1,4 @@
-/datum/robot_model/syndicate
+/obj/item/robot_model/syndicate
 	name = "Syndicate Assault"
 	hud_icon_state = "malf"
 	default_skin = /datum/robot_skin/syndicate/default
@@ -14,13 +14,13 @@
 	)
 	traits = list(TRAIT_PUSHIMMUNE)
 
-/datum/robot_model/syndicate/New(mob/living/silicon/robot/new_cyborg_owner)
+/obj/item/robot_model/syndicate/Initialize(mapload)
 	. = ..()
 	if(!cyborg_owner)
 		return
 	cyborg_owner.faction -= FACTION_SILICON
 
-/datum/robot_model/syndicate/Destroy()
+/obj/item/robot_model/syndicate/Destroy()
 	if(cyborg_owner)
 		cyborg_owner.faction |= FACTION_SILICON
 	return ..()

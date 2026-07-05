@@ -112,7 +112,7 @@
  * and also borg emag code.
  */
 /mob/living/silicon/robot/proc/set_modularInterface_theme()
-	if(istype(model, /datum/robot_model/syndicate) || (emagged && !centcom))
+	if(istype(model, /obj/item/robot_model/syndicate) || (emagged && !centcom))
 		modularInterface.device_theme = PDA_THEME_SYNDICATE
 		modularInterface.icon_state = "tablet-silicon-syndicate"
 	else
@@ -629,7 +629,7 @@
 	custom_name = newname
 
 /mob/living/silicon/robot/proc/has_model()
-	if(!model || model.type == /datum/robot_model)
+	if(!model || model.type == /obj/item/robot_model)
 		return FALSE
 	return TRUE
 
@@ -957,14 +957,14 @@
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
 	logevent("Chassis model has been reset.")
 	log_silicon("CYBORG: [key_name(src)] has reset their cyborg model.")
-	apply_model(/datum/robot_model, FALSE)
+	apply_model(/obj/item/robot_model, FALSE)
 	apply_skin(model.default_skin)
 	revert_shell()
 	return TRUE
 
 /// Prompts the cyborg with what model/skin that they want and applies the changes.
 /mob/living/silicon/robot/proc/prompt_full_transformation()
-	var/datum/robot_model/chosen_robot_model = prompt_model_selection()
+	var/obj/item/robot_model/chosen_robot_model = prompt_model_selection()
 	if(!chosen_robot_model)
 		return FALSE
 	var/datum/robot_skin/chosen_robot_skin = prompt_skin_selection(chosen_robot_model)
@@ -983,14 +983,14 @@
 	var/input_model = show_radial_menu(src, src, GLOB.cyborg_base_models_icon_list, custom_check = CALLBACK(src, PROC_REF(check_menu), src), radius = 42, require_near = TRUE)
 	if(!input_model)
 		return FALSE
-	var/datum/robot_model/picked_robot_model = GLOB.cyborg_model_list[input_model]
+	var/obj/item/robot_model/picked_robot_model = GLOB.cyborg_model_list[input_model]
 	if(!picked_robot_model)
 		return FALSE
 	return picked_robot_model
 
 /// Prompts the cyborg with a radial wheel to pick a skin that they want.
-/mob/living/silicon/robot/proc/prompt_skin_selection(datum/robot_model/robot_model_typepath)
-	var/datum/robot_model/temporary_robot_model = new robot_model_typepath() // We just want one of its list.
+/mob/living/silicon/robot/proc/prompt_skin_selection(obj/item/robot_model/robot_model_typepath)
+	var/obj/item/robot_model/temporary_robot_model = new robot_model_typepath(null) // We just want one of its list.
 	var/list/reskin_icons = list()
 	for(var/datum/robot_skin/robot_skin as anything in temporary_robot_model.available_skins)
 		reskin_icons[robot_skin] = image(icon = robot_skin.icon, icon_state = robot_skin.icon_state)
@@ -1007,7 +1007,7 @@
 	return TRUE
 
 /// Applies a model to the cyborg.
-/mob/living/silicon/robot/proc/apply_model(datum/robot_model/new_robot_model, should_notify_ai = TRUE)
+/mob/living/silicon/robot/proc/apply_model(obj/item/robot_model/new_robot_model, should_notify_ai = TRUE)
 	// Upgrades don't work if there is a new model now.
 	for(var/obj/item/borg/upgrade/upgrade_item in upgrades)
 		upgrade_item.forceMove(get_turf(src))

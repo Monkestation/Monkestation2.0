@@ -1,4 +1,4 @@
-/datum/robot_model/syndicate/medical
+/obj/item/robot_model/syndicate/medical
 	name = "Syndicate Medical"
 	hud_icon_state = "malf"
 	default_skin = /datum/robot_skin/syndicate_medical/default

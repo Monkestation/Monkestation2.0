@@ -24,7 +24,7 @@
 	 *
 	 * Do not directly set this outside of Initialize! Use [/proc/apply_model] instead!
 	 */
-	var/datum/robot_model/model = /datum/robot_model
+	var/obj/item/robot_model/model = /obj/item/robot_model
 	/**
 	 * The skin that we are currently using. Will be created & applied upon initialization.
 	 *
@@ -176,7 +176,7 @@
 	cell = null
 
 /mob/living/silicon/robot/model
-	model = /datum/robot_model // Unneeded, but it looks neat to have consistent variables.
+	model = /obj/item/robot_model // Unneeded, but it looks neat to have consistent variables.
 	icon_state = "robot"
 
 /mob/living/silicon/robot/model/Initialize(mapload)
@@ -184,60 +184,60 @@
 	return ..()
 
 /mob/living/silicon/robot/model/cargo
-	model = /datum/robot_model/cargo
+	model = /obj/item/robot_model/cargo
 	icon = CYBORG_ICON_CARGO // The icon will change itself later.
 	icon_state = "cargoborg"
 
 /mob/living/silicon/robot/model/centcom
-	model = /datum/robot_model/centcom
+	model = /obj/item/robot_model/centcom
 	icon_state = "centcomborg"
 
 /mob/living/silicon/robot/model/clown
-	model = /datum/robot_model/clown
+	model = /obj/item/robot_model/clown
 	icon_state = "clown"
 
 /mob/living/silicon/robot/model/engineering
-	model = /datum/robot_model/engineering
+	model = /obj/item/robot_model/engineering
 	icon_state = "engineer"
 
 /mob/living/silicon/robot/model/highlander
-	model = /datum/robot_model/highlander
+	model = /obj/item/robot_model/highlander
 	icon_state = "kilt"
 
 /mob/living/silicon/robot/model/janitor
-	model = /datum/robot_model/janitor
+	model = /obj/item/robot_model/janitor
 	icon_state = "janitor"
 
 /mob/living/silicon/robot/model/medical
-	model = /datum/robot_model/medical
+	model = /obj/item/robot_model/medical
 	icon_state = "medical"
 
 /mob/living/silicon/robot/model/miner
-	model = /datum/robot_model/miner
+	model = /obj/item/robot_model/miner
 	icon_state = "miner"
 
 /mob/living/silicon/robot/model/peacekeeper
-	model = /datum/robot_model/peacekeeper
+	model = /obj/item/robot_model/peacekeeper
 	icon_state = "peace"
 
 /mob/living/silicon/robot/model/science
-	model = /datum/robot_model/science
+	model = /obj/item/robot_model/science
 	icon_state = "science"
 
 /mob/living/silicon/robot/model/security
-	model = /datum/robot_model/security
+	model = /obj/item/robot_model/security
 	icon_state = "sec"
 
 /mob/living/silicon/robot/model/service
-	model = /datum/robot_model/service
+	model = /obj/item/robot_model/service
 	icon_state = "brobot"
 
 /mob/living/silicon/robot/model/standard
-	model = /datum/robot_model/standard
+	model = /obj/item/robot_model/standard
 	icon_state = "robot"
 
 /mob/living/silicon/robot/model/syndicate
-	model = /datum/robot_model/syndicate
+	model = /obj/item/robot_model/syndicate
 	icon_state = "synd_sec"
 	faction = list(ROLE_SYNDICATE)
 	req_access = list(ACCESS_SYNDICATE)
@@ -272,7 +272,7 @@
 	to_chat(src, playstyle_string)
 
 /mob/living/silicon/robot/model/syndicate/medical
-	model = /datum/robot_model/syndicate/medical
+	model = /obj/item/robot_model/syndicate/medical
 	icon_state = "synd_medical"
 	playstyle_string = "<span class='big bold'>You are a Syndicate medical cyborg!</span><br>\
 		<b>You are armed with powerful medical tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
@@ -282,7 +282,7 @@
 		<i>Help the operatives secure the disk at all costs!</i></b>"
 
 /mob/living/silicon/robot/model/syndicate/saboteur
-	model = /datum/robot_model/syndicate/saboteur
+	model = /obj/item/robot_model/syndicate/saboteur
 	icon_state = "synd_engi"
 	playstyle_string = "<span class='big bold'>You are a Syndicate saboteur cyborg!</span><br>\
 		<b>You are armed with robust engineering tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
@@ -293,7 +293,7 @@
 		<i>Help the operatives secure the disk at all costs!</i></b>"
 
 /mob/living/silicon/robot/model/syndicate/saboteur/operative
-	model = /datum/robot_model/syndicate/saboteur/operative
+	model = /obj/item/robot_model/syndicate/saboteur/operative
 	playstyle_string = "<span class='big bold'>You are a Syndicate saboteur cyborg!</span><br>\
 		<b>You are armed with robust engineering tools to aid you in your mission: help the operatives secure the golden eye authentication disks. \
 		Your destination tagger will allow you to stealthily traverse the disposal network across the station \

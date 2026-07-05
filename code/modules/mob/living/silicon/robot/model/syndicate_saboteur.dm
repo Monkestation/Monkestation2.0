@@ -1,4 +1,4 @@
-/datum/robot_model/syndicate/saboteur
+/obj/item/robot_model/syndicate/saboteur
 	name = "Syndicate Saboteur"
 	hud_icon_state = "malf"
 	default_skin = /datum/robot_skin/syndicate_saboteur/default
@@ -28,7 +28,7 @@
 	)
 	traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY, TRAIT_KNOW_ENGI_WIRES, TRAIT_KNOW_ROBO_WIRES, TRAIT_CAN_CLIMB_DISPOSALS)
 
-/datum/robot_model/syndicate/saboteur/New(mob/living/silicon/robot/new_cyborg_owner)
+/obj/item/robot_model/syndicate/saboteur/Initialize(mapload)
 	. = ..()
 	if(!cyborg_owner)
 		return
@@ -36,11 +36,12 @@
 	sight_vision_thermal.Grant(cyborg_owner)
 	sight_vision_ref = WEAKREF(sight_vision_thermal)
 
-/datum/robot_model/syndicate/saboteur/operative
+/obj/item/robot_model/syndicate/saboteur/operative
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/construction/rcd/borg/syndicate,
 		/obj/item/pipe_dispenser,
+		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/extinguisher,
 		/obj/item/borg/cyborg_omnitool/engineering/syndie,
 		/obj/item/borg/cyborg_omnitool/engineering/syndie,
@@ -54,7 +55,6 @@
 		/obj/item/holosign_creator/atmos,
 		/obj/item/dest_tagger/borg,
 		/obj/item/stack/cable_coil,
-		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/pinpointer/operative_cyborg,
 		/obj/item/borg_chameleon,
 		/obj/item/card/emag,

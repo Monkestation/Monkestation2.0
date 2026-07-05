@@ -1,4 +1,4 @@
-/datum/robot_model/engineering
+/obj/item/robot_model/engineering
 	name = "Engineering"
 	hud_icon_state = "engineer"
 	default_skin = /datum/robot_skin/engineering/default
@@ -40,7 +40,7 @@
 	radio_channels = list(RADIO_CHANNEL_ENGINEERING)
 	traits = list(TRAIT_NEGATES_GRAVITY, TRAIT_KNOW_ENGI_WIRES, TRAIT_KNOW_ROBO_WIRES)
 
-/datum/robot_model/engineering/New(mob/living/silicon/robot/new_cyborg_owner)
+/obj/item/robot_model/engineering/Initialize(mapload)
 	. = ..()
 	if(!cyborg_owner)
 		return

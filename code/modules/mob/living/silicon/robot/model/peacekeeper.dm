@@ -1,4 +1,4 @@
-/datum/robot_model/peacekeeper
+/obj/item/robot_model/peacekeeper
 	name = "Peacekeeper"
 	hud_icon_state = "standard"
 	default_skin = /datum/robot_skin/peacekeeper/default
@@ -23,7 +23,7 @@
 	)
 	traits = list(TRAIT_PUSHIMMUNE)
 
-/datum/robot_model/peacekeeper/New(mob/living/silicon/robot/new_cyborg_owner)
+/obj/item/robot_model/peacekeeper/Initialize(mapload)
 	. = ..()
 	if(!cyborg_owner)
 		return

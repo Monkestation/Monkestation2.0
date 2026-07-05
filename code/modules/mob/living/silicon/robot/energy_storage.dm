@@ -12,7 +12,7 @@
 	/// If this resource is not renewable, what material should we drain from the cyborg recharger to recharge this?
 	var/datum/material/mat_type
 
-/datum/robot_energy_storage/New(datum/robot_model/model)
+/datum/robot_energy_storage/New(obj/item/robot_model/model)
 	energy = max_energy
 	if(!model)
 		return
@@ -20,7 +20,7 @@
 	RegisterSignal(model.cyborg_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 	RegisterSignal(model, COMSIG_QDELETING, PROC_REF(unregister_from_model))
 
-/datum/robot_energy_storage/proc/unregister_from_model(datum/robot_model/model)
+/datum/robot_energy_storage/proc/unregister_from_model(obj/item/robot_model/model)
 	SIGNAL_HANDLER
 	if(!model)
 		return
