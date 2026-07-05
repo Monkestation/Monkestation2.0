@@ -30700,12 +30700,6 @@
 	},
 /turf/open/floor/iron/textured_large,
 /area/station/security/execution/education)
-"iBp" = (
-/obj/structure/curtain,
-/obj/machinery/shower/directional/north,
-/obj/structure/drain,
-/turf/open/floor/iron/freezer,
-/area/station/commons/toilet)
 "iBx" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -74920,7 +74914,7 @@
 /area/station/commons/dorms)
 "vYW" = (
 /obj/machinery/mineral/stacking_machine{
-	input_dir = 8;
+	input_dir = 6;
 	output_dir = 2
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -94472,7 +94466,7 @@ hAD
 veV
 thi
 alR
-iBp
+pAv
 apC
 jXf
 yah
