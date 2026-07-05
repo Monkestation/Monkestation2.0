@@ -7,6 +7,7 @@
 
 /obj/item/ammo_casing/energy/laser/hitscan
 	projectile_type = /obj/projectile/beam/laser/hitscan
+	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
 /obj/item/ammo_casing/energy/laser/hellfire
 	projectile_type = /obj/projectile/beam/laser/hellfire

@@ -28,11 +28,12 @@
 	bare_wound_bonus = 40
 
 /obj/projectile/beam/laser/hitscan
-	damage = 25
 	icon_state = null
 	hitscan = TRUE
-	hitscan_light_color_override = RED
-	impact_light_color_override = RED
+	hitscan_light_color_override = COLOR_RED
+	impact_light_color_override = COLOR_RED
+	hitscan_light_intensity = 1
+	hitscan_light_outer_range = 0.25
 
 /obj/projectile/beam/laser/lasrifle
 	damage = 25

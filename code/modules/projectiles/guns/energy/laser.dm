@@ -13,7 +13,14 @@
 	AddElement(/datum/element/manufacturer_examine, COMPANY_ALLSTAR)
 
 /obj/item/gun/energy/laser/hitscan
+	name = "\improper Allstar SC-1B laser cannon"
+	desc = "An advanced energy-based laser rifle that fires concentrated beams of light which pass through glass and thin metal."
+	icon_state = "lasercannon"
+	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hitscan)
+	fire_delay = 10
+	ammo_x_offset = 3
+	shaded_charge = FALSE
 
 /obj/item/gun/energy/laser/lasrifle
 	name = "laser rifle"
@@ -50,6 +57,7 @@
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's private security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 	ammo_x_offset = 3
+	inhand_icon_state = null
 
 /obj/item/gun/energy/laser/retro/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_REMOVED)
@@ -186,6 +194,7 @@
 	ammo_x_offset = 2
 	selfcharge = TRUE
 	gun_flags = NOT_A_REAL_GUN
+	inhand_icon_state = null
 
 /obj/item/gun/energy/laser/bluetag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag/hitscan)
@@ -204,6 +213,7 @@
 	ammo_x_offset = 2
 	selfcharge = TRUE
 	gun_flags = NOT_A_REAL_GUN
+	inhand_icon_state = null
 
 /obj/item/gun/energy/laser/redtag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)
