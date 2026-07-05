@@ -214,19 +214,19 @@
 	var/target_range = 10
 	var/minimum_target_range = 5
 	var/maximum_target_range = 30
-	icon = 'monkestation/icons/obj/guns/china_lake_obj.dmi'
+	icon = 'icons/obj/guns/china_lake_obj.dmi'
 	icon_state = "china_lake"
-	lefthand_file = 'monkestation/icons/mob/inhands/china_lake_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/china_lake_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/china_lake_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/china_lake_righthand.dmi'
 	inhand_icon_state = "china_lake"
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
-	fire_sound = 'monkestation/sound/misc/china_lake_sfx/china_lake_fire.ogg'
+	fire_sound = 'sound/weapons/gun/china_lake_sfx/china_lake_fire.ogg'
 	fire_sound_volume = 100
-	rack_sound = 'monkestation/sound/misc/china_lake_sfx/china_lake_rack.ogg'
+	rack_sound = 'sound/weapons/gun/china_lake_sfx/china_lake_rack.ogg'
 	rack_delay = 1.5 SECONDS
-	drop_sound = 'monkestation/sound/misc/china_lake_sfx/china_lake_drop.ogg'
-	pickup_sound = 'monkestation/sound/misc/china_lake_sfx/china_lake_pickup.ogg'
+	drop_sound = 'sound/weapons/gun/china_lake_sfx/china_lake_drop.ogg'
+	pickup_sound = 'sound/weapons/gun/china_lake_sfx/china_lake_pickup.ogg'
 
 /obj/item/gun/ballistic/shotgun/china_lake/Initialize(mapload)
 	. = ..()

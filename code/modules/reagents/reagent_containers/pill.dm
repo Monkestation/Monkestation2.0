@@ -314,7 +314,7 @@
 	if(prob(30))
 		desc = pick(descs)
 	if(prob(10))
-		icon = 'monkestation/icons/obj/pills.dmi'
+		icon = 'icons/obj/pills.dmi'
 		icon_state = "mdma_wario"
 		transform.Scale(0.5 ,0.5)
 	else

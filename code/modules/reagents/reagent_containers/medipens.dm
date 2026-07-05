@@ -307,7 +307,7 @@
 
 /obj/item/reagent_containers/medipen/advanced
 	name = "advanced stimulant autoinjector"
-	desc = "Contains a very large amount of an incredibly powerful stimulant, vastly increasing your movement speed and reducing stuns by a very large amount for around five minutes. Do not take if pregnant. Has a two use system."
+	desc = "Contains a very large amount of an incredibly powerful stimulant, vastly increasing your movement speed and reducing stuns by a very large amount for around five minutes. Do not take if pregnant."
 	icon_state = "syndipendouble"
 	inhand_icon_state = "tbpen"
 	base_icon_state = "syndipendouble"
@@ -320,6 +320,11 @@
 /obj/item/reagent_containers/medipen/advanced/Initialize(mapload)
 	. = ..()
 	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/reagent_containers/medipen/advanced/examine(User)
+	. = ..()
+	var/uses = reagents.total_volume / amount_per_transfer_from_this
+	. += span_notice("<b>It has [uses] [uses == 1 ? "use" : "uses"] remaining.<b>")
 
 /obj/item/reagent_containers/medipen/advanced/update_overlays()
 	. = ..()
@@ -335,7 +340,7 @@
 
 /obj/item/reagent_containers/medipen/advanced/oxandrolone
 	name = "advanced oxandrolone autoinjector"
-	desc = "An autoinjector containing oxandrolone, used to treat severe burns. Has a two use system."
+	desc = "An autoinjector containing oxandrolone, used to treat severe burns."
 	volume = 20
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
@@ -345,7 +350,7 @@
 
 /obj/item/reagent_containers/medipen/advanced/salacid
 	name = "advanced salicylic acid autoinjector"
-	desc = "An autoinjector containing salicylic acid, used to treat severe brute damage. Has a two use system."
+	desc = "An autoinjector containing salicylic acid, used to treat severe brute damage."
 	volume = 20
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
@@ -355,7 +360,7 @@
 
 /obj/item/reagent_containers/medipen/advanced/morphine
 	name = "advanced morphine autoinjector"
-	desc = "An autoinjector containing morphine, used as a strong painkiller. Has a two use system."
+	desc = "An autoinjector containing morphine, used as a strong painkiller."
 	volume = 30
 	amount_per_transfer_from_this = 15
 	possible_transfer_amounts = list(10)
@@ -366,7 +371,7 @@
 
 /obj/item/reagent_containers/medipen/advanced/salbutamol
 	name = "advanced salbutamol autoinjector"
-	desc = "An autoinjector containing salbutamol, used to heal oxygen damage quickly. Has a two use system."
+	desc = "An autoinjector containing salbutamol, used to heal oxygen damage quickly."
 	volume = 20
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
@@ -376,7 +381,7 @@
 
 /obj/item/reagent_containers/medipen/advanced/penacid
 	name = "advanced pentetic autoinjector"
-	desc = "An autoinjector containing pentetic acid, used to reduce high levels of radiations and moderate toxins. Has a two use system."
+	desc = "An autoinjector containing pentetic acid, used to reduce high levels of radiations and moderate toxins."
 	volume = 20
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
@@ -386,7 +391,7 @@
 
 /obj/item/reagent_containers/medipen/advanced/epinephrine
 	name = "advanced epinephrine autoinjector"
-	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Contains a powerful preservative that can delay decomposition when applied to a dead body, and stop the production of histamine during an allergic reaction. Has a two use system."
+	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Contains a powerful preservative that can delay decomposition when applied to a dead body, and stop the production of histamine during an allergic reaction."
 	volume = 50
 	amount_per_transfer_from_this = 25
 	possible_transfer_amounts = list(25)
@@ -396,7 +401,7 @@
 
 /obj/item/reagent_containers/medipen/advanced/blood_loss
 	name = "advanced hypovolemic-response autoinjector"
-	desc = "An autoinjector designed to stabilize and rapidly reverse severe bloodloss. Has a two use system."
+	desc = "An autoinjector designed to stabilize and rapidly reverse severe bloodloss."
 	volume = 100
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(50)

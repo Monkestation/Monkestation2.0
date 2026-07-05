@@ -230,6 +230,10 @@
 	name = "Firebase Trident hangar bay"
 	icon_state = "syndie-elite"
 
+/area/centcom/syndicate_mothership/golden_eye
+	name = "Syndicate Golden Eye Base"
+	icon_state = "syndie-elite"
+
 //CAPTURE THE FLAG
 /area/centcom/ctf
 	name = "Capture the Flag"

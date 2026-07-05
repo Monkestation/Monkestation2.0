@@ -309,6 +309,8 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = wear_neck
 		update_hud_neck(wear_neck)
 
+		if(worn_item.slot_flags & ITEM_SLOT_MASK)
+			CHECK_SHOULDNT_RENDER(worn_item, ITEM_SLOT_MASK)
 		CHECK_SHOULDNT_RENDER(worn_item, ITEM_SLOT_NECK) // monkestation edit: combine TRAIT_ALWAYS_RENDER + TRAIT_NO_WORN_ICON + obscure check into a single define
 
 		var/icon_file = 'icons/mob/clothing/neck.dmi'
@@ -1088,9 +1090,9 @@ generate/load female uniform sprites matching all previously decided variables
 	var/mask_icon = 'icons/effects/cut.dmi'
 	if(icon_width != 0 && icon_height != 0)
 		if(icon_height == 48 && icon_width <= 96)
-			mask_icon = 'monkestation/icons/effects/cut_96x48.dmi'
+			mask_icon = 'icons/effects/cut_96x48.dmi'
 		else if(icon_height == 64 && icon_width <= 64)
-			mask_icon = 'monkestation/icons/effects/cut_64x64.dmi'
+			mask_icon = 'icons/effects/cut_64x64.dmi'
 		else if(icon_height != 32 || icon_width > 32)
 			stack_trace("Bad dimensions (w[icon_width],h[icon_height]) for icon '[appearance.icon]'")
 

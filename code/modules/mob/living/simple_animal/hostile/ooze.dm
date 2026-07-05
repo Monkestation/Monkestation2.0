@@ -217,19 +217,19 @@
 	if(!.)
 		return
 	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
-	if(!isliving(ooze.pulling))
-		to_chat(src, span_warning("You need to be pulling a creature for this to work!"))
+	var/mob/living/eat_target = ooze.pulling
+	if(!isliving(eat_target))
+		to_chat(ooze, span_warning("You need to be pulling a creature for this to work!"))
 		return FALSE
 	if(devoured_mob)
-		to_chat(src, span_warning("You are already consuming another creature!"))
+		to_chat(ooze, span_warning("You are already consuming another creature!"))
 		return FALSE
-	owner.visible_message(span_warning("[ooze] starts attempting to devour [target]!"), span_notice("You start attempting to devour [target]."))
-	if(!do_after(ooze, 1.5 SECONDS, target = ooze.pulling))
+	owner.visible_message(span_warning("[ooze] starts attempting to devour [eat_target]!"), span_notice("You start attempting to devour [eat_target]."))
+	if(!do_after(ooze, 1.5 SECONDS, target = eat_target))
 		return FALSE
-	var/mob/living/eat_target = ooze.pulling
 
-	if(!(eat_target.mob_biotypes & MOB_ORGANIC) || eat_target.stat == DEAD)
-		to_chat(src, span_warning("This creature isn't to my tastes!"))
+	if(!(eat_target.mob_biotypes & MOB_ORGANIC))
+		to_chat(ooze, span_warning("This creature isn't to my tastes!"))
 		return FALSE
 	start_consuming(eat_target)
 
