@@ -110,6 +110,7 @@
 		"slime_market_pad",
 		"slime_market",
 		"slimevac",
+		"slime_compressor",
 
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)

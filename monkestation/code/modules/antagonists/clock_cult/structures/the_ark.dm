@@ -105,9 +105,9 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	. = ..()
 	if(!.)
 		return
-	send_clock_message(span_bigbrass("The ark is taking damage!"), sent_sound = 'monkestation/sound/machines/clockcult/ark_damage.ogg')
+	send_clock_message(span_bigbrass("The ark is taking damage!"), sent_sound = 'sound/machines/clockcult/ark_damage.ogg')
 	flick("clockwork_gateway_damaged", src)
-	playsound(src, 'monkestation/sound/machines/clockcult/ark_damage.ogg', 75, FALSE)
+	playsound(src, 'sound/machines/clockcult/ark_damage.ogg', 75, FALSE)
 
 /obj/structure/destructible/clockwork/the_ark/process(seconds_per_tick)
 	if(current_state >= ARK_STATE_FINAL)
@@ -123,7 +123,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	if(current_state < ARK_STATE_SUMMONING && charging_for >= (ARK_ASSAULT_PERIOD * 0.5))
 		current_state = ARK_STATE_SUMMONING
 		icon_state = "clockwork_gateway_closing"
-		sound_to_playing_players('monkestation/sound/effects/clockcult_gateway_closing.ogg', 30, TRUE)
+		sound_to_playing_players('sound/effects/clockcult_gateway_closing.ogg', 30, TRUE)
 
 	if(current_state >= ARK_STATE_SUMMONING && SPT_PROB(4, seconds_per_tick))
 		send_to_playing_players(span_warning("[pick(list("You feel the fabric of reality twist and bend.", \
@@ -153,7 +153,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	addtimer(CALLBACK(src, PROC_REF(announce_gateway)), 27 SECONDS)
 
 /obj/structure/destructible/clockwork/the_ark/proc/announce_gateway()
-	send_clock_message(span_ratvar("DESTROY THE HERETICS."), sent_sound = 'monkestation/sound/machines/clockcult/ark_recall.ogg')
+	send_clock_message(span_ratvar("DESTROY THE HERETICS."), sent_sound = 'sound/machines/clockcult/ark_recall.ogg')
 	sleep(3 SECONDS)
 	current_state = ARK_STATE_ACTIVE
 
@@ -178,7 +178,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	not a drill. Estimated time of appearance: [ARK_GRACE_PERIOD/10] seconds. Use this time to prepare for an attack on [station_name()]." \
 	,"Central Command Higher Dimensional Affairs", 'sound/magic/clockwork/ark_activation.ogg')
 
-	sound_to_playing_players('monkestation/sound/effects/clockcult_gateway_charging.ogg', 10, TRUE)
+	sound_to_playing_players('sound/effects/clockcult_gateway_charging.ogg', 10, TRUE)
 	log_game("The clock cult has begun opening the Ark of the Clockwork Justiciar.")
 
 /obj/structure/destructible/clockwork/the_ark/proc/begin_assault()
@@ -202,7 +202,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	send_clock_message(span_bigbrass("Ratvar approaches, you shall be eternally rewarded for your servitude!"), msg_ghosts = FALSE)
 	send_to_playing_players(span_warning("You feel time slow down."))
 	GLOB.ratvar_risen = TRUE
-	sound_to_playing_players('monkestation/sound/effects/ratvar_rises.ogg', 100)
+	sound_to_playing_players('sound/effects/ratvar_rises.ogg', 100)
 
 	if(GLOB.main_clock_cult)
 		for(var/datum/mind/current_mind in GLOB.main_clock_cult.members)

@@ -13,4 +13,4 @@
 		new /obj/item/stack/sheet/animalhide/human(target.loc)
 		target.set_species(/datum/species/skeleton)
 		to_chat(target, span_warning("You feel RATTLED!"))
-		playsound(target, 'monkestation/sound/misc/spinal_laugh.ogg', 80)
+		playsound(target, 'sound/misc/spinal_laugh.ogg', 80)

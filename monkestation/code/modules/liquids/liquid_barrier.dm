@@ -1,7 +1,7 @@
 /obj/structure/liquid_barrier
 	name = "liquid barrier"
 	desc = "A complex draining mesh embedded in the flooring that blocks any and all liquids from passing through.\n<i>You feel like these were installed for a very good reason...</i>"
-	icon = 'monkestation/icons/obj/structures/drains.dmi'
+	icon = 'icons/obj/structures/drains.dmi'
 	icon_state = "bigdrain"
 	plane = FLOOR_PLANE
 	layer = GAS_SCRUBBER_LAYER

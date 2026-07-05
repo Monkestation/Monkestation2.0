@@ -74,6 +74,7 @@
 	desc = "A bullpup three-round burst .45 SMG, designated 'C-20r'. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
 	icon_state = "c20r"
 	inhand_icon_state = "c20r"
+	fire_sound = 'sound/weapons/gun/smg/gunshot_c20.ogg'
 	selector_switch_icon = TRUE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/smgm45
 	fire_delay = 2
@@ -100,12 +101,13 @@
 
 /obj/item/gun/ballistic/automatic/wt550
 	name = "\improper WT-550 Autorifle"
-	desc = "Recalled by Nanotrasen due to public backlash around heat distribution resulting in unintended discombobulation. \
+	desc = "Recalled commercially by Nanotrasen due to public backlash around heat distribution resulting in unintended discombobulation. \
 		This outcry was fabricated through various Syndicate-backed misinformation operations to force Nanotrasen to abandon \
 		its ballistics weapon program, cornering them into the energy weapons market. Most often found today in the hands of pirates, \
-		underfunded security personnel, cargo technicians, theoritical physicists and gang bangers out on the rim. \
+		underfunded security personnel, cargo technicians, theoretical physicists and gang bangers out on the rim. \
 		Light-weight and fully automatic. Uses 4.6x30mm rounds."
 	icon_state = "wt550"
+	fire_sound = 'sound/weapons/gun/smg/gunshot_wt.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "arg"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/wt550m9
@@ -130,9 +132,9 @@
 /obj/item/gun/ballistic/automatic/wt550/fss //Slightly worse printable WT-550
 	name = "\improper FSS-550"
 	desc = "A modified printable version of the WT-550 autorifle, in order to be printed by an autolathe, some sacrifices had to be made. Not only does this gun have less stopping power, the magazine doesn't entirely fit, and it takes a bit of force to jam it in or rip it out. Used by Syndicate agents and rebels in more than 50 systems."
-	icon = 'monkestation/icons/obj/guns/guns.dmi'
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthand.dmi'
+	icon = 'icons/obj/guns/guns.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	icon_state = "fss550"
 	inhand_icon_state = "fss"
 	spread = 2
@@ -798,7 +800,7 @@
 /obj/item/gun/ballistic/automatic/quarad_lmg /// Light Machine Gun, lives in the heavy armaments locker
 	name = "\improper Qarad Light Machinegun"
 	desc = "A spotless, if outdated machinegun. The same model was used to great effect against xenomorph incursions in the past, hopefully this one doesn't have any manufacturing defects...."
-	icon = 'monkestation/icons/obj/weapons/guns/guns48x.dmi'
+	icon = 'icons/obj/weapons/guns/guns48x.dmi'
 	icon_state = "outomaties"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_worn.dmi'
 	worn_icon_state = "outomaties"
@@ -850,10 +852,10 @@
 	name = "\improper Suspicious Qarad Light Machinegun"
 	desc = "A heavily modified machinegun, complete with bluespace barrel extender! More bullet per bullet, more barrel per inch!"
 	icon_state = "outomaties_evil"
-	worn_icon = 'monkestation/icons/mob/inhands/gunsx48_worn.dmi'
+	worn_icon = 'icons/mob/inhands/gunsx48_worn.dmi'
 	worn_icon_state = "outomaties_evil"
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthandx48.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthandx48.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthandx48.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthandx48.dmi'
 	inhand_icon_state = "outomaties_evil"
 	spawn_magazine_type = /obj/item/ammo_box/magazine/c65xeno_drum/evil
 	fire_delay = 0.1 SECONDS
@@ -1073,7 +1075,7 @@
 	can_suppress = FALSE
 	burst_size = 0
 	actions_types = list()
-	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
 	casing_ejector = FALSE
 
 

@@ -3,8 +3,8 @@
 	desc = "Wearing this fills you with unbridled rock-related rage."
 	icon_state = "admiral_uni"
 	inhand_icon_state = "admiral_uni"
-	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'icons/mob/clothing/uniform.dmi'
 	can_adjust = TRUE
 
 /obj/item/clothing/neck/hornetcloak/alt
@@ -31,7 +31,7 @@
 
 /datum/sprite_accessory/hair/hornet
 	name = "Hornet"
-	icon ='monkestation/icons/mob/sprite_accessories/hair.dmi'
+	icon ='icons/mob/sprite_accessories/hair.dmi'
 	icon_state = "hair_hornet"
 
 

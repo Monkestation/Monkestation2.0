@@ -1,6 +1,6 @@
 /datum/component/particle_spewer/sakura
 	unusual_description = "sakura"
-	icon_file = 'monkestation/icons/effects/particle.dmi'
+	icon_file = 'icons/effects/particle.dmi'
 	particle_state = "petals1"
 	burst_amount = 5
 	duration = 9 SECONDS

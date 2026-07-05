@@ -1,7 +1,0 @@
-author: "JupiterJaeden"
-delete-after: True
-changes:
-  - qol: "Security records notes now allow you to put in punctuation and varied capitalization, Instead Of Always Looking Like This."
-  - qol: "The max length of crime names has been extended to fill the available space in the records console UI."
-  - bugfix: "Long crime names will no longer be cut off by a few characters when put into the records console."
-  - bugfix: "Security huds no longer allow you to put in infinitely long crime names through the examine menu."

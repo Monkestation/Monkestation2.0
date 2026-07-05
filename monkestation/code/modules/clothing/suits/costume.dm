@@ -1,16 +1,16 @@
 /obj/item/clothing/suit/hooded/dinojammies
 	name = "dinosaur pajamas"
 	desc = "The ultimate in reptile-pajama-costume fusion."
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "dinojammies"
 	worn_icon_state = "dinojammies"
 	hoodtype = /obj/item/clothing/head/hooded/dinojammies
 
 /obj/item/clothing/head/hooded/dinojammies
 	desc = "A dinosaur head hood."
-	icon = 'monkestation/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	icon_state = "dinojammies_hood"
 	worn_icon_state = "dinojammies_hood"
 	flags_inv = HIDEHAIR
@@ -18,8 +18,8 @@
 /obj/item/clothing/suit/hooded/gorilla
 	name = "gorilla costume"
 	desc = "Ooga!"
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "gorilla"
 	worn_icon_state = "gorilla"
 	hoodtype = /obj/item/clothing/head/hooded/gorilla
@@ -27,8 +27,8 @@
 
 /obj/item/clothing/head/hooded/gorilla
 	desc = "A gorilla costume hood."
-	icon = 'monkestation/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	icon_state = "gorilla"
 	worn_icon_state = "gorilla"
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
@@ -40,16 +40,16 @@
 /obj/item/clothing/suit/shipwreckedsuit
 	name = "shipwrecked captain suit"
 	desc = "DISCLAIMER:Not Space Proof. Wearing this suit gives you the luck of a true space captain! Just avoid the space rocks..."
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "shipwrecked_suit"
 	worn_icon_state = "shipwrecked_suit"
 
 /obj/item/clothing/head/shipwreckedhelmet
 	name = "shipwrecked captain helmet"
 	desc = "DISCLAIMER:Not Space Proof. A vital part of keeping out the poisonous oxygen!... what do you mean oxygen is good for me?"
-	icon = 'monkestation/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	icon_state = "shipwrecked_helmet"
 	worn_icon_state = "shipwrecked_helmet"
 	worn_y_offset = 4
@@ -57,16 +57,16 @@
 /obj/item/clothing/suit/kingofbugssuit
 	name = "king of bugs suit"
 	desc = "DISCLAIMER:Not Space Proof. Dandori Issues "
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "kingofbugs_suit"
 	worn_icon_state = "kingofbugs_suit"
 
 /obj/item/clothing/head/kingofbugshelmet
 	name = "king of bugs helmet"
 	desc = "DISCLAIMER:Not Space Proof. FOOD!!!"
-	icon = 'monkestation/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	icon_state = "kingofbugs_helmet"
 	worn_icon_state = "kingofbugs_helmet"
 	worn_y_offset = 5
@@ -74,8 +74,8 @@
 /obj/item/clothing/head/helldiverhelmet
 	name = "helldiver helmet"
 	desc = "Have a Nice Cup of LIBER-TEA"
-	icon = 'monkestation/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	icon_state = "helldiver_helm"
 	worn_icon_state = "helldiver_helm"
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
@@ -92,8 +92,8 @@
 /obj/item/clothing/suit/helldiverarmor
 	name = "helldiver armor"
 	desc = "How Do You Like The Taste of DEMOCRACY?!"
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "helldiver_armor"
 	worn_icon_state = "helldiver_armor"
 	flags_inv = HIDEJUMPSUIT
@@ -115,8 +115,8 @@
 	name = "ashsuit suit"
 	desc = "Whoever controls the Plasma, controls the Spinward Sector."
 	icon_state = "ashsuit"
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
@@ -150,8 +150,8 @@
 /obj/item/clothing/head/hooded/ashsuit
 	name = "ashsuit hood"
 	desc = "For covering your face when walking the ash dunes."
-	icon = 'monkestation/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	icon_state = "ashsuit"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
@@ -173,8 +173,8 @@
 /obj/item/clothing/suit/chameleon/syndie_armor
 	name = "syndicate body armor"
 	desc = "A set of red and black body armor. Lightweight but great protection."
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "armor_syndie"
 	armor_type = /datum/armor/mod_theme_infiltrator
 	body_parts_covered = CHEST|GROIN
@@ -203,14 +203,14 @@
 /obj/item/clothing/suit/infinity_jacket
 	name = "infinity jersey"
 	desc = "A jersey labelled '88', somehow leaving a threatening aura around it."
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "infinity_jersey"
 
 /obj/item/clothing/suit/thekiller_robe
 	name = "killer's robe"
 	desc = "As long as there has been man, there has been The Killer. They are surprisingly into the theater scene."
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "thekiller_robe"
 	flags_inv = HIDEJUMPSUIT

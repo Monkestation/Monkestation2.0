@@ -1,7 +1,7 @@
 /obj/machinery/composters
 	name = "NT-Brand Auto Composter"
 	desc = "Just insert your bio degradable materials and it will produce compost."
-	icon = 'monkestation/icons/obj/machines/composter.dmi'
+	icon = 'icons/obj/machines/composter.dmi'
 	icon_state = "composter"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/composters
@@ -117,9 +117,9 @@
 /obj/machinery/composters/update_overlays()
 	. = ..()
 	if(biomatter < biocube_cost)
-		. += mutable_appearance('monkestation/icons/obj/machines/composter.dmi', "light_off", layer = OBJ_LAYER + 0.01)
+		. += mutable_appearance('icons/obj/machines/composter.dmi', "light_off", layer = OBJ_LAYER + 0.01)
 	else
-		. += mutable_appearance('monkestation/icons/obj/machines/composter.dmi', "light_on", layer = OBJ_LAYER + 0.01)
+		. += mutable_appearance('icons/obj/machines/composter.dmi', "light_on", layer = OBJ_LAYER + 0.01)
 
 /obj/machinery/composters/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -176,7 +176,7 @@
 /obj/item/stack/biocube
 	name = "biocube"
 	desc = "A cube made of pure biomatter, it does wonders on plant trays."
-	icon = 'monkestation/icons/obj/misc.dmi'
+	icon = 'icons/obj/misc.dmi'
 	icon_state = "bio_cube"
 	singular_name = "biocube"
 	max_amount = 20

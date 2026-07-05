@@ -17,9 +17,9 @@
 	cooldown_time = 100 SECONDS
 
 	/// Sound played when entering the jaunt
-	var/enter_sound = 'monkestation/sound/effects/slasher_jauntstart.ogg'
+	var/enter_sound = 'sound/effects/slasher_jauntstart.ogg'
 	/// Sound played when exiting the jaunt
-	var/exit_sound = 'monkestation/sound/effects/slasher_jauntappear.ogg'
+	var/exit_sound = 'sound/effects/slasher_jauntappear.ogg'
 	/// For how long are we jaunting?
 	var/jaunt_duration = 8 SECONDS
 	/// For how long we become immobilized after exiting the jaunt

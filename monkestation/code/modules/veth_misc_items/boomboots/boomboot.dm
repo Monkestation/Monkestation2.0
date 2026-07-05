@@ -1,8 +1,8 @@
 /obj/item/clothing/shoes/magboots/boomboots
 	desc = "The ultimate in clown shoe technology. WARNING: EXPLODES ON REMOVAL! VERY FUNNY!"
 	name = "boom boots"
-	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
+	icon = 'icons/obj/clothing/shoes.dmi'
+	worn_icon = 'icons/mob/clothing/feet.dmi'
 	icon_state = "boomboot0"
 	base_icon_state = "boomboot0"
 	inhand_icon_state = "clown_shoes"
@@ -15,7 +15,7 @@
 
 /obj/item/clothing/shoes/magboots/boomboots/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/squeak, list('monkestation/sound/misc/Boomboot1.ogg'=1), 50)
+	AddComponent(/datum/component/squeak, list('sound/misc/Boomboot1.ogg'=1), 50)
 	create_storage(storage_type = /datum/storage/pockets/shoes/clown)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 

@@ -372,7 +372,7 @@
 	desc = "While lever-actions have been horribly out of date for hundreds of years now, \
 	putting a nicely sized hole in a man-sized target with a .45 Long round has stayed relatively timeless."
 	icon_state = "brushgun"
-	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	icon = 'icons/obj/guns/guns.dmi'
 	bolt_wording = "Lever"
 	bolt_type = BOLT_TYPE_STANDARD
 	cartridge_wording = "bullet"
@@ -412,10 +412,10 @@
 	bolt_type = BOLT_TYPE_LOCKING
 	semi_auto = FALSE
 	recoil = 8 //ow my back
-	fire_sound = 'monkestation/sound/weapons/gun/shotgun/quadfire.ogg'
+	fire_sound = 'sound/weapons/gun/shotgun/quadfire.ogg'
 	fire_sound_volume = 200 // L O U D
-	rack_sound = 'monkestation/sound/weapons/gun/shotgun/quadrack.ogg'
-	bolt_drop_sound = 'monkestation/sound/weapons/gun/shotgun/quadinsert.ogg'
+	rack_sound = 'sound/weapons/gun/shotgun/quadrack.ogg'
+	bolt_drop_sound = 'sound/weapons/gun/shotgun/quadinsert.ogg'
 	need_bolt_lock_to_interact = TRUE
 	pin = /obj/item/firing_pin/wastes //hey so yeah did you see how much damage the bullet this thing fires does ok cool so you know why this is NEVER EVER coming off
 

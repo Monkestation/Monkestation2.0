@@ -16,12 +16,12 @@
 
 
 /obj/structure/window/fulltile
-	icon = 'monkestation/icons/obj/structures/window/window.dmi'
+	icon = 'icons/obj/structures/window/window.dmi'
 	canSmoothWith = SMOOTH_GROUP_AIRLOCK +  SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 	smooth_adapters = SMOOTH_ADAPTERS_WALLS
 
 /obj/structure/window/reinforced/plasma/fulltile
-	icon = 'monkestation/icons/obj/structures/window/reinforced_window.dmi'
+	icon = 'icons/obj/structures/window/reinforced_window.dmi'
 	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 	base_icon_state = "reinforced_window"
 	icon_state = "reinforced_window-0"
@@ -30,14 +30,14 @@
 	smooth_adapters = SMOOTH_ADAPTERS_WALLS
 
 /obj/structure/window/reinforced/fulltile
-	icon = 'monkestation/icons/obj/structures/window/reinforced_window.dmi'
+	icon = 'icons/obj/structures/window/reinforced_window.dmi'
 	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 	base_icon_state = "reinforced_window"
 	icon_state = "reinforced_window-0"
 	smooth_adapters = SMOOTH_ADAPTERS_WALLS
 
 /obj/structure/window/plasma/fulltile
-	icon = 'monkestation/icons/obj/structures/window/window.dmi'
+	icon = 'icons/obj/structures/window/window.dmi'
 	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 	base_icon_state = "window"
 	icon_state = "window-0"
@@ -48,7 +48,7 @@
 /obj/structure/grille/window_sill
 	name = "window grille"
 	desc = "A flimsy framework of iron rods. This one fits a window!"
-	icon = 'monkestation/icons/obj/structures/window/grille.dmi'
+	icon = 'icons/obj/structures/window/grille.dmi'
 	icon_state = "grille-0"
 	layer = ABOVE_OBJ_LAYER - 0.01
 	base_icon_state = "grille"
