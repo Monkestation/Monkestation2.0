@@ -18,7 +18,7 @@
 	if(isnull(selected_server))
 		return FALSE
 	techweb_boosting = selected_server.stored_research
-	return ..
+	return ..()
 
 /datum/ai_project/research_booster/run_project(force_run = FALSE)
 	. = ..(force_run)
