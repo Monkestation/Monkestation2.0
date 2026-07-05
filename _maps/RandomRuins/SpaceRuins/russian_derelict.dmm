@@ -752,6 +752,7 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
+/obj/item/circuitboard/computer/aifixer,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
 "fK" = (
@@ -1160,6 +1161,7 @@
 "jq" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/grav_gen)
 "jv" = (
@@ -2470,6 +2472,13 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"so" = (
+/obj/item/circuitboard/computer/ai_resource_distribution{
+	pixel_y = -3;
+	pixel_x = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/ks13/ai/corridor)
 "sp" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/glass,
@@ -2692,10 +2701,13 @@
 /turf/open/floor/iron/chapel,
 /area/ruin/space/ks13/service/chapel)
 "tt" = (
-/obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/engineering/grav_gen)
+/obj/machinery/light/small/directional/south,
+/obj/structure/rack,
+/obj/item/circuitboard/computer/ai_upload_download{
+	pixel_x = -3
+	},
+/turf/open/floor/iron,
+/area/ruin/space/ks13/ai/corridor)
 "tu" = (
 /obj/structure/closet/emcloset/anchored,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -4040,6 +4052,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/aft)
+"zT" = (
+/obj/structure/rack,
+/obj/item/circuitboard/machine/autolathe{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/circuitboard/machine/protolathe/offstation,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/ruin/space/ks13/ai/corridor)
 "zU" = (
 /obj/effect/spawner/random/trash/box,
 /turf/open/floor/iron,
@@ -6474,11 +6496,9 @@
 /area/ruin/space/ks13/service/kitchen)
 "LL" = (
 /obj/structure/rack,
-/obj/item/circuitboard/machine/autolathe{
-	pixel_x = -6;
-	pixel_y = 6
+/obj/item/circuitboard/computer/ai_server_overview{
+	pixel_y = 5
 	},
-/obj/item/circuitboard/machine/protolathe/offstation,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
 "LM" = (
@@ -7363,6 +7383,10 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/sec)
+"PQ" = (
+/obj/item/rack_parts,
+/turf/open/floor/iron,
+/area/ruin/space/ks13/ai/corridor)
 "PS" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
@@ -7665,6 +7689,10 @@
 "Rm" = (
 /obj/structure/rack,
 /obj/item/circuitboard/computer/crew,
+/obj/item/circuitboard/machine/rack_creator{
+	pixel_y = 5;
+	pixel_x = 3
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
 "Ro" = (
@@ -14249,8 +14277,8 @@ fU
 YC
 Yc
 Yc
-yf
-yf
+Yc
+Yc
 yf
 yf
 yf
@@ -14361,9 +14389,9 @@ fU
 fU
 KO
 Yc
+zT
 Yc
 Yc
-tZ
 sr
 Fo
 Fo
@@ -14474,9 +14502,9 @@ Rm
 fU
 fU
 Yc
+fU
 LL
 Yc
-Fo
 Fo
 te
 Kn
@@ -14587,9 +14615,9 @@ fU
 fU
 fU
 PW
-KO
-Yc
+fU
 tt
+Yc
 jq
 Da
 sr
@@ -14700,9 +14728,9 @@ Jy
 fU
 YC
 Yc
-DK
+so
+PQ
 Yc
-sr
 sr
 Fo
 Fo
@@ -14813,9 +14841,9 @@ Yc
 Yc
 Yc
 Yc
+DK
 Yc
 Yc
-Fo
 Fo
 PS
 tZ
@@ -14928,7 +14956,7 @@ Yc
 Yc
 Yc
 Yc
-yf
+Yc
 yf
 yf
 yf
