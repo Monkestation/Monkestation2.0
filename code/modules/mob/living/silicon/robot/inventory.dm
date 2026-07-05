@@ -65,7 +65,14 @@
 		to_chat(src, span_notice("You can't drop your [dropping_item.name] module."))
 		return FALSE
 
-	var/dropping_module_slot = module_active == dropping_item ? module_active : null
+	var/dropping_module_slot = null
+	if(dropping_item == module_active)
+		for(var/module_slot in 1 to length(held_items))
+			if(!held_items[module_slot] || (dropping_item != held_items[module_slot]))
+				continue
+			dropping_module_slot = module_slot
+			break
+
 	. = ..()
 	if(!.)
 		return
