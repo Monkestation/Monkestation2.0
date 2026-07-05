@@ -109,5 +109,5 @@
 		return
 
 	var/damage_icon_state = "reactor_damaged_[new_stage]"
-	current_damage_overlay_image = image('icons/obj/machines/rbmk.dmi', damage_icon_state)
+	current_damage_overlay_image = image('icons/obj/machines/rbmk_reactor.dmi', damage_icon_state)
 	overlays += current_damage_overlay_image

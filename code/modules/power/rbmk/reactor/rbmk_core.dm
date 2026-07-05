@@ -1,7 +1,7 @@
 /obj/machinery/rbmk/reactor
 	name = "RBMK Reactor Core"
 	desc = "A massive nuclear reactor core. Insert rods at your own risk."
-	icon = 'icons/obj/machines/rbmk.dmi'
+	icon = 'icons/obj/machines/rbmk_reactor.dmi'
 	icon_state = "reactor_off"
 
 	anchored = TRUE
