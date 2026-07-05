@@ -21,9 +21,7 @@ export const RBMKLockout = () => {
     <Box className="RBMKConsole__CascadeLockout">
       <Box className="RBMKConsole__CascadeLock">🔒</Box>
 
-      <Box className="RBMKConsole__CascadeTitle">
-        Syndicate Override Active
-      </Box>
+      <Box className="RBMKConsole__CascadeTitle">Syndicate Override Active</Box>
 
       <Box className="RBMKConsole__CascadeSubtitle">
         Supermatter Rod Cascade Control Lockout
@@ -34,7 +32,8 @@ export const RBMKLockout = () => {
           finalCountdown
             ? 'RBMKConsole__CascadeTimer RBMKConsole__CascadeTimer--final'
             : 'RBMKConsole__CascadeTimer'
-        }>
+        }
+      >
         {formatDeciseconds(timeLeft)}
       </Box>
 

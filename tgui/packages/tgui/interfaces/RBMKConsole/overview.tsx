@@ -1,10 +1,10 @@
 import { useBackend } from '../../backend';
 import {
-  Section,
   Flex,
-  ProgressBar,
   LabeledControls,
+  ProgressBar,
   RoundGauge,
+  Section,
 } from '../../components';
 
 export const RBMKOverview = () => {
@@ -131,7 +131,8 @@ export const RBMKOverview = () => {
             average: [25, 50],
             bad: [10, 25],
             purple: [0, 10],
-          }}>
+          }}
+        >
           {integrityPercent}%
         </ProgressBar>
       </Section>

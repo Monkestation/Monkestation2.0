@@ -8,7 +8,7 @@
 
 	last_decay_check = world.time
 
-	if(temperature >= decay_meltdown_threshold)
+	if(temperature >= get_effective_decay_meltdown_threshold())
 		trigger_meltdown("Post-SCRAM decay heat runaway")
 
 

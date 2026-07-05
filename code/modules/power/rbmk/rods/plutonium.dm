@@ -11,11 +11,10 @@
 	rod_color = "crimson"
 
 	fuel_amount = 400
-	fuel_consumption = 1
+	fuel_consumption = 0.5
 
 	reactivity = 18
 	flux_multiplier = 1.9
 	radiation_multiplier = 3.0
 	thermal_multiplier = 2.6
-
 

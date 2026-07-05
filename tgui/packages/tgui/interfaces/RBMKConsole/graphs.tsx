@@ -1,5 +1,5 @@
 import { useBackend } from '../../backend';
-import { Section, Flex, ProgressBar, Box } from '../../components';
+import { Box, Flex, ProgressBar, Section } from '../../components';
 import { getGasFromPath } from '../../constants';
 
 interface GasInfo {

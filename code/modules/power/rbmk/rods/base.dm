@@ -10,7 +10,8 @@
 	var/rod_color = "grey"
 
 	var/fuel_amount = 100
-	var/fuel_consumption = 1
+	/// Fuel consumed per second while the rod is active in a reactor.
+	var/fuel_consumption = 0.5
 
 	var/reactivity = 10
 	var/flux_multiplier = 1.0
@@ -18,6 +19,8 @@
 	var/thermal_multiplier = 1.0
 
 	var/active = TRUE
+	/// Whether this rod can sustain reactor operation by producing direct output.
+	var/contributes_to_reaction = TRUE
 	var/activated_in_reactor = FALSE
 	var/irradiated = FALSE
 
@@ -127,11 +130,19 @@
 	return list(
 		"flux" = 0,
 		"radiation" = 0,
-		"heat" = 0
+		"heat" = 0,
 	)
 
 
-/obj/item/rbmk/fuel_rod/proc/process_rod()
+/obj/item/rbmk/fuel_rod/proc/get_modifier_output()
+	return list(
+		"temperature_limit_bonus" = 0,
+		"coolant_exchange_bonus" = 0,
+		"flux_multiplier_bonus" = 0,
+	)
+
+
+/obj/item/rbmk/fuel_rod/proc/process_rod(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
 	if(!active)
 		return get_zero_output()
 
@@ -141,7 +152,7 @@
 
 	activate_in_reactor()
 
-	fuel_amount = max(0, fuel_amount - fuel_consumption)
+	fuel_amount = max(0, fuel_amount - (fuel_consumption * seconds_per_tick))
 
 	// Let the last unit of fuel still produce output this tick,
 	// then mark the rod spent afterward.

@@ -311,9 +311,7 @@ export const RBMKFuelProcessor = () => {
     <Window width={920} height={720}>
       <Window.Content scrollable>
         {!!onHold && (
-          <NoticeBox>
-            Linked ore silo access is currently suspended.
-          </NoticeBox>
+          <NoticeBox>Linked ore silo access is currently suspended.</NoticeBox>
         )}
 
         {!!processing && (

@@ -1,19 +1,18 @@
 import { useBackend, useLocalState } from '../../backend';
-import { Window } from '../../layouts';
 import {
-  Tabs,
-  Flex,
-  Button,
   Box,
+  Button,
+  Flex,
   LabeledList,
   ProgressBar,
+  Tabs,
 } from '../../components';
-
-import RBMKOverview from './overview';
+import { Window } from '../../layouts';
 import RBMKControls from './controls';
-import RBMKRods from './rods';
-import RBMKGraphs from './graphs';
 import RBMKGenerators from './generators';
+import RBMKGraphs from './graphs';
+import RBMKOverview from './overview';
+import RBMKRods from './rods';
 
 const formatDeciseconds = (timeLeft: number) => {
   const totalSeconds = Math.max(Math.ceil(timeLeft / 10), 0);
@@ -62,7 +61,8 @@ const RBMKCascadeLockout = () => {
           finalCountdown
             ? 'RBMKConsole__CascadeWarning RBMKConsole__CascadeWarning--final'
             : 'RBMKConsole__CascadeWarning'
-        }>
+        }
+      >
         REMOTE REACTOR CONTROL HAS BEEN FORCIBLY DISABLED
       </Box>
 
@@ -71,7 +71,8 @@ const RBMKCascadeLockout = () => {
           finalCountdown
             ? 'RBMKConsole__CascadeTimer RBMKConsole__CascadeTimer--final'
             : 'RBMKConsole__CascadeTimer'
-        }>
+        }
+      >
         {formatDeciseconds(timeLeft)}
       </Box>
 
@@ -83,7 +84,8 @@ const RBMKCascadeLockout = () => {
           yellow: [33, 66],
           bad: [12, 33],
           purple: [0, 12],
-        }}>
+        }}
+      >
         Cascade lockout timer
       </ProgressBar>
 
@@ -141,35 +143,40 @@ export const RBMKConsole = () => {
               <Tabs.Tab
                 selected={tab === 'overview'}
                 onClick={() => setTab('overview')}
-                icon="gauge">
+                icon="gauge"
+              >
                 Overview
               </Tabs.Tab>
 
               <Tabs.Tab
                 selected={tab === 'controls'}
                 onClick={() => setTab('controls')}
-                icon="sliders">
+                icon="sliders"
+              >
                 Controls
               </Tabs.Tab>
 
               <Tabs.Tab
                 selected={tab === 'rods'}
                 onClick={() => setTab('rods')}
-                icon="grip-vertical">
+                icon="grip-vertical"
+              >
                 Rods
               </Tabs.Tab>
 
               <Tabs.Tab
                 selected={tab === 'graphs'}
                 onClick={() => setTab('graphs')}
-                icon="chart-line">
+                icon="chart-line"
+              >
                 Graphs
               </Tabs.Tab>
 
               <Tabs.Tab
                 selected={tab === 'generators'}
                 onClick={() => setTab('generators')}
-                icon="bolt">
+                icon="bolt"
+              >
                 Generators
               </Tabs.Tab>
 

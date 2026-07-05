@@ -62,6 +62,9 @@
 	var/last_tick_flux = 0
 	var/last_tick_temp_gain = 0
 	var/last_tick_rod_count = 0
+	var/rod_temperature_limit_bonus = 0
+	var/rod_coolant_exchange_bonus = 0
+	var/rod_flux_multiplier_bonus = 0
 
 	var/current_damage_stage = 0
 	var/image/current_damage_overlay_image = null
@@ -95,7 +98,7 @@
 
 /obj/machinery/rbmk/reactor/proc/has_active_fuel_rods()
 	for(var/obj/item/rbmk/fuel_rod/fuel_rod in (normal_slots + special_slots))
-		if(fuel_rod?.active)
+		if(fuel_rod?.active && fuel_rod.contributes_to_reaction)
 			return TRUE
 	return FALSE
 
@@ -109,6 +112,45 @@
 	last_tick_flux = 0
 	last_tick_temp_gain = 0
 	last_tick_rod_count = 0
+	reset_reactor_modifier_state()
+
+
+/obj/machinery/rbmk/reactor/proc/reset_reactor_modifier_state()
+	rod_temperature_limit_bonus = 0
+	rod_coolant_exchange_bonus = 0
+	rod_flux_multiplier_bonus = 0
+
+
+/obj/machinery/rbmk/reactor/proc/update_reactor_modifier_state(list/all_fuel_rods)
+	reset_reactor_modifier_state()
+
+	for(var/obj/item/rbmk/fuel_rod/fuel_rod in all_fuel_rods)
+		if(!fuel_rod?.active)
+			continue
+
+		var/list/modifier_output = fuel_rod.get_modifier_output()
+		if(!islist(modifier_output))
+			continue
+
+		rod_temperature_limit_bonus += modifier_output["temperature_limit_bonus"] || 0
+		rod_coolant_exchange_bonus += modifier_output["coolant_exchange_bonus"] || 0
+		rod_flux_multiplier_bonus += modifier_output["flux_multiplier_bonus"] || 0
+
+	rod_temperature_limit_bonus = clamp(rod_temperature_limit_bonus, 0, RBMK_MODIFIER_PLASMA_TEMP_LIMIT_BONUS_MAX)
+	rod_coolant_exchange_bonus = clamp(rod_coolant_exchange_bonus, 0, RBMK_MODIFIER_BLUESPACE_COOLANT_BONUS_MAX)
+	rod_flux_multiplier_bonus = clamp(rod_flux_multiplier_bonus, 0, RBMK_MODIFIER_DIAMOND_FLUX_MULT_BONUS_MAX)
+
+
+/obj/machinery/rbmk/reactor/proc/get_effective_temp_stress_threshold()
+	return RBMK_TEMP_STRESS_THRESHOLD + rod_temperature_limit_bonus
+
+
+/obj/machinery/rbmk/reactor/proc/get_effective_temp_damage_threshold()
+	return RBMK_TEMP_DAMAGE_RAMP + rod_temperature_limit_bonus
+
+
+/obj/machinery/rbmk/reactor/proc/get_effective_decay_meltdown_threshold()
+	return decay_meltdown_threshold + rod_temperature_limit_bonus
 
 
 /obj/machinery/rbmk/reactor/proc/start_reactor_sound()
@@ -137,7 +179,7 @@
 
 
 /obj/machinery/rbmk/reactor/proc/is_special_rod(obj/item/rbmk/fuel_rod/fuel_rod)
-	return fuel_rod?.rod_type in list("plasma", "telecrystal", "supermatter")
+	return fuel_rod?.rod_type in list("plasma", "bluespace", "diamond", "supermatter")
 
 
 /obj/machinery/rbmk/reactor/proc/get_target_slot_list(obj/item/rbmk/fuel_rod/fuel_rod)
@@ -145,6 +187,16 @@
 		return special_slots
 
 	return normal_slots
+
+
+/obj/machinery/rbmk/reactor/proc/get_slot_list_by_kind(slot_kind)
+	if(slot_kind == "special")
+		return special_slots
+
+	if(slot_kind == "normal")
+		return normal_slots
+
+	return null
 
 
 /obj/machinery/rbmk/reactor/proc/get_installed_supermatter_rod()
@@ -384,18 +436,14 @@
 
 
 /obj/machinery/rbmk/reactor/item_interaction(mob/living/user, obj/item/used_item, list/modifiers)
-	. = ..()
-	if(.)
-		return .
-
 	if(istype(used_item, /obj/item/rbmk/rod_tool))
 		var/obj/item/rbmk/rod_tool/rod_tool = used_item
 		return try_remove_rod_with_tool(user, rod_tool)
 
-	if(!istype(used_item, /obj/item/rbmk/fuel_rod))
-		return .
+	if(istype(used_item, /obj/item/rbmk/fuel_rod))
+		return try_insert_fuel_rod(used_item, user)
 
-	return try_insert_fuel_rod(used_item, user)
+	return ..()
 
 
 /obj/machinery/rbmk/reactor/proc/try_insert_fuel_rod(obj/item/rbmk/fuel_rod/fuel_rod, mob/user)
@@ -442,17 +490,61 @@
 
 
 /obj/machinery/rbmk/reactor/proc/get_rod_tool_target()
+	var/list/target_data = get_rod_tool_target_data()
+	if(!target_data)
+		return null
+
+	return target_data["rod"]
+
+
+/obj/machinery/rbmk/reactor/proc/get_rod_tool_target_data()
 	var/obj/item/rbmk/fuel_rod/supermatter/installed_supermatter_rod = get_installed_supermatter_rod()
 	if(installed_supermatter_rod)
-		return installed_supermatter_rod
+		var/supermatter_slot_index = special_slots.Find(installed_supermatter_rod)
+		if(supermatter_slot_index)
+			return list(
+				"rod" = installed_supermatter_rod,
+				"slot_kind" = "special",
+				"slot_index" = supermatter_slot_index,
+			)
 
 	if(length(special_slots))
-		return special_slots[length(special_slots)]
+		return list(
+			"rod" = special_slots[length(special_slots)],
+			"slot_kind" = "special",
+			"slot_index" = length(special_slots),
+		)
 
 	if(length(normal_slots))
-		return normal_slots[length(normal_slots)]
+		return list(
+			"rod" = normal_slots[length(normal_slots)],
+			"slot_kind" = "normal",
+			"slot_index" = length(normal_slots),
+		)
 
 	return null
+
+
+/obj/machinery/rbmk/reactor/proc/rod_tool_target_still_installed(slot_kind, slot_index, obj/item/rbmk/fuel_rod/expected_rod)
+	if(QDELETED(expected_rod))
+		return FALSE
+
+	var/list/target_slots = get_slot_list_by_kind(slot_kind)
+	if(!target_slots)
+		return FALSE
+
+	if(!isnum(slot_index))
+		return FALSE
+
+	slot_index = round(slot_index)
+
+	if(!ISINRANGE(slot_index, 1, length(target_slots)))
+		return FALSE
+
+	if(target_slots[slot_index] != expected_rod)
+		return FALSE
+
+	return expected_rod.loc == src
 
 
 /obj/machinery/rbmk/reactor/proc/get_rod_tool_removal_time(obj/item/rbmk/fuel_rod/fuel_rod)
@@ -601,13 +693,45 @@
 	if(!fuel_rod)
 		return FALSE
 
-	if(fuel_rod in special_slots)
-		special_slots -= fuel_rod
-	else if(fuel_rod in normal_slots)
-		normal_slots -= fuel_rod
-	else
+	var/special_slot_index = special_slots.Find(fuel_rod)
+	if(special_slot_index)
+		return finish_remove_rod_from_slot("special", special_slot_index, fuel_rod, user)
+
+	var/normal_slot_index = normal_slots.Find(fuel_rod)
+	if(normal_slot_index)
+		return finish_remove_rod_from_slot("normal", normal_slot_index, fuel_rod, user)
+
+	return FALSE
+
+
+/obj/machinery/rbmk/reactor/proc/finish_remove_rod_from_slot(slot_kind, slot_index, obj/item/rbmk/fuel_rod/expected_rod = null, mob/user = null)
+	var/list/target_slots = get_slot_list_by_kind(slot_kind)
+	if(!target_slots)
 		return FALSE
 
+	if(!isnum(slot_index))
+		return FALSE
+
+	slot_index = round(slot_index)
+
+	if(!ISINRANGE(slot_index, 1, length(target_slots)))
+		return FALSE
+
+	var/obj/item/rbmk/fuel_rod/fuel_rod = target_slots[slot_index]
+	if(!fuel_rod || QDELETED(fuel_rod))
+		return FALSE
+
+	if(expected_rod && fuel_rod != expected_rod)
+		return FALSE
+
+	if(fuel_rod.loc != src)
+		return FALSE
+
+	target_slots.Cut(slot_index, slot_index + 1)
+	return finish_removed_rod(fuel_rod, user)
+
+
+/obj/machinery/rbmk/reactor/proc/finish_removed_rod(obj/item/rbmk/fuel_rod/fuel_rod, mob/user = null)
 	if(fuel_rod == supermatter_rod)
 		var/obj/item/rbmk/fuel_rod/supermatter/removed_supermatter_rod = fuel_rod
 		removed_supermatter_rod.stop_cascade(TRUE)
@@ -634,11 +758,18 @@
 	if(!user || !tool)
 		return ITEM_INTERACT_FAILURE
 
-	var/obj/item/rbmk/fuel_rod/fuel_rod = get_rod_tool_target()
+	var/list/target_data = get_rod_tool_target_data()
+	if(!target_data)
+		balloon_alert(user, "no rod")
+		return ITEM_INTERACT_SUCCESS
+
+	var/obj/item/rbmk/fuel_rod/fuel_rod = target_data["rod"]
 	if(!fuel_rod)
 		balloon_alert(user, "no rod")
 		return ITEM_INTERACT_SUCCESS
 
+	var/slot_kind = target_data["slot_kind"]
+	var/slot_index = target_data["slot_index"]
 	var/cascade_extraction = (fuel_rod == supermatter_rod && supermatter_cascade_active)
 	var/removal_time = get_rod_tool_removal_time(fuel_rod)
 
@@ -653,13 +784,14 @@
 	else if(temperature >= RBMK_ROD_TOOL_HOT_KNOCKBACK_TEMP)
 		to_chat(user, span_warning("The reactor is dangerously hot. Manual rod extraction may violently vent heat."))
 
-	if(!tool.use_tool(src, user, removal_time, volume = 40))
+	var/datum/callback/target_check = CALLBACK(src, PROC_REF(rod_tool_target_still_installed), slot_kind, slot_index, fuel_rod)
+	if(!tool.use_tool(src, user, removal_time, volume = 40, extra_checks = target_check))
 		return ITEM_INTERACT_SUCCESS
 
 	if(QDELETED(fuel_rod))
 		return ITEM_INTERACT_SUCCESS
 
-	if(!finish_remove_rod(fuel_rod, user))
+	if(!finish_remove_rod_from_slot(slot_kind, slot_index, fuel_rod, user))
 		balloon_alert(user, "failed")
 		return ITEM_INTERACT_SUCCESS
 
@@ -698,7 +830,12 @@
 	if(!can_remote_extract_rods(user))
 		return FALSE
 
-	var/list/target_slots = (slot_kind == "special") ? special_slots : normal_slots
+	if(slot_kind != "normal" && slot_kind != "special")
+		return FALSE
+
+	var/list/target_slots = get_slot_list_by_kind(slot_kind)
+	if(!target_slots)
+		return FALSE
 
 	if(!isnum(slot_index))
 		return FALSE
@@ -719,7 +856,7 @@
 			to_chat(user, span_warning("The supermatter rod is resonating too violently. It must be removed before any other rods can be handled."))
 		return FALSE
 
-	return finish_remove_rod(fuel_rod, user)
+	return finish_remove_rod_from_slot(slot_kind, slot_index, fuel_rod, user)
 
 
 /obj/machinery/rbmk/reactor/proc/update_linked_consoles()

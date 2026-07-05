@@ -1,5 +1,5 @@
 import { useBackend } from '../../backend';
-import { Section, LabeledList, ProgressBar, Box } from '../../components';
+import { Box, LabeledList, ProgressBar, Section } from '../../components';
 
 const formatNumber = (value: number, digits = 0) => {
   return Number(value || 0).toLocaleString(undefined, {
@@ -95,7 +95,7 @@ const getPressureDelta = (turbine: any) => {
 
   return Math.max(
     Number(turbine.inlet_pressure || 0) - Number(turbine.outlet_pressure || 0),
-    0
+    0,
   );
 };
 

@@ -188,7 +188,6 @@
 
 	extra_range = 15
 
-	sound_channel = CHANNEL_RBMK_REACTOR
 	live_attenuation = TRUE
 	live_attenuation_interval = 0.5 SECONDS
 	live_attenuation_max_distance = 20
@@ -251,7 +250,6 @@
 	extra_range = 8
 
 	// Dynamic attenuation
-	sound_channel = CHANNEL_RBMK_TURBINE
 	live_attenuation = TRUE
 	live_attenuation_interval = 0.5 SECONDS
 	live_attenuation_max_distance = 10

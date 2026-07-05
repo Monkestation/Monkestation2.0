@@ -209,7 +209,7 @@
 
 
 /obj/machinery/power/rbmk_turbine/proc/update_turbine_sound()
-	if(!running || rpm <= 0 || machine_stat & BROKEN)
+	if(!is_actively_generating())
 		if(turbine_soundloop)
 			turbine_soundloop.stop()
 			QDEL_NULL(turbine_soundloop)
@@ -339,7 +339,8 @@
 
 
 /obj/machinery/power/rbmk_turbine/proc/process_working_gas(datum/gas_mixture/working_mix)
-	reset_generation_telemetry()
+	last_generator_damage = 0
+	last_overtemp = 0
 
 	if(!working_mix || working_mix.total_moles() <= 0)
 		last_outlet_temperature = working_mix?.temperature || 0
@@ -355,6 +356,7 @@
 	check_generator_failure_conditions()
 
 	if(machine_stat & BROKEN)
+		reset_generation_telemetry()
 		last_outlet_temperature = working_mix.temperature
 		update_turbine_icon()
 		update_turbine_sound()

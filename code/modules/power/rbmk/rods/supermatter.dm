@@ -8,6 +8,7 @@
 	rod_color = "gold"
 
 	active = TRUE
+	contributes_to_reaction = FALSE
 
 	var/datum/supermatter_rod_cascade/cascade_controller = null
 	var/contained_sliver = TRUE
@@ -20,7 +21,7 @@
 	return ..()
 
 
-/obj/item/rbmk/fuel_rod/supermatter/process_rod(reactor_temperature = RBMK_AMBIENT_TEMP, reactor_flux = 0, core_feedback_factor = 1.0)
+/obj/item/rbmk/fuel_rod/supermatter/process_rod(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS, reactor_temperature = RBMK_AMBIENT_TEMP, reactor_flux = 0, core_feedback_factor = 1.0)
 	return list(
 		"heat" = 0,
 		"flux" = 0,

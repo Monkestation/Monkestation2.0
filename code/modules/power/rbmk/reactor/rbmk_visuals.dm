@@ -62,7 +62,7 @@
 		update_reactor_sound()
 		return
 
-	if(!has_fuel_rods())
+	if(!has_fuel_rods() || (!has_active_fuel_rods() && temperature < RBMK_TEMP_RUNNING))
 		icon_state = "reactor_off"
 	else if(temperature < RBMK_TEMP_RUNNING)
 		icon_state = "reactor_on"

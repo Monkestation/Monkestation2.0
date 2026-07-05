@@ -11,10 +11,9 @@
 	rod_color = "green"
 
 	fuel_amount = 500
-	fuel_consumption = 1
+	fuel_consumption = 0.5
 
 	reactivity = 14
 	flux_multiplier = 1.5
 	radiation_multiplier = 2.5
 	thermal_multiplier = 1.3
-

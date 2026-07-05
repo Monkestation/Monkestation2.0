@@ -52,7 +52,7 @@
 	dir = WEST
 
 
-/obj/machinery/atmospherics/components/unary/rbmk/inlet/process_atmos()
+/obj/machinery/atmospherics/components/unary/rbmk/inlet/process_atmos(seconds_per_tick = RBMK_ATMOS_PROCESS_SECONDS)
 	if(!parent_reactor?.inlet_open)
 		return
 
@@ -66,7 +66,8 @@
 	if(!parent_reactor.coolant_internal)
 		return
 
-	var/desired_moles = clamp(parent_reactor.inlet_rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX)
+	var/process_scale = seconds_per_tick / RBMK_ATMOS_PROCESS_SECONDS
+	var/desired_moles = clamp(parent_reactor.inlet_rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX) * process_scale
 	if(desired_moles <= 0)
 		return
 
@@ -84,7 +85,7 @@
 	dir = EAST
 
 
-/obj/machinery/atmospherics/components/unary/rbmk/outlet/process_atmos()
+/obj/machinery/atmospherics/components/unary/rbmk/outlet/process_atmos(seconds_per_tick = RBMK_ATMOS_PROCESS_SECONDS)
 	if(!parent_reactor?.outlet_open)
 		return
 
@@ -92,6 +93,7 @@
 	if(!internal_coolant_mix || internal_coolant_mix.total_moles() <= 0)
 		return
 
+	var/process_scale = seconds_per_tick / RBMK_ATMOS_PROCESS_SECONDS
 	var/current_pressure = internal_coolant_mix.return_pressure()
 	var/target_pressure = max(parent_reactor.outlet_target_pressure, RBMK_OUTLET_PRESSURE_BASE)
 
@@ -102,6 +104,7 @@
 		var/pressure_ratio = clamp(pressure_delta / max(RBMK_PRESSURE_CRITICAL, 1), 0.05, 1)
 		desired_release_moles = max(desired_release_moles, max(10, RBMK_INLET_RATE_MAX * pressure_ratio))
 
+	desired_release_moles *= process_scale
 	if(desired_release_moles <= 0)
 		return
 

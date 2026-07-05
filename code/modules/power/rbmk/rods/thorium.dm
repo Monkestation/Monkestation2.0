@@ -11,11 +11,10 @@
 	rod_color = "lightblue"
 
 	fuel_amount = 800
-	fuel_consumption = 1
+	fuel_consumption = 0.5
 
 	reactivity = 9
 	flux_multiplier = 1.1
 	radiation_multiplier = 1.2
 	thermal_multiplier = 1
-
 

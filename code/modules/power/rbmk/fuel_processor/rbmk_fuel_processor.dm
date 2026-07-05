@@ -3,11 +3,15 @@
 #define RBMK_PROCESSOR_FABRICATE_THORIUM "fabricate_thorium"
 #define RBMK_PROCESSOR_EXTRACT_PLUTONIUM "extract_plutonium"
 #define RBMK_PROCESSOR_FABRICATE_PLUTONIUM "fabricate_plutonium"
+#define RBMK_PROCESSOR_FABRICATE_PLASMA_MODERATOR "fabricate_plasma_moderator"
+#define RBMK_PROCESSOR_FABRICATE_BLUESPACE_MODERATOR "fabricate_bluespace_moderator"
+#define RBMK_PROCESSOR_FABRICATE_DIAMOND_MODERATOR "fabricate_diamond_moderator"
 
 #define RBMK_PROCESSOR_IRON_COST (3 * SHEET_MATERIAL_AMOUNT)
 #define RBMK_PROCESSOR_FUEL_COST (10 * SHEET_MATERIAL_AMOUNT)
+#define RBMK_PROCESSOR_MODERATOR_COST (5 * SHEET_MATERIAL_AMOUNT)
 #define RBMK_PROCESSOR_RECOVERED_SHEETS 5
-#define RBMK_PROCESSOR_PROCESS_TIME (10 SECONDS)
+#define RBMK_PROCESSOR_PROCESS_TIME (5 SECONDS)
 
 /obj/item/rbmk/spent_fuel_casing
 	name = "spent fuel casing"
@@ -152,6 +156,15 @@
 		if(RBMK_PROCESSOR_FABRICATE_PLUTONIUM)
 			return "Fabricate plutonium fuel rod"
 
+		if(RBMK_PROCESSOR_FABRICATE_PLASMA_MODERATOR)
+			return "Fabricate plasma moderator rod"
+
+		if(RBMK_PROCESSOR_FABRICATE_BLUESPACE_MODERATOR)
+			return "Fabricate bluespace moderator rod"
+
+		if(RBMK_PROCESSOR_FABRICATE_DIAMOND_MODERATOR)
+			return "Fabricate diamond moderator rod"
+
 	return "Unknown process"
 
 /obj/machinery/rbmk/fuel_processor/proc/get_recipe_description(recipe_id)
@@ -169,7 +182,16 @@
 			return "Extracts plutonium from a depleted thorium rod and stores the ruined casing."
 
 		if(RBMK_PROCESSOR_FABRICATE_PLUTONIUM)
-			return "Presses plutonium and iron into a fresh plutium fuel rod."
+			return "Presses plutonium and iron into a fresh plutonium fuel rod."
+
+		if(RBMK_PROCESSOR_FABRICATE_PLASMA_MODERATOR)
+			return "Presses stabilized plasma and iron into a plasma moderator rod."
+
+		if(RBMK_PROCESSOR_FABRICATE_BLUESPACE_MODERATOR)
+			return "Presses bluespace crystal and iron into a bluespace moderator rod."
+
+		if(RBMK_PROCESSOR_FABRICATE_DIAMOND_MODERATOR)
+			return "Presses diamond and iron into a diamond moderator rod."
 
 	return "No description."
 
@@ -191,6 +213,24 @@
 			return list(
 				/datum/material/iron = RBMK_PROCESSOR_IRON_COST,
 				/datum/material/plutonium = RBMK_PROCESSOR_FUEL_COST,
+			)
+
+		if(RBMK_PROCESSOR_FABRICATE_PLASMA_MODERATOR)
+			return list(
+				/datum/material/iron = RBMK_PROCESSOR_IRON_COST,
+				/datum/material/plasma = RBMK_PROCESSOR_MODERATOR_COST,
+			)
+
+		if(RBMK_PROCESSOR_FABRICATE_BLUESPACE_MODERATOR)
+			return list(
+				/datum/material/iron = RBMK_PROCESSOR_IRON_COST,
+				/datum/material/bluespace = RBMK_PROCESSOR_MODERATOR_COST,
+			)
+
+		if(RBMK_PROCESSOR_FABRICATE_DIAMOND_MODERATOR)
+			return list(
+				/datum/material/iron = RBMK_PROCESSOR_IRON_COST,
+				/datum/material/diamond = RBMK_PROCESSOR_MODERATOR_COST,
 			)
 
 	return list()
@@ -230,6 +270,39 @@
 			costs += list(list(
 				"name" = "plutonium",
 				"amount" = RBMK_PROCESSOR_FUEL_COST,
+			))
+
+		if(RBMK_PROCESSOR_FABRICATE_PLASMA_MODERATOR)
+			costs += list(list(
+				"name" = "iron",
+				"amount" = RBMK_PROCESSOR_IRON_COST,
+			))
+
+			costs += list(list(
+				"name" = "plasma",
+				"amount" = RBMK_PROCESSOR_MODERATOR_COST,
+			))
+
+		if(RBMK_PROCESSOR_FABRICATE_BLUESPACE_MODERATOR)
+			costs += list(list(
+				"name" = "iron",
+				"amount" = RBMK_PROCESSOR_IRON_COST,
+			))
+
+			costs += list(list(
+				"name" = "bluespace crystal",
+				"amount" = RBMK_PROCESSOR_MODERATOR_COST,
+			))
+
+		if(RBMK_PROCESSOR_FABRICATE_DIAMOND_MODERATOR)
+			costs += list(list(
+				"name" = "iron",
+				"amount" = RBMK_PROCESSOR_IRON_COST,
+			))
+
+			costs += list(list(
+				"name" = "diamond",
+				"amount" = RBMK_PROCESSOR_MODERATOR_COST,
 			))
 
 	return costs
@@ -295,6 +368,15 @@
 
 		if(RBMK_PROCESSOR_FABRICATE_PLUTONIUM)
 			return /obj/item/rbmk/fuel_rod/plutonium
+
+		if(RBMK_PROCESSOR_FABRICATE_PLASMA_MODERATOR)
+			return /obj/item/rbmk/fuel_rod/plasma
+
+		if(RBMK_PROCESSOR_FABRICATE_BLUESPACE_MODERATOR)
+			return /obj/item/rbmk/fuel_rod/bluespace
+
+		if(RBMK_PROCESSOR_FABRICATE_DIAMOND_MODERATOR)
+			return /obj/item/rbmk/fuel_rod/diamond
 
 	return null
 
@@ -618,6 +700,9 @@
 		get_recipe_data(RBMK_PROCESSOR_FABRICATE_THORIUM),
 		get_recipe_data(RBMK_PROCESSOR_EXTRACT_PLUTONIUM),
 		get_recipe_data(RBMK_PROCESSOR_FABRICATE_PLUTONIUM),
+		get_recipe_data(RBMK_PROCESSOR_FABRICATE_PLASMA_MODERATOR),
+		get_recipe_data(RBMK_PROCESSOR_FABRICATE_BLUESPACE_MODERATOR),
+		get_recipe_data(RBMK_PROCESSOR_FABRICATE_DIAMOND_MODERATOR),
 	)
 
 /obj/machinery/rbmk/fuel_processor/ui_assets(mob/user)
@@ -721,7 +806,11 @@
 #undef RBMK_PROCESSOR_FABRICATE_THORIUM
 #undef RBMK_PROCESSOR_EXTRACT_PLUTONIUM
 #undef RBMK_PROCESSOR_FABRICATE_PLUTONIUM
+#undef RBMK_PROCESSOR_FABRICATE_PLASMA_MODERATOR
+#undef RBMK_PROCESSOR_FABRICATE_BLUESPACE_MODERATOR
+#undef RBMK_PROCESSOR_FABRICATE_DIAMOND_MODERATOR
 #undef RBMK_PROCESSOR_IRON_COST
 #undef RBMK_PROCESSOR_FUEL_COST
+#undef RBMK_PROCESSOR_MODERATOR_COST
 #undef RBMK_PROCESSOR_RECOVERED_SHEETS
 #undef RBMK_PROCESSOR_PROCESS_TIME

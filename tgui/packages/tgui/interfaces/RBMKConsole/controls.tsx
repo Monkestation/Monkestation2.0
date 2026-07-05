@@ -1,12 +1,12 @@
 import { useBackend } from '../../backend';
 import {
-  Section,
+  Box,
   Button,
+  Flex,
   LabeledList,
   NumberInput,
-  Flex,
-  Box,
   ProgressBar,
+  Section,
 } from '../../components';
 
 export const RBMKControls = () => {
@@ -62,7 +62,8 @@ export const RBMKControls = () => {
             bad: [0, maxRodDepth * 0.3],
             yellow: [maxRodDepth * 0.3, maxRodDepth * 0.7],
             good: [maxRodDepth * 0.7, maxRodDepth],
-          }}>
+          }}
+        >
           {depth.toFixed(0)}%
         </ProgressBar>
 
@@ -76,7 +77,8 @@ export const RBMKControls = () => {
             bad: [0, maxRodDepth * 0.3],
             yellow: [maxRodDepth * 0.3, maxRodDepth * 0.7],
             good: [maxRodDepth * 0.7, maxRodDepth],
-          }}>
+          }}
+        >
           {targetDepth.toFixed(0)}%
         </ProgressBar>
 
@@ -88,7 +90,8 @@ export const RBMKControls = () => {
         <Box
           textAlign="center"
           mt={1}
-          color={scrammed ? 'bad' : running ? 'good' : 'label'}>
+          color={scrammed ? 'bad' : running ? 'good' : 'label'}
+        >
           {scrammed ? 'SCRAMMED' : running ? 'RUNNING' : 'IDLE'}
         </Box>
 

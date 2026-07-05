@@ -62,6 +62,8 @@
 	var/direct
 	/// Sound channel to play on, random if not provided
 	var/sound_channel
+	/// Per-datum channel reserved for live attenuated loops that do not use a fixed channel.
+	var/reserved_sound_channel
 
 	// Live attenuation
 	/// If TRUE, mid_sounds update listener volume/position while the current loop segment is still playing.
@@ -103,6 +105,7 @@
 
 /datum/looping_sound/Destroy()
 	stop(TRUE)
+	release_reserved_sound_channel()
 	return ..()
 
 /**
@@ -127,6 +130,7 @@
 /datum/looping_sound/proc/stop(null_parent = FALSE)
 	stop_live_attenuation()
 	stop_current()
+	release_reserved_sound_channel()
 	if(null_parent)
 		set_parent(null)
 	if(!timer_id)
@@ -221,15 +225,38 @@
 /datum/looping_sound/proc/get_live_mixer_channel(soundfile)
 	return live_attenuation_mixer_channel || guess_mixer_channel(soundfile) || sound_channel
 
+/// Returns a stable channel for live attenuation, reserving one when no fixed channel is configured.
+/datum/looping_sound/proc/get_live_sound_channel(reserve_if_needed = TRUE)
+	if(sound_channel)
+		return sound_channel
+
+	if(reserved_sound_channel)
+		return reserved_sound_channel
+
+	if(!reserve_if_needed)
+		return null
+
+	reserved_sound_channel = SSsounds.reserve_sound_channel(src)
+	return reserved_sound_channel
+
+/// Frees this datum's reserved live attenuation channel, if it has one.
+/datum/looping_sound/proc/release_reserved_sound_channel()
+	if(!reserved_sound_channel)
+		return
+
+	SSsounds.free_sound_channel(reserved_sound_channel)
+	reserved_sound_channel = null
+
 /// Makes sure this datum can safely use live attenuation.
 /datum/looping_sound/proc/validate_live_attenuation()
-	if(!sound_channel)
-		CRASH("[type] has live_attenuation enabled without a fixed sound_channel.")
 	if(direct)
 		CRASH("[type] has live_attenuation enabled while direct is TRUE. Direct live attenuation is unsupported.")
 
+	if(!get_live_sound_channel())
+		CRASH("[type] has live_attenuation enabled but could not reserve a sound channel.")
+
 /// Returns nearby candidate listeners for this live attenuated loop.
-/datum/looping_sound/proc/get_live_listener_candidates()
+/datum/looping_sound/proc/get_live_listener_candidates(base_volume)
 	var/list/candidates = list()
 
 	if(!parent)
@@ -239,11 +266,22 @@
 	if(!max_distance)
 		return candidates
 
+	if(!isnull(base_volume))
+		if(base_volume < SOUND_AUDIBLE_VOLUME_MIN)
+			return candidates
+
+		if(falloff_exponent)
+			var/resolved_falloff_distance = falloff_distance || SOUND_DEFAULT_FALLOFF_DISTANCE
+			if(resolved_falloff_distance >= max_distance)
+				CRASH("[type] has falloff_distance >= live_attenuation_max_distance.")
+
+			max_distance = min(max_distance, CALCULATE_MAX_SOUND_AUDIBLE_DISTANCE(base_volume, max_distance, resolved_falloff_distance, falloff_exponent))
+
 	if(ignore_walls)
-		for(var/mob/listener in range(max_distance, parent))
+		for(var/mob/listener in get_hearers_in_range(max_distance, parent, RECURSIVE_CONTENTS_CLIENT_MOBS))
 			candidates += listener
 	else
-		for(var/mob/listener in get_hearers_in_view(max_distance, parent))
+		for(var/mob/listener in get_hearers_in_view(max_distance, parent, RECURSIVE_CONTENTS_CLIENT_MOBS))
 			candidates += listener
 
 	return candidates
@@ -321,7 +359,7 @@
 
 	var/sound/listener_sound = sound(soundfile)
 	listener_sound.wait = FALSE
-	listener_sound.channel = sound_channel
+	listener_sound.channel = get_live_sound_channel()
 	listener_sound.volume = calculate_mixed_volume(listener.client, effective_volume, mixer_channel)
 
 	apply_live_position_to_sound(listener_sound, listener)
@@ -338,7 +376,7 @@
 		final_volume = calculate_mixed_volume(listener.client, effective_volume, mixer_channel)
 
 	var/sound/update = sound(null)
-	update.channel = sound_channel
+	update.channel = get_live_sound_channel()
 	update.status = SOUND_UPDATE
 	update.volume = final_volume
 
@@ -362,8 +400,9 @@
 
 	var/mixer_channel = get_live_mixer_channel(soundfile)
 	var/list/current_listeners = list()
+	var/channel_to_stop = get_live_sound_channel(FALSE)
 
-	for(var/mob/listener in get_live_listener_candidates())
+	for(var/mob/listener in get_live_listener_candidates(base_volume))
 		if(!listener?.client)
 			continue
 
@@ -378,8 +417,8 @@
 		if(old_listener in current_listeners)
 			continue
 
-		if(old_listener?.client)
-			old_listener.stop_sound_channel(sound_channel)
+		if(old_listener?.client && channel_to_stop)
+			old_listener.stop_sound_channel(channel_to_stop)
 
 	live_listeners = current_listeners
 
@@ -404,14 +443,18 @@
 
 /// Updates volume/position on the currently playing live loop channel.
 /datum/looping_sound/proc/update_live_attenuation()
-	if(!parent || !sound_channel || !live_current_sound)
+	if(!parent || !live_current_sound)
+		return
+
+	if(!get_live_sound_channel())
 		return
 
 	var/base_volume = live_current_base_volume || volume
 	var/mixer_channel = get_live_mixer_channel(live_current_sound)
 	var/list/current_listeners = list()
+	var/channel_to_stop = get_live_sound_channel(FALSE)
 
-	for(var/mob/listener in get_live_listener_candidates())
+	for(var/mob/listener in get_live_listener_candidates(base_volume))
 		if(!listener?.client)
 			continue
 
@@ -430,21 +473,22 @@
 		if(old_listener in current_listeners)
 			continue
 
-		if(old_listener?.client)
-			old_listener.stop_sound_channel(sound_channel)
+		if(old_listener?.client && channel_to_stop)
+			old_listener.stop_sound_channel(channel_to_stop)
 
 	live_listeners = current_listeners
 
 /// Stops this live loop channel for all listeners currently receiving it.
 /datum/looping_sound/proc/stop_live_channels()
-	if(!sound_channel)
+	var/channel_to_stop = get_live_sound_channel(FALSE)
+	if(!channel_to_stop)
 		return
 
 	for(var/mob/listener in live_listeners)
 		if(!listener?.client)
 			continue
 
-		listener.stop_sound_channel(sound_channel)
+		listener.stop_sound_channel(channel_to_stop)
 
 	live_listeners.Cut()
 

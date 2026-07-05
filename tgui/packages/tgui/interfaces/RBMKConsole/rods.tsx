@@ -1,5 +1,5 @@
 import { useBackend } from '../../backend';
-import { Section, Table, Button, LabeledList, Box } from '../../components';
+import { Box, Button, LabeledList, Section, Table } from '../../components';
 
 type RodSlotData = {
   name?: string;

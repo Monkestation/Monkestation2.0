@@ -1,19 +1,17 @@
-/obj/machinery/rbmk/reactor/proc/rbmk_decay_process()
-	flux = max(flux - RBMK_FLUX_DECAY, 0)
-	radiation = max(radiation - RBMK_RADIATION_DECAY, 0)
+/obj/machinery/rbmk/reactor/proc/rbmk_decay_process(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
+	flux = max(flux - (RBMK_FLUX_DECAY_PER_SECOND * seconds_per_tick), 0)
+	radiation = max(radiation - (RBMK_RADIATION_DECAY_PER_SECOND * seconds_per_tick), 0)
 	thermal_output = 0
 	last_tick_flux = flux
 	last_tick_temp_gain = 0
 
 
-/obj/machinery/rbmk/reactor/proc/rbmk_update_control_rods()
+/obj/machinery/rbmk/reactor/proc/rbmk_update_control_rods(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
 	if(scrammed && control_rod_depth >= RBMK_CONTROL_ROD_MAX)
 		actual_control_rod_depth = RBMK_CONTROL_ROD_MAX
 		return
 
-	var/step_size = control_rod_step
-	step_size = max(step_size, 1)
-	step_size = max(round(step_size * 0.35), 1) * 2
+	var/step_size = max(round(control_rod_step * 0.35), 1) * seconds_per_tick
 
 	if(actual_control_rod_depth < control_rod_depth)
 		actual_control_rod_depth = min(actual_control_rod_depth + step_size, control_rod_depth)
@@ -42,7 +40,7 @@
 	if(meltdown_in_progress || scrammed)
 		return
 
-	if(!has_fuel_rods())
+	if(!has_active_fuel_rods())
 		return
 
 	if(previous_control_rod_depth >= RBMK_CONTROL_ROD_MAX && control_rod_depth < RBMK_CONTROL_ROD_MAX)
@@ -61,7 +59,7 @@
 	playsound(src, 'sound/rbmk/startup2.ogg', 90, FALSE)
 
 
-/obj/machinery/rbmk/reactor/proc/rbmk_coolant_exchange()
+/obj/machinery/rbmk/reactor/proc/rbmk_coolant_exchange(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
 	if(!coolant_internal)
 		return
 
@@ -80,8 +78,11 @@
 	else if(!inlet_open || !outlet_open)
 		exchange_ratio = max(exchange_ratio * RBMK_COOLANT_ONE_PORT_FLOW_MULT, RBMK_COOLANT_STAGNANT_FLOW_RATIO)
 
+	var/process_scale = seconds_per_tick / RBMK_MACHINERY_PROCESS_SECONDS
 	var/exchange_coefficient = RBMK_COOLANT_EXCHANGE_COEFFICIENT + (exchange_ratio * RBMK_COOLANT_EXCHANGE_FLOW_BONUS)
+	exchange_coefficient *= 1 + rod_coolant_exchange_bonus
 	exchange_coefficient = CLAMP01(exchange_coefficient)
+	exchange_coefficient = 1 - ((1 - exchange_coefficient) ** process_scale)
 
 	var/temperature_delta = (temperature - coolant_internal.temperature) * exchange_coefficient
 	if(abs(temperature_delta) < 0.1)
@@ -92,8 +93,11 @@
 	var/coolant_temperature_change = energy_to_coolant / coolant_heat_capacity
 	var/core_temperature_change = energy_to_coolant / RBMK_CORE_HEAT_CAPACITY
 
-	coolant_temperature_change = clamp(coolant_temperature_change, -RBMK_COOLANT_MAX_GAS_TEMP_CHANGE, RBMK_COOLANT_MAX_GAS_TEMP_CHANGE)
-	core_temperature_change = clamp(core_temperature_change, -RBMK_COOLANT_MAX_CORE_TEMP_CHANGE, RBMK_COOLANT_MAX_CORE_TEMP_CHANGE)
+	var/max_gas_temp_change = RBMK_COOLANT_MAX_GAS_TEMP_CHANGE * process_scale
+	var/max_core_temp_change = RBMK_COOLANT_MAX_CORE_TEMP_CHANGE * process_scale
+
+	coolant_temperature_change = clamp(coolant_temperature_change, -max_gas_temp_change, max_gas_temp_change)
+	core_temperature_change = clamp(core_temperature_change, -max_core_temp_change, max_core_temp_change)
 
 	coolant_internal.temperature = max(coolant_internal.temperature + coolant_temperature_change, TCMB)
 	temperature = max(temperature - core_temperature_change, RBMK_AMBIENT_TEMP)
@@ -108,12 +112,39 @@
 		reactor_temperature_history.Cut(1, 2)
 
 
-/obj/machinery/rbmk/reactor/proc/rbmk_update_pressure()
+/obj/machinery/rbmk/reactor/proc/apply_pressure_damage(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
+	if(meltdown_in_progress || reactor_integrity <= 0)
+		return
+
+	if(pressure < RBMK_PRESSURE_WARNING)
+		return
+
+	var/process_scale = seconds_per_tick / RBMK_MACHINERY_PROCESS_SECONDS
+	var/pressure_damage = (pressure - RBMK_PRESSURE_WARNING) / RBMK_PRESSURE_DAMAGE_DIVISOR
+
+	if(pressure >= RBMK_PRESSURE_CRITICAL)
+		pressure_damage += (pressure - RBMK_PRESSURE_CRITICAL) / RBMK_PRESSURE_CRITICAL_DAMAGE_DIVISOR
+
+	if(pressure >= RBMK_PRESSURE_EXTREME)
+		pressure_damage += RBMK_PRESSURE_EXTREME_DAMAGE_BONUS
+
+	reactor_integrity = max(reactor_integrity - (pressure_damage * process_scale), 0)
+
+	if(reactor_integrity <= 0)
+		trigger_meltdown("Primary coolant pressure vessel failure")
+		return
+
+	if(pressure >= RBMK_PRESSURE_EXTREME && SPT_PROB(RBMK_PRESSURE_EXTREME_FAILURE_CHANCE_PER_SECOND, seconds_per_tick))
+		trigger_meltdown("Primary coolant pressure vessel rupture")
+
+
+/obj/machinery/rbmk/reactor/proc/rbmk_update_pressure(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
 	if(!coolant_internal)
 		pressure = 0
 		return
 
-	pressure = clamp(coolant_internal.return_pressure(), 0, RBMK_PRESSURE_EXTREME)
+	pressure = max(coolant_internal.return_pressure(), 0)
+	apply_pressure_damage(seconds_per_tick)
 
 	if(inlet_open || outlet_open)
 		wake_coolant_ports()
@@ -161,7 +192,7 @@
 	)
 
 
-/obj/machinery/rbmk/reactor/proc/try_spawn_flux_anomaly()
+/obj/machinery/rbmk/reactor/proc/try_spawn_flux_anomaly(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
 	if(meltdown_in_progress || !running || !has_active_fuel_rods())
 		return
 
@@ -171,9 +202,9 @@
 	var/flux_anomaly_ratio = CLAMP01((flux - RBMK_FLUX_ANOMALY_THRESHOLD) / max(RBMK_MAX_FLUX - RBMK_FLUX_ANOMALY_THRESHOLD, 1))
 	var/current_cooldown = RBMK_FLUX_ANOMALY_COOLDOWN_LOW
 
-	if(flux_anomaly_ratio >= 0.75)
+	if(flux >= RBMK_FLUX_ANOMALY_EXTREME)
 		current_cooldown = RBMK_FLUX_ANOMALY_COOLDOWN_EXTREME
-	else if(flux_anomaly_ratio >= 0.35)
+	else if(flux >= RBMK_FLUX_ANOMALY_HIGH)
 		current_cooldown = RBMK_FLUX_ANOMALY_COOLDOWN_HIGH
 
 	if(last_flux_anomaly_spawn + current_cooldown > world.time)
@@ -182,7 +213,9 @@
 	var/spawn_chance = round(8 + (flux_anomaly_ratio * 27))
 	var/anomaly_range = round(4 + (flux_anomaly_ratio * 7))
 
-	if(!prob(spawn_chance))
+	var/spawn_chance_rate = 1 - ((1 - (spawn_chance / 100)) ** (1 / RBMK_MACHINERY_PROCESS_SECONDS))
+	var/spawn_chance_per_second = 100 * spawn_chance_rate
+	if(!SPT_PROB(spawn_chance_per_second, seconds_per_tick))
 		return
 
 	var/turf/reactor_turf = get_turf(src)
@@ -243,7 +276,7 @@
 		trigger_meltdown("Core structural integrity reached zero")
 
 
-/obj/machinery/rbmk/reactor/process()
+/obj/machinery/rbmk/reactor/process(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
 	if(meltdown_in_progress || reactor_integrity <= 0)
 		process_meltdown_fallout()
 		reset_reaction_state()
@@ -259,15 +292,15 @@
 		update_linked_consoles()
 		return
 
-	rbmk_update_control_rods()
+	rbmk_update_control_rods(seconds_per_tick)
 	update_rod_motion_state()
 
 	if(!has_fuel_rods())
 		reset_reaction_state()
 		startup_sequence_played = FALSE
 
-		rbmk_coolant_exchange()
-		rbmk_update_pressure()
+		rbmk_coolant_exchange(seconds_per_tick)
+		rbmk_update_pressure(seconds_per_tick)
 		rbmk_sample_coolant()
 		rbmk_sample_reactor_temperature()
 
@@ -282,10 +315,12 @@
 	try_play_startup_sequence()
 
 	var/list/all_fuel_rods = normal_slots + special_slots
+	update_reactor_modifier_state(all_fuel_rods)
+
 	var/active_rods = 0
 
 	for(var/obj/item/rbmk/fuel_rod/fuel_rod in all_fuel_rods)
-		if(fuel_rod?.active)
+		if(fuel_rod?.active && fuel_rod.contributes_to_reaction)
 			active_rods++
 
 	last_tick_rod_count = active_rods
@@ -293,9 +328,9 @@
 	if(active_rods <= 0 || scrammed || actual_control_rod_depth >= RBMK_CONTROL_ROD_MAX)
 		running = FALSE
 
-		rbmk_decay_process()
-		rbmk_coolant_exchange()
-		rbmk_update_pressure()
+		rbmk_decay_process(seconds_per_tick)
+		rbmk_coolant_exchange(seconds_per_tick)
+		rbmk_update_pressure(seconds_per_tick)
 		rbmk_sample_coolant()
 		rbmk_sample_reactor_temperature()
 		check_decay_meltdown()
@@ -318,7 +353,7 @@
 		if(!fuel_rod?.active)
 			continue
 
-		var/list/rod_output = fuel_rod.process_rod()
+		var/list/rod_output = fuel_rod.process_rod(seconds_per_tick)
 		if(!islist(rod_output))
 			continue
 
@@ -332,14 +367,17 @@
 	var/flux_control_multiplier = CLAMP01(1 - control_ratio)
 	var/heat_control_multiplier = CLAMP01(1 - (control_ratio ** 1.35))
 	var/radiation_control_multiplier = CLAMP01(1 - (control_ratio ** 1.15))
+	var/flux_modifier_multiplier = 1 + rod_flux_multiplier_bonus
 
+	total_flux *= flux_modifier_multiplier
 	total_flux *= flux_control_multiplier
 	total_heat *= heat_control_multiplier
 	total_radiation *= radiation_control_multiplier
 
 	flux = clamp(total_flux * RBMK_FLUX_GAIN, 0, RBMK_MAX_FLUX)
 
-	var/generated_heat = total_heat + (flux * RBMK_TEMP_GAIN_PER_TICK)
+	var/generated_heat_per_second = (total_heat / RBMK_MACHINERY_PROCESS_SECONDS) + (flux * RBMK_TEMP_GAIN_PER_SECOND)
+	var/generated_heat = generated_heat_per_second * seconds_per_tick
 	temperature += generated_heat
 
 	thermal_output = generated_heat
@@ -349,7 +387,7 @@
 	var/extra_void_coefficient = update_void_coefficient()
 	flux = clamp(flux * (1 + extra_void_coefficient), 0, RBMK_MAX_FLUX)
 
-	try_spawn_flux_anomaly()
+	try_spawn_flux_anomaly(seconds_per_tick)
 
 	radiation = clamp(
 		total_radiation + (flux * RBMK_RADIATION_FLUX_MULT) + (temperature * RBMK_RADIATION_TEMP_MULT),
@@ -359,19 +397,20 @@
 
 	emit_real_radiation()
 
-	rbmk_coolant_exchange()
+	rbmk_coolant_exchange(seconds_per_tick)
 
 	if(coolant_internal)
 		var/tritium_delta = flux * (RBMK_TRITIUM_RATE * 400)
+		tritium_delta *= seconds_per_tick / RBMK_MACHINERY_PROCESS_SECONDS
 		if(tritium_delta > 0)
 			coolant_internal.assert_gases(/datum/gas/tritium)
 			coolant_internal.gases[/datum/gas/tritium][MOLES] += tritium_delta
 
-	rbmk_update_pressure()
+	rbmk_update_pressure(seconds_per_tick)
 	rbmk_sample_coolant()
 	rbmk_sample_reactor_temperature()
 
-	update_reactor_integrity()
+	update_reactor_integrity(seconds_per_tick)
 	check_hard_meltdown_conditions()
 
 	update_reactor_icon()
