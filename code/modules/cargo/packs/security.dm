@@ -341,14 +341,12 @@
 	crate_name = "Anti-Tank Rocket crate"
 	dangerous = TRUE
 
-//security grade bob semple orders.
+//iilegal bob semple ammo orders.
 /datum/supply_pack/security/armory/rubber_semple_ammo
 	name = "Bob Semple Rubber Ammo Box"
 	desc = "An old box of Rubber bullets for your bob semple."
 	crate_name = "Rusty Ammo Crate"
 	cost = CARGO_CRATE_VALUE * 3
-	access = ACCESS_HOS
-	access_view = ACCESS_HOS
 	contraband = TRUE
 	contains = list(/obj/item/mecha_ammo/semple/rubber)
 
@@ -357,7 +355,5 @@
 	desc = "An old box of bullets for your bob semple."
 	crate_name = "Rusty Ammo Crate"
 	cost = CARGO_CRATE_VALUE * 6
-	access = ACCESS_HOS
-	access_view = ACCESS_HOS
 	contraband = TRUE
 	contains = list(/obj/item/mecha_ammo/semple)
