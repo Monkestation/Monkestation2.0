@@ -241,13 +241,13 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 // Used for IPC and IRC brains, MMIs/Positronics surgerically installed become these
 /obj/item/organ/internal/brain/positronic
 	name = "compact positronic brain"
+	desc = "You should not be seeing this, please bug report if found" // These should always become positronics/mmis on removal, should never be able to examine
+	icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi'
+	icon_state = "posibrain-ipc"
 	slot = ORGAN_SLOT_BRAIN
 	zone = BODY_ZONE_CHEST
 	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES | ORGAN_VITAL
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
-	desc = "You should not be seeing this, please bug report if found" // These should always become positronics/mmis on removal, should never be able to examine
-	icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi'
-	icon_state = "posibrain-ipc"
 
 	/// The last time (in ticks) a message about brain damage was sent. Don't touch.
 	var/last_message_time = 0
