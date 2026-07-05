@@ -65,6 +65,7 @@
 	if(!QDELETED(cyborg_owner))
 		UnregisterSignal(cyborg_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
 		cyborg_owner.drop_all_held_items()
+	cyborg_owner = null
 	if(!QDELETED(inventory_holder))
 		for(var/obj/item/storage/bag in inventory_holder.contents)
 			for(var/obj/item in bag)
