@@ -196,7 +196,7 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	icon = 'icons/materials/fission_isotopes.dmi'
 	icon_state = "sheet-thorium"
 	base_icon_state = "sheet-thorium"
-	inhand_icon_state = "sheet-thorium"
+	inhand_icon_state = null
 	singular_name = "thorium sheet"
 	sheettype = "thorium"
 	mats_per_unit = list(/datum/material/thorium = SHEET_MATERIAL_AMOUNT)
@@ -217,7 +217,7 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	icon = 'icons/materials/fission_isotopes.dmi'
 	icon_state = "sheet-plutonium"
 	base_icon_state = "sheet-plutonium"
-	inhand_icon_state = "sheet-plutonium"
+	inhand_icon_state = null
 	singular_name = "plutonium sheet"
 	sheettype = "plutonium"
 	mats_per_unit = list(/datum/material/plutonium = SHEET_MATERIAL_AMOUNT)
