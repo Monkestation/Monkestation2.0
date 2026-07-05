@@ -5,7 +5,6 @@
 	icon = 'icons/obj/clothing/bunnysprites/bunny_ears.dmi'
 	worn_icon = 'icons/mob/clothing/costumes/bunnysprites/bunny_ears_worn.dmi'
 	inhand_icon_state = "that"
-	armor_type = /datum/armor/hats_caphat
 	dog_fashion = null
 
 /obj/item/clothing/under/rank/captain/bunnysuit
