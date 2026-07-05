@@ -19,7 +19,7 @@
 	var/list/obj/item/emagged_modules = list()
 	/// The list of modules that are given only if the cyborg is part of the clockwork cult.
 	var/list/obj/item/clockwork_modules = list()
-	/// The list of modules that are given only if the cyborg is upgraded through external means.
+	/// The list of modules that are given only by external means (aka adminbus).
 	var/list/obj/item/external_modules = list()
 	/// The list of energy storages to keep track of.
 	var/list/datum/robot_energy_storage/energy_storages = list()
