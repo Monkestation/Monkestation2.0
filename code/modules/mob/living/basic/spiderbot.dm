@@ -166,11 +166,11 @@
 	return ..()
 
 /mob/living/basic/spiderbot/proc/eject_brain()
-	if(mmi)
-		var/turf/T = get_turf(src)
-		mmi.forceMove(T)
-		if(mind)
-			mind.transfer_to(mmi.brainmob)
-		mmi = null
-		name = "Spider-bot"
-		update_icon()
+	if(!mmi)
+		return
+	mmi.forceMove(drop_location())
+	if(mind)
+		mind.transfer_to(mmi.brainmob)
+	mmi = null
+	name = initial(name)
+	update_appearance(UPDATE_ICON_STATE)
