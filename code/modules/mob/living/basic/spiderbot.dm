@@ -1,6 +1,6 @@
 // No AI controller for these guys - they should be inert if they're not player controlled.
 /mob/living/basic/spiderbot
-	name = "Spider-bot"
+	name = "spider bot"
 	desc = "A skittering robotic friend!" // More like ultimate shitter
 	icon = 'icons/mob/silicon/robots.dmi'
 	icon_state = "spiderbot-chassis"
