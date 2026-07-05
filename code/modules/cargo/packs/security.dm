@@ -414,6 +414,7 @@
 		/obj/item/gun/ballistic/shotgun/riot = 3,
 		/obj/item/storage/belt/bandolier = 3,
 	)
+	crate_name = "riot shotgun crate"
 
 // these are here now, worst part is they used to sexually harass you
 /datum/supply_pack/security/armory/short_mod_laser
