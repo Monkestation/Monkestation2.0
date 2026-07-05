@@ -115,7 +115,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		finish_download()
 
 	if(downloading)
-		if(!downloading.can_download)
+		if(!downloading.can_download && !one_time_password_used)
 			stop_download()
 			return
 		download_progress += (AI_DOWNLOAD_PER_PROCESS * seconds_per_tick)
@@ -207,7 +207,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 			data["ais"] += list(list(
 				"name" = A.name,
 				"ref" = REF(A),
-				"can_download" = A.can_download,
+				"can_download" = one_time_password_used ? TRUE : A.can_download,
 				"health" = A.health,
 				"active" = !!(A.mind),
 				"in_core" = istype(A.loc, /obj/machinery/ai/data_core),
@@ -326,7 +326,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 				return
 			if(!isvalidAIloc(target.loc))
 				return
-			if(!target.can_download)
+			if(!target.can_download && !one_time_password_used)
 				return
 			if(!(target.loc in GLOB.data_cores["[z]"]))
 				to_chat(user, span_warning("No connection. Try again later."))

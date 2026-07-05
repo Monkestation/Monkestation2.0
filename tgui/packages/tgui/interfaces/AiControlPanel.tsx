@@ -257,7 +257,7 @@ export const AiControlPanel = (props) => {
                                       tooltip={
                                         !intellicard
                                           ? ai.can_download
-                                            ? 'Requires IntelliCard'
+                                            ? 'Requires intellicard'
                                             : '&¤!65%'
                                           : null
                                       }
