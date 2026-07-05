@@ -525,15 +525,18 @@ const PageMain = () => {
             />
           )}
 
-          {!!can_request_ai_codes && (
-            <Button
-              icon="bullhorn"
-              content="Print AI Codes"
-              onClick={() => act('printAIControlCode')}
-            >
-              Print AI Codes
-            </Button>
-          )}
+          <Button
+            icon="fax"
+            disabled={!can_request_ai_codes}
+            tooltip={
+              can_request_ai_codes
+                ? 'Prints a new set of AI codes, removing the old ones.'
+                : 'Unable to download codes while they are still loaded in the primary data core. Deconstruct the core to get the codes.'
+            }
+            onClick={() => act('printAIControlCode')}
+          >
+            Print AI Codes
+          </Button>
 
           {!!canToggleEmergencyAccess && (
             <Button.Confirm
