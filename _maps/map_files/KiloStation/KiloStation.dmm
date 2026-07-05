@@ -75048,6 +75048,7 @@
 /area/space/nearstation)
 "xrm" = (
 /obj/machinery/blackbox_recorder,
+/obj/structure/cable,
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/tcommsat/server)
 "xrz" = (
