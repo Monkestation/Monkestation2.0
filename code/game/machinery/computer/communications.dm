@@ -114,7 +114,7 @@
 		return FALSE
 	if(!(ACCESS_COMMAND in authorize_access))
 		return FALSE
-	var/obj/machinery/ai/data_core/primary/primary_machine = SSmachines.get_machines_by_type(/obj/machinery/ai/data_core/primary)
+	var/list/primary_machine = SSmachines.get_machines_by_type(/obj/machinery/ai/data_core/primary)
 	if(!length(primary_machine))
 		return TRUE
 	var/obj/item/paper/ai_control_code/codes = locate() in primary_machine[1]
