@@ -148,9 +148,9 @@
 
 /obj/item/organ/internal/tongue/apid/get_laugh_sound()
 	return pick(
-		'monkestation/sound/voice/laugh/moth/mothchitter.ogg',
-		'monkestation/sound/voice/laugh/moth/mothlaugh.ogg',
-		'monkestation/sound/voice/laugh/moth/mothsqueak.ogg',
+		'sound/voice/laugh/moth/mothchitter.ogg',
+		'sound/voice/laugh/moth/mothlaugh.ogg',
+		'sound/voice/laugh/moth/mothsqueak.ogg',
 	)
 
 /datum/species/apid/create_pref_unique_perks()

@@ -54,11 +54,6 @@
 	. += span_notice("Right click it to remove all the cells at once!")
 
 /obj/machinery/cell_charger_multi/attackby(obj/item/tool, mob/user, params)
-	if(istype(tool, /obj/item/borg/apparatus/circuit) && !panel_open)
-		var/obj/item/borg/apparatus/circuit/robo_hand = tool
-		if(robo_hand.stored == null)
-			return attack_hand(user)
-
 	if(istype(tool, /obj/item/stock_parts/power_store/cell) && !panel_open)
 		if(machine_stat & BROKEN)
 			to_chat(user, span_warning("[src] is broken!"))

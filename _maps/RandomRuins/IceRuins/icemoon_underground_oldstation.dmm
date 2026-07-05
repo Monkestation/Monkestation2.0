@@ -5225,7 +5225,7 @@
 	listening = 0;
 	name = "Custom Channel"
 	},
-/obj/structure/ai_core/deactivated,
+/obj/machinery/status_display/ai_core,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "CN" = (

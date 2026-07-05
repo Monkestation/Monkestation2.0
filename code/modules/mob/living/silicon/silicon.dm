@@ -43,7 +43,7 @@
 	var/crew_hud = DATA_HUD_CREW //MONKE, lets silicons tell who is crew.
 
 	var/law_change_counter = 0
-	var/obj/machinery/camera/builtInCamera = null
+	var/obj/machinery/camera/bodycamera/builtInCamera = null
 	var/updating = FALSE //portable camera camerachunk update
 	///Whether we have been emagged
 	var/emagged = FALSE
@@ -423,16 +423,18 @@
 	diagsensor.show_to(src)
 	crewsensor.show_to(src)
 
-/mob/living/silicon/proc/toggle_sensors()
+/mob/living/silicon/proc/toggle_sensors(silent = FALSE)
 	if(incapacitated())
 		return
 	sensors_on = !sensors_on
 	if (!sensors_on)
-		to_chat(src, span_notice("Sensor overlay deactivated."))
+		if(!silent)
+			to_chat(src, span_notice("Sensor overlay deactivated."))
 		remove_sensors()
 		return
 	add_sensors()
-	to_chat(src, span_notice("Sensor overlay activated."))
+	if(!silent)
+		to_chat(src, span_notice("Sensor overlay activated."))
 
 /mob/living/silicon/proc/GetPhoto(mob/user)
 	if (aicamera)

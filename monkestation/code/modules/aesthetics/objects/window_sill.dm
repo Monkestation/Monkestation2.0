@@ -9,7 +9,7 @@ GLOBAL_LIST_INIT(sheets_to_window_types, zebra_typecacheof(list(
 )))
 
 /obj/structure/window_sill
-	icon = 'monkestation/icons/obj/structures/window/window_sill.dmi'
+	icon = 'icons/obj/structures/window/window_sill.dmi'
 	base_icon_state = "window_sill"
 	icon_state = "window_sill-0"
 	layer = ABOVE_OBJ_LAYER - 0.02

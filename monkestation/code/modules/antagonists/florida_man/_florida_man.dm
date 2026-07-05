@@ -3,7 +3,7 @@
 	roundend_category = "Florida Men"
 	antagpanel_category = "Florida Man"
 	job_rank = ROLE_FLORIDA_MAN
-	hud_icon = 'monkestation/icons/mob/huds/antag_hud.dmi'
+	hud_icon = 'icons/mob/huds/antag_hud.dmi'
 	antag_hud_name = "usa"
 	objectives = list()
 	show_to_ghosts = TRUE
@@ -86,7 +86,7 @@
 	var/mob/living/carbon/floridan = owner.current
 	randomize_human(floridan)
 
-	owner.current.playsound_local(get_turf(owner.current), 'monkestation/sound/ambience/antag/floridaman.ogg',100,0, use_reverb = FALSE)
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/floridaman.ogg',100,0, use_reverb = FALSE)
 	to_chat(owner, span_boldannounce("You are THE Florida Man!\nYou're not quite sure how you got out here in space, but you don't generally bother thinking about things.\n\nYou love methamphetamine!\nYou love wrestling lizards!\nYou love getting drunk!\nYou love sticking it to THE MAN!\nYou don't act with any coherent plan or objective.\nYou don't outright want to destroy the station or murder people, as you have no home to return to.\n\nGo forth, son of Space Florida, and sow chaos!"))
 	owner.announce_objectives()
 	random_unique_name(PLURAL, floridan)

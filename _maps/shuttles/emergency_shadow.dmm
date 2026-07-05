@@ -823,11 +823,11 @@
 /obj/machinery/airalarm/directional/north,
 /obj/structure/rack,
 /obj/item/soap/nanotrasen,
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 6;
 	pixel_y = 3
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = -4
 	},
 /obj/effect/turf_decal/tile/yellow/opposingcorners,

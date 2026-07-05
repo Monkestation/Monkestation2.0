@@ -127,7 +127,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_CHIEF_ENGINEER = 40,
 		JOB_STATION_ENGINEER = 41,
 		JOB_ATMOSPHERIC_TECHNICIAN = 42,
-		JOB_SIGNAL_TECHNICIAN = 43, // monkestation edit
+		JOB_NETWORK_ADMIN = 43, // monkestation edit
 		// 50-59: Cargo
 		JOB_QUARTERMASTER = 50,
 		JOB_SHAFT_MINER = 51,

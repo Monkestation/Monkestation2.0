@@ -567,7 +567,7 @@
 /obj/item/storage/fancy/a40mm_box
 	name = "40mm grenade box"
 	desc = "A metal box designed to hold 40mm grenades."
-	icon =  'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon =  'icons/obj/guns/40mm_grenade.dmi'
 	icon_state = "40mm_box"
 	base_icon_state = "40mm_box"
 	spawn_type = /obj/item/ammo_casing/a40mm

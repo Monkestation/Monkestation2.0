@@ -1,0 +1,10 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - bugfix: "CentCom commander's suitskirt now plays nicley with digigrade legs"
+  - bugfix: "security medical jumpskirt now no longer errors while adjusted"
+  - bugfix: "stirling generator should be producing appriopate power"
+  - bugfix: "Scroll of the Awakened Dragon no longer discounts"
+  - map: "Kilostation telecomms now has grid wires under the blackbox"
+  - map: "Kilostation disposals has been fixed atrium"
+  - map: "Tramstation's disposal stacking unit has had its input direction adjusted to northeast."

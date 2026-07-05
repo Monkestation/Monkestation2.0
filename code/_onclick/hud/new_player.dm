@@ -613,7 +613,7 @@
 /atom/movable/screen/lobby/button/ook/Click(location, control, params)
 	. = ..()
 	if(.)
-		SEND_SOUND(usr, 'monkestation/sound/misc/menumonkey.ogg')
+		SEND_SOUND(usr, 'sound/misc/menumonkey.ogg')
 
 /atom/movable/screen/lobby/overflow_alert
 	screen_loc = "TOP:-48,CENTER-2.7"

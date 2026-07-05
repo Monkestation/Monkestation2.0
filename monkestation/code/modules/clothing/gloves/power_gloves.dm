@@ -73,7 +73,7 @@
 		owner.balloon_alert(owner, "not enough power in the grid!")
 		return
 	else
-		playsound(owner, 'monkestation/sound/weapons/powerglovestarget.ogg', 35, TRUE, -1)
+		playsound(owner, 'sound/weapons/powerglovestarget.ogg', 35, TRUE, -1)
 		if(do_after(owner, 3 SECONDS, target, IGNORE_TARGET_LOC_CHANGE, hidden = TRUE))
 			for(var/obj/machinery/light/light in get_area(owner))
 				light.flicker(amount = rand(3, 6))
