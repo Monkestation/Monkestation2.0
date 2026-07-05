@@ -16,6 +16,13 @@
 	/// whether we are currently being loaded by a lobby
 	var/template_in_use = FALSE
 
+/datum/lazy_template/deathmatch/random // Not an actual template, but close enough
+	name = "Random"
+	desc = "Lets go gambling! (selects a random map, except for those that would force observers)"
+	allowed_loadouts = list(/datum/outfit/deathmatch_loadout/random)
+	map_name = "ragecage"
+	key = "random"
+
 /datum/lazy_template/deathmatch/ragecage
 	name = "Ragecage"
 	desc = "Fun for the whole family, the classic ragecage."
@@ -38,7 +45,7 @@
 	desc = "What would Engineering be without an overly complicated engine, with conveyor belts, emitters and shield generators sprinkled about? That's right, not Engineering."
 	max_players = 10
 	allowed_loadouts = list(/datum/outfit/deathmatch_loadout/assistant)
-	map_name = "OSHA_violator"
+	map_name = "OSHA_Violator"
 	key = "OSHA_Violator"
 
 /datum/lazy_template/deathmatch/the_brig

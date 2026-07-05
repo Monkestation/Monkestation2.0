@@ -309,6 +309,15 @@
 		/obj/item/magazine_shuffler,
 	)
 
+/datum/supply_pack/service/dance_machine
+	name = "Dance Machine Crate"
+	desc = "Contains one radiant dance machine. Dance like your local megacorporation isn't watching you."
+	cost = CARGO_CRATE_VALUE * 25 //if this gets spammed everywhere it might lag clients out
+	contains = list(/obj/machinery/jukebox/disco)
+	crate_name = "dance machine crate"
+	crate_type = /obj/structure/closet/crate/large
+	contraband = TRUE
+
 /datum/supply_pack/service/genesischamber
 	name = "Genesis Chamber Construction Kit"
 	desc = "Contains most of the machine parts in order to construct the Genesis Chamber for Botany. Bluespace crystals sold separately. Consult your local science division for a bioscrambler anomaly core."

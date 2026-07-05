@@ -178,6 +178,11 @@
 		to_chat(owner, span_warning("Your breathing tube suddenly closes!"))
 		owner.losebreath += 2
 
+/obj/item/organ/internal/cyberimp/mouth/breathing_tube/simple
+	name = "simple breathing tube implant"
+	desc = "This simple implant adds an internals connector to your back, allowing you to use internals without a mask."
+	organ_traits = list()
+
 //BOX O' IMPLANTS
 
 /obj/item/storage/box/cyber_implants

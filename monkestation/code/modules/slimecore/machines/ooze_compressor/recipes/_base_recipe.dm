@@ -1,9 +1,10 @@
 GLOBAL_LIST_EMPTY_TYPED(compressor_recipe_previews, /image)
 
 /datum/compressor_recipe
-	var/list/required_oozes = list()
+	/// What slime colors we need to make the crossbreed. Uses /datum/slime_color
+	var/base_slime_color
 	var/obj/item/output_item
-	var/created_amount = 1
+	var/cross_slime_color
 
 /datum/compressor_recipe/crossbreed
 
