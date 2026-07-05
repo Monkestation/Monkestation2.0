@@ -396,6 +396,7 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 		/obj/item/dice/d20/fate/stealth/one_use = 1, //Looks like a d20, keep the d20 in the uncommon pool.
 		/obj/item/storage/belt/military/assault/cloak = 1, //this is currently broken and does not recharge
 		/obj/item/spear/grey_tide = 1,
+		/obj/vehicle/sealed/mecha/semple/maintchance = 1, // Worse variant of the bob semple, slow shooting weapons.. low damage.. low health.. but it is still a tank so.. odditiy.
 		/* MONKESTATION EDIT - removal of self antag items from maints loot
 		list(//music
 			/obj/item/instrument/saxophone/spectral = 1,

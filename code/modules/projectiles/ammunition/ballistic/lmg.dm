@@ -104,3 +104,24 @@
 	caliber = CALIBER_A762_KINETIC
 	projectile_type = /obj/projectile/bullet/a762/kinetic
 
+/// bob semple casings
+
+/obj/item/ammo_casing/a77mm
+	name = "7.7mm Lethal Slow Shot casing"
+	desc = "A 7.7mm lethal slow shot casing for use in the bob semple."
+	icon_state = "77mm_lethal_casing"
+	projectile_type = /obj/projectile/bullet/a77mm/lethal
+
+	can_be_printed = FALSE
+
+/obj/item/ammo_casing/a77mm/rubber
+	name = "7.7mm Rubber Shot casing"
+	desc = "A 7.7mm Rubber shot casing for use in the bob semple."
+	icon_state = "77mm_rubber_casing"
+	projectile_type = /obj/projectile/bullet/a77mm/rubber
+
+/obj/item/ammo_casing/a77mm/rusted
+	name = "Rusted 7.7mm Lethal Slow Shot casing"
+	desc = "A Rusted 7.7mm lethal slow shot casing for use in the bob semple."
+	icon_state = "77mm_rusted_casing"
+	projectile_type = /obj/projectile/bullet/a77mm/rusted

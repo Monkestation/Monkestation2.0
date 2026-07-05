@@ -171,3 +171,17 @@
 	icon_state = "sentinel"
 	rounds = 10
 	ammo_type = MECHA_AMMO_SENTINEL
+
+/obj/item/mecha_ammo/semple/rubber
+	name = "Anti Riot Semple Rounds"
+	desc = "A Large box of 7.7mm rubber rounds, for use in a semple."
+	icon_state = "rsemple"
+	rounds = 120
+	ammo_type = MECHA_AMMO_SEMPLE_RUBBER
+
+/obj/item/mecha_ammo/semple
+	name = "Lethal Semple Rounds"
+	desc = "A Large box of 7.7mm rounds, for use in a semple."
+	icon_state = "semple"
+	rounds = 120
+	ammo_type = MECHA_AMMO_SEMPLE

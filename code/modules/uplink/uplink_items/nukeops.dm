@@ -970,6 +970,14 @@
 
 /datum/uplink_item/support/semple
 	name = "Syndicate Ancient History Semple Kit"
-	desc = "Brought to you by the Syndicate Ancient History Department! the Bob Semple! Kit Includes! 1 Bob Semple! 4 Boxes of ammo! and 1 Welding tool!"
-	item = list(/obj/vehicle/sealed/mecha/semple, /obj/item/mecha_ammo/makeshift/lighttankmg, /obj/item/mecha_ammo/makeshift/lighttankmg, /obj/item/mecha_ammo/makeshift/lighttankmg, /obj/item/mecha_ammo/makeshift/lighttankmg, /obj/item/weldingtool/hugetank)
-	cost = 75
+	desc = "Brought to you by the Syndicate Ancient History Department! the Bob Semple! this model can fit up to 6 whole crew!"
+	item = /obj/vehicle/sealed/mecha/semple
+	cost = 60
+	purchasable_from = UPLINK_NUKE_OPS
+
+/datum/uplink_item/ammo/sempleammo
+	name = "Syndicate Ancient History Semple Ammo"
+	desc = "Brought to you by the Syndicate Ancient History Department! Authentic Bob Semple ammo! Contains One box!"
+	item = /obj/item/mecha_ammo/semple
+	cost = 1
+	purchasable_from = UPLINK_NUKE_OPS

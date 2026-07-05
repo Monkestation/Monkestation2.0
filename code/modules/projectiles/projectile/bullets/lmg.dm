@@ -222,3 +222,35 @@
 		M.gets_drilled(firer, FALSE)
 	. = ..()
 
+// bob semple variants.
+
+/obj/projectile/bullet/a77mm/lethal
+	name = "7.7mm Lethal Slow Shot"
+	damage = 15
+	armour_ignorance = 10
+	bare_wound_bonus = 10
+	icon_state = "77mm_lethal"
+
+/obj/projectile/bullet/a77mm/rubber
+	name = "7.7mm Non-Lethal Rubber Shot"
+	ricochets_max = 40
+	ricochet_chance = 150
+	ricochet_auto_aim_range = 4
+	ricochet_incidence_leeway = 0
+	ricochet_decay_chance = 0.9
+	damage = 5
+	stamina = 15
+	wound_bonus = -40
+	bare_wound_bonus = -20
+	weak_against_armour = TRUE
+	icon_state = "77mm_rubber"
+
+/obj/projectile/bullet/a77mm/rusted
+	name = "Rusted 7.7mm Lethal Slow Shot"
+	damage = 10
+	stamina = 5
+	wound_bonus = -10
+	weak_against_armour = TRUE
+	embed_type = /datum/embedding/rebar
+	shrapnel_type = /obj/item/ammo_casing
+	icon_state = "77mm_rusted"

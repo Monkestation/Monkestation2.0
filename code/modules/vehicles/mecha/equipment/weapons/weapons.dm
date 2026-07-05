@@ -822,7 +822,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lighttankmg
 	name = "12.7mm Malone Mk.1 Ratcatcher"
-	desc = "The Primary weapon systems of a bob semple."
+	desc = ""
 	icon_state = "mecha_light_tank_mg"
 	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
 	projectile = /obj/projectile/bullet/mm127x70
@@ -836,4 +836,58 @@
 	randomspread = 4
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_LIGHTTANKMG
+	mech_flags = EXOSUIT_MODULE_TANK
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rubberbobsemplemg
+	name = "7.7mm Semple Rubber Slowshot"
+	desc = "The primary weapon systems of a bob semple"
+	icon_state = "rubber_mecha_semplemg"
+	fire_sound = 'sound/weapons/gun/smg/shot_suppressed.ogg'
+	projectile = /obj/projectile/bullet/a77mm/rubber
+	projectiles = 60
+	projectiles_cache = 200
+	projectiles_cache_max = 400
+	projectiles_per_shot = 3
+	projectile_delay = 0.5 SECONDS
+	equip_cooldown = 1 SECONDS
+	variance = 18
+	randomspread = 8
+	harmful = FALSE
+	ammo_type = MECHA_AMMO_SEMPLE_RUBBER
+	mech_flags = EXOSUIT_MODULE_TANK
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/bobsemplemg
+	name = "7.7mm Semple Slowshot"
+	desc = "The primary weapon systems of a bob semple"
+	icon_state = "mecha_semplemg"
+	fire_sound = 'sound/weapons/gun/smg/shot.ogg'
+	projectile = /obj/projectile/bullet/a77mm/lethal
+	projectiles = 60
+	projectiles_cache = 200
+	projectiles_cache_max = 400
+	projectiles_per_shot = 3
+	projectile_delay = 0.5 SECONDS
+	equip_cooldown = 1 SECONDS
+	variance = 18
+	randomspread = 8
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_SEMPLE
+	mech_flags = EXOSUIT_MODULE_TANK
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rustedbobsemplemg
+	name = "7.7mm Rusted Semple Slowshot"
+	desc = "The primary weapon systems of a bob semple"
+	icon_state = "rusted_mecha_semplemg"
+	fire_sound = 'sound/weapons/gun/smg/shot_alt.ogg'
+	projectile = /obj/projectile/bullet/a77mm/rusted
+	projectiles = 30
+	projectiles_cache = 100
+	projectiles_cache_max = 200
+	projectiles_per_shot = 2
+	projectile_delay = 0.5 SECONDS
+	equip_cooldown = 1 SECONDS
+	variance = 18
+	randomspread = 20
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_SEMPLE
 	mech_flags = EXOSUIT_MODULE_TANK

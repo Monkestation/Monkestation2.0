@@ -67,4 +67,6 @@
 #define MECHA_AMMO_ATR "20x160mm"
 #define MECHA_AMMO_FLAME "Flames"
 #define MECHA_AMMO_SENTINEL "Sentinel Cannon Shell"
+#define MECHA_AMMO_SEMPLE_RUBBER "7.7mm Rubber Shot"
+#define MECHA_AMMO_SEMPLE "7.7mm Slow Shot"
 //monke edit end
