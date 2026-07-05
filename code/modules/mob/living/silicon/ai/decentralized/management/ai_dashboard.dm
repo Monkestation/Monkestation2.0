@@ -352,12 +352,12 @@
 	if(reduction_of_resources)
 		to_chat(owner, span_warning("Lack of computational capacity. Some programs may have been stopped."))
 
-	var/remaining_cpu = 1
+	var/remaining_cpu = current_cpu
 	for(var/I in cpu_usage)
 		remaining_cpu -= cpu_usage[I]
 
 	if(remaining_cpu > 0 && contribute_spare_cpu)
-		var/points = max(round(AI_RESEARCH_PER_CPU * (remaining_cpu * current_cpu) * owner.research_point_booster * seconds_per_tick, 0.1), 0)
+		var/points = max(round(AI_RESEARCH_PER_CPU * remaining_cpu * seconds_per_tick, 0.1), 0)
 
 		if(crypto_mining)
 			points *= 0.5

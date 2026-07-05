@@ -1,7 +1,7 @@
 /datum/ai_project/firewall
 	name = "Download Firewall"
-	description = "By hiding your various functions you should be able to prolong the time it takes to download your consciousness by 2x."
-	research_cost = 1500
+	description = "By converting old tools from online archives to fit your systems, you should be able to wall off any attempts to download your consciousness."
+	research_cost = 3000
 	ram_required = 2
 	category = AI_PROJECT_MISC
 
@@ -9,9 +9,8 @@
 	. = ..(force_run)
 	if(!.)
 		return .
-	ai.downloadSpeedModifier *= 0.5
-
+	ai.can_download = FALSE
 
 /datum/ai_project/firewall/stop()
-	ai.downloadSpeedModifier *= 2
+	ai.can_download = TRUE
 	..()

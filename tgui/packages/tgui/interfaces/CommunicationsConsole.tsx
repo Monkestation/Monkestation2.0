@@ -81,6 +81,7 @@ export type CommunicationsMainData<Page = typeof STATE_MAIN> =
     shuttleRecallable?: BooleanLike;
     shuttleCalledPreviously?: BooleanLike;
     shuttleLastCalled: false | string;
+    can_request_ai_codes: BooleanLike;
 
     aprilFools: BooleanLike;
 
@@ -411,6 +412,7 @@ const PageMain = () => {
     callShuttleReasonMinLength,
     canBuyShuttles,
     canMakeAnnouncement,
+    can_request_ai_codes,
     canMessageAssociates,
     canRecallShuttles,
     canRequestNuke,
@@ -521,6 +523,16 @@ const PageMain = () => {
               content="Make Priority Announcement"
               onClick={() => act('makePriorityAnnouncement')}
             />
+          )}
+
+          {!!can_request_ai_codes && (
+            <Button
+              icon="bullhorn"
+              content="Print AI Codes"
+              onClick={() => act('printAIControlCode')}
+            >
+              Print AI Codes
+            </Button>
           )}
 
           {!!canToggleEmergencyAccess && (

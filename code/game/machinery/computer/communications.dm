@@ -604,6 +604,8 @@
 					data["canMessageAssociates"] = TRUE
 					data["canRequestNuke"] = TRUE
 
+				data["can_request_ai_codes"] = !!authenticated_as_non_silicon_head(user)
+
 				if (can_send_messages_to_other_sectors(user))
 					data["canSendToSectors"] = TRUE
 

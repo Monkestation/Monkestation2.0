@@ -118,7 +118,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		if(!downloading.can_download)
 			stop_download()
 			return
-		download_progress += (AI_DOWNLOAD_PER_PROCESS * seconds_per_tick * downloading.downloadSpeedModifier)
+		download_progress += (AI_DOWNLOAD_PER_PROCESS * seconds_per_tick)
 
 
 /obj/machinery/computer/ai_control_console/ui_interact(mob/user, datum/tgui/ui)
