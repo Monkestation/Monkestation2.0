@@ -820,24 +820,6 @@
 	user.log_message("fired a [F] in [AREACOORD(T)].", LOG_ATTACK)
 	addtimer(CALLBACK(F, TYPE_PROC_REF(/obj/item/grenade/iedcasing/spawned, detonate)), det_time)
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lighttankmg
-	name = "12.7mm Malone Mk.1 Ratcatcher"
-	desc = ""
-	icon_state = "mecha_light_tank_mg"
-	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
-	projectile = /obj/projectile/bullet/mm127x70
-	projectiles = 60
-	projectiles_cache = 120
-	projectiles_cache_max = 400
-	projectiles_per_shot = 3
-	projectile_delay = 0.1 SECONDS
-	equip_cooldown = 1 SECONDS
-	variance = 18
-	randomspread = 4
-	harmful = TRUE
-	ammo_type = MECHA_AMMO_LIGHTTANKMG
-	mech_flags = EXOSUIT_MODULE_TANK
-
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rubberbobsemplemg
 	name = "7.7mm Semple Rubber Slowshot"
 	desc = "The primary weapon systems of a bob semple"
