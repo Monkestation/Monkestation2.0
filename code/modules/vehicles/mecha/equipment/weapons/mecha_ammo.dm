@@ -199,4 +199,3 @@
 	icon_state = "trashball"
 	rounds = 5
 	ammo_type = MECHA_AMMO_TRASHBALL
-	var/qdel_on_empty = TRUE
