@@ -7,9 +7,9 @@
 	var/icon = 'icons/mob/silicon/robots.dmi'
 	/// The icon state of the sprite.
 	var/icon_state = "robot"
-	/// The icon state of the sprite's cover panel.
+	/// The prefix of the icon state used for the cover panel.
 	var/icon_state_cover = "ov"
-	/// The icon state of the sprite's head lights.
+	/// The prefix of the icon state used for the head lights.
 	var/icon_state_light = "robot"
 	/// The icon state of the sprite's transform sequence.
 	var/icon_state_transform = null
