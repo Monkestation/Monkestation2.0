@@ -246,7 +246,7 @@
 
 	end_sound = 'sound/rbmk/turbine_end.ogg'
 	end_volume = 12
-    // Legacy fallback if dynamic attenuation is disabled.
+	// Legacy fallback if dynamic attenuation is disabled.
 	extra_range = 8
 
 	// Dynamic attenuation
