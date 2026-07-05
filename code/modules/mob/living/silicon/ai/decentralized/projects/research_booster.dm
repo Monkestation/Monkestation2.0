@@ -11,15 +11,20 @@
 	techweb_boosting = null
 	return ..()
 
+/datum/ai_project/research_booster/canRun()
+	. = ..()
+	var/turf/ai_turf = get_turf(ai)
+	var/obj/machinery/rnd/server/selected_server = pick(SSresearch.get_available_servers(ai_turf))
+	if(isnull(selected_server))
+		return FALSE
+	techweb_boosting = selected_server.stored_research
+	return ..
+
 /datum/ai_project/research_booster/run_project(force_run = FALSE)
 	. = ..(force_run)
 	if(!.)
 		return .
-	var/turf/ai_turf = get_turf(ai)
-	var/obj/machinery/rnd/server/selected_server = pick(SSresearch.get_available_servers(ai_turf))
-	if(selected_server)
-		techweb_boosting = selected_server.stored_research
-		techweb_boosting.ai_boosted = TRUE
+	techweb_boosting.ai_boosted = TRUE
 
 /datum/ai_project/research_booster/stop()
 	techweb_boosting.ai_boosted = FALSE
