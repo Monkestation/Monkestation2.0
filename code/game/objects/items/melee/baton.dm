@@ -835,7 +835,6 @@
 		var/mob/living/silicon/robot/robot = loc
 		if(!robot || !robot.cell || !robot.cell.use(cell_hit_cost))
 			return FALSE
-
 	else if(!deductcharge(cell_hit_cost))
 		return FALSE
 	stun_override = 0 //Avoids knocking people down prematurely.
