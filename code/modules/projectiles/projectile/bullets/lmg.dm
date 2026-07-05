@@ -252,5 +252,5 @@
 	wound_bonus = -10
 	weak_against_armour = TRUE
 	embed_type = /datum/embedding/rebar
-	shrapnel_type = /obj/item/ammo_casing
+	shrapnel_type = /obj/item/ammo_casing/a77mm/rusted
 	icon_state = "77mm_rusted"
