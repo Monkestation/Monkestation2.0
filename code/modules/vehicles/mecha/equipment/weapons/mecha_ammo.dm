@@ -197,5 +197,5 @@
 	name = "Compacted Trash Mound"
 	desc = "A Compact Ball of trash, you feel like you could use this in some sort of tank..."
 	icon_state = "trashball"
-	rounds = 5
+	rounds = 2
 	ammo_type = MECHA_AMMO_TRASHBALL
