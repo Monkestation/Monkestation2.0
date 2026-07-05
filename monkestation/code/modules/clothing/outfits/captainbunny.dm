@@ -30,7 +30,6 @@
 	icon = 'icons/obj/clothing/bunnysprites/tailcoats.dmi'
 	worn_icon = 'icons/mob/clothing/costumes/bunnysprites/tailcoats_worn.dmi'
 	body_parts_covered = CHEST|GROIN|ARMS
-	armor_type = /datum/armor/vest_capcarapace
 	dog_fashion = null
 
 /obj/item/clothing/neck/tie/bunnytie/captain
