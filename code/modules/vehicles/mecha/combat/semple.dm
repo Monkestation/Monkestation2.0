@@ -4,7 +4,7 @@
 	icon = 'icons/mecha/tanks.dmi'                      // this one is just a baseplate for all the others.. but i mean.. admins can spawn it they want it works
 	icon_state = "semple_0_0"
 	base_icon_state = "semple"
-	max_integrity = 90 // its a hunk of steel that didnt need to be limited by mecha legs... its a bob semple..
+	max_integrity = 220 // its a hunk of steel that didnt need to be limited by mecha legs... its a bob semple..
 	force = 10 // ... did i mention its a bob semple?.... its max speed was 10km an hour...
 	movedelay = 5
 	step_energy_drain = 30 // hey i mean... an old caterpillar tractor with steel plating shouldnt use that much energy...
@@ -21,7 +21,7 @@
 //	max_occupants = 2 // gunner + Driver... i mean thats just how tanks work...
 	mech_type = EXOSUIT_MODULE_TANK
 	equip_by_category = list(
-		MECHA_L_ARM = null,
+		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/bobsemplemg,
 		MECHA_R_ARM = null,
 		MECHA_UTILITY = list(),
 		MECHA_POWER = list(),
@@ -97,48 +97,12 @@
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/swap_seat)
 	. = ..()
 
-/obj/vehicle/sealed/mecha/semple/nt
-	desc = "Provided by Nanotrasen Ancient history, an anti riot device built to prevent rioters from destroying your station! fitted within a part of ancient history!"
-	name = "Security Bob Semple"
+/obj/vehicle/sealed/mecha/semple/maintchance
+	desc = "an ancient bob semple abandoned in maintenance, most likely left here from cleaning up an attack... someones modified it."
+	name = "Rusted Security Bob Semple"
 	icon = 'icons/mecha/tanks.dmi'
 	icon_state = "ntsemple_0_0"
 	base_icon_state = "ntsemple"
-	max_integrity = 250 // its a hunk of steel that didnt need to be limited by mecha legs... its a bob semple..
-	force = 15 // ... did i mention its a bob semple?.... its max speed was 10km an hour...
-	movedelay = 2.5
-	step_energy_drain = 30 // hey i mean... an old caterpillar tractor with steel plating shouldnt use that much energy...
-	SET_BASE_PIXEL(-12, 0)
-	bumpsmash = FALSE
-	stepsound = 'sound/vehicles/driving-noise.ogg'
-	turnsound = 'sound/vehicles/driving-noise.ogg'
-	mecha_flags = IS_ENCLOSED //can't strafe bruv.. dont think you can plug a brain into a 1940's tank..
-	armor_type = /datum/armor/semple //it eh... its a bob semple..
-	internal_damage_threshold = 30 //Its old but no electronics
-	wreckage = /obj/structure/mecha_wreckage/semple
-//	max_occupants = 2
-	mech_type = EXOSUIT_MODULE_TANK
-	equip_by_category = list(
-		MECHA_L_ARM = null,
-		MECHA_R_ARM = null,
-		MECHA_UTILITY = list(),
-		MECHA_POWER = list(/obj/item/mecha_parts/mecha_equipment/generator),
-		MECHA_ARMOR = list(),
-	)
-	max_occupants = 2 //driver+gunner, bob semple :).... very cramped!...
-	max_equip_by_category = list(
-		MECHA_L_ARM = 1,
-		MECHA_R_ARM = 1,
-		MECHA_UTILITY = 0,
-		MECHA_POWER = 2, // you can put an engine in it, wow!.. Modified by nanotrasen security forces for twice the power!
-		MECHA_ARMOR = 1, // modified by nanotrasen security forces to fit an extra armor plate!
-	)
-
-/obj/vehicle/sealed/mecha/semple/maintchance
-	desc = "an ancient bob semple abandoned in maintenance, most likely left here from cleaning up an attack... someones modified it."
-	name = "Modifed Rusted Bob Semple"
-	icon = 'icons/mecha/tanks.dmi'
-	icon_state = "semple_0_0"
-	base_icon_state = "semple"
 	max_integrity = 220 // its a hunk of steel that didnt need to be limited by mecha legs... its a bob semple..
 	force = 15 // ... did i mention its a bob semple?.... its max speed was 10km an hour...
 	movedelay = 3
@@ -155,7 +119,7 @@
 	mech_type = EXOSUIT_MODULE_TANK
 	equip_by_category = list(
 		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rustedbobsemplemg,
-		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/trash_cannon,
+		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rubberbobsemplemg,
 		MECHA_UTILITY = list(),
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),

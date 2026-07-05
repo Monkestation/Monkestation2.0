@@ -905,19 +905,3 @@
 	projectiles_cache_max = 60
 	ammo_type = MECHA_AMMO_SEMPLE_SHELL
 	mech_flags = EXOSUIT_MODULE_TANK
-
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/trash_cannon
-	name = "Improvised Trash Cannon"
-	desc = "what looks to be a ripped out disposals systems with a belt fed trash launcher."
-	icon_state = "mecha_trash_cannon"
-	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
-	harmful = TRUE
-	projectile = /obj/projectile/bullet/rocket/trashchunk
-	equip_cooldown = 12 SECONDS
-	energy_drain = 30
-	projectiles = 2
-	projectiles_cache = 8
-	projectiles_cache_max = 24
-	ammo_type = MECHA_AMMO_TRASHBALL
-	mech_flags = EXOSUIT_MODULE_TANK | EXOSUIT_MODULE_TRASHTANK
-

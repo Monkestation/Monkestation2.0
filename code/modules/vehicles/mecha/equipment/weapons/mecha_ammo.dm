@@ -192,10 +192,3 @@
 	icon_state = "sentinel"
 	rounds = 10
 	ammo_type = MECHA_AMMO_SEMPLE_SHELL
-
-/obj/item/mecha_ammo/trashball
-	name = "Compacted Trash Mound"
-	desc = "A Compact Ball of trash, you feel like you could use this in some sort of tank..."
-	icon_state = "trashball"
-	rounds = 2
-	ammo_type = MECHA_AMMO_TRASHBALL

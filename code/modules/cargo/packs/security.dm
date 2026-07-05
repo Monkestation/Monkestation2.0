@@ -342,18 +342,6 @@
 	dangerous = TRUE
 
 //security grade bob semple orders.
-
-/datum/supply_pack/security/armory/ancient_semple
-	name = "Ancient Bob Semple Import"
-	desc = "An incredibly old Bob Semple, supplied by nanotrasen ancient history.. based off the old new zealand model."
-	cost = CARGO_CRATE_VALUE * 800
-	access = ACCESS_HOS
-	access_view = ACCESS_HOS
-	contains = list(/obj/vehicle/sealed/mecha/semple/nt)
-	crate_name = "Dusty Crate"
-	crate_type = /obj/structure/closet/crate/large
-	dangerous = TRUE
-
 /datum/supply_pack/security/armory/rubber_semple_ammo
 	name = "Bob Semple Rubber Ammo Box"
 	desc = "An old box of Rubber bullets for your bob semple."
@@ -361,6 +349,7 @@
 	cost = CARGO_CRATE_VALUE * 3
 	access = ACCESS_HOS
 	access_view = ACCESS_HOS
+	contraband = TRUE
 	contains = list(/obj/item/mecha_ammo/semple/rubber)
 
 /datum/supply_pack/security/armory/semple_ammo
@@ -370,25 +359,5 @@
 	cost = CARGO_CRATE_VALUE * 6
 	access = ACCESS_HOS
 	access_view = ACCESS_HOS
+	contraband = TRUE
 	contains = list(/obj/item/mecha_ammo/semple)
-
-/datum/supply_pack/security/armory/semple_gun_lethal
-	name = "Bob Semple Lethal Slow Shot"
-	desc = "An old 7.7mm Lethal machine gun for a bob semple."
-	crate_name = "Rusty History Crate"
-	cost = CARGO_CRATE_VALUE * 10
-	access = ACCESS_HOS
-	access_view = ACCESS_HOS
-	contains = list(/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/bobsemplemg)
-
-/datum/supply_pack/security/armory/semple_gun_rubber
-	name = "Bob Semple Non-Lethal Slow Shot"
-	desc = "An old 7.7mm Non-Lethal machine gun for a bob semple."
-	crate_name = "Rusty History Crate"
-	cost = CARGO_CRATE_VALUE * 6
-	access = ACCESS_HOS
-	access_view = ACCESS_HOS
-	contains = list(/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rubberbobsemplemg)
-
-
-

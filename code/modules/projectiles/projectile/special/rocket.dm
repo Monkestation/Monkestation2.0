@@ -230,17 +230,3 @@ among other potential differences. This granularity is helpful for things like t
 	..()
 	explosion(target, devastation_range = -1, light_impact_range = 1, explosion_cause = src)
 	return BULLET_ACT_HIT
-
-/obj/projectile/bullet/rocket/trashchunk
-	name = "\improper trashchunk"
-	desc = "trashy!"
-	icon_state = "trashball"
-	damage = 30
-	armour_penetration = 20
-	dismemberment = 1
-	anti_armour_damage = 15
-
-/obj/projectile/bullet/rocket/trashchunk/on_hit(atom/target, blocked = 0, pierce_hit)
-	..()
-	explosion(target, devastation_range = -1, light_impact_range = -1, explosion_cause = src)
-	return BULLET_ACT_HIT

@@ -379,3 +379,37 @@
 	In its crowbar configuration, it can be used to force open airlocks. Very useful for entering the station or its departments."
 	item = /obj/item/crowbar/power/death
 	cost = 3
+
+/datum/uplink_item/device_tools/semple
+	name = "Ancient Bob Semple Tank"
+	desc = "An incredibly old BOB Semple.. this is a backwater reproduction.. comes fitted with a lethal machine gun."
+	item = /obj/vehicle/sealed/mecha/semple
+	cost = 30
+	surplus = 0 // Two person item
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
+	cant_discount = TRUE
+	progression_minimum = 15 MINUTES
+
+/datum/uplink_item/device_tools/semple_lethal_gun
+	name = "Ancient 7.7mm Slow Shot"
+	desc = "An old 7.7mm Slow shot machine gun, best fitted on a bob semple"
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/mecha_semplemg
+	cost = 6
+
+/datum/uplink_item/device_tools/semple_non-lethal_gun
+	name = "Ancient Non-Lethal 7.7mm Slow Shot"
+	desc = "An old 7.7mm Slow shot machine gun, this one is non-lethally loaded. Best fitted on a bob semple"
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rubber_mecha_semplemg
+	cost = 4
+
+/datum/uplink_item/device_tools/semple_lethal_ammo
+	name = "Lethal 7.7mm Slow Shot"
+	desc = "An old ammo box of 7.7mm lethal slow shot."
+	item = /obj/item/mecha_ammo/semple
+	cost = 3
+
+/datum/uplink_item/device_tools/semple_non-lethal_ammo
+	name = "Non-Lethal 7.7mm Slow Shot"
+	desc = "An old ammo box of 7.7mm non-lethal slow shot."
+	item = /obj/item/mecha_ammo/semple/rubber
+	cost = 2
