@@ -131,18 +131,17 @@
 	if(emagged)
 		to_chat(user, span_warning("[src] doesn't seem to respond."))
 		return FALSE
-	else
-		emagged = TRUE
-		to_chat(user, span_notice("You short out the security protocols and rewrite [src]'s internal memory."))
-		to_chat(src, span_userdanger("You have been emagged; you are now completely loyal to [user] and [user.p_their()] every order!"))
-		emagged_master = user
-		log_silicon("EMAG: [key_name(user)] emagged cyborg [key_name(src)].")
-		maxHealth = 60
-		health = 60
-		melee_damage_lower = 15
-		melee_damage_upper = 15
-		attack_sound = 'sound/machines/defib_zap.ogg'
-		return TRUE
+	emagged = TRUE
+	to_chat(user, span_notice("You short out the security protocols and rewrite [src]'s internal memory."))
+	to_chat(src, span_userdanger("You have been emagged; you are now completely loyal to [user] and [user.p_their()] every order!"))
+	emagged_master = user
+	log_silicon("EMAG: [key_name(user)] emagged cyborg [key_name(src)].")
+	maxHealth = 60
+	health = 60
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	attack_sound = 'sound/machines/defib_zap.ogg'
+	return TRUE
 
 /mob/living/basic/spiderbot/proc/transfer_personality(obj/item/mmi/M)
 	mind = M.brainmob.mind
