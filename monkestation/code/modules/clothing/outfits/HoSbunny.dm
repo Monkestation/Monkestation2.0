@@ -5,20 +5,10 @@
 	icon = 'icons/obj/clothing/bunnysprites/bunny_ears.dmi'
 	worn_icon = 'icons/mob/clothing/costumes/bunnysprites/bunny_ears_worn.dmi'
 	clothing_flags = SNUG_FIT
-	armor_type = /datum/armor/playbunnyears_hos
+	armor_type = /datum/armor/hats_hos
 	greyscale_colors = null
 	greyscale_config = null
 	greyscale_config_worn = null
-
-/datum/armor/playbunnyears_hos
-	melee = 30
-	bullet = 30
-	laser = 20
-	energy = 30
-	fire = 30
-	bomb = 20
-	acid = 30
-	wound = 10
 
 /obj/item/clothing/under/rank/security/head_of_security/bunnysuit
 	desc = "The staple of any bunny themed security commanders. Includes kevlar weave stockings and a gilded tail."
@@ -43,18 +33,8 @@
 	worn_icon = 'icons/mob/clothing/costumes/bunnysprites/tailcoats_worn.dmi'
 	body_parts_covered = CHEST|GROIN|ARMS
 	dog_fashion = null
-	armor_type = /datum/armor/hos_tailcoat
+	armor_type = /datum/armor/armor_hos
 	strip_delay = 80
-
-/datum/armor/hos_tailcoat
-	melee = 30
-	bullet = 30
-	laser = 30
-	energy = 40
-	bomb = 25
-	fire = 70
-	acid = 90
-	wound = 10
 
 /obj/item/clothing/neck/tie/bunnytie/security
 	name = "security bowtie"

@@ -5,18 +5,8 @@
 	icon = 'icons/obj/clothing/bunnysprites/bunny_ears.dmi'
 	worn_icon = 'icons/mob/clothing/costumes/bunnysprites/bunny_ears_worn.dmi'
 	inhand_icon_state = "that"
-	armor_type = /datum/armor/bunny_ears_captain
+	armor_type = /datum/armor/hats_caphat
 	dog_fashion = null
-
-/datum/armor/bunny_ears_captain
-	melee = 20
-	bullet = 10
-	laser = 20
-	energy = 30
-	bomb = 20
-	fire = 50
-	acid = 50
-	wound = 5
 
 /obj/item/clothing/under/rank/captain/bunnysuit
 	desc = "The staple of any bunny themed captains. Great for securing the disk."
@@ -41,18 +31,8 @@
 	icon = 'icons/obj/clothing/bunnysprites/tailcoats.dmi'
 	worn_icon = 'icons/mob/clothing/costumes/bunnysprites/tailcoats_worn.dmi'
 	body_parts_covered = CHEST|GROIN|ARMS
-	armor_type = /datum/armor/tailcoat_captain
+	armor_type = /datum/armor/vest_capcarapace
 	dog_fashion = null
-
-/datum/armor/tailcoat_captain
-	melee = 40
-	bullet = 30
-	laser = 40
-	energy = 40
-	bomb = 25
-	fire = 70
-	acid = 70
-	wound = 10
 
 /obj/item/clothing/neck/tie/bunnytie/captain
 	name = "captain's bowtie"
