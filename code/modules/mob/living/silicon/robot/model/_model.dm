@@ -126,12 +126,7 @@
 		if(istype(sheet_module.source))
 			sheet_module.cost = max(sheet_module.cost, 1) // Must not cost 0 to prevent div/0 errors.
 			sheet_module.is_cyborg = TRUE
-	var/holding_this_item_already = FALSE
-	for(var/module_slot in 1 to length(cyborg_owner.held_items))
-		if(!cyborg_owner.held_items[module_slot] || (cyborg_owner.held_items[module_slot] in usable_modules))
-			continue
-		holding_this_item_already = TRUE
-	if(!holding_this_item_already)
+	if(!(locate(module_to_add) in cyborg_owner.held_items))
 		module_to_add.forceMove(src)
 	module_to_add.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	module_to_add.obj_flags |= ABSTRACT
@@ -144,6 +139,8 @@
 
 /// Removes a module.
 /obj/item/robot_model/proc/remove_module(obj/item/removed_module)
+	if(locate(removed_module) in cyborg_owner.held_items)
+		cyborg_owner.deactivate_module(removed_module)
 	basic_modules -= removed_module
 	emagged_modules -= removed_module
 	clockwork_modules -= removed_module

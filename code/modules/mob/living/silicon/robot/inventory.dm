@@ -56,23 +56,24 @@
 	REMOVE_TRAIT(item_module, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 	transferItemToLoc(item_module, newloc = model)
 
-/mob/living/silicon/robot/doUnEquip(obj/item/item_dropping, force, atom/newloc, no_move, invdrop, silent)
+/mob/living/silicon/robot/doUnEquip(obj/item/dropping_item, force, atom/newloc, no_move, invdrop, silent)
 	// If it is not a module, it is free to drop.
-	if(!has_model() || !(item_dropping in model.get_all_modules()))
+	if(!has_model() || !(dropping_item in model.get_all_modules()))
 		return ..()
 
 	if(newloc != model)
-		to_chat(src, span_notice("You can't drop your [item_dropping.name] module."))
+		to_chat(src, span_notice("You can't drop your [dropping_item.name] module."))
 		return FALSE
 
-	var/module_num = get_selected_module()
+	var/dropping_module_slot = module_active == dropping_item ? module_active : null
 	. = ..()
 	if(!.)
 		return
-	item_dropping.mouse_opacity = MOUSE_OPACITY_OPAQUE
-	//this is the cyborg equivalent of dropped(), though we call that too in doUnEquip.
-	item_dropping.cyborg_unequip(src)
-	deselect_module(module_num)
+	dropping_item.mouse_opacity = MOUSE_OPACITY_OPAQUE
+	// This is the cyborg equivalent of dropped(), though we call that too in doUnEquip.
+	dropping_item.cyborg_unequip(src)
+	if(dropping_module_slot)
+		deselect_module(dropping_module_slot)
 	playsound_local(src, SFX_RUSTLE, 40, TRUE)
 
 /mob/living/silicon/robot/update_held_items()

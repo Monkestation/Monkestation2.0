@@ -452,12 +452,3 @@
 		stored_copy.plane = FLOAT_PLANE
 		. += stored_copy
 	. += arm
-
-/obj/item/storage/cyborg_internal_storage
-	storage_type = /datum/storage/cyborg_internal_storage
-
-/obj/item/storage/cyborg_internal_storage/Initialize(mapload)
-	. = ..()
-	if(!iscyborg(loc))
-		return INITIALIZE_HINT_QDEL
-	atom_storage.emp_shielded = TRUE
