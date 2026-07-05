@@ -200,7 +200,7 @@
 		target.take_damage(damage)
 
 /datum/action/cooldown/spell/touch/buster/proc/non_living_type_check(atom/thing)
-	return isstructure(thing) || ismachinery(thing) || ismecha(thing)
+	return isstructure(thing) || (ismachinery(thing) && !istype(thing, /obj/machinery/power/supermatter_crystal)) || ismecha(thing)
 
 /*---------------------------------------------------------------
 	start of slam section
