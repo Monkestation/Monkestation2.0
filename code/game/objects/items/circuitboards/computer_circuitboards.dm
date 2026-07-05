@@ -457,6 +457,11 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/ai_server_console
 
+/obj/item/circuitboard/computer/ai_overclocking
+	name = "AI Overclocking Workstation Console"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/computer/ai_overclocking
+
 /obj/item/circuitboard/computer/ai_resource_distribution
 	name = "AI Resource Distribution Console"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE

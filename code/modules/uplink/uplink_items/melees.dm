@@ -91,6 +91,7 @@
 	surplus = 5 // Rare but not impossible.
 	item = /obj/item/book/granter/martial/carp/true
 	lock_other_purchases = TRUE
+	cant_discount = TRUE
 	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS | UPLINK_SPY)
 
 /datum/uplink_item/melees/edagger

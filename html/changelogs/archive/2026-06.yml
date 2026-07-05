@@ -429,3 +429,13 @@
   - bugfix: Fixes Bluespace Launchpads "R" button not working.
   Siro:
   - code_imp: Enables Lentslurri to be made by adding it to Lenturi's inversion setting.
+2026-06-30:
+  SirNightKnight:
+  - balance: labyrinth  pages can be passed through if the person has TRAIT_HOLY which
+      holy water gives.
+  Tractor-Maam:
+  - bugfix: AI overclocking workstation now has a board of its own, letting it be
+      repaired.
+  hack-wrench,  SirNightKnight, Ghommie:
+  - rscadd: tape recorder now records speaker name.
+  - qol: gave tape recorders a radio filter toggle.

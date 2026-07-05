@@ -1,0 +1,7 @@
+author: "Runian"
+delete-after: True
+changes:
+  - rscadd: "1 new techweb node: \"Cyborg Upgrades: Alien\""
+  - rscadd: "New arm implant that contains alien surgical tools: Alien Surgical Arm Implant. It is adminbus only."
+  - rscadd: "New mediborg upgrade that replaces their surgical omnitool with alien surgical tools: Alien Surgical Omnitool Upgrade."
+  - image: "Cyborg alien omnitool sprites."

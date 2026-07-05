@@ -25,6 +25,7 @@
 	if(!isaicore(owner.loc))
 		to_chat(owner, span_warning("You must be in your core to do this!"))
 		return
-	for(var/obj/machinery/ai/data_core/core in GLOB.data_cores)
+	var/turf/ai_location_turf = get_turf(owner_AI)
+	for(var/obj/machinery/ai/data_core/core in GLOB.data_cores["[ai_location_turf.z]"])
 		tesla_zap(core, 2, (8 KILO JOULES), (ZAP_MOB_STUN|ZAP_MOB_DAMAGE))
 		core.use_energy(core.idle_power_usage)
