@@ -822,7 +822,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rubberbobsemplemg
 	name = "7.7mm Semple Rubber Slowshot"
-	desc = "The primary weapon systems of a bob semple"
+	desc = "The primary weapon systems of a bob semple, this one appears to only chamber rubber rounds"
 	icon_state = "rubber_mecha_semplemg"
 	fire_sound = 'sound/weapons/gun/smg/shot_suppressed.ogg'
 	projectile = /obj/projectile/bullet/a77mm/rubber
@@ -840,7 +840,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/bobsemplemg
 	name = "7.7mm Semple Slowshot"
-	desc = "The primary weapon systems of a bob semple"
+	desc = "The primary weapon systems of a bob semple this one appears to only chamber lethals."
 	icon_state = "mecha_semplemg"
 	fire_sound = 'sound/weapons/gun/smg/shot.ogg'
 	projectile = /obj/projectile/bullet/a77mm/lethal
@@ -858,7 +858,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rustedbobsemplemg
 	name = "7.7mm Rusted Semple Slowshot"
-	desc = "The primary weapon systems of a bob semple"
+	desc = "The primary weapon systems of a bob semple this one is rusted.."
 	icon_state = "rusted_mecha_semplemg"
 	fire_sound = 'sound/weapons/gun/smg/shot_alt.ogg'
 	projectile = /obj/projectile/bullet/a77mm/rusted
