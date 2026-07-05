@@ -312,7 +312,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 			return eject_intellicard(user)
 
 		if("stop_download")
-			if(isAI(user))
+			if(isAI(user) && one_time_password_used)
 				to_chat(user, span_warning("You need physical access to stop the download!"))
 				return
 			stop_download()
