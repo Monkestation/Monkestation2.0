@@ -396,7 +396,7 @@
 	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/bobsemplemg
 	cost = 6
 
-/datum/uplink_item/device_tools/semple_non-lethal_gun
+/datum/uplink_item/device_tools/semple_non_lethal_gun
 	name = "Ancient Non-Lethal 7.7mm Slow Shot"
 	desc = "An old 7.7mm Slow shot machine gun, this one is non-lethally loaded. Best fitted on a bob semple"
 	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rubberbobsemplemg

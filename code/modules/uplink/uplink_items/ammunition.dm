@@ -119,7 +119,7 @@
 	item = /obj/item/mecha_ammo/semple
 	cost = 3
 
-/datum/uplink_item/ammo/semple_non-lethal_ammo
+/datum/uplink_item/ammo/semple_non_lethal_ammo
 	name = "Non-Lethal 7.7mm Slow Shot"
 	desc = "An old ammo box of 7.7mm non-lethal slow shot."
 	item = /obj/item/mecha_ammo/semple/rubber
