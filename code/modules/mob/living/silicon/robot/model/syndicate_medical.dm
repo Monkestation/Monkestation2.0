@@ -17,6 +17,6 @@
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/stack/medical/gauze,
 		/obj/item/gun/medbeam,
-		/obj/item/borg/apparatus/organ_storage
+		/obj/item/borg/apparatus/organ_storage,
 	)
 	traits = list(TRAIT_PUSHIMMUNE)

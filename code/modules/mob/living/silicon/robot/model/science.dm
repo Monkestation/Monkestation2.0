@@ -5,7 +5,7 @@
 	available_skins = list(
 		/datum/robot_skin/science/default,
 		/datum/robot_skin/science/eyebot,
-		/datum/robot_skin/science/drone
+		/datum/robot_skin/science/drone,
 	)
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
@@ -25,10 +25,10 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/borg/apparatus/organ_storage/limb, // They need to be able to hold limbs to hit artifacts with it.
 		/obj/item/borg/artifact_sticker_holder,
-		/obj/item/pen/fountain
+		/obj/item/pen/fountain,
 	)
 	emagged_modules = list(
-		/obj/item/borg/handheld_jaunter
+		/obj/item/borg/handheld_jaunter,
 	)
 	clockwork_modules = list(
 		/obj/item/clock_module/abscond,
@@ -36,6 +36,6 @@
 		/obj/item/clock_module/kindle,
 		/obj/item/clock_module/vanguard,
 		/obj/item/clock_module/sentinels_compromise,
-		/obj/item/clock_module/sigil_submission
+		/obj/item/clock_module/sigil_submission,
 	)
 	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)

@@ -24,7 +24,7 @@
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/borg_chameleon,
 		/obj/item/card/emag,
-		/obj/item/borg/charger
+		/obj/item/borg/charger,
 	)
 	traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY, TRAIT_KNOW_ENGI_WIRES, TRAIT_KNOW_ROBO_WIRES, TRAIT_CAN_CLIMB_DISPOSALS)
 
@@ -58,7 +58,7 @@
 		/obj/item/pinpointer/operative_cyborg,
 		/obj/item/borg_chameleon,
 		/obj/item/card/emag,
-		/obj/item/borg/stun
+		/obj/item/borg/stun,
 	)
 
 /obj/item/pinpointer/operative_cyborg

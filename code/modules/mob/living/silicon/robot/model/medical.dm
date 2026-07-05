@@ -5,7 +5,7 @@
 	default_skin = /datum/robot_skin/medical/default
 	available_skins = list(
 		/datum/robot_skin/medical/default,
-		/datum/robot_skin/medical/qualified
+		/datum/robot_skin/medical/qualified,
 	)
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
@@ -25,17 +25,17 @@
 		/obj/item/stack/medical/bone_gel,
 		/obj/item/borg/apparatus/organ_storage,
 		/obj/item/borg/lollipop,
-		/obj/item/holosign_creator/medical/treatment_zone
+		/obj/item/holosign_creator/medical/treatment_zone,
 	)
 	emagged_modules = list(
-		/obj/item/reagent_containers/borghypo/medical/hacked
+		/obj/item/reagent_containers/borghypo/medical/hacked,
 	)
 	clockwork_modules = list(
 		/obj/item/clock_module/abscond,
 		/obj/item/clock_module/sentinels_compromise,
 		/obj/item/clock_module/prosperity_prism,
 		/obj/item/clock_module/vanguard,
-		/obj/item/clock_module/sigil_transmission
+		/obj/item/clock_module/sigil_transmission,
 	)
 	radio_channels = list(RADIO_CHANNEL_MEDICAL)
 	traits = list(TRAIT_PUSHIMMUNE)

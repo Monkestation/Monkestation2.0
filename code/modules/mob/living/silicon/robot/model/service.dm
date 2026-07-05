@@ -8,7 +8,7 @@
 		/datum/robot_skin/service/kent,
 		/datum/robot_skin/service/tophat,
 		/datum/robot_skin/service/waitress,
-		/datum/robot_skin/service/kerfus
+		/datum/robot_skin/service/kerfus,
 	)
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
@@ -39,10 +39,10 @@
 		/obj/item/storage/bag/plants,
 		/obj/item/plant_analyzer,
 		/obj/item/shovel/spade,
-		/obj/item/cultivator
+		/obj/item/cultivator,
 	)
 	emagged_modules = list(
-		/obj/item/reagent_containers/borghypo/borgshaker/hacked
+		/obj/item/reagent_containers/borghypo/borgshaker/hacked,
 	)
 	clockwork_modules = list(
 		/obj/item/clock_module/abscond,
@@ -50,7 +50,7 @@
 		/obj/item/clock_module/sigil_submission,
 		/obj/item/clock_module/kindle,
 		/obj/item/clock_module/sentinels_compromise,
-		/obj/item/clockwork/replica_fabricator
+		/obj/item/clockwork/replica_fabricator,
 	)
 
 	radio_channels = list(RADIO_CHANNEL_SERVICE)

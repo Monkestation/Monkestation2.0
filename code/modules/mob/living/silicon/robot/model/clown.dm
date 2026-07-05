@@ -19,14 +19,14 @@
 		/obj/item/borg/lollipop,
 		/obj/item/picket_sign/cyborg,
 		/obj/item/reagent_containers/borghypo/clown,
-		/obj/item/extinguisher/mini
+		/obj/item/extinguisher/mini,
 	)
 	emagged_modules = list(
 		/obj/item/reagent_containers/borghypo/clown/hacked,
-		/obj/item/reagent_containers/spray/waterflower/cyborg/hacked
+		/obj/item/reagent_containers/spray/waterflower/cyborg/hacked,
 	)
 	clockwork_modules = list(
 		/obj/item/clock_module/abscond,
 		/obj/item/clock_module/vanguard,
-		/obj/item/clockwork/weapon/brass_battlehammer
+		/obj/item/clockwork/weapon/brass_battlehammer,
 	)

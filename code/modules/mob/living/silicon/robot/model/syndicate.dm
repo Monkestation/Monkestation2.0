@@ -10,7 +10,7 @@
 		/obj/item/card/emag,
 		/obj/item/crowbar/cyborg,
 		/obj/item/extinguisher/mini,
-		/obj/item/pinpointer/syndicate_cyborg
+		/obj/item/pinpointer/syndicate_cyborg,
 	)
 	traits = list(TRAIT_PUSHIMMUNE)
 

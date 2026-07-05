@@ -18,17 +18,17 @@
 		/obj/item/holosign_creator,
 		/obj/item/reagent_containers/spray/cyborg_drying,
 		/obj/item/wirebrush,
-		/obj/item/pushbroom/cyborg
+		/obj/item/pushbroom/cyborg,
 	)
 	emagged_modules = list(
-		/obj/item/reagent_containers/spray/cyborg_lube
+		/obj/item/reagent_containers/spray/cyborg_lube,
 	)
 	clockwork_modules = list(
 		/obj/item/clock_module/abscond,
 		/obj/item/clock_module/sigil_submission,
 		/obj/item/clock_module/kindle,
 		/obj/item/clock_module/vanguard,
-		/obj/item/clockwork/weapon/brass_spear
+		/obj/item/clockwork/weapon/brass_spear,
 	)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	/// The weakref to the wash toggle action we own.

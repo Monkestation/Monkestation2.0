@@ -10,16 +10,16 @@
 		/obj/item/holosign_creator/cyborg,
 		/obj/item/borg/cyborghug/peacekeeper,
 		/obj/item/extinguisher,
-		/obj/item/borg/projectile_dampen
+		/obj/item/borg/projectile_dampen,
 	)
 	emagged_modules = list(
-		/obj/item/reagent_containers/borghypo/peace/hacked
+		/obj/item/reagent_containers/borghypo/peace/hacked,
 	)
 	clockwork_modules = list(
 		/obj/item/clock_module/abscond,
 		/obj/item/clock_module/vanguard,
 		/obj/item/clock_module/kindle,
-		/obj/item/clock_module/sigil_submission
+		/obj/item/clock_module/sigil_submission,
 	)
 	traits = list(TRAIT_PUSHIMMUNE)
 

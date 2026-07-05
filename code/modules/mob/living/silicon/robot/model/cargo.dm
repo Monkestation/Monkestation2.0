@@ -5,7 +5,7 @@
 	available_skins = list(
 		/datum/robot_skin/cargo/default,
 		/datum/robot_skin/cargo/zoomba,
-		/datum/robot_skin/cargo/kerfus
+		/datum/robot_skin/cargo/kerfus,
 	)
 	basic_modules = list(
 		/obj/item/stamp,
@@ -24,17 +24,17 @@
 		/obj/item/extinguisher,
 		/obj/item/universal_scanner,
 		/obj/item/cargo_teleporter,
-		/obj/item/boxcutter
+		/obj/item/boxcutter,
 	)
 	emagged_modules = list(
 		/obj/item/stamp/chameleon,
-		/obj/item/borg/paperplane_crossbow
+		/obj/item/borg/paperplane_crossbow,
 	)
 	clockwork_modules = list(
 		/obj/item/clock_module/abscond,
 		/obj/item/gun/ballistic/bow/clockwork,
 		/obj/item/clock_module/stargazer,
-		/obj/item/clock_module/sigil_transmission
+		/obj/item/clock_module/sigil_transmission,
 	)
 	radio_channels = list(RADIO_CHANNEL_SUPPLY)
 	traits = list(TRAIT_CAN_CLIMB_DISPOSALS)

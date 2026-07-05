@@ -3,7 +3,7 @@
 	default_skin = /datum/robot_skin/centcom/default
 	available_skins = list(
 		/datum/robot_skin/centcom/default,
-		/datum/robot_skin/centcom/kerfus
+		/datum/robot_skin/centcom/kerfus,
 	)
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
@@ -27,7 +27,7 @@
 		/obj/item/lighter,
 		/obj/item/storage/bag/tray,
 		/obj/item/reagent_containers/borghypo/borgshaker/centcom,
-		/obj/item/borg/apparatus/beaker/service
+		/obj/item/borg/apparatus/beaker/service,
 	)
 	radio_channels = list(RADIO_CHANNEL_CENTCOM)
 

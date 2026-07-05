@@ -24,7 +24,7 @@
 		/obj/item/stack/rods/cyborg,
 		/obj/item/stack/tile/iron/base/cyborg,
 		/obj/item/stack/cable_coil,
-		/obj/item/holosign_creator/atmos
+		/obj/item/holosign_creator/atmos,
 	)
 	emagged_modules = list(
 		/obj/item/borg/stun,
@@ -35,7 +35,7 @@
 		/obj/item/clock_module/tinkerers_cache,
 		/obj/item/clock_module/stargazer,
 		/obj/item/clockwork/replica_fabricator,
-		/obj/item/clock_module/sigil_transmission
+		/obj/item/clock_module/sigil_transmission,
 	)
 	radio_channels = list(RADIO_CHANNEL_ENGINEERING)
 	traits = list(TRAIT_NEGATES_GRAVITY, TRAIT_KNOW_ENGI_WIRES, TRAIT_KNOW_ROBO_WIRES)

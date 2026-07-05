@@ -8,16 +8,16 @@
 		/obj/item/melee/baton/security/loaded,
 		/obj/item/gun/energy/disabler/cyborg,
 		/obj/item/clothing/mask/gas/sechailer/cyborg,
-		/obj/item/extinguisher/mini
+		/obj/item/extinguisher/mini,
 	)
 	emagged_modules = list(
-		/obj/item/gun/energy/laser/cyborg
+		/obj/item/gun/energy/laser/cyborg,
 	)
 	clockwork_modules = list(
 		/obj/item/clock_module/abscond,
 		/obj/item/clockwork/weapon/brass_spear,
 		/obj/item/clock_module/ocular_warden,
-		/obj/item/clock_module/vanguard
+		/obj/item/clock_module/vanguard,
 	)
 	radio_channels = list(RADIO_CHANNEL_SECURITY)
 	traits = list(TRAIT_PUSHIMMUNE)
