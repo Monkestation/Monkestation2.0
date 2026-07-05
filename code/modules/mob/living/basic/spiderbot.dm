@@ -112,7 +112,7 @@
 			return ITEM_INTERACT_SUCCESS
 
 /mob/living/basic/spiderbot/welder_act(mob/user, obj/item/tool)
-	if((user.istate & ISTATE_HARM) && usr != src)
+	if((user.istate & ISTATE_HARM) && user != src)
 		return FALSE
 	if(user == src) // No self-repair dummy
 		to_chat(user, span_warning("You can not repair yourself!"))
