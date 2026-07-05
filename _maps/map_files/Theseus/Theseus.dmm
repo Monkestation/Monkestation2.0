@@ -24197,12 +24197,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/command/corporate_showroom)
-"hhA" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/station/science/lower)
 "hhF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/autoname/directional/east,
@@ -41090,6 +41084,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"lWO" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/science/lower)
 "lWV" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -105503,7 +105503,7 @@ gBx
 phq
 phq
 gBx
-hhA
+lWO
 wJg
 jwa
 lLR
