@@ -98,7 +98,7 @@
 	. = ..()
 
 /obj/vehicle/sealed/mecha/semple/maintchance
-	desc = "an ancient bob semple abandoned in maintenance, most likely left here from cleaning up an attack... someones modified it."
+	desc = "an ancient bob semple abandoned in maintenance, most likely left here from cleaning up an attack... looks discontinued."
 	name = "Rusted Security Bob Semple"
 	icon = 'icons/mecha/tanks.dmi'
 	icon_state = "ntsemple_0_0"
@@ -107,11 +107,7 @@
 	force = 15 // ... did i mention its a bob semple?.... its max speed was 10km an hour...
 	movedelay = 3
 	step_energy_drain = 40 // hey i mean... an old caterpillar tractor with steel plating shouldnt use that much energy...
-	SET_BASE_PIXEL(-12, 0)
-	bumpsmash = FALSE
-	stepsound = 'sound/vehicles/driving-noise.ogg'
-	turnsound = 'sound/vehicles/driving-noise.ogg'
-	mecha_flags = IS_ENCLOSED //can't strafe bruv.. john tider.. added a brain port.
+	mecha_flags = IS_ENCLOSED //can't strafe bruv..
 	armor_type = /datum/armor/semple/maintchance //it eh... its a bob semple..
 	internal_damage_threshold = 55 //Its old but no electronics
 	wreckage = /obj/structure/mecha_wreckage/semple
@@ -144,10 +140,6 @@
 	force = 18 // ... did i mention its a bob semple?.... its max speed was 10km an hour...
 	movedelay = 2.0
 	step_energy_drain = 24 // hey i mean... an old caterpillar tractor with steel plating shouldnt use that much energy...
-	SET_BASE_PIXEL(-12, 0)
-	bumpsmash = FALSE
-	stepsound = 'sound/vehicles/driving-noise.ogg'
-	turnsound = 'sound/vehicles/driving-noise.ogg'
 	mecha_flags = IS_ENCLOSED | MMI_COMPATIBLE //can't strafe bruv..the syndicate added an mmi slot..
 	armor_type = /datum/armor/semple //it eh... its a bob semple..
 	internal_damage_threshold = 40 //Its old.. and due to sydnicate meddling takes more damage..
