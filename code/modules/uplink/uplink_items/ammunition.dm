@@ -112,3 +112,15 @@
 	desc = "A box with 16 rubber shells. A less-lethal high stamina damage spread of rubber pellets."
 	cost = 2
 	item = /obj/item/ammo_box/advanced/s12gauge/rubber
+
+/datum/uplink_item/ammo/semple_lethal_ammo
+	name = "Lethal 7.7mm Slow Shot"
+	desc = "An old ammo box of 7.7mm lethal slow shot."
+	item = /obj/item/mecha_ammo/semple
+	cost = 3
+
+/datum/uplink_item/ammo/semple_non-lethal_ammo
+	name = "Non-Lethal 7.7mm Slow Shot"
+	desc = "An old ammo box of 7.7mm non-lethal slow shot."
+	item = /obj/item/mecha_ammo/semple/rubber
+	cost = 2
