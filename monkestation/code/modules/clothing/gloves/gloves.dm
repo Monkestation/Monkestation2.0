@@ -63,7 +63,7 @@
 	alternate_worn_layer = ABOVE_SUIT_LAYER
 
 /obj/item/clothing/gloves/color/black/dimensional
-	desc = "These gloves function as a dimensional weapon storage using bluespace compression technology. It doesn't muffle surrounding sound; why would it?"
+	desc = "These gloves function as a dimensional weapon storage using bluespace compression technology. They are as silent as a prayer for loving sorrow."
 
 /obj/item/clothing/gloves/color/black/dimensional/Initialize(mapload)
 	. = ..()
@@ -73,6 +73,9 @@
 	max_specific_storage = WEIGHT_CLASS_GIGANTIC
 	max_total_storage = WEIGHT_CLASS_GIGANTIC * 6
 	max_slots = 6
+	silent = TRUE
+	rustle_sound = FALSE
+	emp_shielded = TRUE
 
 /datum/storage/dimensional_gloves/New(atom/parent, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, allow_quick_empty, collection_mode, attack_hand_interact)
 	. = ..()
