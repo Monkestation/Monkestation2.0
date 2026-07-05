@@ -873,3 +873,51 @@
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_SEMPLE
 	mech_flags = EXOSUIT_MODULE_TANK
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/syndie_bobsemplemg
+	name = "7.7mm Semple Quickshot"
+	desc = "The primary weapon systems of a bob semple this one appears to only chamber lethals.. its been modified."
+	icon_state = "mecha_semplemg_syndie"
+	fire_sound = 'sound/weapons/gun/smg/shot.ogg'
+	projectile = /obj/projectile/bullet/a77mm/lethal
+	projectiles = 100
+	projectiles_cache = 200
+	projectiles_cache_max = 400
+	projectiles_per_shot = 10
+	projectile_delay = 0.1 SECONDS
+	equip_cooldown = 0.5 SECONDS
+	variance = 10
+	randomspread = 2
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_SEMPLE
+	mech_flags = EXOSUIT_MODULE_TANK
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/semple_tank_cannon
+	name = "30mm Scrap-Piercer cannon"
+	desc = "a cheaply produced ultra-light tank cannon, fitted for a bob semple."
+	icon_state = "syndie_semple_cannon"
+	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	harmful = TRUE
+	projectile = /obj/projectile/bullet/rocket/sempletankshell
+	equip_cooldown = 8 SECONDS
+	projectiles = 2
+	projectiles_cache = 14
+	projectiles_cache_max = 60
+	ammo_type = MECHA_AMMO_SEMPLE_SHELL
+	mech_flags = EXOSUIT_MODULE_TANK
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/trash_cannon
+	name = "Improvised Trash Cannon"
+	desc = "what looks to be a ripped out disposals systems with a belt fed trash launcher."
+	icon_state = "mecha_trash_cannon"
+	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	harmful = TRUE
+	projectile = /obj/projectile/bullet/rocket/trashchunk
+	equip_cooldown = 12 SECONDS
+	energy_drain = 30
+	projectiles = 2
+	projectiles_cache = 8
+	projectiles_cache_max = 24
+	ammo_type = MECHA_AMMO_TRASHBALL
+	mech_flags = EXOSUIT_MODULE_TANK | EXOSUIT_MODULE_TRASHTANK
+

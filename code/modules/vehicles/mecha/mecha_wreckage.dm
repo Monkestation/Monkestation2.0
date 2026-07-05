@@ -272,3 +272,8 @@
 	icon = 'icons/mecha/tanks.dmi'
 	icon_state = "semple-broken"
 	welder_salvage = list(/obj/item/stack/sheet/iron, /obj/item/stack/rods)
+
+/obj/structure/mecha_wreckage/semple/syndie
+	name = "\improper Syndicate Semple Wreckage"
+	icon_state = "syndie_semple-broken"
+	welder_salvage = list(/obj/item/stack/sheet/iron, /obj/item/stack/rods, /obj/item/stack/sheet/plasteel)

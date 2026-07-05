@@ -346,7 +346,7 @@
 /datum/supply_pack/security/armory/ancient_semple
 	name = "Ancient Bob Semple Import"
 	desc = "An incredibly old Bob Semple, supplied by nanotrasen ancient history.. based off the old new zealand model."
-	cost = CARGO_CRATE_VALUE * 75
+	cost = CARGO_CRATE_VALUE * 800
 	access = ACCESS_HOS
 	access_view = ACCESS_HOS
 	contains = list(/obj/vehicle/sealed/mecha/semple/nt)

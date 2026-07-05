@@ -1,13 +1,13 @@
 /obj/vehicle/sealed/mecha/semple
 	desc = "A very old tank prototype from the ancient country of 'new zealand' this one appears to be a original production.. very rare.. seems to function still.."
 	name = "Ancient Bob Semple"
-	icon = 'icons/mecha/tanks.dmi'
+	icon = 'icons/mecha/tanks.dmi'                      // this one is just a baseplate for all the others.. but i mean.. admins can spawn it they want it works
 	icon_state = "semple_0_0"
 	base_icon_state = "semple"
-	max_integrity = 380 // its a hunk of steel that didnt need to be limited by mecha legs... its a bob semple..
-	force = 15 // ... did i mention its a bob semple?.... its max speed was 10km an hour...
-	movedelay = 2
-	step_energy_drain = 20 // hey i mean... an old caterpillar tractor with steel plating shouldnt use that much energy...
+	max_integrity = 90 // its a hunk of steel that didnt need to be limited by mecha legs... its a bob semple..
+	force = 10 // ... did i mention its a bob semple?.... its max speed was 10km an hour...
+	movedelay = 5
+	step_energy_drain = 30 // hey i mean... an old caterpillar tractor with steel plating shouldnt use that much energy...
 	SET_BASE_PIXEL(-12, 0)
 	bumpsmash = FALSE
 	stepsound = 'sound/vehicles/driving-noise.ogg'
@@ -21,13 +21,13 @@
 //	max_occupants = 2 // gunner + Driver... i mean thats just how tanks work...
 	mech_type = EXOSUIT_MODULE_TANK
 	equip_by_category = list(
-		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/bobsemplemg,
-		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/bobsemplemg,
+		MECHA_L_ARM = null,
+		MECHA_R_ARM = null,
 		MECHA_UTILITY = list(),
-		MECHA_POWER = list(/obj/item/mecha_parts/mecha_equipment/generator),
+		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
 	)
-	max_occupants = 6 //driver+gunner, bob semple :).... very cramped!... syndicate party wagon!
+	max_occupants = 2 //driver+gunner, bob semple :)
 	max_equip_by_category = list(
 		MECHA_L_ARM = 1,
 		MECHA_R_ARM = 1,
@@ -103,7 +103,7 @@
 	icon = 'icons/mecha/tanks.dmi'
 	icon_state = "ntsemple_0_0"
 	base_icon_state = "ntsemple"
-	max_integrity = 200 // its a hunk of steel that didnt need to be limited by mecha legs... its a bob semple..
+	max_integrity = 250 // its a hunk of steel that didnt need to be limited by mecha legs... its a bob semple..
 	force = 15 // ... did i mention its a bob semple?.... its max speed was 10km an hour...
 	movedelay = 2.5
 	step_energy_drain = 30 // hey i mean... an old caterpillar tractor with steel plating shouldnt use that much energy...
@@ -134,12 +134,12 @@
 	)
 
 /obj/vehicle/sealed/mecha/semple/maintchance
-	desc = "an ancient bob semple abandoned in maintenance, most likely left here from cleaning up an attack.."
-	name = "Rusted Bob Semple"
+	desc = "an ancient bob semple abandoned in maintenance, most likely left here from cleaning up an attack... someones modified it."
+	name = "Modifed Rusted Bob Semple"
 	icon = 'icons/mecha/tanks.dmi'
 	icon_state = "semple_0_0"
 	base_icon_state = "semple"
-	max_integrity = 140 // its a hunk of steel that didnt need to be limited by mecha legs... its a bob semple..
+	max_integrity = 220 // its a hunk of steel that didnt need to be limited by mecha legs... its a bob semple..
 	force = 15 // ... did i mention its a bob semple?.... its max speed was 10km an hour...
 	movedelay = 3
 	step_energy_drain = 40 // hey i mean... an old caterpillar tractor with steel plating shouldnt use that much energy...
@@ -147,16 +147,61 @@
 	bumpsmash = FALSE
 	stepsound = 'sound/vehicles/driving-noise.ogg'
 	turnsound = 'sound/vehicles/driving-noise.ogg'
-	mecha_flags = IS_ENCLOSED //can't strafe bruv.. dont think you can plug a brain into a 1940's tank..
-	armor_type = /datum/armor/semple //it eh... its a bob semple..
+	mecha_flags = IS_ENCLOSED //can't strafe bruv.. john tider.. added a brain port.
+	armor_type = /datum/armor/semple/maintchance //it eh... its a bob semple..
 	internal_damage_threshold = 55 //Its old but no electronics
 	wreckage = /obj/structure/mecha_wreckage/semple
 //	max_occupants = 2 // gunner + Driver... i mean thats just how tanks work...
 	mech_type = EXOSUIT_MODULE_TANK
 	equip_by_category = list(
 		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rustedbobsemplemg,
-		MECHA_R_ARM = null,
+		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/trash_cannon,
 		MECHA_UTILITY = list(),
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
+	)
+
+/datum/armor/semple/maintchance
+	melee = -40
+	bullet = 30
+	laser = 50
+	energy = 40
+	bomb = -50
+	fire = 70
+	acid = 5
+
+/obj/vehicle/sealed/mecha/semple/syndie
+	desc = "a modified bob semple, featuring a non explosive 30mm cannon and modified syndicate produced quickshot machine gun."
+	name = "Syndicate Bob Semple"
+	icon = 'icons/mecha/tanks.dmi'
+	icon_state = "syndie_semple_0_0"
+	base_icon_state = "syndie_semple"
+	max_integrity = 420 // its a hunk of steel that didnt need to be limited by mecha legs... its a bob semple..
+	force = 18 // ... did i mention its a bob semple?.... its max speed was 10km an hour...
+	movedelay = 2.0
+	step_energy_drain = 24 // hey i mean... an old caterpillar tractor with steel plating shouldnt use that much energy...
+	SET_BASE_PIXEL(-12, 0)
+	bumpsmash = FALSE
+	stepsound = 'sound/vehicles/driving-noise.ogg'
+	turnsound = 'sound/vehicles/driving-noise.ogg'
+	mecha_flags = IS_ENCLOSED | MMI_COMPATIBLE //can't strafe bruv..the syndicate added an mmi slot..
+	armor_type = /datum/armor/semple //it eh... its a bob semple..
+	internal_damage_threshold = 40 //Its old.. and due to sydnicate meddling takes more damage..
+	wreckage = /obj/structure/mecha_wreckage/semple/syndie
+//	max_occupants = 2
+	mech_type = EXOSUIT_MODULE_TANK
+	equip_by_category = list(
+		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/syndie_bobsemplemg,
+		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/semple_tank_cannon,
+		MECHA_UTILITY = list(),
+		MECHA_POWER = list(/obj/item/mecha_parts/mecha_equipment/generator),
+		MECHA_ARMOR = list(),
+	)
+	max_occupants = 6 //driver+gunner, bob semple :).... very cramped!... the true nuclear experience is with the full team onboard
+	max_equip_by_category = list(
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 2, // the syndicate have grafted some utility port onto it.
+		MECHA_POWER = 1, // you can put an engine on it.. yeah!
+		MECHA_ARMOR = 1, // the syndicate modified it.
 	)

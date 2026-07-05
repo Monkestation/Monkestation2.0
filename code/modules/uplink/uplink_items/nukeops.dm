@@ -971,8 +971,8 @@
 /datum/uplink_item/support/semple
 	name = "Syndicate Ancient History Semple Kit"
 	desc = "Brought to you by the Syndicate Ancient History Department! the Bob Semple! this model can fit up to 6 whole crew!"
-	item = /obj/vehicle/sealed/mecha/semple
-	cost = 60
+	item = /obj/vehicle/sealed/mecha/semple/syndie
+	cost = 70
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/sempleammo
@@ -980,4 +980,10 @@
 	desc = "Brought to you by the Syndicate Ancient History Department! Authentic Bob Semple ammo! Contains One box!"
 	item = /obj/item/mecha_ammo/semple
 	cost = 1
+	purchasable_from = UPLINK_NUKE_OPS
+
+/datum/uplink_item/ammo/sempletankshell
+	name = "Syndicate 30mm Tank Shell"
+	desc = "a cheap non explosive 30mm tank shell for use in a bob semple."
+	cost = 3
 	purchasable_from = UPLINK_NUKE_OPS

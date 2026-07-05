@@ -69,4 +69,6 @@
 #define MECHA_AMMO_SENTINEL "Sentinel Cannon Shell"
 #define MECHA_AMMO_SEMPLE_RUBBER "7.7mm Rubber Shot"
 #define MECHA_AMMO_SEMPLE "7.7mm Slow Shot"
+#define MECHA_AMMO_SEMPLE_SHELL "30mm Scrap-Piercer"
+#define MECHA_AMMO_TRASHBALL "Trashball"
 //monke edit end

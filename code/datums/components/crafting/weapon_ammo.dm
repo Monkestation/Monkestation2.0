@@ -111,3 +111,11 @@
 		/datum/reagent/consumable/space_cola = 10,
 	)
 	category = CAT_WEAPON_AMMO
+
+/datum/crafting_recipe/compactrashmound
+	name = "Compacted Trash Mound"
+	always_available = TRUE
+	result = /obj/item/mecha_ammo/trashball
+	reqs = list(/obj/item/trash = 10, /datum/reagent/consumable/space_cola = 60, /datum/reagent/water = 20, /obj/item/paper = 4,)
+	category = CAT_WEAPON_AMMO
+	time = 10 SECONDS

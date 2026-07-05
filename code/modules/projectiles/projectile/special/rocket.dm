@@ -216,3 +216,31 @@ among other potential differences. This granularity is helpful for things like t
 		M.ignite_mob()
 	else if(isturf(target))
 		impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser/wall
+
+/obj/projectile/bullet/rocket/sempletankshell
+	name = "\improper 30mm Scrap-Piercer"
+	desc = "seems rusted."
+	icon_state = "LIGHTTANKSHELL"
+	damage = 30
+	armour_penetration = 120
+	dismemberment = 10
+	anti_armour_damage = 100
+
+/obj/projectile/bullet/rocket/sempletankshell/on_hit(atom/target, blocked = 0, pierce_hit)
+	..()
+	explosion(target, devastation_range = -1, light_impact_range = 1, explosion_cause = src)
+	return BULLET_ACT_HIT
+
+/obj/projectile/bullet/rocket/trashchunk
+	name = "\improper trashchunk"
+	desc = "trashy!"
+	icon_state = "trashball"
+	damage = 30
+	armour_penetration = 20
+	dismemberment = 1
+	anti_armour_damage = 15
+
+/obj/projectile/bullet/rocket/trashchunk/on_hit(atom/target, blocked = 0, pierce_hit)
+	..()
+	explosion(target, devastation_range = -1, light_impact_range = -1, explosion_cause = src)
+	return BULLET_ACT_HIT

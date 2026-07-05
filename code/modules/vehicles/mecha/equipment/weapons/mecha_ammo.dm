@@ -185,3 +185,18 @@
 	icon_state = "semple"
 	rounds = 120
 	ammo_type = MECHA_AMMO_SEMPLE
+
+/obj/item/mecha_ammo/semple/cannon
+	name = "30mm Scrap-Piercer rounds"
+	desc = "A small box of 30mm rounds, for use in a bob semple."
+	icon_state = "sentinel"
+	rounds = 10
+	ammo_type = MECHA_AMMO_SEMPLE_SHELL
+
+/obj/item/mecha_ammo/trashball
+	name = "Compacted Trash Mound"
+	desc = "A Compact Ball of trash, you feel like you could use this in some sort of tank..."
+	icon_state = "trashball"
+	rounds = 5
+	ammo_type = MECHA_AMMO_TRASHBALL
+	var/qdel_on_empty = TRUE

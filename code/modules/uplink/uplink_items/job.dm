@@ -553,3 +553,11 @@
 	item = /obj/item/chromosome/energy
 	restricted_roles = list(JOB_GENETICIST)
 	illegal_tech = FALSE
+
+/datum/uplink_item/role_restricted/improvised_trash_cannon
+	name = "Trash Tank Cannon"
+	desc = "Brought to you by your fellow assistants who have moved up in the world!, this weapon was designed to be mounted on YOUR trash tank! for you to use! utilize specialized COMPACTED TRASH BALLS to reload your new pneumatic cannon!"
+	cost = 10
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/trash_cannon
+	restricted_roles = list(JOB_ASSISTANT)
+	illegal_tech = FALSE
