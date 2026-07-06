@@ -19,8 +19,8 @@
 	if(HAS_TRAIT_FROM(thingy, TRAIT_NODROP, GLUED_ITEM_TRAIT))
 		to_chat(user, "<span class='warning'>[interacting_with] is already sticky!</span>")
 		return ITEM_INTERACT_BLOCKING
-	if (istype(thingy, /obj/item/dualsaber))
-		to_chat(user, span_notice("The glue can't seem to stick to the handle of the [thingy]."))
+	if (thingy.type in ANTI_DROP_BLACKLIST())
+		to_chat(user, span_notice("The glue can't seem to stick to the [thingy]."))
 		return ITEM_INTERACT_BLOCKING
 	uses -= 1
 	ADD_TRAIT(thingy, TRAIT_NODROP, GLUED_ITEM_TRAIT)

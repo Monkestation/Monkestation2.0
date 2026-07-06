@@ -57,7 +57,7 @@
 		for(var/obj/item/held_item as anything in owner.held_items)
 			if(!held_item)
 				continue
-			if (istype(held_item, /obj/item/dualsaber))
+			if (held_item.type in ANTI_DROP_BLACKLIST())
 				to_chat(owner, span_notice("You can't seem to get a good grip on the [held_item]."))
 				continue
 			stored_items += held_item
