@@ -272,11 +272,19 @@
 
 	data["flux"] = RBMK_ROUND2(reactor.flux)
 	data["max_flux"] = max(100, RBMK_MAX_FLUX, round((reactor.flux * 1.25) + 50, 50))
+	data["base_flux"] = RBMK_ROUND2(reactor.last_tick_base_flux)
+	data["void_flux_bonus"] = RBMK_ROUND2(reactor.last_tick_void_flux_bonus)
 
 	data["void_coefficient"] = RBMK_ROUND2(reactor.void_coefficient)
+	data["max_void_coefficient"] = RBMK_VC_MAX
+	data["void_flux_multiplier"] = RBMK_ROUND2(reactor.last_void_flux_multiplier)
+	data["void_temperature_component"] = RBMK_ROUND2(reactor.void_coefficient_temperature)
+	data["void_pressure_component"] = RBMK_ROUND2(reactor.void_coefficient_pressure)
+	data["void_coolant_component"] = RBMK_ROUND2(reactor.void_coefficient_coolant)
 
 	data["integrity"] = RBMK_ROUND2(reactor.reactor_integrity)
 	data["max_integrity"] = reactor.max_reactor_integrity
+	data["last_integrity_damage"] = RBMK_ROUND2(reactor.last_integrity_damage)
 
 	data["pressure_current"] = RBMK_ROUND2(reactor.pressure)
 	data["pressure_warning"] = RBMK_PRESSURE_WARNING
@@ -295,9 +303,19 @@
 
 	var/datum/gas_mixture/inlet_mix = reactor.get_inlet_mix()
 	var/datum/gas_mixture/outlet_mix = reactor.get_outlet_mix()
+	var/datum/gas_mixture/coolant_mix = reactor.get_coolant_mix()
 
 	data["inlet_pressure"] = inlet_mix ? RBMK_ROUND2(inlet_mix.return_pressure()) : 0
 	data["outlet_pressure"] = outlet_mix ? RBMK_ROUND2(outlet_mix.return_pressure()) : 0
+	data["inlet_flow"] = RBMK_ROUND2(reactor.last_inlet_flow_rate)
+	data["outlet_flow"] = RBMK_ROUND2(reactor.last_outlet_flow_rate)
+	data["inlet_last_pressure"] = RBMK_ROUND2(reactor.last_inlet_pressure)
+	data["outlet_core_pressure"] = RBMK_ROUND2(reactor.last_outlet_pressure)
+	data["coolant_moles"] = coolant_mix ? RBMK_ROUND2(coolant_mix.total_moles()) : 0
+	data["coolant_temperature"] = coolant_mix ? RBMK_ROUND2(coolant_mix.temperature) : 0
+	data["coolant_exchange_ratio"] = RBMK_ROUND2(reactor.last_coolant_exchange_ratio * 100)
+	data["coolant_core_temp_change"] = RBMK_ROUND2(reactor.last_coolant_core_temp_change)
+	data["coolant_temperature_change"] = RBMK_ROUND2(reactor.last_coolant_temperature_change)
 
 	var/list/pressure_history = list()
 	for(var/pressure_value in reactor.coolant_pressure_history)

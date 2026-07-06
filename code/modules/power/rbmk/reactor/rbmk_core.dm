@@ -30,8 +30,14 @@
 
 	var/inlet_open = FALSE
 	var/outlet_open = FALSE
-	var/inlet_rate = RBMK_INLET_RATE_MIN
-	var/outlet_target_pressure = RBMK_OUTLET_PRESSURE_BASE
+	var/inlet_rate = RBMK_INLET_RATE_DEFAULT
+	var/outlet_target_pressure = RBMK_OUTLET_PRESSURE_DEFAULT
+	var/last_inlet_moles_moved = 0
+	var/last_outlet_moles_moved = 0
+	var/last_inlet_flow_rate = 0
+	var/last_outlet_flow_rate = 0
+	var/last_inlet_pressure = 0
+	var/last_outlet_pressure = 0
 
 	var/list/normal_slots = list()
 	var/list/special_slots = list()
@@ -43,6 +49,10 @@
 	var/thermal_output = 0
 	var/flux = 0
 	var/void_coefficient = 0
+	var/void_coefficient_temperature = 0
+	var/void_coefficient_pressure = 0
+	var/void_coefficient_coolant = 0
+	var/last_void_flux_multiplier = 1
 	var/pressure = 0
 
 	var/running = FALSE
@@ -55,12 +65,19 @@
 
 	var/reactor_integrity = RBMK_MAX_INTEGRITY
 	var/max_reactor_integrity = RBMK_MAX_INTEGRITY
+	var/last_integrity_damage = 0
+	var/integrity_warning_started = FALSE
 	var/list/active_welder_repairers = list()
 
 	var/datum/gas_mixture/coolant_internal = null
 
 	var/last_tick_flux = 0
+	var/last_tick_base_flux = 0
+	var/last_tick_void_flux_bonus = 0
 	var/last_tick_temp_gain = 0
+	var/last_coolant_exchange_ratio = 0
+	var/last_coolant_core_temp_change = 0
+	var/last_coolant_temperature_change = 0
 	var/last_tick_rod_count = 0
 	var/rod_temperature_limit_bonus = 0
 	var/rod_coolant_exchange_bonus = 0
@@ -115,8 +132,17 @@
 	radiation = 0
 	thermal_output = 0
 	void_coefficient = 0
+	void_coefficient_temperature = 0
+	void_coefficient_pressure = 0
+	void_coefficient_coolant = 0
+	last_void_flux_multiplier = 1
 	last_tick_flux = 0
+	last_tick_base_flux = 0
+	last_tick_void_flux_bonus = 0
 	last_tick_temp_gain = 0
+	last_coolant_exchange_ratio = 0
+	last_coolant_core_temp_change = 0
+	last_coolant_temperature_change = 0
 	last_tick_rod_count = 0
 	reset_reactor_modifier_state()
 
@@ -250,9 +276,17 @@
 
 	reactor_integrity = RBMK_MAX_INTEGRITY
 	max_reactor_integrity = RBMK_MAX_INTEGRITY
+	last_integrity_damage = 0
+	integrity_warning_started = FALSE
 	active_welder_repairers = list()
 	control_rod_depth = 0
 	actual_control_rod_depth = 0
+	last_inlet_moles_moved = 0
+	last_outlet_moles_moved = 0
+	last_inlet_flow_rate = 0
+	last_outlet_flow_rate = 0
+	last_inlet_pressure = 0
+	last_outlet_pressure = 0
 
 	reset_reaction_state()
 	scrammed = FALSE
@@ -438,6 +472,7 @@
 	update_linked_consoles()
 
 	if(reactor_integrity >= max_reactor_integrity)
+		integrity_warning_started = FALSE
 		finish_welder_repair(user)
 
 		user.visible_message(

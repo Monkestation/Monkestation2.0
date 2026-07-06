@@ -14,6 +14,6 @@
 	fuel_consumption = 0.5
 
 	reactivity = 14
-	flux_multiplier = 1.5
+	flux_multiplier = 2.4
 	radiation_multiplier = 2.5
 	thermal_multiplier = 1.3

@@ -1,7 +1,9 @@
 import { useBackend } from '../../backend';
 import {
+  Box,
   Flex,
   LabeledControls,
+  LabeledList,
   ProgressBar,
   RoundGauge,
   Section,
@@ -20,12 +22,20 @@ export const RBMKOverview = () => {
 
   const flux = Number(data?.flux ?? 0);
   const maxFlux = Number(data?.max_flux ?? 900);
+  const baseFlux = Number(data?.base_flux ?? 0);
+  const voidFluxBonus = Number(data?.void_flux_bonus ?? 0);
 
   const voidCoefficient = Number(data?.void_coefficient ?? 0);
   const maxVoidCoefficient = Math.max(
     Number(data?.max_void_coefficient ?? 0.5),
     0.5,
   );
+  const voidFluxMultiplier = Number(data?.void_flux_multiplier ?? 1);
+  const voidTemperatureComponent = Number(
+    data?.void_temperature_component ?? 0,
+  );
+  const voidPressureComponent = Number(data?.void_pressure_component ?? 0);
+  const voidCoolantComponent = Number(data?.void_coolant_component ?? 0);
 
   const pressure = Number(data?.pressure_current ?? 0);
   const pressureWarning = Number(data?.pressure_warning ?? 950);
@@ -39,6 +49,7 @@ export const RBMKOverview = () => {
     0,
     Math.min(100, Math.round((integrity / maxIntegrity) * 100)),
   );
+  const lastIntegrityDamage = Number(data?.last_integrity_damage ?? 0);
 
   return (
     <Flex direction="column" gap={1}>
@@ -135,6 +146,31 @@ export const RBMKOverview = () => {
         >
           {integrityPercent}%
         </ProgressBar>
+        <Box mt={0.5} color={lastIntegrityDamage > 0 ? 'bad' : 'label'}>
+          Integrity loss: {lastIntegrityDamage.toFixed(2)}% / tick
+        </Box>
+      </Section>
+
+      <Section title="Flux Feedback">
+        <LabeledList>
+          <LabeledList.Item label="Base Flux">
+            {baseFlux.toFixed(0)}
+          </LabeledList.Item>
+
+          <LabeledList.Item label="Void Bonus">
+            +{voidFluxBonus.toFixed(0)}
+          </LabeledList.Item>
+
+          <LabeledList.Item label="Void Multiplier">
+            {voidFluxMultiplier.toFixed(2)}x
+          </LabeledList.Item>
+
+          <LabeledList.Item label="Void Sources">
+            heat {voidTemperatureComponent.toFixed(2)} / pressure{' '}
+            {voidPressureComponent.toFixed(2)} / coolant{' '}
+            {voidCoolantComponent.toFixed(2)}
+          </LabeledList.Item>
+        </LabeledList>
       </Section>
     </Flex>
   );

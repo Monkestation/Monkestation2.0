@@ -59,12 +59,12 @@
 	UnregisterSignal(src, COMSIG_SILO_ITEM_CONSUMED)
 
 	if(inserted_rod)
-		inserted_rod.forceMove(drop_location())
+		inserted_rod.forceMove(get_processor_output_location())
 		inserted_rod = null
 
 	for(var/atom/movable/output_item as anything in output_items)
 		if(!QDELETED(output_item))
-			output_item.forceMove(drop_location())
+			output_item.forceMove(get_processor_output_location())
 
 	output_items.Cut()
 	materials = null
@@ -118,11 +118,14 @@
 
 /obj/machinery/rbmk/fuel_processor/proc/prune_output_items()
 	var/index = length(output_items)
+	var/turf/output_turf = get_processor_output_location()
 
 	while(index >= 1)
 		var/atom/movable/output_item = output_items[index]
 
 		if(!output_item || QDELETED(output_item))
+			output_items.Cut(index, index + 1)
+		else if(output_item.loc != output_turf)
 			output_items.Cut(index, index + 1)
 
 		index--
@@ -235,77 +238,15 @@
 
 	return list()
 
-/obj/machinery/rbmk/fuel_processor/proc/get_recipe_cost_data(recipe_id)
-	var/list/costs = list()
+/obj/machinery/rbmk/fuel_processor/proc/get_recipe_cost_map(recipe_id)
+	var/list/cost_map = list()
+	var/list/material_cost = get_recipe_material_cost(recipe_id)
 
-	switch(recipe_id)
-		if(RBMK_PROCESSOR_FABRICATE_URANIUM)
-			costs += list(list(
-				"name" = "iron",
-				"amount" = RBMK_PROCESSOR_IRON_COST,
-			))
+	for(var/material_type as anything in material_cost)
+		var/datum/material/material = GET_MATERIAL_REF(material_type)
+		cost_map[material.name] = material_cost[material_type]
 
-			costs += list(list(
-				"name" = "uranium",
-				"amount" = RBMK_PROCESSOR_FUEL_COST,
-			))
-
-		if(RBMK_PROCESSOR_FABRICATE_THORIUM)
-			costs += list(list(
-				"name" = "iron",
-				"amount" = RBMK_PROCESSOR_IRON_COST,
-			))
-
-			costs += list(list(
-				"name" = "thorium",
-				"amount" = RBMK_PROCESSOR_FUEL_COST,
-			))
-
-		if(RBMK_PROCESSOR_FABRICATE_PLUTONIUM)
-			costs += list(list(
-				"name" = "iron",
-				"amount" = RBMK_PROCESSOR_IRON_COST,
-			))
-
-			costs += list(list(
-				"name" = "plutonium",
-				"amount" = RBMK_PROCESSOR_FUEL_COST,
-			))
-
-		if(RBMK_PROCESSOR_FABRICATE_PLASMA_MODERATOR)
-			costs += list(list(
-				"name" = "iron",
-				"amount" = RBMK_PROCESSOR_IRON_COST,
-			))
-
-			costs += list(list(
-				"name" = "plasma",
-				"amount" = RBMK_PROCESSOR_MODERATOR_COST,
-			))
-
-		if(RBMK_PROCESSOR_FABRICATE_BLUESPACE_MODERATOR)
-			costs += list(list(
-				"name" = "iron",
-				"amount" = RBMK_PROCESSOR_IRON_COST,
-			))
-
-			costs += list(list(
-				"name" = "bluespace crystal",
-				"amount" = RBMK_PROCESSOR_MODERATOR_COST,
-			))
-
-		if(RBMK_PROCESSOR_FABRICATE_DIAMOND_MODERATOR)
-			costs += list(list(
-				"name" = "iron",
-				"amount" = RBMK_PROCESSOR_IRON_COST,
-			))
-
-			costs += list(list(
-				"name" = "diamond",
-				"amount" = RBMK_PROCESSOR_MODERATOR_COST,
-			))
-
-	return costs
+	return cost_map
 
 /obj/machinery/rbmk/fuel_processor/proc/recipe_needs_inserted_rod(recipe_id)
 	return recipe_id == RBMK_PROCESSOR_EXTRACT_THORIUM || recipe_id == RBMK_PROCESSOR_EXTRACT_PLUTONIUM
@@ -512,7 +453,7 @@
 	if(!output_type)
 		return null
 
-	var/atom/movable/created = new output_type(src)
+	var/atom/movable/created = new output_type(get_processor_output_location())
 	output_items += created
 	return created
 
@@ -520,9 +461,16 @@
 	if(!output_type)
 		return null
 
-	var/obj/item/stack/created = new output_type(src, amount)
+	var/obj/item/stack/created = new output_type(get_processor_output_location(), amount)
 	output_items += created
 	return created
+
+/obj/machinery/rbmk/fuel_processor/proc/get_processor_output_location()
+	var/turf/output_turf = get_step(src, EAST)
+	if(output_turf && !isclosedturf(output_turf))
+		return output_turf
+
+	return drop_location()
 
 /obj/machinery/rbmk/fuel_processor/proc/can_accept_rod(obj/item/rbmk/fuel_rod/fuel_rod, mob/user)
 	if(!fuel_rod)
@@ -603,7 +551,7 @@
 
 	var/obj/item/rbmk/fuel_rod/ejected_rod = inserted_rod
 	inserted_rod = null
-	ejected_rod.forceMove(drop_location())
+	ejected_rod.forceMove(get_processor_output_location())
 
 	if(user)
 		to_chat(user, span_notice("You eject [ejected_rod] from [src]."))
@@ -638,7 +586,7 @@
 		return TRUE
 
 	output_items.Cut(output_index, output_index + 1)
-	output_item.forceMove(drop_location())
+	output_item.forceMove(get_processor_output_location())
 
 	if(user)
 		to_chat(user, span_notice("You eject [output_item] from [src]."))
@@ -685,7 +633,7 @@
 		"id" = recipe_id,
 		"name" = get_recipe_name(recipe_id),
 		"description" = get_recipe_description(recipe_id),
-		"costs" = get_recipe_cost_data(recipe_id),
+		"cost" = get_recipe_cost_map(recipe_id),
 		"requires_inserted_rod" = recipe_needs_inserted_rod(recipe_id),
 		"creates_spent_casing" = recipe_creates_spent_casing(recipe_id),
 		"visible" = recipe_visible_by_default(recipe_id),
@@ -793,7 +741,7 @@
 			if(isnull(amount) || amount <= 0)
 				return FALSE
 
-			materials.eject_sheets(material, amount)
+			materials.eject_sheets(material, amount, get_processor_output_location())
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			update_appearance(UPDATE_ICON)
 			SStgui.update_uis(src)

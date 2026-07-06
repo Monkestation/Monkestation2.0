@@ -53,6 +53,11 @@
 
 
 /obj/machinery/atmospherics/components/unary/rbmk/inlet/process_atmos(seconds_per_tick = RBMK_ATMOS_PROCESS_SECONDS)
+	if(parent_reactor)
+		parent_reactor.last_inlet_moles_moved = 0
+		parent_reactor.last_inlet_flow_rate = 0
+		parent_reactor.last_inlet_pressure = 0
+
 	if(!parent_reactor?.inlet_open)
 		return
 
@@ -60,14 +65,15 @@
 		return
 
 	var/datum/gas_mixture/inlet_pipe_mix = airs[1]
+	parent_reactor.last_inlet_pressure = inlet_pipe_mix?.return_pressure() || 0
+
 	if(!inlet_pipe_mix || inlet_pipe_mix.total_moles() <= 0)
 		return
 
 	if(!parent_reactor.coolant_internal)
 		return
 
-	var/process_scale = seconds_per_tick / RBMK_ATMOS_PROCESS_SECONDS
-	var/desired_moles = clamp(parent_reactor.inlet_rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX) * process_scale
+	var/desired_moles = clamp(parent_reactor.inlet_rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX) * seconds_per_tick
 	if(desired_moles <= 0)
 		return
 
@@ -75,6 +81,8 @@
 	if(!moved_mix || moved_mix.total_moles() <= 0)
 		return
 
+	parent_reactor.last_inlet_moles_moved = moved_mix.total_moles()
+	parent_reactor.last_inlet_flow_rate = parent_reactor.last_inlet_moles_moved / max(seconds_per_tick, 0.1)
 	parent_reactor.coolant_internal.merge(moved_mix)
 	update_parents()
 
@@ -86,6 +94,11 @@
 
 
 /obj/machinery/atmospherics/components/unary/rbmk/outlet/process_atmos(seconds_per_tick = RBMK_ATMOS_PROCESS_SECONDS)
+	if(parent_reactor)
+		parent_reactor.last_outlet_moles_moved = 0
+		parent_reactor.last_outlet_flow_rate = 0
+		parent_reactor.last_outlet_pressure = 0
+
 	if(!parent_reactor?.outlet_open)
 		return
 
@@ -93,18 +106,18 @@
 	if(!internal_coolant_mix || internal_coolant_mix.total_moles() <= 0)
 		return
 
-	var/process_scale = seconds_per_tick / RBMK_ATMOS_PROCESS_SECONDS
 	var/current_pressure = internal_coolant_mix.return_pressure()
-	var/target_pressure = max(parent_reactor.outlet_target_pressure, RBMK_OUTLET_PRESSURE_BASE)
+	var/target_pressure = clamp(parent_reactor.outlet_target_pressure, RBMK_OUTLET_PRESSURE_BASE, RBMK_OUTLET_PRESSURE_MAX)
+	parent_reactor.last_outlet_pressure = current_pressure
 
-	var/desired_release_moles = clamp(parent_reactor.inlet_rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX)
+	if(current_pressure <= target_pressure)
+		return
 
-	if(current_pressure > target_pressure)
-		var/pressure_delta = current_pressure - target_pressure
-		var/pressure_ratio = clamp(pressure_delta / max(RBMK_PRESSURE_CRITICAL, 1), 0.05, 1)
-		desired_release_moles = max(desired_release_moles, max(10, RBMK_INLET_RATE_MAX * pressure_ratio))
+	var/pressure_delta = current_pressure - target_pressure
+	var/pressure_ratio = CLAMP01(pressure_delta / max(RBMK_PRESSURE_CRITICAL, 1))
+	var/desired_release_moles = clamp(RBMK_INLET_RATE_MAX * pressure_ratio, 10, RBMK_INLET_RATE_MAX)
 
-	desired_release_moles *= process_scale
+	desired_release_moles *= seconds_per_tick
 	if(desired_release_moles <= 0)
 		return
 
@@ -112,6 +125,8 @@
 	if(!released_mix || released_mix.total_moles() <= 0)
 		return
 
+	parent_reactor.last_outlet_moles_moved = released_mix.total_moles()
+	parent_reactor.last_outlet_flow_rate = parent_reactor.last_outlet_moles_moved / max(seconds_per_tick, 0.1)
 	if(length(airs))
 		airs[1].merge(released_mix)
 		update_parents()

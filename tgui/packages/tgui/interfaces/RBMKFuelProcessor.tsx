@@ -3,6 +3,7 @@ import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
+  Icon,
   LabeledList,
   NoticeBox,
   ProgressBar,
@@ -10,9 +11,11 @@ import {
   Stack,
   Table,
 } from '../components';
+import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
-import type { Material } from './Fabrication/Types';
+import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
+import type { Material, MaterialMap } from './Fabrication/Types';
 
 type InsertedRod = {
   name: string;
@@ -27,16 +30,11 @@ type OutputItem = {
   desc: string;
 };
 
-type RecipeCost = {
-  name: string;
-  amount: number;
-};
-
 type Recipe = {
   id: string;
   name: string;
   description: string;
-  costs: RecipeCost[];
+  cost: MaterialMap;
   requires_inserted_rod: BooleanLike;
   creates_spent_casing: BooleanLike;
   visible: BooleanLike;
@@ -60,32 +58,47 @@ type Data = {
 
 const formatSheetAmount = (amount: number, sheetMaterialAmount: number) => {
   if (!sheetMaterialAmount) {
-    return amount;
+    return `${amount}`;
   }
 
-  return amount / sheetMaterialAmount;
+  return formatSiUnit(amount / sheetMaterialAmount, 0);
 };
 
-const CostDisplay = (props: {
-  costs: RecipeCost[];
+const RecipeMaterialStrip = (props: {
+  cost: MaterialMap;
+  requiresInsertedRod: BooleanLike;
+  availableMaterials: MaterialMap;
   sheetMaterialAmount: number;
 }) => {
-  const { costs, sheetMaterialAmount } = props;
+  const { cost, requiresInsertedRod, availableMaterials, sheetMaterialAmount } =
+    props;
+  const costEntries = Object.entries(cost || {});
 
-  if (!costs.length) {
-    return <Box color="label">No material cost.</Box>;
+  if (!costEntries.length) {
+    return (
+      <Box color={requiresInsertedRod ? 'average' : 'label'}>
+        {requiresInsertedRod ? 'Inserted depleted rod' : 'No material cost'}
+      </Box>
+    );
   }
 
   return (
-    <Stack vertical>
-      {costs.map((cost) => (
-        <Stack.Item key={cost.name}>
-          <Box>
-            {formatSheetAmount(cost.amount, sheetMaterialAmount)} {cost.name}
-          </Box>
-        </Stack.Item>
-      ))}
-    </Stack>
+    <>
+      <MaterialCostSequence
+        costMap={cost}
+        available={availableMaterials}
+        SHEET_MATERIAL_AMOUNT={sheetMaterialAmount}
+        justify="flex-start"
+      />
+      <Box color="label" mt={0.5}>
+        {costEntries
+          .map(
+            ([material, amount]) =>
+              `${formatSheetAmount(amount, sheetMaterialAmount)} ${material}`,
+          )
+          .join(', ')}
+      </Box>
+    </>
   );
 };
 
@@ -183,6 +196,7 @@ const OutputTray = (props: {
 const Recipes = (props: {
   recipes: Recipe[];
   sheetMaterialAmount: number;
+  availableMaterials: MaterialMap;
   processing: BooleanLike;
   showCatalog: boolean;
   onToggleCatalog: () => void;
@@ -191,6 +205,7 @@ const Recipes = (props: {
   const {
     recipes,
     sheetMaterialAmount,
+    availableMaterials,
     processing,
     showCatalog,
     onToggleCatalog,
@@ -219,25 +234,52 @@ const Recipes = (props: {
           depleted fuel rod, or open the recipe catalog.
         </NoticeBox>
       ) : (
-        <Table>
-          <Table.Row header>
-            <Table.Cell>Process</Table.Cell>
-            <Table.Cell>Cost</Table.Cell>
-            <Table.Cell>Status</Table.Cell>
-            <Table.Cell collapsing>Action</Table.Cell>
-          </Table.Row>
+        displayedRecipes.map((recipe) => (
+          <Box
+            key={recipe.id}
+            mb={1}
+            p={1}
+            style={{
+              background: 'rgba(255, 255, 255, 0.035)',
+              borderLeft: recipe.can_start
+                ? '3px solid #45a049'
+                : '3px solid #3d4f61',
+              borderTop: '1px solid rgba(96, 160, 220, 0.35)',
+            }}
+          >
+            <Stack align="center">
+              <Stack.Item width="44px">
+                <Box
+                  textAlign="center"
+                  style={{
+                    color: recipe.can_start ? '#7bd36f' : '#7d8790',
+                    fontSize: '22px',
+                  }}
+                >
+                  <Icon
+                    name={
+                      recipe.requires_inserted_rod ? 'radiation' : 'industry'
+                    }
+                  />
+                </Box>
+              </Stack.Item>
 
-          {displayedRecipes.map((recipe) => (
-            <Table.Row key={recipe.id}>
-              <Table.Cell>
+              <Stack.Item grow>
                 <Box bold>{recipe.name}</Box>
                 <Box color="label">{recipe.description}</Box>
 
-                {showCatalog && !recipe.visible && (
-                  <Box color="label" mt={0.5}>
-                    Catalog entry.
-                  </Box>
-                )}
+                <Box
+                  mt={1}
+                  pt={0.5}
+                  style={{ borderTop: '1px solid rgba(255,255,255,0.12)' }}
+                >
+                  <RecipeMaterialStrip
+                    cost={recipe.cost}
+                    requiresInsertedRod={recipe.requires_inserted_rod}
+                    availableMaterials={availableMaterials}
+                    sheetMaterialAmount={sheetMaterialAmount}
+                  />
+                </Box>
 
                 {!!recipe.requires_inserted_rod && (
                   <Box color="average" mt={0.5}>
@@ -250,25 +292,24 @@ const Recipes = (props: {
                     Produces spent casing waste.
                   </Box>
                 )}
-              </Table.Cell>
 
-              <Table.Cell>
-                <CostDisplay
-                  costs={recipe.costs}
-                  sheetMaterialAmount={sheetMaterialAmount}
-                />
-              </Table.Cell>
-
-              <Table.Cell>
-                {recipe.can_start ? (
-                  <Box color="good">Ready</Box>
-                ) : (
-                  <Box color="bad">{recipe.block_reason}</Box>
+                {showCatalog && !recipe.visible && (
+                  <Box color="label" mt={0.5}>
+                    Catalog entry.
+                  </Box>
                 )}
-              </Table.Cell>
+              </Stack.Item>
 
-              <Table.Cell collapsing>
+              <Stack.Item width="150px">
+                <Box
+                  color={recipe.can_start ? 'good' : 'bad'}
+                  mb={1}
+                  textAlign="right"
+                >
+                  {recipe.can_start ? 'Ready' : recipe.block_reason}
+                </Box>
                 <Button
+                  fluid
                   icon="play"
                   disabled={!recipe.can_start || !!processing}
                   color={recipe.creates_spent_casing ? 'bad' : undefined}
@@ -280,10 +321,10 @@ const Recipes = (props: {
                 >
                   Start
                 </Button>
-              </Table.Cell>
-            </Table.Row>
-          ))}
-        </Table>
+              </Stack.Item>
+            </Stack>
+          </Box>
+        ))
       )}
     </Section>
   );
@@ -306,6 +347,11 @@ export const RBMKFuelProcessor = () => {
     SHEET_MATERIAL_AMOUNT,
     onHold,
   } = data;
+
+  const availableMaterials: MaterialMap = {};
+  for (const material of materials) {
+    availableMaterials[material.name] = material.amount;
+  }
 
   return (
     <Window width={920} height={720}>
@@ -356,6 +402,7 @@ export const RBMKFuelProcessor = () => {
         <Recipes
           recipes={recipes}
           sheetMaterialAmount={SHEET_MATERIAL_AMOUNT}
+          availableMaterials={availableMaterials}
           processing={processing}
           showCatalog={showCatalog}
           onToggleCatalog={() => setShowCatalog(!showCatalog)}

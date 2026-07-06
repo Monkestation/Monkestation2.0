@@ -43,7 +43,7 @@
 	priority_announce(
 		"RBMK reactor containment has failed aboard [station_name()]. Engineering personnel are ordered to evacuate the reactor chamber. Crew should prepare for a blast and shelter in maintenance before fallout reaches inhabited areas.",
 		supermatter_failure ? "RBMK Supermatter Cascade Alert" : "RBMK Reactor Alert",
-		'sound/rbmk/alarm.ogg'
+		'sound/misc/airraid.ogg'
 	)
 	rbmk_engineering_alert("CRITICAL ALERT: RBMK reactor containment failure at [get_area_name(src)]. Core integrity is zero. Evacuate the reactor chamber immediately.")
 
@@ -85,7 +85,7 @@
 	priority_announce(
 		"RBMK reactor pressure vessel failure confirmed. Radioactive fallout will begin spreading in approximately one minute. Maintenance remains the safest shelter.",
 		"RBMK Reactor Breach",
-		'sound/rbmk/explode.ogg'
+		'sound/misc/airraid.ogg'
 	)
 	rbmk_engineering_alert("RBMK pressure vessel failure confirmed. Fallout warning window is one minute.")
 
@@ -181,7 +181,7 @@
 	priority_announce(
 		"RBMK fallout has reached the station. Maintenance tunnels and radiation shelters remain shielded; exposed areas are unsafe.",
 		"RBMK Fallout Warning",
-		'sound/rbmk/alarm.ogg'
+		ANNOUNCER_RADIATION
 	)
 	rbmk_engineering_alert("RBMK fallout has begun spreading from [get_area_name(src)]. Maintenance remains shielded.")
 	play_rbmk_fallout_sound()
