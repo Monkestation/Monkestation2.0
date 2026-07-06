@@ -30,6 +30,7 @@
 #define GLASS_SHEET_USES 5
 #define LIGHTBULB_COST 1
 #define BULB_SHARDS_REQUIRED 4
+#define LIGHT_CHARGE_COEFF 3
 
 /obj/item/lightreplacer
 	name = "light replacer"
@@ -244,21 +245,23 @@
 /obj/item/lightreplacer/proc/add_uses(amount = 1)
 	uses = clamp(uses + amount, 0, max_uses)
 
-/**
- * Increases the amount of bulb shards and converts excess bulb shards into blubs.
- *
- * Only provides feedback if an user is provided.
- */
 /obj/item/lightreplacer/proc/add_shards(amount = 1, user)
 	bulb_shards += amount
 	var/new_bulbs = round(bulb_shards / BULB_SHARDS_REQUIRED)
 	if(new_bulbs > 0)
 		add_uses(new_bulbs)
 	bulb_shards = bulb_shards % BULB_SHARDS_REQUIRED
-	if(new_bulbs != 0 && user)
+	if(new_bulbs != 0)
 		to_chat(user, span_notice("\The [src] fabricates a new bulb from the broken glass it has stored. It now has [uses] uses."))
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
 	return new_bulbs
+
+/// Increases the amount of charge and converts the excess into additional uses.
+/obj/item/lightreplacer/proc/charge(mob/user, coeff)
+	charge += coeff
+	if(charge > LIGHT_CHARGE_COEFF)
+		add_uses(floor(charge / LIGHT_CHARGE_COEFF))
+		charge = charge % LIGHT_CHARGE_COEFF
 
 /obj/item/lightreplacer/proc/replace_light(obj/machinery/light/target, mob/living/user)
 	//Confirm that it's a light we're testing, because afterattack runs this for everything on a given turf and will runtime
@@ -310,3 +313,4 @@
 #undef GLASS_SHEET_USES
 #undef LIGHTBULB_COST
 #undef BULB_SHARDS_REQUIRED
+#undef LIGHT_CHARGE_COEFF
