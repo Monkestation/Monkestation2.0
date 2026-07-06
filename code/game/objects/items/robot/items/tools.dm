@@ -137,7 +137,7 @@
 		usage += projectile_tick_speed_ecost * seconds_per_tick
 		usage += tracked_bullet_cost[projectile] * projectile_damage_tick_ecost_coefficient * seconds_per_tick
 	energy = clamp(energy - usage, 0, maxenergy)
-	if(energy <= 0)
+	if(energy <= 0 && active)
 		deactivate_field()
 		visible_message(span_warning("[src] blinks \"ENERGY DEPLETED\"."))
 
@@ -170,7 +170,7 @@
 	name = "cyborg omni-toolset"
 	desc = "You shouldn't see this in-game normally."
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg"
+	icon_state = "toolkit_mediborg"
 	/// Our tools (list of item typepaths).
 	var/list/obj/item/omni_toolkit = list()
 	/// Map of solid objects internally used by the omni-tool.
@@ -210,7 +210,10 @@
  */
 /obj/item/borg/cyborg_omnitool/proc/set_internal_tool(obj/item/tool)
 	SHOULD_NOT_OVERRIDE(TRUE)
-
+	if(!tool)
+		reference = null
+		tool_behaviour = initial(tool_behaviour)
+		return
 	for(var/obj/item/internal_tool as anything in omni_toolkit)
 		if(internal_tool == tool)
 			reference = internal_tool
@@ -310,6 +313,24 @@
 		tool.toolspeed = upgraded ? initial(tool.toolspeed) * 0.5 : initial(tool.toolspeed)
 	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
 
+/// Replaces an existing tool with a new tool.
+/obj/item/borg/cyborg_omnitool/proc/replace_tool(replaced_tool_typepath, replacement_tool_typepath)
+	if(!(replaced_tool_typepath in omni_toolkit))
+		return
+	var/tool_currently_used = FALSE
+	if(reference == replaced_tool_typepath)
+		tool_currently_used = TRUE
+		set_internal_tool(null)
+	var/obj/item/tool_previously_used = atoms[replaced_tool_typepath]
+	if(!QDELETED(tool_previously_used))
+		qdel(tool_previously_used)
+	atoms -= replaced_tool_typepath
+	omni_toolkit -= replaced_tool_typepath
+	omni_toolkit += replacement_tool_typepath
+	if(tool_currently_used)
+		set_internal_tool(replacement_tool_typepath)
+		update_appearance(UPDATE_ICON_STATE)
+
 /obj/item/borg/cyborg_omnitool/medical
 	name = "surgical omni-toolset"
 	desc = "A set of surgical tools used by cyborgs to operate on various surgical operations."
@@ -357,3 +378,127 @@
 		/obj/item/crowbar/cyborg,
 		/obj/item/multitool/cyborg,
 	)
+
+/obj/item/borg/handheld_jaunter
+	name = "experimental jaunter"
+	desc = "An experimental module that briefly creates a wormhole for accurate jaunting that has shown no side effects for inorganic matter."
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "cyborg_jaunter"
+	/// How many charges do we have right now?
+	var/current_charges = 2
+	/// How many charges can we store at a time?
+	var/maximum_charges = 2
+	/// The cooldown that tracks when to restore a charge.
+	COOLDOWN_DECLARE(recharge_cooldown)
+
+/obj/item/borg/handheld_jaunter/Destroy(force)
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/borg/handheld_jaunter/examine(mob/user)
+	. = ..()
+	. += span_notice("It has <b>[current_charges]</b> out of [maximum_charges] charges left.")
+
+/obj/item/borg/handheld_jaunter/process(seconds_per_tick)
+	if(!COOLDOWN_FINISHED(src, recharge_cooldown))
+		return
+	adjust_charge(1)
+	COOLDOWN_START(src, recharge_cooldown, 4 SECONDS)
+
+/obj/item/borg/handheld_jaunter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return try_teleport_to(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
+
+/obj/item/borg/handheld_jaunter/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return try_teleport_to(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
+
+/// Opens a portal and tries to teleport from one place to another.
+/obj/item/borg/handheld_jaunter/proc/try_teleport_to(atom/target, mob/living/user)
+	if(!current_charges)
+		user.balloon_alert(user, "no charges!")
+		return FALSE
+
+	if(!user.client || !(target in view(user.client.view, user)))
+		user.balloon_alert(user, "out of view!")
+		return FALSE
+
+	if(target.density)
+		return FALSE
+
+	adjust_charge(-1)
+	COOLDOWN_START(src, recharge_cooldown, clamp(COOLDOWN_TIMELEFT(src, recharge_cooldown), 2 SECONDS, 4 SECONDS)) // Active use shall potentially delay it.
+
+	var/turf/current_turf = get_turf(user)
+	var/turf/target_turf = get_turf(target)
+	var/obj/effect/portal/inorganic/tunnel = new(current_turf, 1.5 SECONDS, null, FALSE, target_turf)
+	if(tunnel.teleport(user))
+		playsound(user, 'sound/magic/blink.ogg', 25, TRUE)
+		current_turf.Beam(target_turf, "light_beam", time = 0.5 SECONDS)
+	return TRUE
+
+/obj/item/borg/handheld_jaunter/proc/adjust_charge(amount)
+	if(!amount)
+		return
+	current_charges = clamp(current_charges + amount, 0, maximum_charges)
+	if(maximum_charges > current_charges)
+		START_PROCESSING(SSobj, src)
+	else
+		STOP_PROCESSING(SSobj, src)
+	if(loc)
+		playsound(loc, 'sound/magic/charge.ogg', 50, TRUE)
+		if(ismob(loc))
+			balloon_alert(loc, "[current_charges]/[maximum_charges] charges!")
+
+/obj/effect/portal/inorganic
+	name = "wormhole"
+	desc = "It looks highly unstable; It could close at any moment."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "anom"
+	mech_sized = TRUE
+	light_on = FALSE
+	wibbles = FALSE
+
+/obj/effect/portal/inorganic/teleport(atom/movable/M, force = FALSE)
+	. = ..()
+	if(!.)
+		return
+	if(issilicon(M) || !isliving(M))
+		return
+	var/mob/living/living_mob = M
+	if(living_mob.mob_biotypes & MOB_ORGANIC)
+		living_mob.adjust_confusion(8 SECONDS)
+		living_mob.adjust_dizzy(8 SECONDS)
+		shake_camera(living_mob, 2 SECONDS, 1)
+		ADD_TRAIT(living_mob, TRAIT_POOR_AIM, type)
+		addtimer(TRAIT_CALLBACK_REMOVE(living_mob, TRAIT_POOR_AIM, type), 8 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/obj/item/borg/artifact_sticker_holder
+	name = "analysis form holder"
+	desc = "An built-in holder that automatically generates artifact analysis forms to write on and label artifacts with!"
+	icon = 'icons/obj/service/bureaucracy.dmi'
+	icon_state = "analysisbin1"
+	base_icon_state = "analysisbin"
+	/// The sticker that we are holding.
+	var/obj/item/sticker/analysis_form/sticker_to_apply
+
+/obj/item/borg/artifact_sticker_holder/Initialize(mapload)
+	. = ..()
+	sticker_to_apply = new(src)
+
+/obj/item/borg/artifact_sticker_holder/Destroy(force)
+	QDEL_NULL(sticker_to_apply)
+	return ..()
+
+/obj/item/borg/artifact_sticker_holder/attackby(obj/item/item, mob/user, params)
+	sticker_to_apply.attackby(item, user, params)
+
+/obj/item/borg/artifact_sticker_holder/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ITEM_INTERACT_BLOCKING
+	var/datum/component/artifact/artifact_component = interacting_with.GetComponent(/datum/component/artifact)
+	if(!artifact_component)
+		user.balloon_alert(user, "not an artifact!")
+		return
+	var/item_interact_result = sticker_to_apply.interact_with_atom(interacting_with, user, modifiers)
+	if(item_interact_result & ITEM_INTERACT_SUCCESS)
+		// Need to create a new sticker since the last one was used up.
+		sticker_to_apply = new(src)
+		return ITEM_INTERACT_SUCCESS

@@ -1,0 +1,4 @@
+author: "JupiterJaeden"
+delete-after: True
+changes:
+  - config: "Brig timers max out at 10 minutes instead of 15."

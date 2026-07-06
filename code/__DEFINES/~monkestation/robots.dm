@@ -13,6 +13,7 @@ GLOBAL_LIST_EMPTY(cyborg_base_models_icon_list)
 			"Miner" = /obj/item/robot_model/miner,
 			"Janitor" = /obj/item/robot_model/janitor,
 			"Service" = /obj/item/robot_model/service,
+			"Science" = /obj/item/robot_model/science,
 			"Standard" = /obj/item/robot_model/standard,
 		)
 		if(!CONFIG_GET(flag/disable_peaceborg))
@@ -25,7 +26,7 @@ GLOBAL_LIST_EMPTY(cyborg_base_models_icon_list)
 		for(var/option in GLOB.cyborg_model_list)
 			var/obj/item/robot_model/model = GLOB.cyborg_model_list[option]
 			var/model_icon = initial(model.cyborg_base_icon)
-			valid_base_models[option] = image(icon = 'monkestation/icons/mob/robots.dmi', icon_state = model_icon)
+			valid_base_models[option] = image(icon = 'icons/mob/silicon/robots.dmi', icon_state = model_icon)
 		GLOB.cyborg_base_models_icon_list = valid_base_models
 
 #define CYBORG_ICON_CARGO 'monkestation/code/modules/cargoborg/icons/robots_cargo.dmi'

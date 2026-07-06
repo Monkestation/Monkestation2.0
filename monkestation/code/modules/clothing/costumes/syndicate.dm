@@ -2,8 +2,8 @@
 	name = "top-hat of EVIL"
 	desc = "It's an EVIL looking hat."
 	icon_state = "evil_tophat"
-	icon = 'monkestation/icons/mob/clothing/costumes/syndicate/evil_clothing_obj.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/costumes/syndicate/evil_clothing_worn.dmi'
+	icon = 'icons/mob/clothing/costumes/syndicate/evil_clothing_obj.dmi'
+	worn_icon = 'icons/mob/clothing/costumes/syndicate/evil_clothing_worn.dmi'
 	inhand_icon_state = "that"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | PLASMAMAN_PREVENT_IGNITION
@@ -41,13 +41,13 @@
 /obj/item/clothing/head/hats/tophat/syndicate/proc/speak(mob/living/carbon/human/user)
 	sleep(2 SECOND)
 	to_chat(user,  span_boldwarning("Time!"))
-	user.playsound_local(get_turf(user), 'monkestation/sound/voice/robotic/time.ogg',100,0, use_reverb = TRUE)
+	user.playsound_local(get_turf(user), 'sound/voice/robotic/time.ogg',100,0, use_reverb = TRUE)
 	sleep(2 SECOND)
 	to_chat(user,  span_boldwarning("For!"))
-	user.playsound_local(get_turf(user), 'monkestation/sound/voice/robotic/for.ogg',100,0, use_reverb = TRUE)
+	user.playsound_local(get_turf(user), 'sound/voice/robotic/for.ogg',100,0, use_reverb = TRUE)
 	sleep(2 SECOND)
 	to_chat(user,  span_boldwarning("CRIME!!"))
-	user.playsound_local(get_turf(user), 'monkestation/sound/voice/robotic/crime.ogg',100,0, use_reverb = TRUE)
+	user.playsound_local(get_turf(user), 'sound/voice/robotic/crime.ogg',100,0, use_reverb = TRUE)
 	sleep(2 SECOND)
 
 /obj/item/clothing/head/hats/tophat/syndicate/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
@@ -82,8 +82,8 @@
 	name = "cloak of EVIL"
 	desc = "It's an EVIL looking cloak."
 	icon_state = "syndiecloak"
-	icon = 'monkestation/icons/mob/clothing/costumes/syndicate/evil_clothing_obj.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/costumes/syndicate/evil_clothing_worn.dmi'
+	icon = 'icons/mob/clothing/costumes/syndicate/evil_clothing_obj.dmi'
+	worn_icon = 'icons/mob/clothing/costumes/syndicate/evil_clothing_worn.dmi'
 	armor_type = /datum/armor/armor_swat
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/has_been_worn = FALSE

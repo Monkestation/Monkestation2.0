@@ -3,7 +3,7 @@
 //temporary visual effects(/obj/effect/temp_visual) used by clock stuff
 /obj/effect/temp_visual/ratvar
 	name = "ratvar's light"
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_effects.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_effects.dmi'
 	duration = 8
 	randomdir = FALSE
 	layer = ABOVE_NORMAL_TURF_LAYER
@@ -84,7 +84,7 @@
 
 /obj/effect/temp_visual/ratvar/belligerent
 	layer = ABOVE_MOB_LAYER
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_objects.dmi'
 	icon_state = "belligerent_eye"
 	pixel_y = 20
 	duration = 2 SECONDS
@@ -127,7 +127,7 @@
 	animate(src, alpha = 0, time = duration, easing = EASE_OUT)
 
 /obj/effect/temp_visual/ratvar/component
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_objects.dmi'
 	icon_state = "belligerent_eye"
 	layer = ABOVE_MOB_LAYER
 	duration = 1 SECONDS

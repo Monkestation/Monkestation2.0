@@ -48,7 +48,7 @@
 /mob/living/basic/pet/cirno  //nobody needs to know she's a lizard
 	name = "Cirno"
 	desc = "She is the greatest."
-	icon = 'monkestation/icons/obj/plushes.dmi'
+	icon = 'icons/obj/plushes.dmi'
 	icon_state = "cirno-happy"
 	icon_living = "cirno-happy"
 	icon_dead = "cirno-happy"
@@ -504,3 +504,18 @@
 	gold_core_spawnable = NO_SPAWN
 
 	ckeywhitelist = list("ZBunz")
+
+/mob/living/basic/mothroach/vanilla
+	name = "Vanilla"
+	desc = "A cute mothroach wearing a medical beret."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "vanilla_mothroach"
+	icon_living = "vanilla_mothroach"
+	icon_dead = "vanilla_mothroach_dead"
+	held_state = "vanilla_mothroach"
+	held_lh = 'monkestation/code/modules/donator/icons/mob/pets_held_lh.dmi'
+	held_rh = 'monkestation/code/modules/donator/icons/mob/pets_held_rh.dmi'
+	head_icon = 'monkestation/code/modules/donator/icons/mob/pets_held.dmi'
+	gold_core_spawnable = NO_SPAWN
+
+	ckeywhitelist = list("Rynnogen")

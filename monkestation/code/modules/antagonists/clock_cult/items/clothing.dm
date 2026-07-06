@@ -3,8 +3,8 @@
 /obj/item/clothing/suit/hooded/clockwork
 	name = "bronze armor"
 	desc = "A strong, bronze suit worn by the soldiers of the Ratvarian armies."
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_garb.dmi'
-	worn_icon = 'monkestation/icons/mob/clock_cult/clockwork_garb_worn.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_garb.dmi'
+	worn_icon = 'icons/mob/clock_cult/clockwork_garb_worn.dmi'
 	icon_state = "clockwork_cuirass"
 	armor_type = /datum/armor/suit_clockwork
 	slowdown = 0.2
@@ -63,8 +63,8 @@
 	name = "brass helmet"
 	desc = "A strong, brass helmet worn by the soldiers of the Ratvarian armies. Includes an integrated light-dimmer for flash protection, \
 			as well as occult-grade muffling for factory based environments."
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_garb.dmi'
-	worn_icon = 'monkestation/icons/mob/clock_cult/clockwork_garb_worn.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_garb.dmi'
+	worn_icon = 'icons/mob/clock_cult/clockwork_garb_worn.dmi'
 	icon_state = "clockwork_helmet"
 	armor_type = /datum/armor/helmet_clockwork
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -250,8 +250,8 @@
 
 /obj/item/clothing/glasses/clockwork
 	name = "base clock glasses"
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_garb.dmi'
-	worn_icon = 'monkestation/icons/mob/clock_cult/clockwork_garb_worn.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_garb.dmi'
+	worn_icon = 'icons/mob/clock_cult/clockwork_garb_worn.dmi'
 	icon_state = "clockwork_cuirass"
 	/// What additional desc to show if the person examining is a clock cultist
 	var/clock_desc = ""
@@ -494,8 +494,8 @@
 /obj/item/clothing/shoes/clockwork
 	name = "brass treads"
 	desc = "A strong pair of brass boots worn by the soldiers of the Ratvarian armies."
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_garb.dmi'
-	worn_icon = 'monkestation/icons/mob/clock_cult/clockwork_garb_worn.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_garb.dmi'
+	worn_icon = 'icons/mob/clock_cult/clockwork_garb_worn.dmi'
 	icon_state = "clockwork_treads"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	clothing_traits = list(TRAIT_NO_SLIP_WATER)
@@ -517,8 +517,8 @@
 /obj/item/clothing/gloves/clockwork
 	name = "brass gauntlets"
 	desc = "A strong pair of brass gloves worn by the soldiers of the Ratvarian armies."
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_garb.dmi'
-	worn_icon = 'monkestation/icons/mob/clock_cult/clockwork_garb_worn.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_garb.dmi'
+	worn_icon = 'icons/mob/clock_cult/clockwork_garb_worn.dmi'
 	icon_state = "clockwork_gauntlets"
 	siemens_coefficient = 0
 	strip_delay = 8 SECONDS

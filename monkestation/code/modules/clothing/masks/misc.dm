@@ -1,8 +1,8 @@
 /obj/item/clothing/mask/kitsuneblack
 	name = "Black Kitsune Mask"
 	desc = "An oriental styled porcelain mask, this one is black and gold."
-	icon = 'monkestation/icons/obj/clothing/masks.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
+	icon = 'icons/obj/clothing/masks.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
 	icon_state = "blackkitsunemask"
 	w_class = WEIGHT_CLASS_TINY
 	flags_cover = MASKCOVERSMOUTH
@@ -21,8 +21,8 @@
 /obj/item/clothing/mask/kitsunewhite
 	name = "White Kitsune Mask"
 	desc = "An oriental styled porcelain mask, this one is white and red."
-	icon = 'monkestation/icons/obj/clothing/masks.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
+	icon = 'icons/obj/clothing/masks.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
 	icon_state = "whitekitsunemask"
 	w_class = WEIGHT_CLASS_TINY
 	flags_cover = MASKCOVERSMOUTH
@@ -41,9 +41,9 @@
 /obj/item/clothing/mask/ookmask
 	name = "Paper Monkey Mask"
 	desc = "One shudders to imagine the inhuman thoughts that lie underneath that mask."
-	icon = 'monkestation/icons/obj/clothing/masks.dmi'
+	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "ook"
-	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	alternative_screams = list(	'sound/creatures/monkey/monkey_screech_1.ogg',
 								'sound/creatures/monkey/monkey_screech_2.ogg',
@@ -53,17 +53,17 @@
 								'sound/creatures/monkey/monkey_screech_6.ogg',
 								'sound/creatures/monkey/monkey_screech_7.ogg')
 
-	alternative_laughs = list(	'monkestation/sound/voice/laugh/misc/big_laugh0.ogg',
-								'monkestation/sound/voice/laugh/misc/big_laugh1.ogg',
-								'monkestation/sound/voice/laugh/misc/big_laugh2.ogg',
-								'monkestation/sound/voice/laugh/misc/big_laugh3.ogg',
-								'monkestation/sound/voice/laugh/misc/big_laugh4.ogg')
+	alternative_laughs = list(	'sound/voice/laugh/misc/big_laugh0.ogg',
+								'sound/voice/laugh/misc/big_laugh1.ogg',
+								'sound/voice/laugh/misc/big_laugh2.ogg',
+								'sound/voice/laugh/misc/big_laugh3.ogg',
+								'sound/voice/laugh/misc/big_laugh4.ogg')
 
 /obj/item/clothing/mask/breath/sec_bandana
 	desc = "An incredibly dense synthetic thread bandana that can be used as an internals mask."
 	name = "sec bandana"
-	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
-	icon = 'monkestation/icons/obj/clothing/masks.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
+	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "sec_bandana_default"
 	var/obj/item/clothing/suit/armor/secduster/suit
 	actions_types = null
@@ -95,8 +95,8 @@
 /obj/item/clothing/mask/knightmask
 	name = "Knight Mask"
 	desc = "A stark white mask with gaping eyes, adorned with pinsir like horns."
-	icon = 'monkestation/icons/obj/clothing/masks.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
+	icon = 'icons/obj/clothing/masks.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
 	icon_state = "knight_mask"
 	worn_icon_state = "knight_mask"
 	w_class = WEIGHT_CLASS_TINY
@@ -109,8 +109,8 @@
 /obj/item/clothing/mask/hornetmask
 	name = "Hornet Mask"
 	desc = "A stark white mask with gaping eyes, adorned with curved horns."
-	icon = 'monkestation/icons/obj/clothing/masks.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
+	icon = 'icons/obj/clothing/masks.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
 	icon_state = "hornet_mask"
 	worn_icon_state = "hornet_mask"
 	worn_y_offset = 16
@@ -124,8 +124,8 @@
 /obj/item/clothing/mask/grimmmask
 	name = "Grimm Mask"
 	desc = "A black mask with a stark white faceplate."
-	icon = 'monkestation/icons/obj/clothing/masks.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
+	icon = 'icons/obj/clothing/masks.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
 	icon_state = "grimm_mask"
 	worn_icon_state = "grimm_mask"
 	w_class = WEIGHT_CLASS_TINY
@@ -138,8 +138,8 @@
 /obj/item/clothing/mask/gas/atp
 	name = "\improper A.T.P. engineer mask"
 	desc = "Not rated for bullets, stop trying. Also not rated for killer clowns with stop signs."
-	icon = 'monkestation/icons/obj/clothing/masks.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
+	icon = 'icons/obj/clothing/masks.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
 	icon_state = "atp_mask"
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 //	inhand_icon_state = "gas_alt"
@@ -148,7 +148,7 @@
 /obj/item/clothing/mask/gas/atp/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 	if(COOLDOWN_FINISHED(src, spamcheck))
-		var/speaksound = pick('monkestation/sound/items/atp_speak1.ogg', 'monkestation/sound/items/atp_speak2.ogg', 'monkestation/sound/items/atp_speak3.ogg', 'monkestation/sound/items/atp_speak4.ogg', 'monkestation/sound/items/atp_speak5.ogg')
+		var/speaksound = pick('sound/items/atp_speak1.ogg', 'sound/items/atp_speak2.ogg', 'sound/items/atp_speak3.ogg', 'sound/items/atp_speak4.ogg', 'sound/items/atp_speak5.ogg')
 		playsound(src, speaksound, 35, FALSE, SHORT_RANGE_SOUND_EXTRARANGE-2, falloff_exponent = 0, ignore_walls = FALSE, use_reverb = FALSE)
 		COOLDOWN_START(src, spamcheck, 3 SECONDS)
 
@@ -171,4 +171,4 @@
 
 /obj/item/clothing/mask/gas/atp/proc/death_sound(mob/living/equipee)
 	SIGNAL_HANDLER
-	playsound(src, 'monkestation/sound/items/atp_death_sound.ogg', 20, FALSE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
+	playsound(src, 'sound/items/atp_death_sound.ogg', 20, FALSE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)

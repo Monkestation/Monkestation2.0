@@ -81,15 +81,18 @@
 
 /obj/effect/holy
 	name = "holy"
-	icon = 'monkestation/icons/obj/effects/96x96.dmi'
+	icon = 'icons/obj/effects/96x96.dmi'
 	icon_state = "beamin"
 	layer = ABOVE_MOB_LAYER
 	mouse_opacity = 0
 	pixel_x = -32
-	pixel_y = 0
+	var/volume = 50
 
 /obj/effect/holy/Initialize(mapload)
-	playsound(src,'monkestation/sound/misc/adminspawn.ogg',50,1)
-	QDEL_IN(src, 20)
+	playsound(src,'sound/misc/adminspawn.ogg',volume,1)
+	QDEL_IN(src, 2 SECONDS)
 	. = ..()
 	return INITIALIZE_HINT_NORMAL
+
+/obj/effect/holy/quiet
+	volume = 25

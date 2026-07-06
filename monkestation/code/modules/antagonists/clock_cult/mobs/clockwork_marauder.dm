@@ -3,7 +3,7 @@
 /mob/living/basic/clockwork_marauder
 	name = "clockwork marauder"
 	desc = "A brass machine of destruction."
-	icon = 'monkestation/icons/mob/clock_cult/clockwork_mobs.dmi'
+	icon = 'icons/mob/clock_cult/clockwork_mobs.dmi'
 	icon_state = "clockwork_marauder"
 	icon_living = "clockwork_marauder"
 	mob_biotypes = MOB_HUMANOID|MOB_ROBOTIC|MOB_SPIRIT

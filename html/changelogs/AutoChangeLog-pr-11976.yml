@@ -1,0 +1,4 @@
+author: "JupiterJaeden"
+delete-after: True
+changes:
+  - map: "Removed the records console from the syndicate listening station space ruin."

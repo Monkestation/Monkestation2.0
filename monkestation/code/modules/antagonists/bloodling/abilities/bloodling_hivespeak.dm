@@ -8,6 +8,8 @@
 
 /datum/action/cooldown/bloodling_hivespeak/IsAvailable(feedback = FALSE)
 	. = ..()
+	if(owner.stat == DEAD)
+		return FALSE
 
 	if(IS_BLOODLING_OR_THRALL(owner))
 		return TRUE

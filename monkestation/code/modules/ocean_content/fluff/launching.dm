@@ -4,7 +4,7 @@ GLOBAL_LIST_INIT(oshan_launch_points, list())
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 0
 
-	icon = 'monkestation/icons/effects/effects.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "launch_point"
 	var/map_edge_direction = SOUTH
 
