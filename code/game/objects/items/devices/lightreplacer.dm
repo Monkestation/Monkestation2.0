@@ -49,8 +49,6 @@
 	var/uses = 10
 	/// The maximum number of lights this replacer can hold
 	var/max_uses = 20
-	/// The light replacer's charge increment (used for adding to cyborg light replacers)
-	var/charge = 1
 
 	/// Eating used bulbs gives us bulb shards. Requires BULB_SHARDS_MAXIMUM to produce a new light.
 	var/bulb_shards = 0
