@@ -255,9 +255,7 @@
 
 
 /obj/structure/closet/supplypod/rbmk_reactor_lid/update_overlays()
-	. = list()
-	if(rubble)
-		. += rubble.getForeground(src)
+	. = ..()
 
 
 /obj/structure/closet/supplypod/rbmk_reactor_lid/preOpen()
