@@ -153,12 +153,14 @@
 	if(pressure >= RBMK_PRESSURE_EXTREME)
 		pressure_damage += RBMK_PRESSURE_EXTREME_DAMAGE_BONUS
 
-	apply_integrity_damage(pressure_damage * process_scale, "Primary coolant pressure vessel failure", seconds_per_tick)
-	if(meltdown_in_progress)
-		return
-
-	if(pressure >= RBMK_PRESSURE_EXTREME && SPT_PROB(RBMK_PRESSURE_EXTREME_FAILURE_CHANCE_PER_SECOND, seconds_per_tick))
-		trigger_meltdown("Primary coolant pressure vessel rupture")
+	// Overpressure should be urgent, but never an instant random rupture.
+	// Let it chew through integrity on a visible, repairable timer so engineers can SCRAM, vent, or weld.
+	apply_integrity_damage(
+		pressure_damage * process_scale,
+		"Primary coolant pressure vessel failure",
+		seconds_per_tick,
+		RBMK_PRESSURE_INTEGRITY_DAMAGE_CAP_PER_SECOND
+	)
 
 
 /obj/machinery/rbmk/reactor/proc/rbmk_update_pressure(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)

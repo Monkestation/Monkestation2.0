@@ -40,13 +40,10 @@
 
 	var/alert_reason = supermatter_failure ? "SUPERMATTER CASCADE FAILURE: [reason]" : reason
 	world << span_userdanger("[RBMK_MELTDOWN_PREFIX]: [alert_reason]!")
-	priority_announce(
-		"RBMK reactor containment has failed aboard [station_name()]. Engineering personnel are ordered to evacuate the reactor chamber. Crew should prepare for a blast and shelter in maintenance before fallout reaches inhabited areas.",
-		supermatter_failure ? "RBMK Supermatter Cascade Alert" : "RBMK Reactor Alert",
-		'sound/misc/airraid.ogg'
-	)
-	rbmk_engineering_alert("CRITICAL ALERT: RBMK reactor containment failure at [get_area_name(src)]. Core integrity is zero. Evacuate the reactor chamber immediately.")
+	rbmk_engineering_alert("CRITICAL ALERT: RBMK reactor containment failure at [get_area_name(src)]. Core integrity has reached zero. Evacuate the reactor chamber immediately.")
 
+	// Keep the pre-explosion warning local only.
+	// The stationwide air raid is reserved for the confirmed vessel breach and fallout countdown.
 	meltdown_area_alarms()
 
 	cut_overlays()
@@ -83,11 +80,11 @@
 
 	launch_reactor_lid()
 	priority_announce(
-		"RBMK reactor pressure vessel failure confirmed. Radioactive fallout will begin spreading in approximately one minute. Maintenance remains the safest shelter.",
+		"RBMK reactor containment vessel failure confirmed. Radioactive fallout will begin spreading in approximately one minute. Maintenance remains the safest shelter.",
 		"RBMK Reactor Breach",
 		'sound/misc/airraid.ogg'
 	)
-	rbmk_engineering_alert("RBMK pressure vessel failure confirmed. Fallout warning window is one minute.")
+	rbmk_engineering_alert("RBMK containment vessel failure confirmed. Fallout will spread across the station in T-1 minute.")
 
 	#if RBMK_MELTDOWN_RADIATION
 	addtimer(CALLBACK(src, PROC_REF(meltdown_radiation_pulse)), RBMK_MELTDOWN_EFFECT_STAGGER)
@@ -179,7 +176,7 @@
 		return
 
 	priority_announce(
-		"RBMK fallout has reached the station. Maintenance tunnels and radiation shelters remain shielded; exposed areas are unsafe.",
+		"RBMK fallout has spread across the station. Maintenance tunnels and radiation shelters remain shielded; exposed areas are unsafe.",
 		"RBMK Fallout Warning",
 		ANNOUNCER_RADIATION
 	)
@@ -195,7 +192,7 @@
 		return
 
 	var/obj/structure/closet/supplypod/rbmk_reactor_lid/lid = new()
-	visible_message(span_userdanger("[src]'s pressure vessel lid tears free and vanishes into the smoke!"))
+	visible_message(span_userdanger("[src]'s Containment lid is violently torn free from reactor core!"))
 	new /obj/effect/pod_landingzone(target_turf, lid)
 
 
@@ -218,8 +215,8 @@
 
 
 /obj/structure/closet/supplypod/rbmk_reactor_lid
-	name = "RBMK reactor lid"
-	desc = "An impossibly heavy reactor pressure lid. It should not be here."
+	name = "RBMK Reactor Lid"
+	desc = "An impossibly heavy reactor containment lid. It should not be here."
 	icon = 'icons/obj/machines/rbmk_reactor.dmi'
 	icon_state = "reactor_explode"
 	anchored = TRUE
@@ -261,7 +258,7 @@
 /obj/structure/closet/supplypod/rbmk_reactor_lid/preOpen()
 	. = ..()
 	reset_lid_appearance(TRUE)
-	visible_message(span_userdanger("[src] crashes down and embeds itself into the deck plating!"))
+	visible_message(span_userdanger("[src] crashes down and embeds itself into the floor!"))
 
 
 /obj/structure/closet/supplypod/rbmk_reactor_lid/setOpened()
