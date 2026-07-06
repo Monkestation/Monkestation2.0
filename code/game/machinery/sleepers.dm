@@ -241,6 +241,10 @@
 		if(mob_occupant && mob_occupant.stat != DEAD)
 			to_chat(mob_occupant, "[enter_message]")
 
+// Its old proc and its bad
+/obj/machinery/sleeper/updateUsrDialog()
+	SStgui.update_uis(src)
+
 /obj/machinery/sleeper/emp_act(severity)
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
