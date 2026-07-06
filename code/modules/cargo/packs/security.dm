@@ -334,9 +334,9 @@
 
 /datum/supply_pack/security/armory/antitank
 	name = "Disposable Anti-Tank Rocket Crate"
-	desc = "Contains a singular antiquated anti-tank rocket."
+	desc = "Contains three antiquated anti-tank rockets."
 	cost = CARGO_CRATE_VALUE * 7
-	contains = list(/obj/item/gun/ballistic/ignifist
+	contains = list(/obj/item/gun/ballistic/ignifist = 3
 				)
 	crate_name = "Anti-Tank Rocket crate"
 	dangerous = TRUE

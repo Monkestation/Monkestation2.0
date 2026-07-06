@@ -14,7 +14,7 @@
 	armor_type = /datum/armor/scrap_tank //mediocre armor, do you expect any better?
 	internal_damage_threshold = 60 //Its got shitty durability
 	var/crushdmglower = 2
-	var/crushdmgupper = 5
+	var/crushdmgupper = 4
 	wreckage = /obj/structure/closet/crate/trashcart
 	mech_type = EXOSUIT_MODULE_TRASHTANK
 	equip_by_category = list(
@@ -91,4 +91,3 @@
 		target_dir_change = TRUE, \
 		transfer_blood_dna = TRUE, \
 		max_blood = 4)
-
