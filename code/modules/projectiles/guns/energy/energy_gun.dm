@@ -160,7 +160,6 @@
 	charge_delay = 10
 	can_charge = FALSE
 	ammo_x_offset = 1
-	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
 	selfcharge = 1
 	var/reactor_overloaded
 	var/fail_tick = 0
@@ -211,4 +210,4 @@
 			. += "[icon_state]_fail_2"
 
 /obj/item/gun/energy/e_gun/lethal
-	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun, /obj/item/ammo_casing/energy/disabler)
