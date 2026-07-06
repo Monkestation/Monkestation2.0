@@ -145,6 +145,18 @@
 	time = 20 SECONDS
 	category = CAT_WEAPON_RANGED
 
+/datum/crafting_recipe/lasercannon
+	name = "Laser Cannon"
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	result = /obj/item/gun/energy/laser/cannon
+	reqs = list(
+		/obj/item/gun/energy/laser = 1,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/weaponcrafting/gunkit/lasercannon = 1,
+	)
+	time = 20 SECONDS
+	category = CAT_WEAPON_RANGED
+
 /datum/crafting_recipe/ioncarbine/New()
 	..()
 	blacklist += subtypesof(/obj/item/gun/energy/laser)
@@ -345,7 +357,7 @@
 		/obj/item/stock_parts/water_recycler = 1,
 		/datum/reagent/consumable/nuka_cola = 15,
 	)
-	tool_behaviors = list(TOOL_SCREWDRIVER) //monke edits. removed the need for the special clothing
+	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 30 SECONDS //contemplate for a bit
 	category = CAT_WEAPON_RANGED
 
@@ -372,7 +384,7 @@
 		/obj/item/gun/energy/disabler/smoothbore = 1,
 		/obj/item/stack/sheet/mineral/gold = 5,
 		/obj/item/stock_parts/power_store/cell/hyper = 1,
-		/datum/reagent/consumable/red_queen = 10, //monke edit
+		/datum/reagent/consumable/red_queen = 10,
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 20 SECONDS

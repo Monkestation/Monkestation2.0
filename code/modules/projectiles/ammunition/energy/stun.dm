@@ -12,6 +12,7 @@
 
 /obj/item/ammo_casing/energy/electrode/spec
 	e_cost = LASER_SHOTS(10.25, STANDARD_CELL_CHARGE)
+	select_sound = 'sound/weapons/gun/energy/egun_toggle_noammo.ogg'
 
 /obj/item/ammo_casing/energy/electrode/gun
 	fire_sound = 'sound/weapons/gun/pistol/shot.ogg'

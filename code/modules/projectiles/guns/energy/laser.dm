@@ -12,9 +12,9 @@
 /obj/item/gun/energy/laser/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_ALLSTAR)
 
-/obj/item/gun/energy/laser/hitscan
+/obj/item/gun/energy/laser/cannon
 	name = "\improper Allstar SC-1B laser cannon"
-	desc = "An advanced energy-based laser rifle that fires concentrated beams of light which pass through glass and thin metal."
+	desc = "An advanced energy-based laser cannon that fires heavily concentrated beams of light which pass through glass and thin metal."
 	icon_state = "lasercannon"
 	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hitscan)

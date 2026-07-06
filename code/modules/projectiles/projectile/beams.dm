@@ -28,6 +28,7 @@
 	bare_wound_bonus = 40
 
 /obj/projectile/beam/laser/hitscan
+	damage = 30
 	icon_state = null
 	hitscan = TRUE
 	hitscan_light_color_override = COLOR_RED
@@ -208,10 +209,9 @@
 	. = ..()
 	if (!QDELETED(target) && (isturf(target) || isstructure(target)))
 		if(isobj(target))
-			SSexplosions.low_mov_atom += target //monkestation edit
+			SSexplosions.low_mov_atom += target
 		else
-			SSexplosions.lowturf += target //monkestation edit
-
+			SSexplosions.lowturf += target
 /obj/projectile/beam/pulse/shotgun
 	damage = 30
 

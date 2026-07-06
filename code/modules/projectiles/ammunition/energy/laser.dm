@@ -8,6 +8,8 @@
 /obj/item/ammo_casing/energy/laser/hitscan
 	projectile_type = /obj/projectile/beam/laser/hitscan
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
+	firing_effect_type = null
+	delay = 1 SECOND
 
 /obj/item/ammo_casing/energy/laser/hellfire
 	projectile_type = /obj/projectile/beam/laser/hellfire
@@ -42,7 +44,7 @@
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/laser/hos
-	e_cost = LASER_SHOTS(20, STANDARD_CELL_CHARGE * 1.2) // MONKE EDIT: 10 -> 20 shots
+	e_cost = LASER_SHOTS(20, STANDARD_CELL_CHARGE * 1.2)
 
 /obj/item/ammo_casing/energy/laser/musket
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'

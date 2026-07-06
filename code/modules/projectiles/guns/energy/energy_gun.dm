@@ -44,8 +44,9 @@
 	name = "tactical energy gun"
 	desc = "Military issue energy gun, is able to fire stun rounds."
 	icon_state = "energytac"
+	cell_type = /obj/item/stock_parts/power_store/cell/upgraded
 	ammo_x_offset = 2
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/spec, /obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/lasergun)
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/electrode/spec, /obj/item/ammo_casing/energy/lasergun)
 
 /obj/item/gun/energy/e_gun/old
 	name = "prototype energy gun"
