@@ -1,7 +1,7 @@
 /obj/vehicle/sealed/mecha/semple
 	desc = "A very old tank prototype from the ancient country of 'new zealand' this one appears to be a original production.. very rare.. seems to function still.."
 	name = "\improper Ancient Bob Semple"
-	icon = 'icons/mecha/tanks.dmi'                      // this one is just a baseplate for all the others.. but i mean.. admins can spawn it they want it works
+	icon = 'icons/mecha/tanks.dmi'                      // traitor one.
 	icon_state = "semple_0_0"
 	base_icon_state = "semple"
 	max_integrity = 220 // its a hunk of steel that didnt need to be limited by mecha legs... its a bob semple..
@@ -100,7 +100,7 @@
 /obj/vehicle/sealed/mecha/semple/maintchance
 	desc = "an ancient bob semple abandoned in maintenance, most likely left here from cleaning up an attack... looks discontinued."
 	name = "\improper Rusted Security Bob Semple"
-	icon = 'icons/mecha/tanks.dmi'
+	icon = 'icons/mecha/tanks.dmi'              //,maint one
 	icon_state = "ntsemple_0_0"
 	base_icon_state = "ntsemple"
 	max_integrity = 220 // its a hunk of steel that didnt need to be limited by mecha legs... its a bob semple..
@@ -134,9 +134,9 @@
 	desc = "a modified bob semple, featuring a non explosive 30mm cannon and modified syndicate produced quickshot machine gun."
 	name = "\improper Syndicate Bob Semple"
 	icon = 'icons/mecha/tanks.dmi'
-	icon_state = "syndie_semple_0_0"
+	icon_state = "syndie_semple_0_0"            //special nukie one.
 	base_icon_state = "syndie_semple"
-	max_integrity = 420 // its a hunk of steel that didnt need to be limited by mecha legs... its a bob semple..
+	max_integrity = 420 // its a hunk of steel that didnt need to be limited by mecha legs... its a bob semple..modified by the syndicate
 	force = 18 // ... did i mention its a bob semple?.... its max speed was 10km an hour...
 	movedelay = 2.0
 	step_energy_drain = 24 // hey i mean... an old caterpillar tractor with steel plating shouldnt use that much energy...
