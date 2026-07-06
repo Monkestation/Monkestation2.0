@@ -57,7 +57,7 @@
 /datum/design/cpu_basic
 	name = "Neural Processing Unit"
 	id = "basic_ai_cpu"
-	build_type = IMPRINTER
+	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
@@ -72,7 +72,7 @@
 /datum/design/cpu_advanced
 	name = "Advanced Neural Processing Unit"
 	id = "advanced_ai_cpu"
-	build_type = IMPRINTER
+	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 4,
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
@@ -87,7 +87,7 @@
 /datum/design/cpu_experimental
 	name = "Experimental Neural Processing Unit"
 	id = "experimental_ai_cpu"
-	build_type = IMPRINTER
+	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 6,
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
@@ -103,7 +103,7 @@
 /datum/design/cpu_bluespace
 	name = "Bluespace Neural Processing Unit"
 	id = "bluespace_ai_cpu"
-	build_type = IMPRINTER
+	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 8,
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
