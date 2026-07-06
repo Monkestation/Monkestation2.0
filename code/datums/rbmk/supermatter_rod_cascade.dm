@@ -321,7 +321,7 @@
 			reactor.control_rod_depth = RBMK_CONTROL_ROD_MAX
 
 			reactor.visible_message(span_warning("[reactor] automatically SCRAMs as the supermatter rod is removed!"))
-			playsound(reactor, 'sound/machines/engine_alert1.ogg', 75, FALSE)
+			playsound(reactor, 'sound/rbmk/alarm.ogg', 75, FALSE)
 
 			priority_announce(
 				"Central Command notice: RBMK supermatter resonance has been interrupted. Reactor remains thermally unstable. Engineering response is still required.",

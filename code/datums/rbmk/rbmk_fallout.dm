@@ -12,7 +12,7 @@ GLOBAL_LIST_EMPTY(rbmk_fallout_reactors)
 	weather_message = "<span class='userdanger'><i>The air burns with reactor fallout! Find shielded shelter!</i></span>"
 	weather_overlay = "ash_storm"
 	weather_color = "green"
-	weather_sound = 'sound/misc/bloblarm.ogg'
+	weather_sound = null
 
 	// Effectively permanent for the round.
 	weather_duration_lower = 9999999
@@ -21,10 +21,14 @@ GLOBAL_LIST_EMPTY(rbmk_fallout_reactors)
 	end_duration = 0
 	end_message = null
 
-/datum/weather/rbmk_fallout/weather_act(mob/living/affected_mob)
+/datum/weather/rbmk_fallout/can_weather_act(mob/living/affected_mob)
 	if(!rbmk_fallout_should_affect(affected_mob))
-		return
+		return FALSE
 
+	return ..()
+
+
+/datum/weather/rbmk_fallout/weather_act(mob/living/affected_mob)
 	return ..()
 
 
@@ -34,6 +38,9 @@ GLOBAL_LIST_EMPTY(rbmk_fallout_reactors)
 
 	var/turf/mob_turf = get_turf(affected_mob)
 	if(!mob_turf)
+		return FALSE
+
+	if(istype(get_area(affected_mob), /area/station/maintenance))
 		return FALSE
 
 	for(var/obj/machinery/rbmk/reactor/reactor as anything in GLOB.rbmk_fallout_reactors)

@@ -69,6 +69,10 @@
 	var/current_damage_stage = 0
 	var/image/current_damage_overlay_image = null
 
+	var/obj/item/radio/radio
+	var/radio_key = /obj/item/encryptionkey/headset_eng
+	var/warning_channel = RADIO_CHANNEL_ENGINEERING
+
 	var/datum/looping_sound/rbmk_reactor/reactor_soundloop = null
 
 	var/startup_sequence_played = FALSE
@@ -77,6 +81,8 @@
 
 	var/meltdown_announced = FALSE
 	var/meltdown_in_progress = FALSE
+	var/meltdown_exploded = FALSE
+	var/meltdown_supermatter_failure = FALSE
 	var/decay_meltdown_threshold = RBMK_TEMP_DAMAGE_RAMP
 	var/decay_check_interval = 2 SECONDS
 	var/last_decay_check = 0
@@ -252,6 +258,8 @@
 	scrammed = FALSE
 	meltdown_announced = FALSE
 	meltdown_in_progress = FALSE
+	meltdown_exploded = FALSE
+	meltdown_supermatter_failure = FALSE
 	last_decay_check = 0
 
 	rbmk_fallout_active = FALSE
@@ -283,6 +291,11 @@
 	coolant_gas_hist = list()
 	reactor_temperature_history = list()
 
+	radio = new(src)
+	radio.keyslot = new radio_key
+	radio.set_listening(FALSE)
+	radio.recalculateChannels()
+
 	rbmk_init_coolant()
 	relink_ports()
 
@@ -299,6 +312,7 @@
 	active_welder_repairers = null
 	GLOB.rbmk_fallout_reactors -= src
 
+	QDEL_NULL(radio)
 	stop_reactor_sound()
 
 	rbmk_cleanup_atmos()
@@ -317,7 +331,7 @@
 	rod_motion_in_progress = FALSE
 
 	visible_message(span_danger("[src] emits a harsh shutdown alarm!"))
-	playsound(src, 'sound/machines/engine_alert1.ogg', 75, FALSE)
+	playsound(src, 'sound/rbmk/alarm.ogg', 75, FALSE)
 
 	update_reactor_icon()
 	update_linked_consoles()

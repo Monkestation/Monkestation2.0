@@ -93,7 +93,7 @@
 	weather_duration_upper = 1500
 	weather_color = "green"
 	telegraph_sound = null
-	weather_sound = 'sound/effects/rbmk/falloutwind.ogg'
+	weather_sound = 'sound/rbmk/falloutwind.ogg'
 	end_duration = 100
 	area_type = /area
 	protected_areas = list(/area/maintenance, /area/ai_monitored/turret_protected/ai_upload, /area/ai_monitored/turret_protected/ai_upload_foyer,

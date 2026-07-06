@@ -16,101 +16,100 @@
 	if(meltdown_in_progress)
 		return
 
-	meltdown_in_progress = TRUE
-	meltdown_announced = TRUE
-
-	// Start permanent creeping fallout before the explosion happens.
-	start_meltdown_fallout()
-
-	scrammed = TRUE
-	control_rod_depth = RBMK_CONTROL_ROD_MAX
-	reset_reaction_state()
-	reactor_integrity = 0
-
-	world << span_danger("[RBMK_MELTDOWN_PREFIX]: [reason]!")
-	priority_announce("[RBMK_MELTDOWN_BROADCAST] [reason]", "RBMK Reactor Alert")
-
-	cut_overlays()
-	current_damage_overlay_image = null
-	current_damage_stage = 4
-	update_reactor_icon()
-
-	#if RBMK_MELTDOWN_RADIATION
-	meltdown_radiation_pulse()
-	#endif
-
-	#if RBMK_MELTDOWN_ATMOS_DUMP
-	meltdown_atmos_release()
-	#endif
-
-	#if RBMK_MELTDOWN_EXPLOSIONS
-	meltdown_explosions()
-	#endif
-
-	#if RBMK_MELTDOWN_ALARMS
-	meltdown_area_alarms()
-	#endif
-
-	temperature = max(temperature, RBMK_TEMP_DAMAGE_RAMP)
-	flux = 0
-	radiation = 0
-	thermal_output = 0
-	void_coefficient = 0
-
-	update_linked_consoles()
-	log_game("[src] MELTDOWN triggered: [reason]")
+	begin_meltdown_sequence(reason)
 
 
 /obj/machinery/rbmk/reactor/proc/trigger_supermatter_rod_meltdown(reason)
 	if(meltdown_in_progress)
 		return
 
+	begin_meltdown_sequence(reason, TRUE)
+
+
+/obj/machinery/rbmk/reactor/proc/begin_meltdown_sequence(reason, supermatter_failure = FALSE)
 	meltdown_in_progress = TRUE
 	meltdown_announced = TRUE
+	meltdown_exploded = FALSE
+	meltdown_supermatter_failure = supermatter_failure
 
 	scrammed = TRUE
 	running = FALSE
 	control_rod_depth = RBMK_CONTROL_ROD_MAX
+	reset_reaction_state()
 	reactor_integrity = 0
 
-	world << span_userdanger("[RBMK_MELTDOWN_PREFIX]: SUPERMATTER CASCADE FAILURE: [reason]!")
+	var/alert_reason = supermatter_failure ? "SUPERMATTER CASCADE FAILURE: [reason]" : reason
+	world << span_userdanger("[RBMK_MELTDOWN_PREFIX]: [alert_reason]!")
 	priority_announce(
-		"RBMK supermatter rod cascade failure detected. Reactor containment has entered a resonance-collapse meltdown state.",
-		"RBMK Supermatter Cascade Alert",
-		'sound/misc/airraid.ogg'
+		"RBMK reactor containment has failed aboard [station_name()]. Engineering personnel are ordered to evacuate the reactor chamber. Crew should prepare for a blast and shelter in maintenance before fallout reaches inhabited areas.",
+		supermatter_failure ? "RBMK Supermatter Cascade Alert" : "RBMK Reactor Alert",
+		'sound/rbmk/alarm.ogg'
 	)
+	rbmk_engineering_alert("CRITICAL ALERT: RBMK reactor containment failure at [get_area_name(src)]. Core integrity is zero. Evacuate the reactor chamber immediately.")
+
+	meltdown_area_alarms()
 
 	cut_overlays()
 	current_damage_overlay_image = null
 	current_damage_stage = 4
 	update_reactor_icon()
+	update_linked_consoles()
 
-	// This is intentionally not a normal thermal SCRAM reset.
-	// The SM rod failure leaves the reactor in an extreme resonance-collapse state.
-	temperature = max(temperature, RBMK_TEMP_DAMAGE_RAMP * 2)
-	flux = RBMK_MAX_FLUX
-	radiation = RBMK_MAX_RADIATION
+	addtimer(CALLBACK(src, PROC_REF(complete_meltdown_sequence), alert_reason), RBMK_MELTDOWN_WARNING_DELAY, TIMER_UNIQUE)
+	log_game("[src] MELTDOWN sequence started: [alert_reason]")
+
+
+/obj/machinery/rbmk/reactor/proc/complete_meltdown_sequence(reason)
+	if(QDELETED(src) || meltdown_exploded)
+		return
+
+	meltdown_exploded = TRUE
+	cut_overlays()
+	current_damage_overlay_image = null
+	current_damage_stage = 4
+	update_reactor_icon()
+
+	temperature = max(temperature, RBMK_TEMP_DAMAGE_RAMP)
+	flux = 0
+	radiation = 0
+
+	if(meltdown_supermatter_failure)
+		temperature = max(temperature, RBMK_TEMP_DAMAGE_RAMP * 2)
+		flux = RBMK_MAX_FLUX
+		radiation = RBMK_MAX_RADIATION
+
 	thermal_output = 0
 	void_coefficient = 0
 
+	launch_reactor_lid()
+	priority_announce(
+		"RBMK reactor pressure vessel failure confirmed. Radioactive fallout will begin spreading in approximately one minute. Maintenance remains the safest shelter.",
+		"RBMK Reactor Breach",
+		'sound/rbmk/explode.ogg'
+	)
+	rbmk_engineering_alert("RBMK pressure vessel failure confirmed. Fallout warning window is one minute.")
+
 	#if RBMK_MELTDOWN_RADIATION
-	meltdown_radiation_pulse()
+	addtimer(CALLBACK(src, PROC_REF(meltdown_radiation_pulse)), RBMK_MELTDOWN_EFFECT_STAGGER)
 	#endif
-
 	#if RBMK_MELTDOWN_ATMOS_DUMP
-	meltdown_atmos_release()
+	addtimer(CALLBACK(src, PROC_REF(meltdown_atmos_release)), RBMK_MELTDOWN_EFFECT_STAGGER * 2)
 	#endif
-
 	#if RBMK_MELTDOWN_EXPLOSIONS
-	meltdown_explosions()
+	addtimer(CALLBACK(src, PROC_REF(meltdown_explosions)), RBMK_MELTDOWN_EFFECT_STAGGER * 3)
 	#endif
-
-	#if RBMK_MELTDOWN_ALARMS
-	meltdown_area_alarms()
-	#endif
+	addtimer(CALLBACK(src, PROC_REF(meltdown_floor_damage)), RBMK_MELTDOWN_EFFECT_STAGGER * 4)
+	addtimer(CALLBACK(src, PROC_REF(begin_delayed_meltdown_fallout)), RBMK_MELTDOWN_FALLOUT_DELAY, TIMER_UNIQUE)
 
 	update_linked_consoles()
-	log_game("[src] SUPERMATTER ROD MELTDOWN triggered: [reason]")
+	log_game("[src] MELTDOWN explosion triggered: [reason]")
+
+
+/obj/machinery/rbmk/reactor/proc/rbmk_engineering_alert(message)
+	if(!radio || !message)
+		return
+
+	radio.talk_into(src, message, warning_channel)
 
 
 /obj/machinery/rbmk/reactor/proc/meltdown_radiation_pulse()
@@ -123,7 +122,7 @@
 		RBMK_MAX_RADIATION,
 		TRUE
 	)
-	playsound(src, 'sound/effects/supermatter.ogg', 90, TRUE)
+	playsound(src, 'sound/rbmk/meltdown.ogg', 90, TRUE)
 
 
 /obj/machinery/rbmk/reactor/proc/meltdown_atmos_release()
@@ -159,4 +158,137 @@
 
 
 /obj/machinery/rbmk/reactor/proc/meltdown_area_alarms()
-	playsound(src, 'sound/machines/engine_alert1.ogg', 100, FALSE)
+	playsound(src, 'sound/rbmk/alarm.ogg', 100, FALSE)
+
+
+/obj/machinery/rbmk/reactor/proc/meltdown_floor_damage()
+	var/turf/epicenter = get_turf(src)
+	if(!epicenter)
+		return
+
+	for(var/turf/open/floor/damaged_floor in RANGE_TURFS(RBMK_MELTDOWN_FLOOR_DAMAGE_RANGE, epicenter))
+		var/distance_from_core = max(get_dist(epicenter, damaged_floor), 1)
+		var/space_chance = max(RBMK_MELTDOWN_FLOOR_SPACE_CHANCE - (distance_from_core * 8), 5)
+		if(prob(space_chance))
+			damaged_floor.ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
+		CHECK_TICK
+
+
+/obj/machinery/rbmk/reactor/proc/begin_delayed_meltdown_fallout()
+	if(QDELETED(src) || rbmk_fallout_active)
+		return
+
+	priority_announce(
+		"RBMK fallout has reached the station. Maintenance tunnels and radiation shelters remain shielded; exposed areas are unsafe.",
+		"RBMK Fallout Warning",
+		'sound/rbmk/alarm.ogg'
+	)
+	rbmk_engineering_alert("RBMK fallout has begun spreading from [get_area_name(src)]. Maintenance remains shielded.")
+	play_rbmk_fallout_sound()
+	start_meltdown_fallout()
+
+
+/obj/machinery/rbmk/reactor/proc/launch_reactor_lid()
+	var/turf/reactor_turf = get_turf(src)
+	var/turf/target_turf = get_rbmk_lid_landing_turf()
+	if(!reactor_turf || !target_turf)
+		return
+
+	var/obj/structure/closet/supplypod/rbmk_reactor_lid/lid = new()
+	visible_message(span_userdanger("[src]'s pressure vessel lid tears free and vanishes into the smoke!"))
+	new /obj/effect/pod_landingzone(target_turf, lid)
+
+
+/obj/machinery/rbmk/reactor/proc/get_rbmk_lid_landing_turf()
+	var/list/hallway_areas = list()
+	for(var/area_type as anything in GLOB.the_station_areas)
+		if(ispath(area_type, /area/station/hallway))
+			hallway_areas += area_type
+
+	if(length(hallway_areas))
+		var/turf/hallway_turf = get_safe_random_station_turf(hallway_areas)
+		if(hallway_turf)
+			return hallway_turf
+
+	return get_safe_random_station_turf()
+
+
+/proc/play_rbmk_fallout_sound()
+	sound_to_playing_players('sound/rbmk/falloutwind.ogg', 90)
+
+
+/obj/structure/closet/supplypod/rbmk_reactor_lid
+	name = "RBMK reactor lid"
+	desc = "An impossibly heavy reactor pressure lid. It should not be here."
+	icon = 'icons/obj/machines/rbmk_reactor.dmi'
+	icon_state = "reactor_explode"
+	anchored = TRUE
+	density = TRUE
+	opened = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	layer = ABOVE_OBJ_LAYER
+	bound_width = 96
+	bound_height = 96
+	bound_x = -32
+	bound_y = -32
+	pixel_x = -32
+	pixel_y = -32
+	style = STYLE_CAR
+	specialised = TRUE
+	rubble_type = RUBBLE_THIN
+	effectGib = TRUE
+	effectCircle = TRUE
+	damage = 500
+	explosionSize = list(0, 1, 2, 3)
+	delays = list(POD_TRANSIT = 15, POD_FALLING = 5, POD_OPENING = 0, POD_LEAVING = 0)
+	fallingSoundLength = 10
+	landingSound = 'sound/rbmk/explode.ogg'
+	soundVolume = 100
+	decal = null
+	door = null
+	fin_mask = null
+
+
+/obj/structure/closet/supplypod/rbmk_reactor_lid/Initialize(mapload, customStyle = FALSE)
+	. = ..()
+	reset_lid_appearance()
+
+
+/obj/structure/closet/supplypod/rbmk_reactor_lid/update_overlays()
+	. = list()
+	if(rubble)
+		. += rubble.getForeground(src)
+
+
+/obj/structure/closet/supplypod/rbmk_reactor_lid/preOpen()
+	. = ..()
+	reset_lid_appearance(TRUE)
+	visible_message(span_userdanger("[src] crashes down and embeds itself into the deck plating!"))
+
+
+/obj/structure/closet/supplypod/rbmk_reactor_lid/setOpened()
+	opened = TRUE
+	set_density(TRUE)
+	reset_lid_appearance(TRUE)
+
+
+/obj/structure/closet/supplypod/rbmk_reactor_lid/setClosed()
+	opened = TRUE
+	set_density(TRUE)
+	reset_lid_appearance(TRUE)
+
+
+/obj/structure/closet/supplypod/rbmk_reactor_lid/proc/reset_lid_appearance(landed = FALSE)
+	icon = 'icons/obj/machines/rbmk_reactor.dmi'
+	icon_state = landed ? "reactor_slagged" : "reactor_explode"
+	rubble_type = RUBBLE_THIN
+	decal = null
+	door = null
+	fin_mask = null
+	alpha = 255
+	pixel_x = initial(pixel_x)
+	pixel_y = initial(pixel_y)
+	pixel_z = initial(pixel_z)
+	transform = matrix()
+	set_density(TRUE)
+	update_appearance()
