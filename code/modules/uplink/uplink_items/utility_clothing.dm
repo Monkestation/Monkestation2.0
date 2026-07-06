@@ -75,7 +75,7 @@
 
 /datum/uplink_item/suits/shock_absorber
 	name = "MODsuit Shock-Absorber Module"
-	desc = "A MODsuit module preventing the user from getting knocked down by batons."
+	desc = "A MODsuit module making the user resistant to batons and tasers."
 	item = /obj/item/mod/module/shock_absorber
 	cost = 2
 
