@@ -103,9 +103,7 @@
 	SIGNAL_HANDLER
 	if(!projectile.is_hostile_projectile())
 		return
-	// Since the projectile has been affected already, got to do some work to get the unadjusted damage & cost.
-	var/charge_cost = projectile.damage * dampening_field.bullet_effects.projectile_damage_multiplier * cost_per_projectile_damage
-	if(!active_cyborg.cell || !active_cyborg.cell.use(charge_cost) || (active_cyborg.cell.charge < (active_cyborg.cell.maxcharge * cyborg_cell_critical_percentage)))
+	if(!active_cyborg.cell || !active_cyborg.cell.use(projectile.damage * cost_per_projectile_damage) || (active_cyborg.cell.charge < (active_cyborg.cell.maxcharge * cyborg_cell_critical_percentage)))
 		visible_message(span_warning("[src] blinks \"ENERGY DEPLETED\"."))
 		deactivate_field()
 
