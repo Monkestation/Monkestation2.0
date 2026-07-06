@@ -52,6 +52,9 @@
 /// All armors, preferable in the order as seen above
 #define ARMOR_LIST_ALL(...) list(ACID, BIO, BOMB, BULLET, CONSUME, ENERGY, FIRE, LASER, MELEE, WOUND)
 
+/// Blacklist for certain objects being used with anti-drop implants or superglue - currently only d-swords.
+#define ANTI_DROP_BLACKLIST(...) list(/obj/item/dualsaber)
+
 //bitflag damage defines used for suicide_act
 #define BRUTELOSS (1<<0)
 #define FIRELOSS (1<<1)

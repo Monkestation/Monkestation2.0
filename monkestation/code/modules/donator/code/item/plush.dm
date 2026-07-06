@@ -204,3 +204,9 @@
 	desc = "A strangely terrifying creature."
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "kumoko_san"
+
+/obj/item/toy/plush/vanilla
+	name = "Vanilla Plush"
+	desc = "Adorable plushie of Vanilla!"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "vanilla"
