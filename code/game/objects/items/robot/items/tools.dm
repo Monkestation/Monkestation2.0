@@ -27,7 +27,7 @@
 	/// The energy cost per projectile damage whenever a projectile enters the dampening field.
 	var/cost_per_projectile_damage = 0.15 KILO WATTS
 	/// When the active cyborg's cell drops below this percentage, it will automatically turn off.
-	var/cyborg_cell_critical_percentage = 0.05
+	var/cyborg_cell_critical_percentage = 0.1
 	/// The activation cooldown.
 	COOLDOWN_DECLARE(cycle_cooldown)
 
