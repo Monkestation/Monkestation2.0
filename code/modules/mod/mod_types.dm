@@ -231,7 +231,6 @@
 	applied_cell = /obj/item/stock_parts/power_store/cell/super
 	applied_modules = list(
 		/obj/item/mod/module/storage/syndicate,
-		/obj/item/mod/module/shock_absorber,
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack,
@@ -250,7 +249,6 @@
 	applied_cell = /obj/item/stock_parts/power_store/cell/bluespace
 	applied_modules = list(
 		/obj/item/mod/module/storage/syndicate,
-		/obj/item/mod/module/shock_absorber,
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack/advanced,
@@ -271,7 +269,6 @@
 	req_access = list(ACCESS_SYNDICATE)
 	applied_modules = list(
 		/obj/item/mod/module/storage/syndicate,
-		/obj/item/mod/module/shock_absorber,
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack/advanced,
@@ -306,7 +303,6 @@
 	req_access = list(ACCESS_SYNDICATE)
 	applied_modules = list(
 		/obj/item/mod/module/storage/syndicate,
-		/obj/item/mod/module/shock_absorber,
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack/advanced,
@@ -322,7 +318,6 @@
 /obj/item/mod/control/pre_equipped/elite/flamethrower
 	applied_modules = list(
 		/obj/item/mod/module/storage/syndicate,
-		/obj/item/mod/module/shock_absorber,
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/thermal_regulator,
@@ -343,7 +338,6 @@
 	starting_frequency = MODLINK_FREQ_SYNDICATE
 	applied_cell = /obj/item/stock_parts/power_store/cell/super
 	applied_modules = list(
-		/obj/item/mod/module/shock_absorber,
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/quick_carry,

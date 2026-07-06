@@ -18,7 +18,7 @@
 			The suit does come pre-equipped with a special psi-emitter stealth module that makes it impossible to recognize the wearer \
 			as well as causing significant demoralization amongst Nanotrasen crew."
 	item = /obj/item/mod/control/pre_equipped/infiltrator
-	cost = 5
+	cost = 6
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/utility_clothing/space_suit
@@ -33,7 +33,7 @@
 	name = "Syndicate MODsuit"
 	desc = "The feared MODsuit of a Syndicate agent. Features armoring and a set of inbuilt modules."
 	item = /obj/item/mod/control/pre_equipped/traitor
-	cost = 6
+	cost = 8
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //you can't buy it in nuke, because the elite modsuit costs the same while being better
 
 /datum/uplink_item/utility_clothing/modsuit/elite_traitor
@@ -44,7 +44,7 @@
 	// This one costs more than the nuke op counterpart
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	progression_minimum = 90 MINUTES
-	cost = 12
+	cost = 14
 	cant_discount = TRUE
 
 //---- MODULES
@@ -71,20 +71,20 @@
 	name = "MODsuit Anti-Slip Module"
 	desc = "A MODsuit module preventing the user from slipping on water."
 	item = /obj/item/mod/module/noslip
-	cost = 1
+	cost = 2
 
 /datum/uplink_item/suits/shock_absorber
 	name = "MODsuit Shock-Absorber Module"
 	desc = "A MODsuit module preventing the user from getting knocked down by batons."
 	item = /obj/item/mod/module/shock_absorber
-	cost = 1
+	cost = 2
 
 /datum/uplink_item/utility_clothing/modsuit/Wraith
 	name = "MODsuit wraith cloaking module"
 	desc = "A MODsuit module that grants to the user Optical camouflage and the ability to overload light sources to recharge suit power. \
 		Incompatible with armored MODsuits."
 	item = /obj/item/mod/module/stealth/wraith
-	cost = 2
+	cost = 4
 
 /datum/uplink_item/utility_clothing/syndie_armor
 	name = "Syndicate Body armor"

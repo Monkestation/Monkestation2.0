@@ -1094,7 +1094,7 @@
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	complexity_max = DEFAULT_MAX_COMPLEXITY + 4
+	complexity_max = DEFAULT_MAX_COMPLEXITY + 3
 	siemens_coefficient = 0
 	slowdown_inactive = 0.5
 	slowdown_active = 0
@@ -1316,7 +1316,7 @@
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
 	ui_theme = "wizard"
-	inbuilt_modules = list(/obj/item/mod/module/anti_magic/wizard, /obj/item/mod/module/hearing_protection)
+	inbuilt_modules = list(/obj/item/mod/module/anti_magic/wizard)
 	allowed_suit_storage = list(
 		/obj/item/teleportation_scroll,
 		/obj/item/highfrequencyblade/wizard,
