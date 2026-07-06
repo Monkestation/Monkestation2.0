@@ -16,7 +16,7 @@
 // HOW TO REFILL THE DEVICE
 //
 // It will need to be manually refilled with lights.
-// If it's part of a robot module, it will charge when the Robot is inside a Recharge Station.
+// If it's part of a robot model, it will charge when the Robot is inside a Recharge Station.
 //
 // EMAGGED FEATURES
 //
