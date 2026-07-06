@@ -103,6 +103,7 @@
 /obj/item/gun/energy/laser/captain/scattershot
 	name = "scatter shot laser rifle"
 	icon_state = "lasercannon"
+	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "laser"
 	desc = "An industrial-grade heavy-duty laser rifle with a modified laser lens to scatter its shot into multiple smaller lasers. The inner-core can self-charge for theoretically infinite use."
@@ -139,7 +140,7 @@
 	name = "accelerator laser cannon"
 	desc = "An advanced laser cannon that does more damage the farther away the target is."
 	icon_state = "lasercannon"
-	inhand_icon_state = "laser"
+	inhand_icon_state = null
 	worn_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
