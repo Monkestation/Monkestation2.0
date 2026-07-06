@@ -1,7 +1,5 @@
+///Assoc list of ["z_level"] = list(cores)
 GLOBAL_LIST_EMPTY(data_cores)
-GLOBAL_VAR_INIT(primary_data_core, null)
-
-#define CELL_POWERUSE_MULTIPLIER 0.025
 
 /obj/machinery/ai/data_core
 	name = "AI data core"
@@ -17,7 +15,6 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	critical_machine = TRUE
 
 	var/disableheat = FALSE
-	var/primary = FALSE
 	var/valid_ticks = MAX_AI_DATA_CORE_TICKS //Limited to MAX_AI_DATA_CORE_TICKS. Decrement by 1 every time we have an invalid tick, opposite when valid
 	COOLDOWN_DECLARE(warning_cooldown)
 
@@ -29,39 +26,56 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 
 /obj/machinery/ai/data_core/Initialize(mapload)
 	. = ..()
-	GLOB.data_cores += src
-	if(primary && !GLOB.primary_data_core)
-		GLOB.primary_data_core = src
 	if(mapload)
 		integrated_battery = new /obj/item/stock_parts/power_store/cell/high(src)
+	update_list()
 	RefreshParts()
-	update_appearance()
 	register_context()
 
 /obj/machinery/ai/data_core/Destroy(force)
-	GLOB.data_cores -= src
-	if(GLOB.primary_data_core == src)
-		GLOB.primary_data_core = null
-
-	var/list/all_ais = GLOB.ai_list.Copy()
+	update_list()
 
 	for(var/mob/living/silicon/ai/AI in contents)
 		if(!AI.is_dying)
 			AI.relocate()
 
-	for(var/mob/living/silicon/ai/AI in all_ais)
-		if(!AI.mind && AI.deployed_shell.mind)
-			to_chat(AI.deployed_shell, span_userdanger("Warning! Data Core brought offline in [get_area(src)]! Please verify that no malicious actions were taken."))
-		else
-			to_chat(AI, span_userdanger("Warning! <A HREF=?src=[REF(AI)];go_to_machine=[REF(src)]>Data Core</A> brought offline in [get_area(src)]! Please verify that no malicious actions were taken."))
-
-	QDEL_NULL(integrated_battery)
+	//Other AIs on this level will get alerted
+	for(var/obj/machinery/ai/data_core/other_data_cores in GLOB.data_cores["[z]"])
+		for(var/mob/living/silicon/ai/AI in other_data_cores.contents)
+			if(!AI.mind && AI.deployed_shell.mind)
+				to_chat(AI.deployed_shell, span_userdanger("Warning! Data Core brought offline in [get_area(src)]! Please verify that no malicious actions were taken."))
+			else
+				to_chat(AI, span_userdanger("Warning! <A HREF=?src=[REF(AI)];go_to_machine=[REF(src)]>Data Core</A> brought offline in [get_area(src)]! Please verify that no malicious actions were taken."))
 
 	return ..()
 
-/obj/machinery/ai/data_core/on_deconstruction()
+//Taken from gravity generator
+/obj/machinery/ai/data_core/proc/update_list()
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+	var/list/z_list = list()
+	// take multi-z into account.
+	if(SSmapping.level_trait(T.z, ZTRAIT_STATION))
+		for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+			z_list += z
+	else
+		z_list += T.z
+
+	for(var/z in z_list)
+		if(QDELETED(src))
+			LAZYREMOVE(GLOB.data_cores["[z]"], src)
+		else
+			LAZYADD(GLOB.data_cores["[z]"], src)
+
+/obj/machinery/ai/data_core/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	var/datum/ai_os/old_os = GLOB.ai_os["[old_turf.z]"]
 	. = ..()
-	integrated_battery.forceMove(drop_location())
+	for(var/mob/living/silicon/ai/ai_contents as anything in contents)
+		old_os.remove_ai(ai_contents)
+		linked_os.add_ai(ai_contents)
+
+	update_list()
 
 /obj/machinery/ai/data_core/JoinPlayerHere(mob/M, buckle)
 	return
@@ -170,16 +184,19 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/ai/data_core/attack_ai(mob/living/silicon/ai/user)
-	if((user in src))
+	if(user in src)
 		return ..()
-	if(!valid_data_core() || !valid_holder())
+	if(!valid_data_core(user) || !valid_holder())
 		balloon_alert(user, "not a valid core!")
+		return ..()
+	if(user.controlled_equipment)
+		balloon_alert(user, "controlling equipment!")
 		return ..()
 	if(user.nuking)
 		var/confirmation_alert = tgui_alert(user, "Shunting will disable the doomsday device, are you sure you wish to do this?", "Really shunt?", list("Shunt", "Cancel"))
 		if(confirmation_alert != "Shunt")
 			return
-	if(do_after(user, 4 SECONDS, src, interaction_key = DOAFTER_SOURCE_AI_SHUNTING) && valid_data_core())
+	if(do_after(user, 4 SECONDS, src, interaction_key = DOAFTER_SOURCE_AI_SHUNTING) && valid_data_core(user))
 		transfer_AI(user)
 		playsound(src, 'sound/items/pip.ogg', 25, FALSE, 2)
 		balloon_alert(user, "shunted!")
@@ -189,39 +206,44 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	for(var/mob/living/silicon/ai/AI in contents)
 		AI.disconnect_shell()
 
-/obj/machinery/ai/data_core/proc/valid_data_core(mob/living/silicon/ai/user)
+/obj/machinery/ai/data_core/proc/valid_data_core(mob/living/silicon/ai/user, ignore_z_levels = FALSE)
 	if(is_reebe_level(z) && !IS_CLOCK(user))
 		return FALSE
-	if(!is_station_level(z) && !is_station_level(get_turf(user)))
-		return FALSE
+
+	if(!ignore_z_levels)
+		var/turf/user_turf = get_turf(user)
+		//If we're on the station, we won't work if the primary is not.
+		if(!(src in GLOB.data_cores["[user_turf.z]"]))
+			return FALSE
+
 	if(valid_ticks > 0)
 		return TRUE
 	return FALSE
 
-/obj/machinery/ai/data_core/process(seconds_per_tick)
+/obj/machinery/ai/data_core/process()
 	valid_ticks = clamp(valid_ticks, 0, MAX_AI_DATA_CORE_TICKS)
 
 	if(valid_holder())
 		valid_ticks++
 		use_power = ACTIVE_POWER_USE
-		if(machine_stat & NOPOWER)
-			integrated_battery.use(active_power_usage * CELL_POWERUSE_MULTIPLIER)
+		if((machine_stat & NOPOWER) && integrated_battery)
+			integrated_battery.use(active_power_usage)
 		COOLDOWN_RESET(src, warning_cooldown)
 		return
 
 	valid_ticks--
 	if(valid_ticks <= 0)
 		use_power = IDLE_POWER_USE
-
-	if(!COOLDOWN_FINISHED(src, warning_cooldown))
-		return
-	COOLDOWN_START(src, warning_cooldown, AI_DATA_CORE_WARNING_COOLDOWN)
-	for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
-		if(!AI.mind && AI.deployed_shell.mind)
-			to_chat(AI.deployed_shell, span_userdanger("<A HREF=?src=[REF(AI)];go_to_machine=[REF(src)]>Data core</A> in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
-		else
-			to_chat(AI, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
-		AI.playsound_local(AI, 'sound/machines/engine_alert2.ogg', 30)
+	if(COOLDOWN_FINISHED(src, warning_cooldown))
+		COOLDOWN_START(src, warning_cooldown, AI_DATA_CORE_WARNING_COOLDOWN)
+		//Other AIs on this level will get alerted
+		for(var/obj/machinery/ai/data_core/other_data_cores in GLOB.data_cores["[z]"])
+			for(var/mob/living/silicon/ai/AI in other_data_cores.contents)
+				if(!AI.mind && AI.deployed_shell.mind)
+					to_chat(AI.deployed_shell, span_userdanger("<A HREF=?src=[REF(AI)];go_to_machine=[REF(src)]>Data core</A> in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
+				else
+					to_chat(AI, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
+				AI.playsound_local(AI, 'sound/machines/engine_alert2.ogg', 30)
 
 /obj/machinery/ai/data_core/process_atmos()
 	. = ..()
@@ -236,44 +258,37 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 	if((machine_stat & (BROKEN|EMPED)) || !has_power() || disableheat || !ai_creating_heat)
 		return FALSE
 
-	var/temp_active_usage = (machine_stat & NOPOWER) ? idle_power_usage * CELL_POWERUSE_MULTIPLIER : active_power_usage * CELL_POWERUSE_MULTIPLIER
+	var/temp_active_usage = (machine_stat & NOPOWER) ? idle_power_usage : active_power_usage
 	var/temperature_increase = (temp_active_usage / AI_HEATSINK_CAPACITY) * heat_modifier //1 CPU = 1000W. Heat capacity = somewhere around 3000-4000. Aka we generate 0.25 - 0.33 K per second, per CPU.
 	core_temp += temperature_increase * AI_TEMPERATURE_MULTIPLIER
 	return TRUE
 
-/obj/machinery/ai/data_core/process_atmos()
-	for(var/mob/living/silicon/ai/ai_contents in contents)
-		if(ai_contents.technically_unpowered)
-			return
-		else //don't need to check every single AI
-			break
+/obj/machinery/ai/data_core/has_power()
+	if((machine_stat & NOPOWER) && integrated_battery)
+		if(integrated_battery.charge > (active_power_usage))
+			return TRUE
 	return ..()
 
-/obj/machinery/ai/data_core/has_power()
-	if((machine_stat & (NOPOWER)) && integrated_battery)
-		if(integrated_battery.charge > (active_power_usage * CELL_POWERUSE_MULTIPLIER))
-			return TRUE
-	else
-		return TRUE
-	return FALSE
-
-/obj/machinery/ai/data_core/proc/can_transfer_ai()
+/obj/machinery/ai/data_core/proc/can_transfer_ai(mob/living/silicon/ai/user, ignore_z_levels = FALSE)
 	if(machine_stat & (BROKEN|EMPED) || !has_power())
 		return FALSE
-	if(!valid_data_core() || !valid_holder())
+	if(!valid_data_core(user, ignore_z_levels) || !valid_holder())
 		return FALSE
 	return TRUE
 
 /obj/machinery/ai/data_core/proc/transfer_AI(mob/living/silicon/ai/AI)
 	if(AI.nuking)
 		AI.ShutOffDoomsdayDevice()
-	AI.forceMove(src)
+	. = AI.forceMove(src)
 	if(AI.eyeobj)
 		AI.eyeobj.setLoc(get_turf(src))
+	update_appearance(UPDATE_ICON)
+	linked_os.add_ai(AI)
+	return .
 
 /obj/machinery/ai/data_core/update_icon_state()
 	. = ..()
-	if(!valid_data_core())
+	if(!valid_holder())
 		return
 	if((machine_stat & (BROKEN|EMPED)) || !has_power())
 		icon_state = "[base_icon_state]-offline"
@@ -286,7 +301,6 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 /obj/machinery/ai/data_core/primary
 	name = "primary AI data core"
 	desc = "A complicated computer system capable of emulating the neural functions of a human at near-instantanous speeds. This one has a scrawny and faded note saying: 'Primary AI Data Core'"
-	primary = TRUE
 	circuit = /obj/item/circuitboard/machine/ai_data_core/primary
 
 /*
@@ -302,5 +316,3 @@ GLOBAL_VAR_INIT(primary_data_core, null)
 			to_chat(user, span_alert("ERROR: AI flush is in progress, cannot execute transfer protocol."))
 			return FALSE
 	return TRUE
-
-#undef CELL_POWERUSE_MULTIPLIER

@@ -53042,12 +53042,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
-"pAv" = (
-/obj/structure/curtain,
-/obj/machinery/shower/directional/north,
-/obj/structure/drain,
-/turf/open/floor/iron/freezer,
-/area/station/commons/toilet)
 "pAA" = (
 /obj/machinery/door/airlock/vault{
 	name = "High Security Vault"
@@ -74877,7 +74871,7 @@
 /area/station/commons/dorms)
 "vYW" = (
 /obj/machinery/mineral/stacking_machine{
-	input_dir = 8;
+	input_dir = 5;
 	output_dir = 2
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -94159,7 +94153,7 @@ hAD
 veV
 thi
 alO
-pAv
+iBp
 apC
 jXf
 yah
@@ -94673,7 +94667,7 @@ alT
 amr
 alT
 apD
-pAv
+iBp
 apC
 jXf
 yah
@@ -94930,7 +94924,7 @@ hAD
 veV
 thi
 alP
-pAv
+iBp
 apC
 jXf
 yah
@@ -95176,7 +95170,7 @@ lZP
 apC
 thi
 rnL
-pAv
+iBp
 veV
 cDZ
 hAD
@@ -95187,7 +95181,7 @@ hAD
 veV
 thi
 alT
-pAv
+iBp
 apC
 jXf
 yah

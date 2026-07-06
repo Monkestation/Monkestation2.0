@@ -98,3 +98,46 @@
   - code_imp: Cyborg chameleon projector's code is more readable.
   Shoddd:
   - balance: hosed quirk no longer recieves assisted breathing trait, now only 2 points
+2026-07-05:
+  JohnFulpWillard, Tractor Maam:
+  - rscadd: Multi-Z support for AIs, and the re-introduction of AIs to Oldstation
+      & Russian Derelict.
+  - rscadd: AIs can now fight over control of display cores.
+  - bugfix: AIs no longer get alerts of falling apart when they aren't.
+  - bugfix: Upgrade modules now work again.
+  - bugfix: Power transfer upgrade now researches induction immediately rather than
+      using a separate upgrade for the same thing.
+  - bugfix: AI data cores can now be pie'd again.
+  PotatoTomahto:
+  - balance: gelatinous ooze can devour dead mobs
+  Shoddd:
+  - balance: removes elite suit from infested frigate
+  SirNightKnight:
+  - sound: added some new sounds for the riot and combat shotgun.
+  - sound: added new firing sounds for the WT autorifle and C-20r.
+  - sound: shotgun casings have a distinct sound when ejected.
+2026-07-06:
+  JupiterJaeden:
+  - config: Brig timers max out at 10 minutes instead of 15.
+  - map: Removed the records console from the syndicate listening station space ruin.
+  PotatoTomahto:
+  - balance: showers now also apply chems using vapor
+  Runian:
+  - rscadd: '1 new techweb node: "Cyborg Upgrades: Alien"'
+  - rscadd: 'New arm implant that contains alien surgical tools: Alien Surgical Arm
+      Implant. It is adminbus only.'
+  - rscadd: 'New mediborg upgrade that replaces their surgical omnitool with alien
+      surgical tools: Alien Surgical Omnitool Upgrade.'
+  - image: Cyborg alien omnitool sprites.
+  TheColorCyan:
+  - rscadd: Added donator plush - Vanilla
+  - rscadd: Added donator vanilla mothroach
+  notghosti:
+  - bugfix: CentCom commander's suitskirt now plays nicley with digigrade legs
+  - bugfix: security medical jumpskirt now no longer errors while adjusted
+  - bugfix: stirling generator should be producing appriopate power
+  - bugfix: Scroll of the Awakened Dragon no longer discounts
+  - map: Kilostation telecomms now has grid wires under the blackbox
+  - map: Kilostation disposals has been fixed atrium
+  - map: Tramstation's disposal stacking unit has had its input direction adjusted
+      to northeast.
