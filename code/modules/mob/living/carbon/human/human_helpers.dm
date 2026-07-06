@@ -74,11 +74,14 @@
 	var/obj/item/storage/wallet/wallet = wear_id
 	var/obj/item/modular_computer/pda = wear_id
 	var/obj/item/card/id/id = wear_id
+	var/obj/item/card/cardboard/cardboard_id = wear_id
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		. = if_no_id //You get NOTHING, no id name, good day sir
 	if(istype(wallet))
 		id = wallet.front_id
-	if(istype(id))
+	if(istype(cardboard_id))
+		. = cardboard_id.scribbled_name
+	else if(istype(id))
 		. = id.registered_name
 	else if(istype(pda) && pda.computer_id_slot)
 		. = pda.computer_id_slot.registered_name

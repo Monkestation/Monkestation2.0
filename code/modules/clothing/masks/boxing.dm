@@ -70,6 +70,45 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 			carbon_user.update_body_parts()
 		return TRUE
 
+/obj/item/clothing/mask/floortilebalaclava
+	name = "floor-tile balaclava"
+	desc = "The newest floor-tile camouflage balaclava used for hallway warfare. The best breathability, flexibility, and comfort. Designed by Camo-J's."
+	worn_icon = 'icons/mob/clothing/mask.dmi'
+	icon_state = "floortile_balaclava"
+	inhand_icon_state = "balaclava"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	alternate_worn_layer = UNDER_SUIT_LAYER
+	w_class = WEIGHT_CLASS_SMALL
+	actions_types = list(/datum/action/item_action/adjust)
+
+/obj/item/clothing/mask/floortilebalaclava/attack_self(mob/user)
+	adjustmask(user)
+
+/obj/item/clothing/mask/floortilebalaclava/adjustmask(mob/living/carbon/user)
+	if(user?.incapacitated())
+		return
+	mask_adjusted = !mask_adjusted
+	if(!mask_adjusted)
+		clothing_flags |= visor_flags
+		flags_inv |= visor_flags_inv
+		flags_cover |= visor_flags_cover
+		to_chat(user, span_notice("You push \the [src] back into place."))
+		slot_flags = initial(slot_flags)
+	else
+		to_chat(user, span_notice("You push \the [src] out of the way."))
+		clothing_flags &= ~visor_flags
+		flags_inv &= ~visor_flags_inv
+		flags_cover &= ~visor_flags_cover
+		if(adjusted_flags)
+			slot_flags = adjusted_flags
+	if(!istype(user))
+		return
+	if(user.wear_mask == src)
+		user.wear_mask_update(src, toggle_off = mask_adjusted)
+	if(loc == user)
+		user.update_mob_action_buttons()
+
 /obj/item/clothing/mask/luchador
 	name = "Luchador Mask"
 	desc = "Worn by robust fighters, flying high to defeat their foes!"

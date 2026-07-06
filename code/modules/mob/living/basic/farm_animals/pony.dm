@@ -40,7 +40,7 @@
 	AddElement(/datum/element/pet_bonus, "whickers.")
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
-	AddElement(/datum/element/waddling)
+	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/apple), tame_chance = 25, bonus_tame_chance = 15, unique = unique_tamer)
 
 /mob/living/basic/pony/tamed(mob/living/tamer, atom/food)

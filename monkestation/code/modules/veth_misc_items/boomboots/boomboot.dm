@@ -30,13 +30,13 @@
 	. = ..()
 	if(slot & ITEM_SLOT_FEET)
 		if(enabled_waddle)
-			user.AddElement(/datum/element/waddling)
+			user.AddElementTrait(TRAIT_WADDLING, SHOES_TRAIT, /datum/element/waddling)
 		if(is_clown_job(user.mind?.assigned_role))
 			user.add_mood_event("clownshoes", /datum/mood_event/clownshoes)
 
 /obj/item/clothing/shoes/magboots/boomboots/dropped(mob/living/user)
 	. = ..()
-	user.RemoveElement(/datum/element/waddling)
+	REMOVE_TRAIT(user, TRAIT_WADDLING, SHOES_TRAIT)
 	if(is_clown_job(user.mind?.assigned_role))
 		user.clear_mood_event("clownshoes")
 	if(magpulse)//make sure they're being worn and activated
@@ -75,4 +75,3 @@
 		if(source.shoes == src)
 			if(magpulse)
 				explosion(src,2,4,8,6)//used the size of the big rubber ducky bomb
-
