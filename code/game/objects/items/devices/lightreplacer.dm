@@ -246,22 +246,21 @@
 /obj/item/lightreplacer/proc/add_uses(amount = 1)
 	uses = clamp(uses + amount, 0, max_uses)
 
+/**
+ * Increases the amount of bulb shards and converts excess bulb shards into blubs.
+ *
+ * Only provides feedback if an user is provided.
+ */
 /obj/item/lightreplacer/proc/add_shards(amount = 1, user)
 	bulb_shards += amount
 	var/new_bulbs = round(bulb_shards / BULB_SHARDS_REQUIRED)
 	if(new_bulbs > 0)
 		add_uses(new_bulbs)
 	bulb_shards = bulb_shards % BULB_SHARDS_REQUIRED
-	if(new_bulbs != 0)
+	if(new_bulbs != 0 && user)
 		to_chat(user, span_notice("\The [src] fabricates a new bulb from the broken glass it has stored. It now has [uses] uses."))
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
 	return new_bulbs
-
-/obj/item/lightreplacer/proc/Charge(mob/user)
-	charge += 1
-	if(charge > 3)
-		add_uses(1)
-		charge = 1
 
 /obj/item/lightreplacer/proc/replace_light(obj/machinery/light/target, mob/living/user)
 	//Confirm that it's a light we're testing, because afterattack runs this for everything on a given turf and will runtime
