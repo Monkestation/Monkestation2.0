@@ -254,3 +254,10 @@
 	embed_type = /datum/embedding/rebar
 	shrapnel_type = /obj/item/ammo_casing/a77mm/rusted
 	icon_state = "77mm_rusted"
+
+/obj/projectile/bullet/a77mm/lethal/syndie
+	name = "7.7mm Lethal Quick Shot"
+	damage = 20
+	armour_ignorance = 15
+	bare_wound_bonus = 16
+	speed = 1.25

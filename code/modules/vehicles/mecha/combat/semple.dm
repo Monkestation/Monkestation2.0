@@ -1,6 +1,6 @@
 /obj/vehicle/sealed/mecha/semple
 	desc = "A very old tank prototype from the ancient country of 'new zealand' this one appears to be a original production.. very rare.. seems to function still.."
-	name = "Ancient Bob Semple"
+	name = "\improper Ancient Bob Semple"
 	icon = 'icons/mecha/tanks.dmi'                      // this one is just a baseplate for all the others.. but i mean.. admins can spawn it they want it works
 	icon_state = "semple_0_0"
 	base_icon_state = "semple"
@@ -99,7 +99,7 @@
 
 /obj/vehicle/sealed/mecha/semple/maintchance
 	desc = "an ancient bob semple abandoned in maintenance, most likely left here from cleaning up an attack... looks discontinued."
-	name = "Rusted Security Bob Semple"
+	name = "\improper Rusted Security Bob Semple"
 	icon = 'icons/mecha/tanks.dmi'
 	icon_state = "ntsemple_0_0"
 	base_icon_state = "ntsemple"
@@ -132,7 +132,7 @@
 
 /obj/vehicle/sealed/mecha/semple/syndie
 	desc = "a modified bob semple, featuring a non explosive 30mm cannon and modified syndicate produced quickshot machine gun."
-	name = "Syndicate Bob Semple"
+	name = "\improper Syndicate Bob Semple"
 	icon = 'icons/mecha/tanks.dmi'
 	icon_state = "syndie_semple_0_0"
 	base_icon_state = "syndie_semple"

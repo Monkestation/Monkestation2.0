@@ -125,3 +125,8 @@
 	desc = "A Rusted 7.7mm lethal slow shot casing for use in the bob semple."
 	icon_state = "77mm_rusted_casing"
 	projectile_type = /obj/projectile/bullet/a77mm/rusted
+
+/obj/item/ammo_casing/a77mm
+	name = "7.7mm Lethal Quick Shot casing"
+	desc = "A 7.7mm lethal slow shot casing for use in the bob semple... this one is modified.."
+	projectile_type = /obj/projectile/bullet/a77mm/lethal/syndie

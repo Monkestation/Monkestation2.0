@@ -876,10 +876,10 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/syndie_bobsemplemg
 	name = "7.7mm Semple Quickshot"
-	desc = "The primary weapon systems of a bob semple this one appears to only chamber lethals.. its been modified."
+	desc = "An illegally modified Bob Semple 7.7mm Machine gun, fitted with auto-stabilizers, and specialized ammo, it is able to shoot almost 4 times as fast."
 	icon_state = "mecha_semplemg_syndie"
 	fire_sound = 'sound/weapons/gun/smg/shot.ogg'
-	projectile = /obj/projectile/bullet/a77mm/lethal
+	projectile = /obj/projectile/bullet/a77mm/lethal/syndie
 	projectiles = 100
 	projectiles_cache = 200
 	projectiles_cache_max = 400
