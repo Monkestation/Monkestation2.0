@@ -384,7 +384,7 @@
 	name = "Ancient Bob Semple Tank"
 	desc = "An incredibly old BOB Semple.. this is a backwater reproduction.. comes fitted with a lethal machine gun."
 	item = /obj/vehicle/sealed/mecha/semple
-	cost = 30
+	cost = 20
 	surplus = 0 // Two person item
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
 	cant_discount = TRUE
