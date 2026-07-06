@@ -1170,3 +1170,24 @@
 	ckeywhitelist = list("ZBunz")
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+//Rynnogen
+/datum/loadout_item/pocket_items/donator/vanilla_mothroach
+	name = "Pet Delivery Beacon - Vanilla Mothroach"
+	item_path = /obj/item/choice_beacon/pet/donator/vanilla_mothroach
+	ckeywhitelist = list("Rynnogen")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/effects/vanilla_mothroach
+	name = "Vanilla Mothroach Transformation"
+	item_path = /obj/item/effect_granter/donator/vanilla_mothroach
+	ckeywhitelist = list("Rynnogen")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/plushies/vanilla
+	name = "Vanilla Plush"
+	item_path = /obj/item/toy/plush/vanilla
+	donator_only = TRUE
+	requires_purchase = FALSE
