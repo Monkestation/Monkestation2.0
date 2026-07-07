@@ -85,27 +85,35 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 /obj/item/clothing/mask/floortilebalaclava/attack_self(mob/user)
 	adjustmask(user)
 
+/obj/item/clothing/mask/floortilebalaclava/ui_action_click(mob/user, datum/action/action)
+	adjustmask(user)
+	return TRUE
+
 /obj/item/clothing/mask/floortilebalaclava/adjustmask(mob/living/carbon/user)
 	if(user?.incapacitated())
 		return
+
 	mask_adjusted = !mask_adjusted
+
 	if(!mask_adjusted)
+		REMOVE_TRAIT(src, TRAIT_NO_WORN_ICON, "floortile_balaclava_adjusted")
 		clothing_flags |= visor_flags
 		flags_inv |= visor_flags_inv
 		flags_cover |= visor_flags_cover
-		to_chat(user, span_notice("You push \the [src] back into place."))
 		slot_flags = initial(slot_flags)
+		to_chat(user, span_notice("You pull \the [src] back over your face."))
 	else
-		to_chat(user, span_notice("You push \the [src] out of the way."))
+		ADD_TRAIT(src, TRAIT_NO_WORN_ICON, "floortile_balaclava_adjusted")
 		clothing_flags &= ~visor_flags
 		flags_inv &= ~visor_flags_inv
 		flags_cover &= ~visor_flags_cover
 		if(adjusted_flags)
 			slot_flags = adjusted_flags
-	if(!istype(user))
-		return
+		to_chat(user, span_notice("You pull \the [src] down off your face."))
+
 	if(user.wear_mask == src)
 		user.wear_mask_update(src, toggle_off = mask_adjusted)
+
 	if(loc == user)
 		user.update_mob_action_buttons()
 
