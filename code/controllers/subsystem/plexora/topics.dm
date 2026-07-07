@@ -13,8 +13,11 @@
 /datum/world_topic/plx_announce/Run(list/input)
 	var/message = input["message"]
 	var/from = input["from"]
+	var/encode_text = TRUE
+	if(input["encode"] != null)
+		encode_text = input["encode"]
 
-	send_formatted_announcement(message, "From [from]")
+	send_formatted_announcement(message, "From [from]", encode_text = encode_text)
 
 /datum/world_topic/plx_restartcontroller
 	keyword = "PLX_restartcontroller"

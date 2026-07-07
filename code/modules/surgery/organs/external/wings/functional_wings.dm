@@ -63,7 +63,6 @@
 /obj/item/organ/external/wings/functional/proc/can_fly(mob/living/carbon/human/human)
 	if(human.stat || human.body_position == LYING_DOWN)
 		return FALSE
-	//Jumpsuits have tail holes, so it makes sense they have wing holes too
 	if(human.wear_suit && ((human.wear_suit.flags_inv & HIDEJUMPSUIT) && (!human.wear_suit.species_exception || !is_type_in_list(src, human.wear_suit.species_exception))))
 		to_chat(human, span_warning("Your suit blocks your wings from extending!"))
 		return FALSE
@@ -217,7 +216,6 @@
 ///fly wings, which relate to flies.
 /obj/item/organ/external/wings/functional/fly
 	name = "fly wings"
-	desc = "Fly as a fly."
 	sprite_accessory_override = /datum/sprite_accessory/wings/fly
 
 ///slime wings, which relate to slimes.

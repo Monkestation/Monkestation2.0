@@ -96,6 +96,8 @@
 #define HIDEBELT (1<<14)
 ///hides antennae
 #define HIDEANTENNAE (1<<15)
+///hides mutant tails
+#define HIDEMUTTAIL (1<<16)
 
 //bitflags for clothing coverage - also used for limbs
 #define HEAD (1<<0)

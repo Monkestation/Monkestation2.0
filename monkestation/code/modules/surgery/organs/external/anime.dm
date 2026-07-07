@@ -78,6 +78,8 @@
 	return sprite_datum.icon_state
 
 /datum/bodypart_overlay/mutant/anime_bottom/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if(human.w_uniform?.flags_inv & HIDEMUTTAIL)
+		return FALSE
 	if(human.wear_suit?.flags_inv & HIDEJUMPSUIT)
 		return FALSE
 	return ..()

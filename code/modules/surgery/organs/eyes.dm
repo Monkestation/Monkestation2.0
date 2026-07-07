@@ -160,11 +160,14 @@
 	var/list/overlays = list(eye_left, eye_right)
 	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
 	if(my_head)
+		var/obscured = parent.check_obscured_slots(TRUE)
+		if(obscured & ITEM_SLOT_EYES)
+			return list()
+
 		if(my_head.head_flags & HEAD_EYECOLOR)
 			eye_right.color = eye_color_right
 			eye_left.color = eye_color_left
 
-		var/obscured = parent.check_obscured_slots(TRUE)
 		if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
 			overlays += emissive_appearance_copy(eye_left, src, NONE)
 			overlays += emissive_appearance_copy(eye_right, src, NONE)
