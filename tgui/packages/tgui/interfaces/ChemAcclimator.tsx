@@ -6,6 +6,7 @@ import { Window } from '../layouts';
 type Data = {
   chem_temp: number;
   target_temperature: number;
+  allowed_temperature_difference: number;
   max_volume: number;
   acclimate_state: string;
 };
@@ -14,10 +15,10 @@ const States = ['Filling', 'Heating', 'Cooling', 'Emptying'] as const;
 
 export const ChemAcclimator = (props) => {
   const { act, data } = useBackend<Data>();
-  const { chem_temp, target_temperature, max_volume, acclimate_state } = data;
+  const { chem_temp, target_temperature, allowed_temperature_difference, max_volume, acclimate_state } = data;
 
   return (
-    <Window width={320} height={130}>
+    <Window width={320} height={160}>
       <Window.Content>
         <LabeledList>
           <LabeledList.Item label="Current Temperature">
@@ -35,6 +36,22 @@ export const ChemAcclimator = (props) => {
               onChange={(value) =>
                 act('set_target_temperature', {
                   temperature: value,
+                })
+              }
+            />
+          </LabeledList.Item>
+          <LabeledList.Item label="Acceptable Temp. Difference">
+            <NumberInput
+              value={allowed_temperature_difference}
+              unit="K"
+              width="59px"
+              minValue={0.5}
+              maxValue={1000}
+              step={5}
+              stepPixelSize={2}
+              onChange={(value) =>
+                act('set_allowed_temperature_difference', {
+                  temperature_difference: value,
                 })
               }
             />

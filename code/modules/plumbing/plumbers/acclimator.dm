@@ -2,8 +2,6 @@
 #define HEATER_COFFICIENT 0.3
 ///Decimal point in rounding temperature
 #define TEMP_ROUNDING 0.01
-///Minimal allowed difference temperature range
-#define TEMP_DIFF 0.5
 
 /obj/machinery/plumbing/acclimator
 	name = "chemical acclimator"
@@ -17,6 +15,8 @@
 
 	///towards wich temperature do we build?
 	var/target_temperature = 300
+	///I cant find a good name for this. Basically if target is 300, and this is 10, it will still target 300 but will start emptying itself at 290 and 310.
+	var/allowed_temperature_difference = 0.5
 	///See code/__DEFINES/plumbing.dm
 	var/acclimate_state = AC_FILLING
 	///Maximum volume intake before processing
@@ -74,7 +74,7 @@
 		return
 
 	var/temp = round(reagents.chem_temp, TEMP_ROUNDING)
-	if(temp >= target_temperature - TEMP_DIFF && temp <= target_temperature + TEMP_DIFF)
+	if(temp >= target_temperature - allowed_temperature_difference && temp <= target_temperature + allowed_temperature_difference)
 		reagents.set_temperature(target_temperature)
 		acclimate_state = AC_EMPTYING
 		update_appearance(UPDATE_ICON_STATE)
@@ -95,10 +95,11 @@
 
 /obj/machinery/plumbing/acclimator/ui_data(mob/user)
 	return list(
-		chem_temp = round(reagents.chem_temp, TEMP_ROUNDING),
-		target_temperature = target_temperature,
-		max_volume = max_volume,
-		acclimate_state = acclimate_state
+		"chem_temp" = round(reagents.chem_temp, TEMP_ROUNDING),
+		"target_temperature" = target_temperature,
+		"allowed_temperature_difference" = allowed_temperature_difference,
+		"max_volume" = max_volume,
+		"acclimate_state" = acclimate_state
 	)
 
 /obj/machinery/plumbing/acclimator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -111,7 +112,10 @@
 			var/value = text2num(params["temperature"])
 			target_temperature = round(clamp(value, 1, 1000), TEMP_ROUNDING)
 			return TRUE
-
+		if("set_allowed_temperature_difference")
+			var/target = text2num(params["temperature_difference"])
+			allowed_temperature_difference = clamp(target, 0.5, 1000)
+			return TRUE
 		if("change_volume")
 			var/value = text2num(params["volume"])
 			max_volume = round(clamp(value, 1, buffer), CHEMICAL_VOLUME_ROUNDING)
@@ -119,4 +123,3 @@
 
 #undef HEATER_COFFICIENT
 #undef TEMP_ROUNDING
-#undef TEMP_DIFF
