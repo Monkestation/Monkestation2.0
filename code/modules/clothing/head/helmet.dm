@@ -610,7 +610,6 @@
 	armor_type = /datum/armor/armor_laserproof
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-
 /obj/item/clothing/head/helmet/laserproof/IsReflect(def_zone)
 	if(def_zone != BODY_ZONE_HEAD) //If not shot where ablative is covering you, you don't get the reflection bonus!
 		return FALSE
