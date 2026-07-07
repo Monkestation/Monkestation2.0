@@ -125,11 +125,11 @@
 
 /// Silicon subtype of storage interface used by their model storage.
 /datum/storage_interface/silicon
-	var/mob/living/silicon/robot/cyborg
+	var/obj/item/robot_model/robot_model
 
 /datum/storage_interface/silicon/New(ui_style, datum/storage/parent_storage, mob/user)
 	. = ..()
-	cyborg = parent_storage.real_location.loc
+	robot_model = parent_storage.real_location
 
 /datum/storage_interface/silicon/add_items(
 	screen_start_x,
@@ -142,7 +142,7 @@
 	atom/real_location,
 	list/datum/numbered_display/numbered_contents,
 )
-	var/list/usable_modules = cyborg.model.usable_modules.Copy()
+	var/list/usable_modules = robot_model.usable_modules.Copy()
 
 	var/current_x = screen_start_x
 	var/current_y = screen_start_y
@@ -150,7 +150,7 @@
 
 	for(var/i in 1 to length(usable_modules))
 		var/atom/movable/item = usable_modules[i]
-		if(item in cyborg.held_items)
+		if(item in robot_model.cyborg_owner.held_items)
 			current_x++
 			if(current_x - screen_start_x < columns)
 				continue
