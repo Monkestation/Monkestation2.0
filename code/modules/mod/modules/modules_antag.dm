@@ -310,7 +310,7 @@
 	undo_disguise()
 	if(current_disguise)
 		current_disguise = null
-		mod.wearer?.balloon_alert(mod.wearer, "MOD disguise cleared")
+		mod.wearer?.balloon_alert(mod.wearer, "mod disguise cleared")
 
 /obj/item/mod/module/chameleon/proc/on_update_icon_state()
 	SIGNAL_HANDLER
@@ -329,7 +329,7 @@
 	if(current_disguise)
 		undo_disguise()
 		current_disguise = null
-		mod.wearer.balloon_alert(mod.wearer, "MOD disguise cleared")
+		mod.wearer.balloon_alert(mod.wearer, "mod disguise cleared")
 		return
 	var/picked_name = tgui_input_list(mod.wearer, "Select look to change into", "Chameleon Settings", possible_disguises)
 	if(!possible_disguises[picked_name])
@@ -338,7 +338,7 @@
 		mod.wearer.balloon_alert(mod.wearer, "can't disguise MOD while active!")
 		return
 	current_disguise = possible_disguises[picked_name]
-	mod.wearer?.balloon_alert(mod.wearer, "MOD disguise set")
+	mod.wearer?.balloon_alert(mod.wearer, "mod disguise set")
 	disguise()
 
 /obj/item/mod/module/chameleon/on_equip()
@@ -355,7 +355,7 @@
 	if(current_disguise && !(current_disguise::slot_flags & current_slot))
 		undo_disguise()
 		current_disguise = null
-		mod.wearer?.balloon_alert(mod.wearer, "MOD undisguised")
+		mod.wearer?.balloon_alert(mod.wearer, "mod undisguised")
 
 /obj/item/mod/module/chameleon/on_unequip()
 	if(QDELETED(mod) || QDELETED(mod.wearer))
@@ -368,14 +368,14 @@
 /obj/item/mod/module/chameleon/on_suit_activation()
 	undo_disguise()
 	if(current_disguise)
-		mod.wearer?.balloon_alert(mod.wearer, "MOD undisguised")
+		mod.wearer?.balloon_alert(mod.wearer, "mod undisguised")
 
 /obj/item/mod/module/chameleon/on_suit_deactivation(deleting = FALSE)
 	if(deleting)
 		return
 	disguise()
 	if(current_disguise)
-		mod.wearer?.balloon_alert(mod.wearer, "MOD disguised")
+		mod.wearer?.balloon_alert(mod.wearer, "mod disguised")
 
 /obj/item/mod/module/chameleon/proc/disguise()
 	if(!current_disguise)
