@@ -304,14 +304,13 @@
 	RegisterSignal(mod, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_update_icon_state))
 
 /obj/item/mod/module/chameleon/on_uninstall(deleting = FALSE)
+	UnregisterSignal(mod, COMSIG_ATOM_UPDATE_ICON_STATE)
 	if(deleting)
-		UnregisterSignal(mod, COMSIG_ATOM_UPDATE_ICON_STATE)
 		return
 	undo_disguise()
 	if(current_disguise)
 		current_disguise = null
 		mod.wearer?.balloon_alert(mod.wearer, "MOD disguise cleared")
-	UnregisterSignal(mod, COMSIG_ATOM_UPDATE_ICON_STATE)
 
 /obj/item/mod/module/chameleon/proc/on_update_icon_state()
 	SIGNAL_HANDLER
