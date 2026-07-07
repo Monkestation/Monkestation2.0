@@ -28,6 +28,8 @@
 /obj/item/clothing/gloves/combat/floortile
 	name = "floor-tile camouflage gloves"
 	desc = "Is it just me, or is there a pair of gloves on the floor?"
+	icon = 'icons/obj/clothing/gloves.dmi'
+	worn_icon = null
 	icon_state = "ftc_gloves"
 	worn_icon_state = "ftc_gloves"
 	greyscale_colors = null
