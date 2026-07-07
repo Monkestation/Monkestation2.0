@@ -305,6 +305,7 @@
 
 /obj/item/mod/module/chameleon/on_uninstall(deleting = FALSE)
 	if(deleting)
+		UnregisterSignal(mod, COMSIG_ATOM_UPDATE_ICON_STATE)
 		return
 	undo_disguise()
 	if(current_disguise)
