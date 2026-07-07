@@ -161,6 +161,7 @@
 	max_slots = 2
 	quickdraw = TRUE
 	max_total_storage = 6
+	max_specific_storage = WEIGHT_CLASS_NORMAL
 
 /datum/storage/pockets/helmet/New()
 	. = ..()
