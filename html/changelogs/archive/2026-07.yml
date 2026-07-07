@@ -141,3 +141,23 @@
   - map: Kilostation disposals has been fixed atrium
   - map: Tramstation's disposal stacking unit has had its input direction adjusted
       to northeast.
+2026-07-07:
+  BebeYoshi:
+  - map: Oshan public mining now has proper gears. (Including EVA suits, pickaxes,
+      oxygen tanks, mining satchels, pickaxes, meson scanners, GPS, manual mining
+      scanners and flashlights)
+  JupiterJaeden:
+  - balance: Double-bladed energy swords can no longer be used with anti-drop implants
+      or syndicate sticky glue.
+  - spellcheck: Description of double-bladed energy swords updated to be accurate.
+  PotatoTomahto:
+  - rscadd: 'new utility syndicate clothing: black gloves which can store up to six
+      bulky weapons'
+  Runian, Majkl-J:
+  - code_imp: The way cyborgs restore uses for their light replacer via recharging
+      is more performant.
+  flleeppyy:
+  - code_imp: Update sister server button code to use Plexora server checks
+  - rscadd: The Eris button now works.
+  - rscdel: Remove's day and hour based "is_available" checks for the sister server
+      buttons as nothing has used it for over a year
