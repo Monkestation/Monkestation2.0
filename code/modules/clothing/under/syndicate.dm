@@ -132,6 +132,7 @@
 	can_adjust = FALSE
 	supports_variations_flags = NONE
 	ignore_mob_height_adjustments = TRUE
+	flags_inv = HIDEMUTWINGS
 
 /obj/item/clothing/under/syndicate/soviet
 	name = "Ratnik 5 tracksuit"

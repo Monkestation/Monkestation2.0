@@ -54,14 +54,35 @@
 
 /obj/item/cardboard_cutout/equipped(mob/living/user, slot)
 	. = ..()
-	user.AddElementTrait(TRAIT_WADDLING, REF(src), /datum/element/waddling)
+	if(!pushed_over)
+		user.AddElementTrait(TRAIT_WADDLING, REF(src), /datum/element/waddling)
 
 /obj/item/cardboard_cutout/dropped(mob/living/user)
 	. = ..()
 	REMOVE_TRAIT(user, TRAIT_WADDLING, REF(src))
 
 /obj/item/cardboard_cutout/proc/push_over()
-	appearance = initial(appearance)
+	if(pushed_over)
+		return
+
+	if(isliving(loc))
+		var/mob/living/holder = loc
+		REMOVE_TRAIT(holder, TRAIT_WADDLING, REF(src))
+
+		var/old_plane = plane
+		var/old_layer = layer
+		var/old_appearance_flags = appearance_flags
+
+		appearance = initial(appearance)
+
+		plane = old_plane
+		layer = old_layer
+		appearance_flags = old_appearance_flags
+
+		holder.update_held_items()
+	else
+		appearance = initial(appearance)
+
 	desc = "[initial(desc)] It's been pushed over."
 	icon_state = "cutout_pushed_over"
 	remove_atom_colour(FIXED_COLOUR_PRIORITY)
@@ -71,12 +92,17 @@
 /obj/item/cardboard_cutout/attack_self(mob/living/user)
 	if(!pushed_over)
 		return
+
 	to_chat(user, span_notice("You right [src]."))
 	desc = initial(desc)
 	icon = initial(icon)
-	icon_state = initial(icon_state) //This resets a cutout to its blank state - this is intentional to allow for resetting
+	icon_state = initial(icon_state) // This resets a cutout to its blank state - this is intentional to allow for resetting
 	pushed_over = FALSE
 	tacticool = AddComponent(/datum/component/tactical)
+
+	if(user?.is_holding(src))
+		user.AddElementTrait(TRAIT_WADDLING, REF(src), /datum/element/waddling)
+		user.update_held_items()
 
 /obj/item/cardboard_cutout/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/toy/crayon))
@@ -249,7 +275,7 @@
 	outfit = /datum/outfit/traitor_cutout
 
 /datum/cardboard_cutout/traitor/get_name()
-	return pick("Unknown", "Captain")
+	return pick("Smooth Operator", "REDACTED")
 
 /datum/cardboard_cutout/nuclear_operative
 	name = "Nuclear Operative"

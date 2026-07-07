@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 	worn_icon = 'icons/mob/clothing/mask.dmi'
 	icon_state = "floortile_balaclava"
 	inhand_icon_state = "balaclava"
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDENECK|HIDEANTENNAE|HIDEHEADGEAR|HIDEEYES|HIDEEYES
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	alternate_worn_layer = UNDER_SUIT_LAYER
 	w_class = WEIGHT_CLASS_SMALL
@@ -113,6 +113,7 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 
 	if(user.wear_mask == src)
 		user.wear_mask_update(src, toggle_off = mask_adjusted)
+		user.update_worn_glasses()
 
 	if(loc == user)
 		user.update_mob_action_buttons()

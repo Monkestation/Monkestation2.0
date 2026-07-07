@@ -29,5 +29,5 @@
 	name = "floor-tile camouflage gloves"
 	desc = "Is it just me, or is there a pair of gloves on the floor?"
 	icon_state = "ftc_gloves"
-	greyscale_colors = COLOR_FLOORTILE_GRAY
-	inhand_icon_state = "greyscale_gloves"
+	greyscale_colors = null
+	inhand_icon_state = null

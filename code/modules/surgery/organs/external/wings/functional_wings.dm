@@ -143,6 +143,16 @@
 	///Feature render key for opened wings
 	var/open_feature_key = "wingsopen"
 
+/datum/bodypart_overlay/mutant/wings/functional/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if(human.w_uniform?.flags_inv & HIDEMUTWINGS)
+		return FALSE
+	if(human.wear_suit?.flags_inv & HIDEMUTWINGS)
+		return FALSE
+	if(human.wear_neck?.flags_inv & HIDEMUTWINGS)
+		return FALSE
+
+	return ..()
+
 /datum/bodypart_overlay/mutant/wings/functional/get_global_feature_list()
 	if(wings_open)
 		return GLOB.wings_open_list
