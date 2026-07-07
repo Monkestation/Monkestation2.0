@@ -20,7 +20,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hitscan)
 	fire_delay = 10
 	ammo_x_offset = 3
-	dual_wield_spread = 72 // nice aim rambo
+	weapon_weight = WEAPON_HEAVY
 	shaded_charge = FALSE
 
 /obj/item/gun/energy/laser/lasrifle
