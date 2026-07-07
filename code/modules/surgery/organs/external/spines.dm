@@ -46,4 +46,5 @@
 	. = ..()
 	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
 		return FALSE
-
+	if(human.w_uniform?.flags_inv & HIDEMUTTAIL)
+		return FALSE

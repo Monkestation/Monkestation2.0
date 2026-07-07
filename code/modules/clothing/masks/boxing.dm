@@ -76,8 +76,8 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 	worn_icon = 'icons/mob/clothing/mask.dmi'
 	icon_state = "floortile_balaclava"
 	inhand_icon_state = "balaclava"
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	flags_inv = HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	visor_flags_inv = HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	alternate_worn_layer = UNDER_SUIT_LAYER
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/adjust)
