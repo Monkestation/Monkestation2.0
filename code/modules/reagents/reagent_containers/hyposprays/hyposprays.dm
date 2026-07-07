@@ -324,6 +324,10 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/hypospray/proc/draw(mob/living/user, atom/target)
+	if(vial == null)
+		balloon_alert(user, "no vial!")
+		return ITEM_INTERACT_BLOCKING
+
 	if(vial.reagents.total_volume >= vial.reagents.maximum_volume)
 		balloon_alert(user, "container full!")
 		return ITEM_INTERACT_BLOCKING
