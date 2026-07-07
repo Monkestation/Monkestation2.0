@@ -165,3 +165,10 @@
 	item = /obj/item/storage/backpack/duffelbag/syndie
 	cost = 1
 	surplus = 50
+
+/datum/uplink_item/utility_clothing/dimensional_gloves
+	name = "Black Dimensional Gloves"
+	desc = "A pair of sleak black gloves that functions as a weapon storage using bluespace compression technology. Holds up to six weapons."
+	item = /obj/item/clothing/gloves/color/black/dimensional
+	cost = 10
+	surplus = 30
