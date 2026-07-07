@@ -37,6 +37,9 @@
 /obj/machinery/status_display/door_timer/Initialize(mapload)
 	. = ..()
 
+	sec_radio = new/obj/item/radio(src)
+	sec_radio.set_listening(FALSE)
+
 	if(id != null)
 		for(var/obj/machinery/door/window/brigdoor/M in urange(20, src))
 			if (M.id == id)
