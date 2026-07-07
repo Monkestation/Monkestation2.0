@@ -1,7 +1,6 @@
 GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	HYPO_INJECT = image(icon = 'icons/obj/medical/syringe.dmi', icon_state = "hypo_mode_inject"),
 	HYPO_SPRAY = image(icon = 'icons/obj/medical/syringe.dmi', icon_state = "hypo_mode_spray"),
-	HYPO_DRAW = image(icon = 'icons/obj/medical/syringe.dmi', icon_state = "hypo_mode_draw"),
 ))
 
 /obj/item/hypospray
@@ -88,8 +87,6 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 			. += span_notice("[src] is set to inject contents on application.")
 		if(HYPO_SPRAY)
 			. += span_notice("[src] is set to spray contents on application.")
-		if(HYPO_DRAW)
-			. += span_notice("[src] is set to draw on application.")
 
 /obj/item/hypospray/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/reagent_containers))
@@ -113,16 +110,6 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		var/obj/item/hypospray_upgrade/upgrade = attacking_item
 		upgrade.install(src, user)
 		return TRUE
-
-/obj/item/hypospray/attack_self_secondary(mob/user, list/modifiers)
-	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
-		if("ctrl" in modifiers)
-			if(upgrade_flags & HYPO_UPGRADE_NOZZLE)
-				set_transfer_amount(user)
-				return
-			cycle_transfer_amount(user, BACKWARD)
-			return
-		unload_vial(user)
 
 /obj/item/hypospray/attack_self(mob/user, list/modifiers)
 	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
@@ -156,14 +143,17 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 					return
 			if(HYPO_SPRAY)
 				return spray(user, target)
-			if(HYPO_DRAW)
-				if(target.reagents)
-					return draw(user, target)
-				else
-					return
+
 	else if(target.reagents || mode == HYPO_SPRAY)
 		balloon_alert(user, "no vial!")
 		return ITEM_INTERACT_BLOCKING
+
+/obj/item/hypospray/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
+	if(target.reagents)
+		return draw(user, target)
+	else
+		return
+
 
 /obj/item/hypospray/proc/cycle_transfer_amount(mob/user, direction = FORWARD)
 	var/list_len = length(possible_transfer_amounts)
