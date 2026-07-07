@@ -98,3 +98,21 @@
   - code_imp: Cyborg chameleon projector's code is more readable.
   Shoddd:
   - balance: hosed quirk no longer recieves assisted breathing trait, now only 2 points
+2026-07-05:
+  JohnFulpWillard, Tractor Maam:
+  - rscadd: Multi-Z support for AIs, and the re-introduction of AIs to Oldstation
+      & Russian Derelict.
+  - rscadd: AIs can now fight over control of display cores.
+  - bugfix: AIs no longer get alerts of falling apart when they aren't.
+  - bugfix: Upgrade modules now work again.
+  - bugfix: Power transfer upgrade now researches induction immediately rather than
+      using a separate upgrade for the same thing.
+  - bugfix: AI data cores can now be pie'd again.
+  PotatoTomahto:
+  - balance: gelatinous ooze can devour dead mobs
+  Shoddd:
+  - balance: removes elite suit from infested frigate
+  SirNightKnight:
+  - sound: added some new sounds for the riot and combat shotgun.
+  - sound: added new firing sounds for the WT autorifle and C-20r.
+  - sound: shotgun casings have a distinct sound when ejected.
