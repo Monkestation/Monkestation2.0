@@ -184,7 +184,7 @@
 			continue
 		if(istype(usable_module, /obj/item/lightreplacer))
 			var/obj/item/lightreplacer/light_replacer = usable_module
-			light_replacer.Charge(cyborg_owner, max(1, power_coeff))
+			light_replacer.charge(cyborg_owner, power_coeff)
 			continue
 		if(istype(usable_module, /obj/item/melee/baton/security))
 			var/obj/item/melee/baton/security/security_baton = usable_module
