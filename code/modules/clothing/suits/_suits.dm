@@ -17,6 +17,8 @@
 	blood_overlay_type = "suit"
 	limb_integrity = 0 // disabled for most exo-suits
 	var/suittoggled = FALSE // sec duster toggling and more
+	/// tackling bonus
+	var/tackle_mod = 0
 
 /obj/item/clothing/suit/Initialize(mapload)
 	. = ..()
