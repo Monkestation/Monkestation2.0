@@ -3,13 +3,13 @@
 	roundend_category = "Monster Hunters"
 	antagpanel_category = "Monster Hunter"
 	job_rank = ROLE_MONSTERHUNTER
-	hud_icon = 'monkestation/icons/mob/huds/antag_hud.dmi'
+	hud_icon = 'icons/mob/huds/antag_hud.dmi'
 	antag_hud_name = "hunter"
 	preview_outfit = /datum/outfit/monsterhunter
 	antag_moodlet = /datum/mood_event/monster_hunter
 	show_to_ghosts = TRUE
 	ui_name = "AntagInfoMonsterHunter"
-	stinger_sound = 'monkestation/sound/ambience/antag/monster_hunter.ogg'
+	stinger_sound = 'sound/ambience/antag/monster_hunter.ogg'
 	var/list/datum/action/powers = list()
 	/// Have we chosen a weapon yet?
 	var/weapon_claimed = FALSE
@@ -254,8 +254,8 @@
 
 /datum/antagonist/monsterhunter/get_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/hunter = new
-	var/icon/white_rabbit = icon('monkestation/icons/mob/rabbit.dmi', "white_rabbit")
-	var/icon/red_rabbit = icon('monkestation/icons/mob/rabbit.dmi', "killer_rabbit")
+	var/icon/white_rabbit = icon('icons/mob/rabbit.dmi', "white_rabbit")
+	var/icon/red_rabbit = icon('icons/mob/rabbit.dmi', "killer_rabbit")
 	var/icon/hunter_icon = render_preview_outfit(/datum/outfit/monsterhunter, hunter)
 
 	var/icon/final_icon = hunter_icon
@@ -406,7 +406,7 @@
 
 /obj/item/clothing/mask/monster_preview_mask
 	name = "Monster Preview Mask"
-	worn_icon = 'monkestation/icons/mob/mask.dmi'
+	worn_icon = 'icons/mob/mask.dmi'
 	worn_icon_state = "monoclerabbit"
 
 /datum/antagonist/monsterhunter/roundend_report()

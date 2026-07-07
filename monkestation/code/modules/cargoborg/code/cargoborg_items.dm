@@ -316,7 +316,11 @@
 	id = "borg_upgrade_clamp"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/better_clamp
-	materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = list(
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.5,
+		/datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 0.5
+	)
 	construction_time = 12 SECONDS
 	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_CARGO)
 

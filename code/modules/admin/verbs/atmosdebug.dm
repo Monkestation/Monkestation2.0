@@ -1,4 +1,4 @@
-ADMIN_VERB_VISIBILITY(atmos_debug, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(atmos_debug, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(atmos_debug, R_DEBUG, FALSE, "Check Plumbing", "Verifies the integrity of the plumbing network.", ADMIN_CATEGORY_MAPPING)
 	BLACKBOX_LOG_ADMIN_VERB("Check Plumbing")
 
@@ -20,7 +20,7 @@ ADMIN_VERB(atmos_debug, R_DEBUG, FALSE, "Check Plumbing", "Verifies the integrit
 			if(!(node1 in node2.nodes))
 				to_chat(user, "One-way connection in [node1.name] located at [ADMIN_VERBOSEJMP(node1)]", confidential = TRUE)
 
-ADMIN_VERB_VISIBILITY(power_debug, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(power_debug, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(power_debug, R_DEBUG, FALSE, "Check Power", "Verifies the integrity of the power network.", ADMIN_CATEGORY_MAPPING)
 	BLACKBOX_LOG_ADMIN_VERB("Check Power")
 	var/list/results = list()

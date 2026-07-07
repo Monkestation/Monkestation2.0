@@ -251,7 +251,6 @@
 /**
  * Water reaction to a mob
  */
-#define WAS_SPRAYED "was_sprayed" //monkestation edit
 
 /datum/reagent/water/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume)//Splashing people with water can help put them out!
 	. = ..()
@@ -270,27 +269,28 @@
 		return
 
 	var/mob/living/victim = exposed_mob
-	if((methods & (TOUCH|VAPOR)) && !victim.is_pepper_proof() && !HAS_TRAIT(victim, TRAIT_FEARLESS))
-		victim.set_eye_blur_if_lower(3 SECONDS)
-		victim.set_confusion_if_lower(5 SECONDS)
-		if(ishuman(victim))
-			victim.add_mood_event("watersprayed", /datum/mood_event/watersprayed/cat)
-		victim.update_damage_hud()
-		if(HAS_TRAIT(victim, WAS_SPRAYED))
-			return
-		ADD_TRAIT(victim, WAS_SPRAYED, TRAIT_GENERIC)
-		if(prob(50))
-			INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "hiss")
-		else
-			INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "scream")
-		addtimer(TRAIT_CALLBACK_REMOVE(victim, WAS_SPRAYED, TRAIT_GENERIC), 1 SECONDS)
-	//MONKESTATION EDIT STOP
-
-#undef WAS_SPRAYED //monkestation edit
+	if((methods & (TOUCH|VAPOR)) && !victim.is_pepper_proof())
+		victim.apply_status_effect(/datum/status_effect/cat_water_sprayed)
 
 #undef WATER_TO_WET_STACKS_FACTOR_TOUCH
 #undef WATER_TO_WET_STACKS_FACTOR_VAPOR
 
+/datum/status_effect/cat_water_sprayed
+	duration = 0.5 SECONDS
+	alert_type = null
+	id = "cat_water_sprayed"
+
+/datum/status_effect/cat_water_sprayed/on_apply()
+	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
+		return FALSE
+
+	owner.set_eye_blur_if_lower(3 SECONDS)
+	owner.set_confusion_if_lower(5 SECONDS)
+
+	owner.add_mood_event("watersprayed", /datum/mood_event/watersprayed/cat)
+	INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), pick("hiss", "scream"))
+
+	return TRUE
 
 /datum/reagent/water/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -2158,6 +2158,8 @@
 	taste_description = "rainbows"
 	var/can_colour_mobs = TRUE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	inverse_chem_val = 0.3
+	inverse_chem = /datum/reagent/inverse/colorful_reagent
 	var/datum/callback/color_callback
 
 /datum/reagent/colorful_reagent/New()
@@ -2278,6 +2280,8 @@
 	taste_description = "bitterness"
 	penetrates_skin = NONE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	inverse_chem_val = 0.3
+	inverse_chem = /datum/reagent/inverse/baldium
 
 /datum/reagent/baldium/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=FALSE)
 	. = ..()
@@ -2742,6 +2746,8 @@
 	taste_mult = 0 // oderless and tasteless
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM //20 times as long, so it's actually viable to use
 	var/time_multiplier = 1 MINUTES //1 minute per unit of gravitum on objects. Seems overpowered, but the whole thing is very niche
+	inverse_chem_val = 0.3
+	inverse_chem = /datum/reagent/inverse/gravitum
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	self_consuming = TRUE //this works on objects, so it should work on skeletons and robots too
 

@@ -143,7 +143,7 @@
 			internal_tracker.track_input(usr)
 			return TRUE
 
-/datum/computer_file/program/secureye/proc/on_track_target(datum/trackable/source, mob/living/target)
+/datum/computer_file/program/secureye/proc/on_track_target(datum/trackable/source, atom/movable/target)
 	SIGNAL_HANDLER
 	var/datum/camerachunk/target_camerachunk = GLOB.cameranet.getTurfVis(get_turf(target))
 	if(!target_camerachunk)

@@ -21,6 +21,8 @@
 #define MAT_CATEGORY_RIGID "rigid material"
 /// Materials that can be used to craft items
 #define MAT_CATEGORY_ITEM_MATERIAL "item material"
+/// Materials that can be used to craft items
+#define MAT_CATEGORY_RACK_CREATOR "rack creator"
 /**
  * Materials that can also be used to craft items for designs that require two custom mats.
  * This is mainly a work around to the fact we can't (easily) have the same category show
@@ -49,6 +51,8 @@
 #define MATCONTAINER_SILENT (1<<3)
 ///Alloys won't be disassembled in its components when inserted.
 #define MATCONTAINER_ACCEPT_ALLOYS (1<<4)
+///Only allows you to recycle stacks. Incompatible with MATCONTAINER_NO_INSERT
+#define MATCONTAINER_ONLY_STACKS (1<<5)
 
 /// Whether a material's mechanical effects should apply to the atom. This is necessary for other flags to work.
 #define MATERIAL_EFFECTS (1<<0)

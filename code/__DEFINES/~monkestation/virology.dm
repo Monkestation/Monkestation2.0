@@ -44,6 +44,7 @@
 #define DISEASE_SLIME "slime"
 #define DISEASE_MORPH "morph"
 #define DISEASE_ROBOT "robot"
+#define DISEASE_MONKEY "monkey"
 #define DISEASE_COLD "cold"
 #define DISEASE_HEART "heart"
 #define DISEASE_SANDWICH "sandwich"

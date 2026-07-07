@@ -46,6 +46,7 @@
 	action_to_add = /datum/action/cooldown/spell/aoe/wave_of_desperation
 	cost = 2
 	drafting_tier = 2
+	is_shop_only = TRUE
 
 /datum/heretic_knowledge/rune_carver
 	name = "Carving Knife"

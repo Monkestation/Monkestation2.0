@@ -99,3 +99,8 @@
 	name = "\improper All-American Diner billboard"
 	desc = "A billboard advertising an old-school 1950's themed restaurant franchise \"All-American Diner\""
 	icon_state = "billboard_american_diner"
+
+/obj/structure/billboard/shrimp
+	name = "\improper Rice to KRILL For billboard"
+	desc = "A billboard advertising a shrimp fried rice restaurant. Whether it is shrimp-owned or shrimp-made is unclear."
+	icon_state = "billboard_shrimp"

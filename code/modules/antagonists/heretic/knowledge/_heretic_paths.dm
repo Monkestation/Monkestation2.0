@@ -312,7 +312,7 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 		),
 		list(
 			"parent_knowledge" = knowledge_tier4,
-			"probabilities" = list("1" = 0, "2" = 0, "3" = 0, "4" = 0, "5" = 100),
+			"probabilities" = list("1" = 0, "2" = 0, "3" = 20, "4" = 60, "5" = 20),
 			HKT_DEPTH = HKT_DEPTH_DRAFT_4,
 		)
 	)
@@ -332,6 +332,8 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 				if(shop_tier && !(guaranteed_draft in shop_tier))
 					shop_tier += guaranteed_draft
 			else
+				if(depth == HKT_DEPTH_DRAFT_4 && route == PATH_LOCK)
+					probabilities = list("1" = 0, "2" = 0, "3" = 0, "4" = 0, "5" = 100)
 				// rng kinda not correct but like, whatever
 				var/chosen_tier = min(text2num(pick_weight(probabilities)), length(elligible_knowledge))
 				var/list/picked_tier = elligible_knowledge[chosen_tier]

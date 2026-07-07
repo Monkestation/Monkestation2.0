@@ -24,7 +24,7 @@
 /obj/machinery/power/rad_collector //Still use this for compat reasons
 	name = "Particle Capture Array"
 	desc = "A device which uses a large plasma-glass sheet to 'catch' particles, harvesting their stored energy. Do not taunt. Can be loaded with a variety of gases to produce additional power."
-	icon = 'monkestation/icons/obj/engine/singularity.dmi'
+	icon = 'icons/obj/engine/singularity.dmi'
 	icon_state = "ca"
 	anchored = FALSE
 	density = TRUE

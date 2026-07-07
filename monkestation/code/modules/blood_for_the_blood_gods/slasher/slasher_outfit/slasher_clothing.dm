@@ -2,8 +2,8 @@
 	name = "slasher's gas mask"
 	desc = "A close-fitting sealed gas mask, this one seems to be protruding some kind of dark aura."
 
-	icon = 'monkestation/icons/mob/slasher/slasher_items.dmi'
-	worn_icon = 'monkestation/icons/mob/slasher/slasher_wornstates.dmi'
+	icon = 'icons/mob/slasher/slasher_items.dmi'
+	worn_icon = 'icons/mob/slasher/slasher_wornstates.dmi'
 	icon_state = "slasher_firemask"
 	inhand_icon_state = null
 	flash_protect = FLASH_PROTECTION_WELDER
@@ -36,8 +36,8 @@
 	name = "butcher's apron"
 	desc = "A brown butcher's apron, you can feel an aura of something dark radiating off of it."
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	icon = 'monkestation/icons/mob/slasher/slasher_items.dmi'
-	worn_icon = 'monkestation/icons/mob/slasher/slasher_wornstates.dmi'
+	icon = 'icons/mob/slasher/slasher_items.dmi'
+	worn_icon = 'icons/mob/slasher/slasher_wornstates.dmi'
 	icon_state = "slasher_apron"
 	inhand_icon_state = null
 	armor_type = /datum/armor/slasher/level0
@@ -94,8 +94,8 @@
 
 /obj/item/clothing/under/slasher
 	name = "butcher's jumpsuit"
-	icon = 'monkestation/icons/mob/slasher/slasher_items.dmi'
-	worn_icon = 'monkestation/icons/mob/slasher/slasher_wornstates.dmi'
+	icon = 'icons/mob/slasher/slasher_items.dmi'
+	worn_icon = 'icons/mob/slasher/slasher_wornstates.dmi'
 	icon_state = "slasher_under"
 	inhand_icon_state = null
 	desc = "A brown butcher's jumpsuit, you can feel an aura of something dark radiating off of it."
@@ -137,23 +137,6 @@
 	SSwardrobe.provide_type(/obj/item/restraints/legcuffs/beartrap/slasher, src)
 	SSwardrobe.provide_type(/obj/item/restraints/legcuffs/beartrap/slasher, src)
 
-/obj/item/restraints/legcuffs/beartrap/slasher
-	name = "barbed bear trap"
-	breakouttime = 2 SECONDS
-	alpha = 160
-	var/datum/antagonist/slasher/slasher_owner
-
-/obj/item/restraints/legcuffs/beartrap/slasher/Destroy()
-	if(slasher_owner)
-		slasher_owner.linked_traps -= src
-	return ..()
-
-/obj/item/restraints/legcuffs/beartrap/slasher/proc/set_slasher(datum/antagonist/slasher/slasherdatum)
-	if(slasher_owner)
-		slasher_owner.linked_traps -= src
-	slasher_owner = slasherdatum
-	if(slasher_owner)
-		slasher_owner.linked_traps += src
 
 /obj/item/storage/belt/slasher/cluwne
 	name = "cluwne's trap fanny pack"

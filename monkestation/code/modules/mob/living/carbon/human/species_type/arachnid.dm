@@ -127,7 +127,7 @@
 	resistance_flags = FLAMMABLE
 	force = 0
 	throwforce = 0
-	icon = 'monkestation/icons/obj/stack_objects.dmi'
+	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "silk"
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'

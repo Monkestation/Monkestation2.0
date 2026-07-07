@@ -137,7 +137,7 @@
 		usage += projectile_tick_speed_ecost * seconds_per_tick
 		usage += tracked_bullet_cost[projectile] * projectile_damage_tick_ecost_coefficient * seconds_per_tick
 	energy = clamp(energy - usage, 0, maxenergy)
-	if(energy <= 0)
+	if(energy <= 0 && active)
 		deactivate_field()
 		visible_message(span_warning("[src] blinks \"ENERGY DEPLETED\"."))
 
@@ -170,7 +170,7 @@
 	name = "cyborg omni-toolset"
 	desc = "You shouldn't see this in-game normally."
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg"
+	icon_state = "toolkit_mediborg"
 	/// Our tools (list of item typepaths).
 	var/list/obj/item/omni_toolkit = list()
 	/// Map of solid objects internally used by the omni-tool.
@@ -210,7 +210,10 @@
  */
 /obj/item/borg/cyborg_omnitool/proc/set_internal_tool(obj/item/tool)
 	SHOULD_NOT_OVERRIDE(TRUE)
-
+	if(!tool)
+		reference = null
+		tool_behaviour = initial(tool_behaviour)
+		return
 	for(var/obj/item/internal_tool as anything in omni_toolkit)
 		if(internal_tool == tool)
 			reference = internal_tool
@@ -309,6 +312,24 @@
 			continue
 		tool.toolspeed = upgraded ? initial(tool.toolspeed) * 0.5 : initial(tool.toolspeed)
 	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
+
+/// Replaces an existing tool with a new tool.
+/obj/item/borg/cyborg_omnitool/proc/replace_tool(replaced_tool_typepath, replacement_tool_typepath)
+	if(!(replaced_tool_typepath in omni_toolkit))
+		return
+	var/tool_currently_used = FALSE
+	if(reference == replaced_tool_typepath)
+		tool_currently_used = TRUE
+		set_internal_tool(null)
+	var/obj/item/tool_previously_used = atoms[replaced_tool_typepath]
+	if(!QDELETED(tool_previously_used))
+		qdel(tool_previously_used)
+	atoms -= replaced_tool_typepath
+	omni_toolkit -= replaced_tool_typepath
+	omni_toolkit += replacement_tool_typepath
+	if(tool_currently_used)
+		set_internal_tool(replacement_tool_typepath)
+		update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/borg/cyborg_omnitool/medical
 	name = "surgical omni-toolset"
@@ -449,3 +470,35 @@
 		shake_camera(living_mob, 2 SECONDS, 1)
 		ADD_TRAIT(living_mob, TRAIT_POOR_AIM, type)
 		addtimer(TRAIT_CALLBACK_REMOVE(living_mob, TRAIT_POOR_AIM, type), 8 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/obj/item/borg/artifact_sticker_holder
+	name = "analysis form holder"
+	desc = "An built-in holder that automatically generates artifact analysis forms to write on and label artifacts with!"
+	icon = 'icons/obj/service/bureaucracy.dmi'
+	icon_state = "analysisbin1"
+	base_icon_state = "analysisbin"
+	/// The sticker that we are holding.
+	var/obj/item/sticker/analysis_form/sticker_to_apply
+
+/obj/item/borg/artifact_sticker_holder/Initialize(mapload)
+	. = ..()
+	sticker_to_apply = new(src)
+
+/obj/item/borg/artifact_sticker_holder/Destroy(force)
+	QDEL_NULL(sticker_to_apply)
+	return ..()
+
+/obj/item/borg/artifact_sticker_holder/attackby(obj/item/item, mob/user, params)
+	sticker_to_apply.attackby(item, user, params)
+
+/obj/item/borg/artifact_sticker_holder/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ITEM_INTERACT_BLOCKING
+	var/datum/component/artifact/artifact_component = interacting_with.GetComponent(/datum/component/artifact)
+	if(!artifact_component)
+		user.balloon_alert(user, "not an artifact!")
+		return
+	var/item_interact_result = sticker_to_apply.interact_with_atom(interacting_with, user, modifiers)
+	if(item_interact_result & ITEM_INTERACT_SUCCESS)
+		// Need to create a new sticker since the last one was used up.
+		sticker_to_apply = new(src)
+		return ITEM_INTERACT_SUCCESS

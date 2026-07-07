@@ -64,6 +64,7 @@
 #define ROLE_BINGLE "Bingle"
 #define ROLE_BINGLE_MIDROUND "Bingle (Midround)"
 #define ROLE_WILLING_HOST "Willing Host"
+#define ROLE_ABANDONED_IPC "Abandoned IPC"
 // Latejoin roles
 #define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
 #define ROLE_PROVOCATEUR "Provocateur"
@@ -205,6 +206,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_TERATOMA = 0,
 	ROLE_JUNIOR_LONE_OPERATIVE = 0,
 	ROLE_BINGLE = 0,
+	ROLE_ABANDONED_IPC = 0,
 //darkspawns role classes
 	ROLE_DARKSPAWN_WARLOCK = 0,
 	ROLE_DARKSPAWN_SCOUT = 0,
