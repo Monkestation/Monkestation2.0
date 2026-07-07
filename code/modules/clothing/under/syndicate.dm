@@ -130,10 +130,9 @@
 	icon_state = "camofloortile"
 	inhand_icon_state = "gy_suit"
 	can_adjust = FALSE
-	flags_inv = HIDEMUTTAIL|HIDEMUTWINGS
+	flags_inv = HIDEMUTTAIL | HIDEMUTWINGS
 	supports_variations_flags = NONE
 	ignore_mob_height_adjustments = TRUE
-	flags_inv = HIDEMUTWINGS
 
 /obj/item/clothing/under/syndicate/soviet
 	name = "Ratnik 5 tracksuit"

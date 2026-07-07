@@ -29,5 +29,6 @@
 	name = "floor-tile camouflage gloves"
 	desc = "Is it just me, or is there a pair of gloves on the floor?"
 	icon_state = "ftc_gloves"
+	worn_icon_state = "ftc_gloves"
 	greyscale_colors = null
 	inhand_icon_state = null
