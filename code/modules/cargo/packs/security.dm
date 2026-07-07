@@ -228,7 +228,7 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(
 		/obj/item/ammo_box/magazine/m35/rubber = 3,
-		/obj/item/ammo_box/c35/rubber = 1,
+		/obj/item/ammo_box/c35/rubber,
 		)
 	crate_name = ".35 Auto Non-Lethal Ammo crate"
 
@@ -298,7 +298,7 @@
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(
 		/obj/item/gun/energy/e_gun/dragnet = 2,
-		/obj/item/dragnet_beacon = 1,
+		/obj/item/dragnet_beacon,
 		)
 	crate_name = "\improper DRAGnet crate"
 
@@ -422,11 +422,7 @@
 	desc = "Five 'Hoshi' modular laser carbines, compact energy weapons that can be rapidly reconfigured into different firing modes."
 	cost = CARGO_CRATE_VALUE * 12
 	contains = list(
-		/obj/item/gun/energy/modular_laser_rifle/carbine,
-		/obj/item/gun/energy/modular_laser_rifle/carbine,
-		/obj/item/gun/energy/modular_laser_rifle/carbine,
-		/obj/item/gun/energy/modular_laser_rifle/carbine,
-		/obj/item/gun/energy/modular_laser_rifle/carbine,
+		/obj/item/gun/energy/modular_laser_rifle/carbine = 5,
 	)
 	crate_name = "\improper Modular Laser Carbine Crate"
 
@@ -435,9 +431,7 @@
 	desc = "Three 'Hyeseong' modular laser rifles, bulky energy weapons that can be rapidly reconfigured into different firing modes."
 	cost = CARGO_CRATE_VALUE * 12
 	contains = list(
-		/obj/item/gun/energy/modular_laser_rifle,
-		/obj/item/gun/energy/modular_laser_rifle,
-		/obj/item/gun/energy/modular_laser_rifle,
+		/obj/item/gun/energy/modular_laser_rifle = 3,
 	)
 	crate_name = "\improper Modular Laser Rifle Crate"
 
@@ -447,7 +441,7 @@
 	cost = CARGO_CRATE_VALUE * 20
 	contains = list(
 		/obj/item/gun/ballistic/revolver/shotgun_revolver = 2,
-		/obj/item/ammo_box/tacshield/tutel/ = 2,
+		/obj/item/ammo_box/tacshield/tutel = 2,
 		/obj/item/ammo_box/advanced/s12gauge = 2,
 	)
 	crate_name = "Tactical Bóbr Crate"
@@ -467,7 +461,7 @@
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(
 		/obj/item/ammo_box/magazine/m35 = 3,
-		/obj/item/ammo_box/c35 = 1,
+		/obj/item/ammo_box/c35,
 		)
 	crate_name = ".35 auto lethal ammo crate"
 
@@ -503,4 +497,15 @@
 		/obj/item/ammo_box/magazine/wt550m9/wtic = 3,
 	)
 	crate_name = "wt-550 ammo crate"
+	crate_type = /obj/structure/closet/crate/secure/weapon
+
+/datum/supply_pack/security/armory/eva
+	name = "Security Hardsuit Crate"
+	desc = "Contains two security hardsuits and two security jetpacks."
+	cost = CARGO_CRATE_VALUE * 15
+	contains = list(
+		/obj/item/clothing/suit/space/hardsuit/sec = 2,
+		/obj/item/tank/jetpack/security = 2,
+	)
+	crate_name = "security hardsuit crate"
 	crate_type = /obj/structure/closet/crate/secure/weapon
