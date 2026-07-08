@@ -205,8 +205,8 @@
 		return FALSE
 
 	if(get_fuel() >= used || passive)
-		if(!reagents.remove_reagent(/datum/reagent/napalm, used * 0.5))
-			reagents.remove_reagent(/datum/reagent/fuel, used)
+		if(!reagents.remove_reagent(/datum/reagent/fuel, used))
+			reagents.remove_reagent(/datum/reagent/napalm, used * 0.5)
 		check_fuel()
 		return TRUE
 	else
