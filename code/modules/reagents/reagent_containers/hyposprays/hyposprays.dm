@@ -69,9 +69,10 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	. = ..()
 	if(vial)
 		. += span_notice("[vial] has [vial.reagents.total_volume]u remaining. You can [EXAMINE_HINT("R-click")] the hypospray in your active hand to remove a vial, or [EXAMINE_HINT("click")] it while it is in your offhand to remove a vial")
+		. += span_notice("[EXAMINE_HINT("right click")] to draw from a container or take a blood sample from a person.")
 	else
 		. += span_notice("It has no container loaded in. You can [EXAMINE_HINT("click")] with a vial to load it.")
-	. += span_notice("Currently injects [transfer_amount]u. [EXAMINE_HINT("ctrl click")] to change the transfer amount.")
+	. += span_notice("Currently transfers [transfer_amount]u. [EXAMINE_HINT("ctrl click")] to change the transfer amount.")
 	if(upgrade_flags & HYPO_UPGRADE_PIERCING)
 		. += span_notice("[src] has a polycarbonate diamond tipped needle, allowing it to pierce thick clothing.")
 	if(upgrade_flags & HYPO_UPGRADE_SPEED)
