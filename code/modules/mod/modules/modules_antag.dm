@@ -378,7 +378,7 @@
 		mod.wearer?.balloon_alert(mod.wearer, "mod disguised")
 
 /obj/item/mod/module/chameleon/proc/disguise(updating = TRUE)
-	if(!current_disguise)
+	if(!current_disguise && updating)
 		undo_disguise()
 		return
 	mod.name = initial(current_disguise.name)
@@ -406,8 +406,8 @@
 	mod.righthand_file = initial(mod.righthand_file)
 	mod.worn_icon_state = initial(mod.worn_icon_state)
 	mod.inhand_icon_state = initial(mod.inhand_icon_state)
-	mod.update_icon_state()
 	if(updating)
+		mod.update_icon_state()
 		mod.wearer?.update_clothing(mod.slot_flags)
 
 /obj/item/mod/module/chameleon/proc/get_slot_disguises(slot) as /list
