@@ -582,6 +582,7 @@
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
 	works_from_distance = TRUE
 	advanced = TRUE
+	give_wound_treatment_bonus = TRUE
 
 #define AID_EMOTION_NEUTRAL "neutral"
 #define AID_EMOTION_HAPPY "happy"
