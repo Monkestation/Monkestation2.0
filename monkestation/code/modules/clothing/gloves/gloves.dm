@@ -103,6 +103,11 @@
 			/obj/item/switchblade,
 			/obj/item/cane,
 			/obj/item/highfrequencyblade,
+			/obj/item/kinetic_crusher,
+			/obj/item/resonator,
+			/obj/item/pickaxe,
+			/obj/item/shovel,
+			/obj/item/trench_tool,
 		),
 		cant_hold_list = list(
 			/obj/item/gun/magic, // no magic
