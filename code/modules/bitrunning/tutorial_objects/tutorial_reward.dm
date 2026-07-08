@@ -1,6 +1,6 @@
 /*
 	Below is the tutorial_reward datum, for standardizing tutorial completion. it handles: checks, reward, and feedback (message, sound).
-	Simply instance this datum on init and call .give_reward() and it will handle everything for you.
+	Simply instance this datum on init and call .award() and it will handle everything for you.
 	Refer to /obj/item/autopsy_scanner/tutorial for simplest implementation.
 */
 /datum/tutorial_reward
