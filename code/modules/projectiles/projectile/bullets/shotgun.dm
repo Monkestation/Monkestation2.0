@@ -57,7 +57,7 @@
 /obj/projectile/bullet/incendiary/shotgun/no_trail
 	name = "precision incendiary slug"
 	damage = 35
-	fire_stacks = 5
+	fire_stacks = 6
 	leaves_fire_trail = FALSE
 
 /obj/projectile/bullet/pellet
