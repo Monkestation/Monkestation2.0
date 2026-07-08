@@ -86,7 +86,7 @@
 	owner.desc = initial(owner.desc)
 
 	owner.name = initial(owner.name)
-	owner.icon = initial(owner.icon_state)
+	owner.icon = initial(owner.icon)
 	owner.icon_state = initial(owner.icon_state)
 	owner.cut_overlays()
 
