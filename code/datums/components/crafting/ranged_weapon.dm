@@ -145,6 +145,10 @@
 	time = 20 SECONDS
 	category = CAT_WEAPON_RANGED
 
+/datum/crafting_recipe/ioncarbine/New()
+	..()
+	blacklist += subtypesof(/obj/item/gun/energy/laser)
+
 /datum/crafting_recipe/lasercannon
 	name = "Laser Cannon"
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
@@ -157,7 +161,7 @@
 	time = 20 SECONDS
 	category = CAT_WEAPON_RANGED
 
-/datum/crafting_recipe/ioncarbine/New()
+/datum/crafting_recipe/lasercannon/New()
 	..()
 	blacklist += subtypesof(/obj/item/gun/energy/laser)
 
