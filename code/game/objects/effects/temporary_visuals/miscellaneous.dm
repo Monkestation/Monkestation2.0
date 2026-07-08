@@ -133,11 +133,6 @@
 	icon_state = "firing_effect_red"
 	duration = 3
 
-/obj/effect/temp_visual/dir_setting/firing_effect/blue
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "firing_effect_blue"
-	duration = 3
-
 /obj/effect/temp_visual/dir_setting/firing_effect/yellow
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "firing_effect_yellow"
