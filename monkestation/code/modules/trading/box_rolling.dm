@@ -51,7 +51,8 @@
 	user.overlay_fullscreen("lb_bg", /atom/movable/screen/fullscreen/lootbox_overlay/background)
 	var/atom/movable/screen/fullscreen/lootbox_overlay/item_preview/preview = user.overlay_fullscreen("lb_preview", /atom/movable/screen/fullscreen/lootbox_overlay/item_preview)
 
-	var/obj/item/rolled_item = generate_lootbox_item(user, guarentee_unusual)
+	var/datum/reward_item/reward = generate_lootbox_item(user, guarentee_unusual)
+	var/obj/item/rolled_item = reward.item
 
 	preview.icon_state = rolled_item.icon_state
 	preview.icon =  rolled_item.icon

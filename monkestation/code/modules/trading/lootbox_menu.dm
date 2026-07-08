@@ -79,9 +79,14 @@
 	var/low_tokens_gained = 0
 	var/med_tokens_gained = 0
 	var/high_tokens_gained = 0
+	var/duplicates = 0
 	var/list/loadout_items = list()
+	var/datum/reward_item/reward
 	for(var/i in 1 to number_boxes)
-		result_loot = generate_lootbox_item(client_owner.mob)
+		reward = generate_lootbox_item(client_owner.mob)
+		result_loot = reward.item
+		if(reward.duplicate)
+			duplicates++
 		client_owner.prefs.lootboxes_owned--
 		if(client_owner.prefs.lootboxes_owned < 1)
 			break
@@ -97,7 +102,7 @@
 					high_tokens_gained++
 		else
 			loadout_items += result_loot
-	new /datum/lootbox_rewards_display(client_owner, low_tokens_gained, med_tokens_gained, high_tokens_gained, loadout_items, number_boxes)
+	new /datum/lootbox_rewards_display(client_owner, low_tokens_gained, med_tokens_gained, high_tokens_gained, loadout_items, number_boxes, duplicates)
 
 /// Datum that shows the rewards of opening mutiple lootboxes at once
 /datum/lootbox_rewards_display
@@ -111,16 +116,18 @@
 	var/high_tokens
 	/// A list of all the loadout items that were earned from opening boxes
 	var/list/loadout_items = list()
-	/// How many boxes were opened in total
-	var/total_boxes_opened
 	/// How many duplicates we recieved
 	var/duplicates
+	/// How many boxes were opened in total
+	var/totalboxes
 
-/datum/lootbox_rewards_display/New(client/owner, low_tokens, med_tokens, high_tokens, _loadout_items, total_boxes_opened)
+/datum/lootbox_rewards_display/New(client/owner, low_tokens, med_tokens, high_tokens, _loadout_items, total_boxes_opened, duplicates_total)
 	client_owner = owner
 	src.low_tokens = low_tokens
 	src.med_tokens = med_tokens
 	src.high_tokens = high_tokens
+	totalboxes = total_boxes_opened
+	duplicates = duplicates_total
 	loadout_items = list()
 	for(var/obj/item/item in _loadout_items)
 		loadout_items += list(list("name" = initial(item.name), "icon" = item.icon, "iconstate" = item.icon_state))
@@ -142,6 +149,8 @@
 	data["numbermedtokens"] = med_tokens
 	data["numberhightokens"] = high_tokens
 	data["loadoutitems"] = loadout_items
+	data["duplicates"] = duplicates
+	data["totalboxes"] = totalboxes
 
 	return data
 

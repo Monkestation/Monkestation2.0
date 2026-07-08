@@ -26,6 +26,7 @@
 //to find and adjust odds of lootbox rolls
 /proc/return_rolled(type_string, mob/user)
 	var/obj/item/temp
+	var/datum/reward_item/reward = new
 	switch(type_string)
 		if("Unusual")
 			var/path = pick(GLOB.possible_lootbox_clothing)
@@ -74,12 +75,17 @@
 				user.client.prefs.adjust_metacoins(user.ckey, 2500, "Duplicate Loadout Item", donator_multiplier = FALSE)
 				temp.color = COLOR_GRAY
 				temp.name = "Loadout Item [temp.name] (Duplicate)"
+				reward.duplicate = TRUE
 			else
 				picked.add_to_user(usr.client)
 				temp.name = "Loadout Item [temp.name]"
+			reward.item = temp
+	return reward
 
-	return temp
-
+///Temp datum to hold info on if the generated item is a duplicate, and the item itself
+/datum/reward_item
+	var/atom/item
+	var/duplicate = FALSE
 
 /datum/loadout_item/proc/add_to_user(client/buyer)
 	SHOULD_CALL_PARENT(TRUE)

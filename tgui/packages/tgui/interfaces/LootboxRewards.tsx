@@ -1,3 +1,4 @@
+import { Button } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import { Box, Divider, DmIcon, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -7,6 +8,8 @@ type Data = {
   numbermedtokens: number;
   numberhightokens: number;
   loadoutitems: RewardItem[];
+  duplicates: number;
+  totalboxes: number;
 };
 
 type RewardItem = {
@@ -39,11 +42,24 @@ export const LootboxRewards = (props) => {
     numbermedtokens,
     numberhightokens,
     loadoutitems = [],
+    duplicates,
+    totalboxes,
   } = data;
   return (
     <Window title="Loot! Wowza!" width={480} height={250}>
       <Stack fill gc={0}>
-        <Section title="Tokens" width="24%" p={0} m={0} height="100%">
+        <Section
+          title="Tokens"
+          width="24%"
+          p={0}
+          m={0}
+          height="100%"
+          buttons=<Button
+            icon="box"
+            content={totalboxes}
+            tooltip="The number of boxes opened"
+          />
+        >
           <Stack fill vertical>
             <Box textAlign="center" fontSize="14px" bold height="33%">
               Low
@@ -73,6 +89,11 @@ export const LootboxRewards = (props) => {
           height="100%"
           scrollable
           fill
+          buttons=<Button
+            icon="trash"
+            content={duplicates > 1 ? duplicates : 'None'}
+            tooltip="The number of duplicates recieved"
+          />
         >
           <Stack draggable wrap scrollable={true} fill>
             {loadoutitems.map((tab) => (
