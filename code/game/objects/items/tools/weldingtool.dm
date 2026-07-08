@@ -73,7 +73,7 @@
 /obj/item/weldingtool/update_overlays()
 	. = ..()
 	if(change_icons)
-		var/ratio = get_fuel() / max_fuel
+		var/ratio = reagents.total_volume / max_fuel
 		ratio = CEILING(ratio*4, 1) * 25
 		. += "[initial(icon_state)][ratio]"
 	if(welding)
@@ -82,19 +82,14 @@
 
 /obj/item/weldingtool/process(seconds_per_tick)
 	if(welding)
-		force = 15
-		damtype = BURN
-		use(TRUE)
-		update_appearance()
+		use(1)
 
 	//Welders left on now use up fuel, but lets not have them run out quite that fast
 	else
-		force = 3
-		damtype = BRUTE
-		update_appearance()
 		if(!can_off_process)
 			STOP_PROCESSING(SSobj, src)
 		return
+	update_appearance()
 
 	//This is to start fires. process() is only called if the welder is on.
 	open_flame()
@@ -105,7 +100,17 @@
 	return FIRELOSS
 
 /obj/item/weldingtool/screwdriver_act(mob/living/user, obj/item/tool)
-	flamethrower_screwdriver(tool, user)
+	if(welding)
+		to_chat(user, span_warning("Turn it off first!"))
+		return ITEM_INTERACT_FAILURE
+	status = !status
+	if(status)
+		to_chat(user, span_notice("You resecure [src] and close the fuel tank."))
+		reagents.flags &= ~(OPENCONTAINER)
+	else
+		to_chat(user, span_notice("[src] can now be attached, modified, and refuelled."))
+		reagents.flags |= OPENCONTAINER
+	add_fingerprint(user)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/weldingtool/attackby(obj/item/tool, mob/user, params)
@@ -194,11 +199,6 @@
 	switched_on(user)
 	update_appearance()
 
-/obj/item/weldingtool/proc/handle_fuel_and_temps(used = 0, mob/living/user)
-	use(used)
-	var/turf/location = get_turf(user)
-	location.hotspot_expose(700, 50, 1)
-
 /// Returns the amount of fuel in the welder
 /obj/item/weldingtool/proc/get_fuel()
 	return reagents.get_reagent_amount(/datum/reagent/fuel)
@@ -228,7 +228,7 @@
 
 /// Turns off the welder if there is no more fuel (does this really need to be its own proc?)
 /obj/item/weldingtool/proc/check_fuel(mob/user)
-	if(get_fuel() <= 0 && welding)
+	if(get_fuel() < 1 && welding)
 		set_light_on(FALSE)
 		switched_on(user)
 		update_appearance()
@@ -268,7 +268,13 @@
 
 /obj/item/weldingtool/examine(mob/user)
 	. = ..()
-	. += "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
+	. += "It contains [reagents.total_volume] unit\s of fuel out of [max_fuel]."
+	if(status)
+		. += span_notice("Looks like the fuel tank is currently secured firmly in-place.")
+		. += span_notice("You could use a [span_bold("Screwdriver")] on it to allow for attaching, modifying and using unique fuel.")
+	else
+		. += span_notice("Looks like the fuel tank is loose, allowing for modifying its contents freely and attaching or modifying it.")
+		. += span_notice("You could use a [span_bold("Screwdriver")] on it to secure it in-place.")
 
 /obj/item/weldingtool/get_temperature()
 	return welding * heat
@@ -288,20 +294,6 @@
 	else
 		to_chat(user, span_warning("You need more welding fuel to complete this task!"))
 		return FALSE
-
-/// Ran when the welder is attacked by a screwdriver.
-/obj/item/weldingtool/proc/flamethrower_screwdriver(obj/item/tool, mob/user)
-	if(welding)
-		to_chat(user, span_warning("Turn it off first!"))
-		return
-	status = !status
-	if(status)
-		to_chat(user, span_notice("You resecure [src] and close the fuel tank."))
-		reagents.flags &= ~(OPENCONTAINER)
-	else
-		to_chat(user, span_notice("[src] can now be attached, modified, and refuelled."))
-		reagents.flags |= OPENCONTAINER
-	add_fingerprint(user)
 
 /// First step of building a flamethrower (when a welder is attacked by rods)
 /obj/item/weldingtool/proc/flamethrower_rods(obj/item/tool, mob/user)
