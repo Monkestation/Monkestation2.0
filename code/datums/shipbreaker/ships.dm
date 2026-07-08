@@ -1,13 +1,3 @@
-/datum/map_template/shipbreaker
-	should_place_on_top = TRUE
-	keep_cached_map = TRUE
-
-	var/emag_only = 0
-	var/template_id
-	var/description
-	var/datum/parsed_map/lastparsed
-	var/tied_faction = DONK_CO_NAME
-
 /datum/map_template/shipbreaker/black_peregrine
 	name = "Black Peregrine"
 	template_id = "black_peregrine"
@@ -144,3 +134,4 @@
 	description = "Whale-type description"
 	mappath = "_maps/shipbreaking/whale.dmm"
 */
+mapp

@@ -263,5 +263,5 @@ SUBSYSTEM_DEF(credits)
 
 /obj/effect/title_card_object
 	plane = SPLASHSCREEN_PLANE
-	icon = 'monkestation/code/modules/and_roll_credits/icons/title_cards.dmi'
+	icon = 'icons/hud/title_cards.dmi'
 	screen_loc = "CENTER-4,BOTTOM"

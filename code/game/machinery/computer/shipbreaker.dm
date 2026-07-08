@@ -3,21 +3,20 @@
 	desc = "A computer console used to call a ship for breaking, how original!"
 	icon_screen = "holocontrol"
 
-
 	var/turf/bottom_left
 
-///what area type this holodeck loads into. linked turns into the nearest instance of this area
+	///what area type this holodeck loads into. linked turns into the nearest instance of this area
 	var/area/mapped_start_area = /area/space/shipbreak
 
-///the currently used map template
+	///the currently used map template
 	var/datum/map_template/shipbreaker/template
 
-///subtypes of this (but not this itself) are loadable programs
+	///subtypes of this (but not this itself) are loadable programs
 	var/ship_type = /datum/map_template/shipbreaker
 
-///links the shipbreaker zone to the computer
+	///links the shipbreaker zone to the computer
 	var/area/space/shipbreak/linked
-///cool variablw
+
 	var/spawn_area_clear = TRUE
 
 	///our overall ship health
@@ -28,7 +27,7 @@
 	var/total_turf = 0
 
 /obj/machinery/computer/shipbreaker/Initialize(mapload)
-	..()
+	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/shipbreaker/LateInitialize(mapload_arg)
@@ -73,12 +72,8 @@
 
 /obj/machinery/computer/shipbreaker/proc/clear_floor_plating()
 	for(var/turf/t in linked)
-		//if(isfloorturf(t))
-		//t.ScrapeAway()
 		if(isopenturf(t))
 			t.ScrapeAway()
-
-
 
 /obj/machinery/computer/shipbreaker/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -98,16 +93,15 @@
 	. = ..()
 	if(.)
 		return
-	. = TRUE
 
 	switch(action)
 		if("spawn_ship")
 			turf_count = 0
 			spawn_ship()
-			return
 		if("clear_floor_plating")
 			clear_floor_plating()
-			return
+
+	return TRUE
 
 /obj/machinery/computer/shipbreaker/proc/setup_health_tracker()
 	for(var/turf/turf in linked)
@@ -124,15 +118,13 @@
 	if(ship_health < 1)
 		ship_health = 0
 
-
 /obj/machinery/computer/shipbreaker/proc/damage_ship()
 	var/list/turfs = list()
 	for(var/turf/turf in linked)
 		turfs += turf
 
 	var/prob_chance_explode = 100
-	if(prob(0))
-		prob_chance_explode = 0
+
 	while(prob(prob_chance_explode))
 		prob_chance_explode -= 33
 		var/turf/picked_turf = pick(turfs)
