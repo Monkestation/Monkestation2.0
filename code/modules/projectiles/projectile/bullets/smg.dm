@@ -55,7 +55,8 @@
 /obj/projectile/bullet/incendiary/c46x30mm
 	name = "4.6x30mm incendiary bullet"
 	damage = 10
-	fire_stacks = 1
+	fire_stacks = 4
+	leaves_fire_trail = FALSE
 
 /obj/projectile/bullet/c46x30mm/salt
 	name = "4.6x30mm saltshot bullet"

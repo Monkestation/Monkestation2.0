@@ -155,7 +155,7 @@
 	id = "incendiary_slug"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
-	build_path = /obj/item/ammo_casing/shotgun/incendiary
+	build_path = /obj/item/ammo_casing/shotgun/incendiary/no_trail
 	category = list(
 		RND_CATEGORY_HACKED,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
