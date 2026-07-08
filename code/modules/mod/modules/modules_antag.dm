@@ -320,7 +320,7 @@
 		return
 	if(!current_disguise)
 		return
-	disguise()
+	disguise(FALSE)
 
 /obj/item/mod/module/chameleon/on_use()
 	. = ..()
@@ -377,7 +377,7 @@
 	if(current_disguise)
 		mod.wearer?.balloon_alert(mod.wearer, "mod disguised")
 
-/obj/item/mod/module/chameleon/proc/disguise()
+/obj/item/mod/module/chameleon/proc/disguise(updating = TRUE)
 	if(!current_disguise)
 		undo_disguise()
 		return
@@ -391,7 +391,8 @@
 	mod.righthand_file = initial(current_disguise.righthand_file)
 	mod.worn_icon_state = initial(current_disguise.worn_icon_state)
 	mod.inhand_icon_state = initial(current_disguise.inhand_icon_state)
-	mod.wearer?.update_clothing(mod.slot_flags)
+	if(updating)
+		mod.wearer?.update_clothing(mod.slot_flags)
 
 /obj/item/mod/module/chameleon/proc/undo_disguise()
 	mod.name = "[mod.theme.name] [initial(mod.name)]"
