@@ -316,7 +316,7 @@
 	SIGNAL_HANDLER
 
 	if(mod.active)
-		undo_disguise()
+		undo_disguise(FALSE)
 		return
 	if(!current_disguise)
 		return
@@ -394,7 +394,7 @@
 	if(updating)
 		mod.wearer?.update_clothing(mod.slot_flags)
 
-/obj/item/mod/module/chameleon/proc/undo_disguise()
+/obj/item/mod/module/chameleon/proc/undo_disguise(updating = TRUE)
 	mod.name = "[mod.theme.name] [initial(mod.name)]"
 	mod.desc = "[initial(mod.desc)] [mod.theme.desc]"
 	mod.icon_state = "[mod.skin]-[initial(mod.icon_state)]"
@@ -407,7 +407,8 @@
 	mod.worn_icon_state = initial(mod.worn_icon_state)
 	mod.inhand_icon_state = initial(mod.inhand_icon_state)
 	mod.update_icon_state()
-	mod.wearer?.update_clothing(mod.slot_flags)
+	if(updating)
+		mod.wearer?.update_clothing(mod.slot_flags)
 
 /obj/item/mod/module/chameleon/proc/get_slot_disguises(slot) as /list
 	if(cached_disguises["[slot]"]) // let's avoid repeated sorts on a list that'll always be the same for the same input
