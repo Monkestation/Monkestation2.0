@@ -55,7 +55,7 @@
 	objectives += ascend_objective
 
 /datum/antagonist/bloodling/get_preview_icon()
-	return finish_preview_icon(icon('monkestation/code/modules/antagonists/bloodling/sprites/bloodling_sprites.dmi', "bloodling_stage_1"))
+	return finish_preview_icon(icon('icons/mob/bloodling/bloodling_ascended.dmi', "bloodling_stage_1"))
 
 /// This generates the areas for the bloodling to ascend in
 /datum/antagonist/bloodling/proc/generate_ascension_areas()

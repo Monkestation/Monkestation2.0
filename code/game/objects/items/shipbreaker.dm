@@ -17,11 +17,12 @@
 
 /obj/item/stack/scrap
 	name = "scrap"
+	desc = "get some help if you see this"
+	icon = 'icons/obj/items/shipbreaking.dmi'
+	icon_state = "ship_plating"
 	singular_name = "scrap"
 	merge_type = /obj/item/stack/scrap
-	desc = "get some help if you see this"
-	icon = 'monkestation/code/modules/a_ship_in_need_of_breaking/icons/shipbreaking.dmi'
-	icon_state = "ship_plating"
+
 	var/point_value = 0 //how many shipbreaking points these give from recycling
 
 /obj/item/stack/scrap/plating

@@ -1,7 +1,7 @@
 /obj/structure/bloodling
 	name = "Abstract bloodling structure"
 	max_integrity = 100
-	icon = 'monkestation/code/modules/antagonists/bloodling/sprites/bloodling_sprites.dmi'
+	icon = 'icons/obj/bloodling/bloodling_obj.dmi'
 
 /obj/structure/bloodling/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == MELEE)

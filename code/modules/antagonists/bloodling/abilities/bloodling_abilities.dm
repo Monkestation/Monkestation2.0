@@ -2,8 +2,8 @@
 /datum/action/cooldown/bloodling
 	name = "debug"
 	desc = "Yell at coders if you see this"
-	button_icon = 'monkestation/code/modules/antagonists/bloodling/sprites/bloodling_abilities.dmi'
-	background_icon = 'monkestation/code/modules/antagonists/bloodling/sprites/bloodling_abilities.dmi'
+	button_icon = 'icons/mob/actions/actions_bloodling.dmi'
+	background_icon = 'icons/mob/actions/actions_bloodling.dmi'
 	background_icon_state = "button_bg"
 	shared_cooldown = MOB_SHARED_COOLDOWN_1
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED

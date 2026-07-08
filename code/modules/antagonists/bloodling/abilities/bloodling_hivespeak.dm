@@ -1,8 +1,8 @@
 /datum/action/cooldown/bloodling_hivespeak
 	name = "Hivespeak"
 	desc = "Whispered words that all in your hive can hear."
-	button_icon = 'monkestation/code/modules/antagonists/bloodling/sprites/bloodling_abilities.dmi'
-	background_icon = 'monkestation/code/modules/antagonists/bloodling/sprites/bloodling_abilities.dmi'
+	button_icon = 'icons/mob/actions/actions_bloodling.dmi'
+	background_icon = 'icons/mob/actions/actions_bloodling.dmi'
 	background_icon_state = "button_bg"
 	button_icon_state = "hivemind"
 

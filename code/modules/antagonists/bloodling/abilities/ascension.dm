@@ -177,7 +177,7 @@ GLOBAL_VAR(ascended_bloodling)
 
 /turf/open/misc/bloodling
 	name = "nerve threads"
-	icon = 'monkestation/code/modules/antagonists/bloodling/sprites/flesh_tile.dmi'
+	icon = 'icons/turf/floors/flesh_tile.dmi'
 	icon_state = "flesh_tile-0"
 	base_icon_state = "flesh_tile"
 	transform = MAP_SWITCH(TRANSLATE_MATRIX(-16, -16), matrix())

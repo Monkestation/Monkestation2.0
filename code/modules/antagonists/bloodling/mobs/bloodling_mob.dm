@@ -2,7 +2,7 @@
 /mob/living/basic/bloodling
 	name = "abstract bloodling"
 	desc = "A disgusting mass of code and flesh. Report this as an issue if you see it."
-	icon = 'monkestation/code/modules/antagonists/bloodling/sprites/bloodling_sprites.dmi'
+	icon = 'icons/mob/bloodling/bloodling_ascended.dmi'
 	gender = NEUTER
 	health = 50
 	maxHealth = 50
@@ -310,7 +310,7 @@
 	speed = 2.5
 
 /mob/living/basic/bloodling/proper/ascended
-	icon = 'monkestation/code/modules/antagonists/bloodling/sprites/bloodling_ascended_sprites.dmi'
+	icon = 'icons/mob/bloodling/bloodling_ascended.dmi'
 	icon_state = "bloodling_ascended"
 	icon_living = "bloodling_ascended"
 	icon_dead = "bloodling_ascended_dead"

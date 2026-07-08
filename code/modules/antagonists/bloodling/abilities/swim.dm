@@ -6,7 +6,7 @@
 	shared_cooldown = NONE
 	background_icon = 'icons/mob/actions/backgrounds.dmi'
 	background_icon_state = "bg_bloodling"
-	button_icon = 'monkestation/code/modules/antagonists/bloodling/sprites/bloodling_abilities.dmi'
+	button_icon = 'icons/mob/actions/actions_bloodling.dmi'
 	button_icon_state = "swim"
 
 /datum/action/cooldown/bloodling/swim/PreActivate(atom/target)

@@ -1,9 +1,9 @@
 /datum/action/cooldown/spell/aoe/repulse/bloodling
 	name = "Whiplash"
 	desc = "Grow whiplike appendages and throw back nearby attackers. Costs 25 biomass."
-	background_icon = 'monkestation/code/modules/antagonists/bloodling/sprites/bloodling_abilities.dmi'
+	background_icon = 'icons/mob/actions/actions_bloodling.dmi'
 	background_icon_state = "button_bg"
-	button_icon = 'monkestation/code/modules/antagonists/bloodling/sprites/bloodling_abilities.dmi'
+	button_icon = 'icons/mob/actions/actions_bloodling.dmi'
 	button_icon_state = "whiplash"
 	sound = 'sound/magic/tail_swing.ogg'
 	shared_cooldown = MOB_SHARED_COOLDOWN_1
@@ -21,7 +21,7 @@
 	var/biomass_cost = 25
 
 /obj/effect/temp_visual/bloodling_tentacle
-	icon = 'monkestation/code/modules/antagonists/bloodling/sprites/bloodling_sprites.dmi'
+	icon = 'icons/obj/bloodling/bloodling_obj.dmi'
 	icon_state = "tentacle_effect"
 	duration = 7
 
