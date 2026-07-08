@@ -81,17 +81,12 @@
 
 
 /obj/item/weldingtool/process(seconds_per_tick)
-	if(welding)
-		use(1)
-
-	//Welders left on now use up fuel, but lets not have them run out quite that fast
-	else
+	if(!welding)
 		if(!can_off_process)
 			STOP_PROCESSING(SSobj, src)
 		return
-	update_appearance()
 
-	//This is to start fires. process() is only called if the welder is on.
+	use(1, TRUE)
 	open_flame()
 
 
@@ -205,11 +200,11 @@
 
 
 /// Uses fuel from the welding tool.
-/obj/item/weldingtool/use(used = 0)
+/obj/item/weldingtool/use(used = 0, passive = FALSE)
 	if(!..() || !isOn() || !check_fuel())
 		return FALSE
 
-	if(get_fuel() >= used)
+	if(get_fuel() >= used || passive)
 		if(reagents.remove_reagent(/datum/reagent/napalm, used * 0.5))
 			check_fuel()
 			return TRUE
