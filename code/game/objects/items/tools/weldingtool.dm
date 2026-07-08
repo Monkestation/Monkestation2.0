@@ -205,10 +205,8 @@
 		return FALSE
 
 	if(get_fuel() >= used || passive)
-		if(reagents.remove_reagent(/datum/reagent/napalm, used * 0.5))
-			check_fuel()
-			return TRUE
-		reagents.remove_reagent(/datum/reagent/fuel, used)
+		if(!reagents.remove_reagent(/datum/reagent/napalm, used * 0.5))
+			reagents.remove_reagent(/datum/reagent/fuel, used)
 		check_fuel()
 		return TRUE
 	else
@@ -226,7 +224,7 @@
 
 /// Turns off the welder if there is no more fuel (does this really need to be its own proc?)
 /obj/item/weldingtool/proc/check_fuel(mob/user)
-	if(get_fuel() < 1 && welding)
+	if(get_fuel() <= 0 && welding)
 		set_light_on(FALSE)
 		switched_on(user)
 		update_appearance()
