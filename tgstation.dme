@@ -8278,7 +8278,6 @@
 #include "monkestation\code\modules\mod\mod_control.dm"
 #include "monkestation\code\modules\mod\mod_theme.dm"
 #include "monkestation\code\modules\mod\mod_types.dm"
-#include "monkestation\code\modules\mod\modules\modules_antag.dm"
 #include "monkestation\code\modules\modular_bartending\modglass.dm"
 #include "monkestation\code\modules\modular_bartending\garnishes\crafting_recipes.dm"
 #include "monkestation\code\modules\modular_bartending\garnishes\garnish_items.dm"
