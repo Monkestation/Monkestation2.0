@@ -102,7 +102,7 @@
 /obj/item/weldingtool/screwdriver_act(mob/living/user, obj/item/tool)
 	if(welding)
 		to_chat(user, span_warning("Turn it off first!"))
-		return ITEM_INTERACT_FAILURE
+		return ITEM_INTERACT_BLOCKING
 	status = !status
 	if(status)
 		to_chat(user, span_notice("You resecure [src] and close the fuel tank."))
@@ -201,7 +201,7 @@
 
 /// Returns the amount of fuel in the welder
 /obj/item/weldingtool/proc/get_fuel()
-	return reagents.get_reagent_amount(/datum/reagent/fuel)
+	return reagents.get_multiple_reagent_amounts(list(/datum/reagent/fuel, /datum/reagent/napalm))
 
 
 /// Uses fuel from the welding tool.
@@ -210,6 +210,9 @@
 		return FALSE
 
 	if(get_fuel() >= used)
+		if(reagents.remove_reagent(/datum/reagent/napalm, used * 0.5))
+			check_fuel()
+			return TRUE
 		reagents.remove_reagent(/datum/reagent/fuel, used)
 		check_fuel()
 		return TRUE
@@ -271,10 +274,14 @@
 	. += "It contains [reagents.total_volume] unit\s of fuel out of [max_fuel]."
 	if(status)
 		. += span_notice("Looks like the fuel tank is currently secured firmly in-place.")
-		. += span_notice("You could use a [span_bold("Screwdriver")] on it to allow for attaching, modifying and using unique fuel.")
+		. += span_notice("You could use a [span_bold("screwdriver")] on it to allow for attaching, modifying and accessing the fuel.")
 	else
 		. += span_notice("Looks like the fuel tank is loose, allowing for modifying its contents freely and attaching or modifying it.")
-		. += span_notice("You could use a [span_bold("Screwdriver")] on it to secure it in-place.")
+		. += span_notice("You could use a [span_bold("screwdriver")] on it to secure it in-place.")
+
+/obj/item/weldingtool/examine_more(mob/user)
+	. = ..()
+	. += span_notice("You think replacing its fuel with napalm could make the flames last a lot longer.")
 
 /obj/item/weldingtool/get_temperature()
 	return welding * heat
