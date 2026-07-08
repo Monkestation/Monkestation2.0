@@ -314,9 +314,7 @@
 
 /obj/item/mod/module/chameleon/proc/on_update_icon_state()
 	SIGNAL_HANDLER
-
 	if(mod.active)
-		undo_disguise(FALSE)
 		return
 	if(!current_disguise)
 		return
@@ -378,8 +376,8 @@
 		mod.wearer?.balloon_alert(mod.wearer, "mod disguised")
 
 /obj/item/mod/module/chameleon/proc/disguise(updating = TRUE)
-	if(!current_disguise && updating)
-		undo_disguise()
+	if(!current_disguise)
+		undo_disguise(updating)
 		return
 	mod.name = initial(current_disguise.name)
 	mod.desc = initial(current_disguise.desc)
