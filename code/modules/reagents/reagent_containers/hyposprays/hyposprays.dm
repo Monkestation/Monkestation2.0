@@ -140,8 +140,6 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 			if(HYPO_INJECT)
 				if(target.reagents)
 					return inject(user, target)
-				else
-					return
 			if(HYPO_SPRAY)
 				return spray(user, target)
 
@@ -325,7 +323,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/hypospray/proc/draw(mob/living/user, atom/target)
-	if(vial == null)
+	if(!vial)
 		balloon_alert(user, "no vial!")
 		return ITEM_INTERACT_BLOCKING
 
