@@ -9,6 +9,8 @@
 
 	///If this is set, this will be the emotion the display uses, and it will not be able to be edited by an AI. Used for map VV edits.
 	var/custom_emotion
+	///Mutable appearance custom portrait icon.
+	var/mutable_appearance/custom_portrait_icon
 	///The AI that controls the core display, it changes emotions as they do.
 	var/mob/living/silicon/ai/connected_ai
 
@@ -16,7 +18,7 @@
 	. = ..()
 	if(custom_emotion)
 		custom_emotion = resolve_ai_icon(custom_emotion)
-		set_ai(custom_emotion)
+		update_appearance(UPDATE_ICON)
 		return
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_AI_CREATED, PROC_REF(on_ai_creation))
@@ -33,6 +35,7 @@
 /obj/machinery/status_display/ai_core/Destroy()
 	connected_ai = null
 	custom_emotion = null
+	custom_portrait_icon = null
 	return ..()
 
 /obj/machinery/status_display/ai_core/examine(mob/user)
@@ -103,13 +106,6 @@
 			but it didn't have enough CPU power!")
 		)
 
-/obj/machinery/status_display/ai_core/proc/set_ai(new_icon_state, new_icon)
-	icon = initial(icon)
-	if(new_icon)
-		icon = new_icon
-	if(new_icon_state)
-		icon_state = new_icon_state
-
 /obj/machinery/status_display/ai_core/on_set_machine_stat(old_value)
 	. = ..()
 	update_appearance(UPDATE_ICON)
@@ -120,7 +116,14 @@
 		icon = initial(icon)
 		icon_state = initial(icon_state)
 		return .
-	set_ai(custom_emotion)
+	if(custom_emotion)
+		icon_state = custom_emotion
+	return .
+
+/obj/machinery/status_display/ai_core/update_overlays(updates)
+	. = ..()
+	if(custom_portrait_icon)
+		. += custom_portrait_icon
 	return .
 
 /obj/machinery/status_display/ai_core/proc/assign_ai(mob/living/silicon/ai/new_ai)
@@ -152,5 +155,10 @@
 ///Called when an AI we're registered to changes their screen, we follow to what icon_used is.
 /obj/machinery/status_display/ai_core/proc/on_ai_screen_change(mob/living/silicon/ai/source, icon_used)
 	SIGNAL_HANDLER
-	custom_emotion = icon_used
-	set_ai(custom_emotion)
+
+	if(istype(icon_used, /mutable_appearance))
+		custom_emotion = "ai-portrait-active"
+		custom_portrait_icon = icon_used
+	else
+		custom_emotion = icon_used
+	update_appearance(UPDATE_ICON)
