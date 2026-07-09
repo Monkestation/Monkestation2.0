@@ -4050,7 +4050,7 @@
 #include "code\modules\clothing\outfits\captainbunny.dm"
 #include "code\modules\clothing\outfits\ert.dm"
 #include "code\modules\clothing\outfits\event.dm"
-#include "code\modules\clothing\outfits\HoSbunny.dm"
+#include "code\modules\clothing\outfits\hosbunny.dm"
 #include "code\modules\clothing\outfits\plasmaman.dm"
 #include "code\modules\clothing\outfits\standard.dm"
 #include "code\modules\clothing\outfits\vr.dm"
