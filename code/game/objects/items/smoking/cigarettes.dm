@@ -711,6 +711,30 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A manky old cigar butt."
 	icon_state = "cigarbutt"
 
+/obj/item/clothing/mask/cigarette/cigar/intern
+	name = "the Classic"
+	desc = "Founded by Johnathan 'Unpaid' Internship, these cigars have been made with only the finest possible ingredients that have been hand-picked and crafted since 1728."
+	icon_state = "intern_cigaroff"
+	icon_on = "intern_cigaron"
+	icon_off = "intern_cigaroff"
+	smoketime = 30 MINUTES
+	chem_volume = 60
+	list_reagents = list(/datum/reagent/drug/nicotine = 35, /datum/reagent/determination = 3)
+
+//purple edition contains random chems, like a maint pill. but purple cigar form.
+/obj/item/clothing/mask/cigarette/cigar/intern/purple
+	name = "the Prohibition"
+	desc = "Like the Roaring 20's, these Cigars offer a taste of your wild side. Make sure to avoid the coppers!"
+	icon_state = "intern_cigar_purpleoff"
+	icon_on = "intern_cigar_purpleon"
+	icon_off = "intern_cigar_purpleoff"
+	smoketime = 30 MINUTES
+	chem_volume = 60
+
+/obj/item/clothing/mask/cigarette/cigar/intern/purple/Initialize(mapload)
+	list_reagents = list(pick_weight(GLOB.weighted_random_reagents) = rand(1,5), /datum/reagent/drug/nicotine = 20) // Called before init because init actually makes the chems and we need to know what chems we are making before we do that
+	. = ..()
+
 /////////////////
 //SMOKING PIPES//
 /////////////////
