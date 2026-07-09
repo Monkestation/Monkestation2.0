@@ -1,0 +1,11 @@
+author: "DrDiasyl, SirNightKnight"
+delete-after: True
+changes:
+  - image: "Energy weapon muzzle flashes got a new sprite, each direction included!"
+  - image: "Temperature Gun \"BAKE\" beams are now lava colored"
+  - rscadd: "added the laser cannon. a new laser weapon researchable by science."
+  - balance: "energy guns can fire off 16 lethal lasers total, up from 12."
+  - balance: "moved x-ray laser guns to nuclear weapon tech."
+  - image: "ported inhand sprites for the retro laser, laser tag, and laser cannon guns from vg."
+  - sound: "energy guns have sounds for selecting different modes."
+  - image: "hellfire lasers use the heavy laser sprite to better differentiate them from normal lasers."

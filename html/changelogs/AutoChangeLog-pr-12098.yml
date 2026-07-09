@@ -1,0 +1,5 @@
+author: "PotatoTomahto"
+delete-after: True
+changes:
+  - balance: "advanced health analyzer applies wound treatment bonus when scanning wounds"
+  - balance: "technetium also upgrades wound scans"

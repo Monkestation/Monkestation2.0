@@ -1,0 +1,4 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - bugfix: "incendiary bullet fire trails auto-delete in 2.5 seconds to mitigate hangtime from lag."

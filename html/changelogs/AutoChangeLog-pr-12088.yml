@@ -1,0 +1,9 @@
+author: "Pickle-Coding, SirNightKnight"
+delete-after: True
+changes:
+  - bugfix: "fixed the modsuit chameleon module breaking when an item is inserted into the modsuit's storage."
+  - bugfix: "fixed large mortars not juicing items correctly."
+  - bugfix: "russian helmets can now properly store stripper clips as advertised."
+  - bugfix: "fixed blood brother ability icons having an error background."
+  - bugfix: "Fixes the brig cell timer adjustment not working correctly on live timers."
+  - qol: "cell timer sentence presets now reflect the current sentence times of Space Law."
