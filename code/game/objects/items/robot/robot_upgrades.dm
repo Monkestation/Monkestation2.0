@@ -1059,8 +1059,8 @@
 
 /// Downgrades the syringe to its initial values.
 /obj/item/borg/upgrade/syringe/proc/downgrade_syringe(mob/living/silicon/robot/borg, obj/item/reagent_containers/syringe/syringe_to_downgrade)
-	syringe_to_downgrade.name = initial(syringe_to_downgrade)
-	syringe_to_downgrade.desc = initial(syringe_to_downgrade)
+	syringe_to_downgrade.name = initial(syringe_to_downgrade.name)
+	syringe_to_downgrade.desc = initial(syringe_to_downgrade.desc)
 	syringe_to_downgrade.base_icon_state = initial(syringe_to_downgrade.base_icon_state)
 	var/obj/item/reagent_containers/syringe/old_syringe = new syringe_to_downgrade.type()
 	syringe_to_downgrade.possible_transfer_amounts = old_syringe.possible_transfer_amounts.Copy() // Created only to get a list.
