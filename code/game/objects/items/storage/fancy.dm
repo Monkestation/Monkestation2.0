@@ -465,7 +465,7 @@
 
 /obj/item/storage/fancy/cigarettes/cigars/update_overlays()
 	. = ..()
-	if(!open_status || cigar_overlay)
+	if(!open_status || !cigar_overlay)
 		return
 	var/cigar_position = 1 //generate sprites for cigars in the box
 	for(var/obj/item/clothing/mask/cigarette/cigar/smokes in contents)
