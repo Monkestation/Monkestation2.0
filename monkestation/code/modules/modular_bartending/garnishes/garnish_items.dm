@@ -100,7 +100,12 @@
 	sharpness = SHARP_POINTY
 	throwforce = 3
 	throw_speed = 1
-	embedding = EMBED_HARMLESS
+	embed_type = /datum/embedding/olives
+
+/datum/embedding/olives
+	pain_mult = 0
+	jostle_pain_mult = 0
+	ignore_throwspeed_threshold = 0
 
 /obj/item/garnish/umbrellared
 	name = "red drink umbrella"

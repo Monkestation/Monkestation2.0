@@ -180,22 +180,22 @@
 	return TRUE
 
 /obj/item/toy/balloon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/ammo_casing/caseless/foam_dart) && ismonkey(user))
+	if(istype(attacking_item, /obj/item/ammo_casing/foam_dart) && ismonkey(user))
 		pop_balloon(monkey_pop = TRUE)
 	else
 		return ..()
 
 /obj/item/toy/balloon/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	if(ismonkey(throwingdatum.thrower) && istype(AM, /obj/item/ammo_casing/caseless/foam_dart))
+	if(ismonkey(throwingdatum.thrower) && istype(AM, /obj/item/ammo_casing/foam_dart))
 		pop_balloon(monkey_pop = TRUE)
 	else
 		return ..()
 
-/obj/item/toy/balloon/bullet_act(obj/projectile/P)
-	if((istype(P,/obj/projectile/bullet/p50) || istype(P,/obj/projectile/bullet/reusable/foam_dart)) && ismonkey(P.firer))
+/obj/item/toy/balloon/bullet_act(obj/projectile/proj)
+	if((istype(proj, /obj/projectile/bullet/p50) || istype(proj,/obj/projectile/bullet/foam_dart)) && ismonkey(proj.firer))
 		pop_balloon(monkey_pop = TRUE)
-	else
-		return ..()
+		return BULLET_ACT_HIT
+	return ..()
 
 /obj/item/toy/balloon/proc/pop_balloon(monkey_pop = FALSE)
 	playsound(src, 'sound/effects/cartoon_pop.ogg', 50, vary = TRUE)
@@ -1460,7 +1460,7 @@
 /obj/item/toy/eldritch_book
 	name = "Codex Cicatrix"
 	desc = "A toy book that closely resembles the Codex Cicatrix. Covered in fake polyester human flesh and has a huge goggly eye attached to the cover. The runes are gibberish and cannot be used to summon demons... Hopefully?"
-	icon = 'icons/obj/eldritch.dmi'
+	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "book"
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("sacrifices", "transmutes", "graspes", "curses")
@@ -1757,7 +1757,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 /obj/item/gun/magic/sickly_blade_toy
 	name = "plastic replica blade"
 	desc = "A sickly green crescent blade, decorated with a plastic eye. You feel like this was cheaply made. A Donk Co logo is on the hilt."
-	icon = 'icons/obj/eldritch.dmi'
+	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "eldritch_blade"
 	inhand_icon_state = "eldritch_blade"
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
@@ -1781,7 +1781,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 	to_chat(user, span_warning("The [name] grumbles quietly. It is not yet ready to fire again!"))
 
 /obj/item/gun/magic/sickly_blade_toy/attack(mob/living/M, mob/living/user)
-	if((IS_HERETIC(user) || IS_HERETIC_MONSTER(user)))
+	if(IS_HERETIC_OR_MONSTER(user))
 		to_chat(user, span_danger("You feel a pulse of the old gods lash out at your mind, laughing how you're using a fake blade!"))
 	return ..()
 

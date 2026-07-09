@@ -16,7 +16,7 @@
 
 	var/obj/projectile/hallucination/fake_projectile = new fake_type(start, src)
 
-	fake_projectile.preparePixelProjectile(hallucinator, start)
+	fake_projectile.aim_projectile(hallucinator, start)
 	fake_projectile.fire()
 
 	QDEL_IN(src, 10 SECONDS) // Should clean up the projectile if it somehow gets stuck.
@@ -32,7 +32,6 @@
 	ricochets_max = 0
 	ricochet_chance = 0
 	damage = 0
-	projectile_type = /obj/projectile/hallucination
 	log_override = TRUE
 	/// Our parent hallucination that's created us
 	var/datum/hallucination/parent
@@ -202,7 +201,7 @@
 	name = "laser"
 	damage_type = BURN
 	hal_icon_state = "laser"
-	hal_fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+	hal_fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
 	hal_hitsound = 'sound/weapons/sear.ogg'
 	hal_hitsound_wall = 'sound/weapons/effects/searwall.ogg'
 	hal_impact_effect = "impact_laser"
@@ -213,7 +212,7 @@
 
 	ricochets_max = 50
 	ricochet_chance = 80
-	reflectable = REFLECT_NORMAL // No idea if this works
+	reflectable = TRUE
 
 /obj/projectile/hallucination/laser/apply_effect_to_hallucinator(mob/living/afflicted)
 	afflicted.stamina.adjust(-10)
@@ -249,7 +248,7 @@
 	name = "disabler beam"
 	damage_type = STAMINA
 	hal_icon_state = "omnilaser"
-	hal_fire_sound = 'monkestation/sound/weapons/gun/energy/Laser2.ogg'
+	hal_fire_sound = 'sound/weapons/gun/energy/Laser2.ogg'
 	hal_hitsound = 'sound/weapons/tap.ogg'
 	hal_hitsound_wall = 'sound/weapons/effects/searwall.ogg'
 	hal_impact_effect = "impact_laser_blue"
@@ -259,7 +258,7 @@
 
 	ricochets_max = 50
 	ricochet_chance = 80
-	reflectable = REFLECT_NORMAL // No idea if this works
+	reflectable = TRUE
 
 /obj/projectile/hallucination/disabler/apply_effect_to_hallucinator(mob/living/afflicted)
 	afflicted.stamina.adjust(-15)

@@ -6,7 +6,7 @@
 	category = EVENT_CATEGORY_AI
 	description = "Gives the AI a new, randomized law."
 	min_wizard_trigger_potency = 2
-	max_wizard_trigger_potency = 7
+	max_wizard_trigger_potency = 100
 	track = EVENT_TRACK_MODERATE
 	tags = list(TAG_TARGETED, TAG_ALIEN)
 	event_group = /datum/event_group/bsod
@@ -35,7 +35,7 @@
 
 /datum/round_event/ion_storm/start()
 	//AI laws
-	for(var/mob/living/silicon/ai/M in GLOB.alive_mob_list)
+	for(var/mob/living/silicon/ai/M in GLOB.ai_list)
 		M.laws_sanity_check()
 		if(M.stat != DEAD && !M.incapacitated())
 			if(prob(replaceLawsetChance))

@@ -9,6 +9,12 @@
 	if(!target.mind || HAS_MIND_TRAIT(target, TRAIT_UNCONVERTABLE))
 		return VASSALIZATION_BANNED
 
+	if(isliving(target))
+		var/mob/living/living_target = target
+		// just gets us past checks, bc something *UNIQUE* happens if you try to vassalize a moonatic
+		if(living_target.has_status_effect(/datum/status_effect/heretic_passive/moon))
+			return VASSALIZATION_ALLOWED
+
 	for(var/datum/antagonist/antag_datum as anything in target.mind.antag_datums)
 		if(antag_datum.type in vassal_banned_antags)
 			return VASSALIZATION_BANNED
@@ -72,6 +78,34 @@
  */
 /datum/antagonist/bloodsucker/proc/make_vassal(mob/living/conversion_target, special_type)
 	if(!can_make_vassal(conversion_target))
+		return null
+
+	// conversion gets REVERSED for moon heretics.
+	if(conversion_target.has_status_effect(/datum/status_effect/heretic_passive/moon))
+		to_chat(owner.current, span_userdanger("You begin to pour your will into [conversion_target]'s mind, \
+			but the demand does not stop. It draws you in, like a lamb caught in raPID WATERS, SWEPT INTO THE TUNNEL WITHIN, \
+			DRUMS DEAFENING AS THE WATERS CRASH, THE LIGHTS AND SOUNDS DANCING ABOVE THE DROWNING DEPTHS, SWALLOWING YOU WHOLE."), type = MESSAGE_TYPE_WARNING)
+		to_chat(owner.current, span_hypnophrase(span_reallybig("STOP THE NOISE OUT OF THE WATERS STOP STOP STOP THE MUSIC STOP STOP.")), type = MESSAGE_TYPE_WARNING)
+
+		// congrats moon heretic, the hubris of a creature of the night has earned you one USEFUL minion!
+		if(!conversion_target.mind.has_antag_datum(/datum/antagonist/lunatic/master))
+			conversion_target.mind.add_antag_datum(/datum/antagonist/lunatic/master)
+
+		var/datum/antagonist/lunatic/lunatic = owner.add_antag_datum(/datum/antagonist/lunatic)
+		lunatic.set_master(conversion_target.mind, conversion_target)
+
+		if(iscarbon(owner.current))
+			var/mob/living/carbon/current_carbon = owner.current
+			var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet = new(current_carbon.drop_location())
+			var/static/list/slots = list(
+				LOCATION_NECK,
+				LOCATION_HANDS,
+				LOCATION_RPOCKET,
+				LOCATION_LPOCKET,
+				LOCATION_BACKPACK,
+			)
+			current_carbon.equip_in_one_of_slots(amulet, slots, qdel_on_fail = FALSE)
+		INVOKE_ASYNC(owner.current, TYPE_PROC_REF(/mob, emote), "laugh")
 		return null
 
 	//Check if they used to be a Vassal and was stolen.

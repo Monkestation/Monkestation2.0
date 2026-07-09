@@ -34,6 +34,10 @@
 		if(5 to TANK_DISPENSER_CAPACITY)
 			. += "plasma-5"
 
+/obj/structure/tank_dispenser/attack_ai(mob/user)
+	. = ..()
+	return ui_interact(user)
+
 /obj/structure/tank_dispenser/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
@@ -119,7 +123,10 @@
 	var/existing_tank = locate(tank_type) in src
 	if (isnull(existing_tank))
 		existing_tank = new tank_type
-	receiver.put_in_hands(existing_tank)
+	if(iscyborg(receiver))
+		receiver.transferItemToLoc(existing_tank, receiver.loc)
+	else
+		receiver.put_in_hands(existing_tank)
 	return existing_tank
 
 #undef TANK_DISPENSER_CAPACITY

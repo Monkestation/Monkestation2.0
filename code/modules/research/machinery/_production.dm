@@ -26,6 +26,9 @@
 	/// Optional tgui theme override for this fabricator.
 	var/ui_theme
 
+	/// Multiplier for production speed.
+	var/production_speed_multiplier = 0.1
+
 /obj/machinery/rnd/production/Initialize(mapload)
 	materials = AddComponent(
 		/datum/component/remote_materials, \
@@ -71,7 +74,7 @@
 	if(!stripe_color)
 		return
 
-	var/mutable_appearance/stripe = mutable_appearance('monkestation/icons/obj/machines/research.dmi', "protolathe_stripe[panel_open ? "_t" : ""]")
+	var/mutable_appearance/stripe = mutable_appearance('icons/obj/machines/research.dmi', "protolathe_stripe[panel_open ? "_t" : ""]")
 	stripe.color = stripe_color
 	. += stripe
 
@@ -177,7 +180,7 @@
 	flick_overlay_view(lathe_material_insertion_animation(mat_ref.greyscale_colors), 1.5 SECONDS)
 
 	//now play the progress bar animation
-	flick_overlay_view(mutable_appearance('monkestation/icons/obj/machines/research.dmi', "protolathe_progress"), 1 SECONDS)
+	flick_overlay_view(mutable_appearance('icons/obj/machines/research.dmi', "protolathe_progress"), 1 SECONDS)
 
 ///When materials are instered into local storage
 /obj/machinery/rnd/production/proc/local_material_insert(container, obj/item/item_inserted, last_inserted_id, list/mats_consumed, amount_inserted, atom/context)
@@ -348,6 +351,7 @@
 				charge_per_item += design.materials[material]
 			charge_per_item = ROUND_UP((charge_per_item / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * coefficient * active_power_usage)
 			var/build_time_per_item = (design.construction_time * design.lathe_time_factor * efficiency_coeff) ** 0.8
+			build_time_per_item *= production_speed_multiplier
 
 			//start production
 			busy = TRUE

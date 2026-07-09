@@ -85,7 +85,7 @@
 
 	if(acid_projectile)
 		var/obj/projectile/spit_projectile = new acid_projectile(user.loc)
-		spit_projectile.preparePixelProjectile(target, user, modifiers)
+		spit_projectile.aim_projectile(target, user, modifiers)
 		spit_projectile.firer = user
 		spit_projectile.fire()
 		playsound(user, spit_sound, 100, TRUE, 5, 0.9)

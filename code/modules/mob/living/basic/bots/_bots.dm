@@ -748,7 +748,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		return
 	update_appearance()
 
-/mob/living/basic/bot/rust_heretic_act()
+/mob/living/basic/bot/rust_heretic_act(rust_strength)
 	adjustBruteLoss(400)
 
 /mob/living/basic/bot/proc/retrieve_access(atom/source, list/player_access)

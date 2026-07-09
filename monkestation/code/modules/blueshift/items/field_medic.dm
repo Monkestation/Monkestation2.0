@@ -115,7 +115,7 @@
 	tool_behaviors = list(TOOL_WELDER)
 
 //Marksman's throwing knife and a pouch for it
-/obj/item/knife/combat/throwing
+/obj/item/knife/throwing
 	name = "throwing knife"
 	desc = "While very well weighted for throwing, the distribution of mass makes it unwieldy for use in melee."
 	icon = 'monkestation/code/modules/blueshift/icons/throwing.dmi'
@@ -123,8 +123,12 @@
 	force = 12 // don't stab with this
 	throwforce = 30 // 38 force on embed? compare contrast with throwing stars.
 	throw_speed = 4
-	embedding = list("pain_mult" = 4, "embed_chance" = 75, "fall_chance" = 10) // +10 embed chance up from combat knife's 65
-	bayonet = FALSE // throwing knives probably aren't made for use as bayonets
+	embed_type = /datum/embedding/throwing_knife // +10 embed chance up from combat knife's 65
+
+/datum/embedding/throwing_knife
+	embed_chance = 75
+	pain_mult = 4
+	fall_chance = 10
 
 /obj/item/storage/pouch/ammo/marksman
 	name = "marksman's knife pouch"
@@ -145,8 +149,8 @@
 	can_hold = typecacheof(list(/obj/item/knife/combat))
 
 /obj/item/storage/pouch/ammo/marksman/PopulateContents() //can kill most basic enemies with 5 knives, though marksmen shouldn't be soloing enemies anyways
-	new /obj/item/knife/combat/throwing(src)
-	new /obj/item/knife/combat/throwing(src)
-	new /obj/item/knife/combat/throwing(src)
-	new /obj/item/knife/combat/throwing(src)
-	new /obj/item/knife/combat/throwing(src)
+	new /obj/item/knife/throwing(src)
+	new /obj/item/knife/throwing(src)
+	new /obj/item/knife/throwing(src)
+	new /obj/item/knife/throwing(src)
+	new /obj/item/knife/throwing(src)

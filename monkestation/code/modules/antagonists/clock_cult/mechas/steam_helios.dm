@@ -57,7 +57,7 @@
 	return ..()
 
 //kinda lame to lose it to a single heretic clicking it once
-/obj/vehicle/sealed/mecha/steam_helios/rust_heretic_act()
+/obj/vehicle/sealed/mecha/steam_helios/rust_heretic_act(rust_strength)
 	visible_message(span_warning("\The [src] glows for a second, but is uneffected by the magic!"))
 	return
 
@@ -80,9 +80,9 @@
 
 /datum/action/vehicle/sealed/mecha/judicial_mark
 	name = "Judicial Mark"
-	button_icon = 'monkestation/icons/mob/clock_cult/actions_clock.dmi'
+	button_icon = 'icons/mob/clock_cult/actions_clock.dmi'
 	button_icon_state = "Judicial Marker"
-	background_icon = 'monkestation/icons/mob/clock_cult/background_clock.dmi'
+	background_icon = 'icons/mob/clock_cult/background_clock.dmi'
 	background_icon_state = "bg_clock"
 	///how often the action can be used
 	var/mark_cooldown = 30 SECONDS
@@ -148,7 +148,7 @@
 	name = "Steam Discharge"
 	button_icon = 'icons/effects/effects.dmi'
 	button_icon_state = "smoke"
-	background_icon = 'monkestation/icons/mob/clock_cult/background_clock.dmi'
+	background_icon = 'icons/mob/clock_cult/background_clock.dmi'
 	background_icon_state = "bg_clock"
 	///how often the action can be used
 	var/discharge_cooldown = 45 SECONDS

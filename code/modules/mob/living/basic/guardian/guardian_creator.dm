@@ -9,12 +9,6 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		option.info = span_boldnotice(initial(guardian_path.creator_desc))
 		.[guardian_path] = option
 
-	//MONKESTATION EDIT START
-	// Hack to change Timestop Guardian's radial icon, since it's in a different DMI
-	var/datum/radial_menu_choice/timestop_opt = .[/mob/living/basic/guardian/standard/timestop]
-	timestop_opt.image = image(icon = 'monkestation/icons/bloodsuckers/timestop_guardian.dmi', icon_state = "timestop")
-	//MONKESTATION EDIT END
-
 /// An item which grants you your very own soul buddy
 /obj/item/guardian_creator
 	name = "enchanted deck of tarot cards"
@@ -127,6 +121,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	to_chat(user, guardian_theme.get_fluff_string(summoned_guardian.guardian_type))
 	to_chat(user, replacetext(success_message, "%GUARDIAN", mob_name))
 	summoned_guardian.client?.init_verbs()
+	summoned_guardian.updatehealth() // Set the initial health hud
 	return summoned_guardian
 
 /// Checks to ensure we're still capable of using the radial selector

@@ -22,6 +22,14 @@
 	desc = "Micro-mechanical manipulator for retracting stuff."
 	toolspeed = 0.5
 
+/obj/item/retractor/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_retractor"
+
+/obj/item/retractor/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_retractor_alien"
+	toolspeed = 0.25
 
 /obj/item/hemostat
 	name = "hemostat"
@@ -49,6 +57,14 @@
 	desc = "Tiny servos power a pair of pincers to stop bleeding."
 	toolspeed = 0.5
 
+/obj/item/hemostat/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_hemostat"
+
+/obj/item/hemostat/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_hemostat_alien"
+	toolspeed = 0.25
 
 /obj/item/cautery
 	name = "cautery"
@@ -78,6 +94,14 @@
 /obj/item/cautery/augment
 	desc = "A heated element that cauterizes wounds."
 	toolspeed = 0.5
+
+/obj/item/cautery/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_cautery"
+
+/obj/item/cautery/cyborg/alien
+	icon_state = "toolkit_mediborg_cautery_alien"
+	toolspeed = 0.25
 
 /obj/item/cautery/advanced
 	name = "searing tool"
@@ -179,6 +203,15 @@
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 
+/obj/item/surgicaldrill/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_drill"
+
+/obj/item/surgicaldrill/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_drill_alien"
+	toolspeed = 0.25
+
 /obj/item/scalpel
 	name = "scalpel"
 	desc = "Cut, cut, and once more cut."
@@ -227,9 +260,15 @@
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
 	toolspeed = 0.5
 
-/obj/item/scalpel/borg // Monke edit start:
+/obj/item/scalpel/cyborg
 	desc = "Ultra-sharp blade attached directly to your servos for extra-accuracy."
-	toolspeed= 0.5 // Monke Edit end: Added a borg scalpel for some different flavor text since, ya know borgs dont exactly have "Bones"
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_scalpel"
+
+/obj/item/scalpel/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_scalpel_alien"
+	toolspeed = 0.25
 
 /obj/item/circular_saw
 	name = "circular saw"
@@ -277,6 +316,14 @@
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 
+/obj/item/circular_saw/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_saw"
+
+/obj/item/circular_saw/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_saw_alien"
+	toolspeed = 0.25
 
 /obj/item/surgical_drapes
 	name = "surgical drapes"
@@ -294,7 +341,11 @@
 	. = ..()
 	AddComponent(/datum/component/surgery_initiator)
 
-/obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
+/obj/item/surgical_drapes/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_surgicaldrapes"
+
+/obj/item/surgical_processor
 	name = "surgical processor"
 	desc = "A device for scanning and initiating surgeries from a disk or operating computer."
 	icon = 'icons/obj/device.dmi'
@@ -329,10 +380,6 @@
 	RegisterSignal(user, COMSIG_SURGERY_STARTING, PROC_REF(check_surgery))
 
 /obj/item/surgical_processor/dropped(mob/user, silent)
-	. = ..()
-	UnregisterSignal(user, COMSIG_SURGERY_STARTING)
-
-/obj/item/surgical_processor/cyborg_unequip(mob/user)
 	. = ..()
 	UnregisterSignal(user, COMSIG_SURGERY_STARTING)
 
@@ -486,7 +533,7 @@
 	attack_verb_continuous = list("shears", "snips")
 	attack_verb_simple = list("shear", "snip")
 	sharpness = SHARP_EDGED
-	custom_premium_price = PAYCHECK_CREW * 14
+	custom_premium_price = PAYCHECK_CREW * 10
 
 /obj/item/shears/attack(mob/living/amputee, mob/living/user)
 	if(!iscarbon(amputee) || (user.istate & ISTATE_HARM))
@@ -568,6 +615,15 @@
 /obj/item/bonesetter/get_surgery_tool_overlay(tray_extended)
 	return "bonesetter" + (tray_extended ? "" : "_out")
 
+/obj/item/bonesetter/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_bonesetter"
+
+/obj/item/bonesetter/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_bonesetter_alien"
+	toolspeed = 0.25
+
 /obj/item/blood_filter
 	name = "blood filter"
 	desc = "For filtering the blood."
@@ -587,6 +643,13 @@
 
 /obj/item/blood_filter/get_surgery_tool_overlay(tray_extended)
 	return "filter"
+
+/obj/item/blood_filter/click_alt(mob/living/user)
+	ui_interact(user)
+
+/obj/item/blood_filter/examine()
+	. = ..()
+	. += span_notice("There is a small <b>\"Alt-click\"</b> button here, which is responsible for setting up the filtering list exceptions.")
 
 /obj/item/blood_filter/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -626,3 +689,92 @@
 			var/chem_name = params["reagent"]
 			var/chem_id = get_chem_id(chem_name)
 			blacklist -= chem_id
+
+// Biocorrector
+/obj/item/blood_filter/advanced
+	name = "bio-corrector"
+	desc = "The latest medical prototype with a bone gel synthesizer. It sets bones, cleanses blood and lymph. The application of bone gel is possible only with invasive intervention."
+	icon = 'icons/obj/advanced_device.dmi'
+	icon_state = "biocorrector"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	inhand_icon_state = "adv_retractor"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 4, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 2, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3)
+	toolspeed = 0.7
+
+/obj/item/blood_filter/advanced/get_all_tool_behaviours()
+	return list(TOOL_BLOODFILTER, TOOL_BONESET)
+
+/obj/item/blood_filter/advanced/Initialize(mapload)
+	. = ..()
+	AddComponent( \
+		/datum/component/transforming, \
+		force_on = force, \
+		throwforce_on = throwforce, \
+		hitsound_on = hitsound, \
+		w_class_on = w_class, \
+		clumsy_check = FALSE, \
+	)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+
+/obj/item/blood_filter/advanced/examine()
+	. = ..()
+	. += span_notice("The device is ready for <b>[tool_behaviour == TOOL_BLOODFILTER ? "blood filtration" : "bone manipulation"]</b>.")
+
+/obj/item/blood_filter/advanced/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
+	tool_behaviour = (active ? TOOL_BONESET : TOOL_BLOODFILTER)
+	balloon_alert(user, "rebuilt to [active ? "bone manipulation" : "blood filtration"]")
+	playsound(user ? user : src, 'sound/items/change_drill.ogg', 50, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
+
+// 	Ambu bag
+/obj/item/breathing_bag
+	name = "Ambu bag"
+	desc = "Also known as a breathing bag, it is a mechanical manual device for performing artificial lung ventilation."
+	icon = 'icons/obj/advanced_device.dmi'
+	icon_state = "breathing_bag"
+	lefthand_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
+	inhand_icon_state = "m_mask"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/breathing_bag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(user == interacting_with || !user.Adjacent(interacting_with) || !isliving(interacting_with))
+		return NONE
+	var/mob/living/target = interacting_with
+	if(!target.appears_alive())
+		to_chat(user, span_warning("To perform mechanical ventilation, the patient must be alive!"))
+		return ITEM_INTERACT_BLOCKING
+	if(target.is_mouth_covered())
+		to_chat(user, span_warning("To perform mechanical ventilation, the patient must be unmasked!"))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("Applying a breathing mask to [target] face."))
+	if(!can_repeat_healing(user, target, 3 SECONDS))
+		return ITEM_INTERACT_BLOCKING
+	. = ITEM_INTERACT_SUCCESS
+	playsound(user,'sound/items/breathing_bag.ogg', 100, TRUE)
+	for(var/loop_attempt in 1 to 15)
+		if(!can_repeat_healing(user, target, 1 SECONDS))
+			return
+		to_chat(user, span_notice("Performing artificial ventilation!"))
+		// Ventilation will only help if the target can make use of the air that comes with it.
+		if(!target.get_organ_slot(ORGAN_SLOT_LUNGS))
+			continue
+		if(HAS_TRAIT(target, TRAIT_NOBREATH))
+			continue
+		target.adjustOxyLoss(-10)
+
+/// Checks if the target can be interacted with.
+/obj/item/breathing_bag/proc/can_repeat_healing(mob/living/user, mob/living/target, delay_length)
+	if(delay_length && !do_after(user, delay_length, target, IGNORE_TARGET_LOC_CHANGE)) // Target is free to move around a little.
+		return FALSE
+	if(!user.Adjacent(target))
+		return FALSE
+	if(!target.appears_alive())
+		return FALSE
+	if(target.is_mouth_covered())
+		return FALSE
+	return TRUE

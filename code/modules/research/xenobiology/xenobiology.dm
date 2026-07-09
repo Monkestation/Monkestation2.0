@@ -735,6 +735,11 @@
 	imp.implant(smart_mob, user)
 	smart_mob.AddComponent(/datum/component/simple_access, list(ACCESS_SYNDICATE, ACCESS_MAINT_TUNNELS))
 
+/obj/item/slimepotion/slime/sentience/nuclear/dangerous_horse
+	name = "dangerous pony potion"
+	desc = "A miraculous chemical mix that grants human like intelligence to pony beings. It has been modified with Syndicate technology to also grant an internal radio implant to the pony and authenticate with identification systems"
+	sentience_type = SENTIENCE_PONY
+
 /obj/item/slimepotion/transference
 	name = "consciousness transference potion"
 	desc = "A strange slime-based chemical that, when used, allows the user to transfer their consciousness to a lesser being."
@@ -798,18 +803,16 @@
 
 /obj/item/slimepotion/slime/steroid/attack(mob/living/basic/slime/M, mob/user)
 	if(!isslime(M))//If target is not a slime.
-		to_chat(user, span_warning("The steroid only works on slimes!")) // monkestation edit: not baby slimes only, no
+		to_chat(user, span_warning("The steroid only works on slimes!"))
 		return ..()
 	if(M.stat)
 		to_chat(user, span_warning("The slime is dead!"))
 		return
-	// monkestation start: xenobio rework
-	if(M.ooze_production >= 50)
-		to_chat(user, span_warning("The slime is already producing too much ooze!"))
+	if(M.slime_extract_bonus >= 6)
+		to_chat(user, span_warning("The slime can't consume any more of the steroid."))
 		return
-	to_chat(user, span_notice("You feed the slime the steroid. It will now produce more ooze."))
-	M.ooze_production = min(M.ooze_production + 20, 50)
-	// monkestation end
+	to_chat(user, span_notice("You feed the slime the steroid. It will now produce more extracts."))
+	M.slime_extract_bonus += 3
 	qdel(src)
 
 /obj/item/slimepotion/enhancer
@@ -890,7 +893,7 @@
 
 	to_chat(user, span_notice("You slather the red gunk over the [interacting_with], making it faster."))
 	interacting_with.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	interacting_with.add_atom_colour(COLOR_RED, FIXED_COLOUR_PRIORITY)
+	interacting_with.add_atom_colour(color_transition_filter(COLOR_RED, SATURATION_OVERRIDE), FIXED_COLOUR_PRIORITY)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -922,7 +925,7 @@
 	to_chat(user, span_notice("You slather the blue gunk over the [clothing], fireproofing it."))
 	clothing.name = "fireproofed [clothing.name]"
 	clothing.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	clothing.add_atom_colour("#000080", FIXED_COLOUR_PRIORITY)
+	clothing.add_atom_colour(color_transition_filter(COLOR_NAVY, SATURATION_OVERRIDE), FIXED_COLOUR_PRIORITY)
 	clothing.max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	clothing.resistance_flags |= FIRE_PROOF
 	uses --

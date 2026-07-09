@@ -1,7 +1,7 @@
 /obj/item/chasm_filler
 	name = "chasm filler capsule"
 	desc = "A capsule containing a large amount of compressed dirt, intended to cover chasms. The dirt is slow to walk through, though."
-	icon_state = "capsule"
+	icon_state = "chasm_filler"
 	icon = 'icons/obj/mining.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	/// Has this chasm filler been used?

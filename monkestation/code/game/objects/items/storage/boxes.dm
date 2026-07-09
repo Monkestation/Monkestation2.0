@@ -9,7 +9,7 @@
 /obj/item/storage/fancy/popsiclestick_pack
 	name = "popsicle stick pack"
 	desc = "A pack of ethically-sourced popsicle sticks, great for medical examinations or iced treats! Comes in a modest pack of 6, for wood is quite a scarcity on space stations."
-	icon = 'monkestation/icons/obj/popsiclestick_pack.dmi'
+	icon = 'icons/obj/popsiclestick_pack.dmi'
 	icon_state = "popsiclepack6"
 	base_icon_state = "popsiclepack"
 	inhand_icon_state = null

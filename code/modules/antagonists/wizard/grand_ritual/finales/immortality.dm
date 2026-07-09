@@ -18,6 +18,7 @@
 	minimum_time = 30 MINUTES // This is enormously disruptive but doesn't technically in of itself end the round.
 
 /datum/grand_finale/immortality/trigger(mob/living/carbon/human/invoker)
+	. = ..()
 	new /obj/effect/temp_visual/immortality_blast(get_turf(invoker))
 	SEND_SOUND(world, sound('sound/magic/teleport_diss.ogg'))
 	for (var/mob/living/alive_guy as anything in GLOB.mob_living_list)

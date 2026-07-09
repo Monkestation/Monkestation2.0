@@ -64,7 +64,7 @@
 		span_alert("You spit."),
 	)
 	var/obj/projectile/neurotoxin/zombie/spit = new(user.loc)
-	spit.preparePixelProjectile(target, user, modifiers)
+	spit.aim_projectile(target, user, modifiers)
 	spit.firer = user
 	spit.fire()
 	user.newtonian_move(get_dir(target, user))

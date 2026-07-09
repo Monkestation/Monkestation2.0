@@ -116,7 +116,7 @@
 			continue //Skip permanent mutations we already have.
 		if(mutation == /datum/mutation/race && !ismonkey(target))
 			message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(target)] with the [name] [span_danger("(MONKEY)")]")
-		if(mutation == /datum/mutation/race/simian && !is_simian(target))
+		if(mutation == /datum/mutation/race/simian && !issimianspecies(target))
 			message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(target)] with the [name] [span_danger("(SIMIAN)")]")
 		target.dna.add_mutation(mutation, MUTATION_SOURCE_TIMED_INJECTOR)
 		addtimer(CALLBACK(target.dna, TYPE_PROC_REF(/datum/dna, remove_mutation), mutation, MUTATION_SOURCE_TIMED_INJECTOR), duration)

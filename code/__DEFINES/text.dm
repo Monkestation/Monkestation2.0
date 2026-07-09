@@ -58,6 +58,10 @@
 /// Removes everything enclose in < and > inclusive of the bracket, and limits the length of the message.
 #define STRIP_HTML_FULL(text, limit) (GLOB.html_tags.Replace(copytext(text, 1, limit), ""))
 
+/// Just like `icon2html` or `ma2html` but for a raw icon and icon_state
+/// (lowercase so we can just pretend this is a proc like icon2html or ma2html)
+#define iconstate2html(icon, icon_state, extra_classes) "<img class='icon [extra_classes]' src='\ref[icon]?state=[url_encode(icon_state)]' style='image-rendering: pixelated; -ms-interpolation-mode: nearest-neighbor'>"
+
 /**
  * stuff like `copytext(input, length(input))` will trim the last character of the input,
  * because DM does it so it copies until the char BEFORE the `end` arg, so we need to bump `end` by 1 in these cases.

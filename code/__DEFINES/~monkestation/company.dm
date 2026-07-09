@@ -40,7 +40,6 @@
 #define span_oocplain(str) ("<span class='oocplain'>" + str + "</span>")
 #define span_pink(str) ("<span class='pink'>" + str + "</span>")
 #define span_rlooc(str) ("<span class='rlooc'>" + str + "</span>")
-#define span_smalldanger(str) ("<span class='smalldanger'>" + str + "</span>")
 #define span_userlove(str) ("<span class='userlove'>" + str + "</span>")
 #define span_warningplain(str) ("<span class='warningplain'>" + str + "</span>")
 #define span_crossooc(str) ("<span class='crossooc'>" + str + "</span>")

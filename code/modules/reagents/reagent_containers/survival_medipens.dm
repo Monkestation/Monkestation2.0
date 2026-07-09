@@ -53,12 +53,13 @@
 /obj/item/reagent_containers/medipen/survival/luxury/oozeling //oozeling safe version of the luxury pen!
 	name = "luxury oozeling medipen"
 	desc = "Even more cutting edge bluespace technology allowed Nanotrasen to compact 90u of volume into a single medipen. Contains rare and powerful chemicals that are also oozeling safe! Used to aid in exploration of very harsh enviroments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE. <b> EXTRA WARNING : UNSAFE FOR NON OOZELING LIFE </b>"
-	icon_state = "luxpen"
+	icon_state = "slimepen"
 	inhand_icon_state = "atropen"
-	base_icon_state = "luxpen"
+	base_icon_state = "slimepen"
 	volume = 90
 	amount_per_transfer_from_this = 90
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10, /datum/reagent/medicine/regen_jelly/weakened = 5, /datum/reagent/toxin = 5, /datum/reagent/medicine/leporazine = 10)
+
 /obj/item/reagent_containers/medipen/survival/penthrite
 	name = "Rapid Penthrite Injector"
 	desc = "An expensive single use injector containing penthrite, allowing your body to keep functioning even with wounds that would make someone collapse. Seems to only be rapid in a low pressure enviorment as well... thats misleading. <b> WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE. </b>"

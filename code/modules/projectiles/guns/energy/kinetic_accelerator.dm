@@ -8,14 +8,17 @@
 	item_flags = NONE
 	obj_flags = UNIQUE_RENAME
 	weapon_weight = WEAPON_LIGHT
-	can_bayonet = TRUE
-	knife_x_offset = 20
-	knife_y_offset = 12
-	var/mob/holder
-	var/max_mod_capacity = 100
-	var/list/modkits = list()
 	gun_flags = NOT_A_REAL_GUN
+	///List of all mobs that projectiles fired from this gun will ignore.
+	var/list/ignored_mob_types
+	///List of all modkits currently in the kinetic accelerator.
+	var/list/obj/item/borg/upgrade/modkit/modkits = list()
+	///The max capacity of modkits the PKA can have installed at once.
+	var/max_mod_capacity = 100
 	var/disablemodification = FALSE //monkeedit - stops removal and addition of mods
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 20, offset_y = 12)
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -56,18 +59,16 @@
 	if(max_mod_capacity)
 		. += "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining."
 		. += span_info("You can use a <b>crowbar</b> to remove all modules or <b>right-click</b> with an empty hand to remove a specific one.")
-		for(var/A in modkits)
-			var/obj/item/borg/upgrade/modkit/M = A
-			. += span_notice("There is \a [M] installed, using <b>[M.cost]%</b> capacity.")
+		for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in modkits)
+			. += span_notice("There is \a [modkit_upgrade] installed, using <b>[modkit_upgrade.cost]%</b> capacity.")
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/crowbar_act(mob/living/user, obj/item/I)
 	. = TRUE
 	if(modkits.len && !disablemodification) //monkeedit
 		to_chat(user, span_notice("You pry all the modifications out."))
 		I.play_tool_sound(src, 100)
-		for(var/a in modkits)
-			var/obj/item/borg/upgrade/modkit/M = a
-			M.forceMove(drop_location()) //uninstallation handled in Exited(), or /mob/living/silicon/robot/remove_from_upgrades() for borgs
+		for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in modkits)
+			modkit_upgrade.forceMove(drop_location()) //uninstallation handled in Exited(), or /mob/living/silicon/robot/remove_from_upgrades() for borgs
 	else
 		to_chat(user, span_notice("There are no modifications currently installed."))
 
@@ -131,23 +132,20 @@
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/proc/get_remaining_mod_capacity()
 	var/current_capacity_used = 0
-	for(var/A in modkits)
-		var/obj/item/borg/upgrade/modkit/M = A
-		current_capacity_used += M.cost
+	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in modkits)
+		current_capacity_used += modkit_upgrade.cost
 	return max_mod_capacity - current_capacity_used
 
-/obj/item/gun/energy/recharge/kinetic_accelerator/proc/modify_projectile(obj/projectile/kinetic/K)
-	K.kinetic_gun = src //do something special on-hit, easy!
-	for(var/A in modkits)
-		var/obj/item/borg/upgrade/modkit/M = A
-		M.modify_projectile(K)
+/obj/item/gun/energy/recharge/kinetic_accelerator/proc/modify_projectile(obj/projectile/kinetic/kinetic_projectile)
+	kinetic_projectile.kinetic_gun = src //do something special on-hit, easy!
+	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in modkits)
+		modkit_upgrade.modify_projectile(kinetic_projectile)
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/cyborg
 	icon_state = "kineticgun_b"
 	hitsound = 'sound/weapons/bladeslice.ogg' // has a blade
 	holds_charge = TRUE
 	unique_frequency = TRUE
-	can_bayonet = FALSE
 	sharpness = SHARP_EDGED
 	force = 15
 	wound_bonus = 5
@@ -183,8 +181,7 @@
 	base_icon_state = "kineticpistol"
 	recharge_time = 2 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/glock)
-	can_bayonet = FALSE
-	max_mod_capacity = 200
+	max_mod_capacity = 210
 
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/railgun
@@ -203,7 +200,6 @@
 	recharge_time = 3 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/railgun)
 	weapon_weight = WEAPON_HEAVY
-	can_bayonet = FALSE
 	max_mod_capacity = 0 // Fuck off
 	recoil = 1 // Railgun go brrrrr
 	disablemodification = TRUE
@@ -235,7 +231,6 @@
 	base_icon_state = "kineticshockwave"
 	recharge_time = 2 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/shockwave)
-	can_bayonet = FALSE
 	max_mod_capacity = 90 //bumped up to 90 to compensate for the 30 you need to spend on the AOE mod that gives it its functionality
 
 
@@ -254,7 +249,6 @@
 	desc = "Mining RnD broke the fabric of space time AGAIN, please return to your nearest centralcommand officer. <b> WARNING FROM THE MINING RND DIRECTOR : DO NOT RAPIDLY PULL TRIGGER : FABRIC OF SPACE TIME LIABLE TO BREAK </b>\
 	Im being bullied by the admins"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/meme/nonlethal)
-	can_bayonet = FALSE
 	max_mod_capacity = 0
 
 //Modkits
@@ -267,6 +261,8 @@
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_MINER
+	// Most modkits are supposed to allow duplicates. The ones that don't should be blocked by PKA code anyways.
+	allow_duplicates = TRUE
 	var/denied_type = null
 	var/maximum_of_type = 1
 	var/cost = 30
@@ -301,9 +297,8 @@
 		return FALSE
 	if(denied_type)
 		var/number_of_denied = 0
-		for(var/A in KA.modkits)
-			var/obj/item/borg/upgrade/modkit/M = A
-			if(istype(M, denied_type))
+		for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in KA.modkits)
+			if(istype(modkit_upgrade, denied_type))
 				number_of_denied++
 			if(number_of_denied >= maximum_of_type)
 				. = FALSE
@@ -436,6 +431,8 @@
 				M.gets_drilled(K.firer, TRUE)
 	if(modifier)
 		for(var/mob/living/L in range(1, target_turf) - K.firer - target)
+			if(is_type_in_typecache(L, KA.ignored_mob_types))
+				continue
 			var/armor = L.run_armor_check(K.def_zone, K.armor_flag, "", "", K.armour_penetration)
 			L.apply_damage(K.damage*modifier, K.damage_type, K.def_zone, armor)
 			to_chat(L, span_userdanger("You're struck by a [K.name]!"))
@@ -478,6 +475,8 @@
 				M.gets_drilled(K.firer, TRUE)
 	if(modifier)
 		for(var/mob/living/L in range(2, target_turf) - K.firer - target)
+			if(is_type_in_typecache(L, KA.ignored_mob_types))
+				continue
 			var/armor = L.run_armor_check(K.def_zone, K.armor_flag, "", "", K.armour_penetration)
 			L.apply_damage(K.damage*modifier, K.damage_type, K.def_zone, armor)
 			to_chat(L, span_userdanger("You're struck by a [K.name]!"))
@@ -503,7 +502,30 @@
 /obj/item/borg/upgrade/modkit/minebot_passthrough
 	name = "minebot passthrough"
 	desc = "Causes kinetic accelerator shots to pass through minebots."
+	denied_type = /obj/item/borg/upgrade/modkit/human_passthrough
 	cost = 0
+
+/obj/item/borg/upgrade/modkit/minebot_passthrough/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user, transfer_to_loc)
+	. = ..()
+	LAZYADD(KA.ignored_mob_types, typecacheof(/mob/living/basic/mining_drone))
+
+/obj/item/borg/upgrade/modkit/minebot_passthrough/uninstall(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
+	. = ..()
+	LAZYREMOVE(KA.ignored_mob_types, typecacheof(/mob/living/basic/mining_drone))
+
+/obj/item/borg/upgrade/modkit/human_passthrough
+	name = "human passthrough"
+	desc = "Causes kinetic accelerator shots to pass through humans, good for preventing friendly fire."
+	denied_type = /obj/item/borg/upgrade/modkit/minebot_passthrough
+	cost = 0
+
+/obj/item/borg/upgrade/modkit/human_passthrough/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user, transfer_to_loc)
+	. = ..()
+	LAZYADD(KA.ignored_mob_types, typecacheof(/mob/living/carbon/human))
+
+/obj/item/borg/upgrade/modkit/human_passthrough/uninstall(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
+	. = ..()
+	LAZYREMOVE(KA.ignored_mob_types, typecacheof(/mob/living/carbon/human))
 
 //Tendril-unique modules
 /obj/item/borg/upgrade/modkit/cooldown/repeater
@@ -625,6 +647,25 @@
 	KA.trigger_guard = TRIGGER_GUARD_NORMAL
 	..()
 
+/obj/item/borg/upgrade/modkit/hardmode
+	name = "HRD-MDE accelerator injector"
+	desc = "An experimental attachment to a kinetic accelerator that can make megafauna crystallize a core, making them harder."
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
+	icon_state = "crevice_shard"
+	cost = 0
+	denied_type = /obj/item/borg/upgrade/modkit/hardmode
+
+/obj/item/borg/upgrade/modkit/hardmode/examine_more(mob/user)
+	. = ..()
+	. += span_notice("An experimental injector developed by the Nanotrasen Science Division used to force a megafauna to crystallize a core.")
+	. += span_notice("Due to the crystallization process the megafauna becomes much stronger, however the core can be extracted post-death.")
+	. += span_notice("A use for crystallized cores has not yet been found, but many experienced miners show them off just like trophies.")
+
+/obj/item/borg/upgrade/modkit/hardmode/projectile_strike(obj/projectile/kinetic/K, turf/target_turf, mob/living/simple_animal/hostile/megafauna/target, obj/item/gun/energy/recharge/kinetic_accelerator/KA)
+	if(istype(target) && target.hardmode_reward != null && !target.hardmode && !is_station_level(target.z))
+		target.activate_hardmode()
+		log_combat(KA, target, "turned on hardmode for", src)
+		qdel(src)
 
 //Cosmetic
 

@@ -53,6 +53,9 @@
 		else
 			. += mutable_appearance(damaged_dmi, pick(broken_states()))
 
+/turf/open/examine_descriptor(mob/user)
+	return "floor"
+
 //direction is direction of travel of A
 /turf/open/zPassIn(direction)
 	if(direction != DOWN)
@@ -328,6 +331,8 @@
 	if(lube & SLIDE_ICE)
 		// Ice slides only go 1 tile, this is so you will slip across ice until you reach a non-slip tile
 		slide_distance = 1
+	else if(lube & SUPER_DUPER_SLIDE)
+		slide_distance = 255
 	else if(HAS_TRAIT(slipper, TRAIT_CURSED))
 		// When cursed, all slips send you flying
 		lube |= SLIDE
@@ -474,3 +479,30 @@
 	var/obj/machinery/door/door = locate() in src
 	if(door?.density && !door.locked)
 		. += 5 // try to avoid closed doors where possible
+
+/// Very similar to build_with_rods, this exists to allow consistent behavior between different types in terms of how
+/// Building floors works
+/turf/open/proc/build_with_transport_tiles(obj/item/stack/thermoplastic/used_tiles, user)
+	var/obj/structure/transport/linear/platform = locate(/obj/structure/transport/linear, src)
+	if(!platform)
+		balloon_alert(user, "no tram base!")
+		return
+	if(!used_tiles.use(1))
+		balloon_alert(user, "no tile!")
+		return
+
+	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	new used_tiles.tile_type(src)
+
+/// Very similar to build_with_rods, this exists to allow building transport/tram girders on openspace
+/turf/open/proc/build_with_titanium(obj/item/stack/sheet/mineral/titanium/used_stack, user)
+	var/obj/structure/transport/linear/platform = locate(/obj/structure/transport/linear, src)
+	if(!platform)
+		to_chat(user, span_warning("There is no transport frame to attach the anchor!"))
+		return
+	if(!used_stack.use(2))
+		balloon_alert(user, "not enough titanium!")
+		return
+
+	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	new /obj/structure/girder/tram(src)

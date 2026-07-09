@@ -142,17 +142,20 @@
 		else
 			target.investigate_log("has been gibbed by [src] (attached to [chassis]).", INVESTIGATE_DEATHS)
 			target.gib()
-	else
-		//drill makes a hole
-		var/obj/item/bodypart/target_part = target.get_bodypart(target.get_random_valid_zone(BODY_ZONE_CHEST))
-		target.apply_damage(10, BRUTE, BODY_ZONE_CHEST, target.run_armor_check(target_part, MELEE))
+		return
 
-		//blood splatters
-		target.do_splatter_effect(get_dir(chassis, target))
+	//drill makes a hole
+	var/def_zone = target.get_random_valid_zone(BODY_ZONE_CHEST)
+	var/obj/item/bodypart/target_part = target.get_bodypart(def_zone)
+	var/blocked = target.run_armor_check(def_zone, MELEE)
+	target.apply_damage(10, BRUTE, def_zone, blocked)
 
-		//organs go everywhere
-		if(target_part && prob(10 * drill_level))
-			target_part.dismember(BRUTE)
+	//blood splatters
+	target.create_splatter(get_dir(chassis, target))
+
+	//organs go everywhere
+	if(target_part && blocked < 100 && prob(10 * drill_level))
+		target_part.dismember(BRUTE)
 
 /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill
 	name = "diamond-tipped exosuit drill"

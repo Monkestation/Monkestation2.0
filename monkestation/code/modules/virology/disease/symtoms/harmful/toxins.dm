@@ -7,4 +7,4 @@
 	severity = 3
 
 /datum/symptom/toxins/activate(mob/living/carbon/mob)
-	mob.adjustToxLoss((2*multiplier))
+	mob.adjustToxLoss((2 * power * multiplier))

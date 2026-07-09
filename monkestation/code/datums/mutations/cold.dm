@@ -39,4 +39,4 @@
 	. = ..()
 	if(projectiles_per_fire > 1)
 		var/current_angle = iteration * 30
-		to_fire.preparePixelProjectile(target, user, null, current_angle - 45)
+		to_fire.aim_projectile(target, user, null, current_angle - 45)

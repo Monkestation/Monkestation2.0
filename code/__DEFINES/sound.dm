@@ -251,6 +251,7 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_SCREECH "screech"
 #define SFX_VISOR_UP "visor_up"
 #define SFX_VISOR_DOWN "visor_down"
+#define SFX_VOID_DEFLECT "void_deflect"
 
 #define SFX_DJSTATION_OPENTAKEOUT "djstation_opentakeout"
 #define SFX_DJSTATION_PUTINANDCLOSE "djstation_putinandclose"

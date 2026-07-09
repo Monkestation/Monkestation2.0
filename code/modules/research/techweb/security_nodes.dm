@@ -5,13 +5,14 @@
 	prereq_ids = list("base")
 	design_ids = list(
 		"bola_energy",
+		"security_trap",
 		"evidencebag",
 		"pepperspray",
 		"seclite",
 		"zipties",
 		"dragnet_beacon",
 		"inspector",
-		"rubber_c35", //monkestation edit: taco sec
+		"rubber_c35",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 	announce_channels = list(RADIO_CHANNEL_SECURITY)
@@ -24,7 +25,8 @@
 	design_ids = list(
 		"pin_testing",
 		"tele_shield",
-		"mag_autorifle_rub", //monkestation edit: autorifles
+		"mag_autorifle_rub",
+		"lasershell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	discount_experiments = list(/datum/experiment/ordnance/explosive/pressurebomb = TECHWEB_TIER_2_POINTS)
@@ -37,9 +39,9 @@
 	prereq_ids = list("adv_engi", "weaponry")
 	design_ids = list(
 		"pin_loyalty",
-		"lethal_c35", //monkestation edit: paco sec
-		"mag_autorifle", //monkestation edit: autorifles
-		"mag_autorifle_salt", //monkestation edit: autorifles
+		"lethal_c35",
+		"mag_autorifle",
+		"mag_autorifle_salt",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = TECHWEB_TIER_1_POINTS)
@@ -76,7 +78,7 @@
 	id = "electronic_weapons"
 	display_name = "Electric Weapons"
 	description = "Weapons using electric technology"
-	prereq_ids = list("weaponry", "adv_power"  , "emp_basic")
+	prereq_ids = list("weaponry", "adv_power", "emp_basic")
 	design_ids = list(
 		"ioncarbine",
 		"stunrevolver",
@@ -91,18 +93,7 @@
 	prereq_ids = list("adv_weaponry")
 	design_ids = list(
 		"temp_gun",
-		"xray_laser",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
-	announce_channels = list(RADIO_CHANNEL_SECURITY)
-
-/datum/techweb_node/adv_beam_weapons
-	id = "adv_beam_weapons"
-	display_name = "Advanced Beam Weaponry"
-	description = "Various advanced beam weapons"
-	prereq_ids = list("beam_weapons")
-	design_ids = list(
-		"beamrifle",
+		"lasercannon",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SECURITY)
@@ -114,6 +105,7 @@
 	prereq_ids = list("adv_engi", "adv_weaponry")
 	design_ids = list(
 		"nuclear_gun",
+		"xray_laser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SECURITY)

@@ -142,7 +142,7 @@
 	data["patient"]["blood_type"] = "[patient.get_blood_type() || "None"]"
 
 	data["patient"]["maxHealth"] = patient.maxHealth
-	data["patient"]["minHealth"] = HEALTH_THRESHOLD_DEAD
+	data["patient"]["minHealth"] = patient.dead_threshold
 	data["patient"]["bruteLoss"] = patient.getBruteLoss()
 	data["patient"]["fireLoss"] = patient.getFireLoss()
 	data["patient"]["toxLoss"] = patient.getToxLoss()

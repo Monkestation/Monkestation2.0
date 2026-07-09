@@ -91,6 +91,8 @@
 ///The limb fits a modular custom shape
 #define BODYTYPE_CUSTOM (1<<8)
 
+#define BODYTYPE_LIST_PROSTHETIC (BODYTYPE_ROBOTIC | BODYTYPE_HUMANOID | BODYTYPE_MONKEY)
+
 //Species gib types
 #define GIB_TYPE_HUMAN "human"
 #define GIB_TYPE_ROBOTIC "robotic"
@@ -118,12 +120,15 @@
 #define SPECIES_PLASMAMAN "plasmaman"
 #define SPECIES_PODPERSON "pod"
 #define SPECIES_SHADOW "shadow"
+#define SPECIES_SHADOW_BLESSED "shadow_blessed"
 #define SPECIES_DARKSPAWN "darkspawn"
 #define SPECIES_SKELETON "skeleton"
+#define SPECIES_SKELETON_FRAGILE "fragile_skeleton"
 #define SPECIES_SNAIL "snail"
 #define SPECIES_TALLBOY "tallboy"
 #define SPECIES_VAMPIRE "vampire"
 #define SPECIES_ZOMBIE "zombie"
+#define SPECIES_ZOMBIE_SHAMBLER "shambler"
 #define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
 #define SPECIES_ZOMBIE_INFECTIOUS_RUNNER "runnerzombie" //Monkestation Addition
 #define SPECIES_ZOMBIE_INFECTIOUS_TANK "tankzombie" //monkestation edit
@@ -290,6 +295,7 @@
 
 //Disgust levels for humans
 #define DISGUST_LEVEL_MAXEDOUT 150
+#define DISGUST_LEVEL_VERYDISGUSTED 100
 #define DISGUST_LEVEL_DISGUSTED 75
 #define DISGUST_LEVEL_VERYGROSS 50
 #define DISGUST_LEVEL_GROSS 25
@@ -354,6 +360,7 @@
 #define SENTIENCE_HUMANOID 3
 #define SENTIENCE_MINEBOT 4
 #define SENTIENCE_BOSS 5
+#define SENTIENCE_PONY 6
 
 //Mob AI Status
 #define POWER_RESTORATION_OFF 0
@@ -390,6 +397,8 @@
 #define SLIP_WHEN_CRAWLING (1<<4)
 /// the mob won't slip if the turf has the TRAIT_TURF_IGNORE_SLIPPERY trait.
 #define SLIPPERY_TURF (1<<5)
+/// Slipping on this will send them sliding for a long time
+#define SUPER_DUPER_SLIDE (1<<6)
 
 #define MAX_CHICKENS 50
 
@@ -492,6 +501,8 @@
 #define FLASH_PROTECTION_NONE 0
 #define FLASH_PROTECTION_FLASH 1
 #define FLASH_PROTECTION_WELDER 2
+#define FLASH_PROTECTION_WELDER_SENSITIVE 3
+#define FLASH_PROTECTION_WELDER_HYPER_SENSITIVE 4
 
 // Roundstart trait system
 
@@ -717,51 +728,53 @@ GLOBAL_DATUM_INIT(human_heights_to_offsets, /alist, alist(
 /// Total number of layers for mob overlays
 /// KEEP THIS UP-TO-DATE OR SHIT WILL BREAK
 /// Also consider updating layers_to_offset
-#define TOTAL_LAYERS 35
+#define TOTAL_LAYERS 36
 /// Mutant race multiparts - Lbelly
-#define ACCESSORIES_LAYER 35
+#define ACCESSORIES_LAYER 36
 /// Mutations layer - Tk headglows, cold resistance glow, etc
-#define MUTATIONS_LAYER 34
+#define MUTATIONS_LAYER 35
 /// Mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODY_BEHIND_LAYER 33
+#define BODY_BEHIND_LAYER 34
 /// Layer for bodyparts that should appear behind every other bodypart - Mostly, legs when facing WEST or EAST
-#define BODYPARTS_LOW_LAYER 32
+#define BODYPARTS_LOW_LAYER 33
 /// Layer for most bodyparts, appears above BODYPARTS_LOW_LAYER and below BODYPARTS_HIGH_LAYER
-#define BODYPARTS_LAYER 31
+#define BODYPARTS_LAYER 32
 /// Mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_ADJ_LAYER 30
+#define BODY_ADJ_LAYER 31
 /// Underwear, undershirts, socks
-#define BODY_LAYER 29
+#define BODY_LAYER 30
 /// Mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define FRONT_MUTATIONS_LAYER 28
+#define FRONT_MUTATIONS_LAYER 29
 /// Damage indicators (cuts and burns)
-#define DAMAGE_LAYER 27
+#define DAMAGE_LAYER 28
 /// Jumpsuit clothing layer
-#define UNIFORM_LAYER 26
+#define UNIFORM_LAYER 27
 /// ID card layer
-#define ID_LAYER 25
+#define ID_LAYER 26
 /// ID card layer (might be deprecated)
-#define ID_CARD_LAYER 24
+#define ID_CARD_LAYER 25
 /// Layer for bodyparts that should appear above every other bodypart - Currently only used for hands
-#define BODYPARTS_HIGH_LAYER 23
+#define BODYPARTS_HIGH_LAYER 24
 /// Gloves layer
-#define GLOVES_LAYER 22
+#define GLOVES_LAYER 23
 /// Shoes layer
-#define SHOES_LAYER 21
+#define SHOES_LAYER 22
 /// Ears layer (Spessmen have ears? Wow)
-#define EARS_LAYER 20
+#define EARS_LAYER 21
 /// Suit layer (armor, coats, etc.)
-#define SUIT_LAYER 19
+#define SUIT_LAYER 20
 /// Glasses layer
-#define GLASSES_LAYER 18
+#define GLASSES_LAYER 19
 /// Belt layer
-#define BELT_LAYER 17 //Possible make this an overlay of somethign required to wear a belt?
+#define BELT_LAYER 18 //Possible make this an overlay of somethign required to wear a belt?
 /// Suit storage layer (tucking a gun or baton underneath your armor)
-#define SUIT_STORE_LAYER 16
+#define SUIT_STORE_LAYER 17
 /// Neck layer (for wearing ties and bedsheets)
-#define NECK_LAYER 15
+#define NECK_LAYER 16
 /// Back layer (for backpacks and equipment on your back)
-#define BACK_LAYER 14
+#define BACK_LAYER 15
+/// Special layer for rendering beneath hair, for special facemasks
+#define BENEATH_HAIR_LAYER 14
 /// Hair layer (mess with the fro and you got to go!)
 #define HAIR_LAYER 13 //TODO: make part of head layer?
 /// Facemask layer (gas masks, breath masks, etc.)
@@ -912,7 +925,9 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define VOMIT_TOXIC 1
 /// The mob will vomit a purple color
 #define VOMIT_PURPLE 2
-#define VOMIT_NANITE 3
+#define VOMIT_NEBULA 3
+#define VOMIT_NEBULA_WORMS 4
+#define VOMIT_NANITE 5
 
 /// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
 #define NO_BUCKLE_LYING -1
@@ -1024,3 +1039,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define MINING_MOB_PROJECTILE_VULNERABILITY list(BRUTE)
 /// The amount of "blood" that a slimeperson consumes when regenerating a single limb.
 #define REGEN_BLOOD_REQUIREMENT 40
+
+/// Distance which you can see someone's ID card
+/// Short enough that you can inspect over tables (bartender checking age)
+#define ID_EXAMINE_DISTANCE 3

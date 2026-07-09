@@ -68,14 +68,16 @@
 				vision_distance = COMBAT_MESSAGE_RANGE,
 
 			)
-
+			victim.do_splatter_effect(victim.dir)
+			victim.bleed(blood_bled)
 		if(20 to INFINITY)
 			victim.visible_message(
 				span_danger("A spray of blood streams from the gash in [victim]'s [limb.plaintext_zone]!"),
 				span_bolddanger("You choke up on a spray of blood from the blow to your [limb.plaintext_zone]!"),
 				vision_distance = COMBAT_MESSAGE_RANGE,
-
 			)
+			victim.bleed(blood_bled)
+			victim.do_splatter_effect(victim.dir)
 			victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 
 	victim.bleed(blood_bled, TRUE)
@@ -154,7 +156,7 @@
 
 	if(!do_after(user, treatment_delay, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
-	var/bleeding_wording = (!limb.can_bleed() ? "holes" : "bleeding")
+	var/bleeding_wording = (limb.can_bleed() ? "bleeding" : "holes")
 	user.visible_message(span_green("[user] stitches up some of the [bleeding_wording] on [victim]."), span_green("You stitch up some of the [bleeding_wording] on [user == victim ? "yourself" : "[victim]"]."))
 	var/blood_sutured = I.stop_bleeding / self_penalty_mult
 	adjust_blood_flow(-blood_sutured)
@@ -187,7 +189,7 @@
 
 	playsound(user, 'sound/surgery/cautery2.ogg', 75, TRUE)
 
-	var/bleeding_wording = (!limb.can_bleed() ? "holes" : "bleeding")
+	var/bleeding_wording = (limb.can_bleed() ? "bleeding" : "holes")
 	user.visible_message(span_green("[user] cauterizes some of the [bleeding_wording] on [victim]."), span_green("You cauterize some of the [bleeding_wording] on [victim]."))
 	victim.apply_damage(2 + severity, BURN, limb, wound_bonus = CANT_WOUND)
 	var/blood_cauterized = (0.6 / (self_penalty_mult * improv_penalty_mult))

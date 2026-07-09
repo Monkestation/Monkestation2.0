@@ -4,7 +4,7 @@
 	damage = 0
 	damage_type = BURN
 	armor_flag = ENERGY
-	reflectable = REFLECT_NORMAL
+	reflectable = TRUE
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/energy
 
 /obj/projectile/energy/Initialize(mapload)

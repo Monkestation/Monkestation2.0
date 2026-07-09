@@ -266,8 +266,11 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	. = ..()
 	if(desc_controls)
 		. += span_notice(desc_controls)
+
+/obj/examine_tags(mob/user)
+	. = ..()
 	if(obj_flags & UNIQUE_RENAME)
-		. += span_notice("Use a pen on it to rename it or change its description.")
+		.["renameable"] = "Use a pen on it to rename it or change its description."
 
 /obj/analyzer_act(mob/living/user, obj/item/analyzer/tool)
 	if(atmos_scan(user=user, target=src, silent=FALSE))
@@ -281,11 +284,10 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/proc/dump_contents()
 	CRASH("Unimplemented.")
 
-/obj/handle_ricochet(obj/projectile/ricocheting)
+/obj/handle_ricochet(obj/projectile/proj)
 	. = ..()
 	if(. && receive_ricochet_damage_coeff)
-		// pass along receive_ricochet_damage_coeff damage to the structure for the ricochet
-		take_damage(ricocheting.damage * receive_ricochet_damage_coeff, ricocheting.damage_type, ricocheting.armor_flag, 0, turn(ricocheting.dir, 180), ricocheting.armour_penetration)
+		take_damage(proj.damage * receive_ricochet_damage_coeff, proj.damage_type, proj.armor_flag, 0, REVERSE_DIR(proj.dir), proj.armour_penetration) // pass along receive_ricochet_damage_coeff damage to the structure for the ricochet
 
 /// Handles exposing an object to reagents.
 /obj/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)

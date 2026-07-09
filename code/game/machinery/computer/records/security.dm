@@ -2,8 +2,6 @@
 #define PRINTOUT_MISSING "Missing"
 #define PRINTOUT_RAPSHEET "Rapsheet"
 #define PRINTOUT_WANTED "Wanted"
-/// Editing this will cause UI issues.
-#define MAX_CRIME_NAME_LEN 24
 
 /obj/machinery/computer/records/security
 	name = "security records console"
@@ -174,12 +172,6 @@
 
 		if("print_record")
 			print_record(user, target, params)
-			return TRUE
-
-		if("set_note")
-			var/note = strip_html_full(params["note"], MAX_MESSAGE_LEN)
-			investigate_log("[key_name(user)] has changed the security note of record: \"[target]\" from \"[target.security_note]\" to \"[note]\".", INVESTIGATE_RECORDS)
-			target.security_note = note
 			return TRUE
 
 		if("set_wanted")
@@ -509,4 +501,3 @@
 #undef PRINTOUT_MISSING
 #undef PRINTOUT_RAPSHEET
 #undef PRINTOUT_WANTED
-#undef MAX_CRIME_NAME_LEN

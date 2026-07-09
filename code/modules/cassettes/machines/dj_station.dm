@@ -411,13 +411,12 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 
 // Funny.
 /obj/machinery/dj_station/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit)
-	SHOULD_CALL_PARENT(FALSE)
+	. = ..()
 	visible_message(span_warning("[hitting_projectile] bounces harmlessly off of [src]!"))
 	// doesn't actually do any damage, this is meant to annoy people when they try to shoot it bc someone played pickle rick
 	hitting_projectile.damage = 0
 	hitting_projectile.stamina = 0
 	hitting_projectile.reflect(src)
-	return BULLET_ACT_FORCE_PIERCE
 
 // TODO: clean all of this shit up
 /obj/machinery/dj_station/proc/play_to_all_listeners()

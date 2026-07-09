@@ -5,6 +5,9 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, FALSE, "Show Player Pan
 		to_chat(user, span_warning("You seem to be selecting a mob that doesn't exist anymore."), confidential = TRUE)
 		return
 
+	if(istype(player, /client))
+		player = astype(player, /client).mob
+
 	var/body = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Options for [player.key]</title></head>"
 	body += "<body>Options panel for <b>[player]</b>"
 	if(player.client)
@@ -368,7 +371,7 @@ ADMIN_VERB(combo_hud, R_ADMIN, FALSE, "Toggle Combo HUD", "Toggles the Admin Com
 
 	combo_hud_enabled = TRUE
 
-	for (var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED))
+	for (var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_SIMIAN))
 		var/datum/atom_hud/atom_hud = GLOB.huds[hudtype]
 		atom_hud.show_to(mob)
 
@@ -384,7 +387,7 @@ ADMIN_VERB(combo_hud, R_ADMIN, FALSE, "Toggle Combo HUD", "Toggles the Admin Com
 
 	combo_hud_enabled = FALSE
 
-	for (var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED))
+	for (var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_SIMIAN))
 		var/datum/atom_hud/atom_hud = GLOB.huds[hudtype]
 		atom_hud.hide_from(mob)
 

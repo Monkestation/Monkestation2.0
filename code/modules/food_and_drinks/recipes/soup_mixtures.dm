@@ -1939,7 +1939,7 @@
 	name = "\improper New Osaka Sunrise soup"
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "new_osaka_sunrise"
-	drink_type = MEAT | GRAIN | DAIRY | VEGETABLES
+	drink_type = GRAIN | DAIRY | VEGETABLES
 
 /datum/chemical_reaction/food/soup/new_osaka_sunrise
 	required_reagents = list(

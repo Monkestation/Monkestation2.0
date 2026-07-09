@@ -32,6 +32,8 @@
 	var/scanmode = SCANMODE_HEALTH
 	/// Advanced health analyzer
 	var/advanced = FALSE
+	/// Scans from a distance
+	var/works_from_distance = FALSE
 	/// If this analyzer will give a bonus to wound treatments apon woundscan.
 	var/give_wound_treatment_bonus = FALSE
 	var/last_scan_text
@@ -137,7 +139,7 @@
  * tochat - Whether to immediately post the result into the chat of the user, otherwise it will return the results.
  */
 /proc/healthscan(mob/user, mob/living/target, mode = SCANNER_VERBOSE, advanced = FALSE, tochat = TRUE)
-	if(user.incapacitated())
+	if(user.incapacitated(IGNORE_SOFTCRIT))
 		return
 
 	// the final list of strings to render
@@ -184,7 +186,7 @@
 		render_list += "<span class='alert ml-1'><b>Subject will suffer highly abnormal hemorrhaging from laceration or surgical incension.</b></span>\n"
 
 	// monkestation edit: DNR Quirk, i mean it also technically will count for all other defib blacklist reasons.
-	if(HAS_TRAIT(target, TRAIT_DEFIB_BLACKLISTED))
+	if(target.mind && HAS_TRAIT(target.mind, TRAIT_DEFIB_BLACKLISTED))
 		render_list += "<span class='alert ml-1'><b>Subject is blacklisted from resuscitation and cannot be defibrillated[target.stat == DEAD ? "" : " after dying"].</b></span>\n"
 	// monkestation end
 
@@ -344,7 +346,7 @@
 		var/list/cyberimps
 		for(var/obj/item/organ/internal/cyberimp/cyberimp in humantarget.organs)
 			if(IS_ROBOTIC_ORGAN(cyberimp) && !(cyberimp.organ_flags & ORGAN_HIDDEN))
-				LAZYADD(cyberimps, cyberimp.get_examine_string(user))
+				LAZYADD(cyberimps, cyberimp.examine_title(user))
 		if(LAZYLEN(cyberimps))
 			if(!render)
 				render_list += "<hr>"
@@ -530,11 +532,57 @@
 	to_chat(user, mode == SCANNER_VERBOSE ? "The scanner now shows specific limb damage." : "The scanner no longer shows limb damage.")
 	return CLICK_ACTION_SUCCESS
 
+	// Long range
+/obj/item/healthanalyzer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!works_from_distance)
+		return NONE
+
+	if(!istype(interacting_with, /mob/living))
+		return NONE
+
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION) || !can_see(user, interacting_with, 15))
+		return NONE
+
+	interacting_with.Beam(user, icon = 'icons/effects/beam_advanced.dmi', icon_state = "med_scan", time = 0.5 SECONDS)
+	playsound(src, 'sound/items/pip.ogg', 25, FALSE, 2)
+	attack(interacting_with, user)
+
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/healthanalyzer/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!works_from_distance)
+		return NONE
+
+	if(!istype(interacting_with, /mob/living))
+		return NONE
+
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION) || !can_see(user, interacting_with, 15))
+		return NONE
+
+	interacting_with.Beam(user, icon = 'icons/effects/beam_advanced.dmi', icon_state = "med_scan", time = 0.5 SECONDS)
+	playsound(src, 'sound/items/pip.ogg', 25, FALSE, 2)
+	attack_secondary(interacting_with, user)
+
+	return ITEM_INTERACT_SUCCESS
+
+///////////////////////////////////////////
+
+/obj/item/healthanalyzer/range
+	name = "remote health analyzer"
+	desc = "A hand-held medical scanner for detecting patient's vital signs from a distance. Limited edition from NT medical department."
+	icon = 'icons/obj/advanced_device.dmi'
+	icon_state = "health_range"
+	works_from_distance = TRUE
+	custom_premium_price = PAYCHECK_CREW * 6
+
 /obj/item/healthanalyzer/advanced
 	name = "advanced health analyzer"
+	icon = 'icons/obj/advanced_device.dmi'
 	icon_state = "health_adv"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
+	works_from_distance = TRUE
 	advanced = TRUE
+	give_wound_treatment_bonus = TRUE
 
 #define AID_EMOTION_NEUTRAL "neutral"
 #define AID_EMOTION_HAPPY "happy"
@@ -549,11 +597,16 @@
 
 	var/render_list = ""
 	var/advised = FALSE
+
+	var/advanced = scanner.give_wound_treatment_bonus
+	if(!advanced && patient.has_reagent(/datum/reagent/inverse/technetium))
+		advanced = TRUE
+
 	for(var/obj/item/bodypart/wounded_part as anything in patient.get_wounded_bodyparts())
 		render_list += "<span class='alert ml-1'><b>Warning: Physical trauma[LAZYLEN(wounded_part.wounds) > 1? "s" : ""] detected in [wounded_part.plaintext_zone]</b>"
 		for(var/datum/wound/current_wound as anything in wounded_part.wounds)
 			render_list += "<div class='ml-2'>[simple_scan ? current_wound.get_simple_scanner_description() : current_wound.get_scanner_description()]</div>\n"
-			if (scanner.give_wound_treatment_bonus)
+			if(advanced)
 				ADD_TRAIT(current_wound, TRAIT_WOUND_SCANNED, ANALYZER_TRAIT)
 				if(!advised)
 					to_chat(user, span_notice("You notice how bright holo-images appear over your [(length(wounded_part.wounds) || length(patient.get_wounded_bodyparts()) ) > 1 ? "various wounds" : "wound"]. They seem to be filled with helpful information, this should make treatment easier!"))
@@ -577,6 +630,11 @@
 
 //Cyborgs can use an integrated health analyzer even if they cant see
 /obj/item/healthanalyzer/cyborg
+	name = "remote health analyzer"
+	desc = "A hand-held medical scanner for detecting patient's vital signs from a distance. Limited edition from NT medical department."
+	icon = 'icons/obj/advanced_device.dmi'
+	icon_state = "health_range"
+	works_from_distance = TRUE
 
 /obj/item/healthanalyzer/cyborg/attack_self(mob/user)
 	if(!user.can_read(src, READING_CHECK_LITERACY))
@@ -630,6 +688,7 @@
 
 /obj/item/healthanalyzer/cyborg/proc/upgrade() //so that it wont get moved upon upgrade in the cyborgs toolkit
 	advanced = TRUE
+	give_wound_treatment_bonus = TRUE
 	name = /obj/item/healthanalyzer/advanced::name
 	desc = /obj/item/healthanalyzer/advanced::desc
 	icon_state = /obj/item/healthanalyzer/advanced::icon_state

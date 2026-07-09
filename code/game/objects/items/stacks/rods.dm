@@ -13,7 +13,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	new/datum/stack_recipe("stairs frame", /obj/structure/stairs_frame, 10, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("white cane", /obj/item/cane/white, 3, time = 1 SECONDS, one_per_turf = FALSE, category = CAT_TOOLS), \
 	new/datum/stack_recipe("sharpened iron rod", /obj/item/ammo_casing/rebar, 1, time = 0.2 SECONDS, one_per_turf = FALSE, category = CAT_WEAPON_AMMO), \
-	))
+))
 
 /obj/item/stack/rods
 	name = "iron rod"
@@ -33,12 +33,15 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	attack_verb_continuous = list("hits", "bludgeons", "whacks")
 	attack_verb_simple = list("hit", "bludgeon", "whack")
 	hitsound = 'sound/weapons/gun/general/grenade_launch.ogg'
-	embedding = list(embed_chance = 50)
+	embed_type = /datum/embedding/rods
 	novariants = TRUE
 	matter_amount = 2
 	cost = 250
 	source = /datum/robot_energy_storage/iron
 	merge_type = /obj/item/stack/rods
+
+/datum/embedding/rods
+	embed_chance = 50
 
 /obj/item/stack/rods/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to stuff \the [src] down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!"))//it looks like theyre ur mum
@@ -127,7 +130,11 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	color = "#5286b9ff"
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_NORMAL
-	mats_per_unit = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma=SMALL_MATERIAL_AMOUNT*5, /datum/material/titanium=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/plasma = SMALL_MATERIAL_AMOUNT * 5,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT,
+	)
 	max_amount = 30
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	merge_type = /obj/item/stack/rods/lava

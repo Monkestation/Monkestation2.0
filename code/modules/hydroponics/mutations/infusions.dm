@@ -15,3 +15,16 @@
 	reagent_requirement = list(/datum/reagent/gunpowder)
 	created_product = /obj/item/food/grown/shell/coconut_gun
 	created_seed = /obj/item/seeds/coconut/gun
+
+
+/datum/hydroponics/plant_mutation/infusion/bluespace_tomato
+	mutates_from = list(/obj/item/seeds/tomato/blue)
+	reagent_requirement = list(/datum/reagent/bluespace)
+	created_product = /obj/item/food/grown/tomato/blue/bluespace
+	created_seed = /obj/item/seeds/tomato/blue/bluespace
+
+/datum/hydroponics/plant_mutation/infusion/bluespace_banana
+	mutates_from = list(/obj/item/seeds/banana)
+	reagent_requirement = list(/datum/reagent/bluespace)
+	created_product = /obj/item/food/grown/banana/bluespace
+	created_seed = /obj/item/seeds/banana/bluespace

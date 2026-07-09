@@ -12,6 +12,7 @@
 	light_color = LIGHT_COLOR_BRIGHT_YELLOW
 	light_power = 5
 	allowed_buildtypes = COLONY_FABRICATOR
+	production_speed_multiplier = 1
 	/// The item we turn into when repacked
 	var/repacked_type = /obj/item/flatpacked_machine
 	/// The sound loop played while the fabricator is making something
@@ -104,15 +105,6 @@
 /// Adds the manufacturer examine element to the flatpack machine, but can be overridden in the future
 /obj/item/flatpacked_machine/proc/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
-
-/obj/item/borg/apparatus/sheet_manipulator/Initialize(mapload)
-	. = ..()
-	storable += /obj/item/flatpacked_machine
-
-/obj/item/borg/apparatus/circuit/Initialize(mapload)
-	. = ..()
-	storable += /obj/item/flatpacked_machine
-
 
 /obj/item/flatpacked_machine/generic
 	name = "generic flat-packed machine"

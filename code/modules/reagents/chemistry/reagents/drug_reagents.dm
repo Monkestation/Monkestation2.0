@@ -31,7 +31,7 @@
 	if(isturf(affected_mob.loc) && !isspaceturf(affected_mob.loc) && !HAS_TRAIT(affected_mob, TRAIT_IMMOBILIZED) && SPT_PROB(5, seconds_per_tick))
 		step(affected_mob, pick(GLOB.cardinals))
 	if(SPT_PROB(3.5, seconds_per_tick))
-		affected_mob.emote(pick("twitch","drool","moan","giggle"))
+		affected_mob.emote(pick("twitch","twitch_s","drool","sway","giggle"))
 	..()
 
 /datum/reagent/drug/space_drugs/overdose_start(mob/living/affected_mob)
@@ -111,6 +111,8 @@
 	overdose_threshold = 20
 	ph = 9
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	inverse_chem_val = 0.3
+	inverse_chem = /datum/reagent/inverse/krokodil
 	addiction_types = list(/datum/addiction/opioids = 18) //7.2 per 2 seconds
 
 
@@ -224,6 +226,8 @@
 	color = "#FAFAFA"
 	overdose_threshold = 20
 	taste_description = "salt" // because they're bathsalts?
+	inverse_chem_val = 0.3
+	inverse_chem = /datum/reagent/inverse/bath_salts
 	addiction_types = list(/datum/addiction/stimulants = 25)  //8 per 2 seconds
 	ph = 8.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -264,7 +268,7 @@
 		for(var/i in 1 to round(8 * REM * seconds_per_tick, 1))
 			step(affected_mob, pick(GLOB.cardinals))
 	if(SPT_PROB(10, seconds_per_tick))
-		affected_mob.emote(pick("twitch","drool","moan"))
+		affected_mob.emote(pick("twitch","drool","sway","scream"))
 	if(SPT_PROB(28, seconds_per_tick))
 		affected_mob.drop_all_held_items()
 	..()
@@ -275,6 +279,8 @@
 	reagent_state = LIQUID
 	color = "#78FFF0"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	inverse_chem_val = 0.5
+	inverse_chem = /datum/reagent/inverse/aranesp
 	addiction_types = list(/datum/addiction/stimulants = 8)
 
 /datum/reagent/drug/aranesp/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -297,6 +303,8 @@
 	overdose_threshold = 20
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	taste_description = "paint thinner"
+	inverse_chem_val = 0.4
+	inverse_chem = /datum/reagent/inverse/happiness
 	addiction_types = list(/datum/addiction/hallucinogens = 18)
 	metabolized_traits = list(TRAIT_FEARLESS, TRAIT_ANALGESIA)
 
@@ -530,7 +538,7 @@
 /datum/reagent/drug/mushroomhallucinogen/overdose_process(mob/living/psychonaut, seconds_per_tick, times_fired)
 	. = ..()
 	if(SPT_PROB(10, seconds_per_tick))
-		psychonaut.emote(pick("twitch","drool","moan"))
+		psychonaut.emote(pick("twitch","twitch_s","drool","sway"))
 
 	if(SPT_PROB(10, seconds_per_tick))
 		psychonaut.apply_status_effect(/datum/status_effect/tower_of_babel)

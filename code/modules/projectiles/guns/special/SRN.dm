@@ -1,11 +1,11 @@
 /obj/item/gun/ballistic/SRN_rocketlauncher
 	desc = "A rocket designed with the power of bluespace to send a singularity or tesla back to the shadow realm"
 	name = "Spatial Rift Nullifier"
-	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	icon = 'icons/obj/guns/guns.dmi'
 	icon_state = "srnlauncher"
 	inhand_icon_state = "srnlauncher"
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/SRN_rocket
 	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
 	item_flags = NONE
@@ -18,7 +18,6 @@
 	recoil = 1
 	casing_ejector = FALSE
 	weapon_weight = WEAPON_HEAVY
-	bolt_type = BOLT_TYPE_LOCKING
 	internal_magazine = TRUE
 	cartridge_wording = "rocket"
 	empty_indicator = TRUE
@@ -36,27 +35,34 @@
 ///SRN Internal Magazine
 /obj/item/ammo_box/magazine/internal/SRN_rocket
 	name = "SRN Rocket"
-	ammo_type = /obj/item/ammo_casing/caseless/SRN_rocket
+	ammo_type = /obj/item/ammo_casing/SRN_rocket
 	caliber = "84mm"
 	max_ammo = 3
 
 
 
 /// SRN caseless ammo casing
-/obj/item/ammo_casing/caseless/SRN_rocket
+/obj/item/ammo_casing/SRN_rocket
 	name = "\improper Spatial Rift Nullifier Rocket"
 	desc = "A prototype Spatial Rift Nullifier (SRN) Rocket. Fire at a rogue singularity or Tesla and pray it hits"
 	caliber = "84mm"
-	icon = 'monkestation/icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
+	base_icon_state = "srn_rocket"
 	icon_state = "srn_rocket"
 	projectile_type = /obj/projectile/bullet/SRN_rocket
 
+/obj/item/ammo_casing/SRN_rocket/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/caseless)
 
+/obj/item/ammo_casing/SRN_rocket/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]"
 
 /// SRN Rocket Projectile
 /obj/projectile/bullet/SRN_rocket
 	name = "SRN rocket"
-	icon = 'monkestation/icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "srn_rocket"
 	hitsound = "sound/effects/meteorimpact.ogg"
 	damage = 10
@@ -74,7 +80,7 @@
 		playsound(src.loc, SFX_SPARKS, vol = 100, vary = TRUE)
 	return ..()
 
-/obj/projectile/bullet/SRN_rocket/Impact(atom/impacted)
+/obj/projectile/bullet/SRN_rocket/impact(atom/impacted)
 	. = ..()
 
 	if(istype(impacted, /obj/singularity))

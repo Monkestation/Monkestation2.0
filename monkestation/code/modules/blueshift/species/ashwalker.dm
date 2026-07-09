@@ -1,14 +1,14 @@
 /**
- * 20 minutes = ash storm immunity
- * 40 minutes = armor
- * 60 minutes = base punch
- * 80 minutes = lavaproof
- * 100 minutes = firebreath
+ * 15 minutes = ash storm immunity
+ * 30 minutes = armor
+ * 45 minutes = base punch
+ * 60 minutes = lavaproof
+ * 75 minutes = firebreath
  */
 
 /datum/component/ash_age
 	/// the amount of minutes after each upgrade
-	var/stage_time = 20 MINUTES
+	var/stage_time = 15 MINUTES
 	/// the current stage of the ash
 	var/current_stage = 0
 	/// the time when upgraded/attached

@@ -46,6 +46,28 @@
 	pushed_mob.forceMove(loc)
 	return ..()
 
+/obj/structure/altar_of_gods/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/nullrod))
+		if(user.mind?.holy_role == NONE)
+			to_chat(user, span_warning("Only the faithful may control the disposition of [src]!"))
+			return
+		if(!GLOB.religious_sect)
+			to_chat(user, span_warning("must select a sect first!"))
+			return
+		if(!GLOB.religious_sect.altar_anchorable)
+			to_chat(user, span_warning("[src] cannot be unanchored!"))
+			return
+		anchored = !anchored
+		if(GLOB.religious_sect)
+			GLOB.religious_sect.altar_anchored = anchored //Having more than one altar of the gods is only possible through adminbus so this should screw with normal gameplay
+		user.visible_message(span_notice("[user] [anchored ? "" : "un"]anchors [src] [anchored ? "to" : "from"] the floor with [I]."), span_notice("You [anchored ? "" : "un"]anchor [src] [anchored ? "to" : "from"] the floor with [I]."))
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+		user.do_attack_animation(src)
+		return
+	if(I.tool_behaviour == TOOL_WRENCH)
+		return
+	return ..()
+
 /obj/structure/altar_of_gods/examine_more(mob/user)
 	if(!isobserver(user))
 		return ..()
@@ -130,3 +152,100 @@
 	if(no_take)
 		taker.dropItemToGround(src)
 		forceMove(initial_loc)
+
+/obj/structure/destructible/religion
+	density = TRUE
+	anchored = FALSE
+	icon = 'icons/obj/religion.dmi'
+	light_power = 2
+	break_sound = 'sound/effects/glassbr2.ogg'
+
+/obj/structure/destructible/religion/nature_pylon
+	name = "Orb of Nature"
+	desc = "A floating crystal that slowly heals all life nearby, except for the unholy. It can be anchored with a null rod."
+	icon_state = "nature_orb"
+	anchored = FALSE
+	light_outer_range = 3
+	light_color = LIGHT_COLOR_GREEN
+	break_message = span_warning("The luminous green crystal shatters!")
+	/// Length of the cooldown in between tile corruptions. Doubled if no turfs are found.
+	var/corruption_cooldown_duration = 5 SECONDS
+	/// The cooldown for corruptions.
+	COOLDOWN_DECLARE(corruption_cooldown)
+
+/obj/structure/destructible/religion/nature_pylon/Initialize(mapload)
+	. = ..()
+
+	AddComponent( \
+		/datum/component/aura_healing, \
+		range = 6, \
+		brute_heal = 0.2, \
+		burn_heal = 0.2, \
+		blood_heal = 0.1, \
+		simple_heal = 0.8, \
+		requires_visibility = TRUE, \
+		healing_color = LIGHT_COLOR_GREEN, \
+	)
+
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/structure/destructible/religion/nature_pylon/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+
+/obj/structure/destructible/religion/nature_pylon/process(delta_time)
+	if(!anchored)
+		return
+	if(!COOLDOWN_FINISHED(src, corruption_cooldown))
+		return
+
+	var/list/validturfs = list()
+	var/list/natureturfs = list()
+	for(var/nearby_turf in circle_view_turfs(src, 5))
+		if(istype(nearby_turf, /turf/open/floor/grass))
+			natureturfs |= nearby_turf
+			continue
+		var/static/list/blacklisted_pylon_turfs = typecacheof(list(
+			/turf/closed,
+			/turf/open/floor/engine/cult,
+			/turf/open/space,
+			/turf/open/lava,
+			/turf/open/chasm,
+			/turf/open/misc/asteroid,
+		))
+
+		if(is_type_in_typecache(nearby_turf, blacklisted_pylon_turfs))
+			continue
+		validturfs |= nearby_turf
+	if(length(validturfs))
+		var/turf/converted_turf = pick(validturfs)
+		if(isplatingturf(converted_turf))
+			converted_turf.PlaceOnTop(/turf/open/floor/grass/fairy, flags = CHANGETURF_INHERIT_AIR)
+		else
+			converted_turf.ChangeTurf(/turf/open/floor/grass/fairy, flags = CHANGETURF_INHERIT_AIR)
+
+	else if (length(natureturfs))
+		var/turf/open/floor/grass/F = pick(natureturfs)
+		new /obj/effect/temp_visual/holy_grass(F)
+
+	else
+		// Are we in space or something? No nature turfs or convertable turfs? Double the cooldown
+		COOLDOWN_START(src, corruption_cooldown, corruption_cooldown_duration * 2)
+		return
+
+	COOLDOWN_START(src, corruption_cooldown, corruption_cooldown_duration)
+
+/obj/structure/destructible/religion/nature_pylon/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/nullrod))
+		if(user.mind?.holy_role == NONE)
+			to_chat(user, span_warning("Only the faithful may control the disposition of [src]!"))
+			return
+		anchored = !anchored
+		user.visible_message(span_notice("[user] [anchored ? "" : "un"]anchors [src] [anchored ? "to" : "from"] the floor with [I]."), span_notice("You [anchored ? "" : "un"]anchor [src] [anchored ? "to" : "from"] the floor with [I]."))
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+		user.do_attack_animation(src)
+		return
+	if(I.tool_behaviour == TOOL_WRENCH)
+		return
+	return ..()

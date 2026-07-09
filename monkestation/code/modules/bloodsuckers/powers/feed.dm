@@ -147,7 +147,8 @@
 		bloodsuckerdatum_power.give_masquerade_infraction()
 
 	if(!HAS_MIND_TRAIT(feed_target, TRAIT_BLOODSUCKER_ALIGNED) && !IS_MONSTERHUNTER(feed_target))
-		to_chat(feed_target, span_reallybig(span_hypnophrase("Huh? What just happened? You don't remember the last few moments")))
+		to_chat(feed_target, span_reallybig(span_hypnophrase("Huh? What just happened? You don't remember the last few moments...")))
+		to_chat(feed_target, span_notice("(You do not remember that you have been fed on, the identity of the person who just fed on you, or the fact that they are a vampire. If you already knew this person was a vampire from before your current encounter with them, however, you retain memory of that.)"))
 	feed_target.Immobilize(2 SECONDS)
 	feed_target.remove_status_effect(/datum/status_effect/feed_regen)
 	owner.add_traits(list(TRAIT_MUTE, TRAIT_IMMOBILIZED), FEED_TRAIT)
@@ -243,7 +244,8 @@
 		warning_target_bloodvol = feed_target.blood_volume
 
 	if(bloodsuckerdatum_power.bloodsucker_blood_volume >= bloodsuckerdatum_power.max_blood_volume && !notified_overfeeding)
-		user.balloon_alert(owner, "full on blood! Anything more we drink now will be burnt on quicker healing")
+		user.balloon_alert(owner, "full on blood!")
+		to_chat(user, span_boldnotice("Your blood is full. Anything more we drink now will be burnt on quicker healing."))
 		notified_overfeeding = TRUE
 	if(feed_target.blood_volume <= 0)
 		user.balloon_alert(owner, "no blood left!")

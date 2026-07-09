@@ -124,6 +124,12 @@
 	list_reagents = list(/datum/reagent/medicine/painkiller/morphine = 30)
 	rename_with_volume = TRUE
 
+/obj/item/reagent_containers/pill/spaceacillin
+	name = "spaceacillin pill"
+	desc = "Increases resistance to viruses, bacteria, and parasites."
+	icon_state = "pill17"
+	list_reagents = list(/datum/reagent/medicine/antipathogenic/spaceacillin = 1.5) //1 minute since 0.05 every tick.
+
 /obj/item/reagent_containers/pill/stimulant
 	name = "stimulant pill"
 	desc = "Often taken by overworked employees, athletes, and the inebriated. You'll snap to attention immediately!"
@@ -308,7 +314,7 @@
 	if(prob(30))
 		desc = pick(descs)
 	if(prob(10))
-		icon = 'monkestation/icons/obj/pills.dmi'
+		icon = 'icons/obj/pills.dmi'
 		icon_state = "mdma_wario"
 		transform.Scale(0.5 ,0.5)
 	else

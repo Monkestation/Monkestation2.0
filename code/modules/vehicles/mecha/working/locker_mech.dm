@@ -4,7 +4,7 @@
 	icon = 'icons/mecha/mecha.dmi'
 	icon_state = "lockermech"
 	base_icon_state = "lockermech"
-	silicon_icon_state = "null"
+	silicon_icon_state = null
 	max_integrity = 100 //its made of scraps
 	lights_power = 5
 	movedelay = 2 //Same speed as a ripley, for now.

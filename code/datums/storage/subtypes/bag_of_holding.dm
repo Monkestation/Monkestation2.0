@@ -13,15 +13,17 @@
 	if(safety != "Proceed" || QDELETED(to_insert) || QDELETED(real_location) || QDELETED(user) || !iscarbon(user) || !user.can_perform_action(real_location, NEED_DEXTERITY))
 		return
 
-	var/turf/loccheck = get_turf(real_location)
+	var/turf/rift_loc = get_turf(real_location)
 	to_chat(user, span_danger("The Bluespace interfaces of the two devices catastrophically malfunction!"))
 	qdel(to_insert)
-	playsound(loccheck,'sound/effects/supermatter.ogg', 200, TRUE)
+	playsound(rift_loc,'sound/effects/supermatter.ogg', 200, TRUE)
 
-	message_admins("[ADMIN_LOOKUPFLW(user)] detonated a bag of holding at [ADMIN_VERBOSEJMP(loccheck)].")
-	user.log_message("detonated a bag of holding at [loc_name(loccheck)].", LOG_ATTACK, color="red")
+	message_admins("[ADMIN_LOOKUPFLW(user)] detonated a bag of holding at [ADMIN_VERBOSEJMP(rift_loc)].")
+	user.log_message("detonated a bag of holding at [loc_name(rift_loc)].", LOG_ATTACK, color="red")
 
 	user.investigate_log("has been gibbed by a bag of holding recursive insertion.", INVESTIGATE_DEATHS)
-	user.gib(TRUE, TRUE, TRUE)
-	new/obj/boh_tear(loccheck)
-	qdel(real_location)
+	user.gib()
+	var/obj/reality_tear/tear = new(rift_loc)
+	tear.start_disaster()
+	qdel(to_insert)
+	qdel(parent)

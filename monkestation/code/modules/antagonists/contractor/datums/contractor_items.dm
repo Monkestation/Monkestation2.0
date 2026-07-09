@@ -75,8 +75,8 @@
 	desc = "Upon purchase we'll contact available units in the area. Should there be an agent free, we'll send them down to assist you immediately. \
 			If no units are free, we give a full refund."
 	item_icon = "user-friends"
-	stock = 1
-	cost = 2
+	stock = 2
+	cost = 3
 	var/datum/mind/partner_mind = null
 
 /datum/contractor_item/contractor_partner/handle_purchase(datum/uplink_handler/handler, mob/living/user)

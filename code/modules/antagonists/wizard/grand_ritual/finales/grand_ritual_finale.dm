@@ -41,7 +41,11 @@
  * * invoker - The wizard casting this.
  */
 /datum/grand_finale/proc/trigger(mob/living/invoker)
-	// Do something cool.
+	SSshuttle.registerEvacBlocker("wizard finale") //all the finales(besides apoc) are kinda slow acting so give them at least a little time to do stuff(apoc wont call this)
+	addtimer(CALLBACK(SSshuttle, TYPE_PROC_REF(/datum/controller/subsystem/shuttle, clearEvacBlocker), "wizard finale"), 5 MINUTES)
+	priority_announce("A massive bluespace flux has caused your escape shuttle systems to be disabled, repair ETA: 5 minutes.",
+					"Nantrasen Bluespace Monitoring Division",
+					ANNOUNCER_SPANOMALIES)
 
 /// Tries to equip something into an inventory slot, then hands, then the floor.
 /datum/grand_finale/proc/equip_to_slot_then_hands(mob/living/carbon/human/invoker, slot, obj/item/item)

@@ -1,16 +1,15 @@
 import { useBackend } from '../../backend';
-import { Box, Button, Dimmer, Section, Stack } from '../../components';
+import { Box, Button, Section, Stack } from '../../components';
 import { ObjectiveElement } from './ObjectiveMenu';
 
 type PrimaryObjectiveMenuProps = {
   primary_objectives;
-  final_objective;
   can_renegotiate;
 };
 
 export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
   const { act } = useBackend();
-  const { primary_objectives, final_objective, can_renegotiate } = props;
+  const { primary_objectives, can_renegotiate } = props;
   return (
     <Section fill scrollable align="center">
       <Box my={4} bold fontSize={1.2} color="green">
@@ -23,30 +22,6 @@ export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
         Completing Secondary Objectives may allow you to acquire additional
         equipment.
       </Box>
-      {final_objective && (
-        <Dimmer>
-          <Box
-            color="red"
-            fontFamily={'Bahnschrift'}
-            fontSize={3}
-            align={'top'}
-            as="span"
-          >
-            PRIORITY MESSAGE
-            <br />
-            SOURCE: xxx.xxx.xxx.224:41394
-            <br />
-            <br />
-            \\Debrief in progress.
-            <br />
-            \\Final Objective confirmed complete. <br />
-            \\Your work is done here, agent.
-            <br />
-            <br />
-            CONNECTION CLOSED_
-          </Box>
-        </Dimmer>
-      )}
       <Stack vertical>
         {primary_objectives.map((prim_obj, index) => (
           <Stack.Item key={index}>
@@ -69,7 +44,6 @@ export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
               hideTcRep
               canAbort={false}
               grow={false}
-              finalObjective={false}
             />
           </Stack.Item>
         ))}

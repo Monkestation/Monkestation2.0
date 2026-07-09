@@ -1,90 +1,5 @@
 //Antag modules for MODsuits
 
-///Armor Booster - Grants your suit more armor and speed in exchange for EVA protection. Also acts as a welding screen.
-/obj/item/mod/module/armor_booster
-	name = "MOD armor booster module"
-	desc = "A retrofitted series of retractable armor plates, allowing the suit to function as essentially power armor, \
-		giving the user incredible protection against conventional firearms, or everyday attacks in close-quarters. \
-		However, the additional plating cannot deploy alongside parts of the suit used for vacuum sealing, \
-		so this extra armor provides zero ability for extravehicular activity while deployed."
-	icon_state = "armor_booster"
-	module_type = MODULE_TOGGLE
-	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
-	removable = FALSE
-	incompatible_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/welding)
-	cooldown_time = 0.5 SECONDS
-	overlay_state_inactive = "module_armorbooster_off"
-	overlay_state_active = "module_armorbooster_on"
-	use_mod_colors = TRUE
-	/// Whether or not this module removes pressure protection.
-	var/remove_pressure_protection = TRUE
-	/// Speed added to the control unit.
-	var/speed_added = 0.5
-	/// Speed that we actually added.
-	var/actual_speed_added = 0
-	/// Armor values added to the suit parts.
-	var/list/armor_mod = /datum/armor/mod_module_armor_boost
-	/// List of parts of the suit that are spaceproofed, for giving them back the pressure protection.
-	var/list/spaceproofed = list()
-
-/obj/item/mod/module/armor_booster/no_speedbost
-	speed_added = 0
-
-/datum/armor/mod_module_armor_boost
-	melee = 25
-	bullet = 30
-	laser = 15
-	energy = 15
-
-/obj/item/mod/module/armor_booster/on_suit_activation()
-	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
-
-/obj/item/mod/module/armor_booster/on_suit_deactivation(deleting = FALSE)
-	if(deleting)
-		return
-	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
-
-/obj/item/mod/module/armor_booster/on_activation()
-	. = ..()
-	if(!.)
-		return
-	playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	actual_speed_added = max(0, min(mod.slowdown_active, speed_added))
-	mod.slowdown -= actual_speed_added
-	mod.wearer.update_equipment_speed_mods()
-	var/list/parts = mod.mod_parts + mod
-	for(var/obj/item/part as anything in parts)
-		part.set_armor(part.get_armor().add_other_armor(armor_mod))
-		if(!remove_pressure_protection || !isclothing(part))
-			continue
-		var/obj/item/clothing/clothing_part = part
-		if(clothing_part.clothing_flags & STOPSPRESSUREDAMAGE)
-			clothing_part.clothing_flags &= ~STOPSPRESSUREDAMAGE
-			spaceproofed[clothing_part] = TRUE
-
-/obj/item/mod/module/armor_booster/on_deactivation(display_message = TRUE, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
-	if(!deleting)
-		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	mod.slowdown += actual_speed_added
-	mod.wearer.update_equipment_speed_mods()
-	var/list/parts = mod.mod_parts + mod
-	for(var/obj/item/part as anything in parts)
-		part.set_armor(part.get_armor().subtract_other_armor(armor_mod))
-		if(!remove_pressure_protection || !isclothing(part))
-			continue
-		var/obj/item/clothing/clothing_part = part
-		if(spaceproofed[clothing_part])
-			clothing_part.clothing_flags |= STOPSPRESSUREDAMAGE
-	spaceproofed = list()
-
-/obj/item/mod/module/armor_booster/generate_worn_overlay(mutable_appearance/standing)
-	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
-	overlay_state_active = "[initial(overlay_state_active)]-[mod.skin]"
-	return ..()
-
 ///Energy Shield - Gives you a rechargeable energy shield that nullifies attacks.
 /obj/item/mod/module/energy_shield
 	name = "MOD energy shield module"
@@ -121,8 +36,16 @@
 	charges = max_charges
 
 /obj/item/mod/module/energy_shield/on_suit_activation()
-	mod.AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
-	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, recharge_path = recharge_path, starting_charges = charges, shield_icon_file = shield_icon_file, shield_icon = shield_icon)
+	mod.AddComponent(\
+		/datum/component/shielded, \
+		max_charges = max_charges, \
+		recharge_start_delay = recharge_start_delay, \
+		charge_increment_delay = charge_increment_delay, \
+		charge_recovery = charge_recovery, \
+		lose_multiple_charges = lose_multiple_charges, \
+		starting_charges = charges, \
+		shield_icon_file = shield_icon_file, \
+		shield_icon = shield_icon)
 	RegisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(shield_reaction))
 
 /obj/item/mod/module/energy_shield/on_suit_deactivation(deleting = FALSE)
@@ -290,7 +213,7 @@
 	if(!.)
 		return
 	var/obj/projectile/flame = new /obj/projectile/bullet/incendiary/fire(mod.wearer.loc)
-	flame.preparePixelProjectile(target, mod.wearer)
+	flame.aim_projectile(target, mod.wearer)
 	flame.firer = mod.wearer
 	playsound(src, 'sound/items/modsuit/flamethrower.ogg', 75, TRUE)
 	INVOKE_ASYNC(flame, TYPE_PROC_REF(/obj/projectile, fire))
@@ -356,7 +279,6 @@
 		return
 	mod.wearer.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 
-/* monkestation removal: overwritten in [monkestation\code\modules\mod\modules\modules_antag.dm], to fix bugs
 ///Chameleon - lets the suit disguise as any item that would fit on that slot.
 /obj/item/mod/module/chameleon
 	name = "MOD chameleon module"
@@ -371,35 +293,92 @@
 	var/list/possible_disguises = list()
 	/// The path of the item we're disguised as.
 	var/obj/item/current_disguise
+	/// The last (valid) slot the suit was equipped to, so we don't lose it if we just temporarily put it in our hands or something
+	var/last_equipped_slot = NONE
+	/// Cached possible disguises for individual slots
+	var/static/list/cached_disguises = list()
 
 /obj/item/mod/module/chameleon/on_install()
-	var/list/all_disguises = sort_list(subtypesof(get_path_by_slot(mod.slot_flags)), GLOBAL_PROC_REF(cmp_typepaths_asc))
-	for(var/clothing_path in all_disguises)
-		var/obj/item/clothing = clothing_path
-		if(!initial(clothing.icon_state))
-			continue
-		var/chameleon_item_name = "[initial(clothing.name)] ([initial(clothing.icon_state)])"
-		possible_disguises[chameleon_item_name] = clothing_path
+	undo_disguise()
+	current_disguise = null
+	RegisterSignal(mod, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_update_icon_state))
 
 /obj/item/mod/module/chameleon/on_uninstall(deleting = FALSE)
+	UnregisterSignal(mod, COMSIG_ATOM_UPDATE_ICON_STATE)
+	if(deleting)
+		return
+	undo_disguise()
 	if(current_disguise)
-		return_look()
-	possible_disguises = null
+		current_disguise = null
+		mod.wearer?.balloon_alert(mod.wearer, "mod disguise cleared")
+
+/obj/item/mod/module/chameleon/proc/on_update_icon_state()
+	SIGNAL_HANDLER
+	if(mod.active)
+		return
+	if(!current_disguise)
+		return
+	disguise(FALSE)
 
 /obj/item/mod/module/chameleon/on_use()
 	. = ..()
 	if(!.)
 		return
 	if(current_disguise)
-		return_look()
+		undo_disguise()
+		current_disguise = null
+		mod.wearer.balloon_alert(mod.wearer, "mod disguise cleared")
 		return
 	var/picked_name = tgui_input_list(mod.wearer, "Select look to change into", "Chameleon Settings", possible_disguises)
-	if(!possible_disguises[picked_name] || mod.active || mod.activating)
+	if(!possible_disguises[picked_name])
+		return
+	if(mod.active || mod.activating)
+		mod.wearer.balloon_alert(mod.wearer, "can't disguise MOD while active!")
 		return
 	current_disguise = possible_disguises[picked_name]
-	update_look()
+	mod.wearer?.balloon_alert(mod.wearer, "mod disguise set")
+	disguise()
 
-/obj/item/mod/module/chameleon/proc/update_look()
+/obj/item/mod/module/chameleon/on_equip()
+	if(QDELETED(mod) || QDELETED(mod.wearer))
+		return
+	var/mob/living/carbon/human/wearer = mod.wearer
+	var/current_slot = wearer.get_slot_by_item(mod)
+	if(mod.slot_flags & current_slot)
+		last_equipped_slot = current_slot
+	else
+		// if we're holding it or something, just use either the last equipped slot or the default one
+		current_slot = last_equipped_slot || mod.slot_flags
+	possible_disguises = get_slot_disguises(current_slot)
+	if(current_disguise && !(current_disguise::slot_flags & current_slot))
+		undo_disguise()
+		current_disguise = null
+		mod.wearer?.balloon_alert(mod.wearer, "mod undisguised")
+
+/obj/item/mod/module/chameleon/on_unequip()
+	if(QDELETED(mod) || QDELETED(mod.wearer))
+		return
+	var/mob/living/carbon/human/wearer = mod.wearer
+	var/current_slot = wearer.get_slot_by_item(mod)
+	if(mod.slot_flags & current_slot)
+		current_slot = last_equipped_slot || mod.slot_flags
+
+/obj/item/mod/module/chameleon/on_suit_activation()
+	undo_disguise()
+	if(current_disguise)
+		mod.wearer?.balloon_alert(mod.wearer, "mod undisguised")
+
+/obj/item/mod/module/chameleon/on_suit_deactivation(deleting = FALSE)
+	if(deleting)
+		return
+	disguise()
+	if(current_disguise)
+		mod.wearer?.balloon_alert(mod.wearer, "mod disguised")
+
+/obj/item/mod/module/chameleon/proc/disguise(updating = TRUE)
+	if(!current_disguise)
+		undo_disguise(updating)
+		return
 	mod.name = initial(current_disguise.name)
 	mod.desc = initial(current_disguise.desc)
 	mod.icon_state = initial(current_disguise.icon_state)
@@ -410,10 +389,10 @@
 	mod.righthand_file = initial(current_disguise.righthand_file)
 	mod.worn_icon_state = initial(current_disguise.worn_icon_state)
 	mod.inhand_icon_state = initial(current_disguise.inhand_icon_state)
-	mod.wearer.update_clothing(mod.slot_flags)
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(return_look))
+	if(updating)
+		mod.wearer?.update_clothing(mod.slot_flags)
 
-/obj/item/mod/module/chameleon/proc/return_look()
+/obj/item/mod/module/chameleon/proc/undo_disguise(updating = TRUE)
 	mod.name = "[mod.theme.name] [initial(mod.name)]"
 	mod.desc = "[initial(mod.desc)] [mod.theme.desc]"
 	mod.icon_state = "[mod.skin]-[initial(mod.icon_state)]"
@@ -423,12 +402,24 @@
 	mod.alternate_worn_layer = mod_skin[CONTROL_LAYER]
 	mod.lefthand_file = initial(mod.lefthand_file)
 	mod.righthand_file = initial(mod.righthand_file)
-	mod.worn_icon_state = null
-	mod.inhand_icon_state = null
-	mod.wearer.update_clothing(mod.slot_flags)
-	current_disguise = null
-	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
-monkestation end */
+	mod.worn_icon_state = initial(mod.worn_icon_state)
+	mod.inhand_icon_state = initial(mod.inhand_icon_state)
+	if(updating)
+		mod.update_icon_state()
+		mod.wearer?.update_clothing(mod.slot_flags)
+
+/obj/item/mod/module/chameleon/proc/get_slot_disguises(slot) as /list
+	if(cached_disguises["[slot]"]) // let's avoid repeated sorts on a list that'll always be the same for the same input
+		return cached_disguises["[slot]"]
+	var/list/all_disguises = sort_list(subtypesof(get_path_by_slot(slot)), GLOBAL_PROC_REF(cmp_typepaths_asc))
+	var/list/disguises = list()
+	for(var/obj/item/clothing as anything in all_disguises)
+		if(!clothing::icon_state)
+			continue
+		var/chameleon_item_name = "[clothing::name] ([clothing::icon_state])"
+		disguises[chameleon_item_name] = clothing
+	cached_disguises["[slot]"] = disguises
+	return disguises
 
 ///Plate Compression - Compresses the suit to normal size
 /obj/item/mod/module/plate_compression
@@ -483,7 +474,7 @@ monkestation end */
 	complexity = 0
 	removable = FALSE
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0
-	incompatible_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/armor_booster, /obj/item/mod/module/welding)
+	incompatible_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/welding)
 
 /obj/item/mod/module/infiltrator/on_install()
 	ADD_TRAIT(mod, TRAIT_EXAMINE_SKIP, REF(src))
@@ -516,11 +507,16 @@ monkestation end */
 
 /obj/item/mod/module/stealth/wraith
 	name = "MOD Wraith Cloaking Module"
-	desc = "A more destructive adaptation of the stealth module."
+	desc = "A more destructive adaptation of the stealth module. Incompatible with armor modules"
 	icon_state = "cloak_traitor"
 	stealth_alpha = 30
 	module_type = MODULE_ACTIVE
 	cooldown_time = 2 SECONDS
+	incompatible_modules = list(/obj/item/mod/module/stealth, /obj/item/mod/module/welding/syndicate)
+	/// How much time before we are able to cloak again after the cloak is broken (not disabled)
+	COOLDOWN_DECLARE(recloak_timer)
+	/// If the stealth portion of the module is active
+	var/stealth_active = FALSE
 
 /obj/item/mod/module/stealth/wraith/on_select_use(atom/target)
 	. = ..()
@@ -530,38 +526,50 @@ monkestation end */
 		balloon_alert(mod.wearer, "can't reach that!")
 		return
 	if(istype(target, /obj/machinery/power/apc)) //Bit too strong for a module so this is blacklisted
-		balloon_alert(mod.wearer, "cant disable apc!")
+		balloon_alert(mod.wearer, "can't disable apc!")
 		return
 
 	var/list/things_to_disrupt = list(target)
-	if(iscarbon(target))
-		var/mob/living/carbon/carbon_target = target
-		things_to_disrupt += carbon_target.get_all_gear()
+	if(isliving(target))
+		var/mob/living/live_target = target
+		things_to_disrupt += live_target.get_all_gear()
 
 	for(var/atom/disrupted as anything in things_to_disrupt)
 		if(disrupted.on_saboteur(src, 1 MINUTES))
 			mod.add_charge(DEFAULT_CHARGE_DRAIN * 250)
 
+/obj/item/mod/module/stealth/wraith/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
+	. = ..()
+	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_MOB_BUMP, COMSIG_ATOM_BUMPED, COMSIG_MOB_FIRED_GUN))
+
 /obj/item/mod/module/stealth/wraith/on_suit_activation()
-	// remove the `override = TRUE`s if/when https://github.com/tgstation/tgstation/pull/88010 is ever ported ~Lucy
-	if(bumpoff)
-		RegisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP, PROC_REF(unstealth), override = TRUE)
+	start_stealth()
+
+/obj/item/mod/module/stealth/wraith/on_suit_deactivation(deleting)
+	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED, COMSIG_LIVING_MOB_BUMP, COMSIG_ATOM_BUMPED, COMSIG_MOB_FIRED_GUN))
+	animate(mod.wearer, alpha = 255, time = 1.5 SECONDS)
+	stealth_active = FALSE
+
+/obj/item/mod/module/stealth/wraith/proc/start_stealth()
+	if(!COOLDOWN_FINISHED(src, recloak_timer)) // Prevents being able to bypass the cooldown by disabling and re-enabling the module
+		addtimer(CALLBACK(src, PROC_REF(start_stealth)), COOLDOWN_TIMELEFT(src, recloak_timer))
+		return
+	RegisterSignals(mod.wearer, list(COMSIG_LIVING_MOB_BUMP, COMSIG_ATOM_BUMPED, COMSIG_MOB_FIRED_GUN), PROC_REF(unstealth), override = TRUE)
 	RegisterSignal(mod.wearer, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack), override = TRUE)
 	RegisterSignal(mod.wearer, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act), override = TRUE)
 	RegisterSignals(mod.wearer, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), PROC_REF(unstealth), override = TRUE)
 	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
 	drain_power(use_energy_cost)
-
-/obj/item/mod/module/stealth/wraith/on_suit_deactivation(deleting)
-	if(bumpoff)
-		UnregisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP)
-	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED))
-	animate(mod.wearer, alpha = 255, time = 1.5 SECONDS)
+	stealth_active = TRUE
 
 /obj/item/mod/module/stealth/wraith/unstealth(datum/source)
+	if(!stealth_active)
+		return
 	. = ..()
 	if(mod.active)
-		addtimer(CALLBACK(src, PROC_REF(on_suit_activation)), 5 SECONDS)
+		COOLDOWN_START(src, recloak_timer, 10 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(start_stealth)), 10 SECONDS)
+		stealth_active = FALSE
 
 /obj/item/mod/module/stealth/wraith/examine_more(mob/user)
 	. = ..()

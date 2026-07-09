@@ -21,6 +21,7 @@ GLOBAL_ALIST_INIT(huds, alist(
 	DATA_HUD_SENSORS = new/datum/atom_hud/data/human/medical/basic/sensors(), //monkestation edit - CYBERNETICS
 	DATA_HUD_CREW = new/datum/atom_hud/data/human/crew_hud(), //Monkestation edit, crew hud
 	DATA_HUD_BORER = new/datum/atom_hud/borer(),
+	DATA_HUD_SIMIAN = new/datum/atom_hud/data/human/simian(),
 ))
 
 /datum/atom_hud
@@ -48,7 +49,7 @@ GLOBAL_ALIST_INIT(huds, alist(
 	var/list/next_time_allowed = list()
 	///mobs that have triggered the cooldown and are queued to see the hud, but do not yet
 	var/list/queued_to_see = list()
-	/// huduser = list(atoms with their hud hidden) - aka everyone hates targeted invisiblity
+	/// huduser = list(atoms with their hud hidden) - aka everyone hates targeted invisibility
 	var/list/hud_exceptions = list()
 	///whether or not this atom_hud type updates the global huds_by_category list.
 	///some subtypes cant work like this since theyre supposed to "belong" to

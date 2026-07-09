@@ -19,6 +19,8 @@
 		to_chat(user, span_warning("[target] seems to be missing the organ necessary to complete this surgery!"))
 		return FALSE
 
+	tool = tool?.get_proxy_attacker_for(target, user)
+
 	if(accept_hand)
 		if(!tool)
 			success = TRUE

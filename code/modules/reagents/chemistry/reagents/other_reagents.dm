@@ -251,7 +251,6 @@
 /**
  * Water reaction to a mob
  */
-#define WAS_SPRAYED "was_sprayed" //monkestation edit
 
 /datum/reagent/water/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume)//Splashing people with water can help put them out!
 	. = ..()
@@ -270,27 +269,28 @@
 		return
 
 	var/mob/living/victim = exposed_mob
-	if((methods & (TOUCH|VAPOR)) && !victim.is_pepper_proof() && !HAS_TRAIT(victim, TRAIT_FEARLESS))
-		victim.set_eye_blur_if_lower(3 SECONDS)
-		victim.set_confusion_if_lower(5 SECONDS)
-		if(ishuman(victim))
-			victim.add_mood_event("watersprayed", /datum/mood_event/watersprayed/cat)
-		victim.update_damage_hud()
-		if(HAS_TRAIT(victim, WAS_SPRAYED))
-			return
-		ADD_TRAIT(victim, WAS_SPRAYED, TRAIT_GENERIC)
-		if(prob(50))
-			INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "hiss")
-		else
-			INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "scream")
-		addtimer(TRAIT_CALLBACK_REMOVE(victim, WAS_SPRAYED, TRAIT_GENERIC), 1 SECONDS)
-	//MONKESTATION EDIT STOP
-
-#undef WAS_SPRAYED //monkestation edit
+	if((methods & (TOUCH|VAPOR)) && !victim.is_pepper_proof())
+		victim.apply_status_effect(/datum/status_effect/cat_water_sprayed)
 
 #undef WATER_TO_WET_STACKS_FACTOR_TOUCH
 #undef WATER_TO_WET_STACKS_FACTOR_VAPOR
 
+/datum/status_effect/cat_water_sprayed
+	duration = 0.5 SECONDS
+	alert_type = null
+	id = "cat_water_sprayed"
+
+/datum/status_effect/cat_water_sprayed/on_apply()
+	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
+		return FALSE
+
+	owner.set_eye_blur_if_lower(3 SECONDS)
+	owner.set_confusion_if_lower(5 SECONDS)
+
+	owner.add_mood_event("watersprayed", /datum/mood_event/watersprayed/cat)
+	INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), pick("hiss", "scream"))
+
+	return TRUE
 
 /datum/reagent/water/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -391,7 +391,7 @@
 				removed_any = TRUE
 				qdel(BS)
 			if(removed_any)
-				to_chat(affected_mob, span_cult_large("Your blood rites falter as holy water scours your body!"))
+				to_chat(affected_mob, span_cultlarge("Your blood rites falter as holy water scours your body!"))
 
 	if(data["deciseconds_metabolized"] >= (25 SECONDS)) // 10 units
 		affected_mob.adjust_stutter_up_to(4 SECONDS * REM * seconds_per_tick, 20 SECONDS)
@@ -401,7 +401,7 @@
 			if(prob(10))
 				affected_mob.visible_message(span_danger("[affected_mob] starts having a seizure!"), span_userdanger("You have a seizure!"))
 				affected_mob.Unconscious(12 SECONDS)
-				to_chat(affected_mob, span_cult_large("[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
+				to_chat(affected_mob, span_cultlarge("[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
 					"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")]."))
 		else if(HAS_TRAIT(affected_mob, TRAIT_EVIL) && SPT_PROB(25, seconds_per_tick)) //Congratulations, your committment to evil has now made holy water a deadly poison to you!
 			if(!IS_CULTIST(affected_mob) || affected_mob.mind?.holy_role != HOLY_ROLE_PRIEST)
@@ -970,7 +970,7 @@
 /datum/reagent/serotrotium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(ishuman(affected_mob))
 		if(SPT_PROB(3.5, seconds_per_tick))
-			affected_mob.emote(pick("twitch","drool","moan","gasp"))
+			affected_mob.emote(pick("twitch","drool","sway","gasp"))
 	..()
 
 /datum/reagent/oxygen
@@ -1042,7 +1042,7 @@
 	if(!HAS_TRAIT(src, TRAIT_IMMOBILIZED) && !isspaceturf(affected_mob.loc))
 		step(affected_mob, pick(GLOB.cardinals))
 	if(SPT_PROB(3.5, seconds_per_tick))
-		affected_mob.emote(pick("twitch","drool","moan"))
+		affected_mob.emote(pick("twitch","drool","sway"))
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5*seconds_per_tick)
 	..()
 
@@ -1138,7 +1138,7 @@
 	if(!HAS_TRAIT(affected_mob, TRAIT_IMMOBILIZED) && !isspaceturf(affected_mob.loc) && isturf(affected_mob.loc))
 		step(affected_mob, pick(GLOB.cardinals))
 	if(SPT_PROB(2.5, seconds_per_tick))
-		affected_mob.emote(pick("twitch","drool","moan"))
+		affected_mob.emote(pick("twitch","drool","sway"))
 	..()
 
 /datum/reagent/glycerol
@@ -2158,6 +2158,8 @@
 	taste_description = "rainbows"
 	var/can_colour_mobs = TRUE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	inverse_chem_val = 0.3
+	inverse_chem = /datum/reagent/inverse/colorful_reagent
 	var/datum/callback/color_callback
 
 /datum/reagent/colorful_reagent/New()
@@ -2176,14 +2178,13 @@
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(can_colour_mobs)
-		affected_mob.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
-	return ..()
+		affected_mob.add_atom_colour(color_transition_filter(pick(random_color_list), SATURATION_OVERRIDE), WASHABLE_COLOUR_PRIORITY)
 
 /// Colors anything it touches a random color.
 /datum/reagent/colorful_reagent/expose_atom(atom/exposed_atom, reac_volume)
 	. = ..()
 	if(!isliving(exposed_atom) || can_colour_mobs)
-		exposed_atom.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
+		exposed_atom.add_atom_colour(color_transition_filter(pick(random_color_list), SATURATION_OVERRIDE), WASHABLE_COLOUR_PRIORITY)
 
 /datum/reagent/hair_dye
 	name = "Quantum Hair Dye"
@@ -2279,6 +2280,8 @@
 	taste_description = "bitterness"
 	penetrates_skin = NONE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	inverse_chem_val = 0.3
+	inverse_chem = /datum/reagent/inverse/baldium
 
 /datum/reagent/baldium/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=FALSE)
 	. = ..()
@@ -2743,6 +2746,8 @@
 	taste_mult = 0 // oderless and tasteless
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM //20 times as long, so it's actually viable to use
 	var/time_multiplier = 1 MINUTES //1 minute per unit of gravitum on objects. Seems overpowered, but the whole thing is very niche
+	inverse_chem_val = 0.3
+	inverse_chem = /datum/reagent/inverse/gravitum
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	self_consuming = TRUE //this works on objects, so it should work on skeletons and robots too
 
@@ -2824,13 +2829,13 @@
 		drinker.adjust_drowsiness(-10 * REM * seconds_per_tick)
 		drinker.AdjustAllImmobility(-40 * REM * seconds_per_tick)
 		drinker.stamina.adjust(10 * REM * seconds_per_tick, TRUE)
-		drinker.adjustToxLoss(-2 * REM * seconds_per_tick, FALSE, forced = TRUE)
-		drinker.adjustOxyLoss(-2 * REM * seconds_per_tick, FALSE)
-		drinker.adjustBruteLoss(-2 * REM * seconds_per_tick, FALSE)
-		drinker.adjustFireLoss(-2 * REM * seconds_per_tick, FALSE)
+		drinker.adjustToxLoss(-3 * REM * seconds_per_tick, FALSE, forced = TRUE)
+		drinker.adjustOxyLoss(-3 * REM * seconds_per_tick, FALSE)
+		drinker.adjustBruteLoss(-3 * REM * seconds_per_tick, FALSE)
+		drinker.adjustFireLoss(-3 * REM * seconds_per_tick, FALSE)
 		drinker.fully_heal(HEAL_NEGATIVE_DISEASES)
 		if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
-			drinker.blood_volume += 3 * REM * seconds_per_tick
+			drinker.blood_volume += 4 * REM * seconds_per_tick
 	else
 		drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * seconds_per_tick, 150)
 		drinker.adjustToxLoss(2 * REM * seconds_per_tick, FALSE)
@@ -3072,3 +3077,19 @@
 		if(SPT_PROB(10, seconds_per_tick))
 			affected_mob.emote(pick("twitch","choke","shiver","gag"))
 		..()
+
+/datum/reagent/scrunchium
+	name = "High-Purity Scrunchium"
+	color = "#72bba7"
+	description = "Scrunches fools who consume it."
+	taste_description = "the intensely painful sensation of your bones and flesh compacting"
+	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	ph = 7
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/scrunchium/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
+	. = ..()
+	if(!HasElement(exposed_mob, /datum/element/squish))
+		exposed_mob.adjustBruteLoss(20)
+		exposed_mob.AddElement(/datum/element/squish, reac_volume * 5 SECONDS)
+		exposed_mob.visible_message(span_warning("[exposed_mob] is violently compacted for no apparent reason!"), span_warning("Your flesh and bone suddenly collapse inwards, scrunching you flat!"))

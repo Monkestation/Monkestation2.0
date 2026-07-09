@@ -48,14 +48,17 @@
 		var/max_heat_protection_temperature = insulation[3]
 
 		var/valid = FALSE
+
+		// If we have both heat and cold protection values, check both
 		if(isnum(max_heat_protection_temperature) && isnum(min_cold_protection_temperature))
 			valid = max_heat_protection_temperature >= temperature && min_cold_protection_temperature <= temperature
-
-		else if (isnum(max_heat_protection_temperature))
-			valid = max_heat_protection_temperature >= temperature
-
-		else if (isnum(min_cold_protection_temperature))
-			valid = min_cold_protection_temperature <= temperature
+		// If we don't, do checks based on our body temperature
+		else if(temperature > standard_body_temperature)
+			if (isnum(max_heat_protection_temperature))
+				valid = max_heat_protection_temperature >= temperature
+		else
+			if (isnum(min_cold_protection_temperature))
+				valid = min_cold_protection_temperature <= temperature
 
 		if(valid)
 			thermal_protection_flags |= body_parts_covered
@@ -115,8 +118,6 @@
 		amount *= (1 - get_insulation(bodytemperature + amount))
 	if(amount == 0)
 		return FALSE
-	if(amount == 0)
-		return 0
 	amount = round(amount, 0.01)
 	min_temp = max(min_temp, TCMB)
 	max_temp = min(max_temp, 603.15)

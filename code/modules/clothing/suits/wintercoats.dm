@@ -379,24 +379,13 @@
 	desc = "A white winter coat with an outdated atomic model instead of a plastic zipper tab."
 	icon_state = "coatscience"
 	inhand_icon_state = "coatscience"
-	allowed = list(
-		/obj/item/analyzer,
-		/obj/item/dnainjector,
-		/obj/item/paper,
-		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/cup/tube,
-		/obj/item/hypospray,
-		/obj/item/reagent_containers/medipen,
-		/obj/item/reagent_containers/pill,
-		/obj/item/reagent_containers/syringe,
-		/obj/item/storage/bag/xeno,
-		/obj/item/storage/pill_bottle,
-	)
 	armor_type = /datum/armor/wintercoat_science
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/science
 	species_exception = list(/datum/species/golem)
+
+/obj/item/clothing/suit/hooded/wintercoat/science/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.science_suit_allowed
 
 /datum/armor/wintercoat_science
 	bomb = 10

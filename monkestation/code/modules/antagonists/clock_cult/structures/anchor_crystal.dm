@@ -10,10 +10,10 @@
 /obj/structure/destructible/clockwork/anchoring_crystal
 	name = "Anchoring Crystal"
 	desc = "A strange crystal that you cant quite seem to focus on."
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_objects.dmi'
 	icon_state = "obelisk"
 	break_message = span_warning("As the Anchoring Crystal shatters you swear you hear a faint scream.")
-	break_sound = 'monkestation/sound/machines/clockcult/ark_damage.ogg'
+	break_sound = 'sound/machines/clockcult/ark_damage.ogg'
 	immune_to_servant_attacks = TRUE
 	clockwork_desc = "This will help anchor reebe to this realm, allowing for greater power."
 	can_rotate = FALSE
@@ -43,7 +43,7 @@
 	energy = 100
 	fire = 100
 	acid = 100
-	melee = -15 //weak to melee, subject to change
+	melee = -10 //weak to melee, subject to change
 	laser = 60 //resistant to lasers
 	bullet = 30
 
@@ -68,19 +68,22 @@
 		SSthe_ark.marked_areas[marked_area] = TRUE
 		SSthe_ark.convert_area_turfs(marked_area, 50, conversion_timer)
 
-	priority_announce("Reality warping object aboard the station, emergency shuttle uplink connection lost.", "Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES, has_important_message = TRUE)
+	priority_announce("Reality warping object aboard the station, emergency shuttle uplink connection lost.",
+					"Higher Dimensional Affairs",
+					ANNOUNCER_SPANOMALIES,
+					has_important_message = TRUE)
 	send_clock_message(span_bigbrass(span_bold("An Anchoring Crystal has been created at [crystal_area], defend it!")))
 	START_PROCESSING(SSthe_ark, src)
 	RegisterSignal(src, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	update_icon()
 
 	SSthe_ark.marked_areas[crystal_area] = TRUE
-	SSthe_ark.block_shuttle(src)
+	SSshuttle.registerEvacBlocker(src)
 	if(SSthe_ark.valid_crystal_areas)
 		SSthe_ark.valid_crystal_areas -= crystal_area
 
 /obj/structure/destructible/clockwork/anchoring_crystal/Destroy()
-	SSthe_ark.clear_shuttle_interference(src)
+	SSshuttle.clearEvacBlocker(src)
 	return ..()
 
 /obj/structure/destructible/clockwork/anchoring_crystal/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
@@ -155,7 +158,7 @@
 /obj/structure/destructible/clockwork/anchoring_crystal/proc/on_update_overlays(atom/crystal, list/overlays)
 	SIGNAL_HANDLER
 
-	var/mutable_appearance/shield_appearance = mutable_appearance('monkestation/icons/obj/clock_cult/clockwork_effects.dmi', \
+	var/mutable_appearance/shield_appearance = mutable_appearance('icons/obj/clock_cult/clockwork_effects.dmi', \
 																  overlay_state == SHIELD_BROKEN ? "broken" : "clock_shield", ABOVE_OBJ_LAYER)
 	if(overlay_state == SHIELD_DEFLECT)
 		shield_appearance.icon_state = "clock_shield_deflect"

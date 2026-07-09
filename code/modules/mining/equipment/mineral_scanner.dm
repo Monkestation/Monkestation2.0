@@ -44,9 +44,8 @@
 	var/current_cooldown = 0
 	var/range = 7
 
-/obj/item/t_scanner/adv_mining_scanner/cyborg/Initialize(mapload)
-	. = ..()
-	toggle_on()
+/obj/item/t_scanner/adv_mining_scanner/cyborg/cyborg_unequip(mob/user)
+	return // Prevents it from turning off when unequipped.
 
 /obj/item/t_scanner/adv_mining_scanner/lesser
 	name = "automatic mining scanner"

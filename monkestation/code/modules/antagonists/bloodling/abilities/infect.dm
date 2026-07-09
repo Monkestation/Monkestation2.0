@@ -1,7 +1,7 @@
 /datum/action/cooldown/bloodling_infect
 	name = "Infect"
 	desc = "Allows us to make someone our thrall, this consumes our host body and reveals our true form. You will be VERY vulnerable when you initially reach this form."
-	background_icon = 'monkestation/icons/mob/actions/backgrounds.dmi'
+	background_icon = 'icons/mob/actions/backgrounds.dmi'
 	background_icon_state = "bg_bloodling"
 	button_icon = 'monkestation/code/modules/antagonists/bloodling/sprites/bloodling_abilities.dmi'
 	button_icon_state = "infest"
@@ -52,10 +52,11 @@
 				chosen_one = SSpolling.poll_ghosts_for_target(
 					check_jobban = ROLE_BLOODLING_THRALL,
 					poll_time = 10 SECONDS,
+					ignore_category = POLL_IGNORE_BLOODLING_THRALL,
 					checked_target = carbon_mob,
 					alert_pic = carbon_mob,
 					role_name_text = "Bloodling Thrall",
-					)
+				)
 
 		if(isnull(chosen_one))
 			is_infecting = FALSE

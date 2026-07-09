@@ -8,6 +8,7 @@
 	key_type = /obj/item/key/security
 	integrity_failure = 0.5
 	cover_amount = 40
+	movedelay = 1
 
 	///This stores a banana that, when used on the secway, prevents the vehicle from moving until it is removed.
 	var/obj/item/food/grown/banana/eddie_murphy
@@ -95,4 +96,12 @@
 
 /obj/vehicle/ridden/secway/Destroy()
 	STOP_PROCESSING(SSobj,src)
+	return ..()
+
+//bullets will have a 60% chance to hit any riders
+/obj/vehicle/ridden/secway/bullet_act(obj/projectile/proj)
+	if(!buckled_mobs || prob(40))
+		return ..()
+	for(var/mob/rider as anything in buckled_mobs)
+		return rider.projectile_hit(proj)
 	return ..()

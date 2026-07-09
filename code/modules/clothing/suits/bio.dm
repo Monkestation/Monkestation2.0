@@ -62,32 +62,23 @@
 
 //Security biosuit, grey with red stripe across the chest
 /obj/item/clothing/head/bio_hood/security
-	armor_type = /datum/armor/bio_hood_security
+	armor_type = /datum/armor/bio_security
 	icon_state = "bio_security"
-
-/datum/armor/bio_hood_security
-	melee = 25
-	bullet = 15
-	laser = 25
-	energy = 35
-	bomb = 25
-	bio = 100
-	fire = 30
-	acid = 100
 
 /obj/item/clothing/suit/bio_suit/security
-	armor_type = /datum/armor/bio_suit_security
+	armor_type = /datum/armor/bio_security
 	icon_state = "bio_security"
 
-/datum/armor/bio_suit_security
-	melee = 25
-	bullet = 15
+/datum/armor/bio_security
+	melee = 30
+	bullet = 25
 	laser = 25
 	energy = 35
 	bomb = 25
 	bio = 100
-	fire = 30
+	fire = 50 // that one sympton that lights you on fire is common in plagues
 	acid = 100
+	wound = 10
 
 /obj/item/clothing/suit/bio_suit/security/Initialize(mapload)
 	. = ..()
@@ -110,6 +101,10 @@
 
 /obj/item/clothing/suit/bio_suit/scientist
 	icon_state = "bio_scientist"
+
+/obj/item/clothing/suit/bio_suit/scientist/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.science_suit_allowed
 
 //CMO's biosuit, blue stripe
 /obj/item/clothing/head/bio_hood/cmo

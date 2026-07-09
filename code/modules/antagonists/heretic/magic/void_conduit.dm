@@ -1,14 +1,14 @@
 /datum/action/cooldown/spell/conjure/void_conduit
 	name = "Void Conduit"
 	desc = "Opens a gate to the Void; it releases an intermittent pulse that damages windows and airlocks, \
-		while afflicting Heathens with  void chill. \
-		Heretics are granted the cold resistance and low pressure resistance."
+		while afflicting Heathens with void chill. \
+		Affected Heretics instead receive low pressure resistance."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "void_rift"
 
-	cooldown_time = 90 SECONDS
+	cooldown_time = 1 MINUTES
 
 	sound = null
 	school = SCHOOL_FORBIDDEN
@@ -24,18 +24,17 @@
 /obj/structure/void_conduit
 	name = "Void Conduit"
 	desc = "An open gate which leads to nothingness. Releases pulses which you do not want to get hit by."
-	icon = 'icons/effects/effects.dmi'
+	icon = 'icons/effects/void_effects.dmi'
 	icon_state = "void_conduit"
 	anchored = TRUE
 	density = TRUE
 	max_integrity = 150
-
 	///Overlay to apply to the tiles in range of the conduit
 	var/static/image/void_overlay = image(icon = 'icons/turf/overlays.dmi', icon_state = "voidtile")
 	///List of tiles that we added an overlay to, so we can clear them when the conduit is deleted
 	var/list/overlayed_turfs = list()
 	///How many tiles far our effect is
-	var/effect_range = 10
+	var/effect_range = 8
 	///id of the deletion timer
 	var/timerid
 	///Audio loop for the rift being alive
@@ -44,9 +43,14 @@
 /obj/structure/void_conduit/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, start_immediately = TRUE)
-	timerid = QDEL_IN_STOPPABLE(src, 45 SECONDS)
+	timerid = QDEL_IN_STOPPABLE(src, 1 MINUTES)
 	START_PROCESSING(SSobj, src)
-	for(var/turf/affected_turf as anything in RANGE_TURFS(effect_range, src))
+	build_view_turfs()
+
+/obj/structure/void_conduit/proc/build_view_turfs()
+	for(var/turf/affected_turf as anything in overlayed_turfs)
+		affected_turf.cut_overlay(void_overlay)
+	for(var/turf/affected_turf in view(effect_range, src))
 		if(!isopenturf(affected_turf))
 			continue
 		affected_turf.add_overlay(void_overlay)
@@ -63,12 +67,13 @@
 	return ..()
 
 /obj/structure/void_conduit/process(seconds_per_tick)
+	build_view_turfs()
 	do_conduit_pulse()
 
 ///Sends out a pulse
 /obj/structure/void_conduit/proc/do_conduit_pulse()
 	var/list/turfs_to_affect = list()
-	for(var/turf/affected_turf as anything in RANGE_TURFS(effect_range, loc))
+	for(var/turf/affected_turf in view(effect_range, loc))
 		var/distance = get_dist(loc, affected_turf)
 		if(!turfs_to_affect["[distance]"])
 			turfs_to_affect["[distance]"] = list()
@@ -90,18 +95,14 @@
 				var/mob/living/affected_mob = thing_to_affect
 				if(affected_mob.can_block_magic(MAGIC_RESISTANCE))
 					continue
-				if(IS_HERETIC(affected_mob))
+				if(IS_HERETIC_OR_MONSTER(affected_mob) || HAS_TRAIT(affected_mob, TRAIT_MANSUS_TOUCHED))
 					affected_mob.apply_status_effect(/datum/status_effect/void_conduit)
 				else
 					affected_mob.apply_status_effect(/datum/status_effect/void_chill, 1)
 
-			else if(istype(thing_to_affect, /obj/machinery/door) || istype(thing_to_affect, /obj/structure/door_assembly))
-				var/obj/affected_door = thing_to_affect
-				affected_door.take_damage(rand(15, 30))
-
-			else if(istype(thing_to_affect, /obj/structure/window) || istype(thing_to_affect, /obj/structure/grille))
-				var/obj/structure/affected_structure = thing_to_affect
-				affected_structure.take_damage(rand(5, 15))
+			else if(istype(thing_to_affect, /obj/machinery/door) || istype(thing_to_affect, /obj/structure/door_assembly) || istype(thing_to_affect, /obj/structure/window) || istype(thing_to_affect, /obj/structure/grille) || istype(thing_to_affect, /obj/structure/window_sill))
+				var/obj/affected_structure = thing_to_affect
+				affected_structure.take_damage(rand(15, 30))
 
 /datum/looping_sound/void_conduit
 	mid_sounds = 'sound/ambience/ambiatm1.ogg'
@@ -111,12 +112,12 @@
 	falloff_distance = 5
 	falloff_exponent = 20
 
-//Effect applied to heretics in conduit radius
 /datum/status_effect/void_conduit
+	id = "void_conduit"
 	duration = 15 SECONDS
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
-	id = "void_conduit"
 
 /datum/status_effect/void_conduit/on_apply()
 	ADD_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, TRAIT_STATUS_EFFECT(id))
@@ -124,4 +125,3 @@
 
 /datum/status_effect/void_conduit/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, TRAIT_STATUS_EFFECT(id))
-

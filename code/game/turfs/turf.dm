@@ -82,6 +82,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	///whether or not this turf forces movables on it to have no gravity (unless they themselves have forced gravity)
 	var/force_no_gravity = FALSE
 
+	///This turf's resistance to getting rusted
+	var/rust_resistance = RUST_RESISTANCE_BASIC
+
 	/// How pathing algorithm will check if this turf is passable by itself (not including content checks). By default it's just density check.
 	/// WARNING: Currently to use a density shortcircuiting this does not support dense turfs with special allow through function
 	var/pathing_pass_method = TURF_PATHING_PASS_DENSITY
@@ -629,13 +632,20 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/acid_melt()
 	return
 
-/turf/rust_heretic_act()
-	if(turf_flags & NO_RUST)
-		return
-	if(HAS_TRAIT(src, TRAIT_RUSTY))
+/// Check if the heretic is strong enough to rust this turf, and if so, rusts the turf with an added visual effect.
+/turf/rust_heretic_act(rust_strength = RUST_RESISTANCE_BASIC)
+	if((rust_strength < rust_resistance))
 		return
 
-	AddElement(/datum/element/rust)
+	if (rust_turf(magic = TRUE))
+		new /obj/effect/glowing_rune(src)
+
+/// Override this to change behaviour when being rusted
+/turf/proc/rust_turf(magic = FALSE)
+	if ((turf_flags & NO_RUST) || HAS_TRAIT(src, TRAIT_RUSTIMMUNE) || HAS_TRAIT(src, TRAIT_RUSTY))
+		return FALSE
+	AddElement(magic ? /datum/element/rust/heretic : /datum/element/rust)
+	return TRUE
 
 /turf/handle_fall(mob/faller)
 	if(has_gravity(src))
@@ -666,7 +676,15 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/add_vomit_floor(mob/living/M, toxvomit = NONE, purge_ratio = 0.1)
 
-	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
+	var/vomit_type
+	switch(toxvomit)
+		if(VOMIT_NEBULA)
+			vomit_type = /obj/effect/decal/cleanable/vomit/nebula
+		if(VOMIT_NEBULA_WORMS)
+			vomit_type = /obj/effect/decal/cleanable/vomit/nebula/worms
+		else
+			vomit_type = /obj/effect/decal/cleanable/vomit
+	var/obj/effect/decal/cleanable/vomit/V = new vomit_type(src, M.get_static_viruses())
 
 	//if the vomit combined, apply toxicity and reagents to the old vomit
 	if (QDELETED(V))

@@ -81,5 +81,6 @@
 #define CAT_ENTERTAINMENT "Entertainment"
 #define CAT_TOOLS "Tools"
 #define CAT_CULT "Blood Cult"
-// Monke addition
 #define CAT_GUNPARTS "Gunparts"
+#define CAT_LIMBS "Limbs"
+#define CAT_ORGANS "Organs"

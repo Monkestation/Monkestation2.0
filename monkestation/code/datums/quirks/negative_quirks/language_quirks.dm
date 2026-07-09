@@ -5,6 +5,7 @@
 	value = QUIRK_COST_OUTSIDER
 	gain_text = span_notice("You can't understand your species' language.")
 	lose_text = span_notice("You've remembered your species' language.")
+	species_blacklist = list(SPECIES_MONKEY, SPECIES_SIMIAN)
 
 /datum/quirk/outsider/add_unique(client/client_source)
 	var/is_human = ishumanbasic(quirk_holder)

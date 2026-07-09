@@ -30,7 +30,7 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	siemens_coefficient = 0.5
-	alternate_worn_layer = HANDS_LAYER+0.1 //we want it to go above generally everything, but not hands
+	alternate_worn_layer = BACK_LAYER  //we want it to go above generally everything, but not hands
 	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	/// The MOD's theme, decides on some stuff like armor and statistics.
 	var/datum/mod_theme/theme = /datum/mod_theme
@@ -757,7 +757,7 @@
 		to_chat(user, span_warning("It's too dangerous to smear [speed_potion] on [src] while it's active!"))
 		return SPEED_POTION_STOP
 	to_chat(user, span_notice("You slather the red gunk over [src], making it faster."))
-	set_mod_color("#FF0000")
+	set_mod_color(color_transition_filter(COLOR_RED))
 	slowdown_inactive = 0
 	slowdown_active = 0
 	update_speed()

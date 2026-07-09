@@ -1163,9 +1163,9 @@
 		air.temperature = max((temperature * old_heat_capacity + energy_released) / new_heat_capacity, TCMB)
 	return REACTING
 
-//fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again!
-//Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
-//6 reworks
+// On TG, this code was deleted 6 years ago and replaced with the more convenient HFR.
+// This is the reaction Plasmic Fusion. It triggers as Tritium, CO2, and Plasma are present.
+// Spaghetti code has been cleaned up. Now Plasmic Fusion has its own variables.
 
 /datum/gas_reaction/fusion
 	name = "Plasmic Fusion"
@@ -1174,10 +1174,10 @@
 
 /datum/gas_reaction/fusion/init_reqs()
 	requirements = list(
-		"MIN_TEMP" = FUSION_TEMPERATURE_THRESHOLD,
-		/datum/gas/tritium = FUSION_TRITIUM_MOLES_USED,
-		/datum/gas/plasma = FUSION_MOLE_THRESHOLD,
-		/datum/gas/carbon_dioxide  = FUSION_MOLE_THRESHOLD
+		"MIN_TEMP" = PLASMIC_FUSION_TEMPERATURE_THRESHOLD,
+		/datum/gas/tritium = PLASMIC_FUSION_TRITIUM_MOLES_USED,
+		/datum/gas/plasma = PLASMIC_FUSION_MOLE_THRESHOLD,
+		/datum/gas/carbon_dioxide  = PLASMIC_FUSION_MOLE_THRESHOLD
 	)
 
 /datum/gas_reaction/fusion/react(datum/gas_mixture/air, datum/holder)
@@ -1196,26 +1196,26 @@
 	var/initial_plasma = cached_gases[/datum/gas/plasma][MOLES]
 	var/initial_carbon = cached_gases[/datum/gas/carbon_dioxide][MOLES]
 	var/scale_factor = (air.volume)/(PI) //We scale it down by volume/Pi because for fusion conditions, moles roughly = 2*volume, but we want it to be based off something constant between reactions.
-	var/toroidal_size = (2*PI)+TORADIANS(arctan((air.volume-TOROID_VOLUME_BREAKEVEN)/TOROID_VOLUME_BREAKEVEN)) //The size of the phase space hypertorus
+	var/toroidal_size = (2*PI)+TORADIANS(arctan((air.volume-PLASMIC_FUSION_TOROID_VOLUME_BREAKEVEN)/PLASMIC_FUSION_TOROID_VOLUME_BREAKEVEN)) //The size of the phase space hypertorus
 	var/gas_power = 0
 	for (var/gas_id in cached_gases)
 		gas_power += (cached_gases[gas_id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[gas_id][MOLES])
-	var/instability = MODULUS((gas_power*INSTABILITY_GAS_POWER_FACTOR)**2,toroidal_size) //Instability effects how chaotic the behavior of the reaction is
+	var/instability = MODULUS((gas_power*PLASMIC_FUSION_INSTABILITY_GAS_POWER_FACTOR)**2,toroidal_size) //Instability effects how chaotic the behavior of the reaction is
 	cached_scan_results[id] = instability//used for analyzer feedback
 
-	var/plasma = (initial_plasma-FUSION_MOLE_THRESHOLD)/(scale_factor) //We have to scale the amounts of carbon and plasma down a significant amount in order to show the chaotic dynamics we want
-	var/carbon = (initial_carbon-FUSION_MOLE_THRESHOLD)/(scale_factor) //We also subtract out the threshold amount to make it harder for fusion to burn itself out.
+	var/plasma = (initial_plasma-PLASMIC_FUSION_MOLE_THRESHOLD)/(scale_factor) //We have to scale the amounts of carbon and plasma down a significant amount in order to show the chaotic dynamics we want
+	var/carbon = (initial_carbon-PLASMIC_FUSION_MOLE_THRESHOLD)/(scale_factor) //We also subtract out the threshold amount to make it harder for fusion to burn itself out.
 
 	//The reaction is a specific form of the Kicked Rotator system, which displays chaotic behavior and can be used to model particle interactions.
 	plasma = MODULUS(plasma - (instability*sin(TODEGREES(carbon))), toroidal_size)
 	carbon = MODULUS(carbon - plasma, toroidal_size)
 
 
-	cached_gases[/datum/gas/plasma][MOLES] = plasma*scale_factor + FUSION_MOLE_THRESHOLD //Scales the gases back up
-	cached_gases[/datum/gas/carbon_dioxide][MOLES] = carbon*scale_factor + FUSION_MOLE_THRESHOLD
+	cached_gases[/datum/gas/plasma][MOLES] = plasma*scale_factor + PLASMIC_FUSION_MOLE_THRESHOLD //Scales the gases back up
+	cached_gases[/datum/gas/carbon_dioxide][MOLES] = carbon*scale_factor + PLASMIC_FUSION_MOLE_THRESHOLD
 	var/delta_plasma = initial_plasma - cached_gases[/datum/gas/plasma][MOLES]
 
-	reaction_energy += delta_plasma*PLASMA_BINDING_ENERGY //Energy is gained or lost corresponding to the creation or destruction of mass.
+	reaction_energy += delta_plasma*PLASMIC_FUSION_PLASMA_BINDING_ENERGY //Energy is gained or lost corresponding to the creation or destruction of mass.
 	if(instability < FUSION_INSTABILITY_ENDOTHERMALITY)
 		reaction_energy = max(reaction_energy,0) //Stable reactions don't end up endothermic.
 	else if (reaction_energy < 0)
@@ -1225,23 +1225,23 @@
 		cached_gases[/datum/gas/plasma][MOLES] = initial_plasma
 		cached_gases[/datum/gas/carbon_dioxide][MOLES] = initial_carbon
 		return NO_REACTION
-	cached_gases[/datum/gas/tritium][MOLES] -= FUSION_TRITIUM_MOLES_USED
+	cached_gases[/datum/gas/tritium][MOLES] -= PLASMIC_FUSION_TRITIUM_MOLES_USED
 	//The decay of the tritium and the reaction's energy produces waste gases, different ones depending on whether the reaction is endo or exothermic
 	if(reaction_energy > 0)
 		air.assert_gases(/datum/gas/oxygen,/datum/gas/nitrous_oxide)
-		cached_gases[/datum/gas/oxygen][MOLES] += FUSION_TRITIUM_MOLES_USED*(reaction_energy*FUSION_TRITIUM_CONVERSION_COEFFICIENT)
-		cached_gases[/datum/gas/nitrous_oxide][MOLES] += FUSION_TRITIUM_MOLES_USED*(reaction_energy*FUSION_TRITIUM_CONVERSION_COEFFICIENT)
+		cached_gases[/datum/gas/oxygen][MOLES] += PLASMIC_FUSION_TRITIUM_MOLES_USED*(reaction_energy*PLASMIC_FUSION_TRITIUM_CONVERSION_COEFFICIENT)
+		cached_gases[/datum/gas/nitrous_oxide][MOLES] += PLASMIC_FUSION_TRITIUM_MOLES_USED*(reaction_energy*PLASMIC_FUSION_TRITIUM_CONVERSION_COEFFICIENT)
 	else
 		air.assert_gases(/datum/gas/bz,/datum/gas/nitrium)
-		cached_gases[/datum/gas/bz][MOLES] += FUSION_TRITIUM_MOLES_USED*(reaction_energy*-FUSION_TRITIUM_CONVERSION_COEFFICIENT)
-		cached_gases[/datum/gas/nitrium][MOLES] += FUSION_TRITIUM_MOLES_USED*(reaction_energy*-FUSION_TRITIUM_CONVERSION_COEFFICIENT)
+		cached_gases[/datum/gas/bz][MOLES] += PLASMIC_FUSION_TRITIUM_MOLES_USED*(reaction_energy*-PLASMIC_FUSION_TRITIUM_CONVERSION_COEFFICIENT)
+		cached_gases[/datum/gas/nitrium][MOLES] += PLASMIC_FUSION_TRITIUM_MOLES_USED*(reaction_energy*-PLASMIC_FUSION_TRITIUM_CONVERSION_COEFFICIENT)
 
 	if(reaction_energy)
 		if(location)
-			var/particle_chance = ((PARTICLE_CHANCE_CONSTANT)/(reaction_energy-PARTICLE_CHANCE_CONSTANT)) + 1//Asymptopically approaches 100% as the energy of the reaction goes up.
+			var/particle_chance = ((PLASMIC_FUSION_PARTICLE_CHANCE_CONSTANT)/(reaction_energy-PLASMIC_FUSION_PARTICLE_CHANCE_CONSTANT)) + 1//Asymptopically approaches 100% as the energy of the reaction goes up.
 			if(prob(PERCENT(particle_chance)))
 				location.fire_nuclear_particle()
-			var/rad_power = max((FUSION_RAD_COEFFICIENT/instability) + 250, 15000) //Wow!
+			var/rad_power = max((PLASMIC_FUSION_RAD_COEFFICIENT/instability) + 250, 15000) //Wow!
 			radiation_pulse(location, rand(6,30), 7, 60, 0 SECONDS, rad_power, 1) // Nonmodular. Fixes fusion going wacko mode - makes it significantly harder to irradiate people through walls, and fixes the range issue.
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY && (air.temperature <= FUSION_MAXIMUM_TEMPERATURE || reaction_energy <= 0))	//If above FUSION_MAXIMUM_TEMPERATURE, will only adjust temperature for endothermic reactions.

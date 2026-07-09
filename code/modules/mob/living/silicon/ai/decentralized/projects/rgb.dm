@@ -1,0 +1,17 @@
+/datum/ai_project/rgb
+	name = "RGB Lighting"
+	description = "By varying the current levels in the lighting subsystems of your servers, you can make pretty colors."
+	research_cost = 500
+	ram_required = 0
+	category = AI_PROJECT_MISC
+
+/datum/ai_project/rgb/run_project(force_run = FALSE)
+	. = ..()
+	if(!.)
+		return .
+	ai.partytime()
+
+
+/datum/ai_project/rgb/stop()
+	ai.stoptheparty()
+	return ..()

@@ -11,9 +11,10 @@
 	id = "unholy_determination"
 	duration = 3 MINUTES // Given a default duration so no one gets to hold onto this buff forever by accident.
 	tick_interval = 1 SECONDS
+	processing_speed = STATUS_EFFECT_PRIORITY
 	alert_type = /atom/movable/screen/alert/status_effect/unholy_determination
 	/// List of traits to give to the owner.
-	var/static/list/traits_to_give = list(
+	var/list/traits_to_give = list(
 		TRAIT_ANTICONVULSANT,
 		TRAIT_COAGULATING,
 		TRAIT_FEARLESS,
@@ -44,7 +45,7 @@
 	var/healing_amount = 1 + (2 - owner.usable_legs)
 
 	// In softcrit you're, strong enough to stay up.
-	if(owner.health <= owner.crit_threshold && owner.health >= owner.hardcrit_threshold)
+	if(ISINRANGE(owner.health, owner.hardcrit_threshold, owner.crit_threshold))
 		if(prob(5))
 			to_chat(owner, span_hypnophrase("Your body feels like giving up, but you fight on!"))
 		healing_amount *= 2
@@ -89,7 +90,7 @@
 		return
 
 	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-		owner.blood_volume = owner.blood_volume + 2
+		owner.blood_volume += 2
 
 	var/mob/living/carbon/carbon_owner = owner
 	var/datum/wound/bloodiest_wound
@@ -111,7 +112,7 @@
 	new /obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, victim.dir)
 	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, TRUE, -1)
 	var/obj/projectile/curse_hand/hel/hand = new (spawn_turf)
-	hand.preparePixelProjectile(victim, spawn_turf)
+	hand.aim_projectile(victim, spawn_turf)
 	if (QDELETED(hand)) // safety check if above fails - above has a stack trace if it does fail
 		return
 	hand.fire()

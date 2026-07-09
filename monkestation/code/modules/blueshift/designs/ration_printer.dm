@@ -68,7 +68,7 @@
 	name = "Flour Sack"
 	id = "frontier_ration_flour_sack"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass = 100)
+	materials = list(/datum/material/biomass = 200)
 	build_path = /obj/item/reagent_containers/condiment/flour/small_ration
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -79,7 +79,7 @@
 	name = "Korta Flour Sack"
 	id = "frontier_ration_flour_sack_korta"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass = 100)
+	materials = list(/datum/material/biomass = 200)
 	build_path = /obj/item/reagent_containers/condiment/small_ration_korta_flour
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -90,7 +90,7 @@
 	name = "Rice Sack"
 	id = "frontier_ration_rice_sack"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass = 100)
+	materials = list(/datum/material/biomass = 200)
 	build_path = /obj/item/reagent_containers/condiment/rice/small_ration
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -101,7 +101,7 @@
 	name = "Sugar Sack"
 	id = "frontier_ration_sugar_sack"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass = 100)
+	materials = list(/datum/material/biomass = 200)
 	build_path = /obj/item/reagent_containers/condiment/sugar/small_ration
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -112,7 +112,7 @@
 	name = "Soy Milk"
 	id = "frontier_ration_soy_milk_cart"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass = 100)
+	materials = list(/datum/material/biomass = 200)
 	build_path = /obj/item/reagent_containers/condiment/soymilk/small_ration
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -123,7 +123,7 @@
 	name = "Milk"
 	id = "frontier_ration_milk_cart"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass = 100)
+	materials = list(/datum/material/biomass = 200)
 	build_path = /obj/item/reagent_containers/condiment/milk/small_ration
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -351,44 +351,44 @@
 
 /obj/item/reagent_containers/condiment/flour/small_ration
 	name = "small flour sack"
-	desc = "A maritime ration-sized portion of flour, containing just enough to make a single good loaf of bread to fuel the day."
+	desc = "A maritime ration-sized portion of flour, containing just enough to make a few loaves of bread to fuel the day."
 	icon = 'monkestation/code/modules/blueshift/icons/food_containers.dmi'
-	list_reagents = list(/datum/reagent/consumable/flour = 15)
+	list_reagents = list(/datum/reagent/consumable/flour = 30)
 
 /obj/item/reagent_containers/condiment/rice/small_ration
 	name = "small rice sack"
-	desc = "A maritime ration-sized portion of rice, containing just enough to make the universe's saddest rice dish."
+	desc = "A maritime ration-sized portion of rice, containing just enough to make the universe's saddest rice dishes."
 	icon = 'monkestation/code/modules/blueshift/icons/food_containers.dmi'
-	list_reagents = list(/datum/reagent/consumable/rice = 10)
+	list_reagents = list(/datum/reagent/consumable/rice = 20)
 
 /obj/item/reagent_containers/condiment/sugar/small_ration
 	name = "small sugar sack"
 	desc = "A maritime ration-sized portion of sugar, containing just enough to make the day just a tiny bit sweeter."
 	icon = 'monkestation/code/modules/blueshift/icons/food_containers.dmi'
-	list_reagents = list(/datum/reagent/consumable/sugar = 10)
+	list_reagents = list(/datum/reagent/consumable/sugar = 20)
 
 /obj/item/reagent_containers/condiment/small_ration_korta_flour
 	name = "small korta flour sack"
-	desc = "A maritime ration-sized portion of korta flour, containing just enough to make a single good loaf of bread to fuel the day."
+	desc = "A maritime ration-sized portion of korta flour, containing just enough to make a few good loaves of rootbread to fuel the day."
 	icon = 'monkestation/code/modules/blueshift/icons/food_containers.dmi'
 	icon_state = "flour_korta"
 	inhand_icon_state = "carton"
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
-	list_reagents = list(/datum/reagent/consumable/korta_flour = 10)
+	list_reagents = list(/datum/reagent/consumable/korta_flour = 20)
 	fill_icon_thresholds = null
 
 /obj/item/reagent_containers/condiment/soymilk/small_ration
 	name = "small soy milk"
 	desc = "It's soy milk. White and nutritious goodness! This one is significantly smaller than normal cartons; just enough to make some rootdough with."
 	icon = 'monkestation/code/modules/blueshift/icons/food_containers.dmi'
-	list_reagents = list(/datum/reagent/consumable/soymilk = 15)
+	list_reagents = list(/datum/reagent/consumable/soymilk = 30)
 
 /obj/item/reagent_containers/condiment/milk/small_ration
 	name = "small milk"
 	desc = "It's milk. White and nutritious goodness! This one is significantly smaller than normal cartons; just enough to make some cheese with."
 	icon = 'monkestation/code/modules/blueshift/icons/food_containers.dmi'
-	list_reagents = list(/datum/reagent/consumable/milk = 15)
+	list_reagents = list(/datum/reagent/consumable/milk = 30)
 
 /obj/item/reagent_containers/cup/glass/bottle/small/tiny
 	name = "tiny glass bottle"

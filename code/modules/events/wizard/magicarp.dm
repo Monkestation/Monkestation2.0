@@ -6,7 +6,7 @@
 	earliest_start = 0 MINUTES
 	description = "Summons a school of carps with magic projectiles."
 	min_wizard_trigger_potency = 4
-	max_wizard_trigger_potency = 6
+	max_wizard_trigger_potency = 100
 	admin_setup = list(/datum/event_admin_setup/carp_migration)
 
 /datum/round_event/carp_migration/wizard

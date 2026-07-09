@@ -49,8 +49,8 @@
 /obj/item/crowbar/drone
 	name = "built-in crowbar"
 	desc = "A crowbar built into your chassis."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "crowbar_cyborg"
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_engiborg_crowbar"
 	inhand_icon_state = "crowbar"
 	item_flags = NO_MAT_REDEMPTION
 	toolspeed = 0.5 //Monke, drone tools are as fast as borg tools.
@@ -58,13 +58,12 @@
 /obj/item/screwdriver/drone
 	name = "built-in screwdriver"
 	desc = "A screwdriver built into your chassis."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "screwdriver_cyborg"
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_engiborg_screwdriver"
 	inhand_icon_state = "screwdriver"
 	item_flags = NO_MAT_REDEMPTION
 	random_color = FALSE
 	toolspeed = 0.5 //Monke, drone tools are as fast as borg tools.
-
 
 /obj/item/screwdriver/drone/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file)
 	. = ..()
@@ -78,8 +77,8 @@
 /obj/item/wrench/drone
 	name = "built-in wrench"
 	desc = "A wrench built into your chassis."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "wrench_cyborg"
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_engiborg_wrench"
 	inhand_icon_state = "wrench"
 	item_flags = NO_MAT_REDEMPTION
 	toolspeed = 0.5 //Monke, drone tools are as fast as borg tools.
@@ -96,8 +95,8 @@
 /obj/item/wirecutters/drone
 	name = "built-in wirecutters"
 	desc = "Wirecutters built into your chassis."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "wirecutters_cyborg"
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_engiborg_cutters"
 	inhand_icon_state = "cutters"
 	item_flags = NO_MAT_REDEMPTION
 	random_color = FALSE
@@ -106,7 +105,7 @@
 /obj/item/multitool/drone
 	name = "built-in multitool"
 	desc = "A multitool built into your chassis."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "multitool_cyborg"
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_engiborg_multitool"
 	item_flags = NO_MAT_REDEMPTION
 	toolspeed = 0.5

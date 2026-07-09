@@ -264,7 +264,7 @@
 	var/atom/destination
 	var/obj/effect/oshan_launch_point/player/picked_point
 
-	if(length(GLOB.oshan_launch_points))
+	if(length(GLOB.oshan_launch_points) && !mind.assigned_role.oshan_normal_latejoin)
 		picked_point = pick(GLOB.oshan_launch_points)
 		destination = get_edge_target_turf(picked_point, picked_point.map_edge_direction)
 	else
@@ -379,10 +379,10 @@
 	if(!isAI(spawning_mob)) // Unfortunately there's still snowflake AI code out there.
 		// transfer_to sets mind to null
 		var/datum/mind/preserved_mind = mind
-		preserved_mind.original_character_slot_index = client.prefs.default_slot
+		preserved_mind.original_character_slot_index = client.prefs.active_slot
 		preserved_mind.transfer_to(spawning_mob) //won't transfer key since the mind is not active
 		preserved_mind.set_original_character(spawning_mob)
-	LAZYADD(persistent_client.joined_as_slots, "[client.prefs.default_slot]")
+	LAZYADD(persistent_client.joined_as_slots, "[client.prefs.active_slot]")
 	client.init_verbs()
 	. = spawning_mob
 	new_character = .

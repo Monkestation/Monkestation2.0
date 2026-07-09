@@ -109,6 +109,8 @@
 #define COMSIG_MOB_ATTACK_ALIEN "mob_attack_alien"
 ///from base of /mob/throw_item(): (atom/target)
 #define COMSIG_MOB_THROW "mob_throw"
+///from base of /mob/verb/examinate(): (atom/target, list/examine_strings)
+#define COMSIG_MOB_EXAMINING "mob_examining"
 ///from base of /mob/verb/examinate(): (atom/target)
 #define COMSIG_MOB_EXAMINATE "mob_examinate"
 ///from /mob/living/handle_eye_contact(): (mob/living/other_mob)
@@ -166,6 +168,8 @@
 	#define COMPONENT_CLIENT_MOUSEUP_INTERCEPT (1<<0)
 //from base of client/MouseUp(): (/client, object, location, control, params)
 #define COMSIG_CLIENT_MOUSEDRAG "client_mousedrag"
+///Called on the mob being stripped, accepts COMPONENT_CANT_STRIP (mob/user, obj/item/unequipping)
+#define COMSIG_BEING_STRIPPED "try_strip"
 ///Called on user, from base of /datum/strippable_item/try_(un)equip() (atom/target, obj/item/equipping?)
 #define COMSIG_TRY_STRIP "try_strip"
 	#define COMPONENT_CANT_STRIP (1<<0)

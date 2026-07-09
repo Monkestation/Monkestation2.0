@@ -113,6 +113,10 @@
 	has_sensor = HAS_SENSORS
 	can_adjust = TRUE
 
+/obj/item/clothing/under/syndicate/nova/overalls/unarmoured/tacticool
+	name = "tacticool utility turtleneck"
+	desc = "A pair of spiffy overalls with a tacticool turtleneck underneath, now with 100% more tacticool."
+
 /obj/item/clothing/under/syndicate/nova/overalls/unarmoured/skirt
 	name = "suspicious utility overalls skirtleneck"
 	desc = "A pair of spiffy overalls with a turtleneck underneath, this one is a skirt instead, breezy."
@@ -121,6 +125,10 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/syndicate/nova/overalls/unarmoured/skirt/tacticool
+	name = "tacticool utility skirtleneck"
+	desc = "A pair of spiffy overalls with a tacticool turtleneck underneath, now with 100% more tacticool."
 
 /obj/item/clothing/under/syndicate/nova/overalls/unarmoured/examine_more(mob/user)
 	. = ..()
@@ -421,23 +429,10 @@
 /obj/item/clothing/head/beret/medical/nova/interdyne
 	name = "interdyne beret"
 	desc = "A white and green beret denoting one's allegiance to Interdyne Pharmaceutics."
+	icon_state = "beret_badge"
+	greyscale_config = /datum/greyscale_config/beret_badge
+	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#FFFFFF#198019"
-
-/obj/item/clothing/head/hats/syndicate/interdyne_deckofficer_black
-	name = "black deck officer's cap"
-	desc = "A black officer's cap that demands discipline from the one who wears it."
-	icon_state = "ip_officercap_black"
-	armor_type = /datum/armor/sec_navywarden
-	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/head.dmi'
-
-/obj/item/clothing/head/hats/syndicate/interdyne_deckofficer_white
-	name = "white deck officer's cap"
-	desc = "A white officer's cap that demands discipline from the one who wears it."
-	icon_state = "ip_officercap_white"
-	armor_type = /datum/armor/sec_navywarden
-	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/head.dmi'
 
 /obj/item/clothing/head/bio_hood/interdyne
 	name = "interdyne biosuit helmet"

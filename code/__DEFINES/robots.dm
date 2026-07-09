@@ -18,6 +18,8 @@
 #define AI_NOTIFICATION_AI_SHELL 4
 ///Alert when a Cyborg gets disconnected from their AI.
 #define AI_NOTIFICATION_CYBORG_DISCONNECTED 5
+/// Alert when a Cyborg dies.
+#define AI_NOTIFICATION_CYBORG_DEATH 6
 
 //transfer_ai() defines. Main proc in ai_core.dm
 ///Downloading AI to InteliCard

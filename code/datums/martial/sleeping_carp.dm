@@ -22,7 +22,6 @@
 	var/counter = FALSE //monke edit end
 	var/damage_sharpness = NONE
 	var/instant_grab = FALSE
-	var/snap_grab_state = GRAB_KILL
 
 /datum/martial_art/the_sleeping_carp/teach(mob/living/carbon/human/target, make_temporary = FALSE)
 	. = ..()
@@ -160,7 +159,7 @@
 	return ..()
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/attacker, mob/living/defender)
-	if(attacker.grab_state >= snap_grab_state \
+	if(attacker.grab_state == GRAB_KILL \
 		&& attacker.zone_selected == BODY_ZONE_HEAD \
 		&& attacker.pulling == defender \
 		&& defender.stat != DEAD \
@@ -267,7 +266,7 @@
 		)
 		to_chat(attacker, span_userdanger("[carp_user] carefully dodges your [touch_weapon], remaining completely untouched!"), type = MESSAGE_TYPE_COMBAT)
 		carp_user.balloon_alert(attacker, "miss!")
-		playsound(carp_user, 'monkestation/sound/effects/miss.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(carp_user, 'sound/effects/miss.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	else
 		carp_user.visible_message(
 			span_danger("[carp_user] twists [attacker]'s arm, sending [attacker.p_their()] [touch_weapon] back towards [attacker.p_them()]!"),
@@ -364,7 +363,7 @@
 			H.Paralyze(8 SECONDS)
 		if(H.stamina.loss && !H.IsSleeping())
 			var/total_health = (H.health - H.stamina.loss)
-			if(total_health <= HEALTH_THRESHOLD_CRIT && !H.stat)
+			if(total_health <= H.crit_threshold && !H.stat)
 				H.visible_message(span_warning("[user] delivers a heavy hit to [H]'s head, knocking [H.p_them()] out cold!"), \
 								span_userdanger("You're knocked unconscious by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
 				to_chat(user, span_danger("You deliver a heavy hit to [H]'s head, knocking [H.p_them()] out cold!"))

@@ -279,7 +279,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 		return TRUE
 	if (!considered_alive(target))
 		return TRUE
-	if (!target.current.onCentCom() && !target.current.onSyndieBase())
+	if (!target.current.onCentCom())
 		return TRUE
 	return FALSE
 
@@ -381,7 +381,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/jailbreak/detain/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role] is delivered to nanotrasen alive and in custody."
+		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role] is delivered, via the shuttle or pods, alive and in custody."
 	else
 		explanation_text = "Free objective."
 

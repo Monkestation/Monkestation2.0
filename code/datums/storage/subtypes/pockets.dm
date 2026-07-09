@@ -103,7 +103,7 @@
 		/obj/item/toy/crayon,
 		/obj/item/reagent_containers/cup/glass/flask),
 		list(/obj/item/screwdriver/power,
-		/obj/item/ammo_casing/caseless/rocket,
+		/obj/item/ammo_casing/rocket,
 		/obj/item/clothing/mask/cigarette/pipe,
 		/obj/item/toy/crayon/spraycan)
 		)
@@ -138,7 +138,7 @@
 		/obj/item/bikehorn,
 		/obj/item/reagent_containers/cup/glass/flask),
 		list(/obj/item/screwdriver/power,
-		/obj/item/ammo_casing/caseless/rocket,
+		/obj/item/ammo_casing/rocket,
 		/obj/item/clothing/mask/cigarette/pipe,
 		/obj/item/toy/crayon/spraycan)
 		)
@@ -161,24 +161,34 @@
 	max_slots = 2
 	quickdraw = TRUE
 	max_total_storage = 6
+	max_specific_storage = WEIGHT_CLASS_NORMAL
 
 /datum/storage/pockets/helmet/New()
 	. = ..()
 	set_holdable(list(/obj/item/reagent_containers/cup/glass/bottle/vodka,
-					  /obj/item/reagent_containers/cup/glass/bottle/molotov,
-					  /obj/item/reagent_containers/cup/glass/drinkingglass,
-					  /obj/item/ammo_box/a762))
+					/obj/item/reagent_containers/cup/glass/bottle/molotov,
+					/obj/item/reagent_containers/cup/glass/drinkingglass,
+					/obj/item/ammo_box/a762))
 
+/datum/storage/pockets/armor
+	max_slots = 2
+	rustle_sound = TRUE
+	attack_hand_interact = TRUE
 
+///Void cloak pocket
 /datum/storage/pockets/void_cloak
-	quickdraw = TRUE
 	max_total_storage = 5 // 2 small items + 1 tiny item, or 1 normal item + 1 small item
 	max_slots = 3
 
-/datum/storage/pockets/void_cloak/New()
+/datum/storage/pockets/void_cloak/New(
+	atom/parent,
+	max_slots,
+	max_specific_storage,
+	max_total_storage,
+)
 	. = ..()
 	set_holdable(list(
-		/obj/item/ammo_box/a762/lionhunter,
+		/obj/item/ammo_box/speedloader/strilka310/lionhunter,
 		/obj/item/bodypart, // Bodyparts are often used in rituals. They're also often normal sized, so you can only fit one.
 		/obj/item/clothing/neck/eldritch_amulet,
 		/obj/item/clothing/neck/heretic_focus,

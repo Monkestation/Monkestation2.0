@@ -2,7 +2,7 @@
 	name = "arachnid chelicerae"
 	desc = "Some fang things, spooky."
 	icon_state = "chelicerae"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 
 	preference = "feature_arachnid_chelicerae"
 	zone = BODY_ZONE_HEAD
