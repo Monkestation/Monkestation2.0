@@ -68,29 +68,26 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 ))
 
 GLOBAL_LIST_INIT(mystery_magic, list(
-	/obj/item/gun/magic/wand/arcane_barrage,
-	/obj/item/gun/magic/wand/arcane_barrage/blood,
+//	/obj/item/gun/magic/wand/arcane_barrage,
+//	/obj/item/gun/magic/wand/arcane_barrage/blood,
+	/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage,
+	/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/blood,
 	/obj/item/gun/magic/wand/fireball,
 	/obj/item/gun/magic/wand/resurrection,
-	/obj/item/gun/magic/wand/death,
-	/obj/item/gun/magic/wand/polymorph,
 	/obj/item/gun/magic/wand/teleport,
 	/obj/item/gun/magic/wand/door,
 	/obj/item/gun/magic/wand/nothing,
 	/obj/item/storage/belt/wands/full,
+//	/obj/item/storage/belt/wands/full/discount,
 	/obj/item/gun/magic/staff/healing,
-	/obj/item/gun/magic/staff/change,
-	/obj/item/gun/magic/staff/animate,
 	/obj/item/gun/magic/staff/chaos,
 	/obj/item/gun/magic/staff/door,
 	/obj/item/gun/magic/staff/honk,
 	/obj/item/gun/magic/staff/spellblade,
-	/obj/item/gun/magic/staff/locker,
 	/obj/item/gun/magic/staff/flying,
 	/obj/item/gun/magic/staff/babel,
 	/obj/item/singularityhammer,
-	/obj/item/mod/control/pre_equipped/enchanted,
-	/obj/item/runic_vendor_scepter,
+//	/obj/item/runic_vendor_scepter,
 ))
 
 
