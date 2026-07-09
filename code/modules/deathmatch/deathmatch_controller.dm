@@ -72,7 +72,7 @@
 		.["lobbies"] += list(list(
 			name = ckey,
 			players = lobby.players.len,
-			max_players = initial(lobby.map.max_players),
+			max_players = lobby.map.max_players,
 			map = initial(lobby.map.name),
 			playing = lobby.playing
 		))

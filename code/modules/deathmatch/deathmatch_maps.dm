@@ -5,8 +5,12 @@
 	var/name
 	/// Map Description
 	var/desc = ""
+#ifndef LOWMEMORYMODE
 	/// Minimum players for this map
 	var/min_players = 2
+#else
+	var/min_players = 1
+#endif
 	/// Maximum players for this map
 	var/max_players = 2 // TODO: make this automatic.
 	/// The map will end in this time

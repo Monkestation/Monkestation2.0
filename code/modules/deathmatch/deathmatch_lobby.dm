@@ -123,7 +123,12 @@
 		observer.forceMove(pick(location.reserved_turfs))
 
 	playing = DEATHMATCH_PLAYING
+#ifndef LOWMEMORYMODE
 	addtimer(CALLBACK(src, PROC_REF(game_took_too_long)), initial(map.automatic_gameend_time))
+#else
+	message_admins("Deathmatch time set to 20 seconds for debugging")
+	addtimer(CALLBACK(src, PROC_REF(game_took_too_long)), 20 SECONDS)
+#endif
 	log_game("Deathmatch game [host] started.")
 	announce(span_reallybig("GO!"))
 	if(length(modifiers))
