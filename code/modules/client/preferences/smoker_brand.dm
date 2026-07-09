@@ -12,10 +12,7 @@
 	return "Random"
 
 /datum/preference/choiced/smoker_brand/is_accessible(datum/preferences/preferences)
-	if(!..(preferences))
-		return FALSE
-
-	return "Smoker" in preferences.all_quirks
+	return ..() && (/datum/quirk/item_quirk/junkie/smoker::name in preferences.all_quirks)
 
 /datum/preference/choiced/smoker_brand/apply_to_human(mob/living/carbon/human/target, value)
 	return
