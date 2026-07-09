@@ -1,7 +1,0 @@
-author: "Gboster-0"
-delete-after: True
-changes:
-  - rscadd: "Added napalm being able to be put into welders as long-lasting fuel"
-  - qol: "The welding tool now has text explaining it can be screwdrivered in examine (and that screwdrivering it allows you to put chems into it)"
-  - bugfix: "Welding tools can no longer infinitelly burn when you put integer amounts of fuel into them"
-  - bugfix: "Welding tools now show how many reagents they have with their gauge instead of just the fuel amount"
