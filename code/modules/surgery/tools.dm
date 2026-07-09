@@ -24,7 +24,12 @@
 
 /obj/item/retractor/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_retractor"
+	icon_state = "toolkit_mediborg_retractor"
+
+/obj/item/retractor/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_retractor_alien"
+	toolspeed = 0.25
 
 /obj/item/hemostat
 	name = "hemostat"
@@ -54,7 +59,12 @@
 
 /obj/item/hemostat/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_hemostat"
+	icon_state = "toolkit_mediborg_hemostat"
+
+/obj/item/hemostat/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_hemostat_alien"
+	toolspeed = 0.25
 
 /obj/item/cautery
 	name = "cautery"
@@ -87,7 +97,11 @@
 
 /obj/item/cautery/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_cautery"
+	icon_state = "toolkit_mediborg_cautery"
+
+/obj/item/cautery/cyborg/alien
+	icon_state = "toolkit_mediborg_cautery_alien"
+	toolspeed = 0.25
 
 /obj/item/cautery/advanced
 	name = "searing tool"
@@ -191,7 +205,12 @@
 
 /obj/item/surgicaldrill/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_drill"
+	icon_state = "toolkit_mediborg_drill"
+
+/obj/item/surgicaldrill/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_drill_alien"
+	toolspeed = 0.25
 
 /obj/item/scalpel
 	name = "scalpel"
@@ -244,7 +263,12 @@
 /obj/item/scalpel/cyborg
 	desc = "Ultra-sharp blade attached directly to your servos for extra-accuracy."
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_scalpel"
+	icon_state = "toolkit_mediborg_scalpel"
+
+/obj/item/scalpel/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_scalpel_alien"
+	toolspeed = 0.25
 
 /obj/item/circular_saw
 	name = "circular saw"
@@ -294,7 +318,12 @@
 
 /obj/item/circular_saw/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_saw"
+	icon_state = "toolkit_mediborg_saw"
+
+/obj/item/circular_saw/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_saw_alien"
+	toolspeed = 0.25
 
 /obj/item/surgical_drapes
 	name = "surgical drapes"
@@ -314,7 +343,7 @@
 
 /obj/item/surgical_drapes/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_surgicaldrapes"
+	icon_state = "toolkit_mediborg_surgicaldrapes"
 
 /obj/item/surgical_processor
 	name = "surgical processor"
@@ -588,7 +617,12 @@
 
 /obj/item/bonesetter/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_bonesetter"
+	icon_state = "toolkit_mediborg_bonesetter"
+
+/obj/item/bonesetter/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_bonesetter_alien"
+	toolspeed = 0.25
 
 /obj/item/blood_filter
 	name = "blood filter"
@@ -706,30 +740,41 @@
 	inhand_icon_state = "m_mask"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
 	w_class = WEIGHT_CLASS_SMALL
-	toolspeed = 1
 
 /obj/item/breathing_bag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(istype(interacting_with, /mob/living) && can_see(user, interacting_with, 1))
-		var/mob/living/mob = interacting_with
-		if(mob == user)
+	if(user == interacting_with || !user.Adjacent(interacting_with) || !isliving(interacting_with))
+		return NONE
+	var/mob/living/target = interacting_with
+	if(!target.appears_alive())
+		to_chat(user, span_warning("To perform mechanical ventilation, the patient must be alive!"))
+		return ITEM_INTERACT_BLOCKING
+	if(target.is_mouth_covered())
+		to_chat(user, span_warning("To perform mechanical ventilation, the patient must be unmasked!"))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("Applying a breathing mask to [target] face."))
+	if(!can_repeat_healing(user, target, 3 SECONDS))
+		return ITEM_INTERACT_BLOCKING
+	. = ITEM_INTERACT_SUCCESS
+	playsound(user,'sound/items/breathing_bag.ogg', 100, TRUE)
+	for(var/loop_attempt in 1 to 15)
+		if(!can_repeat_healing(user, target, 1 SECONDS))
 			return
-		if(!mob.appears_alive())
-			to_chat(user, span_warning("They are dead!"))
-			return
-		if(mob.is_mouth_covered())
-			to_chat(user, span_warning("To perform mechanical ventilation, the patient must be unmasked!"))
-			return
-		to_chat(user, span_notice("Applying a breathing mask to [mob] face."))
-		if(!do_after(user, 3 SECONDS, user))
-			to_chat(user, span_warning("It doesn't work!"))
-			return
-		. = ..()
-		playsound(user,'sound/items/breathing_bag.ogg', 100, TRUE)
-		for(var/ivl in 1 to 15)
-			if(!do_after(user, 1 SECONDS, user))
-				return
-			if(get_dist(user, mob) > 1)
-				to_chat(user, span_notice("Where did he go?"))
-				return
-			to_chat(user, span_notice("Performing artificial ventilation!"))
-			mob.adjustOxyLoss(-10)
+		to_chat(user, span_notice("Performing artificial ventilation!"))
+		// Ventilation will only help if the target can make use of the air that comes with it.
+		if(!target.get_organ_slot(ORGAN_SLOT_LUNGS))
+			continue
+		if(HAS_TRAIT(target, TRAIT_NOBREATH))
+			continue
+		target.adjustOxyLoss(-10)
+
+/// Checks if the target can be interacted with.
+/obj/item/breathing_bag/proc/can_repeat_healing(mob/living/user, mob/living/target, delay_length)
+	if(delay_length && !do_after(user, delay_length, target, IGNORE_TARGET_LOC_CHANGE)) // Target is free to move around a little.
+		return FALSE
+	if(!user.Adjacent(target))
+		return FALSE
+	if(!target.appears_alive())
+		return FALSE
+	if(target.is_mouth_covered())
+		return FALSE
+	return TRUE

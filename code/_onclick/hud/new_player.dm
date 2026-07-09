@@ -105,7 +105,7 @@
 	highlighted = FALSE
 	update_appearance(UPDATE_ICON_STATE)
 
-/atom/movable/screen/lobby/button/update_icon_state(updates)
+/atom/movable/screen/lobby/button/update_icon_state()
 	if(!enabled)
 		icon_state = "[base_icon_state]_disabled"
 	else if(highlighted)
@@ -524,6 +524,8 @@
 	var/server_ip = "play.monkestation.com"
 	/// The port of this server.
 	var/server_port
+	/// Plexora ID of this server
+	var/server_id
 
 /atom/movable/screen/lobby/button/server/SlowInit(mapload)
 	. = ..()
@@ -531,15 +533,14 @@
 	update_appearance(UPDATE_ICON_STATE)
 
 /atom/movable/screen/lobby/button/server/proc/is_available()
-	var/time_info = time2text(world.realtime, "DDD hh")
-	var/day = copytext(time_info, 1, 4)
-	var/hour = text2num(copytext(time_info, 5))
-	if(!should_be_up(day, hour))
-		return FALSE
-	return TRUE
+	if(!SSplexora.enabled)
+	  // Defaults to enabled since there's no other source for if its up or not.
+		return TRUE
 
-/atom/movable/screen/lobby/button/server/proc/should_be_up(day, hour)
-	return TRUE
+	if(SSplexora.current_server_id == server_id)
+		return TRUE
+
+	return SSplexora.up_servers[server_id]
 
 /atom/movable/screen/lobby/button/server/Click(location, control, params)
 	. = ..()
@@ -555,17 +556,11 @@
 //HRP MONKE - Monkeris
 /atom/movable/screen/lobby/button/server/hrp
 	icon = 'icons/hud/lobby/sister_server_buttons_large.dmi'
-	base_icon_state = "erisbutton_serverwip"
+	base_icon_state = "erisbutton"
 	screen_loc = "TOP:-46,CENTER:+173"
-	server_name = "CEV-ERIS (HRP)"
+	server_name = "CEV-ERIS (MRP/HRP)"
 	server_port = HRP_PORT
-
-/atom/movable/screen/lobby/button/server/hrp/should_be_up(day, hour)
-	return FALSE
-
-/atom/movable/screen/lobby/button/server/hrp/update_icon_state(updates)
-	. = ..()
-	icon_state = base_icon_state
+	server_id = PLEXORA_SERVERID_MONKERIS
 
 //MAIN MONKE (MEDIUM RARE)
 /atom/movable/screen/lobby/button/server/mrp
@@ -574,13 +569,15 @@
 	enabled = TRUE
 	server_name = "Medium-Rare Roleplay (MRP)"
 	server_port = MRP_PORT
+	server_id = PLEXORA_SERVERID_MRP
 
 //MRP 2 MONKE (MEDIUM WELL)
 /atom/movable/screen/lobby/button/server/mrp2
 	screen_loc = "TOP:-117,CENTER:+173"
 	base_icon_state = "mrp2"
-	server_name = "Medium-Well (MRP)"
+	server_name = "Monke's Paw (MRP)"
 	server_port = MRP2_PORT
+	server_id = PLEXORA_SERVERID_MONKESPAW
 
 //bottom button is "TOP:-140,CENTER:+177"
 //The Vanderlin Project
@@ -590,18 +587,8 @@
 	screen_loc = "TOP:-147,CENTER:+179"
 	server_name = "Vanderlin"
 	server_port = VANDERLIN_PORT
+	server_id = PLEXORA_SERVERID_VANDERLIN
 	layer = LOBBY_BACKGROUND_LAYER
-
-/atom/movable/screen/lobby/button/server/vanderlin/should_be_up(day, hour)
-	return TRUE
-/*
-	switch(day)
-		if(FRIDAY)
-			return (hour >= 15)
-		if(SATURDAY, SUNDAY)
-			return TRUE
-	return FALSE
-*/
 
 //Monke button
 /atom/movable/screen/lobby/button/ook

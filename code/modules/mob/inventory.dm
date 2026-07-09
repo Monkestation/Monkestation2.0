@@ -216,11 +216,12 @@
 	if(QDELETED(I))
 		return FALSE
 
-	// try to put it in a borg apparatus
-	if(istype(src, /mob/living/silicon/robot))
-		for(var/obj/item/borg/apparatus/apparatus in src)
-			if(apparatus.put_in_apparatus(I, src))
-				return TRUE
+	// Cyborg's apparatus is their hand.
+	if(iscyborg(src))
+		var/mob/living/silicon/robot/cyborg_owner = src
+		var/obj/item/borg/apparatus/cyborg_apparatus = cyborg_owner.get_active_held_item()
+		if(istype(cyborg_apparatus) && cyborg_apparatus.put_in_apparatus(I, cyborg_owner))
+			return TRUE
 
 	// If the item is a stack and we're already holding a stack then merge
 	if (isstack(I))

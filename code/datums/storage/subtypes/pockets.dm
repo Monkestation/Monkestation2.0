@@ -169,6 +169,10 @@
 					  /obj/item/reagent_containers/cup/glass/drinkingglass,
 					  /obj/item/ammo_box/a762))
 
+/datum/storage/pockets/armor
+	max_slots = 2
+	rustle_sound = TRUE
+	attack_hand_interact = TRUE
 
 ///Void cloak pocket
 /datum/storage/pockets/void_cloak
