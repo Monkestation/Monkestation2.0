@@ -1571,9 +1571,6 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
 
-borg_upgrade_piercing_syringe
-
-
 /datum/design/borg_upgrade_uwu
 	name = "Cyborg UwU-speak \"Upgrade\""
 	id = "borg_upgrade_cringe"
