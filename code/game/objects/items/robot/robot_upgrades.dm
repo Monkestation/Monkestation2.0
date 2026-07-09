@@ -908,14 +908,35 @@
 	if(!.)
 		return .
 	for(var/obj/item/healthanalyzer/cyborg/analyzer in borg.model.modules)
-		analyzer.upgrade()
+		upgrade_analyzer(analyzer)
 
 /obj/item/borg/upgrade/adv_healthanalyzer/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if(!.)
 		return .
 	for(var/obj/item/healthanalyzer/cyborg/analyzer in borg.model.modules)
-		analyzer.downgrade()
+		downgrade_analyzer(analyzer)
+
+/// Upgrades the health analyzer to its advanced version.
+/obj/item/borg/upgrade/adv_healthanalyzer/proc/upgrade_analyzer(obj/item/healthanalyzer/analyzer_to_upgrade)
+	analyzer_to_upgrade.works_from_distance = /obj/item/healthanalyzer/advanced::works_from_distance
+	analyzer_to_upgrade.advanced = /obj/item/healthanalyzer/advanced::advanced
+	analyzer_to_upgrade.give_wound_treatment_bonus = /obj/item/healthanalyzer/advanced::give_wound_treatment_bonus
+	analyzer_to_upgrade.name = /obj/item/healthanalyzer/advanced::name
+	analyzer_to_upgrade.desc = /obj/item/healthanalyzer/advanced::desc
+	analyzer_to_upgrade.icon_state = /obj/item/healthanalyzer/advanced::icon_state
+	analyzer_to_upgrade.update_appearance()
+
+/// Downgrades the health analyzer to its initial values.
+/obj/item/borg/upgrade/adv_healthanalyzer/proc/downgrade_analyzer(obj/item/healthanalyzer/analyzer_to_downgrade)
+	var/obj/item/healthanalyzer/downgraded_typepath = analyzer_to_downgrade.type
+	analyzer_to_downgrade.works_from_distance = analyzer_to_downgrade.type::works_from_distance
+	analyzer_to_downgrade.advanced = analyzer_to_downgrade.type::advanced
+	analyzer_to_downgrade.give_wound_treatment_bonus = analyzer_to_downgrade.type::give_wound_treatment_bonus
+	analyzer_to_downgrade.name = analyzer_to_downgrade.type::name
+	analyzer_to_downgrade.desc = analyzer_to_downgrade.type::desc
+	analyzer_to_downgrade.icon_state = analyzer_to_downgrade.type::icon_state
+	analyzer_to_downgrade.update_appearance()
 
 /obj/item/borg/upgrade/breathingbag
 	name = "breathing bag upgrade"
