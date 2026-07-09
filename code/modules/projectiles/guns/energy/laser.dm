@@ -12,6 +12,17 @@
 /obj/item/gun/energy/laser/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_ALLSTAR)
 
+/obj/item/gun/energy/laser/cannon
+	name = "\improper Allstar SC-1B laser cannon"
+	desc = "An advanced energy-based laser cannon that fires heavily concentrated beams of light which pass through glass and thin metal."
+	icon_state = "lasercannon"
+	inhand_icon_state = null
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/hitscan)
+	fire_delay = 10
+	ammo_x_offset = 3
+	weapon_weight = WEAPON_HEAVY
+	shaded_charge = FALSE
+
 /obj/item/gun/energy/laser/lasrifle
 	name = "laser rifle"
 	desc = "An extremely accurate and deadly pulsed laser weapon based upon a vastly older original design. Unfortunately, it's optics were crippled by penny-pinching, so the dropoff is significant."
@@ -47,6 +58,7 @@
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's private security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 	ammo_x_offset = 3
+	inhand_icon_state = null
 
 /obj/item/gun/energy/laser/retro/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_REMOVED)
@@ -91,6 +103,7 @@
 /obj/item/gun/energy/laser/captain/scattershot
 	name = "scatter shot laser rifle"
 	icon_state = "lasercannon"
+	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "laser"
 	desc = "An industrial-grade heavy-duty laser rifle with a modified laser lens to scatter its shot into multiple smaller lasers. The inner-core can self-charge for theoretically infinite use."
@@ -127,7 +140,7 @@
 	name = "accelerator laser cannon"
 	desc = "An advanced laser cannon that does more damage the farther away the target is."
 	icon_state = "lasercannon"
-	inhand_icon_state = "laser"
+	inhand_icon_state = null
 	worn_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
@@ -183,6 +196,7 @@
 	ammo_x_offset = 2
 	selfcharge = TRUE
 	gun_flags = NOT_A_REAL_GUN
+	inhand_icon_state = null
 
 /obj/item/gun/energy/laser/bluetag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag/hitscan)
@@ -201,6 +215,7 @@
 	ammo_x_offset = 2
 	selfcharge = TRUE
 	gun_flags = NOT_A_REAL_GUN
+	inhand_icon_state = null
 
 /obj/item/gun/energy/laser/redtag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)

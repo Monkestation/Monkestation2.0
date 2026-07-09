@@ -4,12 +4,15 @@
 	fire_sound = 'sound/weapons/taser.ogg'
 	e_cost = LASER_SHOTS(5.25, STANDARD_CELL_CHARGE)
 	harmful = FALSE
+	select_sound = 'sound/weapons/gun/energy/egun_toggle_taser.ogg'
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/yellow
 
-/obj/item/ammo_casing/energy/electrode/hos // MONKE EDIT: 4th shot mode
+/obj/item/ammo_casing/energy/electrode/hos
 	e_cost = LASER_SHOTS(6.25, STANDARD_CELL_CHARGE * 1.2)
 
 /obj/item/ammo_casing/energy/electrode/spec
 	e_cost = LASER_SHOTS(10.25, STANDARD_CELL_CHARGE)
+	select_sound = 'sound/weapons/gun/energy/egun_toggle_noammo.ogg'
 
 /obj/item/ammo_casing/energy/electrode/gun
 	fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
@@ -24,6 +27,8 @@
 	e_cost = LASER_SHOTS(20, STANDARD_CELL_CHARGE)
 	fire_sound = 'sound/weapons/gun/energy/Laser2.ogg'
 	harmful = FALSE
+	select_sound = 'sound/weapons/gun/energy/egun_toggle_taser.ogg'
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
 
 /obj/item/ammo_casing/energy/disabler/smg
 	projectile_type = /obj/projectile/beam/disabler/weak
@@ -31,7 +36,8 @@
 	fire_sound = 'sound/weapons/taser3.ogg'
 
 /obj/item/ammo_casing/energy/disabler/hos
-	e_cost = LASER_SHOTS(30, STANDARD_CELL_CHARGE) // MONKE EDIT: 20 -> 30 shots
+	e_cost = LASER_SHOTS(30, STANDARD_CELL_CHARGE)
+	select_sound = 'sound/weapons/gun/energy/egun_toggle_noammo.ogg'
 
 /obj/item/ammo_casing/energy/disabler/smoothbore
 	projectile_type = /obj/projectile/beam/disabler/smoothbore
