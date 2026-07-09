@@ -496,6 +496,7 @@
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/intern
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	custom_premium_price = PAYCHECK_COMMAND * 4 // 400
+	discountable = FALSE
 	spawn_count = 6
 	cigar_overlay = FALSE
 
