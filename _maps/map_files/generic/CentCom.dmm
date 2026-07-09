@@ -19943,6 +19943,12 @@
 /obj/structure/shipping_container/cybersun,
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/syndicate_mothership/golden_eye)
+"bLU" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/turf/closed/wall/mineral/titanium,
+/area/centcom/central_command_areas/admin)
 "bLX" = (
 /obj/structure/rack,
 /obj/item/clothing/gloves/color/orange,
@@ -21971,12 +21977,6 @@
 	},
 /turf/open/floor/iron/smooth_large,
 /area/centcom/syndicate_mothership/golden_eye)
-"fiy" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 9
-	},
-/turf/closed/wall/mineral/titanium,
-/area/centcom/central_command_areas/admin)
 "fiJ" = (
 /obj/item/ammo_box/advanced/s12gauge/flechette,
 /obj/item/ammo_box/advanced/s12gauge/flechette,
@@ -22924,6 +22924,12 @@
 	pixel_y = -5
 	},
 /turf/open/floor/sandy_dirt,
+/area/centcom/central_command_areas/admin)
+"gNw" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/closed/wall/mineral/titanium,
 /area/centcom/central_command_areas/admin)
 "gNy" = (
 /obj/structure/chair/sofa/left/maroon,
@@ -24171,6 +24177,10 @@
 /obj/machinery/netpod/tutorial_coop,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/hall)
+"itR" = (
+/obj/machinery/slime_compressor,
+/turf/open/floor/engine,
+/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "iuf" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/siding/wood{
@@ -26527,12 +26537,6 @@
 	},
 /turf/open/floor/carpet/purple,
 /area/centcom/central_command_areas/adminroom)
-"mwE" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 10
-	},
-/turf/closed/wall/mineral/titanium,
-/area/centcom/central_command_areas/admin)
 "mwV" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -26932,12 +26936,6 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
 /turf/open/floor/iron/smooth,
 /area/centcom/syndicate_mothership/golden_eye)
-"ndp" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 6
-	},
-/turf/closed/wall/mineral/titanium,
-/area/centcom/central_command_areas/admin)
 "neL" = (
 /obj/machinery/flasher/directional/west,
 /obj/structure/table,
@@ -27296,6 +27294,12 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/admin)
+"nPA" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/closed/wall/mineral/titanium,
+/area/centcom/central_command_areas/admin)
 "nSa" = (
 /obj/machinery/light/small/red/dim/directional/south,
 /turf/open/floor/sandy_dirt,
@@ -27306,13 +27310,6 @@
 /obj/structure/rack,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)
-"nTM" = (
-/obj/machinery/status_display/ai_core{
-	name = "MATRIARCH";
-	emotion = "Angel"
-	},
-/turf/open/floor/circuit/green/anim,
-/area/centcom/central_command_areas/admin)
 "nUl" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -27789,6 +27786,13 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/medical)
+"oDa" = (
+/obj/machinery/status_display/ai_core{
+	name = "MATRIARCH";
+	custom_emotion = "Angel"
+	},
+/turf/open/floor/circuit/green/anim,
+/area/centcom/central_command_areas/admin)
 "oDh" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark/textured_large,
@@ -28518,12 +28522,6 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/adminroom)
-"pOy" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 5
-	},
-/turf/closed/wall/mineral/titanium,
-/area/centcom/central_command_areas/admin)
 "pOA" = (
 /obj/structure/table/wood,
 /obj/item/toy/plush/duckyplush{
@@ -29193,10 +29191,6 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
-"qQo" = (
-/obj/machinery/slime_compressor,
-/turf/open/floor/engine,
-/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "qQr" = (
 /obj/structure/decorative/shelf/alcohol,
 /turf/open/floor/carpet/red,
@@ -33269,6 +33263,12 @@
 /obj/machinery/station_map/syndicate,
 /turf/closed/indestructible/syndicate,
 /area/centcom/syndicate_mothership/firebase_trident)
+"xJs" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/closed/wall/mineral/titanium,
+/area/centcom/central_command_areas/admin)
 "xJC" = (
 /obj/structure/closet/cardboard,
 /mob/living/basic/bot/medbot/nukie/assop{
@@ -36155,7 +36155,7 @@ acX
 apE
 avy
 auG
-qQo
+itR
 ksD
 ksD
 ksD
@@ -63748,11 +63748,11 @@ aaa
 aaa
 aOn
 jZA
-ndp
+nPA
 bwZ
 bwZ
 bwZ
-pOy
+gNw
 jZA
 jZA
 jZA
@@ -66061,11 +66061,11 @@ aaa
 aaa
 aOn
 jZA
-mwE
+bLU
 bwZ
 bwZ
 bwZ
-fiy
+xJs
 jZA
 jZA
 wLm
@@ -73777,7 +73777,7 @@ aaa
 aaa
 aaa
 blK
-nTM
+oDa
 eCp
 blK
 vrX

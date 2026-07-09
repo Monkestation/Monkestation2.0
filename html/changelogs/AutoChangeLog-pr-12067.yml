@@ -1,0 +1,4 @@
+author: "JupiterJaeden"
+delete-after: True
+changes:
+  - bugfix: "Fixed a bug where damage slowdown would not properly update player move speed when it was supposed to."

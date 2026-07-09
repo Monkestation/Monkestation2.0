@@ -7871,7 +7871,7 @@
 /turf/open/floor/eighties,
 /area/station/maintenance/port/fore)
 "aQb" = (
-/obj/machinery/dance_machine,
+/obj/machinery/jukebox,
 /turf/open/floor/eighties,
 /area/station/maintenance/port/fore)
 "aQc" = (
@@ -8429,7 +8429,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "aSi" = (
-/obj/machinery/dance_machine/disco,
+/obj/machinery/jukebox/disco,
 /turf/open/floor/eighties,
 /area/station/maintenance/port/fore)
 "aSj" = (
@@ -59632,7 +59632,7 @@
 /obj/machinery/door/airlock/command/glass{
 	name = "Control Room"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms_admin,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "pCn" = (

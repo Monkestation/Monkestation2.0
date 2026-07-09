@@ -1243,6 +1243,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait granted by janitor skillchip, allows communication with cleanbots
 #define TRAIT_CLEANBOT_WHISPERER "cleanbot_whisperer"
 
+/// Trait which means whatever has this is dancing by a dance machine
+#define TRAIT_DISCO_DANCER "disco_dancer"
+
 /// Trait which means that this item is considered illegal contraband, ~(and valid for the contraband bounty or when scanned by an nspect scanner.)~ not implemented yet.
 #define TRAIT_CONTRABAND "illegal_contraband"
 
