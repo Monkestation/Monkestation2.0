@@ -120,7 +120,7 @@ GLOBAL_LIST_INIT(borer_second_name, file2list("monkestation/code/modules/antagon
 /mob/living/basic/cortical_borer
 	name = "cortical borer"
 	desc = "A slimy creature that is known to go into the ear canal of unsuspecting victims."
-	icon = 'icons/mob/borer/borer.dmi
+	icon = 'icons/mob/borer/borer.dmi'
 	icon_state = "brainslug"
 	icon_living = "brainslug"
 	icon_dead = "brainslug_dead"

@@ -1,6 +1,6 @@
 // Parent of all borer actions
 /datum/action/cooldown/borer
-	button_icon = 'icons/mob/actions/actions_borer.dmi`
+	button_icon = 'icons/mob/actions/actions_borer.dmi'
 	cooldown_time = 0
 
 	check_flags = AB_CHECK_INCAPACITATED
@@ -71,8 +71,6 @@
 	if(cortical_owner.stat_evolution < stat_evo_points)
 		cortical_owner.balloon_alert(cortical_owner, "need [stat_evo_points] stat points")
 		return FALSE
-
-	return . == FALSE ? FALSE : TRUE //. can be null, true, or false. There's a difference between null and false here
 
 /datum/asset/simple/borer_icons
 

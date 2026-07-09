@@ -2,7 +2,7 @@
 	name = "syndicate cortical borer cage"
 	desc = "The opposite of a harmless cage that is intended to capture cortical borer, \
 			as this one contains a borer trained to assist anyone who it first sees in completing their goals."
-	icon = 'icons/obj/borer/items.dmi
+	icon = 'icons/obj/borer/items.dmi'
 	icon_state = "cage"
 	/// Used to animate the cage opening when you use the borer spawner, and closing if it fails to spawn a borer. Also midly against spam
 	var/opened = FALSE

@@ -62,7 +62,7 @@
 	return ..()
 
 /datum/antagonist/cortical_borer/get_preview_icon()
-	var/icon/preview = icon('icons/mob/borer/borer.dmi, "brainslug")
+	var/icon/preview = icon('icons/mob/borer/borer.dmi', "brainslug")
 	preview.Scale(115, 115)
 	preview.Shift(WEST, 8)
 	preview.Crop(1, 1, ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)

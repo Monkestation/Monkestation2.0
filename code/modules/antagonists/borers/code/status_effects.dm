@@ -7,5 +7,5 @@
 /atom/movable/screen/alert/status_effect/borer_sugar
 	name = "Sugar Dampening"
 	desc = "Your powers are diminished while sugar is in you or your host!"
-	icon = 'icons/mob/actions/actions_borer.dmi`
+	icon = 'icons/mob/actions/actions_borer.dmi'
 	icon_state = "borer_sugar"
