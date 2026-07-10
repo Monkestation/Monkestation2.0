@@ -28,7 +28,6 @@
 	. = ..()
 	remove_image()
 
-
 /datum/component/see_as_something/proc/setup_image()
 	var/atom/movable/resolved = creature.resolve()
 

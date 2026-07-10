@@ -397,7 +397,7 @@
 	var/fear_stage = slasher.fear_stages[weak]
 
 	var/image/new_image = new
-	new_image.icon = 'monkestation/code/modules/blood_for_the_blood_gods/icons/slasher_ui.dmi'
+	new_image.icon = 'icons/hud/slasher_ui.dmi'
 	new_image.pixel_x = 10
 	new_image.plane = GAME_PLANE_UPPER
 	switch(fear_stage)
