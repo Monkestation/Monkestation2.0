@@ -22,7 +22,7 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_shadyjims = 4,
 		/obj/item/storage/fancy/cigarettes/flash_powder = 2,
 		/obj/item/storage/fancy/cigarettes/cigpack_greytide = 2,
-		/obj/item/storage/fancy/cigarettes/cigars/intern/purple = 1,
+		/obj/item/storage/fancy/cigarettes/cigars/intern/contraband = 1,
 	)
 	premium = list(
 		/obj/item/storage/fancy/cigarettes/cigpack_robustgold = 3,
