@@ -98,3 +98,19 @@
 	greyscale_config_worn = /datum/greyscale_config/rebellion_mask/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
+
+/obj/item/clothing/mask/sprungle
+	name = "porcelain mask"
+	desc = "An ill omen of things to come."
+	icon_state = "protector"
+	worn_icon = 'icons/mob/clothing/mask.dmi'
+	icon = 'icons/obj/clothing/masks.dmi'
+	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT|HIDEHAIR
+
+/obj/item/clothing/mask/sprungle/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/toggle_icon, "hood")
+
+/obj/item/clothing/mask/sprungle/personal
+	name = "golden mask"
+	icon_state = "lordprotector"

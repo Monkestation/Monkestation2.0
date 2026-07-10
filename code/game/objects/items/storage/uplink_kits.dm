@@ -1219,6 +1219,23 @@
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/medipen/deforest/occuisate(src)
 
+/obj/item/storage/box/syndicate/henchmen_traitor_outfit
+	name = "henchmen outfit box"
+
+/obj/item/storage/box/syndicate/henchmen_traitor_outfit/PopulateContents()
+	new /obj/item/clothing/head/henchmen_hat/traitor(src)
+	new /obj/item/clothing/suit/jacket/henchmen_coat/traitor(src)
+	new /obj/item/clothing/under/color/black(src)
+	new /obj/item/clothing/gloves/color/light_brown(src)
+	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/switchblade(src)
+
+/datum/uplink_item/bundles_tc/henchmen_traitor_outfits
+	name = "Henchmen Bundle"
+	desc = "A set of five armored henchmen outfits! Each set comes with a cap, coat, uniform, gloves, shoes, and a switchblade!"
+	item = /obj/item/storage/backpack/duffelbag/henchmen_traitor_outfits
+	cost = 4
+
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY

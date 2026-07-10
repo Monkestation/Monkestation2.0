@@ -1339,3 +1339,15 @@
 /datum/greyscale_config/rebellion_mask/worn
 	name = "Rebellion mask (Worn)"
 	icon_file = 'icons/mob/clothing/mask.dmi'
+
+/datum/greyscale_config/henchmen
+	name = "henchmen"
+	icon_file = 'icons/mob/clothing/costumes/henchmen/henchmen_item.dmi'
+	json_config = 'code/datums/greyscale/json_configs/henchmen.json'
+	expected_colors = 1
+
+/datum/greyscale_config/henchmen_worn
+	name = "henchmen_worn"
+	icon_file = 'icons/mob/clothing/costumes/henchmen/henchmen_worn.dmi'
+	json_config = 'code/datums/greyscale/json_configs/henchmen.json'
+	expected_colors = 1

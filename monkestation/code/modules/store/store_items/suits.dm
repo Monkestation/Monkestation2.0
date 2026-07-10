@@ -693,3 +693,8 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 	name = "Colourable Sleeveless Crop-Top Jacket"
 	item_path = /obj/item/clothing/suit/crop_jacket/sleeveless
 	item_cost = 2500
+
+/datum/store_item/suit/henchmen_coat
+	name = "Henchmen Coat"
+	item_path = /obj/item/clothing/suit/jacket/henchmen_coat
+	item_cost = 20000

@@ -274,6 +274,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	dog_fashion = /datum/dog_fashion/head/clown
 	species_exception = list(/datum/species/golem/bananium)
 	has_fov = FALSE
+	starting_filter_type = /obj/item/gas_filter/clown
 	var/list/clownmask_designs = list()
 
 /obj/item/clothing/mask/gas/clown_hat/plasmaman
@@ -306,6 +307,12 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		update_item_action_buttons()
 		to_chat(user, span_notice("Your Clown Mask has now morphed into [choice], all praise the Honkmother!"))
 		return TRUE
+
+/obj/item/clothing/mask/gas/clown_hat/yellow
+	name = "yellow clown wig and mask"
+	desc = "A true prankster's facial attire. But yellow! A clown is incomplete without his wig and mask."
+	icon_state = "clown_yellow"
+	actions_types = null
 
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy-clown wig and mask"

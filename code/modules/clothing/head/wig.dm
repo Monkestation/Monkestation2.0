@@ -4,6 +4,8 @@
 	icon = 'icons/mob/species/human/human_face.dmi'   // default icon for all hairs
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "hair_vlong"
+	icon_preview = 'icons/obj/previews.dmi'
+	icon_state_preview = "hair_vlong" //match this with icon_state please
 	inhand_icon_state = "pwig"
 	worn_icon_state = "wig"
 	flags_inv = HIDEHAIR

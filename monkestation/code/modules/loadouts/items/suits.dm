@@ -784,3 +784,6 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	restricted_roles = list(JOB_CHAPLAIN)
 	requires_purchase = FALSE
 
+/datum/loadout_item/suit/henchmen_coat
+	name = "Henchmen Coat"
+	item_path = /obj/item/clothing/suit/jacket/henchmen_coat

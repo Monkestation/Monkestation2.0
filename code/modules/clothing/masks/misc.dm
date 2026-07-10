@@ -65,8 +65,9 @@
 	worn_icon = 'icons/mob/clothing/mask.dmi'
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "sec_bandana_default"
-	var/obj/item/clothing/suit/armor/secduster/suit
 	actions_types = null
+
+	var/obj/item/clothing/suit/armor/secduster/suit
 
 /obj/item/clothing/mask/breath/sec_bandana/equipped(mob/user, slot)
 	..()
@@ -75,6 +76,12 @@
 			suit.RemoveMask()
 		else
 			qdel(src)
+
+/obj/item/clothing/mask/breath/sec_bandana/dropped(mob/living/user)
+	if(suit)
+		suit.mask = null
+		user?.update_action_buttons()
+	return ..()
 
 /obj/item/clothing/mask/breath/sec_bandana/click_alt(mob/user)
 	suit.RemoveMask()

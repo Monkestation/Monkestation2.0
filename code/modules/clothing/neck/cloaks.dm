@@ -283,3 +283,43 @@
 	name = "arbiter's cloak"
 	desc = "A fancy cloak worn by the Arbiters of the Head."
 	icon_state = "arbitercloak"
+
+/obj/item/clothing/neck/cloak/syndicate
+	name = "cloak of EVIL"
+	desc = "It's an EVIL looking cloak."
+	icon_state = "syndiecloak"
+	icon = 'icons/mob/clothing/costumes/syndicate/evil_clothing_obj.dmi'
+	worn_icon = 'icons/mob/clothing/costumes/syndicate/evil_clothing_worn.dmi'
+	armor_type = /datum/armor/armor_swat
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	var/has_been_worn = FALSE
+
+/obj/item/clothing/neck/cloak/syndicate/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(!(slot & ITEM_SLOT_NECK))
+		return
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	to_chat(user, span_notice("You feel it's time for a good bloodbath."))
+	message_admins("A cloak of EVIL has been worn by [ADMIN_LOOKUPFLW(user)].")
+	log_admin("A cloak of EVIL has been worn by [key_name(user)]")
+	notify_ghosts(
+		"[user.real_name] has donned a cloak of EVIL!",
+		source = user,
+		action = NOTIFY_ORBIT,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		header = "TIME FOR MURDER!",
+	)
+	has_been_worn = TRUE
+
+/obj/item/clothing/neck/cloak/syndicate/Initialize(mapload)
+	. = ..()
+	message_admins("A cloak of EVIL has been created. Someone might murderbone!")
+	SSpoints_of_interest.make_point_of_interest(src)
+
+/obj/item/clothing/neck/cloak/syndicate/dropped(mob/living/carbon/human/user)
+	if(has_been_worn)
+		do_sparks()
+		user.visible_message("The cloak vanishes into thin air!")
+		qdel(src)
+		return
+	return ..()

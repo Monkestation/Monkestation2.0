@@ -1,6 +1,3 @@
-//Stuff that isn't cloaks
-// BEGIN BUNNYTIES
-
 /obj/item/clothing/neck/tie/bunnytie
 	name = "bowtie collar"
 	desc = "A fancy tie that includes a collar. Looking snazzy!"
@@ -83,5 +80,3 @@
 
 /obj/item/clothing/neck/tie/bunnytie/blue/tied
 	is_tied = TRUE
-
-//END BUNNYTIES
