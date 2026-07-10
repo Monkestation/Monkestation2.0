@@ -1713,7 +1713,7 @@ MONKESTATION REMOVAL END
 	affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, FALSE, FALSE)
 	if(SPT_PROB(13, seconds_per_tick))
 		affected_mob.reagents.remove_reagent(/datum/reagent/medicine/nanopaste, 1 * REM * seconds_per_tick)
-		affected_mob.vomit(20)
+		affected_mob.vomit(20, stun = FALSE)
 	return TRUE
 
 /datum/reagent/medicine/naloxone
