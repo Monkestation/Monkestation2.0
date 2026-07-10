@@ -62,7 +62,7 @@
 
 /obj/vehicle/ridden/magic_broom/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	if(!forced && !check_move_loop_flags(MOVEMENT_LOOP_DRAGGING))
+	if(!forced && !CHECK_MOVE_LOOP_FLAGS(src, MOVEMENT_LOOP_OUTSIDE_CONTROL))
 		playsound(src, 'sound/effects/space_wind.ogg', 50, TRUE)
 
 /obj/vehicle/ridden/magic_broom/update_overlays()

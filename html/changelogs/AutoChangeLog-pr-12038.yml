@@ -1,6 +1,0 @@
-author: "flleeppyy"
-delete-after: True
-changes:
-  - code_imp: "Update sister server button code to use Plexora server checks"
-  - rscadd: "The Eris button now works."
-  - rscdel: "Remove's day and hour based \"is_available\" checks for the sister server buttons as nothing has used it for over a year"
