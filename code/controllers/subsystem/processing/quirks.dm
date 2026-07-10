@@ -36,8 +36,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Social Anxiety", "Mute"),
 		list("Mute", "Soft-Spoken"),
 		list("Stormtrooper Aim", "Big Hands"),
-		list("Common Second Language", "Foreigner"), //monkestation edit 2, re-added but replaced bilingual with csl
-		//MONKESTATION ADDITION START
+		list("Common Second Language", "Foreigner"),
 		list("Listener", "Uncommon"),
 		list("Outsider", "Uncommon"),
 		list("Listener", "Mute"),
@@ -58,7 +57,6 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Cyborg Pre-screened dogtag", "Unborgable"),
 		list("Revival Blacklist", "Uncloneable Neurons"),
 		list("Mute", "Fluffy Tongue")
-		//MONKESTATION ADDITION END
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize()
