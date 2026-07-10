@@ -602,7 +602,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	suit_store = /obj/item/gun/energy/recharge/ebow
 	l_hand = /obj/item/melee/energy/sword
-	r_pocket = /obj/item/reagent_containers/hypospray/medipen/stimulants
+	r_pocket = /obj/item/reagent_containers/medipen/stimulants
 	l_pocket = /obj/item/soap/syndie
 	belt = /obj/item/gun/ballistic/revolver/syndicate
 
@@ -615,7 +615,7 @@
 	back = /obj/item/mod/control/pre_equipped/nuclear
 	r_hand = /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 	belt = /obj/item/gun/ballistic/automatic/pistol/clandestine
-	r_pocket = /obj/item/reagent_containers/hypospray/medipen/stimulants
+	r_pocket = /obj/item/reagent_containers/medipen/stimulants
 	l_pocket = /obj/item/grenade/syndieminibomb
 	implants = list(/obj/item/implant/explosive)
 
@@ -623,7 +623,7 @@
 		/obj/item/ammo_box/c10mm,
 		/obj/item/ammo_box/magazine/m12g = 2,
 		/obj/item/pen/edagger,
-		/obj/item/reagent_containers/hypospray/medipen/atropine,
+		/obj/item/reagent_containers/medipen/atropine,
 	)
 
 /datum/outfit/deathmatch_loadout/pete
@@ -657,8 +657,8 @@
 	mask = /obj/item/clothing/mask/gas
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	gloves = /obj/item/clothing/gloves/cut
-	l_pocket = /obj/item/reagent_containers/hypospray/medipen/methamphetamine
-	r_pocket = /obj/item/stock_parts/cell/high
+	l_pocket = /obj/item/reagent_containers/medipen/methamphetamine
+	r_pocket = /obj/item/stock_parts/power_store/cell/high
 	belt = /obj/item/storage/belt/utility/full
 
 /datum/outfit/deathmatch_loadout/abductor
@@ -670,7 +670,7 @@
 	uniform = /obj/item/clothing/under/abductor
 	head = /obj/item/clothing/head/helmet/abductor
 	suit = /obj/item/clothing/suit/armor/abductor/vest
-	l_pocket = /obj/item/reagent_containers/hypospray/medipen/atropine
+	l_pocket = /obj/item/reagent_containers/medipen/atropine
 	r_pocket = /obj/item/grenade/gluon
 	l_hand = /obj/item/gun/energy/alien
 	r_hand = /obj/item/gun/energy/alien
@@ -736,7 +736,7 @@
 	desc = "Let him cook."
 
 	belt = /obj/item/gun/magic/hook
-	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
+	uniform = /obj/item/clothing/under/suit/black
 	suit = /obj/item/clothing/suit/toggle/chef
 	suit_store = /obj/item/knife/kitchen
 	head = /obj/item/clothing/head/utility/chefhat

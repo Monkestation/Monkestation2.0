@@ -2,10 +2,10 @@
 "aO" = (
 /obj/structure/mineral_door/paperframe,
 /turf/open/water/beach/biodome,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "bd" = (
 /turf/open/floor/wood/parquet,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "ce" = (
 /obj/structure/chair/stool/bamboo{
 	dir = 4
@@ -15,17 +15,17 @@
 	dir = 8
 	},
 /turf/open/misc/grass/jungle,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "ch" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/bamboo,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "cr" = (
 /obj/item/stack/sheet/mineral/bamboo,
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "dm" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -35,7 +35,7 @@
 /obj/item/fishing_line/sinew,
 /obj/structure/fermenting_barrel/gunpowder,
 /turf/open/indestructible/hotelwood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "dp" = (
 /obj/item/food/grown/wheat{
 	pixel_y = 4;
@@ -50,37 +50,37 @@
 	pixel_x = -9
 	},
 /turf/open/misc/dirt,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "dr" = (
 /obj/structure/closet/crate/wooden,
 /obj/item/throwing_star,
 /obj/item/stack/medical/suture,
 /obj/machinery/light,
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "dy" = (
 /obj/structure/headpike/bamboo,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "dI" = (
 /obj/machinery/light/floor{
 	pixel_x = 16;
 	pixel_y = -17
 	},
 /turf/open/water/jungle,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "el" = (
 /obj/structure/flora/bush/flowers_yw,
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "fk" = (
 /obj/item/storage/box/matches,
 /turf/open/floor/bamboo,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "fn" = (
 /obj/structure/flora/tree/jungle/style_random,
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "fs" = (
 /obj/structure/chair/stool/bamboo{
 	dir = 4
@@ -90,14 +90,14 @@
 	dir = 8
 	},
 /turf/open/misc/grass/jungle,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "fD" = (
 /obj/structure/flora/bush/stalky/style_random,
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "gH" = (
 /turf/open/floor/engine/cult,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "ha" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-10"
@@ -106,20 +106,20 @@
 	dir = 8
 	},
 /turf/open/floor/bamboo/tatami/purple,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "iq" = (
 /turf/open/floor/carpet/green,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "iI" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/mortar,
 /obj/item/pestle,
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "iL" = (
 /obj/structure/flora/bush/leavy/style_2,
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "jc" = (
 /obj/structure/table/wood,
 /obj/item/food/fishmeat/carp{
@@ -127,22 +127,22 @@
 	},
 /obj/item/food/fishmeat/carp,
 /turf/open/floor/stone,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "kY" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "lr" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "lA" = (
 /obj/structure/statue/bone/skull,
 /obj/item/clothing/suit/hooded/cultrobes/hardened,
 /turf/open/floor/engine/cult,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "lD" = (
 /obj/structure/table/wood,
 /obj/item/food/vegetariansushislice{
@@ -160,56 +160,56 @@
 	pixel_y = -2
 	},
 /turf/open/floor/wood/tile,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "lO" = (
 /obj/structure/flora/bush/generic,
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "ma" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/indestructible/hotelwood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "mb" = (
 /obj/structure/flora/bush/sparsegrass,
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "mf" = (
 /obj/structure/flora/tree/jungle/style_3,
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "mt" = (
 /obj/structure/flora/tree/jungle/style_2,
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "mC" = (
 /obj/structure/table/wood,
 /obj/item/food/sashimi,
 /turf/open/floor/wood/tile,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "mT" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/engine/cult,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "nE" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/floor/bamboo/tatami,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "nU" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/barricade/wooden,
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "of" = (
 /obj/structure/flora/rock/pile/jungle,
 /turf/open/water/jungle,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "oo" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine/cult,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "oy" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/bottle/potassium{
@@ -222,11 +222,11 @@
 	},
 /obj/item/reagent_containers/cup/bottle/frostoil,
 /turf/open/floor/bamboo,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "oN" = (
 /obj/item/stack/sheet/bone,
 /turf/open/floor/bamboo,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "oR" = (
 /obj/structure/table/bronze,
 /obj/item/nullrod/claymore/bostaff,
@@ -236,7 +236,7 @@
 	dir = 4
 	},
 /turf/open/floor/stone,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "oX" = (
 /obj/structure/closet/crate/wooden,
 /obj/item/stack/medical/bruise_pack{
@@ -245,7 +245,7 @@
 	},
 /obj/item/food/grown/banana,
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "oY" = (
 /obj/item/food/grown/wheat{
 	pixel_y = 4;
@@ -259,20 +259,20 @@
 	pixel_x = -10
 	},
 /turf/open/misc/dirt,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "pG" = (
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "pV" = (
 /obj/structure/fermenting_barrel/gunpowder,
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "qo" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "qu" = (
 /obj/structure/table/wood,
 /obj/item/retractor,
@@ -281,16 +281,16 @@
 	pixel_y = 1
 	},
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "qI" = (
 /obj/item/knife/ritual,
 /turf/open/floor/engine/cult,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "rl" = (
 /obj/structure/table/wood/fancy,
 /obj/item/clothing/head/costume/crown,
 /turf/open/floor/carpet,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "rP" = (
 /obj/structure/table/bronze,
 /obj/item/flashlight/lantern{
@@ -298,7 +298,7 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/stone,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "rU" = (
 /obj/item/food/meat/slab/human{
 	pixel_x = -7;
@@ -307,63 +307,63 @@
 /obj/item/food/meat/slab/gondola,
 /obj/structure/bonfire/prelit,
 /turf/open/indestructible/necropolis,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "sa" = (
 /obj/item/clothing/head/costume/rice_hat,
 /obj/item/hatchet/wooden,
 /obj/structure/bed/maint,
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "so" = (
 /obj/machinery/light,
 /turf/open/floor/bamboo,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "tM" = (
 /obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "tT" = (
 /obj/structure/chair/stool/bamboo{
 	dir = 4
 	},
 /turf/open/floor/bamboo/tatami,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "uc" = (
 /obj/structure/flora/bush/leafy,
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "ui" = (
 /turf/open/floor/bamboo/tatami,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "ut" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/clothing/shoes/cult/alt,
 /turf/open/floor/engine/cult,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "uP" = (
 /mob/living/basic/cow,
 /obj/machinery/light,
 /turf/open/misc/dirt,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "vC" = (
 /obj/structure/mineral_door/paperframe,
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "wF" = (
 /obj/structure/flora/bush/flowers_yw/style_2,
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "xk" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/floor/bamboo,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "xm" = (
 /obj/machinery/light,
 /turf/open/water/jungle,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "xz" = (
 /turf/open/lava/smooth,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "xJ" = (
 /obj/structure/table/wood,
 /obj/item/stack/medical/poultice,
@@ -383,7 +383,7 @@
 	dir = 1
 	},
 /turf/open/floor/bamboo,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "yl" = (
 /obj/structure/chair/stool/bamboo{
 	dir = 4
@@ -398,27 +398,27 @@
 	pixel_y = -4
 	},
 /turf/open/misc/grass/jungle,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "yz" = (
 /obj/structure/flora/bush/flowers_pp,
 /obj/item/food/pie/cream,
 /obj/item/clothing/mask/gas/clown_hat,
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "yA" = (
 /obj/structure/flora/rock/pile/jungle/large,
 /obj/machinery/light/floor,
 /turf/open/water/jungle,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "yE" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "yI" = (
 /obj/structure/barricade/wooden/crude,
 /obj/structure/mineral_door/paperframe,
 /turf/open/floor/engine/cult,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "yL" = (
 /obj/structure/table/bronze,
 /obj/item/throwing_star{
@@ -434,16 +434,16 @@
 	dir = 8
 	},
 /turf/open/floor/stone,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "zb" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/bedsheet/cult,
 /turf/open/floor/engine/cult,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "zu" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "zE" = (
 /obj/structure/table/wood,
 /obj/item/stack/medical/ointment{
@@ -459,36 +459,36 @@
 	pixel_y = -4
 	},
 /turf/open/floor/bamboo,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "zG" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/bamboo,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "zV" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/indestructible/hotelwood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Az" = (
 /obj/structure/flora/bush/reed,
 /turf/open/water/jungle,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Bn" = (
 /obj/structure/mineral_door/paperframe,
 /obj/structure/barricade/wooden/crude,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/engine/cult,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Cr" = (
 /obj/item/sharpener,
 /obj/structure/window/spawner/directional/east,
 /obj/structure/window/spawner/directional/north,
 /obj/structure/window/spawner/directional/west,
 /turf/open/water/jungle,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "DD" = (
 /obj/structure/closet/cabinet,
 /obj/item/throwing_star{
@@ -496,29 +496,29 @@
 	},
 /obj/item/clothing/suit/hooded/chaplainsuit/monkhabit,
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Ea" = (
 /obj/structure/table/wood,
 /obj/item/knife/butcher,
 /turf/open/floor/stone,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "EJ" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/machinery/light,
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Fl" = (
 /obj/structure/window/spawner/directional/east,
 /obj/structure/window/spawner/directional/south,
 /obj/structure/window/spawner/directional/west,
 /turf/open/water/jungle,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Fu" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "FV" = (
 /obj/structure/table/wood,
 /obj/item/food/nigiri_sushi{
@@ -527,11 +527,11 @@
 	},
 /obj/item/food/nigiri_sushi,
 /turf/open/floor/wood/tile,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Gf" = (
 /obj/structure/flora/bush/flowers_pp,
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Gv" = (
 /obj/structure/chair/stool/bamboo{
 	dir = 4
@@ -539,7 +539,7 @@
 /obj/item/clothing/suit/armor/bone,
 /obj/item/clothing/accessory/talisman,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "GQ" = (
 /obj/structure/closet/crate/coffin,
 /obj/item/toy/plush/lizard_plushie/green,
@@ -547,27 +547,27 @@
 /obj/structure/window/spawner/directional/west,
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/carpet,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "GX" = (
 /turf/open/misc/grass/jungle,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "JP" = (
 /obj/structure/table/bronze,
 /obj/item/restraints/legcuffs/bola/tactical,
 /obj/structure/window/spawner/directional/north,
 /obj/structure/window/spawner/directional/west,
 /turf/open/floor/stone,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Kd" = (
 /turf/open/floor/bamboo,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Kx" = (
 /obj/structure/fermenting_barrel/gunpowder,
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "KM" = (
 /obj/item/flashlight/lantern{
 	light_on = 1
@@ -575,35 +575,35 @@
 /obj/structure/table/bronze,
 /obj/machinery/light,
 /turf/open/floor/stone,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "KN" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/indestructible/hotelwood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "LN" = (
 /obj/structure/closet/cabinet,
 /mob/living/carbon/human/species/monkey/angry,
 /obj/item/nullrod/tribal_knife,
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "MN" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Na" = (
 /turf/open/misc/dirt,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Nn" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/item/cultivator/rake,
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "No" = (
 /turf/open/water/jungle,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "NJ" = (
 /obj/structure/table/bronze,
 /obj/item/clothing/suit/armor/riot/knight,
@@ -611,37 +611,37 @@
 /obj/structure/window/spawner/directional/east,
 /obj/structure/window/spawner/directional/south,
 /turf/open/floor/stone,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Op" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "OA" = (
 /obj/item/clothing/shoes/cowboy,
 /turf/open/misc/dirt,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "OV" = (
 /obj/structure/chair/stool/bamboo{
 	dir = 4
 	},
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/floor/bamboo/tatami,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Pk" = (
 /obj/structure/flora/bush/leavy/style_random,
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Py" = (
 /obj/structure/flora/rock/pile/jungle/style_random{
 	pixel_x = -12;
 	pixel_y = 15
 	},
 /turf/open/water/jungle,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "PE" = (
 /obj/structure/water_source/puddle,
 /turf/open/misc/dirt,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "PF" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/statue/bone/rib{
@@ -652,25 +652,25 @@
 	pixel_x = -4
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "PN" = (
 /obj/effect/mob_spawn/corpse/human,
 /obj/structure/bonfire/prelit,
 /turf/open/indestructible/necropolis,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "PP" = (
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Qb" = (
 /turf/open/floor/stone,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Qp" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "QC" = (
 /turf/open/floor/wood/tile,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "QG" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/glass/bottle/sake{
@@ -686,20 +686,20 @@
 	pixel_x = -3
 	},
 /turf/open/floor/wood/tile,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "RI" = (
 /obj/structure/punji_sticks,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "RR" = (
 /obj/item/stack/sheet/bone,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Su" = (
 /obj/structure/flora/rock/pile/jungle/style_3,
 /obj/machinery/light/floor,
 /turf/open/water/jungle,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "SJ" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-10"
@@ -708,11 +708,11 @@
 	dir = 4
 	},
 /turf/open/floor/bamboo/tatami/purple,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "SO" = (
 /obj/item/grown/bananapeel,
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "TW" = (
 /obj/structure/table/bronze,
 /obj/item/flashlight/lantern{
@@ -722,7 +722,7 @@
 	dir = 1
 	},
 /turf/open/floor/stone,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Uk" = (
 /obj/structure/closet/crate/coffin,
 /obj/item/organ/internal/cyberimp/arm/item_set/katana,
@@ -730,20 +730,20 @@
 /obj/structure/window/spawner/directional/west,
 /obj/structure/window/spawner/directional/south,
 /turf/open/floor/carpet,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "UO" = (
 /turf/open/floor/carpet,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "UU" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/wood/tile,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "UY" = (
 /obj/structure/flora/bush/leavy,
 /turf/open/misc/grass,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Vi" = (
 /obj/item/food/grown/wheat{
 	pixel_y = 10;
@@ -756,7 +756,7 @@
 	pixel_x = -10
 	},
 /turf/open/misc/dirt,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Vm" = (
 /obj/structure/table/wood,
 /obj/item/food/vegetariansushiroll{
@@ -765,43 +765,43 @@
 	},
 /obj/item/food/vegetariansushiroll,
 /turf/open/floor/stone,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Vt" = (
 /turf/closed/indestructible/wood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "VA" = (
 /obj/structure/table/wood/fancy,
 /obj/item/clothing/mask/gas/tiki_mask,
 /obj/item/flashlight/flare/torch,
 /turf/open/floor/carpet,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "We" = (
 /obj/structure/statue/bone/rib{
 	dir = 8
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Ya" = (
 /obj/structure/table/wood,
 /obj/structure/chem_separator,
 /turf/open/floor/bamboo,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Yo" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/stone,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Zm" = (
 /obj/item/toy/plush/carpplushie/dehy_carp,
 /obj/structure/window/spawner/directional/east,
 /obj/structure/window/spawner/directional/west,
 /turf/open/water/jungle,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Zu" = (
 /obj/structure/statue/bone/rib,
 /turf/open/floor/engine/cult,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 
 (1,1,1) = {"
 Vt
