@@ -91,6 +91,7 @@
 			/obj/item/throwing_star,
 			/obj/item/shield,
 			/obj/item/spear,
+			/obj/item/smithed_part/weapon_part,
 			/obj/item/dualsaber,
 			/obj/item/fireaxe,
 			/obj/item/flamethrower,
