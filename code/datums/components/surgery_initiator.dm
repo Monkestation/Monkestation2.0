@@ -309,7 +309,7 @@
 		target.balloon_alert(user, "not the right type of limb!")
 		return
 
-	if (IS_IN_INVALID_SURGICAL_POSITION(target, surgery))
+	if (IS_IN_INVALID_SURGICAL_POSITION(target, surgery) && surgery.requires_bodypart_type == 1)
 		target.balloon_alert(user, "patient is not lying down!")
 		return
 
