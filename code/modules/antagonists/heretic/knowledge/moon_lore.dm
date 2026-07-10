@@ -132,7 +132,7 @@
 	desc = "Create a Resplendant Regalia.<br>\
 		While worn, renders you fully immune to disabling effects \
 		and converts all forms of damage into brain damage, though also causing pacifism \
-		(You won't be able to use your moonlight blade without wearing a moon amulet).
+		(You won't be able to use your moonlight blade without wearing a moon amulet)."
 	gain_text = "Trails of light and mirth flowed from every arm of this magnificent attire. \
 			The troupe twirled in irridescent cascades, dazzling onlookers with the truth they sought. \
 			I observed, basking in the light, to find my self."
