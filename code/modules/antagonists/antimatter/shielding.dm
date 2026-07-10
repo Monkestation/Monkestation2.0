@@ -11,7 +11,7 @@
 /obj/machinery/am_shielding
 	name = "antimatter reactor section"
 	desc = "This device was built using a plasma life-form that seems to increase plasma's natural ability to react with neutrinos while reducing the combustibility."
-	icon = 'monkestation/code/modules/antimatter/icons/antimatter.dmi'
+	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "shield"
 	density = TRUE
 	dir = NORTH
@@ -229,7 +229,7 @@
 /obj/item/am_shielding_container
 	name = "packaged antimatter reactor section"
 	desc = "A small storage unit containing an antimatter reactor section.  To use place near an antimatter control unit or deployed antimatter reactor section and use a multitool to activate this package."
-	icon = 'monkestation/code/modules/antimatter/icons/antimatter.dmi'
+	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "box"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'

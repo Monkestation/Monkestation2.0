@@ -1,7 +1,7 @@
 /obj/item/antimatter_jar
 	name = "antimatter containment jar"
 	desc = "Holds antimatter."
-	icon = 'monkestation/code/modules/antimatter/icons/antimatter.dmi'
+	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "jar"
 	density = FALSE
 	anchored = FALSE
