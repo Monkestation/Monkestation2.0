@@ -1,14 +1,22 @@
 /// A Syndicate-manufactured alternate rapid construction fabricator with its own recipe list.
 
-/obj/machinery/rnd/production/colony_lathe/syndicate
+/obj/machinery/rnd/production/omnilathe
 	name = "Omnilathe"
 	desc = "A sleek, unmarked fabrication unit of Cybersun industries. Capable of producing advanced munitions and hacked autolathe designs. It has drive slots for accepting techfab circuit boards to unlock additional design sets."
+	icon = 'monkestation/code/modules/blueshift/icons/machines.dmi'
+	icon_state = "colony_lathe"
+	base_icon_state = "colony_lathe"
+	circuit = null
 	allowed_buildtypes = AUTOLATHE
 	ui_theme = "syndicate"
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 	light_power = 2
 	link_on_init = FALSE
-	repacked_type = /obj/item/storage/toolbox/emergency/omnilathe
+	production_speed_multiplier = 1
+	/// The item we turn into when repacked.
+	var/repacked_type = /obj/item/storage/toolbox/emergency/omnilathe
+	/// The sound loop played while the fabricator is making something.
+	var/datum/looping_sound/colony_fabricator_running/soundloop
 	/// Current UI mode: lathe or ammo workbench.
 	var/machine_mode = "lathe"
 	/// Inserted ammo container to fill while in ammo mode.
@@ -44,27 +52,49 @@
 	/// Additional recipe families unlocked by inserting matching machine boards.
 	var/list/unlocked_techfab_departments = list()
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/Initialize(mapload)
+/obj/machinery/rnd/production/omnilathe/Initialize(mapload)
 	. = ..()
-	RemoveElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
+	AddElement(/datum/element/repackable, repacked_type, 5 SECONDS)
 	AddElement(/datum/element/manufacturer_examine, COMPANY_CYBERSUN)
-	if(soundloop)
-		soundloop.volume = 50
+	stored_research = locate(/datum/techweb/admin) in SSresearch.techwebs
+	soundloop = new(src, FALSE)
+	soundloop.volume = 50
 	// This variant is intended to run on local storage and accept broader item inputs.
 	if(materials?.mat_container)
 		materials.mat_container.allowed_item_typecache = null
+	rebuild_cached_designs()
 	update_ammotypes()
+	if(!mapload)
+		flick("colony_lathe_deploy", src)
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/Destroy()
+/obj/machinery/rnd/production/omnilathe/Destroy()
 	if(ammo_timer_id)
 		deltimer(ammo_timer_id)
 		ammo_timer_id = null
 	if(loaded_magazine)
 		loaded_magazine.forceMove(drop_location())
 		loaded_magazine = null
+	QDEL_NULL(soundloop)
 	return ..()
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/RefreshParts()
+/obj/machinery/rnd/production/omnilathe/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
+	return NONE
+
+/obj/machinery/rnd/production/omnilathe/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
+	return NONE
+
+/obj/machinery/rnd/production/omnilathe/default_pry_open(obj/item/crowbar, close_after_pry, open_density, closed_density)
+	return NONE
+
+/obj/machinery/rnd/production/omnilathe/finalize_build()
+	. = ..()
+	soundloop?.stop()
+	set_light(l_outer_range = 0)
+	icon_state = base_icon_state
+	update_appearance()
+	flick("colony_lathe_finish_print", src)
+
+/obj/machinery/rnd/production/omnilathe/RefreshParts()
 	. = ..()
 	// Flatpacker original code is stupid and uses stock parts but doesnt have stock parts so I just hardcode ts
 	if(materials && !materials.silo)
@@ -75,7 +105,7 @@
 	update_ammotypes()
 
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/proc/rebuild_cached_designs()
+/obj/machinery/rnd/production/omnilathe/proc/rebuild_cached_designs()
 	var/previous_design_count = cached_designs.len
 	cached_designs.Cut()
 
@@ -153,10 +183,10 @@
 
 	update_static_data_for_all_viewers()
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/update_designs()
+/obj/machinery/rnd/production/omnilathe/update_designs()
 	rebuild_cached_designs()
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/proc/build_packed_material_cache()
+/obj/machinery/rnd/production/omnilathe/proc/build_packed_material_cache()
 	packed_materials = list()
 	if(!materials?.mat_container)
 		return
@@ -166,7 +196,7 @@
 		if(amount > 0)
 			packed_materials[material_ref.type] = amount
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/proc/prepare_for_packing()
+/obj/machinery/rnd/production/omnilathe/proc/prepare_for_packing()
 	build_packed_material_cache()
 	if(!materials?.mat_container)
 		return
@@ -174,7 +204,7 @@
 	for(var/datum/material/material_ref as anything in materials.mat_container.materials)
 		materials.mat_container.materials[material_ref] = 0
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/proc/transfer_contents_to_packed_item(obj/item/new_pack)
+/obj/machinery/rnd/production/omnilathe/proc/transfer_contents_to_packed_item(obj/item/new_pack)
 	if(!new_pack)
 		return
 
@@ -183,7 +213,7 @@
 		if(stored_item?.loc == src)
 			stored_item.forceMove(new_pack)
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/proc/restore_packed_material_cache()
+/obj/machinery/rnd/production/omnilathe/proc/restore_packed_material_cache()
 	if(!packed_materials?.len || !materials?.mat_container)
 		return
 
@@ -198,7 +228,7 @@
 
 	packed_materials = list()
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/proc/get_techfab_department_flag(recipe_set)
+/obj/machinery/rnd/production/omnilathe/proc/get_techfab_department_flag(recipe_set)
 	switch(recipe_set)
 		if("techfab_engineering")
 			return DEPARTMENT_BITFLAG_ENGINEERING
@@ -214,7 +244,7 @@
 			return DEPARTMENT_BITFLAG_SECURITY
 	return null
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/proc/get_recipe_set_name(recipe_set)
+/obj/machinery/rnd/production/omnilathe/proc/get_recipe_set_name(recipe_set)
 	switch(recipe_set)
 		if("autolathe")
 			return "Autolathe"
@@ -244,7 +274,7 @@
 			return "Department Circuit Imprinter - Engineering"
 	return "Autolathe"
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/proc/get_available_recipe_sets()
+/obj/machinery/rnd/production/omnilathe/proc/get_available_recipe_sets()
 	var/list/available_sets = list("autolathe")
 	if(unlocked_techfab_departments["techfab_engineering"])
 		available_sets += "techfab_engineering"
@@ -272,7 +302,7 @@
 		available_sets += "imprinter_department_engineering"
 	return available_sets
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/proc/get_techfab_set_from_board(obj/item/circuitboard/machine/techfab/department/board)
+/obj/machinery/rnd/production/omnilathe/proc/get_techfab_set_from_board(obj/item/circuitboard/machine/techfab/department/board)
 	if(istype(board, /obj/item/circuitboard/machine/techfab/department/engineering))
 		return "techfab_engineering"
 	if(istype(board, /obj/item/circuitboard/machine/techfab/department/service))
@@ -287,7 +317,7 @@
 		return "techfab_security"
 	return null
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/proc/get_recipe_set_from_board(obj/item/circuitboard/machine/board)
+/obj/machinery/rnd/production/omnilathe/proc/get_recipe_set_from_board(obj/item/circuitboard/machine/board)
 	if(istype(board, /obj/item/circuitboard/machine/techfab/department))
 		return get_techfab_set_from_board(board)
 	if(istype(board, /obj/item/circuitboard/machine/mechfab))
@@ -302,7 +332,7 @@
 		return "imprinter"
 	return null
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/rnd/production/omnilathe/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/circuitboard/machine) && istype(user, /mob/living))
 		if(machine_stat)
 			return ITEM_INTERACT_BLOCKING
@@ -377,7 +407,7 @@
 
 	return ..()
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/ui_data(mob/user)
+/obj/machinery/rnd/production/omnilathe/ui_data(mob/user)
 	. = ..()
 
 	.["machine_mode"] = machine_mode
@@ -417,7 +447,7 @@
 			"mats_list" = casing_mat_strings[casing_index]
 		))
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/ui_act(action, list/params, datum/tgui/ui)
+/obj/machinery/rnd/production/omnilathe/ui_act(action, list/params, datum/tgui/ui)
 	if(action == "switch_mode")
 		if(busy || ammo_busy)
 			say("Warning: machine is busy!")
@@ -524,7 +554,7 @@
 			fill_magazine_start(type_to_pass)
 			return TRUE
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/proc/eject_magazine(mob/living/user)
+/obj/machinery/rnd/production/omnilathe/proc/eject_magazine(mob/living/user)
 	if(loaded_magazine)
 		loaded_magazine.forceMove(drop_location())
 		if(user)
@@ -537,7 +567,7 @@
 	update_ammotypes()
 	update_appearance()
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/proc/update_ammotypes()
+/obj/machinery/rnd/production/omnilathe/proc/update_ammotypes()
 	LAZYCLEARLIST(valid_casings)
 	LAZYCLEARLIST(casing_mat_strings)
 	if(!loaded_magazine)
@@ -585,7 +615,7 @@
 		valid_casings[our_casing] = initial(our_casing.name)
 		casing_mat_strings += mat_string
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/proc/fill_magazine_start(casing_type)
+/obj/machinery/rnd/production/omnilathe/proc/fill_magazine_start(casing_type)
 	if(machine_stat & (NOPOWER|BROKEN))
 		if(ammo_busy)
 			ammo_fill_finish(FALSE)
@@ -618,7 +648,7 @@
 	update_appearance()
 	ammo_timer_id = addtimer(CALLBACK(src, PROC_REF(fill_round), casing_type), time_per_round, TIMER_STOPPABLE)
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/proc/fill_round(casing_type)
+/obj/machinery/rnd/production/omnilathe/proc/fill_round(casing_type)
 	if(machine_stat & (NOPOWER|BROKEN))
 		ammo_fill_finish(FALSE)
 		return
@@ -664,7 +694,7 @@
 	SStgui.update_uis(src)
 	ammo_timer_id = addtimer(CALLBACK(src, PROC_REF(fill_round), casing_type), time_per_round, TIMER_STOPPABLE)
 
-/obj/machinery/rnd/production/colony_lathe/syndicate/proc/ammo_fill_finish(successfully = TRUE)
+/obj/machinery/rnd/production/omnilathe/proc/ammo_fill_finish(successfully = TRUE)
 	ammo_busy = FALSE
 	if(ammo_timer_id)
 		deltimer(ammo_timer_id)
@@ -683,7 +713,7 @@
 // Undeployed printer disguised as a normal emergency toolbox.
 
 /obj/item/storage/toolbox/emergency/omnilathe
-	var/obj/machinery/rnd/production/colony_lathe/syndicate/type_to_deploy = /obj/machinery/rnd/production/colony_lathe/syndicate
+	var/obj/machinery/rnd/production/omnilathe/type_to_deploy = /obj/machinery/rnd/production/omnilathe
 	var/deploy_time = 4 SECONDS
 	/// Imported autolathe design IDs preserved while packed.
 	var/list/imported_designs = list()
@@ -697,7 +727,7 @@
 /obj/item/storage/toolbox/emergency/omnilathe/PopulateContents()
 	return
 
-/obj/item/storage/toolbox/emergency/omnilathe/proc/transfer_contents_to_deployed_object(obj/machinery/rnd/production/colony_lathe/syndicate/deployed_object)
+/obj/item/storage/toolbox/emergency/omnilathe/proc/transfer_contents_to_deployed_object(obj/machinery/rnd/production/omnilathe/deployed_object)
 	if(!deployed_object)
 		return
 
@@ -725,7 +755,7 @@
 		balloon_alert(user, "insufficient room to deploy here.")
 		return
 
-	var/obj/machinery/rnd/production/colony_lathe/syndicate/deployed_object = new /obj/machinery/rnd/production/colony_lathe/syndicate(deploy_location)
+	var/obj/machinery/rnd/production/omnilathe/deployed_object = new /obj/machinery/rnd/production/omnilathe(deploy_location)
 	if(imported_designs?.len)
 		deployed_object.imported_designs = imported_designs.Copy()
 	if(packed_materials?.len)
