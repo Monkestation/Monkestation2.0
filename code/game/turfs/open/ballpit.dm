@@ -16,11 +16,9 @@
 
 	var/sink_time = 5 SECONDS
 
-
 /turf/open/ballpit/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(try_attach))
-
 
 /turf/open/proc/try_attach(turf/open/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(!istype(src, /turf/open/ballpit))
