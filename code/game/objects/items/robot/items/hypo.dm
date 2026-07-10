@@ -133,7 +133,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	amount_per_transfer_from_this = 5
 	/// In the hypo's TGUI, each of these numbers will be available as buttons to click on.
-	possible_transfer_amounts = list(1, 2, 5)
+	possible_transfer_amounts = list(1, 2, 2.5, 5)
 	/// Cell cost for charging a reagent.
 	var/charge_cost = 0.05 * STANDARD_CELL_CHARGE
 	/// Counts up to the next time we charge.
@@ -172,6 +172,12 @@
 	var/injection_sound = 'sound/items/autoinjector.ogg'
 	/// Name of the chemicals section in the UI
 	var/chemicals_section_title = "Chemicals"
+	/// Maximum volume per injection (for a queue)
+	var/max_injection_per_tick = 5
+	/// Current injection queue (in progress)
+	var/list/injection_queue = list()
+	/// Flag whether the queue is currently running
+	var/is_processing_queue = FALSE
 
 /obj/item/reagent_containers/borghypo/Initialize(mapload)
 	. = ..()
@@ -194,6 +200,10 @@
 
 /// LEFT MOUSE BUTTON interaction with living mobs (injection)
 /obj/item/reagent_containers/borghypo/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(is_processing_queue)
+		balloon_alert(user, "injection in progress!")
+		return ITEM_INTERACT_BLOCKING
+
 	if(!isliving(interacting_with))
 		return NONE
 
@@ -211,17 +221,41 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/datum/reagents/reagent_injector = create_reagent_injector_left()
-	to_chat(injectee, span_warning("You feel a tiny prick!"))
-	to_chat(user, span_notice("You inject [injectee] with the injector ([get_injection_name_left()])."))
-	balloon_alert(user, "[get_injection_name_left()] [reagent_injector.total_volume] unit\s injected")
-	reagent_injector.trans_to(injectee, reagent_injector.total_volume, transfered_by = user, methods = INJECT)
-	log_combat(user, injectee, "injected", src, "(CHEMICALS: [get_injection_name_left()])")
-	if(injection_sound)
-		playsound(injectee, injection_sound, 20, TRUE)
+
+	// If the volume is greater than max_injection_per_tick, start the queue.
+	if(reagent_injector.total_volume > max_injection_per_tick)
+		var/list/reagents_to_inject = list()
+		for(var/datum/reagent/R in reagent_injector.reagent_list)
+			reagents_to_inject[R.type] = R.volume
+
+		if(!process_injection_queue(injectee, user, reagents_to_inject))
+			// Return of unused chemicals
+			for(var/reagent_type in reagents_to_inject)
+				var/amount = reagents_to_inject[reagent_type]
+				if(amount > 0)
+					var/datum/reagent/reagent = GLOB.chemical_reagents_list[reagent_type]
+					regenerate_reagents(list(reagent), amount)
+			return ITEM_INTERACT_BLOCKING
+	else
+		// else 5u injection is instant as before
+		to_chat(injectee, span_warning("You feel a tiny prick!"))
+		to_chat(user, span_notice("You inject [injectee] with the injector ([get_injection_name_left()])."))
+		balloon_alert(user, "[get_injection_name_left()] [reagent_injector.total_volume] unit\s injected")
+		reagent_injector.trans_to(injectee, reagent_injector.total_volume, transfered_by = user, methods = INJECT)
+		log_combat(user, injectee, "injected", src, "(CHEMICALS: [get_injection_name_left()])")
+		if(injection_sound)
+			playsound(injectee, injection_sound, 50, TRUE)
+
+		user.changeNext_move(CLICK_CD_MELEE)
+
 	return ITEM_INTERACT_SUCCESS
 
 /// RIGHT MOUSE BUTTON interaction with living mobs (injection)
 /obj/item/reagent_containers/borghypo/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(is_processing_queue)
+		balloon_alert(user, "injection in progress!")
+		return ITEM_INTERACT_BLOCKING
+
 	if(!isliving(interacting_with))
 		return NONE
 
@@ -239,13 +273,33 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/datum/reagents/reagent_injector = create_reagent_injector_right()
-	to_chat(injectee, span_warning("You feel a tiny prick!"))
-	to_chat(user, span_notice("You inject [injectee] with the injector ([get_injection_name_right()])."))
-	balloon_alert(user, "[get_injection_name_right()] [reagent_injector.total_volume] unit\s injected")
-	reagent_injector.trans_to(injectee, reagent_injector.total_volume, transfered_by = user, methods = INJECT)
-	log_combat(user, injectee, "injected", src, "(CHEMICALS: [get_injection_name_right()])")
-	if(injection_sound)
-		playsound(injectee, injection_sound, 20, TRUE)
+
+	// If the volume is greater than max_injection_per_tick, start the queue.
+	if(reagent_injector.total_volume > max_injection_per_tick)
+		var/list/reagents_to_inject = list()
+		for(var/datum/reagent/R in reagent_injector.reagent_list)
+			reagents_to_inject[R.type] = R.volume
+
+		if(!process_injection_queue(injectee, user, reagents_to_inject))
+			// Return of unused chemicals
+			for(var/reagent_type in reagents_to_inject)
+				var/amount = reagents_to_inject[reagent_type]
+				if(amount > 0)
+					var/datum/reagent/reagent = GLOB.chemical_reagents_list[reagent_type]
+					regenerate_reagents(list(reagent), amount)
+			return ITEM_INTERACT_BLOCKING
+	else
+		// else 5u injection is instant as before
+		to_chat(injectee, span_warning("You feel a tiny prick!"))
+		to_chat(user, span_notice("You inject [injectee] with the injector ([get_injection_name_right()])."))
+		balloon_alert(user, "[get_injection_name_right()] [reagent_injector.total_volume] unit\s injected")
+		reagent_injector.trans_to(injectee, reagent_injector.total_volume, transfered_by = user, methods = INJECT)
+		log_combat(user, injectee, "injected", src, "(CHEMICALS: [get_injection_name_right()])")
+		if(injection_sound)
+			playsound(injectee, injection_sound, 50, TRUE)
+
+		user.changeNext_move(CLICK_CD_MELEE)
+
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/borghypo/attack_self(mob/user)
@@ -395,6 +449,77 @@
 	for(var/datum/reagent/added_reagent in reagent_injector.reagent_list)
 		deplete_reagent(added_reagent.type, added_reagent.volume)
 	return reagent_injector
+
+/obj/item/reagent_containers/borghypo/proc/process_injection_queue(mob/living/injectee, mob/living/user, list/reagents_to_inject)
+	if(is_processing_queue)
+		balloon_alert(user, "injection already in progress!")
+		return FALSE
+
+	is_processing_queue = TRUE
+
+	var/total_volume = 0
+	for(var/reagent_type in reagents_to_inject)
+		total_volume += reagents_to_inject[reagent_type]
+
+	var/remaining = total_volume
+	var/injected = 0
+	var/list/queue_reagents = reagents_to_inject.Copy()
+
+	while(remaining > 0 && injectee && user && injectee.stat != DEAD)
+		// are u still here?
+		if(!(injectee in view(1, user)) && !bypass_protection)
+			to_chat(user, span_warning("Patient moved away!"))
+			is_processing_queue = FALSE
+			return FALSE
+
+		// too thick :D
+		if(!injectee.try_inject(user, user.zone_selected, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE | (bypass_protection ? INJECT_CHECK_PENETRATE_THICK : 0)))
+			to_chat(user, span_warning("Injection failed!"))
+			is_processing_queue = FALSE
+			return FALSE
+
+		// How much we still have
+		var/to_inject = min(max_injection_per_tick, remaining)
+
+		var/datum/reagents/temp_holder = new()
+		var/temp_volume = 0
+
+		// Fill holder
+		for(var/reagent_type in queue_reagents)
+			if(temp_volume >= to_inject)
+				break
+			var/available = queue_reagents[reagent_type]
+			var/take = min(available, to_inject - temp_volume)
+			if(take <= 0)
+				continue
+			temp_holder.add_reagent(reagent_type, take)
+			queue_reagents[reagent_type] -= take
+			if(queue_reagents[reagent_type] <= 0)
+				queue_reagents -= reagent_type
+			temp_volume += take
+
+		to_chat(injectee, span_warning("You feel a tiny prick!"))
+		to_chat(user, span_notice("You inject [injectee] with [temp_volume] units."))
+
+		var/percent = round((injected + temp_volume) / total_volume * 100)
+		balloon_alert(user, "[temp_volume]u injected ([percent]%)")
+
+		temp_holder.trans_to(injectee, temp_holder.total_volume, transfered_by = user, methods = INJECT)
+		playsound(injectee, injection_sound, 50, TRUE)
+
+		// Process
+		injected += temp_volume
+		remaining -= temp_volume
+
+		// Delay
+		if(remaining > 0)
+			if(!do_after(user, 1 SECOND, target = injectee))
+				to_chat(user, span_warning("Injection interrupted!"))
+				is_processing_queue = FALSE
+				return FALSE
+
+	is_processing_queue = FALSE
+	return TRUE
 
 /// Upgrades the hypospray.
 /obj/item/reagent_containers/borghypo/proc/upgrade()
@@ -594,7 +719,7 @@
 	default_reagent_types = HACKED_MEDICAL_REAGENTS
 	expanded_reagent_types = null
 	injection_sound = null
-	possible_transfer_amounts = list(1, 2, 5, 10)
+	possible_transfer_amounts = list(1, 2, 2.5, 5, 10)
 
 /// Peacekeeper cyborg hypospray.
 /obj/item/reagent_containers/borghypo/peace
@@ -608,7 +733,7 @@
 	tgui_theme = "syndicate"
 	default_reagent_types = HACKED_PEACE_REAGENTS
 	injection_sound = null
-	possible_transfer_amounts = list(1, 2, 5, 10)
+	possible_transfer_amounts = list(1, 2, 2.5, 5, 10)
 
 /// Clown cyborg hypospray.
 /obj/item/reagent_containers/borghypo/clown
@@ -640,7 +765,7 @@
 	recharge_time = 2 SECONDS
 	default_reagent_types = BASE_SYNDICATE_REAGENTS
 	bypass_protection = TRUE
-	possible_transfer_amounts = list(1, 2, 5, 10)
+	possible_transfer_amounts = list(1, 2, 2.5, 5, 10)
 
 /// Paramedic toolset hypospray.
 /obj/item/reagent_containers/borghypo/paramedic
