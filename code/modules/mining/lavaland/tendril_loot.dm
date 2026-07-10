@@ -94,7 +94,7 @@
 
 /obj/item/rod_of_asclepius/update_desc(updates)
 	. = ..()
-	desc = activated ? "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. I feel like I can lift a dead man with just one touch and pacify a rebellious soul!" : initial(desc)
+	desc = activated ? "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. You feel like you can raise a dead man with a touch or pacify a rebellious soul!" : initial(desc)
 
 /obj/item/rod_of_asclepius/update_icon_state()
 	. = ..()
