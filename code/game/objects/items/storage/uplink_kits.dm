@@ -1236,6 +1236,15 @@
 	item = /obj/item/storage/backpack/duffelbag/henchmen_traitor_outfits
 	cost = 4
 
+/obj/item/storage/box/syndie_kit/buster
+	name = "Buster kit"
+	desc = "A box with a combat-grade arm prosthetic and three monkey cubes to be used as training dummies."
+
+/obj/item/storage/box/syndie_kit/buster/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/food/monkeycube(src)
+	new /obj/item/bodypart/arm/left/robot/buster(src)
+
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY
