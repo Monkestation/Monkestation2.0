@@ -136,7 +136,7 @@
 	return stomach && lungs && heart && liver && core_wired
 
 /obj/item/ipc_core/proc/check_body_completion()
-	return check_core_completion() && core_secured && l_arm && r_arm && l_leg && r_leg && head?.secured
+	return check_core_completion() && core_secured && l_arm && r_arm && l_leg && r_leg && head && head.secured && head.check_completion()
 
 /obj/item/ipc_core/proc/check_completion()
 	return check_body_completion() && screen && screen_wired && screen_secured
@@ -276,7 +276,7 @@
 	if(!core_secured)
 		to_chat(user, span_warning("The IPC core's chest cavity must be secured before it can be finalized."))
 		return ITEM_INTERACT_BLOCKING
-	if(!head?.secured || !l_arm || !r_arm || !l_leg || !r_leg)
+	if(!head || !head.secured || !head.check_completion() || !l_arm || !r_arm || !l_leg || !r_leg)
 		to_chat(user, span_warning("The IPC core must have a secured head assembly plus both arms and legs before it can be finalized."))
 		return ITEM_INTERACT_BLOCKING
 	if(!screen)
@@ -356,7 +356,7 @@
 			user.balloon_alert(user, "head already present!")
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/bodypart/head/ipc/ipc_head = tool
-		if(!ipc_head.secured)
+		if(!ipc_head.secured || !ipc_head.check_completion())
 			to_chat(user, span_warning("The IPC head has to be fully assembled and secured before it can be attached."))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
@@ -470,9 +470,15 @@
 	var/mob/living/carbon/human/species/ipc/ipc_body = new(build_turf)
 	if(!ipc_body)
 		return FALSE
+	// Keep the roundstart augment policy on normal IPCs, but prevent organ regeneration from restoring it on this constructed shell.
+	ipc_body.dna.species.mutant_organs = ipc_body.dna.species.mutant_organs.Copy()
+	ipc_body.dna.species.mutant_organs -= /obj/item/organ/internal/cyberimp/arm/item_set/power_cord
 
-	// Remove the default IPC organs and limbs so the shell only uses the fabricated components.
+	// Remove default IPC organs so the shell only uses fabricated components.
+	// The iron butt is initialized with the shell and can still be replaced later through augmentation.
 	for(var/obj/item/organ/existing_organ as anything in ipc_body.organs.Copy())
+		if(istype(existing_organ, /obj/item/organ/internal/butt/iron))
+			continue
 		existing_organ.Remove(ipc_body, TRUE)
 		qdel(existing_organ)
 
@@ -501,6 +507,12 @@
 		qdel(ipc_body)
 		return FALSE
 
+	// Roundstart IPCs receive a charging cord from their species, but constructed shells must have it installed later through augmentation surgery.
+	var/obj/item/organ/internal/cyberimp/arm/item_set/power_cord/power_cord = ipc_body.get_organ_by_type(/obj/item/organ/internal/cyberimp/arm/item_set/power_cord)
+	if(power_cord)
+		power_cord.Remove(ipc_body, TRUE)
+		qdel(power_cord)
+
 	head = null
 	l_arm = null
 	r_arm = null
@@ -523,6 +535,8 @@
 	ipc_body.death_sound = 'sound/voice/borg_deathsound.ogg'
 	REMOVE_TRAIT(ipc_body, TRAIT_EMOTEMUTE, type)
 
+	// The new shell may have randomized to no screen, so establish a valid display feature before inserting the fabricated screen.
+	ipc_body.dna.features["ipc_screen"] = "Blue"
 	if(!installed_screen.Insert(ipc_body, TRUE, FALSE))
 		qdel(ipc_body)
 		return FALSE

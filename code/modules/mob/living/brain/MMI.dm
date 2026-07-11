@@ -25,7 +25,7 @@
 	var/force_cyborg_lawsync = null
 	/// Should this MMI be used to create a cyborg, should a law zero be given to them? This law zero is persistent until the MMI is removed.
 	var/force_cyborg_lawzero = null
-	/// Should this MMI be used to create an AI, will our laws become the new AI's laws?
+	/// Should this MMI be used to create a cyborg, can our laws become the new cyborg's laws? It will not happen if it will be immediately overridden by an master AI.
 	var/overrides_cyborg_laws = FALSE
 	/// Should this MMI be used to create an AI, will our laws become the new AI's laws?
 	var/overrides_ai_laws = TRUE
@@ -330,27 +330,9 @@
 	return TRUE
 
 /obj/item/mmi/proc/ready_for_ipc_install(mob/user)
+	if(!brain_check(user))
+		return FALSE
 	var/mob/living/brain/B = brainmob
-	if(!B)
-		if(user)
-			to_chat(user, span_warning("\The [src] indicates that there is no mind present!"))
-		return FALSE
-	if(!B.key || !B.mind)
-		if(user)
-			to_chat(user, span_warning("\The [src] indicates that their mind is completely unresponsive!"))
-		return FALSE
-	if(!B.client)
-		if(user)
-			to_chat(user, span_warning("\The [src] indicates that their mind is currently inactive."))
-		return FALSE
-	if(HAS_TRAIT(B, TRAIT_SUICIDED) || brain?.suicided)
-		if(user)
-			to_chat(user, span_warning("\The [src] indicates that their mind has no will to live!"))
-		return FALSE
-	if(brain?.organ_flags & ORGAN_FAILING)
-		if(user)
-			to_chat(user, span_warning("\The [src] indicates that the brain is damaged!"))
-		return FALSE
 	B.set_stat(CONSCIOUS)
 	B.emp_damage = 0
 	B.reset_perspective()
@@ -362,6 +344,8 @@
 
 /// Brainwashes the brainmob if we can do it.
 /obj/item/mmi/proc/try_brainwash(mob/living/user)
+	if(brainwash_objectives)
+		return
 	if(user)
 		brainwash_directive = get_updated_brainwash_directive(user)
 	if(!brainwash_directive || !brainmob)
@@ -369,11 +353,11 @@
 	to_chat(brainmob, span_userdanger( "You feel the MMI overriding your free will!"))
 	brainwash_objectives = brainwash(brainmob, brainwash_directive)
 
-/// Undoes any brainwashing that we've done.
-/obj/item/mmi/proc/try_unbrainwash()
-	if(!brainwash_objectives || !brainmob)
+/// Undoes any normal MMI brainwashing that we've applied to the provided occupant.
+/obj/item/mmi/proc/try_unbrainwash(mob/living/brainwash_target = brainmob)
+	if(!brainwash_objectives || !brainwash_target)
 		return
-	unbrainwash(brainmob, brainwash_objectives)
+	unbrainwash(brainwash_target, brainwash_objectives)
 	brainwash_objectives = null
 
 /obj/item/mmi/ipc/Initialize(mapload) // IPC MMI brain, brain for spawned IPCs with MMI pref, radio off by default for balance concerns
@@ -401,4 +385,6 @@
 		. += "\t[span_info("Cyborgs may be connected to a master AI, but are not obligated to follow their orders.")]"
 
 /obj/item/mmi/syndie/get_updated_brainwash_directive(mob/living/user)
+	if(brainwash_objectives)
+		return
 	return "[user.real_name] is part of the Syndicate! Assist the Syndicate to the best of your abilities."

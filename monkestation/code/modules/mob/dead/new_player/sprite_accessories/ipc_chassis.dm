@@ -59,6 +59,7 @@
 	name = "Pawsitrons United"
 	icon_state = "pawsitrons"
 
+// MONKESTATION CHANGE: Adds staripc chassis by MilkForever
 /datum/sprite_accessory/ipc_chassis/star_industrial
 	name = "Star Industrial"
 	icon_state = "staripc"

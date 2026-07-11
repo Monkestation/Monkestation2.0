@@ -96,7 +96,7 @@
 /datum/surgery/organ_manipulation/mechanic/mmi
 	name = "Cybernetic brain installation"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
-	surgery_flags =  SURGERY_REQUIRE_LIMB
+	surgery_flags = SURGERY_REQUIRE_LIMB
 	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/mechanic_open,
@@ -107,6 +107,9 @@
 		/datum/surgery_step/mechanic_wrench,
 		/datum/surgery_step/mechanic_close,
 	)
+
+/datum/surgery/organ_manipulation/mechanic/mmi/can_start(mob/user, mob/living/carbon/target)
+	return ..() && !target.get_organ_slot(ORGAN_SLOT_BRAIN) && !target.mind
 
 /datum/surgery/organ_manipulation/external
 	name = "Feature manipulation"

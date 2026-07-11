@@ -97,55 +97,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
-// Synthetic IPC organs are unlocked by IPC research and use the same names as their fabricated items.
-/datum/design/ipc_synth_stomach
-	name = "Synthetic Bio-Reactor"
-	id = "ipc_synth_stomach"
-	build_type = MECHFAB | PROTOLATHE
-	construction_time = 10 SECONDS
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
-	build_path = /obj/item/organ/internal/stomach/synth
-	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
-
-/datum/design/ipc_synth_lungs
-	name = "Heatsink"
-	id = "ipc_synth_lungs"
-	build_type = MECHFAB | PROTOLATHE
-	construction_time = 10 SECONDS
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
-	build_path = /obj/item/organ/internal/lungs/synth
-	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
-
-/datum/design/ipc_synth_heart
-	name = "Hydraulic Pump Engine"
-	id = "ipc_synth_heart"
-	build_type = MECHFAB | PROTOLATHE
-	construction_time = 10 SECONDS
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
-	build_path = /obj/item/organ/internal/heart/synth
-	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
-
-/datum/design/ipc_synth_liver
-	name = "Reagent Processing Unit"
-	id = "ipc_synth_liver"
-	build_type = MECHFAB | PROTOLATHE
-	construction_time = 10 SECONDS
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
-	build_path = /obj/item/organ/internal/liver/synth
-	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
-
+// IPC construction needs printable optical sensors; the other synthetic organs retain their existing designs and unlock timing.
 /datum/design/ipc_synth_eyes
 	name = "Optical Sensors"
 	id = "ipc_synth_eyes"
@@ -158,42 +110,10 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/ipc_synth_ears
-	name = "Auditory Sensors"
-	id = "ipc_synth_ears"
-	build_type = MECHFAB | PROTOLATHE
-	construction_time = 10 SECONDS
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*0.25)
-	build_path = /obj/item/organ/internal/ears/synth
-	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
-
-/datum/design/ipc_synth_tongue
-	name = "Synthetic Tongue"
-	id = "ipc_synth_tongue"
-	build_type = MECHFAB | PROTOLATHE
-	construction_time = 10 SECONDS
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*0.25)
-	build_path = /obj/item/organ/internal/tongue/robot/synth
-	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
-
 /datum/techweb_node/ipc_parts/New()
 	..()
 	design_ids -= "ipc_chest"
-	design_ids += list(
-		"ipc_synth_stomach",
-		"ipc_synth_lungs",
-		"ipc_synth_heart",
-		"ipc_synth_liver",
-		"ipc_synth_eyes",
-		"ipc_synth_ears",
-		"ipc_synth_tongue",
-	)
+	design_ids += "ipc_synth_eyes"
 
 /datum/design/ipc_core
 	name = "IPC Core"
@@ -201,7 +121,7 @@
 	id = "ipc_core"
 	build_type = MECHFAB
 	build_path = /obj/item/ipc_core
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*100, /datum/material/titanium = SHEET_MATERIAL_AMOUNT*100, /datum/material/glass = SHEET_MATERIAL_AMOUNT*100)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT*5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*5)
 	construction_time = 30 SECONDS
 	category = list(
 		RND_CATEGORY_IPC + RND_SUBCATEGORY_IPC_COMPONENTS
