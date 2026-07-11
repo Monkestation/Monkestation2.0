@@ -126,7 +126,7 @@
 	item_flags = NOBLUDGEON
 	reagent_flags = OPENCONTAINER
 	amount_per_transfer_from_this = 5
-	possible_transfer_amounts = list()
+	has_variable_transfer_amount = FALSE
 	volume = 5
 	spillable = FALSE
 
@@ -365,7 +365,7 @@
 	. = ..()
 	if(!(user.istate & ISTATE_HARM))
 		return NONE
-		
+
 	if(cap_on)
 		to_chat(user, span_warning("\The [src] is capped!"))
 		return NONE
