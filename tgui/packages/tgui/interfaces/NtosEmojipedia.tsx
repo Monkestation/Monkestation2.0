@@ -1,12 +1,5 @@
 import { useState } from 'react';
-import {
-  Box,
-  Button,
-  Button,
-  Image,
-  Input,
-  Section,
-} from 'tgui-core/components';
+import { Button, Input, Section } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
