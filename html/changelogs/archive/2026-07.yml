@@ -201,3 +201,61 @@
   - balance: gives the contractor modsuit eye and ear protection
   theprophet321:
   - bugfix: fix button
+2026-07-09:
+  DrDiasyl, SirNightKnight:
+  - image: Energy weapon muzzle flashes got a new sprite, each direction included!
+  - image: Temperature Gun "BAKE" beams are now lava colored
+  - rscadd: added the laser cannon. a new laser weapon researchable by science.
+  - balance: energy guns can fire off 16 lethal lasers total, up from 12.
+  - balance: moved x-ray laser guns to nuclear weapon tech.
+  - image: ported inhand sprites for the retro laser, laser tag, and laser cannon
+      guns from vg.
+  - sound: energy guns have sounds for selecting different modes.
+  - image: hellfire lasers use the heavy laser sprite to better differentiate them
+      from normal lasers.
+  Gboster-0:
+  - rscadd: Added napalm being able to be put into welders as long-lasting fuel
+  - qol: The welding tool now has text explaining it can be screwdrivered in examine
+      (and that screwdrivering it allows you to put chems into it)
+  - bugfix: Welding tools can no longer infinitelly burn when you put integer amounts
+      of fuel into them
+  - bugfix: Welding tools now show how many reagents they have with their gauge instead
+      of just the fuel amount
+  JohnFulpWillard:
+  - bugfix: '[Heliostation] Telecomms Admin office is now behind Telecomms Admin access.'
+  JupiterJaeden:
+  - bugfix: Fixed a bug where damage slowdown would not properly update player move
+      speed when it was supposed to.
+  - map: Added a holding cell to the tramstation brig + some other minor brig mapping
+      improvements.
+  Pickle-Coding, SirNightKnight:
+  - bugfix: fixed the modsuit chameleon module breaking when an item is inserted into
+      the modsuit's storage.
+  - bugfix: fixed large mortars not juicing items correctly.
+  - bugfix: russian helmets can now properly store stripper clips as advertised.
+  - bugfix: fixed blood brother ability icons having an error background.
+  - bugfix: Fixes the brig cell timer adjustment not working correctly on live timers.
+  - qol: cell timer sentence presets now reflect the current sentence times of Space
+      Law.
+  PotatoTomahto:
+  - balance: advanced health analyzer applies wound treatment bonus when scanning
+      wounds
+  - balance: technetium also upgrades wound scans
+  SirNightKnight:
+  - bugfix: incendiary bullet fire trails auto-delete in 2.5 seconds to mitigate hangtime
+      from lag.
+2026-07-10:
+  PotatoTomahto:
+  - rscadd: adds the buster fist as a tot item from yogstation
+  Runian, lelandkemble:
+  - balance: Scanned wounds stay scanned when they downgrade in severity.
+  SpeebusDaGeebus:
+  - rscdel: removed health bonus from no revive / DNR
+  Vekter, SirNightKnight:
+  - rscadd: Adds support for it/its pronouns. You can select these in character preferences.
+  hexakats:
+  - qol: Moved the hypospray's draw function from a mode to right click
+  - bugfix: Fixed a runtime that happens when you try to draw from a container with
+      no vial in the hypospray
+  - bugfix: Contractor baton can harm with right click again when there's no cuff
+      upgrade (and a runtime fix when trying to harm baton)

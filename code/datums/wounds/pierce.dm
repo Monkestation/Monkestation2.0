@@ -156,7 +156,7 @@
 
 	if(!do_after(user, treatment_delay, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
-	var/bleeding_wording = (!limb.can_bleed() ? "holes" : "bleeding")
+	var/bleeding_wording = (limb.can_bleed() ? "bleeding" : "holes")
 	user.visible_message(span_green("[user] stitches up some of the [bleeding_wording] on [victim]."), span_green("You stitch up some of the [bleeding_wording] on [user == victim ? "yourself" : "[victim]"]."))
 	var/blood_sutured = I.stop_bleeding / self_penalty_mult
 	adjust_blood_flow(-blood_sutured)
@@ -189,7 +189,7 @@
 
 	playsound(user, 'sound/surgery/cautery2.ogg', 75, TRUE)
 
-	var/bleeding_wording = (!limb.can_bleed() ? "holes" : "bleeding")
+	var/bleeding_wording = (limb.can_bleed() ? "bleeding" : "holes")
 	user.visible_message(span_green("[user] cauterizes some of the [bleeding_wording] on [victim]."), span_green("You cauterize some of the [bleeding_wording] on [victim]."))
 	victim.apply_damage(2 + severity, BURN, limb, wound_bonus = CANT_WOUND)
 	var/blood_cauterized = (0.6 / (self_penalty_mult * improv_penalty_mult))
