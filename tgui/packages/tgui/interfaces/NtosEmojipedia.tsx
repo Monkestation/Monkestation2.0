@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { Button, ImageButton, Input, Section } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Button,
+  Image,
+  Input,
+  Section,
+} from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
@@ -44,18 +51,20 @@ export const NtosEmojipedia = (props) => {
           }
         >
           {filteredEmojis.map((emoji) => (
-            <ImageButton
+            <Button
+              verticalAlign
               key={emoji.name}
               tooltip={emoji.name}
-              tooltipPosition="top"
-              m={1.5}
+              width="16px"
+              height="16px"
               className={classes(['emojipedia16x16', emoji.name])}
+              m={1.5}
               onClick={() => {
                 copyText(emoji.name);
               }}
               style={{
                 imageRendering: 'pixelated',
-                transform: 'scale(1.5) translate(0px, 10%)',
+                transform: 'scale(2)',
                 verticalAlign: 'middle',
               }}
             />
