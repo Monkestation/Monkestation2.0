@@ -25,7 +25,7 @@
 	var/force_cyborg_lawsync = null
 	/// Should this MMI be used to create a cyborg, should a law zero be given to them? This law zero is persistent until the MMI is removed.
 	var/force_cyborg_lawzero = null
-	/// Should this MMI be used to create a cyborg, can our laws become the new cyborg's laws? It will not happen if it will be immediately overridden by an master AI.
+	/// Should this MMI be used to create an AI, will our laws become the new AI's laws?
 	var/overrides_cyborg_laws = FALSE
 	/// Should this MMI be used to create an AI, will our laws become the new AI's laws?
 	var/overrides_ai_laws = TRUE
@@ -329,6 +329,33 @@
 		return FALSE
 	return TRUE
 
+/obj/item/mmi/proc/ready_for_ipc_install(mob/user)
+	var/mob/living/brain/B = brainmob
+	if(!B)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that there is no mind present!"))
+		return FALSE
+	if(!B.key || !B.mind)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that their mind is completely unresponsive!"))
+		return FALSE
+	if(!B.client)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that their mind is currently inactive."))
+		return FALSE
+	if(HAS_TRAIT(B, TRAIT_SUICIDED) || brain?.suicided)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that their mind has no will to live!"))
+		return FALSE
+	if(brain?.organ_flags & ORGAN_FAILING)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that the brain is damaged!"))
+		return FALSE
+	B.set_stat(CONSCIOUS)
+	B.emp_damage = 0
+	B.reset_perspective()
+	return TRUE
+
 /// Gets the brainwash directive.
 /obj/item/mmi/proc/get_updated_brainwash_directive(mob/living/user)
 	return
@@ -348,6 +375,11 @@
 		return
 	unbrainwash(brainmob, brainwash_objectives)
 	brainwash_objectives = null
+
+/obj/item/mmi/ipc/Initialize(mapload) // IPC MMI brain, brain for spawned IPCs with MMI pref, radio off by default for balance concerns
+	. = ..()
+	set_brainmob(new /mob/living/brain(src))
+	radio.set_on(FALSE)
 
 /obj/item/mmi/syndie
 	name = "\improper Syndicate Man-Machine Interface"
