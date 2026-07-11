@@ -13,8 +13,8 @@
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/reinforced
 	explosive_resistance = 2
-	max_integrity = 600 //Monkestation edit
-	damage_deflection = 75 // can't be damaged with most conventional weapons or tools Monkestation edit
+	max_integrity = 900
+	damage_deflection = 75 // can't be damaged with most conventional weapons or tools
 	rad_insulation = RAD_HEAVY_INSULATION
 	rust_resistance = RUST_RESISTANCE_REINFORCED
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall. also indicates the temperature at wich the wall will melt (currently only able to melt with H/E pipes)
@@ -228,10 +228,9 @@
 	return ..()
 
 /turf/closed/wall/r_wall/syndicate
-	//MONKESTATION EDIT - Swapped original name and description into the hull subtype.
+	// Swapped original name and description into the hull subtype.
 	name = "reinforced plastitanium wall"
 	desc = "A reinforced, ominous wall made of an alloy of plasma and titanium, with plasteel reinforcement layered underneath. Good luck getting through this."
-	//END OF EDIT
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "plastitanium_wall-0"
 	base_icon_state = "plastitanium_wall"
@@ -263,7 +262,7 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	fixed_underlay = list("space" = TRUE)
 
-//MONKESTATION ADDITION - Hull subtype for syndicate r_walls
+// Hull subtype for syndicate r_walls
 /turf/closed/wall/r_wall/syndicate/hull
 	name = "hull"
 	desc = "The armored hull of an ominous looking ship."
@@ -283,4 +282,3 @@
 	icon_state = "map-overspace"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	fixed_underlay = list("space" = TRUE)
-//END OF ADDITION
