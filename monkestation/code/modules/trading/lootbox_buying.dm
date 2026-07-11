@@ -10,7 +10,7 @@
 
 	var/negative_loot = prefs.lootboxes_owned < 0
 	if(negative_loot)
-		message_admins("[key_name_admin(src)] had negative loot boxes, it's possible they have already bought multiple for free! They have a debt of [prefs.lootboxes_owned].")
+		message_admins("[key_name_admin(src)] has negative loot boxes, it's possible they have already bought multiple for free! They have a debt of [prefs.lootboxes_owned].")
 		logger.Log(LOG_CATEGORY_META, "[src] had negative loot boxes!")
 		to_chat(src, span_warning("You currently have negative lootboxes ([prefs.lootboxes_owned])! You will need to buy these back before you can open more."))
 
