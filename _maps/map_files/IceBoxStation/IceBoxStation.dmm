@@ -13291,7 +13291,6 @@
 "dVc" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/closet/secure_closet/tac,
 /turf/open/floor/carpet/cyan,
 /area/station/command/heads_quarters/blueshield)
 "dVj" = (

@@ -1341,9 +1341,7 @@
 /obj/effect/turf_decal/siding/dark_blue{
 	dir = 8
 	},
-/obj/structure/closet/secure_closet/tac,
 /obj/structure/window/spawner/directional/north,
-/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/command/heads_quarters/blueshield)
 "aqV" = (

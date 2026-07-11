@@ -14449,10 +14449,6 @@
 	pixel_x = -4;
 	pixel_y = 10
 	},
-/obj/item/clothing/head/helmet/toggleable/riot{
-	pixel_y = 6
-	},
-/obj/item/clothing/suit/armor/riot,
 /obj/machinery/recharger{
 	pixel_x = 7;
 	pixel_y = 4
@@ -36706,8 +36702,6 @@
 /turf/closed/wall/r_wall,
 /area/station/command/heads_quarters/ce)
 "iBS" = (
-/obj/structure/closet/secure_closet/tac,
-/obj/effect/turf_decal/box/red,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "iBX" = (

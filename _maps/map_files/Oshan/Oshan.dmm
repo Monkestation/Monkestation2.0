@@ -25672,8 +25672,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/effect/turf_decal/tile/dark_blue/full,
-/obj/machinery/ammo_workbench,
-/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "hUQ" = (
@@ -46069,8 +46067,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/effect/turf_decal/tile/dark_blue/full,
-/obj/structure/closet/secure_closet/tac,
-/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "oiY" = (
@@ -72211,8 +72207,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/effect/turf_decal/tile/dark_blue/full,
-/obj/machinery/dish_drive/bullet,
-/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "wgz" = (

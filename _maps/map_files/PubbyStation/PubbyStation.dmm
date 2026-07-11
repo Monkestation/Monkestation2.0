@@ -54612,11 +54612,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"xfZ" = (
-/obj/structure/cable,
-/obj/structure/closet/secure_closet/tac,
-/turf/open/floor/wood,
-/area/station/command/heads_quarters/blueshield)
 "xga" = (
 /obj/structure/sign/warning/electric_shock{
 	pixel_x = -31
@@ -89620,7 +89615,7 @@ aht
 aht
 aDa
 sHc
-xfZ
+gLF
 gLF
 nPn
 aAH

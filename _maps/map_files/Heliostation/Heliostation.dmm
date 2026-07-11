@@ -26764,7 +26764,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/science/xenobiology)
 "ddq" = (
-/obj/structure/closet/secure_closet/tac,
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 1
 	},
@@ -26776,6 +26775,7 @@
 	req_one_access = list("nt_rep", "blueshield");
 	name = "privacy blinds"
 	},
+/obj/structure/closet/secure_closet/blueshield,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "ddr" = (
@@ -68338,7 +68338,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "sUY" = (
-/obj/structure/closet/secure_closet/blueshield,
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 1
 	},

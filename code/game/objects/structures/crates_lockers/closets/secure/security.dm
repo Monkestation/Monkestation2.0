@@ -49,9 +49,28 @@
 	new /obj/item/circuitboard/machine/techfab/department/service(src)
 	new /obj/item/storage/photo_album/hop(src)
 	new /obj/item/storage/lockbox/medal/hop(src)
-	new /obj/item/clothing/suit/space/hardsuit/hop(src) //monkestation addition
+	new /obj/item/clothing/suit/space/hardsuit/hop(src)
 
 /obj/structure/closet/secure_closet/hop/populate_contents_immediate()
+	. = ..()
+	new /obj/item/gun/energy/e_gun(src)
+
+/obj/structure/closet/secure_closet/blueshield
+	name = "blueshield's locker"
+	icon_state = "bs"
+	icon = 'monkestation/code/modules/blueshift/icons/obj/closet.dmi'
+	req_access = list(ACCESS_BLUESHIELD)
+
+/obj/structure/closet/secure_closet/blueshield/New()
+	..()
+	new /obj/item/storage/briefcase/secure(src)
+	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
+	new /obj/item/storage/medkit/frontier/stocked(src)
+	new /obj/item/storage/bag/garment/blueshield(src)
+	new /obj/item/sensor_device/command(src)
+	new /obj/item/storage/photo_album/blueshield(src)
+
+/obj/structure/closet/secure_closet/blueshield/populate_contents_immediate()
 	. = ..()
 	new /obj/item/gun/energy/e_gun(src)
 
@@ -77,13 +96,13 @@
 	new /obj/item/storage/belt/security/full(src)
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
 	new /obj/item/storage/photo_album/hos(src)
-	new /obj/item/bodycam_upgrade(src) //monkestation edit: Security Liability Act
+	new /obj/item/bodycam_upgrade(src)
 
 /obj/structure/closet/secure_closet/hos/populate_contents_immediate()
 	. = ..()
 
 	// Traitor steal objectives
-	new /obj/item/choice_beacon/hos(src) //monkestation edit
+	new /obj/item/choice_beacon/hos(src)
 	new /obj/item/pinpointer/nuke(src)
 
 /obj/structure/closet/secure_closet/warden
@@ -102,7 +121,7 @@
 	new /obj/item/storage/belt/security/full(src)
 	new /obj/item/flashlight/seclite(src)
 	new /obj/item/door_remote/head_of_security(src)
-	new /obj/item/storage/box/bodycamera(src) //monkestation edit: Security Liability Act
+	new /obj/item/storage/box/bodycamera(src)
 	new /obj/item/gun/ballistic/shotgun/automatic/combat/compact(src) //undoing ancient removal
 	new /obj/item/ammo_box/advanced/s12gauge/rubber(src) //he can have some rubber ammo too
 	new /obj/item/megaphone/sec(src)
@@ -122,8 +141,8 @@
 	new /obj/item/radio/headset/headset_sec/alt(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/flashlight/seclite(src)
-	new /obj/item/clothing/mask/balaclava(src) //monkestation edit
-	new /obj/item/bodycam_upgrade(src) //monkestation edit: Security Liability Act
+	new /obj/item/clothing/mask/balaclava(src)
+	new /obj/item/bodycam_upgrade(src)
 
 /obj/structure/closet/secure_closet/security/sec
 
@@ -179,13 +198,13 @@
 	new /obj/item/reagent_containers/spray/pepper(src)
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
 	new /obj/item/storage/belt/holster/detective/full(src)
-	new /obj/item/storage/belt/holster/detective/full(src) // Monkestation edit : Adding some substance to the detective role
+	new /obj/item/storage/belt/holster/detective/full(src)
 	new /obj/item/pinpointer/crew(src)
 	new /obj/item/binoculars(src)
 	new /obj/item/storage/box/rxglasses/spyglasskit(src)
 	new /obj/item/clothing/head/fedora/inspector_hat(src)
-	new /obj/item/card/id/advanced/undercover(src) // Monkestation edit : Adding some substance to the detective role
-	new /obj/item/bodycam_upgrade(src) //monkestation edit: Security Liability Act
+	new /obj/item/card/id/advanced/undercover(src)
+	new /obj/item/bodycam_upgrade(src)
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections locker"

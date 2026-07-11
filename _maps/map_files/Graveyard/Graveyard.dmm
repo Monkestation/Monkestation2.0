@@ -29214,7 +29214,6 @@
 /turf/open/floor/carpet/blue,
 /area/station/command/heads_quarters/cmo)
 "luw" = (
-/obj/structure/closet/secure_closet/tac,
 /turf/open/floor/carpet/cyan,
 /area/station/command/heads_quarters/blueshield)
 "luA" = (

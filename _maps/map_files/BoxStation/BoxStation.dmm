@@ -29763,11 +29763,6 @@
 /area/station/maintenance/port)
 "jEt" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/rack/shelf,
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/head/helmet/toggleable/riot{
-	pixel_y = 6
-	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/blueshield)
 "jEw" = (
@@ -46583,7 +46578,6 @@
 /area/station/science/lab)
 "oYJ" = (
 /obj/machinery/keycard_auth/directional/east,
-/obj/structure/closet/secure_closet/tac,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/blueshield)
 "oYQ" = (

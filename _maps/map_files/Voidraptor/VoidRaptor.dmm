@@ -46498,11 +46498,9 @@
 	name = "command camera"
 	},
 /obj/item/radio/intercom/directional/south,
-/obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/closet/secure_closet/tac,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/command/heads_quarters/blueshield)
 "mYL" = (
