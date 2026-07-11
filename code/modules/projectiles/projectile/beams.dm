@@ -27,6 +27,15 @@
 	wound_bonus = -30
 	bare_wound_bonus = 40
 
+/obj/projectile/beam/laser/hitscan
+	damage = 30
+	icon_state = null
+	hitscan = TRUE
+	hitscan_light_color_override = COLOR_RED
+	impact_light_color_override = COLOR_RED
+	hitscan_light_intensity = 1
+	hitscan_light_outer_range = 0.25
+
 /obj/projectile/beam/laser/lasrifle
 	damage = 25
 	range = 30
@@ -66,6 +75,7 @@
 //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
 /obj/projectile/beam/laser/hellfire
 	name = "hellfire laser"
+	icon_state = "heavylaser"
 	wound_bonus = 0
 	damage = 25
 	speed = 1.6
@@ -199,10 +209,9 @@
 	. = ..()
 	if (!QDELETED(target) && (isturf(target) || isstructure(target)))
 		if(isobj(target))
-			SSexplosions.low_mov_atom += target //monkestation edit
+			SSexplosions.low_mov_atom += target
 		else
-			SSexplosions.lowturf += target //monkestation edit
-
+			SSexplosions.lowturf += target
 /obj/projectile/beam/pulse/shotgun
 	damage = 30
 

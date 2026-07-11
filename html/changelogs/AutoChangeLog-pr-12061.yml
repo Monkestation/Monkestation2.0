@@ -1,0 +1,6 @@
+author: "Runian"
+delete-after: True
+changes:
+  - balance: "Hyperkinetic Dampening Projector now only consumes power when a projectile initially becomes dampened."
+  - balance: "Hyperkinetic Dampening Projector's power consumption is now 0.15kW per projectile damage."
+  - bugfix: "Projectile dampers no longer speeds up projectiles when it should of slowed them down instead."
