@@ -71,6 +71,9 @@ GLOBAL_LIST_EMPTY(data_cores)
 /obj/machinery/ai/data_core/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	var/datum/ai_os/old_os = GLOB.ai_os["[old_turf.z]"]
 	. = ..()
+	//z-level is the same, ignore us.
+	if(old_os == linked_os)
+		return
 	for(var/mob/living/silicon/ai/ai_contents as anything in contents)
 		old_os.remove_ai(ai_contents)
 		linked_os.add_ai(ai_contents)

@@ -1,0 +1,4 @@
+author: "CheffieGithub"
+delete-after: True
+changes:
+  - bugfix: "Added protections against negative lootboxes, work to pay off your debt!"

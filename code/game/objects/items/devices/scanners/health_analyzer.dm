@@ -582,6 +582,7 @@
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
 	works_from_distance = TRUE
 	advanced = TRUE
+	give_wound_treatment_bonus = TRUE
 
 #define AID_EMOTION_NEUTRAL "neutral"
 #define AID_EMOTION_HAPPY "happy"
@@ -596,11 +597,16 @@
 
 	var/render_list = ""
 	var/advised = FALSE
+
+	var/advanced = scanner.give_wound_treatment_bonus
+	if(!advanced && patient.has_reagent(/datum/reagent/inverse/technetium))
+		advanced = TRUE
+
 	for(var/obj/item/bodypart/wounded_part as anything in patient.get_wounded_bodyparts())
 		render_list += "<span class='alert ml-1'><b>Warning: Physical trauma[LAZYLEN(wounded_part.wounds) > 1? "s" : ""] detected in [wounded_part.plaintext_zone]</b>"
 		for(var/datum/wound/current_wound as anything in wounded_part.wounds)
 			render_list += "<div class='ml-2'>[simple_scan ? current_wound.get_simple_scanner_description() : current_wound.get_scanner_description()]</div>\n"
-			if (scanner.give_wound_treatment_bonus)
+			if(advanced)
 				ADD_TRAIT(current_wound, TRAIT_WOUND_SCANNED, ANALYZER_TRAIT)
 				if(!advised)
 					to_chat(user, span_notice("You notice how bright holo-images appear over your [(length(wounded_part.wounds) || length(patient.get_wounded_bodyparts()) ) > 1 ? "various wounds" : "wound"]. They seem to be filled with helpful information, this should make treatment easier!"))
@@ -682,6 +688,7 @@
 
 /obj/item/healthanalyzer/cyborg/proc/upgrade() //so that it wont get moved upon upgrade in the cyborgs toolkit
 	advanced = TRUE
+	give_wound_treatment_bonus = TRUE
 	name = /obj/item/healthanalyzer/advanced::name
 	desc = /obj/item/healthanalyzer/advanced::desc
 	icon_state = /obj/item/healthanalyzer/advanced::icon_state

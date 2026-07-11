@@ -1,0 +1,5 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - qol: "Borers who are in hosts and have learnt the head focus also receive true night vision and flash immunity."
+  - bugfix: "willing host mood buff now is capitalized. sorry"

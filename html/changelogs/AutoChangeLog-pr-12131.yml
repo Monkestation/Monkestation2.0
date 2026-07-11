@@ -1,0 +1,7 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "AIs no longer lose all assigned CPU & ram when shunting between data cores (or between station z-levels)"
+  - bugfix: "Fixes AI mechs (again)"
+  - bugfix: "[MetaStation] Fixes AI cooling"
+  - bugfix: "[BoxStation] Fixes Network Admin office being behind general telecomms access instead of Telecomms Admin access."
