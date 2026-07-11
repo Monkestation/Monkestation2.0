@@ -63,19 +63,3 @@
 		if(EMP_LIGHT)
 			to_chat(owner, span_warning("Alert: Major cooling system failure!"))
 			owner.adjust_bodytemperature(SYNTH_LIGHT_EMP_TEMPERATURE_POWER * TEMPERATURE_DAMAGE_COEFFICIENT)
-
-/datum/design/synth_heatsink
-	name = "Heatsink"
-	desc = "A device that transfers generated heat to a fluid medium to cool it down. Required to keep your synthetics cool-headed. It's shape resembles lungs."
-	id = "synth_lungs"
-	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-	construction_time = 4 SECONDS
-	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT,
-		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
-	)
-	build_path = /obj/item/organ/internal/lungs/synth
-	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE

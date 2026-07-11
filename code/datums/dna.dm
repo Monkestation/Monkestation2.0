@@ -279,12 +279,14 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		L[DNA_MUSHROOM_CAPS_BLOCK] = construct_block(GLOB.caps_list.Find(features["caps"]), GLOB.caps_list.len)
 	if(features["pod_hair"])
 		L[DNA_POD_HAIR_BLOCK] = construct_block(GLOB.pod_hair_list.Find(features["pod_hair"]), GLOB.pod_hair_list.len)
-	if(features["arm_wings"]) // NON-MODULE CHANGE
+	if(features["arm_wings"])
 		L[DNA_ARM_WINGS_BLOCK] = construct_block(GLOB.arm_wings_list.Find(features["arm_wings"]), GLOB.arm_wings_list.len)
-	if(features["tail_avian"]) // NON-MODULE CHANGE
+	if(features["tail_avian"])
 		L[DNA_AVIAN_TAIL_BLOCK] = construct_block(GLOB.tails_list_avian.Find(features["tail_avian"]), GLOB.tails_list_avian.len)
-	if(features["ears_avian"]) // NON-MODULE CHANGE
+	if(features["ears_avian"])
 		L[DNA_AVIAN_EARS_BLOCK] = construct_block(GLOB.avian_ears_list.Find(features["ears_avian"]), GLOB.avian_ears_list.len)
+	if(features["ipc_screen"])
+		L[DNA_IPC_SCREEN_BLOCK] = construct_block(GLOB.ipc_screens_list.Find(features["ipc_screen"]), GLOB.ipc_screens_list.len)
 	for(var/blocknum in 1 to DNA_FEATURE_BLOCKS)
 		. += L[blocknum] || random_string(GET_UI_BLOCK_LEN(blocknum), GLOB.hex_characters)
 
@@ -427,12 +429,14 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			set_uni_feature_block(blocknumber, construct_block(GLOB.caps_list.Find(features["caps"]), GLOB.caps_list.len))
 		if(DNA_POD_HAIR_BLOCK)
 			set_uni_feature_block(blocknumber, construct_block(GLOB.pod_hair_list.Find(features["pod_hair"]), GLOB.pod_hair_list.len))
-		if(DNA_ARM_WINGS_BLOCK) // NON-MODULE CHANGE
+		if(DNA_ARM_WINGS_BLOCK)
 			set_uni_feature_block(blocknumber, construct_block(GLOB.arm_wings_list.Find(features["arm_wings"]), GLOB.arm_wings_list.len))
-		if(DNA_AVIAN_TAIL_BLOCK) // NON-MODULE CHANGE
+		if(DNA_AVIAN_TAIL_BLOCK)
 			set_uni_feature_block(blocknumber, construct_block(GLOB.tails_list_avian.Find(features["tail_avian"]), GLOB.tails_list_avian.len))
-		if(DNA_AVIAN_EARS_BLOCK) // NON-MODULE CHANGE
+		if(DNA_AVIAN_EARS_BLOCK)
 			set_uni_feature_block(blocknumber, construct_block(GLOB.avian_ears_list.Find(features["ears_avian"]), GLOB.avian_ears_list.len))
+		if(DNA_IPC_SCREEN_BLOCK)
+			set_uni_feature_block(blocknumber, construct_block(GLOB.ipc_screens_list.Find(features["ipc_screen"]), GLOB.ipc_screens_list.len))
 
 /**
  * Checks if two DNAs are practically the same by comparing their most defining features
@@ -717,12 +721,14 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		dna.features["caps"] = GLOB.caps_list[deconstruct_block(get_uni_feature_block(features, DNA_MUSHROOM_CAPS_BLOCK), GLOB.caps_list.len)]
 	if(dna.features["pod_hair"])
 		dna.features["pod_hair"] = GLOB.pod_hair_list[deconstruct_block(get_uni_feature_block(features, DNA_POD_HAIR_BLOCK), GLOB.pod_hair_list.len)]
-	if(dna.features["arm_wings"]) // NON-MODULE CHANGE
+	if(dna.features["arm_wings"])
 		dna.features["arm_wings"] = GLOB.arm_wings_list[deconstruct_block(get_uni_feature_block(features, DNA_ARM_WINGS_BLOCK), GLOB.arm_wings_list.len)]
-	if(dna.features["tail_avian"]) // NON-MODULE CHANGE
+	if(dna.features["tail_avian"])
 		dna.features["tail_avian"] = GLOB.tails_list_avian[deconstruct_block(get_uni_feature_block(features, DNA_AVIAN_TAIL_BLOCK), GLOB.tails_list_avian.len)]
-	if(dna.features["ears_avian"]) // NON-MODULE CHANGE
+	if(dna.features["ears_avian"])
 		dna.features["ears_avian"] = GLOB.avian_ears_list[deconstruct_block(get_uni_feature_block(features, DNA_AVIAN_EARS_BLOCK), GLOB.avian_ears_list.len)]
+	if(dna.features["ipc_screen"])
+		dna.features["ipc_screen"] = GLOB.ipc_screens_list[deconstruct_block(get_uni_feature_block(features, DNA_IPC_SCREEN_BLOCK), GLOB.ipc_screens_list.len)]
 
 	for(var/obj/item/organ/external/external_organ in organs)
 		external_organ.mutate_feature(features, src)
