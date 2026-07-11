@@ -51,11 +51,14 @@
 	name = "Zeng-Hu Pharmaceuticals"
 	icon_state = "zhpipc"
 
+/datum/sprite_accessory/ipc_chassis/zeng_hu_pharmaceuticals_alt
+	name = "Zeng-Hu Pharmaceuticals Mk 1"
+	icon_state = "zghipc"
+
 /datum/sprite_accessory/ipc_chassis/pawsitronsunited
 	name = "Pawsitrons United"
 	icon_state = "pawsitrons"
 
-// MONKESTATION CHANGE: Adds staripc chassis by MilkForever
 /datum/sprite_accessory/ipc_chassis/star_industrial
 	name = "Star Industrial"
 	icon_state = "staripc"
