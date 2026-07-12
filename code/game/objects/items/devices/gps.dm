@@ -205,6 +205,14 @@
 	var/mob/living/current_mob = object
 	yellow_alerts_issued = 0
 
+	if(iscarbon(current_mob))
+		var/mob/living/carbon/current_carbon = current_mob
+		var/obj/item/bodypart/chest/target_chest = current_carbon.get_bodypart(BODY_ZONE_CHEST)
+		if(target_chest && target_chest.cavity_item == src)
+			if(prob(30))
+				to_chat(current_carbon, span_warning("Something in your chest doesn't feel right..."))
+			current_carbon.apply_damage(10, CLONE)
+
 	if(tracked_mob == current_mob)
 		return
 
