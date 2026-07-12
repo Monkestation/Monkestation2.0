@@ -10,6 +10,7 @@ import {
   NumberInput,
   ProgressBar,
   Section,
+  Table,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -22,6 +23,8 @@ type Data = {
   max_power_multiplier: number;
   last_values: LastValuesData[];
   power_usage: number;
+  MINIMUM_CPU_SPEED: number;
+  MINIMUM_CPU_POWER: number;
 };
 
 type LastValuesData = {
@@ -41,6 +44,8 @@ export const AiOverclocking = (props) => {
     max_power_multiplier,
     last_values = [],
     power_usage,
+    MINIMUM_CPU_SPEED,
+    MINIMUM_CPU_POWER,
   } = data;
 
   const [increment, setIncrement] = useState(0.1);
@@ -51,7 +56,7 @@ export const AiOverclocking = (props) => {
   };
 
   return (
-    <Window width={400} height={400}>
+    <Window width={350} height={400}>
       <Window.Content scrollable>
         {(!overclock_progress && (
           <Section
@@ -111,7 +116,7 @@ export const AiOverclocking = (props) => {
                   }
                 >
                   <LabeledList>
-                    <LabeledList.Item label="Increment">
+                    <LabeledList.Item label="Increment" textAlign="right">
                       <NumberInput
                         value={increment}
                         minValue={0.1}
@@ -122,69 +127,85 @@ export const AiOverclocking = (props) => {
                       />
                     </LabeledList.Item>
                     <LabeledList.Item label="Clock Speed">
-                      {speed}THz &nbsp;
-                      <Button
-                        icon="minus"
-                        disabled={speed === 0}
-                        onClick={() =>
-                          act('set_speed', {
-                            new_speed: speed - increment,
-                          })
-                        }
-                      />
-                      <NumberInput
-                        value={speed}
-                        minValue={1}
-                        maxValue={max_speed}
-                        onChange={(value) =>
-                          act('set_speed', {
-                            new_speed: value,
-                          })
-                        }
-                      />
-                      <Button
-                        icon="plus"
-                        disabled={speed === max_speed}
-                        onClick={() =>
-                          act('set_speed', {
-                            new_speed: speed + increment,
-                          })
-                        }
-                      />
+                      <Table>
+                        <Table.Row>
+                          <Table.Cell>{speed}THz &nbsp;</Table.Cell>
+                          <Table.Cell textAlign="right">
+                            <Button
+                              icon="minus"
+                              disabled={speed === 0}
+                              onClick={() =>
+                                act('set_speed', {
+                                  new_speed: speed - increment,
+                                })
+                              }
+                            />
+                            <NumberInput
+                              value={speed}
+                              minValue={MINIMUM_CPU_SPEED}
+                              maxValue={max_speed}
+                              onChange={(value) =>
+                                act('set_speed', {
+                                  new_speed: value,
+                                })
+                              }
+                            />
+                            <Button
+                              icon="plus"
+                              disabled={speed === max_speed}
+                              onClick={() =>
+                                act('set_speed', {
+                                  new_speed: speed + increment,
+                                })
+                              }
+                            />
+                          </Table.Cell>
+                        </Table.Row>
+                      </Table>
                     </LabeledList.Item>
                     <LabeledList.Item label="Power Multiplier">
-                      {power_multiplier}x ({power_usage}W)&nbsp;
-                      <Button
-                        icon="minus"
-                        disabled={power_multiplier === 0}
-                        onClick={() =>
-                          act('set_power', {
-                            new_power:
-                              power_multiplier - increment > 0.5
-                                ? power_multiplier - increment
-                                : 0.5,
-                          })
-                        }
-                      />
-                      <NumberInput
-                        value={power_multiplier}
-                        minValue={0.5}
-                        maxValue={max_power_multiplier}
-                        onChange={(value) =>
-                          act('set_power', {
-                            new_power: value,
-                          })
-                        }
-                      />
-                      <Button
-                        icon="plus"
-                        disabled={power_multiplier === max_power_multiplier}
-                        onClick={() =>
-                          act('set_power', {
-                            new_power: power_multiplier + increment,
-                          })
-                        }
-                      />
+                      <Table>
+                        <Table.Row>
+                          <Table.Cell>
+                            {power_multiplier}x ({power_usage}W)&nbsp;
+                          </Table.Cell>
+                          <Table.Cell textAlign="right">
+                            <Button
+                              icon="minus"
+                              disabled={power_multiplier === 0}
+                              onClick={() =>
+                                act('set_power', {
+                                  new_power:
+                                    power_multiplier - increment > 0.5
+                                      ? power_multiplier - increment
+                                      : 0.5,
+                                })
+                              }
+                            />
+                            <NumberInput
+                              value={power_multiplier}
+                              minValue={MINIMUM_CPU_POWER}
+                              maxValue={max_power_multiplier}
+                              onChange={(value) =>
+                                act('set_power', {
+                                  new_power: value,
+                                })
+                              }
+                            />
+                            <Button
+                              icon="plus"
+                              disabled={
+                                power_multiplier === max_power_multiplier
+                              }
+                              onClick={() =>
+                                act('set_power', {
+                                  new_power: power_multiplier + increment,
+                                })
+                              }
+                            />
+                          </Table.Cell>
+                        </Table.Row>
+                      </Table>
                     </LabeledList.Item>
                   </LabeledList>
                 </Section>

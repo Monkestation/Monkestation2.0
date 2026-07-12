@@ -161,3 +161,167 @@
   - rscadd: The Eris button now works.
   - rscdel: Remove's day and hour based "is_available" checks for the sister server
       buttons as nothing has used it for over a year
+2026-07-08:
+  SirNightKnight:
+  - rscadd: added the security riot grenade launcher crate.  contains a grenade launcher
+      along with a box each of teargas and flashbang grenades. includes a SWAT mask.
+      1,600 credits to purchase.
+  - rscadd: added the security biological containment gear crate. contains 3 security
+      biosuits, viral analyzer goggles, PENLITE barrier projectors, spaceacillin syringes,
+      and pairs of nitrile gloves. costs 2,400 credits to purchase.
+  - rscadd: added the portable flasher crate. contains one portable flasher crate.
+      costs 400 credits.
+  - rscadd: added reflector helmet which functions the same as the reflector vest.
+      renamed the reflector vest crate to the reflector armor crate, bumped the price
+      from 1,000 to 1,200 credits, and increased the contents to 3 full sets.
+  - balance: restructured purchase permissions so all security orders require security
+      access and all srmory orders require armory access.
+  - balance: sec bio suits have a bit more melee, bullet, and wound armor.
+  - balance: moved WT autorifles and ammo from imports to armory orders. the autorifle
+      crate now costs 4,000 credits and contains 3 autorifles. non-lethal ammo crates
+      cost 1,000 credits and lethal ammo crates cost 1,200 credits.
+  - balance: buffed SWAT suits. the suit now has two small item slots and a +2 tackling
+      bonus. increased SWAT crate contents to 3 armor sets and bumped the price from
+      1,400 to 2,400 credits.
+  - balance: lowered the price of mindshield crates from 1,200 to 900 credits.
+  - balance: made the automatic variants of the disabler and laser gun available as
+      standard security orders for the same price as the regular variants.
+  - balance: buffed the energy gun crate to contain 3 energy guns for 1,200 credits
+      (previously 2 energy guns for 3,600 credits).
+  - balance: doubled the secway's speed to match the janicart and removed the secway
+      crate from the contraband listing.
+  - balance: lowered the cost of firing pin crates.  firing pin crates cost 1,000
+      credits and pay wall firing pins cost 600 credits.
+  - rscdel: removed solfed armor and gun crates (except for modular laser guns and
+      the Bobr) to reduce catalog bloat.
+  - rscdel: removed the Renoster crate and replaced it with a riot shotgun crate.
+  - rscdel: removed the anti-tank launcher crate.
+  - image: added a new sprite for the SWAT suit.
+  hexakats:
+  - balance: gives the contractor modsuit eye and ear protection
+  theprophet321:
+  - bugfix: fix button
+2026-07-09:
+  DrDiasyl, SirNightKnight:
+  - image: Energy weapon muzzle flashes got a new sprite, each direction included!
+  - image: Temperature Gun "BAKE" beams are now lava colored
+  - rscadd: added the laser cannon. a new laser weapon researchable by science.
+  - balance: energy guns can fire off 16 lethal lasers total, up from 12.
+  - balance: moved x-ray laser guns to nuclear weapon tech.
+  - image: ported inhand sprites for the retro laser, laser tag, and laser cannon
+      guns from vg.
+  - sound: energy guns have sounds for selecting different modes.
+  - image: hellfire lasers use the heavy laser sprite to better differentiate them
+      from normal lasers.
+  Gboster-0:
+  - rscadd: Added napalm being able to be put into welders as long-lasting fuel
+  - qol: The welding tool now has text explaining it can be screwdrivered in examine
+      (and that screwdrivering it allows you to put chems into it)
+  - bugfix: Welding tools can no longer infinitelly burn when you put integer amounts
+      of fuel into them
+  - bugfix: Welding tools now show how many reagents they have with their gauge instead
+      of just the fuel amount
+  JohnFulpWillard:
+  - bugfix: '[Heliostation] Telecomms Admin office is now behind Telecomms Admin access.'
+  JupiterJaeden:
+  - bugfix: Fixed a bug where damage slowdown would not properly update player move
+      speed when it was supposed to.
+  - map: Added a holding cell to the tramstation brig + some other minor brig mapping
+      improvements.
+  Pickle-Coding, SirNightKnight:
+  - bugfix: fixed the modsuit chameleon module breaking when an item is inserted into
+      the modsuit's storage.
+  - bugfix: fixed large mortars not juicing items correctly.
+  - bugfix: russian helmets can now properly store stripper clips as advertised.
+  - bugfix: fixed blood brother ability icons having an error background.
+  - bugfix: Fixes the brig cell timer adjustment not working correctly on live timers.
+  - qol: cell timer sentence presets now reflect the current sentence times of Space
+      Law.
+  PotatoTomahto:
+  - balance: advanced health analyzer applies wound treatment bonus when scanning
+      wounds
+  - balance: technetium also upgrades wound scans
+  SirNightKnight:
+  - bugfix: incendiary bullet fire trails auto-delete in 2.5 seconds to mitigate hangtime
+      from lag.
+2026-07-10:
+  PotatoTomahto:
+  - rscadd: adds the buster fist as a tot item from yogstation
+  Runian, lelandkemble:
+  - balance: Scanned wounds stay scanned when they downgrade in severity.
+  SpeebusDaGeebus:
+  - rscdel: removed health bonus from no revive / DNR
+  Vekter, SirNightKnight:
+  - rscadd: Adds support for it/its pronouns. You can select these in character preferences.
+  hexakats:
+  - qol: Moved the hypospray's draw function from a mode to right click
+  - bugfix: Fixed a runtime that happens when you try to draw from a container with
+      no vial in the hypospray
+  - bugfix: Contractor baton can harm with right click again when there's no cuff
+      upgrade (and a runtime fix when trying to harm baton)
+2026-07-11:
+  Barrel:
+  - qol: Darkspawns panopticon no longer needs power or an apc to use. You can now
+      jump to allies and placed void eyes.
+  - refactor: Refactored how cameras work based on tgstation.
+  - balance: sets body camera range to 7, same as cameras
+  Cujo:
+  - rscadd: Mute and Fluffy Tongue are now incompatible quirks
+  - rscdel: Removes the duplicate shower drain from Tramstation Medical for real this
+      time
+  JohnFulpWillard:
+  - bugfix: AIs can double click on a tile to TP to that tile again.
+  - bugfix: Fixes AI's custom portrait icons.
+  - bugfix: Removed negative AI CPU speed/power values from the overclocking workstation
+      computer. Also made the UI a little bit better.
+  Runian:
+  - balance: Hyperkinetic Dampening Projector now only consumes power when a projectile
+      initially becomes dampened.
+  - balance: Hyperkinetic Dampening Projector's power consumption is now 0.15kW per
+      projectile damage.
+  - bugfix: Projectile dampers no longer speeds up projectiles when it should of slowed
+      them down instead.
+  Shoddd:
+  - bugfix: unclonable neurons quirk now tied to mind
+  SirNightKnight:
+  - rscadd: added a dozen mints to the snack vendor contraband section.
+  siliconOpossum, MrMelbert, ghost, SirNightKnight:
+  - qol: Neckties are now worn underneath suit items and accessories, they can still
+      be optionally worn over them in case you want the "business space suit" look.
+  - qol: made Balaclavas layer below glasses and radios
+  - bugfix: split bandage layering so it layers better with back slot items.
+2026-07-12:
+  CheffieGithub:
+  - bugfix: Added protections against negative lootboxes, work to pay off your debt!
+  Cujo:
+  - rscadd: Adds the security hi vis jacket to the loadout menu
+  - qol: Updated the cryo message to reflect that it does not permanently remove you
+      from the round, and gives a hint on how to emerge from cryo.
+  - rscdel: Removes anime virus
+  - balance: Slasher sighting now requires a minimum of 20 pop to roll
+  - bugfix: Dummy thicc quirk sounds now properly check prude mode settings.
+  EnterTheJake:
+  - spellcheck: Description on how the moon robes function is a bit more clear.
+  JohnFulpWillard:
+  - rscadd: pAIs now have Emojipedia.
+  - bugfix: AIs no longer lose all assigned CPU & ram when shunting between data cores
+      (or between station z-levels)
+  - bugfix: Fixes AI mechs (again)
+  - bugfix: '[MetaStation] Fixes AI cooling'
+  - bugfix: '[BoxStation] Fixes Network Admin office being behind general telecomms
+      access instead of Telecomms Admin access.'
+  - rscadd: Added a better Emojipedia UI.
+  Mantlecrawler:
+  - bugfix: Smithed weapons can now fit into dimensional gloves
+  SirNightKnight:
+  - balance: changed the required pop for heretics to 45 (used to be 25).
+  - rscadd: added lead to the emagged chem dispenser list.
+  hexakats:
+  - balance: Foam dart guns no longer have recoil.
+  notghosti:
+  - qol: Borers who are in hosts and have learnt the head focus also receive true
+      night vision and flash immunity.
+  - bugfix: willing host mood buff now is capitalized. sorry
+  - map: Tramstation RD Server room now has R-walls sealing it again
+  - balance: Replaces the atmospherics arm toolset with Advanced fire extinguisher,
+      ranged gas analyzer, and cyborg crowbar from their normal versions

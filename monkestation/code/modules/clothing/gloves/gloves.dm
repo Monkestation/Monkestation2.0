@@ -91,6 +91,7 @@
 			/obj/item/throwing_star,
 			/obj/item/shield,
 			/obj/item/spear,
+			/obj/item/smithed_part/weapon_part,
 			/obj/item/dualsaber,
 			/obj/item/fireaxe,
 			/obj/item/flamethrower,
@@ -103,6 +104,11 @@
 			/obj/item/switchblade,
 			/obj/item/cane,
 			/obj/item/highfrequencyblade,
+			/obj/item/kinetic_crusher,
+			/obj/item/resonator,
+			/obj/item/pickaxe,
+			/obj/item/shovel,
+			/obj/item/trench_tool,
 		),
 		cant_hold_list = list(
 			/obj/item/gun/magic, // no magic
