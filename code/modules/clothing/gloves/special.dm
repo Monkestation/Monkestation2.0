@@ -103,7 +103,7 @@
 	greyscale_colors = null
 	siemens_coefficient = 0.3
 	armor_type = /datum/armor/latex_gloves
-	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_FINGERPRINT_PASSTHROUGH, TRAIT_STERILE)
+	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_STERILE)
 	resistance_flags = NONE
 
 /datum/armor/latex_gloves
