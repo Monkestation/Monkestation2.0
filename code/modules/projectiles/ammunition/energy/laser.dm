@@ -9,7 +9,7 @@
 	projectile_type = /obj/projectile/beam/laser/hitscan
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 	firing_effect_type = null
-	delay = 1 SECOND
+	delay = 1 SECONDS
 
 /obj/item/ammo_casing/energy/laser/hellfire
 	projectile_type = /obj/projectile/beam/laser/hellfire
