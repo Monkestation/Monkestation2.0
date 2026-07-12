@@ -131,9 +131,9 @@
 #define SPECIES_ZOMBIE_SHAMBLER "shambler"
 #define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
 #define SPECIES_ZOMBIE_INFECTIOUS_RUNNER "runnerzombie"
-#define SPECIES_ZOMBIE_INFECTIOUS_TANK "tankzombie" //monkestation edit
-#define SPECIES_ZOMBIE_INFECTIOUS_SPITTER "spitterzombie" //monkestation edit
-#define SPECIES_ZOMBIE_INFECTIOUS_BLOATER "bloaterzombie" //monkestation edit
+#define SPECIES_ZOMBIE_INFECTIOUS_TANK "tankzombie"
+#define SPECIES_ZOMBIE_INFECTIOUS_SPITTER "spitterzombie"
+#define SPECIES_ZOMBIE_INFECTIOUS_BLOATER "bloaterzombie"
 #define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
 #define SPECIES_OOZELING "oozeling"
 #define SPECIES_IPC "ipc"
