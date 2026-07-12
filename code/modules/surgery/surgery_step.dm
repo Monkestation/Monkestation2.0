@@ -107,7 +107,7 @@
 	var/slowdown_time = time * SURGERY_SLOWDOWN_CAP_MULTIPLIER
 	var/obj/item/clothing/gloves/latex/gloves = user.get_item_by_slot(ITEM_SLOT_GLOVES)
 
-	fail_prob = min(max(0, modded_time - slowdown_time), 99) //Puts a minimum of 0 and max of 99 here to prevent ghetto surgery causing there to be 99%+ chance of failure
+	fail_prob = min(max(0, modded_time - slowdown_time), 95) //Puts a minimum of 0 and max of 95 here to prevent ghetto surgery causing there to be 95%+ chance of failure
 	if(surgery.requires_bodypart_type == 1)//check if the limb is organic. Nonorganic limbs have no penalties
 		if(user == target)//If doing self surgery, apply a 50% penalty.
 			fail_prob += 50
