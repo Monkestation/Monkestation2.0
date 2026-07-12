@@ -281,7 +281,7 @@
 
 /// Trait granted by [/mob/living/silicon/robot].
 /// Traits applied to a silicon mob by their model.
-#define CYBORG_MODEL_TRAIT "model_trait"
+#define CYBORG_MODEL_TRAIT "cyborg_model_trait"
 
 /// Trait granted by [/mob/living/silicon/robot].
 /// Traits applied to a silicon mob by their skin.
