@@ -375,7 +375,7 @@
 	mood_change = 2
 
 /datum/mood_event/has_borer
-	description = "i feel content, the melody completes me."
+	description = "I feel content, the melody completes me."
 	mood_change = 5
 
 /datum/mood_event/thrall_darkspawn

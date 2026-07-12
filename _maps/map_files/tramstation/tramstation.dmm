@@ -10458,13 +10458,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningfoundry)
-"cgo" = (
-/obj/effect/turf_decal/box,
-/obj/machinery/shower/directional/east,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/drain,
-/turf/open/floor/iron/white,
-/area/station/medical/treatment_center)
 "cgy" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
@@ -11050,6 +11043,14 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lab)
+"crk" = (
+/obj/machinery/door/airlock/command/corporate{
+	name = "Blueshield's Quarters"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
+/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
+/turf/open/floor/carpet/neon/simple/blue/nodots,
+/area/station/command/heads_quarters/blueshield)
 "crz" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -13231,19 +13232,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
-"ddT" = (
-/obj/machinery/door/airlock/command/corporate{
-	id_tag = "Repdoor";
-	name = "Representative's Office"
-	},
-/obj/structure/cable,
-/obj/effect/landmark/navigate_destination,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
-/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
-/turf/open/floor/wood,
-/area/station/command/heads_quarters/nt_rep)
 "ddV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/closet_empty/crate,
@@ -24413,6 +24401,19 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood/parquet,
 /area/station/service/library)
+"gCT" = (
+/obj/machinery/door/airlock/command/corporate{
+	id_tag = "Repdoor";
+	name = "Representative's Office"
+	},
+/obj/structure/cable,
+/obj/effect/landmark/navigate_destination,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
+/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/nt_rep)
 "gCY" = (
 /obj/structure/railing{
 	dir = 1
@@ -26751,6 +26752,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"hpp" = (
+/obj/effect/turf_decal/box,
+/obj/machinery/shower/directional/east,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/drain,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
 "hpE" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -60329,6 +60337,19 @@
 /obj/structure/plasticflaps,
 /turf/open/floor/plating,
 /area/station/cargo/storage)
+"rIy" = (
+/obj/machinery/door/airlock/command/corporate{
+	id_tag = "BSdoor";
+	name = "Blueshield's Office"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/landmark/navigate_destination,
+/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
+/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
+/turf/open/floor/carpet/neon/simple/blue/nodots,
+/area/station/command/heads_quarters/blueshield)
 "rIC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -76050,14 +76071,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
-"wrc" = (
-/obj/machinery/door/airlock/command/corporate{
-	name = "Blueshield's Quarters"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
-/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
-/turf/open/floor/carpet/neon/simple/blue/nodots,
-/area/station/command/heads_quarters/blueshield)
 "wrf" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -78495,19 +78508,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
-"xgS" = (
-/obj/machinery/door/airlock/command/corporate{
-	id_tag = "BSdoor";
-	name = "Blueshield's Office"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/effect/landmark/navigate_destination,
-/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
-/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
-/turf/open/floor/carpet/neon/simple/blue/nodots,
-/area/station/command/heads_quarters/blueshield)
 "xhd" = (
 /obj/machinery/airalarm/directional/north,
 /obj/structure/rack,
@@ -99621,7 +99621,7 @@ rUR
 rUR
 rUR
 gnH
-ddT
+gCT
 bEz
 tpc
 lQM
@@ -101163,7 +101163,7 @@ rUR
 rUR
 rUR
 uzS
-xgS
+rIy
 pnp
 bJM
 lQM
@@ -101931,7 +101931,7 @@ kLz
 kLz
 lRF
 gfH
-wrc
+crk
 bML
 lyI
 iUN
@@ -179844,7 +179844,7 @@ xSZ
 aLd
 oIU
 aLA
-cgo
+hpp
 krE
 bvK
 eGn
@@ -191418,10 +191418,10 @@ dLO
 dLO
 dLO
 pMk
-lVi
-lVi
-lVi
-lVi
+soq
+soq
+soq
+soq
 lVi
 axE
 uJl

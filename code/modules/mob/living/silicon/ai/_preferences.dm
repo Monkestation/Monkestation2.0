@@ -133,6 +133,8 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 		return "ai-[LOWER_TEXT(input)]"
 
 /proc/resolve_ai_icon(input)
+	if(istype(input, /mutable_appearance))
+		return input
 	if (input == "Portrait")
 		var/datum/portrait_picker/tgui = new(usr)//create the datum
 		tgui.ui_interact(usr)//datum has a tgui component, here we open the window

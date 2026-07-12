@@ -259,3 +259,69 @@
       no vial in the hypospray
   - bugfix: Contractor baton can harm with right click again when there's no cuff
       upgrade (and a runtime fix when trying to harm baton)
+2026-07-11:
+  Barrel:
+  - qol: Darkspawns panopticon no longer needs power or an apc to use. You can now
+      jump to allies and placed void eyes.
+  - refactor: Refactored how cameras work based on tgstation.
+  - balance: sets body camera range to 7, same as cameras
+  Cujo:
+  - rscadd: Mute and Fluffy Tongue are now incompatible quirks
+  - rscdel: Removes the duplicate shower drain from Tramstation Medical for real this
+      time
+  JohnFulpWillard:
+  - bugfix: AIs can double click on a tile to TP to that tile again.
+  - bugfix: Fixes AI's custom portrait icons.
+  - bugfix: Removed negative AI CPU speed/power values from the overclocking workstation
+      computer. Also made the UI a little bit better.
+  Runian:
+  - balance: Hyperkinetic Dampening Projector now only consumes power when a projectile
+      initially becomes dampened.
+  - balance: Hyperkinetic Dampening Projector's power consumption is now 0.15kW per
+      projectile damage.
+  - bugfix: Projectile dampers no longer speeds up projectiles when it should of slowed
+      them down instead.
+  Shoddd:
+  - bugfix: unclonable neurons quirk now tied to mind
+  SirNightKnight:
+  - rscadd: added a dozen mints to the snack vendor contraband section.
+  siliconOpossum, MrMelbert, ghost, SirNightKnight:
+  - qol: Neckties are now worn underneath suit items and accessories, they can still
+      be optionally worn over them in case you want the "business space suit" look.
+  - qol: made Balaclavas layer below glasses and radios
+  - bugfix: split bandage layering so it layers better with back slot items.
+2026-07-12:
+  CheffieGithub:
+  - bugfix: Added protections against negative lootboxes, work to pay off your debt!
+  Cujo:
+  - rscadd: Adds the security hi vis jacket to the loadout menu
+  - qol: Updated the cryo message to reflect that it does not permanently remove you
+      from the round, and gives a hint on how to emerge from cryo.
+  - rscdel: Removes anime virus
+  - balance: Slasher sighting now requires a minimum of 20 pop to roll
+  - bugfix: Dummy thicc quirk sounds now properly check prude mode settings.
+  EnterTheJake:
+  - spellcheck: Description on how the moon robes function is a bit more clear.
+  JohnFulpWillard:
+  - rscadd: pAIs now have Emojipedia.
+  - bugfix: AIs no longer lose all assigned CPU & ram when shunting between data cores
+      (or between station z-levels)
+  - bugfix: Fixes AI mechs (again)
+  - bugfix: '[MetaStation] Fixes AI cooling'
+  - bugfix: '[BoxStation] Fixes Network Admin office being behind general telecomms
+      access instead of Telecomms Admin access.'
+  - rscadd: Added a better Emojipedia UI.
+  Mantlecrawler:
+  - bugfix: Smithed weapons can now fit into dimensional gloves
+  SirNightKnight:
+  - balance: changed the required pop for heretics to 45 (used to be 25).
+  - rscadd: added lead to the emagged chem dispenser list.
+  hexakats:
+  - balance: Foam dart guns no longer have recoil.
+  notghosti:
+  - qol: Borers who are in hosts and have learnt the head focus also receive true
+      night vision and flash immunity.
+  - bugfix: willing host mood buff now is capitalized. sorry
+  - map: Tramstation RD Server room now has R-walls sealing it again
+  - balance: Replaces the atmospherics arm toolset with Advanced fire extinguisher,
+      ranged gas analyzer, and cyborg crowbar from their normal versions

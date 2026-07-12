@@ -692,6 +692,12 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY, JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
 	requires_purchase = FALSE
 
+/datum/loadout_item/suit/security_jacket_hi_vis
+	name = "Security Hi-Vis Jacket"
+	item_path = /obj/item/clothing/suit/armor/vest/secjacket
+	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY, JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
+	requires_purchase = FALSE
+
 /datum/loadout_item/suit/british_jacket
 	name = "Peacekeeper Officer Coat"
 	item_path = /obj/item/clothing/suit/british_officer

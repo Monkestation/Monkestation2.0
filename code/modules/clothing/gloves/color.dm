@@ -65,6 +65,7 @@
 			/obj/item/pickaxe,
 			/obj/item/shovel,
 			/obj/item/trench_tool,
+			/obj/item/smithed_part/weapon_part,
 		),
 		cant_hold_list = list(
 			/obj/item/gun/magic, // no magic

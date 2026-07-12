@@ -1,5 +1,4 @@
 #define PKBORG_DAMPEN_CYCLE_DELAY (2 SECONDS)
-#define POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER (0.4 KILO WATTS)
 
 /obj/item/cautery/prt //it's a subtype of cauteries so that it inherits the cautery sprites and behavior and stuff, because I'm too lazy to make sprites for this thing
 	name = "plating repair tool"
@@ -14,156 +13,101 @@
 
 //Peacekeeper Cyborg Projectile Dampenening Field
 /obj/item/borg/projectile_dampen
-	name = "\improper Hyperkinetic Dampening projector"
+	name = "\improper hyperkinetic dampening projector"
 	desc = "A device that projects a dampening field that weakens kinetic energy above a certain threshold. <span class='boldnotice'>Projects a field that drains power per second while active, that will weaken and slow damaging projectiles inside its field.</span> Still being a prototype, it tends to induce a charge on ungrounded metallic surfaces."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "shield0"
 	base_icon_state = "shield"
-	/// Max energy this dampener can hold
-	var/maxenergy = 1500
-	/// Current energy level
-	var/energy = 1500
-	/// Recharging rate in energy per second
-	var/energy_recharge = 37.5
-	/// Critical power level percentage
-	var/cyborg_cell_critical_percentage = 0.05
-	/// The owner of the dampener
-	var/mob/living/silicon/robot/host = null
-	/// The field
+	/// The cyborg who is actively using us.
+	var/mob/living/silicon/robot/active_cyborg = null
+	/// The dampening field that we're projecting around us.
 	var/datum/proximity_monitor/advanced/bubble/projectile_dampener/peaceborg/dampening_field
-	/// Energy cost per tracked projectile damage amount per second
-	var/projectile_damage_tick_ecost_coefficient = 10
-	/**
-	 * Speed coefficient
-	 * Higher the coefficient faster the projectile.
-	*/
-	var/projectile_speed_coefficient = 0.66
-	/// Energy cost per tracked projectile per second
-	var/projectile_tick_speed_ecost = 75
-	/// Projectiles dampened by our dampener
-	var/list/tracked_bullet_cost = list()
-	/// the radius of our field
+	/// The radius of our dampening field.
 	var/field_radius = 3
-	var/active = FALSE
-	/// activation cooldown
+	/// The energy cost per projectile damage whenever a projectile enters the dampening field.
+	var/cost_per_projectile_damage = 0.15 KILO WATTS
+	/// When the active cyborg's cell drops below this percentage, it will automatically turn off.
+	var/cyborg_cell_critical_percentage = 0.1
+	/// The activation cooldown.
 	COOLDOWN_DECLARE(cycle_cooldown)
 
-/obj/item/borg/projectile_dampen/debug
-	maxenergy = 50000
-	energy = 50000
-	energy_recharge = 5000
-
-/obj/item/borg/projectile_dampen/Initialize(mapload)
-	START_PROCESSING(SSfastprocess, src)
-	host = loc
-	RegisterSignal(host, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+/obj/item/borg/projectile_dampen/Destroy()
+	deactivate_field()
 	return ..()
 
-/obj/item/borg/projectile_dampen/proc/on_death(datum/source, gibbed)
-	SIGNAL_HANDLER
-
-	deactivate_field()
-
-/obj/item/borg/projectile_dampen/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
+/obj/item/borg/projectile_dampen/update_icon_state()
+	icon_state = "[base_icon_state][active_cyborg ? TRUE : FALSE]"
 	return ..()
 
 /obj/item/borg/projectile_dampen/attack_self(mob/user)
-	if (!COOLDOWN_FINISHED(src, cycle_cooldown))
+	if(!iscyborg(user))
+		to_chat(user, span_notice("This device doesn't seem to work for non-cyborgs."))
+		return
+	if(!COOLDOWN_FINISHED(src, cycle_cooldown))
 		to_chat(user, span_boldwarning("[src] is still recycling its projectors!"))
 		return
 	COOLDOWN_START(src, cycle_cooldown, PKBORG_DAMPEN_CYCLE_DELAY)
-	if(!active)
-		if(!user.has_buckled_mobs())
-			activate_field()
-		else
-			to_chat(user, span_warning("[src]'s safety cutoff prevents you from activating it due to living beings being ontop of you!"))
-	else
-		deactivate_field()
-	update_appearance()
-	to_chat(user, span_boldnotice("You [active ? "activate":"deactivate"] [src]."))
-
-/obj/item/borg/projectile_dampen/update_icon_state()
-	icon_state = "[base_icon_state][active]"
-	return ..()
-
-/obj/item/borg/projectile_dampen/proc/activate_field()
-	if(istype(dampening_field))
-		QDEL_NULL(dampening_field)
-	var/mob/living/silicon/robot/owner = get_host()
-	dampening_field = new(owner, field_radius, TRUE, src, /datum/dampener_projectile_effects/peacekeeper)
-	RegisterSignal(dampening_field, COMSIG_DAMPENER_CAPTURE, PROC_REF(dampen_projectile))
-	RegisterSignal(dampening_field, COMSIG_DAMPENER_RELEASE, PROC_REF(restore_projectile))
-	owner?.model.allow_riding = FALSE
-	active = TRUE
-
-/obj/item/borg/projectile_dampen/proc/deactivate_field()
-	QDEL_NULL(dampening_field)
-	visible_message(span_warning("\The [src] shuts off!"))
-	tracked_bullet_cost.Cut()
-	active = FALSE
-
-	var/mob/living/silicon/robot/owner = get_host()
-	if(owner)
-		owner.model.allow_riding = TRUE
-
-/obj/item/borg/projectile_dampen/proc/get_host()
-	if(istype(host))
-		return host
-	else
-		if(iscyborg(host.loc))
-			return host.loc
-	return null
-
-/obj/item/borg/projectile_dampen/dropped()
-	host = loc
-	return ..()
-
-/obj/item/borg/projectile_dampen/equipped()
-	host = loc
-	return ..()
+	if(active_cyborg)
+		to_chat(user, span_boldnotice("You deactivate [src]."))
+		deactivate_field(FALSE)
+		return
+	if(user.has_buckled_mobs())
+		to_chat(user, span_warning("[src]'s safety cutoff prevents you from activating it due to living beings being ontop of you!"))
+		return
+	var/mob/living/silicon/robot/cyborg_user = user
+	if(!cyborg_user.cell)
+		to_chat(cyborg_user, span_warning("You need a cell to activate this!"))
+		return
+	var/charge_requirement = cyborg_user.cell.maxcharge * cyborg_cell_critical_percentage
+	if(cyborg_user.cell.charge < charge_requirement)
+		to_chat(cyborg_user, span_warning("You cell needs [display_energy(charge_requirement)] to activate this!"))
+		return
+	to_chat(cyborg_user, span_boldnotice("You activate [src]."))
+	activate_field(cyborg_user)
 
 /obj/item/borg/projectile_dampen/cyborg_unequip(mob/user)
+	if(!active_cyborg)
+		return
+	deactivate_field(FALSE)
+
+/// Activates the item.
+/obj/item/borg/projectile_dampen/proc/activate_field(mob/living/silicon/robot/cyborg_user)
 	deactivate_field()
-	return ..()
+	active_cyborg = cyborg_user
+	active_cyborg.model.allow_riding = FALSE
+	dampening_field = new(active_cyborg, field_radius, TRUE, src, /datum/dampener_projectile_effects/peacekeeper)
+	RegisterSignal(active_cyborg, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+	RegisterSignal(dampening_field, COMSIG_DAMPENER_CAPTURE, PROC_REF(on_projectile_capture))
+	update_appearance()
 
-/obj/item/borg/projectile_dampen/process(seconds_per_tick)
-	process_recharge(seconds_per_tick)
-	process_usage(seconds_per_tick)
+/// Deactivates the item.
+/obj/item/borg/projectile_dampen/proc/deactivate_field(silent = TRUE)
+	if(!QDELETED(dampening_field))
+		qdel(dampening_field)
+	dampening_field = null
+	if(!QDELETED(active_cyborg))
+		active_cyborg.model.allow_riding = TRUE
+		UnregisterSignal(active_cyborg, COMSIG_LIVING_DEATH)
+	active_cyborg = null
+	if(!silent)
+		visible_message(span_warning("\The [src] shuts off!"))
+	update_appearance()
 
-/obj/item/borg/projectile_dampen/proc/process_usage(seconds_per_tick)
-	var/usage = 0
-	for(var/projectile in tracked_bullet_cost)
-		usage += projectile_tick_speed_ecost * seconds_per_tick
-		usage += tracked_bullet_cost[projectile] * projectile_damage_tick_ecost_coefficient * seconds_per_tick
-	energy = clamp(energy - usage, 0, maxenergy)
-	if(energy <= 0 && active)
-		deactivate_field()
+/// Called when our active cyborg died.
+/obj/item/borg/projectile_dampen/proc/on_death(datum/source, gibbed)
+	SIGNAL_HANDLER
+	deactivate_field()
+
+/// Called when a projectile enters our dampening field.
+/obj/item/borg/projectile_dampen/proc/on_projectile_capture(datum/source, obj/projectile/projectile)
+	SIGNAL_HANDLER
+	if(!projectile.is_hostile_projectile())
+		return
+	if(!active_cyborg.cell || !active_cyborg.cell.use(projectile.damage * cost_per_projectile_damage) || (active_cyborg.cell.charge < (active_cyborg.cell.maxcharge * cyborg_cell_critical_percentage)))
 		visible_message(span_warning("[src] blinks \"ENERGY DEPLETED\"."))
-
-/obj/item/borg/projectile_dampen/proc/process_recharge(seconds_per_tick)
-	if(!istype(host))
-		if(iscyborg(host.loc))
-			host = host.loc
-		else
-			energy = clamp(energy + energy_recharge * seconds_per_tick, 0, maxenergy)
-			return
-	if(host.cell && (host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
-		host.cell.use(energy_recharge * seconds_per_tick * POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER)
-		energy += energy_recharge * seconds_per_tick
-
-/obj/item/borg/projectile_dampen/proc/dampen_projectile(datum/source, obj/projectile/projectile)
-	SIGNAL_HANDLER
-
-	if(projectile.is_hostile_projectile())
-		tracked_bullet_cost[REF(projectile)] = projectile.damage
-
-/obj/item/borg/projectile_dampen/proc/restore_projectile(datum/source, obj/projectile/projectile)
-	SIGNAL_HANDLER
-	tracked_bullet_cost -= REF(projectile)
+		deactivate_field()
 
 #undef PKBORG_DAMPEN_CYCLE_DELAY
-#undef POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER
 
 // Bare minimum omni-toolset for modularity.
 /obj/item/borg/cyborg_omnitool
