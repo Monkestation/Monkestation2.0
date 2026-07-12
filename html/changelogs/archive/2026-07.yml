@@ -290,3 +290,38 @@
       be optionally worn over them in case you want the "business space suit" look.
   - qol: made Balaclavas layer below glasses and radios
   - bugfix: split bandage layering so it layers better with back slot items.
+2026-07-12:
+  CheffieGithub:
+  - bugfix: Added protections against negative lootboxes, work to pay off your debt!
+  Cujo:
+  - rscadd: Adds the security hi vis jacket to the loadout menu
+  - qol: Updated the cryo message to reflect that it does not permanently remove you
+      from the round, and gives a hint on how to emerge from cryo.
+  - rscdel: Removes anime virus
+  - balance: Slasher sighting now requires a minimum of 20 pop to roll
+  - bugfix: Dummy thicc quirk sounds now properly check prude mode settings.
+  EnterTheJake:
+  - spellcheck: Description on how the moon robes function is a bit more clear.
+  JohnFulpWillard:
+  - rscadd: pAIs now have Emojipedia.
+  - bugfix: AIs no longer lose all assigned CPU & ram when shunting between data cores
+      (or between station z-levels)
+  - bugfix: Fixes AI mechs (again)
+  - bugfix: '[MetaStation] Fixes AI cooling'
+  - bugfix: '[BoxStation] Fixes Network Admin office being behind general telecomms
+      access instead of Telecomms Admin access.'
+  - rscadd: Added a better Emojipedia UI.
+  Mantlecrawler:
+  - bugfix: Smithed weapons can now fit into dimensional gloves
+  SirNightKnight:
+  - balance: changed the required pop for heretics to 45 (used to be 25).
+  - rscadd: added lead to the emagged chem dispenser list.
+  hexakats:
+  - balance: Foam dart guns no longer have recoil.
+  notghosti:
+  - qol: Borers who are in hosts and have learnt the head focus also receive true
+      night vision and flash immunity.
+  - bugfix: willing host mood buff now is capitalized. sorry
+  - map: Tramstation RD Server room now has R-walls sealing it again
+  - balance: Replaces the atmospherics arm toolset with Advanced fire extinguisher,
+      ranged gas analyzer, and cyborg crowbar from their normal versions

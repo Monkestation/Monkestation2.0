@@ -1,4 +1,0 @@
-author: "Cujo"
-delete-after: True
-changes:
-  - qol: "Updated the cryo message to reflect that it does not permanently remove you from the round, and gives a hint on how to emerge from cryo."
