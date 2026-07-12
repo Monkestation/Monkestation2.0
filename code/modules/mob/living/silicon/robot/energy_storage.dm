@@ -51,31 +51,31 @@
 	mat_type = /datum/material/glass
 
 /datum/robot_energy_storage/wire
+	name = "Wire Synthesizer"
 	max_energy = 50
 	recharge_rate = 2
-	name = "Wire Synthesizer"
 
 /datum/robot_energy_storage/medical
+	name = "Medical Synthesizer"
 	max_energy = 2500
 	recharge_rate = 250
-	name = "Medical Synthesizer"
 
 /datum/robot_energy_storage/beacon
+	name = "Marker Beacon Storage"
 	max_energy = 30
 	recharge_rate = 1
-	name = "Marker Beacon Storage"
 
 /datum/robot_energy_storage/pipe_cleaner
+	name = "Pipe Cleaner Synthesizer"
 	max_energy = 50
 	recharge_rate = 2
-	name = "Pipe Cleaner Synthesizer"
 
 /datum/robot_energy_storage/package_wrap
-	name ="package wrapper synthetizer"
+	name = "Package Wrapper Synthetizer"
 	max_energy = 25
 	recharge_rate = 2
 
 /datum/robot_energy_storage/wrapping_paper
-	name ="wrapping paper synthetizer"
+	name = "Wrapping Paper Synthetizer"
 	max_energy = 25
 	recharge_rate = 2
