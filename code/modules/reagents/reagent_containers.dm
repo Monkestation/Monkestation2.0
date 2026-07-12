@@ -10,8 +10,6 @@
 	var/has_variable_transfer_amount = TRUE
 	/// The different possible amounts of reagent to transfer out of the container
 	var/list/possible_transfer_amounts = list(5,10,15,20,25,30)
-	/// Where we are in the possible transfer amount list. Number should match the position in possible_transfer_amounts corresponding to amount_per_transfer_from_this.
-	var/amount_list_position = 1
 	/// The maximum amount of reagents this container can hold
 	var/volume = 30
 	/// Reagent flags, a few examples being if the container is open or not, if its transparent, if you can inject stuff in and out of the container, and so on
