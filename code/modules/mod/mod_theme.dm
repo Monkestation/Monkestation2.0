@@ -1009,8 +1009,8 @@
 	inbuilt_modules = list(
 		/obj/item/mod/module/welding/syndicate,
 		/obj/item/mod/module/night,
-		/obj/item/mod/module/hearing_protection
-		/obj/item/mod/module/quick_cuff,
+		/obj/item/mod/module/hearing_protection,
+		/obj/item/mod/module/quick_cuff
 	)
 	allowed_suit_storage = list(
 		/obj/item/ammo_box,

@@ -12,6 +12,7 @@
 	default_skin = "contractor"
 	armor_type = /datum/armor/mod_contractor_armor
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
+	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
