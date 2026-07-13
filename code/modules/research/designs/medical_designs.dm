@@ -480,7 +480,7 @@
 	name = "Chemical Canister"
 	id = "chemcanister"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/reagent_containers/cup/chemcanister
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -492,7 +492,7 @@
 	name = "Large Chemical Canister"
 	id = "chemcanister_large"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/reagent_containers/cup/chemcanister/large
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -505,7 +505,7 @@
 	desc = "A chemical canister powered by experimental bluespace technology capable of holding 100 units."
 	id = "chemcanister_bluespace"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/plasma = SMALL_MATERIAL_AMOUNT, /datum/material/diamond = SMALL_MATERIAL_AMOUNT, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma = SMALL_MATERIAL_AMOUNT, /datum/material/diamond = SMALL_MATERIAL_AMOUNT, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/reagent_containers/cup/chemcanister/bluespace
 	category = list(
 		RND_CATEGORY_INITIAL,
