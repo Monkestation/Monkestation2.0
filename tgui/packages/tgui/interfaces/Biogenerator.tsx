@@ -24,7 +24,7 @@ type Data = {
   categories: Category[];
   efficiency: number;
   max_output: number;
-  max_visual_biomass: number;
+  max_biomass: number;
   processing: BooleanLike;
   reagent_color: string;
 };
@@ -102,7 +102,7 @@ const Controls = () => {
     beakerMaxVolume,
     biomass,
     can_process,
-    max_visual_biomass,
+    max_biomass,
     processing,
     reagent_color,
   } = data;
@@ -129,7 +129,7 @@ const Controls = () => {
           <ProgressBar
             value={biomass}
             minValue={0}
-            maxValue={max_visual_biomass}
+            maxValue={max_biomass}
             color="good"
           >
             <Box

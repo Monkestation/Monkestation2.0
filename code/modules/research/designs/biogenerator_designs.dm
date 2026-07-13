@@ -242,14 +242,21 @@
 	build_path = /obj/item/rollingpaper
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_MATERIALS)
 
-/datum/design/strange_seeds
-	name = "Strange Seeds"
+/datum/design/lesser_strange_seeds
+	name = "Lesser Strange Seeds"
 	id = "strange_seeds"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass = 2000)
-	build_path = /obj/item/seeds/random
+	materials = list(/datum/material/biomass = 100)
+	build_path = /obj/item/seeds/random/lesser
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_MATERIALS)
 
+/datum/design/mouse_cube
+	name = "Mouse Cube"
+	id = "rcube" // R for Rat
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = SMALL_MATERIAL_AMOUNT * 0.4)
+	build_path = /obj/item/food/monkeycube/mouse
+	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
 /datum/design/saltpetre
 	name = "Saltpetre"
