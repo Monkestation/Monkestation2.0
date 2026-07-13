@@ -17660,9 +17660,7 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "drc" = (
-/obj/effect/turf_decal/delivery/red,
 /obj/structure/window/spawner/directional/north,
-/obj/structure/closet/secure_closet/tac,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "dri" = (
@@ -73976,12 +73974,6 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/test_chambers)
 "onv" = (
-/obj/structure/rack/shelf,
-/obj/effect/turf_decal/delivery/red,
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/head/helmet/toggleable/riot{
-	pixel_y = 6
-	},
 /obj/structure/sign/poster/official/carwo_grenade/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)

@@ -72,9 +72,6 @@
 	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
 
 	implants = list(/obj/item/implant/mindshield)
-	backpack_contents = list(
-		/obj/item/choice_beacon/blueshield = 1,
-	)
 	backpack = /obj/item/storage/backpack/blueshield
 	satchel = /obj/item/storage/backpack/satchel/blueshield
 	duffelbag = /obj/item/storage/backpack/duffelbag/blueshield

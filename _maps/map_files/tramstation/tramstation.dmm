@@ -28883,14 +28883,13 @@
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/right)
 "iay" = (
-/obj/structure/rack/shelf,
-/obj/item/clothing/head/helmet/toggleable/riot{
-	pixel_y = 6
-	},
-/obj/item/clothing/suit/armor/riot,
-/obj/effect/turf_decal/delivery/blue,
 /obj/machinery/camera/directional/south{
 	c_tag = "Command - Blueshield's Office"
+	},
+/obj/structure/table/reinforced,
+/obj/item/gun_maintenance_supplies{
+	pixel_x = -4;
+	pixel_y = 10
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
@@ -31932,12 +31931,16 @@
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/tram/right)
 "iUN" = (
-/obj/structure/table/reinforced,
-/obj/item/gun_maintenance_supplies{
-	pixel_x = -4;
-	pixel_y = 10
-	},
 /obj/machinery/light/directional/south,
+/obj/structure/table/reinforced,
+/obj/machinery/recharger{
+	pixel_y = 5;
+	pixel_x = 7
+	},
+/obj/machinery/recharger{
+	pixel_y = 5;
+	pixel_x = -6
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "iUY" = (
@@ -33700,15 +33703,6 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/eva)
 "jwR" = (
-/obj/structure/table/reinforced,
-/obj/machinery/recharger{
-	pixel_y = 5;
-	pixel_x = 7
-	},
-/obj/machinery/recharger{
-	pixel_y = 5;
-	pixel_x = -6
-	},
 /obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)

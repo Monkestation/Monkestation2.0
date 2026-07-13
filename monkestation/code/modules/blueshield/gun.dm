@@ -1,21 +1,3 @@
-//Weapon beacon
-/obj/item/choice_beacon/blueshield
-	name = "armament beacon"
-	desc = "A single use beacon to deliver a gunset of your choice. Please only call this in your office"
-	company_source = "Sol Defense Contracting"
-	company_message = span_bold("Supply Pod incoming, please stand by.")
-
-/obj/item/choice_beacon/blueshield/generate_display_names()
-	var/static/list/selectable_gun_types = list(
-		"Unmarked Takbok Revolver Gunset" = /obj/item/storage/toolbox/guncase/skyrat/pistol/trappiste_small_case/takbok/blueshield,
-		"Custom Hellfire Laser Rifle" = /obj/item/gun/energy/laser/hellgun/blueshield,
-		"Bogseo Submachinegun Gunset" = /obj/item/storage/toolbox/guncase/skyrat/xhihao_large_case/bogseo,
-		"Tech-9" = /obj/item/storage/toolbox/guncase/skyrat/pistol/tech_9,
-		"S.A.Y.A. Arm Defense System Cyberset" = /obj/item/storage/box/shield_blades,
-	)
-
-	return selectable_gun_types
-
 // Gunset for the custom Takbok Revolver
 /obj/item/storage/toolbox/guncase/skyrat/pistol/trappiste_small_case/takbok/blueshield
 	name = "Unmarked 'Takbok' gunset"

@@ -65268,7 +65268,6 @@
 /area/station/command/heads_quarters/captain/private)
 "wBt" = (
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/structure/closet/secure_closet/tac,
 /turf/open/floor/carpet/cyan,
 /area/station/command/heads_quarters/blueshield)
 "wBu" = (
