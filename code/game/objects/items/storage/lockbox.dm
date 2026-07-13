@@ -322,7 +322,7 @@
 	name = "vial box"
 	desc = "A small box that can hold up to six vials in a sealed enviroment."
 	w_class = WEIGHT_CLASS_NORMAL
-	icon_state = "vialbox"
+	icon_state = "vialbox2"
 	req_access = list(ACCESS_MEDICAL)
 	icon_locked = "vialbox2"
 	icon_closed = "vialbox1"
