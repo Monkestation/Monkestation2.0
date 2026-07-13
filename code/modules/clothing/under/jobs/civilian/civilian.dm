@@ -116,6 +116,8 @@
 /obj/item/clothing/under/rank/civilian/janitor
 	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."
 	name = "janitor's jumpsuit"
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'icons/mob/clothing/uniform.dmi'
 	icon_state = "janitor"
 	inhand_icon_state = "janitor"
 	armor_type = /datum/armor/civilian_janitor
@@ -126,6 +128,8 @@
 /obj/item/clothing/under/rank/civilian/janitor/skirt
 	name = "janitor's jumpskirt"
 	desc = "It's the official skirt of the station's janitor. It has minor protection from biohazards."
+	icon = 'icons/obj/clothing/under/civilian.dmi'
+	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
 	icon_state = "janitor_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT

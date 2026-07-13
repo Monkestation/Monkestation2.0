@@ -248,6 +248,13 @@
 	/// Does this use the advanced reskinning setup?
 	var/uses_advanced_reskins = FALSE
 
+	/// If specified, the pickup sound will use this mixer channel.
+	var/pickup_mixer_channel = CHANNEL_SOUND_EFFECTS
+	/// If specified, the drop sound will use this mixer channel.
+	var/drop_mixer_channel = CHANNEL_SOUND_EFFECTS
+	/// If specified, the equip sound will use this mixer channel.
+	var/equip_mixer_channel = CHANNEL_SOUND_EFFECTS
+
 /obj/item/Initialize(mapload)
 	if(attack_verb_continuous)
 		attack_verb_continuous = string_list(attack_verb_continuous)
@@ -1074,7 +1081,7 @@
 /obj/item/proc/apply_outline(outline_color = null)
 	if(((get(src, /mob) != usr) && !loc?.atom_storage && !(item_flags & IN_STORAGE)) || QDELETED(src) || isobserver(usr)) //cancel if the item isn't in an inventory, is being deleted, or if the person hovering is a ghost (so that people spectating you don't randomly make your items glow)
 		return FALSE
-	var/theme = lowertext(usr.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
+	var/theme = LOWER_TEXT(usr.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 	if(!outline_color) //if we weren't provided with a color, take the theme's color
 		switch(theme) //yeah it kinda has to be this way
 			if("midnight")
@@ -1698,3 +1705,11 @@
 		target_limb = victim.get_bodypart(target_limb) || victim.bodyparts[1]
 
 	return get_embed()?.embed_into(victim, target_limb)
+
+/obj/item/proc/adjust_weight_class(amt, min_weight = WEIGHT_CLASS_TINY, max_weight = WEIGHT_CLASS_GIGANTIC)
+	if(!amt || !isnum(amt))
+		stack_trace("Attempted to adjust weight class by an invalid value ([amt])")
+		return FALSE
+	var/old_w_class = w_class
+	w_class = clamp(w_class + amt, min_weight, max_weight)
+	return w_class != old_w_class

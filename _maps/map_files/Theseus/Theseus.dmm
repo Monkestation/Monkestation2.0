@@ -18890,23 +18890,6 @@
 	dir = 4
 	},
 /area/station/science/ordnance/office)
-"fGi" = (
-/obj/machinery/door/poddoor/preopen{
-	id = "Blueshield"
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate{
-	id_tag = "BSdoor";
-	name = "Blueshield's Office"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
-/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
-/turf/open/floor/wood,
-/area/station/command/heads_quarters/blueshield)
 "fGn" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -25088,6 +25071,23 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/upper)
+"hvW" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "Blueshield"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command/corporate{
+	id_tag = "BSdoor";
+	name = "Blueshield's Office"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
+/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/blueshield)
 "hwa" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
@@ -35313,6 +35313,16 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/processing)
+"ksx" = (
+/obj/machinery/newscaster/directional/north,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/obj/machinery/jukebox{
+	anchored = 0;
+	name = "jukebox on wheels"
+	},
+/turf/open/floor/plating,
+/area/station/service/kitchen/kitchen_backroom)
 "ksE" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -50980,16 +50990,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
-"oRK" = (
-/obj/machinery/newscaster/directional/north,
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
-/obj/machinery/jukebox{
-	anchored = 0;
-	name = "jukebox on wheels"
-	},
-/turf/open/floor/plating,
-/area/station/service/kitchen/kitchen_backroom)
 "oRS" = (
 /obj/effect/turf_decal/stripes{
 	dir = 4
@@ -74289,23 +74289,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
-"vxF" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/duct,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/corporate{
-	name = "Representative's Office"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
-/obj/effect/landmark/navigate_destination,
-/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
-/turf/open/floor/wood/parquet,
-/area/station/command/heads_quarters/nt_rep)
 "vxI" = (
 /obj/item/clothing/mask/breath{
 	pixel_x = 5;
@@ -77603,6 +77586,23 @@
 /obj/item/surgery_tray/deployed,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/office)
+"wyF" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/duct,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command/corporate{
+	name = "Representative's Office"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
+/obj/effect/landmark/navigate_destination,
+/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/nt_rep)
 "wyG" = (
 /obj/effect/turf_decal/tile/red/half{
 	dir = 8
@@ -104043,7 +104043,7 @@ gjY
 nEA
 mmV
 ozj
-fGi
+hvW
 aLM
 edr
 dwU
@@ -104551,7 +104551,7 @@ uGN
 hoZ
 eeO
 uGN
-vxF
+wyF
 uGN
 gjY
 gjY
@@ -125866,7 +125866,7 @@ jSe
 vlX
 nlh
 imF
-oRK
+ksx
 sOh
 dtJ
 xku

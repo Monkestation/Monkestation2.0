@@ -1859,6 +1859,9 @@
 	desc = "A card used to identify members of the green team for CTF"
 	icon_state = "ctf_green"
 
+/obj/item/card/id/advanced/bountyhunter
+	assigned_icon_state = "assigned_flame"
+
 #undef INTERN_THRESHOLD_FALLBACK_HOURS
 #undef ID_ICON_BORDERS
 #undef HOLOPAY_PROJECTION_INTERVAL

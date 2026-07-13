@@ -174,6 +174,11 @@
 
 	return blob_icon
 
+/datum/antagonist/blob/infection/apply_innate_effects(mob/mob_override)
+	. = ..()
+	var/mob/target = mob_override || owner.current
+	ADD_TRAIT(target, TRAIT_BLOB_ALLY, type)
+
 /atom/proc/can_blob_attack()
 	return !(HAS_TRAIT(src, TRAIT_MAGICALLY_PHASED))
 

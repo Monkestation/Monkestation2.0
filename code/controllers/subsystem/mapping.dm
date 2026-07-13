@@ -13,6 +13,8 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/ruins_templates = list()
 
+	var/list/shipbreaker_templates = list()
+
 	///List of ruins, separated by their theme
 	var/list/themed_ruins = list()
 
@@ -376,6 +378,7 @@ Used by the AI doomsday and the self-destruct nuke.
 	shuttle_templates = SSmapping.shuttle_templates
 	random_room_templates = SSmapping.random_room_templates
 	shelter_templates = SSmapping.shelter_templates
+	shipbreaker_templates = SSmapping.shipbreaker_templates
 	unused_turfs = SSmapping.unused_turfs
 	turf_reservations = SSmapping.turf_reservations
 	used_turfs = SSmapping.used_turfs
@@ -625,6 +628,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	preloadShuttleTemplates()
 	preloadShelterTemplates()
 	preloadHolodeckTemplates()
+	preloadShipbreakerTemplates()
 
 /datum/controller/subsystem/mapping/proc/LoadStationRoomTemplates()
 	for(var/item in (subtypesof(/datum/map_template/random_room) - typesof(/datum/map_template/random_room/random_bar) - typesof(/datum/map_template/random_room/random_engines)))
@@ -722,6 +726,15 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		var/datum/map_template/holodeck/holo_template = new holodeck_type()
 
 		holodeck_templates[holo_template.template_id] = holo_template
+
+/datum/controller/subsystem/mapping/proc/preloadShipbreakerTemplates()
+	for(var/item in subtypesof(/datum/map_template/shipbreaker))
+		var/datum/map_template/shipbreaker/shipbroken_type = item
+		if(!(initial(shipbroken_type.mappath)))
+			continue
+		var/datum/map_template/shipbreaker/S = new shipbroken_type()
+
+		shipbreaker_templates[S.template_id] = S
 
 ADMIN_VERB(load_away_mission, R_FUN, FALSE, "Load Away Mission", "Load a specific away mission for the station.", ADMIN_CATEGORY_EVENTS)
 	if(!GLOB.the_gateway)

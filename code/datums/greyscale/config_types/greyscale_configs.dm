@@ -713,7 +713,6 @@
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sundress_worn.json'
 
-//MONKESTATION ADDITION START
 /datum/greyscale_config/ballgown
 	name = "Ballgown"
 	icon_file = 'icons/obj/clothing/under/dress.dmi'
@@ -743,7 +742,6 @@
 	name = "Ribboned Gown"
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
 	json_config = 'code/datums/greyscale/json_configs/ribbondress_worn.json'
-//MONKESTATION ADDITION END
 
 /datum/greyscale_config/beanie
 	name = "Beanie"
@@ -867,7 +865,7 @@
 
 /datum/greyscale_config/buckets_cleanbot
 	name = "Buckets - Cleanbot"
-	icon_file = 'monkestation/code/modules/aesthetics/icons/cleanbot.dmi' //monkestation edit
+	icon_file = 'icons/mob/silicon/cleanbot.dmi'
 	json_config = 'code/datums/greyscale/json_configs/buckets_bot.json'
 
 /datum/greyscale_config/buttondown_slacks
@@ -1341,3 +1339,15 @@
 /datum/greyscale_config/rebellion_mask/worn
 	name = "Rebellion mask (Worn)"
 	icon_file = 'icons/mob/clothing/mask.dmi'
+
+/datum/greyscale_config/henchmen
+	name = "henchmen"
+	icon_file = 'icons/mob/clothing/costumes/henchmen/henchmen_item.dmi'
+	json_config = 'code/datums/greyscale/json_configs/henchmen.json'
+	expected_colors = 1
+
+/datum/greyscale_config/henchmen_worn
+	name = "henchmen_worn"
+	icon_file = 'icons/mob/clothing/costumes/henchmen/henchmen_worn.dmi'
+	json_config = 'code/datums/greyscale/json_configs/henchmen.json'
+	expected_colors = 1

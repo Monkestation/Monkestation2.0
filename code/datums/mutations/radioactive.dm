@@ -7,6 +7,7 @@
 	instability = 5
 	difficulty = 8
 	power_coeff = 1
+	synchronizer_coeff = 1
 	/// Weakref to our radiation emitter component
 	var/datum/weakref/radioactivity_source_ref
 
@@ -15,10 +16,15 @@
 	if(!(type in visual_indicators))
 		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "radiation", -MUTATIONS_LAYER))
 
-/* Moved to 'monkestation/code/datums/mutations/radioactive.dm'
 /datum/mutation/radioactive/get_visual_indicator()
+	if(GET_MUTATION_SYNCHRONIZER(src) < 1) // Stealth
+		return FALSE
 	return visual_indicators[type][1]
-*/
+
+/datum/mutation/radioactive/setup()
+	. = ..()
+	if(!QDELETED(owner))
+		make_radioactive(owner)
 
 /datum/mutation/radioactive/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
@@ -27,10 +33,9 @@
 	var/datum/component/radioactive_emitter/radioactivity_source = make_radioactive(acquirer)
 	radioactivity_source_ref = WEAKREF(radioactivity_source)
 
-/datum/mutation/radioactive/setup()
-	. = ..()
-	if(!QDELETED(owner))
-		make_radioactive(owner)
+/datum/mutation/radioactive/on_losing(mob/living/carbon/human/owner)
+	QDEL_NULL(radioactivity_source_ref)
+	return ..()
 
 /**
  * Makes the passed mob radioactive, or if they're already radioactive,
@@ -43,7 +48,3 @@
 		range = 1 * (GET_MUTATION_POWER(src) * 2), \
 		threshold = RAD_MEDIUM_INSULATION, \
 	)
-
-/datum/mutation/radioactive/on_losing(mob/living/carbon/human/owner)
-	QDEL_NULL(radioactivity_source_ref)
-	return ..()

@@ -132,7 +132,7 @@ monkestation edit end */
 	hands_use_check = TRUE
 	muzzle_ignore = TRUE
 	sound = 'sound/creatures/salute.ogg'
-	cooldown = 1 SECOND
+	cooldown = 1 SECONDS
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/shrug

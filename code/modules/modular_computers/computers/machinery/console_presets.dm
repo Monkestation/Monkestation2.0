@@ -112,7 +112,7 @@
 /obj/machinery/modular_computer/preset/cargochat/Initialize(mapload)
 	. = ..()
 	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_name("ntnrc_client")
-	chatprogram.username = "[lowertext(console_department)]_department"
+	chatprogram.username = "[LOWER_TEXT(console_department)]_department"
 	cpu.active_program = chatprogram
 
 /obj/machinery/modular_computer/preset/cargochat/service

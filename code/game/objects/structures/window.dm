@@ -36,6 +36,12 @@
 	///Datum that the shard and debris type is pulled from for when the glass is broken.
 	var/datum/material/glass_material_datum = /datum/material/glass
 
+	var/glass_color
+	var/glass_color_blend_to_color
+	var/glass_color_blend_to_ratio
+	///Do we use random coloration
+	var/uses_color = TRUE
+
 /datum/armor/structure_window
 	melee = 50
 	fire = 80
@@ -322,6 +328,14 @@
 			return FALSE
 	return TRUE
 
+/obj/structure/window/proc/change_color(new_color)
+	if(glass_color_blend_to_color && glass_color_blend_to_ratio)
+		glass_color = BlendRGB(new_color, glass_color_blend_to_color, glass_color_blend_to_ratio)
+	else
+		glass_color = new_color
+	if(fulltile)
+		color = glass_color
+	update_appearance()
 
 /obj/structure/window/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
@@ -671,7 +685,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 /* Full Tile Windows (more atom_integrity) */
 
 /obj/structure/window/fulltile
-	icon = 'icons/obj/smooth_structures/window.dmi'
+	icon = 'icons/obj/structures/window/window.dmi'
 	icon_state = "window-0"
 	base_icon_state = "window"
 	max_integrity = 100
@@ -680,7 +694,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	obj_flags = CAN_BE_HIT
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
-	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK +  SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
+	smooth_adapters = SMOOTH_ADAPTERS_WALLS
 	glass_amount = 2
 
 /obj/structure/window/fulltile/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -693,9 +708,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	anchored = FALSE
 
 /obj/structure/window/plasma/fulltile
-	icon = 'icons/obj/smooth_structures/plasma_window.dmi'
-	icon_state = "plasma_window-0"
-	base_icon_state = "plasma_window"
+	icon = 'icons/obj/structures/window/window.dmi'
+	icon_state = "window-0"
+	base_icon_state = "window"
 	max_integrity = 400
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
@@ -703,15 +718,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
+	smooth_adapters = SMOOTH_ADAPTERS_WALLS
+	glass_color_blend_to_color = "#8000ff"
+	glass_color_blend_to_ratio = 0.5
 	glass_amount = 2
 
 /obj/structure/window/plasma/fulltile/unanchored
 	anchored = FALSE
 
 /obj/structure/window/reinforced/plasma/fulltile
-	icon = 'icons/obj/smooth_structures/rplasma_window.dmi'
-	icon_state = "rplasma_window-0"
-	base_icon_state = "rplasma_window"
+	icon = 'icons/obj/structures/window/reinforced_window.dmi'
+	icon_state = "reinforced_window-0"
+	base_icon_state = "reinforced_window"
 	state = RWINDOW_SECURE
 	max_integrity = 1000
 	fulltile = TRUE
@@ -719,7 +737,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	obj_flags = CAN_BE_HIT
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
-	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
+	smooth_adapters = SMOOTH_ADAPTERS_WALLS
+	glass_color_blend_to_color = "#8000ff"
+	glass_color_blend_to_ratio = 0.5
 	glass_amount = 2
 
 /obj/structure/window/reinforced/plasma/fulltile/unanchored
@@ -727,7 +748,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	state = WINDOW_OUT_OF_FRAME
 
 /obj/structure/window/reinforced/fulltile
-	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
+	icon = 'icons/obj/structures/window/reinforced_window.dmi'
 	icon_state = "reinforced_window-0"
 	base_icon_state = "reinforced_window"
 	max_integrity = 150
@@ -737,7 +758,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	state = RWINDOW_SECURE
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
-	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
+	smooth_adapters = SMOOTH_ADAPTERS_WALLS
 	glass_amount = 2
 
 /obj/structure/window/reinforced/fulltile/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -770,6 +792,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	base_icon_state = "rice_window"
 	max_integrity = 150
 	glass_amount = 2
+	uses_color = FALSE
 
 //there is a sub shuttle window in survival_pod.dm for mining pods
 /obj/structure/window/reinforced/shuttle//this is called reinforced because it is reinforced w/titanium
@@ -796,6 +819,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	receive_ricochet_chance_mod = 1.2
 	rad_insulation = RAD_MEDIUM_INSULATION
 	glass_material_datum = /datum/material/alloy/titaniumglass
+	uses_color = FALSE
 
 /datum/armor/reinforced_shuttle
 	melee = 90
@@ -843,6 +867,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	glass_amount = 2
 	rad_insulation = RAD_EXTREME_INSULATION
 	glass_material_datum = /datum/material/alloy/plastitaniumglass
+	uses_color = FALSE
 
 /datum/armor/plasma_plastitanium
 	melee = 95
@@ -961,3 +986,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 
 /obj/structure/window/bronze/fulltile/unanchored
 	anchored = FALSE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/bronze/spawner, 0)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/bronze/unanchored/spawner, 0)

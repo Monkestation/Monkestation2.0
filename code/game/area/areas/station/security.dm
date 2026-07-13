@@ -223,3 +223,8 @@
 /area/station/security/prison/garden
 	name = "\improper Prison Garden"
 	icon_state = "prison_garden"
+
+/area/station/security/bitden
+	name = "Bitrunning Den"
+	desc = "Office of bitrunners, houses their equipment."
+	icon_state = "bit_den"

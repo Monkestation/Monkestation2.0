@@ -74,6 +74,13 @@
 	greyscale_config = /datum/greyscale_config/encryptionkey_security
 	greyscale_colors = "#820a16#280b1a"
 
+/obj/item/encryptionkey/headset_secmed
+	name = "brig physician radio encryption key"
+	icon_state = "cypherkey_security"
+	channels = list(RADIO_CHANNEL_SECURITY = 1, RADIO_CHANNEL_MEDICAL = 1)
+	greyscale_config = /datum/greyscale_config/encryptionkey_security
+	greyscale_colors = "#820a16#280b1a"
+
 /obj/item/encryptionkey/headset_eng
 	name = "engineering radio encryption key"
 	icon_state = "cypherkey_engineering"
@@ -180,9 +187,16 @@
 /obj/item/encryptionkey/heads/hop
 	name = "\proper the head of personnel's encryption key"
 	icon_state = "cypherkey_cube"
-	channels = list(RADIO_CHANNEL_SERVICE = 1, RADIO_CHANNEL_COMMAND = 1, RADIO_CHANNEL_SUPPLY = 1) //monkestation edit: QM is not a fucking head, HOP requires access on the supply circuit.
+	channels = list(RADIO_CHANNEL_SERVICE = 1, RADIO_CHANNEL_COMMAND = 1, RADIO_CHANNEL_SUPPLY = 1)
 	greyscale_config = /datum/greyscale_config/encryptionkey_cube
 	greyscale_colors = "#2b2793#c2c1c9"
+
+/obj/item/encryptionkey/heads/blueshield
+	name = "\proper the blueshield's encryption key"
+	icon_state = "cypherkey_centcom"
+	channels = list(RADIO_CHANNEL_COMMAND = 1, RADIO_CHANNEL_SECURITY = 1)
+	greyscale_config = /datum/greyscale_config/encryptionkey_centcom
+	greyscale_colors = "#1d2657#dca01b"
 
 /obj/item/encryptionkey/heads/qm
 	name = "\proper the quartermaster's encryption key"
@@ -220,7 +234,6 @@
 	greyscale_config = /datum/greyscale_config/encryptionkey_centcom
 	greyscale_colors = "#24a157#dca01b"
 
-//MONKESTATION EDIT
 /obj/item/encryptionkey/headset_cent/crew
 	desc = "An encryption key for a radio headset. It looks like there is a bluespace chip attached to it."
 
@@ -256,8 +269,6 @@
 		RADIO_CHANNEL_CENTCOM = 1,
 		RADIO_CHANNEL_SERVICE = 1,
 	)
-
-//MONKESTATION EDIT STOP
 
 /obj/item/encryptionkey/ai //ported from NT, this goes 'inside' the AI.
 	channels = list(
@@ -354,3 +365,7 @@
 	)
 	greyscale_config = null
 	greyscale_colors = null
+
+/obj/item/encryptionkey/headset_uncommon
+	name = "dusty encryption key"
+	channels = list(RADIO_CHANNEL_UNCOMMON = 1)

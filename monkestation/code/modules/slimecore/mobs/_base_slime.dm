@@ -1,11 +1,11 @@
 /mob/living/basic/slime
 	name = "grey baby slime (123)"
-	icon = 'monkestation/code/modules/slimecore/icons/slimes.dmi'
-	icon_state = "grey baby slime"
-	base_icon_state = "grey baby slime"
+	icon = 'icons/mob/basic/slime.dmi'
+	icon_state = "grey_baby_slime"
+	base_icon_state = "grey_baby_slime"
 
-	icon_living = "grey baby slime"
-	icon_dead = "grey baby slime dead"
+	icon_living = "grey_baby_slime"
+	icon_dead = "grey_baby_slime_dead"
 
 	maxHealth = 150
 	health = 150
@@ -268,11 +268,11 @@
 		prefix = current_color.icon_prefix
 
 	if(slime_flags & ADULT_SLIME)
-		icon_living = "[prefix] adult slime"
-		icon_dead = "[prefix] baby slime dead"
+		icon_living = "[prefix]_adult_slime"
+		icon_dead = "[prefix]_baby_slime_dead"
 	else
-		icon_living = "[prefix] baby slime"
-		icon_dead = "[prefix] baby slime dead"
+		icon_living = "[prefix]_baby_slime"
+		icon_dead = "[prefix]_baby_slime_dead"
 
 	if(stat == DEAD)
 		icon_state = icon_dead
@@ -422,7 +422,6 @@
 
 	slime_flags &= ~MUTATING_SLIME
 	ai_controller.reset_ai_status()
-
 
 /mob/living/basic/slime/proc/pick_mutation(random = FALSE)
 	mutating_into = null

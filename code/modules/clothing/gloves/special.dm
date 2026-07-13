@@ -109,6 +109,14 @@
 /datum/armor/latex_gloves
 	bio = 100
 
+/obj/item/clothing/gloves/latex/surgical
+	name = "black latex gloves"
+	desc = "Pricy sterile gloves that are thinner than latex. The lining allows for the person to operate \
+					quicker along with the faster use time of various chemical related items"
+	icon_state = "surgeonlatex"
+	clothing_traits = list(TRAIT_PERFECT_SURGEON, TRAIT_FASTMED)
+	custom_premium_price = PAYCHECK_CREW * 6
+
 /obj/item/clothing/gloves/latex/nitrile
 	name = "nitrile gloves"
 	desc = "Pricy sterile gloves that are thicker than latex. Excellent grip ensures very fast carrying of patients along with the faster use time of various chemical related items."
@@ -157,3 +165,32 @@
 	siemens_coefficient = 0.3
 	clothing_traits = list(TRAIT_QUICKER_CARRY)
 	clothing_flags = THICKMATERIAL
+
+/obj/item/clothing/gloves/crueltysquad_gloves
+	name = "CSIJ level I gloves"
+	desc = "Armor used by assassins working for Cruelty Squad, stripped of all of its functions for kids to play with."
+	icon_state = "crueltysquad_gloves"
+
+/obj/item/clothing/gloves/civilprotection_gloves
+	name = "civil protection gloves"
+	desc = "Armored gloves for beating anticitizens."
+	icon_state = "civilprotection_gloves"
+
+/obj/item/clothing/gloves/infinity_gloves
+	name = "infinity wristbands"
+	desc = "The bands are oddly moist... let's hope it's not blood."
+	icon_state = "infinity_wrist"
+
+/obj/item/clothing/gloves/infinity_gloves/equipped(mob/living/carbon/user, slot)
+	. = ..()
+	if(!ishuman(user))
+		return
+	if(slot == ITEM_SLOT_GLOVES)
+		var/obj/item/bodypart/user_active_arm = user.get_active_hand()
+		user_active_arm.unarmed_damage_low += 0.2
+		user_active_arm.unarmed_damage_high += 0.1
+
+/obj/item/clothing/gloves/admiral // Loadout version of the Abraxis Centcom Admiral gloves
+	name = "black gloves"
+	icon_state = "admiral"
+	alternate_worn_layer = ABOVE_SUIT_LAYER

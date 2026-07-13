@@ -357,7 +357,7 @@
 		result += completed_objectives_text
 		result += "<br>The traitor had a total of [DISPLAY_PROGRESSION(uplink_handler.progression_points)] Threat Level and [uplink_handler.telecrystals] Unused Telecrystals."
 //monkestation edit on previous line: replaced "Reputation" with "Threat Level"
-	var/special_role_text = lowertext(name)
+	var/special_role_text = LOWER_TEXT(name)
 
 //monkestation edit start
 	if(uplink_handler?.purchased_contractor_items)

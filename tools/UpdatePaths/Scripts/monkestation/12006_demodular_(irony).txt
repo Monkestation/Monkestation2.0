@@ -1,0 +1,9 @@
+/obj/machinery/door/airlock/security/old/@SUBTYPES : /obj/machinery/door/airlock/security/@SUBTYPES{@OLD}
+/obj/machinery/door/airlock/captain : /obj/machinery/door/airlock/command/captain{@OLD}
+/obj/machinery/door/airlock/hop : /obj/machinery/door/airlock/command/hop{@OLD}
+/obj/machinery/door/airlock/hos/@SUBTYPES : /obj/machinery/door/airlock/command/hos/@SUBTYPES{@OLD}
+/obj/machinery/door/airlock/ce/@SUBTYPES : /obj/machinery/door/airlock/command/ce/@SUBTYPES{@OLD}
+/obj/machinery/door/airlock/rd/@SUBTYPES : /obj/machinery/door/airlock/command/rd/@SUBTYPES{@OLD}
+/obj/machinery/door/airlock/qm/@SUBTYPES : /obj/machinery/door/airlock/command/qm/@SUBTYPES{@OLD}
+/obj/machinery/door/airlock/cmo/@SUBTYPES : /obj/machinery/door/airlock/command/cmo/@SUBTYPES{@OLD}
+/obj/machinery/door/airlock/corporate/@SUBTYPES : /obj/machinery/door/airlock/command/corporate/@SUBTYPES{@OLD}

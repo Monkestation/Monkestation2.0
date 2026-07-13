@@ -557,6 +557,31 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 	item_path = /obj/item/clothing/under/rank/medical/paramedic/deforest
 	item_cost = 3000
 
+/datum/store_item/under/jumpsuit/gnome_green
+	name = "Green Gnome Uniform"
+	item_path = /obj/item/clothing/under/gnome_green
+	item_cost = 1000
+
+/datum/store_item/under/jumpsuit/gnome_blue
+	name = "Blue Gnome Uniform"
+	item_path = /obj/item/clothing/under/gnome_blue
+	item_cost = 1000
+
+/datum/store_item/shoes/gnome_boots
+	name = "Leather Gnome Boots"
+	item_path = /obj/item/clothing/shoes/gnome_boots
+	item_cost = 1000
+
+/datum/store_item/head/gnome_hat
+	name = "Gnome Hat"
+	item_path = /obj/item/clothing/head/gnome_hat
+	item_cost = 2500
+
+/datum/store_item/head/gnome_hat_tall
+	name = "Tall Gnome Hat"
+	item_path = /obj/item/clothing/head/gnome_hat_tall
+	item_cost = 10000
+
 /datum/store_item/under/miscellaneous/vicvest //BUYABLE
 	name = "Recolorable Buttondown Shirt with Double-Breasted Vest"
 	item_path = /obj/item/clothing/under/pants/nova/vicvest

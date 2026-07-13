@@ -40,6 +40,9 @@ ADMIN_VERB(create_command_report, R_ADMIN, FALSE, "Create Command Report", "Crea
 	var/subheader = ""
 	/// A static list of preset names that can be chosen.
 	var/list/preset_names = list(CENTCOM_PRESET, SYNDICATE_PRESET, WIZARD_PRESET, CUSTOM_PRESET)
+	var/append_update_name = TRUE
+	var/sanitize_content = TRUE
+	var/custom_played_sound
 
 /datum/command_report_menu/New(mob/user)
 	ui_user = user
@@ -69,6 +72,8 @@ ADMIN_VERB(create_command_report, R_ADMIN, FALSE, "Create Command Report", "Crea
 	data["played_sound"] = played_sound
 	data["announcement_color"] = announcement_color
 	data["subheader"] = subheader
+	data["append_update_name"] = append_update_name
+	data["sanitize_content"] = sanitize_content
 
 	return data
 
@@ -128,6 +133,14 @@ ADMIN_VERB(create_command_report, R_ADMIN, FALSE, "Create Command Report", "Crea
 			command_report_content = params["report"]
 			var/is_preview = params["preview"] //monkestation edit - report previewing
 			send_announcement(is_preview) //monkestation edit - report previewing
+		if("toggle_update_append")
+			append_update_name = !append_update_name
+		if("toggle_sanitization")
+			sanitize_content = !sanitize_content
+		if("preview_sound")
+			preview_sound()
+		if("preview_paper_report")
+			preview_paper_report(params["report"])
 
 	return TRUE
 
@@ -183,6 +196,29 @@ ADMIN_VERB(create_command_report, R_ADMIN, FALSE, "Create Command Report", "Crea
 		log_admin("[key_name(ui_user)] has created a command report: \"[command_report_content]\", sent from \"[command_name]\" with the sound \"[played_sound]\".")
 		message_admins("[key_name_admin(ui_user)] has created a command report, sent from \"[command_name]\" with the sound \"[played_sound]\"")
 
+/datum/command_report_menu/proc/preview_paper_report(report)
+	var/obj/item/paper/report_paper = new /obj/item/paper(null)
+	report_paper.name = "paper - '[announce_contents ? "" : "Classified "][command_name] Update'"
+	report_paper.add_raw_text(report, advanced_html = !sanitize_content)
+	report_paper.ui_interact(ui_user)
+
+/datum/command_report_menu/proc/preview_sound()
+	var/volume_pref = ui_user.client.prefs.channel_volume["[CHANNEL_ANNOUNCEMENTS]"]
+	switch(played_sound)
+		if(DEFAULT_COMMANDREPORT_SOUND)
+			SEND_SOUND(ui_user, sound(SSstation.announcer.get_rand_report_sound(), volume = volume_pref))
+		if(DEFAULT_ALERT_SOUND)
+			SEND_SOUND(ui_user, sound(SSstation.announcer.get_rand_alert_sound(), volume = volume_pref))
+		if(CUSTOM_ALERT_SOUND)
+			if (isnull(custom_played_sound))
+				to_chat(ui_user, span_danger("There's no custom alert loaded! Cannot preview."))
+				return
+			SEND_SOUND(ui_user, sound(custom_played_sound, volume = volume_pref))
+		else
+			if(SSstation.announcer.event_sounds[played_sound])
+				SEND_SOUND(ui_user, sound(SSstation.announcer.event_sounds[played_sound], volume = volume_pref))
+			else
+				to_chat(ui_user, span_danger("No announcer sound available for [played_sound]"))
 
 #undef CENTCOM_PRESET
 #undef SYNDICATE_PRESET

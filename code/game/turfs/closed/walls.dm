@@ -11,6 +11,10 @@
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 62500 //a little over 5 cm thick , 62500 for 1 m by 2.5 m by 0.25 m iron wall. also indicates the temperature at wich the wall will melt (currently only able to melt with H/E pipes)
+	max_integrity = 300
+	damage_deflection = 22 // big chunk of solid metal
+	uses_integrity = TRUE
+	armor_type = /datum/armor/wall
 
 	baseturfs = /turf/open/floor/plating
 
@@ -18,9 +22,11 @@
 
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
-	canSmoothWith = SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
+	smooth_adapters = SMOOTH_ADAPTERS_WALLS_FOR_WALLS
 
 	rcd_memory = RCD_MEMORY_WALL
+
 	///bool on whether this wall can be chiselled into
 	var/can_engrave = TRUE
 	///lower numbers are harder. Used to determine the probability of a hulk smashing through.
@@ -35,11 +41,10 @@
 
 	var/list/dent_decals
 
-	//Monkestation edit start
-	max_integrity = 300
-	damage_deflection = 22 // big chunk of solid metal
-	uses_integrity = TRUE
-	armor_type = /datum/armor/wall
+	/// Wall trim icon file
+	var/wall_trim = 'icons/turf/walls/wall_trim.dmi'
+	/// Trim color
+	var/trim_color = null
 
 /datum/armor/wall
 	melee = 60
@@ -50,7 +55,63 @@
 	bio = 0
 	acid = 50
 	wound = 0
-//Monkestation edit end
+
+/turf/closed/wall/Initialize(mapload)
+	. = ..()
+	if(!can_engrave)
+		ADD_TRAIT(src, TRAIT_NOT_ENGRAVABLE, INNATE_TRAIT)
+	if(is_station_level(z))
+		GLOB.station_turfs += src
+	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS && fixed_underlay) //Set underlays for the diagonal walls.
+		var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, offset_spokesman = src, plane = FLOOR_PLANE)
+		if(fixed_underlay["space"])
+			generate_space_underlay(underlay_appearance, src)
+		else
+			underlay_appearance.icon = fixed_underlay["icon"]
+			underlay_appearance.icon_state = fixed_underlay["icon_state"]
+		fixed_underlay = string_assoc_list(fixed_underlay)
+		underlays += underlay_appearance
+
+	if(SSstation_coloring.wall_trims)
+		trim_color = SSstation_coloring.get_default_color()
+
+/turf/closed/wall/Destroy()
+	if(is_station_level(z))
+		GLOB.station_turfs -= src
+	return ..()
+
+/turf/closed/wall/examine(mob/user)
+	. += ..()
+	. += deconstruction_hints(user)
+
+/turf/closed/wall/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
+	. = ..()
+	if(.) // add a dent if it took damage
+		add_dent(WALL_DENT_HIT)
+
+/turf/closed/wall/attacked_by(obj/item/attacking_item, mob/living/user)
+	if(!uses_integrity)
+		CRASH("attacked_by() was called on an wall that doesn't use integrity!")
+
+	if(!attacking_item.force)
+		return
+
+	var/damage = take_damage(attacking_item.force * attacking_item.demolition_mod, attacking_item.damtype, MELEE, TRUE, armour_penetration = attacking_item.armour_penetration)
+	//only witnesses close by and the victim see a hit message.
+	user.visible_message(span_danger("[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
+		span_danger("You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
+	log_combat(user, src, "attacked", attacking_item)
+
+/turf/closed/wall/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
+	if(damage_amount < damage_deflection && (damage_type in list(MELEE, BULLET, LASER, ENERGY)))
+		return 0 // absolutely no bypassing damage deflection by using projectiles
+	return ..()
+
+/turf/closed/wall/atom_destruction(damage_flag)
+	. = ..()
+	if(damage_flag == MELEE)
+		playsound(src, 'sound/effects/meteorimpact.ogg', 50, TRUE) //Otherwise there's no sound for hitting the wall, since it's just dismantled
+	dismantle_wall(TRUE, TRUE)
 
 /turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
 	if(dropping != user || !iscarbon(dropping))
@@ -65,6 +126,49 @@
 	var/turf/checked_turf = get_step(carbon_mob, turn(carbon_mob.dir, 180))
 	if(checked_turf == src)
 		carbon_mob.start_leaning(src)
+
+/turf/closed/wall/ex_act(severity, target)
+	if(target == src)
+		dismantle_wall(TRUE, TRUE)
+		return
+
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			//SN src = null
+			var/turf/NT = ScrapeAway()
+			NT.contents_explosion(severity, target)
+			return
+		if(EXPLODE_HEAVY)
+			dismantle_wall(prob(50), TRUE)
+		if(EXPLODE_LIGHT)
+			take_damage(150, BRUTE, BOMB) // less kaboom monkestation edit
+	if(!density)
+		..()
+
+
+/turf/closed/wall/blob_act(obj/structure/blob/B)
+	take_damage(400, BRUTE, MELEE, FALSE)
+	playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+
+/turf/closed/wall/attack_paw(mob/living/user, list/modifiers)
+	user.changeNext_move(CLICK_CD_MELEE)
+	return attack_hand(user, modifiers)
+
+/turf/closed/wall/attack_hulk(mob/living/carbon/user)
+	..()
+	var/obj/item/bodypart/arm = user.hand_bodyparts[user.active_hand_index]
+	if(!arm)
+		return
+
+	if(arm.bodypart_disabled)
+		return
+
+	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
+	take_damage(400, BRUTE, MELEE, FALSE)
+	playsound(src, 'sound/effects/bang.ogg', 50, 1)
+	to_chat(user, span_notice("You punch the wall."))
+	hulk_recoil(arm, user)
+	return TRUE
 
 /mob/living/carbon/proc/start_leaning(obj/wall)
 
@@ -104,66 +208,6 @@
 	REMOVE_TRAIT(src, TRAIT_EXPANDED_FOV, LEANING_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_NO_LEG_AID, LEANING_TRAIT)
 	update_fov()
-
-/turf/closed/wall/Initialize(mapload)
-	. = ..()
-	if(!can_engrave)
-		ADD_TRAIT(src, TRAIT_NOT_ENGRAVABLE, INNATE_TRAIT)
-	if(is_station_level(z))
-		GLOB.station_turfs += src
-	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS && fixed_underlay) //Set underlays for the diagonal walls.
-		var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, offset_spokesman = src, plane = FLOOR_PLANE)
-		if(fixed_underlay["space"])
-			generate_space_underlay(underlay_appearance, src)
-		else
-			underlay_appearance.icon = fixed_underlay["icon"]
-			underlay_appearance.icon_state = fixed_underlay["icon_state"]
-		fixed_underlay = string_assoc_list(fixed_underlay)
-		underlays += underlay_appearance
-
-	//monkestation edit start
-	if(SSstation_coloring.wall_trims)
-		trim_color = SSstation_coloring.get_default_color()
-
-/turf/closed/wall/Destroy()
-	if(is_station_level(z))
-		GLOB.station_turfs -= src
-	return ..()
-
-/turf/closed/wall/examine(mob/user)
-	. += ..()
-	. += deconstruction_hints(user)
-
-//monkestation edit start
-/turf/closed/wall/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
-	. = ..()
-	if(.) // add a dent if it took damage
-		add_dent(WALL_DENT_HIT)
-
-/turf/closed/wall/attacked_by(obj/item/attacking_item, mob/living/user)
-	if(!uses_integrity)
-		CRASH("attacked_by() was called on an wall that doesn't use integrity!")
-
-	if(!attacking_item.force)
-		return
-
-	var/damage = take_damage(attacking_item.force * attacking_item.demolition_mod, attacking_item.damtype, MELEE, TRUE, armour_penetration = attacking_item.armour_penetration)
-	//only witnesses close by and the victim see a hit message.
-	user.visible_message(span_danger("[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
-		span_danger("You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
-	log_combat(user, src, "attacked", attacking_item)
-
-/turf/closed/wall/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
-	if(damage_amount < damage_deflection && (damage_type in list(MELEE, BULLET, LASER, ENERGY)))
-		return 0 // absolutely no bypassing damage deflection by using projectiles
-	return ..()
-
-/turf/closed/wall/atom_destruction(damage_flag)
-	. = ..()
-	if(damage_flag == MELEE)
-		playsound(src, 'sound/effects/meteorimpact.ogg', 50, TRUE) //Otherwise there's no sound for hitting the wall, since it's just dismantled
-	dismantle_wall(TRUE, TRUE)
-//monkestation edit end
 
 /turf/closed/wall/proc/deconstruction_hints(mob/user)
 	return span_notice("The outer plating is <b>welded</b> firmly in place.")
@@ -208,51 +252,6 @@
 	if(girder_type)
 		new /obj/item/stack/sheet/iron(src)
 
-/turf/closed/wall/ex_act(severity, target)
-	if(target == src)
-		dismantle_wall(TRUE, TRUE) //monkestation edit
-		return
-
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			//SN src = null
-			var/turf/NT = ScrapeAway()
-			NT.contents_explosion(severity, target)
-			return
-		if(EXPLODE_HEAVY)
-			dismantle_wall(prob(50), TRUE)
-		if(EXPLODE_LIGHT)
-			take_damage(150, BRUTE, BOMB) // less kaboom monkestation edit
-	if(!density)
-		..()
-
-
-/turf/closed/wall/blob_act(obj/structure/blob/B)
-	//monkestation edit start
-	take_damage(400, BRUTE, MELEE, FALSE)
-	playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-	//monkestation edit end
-
-/turf/closed/wall/attack_paw(mob/living/user, list/modifiers)
-	user.changeNext_move(CLICK_CD_MELEE)
-	return attack_hand(user, modifiers)
-
-/turf/closed/wall/attack_hulk(mob/living/carbon/user)
-	..()
-	var/obj/item/bodypart/arm = user.hand_bodyparts[user.active_hand_index]
-	if(!arm)
-		return
-	if(arm.bodypart_disabled)
-		return
-	//monkestation edit start
-	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
-	take_damage(400, BRUTE, MELEE, FALSE)
-	playsound(src, 'sound/effects/bang.ogg', 50, 1)
-	to_chat(user, span_notice("You punch the wall."))
-	hulk_recoil(arm, user)
-	return TRUE
-	//monkestation edit end
-
 /**
  *Deals damage back to the hulk's arm.
  *
@@ -280,7 +279,7 @@
 	playsound(src, 'sound/weapons/genhit.ogg', 25, TRUE)
 	add_fingerprint(user)
 
-/turf/closed/wall/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers) //monkestation edit
+/turf/closed/wall/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))
@@ -293,16 +292,15 @@
 	add_fingerprint(user)
 
 	//the istype cascade has been spread among various procs for easy overriding
-	if(try_clean(attacking_item, user) || try_wallmount(attacking_item, user) || try_decon(attacking_item, user)) //monkestation edit
+	if(try_clean(attacking_item, user) || try_wallmount(attacking_item, user) || try_decon(attacking_item, user))
 		return
 
 	return ..() || (uses_integrity && attacking_item.attack_atom(src, user))
 
 /turf/closed/wall/proc/try_clean(obj/item/W, mob/living/user, turf/T)
-	if(!(user.istate & ISTATE_HARM)) //monkestation edit
+	if(!(user.istate & ISTATE_HARM))
 		return FALSE
 
-	//monkestation edit start
 	if(W.tool_behaviour == TOOL_WELDER)
 		if(!W.tool_start_check(user, amount=0))
 			to_chat(user, span_warning("You need more fuel to repair [src]!"))
@@ -314,8 +312,8 @@
 				if(W.use_tool(src, user, 0, volume=100))
 					if(iswallturf(src))
 						to_chat(user, span_notice("You fix some dents on the wall."))
-						cut_overlay(dent_decals)
-						dent_decals.Cut()
+						dent_decals = null
+						update_appearance(UPDATE_OVERLAYS)
 			else
 				to_chat(user, span_warning("[src] is intact!"))
 			return TRUE
@@ -328,7 +326,7 @@
 			dent_decals.Cut()
 			return TRUE
 		return TRUE
-	//monkestation edit end
+
 	return FALSE
 
 /turf/closed/wall/proc/try_wallmount(obj/item/W, mob/user)
@@ -361,23 +359,10 @@
 
 /turf/closed/wall/singularity_pull(S, current_size)
 	. = ..()
-	//monkestation edit start
 	if(current_size >= STAGE_FIVE)
 		take_damage(300, armour_penetration=100) // LORD SINGULOTH CARES NOT FOR YOUR "ARMOR"
 	else if(current_size == STAGE_FOUR)
 		take_damage(150, armour_penetration=100)
-	//monkestation edit end
-
-/* //MONKESTATION REMOVAL: Deprecated, obselete old code proc
-/turf/closed/wall/proc/wall_singularity_pull(current_size)
-	if(current_size >= STAGE_FIVE)
-		if(prob(50))
-			dismantle_wall()
-		return
-	if(current_size == STAGE_FOUR)
-		if(prob(30))
-			dismantle_wall()
-*/
 
 /turf/closed/wall/narsie_act(force, ignore_mobs, probability = 20)
 	. = ..()
@@ -417,12 +402,10 @@
 			return TRUE
 	return FALSE
 
-//monkestation edit start
 /turf/proc/add_dent(denttype, x=rand(-8, 8), y=rand(-8, 8)) // this only exists because turf code is terrible, monkestation
 	return
 
 /turf/closed/wall/add_dent(denttype, x=rand(-8, 8), y=rand(-8, 8))
-//monkestation edit end
 	if(LAZYLEN(dent_decals) >= MAX_DENT_DECALS)
 		return
 
@@ -436,13 +419,9 @@
 	decal.pixel_x = x
 	decal.pixel_y = y
 
-	if(LAZYLEN(dent_decals))
-		cut_overlay(dent_decals)
-		dent_decals += decal
-	else
-		dent_decals = list(decal)
+	LAZYADD(dent_decals, decal)
 
-	add_overlay(dent_decals)
+	update_appearance(UPDATE_OVERLAYS)
 
 /turf/closed/wall/rust_turf(magic = FALSE)
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
@@ -451,6 +430,25 @@
 
 	return ..()
 
+/turf/closed/wall/proc/change_trim_color(color)
+	trim_color = color
+	update_appearance(UPDATE_OVERLAYS)
+
+/turf/closed/wall/update_overlays()
+	. = ..()
+
+	if(length(dent_decals))
+		for(var/mutable_appearance/decal as anything in dent_decals)
+			. += decal
+
+	if(wall_trim)
+		var/mutable_appearance/trim = mutable_appearance(wall_trim, icon_state, layer + 0.01)
+		trim.color = trim_color
+		. += trim
+
+/turf/closed/wall/smooth_icon()
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
 
 /turf/closed/wall/metal_foam_base
 	girder_type = /obj/structure/foamedmetal
@@ -462,6 +460,34 @@
 /turf/closed/wall/Exited(atom/movable/gone, direction)
 	. = ..()
 	SEND_SIGNAL(gone, COMSIG_LIVING_WALL_EXITED, src)
+
+/turf/closed/wall/material/silk
+	name = "silk wall"
+	desc = "A silk wall reinforced with iron, still weaker than an iron wall."
+	icon = 'icons/turf/walls/silk_wall.dmi'
+	icon_state = "wall-0"
+	base_icon_state = "wall"
+	sheet_type = /obj/item/stack/sheet/silk
+	hardness = 80
+	explosive_resistance = 0
+	max_integrity = 100
+	damage_deflection = 5
+	custom_materials = list(/datum/material/silk = SHEET_MATERIAL_AMOUNT*2)
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_SILK_WALLS + SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_SILK_WALLS
+
+/obj/structure/falsewall/silk
+	name = "silk wall"
+	desc = "A silk wall reinforced with iron, still weaker than an iron wall."
+	icon = 'icons/turf/walls/silk_wall.dmi'
+	icon_state = "wall-0"
+	base_icon_state = "wall"
+	mineral = /obj/item/stack/sheet/silk
+	walltype = /turf/closed/wall/material/silk
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_SILK_WALLS + SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_SILK_WALLS
 
 #undef MAX_DENT_DECALS
 #undef LEANING_OFFSET

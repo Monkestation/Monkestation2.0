@@ -724,3 +724,8 @@
 	desc = "Green coloured glasses... There are patches of fur in the hinges."
 	icon_state = "ralsei_glasses"
 	inhand_icon_state = null
+
+/obj/item/clothing/glasses/crueltysquad_glasses
+	name = "CS inactive vision augmenter"
+	desc = "A pair of glasses usually designed to identify targets for execution, although this mechanic has been removed for civilian casual use."
+	icon_state = "crueltysquad_glasses"

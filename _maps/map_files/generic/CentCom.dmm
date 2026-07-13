@@ -19943,6 +19943,12 @@
 /obj/structure/shipping_container/cybersun,
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/syndicate_mothership/golden_eye)
+"bLU" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/turf/closed/wall/mineral/titanium,
+/area/centcom/central_command_areas/admin)
 "bLX" = (
 /obj/structure/rack,
 /obj/item/clothing/gloves/color/orange,
@@ -22919,6 +22925,12 @@
 	},
 /turf/open/floor/sandy_dirt,
 /area/centcom/central_command_areas/admin)
+"gNw" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/closed/wall/mineral/titanium,
+/area/centcom/central_command_areas/admin)
 "gNy" = (
 /obj/structure/chair/sofa/left/maroon,
 /turf/open/floor/carpet/neon/simple/green/nodots,
@@ -23441,14 +23453,6 @@
 	dir = 8
 	},
 /area/centcom/central_command_areas/evacuation)
-"hsX" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 5
-	},
-/turf/closed/wall/mineral/titanium{
-	paint_color = "#5f6361"
-	},
-/area/centcom/central_command_areas/admin)
 "htD" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -24053,14 +24057,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/expansion_bulldozer)
-"ijF" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 9
-	},
-/turf/closed/wall/mineral/titanium{
-	paint_color = "#5f6361"
-	},
-/area/centcom/central_command_areas/admin)
 "ijH" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -27298,6 +27294,12 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/admin)
+"nPA" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/closed/wall/mineral/titanium,
+/area/centcom/central_command_areas/admin)
 "nSa" = (
 /obj/machinery/light/small/red/dim/directional/south,
 /turf/open/floor/sandy_dirt,
@@ -27308,13 +27310,6 @@
 /obj/structure/rack,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)
-"nTM" = (
-/obj/machinery/status_display/ai_core{
-	name = "MATRIARCH";
-	custom_emotion = "Angel"
-	},
-/turf/open/floor/circuit/green/anim,
-/area/centcom/central_command_areas/admin)
 "nUl" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -27791,6 +27786,13 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/medical)
+"oDa" = (
+/obj/machinery/status_display/ai_core{
+	name = "MATRIARCH";
+	custom_emotion = "Angel"
+	},
+/turf/open/floor/circuit/green/anim,
+/area/centcom/central_command_areas/admin)
 "oDh" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark/textured_large,
@@ -29362,14 +29364,6 @@
 	dir = 5
 	},
 /turf/open/misc/sandy_dirt,
-/area/centcom/central_command_areas/admin)
-"rjG" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 10
-	},
-/turf/closed/wall/mineral/titanium{
-	paint_color = "#5f6361"
-	},
 /area/centcom/central_command_areas/admin)
 "rlq" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -32560,14 +32554,6 @@
 	},
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
-"wzn" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 6
-	},
-/turf/closed/wall/mineral/titanium{
-	paint_color = "#5f6361"
-	},
-/area/centcom/central_command_areas/admin)
 "wzU" = (
 /obj/structure/lattice/catwalk,
 /turf/open/floor/plating,
@@ -33277,6 +33263,12 @@
 /obj/machinery/station_map/syndicate,
 /turf/closed/indestructible/syndicate,
 /area/centcom/syndicate_mothership/firebase_trident)
+"xJs" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/closed/wall/mineral/titanium,
+/area/centcom/central_command_areas/admin)
 "xJC" = (
 /obj/structure/closet/cardboard,
 /mob/living/basic/bot/medbot/nukie/assop{
@@ -63756,11 +63748,11 @@ aaa
 aaa
 aOn
 jZA
-wzn
+nPA
 bwZ
 bwZ
 bwZ
-hsX
+gNw
 jZA
 jZA
 jZA
@@ -66069,11 +66061,11 @@ aaa
 aaa
 aOn
 jZA
-rjG
+bLU
 bwZ
 bwZ
 bwZ
-ijF
+xJs
 jZA
 jZA
 wLm
@@ -73785,7 +73777,7 @@ aaa
 aaa
 aaa
 blK
-nTM
+oDa
 eCp
 blK
 vrX

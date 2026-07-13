@@ -524,7 +524,7 @@
  * C would have a 10% chance of being picked,
  * and D would have a 0% chance of being picked.
  */
-/proc/pick_weight(list/list_to_pick) // monkestation edit: port superior pick_weight impl
+/proc/pick_weight(list/list_to_pick)
 	var/total = 0
 	var/item
 	for(item in list_to_pick)
@@ -1376,4 +1376,20 @@
 				&& log_1["line"] == log_2["line"]\
 				&& deep_compare_list(log_1["stack"], log_2["stack"])
 		else
+			return TRUE
+
+/proc/cycle_inplace(list/c_list) //increases the value of each object in the list by 1 and then puts the final object in the starting location of the first object
+	if(!length(c_list))
+		return
+
+	var/first_obj = c_list[1]
+	for(var/i = 1, i < length(c_list), ++i)
+		c_list[i] = c_list[i+1]
+	c_list[length(c_list)] = first_obj
+
+/// Returns TRUE if the list has any items that are in said typecache, FALSE otherwise.
+/proc/typecached_item_in_list(list/things, list/typecache)
+	. = FALSE
+	for(var/datum/thingy as anything in things)
+		if(is_type_in_typecache(thingy, typecache))
 			return TRUE

@@ -739,8 +739,11 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	restricted_roles = list(JOB_ROBOTICIST)
 	requires_purchase = FALSE
 
-
 // Legacy unpaintable cowboy hat because it fits a character better
 /datum/loadout_item/head/cowboyhat_legacy  //BUYABLE
 	name = "Cowboy Hat (Legacy)"
 	item_path = /obj/item/clothing/head/costume/cowboyhat_old
+
+/datum/loadout_item/head/henchmen_hat
+	name = "Henchmen Cap"
+	item_path = /obj/item/clothing/head/henchmen_hat

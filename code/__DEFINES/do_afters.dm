@@ -8,8 +8,10 @@
 #define DOAFTER_SOURCE_PLANTING_DEVICE "doafter_planting_device"
 #define DOAFTER_SOURCE_CHARGE_GUNCRANK "doafter_charge_guncrank"
 #define DOAFTER_SOURCE_SEED_MESH "doafter_seed_mesh"
-/* #define DOAFTER_SOURCE_ATM "doafter_atm" */
 #define DOAFTER_SOURCE_EXTINGUISHING_HUG "doafter_extinguishing_hug"
 #define DOAFTER_SOURCE_LAVA_STAFF "doafter_lava_staff"
 #define DOAFTER_SOURCE_ROASTING_STICK "doafter_roasting_stick"
 #define DOAFTER_SOURCE_AI_SHUNTING "doafter_ai_shunting"
+#define DOAFTER_SOURCE_PERSUASION_RACK "doafter_persuasion_rack"
+#define DOAFTER_SOURCE_CLIMBING "doafter_climbing"
+#define DOAFTER_SOURCE_TRASH_PILE "doafter_trash_pile"

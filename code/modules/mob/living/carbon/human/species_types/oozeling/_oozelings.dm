@@ -282,7 +282,7 @@
 /datum/species/oozeling/proc/water_exposure(mob/living/carbon/human/slime, check_clothes = TRUE, quiet_if_protected = FALSE)
 	if(!COOLDOWN_FINISHED(src, water_exposure_cooldown))
 		return FALSE
-	COOLDOWN_START(src, water_exposure_cooldown, 0.1 SECOND)
+	COOLDOWN_START(src, water_exposure_cooldown, 0.1 SECONDS)
 	var/water_multiplier = 1
 	// thick clothing won't protect you if you just drink or inject tho
 	if(check_clothes)

@@ -83,6 +83,10 @@
 /datum/armor/combat_insulated
 	bio = 50
 
+/obj/item/clothing/gloves/tackler/combat/insulated/admiral // Reskin for Abraxis's Admiral set
+	icon_state = "admiral"
+	alternate_worn_layer = ABOVE_SUIT_LAYER
+
 /obj/item/clothing/gloves/tackler/rocket
 	name = "rocket gloves"
 	desc = "The ultimate in high risk, high reward, perfect for when you need to stop a criminal from fifty feet away or die trying. Banned in most Spinward gridiron football and rugby leagues."

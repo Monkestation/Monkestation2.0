@@ -55,7 +55,6 @@
 /proc/adminscrub(text, limit = MAX_MESSAGE_LEN)
 	return html_encode(STRIP_HTML_SIMPLE(text, limit))
 
-
 /**
  * Perform a whitespace cleanup on the text, similar to what HTML renderers do
  *
@@ -770,7 +769,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		return string
 
 	var/base = next_backslash == 1 ? "" : copytext(string, 1, next_backslash)
-	var/macro = lowertext(copytext(string, next_backslash + length(string[next_backslash]), next_space))
+	var/macro = LOWER_TEXT(copytext(string, next_backslash + length(string[next_backslash]), next_space))
 	var/rest = next_backslash > leng ? "" : copytext(string, next_space + length(string[next_space]))
 
 	//See https://secure.byond.com/docs/ref/info.html#/DM/text/macros
@@ -1000,6 +999,8 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	return corrupted_text
 
+
+
 /// Checks if the char is lowercase
 #define is_lowercase_character(X) ((text2ascii(X) <= 122) && (text2ascii(X) >= 97))
 /// Checks if the char is uppercase
@@ -1090,7 +1091,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	var/text_length = length(text)
 
 	//remove caps since words will be shuffled
-	text = lowertext(text)
+	text = LOWER_TEXT(text)
 	//remove punctuation for same reasons as above
 	var/punctuation = ""
 	var/punctuation_hit_list = list("!","?",".","-")
@@ -1293,3 +1294,30 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		input_text += "."
 
 	return replacetext_char(input_text, GLOB.noncapital_i, "I")
+
+/// -- Text helpers. --
+/// Provides a preview of [string] up to [len - 3], after which it appends "..." if it pasts the length.
+/proc/text_preview(string, len = 40)
+	var/char_len = length_char(string)
+	if(char_len <= len)
+		if(!char_len)
+			return "\[...\]"
+		else
+			return string
+	else
+		return "[copytext_char(string, 1, len - 3)]..."
+
+/proc/get_fancy_key(mob/user)
+	if(ismob(user))
+		var/mob/temp = user
+		return temp.key
+	else if(istype(user, /client))
+		var/client/temp = user
+		return temp.key
+	else if(istype(user, /datum/mind))
+		var/datum/mind/temp = user
+		return temp.key
+	return "* Unknown *"
+
+/proc/remove_all_spaces(text)
+	return replacetext_char(text, " ", "")

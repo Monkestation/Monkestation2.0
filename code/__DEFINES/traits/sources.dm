@@ -124,7 +124,7 @@
 #define FLASHLIGHT_EYES "flashlight_eyes"
 #define IMPURE_OCULINE "impure_oculine"
 #define HAUNTIUM_REAGENT_TRAIT "hauntium_reagent_trait"
-#define TRAIT_SANTA "santa"
+#define SANTA_TRAIT "santa"
 #define SCRYING_ORB "scrying-orb"
 #define ABDUCTOR_ANTAGONIST "abductor-antagonist"
 #define JUNGLE_FEVER_TRAIT "jungle_fever"
@@ -195,8 +195,6 @@
 #define PAI_FOLDED "pai-folded"
 /// Trait applied to brain mobs when they lack external aid for locomotion, such as being inside a mech.
 #define BRAIN_UNAIDED "brain-unaided"
-/// Trait applied to a mob when it gets a required "operational datum" (components/elements). Sends out the source as the type of the element.
-#define TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM "element-required"
 /// Trait applied by MODsuits.
 #define MOD_TRAIT "mod"
 /// Trait applied to tram passengers
@@ -249,7 +247,7 @@
 #define LEFT_LEG_TRAIT "left_leg"
 
 ///coming from a fish trait datum.
-#define FISH_TRAIT_DATUM "fish_trait_datum"
+#define FISH_DATUM_TRAIT "FISH_DATUM_TRAIT"
 ///coming from a fish evolution datum
 #define FISH_EVOLUTION "fish_evolution"
 
@@ -309,3 +307,58 @@
 
 /// Trait aquired from being painted a certain color
 #define ATOM_COLOR_TRAIT "atom_color"
+
+/// Traits related to the comically large spoon's suicide.
+#define SPOON_SUICIDE_TRAIT "spoon_suicide"
+/// Traits given by mechs.
+#define MECH_TRAIT "mech_trait"
+/// Traits given by nanites.
+#define NANITES_TRAIT "nanites"
+/// Trait given to a mob made uncloneable.
+#define UNCLONEABLE_TRAIT "made-uncloneable"
+/// Traits given by cloning pods.
+#define CLONING_POD_TRAIT "cloning-pod"
+/// Traits given to abductor victims with the ventcrawling gland, while ventcrawling.
+#define ABDUCTOR_GLAND_VENTCRAWLING_TRAIT "abductor_gland_ventcrawling"
+/// Traits given by an anti-drop implant.
+#define ANTI_DROP_IMPLANT_TRAIT "antidrop_implant"
+/// Traits given to glued items.
+#define GLUED_ITEM_TRAIT "glued-item"
+/// Trait source for the stargazer.
+#define STARGAZER_TRAIT "stargazer"
+/// Trait source for the vanguard scripture
+#define VANGUARD_TRAIT "vanguard"
+/// Source trait for Bloodsuckers-related traits
+#define BLOODSUCKER_TRAIT "bloodsucker_trait"
+/// Source for bloodsucker mesmerize related traits
+#define MESMERIZE_TRAIT "meserize_trait"
+/// Source trait for bloodsucker dominate related traits
+#define DOMINATE_TRAIT "dominate_trait"
+/// Source trait for bloodsuckers in torpor.
+#define TORPOR_TRAIT "torpor_trait"
+/// Source trait for stuff related to bloodsuckers in coffins.
+#define BLOODSUCKER_COFFIN_TRAIT "bloodsucker_coffin_trait"
+/// Source trait for bloodsuckers using fortitude.
+#define FORTITUDE_TRAIT "fortitude_trait"
+/// Source trait for bloodsucker mesmerization.
+#define MESMERIZED_TRAIT "mesmerized_trait"
+/// Source trait for Monster Hunter-related traits
+#define HUNTER_TRAIT "monsterhunter_trait"
+/// Source trait while Feeding
+#define FEED_TRAIT "feed_trait"
+/// Source trait for slashers.
+#define SLASHER_TRAIT "slasher_trait"
+/// Source trait for zombies
+#define ZOMBIE_TRAIT "zombie_trait"
+/// Source trait for the Bingle
+#define BINGLE_TRAIT "bingle_trait"
+/// Traits granted by glassblowing
+#define GLASSBLOWING_TRAIT "glassblowing"
+/// Trait source for xeno innate abilities
+#define XENO_TRAIT "xeno_innate"
+/// Trait source for something added BY a xeno ability
+#define XENO_ABILITY_TRAIT "xeno_ability_given"
+/// Trait that was granted by a NIFSoft
+#define NISOFT_TRAIT "nifsoft"
+// Trait sources
+#define GHOSTROLE_TRAIT "ghostrole"

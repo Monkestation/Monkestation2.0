@@ -69,6 +69,15 @@
 	name = "Virology Isolation"
 	icon_state = "virology_isolation"
 
+/area/station/medical/pathology
+	name = "Pathology"
+	icon_state = "patho"
+	ambience_index = AMBIENCE_VIROLOGY
+
+/area/station/medical/pathology/isolation
+	name = "Pathology Isolation"
+	icon_state = "patho_iso"
+
 /area/station/medical/morgue
 	name = "\improper Morgue"
 	icon_state = "morgue"

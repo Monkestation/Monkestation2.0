@@ -19025,12 +19025,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"jcd" = (
-/obj/machinery/jukebox/disco,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/eighties,
-/area/station/commons/lounge)
 "jch" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
@@ -25155,6 +25149,12 @@
 /obj/item/integrated_circuit/chemical,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/pharmacy)
+"lYB" = (
+/obj/machinery/jukebox/disco,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/eighties,
+/area/station/commons/lounge)
 "lYD" = (
 /turf/open/openspace,
 /area/station/maintenance/fore/greater)
@@ -26703,6 +26703,17 @@
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
+"mMJ" = (
+/obj/machinery/door/airlock/command/corporate{
+	id_tag = "Repdoor";
+	name = "Representative's Office"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/nt_rep)
 "mMK" = (
 /obj/machinery/light/directional/west,
 /obj/machinery/door/firedoor,
@@ -27853,21 +27864,6 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/construction)
-"nmo" = (
-/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
-/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
-/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
-/obj/effect/turf_decal/tile/dark/diagonal_edge,
-/obj/machinery/door/airlock/corporate{
-	id_tag = "BSdoor";
-	name = "Blueshield's Office"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/iron/diagonal,
-/area/station/command/heads_quarters/blueshield)
 "nmt" = (
 /obj/structure/table,
 /obj/item/weldingtool/electric/arc_welder,
@@ -31560,17 +31556,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"peL" = (
-/obj/machinery/door/airlock/corporate{
-	id_tag = "Repdoor";
-	name = "Representative's Office"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
-/turf/open/floor/wood,
-/area/station/command/heads_quarters/nt_rep)
 "pfb" = (
 /turf/closed/wall,
 /area/station/maintenance/starboard/upper)
@@ -35402,6 +35387,21 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/diagonal,
 /area/station/commons/lounge)
+"rav" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
+/obj/effect/turf_decal/tile/dark/diagonal_edge,
+/obj/machinery/door/airlock/command/corporate{
+	id_tag = "BSdoor";
+	name = "Blueshield's Office"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/diagonal,
+/area/station/command/heads_quarters/blueshield)
 "rax" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/yellow{
@@ -78764,7 +78764,7 @@ pJB
 qMQ
 bYK
 fKG
-peL
+mMJ
 wBC
 khA
 wtY
@@ -147165,7 +147165,7 @@ azy
 dTv
 gfu
 dTv
-jcd
+lYB
 lkI
 sXt
 nzd
@@ -155082,7 +155082,7 @@ nMU
 mOH
 mOH
 gYh
-nmo
+rav
 gYh
 gYh
 gYh

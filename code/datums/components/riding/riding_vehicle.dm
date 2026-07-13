@@ -108,6 +108,10 @@
 	handle_vehicle_offsets(movable_parent.dir)
 	return TRUE
 
+/// Returns the move delay of this vehicle.
+/datum/component/riding/proc/move_delay()
+	return vehicle_move_delay
+
 /datum/component/riding/vehicle/atv
 	keytype = /obj/item/key/atv
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER

@@ -5,6 +5,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	var/gpstag = "COM0"
 	var/tracking = TRUE
 	var/emped = FALSE
+	/// Can this GPS be targeted by a BSA?
+	var/bsa_targetable = TRUE
 
 /datum/component/gps/Initialize(_gpstag = "COM0")
 	if(!isatom(parent))
@@ -15,6 +17,9 @@ GLOBAL_LIST_EMPTY(GPS_list)
 /datum/component/gps/Destroy()
 	GLOB.GPS_list -= src
 	return ..()
+
+/datum/component/gps/no_bsa
+	bsa_targetable = FALSE
 
 /datum/component/gps/kheiral_cuffs
 
@@ -32,6 +37,10 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
 	/// UI state of GPS, altering when it can be used.
 	var/datum/ui_state/state = null
+	/// If TRUE, then this GPS needs to be calibrated to point to specific z-levels.
+	var/requires_z_calibration = TRUE
+	/// A lazy list of calibrated z-levels
+	var/list/calibrated_zs
 
 /datum/component/gps/item/Initialize(_gpstag = "COM0", emp_proof = FALSE, state = null, overlay_state = "working", requires_z_calibration, list/calibrate_zs) // monkestation edit: require calibration to point to remote z-levels
 	. = ..()
@@ -52,12 +61,14 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_AltClick))
 
-	// monkestation start: require calibration to point to remote z-levels
 	if(!isnull(requires_z_calibration))
 		src.requires_z_calibration = requires_z_calibration
 	if(islist(calibrate_zs))
 		src.calibrated_zs = calibrate_zs
-	// monkestation end
+
+/// Checks to see if we can point in the general direction of a (different) z level.
+/datum/component/gps/item/proc/can_point_to_z_level(z)
+	return !requires_z_calibration || (z in calibrated_zs)
 
 ///Called on COMSIG_ITEM_ATTACK_SELF
 /datum/component/gps/item/proc/interact(datum/source, mob/user)

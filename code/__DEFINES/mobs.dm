@@ -144,6 +144,12 @@
 #define SPECIES_SATYR "satyr"
 #define SPECIES_TERATOMA "teratoma"
 #define SPECIES_TRAINED_MONKEY "trainedmonkey"
+#define SPECIES_ARACHNIDS "arachnid"
+#define SPECIES_DRACONIC_SKELETON "draconic_skeleton"
+#define SPECIES_WEREWOLF "werewolf"
+#define SPECIES_ORNITHID "ornithid"
+
+
 // Like species IDs, but not specifically attached a species.
 #define BODYPART_ID_ALIEN "alien"
 #define BODYPART_ID_ROBOTIC "robotic"

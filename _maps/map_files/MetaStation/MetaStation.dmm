@@ -5649,6 +5649,21 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
+"bXw" = (
+/obj/machinery/door/airlock/command/corporate{
+	id_tag = "Repdoor";
+	name = "Representative's Office"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
+/obj/effect/landmark/navigate_destination,
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/nt_rep)
 "bXG" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -7413,6 +7428,19 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
+"cFC" = (
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/obj/machinery/flasher/directional/south{
+	id = "AI";
+	pixel_x = 26
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
+/turf/open/floor/iron/dark/telecomms,
+/area/station/ai_monitored/turret_protected/ai)
 "cFW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -8801,21 +8829,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/construction/storage_wing)
-"dhE" = (
-/obj/effect/turf_decal/delivery,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/corporate{
-	id_tag = "BSdoor";
-	name = "Blueshield's Office"
-	},
-/obj/effect/landmark/navigate_destination,
-/obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
-/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
-/turf/open/floor/iron,
-/area/station/command/heads_quarters/blueshield)
 "dhF" = (
 /obj/machinery/smartfridge/organ,
 /turf/open/floor/iron/dark,
@@ -23468,6 +23481,21 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
+"ipp" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/command/corporate{
+	id_tag = "BSdoor";
+	name = "Blueshield's Office"
+	},
+/obj/effect/landmark/navigate_destination,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
+/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
+/turf/open/floor/iron,
+/area/station/command/heads_quarters/blueshield)
 "ipy" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -32908,19 +32936,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
-"lup" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
-/obj/machinery/flasher/directional/south{
-	id = "AI";
-	pixel_x = 26
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
-/turf/open/floor/iron/dark/telecomms,
-/area/station/ai_monitored/turret_protected/ai)
 "luE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -67237,21 +67252,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
-"xhf" = (
-/obj/machinery/door/airlock/corporate{
-	id_tag = "Repdoor";
-	name = "Representative's Office"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
-/obj/effect/landmark/navigate_destination,
-/obj/machinery/door/firedoor,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/wood,
-/area/station/command/heads_quarters/nt_rep)
 "xhh" = (
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
@@ -99686,7 +99686,7 @@ syo
 eDL
 lSz
 tst
-dhE
+ipp
 xOl
 iag
 eZZ
@@ -100972,7 +100972,7 @@ syo
 cnA
 nNw
 dmK
-xhf
+bXw
 iME
 ejm
 ejm
@@ -125109,7 +125109,7 @@ wgB
 mCL
 aWO
 aYz
-lup
+cFC
 wPo
 aTV
 rYA

@@ -10,6 +10,7 @@
 /// Use this to prompt the user configuration options.
 /// Return FALSE if the smite should not be used.
 /datum/smite/proc/configure(client/user)
+	return "NO_CONFIG"
 
 /// The effect of the smite, make sure to call this in your own smites
 /datum/smite/proc/effect(client/user, mob/living/target)
