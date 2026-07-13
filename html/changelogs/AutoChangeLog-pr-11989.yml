@@ -1,0 +1,10 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - rscadd: "added secure GPS devices. they report the death of the wearer or if the device is stripped off the wearer to other secure GPS devices. can be sabotaged by emagging one or jammed using a radio jammer."
+  - qol: "added bodycameras to the basic security equipment technode."
+  - rscadd: "made each departmental GPS printable by their respective department."
+  - qol: "medical can print the advanced GPS at their protolathe."
+  - bugfix: "re-added the medical GPS sprite."
+  - qol: "security and medical belts can store GPSs."
+  - rscadd: "added tape recorders, lighters, and cigarette packets to the security belt holdable list."

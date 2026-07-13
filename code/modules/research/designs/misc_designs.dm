@@ -893,6 +893,23 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
+/datum/design/bodycam
+	name = "Body Camera"
+	desc = /obj/item/bodycam_upgrade::desc
+	id = "bodycam"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/bodycam_upgrade
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_BLUESPACE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
 /datum/design/sec_pen
 	name = "Security Pen"
 	id = "sec_pen"
