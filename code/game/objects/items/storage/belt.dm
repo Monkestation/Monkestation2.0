@@ -272,7 +272,7 @@
 		/obj/item/wrench/medical,
 		/obj/item/device/antibody_scanner, //monkestation addition
 		/obj/item/storage/lockbox/vialbox,
-	) + typesof(/obj/item/reagent_containers/cup/vial))
+	) + typesof(/obj/item/reagent_containers/cup/chemcanister))
 
 /obj/item/storage/belt/medical/paramedic
 	name = "EMT belt"

@@ -84,7 +84,7 @@
 /obj/item/storage/medkit/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.set_holdable(list_of_everything_medkits_can_hold + typesof(/obj/item/reagent_containers/cup/vial))
+	atom_storage.set_holdable(list_of_everything_medkits_can_hold + typesof(/obj/item/reagent_containers/cup/chemcanister))
 
 /obj/item/storage/medkit/regular
 	icon_state = "medkit"
@@ -341,11 +341,11 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/hypospray = 1,
-		/obj/item/reagent_containers/cup/vial/brute = 1,
-		/obj/item/reagent_containers/cup/vial/burn = 1,
-		/obj/item/reagent_containers/cup/vial/tox = 1,
-		/obj/item/reagent_containers/cup/vial/oxy = 1,
-		/obj/item/reagent_containers/cup/vial/epi = 1,
+		/obj/item/reagent_containers/cup/chemcanister/brute = 1,
+		/obj/item/reagent_containers/cup/chemcanister/burn = 1,
+		/obj/item/reagent_containers/cup/chemcanister/tox = 1,
+		/obj/item/reagent_containers/cup/chemcanister/oxy = 1,
+		/obj/item/reagent_containers/cup/chemcanister/epi = 1,
 		/obj/item/healthanalyzer = 1,
 		)
 	generate_items_inside(items_inside,src)
@@ -360,12 +360,12 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/cup/vial/omnizine = 2,
-		/obj/item/reagent_containers/cup/vial/sal_acid = 1,
-		/obj/item/reagent_containers/cup/vial/oxandrolone = 1,
-		/obj/item/reagent_containers/cup/vial/pen_acid = 1,
-		/obj/item/reagent_containers/cup/vial/atropine = 1,
-		/obj/item/reagent_containers/cup/vial/inaprovaline = 1,
+		/obj/item/reagent_containers/cup/chemcanister/omnizine = 2,
+		/obj/item/reagent_containers/cup/chemcanister/sal_acid = 1,
+		/obj/item/reagent_containers/cup/chemcanister/oxandrolone = 1,
+		/obj/item/reagent_containers/cup/chemcanister/pen_acid = 1,
+		/obj/item/reagent_containers/cup/chemcanister/atropine = 1,
+		/obj/item/reagent_containers/cup/chemcanister/inaprovaline = 1,
 		)
 	generate_items_inside(items_inside,src)
 
@@ -440,7 +440,7 @@
 		/obj/item/hypospray/combat = 1,
 		/obj/item/storage/box/evilmeds/evilhypos = 1,
 		/obj/item/storage/box/evilmeds = 1,
-		/obj/item/reagent_containers/cup/vial/bluespace/combat = 2,
+		/obj/item/reagent_containers/cup/chemcanister/bluespace/combat = 2,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
 		/obj/item/clothing/glasses/hud/health/night/science = 1,
 	)
@@ -519,10 +519,10 @@
 		return
 	var/static/list/items_inside = list(
 		/obj/item/hypospray/combat/no_vial = 1,
-		/obj/item/reagent_containers/cup/vial/large/combat = 2,
-		/obj/item/reagent_containers/cup/vial/large/omnizine = 1,
-		/obj/item/reagent_containers/cup/vial/large/morphine = 1,
-		/obj/item/reagent_containers/cup/vial/large/epi = 1,
+		/obj/item/reagent_containers/cup/chemcanister/large/combat = 2,
+		/obj/item/reagent_containers/cup/chemcanister/large/omnizine = 1,
+		/obj/item/reagent_containers/cup/chemcanister/large/morphine = 1,
+		/obj/item/reagent_containers/cup/chemcanister/large/epi = 1,
 		/obj/item/healthanalyzer = 1,
 	)
 	generate_items_inside(items_inside, src)
