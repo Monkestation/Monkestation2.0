@@ -93,7 +93,8 @@
 		/datum/reagent/medicine/mine_salve,
 		/datum/reagent/medicine/painkiller/morphine,
 		/datum/reagent/drug/space_drugs,
-		/datum/reagent/australium
+		/datum/reagent/australium,
+		/datum/reagent/lead,
 	)
 
 	var/list/recording_recipe

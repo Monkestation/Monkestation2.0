@@ -315,7 +315,7 @@
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	ph = 2.6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_AFFECTS_WOUNDS
-	metabolized_traits = list(TRAIT_ANALGESIA)
+	metabolized_traits = list(TRAIT_ANALGESIA, TRAIT_NO_DAMAGE_OVERLAY)
 
 /datum/reagent/medicine/mine_salve/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjustBruteLoss(-0.25 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)

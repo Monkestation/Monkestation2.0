@@ -52,3 +52,8 @@ GLOBAL_LIST_INIT(ai_project_categories, list(
 #define MAX_AI_BITCOIN_MINED_PER_TICK 375
 //Self explanatory, see MAX_AI_BITCOIN_MINED_PER_TICK * this = max money 1 AI can contribute per tick. (17,5 credits every 2 seconds, max 63k over 2 hours)
 #define AI_BITCOIN_PRICE 3.75
+
+///The minimum speed an AI CPU can be set by an Overclocking station.
+#define MINIMUM_CPU_SPEED 1
+///The minimum power an AI CPU can be set by an Overclocking station.
+#define MINIMUM_CPU_POWER 0.5

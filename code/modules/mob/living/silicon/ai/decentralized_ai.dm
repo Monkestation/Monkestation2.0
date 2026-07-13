@@ -36,7 +36,7 @@
 	if(last_used_data_core && !QDELETED(last_used_data_core))
 		if(last_used_data_core.can_transfer_ai(src, ignore_z_levels))
 			last_used_data_core.transfer_AI(src)
-			return
+			return TRUE
 	//it's gone pal
 	last_used_data_core = null
 

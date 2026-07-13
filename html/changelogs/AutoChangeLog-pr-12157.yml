@@ -1,0 +1,7 @@
+author: "Shoddd"
+delete-after: True
+changes:
+  - balance: "ipcs, oozelings, and plasma men can no longer have blood deficiency quirk"
+  - balance: "ipcs can no longer have immunodeficiency quirk"
+  - balance: "oozelings can no longer have frail quirk"
+  - balance: "oozelings can have food allergy quirk"
