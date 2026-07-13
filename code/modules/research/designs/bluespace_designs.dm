@@ -113,6 +113,7 @@
 		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/silver = SMALL_MATERIAL_AMOUNT * 1.5,
 		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/bluespace = SMALL_MATERIAL_AMOUNT,
 	)
 	build_path = /obj/item/gps/security
 	category = list(

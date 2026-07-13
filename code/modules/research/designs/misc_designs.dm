@@ -903,7 +903,6 @@
 		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
-		/datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 1.5,
 	)
 	build_path = /obj/item/bodycam_upgrade
 	category = list(

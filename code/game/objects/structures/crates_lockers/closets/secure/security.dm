@@ -78,6 +78,7 @@
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
 	new /obj/item/storage/photo_album/hos(src)
 	new /obj/item/gps/security(src)
+	new /obj/item/bodycam_upgrade(src)
 
 /obj/structure/closet/secure_closet/hos/populate_contents_immediate()
 	. = ..()
@@ -103,6 +104,7 @@
 	new /obj/item/flashlight/seclite(src)
 	new /obj/item/door_remote/head_of_security(src)
 	new /obj/item/gps/security(src)
+	new /obj/item/bodycam_upgrade(src)
 	new /obj/item/gun/ballistic/shotgun/automatic/combat/compact(src) //undoing ancient removal
 	new /obj/item/ammo_box/advanced/s12gauge/rubber(src) //he can have some rubber ammo too
 	new /obj/item/megaphone/sec(src)
@@ -123,7 +125,7 @@
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/flashlight/seclite(src)
 	new /obj/item/clothing/mask/balaclava(src)
-	new /obj/item/gps/security(src)
+	new /obj/item/bodycam_upgrade(src)
 
 /obj/structure/closet/secure_closet/security/sec
 
@@ -185,8 +187,8 @@
 	new /obj/item/storage/box/rxglasses/spyglasskit(src)
 	new /obj/item/clothing/head/fedora/inspector_hat(src)
 	new /obj/item/card/id/advanced/undercover(src)
-	new /obj/item/gps/security(src)
-	new /obj/item/gps/security(src)
+	new /obj/item/bodycam_upgrade(src)
+	new /obj/item/bodycam_upgrade(src)
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections locker"
@@ -367,7 +369,7 @@
 	..()
 	new /obj/item/flashlight/seclite(src)
 	new /obj/item/storage/bag/garment/brig_physician(src)
-	new /obj/item/gps/security(src)
+	new /obj/item/bodycam_upgrade(src)
 	new /obj/item/clothing/suit/jacket/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/clothing/glasses/blindfold(src)
