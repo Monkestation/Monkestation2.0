@@ -63,14 +63,20 @@
 
 /obj/item/chameleonbomb/attack_self(mob/user, modifiers)
 	. = ..()
-	if(!blowingup)
-		blowingup = TRUE
-		to_chat(user, span_userdanger("\The [src] loses it's decoy, it's a bomb!"))
-		visible_message(span_danger("The disguise on \the [src] [user] is holding falls! It's a bomb!"), span_userdanger("\The [src] loses it's disguise, it's a bomb!"), span_hear("A warbling sound rings out with a few beeps!"))
-		playsound(src, 'sound/machines/triple_beep.ogg', 50, FALSE)
-		log_bomber(user, "activated a chameleon bomb disguised as ", src)
-		explosion(src, explosive_size[1], explosive_size[2], explosive_size[3])
-		qdel(src)
+	if(blowingup)
+		return
+	blowingup = TRUE
+	to_chat(user, span_userdanger("\The [src] loses it's decoy, it's a bomb!"))
+	visible_message(span_danger("The disguise on \the [src] [user] is holding falls! It's a bomb!"), span_userdanger("\The [src] loses it's disguise, it's a bomb!"), span_hear("A warbling sound rings out with a few beeps!"))
+	playsound(src, 'sound/machines/triple_beep.ogg', 50, FALSE)
+	log_bomber(user, "activated a chameleon bomb disguised as ", src)
+	explosion(src, explosive_size[1], explosive_size[2], explosive_size[3])
+	if(iscarbon(user))
+		var/mob/living/carbon/carbonuser = user
+		var/obj/item/bodypart/unluckyarm = carbonuser.get_holding_bodypart_of_item(src)
+		if(istype(unluckyarm)) //telekinesis bullshit? whatever!
+			unluckyarm?.dismember(silent = FALSE)
+	qdel(src)
 
 /obj/item/chameleonbomb/click_alt(mob/user)
 	. = ..()
