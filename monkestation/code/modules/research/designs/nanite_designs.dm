@@ -104,7 +104,7 @@
 	program_type = /datum/nanite_program/emp
 	category = list("Utility Nanites")
 
-///datum/design/nanites/spreading
+//datum/design/nanites/spreading
 //	name = "Infective Exo-Locomotion"
 //	desc = "The nanites gain the ability to survive for brief periods outside of the human body, as well as the ability to start new colonies without an integration process; \
 //			resulting in an extremely infective strain of nanites."
