@@ -40,7 +40,7 @@
 		return FALSE //too big to hold
 	if(target.alpha != 255)
 		return FALSE
-	if(target.invisibility != 0)
+	if(target.invisibility)
 		return FALSE
 	return TRUE
 
