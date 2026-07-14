@@ -251,20 +251,6 @@
 	attached_hat = null
 	update_appearance(UPDATE_ICON)
 
-/obj/item/clothing/head/helmet/space/plasmaman/tough_as_hell
-	name = "tuff plasmaman helmet"
-	icon = 'icons/obj/clothing/head/plasmaman_hats.dmi'
-	worn_icon = 'icons/obj/clothing/head/plasmaman_hats.dmi'
-	icon_state = "plasmaman-helm"
-	inhand_icon_state = "plasmaman-helm"
-	greyscale_config = null
-	greyscale_config_worn = null
-	greyscale_config_inhand_left = null
-	greyscale_config_inhand_right = null
-
-/obj/item/clothing/head/helmet/space/plasmaman/tough_as_hell/attack_self(mob/user)
-	icon_state = tgui_input_text(user)
-
 /obj/item/clothing/head/helmet/space/plasmaman/security
 	name = "security plasma envirosuit helmet"
 	desc = "A plasmaman containment helmet designed for security officers, protecting them from burning alive, alongside other undesirables."
