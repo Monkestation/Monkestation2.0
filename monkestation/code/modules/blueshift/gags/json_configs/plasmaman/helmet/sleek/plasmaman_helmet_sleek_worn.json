@@ -1,5 +1,5 @@
 {
-	"plasmaman_helmet_sleek_worn": [
+	"plasmaman_helmet_s_w": [
 		{
 			"type": "icon_state",
 			"icon_state": "plasmaman_helmet_s_w",
@@ -13,7 +13,7 @@
 			"color_ids": [2]
 		}
 	],
-	"plasmaman_helmet_sleek_worn_light": [
+	"plasmaman_helmet_s_worn_light": [
 		{
 			"type": "icon_state",
 			"icon_state": "plasmaman_helmet_s_w",
@@ -27,7 +27,7 @@
 			"color_ids": [2]
 		}
 	],
-	"plasmaman_helmet_sleek_worn_welding": [
+	"plasmaman_helmet_s_worn_welding": [
 		{
 			"type": "icon_state",
 			"icon_state": "plasmaman_helmet_s_w",

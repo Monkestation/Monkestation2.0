@@ -1,5 +1,5 @@
 {
-	"plasmaman_helmet_worn": [
+	"plasmaman_helmet_w": [
 		{
 			"type": "reference",
 			"reference_type": "/datum/greyscale_config/plasmaman_helmet/worn/base",

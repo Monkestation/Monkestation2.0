@@ -1,9 +1,9 @@
 /obj/item/clothing/under/plasmaman/engineering
 	name = "engineering plasma envirosuit"
 	desc = "An air-tight suit designed to be used by plasmamen employed as engineers, the usual purple stripes being replaced by engineering's orange. It protects the user from fire and acid damage."
-	icon_state = "plasmaman_suit_engi"
-	worn_icon_state = "plasmaman_suit_engi_worn"
-	inhand_icon_state = "plasmaman_suit_engi"
+	icon_state = "sign"
+	worn_icon_state = "sign_w"
+	inhand_icon_state = "sign"
 	greyscale_config = /datum/greyscale_config/plasmaman_suit/symbol
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/symbol
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/symbol

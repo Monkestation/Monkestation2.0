@@ -1,5 +1,5 @@
 {
-	"plasmaman_helmet_worn": [
+	"plasmaman_helmet_w": [
 		{
 			"type": "reference",
 			"reference_type": "/datum/greyscale_config/plasmaman_helmet/worn/base",
@@ -13,7 +13,7 @@
 			"color_ids": [3]
 		}
 	],
-	"plasmaman_helmet_worn_light": [
+	"plasmaman_helmet_w_light": [
 		{
 			"type": "reference",
 			"reference_type": "/datum/greyscale_config/plasmaman_helmet/worn/base",
@@ -27,7 +27,7 @@
 			"color_ids": [3]
 		}
 	],
-	"plasmaman_helmet_worn_welding": [
+	"plasmaman_helmet_w_welding": [
 		{
 			"type": "reference",
 			"reference_type": "/datum/greyscale_config/plasmaman_helmet/worn/base",

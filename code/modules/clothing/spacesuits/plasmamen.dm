@@ -48,7 +48,7 @@
 	righthand_file = 'monkestation/code/modules/blueshift/gags/icons/righthand/plasmaman.dmi'
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | PLASMAMAN_PREVENT_IGNITION | HEADINTERNALS
 	icon_state = "plasmaman_helmet"
-	worn_icon_state = "plasmaman_helmet_worn"
+	worn_icon_state = "plasmaman_helmet_w"
 	inhand_icon_state = "plasmaman_helmet"
 	greyscale_config = /datum/greyscale_config/plasmaman_helmet
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_helmet/worn
@@ -107,9 +107,9 @@
 		worn_icon_state = initial(worn_icon_state)
 		inhand_icon_state = initial(inhand_icon_state)
 		return
-	icon_state = "plasmaman_helmet_sleek"
-	worn_icon_state = "plasmaman_helmet_sleek_worn"
-	inhand_icon_state = "plasmaman_sleek_helmet_sleek"
+	icon_state = "plasmaman_helmet_s"
+	worn_icon_state = "plasmaman_helmet_s_w"
+	inhand_icon_state = "plasmaman_helmet_s"
 	greyscale_config = /datum/greyscale_config/plasmaman_helmet/sleek
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_helmet/worn/sleek
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_helmet/inhand_left/sleek
@@ -149,9 +149,9 @@
 		worn_icon_state = initial(worn_icon_state)
 		inhand_icon_state = initial(inhand_icon_state)
 	else
-		icon_state = "plasmaman_helmet_sleek"
-		worn_icon_state = "plasmaman_helmet_sleek_worn"
-		inhand_icon_state = "plasmaman_sleek_helmet_sleek"
+		icon_state = "plasmaman_helmet_s"
+		worn_icon_state = "plasmaman_helmet_s_w"
+		inhand_icon_state = "plasmaman_helmet_s"
 	if(helmet_on)
 		icon_state = "[icon_state]_light"
 		worn_icon_state = "[worn_icon_state]_light"

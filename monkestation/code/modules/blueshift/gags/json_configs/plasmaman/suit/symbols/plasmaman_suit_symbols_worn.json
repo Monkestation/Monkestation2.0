@@ -1,5 +1,5 @@
 {
-	"plasmaman_suit_cross_worn": [
+	"cross_w": [
 		{
 			"type": "reference",
 			"reference_type": "/datum/greyscale_config/plasmaman_suit/worn/base",
@@ -30,7 +30,7 @@
 			"blend_mode": "overlay"
 		}
 	],
-	"plasmaman_suit_engi_worn": [
+	"sign_w": [
 		{
 			"type": "reference",
 			"reference_type": "/datum/greyscale_config/plasmaman_suit/worn/base",
@@ -61,7 +61,7 @@
 			"blend_mode": "overlay"
 		}
 	],
-	"plasmaman_suit_medal_worn": [
+	"medal_w": [
 		{
 			"type": "reference",
 			"reference_type": "/datum/greyscale_config/plasmaman_suit/worn/base",

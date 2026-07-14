@@ -1,9 +1,9 @@
 /obj/item/clothing/under/plasmaman/centcom_commander
 	name = "CentCom commander plasma envirosuit"
 	desc = "It's an envirosuit worn by CentCom's highest-tier Commanders."
-	icon_state = "plasmaman_suit_medal"
-	worn_icon_state = "plasmaman_suit_medal_worn"
-	inhand_icon_state = "plasmaman_suit_medal"
+	icon_state = "medal"
+	worn_icon_state = "medal_w"
+	inhand_icon_state = "medal"
 	greyscale_config = /datum/greyscale_config/plasmaman_suit/symbol
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/symbol
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/symbol
@@ -14,9 +14,9 @@
 /obj/item/clothing/under/plasmaman/centcom_official
 	name = "CentCom official plasma envirosuit"
 	desc = "It's an envirosuit worn by CentCom Officers."
-	icon_state = "plasmaman_suit_medal"
-	worn_icon_state = "plasmaman_suit_medal_worn"
-	inhand_icon_state = "plasmaman_suit_medal"
+	icon_state = "medal"
+	worn_icon_state = "medal_w"
+	inhand_icon_state = "medal"
 	greyscale_config = /datum/greyscale_config/plasmaman_suit/symbol
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/symbol
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/symbol
@@ -27,9 +27,9 @@
 /obj/item/clothing/under/plasmaman/centcom_intern
 	name = "CentCom intern plasma envirosuit"
 	desc = "It's an envirosuit worn by those interning for CentCom. The top is styled after a polo shirt for easy identification."
-	icon_state = "plasmaman_suit_medal"
-	worn_icon_state = "plasmaman_suit_medal_worn"
-	inhand_icon_state = "plasmaman_suit_medal"
+	icon_state = "medal"
+	worn_icon_state = "medal_w"
+	inhand_icon_state = "medal"
 	greyscale_config = /datum/greyscale_config/plasmaman_suit/symbol
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/symbol
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/symbol

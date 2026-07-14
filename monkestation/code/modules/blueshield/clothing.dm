@@ -12,9 +12,9 @@
 /obj/item/clothing/under/plasmaman/blueshield
 	name = "blueshield envirosuit"
 	desc = "A plasmaman containment suit designed for certified blueshields, offering a limited amount of extra protection."
-	icon_state = "plasmaman_suit_medal"
-	worn_icon_state = "plasmaman_suit_medal_worn"
-	inhand_icon_state = "plasmaman_suit_medal"
+	icon_state = "medal"
+	worn_icon_state = "medal_w"
+	inhand_icon_state = "medal"
 	greyscale_config = /datum/greyscale_config/plasmaman_suit/symbol
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/symbol
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/symbol

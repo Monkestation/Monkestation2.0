@@ -1,5 +1,5 @@
 {
-	"plasmaman_suit_sleek": [
+	"plasmaman_suit_s": [
 		{
 			"type": "icon_state",
 			"icon_state": "plasmaman_suit_s",
@@ -31,7 +31,7 @@
 			"color_ids": [5]
 		}
 	],
-	"plasmaman_suit_sleek_tie": [
+	"tie": [
 		{
 			"type": "icon_state",
 			"icon_state": "plasmaman_suit_s",

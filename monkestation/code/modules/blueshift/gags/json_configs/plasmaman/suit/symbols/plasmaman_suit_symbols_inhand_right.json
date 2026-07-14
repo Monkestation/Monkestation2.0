@@ -1,5 +1,5 @@
 {
-	"plasmaman_suit_cross": [
+	"cross": [
 		{
 			"type": "reference",
 			"reference_type": "/datum/greyscale_config/plasmaman_suit/inhand_right/base",
@@ -25,7 +25,7 @@
 			"color_ids": [6]
 		}
 	],
-	"plasmaman_suit_engi": [
+	"sign": [
 		{
 			"type": "reference",
 			"reference_type": "/datum/greyscale_config/plasmaman_suit/inhand_right/base",
@@ -51,7 +51,7 @@
 			"color_ids": [6]
 		}
 	],
-	"plasmaman_suit_medal": [
+	"medal": [
 		{
 			"type": "reference",
 			"reference_type": "/datum/greyscale_config/plasmaman_suit/inhand_right/base",

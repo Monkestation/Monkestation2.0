@@ -26,9 +26,9 @@
 /obj/item/clothing/under/plasmaman/secmed
 	name = "security medical envirosuit"
 	desc = "A new pattern plasmaman suit for those qualified as security medical personnel."
-	icon_state = "plasmaman_suit_cross"
-	worn_icon_state = "plasmaman_suit_cross_worn"
-	inhand_icon_state = "plasmaman_suit_cross"
+	icon_state = "cross"
+	worn_icon_state = "cross_w"
+	inhand_icon_state = "cross"
 	greyscale_config = /datum/greyscale_config/plasmaman_suit/symbol
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/symbol
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/symbol

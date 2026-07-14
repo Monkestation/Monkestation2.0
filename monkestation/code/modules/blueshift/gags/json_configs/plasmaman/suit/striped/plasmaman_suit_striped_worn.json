@@ -1,5 +1,5 @@
 {
-	"plasmaman_suit_worn": [
+	"plasmaman_suit_w": [
 		{
 			"type": "reference",
 			"reference_type": "/datum/greyscale_config/plasmaman_suit/worn/base",

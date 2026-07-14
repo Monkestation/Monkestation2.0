@@ -8,7 +8,7 @@
 	lefthand_file = 'monkestation/code/modules/blueshift/gags/icons/lefthand/plasmaman.dmi'
 	righthand_file = 'monkestation/code/modules/blueshift/gags/icons/righthand/plasmaman.dmi'
 	icon_state = "plasmaman_suit"
-	worn_icon_state = "plasmaman_suit_worn"
+	worn_icon_state = "plasmaman_suit_w"
 	inhand_icon_state = "plasmaman_suit"
 	greyscale_config = /datum/greyscale_config/plasmaman_suit
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn
@@ -28,20 +28,6 @@
 	var/extinguish_cooldown = 10 SECONDS
 	var/extinguishes_left = 5
 
-/obj/item/clothing/under/plasmaman/bulky
-	icon_state = "plasmaman_bulky"
-	greyscale_config = null
-	greyscale_config_worn = null
-	greyscale_config_inhand_left = null
-	greyscale_config_inhand_right = null
-
-/obj/item/clothing/under/plasmaman/sleek
-	icon_state = "plasmaman_sleek"
-	greyscale_config = null
-	greyscale_config_worn = null
-	greyscale_config_inhand_left = null
-	greyscale_config_inhand_right = null
-
 /datum/armor/under_plasmaman
 	bio = 100
 	fire = 95
@@ -57,9 +43,9 @@
 		worn_icon_state = initial(worn_icon_state)
 		inhand_icon_state = initial(inhand_icon_state)
 		return
-	icon_state = "plasmaman_suit_sleek"
-	worn_icon_state = "plasmaman_suit_sleek_worn"
-	inhand_icon_state = "plasmaman_suit_sleek"
+	icon_state = "plasmaman_suit_s"
+	worn_icon_state = "plasmaman_suit_s_w"
+	inhand_icon_state = "plasmaman_suit_s"
 	greyscale_config = /datum/greyscale_config/plasmaman_suit/sleek
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/sleek
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/sleek
@@ -134,9 +120,9 @@
 		worn_icon_state = initial(worn_icon_state)
 		inhand_icon_state = initial(inhand_icon_state)
 		return
-	icon_state = "plasmaman_suit_sleek_tie"
-	worn_icon_state = "plasmaman_suit_sleek_tie_worn"
-	inhand_icon_state = "plasmaman_suit_sleek_tie"
+	icon_state = "tie"
+	worn_icon_state = "tie_w"
+	inhand_icon_state = "tie"
 	update_appearance(UPDATE_ICON)
 
 /obj/item/clothing/under/plasmaman/chaplain
