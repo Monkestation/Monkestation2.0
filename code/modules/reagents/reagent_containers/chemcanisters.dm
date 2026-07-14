@@ -1,5 +1,5 @@
 /obj/item/reagent_containers/cup/chemcanister
-	name = "chemical canister "
+	name = "chemical canister"
 	desc = "A small chemical canister for holding small amounts of reagents."
 	icon_state = "canister"
 	unique_reskin = list("Standard" = "canister",
