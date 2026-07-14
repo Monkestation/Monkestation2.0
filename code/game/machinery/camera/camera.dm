@@ -296,7 +296,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 /obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
 		return
-	if (!can_use())
+	if (!can_use(user))
 		return
 	user.switchCamera(src)
 
@@ -381,7 +381,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 
 /obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = TRUE)
 	camera_enabled = !camera_enabled
-	if(can_use())
+	if(can_use(user))
 		SScameras.add_camera_to_chunk(src)
 		if (isturf(loc))
 			myarea = get_area(src)
@@ -432,14 +432,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 	alarm_on = FALSE
 	alarm_manager.clear_alarm(ALARM_CAMERA)
 
-/obj/machinery/camera/proc/can_use()
+/obj/machinery/camera/proc/can_use(mob/living/user)
 	if(!camera_enabled)
 		return FALSE
 	if(machine_stat & EMPED)
 		return FALSE
 	return TRUE
 
-/obj/machinery/camera/proc/can_see()
+/obj/machinery/camera/proc/can_see(ai_visibility = FALSE)
 	var/list/see = null
 	var/turf/pos = get_turf(src)
 	var/turf/directly_above = GET_TURF_ABOVE(pos)

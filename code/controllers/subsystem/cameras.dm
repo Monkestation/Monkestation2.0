@@ -132,11 +132,11 @@ SUBSYSTEM_DEF(cameras)
 /datum/controller/subsystem/cameras/proc/get_turf_camera_chunk(turf/position)
 	return default_net.get_turf_camera_chunk(position)
 
-/datum/controller/subsystem/cameras/proc/get_available_cameras_data(list/networks_available, list/z_levels_available)
-	return default_net.get_available_cameras_data(networks_available, z_levels_available)
+/datum/controller/subsystem/cameras/proc/get_available_cameras_data(list/networks_available, list/z_levels_available, mob/user)
+	return default_net.get_available_cameras_data(networks_available, z_levels_available, user)
 
-/datum/controller/subsystem/cameras/proc/get_available_camera_by_tag_list(list/networks_available, list/z_levels_available)
-	return default_net.get_available_camera_by_tag_list(networks_available, z_levels_available)
+/datum/controller/subsystem/cameras/proc/get_available_camera_by_tag_list(list/networks_available, list/z_levels_available, mob/user)
+	return default_net.get_available_camera_by_tag_list(networks_available, z_levels_available, user)
 
 /obj/effect/overlay/camera_static
 	name = "static"

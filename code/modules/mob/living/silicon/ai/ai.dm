@@ -678,7 +678,7 @@
 
 	if (length(cameras))
 		var/obj/machinery/camera/cam = cameras[1]
-		if (cam.can_use())
+		if (cam.can_use(src))
 			queueAlarm("--- [alarm_type] alarm detected in [home_name]! (<A HREF='byond://?src=[REF(src)];switchcamera=[REF(cam)]'>[cam.c_tag]</A>)", alarm_type)
 		else
 			var/first_run = FALSE
@@ -716,7 +716,7 @@
 		var/list/tempnetwork = C.network
 		if(!camera_turf || !(is_station_level(camera_turf.z) || is_mining_level(camera_turf.z) || (CAMERANET_NETWORK_SS13 in tempnetwork)))
 			continue
-		if(!C.can_use())
+		if(!C.can_use(src))
 			continue
 		tempnetwork.Remove(CAMERANET_NETWORK_RD, CAMERANET_NETWORK_ORDNANCE, CAMERANET_NETWORK_PRISON)
 		if(length(tempnetwork))
@@ -733,7 +733,7 @@
 		network = old_network // If nothing is selected
 	else
 		for(var/obj/machinery/camera/C in SScameras.cameras)
-			if(!C.can_use())
+			if(!C.can_use(src))
 				continue
 			if(network in C.network)
 				U.eyeobj.setLoc(get_turf(C))
@@ -889,7 +889,7 @@
 			for(var/obj/machinery/camera/camera as anything in z_cameras)
 				if(QDELETED(camera))
 					continue
-				if(!camera.can_use() || get_dist(camera, eyeobj) > 7 || !camera.internal_light)
+				if(!camera.can_use(src) || get_dist(camera, eyeobj) > 7 || !camera.internal_light)
 					continue
 				visible |= camera
 
@@ -1235,7 +1235,7 @@
 		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
 
 /mob/living/silicon/ai/proc/show_camera_list()
-	var/list/cameras = SScameras.get_available_camera_by_tag_list(network)
+	var/list/cameras = SScameras.get_available_camera_by_tag_list(network, user = src)
 	var/camera_tag = tgui_input_list(src, "Choose which camera you want to view", "Cameras", cameras)
 	if(isnull(camera_tag))
 		return

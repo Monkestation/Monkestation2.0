@@ -1,13 +1,13 @@
 //We only call a camera static update if we have successfully moved and the camera is present and working
 /mob/living/silicon/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	if(builtInCamera?.can_use())
+	if(builtInCamera?.can_use(user = null))
 		update_camera_location(old_loc)
 
 /obj/machinery/ai/data_core/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	for(var/mob/living/silicon/ai/internal_ai in contents)
-		if(internal_ai.builtInCamera?.can_use())
+		if(internal_ai.builtInCamera?.can_use(user = null))
 			internal_ai.update_camera_location(old_loc)
 
 /mob/living/silicon/proc/update_camera_location(oldLoc)

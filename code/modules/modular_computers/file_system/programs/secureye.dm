@@ -112,7 +112,7 @@
 	data["network"] = network
 	data["mapRef"] = cam_screen.assigned_map
 	data["can_spy"] = !!spying
-	data["cameras"] = SScameras.get_available_cameras_data(network)
+	data["cameras"] = SScameras.get_available_cameras_data(network, user = user)
 	return data
 
 /datum/computer_file/program/secureye/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)

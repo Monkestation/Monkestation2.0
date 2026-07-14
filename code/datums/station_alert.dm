@@ -66,9 +66,11 @@
 	if(.)
 		return
 
+	var/mob/user = ui.user
+
 	switch(action)
 		if("select_camera")
-			var/mob/living/silicon/ai/ai = usr
+			var/mob/living/silicon/ai/ai = user
 			if(!istype(ai))
 				return
 
@@ -96,8 +98,8 @@
 				if(isnull(chosen_camera))
 					return
 			var/obj/machinery/camera/selected_camera = named_cameras[chosen_camera]
-			if(!selected_camera.can_use())
-				to_chat(ai, span_warning("Camera is unavailable!"))
+			if(!selected_camera.can_use(user))
+				to_chat(user, span_warning("Camera is unavailable!"))
 				return
 			ai.switchCamera(selected_camera)
 			return TRUE

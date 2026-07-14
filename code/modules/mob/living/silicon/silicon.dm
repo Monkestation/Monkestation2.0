@@ -502,7 +502,7 @@
 	//if their camera is online, it's safe to assume they are in cameranets
 	//since it takes a while for camera vis to update, this lets us bypass that so AIs can always see their borgs,
 	//without making cameras constantly update every time a borg moves.
-	if(builtInCamera && builtInCamera.can_use())
+	if(builtInCamera && builtInCamera.can_use(user))
 		return TRUE
 	return ..()
 
