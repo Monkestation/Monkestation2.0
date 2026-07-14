@@ -785,3 +785,7 @@ ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use t
 	icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi'
 	icon_state = "mmi-ipc"
 
+/obj/item/organ/internal/brain/nabber
+	name = "nabber brain"
+	icon = 'icons/obj/medical/organs/nabber_organs.dmi'
+	icon_state = "brain"
