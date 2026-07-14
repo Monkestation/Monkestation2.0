@@ -619,7 +619,16 @@
 	desc = "A modified envirosuit featuring a reserved color scheme."
 	icon = 'monkestation/icons/donator/obj/clothing/uniform.dmi'
 	worn_icon = 'monkestation/icons/donator/mob/clothing/uniform.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_config_inhand_left = null
+	greyscale_config_inhand_right = null
+	greyscale_colors = null
 	icon_state = "emissionsuit"
+	worn_icon_state = "emissionsuit"
+	inhand_icon_state = null
 
 // Donation reward for CandleJax
 /obj/item/clothing/head/bio_hood/jax
@@ -634,7 +643,17 @@
 	desc = "A hazard suit fitted with bio-resistant fibers. Utilizes self-sterilizing pumps fitted in the back."
 	icon = 'monkestation/icons/donator/obj/clothing/uniform.dmi'
 	worn_icon = 'monkestation/icons/donator/mob/clothing/uniform.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_config_inhand_left = null
+	greyscale_config_inhand_right = null
+	greyscale_colors = null
 	icon_state = "plasmaman_jax"
+	worn_icon_state = "plasmaman_jax"
+	inhand_icon_state = null
+
 
 /obj/item/clothing/suit/toggle/labcoat/skyrat/rd/jax
 	name = "xuracorp enameled labcoat"

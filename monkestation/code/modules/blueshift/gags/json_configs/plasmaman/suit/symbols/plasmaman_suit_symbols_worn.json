@@ -1,0 +1,95 @@
+{
+	"plasmaman_suit_cross_worn": [
+		{
+			"type": "reference",
+			"reference_type": "/datum/greyscale_config/plasmaman_suit/worn/base",
+			"blend_mode": "overlay",
+			"color_ids": [1, 2, 3, 7]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "belt_w",
+			"blend_mode": "overlay",
+			"color_ids": [4]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "seal_w",
+			"blend_mode": "overlay",
+			"color_ids": [5]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cross_w",
+			"blend_mode": "overlay",
+			"color_ids": [6]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "soles",
+			"blend_mode": "overlay"
+		}
+	],
+	"plasmaman_suit_engi_worn": [
+		{
+			"type": "reference",
+			"reference_type": "/datum/greyscale_config/plasmaman_suit/worn/base",
+			"blend_mode": "overlay",
+			"color_ids": [1, 2, 3, 7]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "belt_w",
+			"blend_mode": "overlay",
+			"color_ids": [4]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "seal_w",
+			"blend_mode": "overlay",
+			"color_ids": [5]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "sign_w",
+			"blend_mode": "overlay",
+			"color_ids": [6]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "soles",
+			"blend_mode": "overlay"
+		}
+	],
+	"plasmaman_suit_medal_worn": [
+		{
+			"type": "reference",
+			"reference_type": "/datum/greyscale_config/plasmaman_suit/worn/base",
+			"blend_mode": "overlay",
+			"color_ids": [1, 2, 3, 7]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "belt_w",
+			"blend_mode": "overlay",
+			"color_ids": [4]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "seal_w",
+			"blend_mode": "overlay",
+			"color_ids": [5]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "medal_w",
+			"blend_mode": "overlay",
+			"color_ids": [6]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "soles",
+			"blend_mode": "overlay"
+		}
+	]
+}

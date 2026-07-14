@@ -1,0 +1,16 @@
+{
+	"plasmaman_helmet_sleek": [
+		{
+			"type": "icon_state",
+			"icon_state": "plasmaman_helmet_s",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "screen_s",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		}
+	]
+}

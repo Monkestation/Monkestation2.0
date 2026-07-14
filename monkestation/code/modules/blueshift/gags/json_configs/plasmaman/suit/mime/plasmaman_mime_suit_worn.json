@@ -1,0 +1,32 @@
+{
+	"plasmaman_suit_worn": [
+		{
+			"type": "reference",
+			"reference_type": "/datum/greyscale_config/plasmaman_suit/worn/base",
+			"blend_mode": "overlay",
+			"color_ids": [1, 2, 3, 6]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "belt_w",
+			"blend_mode": "overlay",
+			"color_ids": [4]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "seal_w",
+			"blend_mode": "overlay",
+			"color_ids": [5]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "mime_stripes_w",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "soles",
+			"blend_mode": "overlay"
+		}
+	]
+}

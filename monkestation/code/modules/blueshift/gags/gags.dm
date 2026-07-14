@@ -1229,3 +1229,236 @@
 /datum/greyscale_config/cin_surplus_chestrig/object
 	name = "CIN Surplus Chestrig (OBJ)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/surplus_armor/surplus_armor_object.dmi'
+
+// Plasmaman
+
+// Helmet
+/datum/greyscale_config/plasmaman_helmet
+	name = "Plasmaman Helmet"
+	icon_file = 'monkestation/code/modules/blueshift/gags/icons/plasmaman.dmi'
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/default/plasmaman_helmet.json'
+
+/datum/greyscale_config/plasmaman_helmet/base //bases
+	name = "Plasmaman Helmet Base (No Visor)"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/plasmaman_helmet_base.json'
+
+/datum/greyscale_config/plasmaman_helmet/worn
+	name = "Plasmaman Helmet (Worn)"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/default/plasmaman_helmet_worn.json'
+
+/datum/greyscale_config/plasmaman_helmet/worn/base //bases
+	name = "Plasmaman Helmet Base (No Visor) (Worn)"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/plasmaman_helmet_base_worn.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_left
+	name = "Plasmaman Helmet (Held), Left"
+	icon_file = 'monkestation/code/modules/blueshift/gags/icons/lefthand/plasmaman.dmi'
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/default/plasmaman_helmet_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_left/base //bases
+	name = "Plasmaman Helmet Base (No Visor) (Held), Left"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/plasmaman_helmet_base_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_right
+	name = "Plasmaman Helmet (Held), Right"
+	icon_file = 'monkestation/code/modules/blueshift/gags/icons/righthand/plasmaman.dmi'
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/default/plasmaman_helmet_inhand_right.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_right/base //bases
+	name = "Plasmaman Helmet Base (No Visor) (Held), Right"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/plasmaman_helmet_base_inhand_right.json'
+
+// Sleek
+
+/datum/greyscale_config/plasmaman_helmet/sleek
+	name = "Plasmaman Helmet (Sleek)"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/sleek/plasmaman_helmet_sleek.json'
+
+/datum/greyscale_config/plasmaman_helmet/worn/sleek
+	name = "Plasmaman Helmet (Sleek) (Worn)"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/sleek/plasmaman_helmet_sleek_worn.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_left/sleek
+	name = "Plasmaman Helmet (Sleek) (Held), Left"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/sleek/plasmaman_helmet_sleek_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_right/sleek
+	name = "Plasmaman Helmet (Sleek) (Held), Right"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/sleek/plasmaman_helmet_sleek_inhand_right.json'
+
+// Alternative (HoS, Warden and Jani)
+
+/datum/greyscale_config/plasmaman_helmet/stripe
+	name = "Plasmaman Helmet (Striped)"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/striped/plasmaman_helmet_striped.json'
+
+/datum/greyscale_config/plasmaman_helmet/worn/stripe
+	name = "Plasmaman Helmet (Striped) (Worn)"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/striped/plasmaman_helmet_striped_worn.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_left/stripe
+	name = "Plasmaman Helmet (Striped) (Held), Left"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/striped/plasmaman_helmet_striped_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_right/stripe
+	name = "Plasmaman Helmet (Striped) (Held), Right"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/striped/plasmaman_helmet_striped_inhand_right.json'
+
+// Threate Jobs Plasmaman Helmets
+
+/datum/greyscale_config/plasmaman_helmet/clown
+	name = "Plasmaman Clown Helmet"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/clown/plasmaman_clown_helmet.json'
+
+/datum/greyscale_config/plasmaman_helmet/worn/clown
+	name = "Plasmaman Clown Helmet (Worn)"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/clown/plasmaman_clown_helmet_worn.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_left/clown
+	name = "Plasmaman Clown Helmet (Held), Left"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/clown/plasmaman_clown_helmet_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_right/clown
+	name = "Plasmaman Clown Helmet (Held), Right"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/clown/plasmaman_clown_helmet_inhand_right.json'
+
+/datum/greyscale_config/plasmaman_helmet/mime
+	name = "Plasmaman Mime Helmet"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/mime/plasmaman_mime_helmet.json'
+
+/datum/greyscale_config/plasmaman_helmet/worn/mime
+	name = "Plasmaman Mime Helmet (Worn)"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/mime/plasmaman_mime_helmet_worn.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_left/mime
+	name = "Plasmaman Mime Helmet (Held), Left"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/mime/plasmaman_mime_helmet_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_right/mime
+	name = "Plasmaman Mime Helmet (Held), Right"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/helmet/mime/plasmaman_mime_helmet_inhand_right.json'
+
+// Suit
+
+/datum/greyscale_config/plasmaman_suit
+	name = "Plasmaman Suit"
+	icon_file = 'monkestation/code/modules/blueshift/gags/icons/plasmaman.dmi'
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/default/plasmaman_suit.json'
+
+/datum/greyscale_config/plasmaman_suit/base //bases
+	name = "Plasmaman Suit Base"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/plasmaman_suit_base.json'
+
+/datum/greyscale_config/plasmaman_suit/worn
+	name = "Plasmaman Suit (Worn)"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/default/plasmaman_suit_worn.json'
+
+/datum/greyscale_config/plasmaman_suit/worn/base //bases
+	name = "Plasmaman Suit Base (Worn)"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/plasmaman_suit_base_worn.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_left
+	name = "Plasmaman Suit (Held), Left"
+	icon_file = 'monkestation/code/modules/blueshift/gags/icons/lefthand/plasmaman.dmi'
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/default/plasmaman_suit_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_left/base //bases
+	name = "Plasmaman Suit Base (Held), Left"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/plasmaman_suit_base_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_right
+	name = "Plasmaman Suit (Held), Right"
+	icon_file = 'monkestation/code/modules/blueshift/gags/icons/righthand/plasmaman.dmi'
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/default/plasmaman_suit_inhand_right.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_right/base //bases
+	name = "Plasmaman Suit Base (Held), Right"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/plasmaman_suit_base_inhand_right.json'
+
+// Sleek
+
+/datum/greyscale_config/plasmaman_suit/sleek // since i don't want to extend the file more its being set by icon state
+	name = "Plasmaman Suit (Sleek)"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/sleek/plasmaman_suit_sleek.json'
+
+/datum/greyscale_config/plasmaman_suit/worn/sleek
+	name = "Plasmaman Suit (Sleek) (Worn)"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/sleek/plasmaman_suit_sleek_worn.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_left/sleek
+	name = "Plasmaman Suit (Sleek) (Held), Left"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/sleek/plasmaman_suit_sleek_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_right/sleek
+	name = "Plasmaman Suit (Sleek) (Held), Right"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/sleek/plasmaman_suit_sleek_inhand_right.json'
+
+// Symbols (Cross, Engi, Medal)
+
+/datum/greyscale_config/plasmaman_suit/symbol //symbol defined by icon state
+	name = "Plasmaman Suit (Symbols)"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/symbols/plasmaman_suit_symbols.json'
+
+/datum/greyscale_config/plasmaman_suit/worn/symbol
+	name = "Plasmaman Suit (Symbols) (Worn)"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/symbols/plasmaman_suit_symbols_worn.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_left/symbol
+	name = "Plasmaman Suit (Symbols) (Held), Left"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/symbols/plasmaman_suit_symbols_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_right/symbol
+	name = "Plasmaman Suit (Symbols) (Held), Right"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/symbols/plasmaman_suit_symbols_inhand_right.json'
+
+// Threate Jobs
+
+/datum/greyscale_config/plasmaman_suit/clown
+	name = "Plasmaman Clown Suit"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/clown/plasmaman_clown_suit.json'
+
+/datum/greyscale_config/plasmaman_suit/worn/clown
+	name = "Plasmaman Clown Suit (Worn)"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/clown/plasmaman_clown_suit_worn.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_left/clown
+	name = "Plasmaman Clown Suit (Held), Left"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/clown/plasmaman_clown_suit_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_right/clown
+	name = "Plasmaman Clown Suit (Held), Right"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/clown/plasmaman_clown_suit_inhand_right.json'
+
+/datum/greyscale_config/plasmaman_suit/mime
+	name = "Plasmaman Mime Suit"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/mime/plasmaman_mime_suit.json'
+
+/datum/greyscale_config/plasmaman_suit/worn/mime
+	name = "Plasmaman Mime Suit (Worn)"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/mime/plasmaman_mime_suit_worn.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_left/mime
+	name = "Plasmaman Mime Suit (Held), Left"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/mime/plasmaman_mime_suit_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_right/mime
+	name = "Plasmaman Mime Suit (Held), Right"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/mime/plasmaman_mime_suit_inhand_right.json'
+
+// Striped (HoS, Para, Jani, Warden, Chef)
+
+/datum/greyscale_config/plasmaman_suit/striped
+	name = "Plasmaman Suit Striped"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/striped/plasmaman_suit_striped.json'
+
+/datum/greyscale_config/plasmaman_suit/worn/striped
+	name = "Plasmaman Suit Striped (Worn)"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/striped/plasmaman_suit_striped_worn.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_left/striped
+	name = "Plasmaman Suit Striped (Held), Left"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/striped/plasmaman_suit_striped_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_right/striped
+	name = "Plasmaman Suit Striped (Held), Right"
+	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/plasmaman/suit/striped/plasmaman_suit_striped_inhand_right.json'

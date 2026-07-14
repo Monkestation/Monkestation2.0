@@ -1,0 +1,44 @@
+{
+	"plasmaman_helmet_sleek_worn": [
+		{
+			"type": "icon_state",
+			"icon_state": "plasmaman_helmet_s_w",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "screen_s_w",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		}
+	],
+	"plasmaman_helmet_sleek_worn_light": [
+		{
+			"type": "icon_state",
+			"icon_state": "plasmaman_helmet_s_w",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "screen_s_light_w",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		}
+	],
+	"plasmaman_helmet_sleek_worn_welding": [
+		{
+			"type": "icon_state",
+			"icon_state": "plasmaman_helmet_s_w",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "screen_s_welding_w",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		}
+	]
+}
