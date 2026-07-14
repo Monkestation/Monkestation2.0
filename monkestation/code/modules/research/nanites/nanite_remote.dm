@@ -108,7 +108,7 @@
 	data["silicon"] = silicon
 	return data
 
-/obj/item/nanite_remote/ui_act(action, params)
+/obj/item/nanite_remote/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -227,7 +227,7 @@
 
 	return data
 
-/obj/item/nanite_remote/comm/ui_act(action, params)
+/obj/item/nanite_remote/comm/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

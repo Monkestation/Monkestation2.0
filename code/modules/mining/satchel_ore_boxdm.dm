@@ -77,7 +77,7 @@
 
 	return data
 
-/obj/structure/ore_box/ui_act(action, params)
+/obj/structure/ore_box/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

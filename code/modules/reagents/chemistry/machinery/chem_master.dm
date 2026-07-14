@@ -321,7 +321,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 
 	return data
 
-/obj/machinery/chem_master/ui_act(action, params)
+/obj/machinery/chem_master/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

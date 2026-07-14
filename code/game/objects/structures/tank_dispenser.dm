@@ -86,7 +86,7 @@
 
 	return data
 
-/obj/structure/tank_dispenser/ui_act(action, params)
+/obj/structure/tank_dispenser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
