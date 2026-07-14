@@ -391,7 +391,7 @@
 /obj/item/clothing/head/helmet/space/plasmaman/chaplain
 	name = "chaplain's plasma envirosuit helmet"
 	desc = "An envirohelmet specially designed for only the most pious of plasmamen."
-	greyscale_colors = "39393f#a747c0#bd6abd"
+	greyscale_colors = "#39393f#a747c0#bd6abd"
 	sleek_greyscale_colors = "#39393f#dbaa14"
 
 /obj/item/clothing/head/helmet/space/plasmaman/white
@@ -531,6 +531,8 @@
 	desc = "An envirohelmet designed for plasmaman bunny themed waiters, it has a pair of bunny ears welded onto the helmet."
 	icon = 'icons/obj/clothing/head/plasmaman_hats.dmi'
 	worn_icon = 'icons/mob/clothing/head_32x48.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_config_inhand_left = null
