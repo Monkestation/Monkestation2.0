@@ -159,7 +159,7 @@ GLOBAL_VAR(round_default_lawset)
 
 /datum/ai_laws/custom/New() //This reads silicon_laws.txt and allows server hosts to set custom AI starting laws.
 	..()
-	for(var/line in world.file2list("[global.config.directory]/silicon_laws.txt"))
+	for(var/line in file2list("[global.config.directory]/silicon_laws.txt"))
 		if(!line)
 			continue
 		if(findtextEx(line,"#",1,2))
@@ -236,7 +236,14 @@ GLOBAL_VAR(round_default_lawset)
 	// If the owner is an antag (has a special role) they also shouldn't be wiped
 	if(owner?.mind?.special_role)
 		return FALSE
-	if (isAI(owner))
+
+	// If their MMI gave them a zeroth law, they should keep it unless the underlying MMI no longer has it.
+	if(iscyborg(owner))
+		var/mob/living/silicon/robot/cyborg_owner = owner
+		if(cyborg_owner.mmi?.force_cyborg_lawzero)
+			return FALSE
+
+	if(isAI(owner))
 		var/mob/living/silicon/ai/ai_owner = owner
 		if(ai_owner.deployed_shell?.mind?.special_role)
 			return FALSE

@@ -535,8 +535,8 @@
 	sleek_greyscale_colors = "#39393f#c99840"
 
 /obj/item/clothing/head/helmet/space/plasmaman/engineering/signal_tech
-	name = "signal technician plasma envirosuit helmet"
-	desc = "A space-worthy helmet specially designed for signal technician plasmamen, the usual purple stripes being replaced by a unique bright green."
+	name = "network admin's plasma envirosuit helmet"
+	desc = "A space-worthy helmet specially designed for network admin plasmamen, the usual purple stripes being replaced by a unique bright green."
 	greyscale_colors = "#deb63d#00ff33#bd6abd"
 	sleek_greyscale_colors = "#39393f#00ff33"
 
@@ -544,7 +544,7 @@
 	name = "bunny eared plasma envirosuit helmet"
 	desc = "An envirohelmet designed for plasmaman bunny themed waiters, it has a pair of bunny ears welded onto the helmet."
 	icon = 'icons/obj/clothing/head/plasmaman_hats.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/head_32x48.dmi'
+	worn_icon = 'icons/mob/clothing/head_32x48.dmi'
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_config_inhand_left = null

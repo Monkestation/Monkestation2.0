@@ -72,7 +72,7 @@
 /obj/effect/mob_spawn/ghost_role/drone/cogscarab
 	name = "cogscarab construct"
 	desc = "The shell of an ancient construction drone, loyal to Ratvar."
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_objects.dmi'
 	icon_state = "cogscarab_shell"
 	mob_name = "cogscarab"
 	mob_type = /mob/living/basic/drone/cogscarab

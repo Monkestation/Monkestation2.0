@@ -1,5 +1,3 @@
-/// How many seconds between each fuel depletion tick ("use" proc)
-#define WELDER_FUEL_BURN_INTERVAL 26
 /obj/item/weldingtool
 	name = "welding tool"
 	desc = "A standard edition welder provided by Nanotrasen."
@@ -38,15 +36,13 @@
 	/// Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/status = TRUE
 	/// The max amount of fuel the welder can hold
-	var/max_fuel = 20
+	var/max_fuel = 30
 	/// Does the welder start with fuel.
 	var/starting_fuel = TRUE
 	/// Whether or not we're changing the icon based on fuel left.
 	var/change_icons = TRUE
 	/// Used in process(), dictates whether or not we're calling STOP_PROCESSING whilst we're not welding.
 	var/can_off_process = FALSE
-	/// When fuel was last removed.
-	var/burned_fuel_for = 0
 
 	var/activation_sound = 'sound/items/welderactivate.ogg'
 	var/deactivation_sound = 'sound/items/welderdeactivate.ogg'
@@ -77,7 +73,7 @@
 /obj/item/weldingtool/update_overlays()
 	. = ..()
 	if(change_icons)
-		var/ratio = get_fuel() / max_fuel
+		var/ratio = reagents.total_volume / max_fuel
 		ratio = CEILING(ratio*4, 1) * 25
 		. += "[initial(icon_state)][ratio]"
 	if(welding)
@@ -85,24 +81,12 @@
 
 
 /obj/item/weldingtool/process(seconds_per_tick)
-	if(welding)
-		force = 15
-		damtype = BURN
-		burned_fuel_for += seconds_per_tick
-		if(burned_fuel_for >= WELDER_FUEL_BURN_INTERVAL)
-			use(TRUE)
-		update_appearance()
-
-	//Welders left on now use up fuel, but lets not have them run out quite that fast
-	else
-		force = 3
-		damtype = BRUTE
-		update_appearance()
+	if(!welding)
 		if(!can_off_process)
 			STOP_PROCESSING(SSobj, src)
 		return
 
-	//This is to start fires. process() is only called if the welder is on.
+	use(1, TRUE)
 	open_flame()
 
 
@@ -111,7 +95,17 @@
 	return FIRELOSS
 
 /obj/item/weldingtool/screwdriver_act(mob/living/user, obj/item/tool)
-	flamethrower_screwdriver(tool, user)
+	if(welding)
+		to_chat(user, span_warning("Turn it off first!"))
+		return ITEM_INTERACT_BLOCKING
+	status = !status
+	if(status)
+		to_chat(user, span_notice("You resecure [src] and close the fuel tank."))
+		reagents.flags &= ~(OPENCONTAINER)
+	else
+		to_chat(user, span_notice("[src] can now be attached, modified, and refuelled."))
+		reagents.flags |= OPENCONTAINER
+	add_fingerprint(user)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/weldingtool/attackby(obj/item/tool, mob/user, params)
@@ -180,7 +174,7 @@
 /obj/item/weldingtool/afterattack(atom/target, mob/user, click_parameters)
 	if(!isOn())
 		return
-	use(1)
+	use(2)
 	var/turf/location = get_turf(user)
 	location.hotspot_expose(700, 50, 1)
 	if(QDELETED(target) || !isliving(target)) // can't ignite something that doesn't exist
@@ -200,26 +194,19 @@
 	switched_on(user)
 	update_appearance()
 
-/obj/item/weldingtool/proc/handle_fuel_and_temps(used = 0, mob/living/user)
-	use(used)
-	var/turf/location = get_turf(user)
-	location.hotspot_expose(700, 50, 1)
-
 /// Returns the amount of fuel in the welder
 /obj/item/weldingtool/proc/get_fuel()
-	return reagents.get_reagent_amount(/datum/reagent/fuel)
+	return reagents.get_multiple_reagent_amounts(list(/datum/reagent/fuel, /datum/reagent/napalm))
 
 
 /// Uses fuel from the welding tool.
-/obj/item/weldingtool/use(used = 0)
+/obj/item/weldingtool/use(used = 0, passive = FALSE)
 	if(!..() || !isOn() || !check_fuel())
 		return FALSE
 
-	if(used > 0)
-		burned_fuel_for = 0
-
-	if(get_fuel() >= used)
-		reagents.remove_reagent(/datum/reagent/fuel, used)
+	if(get_fuel() >= used || passive)
+		if(!reagents.remove_reagent(/datum/reagent/fuel, used))
+			reagents.remove_reagent(/datum/reagent/napalm, used * 0.5)
 		check_fuel()
 		return TRUE
 	else
@@ -277,7 +264,17 @@
 
 /obj/item/weldingtool/examine(mob/user)
 	. = ..()
-	. += "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
+	. += "It contains [reagents.total_volume] unit\s of fuel out of [max_fuel]."
+	if(status)
+		. += span_notice("Looks like the fuel tank is currently secured firmly in-place.")
+		. += span_notice("You could use a [span_bold("screwdriver")] on it to allow for attaching, modifying and accessing the fuel.")
+	else
+		. += span_notice("Looks like the fuel tank is loose, allowing for modifying its contents freely and attaching or modifying it.")
+		. += span_notice("You could use a [span_bold("screwdriver")] on it to secure it in-place.")
+
+/obj/item/weldingtool/examine_more(mob/user)
+	. = ..()
+	. += span_notice("You think replacing its fuel with napalm could make the flames last a lot longer.")
 
 /obj/item/weldingtool/get_temperature()
 	return welding * heat
@@ -297,20 +294,6 @@
 	else
 		to_chat(user, span_warning("You need more welding fuel to complete this task!"))
 		return FALSE
-
-/// Ran when the welder is attacked by a screwdriver.
-/obj/item/weldingtool/proc/flamethrower_screwdriver(obj/item/tool, mob/user)
-	if(welding)
-		to_chat(user, span_warning("Turn it off first!"))
-		return
-	status = !status
-	if(status)
-		to_chat(user, span_notice("You resecure [src] and close the fuel tank."))
-		reagents.flags &= ~(OPENCONTAINER)
-	else
-		to_chat(user, span_notice("[src] can now be attached, modified, and refuelled."))
-		reagents.flags |= OPENCONTAINER
-	add_fingerprint(user)
 
 /// First step of building a flamethrower (when a welder is attacked by rods)
 /obj/item/weldingtool/proc/flamethrower_rods(obj/item/tool, mob/user)
@@ -340,11 +323,8 @@
 	name = "industrial welding tool"
 	desc = "A slightly larger welder with a larger tank."
 	icon_state = "indwelder"
-	max_fuel = 40
+	max_fuel = 60
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
-
-/obj/item/weldingtool/largetank/flamethrower_screwdriver()
-	return
 
 /obj/item/weldingtool/largetank/empty
 	starting_fuel = FALSE
@@ -359,13 +339,10 @@
 	name = "emergency welding tool"
 	desc = "A miniature welder used during emergencies."
 	icon_state = "miniwelder"
-	max_fuel = 10
+	max_fuel = 15
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.3, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.1)
 	change_icons = FALSE
-
-/obj/item/weldingtool/mini/flamethrower_screwdriver()
-	return
 
 /obj/item/weldingtool/mini/empty
 	starting_fuel = FALSE
@@ -391,7 +368,7 @@
 	desc = "An upgraded welder based of the industrial welder."
 	icon_state = "upindwelder"
 	inhand_icon_state = "upindwelder"
-	max_fuel = 80
+	max_fuel = 90
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.7, /datum/material/glass=SMALL_MATERIAL_AMOUNT*1.2)
 
 /obj/item/weldingtool/experimental
@@ -399,7 +376,7 @@
 	desc = "An experimental welder capable of self-fuel generation and less harmful to the eyes."
 	icon_state = "exwelder"
 	inhand_icon_state = "exwelder"
-	max_fuel = 40
+	max_fuel = 60
 	custom_materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT*5, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT*1.5, /datum/material/uranium =SMALL_MATERIAL_AMOUNT * 2)
 	change_icons = FALSE
 	can_off_process = TRUE
@@ -414,5 +391,3 @@
 	if(get_fuel() < max_fuel && nextrefueltick < world.time)
 		nextrefueltick = world.time + 10
 		reagents.add_reagent(/datum/reagent/fuel, 1)
-
-#undef WELDER_FUEL_BURN_INTERVAL

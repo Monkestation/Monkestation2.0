@@ -1,7 +1,7 @@
 /obj/item/syndie_glue
 	name = "bottle of super glue"
 	desc = "A black market brand of high strength adhesive, rarely sold to the public. Do not ingest."
-	icon = 'monkestation/icons/obj/tools.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state	= "glue"
 	w_class = WEIGHT_CLASS_SMALL
 	var/uses = 1
@@ -18,6 +18,9 @@
 	var/obj/item/thingy = interacting_with
 	if(HAS_TRAIT_FROM(thingy, TRAIT_NODROP, GLUED_ITEM_TRAIT))
 		to_chat(user, "<span class='warning'>[interacting_with] is already sticky!</span>")
+		return ITEM_INTERACT_BLOCKING
+	if (thingy.type in ANTI_DROP_BLACKLIST())
+		to_chat(user, span_notice("The glue can't seem to stick to the [thingy]."))
 		return ITEM_INTERACT_BLOCKING
 	uses -= 1
 	ADD_TRAIT(thingy, TRAIT_NODROP, GLUED_ITEM_TRAIT)

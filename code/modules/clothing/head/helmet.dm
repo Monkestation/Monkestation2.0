@@ -15,7 +15,7 @@
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR|HIDEEARS
-	resistance_flags = FIRE_PROOF // monkestation edit so helmets don't burn, not sure how tf that happened
+	resistance_flags = FIRE_PROOF
 
 	dog_fashion = /datum/dog_fashion/head/helmet
 
@@ -123,10 +123,10 @@
 /obj/item/clothing/head/helmet/surplus
 	name = "surplus helmet"
 	desc = "Standard Security gear. Protects the head from impacts."
-	icon = 'monkestation/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/icons/mob/head.dmi'
-	lefthand_file = 'monkestation/icons/mob/inhands/equipment/helmet_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/equipment/helmet_righthand.dmi'
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/head.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/helmet_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/helmet_righthand.dmi'
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
@@ -272,8 +272,8 @@
 /obj/item/clothing/head/helmet/guardmanhelmet
 	name = "guardman's helmet"
 	desc = "Keeps your brain intact when fighting heretics"
-	icon = 'monkestation/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	icon_state = "guardman_helmet"
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
@@ -314,7 +314,7 @@
 
 /datum/armor/helmet_swat
 	melee = 40
-	bullet = 40 //monkestation edit, 30 to 40
+	bullet = 40
 	laser = 30
 	energy = 40
 	bomb = 50
@@ -329,16 +329,12 @@
 	icon_state = "swat"
 	base_icon_state = "swat"
 	inhand_icon_state = "swat_helmet"
-	clothing_flags = PLASMAMAN_HELMET_EXEMPT | SNUG_FIT //monkestation edit
-
-	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-
-	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	flags_cover = HEADCOVERSEYES | PEPPERPROOF //monkestation edit
+	clothing_flags = PLASMAMAN_HELMET_EXEMPT | SNUG_FIT
+	flags_cover = HEADCOVERSEYES | PEPPERPROOF
 	desc_controls = "CTRL-Click to toggle the chinstrap."
 	has_helmet_strap = TRUE
 
-/obj/item/clothing/head/helmet/swat/nanotrasen/Initialize(mapload) //monkestation edit
+/obj/item/clothing/head/helmet/swat/nanotrasen/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
@@ -606,6 +602,18 @@
 	fire = 100
 	acid = 40
 	wound = 15
+
+/obj/item/clothing/head/helmet/laserproof
+	name = "reflector helmet"
+	desc = "A helmet that excels in protecting the wearer against energy projectiles, as well as reflecting them."
+	icon_state = "helmet_reflec"
+	armor_type = /datum/armor/armor_laserproof
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/head/helmet/laserproof/IsReflect(def_zone)
+	if(def_zone != BODY_ZONE_HEAD) //If not shot where ablative is covering you, you don't get the reflection bonus!
+		return FALSE
+	return TRUE
 
 /obj/item/clothing/head/helmet/toggleable
 	dog_fashion = null

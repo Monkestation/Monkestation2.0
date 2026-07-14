@@ -1,7 +1,7 @@
 
 /obj/machinery/hydroponics
 	name = "hydroponics tray"
-	icon = 'monkestation/icons/obj/machines/hydroponics.dmi'
+	icon = 'icons/obj/machines/hydroponics.dmi'
 	icon_state = "hydrotray"
 	density = TRUE
 	pass_flags_self = PASSMACHINE | LETPASSTHROW
@@ -172,7 +172,7 @@
 
 /obj/machinery/hydroponics/constructable
 	name = "hydroponics tray"
-	icon = 'monkestation/icons/obj/machines/hydroponics.dmi'
+	icon = 'icons/obj/machines/hydroponics.dmi'
 	icon_state = "hydrotray"
 
 /obj/machinery/hydroponics/constructable/Initialize(mapload)
@@ -448,19 +448,19 @@
 			water_state = 2
 		if(81 to 100)
 			water_state = 1
-	. += mutable_appearance('monkestation/icons/obj/machines/hydroponics.dmi', "hydrotray_water_[water_state]", offset_spokesman = src)
+	. += mutable_appearance('icons/obj/machines/hydroponics.dmi', "hydrotray_water_[water_state]", offset_spokesman = src)
 
 
 	if(reagents.total_volume <= 2)
-		. += mutable_appearance('monkestation/icons/obj/machines/hydroponics.dmi', "hydrotray_nutriment", offset_spokesman = src)
+		. += mutable_appearance('icons/obj/machines/hydroponics.dmi', "hydrotray_nutriment", offset_spokesman = src)
 	if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
-		. += mutable_appearance('monkestation/icons/obj/machines/hydroponics.dmi', "hydrotray_pests", offset_spokesman = src)
+		. += mutable_appearance('icons/obj/machines/hydroponics.dmi', "hydrotray_pests", offset_spokesman = src)
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
-		. += mutable_appearance('monkestation/icons/obj/machines/hydroponics.dmi', "hydrotray_harvest", offset_spokesman = src)
+		. += mutable_appearance('icons/obj/machines/hydroponics.dmi', "hydrotray_harvest", offset_spokesman = src)
 
 
 	if(myseed)
-		var/mutable_appearance/health_overlay = mutable_appearance('monkestation/icons/obj/machines/hydroponics.dmi', "hydrotray_health", offset_spokesman = src)
+		var/mutable_appearance/health_overlay = mutable_appearance('icons/obj/machines/hydroponics.dmi', "hydrotray_health", offset_spokesman = src)
 		if(plant_health < (myseed.endurance * 0.3))
 			health_overlay.color = "#FF3300"
 		else if(plant_health < (myseed.endurance * 0.5))

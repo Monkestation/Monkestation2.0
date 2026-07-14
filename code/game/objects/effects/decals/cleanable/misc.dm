@@ -261,7 +261,7 @@
 	name = "stabilized plasma"
 	desc = "A puddle of stabilized plasma."
 	icon_state = "purpleglow"
-	icon = 'monkestation/icons/effects/stabilized_plasma.dmi'
+	icon = 'icons/effects/stabilized_plasma.dmi'
 //MONKESTATION EDIT STOP
 
 /obj/effect/decal/cleanable/insectguts

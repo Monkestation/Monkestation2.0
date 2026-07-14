@@ -1,5 +1,5 @@
 /obj/effect/distortion/large
-	icon = 'monkestation/icons/effects/displacement_96x96.dmi'
+	icon = 'icons/effects/displacement_96x96.dmi'
 	name = "blank"
 	size = 127
 

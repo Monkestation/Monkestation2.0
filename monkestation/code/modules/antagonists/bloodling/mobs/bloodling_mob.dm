@@ -87,6 +87,9 @@
 	// All evolutions over 2 (3,4,5) are spess proof
 	if(evolution_level > 2)
 		ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+		src.bodytemp_cold_damage_limit = -1
+		src.pressure_resistance = 200
+		src.habitable_atmos = null
 
 /mob/living/basic/bloodling/proper/adjust_health(amount, updating_health = TRUE, forced = FALSE)
 	. = amount
@@ -317,7 +320,7 @@
 	maptext_height = 64
 	maptext_width = 64
 	mob_size = MOB_SIZE_HUGE
-	
+
 	evolution_level = 7
 	initial_powers = list(
 		/datum/action/cooldown/bloodling/absorb,

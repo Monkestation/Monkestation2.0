@@ -15,6 +15,8 @@
 	var/mob/living/carbon/human/ascended_body
 	// Our objective
 	var/datum/objective/lunatic/lunatic_obj
+	// Overlay used to show that this mob is a lunatic
+	var/mutable_appearance/moon_insanity_overlay
 
 /datum/antagonist/lunatic/on_gain()
 	// Masters gain an objective before so we dont want duplicates
@@ -43,16 +45,27 @@
 	our_mob.faction += FACTION_HERETIC
 	add_team_hud(our_mob, /datum/antagonist/lunatic)
 	ADD_TRAIT(our_mob, TRAIT_MADNESS_IMMUNE, REF(src))
-
+	moon_insanity_overlay = mutable_appearance('icons/effects/eldritch.dmi', "moon_insanity_overlay", ABOVE_MOB_LAYER)
+	moon_insanity_overlay.pixel_y = 12
+	moon_insanity_overlay.appearance_flags |= RESET_COLOR
+	RegisterSignal(our_mob, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
+	our_mob.update_appearance(UPDATE_OVERLAYS)
 	var/datum/action/cooldown/lunatic_track/moon_track = new /datum/action/cooldown/lunatic_track()
 	var/datum/action/cooldown/spell/touch/mansus_grasp/mad_touch = new /datum/action/cooldown/spell/touch/mansus_grasp()
 	mad_touch.Grant(our_mob)
 	moon_track.Grant(our_mob)
 
+/datum/antagonist/lunatic/proc/update_owner_overlay(atom/source, list/overlays)
+	SIGNAL_HANDLER
+	overlays += moon_insanity_overlay
+
 /datum/antagonist/lunatic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, removing = FALSE)
 	our_mob.faction -= FACTION_HERETIC
+	moon_insanity_overlay = null
+	UnregisterSignal(our_mob, COMSIG_ATOM_UPDATE_OVERLAYS)
+	our_mob.update_appearance(UPDATE_OVERLAYS)
 
 // Mood event given to moon acolytes
 /datum/mood_event/heretics/lunatic

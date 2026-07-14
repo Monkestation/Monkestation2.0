@@ -130,7 +130,7 @@
 	.["key"] = key
 	.["name"] = name
 	.["ghostname"] = ghostname
-	.["memories"] = memories
+	.["memories"] = length(memories) ? memories : null
 	.["martial_art"] = martial_art
 	.["antag_datums"] = antag_datums
 	.["holy_role"] = holy_role

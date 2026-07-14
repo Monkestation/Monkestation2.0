@@ -68,7 +68,7 @@
 
 	if(target_stabbed)
 		if(!stab_overlay)
-			stab_overlay = mutable_appearance('monkestation/icons/obj/clock_cult/clockwork_objects.dmi', "brass_skewer_pokeybit", layer = ABOVE_MOB_LAYER)
+			stab_overlay = mutable_appearance('icons/obj/clock_cult/clockwork_objects.dmi', "brass_skewer_pokeybit", layer = ABOVE_MOB_LAYER)
 
 		add_overlay(stab_overlay)
 

@@ -7,7 +7,7 @@
 /datum/action/innate/internal_nanite_menu
 	name = "Open Nanite Remote Menu"
 	desc = "Configures your nanite remote"
-	button_icon = 'monkestation/icons/obj/device.dmi'
+	button_icon = 'icons/obj/device.dmi'
 	button_icon_state = "nanite_remote"
 	var/datum/action/innate/ai/ranged/internal_nanite_remote/remote_settings
 

@@ -81,9 +81,9 @@
 
 /datum/supply_pack/emergency/metalfoam
 	name = "Metal Foam Grenade Crate"
-	desc = "Seal up those pesky hull breaches with seven metal foam grenades."
+	desc = "Seal up those pesky hull breaches with fourteen metal foam grenades."
 	cost = CARGO_CRATE_VALUE * 2.4
-	contains = list(/obj/item/storage/box/metalfoam)
+	contains = list(/obj/item/storage/box/metalfoam = 2)
 	crate_name = "metal foam grenade crate"
 
 /datum/supply_pack/emergency/plasma_spacesuit

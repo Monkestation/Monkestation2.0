@@ -13,7 +13,7 @@
 /obj/item/multitool
 	name = "multitool"
 	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors. You can activate it in-hand to locate the nearest APC."
-	icon = 'monkestation/icons/obj/device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "multitool"
 	inhand_icon_state = "multitool"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -285,7 +285,7 @@
 
 	for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 		for(var/y = y1; y <= y2; y += CHUNK_SIZE)
-			var/datum/camerachunk/chunk = GLOB.cameranet.getCameraChunk(x, y, epicenter.z)
+			var/datum/camerachunk/chunk = SScameras.generate_chunk(x, y, epicenter.z)
 			// removing cameras in build mode didnt affect it and i guess it needs an AI eye to update so we have to do this manually
 			// unless we only want to see static in a jank manner only if an eye updates it
 			chunk?.update() // UPDATE THE FUCK NOW

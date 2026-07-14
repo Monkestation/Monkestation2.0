@@ -1,7 +1,7 @@
 /obj/effect/decal/nuclear_waste
 	name = "Plutonium sludge"
 	desc = "A writhing pool of heavily irradiated, spent reactor fuel. A shovel should clear it up! Just sprinkle a little graphite on it, it will be fine. though you probably shouldn't step through this..."
-	icon = 'monkestation/icons/obj/machines/reactor_parts.dmi'
+	icon = 'icons/obj/machines/reactor_parts.dmi'
 	icon_state = "waste1"
 	alpha = 150
 	light_color = LIGHT_COLOR_CYAN
@@ -93,7 +93,7 @@
 	weather_duration_upper = 1500
 	weather_color = "green"
 	telegraph_sound = null
-	weather_sound = 'monkestation/sound/effects/rbmk/falloutwind.ogg'
+	weather_sound = 'sound/effects/rbmk/falloutwind.ogg'
 	end_duration = 100
 	area_type = /area
 	protected_areas = list(/area/maintenance, /area/ai_monitored/turret_protected/ai_upload, /area/ai_monitored/turret_protected/ai_upload_foyer,

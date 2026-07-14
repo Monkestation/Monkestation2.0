@@ -5,10 +5,10 @@
 /obj/item/clockwork/weapon
 	name = "clockwork weapon"
 	desc = "Something"
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_weapons.dmi'
-	lefthand_file = 'monkestation/icons/mob/clock_cult/clockwork_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/clock_cult/clockwork_righthand.dmi'
-	worn_icon = 'monkestation/icons/mob/clock_cult/clockwork_garb_worn.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_weapons.dmi'
+	lefthand_file = 'icons/mob/clock_cult/clockwork_lefthand.dmi'
+	righthand_file = 'icons/mob/clock_cult/clockwork_righthand.dmi'
+	worn_icon = 'icons/mob/clock_cult/clockwork_garb_worn.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	throwforce = 20
@@ -134,9 +134,9 @@
 /datum/action/cooldown/spell/summon_spear
 	name = "Summon Brass Spear"
 	desc = "Summons the last brass spear you picked up if you are currently standing on bronze."
-	button_icon = 'monkestation/icons/obj/clock_cult/clockwork_weapons.dmi'
+	button_icon = 'icons/obj/clock_cult/clockwork_weapons.dmi'
 	button_icon_state = "ratvarian_spear0"
-	background_icon = 'monkestation/icons/mob/clock_cult/background_clock.dmi'
+	background_icon = 'icons/mob/clock_cult/background_clock.dmi'
 	background_icon_state = "bg_clock"
 	overlay_icon_state = ""
 	active_background_icon_state = "bg_clock_active"
@@ -262,9 +262,9 @@
 	name = "brass bow"
 	desc = "A bow made from brass and other components that you can't quite understand. It glows with a deep energy and frabricates arrows by itself. \
 			It's bolts destabilize hit structures, making them lose additional integrity."
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_weapons.dmi'
-	lefthand_file = 'monkestation/icons/mob/clock_cult/clockwork_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/clock_cult/clockwork_righthand.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_weapons.dmi'
+	lefthand_file = 'icons/mob/clock_cult/clockwork_lefthand.dmi'
+	righthand_file = 'icons/mob/clock_cult/clockwork_righthand.dmi'
 	icon_state = "bow_clockwork"
 	inhand_icon_state = "clockwork_bow"
 	base_icon_state = "bow_clockwork"
@@ -322,13 +322,13 @@
 /obj/item/ammo_casing/arrow/clockbolt
 	name = "energy bolt"
 	desc = "An arrow made from a strange energy."
-	icon = 'monkestation/icons/obj/clock_cult/ammo.dmi'
+	icon = 'icons/obj/clock_cult/ammo.dmi'
 	icon_state = "arrow_redlight"
 	projectile_type = /obj/projectile/energy/clockbolt
 
 /obj/projectile/energy/clockbolt
 	name = "energy bolt"
-	icon = 'monkestation/icons/obj/clock_cult/projectiles.dmi'
+	icon = 'icons/obj/clock_cult/projectiles.dmi'
 	icon_state = "arrow_energy"
 	damage = 25
 	damage_type = BURN

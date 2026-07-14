@@ -8,7 +8,7 @@
 
 GLOBAL_LIST_INIT(achievements_unlocked, list())
 
-GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MONKEYSTATION EDIT ADDITION PR #11 - update roundend.dm
+GLOBAL_LIST_INIT(round_end_images, file2list("data/image_urls.txt")) // MONKEYSTATION EDIT ADDITION PR #11 - update roundend.dm
 
 /datum/controller/subsystem/ticker/proc/gather_roundend_feedback()
 	gather_antag_data()

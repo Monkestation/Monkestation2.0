@@ -107,11 +107,19 @@ export enum JoblessRole {
   ReturnToLobby = 3,
 }
 
+export enum CharacterMode {
+  Simple = 1,
+  Filters = 2,
+  PerCharacterPriorities = 3,
+}
+
 export enum PreferencesSelectedPage {
   Character = -1,
   Settings = 0,
   Keybindings = 1,
   Volume = 2,
+  Antag = 3,
+  Jobs = 4,
 }
 
 // FIX ME
@@ -161,6 +169,7 @@ export type PreferencesMenuData = {
       gender: Gender;
       joblessrole: JoblessRole;
       species: string;
+      character_role_select_mode: CharacterMode;
     };
 
     randomization: Record<string, RandomSetting>;
@@ -178,7 +187,10 @@ export type PreferencesMenuData = {
       required_playtime: number;
     }
   >;
-  job_preferences: Record<string, JobPriority>;
+  job_preferences_overall: Record<string, JobPriority>;
+  job_preferences_character: Record<string, JobPriority>;
+  enabled_characters: number[];
+  default_character: number;
 
   keybindings: Record<string, string[]>;
   overflow_role: string;
