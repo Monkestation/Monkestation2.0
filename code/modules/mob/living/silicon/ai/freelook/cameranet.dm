@@ -187,30 +187,34 @@
 
 /// Will check if an atom is on a viewable turf.
 /// Returns TRUE if the atom is visible by any camera, FALSE otherwise.
-/datum/cameranet/proc/is_visible_by_cameras(atom/target)
-	return turf_visible_by_cameras(get_turf(target))
+/datum/cameranet/proc/is_visible_by_cameras(atom/target, mob/user)
+	return turf_visible_by_cameras(get_turf(target), user)
 
 /// Checks if the passed turf is visible by any camera.
 /// Returns TRUE if the turf is visible by any camera, FALSE otherwise.
-/datum/cameranet/proc/turf_visible_by_cameras(turf/position)
+/datum/cameranet/proc/turf_visible_by_cameras(turf/position, mob/user)
 	if(isnull(position))
 		return FALSE
 	var/datum/camerachunk/chunk = generate_chunk(position.x, position.y, position.z)
 	if(isnull(chunk))
 		return FALSE
 	chunk.force_update(only_if_necessary = TRUE) // Update NOW if necessary
+	if(!isAI(user) && chunk.cameraTurfs[position])
+		return TRUE
 	if(chunk.visibleTurfs[position])
 		return TRUE
 	return FALSE
 
 /// Gets the camera chunk the passed turf is in.
 /// Returns the chunk if it exists and is visible, null otherwise.
-/datum/cameranet/proc/get_turf_camera_chunk(turf/position)
+/datum/cameranet/proc/get_turf_camera_chunk(turf/position, mob/user)
 	RETURN_TYPE(/datum/camerachunk)
 	var/datum/camerachunk/chunk = generate_chunk(position.x, position.y, position.z)
 	if(!chunk)
 		return null
 	chunk.force_update(only_if_necessary = TRUE) // Update NOW if necessary
+	if(!isAI(user) && chunk.cameraTurfs[position])
+		return TRUE
 	if(chunk.visibleTurfs[position])
 		return chunk
 	return null

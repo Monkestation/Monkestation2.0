@@ -439,7 +439,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 		return FALSE
 	return TRUE
 
-/obj/machinery/camera/proc/can_see(ai_visibility = FALSE)
+/obj/machinery/camera/proc/can_see()
 	var/list/see = null
 	var/turf/pos = get_turf(src)
 	var/turf/directly_above = GET_TURF_ABOVE(pos)

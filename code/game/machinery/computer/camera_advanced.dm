@@ -182,7 +182,7 @@
 		else
 			camera_location = myturf
 	else
-		if((!consider_zlock || (myturf.z in z_lock)) && camnet.turf_visible_by_cameras(myturf))
+		if((!consider_zlock || (myturf.z in z_lock)) && camnet.turf_visible_by_cameras(myturf, user))
 			camera_location = myturf
 		else
 			for(var/obj/machinery/camera/C as anything in camnet.cameras)

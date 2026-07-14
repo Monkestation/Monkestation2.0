@@ -6,6 +6,8 @@
 /datum/camerachunk
 	///turfs our cameras cant see but are inside our grid. associative list of the form: list(obscured turf = static image on that turf)
 	var/list/obscuredTurfs = list()
+	///turfs our bodycameras can see inside our grid
+	var/list/cameraTurfs = list()
 	///turfs our cameras can see inside our grid
 	var/list/visibleTurfs = list()
 	///cameras that can see into our grid
@@ -162,8 +164,12 @@
 			if(get_dist(point, current_camera) > MAX_CAMERA_RANGE + (CHUNK_SIZE / 2))
 				continue
 
-			for(var/turf/vis_turf as anything in current_camera.can_see(ai_visibility = TRUE) & turfs)
-				updated_visible_turfs[vis_turf] = vis_turf
+			if(current_camera.camera_upgrade_bitflags & CAMERA_UPGRADE_NO_AI)
+				for(var/turf/vis_turf as anything in current_camera.can_see() & turfs)
+					cameraTurfs[vis_turf] = vis_turf
+			else
+				for(var/turf/vis_turf as anything in current_camera.can_see() & turfs)
+					updated_visible_turfs[vis_turf] = vis_turf
 
 			if(TICK_CHECK)
 				return FALSE
@@ -194,8 +200,12 @@
 				continue
 
 			// The return value of can_see being the left-hand operand here is a load-bearing performance pillar
-			for(var/turf/vis_turf as anything in current_camera.can_see(ai_visibility = TRUE) & turfs)
-				updated_visible_turfs[vis_turf] = vis_turf
+			if(current_camera.camera_upgrade_bitflags & CAMERA_UPGRADE_NO_AI)
+				for(var/turf/vis_turf as anything in current_camera.can_see() & turfs)
+					cameraTurfs[vis_turf] = vis_turf
+			else
+				for(var/turf/vis_turf as anything in current_camera.can_see() & turfs)
+					updated_visible_turfs[vis_turf] = vis_turf
 
 	update_with_turfs(updated_visible_turfs)
 
@@ -232,6 +242,7 @@
 
 		obscuredTurfs[obscured_turf] = static_image
 		active_static_images += static_image
+
 	visibleTurfs = updated_visible_turfs
 
 	for(var/mob/eye/camera/client_eye as anything in seenby)
@@ -279,13 +290,15 @@
 			continue
 		if(camera_loc.y + MAX_CAMERA_RANGE < lower_y || camera_loc.y - MAX_CAMERA_RANGE > upper_y)
 			continue
+		if(camera.camera_upgrade_bitflags & CAMERA_UPGRADE_NO_AI)
+			continue
 		if(stack != SSmapping.get_connected_levels(camera_loc.z))
 			continue
 		if(!camera.can_use())
 			continue
 
 		cameras["[camera_loc.z]"] += camera
-		for(var/turf/vis_turf as anything in camera.can_see(ai_visibility = TRUE) & turfs)
+		for(var/turf/vis_turf as anything in camera.can_see() & turfs)
 			visibleTurfs[vis_turf] = vis_turf
 
 	for(var/turf/obscured_turf as anything in turfs - visibleTurfs)

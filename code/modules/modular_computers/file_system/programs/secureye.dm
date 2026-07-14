@@ -145,7 +145,7 @@
 
 /datum/computer_file/program/secureye/proc/on_track_target(datum/trackable/source, atom/movable/target)
 	SIGNAL_HANDLER
-	var/datum/camerachunk/target_camerachunk = SScameras.get_turf_camera_chunk(get_turf(target))
+	var/datum/camerachunk/target_camerachunk = SScameras.get_turf_camera_chunk(get_turf(target), source.tracking_holder)
 	if(!target_camerachunk)
 		CRASH("[src] was able to track [target] through /datum/trackable, but was not on a visible turf to cameras.")
 	for(var/obj/machinery/camera/cameras as anything in target_camerachunk.cameras["[target.z]"])
