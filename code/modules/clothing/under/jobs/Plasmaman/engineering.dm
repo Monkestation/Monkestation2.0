@@ -19,8 +19,8 @@
 	sleek_greyscale_colors = "#deb63d#39393f#47bfff#39393f#47bfff"
 
 /obj/item/clothing/under/plasmaman/engineering/signal_tech
-	name = "signal technician plasma envirosuit"
-	desc = "An air-tight suit designed to be used by plasmamen employed as signal technicians, \
+	name = "network admins plasma envirosuit"
+	desc = "An air-tight suit designed to be used by plasmamen employed as network admins, \
 		the usual purple stripes being replaced by a unique bright green. It protects the user from fire and acid damage."
 	greyscale_colors = "#deb63d#deb63d#00ff33#00ff33#deb63d#00ff33#8c4722"
 	sleek_greyscale_colors = "#deb63d#39393f#00ff33#39393f#00ff33"
