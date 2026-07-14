@@ -2,13 +2,14 @@
 	name = "chemical canister"
 	desc = "A small chemical canister for holding small amounts of reagents."
 	icon_state = "canister"
-	unique_reskin = list("Standard" = "canister",
-						"Cyan " = "canister_cyan",
-						"Green" = "canister_green",
-						"Red" = "canister_red",
-						"Orange" = "canister_orange",
-						"Purple" = "canister_purple",
-						)
+	unique_reskin = list(
+		"Standard" = "canister",
+		"Cyan " = "canister_cyan",
+		"Green" = "canister_green",
+		"Red" = "canister_red",
+		"Orange" = "canister_orange",
+		"Purple" = "canister_purple",
+	)
 	possible_transfer_amounts = list(5, 10, 15, 30)
 	volume = 30
 	spillable = FALSE
