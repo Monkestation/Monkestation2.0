@@ -25,13 +25,13 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 
 	// Container Vars //
 	/// The currently inserted container
-	var/obj/item/reagent_containers/cup/chemcanister/vial
+	var/obj/item/reagent_containers/chemcanister/vial
 	/// What containers are allowed within this hypospray
-	var/list/allowed_containers = list(/obj/item/reagent_containers/cup/chemcanister, /obj/item/reagent_containers/cup/chemcanister/bluespace, /obj/item/reagent_containers/cup/tube)
+	var/list/allowed_containers = list(/obj/item/reagent_containers/chemcanister, /obj/item/reagent_containers/chemcanister/bluespace, /obj/item/reagent_containers/cup/tube)
 	/// What containers are blacklisted from this hypospray - NOTE : Adding something like .../vial to just the whitelist will allow also large vials, hence the blacklist
 	var/list/blacklist_containers = null
 	/// The default vial that this hypospray starts preloaded with
-	var/obj/item/reagent_containers/cup/chemcanister/default_vial
+	var/obj/item/reagent_containers/chemcanister/default_vial
 
 	//  Wait Time Vars  //
 	var/inject_other = 1.5 SECONDS
@@ -203,7 +203,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		// context[SCREENTIP_CONTEXT_CTRL_RMB] = "Cycle tranzfer amount backwards"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	if(istype(held_item, /obj/item/reagent_containers/cup/chemcanister))
+	if(istype(held_item, /obj/item/reagent_containers/chemcanister))
 		if(vial != null)
 			context[SCREENTIP_CONTEXT_LMB] = "Swap vial"
 		else
@@ -377,9 +377,9 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	name = "advanced hypospray"
 	icon_state = "hypo_cmo"
 	desc = "An advanced hypospray that can use larger size vials, pierce thick clothing, and deliver more reagents per injection."
-	allowed_containers = list(/obj/item/reagent_containers/cup/chemcanister, /obj/item/reagent_containers/cup/tube)
+	allowed_containers = list(/obj/item/reagent_containers/chemcanister, /obj/item/reagent_containers/cup/tube)
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20)
-	default_vial = /obj/item/reagent_containers/cup/chemcanister/bluespace/omnizine
+	default_vial = /obj/item/reagent_containers/chemcanister/bluespace/omnizine
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	inject_other = 1 SECONDS
 	draw_other = 0 SECONDS
@@ -394,7 +394,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	desc = "A reverse engineered Syndicate Hypospray. Capable of using large vials, and piercing armor."
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20)
 	upgrade_flags = HYPO_UPGRADE_PIERCING
-	default_vial = /obj/item/reagent_containers/cup/chemcanister/large/combat
+	default_vial = /obj/item/reagent_containers/chemcanister/large/combat
 	inhand_icon_state = "combat_hypo"
 
 /obj/item/hypospray/combat/no_vial
@@ -405,7 +405,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	desc = "A advanced hypospray, preloaded with a antitoxin mix."
 	icon_state = "hypo_combat_tox"
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20)
-	default_vial = /obj/item/reagent_containers/cup/chemcanister/large/pen_acid
+	default_vial = /obj/item/reagent_containers/chemcanister/large/pen_acid
 
 /obj/item/hypospray/combat/nanites
 	name = "combat hypospray (nanites)"
@@ -413,7 +413,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	icon_state = "nanite_hypo"
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20, 40, 50)
 	can_remove_vials = FALSE
-	default_vial = /obj/item/reagent_containers/cup/chemcanister/bluespace/ert
+	default_vial = /obj/item/reagent_containers/chemcanister/bluespace/ert
 	inhand_icon_state = "nanite_hypo"
 
 /obj/item/hypospray/combat/heresypurge
@@ -422,5 +422,5 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	icon_state = "holy_hypo"
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20, 40, 50)
 	can_remove_vials = FALSE
-	default_vial = /obj/item/reagent_containers/cup/chemcanister/bluespace/ert/holy
+	default_vial = /obj/item/reagent_containers/chemcanister/bluespace/ert/holy
 	inhand_icon_state = "holy_hypo"

@@ -337,7 +337,7 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_slots = 6
 	atom_storage.max_total_storage = 12
-	atom_storage.set_holdable(list(/obj/item/reagent_containers/cup/chemcanister))
+	atom_storage.set_holdable(list(/obj/item/reagent_containers/chemcanister))
 
 /obj/item/storage/lockbox/vialbox/hypo_deluxe
 	name = "deluxe hypospray vial box"
@@ -346,9 +346,9 @@
 	req_access = list(ACCESS_CMO)
 
 /obj/item/storage/lockbox/vialbox/hypo_deluxe/PopulateContents()
-	new /obj/item/reagent_containers/cup/chemcanister/bluespace/omnizine(src)
-	new /obj/item/reagent_containers/cup/chemcanister/bluespace/sal_acid(src)
-	new /obj/item/reagent_containers/cup/chemcanister/bluespace/oxandrolone(src)
-	new /obj/item/reagent_containers/cup/chemcanister/bluespace/pen_acid(src)
-	new /obj/item/reagent_containers/cup/chemcanister/bluespace/oxy(src)
-	new /obj/item/reagent_containers/cup/chemcanister/bluespace/atropine(src)
+	new /obj/item/reagent_containers/chemcanister/bluespace/omnizine(src)
+	new /obj/item/reagent_containers/chemcanister/bluespace/sal_acid(src)
+	new /obj/item/reagent_containers/chemcanister/bluespace/oxandrolone(src)
+	new /obj/item/reagent_containers/chemcanister/bluespace/pen_acid(src)
+	new /obj/item/reagent_containers/chemcanister/bluespace/oxy(src)
+	new /obj/item/reagent_containers/chemcanister/bluespace/atropine(src)

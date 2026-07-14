@@ -481,7 +481,7 @@
 	id = "chemcanister"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT)
-	build_path = /obj/item/reagent_containers/cup/chemcanister
+	build_path = /obj/item/reagent_containers/chemcanister
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY,
@@ -493,7 +493,7 @@
 	id = "chemcanister_large"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/reagent_containers/cup/chemcanister/large
+	build_path = /obj/item/reagent_containers/chemcanister/large
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY,
@@ -506,7 +506,7 @@
 	id = "chemcanister_bluespace"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma = SMALL_MATERIAL_AMOUNT, /datum/material/diamond = SMALL_MATERIAL_AMOUNT, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT)
-	build_path = /obj/item/reagent_containers/cup/chemcanister/bluespace
+	build_path = /obj/item/reagent_containers/chemcanister/bluespace
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY,
