@@ -1362,6 +1362,7 @@
 
 /datum/reagent/toxin/radiomagnetic_disruptor // MONKESTATION ADDITION: NANITE REMOVAL CHEM
 	name = "Radiomagnetic Disruptor"
+	display_name_short = "R-Disruptor"
 	color = "#1d5a1aae" // grayish dark green
 	description = "A toxic chemical that rapidly destroys nanites and causes highly localized EMPs."
 	taste_description = "radio waves"
