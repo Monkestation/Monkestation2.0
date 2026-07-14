@@ -127,6 +127,12 @@
 	cost = 2
 	item = /obj/item/assembly/flash/explosive
 
+/datum/uplink_item/explosives/chameleonbomb
+	name = "Chameleon Explosive"
+	desc = "A stick of C4 with a rudimentary chameleon projector attached to it. Scan an object with it, activate the disguise lock, then give it to your target to use in hand to detonate a small charge on them."
+	cost = 2
+	item = /obj/item/assembly/flash/explosive
+
 /datum/uplink_item/explosives/door_charge
 	name = "Door Charge"
 	desc = "A small charge that can be rigged to a door, causing it to explode when the handle is moved. Tiny OS and microphone installed for taunting your victims."
