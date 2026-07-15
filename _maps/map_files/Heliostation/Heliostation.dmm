@@ -59632,7 +59632,7 @@
 /obj/machinery/door/airlock/command/glass{
 	name = "Control Room"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms_admin,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "pCn" = (

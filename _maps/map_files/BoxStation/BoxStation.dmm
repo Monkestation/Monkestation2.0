@@ -42136,7 +42136,7 @@
 	name = "Control Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/command/general,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms_admin,
 /turf/open/floor/iron/dark/textured,
 /area/station/tcommsat/computer)
 "nBn" = (

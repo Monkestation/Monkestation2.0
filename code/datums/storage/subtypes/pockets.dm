@@ -161,13 +161,14 @@
 	max_slots = 2
 	quickdraw = TRUE
 	max_total_storage = 6
+	max_specific_storage = WEIGHT_CLASS_NORMAL
 
 /datum/storage/pockets/helmet/New()
 	. = ..()
 	set_holdable(list(/obj/item/reagent_containers/cup/glass/bottle/vodka,
-					  /obj/item/reagent_containers/cup/glass/bottle/molotov,
-					  /obj/item/reagent_containers/cup/glass/drinkingglass,
-					  /obj/item/ammo_box/a762))
+					/obj/item/reagent_containers/cup/glass/bottle/molotov,
+					/obj/item/reagent_containers/cup/glass/drinkingglass,
+					/obj/item/ammo_box/a762))
 
 /datum/storage/pockets/armor
 	max_slots = 2
