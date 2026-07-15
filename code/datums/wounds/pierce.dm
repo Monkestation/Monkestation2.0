@@ -68,7 +68,7 @@
 				vision_distance = COMBAT_MESSAGE_RANGE,
 
 			)
-			victim.do_splatter_effect(victim.dir)
+			victim.create_splatter(victim.dir)
 			victim.bleed(blood_bled)
 		if(20 to INFINITY)
 			victim.visible_message(
@@ -77,12 +77,12 @@
 				vision_distance = COMBAT_MESSAGE_RANGE,
 			)
 			victim.bleed(blood_bled)
-			victim.do_splatter_effect(victim.dir)
+			victim.create_splatter(victim.dir)
 			victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 
 	victim.bleed(blood_bled, TRUE)
 	if(blood_bled >= 14)
-		victim.do_splatter_effect(attack_direction)
+		victim.create_splatter(victim.dir)
 
 /datum/wound/pierce/bleed/get_bleed_rate_of_change()
 	//basically if a species doesn't bleed, the wound is stagnant and will not heal on it's own (nor get worse)
@@ -156,7 +156,7 @@
 
 	if(!do_after(user, treatment_delay, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
-	var/bleeding_wording = (!limb.can_bleed() ? "holes" : "bleeding")
+	var/bleeding_wording = (limb.can_bleed() ? "bleeding" : "holes")
 	user.visible_message(span_green("[user] stitches up some of the [bleeding_wording] on [victim]."), span_green("You stitch up some of the [bleeding_wording] on [user == victim ? "yourself" : "[victim]"]."))
 	var/blood_sutured = I.stop_bleeding / self_penalty_mult
 	adjust_blood_flow(-blood_sutured)
@@ -189,7 +189,7 @@
 
 	playsound(user, 'sound/surgery/cautery2.ogg', 75, TRUE)
 
-	var/bleeding_wording = (!limb.can_bleed() ? "holes" : "bleeding")
+	var/bleeding_wording = (limb.can_bleed() ? "bleeding" : "holes")
 	user.visible_message(span_green("[user] cauterizes some of the [bleeding_wording] on [victim]."), span_green("You cauterize some of the [bleeding_wording] on [victim]."))
 	victim.apply_damage(2 + severity, BURN, limb, wound_bonus = CANT_WOUND)
 	var/blood_cauterized = (0.6 / (self_penalty_mult * improv_penalty_mult))

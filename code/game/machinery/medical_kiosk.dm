@@ -242,8 +242,9 @@
 
 	var/bleed_status = "Patient is not currently bleeding."
 	var/blood_status = " Patient either has no blood, or does not require it to function."
-	var/blood_percent = round((patient.blood_volume / BLOOD_VOLUME_NORMAL)*100)
-	var/blood_type = "[patient.get_blood_type() || "None"]"
+	var/blood_percent = round((patient.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
+	var/datum/blood_type/blood_type = patient.get_bloodtype()
+	var/blood_name = "error"
 	var/blood_warning = " "
 
 	for(var/thing in patient.diseases) //Disease Information
@@ -252,14 +253,30 @@
 			sickness = "Warning: Patient is harboring some form of viral disease. Seek further medical attention."
 			sickness_data = "\nName: [D.name].\nType: [D.get_spread_string()].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]"
 
-	if(patient.has_dna()) //Blood levels Information
+	if(patient.can_bleed()) //Blood levels Information
+		blood_name = LOWER_TEXT(blood_type.get_blood_name())
 		if(patient.is_bleeding())
 			bleed_status = "Patient is currently bleeding!"
+
 		if(blood_percent <= 80)
-			blood_warning = " Patient has low blood levels. Seek a large meal, or iron supplements."
-		if(blood_percent <= 60)
-			blood_warning = " Patient has DANGEROUSLY low blood levels. Seek a blood transfusion, iron supplements, or saline glucose immedietly. Ignoring treatment may lead to death!"
-		blood_status = "Patient blood levels are currently reading [blood_percent]%. Patient has [ blood_type] type blood. [blood_warning]"
+			blood_warning = " Patient has [blood_percent <= 60 ? "DANGEROUSLY low" : "low"] [blood_name] levels."
+			var/list/treatments = list()
+			if(blood_percent <= 60)
+				treatments += "[blood_name] transfusion"
+			else if(!HAS_TRAIT(patient, TRAIT_NOHUNGER))
+				treatments += "a large meal"
+			if(blood_type.restoration_chem)
+				treatments += "[LOWER_TEXT(blood_type.restoration_chem::name)] supplements"
+				if(blood_percent <= 60 && blood_type.restoration_chem == /datum/reagent/iron)
+					treatments += "saline-glucose immediately"
+
+			if (length(treatments))
+				blood_warning += " Seek [english_list(treatments, and_text = " or ")]"
+
+			if (blood_percent <= 60)
+				blood_warning += " Ignoring treatment may lead to death!"
+
+		blood_status = "Patient [blood_name] levels are currently reading [blood_percent]%.[blood_type.get_type() ? " Patient has [blood_type.get_type()] type [blood_name]." : ""][blood_warning]"
 
 	var/trauma_status = "Patient is free of unique brain trauma."
 	var/clone_loss = patient.getCloneLoss()
@@ -360,6 +377,7 @@
 	data["patient_illness"] = sickness
 	data["illness_info"] = sickness_data
 	data["bleed_status"] = bleed_status
+	data["blood_name"] = capitalize(blood_name)
 	data["blood_levels"] = blood_percent - (chaos_modifier * (rand(1,35)))
 	data["blood_status"] = blood_status
 	data["chemical_list"] = chemical_list

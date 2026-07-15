@@ -18,10 +18,10 @@
 	var/health_required = -100
 
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(toxpwr && affected_mob.health > health_required)
 		affected_mob.adjustToxLoss(toxpwr * REM * normalise_creation_purity() * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		. = TRUE
-	..()
 
 /datum/reagent/toxin/amatoxin
 	name = "Amatoxin"

@@ -10,6 +10,12 @@
 	authenticated = FALSE
 	var/human_only = FALSE
 
+/obj/machinery/computer/ai_resource_distribution/Initialize(mapload, obj/item/circuitboard/C)
+	. = ..()
+	if(!is_station_level(z))
+		req_access = null
+		req_one_access = list(ACCESS_AWAY_GENERAL)
+
 /obj/machinery/computer/ai_resource_distribution/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	if(obj_flags & EMAGGED)
@@ -75,26 +81,28 @@
 	if(!authenticated)
 		return data
 
+	var/datum/ai_os/os_using = GLOB.ai_os["[z]"]
+	data["total_cpu"] = os_using.total_cpu
+	data["total_ram"] = os_using.total_ram
 
-	data["total_cpu"] = GLOB.ai_os.total_cpu
-	data["total_ram"] = GLOB.ai_os.total_ram
 
-
-	data["total_assigned_cpu"] = GLOB.ai_os.total_cpu_assigned()
-	data["total_assigned_ram"] = GLOB.ai_os.total_ram_assigned()
+	data["total_assigned_cpu"] = os_using.total_cpu_assigned()
+	data["total_assigned_ram"] = os_using.total_ram_assigned()
 
 	data["human_only"] = human_only
 
 
 	data["ais"] = list()
 
-	for(var/mob/living/silicon/ai/A in GLOB.ai_list)
-		data["ais"] += list(list(
-			"name" = A.name,
-			"ref" = REF(A),
-			"assigned_cpu" = GLOB.ai_os.cpu_assigned[A] ? GLOB.ai_os.cpu_assigned[A] : 0,
-			"assigned_ram" = GLOB.ai_os.ram_assigned[A] ? GLOB.ai_os.ram_assigned[A] : 0,
-		))
+	var/turf/computer_turf = get_turf(src)
+	for(var/obj/machinery/ai/data_core as anything in GLOB.data_cores["[computer_turf.z]"])
+		for(var/mob/living/silicon/ai/A in data_core.contents)
+			data["ais"] += list(list(
+				"name" = A.name,
+				"ref" = REF(A),
+				"assigned_cpu" = os_using.cpu_assigned[A] ? os_using.cpu_assigned[A] : 0,
+				"assigned_ram" = os_using.ram_assigned[A] ? os_using.ram_assigned[A] : 0,
+			))
 
 	return data
 
@@ -114,6 +122,7 @@
 		return
 
 	var/is_human = ishuman(user)
+	var/datum/ai_os/os_using = GLOB.ai_os["[z]"]
 
 	switch(action)
 		if("log_out")
@@ -127,8 +136,10 @@
 			var/mob/living/silicon/ai/target_ai = locate(params["targetAI"])
 			if(!istype(target_ai))
 				return
+			if(!(target_ai in os_using.ai_list))
+				return
 
-			GLOB.ai_os.clear_ai_resources(target_ai)
+			os_using.clear_ai_resources(target_ai)
 			. = TRUE
 
 		if("set_cpu")
@@ -141,11 +152,13 @@
 			if(human_only && !is_human)
 				to_chat(user, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
 				return
+			if(!(target_ai in os_using.ai_list))
+				return
 
 			var/amount = params["amount_cpu"]
 			if(!isnum(amount) || amount < 0)
 				return
-			GLOB.ai_os.set_cpu(target_ai, amount)
+			os_using.set_cpu(target_ai, amount)
 			. = TRUE
 
 		if("set_ram")
@@ -158,12 +171,12 @@
 			if(human_only && !is_human)
 				to_chat(user, span_warning("CAPTCHA check failed. This console is NOT silicon operable. Please call for human assistance."))
 				return
-
+			if(!(target_ai in os_using.ai_list))
+				return
 			var/amount = params["amount_ram"]
 			if(!isnum(amount) || amount < 0)
 				return
-			GLOB.ai_os.set_ram(target_ai, amount)
-			. = TRUE
+			os_using.set_ram(target_ai, amount)
 
 		if("toggle_human_status")
 			if(!authenticated)

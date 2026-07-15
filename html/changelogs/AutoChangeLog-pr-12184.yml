@@ -1,0 +1,6 @@
+author: "Shoddd"
+delete-after: True
+changes:
+  - balance: "lowers recoil on pistols and revolvers"
+  - balance: "removes recoil on crossbows and harpoon guns"
+  - balance: "increases recoil on sawn off guns"

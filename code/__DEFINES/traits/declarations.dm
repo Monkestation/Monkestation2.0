@@ -1338,7 +1338,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to mobs that have the basic eating element
 /* #define TRAIT_MOB_EATER "mob_eater" */
 /// Trait which means whatever has this is dancing by a dance machine
-/* #define TRAIT_DISCO_DANCER "disco_dancer" */
+#define TRAIT_DISCO_DANCER "disco_dancer"
 
 /// Appiled when wizard buy (/datum/spellbook_entry/perks/spalls_lottery) perk.
 /// Give 50/25% chance not spend a spellbook charge on 1/2 cost spell.
@@ -1435,6 +1435,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
 #define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
+
+/// Makes the mob immune to carpotoxin
+#define TRAIT_CARPOTOXIN_IMMUNE "carpotoxin_immune"
 
 /// This mob can hear the music from the DJ station.
 #define TRAIT_CAN_HEAR_MUSIC "can_hear_radio"

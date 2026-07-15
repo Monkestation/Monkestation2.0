@@ -1,7 +1,6 @@
 GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	HYPO_INJECT = image(icon = 'icons/obj/medical/syringe.dmi', icon_state = "hypo_mode_inject"),
 	HYPO_SPRAY = image(icon = 'icons/obj/medical/syringe.dmi', icon_state = "hypo_mode_spray"),
-	HYPO_DRAW = image(icon = 'icons/obj/medical/syringe.dmi', icon_state = "hypo_mode_draw"),
 ))
 
 /obj/item/hypospray
@@ -21,8 +20,6 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	var/transfer_amount = 5
 	/// The different amounts for *transfer_amount* that this hypospray has available
 	var/list/possible_transfer_amounts = list(1, 2, 3, 5, 10)
-	/// Index of the transfer aomunts list
-	var/amount_list_position = 1
 
 	// Container Vars //
 	/// The currently inserted container
@@ -70,9 +67,10 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	. = ..()
 	if(vial)
 		. += span_notice("[vial] has [vial.reagents.total_volume]u remaining. You can [EXAMINE_HINT("R-click")] the hypospray in your active hand to remove a vial, or [EXAMINE_HINT("click")] it while it is in your offhand to remove a vial")
+		. += span_notice("[EXAMINE_HINT("right click")] to draw from a container or take a blood sample from a person.")
 	else
 		. += span_notice("It has no container loaded in. You can [EXAMINE_HINT("click")] with a vial to load it.")
-	. += span_notice("Currently injects [transfer_amount]u. [EXAMINE_HINT("ctrl click")] to change the transfer amount.")
+	. += span_notice("Currently transfers [transfer_amount]u. [EXAMINE_HINT("ctrl click")] to change the transfer amount.")
 	if(upgrade_flags & HYPO_UPGRADE_PIERCING)
 		. += span_notice("[src] has a polycarbonate diamond tipped needle, allowing it to pierce thick clothing.")
 	if(upgrade_flags & HYPO_UPGRADE_SPEED)
@@ -88,8 +86,6 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 			. += span_notice("[src] is set to inject contents on application.")
 		if(HYPO_SPRAY)
 			. += span_notice("[src] is set to spray contents on application.")
-		if(HYPO_DRAW)
-			. += span_notice("[src] is set to draw on application.")
 
 /obj/item/hypospray/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/reagent_containers))
@@ -113,16 +109,6 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		var/obj/item/hypospray_upgrade/upgrade = attacking_item
 		upgrade.install(src, user)
 		return TRUE
-
-/obj/item/hypospray/attack_self_secondary(mob/user, list/modifiers)
-	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
-		if("ctrl" in modifiers)
-			if(upgrade_flags & HYPO_UPGRADE_NOZZLE)
-				set_transfer_amount(user)
-				return
-			cycle_transfer_amount(user, BACKWARD)
-			return
-		unload_vial(user)
 
 /obj/item/hypospray/attack_self(mob/user, list/modifiers)
 	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
@@ -152,31 +138,33 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 			if(HYPO_INJECT)
 				if(target.reagents)
 					return inject(user, target)
-				else
-					return
 			if(HYPO_SPRAY)
 				return spray(user, target)
-			if(HYPO_DRAW)
-				if(target.reagents)
-					return draw(user, target)
-				else
-					return
+
 	else if(target.reagents || mode == HYPO_SPRAY)
 		balloon_alert(user, "no vial!")
 		return ITEM_INTERACT_BLOCKING
+
+/obj/item/hypospray/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
+	if(target.reagents)
+		return draw(user, target)
+	else
+		return
+
 
 /obj/item/hypospray/proc/cycle_transfer_amount(mob/user, direction = FORWARD)
 	var/list_len = length(possible_transfer_amounts)
 	if(!list_len)
 		return
+	var/index = possible_transfer_amounts.Find(transfer_amount) || 1
 	switch(direction)
 		if(FORWARD)
-			amount_list_position = (amount_list_position % list_len) + 1
+			index = (index % list_len) + 1
 		if(BACKWARD)
-			amount_list_position = (amount_list_position - 1) || list_len
+			index = (index - 1) || list_len
 		else
-			CRASH("cycle_transfer_amount() called with invalid direction value")
-	transfer_amount = possible_transfer_amounts[amount_list_position]
+			CRASH("change_transfer_amount() called with invalid direction value")
+	transfer_amount = possible_transfer_amounts[index]
 	balloon_alert(user, "transferring [transfer_amount]u")
 
 /obj/item/hypospray/proc/set_transfer_amount(mob/user)
@@ -283,7 +271,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		playsound(src, inject_sound, 50, 1)
 
 	//The actual reagent transfer
-	if(vial.reagents.trans_to(target, transfer_amount, transfered_by = user, methods = INJECT))
+	if(vial.reagents.trans_to(target, transfer_amount, transferred_by = user, methods = INJECT))
 		to_chat(user, span_notice("You inject [transfer_amount] units of the solution. The vial now contains [vial.reagents.total_volume] units."))
 		target.update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -334,6 +322,10 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/hypospray/proc/draw(mob/living/user, atom/target)
+	if(!vial)
+		balloon_alert(user, "no vial!")
+		return ITEM_INTERACT_BLOCKING
+
 	if(vial.reagents.total_volume >= vial.reagents.maximum_volume)
 		balloon_alert(user, "container full!")
 		return ITEM_INTERACT_BLOCKING
@@ -375,7 +367,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		to_chat(user, span_warning("You cannot directly remove reagents from [target]!"))
 		return ITEM_INTERACT_BLOCKING
 
-	if(target.reagents.trans_to(vial.reagents, transfer_amount, transfered_by = user))
+	if(target.reagents.trans_to(vial.reagents, transfer_amount, transferred_by = user))
 		to_chat(user, span_notice("You draw [transfer_amount] units of the solution. The vial now contains [vial.reagents.total_volume] units."))
 		playsound(src, draw_sound, 50, 1)
 		target.update_appearance()

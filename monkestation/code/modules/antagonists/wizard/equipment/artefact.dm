@@ -8,7 +8,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	reagent_flags = NONE
 	volume = 1200
-	possible_transfer_amounts = list() //we dont want this to change transfer amounts
+	has_variable_transfer_amount = FALSE
 
 /obj/item/reagent_containers/spray/chemsprayer/magical/attack_self(mob/user)
 	cycle_chems() //does this even need to be a proc

@@ -54,6 +54,8 @@
 	update_icons()
 	. = ..()
 
+	LoadComponent(/datum/component/bloodysoles/bot)
+
 	//If this body is meant to be a borg controlled by the AI player
 	if(shell)
 		make_shell()
@@ -527,7 +529,7 @@
 			removing.brainmob.set_stat(CONSCIOUS)
 		mind.transfer_to(removing.brainmob)
 		removing.update_appearance()
-
+		removing.try_brainwash()
 	else
 		to_chat(src, span_boldannounce("Oops! Something went very wrong, your MMI was unable to receive your mind. \
 			You have been ghosted. Please make a bug report so we can fix this bug."))
@@ -1031,7 +1033,7 @@
 		return
 	for(var/mob/living/buckled_mob as anything in buckled_mobs)
 		buckled_mob.visible_message(span_warning("[buckled_mob] is knocked off of [src] by the charge in [src]'s chassis induced by the hyperkinetic dampener field!"))
+		unbuckle_mob(buckled_mob) // In case the paralyze doesn't automatically unbuckle them.
 		buckled_mob.Paralyze(1 SECONDS)
-		unbuckle_mob(buckled_mob)
 	do_sparks(5, 0, src)
 

@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 	actions_types = list(/datum/action/item_action/adjust)
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/adjust)
-	alternate_worn_layer = UNDER_SUIT_LAYER
+	alternate_worn_layer = LOW_FACEMASK_LAYER
 	var/list/balaclava_designs = list()
 
 /obj/item/clothing/mask/balaclava/Initialize(mapload)
@@ -77,6 +77,7 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 	inhand_icon_state = null
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
+	alternate_worn_layer = LOW_FACEMASK_LAYER
 
 /obj/item/clothing/head/frenchberet/Initialize(mapload)
 	. = ..()
@@ -103,5 +104,5 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
-	alternate_worn_layer = UNDER_SUIT_LAYER
+	alternate_worn_layer = LOW_FACEMASK_LAYER
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
