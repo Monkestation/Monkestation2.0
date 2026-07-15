@@ -84,3 +84,286 @@
       do.
   - bugfix: Newly created cyborgs will no longer notify the wrong AI about their creation
       if they were forced to have a specific AI.
+2026-07-04:
+  JohnFulpWillard:
+  - bugfix: Revelations now works as intended
+  Runian:
+  - bugfix: Projectile dampener no longer causes a runtime trying to forcibly eject
+      people who were buckled to a cyborg.
+  - bugfix: Cyborg projectile dampener no longer endlessly spams chat when it runs
+      out of power.
+  - rscadd: Cyborg chameleon projector can now choose what skin that their disguised
+      model will use.
+  - qol: Cyborg chameleon projector can be examined to see how to use it.
+  - code_imp: Cyborg chameleon projector's code is more readable.
+  Shoddd:
+  - balance: hosed quirk no longer recieves assisted breathing trait, now only 2 points
+2026-07-05:
+  JohnFulpWillard, Tractor Maam:
+  - rscadd: Multi-Z support for AIs, and the re-introduction of AIs to Oldstation
+      & Russian Derelict.
+  - rscadd: AIs can now fight over control of display cores.
+  - bugfix: AIs no longer get alerts of falling apart when they aren't.
+  - bugfix: Upgrade modules now work again.
+  - bugfix: Power transfer upgrade now researches induction immediately rather than
+      using a separate upgrade for the same thing.
+  - bugfix: AI data cores can now be pie'd again.
+  PotatoTomahto:
+  - balance: gelatinous ooze can devour dead mobs
+  Shoddd:
+  - balance: removes elite suit from infested frigate
+  SirNightKnight:
+  - sound: added some new sounds for the riot and combat shotgun.
+  - sound: added new firing sounds for the WT autorifle and C-20r.
+  - sound: shotgun casings have a distinct sound when ejected.
+2026-07-06:
+  JupiterJaeden:
+  - config: Brig timers max out at 10 minutes instead of 15.
+  - map: Removed the records console from the syndicate listening station space ruin.
+  PotatoTomahto:
+  - balance: showers now also apply chems using vapor
+  Runian:
+  - rscadd: '1 new techweb node: "Cyborg Upgrades: Alien"'
+  - rscadd: 'New arm implant that contains alien surgical tools: Alien Surgical Arm
+      Implant. It is adminbus only.'
+  - rscadd: 'New mediborg upgrade that replaces their surgical omnitool with alien
+      surgical tools: Alien Surgical Omnitool Upgrade.'
+  - image: Cyborg alien omnitool sprites.
+  TheColorCyan:
+  - rscadd: Added donator plush - Vanilla
+  - rscadd: Added donator vanilla mothroach
+  notghosti:
+  - bugfix: CentCom commander's suitskirt now plays nicley with digigrade legs
+  - bugfix: security medical jumpskirt now no longer errors while adjusted
+  - bugfix: stirling generator should be producing appriopate power
+  - bugfix: Scroll of the Awakened Dragon no longer discounts
+  - map: Kilostation telecomms now has grid wires under the blackbox
+  - map: Kilostation disposals has been fixed atrium
+  - map: Tramstation's disposal stacking unit has had its input direction adjusted
+      to northeast.
+2026-07-07:
+  BebeYoshi:
+  - map: Oshan public mining now has proper gears. (Including EVA suits, pickaxes,
+      oxygen tanks, mining satchels, pickaxes, meson scanners, GPS, manual mining
+      scanners and flashlights)
+  JupiterJaeden:
+  - balance: Double-bladed energy swords can no longer be used with anti-drop implants
+      or syndicate sticky glue.
+  - spellcheck: Description of double-bladed energy swords updated to be accurate.
+  PotatoTomahto:
+  - rscadd: 'new utility syndicate clothing: black gloves which can store up to six
+      bulky weapons'
+  Runian, Majkl-J:
+  - code_imp: The way cyborgs restore uses for their light replacer via recharging
+      is more performant.
+  flleeppyy:
+  - code_imp: Update sister server button code to use Plexora server checks
+  - rscadd: The Eris button now works.
+  - rscdel: Remove's day and hour based "is_available" checks for the sister server
+      buttons as nothing has used it for over a year
+2026-07-08:
+  SirNightKnight:
+  - rscadd: added the security riot grenade launcher crate.  contains a grenade launcher
+      along with a box each of teargas and flashbang grenades. includes a SWAT mask.
+      1,600 credits to purchase.
+  - rscadd: added the security biological containment gear crate. contains 3 security
+      biosuits, viral analyzer goggles, PENLITE barrier projectors, spaceacillin syringes,
+      and pairs of nitrile gloves. costs 2,400 credits to purchase.
+  - rscadd: added the portable flasher crate. contains one portable flasher crate.
+      costs 400 credits.
+  - rscadd: added reflector helmet which functions the same as the reflector vest.
+      renamed the reflector vest crate to the reflector armor crate, bumped the price
+      from 1,000 to 1,200 credits, and increased the contents to 3 full sets.
+  - balance: restructured purchase permissions so all security orders require security
+      access and all srmory orders require armory access.
+  - balance: sec bio suits have a bit more melee, bullet, and wound armor.
+  - balance: moved WT autorifles and ammo from imports to armory orders. the autorifle
+      crate now costs 4,000 credits and contains 3 autorifles. non-lethal ammo crates
+      cost 1,000 credits and lethal ammo crates cost 1,200 credits.
+  - balance: buffed SWAT suits. the suit now has two small item slots and a +2 tackling
+      bonus. increased SWAT crate contents to 3 armor sets and bumped the price from
+      1,400 to 2,400 credits.
+  - balance: lowered the price of mindshield crates from 1,200 to 900 credits.
+  - balance: made the automatic variants of the disabler and laser gun available as
+      standard security orders for the same price as the regular variants.
+  - balance: buffed the energy gun crate to contain 3 energy guns for 1,200 credits
+      (previously 2 energy guns for 3,600 credits).
+  - balance: doubled the secway's speed to match the janicart and removed the secway
+      crate from the contraband listing.
+  - balance: lowered the cost of firing pin crates.  firing pin crates cost 1,000
+      credits and pay wall firing pins cost 600 credits.
+  - rscdel: removed solfed armor and gun crates (except for modular laser guns and
+      the Bobr) to reduce catalog bloat.
+  - rscdel: removed the Renoster crate and replaced it with a riot shotgun crate.
+  - rscdel: removed the anti-tank launcher crate.
+  - image: added a new sprite for the SWAT suit.
+  hexakats:
+  - balance: gives the contractor modsuit eye and ear protection
+  theprophet321:
+  - bugfix: fix button
+2026-07-09:
+  DrDiasyl, SirNightKnight:
+  - image: Energy weapon muzzle flashes got a new sprite, each direction included!
+  - image: Temperature Gun "BAKE" beams are now lava colored
+  - rscadd: added the laser cannon. a new laser weapon researchable by science.
+  - balance: energy guns can fire off 16 lethal lasers total, up from 12.
+  - balance: moved x-ray laser guns to nuclear weapon tech.
+  - image: ported inhand sprites for the retro laser, laser tag, and laser cannon
+      guns from vg.
+  - sound: energy guns have sounds for selecting different modes.
+  - image: hellfire lasers use the heavy laser sprite to better differentiate them
+      from normal lasers.
+  Gboster-0:
+  - rscadd: Added napalm being able to be put into welders as long-lasting fuel
+  - qol: The welding tool now has text explaining it can be screwdrivered in examine
+      (and that screwdrivering it allows you to put chems into it)
+  - bugfix: Welding tools can no longer infinitelly burn when you put integer amounts
+      of fuel into them
+  - bugfix: Welding tools now show how many reagents they have with their gauge instead
+      of just the fuel amount
+  JohnFulpWillard:
+  - bugfix: '[Heliostation] Telecomms Admin office is now behind Telecomms Admin access.'
+  JupiterJaeden:
+  - bugfix: Fixed a bug where damage slowdown would not properly update player move
+      speed when it was supposed to.
+  - map: Added a holding cell to the tramstation brig + some other minor brig mapping
+      improvements.
+  Pickle-Coding, SirNightKnight:
+  - bugfix: fixed the modsuit chameleon module breaking when an item is inserted into
+      the modsuit's storage.
+  - bugfix: fixed large mortars not juicing items correctly.
+  - bugfix: russian helmets can now properly store stripper clips as advertised.
+  - bugfix: fixed blood brother ability icons having an error background.
+  - bugfix: Fixes the brig cell timer adjustment not working correctly on live timers.
+  - qol: cell timer sentence presets now reflect the current sentence times of Space
+      Law.
+  PotatoTomahto:
+  - balance: advanced health analyzer applies wound treatment bonus when scanning
+      wounds
+  - balance: technetium also upgrades wound scans
+  SirNightKnight:
+  - bugfix: incendiary bullet fire trails auto-delete in 2.5 seconds to mitigate hangtime
+      from lag.
+2026-07-10:
+  PotatoTomahto:
+  - rscadd: adds the buster fist as a tot item from yogstation
+  Runian, lelandkemble:
+  - balance: Scanned wounds stay scanned when they downgrade in severity.
+  SpeebusDaGeebus:
+  - rscdel: removed health bonus from no revive / DNR
+  Vekter, SirNightKnight:
+  - rscadd: Adds support for it/its pronouns. You can select these in character preferences.
+  hexakats:
+  - qol: Moved the hypospray's draw function from a mode to right click
+  - bugfix: Fixed a runtime that happens when you try to draw from a container with
+      no vial in the hypospray
+  - bugfix: Contractor baton can harm with right click again when there's no cuff
+      upgrade (and a runtime fix when trying to harm baton)
+2026-07-11:
+  Barrel:
+  - qol: Darkspawns panopticon no longer needs power or an apc to use. You can now
+      jump to allies and placed void eyes.
+  - refactor: Refactored how cameras work based on tgstation.
+  - balance: sets body camera range to 7, same as cameras
+  Cujo:
+  - rscadd: Mute and Fluffy Tongue are now incompatible quirks
+  - rscdel: Removes the duplicate shower drain from Tramstation Medical for real this
+      time
+  JohnFulpWillard:
+  - bugfix: AIs can double click on a tile to TP to that tile again.
+  - bugfix: Fixes AI's custom portrait icons.
+  - bugfix: Removed negative AI CPU speed/power values from the overclocking workstation
+      computer. Also made the UI a little bit better.
+  Runian:
+  - balance: Hyperkinetic Dampening Projector now only consumes power when a projectile
+      initially becomes dampened.
+  - balance: Hyperkinetic Dampening Projector's power consumption is now 0.15kW per
+      projectile damage.
+  - bugfix: Projectile dampers no longer speeds up projectiles when it should of slowed
+      them down instead.
+  Shoddd:
+  - bugfix: unclonable neurons quirk now tied to mind
+  SirNightKnight:
+  - rscadd: added a dozen mints to the snack vendor contraband section.
+  siliconOpossum, MrMelbert, ghost, SirNightKnight:
+  - qol: Neckties are now worn underneath suit items and accessories, they can still
+      be optionally worn over them in case you want the "business space suit" look.
+  - qol: made Balaclavas layer below glasses and radios
+  - bugfix: split bandage layering so it layers better with back slot items.
+2026-07-12:
+  CheffieGithub:
+  - bugfix: Added protections against negative lootboxes, work to pay off your debt!
+  Cujo:
+  - rscadd: Adds the security hi vis jacket to the loadout menu
+  - qol: Updated the cryo message to reflect that it does not permanently remove you
+      from the round, and gives a hint on how to emerge from cryo.
+  - rscdel: Removes anime virus
+  - balance: Slasher sighting now requires a minimum of 20 pop to roll
+  - bugfix: Dummy thicc quirk sounds now properly check prude mode settings.
+  EnterTheJake:
+  - spellcheck: Description on how the moon robes function is a bit more clear.
+  JohnFulpWillard:
+  - rscadd: pAIs now have Emojipedia.
+  - bugfix: AIs no longer lose all assigned CPU & ram when shunting between data cores
+      (or between station z-levels)
+  - bugfix: Fixes AI mechs (again)
+  - bugfix: '[MetaStation] Fixes AI cooling'
+  - bugfix: '[BoxStation] Fixes Network Admin office being behind general telecomms
+      access instead of Telecomms Admin access.'
+  - rscadd: Added a better Emojipedia UI.
+  Mantlecrawler:
+  - bugfix: Smithed weapons can now fit into dimensional gloves
+  SirNightKnight:
+  - balance: changed the required pop for heretics to 45 (used to be 25).
+  - rscadd: added lead to the emagged chem dispenser list.
+  hexakats:
+  - balance: Foam dart guns no longer have recoil.
+  notghosti:
+  - qol: Borers who are in hosts and have learnt the head focus also receive true
+      night vision and flash immunity.
+  - bugfix: willing host mood buff now is capitalized. sorry
+  - map: Tramstation RD Server room now has R-walls sealing it again
+  - balance: Replaces the atmospherics arm toolset with Advanced fire extinguisher,
+      ranged gas analyzer, and cyborg crowbar from their normal versions
+2026-07-13:
+  Cujo:
+  - bugfix: Kitchen pans (and maybe other kitchen utilities) will no longer talk to
+      you.
+  Shoddd:
+  - bugfix: podpeople no longer have hair
+  - bugfix: changeling armor now list that it slows chemical generation
+  SirNightKnight:
+  - rscadd: gave traitors access to microbomb implants in their uplink.
+  - sound: just switched the taser select sounds around so it makes more sense on
+      the advanced taser .
+  - bugfix: miner salve doesnt give a damage overlay.
+2026-07-14:
+  Gboster-0:
+  - bugfix: Megafauna will now move when idle every 20 seconds
+  Shoddd:
+  - balance: ipcs, oozelings, and plasma men can no longer have blood deficiency quirk
+  - balance: ipcs can no longer have immunodeficiency quirk
+  - balance: oozelings can no longer have frail quirk
+  - balance: oozelings can have food allergy quirk
+  SirNightKnight:
+  - rscadd: added secure GPS devices. they report the death of the wearer or if the
+      device is stripped off the wearer to other secure GPS devices. can be sabotaged
+      by emagging one or jammed using a radio jammer.
+  - qol: added bodycameras to the basic security equipment technode.
+  - rscadd: made each departmental GPS printable by their respective department.
+  - qol: medical can print the advanced GPS at their protolathe.
+  - bugfix: re-added the medical GPS sprite.
+  - qol: security and medical belts can store GPSs.
+  - rscadd: added tape recorders, lighters, and cigarette packets to the security
+      belt holdable list.
+  hexakats:
+  - balance: The contractor modsuit's complexity has been increased from 15 to 20
+  - balance: The contractor modsuit's biohazard has been increased to 100%
+  - balance: The contractor modsuit starts with an inbuilt quick cuff module
+2026-07-15:
+  Shoddd:
+  - balance: brig med now requires medical hours instead of sec hours
+  SirNightKnight:
+  - balance: lowered sec gps alert delay to 15 seconds from 20
+  byondsucks:
+  - balance: Heretics need 40 players readied up to roll.

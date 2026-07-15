@@ -46,11 +46,7 @@
 
 /obj/structure/meateor_fluff/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/bloody_spreader,\
-		blood_left = INFINITY,\
-		blood_dna = list("meaty DNA" = "MT-"),\
-		diseases = null,\
-	)
+	AddComponent(/datum/component/bloody_spreader)
 
 /obj/structure/meateor_fluff/play_attack_sound(damage_amount, damage_type, damage_flag)
 	switch(damage_type)
@@ -138,7 +134,7 @@
 	max_integrity = 15
 
 /obj/structure/meateor_fluff/abandoned_headcrab_egg/atom_destruction(damage_flag)
-	new /obj/effect/decal/cleanable/xenoblood(loc)
+	new /obj/effect/decal/cleanable/blood/xeno(loc)
 	playsound(loc, 'sound/effects/footstep/gib_step.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
 	return ..()
 

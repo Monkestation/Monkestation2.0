@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(server_cabinets)
-
 /obj/machinery/ai/server_cabinet
 	name = "Server Cabinet"
 	desc = "A simple cabinet of bPCIe slots for installing server racks."
@@ -14,7 +12,7 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 	//We manually calculate how power the cards + CPU give, so this is accounted for by that
 	active_power_usage = 0
 
-	var/list/installed_racks
+	var/list/installed_racks = list()
 
 	var/total_cpu = 0
 	var/total_ram = 0
@@ -38,18 +36,22 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 /obj/machinery/ai/server_cabinet/Initialize(mapload)
 	. = ..()
 	roundstart = mapload
-	installed_racks = list()
-	GLOB.server_cabinets += src
+	linked_os.update_hardware()
 	RefreshParts()
 	update_appearance()
 	register_context()
 
 /obj/machinery/ai/server_cabinet/Destroy(force)
-	installed_racks = list()
-	GLOB.server_cabinets -= src
+	installed_racks.Cut()
 	//Recalculate all the CPUs and RAM :)
-	GLOB.ai_os.update_hardware()
+	linked_os.update_hardware()
+	linked_os = null
 	return ..()
+
+/obj/machinery/ai/server_cabinet/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	var/datum/ai_os/old_os = GLOB.ai_os["[old_turf.z]"]
+	. = ..()
+	old_os.update_hardware()
 
 /obj/machinery/ai/server_cabinet/RefreshParts()
 	. = ..()
@@ -91,7 +93,7 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 		was_valid_holder = TRUE
 
 		if(!hardware_synced)
-			GLOB.ai_os.update_hardware()
+			linked_os.update_hardware()
 			hardware_synced = TRUE
 	else
 		valid_ticks--
@@ -101,7 +103,7 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 			was_valid_holder = FALSE
 			cut_overlays()
 			hardware_synced = FALSE
-			GLOB.ai_os.update_hardware()
+			linked_os.update_hardware()
 
 /obj/machinery/ai/server_cabinet/process_atmos()
 	. = ..()
@@ -132,6 +134,13 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 		. += mutable_appearance(icon, "[base_icon_state]_top_on")
 	if(length(installed_racks) > 1)
 		. += mutable_appearance(icon, "[base_icon_state]_bottom_on")
+
+/obj/machinery/ai/server_cabinet/valid_holder()
+	. = ..()
+	//if you have no racks, you generate no heat.
+	if(!length(installed_racks))
+		return FALSE
+	return .
 
 /obj/machinery/ai/server_cabinet/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/server_rack))
@@ -181,7 +190,7 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 	total_cpu += new_rack.get_cpu()
 	total_ram += new_rack.get_ram()
 	cached_power_usage += new_rack.get_power_usage()
-	GLOB.ai_os.update_hardware()
+	linked_os.update_hardware()
 	use_power = ACTIVE_POWER_USE
 	update_appearance()
 	return TRUE
@@ -196,7 +205,7 @@ GLOBAL_LIST_EMPTY(server_cabinets)
 	total_cpu = 0
 	total_ram = 0
 	cached_power_usage = 0
-	GLOB.ai_os.update_hardware()
+	linked_os.update_hardware()
 	if(user)
 		balloon_alert(user, "racks removed")
 	use_power = IDLE_POWER_USE

@@ -172,7 +172,7 @@
  * return bool
  */
 /datum/tgui_window/proc/can_be_suspended()
-	var/unlimited_windows = client.prefs.read_preference(/datum/preference/toggle/tgui_unlimited_windows)
+	var/unlimited_windows = client?.prefs?.read_preference(/datum/preference/toggle/tgui_unlimited_windows)
 	return !fatally_errored \
 		&& pooled \
 		&& pool_index > 0 \

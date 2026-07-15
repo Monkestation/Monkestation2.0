@@ -34,7 +34,7 @@
 	var/transfer_amt = amount_per_transfer_from_this
 	if(!target_mob.can_inject(user))
 		transfer_amt = 1
-	reagents.trans_to(target_mob, transfer_amt, methods = INJECT, transfered_by = user)
+	reagents.trans_to(target_mob, transfer_amt, methods = INJECT, transferred_by = user)
 
 /obj/item/knife/venom/proc/change_transfer_amount(mob/user, direction = FORWARD)
 	var/list_len = length(possible_transfer_amounts)

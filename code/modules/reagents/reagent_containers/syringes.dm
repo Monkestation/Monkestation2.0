@@ -82,7 +82,7 @@
 		else
 			log_combat(user, living_target, "injected", src, addition="which had [contained]")
 
-	if(reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user, methods = INJECT))
+	if(reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user, methods = INJECT))
 		to_chat(user, span_notice("You inject [amount_per_transfer_from_this] units of the solution. The syringe now contains [reagents.total_volume] units."))
 		target.update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -127,7 +127,7 @@
 		to_chat(user, span_warning("You cannot directly remove reagents from [target]!"))
 		return ITEM_INTERACT_BLOCKING
 
-	var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user) // transfer from, transfer to - who cares?
+	var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user) // transfer from, transfer to - who cares?
 
 	to_chat(user, span_notice("You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units."))
 	target.update_appearance()
@@ -143,7 +143,7 @@
 		to_chat(victim, span_boldwarning("[src] injects you!"))
 
 	victim.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
-	reagents?.trans_to(victim, round(reagents.total_volume*(2/3)), transfered_by = user, methods = INJECT)
+	reagents?.trans_to(victim, round(reagents.total_volume*(2/3)), transferred_by = user, methods = INJECT)
 
 	return discover_after
 

@@ -15,7 +15,7 @@
 
 	mutanteyes = /obj/item/organ/internal/eyes/snail
 	mutanttongue = /obj/item/organ/internal/tongue/snail
-	exotic_bloodtype = /datum/blood_type/snail
+	exotic_bloodtype = BLOOD_TYPE_SNAIL
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/snail,
@@ -25,16 +25,7 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/snail,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/snail
 	)
-
-/datum/species/snail/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
-	. = ..()
-	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
-		return
-	if(istype(chem,/datum/reagent/consumable/salt))
-		//playsound(affected, SFX_SEAR, 30, TRUE)
-		affected.adjustFireLoss(2 * REM * seconds_per_tick)
-		affected.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
-		return COMSIG_MOB_STOP_REAGENT_CHECK
+	mutantliver = /obj/item/organ/internal/liver/snail
 
 /datum/species/snail/on_species_gain(mob/living/carbon/new_snailperson, datum/species/old_species, pref_load)
 	. = ..()
@@ -42,11 +33,9 @@
 	if(!istype(bag, /obj/item/storage/backpack/snail))
 		if(new_snailperson.dropItemToGround(bag)) //returns TRUE even if its null
 			new_snailperson.equip_to_slot_or_del(new /obj/item/storage/backpack/snail(new_snailperson), ITEM_SLOT_BACK)
-	new_snailperson.AddElement(/datum/element/snailcrawl)
 
 /datum/species/snail/on_species_loss(mob/living/carbon/former_snailperson, datum/species/new_species, pref_load)
 	. = ..()
-	former_snailperson.RemoveElement(/datum/element/snailcrawl)
 	var/obj/item/storage/backpack/bag = former_snailperson.get_item_by_slot(ITEM_SLOT_BACK)
 	if(istype(bag, /obj/item/storage/backpack/snail))
 		bag.emptyStorage()

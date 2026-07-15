@@ -54,6 +54,8 @@
 	update_icons()
 	. = ..()
 
+	LoadComponent(/datum/component/bloodysoles/bot)
+
 	//If this body is meant to be a borg controlled by the AI player
 	if(shell)
 		make_shell()
@@ -1031,7 +1033,7 @@
 		return
 	for(var/mob/living/buckled_mob as anything in buckled_mobs)
 		buckled_mob.visible_message(span_warning("[buckled_mob] is knocked off of [src] by the charge in [src]'s chassis induced by the hyperkinetic dampener field!"))
+		unbuckle_mob(buckled_mob) // In case the paralyze doesn't automatically unbuckle them.
 		buckled_mob.Paralyze(1 SECONDS)
-		unbuckle_mob(buckled_mob)
 	do_sparks(5, 0, src)
 

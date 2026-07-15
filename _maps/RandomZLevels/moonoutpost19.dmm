@@ -159,7 +159,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cd" = (
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /obj/effect/decal/remains/xeno{
 	desc = "They look like the remains of something... alien. The front of skull appears to have been completely obliterated."
 	},
@@ -779,7 +779,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "gA" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -3172,7 +3172,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "yb" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4199,8 +4199,8 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "HQ" = (
-/obj/effect/decal/cleanable/robot_debris,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/item/storage/medkit/regular{
 	empty = 1;
 	name = "First-Aid (empty)"
@@ -4308,7 +4308,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "IW" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating{
@@ -4760,8 +4760,8 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "NJ" = (
-/obj/effect/decal/cleanable/xenoblood,
-/obj/effect/decal/cleanable/xenoblood/xgibs,
+/obj/effect/decal/cleanable/blood/xeno,
+/obj/effect/decal/cleanable/blood/gibs/xeno,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006

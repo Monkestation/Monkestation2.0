@@ -20,6 +20,12 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	var/download_progress = 0
 	var/download_warning = FALSE
 
+/obj/machinery/computer/ai_control_console/Initialize(mapload, obj/item/circuitboard/C)
+	. = ..()
+	if(!is_station_level(z))
+		req_access = null
+		req_one_access = list(ACCESS_AWAY_GENERAL)
+
 /obj/machinery/computer/ai_control_console/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/aicard))
 		if(intellicard)
@@ -176,11 +182,11 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	if(intellicard && intellicard.AI)
 		data["intellicard_ai"] = intellicard.AI.real_name
 		data["intellicard_ai_health"] = intellicard.AI.health
+		data["can_upload"] = intellicard.AI.find_valid_ai_core()
 	else
 		data["intellicard_ai"] = null
 		data["intellicard_ai_health"] = 0
-
-	data["can_upload"] = available_ai_cores()
+		data["can_upload"] = FALSE
 
 	if(downloading)
 		data["downloading"] = downloading.real_name
@@ -195,15 +201,17 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	if(isAI(user))
 		data["current_ai_ref"] = REF(user)
 
-	for(var/mob/living/silicon/ai/A in GLOB.ai_list)
-		data["ais"] += list(list(
-			"name" = A.name,
-			"ref" = REF(A),
-			"can_download" = A.can_download,
-			"health" = A.health,
-			"active" = A.mind ? TRUE : FALSE,
-			"in_core" = istype(A.loc, /obj/machinery/ai/data_core),
-		))
+	var/turf/computer_turf = get_turf(src)
+	for(var/obj/machinery/ai/data_core as anything in GLOB.data_cores["[computer_turf.z]"])
+		for(var/mob/living/silicon/ai/A in data_core.contents)
+			data["ais"] += list(list(
+				"name" = A.name,
+				"ref" = REF(A),
+				"can_download" = A.can_download,
+				"health" = A.health,
+				"active" = !!(A.mind),
+				"in_core" = istype(A.loc, /obj/machinery/ai/data_core),
+			))
 
 	return data
 
@@ -219,7 +227,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	return TRUE
 
 /obj/machinery/computer/ai_control_console/proc/finish_download()
-	if(!is_station_level(z))
+	if(!(downloading.loc in GLOB.data_cores["[z]"]))
 		return
 	if(intellicard)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
@@ -307,9 +315,6 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 			if(isAI(user))
 				to_chat(user, span_warning("You need physical access to stop the download!"))
 				return
-			if(!is_station_level(z))
-				to_chat(user, span_warning("No connection. Try again later."))
-				return
 			stop_download()
 			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
 
@@ -319,11 +324,11 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 			var/mob/living/silicon/ai/target = locate(params["download_target"])
 			if(!target || !istype(target))
 				return
-			if(!istype(target.loc, /obj/machinery/ai/data_core))
+			if(!isvalidAIloc(target.loc))
 				return
 			if(!target.can_download)
 				return
-			if(!is_station_level(z))
+			if(!(target.loc in GLOB.data_cores["[z]"]))
 				to_chat(user, span_warning("No connection. Try again later."))
 				return
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)

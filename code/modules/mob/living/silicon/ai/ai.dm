@@ -265,6 +265,7 @@
 		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), (SSmapping.levels_by_trait(ZTRAIT_STATION) + z), alert_areas, camera_view = TRUE)
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_AI_CREATED, src)
 
 /mob/living/silicon/ai/key_down(_key, client/user)
 	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number
@@ -302,7 +303,6 @@
 	QDEL_NULL(nanite_menu)
 	QDEL_NULL(nanite_remote)
 	malfhack = null
-	GLOB.ai_os.remove_ai(src)
 	current = null
 	bot_ref = null
 	controlled_equipment = null
@@ -327,17 +327,13 @@
 /mob/living/silicon/ai/proc/set_core_display_icon(input, client/C)
 	if(client && !C)
 		C = client
+	var/icon_used
 	if(!input && !C?.prefs?.read_preference(/datum/preference/choiced/ai_core_display))
-		for(var/each in GLOB.ai_core_displays) //change status of displays
-			var/obj/machinery/status_display/ai_core/M = each
-			M.set_ai(initial(icon_state))
-			M.update()
+		icon_used = initial(icon_state)
 	else
 		var/preferred_icon = input ? input : C.prefs.read_preference(/datum/preference/choiced/ai_core_display)
-		for(var/each in GLOB.ai_core_displays) //change status of displays
-			var/obj/machinery/status_display/ai_core/M = each
-			M.set_ai(resolve_ai_icon(preferred_icon))
-			M.update()
+		icon_used = resolve_ai_icon(preferred_icon)
+	SEND_SIGNAL(src, COMSIG_AI_ICON_CHANGE, icon_used)
 
 /mob/living/silicon/ai/create_modularInterface()
 	if(!modularInterface)
@@ -374,12 +370,7 @@
 /mob/living/silicon/ai/proc/add_verb_ai(addedVerb)
 	view_core() //A BYOND bug requires you to be viewing your core before your verbs update
 	add_verb(src, addedVerb)
-	if(istype(loc, /obj/machinery/ai/data_core)) //A BYOND bug requires you to be viewing your core before your verbs update
-		var/obj/machinery/ai/data_core/core = loc
-		forceMove(get_turf(loc))
-		view_core()
-		sleep(1)
-		forceMove(core)
+	view_core()
 
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
@@ -455,6 +446,10 @@
 		// monkestation edit end PR #5133
 	. += list(list("AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]")) //Count of total AI shells
 
+	var/obj/machinery/ai/data_core/ai_location = loc
+	if(istype(ai_location) && ai_location.integrated_battery)
+		. += list(list("Backup battery charge: [ai_location.integrated_battery.percent()]%"))
+
 /mob/living/silicon/ai/proc/ai_call_shuttle()
 	if(control_disabled)
 		to_chat(usr, span_warning("Wireless control is disabled!"))
@@ -497,7 +492,7 @@
 		return ISINRANGE(target_turf.x, ai_turf.x - interaction_range, ai_turf.x + interaction_range) \
 			&& ISINRANGE(target_turf.y, ai_turf.y - interaction_range, ai_turf.y + interaction_range)
 	else
-		return GLOB.cameranet.checkTurfVis(target_turf)
+		return SScameras.turf_visible_by_cameras(target_turf)
 
 /mob/living/silicon/ai/cancel_camera()
 	view_core()
@@ -553,7 +548,7 @@
 		unset_machine()
 		src << browse(null, t1)
 	if (href_list["switchcamera"])
-		switchCamera(locate(href_list["switchcamera"]) in GLOB.cameranet.cameras)
+		switchCamera(locate(href_list["switchcamera"]) in SScameras.cameras)
 	if (href_list["showalerts"])
 		alert_control.ui_interact(src)
 	if(href_list["show_tablet_note"])
@@ -594,7 +589,7 @@
 		if(controlled_equipment)
 			to_chat(src, span_warning("You are already loaded into an onboard computer!"))
 			return
-		if(!GLOB.cameranet.checkCameraVis(M))
+		if(!SScameras.is_visible_by_cameras(M))
 			to_chat(src, span_warning("Exosuit is no longer near active cameras."))
 			return
 		if(!isvalidAIloc(loc))
@@ -654,7 +649,7 @@
 		//The target must be in view of a camera or near the core.
 	if(turf_check in range(get_turf(src)))
 		call_bot(turf_check)
-	else if(GLOB.cameranet && GLOB.cameranet.checkTurfVis(turf_check))
+	else if(SScameras && SScameras.turf_visible_by_cameras(turf_check))
 		call_bot(turf_check)
 	else
 		to_chat(src, span_danger("Selected location is not visible."))
@@ -715,7 +710,7 @@
 
 	var/mob/living/silicon/ai/U = usr
 
-	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+	for (var/obj/machinery/camera/C in SScameras.cameras)
 		var/turf/camera_turf = get_turf(C) //get camera's turf in case it's built into something so we don't get z=0
 
 		var/list/tempnetwork = C.network
@@ -737,7 +732,7 @@
 	if(isnull(network))
 		network = old_network // If nothing is selected
 	else
-		for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+		for(var/obj/machinery/camera/C in SScameras.cameras)
 			if(!C.can_use())
 				continue
 			if(network in C.network)
@@ -967,7 +962,7 @@
 	if(isvalidAIloc(loc)) //AI in core, check if on cameras
 		//get_turf_pixel() is because APCs in maint aren't actually in view of the inner camera
 		//apc_override is needed here because AIs use their own APC when depowered
-		return ((GLOB.cameranet && GLOB.cameranet.checkTurfVis(get_turf_pixel(A))) || (A == apc_override))
+		return ((SScameras && SScameras.turf_visible_by_cameras(get_turf_pixel(A))) || (A == apc_override))
 	//AI is carded/shunted
 	//view(src) returns nothing for carded/shunted AIs and they have X-ray vision so just use get_dist
 	var/list/viewscale = getviewsize(client.view)
@@ -1050,6 +1045,8 @@
 		if(new_eye != GLOB.ai_camera_room_landmark)
 			end_multicam()
 		if(istype(new_eye, /obj/machinery/ai/data_core)) //trying to set your perspective to the 'core' will instead go to the eye.
+			if(isnull(eyeobj))
+				return //not created yet
 			client.set_eye(eyeobj)
 			view_core()
 		else
@@ -1199,12 +1196,17 @@
 	. = ..()
 
 /mob/living/silicon/ai/proc/camera_visibility(mob/eye/camera/ai/moved_eye)
-	GLOB.cameranet.visibility(moved_eye)
+	SScameras.update_eye_chunk(moved_eye)
 
 /mob/living/silicon/ai/forceMove(atom/destination)
+	var/turf/current_turf = get_turf(src)
+	var/turf/new_turf = get_turf(destination)
 	. = ..()
 	if(.)
 		end_multicam()
+		var/datum/ai_os/past_os = GLOB.ai_os["[current_turf.z]"]
+		if(past_os && (current_turf.z != new_turf.z))
+			past_os.remove_ai(src)
 
 /mob/living/silicon/ai/up()
 	set name = "Move Upwards"
@@ -1233,7 +1235,7 @@
 		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
 
 /mob/living/silicon/ai/proc/show_camera_list()
-	var/list/cameras = GLOB.cameranet.get_available_camera_by_tag_list(network)
+	var/list/cameras = SScameras.get_available_camera_by_tag_list(network)
 	var/camera_tag = tgui_input_list(src, "Choose which camera you want to view", "Cameras", cameras)
 	if(isnull(camera_tag))
 		return

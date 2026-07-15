@@ -19,6 +19,7 @@ SUBSYSTEM_DEF(plexora)
 	name = "Plexora"
 	wait = 30 SECONDS
 	init_order = INIT_ORDER_PLEXORA
+	init_stage = INITSTAGE_EARLY
 	priority = FIRE_PRIORITY_PLEXORA
 	runlevels = ALL
 
@@ -39,12 +40,18 @@ SUBSYSTEM_DEF(plexora)
 	var/list/reverify_cache = list()
 
 	var/list/allowed_ckeys = list()
+	var/list/up_servers = list()
+	var/current_server_id = null
 
 /datum/controller/subsystem/plexora/Initialize()
 	if(!CONFIG_GET(flag/plexora_enabled) && !load_old_plexora_config())
 		enabled = FALSE
 		flags |= SS_NO_FIRE
 		return SS_INIT_NO_NEED
+
+	current_server_id = CONFIG_GET(string/plexora_server_id)
+	if(current_server_id)
+		log_world("This server's Plexora ID is [current_server_id]")
 
 	loaded_allowed_ckeys()
 
@@ -67,6 +74,7 @@ SUBSYSTEM_DEF(plexora)
 		stack_trace("SSplexora is enabled BUT plexora is not alive or running! SS has not been aborted, subsequent fires will take place.")
 	else
 		serverstarted()
+		check_servers()
 
 	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(roundstarted))
 
@@ -127,6 +135,20 @@ SUBSYSTEM_DEF(plexora)
 		default_headers
 	)
 	status_request.fire_and_forget()
+
+	check_servers()
+
+/datum/controller/subsystem/plexora/proc/check_servers()
+	var/list/servers_to_check = list(
+		PLEXORA_SERVERID_MRP,
+		PLEXORA_SERVERID_MONKESPAW,
+		PLEXORA_SERVERID_MONKERIS,
+		PLEXORA_SERVERID_VANDERLIN,
+	)
+	for(var/serverid in servers_to_check)
+		if(serverid == current_server_id)
+			continue
+		up_servers[serverid] = check_byondserver_status(serverid, null)
 
 /datum/controller/subsystem/plexora/proc/topic_listener_response(token, data)
 	if(!enabled)

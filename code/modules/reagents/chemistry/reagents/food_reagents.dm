@@ -18,15 +18,17 @@
 	/// affects mood, typically higher for mixed drinks with more complex recipes'
 	var/quality = 0
 
-/datum/reagent/consumable/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	current_cycle++
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
-			H.adjust_nutrition(nutriment_factor * REM * seconds_per_tick)
-	if(length(reagent_removal_skip_list))
+/datum/reagent/consumable/New()
+	. = ..()
+	// All food reagents function at a fixed rate
+	chemical_flags |= REAGENT_UNAFFECTED_BY_METABOLISM
+
+/datum/reagent/consumable/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if(!ishuman(affected_mob) || HAS_TRAIT(affected_mob, TRAIT_NOHUNGER))
 		return
-	holder.remove_reagent(type, metabolization_rate * seconds_per_tick)
+	var/mob/living/carbon/human/affected_human = affected_mob
+	affected_human.adjust_nutrition(get_nutriment_factor(affected_mob) * REM * seconds_per_tick)
 
 /datum/reagent/consumable/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -48,6 +50,10 @@
 			var/obj/item/the_real_food = holder.my_atom
 			if(isitem(the_real_food) && !is_reagent_container(the_real_food))
 				exposed_mob.add_mob_memory(/datum/memory/good_food, food = the_real_food)
+
+/// Gets just how much nutrition this reagent is worth for the passed mob
+/datum/reagent/consumable/proc/get_nutriment_factor(mob/living/carbon/eater)
+	return nutriment_factor * REAGENTS_METABOLISM * purity * 2
 
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"
@@ -648,7 +654,7 @@
 	var/obj/effect/decal/cleanable/food/flour/reagentdecal = new(exposed_turf)
 	reagentdecal = locate() in exposed_turf //Might have merged with flour already there.
 	if(reagentdecal)
-		reagentdecal.reagents.add_reagent(/datum/reagent/consumable/flour, reac_volume)
+		reagentdecal.init_reagents(/datum/reagent/consumable/flour, reac_volume)
 
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"
@@ -809,7 +815,7 @@
 
 /datum/reagent/consumable/nutriment/stabilized/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	if(M.nutrition > NUTRITION_LEVEL_FULL - 25)
-		M.adjust_nutrition(-3 * REM * nutriment_factor * seconds_per_tick)
+		M.adjust_nutrition(-3 * REM * get_nutriment_factor(M) * seconds_per_tick)
 	..()
 
 ////Lavaland Flora Reagents////

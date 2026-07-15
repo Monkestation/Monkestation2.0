@@ -33,10 +33,16 @@
 
 /datum/borer_focus/head/on_add(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
 	host.update_sight()
+	ADD_TRAIT(borer, TRAIT_NOFLASH, REF(borer))
+	borer.lighting_cutoff = LIGHTING_CUTOFF_HIGH // They arent Carbon mobs so TRAIT_TRUE_NIGHT_VISION wont work.
+	borer.update_sight()
 	return ..()
 
 /datum/borer_focus/head/on_remove(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
 	host.update_sight()
+	REMOVE_TRAIT(borer, TRAIT_NOFLASH, REF(borer))
+	borer.lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
+	borer.update_sight()
 	return ..()
 
 /datum/borer_focus/chest
