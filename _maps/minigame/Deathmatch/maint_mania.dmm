@@ -264,7 +264,7 @@
 /turf/open/indestructible,
 /area/deathmatch/fullbright)
 "FH" = (
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/indestructible,
 /area/deathmatch/fullbright)
 "FL" = (
