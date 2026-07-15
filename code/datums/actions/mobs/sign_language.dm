@@ -24,16 +24,13 @@
 	if(!owner)
 		return
 
-	RegisterSignal(grant_to, SIGNAL_REMOVETRAIT(TRAIT_MUTE), PROC_REF(on_unmuted))
 	RegisterSignal(grant_to, SIGNAL_ADDTRAIT(TRAIT_MUTE), PROC_REF(on_muted))
 
 	if (HAS_TRAIT(grant_to, TRAIT_MUTE))
 		// Convenience. Mute Carbons can only speak with sign language.
 		if (!active)
 			Activate()
-	else
-		// Convenience. Only display action if the Carbon isn't mute.
-		show_action()
+	show_action()
 
 /datum/action/innate/sign_language/Remove(mob/living/carbon/grant_to)
 	. = ..()
@@ -41,7 +38,6 @@
 		SIGNAL_ADDTRAIT(TRAIT_SIGN_LANG),
 		SIGNAL_REMOVETRAIT(TRAIT_SIGN_LANG),
 		SIGNAL_ADDTRAIT(TRAIT_MUTE),
-		SIGNAL_REMOVETRAIT(TRAIT_MUTE)
 	))
 	REMOVE_TRAIT(grant_to, TRAIT_SIGN_LANG, TRAIT_GENERIC)
 
@@ -78,14 +74,6 @@
 /datum/action/innate/sign_language/proc/on_muted()
 	SIGNAL_HANDLER
 
-	hide_action()
 	// Enable sign language if the Carbon knows it and just gained TRAIT_MUTE
 	if (!HAS_TRAIT(owner, TRAIT_SIGN_LANG))
 		Activate()
-
-/// Signal handler for SIGNAL_REMOVETRAIT(TRAIT_MUTE)
-/// Re-shows the action if the signing Carbon loses TRAIT_MUTE.
-/datum/action/innate/sign_language/proc/on_unmuted()
-	SIGNAL_HANDLER
-
-	show_action()
