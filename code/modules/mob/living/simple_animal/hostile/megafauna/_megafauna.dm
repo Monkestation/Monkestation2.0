@@ -33,6 +33,7 @@
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	life_subsystem_type = /datum/controller/subsystem/mobs/megafauna
+	turns_per_move = 10
 	/// Crusher loot dropped when the megafauna is killed with a crusher
 	var/list/crusher_loot
 	/// Achievement given to surrounding players when the megafauna is killed
@@ -202,7 +203,12 @@
 // MONKESTATION EDIT ADDITION START
 // This on purpose does not call parent, do not make it call parent, we literally use NOTHING from our parents, we're fine.
 /mob/living/simple_animal/hostile/megafauna/Life(seconds_per_tick, times_fired)
-	if(AIStatus != AI_IDLE || !COOLDOWN_FINISHED(src, rawr_cooldown))
+	if(AIStatus != AI_IDLE)
+		return
+
+	handle_automated_movement()
+
+	if(!COOLDOWN_FINISHED(src, rawr_cooldown))
 		return
 
 	var/list/targets = ListTargets()
@@ -228,8 +234,6 @@
 
 /mob/living/simple_animal/hostile/megafauna/proc/warn_players(list/targets)
 	playsound(src, rawr_sound, 100, extrarange = 5, falloff_distance = (vision_range + 2))
-	for(var/mob/living/shake_target as anything in targets)
-		shake_camera(shake_target, 2 SECONDS)
 	if(prob(0.1))
 		visible_message(span_userdanger("[src] roars loudly, visibly being annoyed with your presence!"))
 		return

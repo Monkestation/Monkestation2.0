@@ -47,7 +47,7 @@
 /turf/open/indestructible/bluespace,
 /area/mapping_showcase)
 "mA" = (
-/obj/effect/landmark/start/ai,
+/obj/machinery/ai/data_core/primary,
 /turf/open/indestructible/bluespace,
 /area/mapping_showcase)
 "mD" = (

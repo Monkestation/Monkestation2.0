@@ -93,8 +93,9 @@
 	icon_state = "mecha_laser"
 	energy_drain = 30
 	projectile = /obj/projectile/beam/laser
-	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
 	harmful = TRUE
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler
 	equip_cooldown = 1.5 SECONDS
@@ -106,7 +107,8 @@
 	projectile = /obj/projectile/beam/disabler/weak
 	variance = 25
 	projectiles_per_shot = 5
-	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser2.ogg'
+	fire_sound = 'sound/weapons/gun/energy/Laser2.ogg'
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
 	equip_cooldown = 15
@@ -136,7 +138,7 @@
 	icon_state = "mecha_ion"
 	energy_drain = 120
 	projectile = /obj/projectile/ion
-	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/tesla
 	equip_cooldown = 35
@@ -157,6 +159,7 @@
 	projectile = /obj/projectile/beam/pulse/heavy
 	fire_sound = 'sound/weapons/marauder.ogg'
 	harmful = TRUE
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
 	equip_cooldown = 10
@@ -192,7 +195,7 @@
 	equip_cooldown = 8
 	projectile = /obj/projectile/energy/electrode
 	fire_sound = 'sound/weapons/taser.ogg'
-
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/yellow
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker
 	name = "\improper HoNkER BlAsT 5000"

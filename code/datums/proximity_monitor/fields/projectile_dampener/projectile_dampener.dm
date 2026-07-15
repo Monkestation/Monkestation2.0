@@ -1,8 +1,8 @@
-//Projectile dampening field that slows projectiles and lowers their damage for an energy cost deducted every 1/5 second.
+// Projectile dampening field that slows projectiles and lowers their damage.
 /datum/proximity_monitor/advanced/bubble/projectile_dampener
-	///overlay we apply to caught bullets
-	var/static/image/new_bullet_overlay= image('icons/effects/fields.dmi', "projectile_dampen_effect")
-	/// datum that holds the effects we apply on caught bullets
+	/// The overlay we apply to caught bullets.
+	var/static/image/new_bullet_overlay = image('icons/effects/fields.dmi', "projectile_dampen_effect")
+	/// The datum that holds the effects we apply on caught bullets.
 	var/datum/dampener_projectile_effects/bullet_effects
 
 /datum/proximity_monitor/advanced/bubble/projectile_dampener/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, atom/projector, datum/dampener_projectile_effects/effects_typepath)
@@ -10,8 +10,8 @@
 	bullet_effects = effects_typepath ? new effects_typepath() : new
 
 /datum/proximity_monitor/advanced/bubble/projectile_dampener/Destroy()
+	. = ..()
 	bullet_effects = null
-	return ..()
 
 /datum/proximity_monitor/advanced/bubble/projectile_dampener/field_edge_crossed(atom/movable/movable, turf/location, turf/old_location)
 	. = ..()
@@ -47,6 +47,8 @@
 
 ///proc that applies the wobbly effect on point of bullet entry
 /datum/proximity_monitor/advanced/bubble/projectile_dampener/proc/determine_wobble(turf/location)
+	if(!location || !host)
+		return
 	var/coord_x = location.x - host.x
 	var/coord_y = location.y - host.y
 	var/obj/effect/overlay/vis/field/my_field = edgeturf_effects["[coord_x],[coord_y]"]
@@ -60,16 +62,18 @@
 
 ///a bullet has entered our field, apply the dampening effects to it
 /datum/proximity_monitor/advanced/bubble/projectile_dampener/proc/catch_bullet_effect(obj/projectile/bullet)
+	SEND_SIGNAL(src, COMSIG_DAMPENER_CAPTURE, bullet)
+	if(QDELETED(src))
+		return
 	ADD_TRAIT(bullet,TRAIT_GOT_DAMPENED, REF(src))
 	RegisterSignal(bullet, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(projectile_overlay_updated))
-	SEND_SIGNAL(src, COMSIG_DAMPENER_CAPTURE, bullet)
 	bullet_effects.apply_effects(bullet)
 	bullet.update_appearance()
 
 ///removing the effects after it has exited our field
 /datum/proximity_monitor/advanced/bubble/projectile_dampener/proc/release_bullet_effect(obj/projectile/bullet)
-	REMOVE_TRAIT(bullet, TRAIT_GOT_DAMPENED, REF(src))
 	SEND_SIGNAL(src, COMSIG_DAMPENER_RELEASE, bullet)
+	REMOVE_TRAIT(bullet, TRAIT_GOT_DAMPENED, REF(src))
 	bullet_effects.remove_effects(bullet)
 	bullet.update_appearance()
 	UnregisterSignal(bullet, COMSIG_ATOM_UPDATE_OVERLAYS)

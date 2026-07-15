@@ -19,7 +19,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	name = "egg"
 	desc = "An egg!"
 	icon_state = "chicken"
-	icon = 'monkestation/icons/obj/ranching/eggs.dmi'
+	icon = 'icons/obj/ranching/eggs.dmi'
 	inhand_icon_state = "egg"
 	food_reagents = list(/datum/reagent/consumable/eggyolk = 2, /datum/reagent/consumable/eggwhite = 4)
 	foodtypes = MEAT | RAW

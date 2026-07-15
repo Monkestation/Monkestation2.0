@@ -54,8 +54,8 @@
 /obj/item/clothing/suit/armor/surplus
 	name = "surplus armor vest"
 	desc = "An armored vest that provides decent protection against most types of damage."
-	icon = 'monkestation/icons/obj/clothing/suits.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "armorvest"
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
@@ -290,6 +290,7 @@
 	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
 	equip_delay_other = 60
+	tackle_mod = 2
 
 /datum/armor/armor_riot
 	melee = 50
@@ -440,8 +441,8 @@
 
 /obj/item/clothing/suit/armor/swat
 	name = "MK.I SWAT Suit"
-	desc = "A tactical suit first developed in a joint effort by the defunct IS-ERI and Nanotrasen in 2321 for military operations. It has a minor slowdown, but offers decent protection."
-	icon_state = "heavy"
+	desc = "A tactical suit first developed in a joint effort by the defunct IS-ERI and Nanotrasen in 2321 for military operations. It has a minor slowdown, but offers decent protection with an attached storage rig that can hold small items."
+	icon_state = "swat"
 	inhand_icon_state = "swat_suit"
 	armor_type = /datum/armor/armor_swat
 	strip_delay = 120
@@ -451,8 +452,15 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
 
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	slowdown = 0.5 //monkestation edit, 0.7 to 0.5
+	slowdown = 0.5
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	tackle_mod = 2
+
+/obj/item/clothing/suit/armor/swat/Initialize(mapload)
+	. = ..()
+
+	create_storage(storage_type = /datum/storage/pockets/armor)
 
 //All of the armor below is mostly unused
 

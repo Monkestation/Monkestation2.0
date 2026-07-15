@@ -232,7 +232,7 @@
 /turf/open/floor/engine/insulation
 	name = "hyper-insulated floor"
 	desc = "Sturdy and completely heat-proof."
-	icon = 'monkestation/icons/turf/insulated_floor.dmi'
+	icon = 'icons/turf/insulated_floor.dmi'
 	icon_state = "insulation"
 	thermal_conductivity = 0
 	heat_capacity = INFINITY

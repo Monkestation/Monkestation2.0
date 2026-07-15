@@ -726,7 +726,7 @@
 	user.stamina.adjust(-roll_stamcost)
 	user.Immobilize(0.8 SECONDS) // you dont get to adjust your roll
 	user.throw_at(where_to, range = roll_range, speed = 2, force = MOVE_FORCE_NORMAL, spin = roll_orientation)
-	playsound(user, 'monkestation/sound/effects/body-armor-rolling.ogg', 50, FALSE)
+	playsound(user, 'sound/effects/body-armor-rolling.ogg', 50, FALSE)
 	return ..()
 
 /*

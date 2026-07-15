@@ -419,6 +419,7 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_BINGLES "Bingles"
 #define ANTAG_GROUP_DARKSPAWN "Darkspawn"
 #define ANTAG_GROUP_DEVILS "Infernal Agents"
+#define ANTAG_GROUP_ABANDONED_IPC "Abandoned IPC"
 
 #define HUNTER_PACK_COPS "Spacepol Officers"
 #define HUNTER_PACK_RUSSIAN "Russian Smugglers"

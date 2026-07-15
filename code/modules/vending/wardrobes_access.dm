@@ -2,7 +2,7 @@
 	name = "\improper Command Outfitting Station"
 	desc = "A vending machine for specialised clothing for members of Command."
 	product_ads = "File paperwork in style!;It's red so you can't see the blood!;You have the right to be fashionable!;Now you can be the fashion police you always wanted to be!"
-	icon = 'monkestation/icons/obj/vending.dmi'
+	icon = 'icons/obj/vending.dmi'
 	icon_state = "commdrobe"
 	light_mask = "wardrobe-light-mask"
 	vend_reply = "Thank you for using the CommDrobe!"
@@ -31,7 +31,6 @@
 		// CAPTAIN
 		/obj/item/clothing/head/hats/caphat = 1,
 		/obj/item/clothing/head/caphat/beret = 1,
-		/obj/item/clothing/head/caphat/beret/alt = 1,
 		/obj/item/clothing/head/hats/imperial/cap = 1,
 		/obj/item/clothing/head/hats/caphat/armored = 1,
 		/obj/item/clothing/under/rank/captain = 1,
@@ -71,7 +70,6 @@
 	inventory[ACCESS_HOP] = list( // Best head btw
 		/obj/item/clothing/head/hats/hopcap = 1,
 		/obj/item/clothing/head/hopcap/beret = 1,
-		/obj/item/clothing/head/hopcap/beret/alt = 1,
 		/obj/item/clothing/head/hats/imperial/hop = 1,
 		/obj/item/clothing/under/rank/civilian/head_of_personnel = 1,
 		/obj/item/clothing/under/rank/civilian/head_of_personnel/skirt = 1,
@@ -90,7 +88,6 @@
 	)
 	inventory[ACCESS_CMO] = list(
 		/obj/item/clothing/head/beret/medical/cmo = 1,
-		/obj/item/clothing/head/beret/medical/cmo/alt = 1,
 		/obj/item/clothing/head/hats/imperial/cmo = 1,
 		/obj/item/clothing/under/rank/medical/chief_medical_officer = 1,
 		/obj/item/clothing/under/rank/medical/chief_medical_officer/skirt = 1,
@@ -104,7 +101,6 @@
 	)
 	inventory[ACCESS_RD] = list(
 		/obj/item/clothing/head/beret/science/rd = 1,
-		/obj/item/clothing/head/beret/science/rd/alt = 1,
 		/obj/item/clothing/under/rank/rnd/research_director = 1,
 		/obj/item/clothing/under/rank/rnd/research_director/skirt = 1,
 		/obj/item/clothing/under/rank/rnd/research_director/turtleneck = 1,
@@ -186,8 +182,6 @@
 
 /obj/machinery/vending/access/wardrobe_cargo/build_access_list(list/inventory)
 	inventory[ACCESS_QM] = list(
-		/obj/item/clothing/head/beret/cargo/qm = 1,
-		/obj/item/clothing/head/beret/cargo/qm/alt = 1,
 		/obj/item/clothing/neck/cloak/qm = 1,
 		/obj/item/clothing/neck/mantle/qm = 1,
 		/obj/item/clothing/under/rank/cargo/qm = 1,

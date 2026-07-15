@@ -12,13 +12,19 @@
 	default_skin = "contractor"
 	armor_type = /datum/armor/mod_contractor_armor
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
+	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	slowdown_inactive = 0.5
 	slowdown_active = 0
 	ui_theme = "syndicate"
-	inbuilt_modules = list(/obj/item/mod/module/chameleon/contractor)
+	inbuilt_modules = list(
+		/obj/item/mod/module/chameleon/contractor,
+		/obj/item/mod/module/welding/syndicate,
+		/obj/item/mod/module/hearing_protection,
+		/obj/item/mod/module/quick_cuff,
+	)
 	allowed_suit_storage = list(
 		/obj/item/flashlight,
 		/obj/item/tank/internals,
@@ -35,8 +41,8 @@
 	)
 	skins = list(
 		"contractor" = list(
-			MOD_ICON_OVERRIDE = 'monkestation/icons/obj/clothing/modsuits/modsuit.dmi',
-			MOD_WORN_ICON_OVERRIDE = 'monkestation/icons/mob/clothing/worn_modsuit.dmi',
+			MOD_ICON_OVERRIDE = 'icons/obj/clothing/modsuit/mod_clothing.dmi',
+			MOD_WORN_ICON_OVERRIDE = 'icons/mob/clothing/worn_modsuit.dmi',
 			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,

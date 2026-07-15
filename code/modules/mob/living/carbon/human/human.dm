@@ -382,7 +382,7 @@
 				return
 
 			if(href_list["add_crime"])
-				var/crime_name = tgui_input_text(human_user, "Crime name", "Security HUD")
+				var/crime_name = tgui_input_text(human_user, "Crime name", "Security HUD", max_length = MAX_CRIME_NAME_LEN)
 				if(!target_record || !crime_name || !allowed_access || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 
@@ -977,9 +977,9 @@
 	var/stamina_deficiency = stamina?.loss
 	var/highest_deficiency = max(lethal_deficiency, stamina_deficiency)
 	if(lethal_deficiency >= 40 || stamina_deficiency >= 60)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE, multiplicative_slowdown = highest_deficiency / 75)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, multiplicative_slowdown = highest_deficiency / 75)
 	else if(LAZYACCESS(movespeed_modification, "[/datum/movespeed_modifier/damage_slowdown]"))
-		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE)
+		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 
 /mob/living/carbon/human/pre_stamina_change(diff as num, forced)
 	. = ..()

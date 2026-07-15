@@ -49,7 +49,7 @@
 	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/inhands/clothing/backpack_righthand.dmi'
 	icon_state = "backpack_blueshield"
 	inhand_icon_state = "backpack_blueshield"
-	alternate_worn_layer = (HEAD_LAYER-0.5)
+	alternate_worn_layer = ABOVE_HEAD_LAYER
 
 /obj/item/storage/backpack/satchel/blueshield
 	name = "blueshield satchel"
@@ -204,7 +204,7 @@
 /obj/item/radio/headset/headset_bs
 	name = "\proper the blueshield's headset"
 	desc = "The headset of the guy who keeps the administration alive."
-	icon = 'monkestation/icons/obj/radio.dmi'
+	icon = 'icons/obj/radio.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/ears.dmi'
 	icon_state = "bshield_headset"
 	worn_icon_state = "bshield_headset"

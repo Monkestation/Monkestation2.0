@@ -1,7 +1,7 @@
 
 /obj/item/kirbyplants
 	name = "potted plant"
-	icon = 'monkestation/icons/obj/plants.dmi'
+	icon = 'icons/obj/plants.dmi'
 	icon_state = "plant-01"
 	base_icon_state = "plant-01"
 	desc = "A little bit of nature contained in a pot."
@@ -94,7 +94,7 @@
 
 /obj/item/kirbyplants/random/Initialize(mapload)
 	. = ..()
-	icon = 'monkestation/icons/obj/plants.dmi'
+	icon = 'icons/obj/plants.dmi'
 	randomize_base_icon_state()
 
 //Handles randomizing the icon during initialize()
@@ -106,7 +106,7 @@
 		update_appearance(UPDATE_ICON)
 
 /obj/item/kirbyplants/random/dead
-	icon = 'monkestation/icons/obj/plants.dmi'
+	icon = 'icons/obj/plants.dmi'
 	icon_state = "plant-25"
 	dead = TRUE
 
@@ -119,7 +119,7 @@
 	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"[dead ? "\nIt doesn't look very healthy...":null]"
 
 /obj/item/kirbyplants/random/fullysynthetic
-	icon = 'monkestation/icons/obj/plants.dmi'
+	icon = 'icons/obj/plants.dmi'
 	name = "plastic potted plant"
 	desc = "A fake, cheap looking, plastic tree. Perfect for people who kill every plant they touch."
 	icon_state = "plant-26"

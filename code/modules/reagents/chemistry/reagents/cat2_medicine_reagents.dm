@@ -165,6 +165,8 @@
 	reagent_state = LIQUID
 	color = "#6171FF"
 	ph = 4.7
+	inverse_chem_val = 0.4
+	inverse_chem = /datum/reagent/impurity/lentslurri
 	var/resetting_probability = 0 //What are these for?? Can I remove them?
 	var/spammer = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

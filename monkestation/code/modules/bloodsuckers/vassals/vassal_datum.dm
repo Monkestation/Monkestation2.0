@@ -10,7 +10,7 @@
 	job_rank = ROLE_BLOODSUCKER
 	antag_hud_name = "vassal"
 	show_in_roundend = FALSE
-	hud_icon = 'monkestation/icons/bloodsuckers/bloodsucker_icons.dmi'
+	hud_icon = 'icons/bloodsuckers/bloodsucker_icons.dmi'
 	antag_count_points = 2
 
 	/// The Master Bloodsucker's antag datum.

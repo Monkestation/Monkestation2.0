@@ -2827,7 +2827,7 @@
 	icon_state = "plastitaniumtiny"
 	},
 /mob/living/basic/alien/queen/large{
-	loot = list(/obj/effect/gibspawner/xeno,/obj/item/ammo_box/magazine/plastikov9mm,/obj/effect/mob_spawn/corpse/human/syndicatestormtrooper);
+	loot = list(/obj/effect/gibspawner/xeno,/obj/item/ammo_box/magazine/plastikov9mm,/obj/item/gun/ballistic/automatic/plastikov);
 	desc = "What you saw in your dreams last night.";
 	faction = list("syndicate","xenomorph")
 	},

@@ -1,8 +1,8 @@
 /obj/item/clothing/mask/cigarette/pipe/crackpipe
 	name = "crack pipe"
 	desc = "A slick glass pipe made for smoking one thing: crack."
-	icon = 'monkestation/icons/obj/items/drugs.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
+	icon = 'icons/obj/items/drugs.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
 	icon_state = "glass_pipeoff"
 	icon_on = "glass_pipeon"
 	icon_off = "glass_pipeoff"

@@ -3,7 +3,7 @@
 GLOBAL_LIST_INIT(clockwork_slabs, list())
 
 /obj/item/clockwork
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_objects.dmi'
 	/// Extra info to give clock cultists, added via the /datum/element/clockwork_description element
 	var/clockwork_desc = ""
 	/// Does this item get the clockwork_pickup element
@@ -21,8 +21,8 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 	clockwork_desc = "A beautiful work of art, harnessing mechanical energy for a variety of useful powers."
 	item_flags = NOBLUDGEON
 	icon_state = "clockwork_slab"
-	lefthand_file = 'monkestation/icons/mob/clock_cult/clockwork_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/clock_cult/clockwork_righthand.dmi'
+	lefthand_file = 'icons/mob/clock_cult/clockwork_lefthand.dmi'
+	righthand_file = 'icons/mob/clock_cult/clockwork_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	has_pickup_element = FALSE
 

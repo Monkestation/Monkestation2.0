@@ -163,11 +163,9 @@
 	flame_generation = !flame_generation
 
 	if(flame_generation)
-		ADD_TRAIT(user, TRAIT_SUPPRESS_NOFIRE, REF(src))
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj, src)
-		REMOVE_TRAIT(user, TRAIT_SUPPRESS_NOFIRE, REF(src))
 		user.extinguish()
 
 	user.balloon_alert(user, flame_generation ? "enabled" : "disabled")

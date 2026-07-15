@@ -49,9 +49,8 @@
 		builtInCamera = new (src)
 		builtInCamera.c_tag = real_name
 		builtInCamera.network = list(CAMERANET_NETWORK_SS13)
-		builtInCamera.internal_light = FALSE
 		if(wires.is_cut(WIRE_CAMERA))
-			builtInCamera.camera_enabled = 0
+			builtInCamera.toggle_cam(null, displaymessage = FALSE)
 	update_icons()
 	. = ..()
 
@@ -121,7 +120,7 @@
 		modularInterface.icon_state = "tablet-silicon"
 		modularInterface.icon_state_powered = "tablet-silicon"
 		modularInterface.icon_state_unpowered = "tablet-silicon"
-	modularInterface.update_icon()
+	modularInterface.update_appearance()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
@@ -528,7 +527,7 @@
 			removing.brainmob.set_stat(CONSCIOUS)
 		mind.transfer_to(removing.brainmob)
 		removing.update_appearance()
-
+		removing.try_brainwash()
 	else
 		to_chat(src, span_boldannounce("Oops! Something went very wrong, your MMI was unable to receive your mind. \
 			You have been ghosted. Please make a bug report so we can fix this bug."))
@@ -856,6 +855,8 @@
 	mainframe.connected_robots |= src
 	lawupdate = TRUE
 	lawsync()
+	if(sensors_on)
+		add_sensors()
 	if(radio && AI.radio) //AI keeps all channels, including Syndie if it is a Traitor
 		if(AI.radio.syndie)
 			radio.make_syndie()
@@ -885,6 +886,7 @@
 /mob/living/silicon/robot/proc/undeploy()
 	if(!deployed || !mind || !mainframe)
 		return
+	remove_sensors()
 	mainframe.UnregisterSignal(src, COMSIG_LIVING_DEATH)
 	mainframe.redeploy_action.Grant(mainframe)
 	mainframe.redeploy_action.last_used_shell = src
@@ -1029,7 +1031,7 @@
 		return
 	for(var/mob/living/buckled_mob as anything in buckled_mobs)
 		buckled_mob.visible_message(span_warning("[buckled_mob] is knocked off of [src] by the charge in [src]'s chassis induced by the hyperkinetic dampener field!"))
+		unbuckle_mob(buckled_mob) // In case the paralyze doesn't automatically unbuckle them.
 		buckled_mob.Paralyze(1 SECONDS)
-		unbuckle_mob(buckled_mob)
 	do_sparks(5, 0, src)
 

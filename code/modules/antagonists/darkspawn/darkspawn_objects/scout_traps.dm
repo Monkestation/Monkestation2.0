@@ -18,7 +18,7 @@
 /obj/item/restraints/legcuffs/beartrap/dark/attack_hand(mob/user)
 	spring_trap(user) //no picking it up
 
-/obj/item/restraints/legcuffs/beartrap/dark/spring_trap(datum/source, atom/movable/target, thrown_at = FALSE)
+/obj/item/restraints/legcuffs/beartrap/dark/spring_trap(datum/source, atom/movable/target, thrown_at = FALSE, def_zone = BODY_ZONE_CHEST)
 	if(isliving(target))
 		var/mob/living/living_target = target
 		if(IS_TEAM_DARKSPAWN(living_target))

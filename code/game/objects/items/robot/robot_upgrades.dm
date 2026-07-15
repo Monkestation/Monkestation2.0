@@ -788,6 +788,15 @@
 	model_flags = BORG_MODEL_CARGO
 	items_to_add = list(/obj/item/borg/hydraulic_clamp/better)
 
+/obj/item/borg/upgrade/condiment_synthesizer
+	name = "service cyborg condiment synthesiser"
+	desc = "An upgrade for service model cyborgs that allows them to produce solid condiments."
+	icon_state = "module_service"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
+	items_to_add = list(/obj/item/reagent_containers/borghypo/condiment_synthesizer)
+
 /// This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
 // A reusable tool that can bring borgs back to life. They gotta be repaired first, though.
 /obj/item/borg_restart_board
@@ -821,6 +830,29 @@
 	borg.logevent("System brought online.")
 	return ..()
 
+/obj/item/borg/upgrade/panel_access_remover
+	name = "cyborg firmware hack"
+	desc = "Used to override the default firmware of a cyborg and disable panel access restrictions."
+	icon_state = "cyborg_upgrade2"
+	one_use = TRUE
+
+/obj/item/borg/upgrade/panel_access_remover/action(mob/living/silicon/robot/R, user = usr)
+	R.req_access = list()
+	R.req_one_access = list()
+	return TRUE //Makes sure we delete the upgrade since it's one_use
+
+/obj/item/borg/upgrade/panel_access_remover/freeminer
+	name = "free miner cyborg firmware hack"
+	desc = "Used to override the default firmware of a cyborg with the freeminer version."
+	icon_state = "cyborg_upgrade2"
+
+/obj/item/borg/upgrade/panel_access_remover/freeminer/action(mob/living/silicon/robot/R, user = usr)
+	R.req_access = list()
+	R.req_one_access = list(ACCESS_AWAY_ENGINEERING, ACCESS_AWAY_SCIENCE)
+	new /obj/item/borg/upgrade/panel_access_remover/freeminer(R.drop_location())
+	//This deletes the upgrade which is why we create a new one. This prevents the message "Upgrade Error" without a adding a once-used variable to every board
+	return TRUE
+
 /obj/item/borg/upgrade/transform/centcom
 	name = "borg model picker (CentCom)"
 	desc = "Allows you to to turn a cyborg into a CentCom cyborg."
@@ -834,8 +866,34 @@
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_ENGINEERING
-	items_to_add = list(/obj/item/borg/sight/meson/nightvision)
-	items_to_remove = list(/obj/item/borg/sight/meson)
+
+/obj/item/borg/upgrade/nvmeson/action(mob/living/silicon/robot/borg, user = usr)
+	. = ..()
+	if(!.)
+		return .
+	var/datum/action/cooldown/borg_sight_vision/sight_vision_action = borg.model.sight_vision_ref?.resolve()
+	if(isnull(sight_vision_action))
+		return FALSE
+	if(sight_vision_action.given_sight_mode == BORGNVMESON)
+		to_chat(user, span_warning("This cyborg already has night vision!"))
+		return FALSE
+
+	sight_vision_action.name = "Toggle Night Vision Meson Vision"
+	sight_vision_action.button_icon_state = "nvgmeson"
+	sight_vision_action.change_sight_mode(BORGNVMESON)
+	sight_vision_action.build_all_button_icons()
+
+/obj/item/borg/upgrade/nvmeson/deactivate(mob/living/silicon/robot/borg, user = usr)
+	. = ..()
+	if(!.)
+		return .
+	var/datum/action/cooldown/borg_sight_vision/sight_vision_action = borg.model.sight_vision_ref?.resolve()
+	if(isnull(sight_vision_action))
+		return FALSE
+	sight_vision_action.name = initial(sight_vision_action.name)
+	sight_vision_action.button_icon_state = initial(sight_vision_action.button_icon_state)
+	sight_vision_action.change_sight_mode(initial(sight_vision_action.given_sight_mode))
+	sight_vision_action.build_all_button_icons()
 
 /obj/item/borg/upgrade/adv_healthanalyzer
 	name = "health analyzer upgrade"
@@ -859,10 +917,19 @@
 	for(var/obj/item/healthanalyzer/cyborg/analyzer in borg.model.modules)
 		analyzer.downgrade()
 
+/obj/item/borg/upgrade/breathingbag
+	name = "breathing bag upgrade"
+	desc = "An upgrade allowing the medical module to assist a patient with breathing."
+	icon_state = "module_medical"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
+	model_flags = BORG_MODEL_MEDICAL
+	items_to_add = list(/obj/item/breathing_bag)
+
+// This is a base item which should be inherited from.
 /obj/item/borg/upgrade/surgery_omnitool
 	name = "cyborg surgical omni-tool upgrade"
-	desc = "An upgrade to the Medical model, upgrading the built-in \
-		surgical omnitool, to be on par with advanced surgical tools, allowing for faster surgery."
+	desc = "An upgrade that changes the standard built-in surgical omnitool somehow."
 	icon_state = "module_medical"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
@@ -871,20 +938,61 @@
 /obj/item/borg/upgrade/surgery_omnitool/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if(!.)
-		return .
-	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_upgrade in borg.model.modules)
-		if(omnitool_upgrade.upgraded)
-			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
-			return FALSE
-	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in borg.model.modules)
-		omnitool.set_upgraded(TRUE)
+		return FALSE
+	for(var/obj/item/borg/upgrade/surgery_omnitool/other_omnitool_upgrade in borg.upgrades)
+		other_omnitool_upgrade.forceMove(get_turf(borg))
 
-/obj/item/borg/upgrade/surgery_omnitool/deactivate(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/surgery_omnitool/advanced
+	name = "cyborg surgical advanced omni-tool upgrade"
+	desc = "An upgrade that upgrades the standard built-in surgical omnitool to be on par with advanced surgical tools which allows for faster surgery."
+
+/obj/item/borg/upgrade/surgery_omnitool/advanced/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if(!.)
-		return .
-	for(var/obj/item/borg/cyborg_omnitool/omnitool in borg.model.modules)
-		omnitool.set_upgraded(FALSE)
+		return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_module in borg.model.modules)
+		if(omnitool_module.upgraded)
+			continue
+		omnitool_module.set_upgraded(TRUE)
+
+/obj/item/borg/upgrade/surgery_omnitool/advanced/deactivate(mob/living/silicon/robot/borg, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_module in borg.model.modules)
+		if(omnitool_module.upgraded && initial(omnitool_module.upgraded)) // Omnitools that start out upgraded shall stay upgraded.
+			continue
+		omnitool_module.set_upgraded(FALSE)
+
+/obj/item/borg/upgrade/surgery_omnitool/alien
+	name = "cyborg surgical alien omni-tool upgrade"
+	desc = "An upgrade that replaces the standard built-in surgical omnitool with an alien variant of it which allows for even faster surgery."
+
+/obj/item/borg/upgrade/surgery_omnitool/alien/action(mob/living/silicon/robot/borg, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_module in borg.model.modules) // Solely because we don't want to shuffle the item around in their inventory.
+		omnitool_module.replace_tool(/obj/item/scalpel/cyborg, /obj/item/scalpel/cyborg/alien)
+		omnitool_module.replace_tool(/obj/item/surgicaldrill/cyborg, /obj/item/surgicaldrill/cyborg/alien)
+		omnitool_module.replace_tool(/obj/item/hemostat/cyborg, /obj/item/hemostat/cyborg/alien)
+		omnitool_module.replace_tool(/obj/item/retractor/cyborg, /obj/item/retractor/cyborg/alien)
+		omnitool_module.replace_tool(/obj/item/cautery/cyborg, /obj/item/cautery/cyborg/alien)
+		omnitool_module.replace_tool(/obj/item/circular_saw/cyborg, /obj/item/circular_saw/cyborg/alien)
+		omnitool_module.replace_tool(/obj/item/bonesetter/cyborg, /obj/item/bonesetter/cyborg/alien)
+
+/obj/item/borg/upgrade/surgery_omnitool/alien/deactivate(mob/living/silicon/robot/borg, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_module in borg.model.modules)
+		omnitool_module.replace_tool(/obj/item/scalpel/cyborg/alien, /obj/item/scalpel/cyborg)
+		omnitool_module.replace_tool(/obj/item/surgicaldrill/cyborg/alien, /obj/item/surgicaldrill/cyborg)
+		omnitool_module.replace_tool(/obj/item/hemostat/cyborg/alien, /obj/item/hemostat/cyborg)
+		omnitool_module.replace_tool(/obj/item/retractor/cyborg/alien, /obj/item/retractor/cyborg)
+		omnitool_module.replace_tool(/obj/item/cautery/cyborg/alien, /obj/item/cautery/cyborg)
+		omnitool_module.replace_tool(/obj/item/circular_saw/cyborg/alien, /obj/item/circular_saw/cyborg)
+		omnitool_module.replace_tool(/obj/item/bonesetter/cyborg/alien, /obj/item/bonesetter/cyborg)
 
 //
 // Science Cyborgs
@@ -911,7 +1019,7 @@
 	if(!length(storables_to_add))
 		to_chat(user, span_warning("This upgrade doesn't seem to do anything!"))
 		return FALSE
-	apparatus.storable |= storables_to_add
+	apparatus.whitelist_storables |= storables_to_add
 
 /obj/item/borg/upgrade/science_apparatus_improvement/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
@@ -922,7 +1030,7 @@
 		return FALSE
 	if(!length(storables_to_add))
 		return FALSE
-	apparatus.storable -= storables_to_add
+	apparatus.whitelist_storables -= storables_to_add
 
 /obj/item/borg/upgrade/science_apparatus_improvement/robotics
 	name = "science robotics upgrade"

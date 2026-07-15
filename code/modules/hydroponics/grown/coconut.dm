@@ -1,10 +1,9 @@
 /obj/item/seeds/coconut
 	name = "pack of Coconut seeds"
 	desc = "These seeds grow into coconut trees."
-	plant_icon_offset = 0
-	icon = 'monkestation/icons/obj/hydroponics/fruit.dmi'
 	icon_state = "coconut_seed"
 
+	plant_icon_offset = 0
 	growing_icon = 'goon/icons/obj/hydroponics/plants_fruit.dmi'
 	growthstages = 3
 	icon_grow = "coconut-grow"
@@ -35,8 +34,6 @@
 /obj/item/food/grown/coconut
 	name = "coconut"
 	desc = "A fruit with a hardshell, filled with sweet coconut milk."
-
-	icon = 'monkestation/icons/obj/hydroponics/fruit.dmi'
 	icon_state = "coconut"
 
 	bite_consumption_mod = 3
@@ -44,10 +41,8 @@
 	seed = /obj/item/seeds/coconut
 
 /obj/item/food/grown/shell/coconut_gun
-	seed = /obj/item/seeds/coconut/gun
 	name = "coconut gun"
 	desc = "It smells like burning."
-	icon = 'monkestation/icons/obj/hydroponics/fruit.dmi'
 	icon_state = "coconut_gun_husked"
 	trash_type = /obj/item/gun/energy/laser/coconut_gun
 	bite_consumption_mod = 2
@@ -59,8 +54,6 @@
 /obj/item/gun/energy/laser/coconut_gun
 	name = "coconut gun"
 	desc = "A gun that shoots coconuts, 'nuff said."
-
-	icon = 'monkestation/icons/obj/hydroponics/fruit.dmi'
 	icon_state = "coconut_gun"
 	can_charge = FALSE
 	automatic_charge_overlays = FALSE
@@ -72,9 +65,9 @@
 /obj/item/ammo_casing/energy/laser/coconut
 	projectile_type = /obj/projectile/beam/disabler/coconut
 	harmful = FALSE
-	fire_sound = 'monkestation/sound/effects/bonk.ogg'
+	fire_sound = 'sound/effects/bonk.ogg'
 	e_cost = 120
 
 /obj/projectile/beam/disabler/coconut
-	icon = 'monkestation/icons/obj/hydroponics/fruit.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "coconut"

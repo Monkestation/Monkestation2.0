@@ -1,13 +1,9 @@
 ///Juice item, converting nutriments into juice_typepath and transfering to target_holder if specified
 /obj/item/proc/juice(datum/reagents/target_holder, mob/user)
-	if(on_juice() == -1 || !reagents?.total_volume)
+	if(on_juice() == -1)
 		return FALSE
 
-	for(var/datum/reagent/juice_typepath as anything in juice_results)
-		if(ispath(juice_typepath))
-			reagents.convert_reagent(/datum/reagent/consumable, juice_typepath, include_source_subtypes = TRUE)
-		reagents.trans_to(target_holder, reagents.total_volume, transfered_by = user)
-
+	target_holder.add_reagent_list(juice_results)
 	return TRUE
 
 ///Grind item, adding grind_results to item's reagents and transfering to target_holder if specified
