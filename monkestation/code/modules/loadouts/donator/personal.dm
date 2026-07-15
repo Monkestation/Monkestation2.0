@@ -583,3 +583,9 @@
 	item_path = /obj/item/clothing/suit/hooded/colorblockhoodie
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+/datum/loadout_item/suit/pharoh
+	name = "Pharoh's Tunic"
+	item_path = /obj/item/clothing/suit/costume/nemes
+	donator_only = TRUE
+	requires_purchase = FALSE
