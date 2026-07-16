@@ -7,6 +7,7 @@
 	var/desc = ":KILL:"
 	/// If defined, using this outfit sets the targets species to it
 	var/datum/species/species_override
+	var/datum/outfit/plasmaman/plasmaman_outfit = /datum/outfit/plasmaman
 	/// This outfit will grant these spells if applied
 	var/list/granted_spells = list()
 
@@ -17,8 +18,21 @@
 
 	if(!isnull(species_override))
 		user.set_species(species_override)
-	else if (!isnull(user.dna.species.outfit_important_for_life)) //plasmamen get lit on fire and die
-		user.set_species(/datum/species/human)
+	else if (!isnull(user.dna.species.outfit_important_for_life) && plasmaman_outfit) //plasmamen get lit on fire and die
+		if(isnull(l_hand) || isnull(r_hand))
+			uniform = plasmaman_outfit::uniform
+			gloves = plasmaman_outfit::gloves
+			head = plasmaman_outfit::head
+			mask = plasmaman_outfit::mask
+			internals_slot = ITEM_SLOT_HANDS
+			if(isnull(l_hand))
+				l_hand = /obj/item/tank/internals/plasmaman/belt/full
+			else
+				r_hand = /obj/item/tank/internals/plasmaman/belt/full
+
+		else // If both hands are taken, just turn them human
+			user.set_species(/datum/species/human)
+
 	for(var/datum/action/act as anything in granted_spells)
 		var/datum/action/new_ability = new act(user)
 		if(istype(new_ability, /datum/action/cooldown/spell))
@@ -36,6 +50,7 @@
 	display_name = "Unarmed, Butt-naked"
 	desc = "Naked man craves for bloodshed."
 	shoes = null
+	plasmaman_outfit = null // You chose to be naked in deathmatch, burn.
 
 /datum/outfit/deathmatch_loadout/assistant
 	name = "Deathmatch: Assistant loadout"
@@ -64,6 +79,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	back = /obj/item/storage/backpack
 	id = /obj/item/card/id/advanced/chameleon
+	plasmaman_outfit = /datum/outfit/syndicate/plasmaman
 
 /datum/outfit/deathmatch_loadout/operative/ranged
 	name = "Deathmatch: Ranged Operative"
@@ -105,6 +121,7 @@
 	back = /datum/outfit/job/security::backpack
 	box = /datum/outfit/job/security::box
 	implants = list(/obj/item/implant/mindshield)
+	plasmaman_outfit = /datum/outfit/plasmaman/security
 
 /datum/outfit/deathmatch_loadout/assistant/instagib
 	name = "DM: Instagib"
@@ -139,6 +156,7 @@
 	backpack_contents = list(
 		/obj/item/sharpener,
 	)
+	plasmaman_outfit = /datum/outfit/plasmaman/chef
 
 /datum/outfit/deathmatch_loadout/samurai
 	name = "Deathmatch: Samurai"
@@ -176,6 +194,7 @@
 		/obj/item/grenade/smokebomb = 2,
 		/obj/item/ammo_box/a762 = 2,
 	)
+	plasmaman_outfit = /datum/outfit/plasmaman/cargo
 
 /datum/outfit/deathmatch_loadout/battler/druid
 	name = "Deathmatch: Druid"
@@ -205,6 +224,7 @@
 		/obj/item/food/grown/mushroom/walkingmushroom = 2,
 		/obj/item/seeds/kudzu = 1,
 	)
+	plasmaman_outfit = /datum/outfit/plasmaman/botany
 
 /datum/outfit/deathmatch_loadout/battler/northstar
 	name = "Deathmatch: North Star"
@@ -218,6 +238,7 @@
 		/obj/item/throwing_star = 6,
 		/obj/item/restraints/legcuffs/bola/tactical = 2,
 	)
+	plasmaman_outfit = /datum/outfit/syndicate/plasmaman
 
 /datum/outfit/deathmatch_loadout/battler/janitor
 	name = "Deathmatch: Janitor"
@@ -235,6 +256,7 @@
 		/obj/item/restraints/legcuffs/beartrap = 3,
 		/obj/item/soap,
 	)
+	plasmaman_outfit = /datum/outfit/plasmaman/janitor
 
 /datum/outfit/deathmatch_loadout/battler/surgeon
 	name = "Deathmatch: Surgeon"
@@ -253,6 +275,7 @@
 		/obj/item/storage/medkit/tactical,
 		/obj/item/reagent_containers/medipen/stimulants,
 	)
+	plasmaman_outfit = /datum/outfit/plasmaman/medical
 
 /datum/outfit/deathmatch_loadout/battler/raider
 	name = "Deathmatch: Raider"
@@ -289,6 +312,7 @@
 		/obj/item/food/grown/banana = 3,
 		/obj/item/food/pie/cream = 2,
 		)
+	plasmaman_outfit = /datum/outfit/plasmaman/clown
 
 /datum/outfit/deathmatch_loadout/battler/tgcoder //tg doesnt stand for tgstation dont ask
 	name = "Deathmatch: Coder"
@@ -315,6 +339,7 @@
 	head = /obj/item/clothing/head/utility/hardhat
 	back = /obj/item/fireaxe
 	gloves = /obj/item/clothing/gloves/color/yellow
+	plasmaman_outfit = /datum/outfit/plasmaman/engineering
 
 /datum/outfit/deathmatch_loadout/battler/scientist
 	name = "Deathmatch: Scientist"
@@ -342,6 +367,7 @@
 		/obj/item/slimecross/burning/rainbow,
 		/obj/item/slimecross/chilling/adamantine,
 	)
+	plasmaman_outfit = /datum/outfit/plasmaman/science
 
 /datum/outfit/deathmatch_loadout/battler/bloodminer
 	name = "Deathmatch: Blood Miner"
@@ -357,6 +383,7 @@
 	granted_spells = list(
 		/datum/action/cooldown/mob_cooldown/dash,
 	)
+	plasmaman_outfit = /datum/outfit/plasmaman/mining
 
 /datum/outfit/deathmatch_loadout/battler/ripper
 	name = "Deathmatch: Ripper"
@@ -384,6 +411,7 @@
 	shoes = /obj/item/clothing/shoes/cowboy
 	belt = /obj/item/storage/belt/holster/detective/full
 	head = /obj/item/clothing/head/cowboy/brown
+	plasmaman_outfit = /datum/outfit/plasmaman/detective
 
 /// wizards
 
@@ -533,6 +561,7 @@
 	back = /obj/item/storage/backpack/clown
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	granted_spells = null
+	plasmaman_outfit = /datum/outfit/plasmaman/clown
 
 /datum/outfit/deathmatch_loadout/wizard/monkey
 	name = "Deathmatch: Monkey"
@@ -568,6 +597,7 @@
 	l_hand = /obj/item/shield/riot/tele
 	l_pocket = /obj/item/grenade/flashbang
 	r_pocket = /obj/item/restraints/legcuffs/bola/energy
+	plasmaman_outfit = /datum/outfit/plasmaman/head_of_security
 
 /datum/outfit/deathmatch_loadout/captain
 	name = "Deathmatch: Captain"
@@ -587,6 +617,7 @@
 	l_hand = /obj/item/gun/energy/laser/captain
 	r_pocket = /obj/item/assembly/flash
 	l_pocket = /obj/item/melee/baton/telescopic
+	plasmaman_outfit = /datum/outfit/plasmaman/captain
 
 /datum/outfit/deathmatch_loadout/traitor
 	name = "Deathmatch: Traitor"
@@ -605,6 +636,7 @@
 	r_pocket = /obj/item/reagent_containers/medipen/stimulants
 	l_pocket = /obj/item/soap/syndie
 	belt = /obj/item/gun/ballistic/revolver/syndicate
+	plasmaman_outfit = /datum/outfit/syndicate/plasmaman
 
 /datum/outfit/deathmatch_loadout/nukie
 	name = "Deathmatch: Nuclear Operative"
@@ -625,6 +657,7 @@
 		/obj/item/pen/edagger,
 		/obj/item/reagent_containers/medipen/atropine,
 	)
+	plasmaman_outfit = /datum/outfit/syndicate/plasmaman
 
 /datum/outfit/deathmatch_loadout/pete
 	name = "Deathmatch: Cuban Pete"
@@ -645,6 +678,7 @@
 	backpack_contents = list(
 		/obj/item/assembly/signaler = 10,
 	)
+	plasmaman_outfit = /datum/outfit/plasmaman/science
 
 /datum/outfit/deathmatch_loadout/tider
 	name = "Deathmatch: Tider"
@@ -729,6 +763,7 @@
 		/datum/action/cooldown/spell/forcewall/mime,
 		/datum/action/cooldown/spell/pointed/projectile/finger_guns,
 		)
+	plasmaman_outfit = /datum/outfit/plasmaman/mime
 
 /datum/outfit/deathmatch_loadout/chef/upgraded
 	name = "Deathmatch: Master Chef"
