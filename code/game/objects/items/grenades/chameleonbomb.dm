@@ -1,3 +1,10 @@
+///Extra methods to detonate the bomb with instead of just using it in hand.
+#define CHAMBOMB_DETONATE_EXTRA_NONE 0
+#define CHAMBOMB_DETONATE_EXTRA_ALT 1
+#define CHAMBOMB_DETONATE_EXTRA_CTRL 2
+#define CHAMBOMB_DETONATE_EXTRA_PICKUP 3
+
+
 /obj/item/chameleonbomb
 	name = "chameleon bomb"
 	desc = "A devious device that can disguise itself as any object \
@@ -12,8 +19,10 @@
 	var/explosive_size = list(0,0,3)
 	///has at any point been disguised, to hide the examine
 	var/disguised = FALSE
-	///locked from being redisguised
+	///locked from being redisguised, and enables extra methods to detonate the bomb.
 	var/disguiselock = FALSE
+	///Extra method to detonate the bomb with, once disguise lock enabled.
+	var/extra_method = CHAMBOMB_DETONATE_EXTRA_NONE
 	var/blowingup
 
 /obj/item/chameleonbomb/examine(mob/user)
@@ -21,6 +30,7 @@
 	if(!disguised)
 		. += span_notice("You can click an object to set a disguise.")
 		. += span_notice("Alt-clicking the bomb when disguised will lock the disguise from being changed.")
+		. += span_notice("Control-clicking the bomb will set an extra detonation method to explode the bomb once disguise locked.")
 		. += span_danger("Attempting to use the bomb inhand will explode it immediately!")
 
 /obj/item/chameleonbomb/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -63,13 +73,70 @@
 
 /obj/item/chameleonbomb/attack_self(mob/user, modifiers)
 	. = ..()
+	mymango(user)
+
+/obj/item/chameleonbomb/pickup(mob/user)
+	. = ..()
+	if(disguiselock && extra_method == CHAMBOMB_DETONATE_EXTRA_PICKUP)
+		addtimer(CALLBACK(src,PROC_REF(mymango),user), (0.2 SECONDS)) //runtime? what runtime?
+
+/obj/item/chameleonbomb/click_alt(mob/user)
+	. = ..()
+	if(disguiselock && extra_method == CHAMBOMB_DETONATE_EXTRA_ALT)
+		mymango(user)
+		return CLICK_ACTION_SUCCESS
+	if(!disguiselock)
+		if(!disguised && tgui_alert(user, "You havent set a disguise for the bomb yet! Are you sure you want to lock the disguise? You can't undo this!", "Disguise Lock", list("Lock Disguise", "Abort")) != "Lock Disguise")
+			return CLICK_ACTION_BLOCKING //kind of stupid but if you wanna disguise a chameleon bomb as... a chameleon bomb, GO AHEAD I GUESS?
+		to_chat(user, span_danger("You activate the disguise lock on the bomb, it is now locked as \the [name]."))
+		log_bomber(user, "activated chameleonbomb disguise lock on", src)
+		disguiselock = TRUE
+		return CLICK_ACTION_SUCCESS
+
+/obj/item/chameleonbomb/item_ctrl_click(mob/user)
+	if(disguiselock)
+		if(extra_method == CHAMBOMB_DETONATE_EXTRA_CTRL && ismob(loc))
+			mymango(user)
+		return
+	var/msg
+	var/det_type = tgui_input_list(
+		user,
+		"Select an additional activation method to detonate the bomb with once the disguise lock is activated.",
+		"Extra Detonation",
+		list(
+			"None",
+			"Alt-Click",
+			"Control-Click",
+			"On Pickup",
+		)
+	)
+	switch(det_type)
+		if("None")
+			extra_method = CHAMBOMB_DETONATE_EXTRA_NONE
+			msg = "disabled"
+		if("Alt-Click")
+			extra_method = CHAMBOMB_DETONATE_EXTRA_ALT
+			msg = "set to Alt-Click in hand"
+		if("Control-Click")
+			extra_method = CHAMBOMB_DETONATE_EXTRA_CTRL
+			msg = "set to Control-Click in hand"
+		if("On Pickup")
+			extra_method = CHAMBOMB_DETONATE_EXTRA_PICKUP
+			msg = "set to On Pickup"
+		else
+			msg = "not updated"
+	to_chat(user, span_notice("Extra Detonation method [msg]."))
+	if(msg != "not updated")
+		log_bomber(user, "updated chameleon bomb extra detonation method of", src, "([msg])", message_admins = FALSE)
+
+/obj/item/chameleonbomb/proc/mymango(user) //is to blow up, and act like i dont know nobody
 	if(blowingup)
 		return
 	blowingup = TRUE
 	to_chat(user, span_userdanger("\The [src] loses it's decoy, it's a bomb!"))
 	visible_message(span_danger("The disguise on \the [src] [user] is holding falls! It's a bomb!"), span_userdanger("\The [src] loses it's disguise, it's a bomb!"), span_hear("A warbling sound rings out with a few beeps!"))
 	playsound(src, 'sound/machines/triple_beep.ogg', 50, FALSE)
-	log_bomber(user, "activated a chameleon bomb disguised as ", src)
+	log_bomber(user, "activated a chameleon bomb disguised as", src)
 	explosion(src, explosive_size[1], explosive_size[2], explosive_size[3])
 	if(iscarbon(user))
 		var/mob/living/carbon/carbonuser = user
@@ -78,10 +145,9 @@
 			unluckyarm?.dismember(silent = FALSE)
 	qdel(src)
 
-/obj/item/chameleonbomb/click_alt(mob/user)
-	. = ..()
-	if(disguised && !disguiselock)
-		to_chat(user, span_danger("You activate the disguise lock on the bomb, it is now locked as \the [name]."))
-		log_bomber(user, "activated chameleonbomb disguise lock on", src)
-		disguiselock = TRUE
-		return CLICK_ACTION_SUCCESS
+
+
+#undef CHAMBOMB_DETONATE_EXTRA_NONE
+#undef CHAMBOMB_DETONATE_EXTRA_ALT
+#undef CHAMBOMB_DETONATE_EXTRA_CTRL
+#undef CHAMBOMB_DETONATE_EXTRA_PICKUP
