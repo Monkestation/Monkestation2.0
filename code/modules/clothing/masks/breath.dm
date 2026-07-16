@@ -57,8 +57,10 @@
 	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
 	body_parts_covered = NONE
 	flags_cover = NONE
-	armor_type = /datum/armor/breath_muzzle
+	clothing_flags = MASKINTERNALS | BLOCKS_SPEECH
+	armor_type = /datum/armor/muzzle_breath
 	equip_delay_other = 25 // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a muzzle
+	adjustable = FALSE //no sprites :(
 
 /*
 /obj/item/clothing/mask/breath/muzzle/Initialize(mapload)
