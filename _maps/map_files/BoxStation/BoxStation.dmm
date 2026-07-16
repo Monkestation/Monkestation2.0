@@ -16228,7 +16228,7 @@
 	},
 /obj/structure/table,
 /obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/breath/medical,
+/obj/item/clothing/mask/breath/muzzle,
 /obj/item/tank/internals/anesthetic,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)

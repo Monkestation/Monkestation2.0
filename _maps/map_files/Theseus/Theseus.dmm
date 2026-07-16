@@ -72617,13 +72617,13 @@
 /obj/item/tank/internals/anesthetic{
 	pixel_x = -3
 	},
-/obj/item/clothing/mask/breath/medical{
+/obj/item/clothing/mask/breath/muzzle{
 	pixel_y = -3
 	},
-/obj/item/clothing/mask/breath/medical{
+/obj/item/clothing/mask/breath/muzzle{
 	pixel_y = -3
 	},
-/obj/item/clothing/mask/breath/medical{
+/obj/item/clothing/mask/breath/muzzle{
 	pixel_y = -3
 	},
 /obj/machinery/button/door/directional/north{

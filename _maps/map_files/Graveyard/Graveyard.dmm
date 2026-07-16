@@ -20868,11 +20868,11 @@
 /obj/item/tank/internals/anesthetic{
 	pixel_x = -3
 	},
-/obj/item/clothing/mask/breath/medical{
+/obj/item/clothing/mask/breath/muzzle{
 	pixel_y = -3
 	},
-/obj/item/clothing/mask/breath/medical,
-/obj/item/clothing/mask/breath/medical{
+/obj/item/clothing/mask/breath/muzzle,
+/obj/item/clothing/mask/breath/muzzle{
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line,
