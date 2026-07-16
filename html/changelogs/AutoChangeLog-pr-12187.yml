@@ -1,0 +1,6 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - rscadd: "added nitrogen tanks."
+  - bugfix: "mini fire extinguishers have a proper sprite when in a tank holder."
+  - code_imp: "rewrote how species specific internals are given for internal boxes. fixed a bug where security survival boxes would get two radios with the expanded survival box station trait."

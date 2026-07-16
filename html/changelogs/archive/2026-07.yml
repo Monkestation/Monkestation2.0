@@ -367,3 +367,14 @@
   - balance: lowered sec gps alert delay to 15 seconds from 20
   byondsucks:
   - balance: Heretics need 40 players readied up to roll.
+2026-07-16:
+  AnTurk, cheese:
+  - bugfix: Fixes reagent transfer ordering (changing container transfer amounts)
+  Shoddd:
+  - balance: lowers recoil on pistols and revolvers
+  - balance: removes recoil on crossbows and harpoon guns
+  - balance: increases recoil on sawn off guns
+  TheColorCyan, MrMelbert, vinylspiders, SmArtKar:
+  - refactor: refactored blood, report any issues
+  - refactor: species chemical interactions are now handled by their livers
+  - rscadd: moths, apids, arachnids now share same blood type
