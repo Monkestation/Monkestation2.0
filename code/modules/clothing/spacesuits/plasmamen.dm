@@ -42,10 +42,10 @@
 /obj/item/clothing/head/helmet/space/plasmaman
 	name = "plasma envirosuit helmet"
 	desc = "A special containment helmet that allows plasma-based lifeforms to exist safely in an oxygenated environment. It is space-worthy, and may be worn in tandem with other EVA gear."
-	icon = 'monkestation/code/modules/blueshift/gags/icons/plasmaman.dmi' //monke -- plasmaman GAGS
-	worn_icon = 'monkestation/code/modules/blueshift/gags/icons/plasmaman.dmi'
-	lefthand_file = 'monkestation/code/modules/blueshift/gags/icons/lefthand/plasmaman.dmi'
-	righthand_file = 'monkestation/code/modules/blueshift/gags/icons/righthand/plasmaman.dmi'
+	icon = 'icons/obj/clothing/under/plasmaman.dmi'
+	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/plasmaman_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/plasmaman_righthand.dmi'
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | PLASMAMAN_PREVENT_IGNITION | HEADINTERNALS
 	icon_state = "plasmaman_helmet"
 	worn_icon_state = "plasmaman_helmet_w"

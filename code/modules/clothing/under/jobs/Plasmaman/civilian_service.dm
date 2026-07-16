@@ -3,10 +3,10 @@
 	name = "plasma envirosuit"
 	desc = "A special containment suit that allows plasma-based lifeforms to exist safely in an oxygenated environment, \
 		and automatically extinguishes them in a crisis. Despite being airtight, it's not spaceworthy."
-	icon = 'monkestation/code/modules/blueshift/gags/icons/plasmaman.dmi' //monke -- plasmaman GAGS
-	worn_icon = 'monkestation/code/modules/blueshift/gags/icons/plasmaman.dmi'
-	lefthand_file = 'monkestation/code/modules/blueshift/gags/icons/lefthand/plasmaman.dmi'
-	righthand_file = 'monkestation/code/modules/blueshift/gags/icons/righthand/plasmaman.dmi'
+	icon = 'icons/obj/clothing/under/plasmaman.dmi'
+	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/plasmaman_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/plasmaman_righthand.dmi'
 	icon_state = "plasmaman_suit"
 	worn_icon_state = "plasmaman_suit_w"
 	inhand_icon_state = "plasmaman_suit"
@@ -136,8 +136,6 @@
 	desc = "Made out of a modified voidsuit, this suit was Nanotrasen's first solution to the *logistical problems* that come with employing plasmamen. \
 		Due to the modifications, the suit is no longer space-worthy. \
 		Despite their limitations, these suits are still in used by historian and old-styled plasmamen alike."
-	icon = 'icons/obj/clothing/under/plasmaman.dmi'
-	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	greyscale_config = null
@@ -232,8 +230,6 @@
 /obj/item/clothing/under/plasmaman/plasma_bun // i would remove this if it wasn't for the fact the bunny wand would kill plasmamen without it - NK
 	name = "plasmabunny envirosuit"
 	desc = "A plasmaman envirosuit designed for bunny themed waiters, it appears to just be a normal envirosuit with a bunnysuit on top of it"
-	icon = 'icons/obj/clothing/under/plasmaman.dmi'
-	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	greyscale_config = null

@@ -76,7 +76,7 @@
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "tie",
+			"icon_state": "tie_w",
 			"blend_mode": "overlay"
 		}
 	]
