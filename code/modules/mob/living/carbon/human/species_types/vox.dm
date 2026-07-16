@@ -19,7 +19,6 @@
 	external_organs = list(
 		/obj/item/organ/external/quills = "Ruff Hawk",
 	)
-
 	death_sound = 'sound/voice/vox/vox_DeathGasp.ogg'
 	meat = /obj/item/food/meat/slab/chicken
 	species_language_holder = /datum/language_holder/vox
@@ -49,6 +48,7 @@
 	icon_state = "vox_ruff_hawk"
 	icon = 'icons/mob/species/vox/vox_hair_vg.dmi'
 
+	preference = "feature_head_quills"
 	zone = BODY_ZONE_HEAD
 	dna_block = DNA_VOX_HEAD_QUILLS_BLOCK
 	use_mob_sprite_as_obj_sprite = TRUE
@@ -68,8 +68,34 @@
 /datum/bodypart_overlay/mutant/head_quills/get_global_feature_list()
 	return GLOB.head_quills_list
 
-/datum/bodypart_overlay/mutant/head_quills/get_base_icon_state()
-	return sprite_datum.icon_state //i hate you
+
+/datum/bodypart_overlay/mutant/head_quills/get_image(image_layer, obj/item/bodypart/limb, layer_name)
+	if(!sprite_datum)
+		CRASH("Trying to call get_image() on [type] while it didn't have a sprite_datum. This shouldn't happen, report it as soon as possible.")
+
+	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, get_base_icon_state(), layer = image_layer)
+
+	if(sprite_datum.center)
+		center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
+
+	return appearance
+
+/datum/preference/choiced/head_quills
+	savefile_key = "feature_head_quills"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_FEATURES
+	main_feature_name = "Hairstyle"
+	should_generate_icons = TRUE
+	relevant_external_organ = /obj/item/organ/external/quills
+
+/datum/preference/choiced/head_quills/init_possible_values()
+	return assoc_to_keys_features(GLOB.head_quills_list)
+
+/datum/preference/choiced/head_quills/create_default_value()
+	return pick(assoc_to_keys_features(GLOB.head_quills_list))
+
+/datum/preference/choiced/head_quills/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features["head_quills"] = value
 
 /obj/item/bodypart/head/vox
 	icon_static = 'icons/mob/species/vox/bodyparts_voxazu.dmi'
