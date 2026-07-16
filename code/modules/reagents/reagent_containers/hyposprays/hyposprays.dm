@@ -20,8 +20,6 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	var/transfer_amount = 5
 	/// The different amounts for *transfer_amount* that this hypospray has available
 	var/list/possible_transfer_amounts = list(1, 2, 3, 5, 10)
-	/// Index of the transfer aomunts list
-	var/amount_list_position = 1
 
 	// Container Vars //
 	/// The currently inserted container
@@ -158,14 +156,15 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	var/list_len = length(possible_transfer_amounts)
 	if(!list_len)
 		return
+	var/index = possible_transfer_amounts.Find(transfer_amount) || 1
 	switch(direction)
 		if(FORWARD)
-			amount_list_position = (amount_list_position % list_len) + 1
+			index = (index % list_len) + 1
 		if(BACKWARD)
-			amount_list_position = (amount_list_position - 1) || list_len
+			index = (index - 1) || list_len
 		else
-			CRASH("cycle_transfer_amount() called with invalid direction value")
-	transfer_amount = possible_transfer_amounts[amount_list_position]
+			CRASH("change_transfer_amount() called with invalid direction value")
+	transfer_amount = possible_transfer_amounts[index]
 	balloon_alert(user, "transferring [transfer_amount]u")
 
 /obj/item/hypospray/proc/set_transfer_amount(mob/user)

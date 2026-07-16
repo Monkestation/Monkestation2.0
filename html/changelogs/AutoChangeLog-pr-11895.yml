@@ -1,6 +1,0 @@
-author: "TheColorCyan, MrMelbert, vinylspiders, SmArtKar"
-delete-after: True
-changes:
-  - refactor: "refactored blood, report any issues"
-  - refactor: "species chemical interactions are now handled by their livers"
-  - rscadd: "moths, apids, arachnids now share same blood type"
