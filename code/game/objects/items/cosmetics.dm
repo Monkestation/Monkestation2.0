@@ -115,6 +115,9 @@
 	if(target.is_mouth_covered())
 		to_chat(user, span_warning("Remove [ target == user ? "your" : "[target.p_their()]" ] mask!"))
 		return
+	if(target.lip_style == NONE)
+		to_chat(user, span_warning("Where are the lips on that?"))
+		return
 	if(target.lip_style) //if they already have lipstick on
 		to_chat(user, span_warning("You need to wipe off the old lipstick first!"))
 		return
