@@ -10,17 +10,16 @@
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_NO_AUGMENTS,
 		TRAIT_FEATHERED,
-		TRAIT_BADDNA,
 		TRAIT_EASILY_WOUNDED,
-		TRAIT_GENELESS,
 		TRAIT_NO_BLOOD_OVERLAY,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_TRANSFORMATION_STING,
 		TRAIT_NO_ZOMBIFY,
 	)
-	// external_organs = list(
-	// 	/obj/item/organ/external/quills = "long",
-	// 	/obj/item/organ/external/quills/lower = "basic")
+	external_organs = list(
+		/obj/item/organ/external/quills = "Ruff Hawk",
+	)
+
 	death_sound = 'sound/voice/vox/vox_DeathGasp.ogg'
 	meat = /obj/item/food/meat/slab/chicken
 	species_language_holder = /datum/language_holder/vox
@@ -37,8 +36,40 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/vox,
 	)
 
-/datum/species/arachnid/get_species_description()
+/datum/species/vox/on_species_gain(mob/living/carbon/human/C, datum/species/old_species, pref_load)
+	. = ..()
+	C.set_voice_pack("misc.vox")
+
+/datum/species/vox/get_species_description()
 	return "The Vox are a race of spacefaring avians. They have a penchant for capitalism and goods peddling, deep space salvage, and sometimes interstellar crime. They speak in outlandish accents and are widely considered a nomadic pest in the eyes of the average human. The presence of these ruthless and irritating space vultures is mostly tolerated because of CentComm policy and the technology the Vox gather."
+
+/obj/item/organ/external/quills
+	name = "feathery quills"
+	desc = "A bunch of feather quills."
+	icon_state = "vox_ruff_hawk"
+	icon = 'icons/mob/species/vox/vox_hair_vg.dmi'
+
+	zone = BODY_ZONE_HEAD
+	dna_block = DNA_VOX_HEAD_QUILLS_BLOCK
+	use_mob_sprite_as_obj_sprite = TRUE
+
+	bodypart_overlay = /datum/bodypart_overlay/mutant/head_quills
+
+/datum/bodypart_overlay/mutant/head_quills
+	layers = EXTERNAL_FRONT
+	feature_key = "head_quills"
+
+/datum/bodypart_overlay/mutant/head_quills/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
+		return FALSE
+
+	return TRUE
+
+/datum/bodypart_overlay/mutant/head_quills/get_global_feature_list()
+	return GLOB.head_quills_list
+
+/datum/bodypart_overlay/mutant/head_quills/get_base_icon_state()
+	return sprite_datum.icon_state //i hate you
 
 /obj/item/bodypart/head/vox
 	icon_static = 'icons/mob/species/vox/bodyparts_voxazu.dmi'
@@ -46,7 +77,7 @@
 	is_dimorphic = FALSE
 	composition_effects = list(TRAIT_COLD_BLOODED = 0.5)
 	lip_style = NONE
-
+	head_flags = null
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/chest/vox

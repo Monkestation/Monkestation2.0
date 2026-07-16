@@ -2469,3 +2469,97 @@ MONKESTATION EDIT
 /datum/sprite_accessory/moth_markings/witchwing
 	name = "Witch Wing"
 	icon_state = "witchwing"
+
+//////////////////////
+// VOX //////////////
+/////////////////////
+
+/datum/sprite_accessory/head_quills
+	icon = 'icons/mob/species/vox/vox_hair_vg.dmi'
+	color_src = null
+
+// Head Quills
+/datum/sprite_accessory/head_quills/shortquills
+	name = "Short Quills"
+	icon_state = "vox_shortquills"
+
+/datum/sprite_accessory/head_quills/kingly
+	name = "Kingly"
+	icon_state = "vox_kingly"
+
+/datum/sprite_accessory/head_quills/afro
+	name = "Afro"
+	icon_state = "vox_afro"
+
+/datum/sprite_accessory/head_quills/mohawk
+	name = "Mohawk"
+	icon_state = "vox_mohawk"
+
+/datum/sprite_accessory/head_quills/yasu
+	name = "Yasu"
+	icon_state = "vox_yasu"
+
+/datum/sprite_accessory/head_quills/horns
+	name = "Horns"
+	icon_state = "vox_horns"
+
+/datum/sprite_accessory/head_quills/nights
+	name = "Nights"
+	icon_state = "vox_nights"
+
+/datum/sprite_accessory/head_quills/surf
+	name = "Surf"
+	icon_state = "vox_surf"
+
+/datum/sprite_accessory/head_quills/cropped
+	name = "Cropped"
+	icon_state = "vox_cropped"
+
+/datum/sprite_accessory/head_quills/rows
+	name = "Rows"
+	icon_state = "vox_rows"
+
+/datum/sprite_accessory/head_quills/pony
+	name = "Pony"
+	icon_state = "vox_pony"
+
+/datum/sprite_accessory/head_quills/mange
+	name = "Mange"
+	icon_state = "vox_mange"
+
+/datum/sprite_accessory/head_quills/emperor
+	name = "Emperor"
+	icon_state = "vox_emperor"
+
+/datum/sprite_accessory/head_quills/razor
+	name = "Razor"
+	icon_state = "vox_razor"
+
+/datum/sprite_accessory/head_quills/ruff_hawk
+	name = "Ruff Hawk"
+	icon_state = "vox_ruff_hawk"
+
+// Face Quills
+/datum/sprite_accessory/face_quills
+	icon = 'icons/mob/species/vox/vox_hair_vg.dmi'
+	color_src = null
+
+/datum/sprite_accessory/face_quills/ruff_beard
+	name = "Ruff Beard"
+	icon_state = "vox_ruff_beard"
+
+/datum/sprite_accessory/face_quills/colonel
+	name = "Colonel"
+	icon_state = "vox_colonel"
+
+/datum/sprite_accessory/face_quills/fu
+	name = "Fu"
+	icon_state = "vox_fu"
+
+/datum/sprite_accessory/face_quills/neck
+	name = "Neck"
+	icon_state = "vox_neck"
+
+/datum/sprite_accessory/face_quills/beard
+	name = "Beard"
+	icon_state = "vox_beard"
