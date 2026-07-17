@@ -76,8 +76,8 @@ name = "Vox"
 path = "sound/voice/vox/vox.ogg"
 ask_path = "sound/voice/vox/vox_ask.ogg"
 exclaim_path = "sound/voice/vox/vox_exclaim.ogg"
-min_pitch = 0.5
-max_pitch = 1.3
+min_pitch = 0.2
+max_pitch = 0.8
 volume = 0.2
 
 # --------- Misc Animal Sounds ---------

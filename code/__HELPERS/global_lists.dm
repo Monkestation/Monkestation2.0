@@ -62,6 +62,8 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_wings, GLOB.oni_wings_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_horns, GLOB.oni_horns_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/head_quills, GLOB.head_quills_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/face_quills, GLOB.face_quills_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/vox, GLOB.vox_tail_list)
 
 /// Inits GLOB.species_list. Not using GLOBAL_LIST_INIT b/c it depends on GLOB.string_lists
 /proc/init_species_list()

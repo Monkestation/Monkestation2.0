@@ -2479,6 +2479,10 @@ MONKESTATION EDIT
 	color_src = null
 
 // Head Quills
+/datum/sprite_accessory/head_quills/none
+	name = "None"
+	icon_state = "none"
+
 /datum/sprite_accessory/head_quills/shortquills
 	name = "Short Quills"
 	icon_state = "vox_shortquills"
@@ -2543,6 +2547,10 @@ MONKESTATION EDIT
 /datum/sprite_accessory/face_quills
 	icon = 'icons/mob/species/vox/vox_hair_vg.dmi'
 	color_src = null
+
+/datum/sprite_accessory/face_quills/none
+	name = "None"
+	icon_state = "none"
 
 /datum/sprite_accessory/face_quills/ruff_beard
 	name = "Ruff Beard"

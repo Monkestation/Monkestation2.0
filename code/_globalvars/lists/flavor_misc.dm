@@ -64,6 +64,8 @@ GLOBAL_LIST_EMPTY(oni_tail_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(oni_wings_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(oni_horns_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(head_quills_list)
+GLOBAL_LIST_EMPTY(face_quills_list)
+GLOBAL_LIST_EMPTY(vox_tail_list)
 
 GLOBAL_LIST_INIT(color_list_ethereal, list(
 	"Blue" = "#3399ff",

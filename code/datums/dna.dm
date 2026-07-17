@@ -288,6 +288,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		L[DNA_AVIAN_EARS_BLOCK] = construct_block(GLOB.avian_ears_list.Find(features["ears_avian"]), GLOB.avian_ears_list.len)
 	if(features["head_quills"])
 		L[DNA_VOX_HEAD_QUILLS_BLOCK] = construct_block(GLOB.head_quills_list.Find(features["head_quills"]), GLOB.head_quills_list.len)
+	if(features["face_quills"])
+		L[DNA_VOX_FACE_QUILLS_BLOCK] = construct_block(GLOB.face_quills_list.Find(features["face_quills"]), GLOB.face_quills_list.len)
 	for(var/blocknum in 1 to DNA_FEATURE_BLOCKS)
 		. += L[blocknum] || random_string(GET_UI_BLOCK_LEN(blocknum), GLOB.hex_characters)
 
@@ -438,6 +440,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			set_uni_feature_block(blocknumber, construct_block(GLOB.avian_ears_list.Find(features["ears_avian"]), GLOB.avian_ears_list.len))
 		if(DNA_VOX_HEAD_QUILLS_BLOCK)
 			set_uni_feature_block(blocknumber, construct_block(GLOB.head_quills_list.Find(features["head_quills"]), GLOB.head_quills_list.len))
+		if(DNA_VOX_FACE_QUILLS_BLOCK)
+			set_uni_feature_block(blocknumber, construct_block(GLOB.face_quills_list.Find(features["face_quills"]), GLOB.face_quills_list.len))
 /**
  * Checks if two DNAs are practically the same by comparing their most defining features
  *
@@ -726,6 +730,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		dna.features["ears_avian"] = GLOB.avian_ears_list[deconstruct_block(get_uni_feature_block(features, DNA_AVIAN_EARS_BLOCK), GLOB.avian_ears_list.len)]
 	if(features["head_quills"])
 		dna.features["head_quills"] = GLOB.head_quills_list[deconstruct_block(get_uni_feature_block(features, DNA_VOX_HEAD_QUILLS_BLOCK), GLOB.head_quills_list.len)]
+	if(features["face_quills"])
+		dna.features["face_quills"] = GLOB.face_quills_list[deconstruct_block(get_uni_feature_block(features, DNA_VOX_FACE_QUILLS_BLOCK), GLOB.face_quills_list.len)]
 
 	for(var/obj/item/organ/external/external_organ in organs)
 		external_organ.mutate_feature(features, src)
