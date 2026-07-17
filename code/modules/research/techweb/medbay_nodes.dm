@@ -70,12 +70,13 @@
 /datum/techweb_node/adv_vitals_monitoring
 	id = "adv_vitals_monitoring"
 	display_name = "Advanced Vitals Monitoring"
-	description = "Various experimental handheld crew monitors allowing remote connection to nearby suit sensors without a console."
-	prereq_ids = list("adv_biotech")
+	description = "Various experimental handheld devices allowing remote vital tracking without a console."
+	prereq_ids = list("adv_biotech", "adv_engi", "sec_basic", "comptech")
 	design_ids = list(
 		"sensor_device",
 		"sensor_device_security",
 		"sensor_device_command",
+		"telesci_gps_sec",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	announce_channels = list(RADIO_CHANNEL_MEDICAL, RADIO_CHANNEL_SECURITY, RADIO_CHANNEL_COMMAND)

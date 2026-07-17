@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			return ITEM_INTERACT_BLOCKING
 
 		var/transfered_amount = 0
-		transfered_amount = tool.reagents.trans_to(src, 10, transfered_by = user)
+		transfered_amount = tool.reagents.trans_to(src, 10, transferred_by = user)
 		if(transfered_amount > 0)
 			to_chat(user, span_notice("You transfer [transfered_amount] units of the solution to \the [src]."))
 		return ITEM_INTERACT_SUCCESS
@@ -146,7 +146,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		return ITEM_INTERACT_BLOCKING
 
 	if(is_reagent_container(interacting_with))
-		var/amount_transfered = reagents.trans_to(interacting_with, 10, transfered_by = user)
+		var/amount_transfered = reagents.trans_to(interacting_with, 10, transferred_by = user)
 		if(amount_transfered > 0)
 			to_chat(user, span_notice("You transfer [amount_transfered] units of the solution to \the [interacting_with]."))
 			return ITEM_INTERACT_SUCCESS
@@ -154,7 +154,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 
 	if(istype(interacting_with, /obj/structure/reagent_dispensers))
 		var/obj/structure/reagent_dispensers/dispenser = interacting_with
-		var/amount_transfered = dispenser.reagents.trans_to(src, 10, transfered_by = user)
+		var/amount_transfered = dispenser.reagents.trans_to(src, 10, transferred_by = user)
 		if(amount_transfered > 0)
 			to_chat(user, span_notice("You transfer [amount_transfered] units of the solution to \the [src]."))
 			return ITEM_INTERACT_SUCCESS

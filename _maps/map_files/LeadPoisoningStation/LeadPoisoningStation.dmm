@@ -4764,7 +4764,7 @@
 /turf/open/floor/iron/diagonal,
 /area/station/security/prison/safe)
 "cxk" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /mob/living/basic/skeleton,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
@@ -5713,7 +5713,7 @@
 /area/station/hallway/primary/central/fore)
 "cSV" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "cTk" = (
@@ -9645,7 +9645,7 @@
 /area/station/maintenance/port/greater)
 "eLY" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "eMh" = (
@@ -16262,7 +16262,7 @@
 /turf/open/floor/carpet,
 /area/station/service/library)
 "hOX" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/closed/wall,
 /area/station/maintenance/starboard/greater)
 "hOY" = (
@@ -24032,7 +24032,7 @@
 /area/station/hallway/floor2/fore)
 "lyg" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/structure/trash_pile,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
@@ -28304,7 +28304,7 @@
 /turf/open/floor/iron/diagonal,
 /area/station/command/heads_quarters/hop)
 "nvz" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "nvB" = (
@@ -34588,7 +34588,7 @@
 "qEL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "qEN" = (
@@ -36146,7 +36146,7 @@
 /turf/open/floor/grass,
 /area/station/hallway/primary/central/fore)
 "rpm" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/structure/trash_pile,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
