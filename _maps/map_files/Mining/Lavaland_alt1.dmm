@@ -1210,6 +1210,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/door/airlock/public/glass,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
 /turf/open/floor/iron/techmaint,
 /area/mine/gateway)
 "hk" = (
@@ -2815,6 +2816,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
 /turf/open/floor/iron/techmaint,
 /area/mine/eva)
 "rm" = (
@@ -3918,6 +3920,7 @@
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Station EVA"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
 /turf/open/floor/iron/techmaint,
 /area/mine/eva)
 "xX" = (
@@ -4355,6 +4358,7 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/public/glass,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
 /turf/open/floor/iron/techmaint,
 /area/mine/gateway)
 "Bi" = (
@@ -4616,6 +4620,7 @@
 	dir = 1
 	},
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
 /turf/open/floor/iron/techmaint,
 /area/mine/eva)
 "CD" = (
@@ -5718,6 +5723,7 @@
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Station"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
 /turf/open/floor/iron/techmaint,
 /area/mine/eva)
 "ID" = (
@@ -6720,6 +6726,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/airlock/public/glass,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
 /turf/open/floor/iron/techmaint,
 /area/mine/production)
 "OR" = (
@@ -6833,6 +6840,7 @@
 /obj/machinery/door/airlock/external/glass{
 	name = "Mining Shuttle Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
 /turf/open/floor/iron/techmaint,
 /area/mine/production)
 "PG" = (
@@ -8070,6 +8078,7 @@
 /obj/machinery/door/airlock/external/glass{
 	name = "Mining Shuttle Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
 /turf/open/floor/iron/techmaint,
 /area/mine/production)
 "Xc" = (
@@ -8341,6 +8350,7 @@
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Station EVA"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
 /turf/open/floor/iron/techmaint,
 /area/mine/eva)
 "Yq" = (
