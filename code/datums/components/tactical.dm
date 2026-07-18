@@ -11,43 +11,46 @@
 
 	src.allowed_slot = allowed_slot
 
+/datum/component/tactical/Destroy()
+	unmodify()
+	return ..()
+
 /datum/component/tactical/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(modify))
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(unmodify))
-	RegisterSignal(parent, COMSIG_ATOM_UPDATED_ICON, PROC_REF(tactical_update))
 	var/obj/item/item = parent
 	if(ismob(item.loc))
 		var/mob/holder = item.loc
 		modify(item, holder, holder.get_slot_by_item(item))
 
 /datum/component/tactical/UnregisterFromParent()
-	UnregisterSignal(parent, list(
-		COMSIG_ITEM_EQUIPPED,
-		COMSIG_ITEM_DROPPED,
-		COMSIG_ATOM_UPDATED_ICON,
-	))
+	UnregisterSignal(parent, COMSIG_ITEM_EQUIPPED)
 	unmodify()
-
-/datum/component/tactical/Destroy()
-	unmodify()
-	return ..()
 
 /datum/component/tactical/proc/modify(obj/item/source, mob/user, slot)
 	SIGNAL_HANDLER
+	if(current_slot == slot)
+		return
 
 	if(allowed_slot && !(slot & allowed_slot))
 		if(current_slot)
 			unmodify(source, user)
 		return
 
-	if(current_slot)
-		user.remove_alt_appearance("sneaking_mission[REF(src)]")
-	else
-		RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(tactical_update))
-		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(tactical_update))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(unmodify))
+	RegisterSignal(parent, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_icon_update))
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 	current_slot = slot
+	on_icon_update(source)
 
+/datum/component/tactical/proc/on_icon_update(obj/item/source)
+	SIGNAL_HANDLER
+	var/mob/user = source.loc
+	if(!istype(user))
+		return
+
+	user.remove_alt_appearance("sneaking_mission[REF(src)]")
 	var/obj/item/master = parent
 	var/image/item_image = image(master, loc = user)
 	item_image.copy_overlays(master)
@@ -58,26 +61,28 @@
 
 /datum/component/tactical/proc/unmodify(obj/item/source, mob/user)
 	SIGNAL_HANDLER
-
-	var/obj/item/master = parent
+	if(!source)
+		source = parent
 	if(!user)
-		if(!ismob(master.loc))
-			return
-		user = master.loc
+		user = source.loc
+	if(!istype(user))
+		return
 
-	user.remove_alt_appearance("sneaking_mission[REF(src)]")
-	current_slot = null
-	UnregisterSignal(parent, list(
+	UnregisterSignal(source, list(
 		COMSIG_MOVABLE_Z_CHANGED,
+		COMSIG_ITEM_DROPPED,
+		COMSIG_ATOM_UPDATED_ICON,
 		COMSIG_MOVABLE_MOVED,
 	))
+	current_slot = null
+	user.remove_alt_appearance("sneaking_mission[REF(src)]")
 
-/datum/component/tactical/proc/tactical_update(datum/source)
+/// Checks if a mob is holding us, and if so updates our appearance to match the item.
+/datum/component/tactical/proc/tactical_update(obj/item/source)
 	SIGNAL_HANDLER
-	var/obj/item/master = parent
-	if(!ismob(master.loc))
+	if(!ismob(source.loc))
 		return
-	modify(master, master.loc, current_slot)
+	modify(source, source.loc, current_slot)
 
 /// Ensures forced moves still remove the tactical appearance from the previous holder.
 /datum/component/tactical/proc/on_moved(obj/item/source, atom/oldloc, direction, forced)
