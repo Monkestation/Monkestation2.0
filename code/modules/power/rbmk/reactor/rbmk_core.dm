@@ -373,7 +373,7 @@
 
 	if(az5_expended)
 		if(user)
-			balloon_alert(user, "AZ-5 is broken!")
+			balloon_alert(user, UNLINT("AZ-5 is broken!"))
 			to_chat(user, span_warning("The AZ-5 mechanism has already fired and cannot be used again."))
 		return FALSE
 

@@ -167,7 +167,7 @@
 		span_userdanger("[reactor]'s emergency annunciator blares: \"[message]\""),
 		blind_message = span_hear("A reactor emergency annunciator blares: \"[message]\"")
 	)
-	playsound(reactor, 'sound/rbmk/alarm.ogg', 90, FALSE, extra_range = 12)
+	playsound(reactor, 'sound/rbmk/alarm.ogg', 90, FALSE, extrarange = 12)
 
 
 /datum/supermatter_rod_cascade/proc/announce_start()

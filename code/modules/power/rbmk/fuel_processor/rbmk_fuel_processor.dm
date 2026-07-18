@@ -248,7 +248,7 @@
 	var/list/cost_map = list()
 	var/list/material_cost = get_recipe_material_cost(recipe_id)
 
-	for(var/material_type as anything in material_cost)
+	for(var/material_type in material_cost)
 		var/datum/material/material = GET_MATERIAL_REF(material_type)
 		cost_map[material.name] = material_cost[material_type]
 

@@ -198,7 +198,7 @@
 
 /obj/machinery/rbmk/reactor/proc/get_rbmk_lid_landing_turf()
 	var/list/hallway_areas = list()
-	for(var/area_type as anything in GLOB.the_station_areas)
+	for(var/area_type in GLOB.the_station_areas)
 		if(ispath(area_type, /area/station/hallway))
 			hallway_areas += area_type
 
