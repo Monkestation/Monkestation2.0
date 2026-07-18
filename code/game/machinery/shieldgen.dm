@@ -286,6 +286,7 @@
 	desc = "A shield generator."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "shield_wall_gen"
+	base_icon_state = "shield_wall_gen"
 	anchored = FALSE
 	density = TRUE
 	req_access = list(ACCESS_TELEPORTER)
@@ -296,6 +297,12 @@
 	var/locked = TRUE
 	var/shield_range = 12 //monke edit
 	var/obj/structure/cable/attached // the attached cable
+	/// The shield we should generate
+	var/obj/machinery/shieldwall/shield_type = /obj/machinery/shieldwall
+	/// The amount of extra tiles we should create shields on, 1 would create shields on the machine's and 2 would go a tile past them
+	var/extra_range = 0
+	/// The ID of this shield generator, used by buttons to remotelly turn them off/on
+	var/id = null
 
 /obj/machinery/power/shieldwallgen/xenobiologyaccess //use in xenobiology containment
 	name = "xenobiology shield wall generator"
@@ -333,7 +340,7 @@
 
 /obj/machinery/power/shieldwallgen/process()
 	if(active)
-		icon_state = "shield_wall_gen_on"
+		icon_state = "[base_icon_state]_on"
 		if(active == ACTIVE_SETUPFIELDS)
 			var/fields = 0
 			for(var/d in GLOB.cardinals)
@@ -347,13 +354,13 @@
 			visible_message(span_danger("The [src.name] shuts down due to lack of power!"), \
 				"If this message is ever seen, something is wrong.",
 				span_hear("You hear heavy droning fade out."))
-			icon_state = "shield_wall_gen"
+			icon_state = base_icon_state
 			deactivate()
 			log_game("[src] deactivated due to lack of power at [AREACOORD(src)]")
 			for(var/d in GLOB.cardinals)
 				cleanup_field(d)
 	else
-		icon_state = "shield_wall_gen"
+		icon_state = base_icon_state
 		for(var/d in GLOB.cardinals)
 			cleanup_field(d)
 
@@ -369,10 +376,11 @@
 
 	for(var/i in 1 to shield_range) //checks out to 8 tiles away for another generator
 		T = get_step(T, direction)
-		G = locate(/obj/machinery/power/shieldwallgen) in T
+		G = locate(type) in T
 		if(G)
-			if(!G.active)
+			if(!can_connect(G))
 				return
+
 			G.cleanup_field(opposite_direction)
 			break
 		else
@@ -381,27 +389,40 @@
 	if(!G || !steps) //no shield gen or no tiles between us and the gen
 		return
 
-	for(var/i in 1 to steps) //creates each field tile
+	if(extra_range > 0)
+		for(var/i in 1 to extra_range)
+			T = get_step(T, direction)
+	for(var/i in 1 to (steps + (extra_range * 2))) //creates each field tile
 		T = get_step(T, opposite_direction)
-		new/obj/machinery/shieldwall(T, src, G)
-	return TRUE
+		new shield_type(T, src, G)
+	return G
 
 /// cleans up fields in the specified direction if they belong to this generator
 /obj/machinery/power/shieldwallgen/proc/cleanup_field(direction)
 	var/obj/machinery/shieldwall/F
 	var/obj/machinery/power/shieldwallgen/G
 	var/turf/T = loc
+	if(extra_range > 0)
+		for(var/i in 1 to extra_range)
+			T = get_step(T, turn(direction, 180))
 
-	for(var/i in 1 to shield_range)
+	for(var/i in 1 to shield_range + extra_range)
 		T = get_step(T, direction)
 
-		G = (locate(/obj/machinery/power/shieldwallgen) in T)
-		if(G && !G.active)
+		G = (locate(type) in T)
+		if(G && can_connect(G) && !extra_range)
 			break
 
-		F = (locate(/obj/machinery/shieldwall) in T)
+		F = (locate(shield_type) in T)
 		if(F && (F.gen_primary == src || F.gen_secondary == src)) //it's ours, kill it.
 			qdel(F)
+
+/obj/machinery/power/shieldwallgen/proc/can_connect(obj/machinery/power/shieldwallgen/gen)
+	if(!gen.active)
+		return FALSE
+	if(type != gen.type)
+		return FALSE
+	return TRUE
 
 /obj/machinery/power/shieldwallgen/proc/block_singularity_if_active()
 	SIGNAL_HANDLER
@@ -478,6 +499,15 @@
 	balloon_alert(user, "access controller shorted")
 	return TRUE
 
+/// Helper proc to turn shields off/on remotelly
+/obj/machinery/power/shieldwallgen/proc/toggle()
+	if(!anchored)
+		return
+	if(active)
+		deactivate()
+	else if(powernet)
+		activate()
+
 //////////////Containment Field START
 /obj/machinery/shieldwall
 	name = "shield wall"
@@ -499,7 +529,7 @@
 	if(gen_primary && gen_secondary)
 		needs_power = TRUE
 		setDir(get_dir(gen_primary, gen_secondary))
-	for(var/mob/living/L in get_turf(src))
+	for(var/mob/living/L in get_turf(src) && density)
 		visible_message(span_danger("\The [src] is suddenly occupying the same space as \the [L]!"))
 		L.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 		L.gib()
@@ -551,6 +581,50 @@
 	else
 		if(isprojectile(mover))
 			return prob(10)
+
+/obj/machinery/power/shieldwallgen/atmos
+	name = "holofield generator"
+	desc = "A holofield generator designed for use in ship loading bays, long since replaced by hand-held versions alongside other machinery."
+	icon_state = "shield_wall_gen_atmos"
+	base_icon_state = "shield_wall_gen_atmos"
+	anchored = TRUE
+	density = FALSE
+	req_access = list()
+	layer = WALL_OBJ_LAYER
+	shield_type = /obj/machinery/shieldwall/atmos
+	extra_range = 1
+
+/obj/machinery/power/shieldwallgen/atmos/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/simple_rotation)
+	activate()
+
+/obj/machinery/power/shieldwallgen/atmos/setup_field(direction)
+	if(direction != dir) // Bit jank, but replacing all GLOB.cardinals stuff with a var aswell is even more jank
+		return FALSE
+	return ..()
+
+/obj/machinery/power/shieldwallgen/atmos/cleanup_field(direction)
+	if(direction != dir)
+		return FALSE
+	return ..()
+
+/obj/machinery/power/shieldwallgen/atmos/can_connect(obj/machinery/power/shieldwallgen/gen)
+	if(gen.dir != turn(dir, 180))
+		return FALSE
+	return ..()
+
+/obj/machinery/shieldwall/atmos
+	name = "holofield wall"
+	desc = "An energy shield capable of blocking gas movement."
+	icon_state = "shieldwall_atmos"
+	density = FALSE
+	can_atmos_pass = ATMOS_PASS_NO
+	rad_insulation = RAD_LIGHT_INSULATION
+
+/obj/machinery/shieldwall/atmos/Initialize(mapload)
+	. = ..()
+	air_update_turf(TRUE, TRUE)
 
 #undef ACTIVE_SETUPFIELDS
 #undef ACTIVE_HASFIELDS

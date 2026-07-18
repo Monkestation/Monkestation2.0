@@ -567,7 +567,10 @@ Used by the AI doomsday and the self-destruct nuke.
 		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
 
 	if(current_map.minetype == "lavaland")
-		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
+		if(!HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_LAVALAND))
+			LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
+		else
+			LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland_alt[rand(1, 1)].dmm", default_traits = ZTRAITS_LAVALAND)
 	else if(current_map.minetype == "oshan")
 		LoadGroup(FailedZs, "Trench", "map_files/Mining", "Oshan.dmm", default_traits = ZTRAITS_TRENCH)
 	else if (!isnull(current_map.minetype) && current_map.minetype != "none")

@@ -73,6 +73,21 @@
 /area/mine/maintenance/labor
 	name = "Labor Camp Maintenance"
 
+/area/mine/atmos
+	name = "Mining Station Atmospherics"
+
+/area/mine/atmos/farm
+	name = "Mining Station Atmospherics Gas Farm"
+
+/area/mine/atmos/hallway
+	name = "Mining Station Atmospherics Hallway"
+
+/area/mine/atmos/engine
+	name = "Mining Station Atmospherics Engine"
+
+/area/mine/gateway
+	name = "Mining Station Gateway"
+
 /area/mine/cafeteria
 	name = "Mining Station Cafeteria"
 	icon_state = "mining_cafe"
