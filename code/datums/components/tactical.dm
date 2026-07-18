@@ -54,7 +54,7 @@
 	item_image.override = TRUE
 	item_image.layer = ABOVE_MOB_LAYER
 	item_image.plane = FLOAT_PLANE
-	source.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission[REF(src)]", item_image)
+	user.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission[REF(src)]", item_image)
 
 /datum/component/tactical/proc/unmodify(obj/item/source, mob/user)
 	SIGNAL_HANDLER
