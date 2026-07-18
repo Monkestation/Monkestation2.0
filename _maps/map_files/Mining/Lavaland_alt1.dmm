@@ -1668,9 +1668,6 @@
 	},
 /obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/access/any/security/brig,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "lavaland_labor_camp"
-	},
 /turf/open/floor/iron/techmaint,
 /area/mine/laborcamp)
 "jI" = (
@@ -2745,9 +2742,6 @@
 	name = "Labor Camp Shuttle Security Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/security/brig,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "lavaland_labor_camp"
-	},
 /turf/open/floor/iron/techmaint,
 /area/mine/laborcamp)
 "qM" = (
@@ -5208,9 +5202,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /turf/open/floor/iron/techmaint,
 /area/mine/laborcamp)
 "FS" = (
@@ -7208,9 +7199,6 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/any/security/brig,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "lavaland_labor_camp"
-	},
 /turf/open/floor/iron/techmaint,
 /area/mine/laborcamp)
 "RP" = (
@@ -8134,6 +8122,14 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/mine/atmos/hallway)
+"Xs" = (
+/obj/structure/closet/crate,
+/obj/item/wheelchair,
+/obj/item/wheelchair,
+/obj/item/clothing/glasses/regular,
+/obj/item/clothing/glasses/regular,
+/turf/open/floor/iron,
+/area/mine/laborcamp)
 "Xt" = (
 /obj/machinery/light{
 	dir = 4
@@ -8160,7 +8156,6 @@
 	dir = 1
 	},
 /obj/structure/fans/tiny,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron/techmaint,
 /area/mine/laborcamp)
 "Xz" = (
@@ -31999,7 +31994,7 @@ mB
 mB
 NQ
 By
-np
+Xs
 DB
 wv
 ZC
