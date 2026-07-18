@@ -44,6 +44,7 @@
 		user.remove_alt_appearance("sneaking_mission[REF(src)]")
 	else
 		RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(tactical_update))
+		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 	current_slot = slot
 
@@ -66,7 +67,10 @@
 
 	user.remove_alt_appearance("sneaking_mission[REF(src)]")
 	current_slot = null
-	UnregisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED)
+	UnregisterSignal(parent, list(
+		COMSIG_MOVABLE_Z_CHANGED,
+		COMSIG_MOVABLE_MOVED,
+	))
 
 /datum/component/tactical/proc/tactical_update(datum/source)
 	SIGNAL_HANDLER
@@ -74,3 +78,8 @@
 	if(!ismob(master.loc))
 		return
 	modify(master, master.loc, current_slot)
+
+/// Ensures forced moves still remove the tactical appearance from the previous holder.
+/datum/component/tactical/proc/on_moved(obj/item/source, atom/oldloc, direction, forced)
+	SIGNAL_HANDLER
+	unmodify(source, oldloc)
