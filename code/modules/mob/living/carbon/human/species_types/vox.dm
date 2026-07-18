@@ -78,6 +78,8 @@
 		return TRUE
 	if(item_to_check.flags_inv & HIDESNOUT)
 		return TRUE
+	if(item_to_check.flags_cover & MASKCOVERSMOUTH)
+		return TRUE
 	return FALSE
 
 /datum/species/vox/get_species_description()
