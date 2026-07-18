@@ -27,20 +27,26 @@
 	update_appearance()
 
 /obj/item/reagent_containers/chemcanister/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
-	add_fingerprint(user)
-	if(istype(tool, /obj/item/pen))
-		if(!user.is_literate())
-			to_chat(user, span_notice("You scribble illegibly on the label of [src]!"))
-			return ITEM_INTERACT_BLOCKING
-		var/t = stripped_input(user, "What would you like the label to be?", text("[]", name), null)
-		if (user.get_active_held_item() != tool)
-			return ITEM_INTERACT_BLOCKING
-		if(!user.can_perform_action(src))
-			return ITEM_INTERACT_BLOCKING
-		name = "[base_name][t ? " ([t])" : ""]"
-	else
+	if(!istype(tool, /obj/item/pen))
 		return ..()
+
+	add_fingerprint(user)
+	if(!user.is_literate())
+		to_chat(user, span_notice("You scribble illegibly on the label of [src]!"))
+		return ITEM_INTERACT_BLOCKING
+
+	var/text = tgui_input_text(user, "What would you like the label to be?", name, encode = TRUE)
+	if(!text)
+		return ITEM_INTERACT_BLOCKING
+
+	if (user.get_active_held_item() != tool)
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.can_perform_action(src))
+		return ITEM_INTERACT_BLOCKING
+
+	name = "[base_name][text ? " ([text])" : ""]"
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/chemcanister/brute
 	name = "chemical canister (libital)"
