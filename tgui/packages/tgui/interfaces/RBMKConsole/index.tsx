@@ -3,7 +3,8 @@ import {
   Box,
   Button,
   Flex,
-  LabeledList,
+  Icon,
+  NoticeBox,
   ProgressBar,
   Tabs,
 } from '../../components';
@@ -14,107 +15,204 @@ import RBMKGraphs from './graphs';
 import RBMKOverview from './overview';
 import RBMKRods from './rods';
 
-const formatDeciseconds = (timeLeft: number) => {
-  const totalSeconds = Math.max(Math.ceil(timeLeft / 10), 0);
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-
-  return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-};
-
 const RBMKCascadeLockout = () => {
   const { data } = useBackend<any>();
 
-  const status = data?.supermatter_cascade_status || 'CONTROL LOCKOUT';
   const timeLeft = Number(data?.supermatter_cascade_time_left ?? 0);
-  const maxTime = Math.max(
-    Number(data?.supermatter_cascade_time_total ?? 600),
-    timeLeft,
+  const totalTime = Math.max(
+    Number(data?.supermatter_cascade_time_total ?? 50),
     1,
   );
   const finalCountdown = Boolean(data?.supermatter_cascade_final_countdown);
-  const countdownPercent = Math.max(
-    0,
-    Math.min(100, Math.round((timeLeft / maxTime) * 100)),
-  );
+  const totalSeconds = Math.max(Math.ceil(timeLeft / 10), 0);
+  const countdownMinutes = Math.floor(totalSeconds / 60);
+  const countdownSeconds = totalSeconds % 60;
+  const formattedCountdown = `${countdownMinutes}:${countdownSeconds
+    .toString()
+    .padStart(2, '0')}`;
+  const countdownPercent = Math.max(0, Math.min(100, (timeLeft / totalTime) * 100));
 
   return (
     <Box className="RBMKConsole__CascadeLockout">
       <Box className="RBMKConsole__CascadeHeader">
-        <Box className="RBMKConsole__CascadeSeal">☭</Box>
-
-        <Box className="RBMKConsole__CascadeHeaderText">
-          <Box className="RBMKConsole__CascadeTitle">
-            SYNDICATE OVERRIDE ACTIVE
+        <Box className="RBMKConsole__CascadeBrand">
+          <Box className="RBMKConsole__CascadeBrandMark">
+            <Icon name="radiation" />
           </Box>
-
-          <Box className="RBMKConsole__CascadeSubtitle">
-            Supermatter Rod Cascade Control Lockout
+          <Box>
+            <Box className="RBMKConsole__CascadeEyebrow">
+              Reactor Protection System / Unit 04
+            </Box>
+            <Box className="RBMKConsole__CascadeTitle">
+              Remote Safety Interlock
+            </Box>
           </Box>
         </Box>
 
-        <Box className="RBMKConsole__CascadeLock">🔒</Box>
+        <Box className="RBMKConsole__CascadeFaultCode">
+          <Box className="RBMKConsole__CascadeFaultCodeLabel">FAULT CODE</Box>
+          <Box className="RBMKConsole__CascadeFaultCodeValue">RPS-C5</Box>
+        </Box>
+      </Box>
+
+      <Box className="RBMKConsole__CascadeStatusRail">
+        <Box className="RBMKConsole__CascadeStatusCell RBMKConsole__CascadeStatusCell--failed">
+          <Icon name="lock" /> CONTROL LINK INHIBITED
+        </Box>
+        <Box className="RBMKConsole__CascadeStatusCell RBMKConsole__CascadeStatusCell--failed">
+          <Icon name="power-off" /> AZ-5 UNAVAILABLE
+        </Box>
+        <Box className="RBMKConsole__CascadeStatusCell RBMKConsole__CascadeStatusCell--live">
+          <Icon name="tower-broadcast" /> LOCAL ANNUNCIATOR ACTIVE
+        </Box>
       </Box>
 
       <Box
         className={
           finalCountdown
-            ? 'RBMKConsole__CascadeWarning RBMKConsole__CascadeWarning--final'
-            : 'RBMKConsole__CascadeWarning'
+            ? 'RBMKConsole__CascadePrimary RBMKConsole__CascadePrimary--terminal'
+            : 'RBMKConsole__CascadePrimary'
         }
       >
-        REMOTE REACTOR CONTROL HAS BEEN FORCIBLY DISABLED
+        <Box className="RBMKConsole__CascadeHazardIcon">
+          <Icon name="triangle-exclamation" />
+        </Box>
+        <Box className="RBMKConsole__CascadePrimaryContent">
+          <Box className="RBMKConsole__CascadeKicker">
+            {finalCountdown ? 'Terminal failure sequence' : 'Priority one hazard'}
+          </Box>
+          <Box className="RBMKConsole__CascadeHazardTitle">
+            Supermatter Resonance Cascade
+          </Box>
+          <Box className="RBMKConsole__CascadeHazardCopy">
+            Remote shutdown commands are being rejected by the reactor control
+            bus. Manual removal of the anomalous fuel assembly is the only
+            authorized recovery action.
+          </Box>
+        </Box>
       </Box>
 
-      <Box
-        className={
-          finalCountdown
-            ? 'RBMKConsole__CascadeTimer RBMKConsole__CascadeTimer--final'
-            : 'RBMKConsole__CascadeTimer'
-        }
-      >
-        {formatDeciseconds(timeLeft)}
-      </Box>
+      {!finalCountdown ? (
+        <Box className="RBMKConsole__CascadeTerminal">
+          <Flex align="end" justify="space-between">
+            <Box>
+              <Box className="RBMKConsole__CascadeTerminalLabel">
+                Terminal cascade threshold
+              </Box>
+              <Box className="RBMKConsole__CascadeTerminalValue">
+                {formattedCountdown}
+              </Box>
+            </Box>
+            <Box className="RBMKConsole__CascadeTerminalFlag">EXTRACT ROD</Box>
+          </Flex>
+          <ProgressBar
+            className="RBMKConsole__CascadeTerminalBar"
+            value={countdownPercent}
+            maxValue={100}
+            color="bad"
+          />
+        </Box>
+      ) : (
+        <Box className="RBMKConsole__CascadeClockNotice">
+          <Icon name="volume-up" />
+          <Box>
+            <Box className="RBMKConsole__CascadeClockNoticeTitle">
+              Terminal countdown transferred to reactor annunciator
+            </Box>
+            <Box className="RBMKConsole__CascadeClockNoticeCopy">
+              Remote timing has ended. Follow the final audible countdown issued
+              directly from the reactor vessel and evacuate immediately.
+            </Box>
+          </Box>
+        </Box>
+      )}
 
-      <ProgressBar
-        value={countdownPercent}
-        maxValue={100}
-        ranges={{
-          good: [66, 100],
-          yellow: [33, 66],
-          bad: [12, 33],
-          purple: [0, 12],
-        }}
-      >
-        Cascade lockout timer
-      </ProgressBar>
-
-      <Box className="RBMKConsole__CascadeStatus">{status}</Box>
-
-      <Box className="RBMKConsole__CascadeInfo">
-        <LabeledList>
-          <LabeledList.Item label="Console Status">
-            Remote operation locked out
-          </LabeledList.Item>
-
-          <LabeledList.Item label="Required Action">
-            Manually extract the supermatter fuel rod
-          </LabeledList.Item>
-
-          <LabeledList.Item label="Access Method">
-            Fuel rod extraction tool required
-          </LabeledList.Item>
-
-          <LabeledList.Item label="Recovery">
-            Automatic AZ-5 shutdown after successful rod removal
-          </LabeledList.Item>
-        </LabeledList>
+      <Box className="RBMKConsole__CascadeProcedure">
+        <Box className="RBMKConsole__CascadeProcedureHeader">
+          Emergency response procedure
+          <Box as="span">RPS-77 / REV. C</Box>
+        </Box>
+        <Box className="RBMKConsole__CascadeSteps">
+          <Box className="RBMKConsole__CascadeStep">
+            <Box className="RBMKConsole__CascadeStepNumber">01</Box>
+            <Box>
+              <Box className="RBMKConsole__CascadeStepTitle">
+                Obtain extraction assembly
+              </Box>
+              <Box className="RBMKConsole__CascadeStepCopy">
+                RBMK fuel-rod extraction tool required.
+              </Box>
+            </Box>
+          </Box>
+          <Box className="RBMKConsole__CascadeStep">
+            <Box className="RBMKConsole__CascadeStepNumber">02</Box>
+            <Box>
+              <Box className="RBMKConsole__CascadeStepTitle">
+                Remove supermatter fuel rod
+              </Box>
+              <Box className="RBMKConsole__CascadeStepCopy">
+                Approach the reactor and perform manual extraction.
+              </Box>
+            </Box>
+          </Box>
+          <Box className="RBMKConsole__CascadeStep">
+            <Box className="RBMKConsole__CascadeStepNumber">03</Box>
+            <Box>
+              <Box className="RBMKConsole__CascadeStepTitle">
+                Confirm automatic insertion
+              </Box>
+              <Box className="RBMKConsole__CascadeStepCopy">
+                Clear the chamber if rod insertion does not begin immediately.
+              </Box>
+            </Box>
+          </Box>
+        </Box>
       </Box>
 
       <Box className="RBMKConsole__CascadeFooter">
-        WARNING: Cascade progression cannot be halted from this console.
+        <Box>
+          <Icon name="shield-halved" /> HARDWARE INTERLOCK / LOCAL ACTION ONLY
+        </Box>
+        <Box>REMOTE COMMAND PATH: ISOLATED</Box>
       </Box>
     </Box>
+  );
+};
+
+const RBMKAlarmStrip = () => {
+  const { data } = useBackend<any>();
+  const alarms: string[] = [];
+  const temperature = Number(data?.temperature ?? 0);
+  const pressure = Number(data?.pressure_current ?? 0);
+  const integrity = Number(data?.integrity ?? 100);
+  const maxIntegrity = Math.max(Number(data?.max_integrity ?? 100), 1);
+  const voidCoefficient = Number(data?.void_coefficient ?? 0);
+  const coolantMoles = Number(data?.coolant_moles ?? 0);
+
+  if (temperature >= Number(data?.temp_max_safe ?? 6000)) {
+    alarms.push('CORE OVER TEMPERATURE');
+  }
+  if (pressure >= Number(data?.pressure_critical ?? 7200)) {
+    alarms.push('PRIMARY PRESSURE CRITICAL');
+  }
+  if ((integrity / maxIntegrity) * 100 <= 50) {
+    alarms.push('VESSEL INTEGRITY DEGRADED');
+  }
+  if (voidCoefficient >= 1.5) {
+    alarms.push('POSITIVE VOID FEEDBACK HIGH');
+  }
+  if (data?.running && coolantMoles < 225) {
+    alarms.push('PRIMARY COOLANT INVENTORY LOW');
+  }
+
+  if (!alarms.length) {
+    return null;
+  }
+
+  return (
+    <NoticeBox danger className="RBMKConsole__AlarmStrip">
+      <Icon name="triangle-exclamation" /> {alarms.join('  /  ')}
+    </NoticeBox>
   );
 };
 
@@ -126,8 +224,8 @@ export const RBMKConsole = () => {
 
   if (data?.supermatter_cascade_active) {
     return (
-      <Window theme="soviet" width={560} height={500}>
-        <Window.Content className="RBMKConsole" scrollable>
+      <Window theme="soviet" width={680} height={620}>
+        <Window.Content className="RBMKConsole">
           <RBMKCascadeLockout />
         </Window.Content>
       </Window>
@@ -138,6 +236,7 @@ export const RBMKConsole = () => {
     <Window theme="soviet" width={832} height={576}>
       <Window.Content className="RBMKConsole" scrollable>
         <Flex direction="column" gap={1}>
+          <RBMKAlarmStrip />
           <Flex.Item>
             <Tabs>
               <Tabs.Tab

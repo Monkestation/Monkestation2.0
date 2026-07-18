@@ -3,6 +3,7 @@
 
 #define RBMK_TURBINE_STALE_TIME (10 SECONDS)
 #define RBMK_TURBINE_TELEMETRY_CLEAR_TIME (30 SECONDS)
+#define RBMK_TURBINE_DESIGN_PRESSURE_DELTA 3000
 
 
 /obj/machinery/power/rbmk_turbine
@@ -338,7 +339,7 @@
 	return turbine_internal
 
 
-/obj/machinery/power/rbmk_turbine/proc/process_working_gas(datum/gas_mixture/working_mix)
+/obj/machinery/power/rbmk_turbine/proc/process_working_gas(datum/gas_mixture/working_mix, seconds_per_tick = RBMK_ATMOS_PROCESS_SECONDS)
 	last_generator_damage = 0
 	last_overtemp = 0
 
@@ -375,9 +376,16 @@
 		update_turbine_sound()
 		return
 
-	var/possible_temperature_drop = clamp(useful_temperature_delta * heat_extraction_ratio, 0, max_temperature_drop)
+	var/pressure_efficiency = CLAMP01(last_pressure_delta / RBMK_TURBINE_DESIGN_PRESSURE_DELTA)
+	if(pressure_efficiency <= 0)
+		last_outlet_temperature = working_mix.temperature
+		update_turbine_icon()
+		update_turbine_sound()
+		return
+
+	var/possible_temperature_drop = clamp(useful_temperature_delta * heat_extraction_ratio * pressure_efficiency, 0, max_temperature_drop)
 	var/possible_heat_extracted = last_heat_capacity * possible_temperature_drop
-	var/possible_power_output = possible_heat_extracted * generator_efficiency
+	var/possible_power_output = (possible_heat_extracted * generator_efficiency) / max(seconds_per_tick, 0.1)
 
 	last_power_output = clamp(possible_power_output, 0, max_power_output)
 
@@ -387,7 +395,7 @@
 		update_turbine_sound()
 		return
 
-	last_heat_extracted = last_power_output / max(generator_efficiency, 0.01)
+	last_heat_extracted = (last_power_output * max(seconds_per_tick, 0.1)) / max(generator_efficiency, 0.01)
 	last_temperature_drop = clamp(last_heat_extracted / last_heat_capacity, 0, possible_temperature_drop)
 
 	working_mix.temperature = max(working_mix.temperature - last_temperature_drop, RBMK_AMBIENT_TEMP)
@@ -500,7 +508,7 @@
 	dir = EAST
 
 
-/obj/machinery/atmospherics/components/unary/rbmk/turbine/inlet/process_atmos()
+/obj/machinery/atmospherics/components/unary/rbmk/turbine/inlet/process_atmos(seconds_per_tick = RBMK_ATMOS_PROCESS_SECONDS)
 	if(!parent_turbine?.inlet_open)
 		return
 
@@ -514,7 +522,14 @@
 	if(!parent_turbine.turbine_internal)
 		return
 
+	var/inlet_pressure = inlet_pipe_mix.return_pressure()
+	var/internal_pressure = parent_turbine.turbine_internal.return_pressure()
+	var/pressure_flow_ratio = CLAMP01((inlet_pressure - internal_pressure) / RBMK_TURBINE_DESIGN_PRESSURE_DELTA)
+	if(pressure_flow_ratio <= 0)
+		return
+
 	var/desired_moles = clamp(parent_turbine.flow_rate, 0, parent_turbine.max_flow_rate)
+	desired_moles *= pressure_flow_ratio * seconds_per_tick
 	if(desired_moles <= 0)
 		return
 
@@ -537,7 +552,7 @@
 	dir = WEST
 
 
-/obj/machinery/atmospherics/components/unary/rbmk/turbine/outlet/process_atmos()
+/obj/machinery/atmospherics/components/unary/rbmk/turbine/outlet/process_atmos(seconds_per_tick = RBMK_ATMOS_PROCESS_SECONDS)
 	if(!parent_turbine?.outlet_open)
 		return
 
@@ -545,7 +560,20 @@
 	if(!internal_turbine_mix || internal_turbine_mix.total_moles() <= 0)
 		return
 
+	var/internal_pressure = internal_turbine_mix.return_pressure()
+	var/downstream_pressure = 0
+	if(length(airs))
+		downstream_pressure = airs[1].return_pressure()
+
+	var/pressure_flow_ratio = CLAMP01((internal_pressure - downstream_pressure) / RBMK_TURBINE_DESIGN_PRESSURE_DELTA)
+	if(pressure_flow_ratio <= 0)
+		return
+
+	parent_turbine.last_outlet_pressure = downstream_pressure
+	parent_turbine.update_pressure_delta()
+
 	var/desired_moles = clamp(parent_turbine.flow_rate, 0, parent_turbine.max_flow_rate)
+	desired_moles *= pressure_flow_ratio * seconds_per_tick
 	if(desired_moles <= 0)
 		return
 
@@ -553,7 +581,7 @@
 	if(!released_mix || released_mix.total_moles() <= 0)
 		return
 
-	parent_turbine.process_working_gas(released_mix)
+	parent_turbine.process_working_gas(released_mix, seconds_per_tick)
 
 	if(length(airs))
 		airs[1].merge(released_mix)
@@ -573,3 +601,4 @@
 #undef RBMK_TURBINE_ICON_ON
 #undef RBMK_TURBINE_STALE_TIME
 #undef RBMK_TURBINE_TELEMETRY_CLEAR_TIME
+#undef RBMK_TURBINE_DESIGN_PRESSURE_DELTA

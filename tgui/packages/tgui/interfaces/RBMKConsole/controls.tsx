@@ -16,6 +16,7 @@ export const RBMKControls = () => {
   const targetDepth = Number(data?.control_rods_target ?? depth);
   const running = Boolean(data?.running ?? false);
   const scrammed = Boolean(data?.scrammed ?? false);
+  const az5Expended = Boolean(data?.az5_expended ?? false);
   const maxRodDepth = Number(data?.max_control_rod ?? 100);
 
   const inletOpen = Boolean(data?.inlet_open ?? false);
@@ -59,6 +60,16 @@ export const RBMKControls = () => {
 
     act('set_outlet_pressure', {
       pressure: value,
+    });
+  };
+
+  const sendRodTarget = (value: number) => {
+    if (!Number.isFinite(value)) {
+      return;
+    }
+
+    act('set_rods', {
+      depth: value,
     });
   };
 
@@ -114,6 +125,15 @@ export const RBMKControls = () => {
             content="Raise"
             onClick={() => act('rod_up')}
           />
+          <NumberInput
+            value={targetDepth}
+            unit="%"
+            width="82px"
+            minValue={0}
+            maxValue={maxRodDepth}
+            step={5}
+            onChange={sendRodTarget}
+          />
           <Button
             icon="arrow-down"
             content="Lower"
@@ -127,10 +147,15 @@ export const RBMKControls = () => {
           <Button
             fluid
             icon="radiation"
-            color="bad"
+            color={az5Expended ? 'label' : 'bad'}
             bold
-            content="☢AZ-5☢"
-            tooltip="Emergency full rod insertion."
+            disabled={az5Expended}
+            content={az5Expended ? 'AZ-5 EXPENDED' : '☢AZ-5☢'}
+            tooltip={
+              az5Expended
+                ? 'The destructive shutdown mechanism has already fired.'
+                : 'Single-use emergency full rod insertion. This destroys the mechanism.'
+            }
             style={{
               fontSize: '1.2em',
               padding: '0.8em',

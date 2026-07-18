@@ -1,6 +1,7 @@
 import { useBackend } from '../../backend';
 import {
   Box,
+  Collapsible,
   Flex,
   LabeledControls,
   LabeledList,
@@ -9,6 +10,14 @@ import {
   Section,
 } from '../../components';
 
+const formatEquivalentDose = (sieverts: number) => {
+  if (Math.abs(sieverts) < 1) {
+    return `${(sieverts * 1000).toFixed(1)} mSv`;
+  }
+
+  return `${sieverts.toFixed(2)} Sv`;
+};
+
 export const RBMKOverview = () => {
   const { data } = useBackend<any>();
 
@@ -16,9 +25,12 @@ export const RBMKOverview = () => {
   const baseMaxTemp = Number(data?.max_temp ?? 20000);
   const maxTemp = Math.max(baseMaxTemp, temperature);
 
-  const radiation = Number(data?.radiation ?? 0);
-  const backendMaxRadiation = Number(data?.max_radiation ?? 10000);
-  const maxRadiation = Math.max(backendMaxRadiation, 10000);
+  const radiation = Number(data?.radiation_sieverts ?? 0);
+  const maxRadiation = Math.max(
+    Number(data?.max_radiation_sieverts ?? 7),
+    radiation,
+    1,
+  );
 
   const flux = Number(data?.flux ?? 0);
   const maxFlux = Number(data?.max_flux ?? 900);
@@ -36,6 +48,20 @@ export const RBMKOverview = () => {
   );
   const voidPressureComponent = Number(data?.void_pressure_component ?? 0);
   const voidCoolantComponent = Number(data?.void_coolant_component ?? 0);
+  const tempModerate = Number(data?.temp_moderate ?? 1500);
+  const tempMaxSafe = Number(data?.temp_max_safe ?? 6000);
+  const fluxWarning = Number(data?.flux_warning ?? 350);
+  const fluxHigh = Number(data?.flux_high ?? 700);
+  const fluxExtreme = Number(data?.flux_extreme ?? 1000);
+  const rodTemperatureLimitBonus = Number(
+    data?.rod_temperature_limit_bonus ?? 0,
+  );
+  const coolantExchangeMultiplier = Number(
+    data?.coolant_exchange_multiplier ?? 1,
+  );
+  const fluxModifierMultiplier = Number(
+    data?.flux_modifier_multiplier ?? 1,
+  );
 
   const pressure = Number(data?.pressure_current ?? 0);
   const pressureWarning = Number(data?.pressure_warning ?? 950);
@@ -63,9 +89,9 @@ export const RBMKOverview = () => {
               maxValue={maxTemp}
               format={(value) => `${value.toFixed(0)} K`}
               ranges={{
-                good: [0, maxTemp * 0.3],
-                yellow: [maxTemp * 0.3, maxTemp * 0.7],
-                bad: [maxTemp * 0.7, maxTemp],
+                good: [0, tempModerate],
+                yellow: [tempModerate, tempMaxSafe],
+                bad: [tempMaxSafe, maxTemp],
               }}
             />
           </LabeledControls.Item>
@@ -100,17 +126,17 @@ export const RBMKOverview = () => {
             />
           </LabeledControls.Item>
 
-          <LabeledControls.Item label="Röntgen">
+          <LabeledControls.Item label="Equivalent Dose">
             <RoundGauge
               size={2}
               value={radiation}
               minValue={0}
               maxValue={maxRadiation}
-              format={(value) => `${value.toFixed(1)} R`}
+              format={formatEquivalentDose}
               ranges={{
-                good: [0, maxRadiation * 0.4],
-                yellow: [maxRadiation * 0.4, maxRadiation * 0.7],
-                bad: [maxRadiation * 0.7, maxRadiation],
+                good: [0, 0.1],
+                yellow: [0.1, 1],
+                bad: [1, maxRadiation],
               }}
             />
           </LabeledControls.Item>
@@ -123,9 +149,9 @@ export const RBMKOverview = () => {
               maxValue={maxFlux}
               format={(value) => value.toFixed(0)}
               ranges={{
-                good: [0, maxFlux * 0.5],
-                yellow: [maxFlux * 0.5, maxFlux * 0.8],
-                bad: [maxFlux * 0.8, maxFlux],
+                good: [0, fluxWarning],
+                yellow: [fluxWarning, fluxHigh],
+                bad: [fluxHigh, Math.max(maxFlux, fluxExtreme)],
               }}
             />
           </LabeledControls.Item>
@@ -151,27 +177,42 @@ export const RBMKOverview = () => {
         </Box>
       </Section>
 
-      <Section title="Flux Feedback">
+      <Collapsible title={`Neutronics & Feedback — ${voidFluxMultiplier.toFixed(2)}x`}>
         <LabeledList>
           <LabeledList.Item label="Base Flux">
             {baseFlux.toFixed(0)}
           </LabeledList.Item>
-
-          <LabeledList.Item label="Void Bonus">
-            +{voidFluxBonus.toFixed(0)}
+          <LabeledList.Item label="Void Contribution">
+            +{voidFluxBonus.toFixed(0)} flux
           </LabeledList.Item>
-
           <LabeledList.Item label="Void Multiplier">
             {voidFluxMultiplier.toFixed(2)}x
           </LabeledList.Item>
-
-          <LabeledList.Item label="Void Sources">
-            heat {voidTemperatureComponent.toFixed(2)} / pressure{' '}
-            {voidPressureComponent.toFixed(2)} / coolant{' '}
-            {voidCoolantComponent.toFixed(2)}
+          <LabeledList.Item label="Temperature Feedback">
+            +{voidTemperatureComponent.toFixed(2)}
+          </LabeledList.Item>
+          <LabeledList.Item label="Low-pressure Feedback">
+            +{voidPressureComponent.toFixed(2)}
+          </LabeledList.Item>
+          <LabeledList.Item label="Low-coolant Feedback">
+            +{voidCoolantComponent.toFixed(2)}
           </LabeledList.Item>
         </LabeledList>
-      </Section>
+      </Collapsible>
+
+      <Collapsible title={`Installed Rod Modifiers — Flux ${fluxModifierMultiplier.toFixed(2)}x`}>
+        <LabeledList>
+          <LabeledList.Item label="Flux Multiplier">
+            {fluxModifierMultiplier.toFixed(2)}x
+          </LabeledList.Item>
+          <LabeledList.Item label="Coolant Exchange">
+            {coolantExchangeMultiplier.toFixed(2)}x
+          </LabeledList.Item>
+          <LabeledList.Item label="Temperature Limit Bonus">
+            +{rodTemperatureLimitBonus.toFixed(0)} K
+          </LabeledList.Item>
+        </LabeledList>
+      </Collapsible>
     </Flex>
   );
 };

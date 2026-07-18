@@ -180,8 +180,12 @@ const RBMKGenerators = () => {
                 {formatNumber(turbine.rpm, 0)}
               </LabeledList.Item>
 
-              <LabeledList.Item label="Flow Rate">
-                {formatNumber(turbine.flow_moles, 2)} mol/tick
+              <LabeledList.Item label="Coolant Throughput">
+                {formatNumber(
+                  turbine.flow_moles_per_second ?? turbine.flow_moles,
+                  2,
+                )}{' '}
+                mol/s
               </LabeledList.Item>
 
               <LabeledList.Item label="Pressure Delta">

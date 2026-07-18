@@ -12,6 +12,8 @@
 #define RBMK_PROCESSOR_MODERATOR_COST (5 * SHEET_MATERIAL_AMOUNT)
 #define RBMK_PROCESSOR_RECOVERED_SHEETS 5
 #define RBMK_PROCESSOR_PROCESS_TIME (5 SECONDS)
+#define RBMK_PROCESSOR_ADDITIONAL_ITEM_TIME (1 SECONDS)
+#define RBMK_PROCESSOR_MAX_BATCH 12
 
 /obj/item/rbmk/spent_fuel_casing
 	name = "spent fuel casing"
@@ -36,14 +38,16 @@
 
 	var/datum/component/remote_materials/materials
 	var/link_on_init = TRUE
-	var/obj/item/rbmk/fuel_rod/inserted_rod
+	var/list/inserted_rods = list()
 	var/list/output_items = list()
 	var/processing = FALSE
 	var/current_process
+	var/current_batch_size = 0
 	var/process_started_at = 0
 	var/process_ends_at = 0
 
 /obj/machinery/rbmk/fuel_processor/Initialize(mapload)
+	inserted_rods = list()
 	output_items = list()
 
 	materials = AddComponent(/datum/component/remote_materials, mapload && link_on_init)
@@ -58,9 +62,11 @@
 /obj/machinery/rbmk/fuel_processor/Destroy()
 	UnregisterSignal(src, COMSIG_SILO_ITEM_CONSUMED)
 
-	if(inserted_rod)
-		inserted_rod.forceMove(get_processor_output_location())
-		inserted_rod = null
+	for(var/obj/item/rbmk/fuel_rod/inserted_rod as anything in inserted_rods)
+		if(!QDELETED(inserted_rod))
+			inserted_rod.forceMove(get_processor_output_location())
+
+	inserted_rods.Cut()
 
 	for(var/atom/movable/output_item as anything in output_items)
 		if(!QDELETED(output_item))
@@ -77,7 +83,7 @@
 
 /obj/machinery/rbmk/fuel_processor/proc/process_material_insert(obj/item/item_inserted, list/mats_consumed, amount_inserted)
 	if(directly_use_energy(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.4 * initial(active_power_usage))))
-		if(!processing && !has_output_items() && !inserted_rod && !panel_open)
+		if(!processing && !has_output_items() && !length(inserted_rods) && !panel_open)
 			flick("rod_press_load", src)
 
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
@@ -98,7 +104,7 @@
 		icon_state = "rod_press_leave"
 		return
 
-	if(inserted_rod)
+	if(length(inserted_rods))
 		icon_state = "rod_press_load"
 		return
 
@@ -254,24 +260,28 @@
 /obj/machinery/rbmk/fuel_processor/proc/recipe_uses_silo_materials(recipe_id)
 	return length(get_recipe_material_cost(recipe_id)) > 0
 
-/obj/machinery/rbmk/fuel_processor/proc/inserted_rod_matches_recipe(recipe_id)
-	if(!recipe_needs_inserted_rod(recipe_id))
-		return TRUE
-
-	if(!inserted_rod)
-		return FALSE
-
-	if(!inserted_rod.is_depleted())
+/obj/machinery/rbmk/fuel_processor/proc/rod_matches_recipe(obj/item/rbmk/fuel_rod/fuel_rod, recipe_id)
+	if(!fuel_rod?.is_depleted())
 		return FALSE
 
 	switch(recipe_id)
 		if(RBMK_PROCESSOR_EXTRACT_THORIUM)
-			return inserted_rod.rod_type == "uranium"
+			return fuel_rod.rod_type == "uranium"
 
 		if(RBMK_PROCESSOR_EXTRACT_PLUTONIUM)
-			return inserted_rod.rod_type == "thorium"
+			return fuel_rod.rod_type == "thorium"
 
 	return FALSE
+
+/obj/machinery/rbmk/fuel_processor/proc/count_matching_inserted_rods(recipe_id)
+	var/matching_rods = 0
+	for(var/obj/item/rbmk/fuel_rod/fuel_rod as anything in inserted_rods)
+		if(rod_matches_recipe(fuel_rod, recipe_id))
+			matching_rods++
+	return matching_rods
+
+/obj/machinery/rbmk/fuel_processor/proc/inserted_rod_matches_recipe(recipe_id)
+	return !recipe_needs_inserted_rod(recipe_id) || count_matching_inserted_rods(recipe_id) > 0
 
 /obj/machinery/rbmk/fuel_processor/proc/recipe_materials_available(recipe_id)
 	var/list/material_cost = get_recipe_material_cost(recipe_id)
@@ -334,7 +344,9 @@
 /obj/machinery/rbmk/fuel_processor/proc/recipe_creates_spent_casing(recipe_id)
 	return recipe_id == RBMK_PROCESSOR_EXTRACT_THORIUM || recipe_id == RBMK_PROCESSOR_EXTRACT_PLUTONIUM
 
-/obj/machinery/rbmk/fuel_processor/proc/get_recipe_block_reason(recipe_id, check_power = TRUE)
+/obj/machinery/rbmk/fuel_processor/proc/get_recipe_block_reason(recipe_id, check_power = TRUE, batch_size = 1)
+	batch_size = clamp(round(batch_size), 1, RBMK_PROCESSOR_MAX_BATCH)
+
 	if(processing)
 		return "Machine is already processing."
 
@@ -350,19 +362,19 @@
 	if(has_output_items())
 		return "Output tray is occupied."
 
-	if(inserted_rod && !recipe_needs_inserted_rod(recipe_id))
-		return "A depleted fuel rod is loaded."
+	if(length(inserted_rods) && !recipe_needs_inserted_rod(recipe_id))
+		return "Depleted fuel rods are loaded."
 
-	if(recipe_needs_inserted_rod(recipe_id) && !inserted_rod)
+	if(recipe_needs_inserted_rod(recipe_id) && !length(inserted_rods))
 		return "Requires a depleted fuel rod."
 
-	if(recipe_needs_inserted_rod(recipe_id) && !inserted_rod_matches_recipe(recipe_id))
+	if(recipe_needs_inserted_rod(recipe_id) && count_matching_inserted_rods(recipe_id) < batch_size)
 		switch(recipe_id)
 			if(RBMK_PROCESSOR_EXTRACT_THORIUM)
-				return "Requires a depleted uranium fuel rod."
+				return "Requires [batch_size] depleted uranium fuel rod\s."
 
 			if(RBMK_PROCESSOR_EXTRACT_PLUTONIUM)
-				return "Requires a depleted thorium fuel rod."
+				return "Requires [batch_size] depleted thorium fuel rod\s."
 
 	if(recipe_uses_silo_materials(recipe_id))
 		if(!materials || !materials.mat_container)
@@ -373,13 +385,20 @@
 
 		var/list/material_cost = get_recipe_material_cost(recipe_id)
 
-		if(!materials.mat_container.has_materials(material_cost, 1, 1))
+		if(!materials.mat_container.has_materials(material_cost, 1, batch_size))
 			return "Insufficient linked materials."
 
 	return null
 
-/obj/machinery/rbmk/fuel_processor/proc/start_recipe(recipe_id, mob/user)
-	var/block_reason = get_recipe_block_reason(recipe_id)
+/obj/machinery/rbmk/fuel_processor/proc/get_recipe_max_batch(recipe_id)
+	for(var/batch_size in RBMK_PROCESSOR_MAX_BATCH to 1 step -1)
+		if(isnull(get_recipe_block_reason(recipe_id, TRUE, batch_size)))
+			return batch_size
+	return 0
+
+/obj/machinery/rbmk/fuel_processor/proc/start_recipe(recipe_id, mob/user, batch_size = 1)
+	batch_size = clamp(round(text2num("[batch_size]")), 1, RBMK_PROCESSOR_MAX_BATCH)
+	var/block_reason = get_recipe_block_reason(recipe_id, TRUE, batch_size)
 
 	if(block_reason)
 		if(user)
@@ -389,8 +408,10 @@
 
 	processing = TRUE
 	current_process = recipe_id
+	current_batch_size = batch_size
 	process_started_at = world.time
-	process_ends_at = world.time + RBMK_PROCESSOR_PROCESS_TIME
+	var/process_time = RBMK_PROCESSOR_PROCESS_TIME + (RBMK_PROCESSOR_ADDITIONAL_ITEM_TIME * (batch_size - 1))
+	process_ends_at = world.time + process_time
 
 	update_use_power(ACTIVE_POWER_USE)
 	update_appearance(UPDATE_ICON)
@@ -401,23 +422,24 @@
 	if(user)
 		user.visible_message(
 			span_notice("[user] starts [src]."),
-			span_notice("You start [get_recipe_name(recipe_id)].")
+			span_notice("You start [get_recipe_name(recipe_id)] for a batch of [batch_size].")
 		)
 
-	addtimer(CALLBACK(src, PROC_REF(finish_recipe), recipe_id), RBMK_PROCESSOR_PROCESS_TIME)
+	addtimer(CALLBACK(src, PROC_REF(finish_recipe), recipe_id, batch_size), process_time)
 	return TRUE
 
-/obj/machinery/rbmk/fuel_processor/proc/finish_recipe(recipe_id)
+/obj/machinery/rbmk/fuel_processor/proc/finish_recipe(recipe_id, batch_size)
 	if(QDELETED(src))
 		return
 
 	processing = FALSE
 	current_process = null
+	current_batch_size = 0
 	process_started_at = 0
 	process_ends_at = 0
 	update_use_power(IDLE_POWER_USE)
 
-	var/block_reason = get_recipe_block_reason(recipe_id, FALSE)
+	var/block_reason = get_recipe_block_reason(recipe_id, FALSE, batch_size)
 
 	if(block_reason)
 		update_appearance(UPDATE_ICON)
@@ -427,24 +449,33 @@
 	var/list/material_cost = get_recipe_material_cost(recipe_id)
 
 	if(length(material_cost))
-		materials.use_materials(material_cost, 1, 1, "fabricated", get_recipe_name(recipe_id))
+		materials.use_materials(material_cost, 1, batch_size, "fabricated", get_recipe_name(recipe_id))
 
 	var/output_type = get_recipe_output_type(recipe_id)
 
 	if(output_type)
-		create_output(output_type)
+		for(var/index in 1 to batch_size)
+			create_output(output_type)
 
 	var/extracted_sheet_type = get_extracted_sheet_type(recipe_id)
 
 	if(extracted_sheet_type)
-		create_sheet_output(extracted_sheet_type, RBMK_PROCESSOR_RECOVERED_SHEETS)
+		create_sheet_output(extracted_sheet_type, RBMK_PROCESSOR_RECOVERED_SHEETS * batch_size)
 
 	if(recipe_creates_spent_casing(recipe_id))
-		create_output(/obj/item/rbmk/spent_fuel_casing)
+		for(var/index in 1 to batch_size)
+			create_output(/obj/item/rbmk/spent_fuel_casing)
 
-	if(recipe_needs_inserted_rod(recipe_id) && inserted_rod)
-		qdel(inserted_rod)
-		inserted_rod = null
+	if(recipe_needs_inserted_rod(recipe_id))
+		var/rods_consumed = 0
+		for(var/obj/item/rbmk/fuel_rod/inserted_rod as anything in inserted_rods.Copy())
+			if(!rod_matches_recipe(inserted_rod, recipe_id))
+				continue
+			inserted_rods -= inserted_rod
+			qdel(inserted_rod)
+			rods_consumed++
+			if(rods_consumed >= batch_size)
+				break
 
 	update_appearance(UPDATE_ICON)
 	SStgui.update_uis(src)
@@ -458,12 +489,18 @@
 	return created
 
 /obj/machinery/rbmk/fuel_processor/proc/create_sheet_output(output_type, amount)
-	if(!output_type)
+	if(!output_type || amount <= 0)
 		return null
 
-	var/obj/item/stack/created = new output_type(get_processor_output_location(), amount)
-	output_items += created
-	return created
+	var/list/created_stacks = list()
+	while(amount > 0)
+		var/stack_amount = min(amount, MAX_STACK_SIZE)
+		var/obj/item/stack/created = new output_type(get_processor_output_location(), stack_amount)
+		output_items += created
+		created_stacks += created
+		amount -= stack_amount
+
+	return created_stacks
 
 /obj/machinery/rbmk/fuel_processor/proc/get_processor_output_location()
 	var/turf/output_turf = get_step(src, EAST)
@@ -488,9 +525,9 @@
 
 		return FALSE
 
-	if(inserted_rod)
+	if(length(inserted_rods) >= RBMK_PROCESSOR_MAX_BATCH)
 		if(user)
-			balloon_alert(user, "rod loaded")
+			balloon_alert(user, "rod bay full")
 
 		return FALSE
 
@@ -525,7 +562,7 @@
 		if(!user.transferItemToLoc(fuel_rod, src))
 			return TRUE
 
-		inserted_rod = fuel_rod
+		inserted_rods += fuel_rod
 
 		user.visible_message(
 			span_notice("[user] loads [fuel_rod] into [src]."),
@@ -539,18 +576,19 @@
 
 	return ..()
 
-/obj/machinery/rbmk/fuel_processor/proc/eject_inserted_rod(mob/user)
+/obj/machinery/rbmk/fuel_processor/proc/eject_inserted_rod(rod_index, mob/user)
 	if(processing)
 		if(user)
 			balloon_alert(user, "processing")
 
 		return FALSE
 
-	if(!inserted_rod)
+	rod_index = round(text2num("[rod_index]"))
+	if(rod_index < 1 || rod_index > length(inserted_rods))
 		return FALSE
 
-	var/obj/item/rbmk/fuel_rod/ejected_rod = inserted_rod
-	inserted_rod = null
+	var/obj/item/rbmk/fuel_rod/ejected_rod = inserted_rods[rod_index]
+	inserted_rods.Cut(rod_index, rod_index + 1)
 	ejected_rod.forceMove(get_processor_output_location())
 
 	if(user)
@@ -596,16 +634,18 @@
 	SStgui.update_uis(src)
 	return TRUE
 
-/obj/machinery/rbmk/fuel_processor/proc/get_inserted_rod_data()
-	if(!inserted_rod)
-		return null
-
-	return list(
-		"name" = inserted_rod.name,
-		"desc" = inserted_rod.desc,
-		"rod_type" = inserted_rod.rod_type,
-		"depleted" = inserted_rod.is_depleted(),
-	)
+/obj/machinery/rbmk/fuel_processor/proc/get_inserted_rods_data()
+	var/list/rod_data = list()
+	for(var/index in 1 to length(inserted_rods))
+		var/obj/item/rbmk/fuel_rod/inserted_rod = inserted_rods[index]
+		rod_data += list(list(
+			"index" = index,
+			"name" = inserted_rod.name,
+			"desc" = inserted_rod.desc,
+			"rod_type" = inserted_rod.rod_type,
+			"depleted" = inserted_rod.is_depleted(),
+		))
+	return rod_data
 
 /obj/machinery/rbmk/fuel_processor/proc/get_output_items_data()
 	prune_output_items()
@@ -639,6 +679,7 @@
 		"visible" = recipe_visible_by_default(recipe_id),
 		"can_start" = isnull(block_reason),
 		"block_reason" = block_reason,
+		"max_batch" = get_recipe_max_batch(recipe_id),
 	)
 
 /obj/machinery/rbmk/fuel_processor/proc/get_all_recipe_data()
@@ -690,8 +731,10 @@
 
 	data["processing"] = processing
 	data["current_process"] = current_process ? get_recipe_name(current_process) : null
+	data["current_batch_size"] = current_batch_size
 	data["process_progress"] = get_process_progress()
-	data["inserted_rod"] = get_inserted_rod_data()
+	data["inserted_rods"] = get_inserted_rods_data()
+	data["max_batch_size"] = RBMK_PROCESSOR_MAX_BATCH
 	data["output_items"] = get_output_items_data()
 	data["recipes"] = get_all_recipe_data()
 	data["materials"] = materials?.mat_container ? materials.mat_container.ui_data() : list()
@@ -714,10 +757,10 @@
 			if(!istext(recipe_id))
 				return FALSE
 
-			return start_recipe(recipe_id, user)
+			return start_recipe(recipe_id, user, params["quantity"])
 
 		if("eject_inserted_rod")
-			return eject_inserted_rod(user)
+			return eject_inserted_rod(params["index"], user)
 
 		if("eject_output")
 			return eject_output(params["index"], user)
@@ -762,3 +805,5 @@
 #undef RBMK_PROCESSOR_MODERATOR_COST
 #undef RBMK_PROCESSOR_RECOVERED_SHEETS
 #undef RBMK_PROCESSOR_PROCESS_TIME
+#undef RBMK_PROCESSOR_ADDITIONAL_ITEM_TIME
+#undef RBMK_PROCESSOR_MAX_BATCH

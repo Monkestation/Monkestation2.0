@@ -66,6 +66,8 @@
 #define RBMK_INLET_RATE_MIN 0
 #define RBMK_INLET_RATE_DEFAULT 750
 #define RBMK_INLET_RATE_MAX 2000
+/// Maximum pressure rise the reactor coolant injector can overcome above its supply pressure.
+#define RBMK_INLET_PUMP_HEAD 6500
 #define RBMK_OUTLET_PRESSURE_BASE 0
 #define RBMK_OUTLET_PRESSURE_DEFAULT 1500
 #define RBMK_OUTLET_PRESSURE_MAX 5500

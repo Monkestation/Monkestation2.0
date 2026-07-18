@@ -10,6 +10,7 @@
 	var/final_countdown_started_at = 0
 	var/final_countdown_duration = 30 SECONDS
 	var/last_countdown_announce = null
+	var/last_reactor_minute_announce = null
 
 	var/start_announced = FALSE
 	var/two_minute_warning_announced = FALSE
@@ -84,6 +85,11 @@
 	var/elapsed = world.time - started_at
 	var/time_left = max(duration - elapsed, 0)
 	var/progress = clamp(elapsed / duration, 0, 1)
+	var/minutes_left = CEILING(time_left / 1 MINUTES, 1)
+
+	if(minutes_left > 0 && minutes_left != last_reactor_minute_announce)
+		last_reactor_minute_announce = minutes_left
+		blare_reactor_countdown("[minutes_left] MINUTE[minutes_left == 1 ? "" : "S"] UNTIL CONTAINMENT FAILURE")
 
 	if(time_left <= 2 MINUTES)
 		announce_two_minute_warning()
@@ -140,12 +146,10 @@
 	send_stationwide_feelings()
 
 	var/seconds_left = CEILING(time_left / 1 SECONDS, 1)
-	if(seconds_left <= 10 && seconds_left != last_countdown_announce)
+	var/should_announce_second = seconds_left <= 10 || (seconds_left <= 30 && seconds_left % 5 == 0)
+	if(should_announce_second && seconds_left != last_countdown_announce)
 		last_countdown_announce = seconds_left
-		priority_announce(
-			"[seconds_left]...",
-			"Central Command Emergency Authority"
-		)
+		blare_reactor_countdown("[seconds_left]")
 
 	reactor.update_reactor_integrity()
 	reactor.update_reactor_icon()
@@ -153,6 +157,17 @@
 
 	if(time_left <= 0)
 		trigger_failure()
+
+
+/datum/supermatter_rod_cascade/proc/blare_reactor_countdown(message)
+	if(!reactor || QDELETED(reactor) || !message)
+		return
+
+	reactor.visible_message(
+		span_userdanger("[reactor]'s emergency annunciator blares: \"[message]\""),
+		blind_message = span_hear("A reactor emergency annunciator blares: \"[message]\"")
+	)
+	playsound(reactor, 'sound/rbmk/alarm.ogg', 90, FALSE, extra_range = 12)
 
 
 /datum/supermatter_rod_cascade/proc/announce_start()

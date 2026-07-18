@@ -57,10 +57,13 @@
 
 	var/running = FALSE
 	var/scrammed = FALSE
+	/// AZ-5 is a destructive, single-use emergency insertion mechanism.
+	var/az5_expended = FALSE
 
 	var/control_rod_depth = 0
 	var/actual_control_rod_depth = 0
-	var/control_rod_step = 4
+	/// Normal control rod travel speed, in percentage points per second.
+	var/control_rod_step = 3
 	var/scram_control_rod_step = 20
 
 	var/reactor_integrity = RBMK_MAX_INTEGRITY
@@ -91,6 +94,14 @@
 	var/warning_channel = RADIO_CHANNEL_ENGINEERING
 
 	var/datum/looping_sound/rbmk_reactor/reactor_soundloop = null
+	/// Items currently cooking on the reactor lid, using the standard griddle signals.
+	var/list/griddled_objects = list()
+	/// Sizzle loop used while the reactor is hot and has something on top.
+	var/datum/looping_sound/grill/grill_loop = null
+	/// Whether the reactor lid was hot enough to cook on the previous process tick.
+	var/reactor_griddle_active = FALSE
+	/// Maximum number of items that fit on top of the reactor.
+	var/max_griddled_items = 8
 
 	var/startup_sequence_played = FALSE
 	var/previous_control_rod_depth = RBMK_CONTROL_ROD_MAX
@@ -290,6 +301,7 @@
 
 	reset_reaction_state()
 	scrammed = FALSE
+	az5_expended = FALSE
 	meltdown_announced = FALSE
 	meltdown_in_progress = FALSE
 	meltdown_exploded = FALSE
@@ -329,6 +341,7 @@
 	radio.keyslot = new radio_key
 	radio.set_listening(FALSE)
 	radio.recalculateChannels()
+	grill_loop = new(src, FALSE)
 
 	rbmk_init_coolant()
 	relink_ports()
@@ -347,15 +360,24 @@
 	GLOB.rbmk_fallout_reactors -= src
 
 	QDEL_NULL(radio)
+	QDEL_NULL(grill_loop)
 	stop_reactor_sound()
 
 	rbmk_cleanup_atmos()
 	return ..()
 
 
-/obj/machinery/rbmk/reactor/proc/force_scram()
+/obj/machinery/rbmk/reactor/proc/force_scram(mob/user)
 	if(meltdown_in_progress)
-		return
+		return FALSE
+
+	if(az5_expended)
+		if(user)
+			balloon_alert(user, "AZ-5 is broken!")
+			to_chat(user, span_warning("The AZ-5 mechanism has already fired and cannot be used again."))
+		return FALSE
+
+	az5_expended = TRUE
 
 	scrammed = TRUE
 	control_rod_depth = RBMK_CONTROL_ROD_MAX
@@ -364,11 +386,15 @@
 	startup_sequence_played = FALSE
 	rod_motion_in_progress = FALSE
 
-	visible_message(span_danger("[src] emits a harsh shutdown alarm!"))
+	visible_message(span_danger("[src] emits a harsh shutdown alarm as its AZ-5 mechanism fires and tears itself apart!"))
 	playsound(src, 'sound/rbmk/alarm.ogg', 75, FALSE)
+	playsound(src, 'sound/effects/sparks4.ogg', 60, TRUE)
+	var/operator_name = user ? key_name(user) : "automatic system"
+	log_game("[operator_name] expended [src]'s AZ-5 emergency shutdown mechanism at [get_area_name(src)].")
 
 	update_reactor_icon()
 	update_linked_consoles()
+	return TRUE
 
 
 /obj/machinery/rbmk/reactor/welder_act(mob/living/user, obj/item/tool)
@@ -492,6 +518,9 @@
 	if(istype(used_item, /obj/item/rbmk/fuel_rod))
 		return try_insert_fuel_rod(used_item, user)
 
+	if(IS_EDIBLE(used_item))
+		return try_add_griddled_item(used_item, user, modifiers)
+
 	return ..()
 
 
@@ -499,6 +528,7 @@
 	if(!fuel_rod || !user)
 		return ITEM_INTERACT_FAILURE
 
+	var/had_active_fuel = has_active_fuel_rods()
 	var/list/target_slots = get_target_slot_list(fuel_rod)
 
 	if(target_slots == special_slots)
@@ -523,6 +553,14 @@
 
 	to_chat(user, span_notice("You insert [fuel_rod.name] into the reactor."))
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+
+	if(!had_active_fuel && fuel_rod.active && fuel_rod.contributes_to_reaction && actual_control_rod_depth < RBMK_CONTROL_ROD_MAX)
+		var/rounded_rod_depth = round(actual_control_rod_depth, 1)
+		visible_message(span_danger("[src] sounds a criticality warning as active fuel is loaded with its control rods only [rounded_rod_depth]% inserted!"))
+		playsound(src, 'sound/rbmk/alarm.ogg', 85, FALSE)
+		rbmk_engineering_alert("CRITICALITY WARNING: Active fuel loaded into [src] in [get_area(src)] with control rods only [rounded_rod_depth]% inserted.")
+		log_game("[key_name(user)] loaded [fuel_rod] into [src] with control rods at [rounded_rod_depth]% insertion.")
+
 	return ITEM_INTERACT_SUCCESS
 
 

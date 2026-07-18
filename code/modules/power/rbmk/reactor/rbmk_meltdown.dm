@@ -217,8 +217,8 @@
 /obj/structure/closet/supplypod/rbmk_reactor_lid
 	name = "RBMK Reactor Lid"
 	desc = "An impossibly heavy reactor containment lid. It should not be here."
-	icon = 'icons/obj/machines/rbmk_reactor.dmi'
-	icon_state = "reactor_explode"
+	icon = 'icons/obj/machines/rbmk_lid.dmi'
+	icon_state = "oh shit"
 	anchored = TRUE
 	density = TRUE
 	opened = TRUE
@@ -274,8 +274,8 @@
 
 
 /obj/structure/closet/supplypod/rbmk_reactor_lid/proc/reset_lid_appearance(landed = FALSE)
-	icon = 'icons/obj/machines/rbmk_reactor.dmi'
-	icon_state = landed ? "reactor_slagged" : "reactor_explode"
+	icon = 'icons/obj/machines/rbmk_lid.dmi'
+	icon_state = "oh shit"
 	rubble_type = RUBBLE_THIN
 	decal = null
 	door = null

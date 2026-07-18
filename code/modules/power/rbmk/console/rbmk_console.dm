@@ -203,6 +203,7 @@
 			"power_output" = current_power_output,
 			"rpm" = turbine_generating ? RBMK_ROUND2(turbine.rpm) : 0,
 			"flow_moles" = turbine_generating ? RBMK_ROUND2(turbine.last_flow_moles) : 0,
+			"flow_moles_per_second" = turbine_generating ? RBMK_ROUND2(turbine.last_flow_moles / RBMK_ATMOS_PROCESS_SECONDS) : 0,
 			"inlet_temperature" = RBMK_ROUND2(turbine.last_inlet_temperature),
 			"outlet_temperature" = RBMK_ROUND2(turbine.last_outlet_temperature),
 			"pressure_delta" = RBMK_ROUND2(turbine.last_pressure_delta)
@@ -243,10 +244,12 @@
 	data["status"] = reactor.meltdown_in_progress ? "Meltdown in progress" : "Online"
 	data["running"] = reactor.running
 	data["scrammed"] = reactor.scrammed
+	data["az5_expended"] = reactor.az5_expended
 
 	data["supermatter_cascade_active"] = reactor.supermatter_cascade_active
 	data["supermatter_cascade_status"] = null
 	data["supermatter_cascade_time_left"] = 0
+	data["supermatter_cascade_time_total"] = 0
 	data["supermatter_cascade_final_countdown"] = FALSE
 
 	if(reactor.supermatter_rod?.cascade_controller)
@@ -256,9 +259,11 @@
 		if(cascade.final_countdown_active)
 			data["supermatter_cascade_status"] = "TERMINAL COUNTDOWN"
 			data["supermatter_cascade_time_left"] = max(cascade.final_countdown_duration - (world.time - cascade.final_countdown_started_at), 0)
+			data["supermatter_cascade_time_total"] = cascade.final_countdown_duration
 		else
 			data["supermatter_cascade_status"] = "CONTROL LOCKOUT"
 			data["supermatter_cascade_time_left"] = max(cascade.duration - (world.time - cascade.started_at), 0)
+			data["supermatter_cascade_time_total"] = cascade.duration
 
 	data["control_rods"] = RBMK_ROUND2(reactor.actual_control_rod_depth)
 	data["control_rods_target"] = RBMK_ROUND2(reactor.control_rod_depth)
@@ -266,9 +271,17 @@
 
 	data["temperature"] = RBMK_ROUND2(reactor.temperature)
 	data["max_temp"] = RBMK_TEMP_DISPLAY_MAX
+	data["temp_running"] = RBMK_TEMP_RUNNING
+	data["temp_moderate"] = RBMK_TEMP_MODERATE
+	data["temp_hot"] = RBMK_TEMP_HOT
+	data["temp_max_safe"] = RBMK_TEMP_MAXSAFE
+	data["temp_meltdown"] = RBMK_TEMP_MELTDOWN
 
 	data["radiation"] = RBMK_ROUND2(reactor.radiation)
 	data["max_radiation"] = RBMK_MAX_RADIATION
+	// Approximate equivalent dose for operator display (gamma-weighted: 1 R ~= 0.01 Sv).
+	data["radiation_sieverts"] = RBMK_ROUND2(reactor.radiation * 0.01)
+	data["max_radiation_sieverts"] = RBMK_ROUND2(RBMK_MAX_RADIATION * 0.01)
 
 	data["flux"] = RBMK_ROUND2(reactor.flux)
 	data["max_flux"] = max(100, RBMK_MAX_FLUX, round((reactor.flux * 1.25) + 50, 50))
@@ -281,6 +294,12 @@
 	data["void_temperature_component"] = RBMK_ROUND2(reactor.void_coefficient_temperature)
 	data["void_pressure_component"] = RBMK_ROUND2(reactor.void_coefficient_pressure)
 	data["void_coolant_component"] = RBMK_ROUND2(reactor.void_coefficient_coolant)
+	data["flux_warning"] = RBMK_FLUX_ANOMALY_THRESHOLD
+	data["flux_high"] = RBMK_FLUX_ANOMALY_HIGH
+	data["flux_extreme"] = RBMK_FLUX_ANOMALY_EXTREME
+	data["rod_temperature_limit_bonus"] = RBMK_ROUND2(reactor.rod_temperature_limit_bonus)
+	data["coolant_exchange_multiplier"] = RBMK_ROUND2(1 + reactor.rod_coolant_exchange_bonus)
+	data["flux_modifier_multiplier"] = RBMK_ROUND2(1 + reactor.rod_flux_multiplier_bonus)
 
 	data["integrity"] = RBMK_ROUND2(reactor.reactor_integrity)
 	data["max_integrity"] = reactor.max_reactor_integrity
@@ -342,6 +361,8 @@
 		rods_list += list(list(
 			"type" = normal_rod ? normal_rod.name : "Empty",
 			"color" = normal_rod ? normal_rod.rod_color : "grey",
+			"active" = normal_rod?.active,
+			"fuel_amount" = normal_rod ? RBMK_ROUND2(normal_rod.fuel_amount) : 0,
 			"depleted" = normal_rod && !normal_rod.active,
 			"slot_kind" = "normal",
 			"slot_index" = normal_slot_index
@@ -355,6 +376,8 @@
 		rods_list += list(list(
 			"type" = special_rod ? special_rod.name : "Empty",
 			"color" = special_rod ? special_rod.rod_color : "grey",
+			"active" = special_rod?.active,
+			"fuel_amount" = special_rod ? RBMK_ROUND2(special_rod.fuel_amount) : 0,
 			"depleted" = special_rod && !special_rod.active,
 			"slot_kind" = "special",
 			"slot_index" = special_slot_index
@@ -420,8 +443,7 @@
 			return TRUE
 
 		if("scram")
-			reactor.force_scram()
-			return TRUE
+			return reactor.force_scram(ui.user)
 
 		if("toggle_inlet")
 			reactor.inlet_open = !reactor.inlet_open

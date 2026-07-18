@@ -73,7 +73,15 @@
 	if(!parent_reactor.coolant_internal)
 		return
 
-	var/desired_moles = clamp(parent_reactor.inlet_rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX) * seconds_per_tick
+	var/internal_pressure = parent_reactor.coolant_internal.return_pressure()
+	var/available_pressure_head = parent_reactor.last_inlet_pressure + RBMK_INLET_PUMP_HEAD - internal_pressure
+	if(available_pressure_head <= 0)
+		return
+
+	var/pressure_flow_ratio = CLAMP01(available_pressure_head / RBMK_INLET_PUMP_HEAD)
+
+	var/desired_moles = clamp(parent_reactor.inlet_rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX)
+	desired_moles *= pressure_flow_ratio * seconds_per_tick
 	if(desired_moles <= 0)
 		return
 
@@ -110,12 +118,18 @@
 	var/target_pressure = clamp(parent_reactor.outlet_target_pressure, RBMK_OUTLET_PRESSURE_BASE, RBMK_OUTLET_PRESSURE_MAX)
 	parent_reactor.last_outlet_pressure = current_pressure
 
-	if(current_pressure <= target_pressure)
+	var/downstream_pressure = 0
+	if(length(airs))
+		downstream_pressure = airs[1].return_pressure()
+
+	var/effective_target_pressure = max(target_pressure, downstream_pressure)
+
+	if(current_pressure <= effective_target_pressure)
 		return
 
-	var/pressure_delta = current_pressure - target_pressure
+	var/pressure_delta = current_pressure - effective_target_pressure
 	var/pressure_ratio = CLAMP01(pressure_delta / max(RBMK_PRESSURE_CRITICAL, 1))
-	var/desired_release_moles = clamp(RBMK_INLET_RATE_MAX * pressure_ratio, 10, RBMK_INLET_RATE_MAX)
+	var/desired_release_moles = RBMK_INLET_RATE_MAX * pressure_ratio
 
 	desired_release_moles *= seconds_per_tick
 	if(desired_release_moles <= 0)

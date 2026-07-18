@@ -18,11 +18,12 @@ import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
 import type { Material, MaterialMap } from './Fabrication/Types';
 
 type InsertedRod = {
+  index: number;
   name: string;
   desc: string;
   rod_type: string;
   depleted: BooleanLike;
-} | null;
+};
 
 type OutputItem = {
   index: number;
@@ -40,14 +41,17 @@ type Recipe = {
   visible: BooleanLike;
   can_start: BooleanLike;
   block_reason: string | null;
+  max_batch: number;
 };
 
 type Data = {
   processing: BooleanLike;
   current_process: string | null;
+  current_batch_size: number;
   process_progress: number;
 
-  inserted_rod: InsertedRod;
+  inserted_rods: InsertedRod[];
+  max_batch_size: number;
   output_items: OutputItem[];
   recipes: Recipe[];
 
@@ -103,44 +107,47 @@ const RecipeMaterialStrip = (props: {
 };
 
 const InsertedRodDisplay = (props: {
-  insertedRod: InsertedRod;
+  insertedRods: InsertedRod[];
   processing: BooleanLike;
+  maxBatchSize: number;
 }) => {
   const { act } = useBackend<Data>();
-  const { insertedRod, processing } = props;
+  const { insertedRods, processing, maxBatchSize } = props;
 
   return (
-    <Section
-      title="Inserted Rod"
-      buttons={
-        <Button
-          icon="eject"
-          disabled={!insertedRod || !!processing}
-          onClick={() => act('eject_inserted_rod')}
-        >
-          Eject
-        </Button>
-      }
-    >
-      {insertedRod ? (
-        <>
-          <Box bold>{insertedRod.name}</Box>
-          <Box color="label">{insertedRod.desc}</Box>
-          <Box mt={1}>
-            <LabeledList>
-              <LabeledList.Item label="Type">
-                {insertedRod.rod_type}
-              </LabeledList.Item>
-              <LabeledList.Item label="State">
-                {insertedRod.depleted ? 'Depleted' : 'Active'}
-              </LabeledList.Item>
-            </LabeledList>
-          </Box>
-        </>
+    <Section title={`Loaded Rods (${insertedRods.length}/${maxBatchSize})`}>
+      {insertedRods.length ? (
+        <Table>
+          <Table.Row header>
+            <Table.Cell>Rod</Table.Cell>
+            <Table.Cell collapsing>Action</Table.Cell>
+          </Table.Row>
+          {insertedRods.map((rod) => (
+            <Table.Row key={rod.index}>
+              <Table.Cell>
+                <Box bold>{rod.name}</Box>
+                <Box color="label">
+                  {rod.rod_type} — {rod.depleted ? 'Depleted' : 'Active'}
+                </Box>
+              </Table.Cell>
+              <Table.Cell collapsing>
+                <Button
+                  icon="eject"
+                  disabled={!!processing}
+                  onClick={() =>
+                    act('eject_inserted_rod', { index: rod.index })
+                  }
+                >
+                  Eject
+                </Button>
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table>
       ) : (
         <Box color="label">
-          Insert a depleted uranium or thorium fuel rod to unlock isotope
-          extraction.
+          Insert up to {maxBatchSize} depleted uranium or thorium fuel rods for
+          bulk isotope extraction.
         </Box>
       )}
     </Section>
@@ -235,6 +242,12 @@ const Recipes = (props: {
         </NoticeBox>
       ) : (
         displayedRecipes.map((recipe) => (
+          (() => {
+            const batchOptions = Array.from(
+              new Set([1, 5, 10, recipe.max_batch]),
+            ).filter((amount) => amount > 0 && amount <= recipe.max_batch);
+
+            return (
           <Box
             key={recipe.id}
             mb={1}
@@ -300,7 +313,7 @@ const Recipes = (props: {
                 )}
               </Stack.Item>
 
-              <Stack.Item width="150px">
+              <Stack.Item width="190px">
                 <Box
                   color={recipe.can_start ? 'good' : 'bad'}
                   mb={1}
@@ -308,22 +321,32 @@ const Recipes = (props: {
                 >
                   {recipe.can_start ? 'Ready' : recipe.block_reason}
                 </Box>
-                <Button
-                  fluid
-                  icon="play"
-                  disabled={!recipe.can_start || !!processing}
-                  color={recipe.creates_spent_casing ? 'bad' : undefined}
-                  onClick={() =>
-                    act('start', {
-                      recipe: recipe.id,
-                    })
-                  }
-                >
-                  Start
-                </Button>
+                <Stack justify="flex-end" wrap>
+                  {batchOptions.map((amount) => (
+                    <Stack.Item key={amount}>
+                      <Button
+                        icon="play"
+                        disabled={!recipe.can_start || !!processing}
+                        color={
+                          recipe.creates_spent_casing ? 'bad' : undefined
+                        }
+                        onClick={() =>
+                          act('start', {
+                            recipe: recipe.id,
+                            quantity: amount,
+                          })
+                        }
+                      >
+                        x{amount}
+                      </Button>
+                    </Stack.Item>
+                  ))}
+                </Stack>
               </Stack.Item>
             </Stack>
           </Box>
+            );
+          })()
         ))
       )}
     </Section>
@@ -337,9 +360,11 @@ export const RBMKFuelProcessor = () => {
   const {
     processing,
     current_process,
+    current_batch_size,
     process_progress,
 
-    inserted_rod,
+    inserted_rods = [],
+    max_batch_size,
     output_items = [],
     recipes = [],
 
@@ -362,7 +387,7 @@ export const RBMKFuelProcessor = () => {
 
         {!!processing && (
           <NoticeBox>
-            {current_process || 'Processing...'}
+            {current_process || 'Processing...'} — Batch x{current_batch_size}
             <ProgressBar value={process_progress / 100} mt={1}>
               {process_progress}%
             </ProgressBar>
@@ -389,8 +414,9 @@ export const RBMKFuelProcessor = () => {
         <Stack>
           <Stack.Item grow>
             <InsertedRodDisplay
-              insertedRod={inserted_rod}
+              insertedRods={inserted_rods}
               processing={processing}
+              maxBatchSize={max_batch_size}
             />
           </Stack.Item>
 

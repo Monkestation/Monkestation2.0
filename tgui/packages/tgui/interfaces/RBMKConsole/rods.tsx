@@ -1,5 +1,12 @@
 import { useBackend } from '../../backend';
-import { Box, Button, LabeledList, Section, Table } from '../../components';
+import {
+  Box,
+  Button,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Table,
+} from '../../components';
 
 type RodSlotData = {
   name?: string;
@@ -70,6 +77,7 @@ export const RBMKRods = () => {
               <Table.Cell>Type</Table.Cell>
               <Table.Cell collapsing>Color</Table.Cell>
               <Table.Cell collapsing>Status</Table.Cell>
+              <Table.Cell collapsing>Fuel</Table.Cell>
               <Table.Cell collapsing>Action</Table.Cell>
             </Table.Row>
 
@@ -98,6 +106,24 @@ export const RBMKRods = () => {
                     )}
                   </Table.Cell>
                   <Table.Cell>{status}</Table.Cell>
+                  <Table.Cell width="90px">
+                    {occupied ? (
+                      <ProgressBar
+                        value={Number(rod.fuel_amount ?? 0)}
+                        minValue={0}
+                        maxValue={100}
+                        ranges={{
+                          good: [50, 100],
+                          yellow: [20, 50],
+                          bad: [0, 20],
+                        }}
+                      >
+                        {Number(rod.fuel_amount ?? 0).toFixed(0)}%
+                      </ProgressBar>
+                    ) : (
+                      '-'
+                    )}
+                  </Table.Cell>
                   <Table.Cell>
                     {occupied && (
                       <Button

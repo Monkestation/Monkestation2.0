@@ -13,7 +13,7 @@
 		actual_control_rod_depth = RBMK_CONTROL_ROD_MAX
 		return
 
-	var/step_size = max(round(control_rod_step * 0.35), 1) * seconds_per_tick
+	var/step_size = control_rod_step * seconds_per_tick
 
 	if(actual_control_rod_depth < control_rod_depth)
 		actual_control_rod_depth = min(actual_control_rod_depth + step_size, control_rod_depth)
@@ -112,14 +112,17 @@
 
 	var/energy_to_coolant = CALCULATE_CONDUCTION_ENERGY(temperature_delta, coolant_heat_capacity, RBMK_CORE_HEAT_CAPACITY)
 
-	var/coolant_temperature_change = energy_to_coolant / coolant_heat_capacity
-	var/core_temperature_change = energy_to_coolant / RBMK_CORE_HEAT_CAPACITY
-
 	var/max_gas_temp_change = RBMK_COOLANT_MAX_GAS_TEMP_CHANGE * process_scale
 	var/max_core_temp_change = RBMK_COOLANT_MAX_CORE_TEMP_CHANGE * process_scale
+	var/max_transfer_energy = min(
+		max_gas_temp_change * coolant_heat_capacity,
+		max_core_temp_change * RBMK_CORE_HEAT_CAPACITY
+	)
+	energy_to_coolant = clamp(energy_to_coolant, -max_transfer_energy, max_transfer_energy)
 
-	coolant_temperature_change = clamp(coolant_temperature_change, -max_gas_temp_change, max_gas_temp_change)
-	core_temperature_change = clamp(core_temperature_change, -max_core_temp_change, max_core_temp_change)
+	// Derive both temperature changes from the same capped energy transfer so energy is conserved.
+	var/coolant_temperature_change = energy_to_coolant / coolant_heat_capacity
+	var/core_temperature_change = energy_to_coolant / RBMK_CORE_HEAT_CAPACITY
 
 	last_coolant_temperature_change = coolant_temperature_change
 	last_coolant_core_temp_change = core_temperature_change
@@ -302,6 +305,8 @@
 
 
 /obj/machinery/rbmk/reactor/process(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
+	process_reactor_griddle(seconds_per_tick)
+
 	if(meltdown_in_progress || reactor_integrity <= 0)
 		process_meltdown_fallout()
 		last_integrity_damage = 0
