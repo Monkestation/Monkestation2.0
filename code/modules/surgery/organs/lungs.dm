@@ -942,6 +942,30 @@
 	maxHealth = SMOKER_ORGAN_HEALTH
 	healing_factor = SMOKER_LUNG_HEALING
 
+/obj/item/organ/internal/lungs/vox
+	name = "air sacs"
+	desc = "An interconnected web of rubbery blue air sacs covered in a thick sticky membrane. They smell sickly sweet and acidic."
+	icon_state = "air_sacs"
+	safe_oxygen_min = 0
+	safe_oxygen_max = 10
+	safe_nitro_min = 8
+	safe_co2_max = INFINITY // blood isn't oxygen based
+	n2o_sleep_min = INFINITY  //immune to getting slept by nitrous oxide
+
+/obj/item/organ/internal/lungs/vox/too_much_oxygen(mob/living/carbon/breather, datum/gas_mixture/breath, o2_pp, old_o2_pp)
+	// If too much Oxygen is poisonous.
+	if(o2_pp <= safe_oxygen_max)
+		if(old_o2_pp > safe_oxygen_max)
+			return BREATH_LOST
+		return
+
+	var/emote = pick("cough", "wheeze", "sneeze", "gasp", "faint")
+	breather.emote("[emote]")
+
+	var/ratio = (breath.gases[/datum/gas/oxygen][MOLES] / safe_oxygen_max) * 10
+	breather.adjustToxLoss(clamp(ratio, 10, 20))
+	breather.throw_alert(ALERT_TOO_MUCH_OXYGEN, /atom/movable/screen/alert/too_much_oxy)
+
 /obj/item/organ/internal/lungs/slime
 	name = "vacuole"
 	desc = "A large organelle designed to store oxygen and other important gasses."

@@ -159,6 +159,12 @@
 		to_chat(user, span_notice("You fix the damage on [src]."))
 	update_appearance()
 
+/obj/item/clothing/mob_can_equip(mob/living/M, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
+	. = ..()
+	if(!isvox(M) && (clothing_flags & VOX_CLOTHING))
+		to_chat(M, span_warning("[src] doesn't fit!"))
+		return FALSE
+
 /**
  * take_damage_zone() is used for dealing damage to specific bodyparts on a worn piece of clothing, meant to be called from [/obj/item/bodypart/proc/check_woundings_mods]
  *

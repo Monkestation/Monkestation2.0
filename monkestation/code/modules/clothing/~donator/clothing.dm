@@ -916,7 +916,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/occult
 
 // Donation reward for Octus
-/obj/item/clothing/mask/breath/vox/octus
+/obj/item/clothing/mask/breath/octus
 	name = "sinister visor"
 	desc = "Skrektastic."
 	icon = 'icons/donator/obj/clothing/masks.dmi'

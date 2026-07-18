@@ -1,4 +1,4 @@
-#define VOICE_PACKS_FILE "config/monkestation/voice_packs.toml"
+#define VOICE_PACKS_FILE "code/modules/voice/voice_packs.toml"
 
 /proc/get_voice_pack_sound(voice_pack_obj, group_path, sound_name)
 	var/sound_path = voice_pack_obj[sound_name]
@@ -50,8 +50,8 @@
 
 			voice_pack.sounds = list(
 				get_voice_pack_sound(voice_pack_obj, group_path, "path"),
-				get_voice_pack_sound(voice_pack_obj, group_path, "ask"),
-				get_voice_pack_sound(voice_pack_obj, group_path, "exclaim"),
+				get_voice_pack_sound(voice_pack_obj, group_path, "ask_path"),
+				get_voice_pack_sound(voice_pack_obj, group_path, "exclaim_path"),
 			)
 			if (!voice_pack.sounds[1])
 				stack_trace("Voice_pack " + voice_pack_id + " has no talk sound")
