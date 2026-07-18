@@ -3987,6 +3987,7 @@
 #include "code\modules\client\preferences\species_features\pod.dm"
 #include "code\modules\client\preferences\species_features\toggle_greyscale.dm"
 #include "code\modules\client\preferences\species_features\vampire.dm"
+#include "code\modules\client\preferences\species_features\vox.dm"
 #include "code\modules\client\verbs\ooc.dm"
 #include "code\modules\client\verbs\ping.dm"
 #include "code\modules\client\verbs\suicide.dm"

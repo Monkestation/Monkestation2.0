@@ -2571,3 +2571,11 @@ MONKESTATION EDIT
 /datum/sprite_accessory/face_quills/beard
 	name = "Beard"
 	icon_state = "vox_beard"
+
+// Tails
+/datum/sprite_accessory/tails/vox
+	icon = 'icons/mob/species/vox/bodyparts_voxazu.dmi'
+
+/datum/sprite_accessory/tails/vox/azure
+	name = "Azure Tail"
+	icon_state = "azure"

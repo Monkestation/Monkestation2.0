@@ -60,6 +60,8 @@
 	var/inhand_y_dimension = 32
 	/// Worn overlay will be shifted by this along y axis
 	var/worn_y_offset = 0
+	/// Item isn't offset by bodyparts offsets.
+	var/no_worn_offset = FALSE
 
 	max_integrity = 200
 
@@ -811,7 +813,6 @@
 /obj/item/proc/mob_can_equip(mob/living/M, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
 	if(!M)
 		return FALSE
-
 	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self, ignore_equipped)
 
 /obj/item/verb/verb_pickup()

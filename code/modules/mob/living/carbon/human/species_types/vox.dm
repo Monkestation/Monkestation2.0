@@ -10,7 +10,6 @@
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_NO_AUGMENTS,
 		TRAIT_FEATHERED,
-		TRAIT_EASILY_WOUNDED,
 		TRAIT_NO_BLOOD_OVERLAY,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_TRANSFORMATION_STING,
@@ -38,161 +37,51 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/vox,
 	)
 
-/datum/species/vox/on_species_gain(mob/living/carbon/human/C, datum/species/old_species, pref_load)
+/datum/species/vox/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()
-	C.set_voice_pack("misc.vox")
+	RegisterSignal(human_who_gained_species, COMSIG_HUMAN_EQUIPPING_ITEM, PROC_REF(on_owner_equipping_item))
+	human_who_gained_species.set_voice_pack("misc.vox")
+
+/datum/species/vox/on_species_loss(mob/living/carbon/human/human_who_lost_species, datum/species/new_species, pref_load)
+	. = ..()
+	UnregisterSignal(human_who_lost_species, COMSIG_HUMAN_EQUIPPING_ITEM)
+
+/datum/species/vox/proc/on_owner_equipping_item(mob/living/carbon/human/owner, obj/item/equip_target, slot)
+	SIGNAL_HANDLER
+	if(!equip_target)
+		return
+	var/obj/item/clothing/clothing_to_equip
+	if(isclothing(equip_target))
+		clothing_to_equip = equip_target
+	if(clothing_to_equip && clothing_to_equip.clothing_flags & VOX_CLOTHING) // vox clothing, we good
+		return
+	if(!(equip_target.slot_flags & ITEM_SLOT_BACK) && !(equip_target.slot_flags & ITEM_SLOT_EARS) && !(equip_target.slot_flags & ITEM_SLOT_HEAD) && !(equip_target.slot_flags & ITEM_SLOT_MASK))
+		to_chat(owner, span_warning("[src] doesn't fit!"))
+		return COMPONENT_BLOCK_EQUIP
+	if(equip_target.slot_flags & ITEM_SLOT_HEAD && check_coverage_conflict(equip_target))
+		to_chat(owner, span_warning("[src] doesn't fit!"))
+		return COMPONENT_BLOCK_EQUIP
+	if(equip_target.slot_flags & ITEM_SLOT_MASK && check_coverage_conflict(equip_target))
+		to_chat(owner, span_warning("[src] doesn't fit!"))
+		return COMPONENT_BLOCK_EQUIP
+
+/datum/species/vox/proc/check_coverage_conflict(obj/item/item_to_check)
+	if(item_to_check.flags_inv & HIDEMASK)
+		return TRUE
+	if(item_to_check.flags_inv & HIDEEARS)
+		return TRUE
+	if(item_to_check.flags_inv & HIDEFACE)
+		return TRUE
+	if(item_to_check.flags_inv & HIDEHAIR)
+		return TRUE
+	if(item_to_check.flags_inv & HIDEFACIALHAIR)
+		return TRUE
+	if(item_to_check.flags_inv & HIDESNOUT)
+		return TRUE
+	return FALSE
 
 /datum/species/vox/get_species_description()
 	return "The Vox are a race of spacefaring avians. They have a penchant for capitalism and goods peddling, deep space salvage, and sometimes interstellar crime. They speak in outlandish accents and are widely considered a nomadic pest in the eyes of the average human. The presence of these ruthless and irritating space vultures is mostly tolerated because of CentComm policy and the technology the Vox gather."
-
-/obj/item/organ/external/head_quills
-	name = "feathery quills"
-	desc = "A bunch of feather quills."
-	icon_state = "vox_ruff_hawk"
-	icon = 'icons/mob/species/vox/vox_hair_vg.dmi'
-
-	preference = "feature_head_quills"
-	zone = BODY_ZONE_HEAD
-	slot =  ORGAN_SLOT_EXTERNAL_HEAD_QUILLS
-	dna_block = DNA_VOX_HEAD_QUILLS_BLOCK
-	use_mob_sprite_as_obj_sprite = TRUE
-
-	bodypart_overlay = /datum/bodypart_overlay/mutant/head_quills
-
-/datum/bodypart_overlay/mutant/head_quills
-	layers = EXTERNAL_FRONT
-	feature_key = "head_quills"
-
-/datum/bodypart_overlay/mutant/head_quills/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
-		return FALSE
-
-	return TRUE
-
-/datum/bodypart_overlay/mutant/head_quills/get_global_feature_list()
-	return GLOB.head_quills_list
-
-/datum/bodypart_overlay/mutant/head_quills/get_image(image_layer, obj/item/bodypart/limb, layer_name)
-	if(!sprite_datum)
-		CRASH("Trying to call get_image() on [type] while it didn't have a sprite_datum. This shouldn't happen, report it as soon as possible.")
-
-	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, get_base_icon_state(), layer = image_layer)
-
-	if(sprite_datum.center)
-		center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
-
-	return appearance
-
-/datum/preference/choiced/head_quills
-	savefile_key = "feature_head_quills"
-	savefile_identifier = PREFERENCE_CHARACTER
-	category = PREFERENCE_CATEGORY_FEATURES
-	main_feature_name = "Head Quills"
-	should_generate_icons = TRUE
-	relevant_external_organ = /obj/item/organ/external/head_quills
-
-/datum/preference/choiced/head_quills/init_possible_values()
-	return assoc_to_keys_features(GLOB.head_quills_list)
-
-/datum/preference/choiced/head_quills/create_default_value()
-	return pick(assoc_to_keys_features(GLOB.head_quills_list))
-
-/datum/preference/choiced/head_quills/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["head_quills"] = value
-
-/obj/item/organ/external/face_quills
-	name = "feathery quills"
-	desc = "A bunch of feather quills."
-	icon_state = "vox_ruff_hawk"
-	icon = 'icons/mob/species/vox/vox_hair_vg.dmi'
-
-	preference = "feature_face_quills"
-	zone = BODY_ZONE_HEAD
-	slot = ORGAN_SLOT_EXTERNAL_FACE_QUILLS
-	dna_block = DNA_VOX_FACE_QUILLS_BLOCK
-	use_mob_sprite_as_obj_sprite = TRUE
-
-	bodypart_overlay = /datum/bodypart_overlay/mutant/face_quills
-
-/datum/bodypart_overlay/mutant/face_quills
-	layers = EXTERNAL_ADJACENT
-	feature_key = "face_quills"
-
-/datum/bodypart_overlay/mutant/face_quills/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if((human.head?.flags_inv & HIDEFACIALHAIR) || (human.wear_mask?.flags_inv & HIDEFACIALHAIR))
-		return FALSE
-
-	return TRUE
-
-/datum/bodypart_overlay/mutant/face_quills/get_global_feature_list()
-	return GLOB.face_quills_list
-
-/datum/bodypart_overlay/mutant/face_quills/get_image(image_layer, obj/item/bodypart/limb, layer_name)
-	if(!sprite_datum)
-		CRASH("Trying to call get_image() on [type] while it didn't have a sprite_datum. This shouldn't happen, report it as soon as possible.")
-
-	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, get_base_icon_state(), layer = image_layer)
-
-	if(sprite_datum.center)
-		center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
-
-	return appearance
-
-/datum/preference/choiced/face_quills
-	savefile_key = "feature_face_quills"
-	savefile_identifier = PREFERENCE_CHARACTER
-	category = PREFERENCE_CATEGORY_FEATURES
-	main_feature_name = "Face Quills"
-	should_generate_icons = TRUE
-	relevant_external_organ = /obj/item/organ/external/face_quills
-
-/datum/preference/choiced/face_quills/init_possible_values()
-	return assoc_to_keys_features(GLOB.face_quills_list)
-
-/datum/preference/choiced/face_quills/create_default_value()
-	return pick(assoc_to_keys_features(GLOB.face_quills_list))
-
-/datum/preference/choiced/face_quills/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["face_quills"] = value
-
-/obj/item/organ/external/tail/vox
-	name = "avian tail"
-	desc = "A severed feathered tail."
-	icon = 'icons/mob/species/vox/vox_hair_vg.dmi'
-	icon_state = "vox_tail"
-	preference = "feature_vox_tail"
-
-	use_mob_sprite_as_obj_sprite = TRUE
-
-	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/vox
-
-/datum/bodypart_overlay/mutant/tail/vox
-	feature_key = "vox_tail"
-
-/datum/bodypart_overlay/mutant/tail/vox/get_global_feature_list()
-	return GLOB.vox_tail_list
-
-/datum/preference/choiced/vox_tail
-	savefile_key = "feature_vox_tail"
-	savefile_identifier = PREFERENCE_CHARACTER
-	category = PREFERENCE_CATEGORY_FEATURES
-	main_feature_name = "Vox Tail"
-	should_generate_icons = TRUE
-	relevant_external_organ =  /obj/item/organ/external/tail/vox
-
-/datum/preference/choiced/vox_tail/init_possible_values()
-	return assoc_to_keys_features(GLOB.vox_tail_list)
-
-/datum/preference/choiced/vox_tail/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["vox_tail"] = value
-
-/datum/sprite_accessory/tails/vox
-	icon = 'icons/mob/species/vox/bodyparts_voxazu.dmi'
-
-/datum/sprite_accessory/tails/vox/azure
-	name = "Azure Tail"
-	icon_state = "azure"
-
 
 /obj/item/bodypart/head/vox
 	icon_static = 'icons/mob/species/vox/bodyparts_voxazu.dmi'
@@ -204,6 +93,20 @@
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/head/vox/Initialize(mapload)
+	worn_mask_offset = new(
+		attached_part = src,
+		feature_key = OFFSET_FACEMASK,
+		offset_x = list(
+			"east" = 5,
+			"west" = -5,
+		),
+		offset_y = list(
+			"north" = -2,
+			"south" = -2,
+			"east" = -1,
+			"west" = -1,
+		),
+	)
 	worn_ears_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_EARS,
@@ -273,10 +176,10 @@
 			"west" = -2,
 		),
 		offset_y = list(
-			"north" = -4,
-			"south" = -4,
-			"east" = -4,
-			"west" = -4,
+			"north" = -3,
+			"south" = -3,
+			"east" = -3,
+			"west" = -3,
 		),
 	)
 	return ..()
@@ -303,10 +206,10 @@
 			"west" = -2,
 		),
 		offset_y = list(
-			"north" = -4,
-			"south" = -4,
-			"east" = -4,
-			"west" = -4,
+			"north" = -3,
+			"south" = -3,
+			"east" = -3,
+			"west" = -3,
 		),
 	)
 	return ..()
@@ -340,3 +243,42 @@
 	)
 
 	should_draw_greyscale = FALSE
+
+/obj/item/clothing/under/vox
+	name = "alien clothing"
+	desc = "A strange set of pants and straps."
+	icon = 'icons/obj/clothing/vox/vox_clothing_obj.dmi'
+	worn_icon = 'icons/mob/clothing/vox/vox_clothing_mob.dmi'
+	icon_state = "vox-jumpsuit"
+	clothing_flags = VOX_CLOTHING
+	inhand_icon_state = null
+	no_worn_offset = TRUE
+	can_adjust = FALSE
+	body_parts_covered = CHEST|GROIN|LEGS
+
+/obj/item/clothing/mask/breath/vox
+	name = "bizarre breath mask"
+	desc = "A close-fitting mask that can be connected to an air supply. This one is enlogated and tapered, strange."
+	icon = 'icons/obj/clothing/vox/vox_clothing_obj.dmi'
+	worn_icon = 'icons/mob/clothing/vox/vox_clothing_mob.dmi'
+	icon_state = "voxmask"
+	clothing_flags = VOX_CLOTHING
+	no_worn_offset = TRUE
+
+/obj/item/clothing/head/helmet/space/vox
+	name = "alien helmet"
+	desc = "Hey, wasn't this a prop in \'The Abyss\'?"
+	icon = 'icons/obj/clothing/vox/vox_clothing_obj.dmi'
+	worn_icon = 'icons/mob/clothing/vox/vox_clothing_mob.dmi'
+	icon_state = "vox-pressure-helmet"
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS | VOX_CLOTHING
+	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+
+
+/obj/item/clothing/suit/space/vox
+	name = "alien pressure suit"
+	desc = "A huge, pressurized suit, designed for distinctly nonhuman proportions. It looks unusually cheap."
+	icon = 'icons/obj/clothing/vox/vox_clothing_obj.dmi'
+	worn_icon = 'icons/mob/clothing/vox/vox_clothing_mob.dmi'
+	icon_state = "vox-pressure-suit"
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | VOX_CLOTHING

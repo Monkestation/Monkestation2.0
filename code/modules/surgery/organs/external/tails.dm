@@ -167,3 +167,20 @@
 /obj/item/organ/external/tail/lizard/fake
 	name = "fabricated lizard tail"
 	desc = "A fabricated severed lizard tail. This one's made of synthflesh. Probably not usable for lizard wine."
+
+/obj/item/organ/external/tail/vox
+	name = "avian tail"
+	desc = "A severed feathered tail."
+	icon = 'icons/mob/species/vox/vox_hair_vg.dmi'
+	icon_state = "vox_tail"
+	preference = "feature_vox_tail"
+
+	use_mob_sprite_as_obj_sprite = TRUE
+
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/vox
+
+/datum/bodypart_overlay/mutant/tail/vox
+	feature_key = "vox_tail"
+
+/datum/bodypart_overlay/mutant/tail/vox/get_global_feature_list()
+	return GLOB.vox_tail_list

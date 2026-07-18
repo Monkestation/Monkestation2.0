@@ -546,7 +546,7 @@ There are several things that need to be remembered:
 				mutant_override = TRUE
 
 		var/mutable_appearance/mask_overlay = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null)
-		if(!mutant_override)
+		if(!mutant_override && !worn_item.no_worn_offset)
 			my_head.worn_mask_offset?.apply_offset(mask_overlay)
 		overlays_standing[FACEMASK_LAYER] = mask_overlay
 
