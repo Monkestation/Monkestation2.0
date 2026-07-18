@@ -55,7 +55,7 @@
 		clothing_to_equip = equip_target
 	if(clothing_to_equip && clothing_to_equip.clothing_flags & VOX_CLOTHING) // vox clothing, we good
 		return
-	if(!(equip_target.slot_flags & ITEM_SLOT_BACK) && !(equip_target.slot_flags & ITEM_SLOT_EARS) && !(equip_target.slot_flags & ITEM_SLOT_HEAD) && !(equip_target.slot_flags & ITEM_SLOT_MASK))
+	if(equip_target.slot_flags & ITEM_SLOT_FEET || equip_target.slot_flags & ITEM_SLOT_OCLOTHING || equip_target.slot_flags & ITEM_SLOT_ICLOTHING || equip_target.slot_flags & ITEM_SLOT_GLOVES)
 		to_chat(owner, span_warning("[src] doesn't fit!"))
 		return COMPONENT_BLOCK_EQUIP
 	if(equip_target.slot_flags & ITEM_SLOT_HEAD && check_coverage_conflict(equip_target))
@@ -262,7 +262,7 @@
 	icon = 'icons/obj/clothing/vox/vox_clothing_obj.dmi'
 	worn_icon = 'icons/mob/clothing/vox/vox_clothing_mob.dmi'
 	icon_state = "voxmask"
-	clothing_flags = VOX_CLOTHING
+	clothing_flags = MASKINTERNALS | VOX_CLOTHING
 	no_worn_offset = TRUE
 
 /obj/item/clothing/head/helmet/space/vox
