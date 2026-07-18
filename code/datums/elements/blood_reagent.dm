@@ -75,6 +75,7 @@
 	touch_protection = 0,
 )
 	SIGNAL_HANDLER
+
 	if ((methods & (TOUCH | VAPOR)) && reac_volume >= 3 && (blood_type.blood_flags & (BLOOD_ADD_DNA | BLOOD_COVER_MOBS)))
 		exposed_mob.add_blood_DNA(list("[source.data?["blood_DNA"] || blood_type.dna_string]" = blood_type))
 
