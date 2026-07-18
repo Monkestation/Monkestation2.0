@@ -2,7 +2,7 @@
 	name = "\improper Vox"
 	plural_form = "Voces"
 	id = SPECIES_VOX
-	changesource_flags = NONE
+	changesource_flags = MIRROR_BADMIN
 	visual_gender = FALSE
 	sexes = FALSE // its a bird looking... thing?
 
