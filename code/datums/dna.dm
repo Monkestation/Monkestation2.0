@@ -728,9 +728,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		dna.features["tail_avian"] = GLOB.tails_list_avian[deconstruct_block(get_uni_feature_block(features, DNA_AVIAN_TAIL_BLOCK), GLOB.tails_list_avian.len)]
 	if(dna.features["ears_avian"]) // NON-MODULE CHANGE
 		dna.features["ears_avian"] = GLOB.avian_ears_list[deconstruct_block(get_uni_feature_block(features, DNA_AVIAN_EARS_BLOCK), GLOB.avian_ears_list.len)]
-	if(features["head_quills"])
+	if(dna.features["head_quills"])
 		dna.features["head_quills"] = GLOB.head_quills_list[deconstruct_block(get_uni_feature_block(features, DNA_VOX_HEAD_QUILLS_BLOCK), GLOB.head_quills_list.len)]
-	if(features["face_quills"])
+	if(dna.features["face_quills"])
 		dna.features["face_quills"] = GLOB.face_quills_list[deconstruct_block(get_uni_feature_block(features, DNA_VOX_FACE_QUILLS_BLOCK), GLOB.face_quills_list.len)]
 
 	for(var/obj/item/organ/external/external_organ in organs)

@@ -178,10 +178,10 @@
 			"west" = -2,
 		),
 		offset_y = list(
-			"north" = -3,
-			"south" = -3,
-			"east" = -3,
-			"west" = -3,
+			"north" = -2,
+			"south" = -2,
+			"east" = -2,
+			"west" = -2,
 		),
 	)
 	return ..()
@@ -208,10 +208,10 @@
 			"west" = -2,
 		),
 		offset_y = list(
-			"north" = -3,
-			"south" = -3,
-			"east" = -3,
-			"west" = -3,
+			"north" = -2,
+			"south" = -2,
+			"east" = -2,
+			"west" = -2,
 		),
 	)
 	return ..()
