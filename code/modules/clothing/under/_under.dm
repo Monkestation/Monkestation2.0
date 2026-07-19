@@ -102,6 +102,10 @@
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
 	if(accessory_overlay)
 		. += accessory_overlay
+	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
+		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "uniformblood")
+		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+		. += blood_overlay
 
 /obj/item/clothing/under/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(has_sensor == BROKEN_SENSORS && istype(attacking_item, /obj/item/stack/cable_coil))

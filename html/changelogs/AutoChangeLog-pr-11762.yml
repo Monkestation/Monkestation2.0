@@ -1,0 +1,13 @@
+author: "Cujo"
+delete-after: True
+changes:
+  - rscadd: "Surgery will now get a 15% fail chance if not on a proper surgery bed or stasis bed, otherwise no penalty is given."
+  - rscadd: "Surgery will now get a 10% fail chance if not wearing latex or nitrile gloves, or a 5% success bonus if wearing latex, nitrile, deployed medical modsuit, or medical hardsuit gloves."
+  - rscadd: "Chemicals that positively affect surgery speed will get a 15% surgery success bonus."
+  - rscadd: "Roller beds, emergency roller beds, and medical beds will now give a 15% faster bonus to surgery speed. (0.7->0.85)"
+  - balance: "Self surgery is now significantly harder(+50% fail chance). It will require chems, a surgery bed, proper tools, and latex gloves or else it will have a high fail chance."
+  - balance: "IPC's and those with robotics limbs are immune to all downsides and positives of surgery. They are able to do self surgery without gloves, off of a surgery bed, and without chemicals."
+  - balance: "Black latex gloves no longer make the user a perfect surgeon, preventing them from doing surgery on multiple targets at the same time. It will still give the speed increase to surgery and a 20% success bonus to surgery."
+  - bugfix: "Ghetto surgery will now have a minimum of 0 and maximum of 95 failure chance before accounting for any increases or decreases. This means that using ghetto tools can yield success if in ideal conditions rather than always failing."
+  - rscadd: "Abductors (as a species) are now perfect surgeons(unable to fail surgery & can do surgery on several people at the same time)."
+  - balance: "Latex gloves no longer pass fingerprints through."

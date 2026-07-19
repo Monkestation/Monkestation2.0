@@ -14,6 +14,7 @@
 	infectionchance = 100
 	infectionchance_base = 100
 	can_kill = list()
+	viable_mobtypes = list(/mob/living/carbon/human)
 
 /datum/disease/acute/premade/disease_debug/after_add()
 	. = ..()

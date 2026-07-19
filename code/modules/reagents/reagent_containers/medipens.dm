@@ -9,6 +9,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	amount_per_transfer_from_this = 15
+	has_variable_transfer_amount = FALSE
 	volume = 15
 	var/ignore_flags = 1 //so you can medipen through spacesuits
 	reagent_flags = DRAWABLE
@@ -79,7 +80,7 @@
 		if(affected_mob.reagents)
 			var/trans = 0
 			if(!infinite)
-				trans = reagents.trans_to(affected_mob, amount_per_transfer_from_this, transfered_by = user, methods = INJECT)
+				trans = reagents.trans_to(affected_mob, amount_per_transfer_from_this, transferred_by = user, methods = INJECT)
 			else
 				reagents.expose(affected_mob, INJECT, fraction)
 				trans = reagents.copy_to(affected_mob, amount_per_transfer_from_this)
@@ -313,7 +314,7 @@
 	base_icon_state = "syndipendouble"
 	volume = 100
 	amount_per_transfer_from_this = 50
-	possible_transfer_amounts = list(50)
+	has_variable_transfer_amount = FALSE
 	list_reagents = list(/datum/reagent/medicine/stimulants = 100)
 	var/stripe_style = null
 
@@ -343,7 +344,7 @@
 	desc = "An autoinjector containing oxandrolone, used to treat severe burns."
 	volume = 20
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(10)
+	has_variable_transfer_amount = FALSE
 	list_reagents = list(/datum/reagent/medicine/oxandrolone = 20)
 	stripe_style = "oxa"
 	inhand_icon_state = "oxapen"
@@ -353,7 +354,7 @@
 	desc = "An autoinjector containing salicylic acid, used to treat severe brute damage."
 	volume = 20
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(10)
+	has_variable_transfer_amount = FALSE
 	list_reagents = list(/datum/reagent/medicine/sal_acid = 20)
 	stripe_style = "sala"
 	inhand_icon_state = "salacid"
@@ -363,7 +364,7 @@
 	desc = "An autoinjector containing morphine, used as a strong painkiller."
 	volume = 30
 	amount_per_transfer_from_this = 15
-	possible_transfer_amounts = list(10)
+	has_variable_transfer_amount = FALSE
 	list_reagents = list(/datum/reagent/medicine/painkiller/morphine = 30)
 	stripe_style = "morphine"
 	inhand_icon_state = "morphen"
@@ -374,7 +375,7 @@
 	desc = "An autoinjector containing salbutamol, used to heal oxygen damage quickly."
 	volume = 20
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(10)
+	has_variable_transfer_amount = FALSE
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 20)
 	stripe_style = "sal"
 	inhand_icon_state = "salpen"
@@ -384,7 +385,7 @@
 	desc = "An autoinjector containing pentetic acid, used to reduce high levels of radiations and moderate toxins."
 	volume = 20
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(10)
+	has_variable_transfer_amount = FALSE
 	list_reagents = list(/datum/reagent/medicine/pen_acid = 20)
 	stripe_style = "acid"
 	inhand_icon_state = "penacid"
@@ -394,7 +395,7 @@
 	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Contains a powerful preservative that can delay decomposition when applied to a dead body, and stop the production of histamine during an allergic reaction."
 	volume = 50
 	amount_per_transfer_from_this = 25
-	possible_transfer_amounts = list(25)
+	has_variable_transfer_amount = FALSE
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 20, /datum/reagent/toxin/formaldehyde = 5, /datum/reagent/medicine/atropine = 20, /datum/reagent/medicine/coagulant = 5)
 	stripe_style = "epi"
 	inhand_icon_state = "medipen"
@@ -404,7 +405,7 @@
 	desc = "An autoinjector designed to stabilize and rapidly reverse severe bloodloss."
 	volume = 100
 	amount_per_transfer_from_this = 50
-	possible_transfer_amounts = list(50)
+	has_variable_transfer_amount = FALSE
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/coagulant = 10, /datum/reagent/iron = 20, /datum/reagent/medicine/salglu_solution = 60)
 	stripe_style = "blood"
 	inhand_icon_state = "stimpen"
@@ -415,7 +416,7 @@
 	desc = "A ghetto-looking autoinjector filled with gore, aka dirty kronkaine. You probably shouldn't take this while on the job, but it is a super-stimulant. Don't take two at once."
 	volume = 15
 	amount_per_transfer_from_this = 15
-	list_reagents = list(/datum/reagent/drug/kronkaine/gore = 15)
+	has_variable_transfer_amount = FALSE
 	icon_state = "maintenance"
 	base_icon_state = "maintenance"
 	label_examine = FALSE

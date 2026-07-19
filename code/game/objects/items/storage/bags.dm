@@ -481,7 +481,7 @@
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/cup/vial,
+		/obj/item/reagent_containers/chemcanister,
 		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,

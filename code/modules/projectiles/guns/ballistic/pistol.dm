@@ -4,6 +4,7 @@
 	icon_state = "pistol"
 	w_class = WEIGHT_CLASS_SMALL
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m9mm
+	recoil = 0.3
 	can_suppress = TRUE
 	burst_size = 1
 	fire_delay = 0

@@ -420,9 +420,7 @@
 /obj/item/robot_model/engineering/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
 	..()
 	var/obj/item/lightreplacer/light_replacer = locate(/obj/item/lightreplacer) in basic_modules
-	if(light_replacer)
-		for(var/charge in 1 to coeff)
-			light_replacer.Charge(cyborg)
+	light_replacer?.charge(cyborg, coeff)
 
 /obj/item/robot_model/engineering/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
 	var/datum/action/cooldown/borg_sight_vision/sight_vision_meson = new(loc)
@@ -738,9 +736,7 @@
 /obj/item/robot_model/janitor/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
 	..()
 	var/obj/item/lightreplacer/light_replacer = locate(/obj/item/lightreplacer) in basic_modules
-	if(light_replacer)
-		for(var/charge in 1 to coeff)
-			light_replacer.Charge(cyborg)
+	light_replacer?.charge(cyborg, coeff)
 
 	var/obj/item/reagent_containers/spray/cyborg_drying/drying_agent = locate(/obj/item/reagent_containers/spray/cyborg_drying) in basic_modules
 	if(drying_agent)

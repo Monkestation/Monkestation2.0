@@ -270,9 +270,10 @@
 		/obj/item/surgicaldrill,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/wrench/medical,
-		/obj/item/device/antibody_scanner, //monkestation addition
+		/obj/item/device/antibody_scanner,
 		/obj/item/storage/lockbox/vialbox,
-	) + typesof(/obj/item/reagent_containers/cup/vial))
+		/obj/item/gps,
+	) + typesof(/obj/item/reagent_containers/chemcanister))
 
 /obj/item/storage/belt/medical/paramedic
 	name = "EMT belt"
@@ -386,9 +387,9 @@
 		/obj/item/clothing/glasses,
 		/obj/item/clothing/gloves,
 		/obj/item/flashlight/seclite,
-		/obj/item/citationinator, //monkestation edit
+		/obj/item/citationinator,
 		/obj/item/food/donut,
-		/obj/item/food/spaghetti/security, //monkestation change: tactical belt spaghetti
+		/obj/item/food/spaghetti/security,
 		/obj/item/grenade,
 		/obj/item/holosign_creator/security,
 		/obj/item/knife/combat,
@@ -397,7 +398,11 @@
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/restraints/handcuffs,
 		/obj/item/restraints/legcuffs/bola,
-		/obj/item/stock_parts/power_store/cell/microfusion, //monkestation edit
+		/obj/item/stock_parts/power_store/cell/microfusion,
+		/obj/item/gps,
+		/obj/item/storage/fancy/cigarettes,
+		/obj/item/lighter,
+		/obj/item/taperecorder,
 	))
 
 /obj/item/storage/belt/security/full/PopulateContents()
@@ -415,7 +420,7 @@
 	inhand_icon_state = "securitywebbing"
 	worn_icon_state = "securitywebbing"
 	content_overlays = FALSE
-	custom_premium_price = PAYCHECK_COMMAND * 2 //monkestation edit: 3 to 2
+	custom_premium_price = PAYCHECK_COMMAND * 2
 	uses_advanced_reskins = TRUE
 	unique_reskin = list(
 		"Security Grey" = list(
@@ -488,16 +493,16 @@
 		/obj/item/wirecutters,
 		/obj/item/wrench,
 		/obj/item/wormhole_jaunter,
-		/obj/item/trench_tool, //monkestation edit
-		/obj/item/cargo_teleporter, //monkestation edit
-		/obj/item/storage/box/kinetic, //monkestation edit
-		/obj/item/ammo_box/magazine/pksmgmag, //monkestation edit
-		/obj/item/ammo_casing/shotgun/kinetic, //monkestation edit
-		/obj/item/ammo_casing/shotgun/kinetic/rockbreaker, //monkestation edit
-		/obj/item/ammo_casing/shotgun/kinetic/sniperslug, //monkestation edit
-		/obj/item/storage/box/kinetic/shotgun, //monkestation edit
-		/obj/item/storage/box/kinetic/shotgun/rockbreaker, //monkestation edit
-		/obj/item/storage/box/kinetic/shotgun/sniperslug, //monkestation edit
+		/obj/item/trench_tool,
+		/obj/item/cargo_teleporter,
+		/obj/item/storage/box/kinetic,
+		/obj/item/ammo_box/magazine/pksmgmag,
+		/obj/item/ammo_casing/shotgun/kinetic,
+		/obj/item/ammo_casing/shotgun/kinetic/rockbreaker,
+		/obj/item/ammo_casing/shotgun/kinetic/sniperslug,
+		/obj/item/storage/box/kinetic/shotgun,
+		/obj/item/storage/box/kinetic/shotgun/rockbreaker,
+		/obj/item/storage/box/kinetic/shotgun/sniperslug,
 		/obj/item/ammo_box/magazine/autoshotgun,
 		/obj/item/ammo_casing/shotgun/hydrakinetic,
 		/obj/item/storage/box/kinetic/autoshotgun,
@@ -512,15 +517,15 @@
 		/obj/item/ammo_box/govmining,
 		/obj/item/storage/box/kinetic/govmining,
 		/obj/item/ammo_casing/minerjdj,
-		/obj/item/ammo_box/advanced/s12gauge/hunter, //monkestation edit
-		/obj/item/ammo_casing/shotgun/hunter, //monkestation edit
+		/obj/item/ammo_box/advanced/s12gauge/hunter,
+		/obj/item/ammo_casing/shotgun/hunter,
 		/obj/item/survivalcapsule,
 		/obj/item/survivalcapsule/luxury,
 		/obj/item/survivalcapsule/luxuryelite,
 		/obj/item/survivalcapsule/bathroom,
 		/obj/item/chasm_filler,
 		/obj/item/skeleton_key,
-		/obj/item/grenade/c4/explosivecharge, //monkestation edit
+		/obj/item/grenade/c4/explosivecharge,
 	))
 
 
@@ -911,7 +916,7 @@
 	name = "sabre sheath"
 	desc = "An ornate sheath designed to hold an officer's blade."
 	icon_state = "sheath"
-	icon_state_preview = "sheath-sabre" // monkestation edit: add preview icon state
+	icon_state_preview = "sheath-sabre"
 	inhand_icon_state = "sheath"
 	worn_icon_state = "sheath"
 	w_class = WEIGHT_CLASS_BULKY

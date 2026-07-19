@@ -165,7 +165,7 @@
 /datum/reagent/consumable/potato_juice
 	name = "Potato Juice"
 	description = "Juice of the potato. Bleh."
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 2
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "irish sadness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -320,7 +320,7 @@
 	description = "Encourages the patient to go golfing."
 	color = "#FFB766"
 	quality = DRINK_NICE
-	nutriment_factor = 10 * REAGENTS_METABOLISM
+	nutriment_factor = 10
 	taste_description = "bitter tea"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -442,7 +442,7 @@
 	description = "A delightfully bubbly root beer, filled with so much sugar that it can actually speed up the user's trigger finger."
 	color = "#181008" // rgb: 24, 16, 8
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 10 * REAGENTS_METABOLISM
+	nutriment_factor = 10
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	taste_description = "a monstrous sugar rush"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -746,7 +746,7 @@
 	description = "A cherry flavored milkshake."
 	color = "#FFB6C1"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 8 * REAGENTS_METABOLISM
+	nutriment_factor = 8
 	taste_description = "creamy tart cherry"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
@@ -756,7 +756,7 @@
 	description = "An exotic milkshake."
 	color = "#00F1FF"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 8 * REAGENTS_METABOLISM
+	nutriment_factor = 8
 	taste_description = "creamy blue cherry"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -765,7 +765,7 @@
 	description = "A vanilla flavored milkshake. The basics are still good."
 	color = "#E9D2B2"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 8 * REAGENTS_METABOLISM
+	nutriment_factor = 8
 	taste_description = "sweet creamy vanilla"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
@@ -775,7 +775,7 @@
 	description = "A caramel flavored milkshake. Your teeth hurt looking at it."
 	color = "#E17C00"
 	quality = DRINK_GOOD
-	nutriment_factor = 10 * REAGENTS_METABOLISM
+	nutriment_factor = 10
 	taste_description = "sweet rich creamy caramel"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
@@ -785,7 +785,7 @@
 	description = "A frosty chocolate milkshake."
 	color = "#541B00"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 8 * REAGENTS_METABOLISM
+	nutriment_factor = 8
 	taste_description = "sweet creamy chocolate"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
@@ -795,7 +795,7 @@
 	description = "A strawberry milkshake."
 	color = "#ff7b7b"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 8 * REAGENTS_METABOLISM
+	nutriment_factor = 8
 	taste_description = "sweet strawberries and cream"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
@@ -805,7 +805,7 @@
 	description = "A banana milkshake. Stuff that clowns drink at their honkday parties."
 	color = "#f2d554"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 8 * REAGENTS_METABOLISM
+	nutriment_factor = 8
 	taste_description = "thick banana"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
@@ -816,7 +816,7 @@
 	color = "#886a3f"
 	quality = DRINK_VERYGOOD
 	boozepwr = 25
-	nutriment_factor = 7 * REAGENTS_METABOLISM
+	nutriment_factor = 7
 	taste_description = "Slight hint of malt within a creamy milkshake and happiness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
@@ -826,7 +826,7 @@
 	description = "A mix of pumpkin juice and coffee."
 	color = "#F4A460"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 3 * REAGENTS_METABOLISM
+	nutriment_factor = 3
 	taste_description = "creamy pumpkin"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/coffee = 4)
@@ -836,7 +836,7 @@
 	description = "Ice cream on top of a Dr. Gibb glass."
 	color = "#B22222"
 	quality = DRINK_NICE
-	nutriment_factor = 3 * REAGENTS_METABOLISM
+	nutriment_factor = 3
 	taste_description = "creamy cherry"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -890,7 +890,7 @@
 /datum/reagent/consumable/bogril
 	name = "Bogril"
 	description = "A savoury meat broth for drinking."
-	nutriment_factor = 4 * REAGENTS_METABOLISM
+	nutriment_factor = 4
 	color = "#403010" // rgb: 64, 48, 16
 	taste_description = "savoury broth"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -905,7 +905,7 @@
 /datum/reagent/consumable/hot_coco
 	name = "Hot Coco"
 	description = "Made with love! And coco beans."
-	nutriment_factor = 4 * REAGENTS_METABOLISM
+	nutriment_factor = 4
 	color = "#403010" // rgb: 64, 48, 16
 	taste_description = "creamy chocolate"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -922,7 +922,7 @@
 /datum/reagent/consumable/italian_coco
 	name = "Italian Hot Chocolate"
 	description = "Made with love! You can just imagine a happy Nonna from the smell."
-	nutriment_factor = 8 * REAGENTS_METABOLISM
+	nutriment_factor = 8
 	color = "#57372A"
 	quality = DRINK_VERYGOOD
 	taste_description = "thick creamy chocolate"

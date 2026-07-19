@@ -185,7 +185,7 @@
 
 		var/datum/record/crew/new_record = new (
 			age = human_occupant.age,
-			blood_type = "[human_occupant.get_blood_type() || "None"]",
+			blood_type = human_occupant.get_bloodtype()?.name || "UNKNOWN",
 			character_appearance = char_appearance,
 			dna_string = human_occupant.dna.unique_enzymes,
 			fingerprint = md5(human_occupant.dna.unique_identity),

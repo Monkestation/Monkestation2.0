@@ -17,7 +17,7 @@
 					/obj/item/reagent_containers/blood/lizard,
 					/obj/item/reagent_containers/blood/ethereal,
 					/obj/item/reagent_containers/blood/slime,
-					/obj/item/reagent_containers/blood/spider,
+					/obj/item/reagent_containers/blood/hemolymph,
 				)
 	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
