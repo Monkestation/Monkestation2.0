@@ -3,6 +3,8 @@
 #define CHAMBOMB_DETONATE_EXTRA_ALT 1
 #define CHAMBOMB_DETONATE_EXTRA_CTRL 2
 #define CHAMBOMB_DETONATE_EXTRA_PICKUP 3
+#define CHAMBOMB_DETONATE_EXTRA_MELEE 4
+#define CHAMBOMB_DETONATE_EXTRA_RANGED 5
 
 
 /obj/item/chameleonbomb
@@ -65,15 +67,31 @@
 	appearance = temp.appearance
 	name = target.name
 	desc = target.desc
+	desc_controls = target.desc_controls
 	w_class = target.w_class
 	inhand_icon_state = target.inhand_icon_state
 	lefthand_file = target.lefthand_file
 	righthand_file = target.righthand_file
+	user.update_held_items()
 	log_bomber(user, "set chameleon bomb disguise to", src, message_admins = FALSE) //dont message admins, its spammable and not actually blowing up yet
 
 /obj/item/chameleonbomb/attack_self(mob/user, modifiers)
 	. = ..()
 	mymango(user)
+
+/obj/item/chameleonbomb/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(disguiselock && extra_method == CHAMBOMB_DETONATE_EXTRA_MELEE)
+		mymango(user)
+
+
+/obj/item/chameleonbomb/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/chameleonbomb/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(disguiselock && extra_method == CHAMBOMB_DETONATE_EXTRA_RANGED)
+		mymango(user)
 
 /obj/item/chameleonbomb/pickup(mob/user)
 	. = ..()
@@ -108,6 +126,8 @@
 			"Alt-Click",
 			"Control-Click",
 			"On Pickup",
+			"On Usage (Melee)",
+			"On Usage (Ranged)",
 		)
 	)
 	switch(det_type)
@@ -123,6 +143,12 @@
 		if("On Pickup")
 			extra_method = CHAMBOMB_DETONATE_EXTRA_PICKUP
 			msg = "set to On Pickup"
+		if("On Usage (Melee)")
+			extra_method = CHAMBOMB_DETONATE_EXTRA_MELEE
+			msg = "set to On Melee Usage"
+		if("On Usage (Ranged)")
+			extra_method = CHAMBOMB_DETONATE_EXTRA_RANGED
+			msg = "set to On Ranged Usage"
 		else
 			msg = "not updated"
 	to_chat(user, span_notice("Extra Detonation method [msg]."))
