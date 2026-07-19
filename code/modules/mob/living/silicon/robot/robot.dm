@@ -51,6 +51,8 @@
 	update_icons()
 	. = ..()
 
+	LoadComponent(/datum/component/bloodysoles/bot)
+
 	//If this body is meant to be a borg controlled by the AI player
 	if(shell)
 		make_shell()

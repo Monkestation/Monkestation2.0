@@ -62,7 +62,7 @@
 /turf/open/floor/carpet,
 /area/deathmatch/fullbright)
 "aI" = (
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/carpet/grimey,
 /area/deathmatch/fullbright)
 "aR" = (
@@ -265,7 +265,7 @@
 /area/deathmatch/fullbright)
 "dN" = (
 /obj/effect/turf_decal/trimline/red/filled/corner,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/indestructible/dark,
 /area/deathmatch/fullbright)
 "ew" = (
@@ -1148,7 +1148,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/indestructible,
 /area/deathmatch/fullbright)
 "rN" = (
@@ -3307,7 +3307,7 @@
 /turf/open/floor/plating,
 /area/deathmatch/fullbright)
 "Wp" = (
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/indestructible,
 /area/deathmatch/fullbright)
 "Wv" = (
@@ -3424,7 +3424,7 @@
 /area/deathmatch/fullbright)
 "XL" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/indestructible,
 /area/deathmatch/fullbright)
 "XS" = (
@@ -3636,7 +3636,7 @@
 /turf/open/indestructible,
 /area/deathmatch/fullbright)
 "ZO" = (
-/obj/effect/decal/cleanable/robot_debris/down,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/down,
 /turf/open/floor/plating,
 /area/deathmatch/fullbright)
 

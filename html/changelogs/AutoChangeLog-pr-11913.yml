@@ -1,6 +1,0 @@
-author: "Barrel"
-delete-after: True
-changes:
-  - qol: "Darkspawns panopticon no longer needs power or an apc to use. You can now jump to allies and placed void eyes."
-  - refactor: "Refactored how cameras work based on tgstation."
-  - balance: "sets body camera range to 7, same as cameras"

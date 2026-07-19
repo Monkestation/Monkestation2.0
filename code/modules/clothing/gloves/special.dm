@@ -97,13 +97,13 @@
 
 /obj/item/clothing/gloves/latex
 	name = "latex gloves"
-	desc = "Cheap sterile gloves made from latex. Provides quicker carrying from a good grip."
+	desc = "Cheap sterile gloves made from latex. Provides quicker carrying from a good grip. Its sterile material makes it great for surgery."
 	icon_state = "latex"
 	inhand_icon_state = "latex_gloves"
 	greyscale_colors = null
 	siemens_coefficient = 0.3
 	armor_type = /datum/armor/latex_gloves
-	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_FINGERPRINT_PASSTHROUGH)
+	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_STERILE)
 	resistance_flags = NONE
 
 /datum/armor/latex_gloves
@@ -111,12 +111,12 @@
 
 /obj/item/clothing/gloves/latex/nitrile
 	name = "nitrile gloves"
-	desc = "Pricy sterile gloves that are thicker than latex. Excellent grip ensures very fast carrying of patients along with the faster use time of various chemical related items."
+	desc = "Pricy sterile gloves that are thicker than latex. Excellent grip ensures very fast carrying of patients along with the faster use time of various chemical related items. Its sterile material makes it great for surgery."
 	icon_state = "nitrile"
 	inhand_icon_state = "greyscale_gloves"
 	armor_type = /datum/armor/nitrile
 	greyscale_colors = "#99eeff"
-	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
+	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED, TRAIT_STERILE)
 
 /datum/armor/nitrile
 	bio = 100

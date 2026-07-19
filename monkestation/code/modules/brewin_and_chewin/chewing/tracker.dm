@@ -442,9 +442,7 @@
 	if(active_step.custom_food_buff)
 		custom_food_buff = active_step.custom_food_buff
 	if(active_step.finish_text)
-		var/datum/chewin_cooking/recipe_tracker/parent = parent_ref.resolve()
-		var/obj/item/resolved_ref = parent.holder_ref.resolve()
-		resolved_ref.say(active_step.finish_text) // I want runetext womp womp
+		used_obj.visible_message(span_notice("[active_step.finish_text]"))
 
 	if(!(active_step.flags & CHEWIN_IS_OPTIONAL))
 		current_step = active_step

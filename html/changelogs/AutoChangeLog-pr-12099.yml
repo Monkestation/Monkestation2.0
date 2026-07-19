@@ -1,6 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "AIs can double click on a tile to TP to that tile again."
-  - bugfix: "Fixes AI's custom portrait icons."
-  - bugfix: "Removed negative AI CPU speed/power values from the overclocking workstation computer. Also made the UI a little bit better."

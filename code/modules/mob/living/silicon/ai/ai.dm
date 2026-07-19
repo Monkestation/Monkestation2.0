@@ -1200,11 +1200,12 @@
 
 /mob/living/silicon/ai/forceMove(atom/destination)
 	var/turf/current_turf = get_turf(src)
+	var/turf/new_turf = get_turf(destination)
 	. = ..()
 	if(.)
 		end_multicam()
 		var/datum/ai_os/past_os = GLOB.ai_os["[current_turf.z]"]
-		if(past_os)
+		if(past_os && (current_turf.z != new_turf.z))
 			past_os.remove_ai(src)
 
 /mob/living/silicon/ai/up()

@@ -62,6 +62,7 @@
 	max_water = 30
 	sprite_name = "miniFE"
 	dog_fashion = null
+	tank_holder_icon_state = "holder_extinguisher_mini"
 
 /obj/item/extinguisher/mini/empty
 	starting_water = FALSE
@@ -247,7 +248,7 @@
 		var/datum/reagents/water_reagents = new /datum/reagents(5)
 		water.reagents = water_reagents
 		water_reagents.my_atom = water
-		reagents.trans_to(water, 1, transfered_by = user)
+		reagents.trans_to(water, 1, transferred_by = user)
 
 	//Make em move dat ass, hun
 	move_particles(water_particles)

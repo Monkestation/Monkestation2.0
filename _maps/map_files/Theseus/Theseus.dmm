@@ -730,7 +730,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /turf/open/floor/engine,
 /area/space/nearstation)
 "akZ" = (
@@ -10859,7 +10859,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil/streak,
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/bot,
 /obj/structure/disposalpipe/trunk{
@@ -27354,7 +27354,7 @@
 	id = "cargosort";
 	name = "disposal conveyor switch"
 	},
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "idl" = (
@@ -29386,8 +29386,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/xenoblood,
-/obj/effect/decal/cleanable/xenoblood/xgibs/torso,
+/obj/effect/decal/cleanable/blood/xeno,
+/obj/effect/decal/cleanable/blood/gibs/xeno/torso,
 /obj/effect/decal/remains/xeno,
 /mob/living/basic/clown/mutant,
 /turf/open/floor/engine,
@@ -30228,7 +30228,7 @@
 "iTv" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -35175,7 +35175,7 @@
 "kpO" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/field/generator,
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil/streak,
 /turf/open/floor/plating,
 /area/station/engineering/storage)
 "kqa" = (
@@ -39709,7 +39709,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/newscaster/directional/west,
 /obj/machinery/mechpad,
 /turf/open/floor/circuit,
@@ -43182,7 +43182,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "mBW" = (
@@ -44133,7 +44133,7 @@
 "mRz" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/portable_atmospherics/canister/plasma,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -48310,7 +48310,7 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Ook Special Room"
 	},
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/lesser)
 "oeh" = (
@@ -54188,7 +54188,7 @@
 "pSY" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/lattice/catwalk,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/iron/smooth{
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -58588,7 +58588,7 @@
 "rcw" = (
 /obj/effect/landmark/start/roboticist,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil/streak,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
@@ -59135,7 +59135,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "rlb" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/spawner/random/trash/graffiti{
 	pixel_y = -32;
 	spawn_loot_chance = 50
@@ -68269,7 +68269,7 @@
 /turf/open/floor/plating,
 /area/station/security/brig/entrance)
 "tNN" = (
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/lesser)
 "tNO" = (
@@ -80151,7 +80151,7 @@
 /turf/open/floor/wood/large,
 /area/station/service/library/private)
 "xio" = (
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "xiG" = (
@@ -80454,7 +80454,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "xmz" = (
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil/streak,
 /obj/structure/cable,
 /obj/machinery/camera/autoname/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -80805,7 +80805,7 @@
 /area/station/science/robotics/lab)
 "xrM" = (
 /obj/effect/decal/cleanable/glass,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/lesser)
 "xrQ" = (
@@ -81465,7 +81465,7 @@
 /turf/open/floor/iron,
 /area/station/security/processing)
 "xAL" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/larva/body,
+/obj/effect/decal/cleanable/blood/gibs/xeno/larva/body,
 /turf/open/floor/engine,
 /area/station/science/xenobiology/cell)
 "xAT" = (
@@ -83422,7 +83422,7 @@
 /obj/effect/turf_decal/tile/neutral/half{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/light/broken/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
