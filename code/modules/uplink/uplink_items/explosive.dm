@@ -130,7 +130,7 @@
 /datum/uplink_item/explosives/chameleonbomb
 	name = "Chameleon Explosive"
 	desc = "A stick of C4 with a rudimentary chameleon projector attached to it. Scan an object with it, activate the disguise lock, then give it to your target to use in hand to detonate a small charge on them."
-	cost = 2
+	cost = 4
 	item = /obj/item/chameleonbomb
 
 /datum/uplink_item/explosives/door_charge
