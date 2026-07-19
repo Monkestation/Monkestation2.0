@@ -252,7 +252,7 @@
 
 
 /obj/structure/closet/supplypod/rbmk_reactor_lid/update_overlays()
-	. = ..()
+	return list()
 
 
 /obj/structure/closet/supplypod/rbmk_reactor_lid/preOpen()
