@@ -21,6 +21,9 @@
 	var/explosive_size = list(0,0,3)
 	///has at any point been disguised, to hide the examine
 	var/disguised = FALSE
+	///the copied result of examining the disguise target.
+	var/fake_examine
+	var/fake_examine_more
 	///locked from being redisguised, and enables extra methods to detonate the bomb.
 	var/disguiselock = FALSE
 	///Extra method to detonate the bomb with, once disguise lock enabled.
@@ -34,6 +37,12 @@
 		. += span_notice("Alt-clicking the bomb when disguised will lock the disguise from being changed.")
 		. += span_notice("Control-clicking the bomb will set an extra detonation method to explode the bomb once disguise locked.")
 		. += span_danger("Attempting to use the bomb inhand will explode it immediately!")
+		return
+	return fake_examine
+
+/obj/item/chameleonbomb/examine_more(mob/user)
+	return fake_examine_more || ..()
+
 
 /obj/item/chameleonbomb/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
@@ -66,8 +75,8 @@
 	SET_PLANE_EXPLICIT(temp, src.plane, src)
 	appearance = temp.appearance
 	name = target.name
-	desc = target.desc
-	desc_controls = target.desc_controls
+	fake_examine = target.examine(user)
+	fake_examine_more = target.examine_more(user)
 	w_class = target.w_class
 	inhand_icon_state = target.inhand_icon_state
 	lefthand_file = target.lefthand_file
