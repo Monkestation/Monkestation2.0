@@ -1,0 +1,5 @@
+author: "PotatoTomahto"
+delete-after: True
+changes:
+  - qol: "ports tg acclimator changes"
+  - balance: "showers apply 20% of reagents through vapor, the rest touch"
