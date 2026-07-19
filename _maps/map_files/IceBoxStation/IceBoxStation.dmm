@@ -55772,6 +55772,11 @@
 /obj/machinery/oven/range,
 /obj/effect/turf_decal/siding/white/corner,
 /obj/machinery/light/directional/north,
+/obj/machinery/button/door/directional/north{
+	id = "kitchencounter";
+	name = "Counter Shutters Control";
+	req_access = list("kitchen")
+	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen)
 "qZL" = (
@@ -75260,7 +75265,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen)
 "wZZ" = (
-/obj/structure/tank_holder/oxygen/red,
+/obj/structure/tank_holder/oxygen/yellow,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "xad" = (

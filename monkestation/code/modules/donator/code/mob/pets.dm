@@ -508,6 +508,7 @@
 /mob/living/basic/mothroach/vanilla
 	name = "Vanilla"
 	desc = "A cute mothroach wearing a medical beret."
+	gender = FEMALE
 	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
 	icon_state = "vanilla_mothroach"
 	icon_living = "vanilla_mothroach"

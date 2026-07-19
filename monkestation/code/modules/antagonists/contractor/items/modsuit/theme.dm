@@ -75,7 +75,7 @@
 	laser = 35
 	energy = 35
 	bomb = 30
-	bio = 40
+	bio = 100
 	fire = 80
 	acid = 90
 	wound = 30

@@ -103,10 +103,10 @@
 		else if ((methods & VAPOR) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
 			if (!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_LUNGS))
 				continue
-			exposed_mob.infect_disease(strain, FALSE, "(Exposure to infected blood through vapor)")
+			exposed_mob.try_contact_infect(strain, note = "(Exposure to infected blood through vapor)")
 
 		else if ((methods & TOUCH) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
-			exposed_mob.infect_disease(strain, FALSE, "(Exposure to infected blood through touch)")
+			exposed_mob.try_contact_infect(strain, note = "(Exposure to infected blood through touch)")
 
 	/// Have to inject, inhale or ingest it. No curefoam/cheap curesprays
 	if (source.data["resistances"] && (methods & (INGEST|INJECT)))

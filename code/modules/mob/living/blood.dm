@@ -275,6 +275,9 @@
 		for(var/datum/disease/disease as anything in diseases)
 			blood_data["viruses"] += disease.Copy()
 
+		if(immune_system)
+			blood_data["immunity"] = immune_system.GetImmunity()
+
 		if(LAZYLEN(disease_resistances))
 			blood_data["resistances"] = disease_resistances.Copy()
 
