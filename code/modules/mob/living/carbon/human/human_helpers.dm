@@ -36,8 +36,15 @@
 
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a separate proc as it'll be useful elsewhere
 /mob/living/carbon/human/get_visible_name(add_id_name = TRUE)
-	var/face_name = get_face_name("")
-	var/id_name = get_id_name("")
+	var/list/identity = list(null, null, null)
+	SEND_SIGNAL(src, COMSIG_HUMAN_GET_VISIBLE_NAME, identity)
+	var/signal_face = LAZYACCESS(identity, VISIBLE_NAME_FACE)
+	var/signal_id = LAZYACCESS(identity, VISIBLE_NAME_ID)
+	if(LAZYACCESS(identity, VISIBLE_NAME_FORCED))
+		return signal_face
+
+	var/face_name = !isnull(signal_face) ? signal_face : get_face_name("")
+	var/id_name = !isnull(signal_id) ? signal_id : get_id_name("")
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		return "Unknown"
 	if(name_override)
@@ -77,6 +84,10 @@
 	var/obj/item/card/cardboard/cardboard_id = wear_id
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		. = if_no_id //You get NOTHING, no id name, good day sir
+		var/list/identity = list(null, null, null)
+		SEND_SIGNAL(src, COMSIG_HUMAN_GET_FORCED_NAME, identity)
+		if(identity[VISIBLE_NAME_FORCED])
+			return identity[VISIBLE_NAME_FACE]
 	if(istype(wallet))
 		id = wallet.front_id
 	if(istype(cardboard_id))
