@@ -210,3 +210,4 @@
 	desc = "Adorable plushie of Vanilla!"
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "vanilla"
+	gender = FEMALE

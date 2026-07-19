@@ -28,3 +28,12 @@ GLOBAL_LIST_INIT(plumbing_layer_names, list(
 
 /// Name of omni color
 #define DUCT_COLOR_OMNI "omni"
+
+///Plumbing Acclimator is filling
+#define AC_FILLING 0
+///Plumbing Acclimator is heating
+#define AC_HEATING 1
+///Plumbing Acclimator is cooling
+#define AC_COOLING 2
+///Plumbing Acclimator is emptying
+#define AC_EMPTYING 3

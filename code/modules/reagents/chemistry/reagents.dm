@@ -145,14 +145,22 @@
 	. |= SEND_SIGNAL(exposed_atom, COMSIG_ATOM_EXPOSE_REAGENT, src, reac_volume)
 
 /// Applies this reagent to a [/mob/living]
-/datum/reagent/proc/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+/datum/reagent/proc/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	SHOULD_CALL_PARENT(TRUE)
 
-	. = SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_MOB, exposed_mob, methods, reac_volume, show_message, touch_protection)
+	if(SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_MOB, exposed_mob, methods, reac_volume, show_message, touch_protection) & COMPONENT_NO_EXPOSE_REAGENTS)
+		return
+
+	if(isnull(exposed_mob.reagents)) // lots of simple mobs do not have a reagents holder
+		return
+
+	if(exposed_mob.reagent_expose(src, methods, reac_volume, show_message, touch_protection) & COMPONENT_NO_EXPOSE_REAGENTS)
+		return
+
 	if((methods & penetrates_skin) && exposed_mob.reagents) //smoke, foam, spray
 		var/amount = round(reac_volume*clamp((1 - touch_protection), 0, 1), 0.1)
 		if(amount >= 0.5)
-			exposed_mob.reagents.add_reagent(type, amount, added_purity = purity)
+			exposed_mob.reagents.add_reagent(type, amount, data, holder.chem_temp, purity)
 
 /// Applies this reagent to an [/obj]
 /datum/reagent/proc/expose_obj(obj/exposed_obj, reac_volume)
@@ -173,12 +181,40 @@
 /datum/reagent/proc/burn(datum/reagents/holder)
 	return
 
-/// Called from [/datum/reagents/proc/metabolize]
-/datum/reagent/proc/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
-	current_cycle++
+/**
+ * Ticks on mob Life() for as long as the reagent remains in the mob's reagents.
+ *
+ * Usage: Parent should be called first using . = ..()
+ *
+ * Exceptions: If the holder var needs to be accessed, call the parent afterward that as it can become null if the reagent is fully removed.
+ *
+ * Returns: UPDATE_MOB_HEALTH only if you need to update the health of a mob (this is only needed when damage is dealt to the mob)
+ *
+ * Arguments
+ * * mob/living/carbon/affected_mob - the mob which the reagent currently is inside of
+ * * seconds_per_tick - the time in server seconds between proc calls (when performing normally it will be 2)
+ * * times_fired - the number of times the owner's Life() tick has been called aka The number of times SSmobs has fired
+ *
+ */
+/datum/reagent/proc/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	SHOULD_CALL_PARENT(TRUE)
+
+///Metabolizes a portion of the reagent after on_mob_life() is called
+/datum/reagent/proc/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(length(reagent_removal_skip_list))
 		return
-	holder.remove_reagent(type, metabolization_rate * metabolizer.metabolism_efficiency * seconds_per_tick) //By default it slowly disappears.
+
+	if(isnull(holder))
+		return
+
+	var/metabolizing_out = metabolization_rate * seconds_per_tick
+	if(!(chemical_flags & REAGENT_UNAFFECTED_BY_METABOLISM))
+		if(chemical_flags & REAGENT_REVERSE_METABOLISM)
+			metabolizing_out /= affected_mob.metabolism_efficiency
+		else
+			metabolizing_out *= affected_mob.metabolism_efficiency
+
+	holder.remove_reagent(type, metabolizing_out)
 
 /// Called in burns.dm *if* the reagent has the REAGENT_AFFECTS_WOUNDS process flag
 /datum/reagent/proc/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
@@ -221,14 +257,12 @@ Primarily used in reagents/reaction_agents
 	SHOULD_CALL_PARENT(TRUE)
 	REMOVE_TRAITS_IN(L, "metabolized:[type]")
 
-/// Called when a reagent is inside of a mob when they are dead
-/datum/reagent/proc/on_mob_dead(mob/living/carbon/C, seconds_per_tick)
-	if(!(chemical_flags & REAGENT_DEAD_PROCESS))
-		return
-	current_cycle++
-	if(length(reagent_removal_skip_list))
-		return
-	holder.remove_reagent(type, metabolization_rate * C.metabolism_efficiency * seconds_per_tick)
+/**
+ * Called when a reagent is inside of a mob when they are dead if the reagent has the REAGENT_DEAD_PROCESS flag
+ * Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
+ */
+/datum/reagent/proc/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
+	SHOULD_CALL_PARENT(TRUE)
 
 /// Called by [/datum/reagents/proc/conditional_update_move]
 /datum/reagent/proc/on_move(mob/M)
@@ -240,8 +274,9 @@ Primarily used in reagents/reaction_agents
 		src.data = data
 
 /// Called when two reagents of the same are mixing.
-/datum/reagent/proc/on_merge(data, amount)
-	return
+/datum/reagent/proc/on_merge(list/mix_data, amount)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_REAGENT_ON_MERGE, mix_data, amount)
 
 /// Called by [/datum/reagents/proc/conditional_update]
 /datum/reagent/proc/on_update(atom/A)

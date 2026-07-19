@@ -45,5 +45,5 @@
 	for(var/reagent in reagent_datums)
 		our_artifact.holder.reagents.add_reagent(reagent, reagent_amount / reagent_datums.len)
 	our_artifact.holder.visible_message(span_danger("[our_artifact.holder] pricks [user] with its needle!"), span_userdanger("OW! You are pricked by [our_artifact.holder]!"))
-	our_artifact.holder.reagents.trans_to(user, our_artifact.holder.reagents.total_volume, transfered_by = our_artifact.holder, methods = INJECT)
+	our_artifact.holder.reagents.trans_to(user, our_artifact.holder.reagents.total_volume, transferred_by = our_artifact.holder, methods = INJECT)
 	COOLDOWN_START(src,activation_cooldown,cooldown_time)

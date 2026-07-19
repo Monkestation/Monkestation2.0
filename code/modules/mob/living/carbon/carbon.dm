@@ -455,7 +455,7 @@
 
 	var/turf/floor = get_turf(src)
 	var/obj/effect/decal/cleanable/vomit/spew = new(floor, get_static_viruses())
-	bite.reagents?.trans_to(spew, amount, transfered_by = src)
+	bite.reagents?.trans_to(spew, amount, transferred_by = src)
 
 /mob/living/carbon/proc/spew_organ(power = 5, amt = 1)
 	for(var/i in 1 to amt)
@@ -1364,6 +1364,29 @@
 		return
 	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
 
+/// Goes through the organs and bodyparts of the mob and updates their blood_dna_info, in case their blood type has changed (via set_species() or otherwise)
+/mob/living/carbon/proc/update_cached_blood_dna_info()
+	var/list/blood_dna_info = get_blood_dna_list()
+	for(var/obj/item/organ/organ in organs)
+		organ.blood_dna_info = blood_dna_info
+	for(var/obj/item/bodypart/bodypart in bodyparts)
+		bodypart.blood_dna_info = blood_dna_info
+
+/// Setter for changing a mob's blood type
+/mob/living/carbon/proc/set_blood_type(datum/blood_type/new_blood_type, update_cached_blood_dna_info = TRUE)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(isnull(dna))
+		return
+
+	if(get_bloodtype() == new_blood_type) // already has this blood type, we don't need to do anything.
+		return
+
+	dna.blood_type = new_blood_type
+	if(update_cached_blood_dna_info)
+		update_cached_blood_dna_info()
+	SEND_SIGNAL(src, COMSIG_CARBON_CHANGED_BLOOD_TYPE, new_blood_type, update_cached_blood_dna_info)
+
 /mob/living/carbon/proc/disarm_precollide(datum/source, mob/living/carbon/shover, mob/living/carbon/target)
 	SIGNAL_HANDLER
 	if(can_be_shoved_into)
@@ -1386,7 +1409,7 @@
 	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
 	if(isnull(head))
 		return ..()
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
+	if(!can_bleed())
 		to_chat(src, span_notice("You get a headache."))
 		return
 	head.adjustBleedStacks(5)
@@ -1397,6 +1420,10 @@
 		return hit_zone
 	// When a limb is missing the damage is actually passed to the chest
 	return BODY_ZONE_CHEST
+
+/mob/living/carbon/get_bloodtype()
+	RETURN_TYPE(/datum/blood_type)
+	return dna?.blood_type
 
 /mob/living/carbon/death(gibbed)
 	if (stat == DEAD)

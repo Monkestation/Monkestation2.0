@@ -30,6 +30,53 @@
 /// Temperature at which blood loss and regen stops. [/mob/living/carbon/human/proc/handle_blood]
 #define BLOOD_STOP_TEMP CELCIUS_TO_KELVIN(-48.15 CELCIUS)
 
+// Bloodtype defines
+#define BLOOD_TYPE_A_MINUS "A-"
+#define BLOOD_TYPE_A_PLUS "A+"
+#define BLOOD_TYPE_B_MINUS "B-"
+#define BLOOD_TYPE_B_PLUS "B+"
+#define BLOOD_TYPE_AB_MINUS "AB-"
+#define BLOOD_TYPE_AB_PLUS "AB+"
+#define BLOOD_TYPE_O_MINUS "O-"
+#define BLOOD_TYPE_O_PLUS "O+"
+#define BLOOD_TYPE_UNIVERSAL "U"
+#define BLOOD_TYPE_BLOODSUCKER "BS"
+#define BLOOD_TYPE_LIZARD "L"
+#define BLOOD_TYPE_VAMPIRE "V"
+#define BLOOD_TYPE_ANIMAL "Y-"
+#define BLOOD_TYPE_ETHEREAL "LE"
+#define BLOOD_TYPE_TOX "TOX"
+#define BLOOD_TYPE_OIL "Oil"
+#define BLOOD_TYPE_MEAT "MT-"
+#define BLOOD_TYPE_CLOWN "C"
+#define BLOOD_TYPE_XENO "X*"
+#define BLOOD_TYPE_H2O "H2O"
+#define BLOOD_TYPE_SNAIL "S"
+#define BLOOD_TYPE_HEMOLYMPH "H"
+
+// Blood exposure behavior flag defines
+/// Add our DNA to turfs/mobs/items, does not correlate with adding decals/overlays
+/// mob/turf/item flags will add DNA when triggered even if this flag is false
+#define BLOOD_ADD_DNA (1<<0)
+/// Cover the entire mob in *visible* blood
+#define BLOOD_COVER_MOBS (1<<1)
+/// Create blood splashes and trails on floors, does not affect gibs creation
+#define BLOOD_COVER_TURFS (1<<2)
+/// Cover items in ourselves
+#define BLOOD_COVER_ITEMS (1<<3)
+/// Usually you want all COVER flags together or none at all
+#define BLOOD_COVER_ALL (BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_ITEMS)
+/// Transfer blood immunities and viruses to exposed mobs
+#define BLOOD_TRANSFER_VIRAL_DATA (1<<4)
+
+// Bleed check results
+/// We cannot bleed (here, or in general) at all
+#define BLEED_NONE 0
+/// We cannot make a splatter, but we can add our DNA
+#define BLEED_ADD_DNA 1
+/// We can bleed just fine
+#define BLEED_SPLATTER 2
+
 //Sizes of mobs, used by mob/living/var/mob_size
 #define MOB_SIZE_TINY 0
 #define MOB_SIZE_SMALL 1
@@ -54,6 +101,8 @@
 #define MOB_REPTILE (1 << 8)
 #define MOB_SPIRIT (1 << 9)
 #define MOB_PLANT (1 << 10)
+///The mob is a goopy creature, probably coming from xenobiology.
+#define MOB_SLIME (1 << 11)
 ///The mob is a mining-related mob. It's the plasma, you see. Gets in ya bones.
 #define MOB_MINING (1 << 13)
 ///The mob is a crustacean. Like crabs. Or lobsters.

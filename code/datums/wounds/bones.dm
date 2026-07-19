@@ -231,7 +231,7 @@
 				)
 	victim.bleed(blood_bled, TRUE)
 	if(blood_bled >= 14)
-		victim.do_splatter_effect(attack_direction)
+		victim.create_splatter(victim.dir)
 		victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 		victim.blood_particles(amount = 1 * round(blood_bled / 14, 1))
 

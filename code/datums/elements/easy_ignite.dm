@@ -1,36 +1,36 @@
+/// Creates a hotspot and deletes the owner atom upon being exposed to high temperatures, by Melbert
 /datum/element/easy_ignite
 	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY|ELEMENT_BESPOKE // because turfs
 	argument_hash_start_idx = 2
 	/// Temp required for ignition
-	var/required_temp = 450
+	var/required_temp = 480
 
-/datum/element/easy_ignite/Attach(datum/target, required_temp = 450)
+/datum/element/easy_ignite/Attach(datum/target, required_temp = 480)
 	. = ..()
 	if(!isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE
 
 	src.required_temp = required_temp
-	RegisterSignal(target, COMSIG_ATOM_ATTACKBY, PROC_REF(attackby_react), override = TRUE)
-	RegisterSignal(target, COMSIG_ATOM_FIRE_ACT, PROC_REF(flame_react), override = TRUE)
-	RegisterSignal(target, COMSIG_ATOM_BULLET_ACT, PROC_REF(projectile_react), override = TRUE)
-	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), PROC_REF(welder_react), override = TRUE)
+	RegisterSignal(target, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(attackby_react))
+	RegisterSignal(target, COMSIG_ATOM_FIRE_ACT, PROC_REF(flame_react))
+	RegisterSignal(target, COMSIG_ATOM_BULLET_ACT, PROC_REF(projectile_react))
+	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), PROC_REF(welder_react))
 	if(isturf(target))
-		RegisterSignal(target, COMSIG_TURF_EXPOSE, PROC_REF(hotspots_react), override = TRUE)
+		RegisterSignal(target, COMSIG_TURF_EXPOSE, PROC_REF(hotspots_react))
 
 /datum/element/easy_ignite/Detach(datum/source, ...)
 	. = ..()
-	UnregisterSignal(source, list(
-		COMSIG_ATOM_ATTACKBY,
-		COMSIG_ATOM_FIRE_ACT,
-		COMSIG_ATOM_BULLET_ACT,
-		COMSIG_ATOM_TOOL_ACT(TOOL_WELDER),
-		COMSIG_TURF_EXPOSE
-	))
+	UnregisterSignal(source, COMSIG_ATOM_ITEM_INTERACTION)
+	UnregisterSignal(source, COMSIG_ATOM_FIRE_ACT)
+	UnregisterSignal(source, COMSIG_ATOM_BULLET_ACT)
+	UnregisterSignal(source, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER))
+	if(isturf(source))
+		UnregisterSignal(source, COMSIG_TURF_EXPOSE)
 
 /datum/element/easy_ignite/proc/ignite(atom/igniting, mob/user)
 	var/delete_after = TRUE
 
-	igniting.visible_message(span_warning("[igniting] ignite[igniting.p_s()]!"), span_warning("You ignite into flames!"))
+	igniting.visible_message(span_warning("[igniting] catch[igniting.p_es()] fire!"), span_warning("You ignite into flames!"))
 	new /obj/effect/hotspot(isturf(igniting) ? igniting : igniting.loc)
 
 	if(isturf(igniting))
@@ -62,12 +62,17 @@
 	if(exposed_temperature > required_temp)
 		ignite(source)
 
-/datum/element/easy_ignite/proc/attackby_react(obj/item/source, obj/item/tool, mob/user, modifiers)
+/datum/element/easy_ignite/proc/attackby_react(obj/item/source, mob/user, obj/item/tool, modifiers)
 	SIGNAL_HANDLER
 
-	if(tool.get_temperature() && item_ignition(source, tool, user))
-		ignite(source, user)
-		return FALSE
+	if(!tool.get_temperature())
+		return NONE
+
+	if (!item_ignition(source, tool, user))
+		return ITEM_INTERACT_BLOCKING
+
+	ignite(source, user)
+	return ITEM_INTERACT_SUCCESS
 
 /datum/element/easy_ignite/proc/projectile_react(obj/item/source, obj/projectile/shot)
 	SIGNAL_HANDLER
@@ -78,7 +83,14 @@
 /datum/element/easy_ignite/proc/welder_react(obj/item/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
 
-	item_ignition(source, tool, user)
+	if(!tool.get_temperature())
+		return NONE
+
+	if (!item_ignition(source, tool, user))
+		return ITEM_INTERACT_BLOCKING
+
+	ignite(source, user)
+	return ITEM_INTERACT_SUCCESS
 
 /datum/element/easy_ignite/proc/item_ignition(obj/item/source, obj/item/tool, mob/user)
 	if(tool.get_temperature() >= required_temp)
