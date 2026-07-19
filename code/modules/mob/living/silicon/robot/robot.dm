@@ -1008,8 +1008,10 @@
 
 /// Applies a model to the cyborg.
 /mob/living/silicon/robot/proc/apply_model(obj/item/robot_model/new_robot_model, should_notify_ai = TRUE)
-	// Upgrades don't work if there is a new model now.
+	// Upgrades generally don't work if there is a new model now.
 	for(var/obj/item/borg/upgrade/upgrade_item in upgrades)
+		if(istype(upgrade_item, /obj/item/borg/upgrade/ai))
+			continue
 		upgrade_item.forceMove(get_turf(src))
 
 	REMOVE_TRAITS_IN(src, CYBORG_MODEL_TRAIT)
@@ -1028,6 +1030,11 @@
 	diag_hud_set_status()
 	diag_hud_set_borgcell()
 	diag_hud_set_aishell()
+
+	var/obj/item/borg/upgrade/ai/boris_upgrade = locate() in upgrades
+	if(!has_model() && boris_upgrade)
+		boris_upgrade.forceMove(get_turf(src))
+		revert_shell()
 
 	log_silicon("CYBORG: [key_name(src)] has transformed into the [model.name] model.")
 	logevent("Chassis model has been set to [name].")
