@@ -46,9 +46,11 @@
 	var/max_power_output = 5000000
 	var/max_rpm = 120000
 
-	var/generator_damage_temperature = 4500
-	var/generator_damage_per_1000k = 2
-	var/max_generator_damage_per_tick = 8
+	/// Temperature where sustained overdrive begins wearing down the generator.
+	var/generator_damage_temperature = 10000
+	var/generator_damage_per_1000k = 0.25
+	var/max_generator_damage_per_tick = 2
+	var/generator_integrity_recovery_per_tick = 1
 
 	var/sound_volume = 24
 	var/sound_min_range = 5
@@ -243,6 +245,7 @@
 		return
 
 	if(gas_temperature <= generator_damage_temperature)
+		generator_integrity = min(generator_integrity + generator_integrity_recovery_per_tick, max_generator_integrity)
 		return
 
 	var/temperature_over_limit = gas_temperature - generator_damage_temperature

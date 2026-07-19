@@ -238,14 +238,14 @@
 /datum/looping_sound/rbmk_turbine
 	start_sound = 'sound/rbmk/turbine_start.ogg'
 	start_length = 16 SECONDS
-	start_volume = 12
+	start_volume = 6
 
-	mid_sounds = list('sound/rbmk/turbine_mid.ogg')
+	mid_sounds = 'sound/rbmk/turbine_mid.ogg'
 	mid_length = 12 SECONDS
-	volume = 24
+	volume = 18
 
 	end_sound = 'sound/rbmk/turbine_end.ogg'
-	end_volume = 12
+	end_volume = 6
 	// Legacy fallback if dynamic attenuation is disabled.
 	extra_range = 8
 
