@@ -21,7 +21,7 @@ export const FakeToolbarButton = (props: FakeToolbarButtonProps) => {
       lineHeight="28px"
       textColor={currentScreenMode === ownerScreenMode ? 'black' : undefined}
       backgroundColor={
-        currentScreenMode === ownerScreenMode ? 'white' : undefined
+        currentScreenMode === ownerScreenMode ? 'average' : undefined
       }
       onClick={() => {
         setScreenmode(ownerScreenMode);
