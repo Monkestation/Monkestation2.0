@@ -74535,7 +74535,6 @@
 	name = "Apothecary"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/pharmacy,
-/obj/effect/landmark/navigate_destination/med,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/pharmacy)
 "xQU" = (

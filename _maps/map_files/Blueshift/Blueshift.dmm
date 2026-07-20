@@ -88834,6 +88834,14 @@
 /obj/structure/bookcase/random/fiction,
 /turf/open/floor/wood,
 /area/station/medical/aslyum)
+"rgy" = (
+/obj/effect/spawner/structure/window,
+/obj/structure/curtain{
+	req_access = list("medical")
+	},
+/obj/effect/landmark/navigate_destination,
+/turf/open/floor/plating,
+/area/station/medical/medbay/lobby)
 "rgD" = (
 /turf/closed/wall/r_wall,
 /area/station/common/laser_tag)
@@ -91920,7 +91928,7 @@
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/any/medical/general,
-/obj/effect/landmark/navigate_destination/med,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "rJF" = (
@@ -226211,7 +226219,7 @@ ipY
 fSN
 cfl
 cfl
-lns
+rgy
 uHL
 tck
 jkO
