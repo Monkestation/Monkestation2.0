@@ -11968,6 +11968,7 @@
 "coz" = (
 /obj/structure/window/spawner/directional/south,
 /obj/machinery/light/directional/east,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "coD" = (
@@ -28607,7 +28608,6 @@
 /area/station/hallway/secondary/entry)
 "fwb" = (
 /obj/machinery/door/firedoor,
-/obj/structure/sign/departments/exam_room/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "fwc" = (
@@ -29332,6 +29332,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/structure/sign/departments/exam_room/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "fEr" = (
@@ -31141,7 +31142,6 @@
 /area/station/science/ordnance/storage)
 "fXh" = (
 /obj/structure/cable,
-/obj/effect/landmark/start/medical_doctor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/blue/filled/warning{
@@ -41253,6 +41253,14 @@
 	},
 /turf/open/floor/glass/reinforced/airless,
 /area/space/nearstation)
+"hWc" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/sign/departments/exam_room/directional/east,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/central)
 "hWj" = (
 /turf/open/floor/plating,
 /area/station/security/prison/mess)
@@ -45784,7 +45792,6 @@
 "iRZ" = (
 /obj/machinery/iv_drip,
 /obj/machinery/defibrillator_mount/directional/north,
-/obj/item/radio/intercom/directional/east,
 /obj/structure/bed/medical/anchored{
 	dir = 4
 	},
@@ -91910,9 +91917,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/landmark/navigate_destination,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/any/medical/general,
+/obj/effect/landmark/navigate_destination/med,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "rJF" = (
@@ -118581,15 +118588,15 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
 /obj/machinery/camera/directional/east{
 	c_tag = "Medbay - Central Port";
 	name = "medbay camera";
 	network = list("ss13","medbay")
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "wJj" = (
@@ -228528,7 +228535,7 @@ rHK
 ePj
 wJe
 alq
-alq
+hWc
 cxb
 gXR
 omQ
@@ -228777,7 +228784,7 @@ tca
 anZ
 gkz
 atX
-tRa
+atX
 tRa
 atX
 hEA
@@ -228785,7 +228792,7 @@ kFt
 fwb
 atX
 tRa
-tRa
+atX
 atX
 oiF
 omQ
