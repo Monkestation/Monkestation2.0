@@ -687,3 +687,34 @@
 	SSticker.start_immediately = TRUE
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		to_chat(usr, span_admin("The server is still setting up, but the round will be started as soon as possible."))
+
+/atom/movable/screen/lobby/button/tutorial
+	name = "Spawn in Tutorial Chamber."
+	screen_loc = "BOTTOM, RIGHT"
+	icon = 'icons/hud/lobby/tutorial.dmi'
+	icon_state = "tutorial_disabled"
+	base_icon_state = "tutorial"
+	enabled = FALSE
+
+/atom/movable/screen/lobby/button/tutorial/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+	if(!usr.client || usr.client.interviewee)
+		return
+
+	var/mob/dead/new_player/new_player = hud.mymob
+	new_player.enter_tutorial()
+
+/atom/movable/screen/lobby/button/tutorial/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	if(SSticker.current_state > GAME_STATE_STARTUP)
+		set_button_status(TRUE)
+	else
+		set_button_status(FALSE)
+		RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(enable_tutorial))
+
+/atom/movable/screen/lobby/button/tutorial/proc/enable_tutorial()
+	SIGNAL_HANDLER
+	set_button_status(TRUE)
+	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME)

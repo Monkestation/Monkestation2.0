@@ -1962,8 +1962,8 @@
 "ul" = (
 /obj/effect/turf_decal/trimline/dark_green/filled/line,
 /obj/structure/reagent_dispensers/wall/plasmavirusfoodweak/directional/south,
-/obj/machinery/disease2/isolator,
 /obj/machinery/light/directional/south,
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/iron,
 /area/virtual_domain/powered_lighting)
 "us" = (
@@ -2210,7 +2210,6 @@
 "wB" = (
 /obj/effect/turf_decal/trimline/dark_green/filled/line,
 /obj/structure/reagent_dispensers/wall/mutagenvirusfood/directional/south,
-/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/iron,
 /area/virtual_domain/powered_lighting)
 "wE" = (
@@ -4627,6 +4626,11 @@
 	pixel_y = 3
 	},
 /obj/item/device/antibody_scanner,
+/obj/item/clothing/glasses/pathology,
+/obj/item/clothing/glasses/pathology{
+	pixel_x = -5;
+	pixel_y = -4
+	},
 /turf/open/floor/iron/white,
 /area/virtual_domain/powered_lighting)
 "So" = (

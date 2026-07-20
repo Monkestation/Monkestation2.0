@@ -170,6 +170,10 @@
 	bitrunning_id = "tutorial_coop"
 	bitrunning_network = BITRUNNER_DOMAIN_TUTORIAL
 
-/obj/machinery/quantum_server/tutorial_solo
-	bitrunning_id = "tutorial_solo"
+/obj/machinery/quantum_server/tutorial_solo_1
+	bitrunning_id = "tutorial_solo_1"
+	bitrunning_network = BITRUNNER_DOMAIN_TUTORIAL
+
+/obj/machinery/quantum_server/tutorial_solo_2
+	bitrunning_id = "tutorial_solo_2"
 	bitrunning_network = BITRUNNER_DOMAIN_TUTORIAL

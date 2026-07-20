@@ -3728,6 +3728,8 @@
 #include "code\modules\bitrunning\tutorial_objects\input_closets.dm"
 #include "code\modules\bitrunning\tutorial_objects\mentor_assistance.dm"
 #include "code\modules\bitrunning\tutorial_objects\other_objects.dm"
+#include "code\modules\bitrunning\tutorial_objects\tutorial_body.dm"
+#include "code\modules\bitrunning\tutorial_objects\tutorial_reward.dm"
 #include "code\modules\bitrunning\tutorial_objects\tutorial_rewards.dm"
 #include "code\modules\bitrunning\util\digital_aura.dm"
 #include "code\modules\bitrunning\util\service_style.dm"
