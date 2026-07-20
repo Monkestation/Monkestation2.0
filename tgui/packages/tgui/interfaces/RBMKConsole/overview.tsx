@@ -10,14 +10,6 @@ import {
   Section,
 } from '../../components';
 
-const formatEquivalentDose = (sieverts: number) => {
-  if (Math.abs(sieverts) < 1) {
-    return `${(sieverts * 1000).toFixed(1)} mSv`;
-  }
-
-  return `${sieverts.toFixed(2)} Sv`;
-};
-
 export const RBMKOverview = () => {
   const { data } = useBackend<any>();
 
@@ -25,9 +17,9 @@ export const RBMKOverview = () => {
   const baseMaxTemp = Number(data?.max_temp ?? 20000);
   const maxTemp = Math.max(baseMaxTemp, temperature);
 
-  const radiation = Number(data?.radiation_sieverts ?? 0);
+  const radiation = Number(data?.radiation ?? 0);
   const maxRadiation = Math.max(
-    Number(data?.max_radiation_sieverts ?? 7),
+    Number(data?.max_radiation ?? 700),
     radiation,
     1,
   );
@@ -126,17 +118,17 @@ export const RBMKOverview = () => {
             />
           </LabeledControls.Item>
 
-          <LabeledControls.Item label="Equivalent Dose">
+          <LabeledControls.Item label="Radiation">
             <RoundGauge
               size={2}
               value={radiation}
               minValue={0}
               maxValue={maxRadiation}
-              format={formatEquivalentDose}
+              format={(value) => value.toFixed(1)}
               ranges={{
-                good: [0, 0.1],
-                yellow: [0.1, 1],
-                bad: [1, maxRadiation],
+                good: [0, maxRadiation * 0.2],
+                yellow: [maxRadiation * 0.2, maxRadiation * 0.5],
+                bad: [maxRadiation * 0.5, maxRadiation],
               }}
             />
           </LabeledControls.Item>

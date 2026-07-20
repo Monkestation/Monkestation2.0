@@ -85,7 +85,7 @@
 	var/elapsed = world.time - started_at
 	var/time_left = max(duration - elapsed, 0)
 	var/progress = clamp(elapsed / duration, 0, 1)
-	var/minutes_left = CEILING(time_left / 1 MINUTES, 1)
+	var/minutes_left = CEILING(time_left / (1 MINUTES), 1)
 
 	if(minutes_left > 0 && minutes_left != last_reactor_minute_announce)
 		last_reactor_minute_announce = minutes_left
@@ -145,7 +145,7 @@
 	update_warp(1)
 	send_stationwide_feelings()
 
-	var/seconds_left = CEILING(time_left / 1 SECONDS, 1)
+	var/seconds_left = CEILING(time_left / (1 SECONDS), 1)
 	var/should_announce_second = seconds_left <= 10 || (seconds_left <= 30 && seconds_left % 5 == 0)
 	if(should_announce_second && seconds_left != last_countdown_announce)
 		last_countdown_announce = seconds_left
@@ -363,10 +363,21 @@
 	reactor.investigate_log("completed an RBMK supermatter rod cascade.", INVESTIGATE_ENGINE)
 
 	reactor.visible_message(span_userdanger("[reactor] erupts in a blinding supermatter resonance cascade!"))
+	STOP_PROCESSING(SSobj, src)
+
+	// Prevent rod deletion or removal from cancelling the already-committed failure.
+	source_rod.cascade_controller = null
+	reactor.supermatter_cascade_active = FALSE
+	reactor.supermatter_rod = null
 
 	reactor.trigger_supermatter_rod_meltdown("Supermatter rod cascade resonance failure")
 
 	var/datum/sm_delam/cascade/cascade = new
 	INVOKE_ASYNC(cascade, TYPE_PROC_REF(/datum/sm_delam/cascade, rbmk_cascade), cascade_origin)
 
+	// Keep the warp attached through the reactor's delayed explosion, then clean it up.
+	addtimer(CALLBACK(src, PROC_REF(finish_failure_cleanup)), RBMK_MELTDOWN_WARNING_DELAY + (RBMK_MELTDOWN_EFFECT_STAGGER * 4), TIMER_UNIQUE)
+
+
+/datum/supermatter_rod_cascade/proc/finish_failure_cleanup()
 	qdel(src)

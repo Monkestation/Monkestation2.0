@@ -1,6 +1,7 @@
 /obj/machinery/rbmk/reactor/proc/update_void_coefficient()
-	// No active reaction means no useful feedback term.
-	if(meltdown_in_progress || !running)
+	// A hot, fueled core retains coolant feedback after SCRAM even though that
+	// feedback is no longer multiplying an active fission reaction.
+	if(meltdown_in_progress || !has_active_fuel_rods() || temperature < RBMK_TEMP_RUNNING)
 		void_coefficient = 0
 		void_coefficient_temperature = 0
 		void_coefficient_pressure = 0
@@ -32,6 +33,7 @@
 	void_coefficient_temperature = temperature_coefficient
 	void_coefficient_pressure = pressure_coefficient
 	void_coefficient_coolant = coolant_coefficient
-	last_void_flux_multiplier = 1 + void_coefficient
+	// Residual VC remains observable after SCRAM, but cannot multiply zeroed fission flux.
+	last_void_flux_multiplier = running ? 1 + void_coefficient : 1
 
 	return void_coefficient

@@ -2,7 +2,6 @@ import { useBackend } from '../../backend';
 import {
   Box,
   Chart,
-  Collapsible,
   Flex,
   ProgressBar,
   Section,
@@ -13,6 +12,42 @@ interface GasInfo {
   percent: number;
 }
 
+const scaleMaximum = (value: number, step: number) =>
+  Math.max(step, Math.ceil(value / step) * step);
+
+const formatScale = (value: number, unit: string) =>
+  `${value.toLocaleString()} ${unit}`;
+
+const GraphScale = (props: { maximum: number; unit: string }) => {
+  const { maximum, unit } = props;
+
+  return (
+    <>
+      <Box position="absolute" left={0} top={0} color="label">
+        {formatScale(maximum, unit)}
+      </Box>
+      <Box
+        position="absolute"
+        left={0}
+        top="50%"
+        color="label"
+        style={{ transform: 'translateY(-50%)' }}
+      >
+        {formatScale(maximum / 2, unit)}
+      </Box>
+      <Box position="absolute" left={0} bottom="1.25em" color="label">
+        {formatScale(0, unit)}
+      </Box>
+      <Box position="absolute" left="5.5em" bottom={0} color="label">
+        Oldest
+      </Box>
+      <Box position="absolute" right={0} bottom={0} color="label">
+        Latest
+      </Box>
+    </>
+  );
+};
+
 export const RBMKGraphs = () => {
   const { data } = useBackend<any>();
 
@@ -21,15 +56,13 @@ export const RBMKGraphs = () => {
   const pressureHistory: number[] = data?.pressure || [];
   const temperatureData = temperatureHistory.map((value, index) => [index, value]);
   const pressureData = pressureHistory.map((value, index) => [index, value]);
-  const maxTemperature = Math.max(
-    Number(data?.temp_max_safe ?? 6000),
-    ...temperatureHistory,
-    1,
+  const maxTemperature = scaleMaximum(
+    Math.max(Number(data?.temp_max_safe ?? 6000), ...temperatureHistory, 1),
+    1000,
   );
-  const maxPressure = Math.max(
-    Number(data?.pressure_critical ?? 7200),
-    ...pressureHistory,
-    1,
+  const maxPressure = scaleMaximum(
+    Math.max(Number(data?.pressure_critical ?? 7200), ...pressureHistory, 1),
+    1000,
   );
 
   const activeGases = Object.entries(gases)
@@ -39,16 +72,21 @@ export const RBMKGraphs = () => {
   return (
     <Flex direction="column" gap={1}>
       <Section title="Core Temperature History">
-        <Box position="relative" height="145px">
+        <Box position="relative" height="165px">
           {temperatureData.length > 1 ? (
-            <Chart.Line
-              fillPositionedParent
-              data={temperatureData}
-              rangeX={[0, temperatureData.length - 1]}
-              rangeY={[0, maxTemperature]}
-              strokeColor="rgba(255, 104, 72, 1)"
-              fillColor="rgba(255, 104, 72, 0.2)"
-            />
+            <>
+              <Box position="absolute" left="5.5em" right={0} top={0} bottom="1.25em">
+                <Chart.Line
+                  fillPositionedParent
+                  data={temperatureData}
+                  rangeX={[0, temperatureData.length - 1]}
+                  rangeY={[0, maxTemperature]}
+                  strokeColor="rgba(255, 104, 72, 1)"
+                  fillColor="rgba(255, 104, 72, 0.2)"
+                />
+              </Box>
+              <GraphScale maximum={maxTemperature} unit="K" />
+            </>
           ) : (
             <Box color="label">Collecting temperature samples...</Box>
           )}
@@ -56,16 +94,21 @@ export const RBMKGraphs = () => {
       </Section>
 
       <Section title="Primary Coolant Pressure History">
-        <Box position="relative" height="145px">
+        <Box position="relative" height="165px">
           {pressureData.length > 1 ? (
-            <Chart.Line
-              fillPositionedParent
-              data={pressureData}
-              rangeX={[0, pressureData.length - 1]}
-              rangeY={[0, maxPressure]}
-              strokeColor="rgba(74, 170, 255, 1)"
-              fillColor="rgba(74, 170, 255, 0.2)"
-            />
+            <>
+              <Box position="absolute" left="5.5em" right={0} top={0} bottom="1.25em">
+                <Chart.Line
+                  fillPositionedParent
+                  data={pressureData}
+                  rangeX={[0, pressureData.length - 1]}
+                  rangeY={[0, maxPressure]}
+                  strokeColor="rgba(74, 170, 255, 1)"
+                  fillColor="rgba(74, 170, 255, 0.2)"
+                />
+              </Box>
+              <GraphScale maximum={maxPressure} unit="kPa" />
+            </>
           ) : (
             <Box color="label">Collecting pressure samples...</Box>
           )}
@@ -73,7 +116,7 @@ export const RBMKGraphs = () => {
       </Section>
 
       <Flex.Item>
-        <Collapsible title="Coolant Gas Composition">
+        <Section title="Coolant Gas Composition">
           {activeGases.length > 0 ? (
             <Flex direction="column" gap={0.5}>
               {activeGases.map(([gasPath, info]) => {
@@ -99,7 +142,7 @@ export const RBMKGraphs = () => {
               No coolant gases detected
             </ProgressBar>
           )}
-        </Collapsible>
+        </Section>
       </Flex.Item>
     </Flex>
   );

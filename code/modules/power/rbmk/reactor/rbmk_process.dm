@@ -8,6 +8,16 @@
 	last_tick_temp_gain = 0
 
 
+/obj/machinery/rbmk/reactor/proc/maintain_residual_radiation(list/all_fuel_rods)
+	var/residual_rod_radiation = 0
+	for(var/obj/item/rbmk/fuel_rod/fuel_rod in all_fuel_rods)
+		residual_rod_radiation += fuel_rod.get_residual_radiation_output()
+
+	var/residual_floor = residual_rod_radiation * RBMK_RESIDUAL_RADIATION_MULTIPLIER
+	residual_floor += temperature * RBMK_RADIATION_TEMP_MULT
+	radiation = clamp(max(radiation, residual_floor), 0, RBMK_MAX_RADIATION)
+
+
 /obj/machinery/rbmk/reactor/proc/rbmk_update_control_rods(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
 	if(scrammed && control_rod_depth >= RBMK_CONTROL_ROD_MAX)
 		actual_control_rod_depth = RBMK_CONTROL_ROD_MAX
@@ -179,13 +189,10 @@
 
 
 /obj/machinery/rbmk/reactor/proc/emit_real_radiation()
-	if(meltdown_in_progress || !running)
+	if(meltdown_in_progress)
 		return
 
-	if(actual_control_rod_depth >= RBMK_CONTROL_ROD_MAX)
-		return
-
-	if(radiation <= 0 || flux <= 0)
+	if(radiation <= 0)
 		return
 
 	var/integrity_ratio = CLAMP01(reactor_integrity / max(max_reactor_integrity, 1))
@@ -365,6 +372,9 @@
 		rbmk_decay_process(seconds_per_tick)
 		rbmk_coolant_exchange(seconds_per_tick)
 		rbmk_update_pressure(seconds_per_tick)
+		maintain_residual_radiation(all_fuel_rods)
+		update_void_coefficient()
+		emit_real_radiation()
 		update_reactor_integrity(seconds_per_tick)
 		rbmk_sample_coolant()
 		rbmk_sample_reactor_temperature()
@@ -401,7 +411,10 @@
 	var/control_ratio = CLAMP01(actual_control_rod_depth / RBMK_CONTROL_ROD_MAX)
 	var/flux_control_multiplier = CLAMP01(1 - control_ratio)
 	var/heat_control_multiplier = CLAMP01(1 - (control_ratio ** 1.35))
-	var/radiation_control_multiplier = CLAMP01(1 - (control_ratio ** 1.15))
+	var/radiation_control_multiplier = max(
+		RBMK_RESIDUAL_RADIATION_MULTIPLIER,
+		CLAMP01(1 - (control_ratio ** 1.15))
+	)
 	var/flux_modifier_multiplier = 1 + rod_flux_multiplier_bonus
 
 	total_flux *= flux_modifier_multiplier
@@ -437,7 +450,7 @@
 	rbmk_coolant_exchange(seconds_per_tick)
 
 	if(coolant_internal)
-		var/tritium_delta = flux * (RBMK_TRITIUM_RATE * 400)
+		var/tritium_delta = flux * RBMK_TRITIUM_RATE * RBMK_TRITIUM_PRODUCTION_MULTIPLIER
 		tritium_delta *= seconds_per_tick / RBMK_MACHINERY_PROCESS_SECONDS
 		if(tritium_delta > 0)
 			coolant_internal.assert_gases(/datum/gas/tritium)

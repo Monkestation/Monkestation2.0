@@ -233,7 +233,7 @@ export const RBMKConsole = () => {
   }
 
   return (
-    <Window theme="soviet" width={832} height={576}>
+    <Window theme="soviet" width={832} height={660}>
       <Window.Content className="RBMKConsole" scrollable>
         <Flex direction="column" gap={1}>
           <RBMKAlarmStrip />

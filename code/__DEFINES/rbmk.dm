@@ -37,6 +37,8 @@
 #define RBMK_RADIATION_DECAY_PER_SECOND (0.12 / RBMK_MACHINERY_PROCESS_SECONDS)
 #define RBMK_RADIATION_FLUX_MULT 0.10
 #define RBMK_RADIATION_TEMP_MULT 0.00035
+/// Fraction of active fuel-rod radiation that remains with the control rods fully inserted.
+#define RBMK_RESIDUAL_RADIATION_MULTIPLIER 0.15
 
 #define RBMK_MAX_INTEGRITY 100
 #define RBMK_INTEGRITY_DAMAGE_CAP_PER_SECOND 0.75
@@ -88,6 +90,8 @@
 #define RBMK_COOLANT_MAX_GAS_TEMP_CHANGE 1800
 
 #define RBMK_TRITIUM_RATE 0.00075
+/// Keeps tritium useful as a coolant byproduct without letting it overwhelm pressure control every process tick.
+#define RBMK_TRITIUM_PRODUCTION_MULTIPLIER 20
 
 #define RBMK_MELTDOWN_PREFIX "RBMK MELTDOWN"
 #define RBMK_MELTDOWN_BROADCAST "RBMK Reactor critical failure!"

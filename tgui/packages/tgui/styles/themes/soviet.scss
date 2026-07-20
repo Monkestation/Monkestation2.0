@@ -14,12 +14,14 @@ $soviet-caution: #be6209;
 $soviet-danger: #9a9d00;
 
 .theme-soviet {
+  --soviet-emblem: url('assets/bg-hammer-sickle.svg');
+
   background-color: $soviet-bg;
   color: #f3d7d7;
 
   .Layout__content {
     background-color: $soviet-bg;
-    background-image: url('assets/bg-hammer-sickle.svg');
+    background-image: var(--soviet-emblem);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 70% 70%;

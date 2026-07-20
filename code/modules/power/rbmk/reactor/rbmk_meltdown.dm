@@ -79,15 +79,24 @@
 	void_coefficient = 0
 
 	launch_reactor_lid()
-	priority_announce(
-		"RBMK reactor containment vessel failure confirmed. Radioactive fallout will begin spreading in approximately one minute. Maintenance remains the safest shelter.",
-		"RBMK Reactor Breach",
-		'sound/misc/airraid.ogg'
-	)
-	rbmk_engineering_alert("RBMK containment vessel failure confirmed. Fallout will spread across the station in T-1 minute.")
+	if(meltdown_supermatter_failure)
+		priority_announce(
+			"RBMK supermatter containment vessel failure confirmed. Spatial cascade effects are developing around the reactor sector.",
+			"RBMK Reactor Breach",
+			'sound/misc/airraid.ogg'
+		)
+		rbmk_engineering_alert("RBMK supermatter containment vessel failure confirmed. Spatial cascade effects are developing around the reactor sector.")
+	else
+		priority_announce(
+			"RBMK reactor containment vessel failure confirmed. Radioactive fallout will begin spreading in approximately one minute. Maintenance remains the safest shelter.",
+			"RBMK Reactor Breach",
+			'sound/misc/airraid.ogg'
+		)
+		rbmk_engineering_alert("RBMK containment vessel failure confirmed. Fallout will spread across the station in T-1 minute.")
 
 	#if RBMK_MELTDOWN_RADIATION
-	addtimer(CALLBACK(src, PROC_REF(meltdown_radiation_pulse)), RBMK_MELTDOWN_EFFECT_STAGGER)
+	if(!meltdown_supermatter_failure)
+		addtimer(CALLBACK(src, PROC_REF(meltdown_radiation_pulse)), RBMK_MELTDOWN_EFFECT_STAGGER)
 	#endif
 	#if RBMK_MELTDOWN_ATMOS_DUMP
 	addtimer(CALLBACK(src, PROC_REF(meltdown_atmos_release)), RBMK_MELTDOWN_EFFECT_STAGGER * 2)
@@ -96,7 +105,8 @@
 	addtimer(CALLBACK(src, PROC_REF(meltdown_explosions)), RBMK_MELTDOWN_EFFECT_STAGGER * 3)
 	#endif
 	addtimer(CALLBACK(src, PROC_REF(meltdown_floor_damage)), RBMK_MELTDOWN_EFFECT_STAGGER * 4)
-	addtimer(CALLBACK(src, PROC_REF(begin_delayed_meltdown_fallout)), RBMK_MELTDOWN_FALLOUT_DELAY, TIMER_UNIQUE)
+	if(!meltdown_supermatter_failure)
+		addtimer(CALLBACK(src, PROC_REF(begin_delayed_meltdown_fallout)), RBMK_MELTDOWN_FALLOUT_DELAY, TIMER_UNIQUE)
 
 	update_linked_consoles()
 	log_game("[src] MELTDOWN explosion triggered: [reason]")

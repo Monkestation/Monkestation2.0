@@ -350,7 +350,9 @@
 	sound_to_update.x = source_turf.x - listener_turf.x
 	sound_to_update.z = source_turf.y - listener_turf.y
 	sound_to_update.y = (source_turf.z - listener_turf.z) * 5
-	sound_to_update.falloff = get_live_max_distance()
+	// Distance attenuation is calculated in get_live_volume_for(). Disabling BYOND's
+	// second attenuation pass prevents long sounds from pumping or cutting out.
+	sound_to_update.falloff = 0
 
 /// Sends the current live loop sound to one listener.
 /datum/looping_sound/proc/send_live_sound_to(mob/listener, soundfile, effective_volume, mixer_channel)

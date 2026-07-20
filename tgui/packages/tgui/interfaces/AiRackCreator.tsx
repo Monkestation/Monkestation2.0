@@ -69,7 +69,7 @@ export const AiRackCreator = (props) => {
   };
 
   return (
-    <Window width={700} height={820}>
+    <Window width={920} height={820}>
       <Window.Content scrollable>
         <Stack vertical fill>
           <Stack.Item>

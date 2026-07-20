@@ -180,6 +180,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/thorium
 	name = "thorium"
 	desc = "A highly radioactive fission by-product."
+	requires_main_rbmk = TRUE
 	color = rgb(174, 214, 112)
 	greyscale_colors = rgb(174, 214, 112)
 	categories = list(
@@ -223,6 +224,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/plutonium
 	name = "plutonium"
 	desc = "A dangerous radioactive fission by-product."
+	requires_main_rbmk = TRUE
 	color = rgb(94, 255, 90)
 	greyscale_colors = rgb(94, 255, 90)
 	categories = list(

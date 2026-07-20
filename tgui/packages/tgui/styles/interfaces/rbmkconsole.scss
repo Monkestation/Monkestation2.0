@@ -2,7 +2,7 @@
   background: #8b0000;
   color: #f8f8f8;
 
-  background-image: url('../../assets/hammer_sickle.svg');
+  background-image: var(--soviet-emblem);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 45%;
@@ -50,165 +50,286 @@
     }
   }
 
-  .RBMKConsole__CascadeLockout {
-    min-height: 100%;
-    padding: 1.25rem;
-    text-align: center;
-
-    background-image:
-      radial-gradient(circle at center, rgba(255, 0, 0, 0.22), transparent 62%),
-      url('../../assets/syndicate.svg'),
-      linear-gradient(to bottom, rgba(80, 0, 0, 0.92), rgba(10, 0, 0, 0.96));
-
-    background-repeat: no-repeat, no-repeat, no-repeat;
-
-    background-position: center, center, center;
-
-    background-size:
-      100% 100%,
-      55%,
-      100% 100%;
-
-    border: 2px solid rgba(255, 40, 40, 0.75);
-    border-radius: 10px;
-    box-shadow:
-      inset 0 0 80px rgba(255, 0, 0, 0.18),
-      0 0 22px rgba(255, 0, 0, 0.22);
+  .RBMKConsole__CorePanel {
+    min-height: 490px;
+    padding: 0.65rem 0.9rem 0.55rem;
+    background: rgba(10, 13, 14, 0.82);
+    border: 1px solid rgba(183, 195, 202, 0.3);
+    box-shadow: inset 0 0 70px rgba(0, 0, 0, 0.5);
   }
 
-  .RBMKConsole__CascadeHeader {
+  .RBMKConsole__CoreStatus,
+  .RBMKConsole__CoreFooter {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-
-    margin-bottom: 1rem;
-    padding: 0.85rem 1rem;
-
-    background: rgba(0, 0, 0, 0.55);
-    border: 1px solid rgba(255, 48, 48, 0.65);
-    border-radius: 8px;
-    box-shadow: inset 0 0 28px rgba(255, 0, 0, 0.12);
+    color: #cbd2d6;
+    font-family: monospace;
+    font-size: 9px;
+    letter-spacing: 0.55px;
   }
 
-  .RBMKConsole__CascadeSeal {
-    min-width: 44px;
-    font-size: 38px;
-    line-height: 1;
-    color: #ffd700;
-    text-shadow:
-      0 0 8px rgba(255, 215, 0, 0.85),
-      0 0 18px rgba(255, 0, 0, 0.35);
+  .RBMKConsole__CoreStatus {
+    min-height: 31px;
+    padding: 0 0.45rem 0.45rem;
+    border-bottom: 1px solid rgba(174, 187, 194, 0.22);
+
+    b {
+      display: block;
+      color: #eef1f2;
+      font-size: 11px;
+      letter-spacing: 0.9px;
+    }
+
+    span {
+      color: #747f85;
+      font-size: 7px;
+    }
   }
 
-  .RBMKConsole__CascadeHeaderText {
-    flex: 1;
+  .RBMKConsole__CoreStatusReadout {
+    color: #9fa9ae;
+    white-space: nowrap;
+  }
+
+  .RBMKConsole__CoreBoard {
+    width: 410px;
+    height: 410px;
+    margin: 0.6rem auto;
+    padding: 19px;
+    background:
+      radial-gradient(circle, rgba(53, 60, 62, 0.66) 0 58%, transparent 59%),
+      radial-gradient(circle, #111516 0 66%, #080a0b 67% 100%);
+    border: 1px solid #566167;
+    border-radius: 50%;
+    box-shadow:
+      inset 0 0 0 7px #090c0d,
+      inset 0 0 0 8px rgba(184, 194, 199, 0.2),
+      0 5px 16px rgba(0, 0, 0, 0.48);
+  }
+
+  .RBMKConsole__CoreGrid {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(15, 1fr);
+    gap: 2px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .RBMKConsole__ChannelVoid {
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .RBMKConsole__IntegrityCell,
+  .RBMKConsole__FuelChannel,
+  .RBMKConsole__ControlChannel {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 1px;
+    outline: none;
+    transition:
+      filter 80ms linear,
+      border-color 80ms linear;
+
+    &:hover,
+    &:focus {
+      filter: brightness(1.42);
+    }
+  }
+
+  .RBMKConsole__IntegrityCell {
+    border: 1px solid rgba(174, 187, 194, 0.13);
+    box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.025);
+
+    &--nominal {
+      background: rgba(70, 143, 91, 0.16);
+      border-color: rgba(104, 175, 124, 0.24);
+    }
+
+    &--warning {
+      background: rgba(162, 136, 62, 0.17);
+      border-color: rgba(190, 163, 87, 0.27);
+    }
+
+    &--critical {
+      background: rgba(172, 91, 44, 0.18);
+      border-color: rgba(200, 111, 57, 0.28);
+    }
+
+    &--danger {
+      background: rgba(157, 45, 45, 0.2);
+      border-color: rgba(202, 67, 67, 0.32);
+    }
+  }
+
+  .RBMKConsole__FuelChannel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #121719;
+    border: 2px solid #727b80;
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.8);
+
+    > span {
+      width: 42%;
+      height: 42%;
+      background: var(--rbmk-rod-color);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 50%;
+      box-shadow:
+        0 0 4px var(--rbmk-rod-color),
+        inset 0 1px rgba(255, 255, 255, 0.35);
+    }
+
+    &--active {
+      border-color: #49bd68;
+      box-shadow:
+        inset 0 0 4px rgba(0, 0, 0, 0.85),
+        0 0 3px rgba(73, 189, 104, 0.35);
+    }
+
+    &--depleted {
+      border-color: #d44b46;
+      box-shadow:
+        inset 0 0 4px rgba(0, 0, 0, 0.85),
+        0 0 3px rgba(212, 75, 70, 0.32);
+    }
+
+    &--empty {
+      border-color: #656e72;
+      opacity: 0.62;
+    }
+  }
+
+  .RBMKConsole__ControlChannel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #111617;
+    border: 1px solid #727b80;
+    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.9);
+
+    &--safe {
+      border-color: #52a76a;
+    }
+
+    &--warning {
+      border-color: #d5ad45;
+    }
+
+    &--low {
+      border-color: #cf7b3a;
+    }
+
+    &--danger {
+      border-color: #ca4743;
+    }
+  }
+
+  .RBMKConsole__ControlTrack {
+    position: relative;
+    display: block;
+    width: 33%;
+    height: 72%;
+    overflow: hidden;
+    background: #090c0d;
+    border: 1px solid rgba(222, 229, 232, 0.2);
+  }
+
+  .RBMKConsole__ControlFill {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    background: #d1aa45;
+    box-shadow: 0 0 4px rgba(209, 170, 69, 0.42);
+  }
+
+  .RBMKConsole__CoreMonitor {
+    position: absolute;
+    top: 39.7%;
+    left: 39.7%;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 20.6%;
+    height: 20.6%;
+    overflow: hidden;
+    font-family: monospace;
     text-align: center;
+    background: linear-gradient(180deg, #172326, #0c1214);
+    border: 2px solid #728086;
+    box-shadow:
+      inset 0 0 12px rgba(55, 151, 164, 0.1),
+      0 0 0 3px #090c0d;
   }
 
-  .RBMKConsole__CascadeLock {
-    min-width: 44px;
-    font-size: 34px;
-    line-height: 1;
-    color: #ff3030;
-    text-shadow:
-      0 0 8px rgba(255, 0, 0, 0.9),
-      0 0 22px rgba(255, 0, 0, 0.45);
+  .RBMKConsole__CoreMonitorTitle,
+  .RBMKConsole__CoreMonitorValue {
+    max-width: 92%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  .RBMKConsole__CascadeTitle {
-    font-size: 22px;
-    font-weight: bold;
-    letter-spacing: 2px;
-    color: #ff3030;
-    text-transform: uppercase;
-    text-shadow: 0 0 8px rgba(255, 0, 0, 0.65);
+  .RBMKConsole__CoreMonitorTitle {
+    color: #8e9ba0;
+    font-size: 7px;
+    letter-spacing: 0.35px;
   }
 
-  .RBMKConsole__CascadeSubtitle {
-    margin-top: 0.35rem;
-    color: #ffb3b3;
-    font-size: 13px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+  .RBMKConsole__CoreMonitorValue {
+    margin-top: 3px;
+    color: #dce8e9;
+    font-size: 9px;
+    font-weight: 700;
   }
 
-  .RBMKConsole__CascadeWarning {
-    margin-bottom: 1rem;
-    padding: 0.6rem 0.85rem;
-
-    background: rgba(160, 0, 0, 0.5);
-    border: 1px solid rgba(255, 48, 48, 0.75);
-    border-radius: 6px;
-
-    color: #ffdddd;
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    text-shadow: 0 0 6px rgba(255, 0, 0, 0.45);
+  .RBMKConsole__CoreFooter {
+    min-height: 28px;
+    padding: 0.35rem 0.45rem 0;
+    border-top: 1px solid rgba(174, 187, 194, 0.2);
   }
 
-  .RBMKConsole__CascadeWarning--final {
-    background: rgba(220, 0, 0, 0.72);
-    color: #ffffff;
-    animation: rbmk-cascade-pulse 0.7s infinite alternate;
+  .RBMKConsole__CoreLegend {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: #8e999e;
+    font-size: 8px;
   }
 
-  .RBMKConsole__CascadeTimer {
-    margin: 1rem 0;
-    font-size: 68px;
-    font-weight: bold;
-    color: #ffd700;
-    letter-spacing: 4px;
-    text-shadow:
-      0 0 10px rgba(255, 215, 0, 0.85),
-      0 0 24px rgba(255, 215, 0, 0.35);
-  }
-
-  .RBMKConsole__CascadeTimer--final {
-    color: #ff3030;
-    text-shadow:
-      0 0 10px rgba(255, 0, 0, 0.9),
-      0 0 28px rgba(255, 0, 0, 0.55);
-    animation: rbmk-cascade-pulse 0.7s infinite alternate;
-  }
-
-  .RBMKConsole__CascadeStatus {
+  .RBMKConsole__LegendKey,
+  .RBMKConsole__LegendLed {
     display: inline-block;
-    margin: 1rem 0;
-    padding: 0.45rem 0.9rem;
-
-    background: rgba(0, 0, 0, 0.65);
-    border: 1px solid rgba(255, 48, 48, 0.8);
-    border-radius: 6px;
-
-    color: #ff7070;
-    font-weight: bold;
-    text-transform: uppercase;
+    width: 9px;
+    height: 9px;
+    margin-left: 0.35rem;
+    background: #111617;
   }
 
-  .RBMKConsole__CascadeInfo {
-    margin-top: 0.75rem;
-    padding: 0.75rem;
-
-    background: rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 48, 48, 0.35);
-    border-radius: 8px;
-
-    text-align: left;
+  .RBMKConsole__LegendKey--active {
+    border: 2px solid #49bd68;
   }
 
-  .RBMKConsole__CascadeFooter {
-    margin-top: 1rem;
-    padding-top: 0.85rem;
+  .RBMKConsole__LegendKey--depleted {
+    border: 2px solid #d44b46;
+  }
 
-    border-top: 1px solid rgba(255, 48, 48, 0.35);
-
-    color: #ffaaaa;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+  .RBMKConsole__LegendLed {
+    background: #8ab8c1;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
   }
 
   // Cascade lockout: hardened industrial emergency terminal.
@@ -540,15 +661,4 @@
     }
   }
 
-  @keyframes rbmk-cascade-pulse {
-    from {
-      transform: scale(1);
-      opacity: 0.85;
-    }
-
-    to {
-      transform: scale(1.05);
-      opacity: 1;
-    }
-  }
 }

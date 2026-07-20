@@ -142,6 +142,13 @@
 	)
 
 
+/obj/item/rbmk/fuel_rod/proc/get_residual_radiation_output()
+	if(!active || fuel_amount <= 0)
+		return 0
+
+	return reactivity * radiation_multiplier
+
+
 /obj/item/rbmk/fuel_rod/proc/process_rod(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
 	if(!active)
 		return get_zero_output()

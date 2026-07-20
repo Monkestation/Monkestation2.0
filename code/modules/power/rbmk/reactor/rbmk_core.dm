@@ -1,3 +1,5 @@
+GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
+
 /obj/machinery/rbmk/reactor
 	name = "RBMK Reactor Core"
 	desc = "A massive nuclear reactor core. Insert rods at your own risk."
@@ -124,6 +126,8 @@
 
 	var/supermatter_cascade_active = FALSE
 	var/obj/item/rbmk/fuel_rod/supermatter/supermatter_rod = null
+	/// Whether this reactor is the station's selected main engine.
+	var/is_main_engine = FALSE
 
 
 /obj/machinery/rbmk/reactor/proc/has_fuel_rods()
@@ -345,6 +349,8 @@
 
 	rbmk_init_coolant()
 	relink_ports()
+	if(is_main_engine)
+		GLOB.main_rbmk_engine = src
 
 	update_reactor_icon()
 	return INITIALIZE_HINT_NORMAL
@@ -358,6 +364,8 @@
 	supermatter_cascade_active = FALSE
 	active_welder_repairers = null
 	GLOB.rbmk_fallout_reactors -= src
+	if(is_main_engine && GLOB.main_rbmk_engine == src)
+		GLOB.main_rbmk_engine = null
 
 	QDEL_NULL(radio)
 	QDEL_NULL(grill_loop)
@@ -365,6 +373,10 @@
 
 	rbmk_cleanup_atmos()
 	return ..()
+
+
+/obj/machinery/rbmk/reactor/main_engine
+	is_main_engine = TRUE
 
 
 /obj/machinery/rbmk/reactor/proc/force_scram(mob/user)

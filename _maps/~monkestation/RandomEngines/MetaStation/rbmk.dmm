@@ -45,7 +45,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "cP" = (
-/obj/machinery/rbmk/reactor,
+/obj/machinery/rbmk/reactor/main_engine,
 /turf/open/floor/engine/insulation,
 /area/station/engineering/supermatter/room)
 "cT" = (
