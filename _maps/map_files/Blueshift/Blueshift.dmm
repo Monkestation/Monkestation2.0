@@ -88834,14 +88834,6 @@
 /obj/structure/bookcase/random/fiction,
 /turf/open/floor/wood,
 /area/station/medical/aslyum)
-"rgy" = (
-/obj/effect/spawner/structure/window,
-/obj/structure/curtain{
-	req_access = list("medical")
-	},
-/obj/effect/landmark/navigate_destination,
-/turf/open/floor/plating,
-/area/station/medical/medbay/lobby)
 "rgD" = (
 /turf/closed/wall/r_wall,
 /area/station/common/laser_tag)
@@ -226219,7 +226211,7 @@ ipY
 fSN
 cfl
 cfl
-rgy
+lns
 uHL
 tck
 jkO
