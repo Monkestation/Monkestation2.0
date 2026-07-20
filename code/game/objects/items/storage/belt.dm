@@ -273,7 +273,7 @@
 		/obj/item/device/antibody_scanner,
 		/obj/item/storage/lockbox/vialbox,
 		/obj/item/gps,
-	) + typesof(/obj/item/reagent_containers/cup/vial))
+	) + typesof(/obj/item/reagent_containers/chemcanister))
 
 /obj/item/storage/belt/medical/paramedic
 	name = "EMT belt"

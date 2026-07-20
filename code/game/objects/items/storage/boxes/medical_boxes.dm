@@ -34,21 +34,21 @@
 
 /obj/item/storage/box/cup/vials/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/cup/vial(src)
+		new /obj/item/reagent_containers/chemcanister(src)
 
 /obj/item/storage/box/cup/vials/large
 	name = "box of large vials"
 
 /obj/item/storage/box/cup/vials/large/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/cup/vial/large(src)
+		new /obj/item/reagent_containers/chemcanister/large(src)
 
 /obj/item/storage/box/cup/vials/bluespace
 	name = "box of bluespace vials"
 
 /obj/item/storage/box/cup/vials/bluespace/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/cup/vial/bluespace(src)
+		new /obj/item/reagent_containers/chemcanister/bluespace(src)
 
 
 /obj/item/storage/box/medipens/utility
@@ -162,6 +162,6 @@
 /obj/item/storage/box/evilmeds/evilhypos/PopulateContents()
 	var/list/items_inside = list(
 		/obj/item/reagent_containers/cup/beaker/meta/combat_juice = 1,
-		/obj/item/reagent_containers/cup/vial/bluespace = 6,
+		/obj/item/reagent_containers/chemcanister/bluespace = 6,
 	)
 	generate_items_inside(items_inside, src)
