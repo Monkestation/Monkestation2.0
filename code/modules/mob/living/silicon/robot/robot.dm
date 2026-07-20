@@ -200,7 +200,7 @@
 
 
 /mob/living/silicon/robot/proc/get_standard_name()
-	return "[(designation ? "[designation] " : "")][mmi.braintype]-[ident]"
+	return "[(designation ? "[designation] " : "")][(mmi ? mmi.braintype : "Cyborg")]-[ident]"
 
 /mob/living/silicon/robot/proc/ionpulse()
 	if(!ionpulse_on)
