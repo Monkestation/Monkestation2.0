@@ -183,9 +183,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/valve{
-	dir = 6
-	},
+/obj/machinery/atmospherics/components/binary/valve,
 /turf/open/floor/engine/insulation,
 /area/station/engineering/rbmk/room)
 "mO" = (
