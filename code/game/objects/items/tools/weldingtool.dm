@@ -391,3 +391,12 @@
 	if(get_fuel() < max_fuel && nextrefueltick < world.time)
 		nextrefueltick = world.time + 10
 		reagents.add_reagent(/datum/reagent/fuel, 1)
+
+/obj/item/weldingtool/makeshift
+	name = "makeshift welding tool"
+	desc = "A MacGyver-style welder."
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "welder_makeshift"
+	toolspeed = 2
+	max_fuel = 10
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5)

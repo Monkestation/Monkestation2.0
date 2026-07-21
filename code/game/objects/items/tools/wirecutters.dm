@@ -81,3 +81,11 @@
 	worn_icon_state = "cutters"
 	toolspeed = 0.5
 	random_color = FALSE
+
+/obj/item/wirecutters/makeshift
+	name = "makeshift wirecutters"
+	desc = "Mind your fingers."
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "cutters_makeshift"
+	toolspeed = 2
+	random_color = FALSE
