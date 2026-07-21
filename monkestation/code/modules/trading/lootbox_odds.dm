@@ -79,7 +79,13 @@
 			else
 				picked.add_to_user(usr.client)
 				temp.name = "Loadout Item [temp.name]"
-			reward.item = temp
+
+	reward.item = temp
+
+	if(!reward.item) // Shouldnt happen but yknow
+		user.client.prefs.adjust_metacoins(user.ckey, 5000, "Failed to generate lootbox reward", donator_multiplier = FALSE)
+		log_runtime("A lootbox attemped to generate a item, but failed to actually generate a item, this shouldn't happen")
+		CRASH("A lootbox attemped to generate a item, but failed to actually generate a item, this shouldn't happen")
 	return reward
 
 ///Temp datum to hold info on if the generated item is a duplicate, and the item itself

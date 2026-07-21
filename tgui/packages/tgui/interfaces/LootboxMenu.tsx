@@ -15,11 +15,12 @@ type Data = {
   numberLootboxes: number;
   canWithdrawLootbox: BooleanLike;
   coins: number;
+  openingboxes: BooleanLike;
 };
 
 export const LootboxMenu = (props) => {
   const { act, data } = useBackend<Data>();
-  const { canWithdrawLootbox, numberLootboxes, coins } = data;
+  const { canWithdrawLootbox, numberLootboxes, coins, openingboxes } = data;
   const [lootboxamount, setLootboxAmount] = useLocalState(`lootboxamount`, 1);
   const [buyboxamount, setbuyboxAmount] = useLocalState(`buyboxamount`, 1);
   return (
@@ -33,7 +34,7 @@ export const LootboxMenu = (props) => {
               icon="eject"
               content="Withdraw Lootbox"
               tooltip="Withdraw a single lootbox to your mob's hands. Requires you be a mob, and be able to hold things."
-              disabled={!canWithdrawLootbox}
+              disabled={!canWithdrawLootbox || openingboxes}
               onClick={() => act('withdraw_lootbox')}
             />
           >
@@ -97,7 +98,7 @@ export const LootboxMenu = (props) => {
                       content={
                         numberLootboxes > 1 ? 'Open Lootboxes' : 'Open Lootbox'
                       }
-                      disabled={numberLootboxes < 1}
+                      disabled={numberLootboxes < 1 || openingboxes}
                       tooltip="Open Lootboxes!"
                       position="center"
                       color="green"
@@ -135,7 +136,7 @@ export const LootboxMenu = (props) => {
                       <i>Lets go gambling!!!</i>
                     </b>
                     position="center"
-                    disabled={numberLootboxes < 1}
+                    disabled={numberLootboxes < 1 || openingboxes}
                     color="gold"
                     bold
                     style={{

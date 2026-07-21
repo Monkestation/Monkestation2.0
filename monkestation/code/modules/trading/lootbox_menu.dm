@@ -1,5 +1,6 @@
 /datum/lootbox_menu
 	var/client/client_owner
+	var/opening_boxes = FALSE
 
 /datum/lootbox_menu/New(client/owner, mob/viewer)
 	src.client_owner = owner
@@ -20,6 +21,7 @@
 	data["numberLootboxes"] = client_owner.prefs.lootboxes_owned
 	data["canWithdrawLootbox"] = isliving(user) && client_owner.prefs.lootboxes_owned >= 1 && user.can_hold_items()
 	data["coins"] = client_owner.prefs.metacoins
+	data["openingboxes"] = opening_boxes
 
 	return data
 
@@ -40,8 +42,8 @@
 			if(client_owner.prefs.lootboxes_owned < 1)
 				return
 			if(opening_amount == 1)
-				client_owner.prefs.lootboxes_owned--
-				client_owner.mob.trigger_lootbox_on_self()
+				if(client_owner.mob.trigger_lootbox_on_self())
+					client_owner.prefs.lootboxes_owned--
 			else
 				open_boxes(opening_amount)
 
@@ -74,19 +76,28 @@
 	client_owner.prefs.lootboxes_owned--
 	playsound(user, 'sound/items/pshoom.ogg', 50, TRUE)
 
+///Holds a rewarded item's important info for the lootbox menu to process
+/datum/reward_item_container
+	var/name
+	var/icon
+	var/icon_state
+	var/duplicate
+
 /datum/lootbox_menu/proc/open_boxes(number_boxes)
-	var/result_loot
+	if(opening_boxes)
+		return
+	opening_boxes = TRUE
+	var/obj/result_loot
 	var/low_tokens_gained = 0
 	var/med_tokens_gained = 0
 	var/high_tokens_gained = 0
 	var/duplicates = 0
 	var/list/loadout_items = list()
-	var/datum/reward_item/reward
+	var/datum/reward_item/reward = new
+
 	for(var/i in 1 to number_boxes)
 		reward = generate_lootbox_item(client_owner.mob)
 		result_loot = reward.item
-		if(reward.duplicate)
-			duplicates++
 		client_owner.prefs.lootboxes_owned--
 		if(client_owner.prefs.lootboxes_owned < 1)
 			break
@@ -101,8 +112,19 @@
 				if(HIGH_THREAT)
 					high_tokens_gained++
 		else
-			loadout_items += result_loot
+			var/datum/reward_item_container/container = new
+			container.name = copytext(result_loot.name, 14) // Trimming the "loadout item" portion of the name, as that clutters the menu
+			container.icon = result_loot.icon
+			container.icon_state = result_loot.icon_state
+			container.duplicate = reward.duplicate
+			loadout_items += container
+			if(reward.duplicate)
+				duplicates++
+	if((high_tokens_gained + med_tokens_gained + low_tokens_gained) == 0 && !(length(loadout_items)) && number_boxes > 0)
+		log_runtime("A lootbox menu attempted to generate items, but returned no tokens and no loadout items. This really shouldnt happen")
+		CRASH("A lootbox menu attempted to generate items, but returned no tokens and no loadout items. This really shouldnt happen")
 	new /datum/lootbox_rewards_display(client_owner, low_tokens_gained, med_tokens_gained, high_tokens_gained, loadout_items, number_boxes, duplicates)
+	opening_boxes = FALSE
 
 /// Datum that shows the rewards of opening mutiple lootboxes at once
 /datum/lootbox_rewards_display
@@ -129,8 +151,8 @@
 	totalboxes = total_boxes_opened
 	duplicates = duplicates_total
 	loadout_items = list()
-	for(var/obj/item/item in _loadout_items)
-		loadout_items += list(list("name" = initial(item.name), "icon" = item.icon, "iconstate" = item.icon_state))
+	for(var/datum/reward_item_container/container in _loadout_items)
+		loadout_items += list(list("name" = container.name, "icon" = container.icon, "iconstate" = container.icon_state, "duplicate" = container.duplicate))
 	ui_interact(owner.mob)
 
 /datum/lootbox_rewards_display/ui_state()

@@ -16,15 +16,20 @@ type RewardItem = {
   icon: string;
   iconstate: string;
   name: string;
+  duplicate: boolean;
 };
 
 const ItemDisplay = (props) => {
-  const { name, icon, iconstate } = props;
+  const { name, icon, iconstate, duplicate } = props;
 
   return (
     <Box
       textAlign="center"
-      style={{ border: 'thin solid grey' }}
+      style={
+        duplicate
+          ? { border: 'thin solid yellow' }
+          : { border: 'thin solid grey' }
+      }
       width="75px"
       height="75px"
     >
@@ -91,8 +96,8 @@ export const LootboxRewards = (props) => {
           fill
           buttons=<Button
             icon="trash"
-            content={duplicates > 1 ? duplicates : 'None'}
-            tooltip="The number of duplicates recieved"
+            content={duplicates > 0 ? duplicates : 'None'}
+            tooltip="The number of duplicates recieved; Items marked in yellow are duplicates"
           />
         >
           <Stack draggable wrap scrollable={true} fill>
@@ -103,6 +108,7 @@ export const LootboxRewards = (props) => {
                   icon={tab.icon}
                   icon_state={tab.iconstate}
                   name={tab.name}
+                  duplicate={tab.duplicate}
                 />
               </Stack.Item>
             ))}

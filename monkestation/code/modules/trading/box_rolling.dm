@@ -87,8 +87,8 @@
 	overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main/guaranteed)
 
 /mob/proc/trigger_lootbox_on_self()
-	if(screens["lb_main"])
-		return
+	if(screens["lb_main"] || screens["lb_spark"] || screens["lb_bg"] || screens["lb_preview"] || screens["lb_duplicate"])
+		return FALSE
 	return overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main)
 
 /obj/item/lootbox
@@ -113,8 +113,8 @@
 
 /obj/item/lootbox/attack_self(mob/user, modifiers)
 	. = ..()
-	if(user.screens["lb_main"])
-		return
+	if(user.screens["lb_main"] || user.screens["lb_spark"] || user.screens["lb_bg"] || user.screens["lb_preview"] || user.screens["lb_duplicate"])
+		return FALSE
 	user.trigger_lootbox_on_self()
 	qdel(src)
 
