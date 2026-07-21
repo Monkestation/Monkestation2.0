@@ -25,10 +25,18 @@
 	var/gas_composition_update_delay = 2 SECONDS
 	var/last_gas_composition_update = 0
 	var/list/cached_gas_composition = list()
+	/// Engineering-band annunciator owned by the operator console, not the core.
+	var/obj/item/radio/alert_radio
+	var/alert_radio_key = /obj/item/encryptionkey/headset_eng
+	var/alert_channel = RADIO_CHANNEL_ENGINEERING
 
 
 /obj/machinery/computer/rbmk_console/Initialize(mapload)
 	. = ..()
+	alert_radio = new(src)
+	alert_radio.keyslot = new alert_radio_key
+	alert_radio.set_listening(FALSE)
+	alert_radio.recalculateChannels()
 	auto_link()
 	update_appearance(UPDATE_ICON)
 
@@ -36,10 +44,26 @@
 
 
 /obj/machinery/computer/rbmk_console/Destroy()
+	QDEL_NULL(alert_radio)
 	linked_reactor = null
 	linked_turbines = null
 	cached_gas_composition = null
 	return ..()
+
+
+/// Broadcasts an operator alert with the console as the visible radio speaker.
+/obj/machinery/computer/rbmk_console/proc/send_engineering_alert(message)
+	if(!alert_radio || !message)
+		return
+	alert_radio.talk_into(src, message, alert_channel)
+
+
+/// Emits a local annunciator message and sound from the console hardware.
+/obj/machinery/computer/rbmk_console/proc/emit_local_alert(message, sound_file, alert_volume = 85)
+	if(message)
+		visible_message(span_warning("[src] reports: [message]"))
+	if(sound_file)
+		playsound(src, sound_file, alert_volume, FALSE)
 
 
 /obj/machinery/computer/rbmk_console/proc/auto_link()

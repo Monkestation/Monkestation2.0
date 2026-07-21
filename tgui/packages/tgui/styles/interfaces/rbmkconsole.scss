@@ -1,18 +1,23 @@
 .RBMKConsole {
-  background: #8b0000;
-  color: #f8f8f8;
+  background: #101416;
+  color: #dce3e5;
 
   background-image: var(--soviet-emblem);
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 45%;
+  background-size: 42%;
 
-  box-shadow: inset 0 0 200px rgba(255, 215, 0, 0.15);
+  box-shadow:
+    inset 0 0 180px rgba(0, 0, 0, 0.72),
+    inset 0 3px rgba(142, 32, 28, 0.38);
 
   .Section {
-    background: rgba(0, 0, 0, 0.55);
-    border: 1px solid rgba(255, 215, 0, 0.4);
-    border-radius: 8px;
+    background: rgba(17, 22, 24, 0.92);
+    border: 1px solid rgba(137, 151, 157, 0.28);
+    border-radius: 3px;
+    box-shadow:
+      inset 0 1px rgba(255, 255, 255, 0.025),
+      0 2px 8px rgba(0, 0, 0, 0.25);
   }
 
   .Knob {
@@ -26,13 +31,140 @@
   }
 
   button {
-    background: rgba(0, 0, 0, 0.6);
-    border: 1px solid #ffd700;
-    color: #ffd700;
+    background: rgba(25, 31, 33, 0.94);
+    border: 1px solid rgba(151, 164, 169, 0.42);
+    color: #d4dcde;
 
     &:hover {
-      background: rgba(255, 215, 0, 0.25);
+      background: rgba(112, 128, 134, 0.28);
+      border-color: rgba(194, 207, 211, 0.66);
     }
+  }
+
+  .Tabs {
+    padding: 0.2rem;
+    background: rgba(6, 9, 10, 0.78);
+    border-bottom: 1px solid rgba(145, 40, 35, 0.72);
+  }
+
+  .Tabs__tab--selected {
+    background: rgba(128, 35, 31, 0.62);
+    box-shadow: inset 0 -2px #c48b4e;
+  }
+
+  .RBMKConsole__Operations {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  .RBMKConsole__Instrument {
+    position: relative;
+    min-width: 128px;
+    min-height: 72px;
+    padding: 0.55rem 0.65rem;
+    overflow: hidden;
+    font-family: monospace;
+    background: linear-gradient(180deg, #151c1e, #0c1112);
+    border: 1px solid rgba(128, 143, 149, 0.35);
+    box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.5);
+  }
+
+  .RBMKConsole__InstrumentLabel {
+    color: #7f9096;
+    font-size: 9px;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+  }
+
+  .RBMKConsole__InstrumentValue {
+    margin-top: 0.35rem;
+    color: #d9e9ea;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+    text-shadow: 0 0 8px rgba(154, 210, 211, 0.18);
+  }
+
+  .RBMKConsole__InstrumentUnit {
+    margin-left: 0.35rem;
+    color: #819196;
+    font-size: 9px;
+    font-weight: 400;
+  }
+
+  .RBMKConsole__InstrumentLamp {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    width: 7px;
+    height: 7px;
+    background: #68b77a;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(104, 183, 122, 0.55);
+  }
+
+  .RBMKConsole__Instrument--warning .RBMKConsole__InstrumentLamp {
+    background: #d2a94e;
+    box-shadow: 0 0 7px rgba(210, 169, 78, 0.65);
+  }
+
+  .RBMKConsole__Instrument--danger .RBMKConsole__InstrumentLamp {
+    background: #d54e49;
+    box-shadow: 0 0 8px rgba(213, 78, 73, 0.75);
+  }
+
+  .RBMKConsole__Instrument--danger {
+    border-color: rgba(190, 65, 59, 0.58);
+  }
+
+  .RBMKConsole__TelemetryPanel {
+    border-top: 2px solid rgba(83, 143, 157, 0.7);
+  }
+
+  .RBMKConsole__IntegrityPanel {
+    border-left: 3px solid rgba(87, 155, 106, 0.68);
+  }
+
+  .RBMKConsole__ControlPanel {
+    border-top: 2px solid rgba(191, 147, 71, 0.68);
+  }
+
+  .RBMKConsole__EmergencyPanel {
+    background: rgba(35, 14, 14, 0.94);
+    border-color: rgba(167, 52, 47, 0.62);
+  }
+
+  .RBMKConsole__CoolantPanel {
+    border-top: 2px solid rgba(66, 128, 153, 0.72);
+  }
+
+  .RBMKConsole__ValvePanel,
+  .RBMKConsole__CircuitPanel {
+    background: rgba(9, 14, 16, 0.78);
+    box-shadow: none;
+  }
+
+  .RBMKConsole__TrendPanel {
+    background: rgba(11, 17, 19, 0.95);
+  }
+
+  .RBMKConsole__TrendPanel .Chart {
+    opacity: 0.92;
+  }
+
+  .RBMKConsole__GasPanel .ProgressBar,
+  .RBMKConsole__GeneratorSummary .ProgressBar,
+  .RBMKConsole__TurbineCard .ProgressBar {
+    border: 1px solid rgba(136, 150, 155, 0.24);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.48);
+  }
+
+  .RBMKConsole__GeneratorSummary {
+    border-left: 3px solid rgba(91, 156, 112, 0.68);
+  }
+
+  .RBMKConsole__TurbineCard {
+    border-left: 3px solid rgba(81, 135, 157, 0.72);
   }
 
   .RBMKConsole__CorePanel {

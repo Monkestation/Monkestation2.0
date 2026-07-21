@@ -3,37 +3,49 @@ import {
   Box,
   Collapsible,
   Flex,
-  LabeledControls,
   LabeledList,
   ProgressBar,
-  RoundGauge,
   Section,
 } from '../../components';
+
+const Instrument = (props: {
+  label: string;
+  value: string;
+  unit?: string;
+  state: 'nominal' | 'warning' | 'danger';
+}) => (
+  <Flex.Item basis="31%" grow>
+    <Box
+      className={`RBMKConsole__Instrument RBMKConsole__Instrument--${props.state}`}
+    >
+      <Box className="RBMKConsole__InstrumentLabel">{props.label}</Box>
+      <Box className="RBMKConsole__InstrumentValue">
+        {props.value}
+        {!!props.unit && (
+          <Box as="span" className="RBMKConsole__InstrumentUnit">
+            {props.unit}
+          </Box>
+        )}
+      </Box>
+      <Box className="RBMKConsole__InstrumentLamp" />
+    </Box>
+  </Flex.Item>
+);
 
 export const RBMKOverview = () => {
   const { data } = useBackend<any>();
 
   const temperature = Number(data?.temperature ?? 0);
-  const baseMaxTemp = Number(data?.max_temp ?? 20000);
-  const maxTemp = Math.max(baseMaxTemp, temperature);
 
   const radiation = Number(data?.radiation ?? 0);
-  const maxRadiation = Math.max(
-    Number(data?.max_radiation ?? 700),
-    radiation,
-    1,
-  );
+  const maxRadiation = Math.max(Number(data?.max_radiation ?? 700), 1);
 
   const flux = Number(data?.flux ?? 0);
-  const maxFlux = Number(data?.max_flux ?? 900);
   const baseFlux = Number(data?.base_flux ?? 0);
   const voidFluxBonus = Number(data?.void_flux_bonus ?? 0);
 
   const voidCoefficient = Number(data?.void_coefficient ?? 0);
-  const maxVoidCoefficient = Math.max(
-    Number(data?.max_void_coefficient ?? 0.5),
-    0.5,
-  );
+  const maxVoidCoefficient = Math.max(Number(data?.max_void_coefficient ?? 0.5), 0.5);
   const voidFluxMultiplier = Number(data?.void_flux_multiplier ?? 1);
   const voidTemperatureComponent = Number(
     data?.void_temperature_component ?? 0,
@@ -44,7 +56,6 @@ export const RBMKOverview = () => {
   const tempMaxSafe = Number(data?.temp_max_safe ?? 6000);
   const fluxWarning = Number(data?.flux_warning ?? 350);
   const fluxHigh = Number(data?.flux_high ?? 700);
-  const fluxExtreme = Number(data?.flux_extreme ?? 1000);
   const rodTemperatureLimitBonus = Number(
     data?.rod_temperature_limit_bonus ?? 0,
   );
@@ -58,9 +69,6 @@ export const RBMKOverview = () => {
   const pressure = Number(data?.pressure_current ?? 0);
   const pressureWarning = Number(data?.pressure_warning ?? 950);
   const pressureCritical = Number(data?.pressure_critical ?? 1500);
-  const pressureExtreme = Number(data?.pressure_extreme ?? 2000);
-  const maxPressure = Math.max(pressureExtreme, pressure);
-
   const integrity = Number(data?.integrity ?? 0);
   const maxIntegrity = Math.max(1, Number(data?.max_integrity ?? 100));
   const integrityPercent = Math.max(
@@ -71,86 +79,39 @@ export const RBMKOverview = () => {
 
   return (
     <Flex direction="column" gap={1}>
-      <Section title="Reactor Parameters">
-        <LabeledControls justify="space-around" wrap>
-          <LabeledControls.Item label="Temperature">
-            <RoundGauge
-              size={2}
-              value={temperature}
-              minValue={0}
-              maxValue={maxTemp}
-              format={(value) => `${value.toFixed(0)} K`}
-              ranges={{
-                good: [0, tempModerate],
-                yellow: [tempModerate, tempMaxSafe],
-                bad: [tempMaxSafe, maxTemp],
-              }}
-            />
-          </LabeledControls.Item>
-
-          <LabeledControls.Item label="Pressure">
-            <RoundGauge
-              size={2}
-              value={pressure}
-              minValue={0}
-              maxValue={maxPressure}
-              format={(value) => `${value.toFixed(1)} kPa`}
-              ranges={{
-                good: [0, pressureWarning],
-                yellow: [pressureWarning, pressureCritical],
-                bad: [pressureCritical, maxPressure],
-              }}
-            />
-          </LabeledControls.Item>
-
-          <LabeledControls.Item label="Void Coefficient">
-            <RoundGauge
-              size={2}
-              value={voidCoefficient}
-              minValue={0}
-              maxValue={maxVoidCoefficient}
-              format={(value) => value.toFixed(3)}
-              ranges={{
-                good: [0, maxVoidCoefficient * 0.35],
-                yellow: [maxVoidCoefficient * 0.35, maxVoidCoefficient * 0.7],
-                bad: [maxVoidCoefficient * 0.7, maxVoidCoefficient],
-              }}
-            />
-          </LabeledControls.Item>
-
-          <LabeledControls.Item label="Radiation">
-            <RoundGauge
-              size={2}
-              value={radiation}
-              minValue={0}
-              maxValue={maxRadiation}
-              format={(value) => value.toFixed(1)}
-              ranges={{
-                good: [0, maxRadiation * 0.2],
-                yellow: [maxRadiation * 0.2, maxRadiation * 0.5],
-                bad: [maxRadiation * 0.5, maxRadiation],
-              }}
-            />
-          </LabeledControls.Item>
-
-          <LabeledControls.Item label="Flux">
-            <RoundGauge
-              size={2}
-              value={flux}
-              minValue={0}
-              maxValue={maxFlux}
-              format={(value) => value.toFixed(0)}
-              ranges={{
-                good: [0, fluxWarning],
-                yellow: [fluxWarning, fluxHigh],
-                bad: [fluxHigh, Math.max(maxFlux, fluxExtreme)],
-              }}
-            />
-          </LabeledControls.Item>
-        </LabeledControls>
+      <Section title="Live Reactor Parameters" className="RBMKConsole__TelemetryPanel">
+        <Flex wrap gap={0.75}>
+          <Instrument
+            label="Core Temperature"
+            value={temperature.toFixed(0)}
+            unit="K"
+            state={temperature >= tempMaxSafe ? 'danger' : temperature >= tempModerate ? 'warning' : 'nominal'}
+          />
+          <Instrument
+            label="Primary Pressure"
+            value={pressure.toFixed(0)}
+            unit="kPa"
+            state={pressure >= pressureCritical ? 'danger' : pressure >= pressureWarning ? 'warning' : 'nominal'}
+          />
+          <Instrument
+            label="Neutron Flux"
+            value={flux.toFixed(0)}
+            state={flux >= fluxHigh ? 'danger' : flux >= fluxWarning ? 'warning' : 'nominal'}
+          />
+          <Instrument
+            label="Radiation"
+            value={radiation.toFixed(1)}
+            state={radiation >= maxRadiation * 0.5 ? 'danger' : radiation >= maxRadiation * 0.2 ? 'warning' : 'nominal'}
+          />
+          <Instrument
+            label="Void Coefficient"
+            value={voidCoefficient.toFixed(3)}
+            state={voidCoefficient >= maxVoidCoefficient * 0.7 ? 'danger' : voidCoefficient >= maxVoidCoefficient * 0.35 ? 'warning' : 'nominal'}
+          />
+        </Flex>
       </Section>
 
-      <Section title="Reactor Integrity">
+      <Section title="Reactor Integrity" className="RBMKConsole__IntegrityPanel">
         <ProgressBar
           value={integrityPercent}
           maxValue={100}

@@ -3,6 +3,9 @@
 
 #define RBMK_TURBINE_STALE_TIME (10 SECONDS)
 #define RBMK_TURBINE_TELEMETRY_CLEAR_TIME (30 SECONDS)
+/// Mechanical spin-down grace. Must exceed the 16 second startup cue so
+/// intermittent atmos pulses cannot continually cancel the sustained loop.
+#define RBMK_TURBINE_SOUND_HOLD_TIME (30 SECONDS)
 #define RBMK_TURBINE_DESIGN_PRESSURE_DELTA 3000
 
 
@@ -211,8 +214,18 @@
 	return TRUE
 
 
+/obj/machinery/power/rbmk_turbine/proc/should_play_turbine_sound()
+	if(machine_stat & BROKEN)
+		return FALSE
+
+	if(!last_generation_time)
+		return FALSE
+
+	return world.time <= last_generation_time + RBMK_TURBINE_SOUND_HOLD_TIME
+
+
 /obj/machinery/power/rbmk_turbine/proc/update_turbine_sound()
-	if(!is_actively_generating())
+	if(!should_play_turbine_sound())
 		if(turbine_soundloop)
 			turbine_soundloop.stop()
 			QDEL_NULL(turbine_soundloop)
@@ -604,4 +617,5 @@
 #undef RBMK_TURBINE_ICON_ON
 #undef RBMK_TURBINE_STALE_TIME
 #undef RBMK_TURBINE_TELEMETRY_CLEAR_TIME
+#undef RBMK_TURBINE_SOUND_HOLD_TIME
 #undef RBMK_TURBINE_DESIGN_PRESSURE_DELTA

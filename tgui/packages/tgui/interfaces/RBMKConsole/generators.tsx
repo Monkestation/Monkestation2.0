@@ -116,8 +116,8 @@ const RBMKGenerators = () => {
   }).length;
 
   return (
-    <Section title="Generators">
-      <Section title="Generator Summary">
+    <Section title="Generators" className="RBMKConsole__Generators">
+      <Section title="Generator Summary" className="RBMKConsole__GeneratorSummary">
         <LabeledList>
           <LabeledList.Item label="Turbines">
             {onlineTurbines} / {turbineCount} online
@@ -165,6 +165,7 @@ const RBMKGenerators = () => {
           <Section
             key={getTurbineKey(turbine, index)}
             title={`Turbine ${turbineIndex}`}
+            className="RBMKConsole__TurbineCard"
             buttons={
               <Box color={getStatusColor(status)} bold>
                 {status}

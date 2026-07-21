@@ -72,7 +72,9 @@
 #define RBMK_INLET_PUMP_HEAD 6500
 #define RBMK_OUTLET_RATE_MIN 0
 #define RBMK_OUTLET_RATE_DEFAULT 75
-#define RBMK_OUTLET_RATE_MAX 250
+#define RBMK_OUTLET_RATE_MAX 750
+/// Prevents a single atmos update from evacuating the hot core and causing a pressure rebound on the next inlet update.
+#define RBMK_OUTLET_MAX_INVENTORY_FRACTION 0.5
 #define RBMK_PRESSURE_WARNING 6000
 #define RBMK_PRESSURE_CRITICAL 7200
 #define RBMK_PRESSURE_EXTREME 8600

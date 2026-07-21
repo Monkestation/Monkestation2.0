@@ -71,7 +71,7 @@ export const RBMKGraphs = () => {
 
   return (
     <Flex direction="column" gap={1}>
-      <Section title="Core Temperature History">
+      <Section title="Core Temperature History" className="RBMKConsole__TrendPanel">
         <Box position="relative" height="165px">
           {temperatureData.length > 1 ? (
             <>
@@ -93,7 +93,7 @@ export const RBMKGraphs = () => {
         </Box>
       </Section>
 
-      <Section title="Primary Coolant Pressure History">
+      <Section title="Primary Coolant Pressure History" className="RBMKConsole__TrendPanel">
         <Box position="relative" height="165px">
           {pressureData.length > 1 ? (
             <>
@@ -116,7 +116,7 @@ export const RBMKGraphs = () => {
       </Section>
 
       <Flex.Item>
-        <Section title="Coolant Gas Composition">
+        <Section title="Coolant Gas Composition" className="RBMKConsole__GasPanel">
           {activeGases.length > 0 ? (
             <Flex direction="column" gap={0.5}>
               {activeGases.map(([gasPath, info]) => {

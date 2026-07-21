@@ -40,6 +40,8 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 	var/last_outlet_flow_rate = 0
 	var/last_inlet_pressure = 0
 	var/last_outlet_pressure = 0
+	/// SSair cycle in which the paired inlet/outlet transfer was last resolved.
+	var/last_coolant_air_cycle = -1
 
 	var/list/normal_slots = list()
 	var/list/special_slots = list()
@@ -90,10 +92,6 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 
 	var/current_damage_stage = 0
 	var/image/current_damage_overlay_image = null
-
-	var/obj/item/radio/radio
-	var/radio_key = /obj/item/encryptionkey/headset_eng
-	var/warning_channel = RADIO_CHANNEL_ENGINEERING
 
 	var/datum/looping_sound/rbmk_reactor/reactor_soundloop = null
 	/// Items currently cooking on the reactor lid, using the standard griddle signals.
@@ -302,6 +300,7 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 	last_outlet_flow_rate = 0
 	last_inlet_pressure = 0
 	last_outlet_pressure = 0
+	last_coolant_air_cycle = -1
 
 	reset_reaction_state()
 	scrammed = FALSE
@@ -341,10 +340,6 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 	coolant_gas_hist = list()
 	reactor_temperature_history = list()
 
-	radio = new(src)
-	radio.keyslot = new radio_key
-	radio.set_listening(FALSE)
-	radio.recalculateChannels()
 	grill_loop = new(src, FALSE)
 
 	rbmk_init_coolant()
@@ -367,7 +362,6 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 	if(is_main_engine && GLOB.main_rbmk_engine == src)
 		GLOB.main_rbmk_engine = null
 
-	QDEL_NULL(radio)
 	QDEL_NULL(grill_loop)
 	stop_reactor_sound()
 
@@ -568,8 +562,8 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 
 	if(!had_active_fuel && fuel_rod.active && fuel_rod.contributes_to_reaction && actual_control_rod_depth < RBMK_CONTROL_ROD_MAX)
 		var/rounded_rod_depth = round(actual_control_rod_depth, 1)
-		visible_message(span_danger("[src] sounds a criticality warning as active fuel is loaded with its control rods only [rounded_rod_depth]% inserted!"))
-		playsound(src, 'sound/rbmk/alarm.ogg', 85, FALSE)
+		var/obj/machinery/computer/rbmk_console/alert_console = get_primary_console()
+		alert_console?.emit_local_alert("Criticality warning: active fuel loaded with control rods only [rounded_rod_depth]% inserted!", 'sound/rbmk/alarm.ogg', 85)
 		rbmk_engineering_alert("CRITICALITY WARNING: Active fuel loaded into [src] in [get_area(src)] with control rods only [rounded_rod_depth]% inserted.")
 		log_game("[key_name(user)] loaded [fuel_rod] into [src] with control rods at [rounded_rod_depth]% insertion.")
 
@@ -963,3 +957,18 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 		if(console.linked_reactor == src)
 			console.update_appearance()
 			SStgui.update_uis(console)
+
+
+/// Returns the nearest console currently linked to this reactor.
+/obj/machinery/rbmk/reactor/proc/get_primary_console()
+	var/obj/machinery/computer/rbmk_console/primary_console
+	var/shortest_distance = INFINITY
+	for(var/obj/machinery/computer/rbmk_console/console in range(7, src))
+		if(console.linked_reactor != src || QDELETED(console))
+			continue
+		var/current_distance = get_dist(src, console)
+		if(current_distance >= shortest_distance)
+			continue
+		primary_console = console
+		shortest_distance = current_distance
+	return primary_console

@@ -53,8 +53,8 @@
 	if(!message)
 		return
 
-	visible_message(span_warning("[src] emits a sharp structural integrity alarm!"))
-	playsound(src, SFX_SM_DELAM, 85, FALSE, 40, 30, falloff_distance = 10)
+	var/obj/machinery/computer/rbmk_console/alert_console = get_primary_console()
+	alert_console?.emit_local_alert("Structural integrity alarm!", SFX_SM_DELAM, 85)
 	rbmk_engineering_alert(message)
 
 	if(!stationwide)

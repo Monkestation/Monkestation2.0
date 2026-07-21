@@ -9,10 +9,9 @@ import {
   Tabs,
 } from '../../components';
 import { Window } from '../../layouts';
-import RBMKControls from './controls';
 import RBMKGenerators from './generators';
 import RBMKGraphs from './graphs';
-import RBMKOverview from './overview';
+import RBMKOperations from './operations';
 import RBMKRods from './rods';
 
 const RBMKCascadeLockout = () => {
@@ -114,14 +113,13 @@ const RBMKCascadeLockout = () => {
         </Box>
       ) : (
         <Box className="RBMKConsole__CascadeClockNotice">
-          <Icon name="volume-up" />
+          <Icon name="triangle-exclamation" />
           <Box>
             <Box className="RBMKConsole__CascadeClockNoticeTitle">
-              Terminal countdown transferred to reactor annunciator
+              Terminal cascade imminent
             </Box>
             <Box className="RBMKConsole__CascadeClockNoticeCopy">
-              Remote timing has ended. Follow the final audible countdown issued
-              directly from the reactor vessel and evacuate immediately.
+              Remote timing has ended. Evacuate the reactor sector immediately.
             </Box>
           </Box>
         </Box>
@@ -219,8 +217,18 @@ const RBMKAlarmStrip = () => {
 export const RBMKConsole = () => {
   const { act, data } = useBackend<any>();
   const [tab, setTab] = useLocalState<
-    'overview' | 'controls' | 'rods' | 'graphs' | 'generators'
-  >('rbmk_tab', 'overview');
+    | 'operations'
+    | 'rods'
+    | 'graphs'
+    | 'generators'
+    | 'overview'
+    | 'controls'
+  >('rbmk_tab', 'operations');
+
+  const activeTab =
+    tab === 'overview' || tab === 'controls'
+      ? 'operations'
+      : tab;
 
   if (data?.supermatter_cascade_active) {
     return (
@@ -240,23 +248,15 @@ export const RBMKConsole = () => {
           <Flex.Item>
             <Tabs>
               <Tabs.Tab
-                selected={tab === 'overview'}
-                onClick={() => setTab('overview')}
+                selected={activeTab === 'operations'}
+                onClick={() => setTab('operations')}
                 icon="gauge"
               >
-                Overview
+                Operations
               </Tabs.Tab>
 
               <Tabs.Tab
-                selected={tab === 'controls'}
-                onClick={() => setTab('controls')}
-                icon="sliders"
-              >
-                Controls
-              </Tabs.Tab>
-
-              <Tabs.Tab
-                selected={tab === 'rods'}
+                selected={activeTab === 'rods'}
                 onClick={() => setTab('rods')}
                 icon="grip-vertical"
               >
@@ -264,15 +264,15 @@ export const RBMKConsole = () => {
               </Tabs.Tab>
 
               <Tabs.Tab
-                selected={tab === 'graphs'}
+                selected={activeTab === 'graphs'}
                 onClick={() => setTab('graphs')}
                 icon="chart-line"
               >
-                Graphs
+                Trends
               </Tabs.Tab>
 
               <Tabs.Tab
-                selected={tab === 'generators'}
+                selected={activeTab === 'generators'}
                 onClick={() => setTab('generators')}
                 icon="bolt"
               >
@@ -292,11 +292,10 @@ export const RBMKConsole = () => {
           </Flex.Item>
 
           <Flex.Item>
-            {tab === 'overview' && <RBMKOverview />}
-            {tab === 'controls' && <RBMKControls />}
-            {tab === 'rods' && <RBMKRods />}
-            {tab === 'graphs' && <RBMKGraphs />}
-            {tab === 'generators' && <RBMKGenerators />}
+            {activeTab === 'operations' && <RBMKOperations />}
+            {activeTab === 'rods' && <RBMKRods />}
+            {activeTab === 'graphs' && <RBMKGraphs />}
+            {activeTab === 'generators' && <RBMKGenerators />}
           </Flex.Item>
         </Flex>
       </Window.Content>

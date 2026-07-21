@@ -29,7 +29,7 @@ export const RBMKControls = () => {
   const outletOpen = Boolean(data?.outlet_open ?? false);
   const outletRate = Number(data?.outlet_rate ?? 75);
   const outletRateMin = Number(data?.outlet_rate_min ?? 0);
-  const outletRateMax = Number(data?.outlet_rate_max ?? 250);
+  const outletRateMax = Number(data?.outlet_rate_max ?? 750);
   const outletPressure = Number(data?.outlet_pressure ?? 0);
   const outletCorePressure = Number(data?.outlet_core_pressure ?? 0);
   const outletFlow = Number(data?.outlet_flow ?? 0);
@@ -76,7 +76,7 @@ export const RBMKControls = () => {
 
   return (
     <Flex direction="column" gap={1}>
-      <Section title="Control Rod Depth">
+      <Section title="Control Rod Command" className="RBMKConsole__ControlPanel">
         <Box mb={0.5} color="label">
           Actual Position
         </Box>
@@ -143,7 +143,7 @@ export const RBMKControls = () => {
         </Flex>
       </Section>
 
-      <Section title="Emergency Controls">
+      <Section title="Emergency Shutdown" className="RBMKConsole__EmergencyPanel">
         <Flex justify="center">
           <Button
             fluid
@@ -151,7 +151,7 @@ export const RBMKControls = () => {
             color={az5Expended ? 'label' : 'bad'}
             bold
             disabled={az5Expended}
-            content={az5Expended ? 'AZ-5 EXPENDED' : '☢AZ-5☢'}
+            content={az5Expended ? 'AZ-5 EXPENDED' : '☢ AZ-5 ☢'}
             tooltip={
               az5Expended
                 ? 'The destructive shutdown mechanism has already fired.'
@@ -166,9 +166,9 @@ export const RBMKControls = () => {
         </Flex>
       </Section>
 
-      <Section title="Coolant Controls">
+      <Section title="Primary Coolant Circuit" className="RBMKConsole__CoolantPanel">
         <Flex direction="column" gap={1}>
-          <Section title="Inlet">
+          <Section title="Inlet Injector" className="RBMKConsole__ValvePanel">
             <LabeledList>
               <LabeledList.Item label="Injector">
                 <Button
@@ -209,7 +209,7 @@ export const RBMKControls = () => {
             />
           </Section>
 
-          <Section title="Outlet">
+          <Section title="Outlet Regulator" className="RBMKConsole__ValvePanel">
             <LabeledList>
               <LabeledList.Item label="Regulator">
                 <Button
@@ -254,7 +254,7 @@ export const RBMKControls = () => {
             />
           </Section>
 
-          <Section title="Coolant Inventory">
+          <Section title="Circuit Telemetry" className="RBMKConsole__CircuitPanel">
             <LabeledList>
               <LabeledList.Item label="Core Pressure">
                 <ProgressBar

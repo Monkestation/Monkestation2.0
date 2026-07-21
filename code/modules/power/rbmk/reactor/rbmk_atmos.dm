@@ -53,47 +53,7 @@
 
 
 /obj/machinery/atmospherics/components/unary/rbmk/inlet/process_atmos(seconds_per_tick = RBMK_ATMOS_PROCESS_SECONDS)
-	if(parent_reactor)
-		parent_reactor.last_inlet_moles_moved = 0
-		parent_reactor.last_inlet_flow_rate = 0
-		parent_reactor.last_inlet_pressure = 0
-
-	if(!parent_reactor?.inlet_open)
-		return
-
-	if(length(airs) < 1)
-		return
-
-	var/datum/gas_mixture/inlet_pipe_mix = airs[1]
-	parent_reactor.last_inlet_pressure = inlet_pipe_mix?.return_pressure() || 0
-
-	if(!inlet_pipe_mix || inlet_pipe_mix.total_moles() <= 0)
-		return
-
-	if(!parent_reactor.coolant_internal)
-		return
-
-	var/internal_pressure = parent_reactor.coolant_internal.return_pressure()
-	var/available_pressure_head = parent_reactor.last_inlet_pressure + RBMK_INLET_PUMP_HEAD - internal_pressure
-	if(available_pressure_head <= 0)
-		return
-
-	// The rate control is authoritative while the injector has pressure head.
-	// Do not taper only the inlet near the pressure limit: asymmetric tapering
-	// makes equal inlet/outlet commands continuously drain the chamber.
-	var/desired_moles = clamp(parent_reactor.inlet_rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX)
-	desired_moles *= seconds_per_tick
-	if(desired_moles <= 0)
-		return
-
-	var/datum/gas_mixture/moved_mix = remove_moles_capped(inlet_pipe_mix, desired_moles)
-	if(!moved_mix || moved_mix.total_moles() <= 0)
-		return
-
-	parent_reactor.last_inlet_moles_moved = moved_mix.total_moles()
-	parent_reactor.last_inlet_flow_rate = parent_reactor.last_inlet_moles_moved / max(seconds_per_tick, 0.1)
-	parent_reactor.coolant_internal.merge(moved_mix)
-	update_parents()
+	parent_reactor?.process_coolant_transfer(seconds_per_tick)
 
 
 /obj/machinery/atmospherics/components/unary/rbmk/outlet
@@ -103,50 +63,75 @@
 
 
 /obj/machinery/atmospherics/components/unary/rbmk/outlet/process_atmos(seconds_per_tick = RBMK_ATMOS_PROCESS_SECONDS)
-	if(parent_reactor)
-		parent_reactor.last_outlet_moles_moved = 0
-		parent_reactor.last_outlet_flow_rate = 0
-		parent_reactor.last_outlet_pressure = 0
+	parent_reactor?.process_coolant_transfer(seconds_per_tick)
 
-	if(!parent_reactor?.outlet_open)
+
+/// Resolves both coolant ports from one pre-transfer state once per SSair cycle.
+/// This prevents damage, graphs, and turbine feed from observing a half-finished
+/// inlet/outlet update while preserving the commanded mol/s controls.
+/obj/machinery/rbmk/reactor/proc/process_coolant_transfer(seconds_per_tick = RBMK_ATMOS_PROCESS_SECONDS)
+	if(last_coolant_air_cycle == SSair.times_fired)
+		return
+	last_coolant_air_cycle = SSair.times_fired
+
+	last_inlet_moles_moved = 0
+	last_outlet_moles_moved = 0
+	last_inlet_flow_rate = 0
+	last_outlet_flow_rate = 0
+	last_inlet_pressure = 0
+	last_outlet_pressure = 0
+
+	var/datum/gas_mixture/internal_coolant_mix = coolant_internal
+	if(!internal_coolant_mix)
 		return
 
-	var/datum/gas_mixture/internal_coolant_mix = parent_reactor.coolant_internal
-	if(!internal_coolant_mix || internal_coolant_mix.total_moles() <= 0)
+	var/datum/gas_mixture/inlet_pipe_mix = get_inlet_mix()
+	var/datum/gas_mixture/outlet_pipe_mix = get_outlet_mix()
+	var/internal_pressure = internal_coolant_mix.return_pressure()
+	var/internal_moles = internal_coolant_mix.total_moles()
+	last_inlet_pressure = inlet_pipe_mix?.return_pressure() || 0
+	last_outlet_pressure = internal_pressure
+
+	var/desired_inlet_moles = 0
+	if(inlet_open && inlet_pipe_mix?.total_moles() > 0)
+		var/available_pressure_head = last_inlet_pressure + RBMK_INLET_PUMP_HEAD - internal_pressure
+		if(available_pressure_head > 0)
+			desired_inlet_moles = clamp(inlet_rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX) * seconds_per_tick
+
+	var/desired_outlet_moles = 0
+	var/downstream_pressure = outlet_pipe_mix?.return_pressure() || 0
+	if(outlet_open && internal_moles > 0 && internal_pressure > downstream_pressure)
+		desired_outlet_moles = clamp(outlet_rate, RBMK_OUTLET_RATE_MIN, RBMK_OUTLET_RATE_MAX) * seconds_per_tick
+		desired_outlet_moles = min(
+			desired_outlet_moles,
+			internal_moles * RBMK_OUTLET_MAX_INVENTORY_FRACTION,
+		)
+
+	// Remove both quantities from the same snapshot before either destination is
+	// merged. Equal commands therefore exchange coolant instead of alternately
+	// overfilling and evacuating the chamber.
+	var/datum/gas_mixture/incoming_mix = inlet?.remove_moles_capped(inlet_pipe_mix, desired_inlet_moles)
+	var/datum/gas_mixture/outgoing_mix = outlet?.remove_moles_capped(internal_coolant_mix, desired_outlet_moles)
+
+	if(incoming_mix?.total_moles() > 0)
+		last_inlet_moles_moved = incoming_mix.total_moles()
+		last_inlet_flow_rate = last_inlet_moles_moved / max(seconds_per_tick, 0.1)
+		internal_coolant_mix.merge(incoming_mix)
+		inlet.update_parents()
+
+	if(outgoing_mix?.total_moles() <= 0)
 		return
 
-	var/current_pressure = internal_coolant_mix.return_pressure()
-	parent_reactor.last_outlet_pressure = current_pressure
-
-	var/downstream_pressure = 0
-	if(length(airs))
-		downstream_pressure = airs[1].return_pressure()
-
-	// The outlet is a commanded mass-flow control. Pressure is an outcome of
-	// coolant inventory and temperature, while downstream pressure remains a
-	// physical backpressure interlock.
-	if(current_pressure <= downstream_pressure)
+	last_outlet_moles_moved = outgoing_mix.total_moles()
+	last_outlet_flow_rate = last_outlet_moles_moved / max(seconds_per_tick, 0.1)
+	if(outlet_pipe_mix)
+		outlet_pipe_mix.merge(outgoing_mix)
+		outlet.update_parents()
 		return
 
-	var/desired_release_moles = clamp(parent_reactor.outlet_rate, RBMK_OUTLET_RATE_MIN, RBMK_OUTLET_RATE_MAX)
-	desired_release_moles *= seconds_per_tick
-	if(desired_release_moles <= 0)
-		return
-
-	var/datum/gas_mixture/released_mix = remove_moles_capped(internal_coolant_mix, desired_release_moles)
-	if(!released_mix || released_mix.total_moles() <= 0)
-		return
-
-	parent_reactor.last_outlet_moles_moved = released_mix.total_moles()
-	parent_reactor.last_outlet_flow_rate = parent_reactor.last_outlet_moles_moved / max(seconds_per_tick, 0.1)
-	if(length(airs))
-		airs[1].merge(released_mix)
-		update_parents()
-		return
-
-	var/turf/outlet_turf = get_turf(src)
+	var/turf/outlet_turf = get_turf(outlet)
 	if(outlet_turf)
-		outlet_turf.assume_air(released_mix)
+		outlet_turf.assume_air(outgoing_mix)
 
 
 /obj/machinery/rbmk/reactor/proc/rbmk_init_coolant()

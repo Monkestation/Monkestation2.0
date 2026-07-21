@@ -113,10 +113,11 @@
 
 
 /obj/machinery/rbmk/reactor/proc/rbmk_engineering_alert(message)
-	if(!radio || !message)
+	if(!message)
 		return
 
-	radio.talk_into(src, message, warning_channel)
+	var/obj/machinery/computer/rbmk_console/alert_console = get_primary_console()
+	alert_console?.send_engineering_alert(message)
 
 
 /obj/machinery/rbmk/reactor/proc/meltdown_radiation_pulse()
