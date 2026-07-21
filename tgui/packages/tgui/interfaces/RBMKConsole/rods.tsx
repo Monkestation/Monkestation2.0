@@ -19,6 +19,7 @@ type RodSlotData = {
 
 type ChannelSelection =
   | { kind: 'control' }
+  | { kind: 'integrity' }
   | { kind: 'rod'; rod: RodSlotData };
 
 const GRID_SIZE = 15;
@@ -68,6 +69,9 @@ export const RBMKRods = () => {
   const rods: RodSlotData[] = data?.rods || [];
   const maxNormal = Number(data?.max_normal_slots ?? 12);
   const maxSpecial = Number(data?.max_special_slots ?? 4);
+  const integrity = Number(data?.integrity ?? 0);
+  const maxIntegrity = Math.max(Number(data?.max_integrity ?? 100), 1);
+  const integrityRatio = Math.max(0, Math.min(1, integrity / maxIntegrity));
   const controlDepth = Number(data?.control_rods ?? 0);
   const maxControlDepth = Math.max(Number(data?.max_control_rod ?? 100), 1);
   const controlRatio = Math.max(0, Math.min(1, controlDepth / maxControlDepth));
@@ -90,6 +94,14 @@ export const RBMKRods = () => {
 
   const normalInstalled = normalRods.filter(isRodOccupied).length;
   const specialInstalled = specialRods.filter(isRodOccupied).length;
+  const integrityState =
+    integrityRatio >= 0.75
+      ? 'nominal'
+      : integrityRatio >= 0.5
+        ? 'warning'
+        : integrityRatio >= 0.25
+          ? 'critical'
+          : 'danger';
   const controlState =
     controlRatio >= 0.7
       ? 'safe'
@@ -101,7 +113,10 @@ export const RBMKRods = () => {
 
   let monitorTitle = 'CONTROL ROD';
   let monitorValue = `${(controlRatio * 100).toFixed(0)}% INSERTED`;
-  if (selection.kind === 'rod') {
+  if (selection.kind === 'integrity') {
+    monitorTitle = 'CORE INTEGRITY';
+    monitorValue = `${(integrityRatio * 100).toFixed(0)}%`;
+  } else if (selection.kind === 'rod') {
     if (isRodOccupied(selection.rod)) {
       monitorTitle = shortRodName(selection.rod);
       monitorValue = selection.rod.depleted
@@ -136,8 +151,22 @@ export const RBMKRods = () => {
               (row - GRID_CENTER) ** 2 + (column - GRID_CENTER) ** 2;
             const isCenter = row >= 6 && row <= 8 && column >= 6 && column <= 8;
 
-            if (distance > 32 || isCenter) {
+            if (distance > 45 || isCenter) {
               return <span key={channel} className="RBMKConsole__ChannelVoid" />;
+            }
+
+            if (distance > 32) {
+              return (
+                <button
+                  type="button"
+                  key={channel}
+                  aria-label="Core integrity"
+                  className={`RBMKConsole__IntegrityCell RBMKConsole__IntegrityCell--${integrityState}`}
+                  onClick={() => setSelection({ kind: 'integrity' })}
+                  onFocus={() => setSelection({ kind: 'integrity' })}
+                  onMouseEnter={() => setSelection({ kind: 'integrity' })}
+                />
+              );
             }
 
             const rod = channelRods.get(channel);

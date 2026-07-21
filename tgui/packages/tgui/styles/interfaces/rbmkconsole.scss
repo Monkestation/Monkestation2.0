@@ -82,15 +82,6 @@
     height: 410px;
     margin: 0.6rem auto;
     padding: 19px;
-    background:
-      radial-gradient(circle, rgba(53, 60, 62, 0.66) 0 58%, transparent 59%),
-      radial-gradient(circle, #111516 0 66%, #080a0b 67% 100%);
-    border: 1px solid #566167;
-    border-radius: 50%;
-    box-shadow:
-      inset 0 0 0 7px #090c0d,
-      inset 0 0 0 8px rgba(184, 194, 199, 0.2),
-      0 5px 16px rgba(0, 0, 0, 0.48);
   }
 
   .RBMKConsole__CoreGrid {
@@ -108,6 +99,7 @@
     min-height: 0;
   }
 
+  .RBMKConsole__IntegrityCell,
   .RBMKConsole__FuelChannel,
   .RBMKConsole__ControlChannel {
     position: relative;
@@ -125,6 +117,31 @@
     &:hover,
     &:focus {
       filter: brightness(1.42);
+    }
+  }
+
+  .RBMKConsole__IntegrityCell {
+    border: 1px solid rgba(174, 187, 194, 0.13);
+    box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.025);
+
+    &--nominal {
+      background: rgba(70, 143, 91, 0.16);
+      border-color: rgba(104, 175, 124, 0.24);
+    }
+
+    &--warning {
+      background: rgba(162, 136, 62, 0.17);
+      border-color: rgba(190, 163, 87, 0.27);
+    }
+
+    &--critical {
+      background: rgba(172, 91, 44, 0.18);
+      border-color: rgba(200, 111, 57, 0.28);
+    }
+
+    &--danger {
+      background: rgba(157, 45, 45, 0.2);
+      border-color: rgba(202, 67, 67, 0.32);
     }
   }
 
