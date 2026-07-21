@@ -472,6 +472,18 @@
 			reactor.update_linked_consoles()
 			return TRUE
 
+		if("reset_inlet_rate")
+			reactor.inlet_rate = RBMK_INLET_RATE_DEFAULT
+			reactor.wake_coolant_ports()
+			reactor.update_linked_consoles()
+			return TRUE
+
+		if("reset_outlet_rate")
+			reactor.outlet_rate = RBMK_OUTLET_RATE_DEFAULT
+			reactor.wake_coolant_ports()
+			reactor.update_linked_consoles()
+			return TRUE
+
 		if("remove_rod")
 			var/slot_kind = params["kind"]
 			var/slot_index = text2num(params["index"])

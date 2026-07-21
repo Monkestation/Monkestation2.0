@@ -78,10 +78,11 @@
 	if(available_pressure_head <= 0)
 		return
 
-	var/pressure_flow_ratio = CLAMP01(available_pressure_head / RBMK_INLET_PUMP_HEAD)
-
+	// The rate control is authoritative while the injector has pressure head.
+	// Do not taper only the inlet near the pressure limit: asymmetric tapering
+	// makes equal inlet/outlet commands continuously drain the chamber.
 	var/desired_moles = clamp(parent_reactor.inlet_rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX)
-	desired_moles *= pressure_flow_ratio * seconds_per_tick
+	desired_moles *= seconds_per_tick
 	if(desired_moles <= 0)
 		return
 
