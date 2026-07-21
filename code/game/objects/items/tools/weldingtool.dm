@@ -397,6 +397,7 @@
 	desc = "A MacGyver-style welder."
 	icon = 'icons/obj/improvised.dmi'
 	icon_state = "welder_makeshift"
+	change_icons = FALSE
 	toolspeed = 2
 	max_fuel = 10
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5)
