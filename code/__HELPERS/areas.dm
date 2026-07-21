@@ -3,6 +3,7 @@
 GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 	/area/station/engineering/main,
 	/area/station/engineering/supermatter,
+	/area/station/engineering/rbmk,
 	/area/station/engineering/atmospherics_engine,
 	/area/station/ai_monitored/turret_protected/ai,
 )))
@@ -363,4 +364,3 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 
 	area = get_area(area)
 	return istype(area, /area/centcom) && !is_type_in_typecache(area, blacklist_typecache)
-

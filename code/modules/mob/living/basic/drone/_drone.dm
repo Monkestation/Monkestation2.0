@@ -104,7 +104,7 @@
 	/// blacklisted drone areas, direct
 	var/list/drone_area_blacklist_flat = list(/area/station/engineering/atmos, /area/station/engineering/atmospherics_engine)
 	/// blacklisted drone areas, recursive/includes descendants
-	var/list/drone_area_blacklist_recursive = list(/area/station/engineering/supermatter)
+	var/list/drone_area_blacklist_recursive = list(/area/station/engineering/supermatter, /area/station/engineering/rbmk)
 	/// blacklisted drone machines, direct
 	var/list/drone_machinery_blacklist_flat
 	/// blacklisted drone machines, recursive/includes descendants

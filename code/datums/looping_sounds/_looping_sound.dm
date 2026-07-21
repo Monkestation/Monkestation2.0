@@ -309,10 +309,10 @@
 	if(distance > max_distance)
 		return 0
 
+	// BYOND applies spatial attenuation from the live x/y/z position and falloff
+	// distance. Keep this value unattenuated here so the same distance is not
+	// applied a second time every time the listener position is refreshed.
 	var/effective_volume = base_volume
-
-	if(falloff_exponent)
-		effective_volume -= CALCULATE_SOUND_VOLUME(base_volume, distance, max_distance, resolved_falloff_distance, falloff_exponent)
 
 	if(pressure_affected)
 		var/pressure_factor = 1
@@ -350,9 +350,10 @@
 	sound_to_update.x = source_turf.x - listener_turf.x
 	sound_to_update.z = source_turf.y - listener_turf.y
 	sound_to_update.y = (source_turf.z - listener_turf.z) * 5
-	// Distance attenuation is calculated in get_live_volume_for(). Disabling BYOND's
-	// second attenuation pass prevents long sounds from pumping or cutting out.
-	sound_to_update.falloff = 0
+	// Keep one attenuation model: BYOND's positional falloff. This is refreshed
+	// with the listener-relative position, while volume updates handle pressure,
+	// hearing traits, and mixer preferences.
+	sound_to_update.falloff = get_live_max_distance()
 
 /// Sends the current live loop sound to one listener.
 /datum/looping_sound/proc/send_live_sound_to(mob/listener, soundfile, effective_volume, mixer_channel)
