@@ -317,8 +317,9 @@
 	data["inlet_min"] = RBMK_INLET_RATE_MIN
 	data["inlet_max"] = RBMK_INLET_RATE_MAX
 
-	data["outlet_target_pressure"] = RBMK_ROUND2(reactor.outlet_target_pressure)
-	data["outlet_pressure_max"] = RBMK_OUTLET_PRESSURE_MAX
+	data["outlet_rate"] = reactor.outlet_rate
+	data["outlet_rate_min"] = RBMK_OUTLET_RATE_MIN
+	data["outlet_rate_max"] = RBMK_OUTLET_RATE_MAX
 
 	var/datum/gas_mixture/inlet_mix = reactor.get_inlet_mix()
 	var/datum/gas_mixture/outlet_mix = reactor.get_outlet_mix()
@@ -464,9 +465,9 @@
 			reactor.update_linked_consoles()
 			return TRUE
 
-		if("set_outlet_pressure")
-			var/requested_pressure = text2num(params["pressure"])
-			reactor.outlet_target_pressure = clamp(requested_pressure, 0, RBMK_OUTLET_PRESSURE_MAX)
+		if("set_outlet_rate")
+			var/requested_rate = text2num(params["rate"])
+			reactor.outlet_rate = clamp(requested_rate, RBMK_OUTLET_RATE_MIN, RBMK_OUTLET_RATE_MAX)
 			reactor.wake_coolant_ports()
 			reactor.update_linked_consoles()
 			return TRUE

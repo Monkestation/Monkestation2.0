@@ -15,21 +15,6 @@
     border-radius: 8px;
   }
 
-  .RoundGauge {
-    border: 2px solid #ffd700;
-    border-radius: 50%;
-    box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
-
-    .RoundGauge__value {
-      color: #ffd700;
-      font-weight: bold;
-    }
-
-    .RoundGauge__needle {
-      background: #ffd700;
-    }
-  }
-
   .Knob {
     border: 2px solid #ffd700;
     border-radius: 50%;
@@ -123,7 +108,6 @@
     min-height: 0;
   }
 
-  .RBMKConsole__IntegrityCell,
   .RBMKConsole__FuelChannel,
   .RBMKConsole__ControlChannel {
     position: relative;
@@ -141,31 +125,6 @@
     &:hover,
     &:focus {
       filter: brightness(1.42);
-    }
-  }
-
-  .RBMKConsole__IntegrityCell {
-    border: 1px solid rgba(174, 187, 194, 0.13);
-    box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.025);
-
-    &--nominal {
-      background: rgba(70, 143, 91, 0.16);
-      border-color: rgba(104, 175, 124, 0.24);
-    }
-
-    &--warning {
-      background: rgba(162, 136, 62, 0.17);
-      border-color: rgba(190, 163, 87, 0.27);
-    }
-
-    &--critical {
-      background: rgba(172, 91, 44, 0.18);
-      border-color: rgba(200, 111, 57, 0.28);
-    }
-
-    &--danger {
-      background: rgba(157, 45, 45, 0.2);
-      border-color: rgba(202, 67, 67, 0.32);
     }
   }
 
@@ -255,15 +214,15 @@
 
   .RBMKConsole__CoreMonitor {
     position: absolute;
-    top: 39.7%;
-    left: 39.7%;
+    top: 40.8%;
+    left: 40.8%;
     z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 20.6%;
-    height: 20.6%;
+    width: 18.4%;
+    height: 18.4%;
     overflow: hidden;
     font-family: monospace;
     text-align: center;
@@ -307,6 +266,12 @@
     gap: 0.35rem;
     color: #8e999e;
     font-size: 8px;
+  }
+
+  .RBMKConsole__CoreHint {
+    color: #737e83;
+    font-size: 8px;
+    white-space: nowrap;
   }
 
   .RBMKConsole__LegendKey,

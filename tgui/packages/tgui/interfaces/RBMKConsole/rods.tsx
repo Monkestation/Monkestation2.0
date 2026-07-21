@@ -1,7 +1,7 @@
 import { type CSSProperties, useState } from 'react';
 
 import { useBackend } from '../../backend';
-import { Box, Button } from '../../components';
+import { Box } from '../../components';
 
 type RodSlotData = {
   name?: string;
@@ -19,7 +19,6 @@ type RodSlotData = {
 
 type ChannelSelection =
   | { kind: 'control' }
-  | { kind: 'integrity' }
   | { kind: 'rod'; rod: RodSlotData };
 
 const GRID_SIZE = 15;
@@ -69,9 +68,6 @@ export const RBMKRods = () => {
   const rods: RodSlotData[] = data?.rods || [];
   const maxNormal = Number(data?.max_normal_slots ?? 12);
   const maxSpecial = Number(data?.max_special_slots ?? 4);
-  const integrity = Number(data?.integrity ?? 0);
-  const maxIntegrity = Math.max(Number(data?.max_integrity ?? 100), 1);
-  const integrityRatio = Math.max(0, Math.min(1, integrity / maxIntegrity));
   const controlDepth = Number(data?.control_rods ?? 0);
   const maxControlDepth = Math.max(Number(data?.max_control_rod ?? 100), 1);
   const controlRatio = Math.max(0, Math.min(1, controlDepth / maxControlDepth));
@@ -94,14 +90,6 @@ export const RBMKRods = () => {
 
   const normalInstalled = normalRods.filter(isRodOccupied).length;
   const specialInstalled = specialRods.filter(isRodOccupied).length;
-  const integrityState =
-    integrityRatio >= 0.75
-      ? 'nominal'
-      : integrityRatio >= 0.5
-        ? 'warning'
-        : integrityRatio >= 0.25
-          ? 'critical'
-          : 'danger';
   const controlState =
     controlRatio >= 0.7
       ? 'safe'
@@ -113,12 +101,7 @@ export const RBMKRods = () => {
 
   let monitorTitle = 'CONTROL ROD';
   let monitorValue = `${(controlRatio * 100).toFixed(0)}% INSERTED`;
-  let selectedRod: RodSlotData | undefined;
-  if (selection.kind === 'integrity') {
-    monitorTitle = 'CORE INTEGRITY';
-    monitorValue = `${(integrityRatio * 100).toFixed(0)}%`;
-  } else if (selection.kind === 'rod') {
-    selectedRod = selection.rod;
+  if (selection.kind === 'rod') {
     if (isRodOccupied(selection.rod)) {
       monitorTitle = shortRodName(selection.rod);
       monitorValue = selection.rod.depleted
@@ -153,22 +136,8 @@ export const RBMKRods = () => {
               (row - GRID_CENTER) ** 2 + (column - GRID_CENTER) ** 2;
             const isCenter = row >= 6 && row <= 8 && column >= 6 && column <= 8;
 
-            if (distance > 45 || isCenter) {
+            if (distance > 32 || isCenter) {
               return <span key={channel} className="RBMKConsole__ChannelVoid" />;
-            }
-
-            if (distance > 32) {
-              return (
-                <button
-                  type="button"
-                  key={channel}
-                  aria-label="Core integrity"
-                  className={`RBMKConsole__IntegrityCell RBMKConsole__IntegrityCell--${integrityState}`}
-                  onClick={() => setSelection({ kind: 'integrity' })}
-                  onFocus={() => setSelection({ kind: 'integrity' })}
-                  onMouseEnter={() => setSelection({ kind: 'integrity' })}
-                />
-              );
             }
 
             const rod = channelRods.get(channel);
@@ -183,7 +152,11 @@ export const RBMKRods = () => {
                 <button
                   type="button"
                   key={channel}
-                  aria-label={occupied ? rodName(rod) : `Empty ${rod.slot_kind} slot`}
+                  aria-label={
+                    occupied
+                      ? `Eject ${rodName(rod)}`
+                      : `Empty ${rod.slot_kind} slot`
+                  }
                   className={`RBMKConsole__FuelChannel RBMKConsole__FuelChannel--${rodState}`}
                   style={
                     {
@@ -192,7 +165,15 @@ export const RBMKRods = () => {
                         : '#737b80',
                     } as CSSProperties
                   }
-                  onClick={() => setSelection({ kind: 'rod', rod })}
+                  onClick={() => {
+                    setSelection({ kind: 'rod', rod });
+                    if (occupied) {
+                      act('remove_rod', {
+                        kind: rod.slot_kind,
+                        index: rod.slot_index,
+                      });
+                    }
+                  }}
                   onFocus={() => setSelection({ kind: 'rod', rod })}
                   onMouseEnter={() => setSelection({ kind: 'rod', rod })}
                 >
@@ -236,19 +217,9 @@ export const RBMKRods = () => {
           DEPLETED
           <span className="RBMKConsole__LegendLed" /> ROD MATERIAL
         </Box>
-        {selectedRod && isRodOccupied(selectedRod) && (
-          <Button
-            icon="eject"
-            color="bad"
-            content="Eject selected"
-            onClick={() =>
-              act('remove_rod', {
-                kind: selectedRod.slot_kind,
-                index: selectedRod.slot_index,
-              })
-            }
-          />
-        )}
+        <Box className="RBMKConsole__CoreHint">
+          CLICK AN OCCUPIED CHANNEL TO EJECT
+        </Box>
       </Box>
     </Box>
   );

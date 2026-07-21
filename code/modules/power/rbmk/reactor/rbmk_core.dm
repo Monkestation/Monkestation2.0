@@ -33,7 +33,7 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 	var/inlet_open = FALSE
 	var/outlet_open = FALSE
 	var/inlet_rate = RBMK_INLET_RATE_DEFAULT
-	var/outlet_target_pressure = RBMK_OUTLET_PRESSURE_DEFAULT
+	var/outlet_rate = RBMK_OUTLET_RATE_DEFAULT
 	var/last_inlet_moles_moved = 0
 	var/last_outlet_moles_moved = 0
 	var/last_inlet_flow_rate = 0

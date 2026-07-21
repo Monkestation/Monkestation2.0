@@ -27,8 +27,9 @@ export const RBMKControls = () => {
   const inletFlow = Number(data?.inlet_flow ?? 0);
 
   const outletOpen = Boolean(data?.outlet_open ?? false);
-  const outletTargetPressure = Number(data?.outlet_target_pressure ?? 1500);
-  const outletPressureMax = Number(data?.outlet_pressure_max ?? 5500);
+  const outletRate = Number(data?.outlet_rate ?? 750);
+  const outletRateMin = Number(data?.outlet_rate_min ?? 0);
+  const outletRateMax = Number(data?.outlet_rate_max ?? 2000);
   const outletPressure = Number(data?.outlet_pressure ?? 0);
   const outletCorePressure = Number(data?.outlet_core_pressure ?? 0);
   const outletFlow = Number(data?.outlet_flow ?? 0);
@@ -53,13 +54,13 @@ export const RBMKControls = () => {
     });
   };
 
-  const sendOutletPressure = (value: number) => {
+  const sendOutletRate = (value: number) => {
     if (!Number.isFinite(value)) {
       return;
     }
 
-    act('set_outlet_pressure', {
-      pressure: value,
+    act('set_outlet_rate', {
+      rate: Math.round(value),
     });
   };
 
@@ -211,15 +212,15 @@ export const RBMKControls = () => {
                 />
               </LabeledList.Item>
 
-              <LabeledList.Item label="Target Pressure">
+              <LabeledList.Item label="Output Rate">
                 <NumberInput
-                  value={outletTargetPressure}
-                  unit="kPa"
+                  value={outletRate}
+                  unit="mol/s"
                   width="90px"
-                  minValue={0}
-                  maxValue={outletPressureMax}
-                  step={10}
-                  onChange={sendOutletPressure}
+                  minValue={outletRateMin}
+                  maxValue={outletRateMax}
+                  step={25}
+                  onChange={sendOutletRate}
                 />
               </LabeledList.Item>
 

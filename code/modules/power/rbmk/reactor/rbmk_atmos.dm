@@ -115,22 +115,19 @@
 		return
 
 	var/current_pressure = internal_coolant_mix.return_pressure()
-	var/target_pressure = clamp(parent_reactor.outlet_target_pressure, RBMK_OUTLET_PRESSURE_BASE, RBMK_OUTLET_PRESSURE_MAX)
 	parent_reactor.last_outlet_pressure = current_pressure
 
 	var/downstream_pressure = 0
 	if(length(airs))
 		downstream_pressure = airs[1].return_pressure()
 
-	var/effective_target_pressure = max(target_pressure, downstream_pressure)
-
-	if(current_pressure <= effective_target_pressure)
+	// The outlet is a commanded mass-flow control. Pressure is an outcome of
+	// coolant inventory and temperature, while downstream pressure remains a
+	// physical backpressure interlock.
+	if(current_pressure <= downstream_pressure)
 		return
 
-	var/pressure_delta = current_pressure - effective_target_pressure
-	var/pressure_ratio = CLAMP01(pressure_delta / max(RBMK_PRESSURE_CRITICAL, 1))
-	var/desired_release_moles = RBMK_INLET_RATE_MAX * pressure_ratio
-
+	var/desired_release_moles = clamp(parent_reactor.outlet_rate, RBMK_OUTLET_RATE_MIN, RBMK_OUTLET_RATE_MAX)
 	desired_release_moles *= seconds_per_tick
 	if(desired_release_moles <= 0)
 		return

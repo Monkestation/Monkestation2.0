@@ -87,7 +87,6 @@
 	if(coolant_heat_capacity <= 0)
 		return
 
-	var/commanded_flow_ratio = inlet_open ? CLAMP01(inlet_rate / max(RBMK_INLET_RATE_MAX, 1)) : 0
 	var/open_port_count = 0
 	var/actual_flow_rate = 0
 	if(inlet_open)
@@ -100,7 +99,10 @@
 	var/actual_flow_ratio = CLAMP01(actual_flow_rate / max(RBMK_INLET_RATE_MAX * max(open_port_count, 1), 1))
 	var/coolant_inventory_ratio = CLAMP01(coolant_moles / max(RBMK_COOLANT_EFFECTIVE_MOLES_TARGET, 1))
 	var/minimum_exchange_ratio = RBMK_COOLANT_STAGNANT_FLOW_RATIO * max(coolant_inventory_ratio, 0.25)
-	var/exchange_ratio = max(actual_flow_ratio, commanded_flow_ratio * 0.25)
+	// Only measured gas movement earns forced-flow cooling. A commanded pump
+	// with no coolant movement retains stationary conduction, but cannot fake
+	// circulation through an empty or backpressured loop.
+	var/exchange_ratio = max(actual_flow_ratio, minimum_exchange_ratio)
 	exchange_ratio *= 0.35 + (coolant_inventory_ratio * 0.65)
 	exchange_ratio = max(exchange_ratio, minimum_exchange_ratio)
 
