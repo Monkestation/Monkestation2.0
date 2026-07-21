@@ -4,6 +4,16 @@
 /obj/structure/grille/window_sill,
 /turf/open/floor/engine,
 /area/station/engineering/rbmk/room)
+"aZ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/station/engineering/rbmk/room)
 "bM" = (
 /obj/machinery/light/directional/east,
 /obj/structure/closet/secure_closet/engineering_welding,
@@ -55,7 +65,7 @@
 "dc" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/binary/volume_pump{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/station/engineering/rbmk/room)
@@ -83,12 +93,12 @@
 /area/station/engineering/rbmk/room)
 "eI" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine Room"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/structure/cable,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "RBMK Containment Room"
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/rbmk/room)
 "gO" = (
@@ -109,6 +119,10 @@
 /obj/structure/window_sill,
 /obj/structure/grille/window_sill,
 /obj/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/engine,
+/area/station/engineering/rbmk/room)
+"hf" = (
+/obj/machinery/rbmk/fuel_processor,
 /turf/open/floor/engine,
 /area/station/engineering/rbmk/room)
 "hT" = (
@@ -136,7 +150,7 @@
 "kf" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine Room"
+	name = "RBMK Containment Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/plating,
@@ -169,7 +183,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/valve,
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 6
+	},
 /turf/open/floor/engine/insulation,
 /area/station/engineering/rbmk/room)
 "mO" = (
@@ -197,10 +213,10 @@
 /area/station/engineering/rbmk/room)
 "nd" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine Room"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "RBMK Containment Room"
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/rbmk/room)
 "np" = (
@@ -248,13 +264,13 @@
 /area/station/engineering/rbmk/room)
 "qz" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine Room"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/structure/cable/layer3,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "RBMK Containment Room"
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/rbmk/room)
 "rY" = (
@@ -357,13 +373,6 @@
 "xA" = (
 /turf/template_noop,
 /area/space/nearstation)
-"xK" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/rbmk/fuel_processor,
-/turf/open/floor/engine,
-/area/station/engineering/rbmk/room)
 "yn" = (
 /turf/open/floor/engine/insulation,
 /area/station/engineering/rbmk/room)
@@ -532,7 +541,7 @@
 /area/station/engineering/rbmk/room)
 "Fw" = (
 /obj/machinery/atmospherics/components/unary/thermomachine{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/station/engineering/rbmk/room)
@@ -707,11 +716,11 @@
 /area/station/engineering/rbmk/room)
 "PF" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine Room"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "RBMK Containment Room"
+	},
 /turf/open/floor/plating,
 /area/station/engineering/rbmk/room)
 "PN" = (
@@ -736,7 +745,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 8
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/station/engineering/rbmk/room)
@@ -815,10 +824,10 @@
 "Vk" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine Room"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "RBMK Containment Room"
+	},
 /turf/open/floor/plating,
 /area/station/engineering/rbmk/room)
 "Vn" = (
@@ -1007,8 +1016,8 @@ ZC
 ZC
 KS
 KS
-KS
-xK
+hf
+bY
 Yf
 MT
 kK
@@ -1105,7 +1114,7 @@ vY
 zC
 zC
 NA
-Ey
+aZ
 gO
 Sh
 yn
