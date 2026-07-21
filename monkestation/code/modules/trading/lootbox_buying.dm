@@ -44,10 +44,3 @@
 
 	to_chat(src, span_notice("You have been given [amount] lootboxes! Open them using the escape menu."))
 	to_chat(src, span_notice("You now own [prefs.lootboxes_owned] lootboxes."))
-
-/proc/give_lootboxes_to_randoms(amount)
-	for(var/i = 1 to amount)
-		var/mob/mob = pick(GLOB.player_list)
-		if(!mob.client)
-			continue
-		mob.client.give_lootbox(1)
