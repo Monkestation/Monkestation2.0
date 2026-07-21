@@ -1191,3 +1191,10 @@
 	item_path = /obj/item/toy/plush/vanilla
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+//Amelora
+/datum/loadout_item/suit/pharaoh_tunic
+	name = "Pharoah Tunic"
+	item_path = /obj/item/clothing/suit/costume/nemes
+	donator_only = TRUE
+	requires_purchase = FALSE

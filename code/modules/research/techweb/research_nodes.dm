@@ -19,6 +19,10 @@
 		"beacon",
 		"bluespace_crystal",
 		"telesci_gps",
+		"telesci_gps_sci",
+		"telesci_gps_engi",
+		"telesci_gps_mining",
+		"telesci_gps_med",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
@@ -31,7 +35,7 @@
 	design_ids = list(
 		"bluespacebeaker",
 		"bluespacesyringe",
-		"bluespacevial",
+		"chemcanister_bluespace",
 		"bluespace_coffeepot",
 		"bs_rped",
 		"cargotele",

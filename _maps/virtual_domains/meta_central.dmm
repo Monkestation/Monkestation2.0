@@ -117,7 +117,7 @@
 "aZ" = (
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/neutral,
-/obj/effect/decal/cleanable/robot_debris/limb,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/limb,
 /obj/machinery/exoscanner,
 /obj/effect/turf_decal/bot_red,
 /turf/open/floor/iron,
@@ -1069,7 +1069,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "jh" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "jk" = (
@@ -1670,7 +1670,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/oil{
+/obj/effect/decal/cleanable/blood/oil{
 	icon_state = "floor6"
 	},
 /obj/structure/railing{
@@ -1828,7 +1828,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "pI" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/up,
+/obj/effect/decal/cleanable/blood/gibs/xeno/up,
 /obj/structure/alien/weeds,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/virtual_domain)
@@ -1853,7 +1853,7 @@
 /turf/open/indestructible/meat,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "pO" = (
-/obj/effect/decal/cleanable/robot_debris/old,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/old,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/paper/stack{
 	dir = 4
@@ -1912,7 +1912,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/oil{
+/obj/effect/decal/cleanable/blood/oil{
 	icon_state = "floor5"
 	},
 /turf/open/floor/iron,
@@ -2309,7 +2309,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "tn" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/core,
+/obj/effect/decal/cleanable/blood/gibs/xeno/core,
 /obj/structure/alien/weeds,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/virtual_domain)
@@ -3452,7 +3452,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "CQ" = (
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /obj/structure/alien/weeds,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/virtual_domain)
@@ -3723,7 +3723,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Fr" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/down,
+/obj/effect/decal/cleanable/blood/gibs/xeno/down,
 /obj/structure/alien/weeds,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/virtual_domain)
@@ -4199,7 +4199,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/robot_debris,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "JP" = (
@@ -5625,7 +5625,7 @@
 "VZ" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/tile/neutral,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Wd" = (

@@ -11,6 +11,7 @@
 	quirk_flags = QUIRK_HUMAN_ONLY
 	mail_goodies = list(/obj/item/reagent_containers/blood/o_minus) // universal blood type that is safe for all
 	var/min_blood = BLOOD_VOLUME_SAFE - 25 // just barely survivable without treatment
+	species_blacklist = list(SPECIES_IPC, SPECIES_OOZELING, SPECIES_PLASMAMAN)
 
 /datum/quirk/blooddeficiency/post_add()
 	update_mail()
@@ -46,11 +47,11 @@
 
 	mail_goodies.Cut()
 
-	var/datum/blood_type/new_type = quirk_holder.get_blood_type()
+	var/datum/blood_type/new_type = quirk_holder.get_bloodtype()
 	if(isnull(new_type))
 		return
 
-	if(istype(new_type, /datum/blood_type/crew/human))
+	if(istype(new_type, /datum/blood_type/human))
 		mail_goodies += /obj/item/reagent_containers/blood/o_minus
 		return
 

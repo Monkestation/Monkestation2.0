@@ -19,7 +19,7 @@
 		to_chat(mob, span_warning("You can't open a lootbox here! The lootbox has been added to your inventory. Observe or spawn in first, then click the button again."))
 		return
 
-	if(!prefs.lootboxes_owned)
+	if(prefs.lootboxes_owned <= 0)
 		return
 
 	prefs.lootboxes_owned--
@@ -38,6 +38,16 @@
 /client/proc/give_lootbox(amount)
 	if(!prefs)
 		return
+
 	prefs.lootboxes_owned += amount
-	to_chat(mob, span_notice("You have been given [amount] lootboxes! Open it using the escape menu."))
 	prefs.save_preferences()
+
+	to_chat(src, span_notice("You have been given [amount] lootboxes! Open them using the escape menu."))
+	to_chat(src, span_notice("You now own [prefs.lootboxes_owned] lootboxes."))
+
+/proc/give_lootboxes_to_randoms(amount)
+	for(var/i = 1 to amount)
+		var/mob/mob = pick(GLOB.player_list)
+		if(!mob.client)
+			continue
+		mob.client.give_lootbox(1)
