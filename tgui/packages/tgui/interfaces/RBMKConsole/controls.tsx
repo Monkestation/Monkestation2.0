@@ -20,16 +20,16 @@ export const RBMKControls = () => {
   const maxRodDepth = Number(data?.max_control_rod ?? 100);
 
   const inletOpen = Boolean(data?.inlet_open ?? false);
-  const inletRate = Number(data?.inlet_rate ?? 750);
+  const inletRate = Number(data?.inlet_rate ?? 75);
   const inletMin = Number(data?.inlet_min ?? 0);
-  const inletMax = Number(data?.inlet_max ?? 2000);
+  const inletMax = Number(data?.inlet_max ?? 250);
   const inletPressure = Number(data?.inlet_pressure ?? 0);
   const inletFlow = Number(data?.inlet_flow ?? 0);
 
   const outletOpen = Boolean(data?.outlet_open ?? false);
-  const outletRate = Number(data?.outlet_rate ?? 750);
+  const outletRate = Number(data?.outlet_rate ?? 75);
   const outletRateMin = Number(data?.outlet_rate_min ?? 0);
-  const outletRateMax = Number(data?.outlet_rate_max ?? 2000);
+  const outletRateMax = Number(data?.outlet_rate_max ?? 250);
   const outletPressure = Number(data?.outlet_pressure ?? 0);
   const outletCorePressure = Number(data?.outlet_core_pressure ?? 0);
   const outletFlow = Number(data?.outlet_flow ?? 0);
@@ -186,7 +186,7 @@ export const RBMKControls = () => {
                   width="90px"
                   minValue={inletMin}
                   maxValue={inletMax}
-                  step={25}
+                  step={5}
                   onChange={sendInletRate}
                 />
               </LabeledList.Item>
@@ -199,6 +199,14 @@ export const RBMKControls = () => {
                 <Box>{inletFlow.toFixed(1)} mol/s</Box>
               </LabeledList.Item>
             </LabeledList>
+            <Button
+              mt={1}
+              fluid
+              icon="rotate-left"
+              content="Reset Inlet Default"
+              tooltip="Restore the inlet command to 75 mol/s. The injector state is unchanged."
+              onClick={() => act('reset_inlet_rate')}
+            />
           </Section>
 
           <Section title="Outlet">
@@ -219,7 +227,7 @@ export const RBMKControls = () => {
                   width="90px"
                   minValue={outletRateMin}
                   maxValue={outletRateMax}
-                  step={25}
+                  step={5}
                   onChange={sendOutletRate}
                 />
               </LabeledList.Item>
@@ -236,6 +244,14 @@ export const RBMKControls = () => {
                 <Box>{outletFlow.toFixed(1)} mol/s</Box>
               </LabeledList.Item>
             </LabeledList>
+            <Button
+              mt={1}
+              fluid
+              icon="rotate-left"
+              content="Reset Outlet Default"
+              tooltip="Restore the outlet command to 75 mol/s. The regulator state is unchanged."
+              onClick={() => act('reset_outlet_rate')}
+            />
           </Section>
 
           <Section title="Coolant Inventory">

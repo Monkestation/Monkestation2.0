@@ -240,7 +240,7 @@
 	start_length = 16 SECONDS
 	start_volume = 6
 
-	mid_sounds = 'sound/rbmk/turbine_mid.ogg'
+	mid_sounds = list('sound/rbmk/turbine_mid.ogg')
 	mid_length = 12 SECONDS
 	volume = 18
 
