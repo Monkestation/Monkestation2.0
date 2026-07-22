@@ -1,8 +1,8 @@
 {
 	"version": 1,
-	"map_name": "byost",
+	"map_name": "buildyourownstation",
 	"map_path": "map_files/BuildYourOwnStation",
-	"map_file": "byost.dmm",
+	"map_file": "buildyourownstation.dmm",
 	"space_ruin_levels": 2,
 	"shuttles": {
 		"cargo": "cargo_box",

@@ -92,5 +92,5 @@ map oshan
 	votable
 endmap
 
-map BYOSt
+map buildyourownstation
 endmap
