@@ -93,5 +93,4 @@ map oshan
 endmap
 
 map BYOSt
-    default
 endmap
