@@ -91,3 +91,7 @@ endmap
 map oshan
 	votable
 endmap
+
+map BYOSt
+    default
+endmap
