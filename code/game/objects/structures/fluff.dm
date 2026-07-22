@@ -297,3 +297,10 @@
 /obj/structure/fluff/tram_rail/electric/attack_hand(mob/living/user, list/modifiers)
 	if(user.electrocute_act(75, src))
 		do_sparks(5, TRUE, src)
+
+/obj/structure/fluff/coinpress
+	name = "coin press"
+	desc = "A very old and non-functional machine for pressing coins using materials, these stopped being supplied in mining bases quite a long while ago."
+	icon = 'icons/obj/economy.dmi'
+	icon_state = "coinpress0"
+	density = TRUE

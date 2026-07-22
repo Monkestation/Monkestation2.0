@@ -5052,6 +5052,7 @@
 #include "code\modules\mob\living\basic\pets\pet.dm"
 #include "code\modules\mob\living\basic\pets\pineapplecreacher.dm"
 #include "code\modules\mob\living\basic\pets\sloth.dm"
+#include "code\modules\mob\living\basic\pets\turtle.dm"
 #include "code\modules\mob\living\basic\pets\dog\_dog.dm"
 #include "code\modules\mob\living\basic\pets\dog\corgi.dm"
 #include "code\modules\mob\living\basic\pets\dog\dog_subtypes.dm"
