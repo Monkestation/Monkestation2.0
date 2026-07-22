@@ -15,7 +15,7 @@
     { "Down": true, "Linkage": "Cross" }
 	],
 	"orbit_shift_replacement": "Attention crew, it appears that someone has shifted your ship into more dangerous territory.",
-	"minetype": "lavaland_ruined",
+	"minetype": "Lavaland_ruined",
 	"job_changes": {
 		"Cook": {
 			"additional_cqc_areas": ["/area/station/service/kitchen/diner"]
