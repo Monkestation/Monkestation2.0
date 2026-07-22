@@ -879,8 +879,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-// Monkestation edit start: Research touchups
-
 /datum/design/mech_mining_scanner
 	name = "Mining Scanner"
 	id = "mech_mscanner"
@@ -1433,6 +1431,20 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
 	)
 
+/datum/design/borg_upgrade_gps
+	name = "Cyborg GPS"
+	id = "borg_upgrade_gps"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/gps
+	materials = list( // Same cost as a regular GPS.
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.5,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT,
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
+	)
+
 /datum/design/borg_upgrade_beaker_app
 	name = "Secondary Beaker Storage"
 	id = "borg_upgrade_beakerapp"
@@ -1539,6 +1551,23 @@
 	construction_time = 4 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	)
+
+/datum/design/borg_upgrade_experimental_welder
+	name = "Cyborg Experimental Welding Tool Upgrade"
+	id = "borg_upgrade_experimental_welder"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/experimental_weldingtool
+	materials = list(
+		/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/glass =SMALL_MATERIAL_AMOUNT * 5,
+		/datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/uranium =SMALL_MATERIAL_AMOUNT * 2
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING,
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SCIENCE
 	)
 
 /datum/design/borg_upgrade_uwu
@@ -1687,8 +1716,6 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 	special_design_flags = WHITELISTED_DESIGN
 
-// Monkestation edit end: Research touchups
-
 /datum/design/synthetic_flash
 	name = "Flash"
 	desc = "When a problem arises, SCIENCE is the solution."
@@ -1819,8 +1846,6 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 	research_icon_state = "cosmohonk-plating"
 
-// MONKE START - changed/added lots of department_flags
-
 /datum/design/mod_paint_kit
 	name = "MOD Paint Kit"
 	desc = "A paint kit for Modular Suits."
@@ -1840,7 +1865,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
 	construction_time = 5 SECONDS
-	build_path = /obj/item/clothing/neck/link_scryer/auto_link // monkestation edit: auto_link subtype
+	build_path = /obj/item/clothing/neck/link_scryer/auto_link
 	category = list(
 		RND_CATEGORY_MODSUITS + RND_SUBCATEGORY_MODSUITS_MISC
 	)

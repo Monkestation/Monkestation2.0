@@ -1,0 +1,9 @@
+author: "Gboster, mc-oofert, sylvia-from-fulp-station, W4rd3nn, Exester509"
+delete-after: True
+changes:
+  - rscadd: "3 new deathmatch maps were ported from TG"
+  - bugfix: "(sylvia-from-fulp-station) indestructible light tile emits light"
+  - bugfix: "(Exester509) Plasmamen will become human in the deathmatch so they don't instantly die"
+  - bugfix: "(mc-oofert) deathmatch OSHA Violator map field generators are now permanently on instead of being on a few seconds"
+  - bugfix: "(mc-oofert) breaking certain terrain in deathmatch doesnt instantly breach to space"
+  - qol: "(mc-oofert) deathmatch map names are sorted alphabetically"

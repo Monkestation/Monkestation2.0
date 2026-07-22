@@ -145,8 +145,6 @@
 	var/can_download = TRUE
 	//Can we (simple) examine humans?
 	var/canExamineHumans = FALSE
-	//Reduces/Increases download speed by this modifier
-	var/downloadSpeedModifier = 1
 
 	//Do we have access to camera tracking?
 	var/canCameraMemoryTrack = FALSE
@@ -157,8 +155,6 @@
 
 	///Did we get the death prompt?
 	var/is_dying = FALSE
-	///Multiplier for amount of points gained when passively using CPU for science
-	var/research_point_booster = 1
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai, shunted)
 	. = ..()

@@ -115,17 +115,17 @@ GLOBAL_LIST_EMPTY(data_cores)
 	var/holder_status = get_holder_status()
 	if(holder_status)
 		. += span_warning("Machinery non-functional. Reason: [holder_status]")
-	. += span_notice("Its floor <b>bolts</b> are [anchored ? "tightened" : "loose"].")
+	. += span_notice("Its floor [EXAMINE_HINT("bolts")] are [anchored ? "tightened" : "loose"].")
+	if(isnull(integrated_battery))
+		. += span_notice("It is missing a [EXAMINE_HINT("backup battery")].")
+	. += span_notice("It is reporting a core temperature of [EXAMINE_HINT("[core_temp]K")]")
 
-	if(isobserver(user))
-		. += "Core temperature: <b>[core_temp] K</b>"
-
-	. += "<b>The monitor lists the following AIs:</b>"
+	. += span_bold("The monitor lists the following AIs:")
 	for(var/mob/living/silicon/ai/AI in contents)
 		if(!isobserver(user))
-			. += "<b>[AI.name]</b>"
+			. += span_bold("[AI.name]")
 		else
-			. += "<b>[AI] (Core: [FOLLOW_LINK(user, AI.loc)], Eye: [FOLLOW_LINK(user, AI.eyeobj)])</b>"
+			. += span_bold("[AI] (Core: [FOLLOW_LINK(user, AI.loc)], Eye: [FOLLOW_LINK(user, AI.eyeobj)])")
 		. += AI.examine(user)
 
 /obj/machinery/ai/data_core/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -151,11 +151,13 @@ GLOBAL_LIST_EMPTY(data_cores)
 	if(!panel_open)
 		balloon_alert(user, "panel closed!")
 		return ITEM_INTERACT_BLOCKING
+	var/had_battery = FALSE
 	if(integrated_battery)
 		user.put_in_hands(integrated_battery)
+		had_battery = TRUE
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
-	balloon_alert(user, "batteries swapped")
+	balloon_alert(user, had_battery ? "batteries swapped" : "battery inserted")
 	RefreshParts()
 	return ITEM_INTERACT_SUCCESS
 
@@ -237,16 +239,17 @@ GLOBAL_LIST_EMPTY(data_cores)
 	valid_ticks--
 	if(valid_ticks <= 0)
 		use_power = IDLE_POWER_USE
-	if(COOLDOWN_FINISHED(src, warning_cooldown))
-		COOLDOWN_START(src, warning_cooldown, AI_DATA_CORE_WARNING_COOLDOWN)
-		//Other AIs on this level will get alerted
-		for(var/obj/machinery/ai/data_core/other_data_cores in GLOB.data_cores["[z]"])
-			for(var/mob/living/silicon/ai/AI in other_data_cores.contents)
-				if(!AI.mind && AI.deployed_shell.mind)
-					to_chat(AI.deployed_shell, span_userdanger("<A HREF=?src=[REF(AI)];go_to_machine=[REF(src)]>Data core</A> in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
-				else
-					to_chat(AI, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
-				AI.playsound_local(AI, 'sound/machines/engine_alert2.ogg', 30)
+	if(!COOLDOWN_FINISHED(src, warning_cooldown))
+		return
+	COOLDOWN_START(src, warning_cooldown, AI_DATA_CORE_WARNING_COOLDOWN)
+	//Other AIs on this level will get alerted
+	for(var/obj/machinery/ai/data_core/other_data_cores in GLOB.data_cores["[z]"])
+		for(var/mob/living/silicon/ai/AI in other_data_cores.contents)
+			if(!AI.mind && AI.deployed_shell.mind)
+				to_chat(AI.deployed_shell, span_userdanger("<A HREF=?src=[REF(AI)];go_to_machine=[REF(src)]>Data core</A> in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
+			else
+				to_chat(AI, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
+			AI.playsound_local(AI, 'sound/machines/engine_alert2.ogg', 30)
 
 /obj/machinery/ai/data_core/process_atmos()
 	. = ..()
@@ -305,6 +308,11 @@ GLOBAL_LIST_EMPTY(data_cores)
 	name = "primary AI data core"
 	desc = "A complicated computer system capable of emulating the neural functions of a human at near-instantanous speeds. This one has a scrawny and faded note saying: 'Primary AI Data Core'"
 	circuit = /obj/item/circuitboard/machine/ai_data_core/primary
+
+/obj/machinery/ai/data_core/primary/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		new /obj/item/paper/ai_control_code(src)
 
 /*
  * This is a good place for AI-related object verbs so I'm sticking it here.
