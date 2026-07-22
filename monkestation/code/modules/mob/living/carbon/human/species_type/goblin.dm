@@ -25,6 +25,7 @@
 	maxhealthmod = 0.75
 	stunmod = 1.2
 	payday_modifier = 1
+	var/was_yoinkable_before = FALSE
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/goblin,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/goblin,
@@ -36,6 +37,15 @@
 
 /mob/living/carbon/human/species/goblin
 	race = /datum/species/goblin
+
+/datum/species/goblin/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	. = ..()
+	was_yoinkable_before = C.can_be_held
+	C.can_be_held = TRUE
+
+/datum/species/goblin/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	. = ..()
+	C.can_be_held = was_yoinkable_before
 
 /datum/species/goblin/get_species_description()
 	return "A species of short humanoids. Hailing from Gatosh, they live in cities built on the crumbling remains of the previous civilization, or travel nomadically through the desert that covers most of the planet."
