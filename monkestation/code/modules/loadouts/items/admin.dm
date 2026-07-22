@@ -74,3 +74,40 @@
 	requires_purchase = FALSE
 	admin_only = TRUE
 	item_path = /obj/item/clothing/mask/sprungle/personal
+
+// SpeebusDaGeebus
+/obj/item/infinite_cigar_box
+	name = "\improper paradoxical premium Classic cigar case"
+	desc = "A case of incredibly expensive cigars, that never seems to run out."
+	icon_state = "intern_cigar_box"
+	icon = 'icons/obj/cigarettes.dmi'
+	var/spawn_type = /obj/item/clothing/mask/cigarette/cigar/intern
+
+/obj/item/infinite_cigar_box/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/clothing/mask/cigarette/cigar))
+		to_chat(user, "you stuff [attacking_item] into the [src], and it seems to fall into a infinite void")
+		qdel(attacking_item)
+		return TRUE
+
+/obj/item/infinite_cigar_box/attack_self(mob/user, modifiers)
+	to_chat(user, "you pull a cigar from the [src]")
+	var/obj/item/new_cigar = new spawn_type
+	user.put_in_hands(new_cigar)
+	playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 30, TRUE)
+
+/obj/item/infinite_cigar_box/contraband
+	name = "\improper paradoxical premium Prohibition cigar case"
+	desc = "A case of seemingly infinte prohibition era cigars, with a purple wrap and a exotic smell."
+	icon_state = "intern_cigar_box_purple"
+	spawn_type = /obj/item/clothing/mask/cigarette/cigar/intern/purple
+
+/datum/loadout_item/inhand/cigar_box
+	name = "Paradoxical Premium Classic Cigar Case"
+	item_path = /obj/item/infinite_cigar_box
+	requires_purchase = FALSE
+	admin_only = TRUE
+	ckeywhitelist = list("speebusdageebus")
+
+/datum/loadout_item/inhand/cigar_box/purple
+	name = "Paradoxical Premium Prohibition Cigar Case"
+	item_path = /obj/item/infinite_cigar_box/contraband

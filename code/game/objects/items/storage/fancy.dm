@@ -451,6 +451,8 @@
 	spawn_coupon = FALSE
 	display_cigs = FALSE
 	custom_premium_price = PAYCHECK_COMMAND
+	///If this box has special sprite for its cigars
+	var/cigar_overlay = TRUE
 
 /obj/item/storage/fancy/cigarettes/cigars/Initialize(mapload)
 	. = ..()
@@ -463,7 +465,7 @@
 
 /obj/item/storage/fancy/cigarettes/cigars/update_overlays()
 	. = ..()
-	if(!open_status)
+	if(!open_status || !cigar_overlay)
 		return
 	var/cigar_position = 1 //generate sprites for cigars in the box
 	for(var/obj/item/clothing/mask/cigarette/cigar/smokes in contents)
@@ -485,6 +487,26 @@
 	base_icon_state = "cohibacase"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/havana
 	custom_premium_price = PAYCHECK_COMMAND * 2.25
+
+/obj/item/storage/fancy/cigarettes/cigars/intern
+	name = "\improper premium Classic cigar case"
+	desc = "A case of incredibly expensive cigars, manufactured the same since 1728."
+	icon_state = "intern_cigar_box"
+	base_icon_state = "intern_cigar_box"
+	spawn_type = /obj/item/clothing/mask/cigarette/cigar/intern
+	open_status = FANCY_CONTAINER_ALWAYS_OPEN
+	custom_premium_price = PAYCHECK_COMMAND * 4 // 400
+	discountable = FALSE
+	spawn_count = 6
+	cigar_overlay = FALSE
+
+/obj/item/storage/fancy/cigarettes/cigars/intern/contraband
+	name = "\improper premium Prohibition cigar case"
+	desc = "A case of incredibly expensive, illict cigars. Take a ride on the wild side, why don't you?"
+	icon_state = "intern_cigar_box_purple"
+	base_icon_state = "intern_cigar_box_purple"
+	spawn_type = /obj/item/clothing/mask/cigarette/cigar/intern/purple
+	custom_premium_price = PAYCHECK_COMMAND * 5 // 500
 
 /*
  * Heart Shaped Box w/ Chocolates
