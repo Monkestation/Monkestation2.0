@@ -23,6 +23,8 @@
 	var/drop_direction = 0
 	/// Whether or not the fabricator links to the ore silo on init. Special derelict or maintanance variants should set this to FALSE.
 	var/link_on_init = TRUE
+	/// Optional tgui theme override for this fabricator.
+	var/ui_theme
 
 	/// Multiplier for production speed.
 	var/production_speed_multiplier = 0.1
@@ -273,6 +275,7 @@
 	data["onHold"] = materials.on_hold()
 	data["busy"] = busy
 	data["materialMaximum"] = materials.local_size
+	data["ui_theme"] = ui_theme
 	data["queue"] = list()
 
 	return data

@@ -48,6 +48,7 @@
 		return
 
 	INVOKE_ASYNC(src, PROC_REF(repack), source, user)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Removes the element target and spawns a new one of whatever item_to_pack_into is
 /datum/element/repackable/proc/repack(atom/source, mob/user)
@@ -56,13 +57,37 @@
 		return
 
 	playsound(source, 'sound/items/ratchet.ogg', 50, TRUE)
+	if(hascall(source, "prepare_for_packing"))
+		call(source, "prepare_for_packing")()
+	else if(hascall(source, "build_packed_material_cache"))
+		call(source, "build_packed_material_cache")()
+	var/obj/item/new_pack
 
 	if(generic_repack)
-		var/obj/item/flatpacked_machine/generic/new_pack = new item_to_pack_into(source.drop_location())
-		new_pack.type_to_deploy = source.type
-		new_pack.after_set()
+		var/obj/item/flatpacked_machine/generic/new_generic_pack = new item_to_pack_into(source.drop_location())
+		new_pack = new_generic_pack
+		new_generic_pack.type_to_deploy = source.type
+		new_generic_pack.after_set()
 	else
-		new item_to_pack_into(source.drop_location())
+		new_pack = new item_to_pack_into(source.drop_location())
+
+	if(new_pack && ("imported_designs" in source.vars) && ("imported_designs" in new_pack.vars))
+		var/list/imported_designs = source.vars["imported_designs"]
+		new_pack.vars["imported_designs"] = islist(imported_designs) ? imported_designs.Copy() : list()
+
+	if(new_pack && ("unlocked_techfab_departments" in source.vars) && ("unlocked_techfab_departments" in new_pack.vars))
+		var/list/unlocked_techfab_departments = source.vars["unlocked_techfab_departments"]
+		new_pack.vars["unlocked_techfab_departments"] = islist(unlocked_techfab_departments) ? unlocked_techfab_departments.Copy() : list()
+
+	if(new_pack && ("lathe_recipe_set" in source.vars) && ("lathe_recipe_set" in new_pack.vars))
+		new_pack.vars["lathe_recipe_set"] = source.vars["lathe_recipe_set"]
+
+	if(new_pack && ("packed_materials" in source.vars) && ("packed_materials" in new_pack.vars))
+		var/list/packed_materials = source.vars["packed_materials"]
+		new_pack.vars["packed_materials"] = islist(packed_materials) ? packed_materials.Copy() : list()
+
+	if(new_pack && hascall(source, "transfer_contents_to_packed_item"))
+		call(source, "transfer_contents_to_packed_item")(new_pack)
 	qdel(source)
 
 /// Adds screen context for hovering over the repackable items with your mouse
