@@ -36,6 +36,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/vox,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/vox,
 	)
+	coldmod = 0.67
 
 /datum/species/vox/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()
@@ -164,7 +165,7 @@
 	unarmed_attack_sound = 'sound/weapons/slash.ogg'
 	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
 	composition_effects = list(TRAIT_COLD_BLOODED = 0.5)
-
+	bodypart_traits = list(TRAIT_QUICKER_CARRY)
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/arm/left/vox/Initialize(mapload)
@@ -194,7 +195,7 @@
 	unarmed_attack_sound = 'sound/weapons/slash.ogg'
 	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
 	composition_effects = list(TRAIT_COLD_BLOODED = 0.5)
-
+	bodypart_traits = list(TRAIT_QUICKER_CARRY)
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/arm/right/vox/Initialize(mapload)
@@ -245,42 +246,3 @@
 	)
 
 	should_draw_greyscale = FALSE
-
-/obj/item/clothing/under/vox
-	name = "alien clothing"
-	desc = "A strange set of pants and straps."
-	icon = 'icons/obj/clothing/vox/vox_clothing_obj.dmi'
-	worn_icon = 'icons/mob/clothing/vox/vox_clothing_mob.dmi'
-	icon_state = "vox-jumpsuit"
-	clothing_flags = VOX_CLOTHING
-	inhand_icon_state = null
-	no_worn_offset = TRUE
-	can_adjust = FALSE
-	body_parts_covered = CHEST|GROIN|LEGS
-
-/obj/item/clothing/mask/breath/vox
-	name = "bizarre breath mask"
-	desc = "A close-fitting mask that can be connected to an air supply. This one is enlogated and tapered, strange."
-	icon = 'icons/obj/clothing/vox/vox_clothing_obj.dmi'
-	worn_icon = 'icons/mob/clothing/vox/vox_clothing_mob.dmi'
-	icon_state = "voxmask"
-	clothing_flags = MASKINTERNALS | VOX_CLOTHING
-	no_worn_offset = TRUE
-
-/obj/item/clothing/head/helmet/space/vox
-	name = "alien helmet"
-	desc = "Hey, wasn't this a prop in \'The Abyss\'?"
-	icon = 'icons/obj/clothing/vox/vox_clothing_obj.dmi'
-	worn_icon = 'icons/mob/clothing/vox/vox_clothing_mob.dmi'
-	icon_state = "vox-pressure-helmet"
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS | VOX_CLOTHING
-	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-
-
-/obj/item/clothing/suit/space/vox
-	name = "alien pressure suit"
-	desc = "A huge, pressurized suit, designed for distinctly nonhuman proportions. It looks unusually cheap."
-	icon = 'icons/obj/clothing/vox/vox_clothing_obj.dmi'
-	worn_icon = 'icons/mob/clothing/vox/vox_clothing_mob.dmi'
-	icon_state = "vox-pressure-suit"
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | VOX_CLOTHING

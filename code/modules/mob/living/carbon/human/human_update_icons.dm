@@ -424,7 +424,7 @@ There are several things that need to be remembered:
 				mutant_override = TRUE
 
 		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null)
-		if(!mutant_override)
+		if(!mutant_override && !worn_item.no_worn_offset)
 			var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
 			my_head?.worn_head_offset?.apply_offset(head_overlay)
 		overlays_standing[HEAD_LAYER] = head_overlay

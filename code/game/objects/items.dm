@@ -85,6 +85,8 @@
 	var/stealthy_audio = FALSE
 	///Sound which is produced when blocking an attack
 	var/block_sound
+	///Do we proc hit_reaction() while worn
+	var/worn_block = FALSE
 
 	///How large is the object, used for stuff like whether it can fit in backpacks or not
 	var/w_class = WEIGHT_CLASS_NORMAL

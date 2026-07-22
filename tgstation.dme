@@ -4140,6 +4140,7 @@
 #include "code\modules\clothing\under\jobs\Plasmaman\engineering.dm"
 #include "code\modules\clothing\under\jobs\Plasmaman\medsci.dm"
 #include "code\modules\clothing\under\jobs\Plasmaman\security.dm"
+#include "code\modules\clothing\vox\vox_clothing.dm"
 #include "code\modules\cluwne\cluwne_brain.dm"
 #include "code\modules\cluwne\cluwne_clothing.dm"
 #include "code\modules\cluwne\cluwne_component.dm"
