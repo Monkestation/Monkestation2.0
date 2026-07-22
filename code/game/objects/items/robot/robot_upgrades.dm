@@ -749,21 +749,21 @@
 	desc = "An upgrade to fit the self-replenishing tank of an experimental welding tool to a cyborg."
 	icon_state = "module_engineer"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur, /obj/item/robot_model/science)
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/syndicate/saboteur, /obj/item/robot_model/science)
 	model_flags = BORG_MODEL_ENGINEERING
 
 /obj/item/borg/upgrade/experimental_weldingtool/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/weldingtool/largetank/cyborg/tool in borg.model.modules)
+	for(var/obj/item/weldingtool/largetank/cyborg/tool in borg.model.usable_modules)
 		tool.refuel = TRUE
 
 /obj/item/borg/upgrade/experimental_weldingtool/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/weldingtool/largetank/cyborg/tool in borg.model.modules)
+	for(var/obj/item/weldingtool/largetank/cyborg/tool in borg.model.usable_modules)
 		tool.refuel = FALSE
 
 /obj/item/borg/upgrade/gps
@@ -774,7 +774,7 @@
 	items_to_add = list(/obj/item/gps/cyborg)
 
 /obj/item/borg/upgrade/gps/action(mob/living/silicon/robot/borg, user = usr)
-	for(var/obj/item/gps/cyborg/GPS in borg.model.modules) //mining borgs start with a GPS
+	for(var/obj/item/gps/cyborg/GPS in borg.model.usable_modules) //mining borgs start with a GPS
 		to_chat(user, span_warning("This unit already has a GPS installed!"))
 		return FALSE
 	. = ..()
