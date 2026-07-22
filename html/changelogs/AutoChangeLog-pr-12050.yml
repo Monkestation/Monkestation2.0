@@ -1,0 +1,10 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "AI research point generation now boosts General Research by 20%, rather than boosting AI points 25%."
+  - balance: "Lowered AI research point generation."
+  - balance: "Increased credit gain from bitcoin mining."
+  - balance: "AIs can now cancel their own downloads if not done with the AI codes."
+  - balance: "Firewall now blocks downloads rather than slow it down, but is bypassable with AI codes."
+  - balance: "AI codes is now in the primary AI data core, then printable from the Comms console if it gets removed."
+  - bugfix: "The CE can use the AI System resource distribution console."

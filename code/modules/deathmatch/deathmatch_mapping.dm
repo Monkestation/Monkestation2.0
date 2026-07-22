@@ -1,10 +1,10 @@
-/area/deathmatch/fullbright
+/area/deathmatch
 	name = "Deathmatch Arena"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
+	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | NO_DEATH_MESSAGE | BINARY_JAMMING
 
-/area/deathmatch/fullbright/fullbright
+/area/deathmatch/fullbright
 	static_lighting = FALSE
 	base_lighting_alpha = 255
 
@@ -66,3 +66,15 @@
 	if(!istype(victim))
 		return
 	victim.electrocute_act(shock_damage, src, flags = shock_flags)
+
+// for the illusion of a moving train
+/turf/open/chasm/true/no_smooth/fake_motion_sand
+	name = "air"
+	desc = "Dont jump off, unless you want to fall a really long distance."
+	icon_state = "sandmoving"
+	base_icon_state = "sandmoving"
+	icon = 'icons/turf/floors.dmi'
+
+/turf/open/chasm/true/no_smooth/fake_motion_sand/fast
+	icon_state = "sandmovingfast"
+	base_icon_state = "sandmovingfast"

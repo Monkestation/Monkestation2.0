@@ -1,0 +1,5 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - rscadd: "Added Cyborg GPS, a all model upgrade to cyborgs that gives them a GPS."
+  - rscadd: "Added Experimental Welding Tool upgrade to cyborgs, giving engineer/science cyborgs refueling welders."

@@ -155,10 +155,12 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_GHOSTS_DURING_ROUND (1<<19)
 /// This area does not allow virtual entities to enter.
 #define VIRTUAL_SAFE_AREA (1<<20)
+/// This area does not allow the Binary channel
+#define BINARY_JAMMING (1<<21)
 /// This area can always be claimed as a bloodsucker lair regardless of Z-level and such
-#define ALWAYS_VALID_BLOODSUCKER_LAIR (1<<21)
+#define ALWAYS_VALID_BLOODSUCKER_LAIR (1<<22)
 ///This area blocks outgoing radio signals. Mostly used for the abductor ship and heretic sacrifice areas.
-#define AREA_BLOCKS_OUTGOING_RADIO (1<<22)
+#define AREA_BLOCKS_OUTGOING_RADIO (1<<23)
 
 
 /*

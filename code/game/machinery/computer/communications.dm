@@ -108,11 +108,19 @@
 		return TRUE
 	return ACCESS_CAPTAIN in authorize_access
 
-/// Are we NOT a silicon, AND we're logged in as a head
-/obj/machinery/computer/communications/proc/authenticated_as_non_silicon_head(mob/user)
+///Returns TRUE/FALSE whether we can print AI codes, which relies on being Non-silicon command, and the sat codes were untouched.
+/obj/machinery/computer/communications/proc/can_print_ai_codes(mob/user)
 	if(issilicon(user))
 		return FALSE
-	return ACCESS_COMMAND in authorize_access
+	if(!(ACCESS_COMMAND in authorize_access))
+		return FALSE
+	var/list/primary_machine = SSmachines.get_machines_by_type(/obj/machinery/ai/data_core/primary)
+	if(!length(primary_machine))
+		return TRUE
+	var/obj/item/paper/ai_control_code/codes = locate() in primary_machine[1]
+	if(isnull(codes))
+		return TRUE
+	return FALSE
 
 /// Are we a silicon, OR logged in?
 /obj/machinery/computer/communications/proc/authenticated(mob/user)
@@ -501,7 +509,7 @@
 			SSjob.safe_code_timer_id = addtimer(CALLBACK(SSjob, TYPE_PROC_REF(/datum/controller/subsystem/job, send_spare_id_safe_code), pod_location), 120 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
 			minor_announce("Due to staff shortages, your station has been approved for delivery of access codes to secure the Captain's Spare ID. Delivery via drop pod at [get_area(pod_location)]. ETA 120 seconds.")
 		if("printAIControlCode")
-			if(authenticated_as_non_silicon_head(usr))
+			if(can_print_ai_codes(user))
 				if(!COOLDOWN_FINISHED(src, important_action_cooldown))
 					return
 				playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
@@ -603,6 +611,8 @@
 				if (authenticated_as_non_silicon_captain(user))
 					data["canMessageAssociates"] = TRUE
 					data["canRequestNuke"] = TRUE
+
+				data["can_request_ai_codes"] = !!can_print_ai_codes(user)
 
 				if (can_send_messages_to_other_sectors(user))
 					data["canSendToSectors"] = TRUE

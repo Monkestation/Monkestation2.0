@@ -152,33 +152,31 @@
 	)
 	generate_items_inside(items_inside, src)
 
-/obj/item/storage/medkit/surgery_syndie
+/obj/item/storage/medkit/surgery/syndie
 	name = "suspicous surgical medkit"
-	desc = "An suspicous coloured medkit full of advanced medical equipment."
+	desc = "A suspicously colored medkit full of advanced medical equipment."
 	icon_state = "medkit_tactical_lite"
 	inhand_icon_state = "medkit-tactical"
 	damagetype_healed = HEAL_ALL_DAMAGE
 
-/obj/item/storage/medkit/surgery_syndie/PopulateContents()
+/obj/item/storage/medkit/surgery/syndie/PopulateContents()
 	if(empty)
 		return
 	var/list/items_inside = list(
+		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/scalpel/advanced = 1,
 		/obj/item/retractor/advanced = 1,
 		/obj/item/cautery/advanced = 1,
+		/obj/item/blood_filter/advanced = 1,
 		/obj/item/surgical_drapes = 1,
 		/obj/item/stack/medical/gauze/twelve = 1,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
-		/obj/item/bonesetter = 1,
-		/obj/item/blood_filter = 1,
-		/obj/item/stack/medical/bone_gel = 1,
-		/obj/item/stack/sticky_tape/surgical = 1,
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/reagent_containers/cup/bottle/sodium_thiopental = 1,
 	)
 	generate_items_inside(items_inside,src)
 
-/obj/item/storage/medkit/surgery_syndie/get_medbot_skin()
+/obj/item/storage/medkit/surgery/syndie/get_medbot_skin()
 	return "bezerk"
 
 /obj/item/storage/medkit/ancient
@@ -448,8 +446,7 @@
 
 //------------------------------------------------------------------------------------------------
 // Combat Medkits. The better tactical medkits. TO-DO: Go and replace tactical medkits with these.
-//------------------------------------------------------------------------------------------------
-/obj/item/storage/medkit/combat
+//----------------------------------------------------------------------------------------------
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."
 	icon_state = "medkit_tactical"
