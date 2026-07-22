@@ -1581,6 +1581,7 @@
 	construction_time = 4 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	)
 
 /datum/design/borg_upgrade_experimental_welder
 	name = "Cyborg Experimental Welding Tool Upgrade"
