@@ -2,11 +2,6 @@
 "a" = (
 /turf/open/space/basic,
 /area/space)
-"b" = (
-/obj/effect/spawner/random/vending,
-/obj/machinery/power/apc/auto_name/directional/north,
-/turf/open/floor/plating,
-/area/station/commons/dorms)
 "c" = (
 /obj/docking_port/stationary{
 	dwidth = 3;
@@ -149,6 +144,7 @@
 /area/station/commons/dorms)
 "z" = (
 /obj/effect/mapping_helpers/airlock/access/any,
+/obj/machinery/door/airlock,
 /turf/open/floor/plating,
 /area/station/engineering/power_station)
 "A" = (
@@ -229,10 +225,6 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/plating,
 /area/station/command/bridge)
-"T" = (
-/obj/machinery/power/apc/auto_name/directional/north,
-/turf/open/floor/plating,
-/area/station/commons/dorms)
 "U" = (
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/plating,
@@ -99072,7 +99064,7 @@ a
 a
 a
 G
-b
+O
 F
 F
 F
@@ -164608,7 +164600,7 @@ a
 a
 a
 G
-T
+F
 F
 F
 F
