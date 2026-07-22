@@ -18,15 +18,25 @@
 	desc = "Learn a synthesizable chemical from the blood of your host."
 	gain_text = "As we were dissecting a former host monkey's fecal matter, I noticed a high concentration of banana matter, despite us not feeding them any for the past week."
 	tier = 2
-	unlocked_evolutions = list(/datum/borer_evolution/hivelord/movespeed)
+	unlocked_evolutions = list(/datum/borer_evolution/hivelord/movespeed, /datum/borer_evolution/hivelord/cheaper_synthesis)
 	added_action = /datum/action/cooldown/borer/learn_bloodchemical
 
 // T3
+/datum/borer_evolution/hivelord/cheaper_synthesis
+	name = "Efficient Synthesis"
+	desc = "Reduces the cost of learning synthsizable chemicals from your host's blood"
+	gain_text = "A few borers have been able to copy a slurry of chemicals, even when fed multiple at once."
+	tier = 3
+	evo_cost = 3
+
+/datum/borer_evolution/hivelord/cheaper_synthesis/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
+	. = ..()
+	cortical_owner.chemical_copy.chemical_evo_points -= 2
+
 /datum/borer_evolution/hivelord/movespeed
 	name = "Increased Energy"
 	desc = "Boost your speed by a large amount."
 	gain_text = "And as I watched, the Cortical Borer was able to complete the course in just over half the time it had last week."
-	mutually_exclusive = TRUE
 	tier = 3
 	unlocked_evolutions = list(/datum/borer_evolution/hivelord/stealth_mode)
 
@@ -55,7 +65,7 @@
 	tier = 5
 	unlocked_evolutions = list(
 		/datum/borer_evolution/sugar_immunity,
-		/datum/borer_evolution/synthetic_borer,
+		/datum/borer_evolution/advanced_borer,
 		/datum/borer_evolution/synthetic_chems_positive,
 		/datum/borer_evolution/synthetic_chems_negative,
 	)
