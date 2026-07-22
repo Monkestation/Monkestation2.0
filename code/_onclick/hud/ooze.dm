@@ -1,9 +1,9 @@
 ///Hud type with targeting dol and a nutrition bar
-/datum/hud/ooze/New(mob/living/owner)
+/datum/hud/living/ooze/New(mob/living/owner)
 	. = ..()
 
 	zone_select = new /atom/movable/screen/zone_sel(null, src)
-	zone_select.icon = ui_style
+	zone_select.icon = ui_style2icon(owner.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 	zone_select.update_appearance()
 	static_inventory += zone_select
 
