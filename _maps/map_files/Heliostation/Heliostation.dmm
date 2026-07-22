@@ -3926,7 +3926,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil/streak,
 /obj/machinery/computer/order_console/bitrunning,
 /turf/open/misc/asteroid,
 /area/station/security/prison/rec)
@@ -19763,7 +19763,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/hydroponics,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/item/storage/toolbox/electrical,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/machinery/camera/directional/north{
@@ -22030,7 +22030,7 @@
 	},
 /area/station/cargo/miningoffice)
 "cvg" = (
-/obj/effect/decal/cleanable/robot_debris,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
 /obj/structure/trash_pile,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -24134,7 +24134,7 @@
 	pixel_y = 5
 	},
 /obj/item/clothing/head/utility/hardhat/fire,
-/obj/item/tank/internals/oxygen/red{
+/obj/item/tank/internals/oxygen/yellow{
 	pixel_x = 9;
 	pixel_y = -5
 	},
@@ -25428,7 +25428,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/science/central)
 "cSA" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
@@ -32012,7 +32012,7 @@
 "fko" = (
 /obj/machinery/shieldgen,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/structure/sign/warning/secure_area/directional/east,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/smooth_large,
@@ -32441,7 +32441,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/atmos/office)
 "ftX" = (
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -34320,7 +34320,7 @@
 "gfw" = (
 /obj/structure/sign/warning/secure_area/directional/north,
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
@@ -36666,7 +36666,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron,
 /area/station/maintenance/port)
 "hdx" = (
@@ -38572,7 +38572,7 @@
 /area/station/service/bar/backroom)
 "hKJ" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
@@ -48325,7 +48325,7 @@
 /area/station/maintenance/aft/lesser)
 "ltS" = (
 /obj/machinery/netpod,
-/obj/effect/decal/cleanable/robot_debris,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
 /turf/open/misc/asteroid,
 /area/station/security/prison/rec)
 "ltZ" = (
@@ -48526,7 +48526,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "lxU" = (
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /obj/item/toy/toy_xeno,
 /turf/open/floor/engine,
 /area/station/science/xenobiology/cell)
@@ -51703,7 +51703,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/freezerchamber)
 "mHB" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron/dark/small,
 /area/station/science/robotics/mechbay)
 "mHE" = (
@@ -53145,7 +53145,7 @@
 /turf/open/floor/plating,
 /area/station/service/abandoned_gambling_den)
 "nkr" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/light/dim/directional/east,
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
@@ -55005,7 +55005,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
@@ -63552,10 +63552,10 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/obj/item/tank/internals/oxygen/red{
+/obj/item/tank/internals/oxygen/yellow{
 	pixel_x = 3
 	},
-/obj/item/tank/internals/oxygen/red{
+/obj/item/tank/internals/oxygen/yellow{
 	pixel_x = -3
 	},
 /obj/item/wrench,
@@ -64747,7 +64747,7 @@
 	},
 /area/station/command/gateway)
 "rwX" = (
-/obj/effect/decal/cleanable/robot_debris/down,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/down,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "rxe" = (
@@ -67962,7 +67962,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron/smooth,
 /area/station/science/robotics/lab)
 "sNC" = (
@@ -74102,7 +74102,7 @@
 	pixel_y = 5
 	},
 /obj/item/clothing/head/utility/hardhat/fire,
-/obj/item/tank/internals/oxygen/red{
+/obj/item/tank/internals/oxygen/yellow{
 	pixel_x = 9;
 	pixel_y = -5
 	},
@@ -79348,7 +79348,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "xhb" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -79613,7 +79613,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/command/storage/eva)
 "xmj" = (

@@ -81,6 +81,7 @@ export type CommunicationsMainData<Page = typeof STATE_MAIN> =
     shuttleRecallable?: BooleanLike;
     shuttleCalledPreviously?: BooleanLike;
     shuttleLastCalled: false | string;
+    can_request_ai_codes: BooleanLike;
 
     aprilFools: BooleanLike;
 
@@ -411,6 +412,7 @@ const PageMain = () => {
     callShuttleReasonMinLength,
     canBuyShuttles,
     canMakeAnnouncement,
+    can_request_ai_codes,
     canMessageAssociates,
     canRecallShuttles,
     canRequestNuke,
@@ -522,6 +524,19 @@ const PageMain = () => {
               onClick={() => act('makePriorityAnnouncement')}
             />
           )}
+
+          <Button
+            icon="fax"
+            disabled={!can_request_ai_codes}
+            tooltip={
+              can_request_ai_codes
+                ? 'Prints a new set of AI codes, removing the old ones.'
+                : 'Unable to download codes while they are still loaded in the primary data core. Deconstruct the core to get the codes.'
+            }
+            onClick={() => act('printAIControlCode')}
+          >
+            Print AI Codes
+          </Button>
 
           {!!canToggleEmergencyAccess && (
             <Button.Confirm

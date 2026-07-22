@@ -46,7 +46,7 @@
 	bonghits = useable_bonghits
 	packeditem = TRUE
 	if(tool.reagents)
-		tool.reagents.trans_to(src, tool.reagents.total_volume, transfered_by = user)
+		tool.reagents.trans_to(src, tool.reagents.total_volume, transferred_by = user)
 		quarter_volume = reagents.total_volume/useable_bonghits
 	qdel(tool)
 	return ITEM_INTERACT_SUCCESS
@@ -79,7 +79,7 @@
 
 	to_chat(target_mob, "<span class='notice'>You finish taking a hit from the [src].</span>")
 	if(reagents.total_volume)
-		reagents.trans_to(target_mob, quarter_volume, transfered_by = user, methods = VAPOR)
+		reagents.trans_to(target_mob, quarter_volume, transferred_by = user, methods = VAPOR)
 		bonghits--
 	var/turf/open/pos = get_turf(src)
 	if(istype(pos) && pos.air.return_pressure() < 2*ONE_ATMOSPHERE)

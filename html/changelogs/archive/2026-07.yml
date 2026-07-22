@@ -244,3 +244,193 @@
   SirNightKnight:
   - bugfix: incendiary bullet fire trails auto-delete in 2.5 seconds to mitigate hangtime
       from lag.
+2026-07-10:
+  PotatoTomahto:
+  - rscadd: adds the buster fist as a tot item from yogstation
+  Runian, lelandkemble:
+  - balance: Scanned wounds stay scanned when they downgrade in severity.
+  SpeebusDaGeebus:
+  - rscdel: removed health bonus from no revive / DNR
+  Vekter, SirNightKnight:
+  - rscadd: Adds support for it/its pronouns. You can select these in character preferences.
+  hexakats:
+  - qol: Moved the hypospray's draw function from a mode to right click
+  - bugfix: Fixed a runtime that happens when you try to draw from a container with
+      no vial in the hypospray
+  - bugfix: Contractor baton can harm with right click again when there's no cuff
+      upgrade (and a runtime fix when trying to harm baton)
+2026-07-11:
+  Barrel:
+  - qol: Darkspawns panopticon no longer needs power or an apc to use. You can now
+      jump to allies and placed void eyes.
+  - refactor: Refactored how cameras work based on tgstation.
+  - balance: sets body camera range to 7, same as cameras
+  Cujo:
+  - rscadd: Mute and Fluffy Tongue are now incompatible quirks
+  - rscdel: Removes the duplicate shower drain from Tramstation Medical for real this
+      time
+  JohnFulpWillard:
+  - bugfix: AIs can double click on a tile to TP to that tile again.
+  - bugfix: Fixes AI's custom portrait icons.
+  - bugfix: Removed negative AI CPU speed/power values from the overclocking workstation
+      computer. Also made the UI a little bit better.
+  Runian:
+  - balance: Hyperkinetic Dampening Projector now only consumes power when a projectile
+      initially becomes dampened.
+  - balance: Hyperkinetic Dampening Projector's power consumption is now 0.15kW per
+      projectile damage.
+  - bugfix: Projectile dampers no longer speeds up projectiles when it should of slowed
+      them down instead.
+  Shoddd:
+  - bugfix: unclonable neurons quirk now tied to mind
+  SirNightKnight:
+  - rscadd: added a dozen mints to the snack vendor contraband section.
+  siliconOpossum, MrMelbert, ghost, SirNightKnight:
+  - qol: Neckties are now worn underneath suit items and accessories, they can still
+      be optionally worn over them in case you want the "business space suit" look.
+  - qol: made Balaclavas layer below glasses and radios
+  - bugfix: split bandage layering so it layers better with back slot items.
+2026-07-12:
+  CheffieGithub:
+  - bugfix: Added protections against negative lootboxes, work to pay off your debt!
+  Cujo:
+  - rscadd: Adds the security hi vis jacket to the loadout menu
+  - qol: Updated the cryo message to reflect that it does not permanently remove you
+      from the round, and gives a hint on how to emerge from cryo.
+  - rscdel: Removes anime virus
+  - balance: Slasher sighting now requires a minimum of 20 pop to roll
+  - bugfix: Dummy thicc quirk sounds now properly check prude mode settings.
+  EnterTheJake:
+  - spellcheck: Description on how the moon robes function is a bit more clear.
+  JohnFulpWillard:
+  - rscadd: pAIs now have Emojipedia.
+  - bugfix: AIs no longer lose all assigned CPU & ram when shunting between data cores
+      (or between station z-levels)
+  - bugfix: Fixes AI mechs (again)
+  - bugfix: '[MetaStation] Fixes AI cooling'
+  - bugfix: '[BoxStation] Fixes Network Admin office being behind general telecomms
+      access instead of Telecomms Admin access.'
+  - rscadd: Added a better Emojipedia UI.
+  Mantlecrawler:
+  - bugfix: Smithed weapons can now fit into dimensional gloves
+  SirNightKnight:
+  - balance: changed the required pop for heretics to 45 (used to be 25).
+  - rscadd: added lead to the emagged chem dispenser list.
+  hexakats:
+  - balance: Foam dart guns no longer have recoil.
+  notghosti:
+  - qol: Borers who are in hosts and have learnt the head focus also receive true
+      night vision and flash immunity.
+  - bugfix: willing host mood buff now is capitalized. sorry
+  - map: Tramstation RD Server room now has R-walls sealing it again
+  - balance: Replaces the atmospherics arm toolset with Advanced fire extinguisher,
+      ranged gas analyzer, and cyborg crowbar from their normal versions
+2026-07-13:
+  Cujo:
+  - bugfix: Kitchen pans (and maybe other kitchen utilities) will no longer talk to
+      you.
+  Shoddd:
+  - bugfix: podpeople no longer have hair
+  - bugfix: changeling armor now list that it slows chemical generation
+  SirNightKnight:
+  - rscadd: gave traitors access to microbomb implants in their uplink.
+  - sound: just switched the taser select sounds around so it makes more sense on
+      the advanced taser .
+  - bugfix: miner salve doesnt give a damage overlay.
+2026-07-14:
+  Gboster-0:
+  - bugfix: Megafauna will now move when idle every 20 seconds
+  Shoddd:
+  - balance: ipcs, oozelings, and plasma men can no longer have blood deficiency quirk
+  - balance: ipcs can no longer have immunodeficiency quirk
+  - balance: oozelings can no longer have frail quirk
+  - balance: oozelings can have food allergy quirk
+  SirNightKnight:
+  - rscadd: added secure GPS devices. they report the death of the wearer or if the
+      device is stripped off the wearer to other secure GPS devices. can be sabotaged
+      by emagging one or jammed using a radio jammer.
+  - qol: added bodycameras to the basic security equipment technode.
+  - rscadd: made each departmental GPS printable by their respective department.
+  - qol: medical can print the advanced GPS at their protolathe.
+  - bugfix: re-added the medical GPS sprite.
+  - qol: security and medical belts can store GPSs.
+  - rscadd: added tape recorders, lighters, and cigarette packets to the security
+      belt holdable list.
+  hexakats:
+  - balance: The contractor modsuit's complexity has been increased from 15 to 20
+  - balance: The contractor modsuit's biohazard has been increased to 100%
+  - balance: The contractor modsuit starts with an inbuilt quick cuff module
+2026-07-15:
+  Shoddd:
+  - balance: brig med now requires medical hours instead of sec hours
+  SirNightKnight:
+  - balance: lowered sec gps alert delay to 15 seconds from 20
+  byondsucks:
+  - balance: Heretics need 40 players readied up to roll.
+2026-07-16:
+  AnTurk, cheese:
+  - bugfix: Fixes reagent transfer ordering (changing container transfer amounts)
+  Shoddd:
+  - balance: lowers recoil on pistols and revolvers
+  - balance: removes recoil on crossbows and harpoon guns
+  - balance: increases recoil on sawn off guns
+  TheColorCyan, MrMelbert, vinylspiders, SmArtKar:
+  - refactor: refactored blood, report any issues
+  - refactor: species chemical interactions are now handled by their livers
+  - rscadd: moths, apids, arachnids now share same blood type
+2026-07-17:
+  SirNightKnight:
+  - rscadd: added nitrogen tanks.
+  - bugfix: mini fire extinguishers have a proper sprite when in a tank holder.
+  - code_imp: rewrote how species specific internals are given for internal boxes.
+      fixed a bug where security survival boxes would get two radios with the expanded
+      survival box station trait.
+  TheColorCyan:
+  - bugfix: fixed foods giving way less nutriment than they should
+  - rscadd: added pharaoh tunic to loadout as donator item
+2026-07-19:
+  Beeper-Skeeper:
+  - rscadd: Adds 2 bunny suits for the Captain and HoS. Both are in the loadoutstore
+      and also in the command outfitting station if you hack the contraband wire.
+  JohnFulpWillard:
+  - bugfix: '[IceBox] Added a button to toggle the kitchen''s shutters.'
+  TheColorCyan:
+  - bugfix: fixed blood not carrying over immunity data (and making it so vaccines
+      arent possible to make)
+  - bugfix: touch and vapor blood infect will now check for protection instead of
+      always infecting you
+  hexakats:
+  - balance: bumps up contractor modsuit biohazard protection to 100 (missed this
+      change previously)
+2026-07-20:
+  Cujo:
+  - rscadd: Surgery will now get a 15% fail chance if not on a proper surgery bed
+      or stasis bed, otherwise no penalty is given.
+  - rscadd: Surgery will now get a 10% fail chance if not wearing latex or nitrile
+      gloves, or a 5% success bonus if wearing latex, nitrile, deployed medical modsuit,
+      or medical hardsuit gloves.
+  - rscadd: Chemicals that positively affect surgery speed will get a 15% surgery
+      success bonus.
+  - rscadd: Roller beds, emergency roller beds, and medical beds will now give a 15%
+      faster bonus to surgery speed. (0.7->0.85)
+  - balance: Self surgery is now significantly harder(+50% fail chance). It will require
+      chems, a surgery bed, proper tools, and latex gloves or else it will have a
+      high fail chance.
+  - balance: IPC's and those with robotics limbs are immune to all downsides and positives
+      of surgery. They are able to do self surgery without gloves, off of a surgery
+      bed, and without chemicals.
+  - balance: Black latex gloves no longer make the user a perfect surgeon, preventing
+      them from doing surgery on multiple targets at the same time. It will still
+      give the speed increase to surgery and a 20% success bonus to surgery.
+  - bugfix: Ghetto surgery will now have a minimum of 0 and maximum of 95 failure
+      chance before accounting for any increases or decreases. This means that using
+      ghetto tools can yield success if in ideal conditions rather than always failing.
+  - rscadd: Abductors (as a species) are now perfect surgeons(unable to fail surgery
+      & can do surgery on several people at the same time).
+  - balance: Latex gloves no longer pass fingerprints through.
+  PotatoTomahto:
+  - qol: ports tg acclimator changes
+  - balance: showers apply 20% of reagents through vapor, the rest touch
+  SirNightKnight:
+  - rscadd: replaced hypospray vials with chemical canisters.
+  - spellcheck: cleaned up some naming with hypo sprays.

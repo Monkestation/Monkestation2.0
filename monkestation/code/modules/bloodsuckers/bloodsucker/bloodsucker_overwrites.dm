@@ -4,12 +4,6 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/mob/living/carbon/transfer_blood_to(atom/movable/AM, amount, forced)
-	. = ..()
-
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind?.has_antag_datum(/datum/antagonist/bloodsucker)
-	bloodsuckerdatum?.bloodsucker_blood_volume -= amount
-
 /// Prevents using a Memento Mori
 /obj/item/clothing/neck/necklace/memento_mori/memento(mob/living/carbon/human/user)
 	if(IS_BLOODSUCKER(user))

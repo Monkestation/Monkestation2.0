@@ -1,7 +1,7 @@
 /obj/machinery/computer/ai_resource_distribution
 	name = "\improper AI system resource distribution"
 	desc = "Used for distributing processing resources across the current artificial intelligences."
-	req_one_access = list(ACCESS_RD, ACCESS_NETWORK)
+	req_one_access = list(ACCESS_RD, ACCESS_TCOMMS_ADMIN)
 	circuit = /obj/item/circuitboard/computer/ai_resource_distribution
 	icon_keyboard = "tech_key"
 	icon_screen = "ai-fixer"

@@ -743,6 +743,41 @@
 		gas_analyzer.ranged_scan_distance = initial(gas_analyzer.ranged_scan_distance)
 		gas_analyzer.update_appearance()
 
+/obj/item/borg/upgrade/experimental_weldingtool
+	name = "experimental welder upgrade"
+	desc = "An upgrade to fit the self-replenishing tank of an experimental welding tool to a cyborg."
+	icon_state = "module_engineer"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur, /obj/item/robot_model/science)
+	model_flags = BORG_MODEL_ENGINEERING
+
+/obj/item/borg/upgrade/experimental_weldingtool/action(mob/living/silicon/robot/borg, user = usr)
+	. = ..()
+	if(!.)
+		return .
+	for(var/obj/item/weldingtool/largetank/cyborg/tool in borg.model.modules)
+		tool.refuel = TRUE
+
+/obj/item/borg/upgrade/experimental_weldingtool/deactivate(mob/living/silicon/robot/borg, user = usr)
+	. = ..()
+	if(!.)
+		return .
+	for(var/obj/item/weldingtool/largetank/cyborg/tool in borg.model.modules)
+		tool.refuel = FALSE
+
+/obj/item/borg/upgrade/gps
+	name = "cyborg global positioning system upgrade"
+	desc = "An upgrade kit for all cyborgs to connect them to the GPS network."
+	icon_state = "module_general"
+	require_model = TRUE
+	items_to_add = list(/obj/item/gps/cyborg)
+
+/obj/item/borg/upgrade/gps/action(mob/living/silicon/robot/borg, user = usr)
+	for(var/obj/item/gps/cyborg/GPS in borg.model.modules) //mining borgs start with a GPS
+		to_chat(user, span_warning("This unit already has a GPS installed!"))
+		return FALSE
+	. = ..()
+
 /obj/item/borg/upgrade/beaker_app
 	name = "beaker storage apparatus"
 	desc = "A supplementary beaker storage apparatus for medical cyborgs."

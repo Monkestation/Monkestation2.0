@@ -1,0 +1,4 @@
+author: "PotatoTomahto"
+delete-after: True
+changes:
+  - bugfix: "particle accelerator console now shows the strength it's set at"

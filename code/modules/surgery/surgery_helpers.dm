@@ -8,13 +8,14 @@
 		return 1
 	else if(locate(/obj/machinery/stasis, mob_turf))
 		return 0.9
+	else if(locate(/obj/structure/bed/medical, mob_turf) || locate(/obj/structure/bed/medical/emergency, mob_turf) || locate(/obj/structure/bed/pod, mob_turf))
+		return 0.85
 	else if(locate(/obj/structure/table, mob_turf))
 		return 0.8
 	else if(locate(/obj/structure/bed, mob_turf))
 		return 0.7
 	else
 		return 0.5
-
 
 /proc/get_location_accessible(mob/located_mob, location)
 	var/covered_locations = 0 //based on body_parts_covered

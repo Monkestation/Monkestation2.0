@@ -135,7 +135,7 @@
 
 /obj/item/weldingtool/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!status && interacting_with.is_refillable())
-		reagents.trans_to(interacting_with, reagents.total_volume, transfered_by = user)
+		reagents.trans_to(interacting_with, reagents.total_volume, transferred_by = user)
 		to_chat(user, span_notice("You empty [src]'s fuel tank into [interacting_with]."))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -334,6 +334,21 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "indwelder_cyborg"
 	toolspeed = 0.5
+	///Upgrades allow it to refuel like a experimental welder
+	var/refuel = FALSE
+	var/last_gen = 0
+	var/nextrefueltick = 0
+
+/obj/item/weldingtool/largetank/cyborg/examine(mob/user)
+	. = ..()
+	if(refuel)
+		. += span_notice("It has been upgraded to automatically refuel.")
+
+/obj/item/weldingtool/largetank/cyborg/process()
+	..()
+	if(refuel && (get_fuel() < max_fuel && nextrefueltick < world.time))
+		nextrefueltick = world.time + 10
+		reagents.add_reagent(/datum/reagent/fuel, 1)
 
 /obj/item/weldingtool/mini
 	name = "emergency welding tool"

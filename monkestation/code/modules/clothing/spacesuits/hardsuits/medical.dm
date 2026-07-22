@@ -7,7 +7,7 @@
 	flash_protect = FLASH_PROTECTION_NONE
 	armor_type = /datum/armor/hardsuit/medical
 	clothing_traits = list(TRAIT_REAGENT_SCANNER)
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | STERILE
 
 /obj/item/clothing/suit/space/hardsuit/medical
 	name = "medical hardsuit"

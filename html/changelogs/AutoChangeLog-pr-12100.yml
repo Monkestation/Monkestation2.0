@@ -1,4 +1,0 @@
-author: "Runian, lelandkemble"
-delete-after: True
-changes:
-  - balance: "Scanned wounds stay scanned when they downgrade in severity."
