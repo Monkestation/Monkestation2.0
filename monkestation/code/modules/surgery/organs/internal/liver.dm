@@ -89,36 +89,3 @@
 		if(EMP_LIGHT)
 			to_chat(owner, span_warning("Alert: Reagent processing unit failure, seek maintenance for diagnostic. Error Code: DR-0k"))
 			apply_organ_damage(SYNTH_ORGAN_LIGHT_EMP_DAMAGE, maximum = maxHealth, required_organ_flag = ORGAN_ROBOTIC)
-
-/obj/item/organ/internal/liver/synth/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
-	. = ..()
-	if((. & COMSIG_MOB_STOP_REAGENT_TICK) || (organ_flags & ORGAN_FAILING))
-		return
-	if(!chem.synthetic_boozepwr)
-		return
-	var/booze_power = chem.synthetic_boozepwr
-	if(organ_owner.nutrition < NUTRITION_LEVEL_ALMOST_FULL)
-		organ_owner.adjust_nutrition(booze_power * 0.055) //one full glass of acetone = 1 full charge if my math is correct
-	if(HAS_TRAIT(organ_owner, TRAIT_ALCOHOL_TOLERANCE))
-		booze_power *= 0.7
-	if(HAS_TRAIT(organ_owner, TRAIT_LIGHT_DRINKER))
-		booze_power *= 2
-	if(organ_owner.get_drunk_amount() < chem.volume * chem.synthetic_boozepwr)
-		organ_owner.adjust_drunk_effect(sqrt(chem.volume) * booze_power * ALCOHOL_RATE * REM * seconds_per_tick)
-	organ_owner.mind.add_addiction_points(/datum/addiction/alcohol, chem.synthetic_boozepwr/20)
-
-/datum/design/synth_liver
-	name = "Reagent Processing Unit"
-	desc = "An electronic device that processes the beneficial chemicals for the synthetic user."
-	id = "synth_liver"
-	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-	construction_time = 4 SECONDS
-	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT,
-		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
-	)
-	build_path = /obj/item/organ/internal/liver/synth
-	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE

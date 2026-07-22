@@ -1,86 +1,86 @@
 //IPC Parts//
 
 /datum/design/ipc_part_head
-	name = "IPC Replacement Head"
+	name = "IPC Head"
 	id = "ipc_head"
 	build_type = MECHFAB
 	construction_time = 15 SECONDS
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/bodypart/head/ipc
 	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
-
-/datum/design/ipc_part_chest
-	name = "IPC Replacement Chest"
-	id = "ipc_chest"
-	build_type = MECHFAB
-	construction_time = 15 SECONDS
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2.5)
-	build_path = /obj/item/bodypart/chest/ipc
-	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
+		RND_CATEGORY_IPC + RND_SUBCATEGORY_IPC_COMPONENTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/ipc_part_arm_left
-	name = "IPC Replacement Left Arm"
+	name = "IPC Left Arm"
 	id = "ipc_arm_left"
 	build_type = MECHFAB
 	construction_time = 15 SECONDS
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/bodypart/arm/left/ipc
 	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
+		RND_CATEGORY_IPC + RND_SUBCATEGORY_IPC_COMPONENTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/ipc_part_arm_right
-	name = "IPC Replacement Right Arm"
+	name = "IPC Right Arm"
 	id = "ipc_arm_right"
 	build_type = MECHFAB
 	construction_time = 15 SECONDS
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/bodypart/arm/right/ipc
 	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
+		RND_CATEGORY_IPC + RND_SUBCATEGORY_IPC_COMPONENTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/ipc_part_leg_left
-	name = "IPC Replacement Left Leg"
+	name = "IPC Left Leg"
 	id = "ipc_leg_left"
 	build_type = MECHFAB
 	construction_time = 15 SECONDS
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/bodypart/leg/left/ipc
 	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
+		RND_CATEGORY_IPC + RND_SUBCATEGORY_IPC_COMPONENTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/ipc_part_leg_right
-	name = "IPC Replacement Right Leg"
+	name = "IPC Right Leg"
 	id = "ipc_leg_right"
 	build_type = MECHFAB
 	construction_time = 15 SECONDS
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/bodypart/leg/right/ipc
 	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
+		RND_CATEGORY_IPC + RND_SUBCATEGORY_IPC_COMPONENTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/ipc_part_atennae
-	name = "IPC Replacement Antennae"
+	name = "IPC Antennae"
 	id = "ipc_antennae"
 	build_type = MECHFAB
 	construction_time = 15 SECONDS
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/organ/external/antennae/ipc
 	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
+		RND_CATEGORY_IPC + RND_SUBCATEGORY_IPC_COMPONENTS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/ipc_part_screen
+	name = "IPC Screen"
+	id = "ipc_screen"
+	build_type = MECHFAB
+	construction_time = 15 SECONDS
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*0.5)
+	build_path = /obj/item/organ/external/ipc_screen
+	category = list(
+		RND_CATEGORY_IPC + RND_SUBCATEGORY_IPC_COMPONENTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -93,7 +93,38 @@
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/power_cord
 	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_MISC
+		RND_CATEGORY_IPC + RND_SUBCATEGORY_IPC_COMPONENTS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+// IPC construction needs printable optical sensors; the other synthetic organs retain their existing designs and unlock timing.
+/datum/design/ipc_synth_eyes
+	name = "Optical Sensors"
+	id = "ipc_synth_eyes"
+	build_type = MECHFAB | PROTOLATHE
+	construction_time = 10 SECONDS
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*0.25)
+	build_path = /obj/item/organ/internal/eyes/synth
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/techweb_node/ipc_parts/New()
+	..()
+	design_ids -= "ipc_chest"
+	design_ids += "ipc_synth_eyes"
+
+/datum/design/ipc_core
+	name = "IPC Core"
+	desc = "An incomplete IPC chassis. Install synthetic organs, attach IPC limbs plus a secured head assembly, install an IPC screen, then finish the shell with a multitool. The brain and optional augments are installed afterward by surgery."
+	id = "ipc_core"
+	build_type = MECHFAB
+	build_path = /obj/item/ipc_core
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT*5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*5)
+	construction_time = 30 SECONDS
+	category = list(
+		RND_CATEGORY_IPC + RND_SUBCATEGORY_IPC_COMPONENTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 

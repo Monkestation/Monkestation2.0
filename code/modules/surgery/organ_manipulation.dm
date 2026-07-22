@@ -93,6 +93,24 @@
 		/datum/surgery_step/mechanic_close,
 	)
 
+/datum/surgery/organ_manipulation/mechanic/mmi
+	name = "Cybernetic brain installation"
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	surgery_flags = SURGERY_REQUIRE_LIMB
+	possible_locs = list(BODY_ZONE_CHEST)
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/mechanic_unwrench,
+		/datum/surgery_step/prepare_electronics,
+		/datum/surgery_step/install_brain,
+		/datum/surgery_step/mechanic_wrench,
+		/datum/surgery_step/mechanic_close,
+	)
+
+/datum/surgery/organ_manipulation/mechanic/mmi/can_start(mob/user, mob/living/carbon/target)
+	return ..() && !target.get_organ_slot(ORGAN_SLOT_BRAIN) && !target.mind
+
 /datum/surgery/organ_manipulation/external
 	name = "Feature manipulation"
 	possible_locs = list(
@@ -258,11 +276,15 @@
 			)
 			display_pain(target, "Your [parse_zone(target_zone)] throbs with pain, you can't feel your [target_organ.name] anymore!")
 			log_combat(user, target, "surgically removed [target_organ.name] from", addition="COMBAT MODE: [uppertext((user.istate & ISTATE_HARM))]")
+			if(istype(target_organ, /obj/item/organ/internal/brain/positronic))
+				var/obj/item/organ/internal/brain/positronic/ipc_brain = target_organ
+				ipc_brain.surgical_extraction = TRUE
 			target_organ.Remove(target)
 			var/turf/drop_turf = get_turf(target)
 			if(drop_turf && !QDELETED(target_organ))
 				target_organ.forceMove(drop_turf)
-			target_organ.on_surgical_removal(user, target, target_zone, tool)
+			if(!QDELETED(target_organ))
+				target_organ.on_surgical_removal(user, target, target_zone, tool)
 			target.regenerate_icons()
 		else
 			display_results(
