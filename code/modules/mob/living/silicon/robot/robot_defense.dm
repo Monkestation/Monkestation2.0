@@ -43,11 +43,11 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, span_warning("You can't reach the wiring!"))
 		return
 
-	if((attacking_item.slot_flags & ITEM_SLOT_HEAD) && model.hat_offset != INFINITY && !(user.istate & ISTATE_HARM) && !is_type_in_typecache(attacking_item, GLOB.blacklisted_borg_hats))
+	if((attacking_item.slot_flags & ITEM_SLOT_HEAD) && !isnull(skin.hat_offset) && !(user.istate & ISTATE_HARM) && !is_type_in_typecache(attacking_item, GLOB.blacklisted_borg_hats))
 		if(user == src)
 			to_chat(user,  span_notice("You can't seem to manage to place [attacking_item] on your head by yourself!") )
 			return
-		if(hat && HAS_TRAIT(hat, TRAIT_NODROP))
+		if(worn_hat && HAS_TRAIT(worn_hat, TRAIT_NODROP))
 			to_chat(user, span_warning("You can't seem to remove [src]'s existing headwear!"))
 			return
 		to_chat(user, span_notice("You begin to place [attacking_item] on [src]'s head..."))
@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 				place_on_head(attacking_item)
 		return
 
-	if(istype(attacking_item, /obj/item/clothing/accessory/badge) && model.badge_offset != INFINITY)
+	if(istype(attacking_item, /obj/item/clothing/accessory/badge) && !isnull(skin.badge_offset))
 		to_chat(user, span_notice("You begin to decorate [src] with [attacking_item]..."))
 		to_chat(src, span_notice("[user] is pinning [attacking_item] onto you..."))
 		if(do_after(user, 3 SECONDS, target = src))
@@ -301,13 +301,15 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 /mob/living/silicon/robot/emp_act(severity)
 	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	switch(severity)
-		if(1)
-			Stun(160)
-		if(2)
-			Stun(60)
+	if(!(. & EMP_PROTECT_SELF))
+		switch(severity)
+			if(EMP_HEAVY)
+				Stun(16 SECONDS)
+			if(EMP_LIGHT)
+				Stun(6 SECONDS)
+	if(!(. & EMP_PROTECT_CONTENTS))
+		for(var/obj/item/active_module in held_items)
+			active_module.emp_act(active_module)
 
 /mob/living/silicon/robot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(user == src)//To prevent syndieborgs from emagging themselves
@@ -348,7 +350,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(shell) //AI shells cannot be emagged, so we try to make it look like a standard reset. Smart players may see through this, however.
 		to_chat(user, span_danger("[src] is remotely controlled! Your emag attempt has triggered a system reset instead!"))
 		log_silicon("EMAG: [key_name(user)] attempted to emag an AI shell belonging to [key_name(src) ? key_name(src) : connected_ai]. The shell has been reset as a result.")
-		ResetModel()
+		reset_model()
 		return TRUE
 
 	SetEmagged(1)
@@ -363,7 +365,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	else
 		GLOB.lawchanges.Add("[time] <B>:</B> [name]([key]) emagged by external event.")
 
-	model.rebuild_modules()
+	model.rebuild_usable_modules()
 
 	INVOKE_ASYNC(src, PROC_REF(borg_emag_end), user)
 	return TRUE

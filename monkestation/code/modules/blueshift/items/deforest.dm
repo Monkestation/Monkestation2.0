@@ -255,14 +255,6 @@
 	. = ..()
 	design_ids.Add("treatment_zone_projector")
 
-// Adds the funny projector to medical borgs
-
-/obj/item/robot_model/medical/New(loc, ...)
-	. = ..()
-	var/obj/item/holosign_creator/medical/treatment_zone/new_holosign = new(src)
-	basic_modules.Add(new_holosign)
-
-
 // Synth repair patch, gives the synth a small amount of healing chems
 /obj/item/reagent_containers/pill/robotic_patch
 	name = "robotic patch"

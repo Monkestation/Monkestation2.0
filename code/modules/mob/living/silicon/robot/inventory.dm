@@ -23,8 +23,8 @@
 	if(QDELETED(item_module))
 		CRASH("activate_module called with improper item_module")
 
-	if(!(item_module in model.modules))
-		CRASH("activate_module called with item_module not in model.modules")
+	if(!(item_module in model.usable_modules))
+		CRASH("activate_module called with item_module not in model.usable_modules")
 
 	if(activated(item_module))
 		to_chat(src, span_warning("That module is already activated."))
@@ -56,23 +56,31 @@
 	REMOVE_TRAIT(item_module, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 	transferItemToLoc(item_module, newloc = model)
 
-/mob/living/silicon/robot/doUnEquip(obj/item/item_dropping, force, atom/newloc, no_move, invdrop, silent)
-	//borgs can drop items that aren't part of the module (used for apparatus modules, the stored item isn't a module).
-	if(isnull(model) || !(item_dropping in model.modules))
+/mob/living/silicon/robot/doUnEquip(obj/item/dropping_item, force, atom/newloc, no_move, invdrop, silent)
+	// If it is not a module, it is free to drop.
+	if(!has_model() || !(dropping_item in model.get_all_modules()))
 		return ..()
 
 	if(newloc != model)
-		to_chat(src, span_notice("You can't drop your [item_dropping.name] module."))
+		to_chat(src, span_notice("You can't drop your [dropping_item.name] module."))
 		return FALSE
 
-	var/module_num = get_selected_module()
+	var/dropping_module_slot = null
+	if(dropping_item == module_active)
+		for(var/module_slot in 1 to length(held_items))
+			if(!held_items[module_slot] || (dropping_item != held_items[module_slot]))
+				continue
+			dropping_module_slot = module_slot
+			break
+
 	. = ..()
 	if(!.)
 		return
-	item_dropping.mouse_opacity = MOUSE_OPACITY_OPAQUE
-	//this is the cyborg equivalent of dropped(), though we call that too in doUnEquip.
-	item_dropping.cyborg_unequip(src)
-	deselect_module(module_num)
+	dropping_item.mouse_opacity = MOUSE_OPACITY_OPAQUE
+	// This is the cyborg equivalent of dropped(), though we call that too in doUnEquip.
+	dropping_item.cyborg_unequip(src)
+	if(dropping_module_slot)
+		deselect_module(dropping_module_slot)
 	playsound_local(src, SFX_RUSTLE, 40, TRUE)
 
 /mob/living/silicon/robot/update_held_items()
@@ -92,7 +100,7 @@
 		client.screen |= held
 
 /mob/living/silicon/robot/put_in_hand_check(obj/item/item_equipping)
-	return (item_equipping in model.modules)
+	return (item_equipping in model.usable_modules)
 
 /**
  * Breaks the slot number, changing the icon.
@@ -344,7 +352,7 @@
 	return TRUE
 
 /mob/living/silicon/robot/can_hold_items(obj/item/I)
-	return (I && (I in model.modules)) //Only if it's part of our model.
+	return (I && (I in model.usable_modules)) //Only if it's part of our model.
 
 /**
  * ## Please do not use

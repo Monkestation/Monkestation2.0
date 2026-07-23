@@ -15,10 +15,14 @@
 	var/mob/living/silicon/robot/disguised_cyborg
 	/// The typepath of the robot model that we will be using as a disguise.
 	var/obj/item/robot_model/disguise_model_type = /obj/item/robot_model/engineering
-	/// The details of the disguised skin.
-	var/list/disguised_skin_details
+	/// The typepath of the robot model that we previously had before disguising.
+	var/obj/item/robot_model/original_model_type
+	/// The typepath of the robot skin that we will be using as a disguise.
+	var/datum/robot_skin/disguise_skin_type
+	/// The typepath of the robot skin that we previously had before disguising.
+	var/datum/robot_skin/original_skin_type
 	/// When the disguise is applied, this is the new name the the cyborg will get.
-	var/disguised_name
+	var/disguise_name
 	/// When the disguise is removed, this is the old name that the cyborg will revert back to.
 	var/original_name
 	/// List of signals that should break the disguise.
@@ -34,11 +38,11 @@
 
 /obj/item/borg_chameleon/Initialize(mapload)
 	. = ..()
-	disguised_name = pick(GLOB.ai_names)
+	disguise_skin_type = disguise_model_type.default_skin
+	disguise_name = pick(GLOB.ai_names)
 
 /obj/item/borg_chameleon/Destroy()
 	deactivate()
-	disguised_skin_details = null
 	return ..()
 
 /obj/item/borg_chameleon/process(seconds_per_tick)
@@ -76,65 +80,29 @@
 	toggle(cyborg_user)
 
 /obj/item/borg_chameleon/attack_self_secondary(mob/user, modifiers)
-	initialize_cyborg_model_lists()
-	var/input_model = show_radial_menu(user, src, GLOB.cyborg_base_models_icon_list, radius = 42, require_near = TRUE)
-	if(!input_model)
+	if(!iscyborg(user))
+		to_chat(user, span_notice("This device doesn't seem to work for non-cyborgs."))
 		return
-	var/obj/item/robot_model/selected_model = GLOB.cyborg_model_list[input_model]
-	if(!selected_model)
+	var/mob/living/silicon/robot/cyborg_user = user
+	var/obj/item/robot_model/chosen_robot_model = cyborg_user.prompt_model_selection()
+	if(!chosen_robot_model)
 		return
-	disguised_skin_details = prompt_skin_details(user, selected_model)
-	disguise_model_type = selected_model
+	var/datum/robot_skin/chosen_robot_skin = cyborg_user.prompt_skin_selection(chosen_robot_model)
+	if(!chosen_robot_skin)
+		return
+	disguise_model_type = chosen_robot_model
+	disguise_skin_type = chosen_robot_skin
 	to_chat(user, span_notice("The next disguised model will be: [initial(disguise_model_type.name)]."))
 
 /obj/item/borg_chameleon/item_ctrl_click(mob/user)
-	disguised_name = pick(GLOB.ai_names)
-	to_chat(user, span_notice("The next disguised name will be: [disguised_name]."))
+	disguise_name = pick(GLOB.ai_names)
+	to_chat(user, span_notice("The next disguised name will be: [disguise_name]."))
 	return CLICK_ACTION_SUCCESS
 
-/// Offers a radial wheel to the user and tells them to pick and choose one of the cyborg model's skin.
-/obj/item/borg_chameleon/proc/prompt_skin_details(mob/user, obj/item/robot_model/skin_model_type)
-	var/obj/item/robot_model/skin_model = new skin_model_type()
-	if(length(skin_model.borg_skins))
-		var/list/reskin_icons = list()
-		for(var/borg_skin in skin_model.borg_skins)
-			var/list/skin_details = skin_model.borg_skins[borg_skin]
-			reskin_icons[borg_skin] = image(icon = skin_details[SKIN_ICON] || 'icons/mob/silicon/robots.dmi', icon_state = skin_details[SKIN_ICON_STATE])
-		var/skin_name = show_radial_menu(user, src, reskin_icons, radius = 42, require_near = TRUE)
-		if(skin_name)
-			var/list/skin_details = skin_model.borg_skins[skin_name]
-			. = skin_details.Copy()
-	qdel(skin_model)
-
-/// Applies the default appearance of a model. If provided, will apply skin details as well.
-/obj/item/borg_chameleon/proc/disguise_as_model(mob/living/silicon/robot/cyborg_user, obj/item/robot_model/skin_model_type, list/skin_details)
-	cyborg_user.model.name = initial(skin_model_type.name)
-	cyborg_user.model.cyborg_base_icon = initial(skin_model_type.cyborg_base_icon)
-	cyborg_user.icon = initial(cyborg_user.icon)
-	cyborg_user.base_pixel_x = initial(skin_model_type.base_pixel_x)
-	cyborg_user.base_pixel_y = initial(skin_model_type.base_pixel_y)
-	cyborg_user.model.special_light_key = initial(skin_model_type.special_light_key)
-	cyborg_user.model.hat_offset = initial(skin_model_type.hat_offset)
-	cyborg_user.model.badge_offset = initial(skin_model_type.badge_offset)
-	REMOVE_TRAITS_IN(cyborg_user, REF(src))
-	if(islist(skin_details))
-		if(!isnull(skin_details[SKIN_ICON_STATE]))
-			cyborg_user.model.cyborg_base_icon = skin_details[SKIN_ICON_STATE]
-		if(!isnull(skin_details[SKIN_ICON]))
-			cyborg_user.icon = skin_details[SKIN_ICON]
-		if(!isnull(skin_details[SKIN_PIXEL_X]))
-			cyborg_user.base_pixel_x = skin_details[SKIN_PIXEL_X]
-		if(!isnull(skin_details[SKIN_PIXEL_Y]))
-			cyborg_user.base_pixel_y = skin_details[SKIN_PIXEL_Y]
-		if(!isnull(skin_details[SKIN_LIGHT_KEY]))
-			cyborg_user.model.special_light_key = skin_details[SKIN_LIGHT_KEY]
-		if(!isnull(skin_details[SKIN_HAT_OFFSET]))
-			cyborg_user.model.hat_offset = skin_details[SKIN_HAT_OFFSET]
-		if(!isnull(skin_details[SKIN_BADGE_OFFSET]))
-			cyborg_user.model.badge_offset = skin_details[SKIN_BADGE_OFFSET]
-		if(!isnull(skin_details[SKIN_TRAITS])) // Skin traits are comestic in general.
-			cyborg_user.add_traits(skin_details[SKIN_TRAITS], REF(src))
-	disguised_cyborg.update_icons() // Icon state is handled here.
+/// Makes the cyborg appear as if they look like a certain model and certain skin.
+/obj/item/borg_chameleon/proc/apply_appearance_as(mob/living/silicon/robot/cyborg_user, obj/item/robot_model/disguising_model, datum/robot_skin/disguising_skin)
+	cyborg_user.model.name = initial(disguising_model.name) // Will fool people examining us.
+	cyborg_user.apply_skin(disguising_skin, FALSE, FALSE)
 
 /**
  * Toggles the item. It will either:
@@ -156,7 +124,7 @@
 	apply_wibbly_filters(cyborg_user)
 	if(do_after(cyborg_user, 5 SECONDS, cyborg_user, interaction_key = REF(src), hidden = TRUE) && cyborg_user.cell.use(ACTIVATION_COST))
 		playsound(src, 'sound/effects/bamf.ogg', 100, TRUE, -6)
-		to_chat(cyborg_user, span_notice("You are now disguised as the Nanotrasen [initial(disguise_model_type.name)] borg \"[disguised_name]\"."))
+		to_chat(cyborg_user, span_notice("You are now disguised as the Nanotrasen [initial(disguise_model_type.name)] borg \"[disguise_name]\"."))
 		activate(cyborg_user)
 	else
 		to_chat(cyborg_user, span_warning("The chameleon field fizzles."))
@@ -169,24 +137,26 @@
 	if(disguised_cyborg)
 		return
 	original_name = cyborg_user.name
+	original_model_type = cyborg_user.model.type
+	original_skin_type = cyborg_user.skin.type
 	disguised_cyborg = cyborg_user
-	disguised_cyborg.name = disguised_name
-	disguised_cyborg.bubble_icon = "robot"
-	disguise_as_model(disguised_cyborg, disguise_model_type, disguised_skin_details)
+	disguised_cyborg.name = disguise_name
+	apply_appearance_as(disguised_cyborg, disguise_model_type, disguise_skin_type)
 	RegisterSignals(disguised_cyborg, signal_cache, PROC_REF(disrupt))
 
-/// Removes the disguise and resets the skin to default.
+/// Removes the disguise and resets the skin to the original skin.
 /obj/item/borg_chameleon/proc/deactivate()
 	STOP_PROCESSING(SSobj, src)
 	if(!disguised_cyborg)
 		return
 	UnregisterSignal(disguised_cyborg, signal_cache)
 	do_sparks(5, FALSE, disguised_cyborg)
+	apply_appearance_as(disguised_cyborg, original_model_type, original_skin_type)
 	disguised_cyborg.name = original_name
-	disguised_cyborg.bubble_icon = "syndibot"
-	disguise_as_model(disguised_cyborg, disguised_cyborg.model.type) // Syndicate Saboteurs do not have skins that we care about.
 	disguised_cyborg = null
 	original_name = null
+	original_model_type = null
+	original_skin_type = null
 
 /// Removes the disguise and tells the cyborg that it happened.
 /obj/item/borg_chameleon/proc/disrupt()

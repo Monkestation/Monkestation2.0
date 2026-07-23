@@ -106,17 +106,11 @@
 	/// Weakref to the cyborg we're currently connected to.
 	var/datum/weakref/cyborg_holding_me
 
-
 /obj/item/borg/hydraulic_clamp/Initialize(mapload)
 	. = ..()
-	if(!istype(loc, /obj/item/robot_model))
-		return
-
-	var/obj/item/robot_model/holder_model = loc
-	cyborg_holding_me = WEAKREF(holder_model.robot)
-
-	RegisterSignal(holder_model.robot, COMSIG_LIVING_DEATH, PROC_REF(empty_contents))
-
+	if(iscyborg(loc))
+		cyborg_holding_me = WEAKREF(loc)
+		RegisterSignal(loc, COMSIG_LIVING_DEATH, PROC_REF(empty_contents))
 
 /obj/item/borg/hydraulic_clamp/Destroy()
 	var/mob/living/silicon/robot/robot_holder = cyborg_holding_me?.resolve()
@@ -427,18 +421,6 @@
 	return interact_with_atom_secondary(interacting_with, user, modifiers)
 
 /// Holders for the package wrap and the wrapping paper synthetizers.
-
-/datum/robot_energy_storage/package_wrap
-	name ="package wrapper synthetizer"
-	max_energy = 25
-	recharge_rate = 2
-
-
-/datum/robot_energy_storage/wrapping_paper
-	name ="wrapping paper synthetizer"
-	max_energy = 25
-	recharge_rate = 2
-
 
 /obj/item/stack/package_wrap/cyborg
 	name = "integrated package wrapper"

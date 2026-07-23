@@ -7,7 +7,7 @@
 /mob/living/silicon/robot/proc/set_clockwork(clockwork_state, rebuild = TRUE)
 	clockwork = clockwork_state
 	if(rebuild)
-		model.rebuild_modules()
+		model.rebuild_usable_modules()
 	update_icons()
 	if(clockwork)
 		set_light_color(LIGHT_COLOR_CLOCKWORK)

@@ -661,7 +661,7 @@
 	attack_paw(ayy, modifiers)
 
 /obj/item/attack_robot(mob/living/silicon/robot/user)
-	if(!istype(loc, /obj/item/robot_model))
+	if(loc != user.model)
 		return
 	if(user.low_power_mode) //can't equip modules with an empty cell.
 		return
