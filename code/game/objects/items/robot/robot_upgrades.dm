@@ -1048,7 +1048,7 @@
 	desc = "An upgrade that replaces the standard built-in syringe."
 	icon_state = "module_medical"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
+	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate/medical)
 	model_flags = BORG_MODEL_MEDICAL
 	/// The typepath of the syringe to copy.
 	var/obj/item/reagent_containers/syringe/upgraded_syringe_typepath = null
