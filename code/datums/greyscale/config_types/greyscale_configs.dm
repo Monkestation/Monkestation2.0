@@ -1576,3 +1576,13 @@
 /datum/greyscale_config/plasmaman_suit/inhand_right/striped
 	name = "Plasmaman Suit Striped (Held), Right"
 	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/striped/plasmaman_suit_striped_inhand_right.json'
+
+// Double Belt
+
+/datum/greyscale_config/plasmaman_suit/doublebelt
+	name = "Plasmaman Double Belt Suit"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/doublebelt/plasmaman_suit_doublebelt.json'
+
+/datum/greyscale_config/plasmaman_suit/worn/doublebelt
+	name = "Plasmaman Double Belt Suit (Worn)"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/doublebelt/plasmaman_suit_doublebelt_worn.json'

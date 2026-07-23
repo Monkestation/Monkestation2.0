@@ -221,8 +221,10 @@
 /obj/item/clothing/under/plasmaman/prisoner
 	name = "prisoner envirosuit"
 	desc = "An orange envirosuit identifying and protecting a criminal plasmaman. Its suit sensors are stuck in the \"Fully On\" position."
-	greyscale_colors = "#d15b1b#d15b1b#39393f#39393f#d15b1b#612313"
+	greyscale_colors = "#d15b1b#d15b1b#39393f#39393f#d15b1b#612313#eeeeee"
 	sleek_greyscale_colors = "#d15b1b#39393f#39393f#39393f#39393f"
+	greyscale_config = /datum/greyscale_config/plasmaman_suit/doublebelt
+	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/doublebelt
 	has_sensor = LOCKED_SENSORS
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE

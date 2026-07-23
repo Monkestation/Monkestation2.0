@@ -4,8 +4,8 @@
 	icon_state = "medal"
 	worn_icon_state = "medal_w"
 	inhand_icon_state = "medal"
-	greyscale_config = /datum/greyscale_config/plasmaman_suit/symbol
-	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/symbol
+	greyscale_config = /datum/greyscale_config/plasmaman_suit/doublebelt
+	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/doublebelt
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/symbol
 	greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_suit/inhand_right/symbol
 	greyscale_colors = "#41579a#41579a#e6a345#e6a345#e6a345#e6a345#924100"
@@ -50,7 +50,7 @@
 /obj/item/clothing/under/plasmaman/engineering/chief_engineer
 	name = "chief engineer's plasma envirosuit"
 	desc = "An air-tight suit designed to be used by plasmamen insane enough to achieve the rank of \"Chief Engineer\"."
-	greyscale_colors = "#deb63d#eeeeee#2e992e#2e992e#deb63d#2e992e#8c4722"
+	greyscale_colors = "#ffcd34#eeeeee#2e992e#2e992e#ffcd34#2e992e#8c4722"
 	sleek_greyscale_colors = "#deb63d#39393f#2e992e#e6a345#eeeeee"
 
 /obj/item/clothing/under/plasmaman/medical/chief_medical_officer

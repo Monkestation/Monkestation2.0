@@ -4,8 +4,8 @@
 	icon_state = "medal"
 	worn_icon_state = "medal_w"
 	inhand_icon_state = "medal"
-	greyscale_config = /datum/greyscale_config/plasmaman_suit/symbol
-	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/symbol
+	greyscale_config = /datum/greyscale_config/plasmaman_suit/doublebelt
+	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/doublebelt
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/symbol
 	greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_suit/inhand_right/symbol
 	greyscale_colors = "#46b946#46b946#e6a345#e6a345#e6a345#e6a345#924100"
