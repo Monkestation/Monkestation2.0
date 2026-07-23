@@ -1,8 +1,3 @@
-// Defines for the ballmer peak.
-#define BALLMER_PEAK_LOW_END 12.9
-#define BALLMER_PEAK_HIGH_END 13.8
-#define BALLMER_PEAK_WINDOWS_ME 26
-
 /// The threshld which determine if someone is tipsy vs drunk
 #define TIPSY_THRESHOLD 6
 
@@ -135,16 +130,6 @@
 
 /datum/status_effect/inebriated/drunk/on_tick_effects()
 	var/is_alcoholic = HAS_TRAIT(owner, TRAIT_ALCOHOL_TOLERANCE) // monkestation edit: alcoholism
-	// Handle the Ballmer Peak.
-	// If our owner is a scientist (has the trait "TRAIT_BALLMER_SCIENTIST"), there's a 5% chance
-	// that they'll say one of the special "ballmer message" lines, depending their drunk-ness level.
-	var/obj/item/organ/internal/liver/liver_organ = owner.get_organ_slot(ORGAN_SLOT_LIVER)
-	if(liver_organ && HAS_TRAIT(liver_organ, TRAIT_BALLMER_SCIENTIST) && prob(5))
-		if(drunk_value >= BALLMER_PEAK_LOW_END && drunk_value <= BALLMER_PEAK_HIGH_END)
-			owner.say(pick_list_replacements(VISTA_FILE, "ballmer_good_msg"), forced = "ballmer")
-
-		if(drunk_value > BALLMER_PEAK_WINDOWS_ME) // by this point you're into windows ME territory
-			owner.say(pick_list_replacements(VISTA_FILE, "ballmer_windows_me_msg"), forced = "ballmer")
 
 	// Drunk slurring scales in intensity based on how drunk we are -at 16 you will likely not even notice it,
 	// but when we start to scale up you definitely will
@@ -204,9 +189,5 @@
 	desc = "All that alcohol you've been drinking is impairing your speech, \
 		motor skills, and mental cognition. Make sure to act like it."
 	icon_state = "drunk"
-
-#undef BALLMER_PEAK_LOW_END
-#undef BALLMER_PEAK_HIGH_END
-#undef BALLMER_PEAK_WINDOWS_ME
 
 #undef TIPSY_THRESHOLD
