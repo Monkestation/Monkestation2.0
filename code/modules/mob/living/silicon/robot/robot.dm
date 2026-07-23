@@ -961,6 +961,9 @@
 	log_silicon("CYBORG: [key_name(src)] has reset their cyborg model.")
 	apply_model(/obj/item/robot_model, FALSE)
 	apply_skin(model.default_skin)
+	var/obj/item/borg/upgrade/ai/boris_upgrade = locate() in upgrades
+	if(boris_upgrade)
+		boris_upgrade.forceMove(get_turf(src))
 	revert_shell()
 	return TRUE
 
@@ -1032,11 +1035,6 @@
 	diag_hud_set_status()
 	diag_hud_set_borgcell()
 	diag_hud_set_aishell()
-
-	var/obj/item/borg/upgrade/ai/boris_upgrade = locate() in upgrades
-	if(!has_model() && boris_upgrade)
-		boris_upgrade.forceMove(get_turf(src))
-		revert_shell()
 
 	log_silicon("CYBORG: [key_name(src)] has transformed into the [model.name] model.")
 	logevent("Chassis model has been set to [name].")
