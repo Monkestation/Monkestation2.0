@@ -1062,7 +1062,7 @@
 		return FALSE
 	for(var/obj/item/borg/upgrade/syringe/other_syringe_upgrade in borg.upgrades)
 		other_syringe_upgrade.forceMove(get_turf(borg))
-	for(var/obj/item/reagent_containers/syringe/syringe_module in borg.model.modules)
+	for(var/obj/item/reagent_containers/syringe/syringe_module in borg.model.usable_modules)
 		upgrade_syringe(borg, syringe_module) // This is solely because we don't want to shuffle the item around in their inventory.
 		syringe_module.update_appearance()
 
@@ -1070,7 +1070,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	for(var/obj/item/reagent_containers/syringe/syringe_module in borg.model.modules)
+	for(var/obj/item/reagent_containers/syringe/syringe_module in borg.model.usable_modules)
 		downgrade_syringe(borg, syringe_module)
 		syringe_module.update_appearance()
 
