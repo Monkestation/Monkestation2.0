@@ -1028,6 +1028,7 @@
 
 /obj/item/circuitboard/machine/ai_data_core/primary
 	name = "Primary AI Data Core"
+	build_path = /obj/machinery/ai/data_core/primary
 
 /obj/item/circuitboard/machine/ai_core_display
 	name = "AI Core Display"
