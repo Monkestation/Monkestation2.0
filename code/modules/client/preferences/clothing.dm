@@ -77,7 +77,7 @@
 	)
 
 /datum/preference/choiced/jumpsuit/icon_for(value)
-	switch (value)
+	switch(value)
 		if (PREF_SUIT)
 			return /obj/item/clothing/under/color/grey
 		if (PREF_SKIRT)

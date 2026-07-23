@@ -172,7 +172,6 @@
 /obj/item/clothing/under/plasmaman/syndicate
 	name = "tacticool envirosuit"
 	desc = "A sinister looking envirosuit, for the boniest of operatives."
-	icon_state = "syndie_envirosuit"
+	greyscale_colors = "#61423f#61423f#b22c20#61423f#61423f#1c070e"
 	has_sensor = NO_SENSORS
 	resistance_flags = FIRE_PROOF
-	inhand_icon_state = null

@@ -100,7 +100,7 @@ There are several things that need to be remembered:
 
 		CHECK_SHOULDNT_RENDER(uniform, ITEM_SLOT_ICLOTHING) // monkestation edit: combine TRAIT_ALWAYS_RENDER + TRAIT_NO_WORN_ICON + obscure check into a single define
 
-		var/target_overlay = uniform.icon_state
+		var/target_overlay = RESOLVE_ICON_STATE(uniform) //Selects proper icon from the vars the clothing has (Search define for more.)
 		if(uniform.adjusted == ALT_STYLE)
 			target_overlay = "[target_overlay]_d"
 
