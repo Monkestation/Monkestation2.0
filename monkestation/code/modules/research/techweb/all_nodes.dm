@@ -186,7 +186,7 @@
 		"pyramid_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS, TECHWEB_POINT_TYPE_NANITES = 5000)
-		announce_channels = list(RADIO_CHANNEL_SCIENCE)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/nanite_storage_protocols
 	id = "nanite_storage_protocols"
