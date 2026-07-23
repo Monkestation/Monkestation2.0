@@ -434,3 +434,48 @@
   SirNightKnight:
   - rscadd: replaced hypospray vials with chemical canisters.
   - spellcheck: cleaned up some naming with hypo sprays.
+2026-07-23:
+  Gboster, mc-oofert, sylvia-from-fulp-station, W4rd3nn, Exester509:
+  - rscadd: 3 new deathmatch maps were ported from TG
+  - bugfix: (sylvia-from-fulp-station) indestructible light tile emits light
+  - bugfix: (Exester509) Plasmamen will become human in the deathmatch so they don't
+      instantly die
+  - bugfix: (mc-oofert) deathmatch OSHA Violator map field generators are now permanently
+      on instead of being on a few seconds
+  - bugfix: (mc-oofert) breaking certain terrain in deathmatch doesnt instantly breach
+      to space
+  - qol: (mc-oofert) deathmatch map names are sorted alphabetically
+  Glyphee:
+  - rscadd: Gave goblins minor toxin healing
+  JohnFulpWillard:
+  - balance: AI research point generation now boosts General Research by 20%, rather
+      than boosting AI points 25%.
+  - balance: Lowered AI research point generation.
+  - balance: Increased credit gain from bitcoin mining.
+  - balance: AIs can now cancel their own downloads if not done with the AI codes.
+  - balance: Firewall now blocks downloads rather than slow it down, but is bypassable
+      with AI codes.
+  - balance: AI codes is now in the primary AI data core, then printable from the
+      Comms console if it gets removed.
+  - bugfix: The CE can use the AI System resource distribution console.
+  PotatoTomahto:
+  - bugfix: particle accelerator console now shows the strength it's set at
+  Runian:
+  - rscadd: 'Two mutually exclusive upgrades for medical cyborg''s syringe: piercing
+      syringe & bluespace syringe.'
+  - balance: Bluespace Cyborg Upgrades now requires Medical Cyborg Upgrades as a prerequisite.
+  - bugfix: Downgrading a cyborg health analyzer now resets its wound treatment bonus.
+  - bugfix: Advanced Biotechnology no longer unlock piercing syringes.
+  Shoddd:
+  - balance: blueshield no longer recieves the tech-9 as a option
+  Tractor-Maam:
+  - rscadd: Added Cyborg GPS, a all model upgrade to cyborgs that gives them a GPS.
+  - rscadd: Added Experimental Welding Tool upgrade to cyborgs, giving engineer/science
+      cyborgs refueling welders.
+  adamsong:
+  - rscdel: Removed copulating with from ion law strings
+  hexakats:
+  - bugfix: Syndicate surgery kit can fit its own tools now
+  - balance: Syndicate surgery kit starts with a biocorrector instead of the tier
+      1 equivalents
+  - balance: Syndicate surgery kit starts with an advanced health analyzer
