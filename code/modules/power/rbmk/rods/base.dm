@@ -60,6 +60,17 @@
 	return !active || fuel_amount <= 0
 
 
+/obj/item/rbmk/fuel_rod/proc/get_fuel_percent()
+	if(fuel_amount >= INFINITY)
+		return 100
+
+	var/initial_fuel_amount = initial(fuel_amount)
+	if(initial_fuel_amount <= 0)
+		return is_depleted() ? 0 : 100
+
+	return clamp((fuel_amount / initial_fuel_amount) * 100, 0, 100)
+
+
 /obj/item/rbmk/fuel_rod/proc/is_inside_reactor()
 	return istype(loc, /obj/machinery/rbmk/reactor)
 

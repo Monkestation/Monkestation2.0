@@ -13,6 +13,7 @@ type RodSlotData = {
   empty?: boolean;
   occupied?: boolean;
   fuel_amount?: number;
+  fuel_percent?: number;
   slot_kind: 'normal' | 'special';
   slot_index: number;
 };
@@ -56,8 +57,8 @@ const shortRodName = (rod: RodSlotData) =>
   rodName(rod).replace(/ fuel rod$/i, '').replace(/ rod$/i, '').toUpperCase();
 
 const fuelDisplay = (rod: RodSlotData) => {
-  const fuel = Number(rod.fuel_amount ?? 0);
-  return Number.isFinite(fuel) ? `${Math.max(0, fuel).toFixed(0)}% FUEL` : '∞ FUEL';
+  const fuelPercent = Number(rod.fuel_percent ?? 0);
+  return `${Math.max(0, Math.min(100, fuelPercent)).toFixed(0)}% FUEL`;
 };
 
 export const RBMKRods = () => {
@@ -119,9 +120,12 @@ export const RBMKRods = () => {
   } else if (selection.kind === 'rod') {
     if (isRodOccupied(selection.rod)) {
       monitorTitle = shortRodName(selection.rod);
-      monitorValue = selection.rod.depleted
-        ? 'DEPLETED'
-        : fuelDisplay(selection.rod);
+      monitorValue =
+        selection.rod.slot_kind === 'special'
+          ? 'MODIFIER ROD'
+          : selection.rod.depleted
+            ? 'DEPLETED'
+            : fuelDisplay(selection.rod);
     } else {
       monitorTitle = 'EMPTY';
       monitorValue = `${selection.rod.slot_kind.toUpperCase()} SLOT`;

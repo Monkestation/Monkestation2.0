@@ -8,6 +8,23 @@
 	last_tick_temp_gain = 0
 
 
+/// Slowly exchanges heat with the reactor room even when the primary loop is
+/// empty or depressurized. The room/structure acts as the passive heat sink;
+/// forced coolant remains orders of magnitude more effective.
+/obj/machinery/rbmk/reactor/proc/rbmk_passive_air_exchange(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
+	var/turf/reactor_turf = get_turf(src)
+	var/datum/gas_mixture/environment_mix = reactor_turf?.return_air()
+	var/environment_temperature = max(environment_mix?.temperature || RBMK_AMBIENT_TEMP, RBMK_AMBIENT_TEMP)
+	var/temperature_delta = temperature - environment_temperature
+	if(abs(temperature_delta) < 0.1)
+		return
+
+	var/process_scale = seconds_per_tick / RBMK_MACHINERY_PROCESS_SECONDS
+	var/exchange_coefficient = 1 - ((1 - RBMK_PASSIVE_AIR_EXCHANGE_COEFFICIENT) ** process_scale)
+	temperature -= temperature_delta * exchange_coefficient
+	temperature = max(temperature, RBMK_AMBIENT_TEMP)
+
+
 /obj/machinery/rbmk/reactor/proc/maintain_residual_radiation(list/all_fuel_rods)
 	var/residual_rod_radiation = 0
 	for(var/obj/item/rbmk/fuel_rod/fuel_rod in all_fuel_rods)
@@ -327,6 +344,7 @@
 		return
 
 	last_integrity_damage = 0
+	rbmk_passive_air_exchange(seconds_per_tick)
 
 	check_supermatter_rod_activation()
 

@@ -1,5 +1,6 @@
 import { useBackend } from '../../backend';
 import {
+  AnimatedNumber,
   Box,
   Collapsible,
   Flex,
@@ -10,8 +11,10 @@ import {
 
 const Instrument = (props: {
   label: string;
-  value: string;
+  value: number;
+  digits?: number;
   unit?: string;
+  reference: string;
   state: 'nominal' | 'warning' | 'danger';
 }) => (
   <Flex.Item basis="31%" grow>
@@ -20,12 +23,18 @@ const Instrument = (props: {
     >
       <Box className="RBMKConsole__InstrumentLabel">{props.label}</Box>
       <Box className="RBMKConsole__InstrumentValue">
-        {props.value}
+        <AnimatedNumber
+          value={props.value}
+          format={(value) => value.toFixed(props.digits ?? 0)}
+        />
         {!!props.unit && (
           <Box as="span" className="RBMKConsole__InstrumentUnit">
             {props.unit}
           </Box>
         )}
+      </Box>
+      <Box className="RBMKConsole__InstrumentReference">
+        {props.reference}
       </Box>
       <Box className="RBMKConsole__InstrumentLamp" />
     </Box>
@@ -34,6 +43,7 @@ const Instrument = (props: {
 
 export const RBMKOverview = () => {
   const { data } = useBackend<any>();
+  const running = Boolean(data?.running ?? false);
 
   const temperature = Number(data?.temperature ?? 0);
 
@@ -83,30 +93,49 @@ export const RBMKOverview = () => {
         <Flex wrap gap={0.75}>
           <Instrument
             label="Core Temperature"
-            value={temperature.toFixed(0)}
+            value={temperature}
             unit="K"
+            reference={`WARN ${tempModerate.toFixed(0)} · LIMIT ${tempMaxSafe.toFixed(0)}`}
             state={temperature >= tempMaxSafe ? 'danger' : temperature >= tempModerate ? 'warning' : 'nominal'}
           />
           <Instrument
             label="Primary Pressure"
-            value={pressure.toFixed(0)}
+            value={pressure}
             unit="kPa"
+            reference={`WARN ${pressureWarning.toFixed(0)} · CRIT ${pressureCritical.toFixed(0)}`}
             state={pressure >= pressureCritical ? 'danger' : pressure >= pressureWarning ? 'warning' : 'nominal'}
           />
           <Instrument
             label="Neutron Flux"
-            value={flux.toFixed(0)}
+            value={flux}
+            reference={`WARN ${fluxWarning.toFixed(0)} · HIGH ${fluxHigh.toFixed(0)}`}
             state={flux >= fluxHigh ? 'danger' : flux >= fluxWarning ? 'warning' : 'nominal'}
           />
           <Instrument
             label="Radiation"
-            value={radiation.toFixed(1)}
+            value={radiation}
+            digits={1}
+            reference="LIVE FIELD INTENSITY"
             state={radiation >= maxRadiation * 0.5 ? 'danger' : radiation >= maxRadiation * 0.2 ? 'warning' : 'nominal'}
           />
           <Instrument
-            label="Void Coefficient"
-            value={voidCoefficient.toFixed(3)}
-            state={voidCoefficient >= maxVoidCoefficient * 0.7 ? 'danger' : voidCoefficient >= maxVoidCoefficient * 0.35 ? 'warning' : 'nominal'}
+            label={running ? 'Void Feedback' : 'Void Potential'}
+            value={voidCoefficient}
+            digits={3}
+            reference={
+              running
+                ? `ACTIVE · MULT ${voidFluxMultiplier.toFixed(2)}x`
+                : 'DORMANT · NO FLUX GAIN'
+            }
+            state={
+              !running
+                ? 'nominal'
+                : voidCoefficient >= maxVoidCoefficient * 0.7
+                  ? 'danger'
+                  : voidCoefficient >= maxVoidCoefficient * 0.35
+                    ? 'warning'
+                    : 'nominal'
+            }
           />
         </Flex>
       </Section>

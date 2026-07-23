@@ -6,6 +6,9 @@
 #define RBMK_TEMP_DISPLAY_MAX 20000
 #define RBMK_TEMP_STRESS_THRESHOLD 8000
 #define RBMK_TEMP_DAMAGE_RAMP 9500
+/// Passive vessel-to-room thermal loss per normal machinery cycle. This is
+/// deliberately weak compared with forced coolant exchange.
+#define RBMK_PASSIVE_AIR_EXCHANGE_COEFFICIENT 0.0015
 
 #define RBMK_MODIFIER_PLASMA_TEMP_LIMIT_BONUS 1250
 #define RBMK_MODIFIER_PLASMA_TEMP_LIMIT_BONUS_MAX 4000

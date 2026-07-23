@@ -388,7 +388,8 @@
 			"color" = normal_rod ? normal_rod.rod_color : "grey",
 			"active" = normal_rod?.active,
 			"fuel_amount" = normal_rod ? RBMK_ROUND2(normal_rod.fuel_amount) : 0,
-			"depleted" = normal_rod && !normal_rod.active,
+			"fuel_percent" = normal_rod ? RBMK_ROUND2(normal_rod.get_fuel_percent()) : 0,
+			"depleted" = normal_rod?.is_depleted(),
 			"slot_kind" = "normal",
 			"slot_index" = normal_slot_index
 		))
@@ -403,7 +404,8 @@
 			"color" = special_rod ? special_rod.rod_color : "grey",
 			"active" = special_rod?.active,
 			"fuel_amount" = special_rod ? RBMK_ROUND2(special_rod.fuel_amount) : 0,
-			"depleted" = special_rod && !special_rod.active,
+			"fuel_percent" = special_rod ? RBMK_ROUND2(special_rod.get_fuel_percent()) : 0,
+			"depleted" = special_rod?.is_depleted(),
 			"slot_kind" = "special",
 			"slot_index" = special_slot_index
 		))
