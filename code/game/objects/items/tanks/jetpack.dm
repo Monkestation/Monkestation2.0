@@ -237,10 +237,16 @@
 	distribute_pressure = 0
 	gas_type = /datum/gas/carbon_dioxide
 
-//MONKESTATION EDIT START
+/obj/item/tank/jetpack/nitrogen
+	name = "jetpack (nitrogen)"
+	desc = "A tank of compressed nitrogen for use as propulsion in zero-gravity areas."
+	icon_state = "jetpack-nitrogen"
+	inhand_icon_state = "jetpack-nitrogen"
+	gas_type = /datum/gas/nitrogen
+
 /obj/item/tank/jetpack/mining //tried to get hardsuit jetpacks to work again took all day with no real progess so this is the compromise
 	name = "mining jetpack (oxygen)"
 	icon_state = "jetpack-mining"
 	inhand_icon_state = "jetpack-mining"
 	desc = "A tank of compressed oxygen for miners to use as propulsion in local space."
-//MONKESTATION EDIT STOP
+
