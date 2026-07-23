@@ -305,11 +305,20 @@
 
 /datum/status_effect/hippocratic_oath/proc/consume_owner()
 	owner.visible_message(span_notice("[owner]'s soul is absorbed into the rod, relieving the previous snake of its duty."))
-	var/list/chems = list(/datum/reagent/medicine/sal_acid, /datum/reagent/medicine/c2/convermol, /datum/reagent/medicine/oxandrolone)
-	var/mob/living/basic/snake/spawned = new(owner.loc, pick(chems))
+	var/mob/living/basic/snake/spawned = new(owner.loc, /datum/reagent/medicine/omnizine/godblood)
 	spawned.name = "Asclepius's Snake"
 	spawned.real_name = "Asclepius's Snake"
 	spawned.desc = "A mystical snake previously trapped upon the Rod of Asclepius, now freed of its burden. Unlike the average snake, its bites contain chemicals with minor healing properties."
+	spawned.maxHealth = 100
+	spawned.health = 100
+	spawned.melee_damage_lower = 1
+	spawned.melee_damage_upper = 1
+	spawned.PossessByPlayer(owner.mind.key)
+
+	ADD_TRAIT(spawned, TRAIT_MEDICAL_HUD, ABSTRACT_ITEM_TRAIT)
+	var/datum/atom_hud/med_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+	med_hud.show_to(spawned)
+
 	new /obj/effect/decal/cleanable/ash(owner.loc)
 	new /obj/item/rod_of_asclepius(owner.loc)
 	owner.investigate_log("has been consumed by the Rod of Asclepius.", INVESTIGATE_DEATHS)
