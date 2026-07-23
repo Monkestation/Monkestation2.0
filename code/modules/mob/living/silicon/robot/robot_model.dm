@@ -772,6 +772,7 @@
 		/obj/item/stack/medical/bone_gel,
 		/obj/item/borg/apparatus/organ_storage,
 		/obj/item/borg/lollipop,
+		/obj/item/holosign_creator/medical/treatment_zone,
 	)
 	radio_channels = list(RADIO_CHANNEL_MEDICAL)
 	emag_modules = list(
