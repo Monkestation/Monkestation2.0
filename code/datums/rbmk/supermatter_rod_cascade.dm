@@ -1,6 +1,7 @@
 /datum/supermatter_rod_cascade
 	var/obj/item/rbmk/fuel_rod/supermatter/source_rod = null
 	var/obj/machinery/rbmk/reactor/reactor = null
+	var/datum/looping_sound/rbmk_cascade/cascade_soundloop = null
 
 	var/started_at = 0
 	var/duration = 5 MINUTES
@@ -45,6 +46,8 @@
 
 	reactor.supermatter_cascade_active = TRUE
 	reactor.supermatter_rod = source_rod
+	reactor.stop_reactor_sound()
+	cascade_soundloop = new /datum/looping_sound/rbmk_cascade(reactor, TRUE)
 
 	message_admins("[reactor] has begun an RBMK supermatter rod cascade. [ADMIN_VERBOSEJMP(reactor)]")
 	reactor.investigate_log("has begun an RBMK supermatter rod cascade.", INVESTIGATE_ENGINE)
@@ -57,12 +60,19 @@
 
 /datum/supermatter_rod_cascade/Destroy(force)
 	STOP_PROCESSING(SSobj, src)
+	stop_cascade_sound()
 	cleanup_warp()
 
 	source_rod = null
 	reactor = null
 
 	return ..()
+
+
+/datum/supermatter_rod_cascade/proc/stop_cascade_sound()
+	if(cascade_soundloop)
+		cascade_soundloop.stop()
+	QDEL_NULL(cascade_soundloop)
 
 
 /datum/supermatter_rod_cascade/process(seconds_per_tick)
@@ -369,6 +379,7 @@
 	source_rod.cascade_controller = null
 	reactor.supermatter_cascade_active = FALSE
 	reactor.supermatter_rod = null
+	stop_cascade_sound()
 
 	reactor.trigger_supermatter_rod_meltdown("Supermatter rod cascade resonance failure")
 

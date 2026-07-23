@@ -8,6 +8,10 @@
 
 
 /obj/machinery/rbmk/reactor/proc/update_reactor_sound()
+	if(supermatter_cascade_active)
+		stop_reactor_sound()
+		return
+
 	if(icon_state == "reactor_off" || icon_state == "reactor_slagged")
 		stop_reactor_sound()
 		return

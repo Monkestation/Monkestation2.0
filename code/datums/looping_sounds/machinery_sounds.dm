@@ -235,6 +235,25 @@
 
 	return 'sound/rbmk/reactor_hum_low.ogg'
 
+
+/datum/looping_sound/rbmk_cascade
+	mid_sounds = list('sound/rbmk/cascade_loop.ogg')
+	mid_length = 64 SECONDS
+	volume = 35
+
+	extra_range = 15
+
+	live_attenuation = TRUE
+	live_attenuation_interval = 0.5 SECONDS
+	live_attenuation_max_distance = 20
+	live_attenuation_mixer_channel = CHANNEL_MACHINERY
+
+	falloff_distance = 5
+	falloff_exponent = 2
+	ignore_walls = FALSE
+	pressure_affected = FALSE
+
+
 /datum/looping_sound/rbmk_turbine
 	start_sound = 'sound/rbmk/turbine_start.ogg'
 	start_length = 16 SECONDS
