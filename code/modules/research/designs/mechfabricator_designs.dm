@@ -1553,6 +1553,36 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
 
+/datum/design/borg_upgrade_piercing_syringe
+	name = "Piercing Syringe Upgrade"
+	id = "borg_upgrade_piercing_syringe"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/syringe/piercing
+	materials = list( // Same cost as a regular piercing syringe.
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 0.5
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	)
+
+/datum/design/borg_upgrade_bluespace_syringe
+	name = "Bluespace Syringe Upgrade"
+	id = "borg_upgrade_bluespace_syringe"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/syringe/bluespace
+	materials = list( // Same cost as a regular bluespace syringe.
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.5,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 0.5,
+		/datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 0.5
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	)
+
 /datum/design/borg_upgrade_experimental_welder
 	name = "Cyborg Experimental Welding Tool Upgrade"
 	id = "borg_upgrade_experimental_welder"

@@ -131,9 +131,17 @@
 
 /obj/item/organ/internal/tongue/goblin
 	name = "goblin tongue"
-	disliked_foodtypes = VEGETABLES
-	liked_foodtypes = GORE | MEAT | GROSS
-	var/static/list/speech_replacements = list( new /regex(@"\bx(?=\w+)", "g") = "z", new /regex(@"\bX(?=\w+)", "g") = "Z", new /regex(@"\bx\b", "g") = "ecks", new /regex(@"\bX\b", "g") = "ECKS", new /regex(@"\Bx", "g") = "cks", new /regex(@"\BX", "g") = "CKS", new /regex(@"\bask", "g") = "acks", , new /regex(@"\bAsk", "g") = "Acks", new /regex(@"\bASK", "g") = "ACKS" ) //Reverses ask to a(c)ks, and changes beginning x's to z's, and x's inside words to "cks"
+	liked_foodtypes = GORE | MEAT | GROSS | TOXIC
+	toxic_foodtypes = NONE
+	//Reverses ask to a(c)ks, and changes beginning x's to z's, and x's inside words to "cks"
+	var/static/list/speech_replacements = list(
+		"ask" = "acks",
+		"asks" = "ackses",
+		new /regex(@"\bx", "g") = "z",
+		new /regex(@"\bX", "g") = "Z",
+		new /regex(@"(?<=[a-z])x", "g") = "cks",
+		new /regex(@"(?<=[A-Z])X", "g") = "CKS",
+	)
 
 /obj/item/organ/internal/tongue/goblin/New(class, timer, datum/mutation/copymut)
 	. = ..()
@@ -147,6 +155,12 @@
 	toxTolerance = 5
 	liver_resistance = 1.2
 	desc = "Its green and pulsing..."
+	organ_traits = list(TRAIT_GOBLIN_METABOLISM)
+	var/innate_tox_healing = 0.2
+
+/obj/item/organ/internal/liver/goblin/on_life(seconds_per_tick, times_fired)
+	. = ..()
+	owner.adjustToxLoss(-innate_tox_healing * seconds_per_tick) //Goblins slowly heal tox damage
 
 /obj/item/organ/internal/spleen/goblin
 	name = "squeedily spooch"

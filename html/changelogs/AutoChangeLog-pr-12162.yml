@@ -1,0 +1,6 @@
+author: "hexakats"
+delete-after: True
+changes:
+  - bugfix: "Syndicate surgery kit can fit its own tools now"
+  - balance: "Syndicate surgery kit starts with a biocorrector instead of the tier 1 equivalents"
+  - balance: "Syndicate surgery kit starts with an advanced health analyzer"

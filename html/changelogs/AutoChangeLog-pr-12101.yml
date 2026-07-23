@@ -1,0 +1,7 @@
+author: "Runian"
+delete-after: True
+changes:
+  - rscadd: "Two mutually exclusive upgrades for medical cyborg's syringe: piercing syringe & bluespace syringe."
+  - balance: "Bluespace Cyborg Upgrades now requires Medical Cyborg Upgrades as a prerequisite."
+  - bugfix: "Downgrading a cyborg health analyzer now resets its wound treatment bonus."
+  - bugfix: "Advanced Biotechnology no longer unlock piercing syringes."

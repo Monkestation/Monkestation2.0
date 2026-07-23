@@ -705,22 +705,6 @@
 	chemscan(user, victim)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/healthanalyzer/cyborg/proc/upgrade() //so that it wont get moved upon upgrade in the cyborgs toolkit
-	advanced = TRUE
-	give_wound_treatment_bonus = TRUE
-	name = /obj/item/healthanalyzer/advanced::name
-	desc = /obj/item/healthanalyzer/advanced::desc
-	icon_state = /obj/item/healthanalyzer/advanced::icon_state
-	update_appearance()
-
-/obj/item/healthanalyzer/cyborg/proc/downgrade()
-	advanced = initial(advanced)
-	name = initial(name)
-	desc = initial(desc)
-	icon_state = initial(icon_state)
-	update_appearance()
-
-
 /obj/item/healthanalyzer/simple
 	name = "wound analyzer"
 	icon_state = "first_aid"
