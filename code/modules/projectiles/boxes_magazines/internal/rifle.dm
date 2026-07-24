@@ -33,7 +33,7 @@
 	caliber = CALIBER_HARPOON
 	ammo_type = /obj/item/ammo_casing/harpoon
 
-/obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/normal
+/obj/item/ammo_box/magazine/internal/boltaction/rebarxbow
 	name = "single round magazine"
 	max_ammo = 1
 	caliber = CALIBER_REBAR
@@ -42,13 +42,13 @@
 /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/force
 	name = "two round magazine"
 	max_ammo = 2
-	caliber = CALIBER_REBAR_FORCED
+	caliber = CALIBER_REBAR
 	ammo_type = /obj/item/ammo_casing/rebar
 
 /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/syndie
 	max_ammo = 3
-	caliber = CALIBER_REBAR_SYNDIE
-	ammo_type = /obj/item/ammo_casing/rebar
+	caliber = CALIBER_REBAR
+	ammo_type = /obj/item/ammo_casing/rebar/syndie
 
 /obj/item/ammo_box/magazine/internal/boltaction/minerjdj
 	name = "GIGANTIC RIFLE BREECH THAT SHOULD NOT EXIST"

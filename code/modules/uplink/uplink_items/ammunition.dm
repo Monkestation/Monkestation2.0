@@ -17,7 +17,7 @@
 
 /datum/uplink_item/ammo/pistol
 	name = "9mm Magazine Case"
-	desc = "A case containing three additional 8-round 9mm magazines, compatible with the Makarov pistol, as well as \
+	desc = "A case containing three additional 12-round 9mm magazines, compatible with the Makarov pistol, as well as \
 		a box of loose 9mm ammunition."
 	item = /obj/item/storage/toolbox/guncase/traitor/ammunition
 	cost = 2
@@ -26,7 +26,7 @@
 
 /datum/uplink_item/ammo/pistolap
 	name = "9mm Armour Piercing Magazine"
-	desc = "An additional 8-round 9mm magazine, compatible with the Makarov pistol. \
+	desc = "An additional 12-round 9mm magazine, compatible with the Makarov pistol. \
 			These rounds are less effective at injuring the target but penetrate protective gear."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/ammo_box/magazine/m9mm/ap
@@ -35,7 +35,7 @@
 
 /datum/uplink_item/ammo/pistolhp
 	name = "9mm Hollow Point Magazine"
-	desc = "An additional 8-round 9mm magazine, compatible with the Makarov pistol. \
+	desc = "An additional 12-round 9mm magazine, compatible with the Makarov pistol. \
 			These rounds are more damaging but ineffective against armour."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/ammo_box/magazine/m9mm/hp
@@ -44,7 +44,7 @@
 
 /datum/uplink_item/ammo/pistolfire
 	name = "9mm Incendiary Magazine"
-	desc = "An additional 8-round 9mm magazine, compatible with the Makarov pistol. \
+	desc = "An additional 12-round 9mm magazine, compatible with the Makarov pistol. \
 			Loaded with incendiary rounds which inflict little damage, but ignite the target."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/ammo_box/magazine/m9mm/fire
