@@ -75,6 +75,17 @@
 	icon_state = "engine_sm_room"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
+/area/station/engineering/rbmk
+	name = "\improper RBMK Engine"
+	icon_state = "engine_sm"
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
+/area/station/engineering/rbmk/room
+	name = "\improper RBMK Room"
+	icon_state = "engine_sm_room"
+	sound_environment = SOUND_AREA_LARGE_ENCLOSED
+
 /area/station/engineering/break_room
 	name = "\improper Engineering Foyer"
 	icon_state = "engine_break"

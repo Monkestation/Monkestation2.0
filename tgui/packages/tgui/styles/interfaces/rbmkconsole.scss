@@ -1,0 +1,786 @@
+.RBMKConsole {
+  background: #101416;
+  color: #dce3e5;
+
+  background-image: var(--soviet-emblem);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 42%;
+
+  box-shadow:
+    inset 0 0 180px rgba(0, 0, 0, 0.72),
+    inset 0 3px rgba(142, 32, 28, 0.38);
+
+  .Section {
+    background: rgba(17, 22, 24, 0.92);
+    border: 1px solid rgba(137, 151, 157, 0.28);
+    border-radius: 3px;
+    box-shadow:
+      inset 0 1px rgba(255, 255, 255, 0.025),
+      0 2px 8px rgba(0, 0, 0, 0.25);
+  }
+
+  .Knob {
+    border: 2px solid #ffd700;
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+
+    .Knob__needle {
+      background: #ffd700;
+    }
+  }
+
+  button {
+    background: rgba(25, 31, 33, 0.94);
+    border: 1px solid rgba(151, 164, 169, 0.42);
+    color: #d4dcde;
+
+    &:hover {
+      background: rgba(112, 128, 134, 0.28);
+      border-color: rgba(194, 207, 211, 0.66);
+    }
+  }
+
+  .Tabs {
+    padding: 0.2rem;
+    background: rgba(6, 9, 10, 0.78);
+    border-bottom: 1px solid rgba(145, 40, 35, 0.72);
+  }
+
+  .Tabs__tab--selected {
+    background: rgba(128, 35, 31, 0.62);
+    box-shadow: inset 0 -2px #c48b4e;
+  }
+
+  .RBMKConsole__Operations {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  .RBMKConsole__Instrument {
+    position: relative;
+    min-width: 128px;
+    min-height: 72px;
+    padding: 0.55rem 0.65rem;
+    overflow: hidden;
+    font-family: monospace;
+    background: linear-gradient(180deg, #151c1e, #0c1112);
+    border: 1px solid rgba(128, 143, 149, 0.35);
+    box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.5);
+  }
+
+  .RBMKConsole__InstrumentLabel {
+    color: #7f9096;
+    font-size: 9px;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+  }
+
+  .RBMKConsole__InstrumentValue {
+    margin-top: 0.35rem;
+    color: #d9e9ea;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+    text-shadow: 0 0 8px rgba(154, 210, 211, 0.18);
+  }
+
+  .RBMKConsole__InstrumentReference {
+    margin-top: 0.45rem;
+    color: #68787e;
+    font-size: 7px;
+    letter-spacing: 0.35px;
+    white-space: nowrap;
+  }
+
+  .RBMKConsole__InstrumentUnit {
+    margin-left: 0.35rem;
+    color: #819196;
+    font-size: 9px;
+    font-weight: 400;
+  }
+
+  .RBMKConsole__InstrumentLamp {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    width: 7px;
+    height: 7px;
+    background: #68b77a;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(104, 183, 122, 0.55);
+  }
+
+  .RBMKConsole__Instrument--warning .RBMKConsole__InstrumentLamp {
+    background: #d2a94e;
+    box-shadow: 0 0 7px rgba(210, 169, 78, 0.65);
+  }
+
+  .RBMKConsole__Instrument--danger .RBMKConsole__InstrumentLamp {
+    background: #d54e49;
+    box-shadow: 0 0 8px rgba(213, 78, 73, 0.75);
+  }
+
+  .RBMKConsole__Instrument--danger {
+    border-color: rgba(190, 65, 59, 0.58);
+  }
+
+  .RBMKConsole__TelemetryPanel {
+    border-top: 2px solid rgba(83, 143, 157, 0.7);
+  }
+
+  .RBMKConsole__IntegrityPanel {
+    border-left: 3px solid rgba(87, 155, 106, 0.68);
+  }
+
+  .RBMKConsole__ControlPanel {
+    border-top: 2px solid rgba(191, 147, 71, 0.68);
+  }
+
+  .RBMKConsole__EmergencyPanel {
+    background: rgba(35, 14, 14, 0.94);
+    border-color: rgba(167, 52, 47, 0.62);
+  }
+
+  .RBMKConsole__CoolantPanel {
+    border-top: 2px solid rgba(66, 128, 153, 0.72);
+  }
+
+  .RBMKConsole__ValvePanel,
+  .RBMKConsole__CircuitPanel {
+    background: rgba(9, 14, 16, 0.78);
+    box-shadow: none;
+  }
+
+  .RBMKConsole__TrendPanel {
+    background: rgba(11, 17, 19, 0.95);
+  }
+
+  .RBMKConsole__TrendPanel .Chart {
+    opacity: 0.92;
+  }
+
+  .RBMKConsole__GasPanel .ProgressBar,
+  .RBMKConsole__GeneratorSummary .ProgressBar,
+  .RBMKConsole__TurbineCard .ProgressBar {
+    border: 1px solid rgba(136, 150, 155, 0.24);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.48);
+  }
+
+  .RBMKConsole__GeneratorSummary {
+    border-left: 3px solid rgba(91, 156, 112, 0.68);
+  }
+
+  .RBMKConsole__TurbineCard {
+    border-left: 3px solid rgba(81, 135, 157, 0.72);
+  }
+
+  .RBMKConsole__CorePanel {
+    min-height: 590px;
+    padding: 0.65rem 0.9rem 0.55rem;
+    background: rgba(10, 13, 14, 0.82);
+    border: 1px solid rgba(183, 195, 202, 0.3);
+    box-shadow: inset 0 0 70px rgba(0, 0, 0, 0.5);
+  }
+
+  .RBMKConsole__CoreStatus,
+  .RBMKConsole__CoreFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #cbd2d6;
+    font-family: monospace;
+    font-size: 9px;
+    letter-spacing: 0.55px;
+  }
+
+  .RBMKConsole__CoreStatus {
+    min-height: 31px;
+    padding: 0 0.45rem 0.45rem;
+    border-bottom: 1px solid rgba(174, 187, 194, 0.22);
+
+    b {
+      display: block;
+      color: #eef1f2;
+      font-size: 11px;
+      letter-spacing: 0.9px;
+    }
+
+    span {
+      color: #747f85;
+      font-size: 7px;
+    }
+  }
+
+  .RBMKConsole__CoreStatusReadout {
+    color: #9fa9ae;
+    white-space: nowrap;
+  }
+
+  .RBMKConsole__CoreBoard {
+    width: 500px;
+    height: 500px;
+    margin: 0.6rem auto;
+    padding: 19px;
+  }
+
+  .RBMKConsole__CoreGrid {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(15, 1fr);
+    gap: 2px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .RBMKConsole__ChannelVoid {
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .RBMKConsole__IntegrityCell,
+  .RBMKConsole__FuelChannel,
+  .RBMKConsole__ControlChannel {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 1px;
+    outline: none;
+    transition:
+      filter 80ms linear,
+      border-color 80ms linear;
+
+    &:hover,
+    &:focus {
+      filter: brightness(1.42);
+    }
+  }
+
+  .RBMKConsole__IntegrityCell {
+    border: 1px solid rgba(174, 187, 194, 0.13);
+    box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.025);
+
+    &--nominal {
+      background: rgba(70, 143, 91, 0.16);
+      border-color: rgba(104, 175, 124, 0.24);
+    }
+
+    &--warning {
+      background: rgba(162, 136, 62, 0.17);
+      border-color: rgba(190, 163, 87, 0.27);
+    }
+
+    &--critical {
+      background: rgba(172, 91, 44, 0.18);
+      border-color: rgba(200, 111, 57, 0.28);
+    }
+
+    &--danger {
+      background: rgba(157, 45, 45, 0.2);
+      border-color: rgba(202, 67, 67, 0.32);
+    }
+  }
+
+  .RBMKConsole__FuelChannel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #121719;
+    border: 2px solid #727b80;
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.8);
+
+    > span {
+      width: 42%;
+      height: 42%;
+      background: var(--rbmk-rod-color);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 50%;
+      box-shadow:
+        0 0 4px var(--rbmk-rod-color),
+        inset 0 1px rgba(255, 255, 255, 0.35);
+    }
+
+    &--active {
+      border-color: #49bd68;
+      box-shadow:
+        inset 0 0 4px rgba(0, 0, 0, 0.85),
+        0 0 3px rgba(73, 189, 104, 0.35);
+    }
+
+    &--depleted {
+      border-color: #d44b46;
+      box-shadow:
+        inset 0 0 4px rgba(0, 0, 0, 0.85),
+        0 0 3px rgba(212, 75, 70, 0.32);
+    }
+
+    &--empty {
+      border-color: #656e72;
+      opacity: 0.62;
+    }
+  }
+
+  .RBMKConsole__ControlChannel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #111617;
+    border: 1px solid #727b80;
+    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.9);
+
+    &--safe {
+      border-color: #52a76a;
+    }
+
+    &--warning {
+      border-color: #d5ad45;
+    }
+
+    &--low {
+      border-color: #cf7b3a;
+    }
+
+    &--danger {
+      border-color: #ca4743;
+    }
+  }
+
+  .RBMKConsole__ControlTrack {
+    position: relative;
+    display: block;
+    width: 33%;
+    height: 72%;
+    overflow: hidden;
+    background: #090c0d;
+    border: 1px solid rgba(222, 229, 232, 0.2);
+  }
+
+  .RBMKConsole__ControlFill {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    background: #d1aa45;
+    box-shadow: 0 0 4px rgba(209, 170, 69, 0.42);
+  }
+
+  .RBMKConsole__CoreMonitor {
+    position: absolute;
+    top: 40.8%;
+    left: 40.8%;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 18.4%;
+    height: 18.4%;
+    overflow: hidden;
+    font-family: monospace;
+    text-align: center;
+    background: linear-gradient(180deg, #172326, #0c1214);
+    border: 2px solid #728086;
+    box-shadow:
+      inset 0 0 12px rgba(55, 151, 164, 0.1),
+      0 0 0 3px #090c0d;
+  }
+
+  .RBMKConsole__CoreMonitorTitle,
+  .RBMKConsole__CoreMonitorValue {
+    max-width: 92%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .RBMKConsole__CoreMonitorTitle {
+    color: #8e9ba0;
+    font-size: 7px;
+    letter-spacing: 0.35px;
+  }
+
+  .RBMKConsole__CoreMonitorValue {
+    margin-top: 3px;
+    color: #dce8e9;
+    font-size: 9px;
+    font-weight: 700;
+  }
+
+  .RBMKConsole__CoreFooter {
+    min-height: 28px;
+    padding: 0.35rem 0.45rem 0;
+    border-top: 1px solid rgba(174, 187, 194, 0.2);
+  }
+
+  .RBMKConsole__CoreLegend {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: #8e999e;
+    font-size: 8px;
+  }
+
+  .RBMKConsole__CoreHint {
+    color: #737e83;
+    font-size: 8px;
+    white-space: nowrap;
+  }
+
+  .RBMKConsole__LegendKey,
+  .RBMKConsole__LegendLed {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    margin-left: 0.35rem;
+    background: #111617;
+  }
+
+  .RBMKConsole__LegendKey--active {
+    border: 2px solid #49bd68;
+  }
+
+  .RBMKConsole__LegendKey--depleted {
+    border: 2px solid #d44b46;
+  }
+
+  .RBMKConsole__LegendLed {
+    background: #8ab8c1;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+  }
+
+  // Cascade lockout: hardened industrial emergency terminal.
+  .RBMKConsole__CascadeLockout {
+    min-height: 100%;
+    padding: 1rem;
+    overflow: hidden;
+    color: #e8edf1;
+    text-align: left;
+    background:
+      linear-gradient(135deg, rgba(198, 35, 35, 0.07) 25%, transparent 25%) 0 0 / 12px 12px,
+      linear-gradient(315deg, rgba(198, 35, 35, 0.05) 25%, transparent 25%) 0 0 / 12px 12px,
+      linear-gradient(180deg, #171b1e 0%, #0b0e10 100%);
+    border: 1px solid #4b555c;
+    border-radius: 2px;
+    box-shadow:
+      inset 0 0 0 3px #090b0c,
+      inset 0 0 0 4px rgba(183, 195, 202, 0.12),
+      inset 0 -90px 140px rgba(0, 0, 0, 0.48);
+  }
+
+  .RBMKConsole__CascadeHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 0.65rem;
+    padding: 0.75rem 0.9rem;
+    background: linear-gradient(180deg, #252b2f, #171b1e);
+    border: 1px solid #59636a;
+    border-left: 4px solid #c92c2c;
+    border-radius: 1px;
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  .RBMKConsole__CascadeBrand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .RBMKConsole__CascadeBrandMark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    color: #101315;
+    font-size: 24px;
+    background: #e0aa32;
+    border: 1px solid #f2cf73;
+    border-radius: 50%;
+    box-shadow: 0 0 14px rgba(224, 170, 50, 0.18);
+  }
+
+  .RBMKConsole__CascadeEyebrow,
+  .RBMKConsole__CascadeFaultCodeLabel,
+  .RBMKConsole__CascadeKicker,
+  .RBMKConsole__CascadeTerminalLabel {
+    color: #9aa5ac;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .RBMKConsole__CascadeTitle {
+    margin-top: 0.15rem;
+    color: #f3f5f6;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+    text-shadow: none;
+    text-transform: uppercase;
+  }
+
+  .RBMKConsole__CascadeFaultCode {
+    min-width: 92px;
+    padding: 0.45rem 0.65rem;
+    text-align: right;
+    background: #101315;
+    border: 1px solid #3e484e;
+  }
+
+  .RBMKConsole__CascadeFaultCodeValue {
+    margin-top: 0.1rem;
+    color: #ff5a52;
+    font-family: monospace;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .RBMKConsole__CascadeStatusRail {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 0.65rem;
+    border: 1px solid #3b444a;
+  }
+
+  .RBMKConsole__CascadeStatusCell {
+    padding: 0.55rem 0.45rem;
+    color: #aeb7bc;
+    font-family: monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-align: center;
+    background: #111517;
+    border-right: 1px solid #3b444a;
+
+    &:last-child {
+      border-right: 0;
+    }
+
+    svg {
+      margin-right: 0.3rem;
+    }
+  }
+
+  .RBMKConsole__CascadeStatusCell--failed {
+    color: #ff6b63;
+  }
+
+  .RBMKConsole__CascadeStatusCell--live {
+    color: #e0aa32;
+  }
+
+  .RBMKConsole__CascadePrimary {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.65rem;
+    padding: 0.85rem 1rem;
+    background: linear-gradient(90deg, rgba(116, 20, 20, 0.42), rgba(34, 24, 24, 0.72));
+    border: 1px solid #7e3434;
+    border-left: 4px solid #d13832;
+  }
+
+  .RBMKConsole__CascadePrimary--terminal {
+    background: linear-gradient(90deg, rgba(174, 24, 24, 0.62), rgba(48, 18, 18, 0.88));
+    animation: rbmk-terminal-border 0.65s infinite alternate;
+  }
+
+  .RBMKConsole__CascadeHazardIcon {
+    min-width: 48px;
+    color: #f0b53b;
+    font-size: 40px;
+    line-height: 1;
+    text-align: center;
+  }
+
+  .RBMKConsole__CascadePrimaryContent {
+    flex: 1;
+  }
+
+  .RBMKConsole__CascadeHazardTitle {
+    margin: 0.15rem 0 0.25rem;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+
+  .RBMKConsole__CascadeHazardCopy {
+    max-width: 520px;
+    color: #c4ccd1;
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
+  .RBMKConsole__CascadeTerminal {
+    margin-bottom: 0.65rem;
+    padding: 0.75rem 0.9rem;
+    background: #0c0f11;
+    border: 1px solid #535e65;
+    box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.5);
+  }
+
+  .RBMKConsole__CascadeTerminalValue {
+    color: #f3f5f6;
+    font-family: monospace;
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    line-height: 0.95;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.12);
+  }
+
+  .RBMKConsole__CascadeTerminalUnit {
+    margin-left: 0.4rem;
+    color: #ff5a52;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  .RBMKConsole__CascadeTerminalFlag {
+    padding: 0.4rem 0.65rem;
+    color: #111416;
+    font-family: monospace;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    background: #e0aa32;
+    border: 1px solid #f4cf72;
+  }
+
+  .RBMKConsole__CascadeTerminalBar {
+    margin-top: 0.6rem;
+    height: 9px;
+    border: 1px solid #6a747a;
+    border-radius: 0;
+  }
+
+  .RBMKConsole__CascadeClockNotice {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.65rem;
+    padding: 0.8rem 1rem;
+    color: #ff5a52;
+    font-size: 28px;
+    background: rgba(115, 18, 18, 0.32);
+    border: 1px solid #783232;
+  }
+
+  .RBMKConsole__CascadeClockNoticeTitle {
+    color: #f0f2f3;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+
+  .RBMKConsole__CascadeClockNoticeCopy {
+    margin-top: 0.2rem;
+    color: #b9c1c6;
+    font-size: 10px;
+    line-height: 1.35;
+  }
+
+  .RBMKConsole__CascadeProcedure {
+    background: #111517;
+    border: 1px solid #3f494f;
+  }
+
+  .RBMKConsole__CascadeProcedureHeader {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.45rem 0.65rem;
+    color: #d9dfe2;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: #252b2f;
+    border-bottom: 1px solid #4d575d;
+
+    span {
+      color: #869198;
+      font-family: monospace;
+      font-weight: 400;
+    }
+  }
+
+  .RBMKConsole__CascadeSteps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .RBMKConsole__CascadeStep {
+    display: flex;
+    gap: 0.55rem;
+    min-height: 66px;
+    padding: 0.65rem;
+    border-right: 1px solid #384147;
+
+    &:last-child {
+      border-right: 0;
+    }
+  }
+
+  .RBMKConsole__CascadeStepNumber {
+    color: #d13b35;
+    font-family: monospace;
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .RBMKConsole__CascadeStepTitle {
+    color: #eef1f2;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1.15;
+    text-transform: uppercase;
+  }
+
+  .RBMKConsole__CascadeStepCopy {
+    margin-top: 0.3rem;
+    color: #929da4;
+    font-size: 9px;
+    line-height: 1.25;
+  }
+
+  .RBMKConsole__CascadeFooter {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.65rem;
+    padding: 0.45rem 0.1rem 0;
+    color: #7f8a91;
+    font-family: monospace;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    border-top: 1px solid #333b40;
+  }
+
+  @keyframes rbmk-terminal-border {
+    from {
+      border-color: #7e3434;
+      box-shadow: inset 0 0 0 rgba(255, 45, 38, 0);
+    }
+
+    to {
+      border-color: #ff554d;
+      box-shadow: inset 0 0 24px rgba(255, 45, 38, 0.12);
+    }
+  }
+
+}

@@ -1,18 +1,18 @@
 /datum/looping_sound/showering
 	start_sound = 'sound/machines/shower/shower_start.ogg'
-	start_length = 2
+	start_length = 2 SECONDS
 	mid_sounds = list(
 		'sound/machines/shower/shower_mid1.ogg',
 		'sound/machines/shower/shower_mid2.ogg',
 		'sound/machines/shower/shower_mid3.ogg',
 	)
-	mid_length = 10
+	mid_length = 10 SECONDS
 	end_sound = 'sound/machines/shower/shower_end.ogg'
 	volume = 20
 
 /datum/looping_sound/supermatter
 	mid_sounds = list('sound/machines/sm/loops/calm.ogg')
-	mid_length = 60
+	mid_length = 60 SECONDS
 	volume = 40
 	extra_range = 25
 	falloff_exponent = 10
@@ -21,7 +21,7 @@
 
 /datum/looping_sound/destabilized_crystal
 	mid_sounds = list('sound/machines/sm/loops/delamming.ogg')
-	mid_length = 60
+	mid_length = 60 SECONDS
 	volume = 55
 	extra_range = 15
 	vary = TRUE
@@ -35,44 +35,43 @@
 
 /datum/looping_sound/generator
 	start_sound = 'sound/machines/generator/generator_start.ogg'
-	start_length = 4
+	start_length = 4 SECONDS
 	mid_sounds = list(
 		'sound/machines/generator/generator_mid1.ogg',
 		'sound/machines/generator/generator_mid2.ogg',
 		'sound/machines/generator/generator_mid3.ogg',
 	)
-	mid_length = 4
+	mid_length = 4 SECONDS
 	end_sound = 'sound/machines/generator/generator_end.ogg'
 	volume = 40
 
 /datum/looping_sound/deep_fryer
 	start_sound = 'sound/machines/fryer/deep_fryer_immerse.ogg' //my immersions
-	start_length = 10
+	start_length = 10 SECONDS
 	mid_sounds = list(
 		'sound/machines/fryer/deep_fryer_1.ogg',
 		'sound/machines/fryer/deep_fryer_2.ogg',
 	)
-	mid_length = 2
+	mid_length = 2 SECONDS
 	end_sound = 'sound/machines/fryer/deep_fryer_emerge.ogg'
 	volume = 15
 
-
 /datum/looping_sound/grill
 	mid_sounds = list('sound/machines/grill/grillsizzle.ogg')
-	mid_length = 18
+	mid_length = 18 SECONDS
 	volume = 50
 
 /datum/looping_sound/oven
 	start_sound = 'sound/machines/oven/oven_loop_start.ogg' //my immersions
-	start_length = 12
+	start_length = 12 SECONDS
 	mid_sounds = list('sound/machines/oven/oven_loop_mid.ogg')
-	mid_length = 13
+	mid_length = 13 SECONDS
 	end_sound = 'sound/machines/oven/oven_loop_end.ogg'
 	volume = 100
 	falloff_exponent = 4
 
 /datum/looping_sound/deep_fryer
-	mid_length = 2
+	mid_length = 2 SECONDS
 	mid_sounds = list(
 		'sound/machines/fryer/deep_fryer_1.ogg',
 		'sound/machines/fryer/deep_fryer_2.ogg',
@@ -81,17 +80,17 @@
 
 /datum/looping_sound/microwave
 	start_sound = 'sound/machines/microwave/microwave-start.ogg'
-	start_length = 10
+	start_length = 10 SECONDS
 	mid_sounds = list(
 		'sound/machines/microwave/microwave-mid1.ogg' = 10,
 		'sound/machines/microwave/microwave-mid2.ogg' = 1,
 	)
-	mid_length = 10
+	mid_length = 10 SECONDS
 	end_sound = 'sound/machines/microwave/microwave-end.ogg'
 	volume = 90
 
 /datum/looping_sound/jackpot
-	mid_length = 11
+	mid_length = 11 SECONDS
 	mid_sounds = list('sound/machines/roulettejackpot.ogg')
 	volume = 85
 	vary = TRUE
@@ -146,7 +145,7 @@
 	falloff_exponent = 20
 
 /datum/looping_sound/firealarm
-	mid_sounds = list('sound/machines/FireAlarm1.ogg' , 'sound/machines/FireAlarm2.ogg', 'sound/machines/FireAlarm3.ogg', 'sound/machines/FireAlarm4.ogg')
+	mid_sounds = list('sound/machines/FireAlarm1.ogg', 'sound/machines/FireAlarm2.ogg', 'sound/machines/FireAlarm3.ogg', 'sound/machines/FireAlarm4.ogg')
 	mid_length = 2.4 SECONDS
 	volume = 30
 
@@ -181,6 +180,104 @@
 	falloff_distance = 5
 	falloff_exponent = 1
 	sound_channel = CHANNEL_DELTA_SIRENS
+
+/datum/looping_sound/rbmk_reactor
+	mid_sounds = list('sound/rbmk/reactor_hum_low.ogg')
+	mid_length = 20 SECONDS
+	volume = 50
+
+	extra_range = 15
+
+	live_attenuation = TRUE
+	live_attenuation_interval = 0.5 SECONDS
+	live_attenuation_max_distance = 20
+	live_attenuation_mixer_channel = CHANNEL_MACHINERY
+
+	falloff_distance = 5
+	falloff_exponent = 3
+	ignore_walls = FALSE
+	pressure_affected = FALSE
+
+	var/sound_state = RBMK_SOUND_LOW
+
+
+/datum/looping_sound/rbmk_reactor/proc/set_sound_state(new_state)
+	if(sound_state == new_state)
+		return
+
+	sound_state = new_state
+
+	switch(sound_state)
+		if(RBMK_SOUND_MAX)
+			volume = 60
+			live_attenuation_max_distance = 20
+			falloff_distance = 5
+			return
+
+		if(RBMK_SOUND_HIGH)
+			volume = 55
+			live_attenuation_max_distance = 20
+			falloff_distance = 5
+			return
+
+	volume = 50
+	live_attenuation_max_distance = 20
+	falloff_distance = 5
+
+
+/datum/looping_sound/rbmk_reactor/get_sound(_mid_sounds)
+	switch(sound_state)
+		if(RBMK_SOUND_MAX)
+			return 'sound/rbmk/reactor_hum_max.ogg'
+
+		if(RBMK_SOUND_HIGH)
+			return 'sound/rbmk/reactor_hum_high.ogg'
+
+	return 'sound/rbmk/reactor_hum_low.ogg'
+
+
+/datum/looping_sound/rbmk_cascade
+	mid_sounds = list('sound/rbmk/cascade_loop.ogg')
+	mid_length = 64 SECONDS
+	volume = 35
+
+	extra_range = 15
+
+	live_attenuation = TRUE
+	live_attenuation_interval = 0.5 SECONDS
+	live_attenuation_max_distance = 20
+	live_attenuation_mixer_channel = CHANNEL_MACHINERY
+
+	falloff_distance = 5
+	falloff_exponent = 2
+	ignore_walls = FALSE
+	pressure_affected = FALSE
+
+
+/datum/looping_sound/rbmk_turbine
+	start_sound = 'sound/rbmk/turbine_start.ogg'
+	start_length = 16 SECONDS
+	start_volume = 6
+
+	mid_sounds = list('sound/rbmk/turbine_mid.ogg')
+	mid_length = 12 SECONDS
+	volume = 18
+
+	end_sound = 'sound/rbmk/turbine_end.ogg'
+	end_volume = 6
+	// Legacy fallback if dynamic attenuation is disabled.
+	extra_range = 8
+
+	// Dynamic attenuation
+	live_attenuation = TRUE
+	live_attenuation_interval = 0.5 SECONDS
+	live_attenuation_max_distance = 10
+	live_attenuation_mixer_channel = CHANNEL_MACHINERY
+
+	falloff_distance = 4
+	falloff_exponent = 3
+	ignore_walls = FALSE
+	pressure_affected = FALSE
 
 /datum/looping_sound/charger
 	start_sound = 'sound/machines/charger/charger_start.ogg'

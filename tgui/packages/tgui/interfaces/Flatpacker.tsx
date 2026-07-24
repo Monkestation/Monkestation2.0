@@ -41,7 +41,7 @@ export const Flatpacker = (props: any) => {
     data;
 
   return (
-    <Window width={400} height={445} title="Flatpacker">
+    <Window width={920} height={445} title="Flatpacker">
       <Window.Content>
         {!!busy && (
           <Dimmer

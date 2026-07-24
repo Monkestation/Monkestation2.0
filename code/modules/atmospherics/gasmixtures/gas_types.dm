@@ -163,7 +163,7 @@
 	fusion_power = 5
 	rarity = 300
 	base_value = 2.5
-	desc = "A highly flammable and radioctive gas."
+	desc = "A highly flammable and radioactive gas."
 
 /datum/gas/bz
 	id = "bz"
