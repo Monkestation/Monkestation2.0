@@ -2,13 +2,13 @@
 	name = "The Green"
 	desc = "The Green will not create any player antagonists, running only events that don't create antagonists."
 	star_colour = STARCOLOUR_ORANGESTAR
-	weight = 1
+	weight = 0
 	event_repetition_multiplier = 0.8
 	always_votable = TRUE
 	point_gains_multipliers = list(
-		EVENT_TRACK_MUNDANE = 0.8,
-		EVENT_TRACK_MODERATE = 0.8,
-		EVENT_TRACK_MAJOR = 0.8,
+		EVENT_TRACK_MUNDANE = 1,
+		EVENT_TRACK_MODERATE = 1,
+		EVENT_TRACK_MAJOR = 1,
 		EVENT_TRACK_ROLESET = 0,
 		STORYTELLER_TRACK_BOOSTER = 0,
 		)
