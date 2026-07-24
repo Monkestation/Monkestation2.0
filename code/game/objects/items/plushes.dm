@@ -1103,3 +1103,21 @@
 	squeak_override = list(
 		'sound/misc/expie_bark.ogg' = 1
 	)
+
+/obj/item/toy/plush/expie/spinny_hat
+	name = "spinny expie plushie"
+	desc = "A normal expie plushie which has been given a bright lolipop and a spinny propeller hat."
+	icon_state = "expie_spinny_hat"
+
+/obj/item/toy/plush/expie/dune
+	name = "dune plushie"
+	desc = "A tag on it reads, \"Manufactuerer is not responsible for bodily harm as a result of plushie usage.\""
+	icon_state = "dune"
+	attack_verb_continuous = list("chomps")
+	attack_verb_simple = list("chomp")
+
+/obj/item/toy/plush/expie/milky
+	name = "milky plushie"
+	desc = "A tag on it reads, \"Made with all natural geofruit milk biothread\""
+	icon_state = "milky"
+
