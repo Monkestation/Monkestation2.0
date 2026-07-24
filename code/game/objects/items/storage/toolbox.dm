@@ -411,7 +411,9 @@
 	new weapon_to_spawn (src)
 	for(var/i in 1 to 2)
 		new extra_to_spawn (src)
-	new ammo_box_to_spawn(src)
+
+	if(ammo_box_to_spawn != null)
+		new ammo_box_to_spawn(src)
 
 /obj/item/storage/toolbox/guncase/traitor/update_icon_state()
 	. = ..()
@@ -463,7 +465,11 @@
 	name = "\improper Syndicate revolver gun case"
 	weapon_to_spawn = /obj/item/gun/ballistic/revolver/syndicate
 	extra_to_spawn = /obj/item/ammo_box/a357
-	ammo_box_to_spawn = null
+
+/obj/item/storage/toolbox/guncase/traitor/revolver/PopulateContents()
+	new weapon_to_spawn (src)
+	for(var/i in 1 to 3)
+		new extra_to_spawn (src)
 
 /obj/item/storage/toolbox/guncase/traitor/wespe
 	name = "\improper Wespe pistol gun case"
