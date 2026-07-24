@@ -1270,7 +1270,7 @@
 	if(is_away_level(T.z))
 		return FALSE
 	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
-	if(!SScameras.is_visible_by_cameras(src))
+	if(!SScameras.is_visible_by_cameras(src, user))
 		return FALSE
 	return TRUE
 

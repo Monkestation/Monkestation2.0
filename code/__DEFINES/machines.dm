@@ -155,6 +155,7 @@
 #define CAMERA_UPGRADE_XRAY (1<<0)
 #define CAMERA_UPGRADE_EMP_PROOF (1<<1)
 #define CAMERA_UPGRADE_MOTION (1<<2)
+#define CAMERA_UPGRADE_NO_AI (1<<3)
 
 /// Max length of a status line in the status display
 #define MAX_STATUS_LINE_LENGTH 40

@@ -118,7 +118,7 @@
 	var/turf/T = get_turf(target)
 	if(!T)
 		return FALSE
-	if(through_camera_console && SScameras.turf_visible_by_cameras(T))
+	if(through_camera_console && SScameras.turf_visible_by_cameras(T, user))
 		return TRUE
 	if(istype(user))
 		if(user.client && !(get_turf(target) in get_hear(user.client.view, user)))
@@ -216,7 +216,7 @@
 			if(!placeholder)
 				break
 
-		if(placeholder && ((through_camera_console && SScameras.turf_visible_by_cameras(placeholder)) || (placeholder in seen)))
+		if(placeholder && ((through_camera_console && SScameras.turf_visible_by_cameras(placeholder, user)) || (placeholder in seen)))
 			turfs += placeholder
 			for(var/mob/M in placeholder)
 				mobs += M

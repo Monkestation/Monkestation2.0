@@ -84,11 +84,11 @@
 		)
 	return data
 
-/obj/machinery/computer/security/ui_static_data()
+/obj/machinery/computer/security/ui_static_data(mob/user)
 	var/list/data = list()
 	data["network"] = network
 	data["mapRef"] = cam_screen.assigned_map
-	data["cameras"] = SScameras.get_available_cameras_data(network)
+	data["cameras"] = SScameras.get_available_cameras_data(network, user = null) //AIs can check bodycams through this.
 	return data
 
 /obj/machinery/computer/security/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

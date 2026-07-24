@@ -182,11 +182,11 @@
 		else
 			camera_location = myturf
 	else
-		if((!consider_zlock || (myturf.z in z_lock)) && camnet.turf_visible_by_cameras(myturf))
+		if((!consider_zlock || (myturf.z in z_lock)) && camnet.turf_visible_by_cameras(myturf, user))
 			camera_location = myturf
 		else
 			for(var/obj/machinery/camera/C as anything in camnet.cameras)
-				if(!C.can_use() || consider_zlock && !(C.z in z_lock))
+				if(!C.can_use(user) || consider_zlock && !(C.z in z_lock))
 					continue
 				var/list/network_overlap = networks & C.network
 				if(length(network_overlap))
@@ -228,7 +228,7 @@
 	var/mob/eye/camera/remote/remote_eye = owner.remote_control
 	var/obj/machinery/computer/camera_advanced/origin = remote_eye.origin_ref.resolve()
 
-	var/list/cameras_by_tag = origin.camnet.get_available_camera_by_tag_list(origin.networks, origin.z_lock)
+	var/list/cameras_by_tag = origin.camnet.get_available_camera_by_tag_list(origin.networks, origin.z_lock, owner)
 
 	playsound(origin, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
 	var/camera = tgui_input_list(usr, "Camera to view", "Cameras", cameras_by_tag)

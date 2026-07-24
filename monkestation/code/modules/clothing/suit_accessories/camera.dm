@@ -6,3 +6,15 @@
 /obj/machinery/camera/bodycamera
 	start_active = TRUE
 	internal_light = FALSE
+	camera_upgrade_bitflags = CAMERA_UPGRADE_NO_AI
+
+/obj/machinery/camera/bodycamera/can_use(mob/living/user)
+	. = ..()
+	if(!.)
+		return .
+	if(isnull(user))
+		return TRUE
+	return !!isAI(user) //AIs cant see through body cameras.
+
+/obj/machinery/camera/bodycamera/Togglelight(on=0)
+	return //no lights
