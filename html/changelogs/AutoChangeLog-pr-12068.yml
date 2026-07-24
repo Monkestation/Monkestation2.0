@@ -1,8 +1,0 @@
-author: "JupiterJaeden"
-delete-after: True
-changes:
-  - balance: "Duration of the void chill status effect reduced from 30s -> 10s."
-  - balance: "Body temp loss per stack, per second of void chill reduced from 12K to 6K."
-  - balance: "Holy water being in your system now once again reduces void chill temp loss to 3K per stack, per second and also allows you to purge 1 stack every 2 seconds. Anti-magic of any kind does the same thing."
-  - balance: "Anti-magic no longer fully protects you from void conduits."
-  - balance: "Void chill no longer stops all body heating at 5 stacks."
