@@ -1,6 +1,6 @@
 import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Section, Stack } from '../components';
+import { Box, Button, Icon, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type ATMData = {
@@ -31,7 +31,7 @@ export const ATM = () => {
     <Window
       title="Automated Teller Machine"
       width={360}
-      height={flash_sale_present ? 420 : 340}
+      height={flash_sale_present ? 460 : 380}
     >
       <Window.Content>
         <Stack vertical fill>
@@ -87,6 +87,10 @@ export const ATM = () => {
               <Button fluid icon="gift" onClick={() => act('buy_lootbox')}>
                 Purchase Lootbox
               </Button>
+              <NoticeBox info>
+                You can manage, purchase, and open lootboxes (in bulk) from the
+                pause menu.
+              </NoticeBox>
             </Stack>
           </Section>
 
