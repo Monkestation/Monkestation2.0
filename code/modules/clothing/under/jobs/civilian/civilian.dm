@@ -140,6 +140,7 @@
 	name = "maid uniform"
 	desc = "A simple maid uniform for housekeeping."
 	icon = 'icons/mob/clothing/under/civilian.dmi'
+	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
 	icon_state = "janimaid"
 	inhand_icon_state = "janimaid"
 	body_parts_covered = CHEST|GROIN

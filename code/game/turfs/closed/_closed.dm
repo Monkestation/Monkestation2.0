@@ -259,18 +259,18 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/fakedoor
 	name = "airlock"
-	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
-	icon_state = "fake_door"
-
-/turf/closed/indestructible/fakedoor/maintenance
-	icon = 'icons/obj/doors/airlocks/hatch/maintenance.dmi'
+	icon = 'icons/turf/walls/fake_door.dmi'
+	icon_state = "command"
 
 /turf/closed/indestructible/fakedoor/glass_airlock
-	icon = 'icons/obj/doors/airlocks/external/external.dmi'
+	icon_state = "glass"
 	opacity = FALSE
 
+/turf/closed/indestructible/fakedoor/maintenance
+	icon_state = "maintenance"
+
 /turf/closed/indestructible/fakedoor/engineering
-	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
+	icon_state = "engineering"
 
 /turf/closed/indestructible/rock
 	name = "dense rock"
