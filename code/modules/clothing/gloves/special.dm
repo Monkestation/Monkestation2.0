@@ -112,9 +112,10 @@
 /obj/item/clothing/gloves/latex/surgical
 	name = "black latex gloves"
 	desc = "Pricy sterile gloves that are thinner than latex. The lining allows for the person to operate \
-					quicker along with the faster use time of various chemical related items"
+			quicker and with higher success along with the faster use time of various chemical related items."
 	icon_state = "surgeonlatex"
-	clothing_traits = list(TRAIT_PERFECT_SURGEON, TRAIT_FASTMED)
+	armor_type = /datum/armor/surgeon
+	clothing_traits = list(TRAIT_FASTMED, TRAIT_STERILE)
 	custom_premium_price = PAYCHECK_CREW * 6
 
 /obj/item/clothing/gloves/latex/nitrile
