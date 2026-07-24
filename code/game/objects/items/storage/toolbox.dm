@@ -459,6 +459,12 @@
 	extra_to_spawn = /obj/item/ammo_box/magazine/whispering_jester_45_magazine
 	ammo_box_to_spawn = /obj/item/ammo_box/c45/caseless
 
+/obj/item/storage/toolbox/guncase/traitor/revolver
+	name = "\improper Syndicate revolver gun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/revolver/syndicate
+	extra_to_spawn = /obj/item/ammo_box/a357
+	ammo_box_to_spawn = null
+
 /obj/item/storage/toolbox/guncase/traitor/wespe
 	name = "\improper Wespe pistol gun case"
 	weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol/sol/evil/unrestricted
