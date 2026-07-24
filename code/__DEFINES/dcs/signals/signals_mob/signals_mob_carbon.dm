@@ -145,6 +145,17 @@
 ///from /mob/living/carbon/human/proc/force_say(): ()
 #define COMSIG_HUMAN_FORCESAY "human_forcesay"
 
+/// From /mob/living/carbon/human/get_visible_name(): (list/identity)
+#define COMSIG_HUMAN_GET_VISIBLE_NAME "human_get_visible_name"
+	/// Index for the visible face name.
+	#define VISIBLE_NAME_FACE 1
+	/// Index for the visible ID name.
+	#define VISIBLE_NAME_ID 2
+	/// Index for the priority of a forced name override.
+	#define VISIBLE_NAME_FORCED 3
+/// From /mob/living/carbon/human/get_id_name(); sent only while the mob has TRAIT_UNKNOWN: (list/identity)
+#define COMSIG_HUMAN_GET_FORCED_NAME "human_get_forced_name"
+
 // Mob transformation signals
 ///Called when a human turns into a monkey, from /mob/living/carbon/proc/finish_monkeyize()
 #define COMSIG_HUMAN_MONKEYIZE "human_monkeyize"

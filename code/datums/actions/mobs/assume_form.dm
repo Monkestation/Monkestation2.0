@@ -57,8 +57,12 @@
 
 /// Assumes the appearance of a desired movable and applies it to our mob. Target is the movable in question.
 /datum/action/cooldown/mob_cooldown/assume_form/proc/assume_appearances(atom/movable/target_atom)
-	owner.appearance = target_atom.appearance
-	owner.copy_overlays(target_atom)
+	var/mutable_appearance/assumed_appearance = target_atom.get_assumed_form_appearance()
+	if(assumed_appearance)
+		owner.appearance = assumed_appearance
+	else
+		owner.appearance = target_atom.appearance
+		owner.copy_overlays(target_atom)
 	owner.alpha = max(target_atom.alpha, 150) //fucking chameleons
 	owner.transform = initial(target_atom.transform)
 	owner.pixel_x = target_atom.base_pixel_x
@@ -88,3 +92,20 @@
 
 	// important: do this very end because we might have SIGNAL_REMOVETRAIT for this on the mob that's dependent on the above logic
 	REMOVE_TRAIT(owner, TRAIT_DISGUISED, REF(src))
+
+/// Allows specific movables to provide a different appearance for assume-form disguises.
+/atom/movable/proc/get_assumed_form_appearance()
+	return null
+
+/// Cardboard cutouts display a flattened cardboard sprite, but morphs should copy the portrayed mob/object model.
+/obj/item/cardboard_cutout/get_assumed_form_appearance()
+	if(pushed_over)
+		return null
+
+	for(var/datum/cardboard_cutout/cutout_subtype as anything in subtypesof(/datum/cardboard_cutout))
+		var/datum/cardboard_cutout/cutout = get_cardboard_cutout_instance(cutout_subtype)
+		if(cutout.applied_desc != desc)
+			continue
+		return cutout.preview_appearance
+
+	return null

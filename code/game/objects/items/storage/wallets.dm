@@ -42,7 +42,7 @@
 		/obj/item/screwdriver,
 		/obj/item/spess_knife,
 		/obj/item/stamp),
-		list(/obj/item/screwdriver/power))
+		list(/obj/item/card/cardboard, /obj/item/screwdriver/power))
 
 /obj/item/storage/wallet/Exited(atom/movable/gone, direction)
 	. = ..()

@@ -79,6 +79,12 @@
 /obj/item/clothing/shoes/jackboots/sec
 	icon_state = "jackboots_sec"
 
+/obj/item/clothing/shoes/jackboots/floortile
+	name = "floor-tile camouflage jackboots"
+	desc = "Is it just me, or is there a pair of jackboots on the floor?"
+	icon_state = "ftc_boots"
+	inhand_icon_state = null
+
 /obj/item/clothing/shoes/jackboots/sec/hos
 	name = "head of security jackboots"
 	icon_state = "jackboots_hos"

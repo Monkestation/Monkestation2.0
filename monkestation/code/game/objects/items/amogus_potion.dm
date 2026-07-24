@@ -20,7 +20,7 @@
 		impostor.visible_message(span_notice("[impostor] drinks the strange red liquid from [src]!"), span_notice("You drink [src]."))
 		to_chat(impostor, span_userdanger("You feel strange..."))
 
-	impostor.AddElement(/datum/element/waddling)
+	impostor.AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 	impostor.can_be_held = TRUE
 	to_chat(impostor, span_notice("You can now be picked up by other people."))
 	qdel(src)

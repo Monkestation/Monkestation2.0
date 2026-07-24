@@ -136,7 +136,8 @@ There are several things that need to be remembered:
 		)
 
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
-		my_chest?.worn_uniform_offset?.apply_offset(uniform_overlay)
+		if(!uniform.ignore_mob_height_adjustments)
+			my_chest?.worn_uniform_offset?.apply_offset(uniform_overlay)
 		overlays_standing[UNIFORM_LAYER] = uniform_overlay
 		apply_overlay(UNIFORM_LAYER)
 		check_body_shape(BODYTYPE_DIGITIGRADE, ITEM_SLOT_ICLOTHING)
@@ -1033,6 +1034,9 @@ generate/load female uniform sprites matching all previously decided variables
 		This is required because they use cached / shared appearences
 	if(mob_height == HUMAN_HEIGHT_MEDIUM) - original */
 	if(mob_height == HUMAN_HEIGHT_MEDIUM && cache_index != MUTATIONS_LAYER && cache_index != FRONT_MUTATIONS_LAYER)
+		return ..()
+
+	if(cache_index == UNIFORM_LAYER && w_uniform?.ignore_mob_height_adjustments)
 		return ..()
 
 	var/raw_applied = overlays_standing[cache_index]
