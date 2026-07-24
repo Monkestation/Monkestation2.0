@@ -16,7 +16,7 @@
 #define REMOVE_DELAY 15
 
 /obj/item/construction/rld
-	name = "Rapid Lighting Device"
+	name = "rapid lighting device"
 	desc = "A device used to rapidly provide lighting sources to an area. Reload with iron, plasteel, glass or compressed matter cartridges."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rld"
@@ -168,10 +168,12 @@
 				if(!useResource(cost, user))
 					return ITEM_INTERACT_BLOCKING
 				activate()
-				var/obj/machinery/light/L = new /obj/machinery/light(get_turf(winner))
-				L.setDir(get_dir(winner, interacting_with))
-				L.color = color_choice
-				L.set_light_color(color_choice)
+				var/obj/machinery/light/light = new /obj/machinery/light(get_turf(winner))
+				light.setDir(get_dir(winner, interacting_with))
+				light.color = color_choice
+				light.set_light_color(color_choice)
+				var/obj/item/light/tube = light.drop_light_tube()
+				qdel(tube)
 				return ITEM_INTERACT_SUCCESS
 
 			if(isfloorturf(interacting_with))
@@ -216,16 +218,6 @@
 			return ITEM_INTERACT_SUCCESS
 
 	return NONE
-
-/obj/item/construction/rld/mini
-	name = "mini-rapid-light-device"
-	desc = "A device used to rapidly provide lighting sources to an area. Reload with iron, plasteel, glass or compressed matter cartridges."
-	icon = 'icons/obj/tools.dmi'
-	icon_state = "rld"
-	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	matter = 100
-	max_matter = 100
 
 #undef LIGHT_TUBE_COST
 #undef FLOOR_LIGHT_COST

@@ -96,6 +96,7 @@
 		"rcd_ammo_large",
 		"rpd_loaded",
 		"rtd_loaded",
+		"rld_loaded",
 		"sheetifier",
 		"weldingmask",
 		"bolter_wrench",
