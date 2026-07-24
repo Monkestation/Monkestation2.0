@@ -114,7 +114,6 @@
 	desc = "Pricy sterile gloves that are thinner than latex. The lining allows for the person to operate \
 			quicker and with higher success along with the faster use time of various chemical related items."
 	icon_state = "surgeonlatex"
-	armor_type = /datum/armor/surgeon
 	clothing_traits = list(TRAIT_FASTMED, TRAIT_STERILE)
 	custom_premium_price = PAYCHECK_CREW * 6
 
