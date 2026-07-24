@@ -16,7 +16,7 @@
 		target_holder.add_reagent_list(grind_results)
 		. = TRUE
 	if(reagents?.total_volume)
-		reagents.trans_to(target_holder, reagents.total_volume, transfered_by = user)
+		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 		. = TRUE
 
 /datum/reagents/proc/convert_reagent(

@@ -135,15 +135,10 @@
 ///Called by either cell/proc/give or cell/proc/use
 #define COMSIG_CELL_CHANGE_POWER "cell_change_power"
 
-
-// This isn't even used at the moment.
-// Refactor this to a component if it's ever brought back.
-// ~Absolucy
-/*
-/// Mob is trying to open the hacking menu of a target [/atom], from /datum/hacking/interactable(): (mob/user)
-#define COMSIG_TRY_HACKING_INTERACT "try_hacking_interact"
-	#define COMPONENT_CANT_INTERACT_HACKING (1<<0)
-*/
-
 /// generic turf checker signal
 #define COMSIG_CHECK_TURF_GENERIC "check_turf_generic"
+
+/// From /atom/proc/update_atom_colour() : (color_changed)
+#define COMSIG_ATOM_COLOR_UPDATED "atom_color_updated"
+	/// Cancels update_appearance call in case you are somehow forced to call it manually to prevent dupe calls
+	#define COMPONENT_CANCEL_COLOR_APPEARANCE_UPDATE (1<<0)

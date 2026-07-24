@@ -51,34 +51,6 @@
 		bonechill.Remove(C)
 	..()
 
-/datum/species/golem/bone/handle_chemical(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
-	. = ..()
-	if(chem.type == /datum/reagent/toxin/bonehurtingjuice)
-		H.stamina.adjust(-4 * REM * seconds_per_tick, 0)
-		H.adjustBruteLoss(0.5 * REM * seconds_per_tick, 0)
-		if(SPT_PROB(10, seconds_per_tick))
-			switch(rand(1, 3))
-				if(1)
-					H.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
-				if(2)
-					H.manual_emote(pick("oofs silently.", "looks like [H.p_their()] bones hurt.", "grimaces, as though [H.p_their()] bones hurt."))
-				if(3)
-					to_chat(H, span_warning("Your bones hurt!"))
-		if(chem.overdosed)
-			if(SPT_PROB(2, seconds_per_tick) && iscarbon(H)) //big oof
-				var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
-				var/obj/item/bodypart/bp = H.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
-				if(bp)
-					playsound(H, get_sfx(SFX_DESECRATION), 50, TRUE, -1) //You just want to socialize
-					H.visible_message(span_warning("[H] rattles loudly and flails around!!"), span_danger("Your bones hurt so much that your missing muscles spasm!!"))
-					H.say("OOF!!", forced=/datum/reagent/toxin/bonehurtingjuice)
-					bp.receive_damage(200, 0, 0) //But I don't think we should
-				else
-					to_chat(H, span_warning("Your missing arm aches from wherever you left it."))
-					H.emote("sigh")
-		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
-		return TRUE
-
 /datum/action/innate/bonechill
 	name = "Bone Chill"
 	desc = "Rattle your bones and strike fear into your enemies!"

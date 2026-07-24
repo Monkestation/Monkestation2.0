@@ -367,3 +367,6 @@ rough example of the "cone" made by the 3 dirs checked
 	for(var/obj/item/thing as anything in get_all_contents_type(/obj/item))
 		if(!QDELETED(thing) && HAS_TRAIT(thing, TRAIT_GIFT_ITEM))
 			. += thing
+
+/// Helper for easily adding blood from INSIDE a mob to an atom (NOT blood ON the mob)
+#define add_mob_blood(from_who) add_blood_DNA(from_who.get_blood_dna_list(), from_who.get_static_viruses())

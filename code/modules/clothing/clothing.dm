@@ -695,24 +695,18 @@ BLIND     // can't see anything
 	set_armor(get_armor().generate_new_with_modifiers(list(ARMOR_ALL = -bonus)))
 	return ..()
 
-/obj/item/clothing/proc/appears_bloody()
-	return GET_ATOM_BLOOD_DNA_LENGTH(src) && can_be_bloody && !(item_flags & NO_BLOOD_ON_ITEM)
-
-/obj/item/clothing/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
-	. = ..()
-	if(isinhands)
+/// Returns a list of overlays with our blood, if we're bloodied
+/obj/item/clothing/proc/get_blood_overlay(blood_state)
+	if (!GET_ATOM_BLOOD_DECAL_LENGTH(src))
 		return
 
-	if(blood_overlay_type && appears_bloody())
-		var/mutable_appearance/blood_overlay
-		//MONKESTATION EDIT START
-		/* - MONKESTATION EDIT ORIGINAL -
-		if(clothing_flags & LARGE_WORN_ICON)
-			blood_overlay = mutable_appearance('icons/effects/64x64.dmi', "[blood_overlay_type]blood_large")
-		else
-			blood_overlay = mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
-		*/
-		blood_overlay = mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
-		//MONKESTATION EDIT END
-		blood_overlay.color = get_blood_dna_color()
-		. += blood_overlay
+	var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "[blood_state]blood")
+
+	blood_overlay.color = get_blood_dna_color()
+
+	var/emissive_alpha = get_blood_emissive_alpha(is_worn = TRUE)
+	if (emissive_alpha)
+		var/mutable_appearance/emissive_overlay = emissive_appearance(blood_overlay.icon, blood_overlay.icon_state, src, alpha = emissive_alpha)
+		blood_overlay.overlays += emissive_overlay
+
+	return blood_overlay

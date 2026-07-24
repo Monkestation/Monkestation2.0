@@ -1,5 +1,0 @@
-author: "SirNightKnight"
-delete-after: True
-changes:
-  - sound: "just switched the taser select sounds around so it makes more sense on the advanced taser ."
-  - bugfix: "miner salve doesnt give a damage overlay."

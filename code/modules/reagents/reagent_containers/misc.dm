@@ -126,7 +126,7 @@
 	item_flags = NOBLUDGEON
 	reagent_flags = OPENCONTAINER
 	amount_per_transfer_from_this = 5
-	possible_transfer_amounts = list()
+	has_variable_transfer_amount = FALSE
 	volume = 5
 	spillable = FALSE
 
@@ -145,7 +145,7 @@
 	var/reagentlist = pretty_string_from_reagent_list(reagents.reagent_list)
 	var/log_object = "containing [reagentlist]"
 	if((user.istate & ISTATE_HARM) && !carbon_target.is_mouth_covered())
-		reagents.trans_to(carbon_target, reagents.total_volume, transfered_by = user, methods = INGEST)
+		reagents.trans_to(carbon_target, reagents.total_volume, transferred_by = user, methods = INGEST)
 		carbon_target.visible_message(span_danger("[user] smothers \the [carbon_target] with \the [src]!"), span_userdanger("[user] smothers you with \the [src]!"), span_hear("You hear some struggling and muffled cries of surprise."))
 		log_combat(user, carbon_target, "smothered", src, log_object)
 	else
@@ -351,7 +351,7 @@
 		if(welder.reagents.total_volume >= welder.reagents.maximum_volume)
 			to_chat(user, span_warning("Your [welder.name] is already full!"))
 			return ITEM_INTERACT_BLOCKING
-		reagents.trans_to(welder, welder.max_fuel, transfered_by = user)
+		reagents.trans_to(welder, welder.max_fuel, transferred_by = user)
 		user.visible_message(span_notice("[user] refills [user.p_their()] [welder.name]."), span_notice("You refill [welder]."))
 		playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
 		welder.update_appearance()
@@ -365,7 +365,7 @@
 	. = ..()
 	if(!(user.istate & ISTATE_HARM))
 		return NONE
-		
+
 	if(cap_on)
 		to_chat(user, span_warning("\The [src] is capped!"))
 		return NONE
