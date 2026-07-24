@@ -248,6 +248,7 @@
 	icon_state = "hivisboots"
 
 /obj/item/clothing/shoes/combat/swat/admiral // Reskin for Abraxis's Admiral set
+	icon = 'icons/obj/clothing/shoes.dmi'
 	worn_icon = 'icons/mob/clothing/feet.dmi'
 	icon_state = "admiral"
 
