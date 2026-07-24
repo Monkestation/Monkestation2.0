@@ -1,4 +1,6 @@
-/**For items automatically offered to a player when they pull a borg.*/
+/**
+ * For items automatically offered to a player when they pull a borg.
+ */
 
 /datum/component/borg_item_offered_when_pulled
 	var/mob/living/silicon/robot

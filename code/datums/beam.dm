@@ -40,7 +40,7 @@
 	var/override_target_pixel_x = null
 	/// If set will be used instead of targets's pixel_y in offset calculations
 	var/override_target_pixel_y = null
-	///the layer of our beam
+	/// The layer of our beam.
 	var/beam_layer
 
 /datum/beam/New(
@@ -285,17 +285,17 @@
  * maxdistance: how far the beam will go before stopping itself. Used mainly for two things: preventing lag if the beam may go in that direction and setting a range to abilities that use beams.
  * beam_type: The type of your custom beam. This is for adding other wacky stuff for your beam only. Most likely, you won't (and shouldn't) change it.
  */
-/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=INFINITY,maxdistance=INFINITY,beam_type=/obj/effect/ebeam, beam_color = null, emissive = TRUE, override_origin_pixel_x = null, override_origin_pixel_y = null, override_target_pixel_x = null, override_target_pixel_y = null, beam_layer = null)
-	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, beam_layer)
+/atom/proc/Beam(atom/BeamTarget, icon_state="b_beam", icon='icons/effects/beam.dmi', time = INFINITY, maxdistance = INFINITY, beam_type = /obj/effect/ebeam, beam_color = null, emissive = TRUE, override_origin_pixel_x = null, override_origin_pixel_y = null, override_target_pixel_x = null, override_target_pixel_y = null, beam_layer = null)
+	var/datum/beam/newbeam = new(src, BeamTarget, icon, icon_state, time, maxdistance, beam_type, beam_color, emissive, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, beam_layer)
 	INVOKE_ASYNC(newbeam, TYPE_PROC_REF(/datum/beam/, Start))
 	return newbeam
 
 /// For beams that might be from a held item.
 /datum/beam/held
-	// Is the fishing rod held in left side hand
+	// Is the fishing rod held in left side hand?
 	var/lefthand = FALSE
 
-	// Make these inline with final sprites
+	// Make these inline with final sprites.
 	var/righthand_s_px = 13
 	var/righthand_s_py = 16
 
