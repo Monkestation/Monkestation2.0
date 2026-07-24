@@ -9828,6 +9828,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/duct,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "dgz" = (
@@ -11466,6 +11469,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/duct,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "dIF" = (
@@ -12734,6 +12740,7 @@
 	pixel_y = 14
 	},
 /obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/machinery/defibrillator_mount/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery)
 "ecI" = (
@@ -14186,7 +14193,6 @@
 "eBQ" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/light/small/directional/south,
-/obj/machinery/defibrillator_mount/directional/south,
 /obj/structure/table/optable,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery)
@@ -14357,10 +14363,7 @@
 	id = "med_priv_2";
 	name = "Privacy Shutters Control"
 	},
-/obj/structure/chair/office{
-	dir = 8
-	},
-/obj/effect/landmark/start/medical_doctor,
+/obj/structure/closet/secure_closet/personal/patient,
 /turf/open/floor/iron/white,
 /area/station/medical/patients_rooms/room_b)
 "eFM" = (
@@ -17838,6 +17841,16 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
+"fOU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/duct,
+/obj/structure/disposalpipe/junction/flip{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/aft)
 "fOZ" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
@@ -19451,7 +19464,9 @@
 	},
 /obj/machinery/airalarm/directional/west,
 /obj/structure/table/reinforced/rglass,
-/obj/machinery/computer/records/medical/laptop,
+/obj/machinery/computer/records/medical/laptop{
+	dir = 3
+	},
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "gqq" = (
@@ -30253,6 +30268,10 @@
 	dir = 6
 	},
 /obj/machinery/firealarm/directional/east,
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "jLu" = (
@@ -33568,7 +33587,9 @@
 	pixel_x = -5
 	},
 /obj/item/radio/intercom/directional/east,
-/obj/structure/closet/secure_closet/personal/patient,
+/obj/machinery/computer/operating{
+	dir = 1
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/patients_rooms/room_b)
 "kOW" = (
@@ -36475,6 +36496,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/structure/chair/office{
+	dir = 1
+	},
+/obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/iron/white,
 /area/station/medical/patients_rooms/room_b)
 "lHY" = (
@@ -41690,10 +41715,7 @@
 	id = "med_priv_1";
 	name = "Privacy Shutters Control"
 	},
-/obj/structure/chair/office{
-	dir = 8
-	},
-/obj/effect/landmark/start/medical_doctor,
+/obj/structure/closet/secure_closet/personal/patient,
 /turf/open/floor/iron/white,
 /area/station/medical/patients_rooms/room_a)
 "nuS" = (
@@ -44106,7 +44128,9 @@
 "ohm" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/structure/table/reinforced/rglass,
-/obj/machinery/computer/records/medical/laptop,
+/obj/machinery/computer/records/medical/laptop{
+	dir = 3
+	},
 /turf/open/floor/iron/checker{
 	dir = 1
 	},
@@ -44208,6 +44232,7 @@
 	pixel_y = 14
 	},
 /obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/machinery/defibrillator_mount/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery)
 "ojr" = (
@@ -48336,6 +48361,9 @@
 	},
 /obj/machinery/vending/wallmed/directional/west,
 /obj/structure/table,
+/obj/machinery/computer/records/medical/laptop{
+	dir = 1
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/patients_rooms/room_a)
 "pCb" = (
@@ -50299,6 +50327,7 @@
 	},
 /obj/machinery/vending/wallmed/directional/west,
 /obj/structure/table,
+/obj/machinery/computer/records/medical/laptop,
 /turf/open/floor/iron/white,
 /area/station/medical/patients_rooms/room_b)
 "qjq" = (
@@ -56854,7 +56883,9 @@
 /area/station/service/hydroponics/chicken)
 "srS" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/records/medical/laptop,
+/obj/machinery/computer/records/medical/laptop{
+	dir = 3
+	},
 /turf/open/floor/carpet/blue,
 /area/station/medical/psychology)
 "ssd" = (
@@ -59441,6 +59472,11 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = "medbay_foyer";
+	name = "Medbay"
+	},
 /turf/open/floor/iron/white/textured,
 /area/station/medical/exam_room)
 "tjP" = (
@@ -62619,7 +62655,7 @@
 	pixel_x = -5
 	},
 /obj/item/radio/intercom/directional/east,
-/obj/structure/closet/secure_closet/personal/patient,
+/obj/machinery/computer/operating,
 /turf/open/floor/iron/white,
 /area/station/medical/patients_rooms/room_a)
 "uiM" = (
@@ -63942,6 +63978,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/structure/chair/office,
+/obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/iron/white,
 /area/station/medical/patients_rooms/room_a)
 "uFl" = (
@@ -64212,6 +64250,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = "medbay_foyer";
+	name = "Medbay"
+	},
 /turf/open/floor/iron/white/textured,
 /area/station/medical/exam_room)
 "uIU" = (
@@ -71547,6 +71590,27 @@
 /obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
+"wTi" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/duct,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay Storage"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/white/textured,
+/area/station/medical/storage)
 "wTy" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
@@ -114240,7 +114304,7 @@ fep
 sxS
 sxS
 sxS
-ttr
+wTi
 sxS
 sxS
 ocd
@@ -114754,7 +114818,7 @@ jQs
 jQs
 jQs
 jQs
-uEE
+fOU
 nNu
 uEE
 uEE
