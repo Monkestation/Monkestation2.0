@@ -96,6 +96,7 @@
 /obj/item/clothing/head/maidheadband/syndicate
 	name = "tactical maid headband"
 	desc = "Tacticute."
+	icon = 'icons/mob/clothing/head.dmi'
 	icon_state = "syndieheadband"
 
 /datum/armor/helmet_durathread
