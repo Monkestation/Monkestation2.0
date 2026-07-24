@@ -486,7 +486,7 @@
 	},
 /obj/item/clothing/under/syndicate/scrubs,
 /obj/item/clothing/gloves/latex/nitrile,
-/obj/item/clothing/mask/breath/medical,
+/obj/item/clothing/mask/breath/muzzle,
 /obj/item/tank/internals/anesthetic,
 /turf/open/floor/iron,
 /area/shuttle/syndicate/medical)

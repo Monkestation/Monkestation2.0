@@ -11266,7 +11266,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
-/obj/item/clothing/mask/surgical,
+/obj/item/clothing/mask/breath/muzzle,
 /obj/effect/turf_decal/trimline/blue/corner{
 	dir = 8
 	},
@@ -28570,8 +28570,8 @@
 /obj/item/storage/toolbox/electrical/medical,
 /obj/item/tank/internals/anesthetic,
 /obj/item/tank/internals/anesthetic,
-/obj/item/clothing/mask/breath/medical,
-/obj/item/clothing/mask/breath/medical,
+/obj/item/clothing/mask/breath/muzzle,
+/obj/item/clothing/mask/breath/muzzle,
 /obj/item/wheelchair,
 /obj/item/wheelchair,
 /obj/item/wheelchair,
