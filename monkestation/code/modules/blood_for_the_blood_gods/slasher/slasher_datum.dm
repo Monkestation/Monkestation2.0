@@ -122,8 +122,6 @@
 	ADD_TRAIT(current_mob, TRAIT_VIRUSIMMUNE, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_RESISTHEAT, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_RESISTCOLD, "slasher")
-	ADD_TRAIT(current_mob, TRAIT_RESISTLOWPRESSURE, "slasher")
-	ADD_TRAIT(current_mob, TRAIT_RESISTHIGHPRESSURE, "slasher")
 
 	var/mob/living/carbon/carbon = current_mob
 	var/obj/item/organ/internal/eyes/slasher/eye = new
