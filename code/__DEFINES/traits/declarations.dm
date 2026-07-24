@@ -679,6 +679,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SLASHER "slasher"
 /// Given to the detective, if they have this, they can see syndicate special descriptions.
 #define TRAIT_DETECTIVE "detective_ability"
+#define TRAIT_OVERDOSEIMMUNE "overdose_immune"
 
 // Traits related to food
 /// Trait for Fire Burps

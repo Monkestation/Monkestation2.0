@@ -308,7 +308,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 			playsound(jamming_gps_device, 'sound/items/gps/radio_jammer.ogg', 35, TRUE)
 			jamming_gps_device.say("[Gibberish("///%<SIGNAL INTERCEPTED>{SEND}source.create_feedback_loop", TRUE, 50)] [gpstag]: [alert_text] ([get_area_name(our_gps_turf, TRUE)]) ([our_gps_turf.x], [our_gps_turf.y], [our_gps_turf.z])")
 			jamming_gps_device.can_play_jam_sound = FALSE
-			addtimer(CALLBACK(src, PROC_REF(reset_jam_sound), jamming_gps_device), 1 SECOND)
+			addtimer(CALLBACK(src, PROC_REF(reset_jam_sound), jamming_gps_device), 1 SECONDS)
 		jammed_signal = TRUE
 
 	// go through and alert all other sec gps

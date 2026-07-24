@@ -234,7 +234,7 @@
 		return
 	obj_flags |= EMAGGED
 	do_sparks(3, FALSE, src)
-	sleep(1 SECOND)
+	sleep(1 SECONDS)
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 	gps_component.jammed = TRUE
 	gps_component.handle_overlay()

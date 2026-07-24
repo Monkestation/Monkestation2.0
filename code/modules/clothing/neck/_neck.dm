@@ -61,9 +61,6 @@
 	if(displayed.above_suit)
 		. += undershirt.accessory_overlay
 
-/obj/item/clothing/neck/appears_bloody()
-	return ..() && (body_parts_covered & HEAD)
-
 /obj/item/clothing/neck/bowtie
 	name = "bow tie"
 	desc = "A small neosilk bowtie."
