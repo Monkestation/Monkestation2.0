@@ -93,7 +93,7 @@
 	inhand_icon_state = "rebarxbowsyndie"
 	worn_icon_state = "rebarxbowsyndie"
 	w_class = WEIGHT_CLASS_NORMAL
-	initial_caliber = CALIBER_REBAR
+	initial_caliber = CALIBER_REBAR_SYNDIE
 	draw_time = 1
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/syndie
 
