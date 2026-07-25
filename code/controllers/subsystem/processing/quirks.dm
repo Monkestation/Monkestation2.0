@@ -56,7 +56,8 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Prosthetic Limb", "Monoplegic"),
 		list("Cyborg Pre-screened dogtag", "Unborgable"),
 		list("Revival Blacklist", "Uncloneable Neurons"),
-		list("Mute", "Fluffy Tongue")
+		list("Mute", "Fluffy Tongue"),
+		list("Mute", "Corporate Sponsorship"),
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize()
