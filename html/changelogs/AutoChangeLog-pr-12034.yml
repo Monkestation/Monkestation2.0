@@ -1,0 +1,17 @@
+author: "Runian"
+delete-after: True
+changes:
+  - rscadd: "The flavortext/warnings when picking a robot model are now displayed immediately."
+  - rscadd: "When applicable, robot skins now lock down cyborgs for its entire animation duration only."
+  - rscadd: "The cyborg chameleon projector now saves the user's original robot skin."
+  - rscadd: "Hats and badges presist through robot model changes, but are dropped if their robot skin disallows wearing them."
+  - rscadd: "The hud module for clown cyborgs have been changed to be more thematic."
+  - rscdel: "SSD Cyborgs no longer have the option to select a pending model."
+  - balance: "Changing robot models now drops all robot upgrades."
+  - bugfix: "The female skin for service cyborgs now correctly plays its transformation animation."
+  - bugfix: "Cyborg upgrades that remove item from the active item slot correctly sets the active item slot to be empty."
+  - bugfix: "EMPs no longer affect the non-held modules of a cyborg."
+  - bugfix: "EMPs now only affect the held modules of a cyborg once, rather than twice."
+  - bugfix: "Robot skins with animations no longer cause the cyborg to show their final icon state for a frame at the start."
+  - code_imp: "Robot skins are now handled separately from robot models."
+  - refactor: "Robot model have been refactored in general."

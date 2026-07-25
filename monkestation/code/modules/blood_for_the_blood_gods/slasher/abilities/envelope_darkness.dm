@@ -177,9 +177,6 @@
 
 	ADD_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
 
-	// Remove blood trail effect before cleanup
-	qdel(holder.GetComponent(/datum/component/blood_trail))
-
 	// Exit the jaunt
 	jaunter.forceMove(final_point)
 	holder.jaunter = null

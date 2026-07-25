@@ -1,22 +1,5 @@
 /datum/reagent/blood
-	data = list(
-		// Actually Relevant
-		"viruses" = null, // Refernces to virus datums in this blood
-		"blood_DNA" = null, // DNA of the guy who the blood came from
-		"blood_type" = null, // /datum/blood_type of the blood
-		"resistances" = null, // Viruses the blood is vaccinated against
-		"immunity" = null,
-		// Unused? (but cool)
-		"trace_chem" = null, // Param list of all chems in the blood at the time the sample was taken (type to volume)
-		// Used for podperson shit
-		"mind" = null, // Ref to the mind of the guy who the blood came from
-		"ckey" = null, // Ckey of the guy who the blood came from
-		"gender" = null, // Gender of the guy when the blood was taken
-		"real_name" = null, // Real name of the guy when the blood was taken
-		"cloneable" = null, // Tracks if the guy who the blood came from suicided or not
-		"factions" = null, // Factions the guy who the blood came from was in
-		"quirks" = null, // Quirk typepaths of the guy who the blood came from had
-		)
+	description  = "Blood cells suspended in plasma, the most abundant of which being the hemoglobin-containing red blood cells."
 	name = "Blood"
 	color = COLOR_BLOOD
 	metabolization_rate = 12.5 * REAGENTS_METABOLISM //fast rate so it disappears fast.
@@ -39,65 +22,20 @@
 	desc = "Are you sure this is tomato juice?"
 	icon_state = "glass_red"
 
-/datum/reagent/blood/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
-	. = ..()
-	for(var/datum/disease/strain as anything in data?["viruses"])
-		if(istype(strain, /datum/disease/acute))
-			var/datum/disease/acute/advanced = strain
-			if(methods & (INJECT|INGEST|PATCH))
-				exposed_mob.infect_disease(advanced, TRUE, "(Contact, splashed with infected blood)")
-			if((methods & (TOUCH | VAPOR)) && (advanced.spread_flags & DISEASE_SPREAD_BLOOD))
-				if(exposed_mob.check_bodypart_bleeding(BODY_ZONE_EVERYTHING))
-					exposed_mob.infect_disease(advanced, notes="(Blood, splashed with infected blood)")
-
-	var/datum/blood_type/blood = exposed_mob.get_blood_type()
-	if(blood?.reagent_type == type && ((methods & INJECT) || ((methods & INGEST))))
-		if(data["blood_type"] in blood.compatible_types)
-			exposed_mob.blood_volume = min(exposed_mob.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
-		else
-			exposed_mob.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
-
-		exposed_mob.reagents.remove_reagent(type, reac_volume) // Because we don't want blood to just lie around in the patient's blood, makes no sense.
-
-
 /datum/reagent/blood/on_new(list/data)
 	. = ..()
-	if(istype(data))
-		SetViruses(src, data)
-		color = GLOB.blood_types[data["blood_type"]]?.color || COLOR_BLOOD
+	// If we were artificially created without blood data, we still want to have the blood_reagent element for exposure effects
+	if(!istype(data) || !data["blood_type"])
+		AddElement(/datum/element/blood_reagent, null, get_blood_type(BLOOD_TYPE_UNIVERSAL))
+		return
 
-/datum/reagent/blood/on_merge(list/mix_data)
-	if(data && mix_data)
-		if(data["blood_DNA"] != mix_data["blood_DNA"])
-			data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning if the DNA sample doesn't match.
-		if(data["viruses"] || mix_data["viruses"])
+	var/datum/blood_type/blood_type = data["blood_type"]
+	if(!istype(blood_type))
+		return
 
-			var/list/mix1 = data["viruses"]
-			var/list/mix2 = mix_data["viruses"]
-
-			// Stop issues with the list changing during mixing.
-			var/list/to_mix = list()
-
-			for(var/datum/disease/advance/AD in mix1)
-				to_mix += AD
-			for(var/datum/disease/advance/AD in mix2)
-				to_mix += AD
-
-			var/datum/disease/advance/AD = Advance_Mix(to_mix)
-			if(AD)
-				var/list/preserve = list(AD)
-				for(var/D in data["viruses"])
-					if(!istype(D, /datum/disease/advance))
-						preserve += D
-				data["viruses"] = preserve
-	return 1
-
-/datum/reagent/blood/proc/get_diseases()
-	. = list()
-	if(data && data["viruses"])
-		for(var/thing in data["viruses"])
-			var/datum/disease/D = thing
-			. += D
+	var/blood_color = blood_type.get_color()
+	if(blood_color == BLOOD_COLOR_RED) // If the blood is default red, just use the darker red color for the reagent.
+		color = initial(color)
 
 /datum/reagent/blood/expose_turf(turf/exposed_turf, reac_volume)//splash the blood all over the place
 	. = ..()
@@ -124,7 +62,7 @@
 	color = "#CC4633"
 	description = "You don't even want to think about what's in here."
 	taste_description = "gross iron"
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 2
 	material = /datum/material/meat
 	ph = 7.45
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -157,9 +95,10 @@
 			infection.cure()
 	LAZYOR(exposed_mob.disease_resistances, data)
 
-/datum/reagent/vaccine/on_merge(list/data)
-	if(istype(data))
-		src.data |= data.Copy()
+/datum/reagent/vaccine/on_merge(list/mix_data, amount)
+	. = ..()
+	if(mix_data)
+		data |= mix_data
 
 /datum/reagent/vaccine/fungal_tb
 	name = "Vaccine (Fungal Tuberculosis)"
@@ -362,10 +301,14 @@
 	desc = "A glass of holy water."
 	icon_state = "glass_clear"
 
-/datum/reagent/water/holywater/on_mob_add(mob/living/affected_mob, amount)
-	. = ..()
-	if(data)
-		data["misc"] = 0
+/datum/reagent/water/holywater/on_new(list/data)
+	// Tracks the total amount of deciseconds that the reagent has been metab'd for, for the purpose of deconversion
+	if(isnull(data))
+		data = list("deciseconds_metabolized" = 0)
+	else if(isnull(data["deciseconds_metabolized"]))
+		data["deciseconds_metabolized"] = 0
+
+	return ..()
 
 /datum/reagent/water/holywater/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -375,83 +318,29 @@
 		to_chat(exposed_mob, span_userdanger("Your mind burns in agony as you feel the light of the Justicar being ripped away from you by something else!")) //monkestation edit
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	// monkestation edit start
-	/* original - this version of the code depends on https://github.com/tgstation/tgstation/pull/78657 which has not been ported yet
 	. = ..()
 
 	data["deciseconds_metabolized"] += (seconds_per_tick * 1 SECONDS * REM)
 
 	affected_mob.adjust_jitter_up_to(4 SECONDS * REM * seconds_per_tick, 20 SECONDS)
-	var/need_mob_update = FALSE
 
-	if(IS_CULTIST(affected_mob))
-		for(var/datum/action/innate/cult/blood_magic/BM in affected_mob.actions)
-			var/removed_any = FALSE
-			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
-				removed_any = TRUE
-				qdel(BS)
-			if(removed_any)
-				to_chat(affected_mob, span_cultlarge("Your blood rites falter as holy water scours your body!"))
-
-	if(data["deciseconds_metabolized"] >= (25 SECONDS)) // 10 units
-		affected_mob.adjust_stutter_up_to(4 SECONDS * REM * seconds_per_tick, 20 SECONDS)
-		affected_mob.set_dizzy_if_lower(10 SECONDS)
-		if(IS_CULTIST(affected_mob) && SPT_PROB(10, seconds_per_tick))
-			affected_mob.say(pick("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"), forced = "holy water")
-			if(prob(10))
-				affected_mob.visible_message(span_danger("[affected_mob] starts having a seizure!"), span_userdanger("You have a seizure!"))
-				affected_mob.Unconscious(12 SECONDS)
-				to_chat(affected_mob, span_cultlarge("[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
-					"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")]."))
-		else if(HAS_TRAIT(affected_mob, TRAIT_EVIL) && SPT_PROB(25, seconds_per_tick)) //Congratulations, your committment to evil has now made holy water a deadly poison to you!
-			if(!IS_CULTIST(affected_mob) || affected_mob.mind?.holy_role != HOLY_ROLE_PRIEST)
-				affected_mob.emote("scream")
-				need_mob_update += affected_mob.adjustFireLoss(3 * REM * seconds_per_tick, updating_health = FALSE)
-
-	if(data["deciseconds_metabolized"] >= (1 MINUTES)) // 24 units
-		if(IS_CULTIST(affected_mob))
-			affected_mob.mind.remove_antag_datum(/datum/antagonist/cult)
-			affected_mob.Unconscious(10 SECONDS)
-		else if(HAS_TRAIT(affected_mob, TRAIT_EVIL)) //At this much holy water, you're probably going to fucking melt. good luck
-			if(!IS_CULTIST(affected_mob) || affected_mob.mind?.holy_role != HOLY_ROLE_PRIEST)
-				need_mob_update += affected_mob.adjustFireLoss(10 * REM * seconds_per_tick, updating_health = FALSE)
-		affected_mob.remove_status_effect(/datum/status_effect/jitter)
-		affected_mob.remove_status_effect(/datum/status_effect/speech/stutter)
-		holder?.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
-	if(need_mob_update)
-		return UPDATE_MOB_HEALTH
-	*/
-	if(affected_mob.blood_volume)
-		affected_mob.blood_volume += 0.1 * REM * seconds_per_tick // water is good for you!
-	if(!islist(data))
-		data = list("misc" = 0)
-	else if(!IS_SAFE_NUM(data["misc"]))
-		data["misc"] = 0
-
-	data["misc"] += seconds_per_tick SECONDS * REM
-	affected_mob.adjust_jitter_up_to(4 SECONDS * seconds_per_tick, 20 SECONDS)
 	if(IS_CULTIST(affected_mob) || affected_mob.mind?.has_antag_datum(/datum/antagonist/clock_cultist))
 		if(handle_cultists(affected_mob, seconds_per_tick)) //only returns TRUE on deconversion
 			return
-	holder.remove_reagent(type, 1 * REAGENTS_METABOLISM * seconds_per_tick) //fixed consumption to prevent balancing going out of whack
 
-	var/need_mob_update = FALSE
-
-	if (!HAS_TRAIT(affected_mob, TRAIT_EVIL) || IS_CULTIST(affected_mob) || affected_mob.mind?.holy_role == HOLY_ROLE_PRIEST)
+	if(!HAS_TRAIT(affected_mob, TRAIT_EVIL) || IS_CULTIST(affected_mob) || affected_mob.mind?.holy_role == HOLY_ROLE_PRIEST)
 		return
-	if(data["misc"] >= (25 SECONDS)) // 10 units
+	if(data["deciseconds_metabolized"] >= (25 SECONDS)) // 10 units
 		affected_mob.adjust_stutter_up_to(4 SECONDS * REM * seconds_per_tick, 20 SECONDS)
 		affected_mob.set_dizzy_if_lower(10 SECONDS)
 		if(SPT_PROB(25, seconds_per_tick)) //Congratulations, your committment to evil has now made holy water a deadly poison to you!
 			affected_mob.emote("scream")
-			need_mob_update += affected_mob.adjustFireLoss(3 * REM * seconds_per_tick, updating_health = FALSE)
-	if(data["misc"] >= (1 MINUTES)) // 24 units
-		need_mob_update += affected_mob.adjustFireLoss(10 * REM * seconds_per_tick, updating_health = FALSE)
+			affected_mob.adjustFireLoss(3 * REM * seconds_per_tick, updating_health = FALSE)
+	if(data["deciseconds_metabolized"] >= (1 MINUTES)) // 24 units
+		affected_mob.adjustFireLoss(10 * REM * seconds_per_tick, updating_health = FALSE)
 		affected_mob.remove_status_effect(/datum/status_effect/jitter)
 		affected_mob.remove_status_effect(/datum/status_effect/speech/stutter)
 		holder?.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
-	return need_mob_update
-	// monkestation edit edit
 
 /datum/reagent/water/holywater/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -478,7 +367,7 @@
 		var/datum/antagonist/clock_cultist/servant_datum = affected_mob.mind.has_antag_datum(/datum/antagonist/clock_cultist)
 		phrase_list = servant_datum?.servant_deconversion_phrases
 
-	if(data["misc"] >= (25 SECONDS)) // 10 units
+	if(data["deciseconds_metabolized"] >= (25 SECONDS)) // 10 units
 		affected_mob.adjust_stutter_up_to(4 SECONDS * seconds_per_tick, 20 SECONDS)
 		affected_mob.set_dizzy_if_lower(10 SECONDS)
 		if(SPT_PROB(10, seconds_per_tick))
@@ -495,7 +384,7 @@
 				if(phrase_list)
 					to_chat(affected_mob, "<span class=[span_type]>[pick(phrase_list["seizure"])].</span>")
 
-	if(data["misc"] >= (1 MINUTES)) // 24 units
+	if(data["deciseconds_metabolized"] >= (1 MINUTES)) // 24 units
 		if(IS_CULTIST(affected_mob))
 			affected_mob.mind.remove_antag_datum(/datum/antagonist/cult)
 		if(IS_CLOCK(affected_mob))
@@ -505,7 +394,6 @@
 		affected_mob.remove_status_effect(/datum/status_effect/speech/stutter)
 		holder.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
 		return TRUE
-//monkestation edit end
 
 /datum/reagent/water/hollowwater
 	name = "Hollow Water"
@@ -591,6 +479,7 @@
 
 
 /datum/reagent/hellwater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	affected_mob.set_fire_stacks(min(affected_mob.fire_stacks + (1.5 * seconds_per_tick), 5))
 	affected_mob.ignite_mob() //Only problem with igniting people is currently the commonly available fire suits make you immune to being on fire
 	affected_mob.adjustToxLoss(0.5*seconds_per_tick, 0)
@@ -1179,11 +1068,6 @@
 	color = "#606060" //pure iron? let's make it violet of course
 	ph = 6
 	restricted = TRUE
-
-/datum/reagent/iron/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
-		affected_mob.blood_volume += 0.25 * seconds_per_tick
-	..()
 
 /datum/reagent/gold
 	name = "Gold"
@@ -1832,7 +1716,7 @@
 	burning_volume = 0.05 //but has a lot of hydrocarbons
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = null
-	default_container = /obj/effect/decal/cleanable/oil
+	default_container = /obj/effect/decal/cleanable/blood/oil
 	liquid_fire_power = 15
 	synthetic_boozepwr = 0
 
@@ -2177,6 +2061,7 @@
 	color = pick(random_color_list)
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(can_colour_mobs)
 		affected_mob.add_atom_colour(color_transition_filter(pick(random_color_list), SATURATION_OVERRIDE), WASHABLE_COLOUR_PRIORITY)
 

@@ -1,0 +1,4 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - qol: "Strongarm crates now contain a left and a right implant instead of two rights"

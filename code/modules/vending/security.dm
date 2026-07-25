@@ -15,7 +15,7 @@
 		/obj/item/assembly/flash/handheld = 6,
 		/obj/item/food/donut/plain = 12,
 		/obj/item/storage/box/evidence = 6,
-		/obj/item/flashlight/seclite = 4,
+		/obj/item/flashlight/seclite = 6,
 		/obj/item/restraints/legcuffs/bola/energy = 7,
 		/obj/item/restraints/legcuffs/beartrap/security = 4,
 		/obj/item/ammo_box/magazine/m35/rubber = 14,

@@ -27,6 +27,7 @@
 	bodytemp_heat_damage_limit = (T0C + 100)
 	unsuitable_atmos_damage = 10
 	unsuitable_heat_damage = 15
+	blood_volume = BLOOD_VOLUME_NORMAL
 	faction = list(FACTION_CLOWN)
 	ai_controller = /datum/ai_controller/basic_controller/clown
 	speed = 1.4 //roughly close to simpleanimal clowns
@@ -66,6 +67,11 @@
 	var/obj/item/food/grown/banana/bunch/unripe_bunch = target
 	unripe_bunch.start_ripening()
 	log_combat(src, target, "explosively ripened")
+
+/mob/living/basic/clown/get_bloodtype()
+	if (check_holidays(APRIL_FOOLS))
+		return get_blood_type(BLOOD_TYPE_CLOWN)
+	return ..()
 
 /mob/living/basic/clown/lube
 	name = "Living Lube"

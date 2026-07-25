@@ -32,8 +32,22 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
 	/// UI state of GPS, altering when it can be used.
 	var/datum/ui_state/state = null
+	var/uses_overlays = TRUE
 
-/datum/component/gps/item/Initialize(_gpstag = "COM0", emp_proof = FALSE, state = null, overlay_state = "working", requires_z_calibration, list/calibrate_zs) // monkestation edit: require calibration to point to remote z-levels
+/datum/component/gps/item/proc/handle_overlay()
+	if(!uses_overlays)
+		return
+	var/atom/A = parent
+	A.cut_overlay("working")
+	A.cut_overlay("emp")
+	if(emped)
+		A.add_overlay("emp")
+		return
+	if(tracking)
+		A.add_overlay("working")
+		return
+
+/datum/component/gps/item/Initialize(_gpstag = "COM0", emp_proof = FALSE, state = null, requires_z_calibration, list/calibrate_zs, uses_overlays = TRUE)
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE || !isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -42,22 +56,23 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		state = GLOB.default_state
 	src.state = state
 
-	var/atom/A = parent
-	if(overlay_state)
-		A.add_overlay(overlay_state)
-	A.name = "[initial(A.name)] ([gpstag])"
+	src.uses_overlays = uses_overlays
+
+	var/obj/item/parent_item = parent
+	parent_item.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
+	handle_overlay()
+	parent_item.name = "[initial(parent_item.name)] ([gpstag])"
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(interact))
 	if(!emp_proof)
 		RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_AltClick))
+	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 
-	// monkestation start: require calibration to point to remote z-levels
 	if(!isnull(requires_z_calibration))
 		src.requires_z_calibration = requires_z_calibration
 	if(islist(calibrate_zs))
 		src.calibrated_zs = calibrate_zs
-	// monkestation end
 
 ///Called on COMSIG_ITEM_ATTACK_SELF
 /datum/component/gps/item/proc/interact(datum/source, mob/user)
@@ -77,42 +92,48 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	SIGNAL_HANDLER
 
 	emped = TRUE
-	var/atom/A = parent
-	A.cut_overlay("working")
-	A.add_overlay("emp")
-	addtimer(CALLBACK(src, PROC_REF(reboot)), 300, TIMER_UNIQUE|TIMER_OVERRIDE) //if a new EMP happens, remove the old timer so it doesn't reactivate early
+	handle_overlay()
+	addtimer(CALLBACK(src, PROC_REF(reboot)), 30 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //if a new EMP happens, remove the old timer so it doesn't reactivate early
 	SStgui.close_uis(src) //Close the UI control if it is open.
 
 ///Restarts the GPS after getting turned off by an EMP.
 /datum/component/gps/item/proc/reboot()
 	emped = FALSE
-	var/atom/A = parent
-	A.cut_overlay("emp")
-	A.add_overlay("working")
+	handle_overlay()
+
+/datum/component/gps/item/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)
+	SIGNAL_HANDLER
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = tracking ? "Turn off" : "Turn on"
+	return CONTEXTUAL_SCREENTIP_SET
 
 ///Calls toggletracking
 /datum/component/gps/item/proc/on_AltClick(datum/source, mob/user)
 	SIGNAL_HANDLER
-
+	if(isobj(parent))
+		var/obj/our_gps_device = parent
+		our_gps_device.add_fingerprint(user)
 	toggletracking(user)
 	return COMPONENT_CANCEL_CLICK_ALT
 
 ///Toggles the tracking for the gps
 /datum/component/gps/item/proc/toggletracking(mob/user)
-	if(!user.can_perform_action(parent, ALLOW_RESTING|ALLOW_PAI))
+	if(user && !user?.can_perform_action(parent, ALLOW_RESTING|ALLOW_PAI))
 		return //user not valid to use gps
 	if(emped)
-		to_chat(user, span_warning("It's busted!"))
+		if(user)
+			to_chat(user, span_warning("It's busted!"))
 		return
-	var/atom/A = parent
 	if(tracking)
-		A.cut_overlay("working")
-		to_chat(user, span_notice("[parent] is no longer tracking, or visible to other GPS devices."))
+		if(user)
+			to_chat(user, span_notice("[parent] is no longer tracking, or visible to other GPS devices."))
 		tracking = FALSE
 	else
-		A.add_overlay("working")
-		to_chat(user, span_notice("[parent] is now tracking, and visible to other GPS devices."))
+		if(user)
+			to_chat(user, span_notice("[parent] is now tracking, and visible to other GPS devices."))
 		tracking = TRUE
+	SEND_SIGNAL(parent, COMSIG_GPS_TOGGLED_TRACKING, tracking)
+	handle_overlay()
 
 /datum/component/gps/item/ui_interact(mob/user, datum/tgui/ui)
 	if(emped)
@@ -156,7 +177,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		if(pos.z == curr.z)
 			signal["dist"] = max(get_dist(curr, pos), 0) //Distance between the src and remote GPS turfs
 			signal["degrees"] = round(get_angle(curr, pos)) //0-360 degree directional bearing, for more precision.
-		else if(can_point_to_z_level(pos.z)) // monkestation edit: require calibration to point to remove z-levels
+		else if(can_point_to_z_level(pos.z)) // require calibration to point to remove z-levels
 			var/angle = get_linked_z_angle(curr.z, pos.z)
 			if(!isnull(angle))
 				signal["degrees"] = angle
@@ -191,3 +212,110 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		if("globalmode")
 			global_mode = !global_mode
 			. = TRUE
+
+/datum/component/gps/item/security_gps
+	tracking = FALSE // start turned off
+	var/jammed = FALSE
+
+/datum/component/gps/item/security_gps/Initialize(_gpstag = "COM0", emp_proof = FALSE, state = null, requires_z_calibration, list/calibrate_zs)
+	. = ..()
+	RegisterSignal(parent, COMSIG_SEC_GPS_ALERT, PROC_REF(send_alert))
+
+/datum/component/gps/item/security_gps/handle_overlay()
+	var/atom/A = parent
+	A.cut_overlay("working")
+	A.cut_overlay("emp")
+	A.cut_overlay("broken")
+	if(jammed)
+		A.add_overlay("broken")
+		return
+	if(emped)
+		A.add_overlay("emp")
+		return
+	if(tracking)
+		A.add_overlay("working")
+		return
+
+/datum/component/gps/item/security_gps/proc/get_gps_list_to_alert()
+	var/list/gps_to_alert = list()
+	var/turf/curr = get_turf(parent)
+	for(var/datum/component/gps/item/security_gps/other_gps as anything in GLOB.GPS_list)
+		if(other_gps == src || other_gps.emped || !other_gps.tracking)
+			continue
+		var/turf/pos = get_turf(other_gps.parent)
+		if(!pos || (!global_mode && pos.z != curr.z))
+			continue
+		gps_to_alert += other_gps
+	return gps_to_alert
+
+/datum/component/gps/item/security_gps/proc/get_jammed_gps()
+	var/list/jammed_gps = list()
+	for(var/datum/component/gps/item/security_gps/other_gps in get_gps_list_to_alert())
+		if(!other_gps.jammed)
+			continue
+		jammed_gps += other_gps
+	return jammed_gps.len ? pick(jammed_gps) : 0
+
+/datum/component/gps/item/security_gps/proc/send_alert(atom/source, alert_text)
+	SIGNAL_HANDLER
+
+	var/obj/item/gps/security/our_gps_device = parent
+
+	playsound(our_gps_device, 'sound/items/gps/four_ping.ogg', 35, TRUE)
+	our_gps_device.say("Transmitting distress signal...")
+
+	addtimer(CALLBACK(src, PROC_REF(attempt_to_send_signal), alert_text), 15 SECONDS)
+
+/datum/component/gps/item/security_gps/proc/attempt_to_send_signal(alert_text)
+
+	var/obj/item/gps/security/our_gps_device = parent
+
+	if(!our_gps_device)
+		return
+
+	var/area/our_area = get_area(our_gps_device)
+	var/turf/our_gps_turf = get_turf(our_gps_device)
+
+	if(!tracking || emped || jammed || is_within_radio_jammer_range(our_gps_device) || our_area.area_flags & AREA_BLOCKS_OUTGOING_RADIO)
+		our_gps_device.say("Signal failure.")
+		playsound(our_gps_device, 'sound/machines/buzz-sigh.ogg', 35, TRUE)
+		return
+
+	our_gps_device.say("Signal sent.")
+	playsound(our_gps_device, 'sound/items/gps/one_ping.ogg', 35, TRUE)
+
+	// check if there's a jammed GPS first, if there is set the turf that's being reported to that of the jamming GPS
+	var/jammed_signal = FALSE
+	var/datum/component/gps/item/security_gps/jamming_gps = get_jammed_gps()
+	var/obj/item/gps/security/jamming_gps_device
+	if(jamming_gps)
+		jamming_gps_device = jamming_gps.parent
+		if(jamming_gps_device.can_play_jam_sound)
+			playsound(jamming_gps_device, 'sound/items/gps/radio_jammer.ogg', 35, TRUE)
+			jamming_gps_device.say("[Gibberish("///%<SIGNAL INTERCEPTED>{SEND}source.create_feedback_loop", TRUE, 50)] [gpstag]: [alert_text] ([get_area_name(our_gps_turf, TRUE)]) ([our_gps_turf.x], [our_gps_turf.y], [our_gps_turf.z])")
+			jamming_gps_device.can_play_jam_sound = FALSE
+			addtimer(CALLBACK(src, PROC_REF(reset_jam_sound), jamming_gps_device), 1 SECOND)
+		jammed_signal = TRUE
+
+	// go through and alert all other sec gps
+	for(var/datum/component/gps/item/security_gps/other_gps in get_gps_list_to_alert())
+		if(!other_gps?.parent)
+			return
+		if(other_gps.jammed)
+			continue
+		if(is_within_radio_jammer_range(our_gps_device))
+			continue
+		if(jammed_signal)
+			our_gps_turf = get_turf(jamming_gps_device)
+		var/obj/item/gps/security/other_gps_device = other_gps.parent
+		var/full_alert_text = "Alert. [gpstag]: [alert_text] ([get_area_name(our_gps_turf, TRUE)]) ([our_gps_turf.x], [our_gps_turf.y], [our_gps_turf.z])"
+		other_gps_device.say(full_alert_text)
+		playsound(other_gps_device , 'sound/items/gps/one_ping.ogg', 35, TRUE)
+
+	if(tracking && jammed_signal)
+		toggletracking()
+
+/datum/component/gps/item/security_gps/proc/reset_jam_sound(obj/item/gps/security/gps_device)
+	if(!gps_device)
+		return
+	gps_device.can_play_jam_sound = TRUE

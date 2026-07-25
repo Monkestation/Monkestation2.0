@@ -145,8 +145,6 @@
 	var/can_download = TRUE
 	//Can we (simple) examine humans?
 	var/canExamineHumans = FALSE
-	//Reduces/Increases download speed by this modifier
-	var/downloadSpeedModifier = 1
 
 	//Do we have access to camera tracking?
 	var/canCameraMemoryTrack = FALSE
@@ -157,8 +155,6 @@
 
 	///Did we get the death prompt?
 	var/is_dying = FALSE
-	///Multiplier for amount of points gained when passively using CPU for science
-	var/research_point_booster = 1
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai, shunted)
 	. = ..()
@@ -1200,11 +1196,12 @@
 
 /mob/living/silicon/ai/forceMove(atom/destination)
 	var/turf/current_turf = get_turf(src)
+	var/turf/new_turf = get_turf(destination)
 	. = ..()
 	if(.)
 		end_multicam()
 		var/datum/ai_os/past_os = GLOB.ai_os["[current_turf.z]"]
-		if(past_os)
+		if(past_os && (current_turf.z != new_turf.z))
 			past_os.remove_ai(src)
 
 /mob/living/silicon/ai/up()

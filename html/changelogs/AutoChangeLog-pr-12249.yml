@@ -1,0 +1,5 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - map: "Heliostation 0perating room is now Operating room"
+  - map: "Lavaland mining station now has a tiny fan on the side exit"

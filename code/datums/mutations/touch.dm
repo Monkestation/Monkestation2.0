@@ -329,53 +329,43 @@
 		var/blood_to_hurtguy = min(max_blood_transfer, max_blood_to_hurtguy)
 		if(!blood_to_hurtguy)
 			return .
+
 		// We ignore incompatibility here.
-		/* MONKESTATION EDIT OLD
-		mendicant.transfer_blood_to(hurtguy, blood_to_hurtguy, forced = TRUE, ignore_incompatibility = TRUE)
-		to_chat(mendicant, span_notice("Your veins (and brain) feel a bit lighter."))
-		. = TRUE
-		// Because we do our own spin on it!
-		if(hurtguy.get_blood_compatibility(mendicant) == FALSE)
-		*/
-		// MONKESTATION EDIT NEW START
-		var/datum/blood_type/blood = hurtguy.get_blood_type()
+		if(!mendicant.transfer_blood_to(hurtguy, blood_to_hurtguy, forced = TRUE, ignore_incompatibility = TRUE))
+			return
+
+		var/datum/blood_type/blood = hurtguy.get_bloodtype()
 		to_chat(mendicant, span_notice("Your veins (and brain) feel a bit lighter."))
 		. = TRUE
 		mendicant.blood_volume = min(mendicant.blood_volume - round(blood_to_hurtguy, 0.1), BLOOD_VOLUME_MAXIMUM)
 		hurtguy.blood_volume = min(hurtguy.blood_volume + round(blood_to_hurtguy, 0.1), BLOOD_VOLUME_MAXIMUM)
-		if(!(mendicant.get_blood_type_path() in blood.compatible_types))
-		// MONKESTATION EDIT NEW END
+		if(!(mendicant.get_bloodtype() in blood.compatible_types))
 			hurtguy.adjustToxLoss((blood_to_hurtguy * 0.1) * pain_multiplier) // 1 dmg per 10 blood
 			to_chat(hurtguy, span_notice("Your veins feel thicker, but they itch a bit."))
 		else
 			to_chat(hurtguy, span_notice("Your veins feel thicker!"))
+			return
+
+	if(hurtguy.blood_volume < BLOOD_VOLUME_MAXIMUM)
+		return
 
 	// Too MUCH blood
-	if(hurtguy.blood_volume > BLOOD_VOLUME_MAXIMUM)
-		var/max_blood_to_mendicant = BLOOD_VOLUME_EXCESS - hurtguy.blood_volume
-		var/blood_to_mendicant = min(max_blood_transfer, max_blood_to_mendicant)
-		// mender always gonna have blood
+	var/max_blood_to_mendicant = BLOOD_VOLUME_EXCESS - hurtguy.blood_volume
+	var/blood_to_mendicant = min(max_blood_transfer, max_blood_to_mendicant)
+	// mender always gonna have blood
 
-		// We ignore incompatibility here.
-		/* MONKESTATION EDIT OLD
-		hurtguy.transfer_blood_to(mendicant, hurtguy.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE, ignore_incompatibility = TRUE)
-		to_chat(hurtguy, span_notice("Your veins don't feel quite so swollen anymore."))
-		. = TRUE
-		// Because we do our own spin on it!
-		if(mendicant.get_blood_compatibility(hurtguy) == FALSE)
-		*/
-		// MONKESTATION EDIT NEW START
-		var/datum/blood_type/mendicant_blood = mendicant.get_blood_type()
-		to_chat(hurtguy, span_notice("Your veins don't feel quite so swollen anymore."))
-		. = TRUE
-		mendicant.blood_volume = min(mendicant.blood_volume + round(blood_to_mendicant, 0.1), BLOOD_VOLUME_MAXIMUM)
-		hurtguy.blood_volume = min(hurtguy.blood_volume - round(blood_to_mendicant, 0.1), BLOOD_VOLUME_MAXIMUM)
-		if(!(hurtguy.get_blood_type_path() in mendicant_blood.compatible_types))
-		// MONKESTATION EDIT NEW END
-			mendicant.adjustToxLoss((blood_to_mendicant * 0.1) * pain_multiplier) // 1 dmg per 10 blood
-			to_chat(mendicant, span_notice("Your veins swell and itch!"))
-		else
-			to_chat(mendicant, span_notice("Your veins swell!"))
+	// We ignore incompatibility here.
+	if(!hurtguy.transfer_blood_to(mendicant, hurtguy.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE, ignore_incompatibility = TRUE))
+		return
+
+	to_chat(hurtguy, span_notice("Your veins don't feel quite so swollen anymore."))
+	. = TRUE
+	// Because we do our own spin on it!
+	if(mendicant.get_blood_compatibility(hurtguy) == FALSE)
+		mendicant.adjustToxLoss((blood_to_mendicant * 0.1) * pain_multiplier) // 1 dmg per 10 blood
+		to_chat(mendicant, span_notice("Your veins swell and itch!"))
+	else
+		to_chat(mendicant, span_notice("Your veins swell!"))
 
 
 /datum/action/cooldown/spell/touch/lay_on_hands/proc/determine_if_this_hurts_instead(mob/living/carbon/mendicant, mob/living/hurtguy)
