@@ -6,8 +6,8 @@
 #define SHOWER_BOILING_TEMP 400
 /// The volume of it's internal reagents the shower applies to everything it sprays.
 #define SHOWER_SPRAY_VOLUME 5
-/// How much the volume of the shower's spay reagents are amplified by when it sprays something.
-#define SHOWER_EXPOSURE_MULTIPLIER 2 // Showers effectively double exposed reagents
+/// How much the volume of the shower's spay reagents are applied by vapor when it sprays something.
+#define SHOWER_VAPOR_EXPOSURE_PERCENT 0.2
 /// How long we run in TIMED mode
 #define SHOWER_TIMED_LENGTH (15 SECONDS)
 
@@ -244,7 +244,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 /obj/machinery/shower/proc/wash_atom(atom/target)
 	target.wash(CLEAN_RAD | CLEAN_WASH)
-	reagents.expose(target, TOUCH|VAPOR, SHOWER_EXPOSURE_MULTIPLIER * SHOWER_SPRAY_VOLUME / max(reagents.total_volume, SHOWER_SPRAY_VOLUME))
+	var/volume_proportion = SHOWER_SPRAY_VOLUME / max(reagents.total_volume, SHOWER_SPRAY_VOLUME)
+	var/vapor_percent = SHOWER_VAPOR_EXPOSURE_PERCENT * volume_proportion
+	reagents.expose(target, TOUCH, volume_proportion - vapor_percent)
+	reagents.expose(target, VAPOR, vapor_percent)
 	if(isitem(target))
 		var/obj/item/item = target
 		if(length(item.viruses))
@@ -391,7 +394,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 #undef SHOWER_MODE_COUNT
 #undef SHOWER_TIMED_LENGTH
 #undef SHOWER_SPRAY_VOLUME
-#undef SHOWER_EXPOSURE_MULTIPLIER
+#undef SHOWER_VAPOR_EXPOSURE_PERCENT
 #undef SHOWER_BOILING_TEMP
 #undef SHOWER_BOILING
 #undef SHOWER_NORMAL_TEMP

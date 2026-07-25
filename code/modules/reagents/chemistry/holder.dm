@@ -1192,6 +1192,9 @@
 	total_volume = .
 	// recalculate_sum_ph() // monkestation edit: we don't use ph or purity
 
+	//inform hooks about reagent changes
+	SEND_SIGNAL(src, COMSIG_REAGENTS_HOLDER_UPDATED)
+
 /**
  * Applies the relevant expose_ proc for every reagent in this holder
  * * [/datum/reagent/proc/expose_mob]
