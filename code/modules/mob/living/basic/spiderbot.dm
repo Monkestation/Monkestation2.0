@@ -63,21 +63,21 @@
 			balloon_alert(user, "already has a brain!")
 			return ITEM_INTERACT_BLOCKING
 		if(!inserted_mmi.brainmob)
-			balloon_alert(user, "MMI is empty!")
+			balloon_alert(user, "mmi is empty!")
 			return ITEM_INTERACT_BLOCKING
 		if(!inserted_mmi.brainmob.key)
-			balloon_alert(user, "MMI is inactive!")
+			balloon_alert(user, "mmi is inactive!")
 			return ITEM_INTERACT_BLOCKING
 		if(!inserted_mmi.brainmob.mind)
-			balloon_alert(user, "MMI has no personality!")
+			balloon_alert(user, "mmi has no personality!")
 			return ITEM_INTERACT_BLOCKING
 
 		if(inserted_mmi.brainmob.stat == DEAD)
-			balloon_alert(user, "MMI is dead!")
+			balloon_alert(user, "mmi is dead!")
 			return ITEM_INTERACT_BLOCKING
 
 		if(is_banned_from(inserted_mmi.brainmob.key, list(ROLE_PAI, JOB_CYBORG)))
-			balloon_alert(user, "MMI rejected!")
+			balloon_alert(user, "mmi rejected!")
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(inserted_mmi, src))

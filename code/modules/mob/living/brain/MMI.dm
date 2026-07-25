@@ -1,5 +1,3 @@
-#define IPC_BRAIN_TRAUMATIC_REBOOT_DELAY (30 SECONDS)
-
 /obj/item/mmi
 	name = "\improper Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity, that nevertheless has become standard-issue on Nanotrasen stations."

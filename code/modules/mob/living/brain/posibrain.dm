@@ -541,5 +541,3 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	QDEL_NULL(stored_mmi)
 	stored_mmi = new /obj/item/mmi(src) // Spawned/roundstart IPCs get a mmi too
 	stored_mmi.radio?.set_on(FALSE)
-
-#undef IPC_BRAIN_TRAUMATIC_REBOOT_DELAY
