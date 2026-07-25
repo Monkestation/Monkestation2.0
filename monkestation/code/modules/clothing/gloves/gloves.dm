@@ -38,12 +38,12 @@
 /obj/item/clothing/gloves/latex/surgical
 	name = "black latex gloves"
 	desc = "Pricy sterile gloves that are thinner than latex. The lining allows for the person to operate \
-					quicker along with the faster use time of various chemical related items"
+			quicker and with higher success along with the faster use time of various chemical related items."
 	icon = 'icons/obj/clothing/gloves.dmi'
 	worn_icon = 'icons/mob/clothing/gloves.dmi'
 	icon_state = "surgeonlatex"
 	armor_type = /datum/armor/surgeon
-	clothing_traits = list(TRAIT_PERFECT_SURGEON, TRAIT_FASTMED)
+	clothing_traits = list(TRAIT_FASTMED, TRAIT_STERILE)
 	custom_premium_price = PAYCHECK_CREW * 6
 
 /datum/armor/surgeon
@@ -91,6 +91,7 @@
 			/obj/item/throwing_star,
 			/obj/item/shield,
 			/obj/item/spear,
+			/obj/item/smithed_part/weapon_part,
 			/obj/item/dualsaber,
 			/obj/item/fireaxe,
 			/obj/item/flamethrower,

@@ -553,8 +553,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return can_have_cabling() && underfloor_accessibility >= UNDERFLOOR_INTERACTABLE
 
 /turf/proc/visibilityChanged()
-	GLOB.cameranet.updateVisibility(src)
-	GLOB.thrallnet.updateVisibility(src)
+	SScameras.update_visibility(src)
 
 /turf/proc/burn_tile()
 	return
@@ -708,7 +707,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(!belly?.reagents.total_volume)
 		return
 	var/chemicals_lost = belly.reagents.total_volume * purge_ratio
-	belly.reagents.trans_to(V, chemicals_lost, transfered_by = M)
+	belly.reagents.trans_to(V, chemicals_lost, transferred_by = M)
 	//clear the stomach of anything even not food
 	for(var/bile in belly.reagents.reagent_list)
 		var/datum/reagent/reagent = bile

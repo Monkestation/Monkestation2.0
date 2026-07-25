@@ -25,6 +25,7 @@
 	unsuitable_heat_damage = 0
 	bodytemp_heat_damage_limit = INFINITY
 	habitable_atmos = null
+	mob_biotypes = MOB_SLIME
 
 	//emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("blorbles")

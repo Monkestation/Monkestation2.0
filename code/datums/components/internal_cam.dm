@@ -15,8 +15,11 @@
 	bodcam = new(parent)
 	bodcam.c_tag = parent
 	bodcam.name = parent
-	bodcam.network = networks
-	bodcam.setViewRange(10)//standard mob viewrange
+	var/list/lowercase_networks = list()
+	for(var/network_name in networks)
+		lowercase_networks += lowertext(network_name)
+	bodcam.network = lowercase_networks
+	bodcam.setViewRange(MAX_CAMERA_RANGE) //standard camera viewrange
 	bodcam.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
 
 /datum/component/internal_cam/Destroy(force, silent)
@@ -25,13 +28,13 @@
 
 /datum/component/internal_cam/RegisterWithParent()
 	bodcam.camera_enabled = TRUE
-	update_cam()
+	SScameras.add_camera_to_chunk(bodcam)
 	bodcam.built_in = parent
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(update_cam))
 
 /datum/component/internal_cam/UnregisterFromParent()
 	bodcam.camera_enabled = FALSE
-	update_cam()
+	SScameras.remove_camera_from_chunk(bodcam)
 	bodcam.built_in = null
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 
@@ -40,7 +43,7 @@
 	bodcam.change_camnet(newnet)
 
 ///Updates the camera net, telling it that the camera has moved
-/datum/component/internal_cam/proc/update_cam()
+/datum/component/internal_cam/proc/update_cam(atom/movable/source, atom/old_loc)
 	SIGNAL_HANDLER
-	bodcam.camnet.updatePortableCamera(bodcam, INTERNAL_CAMERA_BUFFER)
+	SScameras.camera_moved(bodcam, get_turf(old_loc), get_turf(parent), INTERNAL_CAMERA_BUFFER)
 

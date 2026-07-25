@@ -541,14 +541,14 @@
 			scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			return
+	if(HAS_TRAIT(mob_occupant.mind, TRAIT_NO_CLONE))
+		scantemp = "<font class='bad'>Subject's brain neurons are too short to be scanned.</font>"
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+		return
 	if(isbrain(mob_occupant))
 		old_dna = B.stored_dna
 	if((mob_occupant.mob_biotypes & MOB_ROBOTIC) || (old_dna?.species?.inherent_biotypes & MOB_ROBOTIC))
 		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
-		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-		return
-	if(!body_only && HAS_TRAIT(mob_occupant, TRAIT_NO_CLONE))
-		scantemp = "<font class='bad'>Subject's brain neurons are too short to be scanned.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
 	if(!body_only && (HAS_TRAIT(mob_occupant, TRAIT_SUICIDED) || (mob_occupant.mind && HAS_TRAIT(mob_occupant.mind, TRAIT_DEFIB_BLACKLISTED))))

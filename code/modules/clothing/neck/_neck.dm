@@ -16,9 +16,10 @@
 	if(body_parts_covered & HEAD)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
-
-/obj/item/clothing/neck/appears_bloody()
-	return ..() && (body_parts_covered & HEAD)
+		if(GET_ATOM_BLOOD_DNA_LENGTH(src))
+			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "maskblood")
+			blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+			. += blood_overlay
 
 /obj/item/clothing/neck/bowtie
 	name = "bow tie"
@@ -52,6 +53,7 @@
 	greyscale_config = /datum/greyscale_config/ties
 	greyscale_config_worn = /datum/greyscale_config/ties/worn
 	greyscale_colors = "#4d4e4e"
+	alternate_worn_layer = LOW_NECK_LAYER // So that it renders below suit jackets, MODsuits, etc
 	flags_1 = IS_PLAYER_COLORABLE_1
 	/// All ties start untied unless otherwise specified
 	var/is_tied = FALSE
@@ -59,7 +61,7 @@
 	var/tie_timer = 4 SECONDS
 	/// Is this tie a clip-on, meaning it does not have an untied state?
 	var/clip_on = FALSE
-	/// MONKESTATION EDIT Base icon_state name between tied and untied versions.
+	/// Base icon_state name between tied and untied versions.
 	var/tie_type = "tie_greyscale"
 
 /obj/item/clothing/neck/tie/Initialize(mapload)
@@ -71,6 +73,7 @@
 
 /obj/item/clothing/neck/tie/examine(mob/user)
 	. = ..()
+	. += span_notice("The tie can be worn above or below your suit. Right-click to toggle.")
 	if(clip_on)
 		. += span_notice("Looking closely, you can see that it's actually a cleverly disguised clip-on.")
 	else if(!is_tied)
@@ -107,6 +110,18 @@
 	user.update_clothing(ITEM_SLOT_NECK)
 	return CLICK_ACTION_SUCCESS
 
+/obj/item/clothing/neck/tie/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!user.can_perform_action(src, NEED_DEXTERITY))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	alternate_worn_layer = alternate_worn_layer == initial(alternate_worn_layer) ? NONE : initial(alternate_worn_layer)
+	user.update_clothing(ITEM_SLOT_NECK)
+	balloon_alert(user, "wearing [alternate_worn_layer == initial(alternate_worn_layer) ? "below" : "above"] suits")
+	add_fingerprint(user)
+	return SECONDARY_ATTACK_CALL_NORMAL
+
 /obj/item/clothing/neck/tie/update_icon()
 	. = ..()
 	if(clip_on)
@@ -125,6 +140,7 @@
 
 /obj/item/clothing/neck/tie/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
+	context[SCREENTIP_CONTEXT_RMB] = "Wear [alternate_worn_layer == initial(alternate_worn_layer) ? "above" : "below"] suit"
 	if(clip_on)
 		return
 	if(is_tied)

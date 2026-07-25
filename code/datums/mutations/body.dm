@@ -553,7 +553,7 @@
 		var/turf/blood_turf = get_turf(owner)
 
 		var/blood_amount = min(owner.blood_volume, initial(owner.blood_volume) * 5)
-		var/datum/blood_type/blood = owner.get_blood_type()
+		var/datum/blood_type/blood = owner.get_bloodtype()
 
 		blood_turf.add_liquid(blood.reagent_type, blood_amount)
 		owner.blood_volume = 0

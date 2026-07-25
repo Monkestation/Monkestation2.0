@@ -114,7 +114,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	"Monkestation",
 	"Facepunch",
 	"Kitty",
-	"Sus", 
+	"Sus",
 	"Marionette",
 	"Company",
 	"Randomgod", // why in gods green earth is AI core images stored in preferences?? who did this??? why???
@@ -133,6 +133,8 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 		return "ai-[lowertext(input)]"
 
 /proc/resolve_ai_icon(input)
+	if(istype(input, /mutable_appearance))
+		return input
 	if (input == "Portrait")
 		var/datum/portrait_picker/tgui = new(usr)//create the datum
 		tgui.ui_interact(usr)//datum has a tgui component, here we open the window

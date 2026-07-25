@@ -218,9 +218,7 @@
 		if(ITEM_SLOT_OCLOTHING)
 			if(wear_suit)
 				return
-
 			wear_suit = I
-
 			if(I.flags_inv & HIDEJUMPSUIT)
 				update_worn_undersuit()
 			if(wear_suit.breakouttime) //when equipping a straightjacket
@@ -276,6 +274,8 @@
 		if(!QDELETED(src)) //no need to update we're getting deleted anyway
 			if(I.flags_inv & HIDEJUMPSUIT)
 				update_worn_undersuit()
+			if(I.flags_inv & HIDEGLOVES)
+				update_worn_gloves()
 			update_worn_oversuit()
 	else if(I == w_uniform)
 		w_uniform = null

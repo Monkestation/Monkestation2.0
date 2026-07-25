@@ -102,7 +102,7 @@
 	var/alarm_delay = 30 // Don't forget, there's another 3 seconds in queueAlarm()
 
 	//OTHER
-	///used to track what camera network we are on
+	/// The network this camera is on.
 	var/datum/cameranet/camnet
 	var/special_camera = FALSE
 
@@ -137,7 +137,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 	myarea = get_room_area()
 
 	if(camera_enabled)
-		camnet.addCamera(src)
+		SScameras.add_camera_to_chunk(src)
 		LAZYADD(myarea.cameras, src)
 		if(mapload && should_break_roundstart())
 			toggle_cam()
@@ -146,22 +146,26 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 
 	alarm_manager = new(src)
 
+/obj/machinery/camera/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	SScameras.camera_moved(src, get_turf(old_loc), get_turf(loc))
+
 /obj/machinery/camera/proc/default_camera_net()
-	return GLOB.cameranet
+	return SScameras.default_net
 
 /obj/machinery/camera/proc/change_camnet(datum/cameranet/newnet)
 	if(!istype(newnet))
 		return
 	camnet.cameras -= src
-	camnet.removeCamera(src)
+	SScameras.remove_camera_from_chunk(src)
 	camnet = newnet
 	camnet.cameras += src
-	camnet.addCamera(src)
+	SScameras.add_camera_to_chunk(src)
 
 /obj/machinery/camera/Destroy(force)
 	if(can_use())
 		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
-	camnet.removeCamera(src)
+	SScameras.remove_camera_from_chunk(src)
 	camnet.cameras -= src
 	cancelCameraAlarm()
 	if(isarea(myarea))
@@ -257,7 +261,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 		return
 	if(prob(150 / severity))
 		network = list()
-		camnet.removeCamera(src)
+		SScameras.remove_camera_from_chunk(src)
 		set_machine_stat(machine_stat | EMPED)
 		set_light(0)
 		emped++ //Increase the number of consecutive EMP's
@@ -285,7 +289,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 	set_machine_stat(machine_stat & ~EMPED)
 	update_appearance()
 	if(can_use())
-		camnet.addCamera(src)
+		SScameras.add_camera_to_chunk(src)
 	emped = 0 //Resets the consecutive EMP count
 	addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 10 SECONDS)
 
@@ -298,7 +302,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
 	src.view_range = num
-	camnet.updateVisibility(src, 0)
+	SScameras.update_visibility(src)
 
 /obj/machinery/camera/proc/shock(mob/living/user)
 	if(!istype(user))
@@ -378,7 +382,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 /obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = TRUE)
 	camera_enabled = !camera_enabled
 	if(can_use())
-		camnet.addCamera(src)
+		SScameras.add_camera_to_chunk(src)
 		if (isturf(loc))
 			myarea = get_area(src)
 			LAZYADD(myarea.cameras, src)
@@ -386,13 +390,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 			myarea = null
 	else
 		set_light(0)
-		camnet.removeCamera(src)
+		SScameras.remove_camera_from_chunk(src)
 		if (isarea(myarea))
 			LAZYREMOVE(myarea.cameras, src)
 	// We are not guarenteed that the camera will be on a turf. account for that
 	var/turf/our_turf = get_turf(src)
 	if(our_turf)
-		camnet.updateChunk(our_turf.x, our_turf.y, our_turf.z)
+		var/datum/camerachunk/chunk = camnet.get_camera_chunk(our_turf.x, our_turf.y, our_turf.z)
+		chunk?.queue_update(src)
 	var/change_msg = "deactivates"
 	if(camera_enabled)
 		change_msg = "reactivates"

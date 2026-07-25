@@ -30,6 +30,53 @@
 /// Temperature at which blood loss and regen stops. [/mob/living/carbon/human/proc/handle_blood]
 #define BLOOD_STOP_TEMP CELCIUS_TO_KELVIN(-48.15 CELCIUS)
 
+// Bloodtype defines
+#define BLOOD_TYPE_A_MINUS "A-"
+#define BLOOD_TYPE_A_PLUS "A+"
+#define BLOOD_TYPE_B_MINUS "B-"
+#define BLOOD_TYPE_B_PLUS "B+"
+#define BLOOD_TYPE_AB_MINUS "AB-"
+#define BLOOD_TYPE_AB_PLUS "AB+"
+#define BLOOD_TYPE_O_MINUS "O-"
+#define BLOOD_TYPE_O_PLUS "O+"
+#define BLOOD_TYPE_UNIVERSAL "U"
+#define BLOOD_TYPE_BLOODSUCKER "BS"
+#define BLOOD_TYPE_LIZARD "L"
+#define BLOOD_TYPE_VAMPIRE "V"
+#define BLOOD_TYPE_ANIMAL "Y-"
+#define BLOOD_TYPE_ETHEREAL "LE"
+#define BLOOD_TYPE_TOX "TOX"
+#define BLOOD_TYPE_OIL "Oil"
+#define BLOOD_TYPE_MEAT "MT-"
+#define BLOOD_TYPE_CLOWN "C"
+#define BLOOD_TYPE_XENO "X*"
+#define BLOOD_TYPE_H2O "H2O"
+#define BLOOD_TYPE_SNAIL "S"
+#define BLOOD_TYPE_HEMOLYMPH "H"
+
+// Blood exposure behavior flag defines
+/// Add our DNA to turfs/mobs/items, does not correlate with adding decals/overlays
+/// mob/turf/item flags will add DNA when triggered even if this flag is false
+#define BLOOD_ADD_DNA (1<<0)
+/// Cover the entire mob in *visible* blood
+#define BLOOD_COVER_MOBS (1<<1)
+/// Create blood splashes and trails on floors, does not affect gibs creation
+#define BLOOD_COVER_TURFS (1<<2)
+/// Cover items in ourselves
+#define BLOOD_COVER_ITEMS (1<<3)
+/// Usually you want all COVER flags together or none at all
+#define BLOOD_COVER_ALL (BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_ITEMS)
+/// Transfer blood immunities and viruses to exposed mobs
+#define BLOOD_TRANSFER_VIRAL_DATA (1<<4)
+
+// Bleed check results
+/// We cannot bleed (here, or in general) at all
+#define BLEED_NONE 0
+/// We cannot make a splatter, but we can add our DNA
+#define BLEED_ADD_DNA 1
+/// We can bleed just fine
+#define BLEED_SPLATTER 2
+
 //Sizes of mobs, used by mob/living/var/mob_size
 #define MOB_SIZE_TINY 0
 #define MOB_SIZE_SMALL 1
@@ -54,6 +101,8 @@
 #define MOB_REPTILE (1 << 8)
 #define MOB_SPIRIT (1 << 9)
 #define MOB_PLANT (1 << 10)
+///The mob is a goopy creature, probably coming from xenobiology.
+#define MOB_SLIME (1 << 11)
 ///The mob is a mining-related mob. It's the plasma, you see. Gets in ya bones.
 #define MOB_MINING (1 << 13)
 ///The mob is a crustacean. Like crabs. Or lobsters.
@@ -115,7 +164,7 @@
 #define SPECIES_NIGHTMARE "nightmare"
 #define SPECIES_MONKEY "monkey"
 #define SPECIES_MOTH "moth"
-#define SPECIES_TUNDRA "tundra" //Monkestation Addition
+#define SPECIES_TUNDRA "tundra"
 #define SPECIES_MUSHROOM "mush"
 #define SPECIES_PLASMAMAN "plasmaman"
 #define SPECIES_PODPERSON "pod"
@@ -130,19 +179,19 @@
 #define SPECIES_ZOMBIE "zombie"
 #define SPECIES_ZOMBIE_SHAMBLER "shambler"
 #define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
-#define SPECIES_ZOMBIE_INFECTIOUS_RUNNER "runnerzombie" //Monkestation Addition
-#define SPECIES_ZOMBIE_INFECTIOUS_TANK "tankzombie" //monkestation edit
-#define SPECIES_ZOMBIE_INFECTIOUS_SPITTER "spitterzombie" //monkestation edit
-#define SPECIES_ZOMBIE_INFECTIOUS_BLOATER "bloaterzombie" //monkestation edit
+#define SPECIES_ZOMBIE_INFECTIOUS_RUNNER "runnerzombie"
+#define SPECIES_ZOMBIE_INFECTIOUS_TANK "tankzombie"
+#define SPECIES_ZOMBIE_INFECTIOUS_SPITTER "spitterzombie"
+#define SPECIES_ZOMBIE_INFECTIOUS_BLOATER "bloaterzombie"
 #define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
 #define SPECIES_OOZELING "oozeling"
 #define SPECIES_IPC "ipc"
-#define SPECIES_ONI "oni" //Monkestation Addition
-#define SPECIES_SIMIAN "simian" //Monkestation Addition
-#define SPECIES_GOBLIN "goblin" //Monkestation Addition
-#define SPECIES_FLORAN "floran" //Monkestation Addition
-#define SPECIES_SATYR "satyr" //Monkestation Addition
-#define SPECIES_TERATOMA "teratoma" //Monkestation Addition
+#define SPECIES_ONI "oni"
+#define SPECIES_SIMIAN "simian"
+#define SPECIES_GOBLIN "goblin"
+#define SPECIES_FLORAN "floran"
+#define SPECIES_SATYR "satyr"
+#define SPECIES_TERATOMA "teratoma"
 #define SPECIES_TRAINED_MONKEY "trainedmonkey"
 // Like species IDs, but not specifically attached a species.
 #define BODYPART_ID_ALIEN "alien"
@@ -724,83 +773,118 @@ GLOBAL_DATUM_INIT(human_heights_to_offsets, /alist, alist(
 	HUMAN_HEIGHT_TALLEST = list(3, 2),
 ))
 
-// Mob Overlays Indexes
-/// Total number of layers for mob overlays
-/// KEEP THIS UP-TO-DATE OR SHIT WILL BREAK
-/// Also consider updating layers_to_offset
-#define TOTAL_LAYERS 36
-/// Mutant race multiparts - Lbelly
-#define ACCESSORIES_LAYER 36
-/// Mutations layer - Tk headglows, cold resistance glow, etc
-#define MUTATIONS_LAYER 35
-/// Mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODY_BEHIND_LAYER 34
-/// Layer for bodyparts that should appear behind every other bodypart - Mostly, legs when facing WEST or EAST
-#define BODYPARTS_LOW_LAYER 33
-/// Layer for most bodyparts, appears above BODYPARTS_LOW_LAYER and below BODYPARTS_HIGH_LAYER
-#define BODYPARTS_LAYER 32
-/// Mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_ADJ_LAYER 31
-/// Underwear, undershirts, socks
-#define BODY_LAYER 30
-/// Mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define FRONT_MUTATIONS_LAYER 29
-/// Damage indicators (cuts and burns)
-#define DAMAGE_LAYER 28
-/// Jumpsuit clothing layer
-#define UNIFORM_LAYER 27
-/// ID card layer
-#define ID_LAYER 26
-/// ID card layer (might be deprecated)
-#define ID_CARD_LAYER 25
-/// Layer for bodyparts that should appear above every other bodypart - Currently only used for hands
-#define BODYPARTS_HIGH_LAYER 24
-/// Gloves layer
-#define GLOVES_LAYER 23
-/// Shoes layer
-#define SHOES_LAYER 22
-/// Ears layer (Spessmen have ears? Wow)
-#define EARS_LAYER 21
-/// Suit layer (armor, coats, etc.)
-#define SUIT_LAYER 20
-/// Glasses layer
-#define GLASSES_LAYER 19
-/// Belt layer
-#define BELT_LAYER 18 //Possible make this an overlay of somethign required to wear a belt?
-/// Suit storage layer (tucking a gun or baton underneath your armor)
-#define SUIT_STORE_LAYER 17
-/// Neck layer (for wearing ties and bedsheets)
-#define NECK_LAYER 16
-/// Back layer (for backpacks and equipment on your back)
-#define BACK_LAYER 15
-/// Special layer for rendering beneath hair, for special facemasks
-#define BENEATH_HAIR_LAYER 14
-/// Hair layer (mess with the fro and you got to go!)
-#define HAIR_LAYER 13 //TODO: make part of head layer?
-/// Facemask layer (gas masks, breath masks, etc.)
-#define FACEMASK_LAYER 12
-/// Head layer (hats, helmets, etc.)
-#define HEAD_LAYER 11
-/// Bandage layer (gauze and other medical overlays)
-#define BANDAGE_LAYER 10
-/// Handcuff layer (when your hands are cuffed)
-#define HANDCUFF_LAYER 9
-/// Legcuff layer (when your feet are cuffed)
-#define LEGCUFF_LAYER 8
-/// Hands layer (for the actual hand, not the arm... I think?)
-#define HANDS_LAYER 7
-/// Body front layer. Usually used for mutant bodyparts that need to be in front of stuff (e.g. cat ears)
-#define BODY_FRONT_LAYER 6
-/// Special body layer that actually require to be above the hair (e.g. lifted welding goggles)
-#define ABOVE_BODY_FRONT_GLASSES_LAYER 5
-/// Special body layer for the rare cases where something on the head needs to be above everything else (e.g. flowers)
-#define ABOVE_BODY_FRONT_HEAD_LAYER 4
-/// Bleeding wound icons
-#define WOUND_LAYER 3
-/// Blood cult ascended halo layer, because there's currently no better solution for adding/removing
-#define HALO_LAYER 2
+/*
+ * Mob overlays
+ *
+ * Integers are standing overlays which are managed by the mob overlay system
+ * They're drawn in order from least to greatest, with the lowest layer drawn highest on the screen
+ *
+ * --Decimals are sub-layers or alternate layers-- (something with decimals breaks it currently)
+ * These are not managed by the mob overlay system, but still layer according to their value
+ *
+ * Please keep this organized and in order, to make it easier to see at a glance how mobs layer
+ * Don't be afraid to change the values of existing layers either, it won't break anything so long as order is the same
+ *
+ * If you want to add a new layer, make sure to update TOTAL_LAYERS and layers_to_offset as needed
+ * NOTE: You ONLY need to add standing layers if you're using the standing overlay system, ie. apply_overlay(YOUR_LAYER)!
+ * If you're NOT using this sytem just add it as a sub-layer where appropriate
+ */
+
 /// The highest most layer for mob overlays. Unused
 #define HIGHEST_LAYER 1
+	/// Blood cult ascended halo layer
+	#define HALO_LAYER 2
+/// Bleeding wound icons
+#define WOUND_LAYER 3
+	/// Special body layer for the rare cases where something on the head needs to be above everything else (e.g. flowers)
+	#define ABOVE_BODY_FRONT_HEAD_LAYER 4
+	/// The layer above mutant body parts
+	#define ABOVE_BODY_FRONT_LAYER 5
+	/// Body front layer. Usually used for mutant bodyparts that need to be in front of stuff (e.g. cat ears)
+	#define BODY_FRONT_LAYER 6
+/// Hands layer (for the actual hand, not the arm... I think?)
+#define HANDS_LAYER 7
+/// Legcuff layer (when your feet are cuffed)
+#define LEGCUFF_LAYER 8
+/// Handcuff layer (when your hands are cuffed)
+#define HANDCUFF_LAYER 9
+	/// Upper bandage layer for the head
+	#define UPPER_BANDAGE_LAYER 10
+	/// Hair that layers out above clothing, including hats (high ponytails and such)
+	#define OUTER_HAIR_LAYER 11
+	/// When you have to layer things ontop of helmets
+	#define ABOVE_HEAD_LAYER 12
+/// Head layer (hats, helmets, etc.)
+#define HEAD_LAYER 13
+	/// The layer underneath the head (for hats)
+	#define UNDER_HEAD_LAYER 14
+/// Facemask layer (gas masks, breath masks, etc.)
+#define FACEMASK_LAYER 15
+/// Hair layer (mess with the fro and you got to go!)
+#define HAIR_LAYER 16
+	/// Special layer for rendering beneath hair, for special facemasks
+	#define BENEATH_HAIR_LAYER 17
+/// Back layer (for backpacks and equipment on your back)
+#define BACK_LAYER 18
+/// Neck layer (for wearing capes and bedsheets)
+#define NECK_LAYER 19
+/// Suit storage layer (tucking a gun or baton underneath your armor)
+#define SUIT_STORE_LAYER 20
+/// Belt layer
+#define BELT_LAYER 21 //Possible make this an overlay of something required to wear a belt?
+/// Glasses layer
+#define GLASSES_LAYER 22
+	/// Layer for bandages
+	#define BANDAGE_LAYER 23
+	/// Layer above the suit
+	#define ABOVE_SUIT_LAYER 24
+/// Suit layer (armor, coats, etc.)
+#define SUIT_LAYER 25
+	/// The layer underneath the suit
+	#define UNDER_SUIT_LAYER 26
+	/// Layer for neck apperal that should appear below the suit slot (like neckties)
+	#define LOW_NECK_LAYER 27
+/// Ears layer (Spessmen have ears? Wow)
+#define EARS_LAYER 28
+	/// Layer for masks that are worn below ears and eyes (like Balaclavas) (layers below hair, use flagsinv=HIDEHAIR as needed)
+	#define LOW_FACEMASK_LAYER 29
+	/// The layer above shoes
+	#define ABOVE_SHOES_LAYER 30
+/// Shoes layer
+#define SHOES_LAYER 31
+/// Gloves layer
+#define GLOVES_LAYER 32
+	/// Layer for bodyparts that should appear above every other bodypart - Currently only used for hands
+	#define BODYPARTS_HIGH_LAYER 33
+/// ID card layer
+#define ID_LAYER 34
+/// Jumpsuit clothing layer
+#define UNIFORM_LAYER 35
+	/// The layer underneath the uniform
+	#define UNDER_UNIFORM_LAYER 36
+/// Damage indicators (cuts and burns)
+#define DAMAGE_LAYER 37
+	/// Mutations that should appear above everything else (e.g. laser eyes)
+	#define FRONT_MUTATIONS_LAYER 38
+/// Eyes and eyelids
+#define EYES_LAYER 39
+/// Underwear, undershirts, socks
+#define BODY_LAYER 40
+	/// Mutantrace features (snout, body markings) that must appear above the body parts
+	#define BODY_ADJ_LAYER 41
+/// Layer for most bodyparts, appears above BODYPARTS_LOW_LAYER and below BODYPARTS_HIGH_LAYER
+#define BODYPARTS_LAYER 42
+	/// Layer for bodyparts that should appear behind every other bodypart - Mostly, legs when facing WEST or EAST
+	#define BODYPARTS_LOW_LAYER 43
+	/// Mutantrace features (tail when looking south) that must appear behind the body parts
+	#define BODY_BEHIND_LAYER 44
+	/// Mutations layer - Tk headglows, cold resistance glow, etc. Very bottom of the mob
+	#define MUTATIONS_LAYER 45
+
+/// Total number of standing overlays.
+/// KEEP THIS UP-TO-DATE OR SHIT WILL BREAK.
+/// (You ONLY need to update this if you add a standing overlay, adding an integer.)
+#define TOTAL_LAYERS 45
 
 #define UPPER_BODY "upper body"
 #define LOWER_BODY "lower body"
@@ -869,24 +953,6 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define EXTERNAL_RESTYLE_FLESH (1 << 2)
 /// This organ allows restyling with enamel restyling (like a fucking file or something?). It's for horns and shit
 #define EXTERNAL_RESTYLE_ENAMEL (1 << 3)
-
-//Mob Overlay Index Shortcuts for alternate_worn_layer, layers
-//Because I *KNOW* somebody will think layer+1 means "above"
-//IT DOESN'T OK, IT MEANS "UNDER"
-/// The layer underneath the suit
-#define UNDER_SUIT_LAYER (SUIT_LAYER+1)
-/// The layer underneath the head (for hats)
-#define UNDER_HEAD_LAYER (HEAD_LAYER+1)
-
-//AND -1 MEANS "ABOVE", OK?, OK!?!
-/// The layer above shoes
-#define ABOVE_SHOES_LAYER (SHOES_LAYER-1)
-/// The layer above suits
-#define ABOVE_SUIT_LAYER (SUIT_LAYER-1)
-/// The layer above mutant body parts
-#define ABOVE_BODY_FRONT_LAYER (BODY_FRONT_LAYER-1)
-/// The layer above the head layer
-#define ABOVE_HEAD_LAYER (HEAD_LAYER-1)
 
 /// If gravity must be present to perform action (can't use pens without gravity)
 #define NEED_GRAVITY (1<<0)

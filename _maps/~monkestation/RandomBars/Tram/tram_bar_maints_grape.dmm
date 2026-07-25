@@ -221,7 +221,7 @@
 /turf/closed/wall,
 /area/station/service/bar)
 "eY" = (
-/obj/effect/decal/cleanable/robot_debris/limb,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/limb,
 /obj/item/reagent_containers/cup/bucket{
 	pixel_y = -2;
 	pixel_x = 3
@@ -230,7 +230,7 @@
 	pixel_x = -4;
 	pixel_y = 7
 	},
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil/streak,
 /turf/open/floor/plating,
 /area/station/commons/lounge)
 "fn" = (
@@ -505,7 +505,7 @@
 "na" = (
 /obj/machinery/duct,
 /obj/structure/disposalpipe/segment,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/station/service/kitchen)
 "nk" = (
@@ -719,7 +719,7 @@
 /area/station/service/kitchen)
 "qC" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/station/service/theater)
 "qE" = (
@@ -1006,7 +1006,7 @@
 /area/station/commons/lounge)
 "xM" = (
 /obj/item/radio/intercom/directional/west,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
 /obj/effect/spawner/random/exotic/technology,
 /turf/open/floor/plating,
@@ -1088,7 +1088,7 @@
 /turf/open/floor/plating,
 /area/station/commons/lounge)
 "zh" = (
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil/streak,
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/station/commons/lounge)
@@ -1217,8 +1217,8 @@
 /turf/open/floor/wood,
 /area/station/service/bar)
 "BX" = (
-/obj/effect/decal/cleanable/oil/streak,
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil/streak,
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/station/commons/lounge)
@@ -1532,7 +1532,7 @@
 /turf/open/floor/wood,
 /area/station/service/bar)
 "HF" = (
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil/streak,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille/broken,
@@ -2140,7 +2140,7 @@
 /turf/open/floor/iron,
 /area/station/service/bar)
 "WP" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/spawner/random/structure/barricade,
 /turf/open/floor/plating,
 /area/station/commons/lounge)
