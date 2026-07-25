@@ -334,6 +334,21 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "indwelder_cyborg"
 	toolspeed = 0.5
+	///Upgrades allow it to refuel like a experimental welder
+	var/refuel = FALSE
+	var/last_gen = 0
+	var/nextrefueltick = 0
+
+/obj/item/weldingtool/largetank/cyborg/examine(mob/user)
+	. = ..()
+	if(refuel)
+		. += span_notice("It has been upgraded to automatically refuel.")
+
+/obj/item/weldingtool/largetank/cyborg/process()
+	..()
+	if(refuel && (get_fuel() < max_fuel && nextrefueltick < world.time))
+		nextrefueltick = world.time + 10
+		reagents.add_reagent(/datum/reagent/fuel, 1)
 
 /obj/item/weldingtool/mini
 	name = "emergency welding tool"

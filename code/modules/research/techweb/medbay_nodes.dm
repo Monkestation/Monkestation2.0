@@ -53,7 +53,6 @@
 		"meta_beaker",
 		"ph_meter",
 		"medicalbed_emergency",
-		"piercesyringe",
 		"plasmarefiller",
 		"smoke_machine",
 		"sleeper",
