@@ -87,7 +87,7 @@
 /obj/item/gun/ballistic/rifle/rebarxbow/syndie
 	name = "syndicate rebar crossbow"
 	desc = "The syndicate liked the bootleg rebar crossbow NT engineers made, so they showed what it could be if properly developed. \
-			Holds three shots without a chance of exploding, and features a built in scope. Compatible with all known crossbow ammunition."
+			features a built in scope. Compatible with all known crossbow ammunition."
 	base_icon_state = "rebarxbowsyndie"
 	icon_state = "rebarxbowsyndie"
 	inhand_icon_state = "rebarxbowsyndie"
