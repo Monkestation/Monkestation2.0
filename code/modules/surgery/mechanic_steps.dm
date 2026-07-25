@@ -171,16 +171,8 @@
 	if(!istype(M))
 		return FALSE
 
-	if(!(affected.bodytype & BODYTYPE_ROBOTIC))
-		to_chat(user, span_danger("You cannot install a computer brain into a meat enclosure."))
-		return FALSE
-
 	if(!isipc(target))
 		to_chat(user, span_danger("[tool] cannot be installed into an organic body, as it is not designed to operate the complex biological systems of one!"))
-		return FALSE
-
-	if(!target.dna?.species)
-		to_chat(user, span_danger("You have no idea what species this person is. Report this on the bug tracker."))
 		return FALSE
 
 	if(target.get_organ_slot(ORGAN_SLOT_BRAIN) || target.mind)
@@ -206,7 +198,7 @@
 	if(!affected || !istype(M))
 		to_chat(user, span_warning("[target]'s chest can no longer accept [tool]."))
 		return FALSE
-	if(!(affected.bodytype & BODYTYPE_ROBOTIC) || !isipc(target) || !target.dna?.species)
+	if(!isipc(target))
 		to_chat(user, span_warning("[target]'s body is no longer compatible with [tool]."))
 		return FALSE
 	if(target.get_organ_slot(ORGAN_SLOT_BRAIN) || target.mind)

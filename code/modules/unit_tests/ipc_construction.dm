@@ -6,8 +6,7 @@
 	core.lungs = new /obj/item/organ/internal/lungs/synth(core)
 	core.heart = new /obj/item/organ/internal/heart/synth(core)
 	core.liver = new /obj/item/organ/internal/liver/synth(core)
-	core.core_wired = TRUE
-	core.core_secured = TRUE
+	core.core_state = IPC_CONSTRUCTION_SECURED
 	core.l_arm = new /obj/item/bodypart/arm/left/ipc(core)
 	core.r_arm = new /obj/item/bodypart/arm/right/ipc(core)
 	core.l_leg = new /obj/item/bodypart/leg/left/ipc(core)
@@ -47,8 +46,7 @@
 	core.lungs = new /obj/item/organ/internal/lungs/synth(core)
 	core.heart = new /obj/item/organ/internal/heart/synth(core)
 	core.liver = new /obj/item/organ/internal/liver/synth(core)
-	core.core_wired = TRUE
-	core.core_secured = TRUE
+	core.core_state = IPC_CONSTRUCTION_SECURED
 	core.l_arm = new /obj/item/bodypart/arm/left/ipc(core)
 	core.r_arm = new /obj/item/bodypart/arm/right/ipc(core)
 	core.l_leg = new /obj/item/bodypart/leg/left/ipc(core)
@@ -65,8 +63,7 @@
 	head.secured = TRUE
 
 	core.screen = new /obj/item/organ/external/ipc_screen(core)
-	core.screen_wired = TRUE
-	core.screen_secured = TRUE
+	core.screen_state = IPC_CONSTRUCTION_SECURED
 
 	var/mob/living/carbon/human/consistent/builder = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right)
 	TEST_ASSERT(core.build_ipc_body(builder), "A complete IPC core failed to produce a constructed shell.")

@@ -33,6 +33,7 @@
 	unsuitable_heat_damage = 0
 
 	basic_mob_flags = DEL_ON_DEATH
+	req_access = list(ACCESS_ROBOTICS)
 
 	/// Is it getting ready to explode?
 	var/emagged = FALSE
@@ -55,90 +56,78 @@
 		eject_brain()
 	return ..()
 
-/mob/living/basic/spiderbot/item_interaction(mob/living/user, obj/item/O, list/modifiers)
-	if(istype(O, /obj/item/mmi))
-		var/obj/item/mmi/B = O
+/mob/living/basic/spiderbot/item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
+	if(istype(attacking_item, /obj/item/mmi))
+		var/obj/item/mmi/inserted_mmi = attacking_item
 		if(mmi) // There's already a brain in it.
-			to_chat(user, span_warning("There's already a brain in [src]!"))
+			balloon_alert(user, "already has a brain!")
 			return ITEM_INTERACT_BLOCKING
-		if(!B.brainmob)
-			to_chat(user, span_warning("Sticking an empty MMI into the frame would sort of defeat the purpose."))
+		if(!inserted_mmi.brainmob)
+			balloon_alert(user, "MMI is empty!")
 			return ITEM_INTERACT_BLOCKING
-		if(!B.brainmob.key)
-			to_chat(user, span_warning("This MMI is inactive."))
+		if(!inserted_mmi.brainmob.key)
+			balloon_alert(user, "MMI is inactive!")
 			return ITEM_INTERACT_BLOCKING
-		if(!B.brainmob.mind)
-			to_chat(user, span_warning("This MMI has no personality to transfer."))
-			return ITEM_INTERACT_BLOCKING
-
-		if(B.brainmob.stat == DEAD)
-			to_chat(user, span_warning("[B] is dead. Sticking it into the frame would sort of defeat the purpose."))
+		if(!inserted_mmi.brainmob.mind)
+			balloon_alert(user, "MMI has no personality!")
 			return ITEM_INTERACT_BLOCKING
 
-		if(is_banned_from(B.brainmob.key, list(ROLE_PAI, JOB_CYBORG)))
-			to_chat(user, span_warning("[B] does not seem to fit."))
+		if(inserted_mmi.brainmob.stat == DEAD)
+			balloon_alert(user, "MMI is dead!")
 			return ITEM_INTERACT_BLOCKING
 
-		if(!user.transferItemToLoc(B, src))
+		if(is_banned_from(inserted_mmi.brainmob.key, list(ROLE_PAI, JOB_CYBORG)))
+			balloon_alert(user, "MMI rejected!")
 			return ITEM_INTERACT_BLOCKING
-		mmi = B
-		transfer_personality(B)
 
-		to_chat(user, span_notice("You install [B] in [src]!"))
-		update_icon()
+		if(!user.transferItemToLoc(inserted_mmi, src))
+			return ITEM_INTERACT_BLOCKING
+		mmi = inserted_mmi
+		transfer_personality(inserted_mmi)
+
+		balloon_alert(user, "brain installed")
+		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
-	else if(istype(O, /obj/item/card/id) || istype(O, /obj/item/modular_computer/pda))
+	if(attacking_item.GetID())
 		if(!mmi)
-			to_chat(user, span_warning("There's no reason to swipe your ID - the spiderbot has no brain to remove."))
+			balloon_alert(user, "no brain installed!")
 			return ITEM_INTERACT_BLOCKING
 
 		if(emagged)
-			to_chat(user, span_warning("[src] doesn't seem to respond."))
+			balloon_alert(user, "access system unresponsive!")
 			return ITEM_INTERACT_BLOCKING
 
-		var/obj/item/card/id/id_card
-
-		if(istype(O, /obj/item/card/id))
-			id_card = O
-		else
-			var/obj/item/modular_computer/pda/pda = O
-			id_card = pda.computer_id_slot
-
-		if(!id_card)
-			to_chat(user, span_warning("[O] has no ID card to swipe."))
-			return ITEM_INTERACT_BLOCKING
-
-		if(ACCESS_ROBOTICS in id_card.access)
-			to_chat(user, span_notice("You swipe your access card and pop the brain out of [src]."))
+		if(allowed(user))
+			balloon_alert(user, "brain ejected")
 			eject_brain()
 			return ITEM_INTERACT_SUCCESS
 
-		to_chat(user, span_warning("You swipe your card, with no effect."))
+		balloon_alert(user, "access denied!")
 		return ITEM_INTERACT_BLOCKING
 
 /mob/living/basic/spiderbot/welder_act(mob/user, obj/item/tool)
 	if((user.istate & ISTATE_HARM) && user != src)
 		return FALSE
 	if(user == src) // No self-repair dummy
-		to_chat(user, span_warning("You can not repair yourself!"))
+		balloon_alert(user, "cannot self-repair!")
 		return
 	if(health >= maxHealth)
-		to_chat(user, span_warning("[src] does not need repairing!"))
+		balloon_alert(user, "no repairs needed!")
 		return
 	. = TRUE
-	if(!tool.tool_start_check(user, amount = 1)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
+	if(!tool.use_tool(src, user, 0 SECONDS, volume = 40, amount = 1))
 		return
 	adjustBruteLoss(-5)
 	add_fingerprint(user)
-	user.visible_message("[user] repairs [src]!",span_notice("You repair [src]."))
+	user.visible_message("[user] repairs [src]!", span_notice("You repair [src]."))
 
 /mob/living/basic/spiderbot/emag_act(mob/living/user)
 	if(emagged)
-		to_chat(user, span_warning("[src] doesn't seem to respond."))
+		balloon_alert(user, "already emagged!")
 		return FALSE
 	emagged = TRUE
-	to_chat(user, span_notice("You short out the security protocols and rewrite [src]'s internal memory."))
+	balloon_alert(user, "security protocols rewritten")
 	to_chat(src, span_userdanger("You have been emagged; you are now completely loyal to [user] and [user.p_their()] every order!"))
 	emagged_master = WEAKREF(user)
 	log_silicon("EMAG: [key_name(user)] emagged cyborg [key_name(src)].")
@@ -149,9 +138,8 @@
 	attack_sound = 'sound/machines/defib_zap.ogg'
 	return TRUE
 
-/mob/living/basic/spiderbot/proc/transfer_personality(obj/item/mmi/M)
-	name = "Spider-bot ([M.brainmob.name])"
-	M.brainmob.mind.transfer_to(src)
+/mob/living/basic/spiderbot/proc/transfer_personality(obj/item/mmi/inserted_mmi)
+	inserted_mmi.brainmob.mind.transfer_to(src)
 	if(emagged)
 		var/mob/living/master = emagged_master?.resolve()
 		if(master)
@@ -160,14 +148,18 @@
 			emagged_master = null
 			to_chat(src, span_userdanger("You have been emagged; your original master signal is no longer traceable."))
 
+/mob/living/basic/spiderbot/update_name(updates)
+	. = ..()
+	name = mmi ? "Spider-bot ([mmi.brainmob.name])" : initial(name)
+
 /mob/living/basic/spiderbot/update_icon_state()
 	if(mmi)
-		if(istype(mmi, /obj/item/mmi))
-			icon_state = "spiderbot-chassis-mmi"
-			icon_living = "spiderbot-chassis-mmi"
 		if(istype(mmi, /obj/item/mmi/posibrain))
 			icon_state = "spiderbot-chassis-posi"
 			icon_living = "spiderbot-chassis-posi"
+		else
+			icon_state = "spiderbot-chassis-mmi"
+			icon_living = "spiderbot-chassis-mmi"
 
 	else
 		icon_state = "spiderbot-chassis"
@@ -188,6 +180,5 @@
 			ghostize()
 			stack_trace("Spiderbot MMI lacked a brainmob during ejection")
 	ejected_mmi.update_appearance()
-	name = initial(name)
-	update_appearance(UPDATE_ICON_STATE)
+	update_appearance()
 	return ejected_mmi

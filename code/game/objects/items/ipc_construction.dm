@@ -1,4 +1,3 @@
-#define IPC_CORE_SCREEN_ICON 'icons/mob/species/ipc/ipc_screens.dmi'
 #define IPC_CORE_OFF_SCREEN "blank"
 #define IPC_CORE_UNCONNECTED_SCREEN "blue"
 #define IPC_CORE_UNCONNECTED_SCREEN_COLOR "#3399ff"
@@ -27,16 +26,12 @@
 	var/obj/item/organ/internal/lungs/synth/lungs = null
 	var/obj/item/organ/internal/heart/synth/heart = null
 	var/obj/item/organ/internal/liver/synth/liver = null
-	/// Whether the core chest cavity is wired.
-	var/core_wired = FALSE
-	/// Whether the core chest cavity is secured.
-	var/core_secured = FALSE
+	/// Current construction state of the core chest cavity.
+	var/core_state = IPC_CONSTRUCTION_UNWIRED
 	/// Screen installed after the chassis body is fully assembled.
 	var/obj/item/organ/external/ipc_screen/screen = null
-	/// Whether the screen has been wired into the completed chassis.
-	var/screen_wired = FALSE
-	/// Whether the screen has been secured after wiring.
-	var/screen_secured = FALSE
+	/// Current construction state of the installed screen.
+	var/screen_state = IPC_CONSTRUCTION_UNWIRED
 
 /obj/item/ipc_core/Initialize(mapload)
 	. = ..()
@@ -77,25 +72,24 @@
 		liver = null
 	if(gone == screen)
 		screen = null
-		screen_wired = FALSE
-		screen_secured = FALSE
+		screen_state = IPC_CONSTRUCTION_UNWIRED
 
 /obj/item/ipc_core/examine(mob/user)
 	. = ..()
 	. += span_info("Its chest cavity has [stomach ? "a synthetic bio-reactor" : "no synthetic bio-reactor"], [lungs ? "a heatsink" : "no heatsink"], [heart ? "a hydraulic pump engine" : "no hydraulic pump engine"], and [liver ? "a reagent processing unit" : "no reagent processing unit"] installed.")
-	. += span_info("The chest cavity is [core_wired ? "wired" : "unwired"] and [core_secured ? "secured" : "unsecured"].")
+	. += span_info("The chest cavity is [core_state >= IPC_CONSTRUCTION_WIRED ? "wired" : "unwired"] and [core_state == IPC_CONSTRUCTION_SECURED ? "secured" : "unsecured"].")
 	. += span_info("It has [head ? "an attached head" : "no attached head"], [l_arm ? "an attached left arm" : "no attached left arm"], [r_arm ? "an attached right arm" : "no attached right arm"], [l_leg ? "an attached left leg" : "no attached left leg"], [r_leg ? "an attached right leg" : "no attached right leg"], and [screen ? "an installed screen" : "no installed screen"].")
 	if(screen)
-		. += span_info("The screen is [screen_wired ? "wired" : "unwired"] and [screen_secured ? "secured" : "unsecured"].")
+		. += span_info("The screen is [screen_state >= IPC_CONSTRUCTION_WIRED ? "wired" : "unwired"] and [screen_state == IPC_CONSTRUCTION_SECURED ? "secured" : "unsecured"].")
 	if(check_completion())
 		. += span_info("It is ready to be finalized with a <b>multitool</b>.")
-	else if(!core_secured)
+	else if(core_state != IPC_CONSTRUCTION_SECURED)
 		. += span_info("Install each chest component, add <b>cable</b>, then use a <b>screwdriver</b> to secure the chest cavity.")
 	else if(check_body_completion() && !screen)
 		. += span_info("Install an <b>IPC screen</b>, then wire and secure it before finalizing the chassis with a <b>multitool</b>.")
-	else if(screen && !screen_wired)
+	else if(screen && screen_state == IPC_CONSTRUCTION_UNWIRED)
 		. += span_info("Use <b>cable</b> to wire the installed screen.")
-	else if(screen && !screen_secured)
+	else if(screen && screen_state != IPC_CONSTRUCTION_SECURED)
 		. += span_info("Use a <b>screwdriver</b> to secure the wired screen.")
 	else
 		. += span_info("Attach all IPC limbs plus a secured head before installing the screen and finalizing the chassis.")
@@ -108,7 +102,7 @@
 		if(bodypart_overlay)
 			. += bodypart_overlay
 	if(screen)
-		. += build_screen_overlay()
+		. += mutable_appearance(screen.screen_icon, screen_state == IPC_CONSTRUCTION_SECURED ? IPC_CORE_UNCONNECTED_SCREEN : IPC_CORE_OFF_SCREEN)
 
 /// Builds construction overlays from the attached IPC bodypart's visible item sprite.
 /// This intentionally avoids get_limb_icon(), since that mutates the attached part's dropped icon state.
@@ -128,18 +122,14 @@
 	bodypart_overlay.transform = bodypart.transform
 	return bodypart_overlay
 
-/// The construction monitor uses the actual IPC screen overlay art, not the small organ item sprite.
-/obj/item/ipc_core/proc/build_screen_overlay()
-	return mutable_appearance(IPC_CORE_SCREEN_ICON, screen_secured ? IPC_CORE_UNCONNECTED_SCREEN : IPC_CORE_OFF_SCREEN)
-
 /obj/item/ipc_core/proc/check_core_completion()
-	return stomach && lungs && heart && liver && core_wired
+	return stomach && lungs && heart && liver && core_state >= IPC_CONSTRUCTION_WIRED
 
 /obj/item/ipc_core/proc/check_body_completion()
-	return check_core_completion() && core_secured && l_arm && r_arm && l_leg && r_leg && head && head.secured && head.check_completion()
+	return check_core_completion() && core_state == IPC_CONSTRUCTION_SECURED && l_arm && r_arm && l_leg && r_leg && head && head.secured && head.check_completion()
 
 /obj/item/ipc_core/proc/check_completion()
-	return check_body_completion() && screen && screen_wired && screen_secured
+	return check_body_completion() && screen && screen_state == IPC_CONSTRUCTION_SECURED
 
 /// Drops all organs currently installed directly into this IPC core.
 /obj/item/ipc_core/proc/drop_stored_parts(atom/drop_to = drop_location())
@@ -177,17 +167,15 @@
 	head?.forceMove(drop_to)
 	screen?.forceMove(drop_to)
 	drop_stored_parts(drop_to)
-	if(core_wired)
+	if(core_state >= IPC_CONSTRUCTION_WIRED)
 		new /obj/item/stack/cable_coil(drop_to, 1)
-		core_wired = FALSE
-		core_secured = FALSE
-	if(screen_wired)
+		core_state = IPC_CONSTRUCTION_UNWIRED
+	if(screen_state >= IPC_CONSTRUCTION_WIRED)
 		new /obj/item/stack/cable_coil(drop_to, 1)
-		screen_wired = FALSE
-		screen_secured = FALSE
+		screen_state = IPC_CONSTRUCTION_UNWIRED
 
 /obj/item/ipc_core/wrench_act(mob/living/user, obj/item/tool)
-	if(!l_arm && !r_arm && !l_leg && !r_leg && !head && !screen && !stomach && !lungs && !heart && !liver && !core_wired && !screen_wired)
+	if(!l_arm && !r_arm && !l_leg && !r_leg && !head && !screen && !stomach && !lungs && !heart && !liver && core_state == IPC_CONSTRUCTION_UNWIRED && screen_state == IPC_CONSTRUCTION_UNWIRED)
 		to_chat(user, span_warning("There is nothing to remove from [src]!"))
 		return ITEM_INTERACT_BLOCKING
 	if(!tool.use_tool(src, user, 5, volume = 50))
@@ -199,27 +187,27 @@
 
 /obj/item/ipc_core/screwdriver_act(mob/living/user, obj/item/tool)
 	if(screen)
-		if(screen_secured)
+		if(screen_state == IPC_CONSTRUCTION_SECURED)
 			if(!tool.use_tool(src, user, 5, volume = 50))
 				return ITEM_INTERACT_BLOCKING
-			screen_secured = FALSE
+			screen_state = IPC_CONSTRUCTION_WIRED
 			to_chat(user, span_notice("You unsecure [screen] from [src]."))
 			update_appearance()
 			return ITEM_INTERACT_SUCCESS
-		if(!screen_wired)
+		if(screen_state != IPC_CONSTRUCTION_WIRED)
 			to_chat(user, span_warning("[screen] needs to be wired into [src] before it can be secured."))
 			return ITEM_INTERACT_BLOCKING
 		if(!tool.use_tool(src, user, 5, volume = 50))
 			return ITEM_INTERACT_BLOCKING
-		screen_secured = TRUE
+		screen_state = IPC_CONSTRUCTION_SECURED
 		to_chat(user, span_notice("You secure [screen] into [src]. Its display comes online."))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
-	if(core_secured)
+	if(core_state == IPC_CONSTRUCTION_SECURED)
 		if(!tool.use_tool(src, user, 5, volume = 50))
 			return ITEM_INTERACT_BLOCKING
-		core_secured = FALSE
+		core_state = IPC_CONSTRUCTION_WIRED
 		to_chat(user, span_notice("You unsecure [src]'s chest cavity."))
 		return ITEM_INTERACT_SUCCESS
 	if(!check_core_completion())
@@ -227,37 +215,37 @@
 		return ITEM_INTERACT_BLOCKING
 	if(!tool.use_tool(src, user, 5, volume = 50))
 		return ITEM_INTERACT_BLOCKING
-	core_secured = TRUE
+	core_state = IPC_CONSTRUCTION_SECURED
 	to_chat(user, span_notice("You secure [src]'s chest cavity."))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/ipc_core/wirecutter_act(mob/living/user, obj/item/cutter)
 	. = ..()
-	if(screen && screen_wired)
-		if(screen_secured)
+	if(screen && screen_state >= IPC_CONSTRUCTION_WIRED)
+		if(screen_state == IPC_CONSTRUCTION_SECURED)
 			to_chat(user, span_warning("You need to unsecure [screen] first!"))
 			return TRUE
 		. = TRUE
 		cutter.play_tool_sound(src)
 		to_chat(user, span_notice("You cut [screen]'s wiring out of [src]."))
 		new /obj/item/stack/cable_coil(drop_location(), 1)
-		screen_wired = FALSE
+		screen_state = IPC_CONSTRUCTION_UNWIRED
 		update_appearance()
 		return
-	if(!core_wired)
+	if(core_state == IPC_CONSTRUCTION_UNWIRED)
 		return
-	if(core_secured)
+	if(core_state == IPC_CONSTRUCTION_SECURED)
 		to_chat(user, span_warning("You need to unsecure [src]'s chest cavity first!"))
 		return TRUE
 	. = TRUE
 	cutter.play_tool_sound(src)
 	to_chat(user, span_notice("You cut the wires out of [src]'s chest cavity."))
 	new /obj/item/stack/cable_coil(drop_location(), 1)
-	core_wired = FALSE
+	core_state = IPC_CONSTRUCTION_UNWIRED
 
 /obj/item/ipc_core/crowbar_act(mob/living/user, obj/item/prytool)
 	. = ..()
-	if(core_secured)
+	if(core_state == IPC_CONSTRUCTION_SECURED)
 		to_chat(user, span_warning("You need to unsecure [src]'s chest cavity first!"))
 		return TRUE
 	if(!stomach && !lungs && !heart && !liver)
@@ -273,7 +261,7 @@
 	if(!check_core_completion())
 		to_chat(user, span_warning("The IPC core must have a synthetic bio-reactor, heatsink, hydraulic pump engine, reagent processing unit, and wiring before it can be finalized."))
 		return ITEM_INTERACT_BLOCKING
-	if(!core_secured)
+	if(core_state != IPC_CONSTRUCTION_SECURED)
 		to_chat(user, span_warning("The IPC core's chest cavity must be secured before it can be finalized."))
 		return ITEM_INTERACT_BLOCKING
 	if(!head || !head.secured || !head.check_completion() || !l_arm || !r_arm || !l_leg || !r_leg)
@@ -282,10 +270,10 @@
 	if(!screen)
 		to_chat(user, span_warning("The IPC core needs an IPC screen installed before it can be finalized."))
 		return ITEM_INTERACT_BLOCKING
-	if(!screen_wired)
+	if(screen_state == IPC_CONSTRUCTION_UNWIRED)
 		to_chat(user, span_warning("The IPC screen needs to be wired before the core can be finalized."))
 		return ITEM_INTERACT_BLOCKING
-	if(!screen_secured)
+	if(screen_state != IPC_CONSTRUCTION_SECURED)
 		to_chat(user, span_warning("The IPC screen needs to be secured before the core can be finalized."))
 		return ITEM_INTERACT_BLOCKING
 	if(!isturf(loc))
@@ -300,7 +288,7 @@
 
 /obj/item/ipc_core/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/organ/internal/stomach/synth))
-		if(core_secured)
+		if(core_state == IPC_CONSTRUCTION_SECURED)
 			to_chat(user, span_warning("You need to unsecure [src]'s chest cavity first!"))
 			return ITEM_INTERACT_BLOCKING
 		if(stomach)
@@ -313,7 +301,7 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/organ/internal/lungs/synth))
-		if(core_secured)
+		if(core_state == IPC_CONSTRUCTION_SECURED)
 			to_chat(user, span_warning("You need to unsecure [src]'s chest cavity first!"))
 			return ITEM_INTERACT_BLOCKING
 		if(lungs)
@@ -326,7 +314,7 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/organ/internal/heart/synth))
-		if(core_secured)
+		if(core_state == IPC_CONSTRUCTION_SECURED)
 			to_chat(user, span_warning("You need to unsecure [src]'s chest cavity first!"))
 			return ITEM_INTERACT_BLOCKING
 		if(heart)
@@ -339,7 +327,7 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/organ/internal/liver/synth))
-		if(core_secured)
+		if(core_state == IPC_CONSTRUCTION_SECURED)
 			to_chat(user, span_warning("You need to unsecure [src]'s chest cavity first!"))
 			return ITEM_INTERACT_BLOCKING
 		if(liver)
@@ -415,8 +403,7 @@
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
 		screen = tool
-		screen_wired = FALSE
-		screen_secured = FALSE
+		screen_state = IPC_CONSTRUCTION_UNWIRED
 		to_chat(user, span_notice("You install [tool] into [src]."))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -424,20 +411,20 @@
 	if(istype(tool, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = tool
 		if(screen)
-			if(screen_wired)
+			if(screen_state >= IPC_CONSTRUCTION_WIRED)
 				to_chat(user, span_warning("[screen] is already wired into [src]!"))
 				return ITEM_INTERACT_BLOCKING
 			if(coil.use(1))
-				screen_wired = TRUE
+				screen_state = IPC_CONSTRUCTION_WIRED
 				to_chat(user, span_notice("You wire [screen] into [src]."))
 				return ITEM_INTERACT_SUCCESS
 			to_chat(user, span_warning("You need one length of cable to wire [screen]!"))
 			return ITEM_INTERACT_BLOCKING
-		if(core_wired)
+		if(core_state >= IPC_CONSTRUCTION_WIRED)
 			to_chat(user, span_warning("[src]'s chest cavity is already wired!"))
 			return ITEM_INTERACT_BLOCKING
 		if(coil.use(1))
-			core_wired = TRUE
+			core_state = IPC_CONSTRUCTION_WIRED
 			to_chat(user, span_notice("You wire [src]'s chest cavity."))
 			return ITEM_INTERACT_SUCCESS
 		to_chat(user, span_warning("You need one length of cable to wire [src]'s chest cavity!"))
@@ -518,8 +505,7 @@
 	r_arm = null
 	l_leg = null
 	r_leg = null
-	core_wired = FALSE
-	core_secured = FALSE
+	core_state = IPC_CONSTRUCTION_UNWIRED
 
 	/// Remove clothes, facial hair, features.
 	ipc_body.undershirt = null
@@ -542,8 +528,7 @@
 		return FALSE
 	installed_screen.switch_to_screen(ipc_body, "Blue", IPC_CORE_UNCONNECTED_SCREEN_COLOR)
 	screen = null
-	screen_wired = FALSE
-	screen_secured = FALSE
+	screen_state = IPC_CONSTRUCTION_UNWIRED
 
 	// Anything left in the construction core would otherwise be dumped on the turf when the core is deleted.
 	for(var/atom/movable/contained as anything in contents)
@@ -554,7 +539,6 @@
 	qdel(src)
 	return TRUE
 
-#undef IPC_CORE_SCREEN_ICON
 #undef IPC_CORE_OFF_SCREEN
 #undef IPC_CORE_UNCONNECTED_SCREEN
 #undef IPC_CORE_UNCONNECTED_SCREEN_COLOR

@@ -1,3 +1,5 @@
+#define IPC_BRAIN_TRAUMATIC_REBOOT_DELAY (30 SECONDS)
+
 /obj/item/mmi
 	name = "\improper Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity, that nevertheless has become standard-issue on Nanotrasen stations."
@@ -33,6 +35,8 @@
 	var/brainwash_directive
 	/// Holds the brainwash objectives that should be removed upon brain's ejection.
 	var/list/datum/weakref/brainwash_objectives
+	/// Brainwashing objectives applied specifically while this MMI is installed in an IPC shell.
+	var/list/datum/weakref/ipc_brainwash_objectives
 
 /obj/item/mmi/Initialize(mapload)
 	. = ..()
@@ -332,10 +336,16 @@
 /obj/item/mmi/proc/ready_for_ipc_install(mob/user)
 	if(!brain_check(user))
 		return FALSE
-	var/mob/living/brain/B = brainmob
-	B.set_stat(CONSCIOUS)
-	B.emp_damage = 0
-	B.reset_perspective()
+	restore_brainmob_consciousness()
+	return TRUE
+
+/// Restores the contained brainmob to a conscious, usable state.
+/obj/item/mmi/proc/restore_brainmob_consciousness()
+	if(!brainmob)
+		return FALSE
+	brainmob.set_stat(CONSCIOUS)
+	brainmob.emp_damage = 0
+	brainmob.reset_perspective()
 	return TRUE
 
 /// Gets the brainwash directive.

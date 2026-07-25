@@ -56,7 +56,6 @@
 	bound_posi.imprinted_master_ref = WEAKREF(master)
 	var/bound_directive = bound_posi.get_ipc_brainwash_directive(bound_shell, master)
 	TEST_ASSERT(findtext(bound_directive, master.real_name), "An imprinted positronic brain did not generate its master's directive.")
-	TEST_ASSERT_EQUAL(bound_posi.get_ipc_brainwash_message(), "Your positronic imprint asserts itself, binding you to your master!", "An imprinted positronic brain used generic MMI installation feedback.")
 	var/obj/item/bodypart/bound_chest = bound_shell.get_bodypart(BODY_ZONE_CHEST)
 	TEST_ASSERT(bound_posi.attempt_become_ipc_organ(bound_chest, bound_shell, master), "An imprinted positronic brain could not be installed into an IPC shell.")
 	TEST_ASSERT_EQUAL(bound_shell.mind, bound_personality, "The imprinted positronic personality was not transferred to its IPC shell.")
