@@ -192,5 +192,7 @@
 
 /obj/item/clothing/gloves/admiral // Loadout version of the Abraxis Centcom Admiral gloves
 	name = "black gloves"
-	icon_state = "admiral"
-	alternate_worn_layer = ABOVE_SUIT_LAYER
+	icon = /obj/item/clothing/gloves/tackler/combat/insulated/admiral::icon
+	worn_icon = /obj/item/clothing/gloves/tackler/combat/insulated/admiral::worn_icon
+	icon_state = /obj/item/clothing/gloves/tackler/combat/insulated/admiral::icon_state
+	alternate_worn_layer = /obj/item/clothing/gloves/tackler/combat/insulated/admiral::alternate_worn_layer
