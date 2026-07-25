@@ -13,7 +13,7 @@
 	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/modular_computer/pda/pda_without_id = allocate(/obj/item/modular_computer/pda)
 	var/interaction_result = spiderbot.item_interaction(user, pda_without_id, list())
-	TEST_ASSERT_EQUAL(interaction_result, ITEM_INTERACT_BLOCKING, "An ID-less PDA should be handled without ejecting the MMI.")
+	TEST_ASSERT_NULL(interaction_result, "An ID-less PDA should not be handled as an ID.")
 	TEST_ASSERT_EQUAL(spiderbot.mmi, installed_mmi, "An ID-less PDA ejected the spiderbot's MMI.")
 
 	spiderbot.transfer_personality(installed_mmi)
