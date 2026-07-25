@@ -103,11 +103,6 @@ export type FabricatorData = {
   }>;
 
   /**
-   * Label for cycling between available lathe recipe sets.
-   */
-  lathe_recipe_toggle_label?: string;
-
-  /**
    * Whether there is more than one lathe recipe set available.
    */
   lathe_recipe_can_switch?: BooleanLike;

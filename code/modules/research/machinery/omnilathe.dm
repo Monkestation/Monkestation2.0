@@ -150,6 +150,30 @@
 		switch(lathe_recipe_set)
 			if("mechfab")
 				buildtype_mask = MECHFAB
+			if("protolathe")
+				buildtype_mask = PROTOLATHE
+			if("protolathe_away")
+				buildtype_mask = AWAY_LATHE
+			if("protolathe_department")
+				buildtype_mask = PROTOLATHE
+			if("protolathe_engineering")
+				buildtype_mask = PROTOLATHE
+				department_flag = DEPARTMENT_BITFLAG_ENGINEERING
+			if("protolathe_service")
+				buildtype_mask = PROTOLATHE
+				department_flag = DEPARTMENT_BITFLAG_SERVICE
+			if("protolathe_medical")
+				buildtype_mask = PROTOLATHE
+				department_flag = DEPARTMENT_BITFLAG_MEDICAL
+			if("protolathe_cargo")
+				buildtype_mask = PROTOLATHE
+				department_flag = DEPARTMENT_BITFLAG_CARGO
+			if("protolathe_science")
+				buildtype_mask = PROTOLATHE
+				department_flag = DEPARTMENT_BITFLAG_SCIENCE
+			if("protolathe_security")
+				buildtype_mask = PROTOLATHE
+				department_flag = DEPARTMENT_BITFLAG_SECURITY
 			if("imprinter")
 				buildtype_mask = IMPRINTER
 			if("imprinter_away")
@@ -262,6 +286,24 @@
 			return "Techfab - Security"
 		if("mechfab")
 			return "Exosuit Fabricator"
+		if("protolathe")
+			return "Protolathe"
+		if("protolathe_away")
+			return "Ancient Protolathe"
+		if("protolathe_department")
+			return "Department Protolathe"
+		if("protolathe_engineering")
+			return "Protolathe - Engineering"
+		if("protolathe_service")
+			return "Protolathe - Service"
+		if("protolathe_medical")
+			return "Protolathe - Medical"
+		if("protolathe_cargo")
+			return "Protolathe - Cargo"
+		if("protolathe_science")
+			return "Protolathe - Science"
+		if("protolathe_security")
+			return "Protolathe - Security"
 		if("imprinter")
 			return "Circuit Imprinter"
 		if("imprinter_away")
@@ -290,6 +332,24 @@
 		available_sets += "techfab_security"
 	if(unlocked_techfab_departments["mechfab"])
 		available_sets += "mechfab"
+	if(unlocked_techfab_departments["protolathe"])
+		available_sets += "protolathe"
+	if(unlocked_techfab_departments["protolathe_away"])
+		available_sets += "protolathe_away"
+	if(unlocked_techfab_departments["protolathe_department"])
+		available_sets += "protolathe_department"
+	if(unlocked_techfab_departments["protolathe_engineering"])
+		available_sets += "protolathe_engineering"
+	if(unlocked_techfab_departments["protolathe_service"])
+		available_sets += "protolathe_service"
+	if(unlocked_techfab_departments["protolathe_medical"])
+		available_sets += "protolathe_medical"
+	if(unlocked_techfab_departments["protolathe_cargo"])
+		available_sets += "protolathe_cargo"
+	if(unlocked_techfab_departments["protolathe_science"])
+		available_sets += "protolathe_science"
+	if(unlocked_techfab_departments["protolathe_security"])
+		available_sets += "protolathe_security"
 	if(unlocked_techfab_departments["imprinter"])
 		available_sets += "imprinter"
 	if(unlocked_techfab_departments["imprinter_away"])
@@ -317,15 +377,38 @@
 		return "techfab_security"
 	return null
 
+/obj/machinery/rnd/production/omnilathe/proc/get_protolathe_set_from_board(obj/item/circuitboard/machine/protolathe/board)
+	if(istype(board, /obj/item/circuitboard/machine/protolathe/offstation))
+		return "protolathe_away"
+	if(istype(board, /obj/item/circuitboard/machine/protolathe/department/engineering))
+		return "protolathe_engineering"
+	if(istype(board, /obj/item/circuitboard/machine/protolathe/department/service))
+		return "protolathe_service"
+	if(istype(board, /obj/item/circuitboard/machine/protolathe/department/medical))
+		return "protolathe_medical"
+	if(istype(board, /obj/item/circuitboard/machine/protolathe/department/cargo))
+		return "protolathe_cargo"
+	if(istype(board, /obj/item/circuitboard/machine/protolathe/department/science))
+		return "protolathe_science"
+	if(istype(board, /obj/item/circuitboard/machine/protolathe/department/security))
+		return "protolathe_security"
+	if(istype(board, /obj/item/circuitboard/machine/protolathe/department))
+		return "protolathe_department"
+	return "protolathe"
+
 /obj/machinery/rnd/production/omnilathe/proc/get_recipe_set_from_board(obj/item/circuitboard/machine/board)
 	if(istype(board, /obj/item/circuitboard/machine/techfab/department))
 		return get_techfab_set_from_board(board)
+	if(istype(board, /obj/item/circuitboard/machine/protolathe))
+		return get_protolathe_set_from_board(board)
 	if(istype(board, /obj/item/circuitboard/machine/mechfab))
 		return "mechfab"
 	if(istype(board, /obj/item/circuitboard/machine/circuit_imprinter/offstation))
 		return "imprinter_away"
 	if(istype(board, /obj/item/circuitboard/machine/circuit_imprinter/department/science))
 		return "imprinter_department_science"
+	if(istype(board, /obj/item/circuitboard/machine/circuit_imprinter/department/engineering))
+		return "imprinter_department_engineering"
 	if(istype(board, /obj/item/circuitboard/machine/circuit_imprinter/department))
 		return "imprinter_department"
 	if(istype(board, /obj/item/circuitboard/machine/circuit_imprinter))
@@ -422,7 +505,6 @@
 	.["lathe_recipe_label"] = get_recipe_set_name(lathe_recipe_set)
 	.["lathe_recipe_set"] = lathe_recipe_set
 	.["lathe_recipe_sets"] = set_options
-	.["lathe_recipe_toggle_label"] = "Recipe Set"
 	.["lathe_recipe_can_switch"] = length(available_sets) > 1
 	.["mag_loaded"] = !!loaded_magazine
 	.["system_busy"] = ammo_busy
@@ -455,23 +537,6 @@
 		machine_mode = machine_mode == "lathe" ? "ammo" : "lathe"
 		ammo_error_message = ""
 		ammo_error_type = ""
-		SStgui.update_uis(src)
-		return TRUE
-
-	if(action == "switch_recipe_set")
-		if(machine_mode != "lathe" || busy || ammo_busy)
-			return TRUE
-		var/list/available_sets = get_available_recipe_sets()
-		if(length(available_sets) <= 1)
-			return TRUE
-		var/current_index = available_sets.Find(lathe_recipe_set)
-		if(!current_index)
-			current_index = 1
-		var/next_index = current_index + 1
-		if(next_index > length(available_sets))
-			next_index = 1
-		lathe_recipe_set = available_sets[next_index]
-		rebuild_cached_designs()
 		SStgui.update_uis(src)
 		return TRUE
 
@@ -713,7 +778,6 @@
 // Undeployed printer disguised as a normal emergency toolbox.
 
 /obj/item/storage/toolbox/emergency/omnilathe
-	var/obj/machinery/rnd/production/omnilathe/type_to_deploy = /obj/machinery/rnd/production/omnilathe
 	var/deploy_time = 4 SECONDS
 	/// Imported autolathe design IDs preserved while packed.
 	var/list/imported_designs = list()
