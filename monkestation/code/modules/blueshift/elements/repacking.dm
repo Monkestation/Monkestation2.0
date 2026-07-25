@@ -75,9 +75,9 @@
 		var/list/imported_designs = source.vars["imported_designs"]
 		new_pack.vars["imported_designs"] = islist(imported_designs) ? imported_designs.Copy() : list()
 
-	if(new_pack && ("unlocked_techfab_departments" in source.vars) && ("unlocked_techfab_departments" in new_pack.vars))
-		var/list/unlocked_techfab_departments = source.vars["unlocked_techfab_departments"]
-		new_pack.vars["unlocked_techfab_departments"] = islist(unlocked_techfab_departments) ? unlocked_techfab_departments.Copy() : list()
+	if(new_pack && ("unlocked_recipe_sets" in source.vars) && ("unlocked_recipe_sets" in new_pack.vars))
+		var/list/unlocked_recipe_sets = source.vars["unlocked_recipe_sets"]
+		new_pack.vars["unlocked_recipe_sets"] = islist(unlocked_recipe_sets) ? unlocked_recipe_sets.Copy() : list()
 
 	if(new_pack && ("lathe_recipe_set" in source.vars) && ("lathe_recipe_set" in new_pack.vars))
 		new_pack.vars["lathe_recipe_set"] = source.vars["lathe_recipe_set"]

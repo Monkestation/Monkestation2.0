@@ -50,7 +50,7 @@
 	/// Which lathe recipe family is currently active in lathe mode.
 	var/lathe_recipe_set = "autolathe"
 	/// Additional recipe families unlocked by inserting matching machine boards.
-	var/list/unlocked_techfab_departments = list()
+	var/list/unlocked_recipe_sets = list()
 
 /obj/machinery/rnd/production/omnilathe/Initialize(mapload)
 	. = ..()
@@ -105,9 +105,153 @@
 	update_ammotypes()
 
 
+/// Recipe set defs keyed by id, each entry with name/build_type/department
+/obj/machinery/rnd/production/omnilathe/proc/get_recipe_set_definitions()
+	var/static/list/recipe_sets
+	if(isnull(recipe_sets))
+		recipe_sets = list(
+			"autolathe" = list(
+				"name" = "Autolathe",
+			),
+			"techfab_engineering" = list(
+				"name" = "Techfab - Engineering",
+				"build_type" = PROTOLATHE | IMPRINTER,
+				"department" = DEPARTMENT_BITFLAG_ENGINEERING,
+			),
+			"techfab_service" = list(
+				"name" = "Techfab - Service",
+				"build_type" = PROTOLATHE | IMPRINTER,
+				"department" = DEPARTMENT_BITFLAG_SERVICE,
+			),
+			"techfab_medical" = list(
+				"name" = "Techfab - Medical",
+				"build_type" = PROTOLATHE | IMPRINTER,
+				"department" = DEPARTMENT_BITFLAG_MEDICAL,
+			),
+			"techfab_cargo" = list(
+				"name" = "Techfab - Cargo",
+				"build_type" = PROTOLATHE | IMPRINTER,
+				"department" = DEPARTMENT_BITFLAG_CARGO,
+			),
+			"techfab_science" = list(
+				"name" = "Techfab - Science",
+				"build_type" = PROTOLATHE | IMPRINTER,
+				"department" = DEPARTMENT_BITFLAG_SCIENCE,
+			),
+			"techfab_security" = list(
+				"name" = "Techfab - Security",
+				"build_type" = PROTOLATHE | IMPRINTER,
+				"department" = DEPARTMENT_BITFLAG_SECURITY,
+			),
+			"mechfab" = list(
+				"name" = "Exosuit Fabricator",
+				"build_type" = MECHFAB,
+			),
+			"protolathe" = list(
+				"name" = "Protolathe",
+				"build_type" = PROTOLATHE,
+			),
+			"protolathe_away" = list(
+				"name" = "Ancient Protolathe",
+				"build_type" = AWAY_LATHE,
+			),
+			"protolathe_department" = list(
+				"name" = "Department Protolathe",
+				"build_type" = PROTOLATHE,
+			),
+			"protolathe_engineering" = list(
+				"name" = "Protolathe - Engineering",
+				"build_type" = PROTOLATHE,
+				"department" = DEPARTMENT_BITFLAG_ENGINEERING,
+			),
+			"protolathe_service" = list(
+				"name" = "Protolathe - Service",
+				"build_type" = PROTOLATHE,
+				"department" = DEPARTMENT_BITFLAG_SERVICE,
+			),
+			"protolathe_medical" = list(
+				"name" = "Protolathe - Medical",
+				"build_type" = PROTOLATHE,
+				"department" = DEPARTMENT_BITFLAG_MEDICAL,
+			),
+			"protolathe_cargo" = list(
+				"name" = "Protolathe - Cargo",
+				"build_type" = PROTOLATHE,
+				"department" = DEPARTMENT_BITFLAG_CARGO,
+			),
+			"protolathe_science" = list(
+				"name" = "Protolathe - Science",
+				"build_type" = PROTOLATHE,
+				"department" = DEPARTMENT_BITFLAG_SCIENCE,
+			),
+			"protolathe_security" = list(
+				"name" = "Protolathe - Security",
+				"build_type" = PROTOLATHE,
+				"department" = DEPARTMENT_BITFLAG_SECURITY,
+			),
+			"imprinter" = list(
+				"name" = "Circuit Imprinter",
+				"build_type" = IMPRINTER,
+			),
+			"imprinter_away" = list(
+				"name" = "Ancient Circuit Imprinter",
+				"build_type" = AWAY_IMPRINTER,
+			),
+			"imprinter_department" = list(
+				"name" = "Department Circuit Imprinter",
+				"build_type" = IMPRINTER,
+			),
+			"imprinter_department_science" = list(
+				"name" = "Department Circuit Imprinter - Science",
+				"build_type" = IMPRINTER,
+				"department" = DEPARTMENT_BITFLAG_SCIENCE,
+			),
+			"imprinter_department_engineering" = list(
+				"name" = "Department Circuit Imprinter - Engineering",
+				"build_type" = IMPRINTER,
+				"department" = DEPARTMENT_BITFLAG_ENGINEERING,
+			),
+		)
+	return recipe_sets
+
+/// Board typepath used for recipe set id mappings
+/obj/machinery/rnd/production/omnilathe/proc/get_board_recipe_set_map()
+	var/static/list/board_map
+	if(isnull(board_map))
+		board_map = list(
+			list(/obj/item/circuitboard/machine/techfab/department/engineering, "techfab_engineering"),
+			list(/obj/item/circuitboard/machine/techfab/department/service, "techfab_service"),
+			list(/obj/item/circuitboard/machine/techfab/department/medical, "techfab_medical"),
+			list(/obj/item/circuitboard/machine/techfab/department/cargo, "techfab_cargo"),
+			list(/obj/item/circuitboard/machine/techfab/department/science, "techfab_science"),
+			list(/obj/item/circuitboard/machine/techfab/department/security, "techfab_security"),
+			list(/obj/item/circuitboard/machine/protolathe/offstation, "protolathe_away"),
+			list(/obj/item/circuitboard/machine/protolathe/department/engineering, "protolathe_engineering"),
+			list(/obj/item/circuitboard/machine/protolathe/department/service, "protolathe_service"),
+			list(/obj/item/circuitboard/machine/protolathe/department/medical, "protolathe_medical"),
+			list(/obj/item/circuitboard/machine/protolathe/department/cargo, "protolathe_cargo"),
+			list(/obj/item/circuitboard/machine/protolathe/department/science, "protolathe_science"),
+			list(/obj/item/circuitboard/machine/protolathe/department/security, "protolathe_security"),
+			list(/obj/item/circuitboard/machine/protolathe/department, "protolathe_department"),
+			list(/obj/item/circuitboard/machine/protolathe, "protolathe"),
+			list(/obj/item/circuitboard/machine/mechfab, "mechfab"),
+			list(/obj/item/circuitboard/machine/circuit_imprinter/offstation, "imprinter_away"),
+			list(/obj/item/circuitboard/machine/circuit_imprinter/department/science, "imprinter_department_science"),
+			list(/obj/item/circuitboard/machine/circuit_imprinter/department/engineering, "imprinter_department_engineering"),
+			list(/obj/item/circuitboard/machine/circuit_imprinter/department, "imprinter_department"),
+			list(/obj/item/circuitboard/machine/circuit_imprinter, "imprinter"),
+		)
+	return board_map
+
 /obj/machinery/rnd/production/omnilathe/proc/rebuild_cached_designs()
 	var/previous_design_count = cached_designs.len
 	cached_designs.Cut()
+
+	var/list/recipe_sets = get_recipe_set_definitions()
+	var/list/set_data = recipe_sets[lathe_recipe_set]
+	if(isnull(set_data))
+		lathe_recipe_set = "autolathe"
+		set_data = recipe_sets["autolathe"]
 
 	if(lathe_recipe_set == "autolathe")
 		for(var/design_id in SSresearch.techweb_designs)
@@ -122,73 +266,12 @@
 			var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
 			if(design && !(design in cached_designs))
 				cached_designs |= design
-	else if(findtext(lathe_recipe_set, "techfab_") == 1)
-		var/department_flag = get_techfab_department_flag(lathe_recipe_set)
-		if(!department_flag)
-			lathe_recipe_set = "autolathe"
-			return rebuild_cached_designs()
-		var/datum/techweb/research_source = SSresearch.science_tech
-		if(isnull(research_source))
-			return
-
-		for(var/design_id in research_source.researched_designs)
-			var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
-			if(!istype(design))
-				continue
-			if(!(design.build_type & (PROTOLATHE | IMPRINTER)))
-				continue
-			if(!(design.departmental_flags & department_flag))
-				continue
-			cached_designs |= design
 	else
+		var/buildtype_mask = set_data["build_type"]
+		var/department_flag = set_data["department"]
 		var/datum/techweb/research_source = SSresearch.science_tech
-		if(isnull(research_source))
+		if(isnull(research_source) || !buildtype_mask)
 			return
-
-		var/buildtype_mask = NONE
-		var/department_flag = null
-		switch(lathe_recipe_set)
-			if("mechfab")
-				buildtype_mask = MECHFAB
-			if("protolathe")
-				buildtype_mask = PROTOLATHE
-			if("protolathe_away")
-				buildtype_mask = AWAY_LATHE
-			if("protolathe_department")
-				buildtype_mask = PROTOLATHE
-			if("protolathe_engineering")
-				buildtype_mask = PROTOLATHE
-				department_flag = DEPARTMENT_BITFLAG_ENGINEERING
-			if("protolathe_service")
-				buildtype_mask = PROTOLATHE
-				department_flag = DEPARTMENT_BITFLAG_SERVICE
-			if("protolathe_medical")
-				buildtype_mask = PROTOLATHE
-				department_flag = DEPARTMENT_BITFLAG_MEDICAL
-			if("protolathe_cargo")
-				buildtype_mask = PROTOLATHE
-				department_flag = DEPARTMENT_BITFLAG_CARGO
-			if("protolathe_science")
-				buildtype_mask = PROTOLATHE
-				department_flag = DEPARTMENT_BITFLAG_SCIENCE
-			if("protolathe_security")
-				buildtype_mask = PROTOLATHE
-				department_flag = DEPARTMENT_BITFLAG_SECURITY
-			if("imprinter")
-				buildtype_mask = IMPRINTER
-			if("imprinter_away")
-				buildtype_mask = AWAY_IMPRINTER
-			if("imprinter_department")
-				buildtype_mask = IMPRINTER
-			if("imprinter_department_science")
-				buildtype_mask = IMPRINTER
-				department_flag = DEPARTMENT_BITFLAG_SCIENCE
-			if("imprinter_department_engineering")
-				buildtype_mask = IMPRINTER
-				department_flag = DEPARTMENT_BITFLAG_ENGINEERING
-		if(!buildtype_mask)
-			lathe_recipe_set = "autolathe"
-			return rebuild_cached_designs()
 
 		for(var/design_id in research_source.researched_designs)
 			var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
@@ -252,167 +335,23 @@
 
 	packed_materials = list()
 
-/obj/machinery/rnd/production/omnilathe/proc/get_techfab_department_flag(recipe_set)
-	switch(recipe_set)
-		if("techfab_engineering")
-			return DEPARTMENT_BITFLAG_ENGINEERING
-		if("techfab_service")
-			return DEPARTMENT_BITFLAG_SERVICE
-		if("techfab_medical")
-			return DEPARTMENT_BITFLAG_MEDICAL
-		if("techfab_cargo")
-			return DEPARTMENT_BITFLAG_CARGO
-		if("techfab_science")
-			return DEPARTMENT_BITFLAG_SCIENCE
-		if("techfab_security")
-			return DEPARTMENT_BITFLAG_SECURITY
-	return null
-
 /obj/machinery/rnd/production/omnilathe/proc/get_recipe_set_name(recipe_set)
-	switch(recipe_set)
-		if("autolathe")
-			return "Autolathe"
-		if("techfab_engineering")
-			return "Techfab - Engineering"
-		if("techfab_service")
-			return "Techfab - Service"
-		if("techfab_medical")
-			return "Techfab - Medical"
-		if("techfab_cargo")
-			return "Techfab - Cargo"
-		if("techfab_science")
-			return "Techfab - Science"
-		if("techfab_security")
-			return "Techfab - Security"
-		if("mechfab")
-			return "Exosuit Fabricator"
-		if("protolathe")
-			return "Protolathe"
-		if("protolathe_away")
-			return "Ancient Protolathe"
-		if("protolathe_department")
-			return "Department Protolathe"
-		if("protolathe_engineering")
-			return "Protolathe - Engineering"
-		if("protolathe_service")
-			return "Protolathe - Service"
-		if("protolathe_medical")
-			return "Protolathe - Medical"
-		if("protolathe_cargo")
-			return "Protolathe - Cargo"
-		if("protolathe_science")
-			return "Protolathe - Science"
-		if("protolathe_security")
-			return "Protolathe - Security"
-		if("imprinter")
-			return "Circuit Imprinter"
-		if("imprinter_away")
-			return "Ancient Circuit Imprinter"
-		if("imprinter_department")
-			return "Department Circuit Imprinter"
-		if("imprinter_department_science")
-			return "Department Circuit Imprinter - Science"
-		if("imprinter_department_engineering")
-			return "Department Circuit Imprinter - Engineering"
-	return "Autolathe"
+	var/list/set_data = get_recipe_set_definitions()[recipe_set]
+	if(isnull(set_data))
+		return "Autolathe"
+	return set_data["name"]
 
 /obj/machinery/rnd/production/omnilathe/proc/get_available_recipe_sets()
 	var/list/available_sets = list("autolathe")
-	if(unlocked_techfab_departments["techfab_engineering"])
-		available_sets += "techfab_engineering"
-	if(unlocked_techfab_departments["techfab_service"])
-		available_sets += "techfab_service"
-	if(unlocked_techfab_departments["techfab_medical"])
-		available_sets += "techfab_medical"
-	if(unlocked_techfab_departments["techfab_cargo"])
-		available_sets += "techfab_cargo"
-	if(unlocked_techfab_departments["techfab_science"])
-		available_sets += "techfab_science"
-	if(unlocked_techfab_departments["techfab_security"])
-		available_sets += "techfab_security"
-	if(unlocked_techfab_departments["mechfab"])
-		available_sets += "mechfab"
-	if(unlocked_techfab_departments["protolathe"])
-		available_sets += "protolathe"
-	if(unlocked_techfab_departments["protolathe_away"])
-		available_sets += "protolathe_away"
-	if(unlocked_techfab_departments["protolathe_department"])
-		available_sets += "protolathe_department"
-	if(unlocked_techfab_departments["protolathe_engineering"])
-		available_sets += "protolathe_engineering"
-	if(unlocked_techfab_departments["protolathe_service"])
-		available_sets += "protolathe_service"
-	if(unlocked_techfab_departments["protolathe_medical"])
-		available_sets += "protolathe_medical"
-	if(unlocked_techfab_departments["protolathe_cargo"])
-		available_sets += "protolathe_cargo"
-	if(unlocked_techfab_departments["protolathe_science"])
-		available_sets += "protolathe_science"
-	if(unlocked_techfab_departments["protolathe_security"])
-		available_sets += "protolathe_security"
-	if(unlocked_techfab_departments["imprinter"])
-		available_sets += "imprinter"
-	if(unlocked_techfab_departments["imprinter_away"])
-		available_sets += "imprinter_away"
-	if(unlocked_techfab_departments["imprinter_department"])
-		available_sets += "imprinter_department"
-	if(unlocked_techfab_departments["imprinter_department_science"])
-		available_sets += "imprinter_department_science"
-	if(unlocked_techfab_departments["imprinter_department_engineering"])
-		available_sets += "imprinter_department_engineering"
+	for(var/set_id in unlocked_recipe_sets)
+		if(unlocked_recipe_sets[set_id])
+			available_sets += set_id
 	return available_sets
 
-/obj/machinery/rnd/production/omnilathe/proc/get_techfab_set_from_board(obj/item/circuitboard/machine/techfab/department/board)
-	if(istype(board, /obj/item/circuitboard/machine/techfab/department/engineering))
-		return "techfab_engineering"
-	if(istype(board, /obj/item/circuitboard/machine/techfab/department/service))
-		return "techfab_service"
-	if(istype(board, /obj/item/circuitboard/machine/techfab/department/medical))
-		return "techfab_medical"
-	if(istype(board, /obj/item/circuitboard/machine/techfab/department/cargo))
-		return "techfab_cargo"
-	if(istype(board, /obj/item/circuitboard/machine/techfab/department/science))
-		return "techfab_science"
-	if(istype(board, /obj/item/circuitboard/machine/techfab/department/security))
-		return "techfab_security"
-	return null
-
-/obj/machinery/rnd/production/omnilathe/proc/get_protolathe_set_from_board(obj/item/circuitboard/machine/protolathe/board)
-	if(istype(board, /obj/item/circuitboard/machine/protolathe/offstation))
-		return "protolathe_away"
-	if(istype(board, /obj/item/circuitboard/machine/protolathe/department/engineering))
-		return "protolathe_engineering"
-	if(istype(board, /obj/item/circuitboard/machine/protolathe/department/service))
-		return "protolathe_service"
-	if(istype(board, /obj/item/circuitboard/machine/protolathe/department/medical))
-		return "protolathe_medical"
-	if(istype(board, /obj/item/circuitboard/machine/protolathe/department/cargo))
-		return "protolathe_cargo"
-	if(istype(board, /obj/item/circuitboard/machine/protolathe/department/science))
-		return "protolathe_science"
-	if(istype(board, /obj/item/circuitboard/machine/protolathe/department/security))
-		return "protolathe_security"
-	if(istype(board, /obj/item/circuitboard/machine/protolathe/department))
-		return "protolathe_department"
-	return "protolathe"
-
 /obj/machinery/rnd/production/omnilathe/proc/get_recipe_set_from_board(obj/item/circuitboard/machine/board)
-	if(istype(board, /obj/item/circuitboard/machine/techfab/department))
-		return get_techfab_set_from_board(board)
-	if(istype(board, /obj/item/circuitboard/machine/protolathe))
-		return get_protolathe_set_from_board(board)
-	if(istype(board, /obj/item/circuitboard/machine/mechfab))
-		return "mechfab"
-	if(istype(board, /obj/item/circuitboard/machine/circuit_imprinter/offstation))
-		return "imprinter_away"
-	if(istype(board, /obj/item/circuitboard/machine/circuit_imprinter/department/science))
-		return "imprinter_department_science"
-	if(istype(board, /obj/item/circuitboard/machine/circuit_imprinter/department/engineering))
-		return "imprinter_department_engineering"
-	if(istype(board, /obj/item/circuitboard/machine/circuit_imprinter/department))
-		return "imprinter_department"
-	if(istype(board, /obj/item/circuitboard/machine/circuit_imprinter))
-		return "imprinter"
+	for(var/list/entry as anything in get_board_recipe_set_map())
+		if(istype(board, entry[1]))
+			return entry[2]
 	return null
 
 /obj/machinery/rnd/production/omnilathe/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -424,7 +363,7 @@
 		var/recipe_set = get_recipe_set_from_board(board)
 		if(isnull(recipe_set))
 			return ITEM_INTERACT_BLOCKING
-		if(unlocked_techfab_departments[recipe_set])
+		if(unlocked_recipe_sets[recipe_set])
 			balloon_alert(living_user, "department recipes already unlocked")
 			return ITEM_INTERACT_BLOCKING
 		if(!living_user.transferItemToLoc(attacking_item, src))
@@ -438,7 +377,7 @@
 			balloon_alert(living_user, "interrupted!")
 			return ITEM_INTERACT_BLOCKING
 		qdel(attacking_item)
-		unlocked_techfab_departments[recipe_set] = TRUE
+		unlocked_recipe_sets[recipe_set] = TRUE
 		lathe_recipe_set = recipe_set
 		rebuild_cached_designs()
 		balloon_alert(living_user, "department recipes unlocked")
@@ -783,8 +722,8 @@
 	var/list/imported_designs = list()
 	/// Packed snapshot of local material amounts, keyed by material typepath.
 	var/list/packed_materials = list()
-	/// Techfab department recipes unlocked before this printer was packed.
-	var/list/unlocked_techfab_departments = list()
+	/// Recipe families unlocked before this printer was packed.
+	var/list/unlocked_recipe_sets = list()
 	/// Last selected lathe recipe set before this printer was packed.
 	var/lathe_recipe_set = "autolathe"
 
@@ -824,8 +763,8 @@
 		deployed_object.imported_designs = imported_designs.Copy()
 	if(packed_materials?.len)
 		deployed_object.packed_materials = packed_materials.Copy()
-	if(unlocked_techfab_departments?.len)
-		deployed_object.unlocked_techfab_departments = unlocked_techfab_departments.Copy()
+	if(unlocked_recipe_sets?.len)
+		deployed_object.unlocked_recipe_sets = unlocked_recipe_sets.Copy()
 	if(lathe_recipe_set)
 		deployed_object.lathe_recipe_set = lathe_recipe_set
 	transfer_contents_to_deployed_object(deployed_object)
