@@ -1,6 +1,6 @@
 GLOBAL_VAR(posibrain_notify_cooldown)
 
-#define IPC_BRAIN_TRAUMATIC_REBOOT_DELAY 30 SECONDS
+#define IPC_BRAIN_TRAUMATIC_REBOOT_DELAY (30 SECONDS)
 
 /obj/item/mmi
 	/// Brainwashing objectives applied specifically while this MMI is installed in an IPC shell.
