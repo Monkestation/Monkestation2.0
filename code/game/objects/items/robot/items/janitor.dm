@@ -5,7 +5,7 @@
 	icon_state = "vacuum_suite"
 	hitsound = SFX_SWING_HIT
 	/// The weakref to the cyborg that we belong to.
-	var/datum/weakref/cyborg_owner_weakref = null
+	var/datum/weakref/cyborg_owner_weakref
 	/// The hose item that will be offered when the cyborg is pulled.
 	var/obj/item/janitorial_vacuum_hose/hose
 	/// Should the hose item not be offered when the cyborg is pulled?
