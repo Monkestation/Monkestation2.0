@@ -72,13 +72,7 @@
 /obj/item/borg/janitorial_vacuum_suite/on_offer_taken(mob/living/offerer, mob/living/taker)
 	if(..())
 		return TRUE
-	var/mob/living/silicon/robot/cyborg_owner = cyborg_owner_weakref.resolve()
-	if(!cyborg_owner)
-		stack_trace("[src] failed to resolve a cyborg owner.")
-		return TRUE
-	hose.bag = (loc == cyborg_owner) ? pick(cyborg_owner.get_all_contents_type(/obj/item/storage/bag/trash)) : locate(/obj/item/storage/bag/trash) in cyborg_owner.model.usable_modules
-	if(!hose.bag)
-		stack_trace("[src] failed to connect to a trash bag.")
+	if(!handle_hose_bag())
 		return TRUE
 	taker.visible_message(
 		span_notice("[taker] takes the [hose] from [offerer]."),
@@ -105,6 +99,18 @@
 /obj/item/borg/janitorial_vacuum_suite/examine(mob/user)
 	. = ..()
 	. += span_notice("<b>Alt-Click</b> to <b>[locked ? "unlock" : "lock"]</b> the [src].")
+
+/// Automatically finds and sets the trash bag for the hose to use.
+/obj/item/borg/janitorial_vacuum_suite/proc/handle_hose_bag()
+	var/mob/living/silicon/robot/cyborg_owner = cyborg_owner_weakref.resolve()
+	if(!cyborg_owner)
+		stack_trace("[src] failed to resolve the cyborg owner.")
+		return FALSE
+	hose.bag = (loc == cyborg_owner) ? pick(cyborg_owner.get_all_contents_type(/obj/item/storage/bag/trash)) : locate(/obj/item/storage/bag/trash) in cyborg_owner.model.usable_modules
+	if(!hose.bag)
+		stack_trace("[src] failed to find any trash bags.")
+		return FALSE
+	return TRUE
 
 /obj/item/janitorial_vacuum_hose
 	name = "janitorial floor cleaner"
@@ -144,11 +150,18 @@
 		return NONE
 	if(thing.anchored || thing.w_class >= WEIGHT_CLASS_BULKY)
 		return NONE
+	if(QDELETED(bag)) // May occur if the janitor cyborg gets upgraded to a bluespace trash bag while the hose is still being used.
+		var/obj/item/borg/janitorial_vacuum_suite/vacuum_suite = vacuum_suite_weakref?.resolve()
+		if(!vacuum_suite.handle_hose_bag())
+			retract_hose()
+			return NONE
 	playsound(bag, 'sound/items/vacuum/vacuum_use.ogg', 20, TRUE)
 	for(var/obj/item/I in get_turf(thing))
 		if(!istype(I, thing.type))
 			continue
 		if(!do_after(user, 0.1 SECONDS, user, progress = FALSE))
+			break
+		if(QDELETED(bag))
 			break
 		if(bag.atom_storage.attempt_insert(I, user, FALSE))
 			continue
