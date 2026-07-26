@@ -201,7 +201,7 @@
 /obj/item/janitorial_vacuum_hose/proc/retract_hose()
 	var/obj/item/borg/janitorial_vacuum_suite/vacuum_suite = vacuum_suite_weakref?.resolve()
 	if(!vacuum_suite)
-		CRASH("Somehow [src] doesn't have a source to return to!")
+		return  // Occurs when the suite is deleted (which means we'll be deleted soon too).
 	if(loc == vacuum_suite)
 		return
 	do_pickup_animation(vacuum_suite, get_turf(src))
