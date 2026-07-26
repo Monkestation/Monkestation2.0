@@ -376,7 +376,7 @@
 
 	for(var/i in 1 to shield_range) //checks out to 8 tiles away for another generator
 		T = get_step(T, direction)
-		G = locate(type) in T
+		G = locate(/obj/machinery/power/shieldwallgen) in T
 		if(G)
 			if(!can_connect(G))
 				return
@@ -409,7 +409,7 @@
 	for(var/i in 1 to shield_range + extra_range)
 		T = get_step(T, direction)
 
-		G = (locate(type) in T)
+		G = (locate(/obj/machinery/power/shieldwallgen) in T)
 		if(G && can_connect(G) && !extra_range)
 			break
 
@@ -420,7 +420,9 @@
 /obj/machinery/power/shieldwallgen/proc/can_connect(obj/machinery/power/shieldwallgen/gen)
 	if(!gen.active)
 		return FALSE
-	if(type != gen.type)
+	if(shield_type != gen.shield_type)
+		return FALSE
+	if(extra_range != gen.extra_range)
 		return FALSE
 	return TRUE
 

@@ -570,7 +570,16 @@ Used by the AI doomsday and the self-destruct nuke.
 		if(!HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_LAVALAND))
 			LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
 		else
-			LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland_alt[rand(1, 1)].dmm", default_traits = ZTRAITS_LAVALAND)
+			var/chosen_base = rand(1, 2)
+			LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland_alt[chosen_base].dmm", default_traits = ZTRAITS_LAVALAND)
+			if(chosen_base == 2)
+				if(themed_ruins[ZTRAIT_LAVA_RUINS])
+					CRASH("SSmapping.themed_ruins exists while [src] tried assigning a yogstation base, this should never happen.")
+				var/datum/map_template/ruin/lavaland/yogs_base/base = new()
+				base.id = "yog-base-ruin"
+				themed_ruins[ZTRAIT_LAVA_RUINS] = list()
+				themed_ruins[ZTRAIT_LAVA_RUINS][base.name] = base
+
 	else if(current_map.minetype == "oshan")
 		LoadGroup(FailedZs, "Trench", "map_files/Mining", "Oshan.dmm", default_traits = ZTRAITS_TRENCH)
 	else if (!isnull(current_map.minetype) && current_map.minetype != "none")
