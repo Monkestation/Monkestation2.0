@@ -3,6 +3,7 @@
 	desc = "A module designed to compensate for your lack of hands by offloading your job onto your more squishy overlords."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "vacuum_suite"
+	hitsound = SFX_SWING_HIT
 	/// The weakref to the cyborg that we belong to.
 	var/datum/weakref/cyborg_owner_weakref = null
 	/// The hose item that will be offered when the cyborg is pulled.
