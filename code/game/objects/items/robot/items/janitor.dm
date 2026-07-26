@@ -35,7 +35,9 @@
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/item/borg/janitorial_vacuum_suite/Destroy(force)
-	QDEL_NULL(hose) // Handles the undeployment.
+	if(deployed)
+		hose.retract_hose()
+	QDEL_NULL(hose)
 	return ..()
 
 /obj/item/borg/janitorial_vacuum_suite/attack_self(mob/user, modifiers)
@@ -136,7 +138,9 @@
 	var/cleaning = FALSE
 
 /obj/item/janitorial_vacuum_hose/Destroy(force)
-	retract_hose()
+	if(vaccum_beam)
+		QDEL_NULL(vaccum_beam)
+	bag = null
 	return ..()
 
 /obj/item/janitorial_vacuum_hose/examine(mob/user)
