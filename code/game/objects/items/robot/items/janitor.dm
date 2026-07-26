@@ -3,22 +3,22 @@
 	desc = "A module designed to compensate for your lack of hands by offloading your job onto your more squishy overlords."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "cleanerbox"
+	/// The weakref to the cyborg that we belong to.
+	var/datum/weakref/cyborg_owner_weakref = null
+	/// The hose item that will be offered when the cyborg is pulled.
 	var/obj/item/janitorial_vacuum_hose/hose
-	var/deployed = FALSE
+	/// Should the hose item not be offered when the cyborg is pulled?
 	var/locked = FALSE
-	var/datum/weakref/module_list
+	/// Has the hose item been deployed / taken by someone?
+	var/deployed = FALSE
 
 /obj/item/borg/janitorial_vacuum_suite/Initialize(mapload)
 	. = ..()
-	var/mob/living/silicon/robot = loc
-	if(!istype(robot))
+	if(!iscyborg(loc))
 		return INITIALIZE_HINT_QDEL
-	var/obj/item/robot_model/janitor/model = locate() in robot.get_contents()
-	module_list = WEAKREF(model)
-	AddComponent(/datum/component/borg_item_offered_when_pulled, robot)
-	ADD_TRAIT(src, TRAIT_BORG_GIVE, TRAIT_BORG_GIVE)
+	cyborg_owner_weakref = WEAKREF(loc)
 	hose = new(src)
-	hose.cleaner_box = WEAKREF(src)
+	hose.vacuum_suite_weakref = WEAKREF(src)
 	hose.AddComponent( \
 		/datum/component/transforming, \
 		force_on = hose.force, \
@@ -29,14 +29,12 @@
 		attack_verb_simple_on = list("wash", "mop", "scrub", "whack", "bap", "decontaminate"), \
 		)
 	hose.RegisterSignal(hose, COMSIG_TRANSFORMING_ON_TRANSFORM, TYPE_PROC_REF(/obj/item/janitorial_vacuum_hose, on_transform))
+	AddComponent(/datum/component/borg_item_offered_when_pulled, loc)
+	ADD_TRAIT(src, TRAIT_BORG_GIVE, REF(src))
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/item/borg/janitorial_vacuum_suite/Destroy(force)
-	if(hose?.borg_hose)
-		QDEL_NULL(hose.borg_hose)
-	if(deployed)
-		hose.retract_hose()
-	QDEL_NULL(hose)
+	QDEL_NULL(hose) // Handles the undeployment.
 	return ..()
 
 /obj/item/borg/janitorial_vacuum_suite/attack_self(mob/user, modifiers)
@@ -53,39 +51,41 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/borg/janitorial_vacuum_suite/on_offered(mob/living/offerer, mob/living/carbon/offered)
-	. = ..()
-	if(.)
+	if(..())
 		return
-	if(hose.loc != src && !istype(hose.loc, /mob/living)) // Error handling
+	if(hose.loc != src && !istype(hose.loc, /mob/living)) // Error handling.
 		stack_trace("[src] has been offered with [hose] not present inside its contents or inside a mob's loc variable. Location: [isnull(loc) ? "NULLSPACE" : "[hose.loc], X: [hose.x], Y: [hose.y], Z:[hose.z]"]")
 		deployed = FALSE
 		hose.forceMove(src)
 	if(locked || deployed)
-		return
+		return TRUE
 	if(!offered)
 		offered = locate(/mob/living/carbon) in orange(1, offerer)
 	if(offered && istype(offered))
 		offerer.visible_message(
 			span_notice("[offerer] extends the handle towards [offered] for their cleaning suite."),
 			span_notice("The handle to your [src] extends towards [offered]'s hand."), null, 2)
-
+	SET_PLANE_IMPLICIT(src, ABOVE_HUD_PLANE) // Handles issue where this item could be hidden underneath the offering alert.
 	offerer.apply_status_effect(/datum/status_effect/offering, src, /atom/movable/screen/alert/give/borg, offered)
-	return
+	return TRUE
 
 /obj/item/borg/janitorial_vacuum_suite/on_offer_taken(mob/living/offerer, mob/living/taker)
-	. = ..()
-	if(.)
+	if(..())
 		return TRUE
-	hose.bag = istype(loc, /mob/living/silicon) ? pick(loc.get_all_contents_type(/obj/item/storage/bag/trash)) : locate(/obj/item/storage/bag/trash) in module_list.resolve()
+	var/mob/living/silicon/robot/cyborg_owner = cyborg_owner_weakref.resolve()
+	if(!cyborg_owner)
+		stack_trace("[src] failed to resolve a cyborg owner.")
+		return TRUE
+	hose.bag = (loc == cyborg_owner) ? pick(cyborg_owner.get_all_contents_type(/obj/item/storage/bag/trash)) : locate(/obj/item/storage/bag/trash) in cyborg_owner.model.usable_modules
 	if(!hose.bag)
-		stack_trace("[src] failed to connect to a trash bag on [module_list.resolve()].")
+		stack_trace("[src] failed to connect to a trash bag.")
 		return TRUE
 	taker.visible_message(
 		span_notice("[taker] takes the [hose] from [offerer]."),
 		span_notice("You take the [hose] from [offerer]"))
 	hose.do_pickup_animation(taker, offerer)
 	taker.put_in_hands(hose)
-	hose.borg_hose = hose.generate_hose(offerer, taker)
+	hose.vaccum_beam = hose.generate_vaccum_beam(offerer, taker)
 	hose.RegisterSignal(hose, COMSIG_ITEM_DROPPED, TYPE_PROC_REF(/obj/item/janitorial_vacuum_hose, on_drop))
 	playsound(hose, 'sound/items/vacuum/vacuum_hose.ogg', 100, TRUE)
 	deployed = TRUE
@@ -119,14 +119,17 @@
 	attack_verb_continuous = list("sucked", "vacuumed", "smacked", "forcefully dusted off", "beaten")
 	attack_verb_simple = list("suck", "vacuum", "smack", "dust off", "beat")
 	force = 12
-
-	var/datum/beam/held/vacuum/borg_hose
-	var/datum/weakref/cleaner_box
+	/// The weakref to the vacuum suite that we belong to.
+	var/datum/weakref/vacuum_suite_weakref
+	/// The trash bag where vacuumed items will be inserted into.
 	var/obj/item/storage/bag/trash/bag
+	/// The beam that visualizes the connection between the user's hand and the cyborg's vacuum suite.
+	var/datum/beam/held/vacuum/vaccum_beam
+	/// Should it be cleaning the floor (TRUE) or vacuuming items from the floor (FALSE)?
 	var/cleaning = FALSE
 
 /obj/item/janitorial_vacuum_hose/Destroy(force)
-	bag = null
+	retract_hose()
 	return ..()
 
 /obj/item/janitorial_vacuum_hose/examine(mob/user)
@@ -151,6 +154,7 @@
 			continue
 		break
 
+/// Transforms the item between clean mode and vaccum mode.
 /obj/item/janitorial_vacuum_hose/proc/on_transform(obj/item/source, mob/living/user, active)
 	SIGNAL_HANDLER
 
@@ -158,7 +162,7 @@
 	if(!user)
 		return COMPONENT_NO_DEFAULT_MESSAGE
 	playsound(src, 'sound/items/vacuum/vacuum_clack.ogg', 30, TRUE)
-	if(cleaning) //CLEAN_SCRUB because if you get a borg to help you clean up a crime, you deserve to win.
+	if(cleaning) // CLEAN_SCRUB because if you get a cyborg to help you clean up a crime, you deserve to win.
 		balloon_alert(user, "cleaning")
 		AddComponent( \
 			/datum/component/cleaner, \
@@ -170,42 +174,46 @@
 		qdel(GetComponent(/datum/component/cleaner))
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
+/// Plays the sound when cleaning something.
 /obj/item/janitorial_vacuum_hose/proc/clean_sound()
 	playsound(src, 'sound/items/vacuum/vacuum_steam.ogg', 10, TRUE)
 	return CLEAN_ALLOWED
 
+/// Retracts the item back into the vacuum suite.
 /obj/item/janitorial_vacuum_hose/proc/retract_hose()
-	var/obj/item/borg/janitorial_vacuum_suite/cleaner_resolved = cleaner_box?.resolve()
-	if(!cleaner_resolved)
+	var/obj/item/borg/janitorial_vacuum_suite/vacuum_suite = vacuum_suite_weakref?.resolve()
+	if(!vacuum_suite)
 		CRASH("Somehow [src] doesn't have a source to return to!")
-	if(loc == cleaner_resolved)
+	if(loc == vacuum_suite)
 		return
-	do_pickup_animation(cleaner_resolved, get_turf(src))
-	forceMove(cleaner_resolved)
-	playsound(cleaner_resolved, 'sound/items/vacuum/vacuum_ploop.ogg', 100)
-	if(!isnull(borg_hose) && !QDELING(borg_hose))
+	do_pickup_animation(vacuum_suite, get_turf(src))
+	forceMove(vacuum_suite)
+	playsound(vacuum_suite, 'sound/items/vacuum/vacuum_ploop.ogg', 100)
+	if(!isnull(vaccum_beam) && !QDELING(vaccum_beam))
 		balloon_alert_to_viewers("snap")
-		QDEL_NULL(borg_hose)
+		QDEL_NULL(vaccum_beam)
 	bag = null
-	cleaner_resolved.deployed = FALSE
+	vacuum_suite.deployed = FALSE
 	UnregisterSignal(src, COMSIG_ITEM_DROPPED)
-	cleaner_resolved.update_icon(UPDATE_OVERLAYS)
+	vacuum_suite.update_icon(UPDATE_OVERLAYS)
 
-/obj/item/janitorial_vacuum_hose/proc/generate_hose(mob/living/offerer, mob/living/taker)
-	var/datum/beam/held/vacuum/generated_borg_hose = new(taker, offerer, icon_state = "hosebeam", max_distance = 7, emissive = FALSE, beam_layer = BELOW_MOB_LAYER)
+/// Generates the beam between the user's hand (taker) and the cyborg's vacuum suite (offerer).
+/obj/item/janitorial_vacuum_hose/proc/generate_vaccum_beam(mob/living/offerer, mob/living/taker)
+	var/datum/beam/held/vacuum/generated_vaccum_beam = new(taker, offerer, icon_state = "hosebeam", max_distance = 7, emissive = FALSE, beam_layer = BELOW_MOB_LAYER)
 	var/index = taker.get_held_index_of_item(src)
-	generated_borg_hose.lefthand = IS_LEFT_INDEX(index)
-	INVOKE_ASYNC(generated_borg_hose, TYPE_PROC_REF(/datum/beam, Start))
-	RegisterSignal(generated_borg_hose, COMSIG_QDELETING, PROC_REF(retract_hose))
-	RegisterSignal(generated_borg_hose, COMSIG_BEAM_BEFORE_DRAW, PROC_REF(on_update))
-	return generated_borg_hose
+	generated_vaccum_beam.lefthand = IS_LEFT_INDEX(index)
+	INVOKE_ASYNC(generated_vaccum_beam, TYPE_PROC_REF(/datum/beam, Start))
+	RegisterSignal(generated_vaccum_beam, COMSIG_QDELETING, PROC_REF(retract_hose))
+	RegisterSignal(generated_vaccum_beam, COMSIG_BEAM_BEFORE_DRAW, PROC_REF(on_update))
+	return generated_vaccum_beam
 
+/// Updates the position of the beam whenever the user moves or turns.
 /obj/item/janitorial_vacuum_hose/proc/on_update()
 	SIGNAL_HANDLER
-	var/mob/living/mob = borg_hose.origin
+	var/mob/living/mob = vaccum_beam.origin
 	if(istype(mob))
 		var/index = mob.is_holding(src)
-		borg_hose.lefthand = IS_LEFT_INDEX(index)
+		vaccum_beam.lefthand = IS_LEFT_INDEX(index)
 	if(prob(10))
 		playsound(src, 'sound/items/vacuum/vacuum_hose.ogg', 50, TRUE)
 
