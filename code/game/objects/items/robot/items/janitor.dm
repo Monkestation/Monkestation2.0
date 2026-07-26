@@ -2,7 +2,7 @@
 	name = "janitorial vacuum suite"
 	desc = "A module designed to compensate for your lack of hands by offloading your job onto your more squishy overlords."
 	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "cleanerbox"
+	icon_state = "vacuum_suite"
 	/// The weakref to the cyborg that we belong to.
 	var/datum/weakref/cyborg_owner_weakref = null
 	/// The hose item that will be offered when the cyborg is pulled.
@@ -96,11 +96,11 @@
 /obj/item/borg/janitorial_vacuum_suite/update_overlays()
 	. = ..()
 	if(deployed)
-		. += "cleanerbox_on"
+		. += "vacuum_suite_on"
 	else
-		. += "cleanerbox_wand"
+		. += "vacuum_suite_wand"
 	if(locked)
-		. += "cleanerbox_locked"
+		. += "vacuum_suite_locked"
 
 /obj/item/borg/janitorial_vacuum_suite/examine(mob/user)
 	. = ..()
