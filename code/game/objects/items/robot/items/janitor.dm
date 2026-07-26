@@ -151,7 +151,7 @@
 	. = ..()
 	if(!istype(thing))
 		return NONE
-	if(!bag && cleaning)
+	if(cleaning)
 		return NONE
 	if(thing.anchored || thing.w_class >= WEIGHT_CLASS_BULKY)
 		return NONE
