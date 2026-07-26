@@ -1063,5 +1063,7 @@
 	greyscale_colors = "#F8F8F8#38B40A"
 	greyscale_config = /datum/greyscale_config/peculiar_watch
 	greyscale_config_worn = /datum/greyscale_config/peculiar_watch_worn
+	greyscale_config_inhand_left = null
+	greyscale_config_inhand_right = null
 	body_parts_covered = null
 	flags_1 = IS_PLAYER_COLORABLE_1
