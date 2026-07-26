@@ -36,7 +36,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/mining, 32)
 
 /obj/item/storage/lockbox/vialbox/blood/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/reagent_containers/cup/vial(src)
+		new /obj/item/reagent_containers/chemcanister(src)
 
 /obj/item/bedsheet/prisoner
 	name = "prisoner's blanket"
