@@ -165,12 +165,10 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "bW" = (
@@ -256,15 +254,13 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "ei" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/item/cultivator,
 /obj/item/seeds/potato,
-/obj/machinery/hydroponics/soil,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/growing/soil,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "ez" = (
@@ -894,9 +890,7 @@
 /area/lavaland/surface/outdoors)
 "kx" = (
 /obj/structure/chair/stool,
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
@@ -1860,7 +1854,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor/preopen{
 	id = "labor";
-	name = "labor camp blast door"
+	name = "Labor Camp Blast Door"
 	},
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -1909,17 +1903,13 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "tC" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/seed_extractor,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "tH" = (
@@ -2072,10 +2062,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/hydroponics/soil,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
 	},
+/obj/machinery/growing/soil,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "xY" = (
@@ -2334,15 +2324,13 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "Di" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/plant_analyzer,
-/obj/machinery/hydroponics/soil,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 10
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/growing/soil,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "Ds" = (
@@ -2402,10 +2390,10 @@
 "Ez" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/seeds/onion,
-/obj/machinery/hydroponics/soil,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
+/obj/machinery/growing/soil,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "EF" = (
@@ -2899,10 +2887,10 @@
 /area/mine/laborcamp)
 "SJ" = (
 /obj/item/seeds/soya,
-/obj/machinery/hydroponics/soil,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
 	},
+/obj/machinery/growing/soil,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "SP" = (
@@ -2910,15 +2898,13 @@
 /turf/open/indestructible/necropolis,
 /area/ruin/unpowered/dragonslair)
 "SV" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/seeds/carrot,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
 	},
-/obj/machinery/hydroponics/soil,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/growing/soil,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "SZ" = (

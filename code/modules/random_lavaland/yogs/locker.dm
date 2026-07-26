@@ -63,7 +63,6 @@
 	name = "strange jumpsuit"
 	desc = "A very strange looking blue and white uniform with a blue cross on its back."
 	icon_state = "mining_medic"
-	inhand_icon_state = "mining_medic"
 	armor_type = /datum/armor/cargo_miner
 	resistance_flags = NONE
 	can_adjust = FALSE

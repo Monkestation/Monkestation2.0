@@ -676,13 +676,9 @@
 /area/mine/living_quarters)
 "ia" = (
 /obj/effect/turf_decal/loading_area,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Mining Production APC";
-	pixel_x = -25
-	},
 /obj/structure/cable,
 /obj/structure/cable/layer1,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/mine/production)
 "id" = (
@@ -2109,11 +2105,8 @@
 /turf/open/floor/iron,
 /area/mine/production)
 "EJ" = (
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -24
-	},
 /obj/structure/cable,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
 /area/mine/production)
 "ET" = (
@@ -3046,11 +3039,6 @@
 /area/mine/lounge)
 "UP" = (
 /obj/structure/table,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Mining Engineering APC";
-	pixel_x = 24
-	},
 /obj/item/storage/box/lights/mixed,
 /obj/item/storage/toolbox/electrical{
 	pixel_x = 2;
@@ -3066,6 +3054,7 @@
 	c_tag = "Power and Telecommunications"
 	},
 /obj/structure/cable/multilayer/connected,
+/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron/dark,
 /area/mine/maintenance)
 "UX" = (
