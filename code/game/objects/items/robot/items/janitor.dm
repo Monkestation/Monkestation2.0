@@ -3,9 +3,6 @@
 	desc = "A module designed to compensate for your lack of hands by offloading your job onto your more squishy overlords."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "vacuum_suite"
-	hitsound = SFX_SWING_HIT
-	/// The weakref to the cyborg that we belong to.
-	var/datum/weakref/cyborg_owner_weakref
 	/// The hose item that will be offered when the cyborg is pulled.
 	var/obj/item/janitorial_vacuum_hose/hose
 	/// Should the hose item not be offered when the cyborg is pulled?
@@ -17,7 +14,6 @@
 	. = ..()
 	if(!iscyborg(loc))
 		return INITIALIZE_HINT_QDEL
-	cyborg_owner_weakref = WEAKREF(loc)
 	hose = new(src)
 	hose.vacuum_suite_weakref = WEAKREF(src)
 	hose.AddComponent( \
@@ -75,8 +71,6 @@
 /obj/item/borg/janitorial_vacuum_suite/on_offer_taken(mob/living/offerer, mob/living/taker)
 	if(..())
 		return TRUE
-	if(!handle_hose_bag())
-		return TRUE
 	taker.visible_message(
 		span_notice("[taker] takes the [hose] from [offerer]."),
 		span_notice("You take the [hose] from [offerer]"))
@@ -103,18 +97,6 @@
 	. = ..()
 	. += span_notice("<b>Alt-Click</b> to <b>[locked ? "unlock" : "lock"]</b> the [src].")
 
-/// Automatically finds and sets the trash bag for the hose to use.
-/obj/item/borg/janitorial_vacuum_suite/proc/handle_hose_bag()
-	var/mob/living/silicon/robot/cyborg_owner = cyborg_owner_weakref.resolve()
-	if(!cyborg_owner)
-		stack_trace("[src] failed to resolve the cyborg owner.")
-		return FALSE
-	hose.bag = (loc == cyborg_owner) ? pick(cyborg_owner.get_all_contents_type(/obj/item/storage/bag/trash)) : locate(/obj/item/storage/bag/trash) in cyborg_owner.model.usable_modules
-	if(!hose.bag)
-		stack_trace("[src] failed to find any trash bags.")
-		return FALSE
-	return TRUE
-
 /obj/item/janitorial_vacuum_hose
 	name = "janitorial floor cleaner"
 	desc = "This is the working end of an industrial cleaner that someone unfortunately gave sapience."
@@ -123,6 +105,7 @@
 	inhand_icon_state = "vacuum-wand"
 	righthand_file = 'icons/mob/inhands/items/vacuum_wand_righthand.dmi'
 	lefthand_file = 'icons/mob/inhands/items/vacuum_wand_lefthand.dmi'
+	hitsound = SFX_SWING_HIT
 	w_class = WEIGHT_CLASS_BULKY
 	obj_flags = INDESTRUCTIBLE // To prevent fuckery and a broken borg module.
 	attack_verb_continuous = list("sucked", "vacuumed", "smacked", "forcefully dusted off", "beaten")
@@ -155,11 +138,9 @@
 		return NONE
 	if(thing.anchored || thing.w_class >= WEIGHT_CLASS_BULKY)
 		return NONE
-	if(QDELETED(bag)) // May occur if the janitor cyborg gets upgraded to a bluespace trash bag while the hose is still being used.
-		var/obj/item/borg/janitorial_vacuum_suite/vacuum_suite = vacuum_suite_weakref?.resolve()
-		if(!vacuum_suite.handle_hose_bag())
-			retract_hose()
-			return NONE
+	if(QDELETED(bag) && !autoset_bag()) // Catches if the janitor cyborg exchanged their bag while the hose is still being used.
+		retract_hose()
+		return NONE
 	playsound(bag, 'sound/items/vacuum/vacuum_use.ogg', 20, TRUE)
 	for(var/obj/item/I in get_turf(thing))
 		if(!istype(I, thing.type))
@@ -171,6 +152,27 @@
 		if(bag.atom_storage.attempt_insert(I, user, FALSE))
 			continue
 		break
+
+/// Automatically finds and sets the trash bag for the hose to use.
+/obj/item/janitorial_vacuum_hose/proc/autoset_bag()
+	var/obj/item/borg/janitorial_vacuum_suite/vacuum_suite = vacuum_suite_weakref?.resolve()
+	if(!vacuum_suite)
+		stack_trace("[src] failed to resolve their vacuum suite.")
+		return FALSE
+	var/mob/living/silicon/robot/cyborg_holder
+	if(iscyborg(vacuum_suite.loc))
+		cyborg_holder = vacuum_suite.loc
+	else if(istype(vacuum_suite.loc, /obj/item/robot_model))
+		var/obj/item/robot_model/cyborg_model = vacuum_suite.loc
+		cyborg_holder = cyborg_model.cyborg_owner
+	if(!cyborg_holder)
+		stack_trace("[src] failed to resolve the cyborg holder.")
+		return FALSE
+	bag = (loc == cyborg_holder) ? pick(cyborg_holder.get_all_contents_type(/obj/item/storage/bag/trash)) : locate(/obj/item/storage/bag/trash) in cyborg_holder.model.usable_modules
+	if(!bag)
+		stack_trace("[src] failed to find any trash bags.")
+		return FALSE
+	return TRUE
 
 /// Transforms the item between clean mode and vaccum mode.
 /obj/item/janitorial_vacuum_hose/proc/on_transform(obj/item/source, mob/living/user, active)
