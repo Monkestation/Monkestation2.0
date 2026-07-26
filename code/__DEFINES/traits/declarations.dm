@@ -289,6 +289,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_TOXINLOVER "toxinlover"
 /// Doesn't get overlays from being in critical.
 #define TRAIT_NOCRITOVERLAY "no_crit_overlay"
+/// For gloves that should not incur a penalty when doing surgery
+#define TRAIT_STERILE "sterilegloves"
 /// reduces the use time of syringes, pills, patches and medigels but only when using on someone
 #define TRAIT_FASTMED "fast_med_use"
 /// The mob is holy and resistance to cult magic
@@ -722,6 +724,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PRETENDER_ROYAL_METABOLISM "pretender_royal_metabolism"
 #define TRAIT_BALLMER_SCIENTIST "ballmer_scientist"
 #define TRAIT_MAINTENANCE_METABOLISM "maintenance_metabolism"
+#define TRAIT_GOBLIN_METABOLISM "goblin_metabolism"
 /* #define TRAIT_CORONER_METABOLISM "coroner_metabolism" */
 /* #define TRAIT_HUMAN_AI_METABOLISM "human_ai_metabolism" */
 
@@ -1021,6 +1024,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
  */
 #define TRAIT_VENTCRAWLER_ALWAYS "ventcrawler_always"
 #define TRAIT_VENTCRAWLER_NUDE "ventcrawler_nude"
+
+/// Trait to allow climbing into disposals bin by themselves. Only matters for non-carbon living mobs.
+#define TRAIT_CAN_CLIMB_DISPOSALS "disposals_always"
 
 /// Minor trait used for beakers, or beaker-ishes. [/obj/item/reagent_containers], to show that they've been used in a reagent grinder.
 #define TRAIT_MAY_CONTAIN_BLENDED_DUST "may_contain_blended_dust"

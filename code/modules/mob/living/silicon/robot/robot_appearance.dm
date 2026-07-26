@@ -1,0 +1,39 @@
+/mob/living/silicon/robot/regenerate_icons()
+	return update_icons()
+
+/mob/living/silicon/robot/update_icons()
+	icon_state = skin.icon_state
+	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/silicon/robot/update_overlays()
+	. = ..()
+	if(stat != DEAD && !(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed() || low_power_mode)) // Not dead, not stunned.
+		if(!eye_lights)
+			eye_lights = new()
+		if(lamp_enabled || lamp_doom)
+			eye_lights.icon_state = "[skin.icon_state_light]_l"
+			eye_lights.color = lamp_doom ? COLOR_RED : lamp_color
+			set_light_range(max(MINIMUM_USEFUL_LIGHT_RANGE, lamp_intensity))
+			set_light_color(lamp_doom ? COLOR_RED : lamp_color) //Red for doomsday killborgs, borg's choice otherwise
+			SET_PLANE_EXPLICIT(eye_lights, ABOVE_LIGHTING_PLANE, src) //glowy eyes
+		else
+			eye_lights.icon_state = "[skin.icon_state_light]_e"
+			eye_lights.color = COLOR_WHITE
+			SET_PLANE_EXPLICIT(eye_lights, ABOVE_GAME_PLANE, src)
+		eye_lights.icon = icon
+		. += eye_lights
+	if(opened)
+		if(wiresexposed)
+			. += "[skin.icon_state_cover]-opencover +w"
+		else if(cell)
+			. += "[skin.icon_state_cover]-opencover +c"
+		else
+			. += "[skin.icon_state_cover]-opencover -c"
+	if(worn_hat && !isnull(skin.hat_offset))
+		var/mutable_appearance/head_overlay = worn_hat.build_worn_icon(default_layer = 20, default_icon_file = 'icons/mob/clothing/head/default.dmi')
+		head_overlay.pixel_z += skin.hat_offset
+		. += head_overlay
+	if(worn_badge && !isnull(skin.badge_offset))
+		var/mutable_appearance/accessory_overlay = mutable_appearance(worn_badge.worn_icon, worn_badge.icon_state)
+		accessory_overlay.pixel_z += skin.badge_offset
+		. += accessory_overlay

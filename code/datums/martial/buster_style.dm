@@ -841,7 +841,7 @@
 	var/living_collision_dam = 20
 	var/object_punched_damage = 400
 	var/object_collision_damage = 120
-	var/wall_collision_damage = 300
+	var/wall_collision_damage = 600
 
 /datum/action/cooldown/spell/touch/buster/megabuster/before_cast(atom/cast_on)
 	. = ..()

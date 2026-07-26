@@ -43,6 +43,8 @@
 #define COMSIG_REAGENTS_REM_REAGENT "reagents_rem_reagent"
 ///from base of [/datum/reagents/proc/clear_reagents]: ()
 #define COMSIG_REAGENTS_CLEAR_REAGENTS "reagents_clear_reagents"
+///from base of [/datum/reagents/proc/update_total()]
+#define COMSIG_REAGENTS_HOLDER_UPDATED "reagents_update_total"
 ///from base of [/datum/reagents/proc/set_temperature]: (new_temp, old_temp)
 #define COMSIG_REAGENTS_TEMP_CHANGE "reagents_temp_change"
 ///from base of [/datum/reagents/proc/handle_reactions]: (num_reactions)
