@@ -258,8 +258,9 @@
 
 	slime.adjust_wet_stacks(-5, /datum/status_effect/fire_handler/wet_stacks/oozeling)
 
-	if(is_slime_hydrophobic(slime) && !quiet_if_protected)
-		to_chat(slime, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
+	if(is_slime_hydrophobic(slime))
+		if(!quiet_if_protected)
+			to_chat(slime, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
 		return FALSE
 
 	remove_blood_volume(slime, 40 * water_multiplier)
