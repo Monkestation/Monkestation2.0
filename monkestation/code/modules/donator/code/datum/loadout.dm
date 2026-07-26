@@ -1192,6 +1192,13 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+//Amelora
+/datum/loadout_item/suit/pharaoh_tunic
+	name = "Pharoah Tunic"
+	item_path = /obj/item/clothing/suit/costume/nemes
+	donator_only = TRUE
+	requires_purchase = FALSE
+
 //Bleachedcr0w
 /datum/loadout_item/gloves/peculiar_watch
 	name = "Peculiar Watch"

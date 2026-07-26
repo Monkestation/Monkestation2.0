@@ -74,7 +74,7 @@
 /obj/item/borg/projectile_dampen/proc/activate_field(mob/living/silicon/robot/cyborg_user)
 	deactivate_field()
 	active_cyborg = cyborg_user
-	active_cyborg.model.allow_riding = FALSE
+	active_cyborg.can_be_ridden = FALSE
 	dampening_field = new(active_cyborg, field_radius, TRUE, src, /datum/dampener_projectile_effects/peacekeeper)
 	RegisterSignal(active_cyborg, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	RegisterSignal(dampening_field, COMSIG_DAMPENER_CAPTURE, PROC_REF(on_projectile_capture))
@@ -86,7 +86,7 @@
 		qdel(dampening_field)
 	dampening_field = null
 	if(!QDELETED(active_cyborg))
-		active_cyborg.model.allow_riding = TRUE
+		active_cyborg.can_be_ridden = TRUE
 		UnregisterSignal(active_cyborg, COMSIG_LIVING_DEATH)
 	active_cyborg = null
 	if(!silent)
