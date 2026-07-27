@@ -1,6 +1,12 @@
-// CARGO
 /obj/item/robot_model/cargo
 	name = "Cargo"
+	hud_icon_state = "cargo"
+	default_skin = /datum/robot_skin/cargo/default
+	available_skins = list(
+		/datum/robot_skin/cargo/default,
+		/datum/robot_skin/cargo/zoomba,
+		/datum/robot_skin/cargo/kerfus,
+	)
 	basic_modules = list(
 		/obj/item/stamp,
 		/obj/item/stamp/denied,
@@ -20,30 +26,15 @@
 		/obj/item/cargo_teleporter,
 		/obj/item/boxcutter,
 	)
-	radio_channels = list(RADIO_CHANNEL_SUPPLY)
-	emag_modules = list(
+	emagged_modules = list(
 		/obj/item/stamp/chameleon,
 		/obj/item/borg/paperplane_crossbow,
 	)
-	hat_offset = 0
-	badge_offset = 0
-	cyborg_base_icon = "cargo"
-	model_select_icon = "cargo"
-	canDispose = TRUE
-	borg_skins = list(
-		"Technician" = list(
-			SKIN_ICON_STATE = "cargoborg",
-			SKIN_ICON = CYBORG_ICON_CARGO,
-		),
-		"Zoomba" = list(
-			SKIN_ICON_STATE = "zoomba_cargo",
-			SKIN_ICON = CYBORG_ICON_CARGO,
-			SKIN_BADGE_OFFSET = -9,
-		),
-		"Kerfus" = list(
-			SKIN_ICON_STATE = "kerfus_cargo",
-			SKIN_LIGHT_KEY = NONE, SKIN_ICON = CYBORG_ICON_CARGO,
-			SKIN_TRAITS = list(TRAIT_CAT),
-			SKIN_BADGE_OFFSET = -6,
-		),
+	clockwork_modules = list(
+		/obj/item/clock_module/abscond,
+		/obj/item/gun/ballistic/bow/clockwork,
+		/obj/item/clock_module/stargazer,
+		/obj/item/clock_module/sigil_transmission,
 	)
+	radio_channels = list(RADIO_CHANNEL_SUPPLY)
+	traits = list(TRAIT_CAN_CLIMB_DISPOSALS)

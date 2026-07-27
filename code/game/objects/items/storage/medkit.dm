@@ -446,7 +446,8 @@
 
 //------------------------------------------------------------------------------------------------
 // Combat Medkits. The better tactical medkits. TO-DO: Go and replace tactical medkits with these.
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------
+/obj/item/storage/medkit/combat
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."
 	icon_state = "medkit_tactical"
