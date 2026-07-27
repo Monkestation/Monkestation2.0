@@ -66,7 +66,7 @@
 		if(ORGAN_SLOT_EXTERNAL_TAIL)
 			if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
 				return FALSE
-			if(human.w_uniform?.flags_inv & HIDEMUTTAIL)
+			if(human.w_uniform?.flags_inv & HIDETAIL)
 				return FALSE
 			return TRUE
 		if(ORGAN_SLOT_EXTERNAL_SNOUT)
@@ -78,7 +78,7 @@
 				return TRUE
 			return FALSE
 		if(ORGAN_SLOT_EXTERNAL_SPINES)
-			if(human.w_uniform?.flags_inv & HIDEMUTTAIL)
+			if(human.w_uniform?.flags_inv & HIDETAIL)
 				return FALSE
 			return TRUE //todo
 		if(ORGAN_SLOT_EXTERNAL_WINGS)
