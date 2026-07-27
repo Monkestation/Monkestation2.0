@@ -3,7 +3,7 @@
 #define INCUBATOR_DISH_MAJOR   (1 << 2)
 #define INCUBATOR_DISH_MINOR   (1 << 3)
 
-/obj/machinery/disease2/incubator
+/obj/machinery/pathology/incubator
 	name = "pathogenic incubator"
 	desc = "Uses radiation to accelerate the incubation of pathogen. The dishes must be filled with reagents for the incubation to have any effects."
 	density = TRUE
@@ -33,7 +33,7 @@
 	var/effect_focus = 0 //What effect of the disease are we focusing on?
 
 
-/obj/machinery/disease2/incubator/Destroy()
+/obj/machinery/pathology/incubator/Destroy()
 	for(var/i in 1 to length(dish_data))
 		var/datum/dish_incubator_dish/dish_datum = dish_data[i]
 		if(isnull(dish_datum))
@@ -44,7 +44,7 @@
 		dish_data[i] = null
 	return ..()
 
-/obj/machinery/disease2/incubator/RefreshParts()
+/obj/machinery/pathology/incubator/RefreshParts()
 	. = ..()
 	var/scancount = 0
 	var/lasercount = 0
@@ -60,7 +60,7 @@
 	growthrate = initial(growthrate) + lasercount
 
 
-/obj/machinery/disease2/incubator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/machinery/pathology/incubator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!isvirusdish(tool))
 		return NONE
 
@@ -76,7 +76,7 @@
 	to_chat(user, span_warning("There is no more room inside \the [src]. Remove a dish first."))
 	return ITEM_INTERACT_BLOCKING
 
-/obj/machinery/disease2/incubator/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/machinery/pathology/incubator/screwdriver_act(mob/living/user, obj/item/tool)
 	if(..())
 		return TRUE
 	if(on)
@@ -84,7 +84,7 @@
 		return FALSE
 	return default_deconstruction_screwdriver(user, "[base_icon_state]u", base_icon_state, tool)
 
-/obj/machinery/disease2/incubator/crowbar_act(mob/living/user, obj/item/tool)
+/obj/machinery/pathology/incubator/crowbar_act(mob/living/user, obj/item/tool)
 	if(..())
 		return TRUE
 	if(on)
@@ -92,7 +92,7 @@
 		return FALSE
 	return default_deconstruction_crowbar(tool)
 
-/obj/machinery/disease2/incubator/proc/add_dish(obj/item/virus_dish/dish, mob/user, slot)
+/obj/machinery/pathology/incubator/proc/add_dish(obj/item/virus_dish/dish, mob/user, slot)
 	if(!dish.open)
 		to_chat(user, span_warning("You must open the dish's lid before it can be put inside the incubator. Be sure to wear proper protection first (at least a sterile mask and latex gloves)."))
 		return
@@ -110,7 +110,7 @@
 	playsound(src, 'sound/machines/click.ogg', vol = 50, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/machinery/disease2/incubator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/pathology/incubator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -191,7 +191,7 @@
 			effect_focus = stage_to_focus
 			return TRUE
 
-/obj/machinery/disease2/incubator/attack_hand(mob/user)
+/obj/machinery/pathology/incubator/attack_hand(mob/user)
 	. = ..()
 	if(machine_stat & BROKEN)
 		to_chat(user, span_notice("\The [src] is broken. Some components will have to be replaced before it can work again."))
@@ -214,13 +214,13 @@
 
 	ui_interact(user)
 
-/obj/machinery/disease2/incubator/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/pathology/incubator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "DiseaseIncubator", "Incubator")
 		ui.open()
 
-/obj/machinery/disease2/incubator/ui_data(mob/user)
+/obj/machinery/pathology/incubator/ui_data(mob/user)
 	// this is the data which will be sent to the ui
 	var/list/data = list()
 
@@ -263,23 +263,23 @@
 
 	return data
 
-/obj/machinery/disease2/incubator/on_set_machine_stat(old_value)
+/obj/machinery/pathology/incubator/on_set_machine_stat(old_value)
 	. = ..()
 	update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS)
 
-/obj/machinery/disease2/incubator/on_set_is_operational(old_value)
+/obj/machinery/pathology/incubator/on_set_is_operational(old_value)
 	. = ..()
 	if(!is_operational)
 		set_on(FALSE)
 
-/obj/machinery/disease2/incubator/process()
+/obj/machinery/pathology/incubator/process()
 	if(!on)
 		return PROCESS_KILL
 
 	for(var/datum/dish_incubator_dish/dish_datum in dish_data)
 		dish_datum.dish.incubate(mutatechance, growthrate, effect_focus)
 
-/obj/machinery/disease2/incubator/proc/set_on(status, mob/user)
+/obj/machinery/pathology/incubator/proc/set_on(status, mob/user)
 	if(status == on)
 		return
 	on = status
@@ -295,14 +295,14 @@
 		end_processing()
 	update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS)
 
-/obj/machinery/disease2/incubator/proc/find_dish_datum(obj/item/virus_dish/dish)
+/obj/machinery/pathology/incubator/proc/find_dish_datum(obj/item/virus_dish/dish)
 	for(var/datum/dish_incubator_dish/dish_datum in dish_data)
 		if(dish_datum.dish == dish)
 			return dish_datum
 
 	return null
 
-/obj/machinery/disease2/incubator/proc/update_major(obj/item/virus_dish/dish)
+/obj/machinery/pathology/incubator/proc/update_major(obj/item/virus_dish/dish)
 	var/datum/dish_incubator_dish/dish_datum = find_dish_datum(dish)
 	if(isnull(dish_datum))
 		return
@@ -311,7 +311,7 @@
 	dish_datum.updates &= ~INCUBATOR_DISH_MAJOR
 	dish_datum.major_mutations_count++
 
-/obj/machinery/disease2/incubator/proc/update_minor(obj/item/virus_dish/dish, str=0, rob=0, eff=0)
+/obj/machinery/pathology/incubator/proc/update_minor(obj/item/virus_dish/dish, str=0, rob=0, eff=0)
 	var/datum/dish_incubator_dish/dish_datum = find_dish_datum(dish)
 	if(isnull(dish_datum))
 		return
@@ -322,7 +322,7 @@
 	dish_datum.minor_mutation_robustness += rob;
 	dish_datum.minor_mutation_effects += eff;
 
-/obj/machinery/disease2/incubator/update_icon_state()
+/obj/machinery/pathology/incubator/update_icon_state()
 	if(machine_stat & BROKEN)
 		icon_state = "[base_icon_state]b"
 	else if(machine_stat & NOPOWER)
@@ -331,7 +331,7 @@
 		icon_state = base_icon_state
 	return ..()
 
-/obj/machinery/disease2/incubator/update_appearance(updates)
+/obj/machinery/pathology/incubator/update_appearance(updates)
 	. = ..()
 	if(!is_operational)
 		set_light(0)
@@ -340,7 +340,7 @@
 	else
 		set_light(2, 1)
 
-/obj/machinery/disease2/incubator/update_overlays()
+/obj/machinery/pathology/incubator/update_overlays()
 	. = ..()
 	if(on && is_operational)
 		. += mutable_appearance(icon, "incubator_light")
@@ -352,7 +352,7 @@
 		if(!isnull(dish_data[i]))
 			. += add_dish_sprite(dish_data[i], i)
 
-/obj/machinery/disease2/incubator/proc/add_dish_sprite(datum/dish_incubator_dish/dish_datum, slot)
+/obj/machinery/pathology/incubator/proc/add_dish_sprite(datum/dish_incubator_dish/dish_datum, slot)
 	var/obj/item/virus_dish/dish = dish_datum.dish
 	var/list/overlays = list()
 

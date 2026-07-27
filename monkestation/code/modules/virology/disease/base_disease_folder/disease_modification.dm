@@ -55,8 +55,8 @@
 	if(!reagents)
 		return
 
-	var/obj/machinery/disease2/incubator/machine
-	if(istype(incubator.loc, /obj/machinery/disease2/incubator))
+	var/obj/machinery/pathology/incubator/machine
+	if(istype(incubator.loc, /obj/machinery/pathology/incubator))
 		machine = incubator.loc
 
 
@@ -68,7 +68,7 @@
 			reagent.disease_incubate(incubator, src, machine)
 			reagents.remove_reagent(reagent.type, (reagent.volume * 0.1))
 
-/datum/disease/proc/stage_incubation(specified_stage, mutatechance, datum/reagents/reagents, obj/machinery/disease2/incubator/machine, atom/movable/incubator)
+/datum/disease/proc/stage_incubation(specified_stage, mutatechance, datum/reagents/reagents, obj/machinery/pathology/incubator/machine, atom/movable/incubator)
 	var/list/symptoms_at_stage = list()
 	for(var/datum/symptom/e as anything in symptoms)
 		if(e.stage != specified_stage)

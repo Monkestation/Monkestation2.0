@@ -1,4 +1,4 @@
-/obj/machinery/disease2/isolator
+/obj/machinery/pathology/isolator
 	name = "Pathogenic Isolator"
 	desc = "Takes a syringe of blood, and isolates the pathogens inside into a dish."
 	density = TRUE
@@ -9,11 +9,11 @@
 	var/isolating = 0
 	var/beaker = null
 
-/obj/machinery/disease2/isolator/Destroy()
+/obj/machinery/pathology/isolator/Destroy()
 	isolated_disease = null
 	return ..()
 
-/obj/machinery/disease2/isolator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/machinery/pathology/isolator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/reagent_containers/syringe))
 		return NONE
 
@@ -31,7 +31,7 @@
 	icon_state = "isolator_in"
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/disease2/isolator/Topic(href, href_list)
+/obj/machinery/pathology/isolator/Topic(href, href_list)
 	if(..())
 		return
 
@@ -71,7 +71,7 @@
 		src.updateUsrDialog()
 		return
 
-/obj/machinery/disease2/isolator/attack_hand(mob/user, list/modifiers)
+/obj/machinery/pathology/isolator/attack_hand(mob/user, list/modifiers)
 	if(machine_stat & BROKEN)
 		return
 	user.machine = src
@@ -102,7 +102,7 @@
 	onclose(user, "isolator")
 	return
 
-/obj/machinery/disease2/isolator/process()
+/obj/machinery/pathology/isolator/process()
 	if(isolating > 0)
 		isolating -= 1
 		if(isolating == 0)

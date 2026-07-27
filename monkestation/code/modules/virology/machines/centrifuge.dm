@@ -3,7 +3,7 @@
 #define CENTRIFUGE_LIGHTSPECIAL_ON			2
 
 
-/obj/machinery/disease2/centrifuge
+/obj/machinery/pathology/centrifuge
 	name = "isolation centrifuge"
 	desc = "Used to isolate pathogen and antibodies in blood. Make sure to keep the tubes balanced when spinning for optimal efficiency."
 	icon = 'monkestation/code/modules/virology/icons/virology.dmi'
@@ -45,11 +45,11 @@
 
 	var/ejecting = FALSE
 
-/obj/machinery/disease2/centrifuge/Initialize(mapload)
+/obj/machinery/pathology/centrifuge/Initialize(mapload)
 	. = ..()
 	RefreshParts()
 
-/obj/machinery/disease2/centrifuge/Destroy()
+/obj/machinery/pathology/centrifuge/Destroy()
 	for (var/i = 1 to length(tubes))
 		var/obj/item/reagent_containers/cup/tube/tube = tubes[i]
 		tube?.forceMove(drop_location())
@@ -64,14 +64,14 @@
 	special = CENTRIFUGE_LIGHTSPECIAL_OFF
 	return ..()
 
-/obj/machinery/disease2/centrifuge/RefreshParts()
+/obj/machinery/pathology/centrifuge/RefreshParts()
 	. = ..()
 	var/manipcount = 0
 	for(var/datum/stock_part/manipulator/M in component_parts)
 		manipcount += M.tier
 	base_efficiency = 1 + upgrade_efficiency * (manipcount-2)
 
-/obj/machinery/disease2/centrifuge/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/machinery/pathology/centrifuge/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/reagent_containers/cup/tube))
 		return NONE
 
@@ -100,7 +100,7 @@
 	to_chat(user, span_warning("There is no room for more tubes."))
 	return ITEM_INTERACT_BLOCKING
 
-/obj/machinery/disease2/centrifuge/proc/tube_has_antibodies(obj/item/reagent_containers/cup/tube/tube)
+/obj/machinery/pathology/centrifuge/proc/tube_has_antibodies(obj/item/reagent_containers/cup/tube/tube)
 	if (!tube)
 		return FALSE
 
@@ -114,7 +114,7 @@
 						return TRUE
 
 //Also handles luminosity
-/obj/machinery/disease2/centrifuge/update_icon_state()
+/obj/machinery/pathology/centrifuge/update_icon_state()
 	if (machine_stat & NOPOWER)
 		icon_state = "[base_icon_state]0"
 	else if (machine_stat & BROKEN)
@@ -125,7 +125,7 @@
 		icon_state = base_icon_state
 	return ..()
 
-/obj/machinery/disease2/centrifuge/update_appearance(updates)
+/obj/machinery/pathology/centrifuge/update_appearance(updates)
 	. = ..()
 	if(!is_operational)
 		set_light(0)
@@ -134,7 +134,7 @@
 	else
 		set_light(2, 1)
 
-/obj/machinery/disease2/centrifuge/update_overlays()
+/obj/machinery/pathology/centrifuge/update_overlays()
 	. = ..()
 	if(is_operational)
 		if(on)
@@ -165,16 +165,16 @@
 			filling.color = mix_color_from_reagents(tube.reagents.reagent_list)
 			. += filling
 
-/obj/machinery/disease2/centrifuge/on_set_machine_stat(old_value)
+/obj/machinery/pathology/centrifuge/on_set_machine_stat(old_value)
 	. = ..()
 	update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS)
 
-/obj/machinery/disease2/centrifuge/on_set_is_operational(old_value)
+/obj/machinery/pathology/centrifuge/on_set_is_operational(old_value)
 	. = ..()
 	if(!is_operational)
 		set_on(FALSE)
 
-/obj/machinery/disease2/centrifuge/proc/add_tube_dat(obj/item/reagent_containers/cup/tube/tube, list/tube_task = list(0,0,0,0,0), slot = 1)
+/obj/machinery/pathology/centrifuge/proc/add_tube_dat(obj/item/reagent_containers/cup/tube/tube, list/tube_task = list(0,0,0,0,0), slot = 1)
 	var/dat = ""
 	var/valid = tube_valid[slot]
 
@@ -217,7 +217,7 @@
 						dat += "<A href='byond://?src=[REF(src)];ejectvial=[slot]'>[tube.name] (no pathogen detected)</a> [valid ? "<A href='byond://?src=[REF(src)];synthvaccine=[slot]'>SYNTHESIZE VACCINE</a>" : "(not enough antibodies for a vaccine)"]"
 	return dat
 
-/obj/machinery/disease2/centrifuge/proc/eject_when_no_power()
+/obj/machinery/pathology/centrifuge/proc/eject_when_no_power()
 	ejecting = TRUE
 	for(var/i = 1 to length(tubes))
 		var/obj/item/reagent_containers/cup/tube/tube = tubes[i]
@@ -232,7 +232,7 @@
 		sleep(0.1 SECONDS)
 	ejecting = FALSE
 
-/obj/machinery/disease2/centrifuge/attack_hand(mob/user, list/modifiers)
+/obj/machinery/pathology/centrifuge/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(machine_stat & (BROKEN))
 		to_chat(user, span_notice("\The [src] is broken. Some components will have to be replaced before it can work again.") )
@@ -268,7 +268,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/disease2/centrifuge/process()
+/obj/machinery/pathology/centrifuge/process()
 	if(!on || !is_operational)
 		return PROCESS_KILL
 
@@ -306,7 +306,7 @@
 		updateUsrDialog()
 		update_appearance(UPDATE_OVERLAYS)
 
-/obj/machinery/disease2/centrifuge/proc/centrifuge_act(obj/item/reagent_containers/cup/tube/tube, list/tube_task = list(0,0,0,0,0))
+/obj/machinery/pathology/centrifuge/proc/centrifuge_act(obj/item/reagent_containers/cup/tube/tube, list/tube_task = list(0,0,0,0,0))
 	var/list/result = list(0,0,0,0,0)
 	if (!tube)
 		return result
@@ -333,7 +333,7 @@
 				result = list(0,0,0,0,0)
 	return result
 
-/obj/machinery/disease2/centrifuge/Topic(href, href_list)
+/obj/machinery/pathology/centrifuge/Topic(href, href_list)
 
 	if(..())
 		return TRUE
@@ -399,7 +399,7 @@
 	updateUsrDialog()
 	attack_hand(usr)
 
-/obj/machinery/disease2/centrifuge/proc/isolate(obj/item/reagent_containers/cup/tube/tube, mob/user)
+/obj/machinery/pathology/centrifuge/proc/isolate(obj/item/reagent_containers/cup/tube/tube, mob/user)
 	var/list/result = list(0,0,0,0,0)
 	if (!tube)
 		return result
@@ -431,7 +431,7 @@
 
 	return result
 
-/obj/machinery/disease2/centrifuge/proc/cure(obj/item/reagent_containers/cup/tube/tube, mob/user)
+/obj/machinery/pathology/centrifuge/proc/cure(obj/item/reagent_containers/cup/tube/tube, mob/user)
 	var/list/result = list(0,0,0,0,0)
 	if (!tube)
 		return result
@@ -477,7 +477,7 @@
 
 	return result
 
-/obj/machinery/disease2/centrifuge/proc/set_on(status, mob/user)
+/obj/machinery/pathology/centrifuge/proc/set_on(status, mob/user)
 	if(status == on)
 		return
 	on = status
@@ -489,7 +489,7 @@
 		end_processing()
 	update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS)
 
-/obj/machinery/disease2/centrifuge/proc/print_dish(datum/disease/acute/disease)
+/obj/machinery/pathology/centrifuge/proc/print_dish(datum/disease/acute/disease)
 	special = CENTRIFUGE_LIGHTSPECIAL_BLINKING
 	update_appearance(UPDATE_OVERLAYS)
 	/*
@@ -500,7 +500,7 @@
 	balloon_alert_to_viewers("growth dish printed")
 	addtimer(CALLBACK(src, PROC_REF(finish_print_dish), disease.Copy()), 1 SECONDS)
 
-/obj/machinery/disease2/centrifuge/proc/finish_print_dish(datum/disease/acute/disease)
+/obj/machinery/pathology/centrifuge/proc/finish_print_dish(datum/disease/acute/disease)
 	var/obj/item/virus_dish/dish = new(drop_location())
 	if(disease.disease_flags & DISEASE_DORMANT)
 		balloon_alert_to_viewers("activating virus sample")
@@ -511,10 +511,10 @@
 	dish.update_appearance()
 	dish.name = "growth dish (Unknown [dish.contained_virus.form])"
 
-/obj/machinery/disease2/centrifuge/fullupgrade
+/obj/machinery/pathology/centrifuge/fullupgrade
 	circuit = /obj/item/circuitboard/machine/centrifuge/fullupgrade
 
-/obj/machinery/disease2/centrifuge/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/machinery/pathology/centrifuge/screwdriver_act(mob/living/user, obj/item/tool)
 	if(..())
 		return TRUE
 	if(on)
@@ -522,7 +522,7 @@
 		return FALSE
 	return default_deconstruction_screwdriver(user, "[base_icon_state]u", base_icon_state, tool)
 
-/obj/machinery/disease2/centrifuge/crowbar_act(mob/living/user, obj/item/tool)
+/obj/machinery/pathology/centrifuge/crowbar_act(mob/living/user, obj/item/tool)
 	if(..())
 		return TRUE
 	if(on)
@@ -530,11 +530,11 @@
 		return FALSE
 	return default_deconstruction_crowbar(tool)
 
-/obj/machinery/disease2/centrifuge/attack_ai(mob/user)
+/obj/machinery/pathology/centrifuge/attack_ai(mob/user)
 	if(!panel_open)
 		return attack_hand(user)
 
-/obj/machinery/disease2/centrifuge/attack_robot(mob/user)
+/obj/machinery/pathology/centrifuge/attack_robot(mob/user)
 	return attack_ai(user)
 
 #undef CENTRIFUGE_LIGHTSPECIAL_OFF
