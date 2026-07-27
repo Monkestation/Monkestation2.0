@@ -3466,7 +3466,6 @@
 #include "code\modules\antagonists\clock_cult\mobs\cogscarab.dm"
 #include "code\modules\antagonists\clock_cult\mobs\eminence.dm"
 #include "code\modules\antagonists\clock_cult\mobs\clock_borgs\clock_borg.dm"
-#include "code\modules\antagonists\clock_cult\mobs\clock_borgs\clock_borg_models.dm"
 #include "code\modules\antagonists\clock_cult\mobs\clock_borgs\clock_borg_modules.dm"
 #include "code\modules\antagonists\clock_cult\scriptures\_scripture.dm"
 #include "code\modules\antagonists\clock_cult\scriptures\preservation\clockwork_armaments.dm"
