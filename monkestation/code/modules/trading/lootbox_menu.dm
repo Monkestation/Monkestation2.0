@@ -22,6 +22,7 @@
 	data["canWithdrawLootbox"] = isliving(user) && client_owner.prefs.lootboxes_owned >= 1 && user.can_hold_items()
 	data["coins"] = client_owner.prefs.metacoins
 	data["openingboxes"] = opening_boxes
+	data["DBconnected"] = SSdbcore.IsConnected()
 
 	return data
 
@@ -45,7 +46,7 @@
 				if(client_owner.mob.trigger_lootbox_on_self())
 					client_owner.prefs.lootboxes_owned--
 			else
-				open_boxes(opening_amount)
+				open_boxes(min(opening_amount, 50)) // Shouldnt go over 50 since its capped in TGUI but just in case
 
 		if("buyboxes")
 			client_owner.attempt_lootbox_buy(params["buyboxamount"])
@@ -56,7 +57,18 @@
 				return
 			if(client_owner.prefs.lootboxes_owned < 1)
 				return
-			open_boxes(client_owner.prefs.lootboxes_owned)
+			open_boxes(min(client_owner.prefs.lootboxes_owned, 50))
+	SStgui.try_update_ui(client_owner.mob, src)
+
+/// Attempt to buy a given number of lootboxes. Fails if the client does not have enough monkecoin to do so.
+/client/proc/attempt_lootbox_buy(num_lootboxes = 1)
+	if(!prefs.has_coins(LOOTBOX_COST))
+		to_chat(src, span_warning("You do not have enough Monkecoins to buy a lootbox!"))
+		return
+	if(!prefs.adjust_metacoins(ckey, -LOOTBOX_COST * num_lootboxes, "Bought [num_lootboxes] lootbox[num_lootboxes > 1 ? "es" : ""]"))
+		return
+	prefs.lootboxes_owned += num_lootboxes
+	prefs.save_preferences()
 
 ///WIthdraw a single lootbox to our client's hands, given that they are living and capable of holding items
 /datum/lootbox_menu/proc/withdraw_lootbox()
@@ -144,6 +156,9 @@
 	var/totalboxes
 
 /datum/lootbox_rewards_display/New(client/owner, low_tokens, med_tokens, high_tokens, _loadout_items, total_boxes_opened, duplicates_total)
+	if(!owner || ((low_tokens + med_tokens + high_tokens) == 0 && !_loadout_items) || total_boxes_opened == 0)
+		qdel(src)
+		return
 	client_owner = owner
 	src.low_tokens = low_tokens
 	src.med_tokens = med_tokens

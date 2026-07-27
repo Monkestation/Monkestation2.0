@@ -16,11 +16,18 @@ type Data = {
   canWithdrawLootbox: BooleanLike;
   coins: number;
   openingboxes: BooleanLike;
+  DBconnected: BooleanLike;
 };
 
 export const LootboxMenu = (props) => {
   const { act, data } = useBackend<Data>();
-  const { canWithdrawLootbox, numberLootboxes, coins, openingboxes } = data;
+  const {
+    canWithdrawLootbox,
+    numberLootboxes,
+    coins,
+    openingboxes,
+    DBconnected,
+  } = data;
   const [lootboxamount, setLootboxAmount] = useLocalState(`lootboxamount`, 1);
   const [buyboxamount, setbuyboxAmount] = useLocalState(`buyboxamount`, 1);
   return (
@@ -34,7 +41,7 @@ export const LootboxMenu = (props) => {
               icon="eject"
               content="Withdraw Lootbox"
               tooltip="Withdraw a single lootbox to your mob's hands. Requires you be a mob, and be able to hold things."
-              disabled={!canWithdrawLootbox || openingboxes}
+              disabled={!canWithdrawLootbox || openingboxes || DBconnected}
               onClick={() => act('withdraw_lootbox')}
             />
           >
@@ -86,7 +93,7 @@ export const LootboxMenu = (props) => {
                       lineHeight="25px"
                       fontSize="20px"
                       minValue={1}
-                      maxValue={Math.floor(coins / 5000)}
+                      maxValue={Math.min(Math.floor(coins / 5000), 50)}
                       onChange={(value) => setbuyboxAmount(Math.round(value))}
                     />
                   </Table.Cell>
@@ -98,7 +105,9 @@ export const LootboxMenu = (props) => {
                       content={
                         numberLootboxes > 1 ? 'Open Lootboxes' : 'Open Lootbox'
                       }
-                      disabled={numberLootboxes < 1 || openingboxes}
+                      disabled={
+                        numberLootboxes < 1 || openingboxes || DBconnected
+                      }
                       tooltip="Open Lootboxes!"
                       position="center"
                       color="green"
@@ -123,7 +132,7 @@ export const LootboxMenu = (props) => {
                       lineHeight="25px"
                       fontSize="20px"
                       minValue={1}
-                      maxValue={numberLootboxes}
+                      maxValue={Math.min(numberLootboxes, 50)}
                       onChange={(value) => setLootboxAmount(Math.round(value))}
                     />
                   </Table.Cell>
@@ -136,7 +145,9 @@ export const LootboxMenu = (props) => {
                       <i>Lets go gambling!!!</i>
                     </b>
                     position="center"
-                    disabled={numberLootboxes < 1 || openingboxes}
+                    disabled={
+                      numberLootboxes < 1 || openingboxes || DBconnected
+                    }
                     color="gold"
                     bold
                     style={{
