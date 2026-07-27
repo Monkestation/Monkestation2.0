@@ -344,8 +344,10 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	QDEL_NULL(holder.stored_mmi)
 	forceMove(holder)
 	holder.stored_mmi = src
+	var/brain_name = brainmob.real_name
 	if(brainmob.mind)
 		brainmob.mind.transfer_to(H)
+	H.fully_replace_character_name(H.real_name, brain_name)
 	var/ipc_brainwash_directive = get_ipc_brainwash_directive(H, installer)
 	if(ipc_brainwash_directive)
 		to_chat(H, span_userdanger(get_ipc_brainwash_message()))

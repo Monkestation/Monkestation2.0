@@ -20,6 +20,27 @@
 	TEST_ASSERT_EQUAL(incoming_personality.current, incoming_brainmob, "A rejected MMI installation transferred the incoming personality out of its brainmob.")
 	TEST_ASSERT_EQUAL(incoming_mmi.loc, original_mmi_location, "A rejected MMI installation moved the incoming MMI.")
 
+/datum/unit_test/roundstart_ipc_posibrain_name_transfer
+
+/datum/unit_test/roundstart_ipc_posibrain_name_transfer/Run()
+	var/mob/living/carbon/human/species/ipc/source_ipc = allocate(/mob/living/carbon/human/species/ipc)
+	source_ipc.mind_initialize()
+	source_ipc.fully_replace_character_name(source_ipc.real_name, "Roundstart IPC Test")
+	var/datum/mind/source_personality = source_ipc.mind
+	var/obj/item/organ/internal/brain/positronic/source_brain = source_ipc.get_organ_slot(ORGAN_SLOT_BRAIN)
+	source_brain.surgical_extraction = TRUE
+	var/obj/item/mmi/posibrain/extracted_posibrain = source_brain.Remove(source_ipc)
+
+	var/mob/living/carbon/human/species/ipc/destination_shell = allocate(/mob/living/carbon/human/species/ipc)
+	var/obj/item/organ/internal/brain/positronic/destination_brain = destination_shell.get_organ_slot(ORGAN_SLOT_BRAIN)
+	destination_brain.Remove(destination_shell, special = TRUE)
+	qdel(destination_brain)
+
+	var/obj/item/bodypart/destination_chest = destination_shell.get_bodypart(BODY_ZONE_CHEST)
+	TEST_ASSERT(extracted_posibrain.attempt_become_ipc_organ(destination_chest, destination_shell, null), "A round-start IPC's positronic brain could not be installed into another IPC shell.")
+	TEST_ASSERT_EQUAL(destination_shell.mind, source_personality, "The round-start IPC's personality did not transfer into the destination shell.")
+	TEST_ASSERT_EQUAL(destination_shell.real_name, "Roundstart IPC Test", "The destination IPC shell did not inherit the round-start IPC's name.")
+
 /datum/unit_test/positronic_ipc_binding_states
 
 /datum/unit_test/positronic_ipc_binding_states/Run()
@@ -37,12 +58,14 @@
 	qdel(unbound_default_brain)
 
 	var/obj/item/mmi/posibrain/unbound_posi = allocate(/obj/item/mmi/posibrain)
+	unbound_posi.brainmob.fully_replace_character_name(null, "Unbound Positronic Test")
 	unbound_posi.brainmob.mind_initialize()
 	var/datum/mind/unbound_personality = unbound_posi.brainmob.mind
 	TEST_ASSERT_NULL(unbound_posi.get_ipc_brainwash_directive(unbound_shell, master), "An unbound positronic brain generated a master directive.")
 	var/obj/item/bodypart/unbound_chest = unbound_shell.get_bodypart(BODY_ZONE_CHEST)
 	TEST_ASSERT(unbound_posi.attempt_become_ipc_organ(unbound_chest, unbound_shell, master), "An unbound positronic brain could not be installed into an IPC shell.")
 	TEST_ASSERT_EQUAL(unbound_shell.mind, unbound_personality, "The unbound positronic personality was not transferred to its IPC shell.")
+	TEST_ASSERT_EQUAL(unbound_shell.real_name, "Unbound Positronic Test", "The IPC shell did not inherit the installed positronic brain's name.")
 	TEST_ASSERT_NULL(unbound_personality.has_antag_datum(/datum/antagonist/brainwashed), "An unbound positronic IPC received a brainwashing directive.")
 
 	var/mob/living/carbon/human/species/ipc/bound_shell = allocate(/mob/living/carbon/human/species/ipc)
@@ -76,6 +99,7 @@
 
 	var/obj/item/mmi/syndie/syndicate_mmi = allocate(/obj/item/mmi/syndie)
 	var/mob/living/brain/incoming_brainmob = allocate(/mob/living/brain)
+	incoming_brainmob.fully_replace_character_name(null, "Syndicate MMI Test")
 	incoming_brainmob.mind_initialize()
 	var/datum/mind/incoming_personality = incoming_brainmob.mind
 	syndicate_mmi.set_brainmob(incoming_brainmob)
@@ -97,6 +121,7 @@
 	var/obj/item/bodypart/chest = shell.get_bodypart(BODY_ZONE_CHEST)
 	TEST_ASSERT(syndicate_mmi.attempt_become_ipc_organ(chest, shell, installer), "The occupied Syndicate MMI could not be installed into an empty IPC shell.")
 	TEST_ASSERT_EQUAL(shell.mind, incoming_personality, "The incoming MMI personality was not transferred to the IPC shell.")
+	TEST_ASSERT_EQUAL(shell.real_name, "Syndicate MMI Test", "The IPC shell did not inherit the installed MMI's name.")
 	TEST_ASSERT_EQUAL(syndicate_mmi.brainwash_directive, original_directive, "IPC installation overwrote the MMI's persistent brainwashing directive.")
 	TEST_ASSERT_EQUAL(length(syndicate_mmi.brainwash_objectives), 1, "IPC installation altered the MMI's normal brainwashing objective tracking.")
 	TEST_ASSERT_NULL(syndicate_mmi.ipc_brainwash_objectives, "IPC installation created a redundant Syndicate MMI directive.")
