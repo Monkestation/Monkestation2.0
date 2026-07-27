@@ -23,7 +23,7 @@
 	disease.log += "<br />[ROUND_TIME()] Antigen Mutation (Unstable Uranium Gel in [parent])"
 	disease.antigenmutate()
 	if(isvirusdish(parent))
-		var/obj/item/weapon/virusdish/dish = parent
+		var/obj/item/virus_dish/dish = parent
 		dish.analysed = FALSE
 		dish.contained_virus.disease_flags &= ~DISEASE_ANALYZED
 		dish.info = "OUTDATED : [dish.info]"

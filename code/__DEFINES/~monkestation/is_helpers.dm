@@ -2,4 +2,4 @@
 
 #define isslugcat(A) (istype(A, /mob/living/basic/slugcat))
 
-#define isvirusdish(A) (istype(A, /obj/item/weapon/virusdish))
+#define isvirusdish(A) (istype(A, /obj/item/virus_dish))

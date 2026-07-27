@@ -501,7 +501,7 @@
 	addtimer(CALLBACK(src, PROC_REF(finish_print_dish), disease.Copy()), 1 SECONDS)
 
 /obj/machinery/disease2/centrifuge/proc/finish_print_dish(datum/disease/acute/disease)
-	var/obj/item/weapon/virusdish/dish = new(drop_location())
+	var/obj/item/virus_dish/dish = new(drop_location())
 	if(disease.disease_flags & DISEASE_DORMANT)
 		balloon_alert_to_viewers("activating virus sample")
 		disease.disease_flags &= ~DISEASE_DORMANT

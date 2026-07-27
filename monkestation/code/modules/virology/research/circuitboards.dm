@@ -9,7 +9,7 @@
 /obj/item/circuitboard/machine/diseaseanalyser
 	name = "Disease Analyzer"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
-	build_path = /obj/machinery/disease2/diseaseanalyser
+	build_path = /obj/machinery/pathology/disease_analyser
 	req_components = list(
 		/datum/stock_part/scanning_module = 3,
 		/datum/stock_part/manipulator = 1,
@@ -33,7 +33,7 @@
 	)
 
 /obj/item/circuitboard/machine/diseaseanalyser/fullupgrade
-	build_path = /obj/machinery/disease2/diseaseanalyser/fullupgrade
+	build_path = /obj/machinery/pathology/disease_analyser/fullupgrade
 	req_components = list(
 		/datum/stock_part/scanning_module/tier4 = 3,
 		/datum/stock_part/manipulator/tier4 = 1,

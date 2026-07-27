@@ -139,7 +139,7 @@
 			span = "notice"
 		to_chat(user,"<span class='[span]'>Scanning \the [I]...sterility level = [I.sterility]%</span>")
 		if (isvirusdish(I))
-			var/obj/item/weapon/virusdish/dish = I
+			var/obj/item/virus_dish/dish = I
 			if (dish.open && dish.contained_virus)
 				to_chat(user,span_danger("However, since its lid has been opened, unprotected contact with the dish can result in infection."))
 

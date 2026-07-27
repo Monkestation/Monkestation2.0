@@ -3,7 +3,7 @@
 	for(var/datum/symptom/listed as anything in symptoms)
 		disease.effectmutate(isliving(parent), listed)
 		if(isvirusdish(parent))
-			var/obj/item/weapon/virusdish/dish = parent
+			var/obj/item/virus_dish/dish = parent
 			dish.analysed = FALSE
 			dish.contained_virus.disease_flags &= ~DISEASE_ANALYZED
 			dish.info = "OUTDATED : [dish.info]"
@@ -18,7 +18,7 @@
 			listed.max_chance = min(listed.max_chance++, 100)
 		listed.chance = min(listed.chance + rand(2, 3), listed.max_chance)
 		if(isvirusdish(parent))
-			var/obj/item/weapon/virusdish/dish = parent
+			var/obj/item/virus_dish/dish = parent
 			dish.analysed = FALSE
 			dish.contained_virus.disease_flags &= ~DISEASE_ANALYZED
 			dish.info = "OUTDATED : [dish.info]"

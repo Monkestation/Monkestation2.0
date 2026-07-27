@@ -1,4 +1,4 @@
-/obj/machinery/disease2/diseaseanalyser
+/obj/machinery/pathology/disease_analyser
 	name = "disease analyzer"
 	desc = "For analysing pathogenic dishes of sufficient growth."
 	icon = 'monkestation/code/modules/virology/icons/virology.dmi'
@@ -13,9 +13,11 @@
 
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1 //1000 extra power once per analysis
 
-	var/process_time = 5
+	/// Minimum virus growth required to analyze
 	var/minimum_growth = 100
-	var/obj/item/weapon/virusdish/dish = null
+	/// The dish itself
+	var/obj/item/virus_dish/dish = null
+
 	var/last_scan_name = ""
 	var/last_scan_info = ""
 
@@ -23,21 +25,21 @@
 	/// Reference to the mob that is currently scanning whatever virus is inserted
 	var/mob/scanner = null
 
-/obj/machinery/disease2/diseaseanalyser/Destroy()
+/obj/machinery/pathology/disease_analyser/Destroy()
 	if(!QDELETED(dish))
 		dish.forceMove(drop_location())
 	dish = null
 	scanner = null
 	return ..()
 
-/obj/machinery/disease2/diseaseanalyser/RefreshParts()
+/obj/machinery/pathology/disease_analyser/RefreshParts()
 	. = ..()
 	var/scancount = 0
 	for(var/datum/stock_part/scanning_module/M in component_parts)
 		scancount += M.tier
 	minimum_growth = round((initial(minimum_growth) - (scancount * 6)))
 
-/obj/machinery/disease2/diseaseanalyser/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/machinery/pathology/disease_analyser/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(machine_stat & (BROKEN))
 		to_chat(user, span_warning("\The [src] is broken. Some components will have to be replaced before it can work again."))
 		return NONE
@@ -58,7 +60,7 @@
 	if(!isvirusdish(tool))
 		return NONE
 
-	var/obj/item/weapon/virusdish/inserting_dish = tool
+	var/obj/item/virus_dish/inserting_dish = tool
 	if(!inserting_dish.open)
 		to_chat(user, span_warning("You must open the dish's lid before it can be analysed. Be sure to wear proper protection first (at least a sterile mask and latex gloves)."))
 		return ITEM_INTERACT_BLOCKING
@@ -71,7 +73,7 @@
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/disease2/diseaseanalyser/attack_hand(mob/user)
+/obj/machinery/pathology/disease_analyser/attack_hand(mob/user)
 	. = ..()
 	if(machine_stat & (BROKEN))
 		to_chat(user, span_notice("\The [src] is broken. Some components will have to be replaced before it can work again."))
@@ -132,12 +134,12 @@
 			return
 		if(dish.contained_virus.addToDB())
 			say("Added new pathogen to database.")
-		var/datum/data/record/v = GLOB.virusDB["[dish.contained_virus.uniqueID]-[dish.contained_virus.subID]"]
+		var/datum/data/record/virus_record = GLOB.virusDB["[dish.contained_virus.uniqueID]-[dish.contained_virus.subID]"]
 		dish.info = dish.contained_virus.get_info()
 		dish.update_desc()
 		last_scan_name = dish.contained_virus.name(TRUE)
-		if(v)
-			last_scan_name += v.fields["nickname"] ? " \"[v.fields["nickname"]]\"" : ""
+		if(virus_record)
+			last_scan_name += virus_record.fields["nickname"] ? " \"[virus_record.fields["nickname"]]\"" : ""
 
 		dish.name = "growth dish ([last_scan_name])"
 		last_scan_info = dish.info
@@ -157,7 +159,7 @@
 	update_appearance()
 	scanner = null
 
-/obj/machinery/disease2/diseaseanalyser/update_icon_state()
+/obj/machinery/pathology/disease_analyser/update_icon_state()
 	if(processing)
 		icon_state = "analyzer-processing"
 	else if(machine_stat & (NOPOWER))
@@ -168,14 +170,14 @@
 		icon_state = "analyser"
 	return ..()
 
-/obj/machinery/disease2/diseaseanalyser/update_appearance(updates)
+/obj/machinery/pathology/disease_analyser/update_appearance(updates)
 	. = ..()
 	if(!is_operational)
 		set_light(0)
 	else
 		set_light(2, 1)
 
-/obj/machinery/disease2/diseaseanalyser/update_overlays()
+/obj/machinery/pathology/disease_analyser/update_overlays()
 	. = ..()
 	if(processing)
 		. += emissive_appearance(icon, "analyzer-processing-emissive", src)
@@ -193,7 +195,7 @@
 		else
 			. += mutable_appearance(icon, "smalldish-empty")
 
-/obj/machinery/disease2/diseaseanalyser/verb/PrintPaper()
+/obj/machinery/pathology/disease_analyser/verb/PrintPaper()
 	set name = "Print last analysis"
 	set category = "Object"
 	set src in oview(1)
@@ -214,7 +216,7 @@
 	visible_message("\The [src] prints a sheet of paper.")
 	addtimer(CALLBACK(src, PROC_REF(print_paper)))
 
-/obj/machinery/disease2/diseaseanalyser/proc/print_paper()
+/obj/machinery/pathology/disease_analyser/proc/print_paper()
 	var/obj/item/paper/paper = new(drop_location())
 	paper.name = last_scan_name
 	paper.add_raw_text(last_scan_info)
@@ -222,7 +224,7 @@
 	paper.pixel_y = -8
 	paper.update_appearance()
 
-/obj/machinery/disease2/diseaseanalyser/process()
+/obj/machinery/pathology/disease_analyser/process()
 	if(!is_operational)
 		scanner = null
 		return
@@ -232,7 +234,7 @@
 		processing = FALSE
 		scanner = null
 
-/obj/machinery/disease2/diseaseanalyser/click_alt(mob/user)
+/obj/machinery/pathology/disease_analyser/click_alt(mob/user)
 	if(!dish && scanner)
 		return CLICK_ACTION_BLOCKING
 	playsound(src, 'sound/machines/click.ogg', vol = 50, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
@@ -241,11 +243,10 @@
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/disease2/diseaseanalyser/fullupgrade
+/obj/machinery/pathology/disease_analyser/fullupgrade
 	circuit = /obj/item/circuitboard/machine/diseaseanalyser/fullupgrade
 
-
-/obj/machinery/disease2/diseaseanalyser/screwdriver_act(mob/living/user, obj/item/I)
+/obj/machinery/pathology/disease_analyser/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
 		return TRUE
 	if(processing)
@@ -253,18 +254,17 @@
 		return FALSE
 	return default_deconstruction_screwdriver(user, "analyseru", "analyser", I)
 
-/obj/machinery/disease2/diseaseanalyser/crowbar_act(mob/living/user, obj/item/I)
+/obj/machinery/pathology/disease_analyser/crowbar_act(mob/living/user, obj/item/I)
 	if(..())
 		return TRUE
 	if(processing)
 		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
 		return FALSE
-	return default_deconstruction_crowbar(I)
+	return default_deconstruction_crowbar(I)\
 
-
-/obj/machinery/disease2/diseaseanalyser/attack_ai(mob/user)
+/obj/machinery/pathology/disease_analyser/attack_ai(mob/user)
 	if(!panel_open)
 		return attack_hand(user)
 
-/obj/machinery/disease2/diseaseanalyser/attack_robot(mob/user)
+/obj/machinery/pathology/disease_analyser/attack_robot(mob/user)
 	return attack_ai(user)

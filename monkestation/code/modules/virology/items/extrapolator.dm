@@ -77,7 +77,7 @@
 
 	last_attacked_target = target
 	if(isvirusdish(last_attacked_target))
-		var/obj/item/weapon/virusdish/dish = last_attacked_target
+		var/obj/item/virus_dish/dish = last_attacked_target
 		if(!dish.contained_virus)
 			return
 	ui_interact(user, should_open = TRUE)
@@ -122,7 +122,7 @@
 
 	var/list/diseases = list()
 	if(isvirusdish(last_attacked_target))
-		var/obj/item/weapon/virusdish/dish = last_attacked_target
+		var/obj/item/virus_dish/dish = last_attacked_target
 		if(!dish.contained_virus)
 			return
 		var/list/symptom_data = list()

@@ -72,10 +72,10 @@
 	desc = "Please input a petri dish containing a virus with the symptoms of sneezing to complete this tutorial and gain a reward."
 
 /obj/structure/closet/tutorial/virology/check_stuff(mob/living/user, obj/item/stuff)
-	if(!istype(stuff, /obj/item/weapon/virusdish))
+	if(!istype(stuff, /obj/item/virus_dish))
 		return FALSE
 
-	var/obj/item/weapon/virusdish/virus_dish = stuff
+	var/obj/item/virus_dish/virus_dish = stuff
 	if(locate(/datum/symptom/sneeze) in virus_dish.contained_virus?.symptoms)
 		return TRUE
 

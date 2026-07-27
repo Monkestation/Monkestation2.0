@@ -1,6 +1,7 @@
 ///////////////VIRUS DISH///////////////
 GLOBAL_LIST_INIT(virusdishes, list())
-/obj/item/weapon/virusdish
+
+/obj/item/virus_dish
 	name = "growth dish"
 	desc = "A petri dish fit to contain viral, bacteriologic, parasitic, or any other kind of pathogenic culture."
 	icon = 'monkestation/code/modules/virology/icons/virology.dmi'
@@ -17,7 +18,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	var/mob/last_openner
 	COOLDOWN_DECLARE(cloud_cooldown)
 
-/obj/item/weapon/virusdish/Initialize(mapload)
+/obj/item/virus_dish/Initialize(mapload)
 	. = ..()
 	reagents = new(10)
 	reagents.my_atom = src
@@ -33,23 +34,14 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	)
 	RegisterSignals(src.reagents, reagent_change_signals, PROC_REF(on_reagent_change))
 
-/obj/item/weapon/virusdish/Destroy()
+/obj/item/virus_dish/Destroy()
 	GLOB.virusdishes -= src
 	STOP_PROCESSING(SSobj, src)
 	contained_virus = null
 	last_openner = null
 	return ..()
 
-/*
-/obj/item/weapon/virusdish/clean_blood()
-	..()
-	if(open)
-		contained_virus = null
-		growth = 0
-		update_icon()
-*/
-
-/obj/item/weapon/virusdish/update_icon()
+/obj/item/virus_dish/update_icon()
 	. = ..()
 	overlays.len = 0
 	if(!contained_virus)
@@ -82,11 +74,11 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	else if(info != "" && copytext(info, 1, 9) == "OUTDATED")
 		overlays += "virusdish-outdated"
 
-/obj/item/weapon/virusdish/attack_hand(mob/living/user, list/modifiers)
+/obj/item/virus_dish/attack_hand(mob/living/user, list/modifiers)
 	..()
 	infection_attempt(user)
 
-/obj/item/weapon/virusdish/attack_self(mob/living/user, list/modifiers)
+/obj/item/virus_dish/attack_self(mob/living/user, list/modifiers)
 	open = !open
 	update_appearance()
 	to_chat(user,span_notice("You [open?"open":"close"] dish's lid."))
@@ -101,10 +93,10 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		STOP_PROCESSING(SSobj, src)
 	infection_attempt(user)
 
-/obj/item/weapon/virusdish/is_open_container()
+/obj/item/virus_dish/is_open_container()
 	return open
 
-/obj/item/weapon/virusdish/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/item/virus_dish/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if((user.istate & ISTATE_HARM) && tool.force)
 		visible_message(span_danger("The virus dish is smashed to bits!"))
 		shatter(user)
@@ -137,7 +129,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			to_chat(user, span_notice("You transfer [transfered_amount] units of the solution to \the [src]."))
 		return ITEM_INTERACT_SUCCESS
 
-/obj/item/weapon/virusdish/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/virus_dish/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(istype(interacting_with, /obj/machinery/smartfridge/chemistry))
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
@@ -172,12 +164,12 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		return ITEM_INTERACT_SUCCESS
 
 /// Empties out the virus dish
-/obj/item/weapon/virusdish/proc/empty(mob/user, atom/target)
+/obj/item/virus_dish/proc/empty(mob/user, atom/target)
 	if(user && target)
 		to_chat(user,span_notice("You empty \the [src]'s reagents into \the [target]."))
 	reagents.clear_reagents()
 
-/obj/item/weapon/virusdish/process()
+/obj/item/virus_dish/process()
 	if(!contained_virus || !open)
 		return PROCESS_KILL
 	if(isliving(loc))
@@ -193,10 +185,10 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			var/list/L = list(contained_virus)
 			new /obj/effect/pathogen_cloud/core(get_turf(src), last_openner, virus_copylist(L), FALSE)
 
-/obj/item/weapon/virusdish/random
+/obj/item/virus_dish/random
 	name = "growth dish"
 
-/obj/item/weapon/virusdish/random/Initialize(mapload)
+/obj/item/virus_dish/random/Initialize(mapload)
 	. = ..()
 	if(!loc) //because fuck you /datum/subsystem/supply_shuttle/Initialize()
 		GLOB.virusdishes -= src
@@ -224,13 +216,13 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	update_appearance()
 	contained_virus.origin = "Random Dish"
 
-/obj/item/weapon/virusdish/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/virus_dish/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if(isturf(hit_atom))
 		visible_message(span_danger("The virus dish shatters on impact!"))
 		shatter(throwingdatum.thrower)
 
-/obj/item/weapon/virusdish/proc/incubate(mutatechance=5, growthrate=3, effect_focus = 0)
+/obj/item/virus_dish/proc/incubate(mutatechance=5, growthrate=3, effect_focus = 0)
 	if(contained_virus)
 		if(reagents.remove_reagent(/datum/reagent/consumable/virus_food, 0.2))
 			growth = min(growth + growthrate, 100)
@@ -238,7 +230,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			growth = max(growth - growthrate, 0)
 		contained_virus.incubate(src,mutatechance,effect_focus)
 
-/obj/item/weapon/virusdish/proc/on_reagent_change(datum/reagents/reagents)
+/obj/item/virus_dish/proc/on_reagent_change(datum/reagents/reagents)
 	SIGNAL_HANDLER
 
 	if(contained_virus)
@@ -248,7 +240,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			L |= contained_virus
 			LAZYOR(blood.data["diseases"], filter_disease_by_spread(L, required = DISEASE_SPREAD_BLOOD))
 
-/obj/item/weapon/virusdish/proc/shatter(mob/user)
+/obj/item/virus_dish/proc/shatter(mob/user)
 	var/obj/effect/decal/cleanable/virusdish/dish = new(get_turf(src))
 	dish.pixel_x = pixel_x
 	dish.pixel_y = pixel_y
@@ -279,7 +271,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 				strength -= 40
 	qdel(src)
 
-/obj/item/weapon/virusdish/update_desc(updates)
+/obj/item/virus_dish/update_desc(updates)
 	. = ..()
 	desc = initial(desc)
 	if(open)
@@ -289,8 +281,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	if(info)
 		desc += "\nThere is a sticker with some printed information on it. <a href='byond://?src=\ref[src];examine=1'>(Read it)</a>"
 
-
-/obj/item/weapon/virusdish/Topic(href, href_list)
+/obj/item/virus_dish/Topic(href, href_list)
 	if(..())
 		return TRUE
 	if(href_list["examine"])
@@ -298,7 +289,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		popup.set_content(info)
 		popup.open()
 
-/obj/item/weapon/virusdish/infection_attempt(mob/living/perp, datum/disease/D)
+/obj/item/virus_dish/infection_attempt(mob/living/perp, datum/disease/D)
 	if(open)//If the dish is open, we may get infected by the disease inside on top of those that might be stuck on it.
 		var/block = 0
 		var/bleeding = 0

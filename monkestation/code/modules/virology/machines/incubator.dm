@@ -147,7 +147,7 @@
 			if(!isliving(user))
 				return TRUE
 
-			var/obj/item/weapon/virusdish/VD = user.get_active_hand()
+			var/obj/item/virus_dish/VD = user.get_active_hand()
 			if(istype(VD))
 				add_dish(VD, user, slot)
 
@@ -252,7 +252,7 @@
 		dish_ui_datum["dish_slot"] = i
 
 		var/list/symptom_data = list()
-		var/obj/item/weapon/virusdish/dish = dish_datum.dish
+		var/obj/item/virus_dish/dish = dish_datum.dish
 		dish_ui_datum["contains_disease"] = istype(dish.contained_virus) ? TRUE : FALSE
 		for(var/datum/symptom/symptom in dish.contained_virus?.symptoms)
 			if(!(dish.contained_virus.disease_flags & DISEASE_ANALYZED))
@@ -353,7 +353,7 @@
 			. += add_dish_sprite(dish_data[i], i)
 
 /obj/machinery/disease2/incubator/proc/add_dish_sprite(datum/dish_incubator_dish/dish_datum, slot)
-	var/obj/item/weapon/virusdish/dish = dish_datum.dish
+	var/obj/item/virus_dish/dish = dish_datum.dish
 	var/list/overlays = list()
 
 	slot--
@@ -467,7 +467,7 @@
 
 /datum/dish_incubator_dish
 	// The inserted virus dish.
-	var/obj/item/weapon/virusdish/dish
+	var/obj/item/virus_dish/dish
 
 	var/major_mutations_count = 0
 

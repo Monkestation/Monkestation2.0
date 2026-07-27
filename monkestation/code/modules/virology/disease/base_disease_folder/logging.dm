@@ -21,7 +21,7 @@
 				return
 
 	var/dishes = 0
-	for (var/obj/item/weapon/virusdish/dish in GLOB.virusdishes)
+	for (var/obj/item/virus_dish/dish in GLOB.virusdishes)
 		if (dish.contained_virus)
 			if (ID == "[dish.contained_virus.uniqueID]-[dish.contained_virus.subID]")
 				dishes++
