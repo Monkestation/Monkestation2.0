@@ -56,7 +56,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_FUN, FALSE, "Select Equipment",
 	clear_human_dummy(dummy_key)
 	qdel(src)
 
-/datum/select_equipment/ui_act(action, params)
+/datum/select_equipment/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (!.)
 		return
