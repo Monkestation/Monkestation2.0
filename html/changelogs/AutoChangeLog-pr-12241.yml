@@ -1,0 +1,5 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - rscadd: "Nanites, microfusion, and cargo sorters will be announced in their respective channels when researched."
+  - code_imp: "Demodularized/cleaned up some researches"
