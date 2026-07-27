@@ -92,7 +92,7 @@
 		return FALSE
 	return default_deconstruction_crowbar(tool)
 
-/obj/machinery/disease2/incubator/proc/add_dish(obj/item/weapon/virusdish/dish, mob/user, slot)
+/obj/machinery/disease2/incubator/proc/add_dish(obj/item/virus_dish/dish, mob/user, slot)
 	if(!dish.open)
 		to_chat(user, span_warning("You must open the dish's lid before it can be put inside the incubator. Be sure to wear proper protection first (at least a sterile mask and latex gloves)."))
 		return
@@ -295,14 +295,14 @@
 		end_processing()
 	update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS)
 
-/obj/machinery/disease2/incubator/proc/find_dish_datum(obj/item/weapon/virusdish/dish)
+/obj/machinery/disease2/incubator/proc/find_dish_datum(obj/item/virus_dish/dish)
 	for(var/datum/dish_incubator_dish/dish_datum in dish_data)
 		if(dish_datum.dish == dish)
 			return dish_datum
 
 	return null
 
-/obj/machinery/disease2/incubator/proc/update_major(obj/item/weapon/virusdish/dish)
+/obj/machinery/disease2/incubator/proc/update_major(obj/item/virus_dish/dish)
 	var/datum/dish_incubator_dish/dish_datum = find_dish_datum(dish)
 	if(isnull(dish_datum))
 		return
@@ -311,7 +311,7 @@
 	dish_datum.updates &= ~INCUBATOR_DISH_MAJOR
 	dish_datum.major_mutations_count++
 
-/obj/machinery/disease2/incubator/proc/update_minor(obj/item/weapon/virusdish/dish, str=0, rob=0, eff=0)
+/obj/machinery/disease2/incubator/proc/update_minor(obj/item/virus_dish/dish, str=0, rob=0, eff=0)
 	var/datum/dish_incubator_dish/dish_datum = find_dish_datum(dish)
 	if(isnull(dish_datum))
 		return
@@ -478,7 +478,7 @@
 	var/updates_new = NONE
 	var/updates = NONE
 
-/datum/dish_incubator_dish/New(obj/item/weapon/virusdish/dish)
+/datum/dish_incubator_dish/New(obj/item/virus_dish/dish)
 	. = ..()
 	src.dish = dish
 
