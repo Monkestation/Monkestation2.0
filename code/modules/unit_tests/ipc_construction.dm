@@ -7,10 +7,10 @@
 	core.heart = new /obj/item/organ/internal/heart/synth(core)
 	core.liver = new /obj/item/organ/internal/liver/synth(core)
 	core.core_state = IPC_CONSTRUCTION_SECURED
-	core.l_arm = new /obj/item/bodypart/arm/left/ipc(core)
-	core.r_arm = new /obj/item/bodypart/arm/right/ipc(core)
-	core.l_leg = new /obj/item/bodypart/leg/left/ipc(core)
-	core.r_leg = new /obj/item/bodypart/leg/right/ipc(core)
+	core.left_arm = new /obj/item/bodypart/arm/left/ipc(core)
+	core.right_arm = new /obj/item/bodypart/arm/right/ipc(core)
+	core.left_leg = new /obj/item/bodypart/leg/left/ipc(core)
+	core.right_leg = new /obj/item/bodypart/leg/right/ipc(core)
 
 	var/obj/item/bodypart/head/ipc/head = new(core)
 	core.head = head
@@ -47,10 +47,10 @@
 	core.heart = new /obj/item/organ/internal/heart/synth(core)
 	core.liver = new /obj/item/organ/internal/liver/synth(core)
 	core.core_state = IPC_CONSTRUCTION_SECURED
-	core.l_arm = new /obj/item/bodypart/arm/left/ipc(core)
-	core.r_arm = new /obj/item/bodypart/arm/right/ipc(core)
-	core.l_leg = new /obj/item/bodypart/leg/left/ipc(core)
-	core.r_leg = new /obj/item/bodypart/leg/right/ipc(core)
+	core.left_arm = new /obj/item/bodypart/arm/left/ipc(core)
+	core.right_arm = new /obj/item/bodypart/arm/right/ipc(core)
+	core.left_leg = new /obj/item/bodypart/leg/left/ipc(core)
+	core.right_leg = new /obj/item/bodypart/leg/right/ipc(core)
 
 	var/obj/item/bodypart/head/ipc/head = new(core)
 	core.head = head
