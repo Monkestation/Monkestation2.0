@@ -57,12 +57,12 @@
 		return
 
 	playsound(source, 'sound/items/ratchet.ogg', 50, TRUE)
-	if(hascall(source, "prepare_for_packing"))
-		call(source, "prepare_for_packing")()
-	else if(hascall(source, "build_packed_material_cache"))
-		call(source, "build_packed_material_cache")()
-	var/obj/item/new_pack
 
+	var/obj/machinery/rnd/production/omnilathe/omnilathe = source
+	if(istype(omnilathe))
+		omnilathe.prepare_for_packing()
+
+	var/obj/item/new_pack
 	if(generic_repack)
 		var/obj/item/flatpacked_machine/generic/new_generic_pack = new item_to_pack_into(source.drop_location())
 		new_pack = new_generic_pack
@@ -71,23 +71,9 @@
 	else
 		new_pack = new item_to_pack_into(source.drop_location())
 
-	if(new_pack && ("imported_designs" in source.vars) && ("imported_designs" in new_pack.vars))
-		var/list/imported_designs = source.vars["imported_designs"]
-		new_pack.vars["imported_designs"] = islist(imported_designs) ? imported_designs.Copy() : list()
+	if(istype(omnilathe) && new_pack)
+		omnilathe.pack_into(new_pack)
 
-	if(new_pack && ("unlocked_recipe_sets" in source.vars) && ("unlocked_recipe_sets" in new_pack.vars))
-		var/list/unlocked_recipe_sets = source.vars["unlocked_recipe_sets"]
-		new_pack.vars["unlocked_recipe_sets"] = islist(unlocked_recipe_sets) ? unlocked_recipe_sets.Copy() : list()
-
-	if(new_pack && ("lathe_recipe_set" in source.vars) && ("lathe_recipe_set" in new_pack.vars))
-		new_pack.vars["lathe_recipe_set"] = source.vars["lathe_recipe_set"]
-
-	if(new_pack && ("packed_materials" in source.vars) && ("packed_materials" in new_pack.vars))
-		var/list/packed_materials = source.vars["packed_materials"]
-		new_pack.vars["packed_materials"] = islist(packed_materials) ? packed_materials.Copy() : list()
-
-	if(new_pack && hascall(source, "transfer_contents_to_packed_item"))
-		call(source, "transfer_contents_to_packed_item")(new_pack)
 	qdel(source)
 
 /// Adds screen context for hovering over the repackable items with your mouse

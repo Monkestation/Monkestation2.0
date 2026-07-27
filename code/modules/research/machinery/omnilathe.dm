@@ -315,10 +315,34 @@
 	if(!new_pack)
 		return
 
+	/// Drop magazine on ground if there is one inside
+	if(loaded_magazine)
+		if(ammo_busy)
+			ammo_fill_finish(FALSE)
+		loaded_magazine.forceMove(drop_location())
+		loaded_magazine = null
+
 	atom_storage?.remove_all(new_pack)
 	for(var/obj/item/stored_item in contents)
 		if(stored_item?.loc == src)
 			stored_item.forceMove(new_pack)
+
+/// Copies current state into the toolbox with contents
+/obj/machinery/rnd/production/omnilathe/proc/pack_into(obj/item/new_pack)
+	var/obj/item/storage/toolbox/emergency/omnilathe/toolbox = new_pack
+	if(!istype(toolbox))
+		return
+
+	if(imported_designs?.len)
+		toolbox.imported_designs = imported_designs.Copy()
+	if(packed_materials?.len)
+		toolbox.packed_materials = packed_materials.Copy()
+	if(unlocked_recipe_sets?.len)
+		toolbox.unlocked_recipe_sets = unlocked_recipe_sets.Copy()
+	if(lathe_recipe_set)
+		toolbox.lathe_recipe_set = lathe_recipe_set
+
+	transfer_contents_to_packed_item(toolbox)
 
 /obj/machinery/rnd/production/omnilathe/proc/restore_packed_material_cache()
 	if(!packed_materials?.len || !materials?.mat_container)
