@@ -25,6 +25,6 @@ GLOBAL_LIST_EMPTY(cyborg_base_models_icon_list)
 		var/valid_base_models = list()
 		for(var/option in GLOB.cyborg_model_list)
 			var/obj/item/robot_model/model = GLOB.cyborg_model_list[option]
-			var/model_icon = initial(model.cyborg_base_icon)
-			valid_base_models[option] = image(icon = 'icons/mob/silicon/robots.dmi', icon_state = model_icon)
+			var/datum/robot_skin/skin = model.default_skin
+			valid_base_models[option] = image(icon = skin.icon, icon_state = skin.icon_state)
 		GLOB.cyborg_base_models_icon_list = valid_base_models
