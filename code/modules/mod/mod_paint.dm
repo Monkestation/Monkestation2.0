@@ -176,8 +176,8 @@
 /obj/item/mod/paint/proc/color_ipc(mob/living/carbon/target, mob/living/user)
 	if(!can_paint_target(target, user))
 		return
-	var/reskin = tgui_input_list(user, "Which chassis do you want to use?", "Chassis Change", GLOB.ipc_chassis_list)
-	if(!reskin || !can_paint_target(target, user))
+	var/chassis_choice = tgui_input_list(user, "Which chassis do you want to use?", "Chassis Change", GLOB.ipc_chassis_list)
+	if(!chassis_choice || !can_paint_target(target, user))
 		return
 	var/color_choice = tgui_color_picker(user, "Which color do you want your chassis to be?", "Color Change")
 	if(!color_choice || !can_paint_target(target, user))
@@ -187,7 +187,7 @@
 	if(!istype(ipc_species))
 		return
 
-	target.dna.features["ipc_chassis"] = reskin
+	target.dna.features["ipc_chassis"] = chassis_choice
 	target.dna.features["mcolor"] = sanitize_hexcolor(color_choice)
 	ipc_species.update_chassis(target)
 	target.regenerate_icons()

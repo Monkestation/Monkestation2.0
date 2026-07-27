@@ -29,7 +29,7 @@
 ///IPCS NO LONGER ARE PURE ELECTRICAL BEINGS, any attempts to change this outside of Borbop will be denied. Thanks.
 /obj/item/organ/internal/stomach/synth
 	name = "synthetic bio-reactor"
-	icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi'
+	icon = 'icons/obj/medical/ipc_organs.dmi'
 	icon_state = "stomach-ipc"
 	w_class = WEIGHT_CLASS_NORMAL
 	zone = BODY_ZONE_CHEST
@@ -44,7 +44,7 @@
 	/// The single pending start or finish timer for the grinder sequence.
 	var/will_it_blend_timer
 	/// Cooldown between completed grinder sequences.
-	COOLDOWN_DECLARE(blend_cd)
+	COOLDOWN_DECLARE(blend_cooldown)
 
 /obj/item/organ/internal/stomach/synth/Destroy()
 	cancel_blend_sequence()
@@ -89,8 +89,8 @@
 	blending = FALSE
 
 /// Returns whether this stomach is still installed in the expected owner.
-/obj/item/organ/internal/stomach/synth/proc/valid_blend_owner(mob/living/carbon/carbon)
-	return !QDELETED(src) && !QDELETED(carbon) && owner == carbon && carbon.get_organ_slot(ORGAN_SLOT_STOMACH) == src
+/obj/item/organ/internal/stomach/synth/proc/valid_blend_owner(mob/living/carbon/stomach_owner)
+	return !QDELETED(src) && !QDELETED(stomach_owner) && owner == stomach_owner && stomach_owner.get_organ_slot(ORGAN_SLOT_STOMACH) == src
 
 ///Handles charging the synth from borg chargers
 /obj/item/organ/internal/stomach/synth/proc/on_borg_charge(datum/source, amount)
@@ -104,31 +104,31 @@
 
 /obj/item/organ/internal/stomach/synth/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	var/datum/reagent/nutri = locate(/datum/reagent/consumable/nutriment) in reagents.reagent_list
-	if(!nutri)
+	var/datum/reagent/nutriment = locate(/datum/reagent/consumable/nutriment) in reagents.reagent_list
+	if(!nutriment)
 		return
-	if(will_it_blend_timer || blending || !COOLDOWN_FINISHED(src, blend_cd))
+	if(will_it_blend_timer || blending || !COOLDOWN_FINISHED(src, blend_cooldown))
 		return
 	will_it_blend_timer = addtimer(CALLBACK(src, PROC_REF(start_blending), owner), 4 SECONDS, TIMER_STOPPABLE)
 
 /// Begins grinding nutriment when the stomach remains installed in its owner.
-/obj/item/organ/internal/stomach/synth/proc/start_blending(mob/living/carbon/carbon)
+/obj/item/organ/internal/stomach/synth/proc/start_blending(mob/living/carbon/stomach_owner)
 	will_it_blend_timer = null
-	if(!valid_blend_owner(carbon) || !carbon.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment))
+	if(!valid_blend_owner(stomach_owner) || !stomach_owner.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment))
 		return
 	blending = TRUE
-	carbon.Shake(2, 2, 10 SECONDS)
-	playsound(carbon, 'monkestation/code/modules/smithing/sounds/blend.ogg', 50, TRUE, mixer_channel = CHANNEL_MOB_SOUNDS)
-	will_it_blend_timer = addtimer(CALLBACK(src, PROC_REF(finish_blending), carbon), 10 SECONDS, TIMER_STOPPABLE)
+	stomach_owner.Shake(2, 2, 10 SECONDS)
+	playsound(stomach_owner, 'sound/items/blend.ogg', 50, TRUE, mixer_channel = CHANNEL_MOB_SOUNDS)
+	will_it_blend_timer = addtimer(CALLBACK(src, PROC_REF(finish_blending), stomach_owner), 10 SECONDS, TIMER_STOPPABLE)
 
 /// Converts the owner's nutriment reagent into nutrition and starts the cooldown.
-/obj/item/organ/internal/stomach/synth/proc/finish_blending(mob/living/carbon/human/carbon)
+/obj/item/organ/internal/stomach/synth/proc/finish_blending(mob/living/carbon/human/stomach_owner)
 	will_it_blend_timer = null
-	if(!valid_blend_owner(carbon))
+	if(!valid_blend_owner(stomach_owner))
 		blending = FALSE
 		return
-	var/nutri_amount = carbon.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
-	carbon.reagents.del_reagent(/datum/reagent/consumable/nutriment)
-	carbon.nutrition = min(NUTRITION_LEVEL_FULL, carbon.nutrition + (nutri_amount * 5))
+	var/nutriment_amount = stomach_owner.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
+	stomach_owner.reagents.del_reagent(/datum/reagent/consumable/nutriment)
+	stomach_owner.nutrition = min(NUTRITION_LEVEL_FULL, stomach_owner.nutrition + (nutriment_amount * 5))
 	blending = FALSE
-	COOLDOWN_START(src, blend_cd, 60 SECONDS)
+	COOLDOWN_START(src, blend_cooldown, 60 SECONDS)

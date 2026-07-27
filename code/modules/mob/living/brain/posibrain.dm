@@ -251,21 +251,21 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	return /obj/item/organ/internal/brain/positronic
 
 /// Returns the brainwashing directive applied when this MMI is installed into an IPC.
-/obj/item/mmi/proc/get_ipc_brainwash_directive(mob/living/carbon/human/H, mob/living/installer)
+/obj/item/mmi/proc/get_ipc_brainwash_directive(mob/living/carbon/human/ipc, mob/living/installer)
 	return
 
 /// Returns the warning shown when IPC installation applies brainwashing.
 /obj/item/mmi/proc/get_ipc_brainwash_message()
 	return "You feel the MMI overriding your free will!"
 
-/obj/item/mmi/syndie/get_ipc_brainwash_directive(mob/living/carbon/human/H, mob/living/installer)
+/obj/item/mmi/syndie/get_ipc_brainwash_directive(mob/living/carbon/human/ipc, mob/living/installer)
 	if(installer)
 		return get_updated_brainwash_directive(installer)
 	if(brainwash_objectives)
 		return
 	return force_cyborg_lawzero
 
-/obj/item/mmi/posibrain/get_ipc_brainwash_directive(mob/living/carbon/human/H, mob/living/installer)
+/obj/item/mmi/posibrain/get_ipc_brainwash_directive(mob/living/carbon/human/ipc, mob/living/installer)
 	var/mob/living/carbon/human/imprinted_master = get_imprinted_master()
 	if(imprinted_master)
 		return "You are permanently imprinted to [imprinted_master], obey [imprinted_master]'s every order and assist [imprinted_master.p_them()] in completing [imprinted_master.p_their()] goals at any cost."
@@ -290,31 +290,31 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	ipc_brainwash_objectives = null
 
 /// Recreates this MMI's brainmob from an IPC occupant and transfers their mind into it.
-/obj/item/mmi/proc/restore_ipc_brainmob(mob/living/carbon/human/H, conscious = TRUE)
+/obj/item/mmi/proc/restore_ipc_brainmob(mob/living/carbon/human/ipc, conscious = TRUE)
 	if(!brainmob)
 		set_brainmob(new /mob/living/brain(src))
-	brainmob.name = H.real_name
-	brainmob.real_name = H.real_name
-	brainmob.timeofhostdeath = H.timeofdeath
-	if(H.has_dna())
+	brainmob.name = ipc.real_name
+	brainmob.real_name = ipc.real_name
+	brainmob.timeofhostdeath = ipc.timeofdeath
+	if(ipc.has_dna())
 		if(!brainmob.stored_dna)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
-		H.dna.copy_dna(brainmob.stored_dna)
+		ipc.dna.copy_dna(brainmob.stored_dna)
 	brainmob.container = src
 	brainmob.forceMove(src)
 	brainmob.set_stat(conscious ? CONSCIOUS : DEAD)
 	brainmob.emp_damage = 0
-	if(H.mind)
-		H.mind.transfer_to(brainmob)
+	if(ipc.mind)
+		ipc.mind.transfer_to(brainmob)
 	brainmob.reset_perspective()
 	name = "[initial(name)]: [brainmob.real_name]"
 	update_appearance()
 
 /// Extracts an IPC occupant into this MMI unconscious and begins a traumatic reboot.
-/obj/item/mmi/proc/start_ipc_brain_reboot(mob/living/carbon/human/H)
-	if(QDELETED(H))
+/obj/item/mmi/proc/start_ipc_brain_reboot(mob/living/carbon/human/ipc)
+	if(QDELETED(ipc))
 		return
-	restore_ipc_brainmob(H, FALSE)
+	restore_ipc_brainmob(ipc, FALSE)
 	try_unbrainwash_ipc()
 	visible_message(span_notice("[src] emits a low boot tone as its systems begin to recover."))
 	addtimer(CALLBACK(src, PROC_REF(finish_ipc_brain_reboot)), IPC_BRAIN_TRAUMATIC_REBOOT_DELAY)
@@ -326,9 +326,9 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	visible_message(span_notice("[src] chimes as its consciousness comes back online."))
 	update_appearance()
 
-/obj/item/mmi/posibrain/restore_ipc_brainmob(mob/living/carbon/human/H, conscious = TRUE)
+/obj/item/mmi/posibrain/restore_ipc_brainmob(mob/living/carbon/human/ipc, conscious = TRUE)
 	personality_activated = TRUE
-	. = ..(H, conscious)
+	. = ..(ipc, conscious)
 	if(brainmob)
 		name = "[initial(name)] ([brainmob.real_name])"
 		if(brainmob.mind)
@@ -336,8 +336,8 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	update_appearance()
 
 /// Attempts to install this MMI as the internal brain organ of an eligible IPC body.
-/obj/item/mmi/proc/attempt_become_ipc_organ(obj/item/bodypart/parent, mob/living/carbon/human/H, mob/living/installer)
-	if(!brainmob?.mind || !isipc(H) || !parent || parent != H.get_bodypart(BODY_ZONE_CHEST) || !(parent.bodytype & BODYTYPE_ROBOTIC) || H.get_organ_slot(ORGAN_SLOT_BRAIN) || H.mind)
+/obj/item/mmi/proc/attempt_become_ipc_organ(obj/item/bodypart/parent, mob/living/carbon/human/ipc, mob/living/installer)
+	if(!brainmob?.mind || !isipc(ipc) || !parent || parent != ipc.get_bodypart(BODY_ZONE_CHEST) || !(parent.bodytype & BODYTYPE_ROBOTIC) || ipc.get_organ_slot(ORGAN_SLOT_BRAIN) || ipc.mind)
 		return FALSE
 	var/holder_type = get_ipc_brain_holder_type()
 	var/obj/item/organ/internal/brain/positronic/holder = new holder_type()
@@ -346,14 +346,14 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	holder.stored_mmi = src
 	var/brain_name = brainmob.real_name
 	if(brainmob.mind)
-		brainmob.mind.transfer_to(H)
-	H.fully_replace_character_name(H.real_name, brain_name)
-	var/ipc_brainwash_directive = get_ipc_brainwash_directive(H, installer)
+		brainmob.mind.transfer_to(ipc)
+	ipc.fully_replace_character_name(ipc.real_name, brain_name)
+	var/ipc_brainwash_directive = get_ipc_brainwash_directive(ipc, installer)
 	if(ipc_brainwash_directive)
-		to_chat(H, span_userdanger(get_ipc_brainwash_message()))
-		ipc_brainwash_objectives = brainwash(H, ipc_brainwash_directive, src)
+		to_chat(ipc, span_userdanger(get_ipc_brainwash_message()))
+		ipc_brainwash_objectives = brainwash(ipc, ipc_brainwash_directive, src)
 	clear_ipc_brainmob()
-	holder.Insert(H)
+	holder.Insert(ipc)
 	return TRUE
 
 /obj/item/mmi/posibrain/examine(mob/user)
@@ -432,12 +432,10 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 /obj/item/organ/internal/brain/positronic
 	name = "compact positronic brain"
 	desc = "You should not be seeing this, please bug report if found" // These should always become positronics/mmis on removal, should never be able to examine
-	icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi'
+	icon = 'icons/obj/medical/ipc_organs.dmi'
 	icon_state = "posibrain-ipc"
-	slot = ORGAN_SLOT_BRAIN
 	zone = BODY_ZONE_CHEST
 	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES | ORGAN_VITAL
-	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 
 	/// Prevents repeated brain-damage warnings from flooding the owner.
 	COOLDOWN_DECLARE(brain_damage_message_cooldown)
@@ -476,7 +474,6 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/organ/internal/brain/positronic/check_for_repair(obj/item/item, mob/user)
 	if(damage && item.is_drainable() && item.reagents.has_reagent(/datum/reagent/medicine/liquid_solder)) //attempt to heal the brain
-
 		user.visible_message(span_notice("[user] starts to slowly pour the contents of [item] onto [src]."), span_notice("You start to slowly pour the contents of [item] onto [src]."))
 		if(!do_after(user, 3 SECONDS, src))
 			to_chat(user, span_warning("You failed to pour the contents of [item] onto [src]!"))
@@ -550,7 +547,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 /obj/item/organ/internal/brain/positronic/mmi // MMI version of internal brain, also shouldn't ever be seen
 	name = "man-machine interface"
 	desc = "A man-machine interface inserted into the chest. Please bug report if seen."
-	icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi'
+	icon = 'icons/obj/medical/ipc_organs.dmi'
 	icon_state = "mmi-ipc"
 
 /obj/item/organ/internal/brain/positronic/mmi/Initialize(mapload)

@@ -12,13 +12,13 @@
 	interaction_flags_item = NONE
 
 	/// Left arm part of the IPC assembly.
-	var/obj/item/bodypart/arm/left/ipc/l_arm = null
+	var/obj/item/bodypart/arm/left/ipc/left_arm = null
 	/// Right arm part of the IPC assembly.
-	var/obj/item/bodypart/arm/right/ipc/r_arm = null
+	var/obj/item/bodypart/arm/right/ipc/right_arm = null
 	/// Left leg part of the IPC assembly.
-	var/obj/item/bodypart/leg/left/ipc/l_leg = null
+	var/obj/item/bodypart/leg/left/ipc/left_leg = null
 	/// Right leg part of the IPC assembly.
-	var/obj/item/bodypart/leg/right/ipc/r_leg = null
+	var/obj/item/bodypart/leg/right/ipc/right_leg = null
 	/// Head part of the IPC assembly.
 	var/obj/item/bodypart/head/ipc/head = null
 	/// IPC chest cavity parts are stored directly in the core until the completed chassis becomes a mob.
@@ -41,10 +41,10 @@
 	update_appearance()
 
 /obj/item/ipc_core/Destroy()
-	QDEL_NULL(l_arm)
-	QDEL_NULL(r_arm)
-	QDEL_NULL(l_leg)
-	QDEL_NULL(r_leg)
+	QDEL_NULL(left_arm)
+	QDEL_NULL(right_arm)
+	QDEL_NULL(left_leg)
+	QDEL_NULL(right_leg)
 	QDEL_NULL(head)
 	QDEL_NULL(stomach)
 	QDEL_NULL(lungs)
@@ -55,14 +55,14 @@
 
 /obj/item/ipc_core/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(gone == l_arm)
-		l_arm = null
-	if(gone == r_arm)
-		r_arm = null
-	if(gone == l_leg)
-		l_leg = null
-	if(gone == r_leg)
-		r_leg = null
+	if(gone == left_arm)
+		left_arm = null
+	if(gone == right_arm)
+		right_arm = null
+	if(gone == left_leg)
+		left_leg = null
+	if(gone == right_leg)
+		right_leg = null
 	if(gone == head)
 		head = null
 	if(gone == stomach)
@@ -81,7 +81,7 @@
 	. = ..()
 	. += span_info("Its chest cavity has [stomach ? "a synthetic bio-reactor" : "no synthetic bio-reactor"], [lungs ? "a heatsink" : "no heatsink"], [heart ? "a hydraulic pump engine" : "no hydraulic pump engine"], and [liver ? "a reagent processing unit" : "no reagent processing unit"] installed.")
 	. += span_info("The chest cavity is [core_state >= IPC_CONSTRUCTION_WIRED ? "wired" : "unwired"] and [core_state == IPC_CONSTRUCTION_SECURED ? "secured" : "unsecured"].")
-	. += span_info("It has [head ? "an attached head" : "no attached head"], [l_arm ? "an attached left arm" : "no attached left arm"], [r_arm ? "an attached right arm" : "no attached right arm"], [l_leg ? "an attached left leg" : "no attached left leg"], [r_leg ? "an attached right leg" : "no attached right leg"], and [screen ? "an installed screen" : "no installed screen"].")
+	. += span_info("It has [head ? "an attached head" : "no attached head"], [left_arm ? "an attached left arm" : "no attached left arm"], [right_arm ? "an attached right arm" : "no attached right arm"], [left_leg ? "an attached left leg" : "no attached left leg"], [right_leg ? "an attached right leg" : "no attached right leg"], and [screen ? "an installed screen" : "no installed screen"].")
 	if(screen)
 		. += span_info("The screen is [screen_state >= IPC_CONSTRUCTION_WIRED ? "wired" : "unwired"] and [screen_state == IPC_CONSTRUCTION_SECURED ? "secured" : "unsecured"].")
 	if(check_completion())
@@ -99,7 +99,7 @@
 
 /obj/item/ipc_core/update_overlays()
 	. = ..()
-	var/list/attached_bodyparts = list(l_leg, r_leg, l_arm, r_arm, head)
+	var/list/attached_bodyparts = list(left_leg, right_leg, left_arm, right_arm, head)
 	for(var/obj/item/bodypart/bodypart as anything in attached_bodyparts)
 		var/mutable_appearance/bodypart_overlay = build_bodypart_overlay(bodypart)
 		if(bodypart_overlay)
@@ -131,7 +131,7 @@
 
 /// Returns whether the IPC core has a secured chest, head, and complete set of limbs.
 /obj/item/ipc_core/proc/check_body_completion()
-	return check_core_completion() && core_state == IPC_CONSTRUCTION_SECURED && l_arm && r_arm && l_leg && r_leg && head && head.secured && head.check_completion()
+	return check_core_completion() && core_state == IPC_CONSTRUCTION_SECURED && left_arm && right_arm && left_leg && right_leg && head && head.secured && head.check_completion()
 
 /// Returns whether the IPC chassis is ready to be finalized.
 /obj/item/ipc_core/proc/check_completion()
@@ -166,10 +166,10 @@
 
 /// Drops all bodyparts currently attached to this IPC core.
 /obj/item/ipc_core/proc/drop_all_parts(atom/drop_to = drop_location())
-	l_arm?.forceMove(drop_to)
-	r_arm?.forceMove(drop_to)
-	l_leg?.forceMove(drop_to)
-	r_leg?.forceMove(drop_to)
+	left_arm?.forceMove(drop_to)
+	right_arm?.forceMove(drop_to)
+	left_leg?.forceMove(drop_to)
+	right_leg?.forceMove(drop_to)
 	head?.forceMove(drop_to)
 	screen?.forceMove(drop_to)
 	drop_stored_parts(drop_to)
@@ -181,7 +181,7 @@
 		screen_state = IPC_CONSTRUCTION_UNWIRED
 
 /obj/item/ipc_core/wrench_act(mob/living/user, obj/item/tool)
-	if(!l_arm && !r_arm && !l_leg && !r_leg && !head && !screen && !stomach && !lungs && !heart && !liver && core_state == IPC_CONSTRUCTION_UNWIRED && screen_state == IPC_CONSTRUCTION_UNWIRED)
+	if(!left_arm && !right_arm && !left_leg && !right_leg && !head && !screen && !stomach && !lungs && !heart && !liver && core_state == IPC_CONSTRUCTION_UNWIRED && screen_state == IPC_CONSTRUCTION_UNWIRED)
 		to_chat(user, span_warning("There is nothing to remove from [src]!"))
 		return ITEM_INTERACT_BLOCKING
 	if(!tool.use_tool(src, user, 5 SECONDS, volume = 50))
@@ -270,7 +270,7 @@
 	if(core_state != IPC_CONSTRUCTION_SECURED)
 		to_chat(user, span_warning("The IPC core's chest cavity must be secured before it can be finalized."))
 		return ITEM_INTERACT_BLOCKING
-	if(!head || !head.secured || !head.check_completion() || !l_arm || !r_arm || !l_leg || !r_leg)
+	if(!head || !head.secured || !head.check_completion() || !left_arm || !right_arm || !left_leg || !right_leg)
 		to_chat(user, span_warning("The IPC core must have a secured head assembly plus both arms and legs before it can be finalized."))
 		return ITEM_INTERACT_BLOCKING
 	if(!screen)
@@ -360,42 +360,42 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/bodypart/arm/left/ipc))
-		if(l_arm)
+		if(left_arm)
 			user.balloon_alert(user, "left arm already present!")
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
-		l_arm = tool
+		left_arm = tool
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/bodypart/arm/right/ipc))
-		if(r_arm)
+		if(right_arm)
 			user.balloon_alert(user, "right arm already present!")
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
-		r_arm = tool
+		right_arm = tool
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/bodypart/leg/left/ipc))
-		if(l_leg)
+		if(left_leg)
 			user.balloon_alert(user, "left leg already present!")
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
-		l_leg = tool
+		left_leg = tool
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/bodypart/leg/right/ipc))
-		if(r_leg)
+		if(right_leg)
 			user.balloon_alert(user, "right leg already present!")
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
-		r_leg = tool
+		right_leg = tool
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
@@ -489,13 +489,11 @@
 	var/obj/item/organ/external/ipc_screen/installed_screen = screen
 	stage_stored_head_organs_for_assembly(installed_head)
 
-	var/list/attached_parts = list(installed_chest, installed_head, l_arm, r_arm, l_leg, r_leg)
+	var/list/attached_parts = list(installed_chest, installed_head, left_arm, right_arm, left_leg, right_leg)
 	for(var/obj/item/bodypart/bodypart as anything in attached_parts)
 		if(!bodypart.try_attach_limb(ipc_body, TRUE))
 			qdel(ipc_body)
 			return FALSE
-		if(bodypart.loc == src)
-			bodypart.moveToNullspace()
 
 	if(!install_stored_organs(ipc_body) || !installed_head.install_stored_organs(ipc_body))
 		qdel(ipc_body)
@@ -508,24 +506,21 @@
 		qdel(power_cord)
 
 	head = null
-	l_arm = null
-	r_arm = null
-	l_leg = null
-	r_leg = null
+	left_arm = null
+	right_arm = null
+	left_leg = null
+	right_leg = null
 	core_state = IPC_CONSTRUCTION_UNWIRED
 
-	/// Remove clothes, facial hair, features.
+	// Remove clothes, facial hair, and features.
 	ipc_body.undershirt = null
 	ipc_body.underwear = null
 	ipc_body.socks = null
 	ipc_body.facial_hairstyle = null
 	ipc_body.hairstyle = null
-	/// Null deathsound and emote ability
-	ipc_body.death_sound = null
+	// Suppress emotes while creating the inert shell.
 	ADD_TRAIT(ipc_body, TRAIT_EMOTEMUTE, type)
 	ipc_body.death()
-	/// Reapply deathsound and emote ability
-	ipc_body.death_sound = 'sound/voice/borg_deathsound.ogg'
 	REMOVE_TRAIT(ipc_body, TRAIT_EMOTEMUTE, type)
 
 	// The new shell may have randomized to no screen, so establish a valid display feature before inserting the fabricated screen.

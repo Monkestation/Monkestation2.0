@@ -100,7 +100,6 @@
 
 /datum/surgery/augmentation/mechanical // You can replace already mechanical limbs with new/better ones
 	name = "Augmentation"
-
 	requires_bodypart_type = BODYTYPE_ROBOTIC
 	steps = list(
 		/datum/surgery_step/mechanic_open,

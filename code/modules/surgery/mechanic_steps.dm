@@ -162,13 +162,13 @@
 
 		return SURGERY_STEP_FAIL
 
-	var/obj/item/bodypart/affected = target.get_bodypart(target_zone)
-	var/obj/item/mmi/M = tool
+	var/obj/item/bodypart/affected_bodypart = target.get_bodypart(target_zone)
+	var/obj/item/mmi/installed_mmi = tool
 
-	if(!affected)
+	if(!affected_bodypart)
 		return SURGERY_STEP_FAIL
 
-	if(!istype(M))
+	if(!istype(installed_mmi))
 		return SURGERY_STEP_FAIL
 
 	if(!isipc(target))
@@ -179,23 +179,22 @@
 		to_chat(user, span_warning("[target] already houses a consciousness. Remove it before installing [tool]."))
 		return SURGERY_STEP_FAIL
 
-	if(!M.ready_for_ipc_install(user))
+	if(!installed_mmi.ready_for_ipc_install(user))
 		return SURGERY_STEP_FAIL
 
 	user.visible_message(
-		"[user] starts installing \the [tool] into [target]'s [affected.name].",
-		"You start installing \the [tool] into [target]'s [affected.name]."
+		"[user] starts installing \the [tool] into [target]'s [affected_bodypart.name].",
+		"You start installing \the [tool] into [target]'s [affected_bodypart.name]."
 	)
 	return ..()
-
 
 /datum/surgery_step/install_brain/success(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(target_zone != BODY_ZONE_CHEST)
 		to_chat(user, span_warning("You can no longer access [target]'s chest cavity."))
 		return FALSE
-	var/obj/item/bodypart/affected = target.get_bodypart(target_zone)
-	var/obj/item/mmi/M = tool
-	if(!affected || !istype(M))
+	var/obj/item/bodypart/affected_bodypart = target.get_bodypart(target_zone)
+	var/obj/item/mmi/installed_mmi = tool
+	if(!affected_bodypart || !istype(installed_mmi))
 		to_chat(user, span_warning("[target]'s chest can no longer accept [tool]."))
 		return FALSE
 	if(!isipc(target))
@@ -204,19 +203,19 @@
 	if(target.get_organ_slot(ORGAN_SLOT_BRAIN) || target.mind)
 		to_chat(user, span_warning("[target] already houses a consciousness. [tool] cannot be inserted."))
 		return FALSE
-	if(!M.ready_for_ipc_install(user))
+	if(!installed_mmi.ready_for_ipc_install(user))
 		to_chat(user, span_warning("[tool]'s personality is no longer ready for installation."))
 		return FALSE
 	if(!user.temporarilyRemoveItemFromInventory(tool))
 		to_chat(user, span_warning("You can no longer install [tool] into [target]."))
 		return FALSE
-	if(!M.attempt_become_ipc_organ(affected, target, user))
+	if(!installed_mmi.attempt_become_ipc_organ(affected_bodypart, target, user))
 		user.put_in_hands(tool)
 		to_chat(user, span_warning("You can no longer install [tool] into [target]."))
 		return FALSE
 	user.visible_message(
-		span_notice("[user] has installed [tool] into [target]'s [affected.name]."),
-		span_notice("You have installed [tool] into [target]'s [affected.name]."),
+		span_notice("[user] has installed [tool] into [target]'s [affected_bodypart.name]."),
+		span_notice("You have installed [tool] into [target]'s [affected_bodypart.name]."),
 	)
 	return ..()
 

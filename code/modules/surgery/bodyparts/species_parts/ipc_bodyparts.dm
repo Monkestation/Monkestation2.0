@@ -37,9 +37,6 @@
 	/// Whether the IPC head assembly has been secured.
 	var/secured = FALSE
 
-/obj/item/bodypart/head/ipc/update_overlays()
-	return ..()
-
 /obj/item/bodypart/head/ipc/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == ipc_eyes)
@@ -250,9 +247,6 @@
 	biological_state = (BIO_ROBOTIC)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
-
-/obj/item/bodypart/chest/ipc/update_overlays()
-	return ..()
 
 /obj/item/bodypart/arm/left/ipc
 	icon = 'icons/mob/species/ipc/bodyparts.dmi'

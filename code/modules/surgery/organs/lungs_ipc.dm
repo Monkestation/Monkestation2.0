@@ -36,7 +36,7 @@
 /obj/item/organ/internal/lungs/synth
 	name = "heatsink"
 	desc = "A device that transfers generated heat to a fluid medium to cool it down. Required to keep your synthetics cool-headed. It's shape resembles lungs." //Purposefully left the 'fluid medium' ambigious for interpretation of the character, whether it be air or fluid cooling
-	icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi'
+	icon = 'icons/obj/medical/ipc_organs.dmi'
 	icon_state = "lungs-ipc"
 	safe_co2_max = 0.1
 	safe_oxygen_min = 16	//What are you doing man, dont breathe with those!

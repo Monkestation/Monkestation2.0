@@ -35,12 +35,12 @@
 	basic_mob_flags = DEL_ON_DEATH
 	req_access = list(ACCESS_ROBOTICS)
 
-	/// Is it getting ready to explode?
+	/// Whether the spiderbot has been emagged and will explode when destroyed.
 	var/emagged = FALSE
-	/// MMI it contains
-	var/obj/item/mmi/mmi = null
-	/// Who emagged the spiderbot
-	var/datum/weakref/emagged_master = null
+	/// The MMI currently installed in the spiderbot.
+	var/obj/item/mmi/mmi
+	/// A weak reference to the mob that emagged the spiderbot.
+	var/datum/weakref/emagged_master
 
 /mob/living/basic/spiderbot/Initialize(mapload)
 	. = ..()
@@ -106,23 +106,23 @@
 		balloon_alert(user, "access denied!")
 		return ITEM_INTERACT_BLOCKING
 
-/mob/living/basic/spiderbot/welder_act(mob/user, obj/item/tool)
+/mob/living/basic/spiderbot/welder_act(mob/living/user, obj/item/tool)
 	if((user.istate & ISTATE_HARM) && user != src)
-		return FALSE
+		return ITEM_INTERACT_SKIP_TO_ATTACK
 	if(user == src) // No self-repair dummy
 		balloon_alert(user, "cannot self-repair!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(health >= maxHealth)
 		balloon_alert(user, "no repairs needed!")
-		return
-	. = TRUE
+		return ITEM_INTERACT_BLOCKING
 	if(!tool.use_tool(src, user, 0 SECONDS, volume = 40, amount = 1))
-		return
+		return ITEM_INTERACT_BLOCKING
 	adjustBruteLoss(-5)
 	add_fingerprint(user)
 	user.visible_message("[user] repairs [src]!", span_notice("You repair [src]."))
+	return ITEM_INTERACT_SUCCESS
 
-/mob/living/basic/spiderbot/emag_act(mob/living/user)
+/mob/living/basic/spiderbot/emag_act(mob/living/user, obj/item/card/emag/emag_card)
 	if(emagged)
 		balloon_alert(user, "already emagged!")
 		return FALSE
@@ -141,13 +141,16 @@
 /// Transfers the inserted MMI's personality into the spiderbot.
 /mob/living/basic/spiderbot/proc/transfer_personality(obj/item/mmi/inserted_mmi)
 	inserted_mmi.brainmob.mind.transfer_to(src)
-	if(emagged)
-		var/mob/living/master = emagged_master?.resolve()
-		if(master)
-			to_chat(src, span_userdanger("You have been emagged; you are now completely loyal to [master] and [master.p_their()] every order!"))
-		else
-			emagged_master = null
-			to_chat(src, span_userdanger("You have been emagged; your original master signal is no longer traceable."))
+	if(!emagged)
+		return
+
+	var/mob/living/master = emagged_master?.resolve()
+	if(master)
+		to_chat(src, span_userdanger("You have been emagged; you are now completely loyal to [master] and [master.p_their()] every order!"))
+		return
+
+	emagged_master = null
+	to_chat(src, span_userdanger("You have been emagged; your original master signal is no longer traceable."))
 
 /mob/living/basic/spiderbot/update_name(updates)
 	. = ..()

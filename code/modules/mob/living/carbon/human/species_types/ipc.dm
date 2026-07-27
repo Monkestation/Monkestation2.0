@@ -76,17 +76,6 @@
 	/// When emagged, IPC's will spew ion laws and this value increases. Every law costs 1 point, if this is 0 laws stop being spoken.
 	var/forced_speech = 0
 
-/mob/living/carbon/human/species/ipc/Initialize(mapload)
-	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(ensure_initial_iron_butt)), 0)
-
-/// Ensures newly initialized IPC shells retain their baseline iron butt without making it a construction step.
-/mob/living/carbon/human/species/ipc/proc/ensure_initial_iron_butt()
-	if(QDELETED(src) || get_organ_slot(ORGAN_SLOT_BUTT))
-		return
-	var/obj/item/organ/internal/butt/iron/iron_butt = new
-	iron_butt.Insert(src, special = TRUE, drop_if_replaced = FALSE)
-
 /datum/species/ipc/get_species_description()
 	return "Integrated Positronic Chassis - or IPC for short - are a race of sentient and unbound humanoid robots."
 

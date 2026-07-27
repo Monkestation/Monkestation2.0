@@ -12,7 +12,7 @@
 
 /obj/item/organ/internal/ears/synth
 	name = "auditory sensors"
-	icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi'
+	icon = 'icons/obj/medical/ipc_organs.dmi'
 	icon_state = "ears-ipc"
 	desc = "A pair of microphones intended to be installed in an IPC or Synthetics head, that grant the ability to hear."
 	zone = BODY_ZONE_HEAD

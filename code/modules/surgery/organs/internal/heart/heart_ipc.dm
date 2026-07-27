@@ -253,7 +253,7 @@
 	name = "hydraulic pump engine"
 	desc = "An electronic device that handles the hydraulic pumps, powering one's robotic limbs. Without this, synthetics are unable to move."
 	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES
-	icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi'
+	icon = 'icons/obj/medical/ipc_organs.dmi'
 	icon_state = "heart-ipc-on"
 	base_icon_state = "heart-ipc"
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD // 1.5x due to synthcode.tm being weird
