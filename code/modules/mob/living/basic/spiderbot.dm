@@ -138,6 +138,7 @@
 	attack_sound = 'sound/machines/defib_zap.ogg'
 	return TRUE
 
+/// Transfers the inserted MMI's personality into the spiderbot.
 /mob/living/basic/spiderbot/proc/transfer_personality(obj/item/mmi/inserted_mmi)
 	inserted_mmi.brainmob.mind.transfer_to(src)
 	if(emagged)
@@ -166,6 +167,7 @@
 		icon_living = "spiderbot-chassis"
 	return ..()
 
+/// Ejects the installed MMI and returns its personality to the contained brain.
 /mob/living/basic/spiderbot/proc/eject_brain()
 	if(!mmi)
 		return

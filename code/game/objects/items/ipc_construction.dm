@@ -23,8 +23,11 @@
 	var/obj/item/bodypart/head/ipc/head = null
 	/// IPC chest cavity parts are stored directly in the core until the completed chassis becomes a mob.
 	var/obj/item/organ/internal/stomach/synth/stomach = null
+	/// Heatsink stored in the IPC core during construction.
 	var/obj/item/organ/internal/lungs/synth/lungs = null
+	/// Hydraulic pump engine stored in the IPC core during construction.
 	var/obj/item/organ/internal/heart/synth/heart = null
+	/// Reagent processing unit stored in the IPC core during construction.
 	var/obj/item/organ/internal/liver/synth/liver = null
 	/// Current construction state of the core chest cavity.
 	var/core_state = IPC_CONSTRUCTION_UNWIRED
@@ -122,12 +125,15 @@
 	bodypart_overlay.transform = bodypart.transform
 	return bodypart_overlay
 
+/// Returns whether the IPC core contains every required chest component and wiring.
 /obj/item/ipc_core/proc/check_core_completion()
 	return stomach && lungs && heart && liver && core_state >= IPC_CONSTRUCTION_WIRED
 
+/// Returns whether the IPC core has a secured chest, head, and complete set of limbs.
 /obj/item/ipc_core/proc/check_body_completion()
 	return check_core_completion() && core_state == IPC_CONSTRUCTION_SECURED && l_arm && r_arm && l_leg && r_leg && head && head.secured && head.check_completion()
 
+/// Returns whether the IPC chassis is ready to be finalized.
 /obj/item/ipc_core/proc/check_completion()
 	return check_body_completion() && screen && screen_state == IPC_CONSTRUCTION_SECURED
 
@@ -178,7 +184,7 @@
 	if(!l_arm && !r_arm && !l_leg && !r_leg && !head && !screen && !stomach && !lungs && !heart && !liver && core_state == IPC_CONSTRUCTION_UNWIRED && screen_state == IPC_CONSTRUCTION_UNWIRED)
 		to_chat(user, span_warning("There is nothing to remove from [src]!"))
 		return ITEM_INTERACT_BLOCKING
-	if(!tool.use_tool(src, user, 5, volume = 50))
+	if(!tool.use_tool(src, user, 5 SECONDS, volume = 50))
 		return ITEM_INTERACT_BLOCKING
 	drop_all_parts(get_turf(src))
 	user.balloon_alert(user, "disassembled!")
@@ -188,7 +194,7 @@
 /obj/item/ipc_core/screwdriver_act(mob/living/user, obj/item/tool)
 	if(screen)
 		if(screen_state == IPC_CONSTRUCTION_SECURED)
-			if(!tool.use_tool(src, user, 5, volume = 50))
+			if(!tool.use_tool(src, user, 5 SECONDS, volume = 50))
 				return ITEM_INTERACT_BLOCKING
 			screen_state = IPC_CONSTRUCTION_WIRED
 			to_chat(user, span_notice("You unsecure [screen] from [src]."))
@@ -197,7 +203,7 @@
 		if(screen_state != IPC_CONSTRUCTION_WIRED)
 			to_chat(user, span_warning("[screen] needs to be wired into [src] before it can be secured."))
 			return ITEM_INTERACT_BLOCKING
-		if(!tool.use_tool(src, user, 5, volume = 50))
+		if(!tool.use_tool(src, user, 5 SECONDS, volume = 50))
 			return ITEM_INTERACT_BLOCKING
 		screen_state = IPC_CONSTRUCTION_SECURED
 		to_chat(user, span_notice("You secure [screen] into [src]. Its display comes online."))
@@ -205,7 +211,7 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(core_state == IPC_CONSTRUCTION_SECURED)
-		if(!tool.use_tool(src, user, 5, volume = 50))
+		if(!tool.use_tool(src, user, 5 SECONDS, volume = 50))
 			return ITEM_INTERACT_BLOCKING
 		core_state = IPC_CONSTRUCTION_WIRED
 		to_chat(user, span_notice("You unsecure [src]'s chest cavity."))
@@ -213,7 +219,7 @@
 	if(!check_core_completion())
 		to_chat(user, span_warning("[src] needs a synthetic bio-reactor, heatsink, hydraulic pump engine, reagent processing unit, and wiring before its chest cavity can be secured."))
 		return ITEM_INTERACT_BLOCKING
-	if(!tool.use_tool(src, user, 5, volume = 50))
+	if(!tool.use_tool(src, user, 5 SECONDS, volume = 50))
 		return ITEM_INTERACT_BLOCKING
 	core_state = IPC_CONSTRUCTION_SECURED
 	to_chat(user, span_notice("You secure [src]'s chest cavity."))
@@ -279,7 +285,7 @@
 	if(!isturf(loc))
 		to_chat(user, span_warning("You need to place [src] on the floor before finalizing the chassis."))
 		return ITEM_INTERACT_BLOCKING
-	if(!tool.use_tool(src, user, 5, volume = 50))
+	if(!tool.use_tool(src, user, 5 SECONDS, volume = 50))
 		return ITEM_INTERACT_BLOCKING
 	if(!build_ipc_body(user))
 		to_chat(user, span_warning("The IPC chassis fails to come together."))
@@ -449,6 +455,7 @@
 	assembled_head.ipc_tongue = staged_tongue
 	assembled_head.antennae = staged_antennae
 
+/// Converts the completed construction core into an inert IPC body.
 /obj/item/ipc_core/proc/build_ipc_body(mob/living/user)
 	var/turf/build_turf = get_turf(src)
 	if(!build_turf)

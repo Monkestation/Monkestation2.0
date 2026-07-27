@@ -2,7 +2,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/mmi/posibrain
 	name = "positronic brain"
-	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves. Use it in hand to request an unbound personality, or right-click it before its first activation to imprint it to yourself. An imprinted positronic brain installed into an IPC shell will be bound to its master. Once a personality activates, the imprint state is permanently locked. Alt-click it to describe the kind of personality you are requesting."
+	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
 	desc_controls = "Use in hand to request an unbound personality. Right-click before its first activation to imprint it to yourself, then use it in hand to request a master-bound personality. Once activated, it can no longer be imprinted. Alt-click to set a personality seed."
 	icon = 'icons/obj/assemblies/assemblies.dmi'
 	icon_state = "posibrain"
@@ -46,18 +46,22 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/personality_request_id = 0
 	///List of all ckeys who has already entered this posibrain once before.
 	var/list/ckeys_entered = list()
+	/// Whether this positronic brain should create an empty brainmob during initialization.
 	var/create_brainmob_on_init = TRUE
 
 /obj/item/mmi/posibrain/Destroy()
 	imprinted_master_ref = null
 	return ..()
 
+/// Resolves and returns this positronic brain's imprinted master, if one remains available.
 /obj/item/mmi/posibrain/proc/get_imprinted_master()
 	return imprinted_master_ref?.resolve()
 
+/// Returns whether this positronic brain supports being imprinted to a master.
 /obj/item/mmi/posibrain/proc/supports_imprinting()
 	return TRUE
 
+/// Returns whether ghost activation requires an active personality request.
 /obj/item/mmi/posibrain/proc/requires_personality_request()
 	return TRUE
 
@@ -126,6 +130,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
+/// Ends the matching personality request and reports whether a candidate claimed the brain.
 /obj/item/mmi/posibrain/proc/check_success(request_id)
 	if(!isnull(request_id) && (!searching || request_id != personality_request_id))
 		return
@@ -238,15 +243,18 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	ckeys_entered |= brainmob.ckey
 	return TRUE
 
+/// Returns the internal brain organ type used to hold this MMI inside an IPC.
 /obj/item/mmi/proc/get_ipc_brain_holder_type()
 	return /obj/item/organ/internal/brain/positronic/mmi
 
 /obj/item/mmi/posibrain/get_ipc_brain_holder_type()
 	return /obj/item/organ/internal/brain/positronic
 
+/// Returns the brainwashing directive applied when this MMI is installed into an IPC.
 /obj/item/mmi/proc/get_ipc_brainwash_directive(mob/living/carbon/human/H, mob/living/installer)
 	return
 
+/// Returns the warning shown when IPC installation applies brainwashing.
 /obj/item/mmi/proc/get_ipc_brainwash_message()
 	return "You feel the MMI overriding your free will!"
 
@@ -266,6 +274,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 /obj/item/mmi/posibrain/get_ipc_brainwash_message()
 	return "Your positronic imprint asserts itself, binding you to your master!"
 
+/// Deletes the temporary brainmob after its mind has been transferred into an IPC.
 /obj/item/mmi/proc/clear_ipc_brainmob()
 	if(!brainmob)
 		return
@@ -280,6 +289,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	unbrainwash(brainwash_target, ipc_brainwash_objectives)
 	ipc_brainwash_objectives = null
 
+/// Recreates this MMI's brainmob from an IPC occupant and transfers their mind into it.
 /obj/item/mmi/proc/restore_ipc_brainmob(mob/living/carbon/human/H, conscious = TRUE)
 	if(!brainmob)
 		set_brainmob(new /mob/living/brain(src))
@@ -300,6 +310,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	name = "[initial(name)]: [brainmob.real_name]"
 	update_appearance()
 
+/// Extracts an IPC occupant into this MMI unconscious and begins a traumatic reboot.
 /obj/item/mmi/proc/start_ipc_brain_reboot(mob/living/carbon/human/H)
 	if(QDELETED(H))
 		return
@@ -308,6 +319,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	visible_message(span_notice("[src] emits a low boot tone as its systems begin to recover."))
 	addtimer(CALLBACK(src, PROC_REF(finish_ipc_brain_reboot)), IPC_BRAIN_TRAUMATIC_REBOOT_DELAY)
 
+/// Completes a traumatic IPC brain reboot and restores the contained brainmob.
 /obj/item/mmi/proc/finish_ipc_brain_reboot()
 	if(QDELETED(src) || !restore_brainmob_consciousness())
 		return
@@ -323,6 +335,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 			brainmob.mind.set_assigned_role(SSjob.GetJobType(posibrain_job_path))
 	update_appearance()
 
+/// Attempts to install this MMI as the internal brain organ of an eligible IPC body.
 /obj/item/mmi/proc/attempt_become_ipc_organ(obj/item/bodypart/parent, mob/living/carbon/human/H, mob/living/installer)
 	if(!brainmob?.mind || !isipc(H) || !parent || parent != H.get_bodypart(BODY_ZONE_CHEST) || !(parent.bodytype & BODYTYPE_ROBOTIC) || H.get_organ_slot(ORGAN_SLOT_BRAIN) || H.mind)
 		return FALSE
@@ -427,10 +440,12 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	/// Prevents repeated brain-damage warnings from flooding the owner.
 	COOLDOWN_DECLARE(brain_damage_message_cooldown)
 
+	/// The MMI represented by this internal IPC brain organ.
 	var/obj/item/mmi/stored_mmi
 	/// Whether this brain is being removed by controlled surgery instead of trauma.
 	var/surgical_extraction = FALSE
 
+/// Removes brainwashing applied by the MMI stored in this organ.
 /obj/item/organ/internal/brain/positronic/proc/clear_stored_mmi_brainwashing(mob/living/brainwash_target)
 	if(!stored_mmi || !brainwash_target)
 		return

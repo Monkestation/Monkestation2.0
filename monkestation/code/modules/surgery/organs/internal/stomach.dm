@@ -39,9 +39,11 @@
 	slot = "stomach"
 	desc = "A specialised mini reactor, for synthetic use only. Has a low-power mode to ensure baseline functions. Without this, synthetics are unable to stay powered."
 	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES
+	/// Whether this stomach is actively grinding nutriment.
 	var/blending = FALSE
 	/// The single pending start or finish timer for the grinder sequence.
 	var/will_it_blend_timer
+	/// Cooldown between completed grinder sequences.
 	COOLDOWN_DECLARE(blend_cd)
 
 /obj/item/organ/internal/stomach/synth/Destroy()
@@ -109,6 +111,7 @@
 		return
 	will_it_blend_timer = addtimer(CALLBACK(src, PROC_REF(start_blending), owner), 4 SECONDS, TIMER_STOPPABLE)
 
+/// Begins grinding nutriment when the stomach remains installed in its owner.
 /obj/item/organ/internal/stomach/synth/proc/start_blending(mob/living/carbon/carbon)
 	will_it_blend_timer = null
 	if(!valid_blend_owner(carbon) || !carbon.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment))
@@ -118,6 +121,7 @@
 	playsound(carbon, 'monkestation/code/modules/smithing/sounds/blend.ogg', 50, TRUE, mixer_channel = CHANNEL_MOB_SOUNDS)
 	will_it_blend_timer = addtimer(CALLBACK(src, PROC_REF(finish_blending), carbon), 10 SECONDS, TIMER_STOPPABLE)
 
+/// Converts the owner's nutriment reagent into nutrition and starts the cooldown.
 /obj/item/organ/internal/stomach/synth/proc/finish_blending(mob/living/carbon/human/carbon)
 	will_it_blend_timer = null
 	if(!valid_blend_owner(carbon))

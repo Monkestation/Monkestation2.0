@@ -26,10 +26,15 @@
 
 	/// IPC head assembly parts are stored here until the completed chassis becomes a mob.
 	var/obj/item/organ/internal/eyes/synth/ipc_eyes = null
+	/// Synthetic ears stored in the IPC head during construction.
 	var/obj/item/organ/internal/ears/synth/ipc_ears = null
+	/// Synthetic tongue stored in the IPC head during construction.
 	var/obj/item/organ/internal/tongue/robot/synth/ipc_tongue = null
+	/// IPC antennae stored in the IPC head during construction.
 	var/obj/item/organ/external/antennae/ipc/antennae = null
+	/// Whether the IPC head assembly has been wired.
 	var/wired = FALSE
+	/// Whether the IPC head assembly has been secured.
 	var/secured = FALSE
 
 /obj/item/bodypart/head/ipc/update_overlays()
@@ -62,9 +67,11 @@
 	if(!secured)
 		. += span_info("Install each head component, add <b>cable</b>, then use a <b>screwdriver</b> to secure it.")
 
+/// Returns whether the IPC head contains every required component and wiring.
 /obj/item/bodypart/head/ipc/proc/check_completion()
 	return ipc_eyes && ipc_ears && ipc_tongue && antennae && wired
 
+/// Drops every component stored in the IPC head assembly.
 /obj/item/bodypart/head/ipc/proc/drop_stored_parts(atom/drop_to = drop_location())
 	ipc_eyes?.forceMove(drop_to)
 	ipc_ears?.forceMove(drop_to)
@@ -76,6 +83,7 @@
 	antennae = null
 	secured = FALSE
 
+/// Installs every stored head component into the completed IPC body.
 /obj/item/bodypart/head/ipc/proc/install_stored_organs(mob/living/carbon/receiver)
 	if(ipc_eyes && !ipc_eyes.Insert(receiver, TRUE, FALSE))
 		return FALSE
@@ -166,7 +174,7 @@
 
 /obj/item/bodypart/head/ipc/screwdriver_act(mob/living/user, obj/item/screwtool)
 	if(secured)
-		if(!screwtool.use_tool(src, user, 5, volume = 50))
+		if(!screwtool.use_tool(src, user, 5 SECONDS, volume = 50))
 			return ITEM_INTERACT_BLOCKING
 		secured = FALSE
 		to_chat(user, span_notice("You unsecure [src]."))
@@ -175,7 +183,7 @@
 	if(!check_completion())
 		to_chat(user, span_warning("[src] needs optical sensors, synthetic ears, a synthetic tongue, IPC antennae, and wiring before it can be secured."))
 		return ITEM_INTERACT_BLOCKING
-	if(!screwtool.use_tool(src, user, 5, volume = 50))
+	if(!screwtool.use_tool(src, user, 5 SECONDS, volume = 50))
 		return ITEM_INTERACT_BLOCKING
 	secured = TRUE
 	to_chat(user, span_notice("You secure [src]."))

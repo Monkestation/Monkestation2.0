@@ -1876,8 +1876,6 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 	research_icon_state = "cosmohonk-plating"
 
-// MONKE START - changed/added lots of department_flags
-
 /datum/design/paint_kit
 	name = "robotics Paint Kit"
 	desc = "A paint kit for IPCs, robotic limbs, and MODsuits."

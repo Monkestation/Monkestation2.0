@@ -331,6 +331,7 @@
 		return FALSE
 	return TRUE
 
+/// Checks whether this MMI can be installed into an IPC and restores its occupant for transfer.
 /obj/item/mmi/proc/ready_for_ipc_install(mob/user)
 	if(!brain_check(user))
 		return FALSE

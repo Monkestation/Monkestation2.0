@@ -160,27 +160,27 @@
 	if(target_zone != BODY_ZONE_CHEST)
 		to_chat(user, span_notice("You must target the chest cavity."))
 
-		return FALSE
+		return SURGERY_STEP_FAIL
 
 	var/obj/item/bodypart/affected = target.get_bodypart(target_zone)
 	var/obj/item/mmi/M = tool
 
 	if(!affected)
-		return FALSE
+		return SURGERY_STEP_FAIL
 
 	if(!istype(M))
-		return FALSE
+		return SURGERY_STEP_FAIL
 
 	if(!isipc(target))
 		to_chat(user, span_danger("[tool] cannot be installed into an organic body, as it is not designed to operate the complex biological systems of one!"))
-		return FALSE
+		return SURGERY_STEP_FAIL
 
 	if(target.get_organ_slot(ORGAN_SLOT_BRAIN) || target.mind)
 		to_chat(user, span_warning("[target] already houses a consciousness. Remove it before installing [tool]."))
-		return FALSE
+		return SURGERY_STEP_FAIL
 
 	if(!M.ready_for_ipc_install(user))
-		return FALSE
+		return SURGERY_STEP_FAIL
 
 	user.visible_message(
 		"[user] starts installing \the [tool] into [target]'s [affected.name].",

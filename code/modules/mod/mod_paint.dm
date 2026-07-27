@@ -148,6 +148,7 @@
 /obj/item/mod/paint/proc/can_paint_target(atom/target, mob/living/user)
 	return !QDELETED(src) && !QDELETED(target) && !QDELETED(user) && !IS_DEAD_OR_INCAP(user) && user.is_holding(src) && user.Adjacent(target)
 
+/// Presents robotic limb styles and applies the user's selected appearance.
 /obj/item/mod/paint/proc/color_limb(obj/item/bodypart/limb, mob/living/user)
 	if(!IS_ROBOTIC_LIMB(limb))
 		return FALSE
@@ -171,6 +172,7 @@
 		limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
 	return TRUE
 
+/// Prompts for and applies a chassis and color to an IPC.
 /obj/item/mod/paint/proc/color_ipc(mob/living/carbon/target, mob/living/user)
 	if(!can_paint_target(target, user))
 		return
