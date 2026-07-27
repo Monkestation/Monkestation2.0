@@ -4,12 +4,15 @@
 	var/allowed_slot
 	/// The slot the item is currently equipped in.
 	var/current_slot
+	/// Whether the holder should waddle while using the tactical disguise.
+	var/waddles = FALSE
 
-/datum/component/tactical/Initialize(allowed_slot)
+/datum/component/tactical/Initialize(allowed_slot, waddles = FALSE)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.allowed_slot = allowed_slot
+	src.waddles = waddles
 
 /datum/component/tactical/Destroy()
 	unmodify()
@@ -43,6 +46,8 @@
 	RegisterSignal(user, COMSIG_HUMAN_GET_VISIBLE_NAME, PROC_REF(on_name_inquiry))
 	RegisterSignal(user, COMSIG_HUMAN_GET_FORCED_NAME, PROC_REF(on_name_inquiry))
 	ADD_TRAIT(user, TRAIT_UNKNOWN, REF(src))
+	if(waddles)
+		user.AddElementTrait(TRAIT_WADDLING, REF(src), /datum/element/waddling)
 
 	current_slot = slot
 	on_icon_update(source)
@@ -100,6 +105,8 @@
 	current_slot = null
 	user.remove_alt_appearance("sneaking_mission[REF(src)]")
 	REMOVE_TRAIT(user, TRAIT_UNKNOWN, REF(src))
+	if(waddles)
+		REMOVE_TRAIT(user, TRAIT_WADDLING, REF(src))
 
 /// Checks if a mob is holding us, and if so updates our appearance to match the item.
 /datum/component/tactical/proc/tactical_update(obj/item/source)

@@ -14,6 +14,8 @@
 	var/deceptive = FALSE
 	/// What cutout datum we spawn at the start? Uses the name, not the path.
 	var/starting_cutout
+	/// The appearance template currently applied to this cutout.
+	var/datum/cardboard_cutout/current_cutout
 	/// Reference to the tactical component that should be deleted when the cutout is toppled.
 	var/datum/component/tactical/tacticool
 
@@ -22,7 +24,7 @@
 	if(starting_cutout)
 		return INITIALIZE_HINT_LATELOAD
 	if(!pushed_over)
-		tacticool = AddComponent(/datum/component/tactical)
+		tacticool = AddComponent(/datum/component/tactical, waddles = TRUE)
 
 /obj/item/cardboard_cutout/Destroy()
 	tacticool = null
@@ -42,7 +44,7 @@
 
 	cutout.apply(src)
 	if(!pushed_over)
-		tacticool = AddComponent(/datum/component/tactical)
+		tacticool = AddComponent(/datum/component/tactical, waddles = TRUE)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/cardboard_cutout/attack_hand(mob/living/user, list/modifiers)
@@ -52,42 +54,21 @@
 	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 	push_over()
 
-/obj/item/cardboard_cutout/equipped(mob/living/user, slot)
-	. = ..()
-	if(!pushed_over)
-		user.AddElementTrait(TRAIT_WADDLING, REF(src), /datum/element/waddling)
-
-/obj/item/cardboard_cutout/dropped(mob/living/user)
-	. = ..()
-	REMOVE_TRAIT(user, TRAIT_WADDLING, REF(src))
-
 /obj/item/cardboard_cutout/proc/push_over()
 	if(pushed_over)
 		return
 
+	QDEL_NULL(tacticool)
+	appearance = initial(appearance)
+
 	if(isliving(loc))
 		var/mob/living/holder = loc
-		REMOVE_TRAIT(holder, TRAIT_WADDLING, REF(src))
-
-		var/old_plane = plane
-		var/old_layer = layer
-		var/old_appearance_flags = appearance_flags
-
-		appearance = initial(appearance)
-
-		plane = old_plane
-		layer = old_layer
-		appearance_flags = old_appearance_flags
-
 		holder.update_held_items()
-	else
-		appearance = initial(appearance)
 
 	desc = "[initial(desc)] It's been pushed over."
 	icon_state = "cutout_pushed_over"
 	remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	pushed_over = TRUE
-	QDEL_NULL(tacticool)
 
 /obj/item/cardboard_cutout/attack_self(mob/living/user)
 	if(!pushed_over)
@@ -97,11 +78,11 @@
 	desc = initial(desc)
 	icon = initial(icon)
 	icon_state = initial(icon_state) // This resets a cutout to its blank state - this is intentional to allow for resetting
+	current_cutout = null
 	pushed_over = FALSE
-	tacticool = AddComponent(/datum/component/tactical)
+	tacticool = AddComponent(/datum/component/tactical, waddles = TRUE)
 
 	if(user?.is_holding(src))
-		user.AddElementTrait(TRAIT_WADDLING, REF(src), /datum/element/waddling)
 		user.update_held_items()
 
 /obj/item/cardboard_cutout/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -236,6 +217,7 @@
 		applied_appearance = image(fcopy_rsc(getFlatIcon(preview_appearance, no_anim = TRUE)))
 	applied_appearance.plane = cutouts.plane
 	applied_appearance.layer = cutouts.layer
+	cutouts.current_cutout = src
 	cutouts.appearance = applied_appearance
 	cutouts.name = get_name()
 	cutouts.desc = applied_desc

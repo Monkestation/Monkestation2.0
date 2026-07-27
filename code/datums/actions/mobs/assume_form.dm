@@ -101,11 +101,4 @@
 /obj/item/cardboard_cutout/get_assumed_form_appearance()
 	if(pushed_over)
 		return null
-
-	for(var/datum/cardboard_cutout/cutout_subtype as anything in subtypesof(/datum/cardboard_cutout))
-		var/datum/cardboard_cutout/cutout = get_cardboard_cutout_instance(cutout_subtype)
-		if(cutout.applied_desc != desc)
-			continue
-		return cutout.preview_appearance
-
-	return null
+	return current_cutout?.preview_appearance

@@ -99,6 +99,9 @@
 ///hides tails
 #define HIDETAIL (1<<16)
 
+/// Hides every head feature covered by full-head masks
+#define HIDE_ALL_HEAD (HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDENECK|HIDEANTENNAE|HIDEHEADGEAR|HIDEEYES)
+
 //bitflags for clothing coverage - also used for limbs
 #define HEAD (1<<0)
 #define CHEST (1<<1)

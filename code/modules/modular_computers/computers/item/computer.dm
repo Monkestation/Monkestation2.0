@@ -273,7 +273,7 @@
 	if(user)
 		if(!user.transferItemToLoc(real_id, src))
 			return FALSE
-		to_chat(user, span_notice("You insert \the [real_id] into the card slot."))
+		balloon_alert(user, "inserted [real_id]")
 	else
 		real_id.forceMove(src)
 
