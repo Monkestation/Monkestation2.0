@@ -1192,6 +1192,9 @@
 	total_volume = .
 	// recalculate_sum_ph() // monkestation edit: we don't use ph or purity
 
+	//inform hooks about reagent changes
+	SEND_SIGNAL(src, COMSIG_REAGENTS_HOLDER_UPDATED)
+
 /**
  * Applies the relevant expose_ proc for every reagent in this holder
  * * [/datum/reagent/proc/expose_mob]
@@ -1851,7 +1854,7 @@ monkestation end */
 	var/datum/chemical_reaction/reaction = sub_reactions[ui_reaction_index]
 	return reaction.type
 
-/datum/reagents/ui_act(action, params)
+/datum/reagents/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

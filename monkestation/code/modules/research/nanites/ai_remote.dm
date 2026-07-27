@@ -19,6 +19,9 @@
 		CRASH("nanite_remote_settings action created with non nanite remote")
 
 /datum/action/innate/internal_nanite_menu/Activate()
+	if(astype(owner, /mob/living/silicon/ai)?.control_disabled)
+		to_chat(owner, span_warning("Wireless networking module is offline."))
+		return
 	remote_settings.ui_interact(owner)
 
 /datum/action/innate/ai/ranged/internal_nanite_remote

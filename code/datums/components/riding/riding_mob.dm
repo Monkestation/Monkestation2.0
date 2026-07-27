@@ -315,11 +315,10 @@
 
 	for(var/mob/living/rider in robot_parent.buckled_mobs)
 		rider.setDir(dir)
-		if(istype(robot_parent.model))
-			if(dir2text(dir) in robot_parent.model.ride_offset_x)
-				rider.pixel_x = robot_parent.model.ride_offset_x[dir2text(dir)]
-			if(dir2text(dir) in robot_parent.model.ride_offset_y)
-				rider.pixel_y = robot_parent.model.ride_offset_y[dir2text(dir)]
+		if(dir2text(dir) in robot_parent.skin.ride_offset_x)
+			rider.pixel_x = robot_parent.skin.ride_offset_x[dir2text(dir)]
+		if(dir2text(dir) in robot_parent.skin.ride_offset_y)
+			rider.pixel_y = robot_parent.skin.ride_offset_y[dir2text(dir)]
 
 //now onto every other ridable mob//
 
