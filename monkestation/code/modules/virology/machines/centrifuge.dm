@@ -101,17 +101,20 @@
 	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/pathology/centrifuge/proc/tube_has_antibodies(obj/item/reagent_containers/cup/tube/tube)
-	if (!tube)
+	if(!tube)
 		return FALSE
 
 	for(var/datum/reagent/blood in tube.reagents.reagent_list)
-		if (length(blood?.data) && ("immunity" in blood.data))
-			var/list/immune_system = blood.data["immunity"]
-			if (islist(immune_system) && length(immune_system) > 0)
-				var/list/antibodies = immune_system[2]
-				for (var/antibody in antibodies)
-					if (antibodies[antibody] >= 30)
-						return TRUE
+		if(!length(blood?.data) || !("immunity" in blood.data))
+			continue
+		var/list/immune_system = blood.data["immunity"]
+		if(!islist(immune_system) || !length(immune_system))
+			continue
+		var/list/antibodies = immune_system[2]
+		for(var/antibody in antibodies)
+			if(antibodies[antibody] < 30)
+				continue
+			return TRUE
 
 //Also handles luminosity
 /obj/machinery/pathology/centrifuge/update_icon_state()
