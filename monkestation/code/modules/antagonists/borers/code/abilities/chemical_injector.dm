@@ -50,7 +50,7 @@
 
 	return data
 
-/datum/action/cooldown/borer/inject_chemical/ui_act(action, params)
+/datum/action/cooldown/borer/inject_chemical/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
