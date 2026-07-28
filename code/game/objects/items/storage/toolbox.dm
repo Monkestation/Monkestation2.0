@@ -412,7 +412,7 @@
 	for(var/i in 1 to 2)
 		new extra_to_spawn (src)
 
-	if(ammo_box_to_spawn != null)
+	if(ammo_box_to_spawn)
 		new ammo_box_to_spawn(src)
 
 /obj/item/storage/toolbox/guncase/traitor/update_icon_state()
