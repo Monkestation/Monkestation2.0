@@ -9,7 +9,7 @@
 	volume = 40
 	apply_type = PATCH
 	apply_method = "apply"
-	self_delay = 30 // three seconds
+	self_delay = 3 SECONDS // three seconds
 	dissolvable = FALSE
 
 	skips_attack = TRUE
@@ -34,7 +34,7 @@
 		forceMove(drop_location())
 		return
 
-	if(target != user && !do_after(user, CHEM_INTERACT_DELAY(3 SECONDS, user), target))
+	if(!do_after(user, CHEM_INTERACT_DELAY(3 SECONDS, user), target))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
