@@ -874,6 +874,12 @@
 /obj/structure/holosign/barrier/atmos,
 /turf/open/floor/iron/dark,
 /area/mine/storage/public)
+"lc" = (
+/obj/structure/ore_vent/starter_resources{
+	icon_state = "ore_vent_active"
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "ld" = (
 /obj/machinery/door/airlock{
 	name = "Restroom"
@@ -1483,6 +1489,17 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
+"vO" = (
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 3;
+	height = 10;
+	name = "lavaland mine";
+	shuttle_id = "mining_away";
+	width = 7
+	},
+/turf/open/floor/plating,
+/area/mine/living_quarters)
 "vS" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 4
@@ -1920,17 +1937,6 @@
 	},
 /turf/open/floor/iron,
 /area/mine/production)
-"CL" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 3;
-	height = 10;
-	name = "lavaland mine";
-	shuttle_id = "mining_away";
-	width = 7
-	},
-/turf/open/floor/plating,
-/area/mine/living_quarters)
 "CN" = (
 /obj/machinery/computer/shuttle/mining{
 	dir = 1
@@ -2200,7 +2206,6 @@
 "GD" = (
 /obj/machinery/mineral/processing_unit_console{
 	input_dir = 4;
-	machinedir = 1;
 	output_dir = 8
 	},
 /turf/closed/wall,
@@ -4152,7 +4157,7 @@ uy
 ep
 ep
 ep
-ep
+vO
 ep
 ep
 ep
@@ -4360,7 +4365,7 @@ uy
 ep
 ep
 ep
-CL
+ep
 ep
 ep
 ep
@@ -4533,7 +4538,7 @@ Ap
 ak
 ak
 ak
-ak
+lc
 ak
 ak
 ak

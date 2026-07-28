@@ -567,21 +567,27 @@ Used by the AI doomsday and the self-destruct nuke.
 		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
 
 	if(current_map.minetype == "lavaland")
-		if(!HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_LAVALAND))
-			LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
-		else
-			var/chosen_base = rand(1, 2)
-			if(chosen_base == 2)
-				if(!themed_ruins[ZTRAIT_LAVA_RUINS])
-					var/datum/map_template/ruin/lavaland/yogs_base/base = new()
-					base.id = "yog-base-ruin"
-					themed_ruins[ZTRAIT_LAVA_RUINS] = list()
-					themed_ruins[ZTRAIT_LAVA_RUINS][base.name] = base
-				else
-					chosen_base = 1
-					message_admins("SSmapping.themed_ruins exists while trying to assign a yogstation base, this should never happen. Message coders.")
+		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
+		var/datum/map_template/lava_base/template = /datum/map_template/lava_base
+		if(HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_LAVALAND))
+			switch(rand(1, 2))
+				if(1)
+					template = /datum/map_template/lava_base/bee
 
-			LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland_alt[chosen_base].dmm", default_traits = ZTRAITS_LAVALAND)
+				if(2)
+					if(SSmapping.themed_ruins[ZTRAIT_LAVA_RUINS])
+						message_admins("SSmapping.themed_ruins exists while [src] tried assigning a yogstation base, this should never happen. Message coders.")
+						template = /datum/map_template/lava_base/bee
+					else
+						template = /datum/map_template/lava_base/yog
+						var/datum/map_template/ruin/lavaland/yogs_base/base = new()
+						base.id = "yog-base-ruin"
+						SSmapping.themed_ruins[ZTRAIT_LAVA_RUINS] = list()
+						SSmapping.themed_ruins[ZTRAIT_LAVA_RUINS][base.name] = base
+
+		template = new template()
+		template.load(locate(1, 1, levels_by_trait(ZTRAIT_MINING)[1]))
+		qdel(template)
 
 	else if(current_map.minetype == "oshan")
 		LoadGroup(FailedZs, "Trench", "map_files/Mining", "Oshan.dmm", default_traits = ZTRAITS_TRENCH)

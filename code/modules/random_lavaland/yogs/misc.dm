@@ -1,19 +1,3 @@
-/datum/map_template/ruin/lavaland/yogs_base
-	name = "Yogs lavaland base"
-//	id = "yog-base-ruin" Purposefully left out so SSmapping won't spawn us naturally
-	description = "The Yogs lavaland base, gulag spawned seperatelly"
-	prefix = "_maps/map_files/Mining/"
-	suffix = "lavabase_yog.dmm"
-	allow_duplicates = FALSE
-	always_place = TRUE
-
-/obj/structure/fluff/papershredder
-	name = "paper shredder"
-	desc = "A very old and non-functional machine for shredding illegal documents, turns out a recycler worked better than these and they were promptly abandoned."
-	icon = 'icons/obj/fluff.dmi'
-	icon_state = "papershredder"
-	density = TRUE
-
 /obj/structure/sign/departments/mining
 	name = "\improper Mining sign"
 	sign_change_name = "Department - Cargo: Mining"
