@@ -89,3 +89,11 @@
 			if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
 				return FALSE
 			return TRUE
+		if(ORGAN_SLOT_EXTERNAL_HEAD_QUILLS)
+			if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
+				return FALSE
+			return TRUE
+		if(ORGAN_SLOT_EXTERNAL_FACE_QUILLS)
+			if((human.head?.flags_inv & HIDEFACIALHAIR) || (human.wear_mask?.flags_inv & HIDEFACIALHAIR))
+				return FALSE
+			return TRUE

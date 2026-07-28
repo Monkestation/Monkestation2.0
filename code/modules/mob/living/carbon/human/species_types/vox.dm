@@ -1,0 +1,87 @@
+/datum/species/vox
+	name = "\improper Vox"
+	plural_form = "Voces"
+	id = SPECIES_VOX
+	changesource_flags = MIRROR_BADMIN
+	visual_gender = FALSE
+	sexes = FALSE // its a bird looking... thing?
+
+	inherent_traits = list(
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_NO_AUGMENTS,
+		TRAIT_FEATHERED,
+		TRAIT_NO_BLOOD_OVERLAY,
+		TRAIT_NO_DNA_COPY,
+		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_NO_ZOMBIFY,
+	)
+	external_organs = list(
+		/obj/item/organ/external/head_quills = "Ruff Hawk",
+		/obj/item/organ/external/face_quills = "None",
+		/obj/item/organ/external/tail/vox = "Azure Tail",
+	)
+	no_equip_flags = ITEM_SLOT_NECK
+	death_sound = 'sound/voice/vox/vox_DeathGasp.ogg'
+	meat = /obj/item/food/meat/slab/chicken
+	species_language_holder = /datum/language_holder/vox
+	mutanttongue = /obj/item/organ/internal/tongue/vox
+	mutanteyes = /obj/item/organ/internal/eyes/vox
+	mutantlungs = /obj/item/organ/internal/lungs/vox
+	exotic_bloodtype = BLOOD_TYPE_HEMOLYMPH
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/vox,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/vox,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/vox,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/vox,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/vox,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/vox,
+	)
+	coldmod = 0.67
+
+/datum/species/vox/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
+	. = ..()
+	RegisterSignal(human_who_gained_species, COMSIG_HUMAN_EQUIPPING_ITEM, PROC_REF(on_owner_equipping_item))
+	human_who_gained_species.set_voice_pack("misc.vox")
+
+/datum/species/vox/on_species_loss(mob/living/carbon/human/human_who_lost_species, datum/species/new_species, pref_load)
+	. = ..()
+	UnregisterSignal(human_who_lost_species, COMSIG_HUMAN_EQUIPPING_ITEM)
+
+/datum/species/vox/proc/on_owner_equipping_item(mob/living/carbon/human/owner, obj/item/equip_target, slot)
+	SIGNAL_HANDLER
+	if(!equip_target)
+		return
+	var/obj/item/clothing/clothing_to_equip
+	if(isclothing(equip_target))
+		clothing_to_equip = equip_target
+	if(clothing_to_equip && clothing_to_equip.clothing_flags & VOX_CLOTHING) // vox clothing, we good
+		return
+	if(equip_target.slot_flags & ITEM_SLOT_FEET || equip_target.slot_flags & ITEM_SLOT_OCLOTHING || equip_target.slot_flags & ITEM_SLOT_ICLOTHING || equip_target.slot_flags & ITEM_SLOT_GLOVES)
+		to_chat(owner, span_warning("[src] doesn't fit!"))
+		return COMPONENT_BLOCK_EQUIP
+	if(equip_target.slot_flags & ITEM_SLOT_HEAD && check_coverage_conflict(equip_target))
+		to_chat(owner, span_warning("[src] doesn't fit!"))
+		return COMPONENT_BLOCK_EQUIP
+	if(equip_target.slot_flags & ITEM_SLOT_MASK && check_coverage_conflict(equip_target))
+		to_chat(owner, span_warning("[src] doesn't fit!"))
+		return COMPONENT_BLOCK_EQUIP
+
+/datum/species/vox/proc/check_coverage_conflict(obj/item/item_to_check)
+	if(item_to_check.flags_inv & HIDEMASK)
+		return TRUE
+	if(item_to_check.flags_inv & HIDEEARS)
+		return TRUE
+	if(item_to_check.flags_inv & HIDEFACE)
+		return TRUE
+	if(item_to_check.flags_inv & HIDEHAIR)
+		return TRUE
+	if(item_to_check.flags_inv & HIDEFACIALHAIR)
+		return TRUE
+	if(item_to_check.flags_inv & HIDESNOUT)
+		return TRUE
+	if(item_to_check.flags_cover & MASKCOVERSMOUTH)
+		return TRUE
+	return FALSE
+
+/datum/species/vox/get_species_description()
+	return "The Vox are a race of spacefaring avians. They have a penchant for capitalism and goods peddling, deep space salvage, and sometimes interstellar crime. They speak in outlandish accents and are widely considered a nomadic pest in the eyes of the average human. The presence of these ruthless and irritating space vultures is mostly tolerated because of CentComm policy and the technology the Vox gather."

@@ -16,6 +16,7 @@
 	name = "\improper Allstar SC-1B laser cannon"
 	desc = "An advanced energy-based laser cannon that fires heavily concentrated beams of light which pass through glass and thin metal."
 	icon_state = "lasercannon"
+	worn_icon_state = null
 	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hitscan)
 	fire_delay = 10
@@ -103,6 +104,7 @@
 /obj/item/gun/energy/laser/captain/scattershot
 	name = "scatter shot laser rifle"
 	icon_state = "lasercannon"
+	worn_icon_state = null
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "laser"
@@ -140,6 +142,7 @@
 	name = "accelerator laser cannon"
 	desc = "An advanced laser cannon that does more damage the farther away the target is."
 	icon_state = "lasercannon"
+	worn_icon_state = null
 	inhand_icon_state = null
 	worn_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY

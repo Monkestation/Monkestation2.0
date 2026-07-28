@@ -71,6 +71,16 @@ path = "sound/machines/clockcult/integration_cog_install.ogg"
 min_speed = 4
 volume = 0.1
 
+[misc.vox]
+name = "Vox"
+path = "sound/voice/vox/vox.ogg"
+ask_path = "sound/voice/vox/vox_ask.ogg"
+exclaim_path = "sound/voice/vox/vox_exclaim.ogg"
+min_pitch = 0.2
+max_pitch = 0.6
+volume = 0.2
+hidden = true
+
 # --------- Misc Animal Sounds ---------
 
 [animal]

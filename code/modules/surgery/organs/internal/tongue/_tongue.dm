@@ -749,3 +749,22 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	name = "oni tongue"
 	liked_foodtypes = GORE | MEAT | SEAFOOD
 	disliked_foodtypes = VEGETABLES | GROSS
+
+/obj/item/organ/internal/tongue/vox
+	name = "avian tongue"
+	desc = "A blue thin and long muscle. You swear you can hear shrieking when you look at it."
+	icon_state = "tongue-vox"
+	say_mod = "caws"
+	languages_native = list(/datum/language/vox_pidgin)
+	liked_foodtypes = MEAT | SEAFOOD | NUTS | BUGS | GRAIN | FRUIT
+	disliked_foodtypes = NONE
+
+
+/obj/item/organ/internal/tongue/vox/get_scream_sound()
+	return pick(
+	'sound/voice/vox/shriek1.ogg',
+	'sound/voice/vox/vox_exclaim.ogg',
+	)
+
+/obj/item/organ/internal/tongue/vox/get_laugh_sound()
+	return 'sound/voice/vox/vox_laugh.ogg'

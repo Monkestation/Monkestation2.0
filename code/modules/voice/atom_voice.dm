@@ -57,18 +57,19 @@
 		else
 			LAZYADD(long_hearers, hearer)
 
+	var/sound_idx = 1
+	if (is_yell)
+		sound_idx = 3
+	else if (talk_icon_state == "1")
+		sound_idx = 2
+
 	if (LAZYLEN(short_hearers))
-		var/sound_idx = 1
-		if (is_yell)
-			sound_idx = 3
-		else if (talk_icon_state == "1")
-			sound_idx = 2
 		short_bark(short_hearers, sound_range, volume, 0, speaker, sound_idx)
 
 	if (LAZYLEN(long_hearers))
-		long_bark(long_hearers, sound_range, volume, is_yell, len, speaker)
+		long_bark(long_hearers, sound_range, volume, is_yell, len, speaker, sound_idx)
 
-/datum/atom_voice/proc/long_bark(list/hearers, sound_range, volume, is_yell, message_len, atom/movable/speaker)
+/datum/atom_voice/proc/long_bark(list/hearers, sound_range, volume, is_yell, message_len, atom/movable/speaker, sound_idx = 1)
 	var/vocal_speed = clamp(speed, voicepack.min_speed, voicepack.max_speed)
 	// Any bark speeds below this feature higher bark density, any speeds above feature lower bark density. Keeps barking length consistent
 	var/bark_speed_baseline = 4
@@ -81,7 +82,7 @@
 	for (var/i in 0 to num_barks)
 		if (total_delay > (1.5 SECONDS))
 			break
-		addtimer(CALLBACK(src, PROC_REF(short_bark), hearers, sound_range, volume, speaker.long_bark_start_time, speaker), total_delay)
+		addtimer(CALLBACK(src, PROC_REF(short_bark), hearers, sound_range, volume, speaker.long_bark_start_time, speaker, sound_idx), total_delay)
 		total_delay += (DS2TICKS(base_duration) + rand(DS2TICKS(base_duration * (is_yell ? 0.5 : 1)))) TICKS
 	return total_delay
 

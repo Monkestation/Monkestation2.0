@@ -338,7 +338,7 @@
 
 /datum/loadout_item/mask/octusvox
 	name = "Sinister Visor"
-	item_path = /obj/item/clothing/mask/breath/vox/octus
+	item_path = /obj/item/clothing/mask/breath/octus
 	donator_only = TRUE
 	requires_purchase = FALSE
 
