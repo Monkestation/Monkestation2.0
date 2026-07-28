@@ -42,7 +42,7 @@
 	register_context()
 
 /obj/machinery/ai/server_cabinet/Destroy(force)
-	installed_racks.Cut()
+	LAZYCLEARLIST(installed_racks)
 	//Recalculate all the CPUs and RAM :)
 	linked_os.update_hardware()
 	linked_os = null
