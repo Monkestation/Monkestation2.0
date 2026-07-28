@@ -9,7 +9,7 @@
 	volume = 40
 	apply_type = PATCH
 	apply_method = "apply"
-	self_delay = 3 SECONDS // three seconds
+	self_delay = 3 SECONDS
 	dissolvable = FALSE
 
 	skips_attack = TRUE
