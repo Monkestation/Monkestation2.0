@@ -467,9 +467,9 @@
 	extra_to_spawn = /obj/item/ammo_box/a357
 
 /obj/item/storage/toolbox/guncase/traitor/revolver/PopulateContents()
-	new weapon_to_spawn (src)
+	new weapon_to_spawn(src)
 	for(var/i in 1 to 3)
-		new extra_to_spawn (src)
+		new extra_to_spawn(src)
 
 /obj/item/storage/toolbox/guncase/traitor/wespe
 	name = "\improper Wespe pistol gun case"
