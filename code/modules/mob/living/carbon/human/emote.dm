@@ -280,7 +280,7 @@ monkestation edit end */
 			'sound/effects/robot_farts/rbf17.ogg',
 			'sound/effects/robot_farts/rbf18.ogg',
 		), 50, TRUE, mixer_channel = CHANNEL_PRUDE)
-		return
+		return TRUE
 	. = ..()
 	if(user.stat == CONSCIOUS)
 		if((!user.get_organ_by_type(/obj/item/organ/internal/butt) || !ishuman(user)))
