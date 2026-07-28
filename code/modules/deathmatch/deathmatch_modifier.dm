@@ -375,6 +375,7 @@
 /datum/deathmatch_modifier/random_loadouts
 	name = "Forced random loadouts"
 	description = "Randomizes everyone's loadouts"
+	random_exempted = TRUE
 
 /datum/deathmatch_modifier/random_loadouts/on_start_game(datum/deathmatch_lobby/lobby)
 	for(var/key in lobby.players)

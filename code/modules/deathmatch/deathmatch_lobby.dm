@@ -30,7 +30,7 @@
 		stack_trace("Attempted to create a deathmatch lobby without a host.")
 		return qdel(src)
 	host = player.ckey
-	map = GLOB.deathmatch_game.maps[pick(GLOB.deathmatch_game.maps)]
+	map = GLOB.deathmatch_game.maps[GLOB.deathmatch_game.maps[1]]
 	log_game("[host] created a deathmatch lobby.")
 	if (map.allowed_loadouts)
 		loadouts = map.allowed_loadouts
@@ -61,14 +61,14 @@
 
 	if(map.type == /datum/lazy_template/deathmatch/random)
 		var/list/available_maps = list()
-		for(var/key in GLOB.deathmatch_game.maps)
+		for(var/key in GLOB.deathmatch_game.maps - map.name)
 			var/datum/lazy_template/deathmatch/map = GLOB.deathmatch_game.maps[key]
 			if(map.min_players <= length(players) && map.max_players >= length(players))
 				available_maps += key
 		if(length(available_maps))
 			change_map(pick(available_maps))
 		else
-			change_map(pick(GLOB.deathmatch_game.maps))
+			change_map(pick(GLOB.deathmatch_game.maps - map.name))
 
 	if(map.template_in_use)
 		to_chat(get_mob_by_ckey(host), span_warning("This map is currently loading for another lobby. Please wait until that other map finishes loading. It would be a disaster if these two mixed up."))
@@ -87,16 +87,15 @@
 
 /datum/deathmatch_lobby/proc/find_spawns_and_start_delay(datum/lazy_template/source, list/atoms)
 	SIGNAL_HANDLER
-	for(var/thing in atoms)
-		if(istype(thing, /obj/effect/landmark/deathmatch_player_spawn))
-			player_spawns += thing
+	for(var/obj/effect/landmark/deathmatch_player_spawn/spawn_point in atoms)
+		player_spawns += spawn_point
 
 	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
 	map.template_in_use = FALSE
 	addtimer(CALLBACK(src, PROC_REF(start_game_after_delay)), start_time)
 
 /datum/deathmatch_lobby/proc/start_game_after_delay()
-	if (!length(player_spawns) || length(player_spawns) < length(players))
+	if (!length(player_spawns))
 		stack_trace("Failed to get spawns when loading deathmatch map [map.name] for lobby [host].")
 		clear_reservation()
 		playing = FALSE
@@ -105,6 +104,7 @@
 	for(var/modpath in modifiers)
 		GLOB.deathmatch_game.modifiers[modpath].on_start_game(src)
 
+	var/list/primary_spawns = player_spawns.Copy()
 	for (var/key in players)
 		var/mob/dead/observer/observer = players[key]["mob"]
 		if (isnull(observer) || !observer.client)
@@ -113,9 +113,12 @@
 			continue
 
 		// pick spawn and remove it.
-		var/picked_spawn = pick_n_take(player_spawns)
+		var/picked_spawn
+		if(length(primary_spawns))
+			picked_spawn = pick_n_take(primary_spawns)
+		else
+			picked_spawn = pick(player_spawns)
 		spawn_observer_as_player(key, get_turf(picked_spawn))
-		qdel(picked_spawn)
 
 	// Remove rest of spawns.
 	QDEL_LIST(player_spawns)
@@ -304,10 +307,7 @@
 	if (playing || !player)
 		return
 	if(!(player.ckey in (players+observers)))
-		if (players.len >= map.max_players)
-			add_observer(player)
-		else
-			add_player(player, loadouts[1])
+		add_player(player, loadouts[1])
 	ui_interact(player)
 
 /datum/deathmatch_lobby/proc/spectate(mob/player)
@@ -321,13 +321,6 @@
 	if (!new_map || !GLOB.deathmatch_game.maps[new_map])
 		return
 	map = GLOB.deathmatch_game.maps[new_map]
-	var/max_players = map.max_players
-	for (var/possible_unlucky_loser in players)
-		max_players--
-		if (max_players <= 0)
-			var/loser_mob = players[possible_unlucky_loser]["mob"]
-			remove_ckey_from_play(possible_unlucky_loser)
-			add_observer(loser_mob)
 
 	loadouts = map.allowed_loadouts ? map.allowed_loadouts : GLOB.deathmatch_game.loadouts
 	for (var/player_key in players)
@@ -472,7 +465,7 @@
 				remove_ckey_from_play(usr.ckey)
 				add_observer(usr, host == usr.ckey)
 				return TRUE
-			else if (observers[usr.ckey] && players.len < map.max_players)
+			else if (observers[usr.ckey])
 				remove_ckey_from_play(usr.ckey)
 				add_player(usr, loadouts[1], host == usr.ckey)
 				return TRUE
@@ -505,7 +498,7 @@
 					if (players[uckey])
 						remove_ckey_from_play(uckey)
 						add_observer(umob, host == uckey)
-					else if (observers[uckey] && players.len < map.max_players)
+					else if (observers[uckey])
 						remove_ckey_from_play(uckey)
 						add_player(umob, loadouts[1], host == uckey)
 					return TRUE

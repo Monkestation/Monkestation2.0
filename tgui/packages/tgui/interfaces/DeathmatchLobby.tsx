@@ -173,6 +173,12 @@ export const DeathmatchLobby = (props) => {
                 Min players: <b>{data.map.min_players}</b>
                 <br />
                 Max players: <b>{data.map.max_players}</b>
+                {(Object.keys(data.players).length > data.map.max_players &&
+                  <Box>
+                    <br />
+                    !!Player count over maps recommended limit, players may spawn together!!
+                  </Box>
+                )}
                 <br />
                 Current players: <b>{Object.keys(data.players).length}</b>
               </Box>
