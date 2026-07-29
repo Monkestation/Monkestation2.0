@@ -96,7 +96,7 @@ GLOBAL_DATUM(thrallnet, /datum/cameranet)
 			continue
 		if(!length(netcam.network & origin.networks))
 			continue
-		T["[netcam.c_tag][netcam.can_use() ? null : " (Deactivated)"]"] = netcam
+		T["[netcam.c_tag][netcam.can_use(owner) ? null : " (Deactivated)"]"] = netcam
 
 	playsound(origin, "crawling_shadows_walk", 25, FALSE)
 	var/camera = tgui_input_list(usr, menu_prompt, menu_title, T)

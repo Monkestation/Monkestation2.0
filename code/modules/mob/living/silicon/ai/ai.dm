@@ -488,7 +488,7 @@
 		return ISINRANGE(target_turf.x, ai_turf.x - interaction_range, ai_turf.x + interaction_range) \
 			&& ISINRANGE(target_turf.y, ai_turf.y - interaction_range, ai_turf.y + interaction_range)
 	else
-		return SScameras.turf_visible_by_cameras(target_turf)
+		return SScameras.turf_visible_by_cameras(target_turf, src)
 
 /mob/living/silicon/ai/cancel_camera()
 	view_core()
@@ -585,7 +585,7 @@
 		if(controlled_equipment)
 			to_chat(src, span_warning("You are already loaded into an onboard computer!"))
 			return
-		if(!SScameras.is_visible_by_cameras(M))
+		if(!SScameras.is_visible_by_cameras(M, src))
 			to_chat(src, span_warning("Exosuit is no longer near active cameras."))
 			return
 		if(!isvalidAIloc(loc))
@@ -645,7 +645,7 @@
 		//The target must be in view of a camera or near the core.
 	if(turf_check in range(get_turf(src)))
 		call_bot(turf_check)
-	else if(SScameras && SScameras.turf_visible_by_cameras(turf_check))
+	else if(SScameras && SScameras.turf_visible_by_cameras(turf_check, src))
 		call_bot(turf_check)
 	else
 		to_chat(src, span_danger("Selected location is not visible."))
@@ -674,7 +674,7 @@
 
 	if (length(cameras))
 		var/obj/machinery/camera/cam = cameras[1]
-		if (cam.can_use())
+		if (cam.can_use(src))
 			queueAlarm("--- [alarm_type] alarm detected in [home_name]! (<A HREF='byond://?src=[REF(src)];switchcamera=[REF(cam)]'>[cam.c_tag]</A>)", alarm_type)
 		else
 			var/first_run = FALSE
@@ -712,7 +712,7 @@
 		var/list/tempnetwork = C.network
 		if(!camera_turf || !(is_station_level(camera_turf.z) || is_mining_level(camera_turf.z) || (CAMERANET_NETWORK_SS13 in tempnetwork)))
 			continue
-		if(!C.can_use())
+		if(!C.can_use(src))
 			continue
 		tempnetwork.Remove(CAMERANET_NETWORK_RD, CAMERANET_NETWORK_ORDNANCE, CAMERANET_NETWORK_PRISON)
 		if(length(tempnetwork))
@@ -729,7 +729,7 @@
 		network = old_network // If nothing is selected
 	else
 		for(var/obj/machinery/camera/C in SScameras.cameras)
-			if(!C.can_use())
+			if(!C.can_use(src))
 				continue
 			if(network in C.network)
 				U.eyeobj.setLoc(get_turf(C))
@@ -885,7 +885,7 @@
 			for(var/obj/machinery/camera/camera as anything in z_cameras)
 				if(QDELETED(camera))
 					continue
-				if(!camera.can_use() || get_dist(camera, eyeobj) > 7 || !camera.internal_light)
+				if(!camera.can_use(src) || get_dist(camera, eyeobj) > 7 || !camera.internal_light)
 					continue
 				visible |= camera
 
@@ -958,7 +958,7 @@
 	if(isvalidAIloc(loc)) //AI in core, check if on cameras
 		//get_turf_pixel() is because APCs in maint aren't actually in view of the inner camera
 		//apc_override is needed here because AIs use their own APC when depowered
-		return ((SScameras && SScameras.turf_visible_by_cameras(get_turf_pixel(A))) || (A == apc_override))
+		return ((SScameras && SScameras.turf_visible_by_cameras(get_turf_pixel(A), src)) || (A == apc_override))
 	//AI is carded/shunted
 	//view(src) returns nothing for carded/shunted AIs and they have X-ray vision so just use get_dist
 	var/list/viewscale = getviewsize(client.view)
@@ -1231,7 +1231,7 @@
 		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
 
 /mob/living/silicon/ai/proc/show_camera_list()
-	var/list/cameras = SScameras.get_available_camera_by_tag_list(network)
+	var/list/cameras = SScameras.get_available_camera_by_tag_list(network, user = src)
 	var/camera_tag = tgui_input_list(src, "Choose which camera you want to view", "Cameras", cameras)
 	if(isnull(camera_tag))
 		return
