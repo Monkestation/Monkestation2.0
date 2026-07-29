@@ -56,7 +56,6 @@
 	. = ..()
 	AddElement(/datum/element/repackable, repacked_type, 5 SECONDS)
 	AddElement(/datum/element/manufacturer_examine, COMPANY_CYBERSUN)
-	stored_research = locate(/datum/techweb/admin) in SSresearch.techwebs
 	soundloop = new(src, FALSE)
 	soundloop.volume = 50
 	// This variant is intended to run on local storage and accept broader item inputs.
@@ -244,7 +243,7 @@
 	return board_map
 
 /obj/machinery/rnd/production/omnilathe/proc/rebuild_cached_designs()
-	var/previous_design_count = cached_designs.len
+	var/previous_design_count = length(cached_designs)
 	cached_designs.Cut()
 
 	var/list/recipe_sets = get_recipe_set_definitions()
@@ -283,7 +282,7 @@
 				continue
 			cached_designs |= design
 
-	var/design_delta = cached_designs.len - previous_design_count
+	var/design_delta = length(cached_designs) - previous_design_count
 	if(design_delta > 0)
 		say("Received [design_delta] new design[design_delta == 1 ? "" : "s"].")
 		playsound(src, 'sound/machines/twobeep_high.ogg', 25, TRUE)
@@ -333,11 +332,11 @@
 	if(!istype(toolbox))
 		return
 
-	if(imported_designs?.len)
+	if(length(imported_designs))
 		toolbox.imported_designs = imported_designs.Copy()
-	if(packed_materials?.len)
+	if(length(packed_materials))
 		toolbox.packed_materials = packed_materials.Copy()
-	if(unlocked_recipe_sets?.len)
+	if(length(unlocked_recipe_sets))
 		toolbox.unlocked_recipe_sets = unlocked_recipe_sets.Copy()
 	if(lathe_recipe_set)
 		toolbox.lathe_recipe_set = lathe_recipe_set
@@ -345,7 +344,7 @@
 	transfer_contents_to_packed_item(toolbox)
 
 /obj/machinery/rnd/production/omnilathe/proc/restore_packed_material_cache()
-	if(!packed_materials?.len || !materials?.mat_container)
+	if(!length(packed_materials) || !materials?.mat_container)
 		return
 
 	for(var/material_type in packed_materials)
@@ -379,8 +378,8 @@
 	return null
 
 /obj/machinery/rnd/production/omnilathe/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/circuitboard/machine) && istype(user, /mob/living))
-		if(machine_stat)
+	if(istype(attacking_item, /obj/item/circuitboard/machine) && isliving(user))
+		if(machine_stat & (NOPOWER|BROKEN))
 			return ITEM_INTERACT_BLOCKING
 		var/mob/living/living_user = user
 		var/obj/item/circuitboard/machine/board = attacking_item
@@ -407,8 +406,8 @@
 		balloon_alert(living_user, "department recipes unlocked")
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(attacking_item, /obj/item/disk/design_disk) && istype(user, /mob/living))
-		if(machine_stat)
+	if(istype(attacking_item, /obj/item/disk/design_disk) && isliving(user))
+		if(machine_stat & (NOPOWER|BROKEN))
 			return ITEM_INTERACT_BLOCKING
 		var/mob/living/living_user = user
 		living_user.visible_message(span_notice("[living_user] begins to load [attacking_item] into [src]..."),
@@ -431,7 +430,7 @@
 		rebuild_cached_designs()
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(attacking_item, /obj/item/ammo_box) && istype(user, /mob/living) && !(user.istate & ISTATE_HARM))
+	if(istype(attacking_item, /obj/item/ammo_box) && isliving(user) && !(user.istate & ISTATE_HARM))
 		var/mob/living/living_user = user
 		if(!living_user.transferItemToLoc(attacking_item, src))
 			return TRUE
@@ -446,7 +445,7 @@
 		playsound(loc, 'sound/weapons/autoguninsert.ogg', 18, TRUE)
 		return TRUE
 
-	if(istype(user, /mob/living) && materials?.mat_container)
+	if(isliving(user) && materials?.mat_container)
 		var/mob/living/living_user = user
 		materials.mat_container.user_insert(attacking_item, living_user, src)
 		return TRUE
@@ -493,85 +492,38 @@
 		))
 
 /obj/machinery/rnd/production/omnilathe/ui_act(action, list/params, datum/tgui/ui)
-	if(action == "switch_mode")
-		if(busy || ammo_busy)
-			say("Warning: machine is busy!")
+	if(action == "build")
+		if(machine_mode != "lathe")
 			return TRUE
-		machine_mode = machine_mode == "lathe" ? "ammo" : "lathe"
-		ammo_error_message = ""
-		ammo_error_type = ""
-		SStgui.update_uis(src)
-		return TRUE
-
-	if(action == "set_recipe_set")
-		if(machine_mode != "lathe" || busy || ammo_busy)
-			return TRUE
-		var/list/available_sets = get_available_recipe_sets()
-		if(length(available_sets) <= 1)
-			return TRUE
-		var/selected_recipe_set = params["recipe_set"]
-		if(!selected_recipe_set || !(selected_recipe_set in available_sets) || selected_recipe_set == lathe_recipe_set)
-			return TRUE
-		lathe_recipe_set = selected_recipe_set
-		rebuild_cached_designs()
-		SStgui.update_uis(src)
-		return TRUE
-
-	if(machine_mode == "lathe" && action == "build")
-		if(busy)
-			say("Warning: fabricator is busy!")
-			return TRUE
-
-		var/design_id = params["ref"]
-		if(!design_id)
-			return TRUE
-
-		var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
-		if(!istype(design) || !(design in cached_designs))
-			return TRUE
-
-		var/print_quantity = text2num(params["amount"])
-		if(isnull(print_quantity))
-			return TRUE
-		print_quantity = clamp(print_quantity, 1, 50)
-
-		var/coefficient = (ispath(design.build_path, /obj/item/stack/sheet) || ispath(design.build_path, /obj/item/stack/ore/bluespace_crystal)) ? 1 : efficiency_coeff
-		if(!materials.can_use_resource())
-			return TRUE
-		if(!materials.mat_container.has_materials(design.materials, coefficient, print_quantity))
-			say("Not enough materials to complete prototype[print_quantity > 1 ? "s" : ""].")
-			return TRUE
-
-		var/charge_per_item = 0
-		for(var/material in design.materials)
-			charge_per_item += design.materials[material]
-		charge_per_item = ROUND_UP((charge_per_item / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * coefficient * active_power_usage)
-		var/build_time_per_item = (design.construction_time * design.lathe_time_factor * efficiency_coeff) ** 0.8
-
-		busy = TRUE
-		soundloop.start()
-		set_light(l_outer_range = 1.5)
-		icon_state = "colony_lathe_working"
-		update_appearance()
-		SStgui.update_uis(src)
-		var/turf/target_location
-		if(drop_direction)
-			target_location = get_step(src, drop_direction)
-			if(isclosedturf(target_location))
-				target_location = get_turf(src)
-		else
-			target_location = get_turf(src)
-		addtimer(CALLBACK(src, PROC_REF(do_make_item), design, print_quantity, build_time_per_item, coefficient, charge_per_item, target_location), build_time_per_item)
-		return TRUE
-
-	if(machine_mode == "ammo" && action == "build")
-		return TRUE
+		return start_lathe_build(params)
 
 	. = ..()
 	if(.)
 		return
 
 	switch(action)
+		if("switch_mode")
+			if(busy || ammo_busy)
+				say("Warning: machine is busy!")
+				return TRUE
+			machine_mode = machine_mode == "lathe" ? "ammo" : "lathe"
+			ammo_error_message = ""
+			ammo_error_type = ""
+			SStgui.update_uis(src)
+			return TRUE
+		if("set_recipe_set")
+			if(machine_mode != "lathe" || busy || ammo_busy)
+				return TRUE
+			var/list/available_sets = get_available_recipe_sets()
+			if(length(available_sets) <= 1)
+				return TRUE
+			var/selected_recipe_set = params["recipe_set"]
+			if(!selected_recipe_set || !(selected_recipe_set in available_sets) || selected_recipe_set == lathe_recipe_set)
+				return TRUE
+			lathe_recipe_set = selected_recipe_set
+			rebuild_cached_designs()
+			SStgui.update_uis(src)
+			return TRUE
 		if("EjectMag")
 			eject_magazine()
 			return TRUE
@@ -581,6 +533,53 @@
 			var/type_to_pass = text2path(params["selected_type"])
 			fill_magazine_start(type_to_pass)
 			return TRUE
+
+/obj/machinery/rnd/production/omnilathe/proc/start_lathe_build(list/params)
+	if(busy)
+		say("Warning: fabricator is busy!")
+		return TRUE
+
+	var/design_id = params["ref"]
+	if(!design_id)
+		return TRUE
+
+	var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+	if(!istype(design) || !(design in cached_designs))
+		return TRUE
+
+	var/print_quantity = text2num(params["amount"])
+	if(isnull(print_quantity))
+		return TRUE
+	print_quantity = clamp(print_quantity, 1, 50)
+
+	var/coefficient = (ispath(design.build_path, /obj/item/stack/sheet) || ispath(design.build_path, /obj/item/stack/ore/bluespace_crystal)) ? 1 : efficiency_coeff
+	if(!materials.can_use_resource())
+		return TRUE
+	if(!materials.mat_container.has_materials(design.materials, coefficient, print_quantity))
+		say("Not enough materials to complete prototype[print_quantity > 1 ? "s" : ""].")
+		return TRUE
+
+	var/charge_per_item = 0
+	for(var/material in design.materials)
+		charge_per_item += design.materials[material]
+	charge_per_item = ROUND_UP((charge_per_item / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * coefficient * active_power_usage)
+	var/build_time_per_item = (design.construction_time * design.lathe_time_factor * efficiency_coeff) ** 0.8
+
+	busy = TRUE
+	soundloop.start()
+	set_light(l_outer_range = 1.5)
+	icon_state = "colony_lathe_working"
+	update_appearance()
+	SStgui.update_uis(src)
+	var/turf/target_location
+	if(drop_direction)
+		target_location = get_step(src, drop_direction)
+		if(isclosedturf(target_location))
+			target_location = get_turf(src)
+	else
+		target_location = get_turf(src)
+	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, print_quantity, build_time_per_item, coefficient, charge_per_item, target_location), build_time_per_item)
+	return TRUE
 
 /obj/machinery/rnd/production/omnilathe/proc/eject_magazine(mob/living/user)
 	if(loaded_magazine)
@@ -606,7 +605,7 @@
 	var/obj/item/ammo_casing/ammo_parent_type = type2parent(ammo_type)
 
 	if(loaded_magazine.multitype)
-		if(ammo_caliber == initial(ammo_parent_type.caliber) && ammo_caliber != null)
+		if(ammo_caliber == initial(ammo_parent_type.caliber) && !isnull(ammo_caliber))
 			ammo_type = ammo_parent_type
 		possible_ammo_types = typesof(ammo_type)
 	else
@@ -619,7 +618,7 @@
 			continue
 		if(initial(our_casing.advanced_print_req) && !allowed_advanced)
 			continue
-		if(initial(our_casing.projectile_type) == null)
+		if(isnull(initial(our_casing.projectile_type)))
 			continue
 
 		var/obj/item/ammo_casing/casing_actual = new our_casing
@@ -661,7 +660,7 @@
 		ammo_error_message = "NO MAGAZINE INSERTED"
 		return
 
-	if(loaded_magazine.stored_ammo.len >= loaded_magazine.max_ammo)
+	if(length(loaded_magazine.stored_ammo) >= loaded_magazine.max_ammo)
 		ammo_error_message = "MAGAZINE IS FULL"
 		ammo_error_type = "good"
 		return
@@ -713,7 +712,7 @@
 	directly_use_energy(ROUND_UP(initial(active_power_usage) * 0.1))
 	playsound(loc, 'sound/machines/piston_raise.ogg', 30, TRUE)
 
-	if(loaded_magazine.stored_ammo.len >= loaded_magazine.max_ammo)
+	if(length(loaded_magazine.stored_ammo) >= loaded_magazine.max_ammo)
 		ammo_error_message = "CONTAINER IS FULL"
 		ammo_error_type = "good"
 		ammo_fill_finish(TRUE)
@@ -783,11 +782,11 @@
 		return
 
 	var/obj/machinery/rnd/production/omnilathe/deployed_object = new /obj/machinery/rnd/production/omnilathe(deploy_location)
-	if(imported_designs?.len)
+	if(length(imported_designs))
 		deployed_object.imported_designs = imported_designs.Copy()
-	if(packed_materials?.len)
+	if(length(packed_materials))
 		deployed_object.packed_materials = packed_materials.Copy()
-	if(unlocked_recipe_sets?.len)
+	if(length(unlocked_recipe_sets))
 		deployed_object.unlocked_recipe_sets = unlocked_recipe_sets.Copy()
 	if(lathe_recipe_set)
 		deployed_object.lathe_recipe_set = lathe_recipe_set
