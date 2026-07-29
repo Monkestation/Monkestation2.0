@@ -567,8 +567,6 @@
 		// common
 		/datum/martial_art/cqc = 30,
 		/datum/martial_art/the_sleeping_carp = 30,
-		// uncommon
-		/datum/martial_art/boxing/evil = 20,
 		// LEGENDARY
 		/datum/martial_art/plasma_fist = 5,
 		/datum/martial_art/wrestling = 5, // wrestling is kinda strong ngl
@@ -580,10 +578,6 @@
 
 	var/datum/martial_art/picked_art_path = pick_weight(weighted_martial_arts)
 	var/datum/martial_art/instantiated_art = new picked_art_path()
-
-	if (istype(instantiated_art, /datum/martial_art/boxing))
-		player.mind.adjust_experience(/datum/skill/athletics, SKILL_EXP_LEGENDARY)
-
 	instantiated_art.teach(player)
 
 	to_chat(player, span_revenboldnotice("Your martial art is [uppertext(instantiated_art.name)]!"))
