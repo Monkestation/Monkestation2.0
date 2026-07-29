@@ -113,7 +113,6 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 
 	if(user.wear_mask == src)
 		user.wear_mask_update(src, toggle_off = mask_adjusted)
-		user.update_worn_glasses()
 
 	if(loc == user)
 		user.update_mob_action_buttons()
