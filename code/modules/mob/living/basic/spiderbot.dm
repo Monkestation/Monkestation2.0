@@ -32,7 +32,8 @@
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
 
-	basic_mob_flags = DEL_ON_DEATH
+	// Leave a smashed chassis behind so icon_dead is visible after destruction.
+	basic_mob_flags = NONE
 	req_access = list(ACCESS_ROBOTICS)
 
 	/// Whether the spiderbot has been emagged and will explode when destroyed.
