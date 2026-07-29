@@ -61,6 +61,11 @@
 			"icon_state": "kneepads",
 			"blend_mode": "overlay",
 			"color_ids": [5]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "tie",
+			"blend_mode": "overlay"
 		}
 	]
 }

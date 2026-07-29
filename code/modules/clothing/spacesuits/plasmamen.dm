@@ -166,7 +166,7 @@
 		smiley.color = smile_color
 		. += smiley
 	if(cowl)
-		. += mutable_appearance('monkestation/code/modules/blueshift/gags/icons/plasmaman.dmi', "security_cowl")
+		. += mutable_appearance('icons/obj/clothing/head/plasmaman_hats.dmi', "security_cowl")
 
 /obj/item/clothing/head/helmet/space/plasmaman/attackby(obj/item/hitting_item, mob/living/user)
 	. = ..()
@@ -205,7 +205,7 @@
 		M.color = smile_color
 		. += M
 	if(cowl)
-		. += mutable_appearance('monkestation/code/modules/blueshift/gags/icons/plasmaman.dmi', "security_cowl_w")
+		. += mutable_appearance('icons/mob/clothing/head/plasmaman_head.dmi', "security_cowl_w")
 	if(attached_hat)
 		. += attached_hat.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head/default.dmi')
 
