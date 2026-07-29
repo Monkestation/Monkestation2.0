@@ -952,7 +952,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 					if(prob(20))
 						O.animate_atom_living()
 			if(9 to 10)
-				ForceContractDisease(new/datum/disease/gastrolosis())
+				ForceContractDisease(new /datum/disease/gastrolosis())
 				to_chat(src, span_notice("Oh, I actually feel quite alright!"))
 	else
 		switch(rand(0,6))
