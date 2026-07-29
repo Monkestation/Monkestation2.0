@@ -1,0 +1,7 @@
+author: "sprites by: nesisknesis, iamthesilly"
+delete-after: True
+changes:
+  - rscadd: "new plasmaman envirosuits customization opion"
+  - balance: "plasmaman helmets are now see-through when flashlight/welding are not on"
+  - bugfix: "fixes jumpsuit sprites using the wrong icon file"
+  - image: "updated all envirosuit sprites"

@@ -31,10 +31,26 @@
 	w_class = WEIGHT_CLASS_TINY
 
 	var/list/files = list()
+	/// Cached icon built for this card. Intended for use in chat/examine displays.
+	var/icon/cached_flat_icon
 
 /obj/item/card/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to swipe [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
+
+/obj/item/card/update_overlays()
+	. = ..()
+	cached_flat_icon = null
+
+/// If no cached_flat_icon exists, this proc creates it and crops it.
+/obj/item/card/proc/get_cached_flat_icon()
+	if(!cached_flat_icon)
+		cached_flat_icon = getFlatIcon(src)
+		cached_flat_icon.Crop(ID_ICON_BORDERS)
+	return cached_flat_icon
+
+/obj/item/card/get_examine_icon(mob/user)
+	return ma2html(get_cached_flat_icon(), user)
 
 /*
  * ID CARDS
@@ -53,9 +69,6 @@
 	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	armor_type = /datum/armor/card_id
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-
-	/// Cached icon that has been built for this card. Intended for use in chat.
-	var/icon/cached_flat_icon
 
 	/// The name registered on the card (for example: Dr Bryan See)
 	var/registered_name = null
@@ -150,21 +163,6 @@
 /obj/item/card/id/get_id_examine_strings(mob/user)
 	. = ..()
 	. += list("[ma2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
-
-/obj/item/card/id/update_overlays()
-	. = ..()
-
-	cached_flat_icon = null
-
-/// If no cached_flat_icon exists, this proc creates it and crops it. This proc then returns the cached_flat_icon. Intended only for use displaying ID card icons in chat.
-/obj/item/card/id/proc/get_cached_flat_icon()
-	if(!cached_flat_icon)
-		cached_flat_icon = getFlatIcon(src)
-		cached_flat_icon.Crop(ID_ICON_BORDERS)
-	return cached_flat_icon
-
-/obj/item/card/id/get_examine_icon(mob/user)
-	return ma2html(get_cached_flat_icon(), user)
 
 /obj/item/card/id/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	if(isitem(old_loc))
@@ -1858,6 +1856,166 @@
 	name = "Green Team identification card"
 	desc = "A card used to identify members of the green team for CTF"
 	icon_state = "ctf_green"
+
+#define CARDBOARD_ID_NAME_COLOR 1
+#define CARDBOARD_ID_ASSIGNMENT_COLOR 2
+#define CARDBOARD_ID_TRIM_COLOR 3
+
+/**
+ * A fake ID card anyone can craft with wirecutters and cardboard.
+ * It changes the visible name when worn, but has no access, account, or real ID behavior.
+ */
+/obj/item/card/cardboard
+	name = "cardboard identification card"
+	desc = "A card used to provide ID and det- Heeeey, wait a second, this is just a piece of cut cardboard!"
+	icon_state = "cardboard_id"
+	inhand_icon_state = "cardboard-id"
+	worn_icon_state = "nothing"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	resistance_flags = FLAMMABLE
+	slot_flags = ITEM_SLOT_ID
+	/// The "name" of the "owner" of this "ID".
+	var/scribbled_name
+	/// The assignment written on this card.
+	var/scribbled_assignment
+	/// An icon state used as trim.
+	var/scribbled_trim
+	/// The colors for name, assignment, and trim overlays.
+	var/list/details_colors = list("#000000", "#000000", "#000000")
+
+/obj/item/card/cardboard/equipped(mob/user, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_ID)
+		update_human_identity(user)
+
+/obj/item/card/cardboard/dropped(mob/user)
+	. = ..()
+	update_human_identity(user)
+
+/obj/item/card/cardboard/proc/update_human_identity(mob/user)
+	var/mob/living/carbon/human/human_user = user
+	if(!istype(human_user))
+		return
+	human_user.name = human_user.get_visible_name()
+	human_user.sec_hud_set_ID()
+
+/obj/item/card/cardboard/proc/update_current_wearer_identity()
+	var/mob/living/carbon/human/human_user = loc
+	if(!istype(human_user) || human_user.wear_id != src)
+		return
+	update_human_identity(human_user)
+
+/obj/item/card/cardboard/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(isliving(user) && user.can_write(attacking_item, TRUE))
+		var/mob/living/living_user = user
+		INVOKE_ASYNC(src, PROC_REF(modify_card), living_user, attacking_item)
+		return TRUE
+	return ..()
+
+/// Lets the user write a name, assignment, or trim on the card, or reset it.
+/obj/item/card/cardboard/proc/modify_card(mob/living/user, obj/item/attacking_item)
+	if(!user.mind)
+		return
+	var/popup_input = tgui_input_list(user, "What to change", "Cardboard ID", list("Name", "Assignment", "Trim", "Reset"))
+	if(!after_input_check(user, attacking_item, popup_input))
+		return
+	switch(popup_input)
+		if("Name")
+			var/input_name = tgui_input_text(user, "What name would you like to put on this card?", "Cardboard card name", scribbled_name || (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
+			input_name = sanitize_name(input_name, allow_numbers = TRUE)
+			if(!after_input_check(user, attacking_item, input_name, scribbled_name))
+				return
+			scribbled_name = input_name
+			var/list/details = attacking_item.get_writing_implement_details()
+			details_colors[CARDBOARD_ID_NAME_COLOR] = details["color"] || "#000000"
+		if("Assignment")
+			var/input_assignment = tgui_input_text(user, "What assignment would you like to put on this card?", "Cardboard card job assignment", scribbled_assignment || "Assistant", MAX_NAME_LEN)
+			if(!after_input_check(user, attacking_item, input_assignment, scribbled_assignment))
+				return
+			scribbled_assignment = input_assignment
+			var/list/details = attacking_item.get_writing_implement_details()
+			details_colors[CARDBOARD_ID_ASSIGNMENT_COLOR] = details["color"] || "#000000"
+		if("Trim")
+			var/static/list/possible_trims
+			if(!possible_trims)
+				possible_trims = list()
+				var/list/cardboard_icon_states = icon_states(icon)
+				for(var/trim_path in typesof(/datum/id_trim))
+					var/datum/id_trim/trim = SSid_access.trim_singletons_by_path[trim_path]
+					if(!trim?.trim_state || !trim.assignment)
+						continue
+					var/trim_name = replacetext(trim.trim_state, "trim_", "")
+					if("cardboard_[trim_name]" in cardboard_icon_states)
+						possible_trims |= trim_name
+				possible_trims = sort_list(possible_trims)
+			var/input_trim = tgui_input_list(user, "Select trim to apply to your card.\nNote: This will not grant any trim accesses.", "Forge Trim", possible_trims)
+			if(!input_trim || !after_input_check(user, attacking_item, input_trim, scribbled_trim))
+				return
+			scribbled_trim = "cardboard_[input_trim]"
+			var/list/details = attacking_item.get_writing_implement_details()
+			details_colors[CARDBOARD_ID_TRIM_COLOR] = details["color"] || "#000000"
+		if("Reset")
+			scribbled_name = null
+			scribbled_assignment = null
+			scribbled_trim = null
+			details_colors = list("#000000", "#000000", "#000000")
+
+	update_appearance()
+	update_current_wearer_identity()
+
+/// Checks that the conditions to modify the cardboard card still hold after user input.
+/obj/item/card/cardboard/proc/after_input_check(mob/living/user, obj/item/attacking_item, input, value)
+	if(!input || (value && input == value))
+		return FALSE
+	if(QDELETED(user) || QDELETED(attacking_item) || QDELETED(src) || user.incapacitated() || !user.is_holding(attacking_item) || !user.CanReach(src) || !user.can_write(attacking_item))
+		return FALSE
+	return TRUE
+
+/obj/item/card/cardboard/attack_self(mob/user)
+	if(!Adjacent(user))
+		return
+	user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show \the [name]."))
+	add_fingerprint(user)
+
+/obj/item/card/cardboard/update_name(updates = ALL)
+	. = ..()
+	if(!scribbled_name)
+		name = initial(name)
+		return
+	name = "[scribbled_name]'s ID Card"
+	if(scribbled_assignment)
+		name = "[name] ([scribbled_assignment])"
+
+/obj/item/card/cardboard/update_overlays()
+	. = ..()
+	if(scribbled_name)
+		var/mutable_appearance/name_overlay = mutable_appearance(icon, "cardboard_name")
+		name_overlay.color = details_colors[CARDBOARD_ID_NAME_COLOR]
+		. += name_overlay
+	if(scribbled_assignment)
+		var/mutable_appearance/assignment_overlay = mutable_appearance(icon, "cardboard_assignment")
+		assignment_overlay.color = details_colors[CARDBOARD_ID_ASSIGNMENT_COLOR]
+		. += assignment_overlay
+	if(scribbled_trim)
+		var/mutable_appearance/frame_overlay = mutable_appearance(icon, "cardboard_frame")
+		frame_overlay.color = details_colors[CARDBOARD_ID_TRIM_COLOR]
+		. += frame_overlay
+		var/mutable_appearance/trim_overlay = mutable_appearance(icon, scribbled_trim)
+		trim_overlay.color = details_colors[CARDBOARD_ID_TRIM_COLOR]
+		. += trim_overlay
+
+/obj/item/card/cardboard/get_id_examine_strings(mob/user)
+	. = ..()
+	. += list("[ma2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
+
+/obj/item/card/cardboard/examine(mob/user)
+	. = ..()
+	. += span_notice("You could use a pen or crayon to forge a name, assignment, or trim.")
+
+#undef CARDBOARD_ID_NAME_COLOR
+#undef CARDBOARD_ID_ASSIGNMENT_COLOR
+#undef CARDBOARD_ID_TRIM_COLOR
 
 #undef INTERN_THRESHOLD_FALLBACK_HOURS
 #undef ID_ICON_BORDERS

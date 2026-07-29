@@ -27,6 +27,8 @@
 	var/alt_covers_chest = FALSE
 	/// The variable containing the flags for how the woman uniform cropping is supposed to interact with the sprite.
 	var/female_sprite_flags = FEMALE_UNIFORM_FULL
+	/// If TRUE, this undersuit's worn overlay is not modified by human height offsets or filters.
+	var/ignore_mob_height_adjustments = FALSE
 
 	// Sensor handling
 	/// Does this undersuit have suit sensors in general

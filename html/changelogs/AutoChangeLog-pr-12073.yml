@@ -1,0 +1,7 @@
+author: "EatsTheGrapes"
+delete-after: True
+changes:
+  - rscadd: "Adds Floor Tile chameleon clothing set."
+  - rscadd: "Adds cardboard ID, can be edited with a crayon or pen"
+  - rscadd: "Reintroduces cardboard cutouts than can be edited with a crayon"
+  - refactor: "refactored cardboard cut-outs to be used as a full body cover carry item, with multiple templates to choose from="
