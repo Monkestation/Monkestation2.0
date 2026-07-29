@@ -13,4 +13,4 @@
 
 #define JOB_XENOBIOLOGIST "Xenobiologist"
 
-
+#define JOB_STOWAWAY "Stowaway"
