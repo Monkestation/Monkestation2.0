@@ -10,6 +10,7 @@
 	icon = 'icons/obj/clothing/under/color.dmi'
 	icon_state = "jumpsuit"
 	inhand_icon_state = "jumpsuit"
+	worn_icon_state = "jumpsuit"
 	worn_icon = 'icons/mob/clothing/under/color.dmi'
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -18,6 +19,7 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	icon_state = "jumpskirt"
+	worn_icon_state = "jumpskirt"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /// Returns a random, acceptable jumpsuit typepath
@@ -218,6 +220,7 @@
 	name = "rainbow jumpsuit"
 	desc = "A multi-colored jumpsuit!"
 	icon_state = "rainbow"
+	worn_icon_state = "rainbow"
 	inhand_icon_state = "rainbow"
 	greyscale_config = null
 	greyscale_config_inhand_left = null
@@ -233,6 +236,7 @@
 	name = "rainbow jumpskirt"
 	desc = "A multi-colored jumpskirt!"
 	icon_state = "rainbow_skirt"
+	worn_icon_state = "rainbow_skirt"
 	inhand_icon_state = "rainbow"
 	greyscale_config = null
 	greyscale_config_inhand_left = null
