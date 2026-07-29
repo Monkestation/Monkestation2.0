@@ -31,8 +31,13 @@
 		return SENSOR_OFF
 
 	// Machinery and the target should be on the same level or different levels of the same station
-	if(pos.z != tracker_z && !(tracker_z in SSmapping.get_connected_levels(pos.z)) && !(nt_net && get_ntnet_wireless_status(pos.z)) && !HAS_TRAIT(tracked_living_mob, TRAIT_MULTIZ_SUIT_SENSORS))
-		return SENSOR_OFF
+	if(pos.z != tracker_z && !(tracker_z in SSmapping.get_connected_levels(pos.z)) && !HAS_TRAIT(tracked_living_mob, TRAIT_MULTIZ_SUIT_SENSORS))
+		//no ntnet trackers
+		if(!(GLOB.cargo_union.demand_is_implemented(/datum/union_demand/mining_sensors)))
+			return SENSOR_OFF
+		//no ntnet
+		if(!(nt_net && get_ntnet_wireless_status(pos.z)))
+			return SENSOR_OFF
 
 	// Set sensor level based on whether we're in the nanites list or the suit sensor list.
 	if(tracked_living_mob in GLOB.nanite_sensors_list)
