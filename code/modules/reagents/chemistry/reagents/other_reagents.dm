@@ -1516,8 +1516,8 @@
 /datum/reagent/snail/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
+		exposed_mob.ForceContractDisease(new /datum/disease/gastrolosis(), FALSE, TRUE)  //TODO VIROLOGY SLIME TRANS
 		return
-		//exposed_mob.ForceContractDisease(new /datum/disease/gastrolosis(), FALSE, TRUE)  //TODO VIROLOGY SLIME TRANS
 
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"
