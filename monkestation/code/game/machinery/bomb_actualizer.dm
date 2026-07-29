@@ -256,7 +256,7 @@
 		ui = new(user, src, "BombActualizer", name)
 		ui.open()
 
-/obj/machinery/bomb_actualizer/ui_act(action, params)
+/obj/machinery/bomb_actualizer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return

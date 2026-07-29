@@ -1,4 +1,4 @@
-/datum/select_equipment/ui_act(action, params)
+/datum/select_equipment/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (!.)
 		return

@@ -73,7 +73,7 @@
 		data["learnedEvolution"] += list(evo_data)
 	return data
 
-/datum/action/cooldown/borer/evolution_tree/ui_act(action, params)
+/datum/action/cooldown/borer/evolution_tree/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

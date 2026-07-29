@@ -721,6 +721,12 @@
 	eye_icon_state = "jelleyes"
 	icon_state = "eyeballs-jelly"
 
+/obj/item/organ/internal/eyes/plasmaman
+	name = "plasmabone light receptors"
+	desc = "Eyes that burn with passion! (And when in contact with oxygen)."
+	eye_icon_state = "plasmaeyes"
+	icon_state = "eyeballs-plasmaman"
+
 /obj/item/organ/internal/eyes/night_vision/maintenance_adapted
 	name = "adapted eyes"
 	desc = "These red eyes look like two foggy marbles. They give off a particularly worrying glow in the dark."

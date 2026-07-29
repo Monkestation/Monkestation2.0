@@ -190,7 +190,7 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 	return data
 
 
-/obj/item/clockwork/clockwork_slab/ui_act(action, params)
+/obj/item/clockwork/clockwork_slab/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
