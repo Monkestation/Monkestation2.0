@@ -7946,7 +7946,6 @@
 #include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\ethereal_tail.dm"
 #include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\floran_leaves.dm"
 #include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\goblin_accessories.dm"
-#include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\hair.dm"
 #include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\ipc_antenna.dm"
 #include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\ipc_chassis.dm"
 #include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\ipc_screens.dm"
