@@ -1,0 +1,15 @@
+{
+	"plasmaman_helmet": [
+		{
+			"type": "reference",
+			"reference_type": "/datum/greyscale_config/plasmaman_helmet/inhand_right/base",
+			"blend_mode": "overlay",
+			"color_ids": [1, 2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "mime_screen",
+			"blend_mode": "overlay"
+		}
+	]
+}
