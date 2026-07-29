@@ -116,7 +116,15 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			return ITEM_INTERACT_BLOCKING
 		growth = growth - 50
 		var/obj/item/reagent_containers/syringe/syringe_tool = tool
-		var/list/data = list("viruses"=null,"blood_DNA"=null,"blood_type" = get_blood_type(BLOOD_TYPE_O_MINUS), "resistances"=null,"trace_chem"=null,"viruses"=list(),"immunity"=list())
+		var/list/data = list(
+			"viruses"= null,
+			"blood_DNA"= null,
+			"blood_type" = get_blood_type(BLOOD_TYPE_O_MINUS),
+			"resistances"= null,
+			"trace_chem"= null,
+			"viruses"= list(),
+			"immunity"= list()
+		)
 		data["viruses"] |= list(contained_virus)
 		syringe_tool.reagents.add_reagent(/datum/reagent/blood, syringe_tool.volume, data, creation_callback = CALLBACK(src, PROC_REF(on_blood_created)))
 		to_chat(user, span_notice("You take some blood from the [src]."))
