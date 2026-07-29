@@ -244,6 +244,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		list(//medical chems
 			/obj/item/reagent_containers/cup/bottle/multiver = 1,
 			/obj/item/reagent_containers/medipen = 1,
+			/obj/item/reagent_containers/medipen/snail = 1,
 			/obj/item/reagent_containers/syringe/convermol = 1,
 			) = 1,
 		list(//drinks
