@@ -378,7 +378,7 @@
 	return toggle_internals(tank, TRUE)
 
 /mob/living/carbon/human/wear_mask_update(obj/item/I, toggle_off = 1)
-	if((I.flags_inv & (HIDEEYES|HIDEHAIR|HIDEFACIALHAIR)) || (initial(I.flags_inv) & (HIDEEYES|HIDEHAIR|HIDEFACIALHAIR)))
+	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(I.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
 		update_body_parts()
 	// Close internal air tank if mask was the only breathing apparatus.
 	if(invalid_internals())
@@ -392,7 +392,7 @@
 	. = ..()
 	if(!worn_neck_item)
 		return
-	if((worn_neck_item.flags_inv & (HIDEEYES|HIDEHAIR|HIDEFACIALHAIR)) || (initial(worn_neck_item.flags_inv) & (HIDEEYES|HIDEHAIR|HIDEFACIALHAIR)))
+	if((worn_neck_item.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(worn_neck_item.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
 		update_body_parts()
 	if((worn_neck_item.flags_inv & HIDEMUTWINGS))
 		update_body_parts()
@@ -402,7 +402,7 @@
 
 
 /mob/living/carbon/human/head_update(obj/item/I, forced)
-	if((I.flags_inv & (HIDEEYES|HIDEHAIR|HIDEFACIALHAIR)) || forced)
+	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || forced)
 		update_body_parts()
 	// Close internal air tank if helmet was the only breathing apparatus.
 	if (invalid_internals())
