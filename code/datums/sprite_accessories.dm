@@ -949,7 +949,7 @@
 /////////////////////////////
 
 /datum/sprite_accessory/facial_hair
-	icon = 'icons/mob/species/human/human_face.dmi'
+	icon = 'icons/mob/sprite_accessories/hair.dmi'
 	gender = MALE // barf (unless you're a dorf, dorfs dig chix w/ beards :P)
 	em_block = TRUE
 
