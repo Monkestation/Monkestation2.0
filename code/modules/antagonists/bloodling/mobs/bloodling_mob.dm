@@ -2,7 +2,7 @@
 /mob/living/basic/bloodling
 	name = "abstract bloodling"
 	desc = "A disgusting mass of code and flesh. Report this as an issue if you see it."
-	icon = 'icons/mob/bloodling/bloodling_ascended.dmi'
+	icon = 'icons/mob/bloodling/bloodling.dmi'
 	gender = NEUTER
 	health = 50
 	maxHealth = 50
