@@ -6,6 +6,7 @@ GLOBAL_LIST_INIT(pronouns_valid, list(
 	"hyr", "hyrs",
 	"they", "them", "their","theirs",
 	"it", "its",
+	"any", "all",
 	"xey", "xe", "xem", "xyr", "xyrs",
 	"ze", "zir", "zirs",
 	"ey", "em", "eir", "eirs",
@@ -16,7 +17,7 @@ GLOBAL_LIST_INIT(pronouns_valid, list(
 
 // at least one is required
 GLOBAL_LIST_INIT(pronouns_required, list(
-	"he", "her", "she", "they", "them", "it", "fae", "its"
+	"he", "her", "she", "they", "them", "it", "fae", "its", "any", "all"
 ))
 
 /// The color admins will speak in for OOC.
