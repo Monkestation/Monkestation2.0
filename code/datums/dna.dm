@@ -54,10 +54,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/unique_enzymes
 	///Stores the hashed values of traits such as skin tones, hair style, and gender
 	var/unique_identity
-	/// So humans have a variety of blood types while other species do not
-	/// This tracks JUST human blood type. Might seem a bit bias but everyone is a human under their scales and feathers.
-	/// Essentially only exists so humans have their same blood type swapping from human -> non-human -> human.
-	var/datum/blood_type/crew/human/human_blood_type
+	///The blood type datum, usually a singleton
+	var/datum/blood_type/blood_type
 	///The type of mutant race the player is if applicable (i.e. potato-man)
 	var/datum/species/species = new /datum/species/human
 	/// Assoc list of feature keys to their value
@@ -66,7 +64,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/list/features = list("mcolor" = "#FFFFFF", "anime_top" = "None", "anime_middle" = "None", "anime_bottom" = "None", "anime_halo" = "None")
 	///Stores the hashed values of the person's non-human features
 	var/unique_features
-	///Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
+	///Stores the real name of the person who originally got this dna datum. Used primarily for changelings
 	var/real_name
 	///All mutations are from now on here
 	var/list/mutations = list()
@@ -90,11 +88,11 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 /datum/dna/Destroy()
 	if(iscarbon(holder))
-		var/mob/living/carbon/cholder = holder
+		var/mob/living/carbon/as_carbon = holder
 		for(var/datum/mutation/mutation as anything in mutations)
 			remove_mutation(mutation, mutation.sources) // mutations hold a reference to the dna, we need to delete them.
-		if(cholder.dna == src)
-			cholder.dna = null
+		if(as_carbon.dna == src)
+			as_carbon.dna = null
 	holder = null
 
 	if(delete_species)
@@ -115,7 +113,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	new_dna.unique_enzymes = unique_enzymes
 	new_dna.unique_identity = unique_identity
 	new_dna.unique_features = unique_features
-	new_dna.human_blood_type = human_blood_type
 	new_dna.features = features.Copy()
 	new_dna.color_palettes = list()
 	for(var/palette_type, value in color_palettes)
@@ -128,10 +125,14 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 	//if the new DNA has a holder, transform them immediately, otherwise save it
 	if(new_dna.holder)
+		if(iscarbon(new_dna.holder))
+			var/mob/living/carbon/as_carbon = new_dna.holder
+			as_carbon.set_blood_type(blood_type)
 		if(transfer_flags & COPY_DNA_SPECIES)
 			new_dna.holder.set_species(species.type, icon_update = FALSE)
 			new_dna.species.copy_properties_from(species)
 	else
+		new_dna.blood_type = blood_type
 		if(transfer_flags & COPY_DNA_SPECIES)
 			new_dna.species = new species.type
 			new_dna.species.copy_properties_from(species)
@@ -225,11 +226,13 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 	switch(holder.gender)
 		if(MALE)
-			L[DNA_GENDER_BLOCK] = construct_block(G_MALE, 3)
+			L[DNA_GENDER_BLOCK] = construct_block(G_MALE, GENDERS)
 		if(FEMALE)
-			L[DNA_GENDER_BLOCK] = construct_block(G_FEMALE, 3)
+			L[DNA_GENDER_BLOCK] = construct_block(G_FEMALE, GENDERS)
+		if(NEUTER)
+			L[DNA_GENDER_BLOCK] = construct_block(G_NEUTER, GENDERS)
 		else
-			L[DNA_GENDER_BLOCK] = construct_block(G_PLURAL, 3)
+			L[DNA_GENDER_BLOCK] = construct_block(G_PLURAL, GENDERS)
 	if(ishuman(holder))
 		var/mob/living/carbon/human/H = holder
 		if(!GLOB.hairstyles_list.len)
@@ -383,11 +386,13 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		if(DNA_GENDER_BLOCK)
 			switch(H.gender)
 				if(MALE)
-					set_uni_identity_block(blocknumber, construct_block(G_MALE, 3))
+					set_uni_identity_block(blocknumber, construct_block(G_MALE, GENDERS))
 				if(FEMALE)
-					set_uni_identity_block(blocknumber, construct_block(G_FEMALE, 3))
+					set_uni_identity_block(blocknumber, construct_block(G_FEMALE, GENDERS))
+				if(NEUTER)
+					set_uni_identity_block(blocknumber, construct_block(G_NEUTER, GENDERS))
 				else
-					set_uni_identity_block(blocknumber, construct_block(G_PLURAL, 3))
+					set_uni_identity_block(blocknumber, construct_block(G_PLURAL, GENDERS))
 		if(DNA_FACIAL_HAIRSTYLE_BLOCK)
 			set_uni_identity_block(blocknumber, construct_block(GLOB.facial_hairstyles_list.Find(H.facial_hairstyle), GLOB.facial_hairstyles_list.len))
 		if(DNA_HAIRSTYLE_BLOCK)
@@ -443,7 +448,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		&& real_name == target_dna.real_name \
 		&& species.type == target_dna.species.type \
 		&& compare_list(features, target_dna.features) \
-		&& human_blood_type == target_dna.human_blood_type \
+		&& blood_type.type == target_dna.blood_type.type \
 	)
 		return TRUE
 
@@ -489,9 +494,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
  * * create_mutation_blocks - If true, generate_dna_blocks is called, which is used to set up mutation blocks (what a mob can naturally mutate).
  * * randomize_features - If true, all entries in the features list will be randomized.
  */
-/datum/dna/proc/initialize_dna(newblood_type, create_mutation_blocks = TRUE, randomize_features = TRUE)
+/datum/dna/proc/initialize_dna(newblood_type = random_human_blood_type(), create_mutation_blocks = TRUE, randomize_features = TRUE)
 	if(newblood_type)
-		human_blood_type = newblood_type
+		blood_type = newblood_type
 	if(create_mutation_blocks) //I hate this
 		generate_dna_blocks()
 	if(randomize_features)
@@ -573,7 +578,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	log_mob_tag("TAG: [tag] SPECIES: [key_name(src)] \[[mrace]\]")
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
-	..()
+	. = ..()
 	if(icon_update)
 		update_body(is_creating = TRUE)
 		update_mutations_overlay()// no lizard with human hulk overlay please.
@@ -612,9 +617,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(newreal_name)
 		dna.real_name = newreal_name
 		dna.generate_unique_enzymes()
-
-	if(newblood_type)
-		dna.human_blood_type = newblood_type
 
 	if(unique_identity)
 		dna.unique_identity = unique_identity
@@ -659,6 +661,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			gender = MALE
 		if(G_FEMALE)
 			gender = FEMALE
+		if(G_NEUTER)
+			gender = NEUTER
 		else
 			gender = PLURAL
 

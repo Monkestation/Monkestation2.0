@@ -26,6 +26,7 @@
 
 /obj/projectile/temp/hot
 	name = "heat beam"
+	icon_state = "lava"
 	temperature =  60
 
 /obj/projectile/temp/cryo

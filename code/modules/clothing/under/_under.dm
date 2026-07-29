@@ -27,6 +27,8 @@
 	var/alt_covers_chest = FALSE
 	/// The variable containing the flags for how the woman uniform cropping is supposed to interact with the sprite.
 	var/female_sprite_flags = FEMALE_UNIFORM_FULL
+	/// If TRUE, this undersuit's worn overlay is not modified by human height offsets or filters.
+	var/ignore_mob_height_adjustments = FALSE
 
 	// Sensor handling
 	/// Does this undersuit have suit sensors in general
@@ -102,6 +104,10 @@
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
 	if(accessory_overlay)
 		. += accessory_overlay
+	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
+		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "uniformblood")
+		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+		. += blood_overlay
 
 /obj/item/clothing/under/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(has_sensor == BROKEN_SENSORS && istype(attacking_item, /obj/item/stack/cable_coil))

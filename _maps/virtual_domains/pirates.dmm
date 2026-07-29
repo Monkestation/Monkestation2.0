@@ -191,7 +191,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/dance_machine,
+/obj/machinery/jukebox,
 /turf/open/floor/wood{
 	icon_state = "wood_large"
 	},
@@ -250,7 +250,7 @@
 /obj/effect/turf_decal/weather/sand{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil/streak,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
 "me" = (
@@ -707,7 +707,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
 "MW" = (

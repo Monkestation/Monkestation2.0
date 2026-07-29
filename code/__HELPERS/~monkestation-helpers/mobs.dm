@@ -3,6 +3,22 @@
  * Also works on brains - it will try to fetch the brainmob's mind.
  * If [include_last] is true, then it will also return last_mind for carbons if there isn't a current mind.
  */
+
+/// Returns one of the human blood types at random, weighted by their rarity
+/proc/random_human_blood_type()
+	RETURN_TYPE(/datum/blood_type)
+	return get_blood_type(pick_weight(
+		list(
+			BLOOD_TYPE_O_MINUS = 4,
+			BLOOD_TYPE_O_PLUS = 36,
+			BLOOD_TYPE_A_MINUS = 3,
+			BLOOD_TYPE_A_PLUS = 28,
+			BLOOD_TYPE_B_MINUS= 1,
+			BLOOD_TYPE_B_PLUS = 20,
+			BLOOD_TYPE_AB_MINUS = 1,
+			BLOOD_TYPE_AB_PLUS = 5,
+		)))
+
 /proc/get_mind(target, include_last = FALSE) as /datum/mind
 	RETURN_TYPE(/datum/mind)
 	if(istype(target, /datum/mind))

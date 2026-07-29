@@ -145,6 +145,17 @@
 ///from /mob/living/carbon/human/proc/force_say(): ()
 #define COMSIG_HUMAN_FORCESAY "human_forcesay"
 
+/// From /mob/living/carbon/human/get_visible_name(): (list/identity)
+#define COMSIG_HUMAN_GET_VISIBLE_NAME "human_get_visible_name"
+	/// Index for the visible face name.
+	#define VISIBLE_NAME_FACE 1
+	/// Index for the visible ID name.
+	#define VISIBLE_NAME_ID 2
+	/// Index for the priority of a forced name override.
+	#define VISIBLE_NAME_FORCED 3
+/// From /mob/living/carbon/human/get_id_name(); sent only while the mob has TRAIT_UNKNOWN: (list/identity)
+#define COMSIG_HUMAN_GET_FORCED_NAME "human_get_forced_name"
+
 // Mob transformation signals
 ///Called when a human turns into a monkey, from /mob/living/carbon/proc/finish_monkeyize()
 #define COMSIG_HUMAN_MONKEYIZE "human_monkeyize"
@@ -172,3 +183,6 @@
 #define COMSIG_HUMAN_GOT_PUNCHED "human_got_punched"
 /// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacked, damage, attack_type, obj/item/bodypart/affecting)
 #define COMSIG_HUMAN_PUNCHED "human_punched"
+
+/// From /mob/living/carbon/proc/set_blood_type : (mob/living/carbon/user, datum/blood_type, update_cached_blood_dna_info)
+#define COMSIG_CARBON_CHANGED_BLOOD_TYPE "carbon_set_blood_type"

@@ -34,7 +34,6 @@ export const AiDashboard = (props) => {
   const {
     current_cpu,
     used_cpu,
-    max_cpu,
     integrity,
     location_name,
     location_coords,
@@ -454,10 +453,10 @@ const AbilityCharging = (props) => {
   );
 };
 
-const NetworkingResources = (props) => {
+const NetworkingResources = () => {
   const { act, data } = useBackend<Data>();
 
-  const { current_cpu, current_ram, max_ram, human_only } = data;
+  const { current_cpu, max_cpu, current_ram, max_ram, human_only } = data;
 
   const tooltipDisabled = human_only
     ? 'Locked by organics. Please request their assistance.'
@@ -480,7 +479,7 @@ const NetworkingResources = (props) => {
       >
         CPU Capacity:
         <Stack>
-          <ProgressBar minValue={0} value={current_cpu} maxValue={1}>
+          <ProgressBar minValue={0} value={current_cpu} maxValue={max_cpu}>
             {current_cpu} THz
           </ProgressBar>
         </Stack>

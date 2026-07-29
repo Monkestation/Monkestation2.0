@@ -313,10 +313,6 @@
 	cooldown_time = 1.5 SECONDS
 	/// Radius of the dampening field.
 	var/field_radius = 2
-	/// Damage multiplier on projectiles.
-	var/damage_multiplier = 0.75
-	/// Speed multiplier on projectiles, higher means slower.
-	var/speed_multiplier = 0.4
 	/// List of all tracked projectiles.
 	var/list/tracked_projectiles = list()
 	/// Effect image on projectiles.

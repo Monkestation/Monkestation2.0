@@ -110,7 +110,7 @@
 	. = ..()
 	if(is_banned_chem(chem))
 		chem.holder?.remove_reagent(chem.type, chem.volume)
-		return COMSIG_MOB_STOP_REAGENT_CHECK
+		return COMSIG_MOB_STOP_REAGENT_TICK
 
 /obj/item/organ/internal/liver/teratoma/proc/is_banned_chem(reagent)
 	var/static/list/disallowed_chems_typecache

@@ -172,7 +172,7 @@
 	desc = "It's a very robust backpack."
 	icon_state = "backpack-security"
 	inhand_icon_state = "securitypack"
-	alternate_worn_layer = (HEAD_LAYER-0.5)
+	alternate_worn_layer = ABOVE_HEAD_LAYER
 
 /obj/item/storage/backpack/security/private
 	name = "private security backpack"
@@ -228,14 +228,13 @@
 	icon_state = "backpack-virology"
 	inhand_icon_state = "viropack"
 
-//MONKESTATION EDIT START// adds generic backpack and touches up the sprites
 /obj/item/storage/backpack/ert
 	name = "emergency response team backpack"
 	desc = "A spacious backpack with lots of pockets."
 	icon_state = "ert_plain"
 	inhand_icon_state = "securitypack"
 	resistance_flags = FIRE_PROOF
-	alternate_worn_layer = (HEAD_LAYER-0.5)
+	alternate_worn_layer = ABOVE_HEAD_LAYER
 
 /obj/item/storage/backpack/ert/Initialize(mapload)
 	. = ..()
@@ -275,7 +274,6 @@
 	name = "emergency response team backpack"
 	desc = "A spacious backpack with lots of pockets"
 	icon_state = "ert_generic"
-//MONKESTATION EDIT STOP
 
 /obj/item/storage/backpack/saddlepack
 	name = "saddlepack"
@@ -333,8 +331,6 @@
 	AddComponent(
 		/datum/component/bloody_spreader,\
 		blood_left = INFINITY,\
-		blood_dna = list("MEAT DNA" = "MT+"),\
-		diseases = null,\
 	)
 
 /*
@@ -383,13 +379,13 @@
 	icon_state = "devilwing"
 	inhand_icon_state = "devilwing"
 
-/obj/item/storage/backpack/satchel/blackleather //MONKESTATION EDIT
+/obj/item/storage/backpack/satchel/blackleather
 	name = "black leather satchel"
 	desc = "It's a fancy satchel made with plastic imitation leather."
 	icon_state = "satchel-blackleather"
 	inhand_icon_state = "satchel-blackleather"
 
-/obj/item/storage/backpack/satchel/retro //MONKESTATION EDIT
+/obj/item/storage/backpack/satchel/retro
 	name = "retro satchel"
 	desc = "A satchel commonly worn during planetary surveys."
 	icon_state = "satchel-retro"
@@ -810,10 +806,7 @@
 	new /obj/item/gun/ballistic/automatic/c20r/toy(src)
 	new /obj/item/storage/box/syringes(src)
 	new /obj/item/ammo_box/foambox/riot(src)
-	// MONKESTATION EDIT START
-	// MONKESTATION EDIT ORIGINAL new /obj/item/grenade/chem_grenade/bioterrorfoam(src)
 	new /obj/item/grenade/chem_grenade/large/bioterrorfoam(src)
-	// MONKESTATION EDIT END
 	if(prob(5))
 		new /obj/item/food/pizza/pineapple(src)
 

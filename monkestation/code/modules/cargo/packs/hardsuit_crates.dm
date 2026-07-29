@@ -1,14 +1,3 @@
-/datum/supply_pack/security/armory/eva
-	name = "Security Hardsuit Crate"
-	desc = "Contains two security hardsuits and two security jetpacks."
-	cost = CARGO_CRATE_VALUE * 15
-	contains = list(
-		/obj/item/clothing/suit/space/hardsuit/sec = 2,
-		/obj/item/tank/jetpack/security = 2,
-	)
-	crate_name = "security hardsuit crate"
-	crate_type = /obj/structure/closet/crate/secure/weapon
-
 /datum/supply_pack/engineering/eva
 	name = "Engineering Hardsuit Crate"
 	desc = "Contains two engineering hardsuits and two oxygen jetpacks."

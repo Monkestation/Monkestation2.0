@@ -39,6 +39,9 @@
 	/// Rubbers aren't advanced. Standard ammo (or FMJ if you're particularly pedantic) isn't advanced.
 	/// Think more specialized or weird, niche ammo, like armor-piercing, incendiary, hollowpoint, or God forbid, phasic.
 	var/advanced_print_req = FALSE
+	/// sound we play when ejected a gun and hit the floor
+	var/bullet_bounce_sound = null
+	var/bullet_bounce_sound_volume = 50
 
 /obj/item/ammo_casing/spent
 	name = "spent bullet casing"
@@ -178,7 +181,11 @@
 		)
 	if(still_warm && our_turf.bullet_sizzle)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/welder.ogg', 20, 1), sound_delay) //If the turf is made of water and the shell casing is still hot, make a sizzling sound when it's ejected.
-	else if(our_turf.bullet_bounce_sound)
+		return
+	if(bullet_bounce_sound)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, bullet_bounce_sound, bullet_bounce_sound_volume, 1), sound_delay)
+		return
+	if(our_turf.bullet_bounce_sound)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, our_turf.bullet_bounce_sound, 20, 1), sound_delay) //Soft / non-solid turfs that shouldn't make a sound when a shell casing is ejected over them.
 
 /obj/item/ammo_casing/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread, atom/fired_from)

@@ -14,6 +14,7 @@
 	icon_state = "centcom_skirt"
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	body_parts_covered = CHEST|GROIN|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/under/rank/centcom/official
 	name = "\improper CentCom official's suit"

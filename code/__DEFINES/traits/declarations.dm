@@ -283,9 +283,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_HUSK "no_husk"
 /// Species with this trait have 50% extra chance of bleeding from piercing and slashing wounds
 /* #define TRAIT_EASYBLEED "easybleed" */
+/// Mob recovers from addictions at an accelerated rate
+#define TRAIT_ADDICTIONRESILIENT "addiction_resilient"
 #define TRAIT_TOXINLOVER "toxinlover"
 /// Doesn't get overlays from being in critical.
 #define TRAIT_NOCRITOVERLAY "no_crit_overlay"
+/// For gloves that should not incur a penalty when doing surgery
+#define TRAIT_STERILE "sterilegloves"
 /// reduces the use time of syringes, pills, patches and medigels but only when using on someone
 #define TRAIT_FASTMED "fast_med_use"
 /// The mob is holy and resistance to cult magic
@@ -485,7 +489,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// We can walk up or around cliffs, or at least we don't fall off of it
 #define TRAIT_CLIFF_WALKER "cliff_walker"
 /// This means the user is currently holding/wearing a "tactical camouflage" item (like a potted plant).
-/* #define TRAIT_TACTICALLY_CAMOUFLAGED "tactically_camouflaged" */
+#define TRAIT_TACTICALLY_CAMOUFLAGED "tactically_camouflaged"
 /// Gets double arcade prizes
 #define TRAIT_GAMERGOD "gamer-god"
 #define TRAIT_GIANT "giant"
@@ -719,6 +723,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PRETENDER_ROYAL_METABOLISM "pretender_royal_metabolism"
 #define TRAIT_BALLMER_SCIENTIST "ballmer_scientist"
 #define TRAIT_MAINTENANCE_METABOLISM "maintenance_metabolism"
+#define TRAIT_GOBLIN_METABOLISM "goblin_metabolism"
 /* #define TRAIT_CORONER_METABOLISM "coroner_metabolism" */
 /* #define TRAIT_HUMAN_AI_METABOLISM "human_ai_metabolism" */
 
@@ -839,7 +844,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Used by the honkspam element to avoid spamming the sound. Amusing considering its name.
 #define TRAIT_HONKSPAMMING "trait_honkspamming"
 /// Required by the waddling element since there are multiple sources of it.
-/* #define TRAIT_WADDLING "trait_waddling" */
+#define TRAIT_WADDLING "trait_waddling"
 /// Required by the on_hit_effect element, which is in turn added by other elements.
 /* #define TRAIT_ON_HIT_EFFECT "trait_on_hit_effect" */
 
@@ -1018,6 +1023,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
  */
 #define TRAIT_VENTCRAWLER_ALWAYS "ventcrawler_always"
 #define TRAIT_VENTCRAWLER_NUDE "ventcrawler_nude"
+
+/// Trait to allow climbing into disposals bin by themselves. Only matters for non-carbon living mobs.
+#define TRAIT_CAN_CLIMB_DISPOSALS "disposals_always"
 
 /// Minor trait used for beakers, or beaker-ishes. [/obj/item/reagent_containers], to show that they've been used in a reagent grinder.
 #define TRAIT_MAY_CONTAIN_BLENDED_DUST "may_contain_blended_dust"
@@ -1336,7 +1344,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to mobs that have the basic eating element
 /* #define TRAIT_MOB_EATER "mob_eater" */
 /// Trait which means whatever has this is dancing by a dance machine
-/* #define TRAIT_DISCO_DANCER "disco_dancer" */
+#define TRAIT_DISCO_DANCER "disco_dancer"
 
 /// Appiled when wizard buy (/datum/spellbook_entry/perks/spalls_lottery) perk.
 /// Give 50/25% chance not spend a spellbook charge on 1/2 cost spell.
@@ -1433,6 +1441,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
 #define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
+
+/// Makes the mob immune to carpotoxin
+#define TRAIT_CARPOTOXIN_IMMUNE "carpotoxin_immune"
 
 /// This mob can hear the music from the DJ station.
 #define TRAIT_CAN_HEAR_MUSIC "can_hear_radio"

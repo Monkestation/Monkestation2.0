@@ -549,7 +549,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/dance_machine,
+/obj/machinery/jukebox,
 /turf/open/floor/mineral/plastitanium,
 /area/station/service/bar)
 "Ec" = (

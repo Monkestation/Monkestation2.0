@@ -39,6 +39,14 @@
 		/obj/item/stack/sheet/glass = 1)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
+/obj/item/circuitboard/machine/slime_compressor
+	name = "Slime Compressor (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/slime_compressor
+	req_components = list(
+		/datum/stock_part/manipulator = 1,
+		/datum/stock_part/micro_laser = 1
+	)
 
 /datum/design/slimevac
 	name = "Slime Vacuum"
@@ -100,3 +108,13 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_FAB
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/slime_compressor
+	name = "Slime Compressor Board"
+	desc = "The circuit board for a slime compressor."
+	id = "slime_compressor"
+	build_path = /obj/item/circuitboard/machine/slime_compressor
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_FAB
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE

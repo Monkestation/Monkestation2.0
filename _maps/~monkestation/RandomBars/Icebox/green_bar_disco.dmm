@@ -1085,7 +1085,7 @@
 /area/station/service/bar)
 "Rr" = (
 /obj/effect/landmark/event_spawn,
-/obj/machinery/dance_machine/disco,
+/obj/machinery/jukebox/disco,
 /turf/open/floor/light,
 /area/station/service/theater)
 "Ru" = (

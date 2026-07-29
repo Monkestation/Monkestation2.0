@@ -1,6 +1,6 @@
 /datum/action/bb
 	background_icon = 'icons/mob/actions/backgrounds.dmi'
-	background_icon_state = "bg_syndie"
+	background_icon_state = "bg_demon"
 	button_icon = 'icons/mob/actions/actions_bb.dmi'
 	check_flags = AB_CHECK_CONSCIOUS
 	var/datum/antagonist/brother/bond

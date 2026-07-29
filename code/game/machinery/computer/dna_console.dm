@@ -1346,7 +1346,7 @@
 				"UE"=scanner_occupant.dna.unique_enzymes,
 				"UF"=scanner_occupant.dna.unique_features,
 				"name"=scanner_occupant.real_name,
-				"blood_type"="[scanner_occupant.get_blood_type()]")
+				"blood_type"=scanner_occupant.get_bloodtype()?.name)
 
 			return
 
@@ -1833,7 +1833,7 @@
 			scanner_occupant.real_name = buffer_slot["name"]
 			scanner_occupant.name = buffer_slot["name"]
 			scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
-			scanner_occupant.dna.human_blood_type = blood_name_to_blood_type(buffer_slot["blood_type"])
+			scanner_occupant.set_blood_type(buffer_slot["blood_type"])
 			scanner_occupant.apply_status_effect(/datum/status_effect/genetic_damage, damage_increase)
 			scanner_occupant.domutcheck()
 			return TRUE
@@ -1851,7 +1851,7 @@
 			scanner_occupant.real_name = buffer_slot["name"]
 			scanner_occupant.name = buffer_slot["name"]
 			scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
-			scanner_occupant.dna.human_blood_type = blood_name_to_blood_type(buffer_slot["blood_type"])
+			scanner_occupant.set_blood_type(buffer_slot["blood_type"])
 			scanner_occupant.apply_status_effect(/datum/status_effect/genetic_damage, damage_increase)
 			scanner_occupant.domutcheck()
 			return TRUE

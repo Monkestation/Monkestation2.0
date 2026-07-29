@@ -54,7 +54,7 @@
 /// Handles adding items with the module.
 /obj/item/borg/upgrade/proc/install_items(mob/living/silicon/robot/borg, user = usr, list/items)
 	for(var/item_to_add in items)
-		var/obj/item/module_item = new item_to_add(borg.model)
+		var/obj/item/module_item = new item_to_add(borg)
 		borg.model.basic_modules += module_item
 		borg.model.add_module(module_item, FALSE, TRUE)
 	return TRUE
@@ -62,7 +62,7 @@
 /// Handles removing items with the module.
 /obj/item/borg/upgrade/proc/remove_items(mob/living/silicon/robot/borg, user = usr, list/items)
 	for(var/item_to_remove in items)
-		var/obj/item/module_item = locate(item_to_remove) in borg.model.modules
+		var/obj/item/module_item = locate(item_to_remove) in borg.model.usable_modules
 		if(module_item)
 			borg.model.remove_module(module_item)
 	return TRUE
@@ -107,7 +107,7 @@
 	. = ..()
 	if(!.)
 		return .
-	var/obj/item/gun/energy/disabler/cyborg/disabler = locate() in borg.model.modules
+	var/obj/item/gun/energy/disabler/cyborg/disabler = locate() in borg.model.usable_modules
 	if(isnull(disabler))
 		to_chat(user, span_warning("There's no disabler in this unit!"))
 		return FALSE
@@ -121,7 +121,7 @@
 	. = ..()
 	if(!.)
 		return .
-	var/obj/item/gun/energy/disabler/cyborg/disabler = locate() in borg.model.modules
+	var/obj/item/gun/energy/disabler/cyborg/disabler = locate() in borg.model.usable_modules
 	if(isnull(disabler))
 		return FALSE
 	disabler.charge_delay = initial(disabler.charge_delay)
@@ -355,14 +355,14 @@
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.usable_modules)
 		hypo.upgrade()
 
 /obj/item/borg/upgrade/hypospray/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.usable_modules)
 		hypo.downgrade()
 
 /obj/item/borg/upgrade/hypospray/expanded
@@ -381,23 +381,23 @@
 	if(!.)
 		return .
 	var/found_hypo = FALSE
-	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.usable_modules)
 		hypo.bypass_protection = TRUE
 		found_hypo = TRUE
 	if(!found_hypo)
 		to_chat(user, span_warning("There are no installed hypospray modules to upgrade with piercing!")) // Check to see if any hyposprays were upgraded.
 		return FALSE
 	// If we are actually going to install the upgrade due to the presence of compatible modules, make sure their emagged counterparts get upgraded too.
-	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.emag_modules)
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.emagged_modules)
 		hypo.bypass_protection = TRUE
 
 /obj/item/borg/upgrade/piercing_hypospray/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.usable_modules)
 		hypo.bypass_protection = initial(hypo.bypass_protection)
-	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.emag_modules)
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.emagged_modules)
 		hypo.bypass_protection = initial(hypo.bypass_protection)
 
 /obj/item/borg/upgrade/defib
@@ -445,7 +445,7 @@
 	desc = "An upgrade to the Medical model, installing a surgical databank that can record available surgeries and gives instructions on how to perform surgical procedures."
 	icon_state = "module_medical"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
+	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate/medical)
 	model_flags = BORG_MODEL_MEDICAL
 	/// Action that looks for nearby objects to load new surgeries from.
 	var/datum/action/database_scanner
@@ -596,7 +596,7 @@
 	desc = "A bluespace rapid part exchange device for the engineering cyborg."
 	icon_state = "module_engineer"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur, /obj/item/robot_model/science)
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/syndicate/saboteur, /obj/item/robot_model/science)
 	model_flags = BORG_MODEL_ENGINEERING
 
 /obj/item/borg/upgrade/bs_rped/action(mob/living/silicon/robot/borg, user = usr)
@@ -604,13 +604,13 @@
 	if(!.)
 		return
 
-	var/obj/item/storage/part_replacer/cyborg/rped = locate() in borg.model.modules
+	var/obj/item/storage/part_replacer/cyborg/rped = locate() in borg.model.usable_modules
 	if(isnull(rped))
 		to_chat(user, span_warning("This cyborg doesn't have a rapid part exchange device to upgrade!"))
 		return FALSE
 
 	install_items(borg, user, list(/obj/item/storage/part_replacer/bluespace))
-	var/obj/item/storage/part_replacer/bluespace/brped = locate() in borg.model.modules
+	var/obj/item/storage/part_replacer/bluespace/brped = locate() in borg.model.usable_modules
 	var/move_location = borg.drop_location()
 	brped.atom_storage.silent_for_user = TRUE
 	for(var/obj/item in rped)
@@ -625,12 +625,12 @@
 	if(!.)
 		return
 
-	var/obj/item/storage/part_replacer/bluespace/brped = locate() in borg.model.modules
+	var/obj/item/storage/part_replacer/bluespace/brped = locate() in borg.model.usable_modules
 	if(isnull(brped))
 		return FALSE
 
 	install_items(borg, user, list(/obj/item/storage/part_replacer/cyborg))
-	var/obj/item/storage/part_replacer/cyborg/rped = locate() in borg.model.modules
+	var/obj/item/storage/part_replacer/cyborg/rped = locate() in borg.model.usable_modules
 	var/move_location = borg.drop_location()
 	rped.atom_storage.silent_for_user = TRUE
 	for(var/obj/item in brped)
@@ -645,7 +645,7 @@
 	desc = "A crew pinpointer module for the medical cyborg. Permits remote access to the crew monitor."
 	icon_state = "module_medical"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
+	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate/medical)
 	model_flags = BORG_MODEL_MEDICAL
 	items_to_add = list(/obj/item/pinpointer/crew)
 	var/datum/action/crew_monitor
@@ -687,7 +687,8 @@
 		return
 	if(!new_model)
 		return FALSE
-	borg.model.transform_to(new_model, FALSE)
+	borg.apply_model(new_model)
+	borg.apply_skin(borg.model.default_skin)
 
 /obj/item/borg/upgrade/transform/clown
 	name = "borg model picker (Clown)"
@@ -700,7 +701,7 @@
 	desc = "A supplementary apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles."
 	icon_state = "module_engineer"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/syndicate/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
 	items_to_add = list(/obj/item/borg/apparatus/sheet_manipulator/extra)
 
@@ -718,14 +719,14 @@
 	desc = "An upgrade that improves the standard built-in gas analyzer's range."
 	icon_state = "module_engineer"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur) // Engineering-exclusive. Do not give this to science cyborgs.
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/syndicate/saboteur) // Engineering-exclusive. Do not give this to science cyborgs.
 	model_flags = BORG_MODEL_ENGINEERING
 
 /obj/item/borg/upgrade/ranged_analyzer/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if(!.)
 		return FALSE
-	for(var/obj/item/analyzer/gas_analyzer in borg.model.modules)
+	for(var/obj/item/analyzer/gas_analyzer in borg.model.usable_modules)
 		gas_analyzer.name = /obj/item/analyzer/ranged::name
 		gas_analyzer.desc = /obj/item/analyzer/ranged::desc
 		gas_analyzer.icon_state = /obj/item/analyzer/ranged::icon_state
@@ -736,12 +737,47 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	for(var/obj/item/analyzer/gas_analyzer in borg.model.modules)
+	for(var/obj/item/analyzer/gas_analyzer in borg.model.usable_modules)
 		gas_analyzer.name = initial(gas_analyzer.name)
 		gas_analyzer.desc = initial(gas_analyzer.desc)
 		gas_analyzer.icon_state = initial(gas_analyzer.icon_state)
 		gas_analyzer.ranged_scan_distance = initial(gas_analyzer.ranged_scan_distance)
 		gas_analyzer.update_appearance()
+
+/obj/item/borg/upgrade/experimental_weldingtool
+	name = "experimental welder upgrade"
+	desc = "An upgrade to fit the self-replenishing tank of an experimental welding tool to a cyborg."
+	icon_state = "module_engineer"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/syndicate/saboteur, /obj/item/robot_model/science)
+	model_flags = BORG_MODEL_ENGINEERING
+
+/obj/item/borg/upgrade/experimental_weldingtool/action(mob/living/silicon/robot/borg, user = usr)
+	. = ..()
+	if(!.)
+		return .
+	for(var/obj/item/weldingtool/largetank/cyborg/tool in borg.model.usable_modules)
+		tool.refuel = TRUE
+
+/obj/item/borg/upgrade/experimental_weldingtool/deactivate(mob/living/silicon/robot/borg, user = usr)
+	. = ..()
+	if(!.)
+		return .
+	for(var/obj/item/weldingtool/largetank/cyborg/tool in borg.model.usable_modules)
+		tool.refuel = FALSE
+
+/obj/item/borg/upgrade/gps
+	name = "cyborg global positioning system upgrade"
+	desc = "An upgrade kit for all cyborgs to connect them to the GPS network."
+	icon_state = "module_general"
+	require_model = TRUE
+	items_to_add = list(/obj/item/gps/cyborg)
+
+/obj/item/borg/upgrade/gps/action(mob/living/silicon/robot/borg, user = usr)
+	for(var/obj/item/gps/cyborg/GPS in borg.model.usable_modules) //mining borgs start with a GPS
+		to_chat(user, span_warning("This unit already has a GPS installed!"))
+		return FALSE
+	. = ..()
 
 /obj/item/borg/upgrade/beaker_app
 	name = "beaker storage apparatus"
@@ -900,58 +936,191 @@
 	desc = "An updated sensor and driver kit for medical cyborgs. Allowing the cyborg unit to perform more in-depth analysis of patients."
 	icon_state = "module_medical"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical) // The fact that syndicate medical doesn't get advanced stock suprises me just as much as you.
+	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate/medical) // The fact that syndicate medical doesn't get advanced stock surprises me just as much as you.
 	model_flags = BORG_MODEL_MEDICAL
 
 /obj/item/borg/upgrade/adv_healthanalyzer/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/healthanalyzer/cyborg/analyzer in borg.model.modules)
-		analyzer.upgrade()
+	for(var/obj/item/healthanalyzer/cyborg/analyzer in borg.model.usable_modules)
+		analyzer.works_from_distance = /obj/item/healthanalyzer/advanced::works_from_distance
+		analyzer.advanced = /obj/item/healthanalyzer/advanced::advanced
+		analyzer.give_wound_treatment_bonus = /obj/item/healthanalyzer/advanced::give_wound_treatment_bonus
+		analyzer.name = /obj/item/healthanalyzer/advanced::name
+		analyzer.desc = /obj/item/healthanalyzer/advanced::desc
+		analyzer.icon_state = /obj/item/healthanalyzer/advanced::icon_state
+		analyzer.update_appearance()
 
 /obj/item/borg/upgrade/adv_healthanalyzer/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/healthanalyzer/cyborg/analyzer in borg.model.modules)
-		analyzer.downgrade()
+	for(var/obj/item/healthanalyzer/cyborg/analyzer in borg.model.usable_modules)
+		analyzer.works_from_distance = initial(analyzer.works_from_distance)
+		analyzer.advanced = initial(analyzer.advanced)
+		analyzer.give_wound_treatment_bonus = initial(analyzer.give_wound_treatment_bonus)
+		analyzer.name = initial(analyzer.name)
+		analyzer.desc = initial(analyzer.desc)
+		analyzer.icon_state = initial(analyzer.icon_state)
+		analyzer.update_appearance()
 
 /obj/item/borg/upgrade/breathingbag
 	name = "breathing bag upgrade"
 	desc = "An upgrade allowing the medical module to assist a patient with breathing."
 	icon_state = "module_medical"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
+	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate/medical)
 	model_flags = BORG_MODEL_MEDICAL
 	items_to_add = list(/obj/item/breathing_bag)
 
+// This is a base item which should be inherited from.
 /obj/item/borg/upgrade/surgery_omnitool
 	name = "cyborg surgical omni-tool upgrade"
-	desc = "An upgrade to the Medical model, upgrading the built-in \
-		surgical omnitool, to be on par with advanced surgical tools, allowing for faster surgery."
+	desc = "An upgrade that changes the standard built-in surgical omnitool somehow."
 	icon_state = "module_medical"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
+	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate/medical)
 	model_flags = BORG_MODEL_MEDICAL
 
 /obj/item/borg/upgrade/surgery_omnitool/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if(!.)
-		return .
-	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_upgrade in borg.model.modules)
-		if(omnitool_upgrade.upgraded)
-			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
-			return FALSE
-	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in borg.model.modules)
-		omnitool.set_upgraded(TRUE)
+		return FALSE
+	for(var/obj/item/borg/upgrade/surgery_omnitool/other_omnitool_upgrade in borg.upgrades)
+		other_omnitool_upgrade.forceMove(get_turf(borg))
 
-/obj/item/borg/upgrade/surgery_omnitool/deactivate(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/surgery_omnitool/advanced
+	name = "cyborg surgical advanced omni-tool upgrade"
+	desc = "An upgrade that upgrades the standard built-in surgical omnitool to be on par with advanced surgical tools which allows for faster surgery."
+
+/obj/item/borg/upgrade/surgery_omnitool/advanced/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if(!.)
-		return .
-	for(var/obj/item/borg/cyborg_omnitool/omnitool in borg.model.modules)
-		omnitool.set_upgraded(FALSE)
+		return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_module in borg.model.usable_modules)
+		if(omnitool_module.upgraded)
+			continue
+		omnitool_module.set_upgraded(TRUE)
+
+/obj/item/borg/upgrade/surgery_omnitool/advanced/deactivate(mob/living/silicon/robot/borg, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_module in borg.model.usable_modules)
+		if(omnitool_module.upgraded && initial(omnitool_module.upgraded)) // Omnitools that start out upgraded shall stay upgraded.
+			continue
+		omnitool_module.set_upgraded(FALSE)
+
+/obj/item/borg/upgrade/surgery_omnitool/alien
+	name = "cyborg surgical alien omni-tool upgrade"
+	desc = "An upgrade that replaces the standard built-in surgical omnitool with an alien variant of it which allows for even faster surgery."
+
+/obj/item/borg/upgrade/surgery_omnitool/alien/action(mob/living/silicon/robot/borg, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_module in borg.model.usable_modules) // Solely because we don't want to shuffle the item around in their inventory.
+		omnitool_module.replace_tool(/obj/item/scalpel/cyborg, /obj/item/scalpel/cyborg/alien)
+		omnitool_module.replace_tool(/obj/item/surgicaldrill/cyborg, /obj/item/surgicaldrill/cyborg/alien)
+		omnitool_module.replace_tool(/obj/item/hemostat/cyborg, /obj/item/hemostat/cyborg/alien)
+		omnitool_module.replace_tool(/obj/item/retractor/cyborg, /obj/item/retractor/cyborg/alien)
+		omnitool_module.replace_tool(/obj/item/cautery/cyborg, /obj/item/cautery/cyborg/alien)
+		omnitool_module.replace_tool(/obj/item/circular_saw/cyborg, /obj/item/circular_saw/cyborg/alien)
+		omnitool_module.replace_tool(/obj/item/bonesetter/cyborg, /obj/item/bonesetter/cyborg/alien)
+
+/obj/item/borg/upgrade/surgery_omnitool/alien/deactivate(mob/living/silicon/robot/borg, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_module in borg.model.usable_modules)
+		omnitool_module.replace_tool(/obj/item/scalpel/cyborg/alien, /obj/item/scalpel/cyborg)
+		omnitool_module.replace_tool(/obj/item/surgicaldrill/cyborg/alien, /obj/item/surgicaldrill/cyborg)
+		omnitool_module.replace_tool(/obj/item/hemostat/cyborg/alien, /obj/item/hemostat/cyborg)
+		omnitool_module.replace_tool(/obj/item/retractor/cyborg/alien, /obj/item/retractor/cyborg)
+		omnitool_module.replace_tool(/obj/item/cautery/cyborg/alien, /obj/item/cautery/cyborg)
+		omnitool_module.replace_tool(/obj/item/circular_saw/cyborg/alien, /obj/item/circular_saw/cyborg)
+		omnitool_module.replace_tool(/obj/item/bonesetter/cyborg/alien, /obj/item/bonesetter/cyborg)
+
+// This is a base item which should be inherited from.
+/obj/item/borg/upgrade/syringe
+	name = "cyborg syringe upgrade"
+	desc = "An upgrade that replaces the standard built-in syringe."
+	icon_state = "module_medical"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate/medical)
+	model_flags = BORG_MODEL_MEDICAL
+	/// The typepath of the syringe to copy.
+	var/obj/item/reagent_containers/syringe/upgraded_syringe_typepath = null
+
+/obj/item/borg/upgrade/syringe/action(mob/living/silicon/robot/borg, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!upgraded_syringe_typepath)
+		to_chat(user, span_warning("This upgrade doesn't seem to do anything."))
+		return FALSE
+	for(var/obj/item/borg/upgrade/syringe/other_syringe_upgrade in borg.upgrades)
+		other_syringe_upgrade.forceMove(get_turf(borg))
+	for(var/obj/item/reagent_containers/syringe/syringe_module in borg.model.usable_modules)
+		upgrade_syringe(borg, syringe_module) // This is solely because we don't want to shuffle the item around in their inventory.
+		syringe_module.update_appearance()
+
+/obj/item/borg/upgrade/syringe/deactivate(mob/living/silicon/robot/borg, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/obj/item/reagent_containers/syringe/syringe_module in borg.model.usable_modules)
+		downgrade_syringe(borg, syringe_module)
+		syringe_module.update_appearance()
+
+/// Upgrades the syringe to use most of the new syringe's values.
+/obj/item/borg/upgrade/syringe/proc/upgrade_syringe(mob/living/silicon/robot/borg, obj/item/reagent_containers/syringe/syringe_to_upgrade)
+	syringe_to_upgrade.name = initial(upgraded_syringe_typepath.name)
+	syringe_to_upgrade.desc = initial(upgraded_syringe_typepath.desc)
+	syringe_to_upgrade.base_icon_state = initial(upgraded_syringe_typepath.base_icon_state)
+	var/obj/item/reagent_containers/syringe/upgraded_syringe = new upgraded_syringe_typepath()
+	syringe_to_upgrade.possible_transfer_amounts = upgraded_syringe.possible_transfer_amounts.Copy() // Created only to get a list.
+	qdel(upgraded_syringe)
+	var/overflowing_reagents = syringe_to_upgrade.reagents.total_volume - initial(upgraded_syringe_typepath.volume)
+	if(overflowing_reagents)
+		var/datum/reagents/reagents_to_splash = new(overflowing_reagents)
+		syringe_to_upgrade.reagents.trans_to(reagents_to_splash, reagents_to_splash.maximum_volume)
+		var/turf/current_turf = borg.loc
+		current_turf.add_liquid_from_reagents(reagents_to_splash)
+	syringe_to_upgrade.amount_per_transfer_from_this = initial(upgraded_syringe_typepath.amount_per_transfer_from_this)
+	syringe_to_upgrade.volume = initial(upgraded_syringe_typepath.volume)
+	syringe_to_upgrade.reagents.maximum_volume = syringe_to_upgrade.volume
+	syringe_to_upgrade.inject_flags = initial(upgraded_syringe_typepath.inject_flags)
+
+/// Downgrades the syringe to its initial values.
+/obj/item/borg/upgrade/syringe/proc/downgrade_syringe(mob/living/silicon/robot/borg, obj/item/reagent_containers/syringe/syringe_to_downgrade)
+	syringe_to_downgrade.name = initial(syringe_to_downgrade.name)
+	syringe_to_downgrade.desc = initial(syringe_to_downgrade.desc)
+	syringe_to_downgrade.base_icon_state = initial(syringe_to_downgrade.base_icon_state)
+	var/obj/item/reagent_containers/syringe/old_syringe = new syringe_to_downgrade.type()
+	syringe_to_downgrade.possible_transfer_amounts = old_syringe.possible_transfer_amounts.Copy() // Created only to get a list.
+	qdel(old_syringe)
+	var/overflowing_reagents = syringe_to_downgrade.reagents.total_volume - initial(syringe_to_downgrade.volume)
+	if(overflowing_reagents)
+		var/datum/reagents/reagents_to_splash = new(overflowing_reagents)
+		syringe_to_downgrade.reagents.trans_to(reagents_to_splash, reagents_to_splash.maximum_volume)
+		var/turf/current_turf = borg.loc
+		current_turf.add_liquid_from_reagents(reagents_to_splash)
+	syringe_to_downgrade.amount_per_transfer_from_this = initial(syringe_to_downgrade.amount_per_transfer_from_this)
+	syringe_to_downgrade.volume = initial(syringe_to_downgrade.volume)
+	syringe_to_downgrade.reagents.maximum_volume = syringe_to_downgrade.volume
+	syringe_to_downgrade.inject_flags = initial(syringe_to_downgrade.inject_flags)
+
+/obj/item/borg/upgrade/syringe/piercing
+	name = "cyborg piercing syringe upgrade"
+	desc = "An upgrade that replaces the standard built-in syringe with a syringe that can pierce thick material."
+	upgraded_syringe_typepath = /obj/item/reagent_containers/syringe/piercing
+
+/obj/item/borg/upgrade/syringe/bluespace
+	name = "cyborg bluespace syringe upgrade"
+	desc = "An upgrade that replaces the standard built-in syringe with a syringe that can hold more reagents."
+	upgraded_syringe_typepath = /obj/item/reagent_containers/syringe/bluespace
 
 //
 // Science Cyborgs
@@ -971,7 +1140,7 @@
 	. = ..()
 	if(!.)
 		return .
-	var/obj/item/borg/apparatus/circuit/science/apparatus = locate() in borg.model.modules
+	var/obj/item/borg/apparatus/circuit/science/apparatus = locate() in borg.model.usable_modules
 	if(isnull(apparatus))
 		to_chat(user, span_warning("This cyborg doesn't have an apparatus to upgrade!"))
 		return FALSE
@@ -984,7 +1153,7 @@
 	. = ..()
 	if(!.)
 		return .
-	var/obj/item/borg/apparatus/circuit/science/apparatus = locate() in borg.model.modules
+	var/obj/item/borg/apparatus/circuit/science/apparatus = locate() in borg.model.usable_modules
 	if(isnull(apparatus))
 		return FALSE
 	if(!length(storables_to_add))

@@ -493,7 +493,7 @@
 	reagent_state = LIQUID
 	taste_mult = 1
 	taste_description = "metallic saltiness"
-	nutriment_factor = 0.5 * REAGENTS_METABOLISM
+	nutriment_factor = 0.5
 	penetrates_skin = NONE
 
 /datum/emote/spin/speen

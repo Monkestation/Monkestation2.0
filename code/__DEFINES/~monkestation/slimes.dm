@@ -6,7 +6,6 @@
 #define CLEANER_SLIME (1<<5)
 #define OVERWRITES_COLOR (1<<6)
 #define NOEVOLVE_SLIME (1<<7)
-#define NOOOZE_SLIME (1<<8)
 
 #define TRAIT_ON_DEATH (1<<0)
 #define TRAIT_VISUAL (1<<1)
@@ -50,13 +49,6 @@
 #define SLIME_SELL_MINIMUM_MODIFIER   0.1
 #define SLIME_RANDOM_MODIFIER_MIN -0.0003
 #define SLIME_RANDOM_MODIFIER_MAX 0.0003
-
-/// How many units of slime ooze are required for a normal extract recipe.
-#define EXTRACT_RECIPE_OOZE_AMOUNT			20
-/// How many units of slime ooze (of each color) are required for a crossbreed recipe.
-#define CROSSBREED_RECIPE_OOZE_AMOUNT		250
-/// How many units of slime ooze (of each color) are required for an regenerative crossbreed recipe.
-#define REGEN_CROSSBREED_RECIPE_OOZE_AMOUNT	500
 
 #define EMOTION_HAPPY "happy"
 #define EMOTION_SAD "sad"

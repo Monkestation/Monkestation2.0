@@ -18,7 +18,7 @@
 	heatmod = 1.5
 	payday_modifier = 0.75
 	meat = /obj/item/food/meat/slab/human/mutant/plant
-	exotic_bloodtype = /datum/blood_type/water
+	exotic_bloodtype = BLOOD_TYPE_H2O
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/plant
 
@@ -52,10 +52,3 @@
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
 		H.take_overall_damage(brute = 1 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
 	..()
-
-/datum/species/pod/handle_chemical(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
-	if(chem.type == /datum/reagent/toxin/plantbgone)
-		H.adjustToxLoss(3 * REM * seconds_per_tick)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
-		return TRUE
-	return ..()

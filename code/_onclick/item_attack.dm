@@ -374,14 +374,31 @@
  * Return TRUE if an effect was done, FALSE otherwise.
  */
 /mob/living/proc/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
-	if(damage_done > 0 && attacking_item.damtype == BRUTE && prob(25 + damage_done * 2))
-		attacking_item.add_mob_blood(src)
-		add_splatter_floor(get_turf(src))
-		if(get_dist(attacker, src) <= 1)
-			attacker.add_mob_blood(src)
+	if(damage_done <= 0 || attacking_item.damtype != BRUTE || !prob(25 + damage_done * 2))
+		return FALSE
+
+	attacking_item.add_mob_blood(src)
+	add_splatter_floor(get_turf(src))
+	if(get_dist(attacker, src) > 1)
 		return TRUE
 
-	return FALSE
+	if(ishuman(attacker))
+		attacker.add_mob_blood(src)
+		return TRUE
+
+	var/bloodied_things = ITEM_SLOT_GLOVES
+	if(damage_done >= 20 || (damage_done >= 15 && prob(25)))
+		bloodied_things |= ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING
+		if(prob(33) && damage_done >= 10)
+			bloodied_things |= ITEM_SLOT_FEET
+		if(prob(33) && damage_done >= 24) // fireaxe damage, because heeeeere's johnny
+			bloodied_things |= ITEM_SLOT_MASK
+		if(prob(33) && damage_done >= 30) // esword damage
+			bloodied_things |= ITEM_SLOT_HEAD
+
+	var/mob/living/carbon/human/human_attacker = attacker
+	human_attacker.add_blood_DNA_to_items(get_blood_dna_list(), bloodied_things)
+	return TRUE
 
 /mob/living/silicon/robot/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
 	if(damage_done > 0 && attacking_item.damtype != STAMINA && stat != DEAD)

@@ -196,7 +196,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!istype(glass)) //you can dip cigarettes into beakers
 		return NONE
 
-	if(glass.reagents.trans_to(src, chem_volume, transfered_by = user)) //if reagents were transfered, show the message
+	if(glass.reagents.trans_to(src, chem_volume, transferred_by = user)) //if reagents were transfered, show the message
 		to_chat(user, span_notice("You dip \the [src] into \the [glass]."))
 	//if not, either the beaker was empty, or the cigarette was full
 	else if(!glass.reagents.total_volume)
@@ -776,7 +776,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	packeditem = to_smoke.name
 	update_name()
 	if(to_smoke.reagents)
-		to_smoke.reagents.trans_to(src, to_smoke.reagents.total_volume, transfered_by = user)
+		to_smoke.reagents.trans_to(src, to_smoke.reagents.total_volume, transferred_by = user)
 	smoketime = round(reagents.total_volume/1.5) MINUTES
 	qdel(to_smoke)
 

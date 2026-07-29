@@ -84,7 +84,7 @@
 /obj/item/storage/medkit/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.set_holdable(list_of_everything_medkits_can_hold + typesof(/obj/item/reagent_containers/cup/vial))
+	atom_storage.set_holdable(list_of_everything_medkits_can_hold + typesof(/obj/item/reagent_containers/chemcanister))
 
 /obj/item/storage/medkit/regular
 	icon_state = "medkit"
@@ -152,33 +152,31 @@
 	)
 	generate_items_inside(items_inside, src)
 
-/obj/item/storage/medkit/surgery_syndie
+/obj/item/storage/medkit/surgery/syndie
 	name = "suspicous surgical medkit"
-	desc = "An suspicous coloured medkit full of advanced medical equipment."
+	desc = "A suspicously colored medkit full of advanced medical equipment."
 	icon_state = "medkit_tactical_lite"
 	inhand_icon_state = "medkit-tactical"
 	damagetype_healed = HEAL_ALL_DAMAGE
 
-/obj/item/storage/medkit/surgery_syndie/PopulateContents()
+/obj/item/storage/medkit/surgery/syndie/PopulateContents()
 	if(empty)
 		return
 	var/list/items_inside = list(
+		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/scalpel/advanced = 1,
 		/obj/item/retractor/advanced = 1,
 		/obj/item/cautery/advanced = 1,
+		/obj/item/blood_filter/advanced = 1,
 		/obj/item/surgical_drapes = 1,
 		/obj/item/stack/medical/gauze/twelve = 1,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
-		/obj/item/bonesetter = 1,
-		/obj/item/blood_filter = 1,
-		/obj/item/stack/medical/bone_gel = 1,
-		/obj/item/stack/sticky_tape/surgical = 1,
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/reagent_containers/cup/bottle/sodium_thiopental = 1,
 	)
 	generate_items_inside(items_inside,src)
 
-/obj/item/storage/medkit/surgery_syndie/get_medbot_skin()
+/obj/item/storage/medkit/surgery/syndie/get_medbot_skin()
 	return "bezerk"
 
 /obj/item/storage/medkit/ancient
@@ -341,11 +339,11 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/hypospray = 1,
-		/obj/item/reagent_containers/cup/vial/brute = 1,
-		/obj/item/reagent_containers/cup/vial/burn = 1,
-		/obj/item/reagent_containers/cup/vial/tox = 1,
-		/obj/item/reagent_containers/cup/vial/oxy = 1,
-		/obj/item/reagent_containers/cup/vial/epi = 1,
+		/obj/item/reagent_containers/chemcanister/brute = 1,
+		/obj/item/reagent_containers/chemcanister/burn = 1,
+		/obj/item/reagent_containers/chemcanister/tox = 1,
+		/obj/item/reagent_containers/chemcanister/oxy = 1,
+		/obj/item/reagent_containers/chemcanister/epi = 1,
 		/obj/item/healthanalyzer = 1,
 		)
 	generate_items_inside(items_inside,src)
@@ -360,12 +358,12 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/cup/vial/omnizine = 2,
-		/obj/item/reagent_containers/cup/vial/sal_acid = 1,
-		/obj/item/reagent_containers/cup/vial/oxandrolone = 1,
-		/obj/item/reagent_containers/cup/vial/pen_acid = 1,
-		/obj/item/reagent_containers/cup/vial/atropine = 1,
-		/obj/item/reagent_containers/cup/vial/inaprovaline = 1,
+		/obj/item/reagent_containers/chemcanister/omnizine = 2,
+		/obj/item/reagent_containers/chemcanister/sal_acid = 1,
+		/obj/item/reagent_containers/chemcanister/oxandrolone = 1,
+		/obj/item/reagent_containers/chemcanister/pen_acid = 1,
+		/obj/item/reagent_containers/chemcanister/atropine = 1,
+		/obj/item/reagent_containers/chemcanister/inaprovaline = 1,
 		)
 	generate_items_inside(items_inside,src)
 
@@ -440,7 +438,7 @@
 		/obj/item/hypospray/combat = 1,
 		/obj/item/storage/box/evilmeds/evilhypos = 1,
 		/obj/item/storage/box/evilmeds = 1,
-		/obj/item/reagent_containers/cup/vial/bluespace/combat = 2,
+		/obj/item/reagent_containers/chemcanister/bluespace/combat = 2,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
 		/obj/item/clothing/glasses/hud/health/night/science = 1,
 	)
@@ -519,10 +517,10 @@
 		return
 	var/static/list/items_inside = list(
 		/obj/item/hypospray/combat/no_vial = 1,
-		/obj/item/reagent_containers/cup/vial/large/combat = 2,
-		/obj/item/reagent_containers/cup/vial/large/omnizine = 1,
-		/obj/item/reagent_containers/cup/vial/large/morphine = 1,
-		/obj/item/reagent_containers/cup/vial/large/epi = 1,
+		/obj/item/reagent_containers/chemcanister/large/combat = 2,
+		/obj/item/reagent_containers/chemcanister/large/omnizine = 1,
+		/obj/item/reagent_containers/chemcanister/large/morphine = 1,
+		/obj/item/reagent_containers/chemcanister/large/epi = 1,
 		/obj/item/healthanalyzer = 1,
 	)
 	generate_items_inside(items_inside, src)
@@ -884,7 +882,7 @@
 /obj/item/storage/organbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(is_reagent_container(tool) && tool.is_open_container())
 		var/obj/item/reagent_containers/RC = tool
-		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
+		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transferred_by = user)
 		if(units)
 			balloon_alert(user, "[units]u transferred")
 			return ITEM_INTERACT_SUCCESS
