@@ -110,6 +110,9 @@
 /datum/preference/choiced/lizard_legs/init_possible_values()
 	return assoc_to_keys_features(GLOB.legs_list)
 
+/datum/preference/choiced/lizard_legs/create_default_value()
+	return DIGITIGRADE_LEGS
+
 /datum/preference/choiced/lizard_legs/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["legs"] = value
 

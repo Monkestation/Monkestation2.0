@@ -167,6 +167,7 @@ Lizard subspecies: SILVER SCALED
 		TRAIT_WINE_TASTER,
 	)
 	mutantlungs = null
+	digitigrade_customization = DIGITIGRADE_FORCED
 	species_language_holder = /datum/language_holder/lizard/silver
 	mutanttongue = /obj/item/organ/internal/tongue/lizard/silver
 	exotic_bloodtype = BLOOD_TYPE_LIZARD
