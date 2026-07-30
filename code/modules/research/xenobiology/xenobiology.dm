@@ -3,7 +3,7 @@
 /obj/item/slime_extract
 	name = "slime extract"
 	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
-	icon = 'monkestation/code/modules/slimecore/icons/slimes.dmi'
+	icon = 'icons/obj/xenobiology/extracts.dmi'
 	icon_state = "grey_slime_extract"
 	force = 0
 	w_class = WEIGHT_CLASS_TINY

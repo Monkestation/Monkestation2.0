@@ -32,3 +32,8 @@
 #define COMSIG_TRAITOR_GRAFFITI_DRAWN "traitor_rune_drawn"
 /// Called when someone slips on some seditious graffiti. Pass the mind of the viewer.
 #define COMSIG_TRAITOR_GRAFFITI_SLIPPED "traitor_demoralise_event"
+
+/// Sent when a bug activates
+#define COMSIG_TRAITOR_BUG_ACTIVATED "traitor_bug_activated"
+/// Sent when a T1de bug activates
+#define COMSIG_GLOBAL_GREY_TIDE_TRAITOR "grey_tide_traitor"

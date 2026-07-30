@@ -217,6 +217,13 @@
 	///Do we not have our own handling for cig overlays?
 	var/display_cigs = TRUE
 
+/obj/item/storage/fancy/cigarettes/Initialize(mapload)
+	. = ..()
+	atom_storage.display_contents = FALSE
+	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
+	register_context()
+	AddElement(/datum/element/trash_if_empty)
+
 /obj/item/storage/fancy/cigarettes/attack_self(mob/user)
 	if(contents.len != 0 || !spawn_coupon)
 		return ..()
@@ -230,12 +237,6 @@
 	name = "discarded cigarette packet"
 	desc = "An old cigarette packet with the back torn off, worth less than nothing now."
 	atom_storage.max_slots = 0
-
-/obj/item/storage/fancy/cigarettes/Initialize(mapload)
-	. = ..()
-	atom_storage.display_contents = FALSE
-	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
-	register_context()
 
 /obj/item/storage/fancy/cigarettes/attack_hand_secondary(mob/user, list/modifiers)
 	if(..() == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
