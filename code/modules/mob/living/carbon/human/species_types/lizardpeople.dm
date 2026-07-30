@@ -119,6 +119,7 @@ Lizard subspecies: ASHWALKERS
 	)
 	examine_limb_id = SPECIES_LIZARD
 	species_language_holder = /datum/language_holder/ashwalker
+	digitigrade_customization = DIGITIGRADE_FORCED
 	/// The aging component given by the species.
 	var/datum/component/ash_age/ash_age
 
