@@ -174,7 +174,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	tableVariant = /obj/structure/table
 	material_type = /datum/material/iron
 	matter_amount = 4
-	cost = 500
+	cost = SHEET_MATERIAL_AMOUNT
 	source = /datum/robot_energy_storage/iron
 	stairs_type = /obj/structure/stairs
 
