@@ -8,7 +8,7 @@
 	needs_dead_host = TRUE
 	ability_explanation = "\
 	Aggressivley probes the dead grey matter of a brain to further one's own growth.\n\
-	If successful, the rate at which one produces chemicals and evolution points \n\
+	If successful, the rate at which one produces chemicals and evolution points increases, and increases the max chemical and evolution points you can store. \n\
 	"
 
 /datum/action/cooldown/borer/dissection/Trigger(trigger_flags, atom/target)
@@ -37,6 +37,9 @@
 	cortical_owner.human_host.add_traits(list(TRAIT_BORER_DISSECTION))
 	cortical_owner.dissections++
 	cortical_owner.chemical_storage -= chemical_cost
+	cortical_owner.max_point_storage += 2
+	cortical_owner.chemical_evolution += 4
+	cortical_owner.stat_evolution += 3
 	var/turf/borer_turf = get_turf(cortical_owner)
 	playsound(borer_turf, 'sound/effects/splat.ogg', 50, TRUE)
 	owner.balloon_alert(owner, "grey Matter Analzyed")

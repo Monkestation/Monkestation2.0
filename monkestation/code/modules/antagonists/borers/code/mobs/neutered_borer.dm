@@ -8,12 +8,16 @@
 	skip_status_tab = TRUE
 	generation = 1
 	/// How many blood chemicals they need to reach for max maturation.
-	var/objective_blood_chems = 10
+	var/objective_blood_chems
 	/// How many dissections they need to reach for max maturation
-	var/objective_dissection = 3
+	var/objective_dissection
 	/// How many dissections have they preformed?
 	var/dissections = 0
 
+/mob/living/basic/cortical_borer/neutered/Initialize(mapload)
+	. = ..()
+	objective_blood_chems = rand(8,12)
+	objective_dissection = rand(2,4)
 
 /mob/living/basic/cortical_borer/neutered/get_status_tab_items()
 	. = ..()

@@ -1,14 +1,11 @@
-/// If a borer learns this amount of chemicals from blood, it will count for their objective
-#define BLOOD_CHEM_OBJECTIVE 3
-
 /// How many chemicals does a borer need to count for the objective. We use this exclusivelly for text on the end-round-panel
-GLOBAL_VAR_INIT(objective_blood_chem, 3)
+GLOBAL_VAR_INIT(objective_blood_chem, rand(2, 4))
 
 /// Whats the borers progress on getting the chemical objective done?
 GLOBAL_VAR_INIT(successful_blood_chem, 0)
 
 /// How many borers should have to learn "objective_blood_chem" amount of chemicals before we count the objective as complete
-GLOBAL_VAR_INIT(objective_blood_borer, 3)
+GLOBAL_VAR_INIT(objective_blood_borer, rand(2,5))
 
 /**
  * Lets borers learn pre-coded chemicals in the "potential_chemicals" list
@@ -81,12 +78,17 @@ GLOBAL_VAR_INIT(objective_blood_borer, 3)
 	Allows you to learn chemicals from blood at a much steeper price\n\
 	Does not work on certain chemicals whose mollecular complexity is too high\n\
 	"
+	var/mob/living/basic/cortical_borer/cortical_owner
+
+/datum/action/cooldown/borer/learn_bloodchemical/Grant(mob/granted_to)
+	. = ..()
+	cortical_owner = owner
+	cortical_owner.chemical_copy = src
 
 /datum/action/cooldown/borer/learn_bloodchemical/Trigger(trigger_flags, atom/target)
 	. = ..()
 	if(!.)
 		return FALSE
-	var/mob/living/basic/cortical_borer/cortical_owner = owner
 
 	if(length(cortical_owner.human_host.reagents.reagent_list) <= 0)
 		owner.balloon_alert(owner, "no reagents in host")
@@ -129,7 +131,7 @@ GLOBAL_VAR_INIT(objective_blood_borer, 3)
 
 	cortical_owner.human_host.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5 * cortical_owner.host_harm_multiplier, maximum = BRAIN_DAMAGE_SEVERE)
 
-	if(cortical_owner.blood_chems_learned == BLOOD_CHEM_OBJECTIVE && !cortical_owner.neutered)
+	if(cortical_owner.blood_chems_learned == GLOB.objective_blood_chem && !cortical_owner.neutered)
 		GLOB.successful_blood_chem += 1
 
 	owner.balloon_alert(owner, "[reagent_choice] learned")
@@ -138,4 +140,3 @@ GLOBAL_VAR_INIT(objective_blood_borer, 3)
 
 	StartCooldown()
 
-#undef BLOOD_CHEM_OBJECTIVE
