@@ -147,9 +147,9 @@
 	desc = "A set of atmospheric tools hidden behind a concealed panel on the user's arm."
 	icon_state = "toolkit_atmosph"
 	items_to_create = list(
-		/obj/item/extinguisher,
-		/obj/item/analyzer,
-		/obj/item/crowbar,
+		/obj/item/extinguisher/advanced,
+		/obj/item/analyzer/ranged,
+		/obj/item/crowbar/cyborg,
 		/obj/item/holosign_creator/atmos
 	)
 

@@ -99,6 +99,7 @@ DEFINE_BITFIELD(status_flags, list(
 
 //click cooldowns, in tenths of a second, used for various combat actions
 #define CLICK_CD_MELEE (0.8 SECONDS)
+#define CLICK_CD_FAST_MELEE (0.5 SECONDS)
 #define CLICK_CD_THROW (0.8 SECONDS)
 #define CLICK_CD_RANGE (0.4 SECONDS)
 #define CLICK_CD_RAPID (0.2 SECONDS)
@@ -110,6 +111,10 @@ DEFINE_BITFIELD(status_flags, list(
 #define CLICK_CD_GRABBING (1 SECONDS)
 #define CLICK_CD_LOOK_UP (0.5 SECONDS)
 #define CLICK_CD_WHIP (1.2 SECONDS)
+
+#define CLICK_CD_BULKY_WEAPON (2.4 SECONDS)
+#define CLICK_CD_LARGE_WEAPON (1.6 SECONDS)
+#define CLICK_CD_LIGHT_WEAPON (1.2 SECONDS)
 
 //Cuff resist speeds
 #define FAST_CUFFBREAK 1
@@ -210,7 +215,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 ///accuracy penalty of sawn off guns
 #define SAWN_OFF_ACC_PENALTY 25
 ///added recoil of sawn off guns
-#define SAWN_OFF_RECOIL 1
+#define SAWN_OFF_RECOIL 1.5
 
 //ammo box sprite defines
 ///ammo box will always use provided icon state

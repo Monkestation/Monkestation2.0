@@ -3,7 +3,7 @@
 /obj/item/slime_extract
 	name = "slime extract"
 	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
-	icon = 'monkestation/code/modules/slimecore/icons/slimes.dmi'
+	icon = 'icons/obj/xenobiology/extracts.dmi'
 	icon_state = "grey_slime_extract"
 	force = 0
 	w_class = WEIGHT_CLASS_TINY
@@ -434,7 +434,7 @@
 		if(SLIME_ACTIVATE_MINOR)
 			to_chat(user, span_warning("You vomit slippery oil."))
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			new /obj/effect/decal/cleanable/oil/slippery(get_turf(user))
+			new /obj/effect/decal/cleanable/blood/oil/slippery(get_turf(user))
 			return 450
 
 		if(SLIME_ACTIVATE_MAJOR)

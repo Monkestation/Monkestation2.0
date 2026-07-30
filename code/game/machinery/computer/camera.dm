@@ -28,7 +28,7 @@
 	// Convert networks to lowercase
 	for(var/i in network)
 		network -= i
-		network += lowertext(i)
+		network += LOWER_TEXT(i)
 	// Initialize map objects
 	cam_screen = new
 	cam_screen.generate_view(map_name)
@@ -88,7 +88,7 @@
 	var/list/data = list()
 	data["network"] = network
 	data["mapRef"] = cam_screen.assigned_map
-	data["cameras"] = GLOB.cameranet.get_available_cameras_data(network)
+	data["cameras"] = SScameras.get_available_cameras_data(network)
 	return data
 
 /obj/machinery/computer/security/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -97,7 +97,7 @@
 		return
 
 	if(action == "switch_camera")
-		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in GLOB.cameranet.cameras
+		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in SScameras.cameras
 		active_camera = selected_camera
 		playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
 
@@ -162,6 +162,13 @@
 	var/size_y = bbox[4] - bbox[2] + 1
 
 	cam_screen.show_camera(visible_turfs, size_x, size_y)
+
+/obj/machinery/camera/proc/count_spesstv_viewers()
+	. = 0
+	var/list/spesstv_viewers = GLOB.spesstv_viewers // just in case this ends up being a hot proc
+	for(var/key in spesstv_viewers)
+		if(spesstv_viewers[key] == c_tag)
+			.++
 
 /obj/machinery/computer/security/ui_close(mob/user)
 	. = ..()

@@ -16,7 +16,7 @@
 		target_holder.add_reagent_list(grind_results)
 		. = TRUE
 	if(reagents?.total_volume)
-		reagents.trans_to(target_holder, reagents.total_volume, transfered_by = user)
+		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 		. = TRUE
 
 /datum/reagents/proc/convert_reagent(
@@ -1471,7 +1471,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 
 	return data
 
-/obj/item/glassblowing/blowing_rod/ui_act(action, params)
+/obj/item/glassblowing/blowing_rod/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -1631,7 +1631,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	to_chat(user, span_notice("You begin to [step_id] [src]."))
 	if(!do_after(user, actioning_speed, target = src))
 		fail_message("You interrupt an action!", user)
-		REMOVE_TRAIT(tool_to_use, TRAIT_CURRENTLY_GLASSBLOWING, TRAIT_GLASSBLOWING)
+		REMOVE_TRAIT(tool_to_use, TRAIT_CURRENTLY_GLASSBLOWING, GLASSBLOWING_TRAIT)
 		return FALSE
 
 	if(glass.steps_remaining)
@@ -1641,7 +1641,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 			if(check_finished(glass))
 				glass.is_finished = TRUE
 
-	REMOVE_TRAIT(tool_to_use, TRAIT_CURRENTLY_GLASSBLOWING, TRAIT_GLASSBLOWING)
+	REMOVE_TRAIT(tool_to_use, TRAIT_CURRENTLY_GLASSBLOWING, GLASSBLOWING_TRAIT)
 	in_use = FALSE
 
 	to_chat(user, span_notice("You finish trying to [step_id] [src]."))
@@ -1686,7 +1686,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 			balloon_alert(user, "already glassblowing!")
 			return FALSE
 
-		ADD_TRAIT(user, TRAIT_CURRENTLY_GLASSBLOWING, TRAIT_GLASSBLOWING)
+		ADD_TRAIT(user, TRAIT_CURRENTLY_GLASSBLOWING, GLASSBLOWING_TRAIT)
 		return user
 
 	var/obj/item/glassblowing/used_tool
@@ -1706,7 +1706,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 		balloon_alert(user, "already in use!")
 		return FALSE
 
-	ADD_TRAIT(used_tool, TRAIT_CURRENTLY_GLASSBLOWING, TRAIT_GLASSBLOWING)
+	ADD_TRAIT(used_tool, TRAIT_CURRENTLY_GLASSBLOWING, GLASSBLOWING_TRAIT)
 	return used_tool
 
 /**

@@ -496,7 +496,7 @@
 /area/ruin/space/has_grav/abandonedscpsite/engineering)
 "ca" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil/streak,
 /obj/effect/decal/cleanable/blood/gibs/down,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -3434,7 +3434,7 @@
 "mN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/white,
@@ -5023,7 +5023,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedscpsite/ezhall)
 "sF" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -6850,7 +6850,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/abandonedscpsite/lczhall)
 "zA" = (
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/structure/flora/rock/pile/style_3,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
@@ -9088,8 +9088,8 @@
 /area/ruin/space/has_grav/abandonedscpsite/czprison)
 "Ir" = (
 /obj/item/bot_assembly/secbot,
-/obj/effect/decal/cleanable/oil/slippery,
-/obj/effect/decal/cleanable/robot_debris/old,
+/obj/effect/decal/cleanable/blood/oil/slippery,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/old,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/abandonedscpsite/hczhall)
@@ -9704,7 +9704,7 @@
 /area/ruin/space/has_grav/abandonedscpsite/czprison)
 "Kw" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
-/obj/effect/decal/cleanable/blood/splatter/stacking,
+/obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/blood/splatter/over_window,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -12155,7 +12155,7 @@
 /area/ruin/space/has_grav/abandonedscpsite/lounge)
 "Tz" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil/streak,
 /obj/effect/decal/cleanable/blood/splatter{
 	icon_state = "gibbl5"
 	},
@@ -12501,7 +12501,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedscpsite/czprison)
 "UQ" = (
-/obj/effect/decal/cleanable/robot_debris/down,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/down,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/blood/splatter{

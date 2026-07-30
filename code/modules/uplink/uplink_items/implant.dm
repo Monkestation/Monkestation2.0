@@ -78,3 +78,11 @@
 	desc = "An implant and firing pin that allows you restrict any pin weapon to those with the implant."
 	item = /obj/item/storage/box/syndie_kit/weapons_auth
 	cost = 2
+
+/datum/uplink_item/implants/microbomb
+	name = "Microbomb Implant"
+	desc = "An implant injected into the body, and later activated either manually or automatically upon death. \
+			The more implants inside of you, the higher the explosive power. \
+			This will permanently destroy your body, however."
+	item = /obj/item/storage/box/syndie_kit/imp_microbomb
+	cost = 2
