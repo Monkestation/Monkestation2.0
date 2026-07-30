@@ -733,7 +733,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/cigar/intern/purple/Initialize(mapload)
 	list_reagents = list(pick_weight(GLOB.weighted_random_reagents) = rand(1,5), /datum/reagent/drug/nicotine = 20) // Called before init because init actually makes the chems and we need to know what chems we are making before we do that
-	. = ..()
+	return ..()
 
 /////////////////
 //SMOKING PIPES//
