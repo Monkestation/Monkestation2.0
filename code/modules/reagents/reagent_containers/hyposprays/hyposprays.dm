@@ -1,7 +1,6 @@
 GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	HYPO_INJECT = image(icon = 'icons/obj/medical/syringe.dmi', icon_state = "hypo_mode_inject"),
 	HYPO_SPRAY = image(icon = 'icons/obj/medical/syringe.dmi', icon_state = "hypo_mode_spray"),
-	HYPO_DRAW = image(icon = 'icons/obj/medical/syringe.dmi', icon_state = "hypo_mode_draw"),
 ))
 
 /obj/item/hypospray
@@ -21,18 +20,16 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	var/transfer_amount = 5
 	/// The different amounts for *transfer_amount* that this hypospray has available
 	var/list/possible_transfer_amounts = list(1, 2, 3, 5, 10)
-	/// Index of the transfer aomunts list
-	var/amount_list_position = 1
 
 	// Container Vars //
 	/// The currently inserted container
-	var/obj/item/reagent_containers/cup/vial/vial
+	var/obj/item/reagent_containers/chemcanister/vial
 	/// What containers are allowed within this hypospray
-	var/list/allowed_containers = list(/obj/item/reagent_containers/cup/vial, /obj/item/reagent_containers/cup/vial/bluespace, /obj/item/reagent_containers/cup/tube)
+	var/list/allowed_containers = list(/obj/item/reagent_containers/chemcanister, /obj/item/reagent_containers/chemcanister/bluespace, /obj/item/reagent_containers/cup/tube)
 	/// What containers are blacklisted from this hypospray - NOTE : Adding something like .../vial to just the whitelist will allow also large vials, hence the blacklist
-	var/list/blacklist_containers = list(/obj/item/reagent_containers/cup/vial/large)
+	var/list/blacklist_containers = null
 	/// The default vial that this hypospray starts preloaded with
-	var/obj/item/reagent_containers/cup/vial/default_vial
+	var/obj/item/reagent_containers/chemcanister/default_vial
 
 	//  Wait Time Vars  //
 	var/inject_other = 1.5 SECONDS
@@ -70,9 +67,10 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	. = ..()
 	if(vial)
 		. += span_notice("[vial] has [vial.reagents.total_volume]u remaining. You can [EXAMINE_HINT("R-click")] the hypospray in your active hand to remove a vial, or [EXAMINE_HINT("click")] it while it is in your offhand to remove a vial")
+		. += span_notice("[EXAMINE_HINT("right click")] to draw from a container or take a blood sample from a person.")
 	else
 		. += span_notice("It has no container loaded in. You can [EXAMINE_HINT("click")] with a vial to load it.")
-	. += span_notice("Currently injects [transfer_amount]u. [EXAMINE_HINT("ctrl click")] to change the transfer amount.")
+	. += span_notice("Currently transfers [transfer_amount]u. [EXAMINE_HINT("ctrl click")] to change the transfer amount.")
 	if(upgrade_flags & HYPO_UPGRADE_PIERCING)
 		. += span_notice("[src] has a polycarbonate diamond tipped needle, allowing it to pierce thick clothing.")
 	if(upgrade_flags & HYPO_UPGRADE_SPEED)
@@ -81,15 +79,11 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		. += span_notice("[src] has a widened titanium nozzle, allowing it to spray or inject more units at a time.")
 	if(!can_remove_vials)
 		. += span_notice("It's unloading mechanism is blocked, preventing vials from being removed, permanently, once loaded.")
-	if(is_path_in_list(/obj/item/reagent_containers/cup/vial/large, blacklist_containers))
-		. += span_notice("It's loading mechanism is too small to load larger vials.")
 	switch(mode)
 		if(HYPO_INJECT)
 			. += span_notice("[src] is set to inject contents on application.")
 		if(HYPO_SPRAY)
 			. += span_notice("[src] is set to spray contents on application.")
-		if(HYPO_DRAW)
-			. += span_notice("[src] is set to draw on application.")
 
 /obj/item/hypospray/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/reagent_containers))
@@ -113,16 +107,6 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		var/obj/item/hypospray_upgrade/upgrade = attacking_item
 		upgrade.install(src, user)
 		return TRUE
-
-/obj/item/hypospray/attack_self_secondary(mob/user, list/modifiers)
-	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
-		if("ctrl" in modifiers)
-			if(upgrade_flags & HYPO_UPGRADE_NOZZLE)
-				set_transfer_amount(user)
-				return
-			cycle_transfer_amount(user, BACKWARD)
-			return
-		unload_vial(user)
 
 /obj/item/hypospray/attack_self(mob/user, list/modifiers)
 	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
@@ -152,31 +136,33 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 			if(HYPO_INJECT)
 				if(target.reagents)
 					return inject(user, target)
-				else
-					return
 			if(HYPO_SPRAY)
 				return spray(user, target)
-			if(HYPO_DRAW)
-				if(target.reagents)
-					return draw(user, target)
-				else
-					return
+
 	else if(target.reagents || mode == HYPO_SPRAY)
 		balloon_alert(user, "no vial!")
 		return ITEM_INTERACT_BLOCKING
+
+/obj/item/hypospray/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
+	if(target.reagents)
+		return draw(user, target)
+	else
+		return
+
 
 /obj/item/hypospray/proc/cycle_transfer_amount(mob/user, direction = FORWARD)
 	var/list_len = length(possible_transfer_amounts)
 	if(!list_len)
 		return
+	var/index = possible_transfer_amounts.Find(transfer_amount) || 1
 	switch(direction)
 		if(FORWARD)
-			amount_list_position = (amount_list_position % list_len) + 1
+			index = (index % list_len) + 1
 		if(BACKWARD)
-			amount_list_position = (amount_list_position - 1) || list_len
+			index = (index - 1) || list_len
 		else
-			CRASH("cycle_transfer_amount() called with invalid direction value")
-	transfer_amount = possible_transfer_amounts[amount_list_position]
+			CRASH("change_transfer_amount() called with invalid direction value")
+	transfer_amount = possible_transfer_amounts[index]
 	balloon_alert(user, "transferring [transfer_amount]u")
 
 /obj/item/hypospray/proc/set_transfer_amount(mob/user)
@@ -216,7 +202,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		// context[SCREENTIP_CONTEXT_CTRL_RMB] = "Cycle tranzfer amount backwards"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	if(istype(held_item, /obj/item/reagent_containers/cup/vial))
+	if(istype(held_item, /obj/item/reagent_containers/chemcanister))
 		if(vial != null)
 			context[SCREENTIP_CONTEXT_LMB] = "Swap vial"
 		else
@@ -283,7 +269,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		playsound(src, inject_sound, 50, 1)
 
 	//The actual reagent transfer
-	if(vial.reagents.trans_to(target, transfer_amount, transfered_by = user, methods = INJECT))
+	if(vial.reagents.trans_to(target, transfer_amount, transferred_by = user, methods = INJECT))
 		to_chat(user, span_notice("You inject [transfer_amount] units of the solution. The vial now contains [vial.reagents.total_volume] units."))
 		target.update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -334,6 +320,10 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/hypospray/proc/draw(mob/living/user, atom/target)
+	if(!vial)
+		balloon_alert(user, "no vial!")
+		return ITEM_INTERACT_BLOCKING
+
 	if(vial.reagents.total_volume >= vial.reagents.maximum_volume)
 		balloon_alert(user, "container full!")
 		return ITEM_INTERACT_BLOCKING
@@ -375,7 +365,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		to_chat(user, span_warning("You cannot directly remove reagents from [target]!"))
 		return ITEM_INTERACT_BLOCKING
 
-	if(target.reagents.trans_to(vial.reagents, transfer_amount, transfered_by = user))
+	if(target.reagents.trans_to(vial.reagents, transfer_amount, transferred_by = user))
 		to_chat(user, span_notice("You draw [transfer_amount] units of the solution. The vial now contains [vial.reagents.total_volume] units."))
 		playsound(src, draw_sound, 50, 1)
 		target.update_appearance()
@@ -383,56 +373,53 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/hypospray/cmo
-	name = "Deluxe Hypospray"
+	name = "advanced hypospray"
 	icon_state = "hypo_cmo"
-	desc = "The Deluxe Hypospray can use larger size vials, pierce thick clothing, and deliver more reagents per injection."
-	allowed_containers = list(/obj/item/reagent_containers/cup/vial, /obj/item/reagent_containers/cup/tube)
+	desc = "An advanced hypospray that can use larger size vials, pierce thick clothing, and deliver more reagents per injection."
+	allowed_containers = list(/obj/item/reagent_containers/chemcanister, /obj/item/reagent_containers/cup/tube)
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20)
-	default_vial = /obj/item/reagent_containers/cup/vial/large/bluespace/omnizine
+	default_vial = /obj/item/reagent_containers/chemcanister/bluespace/omnizine
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	inject_other = 1 SECONDS
 	draw_other = 0 SECONDS
 	spray_other = 0.5 SECONDS
-	blacklist_containers = NONE
 	upgrade_flags = HYPO_UPGRADE_PIERCING
 
 //combat
 
 /obj/item/hypospray/combat
-	name = "Combat Hypospray"
+	name = "combat hypospray"
 	icon_state = "hypo_combat"
 	desc = "A reverse engineered Syndicate Hypospray. Capable of using large vials, and piercing armor."
-	allowed_containers = list(/obj/item/reagent_containers/cup/vial, /obj/item/reagent_containers/cup/tube)
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20)
 	upgrade_flags = HYPO_UPGRADE_PIERCING
-	default_vial = /obj/item/reagent_containers/cup/vial/large/combat
-	blacklist_containers = NONE
+	default_vial = /obj/item/reagent_containers/chemcanister/large/combat
 	inhand_icon_state = "combat_hypo"
 
 /obj/item/hypospray/combat/no_vial
 	default_vial = null
 
 /obj/item/hypospray/combat/anti_tox
-	name = "Combat Hypospray (Anti-Tox)"
+	name = "combat hypospray (anti-tox)"
 	desc = "A advanced hypospray, preloaded with a antitoxin mix."
 	icon_state = "hypo_combat_tox"
-	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20, 40, 60)
-	default_vial = /obj/item/reagent_containers/cup/vial/large/pen_acid
+	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20)
+	default_vial = /obj/item/reagent_containers/chemcanister/large/pen_acid
 
 /obj/item/hypospray/combat/nanites
-	name = "Combat Hypospray (Nanites)"
+	name = "combat hypospray (nanites)"
 	desc = "A advanced hypospray, preloaded with a advanced and experimental nanite combat mix."
 	icon_state = "nanite_hypo"
-	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20, 40, 60)
+	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20, 40, 50)
 	can_remove_vials = FALSE
-	default_vial = /obj/item/reagent_containers/cup/vial/large/ert
+	default_vial = /obj/item/reagent_containers/chemcanister/bluespace/ert
 	inhand_icon_state = "nanite_hypo"
 
 /obj/item/hypospray/combat/heresypurge
-	name = "Combat Hypospray (Holy)"
+	name = "combat hypospray (holy)"
 	desc = "A advanced hypospray, preloaded with a blessed mix, damaging to all heretical entities."
 	icon_state = "holy_hypo"
-	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20, 40, 60)
+	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20, 40, 50)
 	can_remove_vials = FALSE
-	default_vial = /obj/item/reagent_containers/cup/vial/large/ert/holy
+	default_vial = /obj/item/reagent_containers/chemcanister/bluespace/ert/holy
 	inhand_icon_state = "holy_hypo"

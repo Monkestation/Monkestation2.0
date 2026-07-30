@@ -363,7 +363,7 @@
 	pixel_x = 9;
 	pixel_y = -5
 	},
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /turf/open/floor/plating/abductor,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "We" = (
@@ -409,11 +409,11 @@
 /turf/open/floor/plating/abductor,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "XU" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/body,
+/obj/effect/decal/cleanable/blood/gibs/xeno/body,
 /turf/open/floor/plating/abductor,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Yq" = (
-/obj/effect/decal/cleanable/xenoblood/xsplatter,
+/obj/effect/decal/cleanable/blood/splatter/xeno,
 /turf/open/floor/plating/abductor,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "ZM" = (

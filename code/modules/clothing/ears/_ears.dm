@@ -8,6 +8,7 @@
 	throwforce = 0
 	slot_flags = ITEM_SLOT_EARS
 	resistance_flags = NONE
+
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
 	desc = "Protects your hearing from loud noises, and quiet ones as well."

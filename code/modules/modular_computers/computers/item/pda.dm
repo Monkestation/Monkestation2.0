@@ -302,6 +302,7 @@
 	has_pda_programs = FALSE
 	starting_programs = list(
 		/datum/computer_file/program/messenger,
+		/datum/computer_file/program/emojipedia,
 	)
 
 	///Ref to the RoboTact app. Important enough to borgs to deserve a ref.
@@ -322,7 +323,6 @@
 
 /obj/item/modular_computer/pda/silicon/ai
 	max_idle_programs = 12
-	ethernet_forced = TRUE
 	starting_programs = list(
 		/datum/computer_file/program/messenger,
 		/datum/computer_file/program/filemanager,
@@ -337,6 +337,8 @@
 		/datum/computer_file/program/ntnetmonitor,
 	)
 
+/obj/item/modular_computer/pda/silicon/ai/get_ntnet_status()
+	return NTNET_ETHERNET_SIGNAL
 
 /obj/item/modular_computer/pda/silicon/Initialize(mapload)
 	. = ..()

@@ -67,7 +67,7 @@
 
 /obj/item/lighter/examine_more(mob/user)
 	. = ..()
-	. += span_notice("A stamp at the bottom indicates it takes [lowertext(fuel_type::name)] as fuel.")
+	. += span_notice("A stamp at the bottom indicates it takes [LOWER_TEXT(fuel_type::name)] as fuel.")
 
 /obj/item/lighter/proc/get_volume_description()
 	var/volume_percentage = (reagents.total_volume/maximum_fuel) * 100
@@ -91,7 +91,7 @@
 /obj/item/lighter/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
 	victim.visible_message(span_warning("\The [bullet] shatters on [victim]'s lighter!"))
 	playsound(victim, SFX_RICOCHET, 100, TRUE)
-	new /obj/effect/decal/cleanable/oil(get_turf(src))
+	new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
 	do_sparks(1, TRUE, src)
 	victim.dropItemToGround(src, force = TRUE, silent = TRUE)
 	qdel(src)

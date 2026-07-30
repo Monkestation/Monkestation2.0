@@ -36,13 +36,12 @@
 
 /obj/item/organ/internal/liver/werewolf/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
 	. = ..()
-	//parent returned COMSIG_MOB_STOP_REAGENT_CHECK or we are failing
-	if((. & COMSIG_MOB_STOP_REAGENT_CHECK) || (organ_flags & ORGAN_FAILING))
+	//parent returned COMSIG_MOB_STOP_REAGENT_TICK or we are failing
+	if((. & COMSIG_MOB_STOP_REAGENT_TICK) || (organ_flags & ORGAN_FAILING))
 		return
 	if(istype(chem, /datum/reagent/silver))
 		organ_owner.stamina?.adjust(3.75 * REM * seconds_per_tick)
 		organ_owner.adjustFireLoss(5.0 * REM * seconds_per_tick, updating_health = TRUE)
-
 
 /obj/item/organ/internal/tongue/werewolf
 	name = "wolf tongue"

@@ -158,7 +158,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
-/obj/machinery/requests_console/ui_act(action, params)
+/obj/machinery/requests_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -219,13 +219,16 @@ export const AiControlPanel = (props) => {
                         </Button.Confirm>
                         {!!current_ai_ref &&
                           current_ai_ref === downloading_ref && (
-                            <Button
+                            <Button.Confirm
+                              mt={0.5}
+                              fluid
                               color="average"
                               icon="download"
+                              textAlign="center"
                               onClick={() => act('skip_download')}
                             >
                               Instantly finish download
-                            </Button>
+                            </Button.Confirm>
                           )}
                       </Fragment>
                     )) || (
@@ -254,7 +257,7 @@ export const AiControlPanel = (props) => {
                                       tooltip={
                                         !intellicard
                                           ? ai.can_download
-                                            ? 'Requires IntelliCard'
+                                            ? 'Requires intellicard'
                                             : '&¤!65%'
                                           : null
                                       }

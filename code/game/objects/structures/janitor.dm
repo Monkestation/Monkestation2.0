@@ -37,7 +37,7 @@
 		update_appearance(UPDATE_OVERLAYS)
 		return FALSE // skip attack animation when refilling cart
 	if(istype(weapon, /obj/item/mop))
-		weapon.reagents?.trans_to(src, weapon.reagents.maximum_volume, transfered_by = user)
+		weapon.reagents?.trans_to(src, weapon.reagents.maximum_volume, transferred_by = user)
 		balloon_alert(user, "wringed mop")
 		update_appearance(UPDATE_OVERLAYS)
 		return FALSE
@@ -52,7 +52,7 @@
 			if(!CART_HAS_MINIMUM_REAGENT_VOLUME)
 				balloon_alert(user, "mop bucket is empty!")
 				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-			reagents.trans_to(weapon, weapon.reagents.maximum_volume, transfered_by = user)
+			reagents.trans_to(weapon, weapon.reagents.maximum_volume, transferred_by = user)
 			balloon_alert(user, "wet mop")
 			playsound(src, 'sound/effects/slosh.ogg', 25, vary = TRUE)
 		else

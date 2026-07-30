@@ -456,6 +456,18 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_CARGO
 
+/datum/design/yellow_oxygen_tank
+	name = "Yellow Oxygen Tank"
+	desc = "An empty yellow oxygen tank."
+	id = "yellow_oxygen_tank"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/tank/internals/oxygen/yellow/empty
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/plasma_tank
 	name = "Plasma Tank"
 	desc = "An empty oxygen tank."
@@ -890,6 +902,23 @@
 	build_path = /obj/item/inspector
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/bodycam
+	name = "Body Camera"
+	desc = /obj/item/bodycam_upgrade::desc
+	id = "bodycam"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/bodycam_upgrade
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_BLUESPACE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 

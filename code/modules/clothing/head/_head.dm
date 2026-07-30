@@ -52,7 +52,7 @@
 		return
 	if(iscyborg(hit_atom))
 		var/mob/living/silicon/robot/R = hit_atom
-		var/obj/item/worn_hat = R.hat
+		var/obj/item/worn_hat = R.worn_hat
 		if(worn_hat && HAS_TRAIT(worn_hat, TRAIT_NODROP))
 			R.visible_message(span_warning("[src] bounces off [worn_hat], without an effect!"), span_warning("[src] bounces off your mighty [worn_hat.name], falling to the floor in defeat."))
 			return
@@ -73,6 +73,11 @@
 
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedhelmet")
+
+	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
+		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "helmetblood")
+		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+		. += blood_overlay
 
 	if(!(flags_inv & HIDEHAIR))
 		if(ismob(loc) && ishuman(loc))
