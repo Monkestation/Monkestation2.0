@@ -382,7 +382,7 @@
 	if(get_dist(attacker, src) > 1)
 		return TRUE
 
-	if(ishuman(attacker))
+	if(!ishuman(attacker))
 		attacker.add_mob_blood(src)
 		return TRUE
 
