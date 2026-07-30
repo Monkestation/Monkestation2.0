@@ -20,7 +20,7 @@
 	multiplicative_slowdown = 0.75
 
 /datum/movespeed_modifier/damage_slowdown
-	blacklisted_movetypes = FLOATING|FLYING
+	blacklisted_movetypes = FLOATING
 	variable = TRUE
 
 /// Movespeed modifier applied by worn equipment.

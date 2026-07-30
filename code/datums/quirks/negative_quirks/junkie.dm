@@ -180,7 +180,7 @@
 
 /datum/quirk/item_quirk/junkie/alcoholic/post_add()
 	. = ..()
-	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK, PROC_REF(check_brandy))
+	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_TICK, PROC_REF(check_brandy))
 
 	var/obj/item/reagent_containers/brandy_container = GLOB.alcohol_containers[drug_container_type]
 	if(isnull(brandy_container))
@@ -199,7 +199,7 @@
 		alcohol_liver.healing_factor = alcohol_liver.healing_factor * 0.75
 
 /datum/quirk/item_quirk/junkie/alcoholic/remove()
-	UnregisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK)
+	UnregisterSignal(quirk_holder, COMSIG_MOB_REAGENT_TICK)
 
 /datum/quirk/item_quirk/junkie/alcoholic/proc/check_brandy(mob/source, datum/reagent/booze)
 	SIGNAL_HANDLER

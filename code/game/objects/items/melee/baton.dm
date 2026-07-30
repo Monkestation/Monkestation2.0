@@ -465,7 +465,7 @@
 
 /obj/item/melee/baton/telescopic/contractor_baton/attack_secondary(mob/living/victim, mob/living/user, params)
 	if(!(upgrade_flags & BATON_CUFF_UPGRADE) || !active)
-		return
+		return BATON_DO_NORMAL_ATTACK
 
 	for(var/obj/item/restraints/handcuffs/cuff in contents)
 		cuff.attack(victim, user)

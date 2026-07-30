@@ -5,4 +5,4 @@
 #define OOC_CHANNEL "OOC"
 #define ADMIN_CHANNEL "Admin"
 #define MENTOR_CHANNEL "Mentor"
-#define LOOC_CHANNEL "LOOC" // monkestation edit: add LOOC
+#define LOOC_CHANNEL "LOOC"

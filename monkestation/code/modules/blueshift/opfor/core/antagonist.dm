@@ -8,7 +8,7 @@ GLOBAL_LIST_EMPTY(opfor_passed_ckeys)
 	suicide_cry = "FOR A LACK OF CREATIVITY!!!"
 	preview_outfit = /datum/outfit/job/assistant/consistent
 
-/datum/antagonist/opfor_candidate/ui_act(action, params)
+/datum/antagonist/opfor_candidate/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

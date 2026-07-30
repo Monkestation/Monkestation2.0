@@ -6,39 +6,31 @@
 // if the edit to the file is removed in a later commit,
 // the label will not be removed
 export const file_labels = {
-  github: {
+  'Internal: Github': {
     filepaths: ['.github/'],
   },
-  SQL: {
-    filepaths: ['SQL/'],
-  },
-  mapping: {
+  'Change: Mapping': {
     filepaths: ['_maps/'],
     file_extensions: ['.dmm'],
   },
-  tooling: {
+  'Internal: Tooling': {
     filepaths: ['tools/'],
   },
-  config: {
+  'Internal: Config': {
     filepaths: ['config/', 'code/controllers/configuration/entries/'],
     add_only: true,
   },
-  sprites: {
+  'Change: Spriting': {
     filepaths: ['icons/'],
     file_extensions: ['.dmi'],
     add_only: true,
   },
-  sound: {
+  'Change: Sound': {
     filepaths: ['sound/'],
     file_extensions: ['.ogg'],
     add_only: true,
   },
-  music: {
-    filepaths: ['sound/music/'],
-    file_extensions: ['.ogg'],
-    add_only: true,
-  },
-  UI: {
+  'Change: UI': {
     filepaths: ['tgui/'],
     add_only: true,
   },
@@ -60,7 +52,7 @@ export const title_labels = {
   'Process: do not merge': {
     keywords: ['[dnm]', '[do not merge]'],
   },
-  'Process: testmerge only}': {
+  'Process: testmerge only': {
     keywords: ['[tm only]', '[test merge only]'],
   },
 };

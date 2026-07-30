@@ -64,7 +64,7 @@
 	var/refund_amount = 0
 	/// Whether this item is refundable or not.
 	var/refundable = FALSE
-	// Chance of being included in the surplus crate.
+	/// Chance of being included in the surplus crate.
 	var/surplus = 100
 	/// Whether this can be discounted or not
 	var/cant_discount = FALSE

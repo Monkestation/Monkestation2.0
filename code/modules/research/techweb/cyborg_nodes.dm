@@ -50,7 +50,7 @@
 	design_ids = list(
 		"borg_upgrade_charger",
 		"borg_upgrade_extra_sheet_manipulator",
-		"borg_upgrade_ranged_analyzer"
+		"borg_upgrade_ranged_analyzer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
@@ -66,13 +66,14 @@
 	design_ids = list(
 		"borg_upgrade_advanalyzer",
 		"borg_upgrade_beakerapp",
+		"borg_upgrade_breathingbag",
 		"borg_upgrade_defibrillator",
 		"borg_upgrade_expandedsynthesiser",
 		"borg_upgrade_piercinghypospray",
 		"borg_upgrade_pinpointer",
 		"borg_upgrade_surgical_database",
-		"borg_upgrade_breathingbag",
-		"borg_upgrade_surgicalomnitool"
+		"borg_upgrade_surgical_omnitool_advanced",
+		"borg_upgrade_piercing_syringe" // Doesn't require Chemical Weaponry tech because cyborgs don't have syringe guns.
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS) // Lots of upgrades shall be regular cost.
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
@@ -90,6 +91,7 @@
 		"borg_upgrade_thrusters",
 		"borg_upgrade_expand",
 		"borg_upgrade_clamp", // Cargo is so lacking that they don't get their own techweb node.
+		"borg_upgrade_gps",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
@@ -163,12 +165,14 @@
 	description = "Enabling compatibility of our bluespace technology for usage within cyborgs."
 	prereq_ids = list(
 		"cyborg_upgrades_engineering",
+		"cyborg_upgrades_medical",
 		"cyborg_upgrades_mining",
 		"practical_bluespace"
 	)
 	design_ids = list(
 		"borg_upgrade_bs_rped",
-		"borg_upgrade_holding"
+		"borg_upgrade_holding",
+		"borg_upgrade_bluespace_syringe",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
@@ -183,6 +187,34 @@
 	)
 	design_ids = list(
 		"borg_upgrade_nvmeson"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
+
+/datum/techweb_node/cyborg_upgrades_alien
+	id = "cyborg_upgrades_alien"
+	display_name = "Cyborg Upgrades: Alien"
+	description = "Enabling compatibility of our alien technology for usage within cyborgs."
+	prereq_ids = list(
+		"cyborg_upgrades_medical",
+		"alien_bio"
+	)
+	design_ids = list(
+		"borg_upgrade_surgical_omnitool_alien"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
+
+/datum/techweb_node/cyborg_upgrades_experimental
+	id = "cyborg_upgrades_experimental"
+	display_name = "Cyborg Upgrades: Experimental"
+	description =  "Turns out there's just mounting points on these things to fit them into cyborgs. Who knew?"
+	prereq_ids = list(
+		"exp_tools",
+		"adv_robotics"
+	)
+	design_ids = list(
+		"borg_upgrade_experimental_welder"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
@@ -263,7 +295,7 @@
 		"ci-reviver",
 		"ci-surgery",
 		"ci-toolset",
-		"ci-sprinter", //monkestation addition:
+		"ci-sprinter",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL, RADIO_CHANNEL_ENGINEERING)

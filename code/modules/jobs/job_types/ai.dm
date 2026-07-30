@@ -35,18 +35,20 @@
 				R.TryConnectToAI()
 	var/mob/living/silicon/ai/ai_spawn = spawned
 	ai_spawn.relocate(TRUE)
+	var/obj/machinery/ai/data_core/relocated_into = get_turf(ai_spawn)
+	var/datum/ai_os/os_using = GLOB.ai_os["[relocated_into.z]"]
 
-	GLOB.ai_os.set_cpu(ai_spawn, GLOB.ai_os.total_cpu)
-	GLOB.ai_os.set_ram(ai_spawn, GLOB.ai_os.total_ram)
+	os_using.set_cpu(ai_spawn, os_using.total_cpu)
+	os_using.set_ram(ai_spawn, os_using.total_ram)
 	ai_spawn.log_current_laws()
 
 /datum/job/ai/get_roundstart_spawn_point()
 	return get_latejoin_spawn_point()
 
 /datum/job/ai/get_latejoin_spawn_point()
-	for(var/obj/machinery/ai/data_core/core as anything in GLOB.data_cores)
-		if(istype(core))
-			if(core.valid_data_core()) //spawning in will relocate us regardless.
+	for(var/obj/machinery/ai/data_core/core as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ai/data_core))
+		if(istype(core) && is_station_level(core.z) && !QDELETED(core))
+			if(core.valid_holder()) //spawning in will relocate us regardless.
 				return core
 	return FALSE
 
@@ -55,9 +57,9 @@
 		return TRUE
 	if(length(GLOB.ai_list) >= total_positions)
 		return FALSE
-	for(var/obj/machinery/ai/data_core/core as anything in GLOB.data_cores)
-		if(istype(core))
-			if(core.valid_data_core())
+	for(var/obj/machinery/ai/data_core/core as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ai/data_core))
+		if(istype(core) && is_station_level(core.z) && !QDELETED(core))
+			if(core.valid_holder())
 				return TRUE
 	return FALSE
 

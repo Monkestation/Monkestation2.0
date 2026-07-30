@@ -414,7 +414,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED //Doesn't naturally spawn on lavaland.
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 
-/* monkestation edit: this is given anyways by [/datum/material_trait/magical]
+
 /datum/material/mythril/on_applied_obj(atom/source, amount, material_flags)
 	. = ..()
 	if(isitem(source))
@@ -426,7 +426,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	if(isitem(source))
 		REMOVE_TRAIT(source, TRAIT_INNATELY_FANTASTICAL_ITEM, REF(src)) // DO THIS FIRST OR WE WILL NEVER GET OUR BONUSES DELETED!!!
 		qdel(source.GetComponent(/datum/component/fantasy))
-monkestation end */
+
 
 /datum/material/mythril/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)

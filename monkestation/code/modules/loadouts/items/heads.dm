@@ -307,6 +307,16 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Colorable Bunny Ears"
 	item_path = /obj/item/clothing/head/playbunnyears
 
+/datum/loadout_item/head/hats/caphat/bunnyears_captain
+	name = "Captain's Bunny Ears"
+	item_path = /obj/item/clothing/head/hats/caphat/bunnyears_captain
+	restricted_roles = list(JOB_CAPTAIN)
+
+/datum/loadout_item/head/playbunnyears/hos
+	name = "Head of Security's Bunny Ears"
+	item_path = /obj/item/clothing/head/playbunnyears/hos
+	restricted_roles = list(JOB_HEAD_OF_SECURITY)
+
 /datum/loadout_item/head/propeller_hat
 	name = "Rainbow Propeller Hat"
 	item_path = /obj/item/clothing/head/soft/propeller_hat
@@ -739,8 +749,11 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	restricted_roles = list(JOB_ROBOTICIST)
 	requires_purchase = FALSE
 
-
 // Legacy unpaintable cowboy hat because it fits a character better
 /datum/loadout_item/head/cowboyhat_legacy  //BUYABLE
 	name = "Cowboy Hat (Legacy)"
 	item_path = /obj/item/clothing/head/costume/cowboyhat_old
+
+/datum/loadout_item/head/henchmen_hat
+	name = "Henchmen Cap"
+	item_path = /obj/item/clothing/head/henchmen_hat

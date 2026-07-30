@@ -6,10 +6,7 @@
 	armament_type = /datum/armament_entry/assault_operatives
 	access = list(ACCESS_SYNDICATE)
 
-// ARMAMENT ENTRIES
-
-#define ARMAMENT_CATEGORY_OTHER "Miscellaneous"
-#define ARMAMENT_CATEGORY_OTHER_LIMIT 3
+// ARMAMENT ENTRIE
 
 /datum/armament_entry/assault_operatives
 	var/mags_to_spawn = 3
