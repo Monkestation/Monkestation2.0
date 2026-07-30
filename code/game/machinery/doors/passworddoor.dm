@@ -1,7 +1,7 @@
 /obj/machinery/door/password
 	name = "door"
 	desc = "This door only opens when provided a password."
-	icon = 'icons/obj/doors/blastdoor.dmi'
+	icon = 'icons/obj/doors/blast_door.dmi'
 	icon_state = "closed"
 	explosion_block = 3
 	heat_proof = TRUE

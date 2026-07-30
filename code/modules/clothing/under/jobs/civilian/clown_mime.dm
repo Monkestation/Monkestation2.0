@@ -41,6 +41,15 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 	return INITIALIZE_HINT_LATELOAD
 
+/obj/item/clothing/under/rank/civilian/clown/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
+	. = ..()
+	if(QDELETED(outfit_wearer) || visuals_only)
+		return
+	var/image/invisible = image('icons/effects/effects.dmi', icon_state = null, loc = outfit_wearer)
+	invisible.name = "\u200b" // I HATE BYOND I HATE BYOND
+	invisible.override = TRUE
+	outfit_wearer.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/clown_disbelief, "clown", invisible, NONE)
+
 /obj/item/clothing/under/rank/civilian/clown/blue
 	name = "blue clown suit"
 	desc = "<i>'BLUE HONK!'</i>"
@@ -91,3 +100,8 @@
 	desc = "It makes you look HONKable!"
 	icon_state = "sexyclown"
 	inhand_icon_state = null
+
+/obj/item/clothing/under/rank/civilian/clown/jester2
+	name = "alternate jester suit"
+	icon_state = "jester2"
+	desc = "Smells like burgers and fries."

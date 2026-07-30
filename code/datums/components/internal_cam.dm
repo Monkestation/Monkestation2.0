@@ -17,7 +17,7 @@
 	bodcam.name = parent
 	var/list/lowercase_networks = list()
 	for(var/network_name in networks)
-		lowercase_networks += lowertext(network_name)
+		lowercase_networks += LOWER_TEXT(network_name)
 	bodcam.network = lowercase_networks
 	bodcam.setViewRange(MAX_CAMERA_RANGE) //standard camera viewrange
 	bodcam.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)

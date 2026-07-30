@@ -45,7 +45,7 @@
 		), \
 		FRIENDSHIP_FRIEND)
 	AddComponent(/datum/component/basic_inhands)
-	AddElement(/datum/element/waddling)
+	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 
 	SEND_SIGNAL(src, COMSIG_TOGGLE_BIOBOOST)
 

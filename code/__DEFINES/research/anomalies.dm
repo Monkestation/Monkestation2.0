@@ -50,7 +50,6 @@ GLOBAL_LIST_INIT(bioscrambler_organs_blacklist, typecacheof(list(
 	/obj/item/organ/internal/tongue/dullahan,
 	/obj/item/organ/internal/vocal_cords/colossus,
 	/obj/item/organ/internal/zombie_infection,
-	// monkestation additions
 	/obj/item/organ/internal/heart/gland/egg,
 	/obj/item/organ/internal/heart/gland/electric,
 	/obj/item/organ/internal/heart/gland/mindshock,

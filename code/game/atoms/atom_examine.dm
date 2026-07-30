@@ -144,10 +144,7 @@
 
 /// Icon displayed in examine
 /atom/proc/get_examine_icon(mob/user)
-	if(length(overlays) > 2 || (greyscale_colors && greyscale_config))
-		return ma2html(src, user)
-	else
-		return iconstate2html(icon, icon_state, "")
+	return icon2html(src, user)
 
 /**
  * Formats the atom's name into a string for use in examine (as the "title" of the atom)

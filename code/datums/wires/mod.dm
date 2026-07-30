@@ -5,7 +5,7 @@
 /datum/wires/mod/New(atom/holder)
 	wires = list(WIRE_HACK, WIRE_DISABLE, WIRE_SHOCK, WIRE_INTERFACE)
 	add_duds(2)
-	..()
+	return ..()
 
 /datum/wires/mod/interactable(mob/user)
 	if(!..())
@@ -21,6 +21,12 @@
 	status += "The green light is [mod.locked ? "on" : "off"]."
 	status += "The yellow light is [mod.interface_break ? "off" : "on"]."
 	return status
+
+/datum/wires/mod/can_reveal_wires(mob/user)
+	if(HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
+		return TRUE
+
+	return ..()
 
 /datum/wires/mod/on_pulse(wire)
 	var/obj/item/mod/control/mod = holder
