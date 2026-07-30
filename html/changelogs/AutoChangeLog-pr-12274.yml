@@ -1,4 +1,0 @@
-author: "TheColorCyan"
-delete-after: True
-changes:
-  - bugfix: "fixed client crashes when examining people with bloody clothes"

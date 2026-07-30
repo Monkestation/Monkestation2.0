@@ -297,7 +297,7 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 		return GLOB.ice_cream_flavours[ICE_CREAM_BLAND].add_flavour(target) //Bland, sugary ice and milk.
 	var/image/flavoring = image('icons/obj/kitchen.dmi', "icecream_custom")
 	var/datum/reagent/master = R.get_master_reagent()
-	custom_name = lowertext(master.name) // reagent names are capitalized, while items' aren't.
+	custom_name = LOWER_TEXT(master.name) // reagent names are capitalized, while items' aren't.
 	flavoring.color = master.color
 	LAZYADD(target.scoop_overlays, flavoring)
 	. = ..() // Make some space for reagents before attempting to transfer some to the target.

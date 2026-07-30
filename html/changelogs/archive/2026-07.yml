@@ -535,3 +535,56 @@
   - rscadd: Nanites, microfusion, and cargo sorters will be announced in their respective
       channels when researched.
   - code_imp: Demodularized/cleaned up some researches
+2026-07-29:
+  JohnFulpWillard:
+  - bugfix: AIs no longer have Toggle Camera Acceleration verb.
+  - bugfix: Server cabinets no longer duplicate themselves when you deconstruct it.
+  JupiterJaeden:
+  - balance: Syndicate & infil modsuits no longer come pre-installed with shock absorbers.
+  - balance: Syndicate modsuit price back to 8 TC from 6.
+  - balance: No-slip and shock absorber modules back to 2 TC from 1.
+  - balance: Wraith module back to 4 TC from 2.
+  - balance: Syndicate modsuits no longer have slowdown when active.
+  - spellcheck: Updates description of shock absorber module to be a bit more relevant
+      for monkestation.
+  TheColorCyan:
+  - bugfix: fixed client crashes when examining people with bloody clothes
+  notghosti:
+  - qol: Science cyborgs upgrade subcategory contains nanite remotes
+2026-07-30:
+  EatsTheGrapes:
+  - rscadd: Adds Floor Tile chameleon clothing set.
+  - rscadd: Adds cardboard ID, can be edited with a crayon or pen
+  - rscadd: Reintroduces cardboard cutouts than can be edited with a crayon
+  - refactor: refactored cardboard cut-outs to be used as a full body cover carry
+      item, with multiple templates to choose from=
+  Laiko44:
+  - image: Resprited the Biocorrector
+  - image: Resprited cyborg medical tools
+  - image: Resprited cyborg alien medical tools
+  Runian:
+  - qol: Engineering cyborg's status tab now displays a more accurate amount of iron/glass
+      for their synthesizer.
+  - bugfix: Refilling metal/glass via cyborg rechargers for engineering cyborgs now
+      works.
+  - bugfix: Refilling metal/glass via cyborg rechargers no longer consumes 5 sheets
+      to refill 1 sheet of iron.
+  TheColorCyan:
+  - bugfix: blood from virus dishes now properly spreads diseases
+  notghosti:
+  - bugfix: 'Aerobic Gloves are purchasable as intended now
+
+      ## Pre-Merge Checklist
+
+      - [ ] You tested this on a local server.
+
+      - [ ] This code did not runtime during testing.
+
+      - [x] You documented all of your changes.'
+  - qol: Ai research had redundant prerequisites pruned from CPU 3 and RAM 3
+  'sprites by: nesisknesis, iamthesilly':
+  - rscadd: new plasmaman envirosuits customization opion
+  - balance: plasmaman helmets are now see-through when flashlight/welding are not
+      on
+  - bugfix: fixes jumpsuit sprites using the wrong icon file
+  - image: updated all envirosuit sprites

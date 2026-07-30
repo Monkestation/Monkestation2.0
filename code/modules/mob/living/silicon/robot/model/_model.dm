@@ -200,7 +200,7 @@
 	if(!sendmats)
 		return
 	var/obj/machinery/recharge_station/charger = cyborg_owner.loc
-	if(istype(charger))
+	if(!istype(charger))
 		return
 	var/datum/component/material_container/mat_container = charger.materials.mat_container
 	if(!mat_container || charger.materials.on_hold())
@@ -211,7 +211,7 @@
 			continue
 		if(energy_storage.max_energy == energy_storage.energy) // Skipping full.
 			continue
-		var/to_stock = min(energy_storage.max_energy / 8, energy_storage.max_energy - energy_storage.energy, mat_container.get_material_amount(energy_storage.mat_type))
+		var/to_stock = min(energy_storage.recharge_rate, energy_storage.max_energy - energy_storage.energy, mat_container.get_material_amount(energy_storage.mat_type))
 		if(!to_stock) // Silo doesn't have what we want.
 			continue
 		energy_storage.energy += charger.materials.use_materials(list(GET_MATERIAL_REF(energy_storage.mat_type) = to_stock), action = "resupplied", name = "units")

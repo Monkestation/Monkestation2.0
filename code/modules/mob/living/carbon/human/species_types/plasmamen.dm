@@ -20,6 +20,7 @@
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL|MOB_ORGANIC
 	inherent_respiration_type = RESPIRATION_PLASMA
 	mutantlungs = /obj/item/organ/internal/lungs/plasmaman
+	mutanteyes = /obj/item/organ/internal/eyes/plasmaman
 	mutanttongue = /obj/item/organ/internal/tongue/bone/plasmaman
 	mutantliver = /obj/item/organ/internal/liver/bone/plasmaman
 	mutantstomach = /obj/item/organ/internal/stomach/bone/plasmaman

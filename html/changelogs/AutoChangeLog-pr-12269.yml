@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "AIs no longer have Toggle Camera Acceleration verb."
-  - bugfix: "Server cabinets no longer duplicate themselves when you deconstruct it."
