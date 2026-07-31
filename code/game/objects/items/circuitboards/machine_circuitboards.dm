@@ -35,9 +35,9 @@
 	else
 		to_chat(user, span_notice("You remove the added fear from the cloner."))
 
-/obj/item/circuitboard/machine/clonepod/experimental/configure_machine(/obj/item/circuitboard/machine/clonepod/experimental/machine)
+/obj/item/circuitboard/machine/clonepod/experimental/configure_machine(obj/machinery/clonepod/experimental/machine)
 	if(!istype(machine))
-		CRASH("Cargo board attempted to configure incorrect machine type: [machine] ([machine?.type])")
+		CRASH("Experimental Clonepod board attempted to configure incorrect machine type: [machine] ([machine?.type])")
 	machine.hunted = hunted
 
 /obj/item/circuitboard/machine/clonescanner	//hippie end, re-add cloning
