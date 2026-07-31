@@ -261,3 +261,8 @@
 
 	/// Whether we currently have temp alerts, minor optimization
 	VAR_PRIVATE/temp_alerts = FALSE
+
+	/// A weak reference to the team monitor component contained within the monitor holder, used for certain antagoists so they can track
+	var/datum/component/team_monitor/team_monitor
+	///a reference to a stored /datum/component/tracking_beacon used by victims of antags
+	var/datum/component/tracking_beacon/tracking_beacon

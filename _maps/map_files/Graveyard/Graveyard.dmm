@@ -6159,17 +6159,6 @@
 /obj/item/stack/medical/suture,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
-"cqN" = (
-/obj/machinery/door/airlock/hos{
-	name = "Head Of Security's Quarters"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/any/security/hos,
-/obj/machinery/duct,
-/turf/open/floor/carpet/red,
-/area/station/command/heads_quarters/hos)
 "cqY" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -6659,6 +6648,17 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
+"cAO" = (
+/obj/machinery/door/airlock/command/hos{
+	name = "Head Of Security's Quarters"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/security/hos,
+/obj/machinery/duct,
+/turf/open/floor/carpet/red,
+/area/station/command/heads_quarters/hos)
 "cAW" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -7315,20 +7315,6 @@
 /obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
-"cMH" = (
-/obj/machinery/door/airlock/hop{
-	id_tag = "HoPdoor";
-	name = "Head Of Personel's Office"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/any/command/hop,
-/obj/machinery/duct,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/iron/dark,
-/area/station/command/heads_quarters/hop)
 "cMI" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -8318,6 +8304,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/burnchamber)
+"dhF" = (
+/obj/effect/decal/cleanable/blood/oil,
+/turf/open/floor/iron,
+/area/graveyard/bunker/engineering)
 "dhL" = (
 /obj/item/clothing/head/cone,
 /turf/open/misc/grass/jungle,
@@ -15716,6 +15706,17 @@
 	},
 /turf/open/floor/plating,
 /area/station/medical/pathology)
+"ggr" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/oil,
+/obj/machinery/door/window/right/directional/west{
+	name = "Danger: Conveyor Access"
+	},
+/obj/effect/spawner/random/trash/grime,
+/turf/open/floor/plating,
+/area/station/maintenance/disposal)
 "ggt" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -16703,16 +16704,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/iron/white,
 /area/station/science/circuits)
-"gzU" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/orange/half/contrasted{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/blood/gibs/robot_debris,
-/turf/open/floor/iron,
-/area/station/engineering/supermatter/room)
 "gzV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -18174,6 +18165,12 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/dark/textured,
 /area/graveyard/bunker/strange)
+"hdl" = (
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
+/obj/structure/table,
+/obj/effect/spawner/random/engineering/tool,
+/turf/open/floor/iron,
+/area/graveyard/bunker/engineering)
 "hdp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -19406,19 +19403,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/graveyard/surface/structures/church)
-"hBn" = (
-/obj/machinery/door/airlock/hos{
-	id_tag = "HoSdoor";
-	name = "Head Of Security's Office"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/any/security/hos,
-/obj/machinery/duct,
-/turf/open/floor/wood,
-/area/station/command/heads_quarters/hos)
 "hBD" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/condiment/ketchup,
@@ -24163,12 +24147,6 @@
 /obj/structure/mirror/directional/south,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
-"jtW" = (
-/obj/effect/decal/cleanable/blood/gibs/robot_debris,
-/obj/structure/table,
-/obj/effect/spawner/random/engineering/tool,
-/turf/open/floor/iron,
-/area/graveyard/bunker/engineering)
 "jui" = (
 /obj/machinery/camera/autoname/directional/north,
 /obj/effect/turf_decal/tile/orange/half/contrasted,
@@ -24573,6 +24551,18 @@
 /obj/structure/sign/poster/official/random/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
+"jDo" = (
+/obj/machinery/door/airlock/command/hop{
+	id_tag = "HoPdoor";
+	name = "Head of Personel's Quarters"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/command/hop,
+/obj/machinery/duct,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/hop)
 "jDp" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -25432,6 +25422,19 @@
 /obj/effect/spawner/random/structure/closet_maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"jWt" = (
+/obj/machinery/door/airlock/command/hos{
+	id_tag = "HoSdoor";
+	name = "Head Of Security's Office"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/security/hos,
+/obj/machinery/duct,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/hos)
 "jWC" = (
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
@@ -25444,17 +25447,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/dorms)
-"jWJ" = (
-/obj/machinery/door/airlock/captain{
-	name = "Captain's Suite"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/any/command/captain,
-/turf/open/floor/iron/dark,
-/area/station/command/heads_quarters/captain)
 "jWK" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 9
@@ -27062,16 +27054,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base)
-"kDA" = (
-/obj/machinery/door/airlock/hop{
-	id_tag = "HoPdoor";
-	name = "Head of Personel's Quarters"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/any/command/hop,
-/turf/open/floor/wood,
-/area/station/command/heads_quarters/hop)
 "kDH" = (
 /obj/structure/table/wood,
 /obj/item/gavelblock,
@@ -29431,6 +29413,20 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
+"lxv" = (
+/obj/machinery/door/airlock/command/hop{
+	id_tag = "HoPdoor";
+	name = "Head Of Personel's Office"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/command/hop,
+/obj/machinery/duct,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/hop)
 "lxw" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -30992,6 +30988,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/turf/open/floor/iron,
+/area/graveyard/bunker/engineering)
+"mdl" = (
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
 /turf/open/floor/iron,
 /area/graveyard/bunker/engineering)
 "mdB" = (
@@ -35241,18 +35241,6 @@
 /obj/structure/sign/poster/official/ian/directional/north,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
-"nHy" = (
-/obj/machinery/door/airlock/hop{
-	id_tag = "HoPdoor";
-	name = "Head of Personel's Quarters"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/any/command/hop,
-/obj/machinery/duct,
-/turf/open/floor/wood,
-/area/station/command/heads_quarters/hop)
 "nHF" = (
 /obj/machinery/light/warm/dim/directional/east,
 /turf/open/floor/wood,
@@ -39044,6 +39032,17 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
+"php" = (
+/obj/machinery/door/airlock/command/captain{
+	name = "Captain's Office"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/command/captain,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/captain/private)
 "phs" = (
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/light_switch/directional/south{
@@ -39180,6 +39179,16 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"pkh" = (
+/obj/machinery/door/airlock/command/hop{
+	id_tag = "HoPdoor";
+	name = "Head of Personel's Quarters"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/command/hop,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/hop)
 "pkv" = (
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron/white,
@@ -39664,17 +39673,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
-"ptl" = (
-/obj/machinery/door/airlock/captain{
-	name = "Captain's Office"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/any/command/captain,
-/turf/open/floor/wood,
-/area/station/command/heads_quarters/captain/private)
 "pts" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -44073,6 +44071,19 @@
 "rji" = (
 /turf/closed/wall,
 /area/station/hallway/primary/central)
+"rjw" = (
+/obj/machinery/door/airlock/command/captain{
+	name = "Captain's Office"
+	},
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/command/captain,
+/obj/machinery/duct,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/captain/private)
 "rjz" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/wood,
@@ -44405,6 +44416,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"rrd" = (
+/obj/machinery/door/airlock/command/captain{
+	name = "Captain's Quarters"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/command/captain,
+/obj/machinery/duct,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/captain/private)
 "rrf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -52833,10 +52854,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
-"uFC" = (
-/obj/effect/decal/cleanable/blood/oil,
-/turf/open/floor/iron,
-/area/graveyard/bunker/engineering)
 "uFE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -53168,6 +53185,17 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"uMl" = (
+/obj/machinery/door/airlock/command/captain{
+	name = "Captain's Suite"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/command/captain,
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/captain)
 "uMn" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
@@ -53406,10 +53434,6 @@
 "uQl" = (
 /turf/open/misc/asteroid,
 /area/graveyard/tunnels/structures/tunnellounge)
-"uQn" = (
-/obj/effect/decal/cleanable/blood/gibs/robot_debris,
-/turf/open/floor/iron,
-/area/graveyard/bunker/engineering)
 "uQq" = (
 /obj/item/stack/sheet/iron,
 /turf/open/floor/iron/white,
@@ -53526,17 +53550,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"uSW" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/blood/oil,
-/obj/machinery/door/window/right/directional/west{
-	name = "Danger: Conveyor Access"
-	},
-/obj/effect/spawner/random/trash/grime,
-/turf/open/floor/plating,
-/area/station/maintenance/disposal)
 "uTc" = (
 /obj/effect/turf_decal/tile/dark_red/half,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -60116,16 +60129,6 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
-"xuP" = (
-/obj/machinery/door/airlock/captain{
-	name = "Captain's Quarters"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/any/command/captain,
-/obj/machinery/duct,
-/turf/open/floor/wood,
-/area/station/command/heads_quarters/captain/private)
 "xuS" = (
 /obj/structure/filingcabinet/chestdrawer,
 /mob/living/basic/parrot/poly,
@@ -61664,19 +61667,6 @@
 /obj/machinery/telecomms/server/presets/engineering,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
-"xYC" = (
-/obj/machinery/door/airlock/captain{
-	name = "Captain's Office"
-	},
-/obj/structure/cable,
-/obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/any/command/captain,
-/obj/machinery/duct,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/station/command/heads_quarters/captain/private)
 "xYO" = (
 /obj/structure/closet/firecloset,
 /obj/effect/spawner/random/trash/graffiti{
@@ -61697,6 +61687,16 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark,
 /area/graveyard/bunker/command)
+"xZh" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/orange/half/contrasted{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
 "xZt" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible{
@@ -82373,7 +82373,7 @@ oqQ
 ozG
 vkz
 vkz
-uFC
+dhF
 kje
 mvg
 lfB
@@ -83149,7 +83149,7 @@ kYh
 gkD
 knR
 gcE
-uQn
+mdl
 rYT
 mOg
 oqQ
@@ -83408,7 +83408,7 @@ bOp
 tOV
 uKo
 dop
-jtW
+hdl
 oqQ
 wJR
 wJR
@@ -147357,7 +147357,7 @@ oTK
 nNS
 lRz
 eKw
-gzU
+xZh
 kIH
 iNR
 aRj
@@ -148728,7 +148728,7 @@ teB
 uqE
 sHv
 erU
-uSW
+ggr
 boE
 qnZ
 mmk
@@ -157935,7 +157935,7 @@ mTU
 xLk
 ogI
 uDe
-kDA
+pkh
 fxn
 kml
 flX
@@ -158451,7 +158451,7 @@ mTU
 mTU
 mTU
 jOU
-nHy
+jDo
 jOU
 mTU
 qia
@@ -159734,7 +159734,7 @@ soO
 pni
 cyF
 nTk
-cMH
+lxv
 mpq
 iku
 kwZ
@@ -162047,7 +162047,7 @@ pni
 pni
 vfW
 pSd
-jWJ
+uMl
 xCw
 qBK
 vrc
@@ -162817,7 +162817,7 @@ rWP
 rWP
 rWP
 rWP
-xYC
+rjw
 rWP
 sbH
 cxk
@@ -163326,13 +163326,13 @@ fTa
 nkV
 nkV
 gtB
-xuP
+rrd
 bcS
 bcS
 vom
 wEb
 bCh
-ptl
+php
 bhC
 lzN
 lzN
@@ -180789,7 +180789,7 @@ ryf
 ikR
 eBO
 axc
-hBn
+jWt
 tPB
 bCY
 vVT
@@ -181053,7 +181053,7 @@ uGY
 bFt
 cex
 cex
-cqN
+cAO
 gHg
 gHg
 hJZ

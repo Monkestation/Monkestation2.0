@@ -41,6 +41,10 @@
 #define ACCOUNT_CAR_NAME "Cargo Budget"
 #define ACCOUNT_SEC "SEC"
 #define ACCOUNT_SEC_NAME "Defense Budget"
+#define ACCOUNT_CMD "CMD"
+#define ACCOUNT_CMD_NAME "Command Budget"
+#define ACCOUNT_CC "CC"
+#define ACCOUNT_CC_NAME "Central Command Budget"
 
 #define IS_DEPARTMENTAL_CARD(card) (card in SSeconomy.dep_cards)
 #define IS_DEPARTMENTAL_ACCOUNT(account) (account in SSeconomy.departmental_accounts)

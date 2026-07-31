@@ -27,6 +27,8 @@
 	var/alt_covers_chest = FALSE
 	/// The variable containing the flags for how the woman uniform cropping is supposed to interact with the sprite.
 	var/female_sprite_flags = FEMALE_UNIFORM_FULL
+	/// If TRUE, this undersuit's worn overlay is not modified by human height offsets or filters.
+	var/ignore_mob_height_adjustments = FALSE
 
 	// Sensor handling
 	/// Does this undersuit have suit sensors in general
@@ -44,6 +46,8 @@
 	/// The overlay of the accessory we're demonstrating. Only index 1 will show up.
 	/// This is the overlay on the MOB, not the item itself.
 	var/mutable_appearance/accessory_overlay
+	/// A weak reference to the current accessory that's providing armor.
+	var/datum/weakref/current_armored_accessory
 
 /datum/armor/clothing_under
 	bio = 10
@@ -208,10 +212,13 @@
 /obj/item/clothing/under/proc/attach_accessory(obj/item/clothing/accessory/accessory, mob/living/user, attach_message = TRUE)
 	if(!istype(accessory))
 		return
+
 	if(!accessory.can_attach_accessory(src, user))
 		return
+
 	if(user && !user.temporarilyRemoveItemFromInventory(accessory))
 		return
+
 	if(!accessory.attach(src, user))
 		return
 
@@ -226,7 +233,11 @@
 	if(isnull(accessory_overlay))
 		create_accessory_overlay()
 
+	RegisterSignal(accessory, COMSIG_QDELETING, PROC_REF(refresh_armor))
+	refresh_armor()
+
 	update_appearance()
+
 	return TRUE
 
 /// Removes (pops) the topmost accessory from the accessories list and puts it in the user's hands if supplied
@@ -252,6 +263,9 @@
 
 	if(isnull(accessory_overlay) && LAZYLEN(attached_accessories))
 		create_accessory_overlay()
+
+	UnregisterSignal(removed, COMSIG_QDELETING)
+	refresh_armor()
 
 	update_appearance()
 
@@ -467,6 +481,22 @@
 	if(ismob(user) && !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING))
 		return FALSE
 	return ..()
+
+/obj/item/clothing/under/proc/refresh_armor()
+	SIGNAL_HANDLER
+	var/obj/item/clothing/accessory/armored_accesory = current_armored_accessory?.resolve()
+	if(armored_accesory)
+		set_armor(get_armor().subtract_other_armor(armored_accesory.get_armor()))
+		current_armored_accessory = null
+	for(var/obj/item/clothing/accessory/accessory as anything in attached_accessories)
+		if(QDELETED(accessory))
+			continue
+		var/datum/armor/armor = accessory.get_armor()
+		if(!armor || istype(armor, /datum/armor/none))
+			continue
+		set_armor(get_armor().add_other_armor(accessory.get_armor()))
+		current_armored_accessory = WEAKREF(accessory)
+		return
 
 /obj/item/clothing/under/rank
 	dying_key = DYE_REGISTRY_UNDER

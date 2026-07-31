@@ -1,9 +1,0 @@
-author: "JupiterJaeden"
-delete-after: True
-changes:
-  - balance: "Syndicate & infil modsuits no longer come pre-installed with shock absorbers."
-  - balance: "Syndicate modsuit price back to 8 TC from 6."
-  - balance: "No-slip and shock absorber modules back to 2 TC from 1."
-  - balance: "Wraith module back to 4 TC from 2."
-  - balance: "Syndicate modsuits no longer have slowdown when active."
-  - spellcheck: "Updates description of shock absorber module to be a bit more relevant for monkestation."
