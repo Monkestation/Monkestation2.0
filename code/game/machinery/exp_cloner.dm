@@ -38,7 +38,7 @@
 				else
 					. += span_notice("Those cloned will have the objective: [evil_objective.explanation_text]")
 	else if(hunted && (in_range(user, src) || isobserver(user)))
-		. += span_yellow("You notice an meek, yellow LED light.")
+		. += span_yellow("You notice a meek, yellow LED light.")
 
 	if (auto_clone)
 		. += span_notice("This pod allows experimental autoprocessing when upgraded with better parts.")

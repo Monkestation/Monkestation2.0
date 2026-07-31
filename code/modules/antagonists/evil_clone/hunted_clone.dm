@@ -5,7 +5,6 @@
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
 	antag_count_points = 0
-	//stinger_sound = 'sound/ambience/antag/revolutionary_tide.ogg'
 
 /datum/antagonist/hunted_clone/on_gain()
 	forge_objectives()
@@ -14,6 +13,7 @@
 /datum/antagonist/hunted_clone/greet()
 	. = ..()
 	to_chat(owner, "<B>You feel as though you will be hunted down for sport.</B>")
+	to_chat(owner, "<span class='warningplain'><font color=red size='7'><B>You are not an antagonist, you should only be fighting to defend yourself and fellow clones.</B></font></span>")
 	owner.announce_objectives()
 
 /datum/antagonist/hunted_clone/forge_objectives()
