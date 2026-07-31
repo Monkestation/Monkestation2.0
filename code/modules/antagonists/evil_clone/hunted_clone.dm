@@ -7,7 +7,7 @@
 	antag_count_points = 0
 	//stinger_sound = 'sound/ambience/antag/revolutionary_tide.ogg'
 
-/datum/antagonist/survivalist/on_gain()
+/datum/antagonist/hunted_clone/on_gain()
 	forge_objectives()
 	. = ..()
 

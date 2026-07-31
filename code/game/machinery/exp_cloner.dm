@@ -207,6 +207,10 @@
 			RefreshParts()
 			log_cloning("[src] at [AREACOORD(src)] corrupted due to EMP pulse.")
 
+/obj/machinery/clonepod/experimental/on_construction(mob/user)
+	. = ..()
+	circuit.configure_machine(src)
+
 //Prototype cloning console, much more rudimental and lacks modern functions such as saving records, autocloning, or safety checks.
 /obj/machinery/computer/prototype_cloning
 	name = "prototype cloning console"
