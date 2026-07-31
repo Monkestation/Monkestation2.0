@@ -3592,6 +3592,7 @@
 #include "code\modules\antagonists\evil_clone\evil_clone.dm"
 #include "code\modules\antagonists\evil_clone\evil_clone_objective.dm"
 #include "code\modules\antagonists\evil_clone\evil_event.dm"
+#include "code\modules\antagonists\evil_clone\hunted_clone.dm"
 #include "code\modules\antagonists\florida_man\__outfits.dm"
 #include "code\modules\antagonists\florida_man\_defines.dm"
 #include "code\modules\antagonists\florida_man\_florida_man.dm"

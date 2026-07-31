@@ -132,7 +132,7 @@
 
 /obj/item/organ/internal/cyberimp/brain/linked_surgery/perfect/update_surgeries(download_from_held = TRUE)
 	loaded_surgeries.Cut()
-	for(var/datum/surgery/surgery as() in GLOB.surgeries_list)
+	for(var/datum/surgery/surgery as anything in GLOB.surgeries_list)
 		if(surgery.type in blocked_surgeries)
 			continue
 		if(!length(surgery.steps))

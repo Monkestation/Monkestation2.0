@@ -438,7 +438,7 @@ Used by the AI doomsday and the self-destruct nuke.
 		++i
 
 	// load the maps
-	for(var/datum/parsed_map/pm as() in parsed_maps)
+	for(var/datum/parsed_map/pm as anything in parsed_maps)
 		var/bounds = pm.bounds
 		var/x_offset = bounds ? round(world.maxx / 2 - bounds[MAP_MAXX] / 2) + 1 : 1
 		var/y_offset = bounds ? round(world.maxy / 2 - bounds[MAP_MAXY] / 2) + 1 : 1
@@ -451,7 +451,7 @@ Used by the AI doomsday and the self-destruct nuke.
 /datum/controller/subsystem/mapping/proc/LoadStationRooms()
 	var/start_time = REALTIMEOFDAY
 	var/added_text = FALSE
-	for(var/obj/effect/spawner/room/R as() in random_room_spawners)
+	for(var/obj/effect/spawner/room/R as anything in random_room_spawners)
 		var/list/possibletemplates = list()
 		var/datum/map_template/random_room/candidate
 		shuffle_inplace(random_room_templates)
@@ -481,7 +481,7 @@ Used by the AI doomsday and the self-destruct nuke.
 /datum/controller/subsystem/mapping/proc/load_random_engines()
 	var/start_time = REALTIMEOFDAY
 	var/added_text = FALSE
-	for(var/obj/effect/spawner/random_engines/engine_spawner as() in random_engine_spawners)
+	for(var/obj/effect/spawner/random_engines/engine_spawner as anything in random_engine_spawners)
 		var/list/possible_engine_templates = list()
 		var/datum/map_template/random_room/random_engines/engine_candidate
 		shuffle_inplace(random_engine_templates)
@@ -508,7 +508,7 @@ Used by the AI doomsday and the self-destruct nuke.
 /datum/controller/subsystem/mapping/proc/load_random_bars()
 	var/start_time = REALTIMEOFDAY
 	var/added_text = FALSE
-	for(var/obj/effect/spawner/random_bar/bar_spawner as() in random_bar_spawners)
+	for(var/obj/effect/spawner/random_bar/bar_spawner as anything in random_bar_spawners)
 		var/list/possible_bar_templates = list()
 		var/datum/map_template/random_room/random_bar/bar_candidate
 		shuffle_inplace(random_bar_templates)

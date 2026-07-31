@@ -19,6 +19,8 @@
 	var/locked = FALSE
 	/// The custom objective given by the traitor item.
 	var/custom_objective = null
+	/// Am I producing hunted clones? (Overridden if evil.)
+	var/hunted = FALSE
 
 
 /obj/machinery/clonepod/experimental/Destroy()
@@ -35,6 +37,8 @@
 					. += span_notice("Those cloned will have the objective: [custom_objective]") //This doesn't look the best I think.
 				else
 					. += span_notice("Those cloned will have the objective: [evil_objective.explanation_text]")
+	else if(hunted && (in_range(user, src) || isobserver(user)))
+		. += span_yellow("You notice an meek, yellow LED light.")
 
 	if (auto_clone)
 		. += span_notice("This pod allows experimental autoprocessing when upgraded with better parts.")
@@ -158,6 +162,9 @@
 	else if(!isnull(evil_objective))
 		var/datum/antagonist/evil_clone/antag_object = new
 		antag_object.objectives += new evil_objective()
+		mob_occupant.mind.add_antag_datum(antag_object)
+	else if(hunted)
+		var/datum/antagonist/hunted_clone/antag_object = new
 		mob_occupant.mind.add_antag_datum(antag_object)
 	return TRUE
 

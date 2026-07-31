@@ -25,6 +25,20 @@
 /obj/item/circuitboard/machine/clonepod/experimental
 	name = "Experimental Clone Pod (Machine Board)"
 	build_path = /obj/machinery/clonepod/experimental
+	var/hunted = FALSE
+
+/obj/item/circuitboard/machine/clonepod/experimental/multitool_act(mob/living/user)
+	. = ..()
+	hunted = !hunted
+	if(hunted)
+		to_chat(user, span_notice("You program the cloner to instill fear into the clones."))
+	else
+		to_chat(user, span_notice("You remove the added fear from the cloner."))
+
+/obj/item/circuitboard/machine/clonepod/experimental/configure_machine(/obj/item/circuitboard/machine/clonepod/experimental/machine)
+	if(!istype(machine))
+		CRASH("Cargo board attempted to configure incorrect machine type: [machine] ([machine?.type])")
+	machine.hunted = hunted
 
 /obj/item/circuitboard/machine/clonescanner	//hippie end, re-add cloning
 	name = "Cloning Scanner (Machine Board)"
