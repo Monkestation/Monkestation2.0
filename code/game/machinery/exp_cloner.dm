@@ -110,6 +110,9 @@
 	else if(!isnull(evil_objective))
 		role_text = "evil clone"
 		poll_text = "Do you want to play as [clonename]'s evil clone?"
+	else if(hunted)
+		role_text = "hunted clone"
+		poll_text = "Do you want to play as [clonename]'s hunted clone?\nYOU WILL BE VALID TO HARM/KILL OOC WISE."
 	else
 		role_text = "defective clone"
 		poll_text = "Do you want to play as [clonename]'s defective clone?"
