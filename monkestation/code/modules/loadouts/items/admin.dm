@@ -85,12 +85,12 @@
 
 /obj/item/infinite_cigar_box/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/clothing/mask/cigarette/cigar))
-		to_chat(user, "you stuff [attacking_item] into the [src], and it seems to fall into a infinite void")
+		to_chat(user, "You stuff [attacking_item] into the [src], and it vanishes.")
 		qdel(attacking_item)
 		return TRUE
 
 /obj/item/infinite_cigar_box/attack_self(mob/user, modifiers)
-	to_chat(user, "you pull a cigar from the [src]")
+	to_chat(user, "You pull a cigar from the [src].")
 	var/obj/item/new_cigar = new spawn_type
 	user.put_in_hands(new_cigar)
 	playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 30, TRUE)
