@@ -18,11 +18,11 @@
 	spell_type = /datum/action/cooldown/spell/rod_form
 	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
-/*/datum/spellbook_entry/disintegrate //monkestation edit: replaced with a pointed version with a different effect
+/datum/spellbook_entry/smite
 	name = "Smite"
-	desc = "Charges your hand with an unholy energy that can be used to cause a touched victim to violently explode."
-	spell_type = /datum/action/cooldown/spell/touch/smite
-	category = SPELLBOOK_CATEGORY_OFFENSIVE*/
+	desc = "Allows you to call in a favor from the gods upon your foe."
+	spell_type = /datum/action/cooldown/spell/pointed/smite
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
 /datum/spellbook_entry/summon_simians
 	name = "Summon Simians"
@@ -127,11 +127,12 @@
 	item_path = /obj/item/gun/magic/staff/change
 	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
-/*/datum/spellbook_entry/item/mjolnir //monkestation edit: replaced with the spell summon mjollnir
-	name = "Mjolnir"
-	desc = "A mighty hammer on loan from Thor, God of Thunder. It crackles with barely contained power."
-	item_path = /obj/item/mjollnir
-	category = SPELLBOOK_CATEGORY_OFFENSIVE*/
+/datum/spellbook_entry/summon_mjollnir //replacement for the majollnir item
+	name = "Summon Mjollnir"
+	desc = "Summons the mighty Mjollnir to you for a limited time."
+	spell_type = /datum/action/cooldown/spell/conjure_item/summon_mjollnir
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
+	cost = 2
 
 /datum/spellbook_entry/item/singularity_hammer
 	name = "Singularity Hammer"
@@ -158,5 +159,11 @@
 	item_path = /obj/item/gun/magic/staff/shrink
 	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
+/datum/spellbook_entry/fire_ball
+	name = "Fire Ball"
+	desc = "Do you want that classic wizard zing but dont have the points to spare? This discount option provides (alomst) all the things you want out of a flaming orbular projectile!"
+	spell_type = /datum/action/cooldown/spell/pointed/projectile/fireball/bouncy
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
+	cost = 1
 
 #undef SPELLBOOK_CATEGORY_OFFENSIVE

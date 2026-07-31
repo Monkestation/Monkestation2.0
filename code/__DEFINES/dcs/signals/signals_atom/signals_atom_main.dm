@@ -118,6 +118,26 @@
 /// when the timestop ability effect ends on the atom: (datum/proximity_monitor/advanced/timestop)
 #define COMSIG_ATOM_TIMESTOP_UNFREEZE "atom_timestop_unfreeze"
 
+/// The signal sent when an atom/movable should try to toggle their hiding.
+/// Gets called on the target, with (hiding, play_feedback = TRUE) as its args.
+/// Used for `/datum/element/can_hide`
+#define COMSIG_MOVABLE_TOGGLE_HIDING "movable_toggle_hiding"
+
+/// from base of atom/ratvar_act()
+#define COMSIG_ATOM_RATVAR_ACT "atom_ratvar_act"
+
+/// /datum/component/clockwork_trap signals: ()
+#define COMSIG_CLOCKWORK_SIGNAL_RECEIVED "clock_received"
+
+/// from base of atom/eminence_act() : (mob/living/eminence/user)
+#define COMSIG_ATOM_EMINENCE_ACT "atom_eminence_act"
+
+///Called by either cell/proc/give or cell/proc/use
+#define COMSIG_CELL_CHANGE_POWER "cell_change_power"
+
+/// generic turf checker signal
+#define COMSIG_CHECK_TURF_GENERIC "check_turf_generic"
+
 /// From /atom/proc/update_atom_colour() : (color_changed)
 #define COMSIG_ATOM_COLOR_UPDATED "atom_color_updated"
 	/// Cancels update_appearance call in case you are somehow forced to call it manually to prevent dupe calls
