@@ -858,6 +858,10 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"Ee" = (
+/obj/effect/spawner/lavabase_spawner,
+/turf/open/genturf/orange,
+/area/lavaland/surface/outdoors/unexplored)
 "EH" = (
 /obj/structure/stone_tile{
 	dir = 1
@@ -1418,7 +1422,7 @@ lK
 fQ
 lK
 fQ
-lK
+Ee
 "}
 (2,1,1) = {"
 aa
