@@ -18,7 +18,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/spawner/lavabase_spawner)
 		message_admins("[src] tried initializing on non-mapload, if this is due to an admin and you are SURE you \
 			know what you are doing you can call the \"load\" proc on it.")
 		CRASH("[src] tried initializing on non-mapload, this should never happen.")
-	load()
+	INVOKE_ASYNC(src, PROC_REF(load))
 
 /obj/effect/spawner/lavabase_spawner/proc/load()
 	var/datum/map_template/lava_base/chosen_base = /datum/map_template/lava_base
