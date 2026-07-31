@@ -1,6 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - qol: "Engineering cyborg's status tab now displays a more accurate amount of iron/glass for their synthesizer."
-  - bugfix: "Refilling metal/glass via cyborg rechargers for engineering cyborgs now works."
-  - bugfix: "Refilling metal/glass via cyborg rechargers no longer consumes 5 sheets to refill 1 sheet of iron."

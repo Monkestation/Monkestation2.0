@@ -25,6 +25,10 @@
 	var/has_helmet_strap = FALSE
 	///Is the helmet strap buckled?
 	var/helmet_strap_buckled = TRUE
+	var/hud_attachable = FALSE
+	var/obj/item/clothing/glasses/hud/hud_glasses = null
+	var/datum/atom_hud/our_hud = null
+	var/hud_trait = null
 
 /datum/armor/head_helmet
 	melee = 35
@@ -40,6 +44,55 @@
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HEAD, TRUE)
 
+/obj/item/clothing/head/helmet/examine(mob/user)
+	. = ..()
+	if(hud_glasses)
+		. += "It has \a [hud_glasses] [hud_attachable ? "mounted on it with a few <b>screws</b>" : "permanently mounted on it"]."
+	else if (hud_attachable)
+		. += "It has a mounting point for some <b>HUD</b> glasses."
+
+/obj/item/clothing/head/helmet/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(!(slot & ITEM_SLOT_HEAD))
+		return
+	give_hud(user)
+
+/obj/item/clothing/head/helmet/dropped(mob/living/carbon/human/user)
+	. = ..()
+	if(!istype(user) || user.head != src)
+		return
+	remove_hud(user)
+
+/obj/item/clothing/head/helmet/Exited(atom/movable/gone, direction)
+	. = ..()
+
+	if(gone != hud_glasses)
+		return
+
+	hud_glasses = null
+
+	var/mob/living/carbon/human/wearer = loc
+	if(istype(wearer) && wearer.head == src)
+		remove_hud(wearer)
+
+/obj/item/clothing/head/helmet/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/clothing/glasses/hud))
+		return NONE
+
+	if(!hud_attachable || hud_glasses)
+		return NONE
+
+	user.transferItemToLoc(tool, src)
+	hud_glasses = tool
+
+	balloon_alert(user, "attached [tool]")
+
+	var/mob/living/carbon/human/wearer = loc
+	if (istype(wearer) && wearer.head == src)
+		give_hud(wearer)
+
+	return ITEM_INTERACT_SUCCESS
+
 /obj/item/clothing/head/helmet/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(isinhands)
@@ -49,6 +102,24 @@
 	if(helmet_strap_buckled)
 		var/mutable_appearance/helmet_strap_overlay = mutable_appearance('icons/mob/clothing/head/helmet.dmi', "helmet_strap", offset_spokesman = src, offset_const = -1)
 		. += helmet_strap_overlay
+
+/obj/item/clothing/head/helmet/proc/give_hud(mob/living/carbon/human/user)
+	if(!hud_glasses)
+		return
+	if(hud_glasses.hud_type)
+		our_hud = GLOB.huds[hud_glasses.hud_type]
+		our_hud.show_to(user)
+	if(hud_glasses.hud_trait)
+		hud_trait = hud_glasses.hud_trait
+		ADD_TRAIT(user, hud_trait, HELMET_TRAIT)
+
+/obj/item/clothing/head/helmet/proc/remove_hud(mob/living/carbon/human/user)
+	if(our_hud)
+		our_hud.hide_from(user)
+		our_hud = null
+	if(hud_trait)
+		REMOVE_TRAIT(user, hud_trait, HELMET_TRAIT)
+		hud_trait = null
 
 /obj/item/clothing/head/helmet/item_ctrl_click(mob/user)
 	if(!has_helmet_strap)
@@ -63,7 +134,6 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/helmet/sec
-	var/flipped_visor = FALSE
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
@@ -72,6 +142,8 @@
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES
 	desc_controls = "CTRL-Click to toggle the chinstrap, Alt-Click to flip the visor."
 	has_helmet_strap = TRUE
+	hud_attachable = TRUE
+	var/flipped_visor = FALSE
 
 /obj/item/clothing/head/helmet/sec/Initialize(mapload)
 	. = ..()
@@ -119,18 +191,16 @@
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
-//MONKESTATION EDIT START
 /obj/item/clothing/head/helmet/surplus
 	name = "surplus helmet"
 	desc = "Standard Security gear. Protects the head from impacts."
 	icon = 'icons/obj/clothing/hats.dmi'
-	worn_icon = 'icons/mob/head.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/helmet_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/helmet_righthand.dmi'
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
-//MONKESTATION EDIT STOP
 
 /obj/item/clothing/head/helmet/press
 	name = "press helmet"
@@ -164,6 +234,7 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	flags_inv = HIDEEARS|HIDEHAIR
 	desc_controls = "Alt-Click to flip the visor."
+	hud_attachable = TRUE
 	var/flipped_visor = FALSE
 
 /datum/armor/helmet_alt
@@ -770,7 +841,7 @@
 	obj_flags |= EMAGGED
 	mode = MEDICAL_HELMET_EXTREME
 	do_sparks(3, FALSE, src)
-	sleep(1 SECOND)
+	sleep(1 SECONDS)
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 	balloon_alert(user, "safeties shorted!")
 

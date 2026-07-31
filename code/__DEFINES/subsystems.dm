@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 1 // monkestation edit: we've added plenty of our own tables to the db
+#define DB_MINOR_VERSION 1
 
 
 //! ## Timing subsystem
@@ -143,8 +143,8 @@
 #define INIT_ORDER_VIS 80
 #define INIT_ORDER_SECURITY_LEVEL 79 // We need to load before events so that it has a security level to choose from.
 #define INIT_ORDER_DISCORD 78
-#define INIT_ORDER_PLEXORA 77 // monkestation addition
-#define INIT_ORDER_ACHIEVEMENTS 76 // monkestation edit: 77 -> 76 for plexora
+#define INIT_ORDER_PLEXORA 77
+#define INIT_ORDER_ACHIEVEMENTS 76
 #define INIT_ORDER_FLOXY 75 // should initialize relatively early, so admins can start playing music if they want to. also needs to initialize before cassettes anyways
 #define INIT_ORDER_STATION 74 //This is high priority because it manipulates a lot of the subsystems that will initialize after it.
 #define INIT_ORDER_QUIRKS 73
@@ -153,8 +153,8 @@
 #define INIT_ORDER_GAMEMODE 69 //events need to actually exist if we want to use them
 #define INIT_ORDER_IDACCESS 66
 #define INIT_ORDER_JOBS 65 // Must init before atoms, to set up properly the dynamic job lists.
-#define INIT_ORDER_TICKER 60 // monkestation edit: ticker needs to start before media_tracks before it loads tracks, since ticker loads and adds lobby tracks from config
-#define INIT_ORDER_MEDIA_TRACKS 59 // monkestation edit: see INIT_ORDER_TICKER
+#define INIT_ORDER_TICKER 60
+#define INIT_ORDER_MEDIA_TRACKS 59
 #define INIT_ORDER_AI_MOVEMENT 56 //We need the movement setup
 #define INIT_ORDER_AI_CONTROLLERS 55 //So the controller can get the ref
 #define INIT_ORDER_TCG 55
@@ -168,7 +168,7 @@
 #define INIT_ORDER_RESTAURANT 34
 #define INIT_ORDER_POLLUTION 32
 #define INIT_ORDER_FLUIDS 32 // Needs to be above atoms, as some atoms may want to start fluids/gases on init
-#define INIT_ORDER_CASSETTES 31 // monkestation addition: cassettes initialize before atoms, so that cassette stuff can be used in Initialize()
+#define INIT_ORDER_CASSETTES 31
 #define INIT_ORDER_ATOMS 30
 #define INIT_ORDER_ARMAMENTS 27
 #define INIT_ORDER_LANGUAGE 25
