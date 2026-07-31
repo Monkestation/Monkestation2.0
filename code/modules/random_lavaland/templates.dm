@@ -17,8 +17,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/spawner/lavabase_spawner)
 	if(!mapload)
 		message_admins("[src] tried initializing on non-mapload, if this is due to an admin and you are SURE you \
 			know what you are doing you can call the \"load\" proc on it.")
-		stack_trace("[src] tried initializing on non-mapload, this should never happen.")
+#ifdef UNIT_TESTS // We want to crash since us spawning when not maploading has a lot of issues, unit tests don't like that
 		return
+#endif
+		CRASH("[src] tried initializing on non-mapload, this should never happen.")
 	load()
 
 /obj/effect/spawner/lavabase_spawner/proc/load()
