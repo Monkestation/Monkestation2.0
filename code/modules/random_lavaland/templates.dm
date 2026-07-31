@@ -15,7 +15,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/spawner/lavabase_spawner)
 	..()
 	. = INITIALIZE_HINT_NORMAL
 #ifdef UNIT_TESTS // We want to crash since us spawning when not maploading has a lot of issues, unit tests don't like that
-		return
+	return
 #endif
 	if(!mapload)
 		message_admins("[src] tried initializing on non-mapload, if this is due to an admin and you are SURE you \
