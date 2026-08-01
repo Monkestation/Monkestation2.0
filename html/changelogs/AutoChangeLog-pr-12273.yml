@@ -1,0 +1,4 @@
+author: "EatsTheGrapes"
+delete-after: True
+changes:
+  - bugfix: "Using fart emote as synthetic being no longer displays an incorrect unusable emote warning"
