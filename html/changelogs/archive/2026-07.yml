@@ -588,3 +588,16 @@
       on
   - bugfix: fixes jumpsuit sprites using the wrong icon file
   - image: updated all envirosuit sprites
+2026-07-31:
+  Mantlecrawler:
+  - rscadd: Wall mounted detective TV (camera console)
+  - rscadd: Jukebox, reskinned as a gramophone
+  - admin: The interview screen now includes a link to the tutorial
+  - rscadd: Dune, Milky, and Spinny-hat Expie plushies
+  Shoddd:
+  - balance: Saya block chance down to 50%
+  TheColorCyan:
+  - bugfix: making blood into pills should now properly transfer its blood reagent
+      element
+  notghosti:
+  - bugfix: Cortical borers not being able to use any of their abilities
