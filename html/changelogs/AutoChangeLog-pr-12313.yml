@@ -1,0 +1,4 @@
+author: "Runian"
+delete-after: True
+changes:
+  - spellcheck: "Fixes the typo that within the RoboTact app when a cyborg has no connection to an AI."
