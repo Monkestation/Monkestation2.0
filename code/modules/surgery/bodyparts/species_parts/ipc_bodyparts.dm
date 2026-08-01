@@ -14,7 +14,7 @@
 	brute_modifier = 1.2
 	burn_modifier = 1.2
 
-	body_damage_coeff = 0.75	//IPC's Head can dismember
+	body_damage_coeff = 0.75 //IPC's Head can dismember
 	max_damage = 70	//Keep in mind that this value is used in the
 	dmg_overlay_type = "synth"
 
