@@ -251,6 +251,7 @@ monkestation edit end */
 //MonkeStation Edit Start
 //Butt-Based Farts
 /datum/emote/living/carbon/human/fart/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
 	if(issilicon(user))
 		var/list/ignored_mobs = list()
 		for(var/mob/anything in GLOB.player_list)
@@ -281,7 +282,6 @@ monkestation edit end */
 			'sound/effects/robot_farts/rbf18.ogg',
 		), 50, TRUE, mixer_channel = CHANNEL_PRUDE)
 		return
-	. = ..()
 	if(user.stat == CONSCIOUS)
 		if((!user.get_organ_by_type(/obj/item/organ/internal/butt) || !ishuman(user)))
 			to_chat(user, "<span class='warning'>You don't have a butt!</span>")

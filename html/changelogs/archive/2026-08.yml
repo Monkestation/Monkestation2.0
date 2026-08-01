@@ -1,0 +1,13 @@
+2026-08-01:
+  AberrantQuerist:
+  - rscadd: Updates sister server icons for Medium Rare and Monke's Paw.
+  EatsTheGrapes:
+  - bugfix: Using fart emote as synthetic being no longer displays an incorrect unusable
+      emote warning
+  Mantlecrawler:
+  - rscadd: Speebus's admin cameo item, Intern brand Cigars
+  TheColorCyan:
+  - balance: oozeling stacks required for hydrophobia upped from 10 to 20
+  - balance: water will now always remove 5 stacks instead of only doing so if you
+      are hydrophobic
+  - qol: clicking on slime wetness hud will now display info about it
