@@ -2,7 +2,7 @@
 	icon = 'icons/mob/species/ipc/bodyparts.dmi'
 	icon_greyscale = 'icons/mob/species/ipc/bodyparts.dmi'
 	icon_static = 'icons/mob/species/ipc/bodyparts.dmi'
-	limb_id = "synth" //Overriden in /species/ipc/replace_body()
+	limb_id = "synth" //Overridden in /species/ipc/replace_body()
 	icon_state = "synth_head"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
@@ -103,75 +103,75 @@
 	antennae = null
 	return TRUE
 
-/obj/item/bodypart/head/ipc/attackby(obj/item/weapon, mob/user, params)
+/obj/item/bodypart/head/ipc/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(secured)
 		return ..()
 
-	if(istype(weapon, /obj/item/organ/internal/eyes/synth))
+	if(istype(tool, /obj/item/organ/internal/eyes/synth))
 		if(ipc_eyes)
 			to_chat(user, span_warning("[src] already has optical sensors installed!"))
-			return
-		if(!user.transferItemToLoc(weapon, src))
-			return
-		ipc_eyes = weapon
-		to_chat(user, span_notice("You install [weapon] into [src]."))
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		ipc_eyes = tool
+		to_chat(user, span_notice("You install [tool] into [src]."))
 		update_appearance()
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(weapon, /obj/item/organ/internal/ears/synth))
+	if(istype(tool, /obj/item/organ/internal/ears/synth))
 		if(ipc_ears)
 			to_chat(user, span_warning("[src] already has synthetic ears installed!"))
-			return
-		if(!user.transferItemToLoc(weapon, src))
-			return
-		ipc_ears = weapon
-		to_chat(user, span_notice("You install [weapon] into [src]."))
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		ipc_ears = tool
+		to_chat(user, span_notice("You install [tool] into [src]."))
 		update_appearance()
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(weapon, /obj/item/organ/internal/tongue/robot/synth))
+	if(istype(tool, /obj/item/organ/internal/tongue/robot/synth))
 		if(ipc_tongue)
 			to_chat(user, span_warning("[src] already has a synthetic tongue installed!"))
-			return
-		if(!user.transferItemToLoc(weapon, src))
-			return
-		ipc_tongue = weapon
-		to_chat(user, span_notice("You install [weapon] into [src]."))
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		ipc_tongue = tool
+		to_chat(user, span_notice("You install [tool] into [src]."))
 		update_appearance()
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(weapon, /obj/item/organ/external/ipc_screen))
+	if(istype(tool, /obj/item/organ/external/ipc_screen))
 		to_chat(user, span_warning("The IPC screen is installed into the completed chassis last."))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(istype(weapon, /obj/item/organ/external/antennae/ipc))
+	if(istype(tool, /obj/item/organ/external/antennae/ipc))
 		if(antennae)
 			to_chat(user, span_warning("[src] already has IPC antennae installed!"))
-			return
-		if(!user.transferItemToLoc(weapon, src))
-			return
-		antennae = weapon
-		to_chat(user, span_notice("You install [weapon] into [src]."))
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		antennae = tool
+		to_chat(user, span_notice("You install [tool] into [src]."))
 		update_appearance()
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(weapon, /obj/item/stack/cable_coil))
+	if(istype(tool, /obj/item/stack/cable_coil))
 		if(wired)
 			to_chat(user, span_warning("[src] is already wired!"))
-			return
-		var/obj/item/stack/cable_coil/coil = weapon
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/stack/cable_coil/coil = tool
 		if(coil.use(1))
 			wired = TRUE
 			to_chat(user, span_notice("You wire [src]."))
-			return
+			return ITEM_INTERACT_SUCCESS
 		to_chat(user, span_warning("You need one length of cable to wire [src]!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	return ..()
 
 /obj/item/bodypart/head/ipc/screwdriver_act(mob/living/user, obj/item/screwtool)
 	if(secured)
-		if(!screwtool.use_tool(src, user, 5 SECONDS, volume = 50))
+		if(!screwtool.use_tool(src, user, 0.5 SECONDS, volume = 50))
 			return ITEM_INTERACT_BLOCKING
 		secured = FALSE
 		to_chat(user, span_notice("You unsecure [src]."))
@@ -180,7 +180,7 @@
 	if(!check_completion())
 		to_chat(user, span_warning("[src] needs optical sensors, synthetic ears, a synthetic tongue, IPC antennae, and wiring before it can be secured."))
 		return ITEM_INTERACT_BLOCKING
-	if(!screwtool.use_tool(src, user, 5 SECONDS, volume = 50))
+	if(!screwtool.use_tool(src, user, 0.5 SECONDS, volume = 50))
 		return ITEM_INTERACT_BLOCKING
 	secured = TRUE
 	to_chat(user, span_notice("You secure [src]."))

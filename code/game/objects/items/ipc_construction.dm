@@ -184,7 +184,7 @@
 	if(!left_arm && !right_arm && !left_leg && !right_leg && !head && !screen && !stomach && !lungs && !heart && !liver && core_state == IPC_CONSTRUCTION_UNWIRED && screen_state == IPC_CONSTRUCTION_UNWIRED)
 		to_chat(user, span_warning("There is nothing to remove from [src]!"))
 		return ITEM_INTERACT_BLOCKING
-	if(!tool.use_tool(src, user, 5 SECONDS, volume = 50))
+	if(!tool.use_tool(src, user, 0.5 SECONDS, volume = 50))
 		return ITEM_INTERACT_BLOCKING
 	drop_all_parts(get_turf(src))
 	user.balloon_alert(user, "disassembled!")
@@ -194,7 +194,7 @@
 /obj/item/ipc_core/screwdriver_act(mob/living/user, obj/item/tool)
 	if(screen)
 		if(screen_state == IPC_CONSTRUCTION_SECURED)
-			if(!tool.use_tool(src, user, 5 SECONDS, volume = 50))
+			if(!tool.use_tool(src, user, 0.5 SECONDS, volume = 50))
 				return ITEM_INTERACT_BLOCKING
 			screen_state = IPC_CONSTRUCTION_WIRED
 			to_chat(user, span_notice("You unsecure [screen] from [src]."))
@@ -203,7 +203,7 @@
 		if(screen_state != IPC_CONSTRUCTION_WIRED)
 			to_chat(user, span_warning("[screen] needs to be wired into [src] before it can be secured."))
 			return ITEM_INTERACT_BLOCKING
-		if(!tool.use_tool(src, user, 5 SECONDS, volume = 50))
+		if(!tool.use_tool(src, user, 0.5 SECONDS, volume = 50))
 			return ITEM_INTERACT_BLOCKING
 		screen_state = IPC_CONSTRUCTION_SECURED
 		to_chat(user, span_notice("You secure [screen] into [src]. Its display comes online."))
@@ -211,7 +211,7 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(core_state == IPC_CONSTRUCTION_SECURED)
-		if(!tool.use_tool(src, user, 5 SECONDS, volume = 50))
+		if(!tool.use_tool(src, user, 0.5 SECONDS, volume = 50))
 			return ITEM_INTERACT_BLOCKING
 		core_state = IPC_CONSTRUCTION_WIRED
 		to_chat(user, span_notice("You unsecure [src]'s chest cavity."))
@@ -219,7 +219,7 @@
 	if(!check_core_completion())
 		to_chat(user, span_warning("[src] needs a synthetic bio-reactor, heatsink, hydraulic pump engine, reagent processing unit, and wiring before its chest cavity can be secured."))
 		return ITEM_INTERACT_BLOCKING
-	if(!tool.use_tool(src, user, 5 SECONDS, volume = 50))
+	if(!tool.use_tool(src, user, 0.5 SECONDS, volume = 50))
 		return ITEM_INTERACT_BLOCKING
 	core_state = IPC_CONSTRUCTION_SECURED
 	to_chat(user, span_notice("You secure [src]'s chest cavity."))
@@ -285,7 +285,7 @@
 	if(!isturf(loc))
 		to_chat(user, span_warning("You need to place [src] on the floor before finalizing the chassis."))
 		return ITEM_INTERACT_BLOCKING
-	if(!tool.use_tool(src, user, 5 SECONDS, volume = 50))
+	if(!tool.use_tool(src, user, 0.5 SECONDS, volume = 50))
 		return ITEM_INTERACT_BLOCKING
 	if(!build_ipc_body(user))
 		to_chat(user, span_warning("The IPC chassis fails to come together."))
@@ -531,10 +531,6 @@
 	installed_screen.switch_to_screen(ipc_body, "Blue", IPC_CORE_UNCONNECTED_SCREEN_COLOR)
 	screen = null
 	screen_state = IPC_CONSTRUCTION_UNWIRED
-
-	// Anything left in the construction core would otherwise be dumped on the turf when the core is deleted.
-	for(var/atom/movable/contained as anything in contents)
-		contained.moveToNullspace()
 
 	ipc_body.regenerate_icons()
 	user.visible_message(span_notice("[user] finishes [src] into an inert IPC shell."), span_notice("You finish [src] into an inert IPC shell."))

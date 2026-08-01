@@ -110,11 +110,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/techweb_node/ipc_parts/New()
-	..()
-	design_ids -= "ipc_chest"
-	design_ids += "ipc_synth_eyes"
-
 /datum/design/ipc_core
 	name = "IPC Core"
 	desc = "An incomplete IPC chassis. Install synthetic organs, attach IPC limbs plus a secured head assembly, install an IPC screen, then finish the shell with a multitool. The brain and optional augments are installed afterward by surgery."
