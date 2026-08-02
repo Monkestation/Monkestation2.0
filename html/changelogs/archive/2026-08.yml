@@ -11,3 +11,12 @@
   - balance: water will now always remove 5 stacks instead of only doing so if you
       are hydrophobic
   - qol: clicking on slime wetness hud will now display info about it
+2026-08-02:
+  Runian:
+  - spellcheck: Fixes the typo that within the RoboTact app when a cyborg has no connection
+      to an AI.
+  TheColorCyan:
+  - bugfix: (SmArtKar) Added some safeties to ensure that hotspots don't cause an
+      infinite infectious runtime and crash clients
+  Watermelon914:
+  - bugfix: Fixes list pick circuit compenent.

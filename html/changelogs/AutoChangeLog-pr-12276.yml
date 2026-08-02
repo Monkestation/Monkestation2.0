@@ -1,4 +1,0 @@
-author: "TheColorCyan"
-delete-after: True
-changes:
-  - bugfix: "(SmArtKar) Added some safeties to ensure that hotspots don't cause an infinite infectious runtime and crash clients"
