@@ -147,13 +147,18 @@
 	var/turf/open/our_turf = loc
 	//on creation we check adjacent turfs for hot spot to start grouping, if surrounding do not have hot spots we create our own
 	for(var/turf/open/to_check as anything in our_turf.atmos_adjacent_turfs)
-		if(to_check.active_hotspot)
-			var/obj/effect/hotspot/enemy_spot = to_check.active_hotspot
-			if(!our_hot_group)
-				enemy_spot.our_hot_group.add_to_group(src)
-			else if(our_hot_group != enemy_spot.our_hot_group && enemy_spot.our_hot_group) //if we belongs to a hot group from prior loop and we encounter another hot spot with a group then we merge
-				our_hot_group.merge_hot_groups(enemy_spot.our_hot_group)
-	if(!our_hot_group)//if after loop through all the adjacents turfs and we havent belong to a group yet, make our own
+		if(!to_check.active_hotspot)
+			continue
+		var/obj/effect/hotspot/enemy_spot = to_check.active_hotspot
+		// Safeguard to prevent infectious init runtimes for hotspots if we somehow end up with a hotspot without a group
+		if(!enemy_spot.our_hot_group)
+			continue
+		if(!our_hot_group)
+			enemy_spot.our_hot_group.add_to_group(src)
+		else if(our_hot_group != enemy_spot.our_hot_group) //if we belongs to a hot group from prior loop and we encounter another hot spot with a group then we merge
+			our_hot_group.merge_hot_groups(enemy_spot.our_hot_group)
+
+	if(QDELETED(our_hot_group))//if after loop through all the adjacents turfs and we havent belong to a group yet, make our own
 		our_hot_group = new
 		our_hot_group.add_to_group(src)
 
