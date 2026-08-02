@@ -26,6 +26,11 @@
 	if(sinking)
 		RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(try_add_sinking))
 
+/turf/open/water/AfterChange(flags, oldType)
+	. = ..()
+	if(sinking)
+		UnregisterSignal(src, COMSIG_ATOM_ENTERED)
+
 /turf/open/water/proc/try_add_sinking(turf/open/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(arrived.GetComponent(/datum/component/player_sink))
 		return
