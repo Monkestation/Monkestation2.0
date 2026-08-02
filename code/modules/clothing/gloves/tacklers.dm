@@ -85,7 +85,7 @@
 
 /obj/item/clothing/gloves/tackler/combat/insulated/admiral // Reskin for Abraxis's Admiral set
 	icon = 'icons/obj/clothing/gloves.dmi'
-	worn_icon = 'icons/mob/clothing/gloves.dmi'
+	worn_icon = 'icons/mob/clothing/hands.dmi'
 	icon_state = "admiral"
 	alternate_worn_layer = ABOVE_SUIT_LAYER
 
