@@ -758,13 +758,17 @@
 		return .
 	for(var/obj/item/weldingtool/largetank/cyborg/tool in borg.model.usable_modules)
 		tool.refuel = TRUE
+		tool.can_off_process = TRUE
+		if(!tool.welding)
+			START_PROCESSING(SSobj, tool)
 
 /obj/item/borg/upgrade/experimental_weldingtool/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if(!.)
 		return .
 	for(var/obj/item/weldingtool/largetank/cyborg/tool in borg.model.usable_modules)
-		tool.refuel = FALSE
+		tool.refuel = initial(tool.refuel)
+		tool.can_off_process = initial(tool.can_off_process) // It'll stop processing on its own.
 
 /obj/item/borg/upgrade/gps
 	name = "cyborg global positioning system upgrade"

@@ -1,0 +1,4 @@
+author: "Runian"
+delete-after: True
+changes:
+  - bugfix: "Cyborg welders that have been upgraded via the experimental welder upgrade now correctly automatically refuel their welder when it is off."

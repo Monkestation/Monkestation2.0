@@ -255,11 +255,14 @@
 			if(!quiet_if_protected)
 				to_chat(slime, span_warning("The water fails to penetrate your thick clothing!"))
 			return FALSE
-	if(is_slime_hydrophobic(slime)) //oozeling wetness cancels out normal wetness so we just check if they are hydrophobic here
+
+	slime.adjust_wet_stacks(-5, /datum/status_effect/fire_handler/wet_stacks/oozeling)
+
+	if(is_slime_hydrophobic(slime))
 		if(!quiet_if_protected)
 			to_chat(slime, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
-		slime.adjust_wet_stacks(-5, /datum/status_effect/fire_handler/wet_stacks/oozeling)
 		return FALSE
+
 	remove_blood_volume(slime, 40 * water_multiplier)
 	if(COOLDOWN_FINISHED(src, water_alert_cooldown))
 		slime.visible_message(
