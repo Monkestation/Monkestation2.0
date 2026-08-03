@@ -61,7 +61,7 @@
 
 	if(map.type == /datum/lazy_template/deathmatch/random)
 		var/list/available_maps = list()
-		for(var/key in GLOB.deathmatch_game.maps - map.name)
+		for(var/key in GLOB.deathmatch_game.maps - /datum/lazy_template/deathmatch/random::name)
 			var/datum/lazy_template/deathmatch/map = GLOB.deathmatch_game.maps[key]
 			if(map.min_players <= length(players) && map.max_players >= length(players))
 				available_maps += key
@@ -154,7 +154,7 @@
 		if(length(loadouts) > 1)
 			loadout = pick(loadouts - /datum/outfit/deathmatch_loadout/random)
 		else
-			loadout = pick(GLOB.deathmatch_game.loadouts)
+			loadout = pick(GLOB.deathmatch_game.loadouts - /datum/outfit/deathmatch_loadout/random)
 
 	var/mob/living/carbon/human/new_player = new(loc)
 	observer.client?.prefs.safe_transfer_prefs_to(new_player)
@@ -204,16 +204,36 @@
 	for(var/ckey in players)
 		var/mob/loser = players[ckey]["mob"]
 		unregister_player_signals(loser)
-		players[ckey]["mob"] = null
-		loser.ghostize(can_reenter_corpse = FALSE)
+		var/rejoin = players[ckey]["rejoin"]
+		players -= ckey
+		var/mob/dead/observer/ghost = loser.ghostize(can_reenter_corpse = FALSE)
 		qdel(loser)
+		if(ghost)
+			add_observer(ghost, (host == ckey), rejoin, FALSE)
 
-	for(var/datum/deathmatch_modifier/modifier in modifiers)
-		GLOB.deathmatch_game.modifiers[modifier].on_end_game(src)
+	for(var/datum/deathmatch_modifier/modifier_path as anything in modifiers)
+		GLOB.deathmatch_game.modifiers[modifier_path].on_end_game(src)
 
 	clear_reservation()
-	GLOB.deathmatch_game.remove_lobby(host)
 	log_game("Deathmatch game [host] ended.")
+	if(!observers[host]["rejoin"])
+		GLOB.deathmatch_game.remove_lobby(host)
+		return
+
+	map.template_in_use = FALSE
+	playing = DEATHMATCH_NOT_PLAYING
+	for(var/ckey as anything in observers)
+		var/should_rejoin = observers[ckey]["rejoin"]
+		if(!should_rejoin)
+			observers -= ckey
+			continue
+
+		var/stay_observer = observers[ckey]["stay_observer"]
+		var/mob = observers[ckey]["mob"]
+		if(!stay_observer)
+			observers -= ckey
+			add_player(mob, loadouts[1], (host == ckey), TRUE)
+		INVOKE_ASYNC(src, PROC_REF(ui_interact), mob)
 
 /datum/deathmatch_lobby/proc/player_wabbajacked(mob/living/player, mob/living/new_mob)
 	SIGNAL_HANDLER
@@ -237,11 +257,12 @@
 	if(!islist(players[ckey])) // if we STILL didnt find a good ckey
 		return
 
+	var/rejoin = players[ckey]["rejoin"]
 	players -= ckey
 
 	var/mob/dead/observer/ghost = !player.client ? player.get_ghost() : player.ghostize() //this doesnt work on those who used the ghost verb
 	if(!isnull(ghost))
-		add_observer(ghost, (host == ckey))
+		add_observer(ghost, (host == ckey), rejoin, FALSE)
 
 	announce(span_reallybig("[player.real_name] HAS DIED.<br>[players.len] REMAIN."))
 
@@ -252,15 +273,15 @@
 	if(players.len <= 1)
 		end_game()
 
-/datum/deathmatch_lobby/proc/add_observer(mob/mob, host = FALSE)
+/datum/deathmatch_lobby/proc/add_observer(mob/mob, host = FALSE, rejoin = FALSE, stay_observer = TRUE)
 	if(players[mob.ckey])
 		CRASH("Tried to add [mob.ckey] as an observer while being a player.")
-	observers[mob.ckey] = list("mob" = mob, "host" = host)
+	observers[mob.ckey] = list("mob" = mob, "host" = host, "rejoin" = rejoin, "stay_observer" = stay_observer)
 
-/datum/deathmatch_lobby/proc/add_player(mob/mob, loadout, host = FALSE)
+/datum/deathmatch_lobby/proc/add_player(mob/mob, loadout, host = FALSE, rejoin = FALSE)
 	if(observers[mob.ckey])
 		CRASH("Tried to add [mob.ckey] as a player while being an observer.")
-	players[mob.ckey] = list("mob" = mob, "host" = host, "ready" = FALSE, "loadout" = loadout)
+	players[mob.ckey] = list("mob" = mob, "host" = host, "ready" = FALSE, "loadout" = loadout, "rejoin" = rejoin)
 
 /datum/deathmatch_lobby/proc/remove_ckey_from_play(ckey)
 	var/is_likely_player = (ckey in players)
@@ -307,7 +328,7 @@
 	if(playing || !player)
 		return
 	if(!(player.ckey in (players+observers)))
-		add_player(player, loadouts[1])
+		add_player(player, loadouts[1], rejoin = FALSE)
 	ui_interact(player)
 
 /datum/deathmatch_lobby/proc/spectate(mob/player)
@@ -375,6 +396,11 @@
 	.["host"] = is_host
 	.["admin"] = is_admin
 	.["playing"] = playing
+	.["rejoin"] = FALSE // This is here because you can view a lobby without being in it as an admin
+	if(players[user.ckey])
+		.["rejoin"] = players[user.ckey]["rejoin"]
+	else if(observers[user.ckey])
+		.["rejoin"] = observers[user.ckey]["rejoin"]
 	.["loadouts"] = list()
 	for (var/datum/outfit/deathmatch_loadout/loadout as anything in loadouts)
 		.["loadouts"] += initial(loadout.display_name)
@@ -462,18 +488,26 @@
 			if(playing)
 				return FALSE
 			if(players[usr.ckey])
+				var/rejoin = players[usr.ckey]["rejoin"]
 				remove_ckey_from_play(usr.ckey)
-				add_observer(usr, host == usr.ckey)
+				add_observer(usr, host == usr.ckey, rejoin)
 				return TRUE
 			else if(observers[usr.ckey])
+				var/rejoin = observers[usr.ckey]["rejoin"]
 				remove_ckey_from_play(usr.ckey)
-				add_player(usr, loadouts[1], host == usr.ckey)
+				add_player(usr, loadouts[1], host == usr.ckey, rejoin)
 				return TRUE
 		if("ready")
 			players[usr.ckey]["ready"] ^= 1 // Toggle.
 			ready_count += (players[usr.ckey]["ready"] * 2) - 1 // scared?
 			if(ready_count >= players.len && players.len >= map.min_players)
 				start_game()
+			return TRUE
+		if("rejoin")
+			if(players[usr.ckey])
+				players[usr.ckey]["rejoin"] ^= 1
+			else if(observers[usr.ckey])
+				observers[usr.ckey]["rejoin"] ^= 1
 			return TRUE
 		if("host") // Host functions
 			if(playing || (usr.ckey != host && !check_rights(R_ADMIN)))
@@ -496,11 +530,13 @@
 				if("Toggle observe")
 					var/umob = get_mob_by_ckey(uckey)
 					if(players[uckey])
+						var/rejoin = players[uckey]["rejoin"]
 						remove_ckey_from_play(uckey)
-						add_observer(umob, host == uckey)
+						add_observer(umob, host == uckey, rejoin)
 					else if(observers[uckey])
+						var/rejoin = observers[uckey]["rejoin"]
 						remove_ckey_from_play(uckey)
-						add_player(umob, loadouts[1], host == uckey)
+						add_player(umob, loadouts[1], host == uckey, rejoin)
 					return TRUE
 				if("change_map")
 					if(!(params["map"] in GLOB.deathmatch_game.maps))

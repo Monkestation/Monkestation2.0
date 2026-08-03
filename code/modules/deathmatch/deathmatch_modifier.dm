@@ -489,8 +489,12 @@
 	name = "Random Modifiers"
 	description = "Picks 3 to 5 random modifiers as the game is about to start"
 	random_exempted = TRUE
+	///A lazylist of lobbies that have this modifier enabled, used to cleanup the added modifiers from the lobby
+	var/list/signed_lobbies
 
 /datum/deathmatch_modifier/random/on_select(datum/deathmatch_lobby/lobby)
+	LAZYADD(signed_lobbies, lobby)
+	RegisterSignal(lobby, COMSIG_QDELETING, PROC_REF(remove_lobby))
 	///remove any other global modifier if chosen. It'll pick random ones when the time comes.
 	for(var/modpath in lobby.modifiers)
 		var/datum/deathmatch_modifier/modifier = GLOB.deathmatch_game.modifiers[modpath]
@@ -499,8 +503,16 @@
 		modifier.unselect(lobby)
 		lobby.modifiers -= modpath
 
+/datum/deathmatch_modifier/random/unselect(datum/deathmatch_lobby/lobby)
+	remove_lobby(lobby)
+
+/datum/deathmatch_modifier/random/proc/remove_lobby(datum/deathmatch_lobby/lobby)
+	SIGNAL_HANDLER
+	LAZYREMOVE(signed_lobbies, lobby)
+	UnregisterSignal(lobby, COMSIG_QDELETING)
+
 /datum/deathmatch_modifier/random/on_start_game(datum/deathmatch_lobby/lobby)
-	lobby.modifiers -= type //remove it before attempting to select other modifiers, or they'll fail.
+	lobby.modifiers -= type // Remove it before attempting to select other modifiers, or they'll fail.
 
 	var/static/list/static_pool
 	if(isnull(static_pool))
@@ -514,15 +526,22 @@
 		if(!modifier.selectable(lobby))
 			modifiers_pool -= modpath
 
+	signed_lobbies[lobby] = list()
 	///Pick global modifiers at random.
 	for(var/iteration in 1 to rand(3, 5))
 		var/datum/deathmatch_modifier/modifier = GLOB.deathmatch_game.modifiers[pick_n_take(modifiers_pool)]
-		modifier.on_select(lobby)
+		lobby.select_modifier(modifier)
 		modifier.on_start_game(lobby)
-		lobby.modifiers += modifier.type
+		signed_lobbies[lobby] += modifier
 		modifiers_pool -= modifier.blacklisted_modifiers
 		if(!length(modifiers_pool))
-			return
+			break
+
+	lobby.modifiers += type // And then add it so we can track and remove the modifiers later
+
+/datum/deathmatch_modifier/random/on_end_game(datum/deathmatch_lobby/lobby)
+	for(var/datum/deathmatch_modifier/modifier as anything in signed_lobbies[lobby])
+		lobby.unselect_modifier(modifier)
 
 /datum/deathmatch_modifier/any_loadout
 	name = "Any Loadout Allowed"

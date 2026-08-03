@@ -36,6 +36,7 @@ type Data = {
   host: BooleanLike;
   admin: BooleanLike;
   playing: BooleanLike;
+  rejoin: BooleanLike;
   loadouts: string[];
   maps: string[];
   map: {
@@ -225,6 +226,13 @@ export const DeathmatchLobby = (props) => {
           content={data.observers[data.self] ? 'Join' : 'Observe'}
           onClick={() => act('observe')}
         />
+        <Button
+          color={data.rejoin ? "good" : "bad"}
+          tooltip="Automatically joins the lobby and opens the deathmatch menu for you when the game ends"
+          onClick={() => act('rejoin')}
+        >
+          Auto-Rejoin Lobby
+        </Button>
         {!!data.admin && (
           <Button
             icon="exclamation"
