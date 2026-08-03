@@ -222,7 +222,7 @@
 
 	map.template_in_use = FALSE
 	playing = DEATHMATCH_NOT_PLAYING
-	for(var/ckey as anything in observers)
+	for(var/ckey in observers)
 		var/should_rejoin = observers[ckey]["rejoin"]
 		if(!should_rejoin)
 			observers -= ckey
