@@ -1536,6 +1536,11 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
+/obj/machinery/camera/directional/north{
+	c_tag = "Xenobiology - Cytology Cell";
+	name = "xenobiology camera";
+	network = list("ss13","xeno","rd")
+	},
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/science/xenobiology)
 "awa" = (
@@ -4850,11 +4855,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/machinery/camera/directional/north{
-	c_tag = "Xenobiology - Cytology Cell";
-	name = "xenobiology camera";
-	network = list("ss13","xeno","rd")
-	},
 /obj/machinery/light/cold/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5357,7 +5357,7 @@
 	dir = 1
 	},
 /obj/machinery/camera/directional/north{
-	c_tag = "Atmospherics - Nitrogen Cell";
+	c_tag = "Atmospherics - Center South";
 	name = "atmospherics camera"
 	},
 /turf/open/floor/iron/textured_edge,
@@ -5845,7 +5845,6 @@
 	dir = 6
 	},
 /obj/structure/trash_pile,
-/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/station/bitrunning/den)
 "bLv" = (
@@ -7588,7 +7587,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/smes/super/full,
-/turf/open/floor/vault,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
 "coi" = (
 /obj/structure/table,
@@ -9438,8 +9437,7 @@
 /area/station/service/chapel)
 "cQn" = (
 /obj/machinery/camera/directional/south{
-	c_tag = "Atmospherics - Project Room Fore";
-	dir = 5;
+	c_tag = "Atmospherics - Center North";
 	name = "atmospherics camera"
 	},
 /obj/effect/turf_decal/bot,
@@ -9914,7 +9912,7 @@
 /obj/structure/closet/radiation,
 /obj/effect/turf_decal/bot,
 /obj/machinery/camera/directional/east{
-	c_tag = "Atmospherics - Ports";
+	c_tag = "Atmospherics - Incinerator North";
 	dir = 6;
 	name = "atmospherics camera"
 	},
@@ -10502,7 +10500,7 @@
 /area/station/maintenance/disposal/incinerator)
 "dhd" = (
 /obj/machinery/camera/directional/north{
-	c_tag = "Atmospherics - Plasma Cell";
+	c_tag = "Atmospherics - Project Room Corridor";
 	dir = 9;
 	name = "atmospherics camera"
 	},
@@ -12772,11 +12770,6 @@
 /obj/structure/table/glass,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
-	},
-/obj/machinery/camera/directional/north{
-	c_tag = "Xenobiology - Cytology Desk";
-	name = "xenobiology camera";
-	network = list("ss13","xeno","rd")
 	},
 /obj/machinery/reagentgrinder{
 	pixel_y = 7
@@ -17111,6 +17104,11 @@
 /obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9;
 	pixel_x = 4
+	},
+/obj/machinery/camera/directional/north{
+	c_tag = "Xenobiology - Cytology Desk";
+	name = "xenobiology camera";
+	network = list("ss13","xeno","rd")
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -22273,6 +22271,11 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
+/obj/machinery/camera/directional/north{
+	c_tag = "Medbay - Pharmacy";
+	name = "medbay camera";
+	network = list("ss13","medbay")
+	},
 /turf/open/floor/iron/freezer,
 /area/station/medical/pharmacy)
 "guE" = (
@@ -26389,7 +26392,7 @@
 "hBo" = (
 /obj/machinery/light_switch/directional/west,
 /obj/machinery/camera/directional/west{
-	c_tag = "Atmospherics - Fore Port";
+	c_tag = "Atmospherics - Incinerator South";
 	name = "atmospherics camera";
 	network = list("ss13","engine")
 	},
@@ -30329,9 +30332,8 @@
 /area/station/hallway/secondary/entry)
 "iEJ" = (
 /obj/effect/turf_decal/weather/snow,
-/obj/machinery/camera/directional/west{
+/obj/machinery/camera/directional/south{
 	c_tag = "Service - Kitchen Coldroom";
-	dir = 5;
 	name = "service camera"
 	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
@@ -35683,7 +35685,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/camera/directional/east{
-	c_tag = "Atmospherics - Ports";
+	c_tag = "Atmospherics - Ports External";
 	name = "atmospherics camera"
 	},
 /obj/machinery/airalarm/directional/east,
@@ -39498,7 +39500,7 @@
 /area/station/security/execution/transfer)
 "lcf" = (
 /obj/machinery/camera/directional/north{
-	c_tag = "Atmospherics - Plasma Cell";
+	c_tag = "Atmospherics - Project Room North";
 	name = "atmospherics camera"
 	},
 /obj/machinery/portable_atmospherics/canister,
@@ -46679,7 +46681,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/camera/directional/south{
 	c_tag = "Atmospherics - Project Room Fore";
-	dir = 5;
 	name = "atmospherics camera"
 	},
 /turf/open/floor/iron/dark/textured_large,
@@ -56641,7 +56642,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /obj/machinery/camera/directional/east{
-	c_tag = "Atmospherics - Ports";
+	c_tag = "Atmospherics - Aft East";
 	name = "atmospherics camera"
 	},
 /obj/machinery/light/directional/east,
@@ -76838,7 +76839,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/camera/directional/south{
-	c_tag = "Atmospherics - Project Room Closet";
+	c_tag = "Atmospherics - Aft South";
 	name = "atmospherics camera"
 	},
 /obj/item/clothing/head/cone,
@@ -78056,7 +78057,7 @@
 /obj/structure/closet/secure_closet/atmospherics,
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/camera/directional/south{
-	c_tag = "Atmospherics - Project Room Closet";
+	c_tag = "Atmospherics - Project Room South";
 	name = "atmospherics camera"
 	},
 /obj/machinery/light/directional/south,
@@ -79039,11 +79040,6 @@
 "vVO" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
-	},
-/obj/machinery/camera/directional/north{
-	c_tag = "Medbay - Pharmacy";
-	name = "medbay camera";
-	network = list("ss13","medbay")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8

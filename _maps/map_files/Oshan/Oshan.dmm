@@ -4844,7 +4844,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/camera/directional/south{
-	c_tag = "AI Chamber - Aft";
+	c_tag = "AI Chamber - Core";
 	network = list("aicore")
 	},
 /obj/machinery/atmospherics/components/unary/passive_vent{
@@ -8767,6 +8767,13 @@
 /obj/effect/turf_decal/trimline/red/filled/warning,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
+"cOY" = (
+/obj/machinery/camera/preset/ordnance{
+	dir = 1;
+	c_tag = "Bomb Testing Site - SouthEast"
+	},
+/turf/open/floor/plating,
+/area/station/science/ordnance/bomb)
 "cPh" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
@@ -12011,6 +12018,14 @@
 	dir = 4
 	},
 /area/station/engineering/atmos)
+"dKe" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/camera/autoname/directional/south,
+/turf/open/floor/iron,
+/area/station/maintenance/starboard/upper)
 "dKh" = (
 /obj/machinery/doppler_array{
 	dir = 1
@@ -16300,7 +16315,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/dim/directional/south,
-/obj/machinery/camera/preset/ordnance,
+/obj/machinery/camera/preset/ordnance{
+	c_tag = "Bomb Testing Site - True Center"
+	},
 /turf/open/floor/plating,
 /area/station/science/ordnance/bomb)
 "eZD" = (
@@ -25458,7 +25475,8 @@
 /area/station/command/heads_quarters/hos)
 "hQt" = (
 /obj/machinery/camera/preset/ordnance{
-	dir = 4
+	dir = 4;
+	c_tag = "Bomb Testing Site - Center #1"
 	},
 /turf/open/floor/plating,
 /area/station/science/ordnance/bomb)
@@ -27834,7 +27852,8 @@
 	dir = 1
 	},
 /obj/machinery/camera/preset/ordnance{
-	dir = 4
+	dir = 4;
+	c_tag = "Bomb Testing Site - Center #3"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/science/ordnance/bomb)
@@ -39128,7 +39147,8 @@
 /area/station/medical/chemistry)
 "lZJ" = (
 /obj/machinery/camera/preset/ordnance{
-	dir = 1
+	dir = 1;
+	c_tag = "Bomb Testing Site - North"
 	},
 /turf/open/floor/engine,
 /area/station/science/ordnance/bomb)
@@ -46246,7 +46266,8 @@
 /area/station/maintenance/abandon_cafeteria)
 "olK" = (
 /obj/machinery/camera/preset/ordnance{
-	dir = 1
+	dir = 1;
+	c_tag = "Bomb Testing Site - Monkey Pen"
 	},
 /turf/open/floor/grass,
 /area/station/science/ordnance/bomb)
@@ -46953,7 +46974,8 @@
 /area/station/commons/dorms)
 "ovZ" = (
 /obj/machinery/camera/preset/ordnance{
-	dir = 1
+	dir = 1;
+	c_tag = "Bomb Testing Site - South"
 	},
 /turf/open/floor/plating,
 /area/station/science/ordnance/bomb)
@@ -47449,7 +47471,9 @@
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
 "oDR" = (
-/obj/machinery/camera/preset/ordnance,
+/obj/machinery/camera/preset/ordnance{
+	c_tag = "Bomb Testing Site - Center #4"
+	},
 /turf/open/floor/engine,
 /area/station/science/ordnance/bomb)
 "oDT" = (
@@ -60408,7 +60432,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/dorms)
 "sDC" = (
-/obj/machinery/camera/autoname/directional/north,
+/obj/machinery/camera/preset/ordnance{
+	dir = 1;
+	c_tag = "Bomb Testing Site - Kitchen"
+	},
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/bomb)
 "sDD" = (
@@ -60762,7 +60789,8 @@
 "sJk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/preset/ordnance{
-	dir = 8
+	dir = 8;
+	c_tag = "Bomb Testing Site - West"
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/bomb)
@@ -63229,7 +63257,6 @@
 /obj/effect/spawner/random/trash/graffiti,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
 "twF" = (
@@ -69397,7 +69424,8 @@
 "vmY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/camera/preset/ordnance{
-	dir = 1
+	dir = 1;
+	c_tag = "Bomb Testing Site - Center #2"
 	},
 /turf/open/floor/plating,
 /area/station/science/ordnance/bomb)
@@ -70850,7 +70878,9 @@
 /turf/closed/wall/r_wall,
 /area/station/cargo/miningdock)
 "vLk" = (
-/obj/machinery/camera/preset/ordnance,
+/obj/machinery/camera/preset/ordnance{
+	c_tag = "Bomb Testing Site - SouthWest"
+	},
 /turf/open/floor/iron,
 /area/station/science/ordnance/bomb)
 "vLn" = (
@@ -76834,6 +76864,13 @@
 	},
 /turf/open/floor/carpet/grimey,
 /area/station/service/theater/abandoned)
+"xBf" = (
+/obj/machinery/camera/preset/ordnance{
+	dir = 4;
+	c_tag = "Bomb Testing Site - NorthEast"
+	},
+/turf/open/floor/plating,
+/area/station/science/ordnance/bomb)
 "xBi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -108038,7 +108075,7 @@ pmd
 pmd
 ohm
 twE
-nTy
+dKe
 vUP
 lJP
 lol
@@ -121115,7 +121152,7 @@ uUE
 acm
 acm
 mlQ
-ovZ
+cOY
 gVU
 gVU
 mlQ
@@ -124430,7 +124467,7 @@ yam
 mlQ
 mlQ
 gic
-hQt
+xBf
 gic
 mlQ
 mlQ

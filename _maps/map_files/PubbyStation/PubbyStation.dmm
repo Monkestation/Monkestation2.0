@@ -554,7 +554,7 @@
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/turret_protected/ai_sat_ext_ap)
 "acT" = (
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
 "acU" = (
 /turf/closed/wall/r_wall,
@@ -861,7 +861,7 @@
 /area/station/security/lockers)
 "adV" = (
 /obj/machinery/camera/directional/north{
-	c_tag = "MiniSat Bridge Starboard Fore";
+	c_tag = "MiniSat Bridge East";
 	network = list("minisat")
 	},
 /obj/machinery/light/small/directional/north,
@@ -877,7 +877,7 @@
 "aea" = (
 /obj/machinery/light/small/directional/north,
 /obj/machinery/camera/directional/north{
-	c_tag = "MiniSat Bridge Starboard Fore";
+	c_tag = "MiniSat Bridge West";
 	network = list("minisat")
 	},
 /turf/open/floor/plating/airless,
@@ -23757,7 +23757,8 @@
 /area/station/maintenance/department/engine)
 "bXe" = (
 /obj/machinery/camera/preset/ordnance{
-	dir = 5
+	dir = 5;
+	c_tag = "Bomb Testing Site - Deep"
 	},
 /turf/open/misc/asteroid/airless,
 /area/centcom/asteroid/nearstation/bomb_site)
@@ -23948,15 +23949,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/service/chapel/asteroid/monastery)
-"bXO" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/camera/directional/west{
-	c_tag = "Drone Bay Ext."
-	},
-/turf/open/floor/plating,
-/area/station/cargo/drone_bay)
 "bXU" = (
 /obj/effect/spawner/random/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -28166,7 +28158,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "cxM" = (
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/service/library/lounge)
 "cxX" = (
@@ -30958,7 +30950,7 @@
 	id = "shitbreaker"
 	},
 /obj/structure/window/spawner/directional/south,
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "eyd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -35806,7 +35798,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "iyI" = (
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/directional/east{
+	c_tag = "Cargo Bay Shuttle Airlock"
+	},
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/closet/emcloset,
 /turf/open/floor/iron,
@@ -38287,7 +38281,7 @@
 /obj/machinery/conveyor{
 	id = "shitbreaker"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "kHr" = (
 /obj/machinery/light/small/directional/south,
@@ -43390,6 +43384,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
+"oRU" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/camera/directional/north{
+	c_tag = "Drone Bay Ext."
+	},
+/turf/open/floor/plating,
+/area/station/cargo/drone_bay)
 "oRX" = (
 /obj/structure/closet,
 /turf/open/floor/plating,
@@ -45536,7 +45539,7 @@
 	id = "shitbreaker"
 	},
 /obj/structure/window/spawner/directional/south,
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "qAQ" = (
 /obj/structure/cable,
@@ -46695,7 +46698,7 @@
 	id = "shitbreaker"
 	},
 /obj/machinery/shipbreaker,
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "rvA" = (
 /obj/effect/landmark/start/hangover,
@@ -47072,7 +47075,7 @@
 	dheight = 4;
 	dwidth = 4;
 	height = 9;
-	name = "aux base zone";
+	name = "Aux Base Zone";
 	roundstart_template = /datum/map_template/shuttle/aux_base/small;
 	shuttle_id = "aux_base_zone";
 	width = 9
@@ -48723,7 +48726,7 @@
 	dir = 8
 	},
 /obj/structure/cable/layer1,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
 "sZb" = (
 /obj/effect/turf_decal/tile/brown{
@@ -51078,7 +51081,7 @@
 	id = "shitbreaker"
 	},
 /obj/structure/window/spawner/directional/south,
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "uEY" = (
 /obj/effect/turf_decal/tile/blue{
@@ -52073,11 +52076,8 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/machinery/camera/directional/east{
-	c_tag = "Prison Workshop";
-	network = list("ss13","prison")
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/grass,
 /area/station/security/bitden)
 "vuQ" = (
@@ -53555,7 +53555,7 @@
 	dir = 6;
 	id = "shitbreaker"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "wza" = (
 /turf/open/floor/engine,
@@ -55052,7 +55052,7 @@
 	dir = 4
 	},
 /obj/machinery/camera/directional/west{
-	c_tag = "Drone Bay Ext."
+	c_tag = "Cargo Bay Main Airlock"
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
@@ -101714,8 +101714,8 @@ aFi
 env
 odG
 aEj
+oRU
 wmE
-bXO
 ofR
 qfa
 sZh

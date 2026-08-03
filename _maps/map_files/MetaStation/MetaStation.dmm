@@ -5669,9 +5669,7 @@
 	},
 /area/station/science/ordnance/bomb)
 "bXT" = (
-/obj/machinery/camera/autoname{
-	dir = 5
-	},
+/obj/machinery/camera/autoname,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -10458,7 +10456,6 @@
 /obj/effect/turf_decal/trimline/dark_green/corner{
 	dir = 4
 	},
-/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pathology)
 "dOw" = (
@@ -22005,7 +22002,9 @@
 /area/station/command/bridge)
 "hQA" = (
 /obj/structure/lattice,
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/directional/north{
+	c_tag = "Atmospherics - Gas tanks #2"
+	},
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1
 	},
@@ -24672,7 +24671,7 @@
 "iJt" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/camera/directional/east{
-	c_tag = "Science Ordnance Test Lab";
+	c_tag = "Science Ordnance Test Lab #2";
 	network = list("ss13","rd")
 	},
 /obj/machinery/light/directional/east,
@@ -44966,7 +44965,7 @@
 "pzv" = (
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/camera/directional/south{
-	c_tag = "Atmospherics - Central Aft"
+	c_tag = "Atmospherics - Project Room"
 	},
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
@@ -45391,16 +45390,15 @@
 "pHj" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/turf_decal/bot,
-/obj/machinery/camera{
-	c_tag = "Engineering - Foyer - Starboard";
-	dir = 9
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
+	},
+/obj/machinery/camera/directional/north{
+	c_tag = "Engineering - Foyer - Starboard"
 	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
@@ -46215,7 +46213,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/machinery/camera/directional/south{
+/obj/machinery/camera/autoname/directional/south{
 	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
@@ -47479,7 +47477,9 @@
 /area/station/science/xenobiology)
 "qqF" = (
 /obj/structure/lattice,
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/directional/north{
+	c_tag = "Atmospherics - Gas tanks #3"
+	},
 /turf/open/space,
 /area/space/nearstation)
 "qrg" = (
@@ -50057,6 +50057,7 @@
 /obj/effect/turf_decal/trimline/dark_green/line{
 	dir = 6
 	},
+/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pathology)
 "rmF" = (
@@ -61544,9 +61545,7 @@
 /area/station/engineering/main)
 "vly" = (
 /obj/item/target/alien/anchored,
-/obj/machinery/camera/preset/ordnance{
-	dir = 5
-	},
+/obj/machinery/camera/preset/ordnance,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless{
 	luminosity = 2
@@ -63509,7 +63508,8 @@
 /obj/structure/table,
 /obj/effect/turf_decal/bot,
 /obj/machinery/camera/directional/west{
-	c_tag = "Science Ordnance Test Lab"
+	c_tag = "Science Ordnance Test Lab #1";
+	network = list("ss13","rd")
 	},
 /obj/item/assembly/prox_sensor{
 	pixel_y = 2
@@ -64084,10 +64084,9 @@
 /area/station/commons/locker)
 "weD" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/camera{
-	c_tag = "Xenobiology Lab - Pen #4";
-	dir = 6;
-	network = list("ss13","rd","xeno")
+/obj/machinery/camera/directional/east{
+	network = list("ss13","rd","xeno");
+	c_tag = "Xenobiology Lab - Pen #4"
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -65376,10 +65375,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/machinery/camera/directional/east{
-	c_tag = "Prison Workshop";
-	network = list("ss13","prison")
-	},
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/grass,
 /area/station/security/bitden)
 "wDk" = (
@@ -65603,7 +65599,9 @@
 "wId" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible,
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/directional/north{
+	c_tag = "Atmospherics - Gas tanks #1"
+	},
 /turf/open/space,
 /area/space/nearstation)
 "wIo" = (
@@ -69294,9 +69292,8 @@
 /obj/machinery/corral_corner{
 	mapping_id = "2"
 	},
-/obj/machinery/camera{
+/obj/machinery/camera/directional/south{
 	c_tag = "Xenobiology Lab - Pen #7";
-	dir = 5;
 	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/engine,
@@ -69512,7 +69509,7 @@
 /area/station/medical/medbay/central)
 "xYy" = (
 /obj/machinery/camera/directional/south{
-	c_tag = "Atmospherics - Central Aft"
+	c_tag = "Atmospherics - Mix Chamber"
 	},
 /turf/open/floor/engine/vacuum,
 /area/station/engineering/atmos)

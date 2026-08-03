@@ -2776,8 +2776,7 @@
 /area/station/engineering/break_room)
 "amB" = (
 /obj/machinery/camera/directional/east{
-	c_tag = "Hallway - Central Tram Platform South";
-	pixel_y = -23
+	c_tag = "Hallway - Central Tram Platform South"
 	},
 /obj/machinery/light/directional/east,
 /turf/open/floor/noslip/tram,
@@ -6471,17 +6470,16 @@
 /area/station/science/lower)
 "aVn" = (
 /obj/machinery/light/directional/north,
-/obj/machinery/camera/emp_proof{
-	c_tag = "Engineering - Atmospherics Distribution Loop";
-	dir = 9;
-	network = list("ss13","engineering")
-	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
 	name = "Air to Distro"
 	},
 /obj/structure/cable,
+/obj/machinery/camera/emp_proof/directional/north{
+	c_tag = "Engineering - Atmospherics Distribution Loop";
+	network = list("ss13","engineering")
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
 "aVD" = (
@@ -12941,11 +12939,6 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 8
 	},
-/obj/machinery/camera{
-	c_tag = "Medical - Central North-West";
-	dir = 10;
-	network = list("ss13","medbay")
-	},
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -12953,6 +12946,10 @@
 	},
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
+	},
+/obj/machinery/camera/directional/west{
+	c_tag = "Medical - Central North-West";
+	network = list("ss13","medbay")
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
@@ -14708,7 +14705,7 @@
 	dir = 4
 	},
 /obj/machinery/camera/directional/east{
-	c_tag = "Cargo - Mining North-East"
+	c_tag = "Cargo - Mining Dock"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
@@ -14825,7 +14822,7 @@
 	dir = 8
 	},
 /obj/machinery/camera/directional/west{
-	c_tag = "Security - Rec Room West";
+	c_tag = "Security - Gym West";
 	network = list("ss13","Security","prison")
 	},
 /turf/open/floor/iron,
@@ -23004,14 +23001,11 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "ggJ" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Science - Lower Hall North";
-	network = list("ss13","rd")
-	},
 /obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/stone,
 /area/station/smithing)
 "ggL" = (
@@ -36603,15 +36597,14 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 8
 	},
-/obj/machinery/camera{
-	c_tag = "Hallway - Port Tram Platform South-West";
-	dir = 10
-	},
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
+	},
+/obj/machinery/camera/directional/west{
+	c_tag = "Hallway - Port Tram Platform South-West"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
@@ -38614,7 +38607,7 @@
 	dir = 8
 	},
 /obj/machinery/camera/directional/east{
-	c_tag = "Civilian - Library East"
+	c_tag = "Civilian - Library Radio Station"
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -42501,8 +42494,7 @@
 /area/station/maintenance/disposal/incinerator)
 "mht" = (
 /obj/machinery/camera/directional/east{
-	c_tag = "Hallway - Starboard Tram Platform South";
-	pixel_y = -23
+	c_tag = "Hallway - Starboard Tram Platform South"
 	},
 /turf/open/floor/noslip,
 /area/station/hallway/primary/tram/right)
@@ -45551,11 +45543,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "nhf" = (
-/obj/machinery/camera{
-	c_tag = "Security - Rec Room East";
-	dir = 6;
-	network = list("ss13","Security","prison")
-	},
 /obj/machinery/light/neon_lining{
 	dir = 4
 	},
@@ -45563,6 +45550,10 @@
 	dir = 4
 	},
 /obj/vehicle/ridden/wheelchair,
+/obj/machinery/camera/directional/east{
+	network = list("ss13","Security","prison");
+	c_tag = "Security - Rec Room East"
+	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -52062,7 +52053,9 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
-/obj/machinery/camera/emp_proof/directional/west,
+/obj/machinery/camera/emp_proof/directional/west{
+	c_tag = "Engineering - Atmospherics West"
+	},
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -61871,7 +61864,7 @@
 	dir = 1
 	},
 /obj/machinery/camera/emp_proof/directional/south{
-	c_tag = "Engineering - Atmospherics South-East";
+	c_tag = "Engineering - Atmospherics SouthEast";
 	network = list("ss13","engineering")
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
@@ -62497,16 +62490,15 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 8
 	},
-/obj/machinery/camera{
-	c_tag = "Hallway - Starboard Tram Platform South-West";
-	dir = 10
-	},
 /obj/machinery/firealarm/directional/west,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
+	},
+/obj/machinery/camera/directional/west{
+	c_tag = "Hallway - Starboard Tram Platform South-West"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
@@ -64053,8 +64045,7 @@
 /area/station/maintenance/port/central)
 "sPf" = (
 /obj/machinery/camera/directional/east{
-	c_tag = "Hallway - Port Tram Platform South";
-	pixel_y = -23
+	c_tag = "Hallway - Port Tram Platform South"
 	},
 /turf/open/floor/noslip,
 /area/station/hallway/primary/tram/left)
@@ -65729,7 +65720,9 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
 	},
-/obj/machinery/camera/emp_proof/directional/north,
+/obj/machinery/camera/emp_proof/directional/north{
+	c_tag = "Engineering - Atmospherics Lesser North"
+	},
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -72270,13 +72263,12 @@
 /area/station/maintenance/department/cargo)
 "vlb" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
-/obj/machinery/camera{
-	c_tag = "Hallway - Port Tram Platform South-East";
-	dir = 6
-	},
 /obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
+	},
+/obj/machinery/camera/directional/east{
+	c_tag = "Hallway - Port Tram Platform South-East"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
@@ -72291,7 +72283,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/sign/clock/directional/north,
 /obj/machinery/camera/directional/north{
-	c_tag = "Medical - Security Checkpoint";
+	c_tag = "Science - Security Checkpoint";
 	network = list("ss13","rd","Security")
 	},
 /turf/open/floor/iron,
@@ -72729,9 +72721,8 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
-/obj/machinery/camera{
-	c_tag = "Security - Rec Room East";
-	dir = 6;
+/obj/machinery/camera/autoname/directional/east{
+	c_tag = "Security - Gym East";
 	network = list("ss13","Security","prison")
 	},
 /turf/open/floor/iron,
@@ -73575,7 +73566,9 @@
 	department = "Atmospherics";
 	name = "Atmospherics Requests Console"
 	},
-/obj/machinery/camera/emp_proof/directional/east,
+/obj/machinery/camera/emp_proof/directional/east{
+	c_tag = "Engineering - Atmospherics East"
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "vCt" = (
@@ -74366,7 +74359,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/camera/directional/east{
-	c_tag = "Cargo - Mining North-East"
+	c_tag = "Cargo - Mining Foundry"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -76307,16 +76300,15 @@
 /area/station/hallway/secondary/exit)
 "wuH" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
-/obj/machinery/camera{
-	c_tag = "Hallway - Central Tram Platform South-East";
-	dir = 6
-	},
 /obj/machinery/firealarm/directional/east,
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
+	},
+/obj/machinery/camera/autoname/directional/east{
+	c_tag = "Hallway - Central Tram Platform South-East"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
@@ -77505,10 +77497,6 @@
 /turf/open/floor/iron,
 /area/station/science/ordnance/testlab)
 "wMB" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Security - Rec Room West";
-	network = list("ss13","Security","prison")
-	},
 /obj/machinery/light/neon_lining{
 	dir = 8
 	},
@@ -77517,6 +77505,10 @@
 	},
 /obj/machinery/byteforge,
 /obj/effect/turf_decal/bot,
+/obj/machinery/camera/directional/west{
+	network = list("ss13","Security","prison");
+	c_tag = "Security - Rec Room West"
+	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
@@ -78100,7 +78092,9 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
 	dir = 4
 	},
-/obj/machinery/camera/emp_proof/directional/south,
+/obj/machinery/camera/emp_proof/directional/south{
+	c_tag = "Engineering - Atmospherics South"
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "wXP" = (
@@ -80944,13 +80938,12 @@
 /area/station/asteroid)
 "xWW" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/camera/emp_proof{
-	c_tag = "Engineering - Atmospherics Test Room";
-	dir = 9;
-	network = list("ss13","engineering")
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
+/obj/machinery/camera/emp_proof/directional/north{
+	c_tag = "Engineering - PTL Room";
+	network = list("ss13","engineering")
+	},
 /turf/open/floor/iron,
 /area/station/engineering)
 "xWX" = (

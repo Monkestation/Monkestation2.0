@@ -5131,7 +5131,7 @@
 /obj/machinery/airalarm/directional/west,
 /obj/structure/cable/layer3,
 /obj/effect/mapping_helpers/airalarm/tlv_no_checks,
-/turf/open/floor/engine,
+/turf/open/floor/engine/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
 "bGu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -8431,8 +8431,7 @@
 "cJW" = (
 /obj/machinery/light/small/directional/south,
 /obj/machinery/camera/directional/south{
-	c_tag = "Security - Visitation, Visitor Side";
-	name = "security camera"
+	c_tag = "Security - Visitation, Visitor Side"
 	},
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -10713,7 +10712,6 @@
 	},
 /obj/machinery/camera/directional/east{
 	c_tag = "Security - Interrogation";
-	name = "security camera";
 	network = list("ss13","interrogation")
 	},
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -19422,7 +19420,7 @@
 	name = "AI Chamber Lockdown";
 	id = "AI Chamber entrance shutters"
 	},
-/turf/open/floor/circuit/green,
+/turf/open/floor/circuit/green/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
 "gqf" = (
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
@@ -33397,16 +33395,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
-"kMY" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/cable/layer3,
-/turf/open/floor/engine,
-/area/station/ai_monitored/turret_protected/ai)
 "kNe" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -42686,7 +42674,7 @@
 /obj/machinery/porta_turret/ai{
 	dir = 4
 	},
-/turf/open/floor/iron/dark/smooth_large,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
 "nKe" = (
 /obj/effect/turf_decal/box,
@@ -44785,10 +44773,7 @@
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 8
 	},
-/obj/machinery/camera/directional/east{
-	c_tag = "Security - Prison, Access";
-	name = "security camera"
-	},
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "ouj" = (
@@ -118690,7 +118675,7 @@ oQW
 fVR
 keA
 bJM
-kMY
+keA
 bGn
 wLQ
 nXR

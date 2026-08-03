@@ -2394,9 +2394,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/camera/directional/north{
-	c_tag = "Security Office Lockers"
-	},
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "aJO" = (
@@ -3422,15 +3420,14 @@
 /area/station/science/ordnance/bomb)
 "bcy" = (
 /obj/machinery/airalarm/directional/west,
-/obj/machinery/camera/directional/west{
-	c_tag = "Medbay Storage";
-	name = "medical camera";
-	network = list("ss13","medical")
-	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
 /obj/structure/sink/directional/east,
+/obj/machinery/camera/autoname/directional/west{
+	name = "medical camera";
+	network = list("ss13","medical")
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/treatment_center)
 "bcE" = (
@@ -5566,14 +5563,13 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/camera/directional/west{
-	c_tag = "Virology Monkey Pen";
-	name = "medical camera";
-	network = list("ss13","medical")
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/status_display/evac/directional/west,
+/obj/machinery/camera/autoname/directional/west{
+	name = "medical camera";
+	network = list("ss13","medical")
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/medbay/central)
 "bOm" = (
@@ -5690,11 +5686,6 @@
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "bPL" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Medbay Central";
-	name = "medical camera";
-	network = list("ss13","medical")
-	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -5702,6 +5693,10 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
+	},
+/obj/machinery/camera/autoname/directional/north{
+	network = list("ss13","medical");
+	name = "medical camera"
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/medbay/central)
@@ -6978,7 +6973,6 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/camera/directional/south{
 	c_tag = "Security - Interrogation";
-	dir = 5;
 	network = list("ss13","interrogation")
 	},
 /turf/open/floor/iron/dark/textured_large,
@@ -11653,12 +11647,11 @@
 	dir = 1
 	},
 /obj/machinery/vending/medical,
-/obj/machinery/camera/directional/north{
-	c_tag = "Medbay Central";
-	name = "medical camera";
-	network = list("ss13","medical")
-	},
 /obj/machinery/light_switch/directional/north,
+/obj/machinery/camera/autoname/directional/north{
+	network = list("ss13","medical");
+	name = "medical camera"
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/cryo)
 "dHq" = (
@@ -15705,7 +15698,7 @@
 /area/station/science/ordnance)
 "eWT" = (
 /obj/machinery/camera/directional/west{
-	c_tag = "Xenobiology Cell 2";
+	c_tag = "Xenobiology Cell 3";
 	name = "xenobiology camera";
 	network = list("ss13","rd","xeno")
 	},
@@ -17656,9 +17649,7 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
 	},
-/obj/machinery/camera/directional/east{
-	c_tag = "Evidence Closet"
-	},
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "fAA" = (
@@ -24061,9 +24052,8 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "hyg" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Armoury External";
-	dir = 8
+/obj/machinery/camera/directional/west{
+	c_tag = "Armoury External #2"
 	},
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
@@ -24174,7 +24164,7 @@
 "hAS" = (
 /obj/machinery/light/small/directional/west,
 /obj/machinery/camera/directional/west{
-	c_tag = "Xenobiology Cell 2";
+	c_tag = "Xenobiology Cell 1";
 	name = "xenobiology camera";
 	network = list("ss13","rd","xeno")
 	},
@@ -25514,12 +25504,6 @@
 /turf/closed/wall,
 /area/station/medical/abandoned)
 "hRv" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Xenobiology Cell 2";
-	name = "xenobiology camera";
-	network = list("ss13","rd","xeno");
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
@@ -25527,6 +25511,10 @@
 	dir = 4
 	},
 /obj/machinery/vending/wardrobe/xeno_wardrobe,
+/obj/machinery/camera/autoname/directional/north{
+	name = "xenobiology camera";
+	network = list("ss13","rd","xeno")
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology)
 "hRB" = (
@@ -29136,17 +29124,15 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 5
 	},
-/obj/machinery/camera/directional/west{
-	c_tag = "Xenobiology Cell 2";
-	name = "xenobiology camera";
-	network = list("ss13","rd","xeno");
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
+	},
+/obj/machinery/camera/autoname/directional/north{
+	name = "xenobiology camera";
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology)
@@ -29737,7 +29723,7 @@
 /area/space/nearstation)
 "jbV" = (
 /obj/machinery/camera/directional/north{
-	c_tag = "Armoury External"
+	c_tag = "Armoury External #1"
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -32467,13 +32453,12 @@
 	id = "brigfrontdoor";
 	req_access = list("brig")
 	},
-/obj/machinery/camera/directional/east{
-	c_tag = "Aft Hallway Transfer Centre Doors";
-	name = "aft camera"
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
+	},
+/obj/machinery/camera/directional/east{
+	c_tag = "Brig Warden's Office"
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)
@@ -34232,12 +34217,11 @@
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
-/obj/machinery/camera/directional/west{
-	c_tag = "Ordnance Mixing Lab";
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/camera/autoname/directional/west{
 	name = "science camera";
 	network = list("ss13","rd")
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/explab)
 "kBU" = (
@@ -35875,6 +35859,10 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/bot,
+/obj/machinery/camera/directional/west{
+	c_tag = "Hydroponcis Fore";
+	name = "hydroponics camera"
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "lbo" = (
@@ -38868,11 +38856,10 @@
 /turf/closed/wall,
 /area/station/science/robotics/lab)
 "lYJ" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Xenobiology Cell 2";
+/obj/machinery/camera/directional/east{
 	name = "xenobiology camera";
 	network = list("ss13","rd","xeno");
-	dir = 4
+	c_tag = "Xenobiology Cell 6"
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -46942,10 +46929,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/camera/directional/west{
-	c_tag = "Hydroponcis Fore";
-	name = "hydroponics camera"
-	},
 /obj/effect/turf_decal/bot,
 /obj/structure/bookcase/manuals/botany,
 /turf/open/floor/iron/dark,
@@ -49851,14 +49834,13 @@
 /turf/open/floor/engine,
 /area/station/engineering/gravity_generator)
 "pAm" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Prison Recreation";
-	network = list("ss13","prison")
-	},
 /obj/machinery/light/small/red/dim/directional/west,
 /obj/structure/kitchenspike,
 /obj/effect/mob_spawn/corpse/human/damaged,
 /obj/effect/turf_decal/bot/right,
+/obj/machinery/camera/autoname/directional/west{
+	network = list("ss13","prison")
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/bitden)
 "pAq" = (
@@ -51652,8 +51634,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/machinery/camera/directional/south{
-	c_tag = "Recreation Fitness Ring";
+/obj/machinery/camera/autoname/directional/south{
 	name = "recreation camera"
 	},
 /turf/open/floor/iron,
@@ -57477,11 +57458,6 @@
 /turf/open/floor/iron/dark/corner,
 /area/station/hallway/primary/starboard)
 "rUx" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Medbay Central";
-	name = "medical camera";
-	network = list("ss13","medical")
-	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
@@ -57494,6 +57470,10 @@
 /obj/machinery/newscaster/directional/north,
 /obj/item/kirbyplants/random,
 /obj/machinery/light/directional/east,
+/obj/machinery/camera/autoname/directional/north{
+	network = list("ss13","medical");
+	name = "medical camera"
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/treatment_center)
 "rUD" = (
@@ -65051,6 +65031,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
+"urz" = (
+/obj/machinery/light/small/directional/east,
+/obj/machinery/camera/directional/east{
+	name = "xenobiology camera";
+	network = list("ss13","rd","xeno");
+	c_tag = "Xenobiology Cell 4"
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "urE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area{
@@ -66074,12 +66063,11 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/machinery/camera/directional/north{
-	c_tag = "Medbay Central";
-	name = "medical camera";
-	network = list("ss13","medical")
-	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/machinery/camera/autoname/directional/north{
+	network = list("ss13","medical");
+	name = "medical camera"
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/storage)
 "uIs" = (
@@ -67842,7 +67830,7 @@
 /area/station/security/evidence)
 "vnd" = (
 /obj/machinery/camera/directional/west{
-	c_tag = "Xenobiology Cell 2";
+	c_tag = "Xenobiology Cell 5";
 	name = "xenobiology camera";
 	network = list("ss13","rd","xeno")
 	},
@@ -68095,11 +68083,6 @@
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "vqT" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Xenobiology Cell 5";
-	name = "xenobiology camera";
-	network = list("ss13","rd","xeno")
-	},
 /obj/machinery/light/small/directional/west,
 /obj/structure/table/reinforced/plasmarglass,
 /obj/item/screwdriver,
@@ -68587,14 +68570,12 @@
 	},
 /area/station/hallway/primary/fore)
 "vxd" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Brig Warden's Office"
-	},
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "vxf" = (
@@ -75097,16 +75078,15 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/camera/directional/north{
-	c_tag = "Medbay Central";
-	name = "medical camera";
-	network = list("ss13","medical")
-	},
 /obj/effect/turf_decal/siding/blue{
 	dir = 9
 	},
 /obj/machinery/defibrillator_mount/directional/west,
 /obj/effect/turf_decal/bot,
+/obj/machinery/camera/autoname/directional/north{
+	network = list("ss13","medical");
+	name = "medical camera"
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "xva" = (
@@ -77409,25 +77389,23 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/camera/directional/west{
-	c_tag = "Virology Monkey Pen";
-	name = "medical camera";
-	network = list("ss13","medical")
-	},
 /obj/machinery/status_display/evac/directional/west,
 /obj/effect/turf_decal/siding/blue{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/camera/autoname/directional/west{
+	name = "medical camera";
+	network = list("ss13","medical")
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "yhM" = (
 /obj/machinery/light/small/directional/east,
-/obj/machinery/camera/directional/west{
-	c_tag = "Xenobiology Cell 2";
+/obj/machinery/camera/directional/east{
 	name = "xenobiology camera";
 	network = list("ss13","rd","xeno");
-	dir = 4
+	c_tag = "Xenobiology Cell 2"
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -116916,7 +116894,7 @@ qmW
 qmW
 pgU
 qmW
-yhM
+urz
 qmW
 pgU
 nHC

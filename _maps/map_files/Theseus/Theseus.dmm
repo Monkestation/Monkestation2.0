@@ -1288,9 +1288,7 @@
 /turf/open/floor/glass/reinforced,
 /area/station/service/hydroponics/garden)
 "aum" = (
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 8
 	},
@@ -1787,9 +1785,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "aEC" = (
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
 "aED" = (
@@ -2540,9 +2536,7 @@
 /obj/machinery/airalarm/directional/west,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/carpet/red,
 /area/station/security/warden)
 "aMI" = (
@@ -2841,7 +2835,7 @@
 /obj/item/bedsheet/black,
 /obj/effect/landmark/start/prisoner,
 /obj/effect/spawner/random/special_lighter,
-/obj/machinery/camera/directional/north{
+/obj/machinery/camera/autoname/directional/north{
 	network = list("ss13","prison")
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -3025,9 +3019,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "aTD" = (
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/effect/turf_decal/trimline/blue/filled/end{
 	dir = 8
 	},
@@ -3549,9 +3541,7 @@
 /turf/open/floor/glass/reinforced,
 /area/station/engineering/hallway)
 "bci" = (
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "bcj" = (
@@ -5071,11 +5061,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/maintenance/port/lesser)
-"bBD" = (
-/obj/effect/turf_decal/tile/blue/half,
-/obj/machinery/camera/directional/south,
-/turf/open/floor/iron/white/textured_edge,
-/area/station/medical/medbay/central)
 "bBG" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer4,
@@ -5905,9 +5890,7 @@
 /obj/item/pen{
 	pixel_y = 7
 	},
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/structure/sign/poster/official/twelve_gauge/directional/west,
 /turf/open/floor/carpet/red,
 /area/station/security/checkpoint/engineering)
@@ -7892,9 +7875,7 @@
 /area/station/cargo/miningfoundry)
 "ctg" = (
 /obj/item/target/alien/anchored,
-/obj/machinery/camera/preset/ordnance{
-	dir = 5
-	},
+/obj/machinery/camera/preset/ordnance,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless{
 	luminosity = 2
@@ -10773,9 +10754,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/storage)
 "dmS" = (
@@ -11654,9 +11633,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/structure/closet/emcloset/wall/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron/white/textured,
@@ -14067,12 +14044,10 @@
 /area/station/service/library/artgallery)
 "egf" = (
 /obj/structure/closet/emcloset,
-/obj/machinery/camera/directional/south{
-	c_tag = "Auxiliary Base Construction"
-	},
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
 "egh" = (
@@ -14250,9 +14225,7 @@
 /area/space/nearstation)
 "ejR" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/machinery/modular_computer/preset/civilian{
 	dir = 4
 	},
@@ -14318,7 +14291,7 @@
 /obj/effect/spawner/random/entertainment/gambling,
 /obj/effect/spawner/random/entertainment/cigar,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/camera/directional/north{
+/obj/machinery/camera/autoname/directional/north{
 	network = list("ss13","prison")
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -15996,9 +15969,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/gravity_generator)
 "eNC" = (
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos)
 "eNE" = (
@@ -17427,7 +17398,7 @@
 "fih" = (
 /obj/structure/chair/sofa/left/brown,
 /obj/machinery/camera/directional/east{
-	c_tag = "Lawyer's Office"
+	c_tag = "Lawyer's Office Lobby"
 	},
 /obj/effect/landmark/start/hangover,
 /obj/effect/landmark/start/assistant,
@@ -17521,7 +17492,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/library/upper)
 "fkm" = (
-/obj/machinery/camera/directional/west{
+/obj/machinery/camera/autoname/directional/west{
 	network = list("ss13","prison")
 	},
 /turf/open/floor/iron/cafeteria,
@@ -18069,9 +18040,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "fsQ" = (
@@ -18164,9 +18133,7 @@
 	},
 /obj/machinery/vending/autodrobe,
 /obj/effect/turf_decal/bot,
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/dorms/laundry)
 "fuH" = (
@@ -18597,7 +18564,7 @@
 /obj/effect/turf_decal/trimline/dark/filled/line{
 	dir = 4
 	},
-/obj/machinery/camera/directional/east{
+/obj/machinery/camera/autoname/directional/east{
 	network = list("ss13","prison")
 	},
 /turf/open/floor/iron,
@@ -19461,7 +19428,9 @@
 /turf/open/floor/iron/white/textured,
 /area/station/medical/surgery/theatre)
 "fNA" = (
-/obj/machinery/camera/autoname/directional/east,
+/obj/machinery/camera/directional/east{
+	c_tag = "Command - AI external West"
+	},
 /turf/open/space/basic,
 /area/space)
 "fNK" = (
@@ -20559,7 +20528,9 @@
 /area/station/maintenance/port/lesser)
 "geZ" = (
 /obj/structure/lattice/catwalk,
-/obj/machinery/camera/autoname/directional/east,
+/obj/machinery/camera/directional/east{
+	c_tag = "Science - Asteroid Magnet Walkway"
+	},
 /turf/open/space/basic,
 /area/space/nearstation)
 "gfd" = (
@@ -25438,9 +25409,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/machinery/light/small/directional/west,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/engine,
@@ -26459,7 +26428,7 @@
 /obj/effect/turf_decal/trimline/yellow/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/warning/electric_shock/directional/west,
-/obj/machinery/camera/directional/west{
+/obj/machinery/camera/autoname/directional/west{
 	network = list("ss13","prison")
 	},
 /obj/structure/cable,
@@ -26785,12 +26754,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
-"hUF" = (
-/obj/machinery/door/airlock/mining/glass{
-	name = "Boulder Processing"
-	},
-/turf/open/space/basic,
-/area/space)
 "hUJ" = (
 /obj/structure/table/wood,
 /obj/item/lipstick/random{
@@ -28920,9 +28883,7 @@
 /area/station/service/chapel)
 "izb" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "izv" = (
@@ -33533,9 +33494,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "jRU" = (
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos)
 "jSb" = (
@@ -33557,9 +33516,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/upper)
 "jSh" = (
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
@@ -34142,7 +34099,7 @@
 /obj/effect/turf_decal/trimline/darkest_green/filled,
 /obj/effect/turf_decal/trimline/darkest_green/filled,
 /obj/structure/cable,
-/obj/machinery/camera/directional/east{
+/obj/machinery/camera/autoname/directional/east{
 	network = list("ss13","prison")
 	},
 /obj/effect/turf_decal/bot,
@@ -35016,8 +34973,10 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/funeral)
 "knB" = (
-/obj/machinery/camera/autoname/directional/north,
 /obj/structure/lattice,
+/obj/machinery/camera/directional/north{
+	c_tag = "Mining Shuttle External"
+	},
 /turf/open/space/basic,
 /area/space/nearstation)
 "knC" = (
@@ -35708,9 +35667,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/machinery/airalarm/directional/west,
 /obj/effect/turf_decal/bot,
 /obj/machinery/modular_computer/preset/engineering{
@@ -36717,6 +36674,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/construction)
+"kMp" = (
+/obj/machinery/camera/directional/east{
+	c_tag = "Security - Armory External West"
+	},
+/turf/open/space/basic,
+/area/space)
 "kMy" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
@@ -37015,7 +36978,7 @@
 	dir = 4
 	},
 /obj/structure/railing,
-/obj/machinery/camera/directional/north{
+/obj/machinery/camera/autoname/directional/north{
 	network = list("ss13","prison")
 	},
 /turf/open/ballpit,
@@ -37266,7 +37229,9 @@
 /area/station/service/library)
 "kUi" = (
 /obj/machinery/ore_silo,
-/obj/machinery/camera/motion/directional/east,
+/obj/machinery/camera/motion/directional/east{
+	c_tag = "Nuke Storage"
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "kUk" = (
@@ -40523,7 +40488,7 @@
 /turf/open/floor/circuit,
 /area/station/science/robotics/mechbay)
 "lMQ" = (
-/obj/machinery/camera/directional/south{
+/obj/machinery/camera/autoname/directional/south{
 	network = list("ss13","prison")
 	},
 /obj/effect/turf_decal/trimline/neutral/line,
@@ -44187,7 +44152,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "mRZ" = (
-/obj/machinery/camera/autoname/directional/south,
+/obj/machinery/camera/directional/south{
+	c_tag = "Command - AI external North"
+	},
 /turf/open/space/basic,
 /area/space)
 "mSi" = (
@@ -45913,9 +45880,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/central)
 "nsi" = (
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos)
 "nsj" = (
@@ -47201,7 +47166,7 @@
 /area/station/science/robotics/lab)
 "nMd" = (
 /obj/structure/cable,
-/obj/machinery/camera/directional/south{
+/obj/machinery/camera/autoname/directional/south{
 	network = list("ss13","prison")
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -47262,9 +47227,7 @@
 /area/station/security/execution/education)
 "nNk" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "nNA" = (
@@ -47872,9 +47835,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "nXp" = (
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/machinery/firealarm/directional/west{
 	pixel_y = 3
 	},
@@ -47885,9 +47846,7 @@
 /area/station/hallway/primary/central/fore)
 "nXy" = (
 /obj/machinery/firealarm/directional/west,
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -48094,9 +48053,6 @@
 /obj/structure/sign/warning/electric_shock/directional/west,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
-	},
-/obj/machinery/camera/directional/north{
-	network = list("ss13","prison")
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/work)
@@ -48557,7 +48513,7 @@
 /obj/effect/turf_decal/tile/red/half,
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/camera/directional/north{
+/obj/machinery/camera/autoname/directional/north{
 	network = list("ss13","prison")
 	},
 /obj/structure/cable,
@@ -50331,9 +50287,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "oGX" = (
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/wood,
@@ -53257,10 +53211,10 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "pEM" = (
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
 /obj/structure/lattice,
+/obj/machinery/camera/directional/west{
+	c_tag = "Command - AI external East"
+	},
 /turf/open/space/basic,
 /area/space/nearstation)
 "pEO" = (
@@ -56195,7 +56149,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/item/radio/intercom/directional/north,
-/obj/machinery/camera/directional/west{
+/obj/machinery/camera/autoname/directional/west{
 	network = list("ss13","prison")
 	},
 /turf/open/floor/iron,
@@ -56326,9 +56280,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/machinery/rnd/production/techfab/department/cargo,
 /obj/effect/turf_decal/bot,
 /obj/structure/disposalpipe/segment,
@@ -57079,9 +57031,7 @@
 /area/station/engineering/hallway)
 "qFA" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/radio/intercom/directional/west,
@@ -57625,9 +57575,7 @@
 /turf/open/floor/grass,
 /area/station/hallway/primary/central)
 "qOb" = (
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/darkest_green/half/contrasted{
@@ -58297,7 +58245,7 @@
 /obj/effect/landmark/start/prisoner,
 /obj/effect/spawner/random/clothing/bowler_or_that,
 /obj/machinery/light/directional/north,
-/obj/machinery/camera/directional/north{
+/obj/machinery/camera/autoname/directional/north{
 	network = list("ss13","prison")
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -58518,9 +58466,7 @@
 "rbi" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/turf_decal/bot,
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
 "rbm" = (
@@ -61019,9 +60965,7 @@
 /turf/open/floor/iron,
 /area/station/service/kitchen/kitchen_backroom)
 "rJK" = (
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos)
 "rJS" = (
@@ -62209,7 +62153,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/camera/directional/west{
+/obj/machinery/camera/autoname/directional/west{
 	network = list("ss13","prison")
 	},
 /obj/structure/fermenting_barrel,
@@ -63626,7 +63570,7 @@
 /obj/effect/landmark/start/prisoner,
 /obj/item/toy/figure/syndie,
 /obj/structure/sign/poster/official/random/directional/north,
-/obj/machinery/camera/directional/north{
+/obj/machinery/camera/autoname/directional/north{
 	network = list("ss13","prison")
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -64185,9 +64129,7 @@
 "sHf" = (
 /obj/effect/spawner/random/trash/food_packaging,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
 "sHz" = (
@@ -64323,7 +64265,9 @@
 /obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/departments/vault/directional/east,
-/obj/machinery/camera/motion/directional/east,
+/obj/machinery/camera/motion/directional/east{
+	c_tag = "Maintnance Central"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "sIZ" = (
@@ -64378,9 +64322,7 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/solars/port/aft)
 "sJx" = (
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
 "sJJ" = (
@@ -64630,7 +64572,7 @@
 /mob/living/carbon/human/species/monkey,
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/machinery/camera/directional/north{
-	c_tag = "Virology Isolation B";
+	c_tag = "Virology Monkey Pen";
 	network = list("ss13","medbay")
 	},
 /obj/structure/flora/bush/leafy,
@@ -65231,7 +65173,9 @@
 /area/station/service/library)
 "sYg" = (
 /obj/structure/lattice,
-/obj/machinery/camera/autoname/directional/east,
+/obj/machinery/camera/directional/east{
+	c_tag = "Common - Public Mining Shuttle Walkway South"
+	},
 /turf/open/space/basic,
 /area/space/nearstation)
 "sYy" = (
@@ -66577,7 +66521,7 @@
 "tpZ" = (
 /obj/structure/table/reinforced/rglass,
 /obj/machinery/camera/directional/north{
-	c_tag = "Virology Isolation B";
+	c_tag = "Virology Isolation A";
 	network = list("ss13","medbay")
 	},
 /obj/item/folder/white,
@@ -66697,7 +66641,7 @@
 /area/station/security/interrogation)
 "trk" = (
 /obj/machinery/camera/directional/west{
-	c_tag = "Security - Armory External";
+	c_tag = "Security - Armory External East";
 	dir = 10
 	},
 /turf/open/space/basic,
@@ -66828,7 +66772,9 @@
 "tsO" = (
 /obj/structure/lattice,
 /obj/machinery/light/small/directional/east,
-/obj/machinery/camera/autoname/directional/east,
+/obj/machinery/camera/directional/east{
+	c_tag = "Common - Public Mining Shuttle Walkway North"
+	},
 /turf/open/space/basic,
 /area/space/nearstation)
 "tsQ" = (
@@ -70420,9 +70366,7 @@
 /obj/structure/window/reinforced/spawner,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/bot,
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/trimline/dark/line{
@@ -70490,14 +70434,14 @@
 /obj/effect/spawner/random/contraband/prison,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/cable,
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /obj/item/clothing/shoes/sneakers/orange,
 /obj/item/clothing/shoes/sneakers/orange,
+/obj/machinery/camera/autoname/directional/west{
+	network = list("ss13","prison")
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/work)
 "uvi" = (
@@ -72789,9 +72733,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/machinery/requests_console/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
@@ -74727,9 +74669,7 @@
 /area/station/engineering/atmos)
 "vDW" = (
 /obj/structure/closet/secure_closet/personal,
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/commons/dorms)
 "vDZ" = (
@@ -74777,9 +74717,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
 "vEX" = (
-/obj/machinery/camera/directional/west{
-	network = list("theater")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/status_display/evac/directional/west,
@@ -77762,7 +77700,7 @@
 "wCs" = (
 /obj/structure/toilet/greyscale,
 /obj/structure/sign/poster/official/random/directional/north,
-/obj/machinery/camera/directional/north{
+/obj/machinery/camera/autoname/directional/north{
 	network = list("ss13","prison")
 	},
 /obj/effect/turf_decal/bot,
@@ -79492,7 +79430,9 @@
 /turf/closed/wall,
 /area/station/science/cytology)
 "wXW" = (
-/obj/machinery/camera/autoname/directional/west,
+/obj/machinery/camera/directional/west{
+	c_tag = "Command - AI external Upload"
+	},
 /turf/open/space/basic,
 /area/space)
 "wXX" = (
@@ -80556,7 +80496,7 @@
 /area/station/maintenance/starboard/upper)
 "xoA" = (
 /obj/machinery/firealarm/directional/east,
-/obj/machinery/camera/directional/east{
+/obj/machinery/camera/autoname/directional/east{
 	network = list("minisat")
 	},
 /obj/machinery/light/directional/north,
@@ -106842,7 +106782,7 @@ nhC
 lXw
 nhC
 nhC
-fNA
+kMp
 lXw
 vXD
 vXD
@@ -112353,7 +112293,7 @@ rxb
 hTa
 rEc
 clI
-bBD
+ugo
 oMg
 oMg
 qsO
@@ -128288,7 +128228,7 @@ gVf
 saB
 jCp
 nhC
-hUF
+nhC
 nhC
 nhC
 nhC

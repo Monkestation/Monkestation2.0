@@ -8053,9 +8053,8 @@
 /obj/machinery/corral_corner{
 	mapping_id = "2"
 	},
-/obj/machinery/camera{
+/obj/machinery/camera/directional/south{
 	c_tag = "Xenobiology Lab - Pen #7";
-	dir = 5;
 	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/engine,
@@ -10740,7 +10739,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/graveyard/tunnels/mobspawngen)
 "egC" = (
 /obj/structure/closet,
@@ -14634,9 +14633,8 @@
 /area/station/commons/dorms)
 "fLy" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/east{
 	c_tag = "Xenobiology Lab - Pen #4";
-	dir = 6;
 	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/engine,
@@ -24872,7 +24870,7 @@
 /area/station/solars/port/fore)
 "jHC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/white/telecomms,
 /area/station/science/server)
 "jHL" = (
 /obj/structure/sink/kitchen/directional/west,
@@ -25079,10 +25077,7 @@
 	dir = 9
 	},
 /obj/structure/cable,
-/obj/machinery/camera/directional/east{
-	c_tag = "Virology Airlock";
-	network = list("ss13","medbay")
-	},
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron,
 /area/graveyard/bunker/medical)
 "jOx" = (
@@ -25165,7 +25160,7 @@
 	id = "AI"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
 "jPT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -30872,6 +30867,12 @@
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/station/maintenance/fore/greater)
+"mah" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/sign/poster/official/random/directional/west,
+/obj/machinery/camera/autoname/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/primary/upper)
 "mai" = (
 /obj/effect/turf_decal/tile/dark_red{
 	dir = 1
@@ -32963,7 +32964,7 @@
 /area/graveyard/bunker/engineering)
 "mOK" = (
 /obj/machinery/ai/data_core,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/white/telecomms,
 /area/station/science/server)
 "mOX" = (
 /obj/structure/cable,
@@ -47459,9 +47460,7 @@
 /obj/effect/turf_decal/tile/dark_red/anticorner/contrasted,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
-/obj/machinery/camera/autoname/directional/south{
-	dir = 5
-	},
+/obj/machinery/camera/autoname/directional/south,
 /obj/machinery/light_switch/directional/east{
 	pixel_x = 31;
 	pixel_y = -9
@@ -62108,7 +62107,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "ygm" = (
-/obj/machinery/camera/autoname/directional/west,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
@@ -169468,7 +169466,7 @@ pyX
 vig
 kWV
 ygm
-eRf
+mah
 qzt
 iuH
 hCb
