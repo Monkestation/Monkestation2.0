@@ -20,7 +20,7 @@
 		return FALSE
 	if(length(lobby.modifiers & blacklisted_modifiers))
 		return FALSE
-	if (map_incompatible(lobby.map))
+	if(map_incompatible(lobby.map))
 		return FALSE
 	for(var/modpath in lobby.modifiers)
 		if(src in GLOB.deathmatch_game.modifiers[modpath].blacklisted_modifiers)
@@ -29,7 +29,7 @@
 
 /// Returns TRUE if map.type is in our blacklisted maps, FALSE otherwise.
 /datum/deathmatch_modifier/proc/map_incompatible(datum/lazy_template/deathmatch/map)
-	if (map?.type in blacklisted_maps)
+	if(map?.type in blacklisted_maps)
 		return TRUE
 
 	return FALSE
@@ -44,7 +44,7 @@
 
 ///Called when the host chooses to change map. Returns FALSE if the new map is incompatible, TRUE otherwise.
 /datum/deathmatch_modifier/proc/on_map_changed(datum/deathmatch_lobby/lobby)
-	if (map_incompatible(lobby.map))
+	if(map_incompatible(lobby.map))
 		lobby.unselect_modifier(src)
 		return FALSE
 	return TRUE
@@ -560,7 +560,7 @@
 	description = "Applies selected quirks to all players"
 
 /datum/deathmatch_modifier/apply_quirks/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
-	if (!player.client)
+	if(!player.client)
 		return
 
 	SSquirks.AssignQuirks(player, player.client)

@@ -18,7 +18,7 @@
 
 	if(!isnull(species_override))
 		user.set_species(species_override)
-	else if (!isnull(user.dna.species.outfit_important_for_life) && plasmaman_outfit) //plasmamen get lit on fire and die
+	else if(!isnull(user.dna.species.outfit_important_for_life) && plasmaman_outfit) //plasmamen get lit on fire and die
 		if(isnull(l_hand) || isnull(r_hand))
 			uniform = plasmaman_outfit::uniform
 			gloves = plasmaman_outfit::gloves
