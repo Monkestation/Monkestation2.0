@@ -29332,7 +29332,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/structure/sign/departments/exam_room/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "fEr" = (
@@ -228529,14 +228528,14 @@ uZj
 qCh
 rqw
 fEp
-alq
+hWc
 mse
 ePj
 rHK
 ePj
 wJe
-alq
 hWc
+alq
 cxb
 gXR
 omQ
@@ -228786,13 +228785,13 @@ anZ
 gkz
 atX
 atX
-tRa
+atX
 atX
 hEA
 kFt
 fwb
 atX
-tRa
+atX
 atX
 atX
 oiF
