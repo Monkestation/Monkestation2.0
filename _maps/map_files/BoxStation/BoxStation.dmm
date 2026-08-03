@@ -3194,15 +3194,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
-/obj/machinery/camera/directional/west{
-	c_tag = "Medical - Operating Room";
-	name = "medical camera";
-	network = list("ss13","medbay")
-	},
-/obj/item/radio/intercom/directional/west,
-/obj/structure/table/reinforced/rglass,
-/obj/item/clothing/gloves/latex,
-/obj/item/storage/box/gloves,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery)
 "bcF" = (
@@ -14402,7 +14393,10 @@
 	id = "med_priv_2";
 	name = "Privacy Shutters Control"
 	},
-/obj/structure/closet/secure_closet/personal/patient,
+/obj/effect/spawner/random/structure/table_or_rack,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/flashlight/pen,
+/obj/effect/spawner/random/medical/supplies,
 /turf/open/floor/iron/white,
 /area/station/medical/patients_rooms/room_b)
 "eFM" = (
@@ -33638,9 +33632,7 @@
 	pixel_x = -5
 	},
 /obj/item/radio/intercom/directional/east,
-/obj/machinery/computer/operating{
-	dir = 1
-	},
+/obj/structure/closet/secure_closet/personal/patient,
 /turf/open/floor/iron/white,
 /area/station/medical/patients_rooms/room_b)
 "kOW" = (
@@ -41782,7 +41774,13 @@
 	id = "med_priv_1";
 	name = "Privacy Shutters Control"
 	},
-/obj/structure/closet/secure_closet/personal/patient,
+/obj/effect/spawner/random/structure/table_or_rack{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/item/clothing/neck/stethoscope,
+/obj/item/flashlight/pen,
+/obj/effect/spawner/random/medical/supplies,
 /turf/open/floor/iron/white,
 /area/station/medical/patients_rooms/room_a)
 "nuS" = (
@@ -52986,6 +52984,7 @@
 "rdL" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/status_display/evac/directional/south,
+/obj/machinery/mod_installer,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "rdQ" = (
@@ -62736,7 +62735,7 @@
 	pixel_x = -5
 	},
 /obj/item/radio/intercom/directional/east,
-/obj/machinery/computer/operating,
+/obj/structure/closet/secure_closet/personal/patient,
 /turf/open/floor/iron/white,
 /area/station/medical/patients_rooms/room_a)
 "uiM" = (
