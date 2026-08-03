@@ -866,6 +866,7 @@ generate/load female uniform sprites matching all previously decided variables
 			type = female_uniform,
 			greyscale_colors = greyscale_colors,
 		)
+
 	if(!isinhands && is_digi && (supports_variations_flags & CLOTHING_DIGITIGRADE_MASK))
 		building_icon = wear_digi_version(
 			base_icon = building_icon || icon(file2use, t_state),
@@ -873,33 +874,28 @@ generate/load female uniform sprites matching all previously decided variables
 			key = "[t_state]-[file2use]-[female_uniform]",
 			greyscale_colors = greyscale_colors,
 		)
+
 	if(building_icon)
 		standing = mutable_appearance(building_icon, layer = -layer2use)
 
 	// no special handling done, default it
 	standing ||= mutable_appearance(file2use, t_state, layer = -layer2use)
 
-	// MONKESTATION EDIT START
 	var/width = isinhands ? inhand_x_dimension : worn_x_dimension
 	var/height = isinhands ? inhand_y_dimension : worn_y_dimension
 	standing = center_image(standing, width, height)
-	// MONKESTATION EDIT END
 
 	//Get the overlays for this item when it's being worn
 	//eg: ammo counters, primed grenade flashes, etc.
 	var/list/worn_overlays = worn_overlays(standing, isinhands, file2use)
 	if(length(worn_overlays))
-		// MONKESTATION EDIT START
+
 		if (width != 32 || height != 32)
 			for (var/image/overlay in worn_overlays)
 				overlay.pixel_x -= standing.pixel_x
 				overlay.pixel_y -= standing.pixel_y
-		// MONKESTATION EDIT END
-		standing.overlays += worn_overlays
 
-	// MONKESTATION EDIT START
-	// standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension) - moved up
-	// MONKESTATION EDIT END
+		standing.overlays += worn_overlays
 
 	//Worn offsets
 	var/list/offsets = get_worn_offsets(isinhands)

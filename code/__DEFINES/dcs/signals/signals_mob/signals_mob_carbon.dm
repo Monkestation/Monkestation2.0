@@ -184,5 +184,13 @@
 /// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacked, damage, attack_type, obj/item/bodypart/affecting)
 #define COMSIG_HUMAN_PUNCHED "human_punched"
 
+#define COMSIG_CARBON_EQUIP_EARS "carbon_ears_equip"
+#define COMSIG_CARBON_UNEQUIP_EARS "carbon_ears_unequip"
+
+///Sent to carbon when they pickup something (/obj/item)
+#define COMSIG_CARBON_ITEM_PICKED_UP "carbon_item_picked_up"
+#define COMSIG_HUMAN_BEGIN_DUEL "human_begin_duel"
+#define COMSIG_HUMAN_END_DUEL "human_end_duel"
+
 /// From /mob/living/carbon/proc/set_blood_type : (mob/living/carbon/user, datum/blood_type, update_cached_blood_dna_info)
 #define COMSIG_CARBON_CHANGED_BLOOD_TYPE "carbon_set_blood_type"

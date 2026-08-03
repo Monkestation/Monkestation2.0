@@ -20,6 +20,7 @@
 	drag_slowdown = 0
 	door_anim_time = 0 // no animation
 	pass_flags_self = PASSSTRUCTURE | LETPASSTHROW
+	roundstart_anchor = FALSE
 	/// Doesn't use the broken overlay when broken.
 	var/no_broken_overlay = FALSE
 	/// Mobs standing on it are nudged up by this amount.
@@ -187,7 +188,7 @@
 		return
 	if(istype(tool, /obj/item/paper) && !manifest)
 		to_chat(user, span_notice("You begin attaching \the [tool] to [src]..."))
-		if(!do_after(user, 1 SECOND, target=src))
+		if(!do_after(user, 1 SECONDS, target=src))
 			return ITEM_INTERACT_BLOCKING
 		attach_manifest(tool, user)
 		return ITEM_INTERACT_BLOCKING
@@ -196,7 +197,7 @@
 	if(!(tool.get_sharpness() == SHARP_EDGED))
 		return
 	to_chat(user, span_notice("You begin cutting \the [manifest] off of [src]..."))
-	if(!do_after(user, 1 SECOND, target=src))
+	if(!do_after(user, 1 SECONDS, target=src))
 		return ITEM_INTERACT_BLOCKING
 	tear_manifest(user)
 	return ITEM_INTERACT_BLOCKING
@@ -575,3 +576,39 @@
 
 /obj/structure/closet/crate/add_to_roundstart_list()
 	return
+
+/obj/structure/closet/crate/coffin/sandstonesarcophagus
+	name = "sandstone sarcophagus"
+	desc = "It's a burial receptacle for the dearly departed. A sARcophaGUS, it usually contains a caDaVER."
+	icon = 'icons/obj/sandstone_structures.dmi'
+	icon_state = "sarcophagus"
+	base_icon_state = "sarcophagus"
+	resistance_flags = FIRE_PROOF
+	max_integrity = 70
+	material_drop = /obj/item/stack/sheet/mineral/sandstone
+	material_drop_amount = 8
+	open_sound = 'sound/machines/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound_volume = 25
+	close_sound_volume = 50
+	can_install_electronics = FALSE
+
+/obj/structure/closet/crate/coffin/sarcophagus
+	name = "Sarcophagus"
+	desc = "It's a burial receptacle for lustrious figures. A reliquary."
+	icon = 'icons/obj/sandstone_structures.dmi'
+	icon_state = "sarcophagusroyale"
+	base_icon_state = "sarcophagusroyale"
+	resistance_flags = FIRE_PROOF
+	max_integrity = 150
+	material_drop = /obj/item/stack/sheet/mineral/sandstone
+	material_drop_amount = 18
+	open_sound = 'sound/machines/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound_volume = 30
+	close_sound_volume = 80
+	can_install_electronics = FALSE
+	elevation = 0
+	can_weld_shut = FALSE
+	horizontal = FALSE
+	elevation_open = 0
