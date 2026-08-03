@@ -301,6 +301,16 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	item_path = /obj/item/clothing/suit/jacket/tailcoat/bartender
 	restricted_roles = list(JOB_BARTENDER)
 
+/datum/loadout_item/suit/armor/vest/capcarapace/tailcoat_captain
+	name = "Captain's Tailcoat"
+	item_path = /obj/item/clothing/suit/armor/vest/capcarapace/tailcoat_captain
+	restricted_roles = list(JOB_CAPTAIN)
+
+/datum/loadout_item/suit/armor/hos_tailcoat
+	name = "Head of Security's Tailcoat"
+	item_path = /obj/item/clothing/suit/armor/hos_tailcoat
+	restricted_roles = list(JOB_HEAD_OF_SECURITY)
+
 /datum/loadout_item/suit/qm_jacket
 	name = "Quartermaster's Jacket"
 	item_path = /obj/item/clothing/suit/toggle/jacket/supply/head
@@ -790,3 +800,6 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	restricted_roles = list(JOB_CHAPLAIN)
 	requires_purchase = FALSE
 
+/datum/loadout_item/suit/henchmen_coat
+	name = "Henchmen Coat"
+	item_path = /obj/item/clothing/suit/jacket/henchmen_coat

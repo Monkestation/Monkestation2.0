@@ -99,6 +99,15 @@
 	icon_state = icon_name + "[is_powered]" + "[(bloody ? "bld" : "")]" // add the blood tag at the end
 	return ..()
 
+/obj/machinery/recycler/update_overlays()
+	. = ..()
+	if(!bloody || !GET_ATOM_BLOOD_DECAL_LENGTH(src))
+		return
+
+	var/mutable_appearance/blood_overlay = mutable_appearance(icon, "[icon_state]bld", appearance_flags = RESET_COLOR|KEEP_APART)
+	blood_overlay.color = get_blood_dna_color()
+	. += blood_overlay
+
 /obj/machinery/recycler/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(!anchored)
@@ -215,11 +224,10 @@
 	if(iscarbon(L))
 		if(L.stat == CONSCIOUS)
 			L.say("ARRRRRRRRRRRGH!!!", forced="recycler grinding")
-		add_mob_blood(L)
 
-	if(!bloody && !issilicon(L))
+	if(!issilicon(L))
+		add_mob_blood(L)
 		bloody = TRUE
-		update_appearance()
 
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	L.Unconscious(100)

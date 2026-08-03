@@ -232,8 +232,8 @@
 /obj/item/stock_parts/power_store/cell/emproof/slime
 	name = "EMP-proof slime core"
 	desc = "A yellow slime core infused with plasma. Its organic nature makes it immune to EMPs."
-	icon = 'icons/mob/simple/slimes.dmi'
-	icon_state = "yellow_slime_extract"
+	icon = /obj/item/slime_extract/yellow::icon
+	icon_state = /obj/item/slime_extract/yellow::icon_state
 	custom_materials = null
 	maxcharge = STANDARD_CELL_CHARGE * 5
 	charge_light_type = null

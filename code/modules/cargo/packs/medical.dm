@@ -17,7 +17,7 @@
 					/obj/item/reagent_containers/blood/lizard,
 					/obj/item/reagent_containers/blood/ethereal,
 					/obj/item/reagent_containers/blood/slime,
-					/obj/item/reagent_containers/blood/spider,
+					/obj/item/reagent_containers/blood/hemolymph,
 				)
 	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
@@ -152,5 +152,8 @@ End Monkestation Removal*/
 	name = "Strong-Arm Implant Set"
 	desc = "A crate containing two implants, which can be surgically implanted to empower the strength of human arms. Warranty void if exposed to electromagnetic pulses."
 	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/obj/item/organ/internal/cyberimp/arm/strongarm = 2)
+	contains = list(
+		/obj/item/organ/internal/cyberimp/arm/strongarm,
+		/obj/item/organ/internal/cyberimp/arm/strongarm/l,
+	)
 	crate_name = "Strong-Arm implant crate"

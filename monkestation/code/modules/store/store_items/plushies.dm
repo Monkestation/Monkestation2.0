@@ -141,3 +141,16 @@ GLOBAL_LIST_INIT(store_plushies, generate_store_items(/datum/store_item/plushies
 	store_desc = "Now with organic glowfruit stuffing!"
 	item_path = /obj/item/toy/plush/expie
 	item_cost = 7500
+
+/datum/store_item/plushies/expie/spinny_hat
+	name = "Spinny Expie Plushie"
+	item_path = /obj/item/toy/plush/expie/spinny_hat
+	item_cost = 10000
+
+/datum/store_item/plushies/expie/dune
+	name = "Dune Plushie"
+	item_path = /obj/item/toy/plush/expie/dune
+
+/datum/store_item/plushies/expie/milky
+	name = "Milky Plushie"
+	item_path = /obj/item/toy/plush/expie/milky

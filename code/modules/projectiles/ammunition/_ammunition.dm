@@ -10,6 +10,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 	override_notes = TRUE
+	custom_materials = AMMO_MATS_BASIC
 	///What sound should play when this ammo is fired
 	var/fire_sound = null
 	///Which kind of guns it can be loaded into

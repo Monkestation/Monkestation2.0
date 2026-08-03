@@ -1,0 +1,4 @@
+author: "Runian"
+delete-after: True
+changes:
+  - bugfix: "Falling into a chasm as a cyborg no longer deletes your MMI and allows you to re-enter your cyborg body."

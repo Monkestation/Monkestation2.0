@@ -16,7 +16,7 @@
 /obj/item/organ/internal/heart/slime
 	name = "slime heart"
 
-	heart_bloodtype = /datum/blood_type/slime
+	heart_bloodtype = BLOOD_TYPE_TOX
 	/// Ability given to the owner of the organ
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 	/// Ability given to the owner of the organ
@@ -82,7 +82,7 @@
 		if(slime.blood_volume >= BLOOD_VOLUME_OKAY)
 			slime.adjust_wet_stacks(1, /datum/status_effect/fire_handler/wet_stacks/oozeling)
 
-			if(slime_wetness?.stacks > 9 && slime_wetness?.stacks <= HYDROPHOBIA_WETNESS_STACKS)
+			if(slime_wetness?.stacks > (HYDROPHOBIA_WETNESS_STACKS - 1) && slime_wetness?.stacks <= HYDROPHOBIA_WETNESS_STACKS)
 				slime.balloon_alert(slime, "membrane restored!")
 				playsound(slime, 'sound/surgery/organ1.ogg', 80, TRUE)
 				slime.visible_message(

@@ -166,10 +166,6 @@
 
 	// send to oblivion
 	dropped_thing.visible_message(span_boldwarning("[dropped_thing] falls into [parent]!"), span_userdanger("[oblivion_message]"))
-	if(iscyborg(dropped_thing)) // If they are a robot with out this then they glitch out and get stuck in a Chasm Purgatory. Patch job to fix it, probably can be implemented better, but this'll work for now - Amy
-		dropped_thing.visible_message(span_userdanger("Your internal anti-suffering measures kick in, intiating an internal shutdown."))
-		var/mob/living/silicon/robot/S = dropped_thing
-		QDEL_NULL(S.mmi)
 	if (isliving(dropped_thing))
 		var/mob/living/falling_mob = dropped_thing
 		ADD_TRAIT(falling_mob, TRAIT_NO_TRANSFORM, REF(src))
@@ -214,9 +210,14 @@
 	else if(isliving(dropped_thing))
 		var/mob/living/fallen_mob = dropped_thing
 		REMOVE_TRAIT(fallen_mob, TRAIT_NO_TRANSFORM, REF(src))
-		if (fallen_mob.stat != DEAD)
+		if(fallen_mob.stat != DEAD)
 			fallen_mob.investigate_log("has died from falling into a chasm.", INVESTIGATE_DEATHS)
-			fallen_mob.death(TRUE)
+			if(iscyborg(dropped_thing))
+				dropped_thing.visible_message(span_userdanger("Your internal anti-suffering measures kick in, intiating an internal shutdown."))
+				var/mob/living/silicon/robot/fallen_cyborg = dropped_thing
+				fallen_cyborg.death(TRUE, FALSE)
+			else
+				fallen_mob.death(TRUE)
 			fallen_mob.apply_damage(300)
 
 	falling_atoms -= falling_ref

@@ -18,7 +18,7 @@
 	name = "Full Syndicate Surgery Medkit"
 	desc = "The Syndicate surgery medkit is a toolkit containing all surgery tools, surgical drapes, \
 			a syringe, and some sedatives."
-	item = /obj/item/storage/medkit/surgery_syndie
+	item = /obj/item/storage/medkit/surgery/syndie
 	cost = 3
 
 /datum/uplink_item/device_tools/combat_medkit

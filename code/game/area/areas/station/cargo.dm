@@ -4,6 +4,9 @@
 	airlock_wires = /datum/wires/airlock/service
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
+/area/station/cargo/quartermaster
+	name = "\improper Quartermaster's Office"
+
 /area/station/cargo/sorting
 	name = "\improper Delivery Office"
 	icon_state = "cargo_delivery"
