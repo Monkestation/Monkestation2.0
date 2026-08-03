@@ -2,7 +2,9 @@ SUBSYSTEM_DEF(floxy)
 	name = "Floxy"
 	wait = 1 SECONDS
 	runlevels = ALL
-	init_order = INIT_ORDER_FLOXY
+	dependencies = list(
+		/datum/controller/subsystem/cassettes,
+	)
 #ifdef UNIT_TESTS
 	flags = SS_NO_INIT | SS_NO_FIRE
 #else

@@ -48,7 +48,10 @@
 	return cmp_numeric_asc(a.get_exp_living(TRUE), b.get_exp_living(TRUE))
 
 /proc/cmp_subsystem_init(datum/controller/subsystem/a, datum/controller/subsystem/b)
-	return initial(b.init_order) - initial(a.init_order) //uses initial() so it can be used on types
+	return a.init_order - b.init_order
+
+/proc/cmp_subsystem_init_stage(datum/controller/subsystem/a, datum/controller/subsystem/b)
+	return initial(a.init_stage) - initial(b.init_stage)
 
 /proc/cmp_subsystem_display(datum/controller/subsystem/a, datum/controller/subsystem/b)
 	return sorttext(b.name, a.name)
@@ -194,3 +197,8 @@
 /// Used to sort overtime in profiling data.
 /proc/sort_overtime_dsc(list/a, list/b)
 	return b["over"] - a["over"]
+
+///Tracks are sorted by genre then by title inside that.
+/proc/cmp_media_track_asc(datum/media_track/A, datum/media_track/B)
+	var/genre_sort = sorttext(B.genre || "Uncategorized", A.genre || "Uncategorized")
+	return genre_sort || sorttext(B.title, A.title)

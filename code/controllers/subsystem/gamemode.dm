@@ -5,7 +5,6 @@
 
 SUBSYSTEM_DEF(gamemode)
 	name = "Gamemode"
-	init_order = INIT_ORDER_GAMEMODE
 	runlevels = RUNLEVEL_GAME
 	flags = SS_BACKGROUND | SS_KEEP_TIMING
 	priority = 20
@@ -607,4 +606,3 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 
 #undef DEFAULT_STORYTELLER_VOTE_OPTIONS
 #undef MAX_POP_FOR_STORYTELLER_VOTE
-#undef INIT_ORDER_GAMEMODE
