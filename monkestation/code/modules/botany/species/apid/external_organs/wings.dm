@@ -43,7 +43,7 @@
 	return GLOB.apid_wings_list
 
 /datum/bodypart_overlay/mutant/wings/apid/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(!(human.wear_suit?.flags_inv & HIDEMUTWINGS))
+	if(!(human.w_uniform?.flags_inv & HIDEMUTWINGS) && !(human.wear_suit?.flags_inv & HIDEMUTWINGS))
 		return TRUE
 	return FALSE
 
@@ -58,4 +58,3 @@
 /datum/sprite_accessory/apid_wings/normal
 	name = "Normal"
 	icon_state = "normal"
-
