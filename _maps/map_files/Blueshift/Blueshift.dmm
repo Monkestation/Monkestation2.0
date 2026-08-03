@@ -18540,6 +18540,7 @@
 /obj/machinery/stasis{
 	dir = 4
 	},
+/obj/structure/sign/poster/official/cleanliness/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "dAN" = (
@@ -33695,6 +33696,7 @@
 /obj/machinery/stasis{
 	dir = 4
 	},
+/obj/structure/sign/poster/abductor/ayy_cops/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "gwl" = (

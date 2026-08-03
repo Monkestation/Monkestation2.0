@@ -14393,10 +14393,13 @@
 	id = "med_priv_2";
 	name = "Privacy Shutters Control"
 	},
-/obj/effect/spawner/random/structure/table_or_rack,
 /obj/item/clothing/neck/stethoscope,
 /obj/item/flashlight/pen,
-/obj/effect/spawner/random/medical/supplies,
+/obj/effect/spawner/random/medical/supplies{
+	pixel_x = -18;
+	pixel_y = 10
+	},
+/obj/structure/table,
 /turf/open/floor/iron/white,
 /area/station/medical/patients_rooms/room_b)
 "eFM" = (
@@ -35811,6 +35814,13 @@
 /obj/machinery/holopad,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
+"lxg" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/table,
+/turf/open/floor/plating,
+/area/station/maintenance/port)
 "lxi" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -36998,10 +37008,6 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
-/obj/structure/table{
-	pixel_x = 0;
-	pixel_y = 0
-	},
 /obj/item/knife/kitchen{
 	pixel_x = -2
 	},
@@ -37011,6 +37017,7 @@
 /obj/item/knife/kitchen{
 	pixel_x = 4
 	},
+/obj/structure/table,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "lPX" = (
@@ -41774,13 +41781,13 @@
 	id = "med_priv_1";
 	name = "Privacy Shutters Control"
 	},
-/obj/effect/spawner/random/structure/table_or_rack{
-	pixel_x = 0;
-	pixel_y = 0
-	},
 /obj/item/clothing/neck/stethoscope,
 /obj/item/flashlight/pen,
-/obj/effect/spawner/random/medical/supplies,
+/obj/effect/spawner/random/medical/supplies{
+	pixel_x = -18;
+	pixel_y = 10
+	},
+/obj/structure/table,
 /turf/open/floor/iron/white,
 /area/station/medical/patients_rooms/room_a)
 "nuS" = (
@@ -52984,7 +52991,6 @@
 "rdL" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/status_display/evac/directional/south,
-/obj/machinery/mod_installer,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "rdQ" = (
@@ -63856,6 +63862,17 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"uAR" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/table,
+/turf/open/floor/plating,
+/area/station/maintenance/port)
 "uBt" = (
 /obj/structure/sign/poster/random/directional/west,
 /obj/effect/decal/cleanable/dirt,
@@ -94102,8 +94119,8 @@ vBA
 aSO
 kSL
 kSL
-fUs
-eVz
+lxg
+uAR
 fUs
 fUs
 fUs
