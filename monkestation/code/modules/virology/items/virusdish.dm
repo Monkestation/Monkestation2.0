@@ -194,11 +194,11 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	else if(isopenturf(loc))
 		for(var/mob/living/potential_victim in loc.contents)
 			infection_attempt(potential_victim, contained_virus)
-	if(contained_virus.spread_flags & DISEASE_SPREAD_AIRBORNE)
-		if(COOLDOWN_FINISHED(src, cloud_cooldown))
-			COOLDOWN_START(src, cloud_cooldown, cloud_delay)
-			var/list/L = list(contained_virus)
-			new /obj/effect/pathogen_cloud/core(get_turf(src), last_openner, virus_copylist(L), FALSE)
+	if(!contained_virus.spread_flags & DISEASE_SPREAD_AIRBORNE || COOLDOWN_FINISHED(src, cloud_cooldown))
+		return
+	COOLDOWN_START(src, cloud_cooldown, cloud_delay)
+	var/list/disease_list = list(contained_virus)
+	new /obj/effect/pathogen_cloud/core(get_turf(src), last_openner, virus_copylist(disease_list), FALSE)
 
 /obj/item/virus_dish/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
@@ -215,37 +215,48 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		popup.set_content(info)
 		popup.open()
 
-/obj/item/virus_dish/infection_attempt(mob/living/perp, datum/disease/D)
-	if(open)//If the dish is open, we may get infected by the disease inside on top of those that might be stuck on it.
-		var/block = 0
-		var/bleeding = 0
-		if(src in perp.held_items)
-			block = perp.check_contact_sterility(BODY_ZONE_ARMS)
-			bleeding = perp.check_bodypart_bleeding(BODY_ZONE_ARMS)
-			if(!block && (contained_virus.spread_flags & DISEASE_SPREAD_CONTACT_SKIN))
-				perp.infect_disease(contained_virus, notes="(Contact, from picking up \a [src])")
-			else if(bleeding && (contained_virus.spread_flags & DISEASE_SPREAD_BLOOD))
-				perp.infect_disease(contained_virus, notes="(Blood, from picking up \a [src])")
-		else if(isturf(loc) && loc == perp.loc)//is our perp standing over the open dish?
-			if(perp.body_position & LYING_DOWN)
-				block = perp.check_contact_sterility(BODY_ZONE_EVERYTHING)
-				bleeding = perp.check_bodypart_bleeding(BODY_ZONE_EVERYTHING)
-			else
-				block = perp.check_contact_sterility(BODY_ZONE_LEGS)
-				bleeding = perp.check_bodypart_bleeding(BODY_ZONE_LEGS)
-			if(!block && (contained_virus.spread_flags & DISEASE_SPREAD_CONTACT_SKIN))
-				perp.infect_disease(contained_virus, notes="(Contact, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over a virus dish[last_openner ? " opened by [key_name(last_openner)]" : ""])")
-			else if(bleeding && (contained_virus.spread_flags & DISEASE_SPREAD_BLOOD))
-				perp.infect_disease(contained_virus, notes="(Blood, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over a virus dish[last_openner ? " opened by [key_name(last_openner)]" : ""])")
-	..(perp,D)
+/obj/item/virus_dish/infection_attempt(mob/living/perp, datum/disease/virus)
+	//If the dish is open, we may get infected by the disease inside on top of those that might be stuck on it.
+	if(!open)
+		return ..(perp, virus)
+	var/block
+	var/bleeding
+	if(!perp.is_holding(src))
+		//is our perp standing over the open dish?
+		if(!isturf(loc) || loc != perp.loc)
+			return ..(perp, virus)
+		if(perp.body_position & LYING_DOWN)
+			block = perp.check_contact_sterility(BODY_ZONE_EVERYTHING)
+			bleeding = perp.check_bodypart_bleeding(BODY_ZONE_EVERYTHING)
+		else
+			block = perp.check_contact_sterility(BODY_ZONE_LEGS)
+			bleeding = perp.check_bodypart_bleeding(BODY_ZONE_LEGS)
+
+		if(!block && (contained_virus.spread_flags & DISEASE_SPREAD_CONTACT_SKIN))
+			perp.infect_disease(contained_virus, notes="(Contact, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over a virus dish[last_openner ? " opened by [key_name(last_openner)]" : ""])")
+		else if(bleeding && (contained_virus.spread_flags & DISEASE_SPREAD_BLOOD))
+			perp.infect_disease(contained_virus, notes="(Blood, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over a virus dish[last_openner ? " opened by [key_name(last_openner)]" : ""])")
+
+		return ..(perp, virus)
+
+	block = perp.check_contact_sterility(BODY_ZONE_ARMS)
+	bleeding = perp.check_bodypart_bleeding(BODY_ZONE_ARMS)
+
+	if(!block && (contained_virus.spread_flags & DISEASE_SPREAD_CONTACT_SKIN))
+		perp.infect_disease(contained_virus, notes="(Contact, from picking up \a [src])")
+	else if(bleeding && (contained_virus.spread_flags & DISEASE_SPREAD_BLOOD))
+		perp.infect_disease(contained_virus, notes="(Blood, from picking up \a [src])")
+
+	return ..(perp, virus)
 
 /obj/item/virus_dish/proc/incubate(mutatechance=5, growthrate=3, effect_focus = 0)
-	if(contained_virus)
-		if(reagents.remove_reagent(/datum/reagent/consumable/virus_food, 0.2))
-			growth = min(growth + growthrate, 100)
-		if(reagents.remove_reagent(/datum/reagent/water, 0.2))
-			growth = max(growth - growthrate, 0)
-		contained_virus.incubate(src,mutatechance,effect_focus)
+	if(!contained_virus)
+		return
+	if(reagents.remove_reagent(/datum/reagent/consumable/virus_food, 0.2))
+		growth = min(growth + growthrate, 100)
+	if(reagents.remove_reagent(/datum/reagent/water, 0.2))
+		growth = max(growth - growthrate, 0)
+	contained_virus.incubate(src, mutatechance, effect_focus)
 
 /obj/item/virus_dish/proc/on_reagent_change(datum/reagents/reagents)
 	SIGNAL_HANDLER
