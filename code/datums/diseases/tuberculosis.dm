@@ -1,63 +1,32 @@
-/* old viro code bleh.
-/datum/disease/tuberculosis
-	form = "Disease"
-	name = "Fungal tuberculosis"
-	max_stages = 5
-	spread_text = "Airborne"
-	cure_text = "Spaceacillin & Convermol"
-	cures = list(/datum/reagent/medicine/antipathogenic/spaceacillin, /datum/reagent/medicine/c2/convermol)
-	agent = "Fungal Tubercle bacillus Cosmosis"
-	viable_mobtypes = list(/mob/living/carbon/human)
-	cure_chance = 2.5 //like hell are you getting out of hell
-	desc = "A rare highly transmissible virulent virus. Few samples exist, rumoured to be carefully grown and cultured by clandestine bio-weapon specialists. Causes fever, blood vomiting, lung damage, weight loss, and fatigue."
-	required_organs = list(/obj/item/organ/internal/lungs)
+/datum/disease/acute/premade/fungal_tb
+	name = "Tubercle Bacillus Cosmosis Microbes"
+	form = "Fungal Spores"
+	origin = "Active fungal spores"
+	category = DISEASE_FUNGUS
+
+	symptoms = list(
+		new /datum/symptom/fungal_tb,
+	)
+	spread_flags = DISEASE_SPREAD_BLOOD|DISEASE_SPREAD_CONTACT_FLUIDS|DISEASE_SPREAD_AIRBORNE
+	robustness = 100
+	strength = 100
+
+	infectionchance = 75
+	infectionchance_base = 75
 	severity = DISEASE_SEVERITY_BIOHAZARD
+	required_organ = ORGAN_SLOT_LUNGS
 	bypasses_immunity = TRUE // TB primarily impacts the lungs; it's also bacterial or fungal in nature; viral immunity should do nothing.
+	viable_mobtypes = list(/mob/living/carbon/human)
 
-/datum/disease/tuberculosis/stage_act(seconds_per_tick, times_fired) //it begins
+/datum/disease/acute/premade/fungal_tb/after_add()
 	. = ..()
-	if(!.)
-		return
+	antigen = list(ANTIGEN_IG)
+	stage = 4
 
-	switch(stage)
-		if(2)
-			if(SPT_PROB(1, seconds_per_tick))
-				affected_mob.emote("cough")
-				to_chat(affected_mob, span_danger("Your chest hurts."))
-			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(affected_mob, span_danger("Your stomach violently rumbles!"))
-			if(SPT_PROB(2.5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("You feel a cold sweat form."))
-		if(4)
-			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(affected_mob, span_userdanger("You see four of everything!"))
-				affected_mob.set_dizzy_if_lower(10 SECONDS)
-			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(affected_mob, span_danger("You feel a sharp pain from your lower chest!"))
-				affected_mob.adjustOxyLoss(5, FALSE)
-				affected_mob.emote("gasp")
-			if(SPT_PROB(5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("You feel air escape from your lungs painfully."))
-				affected_mob.adjustOxyLoss(25, FALSE)
-				affected_mob.emote("gasp")
-		if(5)
-			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(affected_mob, span_userdanger("[pick("You feel your heart slowing...", "You relax and slow your heartbeat.")]"))
-				affected_mob.stamina.adjust(-70, FALSE)
-			if(SPT_PROB(5, seconds_per_tick))
-				affected_mob.stamina.adjust(-100, FALSE)
-				affected_mob.visible_message(span_warning("[affected_mob] faints!"), span_userdanger("You surrender yourself and feel at peace..."))
-				affected_mob.AdjustSleeping(100)
-			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(affected_mob, span_userdanger("You feel your mind relax and your thoughts drift!"))
-				affected_mob.adjust_confusion_up_to(8 SECONDS, 100 SECONDS)
-			if(SPT_PROB(5, seconds_per_tick))
-				affected_mob.vomit(20)
-			if(SPT_PROB(1.5, seconds_per_tick))
-				to_chat(affected_mob, span_warning("<i>[pick("Your stomach silently rumbles...", "Your stomach seizes up and falls limp, muscles dead and lifeless.", "You could eat a crayon")]</i>"))
-				affected_mob.overeatduration = max(affected_mob.overeatduration - (200 SECONDS), 0)
-				affected_mob.adjust_nutrition(-100)
-			if(SPT_PROB(7.5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("[pick("You feel uncomfortably hot...", "You feel like unzipping your jumpsuit...", "You feel like taking off some clothes...")]"))
-				affected_mob.adjust_bodytemperature(40)
-*/
+/datum/disease/acute/premade/fungal_tb/activate(mob/living/mob, starved, seconds_per_tick)
+	. = ..()
+	if(!mob.has_reagent(/datum/reagent/medicine/antipathogenic/spaceacillin, 1) || !mob.has_reagent(/datum/reagent/medicine/c2/convermol, 1))
+		return
+	if(!prob(5))
+		return
+	cure(add_resistance = FALSE)
