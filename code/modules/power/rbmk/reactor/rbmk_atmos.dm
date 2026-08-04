@@ -62,16 +62,37 @@
 	last_outlet_pressure = internal_pressure
 	var/desired_inlet_moles = 0
 	if(inlet_open && inlet_pipe_mix?.total_moles() > 0)
-		var/available_pressure_head = last_inlet_pressure + RBMK_INLET_PUMP_HEAD - internal_pressure
-		if(available_pressure_head > 0)
-			desired_inlet_moles = clamp(inlet_rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX) * seconds_per_tick
+		var/inlet_target_pressure = last_inlet_pressure + RBMK_INLET_PUMP_HEAD
+		var/inlet_temperature_delta = abs(inlet_pipe_mix.temperature - internal_coolant_mix.temperature)
+		var/inlet_pressure_limited_moles = inlet_pipe_mix.gas_pressure_calculate(
+			internal_coolant_mix,
+			inlet_target_pressure,
+			inlet_temperature_delta <= 5,
+		)
+		desired_inlet_moles = min(
+			clamp(inlet_rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX) * seconds_per_tick,
+			inlet_pressure_limited_moles,
+		)
 	var/desired_outlet_moles = 0
-	var/downstream_pressure = outlet_pipe_mix?.return_pressure() || 0
-	if(outlet_open && internal_moles > 0 && internal_pressure > downstream_pressure)
-		desired_outlet_moles = clamp(outlet_rate, RBMK_OUTLET_RATE_MIN, RBMK_OUTLET_RATE_MAX) * seconds_per_tick
+	var/turf/outlet_turf = get_turf(outlet)
+	var/datum/gas_mixture/outlet_destination_mix = outlet_pipe_mix
+	if(!outlet_destination_mix && outlet_turf)
+		outlet_destination_mix = outlet_turf.return_air()
+	var/downstream_pressure = outlet_destination_mix?.return_pressure() || 0
+	if(outlet_open && outlet_destination_mix && internal_moles > 0 && internal_pressure > downstream_pressure)
+		var/outlet_target_pressure = downstream_pressure + ((internal_pressure - downstream_pressure) / 2)
+		var/outlet_temperature_delta = abs(internal_coolant_mix.temperature - outlet_destination_mix.temperature)
+		var/outlet_pressure_limited_moles = internal_coolant_mix.gas_pressure_calculate(
+			outlet_destination_mix,
+			outlet_target_pressure,
+			outlet_temperature_delta <= 5,
+		)
+		var/outlet_source_limited_moles = internal_moles * (1 - (outlet_target_pressure / internal_pressure))
 		desired_outlet_moles = min(
-			desired_outlet_moles,
+			clamp(outlet_rate, RBMK_OUTLET_RATE_MIN, RBMK_OUTLET_RATE_MAX) * seconds_per_tick,
 			internal_moles * RBMK_OUTLET_MAX_INVENTORY_FRACTION,
+			outlet_pressure_limited_moles,
+			outlet_source_limited_moles,
 		)
 	// Remove both quantities from the same snapshot before either destination is
 	// merged. Equal commands therefore exchange coolant instead of alternately
@@ -91,7 +112,6 @@
 		outlet_pipe_mix.merge(outgoing_mix)
 		outlet.update_parents()
 		return
-	var/turf/outlet_turf = get_turf(outlet)
 	if(outlet_turf)
 		outlet_turf.assume_air(outgoing_mix)
 

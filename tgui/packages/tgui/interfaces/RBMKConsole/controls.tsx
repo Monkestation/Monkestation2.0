@@ -34,8 +34,8 @@ export const RBMKControls = () => {
   const outletCorePressure = Number(data?.outlet_core_pressure ?? 0);
   const outletFlow = Number(data?.outlet_flow ?? 0);
   const pressureCurrent = Number(data?.pressure_current ?? outletCorePressure);
-  const pressureWarning = Number(data?.pressure_warning ?? 6000);
-  const pressureCritical = Number(data?.pressure_critical ?? 7200);
+  const pressureWarning = Number(data?.pressure_warning ?? 8000);
+  const pressureCritical = Number(data?.pressure_critical ?? 10000);
   const coolantMoles = Number(data?.coolant_moles ?? 0);
   const coolantTemperature = Number(data?.coolant_temperature ?? 0);
   const coolantExchangeRatio = Number(data?.coolant_exchange_ratio ?? 0);

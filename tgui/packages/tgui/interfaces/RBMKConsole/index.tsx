@@ -190,7 +190,7 @@ const RBMKAlarmStrip = () => {
   if (temperature >= Number(data?.temp_max_safe ?? 6000)) {
     alarms.push('CORE OVER TEMPERATURE');
   }
-  if (pressure >= Number(data?.pressure_critical ?? 7200)) {
+  if (pressure >= Number(data?.pressure_critical ?? 10000)) {
     alarms.push('PRIMARY PRESSURE CRITICAL');
   }
   if ((integrity / maxIntegrity) * 100 <= 50) {

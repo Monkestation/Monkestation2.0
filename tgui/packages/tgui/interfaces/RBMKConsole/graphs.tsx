@@ -61,7 +61,7 @@ export const RBMKGraphs = () => {
     1000,
   );
   const maxPressure = scaleMaximum(
-    Math.max(Number(data?.pressure_critical ?? 7200), ...pressureHistory, 1),
+    Math.max(Number(data?.pressure_critical ?? 10000), ...pressureHistory, 1),
     1000,
   );
 

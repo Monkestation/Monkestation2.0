@@ -35,6 +35,55 @@
 	TEST_ASSERT_EQUAL(fuel_rod.loc, reactor, "The RBMK reactor did not take ownership of an inserted fuel rod.")
 	TEST_ASSERT(fuel_rod in reactor.normal_slots, "The RBMK reactor did not record an inserted uranium rod in its normal slot bank.")
 
+/// Verifies that RBMK coolant flow respects native atmos pressure limits.
+/datum/unit_test/rbmk_coolant_transfer_pressure_limits/Run()
+	var/obj/machinery/rbmk/reactor/reactor = allocate(
+		/obj/machinery/rbmk/reactor,
+		run_loc_floor_bottom_left,
+	)
+	var/datum/gas_mixture/internal_mix = reactor.coolant_internal
+	var/datum/gas_mixture/inlet_mix = reactor.get_inlet_mix()
+	var/datum/gas_mixture/outlet_mix = reactor.get_outlet_mix()
+	TEST_ASSERT_NOTNULL(internal_mix, "The RBMK reactor initialized without an internal coolant mixture.")
+	TEST_ASSERT_NOTNULL(inlet_mix, "The RBMK reactor initialized without an inlet gas mixture.")
+	TEST_ASSERT_NOTNULL(outlet_mix, "The RBMK reactor initialized without an outlet gas mixture.")
+	ASSERT_GAS(/datum/gas/nitrogen, internal_mix)
+	ASSERT_GAS(/datum/gas/nitrogen, inlet_mix)
+	ASSERT_GAS(/datum/gas/nitrogen, outlet_mix)
+	var/test_temperature = 5000
+	internal_mix.temperature = test_temperature
+	inlet_mix.temperature = test_temperature
+	outlet_mix.temperature = test_temperature
+	var/initial_internal_pressure = 5100
+	var/initial_downstream_pressure = 5000
+	internal_mix.gases[/datum/gas/nitrogen][MOLES] = (initial_internal_pressure * internal_mix.volume) / (R_IDEAL_GAS_EQUATION * test_temperature)
+	outlet_mix.gases[/datum/gas/nitrogen][MOLES] = (initial_downstream_pressure * outlet_mix.volume) / (R_IDEAL_GAS_EQUATION * test_temperature)
+	reactor.inlet_open = FALSE
+	reactor.outlet_open = TRUE
+	reactor.outlet_rate = RBMK_OUTLET_RATE_MAX
+	reactor.last_coolant_air_cycle = SSair.times_fired - 1
+	reactor.process_coolant_transfer(RBMK_ATMOS_PROCESS_SECONDS)
+	TEST_ASSERT(reactor.last_outlet_moles_moved > 0, "The RBMK outlet moved no coolant across a positive pressure differential.")
+	TEST_ASSERT(
+		internal_mix.return_pressure() + ATMOS_PRESSURE_ERROR_TOLERANCE >= outlet_mix.return_pressure(),
+		"The RBMK outlet overshot downstream pressure at maximum flow.",
+	)
+	var/inlet_supply_pressure = 2000
+	var/inlet_target_pressure = inlet_supply_pressure + RBMK_INLET_PUMP_HEAD
+	var/pre_injection_pressure = inlet_target_pressure - 100
+	internal_mix.gases[/datum/gas/nitrogen][MOLES] = (pre_injection_pressure * internal_mix.volume) / (R_IDEAL_GAS_EQUATION * test_temperature)
+	inlet_mix.gases[/datum/gas/nitrogen][MOLES] = (inlet_supply_pressure * inlet_mix.volume) / (R_IDEAL_GAS_EQUATION * test_temperature)
+	reactor.inlet_open = TRUE
+	reactor.inlet_rate = RBMK_INLET_RATE_MAX
+	reactor.outlet_open = FALSE
+	reactor.last_coolant_air_cycle = SSair.times_fired - 1
+	reactor.process_coolant_transfer(RBMK_ATMOS_PROCESS_SECONDS)
+	TEST_ASSERT(reactor.last_inlet_moles_moved > 0, "The RBMK inlet moved no coolant below its pump-head limit.")
+	TEST_ASSERT(
+		internal_mix.return_pressure() <= inlet_target_pressure + ATMOS_PRESSURE_ERROR_TOLERANCE,
+		"The RBMK inlet overshot its pump-head pressure limit at maximum flow.",
+	)
+
 /// Verifies that turbine generator wear is based on elapsed time rather than process frequency.
 /datum/unit_test/rbmk_turbine_frame_independent_damage/Run()
 	var/obj/machinery/power/rbmk_turbine/single_tick_turbine = allocate(

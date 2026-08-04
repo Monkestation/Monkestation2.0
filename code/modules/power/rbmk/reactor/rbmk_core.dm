@@ -36,9 +36,9 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 	var/inlet_open = FALSE
 	/// Whether the paired outlet is enabled.
 	var/outlet_open = FALSE
-	/// Requested inlet transfer in moles per atmos cycle.
+	/// Requested inlet transfer in moles per second.
 	var/inlet_rate = RBMK_INLET_RATE_DEFAULT
-	/// Requested outlet transfer in moles per atmos cycle.
+	/// Requested outlet transfer in moles per second.
 	var/outlet_rate = RBMK_OUTLET_RATE_DEFAULT
 	/// Moles admitted during the latest paired atmos transfer.
 	var/last_inlet_moles_moved = 0

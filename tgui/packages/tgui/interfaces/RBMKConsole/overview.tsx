@@ -77,8 +77,8 @@ export const RBMKOverview = () => {
   );
 
   const pressure = Number(data?.pressure_current ?? 0);
-  const pressureWarning = Number(data?.pressure_warning ?? 950);
-  const pressureCritical = Number(data?.pressure_critical ?? 1500);
+  const pressureWarning = Number(data?.pressure_warning ?? 8000);
+  const pressureCritical = Number(data?.pressure_critical ?? 10000);
   const integrity = Number(data?.integrity ?? 0);
   const maxIntegrity = Math.max(1, Number(data?.max_integrity ?? 100));
   const integrityPercent = Math.max(

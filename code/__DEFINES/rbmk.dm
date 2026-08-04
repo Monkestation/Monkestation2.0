@@ -139,28 +139,28 @@
 
 /// Internal coolant capacity in liters.
 #define RBMK_COOLANT_VOLUME_MAX 2000
-/// Minimum inlet flow setting in moles per atmos cycle.
+/// Minimum inlet flow setting in moles per second.
 #define RBMK_INLET_RATE_MIN 0
-/// Default inlet flow setting in moles per atmos cycle.
+/// Default inlet flow setting in moles per second.
 #define RBMK_INLET_RATE_DEFAULT 75
-/// Maximum inlet flow setting in moles per atmos cycle.
+/// Maximum inlet flow setting in moles per second.
 #define RBMK_INLET_RATE_MAX 250
 /// Maximum pressure rise the reactor coolant injector can overcome above its supply pressure.
 #define RBMK_INLET_PUMP_HEAD 6500
-/// Minimum outlet flow setting in moles per atmos cycle.
+/// Minimum outlet flow setting in moles per second.
 #define RBMK_OUTLET_RATE_MIN 0
-/// Default outlet flow setting in moles per atmos cycle.
+/// Default outlet flow setting in moles per second.
 #define RBMK_OUTLET_RATE_DEFAULT 75
-/// Maximum outlet flow setting in moles per atmos cycle.
+/// Maximum outlet flow setting in moles per second.
 #define RBMK_OUTLET_RATE_MAX 750
 /// Prevents a single atmos update from evacuating the hot core and causing a pressure rebound on the next inlet update.
 #define RBMK_OUTLET_MAX_INVENTORY_FRACTION 0.5
 /// Pressure at which the operator UI shows a warning.
-#define RBMK_PRESSURE_WARNING 6000
+#define RBMK_PRESSURE_WARNING 8000
 /// Pressure at which critical pressure damage begins.
-#define RBMK_PRESSURE_CRITICAL 7200
+#define RBMK_PRESSURE_CRITICAL 10000
 /// Pressure at which the extreme pressure damage bonus applies.
-#define RBMK_PRESSURE_EXTREME 8600
+#define RBMK_PRESSURE_EXTREME 12000
 /// Divisor used to scale ordinary overpressure integrity damage.
 #define RBMK_PRESSURE_DAMAGE_DIVISOR 1200
 /// Divisor used to scale critical overpressure integrity damage.
@@ -186,7 +186,7 @@
 #define RBMK_COOLANT_MAX_GAS_TEMP_CHANGE 1800
 
 /// Keeps tritium useful as a coolant byproduct without letting it overwhelm pressure control every process tick.
-#define RBMK_TRITIUM_PRODUCTION_RATE 0.015
+#define RBMK_TRITIUM_PRODUCTION_RATE 0.005
 
 /// Prefix used by station announcements concerning RBMK failure.
 #define RBMK_MELTDOWN_PREFIX "RBMK MELTDOWN"
