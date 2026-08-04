@@ -324,7 +324,6 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 
 	init_stage_completed = 0
 	var/mc_started = FALSE
-
 	var/list/stage_sorted_subsystems = new(INITSTAGE_MAX)
 	for (var/i in 1 to INITSTAGE_MAX)
 		stage_sorted_subsystems[i] = list()
@@ -335,7 +334,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 
 	// Allows subsystems to declare other subsystems that must initialize after them.
 	for(var/datum/controller/subsystem/subsystem as anything in subsystems)
-		for(var/dependent_type as anything in subsystem.dependents)
+		for(var/dependent_type in subsystem.dependents)
 			if(!ispath(dependent_type, /datum/controller/subsystem))
 				stack_trace("ERROR: MC: subsystem `[subsystem.type]` has an invalid dependent: `[dependent_type]`. Skipping")
 				continue
@@ -345,7 +344,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 
 	// Constructs a reverse-dependency graph.
 	for(var/datum/controller/subsystem/subsystem as anything in subsystems)
-		for(var/dependency_type as anything in subsystem.dependencies)
+		for(var/dependency_type in subsystem.dependencies)
 			if(!ispath(dependency_type, /datum/controller/subsystem))
 				stack_trace("ERROR: MC: subsystem `[subsystem.type]` has an invalid dependency: `[dependency_type]`. Skipping")
 				continue
@@ -379,11 +378,11 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 	// Topological sorting algorithm end
 
 	if(length(subsystems) != length(sorted_subsystems))
-		var/list/circular_dependency = subsystems.Copy() - sorted_subsystems
+		var/list/circular_dependency = subsystems - sorted_subsystems
 		var/list/debug_msg = list()
 		var/list/usr_msg = list()
 		for(var/datum/controller/subsystem/subsystem as anything in circular_dependency)
-			usr_msg += "[subsystem.name]"
+			usr_msg += subsystem.name
 
 		var/list/datum/controller/subsystem/nodes = list(circular_dependency[1])
 		var/list/loop = list()
@@ -423,20 +422,21 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 	var/evaluated_order = 1
 	sortTim(subsystems, GLOBAL_PROC_REF(cmp_subsystem_display))
 	var/start_timeofday = REALTIMEOFDAY
-
 	for (var/current_init_stage in 1 to INITSTAGE_MAX)
+
 		// Initialize subsystems.
-		for(var/datum/controller/subsystem/subsystem in stage_sorted_subsystems[current_init_stage])
+		for (var/datum/controller/subsystem/subsystem in stage_sorted_subsystems[current_init_stage])
 			subsystem.init_order = evaluated_order
 			evaluated_order++
 			init_subsystem(subsystem)
+
 			CHECK_TICK
 		current_initializing_subsystem = null
 		init_stage_completed = current_init_stage
 		if (!mc_started)
 			mc_started = TRUE
 			if (!current_runlevel)
-				SetRunLevel(1)
+				SetRunLevel(1) // Intentionally not using the defines here because the MC doesn't care about them
 			// Loop.
 			Master.StartProcessing(0)
 
