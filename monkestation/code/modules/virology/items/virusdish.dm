@@ -7,15 +7,22 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	icon = 'monkestation/code/modules/virology/icons/virology.dmi'
 	icon_state = "virusdish"
 	w_class = WEIGHT_CLASS_SMALL
-	//sterility = 100//the outside of the dish is sterile.
+
+	/// Growth of our virus
 	var/growth = 0
+	/// Info on our virus
 	var/info = ""
+	/// Was our disease analyzed?
 	var/analysed = FALSE
+	/// Virus in virus dish
 	var/datum/disease/acute/contained_virus
 	/// Boolean, TRUE if the lid is opened
 	var/open = FALSE
-	var/cloud_delay = 8 SECONDS//similar to a mob's breathing
+	/// Similar to a mob's breathing
+	var/cloud_delay = 8 SECONDS
+	/// Who last opened the lid?
 	var/mob/last_openner
+	/// Disease cloud cooldown
 	COOLDOWN_DECLARE(cloud_cooldown)
 
 /obj/item/virus_dish/Initialize(mapload)
