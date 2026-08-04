@@ -194,7 +194,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	else if(isopenturf(loc))
 		for(var/mob/living/potential_victim in loc.contents)
 			infection_attempt(potential_victim, contained_virus)
-	if(!contained_virus.spread_flags & DISEASE_SPREAD_AIRBORNE || COOLDOWN_FINISHED(src, cloud_cooldown))
+	if(!(contained_virus.spread_flags & DISEASE_SPREAD_AIRBORNE) || COOLDOWN_FINISHED(src, cloud_cooldown))
 		return
 	COOLDOWN_START(src, cloud_cooldown, cloud_delay)
 	var/list/disease_list = list(contained_virus)
