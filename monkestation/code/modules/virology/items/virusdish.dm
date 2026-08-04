@@ -257,7 +257,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		return
 	var/list/disease_list = list()
 	disease_list |= contained_virus
-	LAZYOR(blood.data["diseases"], filter_disease_by_spread(disease, required = DISEASE_SPREAD_BLOOD))
+	LAZYOR(blood.data["diseases"], filter_disease_by_spread(disease_list, required = DISEASE_SPREAD_BLOOD))
 
 /obj/item/virus_dish/proc/shatter(mob/user)
 	var/obj/effect/decal/cleanable/virusdish/dish = new(get_turf(src))
