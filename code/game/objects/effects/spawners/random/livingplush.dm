@@ -32,6 +32,3 @@
 	created.health = 50
 
 	created.PossessByPlayer(chosen.ckey)
-
-	//var/datum/language_holder/lang = created.get_language_holder()
-	//lang.omnitongue = TRUE
