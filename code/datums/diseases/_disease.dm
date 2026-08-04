@@ -23,23 +23,26 @@ GLOBAL_LIST_INIT(virusDB, list())
 	var/stage_prob = 2
 
 	//Other
-	var/list/viable_mobtypes = list() //typepaths of viable mobs
 	var/mob/living/affected_mob = null
 	var/list/cures = list() //list of cures if the disease has the CURABLE flag, these are reagent ids
 	/// The probability of spreading through the air every second
 	var/infectivity = 41
 	/// The probability of this infection being cured every second the cure is present
 	var/cure_chance = 4
-	var/carrier = FALSE //If our host is only a carrier
-	var/bypasses_immunity = FALSE //Does it skip species virus immunity check? Some things may diseases and not viruses
+	/// If our host is only a carrier
+	var/carrier = FALSE
+	/// Does it skip species virus immunity check? Some things may diseases and not viruses
+	var/bypasses_immunity = FALSE
 	var/spreading_modifier = 1
 	var/severity = DISEASE_SEVERITY_NONTHREAT
 	/// If the disease requires an organ for the effects to function, robotic organs are immune to disease unless inorganic biology symptom is present
 	var/required_organ
 	var/needs_all_cures = TRUE
 	var/list/strain_data = list() //dna_spread special bullshit
-	var/infectable_biotypes = MOB_ORGANIC //if the disease can spread on organics, synthetics, or undead
-	var/process_dead = FALSE //if this ticks while the host is dead
+	/// if the disease can spread on organics, synthetics, or undead
+	var/infectable_biotypes = MOB_ORGANIC
+	/// if this ticks while the host is dead
+	var/process_dead = FALSE
 	var/copy_type = null //if this is null, copies will use the type of the instance being copied
 	var/list/symptoms = list() // The symptoms of the disease.
 
@@ -58,18 +61,18 @@ GLOBAL_LIST_INIT(virusDB, list())
 	///split category used for predefined diseases atm
 	var/category = DISEASE_NORMAL
 
-	//logging
+	// Logging
 	var/log = ""
 	var/origin = "Unknown"
 	var/logged_virusfood = FALSE
 	var/fever_warning = FALSE
 
-	//cosmetic
+	// Cosmetic
 	var/color
 	var/pattern = 1
 	var/pattern_color
 
-	///pathogenic warfare - If you have a second disease of a form name in the list they will start fighting.
+	/// Pathogenic warfare - If you have a second disease of a form name in the list they will start fighting.
 	var/list/can_kill = list("Bacteria")
 
 	//When an opportunity for the disease to spread_flags to a mob arrives, runs this percentage through prob()
