@@ -1,8 +1,0 @@
-author: "hexakats"
-delete-after: True
-changes:
-  - balance: "Replaced the syndicate revolver in the traitor uplink with a revolver case that comes with the revolver and 3 speedloaders for 12TC"
-  - balance: "Syndicate rebar crossbow is now 8 tc"
-  - balance: "Syndicate rebar crossbow now starts with a jagged iron rods a the starting ammo"
-  - balance: "Syndicate rebar crossbow now only holds one rod in its internal magazine"
-  - spellcheck: "makarov magazine descriptions now correctly say 12 rounds instead of 8 on the uplink"

@@ -26,3 +26,27 @@
       now correctly automatically refuel their welder when it is off.
   nasend_:
   - bugfix: Bullets now leave debris particles.
+2026-08-04:
+  Runian:
+  - bugfix: Falling into a chasm as a cyborg no longer deletes your MMI and allows
+      you to re-enter your cyborg body.
+  - bugfix: Clockwork Soul Vessels now correctly carry over their clockwork antag
+      status whenever becoming a cyborg.
+  - bugfix: Fixes clockwork cult power generation trying to update action buttons
+      for mobs that don't exist.
+  TheColorCyan:
+  - bugfix: fixes slimes runtiming when trying to latch onto borgs
+  - bugfix: slimes cant latch onto robotic mobs anymore
+  - bugfix: fixed spy uplink runtiming and not doing anything
+  - bugfix: fixed oozeling spewing blood around on slasher machete hits
+  - bugfix: fixed blood dna and share blood related runtimes
+  - bugfix: fixed ancient sarcofagus from bubblegum having wrong sprite
+  hexakats:
+  - balance: Replaced the syndicate revolver in the traitor uplink with a revolver
+      case that comes with the revolver and 3 speedloaders for 12TC
+  - balance: Syndicate rebar crossbow is now 8 tc
+  - balance: Syndicate rebar crossbow now starts with a jagged iron rods a the starting
+      ammo
+  - balance: Syndicate rebar crossbow now only holds one rod in its internal magazine
+  - spellcheck: makarov magazine descriptions now correctly say 12 rounds instead
+      of 8 on the uplink

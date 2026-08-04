@@ -1,4 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - bugfix: "Clockwork Soul Vessels now correctly carry over their clockwork antag status whenever becoming a cyborg."
