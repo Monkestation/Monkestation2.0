@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		overlays += "virusdish-outdated"
 
 /obj/item/virus_dish/attack_hand(mob/living/user, list/modifiers)
-	..()
+	. = ..()
 	infection_attempt(user)
 
 /obj/item/virus_dish/attack_self(mob/living/user, list/modifiers)
@@ -84,13 +84,16 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	to_chat(user,span_notice("You [open?"open":"close"] dish's lid."))
 	if(open)
 		last_openner = user
-		if(contained_virus)
-			contained_virus.log += "<br />[ROUND_TIME()] Containment Dish opened by [key_name(user)]."
-			START_PROCESSING(SSobj, src)
+		if(!contained_virus)
+			return
+		contained_virus.log += "<br />[ROUND_TIME()] Containment Dish opened by [key_name(user)]."
+		START_PROCESSING(SSobj, src)
 	else
-		if(contained_virus)
-			contained_virus.log += "<br />[ROUND_TIME()] Containment Dish closed by [key_name(user)]."
 		STOP_PROCESSING(SSobj, src)
+		if(!contained_virus)
+			return
+		contained_virus.log += "<br />[ROUND_TIME()] Containment Dish closed by [key_name(user)]."
+
 	infection_attempt(user)
 
 /obj/item/virus_dish/is_open_container()
@@ -196,42 +199,12 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			var/list/L = list(contained_virus)
 			new /obj/effect/pathogen_cloud/core(get_turf(src), last_openner, virus_copylist(L), FALSE)
 
-/obj/item/virus_dish/random
-	name = "growth dish"
-
-/obj/item/virus_dish/random/Initialize(mapload)
-	. = ..()
-	if(!loc) //because fuck you /datum/subsystem/supply_shuttle/Initialize()
-		GLOB.virusdishes -= src
-		return
-	var/virus_choice = pick(WILD_ACUTE_DISEASES)
-	contained_virus = new virus_choice
-	var/list/anti = list(
-		ANTIGEN_BLOOD	= 2,
-		ANTIGEN_COMMON	= 2,
-		ANTIGEN_RARE	= 1,
-		ANTIGEN_ALIEN	= 0,
-		)
-	var/list/bad = list(
-		EFFECT_DANGER_HELPFUL	= 1,
-		EFFECT_DANGER_FLAVOR	= 2,
-		EFFECT_DANGER_ANNOYING	= 2,
-		EFFECT_DANGER_HINDRANCE	= 2,
-		EFFECT_DANGER_HARMFUL	= 2,
-		EFFECT_DANGER_DEADLY	= 0,
-		)
-	contained_virus.makerandom(list(50,90),list(10,100),anti,bad,src)
-	contained_virus.Refresh_Acute()
-	growth = rand(5, 50)
-	name = "growth dish (Unknown [contained_virus.form])"
-	update_appearance()
-	contained_virus.origin = "Random Dish"
-
 /obj/item/virus_dish/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
-	if(isturf(hit_atom))
-		visible_message(span_danger("The virus dish shatters on impact!"))
-		shatter(throwingdatum.thrower)
+	. = ..()
+	if(!isturf(hit_atom))
+		return
+	visible_message(span_danger("The virus dish shatters on impact!"))
+	shatter(throwingdatum.thrower)
 
 /obj/item/virus_dish/proc/incubate(mutatechance=5, growthrate=3, effect_focus = 0)
 	if(contained_virus)
@@ -323,3 +296,34 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			else if(bleeding && (contained_virus.spread_flags & DISEASE_SPREAD_BLOOD))
 				perp.infect_disease(contained_virus, notes="(Blood, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over a virus dish[last_openner ? " opened by [key_name(last_openner)]" : ""])")
 	..(perp,D)
+
+/obj/item/virus_dish/random
+	name = "growth dish"
+
+/obj/item/virus_dish/random/Initialize(mapload)
+	. = ..()
+	if(!loc) //because fuck you /datum/subsystem/supply_shuttle/Initialize()
+		GLOB.virusdishes -= src
+		return
+	var/virus_choice = pick(WILD_ACUTE_DISEASES)
+	contained_virus = new virus_choice
+	var/list/anti = list(
+		ANTIGEN_BLOOD	= 2,
+		ANTIGEN_COMMON	= 2,
+		ANTIGEN_RARE	= 1,
+		ANTIGEN_ALIEN	= 0,
+		)
+	var/list/bad = list(
+		EFFECT_DANGER_HELPFUL	= 1,
+		EFFECT_DANGER_FLAVOR	= 2,
+		EFFECT_DANGER_ANNOYING	= 2,
+		EFFECT_DANGER_HINDRANCE	= 2,
+		EFFECT_DANGER_HARMFUL	= 2,
+		EFFECT_DANGER_DEADLY	= 0,
+		)
+	contained_virus.makerandom(list(50,90),list(10,100),anti,bad,src)
+	contained_virus.Refresh_Acute()
+	growth = rand(5, 50)
+	name = "growth dish (Unknown [contained_virus.form])"
+	update_appearance()
+	contained_virus.origin = "Random Dish"
