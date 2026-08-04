@@ -1,5 +1,4 @@
 import { useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { logger } from 'tgui/logging';
 import { Box, InfinitePlane, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 import { resolveAsset } from '../assets';
