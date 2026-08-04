@@ -200,7 +200,6 @@
 
 	var/sound_state = RBMK_SOUND_LOW
 
-
 /datum/looping_sound/rbmk_reactor/proc/set_sound_state(new_state)
 	if(sound_state == new_state)
 		return
@@ -224,7 +223,6 @@
 	live_attenuation_max_distance = 20
 	falloff_distance = 5
 
-
 /datum/looping_sound/rbmk_reactor/get_sound(_mid_sounds)
 	switch(sound_state)
 		if(RBMK_SOUND_MAX)
@@ -234,7 +232,6 @@
 			return 'sound/rbmk/reactor_hum_high.ogg'
 
 	return 'sound/rbmk/reactor_hum_low.ogg'
-
 
 /datum/looping_sound/rbmk_cascade
 	mid_sounds = list('sound/rbmk/cascade_loop.ogg')
@@ -252,7 +249,6 @@
 	falloff_exponent = 2
 	ignore_walls = FALSE
 	pressure_affected = FALSE
-
 
 /datum/looping_sound/rbmk_turbine
 	start_sound = 'sound/rbmk/turbine_start.ogg'

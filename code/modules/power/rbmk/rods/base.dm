@@ -1,3 +1,4 @@
+/// Base item for fuel, moderator, and exotic rods accepted by an RBMK reactor.
 /obj/item/rbmk/fuel_rod
 	name = "Fuel Rod"
 	desc = "A generic fuel rod designed for RBMK reactors."
@@ -5,116 +6,118 @@
 	icon_state = "empty"
 	layer = OBJ_LAYER + 0.02
 	plane = GAME_PLANE
-
-	var/rod_type = "empty"
+	/// Stable identifier used by the fuel processor and reactor telemetry.
+	var/rod_type = RBMK_ROD_TYPE_EMPTY
+	/// UI color associated with this rod type.
 	var/rod_color = "grey"
-
+	/// Whether this rod occupies the reactor's limited special-rod bank.
+	var/uses_special_slot = FALSE
+	/// Remaining usable fuel; infinite-fuel moderator rods use `INFINITY`.
 	var/fuel_amount = 100
 	/// Fuel consumed per second while the rod is active in a reactor.
 	var/fuel_consumption = 0.5
-
+	/// Base reaction strength used to derive all three rod outputs.
 	var/reactivity = 10
+	/// Multiplier applied to neutron-flux output.
 	var/flux_multiplier = 1.0
+	/// Multiplier applied to radiation output.
 	var/radiation_multiplier = 1.0
+	/// Multiplier applied to heat output.
 	var/thermal_multiplier = 1.0
-
-	var/active = TRUE
 	/// Whether this rod can sustain reactor operation by producing direct output.
 	var/contributes_to_reaction = TRUE
-	var/activated_in_reactor = FALSE
+	/// Whether reactor exposure has made the item radioactive.
 	var/irradiated = FALSE
-
+	/// Icon state shown after this rod is depleted.
 	var/depleted_icon_state = "rod_empty"
+	/// Description shown after this rod is depleted.
 	var/depleted_description = "An empty fuel rod ready for packing."
-
+	/// Radius of radiation pulses emitted by the item outside a reactor.
 	var/item_radiation_range = 2
+	/// Exposure threshold passed to the radiation pulse helper.
 	var/item_radiation_threshold = 0.55
+	/// Chance parameter passed to the radiation pulse helper.
 	var/item_radiation_chance = 25
+	/// Radiation strength emitted by a depleted rod.
 	var/item_radiation_intensity = 35
+	/// Radiation strength emitted by an activated rod that still has fuel.
 	var/item_radiation_intensity_activated = 15
+	/// Minimum delay between item radiation pulses.
 	var/item_radiation_pulse_interval = 3 SECONDS
-	var/last_item_radiation_pulse = 0
-
+	COOLDOWN_DECLARE(item_radiation_pulse_cooldown)
 
 /obj/item/rbmk/fuel_rod/Initialize(mapload)
 	. = ..()
-
 	if(should_process_item_radiation())
+		COOLDOWN_START(src, item_radiation_pulse_cooldown, item_radiation_pulse_interval)
 		START_PROCESSING(SSobj, src)
-
 
 /obj/item/rbmk/fuel_rod/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-
 /obj/item/rbmk/fuel_rod/process(seconds_per_tick)
 	if(!should_process_item_radiation())
 		STOP_PROCESSING(SSobj, src)
 		return
-
 	emit_item_radiation()
 
+/obj/item/rbmk/fuel_rod/update_icon_state()
+	. = ..()
+	icon_state = is_depleted() ? depleted_icon_state : initial(icon_state)
 
+/obj/item/rbmk/fuel_rod/update_desc(updates = ALL)
+	. = ..()
+	desc = is_depleted() ? depleted_description : initial(desc)
+
+/// Returns whether this rod can no longer produce reactor output.
 /obj/item/rbmk/fuel_rod/proc/is_depleted()
-	return !active || fuel_amount <= 0
+	return fuel_amount <= 0
 
-
+/// Returns the rod's remaining fuel as a percentage of its initial charge.
 /obj/item/rbmk/fuel_rod/proc/get_fuel_percent()
 	if(fuel_amount >= INFINITY)
 		return 100
-
 	var/initial_fuel_amount = initial(fuel_amount)
 	if(initial_fuel_amount <= 0)
 		return is_depleted() ? 0 : 100
-
 	return clamp((fuel_amount / initial_fuel_amount) * 100, 0, 100)
 
-
+/// Returns whether the rod is currently owned by an RBMK reactor vessel.
 /obj/item/rbmk/fuel_rod/proc/is_inside_reactor()
 	return istype(loc, /obj/machinery/rbmk/reactor)
 
-
+/// Returns whether the rod should emit radiation while outside a reactor.
 /obj/item/rbmk/fuel_rod/proc/is_radioactive_item()
 	return irradiated || is_depleted()
 
-
+/// Returns whether this rod needs standalone processing for its radiation pulse.
 /obj/item/rbmk/fuel_rod/proc/should_process_item_radiation()
 	if(!is_radioactive_item())
 		return FALSE
-
 	return TRUE
 
-
+/// Marks the rod active and transfers radiation responsibility to its reactor.
 /obj/item/rbmk/fuel_rod/proc/activate_in_reactor()
-	if(activated_in_reactor && irradiated)
+	if(irradiated)
 		return
-
-	activated_in_reactor = TRUE
 	irradiated = TRUE
-
-
+	COOLDOWN_START(src, item_radiation_pulse_cooldown, item_radiation_pulse_interval)
 	START_PROCESSING(SSobj, src)
 
-
+/// Emits the rod's cooldown-gated radiation pulse while outside a reactor.
 /obj/item/rbmk/fuel_rod/proc/emit_item_radiation()
 	if(!is_radioactive_item())
 		return
-
 	if(is_inside_reactor())
 		return
-
-	if(world.time < last_item_radiation_pulse + item_radiation_pulse_interval)
+	if(!COOLDOWN_FINISHED(src, item_radiation_pulse_cooldown))
 		return
-
 	var/turf/current_turf = get_turf(src)
 	if(!current_turf)
 		return
-
-	last_item_radiation_pulse = world.time
-
+	COOLDOWN_START(src, item_radiation_pulse_cooldown, item_radiation_pulse_interval)
 	var/current_intensity = is_depleted() ? item_radiation_intensity : item_radiation_intensity_activated
-
 	radiation_pulse(
 		src,
 		item_radiation_range,
@@ -122,21 +125,18 @@
 		item_radiation_chance,
 		0,
 		current_intensity,
-		TRUE
+		TRUE,
 	)
 
-
+/// Converts an exhausted rod to its depleted appearance and inert fuel state.
 /obj/item/rbmk/fuel_rod/proc/deplete_rod()
-	active = FALSE
 	fuel_amount = 0
-	activated_in_reactor = TRUE
 	irradiated = TRUE
-	icon_state = depleted_icon_state
-	desc = depleted_description
-
+	update_appearance(UPDATE_DESC | UPDATE_ICON_STATE)
+	COOLDOWN_START(src, item_radiation_pulse_cooldown, item_radiation_pulse_interval)
 	START_PROCESSING(SSobj, src)
 
-
+/// Returns the rod's contribution when it has no remaining usable fuel.
 /obj/item/rbmk/fuel_rod/proc/get_zero_output()
 	return list(
 		"flux" = 0,
@@ -144,7 +144,7 @@
 		"heat" = 0,
 	)
 
-
+/// Returns this rod's current reactor modifier contribution.
 /obj/item/rbmk/fuel_rod/proc/get_modifier_output()
 	return list(
 		"temperature_limit_bonus" = 0,
@@ -152,39 +152,29 @@
 		"flux_multiplier_bonus" = 0,
 	)
 
-
+/// Returns residual radiation contributed by an installed but inactive rod.
 /obj/item/rbmk/fuel_rod/proc/get_residual_radiation_output()
-	if(!active || fuel_amount <= 0)
+	if(is_depleted())
 		return 0
-
 	return reactivity * radiation_multiplier
 
-
+/// Advances fuel depletion and returns the rod's frame-independent reactor output.
 /obj/item/rbmk/fuel_rod/proc/process_rod(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
-	if(!active)
-		return get_zero_output()
-
-	if(fuel_amount <= 0)
+	if(is_depleted())
 		deplete_rod()
 		return get_zero_output()
-
 	activate_in_reactor()
-
 	fuel_amount = max(0, fuel_amount - (fuel_consumption * seconds_per_tick))
-
 	// Let the last unit of fuel still produce output this tick,
 	// then mark the rod spent afterward.
 	var/should_deplete_after_output = (fuel_amount <= 0)
-
 	var/rod_flux_output = reactivity * flux_multiplier
 	var/rod_radiation_output = reactivity * radiation_multiplier
 	var/rod_heat_output = reactivity * thermal_multiplier
-
 	if(should_deplete_after_output)
 		deplete_rod()
-
 	return list(
 		"flux" = rod_flux_output,
 		"radiation" = rod_radiation_output,
-		"heat" = rod_heat_output
+		"heat" = rod_heat_output,
 	)

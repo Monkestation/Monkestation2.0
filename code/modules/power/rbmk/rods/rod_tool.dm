@@ -1,3 +1,4 @@
+/// Reinforced tool used for interruptible manual rod extraction.
 /obj/item/rbmk/rod_tool
 	name = "RBMK Rod Extractor"
 	desc = "A reinforced tool used to manually extract RBMK fuel rods from a reactor core. Emergency extraction from a hot core is extremely dangerous."

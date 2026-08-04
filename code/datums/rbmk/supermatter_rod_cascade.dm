@@ -1,254 +1,212 @@
+/// Centers the cascade warp over the reactor sprite.
+#define RBMK_CASCADE_WARP_PIXEL_OFFSET -112
+
+/// Controls the staged failure sequence caused by an active supermatter rod.
 /datum/supermatter_rod_cascade
+	/// Supermatter rod that initiated this cascade.
 	var/obj/item/rbmk/fuel_rod/supermatter/source_rod = null
+	/// Reactor in which the source rod was activated.
 	var/obj/machinery/rbmk/reactor/reactor = null
+	/// Looping sound controller for the cascade warning audio.
 	var/datum/looping_sound/rbmk_cascade/cascade_soundloop = null
-
+	/// World time at which the cascade began.
 	var/started_at = 0
+	/// Duration of the removable pre-failure cascade phase.
 	var/duration = 5 MINUTES
+	/// Minimum vessel temperature maintained during the cascade.
 	var/cascade_hold_temperature = 8000
-
-	var/final_countdown_active = FALSE
+	/// World time at which the terminal countdown began.
 	var/final_countdown_started_at = 0
+	/// Duration of the terminal countdown.
 	var/final_countdown_duration = 30 SECONDS
+	/// Last countdown second announced, used to suppress duplicates.
 	var/last_countdown_announce = null
+	/// Last whole-minute reactor warning announced.
 	var/last_reactor_minute_announce = null
-
-	var/start_announced = FALSE
+	/// Whether the two-minute warning has been sent.
 	var/two_minute_warning_announced = FALSE
+	/// Whether the one-minute security warning has been sent.
 	var/one_minute_security_announced = FALSE
-
-	var/last_psychic_message = 0
-	var/psychic_message_interval = 20 SECONDS
-
+	COOLDOWN_DECLARE(psychic_message_cooldown)
+	/// Visual distortion effect centered on the reactor.
 	var/atom/movable/warp_effect/warp = null
-	var/last_warp_update = 0
-	var/warp_update_interval = 1 SECONDS
+	/// Last applied whole-minute visual intensity stage.
 	var/last_warp_stage = -1
-
 	// Centering offset for the large warp icon.
 	// The warp icon is larger than 32x32, so 0,0 anchors its bottom-left corner to the reactor.
 	// -112 centers a 256x256 effect over a normal tile-centered reactor visual.
-	var/warp_center_pixel_x = -112
-	var/warp_center_pixel_y = -112
-
 
 /datum/supermatter_rod_cascade/New(obj/item/rbmk/fuel_rod/supermatter/new_source_rod, obj/machinery/rbmk/reactor/new_reactor)
 	. = ..()
-
 	source_rod = new_source_rod
 	reactor = new_reactor
-
 	if(!source_rod || QDELETED(source_rod) || !reactor || QDELETED(reactor))
 		qdel(src)
 		return
-
 	started_at = world.time
-
-	reactor.supermatter_cascade_active = TRUE
 	reactor.supermatter_rod = source_rod
 	reactor.stop_reactor_sound()
 	cascade_soundloop = new /datum/looping_sound/rbmk_cascade(reactor, TRUE)
-
 	message_admins("[reactor] has begun an RBMK supermatter rod cascade. [ADMIN_VERBOSEJMP(reactor)]")
 	reactor.investigate_log("has begun an RBMK supermatter rod cascade.", INVESTIGATE_ENGINE)
-
 	create_warp()
 	announce_start()
-
 	START_PROCESSING(SSobj, src)
-
 
 /datum/supermatter_rod_cascade/Destroy(force)
 	STOP_PROCESSING(SSobj, src)
 	stop_cascade_sound()
 	cleanup_warp()
-
+	if(source_rod?.cascade_controller == src)
+		source_rod.cascade_controller = null
+	if(reactor?.supermatter_rod == source_rod)
+		reactor.supermatter_rod = null
 	source_rod = null
 	reactor = null
-
 	return ..()
 
-
+/// Stops the reactor-owned cascade loop when this controller is still authoritative.
 /datum/supermatter_rod_cascade/proc/stop_cascade_sound()
 	if(cascade_soundloop)
 		cascade_soundloop.stop()
 	QDEL_NULL(cascade_soundloop)
 
-
 /datum/supermatter_rod_cascade/process(seconds_per_tick)
 	if(!source_rod || QDELETED(source_rod) || !reactor || QDELETED(reactor))
 		qdel(src)
 		return
-
 	if(!(source_rod in reactor.special_slots))
 		stop(TRUE)
 		return
-
-	if(final_countdown_active)
+	if(final_countdown_started_at)
 		process_final_countdown(seconds_per_tick)
 		return
-
 	process_cascade(seconds_per_tick)
 
-
+/// Advances cascade instability, warnings, and visual distortion before the final countdown.
 /datum/supermatter_rod_cascade/proc/process_cascade(seconds_per_tick)
 	var/elapsed = world.time - started_at
 	var/time_left = max(duration - elapsed, 0)
 	var/progress = clamp(elapsed / duration, 0, 1)
 	var/minutes_left = CEILING(time_left / (1 MINUTES), 1)
-
 	if(minutes_left > 0 && minutes_left != last_reactor_minute_announce)
 		last_reactor_minute_announce = minutes_left
 		blare_reactor_countdown("[minutes_left] MINUTE[minutes_left == 1 ? "" : "S"] UNTIL CONTAINMENT FAILURE")
-
 	if(time_left <= 2 MINUTES)
 		announce_two_minute_warning()
-
-	if(time_left <= 1 MINUTE)
+	if(time_left <= 1 MINUTES)
 		announce_one_minute_security()
-
 	update_warp(progress)
 	send_stationwide_feelings()
-
 	reactor.running = TRUE
 	reactor.scrammed = FALSE
 	reactor.temperature = cascade_hold_temperature
 	reactor.thermal_output = 0
 	reactor.last_tick_temp_gain = 0
-
 	reactor.update_reactor_integrity()
-	reactor.update_reactor_icon()
+	reactor.update_appearance(UPDATE_ICON)
 	reactor.update_linked_consoles()
-
 	if(progress >= 1)
 		start_final_countdown()
 
-
+/// Transitions an unresolved cascade into its timed terminal-failure phase.
 /datum/supermatter_rod_cascade/proc/start_final_countdown()
-	if(final_countdown_active)
+	if(final_countdown_started_at)
 		return
-
-	final_countdown_active = TRUE
 	final_countdown_started_at = world.time
 	last_countdown_announce = null
-
 	message_admins("[reactor] has entered terminal RBMK supermatter cascade countdown. [ADMIN_VERBOSEJMP(reactor)]")
 	reactor.investigate_log("entered terminal RBMK supermatter cascade countdown.", INVESTIGATE_ENGINE)
-
 	priority_announce(
 		"CRITICAL ALERT: RBMK supermatter resonance has reached terminal instability. Final cascade failure is imminent.",
 		"Central Command Emergency Authority",
-		'sound/misc/airraid.ogg'
+		'sound/misc/airraid.ogg',
 	)
 
-
+/// Advances final-countdown effects and triggers failure when time expires.
 /datum/supermatter_rod_cascade/proc/process_final_countdown(seconds_per_tick)
 	var/elapsed = world.time - final_countdown_started_at
 	var/time_left = max(final_countdown_duration - elapsed, 0)
-
 	reactor.running = TRUE
 	reactor.scrammed = FALSE
 	reactor.temperature = cascade_hold_temperature
 	reactor.thermal_output = 0
 	reactor.last_tick_temp_gain = 0
-
 	update_warp(1)
 	send_stationwide_feelings()
-
 	var/seconds_left = CEILING(time_left / (1 SECONDS), 1)
 	var/should_announce_second = seconds_left <= 10 || (seconds_left <= 30 && seconds_left % 5 == 0)
 	if(should_announce_second && seconds_left != last_countdown_announce)
 		last_countdown_announce = seconds_left
 		blare_reactor_countdown("[seconds_left]")
-
 	reactor.update_reactor_integrity()
-	reactor.update_reactor_icon()
+	reactor.update_appearance(UPDATE_ICON)
 	reactor.update_linked_consoles()
-
 	if(time_left <= 0)
 		trigger_failure()
 
-
+/// Broadcasts one countdown message through the reactor and station alert paths.
 /datum/supermatter_rod_cascade/proc/blare_reactor_countdown(message)
 	if(!reactor || QDELETED(reactor) || !message)
 		return
-
 	reactor.visible_message(
 		span_userdanger("[reactor]'s emergency annunciator blares: \"[message]\""),
-		blind_message = span_hear("A reactor emergency annunciator blares: \"[message]\"")
+		blind_message = span_hear("A reactor emergency annunciator blares: \"[message]\""),
 	)
 	playsound(reactor, 'sound/rbmk/alarm.ogg', 90, FALSE, extrarange = 12)
 
-
+/// Announces the initial cascade condition to engineering and nearby players.
 /datum/supermatter_rod_cascade/proc/announce_start()
-	if(start_announced)
-		return
-
-	start_announced = TRUE
-
 	priority_announce(
 		"Attention: abnormal harmonic flux has been detected inside an RBMK reactor aboard [station_name()]. Engineering personnel are advised to investigate immediately.",
 		"Nanotrasen Reactor Monitoring Network",
-		'sound/misc/airraid.ogg'
+		'sound/misc/airraid.ogg',
 	)
 
-
+/// Emits the two-minute evacuation warning once per cascade.
 /datum/supermatter_rod_cascade/proc/announce_two_minute_warning()
 	if(two_minute_warning_announced)
 		return
-
 	two_minute_warning_announced = TRUE
-
 	priority_announce(
 		"Central Command warning: the RBMK reactor is undergoing a localized supermatter resonance cascade. Manual intervention is required. Failure to remove the anomalous fuel rod may result in catastrophic reactor failure.",
 		"Central Command Engineering Oversight",
-		'sound/misc/notice1.ogg'
+		'sound/misc/notice1.ogg',
 	)
 
-
+/// Emits the final security warning once per cascade.
 /datum/supermatter_rod_cascade/proc/announce_one_minute_security()
 	if(one_minute_security_announced)
 		return
-
 	one_minute_security_announced = TRUE
-
 	priority_announce(
 		"Central Command emergency directive: supermatter resonance cascade is approaching terminal instability. All crew are ordered to assist engineering or evacuate the reactor sector. Security is authorized to enforce emergency access and evacuation procedures.",
 		"Central Command Emergency Authority",
-		'sound/misc/airraid.ogg'
+		'sound/misc/airraid.ogg',
 	)
-
 	if(SSsecurity_level.get_current_level_as_number() != SEC_LEVEL_DELTA)
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 
-
+/// Creates the localized visual warp associated with the active cascade.
 /datum/supermatter_rod_cascade/proc/create_warp()
 	if(!reactor)
 		return
-
 	warp = new(reactor)
 	reactor.vis_contents += warp
-
 	// The warp icon is huge. Center it over the reactor instead of anchoring its bottom-left corner.
-	warp.pixel_x = warp_center_pixel_x
-	warp.pixel_y = warp_center_pixel_y
-
+	warp.pixel_x = RBMK_CASCADE_WARP_PIXEL_OFFSET
+	warp.pixel_y = RBMK_CASCADE_WARP_PIXEL_OFFSET
 	// Do not grow/move the warp. The effect gets stronger through filters only.
 	warp.transform = matrix()
 	warp.alpha = 255
-
 	last_warp_stage = -1
-	last_warp_update = 0
-
 	apply_warp_strength(0)
 
-
+/// Updates warp appearance and strength from normalized cascade progress.
 /datum/supermatter_rod_cascade/proc/update_warp(progress)
 	if(!warp)
 		return
-
 	var/clamped_progress = clamp(progress, 0, 1)
-
 	// Five-minute cascade: increase distortion once per minute.
 	// Stage 0 = 5 minutes left.
 	// Stage 1 = 4 minutes left.
@@ -257,35 +215,27 @@
 	// Stage 4 = 1 minute left.
 	// Stage 5 = terminal intensity.
 	var/warp_stage = clamp(FLOOR(clamped_progress * 5, 1), 0, 5)
-
 	if(warp_stage == last_warp_stage)
 		return
-
 	last_warp_stage = warp_stage
-	last_warp_update = world.time
-
 	apply_warp_strength(warp_stage)
 
-
+/// Applies one discrete transform stage to all owned warp appearances.
 /datum/supermatter_rod_cascade/proc/apply_warp_strength(warp_stage)
 	if(!warp || !reactor)
 		return
-
 	var/stage_progress = clamp(warp_stage / 5, 0, 1)
-
 	// Keep the large warp icon centered over the reactor every update.
 	warp.loc = reactor
-	warp.pixel_x = warp_center_pixel_x
-	warp.pixel_y = warp_center_pixel_y
+	warp.pixel_x = RBMK_CASCADE_WARP_PIXEL_OFFSET
+	warp.pixel_y = RBMK_CASCADE_WARP_PIXEL_OFFSET
 	warp.transform = matrix()
 	warp.alpha = 255
-
 	// Stronger distortion each minute.
 	// This affects the pinch strength without growing the warp sprite.
 	var/ripple_strength = 3 + (stage_progress * 22)
 	var/ripple_repeat = max(24 - round(stage_progress * 12), 8)
 	var/ripple_radius = 96
-
 	warp.filters = list(
 		filter(
 			type = "ripple",
@@ -294,27 +244,23 @@
 			size = ripple_strength,
 			repeat = ripple_repeat,
 			radius = ripple_radius,
-			falloff = 0
-		)
+			falloff = 0,
+		),
 	)
 
-
+/// Removes all visual warp appearances owned by this cascade.
 /datum/supermatter_rod_cascade/proc/cleanup_warp()
 	if(!warp)
 		return
-
 	if(reactor)
 		reactor.vis_contents -= warp
-
 	QDEL_NULL(warp)
 
-
+/// Sends escalating sensory feedback to living players based on their distance.
 /datum/supermatter_rod_cascade/proc/send_stationwide_feelings()
-	if(last_psychic_message + psychic_message_interval > world.time)
+	if(!COOLDOWN_FINISHED(src, psychic_message_cooldown))
 		return
-
-	last_psychic_message = world.time
-
+	COOLDOWN_START(src, psychic_message_cooldown, 20 SECONDS)
 	var/list/messages = list(
 		"Space seems to be shifting around you...",
 		"You hear a high-pitched ringing sound.",
@@ -325,70 +271,56 @@
 		"You feel like something enormous just noticed you.",
 		"The air feels thin, despite your lungs filling normally.",
 	)
-
 	for(var/mob/victim as anything in GLOB.player_list)
 		if(!victim.client)
 			continue
 		if(isdead(victim))
 			continue
-
 		to_chat(victim, span_danger(pick(messages)))
 
-
+/// Ends the cascade, restoring the reactor when the source rod was safely removed.
 /datum/supermatter_rod_cascade/proc/stop(successfully_removed = TRUE)
 	if(reactor)
-		reactor.supermatter_cascade_active = FALSE
 		reactor.supermatter_rod = null
-
 		if(successfully_removed)
 			reactor.scrammed = TRUE
 			reactor.running = FALSE
 			reactor.control_rod_depth = RBMK_CONTROL_ROD_MAX
-
 			reactor.visible_message(span_warning("[reactor] automatically SCRAMs as the supermatter rod is removed!"))
 			playsound(reactor, 'sound/rbmk/alarm.ogg', 75, FALSE)
-
 			priority_announce(
 				"Central Command notice: RBMK supermatter resonance has been interrupted. Reactor remains thermally unstable. Engineering response is still required.",
-				"Central Command Engineering Oversight"
+				"Central Command Engineering Oversight",
 			)
-
-		reactor.update_reactor_icon()
+		reactor.update_appearance(UPDATE_ICON)
 		reactor.update_linked_consoles()
-
 	qdel(src)
 
-
+/// Executes terminal cascade effects and schedules final controller cleanup.
 /datum/supermatter_rod_cascade/proc/trigger_failure()
 	if(!reactor || QDELETED(reactor))
 		qdel(src)
 		return
-
 	var/turf/cascade_origin = get_turf(reactor)
 	if(!cascade_origin)
 		qdel(src)
 		return
-
 	message_admins("[reactor] completed an RBMK supermatter rod cascade. [ADMIN_VERBOSEJMP(reactor)]")
 	reactor.investigate_log("completed an RBMK supermatter rod cascade.", INVESTIGATE_ENGINE)
-
 	reactor.visible_message(span_userdanger("[reactor] erupts in a blinding supermatter resonance cascade!"))
 	STOP_PROCESSING(SSobj, src)
-
 	// Prevent rod deletion or removal from cancelling the already-committed failure.
 	source_rod.cascade_controller = null
-	reactor.supermatter_cascade_active = FALSE
 	reactor.supermatter_rod = null
 	stop_cascade_sound()
-
 	reactor.trigger_supermatter_rod_meltdown("Supermatter rod cascade resonance failure")
-
 	var/datum/sm_delam/cascade/cascade = new
 	INVOKE_ASYNC(cascade, TYPE_PROC_REF(/datum/sm_delam/cascade, rbmk_cascade), cascade_origin)
-
 	// Keep the warp attached through the reactor's delayed explosion, then clean it up.
 	addtimer(CALLBACK(src, PROC_REF(finish_failure_cleanup)), RBMK_MELTDOWN_WARNING_DELAY + (RBMK_MELTDOWN_EFFECT_STAGGER * 4), TIMER_UNIQUE)
 
-
+/// Releases remaining owned state after delayed terminal effects complete.
 /datum/supermatter_rod_cascade/proc/finish_failure_cleanup()
 	qdel(src)
+
+#undef RBMK_CASCADE_WARP_PIXEL_OFFSET

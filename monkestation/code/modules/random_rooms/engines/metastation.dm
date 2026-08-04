@@ -22,7 +22,7 @@
 /datum/map_template/random_room/random_engines/meta_rbmk
 	name = "Meta RBMK Reactor"
 	room_id = "meta_rbmk"
-	mappath = "_maps/~monkestation/RandomEngines/MetaStation/rbmk.dmm"
+	mappath = "_maps/RandomEngines/MetaStation/rbmk.dmm"
 	centerspawner = FALSE
 	template_height = 25
 	template_width = 33

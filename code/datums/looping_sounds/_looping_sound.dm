@@ -81,7 +81,7 @@
 	/// The base source volume of the currently playing mid_sound segment.
 	var/live_current_base_volume
 	/// Mobs that are currently receiving this live attenuated loop.
-	var/list/live_listeners = list()
+	var/list/live_listeners
 
 /datum/looping_sound/New(
 	_parent,
@@ -413,7 +413,7 @@
 		if(effective_volume <= 0)
 			continue
 
-		current_listeners[listener] = TRUE
+		current_listeners |= listener
 		send_live_sound_to(listener, soundfile, effective_volume, mixer_channel)
 
 	for(var/mob/old_listener in live_listeners)
@@ -465,7 +465,7 @@
 		if(effective_volume <= 0)
 			continue
 
-		current_listeners[listener] = TRUE
+		current_listeners |= listener
 
 		if(listener in live_listeners)
 			update_live_sound_for(listener, effective_volume, mixer_channel)
@@ -493,7 +493,7 @@
 
 		listener.stop_sound_channel(channel_to_stop)
 
-	live_listeners.Cut()
+	live_listeners = null
 
 /// Returns the sound we should now be playing.
 /datum/looping_sound/proc/get_sound(_mid_sounds)

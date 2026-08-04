@@ -37,7 +37,6 @@ type Recipe = {
   description: string;
   cost: MaterialMap;
   requires_inserted_rod: BooleanLike;
-  creates_spent_casing: BooleanLike;
   visible: BooleanLike;
   can_start: BooleanLike;
   block_reason: string | null;
@@ -300,7 +299,7 @@ const Recipes = (props: {
                   </Box>
                 )}
 
-                {!!recipe.creates_spent_casing && (
+                {!!recipe.requires_inserted_rod && (
                   <Box color="bad" mt={0.5}>
                     Produces spent casing waste.
                   </Box>
@@ -328,7 +327,7 @@ const Recipes = (props: {
                         icon="play"
                         disabled={!recipe.can_start || !!processing}
                         color={
-                          recipe.creates_spent_casing ? 'bad' : undefined
+                          recipe.requires_inserted_rod ? 'bad' : undefined
                         }
                         onClick={() =>
                           act('start', {
