@@ -1,4 +1,4 @@
-/// Control-rod depth changed by one console step.
+/// Control-rod depth changed by one console adjustment.
 #define RBMK_CONTROL_ROD_ADJUSTMENT 5
 
 /// Operator console for a nearby RBMK reactor and its associated turbines.
@@ -48,20 +48,20 @@
 	cached_gas_composition = null
 	return ..()
 
-/// Broadcasts an operator alert with the console as the visible radio speaker.
+/** Sends a message over the engineering radio. */
 /obj/machinery/computer/rbmk_console/proc/send_engineering_alert(message)
 	if(!alert_radio || !message)
 		return
 	alert_radio.talk_into(src, message, RADIO_CHANNEL_ENGINEERING)
 
-/// Emits a local annunciator message and sound from the console hardware.
+/** Plays a local alarm from the console. */
 /obj/machinery/computer/rbmk_console/proc/emit_local_alert(message, sound_file, alert_volume = 85)
 	if(message)
 		visible_message(span_warning("[src] reports: [message]"))
 	if(sound_file)
 		playsound(src, sound_file, alert_volume, FALSE)
 
-/// Links this console to the nearest RBMK reactor within its scan range.
+/** Links the console to the closest nearby reactor. */
 /obj/machinery/computer/rbmk_console/proc/auto_link()
 	linked_reactor = null
 	var/shortest_distance_found = INFINITY
@@ -73,7 +73,7 @@
 	rescan_turbines()
 	update_appearance(UPDATE_ICON)
 
-/// Rebuilds the list of nearby turbines associated with the linked reactor.
+/** Rebuilds the list of turbines linked to this reactor console. */
 /obj/machinery/computer/rbmk_console/proc/rescan_turbines()
 	linked_turbines = list()
 	if(!linked_reactor)
@@ -81,7 +81,7 @@
 	for(var/obj/machinery/power/rbmk_turbine/turbine in range(turbine_scan_range, linked_reactor))
 		if(QDELETED(turbine))
 			continue
-		linked_turbines += turbine
+			linked_turbines += turbine
 
 /obj/machinery/computer/rbmk_console/update_icon_state()
 	. = ..()
@@ -114,7 +114,7 @@
 		ui.open()
 	return ui
 
-/// Converts a gas mixture into the composition records consumed by TGUI.
+/** Converts a gas mixture into records suitable for the console UI. */
 /obj/machinery/computer/rbmk_console/proc/rbmk_build_gas_composition_data(datum/gas_mixture/gas_mix)
 	var/list/gas_data = list()
 	if(!gas_mix)
@@ -132,7 +132,7 @@
 		)
 	return gas_data
 
-/// Returns a short-lived cached gas-composition snapshot for frequent UI refreshes.
+/** Returns a short-lived gas composition snapshot for the console UI. */
 /obj/machinery/computer/rbmk_console/proc/get_cached_gas_composition_data(datum/gas_mixture/gas_mix)
 	if(cached_gas_composition && !COOLDOWN_FINISHED(src, gas_composition_update_cooldown))
 		return cached_gas_composition
@@ -140,53 +140,44 @@
 	COOLDOWN_START(src, gas_composition_update_cooldown, 2 SECONDS)
 	return cached_gas_composition
 
-/// Aggregates linked turbine state and filters deleted or stale references.
+/** Builds the turbine status shown on the console. */
 /obj/machinery/computer/rbmk_console/proc/get_turbine_data()
 	var/list/turbine_data = list()
 	var/list/valid_turbines = list()
 	var/total_turbine_power = 0
 	var/total_turbine_integrity = 0
 	var/turbine_count = 0
-	var/generating_turbine_count = 0
-	var/stale_turbine_count = 0
+	var/online_turbine_count = 0
 	if(!linked_reactor)
 		return list(
 			"turbines" = turbine_data,
 			"total_turbine_power" = 0,
 			"average_turbine_integrity" = 0,
 			"turbine_count" = 0,
-			"generating_turbine_count" = 0,
-			"stale_turbine_count" = 0,
+			"online_turbine_count" = 0,
 		)
 	for(var/obj/machinery/power/rbmk_turbine/turbine as anything in linked_turbines)
 		if(!turbine || QDELETED(turbine))
 			continue
 		valid_turbines += turbine
 		turbine_count++
-		var/integrity_percent = turbine.get_generator_integrity_percent()
-		var/turbine_generating = turbine.is_actively_generating()
-		var/turbine_stale = turbine.is_telemetry_stale()
-		var/current_power_output = turbine_generating ? RBMK_ROUND2(turbine.last_power_output) : 0
-		if(turbine_generating)
-			generating_turbine_count++
+		var/integrity_percent = round((turbine.generator_integrity / max(turbine.max_generator_integrity, 1)) * 100, 0.1)
+		var/turbine_online = turbine.is_actively_generating()
+		var/current_power_output = turbine_online ? RBMK_ROUND2(turbine.last_power_output) : 0
+		if(turbine_online)
+			online_turbine_count++
 			total_turbine_power += current_power_output
-		if(turbine_stale)
-			stale_turbine_count++
 		total_turbine_integrity += integrity_percent
 		turbine_data += list(list(
 			"ref" = REF(turbine),
 			"name" = turbine.name,
 			"index" = turbine_count,
-			"running" = turbine.running,
-			"generating" = turbine_generating,
-			"broken" = (turbine.machine_stat & BROKEN) ? TRUE : FALSE,
-			"telemetry_stale" = turbine_stale,
-			"telemetry_age" = turbine.get_telemetry_age_seconds(),
+			"online" = turbine_online,
 			"integrity" = RBMK_ROUND2(integrity_percent),
 			"power_output" = current_power_output,
-			"rpm" = turbine_generating ? RBMK_ROUND2(turbine.rpm) : 0,
-			"flow_moles" = turbine_generating ? RBMK_ROUND2(turbine.last_flow_moles) : 0,
-			"flow_moles_per_second" = turbine_generating ? RBMK_ROUND2(turbine.last_flow_moles / RBMK_ATMOS_PROCESS_SECONDS) : 0,
+			"rpm" = turbine_online ? RBMK_ROUND2(turbine.rpm) : 0,
+			"flow_moles" = turbine_online ? RBMK_ROUND2(turbine.last_flow_moles) : 0,
+			"flow_moles_per_second" = turbine_online ? RBMK_ROUND2(turbine.last_flow_moles / RBMK_ATMOS_PROCESS_SECONDS) : 0,
 			"inlet_temperature" = RBMK_ROUND2(turbine.last_inlet_temperature),
 			"outlet_temperature" = RBMK_ROUND2(turbine.last_outlet_temperature),
 			"pressure_delta" = RBMK_ROUND2(turbine.last_pressure_delta),
@@ -200,8 +191,7 @@
 		"total_turbine_power" = RBMK_ROUND2(total_turbine_power),
 		"average_turbine_integrity" = RBMK_ROUND2(average_turbine_integrity),
 		"turbine_count" = turbine_count,
-		"generating_turbine_count" = generating_turbine_count,
-		"stale_turbine_count" = stale_turbine_count,
+		"online_turbine_count" = online_turbine_count,
 	)
 
 /obj/machinery/computer/rbmk_console/ui_data(mob/user)
@@ -212,8 +202,7 @@
 	data["total_turbine_power"] = turbine_summary["total_turbine_power"]
 	data["average_turbine_integrity"] = turbine_summary["average_turbine_integrity"]
 	data["turbine_count"] = turbine_summary["turbine_count"]
-	data["generating_turbine_count"] = turbine_summary["generating_turbine_count"]
-	data["stale_turbine_count"] = turbine_summary["stale_turbine_count"]
+	data["online_turbine_count"] = turbine_summary["online_turbine_count"]
 	if(!reactor)
 		data["status"] = "No reactor linked"
 		return data

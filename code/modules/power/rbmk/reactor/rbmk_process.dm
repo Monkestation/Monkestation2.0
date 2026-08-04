@@ -1,4 +1,4 @@
-/// Processes residual decay heat, passive cooling, radiation, and fallout while shut down.
+/** Processes residual heat and radiation while the chain reaction is inactive. */
 /obj/machinery/rbmk/reactor/proc/rbmk_decay_process(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
 	flux = max(flux - (RBMK_FLUX_DECAY_PER_SECOND * seconds_per_tick), 0)
 	radiation = max(radiation - (RBMK_RADIATION_DECAY_PER_SECOND * seconds_per_tick), 0)
@@ -8,9 +8,11 @@
 	last_tick_void_flux_bonus = 0
 	last_tick_temp_gain = 0
 
-/// Slowly exchanges heat with the reactor room even when the primary loop is
-/// empty or depressurized. The room/structure acts as the passive heat sink;
-/// forced coolant remains orders of magnitude more effective.
+/**
+ * Slowly exchanges heat with the reactor room when forced cooling is unavailable.
+ *
+ * The room is only a weak heat sink; circulating coolant remains far more effective.
+ */
 /obj/machinery/rbmk/reactor/proc/rbmk_passive_air_exchange(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
 	var/turf/reactor_turf = get_turf(src)
 	var/datum/gas_mixture/environment_mix = reactor_turf?.return_air()
@@ -23,7 +25,7 @@
 	temperature -= temperature_delta * exchange_coefficient
 	temperature = max(temperature, RBMK_AMBIENT_TEMP)
 
-/// Preserves radiation output from installed rods while the chain reaction is inactive.
+/** Preserves radiation from installed rods while fission is inactive. */
 /obj/machinery/rbmk/reactor/proc/maintain_residual_radiation(list/all_fuel_rods)
 	var/residual_rod_radiation = 0
 	for(var/obj/item/rbmk/fuel_rod/fuel_rod in all_fuel_rods)
@@ -32,7 +34,7 @@
 	residual_floor += temperature * RBMK_RADIATION_TEMP_MULT
 	radiation = clamp(max(radiation, residual_floor), 0, RBMK_MAX_RADIATION)
 
-/// Moves the control rods toward their commanded insertion at a frame-independent rate.
+/** Moves the control rods toward their commanded insertion depth. */
 /obj/machinery/rbmk/reactor/proc/rbmk_update_control_rods(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
 	if(scrammed && control_rod_depth >= RBMK_CONTROL_ROD_MAX)
 		actual_control_rod_depth = RBMK_CONTROL_ROD_MAX
@@ -44,7 +46,7 @@
 		actual_control_rod_depth = max(actual_control_rod_depth - step_size, control_rod_depth)
 	actual_control_rod_depth = clamp(actual_control_rod_depth, 0, RBMK_CONTROL_ROD_MAX)
 
-/// Updates control-rod sound and UI state after commanded motion changes.
+/** Updates control-rod motion sound and UI state. */
 /obj/machinery/rbmk/reactor/proc/update_rod_motion_state()
 	var/rods_at_target = (actual_control_rod_depth == control_rod_depth)
 	if(!rods_at_target)
@@ -54,7 +56,7 @@
 		rod_motion_in_progress = FALSE
 		playsound(src, 'sound/rbmk/switch2.ogg', 55, TRUE)
 
-/// Starts the staged startup audio once the reactor first sustains a reaction.
+/** Starts the staged startup sound when the reactor first sustains fission. */
 /obj/machinery/rbmk/reactor/proc/try_play_startup_sequence()
 	if(startup_sequence_played)
 		return
@@ -67,7 +69,7 @@
 		playsound(src, 'sound/rbmk/startup.ogg', 80, FALSE)
 		addtimer(CALLBACK(src, PROC_REF(play_startup_stage_two)), 3 SECONDS, TIMER_DELETE_ME)
 
-/// Plays the second startup cue if the reactor still exists and remains active.
+/** Plays the second startup cue if the reactor is still active. */
 /obj/machinery/rbmk/reactor/proc/play_startup_stage_two()
 	if(QDELETED(src))
 		return
@@ -75,7 +77,7 @@
 		return
 	playsound(src, 'sound/rbmk/startup2.ogg', 90, FALSE)
 
-/// Exchanges heat with coolant and sends heated gas through a connected turbine.
+/** Exchanges heat between the core and its internal coolant. */
 /obj/machinery/rbmk/reactor/proc/rbmk_coolant_exchange(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
 	last_coolant_exchange_ratio = 0
 	last_coolant_core_temp_change = 0
@@ -134,7 +136,7 @@
 	coolant_internal.temperature = max(coolant_internal.temperature + coolant_temperature_change, TCMB)
 	temperature = max(temperature - core_temperature_change, RBMK_AMBIENT_TEMP)
 
-/// Appends the current reactor temperature to its bounded telemetry history.
+/** Appends the core temperature to its bounded telemetry history. */
 /obj/machinery/rbmk/reactor/proc/rbmk_sample_reactor_temperature()
 	if(!reactor_temperature_history)
 		reactor_temperature_history = list()
@@ -142,7 +144,7 @@
 	if(reactor_temperature_history.len > RBMK_TELEMETRY_HISTORY_LENGTH)
 		reactor_temperature_history.Cut(1, 2)
 
-/// Applies integrity damage and leak effects when coolant pressure exceeds safe limits.
+/** Applies vessel damage when coolant pressure exceeds safe limits. */
 /obj/machinery/rbmk/reactor/proc/apply_pressure_damage(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
 	if(meltdown_in_progress || reactor_integrity <= 0)
 		return
@@ -163,7 +165,7 @@
 		RBMK_PRESSURE_INTEGRITY_DAMAGE_CAP_PER_SECOND,
 	)
 
-/// Refreshes vessel pressure and wakes open coolant ports for prompt processing.
+/** Refreshes vessel pressure and wakes open coolant ports. */
 /obj/machinery/rbmk/reactor/proc/rbmk_update_pressure(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
 	if(!coolant_internal)
 		pressure = 0
@@ -173,7 +175,7 @@
 	if(inlet_open || outlet_open)
 		wake_coolant_ports()
 
-/// Emits reactor radiation with shielding and integrity modifiers applied.
+/** Emits reactor radiation after shielding and integrity modifiers. */
 /obj/machinery/rbmk/reactor/proc/emit_real_radiation()
 	if(meltdown_in_progress)
 		return
@@ -206,7 +208,7 @@
 		TRUE,
 	)
 
-/// Attempts a cooldown-gated flux anomaly when reactor conditions are severe enough.
+/** Attempts a cooldown-gated anomaly when reactor flux is severe. */
 /obj/machinery/rbmk/reactor/proc/try_spawn_flux_anomaly(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
 	if(meltdown_in_progress || !running || !has_active_fuel_rods())
 		return
@@ -241,27 +243,7 @@
 	new /obj/effect/anomaly/flux(spawn_turf, rand(25 SECONDS, 35 SECONDS), FALSE, FLUX_NO_EMP)
 	visible_message(span_warning("A harmonic flux distortion forms near [src]!"))
 
-/// Starts fallout weather after a meltdown when the reactor area permits it.
-/obj/machinery/rbmk/reactor/proc/start_meltdown_fallout()
-	if(rbmk_fallout_active)
-		return
-	rbmk_fallout_active = TRUE
-	rbmk_fallout_radius = 0
-	COOLDOWN_RESET(src, fallout_spread_cooldown)
-	GLOB.rbmk_fallout_reactors |= src
-	if(!(locate(/datum/weather/rbmk_fallout) in SSweather.processing))
-		SSweather.run_weather(/datum/weather/rbmk_fallout)
-
-/// Periodically refreshes active fallout while the destroyed reactor remains present.
-/obj/machinery/rbmk/reactor/proc/process_meltdown_fallout()
-	if(!rbmk_fallout_active)
-		return
-	if(!COOLDOWN_FINISHED(src, fallout_spread_cooldown))
-		return
-	rbmk_fallout_radius = min(rbmk_fallout_radius + RBMK_FALLOUT_RADIUS_STEP, RBMK_FALLOUT_MAX_RADIUS)
-	COOLDOWN_START(src, fallout_spread_cooldown, RBMK_FALLOUT_SPREAD_INTERVAL)
-
-/// Triggers immediate failure when temperature or pressure crosses a hard limit.
+/** Starts a meltdown when the vessel reaches a hard failure condition. */
 /obj/machinery/rbmk/reactor/proc/check_hard_meltdown_conditions()
 	if(meltdown_in_progress)
 		return
@@ -271,9 +253,10 @@
 /obj/machinery/rbmk/reactor/process(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
 	process_reactor_griddle(seconds_per_tick)
 	if(meltdown_in_progress || reactor_integrity <= 0)
-		process_meltdown_fallout()
 		last_integrity_damage = 0
 		reset_reaction_state()
+		if(meltdown_exploded)
+			radiation = RBMK_MAX_RADIATION
 		rod_motion_in_progress = FALSE
 		update_appearance(UPDATE_ICON)
 		update_linked_consoles()
@@ -389,7 +372,7 @@
 		startup_sequence_played = FALSE
 	previous_control_rod_depth = control_rod_depth
 
-/// Recalculates the reactor's temperature, pressure, and coolant void feedback.
+/** Recalculates temperature, pressure, and coolant contributions to the void coefficient. */
 /obj/machinery/rbmk/reactor/proc/update_void_coefficient()
 	// A hot, fueled core retains coolant feedback after SCRAM even though that
 	// feedback is no longer multiplying an active fission reaction.

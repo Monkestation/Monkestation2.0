@@ -29,37 +29,6 @@ const formatPressure = (value: number) => {
   return `${formatNumber(value, 1)} kPa`;
 };
 
-const getTurbineStatus = (turbine: any) => {
-  if (turbine.broken) {
-    return 'OFFLINE';
-  }
-
-  if (turbine.generating || turbine.running) {
-    return 'ONLINE';
-  }
-
-  if (turbine.telemetry_stale) {
-    return 'STALE';
-  }
-
-  return 'IDLE';
-};
-
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case 'ONLINE':
-      return 'good';
-    case 'IDLE':
-      return 'average';
-    case 'STALE':
-      return 'average';
-    case 'OFFLINE':
-      return 'bad';
-    default:
-      return 'average';
-  }
-};
-
 const getIntegrityColor = (integrity: number) => {
   if (integrity >= 70) {
     return 'good';
@@ -106,14 +75,7 @@ const RBMKGenerators = () => {
   const totalTurbinePower = Number(data?.total_turbine_power || 0);
   const averageTurbineIntegrity = Number(data?.average_turbine_integrity || 0);
   const turbineCount = Number(data?.turbine_count || turbines.length || 0);
-
-  const onlineTurbines = turbines.filter((turbine: any) => {
-    return getTurbineStatus(turbine) === 'ONLINE';
-  }).length;
-
-  const staleTurbines = turbines.filter((turbine: any) => {
-    return getTurbineStatus(turbine) === 'STALE';
-  }).length;
+  const onlineTurbines = Number(data?.online_turbine_count || 0);
 
   return (
     <Section title="Generators" className="RBMKConsole__Generators">
@@ -122,12 +84,6 @@ const RBMKGenerators = () => {
           <LabeledList.Item label="Turbines">
             {onlineTurbines} / {turbineCount} online
           </LabeledList.Item>
-
-          {!!staleTurbines && (
-            <LabeledList.Item label="Stale Telemetry">
-              <Box color="average">{staleTurbines}</Box>
-            </LabeledList.Item>
-          )}
 
           <LabeledList.Item label="Total Generation">
             {formatPower(totalTurbinePower)}
@@ -156,10 +112,9 @@ const RBMKGenerators = () => {
 
       {turbines.map((turbine: any, index: number) => {
         const integrity = Number(turbine.integrity || 0);
-        const status = getTurbineStatus(turbine);
+        const turbineOnline = Boolean(turbine.online);
         const turbineIndex = Number(turbine.index || index + 1);
         const pressureDelta = getPressureDelta(turbine);
-        const telemetryAge = Number(turbine.telemetry_age);
 
         return (
           <Section
@@ -167,8 +122,8 @@ const RBMKGenerators = () => {
             title={`Turbine ${turbineIndex}`}
             className="RBMKConsole__TurbineCard"
             buttons={
-              <Box color={getStatusColor(status)} bold>
-                {status}
+              <Box color={turbineOnline ? 'good' : 'bad'} bold>
+                {turbineOnline ? 'ONLINE' : 'OFFLINE'}
               </Box>
             }
           >
@@ -205,12 +160,6 @@ const RBMKGenerators = () => {
                 >
                   {formatNumber(integrity, 1)}%
                 </ProgressBar>
-              </LabeledList.Item>
-
-              <LabeledList.Item label="Telemetry Age">
-                {Number.isFinite(telemetryAge)
-                  ? `${formatNumber(telemetryAge, 1)} s`
-                  : 'No signal'}
               </LabeledList.Item>
             </LabeledList>
           </Section>

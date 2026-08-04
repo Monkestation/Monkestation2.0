@@ -38,9 +38,12 @@
 /obj/machinery/atmospherics/components/unary/rbmk/outlet/process_atmos(seconds_per_tick = RBMK_ATMOS_PROCESS_SECONDS)
 	parent_reactor?.process_coolant_transfer(seconds_per_tick)
 
-/// Resolves both coolant ports from one pre-transfer state once per SSair cycle.
-/// This prevents damage, graphs, and turbine feed from observing a half-finished
-/// inlet/outlet update while preserving the commanded mol/s controls.
+/**
+ * Moves coolant through both ports once per air tick.
+ *
+ * Both transfers use the same starting state so the reactor never exposes a
+ * half-finished coolant update.
+ */
 /obj/machinery/rbmk/reactor/proc/process_coolant_transfer(seconds_per_tick = RBMK_ATMOS_PROCESS_SECONDS)
 	if(last_coolant_air_cycle == SSair.times_fired)
 		return
@@ -115,7 +118,7 @@
 	if(outlet_turf)
 		outlet_turf.assume_air(outgoing_mix)
 
-/// Creates the reactor's internal coolant mixture and telemetry histories.
+/** Creates the reactor's coolant mixture and telemetry histories. */
 /obj/machinery/rbmk/reactor/proc/rbmk_init_coolant()
 	coolant_internal = new /datum/gas_mixture()
 	coolant_internal.volume = RBMK_COOLANT_VOLUME_MAX
@@ -125,13 +128,13 @@
 	coolant_total_moles_history = list()
 	coolant_gas_hist = list()
 
-/// Deletes owned coolant ports and the reactor's internal gas mixture.
+/** Deletes the coolant ports and internal gas mixture owned by the reactor. */
 /obj/machinery/rbmk/reactor/proc/rbmk_cleanup_atmos()
 	QDEL_NULL(inlet)
 	QDEL_NULL(outlet)
 	QDEL_NULL(coolant_internal)
 
-/// Recreates the reactor-owned inlet and outlet on their adjacent turfs.
+/** Recreates the reactor's coolant ports on their adjacent tiles. */
 /obj/machinery/rbmk/reactor/proc/relink_ports()
 	var/turf/center_turf = get_turf(src)
 	if(!center_turf)
@@ -151,26 +154,26 @@
 		new_outlet.dir = EAST
 		outlet = new_outlet
 
-/// Restarts SSair processing for both coolant ports after a control change.
+/** Wakes both coolant ports after a control change. */
 /obj/machinery/rbmk/reactor/proc/wake_coolant_ports()
 	if(inlet)
 		SSair.start_processing_machine(inlet)
 	if(outlet)
 		SSair.start_processing_machine(outlet)
 
-/// Returns the gas mixture connected to the reactor inlet.
+/** Returns the gas connected to the coolant inlet. */
 /obj/machinery/rbmk/reactor/proc/get_inlet_mix()
 	if(length(inlet?.airs) < 1)
 		return null
 	return inlet.airs[1]
 
-/// Returns the gas mixture connected to the reactor outlet.
+/** Returns the gas connected to the coolant outlet. */
 /obj/machinery/rbmk/reactor/proc/get_outlet_mix()
 	if(length(outlet?.airs) < 1)
 		return null
 	return outlet.airs[1]
 
-/// Appends bounded coolant pressure, temperature, mole, and composition telemetry.
+/** Appends the current coolant state to the bounded telemetry histories. */
 /obj/machinery/rbmk/reactor/proc/rbmk_sample_coolant()
 	var/datum/gas_mixture/coolant_mix = coolant_internal
 	if(!coolant_mix)

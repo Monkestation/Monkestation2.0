@@ -32,9 +32,6 @@
 	var/atom/movable/warp_effect/warp = null
 	/// Last applied whole-minute visual intensity stage.
 	var/last_warp_stage = -1
-	// Centering offset for the large warp icon.
-	// The warp icon is larger than 32x32, so 0,0 anchors its bottom-left corner to the reactor.
-	// -112 centers a 256x256 effect over a normal tile-centered reactor visual.
 
 /datum/supermatter_rod_cascade/New(obj/item/rbmk/fuel_rod/supermatter/new_source_rod, obj/machinery/rbmk/reactor/new_reactor)
 	. = ..()
@@ -65,7 +62,7 @@
 	reactor = null
 	return ..()
 
-/// Stops the reactor-owned cascade loop when this controller is still authoritative.
+/** Stops the cascade sound loop owned by this controller. */
 /datum/supermatter_rod_cascade/proc/stop_cascade_sound()
 	if(cascade_soundloop)
 		cascade_soundloop.stop()
@@ -83,7 +80,7 @@
 		return
 	process_cascade(seconds_per_tick)
 
-/// Advances cascade instability, warnings, and visual distortion before the final countdown.
+/** Advances the cascade until it reaches the final countdown. */
 /datum/supermatter_rod_cascade/proc/process_cascade(seconds_per_tick)
 	var/elapsed = world.time - started_at
 	var/time_left = max(duration - elapsed, 0)
@@ -109,7 +106,7 @@
 	if(progress >= 1)
 		start_final_countdown()
 
-/// Transitions an unresolved cascade into its timed terminal-failure phase.
+/** Moves an unresolved cascade into its final countdown. */
 /datum/supermatter_rod_cascade/proc/start_final_countdown()
 	if(final_countdown_started_at)
 		return
@@ -123,7 +120,7 @@
 		'sound/misc/airraid.ogg',
 	)
 
-/// Advances final-countdown effects and triggers failure when time expires.
+/** Advances the final countdown and triggers failure when it expires. */
 /datum/supermatter_rod_cascade/proc/process_final_countdown(seconds_per_tick)
 	var/elapsed = world.time - final_countdown_started_at
 	var/time_left = max(final_countdown_duration - elapsed, 0)
@@ -145,7 +142,7 @@
 	if(time_left <= 0)
 		trigger_failure()
 
-/// Broadcasts one countdown message through the reactor and station alert paths.
+/** Broadcasts a countdown message from the affected reactor. */
 /datum/supermatter_rod_cascade/proc/blare_reactor_countdown(message)
 	if(!reactor || QDELETED(reactor) || !message)
 		return
@@ -155,7 +152,7 @@
 	)
 	playsound(reactor, 'sound/rbmk/alarm.ogg', 90, FALSE, extrarange = 12)
 
-/// Announces the initial cascade condition to engineering and nearby players.
+/** Announces the start of a cascade to the station. */
 /datum/supermatter_rod_cascade/proc/announce_start()
 	priority_announce(
 		"Attention: abnormal harmonic flux has been detected inside an RBMK reactor aboard [station_name()]. Engineering personnel are advised to investigate immediately.",
@@ -163,7 +160,7 @@
 		'sound/misc/airraid.ogg',
 	)
 
-/// Emits the two-minute evacuation warning once per cascade.
+/** Sends the two-minute evacuation warning once. */
 /datum/supermatter_rod_cascade/proc/announce_two_minute_warning()
 	if(two_minute_warning_announced)
 		return
@@ -174,7 +171,7 @@
 		'sound/misc/notice1.ogg',
 	)
 
-/// Emits the final security warning once per cascade.
+/** Sends the final security warning and raises the security level. */
 /datum/supermatter_rod_cascade/proc/announce_one_minute_security()
 	if(one_minute_security_announced)
 		return
@@ -187,7 +184,7 @@
 	if(SSsecurity_level.get_current_level_as_number() != SEC_LEVEL_DELTA)
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 
-/// Creates the localized visual warp associated with the active cascade.
+/** Creates the visual distortion around the affected reactor. */
 /datum/supermatter_rod_cascade/proc/create_warp()
 	if(!reactor)
 		return
@@ -202,7 +199,7 @@
 	last_warp_stage = -1
 	apply_warp_strength(0)
 
-/// Updates warp appearance and strength from normalized cascade progress.
+/** Updates the reactor warp from normalized cascade progress. */
 /datum/supermatter_rod_cascade/proc/update_warp(progress)
 	if(!warp)
 		return
@@ -220,7 +217,7 @@
 	last_warp_stage = warp_stage
 	apply_warp_strength(warp_stage)
 
-/// Applies one discrete transform stage to all owned warp appearances.
+/** Applies a discrete intensity stage to the owned warp appearances. */
 /datum/supermatter_rod_cascade/proc/apply_warp_strength(warp_stage)
 	if(!warp || !reactor)
 		return
@@ -248,7 +245,7 @@
 		),
 	)
 
-/// Removes all visual warp appearances owned by this cascade.
+/** Removes the visual distortion owned by this cascade. */
 /datum/supermatter_rod_cascade/proc/cleanup_warp()
 	if(!warp)
 		return
@@ -256,7 +253,7 @@
 		reactor.vis_contents -= warp
 	QDEL_NULL(warp)
 
-/// Sends escalating sensory feedback to living players based on their distance.
+/** Sends distance-based sensory effects to living players. */
 /datum/supermatter_rod_cascade/proc/send_stationwide_feelings()
 	if(!COOLDOWN_FINISHED(src, psychic_message_cooldown))
 		return
@@ -278,7 +275,7 @@
 			continue
 		to_chat(victim, span_danger(pick(messages)))
 
-/// Ends the cascade, restoring the reactor when the source rod was safely removed.
+/** Ends the cascade, optionally SCRAMing a reactor whose rod was removed. */
 /datum/supermatter_rod_cascade/proc/stop(successfully_removed = TRUE)
 	if(reactor)
 		reactor.supermatter_rod = null
@@ -296,7 +293,7 @@
 		reactor.update_linked_consoles()
 	qdel(src)
 
-/// Executes terminal cascade effects and schedules final controller cleanup.
+/** Applies the terminal cascade effects and schedules cleanup. */
 /datum/supermatter_rod_cascade/proc/trigger_failure()
 	if(!reactor || QDELETED(reactor))
 		qdel(src)
@@ -319,7 +316,7 @@
 	// Keep the warp attached through the reactor's delayed explosion, then clean it up.
 	addtimer(CALLBACK(src, PROC_REF(finish_failure_cleanup)), RBMK_MELTDOWN_WARNING_DELAY + (RBMK_MELTDOWN_EFFECT_STAGGER * 4), TIMER_UNIQUE)
 
-/// Releases remaining owned state after delayed terminal effects complete.
+/** Releases state retained for delayed terminal effects. */
 /datum/supermatter_rod_cascade/proc/finish_failure_cleanup()
 	qdel(src)
 

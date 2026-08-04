@@ -1,5 +1,8 @@
+/// Iron required to manufacture one standard fuel rod.
 #define RBMK_PROCESSOR_IRON_COST (3 * SHEET_MATERIAL_AMOUNT)
+/// Fissile material required to manufacture one standard fuel rod.
 #define RBMK_PROCESSOR_FUEL_COST (10 * SHEET_MATERIAL_AMOUNT)
+/// Material required to manufacture one moderator rod.
 #define RBMK_PROCESSOR_MODERATOR_COST (5 * SHEET_MATERIAL_AMOUNT)
 
 /// Describes one operation available to an RBMK fuel processor.

@@ -25,7 +25,7 @@
 		"radiation" = 0,
 	)
 
-/// Starts the unique cascade controller after this rod activates in a reactor.
+/** Starts this rod's cascade after the reactor activates it. */
 /obj/item/rbmk/fuel_rod/supermatter/proc/start_cascade(obj/machinery/rbmk/reactor/reactor)
 	if(cascade_controller)
 		return FALSE
@@ -39,7 +39,7 @@
 	cascade_controller = new_controller
 	return TRUE
 
-/// Stops and releases the active cascade controller when the rod is removed or destroyed.
+/** Stops the cascade when this rod is removed or destroyed. */
 /obj/item/rbmk/fuel_rod/supermatter/proc/stop_cascade(successfully_removed = TRUE)
 	if(!cascade_controller)
 		return

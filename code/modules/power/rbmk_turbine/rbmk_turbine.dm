@@ -1,19 +1,20 @@
-/// Turbine icon state when it is not generating.
+/// Icon state used while the turbine is idle.
 #define RBMK_TURBINE_ICON_OFF "Off"
-/// Turbine icon state while it is generating.
+/// Icon state used while the turbine is generating.
 #define RBMK_TURBINE_ICON_ON "On"
 
-/// Grace period before generation telemetry is considered stale.
-#define RBMK_TURBINE_STALE_TIME (10 SECONDS)
+// Turbine timing
+/// Grace period before generation telemetry becomes inactive.
+#define RBMK_TURBINE_GENERATION_GRACE_TIME (10 SECONDS)
 /// Idle duration after which old turbine telemetry is cleared.
 #define RBMK_TURBINE_TELEMETRY_CLEAR_TIME (30 SECONDS)
-/// Mechanical spin-down grace. Must exceed the 16 second startup cue so
-/// intermittent atmos pulses cannot continually cancel the sustained loop.
+/// Duration recent rotor motion keeps the turbine sound loop alive.
+/// This must remain longer than the startup cue to avoid repeated restarts.
 #define RBMK_TURBINE_SOUND_HOLD_TIME (30 SECONDS)
-/// Pressure differential that produces full turbine efficiency.
+/// Pressure difference that produces full turbine efficiency.
 #define RBMK_TURBINE_DESIGN_PRESSURE_DELTA 3000
 
-/// Converts heat and pressure from an RBMK coolant loop into grid power.
+/// Generator for an RBMK coolant loop.
 /obj/machinery/power/rbmk_turbine
 	name = "RBMK turbine"
 	desc = "A heavy turbine assembly designed to convert heated RBMK coolant flow into electrical power."
@@ -75,8 +76,6 @@
 	var/sound_falloff_distance = 4
 	/// Exponent used by turbine sound falloff.
 	var/sound_falloff_exponent = 2
-	/// Whether the turbine recently produced power.
-	var/running = FALSE
 	/// Whether the inlet port permits gas transfer.
 	var/inlet_open = TRUE
 	/// Whether the outlet port permits gas transfer.
@@ -139,9 +138,8 @@
 
 /obj/machinery/power/rbmk_turbine/process(seconds_per_tick)
 	wake_turbine_ports()
-	if(last_generation_time && world.time <= last_generation_time + RBMK_TURBINE_STALE_TIME)
+	if(last_generation_time && world.time <= last_generation_time + RBMK_TURBINE_GENERATION_GRACE_TIME)
 		return
-	running = FALSE
 	rpm = 0
 	if(!last_generation_time || world.time > last_generation_time + RBMK_TURBINE_TELEMETRY_CLEAR_TIME)
 		reset_turbine_telemetry()
@@ -155,7 +153,7 @@
 		return
 	icon_state = RBMK_TURBINE_ICON_OFF
 
-/// Clears output values that describe the latest generation step.
+/** Clears values reported by the latest generation step. */
 /obj/machinery/power/rbmk_turbine/proc/reset_generation_telemetry()
 	last_power_output = 0
 	last_flow_moles = 0
@@ -165,9 +163,8 @@
 	last_generator_damage = 0
 	last_overtemp = 0
 	rpm = 0
-	running = FALSE
 
-/// Clears generation and port telemetry after an extended idle period.
+/** Clears generation and port telemetry after extended inactivity. */
 /obj/machinery/power/rbmk_turbine/proc/reset_turbine_telemetry()
 	reset_generation_telemetry()
 	last_inlet_temperature = 0
@@ -176,29 +173,17 @@
 	last_outlet_pressure = 0
 	last_pressure_delta = 0
 
-/// Recalculates positive inlet-to-outlet pressure differential.
+/** Recalculates the positive pressure difference across the turbine. */
 /obj/machinery/power/rbmk_turbine/proc/update_pressure_delta()
 	last_pressure_delta = max(last_inlet_pressure - last_outlet_pressure, 0)
 
-/// Returns whether generation telemetry is older than its active grace period.
-/obj/machinery/power/rbmk_turbine/proc/is_telemetry_stale()
-	if(!last_generation_time)
-		return TRUE
-	return world.time > last_generation_time + RBMK_TURBINE_STALE_TIME
-
-/// Returns the age of generation telemetry in seconds, or null before first use.
-/obj/machinery/power/rbmk_turbine/proc/get_telemetry_age_seconds()
-	if(!last_generation_time)
-		return null
-	return round((world.time - last_generation_time) / (1 SECONDS), 0.1)
-
-/// Returns whether the turbine is currently producing non-stale power.
+/** Returns whether the turbine has generated power recently. */
 /obj/machinery/power/rbmk_turbine/proc/is_actively_generating()
 	if(machine_stat & BROKEN)
 		return FALSE
 	if(!last_generation_time)
 		return FALSE
-	if(world.time > last_generation_time + RBMK_TURBINE_STALE_TIME)
+	if(world.time > last_generation_time + RBMK_TURBINE_GENERATION_GRACE_TIME)
 		return FALSE
 	if(last_power_output <= 0)
 		return FALSE
@@ -206,7 +191,7 @@
 		return FALSE
 	return TRUE
 
-/// Returns whether recent motion should keep the turbine audio loop alive.
+/** Returns whether recent rotor activity should keep turbine audio playing. */
 /obj/machinery/power/rbmk_turbine/proc/should_play_turbine_sound()
 	if(machine_stat & BROKEN)
 		return FALSE
@@ -214,7 +199,7 @@
 		return FALSE
 	return world.time <= last_generation_time + RBMK_TURBINE_SOUND_HOLD_TIME
 
-/// Starts, updates, or stops turbine audio to match recent rotor activity.
+/** Starts, updates, or stops audio to match recent rotor activity. */
 /obj/machinery/power/rbmk_turbine/proc/update_turbine_sound()
 	if(!should_play_turbine_sound())
 		if(turbine_soundloop)
@@ -233,11 +218,7 @@
 	turbine_soundloop.falloff_distance = sound_falloff_distance
 	turbine_soundloop.falloff_exponent = sound_falloff_exponent
 
-/// Returns generator integrity as a rounded percentage.
-/obj/machinery/power/rbmk_turbine/proc/get_generator_integrity_percent()
-	return round((generator_integrity / max(max_generator_integrity, 1)) * 100, 0.1)
-
-/// Applies frame-independent overtemperature wear or safe-temperature recovery.
+/** Applies generator wear or recovery for the elapsed processing time. */
 /obj/machinery/power/rbmk_turbine/proc/update_generator_integrity(gas_temperature, seconds_per_tick)
 	last_generator_damage = 0
 	last_overtemp = max(gas_temperature - generator_damage_temperature, 0)
@@ -254,7 +235,7 @@
 	last_generator_damage = damage_amount
 	generator_integrity = max(generator_integrity - damage_amount, 0)
 
-/// Commits generator failure once integrity reaches zero.
+/** Fails the generator when its integrity reaches zero. */
 /obj/machinery/power/rbmk_turbine/proc/check_generator_failure_conditions()
 	if(machine_stat & BROKEN)
 		return
@@ -263,11 +244,10 @@
 	generator_integrity = 0
 	turbine_fail_from_overheat()
 
-/// Breaks and deletes a turbine destroyed by superheated working gas.
+/** Breaks and deletes a turbine destroyed by superheated working gas. */
 /obj/machinery/power/rbmk_turbine/proc/turbine_fail_from_overheat()
 	if(machine_stat & BROKEN)
 		return
-	running = FALSE
 	rpm = 0
 	last_power_output = 0
 	last_flow_moles = 0
@@ -280,7 +260,7 @@
 	explosion(get_turf(src), devastation_range = 0, heavy_impact_range = 1, light_impact_range = 2)
 	qdel(src)
 
-/// Recreates and links turbine ports at their expected adjacent turfs.
+/** Recreates the turbine ports on their expected adjacent tiles. */
 /obj/machinery/power/rbmk_turbine/proc/relink_ports()
 	var/turf/center_turf = get_turf(src)
 	if(!center_turf)
@@ -300,26 +280,14 @@
 		new_inlet.dir = EAST
 		inlet = new_inlet
 
-/// Wakes the paired atmos ports so gas-flow changes are processed promptly.
+/** Wakes both turbine ports so gas-flow changes are processed promptly. */
 /obj/machinery/power/rbmk_turbine/proc/wake_turbine_ports()
 	if(inlet)
 		SSair.start_processing_machine(inlet)
 	if(outlet)
 		SSair.start_processing_machine(outlet)
 
-/// Returns the gas mixture connected to the turbine inlet.
-/obj/machinery/power/rbmk_turbine/proc/get_inlet_mix()
-	if(length(inlet?.airs) < 1)
-		return null
-	return inlet.airs[1]
-
-/// Returns the gas mixture connected to the turbine outlet.
-/obj/machinery/power/rbmk_turbine/proc/get_outlet_mix()
-	if(length(outlet?.airs) < 1)
-		return null
-	return outlet.airs[1]
-
-/// Converts one gas parcel's usable heat and pressure into power and telemetry.
+/** Extracts usable heat from a parcel of working gas and adds power to the grid. */
 /obj/machinery/power/rbmk_turbine/proc/process_working_gas(datum/gas_mixture/working_mix, seconds_per_tick = RBMK_ATMOS_PROCESS_SECONDS)
 	last_generator_damage = 0
 	last_overtemp = 0
@@ -371,7 +339,6 @@
 	last_outlet_temperature = working_mix.temperature
 	var/power_ratio = CLAMP01(last_power_output / max(max_power_output, 1))
 	rpm = round(sqrt(power_ratio) * max_rpm)
-	running = TRUE
 	last_generation_time = world.time
 	add_avail(last_power_output)
 	update_appearance(UPDATE_ICON)
@@ -505,7 +472,7 @@
 
 #undef RBMK_TURBINE_ICON_OFF
 #undef RBMK_TURBINE_ICON_ON
-#undef RBMK_TURBINE_STALE_TIME
+#undef RBMK_TURBINE_GENERATION_GRACE_TIME
 #undef RBMK_TURBINE_TELEMETRY_CLEAR_TIME
 #undef RBMK_TURBINE_SOUND_HOLD_TIME
 #undef RBMK_TURBINE_DESIGN_PRESSURE_DELTA

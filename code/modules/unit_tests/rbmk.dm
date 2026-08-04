@@ -1,14 +1,12 @@
-/// Verifies that the fuel processor cannot start recipes outside its server-side registry.
 /datum/unit_test/rbmk_fuel_processor_recipe_validation/Run()
 	var/obj/machinery/rbmk/fuel_processor/processor = allocate(
 		/obj/machinery/rbmk/fuel_processor,
 		run_loc_floor_bottom_left,
 	)
-	TEST_ASSERT(isnull(processor.get_recipe("forged_recipe")), "The RBMK fuel processor accepted an unknown recipe ID.")
-	TEST_ASSERT(!processor.start_recipe("forged_recipe", null), "The RBMK fuel processor started an unknown recipe.")
-	TEST_ASSERT(isnull(processor.current_recipe), "The RBMK fuel processor entered its processing state for an unknown recipe.")
+	TEST_ASSERT_NULL(processor.get_recipe("forged_recipe"), "Unknown recipe ID was accepted.")
+	TEST_ASSERT(!processor.start_recipe("forged_recipe", null), "Unknown recipe was started.")
+	TEST_ASSERT_NULL(processor.current_recipe, "Processor entered its active state for an unknown recipe.")
 
-/// Verifies no-drop rod insertion behavior.
 /datum/unit_test/rbmk_reactor_rod_insertion_nodrop/Run()
 	var/obj/machinery/rbmk/reactor/reactor = allocate(
 		/obj/machinery/rbmk/reactor,
@@ -22,20 +20,19 @@
 	TEST_ASSERT_EQUAL(
 		reactor.item_interaction(operator, fuel_rod, list()),
 		ITEM_INTERACT_FAILURE,
-		"The RBMK reactor reported successful insertion for a no-drop fuel rod.",
+		"No-drop rod was accepted.",
 	)
-	TEST_ASSERT_EQUAL(fuel_rod.loc, operator, "The RBMK reactor removed a no-drop fuel rod from its operator.")
-	TEST_ASSERT(!length(reactor.normal_slots), "The RBMK reactor recorded a no-drop fuel rod as installed.")
+	TEST_ASSERT_EQUAL(fuel_rod.loc, operator, "No-drop rod left the operator's inventory.")
+	TEST_ASSERT(!length(reactor.normal_slots), "No-drop rod was added to a reactor slot.")
 	REMOVE_TRAIT(fuel_rod, TRAIT_NODROP, TRAIT_SOURCE_UNIT_TESTS)
 	TEST_ASSERT_EQUAL(
 		reactor.item_interaction(operator, fuel_rod, list()),
 		ITEM_INTERACT_SUCCESS,
-		"The RBMK reactor rejected a held fuel rod after its no-drop restriction was removed.",
+		"Rod remained rejected after its no-drop trait was removed.",
 	)
-	TEST_ASSERT_EQUAL(fuel_rod.loc, reactor, "The RBMK reactor did not take ownership of an inserted fuel rod.")
-	TEST_ASSERT(fuel_rod in reactor.normal_slots, "The RBMK reactor did not record an inserted uranium rod in its normal slot bank.")
+	TEST_ASSERT_EQUAL(fuel_rod.loc, reactor, "Inserted rod was not moved into the reactor.")
+	TEST_ASSERT(fuel_rod in reactor.normal_slots, "Inserted uranium rod was not added to a normal slot.")
 
-/// Verifies that RBMK coolant flow respects native atmos pressure limits.
 /datum/unit_test/rbmk_coolant_transfer_pressure_limits/Run()
 	var/obj/machinery/rbmk/reactor/reactor = allocate(
 		/obj/machinery/rbmk/reactor,
@@ -84,8 +81,55 @@
 		"The RBMK inlet overshot its pump-head pressure limit at maximum flow.",
 	)
 
-/// Verifies that RBMK meltdown objects retain their breached presentation.
-/datum/unit_test/rbmk_meltdown_presentation/Run()
+/datum/unit_test/rbmk_fallout_weather/Run()
+	var/datum/weather/rbmk_fallout/fallout = allocate(
+		/datum/weather/rbmk_fallout,
+		list(run_loc_floor_bottom_left.z),
+	)
+	TEST_ASSERT(!istype(fallout, /datum/weather/rad_storm), "Fallout inherited radiation-storm mutation effects.")
+	TEST_ASSERT(!fallout.perpetual, "Fallout never ends.")
+	TEST_ASSERT_EQUAL(fallout.area_type, /area/station, "Fallout is not limited to station areas.")
+	TEST_ASSERT(/area/station/ai_monitored/turret_protected/aisat/maint in fallout.protected_areas, "AI satellite maintenance is exposed.")
+	TEST_ASSERT(/area/station/maintenance in fallout.protected_areas, "Maintenance is exposed.")
+	TEST_ASSERT(/area/station/security/prison/safe in fallout.protected_areas, "Prison radiation shelter is exposed.")
+	TEST_ASSERT(/area/station/security/prison/toilet in fallout.protected_areas, "Prison toilet shelter is exposed.")
+
+	var/mob/living/carbon/human/consistent/exposed_human = allocate(
+		/mob/living/carbon/human/consistent,
+		run_loc_floor_bottom_left,
+	)
+	fallout.impacted_areas |= get_area(exposed_human)
+	TEST_ASSERT(fallout.can_weather_act(exposed_human), "Exposed mob was ignored by fallout.")
+	ADD_TRAIT(exposed_human, TRAIT_RADSTORM_IMMUNE, TRAIT_SOURCE_UNIT_TESTS)
+	TEST_ASSERT(!fallout.can_weather_act(exposed_human), "Radiation-weather protection did not block fallout.")
+	REMOVE_TRAIT(exposed_human, TRAIT_RADSTORM_IMMUNE, TRAIT_SOURCE_UNIT_TESTS)
+	fallout.weather_act(exposed_human)
+	TEST_ASSERT(HAS_TRAIT(exposed_human, TRAIT_IRRADIATED), "Fallout did not irradiate an exposed mob.")
+
+	var/mob/living/carbon/human/consistent/radiation_immune_human = allocate(
+		/mob/living/carbon/human/consistent,
+		run_loc_floor_bottom_left,
+	)
+	ADD_TRAIT(radiation_immune_human, TRAIT_RADIMMUNE, TRAIT_SOURCE_UNIT_TESTS)
+	fallout.weather_act(radiation_immune_human)
+	TEST_ASSERT(!HAS_TRAIT(radiation_immune_human, TRAIT_IRRADIATED), "Fallout irradiated a radiation-immune mob.")
+
+/datum/unit_test/rbmk_slagged_core_radiation/Run()
+	var/obj/machinery/rbmk/reactor/reactor = allocate(
+		/obj/machinery/rbmk/reactor,
+		run_loc_floor_bottom_left,
+	)
+	var/datum/component/radioactive_emitter/radiation_emitter = reactor.activate_slagged_core_radiation()
+	TEST_ASSERT_NOTNULL(radiation_emitter, "Slagged core was not made radioactive.")
+	TEST_ASSERT_EQUAL(radiation_emitter.range, RBMK_SLAGGED_CORE_RAD_RANGE, "Slagged core has the wrong radiation range.")
+	TEST_ASSERT_EQUAL(reactor.activate_slagged_core_radiation(), radiation_emitter, "A second radiation emitter was created.")
+	reactor.meltdown_in_progress = TRUE
+	reactor.meltdown_exploded = TRUE
+	reactor.radiation = 0
+	reactor.process()
+	TEST_ASSERT_EQUAL(reactor.radiation, RBMK_MAX_RADIATION, "Slagged core stopped reporting its radiation field.")
+
+/datum/unit_test/rbmk_meltdown_description/Run()
 	var/obj/machinery/rbmk/reactor/reactor = allocate(
 		/obj/machinery/rbmk/reactor,
 		run_loc_floor_bottom_left,
@@ -93,23 +137,24 @@
 	var/initial_description = reactor.desc
 	reactor.meltdown_exploded = TRUE
 	reactor.update_appearance(UPDATE_DESC)
-	TEST_ASSERT_NOTEQUAL(reactor.desc, initial_description, "The breached RBMK reactor retained its intact description.")
+	TEST_ASSERT_NOTEQUAL(reactor.desc, initial_description, "Slagged reactor kept its intact description.")
+
+/datum/unit_test/rbmk_reactor_lid_bounds/Run()
 	var/obj/structure/closet/supplypod/rbmk_reactor_lid/lid = allocate(
 		/obj/structure/closet/supplypod/rbmk_reactor_lid,
 		run_loc_floor_bottom_left,
 	)
-	TEST_ASSERT_EQUAL(lid.bound_width, 48, "The RBMK lid did not match the visible sprite width.")
-	TEST_ASSERT_EQUAL(lid.bound_height, 71, "The RBMK lid did not match the visible sprite height.")
-	TEST_ASSERT_EQUAL(lid.bound_x, -7, "The RBMK lid was not aligned with the visible sprite horizontally.")
-	TEST_ASSERT_EQUAL(lid.bound_y, -24, "The RBMK lid was not aligned with the visible sprite vertically.")
-	TEST_ASSERT_EQUAL(lid.mouse_opacity, MOUSE_OPACITY_ICON, "The RBMK lid accepted clicks outside its visible pixels.")
+	TEST_ASSERT_EQUAL(lid.bound_width, 48, "Lid bounds do not match its width.")
+	TEST_ASSERT_EQUAL(lid.bound_height, 71, "Lid bounds do not match its height.")
+	TEST_ASSERT_EQUAL(lid.bound_x, -7, "Lid bounds are horizontally misaligned.")
+	TEST_ASSERT_EQUAL(lid.bound_y, -24, "Lid bounds are vertically misaligned.")
+	TEST_ASSERT_EQUAL(lid.mouse_opacity, MOUSE_OPACITY_ICON, "Lid accepts clicks outside its visible pixels.")
 	lid.bound_width = world.icon_size
 	lid.bound_height = world.icon_size
 	lid.reset_lid_appearance(TRUE)
-	TEST_ASSERT_EQUAL(lid.bound_width, 48, "The RBMK lid lost its sprite width after landing.")
-	TEST_ASSERT_EQUAL(lid.bound_height, 71, "The RBMK lid lost its sprite height after landing.")
+	TEST_ASSERT_EQUAL(lid.bound_width, 48, "Lid lost its width after landing.")
+	TEST_ASSERT_EQUAL(lid.bound_height, 71, "Lid lost its height after landing.")
 
-/// Verifies that turbine generator wear is based on elapsed time rather than process frequency.
 /datum/unit_test/rbmk_turbine_frame_independent_damage/Run()
 	var/obj/machinery/power/rbmk_turbine/single_tick_turbine = allocate(
 		/obj/machinery/power/rbmk_turbine,
@@ -131,5 +176,29 @@
 		"RBMK turbine generator damage changed with the number of process ticks.",
 	)
 
-TEST_FOCUS(/datum/unit_test/rbmk_coolant_transfer_pressure_limits)
-TEST_FOCUS(/datum/unit_test/rbmk_meltdown_presentation)
+/datum/unit_test/rbmk_turbine_online_status/Run()
+	var/obj/machinery/rbmk/reactor/reactor = allocate(
+		/obj/machinery/rbmk/reactor,
+		run_loc_floor_bottom_left,
+	)
+	var/obj/machinery/computer/rbmk_console/console = allocate(
+		/obj/machinery/computer/rbmk_console,
+		run_loc_floor_bottom_left,
+	)
+	var/obj/machinery/power/rbmk_turbine/turbine = allocate(
+		/obj/machinery/power/rbmk_turbine,
+		run_loc_floor_bottom_left,
+	)
+	console.linked_reactor = reactor
+	console.linked_turbines = list(turbine)
+	var/list/offline_summary = console.get_turbine_data()
+	var/list/offline_turbine = offline_summary["turbines"][1]
+	TEST_ASSERT_EQUAL(offline_turbine["online"], FALSE, "An idle RBMK turbine did not report offline.")
+	TEST_ASSERT_EQUAL(offline_summary["online_turbine_count"], 0, "The RBMK console counted an idle turbine as online.")
+	turbine.last_generation_time = world.time
+	turbine.last_power_output = 100
+	turbine.last_flow_moles = 1
+	var/list/online_summary = console.get_turbine_data()
+	var/list/online_turbine = online_summary["turbines"][1]
+	TEST_ASSERT_EQUAL(online_turbine["online"], TRUE, "A generating RBMK turbine did not report online.")
+	TEST_ASSERT_EQUAL(online_summary["online_turbine_count"], 1, "The RBMK console did not count a generating turbine as online.")

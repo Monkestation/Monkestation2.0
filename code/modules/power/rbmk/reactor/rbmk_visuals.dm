@@ -1,10 +1,10 @@
-/// Refreshes the reactor icon pipeline and its coupled sound and light feedback.
+/** Refreshes reactor appearance, sound, and emitted light together. */
 /obj/machinery/rbmk/reactor/update_appearance(updates = ALL)
 	. = ..()
 	update_reactor_sound()
 	update_reactor_backlight()
 
-/// Describes the breached vessel once the meltdown completes.
+/** Describes the breached vessel after a completed meltdown. */
 /obj/machinery/rbmk/reactor/update_desc(updates = ALL)
 	if(meltdown_exploded)
 		desc = "The ruptured, slagged remains of an RBMK reactor core. Its containment lid has been torn away."
@@ -12,7 +12,7 @@
 		desc = initial(desc)
 	return ..()
 
-/// Selects the reactor's base icon state from its fuel, temperature, and failure state.
+/** Selects the reactor icon state from its fuel, heat, and failure state. */
 /obj/machinery/rbmk/reactor/update_icon_state()
 	. = ..()
 	current_damage_stage = get_reactor_damage_stage()
@@ -42,14 +42,14 @@
 	else
 		icon_state = "reactor_meltdown"
 
-/// Builds the integrity-damage overlay through the managed appearance pipeline.
+/** Adds the integrity-damage overlay through the appearance pipeline. */
 /obj/machinery/rbmk/reactor/update_overlays()
 	. = ..()
 	if(current_damage_stage <= 0)
 		return
 	. += mutable_appearance(icon, "reactor_damaged_[current_damage_stage]")
 
-/// Returns the damage-overlay stage corresponding to the current vessel integrity.
+/** Returns the damage-overlay stage for the current vessel integrity. */
 /obj/machinery/rbmk/reactor/proc/get_reactor_damage_stage()
 	if(meltdown_exploded || meltdown_in_progress || reactor_integrity <= 0)
 		return 4
@@ -64,7 +64,7 @@
 		return 1
 	return 0
 
-/// Keeps the looping reactor ambience synchronized with the current visual state.
+/** Keeps reactor ambience synchronized with its operating state. */
 /obj/machinery/rbmk/reactor/proc/update_reactor_sound()
 	if(supermatter_rod)
 		stop_reactor_sound()
@@ -80,7 +80,7 @@
 		return
 	set_reactor_sound_state(RBMK_SOUND_LOW)
 
-/// Updates the reactor's emitted light to communicate its current hazard state.
+/** Updates emitted light to communicate the current reactor hazard. */
 /obj/machinery/rbmk/reactor/proc/update_reactor_backlight()
 	if(meltdown_exploded || icon_state == "reactor_slagged")
 		set_light(l_outer_range = 8, l_power = 2.8, l_color = LIGHT_COLOR_FIRE)

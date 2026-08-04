@@ -1,8 +1,8 @@
-/// Returns whether the reactor lid is currently hot enough to work as a griddle.
+/** Returns whether the reactor lid is hot enough to cook food. */
 /obj/machinery/rbmk/reactor/proc/is_reactor_griddle_hot()
 	return temperature >= RBMK_TEMP_RUNNING
 
-/// Places an edible item on top of the reactor using the standard griddle interaction model.
+/** Tries to place an edible item on the reactor lid. */
 /obj/machinery/rbmk/reactor/proc/try_add_griddled_item(obj/item/item_to_grill, mob/living/user, list/modifiers)
 	if(length(griddled_objects) >= max_griddled_items)
 		balloon_alert(user, "reactor top is full!")
@@ -19,7 +19,7 @@
 	add_to_reactor_griddle(item_to_grill, user)
 	return ITEM_INTERACT_SUCCESS
 
-/// Registers and displays an item on the reactor lid.
+/** Registers and displays an item on the reactor lid. */
 /obj/machinery/rbmk/reactor/proc/add_to_reactor_griddle(obj/item/item_to_grill, mob/user)
 	vis_contents += item_to_grill
 	griddled_objects += item_to_grill
@@ -33,7 +33,7 @@
 	RegisterSignal(item_to_grill, COMSIG_QDELETING, PROC_REF(remove_from_reactor_griddle))
 	update_reactor_grill_audio()
 
-/// Cleans up an item that was removed from or deleted on the reactor lid.
+/** Stops tracking an item removed from the reactor lid. */
 /obj/machinery/rbmk/reactor/proc/remove_from_reactor_griddle(obj/item/item_to_remove)
 	SIGNAL_HANDLER
 	item_to_remove.flags_1 &= ~IS_ONTOP_1
@@ -43,17 +43,17 @@
 	UnregisterSignal(item_to_remove, list(COMSIG_ITEM_GRILLED, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 	update_reactor_grill_audio()
 
-/// Stops tracking a griddled item when it moves away from the reactor.
+/** Handles a griddled item moving away from the reactor. */
 /obj/machinery/rbmk/reactor/proc/on_reactor_griddle_item_moved(obj/item/moved_item, atom/old_loc, direction, forced)
 	SIGNAL_HANDLER
 	remove_from_reactor_griddle(moved_item)
 
-/// Keeps transformed grill results on top of the reactor, matching griddle behavior.
+/** Keeps a transformed grill result on top of the reactor. */
 /obj/machinery/rbmk/reactor/proc/on_reactor_grill_completed(obj/item/source, atom/grilled_result)
 	SIGNAL_HANDLER
 	add_to_reactor_griddle(grilled_result)
 
-/// Starts or stops cooking audio to match the reactor's current griddle contents.
+/** Starts or stops the cooking loop for items on the reactor lid. */
 /obj/machinery/rbmk/reactor/proc/update_reactor_grill_audio()
 	if(QDELETED(src) || !grill_loop)
 		return
@@ -62,7 +62,7 @@
 	else
 		grill_loop.stop()
 
-/// Runs standard griddle processing while scaling fallback heat to the reactor core.
+/** Processes food on the reactor lid using the current core temperature. */
 /obj/machinery/rbmk/reactor/proc/process_reactor_griddle(seconds_per_tick)
 	var/griddle_is_hot = is_reactor_griddle_hot()
 	if(griddle_is_hot != reactor_griddle_active)

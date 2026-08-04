@@ -1,26 +1,26 @@
-/// Checks whether residual heat should initiate a post-shutdown meltdown.
+/** Checks whether residual heat should start a post-shutdown meltdown. */
 /obj/machinery/rbmk/reactor/proc/check_decay_meltdown()
 	if(meltdown_in_progress || running)
 		return
 	if(!COOLDOWN_FINISHED(src, decay_meltdown_check_cooldown))
 		return
 	COOLDOWN_START(src, decay_meltdown_check_cooldown, decay_check_interval)
-	if(temperature >= get_effective_decay_meltdown_threshold())
+	if(temperature >= get_effective_temp_damage_threshold())
 		trigger_meltdown("Post-SCRAM decay heat runaway")
 
-/// Starts an ordinary reactor meltdown unless one is already committed.
+/** Starts a normal RBMK meltdown. */
 /obj/machinery/rbmk/reactor/proc/trigger_meltdown(reason)
 	if(meltdown_in_progress)
 		return
 	begin_meltdown_sequence(reason)
 
-/// Starts the supermatter-specific reactor failure path.
+/** Starts the failure path used by a supermatter rod cascade. */
 /obj/machinery/rbmk/reactor/proc/trigger_supermatter_rod_meltdown(reason)
 	if(meltdown_in_progress)
 		return
 	begin_meltdown_sequence(reason, TRUE)
 
-/// Commits the reactor to failure and schedules destructive effects after the warning delay.
+/** Commits the reactor to failure and schedules the vessel breach. */
 /obj/machinery/rbmk/reactor/proc/begin_meltdown_sequence(reason, supermatter_failure = FALSE)
 	meltdown_in_progress = TRUE
 	meltdown_exploded = FALSE
@@ -43,7 +43,7 @@
 	addtimer(CALLBACK(src, PROC_REF(complete_meltdown_sequence), alert_reason), RBMK_MELTDOWN_WARNING_DELAY, TIMER_UNIQUE)
 	log_game("[src] MELTDOWN sequence started: [alert_reason]")
 
-/// Executes the committed vessel breach and schedules its secondary effects.
+/** Breaches the vessel and schedules the secondary meltdown effects. */
 /obj/machinery/rbmk/reactor/proc/complete_meltdown_sequence(reason)
 	if(QDELETED(src) || meltdown_exploded)
 		return
@@ -53,13 +53,13 @@
 	update_appearance(UPDATE_ICON | UPDATE_DESC)
 	temperature = max(temperature, RBMK_TEMP_DAMAGE_RAMP)
 	flux = 0
-	radiation = 0
+	radiation = RBMK_MAX_RADIATION
 	if(meltdown_supermatter_failure)
 		temperature = max(temperature, RBMK_TEMP_DAMAGE_RAMP * 2)
 		flux = RBMK_MAX_FLUX
-		radiation = RBMK_MAX_RADIATION
 	thermal_output = 0
 	void_coefficient = 0
+	activate_slagged_core_radiation()
 	launch_reactor_lid()
 	if(meltdown_supermatter_failure)
 		priority_announce(
@@ -70,11 +70,11 @@
 		rbmk_engineering_alert("RBMK supermatter containment vessel failure confirmed. Spatial cascade effects are developing around the reactor sector.")
 	else
 		priority_announce(
-			"RBMK reactor containment vessel failure confirmed. Radioactive fallout will begin spreading in approximately one minute. Maintenance remains the safest shelter.",
+			"RBMK reactor containment vessel failure confirmed. Radioactive fallout will reach exposed station areas in approximately one minute. Maintenance remains the safest shelter.",
 			"RBMK Reactor Breach",
 			'sound/misc/airraid.ogg',
 		)
-		rbmk_engineering_alert("RBMK containment vessel failure confirmed. Fallout will spread across the station in T-1 minute.")
+		rbmk_engineering_alert("RBMK containment vessel failure confirmed. Fallout will reach exposed station areas in T-1 minute.")
 	if(!meltdown_supermatter_failure)
 		addtimer(CALLBACK(src, PROC_REF(meltdown_radiation_pulse)), RBMK_MELTDOWN_EFFECT_STAGGER)
 	addtimer(CALLBACK(src, PROC_REF(meltdown_atmos_release)), RBMK_MELTDOWN_EFFECT_STAGGER * 2)
@@ -85,14 +85,14 @@
 	update_linked_consoles()
 	log_game("[src] MELTDOWN explosion triggered: [reason]")
 
-/// Routes an engineering-band alert through the reactor's primary console.
+/** Routes a reactor alert through the nearest linked console. */
 /obj/machinery/rbmk/reactor/proc/rbmk_engineering_alert(message)
 	if(!message)
 		return
 	var/obj/machinery/computer/rbmk_console/alert_console = get_primary_console()
 	alert_console?.send_engineering_alert(message)
 
-/// Emits the ordinary meltdown radiation pulse.
+/** Emits the initial radiation pulse from an ordinary meltdown. */
 /obj/machinery/rbmk/reactor/proc/meltdown_radiation_pulse()
 	radiation_pulse(
 		src,
@@ -105,7 +105,19 @@
 	)
 	playsound(src, 'sound/rbmk/meltdown.ogg', 90, TRUE)
 
-/// Releases half of the hot internal coolant atmosphere onto the reactor tile.
+/**
+ * Keeps the slagged core dangerously radioactive after its fallout clears.
+ */
+/obj/machinery/rbmk/reactor/proc/activate_slagged_core_radiation()
+	return AddComponent(
+		/datum/component/radioactive_emitter, \
+		cooldown_time = RBMK_SLAGGED_CORE_RAD_PULSE_INTERVAL, \
+		range = RBMK_SLAGGED_CORE_RAD_RANGE, \
+		threshold = RBMK_SLAGGED_CORE_RAD_THRESHOLD, \
+		examine_text = span_boldwarning("The slagged core is emitting lethal levels of ionizing radiation."), \
+	)
+
+/** Releases part of the hot coolant inventory onto the reactor tile. */
 /obj/machinery/rbmk/reactor/proc/meltdown_atmos_release()
 	if(!coolant_internal)
 		return
@@ -117,7 +129,7 @@
 		released_mix.temperature = max(released_mix.temperature, temperature)
 		reactor_turf.assume_air(released_mix)
 
-/// Produces the physical explosion associated with vessel rupture.
+/** Produces the physical explosion caused by the vessel breach. */
 /obj/machinery/rbmk/reactor/proc/meltdown_explosions()
 	var/turf/epicenter = get_turf(src)
 	if(!epicenter)
@@ -133,11 +145,11 @@
 	new /obj/effect/hotspot(epicenter)
 	temperature = max(temperature, RBMK_TEMP_DAMAGE_RAMP * 2)
 
-/// Plays the local reactor-room meltdown alarm.
+/** Plays the reactor-room meltdown alarm. */
 /obj/machinery/rbmk/reactor/proc/meltdown_area_alarms()
 	playsound(src, 'sound/rbmk/alarm.ogg', 100, FALSE)
 
-/// Damages nearby floors after a vessel breach.
+/** Damages station floors around the breached vessel. */
 /obj/machinery/rbmk/reactor/proc/meltdown_floor_damage()
 	var/turf/epicenter = get_turf(src)
 	if(!epicenter)
@@ -149,20 +161,20 @@
 			damaged_floor.ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 		CHECK_TICK
 
-/// Begins expanding fallout after the configured post-breach delay.
+/** Starts station fallout after the post-breach delay. */
 /obj/machinery/rbmk/reactor/proc/begin_delayed_meltdown_fallout()
-	if(QDELETED(src) || rbmk_fallout_active)
+	if(QDELETED(src))
 		return
 	priority_announce(
 		"RBMK fallout has spread across the station. Maintenance tunnels and radiation shelters remain shielded; exposed areas are unsafe.",
 		"RBMK Fallout Warning",
 		ANNOUNCER_RADIATION,
 	)
-	rbmk_engineering_alert("RBMK fallout has begun spreading from [get_area_name(src)]. Maintenance remains shielded.")
-	sound_to_playing_players('sound/rbmk/falloutwind.ogg', 90)
-	start_meltdown_fallout()
+	rbmk_engineering_alert("RBMK fallout is contaminating exposed station areas. Maintenance remains shielded.")
+	if(!(locate(/datum/weather/rbmk_fallout) in SSweather.processing))
+		SSweather.run_weather(/datum/weather/rbmk_fallout)
 
-/// Launches the containment lid toward a safe station hallway turf.
+/** Launches the containment lid toward a safe station hallway. */
 /obj/machinery/rbmk/reactor/proc/launch_reactor_lid()
 	var/turf/reactor_turf = get_turf(src)
 	var/turf/target_turf = get_rbmk_lid_landing_turf()
@@ -172,7 +184,7 @@
 	visible_message(span_userdanger("[src]'s Containment lid is violently torn free from reactor core!"))
 	new /obj/effect/pod_landingzone(target_turf, lid)
 
-/// Selects a valid station turf on which the launched containment lid can land.
+/** Finds a valid station tile for the launched containment lid. */
 /obj/machinery/rbmk/reactor/proc/get_rbmk_lid_landing_turf()
 	var/list/hallway_areas = list()
 	for(var/area_type in GLOB.the_station_areas)
@@ -221,7 +233,7 @@
 	. = ..()
 	reset_lid_appearance()
 
-/// Suppresses generic supply-pod overlays that do not align with the custom lid sprite.
+/** Suppresses supply-pod overlays that do not fit the lid sprite. */
 /obj/structure/closet/supplypod/rbmk_reactor_lid/update_overlays()
 	. = ..()
 	return list()
@@ -241,7 +253,7 @@
 	set_density(TRUE)
 	reset_lid_appearance(TRUE)
 
-/// Restores the lid's custom appearance after supply-pod state transitions.
+/** Restores the lid's custom appearance after a supply-pod state change. */
 /obj/structure/closet/supplypod/rbmk_reactor_lid/proc/reset_lid_appearance(landed = FALSE)
 	icon = 'icons/obj/machines/rbmk_lid.dmi'
 	icon_state = "oh shit"

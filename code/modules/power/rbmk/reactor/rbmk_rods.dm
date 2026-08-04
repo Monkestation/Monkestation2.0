@@ -1,14 +1,14 @@
-/// Returns whether a rod belongs in the special slot bank.
+/** Returns whether a rod belongs in the special slot bank. */
 /obj/machinery/rbmk/reactor/proc/is_special_rod(obj/item/rbmk/fuel_rod/fuel_rod)
 	return fuel_rod?.uses_special_slot
 
-/// Returns the slot bank that owns the supplied rod type.
+/** Returns the slot bank used by the supplied rod. */
 /obj/machinery/rbmk/reactor/proc/get_target_slot_list(obj/item/rbmk/fuel_rod/fuel_rod)
 	if(is_special_rod(fuel_rod))
 		return special_slots
 	return normal_slots
 
-/// Resolves a named slot-bank identifier into its owned list.
+/** Resolves a slot-bank identifier into its owned list. */
 /obj/machinery/rbmk/reactor/proc/get_slot_list_by_kind(slot_kind)
 	if(slot_kind == RBMK_ROD_SLOT_SPECIAL)
 		return special_slots
@@ -16,13 +16,13 @@
 		return normal_slots
 	return null
 
-/// Returns the installed supermatter rod, if the special bank contains one.
+/** Returns the installed supermatter rod, if present. */
 /obj/machinery/rbmk/reactor/proc/get_installed_supermatter_rod()
 	for(var/obj/item/rbmk/fuel_rod/supermatter/installed_supermatter_rod in special_slots)
 		return installed_supermatter_rod
 	return null
 
-/// Starts a supermatter rod cascade once reactor activation conditions are met.
+/** Starts a supermatter cascade once its activation conditions are met. */
 /obj/machinery/rbmk/reactor/proc/check_supermatter_rod_activation()
 	if(supermatter_rod || meltdown_in_progress)
 		return FALSE
@@ -49,7 +49,7 @@
 		return try_add_griddled_item(used_item, user, modifiers)
 	return ..()
 
-/// Transfers a held rod into its owned bank after capacity and inventory validation.
+/** Validates and transfers a held rod into its reactor slot bank. */
 /obj/machinery/rbmk/reactor/proc/try_insert_fuel_rod(obj/item/rbmk/fuel_rod/fuel_rod, mob/user)
 	if(!fuel_rod || !user)
 		return ITEM_INTERACT_FAILURE
@@ -93,7 +93,7 @@
 	to_chat(user, span_notice("No rods installed."))
 	return TRUE
 
-/// Returns the next rod and slot metadata targeted by the manual extractor.
+/** Returns the rod and slot currently targeted by the manual extractor. */
 /obj/machinery/rbmk/reactor/proc/get_rod_tool_target_data()
 	var/obj/item/rbmk/fuel_rod/supermatter/installed_supermatter_rod = get_installed_supermatter_rod()
 	if(installed_supermatter_rod)
@@ -118,7 +118,7 @@
 		)
 	return null
 
-/// Revalidates that an interruptible extraction still targets the same installed rod.
+/** Revalidates an extraction target after an interruptible action. */
 /obj/machinery/rbmk/reactor/proc/rod_tool_target_still_installed(slot_kind, slot_index, obj/item/rbmk/fuel_rod/expected_rod)
 	if(QDELETED(expected_rod))
 		return FALSE
@@ -134,7 +134,7 @@
 		return FALSE
 	return expected_rod.loc == src
 
-/// Returns the manual extraction duration for an ordinary, special, or cascading rod.
+/** Returns the manual extraction time for the supplied rod. */
 /obj/machinery/rbmk/reactor/proc/get_rod_tool_removal_time(obj/item/rbmk/fuel_rod/fuel_rod)
 	if(fuel_rod == supermatter_rod)
 		return RBMK_ROD_TOOL_REMOVE_TIME_CASCADE
@@ -142,13 +142,13 @@
 		return RBMK_ROD_TOOL_REMOVE_TIME_SPECIAL
 	return RBMK_ROD_TOOL_REMOVE_TIME_NORMAL
 
-/// Returns a normalized measure of the reactor heat used by extraction knockback.
+/** Returns normalized reactor heat used by extraction knockback. */
 /obj/machinery/rbmk/reactor/proc/get_rod_extraction_heat_ratio()
 	if(temperature <= RBMK_ROD_TOOL_HOT_KNOCKBACK_TEMP)
 		return 0
 	return CLAMP01((temperature - RBMK_ROD_TOOL_HOT_KNOCKBACK_TEMP) / 6000)
 
-/// Applies heat-scaled blast effects around a completed emergency extraction.
+/** Applies the heat-scaled blast caused by emergency rod extraction. */
 /obj/machinery/rbmk/reactor/proc/apply_rod_tool_knockback(mob/living/user, cascade_extraction = FALSE)
 	if(!cascade_extraction && temperature <= RBMK_ROD_TOOL_HOT_KNOCKBACK_TEMP)
 		return
@@ -212,7 +212,7 @@
 		var/effective_throw_range = max(blast_range - distance_from_reactor + 1, 1)
 		blast_throw_atom(movable_atom, effective_throw_range, throw_speed)
 
-/// Throws and disorients a living mob caught in an extraction blast.
+/** Throws and disorients a living mob caught in an extraction blast. */
 /obj/machinery/rbmk/reactor/proc/blast_throw_living(mob/living/living_mob, throw_range, throw_speed, stamina_damage, disorient_time)
 	if(!living_mob || QDELETED(living_mob))
 		return
@@ -231,7 +231,7 @@
 	living_mob.stamina.adjust(stamina_damage)
 	living_mob.throw_at(target_turf, throw_range, throw_speed, src)
 
-/// Throws a movable non-living atom caught in an extraction blast.
+/** Throws a movable non-living atom caught in an extraction blast. */
 /obj/machinery/rbmk/reactor/proc/blast_throw_atom(atom/movable/thrown_atom, throw_range, throw_speed)
 	if(!thrown_atom || QDELETED(thrown_atom))
 		return
@@ -247,7 +247,7 @@
 		return
 	thrown_atom.throw_at(target_turf, throw_range, throw_speed, src)
 
-/// Atomically removes the expected rod from a validated slot and hands it off for placement.
+/** Removes a validated rod from its slot and passes it to final placement. */
 /obj/machinery/rbmk/reactor/proc/finish_remove_rod_from_slot(slot_kind, slot_index, obj/item/rbmk/fuel_rod/expected_rod = null, mob/user = null)
 	var/list/target_slots = get_slot_list_by_kind(slot_kind)
 	if(!target_slots)
@@ -267,7 +267,7 @@
 	target_slots.Cut(slot_index, slot_index + 1)
 	return finish_removed_rod(fuel_rod, user)
 
-/// Places a removed rod into the user's hands or at a safe drop location.
+/** Places a removed rod in the user's hands or at a safe drop location. */
 /obj/machinery/rbmk/reactor/proc/finish_removed_rod(obj/item/rbmk/fuel_rod/fuel_rod, mob/user = null)
 	if(fuel_rod == supermatter_rod)
 		var/obj/item/rbmk/fuel_rod/supermatter/removed_supermatter_rod = fuel_rod
@@ -285,7 +285,7 @@
 	update_linked_consoles()
 	return TRUE
 
-/// Performs interruptible manual extraction with post-delay target revalidation.
+/** Performs manual rod extraction with post-delay revalidation. */
 /obj/machinery/rbmk/reactor/proc/try_remove_rod_with_tool(mob/living/user, obj/item/rbmk/rod_tool/tool)
 	if(!user || !tool)
 		return ITEM_INTERACT_FAILURE
@@ -321,7 +321,7 @@
 	apply_rod_tool_knockback(user, cascade_extraction)
 	return ITEM_INTERACT_SUCCESS
 
-/// Returns whether remote console extraction is safe in the reactor's current state.
+/** Returns whether console rod extraction is safe in the current state. */
 /obj/machinery/rbmk/reactor/proc/can_remote_extract_rods(mob/user = null)
 	if(meltdown_in_progress || supermatter_rod)
 		if(user)
@@ -337,7 +337,7 @@
 		return FALSE
 	return TRUE
 
-/// Removes a rod from a named slot bank through the console extraction path.
+/** Removes a rod from a named slot bank through the console. */
 /obj/machinery/rbmk/reactor/proc/remove_rod_by_slot(slot_kind, slot_index, mob/user = null)
 	if(!can_remote_extract_rods(user))
 		return FALSE

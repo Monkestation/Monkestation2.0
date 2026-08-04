@@ -1,8 +1,9 @@
-/// Material sheets recovered from each valid extraction recipe.
+// Processor tuning
+/// Material sheets recovered by an extraction recipe.
 #define RBMK_PROCESSOR_RECOVERED_SHEETS 5
-/// Base processing duration for one item.
+/// Base duration of one processing job.
 #define RBMK_PROCESSOR_PROCESS_TIME (5 SECONDS)
-/// Additional processing duration per item beyond the first.
+/// Additional processing time for each item after the first.
 #define RBMK_PROCESSOR_ADDITIONAL_ITEM_TIME (1 SECONDS)
 /// Largest recipe batch accepted by the processor.
 #define RBMK_PROCESSOR_MAX_BATCH 12
@@ -43,6 +44,7 @@
 	var/process_started_at = 0
 	/// World time when the active job is due to finish.
 	var/process_ends_at = 0
+
 /obj/machinery/rbmk/fuel_processor/Initialize(mapload)
 	. = ..()
 	inserted_rods = list()
@@ -51,6 +53,7 @@
 	RegisterSignal(src, COMSIG_SILO_ITEM_CONSUMED, PROC_REF(silo_material_insert))
 	update_appearance(UPDATE_ICON)
 	return .
+
 /obj/machinery/rbmk/fuel_processor/Destroy()
 	UnregisterSignal(src, COMSIG_SILO_ITEM_CONSUMED)
 	for(var/obj/item/rbmk/fuel_rod/inserted_rod as anything in inserted_rods)
@@ -63,17 +66,16 @@
 	output_items.Cut()
 	materials = null
 	return ..()
-/// Handles material-insertion signals from the linked ore silo.
+
+/** Handles material deposits reported by the linked ore silo. */
 /obj/machinery/rbmk/fuel_processor/proc/silo_material_insert(obj/machinery/rnd/machine, container, obj/item/item_inserted, last_inserted_id, list/mats_consumed, amount_inserted)
 	SIGNAL_HANDLER
-	process_material_insert(item_inserted, mats_consumed, amount_inserted)
-/// Applies power, animation, sound, and UI feedback for a silo material deposit.
-/obj/machinery/rbmk/fuel_processor/proc/process_material_insert(obj/item/item_inserted, list/mats_consumed, amount_inserted)
 	if(directly_use_energy(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.4 * initial(active_power_usage))))
 		if(!current_recipe && !has_output_items() && !length(inserted_rods) && !panel_open)
 			flick("rod_press_load", src)
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	SStgui.update_uis(src)
+
 /obj/machinery/rbmk/fuel_processor/update_icon_state()
 	. = ..()
 	if(panel_open)
@@ -89,6 +91,7 @@
 		icon_state = "rod_press_load"
 		return
 	icon_state = base_icon_state
+
 /obj/machinery/rbmk/fuel_processor/screwdriver_act(mob/living/user, obj/item/tool)
 	if(current_recipe)
 		balloon_alert(user, "processing")
@@ -98,7 +101,8 @@
 		SStgui.update_uis(src)
 		return ITEM_INTERACT_SUCCESS
 	return ..()
-/// Removes deleted or externally moved items from the tracked output tray.
+
+/** Stops tracking output that was deleted or moved off the output tile. */
 /obj/machinery/rbmk/fuel_processor/proc/prune_output_items()
 	var/index = length(output_items)
 	var/turf/output_turf = get_processor_output_location()
@@ -109,18 +113,21 @@
 		else if(output_item.loc != output_turf)
 			output_items.Cut(index, index + 1)
 		index--
-/// Returns whether the processor's output tray still contains tracked output.
+
+/** Returns whether tracked output remains on the output tile. */
 /obj/machinery/rbmk/fuel_processor/proc/has_output_items()
 	prune_output_items()
 	return length(output_items) > 0
-/// Returns completion progress for the active recipe as a percentage.
+
+/** Returns the active recipe's completion percentage. */
 /obj/machinery/rbmk/fuel_processor/proc/get_process_progress()
 	if(!current_recipe)
 		return 0
 	var/total_time = max(process_ends_at - process_started_at, 1)
 	var/elapsed = clamp(world.time - process_started_at, 0, total_time)
 	return round((elapsed / total_time) * 100, 0.1)
-/// Resolves a server-validated recipe datum from a datum, type path, or TGUI string.
+
+/** Resolves a recipe through the processor's server-side registry. */
 /obj/machinery/rbmk/fuel_processor/proc/get_recipe(recipe_reference)
 	if(istype(recipe_reference, /datum/rbmk_fuel_recipe))
 		var/datum/rbmk_fuel_recipe/recipe = recipe_reference
@@ -132,7 +139,7 @@
 		return null
 	return GLOB.rbmk_fuel_recipes[recipe_type]
 
-/// Converts a recipe's material costs into the named records consumed by TGUI.
+/** Converts a recipe's material costs into records for the processor UI. */
 /obj/machinery/rbmk/fuel_processor/proc/get_recipe_cost_map(datum/rbmk_fuel_recipe/recipe)
 	var/list/cost_map = list()
 	for(var/material_type in recipe.material_cost)
@@ -140,13 +147,13 @@
 		cost_map[material.name] = recipe.material_cost[material_type]
 	return cost_map
 
-/// Returns whether a depleted rod satisfies an extraction recipe.
+/** Returns whether a depleted rod is valid for an extraction recipe. */
 /obj/machinery/rbmk/fuel_processor/proc/rod_matches_recipe(obj/item/rbmk/fuel_rod/fuel_rod, datum/rbmk_fuel_recipe/recipe)
 	if(!fuel_rod?.is_depleted() || !recipe?.input_rod_type)
 		return FALSE
 	return istype(fuel_rod, recipe.input_rod_type)
 
-/// Counts held rods that satisfy an extraction recipe.
+/** Counts inserted rods accepted by an extraction recipe. */
 /obj/machinery/rbmk/fuel_processor/proc/count_matching_inserted_rods(datum/rbmk_fuel_recipe/recipe)
 	var/matching_rods = 0
 	for(var/obj/item/rbmk/fuel_rod/fuel_rod as anything in inserted_rods)
@@ -154,7 +161,7 @@
 			matching_rods++
 	return matching_rods
 
-/// Returns whether the linked material container can pay a recipe's base cost.
+/** Returns whether the linked material container can pay a recipe's base cost. */
 /obj/machinery/rbmk/fuel_processor/proc/recipe_materials_available(datum/rbmk_fuel_recipe/recipe)
 	if(!length(recipe?.material_cost))
 		return FALSE
@@ -162,7 +169,7 @@
 		return FALSE
 	return materials.mat_container.has_materials(recipe.material_cost, 1, 1)
 
-/// Returns whether a recipe should be expanded in the initial TGUI view.
+/** Returns whether a recipe should be expanded when the UI opens. */
 /obj/machinery/rbmk/fuel_processor/proc/recipe_visible_by_default(datum/rbmk_fuel_recipe/recipe)
 	if(current_recipe == recipe)
 		return TRUE
@@ -170,7 +177,7 @@
 		return count_matching_inserted_rods(recipe) > 0
 	return recipe_materials_available(recipe)
 
-/// Returns the extraction recipe that accepts a depleted rod.
+/** Finds the extraction recipe for a depleted rod. */
 /obj/machinery/rbmk/fuel_processor/proc/get_extraction_recipe_for_rod(obj/item/rbmk/fuel_rod/fuel_rod)
 	if(!fuel_rod?.is_depleted())
 		return null
@@ -180,7 +187,7 @@
 			return recipe
 	return null
 
-/// Returns a player-facing reason a recipe cannot start, or null when it is ready.
+/** Returns why a recipe cannot start, or null when it is ready. */
 /obj/machinery/rbmk/fuel_processor/proc/get_recipe_block_reason(datum/rbmk_fuel_recipe/recipe, check_power = TRUE, batch_size = 1)
 	if(!recipe)
 		return "Unknown recipe."
@@ -211,14 +218,14 @@
 			return "Insufficient linked materials."
 	return null
 
-/// Finds the largest currently valid batch for a recipe, up to the configured cap.
+/** Finds the largest valid batch for a recipe. */
 /obj/machinery/rbmk/fuel_processor/proc/get_recipe_max_batch(datum/rbmk_fuel_recipe/recipe)
 	for(var/batch_size in RBMK_PROCESSOR_MAX_BATCH to 1 step -1)
 		if(isnull(get_recipe_block_reason(recipe, TRUE, batch_size)))
 			return batch_size
 	return 0
 
-/// Starts a validated recipe and schedules its completion.
+/** Starts a recipe after validating its inputs and batch size. */
 /obj/machinery/rbmk/fuel_processor/proc/start_recipe(recipe_reference, mob/user, batch_size = 1)
 	var/datum/rbmk_fuel_recipe/recipe = get_recipe(recipe_reference)
 	batch_size = text2num("[batch_size]")
@@ -247,7 +254,7 @@
 	addtimer(CALLBACK(src, PROC_REF(finish_recipe), recipe, batch_size), process_time)
 	return TRUE
 
-/// Revalidates and completes an active recipe, consuming inputs and creating output.
+/** Revalidates and completes the active recipe. */
 /obj/machinery/rbmk/fuel_processor/proc/finish_recipe(datum/rbmk_fuel_recipe/recipe, batch_size)
 	if(QDELETED(src))
 		return
@@ -286,7 +293,7 @@
 	update_appearance(UPDATE_ICON)
 	SStgui.update_uis(src)
 
-/// Creates and tracks one output atom on the processor's output tile.
+/** Creates and tracks one item on the processor's output tile. */
 /obj/machinery/rbmk/fuel_processor/proc/create_output(output_type)
 	if(!output_type)
 		return null
@@ -294,7 +301,7 @@
 	output_items += created
 	return created
 
-/// Creates and tracks an isotope sheet stack on the processor's output tile.
+/** Creates and tracks isotope sheet stacks on the output tile. */
 /obj/machinery/rbmk/fuel_processor/proc/create_sheet_output(output_type, amount)
 	if(!output_type || amount <= 0)
 		return null
@@ -307,14 +314,14 @@
 		amount -= stack_amount
 	return created_stacks
 
-/// Returns the turf immediately in front of the processor, falling back to its own turf.
+/** Returns the processor's output tile, falling back to its drop location. */
 /obj/machinery/rbmk/fuel_processor/proc/get_processor_output_location()
 	var/turf/output_turf = get_step(src, EAST)
 	if(output_turf && !isclosedturf(output_turf))
 		return output_turf
 	return drop_location()
 
-/// Validates whether a rod can be transferred into the processor.
+/** Validates whether a rod can be inserted into the processor. */
 /obj/machinery/rbmk/fuel_processor/proc/can_accept_rod(obj/item/rbmk/fuel_rod/fuel_rod, mob/user)
 	if(!fuel_rod)
 		return FALSE
@@ -363,7 +370,7 @@
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 
-/// Ejects one held fuel rod selected by its server-validated list index.
+/** Ejects an inserted rod selected by its validated list index. */
 /obj/machinery/rbmk/fuel_processor/proc/eject_inserted_rod(rod_index, mob/user)
 	if(current_recipe)
 		if(user)
@@ -385,7 +392,7 @@
 	SStgui.update_uis(src)
 	return TRUE
 
-/// Ejects one completed output selected by its server-validated list index.
+/** Ejects completed output selected by its validated list index. */
 /obj/machinery/rbmk/fuel_processor/proc/eject_output(output_index, mob/user)
 	if(current_recipe)
 		if(user)
@@ -411,7 +418,7 @@
 	SStgui.update_uis(src)
 	return TRUE
 
-/// Builds the inserted-rod records displayed by TGUI.
+/** Builds the inserted-rod records displayed by the processor UI. */
 /obj/machinery/rbmk/fuel_processor/proc/get_inserted_rods_data()
 	var/list/rod_data = list()
 	for(var/index in 1 to length(inserted_rods))
@@ -425,7 +432,7 @@
 		))
 	return rod_data
 
-/// Builds the completed-output records displayed by TGUI.
+/** Builds the completed-output records displayed by the processor UI. */
 /obj/machinery/rbmk/fuel_processor/proc/get_output_items_data()
 	prune_output_items()
 	var/list/output_data = list()
@@ -440,7 +447,7 @@
 		))
 	return output_data
 
-/// Builds one recipe record with costs, availability, and batch limits for TGUI.
+/** Builds one recipe record for the processor UI. */
 /obj/machinery/rbmk/fuel_processor/proc/get_recipe_data(datum/rbmk_fuel_recipe/recipe)
 	var/block_reason = get_recipe_block_reason(recipe)
 	return list(
@@ -455,7 +462,7 @@
 		"max_batch" = get_recipe_max_batch(recipe),
 	)
 
-/// Builds the ordered recipe list exposed to TGUI.
+/** Builds the ordered recipe list displayed by the processor UI. */
 /obj/machinery/rbmk/fuel_processor/proc/get_all_recipe_data()
 	var/list/recipe_data = list()
 	for(var/recipe_type in GLOB.rbmk_fuel_recipes)

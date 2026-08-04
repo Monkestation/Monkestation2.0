@@ -1,3 +1,4 @@
+// Simulation timing and display limits
 /// Default temperature for newly initialized RBMK gas and machinery state.
 #define RBMK_AMBIENT_TEMP 293
 /// Baseline machinery cycle used to convert legacy per-tick tuning into per-second rates.
@@ -6,6 +7,8 @@
 #define RBMK_ATMOS_PROCESS_SECONDS 0.5
 /// Upper bound used when graphing reactor temperature.
 #define RBMK_TEMP_DISPLAY_MAX 20000
+
+// Temperature limits
 /// Temperature where ordinary thermal integrity stress begins.
 #define RBMK_TEMP_STRESS_THRESHOLD 8000
 /// Temperature where severe thermal integrity damage begins.
@@ -14,6 +17,7 @@
 /// deliberately weak compared with forced coolant exchange.
 #define RBMK_PASSIVE_AIR_EXCHANGE_COEFFICIENT 0.0015
 
+// Moderator rod bonuses
 /// Per-rod increase to the reactor's thermal stress limits from plasma moderation.
 #define RBMK_MODIFIER_PLASMA_TEMP_LIMIT_BONUS 1250
 /// Maximum combined thermal-limit increase from plasma moderator rods.
@@ -27,6 +31,7 @@
 /// Maximum combined flux increase from diamond moderator rods.
 #define RBMK_MODIFIER_DIAMOND_FLUX_MULT_BONUS_MAX 0.48
 
+// Operating temperature bands
 /// Minimum temperature treated as active reactor operation.
 #define RBMK_TEMP_RUNNING 500
 /// Moderate operating-temperature display threshold.
@@ -40,6 +45,7 @@
 /// Temperature that initiates the primary meltdown path.
 #define RBMK_TEMP_MELTDOWN 8000
 
+// Positive void coefficient
 /// Temperature contribution to the positive void coefficient.
 #define RBMK_VC_TEMP_COEFF 0.00008
 /// Maximum temperature contribution to the void coefficient.
@@ -53,6 +59,7 @@
 /// Absolute upper bound for the reactor's void coefficient.
 #define RBMK_VC_MAX 3.0
 
+// Reaction output and decay
 /// Base fraction of rod output added to reactor flux each machinery cycle.
 #define RBMK_FLUX_GAIN 0.8
 /// Base reactor heat gain converted to a per-second rate.
@@ -68,6 +75,7 @@
 /// Fraction of active fuel-rod radiation that remains with the control rods fully inserted.
 #define RBMK_RESIDUAL_RADIATION_MULTIPLIER 0.15
 
+// Vessel integrity
 /// Default and maximum vessel integrity.
 #define RBMK_MAX_INTEGRITY 100
 /// Maximum thermal integrity damage applied per second.
@@ -87,6 +95,7 @@
 /// Integrity threshold for the fourth damage overlay.
 #define RBMK_DAMAGE_OVERLAY_4 25
 
+// Rods and controls
 /// Fully inserted control-rod depth percentage.
 #define RBMK_CONTROL_ROD_MAX 100
 /// Maximum distance at which an RBMK console can link to its reactor.
@@ -113,6 +122,8 @@
 #define RBMK_ROD_TYPE_DIAMOND "diamond"
 /// Supermatter fuel-rod identifier.
 #define RBMK_ROD_TYPE_SUPERMATTER "supermatter"
+
+// Repairs and manual rod extraction
 /// Highest vessel temperature at which welding repairs are allowed.
 #define RBMK_REPAIRABLE_TEMP_LIMIT 2500
 /// Integrity restored by one completed welding repair.
@@ -121,7 +132,6 @@
 #define RBMK_WELDER_REPAIR_TIME 6 SECONDS
 /// Welder fuel consumed by one repair action.
 #define RBMK_WELDER_REPAIR_FUEL_COST 1
-
 /// Highest vessel temperature at which console rod extraction is permitted.
 #define RBMK_ROD_CONSOLE_SAFE_TEMP_LIMIT 2500
 /// Extraction time for an ordinary rod.
@@ -137,6 +147,7 @@
 /// Radius of supermatter cascade extraction knockback.
 #define RBMK_ROD_TOOL_CASCADE_KNOCKBACK_RANGE 7
 
+// Coolant flow and pressure
 /// Internal coolant capacity in liters.
 #define RBMK_COOLANT_VOLUME_MAX 2000
 /// Minimum inlet flow setting in moles per second.
@@ -168,6 +179,7 @@
 /// Flat integrity damage bonus at extreme pressure.
 #define RBMK_PRESSURE_EXTREME_DAMAGE_BONUS 2
 
+// Core-to-coolant heat exchange
 /// Effective heat capacity of the reactor vessel.
 #define RBMK_CORE_HEAT_CAPACITY 450000
 /// Coolant inventory that provides full heat-exchange effectiveness.
@@ -184,10 +196,10 @@
 #define RBMK_COOLANT_MAX_CORE_TEMP_CHANGE 450
 /// Maximum coolant temperature change during one coolant exchange.
 #define RBMK_COOLANT_MAX_GAS_TEMP_CHANGE 1800
-
 /// Keeps tritium useful as a coolant byproduct without letting it overwhelm pressure control every process tick.
 #define RBMK_TRITIUM_PRODUCTION_RATE 0.005
 
+// Meltdown effects
 /// Prefix used by station announcements concerning RBMK failure.
 #define RBMK_MELTDOWN_PREFIX "RBMK MELTDOWN"
 /// Radius of the meltdown radiation pulse.
@@ -208,23 +220,30 @@
 #define RBMK_MELTDOWN_EFFECT_STAGGER (0.1 SECONDS)
 /// Delay before reactor fallout weather begins.
 #define RBMK_MELTDOWN_FALLOUT_DELAY 1 MINUTES
+/// Interval between radiation pulses from a slagged reactor core.
+#define RBMK_SLAGGED_CORE_RAD_PULSE_INTERVAL 2 SECONDS
+/// Radius of the slagged core radiation field.
+#define RBMK_SLAGGED_CORE_RAD_RANGE 20
+/// Minimum exposure threshold for slagged core radiation.
+#define RBMK_SLAGGED_CORE_RAD_THRESHOLD 0.05
 /// Radius in which meltdown effects damage station floors.
 #define RBMK_MELTDOWN_FLOOR_DAMAGE_RANGE 5
 /// Percentage chance for damaged floors to become space.
 #define RBMK_MELTDOWN_FLOOR_SPACE_CHANCE 45
 
+// Simulation caps
 /// Maximum reactor radiation value used by its simulation and displays.
 #define RBMK_MAX_RADIATION 700
 /// Maximum reactor flux value used by its simulation and displays.
 #define RBMK_MAX_FLUX 1200
 
+// Flux anomalies
 /// Flux at which low-tier anomaly spawning begins.
 #define RBMK_FLUX_ANOMALY_THRESHOLD 350
 /// Flux at which high-tier anomaly timing begins.
 #define RBMK_FLUX_ANOMALY_HIGH 700
 /// Flux at which extreme-tier anomaly timing begins.
 #define RBMK_FLUX_ANOMALY_EXTREME 1000
-
 /// Anomaly cooldown at the lowest eligible flux tier.
 #define RBMK_FLUX_ANOMALY_COOLDOWN_LOW 35 SECONDS
 /// Anomaly cooldown at the high flux tier.
@@ -232,13 +251,7 @@
 /// Anomaly cooldown at the extreme flux tier.
 #define RBMK_FLUX_ANOMALY_COOLDOWN_EXTREME 18 SECONDS
 
-/// Time between fallout radius expansions.
-#define RBMK_FALLOUT_SPREAD_INTERVAL 10 SECONDS
-/// Tiles added to the fallout radius per expansion.
-#define RBMK_FALLOUT_RADIUS_STEP 6
-/// Maximum fallout radius in tiles.
-#define RBMK_FALLOUT_MAX_RADIUS 255
-
+// Reactor sound states
 /// Low reactor looping-sound state.
 #define RBMK_SOUND_LOW 1
 /// High reactor looping-sound state.

@@ -1,4 +1,4 @@
-/// Applies capped, frame-independent vessel damage and commits failure at zero integrity.
+/** Applies capped vessel damage and starts a meltdown at zero integrity. */
 /obj/machinery/rbmk/reactor/proc/apply_integrity_damage(damage_amount, failure_reason, seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS, damage_cap_per_second = RBMK_INTEGRITY_DAMAGE_CAP_PER_SECOND)
 	if(meltdown_in_progress || reactor_integrity <= 0)
 		return
@@ -15,7 +15,7 @@
 	if(reactor_integrity <= 0)
 		trigger_meltdown(failure_reason)
 
-/// Sends operator warnings when damage crosses a new integrity threshold.
+/** Warns engineering when integrity crosses a new threshold. */
 /obj/machinery/rbmk/reactor/proc/handle_integrity_damage_warning(old_integrity, damage_reason)
 	if(meltdown_in_progress || reactor_integrity <= 0)
 		return
@@ -40,7 +40,7 @@
 		return
 	send_integrity_warning("RBMK casing integrity has fallen below [warning_threshold]% at [get_area_name(src)]. Immediate engineering response required.", warning_threshold <= RBMK_INTEGRITY_GLOBAL_WARNING_THRESHOLD)
 
-/// Routes a vessel-integrity warning through the primary console and optional station announcement.
+/** Sends an integrity warning through the linked console and station alert system. */
 /obj/machinery/rbmk/reactor/proc/send_integrity_warning(message, stationwide = FALSE)
 	if(!message)
 		return
@@ -55,7 +55,7 @@
 		'sound/misc/airraid.ogg',
 	)
 
-/// Evaluates operating and shutdown thermal stress for one simulation step.
+/** Applies thermal stress while the reactor is running or cooling down. */
 /obj/machinery/rbmk/reactor/proc/update_reactor_integrity(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
 	if(meltdown_in_progress || reactor_integrity <= 0)
 		return

@@ -1,6 +1,6 @@
 GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 
-/// Main RBMK reactor vessel and owner of the reactor simulation state.
+/// The core of an RBMK engine.
 /obj/machinery/rbmk/reactor
 	name = "RBMK Reactor Core"
 	desc = "A massive nuclear reactor core. Insert rods at your own risk."
@@ -156,26 +156,21 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 	var/decay_check_interval = 2 SECONDS
 	COOLDOWN_DECLARE(decay_meltdown_check_cooldown)
 	COOLDOWN_DECLARE(flux_anomaly_spawn_cooldown)
-	/// Whether this reactor is currently expanding radioactive fallout.
-	var/rbmk_fallout_active = FALSE
-	/// Current radius of the reactor's fallout effect.
-	var/rbmk_fallout_radius = 0
-	COOLDOWN_DECLARE(fallout_spread_cooldown)
 	/// Installed supermatter rod that owns the active cascade; null while inactive.
 	var/obj/item/rbmk/fuel_rod/supermatter/supermatter_rod = null
 
-/// Returns whether either reactor slot bank contains a rod.
+/** Returns whether either reactor slot bank contains a rod. */
 /obj/machinery/rbmk/reactor/proc/has_fuel_rods()
 	return (length(normal_slots) + length(special_slots)) > 0
 
-/// Returns whether an installed active rod is capable of sustaining fission.
+/** Returns whether an installed rod can sustain fission. */
 /obj/machinery/rbmk/reactor/proc/has_active_fuel_rods()
 	for(var/obj/item/rbmk/fuel_rod/fuel_rod in (normal_slots + special_slots))
 		if(fuel_rod && !fuel_rod.is_depleted() && fuel_rod.contributes_to_reaction)
 			return TRUE
 	return FALSE
 
-/// Clears transient reaction output while preserving vessel and coolant state.
+/** Clears reaction output while preserving vessel and coolant state. */
 /obj/machinery/rbmk/reactor/proc/reset_reaction_state()
 	running = FALSE
 	flux = 0
@@ -196,13 +191,13 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 	last_tick_rod_count = 0
 	reset_reactor_modifier_state()
 
-/// Clears aggregate bonuses supplied by moderator rods.
+/** Clears the bonuses supplied by moderator rods. */
 /obj/machinery/rbmk/reactor/proc/reset_reactor_modifier_state()
 	rod_temperature_limit_bonus = 0
 	rod_coolant_exchange_bonus = 0
 	rod_flux_multiplier_bonus = 0
 
-/// Recalculates capped aggregate bonuses from all active installed rods.
+/** Recalculates capped moderator bonuses from the installed rods. */
 /obj/machinery/rbmk/reactor/proc/update_reactor_modifier_state(list/all_fuel_rods)
 	reset_reactor_modifier_state()
 	for(var/obj/item/rbmk/fuel_rod/fuel_rod in all_fuel_rods)
@@ -218,32 +213,28 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 	rod_coolant_exchange_bonus = clamp(rod_coolant_exchange_bonus, 0, RBMK_MODIFIER_BLUESPACE_COOLANT_BONUS_MAX)
 	rod_flux_multiplier_bonus = clamp(rod_flux_multiplier_bonus, 0, RBMK_MODIFIER_DIAMOND_FLUX_MULT_BONUS_MAX)
 
-/// Returns the current thermal-stress threshold including moderator bonuses.
+/** Returns the thermal-stress threshold after moderator bonuses. */
 /obj/machinery/rbmk/reactor/proc/get_effective_temp_stress_threshold()
 	return RBMK_TEMP_STRESS_THRESHOLD + rod_temperature_limit_bonus
 
-/// Returns the current severe thermal-damage threshold including moderator bonuses.
+/** Returns the thermal-damage threshold after moderator bonuses. */
 /obj/machinery/rbmk/reactor/proc/get_effective_temp_damage_threshold()
 	return RBMK_TEMP_DAMAGE_RAMP + rod_temperature_limit_bonus
 
-/// Returns the current decay-meltdown threshold including moderator bonuses.
-/obj/machinery/rbmk/reactor/proc/get_effective_decay_meltdown_threshold()
-	return RBMK_TEMP_DAMAGE_RAMP + rod_temperature_limit_bonus
-
-/// Creates and starts the reactor's looping ambience when needed.
+/** Creates and starts the reactor's ambient sound loop. */
 /obj/machinery/rbmk/reactor/proc/start_reactor_sound()
 	if(reactor_soundloop)
 		return reactor_soundloop
 	reactor_soundloop = new /datum/looping_sound/rbmk_reactor(src, TRUE)
 	return reactor_soundloop
 
-/// Stops and deletes the reactor's looping ambience controller.
+/** Stops and deletes the reactor's ambient sound loop. */
 /obj/machinery/rbmk/reactor/proc/stop_reactor_sound()
 	if(reactor_soundloop)
 		reactor_soundloop.stop()
 	QDEL_NULL(reactor_soundloop)
 
-/// Selects the reactor ambience intensity, lazily starting its controller.
+/** Changes the reactor sound loop to the requested intensity. */
 /obj/machinery/rbmk/reactor/proc/set_reactor_sound_state(new_state)
 	if(!reactor_soundloop)
 		start_reactor_sound()
@@ -260,7 +251,6 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 /obj/machinery/rbmk/reactor/Initialize(mapload)
 	. = ..()
 	reset_reaction_state()
-	GLOB.rbmk_fallout_reactors -= src
 	COOLDOWN_START(src, decay_meltdown_check_cooldown, decay_check_interval)
 	COOLDOWN_START(src, flux_anomaly_spawn_cooldown, RBMK_FLUX_ANOMALY_COOLDOWN_LOW)
 	var/turf/reactor_turf = get_turf(src)
@@ -288,7 +278,6 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 		supermatter_rod.stop_cascade(FALSE)
 	supermatter_rod = null
 	active_welder_repairers = null
-	GLOB.rbmk_fallout_reactors -= src
 	QDEL_NULL(grill_loop)
 	stop_reactor_sound()
 	rbmk_cleanup_atmos()
@@ -297,19 +286,19 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 /// Map subtype registered as the station's primary RBMK engine.
 /obj/machinery/rbmk/reactor/main_engine
 
-/// Registers the station's main RBMK engine.
+/** Registers this reactor as the station's main RBMK engine. */
 /obj/machinery/rbmk/reactor/main_engine/Initialize(mapload)
 	. = ..()
 	GLOB.main_rbmk_engine = src
 	return .
 
-/// Clears the registered main RBMK engine.
+/** Clears the main-engine registration when this reactor is deleted. */
 /obj/machinery/rbmk/reactor/main_engine/Destroy()
 	if(GLOB.main_rbmk_engine == src)
 		GLOB.main_rbmk_engine = null
 	return ..()
 
-/// Permanently fires AZ-5 and commands full emergency control-rod insertion.
+/** Fires AZ-5 and drives the control rods all the way in. */
 /obj/machinery/rbmk/reactor/proc/force_scram(mob/user)
 	if(meltdown_in_progress)
 		return FALSE
@@ -355,7 +344,7 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 	INVOKE_ASYNC(src, PROC_REF(welder_repair_loop), user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/// Validates vessel state before beginning or continuing a welding repair.
+/** Checks whether the reactor can be safely repaired with a welder. */
 /obj/machinery/rbmk/reactor/proc/can_welder_repair(mob/living/user, show_alerts = FALSE)
 	if(meltdown_in_progress || supermatter_rod)
 		if(show_alerts)
@@ -376,13 +365,13 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 		return FALSE
 	return TRUE
 
-/// Removes a user from the active welding-repair set.
+/** Removes a user from the active welding-repair set. */
 /obj/machinery/rbmk/reactor/proc/finish_welder_repair(mob/living/user)
 	if(!active_welder_repairers || !user)
 		return
 	active_welder_repairers -= user
 
-/// Repeats interruptible welding actions until repair becomes invalid or completes.
+/** Repeats interruptible welding actions while the reactor remains repairable. */
 /obj/machinery/rbmk/reactor/proc/welder_repair_loop(mob/living/user, obj/item/tool)
 	if(QDELETED(src))
 		return
@@ -421,14 +410,14 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 		return
 	INVOKE_ASYNC(src, PROC_REF(welder_repair_loop), user, tool)
 
-/// Requests immediate UI refreshes from consoles linked to this reactor.
+/** Refreshes consoles linked to this reactor. */
 /obj/machinery/rbmk/reactor/proc/update_linked_consoles()
 	for(var/obj/machinery/computer/rbmk_console/console in range(RBMK_CONSOLE_SCAN_RANGE, src))
 		if(console.linked_reactor == src)
 			console.update_appearance()
 			SStgui.update_uis(console)
 
-/// Returns the nearest console currently linked to this reactor.
+/** Finds the closest console linked to this reactor. */
 /obj/machinery/rbmk/reactor/proc/get_primary_console()
 	var/obj/machinery/computer/rbmk_console/primary_console
 	var/shortest_distance = INFINITY
