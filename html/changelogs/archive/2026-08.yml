@@ -1,0 +1,52 @@
+2026-08-01:
+  AberrantQuerist:
+  - rscadd: Updates sister server icons for Medium Rare and Monke's Paw.
+  EatsTheGrapes:
+  - bugfix: Using fart emote as synthetic being no longer displays an incorrect unusable
+      emote warning
+  Mantlecrawler:
+  - rscadd: Speebus's admin cameo item, Intern brand Cigars
+  TheColorCyan:
+  - balance: oozeling stacks required for hydrophobia upped from 10 to 20
+  - balance: water will now always remove 5 stacks instead of only doing so if you
+      are hydrophobic
+  - qol: clicking on slime wetness hud will now display info about it
+2026-08-02:
+  Runian:
+  - spellcheck: Fixes the typo that within the RoboTact app when a cyborg has no connection
+      to an AI.
+  TheColorCyan:
+  - bugfix: (SmArtKar) Added some safeties to ensure that hotspots don't cause an
+      infinite infectious runtime and crash clients
+  Watermelon914:
+  - bugfix: Fixes list pick circuit compenent.
+2026-08-03:
+  Runian:
+  - bugfix: Cyborg welders that have been upgraded via the experimental welder upgrade
+      now correctly automatically refuel their welder when it is off.
+  nasend_:
+  - bugfix: Bullets now leave debris particles.
+2026-08-04:
+  Runian:
+  - bugfix: Falling into a chasm as a cyborg no longer deletes your MMI and allows
+      you to re-enter your cyborg body.
+  - bugfix: Clockwork Soul Vessels now correctly carry over their clockwork antag
+      status whenever becoming a cyborg.
+  - bugfix: Fixes clockwork cult power generation trying to update action buttons
+      for mobs that don't exist.
+  TheColorCyan:
+  - bugfix: fixes slimes runtiming when trying to latch onto borgs
+  - bugfix: slimes cant latch onto robotic mobs anymore
+  - bugfix: fixed spy uplink runtiming and not doing anything
+  - bugfix: fixed oozeling spewing blood around on slasher machete hits
+  - bugfix: fixed blood dna and share blood related runtimes
+  - bugfix: fixed ancient sarcofagus from bubblegum having wrong sprite
+  hexakats:
+  - balance: Replaced the syndicate revolver in the traitor uplink with a revolver
+      case that comes with the revolver and 3 speedloaders for 12TC
+  - balance: Syndicate rebar crossbow is now 8 tc
+  - balance: Syndicate rebar crossbow now starts with a jagged iron rods a the starting
+      ammo
+  - balance: Syndicate rebar crossbow now only holds one rod in its internal magazine
+  - spellcheck: makarov magazine descriptions now correctly say 12 rounds instead
+      of 8 on the uplink

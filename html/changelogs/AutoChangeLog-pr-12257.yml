@@ -1,6 +1,0 @@
-author: "TheColorCyan"
-delete-after: True
-changes:
-  - balance: "oozeling stacks required for hydrophobia upped from 10 to 20"
-  - balance: "water will now always remove 5 stacks instead of only doing so if you are hydrophobic"
-  - qol: "clicking on slime wetness hud will now display info about it"
