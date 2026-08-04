@@ -39,7 +39,8 @@
 		var/datum/atom_hud/S = GLOB.huds[AI.sec_hud]
 		S.unhide_single_atomhud_from(AI,target)
 
-/datum/element/digitalcamo/proc/on_examine(atom/source, mob/user, list/examine_list)
+/// Displays an obvious tell to those who examine that they have some form of digital camouflage.
+/datum/element/digitalcamo/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	examine_list += span_warning("[source.p_their(TRUE)] skin seems to be shifting like something is moving below it.")
 
