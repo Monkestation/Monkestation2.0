@@ -514,7 +514,6 @@ GLOBAL_LIST_INIT(virusDB, list())
 		for(var/datum/symptom/symptom as anything in symptoms)
 			symptom.power *= 2
 
-
 /datum/disease/proc/GetDiseaseID()
 	return "[type]"
 
