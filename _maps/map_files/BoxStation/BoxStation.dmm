@@ -35814,13 +35814,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
-"lxg" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/structure/table,
-/turf/open/floor/plating,
-/area/station/maintenance/port)
 "lxi" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -63862,17 +63855,6 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"uAR" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/structure/table,
-/turf/open/floor/plating,
-/area/station/maintenance/port)
 "uBt" = (
 /obj/structure/sign/poster/random/directional/west,
 /obj/effect/decal/cleanable/dirt,
@@ -94119,8 +94101,8 @@ vBA
 aSO
 kSL
 kSL
-lxg
-uAR
+fUs
+eVz
 fUs
 fUs
 fUs
