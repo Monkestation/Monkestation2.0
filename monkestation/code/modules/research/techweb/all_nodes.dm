@@ -33,6 +33,7 @@
 		"borg_upgrade_nanite_remote",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/nanite_smart
 	id = "nanite_smart"
@@ -49,6 +50,7 @@
 		"research_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4, TECHWEB_POINT_TYPE_NANITES = 500)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/nanite_mesh
 	id = "nanite_mesh"
@@ -65,6 +67,7 @@
 		"temperature_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4, TECHWEB_POINT_TYPE_NANITES = 500)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/nanite_bio
 	id = "nanite_bio"
@@ -86,6 +89,7 @@
 		"sensor_species_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4, TECHWEB_POINT_TYPE_NANITES = 500)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/nanite_neural
 	id = "nanite_neural"
@@ -102,6 +106,7 @@
 		"word_filter_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2, TECHWEB_POINT_TYPE_NANITES = 1000)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/nanite_synaptic
 	id = "nanite_synaptic"
@@ -117,6 +122,7 @@
 		"speech_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2, TECHWEB_POINT_TYPE_NANITES = 1000)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/nanite_harmonic
 	id = "nanite_harmonic"
@@ -134,6 +140,7 @@
 		"gravity_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS, TECHWEB_POINT_TYPE_NANITES = 3000)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/nanite_combat
 	id = "nanite_military"
@@ -149,6 +156,7 @@
 		"stun_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS, TECHWEB_POINT_TYPE_NANITES = 2500)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/nanite_hazard
 	id = "nanite_hazard"
@@ -164,6 +172,7 @@
 		"shock_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS, TECHWEB_POINT_TYPE_NANITES = 4000)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/nanite_replication_protocols
 	id = "nanite_replication_protocols"
@@ -177,6 +186,7 @@
 		"pyramid_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS, TECHWEB_POINT_TYPE_NANITES = 5000)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/nanite_storage_protocols
 	id = "nanite_storage_protocols"
@@ -190,6 +200,7 @@
 		"zip_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS, TECHWEB_POINT_TYPE_NANITES = 5000)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/adv_ballistics
 	id = "adv_ballistics"
@@ -361,39 +372,3 @@
 
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4)
 	hidden = TRUE
-
-/datum/techweb_node/chemical_weapons
-	discount_experiments = list(/datum/experiment/scanning/random/casing = TECHWEB_DISCOUNT_MINOR * 2.5)
-
-/datum/techweb_node/ai_basic
-	discount_experiments = list(/datum/experiment/scanning/random/shell_scan = TECHWEB_DISCOUNT_MINOR)
-
-/datum/techweb_node/ai_adv
-	discount_experiments = list(/datum/experiment/scanning/random/shell_scan = TECHWEB_DISCOUNT_MINOR * 3)
-
-/datum/techweb_node/robotics
-	discount_experiments = list(/datum/experiment/scanning/random/bot_scan = TECHWEB_DISCOUNT_MINOR * 2.5)
-
-/datum/techweb_node/adv_bots
-	discount_experiments = list(/datum/experiment/scanning/random/bot_scan = TECHWEB_DISCOUNT_MINOR * 2.5)
-
-/datum/techweb_node/datatheory
-	discount_experiments = list(/datum/experiment/scanning/random/money = TECHWEB_DISCOUNT_MINOR * 2.5)
-
-/datum/techweb_node/comptech
-	discount_experiments = list(/datum/experiment/scanning/random/money = TECHWEB_DISCOUNT_MINOR * 2)
-
-/datum/techweb_node/mod_advanced
-	discount_experiments = list(/datum/experiment/scanning/points/modsuit = TECHWEB_DISCOUNT_MINOR * 2)
-
-/datum/techweb_node/mod_engineering
-	discount_experiments = list(/datum/experiment/scanning/points/modsuit = TECHWEB_DISCOUNT_MINOR * 2)
-
-/datum/techweb_node/mod_medical
-	discount_experiments = list(/datum/experiment/scanning/points/modsuit = TECHWEB_DISCOUNT_MINOR * 2)
-
-/datum/techweb_node/mod_security
-	discount_experiments = list(/datum/experiment/scanning/points/modsuit = TECHWEB_DISCOUNT_MINOR * 2)
-
-/datum/techweb_node/mod_entertainment
-	discount_experiments = list(/datum/experiment/scanning/points/modsuit = TECHWEB_DISCOUNT_MINOR * 2)

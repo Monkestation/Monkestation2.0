@@ -185,6 +185,7 @@
 		"conveysorter",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SUPPLY)
 
 /obj/item/conveyor_sorter/improved
 	name = "improved conveyor sorter lister"

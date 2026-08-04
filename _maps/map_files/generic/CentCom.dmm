@@ -7662,25 +7662,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/ghost_spawn)
-"auB" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/structure/table/wood,
-/obj/item/aicard/aitater{
-	name = "Scarlett's Potato";
-	desc = "She doesn't seem thrilled by this predicament... but it's hard to tell with a potato.";
-	pixel_x = 4;
-	pixel_y = 1
-	},
-/obj/effect/decal/cleanable/blood/oil{
-	color = "#0000cc";
-	name = "Strange Fluid";
-	desc = "Something of extradimensional origin had leaked from the potato.";
-	layer = 2.99
-	},
-/turf/open/floor/carpet/neon/simple/black,
-/area/centcom/central_command_areas/adminroom)
 "auC" = (
 /obj/structure/railing/wood,
 /turf/open/floor/glass/reinforced,
@@ -8266,16 +8247,6 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/control)
-"awk" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/oil,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/smooth_large,
-/area/centcom/central_command_areas/evacuation/ship)
 "awl" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -9382,14 +9353,6 @@
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/wood/tile,
 /area/centcom/syndicate_mothership/control)
-"aza" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/effect/decal/cleanable/blood/oil,
-/turf/open/floor/iron/smooth_large,
-/area/centcom/central_command_areas/evacuation/ship)
 "azb" = (
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/catwalk_floor/titanium,
@@ -10229,14 +10192,6 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
-"aBm" = (
-/obj/structure/reagent_dispensers/fueltank,
-/obj/item/weldingtool/experimental,
-/obj/effect/decal/cleanable/blood/oil,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/ferry)
 "aBn" = (
 /obj/machinery/light/directional/east{
 	dir = 1
@@ -20308,6 +20263,25 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
+"ctK" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/aicard/aitater{
+	name = "Scarlett's Potato";
+	desc = "She doesn't seem thrilled by this predicament... but it's hard to tell with a potato.";
+	pixel_x = 4;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/blood/oil{
+	color = "#0000cc";
+	name = "Strange Fluid";
+	desc = "Something of extradimensional origin had leaked from the potato.";
+	layer = 2.99
+	},
+/turf/open/floor/carpet/neon/simple/black,
+/area/centcom/central_command_areas/adminroom)
 "cuK" = (
 /obj/effect/turf_decal/siding/purple{
 	color = "#e6a7b9"
@@ -22854,6 +22828,12 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/central_command_areas/medical)
+"gJI" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/closed/wall/mineral/titanium,
+/area/centcom/central_command_areas/admin)
 "gJY" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 8
@@ -23078,12 +23058,6 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/evacuation)
-"gYp" = (
-/obj/item/storage/toolbox/syndicate,
-/obj/effect/decal/cleanable/blood/oil/slippery,
-/obj/item/stack/cable_coil,
-/turf/open/floor/catwalk_floor/iron_smooth,
-/area/centcom/syndicate_mothership/expansion_bulldozer)
 "gYr" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 1
@@ -23130,6 +23104,12 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/firebase_trident)
+"hbP" = (
+/obj/item/storage/toolbox/syndicate,
+/obj/effect/decal/cleanable/blood/oil/slippery,
+/obj/item/stack/cable_coil,
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/centcom/syndicate_mothership/expansion_bulldozer)
 "hbQ" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/siding/wood{
@@ -23441,14 +23421,6 @@
 	dir = 8
 	},
 /area/centcom/central_command_areas/evacuation)
-"hsX" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 5
-	},
-/turf/closed/wall/mineral/titanium{
-	paint_color = "#5f6361"
-	},
-/area/centcom/central_command_areas/admin)
 "htD" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -24053,14 +24025,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/expansion_bulldozer)
-"ijF" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 9
-	},
-/turf/closed/wall/mineral/titanium{
-	paint_color = "#5f6361"
-	},
-/area/centcom/central_command_areas/admin)
 "ijH" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -25282,6 +25246,16 @@
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/centcom/central_command_areas/admin)
+"kdx" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/oil,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/central_command_areas/evacuation/ship)
 "kdH" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -25311,11 +25285,14 @@
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/glass/reinforced/plasma,
 /area/centcom/central_command_areas/adminroom)
-"khe" = (
-/obj/effect/spawner/random/structure/chair_flipped,
-/obj/effect/decal/cleanable/blood/ethereal,
-/turf/open/floor/emissive_test/white,
-/area/centcom/central_command_areas/adminroom)
+"kfR" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/item/weldingtool/experimental,
+/obj/effect/decal/cleanable/blood/oil,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/ferry)
 "khW" = (
 /obj/machinery/light/small/maintenance/directional/west,
 /obj/effect/spawner/random/trash/garbage{
@@ -25599,6 +25576,12 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
+"kCS" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/closed/wall/mineral/titanium,
+/area/centcom/central_command_areas/admin)
 "kDH" = (
 /obj/item/language_manual{
 	language = /datum/language/machine;
@@ -27287,10 +27270,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
-"nOi" = (
-/obj/effect/decal/cleanable/blood/ethereal,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/adminroom)
 "nPn" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -28610,6 +28589,14 @@
 /obj/item/flashlight/flare/candle/infinite,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/admin)
+"pVU" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/oil,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/central_command_areas/evacuation/ship)
 "pWj" = (
 /turf/open/floor/carpet/orange,
 /area/centcom/central_command_areas/admin)
@@ -28670,6 +28657,12 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/medical)
+"qce" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/turf/closed/wall/mineral/titanium,
+/area/centcom/central_command_areas/admin)
 "qdq" = (
 /obj/effect/turf_decal/siding/dark,
 /obj/structure/chair/office{
@@ -29362,14 +29355,6 @@
 	dir = 5
 	},
 /turf/open/misc/sandy_dirt,
-/area/centcom/central_command_areas/admin)
-"rjG" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 10
-	},
-/turf/closed/wall/mineral/titanium{
-	paint_color = "#5f6361"
-	},
 /area/centcom/central_command_areas/admin)
 "rlq" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -30200,6 +30185,12 @@
 "sEG" = (
 /turf/open/misc/beach/sand,
 /area/centcom/central_command_areas/adminroom)
+"sFg" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/closed/wall/mineral/titanium,
+/area/centcom/central_command_areas/admin)
 "sFI" = (
 /obj/structure/chair/sofa/corp{
 	dir = 8
@@ -30359,6 +30350,11 @@
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron/vaporwave,
 /area/centcom/central_command_areas/adminroom)
+"sRh" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/old,
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
 "sRv" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 1
@@ -31032,6 +31028,10 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/firebase_trident)
+"tWG" = (
+/obj/effect/decal/cleanable/blood/ethereal,
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/adminroom)
 "tWL" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/structure/railing/wood{
@@ -32429,6 +32429,11 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/misc/asteroid,
 /area/centcom/central_command_areas/admin)
+"wnW" = (
+/obj/effect/spawner/random/structure/chair_flipped,
+/obj/effect/decal/cleanable/blood/ethereal,
+/turf/open/floor/emissive_test/white,
+/area/centcom/central_command_areas/adminroom)
 "wnX" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/soda_cans/grey_bull{
@@ -32559,14 +32564,6 @@
 	dir = 4
 	},
 /turf/open/floor/grass,
-/area/centcom/central_command_areas/admin)
-"wzn" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 6
-	},
-/turf/closed/wall/mineral/titanium{
-	paint_color = "#5f6361"
-	},
 /area/centcom/central_command_areas/admin)
 "wzU" = (
 /obj/structure/lattice/catwalk,
@@ -33637,11 +33634,6 @@
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/prison)
-"yje" = (
-/obj/structure/lattice/catwalk,
-/obj/effect/decal/cleanable/blood/gibs/robot_debris/old,
-/turf/open/misc/asteroid,
-/area/centcom/syndicate_mothership/firebase_trident)
 "yjh" = (
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/delivery,
@@ -35899,7 +35891,7 @@ aHg
 aku
 jHW
 bQE
-gYp
+hbP
 aPL
 cTr
 acX
@@ -45700,7 +45692,7 @@ aaa
 aKH
 aLt
 aKK
-awk
+kdx
 aQt
 aLk
 acP
@@ -50582,7 +50574,7 @@ aaa
 aaa
 aLt
 afz
-aza
+pVU
 aMX
 aDL
 aep
@@ -54072,9 +54064,9 @@ kpH
 kpH
 kpH
 kpH
-nOi
-nOi
-nOi
+tWG
+tWG
+tWG
 aMc
 wXS
 aMc
@@ -54841,7 +54833,7 @@ wjo
 wjo
 mVG
 cNw
-khe
+wnW
 krE
 fPm
 cNw
@@ -63351,7 +63343,7 @@ mJa
 cAA
 cwJ
 amD
-aBm
+kfR
 apR
 apR
 apR
@@ -63756,11 +63748,11 @@ aaa
 aaa
 aOn
 jZA
-wzn
+gJI
 bwZ
 bwZ
 bwZ
-hsX
+sFg
 jZA
 jZA
 jZA
@@ -63830,7 +63822,7 @@ ahU
 kpH
 ald
 aPf
-auB
+ctK
 abW
 ahu
 asU
@@ -66069,11 +66061,11 @@ aaa
 aaa
 aOn
 jZA
-rjG
+qce
 bwZ
 bwZ
 bwZ
-ijF
+kCS
 jZA
 jZA
 wLm
@@ -83786,7 +83778,7 @@ lxG
 wzU
 wzU
 wzU
-yje
+sRh
 dgG
 jnx
 oqj

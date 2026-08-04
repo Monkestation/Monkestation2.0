@@ -3,7 +3,7 @@
 	desc = "Slip into the wonderland."
 	icon =  'icons/obj/items/monster_hunter.dmi'
 	icon_state = "rabbit_mask"
-	worn_icon = 'icons/mob/mask.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
 	worn_icon_state = "rabbit_mask"
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | GAS_FILTERING | SNUG_FIT
 	flags_inv = HIDEFACE | HIDEFACIALHAIR | HIDESNOUT

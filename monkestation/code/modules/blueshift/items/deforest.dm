@@ -251,10 +251,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
-/datum/techweb_node/biotech/New()
-	. = ..()
-	design_ids.Add("treatment_zone_projector")
-
 // Synth repair patch, gives the synth a small amount of healing chems
 /obj/item/reagent_containers/pill/robotic_patch
 	name = "robotic patch"

@@ -7,10 +7,10 @@
 	QDEL_NULL(mmi)
 	return ..()
 
-/mob/living/silicon/robot/death(gibbed)
+/mob/living/silicon/robot/death(gibbed, should_dump_mmi = gibbed)
 	if(stat == DEAD)
 		return
-	if(gibbed)
+	if(should_dump_mmi)
 		dump_into_mmi()
 	else
 		logevent("FATAL -- SYSTEM HALT")
