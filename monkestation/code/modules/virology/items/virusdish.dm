@@ -74,6 +74,16 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	else if(info != "" && copytext(info, 1, 9) == "OUTDATED")
 		overlays += "virusdish-outdated"
 
+/obj/item/virus_dish/update_desc(updates)
+	. = ..()
+	desc = initial(desc)
+	if(open)
+		desc += "\nIts lid is open!"
+	else
+		desc += "\nIts lid is closed!"
+	if(info)
+		desc += "\nThere is a sticker with some printed information on it. <a href='byond://?src=\ref[src];examine=1'>(Read it)</a>"
+
 /obj/item/virus_dish/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	infection_attempt(user)
@@ -174,15 +184,6 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		empty(user, interacting_with)
 		return ITEM_INTERACT_SUCCESS
 
-/// Empties out the virus dish
-/obj/item/virus_dish/proc/empty(mob/user, atom/target)
-	if(user && target)
-		to_chat(user,span_notice("You empty \the [src]'s reagents into \the [target]."))
-	reagents.clear_reagents()
-
-/obj/item/virus_dish/proc/on_blood_created(datum/reagent/new_blood)
-	new_blood.AddElement(/datum/element/blood_reagent, null, get_blood_type(BLOOD_TYPE_O_MINUS))
-
 /obj/item/virus_dish/process()
 	if(!contained_virus || !open)
 		return PROCESS_KILL
@@ -205,65 +206,6 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		return
 	visible_message(span_danger("The virus dish shatters on impact!"))
 	shatter(throwingdatum.thrower)
-
-/obj/item/virus_dish/proc/incubate(mutatechance=5, growthrate=3, effect_focus = 0)
-	if(contained_virus)
-		if(reagents.remove_reagent(/datum/reagent/consumable/virus_food, 0.2))
-			growth = min(growth + growthrate, 100)
-		if(reagents.remove_reagent(/datum/reagent/water, 0.2))
-			growth = max(growth - growthrate, 0)
-		contained_virus.incubate(src,mutatechance,effect_focus)
-
-/obj/item/virus_dish/proc/on_reagent_change(datum/reagents/reagents)
-	SIGNAL_HANDLER
-
-	if(contained_virus)
-		var/datum/reagent/blood/blood = locate() in reagents.reagent_list
-		if(blood)
-			var/list/L = list()
-			L |= contained_virus
-			LAZYOR(blood.data["diseases"], filter_disease_by_spread(L, required = DISEASE_SPREAD_BLOOD))
-
-/obj/item/virus_dish/proc/shatter(mob/user)
-	var/obj/effect/decal/cleanable/virusdish/dish = new(get_turf(src))
-	dish.pixel_x = pixel_x
-	dish.pixel_y = pixel_y
-	if(contained_virus)
-		dish.contained_virus = contained_virus.Copy()
-	dish.last_openner = key_name(user)
-	src.transfer_fingerprints_to(dish)
-	playsound(get_turf(src), "shatter", 70, 1)
-	var/image/I1
-	var/image/I2
-	if(contained_virus)
-		I1 = image(icon,src,"brokendish-color")
-		I1.color = contained_virus.color
-		I2 = image(icon,src,"pattern-[contained_virus.pattern]b")
-		I2.color = contained_virus.pattern_color
-	else
-		I1 = image(icon,src,"brokendish")
-	dish.overlays += I1
-	if(contained_virus)
-		dish.overlays += I2
-		contained_virus.log += "<br />[ROUND_TIME()] Containment Dish shattered by [key_name(user)]."
-		if(contained_virus.spread_flags & DISEASE_SPREAD_AIRBORNE)
-			var/strength = contained_virus.infectionchance
-			var/list/L = list()
-			L += contained_virus
-			while (strength > 0)
-				new /obj/effect/pathogen_cloud/core(get_turf(src), last_openner, virus_copylist(L), FALSE)
-				strength -= 40
-	qdel(src)
-
-/obj/item/virus_dish/update_desc(updates)
-	. = ..()
-	desc = initial(desc)
-	if(open)
-		desc += "\nIts lid is open!"
-	else
-		desc += "\nIts lid is closed!"
-	if(info)
-		desc += "\nThere is a sticker with some printed information on it. <a href='byond://?src=\ref[src];examine=1'>(Read it)</a>"
 
 /obj/item/virus_dish/Topic(href, href_list)
 	if(..())
@@ -296,6 +238,66 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			else if(bleeding && (contained_virus.spread_flags & DISEASE_SPREAD_BLOOD))
 				perp.infect_disease(contained_virus, notes="(Blood, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over a virus dish[last_openner ? " opened by [key_name(last_openner)]" : ""])")
 	..(perp,D)
+
+/obj/item/virus_dish/proc/incubate(mutatechance=5, growthrate=3, effect_focus = 0)
+	if(contained_virus)
+		if(reagents.remove_reagent(/datum/reagent/consumable/virus_food, 0.2))
+			growth = min(growth + growthrate, 100)
+		if(reagents.remove_reagent(/datum/reagent/water, 0.2))
+			growth = max(growth - growthrate, 0)
+		contained_virus.incubate(src,mutatechance,effect_focus)
+
+/obj/item/virus_dish/proc/on_reagent_change(datum/reagents/reagents)
+	SIGNAL_HANDLER
+
+	if(!contained_virus)
+		return
+	var/datum/reagent/blood/blood = locate() in reagents.reagent_list
+	if(!blood)
+		return
+	var/list/disease_list = list()
+	disease_list |= contained_virus
+	LAZYOR(blood.data["diseases"], filter_disease_by_spread(disease, required = DISEASE_SPREAD_BLOOD))
+
+/obj/item/virus_dish/proc/shatter(mob/user)
+	var/obj/effect/decal/cleanable/virusdish/dish = new(get_turf(src))
+	dish.pixel_x = pixel_x
+	dish.pixel_y = pixel_y
+	if(contained_virus)
+		dish.contained_virus = contained_virus.Copy()
+	dish.last_openner = key_name(user)
+	src.transfer_fingerprints_to(dish)
+	playsound(get_turf(src), "shatter", 70, 1)
+	var/image/I1
+	var/image/I2
+	if(contained_virus)
+		I1 = image(icon,src,"brokendish-color")
+		I1.color = contained_virus.color
+		I2 = image(icon,src,"pattern-[contained_virus.pattern]b")
+		I2.color = contained_virus.pattern_color
+	else
+		I1 = image(icon,src,"brokendish")
+	dish.overlays += I1
+	if(contained_virus)
+		dish.overlays += I2
+		contained_virus.log += "<br />[ROUND_TIME()] Containment Dish shattered by [key_name(user)]."
+		if(contained_virus.spread_flags & DISEASE_SPREAD_AIRBORNE)
+			var/strength = contained_virus.infectionchance
+			var/list/L = list()
+			L += contained_virus
+			while (strength > 0)
+				new /obj/effect/pathogen_cloud/core(get_turf(src), last_openner, virus_copylist(L), FALSE)
+				strength -= 40
+	qdel(src)
+
+/// Empties out the virus dish
+/obj/item/virus_dish/proc/empty(mob/user, atom/target)
+	if(user && target)
+		to_chat(user,span_notice("You empty \the [src]'s reagents into \the [target]."))
+	reagents.clear_reagents()
+
+/obj/item/virus_dish/proc/on_blood_created(datum/reagent/new_blood)
+	new_blood.AddElement(/datum/element/blood_reagent, null, get_blood_type(BLOOD_TYPE_O_MINUS))
 
 /obj/item/virus_dish/random
 	name = "growth dish"
