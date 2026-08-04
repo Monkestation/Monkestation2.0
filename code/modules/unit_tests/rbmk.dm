@@ -84,6 +84,31 @@
 		"The RBMK inlet overshot its pump-head pressure limit at maximum flow.",
 	)
 
+/// Verifies that RBMK meltdown objects retain their breached presentation.
+/datum/unit_test/rbmk_meltdown_presentation/Run()
+	var/obj/machinery/rbmk/reactor/reactor = allocate(
+		/obj/machinery/rbmk/reactor,
+		run_loc_floor_bottom_left,
+	)
+	var/initial_description = reactor.desc
+	reactor.meltdown_exploded = TRUE
+	reactor.update_appearance(UPDATE_DESC)
+	TEST_ASSERT_NOTEQUAL(reactor.desc, initial_description, "The breached RBMK reactor retained its intact description.")
+	var/obj/structure/closet/supplypod/rbmk_reactor_lid/lid = allocate(
+		/obj/structure/closet/supplypod/rbmk_reactor_lid,
+		run_loc_floor_bottom_left,
+	)
+	TEST_ASSERT_EQUAL(lid.bound_width, 48, "The RBMK lid did not match the visible sprite width.")
+	TEST_ASSERT_EQUAL(lid.bound_height, 71, "The RBMK lid did not match the visible sprite height.")
+	TEST_ASSERT_EQUAL(lid.bound_x, -7, "The RBMK lid was not aligned with the visible sprite horizontally.")
+	TEST_ASSERT_EQUAL(lid.bound_y, -24, "The RBMK lid was not aligned with the visible sprite vertically.")
+	TEST_ASSERT_EQUAL(lid.mouse_opacity, MOUSE_OPACITY_ICON, "The RBMK lid accepted clicks outside its visible pixels.")
+	lid.bound_width = world.icon_size
+	lid.bound_height = world.icon_size
+	lid.reset_lid_appearance(TRUE)
+	TEST_ASSERT_EQUAL(lid.bound_width, 48, "The RBMK lid lost its sprite width after landing.")
+	TEST_ASSERT_EQUAL(lid.bound_height, 71, "The RBMK lid lost its sprite height after landing.")
+
 /// Verifies that turbine generator wear is based on elapsed time rather than process frequency.
 /datum/unit_test/rbmk_turbine_frame_independent_damage/Run()
 	var/obj/machinery/power/rbmk_turbine/single_tick_turbine = allocate(
@@ -105,3 +130,6 @@
 		split_tick_turbine.generator_integrity,
 		"RBMK turbine generator damage changed with the number of process ticks.",
 	)
+
+TEST_FOCUS(/datum/unit_test/rbmk_coolant_transfer_pressure_limits)
+TEST_FOCUS(/datum/unit_test/rbmk_meltdown_presentation)

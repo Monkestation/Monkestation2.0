@@ -4,6 +4,14 @@
 	update_reactor_sound()
 	update_reactor_backlight()
 
+/// Describes the breached vessel once the meltdown completes.
+/obj/machinery/rbmk/reactor/update_desc(updates = ALL)
+	if(meltdown_exploded)
+		desc = "The ruptured, slagged remains of an RBMK reactor core. Its containment lid has been torn away."
+	else
+		desc = initial(desc)
+	return ..()
+
 /// Selects the reactor's base icon state from its fuel, temperature, and failure state.
 /obj/machinery/rbmk/reactor/update_icon_state()
 	. = ..()

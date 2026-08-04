@@ -50,7 +50,7 @@
 	meltdown_exploded = TRUE
 	cut_overlays()
 	current_damage_stage = 4
-	update_appearance(UPDATE_ICON)
+	update_appearance(UPDATE_ICON | UPDATE_DESC)
 	temperature = max(temperature, RBMK_TEMP_DAMAGE_RAMP)
 	flux = 0
 	radiation = 0
@@ -193,12 +193,13 @@
 	anchored = TRUE
 	density = TRUE
 	opened = TRUE
+	mouse_opacity = MOUSE_OPACITY_ICON
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	layer = ABOVE_OBJ_LAYER
-	bound_width = 96
-	bound_height = 96
-	bound_x = -32
-	bound_y = -32
+	bound_width = 48
+	bound_height = 71
+	bound_x = -7
+	bound_y = -24
 	pixel_x = -32
 	pixel_y = -32
 	style = STYLE_CAR
@@ -249,6 +250,11 @@
 	door = null
 	fin_mask = null
 	alpha = 255
+	bound_width = initial(bound_width)
+	bound_height = initial(bound_height)
+	bound_x = initial(bound_x)
+	bound_y = initial(bound_y)
+	mouse_opacity = initial(mouse_opacity)
 	pixel_x = initial(pixel_x)
 	pixel_y = initial(pixel_y)
 	pixel_z = initial(pixel_z)
