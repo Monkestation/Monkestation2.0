@@ -233,9 +233,9 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			bleeding = perp.check_bodypart_bleeding(BODY_ZONE_LEGS)
 
 		if(!block && (contained_virus.spread_flags & DISEASE_SPREAD_CONTACT_SKIN))
-			perp.infect_disease(contained_virus, notes="(Contact, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over a virus dish[last_openner ? " opened by [key_name(last_openner)]" : ""])")
+			perp.infect_disease(contained_virus, notes = "(Contact, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over a virus dish[last_openner ? " opened by [key_name(last_openner)]" : ""])")
 		else if(bleeding && (contained_virus.spread_flags & DISEASE_SPREAD_BLOOD))
-			perp.infect_disease(contained_virus, notes="(Blood, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over a virus dish[last_openner ? " opened by [key_name(last_openner)]" : ""])")
+			perp.infect_disease(contained_virus, notes = "(Blood, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over a virus dish[last_openner ? " opened by [key_name(last_openner)]" : ""])")
 
 		return ..(perp, virus)
 
@@ -243,9 +243,9 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	bleeding = perp.check_bodypart_bleeding(BODY_ZONE_ARMS)
 
 	if(!block && (contained_virus.spread_flags & DISEASE_SPREAD_CONTACT_SKIN))
-		perp.infect_disease(contained_virus, notes="(Contact, from picking up \a [src])")
+		perp.infect_disease(contained_virus, notes = "(Contact, from picking up \a [src])")
 	else if(bleeding && (contained_virus.spread_flags & DISEASE_SPREAD_BLOOD))
-		perp.infect_disease(contained_virus, notes="(Blood, from picking up \a [src])")
+		perp.infect_disease(contained_virus, notes = "(Blood, from picking up \a [src])")
 
 	return ..(perp, virus)
 
