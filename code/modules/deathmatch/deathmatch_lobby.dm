@@ -222,6 +222,8 @@
 
 	map.template_in_use = FALSE
 	playing = DEATHMATCH_NOT_PLAYING
+	ready_count = 0
+	deadchat_broadcast("'s deathmatch lobby has restarted. <a href=byond://?src=[REF(src)];join=1>(Join)</a>", "<B>[host]</B>")
 	for(var/ckey in observers)
 		var/should_rejoin = observers[ckey]["rejoin"]
 		if(!should_rejoin)
