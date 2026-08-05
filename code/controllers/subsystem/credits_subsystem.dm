@@ -1,6 +1,7 @@
 SUBSYSTEM_DEF(credits)
 	name = "Credits Screen Storage"
 	flags = SS_NO_FIRE
+	init_stage = INITSTAGE_LAST
 
 	var/director = "Some monkey we found on the street"
 	var/list/disclaimers = list()
