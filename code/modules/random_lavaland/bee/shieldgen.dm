@@ -49,7 +49,7 @@
 	return ..()
 
 /obj/machinery/power/shieldwallgen/atmos/can_connect(obj/machinery/power/shieldwallgen/gen)
-	if(gen.dir != turn(dir, 180))
+	if(gen.dir != REVERSE_DIR(dir))
 		return FALSE
 	return ..()
 

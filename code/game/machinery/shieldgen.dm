@@ -531,10 +531,11 @@
 	if(gen_primary && gen_secondary)
 		needs_power = TRUE
 		setDir(get_dir(gen_primary, gen_secondary))
-	for(var/mob/living/L in get_turf(src) && density)
-		visible_message(span_danger("\The [src] is suddenly occupying the same space as \the [L]!"))
-		L.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-		L.gib()
+	if(density)
+		for(var/mob/living/L in get_turf(src))
+			visible_message(span_danger("\The [src] is suddenly occupying the same space as \the [L]!"))
+			L.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
+			L.gib()
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity))
 	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_CONTAINMENT_FIELD)))
 
