@@ -31469,7 +31469,7 @@
 /turf/closed/wall/r_wall,
 /area/station/service/library/upper)
 "jnx" = (
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/secure_closet/bombcloset,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -62234,7 +62234,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "scH" = (
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/secure_closet/bombcloset,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -70906,7 +70906,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/machinery/light/directional/north,
-/obj/structure/closet/bombcloset/security,
+/obj/structure/closet/secure_closet/bombcloset/security,
 /turf/open/floor/carpet/grimey,
 /area/station/security/office)
 "uzm" = (

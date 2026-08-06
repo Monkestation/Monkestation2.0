@@ -11960,7 +11960,7 @@
 /area/station/medical/pathology/isolation)
 "cHH" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/secure_closet/bombcloset,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/storage)
 "cHS" = (
@@ -27693,7 +27693,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "hHf" = (
-/obj/structure/closet/bombcloset/security,
+/obj/structure/closet/secure_closet/bombcloset/security,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
 "hHj" = (

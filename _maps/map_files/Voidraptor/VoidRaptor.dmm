@@ -8339,9 +8339,7 @@
 /area/station/security/brig)
 "cAy" = (
 /obj/effect/turf_decal/trimline/dark/filled/line,
-/obj/structure/closet/bombcloset/security,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/bot,
 /obj/machinery/light/cold/directional/south,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 1
@@ -34479,6 +34477,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/red/diagonal_centre,
 /obj/machinery/light/cold/directional/north,
+/obj/structure/closet/secure_closet/bombcloset/security,
 /turf/open/floor/iron/dark/diagonal,
 /area/station/security/office)
 "jJs" = (
@@ -44401,7 +44400,7 @@
 /turf/open/floor/wood,
 /area/station/service/hydroponics/chicken)
 "muZ" = (
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/secure_closet/bombcloset,
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 5
 	},
@@ -46817,7 +46816,7 @@
 /turf/open/floor/carpet/blue,
 /area/station/command/bridge)
 "ncR" = (
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/secure_closet/bombcloset,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 1

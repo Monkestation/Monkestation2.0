@@ -154,7 +154,7 @@
 		/obj/structure/closet/toolcloset = 2,
 		/obj/structure/closet/l3closet = 1,
 		/obj/structure/closet/radiation = 1,
-		/obj/structure/closet/bombcloset = 1,
+		/obj/structure/closet/secure_closet/bombcloset = 1,
 		/obj/structure/closet/mini_fridge = 1,
 	)
 

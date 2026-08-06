@@ -6251,7 +6251,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/bot,
 /obj/machinery/status_display/evac/directional/south,
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/secure_closet/bombcloset,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "bwh" = (
@@ -53096,10 +53096,10 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "mub" = (
-/obj/structure/closet/bombcloset/security,
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/bombcloset/security,
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "muh" = (
@@ -84154,10 +84154,10 @@
 	},
 /area/station/service/bar)
 "tQr" = (
-/obj/structure/closet/bombcloset/security,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/cable,
+/obj/structure/closet/secure_closet/bombcloset,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/security)
 "tQt" = (
@@ -100641,7 +100641,7 @@
 /area/station/commons/vacant_room)
 "xLV" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/secure_closet/bombcloset,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)

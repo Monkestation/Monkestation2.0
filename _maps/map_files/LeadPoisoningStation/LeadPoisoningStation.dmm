@@ -3407,6 +3407,10 @@
 	},
 /turf/open/floor/iron/diagonal,
 /area/station/medical/medbay/lobby)
+"bMc" = (
+/obj/structure/closet/secure_closet/bombcloset/security,
+/turf/open/floor/stone,
+/area/station/ai_monitored/security/armory)
 "bMf" = (
 /obj/effect/spawner/random/trash/bin,
 /turf/open/floor/plating,
@@ -21842,7 +21846,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/thinplating,
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/secure_closet/bombcloset,
 /obj/machinery/camera/directional/north{
 	c_tag = "Science - Toxins North"
 	},
@@ -35109,7 +35113,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/thinplating,
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/secure_closet/bombcloset,
 /turf/open/floor/iron,
 /area/station/science/ordnance)
 "qUj" = (
@@ -93394,7 +93398,7 @@ uYv
 fYQ
 ris
 hbn
-lGD
+bMc
 qtx
 qDD
 uYv

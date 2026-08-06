@@ -27684,8 +27684,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/upper)
 "fom" = (
-/obj/structure/closet/bombcloset/security,
 /obj/machinery/light_switch/directional/west,
+/obj/structure/closet/secure_closet/bombcloset/security,
 /turf/open/floor/iron/dark/side{
 	dir = 10
 	},
@@ -62346,7 +62346,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
 "man" = (
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/secure_closet/bombcloset,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/science/explab)
@@ -99135,7 +99135,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "tdO" = (
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/secure_closet/bombcloset,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes{
 	dir = 6
@@ -105491,7 +105491,7 @@
 /area/station/hallway/secondary/command)
 "umE" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/secure_closet/bombcloset,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/station/science/explab)
@@ -110144,7 +110144,7 @@
 	},
 /area/station/security/lockers)
 "vjx" = (
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/secure_closet/bombcloset,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes{
 	dir = 5

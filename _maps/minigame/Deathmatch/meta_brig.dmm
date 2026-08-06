@@ -702,12 +702,14 @@
 /turf/open/floor/plating,
 /area/deathmatch)
 "mc" = (
-/obj/structure/closet/bombcloset/security,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/closet/secure_closet/bombcloset/security{
+	locked = 0
+	},
 /turf/open/indestructible,
 /area/deathmatch)
 "mi" = (

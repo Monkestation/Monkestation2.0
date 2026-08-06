@@ -20621,7 +20621,7 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "gnL" = (
-/obj/structure/closet/bombcloset/security,
+/obj/structure/closet/secure_closet/bombcloset/security,
 /turf/open/floor/iron/smooth,
 /area/station/security/brig/upper)
 "gnM" = (
@@ -77143,7 +77143,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "xEt" = (
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/secure_closet/bombcloset,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "xEF" = (
