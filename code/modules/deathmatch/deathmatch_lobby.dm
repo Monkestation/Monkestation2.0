@@ -23,6 +23,8 @@
 	var/mod_menu_open = FALSE
 	/// artificial time padding when we start loading to give lighting a breather (admin starts will set this to 0)
 	var/start_time = 8 SECONDS
+	/// Timer for when the lobby ends
+	var/map_timeout_timer = TIMER_ID_NULL
 
 /datum/deathmatch_lobby/New(mob/player)
 	. = ..()
@@ -134,7 +136,7 @@
 		observer.forceMove(pick(location.reserved_turfs))
 
 	playing = DEATHMATCH_PLAYING
-	addtimer(CALLBACK(src, PROC_REF(game_took_too_long)), initial(map.automatic_gameend_time))
+	map_timeout_timer = addtimer(CALLBACK(src, PROC_REF(game_took_too_long)), map.automatic_gameend_time, TIMER_STOPPABLE|TIMER_DELETE_ME)
 	log_game("Deathmatch game [host] started.")
 	announce(span_reallybig("GO!"))
 	if(length(modifiers))
@@ -229,6 +231,8 @@
 	map.template_in_use = FALSE
 	playing = DEATHMATCH_NOT_PLAYING
 	ready_count = 0
+	deltimer(map_timeout_timer)
+
 	deadchat_broadcast("'s deathmatch lobby has restarted. <a href=byond://?src=[REF(src)];join=1>(Join)</a>", "<B>[host]</B>")
 	for(var/ckey in observers)
 		var/should_rejoin = observers[ckey]["rejoin"]
