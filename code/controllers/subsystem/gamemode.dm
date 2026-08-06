@@ -5,6 +5,9 @@
 
 SUBSYSTEM_DEF(gamemode)
 	name = "Gamemode"
+	dependencies = list(
+		/datum/controller/subsystem/events,
+	)
 	runlevels = RUNLEVEL_GAME
 	flags = SS_BACKGROUND | SS_KEEP_TIMING
 	priority = 20
