@@ -59,16 +59,22 @@
 	if(playing)
 		return
 
+	// This is a bit of a mess, but basically pick a map between min and max players, if we can't then pick a map that isnt being used.
 	if(map.type == /datum/lazy_template/deathmatch/random)
 		var/list/available_maps = list()
+		var/list/taken_maps = list(/datum/lazy_template/deathmatch/random::name)
 		for(var/key in GLOB.deathmatch_game.maps - /datum/lazy_template/deathmatch/random::name)
 			var/datum/lazy_template/deathmatch/map = GLOB.deathmatch_game.maps[key]
+			if(map.template_in_use)
+				taken_maps += key
+				continue
 			if(map.min_players <= length(players) && map.max_players >= length(players))
 				available_maps += key
+
 		if(length(available_maps))
 			change_map(pick(available_maps))
 		else
-			change_map(pick(GLOB.deathmatch_game.maps - map.name))
+			change_map(pick(GLOB.deathmatch_game.maps - taken_maps))
 
 	if(map.template_in_use)
 		to_chat(get_mob_by_ckey(host), span_warning("This map is currently loading for another lobby. Please wait until that other map finishes loading. It would be a disaster if these two mixed up."))
