@@ -1,34 +1,36 @@
-/obj/effect/spawner/random/livingplush
+/obj/effect/spawner/livingplush
 	name = "Ghost controlled plush spawner"
 	desc = "Will immediately create an offer a plushie to the ghosts"
-	loot_subtype_path = /obj/item/toy/plush
-	loot = list()
+	invisibility = INVISIBILITY_ABSTRACT
 
-/obj/effect/spawner/random/livingplush/post_spawn(obj/item/toy/plush/boi)
-	set waitfor = FALSE
+/obj/effect/spawner/livingplush/Initialize(mapload)
+	..()
+	. = INITIALIZE_HINT_NORMAL
+	INVOKE_ASYNC(src, PROC_REF(spawn_plush))
 
-	if(boi.icon_state == "debug" || isnull(boi.icon_state))
-		var/obj/item/toy/plush/plush = pick(subtypesof(boi.type))
-		qdel(boi)
-		boi = new plush
+/obj/effect/spawner/livingplush/proc/spawn_plush()
+	var/plush = pick(subtypesof(/obj/item/toy/plush) - /obj/item/toy/plush/lobotomy)
+	plush = new plush(get_turf(src))
 
 	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
-		"Do you want to play as [boi]?",
+		"Do you want to play as [plush]?",
 		check_jobban = ROLE_SENTIENCE,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_SENTIENCE_POTION,
-		alert_pic = boi,
-		role_name_text = "[boi]",
+		alert_pic = plush,
+		role_name_text = "[plush]",
 	)
 
 	if(!length(candidates))
+		qdel(src)
 		return
 
 	var/mob/dead/observer/chosen = pick(candidates)
-	var/mob/living/basic/possession_holder/created = new(get_turf(boi), boi)
+	var/mob/living/basic/possession_holder/created = new(get_turf(plush), plush)
 
 	created.health_regeneration = 0 // disabling regen
 	created.maxHealth = 50
 	created.health = 50
 
 	created.PossessByPlayer(chosen.ckey)
+	qdel(src)

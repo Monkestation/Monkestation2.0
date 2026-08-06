@@ -217,7 +217,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/vending_refill/donksnackvendor = 3,
 		/obj/item/vending_refill/hotdog = 4,
 		/obj/item/clothing/mask/facehugger/toy = 2, //Heheh ~MCP :3
-		/obj/effect/spawner/random/livingplush = 4,
+		/obj/effect/spawner/livingplush = 4,
 		) = 8,
 //monkestation edit end
 
