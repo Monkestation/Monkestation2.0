@@ -70,11 +70,12 @@
 		stored_item.forceMove(get_turf(src))
 		stored_item = null
 		visible_message("You can feel the soul leaving the [stored_item], it returns back to its original self.")
+	ghostize()
 	qdel(src)
 
 /mob/living/basic/possession_holder/Life(seconds_per_tick, times_fired)
 	. = ..()
-	if(maxHealth > health)
+	if(maxHealth > health && health_regeneration > 0)
 		heal_overall_damage(health_regeneration, health_regeneration)
 
 /mob/living/basic/possession_holder/face_atom(atom/atom_to_face)
