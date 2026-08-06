@@ -104,6 +104,7 @@
 	equip_delay_other = 70
 	resistance_flags = NONE
 	hoodtype = /obj/item/clothing/head/hooded/bomb_suit
+	item_flags = IMMUTABLE_SLOW
 
 /obj/item/clothing/head/hooded/bomb_suit
 	name = "bomb hood"
@@ -143,9 +144,7 @@
 	armor_type = /datum/armor/utility_bomb_suit/sec
 
 /datum/armor/utility_bomb_suit/sec
-	bullet = 50
-	melee = 50
-	laser = 50
+	bullet = 40
 
 /*
 * Radiation protection
