@@ -54,3 +54,8 @@
   Runian:
   - bugfix: Examining someone that is using digital camouflage now correctly displays
       the obvious tell at the bottom of examine instead of the top.
+2026-08-06:
+  SirNightKnight:
+  - qol: mutes have the option to disable signer if they know it.
+  notghosti:
+  - map: Voidraptor solars SMES are now hooked to the grid
