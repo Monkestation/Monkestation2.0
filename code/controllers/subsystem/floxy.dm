@@ -5,9 +5,6 @@ SUBSYSTEM_DEF(floxy)
 #else
 	flags = SS_HIBERNATE
 #endif
-	dependencies = list(
-		/datum/controller/subsystem/plexora,
-	)
 	runlevels = ALL
 	init_stage = INITSTAGE_EARLY
 	wait = 1 SECONDS
