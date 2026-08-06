@@ -105,6 +105,7 @@
 	resistance_flags = NONE
 	hoodtype = /obj/item/clothing/head/hooded/bomb_suit
 	item_flags = IMMUTABLE_SLOW
+	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 
 /obj/item/clothing/head/hooded/bomb_suit
 	name = "bomb hood"
