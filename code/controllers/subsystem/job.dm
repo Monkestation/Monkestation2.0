@@ -2,6 +2,7 @@ SUBSYSTEM_DEF(job)
 	name = "Jobs"
 	dependencies = list(
 		/datum/controller/subsystem/processing/station,
+		/datum/controller/subsystem/gamemode,
 	)
 	flags = SS_NO_FIRE
 
