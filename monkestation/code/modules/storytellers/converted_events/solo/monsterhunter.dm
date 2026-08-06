@@ -27,7 +27,7 @@
 		JOB_AI,
 		JOB_CYBORG,
 	)
-	min_players = 10 //no required enemies due to instead needing enemy antags
+	min_players = 30 //round ender
 	weight = 25
 	maximum_antags = 1
 	prompted_picking = TRUE
