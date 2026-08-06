@@ -3,6 +3,7 @@
 
 /datum/asset/spritesheet_batched/sheetmaterials/create_spritesheets()
 	insert_all_icons("", 'icons/obj/stack_objects.dmi')
+	insert_all_icons("", 'icons/materials/fission_isotopes.dmi')
 
 	// Special case to handle Bluespace Crystals
 	insert_icon("polycrystal", uni_icon('icons/obj/telescience.dmi', "polycrystal"))
