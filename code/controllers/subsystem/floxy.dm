@@ -1,15 +1,14 @@
 SUBSYSTEM_DEF(floxy)
 	name = "Floxy"
-	wait = 1 SECONDS
-	runlevels = ALL
-	dependencies = list(
-		/datum/controller/subsystem/cassettes,
-	)
 #ifdef UNIT_TESTS
 	flags = SS_NO_INIT | SS_NO_FIRE
 #else
 	flags = SS_HIBERNATE
 #endif
+	runlevels = ALL
+	init_stage = INITSTAGE_EARLY
+	wait = 1 SECONDS
+
 	/// Base URL for Floxy.
 	var/base_url
 	/// List of IDs that we're waiting on results from.

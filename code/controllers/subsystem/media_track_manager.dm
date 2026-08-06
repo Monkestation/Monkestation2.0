@@ -1,7 +1,9 @@
 SUBSYSTEM_DEF(media_tracks)
 	name = "Media Tracks"
 	flags = SS_NO_FIRE
-
+	dependencies = list(
+		/datum/controller/subsystem/floxy,
+	)
 	/// Every track, including secret
 	var/list/all_tracks = list()
 	/// Non-secret jukebox tracks
