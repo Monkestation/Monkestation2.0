@@ -1472,7 +1472,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/secure_closet/bombcloset,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
