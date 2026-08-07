@@ -18,7 +18,7 @@
 
 	if(!isnull(species_override))
 		user.set_species(species_override)
-	else if (!isnull(user.dna.species.outfit_important_for_life) && plasmaman_outfit) //plasmamen get lit on fire and die
+	else if(!isnull(user.dna.species.outfit_important_for_life) && plasmaman_outfit) //plasmamen get lit on fire and die
 		if(isnull(l_hand) || isnull(r_hand))
 			uniform = plasmaman_outfit::uniform
 			gloves = plasmaman_outfit::gloves
@@ -674,7 +674,7 @@
 	r_hand = /obj/item/sbeacondrop/bomb
 	l_pocket = /obj/item/grenade/syndieminibomb
 	r_pocket = /obj/item/grenade/syndieminibomb
-	implants = list(/obj/item/implanter/explosive_macro)
+	implants = list(/obj/item/implant/explosive/macro)
 	backpack_contents = list(
 		/obj/item/assembly/signaler = 10,
 	)

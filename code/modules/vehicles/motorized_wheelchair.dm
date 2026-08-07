@@ -24,11 +24,32 @@
 	///stock parts for this chair
 	var/list/component_parts = list()
 
+/obj/vehicle/ridden/wheelchair/motorized/Initialize(mapload)
+	. = ..()
+	add_component_parts()
+	refresh_parts()
+
+/obj/vehicle/ridden/wheelchair/motorized/proc/add_component_parts()
+	// Add tier 1 stock parts so that non-crafted wheelchairs aren't empty
+	component_parts += GLOB.stock_part_datums[/datum/stock_part/capacitor]
+	component_parts += GLOB.stock_part_datums[/datum/stock_part/manipulator]
+	component_parts += GLOB.stock_part_datums[/datum/stock_part/manipulator]
+	power_cell = new /obj/item/stock_parts/power_store/cell(src)
+
 /obj/vehicle/ridden/wheelchair/motorized/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/motorized)
 
 /obj/vehicle/ridden/wheelchair/motorized/CheckParts(list/parts_list)
+	// This wheelchair was crafted, so clean out default parts
+	QDEL_NULL(power_cell)
+
+	component_parts = list()
 	for(var/obj/item/stock_parts/part in parts_list)
+		if(istype(part, /obj/item/stock_parts/power_store/cell)) // power cell, physically moves into the wheelchair
+			power_cell = part
+			part.forceMove(src)
+			continue
+
 		// find macthing datum/stock_part for this part and add to component list
 		var/datum/stock_part/newstockpart = GLOB.stock_part_datums_per_object[part.type]
 		if(isnull(newstockpart))
@@ -197,3 +218,12 @@
 	visible_message(span_warning("A bomb appears in [src], what the fuck?"))
 	obj_flags |= EMAGGED
 	return TRUE
+
+///Version with slightly better components. Used by deathmatches.
+/obj/vehicle/ridden/wheelchair/motorized/improved
+
+/obj/vehicle/ridden/wheelchair/motorized/improved/add_component_parts()
+	component_parts += GLOB.stock_part_datums[/datum/stock_part/capacitor]
+	component_parts += GLOB.stock_part_datums[/datum/stock_part/manipulator/tier2]
+	component_parts += GLOB.stock_part_datums[/datum/stock_part/manipulator]
+	power_cell = new /obj/item/stock_parts/power_store/cell/upgraded/plus(src)

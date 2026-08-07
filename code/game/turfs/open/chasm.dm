@@ -17,7 +17,7 @@
 
 /turf/open/chasm/Initialize(mapload)
 	. = ..()
-	apply_components()
+	apply_components(mapload)
 
 /// Lets people walk into chasms.
 /turf/open/chasm/CanAllowThrough(atom/movable/mover, border_dir)
@@ -79,8 +79,8 @@
 		build_with_floor_tiles(C, user)
 
 /// Handles adding the chasm component to the turf (So stuff falls into it!)
-/turf/open/chasm/proc/apply_components()
-	AddComponent(/datum/component/chasm, GET_TURF_BELOW(src))
+/turf/open/chasm/proc/apply_components(mapload)
+	AddComponent(/datum/component/chasm, GET_TURF_BELOW(src), mapload)
 
 /turf/open/chasm/can_cross_safely(atom/movable/crossing)
 	return HAS_TRAIT(src, TRAIT_CHASM_STOPPED) || HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)
