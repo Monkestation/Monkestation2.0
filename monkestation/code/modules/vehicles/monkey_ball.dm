@@ -17,7 +17,6 @@
 /obj/vehicle/ridden/monkey_ball/Destroy()
 	if(has_buckled_mobs())
 		var/mob/living/carbon/driver = buckled_mobs[1]
-		unbuckle_mob(driver)
 		driver.throw_at(get_edge_target_turf(driver,pick(GLOB.alldirs)),rand(1, 10),rand(1, 10))
 		driver.Knockdown(12 SECONDS)
 	return ..()
