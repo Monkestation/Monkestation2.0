@@ -33,7 +33,7 @@
 	inert_mutation = /datum/mutation/firebreath
 	death_sound = 'sound/voice/lizard/deathsound.ogg'
 	species_language_holder = /datum/language_holder/lizard
-	digitigrade_customization = DIGITIGRADE_FORCED //Monkestation Edit: OPTIONAL > FORCED
+	digitigrade_customization = DIGITIGRADE_OPTIONAL
 
 	mutanteyes = /obj/item/organ/internal/eyes/lizard
 	// Lizards are coldblooded and can stand a greater temperature range than humans
@@ -119,6 +119,7 @@ Lizard subspecies: ASHWALKERS
 	)
 	examine_limb_id = SPECIES_LIZARD
 	species_language_holder = /datum/language_holder/ashwalker
+	digitigrade_customization = DIGITIGRADE_FORCED
 	/// The aging component given by the species.
 	var/datum/component/ash_age/ash_age
 
@@ -166,6 +167,7 @@ Lizard subspecies: SILVER SCALED
 		TRAIT_WINE_TASTER,
 	)
 	mutantlungs = null
+	digitigrade_customization = DIGITIGRADE_FORCED
 	species_language_holder = /datum/language_holder/lizard/silver
 	mutanttongue = /obj/item/organ/internal/tongue/lizard/silver
 	exotic_bloodtype = BLOOD_TYPE_LIZARD
