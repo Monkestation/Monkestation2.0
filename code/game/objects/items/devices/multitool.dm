@@ -318,6 +318,13 @@
 	icon_state = "toolkit_engiborg_multitool"
 	toolspeed = 0.5
 
+/obj/item/multitool/makeshift
+	name = "makeshift multitool"
+	desc = "As crappy as it is, its still mostly the same as a standard issue Nanotrasen one."
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "multitool_makeshift"
+	toolspeed = 2
+
 //Tricorder
 //The tricorder is a child of a multitool, atmosanalyzer and health scaner
 
