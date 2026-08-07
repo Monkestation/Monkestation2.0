@@ -69,6 +69,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/psychology, 32)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/engineering, 32)
 
+/obj/structure/sign/departments/atmospherics
+	name = "\improper Atmospherics sign"
+	sign_change_name = "Department - Engineering: Atmospherics"
+	desc = "A sign labelling an area where your life-giving air comes from."
+	icon_state = "atmos"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/atmospherics, 32)
+
 ///////SCIENCE
 
 /obj/structure/sign/departments/science

@@ -265,6 +265,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		// monkestation start
 		/obj/effect/spawner/random_engines,
 		/obj/effect/spawner/random_bar,
+		// Screams somewhat loudly anytime its not initialized during mapload and lazyloads an area
+		/obj/effect/spawner/lavabase_spawner,
 		/obj/machinery/atm, // starts a timer, and if its being instantly deleted it can cause issues
 		/obj/machinery/ocean_elevator,
 		/turf/closed/mineral/random/regrowth,
