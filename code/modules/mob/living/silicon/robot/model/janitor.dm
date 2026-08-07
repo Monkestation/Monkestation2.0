@@ -4,6 +4,7 @@
 	default_skin = /datum/robot_skin/janitor/default
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
+		/obj/item/borg/janitorial_vacuum_suite,
 		/obj/item/screwdriver/cyborg,
 		/obj/item/crowbar/cyborg,
 		/obj/item/stack/tile/iron/base/cyborg,
