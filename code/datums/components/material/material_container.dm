@@ -720,6 +720,9 @@
 	var/list/data = list()
 
 	for(var/datum/material/material as anything in materials)
+		if(material.requires_main_rbmk && isnull(GLOB.main_rbmk_engine))
+			continue
+
 		var/amount = materials[material]
 
 		data += list(list(

@@ -59,6 +59,7 @@
 			/area/station/engineering/atmospherics_engine,
 			/area/station/engineering/shipbreaker_hut,
 			/area/station/engineering/supermatter,
+			/area/station/engineering/rbmk,
 			/area/station/maintenance,
 			/area/station/science/ordnance/bomb,
 			/area/station/science/ordnance/burnchamber,

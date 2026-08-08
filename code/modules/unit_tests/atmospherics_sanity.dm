@@ -78,6 +78,7 @@
 	var/static/list/area/ignored_types = list(
 		/area/station/asteroid,
 		/area/station/engineering/supermatter,
+		/area/station/engineering/rbmk,
 		/area/station/holodeck,
 		/area/station/maintenance,
 		/area/station/science/ordnance/bomb,

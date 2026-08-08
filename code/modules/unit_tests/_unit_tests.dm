@@ -190,6 +190,7 @@
 #include "projectiles.dm"
 #include "quirks.dm"
 #include "range_return.dm"
+#include "rbmk.dm"
 #include "rcd.dm"
 #include "reagent_container_defaults.dm"
 #include "reagent_id_typos.dm"
