@@ -40,7 +40,6 @@
 			if(SPT_PROB(0.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("Mucous runs down the back of your throat."))
 			if(SPT_PROB(0.25, seconds_per_tick) && !LAZYFIND(affected_mob.disease_resistances, /datum/disease/flu))
-				var/datum/disease/Flu = new /datum/disease/flu()
 				//affected_mob.ForceContractDisease(Flu, FALSE, TRUE)
 				cure()
 				return FALSE

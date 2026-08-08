@@ -45,10 +45,10 @@
 			D.infectionchance = input(C, "What will be your pathogen's infection chance?", "Custom Pathogen", D.infectionchance) as num
 			D.infectionchance = clamp(D.infectionchance,0,100)
 			D.infectionchance_base = D.infectionchance
-			D.stageprob = input(C, "What will be your pathogen's progression speed?", "Custom Pathogen", D.stageprob) as num
-			D.stageprob = clamp(D.stageprob,0,100)
+			D.stage_prob = input(C, "What will be your pathogen's progression speed?", "Custom Pathogen", D.stage_prob) as num
+			D.stage_prob = clamp(D.stage_prob,0,100)
 			D.stage_variance = input(C, "What will be your pathogen's stage variance?", "Custom Pathogen", D.stage_variance) as num
-			D.stageprob = clamp(D.stageprob,-1*D.max_stages,0)
+			D.stage_prob = clamp(D.stage_prob,-1*D.max_stages,0)
 			//D.can_kill = something something a while loop but probably not worth the effort. If you need it for your bus code it yourself.
 		else
 			var/d_type = known_forms[chosen_form]
@@ -56,7 +56,7 @@
 			D.form = chosen_form
 			D.max_stages = d_inst.max_stages
 			D.infectionchance = d_inst.infectionchance
-			D.stageprob = d_inst.stageprob
+			D.stage_prob = d_inst.stage_prob
 			D.stage_variance = d_inst.stage_variance
 			D.can_kill = d_inst.can_kill.Copy()
 			qdel(d_inst)

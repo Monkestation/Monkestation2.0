@@ -19,8 +19,6 @@ GLOBAL_LIST_INIT(virusDB, list())
 	//Stages
 	var/stage = 1
 	var/max_stages = 4
-	/// The probability of this infection advancing a stage every second the cure is not present.
-	var/stage_prob = 2
 
 	//Other
 	var/list/viable_mobtypes = list()
@@ -85,7 +83,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	var/ticks = 0
 	var/speed = 1
 
-	var/stageprob = 25
+	var/stage_prob = 25
 
 	//when spreading to another mob, that new carrier has the disease's stage reduced by stage_variance
 	var/stage_variance = -1
@@ -95,7 +93,6 @@ GLOBAL_LIST_INIT(virusDB, list())
 	var/childID = 0// 01 to 99, incremented as the pathogen gets analyzed after a mutation
 	//bitflag showing which transmission types are allowed for this disease
 	var/allowed_transmission = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_AIRBORNE
-
 	var/list/properties = list()
 
 /datum/disease/New()
@@ -193,6 +190,10 @@ GLOBAL_LIST_INIT(virusDB, list())
 	if((mob.stat == DEAD) && !process_dead)
 		return
 
+	if(required_organ)
+		if(!has_required_infectious_organ(affected_mob, required_organ))
+			return FALSE
+
 	//Searing body temperatures cure diseases, on top of killing you.
 	if(mob.bodytemperature > max_bodytemperature)
 		cure(add_resistance = FALSE, target = mob)
@@ -229,12 +230,24 @@ GLOBAL_LIST_INIT(virusDB, list())
 	if(prob(strength * 0.1))
 		incubate(mob, 1)
 
+	var/cure_mod
+	var/bad_immune = HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY) ? 2 : 1
+
+	if(has_cure())
+		cure_mod = cure_chance / bad_immune
+		if(SPT_PROB(cure_mod, seconds_per_tick))
+			update_stage(min(stage - 1, 1))
+
+		if(disease_flags & CURABLE && SPT_PROB(cure_mod, seconds_per_tick))
+			cure()
+			return FALSE
+
+	var/slowdown = HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
+
 	//Moving to the next stage
-	if(ticks > stage*100 && prob(stageprob))
+	if(ticks > stage*100 && SPT_PROB(stage_prob*slowdown*bad_immune, seconds_per_tick))
 		incubate(mob, 1)
-		if(stage < max_stages)
-			log += "<br />[ROUND_TIME()] NEXT STAGE ([stage])"
-			stage++
+		update_stage(min(stage + 1, max_stages))
 		ticks = 0
 
 	//Pathogen killing each others
@@ -292,10 +305,6 @@ GLOBAL_LIST_INIT(virusDB, list())
 
 	ticks += speed
 
-//horrible, awful, stolen code from disease/advance. But it WORKS
-/datum/disease
-	var/list/properties = list()
-
 /// Calls on GenerateProperties and AssignProperties to set a disease severity. From `disease/advance`
 /datum/disease/proc/Refresh(new_name = FALSE)
 	GenerateProperties()
@@ -310,12 +319,12 @@ GLOBAL_LIST_INIT(virusDB, list())
 
 /datum/disease/proc/assign_properties()
 	if(length(properties))
-		set_severity_Acute(properties["severity"])
+		set_severity(properties["severity"])
 	else
 		CRASH("Our properties were empty or null!")
 
 ///sets a serverity level based on the properties["severity"] value of the disease
-/datum/disease/proc/set_severity_Acute(level_sev)
+/datum/disease/proc/set_severity(level_sev)
 	switch(level_sev)
 
 		if(-INFINITY to 0)
@@ -362,32 +371,13 @@ GLOBAL_LIST_INIT(virusDB, list())
 	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
 
 
-///Proc to process the disease and decide on whether to advance, cure or make the sympthoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
+///DEPRICATED
 /datum/disease/proc/stage_act(seconds_per_tick, times_fired)
-	var/slowdown = HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
-
-	if(required_organ)
-		if(!has_required_infectious_organ(affected_mob, required_organ))
-			return FALSE
-
-	var/cure_mod
-	var/bad_immune = HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY) ? 2 : 1
-
-	if(has_cure())
-		cure_mod = cure_chance / bad_immune
-		if(SPT_PROB(cure_mod, seconds_per_tick))
-			update_stage(max(stage - 1, 1))
-
-		if(disease_flags & CURABLE && SPT_PROB(cure_mod, seconds_per_tick))
-			cure()
-			return FALSE
-	else if(SPT_PROB(stage_prob*slowdown*bad_immune, seconds_per_tick))
-		update_stage(min(stage + 1, max_stages))
-
-	return !carrier
-
+	return
 
 /datum/disease/proc/update_stage(new_stage)
+	if(stage != new_stage)
+		log += "<br />[ROUND_TIME()] NEW STAFE ([stage])"
 	stage = new_stage
 
 /datum/disease/proc/has_cure()
@@ -485,7 +475,6 @@ GLOBAL_LIST_INIT(virusDB, list())
 		"subID",
 		"uniqueID",
 		"childID",
-		"stageprob",
 		"antigen",
 		)
 

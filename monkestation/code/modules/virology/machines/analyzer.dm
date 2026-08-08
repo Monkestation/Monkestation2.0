@@ -260,7 +260,7 @@
 	if(processing)
 		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
 		return FALSE
-	return default_deconstruction_crowbar(I)\
+	return default_deconstruction_crowbar(I)
 
 /obj/machinery/pathology/disease_analyser/attack_ai(mob/user)
 	if(!panel_open)

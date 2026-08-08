@@ -3,7 +3,7 @@
 	max_stages = 4
 	infectionchance = 20
 	infectionchance_base = 20
-	stageprob = 10
+	stage_prob = 10
 	stage_variance = -1
 	can_kill = list("Bacteria")
 	disease_flags = parent_type::disease_flags | DISEASE_COPYSTAGE
@@ -13,7 +13,7 @@
 	max_stages = 3
 	infectionchance = 30
 	infectionchance_base = 30
-	stageprob = 30
+	stage_prob = 30
 	stage_variance = -4
 	can_kill = list("Parasite")
 
@@ -21,7 +21,7 @@
 	form = "Parasite"
 	infectionchance = 15
 	infectionchance_base = 15
-	stageprob = 10
+	stage_prob = 10
 	stage_variance = 0
 	can_kill = list("Virus")
 	disease_flags = parent_type::disease_flags | DISEASE_COPYSTAGE
@@ -30,6 +30,6 @@
 	form = "Prion"
 	infectionchance = 3
 	infectionchance_base = 3
-	stageprob = 80
+	stage_prob = 80
 	stage_variance = -10
 	can_kill = list()
