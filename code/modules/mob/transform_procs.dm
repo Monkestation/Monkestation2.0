@@ -295,7 +295,6 @@
 		dropItemToGround(W, TRUE)
 
 
-
 	regenerate_icons()
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
