@@ -33,8 +33,7 @@
 	desc = "Science gone bonkers? Beeping behind the airlock? Buy now and be the hero the station des... \
 		I mean needs! (time not included). Contains one bomb suit and hood, gas mask, and bomb defusal tools."
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/clothing/head/utility/bomb_hood,
-					/obj/item/clothing/suit/utility/bomb_suit,
+	contains = list(/obj/item/clothing/suit/hooded/bomb_suit,
 					/obj/item/clothing/mask/gas,
 					/obj/item/screwdriver,
 					/obj/item/wirecutters,

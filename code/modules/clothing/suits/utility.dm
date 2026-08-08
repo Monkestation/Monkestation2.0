@@ -82,35 +82,12 @@
 /*
  * Bomb protection
  */
-/obj/item/clothing/head/utility/bomb_hood
-	name = "bomb hood"
-	desc = "Use in case of bomb."
-	icon_state = "bombsuit"
-	clothing_flags = THICKMATERIAL | SNUG_FIT
-	armor_type = /datum/armor/utility_bomb_hood
-	flags_inv = HIDEFACE|HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
-
-	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
-
-	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
-	strip_delay = 70
-	equip_delay_other = 70
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-	resistance_flags = NONE
-
-/datum/armor/utility_bomb_hood
-	melee = 20
-	laser = 20
-	energy = 30
-	bomb = 100
-	bio = 50
-	fire = 80
-	acid = 50
-
-/obj/item/clothing/suit/utility/bomb_suit
+/obj/item/clothing/suit/hooded/bomb_suit
 	name = "bomb suit"
 	desc = "A suit designed for safety when handling explosives."
+	icon = 'icons/obj/clothing/suits/utility.dmi'
+	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 	icon_state = "bombsuit"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
@@ -118,7 +95,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	slowdown = 2
 	armor_type = /datum/armor/utility_bomb_suit
-	flags_inv = HIDEJUMPSUIT
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 
@@ -126,32 +103,49 @@
 	strip_delay = 70
 	equip_delay_other = 70
 	resistance_flags = NONE
+	hoodtype = /obj/item/clothing/head/hooded/bomb_suit
+	item_flags = IMMUTABLE_SLOW
+	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
+
+/obj/item/clothing/head/hooded/bomb_suit
+	name = "bomb hood"
+	desc = "Use in case of bomb."
+	icon = 'icons/obj/clothing/head/utility.dmi'
+	worn_icon = 'icons/mob/clothing/head/utility.dmi'
+	icon_state = "bombsuit"
+	clothing_flags = THICKMATERIAL | SNUG_FIT
+	armor_type = /datum/armor/utility_bomb_suit
+	flags_inv = HIDEFACE|HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
+	strip_delay = 70
+	equip_delay_other = 70
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	resistance_flags = NONE
 
 /datum/armor/utility_bomb_suit
-	melee = 20
-	laser = 20
-	energy = 30
+	bullet = 35
+	melee = 40
+	laser = 35
+	energy = 40
 	bomb = 100
 	bio = 50
 	fire = 80
 	acid = 50
 
-/obj/item/clothing/head/utility/bomb_hood/security
-	icon_state = "bombsuit_sec"
-	inhand_icon_state = null
-
-/obj/item/clothing/suit/utility/bomb_suit/security
+/obj/item/clothing/suit/hooded/bomb_suit/sec
 	icon_state = "bombsuit_sec"
 	inhand_icon_state = null
 	allowed = list(/obj/item/gun/energy, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
+	armor_type = /datum/armor/utility_bomb_suit/sec
 
-/obj/item/clothing/head/utility/bomb_hood/white
-	icon_state = "bombsuit_white"
+/obj/item/clothing/head/hooded/bomb_suit/sec
+	icon_state = "bombsuit_sec"
 	inhand_icon_state = null
+	armor_type = /datum/armor/utility_bomb_suit/sec
 
-/obj/item/clothing/suit/utility/bomb_suit/white
-	icon_state = "bombsuit_white"
-	inhand_icon_state = null
+/datum/armor/utility_bomb_suit/sec
+	bullet = 40
 
 /*
 * Radiation protection

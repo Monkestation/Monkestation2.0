@@ -21561,7 +21561,7 @@
 	dir = 4
 	},
 /obj/structure/sign/warning/test_chamber/directional/south,
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/secure_closet/bombcloset,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/ordnance/office)
@@ -53695,6 +53695,7 @@
 	},
 /obj/machinery/camera/autoname/directional/north,
 /obj/effect/turf_decal/trimline/orange/filled/line,
+/obj/structure/closet/secure_closet/bombcloset/security,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
 "qym" = (

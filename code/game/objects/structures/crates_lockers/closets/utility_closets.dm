@@ -159,29 +159,27 @@
 /*
  * Bombsuit closet
  */
-/obj/structure/closet/bombcloset
+
+/obj/structure/closet/secure_closet/bombcloset
 	name = "\improper EOD closet"
 	desc = "It's a storage unit for explosion-protective suits."
-	icon_state = "bomb"
+	icon_state = "scibomb"
+	req_access = list(ACCESS_ORDNANCE)
 
-/obj/structure/closet/bombcloset/PopulateContents()
+/obj/structure/closet/secure_closet/bombcloset/PopulateContents()
 	..()
-	new /obj/item/clothing/suit/utility/bomb_suit(src)
+	new /obj/item/clothing/suit/hooded/bomb_suit(src)
 	new /obj/item/clothing/under/color/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/head/utility/bomb_hood(src)
 
-/obj/structure/closet/bombcloset/security/PopulateContents()
-	new /obj/item/clothing/suit/utility/bomb_suit/security(src)
+/obj/structure/closet/secure_closet/bombcloset/security
+	icon_state = "bomb"
+	req_access = list(ACCESS_ARMORY)
+
+/obj/structure/closet/secure_closet/bombcloset/security/PopulateContents()
+	new /obj/item/clothing/suit/hooded/bomb_suit/sec(src)
 	new /obj/item/clothing/under/rank/security/officer(src)
 	new /obj/item/clothing/shoes/jackboots(src)
-	new /obj/item/clothing/head/utility/bomb_hood/security(src)
-
-/obj/structure/closet/bombcloset/white/PopulateContents()
-	new /obj/item/clothing/suit/utility/bomb_suit/white(src)
-	new /obj/item/clothing/under/color/black(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/head/utility/bomb_hood/white(src)
 
 /*
  * Ammunition

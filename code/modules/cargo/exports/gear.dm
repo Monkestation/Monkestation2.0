@@ -72,15 +72,10 @@
 	unit_name = "biosuit"
 	export_types = list(/obj/item/clothing/suit/bio_suit)
 
-/datum/export/gear/bombhelmet
-	cost = CARGO_CRATE_VALUE * 0.1
-	unit_name = "bomb suit hood"
-	export_types = list(/obj/item/clothing/head/utility/bomb_hood)
-
 /datum/export/gear/bombsuit
-	cost = CARGO_CRATE_VALUE * 0.2
+	cost = CARGO_CRATE_VALUE * 0.3
 	unit_name = "bomb suit"
-	export_types = list(/obj/item/clothing/suit/utility/bomb_suit)
+	export_types = list(/obj/item/clothing/suit/hooded/bomb_suit)
 
 /datum/export/gear/lizardboots
 	cost = CARGO_CRATE_VALUE * 0.7

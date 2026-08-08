@@ -2869,7 +2869,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "aoP" = (
-/obj/structure/closet/bombcloset/security,
+/obj/structure/closet/secure_closet/bombcloset/security,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/security/lockers)
@@ -35547,7 +35547,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "gIw" = (
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/secure_closet/bombcloset,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "gIV" = (

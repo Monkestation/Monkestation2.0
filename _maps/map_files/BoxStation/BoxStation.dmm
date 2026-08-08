@@ -5869,6 +5869,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/bombcloset,
 /turf/open/floor/iron,
 /area/station/science/ordnance/office)
 "bQQ" = (

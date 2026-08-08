@@ -14241,7 +14241,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "ffV" = (
-/obj/structure/closet/bombcloset/security,
+/obj/structure/closet/secure_closet/bombcloset/security,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
@@ -18582,7 +18582,7 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "gIK" = (
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/secure_closet/bombcloset,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "gIM" = (
@@ -46268,7 +46268,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/secure_closet/bombcloset,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},

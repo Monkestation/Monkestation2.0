@@ -2045,8 +2045,8 @@
 /turf/open/floor/plastic,
 /area/station/security/lockers)
 "aip" = (
-/obj/structure/closet/bombcloset/security,
 /obj/effect/turf_decal/delivery,
+/obj/structure/closet/secure_closet/bombcloset/security,
 /turf/open/floor/plastic,
 /area/station/security/lockers)
 "aiq" = (
@@ -48928,6 +48928,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/closet/secure_closet/bombcloset,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "tdB" = (

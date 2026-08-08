@@ -19880,7 +19880,7 @@
 /area/station/engineering/hallway)
 "giG" = (
 /obj/machinery/light/directional/east,
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/secure_closet/bombcloset,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
@@ -61146,7 +61146,7 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/drone_bay)
 "tca" = (
-/obj/structure/closet/bombcloset/security,
+/obj/structure/closet/secure_closet/bombcloset/security,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
