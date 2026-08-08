@@ -1,0 +1,5 @@
+author: "Singul0"
+delete-after: True
+changes:
+  - qol: "Made tutorial simulations easier to access."
+  - bugfix: "Polished bitrunning simulations further"

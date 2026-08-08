@@ -11,6 +11,7 @@
 	recipe_type = /datum/crafting_recipe/shutters
 	open_sound = 'sound/machines/poddoors/shutters_open.ogg'
 	close_sound = 'sound/machines/poddoors/shutters_close.ogg'
+	door_align_type = /obj/machinery/door/poddoor/shutters
 
 /obj/machinery/door/poddoor/shutters/preopen
 	icon_state = "open"
@@ -25,6 +26,14 @@
 	icon_state = "open"
 	density = FALSE
 	opacity = FALSE
+
+/obj/machinery/door/poddoor/shutters/cc
+	obj_flags = INDESTRUCTIBLE
+
+/obj/machinery/door/poddoor/shutters/cc/xcc
+	id = "XCCsec1"
+	name = "XCC Checkpoint 1 Shutters"
+	max_integrity = 3000000
 
 /obj/machinery/door/poddoor/shutters/radiation
 	name = "radiation shutters"

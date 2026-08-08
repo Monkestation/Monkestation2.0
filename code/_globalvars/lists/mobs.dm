@@ -26,6 +26,7 @@ GLOBAL_LIST_INIT(abstract_mob_types, list(
 	/mob/living/carbon/human/consistent,
 	/mob/living/carbon/human/dummy,
 	/mob/living/carbon/human/dummy/consistent,
+	/mob/living/carbon/human/tutorial,
 	/mob/living/carbon/human/species,
 	/mob/living/silicon,
 	/mob/living/simple_animal,
@@ -208,3 +209,7 @@ GLOBAL_LIST_INIT(blood_types, init_blood_types())
 		if(require_body && QDELETED(mind.current))
 			continue
 		. += mind
+
+///List of ckeys that have seen a blurb of a given key.
+GLOBAL_LIST_EMPTY(blurb_witnesses)
+GLOBAL_LIST_EMPTY(assault_operative_start)
