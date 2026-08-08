@@ -269,7 +269,7 @@
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
-	Paralyze(1, ignore_canstun = TRUE)
+	Paralyze(0.1 SECONDS, ignore_canstun = TRUE)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	var/mob/living/basic/pet/eris_romch/romch = new(get_turf(src))
