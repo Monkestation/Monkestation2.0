@@ -41,13 +41,6 @@
 	},
 /turf/open/misc/sandy_dirt,
 /area/centcom/tdome/arena/actual)
-"io" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/machinery/camera/motion/thunderdome{
-	pixel_x = 10
-	},
-/turf/open/floor/wood/large,
-/area/centcom/tdome/arena/actual)
 "jA" = (
 /turf/open/floor/stone,
 /area/centcom/tdome/arena/actual)
@@ -155,6 +148,15 @@
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/misc/sandy_dirt,
+/area/centcom/tdome/arena/actual)
+"WH" = (
+/obj/structure/grille/indestructible{
+	density = 0;
+	alpha = 0;
+	mouse_opacity = 0;
+	name = "magical camera grille (DO NOT DELETE)"
+	},
+/turf/open/water/arena,
 /area/centcom/tdome/arena/actual)
 "Yq" = (
 /obj/effect/turf_decal/siding/wood{
@@ -277,8 +279,8 @@ VF
 hA
 VF
 hL
-io
-VF
+Mj
+WH
 VF
 VF
 Cb

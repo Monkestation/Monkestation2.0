@@ -59,14 +59,6 @@
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/wood/large,
 /area/centcom/tdome/arena/actual)
-"lt" = (
-/obj/structure/window/reinforced/fulltile/ice,
-/obj/structure/barricade/wooden/crude/snow,
-/obj/machinery/camera/motion/thunderdome{
-	pixel_x = 10
-	},
-/turf/open/floor/wood/large,
-/area/centcom/tdome/arena/actual)
 "lO" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -255,6 +247,12 @@
 	color = " #DCDCDC"
 	},
 /obj/machinery/light/floor/has_bulb,
+/obj/structure/grille/indestructible{
+	density = 0;
+	alpha = 0;
+	mouse_opacity = 0;
+	name = "magical camera grille (DO NOT DELETE)"
+	},
 /turf/open/misc/dirt/station,
 /area/centcom/tdome/arena/actual)
 "RD" = (
@@ -400,7 +398,7 @@ Fh
 mi
 Pb
 xl
-lt
+NA
 Re
 EZ
 EZ

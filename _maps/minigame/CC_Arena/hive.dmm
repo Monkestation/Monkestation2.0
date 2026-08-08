@@ -49,15 +49,6 @@
 /obj/effect/decal/cleanable/blood/xeno,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/arena/actual)
-"qe" = (
-/obj/structure/alien/weeds{
-	obj_flags = null
-	},
-/obj/machinery/camera/motion/thunderdome{
-	pixel_x = 10
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/tdome/arena/actual)
 "rt" = (
 /obj/structure/alien/weeds{
 	obj_flags = null
@@ -77,6 +68,18 @@
 	obj_flags = null
 	},
 /obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"tf" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/structure/grille/indestructible{
+	density = 0;
+	alpha = 0;
+	mouse_opacity = 0;
+	name = "magical camera grille (DO NOT DELETE)"
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/arena/actual)
 "tg" = (
@@ -274,8 +277,8 @@ Fp
 ya
 ih
 ih
-qe
 ih
+tf
 ih
 Fp
 ih
