@@ -234,6 +234,8 @@
 	if(new_style && apply_trait)
 		ADD_TRAIT(src, apply_trait, LIPSTICK_TRAIT)
 		hopefully_a_head?.stored_lipstick_trait = apply_trait
+		var/datum/action/innate/lipstick_kiss/lipstick_kiss = new(src)
+		lipstick_kiss.Grant(src)
 
 	if(update)
 		update_body_parts()
@@ -249,6 +251,34 @@
 		return FALSE
 	update_lips(null, null, update = TRUE)
 	return TRUE
+
+/datum/action/innate/lipstick_kiss
+	name = "Blow Kiss"
+	desc = "Prepare to blow a kiss at your target."
+	button_icon = 'icons/mob/simple/animal.dmi'
+	button_icon_state = "heart"
+
+/datum/action/innate/lipstick_kiss/Grant(mob/living/carbon/grant_to)
+	. = ..()
+	RegisterSignal(grant_to, SIGNAL_ADDTRAIT(TRAIT_KISS_OF_DEATH), PROC_REF(lipstick_applied))
+	RegisterSignal(grant_to, SIGNAL_REMOVETRAIT(TRAIT_KISS_OF_DEATH), PROC_REF(lipstick_removed))
+	RegisterSignal(grant_to, SIGNAL_ADDTRAIT(TRAIT_SYNDIE_KISS), PROC_REF(lipstick_applied))
+	RegisterSignal(grant_to, SIGNAL_REMOVETRAIT(TRAIT_SYNDIE_KISS), PROC_REF(lipstick_removed))
+
+///Grants lipstick_kiss action.
+/datum/action/innate/lipstick_kiss/proc/lipstick_applied(datum/source)
+	if(src.owner)
+		var/datum/action/innate/lipstick_kiss/kiss_action = new(src.owner)
+		kiss_action.Grant(src.owner)
+///Removes lipstick_kiss action.
+/datum/action/innate/lipstick_kiss/proc/lipstick_removed(datum/source)
+	if(src.owner)
+		Remove(src.owner)
+
+/datum/action/innate/lipstick_kiss/Activate()
+	. = ..()
+	var/datum/emote/living/kiss/kiss = new
+	kiss.run_emote(owner, null, null, TRUE)
 
 /**
  * Set the hair style of a human.
