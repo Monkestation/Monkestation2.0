@@ -224,18 +224,20 @@
 /mob/living/carbon/human/update_lips(new_style, new_color, apply_trait, update = TRUE)
 	lip_style = new_style
 	lip_color = new_color
-
 	var/obj/item/bodypart/head/hopefully_a_head = get_bodypart(BODY_ZONE_HEAD)
 	REMOVE_TRAITS_IN(src, LIPSTICK_TRAIT)
 	if(hopefully_a_head)
+		var/datum/action/innate/lipstick_kiss/existing_action = locate(/datum/action/innate/lipstick_kiss) in src.actions
+		if(existing_action)
+			qdel(existing_action)
 		hopefully_a_head.stored_lipstick_trait = null
 		hopefully_a_head.lip_style = new_style
 		hopefully_a_head.lip_color = new_color
 	if(new_style && apply_trait)
 		ADD_TRAIT(src, apply_trait, LIPSTICK_TRAIT)
 		hopefully_a_head?.stored_lipstick_trait = apply_trait
-		var/datum/action/innate/lipstick_kiss/lipstick_kiss = new(src)
-		lipstick_kiss.Grant(src)
+		var/datum/action/innate/lipstick_kiss/kiss_action = new(src)
+		kiss_action.Grant(src)
 
 	if(update)
 		update_body_parts()
@@ -257,23 +259,8 @@
 	desc = "Prepare to blow a kiss at your target."
 	button_icon = 'icons/mob/simple/animal.dmi'
 	button_icon_state = "heart"
-
-/datum/action/innate/lipstick_kiss/Grant(mob/living/carbon/grant_to)
+/datum/action/innate/lipstick_kiss/Remove()
 	. = ..()
-	RegisterSignal(grant_to, SIGNAL_ADDTRAIT(TRAIT_KISS_OF_DEATH), PROC_REF(lipstick_applied))
-	RegisterSignal(grant_to, SIGNAL_REMOVETRAIT(TRAIT_KISS_OF_DEATH), PROC_REF(lipstick_removed))
-	RegisterSignal(grant_to, SIGNAL_ADDTRAIT(TRAIT_SYNDIE_KISS), PROC_REF(lipstick_applied))
-	RegisterSignal(grant_to, SIGNAL_REMOVETRAIT(TRAIT_SYNDIE_KISS), PROC_REF(lipstick_removed))
-
-///Grants lipstick_kiss action.
-/datum/action/innate/lipstick_kiss/proc/lipstick_applied(datum/source)
-	if(src.owner)
-		var/datum/action/innate/lipstick_kiss/kiss_action = new(src.owner)
-		kiss_action.Grant(src.owner)
-///Removes lipstick_kiss action.
-/datum/action/innate/lipstick_kiss/proc/lipstick_removed(datum/source)
-	if(src.owner)
-		Remove(src.owner)
 
 /datum/action/innate/lipstick_kiss/Activate()
 	. = ..()
