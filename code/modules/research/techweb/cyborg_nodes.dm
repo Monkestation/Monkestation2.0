@@ -164,9 +164,7 @@
 	display_name = "Cyborg Upgrades: Bluespace"
 	description = "Enabling compatibility of our bluespace technology for usage within cyborgs."
 	prereq_ids = list(
-		"cyborg_upgrades_engineering",
-		"cyborg_upgrades_medical",
-		"cyborg_upgrades_mining",
+		"adv_robotics",
 		"practical_bluespace"
 	)
 	design_ids = list(
