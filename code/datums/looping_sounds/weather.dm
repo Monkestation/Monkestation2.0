@@ -9,6 +9,7 @@
 	start_length = 130
 	end_sound = 'sound/weather/ashstorm/outside/active_end.ogg'
 	volume = 80
+	sound_channel = CHANNEL_WEATHER
 
 /datum/looping_sound/active_inside_ashstorm
 	mid_sounds = list(
@@ -21,6 +22,7 @@
 	start_length = 130
 	end_sound = 'sound/weather/ashstorm/inside/active_end.ogg'
 	volume = 60
+	sound_channel = CHANNEL_WEATHER
 
 /datum/looping_sound/weak_outside_ashstorm
 	mid_sounds = list(
@@ -33,6 +35,7 @@
 	start_length = 130
 	end_sound = 'sound/weather/ashstorm/outside/weak_end.ogg'
 	volume = 50
+	sound_channel = CHANNEL_WEATHER
 
 /datum/looping_sound/weak_inside_ashstorm
 	mid_sounds = list(
@@ -45,9 +48,11 @@
 	start_length = 130
 	end_sound = 'sound/weather/ashstorm/inside/weak_end.ogg'
 	volume = 30
+	sound_channel = CHANNEL_WEATHER
 
 /datum/looping_sound/void_loop
 	mid_sounds = list('sound/ambience/VoidsEmbrace.ogg'=1)
 	mid_length = 1669 // exact length of the music in ticks
 	volume = 100
 	extra_range = 30
+	sound_channel = CHANNEL_WEATHER

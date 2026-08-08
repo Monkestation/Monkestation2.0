@@ -5,6 +5,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	var/gpstag = "COM0"
 	var/tracking = TRUE
 	var/emped = FALSE
+	/// Can this GPS be targeted by a BSA?
+	var/bsa_targetable = TRUE
 
 /datum/component/gps/Initialize(_gpstag = "COM0")
 	if(!isatom(parent))
@@ -15,6 +17,9 @@ GLOBAL_LIST_EMPTY(GPS_list)
 /datum/component/gps/Destroy()
 	GLOB.GPS_list -= src
 	return ..()
+
+/datum/component/gps/no_bsa
+	bsa_targetable = FALSE
 
 /datum/component/gps/kheiral_cuffs
 
@@ -32,6 +37,11 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
 	/// UI state of GPS, altering when it can be used.
 	var/datum/ui_state/state = null
+
+	/// If TRUE, then this GPS needs to be calibrated to point to specific z-levels.
+	var/requires_z_calibration = TRUE
+	/// A lazy list of calibrated z-levels
+	var/list/calibrated_zs
 	var/uses_overlays = TRUE
 
 /datum/component/gps/item/proc/handle_overlay()
@@ -73,6 +83,10 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		src.requires_z_calibration = requires_z_calibration
 	if(islist(calibrate_zs))
 		src.calibrated_zs = calibrate_zs
+
+/// Checks to see if we can point in the general direction of a (different) z level.
+/datum/component/gps/item/proc/can_point_to_z_level(z)
+	return !requires_z_calibration || (z in calibrated_zs)
 
 ///Called on COMSIG_ITEM_ATTACK_SELF
 /datum/component/gps/item/proc/interact(datum/source, mob/user)
@@ -185,7 +199,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	data["signals"] = signals
 	return data
 
-/datum/component/gps/item/ui_act(action, params)
+/datum/component/gps/item/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -294,7 +308,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 			playsound(jamming_gps_device, 'sound/items/gps/radio_jammer.ogg', 35, TRUE)
 			jamming_gps_device.say("[Gibberish("///%<SIGNAL INTERCEPTED>{SEND}source.create_feedback_loop", TRUE, 50)] [gpstag]: [alert_text] ([get_area_name(our_gps_turf, TRUE)]) ([our_gps_turf.x], [our_gps_turf.y], [our_gps_turf.z])")
 			jamming_gps_device.can_play_jam_sound = FALSE
-			addtimer(CALLBACK(src, PROC_REF(reset_jam_sound), jamming_gps_device), 1 SECOND)
+			addtimer(CALLBACK(src, PROC_REF(reset_jam_sound), jamming_gps_device), 1 SECONDS)
 		jammed_signal = TRUE
 
 	// go through and alert all other sec gps

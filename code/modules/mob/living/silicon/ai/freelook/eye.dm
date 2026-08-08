@@ -221,15 +221,6 @@
 	else
 		eyeobj.RemoveInvisibility(type)
 
-/mob/living/silicon/ai/verb/toggle_acceleration()
-	set category = "AI Commands"
-	set name = "Toggle Camera Acceleration"
-
-	if(incapacitated())
-		return
-	acceleration = !acceleration
-	to_chat(usr, "Camera acceleration has been toggled [acceleration ? "on" : "off"].")
-
 /mob/eye/camera/ai/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && SScameras.is_visible_by_cameras(speaker))

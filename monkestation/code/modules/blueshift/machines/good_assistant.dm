@@ -185,12 +185,4 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_ENGINEERING
 
-//Base Nodes
-/datum/techweb_node/base/New()
-	design_ids += list(
-		"polarizer",
-		"gbp_machine",
-	)
-	return ..()
-
 #undef GBP_PUNCH_REWARD
