@@ -9019,6 +9019,14 @@
 	dir = 4
 	},
 /obj/structure/table,
+/obj/item/toy/crayon/spraycan{
+	pixel_y = 20;
+	pixel_x = -8
+	},
+/obj/item/toy/crayon/spraycan{
+	pixel_y = 20;
+	pixel_x = 8
+	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/arcade)
 "ayi" = (
