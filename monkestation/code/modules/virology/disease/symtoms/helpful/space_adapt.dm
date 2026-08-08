@@ -15,7 +15,7 @@
 		spaceproof = TRUE
 		to_chat(mob, span_notice("You feel a warm glow cover your skin."))
 
-/datum/symptom/spaceadapt/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
+/datum/symptom/spaceadapt/deactivate(mob/living/carbon/mob, datum/disease/disease, safe = FALSE)
 	mob.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE), type)
 	if(spaceproof)
 		spaceproof = FALSE

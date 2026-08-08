@@ -412,7 +412,7 @@
 			var/list/blood_viruses = blood.data["viruses"]
 			if (islist(blood_viruses) && length(blood_viruses) > 0)
 				var/list/pathogen_list = list()
-				for (var/datum/disease/acute/D as anything  in blood_viruses)
+				for (var/datum/disease/D as anything  in blood_viruses)
 					if(!istype(D))
 						continue
 					var/pathogen_name = "Unknown [D.form]"
@@ -424,7 +424,7 @@
 				user.set_machine()
 				if (!choice)
 					return result
-				var/datum/disease/acute/target = pathogen_list[choice]
+				var/datum/disease/target = pathogen_list[choice]
 
 				result[1] = "dish"
 				result[2] = "Unknown [target.form]"
@@ -492,7 +492,7 @@
 		end_processing()
 	update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS)
 
-/obj/machinery/pathology/centrifuge/proc/print_dish(datum/disease/acute/disease)
+/obj/machinery/pathology/centrifuge/proc/print_dish(datum/disease/disease)
 	special = CENTRIFUGE_LIGHTSPECIAL_BLINKING
 	update_appearance(UPDATE_OVERLAYS)
 	/*
@@ -503,7 +503,7 @@
 	balloon_alert_to_viewers("growth dish printed")
 	addtimer(CALLBACK(src, PROC_REF(finish_print_dish), disease.Copy()), 1 SECONDS)
 
-/obj/machinery/pathology/centrifuge/proc/finish_print_dish(datum/disease/acute/disease)
+/obj/machinery/pathology/centrifuge/proc/finish_print_dish(datum/disease/disease)
 	var/obj/item/virus_dish/dish = new(drop_location())
 	if(disease.disease_flags & DISEASE_DORMANT)
 		balloon_alert_to_viewers("activating virus sample")

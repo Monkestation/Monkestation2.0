@@ -1,4 +1,4 @@
-/datum/disease/acute/premade/fungal_tb
+/datum/disease/premade/fungal_tb
 	name = "Tubercle Bacillus Cosmosis Microbes"
 	form = "Fungal Spores"
 	origin = "Active fungal spores"
@@ -19,7 +19,7 @@
 	required_organ = ORGAN_SLOT_LUNGS
 	bypasses_immunity = TRUE // TB primarily impacts the lungs; it's also bacterial or fungal in nature; viral immunity should do nothing.
 
-/datum/disease/acute/premade/fungal_tb/after_add()
+/datum/disease/premade/fungal_tb/after_add()
 	. = ..()
 	antigen = list(ANTIGEN_IG)
 	stage = 4

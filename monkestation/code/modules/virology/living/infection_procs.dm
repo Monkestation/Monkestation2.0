@@ -40,7 +40,7 @@
 /mob/living/proc/assume_contact_diseases(list/disease_list, atom/source, blocked=0, bleeding=0)
 	if(!length(disease_list))
 		return
-	for(var/datum/disease/acute/V as anything in disease_list)
+	for(var/datum/disease/V as anything in disease_list)
 		if (!V)
 			message_admins("[key_name(src)] is trying to assume contact diseases from touching \a [source], but the disease_list contains an ID ([V.uniqueID]-[V.subID]) that isn't associated to an actual disease datum! Ping Dwasint about it please.")
 			return
@@ -61,7 +61,7 @@
 		for(var/obj/effect/decal/cleanable/C in loc)
 			if (!length(C.diseases))
 				continue
-			for(var/datum/disease/acute/V as anything in C.diseases)
+			for(var/datum/disease/V as anything in C.diseases)
 				if(V.spread_flags & DISEASE_SPREAD_AIRBORNE)
 					infect_disease(V, notes="(Airborne, from [C])")
 
@@ -72,7 +72,7 @@
 			break
 		sanity++ //anything more than 10 and you aint getting air really
 		if (!cloud.sourceIsCarrier || cloud.source != src || cloud.modified)
-			for (var/datum/disease/acute/V in cloud.viruses)
+			for (var/datum/disease/V in cloud.viruses)
 				//if (V.spread & SPREAD_AIRBORNE)	//Anima Syndrome allows for clouds of non-airborne viruses
 				infect_disease(V, notes="(Airborne, from a pathogenic cloud[cloud.source ? " created by [key_name(cloud.source)]" : ""])")
 
@@ -89,7 +89,7 @@
 	if (length(diseases))
 		var/active_disease = pick(diseases)//only one disease will activate its effects at a time.
 		for (var/datum/disease/disease as anything in diseases)
-			var/datum/disease/acute/acute_disease = disease
+			var/datum/disease/acute_disease = disease
 			if(istype(acute_disease))
 				acute_disease.activate(src, active_disease != acute_disease, seconds_per_tick)
 
@@ -106,7 +106,7 @@
 		if(immune_system?.strength > 1)
 			immune_system.strength = max(immune_system.strength - 0.01, 1)
 
-/mob/living/proc/try_contact_infect(datum/disease/acute/D, zone = BODY_ZONE_EVERYTHING, note = "Try Contact Infect")
+/mob/living/proc/try_contact_infect(datum/disease/D, zone = BODY_ZONE_EVERYTHING, note = "Try Contact Infect")
 	if(!(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN))
 		return
 	var/block = check_contact_sterility(zone)

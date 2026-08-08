@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	/// Was our disease analyzed?
 	var/analysed = FALSE
 	/// Virus in virus dish
-	var/datum/disease/acute/contained_virus
+	var/datum/disease/contained_virus
 	/// Boolean, TRUE if the lid is opened
 	var/open = FALSE
 	/// Similar to a mob's breathing

@@ -110,7 +110,7 @@
 		cached_data = list()
 	else
 		cached_data = data
-	cached_data |= "[/datum/disease/acute/premade/fungal_tb]"
+	cached_data |= "[/datum/disease/premade/fungal_tb]"
 	src.data = cached_data
 
 /datum/reagent/water

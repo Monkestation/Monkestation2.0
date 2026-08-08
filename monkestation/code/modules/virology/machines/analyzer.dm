@@ -125,7 +125,7 @@
 			update_appearance()
 			scanner = null
 			return
-		if(!istype(dish.contained_virus, /datum/disease/acute))
+		if(!istype(dish.contained_virus, /datum/disease))
 			QDEL_NULL(dish)
 			say("ERROR:Bad Pathogen detected PURGING")
 			processing = FALSE // Make sure to return the machine to normal operation after purge

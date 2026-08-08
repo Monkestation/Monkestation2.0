@@ -17,7 +17,7 @@
 	stage = 1
 	max_multiplier = 5
 
-/datum/symptom/fire/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/fire/activate(mob/living/carbon/mob, datum/disease/disease)
 	. = ..()
 	switch(round(multiplier))
 		if(1 to 2)

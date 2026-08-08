@@ -167,7 +167,7 @@
 		EFFECT_DANGER_HARMFUL	= 0,
 		EFFECT_DANGER_DEADLY	= 0,
 	)
-	var/datum/disease/acute/disease = new virus_choice
+	var/datum/disease/disease = new virus_choice
 	disease.makerandom(list(20,50),list(30,50),anti,bad,src)
 
 	var/note = "Rot Infection Contact [key_name(react_to)]"

@@ -204,7 +204,7 @@
 			EFFECT_DANGER_HARMFUL = 2,
 			EFFECT_DANGER_DEADLY = 2,
 		)
-		var/datum/disease/acute/disease = new virus_choice
+		var/datum/disease/disease = new virus_choice
 		disease.makerandom(list(50,90), list(10,100), anti, bad, src)
 
 		disease.disease_flags |= DISEASE_DORMANT

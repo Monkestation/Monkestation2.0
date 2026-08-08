@@ -1,4 +1,4 @@
-/datum/disease/acute/premade/cold
+/datum/disease/premade/cold
 	name = "Common Cold"
 	form = "Viral Infection"
 	category = DISEASE_COLD
