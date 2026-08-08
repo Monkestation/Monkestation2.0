@@ -95,6 +95,11 @@ GLOBAL_LIST_INIT(virusDB, list())
 	//bitflag showing which transmission types are allowed for this disease
 	var/allowed_transmission = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_AIRBORNE
 
+	var/list/properties = list()
+
+/datum/disease/New()
+	Refresh()
+
 /datum/disease/proc/roll_antigen(list/factors = list())
 	if (factors.len <= 0)
 		antigen = list(pick(GLOB.all_antigens))
@@ -291,18 +296,18 @@ GLOBAL_LIST_INIT(virusDB, list())
 	var/list/properties = list()
 
 /// Calls on GenerateProperties and AssignProperties to set a disease severity. From `disease/advance`
-/datum/disease/acute/proc/Refresh_Acute(new_name = FALSE)
-	GenerateProperties_Acute()
-	assign_properties_Acute()
+/datum/disease/acute/proc/Refresh(new_name = FALSE)
+	GenerateProperties()
+	assign_properties()
 
 /// Generates the list for the severity with severity defined at 0, then calls on symtomps severity for final.
-/datum/disease/acute/proc/GenerateProperties_Acute()
+/datum/disease/acute/proc/GenerateProperties()
 	properties = list("severity" = 0)
 	for(var/datum/symptom/S in symptoms)
 		if(!S.neutered)
 			properties["severity"] = max(properties["severity"], S.severity) // severity is based on the highest severity non-neutered symptom
 
-/datum/disease/acute/proc/assign_properties_Acute()
+/datum/disease/acute/proc/assign_properties()
 	if(length(properties))
 		set_severity_Acute(properties["severity"])
 	else

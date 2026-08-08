@@ -365,7 +365,6 @@
 		var/new_name = sanitize_name(name, allow_numbers = TRUE, cap_after_symbols = FALSE)
 		if(!new_name)
 			return FALSE
-		adv_disease.AssignName(new_name)
 		return TRUE
 	return FALSE
 

@@ -40,7 +40,7 @@
 					continue
 				if (length(L.diseases))
 					for (var/datum/disease/acute/D as anything in L.diseases)
-						D.Refresh_Acute()
+						D.Refresh()
 						var/ID = "[D.uniqueID]-[D.subID]"
 						if(ID in GLOB.virusDB)
 							if (antibody in D.antigen)

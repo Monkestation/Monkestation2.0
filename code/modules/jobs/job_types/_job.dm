@@ -211,7 +211,7 @@
 		disease.spread_flags &= ~(DISEASE_SPREAD_AIRBORNE | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_BLOOD)
 
 		spawned.infect_disease(disease, TRUE, "Random Dormant Disease [key_name(src)]")
-		disease.Refresh_Acute()
+		disease.Refresh()
 
 /// Announce that this job as joined the round to all crew members.
 /// Note the joining mob has no client at this point.

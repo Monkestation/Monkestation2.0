@@ -221,22 +221,6 @@
 	results = list(/datum/reagent/uranium/uraniumvirusfood/stable = 1)
 	required_reagents = list(/datum/reagent/uranium = 10, /datum/reagent/silver = 10, /datum/reagent/toxin/plasma = 1)
 
-/datum/chemical_reaction/mix_virus
-	results = list(/datum/reagent/blood = 1)
-	required_reagents = list(/datum/reagent/consumable/virus_food = 1)
-	required_catalysts = list(/datum/reagent/blood = 1)
-	var/level_min = 1
-	var/level_max = 2
-
-
-/datum/chemical_reaction/mix_virus/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
-	if(B?.data)
-		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
-		if(D)
-			D.Evolve(level_min, level_max)
-
-
 /datum/chemical_reaction/mix_virus/mix_virus_2
 	required_reagents = list(/datum/reagent/toxin/mutagen = 1)
 	level_min = 2
