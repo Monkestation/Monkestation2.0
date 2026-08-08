@@ -59,7 +59,6 @@
 	if(istype(incubator.loc, /obj/machinery/pathology/incubator))
 		machine = incubator.loc
 
-
 	if(specified_stage)
 		stage_incubation(specified_stage, mutatechance, reagents, machine, incubator)
 

@@ -1,49 +1,26 @@
-/datum/disease/cold
-	name = "The Cold"
-	desc = "If left untreated the subject will contract the flu."
-	max_stages = 3
-	cure_text = "Rest & Spaceacillin"
-	cures = list(/datum/reagent/medicine/antipathogenic/spaceacillin)
-	agent = "XY-rhinovirus"
-	viable_mobtypes = list(/mob/living/carbon/human)
-	spreading_modifier = 0.5
-	spread_text = "Airborne"
-	severity = DISEASE_SEVERITY_NONTHREAT
+/datum/disease/premade/cold
+	name = "Common Cold"
+	form = "Viral Infection"
+	category = DISEASE_COLD
 
+	symptoms = list(
+		new /datum/symptom/cough,
+		new /datum/symptom/sneeze,
+		new /datum/symptom/fridge,
+	)
+	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
+	robustness = 45
 
-/datum/disease/cold/stage_act(seconds_per_tick, times_fired)
+	infectionchance = 70
+	infectionchance_base = 86
+	can_kill = list("Bacteria")
+
+/datum/disease/premade/cold/activate(mob/living/mob, starved, seconds_per_tick)
 	. = ..()
-	if(!.)
+	if(stage != max_stages)
 		return
 
-	switch(stage)
-		if(2)
-			if(SPT_PROB(0.5, seconds_per_tick))
-				affected_mob.emote("sneeze")
-			if(SPT_PROB(0.5, seconds_per_tick))
-				affected_mob.emote("cough")
-			if(SPT_PROB(0.5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("Your throat feels sore."))
-			if(SPT_PROB(0.5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("Mucous runs down the back of your throat."))
-			if((affected_mob.body_position == LYING_DOWN && SPT_PROB(23, seconds_per_tick)) || SPT_PROB(0.025, seconds_per_tick))  //changed FROM prob(10) until sleeping is fixed // Has sleeping been fixed yet?
-				to_chat(affected_mob, span_notice("You feel better."))
-				cure()
-				return FALSE
-		if(3)
-			if(SPT_PROB(0.5, seconds_per_tick))
-				affected_mob.emote("sneeze")
-			if(SPT_PROB(0.5, seconds_per_tick))
-				affected_mob.emote("cough")
-			if(SPT_PROB(0.5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("Your throat feels sore."))
-			if(SPT_PROB(0.5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("Mucous runs down the back of your throat."))
-			if(SPT_PROB(0.25, seconds_per_tick) && !LAZYFIND(affected_mob.disease_resistances, /datum/disease/flu))
-				//affected_mob.ForceContractDisease(Flu, FALSE, TRUE)
-				cure()
-				return FALSE
-			if((affected_mob.body_position == LYING_DOWN && SPT_PROB(12.5, seconds_per_tick)) || SPT_PROB(0.005, seconds_per_tick))  //changed FROM prob(5) until sleeping is fixed
-				to_chat(affected_mob, span_notice("You feel better."))
-				cure()
-				return FALSE
+	if(SPT_PROB(0.25, seconds_per_tick) && !LAZYFIND(affected_mob.disease_resistances, /datum/disease/flu))
+		//affected_mob.infect_disease_predefined()
+		cure()
+		return
