@@ -272,7 +272,7 @@
 	Paralyze(1, ignore_canstun = TRUE)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
-	var/mob/living/basic/pet/eris_romch/romch = new (get_turf(src))
+	var/mob/living/basic/pet/eris_romch/romch = new(get_turf(src))
 	if(mind)
 		mind.transfer_to(romch)
 	else
