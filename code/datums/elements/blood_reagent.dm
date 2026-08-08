@@ -193,9 +193,6 @@
 			else
 				to_preserve += disease
 
-		var/datum/disease/advance/disease = Advance_Mix(mix_target)
-		if (disease)
-			to_preserve += disease
 		source.data["viruses"] = to_preserve
 	else if (mix_viruses)
 		source.data["viruses"] = mix_viruses.Copy()
