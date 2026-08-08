@@ -372,14 +372,13 @@ GLOBAL_LIST_INIT(virusDB, list())
 	var/turf/source_turf = get_turf(infectee)
 	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
 
-
 ///DEPRICATED
 /datum/disease/proc/stage_act(seconds_per_tick, times_fired)
 	return
 
 /datum/disease/proc/update_stage(new_stage)
 	if(stage != new_stage)
-		log += "<br />[ROUND_TIME()] NEW STAFE ([stage])"
+		log += "<br />[ROUND_TIME()] NEW STAGE ([stage])"
 	stage = new_stage
 
 /datum/disease/proc/has_cure()
