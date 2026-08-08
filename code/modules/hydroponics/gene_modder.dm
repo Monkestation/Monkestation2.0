@@ -92,7 +92,9 @@
 /obj/machinery/plantgenes/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!anchored)
 		return ..()
-
+	if(istype(attacking_item, /obj/item/borg/apparatus/cooking))
+		var/obj/item/borg/apparatus/cooking/apparatus = attacking_item
+		attacking_item = apparatus.stored
 	if(istype(attacking_item, /obj/item/seeds))
 		if (operation)
 			to_chat(user, "<span class='notice'>Please complete current operation.</span>")
@@ -113,28 +115,7 @@
 		disk = attacking_item
 		to_chat(user, "<span class='notice'>You add [attacking_item] to the machine.</span>")
 		interact(user)
-	else if (istype(attacking_item, /obj/item/borg/apparatus/cooking))
-		var/obj/item/borg/apparatus/apparatus = attacking_item
-		if(istype(apparatus.stored, /obj/item/seeds))
-			if (operation)
-				to_chat(user, "<span class='notice'>Please complete current operation.</span>")
-				return
-			if(!user.transferItemToLoc(apparatus.stored, src))
-				return
-			eject_seed()
-			insert_seed(apparatus.stored)
-			to_chat(user, "<span class='notice'>You add [apparatus.stored] to the machine.</span>")
-			interact(user)
-		else if(istype(apparatus.stored, /obj/item/disk/plantgene))
-			if (operation)
-				to_chat(user, "<span class='notice'>Please complete current operation.</span>")
-				return
-			if(!user.transferItemToLoc(apparatus.stored, src))
-				return
-			eject_disk()
-			disk = apparatus.stored
-			to_chat(user, "<span class='notice'>You add [apparatus.stored] to the machine.</span>")
-			interact(user)
+
 
 	else
 		..()
