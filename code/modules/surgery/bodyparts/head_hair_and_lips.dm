@@ -224,6 +224,7 @@
 /mob/living/carbon/human/update_lips(new_style, new_color, apply_trait, update = TRUE)
 	lip_style = new_style
 	lip_color = new_color
+
 	var/obj/item/bodypart/head/hopefully_a_head = get_bodypart(BODY_ZONE_HEAD)
 	REMOVE_TRAITS_IN(src, LIPSTICK_TRAIT)
 	if(hopefully_a_head)
