@@ -265,6 +265,21 @@
 	qdel(src)
 	return new_corgi
 
+/mob/living/basic/cockroach/proc/romchifize()
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+		return
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
+	Paralyze(1, ignore_canstun = TRUE)
+	icon = null
+	invisibility = INVISIBILITY_MAXIMUM
+	var/mob/living/basic/pet/eris_romch/romch = new (get_turf(src))
+	if(mind)
+		mind.transfer_to(romch)
+	else
+		romch.PossessByPlayer(key)
+	qdel(src)
+	return romch
+
 /mob/living/carbon/proc/gorillize()
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
@@ -278,6 +293,8 @@
 	Itemlist += held_items
 	for(var/obj/item/W in Itemlist)
 		dropItemToGround(W, TRUE)
+
+
 
 	regenerate_icons()
 	icon = null
@@ -384,6 +401,8 @@
 		return TRUE
 	if(ispath(MP, /mob/living/basic/parrot))
 		return TRUE //Parrots are no longer unfinished! -Nodrak
+	if(ispath(MP, /mob/living/basic/cockroach))
+		return TRUE
 
 	//Not in here? Must be untested!
 	return FALSE
