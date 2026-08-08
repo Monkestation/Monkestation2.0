@@ -23,6 +23,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	var/stage_prob = 2
 
 	//Other
+	var/list/viable_mobtypes = list()
 	var/mob/living/affected_mob = null
 	var/list/cures = list() //list of cures if the disease has the CURABLE flag, these are reagent ids
 	/// The probability of spreading through the air every second
