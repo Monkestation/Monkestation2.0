@@ -45,6 +45,11 @@
 	if(!prob(40))
 		return
 
+	if(isroach(L))
+		if(prob(2))
+			var/mob/living/basic/cockroach/C = L
+			C.romchifize()
+
 	if(!ishuman(L))
 		return
 
