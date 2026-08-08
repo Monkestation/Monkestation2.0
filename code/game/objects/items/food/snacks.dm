@@ -187,6 +187,10 @@
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
 
+/obj/item/food/candy_trash/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_TRASH_ITEM, INNATE_TRAIT)
+
 /obj/item/food/candy_trash/nicotine
 	desc = "The leftover from a smoked-out candy cigarette. Smells like nicotine...?"
 	food_reagents = list(

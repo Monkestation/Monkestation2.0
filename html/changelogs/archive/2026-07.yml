@@ -434,3 +434,170 @@
   SirNightKnight:
   - rscadd: replaced hypospray vials with chemical canisters.
   - spellcheck: cleaned up some naming with hypo sprays.
+2026-07-23:
+  Gboster, mc-oofert, sylvia-from-fulp-station, W4rd3nn, Exester509:
+  - rscadd: 3 new deathmatch maps were ported from TG
+  - bugfix: (sylvia-from-fulp-station) indestructible light tile emits light
+  - bugfix: (Exester509) Plasmamen will become human in the deathmatch so they don't
+      instantly die
+  - bugfix: (mc-oofert) deathmatch OSHA Violator map field generators are now permanently
+      on instead of being on a few seconds
+  - bugfix: (mc-oofert) breaking certain terrain in deathmatch doesnt instantly breach
+      to space
+  - qol: (mc-oofert) deathmatch map names are sorted alphabetically
+  Glyphee:
+  - rscadd: Gave goblins minor toxin healing
+  JohnFulpWillard:
+  - balance: AI research point generation now boosts General Research by 20%, rather
+      than boosting AI points 25%.
+  - balance: Lowered AI research point generation.
+  - balance: Increased credit gain from bitcoin mining.
+  - balance: AIs can now cancel their own downloads if not done with the AI codes.
+  - balance: Firewall now blocks downloads rather than slow it down, but is bypassable
+      with AI codes.
+  - balance: AI codes is now in the primary AI data core, then printable from the
+      Comms console if it gets removed.
+  - bugfix: The CE can use the AI System resource distribution console.
+  PotatoTomahto:
+  - bugfix: particle accelerator console now shows the strength it's set at
+  Runian:
+  - rscadd: 'Two mutually exclusive upgrades for medical cyborg''s syringe: piercing
+      syringe & bluespace syringe.'
+  - balance: Bluespace Cyborg Upgrades now requires Medical Cyborg Upgrades as a prerequisite.
+  - bugfix: Downgrading a cyborg health analyzer now resets its wound treatment bonus.
+  - bugfix: Advanced Biotechnology no longer unlock piercing syringes.
+  Shoddd:
+  - balance: blueshield no longer recieves the tech-9 as a option
+  Tractor-Maam:
+  - rscadd: Added Cyborg GPS, a all model upgrade to cyborgs that gives them a GPS.
+  - rscadd: Added Experimental Welding Tool upgrade to cyborgs, giving engineer/science
+      cyborgs refueling welders.
+  adamsong:
+  - rscdel: Removed copulating with from ion law strings
+  hexakats:
+  - bugfix: Syndicate surgery kit can fit its own tools now
+  - balance: Syndicate surgery kit starts with a biocorrector instead of the tier
+      1 equivalents
+  - balance: Syndicate surgery kit starts with an advanced health analyzer
+2026-07-24:
+  JupiterJaeden:
+  - balance: Duration of the void chill status effect reduced from 30s -> 10s.
+  - balance: Body temp loss per stack, per second of void chill reduced from 12K to
+      6K.
+  - balance: Holy water being in your system now once again reduces void chill temp
+      loss to 3K per stack, per second and also allows you to purge 1 stack every
+      2 seconds. Anti-magic of any kind does the same thing.
+  - balance: Anti-magic no longer fully protects you from void conduits.
+  - balance: Void chill no longer stops all body heating at 5 stacks.
+2026-07-26:
+  Runian:
+  - rscadd: The flavortext/warnings when picking a robot model are now displayed immediately.
+  - rscadd: When applicable, robot skins now lock down cyborgs for its entire animation
+      duration only.
+  - rscadd: The cyborg chameleon projector now saves the user's original robot skin.
+  - rscadd: Hats and badges presist through robot model changes, but are dropped if
+      their robot skin disallows wearing them.
+  - rscadd: The hud module for clown cyborgs have been changed to be more thematic.
+  - rscdel: SSD Cyborgs no longer have the option to select a pending model.
+  - balance: Changing robot models now drops all robot upgrades.
+  - bugfix: The female skin for service cyborgs now correctly plays its transformation
+      animation.
+  - bugfix: Cyborg upgrades that remove item from the active item slot correctly sets
+      the active item slot to be empty.
+  - bugfix: EMPs no longer affect the non-held modules of a cyborg.
+  - bugfix: EMPs now only affect the held modules of a cyborg once, rather than twice.
+  - bugfix: Robot skins with animations no longer cause the cyborg to show their final
+      icon state for a frame at the start.
+  - code_imp: Robot skins are now handled separately from robot models.
+  - refactor: Robot model have been refactored in general.
+  SirNightKnight:
+  - bugfix: fixed combat medkit's type definition getting deleted.
+  - balance: walls have 600 integrity, same armor as airlocks, and 30 damage deflection.
+      reinforced walls have 900 integrity.
+  Tractor-Maam:
+  - rscadd: AIs dying due to a lack of data cores now drop a AI minicard at their
+      last cores location instead of being deleted.
+  - bugfix: fixed a runtime in the AI Minicard
+  - bugfix: fixed the Primary AI Data Core board not creating primary AI data cores.
+  - bugfix: fixed an issue in the AI death prompt where having a new data core constructed
+      just in time wouldnt let you shunt to it.
+  - spellcheck: changed the messages in the AI death prompt to be more cold and computing.
+  - rscadd: Added the Chameleon Bomb, a 2TC light explosive that copies the look of
+      another item!
+  notghosti:
+  - map: Heliostation 0perating room is now Operating room
+  - map: Lavaland mining station now has a tiny fan on the side exit
+  - qol: Strongarm crates now contain a left and a right implant instead of two rights
+2026-07-28:
+  TheColorCyan:
+  - rscadd: added Bleachedcr0w's donator item peculiar watch
+  notghosti:
+  - rscadd: Nanites, microfusion, and cargo sorters will be announced in their respective
+      channels when researched.
+  - code_imp: Demodularized/cleaned up some researches
+2026-07-29:
+  JohnFulpWillard:
+  - bugfix: AIs no longer have Toggle Camera Acceleration verb.
+  - bugfix: Server cabinets no longer duplicate themselves when you deconstruct it.
+  JupiterJaeden:
+  - balance: Syndicate & infil modsuits no longer come pre-installed with shock absorbers.
+  - balance: Syndicate modsuit price back to 8 TC from 6.
+  - balance: No-slip and shock absorber modules back to 2 TC from 1.
+  - balance: Wraith module back to 4 TC from 2.
+  - balance: Syndicate modsuits no longer have slowdown when active.
+  - spellcheck: Updates description of shock absorber module to be a bit more relevant
+      for monkestation.
+  TheColorCyan:
+  - bugfix: fixed client crashes when examining people with bloody clothes
+  notghosti:
+  - qol: Science cyborgs upgrade subcategory contains nanite remotes
+2026-07-30:
+  EatsTheGrapes:
+  - rscadd: Adds Floor Tile chameleon clothing set.
+  - rscadd: Adds cardboard ID, can be edited with a crayon or pen
+  - rscadd: Reintroduces cardboard cutouts than can be edited with a crayon
+  - refactor: refactored cardboard cut-outs to be used as a full body cover carry
+      item, with multiple templates to choose from=
+  Laiko44:
+  - image: Resprited the Biocorrector
+  - image: Resprited cyborg medical tools
+  - image: Resprited cyborg alien medical tools
+  Runian:
+  - qol: Engineering cyborg's status tab now displays a more accurate amount of iron/glass
+      for their synthesizer.
+  - bugfix: Refilling metal/glass via cyborg rechargers for engineering cyborgs now
+      works.
+  - bugfix: Refilling metal/glass via cyborg rechargers no longer consumes 5 sheets
+      to refill 1 sheet of iron.
+  TheColorCyan:
+  - bugfix: blood from virus dishes now properly spreads diseases
+  notghosti:
+  - bugfix: 'Aerobic Gloves are purchasable as intended now
+
+      ## Pre-Merge Checklist
+
+      - [ ] You tested this on a local server.
+
+      - [ ] This code did not runtime during testing.
+
+      - [x] You documented all of your changes.'
+  - qol: Ai research had redundant prerequisites pruned from CPU 3 and RAM 3
+  'sprites by: nesisknesis, iamthesilly':
+  - rscadd: new plasmaman envirosuits customization opion
+  - balance: plasmaman helmets are now see-through when flashlight/welding are not
+      on
+  - bugfix: fixes jumpsuit sprites using the wrong icon file
+  - image: updated all envirosuit sprites
+2026-07-31:
+  Mantlecrawler:
+  - rscadd: Wall mounted detective TV (camera console)
+  - rscadd: Jukebox, reskinned as a gramophone
+  - admin: The interview screen now includes a link to the tutorial
+  - rscadd: Dune, Milky, and Spinny-hat Expie plushies
+  Shoddd:
+  - balance: Saya block chance down to 50%
+  TheColorCyan:
+  - bugfix: making blood into pills should now properly transfer its blood reagent
+      element
+  notghosti:
+  - bugfix: Cortical borers not being able to use any of their abilities

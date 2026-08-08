@@ -1,11 +1,11 @@
 /mob/living/basic/slime
 	name = "grey baby slime (123)"
-	icon = 'monkestation/code/modules/slimecore/icons/slimes.dmi'
-	icon_state = "grey baby slime"
-	base_icon_state = "grey baby slime"
+	icon = 'icons/mob/basic/slime.dmi'
+	icon_state = "grey_baby_slime"
+	base_icon_state = "grey_baby_slime"
 
-	icon_living = "grey baby slime"
-	icon_dead = "grey baby slime dead"
+	icon_living = "grey_baby_slime"
+	icon_dead = "grey_baby_slime_dead"
 
 	maxHealth = 150
 	health = 150
@@ -196,7 +196,7 @@
 	if(GetComponent(/datum/component/latch_feeding))
 		buckled?.unbuckle_mob(src, force = TRUE)
 		return
-	else if(target != src && isliving(target) && !QDELING(target) && CanReach(target) && !HAS_TRAIT(target, TRAIT_LATCH_FEEDERED))
+	else if(can_latch_feed(target))
 		AddComponent(/datum/component/latch_feeding, target, TRUE, TOX, 2, 4, FALSE)
 		return
 	. = ..()
@@ -207,6 +207,18 @@
 	for(var/datum/slime_mutation_data/data as anything in possible_color_mutations)
 		if(length(data.needed_items))
 			compiled_liked_foods |= data.needed_items
+
+/mob/living/basic/slime/proc/can_latch_feed(mob/target)
+	if(target == src)
+		return FALSE
+	if(!CanReach(target) || QDELING(target))
+		return FALSE
+	if(!isliving(target) || issilicon(target) || HAS_TRAIT(target, TRAIT_LATCH_FEEDERED))
+		return FALSE
+	var/mob/living/living_target = target
+	if(living_target.mob_biotypes & MOB_ROBOTIC)
+		return FALSE
+	return TRUE
 
 /mob/living/basic/slime/proc/on_blackboard_key_changed(datum/source)
 	SIGNAL_HANDLER
@@ -269,11 +281,11 @@
 		prefix = current_color.icon_prefix
 
 	if(slime_flags & ADULT_SLIME)
-		icon_living = "[prefix] adult slime"
-		icon_dead = "[prefix] baby slime dead"
+		icon_living = "[prefix]_adult_slime"
+		icon_dead = "[prefix]_baby_slime_dead"
 	else
-		icon_living = "[prefix] baby slime"
-		icon_dead = "[prefix] baby slime dead"
+		icon_living = "[prefix]_baby_slime"
+		icon_dead = "[prefix]_baby_slime_dead"
 
 	if(stat == DEAD)
 		icon_state = icon_dead
@@ -424,7 +436,6 @@
 	slime_flags &= ~MUTATING_SLIME
 	ai_controller.reset_ai_status()
 
-
 /mob/living/basic/slime/proc/pick_mutation(random = FALSE)
 	mutating_into = null
 	var/list/valid_choices = list()
@@ -502,6 +513,6 @@
 /mob/living/basic/slime/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(SEND_SIGNAL(src, COMSIG_FRIENDSHIP_CHECK_LEVEL, throwingdatum.thrower, FRIENDSHIP_FRIEND))
-		if(!HAS_TRAIT(hit_atom, TRAIT_LATCH_FEEDERED) && isliving(hit_atom) && !QDELING(hit_atom))
+		if(can_latch_feed(hit_atom))
 			AddComponent(/datum/component/latch_feeding, hit_atom, TRUE, TOX, 2, 4, FALSE)
 			visible_message(span_danger("[throwingdatum.thrower] hucks [src] at [hit_atom] causing the [src] to stick to [hit_atom]."))

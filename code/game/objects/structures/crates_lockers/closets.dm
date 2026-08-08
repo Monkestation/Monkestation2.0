@@ -82,6 +82,8 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	var/card_reader_installed = FALSE
 	/// access types for card reader
 	var/list/access_choices = TRUE
+	/// If TRUE, the closet will anchored by default, if it spawns on the station's z-level.
+	var/roundstart_anchor = TRUE
 
 /datum/armor/structure_closet
 	melee = 20
@@ -175,12 +177,24 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 		opened = FALSE //nessassary because open() proc will early return if its true
 		if(open(special_effects = FALSE)) //closets which are meant to be open by default dont need to be animated open
 			return
+
+	if(mapload && can_roundstart_anchor())
+		set_anchored(TRUE)
+
 	update_appearance()
 
 /obj/structure/closet/LateInitialize(mapload_arg)
 	. = ..()
 	if(!opened)
 		take_contents()
+
+/obj/structure/closet/proc/can_roundstart_anchor()
+	if(!roundstart_anchor || !anchorable || !is_station_level(loc?.z))
+		return FALSE
+	var/area/current_area = get_area(src)
+	if(!current_area?.anchor_roundstart_lockers)
+		return FALSE
+	return TRUE
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()

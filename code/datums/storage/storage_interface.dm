@@ -142,7 +142,7 @@
 	atom/real_location,
 	list/datum/numbered_display/numbered_contents,
 )
-	var/list/usable_modules = robot_model.get_usable_modules()
+	var/list/usable_modules = robot_model.usable_modules.Copy()
 
 	var/current_x = screen_start_x
 	var/current_y = screen_start_y
@@ -150,7 +150,7 @@
 
 	for(var/i in 1 to length(usable_modules))
 		var/atom/movable/item = usable_modules[i]
-		if(item in robot_model.robot.held_items)
+		if(item in robot_model.cyborg_owner.held_items)
 			current_x++
 			if(current_x - screen_start_x < columns)
 				continue

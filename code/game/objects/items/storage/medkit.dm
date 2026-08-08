@@ -152,33 +152,31 @@
 	)
 	generate_items_inside(items_inside, src)
 
-/obj/item/storage/medkit/surgery_syndie
+/obj/item/storage/medkit/surgery/syndie
 	name = "suspicous surgical medkit"
-	desc = "An suspicous coloured medkit full of advanced medical equipment."
+	desc = "A suspicously colored medkit full of advanced medical equipment."
 	icon_state = "medkit_tactical_lite"
 	inhand_icon_state = "medkit-tactical"
 	damagetype_healed = HEAL_ALL_DAMAGE
 
-/obj/item/storage/medkit/surgery_syndie/PopulateContents()
+/obj/item/storage/medkit/surgery/syndie/PopulateContents()
 	if(empty)
 		return
 	var/list/items_inside = list(
+		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/scalpel/advanced = 1,
 		/obj/item/retractor/advanced = 1,
 		/obj/item/cautery/advanced = 1,
+		/obj/item/blood_filter/advanced = 1,
 		/obj/item/surgical_drapes = 1,
 		/obj/item/stack/medical/gauze/twelve = 1,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
-		/obj/item/bonesetter = 1,
-		/obj/item/blood_filter = 1,
-		/obj/item/stack/medical/bone_gel = 1,
-		/obj/item/stack/sticky_tape/surgical = 1,
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/reagent_containers/cup/bottle/sodium_thiopental = 1,
 	)
 	generate_items_inside(items_inside,src)
 
-/obj/item/storage/medkit/surgery_syndie/get_medbot_skin()
+/obj/item/storage/medkit/surgery/syndie/get_medbot_skin()
 	return "bezerk"
 
 /obj/item/storage/medkit/ancient
@@ -947,3 +945,29 @@
 /obj/item/storage/test_tube_rack/update_icon_state()
 	icon_state = "[base_icon_state][contents.len > 0 ? contents.len : null]"
 	return ..()
+
+/obj/item/storage/medkit/surgery/cmo/PopulateContents()
+	if(empty)
+		return
+	var/list/items_inside = list(
+		/obj/item/healthanalyzer/advanced = 1,
+		/obj/item/stack/medical/gauze/twelve = 1,
+		/obj/item/stack/medical/suture = 2,
+		/obj/item/stack/medical/mesh = 2,
+		/obj/item/reagent_containers/medipen = 1,
+		/obj/item/surgical_processor/cmo = 1,
+		/obj/item/scalpel/advanced = 1,
+		/obj/item/retractor/advanced = 1,
+		/obj/item/cautery/advanced = 1,
+		/obj/item/blood_filter/advanced = 1,
+		/obj/item/breathing_bag = 1,
+	)
+	generate_items_inside(items_inside, src)
+
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor
+	name = "bottle of radiomagnetic disruptor pills"
+	desc = "Contains pills used to purge nanites."
+
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/pill/radiomagnetic_disruptor(src)
