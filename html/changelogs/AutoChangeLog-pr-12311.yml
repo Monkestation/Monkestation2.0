@@ -1,5 +1,0 @@
-author: "notghosti"
-delete-after: True
-changes:
-  - balance: "Cyborg RPED has had their capacity reduced back to their original value (200 parts -> 50 parts)"
-  - balance: "Cyborg Upgrades: Bluespace has had it's research requirements reduced to practical_bluespace and adv_robotics\n## Pre-Merge Checklist\n- [x] You tested this on a local server.\n- [x] This code did not runtime during testing.\n- [x] You documented all of your changes."
