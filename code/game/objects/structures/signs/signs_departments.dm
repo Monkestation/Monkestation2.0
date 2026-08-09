@@ -171,6 +171,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/lawyer, 32)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/cargo, 32)
 
+/obj/structure/sign/departments/mining
+	name = "\improper Mining sign"
+	sign_change_name = "Department - Cargo: Mining"
+	desc = "A sign labelling the mining division of the station. Minions of Smaug."
+	icon_state = "mining_old"
+	is_editable = FALSE // This is exclusive for old lavaland
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/mining, 32)
+
 ///////SECURITY
 
 /obj/structure/sign/departments/security

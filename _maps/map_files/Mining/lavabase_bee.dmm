@@ -3354,6 +3354,7 @@
 	anchored = 1
 	},
 /obj/structure/sign/warning/electric_shock/directional/north,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron,
 /area/mine/production)
 "xq" = (
@@ -5167,7 +5168,6 @@
 /turf/open/floor/iron/white,
 /area/mine/laborcamp)
 "Kt" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden{
 	dir = 6
 	},
@@ -6834,6 +6834,7 @@
 /area/mine/atmos/engine)
 "VQ" = (
 /obj/structure/closet/crate/secure/loot,
+/obj/structure/cable,
 /turf/open/floor/iron/techmaint,
 /area/mine/production)
 "VR" = (
@@ -6905,6 +6906,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/techmaint,
 /area/mine/production)
 "Wo" = (
