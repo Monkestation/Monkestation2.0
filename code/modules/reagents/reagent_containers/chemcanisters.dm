@@ -119,6 +119,12 @@
 	unique_reskin = "canister_cyan"
 	list_reagents = list(/datum/reagent/medicine/inaprovaline = 30)
 
+/obj/item/reagent_containers/chemcanister/modafinil
+	name = "chemical canister (modafinil)"
+	icon_state = "canister"
+	unique_reskin = "canister"
+	list_reagents = list(/datum/reagent/medicine/modafinil = 10)
+
 /////////// large chemical canisters ///////////
 
 /obj/item/reagent_containers/chemcanister/large

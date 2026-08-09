@@ -401,14 +401,14 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 
 /obj/item/hypospray/combat/anti_tox
 	name = "combat hypospray (anti-tox)"
-	desc = "A advanced hypospray, preloaded with a antitoxin mix."
+	desc = "An advanced hypospray, preloaded with a antitoxin mix."
 	icon_state = "hypo_combat_tox"
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20)
 	default_vial = /obj/item/reagent_containers/chemcanister/large/pen_acid
 
 /obj/item/hypospray/combat/nanites
 	name = "combat hypospray (nanites)"
-	desc = "A advanced hypospray, preloaded with a advanced and experimental nanite combat mix."
+	desc = "An advanced hypospray, preloaded with a advanced and experimental nanite combat mix."
 	icon_state = "nanite_hypo"
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20, 40, 50)
 	can_remove_vials = FALSE
@@ -417,9 +417,34 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 
 /obj/item/hypospray/combat/heresypurge
 	name = "combat hypospray (holy)"
-	desc = "A advanced hypospray, preloaded with a blessed mix, damaging to all heretical entities."
+	desc = "An advanced hypospray, preloaded with a blessed mix, damaging to all heretical entities."
 	icon_state = "holy_hypo"
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20, 40, 50)
 	can_remove_vials = FALSE
 	default_vial = /obj/item/reagent_containers/chemcanister/bluespace/ert/holy
 	inhand_icon_state = "holy_hypo"
+
+/obj/item/hypospray/combat/disposable
+	name = "disposable hypospray"
+	desc = "You shouldn't have this."
+	possible_transfer_amounts = list(5, 10)
+	can_remove_vials = false
+
+/obj/item/hypospray/combat/disposable/brute
+	name = "disposable hypospray (libital)"
+	desc = "An advanced disposable hypospray, preloaded with a vial containing medicine for bruises and cuts."
+	icon_state = "combat_hypo_brute"
+	default_vial = /obj/item/reagent_containers/chemcanister/large/brute
+
+/obj/item/hypospray/combat/disposable/burn
+	name = "disposable hypospray (aiuri)"
+	desc = "An advanced disposable hypospray, preloaded with a vial containing medicine for burns."
+	icon_state = "combat_hypo_burn"
+	default_vial = /obj/item/reagent_containers/chemcanister/large/burn
+
+/obj/item/hypospray/combat/disposable/anti_sleep
+	name = "disposable hypospray (modafinil)"
+	desc = "An advanced disposable hypospray, preloaded with a vial containing medicine to keep you awake."
+	icon_state = "combat_hypo_antisleep"
+	// replacing the modafinil patches in the medkit and those are 1u since modafinil OD is finnicky
+	possible_transfer_amounts =  list(1)
