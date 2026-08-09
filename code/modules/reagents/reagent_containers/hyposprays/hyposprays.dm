@@ -131,7 +131,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 
 /obj/item/hypospray/item_ctrl_click(mob/user)
 	. = ..()
-	if(!has_variable_transfer_amount)
+	if(!variable_transfer_amount)
 		return
 	if(user.get_active_held_item() != src)
 		return NONE
