@@ -40,8 +40,11 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	var/draw_self= 0 SECONDS
 
 	//  Misc Vars  //
+	var/variable_transfer_amount = TRUE
 	var/upgrade_flags = NONE
 	var/can_remove_vials = TRUE
+	var/can_change_modes = TRUE
+	var/can_draw = TRUE
 
 	//	Sound Vars	//
 	/// The sound that plays when you insert a vial into the hypospray
@@ -66,8 +69,11 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 /obj/item/hypospray/examine(mob/user)
 	. = ..()
 	if(vial)
-		. += span_notice("[vial] has [vial.reagents.total_volume]u remaining. You can [EXAMINE_HINT("R-click")] the hypospray in your active hand to remove a vial, or [EXAMINE_HINT("click")] it while it is in your offhand to remove a vial")
-		. += span_notice("[EXAMINE_HINT("right click")] to draw from a container or take a blood sample from a person.")
+		. += span_notice("[vial] has [vial.reagents.total_volume]u remaining.")
+		if(can_remove_vials)
+			. += span_notice("You can [EXAMINE_HINT("R-click")] the hypospray in your active hand to remove a vial, or [EXAMINE_HINT("click")] it while it is in your offhand to remove a vial")
+		if(can_draw)
+			. += span_notice("[EXAMINE_HINT("right click")] to draw from a container or take a blood sample from a person.")
 	else
 		. += span_notice("It has no container loaded in. You can [EXAMINE_HINT("click")] with a vial to load it.")
 	. += span_notice("Currently transfers [transfer_amount]u. [EXAMINE_HINT("ctrl click")] to change the transfer amount.")
@@ -79,6 +85,8 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		. += span_notice("[src] has a widened titanium nozzle, allowing it to spray or inject more units at a time.")
 	if(!can_remove_vials)
 		. += span_notice("It's unloading mechanism is blocked, preventing vials from being removed, permanently, once loaded.")
+	if(!can_draw)
+		. +=span_noitce("This disposable unit doesn't come with a drawing mechanism.")
 	switch(mode)
 		if(HYPO_INJECT)
 			. += span_notice("[src] is set to inject contents on application.")
@@ -123,6 +131,8 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 
 /obj/item/hypospray/item_ctrl_click(mob/user)
 	. = ..()
+	if(!has_variable_transfer_amount)
+		return
 	if(user.get_active_held_item() != src)
 		return NONE
 	if(upgrade_flags & HYPO_UPGRADE_NOZZLE)
@@ -144,10 +154,13 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		return ITEM_INTERACT_BLOCKING
 
 /obj/item/hypospray/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
+	if(!can_draw)
+		balloon_alert(user, "Can't draw!")
+		return ITEM_INTERACT_BLOCKING
 	if(target.reagents)
 		return draw(user, target)
 	else
-		return
+		return ITEM_INTERACT_BLOCKING
 
 
 /obj/item/hypospray/proc/cycle_transfer_amount(mob/user, direction = FORWARD)
@@ -193,12 +206,15 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	. = ..()
 
 	if(held_item == src)
-		context[SCREENTIP_CONTEXT_LMB] = "Change mode"
-		context[SCREENTIP_CONTEXT_RMB] = "Remove vial"
-		if(upgrade_flags & HYPO_UPGRADE_NOZZLE)
-			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Change transfer amount"
-		else
-			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Cycle transfer amount"
+		if(can_change_modes)
+			context[SCREENTIP_CONTEXT_LMB] = "Change mode"
+		if(can_remove_vials)
+			context[SCREENTIP_CONTEXT_RMB] = "Remove vial"
+		if(variable_transfer_amount)
+			if(upgrade_flags & HYPO_UPGRADE_NOZZLE)
+				context[SCREENTIP_CONTEXT_CTRL_LMB] = "Change transfer amount"
+			else
+				context[SCREENTIP_CONTEXT_CTRL_LMB] = "Cycle transfer amount"
 		// context[SCREENTIP_CONTEXT_CTRL_RMB] = "Cycle tranzfer amount backwards"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -429,22 +445,26 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	desc = "You shouldn't have this."
 	possible_transfer_amounts = list(5, 10)
 	can_remove_vials = FALSE
+	can_draw = FALSE
+	can_change_modes = FALSE
 
 /obj/item/hypospray/combat/disposable/brute
 	name = "disposable hypospray (libital)"
-	desc = "An advanced disposable hypospray, preloaded with a vial containing medicine for bruises and cuts."
-	icon_state = "combat_hypo_brute"
+	desc = "A disposable hypospray, preloaded with an unremovable vial containing medicine for bruises and cuts. Please recycle after use."
+	icon_state = "hypo_combat_brute"
 	default_vial = /obj/item/reagent_containers/chemcanister/large/brute
 
 /obj/item/hypospray/combat/disposable/burn
 	name = "disposable hypospray (aiuri)"
-	desc = "An advanced disposable hypospray, preloaded with a vial containing medicine for burns."
-	icon_state = "combat_hypo_burn"
+	desc = "A disposable hypospray, preloaded with an unremovable vial containing medicine for burns. Please recycle after use."
+	icon_state = "hypo_combat_burn"
 	default_vial = /obj/item/reagent_containers/chemcanister/large/burn
 
 /obj/item/hypospray/combat/disposable/anti_sleep
 	name = "disposable hypospray (modafinil)"
-	desc = "An advanced disposable hypospray, preloaded with a vial containing medicine to keep you awake."
-	icon_state = "combat_hypo_antisleep"
+	desc = "A disposable hypospray, preloaded with an unremovable vial containing medicine to keep you awake. Please recycle after use."
+	icon_state = "hypo_combat_antisleep"
 	// replacing the modafinil patches in the medkit and those are 1u since modafinil OD is finnicky
-	possible_transfer_amounts =  list(1)
+	transfer_amount = 1
+	default_vial = /obj/item/reagent_containers/chemcanister/modafinil
+	variable_transfer_amount = FALSE
