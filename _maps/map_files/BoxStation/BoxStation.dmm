@@ -59555,6 +59555,7 @@
 	id_tag = "medbay_foyer";
 	name = "Medbay"
 	},
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/exam_room)
 "tjP" = (
@@ -64334,6 +64335,7 @@
 	id_tag = "medbay_foyer";
 	name = "Medbay"
 	},
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/exam_room)
 "uIU" = (
