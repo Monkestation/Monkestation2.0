@@ -228,7 +228,7 @@
 	var/obj/item/bodypart/head/hopefully_a_head = get_bodypart(BODY_ZONE_HEAD)
 	REMOVE_TRAITS_IN(src, LIPSTICK_TRAIT)
 	if(hopefully_a_head)
-		var/datum/action/innate/lipstick_kiss/existing_action = locate(/datum/action/innate/lipstick_kiss) in src.actions
+		var/datum/action/innate/lipstick_kiss/existing_action = locate() in actions
 		if(existing_action)
 			qdel(existing_action)
 		hopefully_a_head.stored_lipstick_trait = null
