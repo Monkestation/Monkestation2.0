@@ -394,8 +394,8 @@
 	var/static/list/items_inside = list(
 		/obj/item/stack/medical/suture/medicated = 2,
 		/obj/item/stack/medical/mesh/advanced = 2,
-		/obj/item/reagent_containers/pill/patch/libital = 4,
-		/obj/item/reagent_containers/pill/patch/aiuri = 4,
+		/obj/item/hypospray/combat/disposable/brute = 1,
+		/obj/item/hypospray/combat/disposable/burn = 1,
 		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/stack/medical/gauze/plastiseal/twelve = 1,
 		/obj/item/reagent_containers/medipen/atropine = 2,
@@ -426,8 +426,8 @@
 	if(empty)
 		return
 	var/static/list/items_inside = list(
-		/obj/item/reagent_containers/pill/patch/libital = 3,
-		/obj/item/reagent_containers/pill/patch/aiuri = 3,
+		/obj/item/hypospray/combat/disposable/brute = 1,
+		/obj/item/hypospray/combat/disposable/burn = 1,
 		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/stack/medical/gauze/plastiseal/twelve = 1,
 		/obj/item/mod/module/thread_ripper = 1,
