@@ -263,8 +263,7 @@
 
 /datum/action/innate/lipstick_kiss/Activate()
 	. = ..()
-	var/datum/emote/living/kiss/kiss = new
-	kiss.run_emote(owner, null, null, TRUE)
+	owner.emote("kiss", intentional = TRUE)
 
 /**
  * Set the hair style of a human.
