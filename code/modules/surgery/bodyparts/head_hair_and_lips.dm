@@ -260,8 +260,6 @@
 	desc = "Prepare to blow a kiss at your target."
 	button_icon = 'icons/mob/simple/animal.dmi'
 	button_icon_state = "heart"
-/datum/action/innate/lipstick_kiss/Remove()
-	. = ..()
 
 /datum/action/innate/lipstick_kiss/Activate()
 	. = ..()
