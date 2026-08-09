@@ -294,7 +294,6 @@
 	for(var/obj/item/W in Itemlist)
 		dropItemToGround(W, TRUE)
 
-
 	regenerate_icons()
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
