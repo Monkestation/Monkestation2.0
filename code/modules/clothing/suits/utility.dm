@@ -27,7 +27,7 @@
 		/obj/item/fireaxe/metal_h2_axe,
 		/obj/item/tank/internals,
 	)
-	slowdown = 0.5 //monkestation edit: 1 to 0.5
+	slowdown = 0.5
 	armor_type = /datum/armor/utility_fire
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
@@ -35,8 +35,8 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	strip_delay = 60
-	equip_delay_other = 60
+	strip_delay = 6 SECONDS
+	equip_delay_other = 6 SECONDS
 	resistance_flags = FIRE_PROOF
 
 /datum/armor/utility_fire
@@ -100,8 +100,8 @@
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
-	strip_delay = 70
-	equip_delay_other = 70
+	strip_delay = 7 SECONDS
+	equip_delay_other = 7 SECONDS
 	resistance_flags = NONE
 	hoodtype = /obj/item/clothing/head/hooded/bomb_suit
 	item_flags = IMMUTABLE_SLOW
@@ -118,8 +118,8 @@
 	flags_inv = HIDEFACE|HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
-	strip_delay = 70
-	equip_delay_other = 70
+	strip_delay = 7 SECONDS
+	equip_delay_other = 7 SECONDS
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 
@@ -158,8 +158,8 @@
 	clothing_flags = THICKMATERIAL | SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	armor_type = /datum/armor/utility_radiation
-	strip_delay = 60
-	equip_delay_other = 60
+	strip_delay = 6 SECONDS
+	equip_delay_other = 6 SECONDS
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 
@@ -185,10 +185,10 @@
 		/obj/item/geiger_counter,
 		/obj/item/tank/internals,
 		)
-	slowdown = 0.5 //monkestation edit: 1.5 to 0.5
+	slowdown = 0.5
 	armor_type = /datum/armor/utility_radiation
-	strip_delay = 60
-	equip_delay_other = 60
+	strip_delay = 6 SECONDS
+	equip_delay_other = 6 SECONDS
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = NONE
 
