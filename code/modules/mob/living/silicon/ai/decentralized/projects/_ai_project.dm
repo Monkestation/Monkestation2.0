@@ -75,3 +75,11 @@ GLOBAL_LIST_EMPTY(ai_projects)
 	var/datum/action/AC = new ability()
 	AC.Grant(ai)
 	return AC
+
+/datum/ai_project/proc/remove_ability(datum/action/innate/ai/ability)
+	var/datum/action/innate/ai/has_ability = locate(ability) in ai.actions
+	if(isnull(has_ability))
+		return FALSE
+
+	has_ability.Remove(ai)
+	return TRUE
