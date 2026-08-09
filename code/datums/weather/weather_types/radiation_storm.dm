@@ -42,14 +42,16 @@
 
 
 /datum/weather/rad_storm/weather_act(mob/living/L)
-	if(!prob(40))
-		return
 
 	if(isroach(L))
-		if(!prob(2))
+		if(prob(!2))
 			return
-		var/mob/living/basic/cockroach/C = L
-		C.romchifize()
+		var/mob/living/basic/cockroach/affected_roach = L
+		affected_roach.romchifize()
+		return
+
+	if(!prob(40))
+		return
 
 	if(!ishuman(L))
 		return
