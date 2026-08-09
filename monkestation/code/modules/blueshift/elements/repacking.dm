@@ -48,6 +48,7 @@
 		return
 
 	INVOKE_ASYNC(src, PROC_REF(repack), source, user)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Removes the element target and spawns a new one of whatever item_to_pack_into is
 /datum/element/repackable/proc/repack(atom/source, mob/user)
@@ -57,12 +58,22 @@
 
 	playsound(source, 'sound/items/ratchet.ogg', 50, TRUE)
 
+	var/obj/machinery/rnd/production/omnilathe/omnilathe = source
+	if(istype(omnilathe))
+		omnilathe.prepare_for_packing()
+
+	var/obj/item/new_pack
 	if(generic_repack)
-		var/obj/item/flatpacked_machine/generic/new_pack = new item_to_pack_into(source.drop_location())
-		new_pack.type_to_deploy = source.type
-		new_pack.after_set()
+		var/obj/item/flatpacked_machine/generic/new_generic_pack = new item_to_pack_into(source.drop_location())
+		new_pack = new_generic_pack
+		new_generic_pack.type_to_deploy = source.type
+		new_generic_pack.after_set()
 	else
-		new item_to_pack_into(source.drop_location())
+		new_pack = new item_to_pack_into(source.drop_location())
+
+	if(istype(omnilathe) && new_pack)
+		omnilathe.pack_into(new_pack)
+
 	qdel(source)
 
 /// Adds screen context for hovering over the repackable items with your mouse

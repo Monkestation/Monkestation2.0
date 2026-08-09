@@ -62,3 +62,24 @@
 2026-08-07:
   notghosti:
   - bugfix: Hilbital is now 60 seconds to respond.
+2026-08-09:
+  Jak27:
+  - rscadd: lets smokers/alcoholics choose what their favorite brand is
+  - rscadd: Adds a new syndicate Misc. Gadget, the Omnilathe for 4tc, a portable lathe/ammo
+      bench.
+  Singul0:
+  - qol: Made tutorial simulations easier to access.
+  - bugfix: Polished bitrunning simulations further
+  notghosti:
+  - balance: Cyborg RPED has had their capacity reduced back to their original value
+      (200 parts -> 50 parts)
+  - balance: 'Cyborg Upgrades: Bluespace has had it''s research requirements reduced
+      to practical_bluespace and adv_robotics
+
+      ## Pre-Merge Checklist
+
+      - [x] You tested this on a local server.
+
+      - [x] This code did not runtime during testing.
+
+      - [x] You documented all of your changes.'
