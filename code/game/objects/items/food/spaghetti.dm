@@ -23,6 +23,11 @@
 	icon_state = "spaghetti"
 	tastes = list("pasta" = 1)
 
+/obj/item/food/spaghetti/raw/Initialize(mapload)
+	. = ..()
+	var/random_names = list("spagti", "spagooter", "spaghetti", "spaget", "sgetti", "spagotti", "spugetti", "spacegetti", "bisgetti")
+	name = pick(random_names)
+
 /obj/item/food/spaghetti/boiledspaghetti
 	name = "boiled spaghetti"
 	desc = "A plain dish of noodles, this needs more ingredients."
@@ -35,6 +40,19 @@
 /obj/item/food/spaghetti/boiledspaghetti/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_SCATTER, max_ingredients = 6)
+
+/obj/item/food/spaghetti/security
+	name = "Robust pasta"
+	desc = "Only the truly robust can eat this safely."
+	icon_state = "spesslaw"
+	bite_consumption = 5
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 5,
+		/datum/reagent/consumable/nutriment/protein = 20,
+		/datum/reagent/liquid_justice = 10,
+	)
+	tastes = list("justice" = 1, "robustness" = 1)
+	foodtypes = GRAIN | MEAT
 
 /obj/item/food/spaghetti/pastatomato
 	name = "spaghetti"

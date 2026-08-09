@@ -7,7 +7,8 @@
 	opacity = TRUE
 	density = TRUE
 	turf_flags = IS_SOLID
-	smoothing_flags = SMOOTH_BITMASK
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
+	wall_trim = 'icons/turf/walls/reinforced_wall_trim.dmi'
 	hardness = 10
 	sheet_type = /obj/item/stack/sheet/plasteel
 	sheet_amount = 1

@@ -145,7 +145,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/emulsijack/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(emulsify))
-	ADD_TRAIT(fish, TRAIT_RESIST_EMULSIFY, FISH_TRAIT_DATUM)
+	ADD_TRAIT(fish, TRAIT_RESIST_EMULSIFY, FISH_DATUM_TRAIT)
 
 /datum/fish_trait/emulsijack/proc/emulsify(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
@@ -186,7 +186,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	diff_traits_inheritability = 25
 
 /datum/fish_trait/parthenogenesis/apply_to_fish(obj/item/fish/fish)
-	ADD_TRAIT(fish, TRAIT_FISH_SELF_REPRODUCE, FISH_TRAIT_DATUM)
+	ADD_TRAIT(fish, TRAIT_FISH_SELF_REPRODUCE, FISH_DATUM_TRAIT)
 
 /**
  * Useful for those species with the parthenogenesis trait if you don't want them to mate with each other,
@@ -199,7 +199,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	incompatible_traits = list(/datum/fish_trait/crossbreeder)
 
 /datum/fish_trait/no_mating/apply_to_fish(obj/item/fish/fish)
-	ADD_TRAIT(fish, TRAIT_FISH_NO_MATING, FISH_TRAIT_DATUM)
+	ADD_TRAIT(fish, TRAIT_FISH_NO_MATING, FISH_DATUM_TRAIT)
 
 /datum/fish_trait/revival
 	diff_traits_inheritability = 15
@@ -252,7 +252,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/yucky/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_ATOM_PROCESSED, PROC_REF(add_yuck))
-	ADD_TRAIT(fish, TRAIT_YUCKY_FISH, FISH_TRAIT_DATUM)
+	ADD_TRAIT(fish, TRAIT_YUCKY_FISH, FISH_DATUM_TRAIT)
 	LAZYSET(fish.grind_results, /datum/reagent/yuck, 3)
 
 /datum/fish_trait/yucky/proc/add_yuck(obj/item/fish/source, mob/living/user, obj/item/process_item, list/results)
@@ -296,7 +296,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	diff_traits_inheritability = 40
 
 /datum/fish_trait/toxin_immunity/apply_to_fish(obj/item/fish/fish)
-	ADD_TRAIT(fish, TRAIT_FISH_TOXIN_IMMUNE, FISH_TRAIT_DATUM)
+	ADD_TRAIT(fish, TRAIT_FISH_TOXIN_IMMUNE, FISH_DATUM_TRAIT)
 
 /datum/fish_trait/crossbreeder
 	name = "Crossbreeder"
@@ -306,7 +306,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	incompatible_traits = list(/datum/fish_trait/no_mating)
 
 /datum/fish_trait/crossbreeder/apply_to_fish(obj/item/fish/fish)
-	ADD_TRAIT(fish, TRAIT_FISH_CROSSBREEDER, FISH_TRAIT_DATUM)
+	ADD_TRAIT(fish, TRAIT_FISH_CROSSBREEDER, FISH_DATUM_TRAIT)
 
 /datum/fish_trait/aggressive
 	name = "Aggressive"
@@ -352,7 +352,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	catalog_description = "This fish has developed a primitive adaptation to life on both land and water."
 
 /datum/fish_trait/amphibious/apply_to_fish(obj/item/fish/fish)
-	ADD_TRAIT(fish, TRAIT_FISH_AMPHIBIOUS, FISH_TRAIT_DATUM)
+	ADD_TRAIT(fish, TRAIT_FISH_AMPHIBIOUS, FISH_DATUM_TRAIT)
 	if(fish.required_fluid_type == AQUARIUM_FLUID_AIR)
 		fish.required_fluid_type = AQUARIUM_FLUID_FRESHWATER
 
@@ -364,7 +364,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	incompatible_traits = list(/datum/fish_trait/predator, /datum/fish_trait/necrophage)
 
 /datum/fish_trait/antigrav/apply_to_fish(obj/item/fish/fish)
-	ADD_TRAIT(fish, TRAIT_FISH_NO_HUNGER, FISH_TRAIT_DATUM)
+	ADD_TRAIT(fish, TRAIT_FISH_NO_HUNGER, FISH_DATUM_TRAIT)
 
 /datum/fish_trait/antigrav
 	name = "Anti-Gravity"

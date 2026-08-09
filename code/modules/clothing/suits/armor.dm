@@ -196,13 +196,16 @@
 	flags_inv = 0
 	strip_delay = 80
 
+/obj/item/clothing/suit/armor/hos/trenchcoat/pimpcoat
+	name = "pink armored trenchcoat"
+	desc = "For when an armored trenchcoat isn't pimped out enough."
+	icon_state = "pimpcoat"
+
 /obj/item/clothing/suit/armor/hos/trenchcoat/winter
 	name = "head of security's winter trenchcoat"
 	desc = "A trenchcoat enhanced with a special lightweight kevlar, padded with wool on the collar and inside. You feel strangely lonely wearing this coat."
 	icon_state = "hoswinter"
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-
-///obj/item/clothing/suit/armor/hos/trenchcoat/pimpcoat in monkestation\code\modules\aesthetics\items\clothing.dm
 
 /obj/item/clothing/suit/armor/hos/hos_formal
 	name = "\improper Head of Security's parade jacket"
@@ -718,3 +721,21 @@
 	fire = 40
 	acid = 50
 	wound = 30
+
+/obj/item/clothing/suit/armor/vest/buoyantrigvest
+	icon_state = "security_rigvest"
+
+/obj/item/clothing/suit/armor/centcom_admiral
+	name = "\improper CentCom Admiral's coat"
+	desc = "Perfect for hiding a spare pistol under."
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon_state = "admiral"
+	inhand_icon_state = "centcom"
+	body_parts_covered = CHEST|GROIN|ARMS
+	armor_type = /datum/armor/armor_centcom_formal
+
+
+/obj/item/clothing/suit/armor/centcom_admiral/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/toggle_icon)
