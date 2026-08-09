@@ -17,7 +17,7 @@
 	else if(succeeded && isliving(controller.blackboard[target_key]))
 		var/atom/target = controller.blackboard[target_key]
 		var/mob/living/basic/slime/basic_mob = controller.pawn
-		if(basic_mob.CanReach(target) && !HAS_TRAIT(target, TRAIT_LATCH_FEEDERED) && !QDELETED(basic_mob) && !QDELETED(target))
+		if(basic_mob.can_latch_feed(target))
 			basic_mob.AddComponent(/datum/component/latch_feeding, target, TRUE, TOX, 2, 4, FALSE)
 		controller.clear_blackboard_key(target_key)
 	return ..()
