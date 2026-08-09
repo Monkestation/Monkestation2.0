@@ -34,7 +34,10 @@
 		forceMove(drop_location())
 		return
 
-	if(!do_after(user, CHEM_INTERACT_DELAY(3 SECONDS, user), target))
+	if(target == user && !do_after(user, CHEM_INTERACT_DELAY(1.5 SECONDS, user), target))
+		return ITEM_INTERACT_BLOCKING
+
+	if(target != user && !do_after(user, CHEM_INTERACT_DELAY(3 SECONDS, user), target))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
