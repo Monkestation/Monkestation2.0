@@ -42,7 +42,6 @@
 
 
 /datum/weather/rad_storm/weather_act(mob/living/L)
-
 	if(isroach(L))
 		if(prob(!2))
 			return
