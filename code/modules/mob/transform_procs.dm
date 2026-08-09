@@ -400,8 +400,6 @@
 		return TRUE
 	if(ispath(MP, /mob/living/basic/parrot))
 		return TRUE //Parrots are no longer unfinished! -Nodrak
-	if(ispath(MP, /mob/living/basic/cockroach))
-		return TRUE
 
 	//Not in here? Must be untested!
 	return FALSE
