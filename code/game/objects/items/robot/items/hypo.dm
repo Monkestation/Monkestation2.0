@@ -338,7 +338,7 @@
 	data["recordingRecipe"] = recording_recipe
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/cyborg = user
-		var/obj/item/borg/apparatus/beaker/beaker_apparatus = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+		var/obj/item/borg/apparatus/beaker/beaker_apparatus = (locate() in cyborg.model.usable_modules) || (locate() in cyborg.held_items)
 		data["canReagentSearch"] = !isnull(beaker_apparatus)
 	return data
 
@@ -414,7 +414,7 @@
 		if("reaction_lookup")
 			if(iscyborg(user))
 				var/mob/living/silicon/robot/cyborg = user
-				var/obj/item/borg/apparatus/beaker/beaker_apparatus = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+				var/obj/item/borg/apparatus/beaker/beaker_apparatus = (locate() in cyborg.model.usable_modules) || (locate() in cyborg.held_items)
 				if(!isnull(beaker_apparatus) && !isnull(beaker_apparatus.stored))
 					beaker_apparatus.stored.reagents.ui_interact(cyborg)
 					. = TRUE
@@ -546,11 +546,11 @@
 	data["recordingRecipe"] = recording_recipe
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/cyborg = user
-		var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+		var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in cyborg.model.usable_modules) || (locate() in cyborg.held_items)
 		if(!isnull(beverage_apparatus) && !isnull(beverage_apparatus.stored))
 			data["canReagentSearch"] = TRUE
 		if(!data["canReagentSearch"])
-			var/obj/item/reagent_containers/cup/beaker/large/internal_beaker = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+			var/obj/item/reagent_containers/cup/beaker/large/internal_beaker = (locate() in cyborg.model.usable_modules) || (locate() in cyborg.held_items)
 			if(!isnull(internal_beaker))
 				data["canReagentSearch"] = TRUE
 	return data
@@ -564,12 +564,12 @@
 		if("reaction_lookup")
 			if(iscyborg(user))
 				var/mob/living/silicon/robot/cyborg = user
-				var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+				var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in cyborg.model.usable_modules) || (locate() in cyborg.held_items)
 				if(!isnull(beverage_apparatus) && !isnull(beverage_apparatus.stored))
 					beverage_apparatus.stored.reagents.ui_interact(cyborg)
 					. = TRUE
 				if(!.)
-					var/obj/item/reagent_containers/cup/beaker/large/internal_beaker = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+					var/obj/item/reagent_containers/cup/beaker/large/internal_beaker = (locate() in cyborg.model.usable_modules) || (locate() in cyborg.held_items)
 					if(!isnull(internal_beaker))
 						internal_beaker.reagents.ui_interact(cyborg)
 					. = TRUE
@@ -585,7 +585,7 @@
 
 /obj/item/reagent_containers/borghypo/borgshaker/centcom
 	amount_per_transfer_from_this = 50
-	recharge_time = 1 SECOND
+	recharge_time = 1 SECONDS
 
 /obj/item/reagent_containers/borghypo/borgshaker/centcom/Initialize(mapload)
 	default_reagent_types += BASE_CENTCOM_REAGENTS
