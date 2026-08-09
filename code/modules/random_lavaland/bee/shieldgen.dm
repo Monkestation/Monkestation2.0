@@ -12,14 +12,12 @@
 	desc = "A small device used to remotely operate holofield generators."
 
 /obj/item/assembly/control/shieldwallgen/activate()
-	if(cooldown)
+	if(!COOLDOWN_FINISHED(src, cooldown))
 		return
-	cooldown = TRUE
+	COOLDOWN_START(src, cooldown, 3 SECONDS)
 	for(var/obj/machinery/power/shieldwallgen/machine as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/shieldwallgen))
 		if(machine.id == src.id)
 			INVOKE_ASYNC(machine, TYPE_PROC_REF(/obj/machinery/power/shieldwallgen, toggle))
-
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 3 SECONDS)
 
 /obj/machinery/power/shieldwallgen/atmos
 	name = "holofield generator"

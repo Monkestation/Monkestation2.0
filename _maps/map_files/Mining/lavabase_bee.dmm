@@ -638,7 +638,7 @@
 	id = "labor";
 	name = "Labor Camp Lockdown";
 	pixel_y = 28;
-	req_access_txt = "2"
+	req_access = list("brig")
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
@@ -1375,9 +1375,7 @@
 /area/lavaland/surface/outdoors/explored)
 "jL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
-	anchored = 0
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -2252,7 +2250,6 @@
 /obj/machinery/airalarm/directional/north,
 /mob/living/simple_animal/bot/firebot{
 	name = "Colonel Clarity";
-	on = 0;
 	desc = "A little robot that just seems happy to keep you alive, it looks of an older model"
 	},
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -2378,8 +2375,7 @@
 /area/mine/atmos)
 "qT" = (
 /mob/living/simple_animal/bot/firebot{
-	name = "Officer Fastmosky";
-	on = 0
+	name = "Officer Fastmosky"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -2762,15 +2758,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/iron/dark,
 /area/mine/atmos/engine)
-"sV" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
-	anchored = 0
-	},
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/catwalk_floor/iron,
-/area/mine/atmos/hallway)
 "sZ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -2830,9 +2817,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "tz" = (
-/obj/machinery/atmospherics/components/binary/pump/off/orange/visible{
-	anchored = 0
-	},
+/obj/machinery/atmospherics/components/binary/pump/off/orange/visible,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
@@ -3245,8 +3230,7 @@
 "wB" = (
 /obj/structure/closet/emcloset,
 /mob/living/simple_animal/bot/firebot{
-	name = "Sergeant Airhead";
-	on = 0
+	name = "Sergeant Airhead"
 	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Labor Camp External";
@@ -3430,7 +3414,7 @@
 	id = "labor";
 	name = "Labor Camp Lockdown";
 	pixel_y = 28;
-	req_access_txt = "2"
+	req_access = list("brig")
 	},
 /turf/open/floor/iron/techmaint,
 /area/mine/laborcamp/security)
@@ -4305,9 +4289,7 @@
 /turf/open/floor/iron,
 /area/mine/atmos)
 "Ep" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2{
-	anchored = 0
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/catwalk_floor/iron,
@@ -4695,8 +4677,7 @@
 /area/mine/atmos/engine)
 "Ha" = (
 /obj/machinery/computer/shuttle/mining{
-	dir = 1;
-	req_access = null
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/mine/production)
@@ -6261,7 +6242,6 @@
 "Si" = (
 /obj/machinery/light{
 	bulb_colour = "#22bfa2";
-	bulb_vacuum_colour = "#22bfa2";
 	dir = 4;
 	nightshift_light_color = "#22bfa2"
 	},
@@ -6604,9 +6584,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Ud" = (
-/obj/machinery/atmospherics/pipe/smart/simple/green/hidden{
-	anchored = 0
-	},
+/obj/machinery/atmospherics/pipe/smart/simple/green/hidden,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Uj" = (
@@ -6633,14 +6611,6 @@
 	dir = 6
 	},
 /turf/open/floor/iron,
-/area/mine/atmos/hallway)
-"Un" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
-	anchored = 0
-	},
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor/iron,
 /area/mine/atmos/hallway)
 "Uo" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -20983,7 +20953,7 @@ Pv
 Pv
 MY
 uw
-sV
+lw
 oF
 by
 IP
@@ -21068,7 +21038,7 @@ yK
 by
 by
 Wj
-Un
+xg
 mU
 MY
 IP
@@ -21153,7 +21123,7 @@ dB
 Mq
 by
 qC
-Un
+xg
 Wp
 MY
 by
@@ -21395,7 +21365,7 @@ Cd
 Cd
 by
 KZ
-Un
+xg
 Ym
 Ao
 Fa
@@ -21480,7 +21450,7 @@ Cd
 Cd
 yK
 Zr
-Un
+xg
 hl
 Tx
 pS
@@ -21565,7 +21535,7 @@ Cd
 eV
 CR
 XL
-sV
+lw
 mY
 rI
 Nh
@@ -21650,7 +21620,7 @@ Cd
 Cd
 yK
 sf
-Un
+xg
 iT
 oR
 Yk
@@ -21735,7 +21705,7 @@ Cd
 Cd
 KQ
 Qo
-sV
+lw
 Ir
 Ew
 eZ
@@ -21905,7 +21875,7 @@ yK
 MY
 by
 HB
-sV
+lw
 Bg
 Jk
 VK
@@ -21990,7 +21960,7 @@ Vr
 dJ
 yZ
 FA
-Un
+xg
 TI
 Od
 Pj
