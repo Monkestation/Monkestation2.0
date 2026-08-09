@@ -31,7 +31,7 @@
 
 /datum/slime_color/dark_blue
 	name = "dark blue"
-	icon_prefix = "dark blue"
+	icon_prefix = "dark_blue"
 	secretion_path = /datum/reagent/slime_ooze/darkblue
 	slime_color = "#3375F9"
 	possible_mutations = list(
@@ -114,7 +114,7 @@
 
 /datum/slime_color/darkpurple
 	name = "dark purple"
-	icon_prefix = "dark purple"
+	icon_prefix = "dark_purple"
 	secretion_path = /datum/reagent/slime_ooze/darkpurple
 	slime_color = "#793A80"
 	possible_mutations = list(
@@ -174,7 +174,7 @@
 
 /datum/slime_color/lightpink
 	name = "light pink"
-	icon_prefix = "light pink"
+	icon_prefix = "light_pink"
 	secretion_path = /datum/reagent/slime_ooze/lightpink
 	slime_color = "#E9B5A3"
 	possible_mutations = list(/datum/slime_mutation_data/rainbow)

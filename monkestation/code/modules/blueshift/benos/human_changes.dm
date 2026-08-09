@@ -36,7 +36,7 @@
 
 	pixel_x = -16
 
-	ADD_TRAIT(src, TRAIT_XENO_HEAL_AURA, TRAIT_XENO_INNATE)
+	ADD_TRAIT(src, TRAIT_XENO_HEAL_AURA, XENO_TRAIT)
 	real_name = "alien [caste]"
 
 /// Called when a larva or xeno evolves, adds a configurable timer on evolving again to the xeno

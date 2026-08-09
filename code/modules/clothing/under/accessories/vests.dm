@@ -42,3 +42,8 @@
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	minimize_when_attached = FALSE
 	attachment_slot = NONE
+
+/obj/item/clothing/accessory/maidapron/syndicate
+	name = "syndicate maid apron"
+	desc = "Practical? No. Tactical? Also no. Cute? Most definitely yes."
+	icon_state = "maidapronsynd"
