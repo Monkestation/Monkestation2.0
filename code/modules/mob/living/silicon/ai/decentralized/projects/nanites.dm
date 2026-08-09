@@ -4,7 +4,7 @@
 	research_cost = 2000
 	ram_required = 1
 	category = AI_PROJECT_SURVEILLANCE
-//	research_requirements = list(/datum/ai_project/examine_humans)
+	research_requirements = list(/datum/ai_project/examine_humans) //gotta be able to see humans to send signals at them
 
 /datum/ai_project/nanites/run_project(force_run = FALSE)
 	. = ..(force_run)
