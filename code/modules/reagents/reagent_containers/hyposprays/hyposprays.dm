@@ -158,7 +158,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 
 /obj/item/hypospray/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
 	if(!can_draw)
-		balloon_alert(user, "Can't draw!")
+		balloon_alert(user, "can't draw!")
 		return ITEM_INTERACT_BLOCKING
 	if(target.reagents)
 		return draw(user, target)
