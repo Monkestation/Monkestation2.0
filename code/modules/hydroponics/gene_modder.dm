@@ -93,8 +93,7 @@
 	if(!anchored)
 		return ..()
 	if(istype(attacking_item, /obj/item/borg/apparatus/cooking))
-		var/obj/item/borg/apparatus/cooking/apparatus = attacking_item
-		attacking_item = apparatus.stored
+		attacking_item.get_proxy_attacker_for(src)
 	if(istype(attacking_item, /obj/item/seeds))
 		if (operation)
 			to_chat(user, "<span class='notice'>Please complete current operation.</span>")
@@ -115,8 +114,6 @@
 		disk = attacking_item
 		to_chat(user, "<span class='notice'>You add [attacking_item] to the machine.</span>")
 		interact(user)
-
-
 	else
 		..()
 
