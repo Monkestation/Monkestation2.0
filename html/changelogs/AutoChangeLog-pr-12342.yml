@@ -1,4 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - bugfix: "Examining someone that is using digital camouflage now correctly displays the obvious tell at the bottom of examine instead of the top."
