@@ -428,7 +428,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	name = "disposable hypospray"
 	desc = "You shouldn't have this."
 	possible_transfer_amounts = list(5, 10)
-	can_remove_vials = false
+	can_remove_vials = FALSE
 
 /obj/item/hypospray/combat/disposable/brute
 	name = "disposable hypospray (libital)"
