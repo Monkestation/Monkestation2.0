@@ -117,7 +117,7 @@ GLOBAL_LIST_EMPTY(data_cores)
 	. = ..()
 	if(gone == integrated_battery)
 		integrated_battery = null
-	if(istype(arrived, /mob/living/silicon/ai))
+	if(istype(gone, /mob/living/silicon/ai))
 		LAZYREMOVE(stored_ais, gone)
 
 /obj/machinery/ai/data_core/examine(mob/user)
