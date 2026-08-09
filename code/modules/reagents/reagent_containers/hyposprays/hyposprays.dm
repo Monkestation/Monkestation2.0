@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	if(!can_remove_vials)
 		. += span_notice("It's unloading mechanism is blocked, preventing vials from being removed, permanently, once loaded.")
 	if(!can_draw)
-		. +=span_noitce("This disposable unit doesn't come with a drawing mechanism.")
+		. += span_notice("This disposable unit doesn't come with a drawing mechanism.")
 	switch(mode)
 		if(HYPO_INJECT)
 			. += span_notice("[src] is set to inject contents on application.")
