@@ -117,10 +117,13 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		return TRUE
 
 /obj/item/hypospray/attack_self(mob/user, list/modifiers)
+	if(!can_change_modes)
+		return
 	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
-		mode = show_radial_menu(user, src, GLOB.hypospray_mode_icons, radius = 48)
 		if(!mode)
 			mode = HYPO_INJECT
+
+		mode = (mode == HYPO_INJECT) ? HYPO_SPRAY : HYPO_INJECT
 		balloon_alert(user, "mode set to [mode].")
 
 /obj/item/hypospray/attack_hand(mob/user, list/modifiers)
