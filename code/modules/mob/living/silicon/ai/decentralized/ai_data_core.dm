@@ -1,6 +1,6 @@
 ///Assoc list of ["z_level"] = list(cores)
 GLOBAL_LIST_EMPTY(data_cores)
-#define MAX_AIS_PER_CORE 3
+#define MAX_AIS_PER_CORE 2
 
 /obj/machinery/ai/data_core
 	name = "AI data core"
