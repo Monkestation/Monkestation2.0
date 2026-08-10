@@ -1,4 +1,0 @@
-author: "nasend_"
-delete-after: True
-changes:
-  - bugfix: "Bullets now leave debris particles."
