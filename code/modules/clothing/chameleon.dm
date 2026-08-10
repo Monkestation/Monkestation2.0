@@ -1223,12 +1223,12 @@
 		chameleon_action.hidden = FALSE
 		actions += chameleon_action
 		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon necktie ([name]) with [attacking_item]")
+		log_game("[key_name(user)] has removed the disguise lock on the chameleon gun ([name]) with [attacking_item]")
 	else
 		chameleon_action.hidden = TRUE
 		actions -= chameleon_action
 		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon necktie ([name]) with [attacking_item]")
+		log_game("[key_name(user)] has locked the disguise of the chameleon gun ([name]) with [attacking_item]")
 	return ITEM_INTERACT_SUCCESS
 
 
