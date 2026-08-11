@@ -322,7 +322,7 @@
 		input_model = pick(GLOB.cyborg_base_models_icon_list_ninja) // Guess they want a random model then.
 	var/obj/item/robot_model/picked_robot_model = GLOB.cyborg_model_list_ninja[input_model]
 	if(!picked_robot_model)
-		CRASH("Ninja failed to give a syndicate robot model to a cyborg.")
+		CRASH("Ninja failed to give a robot model to a cyborg.")
 	apply_model(picked_robot_model)
 	apply_skin(model.default_skin)
 
