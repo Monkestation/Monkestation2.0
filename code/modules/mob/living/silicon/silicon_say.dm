@@ -16,6 +16,10 @@
 		message,
 		spans
 	)
+	var/obj/item/organ/internal/brain/cybernetic/ai/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(istype(brain))
+		name = brain.mainframe.name
+		designation = brain.mainframe.job
 
 	for(var/mob/M in GLOB.player_list)
 		if(M.binarycheck())

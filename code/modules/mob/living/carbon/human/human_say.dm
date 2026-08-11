@@ -65,6 +65,10 @@
 			dongle = implant.radio
 			break
 
+	var/obj/item/organ/internal/brain/cybernetic/ai/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(istype(brain))
+		return TRUE
+
 	if(!istype(dongle))
 		return FALSE
 	return dongle.translate_binary
