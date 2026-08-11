@@ -57,8 +57,6 @@
 	if(radio)
 		QDEL_NULL(radio)
 	connected_ai = null
-	if(organ_owner in GLOB.available_ai_shells)
-		GLOB.available_ai_shells - organ_owner
 
 /obj/item/organ/internal/brain/cybernetic/ai/proc/get_status_tab_item(mob/living/source, list/items)
 	SIGNAL_HANDLER
