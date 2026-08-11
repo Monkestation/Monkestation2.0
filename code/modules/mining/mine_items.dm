@@ -20,7 +20,7 @@
 	return
 
 /obj/effect/light_emitter/thunderdome
-	set_cap = 1
+	set_cap = 0.7
 	set_luminosity = 1.6
 
 /obj/effect/light_emitter/fake_outdoors
