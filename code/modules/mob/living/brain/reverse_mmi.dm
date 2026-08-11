@@ -57,8 +57,6 @@
 	if(radio)
 		QDEL_NULL(radio)
 	connected_ai = null
-	if(organ_owner in GLOB.available_ai_shells)
-		GLOB.available_ai_shells - organ_owner
 
 /obj/item/organ/internal/brain/cybernetic/ai/proc/get_status_tab_item(mob/living/source, list/items)
 	SIGNAL_HANDLER
@@ -84,6 +82,7 @@
 /obj/item/organ/internal/brain/cybernetic/ai/can_gain_trauma(datum/brain_trauma/trauma, resilience, natural_gain = FALSE)
 	return FALSE
 
+/// Shows status description to AI on click/examine
 /obj/item/organ/internal/brain/cybernetic/ai/proc/owner_clicked(datum/source, atom/location, control, params, mob/user)
 	SIGNAL_HANDLER
 	if(!isAI(user))
@@ -126,6 +125,14 @@
 	AI.mind.transfer_to(owner)
 	to_chat(owner, span_boldbig("You are still considered a silicon/cyborg/AI. Follow your laws."))
 
+
+/**
+ * deploy_init: Deploys AI unit into AI shell
+ *
+ * Arguments:
+ * * AI - AI unit that initiated the deployment into the AI shell
+ */
+
 /obj/item/organ/internal/brain/cybernetic/ai/proc/deploy_init(mob/living/silicon/ai/AI)
 	//todo camera maybe
 	mainframe = AI
@@ -143,7 +150,10 @@
 		implant.radio.channels = AI.radio.channels
 		for(var/channel in implant.radio.channels)
 			LAZYSET(implant.radio.secure_radio_connections, channel, add_radio(implant.radio, GLOB.radiochannels[channel]))
+	if(AI.radio.syndie) /// AI has Syndie radio if traitor.
+		AI.radio.make_syndie()
 
+/// Handles exitting the shell.
 /obj/item/organ/internal/brain/cybernetic/ai/proc/undeploy(datum/source)
 	SIGNAL_HANDLER
 	if(!owner?.mind || !mainframe)
@@ -170,6 +180,7 @@
 	mainframe = null
 	update_med_hud_status(owner)
 
+/// Checks if the organic shell's organs are fully robotic
 /obj/item/organ/internal/brain/cybernetic/ai/proc/is_sufficiently_augmented()
 	var/mob/living/carbon/carb_owner = owner
 	. = TRUE
@@ -181,12 +192,14 @@
 		if(!IS_ROBOTIC_ORGAN(organ) && !istype(organ, /obj/item/organ/internal/tongue)) //tongues are not in the exosuit fab and nobody is going to bother to find them so
 			return FALSE
 
+/// Is called when the brain is inserted
 /obj/item/organ/internal/brain/cybernetic/ai/proc/on_organ_gain(datum/source, obj/item/organ/new_organ, special)
 	SIGNAL_HANDLER
 	if(!is_sufficiently_augmented())
 		to_chat(owner, span_danger("Connection failure. Organic organs detected."))
 		undeploy()
 
+/// Is called when AI cannot control the shell
 /obj/item/organ/internal/brain/cybernetic/ai/proc/ai_deleted(datum/source)
 	SIGNAL_HANDLER
 	to_chat(owner, span_danger("Your core has been rendered inoperable..."))
