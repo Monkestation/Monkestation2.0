@@ -17,7 +17,7 @@
 	GLOB.deathmatch_game = src
 
 	var/max_players = /datum/lazy_template/deathmatch::min_players
-	for (var/datum/lazy_template/deathmatch/template as anything in subtypesof(/datum/lazy_template/deathmatch) - /datum/lazy_template/deathmatch/random)
+	for(var/datum/lazy_template/deathmatch/template as anything in subtypesof(/datum/lazy_template/deathmatch) - /datum/lazy_template/deathmatch/random)
 		template = new template()
 		maps[template.name] = template
 		if(length(template.allowed_loadouts) > 1)
@@ -63,7 +63,7 @@
 	.["lobbies"] = list()
 	.["hosting"] = FALSE
 	.["admin"] = check_rights_for(user.client, R_ADMIN)
-	for (var/ckey in lobbies)
+	for(var/ckey in lobbies)
 		var/datum/deathmatch_lobby/lobby = lobbies[ckey]
 		if(user.ckey == ckey)
 			.["hosting"] = TRUE
