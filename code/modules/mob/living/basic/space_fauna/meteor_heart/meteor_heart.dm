@@ -59,6 +59,8 @@
 	soundloop.pressure_affected = FALSE
 	soundloop.start()
 
+	AddComponent(/datum/component/bloody_spreader)
+
 /// Called when we get mad at something, either for attacking us or attacking the nearby area
 /mob/living/basic/meteor_heart/proc/aggro()
 	if (ai_controller.ai_status == AI_STATUS_ON)

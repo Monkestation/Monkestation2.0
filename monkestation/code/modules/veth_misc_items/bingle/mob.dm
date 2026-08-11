@@ -39,7 +39,6 @@
 	/// The pit from which this bingle came.
 	var/obj/structure/bingle_hole/linked_pit
 	var/static/list/bingle_traits = list(
-		TRAIT_BINGLE,
 		TRAIT_CLUMSY,
 		TRAIT_DUMB,
 	)
@@ -48,7 +47,7 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(on_space_move))
 	RegisterSignal(src, COMSIG_LIVING_BINGLE_EVOLVE, PROC_REF(evolve))
-	add_traits(bingle_traits, INNATE_TRAIT)
+	add_traits(bingle_traits, BINGLE_TRAIT)
 	set_linked_pit(origin_pit)
 
 /mob/living/basic/bingle/Destroy()

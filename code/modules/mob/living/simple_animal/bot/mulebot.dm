@@ -750,7 +750,7 @@
 		cell.update_appearance()
 		cell = null
 
-	new /obj/effect/decal/cleanable/oil(loc)
+	new /obj/effect/decal/cleanable/blood/oil(loc)
 	return ..()
 
 /mob/living/simple_animal/bot/mulebot/remove_air(amount) //To prevent riders suffocating

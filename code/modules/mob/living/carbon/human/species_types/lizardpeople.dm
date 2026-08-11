@@ -29,7 +29,7 @@
 	species_cookie = /obj/item/food/meat/slab
 	meat = /obj/item/food/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
-	exotic_bloodtype = /datum/blood_type/crew/lizard
+	exotic_bloodtype = BLOOD_TYPE_LIZARD
 	inert_mutation = /datum/mutation/firebreath
 	death_sound = 'sound/voice/lizard/deathsound.ogg'
 	species_language_holder = /datum/language_holder/lizard
@@ -168,7 +168,7 @@ Lizard subspecies: SILVER SCALED
 	mutantlungs = null
 	species_language_holder = /datum/language_holder/lizard/silver
 	mutanttongue = /obj/item/organ/internal/tongue/lizard/silver
-	exotic_bloodtype = /datum/blood_type/crew/lizard/silver
+	exotic_bloodtype = BLOOD_TYPE_LIZARD
 	armor = 10 //very light silvery scales soften blows
 	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
 	examine_limb_id = SPECIES_LIZARD

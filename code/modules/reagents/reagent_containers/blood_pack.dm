@@ -4,86 +4,74 @@
 	icon = 'icons/obj/medical/bloodpack.dmi'
 	icon_state = "bloodpack"
 	volume = 200
+	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 	var/blood_type = null
 	var/labelled = FALSE
-	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 	reagent_flags = DRAWABLE | DRAINABLE
 
 /obj/item/reagent_containers/blood/Initialize(mapload, vol)
 	. = ..()
-	if(!isnull(blood_type))
-		var/datum/blood_type/blood = GLOB.blood_types[blood_type]
-		reagents.add_reagent(blood.reagent_type, 200, list("viruses" = null,"blood_DNA" = null,"blood_type" = blood_type, "resistances" = null, "trace_chem" = null))
-		update_appearance()
+	if(!blood_type)
+		return
+	var/datum/blood_type/bloodtype = get_blood_type(blood_type)
+	reagents.add_reagent(bloodtype.reagent_type, volume, list("blood_type" = bloodtype, "blood_DNA" = bloodtype.dna_string), creation_callback = CALLBACK(src, PROC_REF(on_blood_created)))
 
-/// Handles updating the container when the reagents change.
-/obj/item/reagent_containers/blood/on_reagent_change(datum/reagents/holder, ...)
-	blood_type = null
-
-	var/datum/reagent/master_reagent = holder.get_master_reagent()
-	if(master_reagent)
-		if(istype(master_reagent, /datum/reagent/blood))
-			blood_type = master_reagent.data?["blood_type"]
-		else
-			for(var/blood_type in GLOB.blood_types)
-				var/datum/blood_type/blood = GLOB.blood_types[blood_type]
-				if(blood.reagent_type == master_reagent.type)
-					blood_type = blood_type
-					break
-
-	return ..()
+/obj/item/reagent_containers/blood/proc/on_blood_created(datum/reagent/new_blood)
+	new_blood.AddElement(/datum/element/blood_reagent, null, get_blood_type(blood_type))
+	update_appearance()
 
 /obj/item/reagent_containers/blood/update_name(updates)
 	. = ..()
-	if(labelled)
-		return
-	var/datum/blood_type/blood = GLOB.blood_types[blood_type]
-	name = "blood pack[blood ? " - [blood.name]" : null]"
+	if(!labelled)
+		name = "blood pack[blood_type ? " - [blood_type]" : ""]"
 
 /obj/item/reagent_containers/blood/random
 	icon_state = "random_bloodpack"
 
 /obj/item/reagent_containers/blood/random/Initialize(mapload, vol)
 	icon_state = "bloodpack"
-	blood_type = pick(subtypesof(/datum/blood_type/crew) - /datum/blood_type/crew/human)
+	blood_type = pick(BLOOD_TYPE_A_PLUS, BLOOD_TYPE_A_MINUS, BLOOD_TYPE_B_PLUS, BLOOD_TYPE_B_MINUS, BLOOD_TYPE_O_PLUS, BLOOD_TYPE_O_MINUS, BLOOD_TYPE_LIZARD)
 	return ..()
 
 /obj/item/reagent_containers/blood/a_plus
-	blood_type = /datum/blood_type/crew/human/a_plus
+	blood_type = BLOOD_TYPE_A_PLUS
 
 /obj/item/reagent_containers/blood/a_minus
-	blood_type = /datum/blood_type/crew/human/a_minus
+	blood_type = BLOOD_TYPE_A_MINUS
 
 /obj/item/reagent_containers/blood/b_plus
-	blood_type = /datum/blood_type/crew/human/b_plus
+	blood_type = BLOOD_TYPE_B_PLUS
 
 /obj/item/reagent_containers/blood/b_minus
-	blood_type = /datum/blood_type/crew/human/b_minus
+	blood_type = BLOOD_TYPE_B_MINUS
 
 /obj/item/reagent_containers/blood/o_plus
-	blood_type = /datum/blood_type/crew/human/o_plus
+	blood_type = BLOOD_TYPE_O_PLUS
 
 /obj/item/reagent_containers/blood/o_minus
-	blood_type = /datum/blood_type/crew/human/o_minus
+	blood_type = BLOOD_TYPE_O_MINUS
 
 /obj/item/reagent_containers/blood/lizard
-	blood_type = /datum/blood_type/crew/lizard
+	blood_type = BLOOD_TYPE_LIZARD
 
 /obj/item/reagent_containers/blood/ethereal
-	blood_type = /datum/blood_type/crew/ethereal
+	blood_type = BLOOD_TYPE_ETHEREAL
 
-/obj/item/reagent_containers/blood/spider
-	blood_type = /datum/blood_type/crew/spider
+/obj/item/reagent_containers/blood/hemolymph
+	blood_type = BLOOD_TYPE_HEMOLYMPH
 
 /obj/item/reagent_containers/blood/snail
-	blood_type = /datum/blood_type/snail
+	blood_type = BLOOD_TYPE_SNAIL
+
+/obj/item/reagent_containers/blood/slime
+	blood_type = BLOOD_TYPE_TOX
 
 /obj/item/reagent_containers/blood/snail/examine()
 	. = ..()
 	. += span_notice("It's a bit slimy... The label indicates that this is meant for snails.")
 
 /obj/item/reagent_containers/blood/podperson
-	blood_type = /datum/blood_type/water
+	blood_type = BLOOD_TYPE_H2O
 
 /obj/item/reagent_containers/blood/podperson/examine()
 	. = ..()
@@ -91,28 +79,33 @@
 
 // for slimepeople
 /obj/item/reagent_containers/blood/toxin
-	blood_type = /datum/blood_type/slime
+	blood_type = BLOOD_TYPE_TOX
 
 /obj/item/reagent_containers/blood/toxin/examine()
 	. = ..()
 	. += span_notice("There is a toxin warning on the label. This is for slimepeople.")
 
-/obj/item/reagent_containers/blood/attackby(obj/item/tool, mob/user, params)
-	if (IS_WRITING_UTENSIL(tool))
-		if(!user.can_write(tool))
-			return
-		var/custom_label = tgui_input_text(user, "What would you like to label the blood pack?", "Blood Pack", name, MAX_NAME_LEN)
-		if(!user.can_perform_action(src))
-			return
-		if(user.get_active_held_item() != tool)
-			return
-		if(custom_label)
-			labelled = TRUE
-			name = "blood pack - [custom_label]"
-			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
-			balloon_alert(user, "new label set")
-		else
-			labelled = FALSE
-			update_name()
-	else
-		return ..()
+/obj/item/reagent_containers/blood/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!IS_WRITING_UTENSIL(tool))
+		return NONE
+
+	if(!user.can_write(tool))
+		return ITEM_INTERACT_BLOCKING
+
+	var/custom_label = tgui_input_text(user, "What would you like to label the blood pack?", "Blood Pack", name, max_length = MAX_NAME_LEN)
+	if(!user.can_perform_action(src))
+		return ITEM_INTERACT_BLOCKING
+
+	if(user.get_active_held_item() != tool)
+		return ITEM_INTERACT_BLOCKING
+
+	if(!custom_label)
+		labelled = FALSE
+		update_name()
+		return ITEM_INTERACT_SUCCESS
+
+	labelled = TRUE
+	name = "blood pack - [custom_label]"
+	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	balloon_alert(user, "new label set")
+	return ITEM_INTERACT_SUCCESS

@@ -373,10 +373,8 @@
 		src.camera_type = construct_from.type
 	src.is_bot = isbot(construct_from)
 
-	// monkestation start: add TRAIT_GOES_THROUGH_WOODEN_BARRICADES
 	if(HAS_TRAIT(construct_from, TRAIT_GOES_THROUGH_WOODEN_BARRICADES))
 		goes_thru_barricades = TRUE
-	// monkestation end
 
 	if(construct_from.pulling)
 		src.pulling_info = new(construct_from.pulling, access, no_id, call_depth + 1)

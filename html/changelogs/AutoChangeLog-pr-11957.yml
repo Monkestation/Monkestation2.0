@@ -1,8 +1,0 @@
-author: "SirNightKnight"
-delete-after: True
-changes:
-  - balance: "increased the abundance of stingbangs in the sectech and stingbang crate."
-  - balance: "stingbangs release more pellets but the pellets have a higher chance to jostile or fall out on their own."
-  - balance: "embedded objects won't cause stamina damage if you have analgesia."
-  - balance: "stimulants nullify damage slowdown."
-  - image: "gave stingbang boxes their own illustration."

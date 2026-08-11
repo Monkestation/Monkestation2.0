@@ -16,9 +16,21 @@
 		CRASH("A deathmatch controller already exists.")
 	GLOB.deathmatch_game = src
 
-	for (var/datum/lazy_template/deathmatch/template as anything in subtypesof(/datum/lazy_template/deathmatch))
-		var/map_name = initial(template.name)
-		maps[map_name] = new template
+	var/max_players = /datum/lazy_template/deathmatch::min_players
+	for (var/datum/lazy_template/deathmatch/template as anything in subtypesof(/datum/lazy_template/deathmatch) - /datum/lazy_template/deathmatch/random)
+		template = new template()
+		maps[template.name] = template
+		if(length(template.allowed_loadouts) > 1)
+			template.allowed_loadouts.Insert(1, /datum/outfit/deathmatch_loadout/random)
+		if(max_players < template.max_players)
+			max_players = template.max_players
+
+	maps = sort_list(maps)
+	var/datum/lazy_template/deathmatch/random/random_template = new()
+	random_template.max_players = max_players
+	maps.Insert(1, random_template.name)
+	maps[random_template.name] = random_template
+
 	loadouts = subtypesof(/datum/outfit/deathmatch_loadout)
 	modifiers = sortTim(init_subtypes_w_path_keys(/datum/deathmatch_modifier), GLOBAL_PROC_REF(cmp_deathmatch_mods), associative = TRUE)
 
@@ -60,7 +72,7 @@
 		.["lobbies"] += list(list(
 			name = ckey,
 			players = lobby.players.len,
-			max_players = initial(lobby.map.max_players),
+			max_players = lobby.map.max_players,
 			map = initial(lobby.map.name),
 			playing = lobby.playing
 		))

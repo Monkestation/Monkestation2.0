@@ -117,12 +117,13 @@
 	icon_state = "rave_visor"
 	complexity = 1
 	overlay_state_inactive = "module_rave"
+
 	/// The client colors applied to the wearer.
 	var/datum/client_colour/rave_screen
 	/// The current element in the rainbow_order list we are on.
 	var/rave_number = 1
 	/// The track we selected to play.
-	var/datum/track/selection
+	var/datum/media_track/selection
 	/// A list of all the songs we can play.
 	var/list/songs = list()
 	/// A list of the colors the module can take.
@@ -137,29 +138,23 @@
 
 /obj/item/mod/module/visor/rave/Initialize(mapload)
 	. = ..()
-	var/list/tracks = flist("[global.config.directory]/jukebox_music/sounds/")
-	for(var/sound in tracks)
-		var/datum/track/track = new()
-		track.song_path = file("[global.config.directory]/jukebox_music/sounds/[sound]")
-		var/list/sound_params = splittext(sound,"+")
-		if(length(sound_params) != 3)
-			continue
-		track.song_name = sound_params[1]
-		track.song_length = text2num(sound_params[2])
-		track.song_beat = text2num(sound_params[3])
-		songs[track.song_name] = track
+	for(var/datum/media_track/song in SSmedia_tracks.jukebox_tracks)
+		songs += song.title
+		songs[song.title] = song
+
 	if(length(songs))
-		var/song_name = pick(songs)
-		selection = songs[song_name]
+		var/random_song_title = pick(songs)
+		selection = songs[random_song_title]
 
 /obj/item/mod/module/visor/rave/on_activation()
 	. = ..()
 	if(!.)
 		return
+
 	rave_screen = mod.wearer.add_client_colour(/datum/client_colour/rave)
 	rave_screen.update_colour(rainbow_order[rave_number])
 	if(selection)
-		mod.wearer.playsound_local(get_turf(src), null, 50, channel = CHANNEL_JUKEBOX, sound_to_use = sound(selection.song_path), use_reverb = FALSE)
+		mod?.wearer?.client?.tgui_panel?.play_music(selection.url, null)
 
 /obj/item/mod/module/visor/rave/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
@@ -187,19 +182,16 @@
 /obj/item/mod/module/visor/rave/get_configuration()
 	. = ..()
 	if(length(songs))
-		.["selection"] = add_ui_configuration("Song", "list", selection.song_name, clean_songs())
+		.["selection"] = add_ui_configuration("Song", "list", selection.title, assoc_to_keys(songs))
 
 /obj/item/mod/module/visor/rave/configure_edit(key, value)
 	switch(key)
 		if("selection")
 			if(active)
 				return
+			if(QDELETED(src))
+				return
 			selection = songs[value]
-
-/obj/item/mod/module/visor/rave/proc/clean_songs()
-	. = list()
-	for(var/track in songs)
-		. += track
 
 ///Tanner - Tans you with spraytan.
 /obj/item/mod/module/tanner

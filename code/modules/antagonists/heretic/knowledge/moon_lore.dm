@@ -33,7 +33,7 @@
 		"Your moon blade is special compared to the other heretic blades. It can be used even if you are pacified.",
 		"Your passive makes you completely impervious to brain traumas and slowly regenerates your brain health. Makes sure to upgrade it to bolster the regeneration effect.",
 		"Your Resplendent Regalia utterly changes the rules of combat for you and your opponents; You become fully immune to disabling effect, and all damage received (lethal or non lethal) will be converted into brain damage. However. the robes themselves have no armor, and prevent you from using guns as well as pacifying you (you can still use your moon blade).",
-		"Your moon amulette allows you to channel its effects through your moon blade. When toggled on, your Moon blade will no longer do lethal damage, but do sanity damage and become unblockable, this also allows you to use it while wearing your robes!",
+		"Your moon amulette allows you to channel its effects through your moon blade. When toggled on, your Moon blade will no longer do lethal damage, but do sanity damage and become unblockable, this also allows you to use it while wearing your robes.",
 		"Your moon amulette is a vital part of your kit, as it allows your passive to regenerate double the brain health while worn.",
 		"If the sanity of your opponents goes below  a certain threshold, they'll become a lunatic. Lunatics are prompted to start attacking everyone (including you). Should you want to sacrifice them (or to get them to leave you be), hit them again with your moon blade to put them to sleep.",
 		"Ringleader's Rise summons an army of clones. They do barely any damage, but should they be attacked by non-heretics, they will explode and cause sanity and brain damage to those around them.",
@@ -129,8 +129,10 @@
 	research_tree_icon_frame = 9
 
 /datum/heretic_knowledge/armor/moon
-	desc = "Create a Resplendant Regalia.<br>While worn, renders you fully immune to disabling effects \
-		and converts all forms of damage into brain damage, though also causing pacifism (with the exception of your Moon Blade)."
+	desc = "Create a Resplendant Regalia.<br>\
+		While worn, renders you fully immune to disabling effects \
+		and converts all forms of damage into brain damage, though also causing pacifism \
+		(You won't be able to use your moonlight blade without wearing a moon amulet)."
 	gain_text = "Trails of light and mirth flowed from every arm of this magnificent attire. \
 			The troupe twirled in irridescent cascades, dazzling onlookers with the truth they sought. \
 			I observed, basking in the light, to find my self."

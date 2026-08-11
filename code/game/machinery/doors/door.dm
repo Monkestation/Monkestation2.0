@@ -67,6 +67,11 @@
 	/// What specific lift ID do we link with?
 	var/transport_linked_id
 
+	/// What door types do we want to align with if any
+	var/door_align_type
+	var/align_to_windows = FALSE
+	var/auto_dir_align = TRUE
+
 /datum/armor/machinery_door
 	melee = 30
 	bullet = 30
@@ -574,10 +579,8 @@
 	return !(machine_stat & NOPOWER)
 
 /obj/machinery/door/proc/update_freelook_sight()
-	if(!glass && GLOB.cameranet)
-		GLOB.cameranet.updateVisibility(src, 0)
-	if(!glass && GLOB.thrallnet)
-		GLOB.thrallnet.updateVisibility(src, 0)
+	if(!glass && SScameras)
+		SScameras.update_visibility(src)
 
 /obj/machinery/door/block_superconductivity() // All non-glass airlocks block heat, this is intended.
 	if(opacity || heat_proof)
