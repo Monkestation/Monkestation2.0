@@ -301,23 +301,30 @@
 /mob/living/silicon/robot/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!do_after(ninja, 6 SECONDS, target = src, hidden = TRUE))
 		return
+
+	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
+	if(ninja_antag)
+		var/datum/objective/cyborg_hijack/objective = locate() in ninja_antag.objectives
+		if(objective)
+			objective.completed = TRUE
+
 	spark_system.start()
 	playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	to_chat(src, span_danger("UPLOAD COMPLETE. NEW CYBORG MODEL DETECTED.  INSTALLING..."))
 	faction = list(ROLE_NINJA)
-	bubble_icon = "syndibot"
 	UnlinkSelf()
 	ionpulse = TRUE
 	laws = new /datum/ai_laws/ninja_override()
-	apply_model(pick(/obj/item/robot_model/syndicate, /obj/item/robot_model/syndicate/medical, /obj/item/robot_model/syndicate/saboteur))
-	apply_skin(model.default_skin)
 
-	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
-	if(!ninja_antag)
-		return
-	var/datum/objective/cyborg_hijack/objective = locate() in ninja_antag.objectives
-	if(objective)
-		objective.completed = TRUE
+	initialize_cyborg_model_lists()
+	var/input_model = show_radial_menu(src, src, GLOB.cyborg_base_models_icon_list_ninja, custom_check = CALLBACK(src, PROC_REF(check_menu), src), radius = 42, require_near = TRUE)
+	if(!input_model)
+		input_model = pick(GLOB.cyborg_base_models_icon_list_ninja) // Guess they want a random model then.
+	var/obj/item/robot_model/picked_robot_model = GLOB.cyborg_model_list_ninja[input_model]
+	if(!picked_robot_model)
+		CRASH("Ninja failed to give a syndicate robot model to a cyborg.")
+	apply_model(picked_robot_model)
+	apply_skin(model.default_skin)
 
 //CARBON MOBS//
 /mob/living/carbon/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)

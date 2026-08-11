@@ -1,7 +1,12 @@
-/// To store all the different cyborg models, instead of creating that for each cyborg.
+/// To store all the different cyborg models for station cyborgs, instead of creating that for each cyborg.
 GLOBAL_LIST_EMPTY(cyborg_model_list)
-/// To store all of the different base cyborg model icons, instead of creating them every time we need to display a radial menu.
+/// To store all of the different base cyborg model icons for station cyborgs, instead of creating them every time we need to display a radial menu.
 GLOBAL_LIST_EMPTY(cyborg_base_models_icon_list)
+
+/// To store all the different cyborg models for ninja cyborgs, instead of creating that for each cyborg.
+GLOBAL_LIST_EMPTY(cyborg_model_list_ninja)
+/// To store all of the different base cyborg model icons for ninja cyborgs, instead of creating them every time we need to display a radial menu.
+GLOBAL_LIST_EMPTY(cyborg_base_models_icon_list_ninja)
 
 /// Initializes the global list for what cyborg models that are available for selection and their model icons for radial wheel purposes.
 /proc/initialize_cyborg_model_lists()
@@ -28,3 +33,16 @@ GLOBAL_LIST_EMPTY(cyborg_base_models_icon_list)
 			var/datum/robot_skin/skin = model.default_skin
 			valid_base_models[option] = image(icon = skin.icon, icon_state = skin.icon_state)
 		GLOB.cyborg_base_models_icon_list = valid_base_models
+	if(!length(GLOB.cyborg_model_list_ninja))
+		GLOB.cyborg_model_list_ninja = list(
+			"Assault" = /obj/item/robot_model/syndicate,
+			"Medical" = /obj/item/robot_model/syndicate/medical,
+			"Saboteur" = /obj/item/robot_model/syndicate/saboteur,
+		)
+	if(!length(GLOB.cyborg_base_models_icon_list_ninja))
+		var/valid_base_models = list()
+		for(var/option in GLOB.cyborg_model_list_ninja)
+			var/obj/item/robot_model/model = GLOB.cyborg_model_list_ninja[option]
+			var/datum/robot_skin/skin = model.default_skin
+			valid_base_models[option] = image(icon = skin.icon, icon_state = skin.icon_state)
+		GLOB.cyborg_base_models_icon_list_ninja = valid_base_models
