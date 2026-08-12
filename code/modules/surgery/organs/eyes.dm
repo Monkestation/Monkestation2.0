@@ -517,7 +517,7 @@
 				set_beam_color(new_color, to_update)
 				return TRUE
 		if("enter_color")
-			var/new_color = lowertext(params["new_color"])
+			var/new_color = LOWER_TEXT(params["new_color"])
 			var/to_update = params["to_update"]
 			set_beam_color(new_color, to_update, sanitize = TRUE)
 			return TRUE
@@ -720,6 +720,12 @@
 	desc = "These eyes are made of a soft jelly. Unlike all other eyes, though, there are three of them."
 	eye_icon_state = "jelleyes"
 	icon_state = "eyeballs-jelly"
+
+/obj/item/organ/internal/eyes/plasmaman
+	name = "plasmabone light receptors"
+	desc = "Eyes that burn with passion! (And when in contact with oxygen)."
+	eye_icon_state = "plasmaeyes"
+	icon_state = "eyeballs-plasmaman"
 
 /obj/item/organ/internal/eyes/night_vision/maintenance_adapted
 	name = "adapted eyes"

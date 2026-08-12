@@ -52,7 +52,7 @@
 		return
 	if(iscyborg(hit_atom))
 		var/mob/living/silicon/robot/R = hit_atom
-		var/obj/item/worn_hat = R.hat
+		var/obj/item/worn_hat = R.worn_hat
 		if(worn_hat && HAS_TRAIT(worn_hat, TRAIT_NODROP))
 			R.visible_message(span_warning("[src] bounces off [worn_hat], without an effect!"), span_warning("[src] bounces off your mighty [worn_hat.name], falling to the floor in defeat."))
 			return
