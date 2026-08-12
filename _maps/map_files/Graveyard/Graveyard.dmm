@@ -23558,7 +23558,7 @@
 "jig" = (
 /obj/structure/table,
 /obj/structure/window/reinforced/tinted/spawner/directional/north,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "jit" = (

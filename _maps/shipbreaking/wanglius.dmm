@@ -698,7 +698,7 @@
 "Yx" = (
 /obj/structure/table,
 /obj/machinery/light/directional/west,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /turf/open/floor/mineral/titanium/white,
 /area/template_noop)
 "YZ" = (

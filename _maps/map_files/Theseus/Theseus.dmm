@@ -70102,7 +70102,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "upb" = (
 /obj/structure/table,
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray{
 	pixel_y = 7;
 	pixel_x = -3
 	},
@@ -79577,10 +79577,10 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "wZb" = (
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray{
 	pixel_y = 11
 	},
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray{
 	pixel_y = 4
 	},
 /obj/structure/table/reinforced/rglass,

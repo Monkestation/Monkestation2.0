@@ -13416,7 +13416,7 @@
 	network = list("ss13","medbay");
 	pixel_x = 22
 	},
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
@@ -39793,7 +39793,7 @@
 	},
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/autopsy_scanner,
 /turf/open/floor/iron/dark,
@@ -58037,7 +58037,7 @@
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "rKZ" = (
