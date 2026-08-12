@@ -83,3 +83,18 @@
       - [x] This code did not runtime during testing.
 
       - [x] You documented all of your changes.'
+2026-08-12:
+  notghosti:
+  - map: Flatpackers have been added to Theseus.
+  - map: Theseus Robotics Desk window is now under robotics access.
+  - bugfix: You can now beat people to death with a balloon mallet, as god intended
+  osaka-fuuri:
+  - rscadd: Added an action button for kissing, only for applied lipsticks with traits
+  - map: added two spraycans to CentCom
+  sufferingintensifies:
+  - map: boxstation now has a disposals bin in the medical storage room, and airlocks
+      in the operating theater.
+  - map: boxstation patient room has been revamped to allow for minor surgeries.
+  - map: boxstation's defibrillator mounts in the surgery area have been shifted slightly
+  - map: blueshift exam area now has walls and posters rather than windows to let
+      doctors place health monitors
