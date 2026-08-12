@@ -60,10 +60,6 @@
 	name = stored_item.name
 	real_name = stored_item.name
 
-/mob/living/basic/possession_holder/create_overlay_index()
-	var/list/new_overlays[2]
-	possession_overlays = new_overlays
-
 /mob/living/basic/possession_holder/death(gibbed)
 	. = ..()
 	if(stored_item)

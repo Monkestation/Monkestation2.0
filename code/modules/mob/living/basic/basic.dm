@@ -89,6 +89,27 @@
 	///This damage is taken when atmos doesn't fit all the requirements above. Set to 0 to avoid adding the atmos_requirements element.
 	var/unsuitable_atmos_damage = 1
 
+	///rendered posession overlays
+	var/list/possession_overlays[1]
+	/// do we have hands?
+	var/dexterous = FALSE
+
+	var/uses_directional_offsets = TRUE
+	///the shifted y offset of the left hand
+	var/list/l_y_shift
+	///the shifted y offset of the right hand
+	var/list/r_y_shift
+	///the shifted x offset of the right hand
+	var/list/r_x_shift
+	///the shifted x offset of the left hand
+	var/list/l_x_shift
+	/// base amount of pixels this offsets upwards for each set of additional arms past 2
+	var/base_vertical_shift = 0
+	///the shifted y offset of the head
+	var/list/head_y_shift
+	/// the shifted x offset of the head
+	var/list/head_x_shift
+
 //MONKESTATION EDIT START
 	/// List of weather immunity traits that are then added on Initialize(), see traits.dm.
 	var/list/weather_immunities
@@ -324,6 +345,16 @@
 
 	return GLOB.fire_appearances[fire_icon]
 
+/mob/living/basic/proc/apply_overlay(cache_index)
+	if((. = possession_overlays[cache_index]))
+		add_overlay(.)
+
+/mob/living/basic/proc/remove_overlay(cache_index)
+	var/I = possession_overlays[cache_index]
+	if(I)
+		cut_overlay(I)
+		possession_overlays[cache_index] = null
+
 /mob/living/basic/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, ignore_animation = TRUE)
 	. = ..()
 	if (.)
@@ -339,6 +370,25 @@
 		SET_PLANE(held, ABOVE_HUD_PLANE, our_turf)
 		held.screen_loc = ui_hand_position(index)
 		client.screen |= held
+
+/mob/living/basic/can_hold_items(obj/item/I)
+	return dexterous && ..()
+
+/mob/living/basic/activate_hand(selhand)
+	if(!dexterous)
+		return ..()
+	if(!selhand)
+		selhand = (active_hand_index % held_items.len)+1
+	if(istext(selhand))
+		selhand = LOWER_TEXT(selhand)
+		if(selhand == "right" || selhand == "r")
+			selhand = 2
+		if(selhand == "left" || selhand == "l")
+			selhand = 1
+	if(selhand != active_hand_index)
+		swap_hand(selhand)
+	else
+		mode()
 
 /mob/living/basic/update_cached_insulation()
 	return
