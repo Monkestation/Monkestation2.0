@@ -44196,7 +44196,8 @@
 /obj/item/emergency_bed{
 	pixel_y = 14
 	},
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/machinery/defibrillator_mount/directional/south,
+/obj/item/surgery_tray,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery)
 "ojr" = (
