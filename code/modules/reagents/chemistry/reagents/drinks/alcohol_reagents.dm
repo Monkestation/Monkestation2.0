@@ -2450,7 +2450,7 @@
 	quality = DRINK_GOOD
 	taste_description = "strikes and gutters"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/coffee = 1) //MONKESTATION ADDITION: Add coffee addiction to alcoholic beverages containing coffee or coffee liqueur
+	addiction_types = list(/datum/addiction/coffee = 1)
 	liquid_fire_power = 5
 
 /datum/reagent/consumable/ethanol/drunken_espatier
@@ -3186,7 +3186,7 @@
 	taste_description = "creamy brandy and nutmeg"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/flip_cocktail/on_mob_metabolize(mob/living/drinker)
+/datum/reagent/consumable/ethanol/flip_cocktail/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
 	if(prob(10))
 		drinker.emote("flip")
@@ -3202,7 +3202,7 @@
 
 /datum/reagent/consumable/ethanol/aperitivo/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired) //This and some of the cocktails it gets mixed into stimulate the apetite, as an aperitivo should
 	. = ..()
-	drinker.adjust_nutrition(-5 * REM * seconds_per_tick)
+	drinker.adjust_nutrition(-1 * REM * seconds_per_tick)
 	drinker.overeatduration = 0
 
 /datum/reagent/consumable/ethanol/herbal_liqueur
@@ -3213,7 +3213,6 @@
 	quality = DRINK_NICE
 	taste_description = "confounding herbaceousness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
 	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/ethanol/maraschino
@@ -3329,7 +3328,7 @@
 	taste_description = "elegant pineapple"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/negroni //Aperitif that increases hunger
+/datum/reagent/consumable/ethanol/negroni //Aperitif that supresses overeating
 	name = "Negroni"
 	description = "An iconic Italian aperitif, its simple intensity crowns it as perhaps the ultimate bitter cocktail. Supposedly it was named after an Italian count who wanted a stronger version of a spritz and asked his bartender to replace soda with gin."
 	boozepwr = 50
@@ -3342,8 +3341,7 @@
 
 /datum/reagent/consumable/ethanol/negroni/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	drinker.adjust_nutrition(-3 * REM * seconds_per_tick)
-	drinker.overeatduration = 0
+	drinker.overeatduration -= 20
 
 /datum/reagent/consumable/ethanol/nuclear_daiquiri
 	name = "Nuclear daiquiri"
@@ -3409,8 +3407,7 @@
 
 /datum/reagent/consumable/ethanol/spritz/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	drinker.adjust_nutrition(-5 * REM * seconds_per_tick)
-	drinker.overeatduration = 0
+	drinker.overeatduration -= 20
 
 /datum/reagent/consumable/ethanol/vieux_carre
 	name = "Vieux Carré"
