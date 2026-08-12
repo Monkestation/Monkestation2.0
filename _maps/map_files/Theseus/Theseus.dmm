@@ -33396,7 +33396,6 @@
 /area/station/maintenance/port/fore)
 "jPg" = (
 /obj/structure/table/optable,
-/obj/item/surgical_drapes,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/landmark/start/hangover,
 /obj/structure/drain/big,
@@ -34384,7 +34383,6 @@
 /area/station/science/ordnance/freezerchamber)
 "keL" = (
 /obj/structure/table/optable,
-/obj/item/surgical_drapes,
 /obj/effect/landmark/start/hangover,
 /obj/structure/drain/big,
 /turf/open/floor/iron/dark,
@@ -60470,6 +60468,7 @@
 /turf/closed/wall/r_wall,
 /area/station/service/janitor)
 "rDw" = (
+/obj/item/surgery_tray/deployed,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "rDF" = (
@@ -79577,12 +79576,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "wZb" = (
-/obj/item/surgery_tray{
-	pixel_y = 11
-	},
-/obj/item/surgery_tray{
-	pixel_y = 4
-	},
 /obj/structure/table/reinforced/rglass,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
@@ -114410,7 +114403,7 @@ tDu
 uXh
 deo
 umj
-rDw
+agP
 miX
 tjT
 iOH
@@ -114923,7 +114916,7 @@ aYM
 aKB
 qSg
 yeK
-agP
+rDw
 rDw
 vcz
 tjT
