@@ -42,13 +42,13 @@
 	RegisterSignal(brain_owner, COMSIG_CLICK, PROC_REF(owner_clicked))
 	RegisterSignal(brain_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 	RegisterSignals(brain_owner, list(COMSIG_QDELETING, COMSIG_LIVING_PRE_WABBAJACKED), PROC_REF(undeploy))
-	RegisterSignal(brain_owner, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_organ_gain))
+	RegisterSignal(brain_owner, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_organ_gain))
 
 	var/obj/item/implant/radio/radio = new(owner)
 	radio.implant(owner, null, TRUE, TRUE)
 	radio_weakref = WEAKREF(radio)
 
-/obj/item/organ/internal/brain/cybernetic/ai/on_remove(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/internal/brain/cybernetic/ai/Remove(mob/living/carbon/organ_owner, special, movement_flags)
 	undeploy()
 	. = ..()
 	organ_owner.remove_traits(list(TRAIT_MEDICAL_HUD, TRAIT_NO_MINDSWAP, TRAIT_CORPSELOCKED), REF(src))
