@@ -1,0 +1,100 @@
+2026-08-01:
+  AberrantQuerist:
+  - rscadd: Updates sister server icons for Medium Rare and Monke's Paw.
+  EatsTheGrapes:
+  - bugfix: Using fart emote as synthetic being no longer displays an incorrect unusable
+      emote warning
+  Mantlecrawler:
+  - rscadd: Speebus's admin cameo item, Intern brand Cigars
+  TheColorCyan:
+  - balance: oozeling stacks required for hydrophobia upped from 10 to 20
+  - balance: water will now always remove 5 stacks instead of only doing so if you
+      are hydrophobic
+  - qol: clicking on slime wetness hud will now display info about it
+2026-08-02:
+  Runian:
+  - spellcheck: Fixes the typo that within the RoboTact app when a cyborg has no connection
+      to an AI.
+  TheColorCyan:
+  - bugfix: (SmArtKar) Added some safeties to ensure that hotspots don't cause an
+      infinite infectious runtime and crash clients
+  Watermelon914:
+  - bugfix: Fixes list pick circuit compenent.
+2026-08-03:
+  Runian:
+  - bugfix: Cyborg welders that have been upgraded via the experimental welder upgrade
+      now correctly automatically refuel their welder when it is off.
+  nasend_:
+  - bugfix: Bullets now leave debris particles.
+2026-08-04:
+  Runian:
+  - bugfix: Falling into a chasm as a cyborg no longer deletes your MMI and allows
+      you to re-enter your cyborg body.
+  - bugfix: Clockwork Soul Vessels now correctly carry over their clockwork antag
+      status whenever becoming a cyborg.
+  - bugfix: Fixes clockwork cult power generation trying to update action buttons
+      for mobs that don't exist.
+  TheColorCyan:
+  - bugfix: fixes slimes runtiming when trying to latch onto borgs
+  - bugfix: slimes cant latch onto robotic mobs anymore
+  - bugfix: fixed spy uplink runtiming and not doing anything
+  - bugfix: fixed oozeling spewing blood around on slasher machete hits
+  - bugfix: fixed blood dna and share blood related runtimes
+  - bugfix: fixed ancient sarcofagus from bubblegum having wrong sprite
+  hexakats:
+  - balance: Replaced the syndicate revolver in the traitor uplink with a revolver
+      case that comes with the revolver and 3 speedloaders for 12TC
+  - balance: Syndicate rebar crossbow is now 8 tc
+  - balance: Syndicate rebar crossbow now starts with a jagged iron rods a the starting
+      ammo
+  - balance: Syndicate rebar crossbow now only holds one rod in its internal magazine
+  - spellcheck: makarov magazine descriptions now correctly say 12 rounds instead
+      of 8 on the uplink
+2026-08-05:
+  Runian:
+  - bugfix: Examining someone that is using digital camouflage now correctly displays
+      the obvious tell at the bottom of examine instead of the top.
+2026-08-06:
+  SirNightKnight:
+  - qol: mutes have the option to disable signer if they know it.
+  notghosti:
+  - map: Voidraptor solars SMES are now hooked to the grid
+2026-08-07:
+  notghosti:
+  - bugfix: Hilbital is now 60 seconds to respond.
+2026-08-09:
+  Jak27:
+  - rscadd: lets smokers/alcoholics choose what their favorite brand is
+  - rscadd: Adds a new syndicate Misc. Gadget, the Omnilathe for 4tc, a portable lathe/ammo
+      bench.
+  Singul0:
+  - qol: Made tutorial simulations easier to access.
+  - bugfix: Polished bitrunning simulations further
+  notghosti:
+  - balance: Cyborg RPED has had their capacity reduced back to their original value
+      (200 parts -> 50 parts)
+  - balance: 'Cyborg Upgrades: Bluespace has had it''s research requirements reduced
+      to practical_bluespace and adv_robotics
+
+      ## Pre-Merge Checklist
+
+      - [x] You tested this on a local server.
+
+      - [x] This code did not runtime during testing.
+
+      - [x] You documented all of your changes.'
+2026-08-12:
+  notghosti:
+  - map: Flatpackers have been added to Theseus.
+  - map: Theseus Robotics Desk window is now under robotics access.
+  - bugfix: You can now beat people to death with a balloon mallet, as god intended
+  osaka-fuuri:
+  - rscadd: Added an action button for kissing, only for applied lipsticks with traits
+  - map: added two spraycans to CentCom
+  sufferingintensifies:
+  - map: boxstation now has a disposals bin in the medical storage room, and airlocks
+      in the operating theater.
+  - map: boxstation patient room has been revamped to allow for minor surgeries.
+  - map: boxstation's defibrillator mounts in the surgery area have been shifted slightly
+  - map: blueshift exam area now has walls and posters rather than windows to let
+      doctors place health monitors

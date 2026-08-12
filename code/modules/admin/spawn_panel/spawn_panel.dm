@@ -91,7 +91,7 @@ GLOBAL_ALIST_EMPTY(spawnpanels_by_ckey)
 		return GLOB.never_state
 	return ADMIN_STATE(R_ADMIN)
 
-/datum/spawnpanel/ui_act(action, params)
+/datum/spawnpanel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return FALSE
 

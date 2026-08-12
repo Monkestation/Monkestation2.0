@@ -372,14 +372,17 @@
 			new_borg.set_lockcharge(TRUE)
 			to_chat(new_borg, span_warning("Error: Servo motors unresponsive."))
 
-//monkestation edit start
-		if(be_clockwork && new_borg.mind)
+		var/should_convert_to_clockwork_cult = be_clockwork
+		if(istype(inserting_mmi, /obj/item/mmi/posibrain/soul_vessel))
+			var/obj/item/mmi/posibrain/soul_vessel/clockwork_mmi = inserting_mmi
+			if(clockwork_mmi.give_clock_cultist)
+				should_convert_to_clockwork_cult = TRUE
+		if(should_convert_to_clockwork_cult && new_borg.mind)
 			var/datum/antagonist/clock_cultist/new_servant_datum = new
 			if(old_servant_datum)
 				new_servant_datum.silent = TRUE
 			new_borg.mind.add_antag_datum(new_servant_datum)
 			new_servant_datum.silent = FALSE
-//monkestation edit end
 
 		return ITEM_INTERACT_SUCCESS
 

@@ -51,7 +51,7 @@
 /datum/emote/living/hiss/get_sound(mob/living/user)
 	if(islizard(user) || isipc(user) || isAI(user) || iscyborg(user))
 		return pick('sound/voice/hiss1.ogg', 'sound/voice/hiss2.ogg', 'sound/voice/hiss3.ogg', 'sound/voice/hiss4.ogg', 'sound/voice/hiss5.ogg', 'sound/voice/hiss6.ogg')
-	else if(is_cat_enough(user, include_all_anime = TRUE))
+	else if(user.is_cat_enough(include_all_anime = TRUE))
 		return pick('sound/voice/feline/hiss1.ogg', 'sound/voice/feline/hiss2.ogg', 'sound/voice/feline/hiss3.ogg')
 
 /datum/emote/living/thumbs_up
@@ -143,7 +143,7 @@
 	return ..()
 
 /datum/emote/living/scream/get_sound(mob/living/user)
-	if ((is_cat_enough(user, TRUE) && issilicon(user)) || (is_cat_enough(user, FALSE) && isipc(user)))
+	if ((user.is_cat_enough(TRUE) && issilicon(user)) || (user.is_cat_enough(FALSE) && isipc(user)))
 		return pick(
 			'sound/voice/screams/silicon/catscream1.ogg',
 			'sound/voice/screams/silicon/catscream2.ogg',
@@ -158,7 +158,7 @@
 			'sound/voice/screams/silicon/robotAUGH3.ogg',
 			'sound/voice/screams/silicon/robotAUGH4.ogg',
 			'sound/voice/screams/silicon/robotAUGH5.ogg')
-	if(is_cat_enough(user))
+	if(user.is_cat_enough())
 		return pick('sound/voice/feline/scream1.ogg', 'sound/voice/feline/scream2.ogg', 'sound/voice/feline/scream3.ogg')
 	// It's not fair to NOT scream like a cat when we're cat, so alt screams get lowest priority
 	if(ishuman(user))
@@ -172,7 +172,7 @@
 		. = mob.get_scream_sound()
 
 /datum/emote/living/scream/should_vary(mob/living/user)
-	if(ishuman(user) && !is_cat_enough(user))
+	if(ishuman(user) && !user.is_cat_enough())
 		return TRUE
 	return ..()
 
@@ -198,8 +198,8 @@
 	emote_type = EMOTE_AUDIBLE
 	audio_cooldown = 1.5 SECONDS
 
-/datum/emote/living/meow/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
-	return ..() && is_cat_enough(user, include_all_anime = TRUE)
+/datum/emote/living/meow/can_run_emote(mob/living/user, status_check = TRUE, intentional = FALSE)
+	return ..() && user.is_cat_enough(include_all_anime = TRUE)
 
 /datum/emote/living/meow/get_sound(mob/living/user)
 	if(issilicon(user) || isipc(user))
@@ -237,8 +237,8 @@
 	vary = TRUE
 	audio_cooldown = 1.5 SECONDS
 
-/datum/emote/living/mggaow/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
-	return ..() && is_cat_enough(user, include_all_anime = TRUE)
+/datum/emote/living/mggaow/can_run_emote(mob/living/user, status_check = TRUE, intentional = FALSE)
+	return ..() && user.is_cat_enough(include_all_anime = TRUE)
 
 /datum/emote/living/mggaow/get_sound(mob/living/user)
 	return 'sound/voice/feline/mggaow.ogg'
@@ -273,8 +273,8 @@
 	emote_type = EMOTE_AUDIBLE
 	audio_cooldown = 8 SECONDS
 
-/datum/emote/living/purr/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
-	return ..() && is_cat_enough(user, include_all_anime = TRUE)
+/datum/emote/living/purr/can_run_emote(mob/living/user, status_check = TRUE, intentional = FALSE)
+	return ..() && user.is_cat_enough(include_all_anime = TRUE)
 
 /datum/emote/living/purr/get_sound(mob/living/user)
 	return 'sound/voice/feline/purr.ogg'

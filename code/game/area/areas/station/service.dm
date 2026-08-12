@@ -159,6 +159,18 @@
 	name = "Garden"
 	icon_state = "garden"
 
+/area/station/service/hydroponics/chicken
+	name = "Ranch"
+	icon_state = "hydro"
+
+/area/station/service/hydroponics/chicken/storage
+	name = "Ranch Storage"
+	icon_state = "hydro"
+
+/area/station/service/hydroponics/chicken/backroom
+	name = "Ranch Backroom"
+	icon_state = "hydro"
+
 /*
 * Misc/Unsorted Rooms
 */

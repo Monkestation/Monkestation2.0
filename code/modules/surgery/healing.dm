@@ -127,6 +127,26 @@
 	target.take_bodypart_damage(brute_dealt, burn_dealt, wound_bonus=CANT_WOUND)
 	return FALSE
 
+/datum/surgery_step/heal/proc/get_perfect_information(mob/user, mob/target)
+	if(issilicon(user))
+		return TRUE
+
+	if(user.is_holding_item_of_type(/obj/item/healthanalyzer))
+		return TRUE
+
+	for(var/obj/machinery/computer/puter in range(2, target))
+		if(istype(puter, /obj/machinery/computer/operating))
+			var/obj/machinery/computer/operating/op_comp = puter
+			if(op_comp.table?.patient == target)
+				return TRUE
+		if(istype(puter, /obj/machinery/computer/vitals_reader))
+			var/obj/machinery/computer/vitals_reader/vr_comp = puter
+			if(vr_comp.patient == target)
+				return TRUE
+
+	// melbert todo : add modsuit health analyzer to this
+	return FALSE
+
 /***************************BRUTE***************************/
 /datum/surgery/healing/brute
 	name = "Tend Wounds (Bruises)"
