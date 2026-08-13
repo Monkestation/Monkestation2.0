@@ -23,7 +23,8 @@
 	var/datum/action/innate/brain_undeployment/undeployment_action = new
 	/// Weakref to our imaginary brain radio implant
 	var/datum/weakref/radio_weakref
-
+	/// If the owner is deployed as shell
+	var/deployed = FALSE
 /obj/item/organ/internal/brain/cybernetic/ai/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their eyes move with machine precision, their expression completely blank.")
@@ -48,6 +49,7 @@
 	var/obj/item/implant/radio/radio = new(owner)
 	radio.implant(owner, null, TRUE, TRUE)
 	radio_weakref = WEAKREF(radio)
+	GLOB.available_ai_shells |= brain_owner
 
 /obj/item/organ/internal/brain/cybernetic/ai/Remove(mob/living/carbon/organ_owner, special, movement_flags)
 	undeploy()
@@ -58,6 +60,8 @@
 	if(radio)
 		QDEL_NULL(radio)
 	connected_ai = null
+	deployed = FALSE
+	GLOB.available_ai_shells -= owner
 
 /obj/item/organ/internal/brain/cybernetic/ai/proc/get_status_tab_item(mob/living/source, list/items)
 	SIGNAL_HANDLER
@@ -146,13 +150,13 @@
 
 	var/obj/item/implant/radio/implant = radio_weakref.resolve()
 	if(implant.radio && AI.radio)
+		if(AI.radio.syndie) /// AI has Syndie radio if traitor.
+			AI.radio.make_syndie()
 		implant.radio.subspace_transmission = TRUE
 		implant.radio.command = TRUE
 		implant.radio.channels = AI.radio.channels
 		for(var/channel in implant.radio.channels)
 			LAZYSET(implant.radio.secure_radio_connections, channel, add_radio(implant.radio, GLOB.radiochannels[channel]))
-	if(AI.radio.syndie) /// AI has Syndie radio if traitor.
-		AI.radio.make_syndie()
 
 /// Handles exitting the shell.
 /obj/item/organ/internal/brain/cybernetic/ai/proc/undeploy(datum/source)
@@ -168,8 +172,6 @@
 	undeployment_action.Remove(owner)
 	if(mainframe.laws)
 		mainframe.laws.show_laws(mainframe)
-	if(mainframe.eyeobj)
-		mainframe.eyeobj.setLoc(loc)
 	REMOVE_TRAIT(mainframe.mind, TRAIT_UNCONVERTABLE, REF(src))
 	REMOVE_TRAIT(mainframe, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 	owner.remove_traits(list(TRAIT_SILICON_ACCESS), REF(src)) // we don't want randoms using our body as free AA, so we only have it when we active.
@@ -178,6 +180,7 @@
 	if(implant)
 		implant.radio.resetChannels()
 
+	connected_ai = null
 	mainframe = null
 	update_med_hud_status(owner)
 
@@ -188,7 +191,7 @@
 	if(!istype(carb_owner))
 		return
 	for(var/obj/item/organ/organ as anything in carb_owner.organs)
-		if(organ.organ_flags)
+		if(organ.organ_flags && istype(organ, /obj/item/organ/external))
 			continue
 		if(!IS_ROBOTIC_ORGAN(organ) && !istype(organ, /obj/item/organ/internal/tongue)) //tongues are not in the exosuit fab and nobody is going to bother to find them so
 			return FALSE

@@ -1113,7 +1113,7 @@
 	to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
 	apc.update_appearance()
 
-/mob/living/silicon/ai/verb/deploy_to_shell(mob/living/silicon/robot/target)
+/mob/living/silicon/ai/verb/deploy_to_shell(mob/living/target)
 	set category = "AI Commands"
 	set name = "Deploy to Shell"
 
@@ -1126,25 +1126,42 @@
 	var/list/possible = list()
 
 	for(var/borgie in GLOB.available_ai_shells)
-		var/mob/living/silicon/robot/R = borgie
-		if(R.shell && !R.deployed && (R.stat != DEAD) && (!R.connected_ai || (R.connected_ai == src)))
-			possible += R
-
+		if(iscyborg(borgie))
+			var/mob/living/silicon/robot/R = borgie
+			if(R.shell && !R.deployed && (R.stat != DEAD) && (!R.connected_ai || (R.connected_ai == src)))
+				possible += R
+		if(ishuman(borgie))
+			var/mob/living/carbon/human/human = borgie
+			var/obj/item/organ/internal/brain/cybernetic/ai/brain = locate() in human.organs
+			// Checks if it is dead, currently has access from being deployed and has an AI uplink, and is sufficiently augmented
+			if(human.stat != DEAD && !(HAS_TRAIT(human, TRAIT_SILICON_ACCESS)) && (brain.is_sufficiently_augmented()) && (human.get_organ_by_type(/obj/item/organ/internal/brain/cybernetic/ai)))
+				possible += human
 	if(!LAZYLEN(possible))
 		to_chat(src, "No usable AI shell beacons detected.")
-
 	if(!target || !(target in possible)) //If the AI is looking for a new shell, or its pre-selected shell is no longer valid
 		target = tgui_input_list(src, "Which body to control?", "Direct Control", sort_names(possible))
 
 	if(isnull(target))
 		return
-	if (target.stat == DEAD || target.deployed || !(!target.connected_ai || (target.connected_ai == src)))
-		return
 
-	else if(mind)
-		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(disconnect_shell))
-		deployed_shell = target
-		target.deploy_init(src)
+	if(iscyborg(target))
+		var/mob/living/silicon/robot/shell = target
+		if(shell.stat == DEAD || shell.deployed || !(!shell.connected_ai || (shell.connected_ai == src)))
+			return
+
+	if(ishuman(target)) // If it is an AI-uplink organic
+		var/mob/living/carbon/human/human = target
+		var/obj/item/organ/internal/brain/cybernetic/ai/brain = locate() in human.organs
+		if(human.stat == DEAD || brain.deployed || !(!brain.connected_ai || (brain.connected_ai == src)))
+			return
+
+	if(mind)
+		if(ishuman(target))
+			deployed_shell = target.get_organ_by_type(/obj/item/organ/internal/brain/cybernetic/ai)
+		if(iscyborg(target))
+			RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(disconnect_shell))
+			deployed_shell = target
+		deployed_shell.deploy_init(src)
 		mind.transfer_to(target)
 	diag_hud_set_deployed()
 
