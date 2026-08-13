@@ -23,8 +23,6 @@
 	var/datum/action/innate/brain_undeployment/undeployment_action = new
 	/// Weakref to our imaginary brain radio implant
 	var/datum/weakref/radio_weakref
-	/// If the owner is deployed as shell
-	var/deployed = FALSE
 /obj/item/organ/internal/brain/cybernetic/ai/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "eyes move with machine precision, their expression completely blank.")
@@ -43,7 +41,7 @@
 	RegisterSignal(brain_owner, COMSIG_CLICK, PROC_REF(owner_clicked))
 	RegisterSignal(brain_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 	RegisterSignals(brain_owner, list(COMSIG_QDELETING, COMSIG_LIVING_PRE_WABBAJACKED), PROC_REF(undeploy))
-	RegisterSignal(brain_owner, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_organ_gain))
+	RegisterSignals(brain_owner, list(COMSIG_CARBON_GAIN_ORGAN, COMSIG_ORGAN_REMOVED), PROC_REF(on_organ_gain))
 	if(brain_owner.ai_controller) // If the owner is a monkey, delete its AI
 		QDEL_NULL(brain_owner.ai_controller)
 	var/obj/item/implant/radio/radio = new(owner)
@@ -60,7 +58,6 @@
 	if(radio)
 		QDEL_NULL(radio)
 	connected_ai = null
-	deployed = FALSE
 	GLOB.available_ai_shells -= owner
 
 /obj/item/organ/internal/brain/cybernetic/ai/proc/get_status_tab_item(mob/living/source, list/items)
@@ -157,7 +154,6 @@
 		implant.radio.channels = AI.radio.channels
 		for(var/channel in implant.radio.channels)
 			LAZYSET(implant.radio.secure_radio_connections, channel, add_radio(implant.radio, GLOB.radiochannels[channel]))
-	deployed = TRUE
 
 /// Handles exitting the shell.
 /obj/item/organ/internal/brain/cybernetic/ai/proc/undeploy(datum/source)
@@ -209,4 +205,3 @@
 	SIGNAL_HANDLER
 	to_chat(owner, span_danger("Your core has been rendered inoperable..."))
 	undeploy()
-
