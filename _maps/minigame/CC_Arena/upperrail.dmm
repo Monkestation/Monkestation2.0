@@ -427,7 +427,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/camera_assembly{
+/obj/item/wallframe/camera{
 	anchored = 1
 	},
 /turf/open/floor/iron/smooth_edge{
