@@ -176,6 +176,10 @@
 			old_body = observer.mind.current, \
 		)
 	new_player.equipOutfit(loadout) // Loadout
+	var/obj/item/organ/internal/tongue/abductor/tongue = new_player.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(tongue && istype(tongue)) // Some outfits can have them, or could be a round-start species
+		tongue.mothership = "deathmatch"
+
 	new_player.key = ckey
 	players_info["mob"] = new_player
 
