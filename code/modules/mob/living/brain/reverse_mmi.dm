@@ -27,7 +27,7 @@
 	var/deployed = FALSE
 /obj/item/organ/internal/brain/cybernetic/ai/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their eyes move with machine precision, their expression completely blank.")
+	AddElement(/datum/element/noticable_organ, "eyes move with machine precision, their expression completely blank.")
 
 /obj/item/organ/internal/brain/cybernetic/ai/Destroy()
 	. = ..()
