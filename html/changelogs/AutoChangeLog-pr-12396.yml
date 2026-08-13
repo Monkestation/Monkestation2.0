@@ -1,4 +1,0 @@
-author: "hexakats"
-delete-after: True
-changes:
-  - bugfix: "The PK \"Slab\" grenade launcher cycles ammo properly now"

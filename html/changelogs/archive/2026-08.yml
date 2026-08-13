@@ -98,3 +98,13 @@
   - map: boxstation's defibrillator mounts in the surgery area have been shifted slightly
   - map: blueshift exam area now has walls and posters rather than windows to let
       doctors place health monitors
+2026-08-13:
+  Runian:
+  - rscadd: Ore vent discovery and completion now contribute points towards regrowth
+      turf's mineral chance.
+  - bugfix: The regrowth turfs from the goldgrub pen no longer create lava underneath
+      them when mined twice.
+  hexakats:
+  - bugfix: The PK "Slab" grenade launcher cycles ammo properly now
+  osaka-fuuri:
+  - rscadd: Added cyborg apparatus functionality to plant gene modifier
