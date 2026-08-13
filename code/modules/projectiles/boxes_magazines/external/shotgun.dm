@@ -41,10 +41,69 @@
 	base_icon_state = "m12gbc"
 	ammo_type = /obj/item/ammo_casing/shotgun/meteorslug
 
+/obj/item/ammo_box/magazine/autoshotgun
+	name = "autoshotgun magazine (12g buckshot)"
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	icon_state = "proto20gmag"
+	base_icon_state = "proto20gmag"
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+	caliber = CALIBER_SHOTGUN
+	max_ammo = 12
+
+/obj/item/ammo_box/magazine/autoshotgun/slug
+	name = "autoshotgun magazine (12g slugs)"
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	icon_state = "proto20gmag"
+	base_icon_state = "proto20gmag"
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	ammo_type = /obj/item/ammo_casing/shotgun
+	caliber = CALIBER_SHOTGUN
+	max_ammo = 12
+
+/obj/item/ammo_box/magazine/autoshotgun/beeshot
+	name = "autoshotgun magazine (12g beeshot)"
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	icon_state = "proto20gmag"
+	base_icon_state = "proto20gmag"
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	ammo_type = /obj/item/ammo_casing/shotgun/beeshot
+	caliber = CALIBER_SHOTGUN
+	max_ammo = 12
+
+/obj/item/ammo_box/magazine/autoshotgun/uraniumpen
+	name = "autoshotgun magazine (12g uranium penetrator slugs)"
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	icon_state = "proto20gmag"
+	base_icon_state = "proto20gmag"
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	ammo_type = /obj/item/ammo_casing/shotgun/uraniumpen
+	caliber = CALIBER_SHOTGUN
+	max_ammo = 12
+
+/obj/item/ammo_box/magazine/autoshotgun/rubber
+	name = "autoshotgun magazine (12g rubbershot)"
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	icon_state = "proto20gmag"
+	base_icon_state = "proto20gmag"
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
+	caliber = CALIBER_SHOTGUN
+	max_ammo = 12
+
+/obj/item/ammo_box/magazine/autoshotgun/beeshot
+	name = "autoshotgun magazine (12g beanbags)"
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	icon_state = "proto20gmag"
+	base_icon_state = "proto20gmag"
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
+	caliber = CALIBER_SHOTGUN
+	max_ammo = 12
 
 ///Mining autoshotty
 
-/obj/item/ammo_box/magazine/autoshotgun
+/obj/item/ammo_box/magazine/autoshotgun/pk
 	name = "20 Gauge Shotgun Magazine"
 	desc = "A single magazine capable of holding 12 rounds of 20 gauge kinetic hydra shells."
 	icon = 'icons/obj/weapons/guns/ammo.dmi'
