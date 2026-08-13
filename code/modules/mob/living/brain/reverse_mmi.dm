@@ -157,6 +157,7 @@
 		implant.radio.channels = AI.radio.channels
 		for(var/channel in implant.radio.channels)
 			LAZYSET(implant.radio.secure_radio_connections, channel, add_radio(implant.radio, GLOB.radiochannels[channel]))
+	deployed = TRUE
 
 /// Handles exitting the shell.
 /obj/item/organ/internal/brain/cybernetic/ai/proc/undeploy(datum/source)
