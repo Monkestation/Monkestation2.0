@@ -1134,7 +1134,7 @@
 			var/mob/living/carbon/human/human = borgie
 			var/obj/item/organ/internal/brain/cybernetic/ai/brain = locate() in human.organs
 			// Checks if it is dead, currently has access from being deployed and has an AI uplink, and is sufficiently augmented
-			if(human.stat != DEAD && !(HAS_TRAIT(human, TRAIT_SILICON_ACCESS)) && (brain.is_sufficiently_augmented()) && (human.get_organ_by_type(/obj/item/organ/internal/brain/cybernetic/ai)))
+			if(human.stat != DEAD && !(HAS_TRAIT(human, TRAIT_SILICON_ACCESS)) && (brain && brain.is_sufficiently_augmented()))
 				possible += human
 	if(!LAZYLEN(possible))
 		to_chat(src, "No usable AI shell beacons detected.")
@@ -1152,7 +1152,7 @@
 	if(ishuman(target)) // If it is an AI-uplink organic
 		var/mob/living/carbon/human/human = target
 		var/obj/item/organ/internal/brain/cybernetic/ai/brain = locate() in human.organs
-		if(human.stat == DEAD || brain.deployed || !(!brain.connected_ai || (brain.connected_ai == src)))
+		if(human.stat == DEAD || !(!brain.connected_ai || (brain.connected_ai == src)))
 			return
 
 	if(mind)
