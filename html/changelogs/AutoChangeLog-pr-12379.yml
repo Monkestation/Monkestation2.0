@@ -1,0 +1,5 @@
+author: "Runian"
+delete-after: True
+changes:
+  - rscadd: "Ore vent discovery and completion now contribute points towards regrowth turf's mineral chance."
+  - bugfix: "The regrowth turfs from the goldgrub pen no longer create lava underneath them when mined twice."
