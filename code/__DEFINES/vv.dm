@@ -139,7 +139,6 @@
 #define VV_HK_GIVE_HALLUCINATION "give_hallucination"
 #define VV_HK_GIVE_DELUSION_HALLUCINATION "give_hallucination_delusion"
 #define VV_HK_GIVE_GUARDIAN_SPIRIT "give_guardian_spirit"
-#define VV_HK_OFFSET_EDITOR "offset_editor"
 #define VV_HK_ADJUST_HANDS "hand_count"
 
 // /mob/living/carbon
