@@ -936,6 +936,11 @@
 	name = "Scan Target"
 	desc = "Contact may or may not be close."
 
+// AI-Uplink Brain
+/obj/item/organ/internal/brain/cybernetic/ai
+	name = "AI-uplink brain"
+	desc = "A cybernetic brain with a receiver. It can be inserted into humans without organic organs to act as an AI-shell."
+
 /obj/item/organ/internal/cyberimp/arm/item_set/katana
 	name = "dark shard"
 	desc = "An eerie metal shard surrounded by dark energies."
