@@ -569,7 +569,6 @@
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_icon_state = "autoshotgun"
-	worn_icon_state = "autoshotgun"
 	icon_state = "autoshotgun"
 	slot_flags = ITEM_SLOT_BACK
 	inhand_x_dimension = 32
@@ -584,6 +583,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
 	mag_display = TRUE
+	special_mags = TRUE
 	empty_indicator = FALSE
 	tac_reloads = TRUE
 	casing_ejector = TRUE
