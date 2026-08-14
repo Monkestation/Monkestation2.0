@@ -83,3 +83,11 @@ GLOBAL_LIST_EMPTY(ai_projects)
 
 	has_ability.Remove(ai)
 	return TRUE
+
+/datum/ai_project/proc/invest_ability(used_cpu)
+	var/datum/action/innate/ai/ability = locate(ability_path) in ai.actions
+	if(isnull(ability))
+		return FALSE
+	if(ability.uses >= ability.max_uses) //we're already full
+		return
+	ability_recharge_invested += used_cpu

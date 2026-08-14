@@ -42,6 +42,13 @@
 
 
 /datum/weather/rad_storm/weather_act(mob/living/L)
+	if(isroach(L))
+		if(!prob(2))
+			return
+		var/mob/living/basic/cockroach/affected_roach = L
+		affected_roach.romchifize()
+		return
+
 	if(!prob(40))
 		return
 
