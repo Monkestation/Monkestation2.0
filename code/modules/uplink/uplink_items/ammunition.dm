@@ -83,32 +83,44 @@
 	cost = 2
 	purchasable_from = ~UPLINK_SPY
 
-/datum/uplink_item/ammo/trickshot
-	name = "Trickshot Shell Box"
-	desc = "A box with 10 trickshot shells, capable of bouncing up to five times, they are made for the most talented trickshooters around."
+/datum/uplink_item/ammo/autoshotgun_buckshot_case
+	name = "Syndicate Auto Shotgun Buckshot Magazine case"
+	desc = "A case with 2 auto shotgun magazines loaded with buckshot shells. A lethal high damage spread of pellets."
 	cost = 3
-	item = /obj/item/storage/box/trickshot
+	item = /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition
+
+/datum/uplink_item/ammo/autoshotgun_slugs_case
+	name = "Syndicate Auto Shotgun Slugs Magazine case"
+	desc = "A case with 2 auto shotgun magazines loaded with slug shells. A lethal high damage accurate slug."
+	cost = 3
+	item = /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/slug
+
+/datum/uplink_item/ammo/autoshotgun_rubbershot_case
+	name = "Syndicate Auto Shotgun Rubbershot Magazine Case"
+	desc = "A case with 2 auto shotgun magazines loaded with rubber shells. A less-lethal high stamina damage spread of rubber pellets."
+	cost = 2
+	item = /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/rubbershot
+
+/datum/uplink_item/ammo/autoshotgun_beanbags_case
+	name = "Syndicate Auto Shotgun Beanbags Magazine Case"
+	desc = "A case with 2 auto shotgun magazines loaded with beanbag shells. A less-lethal high stamina damage accurate rubber slug."
+	cost = 2
+	item = /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/beanbag
+
+/datum/uplink_item/ammo/trickshot
+	name = "Trickshot Auto Shotgun Magazine"
+	desc = "An auto shotgun magazine with 12 trickshot shells, capable of bouncing up to five times, they are made for the most talented trickshooters around."
+	cost = 3
+	item = /obj/item/ammo_box/magazine/autoshotgun/trickshot
 
 /datum/uplink_item/ammo/uraniumpen
-	name = "Uranium Penetrator Shell Box"
-	desc = "A box with 10 uranium penetrator shells, capable to penetrating walls and objects, but not people. Works best with thermals!"
+	name = "Uranium Penetrator Auto Shotgun Magazine"
+	desc = "An auto shotgun magazine 12 uranium penetrator shells, capable to penetrating walls and objects, but not people. Works best with thermals!"
 	cost = 3
-	item = /obj/item/storage/box/uraniumpen
+	item = /obj/item/ammo_box/magazine/autoshotgun/uraniumpen
 
 /datum/uplink_item/ammo/beeshot
-	name = "Beeshot Shell Box"
-	desc = "A box with 10 Beeshot shells. Creates very angry bees upon impact. Not as strong as buckshot."
+	name = "Beeshot Auto Shotgun Magazine"
+	desc = "An auto shotgun magazine 12 beeshot shells. Creates very angry bees upon impact. Not as strong as buckshot."
 	cost = 3
-	item = /obj/item/storage/box/beeshot
-
-/datum/uplink_item/ammo/buckshot
-	name = "Buckshot Ammo Box"
-	desc = "A box with 16 buckshot shells. A lethal high damage spread of pellets."
-	cost = 3
-	item = /obj/item/ammo_box/advanced/s12gauge/buckshot
-
-/datum/uplink_item/ammo/rubber
-	name = "Rubber Ammo Box"
-	desc = "A box with 16 rubber shells. A less-lethal high stamina damage spread of rubber pellets."
-	cost = 2
-	item = /obj/item/ammo_box/advanced/s12gauge/rubber
+	item = /obj/item/ammo_box/magazine/autoshotgun/beeshot

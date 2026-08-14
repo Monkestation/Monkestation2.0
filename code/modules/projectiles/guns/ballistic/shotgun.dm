@@ -561,8 +561,8 @@
 //LEGALLY DISTINCT autoshotgun!
 /obj/item/gun/ballistic/shotgun/autoshotgun
 	name = "Auto Shotgun"
-	desc = "A semi-automatic shotgun nicknamed the 'auto shotgun' by field agents.\
-	Compatible with 12 round magazines"
+	desc = "A semi-automatic shotgun nicknamed the 'auto shotgun' by field agents. \
+	Compatible with 12 gauge shell magazines that hold 12 shots each."
 	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'

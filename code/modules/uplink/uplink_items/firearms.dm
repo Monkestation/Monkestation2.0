@@ -47,8 +47,9 @@
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/firearms/revolver
-	name = "Syndicate Revolver"
-	desc = "Waffle Co.'s modernized Syndicate revolver. Fires 7 brutal rounds of .357 Magnum."
+	name = "Syndicate Revolver Case"
+	desc = "Waffle Co.'s modernized Syndicate revolver. Fires 7 brutal rounds of .357 Magnum. \
+	Kit comes with 3 Speedloaders included."
 	item = /obj/item/storage/toolbox/guncase/traitor/revolver
 	progression_minimum = 30 MINUTES
 	cost = 12
@@ -72,11 +73,13 @@
 	surplus = 40
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
-/datum/uplink_item/firearms/renoster
-	name = "Renoster Shotgun Case"
-	desc = "A twelve gauge shotgun with an eight shell capacity underneath. Comes with two boxes of buckshot."
-	item = /obj/item/storage/toolbox/guncase/nova/opfor/renoster
-	cost = 10
+/datum/uplink_item/firearms/autoshotgun
+	name = "Auto Shotgun Case"
+	desc = "A twelve gauge semi-auto shotgun with a 12 shell magazine capacity. \
+	3 buckshot filled magazines are included in the kit."
+	item = /obj/item/storage/toolbox/guncase/traitor/autoshotgun
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) // Nuke ops have their own shotty, Clown ops can't buy lethal firearms
+	cost = 12
 
 /datum/uplink_item/firearms/shotgun_revolver
 	name = "\improper Bóbr 12 GA revolver"

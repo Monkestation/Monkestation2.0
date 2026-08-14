@@ -69,7 +69,7 @@
 	base_icon_state = "maguraniumslugs"
 	ammo_type = /obj/item/ammo_casing/shotgun/uraniumpen
 
-/obj/item/ammo_box/magazine/autoshotgun/rubber
+/obj/item/ammo_box/magazine/autoshotgun/rubbershot
 	name = "autoshotgun magazine (12g rubbershot)"
 	icon_state = "magrubbershot"
 	base_icon_state = "magrubbershot"
