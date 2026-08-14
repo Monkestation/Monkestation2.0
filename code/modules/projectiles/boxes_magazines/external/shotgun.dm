@@ -89,7 +89,7 @@
 
 ///Mining autoshotty
 
-/obj/item/ammo_box/magazine/autoshotgun/pk
+/obj/item/ammo_box/magazine/pkautoshotgun
 	name = "20 Gauge Shotgun Magazine"
 	desc = "A single magazine capable of holding 12 rounds of 20 gauge kinetic hydra shells."
 	icon_state = "proto20gmag"
