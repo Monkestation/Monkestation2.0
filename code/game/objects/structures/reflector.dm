@@ -73,6 +73,10 @@
 		return ..()
 	return BULLET_ACT_FORCE_PIERCE
 
+/obj/structure/reflector/accelerated_particle_act(obj/effect/accelerated_particle/particle)
+	particle.dir = angle2dir(rotation_angle) // 8 directions, change to cardinal if issues
+	return
+
 /obj/structure/reflector/proc/auto_reflect(obj/projectile/proj, pdir, turf/ploc, pangle)
 	proj.ignore_source_check = TRUE
 	proj.range = proj.maximum_range
@@ -245,6 +249,10 @@
 /obj/structure/reflector/box/auto_reflect(obj/projectile/proj)
 	proj.set_angle_centered(loc, rotation_angle)
 	return ..()
+
+/obj/structure/reflector/box/accelerated_particle_act(obj/effect/accelerated_particle/particle)
+	particle.dir = dir
+	return
 
 /obj/structure/reflector/ex_act()
 	if(admin)
