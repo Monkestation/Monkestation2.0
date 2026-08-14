@@ -442,18 +442,18 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 
 	var/time = (REALTIMEOFDAY - start_timeofday) / (1 SECONDS)
 	SStitle.total_init_time = time
+	SStitle.update_init_text()
 	log_world("Initializations complete within [time] second\s!")
 
 	initialize_cooking_recipes()
 	clear_profiler()
 
-	// monkestation edit below
 	// basically, most songs end around the 5 minute mark,
 	// so lets give them time to actually play. we're resetting the countdown back to default
 	// because who knows how long we took for initializations, and whatever.
-	SSticker.SetTimeLeft(CONFIG_GET(number/lobby_countdown) * 10) // monkestation edit
+	SSticker.SetTimeLeft(CONFIG_GET(number/lobby_countdown) * 10)
 
-	SSplexora.serverinitdone(time) // Monkestation edit - plexora
+	SSplexora.serverinitdone(time)
 
 	if(world.system_type == MS_WINDOWS && CONFIG_GET(flag/toast_notification_on_init) && !length(GLOB.clients))
 		world.shelleo("start /min powershell -ExecutionPolicy Bypass -File tools/initToast/initToast.ps1 -name \"[world.name]\" -icon %CD%\\icons\\ui_icons\\common\\tg_16.png -port [world.port]")
@@ -472,7 +472,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 	if(sleep_offline_after_initializations && CONFIG_GET(flag/resume_after_initializations))
 		world.sleep_offline = FALSE
 	initializations_finished_with_no_players_logged_in = initialized_tod < REALTIMEOFDAY - 10
-	SSgamemode.handle_picking_storyteller() //monkestation edit
+	SSgamemode.handle_picking_storyteller()
 
 /**
  * Initialize a given subsystem and handle the results.
@@ -580,12 +580,12 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 	if (rtn >= MC_LOOP_RTN_GRACEFUL_EXIT || processing < 0)
 		return //this was suppose to happen.
 	//loop ended, restart the mc
-	// Monkestation edit: start - plexora
+
 	var/msg = "MC crashed or runtimed, restarting"
 	log_game(msg)
 	message_admins(msg)
 	SSplexora.mc_alert(msg)
-	// Monkestation edit: end
+
 	var/rtn2 = Recreate_MC()
 	if (rtn2 <= 0)
 		log_game("Failed to recreate MC (Error code: [rtn2]), it's up to the failsafe now")
