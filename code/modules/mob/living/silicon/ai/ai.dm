@@ -1136,6 +1136,7 @@
 			// Checks if it is dead, currently has access from being deployed and has an AI uplink, and is sufficiently augmented
 			if(human.stat != DEAD && !(HAS_TRAIT(human, TRAIT_SILICON_ACCESS)) && (brain && brain.is_sufficiently_augmented()))
 				possible += human
+
 	if(!LAZYLEN(possible))
 		to_chat(src, "No usable AI shell beacons detected.")
 	if(!target || !(target in possible)) //If the AI is looking for a new shell, or its pre-selected shell is no longer valid
