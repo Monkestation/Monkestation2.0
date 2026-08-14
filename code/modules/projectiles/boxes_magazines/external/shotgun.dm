@@ -44,8 +44,8 @@
 /obj/item/ammo_box/magazine/autoshotgun
 	name = "autoshotgun magazine (12g buckshot)"
 	icon = 'icons/obj/weapons/guns/ammo.dmi'
-	icon_state = "proto20gmag"
-	base_icon_state = "proto20gmag"
+	icon_state = "magbuckshot"
+	base_icon_state = "magbuckshot"
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 	caliber = CALIBER_SHOTGUN
@@ -53,64 +53,46 @@
 
 /obj/item/ammo_box/magazine/autoshotgun/slug
 	name = "autoshotgun magazine (12g slugs)"
-	icon = 'icons/obj/weapons/guns/ammo.dmi'
-	icon_state = "proto20gmag"
-	base_icon_state = "proto20gmag"
-	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	icon_state = "magslugs"
+	base_icon_state = "magslugs"
 	ammo_type = /obj/item/ammo_casing/shotgun
-	caliber = CALIBER_SHOTGUN
-	max_ammo = 12
 
 /obj/item/ammo_box/magazine/autoshotgun/beeshot
 	name = "autoshotgun magazine (12g beeshot)"
-	icon = 'icons/obj/weapons/guns/ammo.dmi'
-	icon_state = "proto20gmag"
-	base_icon_state = "proto20gmag"
-	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	icon_state = "magbeeshot"
+	base_icon_state = "magbeeshot"
 	ammo_type = /obj/item/ammo_casing/shotgun/beeshot
-	caliber = CALIBER_SHOTGUN
-	max_ammo = 12
 
 /obj/item/ammo_box/magazine/autoshotgun/uraniumpen
 	name = "autoshotgun magazine (12g uranium penetrator slugs)"
-	icon = 'icons/obj/weapons/guns/ammo.dmi'
-	icon_state = "proto20gmag"
-	base_icon_state = "proto20gmag"
-	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	icon_state = "maguraniumslugs"
+	base_icon_state = "maguraniumslugs"
 	ammo_type = /obj/item/ammo_casing/shotgun/uraniumpen
-	caliber = CALIBER_SHOTGUN
-	max_ammo = 12
 
 /obj/item/ammo_box/magazine/autoshotgun/rubber
 	name = "autoshotgun magazine (12g rubbershot)"
-	icon = 'icons/obj/weapons/guns/ammo.dmi'
-	icon_state = "proto20gmag"
-	base_icon_state = "proto20gmag"
-	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	icon_state = "magrubbershot"
+	base_icon_state = "magrubbershot"
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
-	caliber = CALIBER_SHOTGUN
-	max_ammo = 12
 
-/obj/item/ammo_box/magazine/autoshotgun/beeshot
+/obj/item/ammo_box/magazine/autoshotgun/beanbag
 	name = "autoshotgun magazine (12g beanbags)"
-	icon = 'icons/obj/weapons/guns/ammo.dmi'
-	icon_state = "proto20gmag"
-	base_icon_state = "proto20gmag"
-	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	icon_state = "magbeanbags"
+	base_icon_state = "magbeanbags"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
-	caliber = CALIBER_SHOTGUN
-	max_ammo = 12
+
+/obj/item/ammo_box/magazine/autoshotgun/trickshot
+	name = "autoshotgun magazine (12g trickshot)"
+	icon_state = "magtrickshot"
+	base_icon_state = "magtrickshot"
+	ammo_type = /obj/item/ammo_casing/shotgun/trickshot
 
 ///Mining autoshotty
 
 /obj/item/ammo_box/magazine/autoshotgun/pk
 	name = "20 Gauge Shotgun Magazine"
 	desc = "A single magazine capable of holding 12 rounds of 20 gauge kinetic hydra shells."
-	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "proto20gmag"
 	base_icon_state = "proto20gmag"
-	multiple_sprites = AMMO_BOX_FULL_EMPTY
 	ammo_type = /obj/item/ammo_casing/shotgun/hydrakinetic
 	caliber = KINETIC_20G
-	max_ammo = 12
-
