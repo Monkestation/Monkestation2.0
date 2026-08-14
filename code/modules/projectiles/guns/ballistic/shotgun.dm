@@ -576,7 +576,7 @@
 	fire_delay = 0
 	base_pixel_x = -2
 	pixel_x = -2
-	wound_bonus = 15
+	projectile_wound_bonus = 15
 	actions_types = list()
 	bolt_wording = "bolt"
 	w_class = WEIGHT_CLASS_BULKY
