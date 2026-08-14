@@ -29,7 +29,8 @@ SUBSYSTEM_DEF(credits)
 
 /datum/controller/subsystem/credits/Initialize()
 	load_contributors()
-	generate_pref_images()
+	// This proc takes fucking FOREVER and is only used at round end we don't need to wait for it
+	INVOKE_ASYNC(src, PROC_REF(generate_pref_images))
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/credits/proc/generate_credits()
