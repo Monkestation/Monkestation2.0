@@ -107,17 +107,17 @@
 	cost = 2
 	item = /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/beanbag
 
-/datum/uplink_item/ammo/trickshot
-	name = "Trickshot Auto Shotgun Magazine"
-	desc = "An auto shotgun magazine with 12 trickshot shells, capable of bouncing up to five times, they are made for the most talented trickshooters around."
+/datum/uplink_item/ammo/autoshotgun_trickshot_case
+	name = "Syndicate Auto Shotgun Trickshot Magazine Case"
+	desc = "A case with 2 auto shotgun magazines loaded with trickshot shells. Capable of bouncing up to five times, they are made for the most talented trickshooters around."
 	cost = 3
-	item = /obj/item/ammo_box/magazine/autoshotgun/trickshot
+	item = /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/trickshot
 
-/datum/uplink_item/ammo/uraniumpen
-	name = "Uranium Penetrator Auto Shotgun Magazine"
-	desc = "An auto shotgun magazine 12 uranium penetrator shells, capable to penetrating walls and objects, but not people. Works best with thermals!"
+/datum/uplink_item/ammo/autoshotgun_uraniumpen_case
+	name = "Syndicate Auto Shotgun Uranium Magazine Case"
+	desc = "A case with 2 auto shotgun magazines loaded with uranium penetrator shells. Capable to penetrating walls and objects, but not people. Works best with thermals!"
 	cost = 3
-	item = /obj/item/ammo_box/magazine/autoshotgun/uraniumpen
+	item = /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/uraniumpen
 
 /datum/uplink_item/ammo/beeshot
 	name = "Beeshot Auto Shotgun Magazine"

@@ -487,6 +487,14 @@
 	name = "\improper Syndicate auto shotgun beanbags magazine case"
 	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/beanbag
 
+/obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/uraniumpen
+	name = "\improper Syndicate auto shotgun uranium penetrator magazine case"
+	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/uraniumpen
+
+/obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/trickshot
+	name = "\improper Syndicate auto shotgun trickshot magazine case"
+	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/trickshot
+
 /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/PopulateContents()
 	for(var/i in 1 to 2)
 		new weapon_to_spawn(src)
