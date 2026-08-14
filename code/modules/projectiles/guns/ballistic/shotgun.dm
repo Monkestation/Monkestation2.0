@@ -560,15 +560,14 @@
 
 //LEGALLY DISTINCT autoshotgun!
 /obj/item/gun/ballistic/shotgun/autoshotgun
-// TODO: rename
-	name = "LEGALLY DISTINCT Auto Shotgun"
-	desc = "A fully automatic shotgun created using some spare polymer parts, procured from a undisclosed source. \
-	With some Proto Kinetic Acceleration tech mixed in, the 'Fenrir' becomes a lethal auto shotgun chambered in \
-	20. Gauge shells, for sweeping up any unwanted fauna from a hostile environment."
+	name = "Auto Shotgun"
+	desc = "A semi-automatic shotgun dubbed the 'auto shotgun' by field agents.\
+	Compatible with 12 round magazines"
 	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_icon_state = "autoshotgun"
+	worn_icon_state = "autoshotgun"
 	icon_state = "autoshotgun"
 	slot_flags = ITEM_SLOT_BACK
 	inhand_x_dimension = 32
@@ -609,6 +608,7 @@
 	icon_state = "protokshotgunauto"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/autoshotgun/pk
 	pin = /obj/item/firing_pin/wastes
+	special_mags = FALSE
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	pb_knockback = 0
 
