@@ -1389,9 +1389,11 @@
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
 "axU" = (
-/obj/machinery/power/apc/auto_name/directional/north,
-/turf/closed/wall,
-/area/station/command/gateway)
+/obj/structure/cable,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/fore)
 "axW" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -6244,12 +6246,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
-"cmw" = (
-/obj/structure/cable,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/fore)
 "cmB" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -6408,6 +6404,10 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
+"coQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
+/area/station/science/explab)
 "cpi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/circuit/green{
@@ -20924,10 +20924,6 @@
 "huG" = (
 /turf/closed/wall,
 /area/station/service/kitchen/coldroom)
-"huX" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/white,
-/area/station/science/explab)
 "huZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -39285,8 +39281,6 @@
 /obj/effect/turf_decal/trimline/dark_green/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pathology)
 "nyk" = (
@@ -45667,6 +45661,13 @@
 	},
 /turf/open/floor/carpet,
 /area/station/command/bridge)
+"pKi" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/fore)
 "pKs" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin/carbon{
@@ -59248,13 +59249,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/locker)
-"usY" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/fore)
 "uta" = (
 /obj/structure/rack,
 /obj/item/book/manual/wiki/security_space_law{
@@ -83077,7 +83071,7 @@ kjm
 daA
 eXu
 wMY
-axU
+yjd
 nSI
 qaU
 faT
@@ -108526,7 +108520,7 @@ cgL
 qXB
 wyG
 edC
-cmw
+axU
 wcu
 eBn
 qXB
@@ -108784,7 +108778,7 @@ kbo
 psZ
 psZ
 xcR
-usY
+pKi
 kbo
 eqt
 psZ
@@ -110672,8 +110666,8 @@ rhw
 wEv
 wEv
 wEv
-huX
-huX
+coQ
+coQ
 uhh
 tVv
 aaa
