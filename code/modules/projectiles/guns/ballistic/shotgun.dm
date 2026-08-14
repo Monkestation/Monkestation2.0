@@ -580,7 +580,7 @@
 	actions_types = list()
 	bolt_wording = "bolt"
 	w_class = WEIGHT_CLASS_BULKY
-	weapon_weight = WEAPON_HEAVY
+	weapon_weight = WEAPON_MEDIUM
 	mag_display = TRUE
 	special_mags = TRUE
 	empty_indicator = FALSE
