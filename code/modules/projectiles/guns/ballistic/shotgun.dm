@@ -587,12 +587,14 @@
 	tac_reloads = TRUE
 	casing_ejector = TRUE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/autoshotgun
-	bolt_type = BOLT_TYPE_STANDARD
+	bolt_type = BOLT_TYPE_LOCKING
+	show_bolt_icon = TRUE
 	semi_auto = TRUE
+	can_suppress = TRUE
 	internal_magazine = FALSE
-	show_bolt_icon = FALSE
 	rack_sound = 'sound/weapons/gun/general/bolt_rack.ogg'
 	fire_sound = 'sound/weapons/gun/shotgun/shotgun_small.ogg'
+	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_heavy.ogg'
 	pbk_gentle = FALSE
 
 //Mining autoshotgun!
