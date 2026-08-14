@@ -1,0 +1,5 @@
+author: "osaka-fuuri"
+delete-after: True
+changes:
+  - rscadd: "Added %2 per tick chance for radstorm to turn cockroaches into romch"
+  - rscadd: "Added romchifize() and isroach() procs"
