@@ -1093,3 +1093,31 @@
 	. = ..()
 	//Taken directly from Dream Maker Reference on 'animate()' with minor adjustment.
 	animate(src, time = 1.5 SECONDS, alpha = 0, easing = SINE_EASING)
+
+/obj/item/toy/plush/expie // Casualties: Unknown reference
+	name = "expie plushie"
+	desc = "A tag on it reads, \"Made with all natural glowfruit and geofruit stuffing!\""
+	icon_state = "expie"
+	attack_verb_continuous = list("experiments")
+	attack_verb_simple = list("experiment")
+	squeak_override = list(
+		'sound/misc/expie_bark.ogg' = 1
+	)
+
+/obj/item/toy/plush/expie/spinny_hat
+	name = "spinny expie plushie"
+	desc = "A normal expie plushie which has been given a bright lolipop and a spinny propeller hat."
+	icon_state = "expie_spinny_hat"
+
+/obj/item/toy/plush/expie/dune
+	name = "dune plushie"
+	desc = "A tag on it reads, \"Manufacturer is not responsible for bodily harm as a result of plushie usage.\""
+	icon_state = "dune"
+	attack_verb_continuous = list("chomps")
+	attack_verb_simple = list("chomp")
+
+/obj/item/toy/plush/expie/milky
+	name = "milky plushie"
+	desc = "A tag on it reads, \"Made with all natural geofruit milk fibers.\""
+	icon_state = "milky"
+

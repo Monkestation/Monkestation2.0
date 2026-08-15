@@ -135,6 +135,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	shoes = /obj/item/clothing/shoes/bhop
 	l_pocket = /obj/item/switchblade
+	id_trim = /datum/id_trim/pirate/lustrous
 
 /datum/outfit/pirate/lustrous/captain
 	name = "Lustrous Radiant"

@@ -141,7 +141,7 @@
 		"volume" = round(beaker.reagents?.total_volume, 0.01) || 0,
 		"capacity" = beaker.volume,
 	)
-	var/datum/reagent/blood/blood = locate() in beaker.reagents.reagent_list
+	var/datum/reagent/blood = get_blood_reagent()
 	if(!blood)
 		data["has_blood"] = FALSE
 		return data
@@ -212,6 +212,12 @@
 	addtimer(CALLBACK(src, PROC_REF(reset_replicator_cooldown)), 5 SECONDS)
 	return TRUE
 
+/// Tries to locate a reagent with valid blood_type data
+/obj/machinery/computer/pandemic/proc/get_blood_reagent()
+	for (var/datum/reagent/reagent as anything in beaker?.reagents?.reagent_list)
+		if (reagent.data?["blood_type"])
+			return reagent
+
 /**
  * Creates a vaccine bottle for the specified disease.
  *
@@ -258,7 +264,7 @@
 /obj/machinery/computer/pandemic/proc/get_by_index(thing, index)
 	if(!beaker || !beaker.reagents)
 		return FALSE
-	var/datum/reagent/blood/blood = locate() in beaker.reagents.reagent_list
+	var/datum/reagent/blood/blood = get_blood_reagent()
 	if(blood?.data[thing])
 		return blood.data[thing][index]
 	return FALSE
@@ -297,7 +303,7 @@
  */
 /obj/machinery/computer/pandemic/proc/get_viruses_data(datum/reagent/blood/blood)
 	var/list/data = list()
-	var/list/viruses = blood.get_diseases()
+	var/list/viruses = blood.data?["viruses"]
 	var/index = 1
 	for(var/datum/disease/disease as anything in viruses)
 		if(!istype(disease) || disease.visibility_flags & HIDDEN_PANDEMIC)

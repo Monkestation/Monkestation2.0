@@ -10,7 +10,7 @@
 	inhand_y_dimension = 64
 	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
 	fire_sound_volume = 90
-	rack_sound = 'sound/weapons/gun/shotgun/rack.ogg'
+	rack_sound = 'sound/weapons/gun/shotgun/shotgunpump.ogg'
 	load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
@@ -131,7 +131,11 @@
 
 /obj/item/gun/ballistic/shotgun/riot/sol/evil/unrestricted
 	pin = /obj/item/firing_pin
+
 // Automatic Shotguns//
+/obj/item/gun/ballistic/shotgun/automatic
+	fire_sound = 'sound/weapons/gun/shotgun/shotgun_small.ogg'
+	load_sound = 'sound/weapons/gun/shotgun/shotgun_shell_insert.ogg'
 
 /obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user)
 	..()
@@ -242,6 +246,7 @@
 	burst_size = 1
 	fire_delay = 0
 	pin = /obj/item/firing_pin/implant/pindicate
+	rack_sound = 'sound/weapons/gun/shotgun/rack.ogg'
 	fire_sound = 'sound/weapons/gun/shotgun/shot_alt.ogg'
 	actions_types = list()
 	mag_display = TRUE

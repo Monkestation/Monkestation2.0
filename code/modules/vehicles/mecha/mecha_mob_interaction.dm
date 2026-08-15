@@ -122,7 +122,8 @@
 		AI.eyeobj?.forceMove(newloc) //kick the eye out as well
 		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
 			newloc = null
-			if(!AI.relocate(silent = TRUE, kill_otherwise = FALSE))
+			//We ignore Z-levels here because AIs can control mechs from other levels.
+			if(!AI.relocate(silent = TRUE, kill_otherwise = FALSE, ignore_z_levels = TRUE))
 				AI.investigate_log("has been gibbed by being forced out of their mech by another AI.", INVESTIGATE_DEATHS)
 				AI.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
 			AI = null

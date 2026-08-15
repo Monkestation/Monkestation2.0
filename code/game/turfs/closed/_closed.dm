@@ -124,11 +124,13 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/splashscreen/vv_edit_var(var_name, var_value)
 	. = ..()
-	if(.)
-		switch(var_name)
-			if(NAMEOF(src, icon))
-				SStitle.icon = icon
-				handle_generic_titlescreen_sizes()
+	if(!.)
+		return
+
+	switch(var_name)
+		if(NAMEOF(src, icon))
+			SStitle.icon = icon
+			handle_generic_titlescreen_sizes()
 
 /turf/closed/indestructible/splashscreen/examine()
 	desc = pick(strings(SPLASH_FILE, "splashes"))
@@ -151,12 +153,12 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 
 /turf/closed/indestructible/riveted
-	icon = 'icons/turf/walls/riveted.dmi'
-	icon_state = "riveted-0"
-	base_icon_state = "riveted"
+	icon = 'icons/turf/walls/reinforced_wall.dmi'
+	icon_state = "reinforced_wall-0"
+	base_icon_state = "reinforced_wall"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS
-	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 
 /turf/closed/indestructible/syndicate
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
@@ -257,18 +259,18 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/fakedoor
 	name = "airlock"
-	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
-	icon_state = "fake_door"
-
-/turf/closed/indestructible/fakedoor/maintenance
-	icon = 'icons/obj/doors/airlocks/hatch/maintenance.dmi'
+	icon = 'icons/turf/walls/fake_door.dmi'
+	icon_state = "command"
 
 /turf/closed/indestructible/fakedoor/glass_airlock
-	icon = 'icons/obj/doors/airlocks/external/external.dmi'
+	icon_state = "glass"
 	opacity = FALSE
 
+/turf/closed/indestructible/fakedoor/maintenance
+	icon_state = "maintenance"
+
 /turf/closed/indestructible/fakedoor/engineering
-	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
+	icon_state = "engineering"
 
 /turf/closed/indestructible/rock
 	name = "dense rock"

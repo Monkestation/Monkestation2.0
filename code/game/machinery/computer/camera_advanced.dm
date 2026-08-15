@@ -26,7 +26,7 @@
 	///Should we supress any view changes?
 	var/should_supress_view_changes = TRUE
 
-	///the net it's looking at
+	/// The network this console views.
 	var/datum/cameranet/camnet
 
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_REQUIRES_SIGHT
@@ -55,7 +55,7 @@
 	if(move_down_action)
 		actions += new move_down_action(src)
 
-	camnet = GLOB.cameranet
+	camnet = SScameras.default_net
 
 /obj/machinery/computer/camera_advanced/Destroy()
 	unset_machine()
@@ -92,6 +92,7 @@
 		CRASH("Tried to make another eyeobj for some reason. Why?")
 
 	eyeobj = new(get_turf(src), src)
+	eyeobj.camnet = camnet
 	return TRUE
 
 /obj/machinery/computer/camera_advanced/proc/GrantActions(mob/living/user)
@@ -163,7 +164,7 @@
 
 	if(eyeobj)
 		give_eye_control(user)
-		eyeobj.setLoc(eyeobj.loc)
+		eyeobj.setLoc(eyeobj.loc, force_update = TRUE)
 		return
 	/* We're attempting to initialize the eye past this point */
 
@@ -181,7 +182,7 @@
 		else
 			camera_location = myturf
 	else
-		if((!consider_zlock || (myturf.z in z_lock)) && camnet.checkTurfVis(myturf))
+		if((!consider_zlock || (myturf.z in z_lock)) && camnet.turf_visible_by_cameras(myturf))
 			camera_location = myturf
 		else
 			for(var/obj/machinery/camera/C as anything in camnet.cameras)

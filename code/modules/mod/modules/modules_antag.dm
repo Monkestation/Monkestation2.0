@@ -36,8 +36,16 @@
 	charges = max_charges
 
 /obj/item/mod/module/energy_shield/on_suit_activation()
-	mod.AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
-	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, recharge_path = recharge_path, starting_charges = charges, shield_icon_file = shield_icon_file, shield_icon = shield_icon)
+	mod.AddComponent(\
+		/datum/component/shielded, \
+		max_charges = max_charges, \
+		recharge_start_delay = recharge_start_delay, \
+		charge_increment_delay = charge_increment_delay, \
+		charge_recovery = charge_recovery, \
+		lose_multiple_charges = lose_multiple_charges, \
+		starting_charges = charges, \
+		shield_icon_file = shield_icon_file, \
+		shield_icon = shield_icon)
 	RegisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(shield_reaction))
 
 /obj/item/mod/module/energy_shield/on_suit_deactivation(deleting = FALSE)
@@ -271,7 +279,6 @@
 		return
 	mod.wearer.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 
-/* monkestation removal: overwritten in [monkestation\code\modules\mod\modules\modules_antag.dm], to fix bugs
 ///Chameleon - lets the suit disguise as any item that would fit on that slot.
 /obj/item/mod/module/chameleon
 	name = "MOD chameleon module"
@@ -286,35 +293,92 @@
 	var/list/possible_disguises = list()
 	/// The path of the item we're disguised as.
 	var/obj/item/current_disguise
+	/// The last (valid) slot the suit was equipped to, so we don't lose it if we just temporarily put it in our hands or something
+	var/last_equipped_slot = NONE
+	/// Cached possible disguises for individual slots
+	var/static/list/cached_disguises = list()
 
 /obj/item/mod/module/chameleon/on_install()
-	var/list/all_disguises = sort_list(subtypesof(get_path_by_slot(mod.slot_flags)), GLOBAL_PROC_REF(cmp_typepaths_asc))
-	for(var/clothing_path in all_disguises)
-		var/obj/item/clothing = clothing_path
-		if(!initial(clothing.icon_state))
-			continue
-		var/chameleon_item_name = "[initial(clothing.name)] ([initial(clothing.icon_state)])"
-		possible_disguises[chameleon_item_name] = clothing_path
+	undo_disguise()
+	current_disguise = null
+	RegisterSignal(mod, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_update_icon_state))
 
 /obj/item/mod/module/chameleon/on_uninstall(deleting = FALSE)
+	UnregisterSignal(mod, COMSIG_ATOM_UPDATE_ICON_STATE)
+	if(deleting)
+		return
+	undo_disguise()
 	if(current_disguise)
-		return_look()
-	possible_disguises = null
+		current_disguise = null
+		mod.wearer?.balloon_alert(mod.wearer, "mod disguise cleared")
+
+/obj/item/mod/module/chameleon/proc/on_update_icon_state()
+	SIGNAL_HANDLER
+	if(mod.active)
+		return
+	if(!current_disguise)
+		return
+	disguise(FALSE)
 
 /obj/item/mod/module/chameleon/on_use()
 	. = ..()
 	if(!.)
 		return
 	if(current_disguise)
-		return_look()
+		undo_disguise()
+		current_disguise = null
+		mod.wearer.balloon_alert(mod.wearer, "mod disguise cleared")
 		return
 	var/picked_name = tgui_input_list(mod.wearer, "Select look to change into", "Chameleon Settings", possible_disguises)
-	if(!possible_disguises[picked_name] || mod.active || mod.activating)
+	if(!possible_disguises[picked_name])
+		return
+	if(mod.active || mod.activating)
+		mod.wearer.balloon_alert(mod.wearer, "can't disguise MOD while active!")
 		return
 	current_disguise = possible_disguises[picked_name]
-	update_look()
+	mod.wearer?.balloon_alert(mod.wearer, "mod disguise set")
+	disguise()
 
-/obj/item/mod/module/chameleon/proc/update_look()
+/obj/item/mod/module/chameleon/on_equip()
+	if(QDELETED(mod) || QDELETED(mod.wearer))
+		return
+	var/mob/living/carbon/human/wearer = mod.wearer
+	var/current_slot = wearer.get_slot_by_item(mod)
+	if(mod.slot_flags & current_slot)
+		last_equipped_slot = current_slot
+	else
+		// if we're holding it or something, just use either the last equipped slot or the default one
+		current_slot = last_equipped_slot || mod.slot_flags
+	possible_disguises = get_slot_disguises(current_slot)
+	if(current_disguise && !(current_disguise::slot_flags & current_slot))
+		undo_disguise()
+		current_disguise = null
+		mod.wearer?.balloon_alert(mod.wearer, "mod undisguised")
+
+/obj/item/mod/module/chameleon/on_unequip()
+	if(QDELETED(mod) || QDELETED(mod.wearer))
+		return
+	var/mob/living/carbon/human/wearer = mod.wearer
+	var/current_slot = wearer.get_slot_by_item(mod)
+	if(mod.slot_flags & current_slot)
+		current_slot = last_equipped_slot || mod.slot_flags
+
+/obj/item/mod/module/chameleon/on_suit_activation()
+	undo_disguise()
+	if(current_disguise)
+		mod.wearer?.balloon_alert(mod.wearer, "mod undisguised")
+
+/obj/item/mod/module/chameleon/on_suit_deactivation(deleting = FALSE)
+	if(deleting)
+		return
+	disguise()
+	if(current_disguise)
+		mod.wearer?.balloon_alert(mod.wearer, "mod disguised")
+
+/obj/item/mod/module/chameleon/proc/disguise(updating = TRUE)
+	if(!current_disguise)
+		undo_disguise(updating)
+		return
 	mod.name = initial(current_disguise.name)
 	mod.desc = initial(current_disguise.desc)
 	mod.icon_state = initial(current_disguise.icon_state)
@@ -325,10 +389,10 @@
 	mod.righthand_file = initial(current_disguise.righthand_file)
 	mod.worn_icon_state = initial(current_disguise.worn_icon_state)
 	mod.inhand_icon_state = initial(current_disguise.inhand_icon_state)
-	mod.wearer.update_clothing(mod.slot_flags)
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(return_look))
+	if(updating)
+		mod.wearer?.update_clothing(mod.slot_flags)
 
-/obj/item/mod/module/chameleon/proc/return_look()
+/obj/item/mod/module/chameleon/proc/undo_disguise(updating = TRUE)
 	mod.name = "[mod.theme.name] [initial(mod.name)]"
 	mod.desc = "[initial(mod.desc)] [mod.theme.desc]"
 	mod.icon_state = "[mod.skin]-[initial(mod.icon_state)]"
@@ -338,12 +402,24 @@
 	mod.alternate_worn_layer = mod_skin[CONTROL_LAYER]
 	mod.lefthand_file = initial(mod.lefthand_file)
 	mod.righthand_file = initial(mod.righthand_file)
-	mod.worn_icon_state = null
-	mod.inhand_icon_state = null
-	mod.wearer.update_clothing(mod.slot_flags)
-	current_disguise = null
-	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
-monkestation end */
+	mod.worn_icon_state = initial(mod.worn_icon_state)
+	mod.inhand_icon_state = initial(mod.inhand_icon_state)
+	if(updating)
+		mod.update_icon_state()
+		mod.wearer?.update_clothing(mod.slot_flags)
+
+/obj/item/mod/module/chameleon/proc/get_slot_disguises(slot) as /list
+	if(cached_disguises["[slot]"]) // let's avoid repeated sorts on a list that'll always be the same for the same input
+		return cached_disguises["[slot]"]
+	var/list/all_disguises = sort_list(subtypesof(get_path_by_slot(slot)), GLOBAL_PROC_REF(cmp_typepaths_asc))
+	var/list/disguises = list()
+	for(var/obj/item/clothing as anything in all_disguises)
+		if(!clothing::icon_state)
+			continue
+		var/chameleon_item_name = "[clothing::name] ([clothing::icon_state])"
+		disguises[chameleon_item_name] = clothing
+	cached_disguises["[slot]"] = disguises
+	return disguises
 
 ///Plate Compression - Compresses the suit to normal size
 /obj/item/mod/module/plate_compression

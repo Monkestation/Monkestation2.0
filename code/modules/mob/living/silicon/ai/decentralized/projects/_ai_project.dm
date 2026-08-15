@@ -46,9 +46,8 @@ GLOBAL_LIST_EMPTY(ai_projects)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!can_be_run)
 		return FALSE
-	if(!force_run)
-		if(!canRun())
-			return FALSE
+	if(!canRun() && !force_run)
+		return FALSE
 	running = TRUE
 	LAZYADD(dashboard.running_projects, src)
 	return TRUE

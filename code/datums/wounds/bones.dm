@@ -231,7 +231,7 @@
 				)
 	victim.bleed(blood_bled, TRUE)
 	if(blood_bled >= 14)
-		victim.do_splatter_effect(attack_direction)
+		victim.create_splatter(victim.dir)
 		victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 		victim.blood_particles(amount = 1 * round(blood_bled / 14, 1))
 
@@ -360,7 +360,7 @@
 		return FALSE
 
 	if(user.grab_state == GRAB_PASSIVE)
-		to_chat(user, span_warning("You must have [victim] in an aggressive grab to manipulate [victim.p_their()] [lowertext(undiagnosed_name || name)]!"))
+		to_chat(user, span_warning("You must have [victim] in an aggressive grab to manipulate [victim.p_their()] [LOWER_TEXT(undiagnosed_name || name)]!"))
 		return TRUE
 
 	if(user.grab_state >= GRAB_AGGRESSIVE)

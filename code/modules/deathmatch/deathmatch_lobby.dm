@@ -21,6 +21,8 @@
 	var/list/modifiers = list()
 	/// Is the modifiers modal menu open (for the host)
 	var/mod_menu_open = FALSE
+	/// artificial time padding when we start loading to give lighting a breather (admin starts will set this to 0)
+	var/start_time = 8 SECONDS
 
 /datum/deathmatch_lobby/New(mob/player)
 	. = ..()
@@ -56,6 +58,18 @@
 /datum/deathmatch_lobby/proc/start_game()
 	if (playing)
 		return
+
+	if(map.type == /datum/lazy_template/deathmatch/random)
+		var/list/available_maps = list()
+		for(var/key in GLOB.deathmatch_game.maps)
+			var/datum/lazy_template/deathmatch/map = GLOB.deathmatch_game.maps[key]
+			if(map.min_players <= length(players) && map.max_players >= length(players))
+				available_maps += key
+		if(length(available_maps))
+			change_map(pick(available_maps))
+		else
+			change_map(pick(GLOB.deathmatch_game.maps))
+
 	if(map.template_in_use)
 		to_chat(get_mob_by_ckey(host), span_warning("This map is currently loading for another lobby. Please wait until that other map finishes loading. It would be a disaster if these two mixed up."))
 		return
@@ -79,7 +93,7 @@
 
 	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
 	map.template_in_use = FALSE
-	addtimer(CALLBACK(src, PROC_REF(start_game_after_delay)), 8 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(start_game_after_delay)), start_time)
 
 /datum/deathmatch_lobby/proc/start_game_after_delay()
 	if (!length(player_spawns) || length(player_spawns) < length(players))
@@ -133,6 +147,12 @@
 	if (!(loadout in loadouts))
 		loadout = loadouts[1]
 
+	if(loadout == /datum/outfit/deathmatch_loadout/random)
+		if(length(loadouts) > 1)
+			loadout = pick(loadouts - /datum/outfit/deathmatch_loadout/random)
+		else
+			loadout = pick(GLOB.deathmatch_game.loadouts)
+
 	var/mob/living/carbon/human/new_player = new(loc)
 	observer.client?.prefs.safe_transfer_prefs_to(new_player)
 	new_player.dna.update_dna_identity()
@@ -152,7 +172,14 @@
 		GLOB.deathmatch_game.modifiers[modifier].apply(new_player, src)
 
 	// register death handling.
-	RegisterSignals(new_player, list(COMSIG_LIVING_DEATH, COMSIG_MOB_GHOSTIZED, COMSIG_QDELETING), PROC_REF(player_died))
+	register_player_signals(new_player)
+
+/datum/deathmatch_lobby/proc/register_player_signals(new_player)
+	RegisterSignals(new_player, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING, COMSIG_MOB_GHOSTIZED), PROC_REF(player_died))
+	RegisterSignal(new_player, COMSIG_LIVING_ON_WABBAJACKED, PROC_REF(player_wabbajacked))
+
+/datum/deathmatch_lobby/proc/unregister_player_signals(new_player)
+	UnregisterSignal(new_player, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING, COMSIG_MOB_GHOSTIZED, COMSIG_LIVING_ON_WABBAJACKED))
 
 /datum/deathmatch_lobby/proc/game_took_too_long()
 	if (!location || QDELING(src))
@@ -173,9 +200,9 @@
 
 	for(var/ckey in players)
 		var/mob/loser = players[ckey]["mob"]
-		UnregisterSignal(loser, list(COMSIG_MOB_GHOSTIZED, COMSIG_QDELETING))
+		unregister_player_signals(loser)
 		players[ckey]["mob"] = null
-		loser.ghostize()
+		loser.ghostize(can_reenter_corpse = FALSE)
 		qdel(loser)
 
 	for(var/datum/deathmatch_modifier/modifier in modifiers)
@@ -185,12 +212,18 @@
 	GLOB.deathmatch_game.remove_lobby(host)
 	log_game("Deathmatch game [host] ended.")
 
+/datum/deathmatch_lobby/proc/player_wabbajacked(mob/living/player, mob/living/new_mob)
+	SIGNAL_HANDLER
+	unregister_player_signals(player)
+	players[player.ckey]["mob"] = new_mob
+	register_player_signals(new_mob)
+
 /datum/deathmatch_lobby/proc/player_died(mob/living/player, gibbed)
 	SIGNAL_HANDLER
-	if(isnull(player) || QDELING(src))
+	if(isnull(player) || QDELING(src) || HAS_TRAIT_FROM(player, TRAIT_NO_TRANSFORM, MAGIC_TRAIT)) //this trait check fixes polymorphing
 		return
 
-	var/ckey = player.ckey
+	var/ckey = player.ckey ? player.ckey : player.mind?.key
 	if(!islist(players[ckey])) // potentially the player info could hold a reference to this mob so we can figure the ckey out without worrying about ghosting and suicides n such
 		for(var/potential_ckey in players)
 			var/list/player_info = players[potential_ckey]
@@ -209,8 +242,9 @@
 
 	announce(span_reallybig("[player.real_name] HAS DIED.<br>[players.len] REMAIN."))
 
-	if(!gibbed && !QDELING(player))
+	if(!gibbed && !QDELING(player) && !isdead(player))
 		if(!HAS_TRAIT(src, TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS))
+			unregister_player_signals(player)
 			player.dust(TRUE, TRUE, TRUE)
 	if (players.len <= 1)
 		end_game()
@@ -339,7 +373,6 @@
 	for (var/map_key in GLOB.deathmatch_game.maps)
 		.["maps"] += map_key
 
-
 /datum/deathmatch_lobby/ui_data(mob/user)
 	. = list()
 	var/is_player = !isnull(players[user.ckey])
@@ -349,7 +382,7 @@
 	.["host"] = is_host
 	.["admin"] = is_admin
 	.["playing"] = playing
-	.["loadouts"] = list("Randomize")
+	.["loadouts"] = list()
 	for (var/datum/outfit/deathmatch_loadout/loadout as anything in loadouts)
 		.["loadouts"] += initial(loadout.display_name)
 	.["map"] = list()
@@ -426,9 +459,6 @@
 				return FALSE
 			if (params["player"] != usr.ckey && host != usr.ckey)
 				return FALSE
-			if (params["loadout"] == "Randomize")
-				players[params["player"]]["loadout"] = pick(loadouts)
-				return TRUE
 			for (var/datum/outfit/deathmatch_loadout/possible_loadout as anything in loadouts)
 				if (params["loadout"] != initial(possible_loadout.display_name))
 					continue
@@ -507,12 +537,13 @@
 				return TRUE
 		if ("admin") // Admin functions
 			if (!check_rights(R_ADMIN))
-				message_admins("[usr.key] has attempted to use admin functions in a deathmatch lobby!")
+				message_admins("[usr.key] has attempted to use admin functions in a deathmatch lobby without being an admin!")
 				log_admin("[key_name(usr)] tried to use the deathmatch lobby admin functions without authorization.")
 				return
 			switch (params["func"])
 				if ("Force start")
 					log_admin("[key_name(usr)] force started deathmatch lobby [host].")
+					start_time = 0
 					start_game()
 
 /datum/deathmatch_lobby/ui_close(mob/user)

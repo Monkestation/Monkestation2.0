@@ -351,13 +351,20 @@
 	overlays_standing[DAMAGE_LAYER] = damage_overlay
 	apply_overlay(DAMAGE_LAYER)
 
-/mob/living/carbon/update_wound_overlays()
+/// Handles bleeding overlays
+/mob/living/carbon/proc/update_wound_overlays()
 	remove_overlay(WOUND_LAYER)
+
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if(!blood_type || !can_bleed())
+		return
 
 	var/mutable_appearance/wound_overlay
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		if(iter_part.bleed_overlay_icon)
-			wound_overlay ||= mutable_appearance('icons/mob/effects/bleed_overlays.dmi', "blank", -WOUND_LAYER, appearance_flags = KEEP_TOGETHER)
+			var/mutable_appearance/blood_overlay = mutable_appearance('icons/mob/effects/bleed_overlays.dmi', "blank", -WOUND_LAYER, appearance_flags = KEEP_TOGETHER)
+			blood_overlay.color = blood_type.get_wound_color(src)
+			wound_overlay ||= blood_overlay
 			wound_overlay.add_overlay(iter_part.bleed_overlay_icon)
 
 	if(isnull(wound_overlay))
@@ -368,26 +375,45 @@
 
 /mob/living/carbon/proc/update_bandage_overlays()
 	remove_overlay(BANDAGE_LAYER)
+	remove_overlay(UPPER_BANDAGE_LAYER)
 
 	var/mutable_appearance/bandage_overlay
+	var/mutable_appearance/upper_bandage_overlay
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
+		var/render_head = FALSE
+		if(istype(iter_part, /obj/item/bodypart/head))
+			render_head = TRUE
+
 		if(isnull(bandage_overlay))
 			bandage_overlay = mutable_appearance(layer = -BANDAGE_LAYER, appearance_flags = KEEP_TOGETHER)
+		if(isnull(upper_bandage_overlay))
+			upper_bandage_overlay = mutable_appearance(layer = -UPPER_BANDAGE_LAYER, appearance_flags = KEEP_TOGETHER)
 
 		if(iter_part.current_gauze)
-			var/mutable_appearance/limb_bandage_overlay = iter_part.current_gauze.build_worn_icon(
-			default_layer = -BANDAGE_LAYER, // proc inverts it for us
-			override_file = 'icons/mob/effects/bandage.dmi',
-			override_state = iter_part.current_gauze.worn_icon_state, // future todo : icon states for dirty bandages as well
-		)
-			limb_bandage_overlay.color = iter_part.current_gauze.overlay_color
-			bandage_overlay.add_overlay(limb_bandage_overlay)
+			var/mutable_appearance/limb_bandage_overlay
+			if(render_head)
+				limb_bandage_overlay = iter_part.current_gauze.build_worn_icon(
+					default_layer = -UPPER_BANDAGE_LAYER, // proc inverts it for us
+					override_file = 'icons/mob/effects/bandage.dmi',
+					override_state = iter_part.current_gauze.worn_icon_state, // future todo : icon states for dirty bandages as well
+					)
+				limb_bandage_overlay.color = iter_part.current_gauze.overlay_color
+				upper_bandage_overlay.add_overlay(limb_bandage_overlay)
+			else
+				limb_bandage_overlay = iter_part.current_gauze.build_worn_icon(
+					default_layer = -BANDAGE_LAYER, // proc inverts it for us
+					override_file = 'icons/mob/effects/bandage.dmi',
+					override_state = iter_part.current_gauze.worn_icon_state, // future todo : icon states for dirty bandages as well
+					)
+				limb_bandage_overlay.color = iter_part.current_gauze.overlay_color
+				bandage_overlay.add_overlay(limb_bandage_overlay)
 
-	if(isnull(bandage_overlay))
-		return
-
-	overlays_standing[BANDAGE_LAYER] = bandage_overlay
-	apply_overlay(BANDAGE_LAYER)
+	if(!isnull(bandage_overlay))
+		overlays_standing[BANDAGE_LAYER] = bandage_overlay
+		apply_overlay(BANDAGE_LAYER)
+	if(!isnull(upper_bandage_overlay))
+		overlays_standing[UPPER_BANDAGE_LAYER] = upper_bandage_overlay
+		apply_overlay(UPPER_BANDAGE_LAYER)
 
 /mob/living/carbon/update_worn_mask()
 	remove_overlay(FACEMASK_LAYER)
@@ -538,7 +564,7 @@
 	var/list/new_limbs = list()
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		if(limb in needs_update)
-			var/bodypart_icon = limb.get_limb_icon()
+			var/bodypart_icon = limb.get_limb_icon(dropped = FALSE, update_on = src)
 			new_limbs += bodypart_icon
 			limb_icon_cache[icon_render_keys[limb.body_zone]] = bodypart_icon //Caches the icon with the bodypart key, as it is new
 		else

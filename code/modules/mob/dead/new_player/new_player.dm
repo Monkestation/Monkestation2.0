@@ -79,6 +79,46 @@
 
 	make_me_an_observer()
 
+/mob/dead/new_player/proc/enter_tutorial()
+	if(QDELETED(src) || QDELETED(client))
+		ready = PLAYER_NOT_READY
+		return FALSE
+
+	if(interview_safety(src, "attempting to enter tutorial"))
+		qdel(client)
+		return FALSE
+
+	var/this_is_like_playing_right = tgui_alert(src, "Are you sure you wish to enter tutorial? You may return to lobby if you try to leave the tutorial chamber", "Tutorial", list("Yes", "No"))
+	if(QDELETED(src) || QDELETED(client))
+		return FALSE
+
+	if(this_is_like_playing_right != "Yes")
+		ready = PLAYER_NOT_READY
+		return FALSE
+
+	//creates the tutorial body and spawns them in CC
+	var/obj/effect/landmark/tutorial_start/obs_start = locate(/obj/effect/landmark/tutorial_start) in GLOB.landmarks_list
+	to_chat(src, span_notice("Now teleporting."))
+
+	if(!obs_start)
+		to_chat(src, span_notice("Teleporting failed. Ahelp an admin please"))
+		stack_trace("There's no freaking tutorial landmark available on yet! you're accessing the tutorial before the CC is initialised")
+		return
+
+	var/mob/living/carbon/human/tutorial/tutorial_body = new(get_turf(obs_start))
+	spawning = TRUE
+
+	tutorial_body.PossessByPlayer(key)
+	tutorial_body.client = client
+
+	if(tutorial_body?.client?.prefs)
+		tutorial_body.client.prefs.apply_prefs_to(tutorial_body)
+		tutorial_body.dna.species.give_important_for_life(tutorial_body)
+	tutorial_body.equipOutfit(/datum/outfit/ghost_player)
+
+	QDEL_NULL(mind)
+	qdel(src)
+
 /mob/dead/new_player/proc/join_game(from_lobby_menu = FALSE, params = null)
 	if(isnull(client))
 		return
