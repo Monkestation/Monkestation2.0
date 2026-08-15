@@ -52,7 +52,7 @@
 	var/obj/item/implant/radio/radio = new(owner)
 	radio.implant(owner, null, TRUE, TRUE)
 	radio_weakref = WEAKREF(radio)
-	is_sufficiently_augmented()
+	check_if_augmented()
 /obj/item/organ/internal/brain/cybernetic/ai/Remove(mob/living/carbon/organ_owner, special, movement_flags)
 	GLOB.available_ai_shells -= owner
 	if(last_connected_ai)
@@ -105,7 +105,7 @@
 		lines += span_warning("Already occupied by another digital entity.")
 	else if(connected_ai && connected_ai != user)
 		lines += span_warning("Uplink is locked by another digital entity.")
-	else if(!is_sufficiently_augmented())
+	else if(!check_if_augmented())
 		lines += span_warning("Organic organs detected. Robotic organs only, cannot take over.")
 	else
 		lines += "<a href='byond://?src=[REF(src)];ai_take_control=[REF(user)]'>[span_boldnotice("Take control?")]</a><br>"
@@ -114,7 +114,7 @@
 
 /obj/item/organ/internal/brain/cybernetic/ai/Topic(href, href_list)
 	..()
-	if(!href_list["ai_take_control"] || !is_sufficiently_augmented() || mainframe)
+	if(!href_list["ai_take_control"] || !check_if_augmented() || mainframe)
 		return
 	var/mob/living/silicon/ai/AI = locate(href_list["ai_take_control"]) in GLOB.silicon_mobs
 	if(isnull(AI))
@@ -153,7 +153,7 @@
 
 	owner.add_traits(list(TRAIT_SILICON_ACCESS), REF(src))
 
-	var/obj/item/implant/radio/implant = radio_weakref.resolve()
+	var/obj/item/implant/radio/implant = radio_weakref?.resolve()
 	if(implant.radio && AI.radio)
 		if(AI.radio.syndie) /// AI has Syndie radio if traitor.
 			AI.radio.make_syndie()
@@ -192,8 +192,11 @@
 	mainframe = null
 	update_med_hud_status(owner)
 
-/// Checks if the organic shell's organs are fully robotic
-/obj/item/organ/internal/brain/cybernetic/ai/proc/is_sufficiently_augmented()
+/** Checks if the owner's organs are fully robotic.
+*If they are, adds them to GLOB.available_ai_shells list.
+*If not, removes them from the list.
+*/
+/obj/item/organ/internal/brain/cybernetic/ai/proc/check_if_augmented()
 	var/mob/living/carbon/carb_owner = owner
 	. = TRUE
 	if(!istype(carb_owner))
@@ -204,16 +207,13 @@
 		if(!IS_ROBOTIC_ORGAN(organ) && !istype(organ, /obj/item/organ/internal/tongue)) //tongues are not in the exosuit fab and nobody is going to bother to find them so
 			GLOB.available_ai_shells -= carb_owner
 			return FALSE
-		else
-			if(!(carb_owner in GLOB.available_ai_shells))
-				GLOB.available_ai_shells |= carb_owner
-
-
+		if(!(carb_owner in GLOB.available_ai_shells))
+			GLOB.available_ai_shells |= carb_owner
 
 /// Is called when any organs are added&removed after uplink is inserted
 /obj/item/organ/internal/brain/cybernetic/ai/proc/on_organ_gain(datum/source, obj/item/organ/new_organ, special)
 	SIGNAL_HANDLER
-	if(!is_sufficiently_augmented())
+	if(!check_if_augmented())
 		to_chat(owner, span_danger("Connection failure. Organic organs detected."))
 		undeploy()
 /// Is called when AI cannot control the shell
