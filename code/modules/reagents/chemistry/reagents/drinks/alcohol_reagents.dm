@@ -3261,7 +3261,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 
-/datum/reagent/consumable/ethanol/garibaldi //Makes revs resitant to wounds and fearless.
+/datum/reagent/consumable/ethanol/garibaldi //Makes revs resistant to wounds and fearless.
 	name = "Garibaldi"
 	description = "Named for the 19th-century Italian general, the red-orange color scheme of this drink mimics the shirts of those who followed him into battles all across the world."
 	boozepwr = 15
