@@ -1275,7 +1275,6 @@
 	if(istype(stomach))
 		stomach.adjust_charge(reac_volume * 3)
 
-
 /datum/reagent/consumable/ethanol/bitters_soda
 	name = "Bitters and Soda"
 	description = "A simple beverage of soda water flavored with aromatic bitters. Soothes upset stomachs."
