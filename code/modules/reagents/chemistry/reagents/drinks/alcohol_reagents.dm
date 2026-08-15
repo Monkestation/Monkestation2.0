@@ -3128,8 +3128,7 @@
 	. = ..()
 	affected_mob.apply_status_effect(/datum/status_effect/headache_soothed) //prevents headaches
 	affected_mob.adjust_disgust(-5 * REM * seconds_per_tick) //removes disgust, same with sol dry
-	if(affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.5 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags)) //heals brain damage very slowly, about 12 damage per 5u
-		return UPDATE_MOB_HEALTH
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.5 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags) //heals brain damage very slowly, about 12 damage per 5u
 
 /datum/reagent/consumable/ethanol/blue_blazer
 	name = "Blue Blazer"
@@ -3238,8 +3237,7 @@
 	. = ..()
 	var/obj/item/organ/internal/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(HAS_TRAIT(liver, TRAIT_BARTENDER_METABOLISM))
-		if(drinker.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 1 * REM * seconds_per_tick, updating_health = FALSE))
-			. = UPDATE_MOB_HEALTH
+		drinker.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 1 * REM * seconds_per_tick, updating_health = FALSE)
 	else
 		drinker.adjust_disgust(2 * REM * seconds_per_tick)
 
