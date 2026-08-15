@@ -66,12 +66,14 @@
 		QDEL_NULL(radio)
 	connected_ai = null
 
+/// Updates the connecting AI's statpanel.
 /obj/item/organ/internal/brain/cybernetic/ai/proc/get_status_tab_item(mob/living/source, list/items)
 	SIGNAL_HANDLER
 	if(!mainframe)
 		return
 	items += mainframe.get_status_tab_items()
 
+/// Updates the shell's vital status on medical HUD
 /obj/item/organ/internal/brain/cybernetic/ai/proc/update_med_hud_status(mob/living/mob_parent)
 	SIGNAL_HANDLER
 	var/image/holder = mob_parent.active_hud_list?[STATUS_HUD]
