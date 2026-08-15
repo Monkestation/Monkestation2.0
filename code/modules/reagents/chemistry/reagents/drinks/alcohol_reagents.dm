@@ -3398,7 +3398,7 @@
 
 /datum/reagent/consumable/ethanol/spritz/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	drinker.overeatduration = max(affected.overeatduration - (2 SECONDS), 0)
+	drinker.overeatduration = max(drinker.overeatduration - (2 SECONDS), 0)
 
 /datum/reagent/consumable/ethanol/vieux_carre
 	name = "Vieux Carré"
