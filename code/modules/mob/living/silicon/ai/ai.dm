@@ -1134,7 +1134,7 @@
 			var/mob/living/carbon/human/human = borgie
 			var/obj/item/organ/internal/brain/cybernetic/ai/brain = locate() in human.organs
 			//  Checks if shell currently has access from being deployed and has an AI uplink, and is sufficiently augmented
-			if(!(HAS_TRAIT(human, TRAIT_SILICON_ACCESS)) && (brain && brain.is_sufficiently_augmented()))
+			if(!(HAS_TRAIT(human, TRAIT_SILICON_ACCESS)) && (brain && brain.check_if_augmented()))
 				possible += human
 
 	if(!LAZYLEN(possible))
