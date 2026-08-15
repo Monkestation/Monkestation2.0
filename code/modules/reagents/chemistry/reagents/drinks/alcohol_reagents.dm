@@ -2584,7 +2584,6 @@
 	taste_description = "a life on the waves"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-
 /datum/reagent/consumable/ethanol/bitters //why do they call them bitters, anyway? they're more spicy than anything else
 	name = "Andromeda Bitters"
 	description = "A bartender's best friend, often used to lend a delicate spiciness to any drink. Produced in New Trinidad, now and forever."
@@ -2789,7 +2788,6 @@
 /datum/reagent/consumable/ethanol/pod_tesla/on_mob_metabolize(mob/living/affected_mob)
 	..()
 	affected_mob.add_traits(list(TRAIT_SHOCKIMMUNE,TRAIT_TESLA_SHOCKIMMUNE,TRAIT_FEARLESS), type)
-
 
 /datum/reagent/consumable/ethanol/pod_tesla/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -3157,7 +3155,6 @@
 	. = ..()
 	affected_mob.adjust_bodytemperature(1.75 * WARM_DRINK * REM * seconds_per_tick, max_temp = affected_mob.standard_body_temperature + 4 KELVIN) //310.15 is the normal bodytemp.
 
-
 /datum/reagent/consumable/ethanol/tizirian_sour
 	name = "Tizirian Sour"
 	description = "A twist on a trinidad sour, using korta nectar in place of orgeat. Despite the name, it was invented by a martian barkeep."
@@ -3198,7 +3195,6 @@
 	taste_description = "intense citrusy bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-
 /datum/reagent/consumable/ethanol/aperitivo/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired) //This and some of the cocktails it gets mixed into stimulate the apetite, as an aperitivo should
 	. = ..()
 	drinker.adjust_nutrition(-1 * REM * seconds_per_tick)
@@ -3232,7 +3228,6 @@
 	taste_description = "pretentious bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-
 /datum/reagent/consumable/ethanol/bartenders_handshake/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired) //Heals bartenders brute and burn, disgusts otherwise
 	. = ..()
 	var/obj/item/organ/internal/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
@@ -3250,7 +3245,6 @@
 	taste_description = "orangy sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-
 /datum/reagent/consumable/ethanol/casino
 	name = "Casino"
 	description = "A gin-heavy classic. Juniper is tempered by scant amounts of citrus and sweetened with liqueur."
@@ -3259,7 +3253,6 @@
 	quality = DRINK_GOOD
 	taste_description = "sweet juniper"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
 
 /datum/reagent/consumable/ethanol/garibaldi //Makes revs resistant to wounds and fearless.
 	name = "Garibaldi"
@@ -3334,12 +3327,12 @@
 	quality = DRINK_GOOD
 	taste_description = "bittersweet vermouth"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
 	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/ethanol/negroni/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	drinker.overeatduration -= 20
+	drinker.overeatduration = max(affected_mob.overeatduration - (2 SECONDS), 0)
+
 
 /datum/reagent/consumable/ethanol/nuclear_daiquiri
 	name = "Nuclear daiquiri"
@@ -3405,7 +3398,7 @@
 
 /datum/reagent/consumable/ethanol/spritz/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	drinker.overeatduration -= 20
+	drinker.overeatduration = max(affected_mob.overeatduration - (2 SECONDS), 0)
 
 /datum/reagent/consumable/ethanol/vieux_carre
 	name = "Vieux Carré"
