@@ -143,7 +143,6 @@
  */
 
 /obj/item/organ/internal/brain/cybernetic/ai/proc/deploy_init(mob/living/silicon/ai/AI)
-	//todo camera maybe
 	mainframe = AI
 	connected_ai = AI
 	last_connected_ai = AI
