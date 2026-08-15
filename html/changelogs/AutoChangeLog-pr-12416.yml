@@ -1,0 +1,4 @@
+author: "Runian"
+delete-after: True
+changes:
+  - bugfix: "Janitor cyborgs now correctly refills their drying agent spray and space lube spray via a recharging station."

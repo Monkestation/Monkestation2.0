@@ -115,3 +115,7 @@
   - bugfix: AI's ability to clear its own resources now works.
   - bugfix: Induction abilities now properly update the button name as you upgrade
       them.
+2026-08-15:
+  osaka-fuuri:
+  - rscadd: Added %2 per tick chance for radstorm to turn cockroaches into romch
+  - rscadd: Added romchifize() and isroach() procs
