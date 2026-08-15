@@ -1,0 +1,9 @@
+author: "Gboster-0"
+delete-after: True
+changes:
+  - rscadd: "Added window sill's under green windows on blueshift"
+  - bugfix: "Fixed missing turfs above monkey pen in LeadPoisoning"
+  - bugfix: "Fixed too many cameras on specifically Theseus, i hate you Theseus. I couldn't even use strongDMM for specifically theseus it had so many i had to edit the map in VSCode"
+  - bugfix: "Fixed centcom arena creating a new camera for every single battle"
+  - bugfix: "Fixed round-start active turfs on Blueshift/Box/Graveyard/LeadPoisoning/Pubby/Void Raptor, so they should load a lil bit faster"
+  - bugfix: "Fixed duplicate/invalid camera names/positions on basically every map, go to the PR if you wanna see em"
