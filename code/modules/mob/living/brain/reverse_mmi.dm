@@ -163,7 +163,7 @@
 		for(var/channel in implant.radio.channels)
 			LAZYSET(implant.radio.secure_radio_connections, channel, add_radio(implant.radio, GLOB.radiochannels[channel]))
 
-/// Handles exitting the shell.
+/// Handles exiting the shell.
 /obj/item/organ/internal/brain/cybernetic/ai/proc/undeploy(datum/source)
 	SIGNAL_HANDLER
 	if(!owner?.mind || !mainframe)
