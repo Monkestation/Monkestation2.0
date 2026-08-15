@@ -114,12 +114,6 @@
 /obj/machinery/power/supermatter_crystal/contents_explosion(severity, target)
 	return
 
-/obj/machinery/power/supermatter_crystal/accelerated_particle_act(obj/effect/accelerated_particle/particle)
-	external_power_immediate += particle.energy * bullet_energy
-	particle.movement_range = 0
-	radiation_pulse(src, floor(particle.energy * 0.3), 3, 0.5)
-	log_activation(who = "particle accelerator")
-
 /obj/machinery/power/supermatter_crystal/proc/wrench_act_callback(mob/user, obj/item/tool)
 	if(moveable)
 		default_unfasten_wrench(user, tool)

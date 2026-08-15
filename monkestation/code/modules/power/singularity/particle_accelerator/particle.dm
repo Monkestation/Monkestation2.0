@@ -82,6 +82,12 @@
 /obj/energy_ball/accelerated_particle_act(obj/effect/accelerated_particle/particle)
 	energy += particle.energy
 
+/obj/machinery/power/supermatter_crystal/accelerated_particle_act(obj/effect/accelerated_particle/particle)
+	external_power_immediate += particle.energy * bullet_energy
+	particle.movement_range = 0
+	radiation_pulse(src, floor(particle.energy * 0.3), 3, 0.5)
+	log_activation(who = "particle accelerator")
+
 /obj/structure/blob/accelerated_particle_act(obj/effect/accelerated_particle/particle)
 	take_damage(particle.energy * 0.6)
 	particle.movement_range = 0
