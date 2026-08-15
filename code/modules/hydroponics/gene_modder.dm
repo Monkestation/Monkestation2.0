@@ -90,11 +90,9 @@
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/plantgenes/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(iscyborg(user))
-		return
 	if(!anchored)
 		return ..()
-
+	attacking_item = attacking_item.get_proxy_attacker_for(src, user)
 	if(istype(attacking_item, /obj/item/seeds))
 		if (operation)
 			to_chat(user, "<span class='notice'>Please complete current operation.</span>")

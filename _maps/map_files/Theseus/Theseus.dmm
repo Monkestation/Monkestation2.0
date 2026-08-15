@@ -13359,6 +13359,7 @@
 	dir = 9
 	},
 /obj/structure/table,
+/obj/item/flatpack,
 /obj/item/multitool,
 /obj/item/toy/figure/cargotech{
 	pixel_x = -8
@@ -22508,6 +22509,7 @@
 	dir = 1
 	},
 /obj/machinery/light/small/directional/north,
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "gJs" = (
@@ -64747,7 +64749,10 @@
 	pixel_x = -7
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/left/directional/north,
+/obj/machinery/door/window/left/directional/north{
+	req_access = list("robotics");
+	name = "Robotic's Desk"
+	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	name = "Robotics Shutters";
 	id = "roboticsurgery"
@@ -83457,6 +83462,10 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm/directional/north,
+/obj/item/flatpack{
+	pixel_x = 1;
+	pixel_y = 6
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
 "yhr" = (
