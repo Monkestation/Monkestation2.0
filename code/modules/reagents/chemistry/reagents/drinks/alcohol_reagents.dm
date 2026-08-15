@@ -3326,7 +3326,7 @@
 	taste_description = "elegant pineapple"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/negroni //Aperitif that supresses overeating
+/datum/reagent/consumable/ethanol/negroni //Aperitif that suppresses overeating
 	name = "Negroni"
 	description = "An iconic Italian aperitif, its simple intensity crowns it as perhaps the ultimate bitter cocktail. Supposedly it was named after an Italian count who wanted a stronger version of a spritz and asked his bartender to replace soda with gin."
 	boozepwr = 50
