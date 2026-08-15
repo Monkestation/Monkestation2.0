@@ -13,14 +13,12 @@
 	contraband = list()
 	premium = list()
 */
-<<<<<<< CWU
 
 /// List of vending machines that players can restock, so only vending machines that are on station or don't have a unique condition.
 GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
-=======
 #define ITEM_HASH(item)(sanitize_css_class_name("[item.name][item.custom_price][item.type]"))
->>>>>>> master
+
 #define MAX_VENDING_INPUT_AMOUNT 30
 #define CREDITS_DUMP_THRESHOLD 50
 /**

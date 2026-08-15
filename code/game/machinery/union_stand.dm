@@ -1,7 +1,7 @@
 /obj/machinery/union_stand
 	name = "\improper holographic union stand"
 	desc = "A holographic stand that allows Union members to vote on new demands. Reads badges for access."
-	icon = 'monkestation/icons/obj/structures/signboards.dmi'
+	icon = 'icons/obj/structures/signboards.dmi'
 	icon_state = "holographic_sign"
 	base_icon_state = "holographic_sign"
 
