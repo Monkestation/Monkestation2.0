@@ -55,7 +55,7 @@
 			drying_spray.reagents.add_reagent(/datum/reagent/drying_agent, 5 * coeff)
 			continue
 		if(istype(usable_module, /obj/item/reagent_containers/spray/cyborg_lube))
-			var/obj/item/reagent_containers/spray/cyborg_drying/lube_spray = usable_module
+			var/obj/item/reagent_containers/spray/cyborg_lube/lube_spray = usable_module
 			lube_spray.reagents.add_reagent(/datum/reagent/lube, 2 * coeff)
 			continue
 
