@@ -84,13 +84,13 @@
 	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/ammo/autoshotgun_buckshot_case
-	name = "Syndicate Auto Shotgun Buckshot Magazine case"
+	name = "Syndicate Auto Shotgun Buckshot Magazine Case"
 	desc = "A case with 2 auto shotgun magazines loaded with buckshot shells. A lethal high damage spread of pellets."
 	cost = 3
 	item = /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition
 
 /datum/uplink_item/ammo/autoshotgun_slugs_case
-	name = "Syndicate Auto Shotgun Slugs Magazine case"
+	name = "Syndicate Auto Shotgun Slugs Magazine Case"
 	desc = "A case with 2 auto shotgun magazines loaded with slug shells. A lethal high damage accurate slug."
 	cost = 3
 	item = /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/slug
