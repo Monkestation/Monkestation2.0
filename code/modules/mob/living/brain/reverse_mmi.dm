@@ -110,7 +110,6 @@
 
 	to_chat(user, boxed_message(jointext(lines, "\n")), type = MESSAGE_TYPE_INFO)
 
-
 /obj/item/organ/internal/brain/cybernetic/ai/Topic(href, href_list)
 	..()
 	if(!href_list["ai_take_control"] || !is_sufficiently_augmented() || mainframe)
