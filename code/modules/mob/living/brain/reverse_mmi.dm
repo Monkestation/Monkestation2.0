@@ -171,8 +171,8 @@
 	UnregisterSignal(owner, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING))
 	UnregisterSignal(mainframe, COMSIG_QDELETING)
 	var/last_loc = owner.loc
-	mainframe.redeploy_action.Remove(mainframe)
-	mainframe.redeploy_action.last_used_shell = null
+	mainframe.redeploy_action.Grant(mainframe)
+	mainframe.redeploy_action.last_used_shell = owner
 	owner.mind.transfer_to(mainframe)
 	mainframe.deployed_shell = null
 	undeployment_action.Remove(owner)
