@@ -103,7 +103,6 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 		charges--
 		return ITEM_INTERACT_SUCCESS
 
-//---- Allows the cargo teleporter to hold fultons as charges, in order to fulton people with right click
 /obj/item/cargo_teleporter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/extraction_pack))
 		return NONE
