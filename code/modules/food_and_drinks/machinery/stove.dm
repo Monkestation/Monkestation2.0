@@ -25,6 +25,8 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
+	if(!user.Adjacent(src))
+		return
 	attack_hand_secondary(user) // Allows interaction with the stove.
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
