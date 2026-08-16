@@ -27,7 +27,7 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	. += span_notice("[EXAMINE_HINT("Use")] in-hand to set down the markers!")
 	. += span_notice("[EXAMINE_HINT("Alt-click")] to remove all markers!")
 	. += span_notice("[EXAMINE_HINT("Ctrl-click")] to select a extraction beacon to fulton to!")
-	. += span_notice("[EXAMINE_HINT("Right-click")] an thing to start fultoning it with a charge.")
+	. += span_notice("[EXAMINE_HINT("Right-click")] a thing to start fultoning it with a charge.")
 	. += span_info("It has [charges]/[max_charges] charges remaining.")
 
 /obj/item/cargo_teleporter/Destroy()
