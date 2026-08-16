@@ -19,6 +19,9 @@
 	/// What dummy mob type do we put jaunters in on jaunt?
 	var/jaunt_type = /obj/effect/dummy/phased_mob
 
+	/// Do we gib when an explosion originates from us when jaunting?
+	var/gib_from_internal_explosion = TRUE
+
 /datum/action/cooldown/spell/jaunt/get_caster_from_target(atom/target)
 	if(istype(target.loc, jaunt_type))
 		return target
@@ -78,7 +81,26 @@
 
 	// This needs to happen at the end, after all the traits and stuff is handled
 	SEND_SIGNAL(jaunter, COMSIG_MOB_ENTER_JAUNT, src, jaunt)
+	if(gib_from_internal_explosion)
+		RegisterSignal(jaunter, COMSIG_ATOM_INTERNAL_EXPLOSION, PROC_REF(poof), jaunter)
 	return jaunt
+
+/// If you try using chemical grenades or other methods to explode while invincible by jaunting, expect a consequence
+/datum/action/cooldown/spell/jaunt/proc/poof(mob/living/jaunter)
+	SIGNAL_HANDLER
+
+	if(!jaunter || !gib_from_internal_explosion)
+		return
+	exit_jaunt(jaunter)
+	jaunter.visible_message(span_danger("[jaunter] suddenly appears as the air around them warps stretching them apart!"),
+			span_userdanger("You feel a sudden cosmic force push from within as your body starts to stretch itself apart. Your last thought is \"Oh, fuck.\""),
+			span_hear("You hear a high-pitched shear as the air around you warps."))
+	var/turf/rift_loc = get_turf(jaunter)
+	jaunter.gib()
+	var/obj/reality_tear/temporary/tear = new(rift_loc)
+	tear.start_disaster()
+	jaunter.investigate_log("has been gibbed by an internal explosion while jaunting.", INVESTIGATE_DEATHS)
+	playsound(rift_loc,'sound/effects/supermatter.ogg', 200, TRUE)
 
 /**
  * Ejects the [unjaunter] from jaunt
@@ -102,6 +124,8 @@
 	if(loc_override)
 		jaunt.forceMove(loc_override)
 	jaunt.eject_jaunter()
+	if(gib_from_internal_explosion)
+		UnregisterSignal(unjaunter, COMSIG_ATOM_INTERNAL_EXPLOSION)
 	return TRUE
 
 /**

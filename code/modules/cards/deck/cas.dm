@@ -22,8 +22,8 @@
 	decksize = 50
 
 GLOBAL_LIST_INIT(card_decks, list(
-	black = world.file2list("strings/cas_black.txt"),
-	white = world.file2list("strings/cas_white.txt")
+	black = file2list("strings/cas_black.txt"),
+	white = file2list("strings/cas_white.txt")
 ))
 
 /obj/item/toy/cards/deck/cas/Initialize(mapload)

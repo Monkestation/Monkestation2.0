@@ -8,7 +8,7 @@
 	name = "Saulter Goodman"
 	real_name = "Saulter Goodman"
 	desc = "Seccies and wardens are nothing compared to the might of this consititutional right loving lawyer."
-	icon = 'monkestation/icons/mob/walterverse.dmi'
+	icon = 'icons/mob/walterverse.dmi'
 	icon_state = "saulter"
 	icon_living = "saulter"
 	icon_dead = "saulter_dead"
@@ -25,7 +25,7 @@
 	name = "Negative Walter"
 	real_name = "Negative Walter"
 	desc = "Nar'sie and Ratvar are a lot compared to the might of this skcurtretsnom despising god."
-	icon = 'monkestation/icons/mob/walterverse.dmi'
+	icon = 'icons/mob/walterverse.dmi'
 	icon_state = "negative"
 	icon_living = "negative"
 	icon_dead = "negative_dead"
@@ -42,7 +42,7 @@
 	name = "Syndicate Walter"
 	real_name = "Syndicate Walter"
 	desc = "Nanotrasen and Centcom are nothing compared to the might of this nuke loving dog."
-	icon = 'monkestation/icons/mob/walterverse.dmi'
+	icon = 'icons/mob/walterverse.dmi'
 	icon_state = "syndie"
 	icon_living = "syndie"
 	icon_dead = "syndie_dead"
@@ -59,7 +59,7 @@
 	name = "Doom Walter"
 	real_name = "Doom Walter"
 	desc = "Devils and Gods are nothing compared to the might of this gun loving soldier."
-	icon = 'monkestation/icons/mob/walterverse.dmi'
+	icon = 'icons/mob/walterverse.dmi'
 	icon_state = "doom"
 	icon_living = "doom"
 	icon_dead = "doom_dead"
@@ -76,7 +76,7 @@
 	name = "Space Walter"
 	real_name = "Space Walter"
 	desc = "Exploring the galaxies is nothing for this star loving dog."
-	icon = 'monkestation/icons/mob/walterverse.dmi'
+	icon = 'icons/mob/walterverse.dmi'
 	icon_state = "space"
 	icon_living = "space"
 	icon_dead = "space_dead"
@@ -96,7 +96,7 @@
 	name = "Suspicious Walter"
 	real_name = "Suspicious Walter"
 	desc = "This vent loving dog is a little suspicious..."
-	icon = 'monkestation/icons/mob/walterverse.dmi'
+	icon = 'icons/mob/walterverse.dmi'
 	icon_state = "sus"
 	icon_living = "sus"
 	icon_dead = "sus_dead"
@@ -117,7 +117,7 @@
 	name = "Clown Walter"
 	real_name = "Clown Walter"
 	desc = "Seccies and staff members are nothing compared to the might of this banana loving loving dog."
-	icon = 'monkestation/icons/mob/walterverse.dmi'
+	icon = 'icons/mob/walterverse.dmi'
 	icon_state = "clown"
 	icon_living = "clown"
 	icon_dead = "clown_dead"
@@ -134,7 +134,7 @@
 	name = "French Walter"
 	real_name = "French Walter"
 	desc = "Nar'sie et ratvar ne sont rien comparés à la puissance de ce chien qui aime les monstertrucks."
-	icon = 'monkestation/icons/mob/walterverse.dmi'
+	icon = 'icons/mob/walterverse.dmi'
 	icon_state = "french"
 	icon_living = "french"
 	icon_dead = "french_dead"
@@ -164,7 +164,7 @@
 	name = "Magic Walter"
 	real_name = "Magic Walter"
 	desc = "Assistants and secoffs are nothing compared to the might of this magic loving dog."
-	icon = 'monkestation/icons/mob/walterverse.dmi'
+	icon = 'icons/mob/walterverse.dmi'
 	icon_state = "wizard"
 	icon_living = "wizard"
 	icon_dead = "wizard_dead"

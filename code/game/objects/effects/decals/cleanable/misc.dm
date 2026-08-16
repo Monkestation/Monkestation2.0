@@ -164,15 +164,15 @@
 
 /obj/effect/decal/cleanable/vomit/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(.)
+	if(. || !ishuman(user))
 		return
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(isflyperson(H))
-			playsound(get_turf(src), 'sound/items/drink.ogg', 50, TRUE) //slurp
-			H.visible_message(span_alert("[H] extends a small proboscis into the vomit pool, sucking it with a slurping sound."))
-			reagents.trans_to(H, reagents.total_volume, transfered_by = user, methods = INGEST)
-			qdel(src)
+	var/mob/living/carbon/human/as_human = user
+	if(!isflyperson(as_human))
+		return
+	playsound(get_turf(src), 'sound/items/drink.ogg', 50, TRUE) //slurp
+	as_human.visible_message(span_alert("[as_human] extends a small proboscis into the vomit pool, sucking it with a slurping sound."))
+	lazy_init_reagents()?.trans_to(as_human, reagents.total_volume, transferred_by = user, methods = INGEST)
+	qdel(src)
 
 /obj/effect/decal/cleanable/vomit/nebula
 	name = "nebula vomit"
@@ -261,15 +261,21 @@
 	name = "stabilized plasma"
 	desc = "A puddle of stabilized plasma."
 	icon_state = "purpleglow"
-	icon = 'monkestation/icons/effects/stabilized_plasma.dmi'
+	icon = 'icons/effects/stabilized_plasma.dmi'
 //MONKESTATION EDIT STOP
 
 /obj/effect/decal/cleanable/insectguts
 	name = "insect guts"
 	desc = "One bug squashed. Four more will rise in its place."
 	icon = 'icons/effects/blood.dmi'
-	icon_state = "xfloor1"
-	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
+	icon_state = "floor1"
+	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
+	color = BLOOD_COLOR_XENO
+
+/obj/effect/decal/cleanable/blood/ethereal
+
+/obj/effect/decal/cleanable/blood/ethereal/get_default_blood_type()
+	return get_blood_type(BLOOD_TYPE_ETHEREAL)
 
 /obj/effect/decal/cleanable/confetti
 	name = "confetti"
@@ -347,7 +353,7 @@
 
 /obj/effect/decal/cleanable/ants/proc/update_ant_damage(ant_min_damage, ant_max_damage)
 	if(!ant_max_damage)
-		ant_max_damage = min(10, round((reagents.get_reagent_amount(/datum/reagent/ants) * 0.1),0.1)) // 100u ants = 10 max_damage
+		ant_max_damage = min(10, round((reagents ? reagents.get_reagent_amount(/datum/reagent/ants) : reagent_amount) * 0.1,0.1)) // 100u ants = 10 max_damage
 	if(!ant_min_damage)
 		ant_min_damage = 0.1
 	var/ant_flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_ANTS) /// Small amounts of ants won't be able to bite through shoes.

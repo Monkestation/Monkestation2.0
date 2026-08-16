@@ -4,7 +4,7 @@
  */
 
 /proc/setup_pretty_filter(path = "config/ntsl_filter.txt")
-	var/list/filter_lines = world.file2list(path)
+	var/list/filter_lines = file2list(path)
 	for(var/line in filter_lines)
 		add_pretty_filter_line(line)
 

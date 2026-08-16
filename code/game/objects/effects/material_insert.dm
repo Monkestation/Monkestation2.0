@@ -29,7 +29,7 @@
 
 	var/mutable_appearance/cached_app = apps[color]
 	if(isnull(cached_app))
-		var/icon/modified_icon = icon('monkestation/icons/obj/machines/research.dmi', "material_insertion")
+		var/icon/modified_icon = icon('icons/obj/machines/research.dmi', "material_insertion")
 
 		//assuming most of the icon is white we find what ratio to scale the intensity of each part roughly
 		var/list/rgb_list = rgb2num(color)

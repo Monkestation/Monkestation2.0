@@ -97,6 +97,8 @@
 ///from base of mob/living/death(): (gibbed)
 #define COMSIG_LIVING_DEATH "living_death"
 
+#define COMSIG_LIVING_FAKE_DEATH "fake_death"
+
 ///from base of mob/living/gib(): (no_brain, no_organs, no_bodyparts)
 ///Note that it is fired regardless of whether the mob was dead beforehand or not.
 #define COMSIG_LIVING_GIBBED "living_gibbed"
@@ -132,9 +134,6 @@
 /// from mob/living/check_stun_immunity(): (check_flags)
 #define COMSIG_LIVING_GENERIC_STUN_CHECK "living_check_stun"
 	#define COMPONENT_NO_STUN (1<<0) //For all of them
-///from base of /mob/living/can_track(): (mob/user)
-#define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
-	#define COMPONENT_CANT_TRACK (1<<0)
 ///from end of fully_heal(): (heal_flags)
 #define COMSIG_LIVING_POST_FULLY_HEAL "living_post_fully_heal"
 /// from start of /mob/living/handle_breathing(): (seconds_per_tick, times_fired)

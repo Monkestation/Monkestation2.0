@@ -55,6 +55,6 @@
 		if(isipc(arrived))
 			if(!(arrived.wear_suit?.clothing_flags & STOPSPRESSUREDAMAGE))
 				arrived.take_overall_damage(burn = 5)
-		else if(isoozeling(arrived) && !HAS_TRAIT(arrived, TRAIT_SLIME_HYDROPHOBIA))
+		else if(isoozeling(arrived))
 			var/datum/species/oozeling/oozeling = arrived.dna.species
 			oozeling.water_exposure(arrived, check_clothes = TRUE, quiet_if_protected = TRUE)

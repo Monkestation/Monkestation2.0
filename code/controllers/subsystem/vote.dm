@@ -5,7 +5,6 @@ SUBSYSTEM_DEF(vote)
 	name = "Vote"
 	wait = 1 SECONDS
 	flags = SS_KEEP_TIMING
-	init_order = INIT_ORDER_VOTE
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	/// A list of all generated action buttons
@@ -479,7 +478,7 @@ SUBSYSTEM_DEF(vote)
 /// Datum action given to mobs that allows players to vote on the current vote.
 /datum/action/vote
 	name = "Vote!"
-	button_icon = 'monkestation/icons/hud/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "vote"
 	show_to_observers = FALSE
 

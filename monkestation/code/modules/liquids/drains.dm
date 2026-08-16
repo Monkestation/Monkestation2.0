@@ -1,7 +1,7 @@
 //Structure as this doesn't need any power to work
 /obj/structure/drain
 	name = "drain"
-	icon = 'monkestation/icons/obj/structures/drains.dmi'
+	icon = 'icons/obj/structures/drains.dmi'
 	icon_state = "drain"
 	desc = "Drainage inlet embedded in the floor to prevent flooding."
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF

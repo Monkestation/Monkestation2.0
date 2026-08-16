@@ -9,7 +9,7 @@
 	desc = "A device that can remotely control active nanites through wireless signals."
 	w_class = WEIGHT_CLASS_SMALL
 	req_access = list(ACCESS_RESEARCH)
-	icon = 'monkestation/icons/obj/device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "nanite_remote"
 	item_flags = NOBLUDGEON
 	var/locked = FALSE //Can be locked, so it can be given to users with a set code and mode
@@ -108,7 +108,7 @@
 	data["silicon"] = silicon
 	return data
 
-/obj/item/nanite_remote/ui_act(action, params)
+/obj/item/nanite_remote/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -227,7 +227,7 @@
 
 	return data
 
-/obj/item/nanite_remote/comm/ui_act(action, params)
+/obj/item/nanite_remote/comm/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

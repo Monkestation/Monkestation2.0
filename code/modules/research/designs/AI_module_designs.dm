@@ -2,16 +2,6 @@
 //////////AI Module Disks//////////
 ///////////////////////////////////
 
-/datum/design/board/aicore
-	name = "AI Core Board"
-	desc = "Allows for the construction of circuit boards used to build new AI cores."
-	id = "aicore"
-	build_path = /obj/item/circuitboard/aicore
-	category = list(
-		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
 /datum/design/board/safeguard_module
 	name = "Safeguard Module"
 	desc = "Allows for the construction of a Safeguard AI Module."

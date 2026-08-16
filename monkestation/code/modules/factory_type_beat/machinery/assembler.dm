@@ -544,3 +544,21 @@
 
 	recipe_icon.icon = initial(atom.icon)
 	recipe_icon.icon_state = initial(atom.icon_state)
+
+/turf/proc/can_drop_off(atom/movable/target)
+	if(isclosedturf(src))
+		return FALSE
+	for(var/obj/structure/listed in contents)
+		if(!listed.can_drop_off(target))
+			return FALSE
+	for(var/obj/machinery/listed in contents)
+		if(!listed.can_drop_off(target))
+			return FALSE
+
+	return TRUE
+
+/obj/structure/proc/can_drop_off(atom/movable/target)
+	return TRUE
+
+/obj/machinery/proc/can_drop_off(atom/movable/target)
+	return TRUE

@@ -476,29 +476,42 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
-/datum/design/cup/vial
-	name = "Vial"
-	id = "vial"
+/datum/design/chemcanister
+	name = "Chemical Canister"
+	id = "chemcanister"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT)
-	build_path = /obj/item/reagent_containers/cup/vial
+	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/reagent_containers/chemcanister
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SERVICE
 
-/datum/design/large_vial
-	name = "Large Vial"
-	id = "large_vial"
+/datum/design/chemcanister_large
+	name = "Large Chemical Canister"
+	id = "chemcanister_large"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/reagent_containers/cup/vial/large
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/reagent_containers/chemcanister/large
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/chemcanister_bluespace
+	name = "Bluespace Chemical Canister"
+	desc = "A chemical canister powered by experimental bluespace technology capable of holding 100 units."
+	id = "chemcanister_bluespace"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma = SMALL_MATERIAL_AMOUNT, /datum/material/diamond = SMALL_MATERIAL_AMOUNT, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/reagent_containers/chemcanister/bluespace
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/hypospray
 	name = "Hypospray"
@@ -510,19 +523,6 @@
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
-
-/datum/design/bluespacevial
-	name = "Bluespace Vial"
-	desc = "A small vial powered by experimental bluespace technology capable of holding 60 units."
-	id = "bluespacevial"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/plasma = SMALL_MATERIAL_AMOUNT, /datum/material/diamond = SMALL_MATERIAL_AMOUNT, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT)
-	build_path = /obj/item/reagent_containers/cup/vial/bluespace
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 

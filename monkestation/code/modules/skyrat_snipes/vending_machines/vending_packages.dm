@@ -1,7 +1,7 @@
 /obj/item/storage/box/foodpack
 	name = "wrapped meal container"
 	desc = "A generic brown paper food package, you aren't quite sure where this comes from."
-	icon = 'monkestation/icons/obj/food/imported_quick_foods.dmi'
+	icon = 'icons/obj/food/imported_quick_foods.dmi'
 	icon_state = "foodpack_generic_big"
 	illustration = null
 	custom_price = PAYCHECK_LOWER * 5

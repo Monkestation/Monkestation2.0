@@ -11,7 +11,7 @@ GLOBAL_LIST_EMPTY(wonderland_marks)
 
 /datum/map_template/wonderland
 	name = "Wonderland"
-	mappath = "_maps/~monkestation/hunter_events/wonderland.dmm"
+	mappath = "_maps/hunter_events/wonderland.dmm"
 
 /obj/effect/mob_spawn/corpse/rabbit
 	mob_type = /mob/living/basic/rabbit
@@ -47,5 +47,5 @@ GLOBAL_LIST_EMPTY(wonderland_marks)
 /obj/structure/chess/redqueen
 	name = "\improper Red Queen"
 	desc = "What is this doing here?"
-	icon = 'monkestation/icons/mob/rabbit.dmi'
+	icon = 'icons/mob/rabbit.dmi'
 	icon_state = "red_queen"

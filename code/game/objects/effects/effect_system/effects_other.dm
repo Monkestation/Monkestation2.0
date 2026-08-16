@@ -96,11 +96,7 @@
 /datum/effect_system/reagents_explosion/set_up(amt, loca, flash = FALSE, flash_fact = 0, message = TRUE)
 	amount = amt
 	explosion_message = message
-	if(isturf(loca))
-		location = loca
-	else
-		location = get_turf(loca)
-
+	location = loca
 	flashing = flash
 	flashing_factor = flash_fact
 

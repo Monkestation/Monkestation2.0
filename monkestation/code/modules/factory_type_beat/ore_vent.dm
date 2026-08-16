@@ -299,6 +299,7 @@
 		var/point_reward_val = (MINER_POINT_MULTIPLIER * boulder_size) - MINER_POINT_MULTIPLIER // We remove the base value of discovering the vent
 		user_id_card.registered_account.mining_points += point_reward_val
 		user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
+		GLOB.lavaland_points_generated += point_reward_val
 	node.pre_escape() //Visually show the drone is done and flies away.
 	node = null
 	add_overlay(mutable_appearance('monkestation/code/modules/factory_type_beat/icons/terrain.dmi', "well", ABOVE_MOB_LAYER, src, GAME_PLANE))
@@ -363,6 +364,7 @@
 			return
 		user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER)
 		user_id_card.registered_account.bank_card_talk("You've been awarded [MINER_POINT_MULTIPLIER] mining points for discovery of an ore vent.")
+		GLOB.lavaland_points_generated += (MINER_POINT_MULTIPLIER)
 		return
 
 	if(scan_only) //Placed here to allow rewards

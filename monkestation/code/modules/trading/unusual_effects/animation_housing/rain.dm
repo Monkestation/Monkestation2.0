@@ -1,6 +1,6 @@
 /datum/component/particle_spewer/rain
 	unusual_description = "gloomy"
-	icon_file = 'monkestation/icons/effects/particle.dmi'
+	icon_file = 'icons/effects/particle.dmi'
 	particle_state = "drop"
 	duration = 0.9 SECONDS
 	spawn_interval = 0.1 SECONDS

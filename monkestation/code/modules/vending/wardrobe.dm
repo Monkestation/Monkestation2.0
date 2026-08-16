@@ -4,7 +4,7 @@
 	icon_state = "xenodrobe"
 	product_ads = "Pesky aliens eating away at your flesh? Dress for the job!"
 	vend_reply = "Thank you for using the XenoDrobe"
-	icon = 'monkestation/icons/obj/vending.dmi'
+	icon = 'icons/obj/vending.dmi'
 	products = list(
 	/obj/item/storage/backpack/xenobiologist = 2,
 	/obj/item/storage/backpack/satchel/xenobiologist = 2,

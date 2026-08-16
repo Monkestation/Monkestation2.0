@@ -352,3 +352,9 @@
 	if(target == goldilocks)
 		target.pixel_y -= 14
 		goldilocks = null
+
+/obj/structure/bed/silk
+	name = "silk bed"
+	icon = 'icons/obj/silk_structures.dmi'
+	icon_state = "bed"
+	build_stack_type = /obj/item/stack/sheet/silk

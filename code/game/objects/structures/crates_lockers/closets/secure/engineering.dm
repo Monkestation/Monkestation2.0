@@ -12,6 +12,7 @@
 	new /obj/item/radio/headset/heads/ce(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/holosign_creator/atmos(src)
+	new /obj/item/storage/box/smart_metalfoam(src)
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/door_remote/chief_engineer(src)
 	new /obj/item/storage/lockbox/medal/engineering(src)
@@ -64,6 +65,8 @@
 		new /obj/item/clothing/head/utility/welding(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weldingtool(src)
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/cup/fuelcanister/full(src)
 
 /obj/structure/closet/secure_closet/engineering_personal
 	name = "engineer's locker"

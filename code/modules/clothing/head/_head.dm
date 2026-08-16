@@ -9,6 +9,12 @@
 	blood_overlay_type = "helmetblood"
 	/// Can hats be stacked on top?
 	var/can_stack_hat = TRUE
+	/// If hat changes name for the amount of hats stacked ontop
+	var/hat_stack_name = TRUE
+	var/random_hat_stack_x_offset = TRUE
+	var/random_hat_stack_y_offset = TRUE
+	var/hat_stack_x_offset_modifier = 1
+	var/hat_stack_y_offset_modifier = 1
 
 ///Special throw_impact for hats to frisbee hats at people to place them on their heads/attempt to de-hat them.
 /obj/item/clothing/head/throw_impact(atom/hit_atom, datum/thrownthing/thrownthing)
@@ -46,7 +52,7 @@
 		return
 	if(iscyborg(hit_atom))
 		var/mob/living/silicon/robot/R = hit_atom
-		var/obj/item/worn_hat = R.hat
+		var/obj/item/worn_hat = R.worn_hat
 		if(worn_hat && HAS_TRAIT(worn_hat, TRAIT_NODROP))
 			R.visible_message(span_warning("[src] bounces off [worn_hat], without an effect!"), span_warning("[src] bounces off your mighty [worn_hat.name], falling to the floor in defeat."))
 			return
@@ -67,6 +73,11 @@
 
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedhelmet")
+
+	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
+		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "helmetblood")
+		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+		. += blood_overlay
 
 	if(!(flags_inv & HIDEHAIR))
 		if(ismob(loc) && ishuman(loc))
@@ -167,7 +178,7 @@
 /obj/item/clothing/head/proc/update_hats(hat_removal, mob/living/user)
 	if(!can_stack_hat)
 		return
-	if(hat_removal)
+	if(hat_removal && user)
 		var/obj/item/clothing/head/hat_to_remove = contents[length(contents)] //Get the last item in the hat and hand it to the user.
 		hat_to_remove.restore_initial()
 		remove_verb(user, /obj/item/clothing/head/verb/detach_stacked_hat)
@@ -175,34 +186,35 @@
 
 	cut_overlays()
 
-	switch(length(contents)) //Section for naming/description
-		if(0)
-			restore_initial()
-			remove_verb(user, /obj/item/clothing/head/verb/detach_stacked_hat)
-		if (1,2)
-			name = "Pile of Hats"
-			desc = "A meagre pile of hats"
-		if (3)
-			name = "Stack of Hats"
-			desc = "A decent stack of hats"
-		if(5,6)
-			name = "Towering Pillar of Hats"
-			desc = "A magnificent display of pride and wealth"
-		if(7,8)
-			name = "A Dangerous Amount of Hats"
-			desc = "A truly grand tower of hats"
-		if(9,10)
-			name = "A Lesser Hatularity"
-			desc = "A tower approaching unstable levels of hats"
-		if(11,12,13,14,15)
-			name = "A Hatularity"
-			desc = "A tower that has grown far too powerful"
-		if(16,17,18,19)
-			name = "A Greater Hatularity"
-			desc = "A monument to the madness of man"
-		if(20)
-			name = "The True Hat Tower"
-			desc = "<span class='narsiesmall'>AFTER NINE YEARS IN DEVELOPMENT, HOPEFULLY IT WILL HAVE BEEN WORTH THE WAIT</span>"
+	if(hat_stack_name)
+		switch(length(contents)) //Section for naming/description
+			if(0)
+				restore_initial()
+				remove_verb(user, /obj/item/clothing/head/verb/detach_stacked_hat)
+			if (1,2)
+				name = "Pile of Hats"
+				desc = "A meagre pile of hats"
+			if (3)
+				name = "Stack of Hats"
+				desc = "A decent stack of hats"
+			if(5,6)
+				name = "Towering Pillar of Hats"
+				desc = "A magnificent display of pride and wealth"
+			if(7,8)
+				name = "A Dangerous Amount of Hats"
+				desc = "A truly grand tower of hats"
+			if(9,10)
+				name = "A Lesser Hatularity"
+				desc = "A tower approaching unstable levels of hats"
+			if(11,12,13,14,15)
+				name = "A Hatularity"
+				desc = "A tower that has grown far too powerful"
+			if(16,17,18,19)
+				name = "A Greater Hatularity"
+				desc = "A monument to the madness of man"
+			if(20)
+				name = "The True Hat Tower"
+				desc = "<span class='narsiesmall'>AFTER NINE YEARS IN DEVELOPMENT, HOPEFULLY IT WILL HAVE BEEN WORTH THE WAIT</span>"
 
 	if(length(contents) > 0)
 		desc += "<BR>You can use it in hand to separate all the hats."
@@ -215,15 +227,19 @@
 			selected_hat.name = initial(name)
 			selected_hat.desc = initial(desc)
 			var/mutable_appearance/hat_adding = mutable_appearance(selected_hat.icon, "[initial(selected_hat.icon_state)]")
-			hat_adding.pixel_y = ((current_hat * 6) - 1)
-			hat_adding.pixel_x = (rand(-1, 1))
+			if(random_hat_stack_y_offset)
+				hat_adding.pixel_y = ((current_hat * 6 * hat_stack_y_offset_modifier) - 1)
+			if(random_hat_stack_x_offset)
+				hat_adding.pixel_x = (rand(-1, 1) * hat_stack_x_offset_modifier)
 			current_hat++
 			add_overlay(hat_adding)
 
-		add_verb(user, /obj/item/clothing/head/verb/detach_stacked_hat) //Verb for removing hats.
+		if(user)
+			add_verb(user, /obj/item/clothing/head/verb/detach_stacked_hat) //Verb for removing hats.
 
 	worn_overlays() //This is where the actual worn icon is generated
-	user.update_worn_head() //Regenerate the wearer's head appearance so that they have real-time hat updates.
+	if(user)
+		user.update_worn_head() //Regenerate the wearer's head appearance so that they have real-time hat updates.
 
 #undef HAT_CAP
 #undef ADD_HAT

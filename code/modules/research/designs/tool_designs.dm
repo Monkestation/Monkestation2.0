@@ -497,6 +497,18 @@
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
 	)
 
+/datum/design/manipulator_task_disk
+	name = "Manipulator Task Disk"
+	desc = "A floppy disk for storing and loading manipulator tasks."
+	id = "manipulator_task_disk"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.5)
+	build_path = /obj/item/disk/manipulator
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
+
 /datum/design/bolter_wrench
 	name = "Bolter Wrench"
 	desc = "A wrench that can unbolt airlocks regardless of power status."

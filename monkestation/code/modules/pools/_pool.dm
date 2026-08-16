@@ -1,7 +1,7 @@
 /turf/open/floor/lowered/iron/pool
 	name = "pool floor"
 	floor_tile = /obj/item/stack/tile/lowered/iron/pool
-	icon = 'monkestation/icons/turf/pool_tile.dmi'
+	icon = 'icons/turf/pool_tile.dmi'
 	base_icon_state = "pool_tile"
 	icon_state = "pool_tile"
 	smoothing_flags = NONE

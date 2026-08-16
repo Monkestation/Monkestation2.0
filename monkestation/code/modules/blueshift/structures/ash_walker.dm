@@ -572,7 +572,7 @@
 			if(W.reagents.has_reagent(/datum/reagent/fuel, W.max_fuel))
 				to_chat(user, span_warning("Your [W.name] is already full!"))
 				return
-			reagents.trans_to(W, W.max_fuel, transfered_by = user)
+			reagents.trans_to(W, W.max_fuel, transferred_by = user)
 			user.visible_message(span_notice("[user] refills [user.p_their()] [W.name]."), span_notice("You refill [W]."))
 			playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
 			W.update_appearance()
@@ -890,11 +890,11 @@
 		else
 			icon_state = "[planted_seed.icon_grow][planted_seed.growthstages]"
 
-		name = lowertext(planted_seed.plantname)
+		name = LOWER_TEXT(planted_seed.plantname)
 
 	else
 		icon_state = "[planted_seed.icon_grow]1"
-		name = lowertext("harvested [planted_seed.plantname]")
+		name = LOWER_TEXT("harvested [planted_seed.plantname]")
 
 	return ..()
 
@@ -1097,7 +1097,7 @@
 	name = "\improper Ashland Clothing Storage"
 	desc = "A large container, filled with various clothes for the Ash Walkers."
 	product_ads = "Praise the Necropolis"
-	icon = 'monkestation/icons/obj/vending.dmi'
+	icon = 'icons/obj/vending.dmi'
 	icon_state = "ashclothvendor"
 	icon_deny = "necrocrate"
 	use_power = NO_POWER_USE

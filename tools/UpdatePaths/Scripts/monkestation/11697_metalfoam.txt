@@ -1,0 +1,2 @@
+/obj/item/grenade/chem_grenade/smart_metalfoam : /obj/item/grenade/chem_grenade/smart_metal_foam{@OLD}
+/obj/item/storage/box/smart_metalfoam : /obj/item/storage/box/smart_metal_foam{@OLD}

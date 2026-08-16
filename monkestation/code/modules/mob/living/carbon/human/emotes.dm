@@ -3,10 +3,10 @@
 	key_third_person = "inhales through their ass"
 
 	var/list/sounds = list(
-		'monkestation/sound/effects/fart_reverse1.ogg',
-		'monkestation/sound/effects/fart_reverse2.ogg',
-		'monkestation/sound/effects/fart_reverse3.ogg',
-		'monkestation/sound/effects/fart_reverse4.ogg'
+		'sound/effects/fart_reverse1.ogg',
+		'sound/effects/fart_reverse2.ogg',
+		'sound/effects/fart_reverse3.ogg',
+		'sound/effects/fart_reverse4.ogg'
 	)
 	emote_type = EMOTE_AUDIBLE
 
@@ -61,7 +61,7 @@
 		ass_holder.dagoth_kill_smite(butt = booty, explode = TRUE)
 		return
 
-	playsound(ass_holder, "monkestation/sound/effects/superfart.ogg", 100, FALSE, pressure_affected = FALSE, mixer_channel = CHANNEL_PRUDE)
+	playsound(ass_holder, "sound/effects/superfart.ogg", 100, FALSE, pressure_affected = FALSE, mixer_channel = CHANNEL_PRUDE)
 	addtimer(CALLBACK(src, PROC_REF(finish_superfart), ass_holder, booty), 0.8 SECONDS)
 
 /datum/emote/living/carbon/human/superfart/proc/finish_superfart(mob/living/carbon/human/user, obj/item/organ/internal/butt/booty)

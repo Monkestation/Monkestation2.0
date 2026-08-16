@@ -31,7 +31,7 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	priority_announce(
 		text = "What the heELl is going on?! WEeE have detected  massive up-spikes in ##@^^?? coming fr*m yoOourr st!*i@n! GeEeEEET out of THERE NOW!!",
 		title = Gibberish("[command_name()] Higher Dimensional Affairs", TRUE, 45),
-		sound = 'monkestation/sound/ambience/antag/monster_hunter.ogg',
+		sound = 'sound/ambience/antag/monster_hunter.ogg',
 		encode_title = FALSE, // Gibberish() already sanitizes
 		color_override = "purple"
 	)
@@ -89,7 +89,7 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 /obj/structure/wonderland_rift
 	name = "Wonderland Door"
 	desc = "A door leading to a magical beautiful land."
-	icon = 'monkestation/icons/mob/infils.dmi'
+	icon = 'icons/mob/infils.dmi'
 	icon_state = "cyborg_rift"
 	anchored = TRUE
 	density = FALSE
@@ -265,5 +265,5 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 /atom/movable/screen/alert/status_effect/wonderland_district
 	name = "Wonderland Manifestation"
 	desc = "The veil between fantasy and reality has been shattered!"
-	icon = 'monkestation/icons/hud/screen_alert.dmi'
+	icon = 'icons/hud/screen_alert.dmi'
 	icon_state = "wonderland"

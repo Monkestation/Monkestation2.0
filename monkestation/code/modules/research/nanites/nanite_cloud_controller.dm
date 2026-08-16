@@ -1,7 +1,7 @@
 /obj/machinery/computer/nanite_cloud_controller
 	name = "nanite programmer"
 	desc = "Stores and controls nanite cloud backups."
-	icon = 'monkestation/icons/obj/machines/research.dmi'
+	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "nanite_cloud_controller"
 	circuit = /obj/item/circuitboard/computer/nanite_cloud_controller
 	icon_keyboard = null
@@ -210,7 +210,7 @@
 
 	return data
 
-/obj/machinery/computer/nanite_cloud_controller/ui_act(action, params)
+/obj/machinery/computer/nanite_cloud_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

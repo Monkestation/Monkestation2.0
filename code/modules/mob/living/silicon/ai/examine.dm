@@ -1,30 +1,23 @@
 /mob/living/silicon/ai/examine(mob/user)
-	. = list()
+	. = ..()
 	if(stat == DEAD)
-		. += span_deadsay("It appears to be powered-down.")
-	. += span_notice("Its floor <b>bolts</b> are [is_anchored ? "tightened" : "loose"].")
-	if(is_anchored)
-		if(!opened)
-			if(!emagged)
-				. += span_notice("Its access panel is [stat == DEAD ? "damaged" : "closed and locked"], but could be <b>pried</b> open.")
-			else
-				. += span_warning("Its access panel lock is sparking, the cover can be <b>pried</b> open.")
+		. += span_deadsay("[p_they(capitalized = TRUE)] appears to be powered-down.")
+		return .
+	if (getBruteLoss())
+		if (getBruteLoss() < 30)
+			. += span_warning("[p_they(capitalized = TRUE)] list minor brute injuries sustained.")
 		else
-			. += span_notice("Its neural network connection could be <b>cut</b>, its access panel cover can be <b>pried</b> back into place.")
-	if(stat != DEAD)
-		if (getBruteLoss())
-			if (getBruteLoss() < 30)
-				. += span_warning("It looks slightly dented.")
-			else
-				. += span_warning("<B>It looks severely dented!</B>")
-		if (getFireLoss())
-			if (getFireLoss() < 30)
-				. += span_warning("It looks slightly charred.")
-			else
-				. += span_warning("<B>Its casing is melted and heat-warped!</B>")
-		if(deployed_shell)
-			. += "The wireless networking light is blinking."
-		else if (!shunted && !client)
-			. += "[src]Core.exe has stopped responding! NTOS is searching for a solution to the problem..."
+			. += span_warning("[p_they(capitalized = TRUE)] list <B>major</B> brute injuries sustained.")
+	if (getFireLoss())
+		if (getFireLoss() < 30)
+			. += span_warning("[p_they(capitalized = TRUE)] list minor burn injuries sustained.")
+		else
+			. += span_warning("[p_they(capitalized = TRUE)] list <B>major</B> burn injuries sustained.")
+	if(deployed_shell)
+		. += "[p_their(capitalized = TRUE)] wireless networking light is blinking."
+	else if(!shunted && !client && last_connection_time)
+		var/formatted_afk_time = span_bold("[round((world.time - lastclienttime) / (1 MINUTES), 0.1)]")
+		. += "[src]Core.exe has stopped responding [formatted_afk_time] minute(s) ago! NTOS is searching for a solution to the problem..."
 
-	. += ..()
+/mob/living/silicon/ai/late_examine(mob/user)
+	return

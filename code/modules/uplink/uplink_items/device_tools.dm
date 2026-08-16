@@ -18,7 +18,7 @@
 	name = "Full Syndicate Surgery Medkit"
 	desc = "The Syndicate surgery medkit is a toolkit containing all surgery tools, surgical drapes, \
 			a syringe, and some sedatives."
-	item = /obj/item/storage/medkit/surgery_syndie
+	item = /obj/item/storage/medkit/surgery/syndie
 	cost = 3
 
 /datum/uplink_item/device_tools/combat_medkit
@@ -379,3 +379,10 @@
 	In its crowbar configuration, it can be used to force open airlocks. Very useful for entering the station or its departments."
 	item = /obj/item/crowbar/power/death
 	cost = 3
+
+/datum/uplink_item/device_tools/omnilathe
+	name = "Omnilathe"
+	desc = "A compact, deployable Omnilathe disguised as an emergency toolbox. Features an autolathe, ammo workbench, and can be upgraded with departmental techfab boards."
+	item = /obj/item/storage/toolbox/emergency/omnilathe
+	cost = 4
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)

@@ -131,7 +131,7 @@
 	name = "Feed Producer"
 	desc = "It converts food and reagents into usable feed for chickens. \n Alt-Click the machine in order to produce feed"
 
-	icon = 'monkestation/icons/obj/structures.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "feed_producer"
 
 	use_power = IDLE_POWER_USE
@@ -216,7 +216,7 @@
 
 /obj/item/chicken_feed
 	name = "chicken feed"
-	icon = 'monkestation/icons/obj/ranching/feed.dmi'
+	icon = 'icons/obj/ranching/feed.dmi'
 	icon_state = "feed_sack"
 
 	///list of contained foods
@@ -256,7 +256,7 @@
 
 /obj/effect/chicken_feed
 	name = "chicken feed"
-	icon = 'monkestation/icons/effects/feed.dmi'
+	icon = 'icons/effects/feed.dmi'
 
 	var/list/held_foods = list()
 
@@ -275,7 +275,7 @@
 
 /obj/item/storage/bag/egg
 	name = "egg bag"
-	icon = 'monkestation/icons/obj/ranching.dmi'
+	icon = 'icons/obj/ranching.dmi'
 	icon_state = "egg_bag"
 	worn_icon_state = "plantbag"
 	w_class = WEIGHT_CLASS_TINY
@@ -299,7 +299,7 @@
 	max_integrity = 300
 	circuit = /obj/item/circuitboard/machine/egg_incubator
 
-	icon = 'monkestation/icons/obj/structures.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "incubator"
 
 	var/current_state = FALSE

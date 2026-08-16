@@ -595,7 +595,7 @@
 
 	//placeholder code for figuring out a way of making this not an if string
 	//ammo selector v8
-	var/fixed_message = "[lowertext(raw_message)]"
+	var/fixed_message = "[LOWER_TEXT(raw_message)]"
 	if(findtext(fixed_message, regex("(?:detain|disable|stun)")))
 		selectammo(DETAIN, speaker)
 		return TRUE
@@ -866,7 +866,7 @@
 /obj/item/ammo_casing/energy/lawbringer/detain
 	projectile_type = /obj/projectile/lawbringer/detain
 	select_name = "detain"
-	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
 	e_cost = 600 //20%, 5 shots
 	pellets = 4
 	variance = 50
@@ -1076,7 +1076,7 @@
  */
 /obj/item/ammo_casing/energy/lawbringer/tideshot
 	projectile_type = /obj/projectile/lawbringer/tideshot
-	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
 	select_name = "tideshot"
 	e_cost = 250 //8%, 12 shots
 	harmful = FALSE

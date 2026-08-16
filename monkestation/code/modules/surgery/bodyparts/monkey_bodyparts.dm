@@ -1,8 +1,8 @@
 /obj/item/bodypart/head/monkey
-	icon = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
-	icon_greyscale = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
+	icon = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
-	icon_husk = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	icon_state = "default_monkey_head"
 	limb_id = SPECIES_MONKEY
@@ -23,10 +23,10 @@
 	return ..()
 
 /obj/item/bodypart/chest/monkey
-	icon = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
-	icon_greyscale = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
+	icon = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
-	icon_husk = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	icon_state = "default_monkey_chest"
 	limb_id = SPECIES_MONKEY
@@ -48,10 +48,10 @@
 	return ..()
 
 /obj/item/bodypart/arm/left/monkey
-	icon = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
-	icon_greyscale = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
+	icon = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
-	icon_husk = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	icon_state = "default_monkey_l_arm"
 	limb_id = SPECIES_MONKEY
@@ -68,10 +68,10 @@
 	palette_key = "fur_color"
 
 /obj/item/bodypart/arm/right/monkey
-	icon = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
-	icon_greyscale = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
+	icon = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
-	icon_husk = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	icon_state = "default_monkey_r_arm"
 	limb_id = SPECIES_MONKEY
@@ -88,10 +88,10 @@
 	palette_key = "fur_color"
 
 /obj/item/bodypart/leg/left/monkey
-	icon = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
-	icon_greyscale = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
+	icon = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
-	icon_husk = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	icon_state = "default_monkey_l_leg"
 	limb_id = SPECIES_MONKEY
@@ -109,10 +109,10 @@
 	palette_key = "fur_color"
 
 /obj/item/bodypart/leg/right/monkey
-	icon = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
-	icon_greyscale = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
+	icon = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
-	icon_husk = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	icon_state = "default_monkey_r_leg"
 	limb_id = SPECIES_MONKEY

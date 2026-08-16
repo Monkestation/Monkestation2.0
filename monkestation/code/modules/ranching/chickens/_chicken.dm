@@ -9,14 +9,14 @@
 	maxHealth = 15
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 
-	icon = 'monkestation/icons/mob/ranching/chickens.dmi'
+	icon = 'icons/mob/ranching/chickens.dmi'
 	icon_state = "chicken_white"
 	icon_living = "chicken_white"
 	icon_dead = "dead_state"
 	held_state = "chicken_white"
-	head_icon = 'monkestation/icons/mob/pets_held.dmi'
-	held_lh = 'monkestation/icons/mob/pets_held_lh.dmi'
-	held_rh = 'monkestation/icons/mob/pets_held_rh.dmi'
+	head_icon = 'icons/mob/pets_held.dmi'
+	held_lh = 'icons/mob/pets_held_lh.dmi'
+	held_rh = 'icons/mob/pets_held_rh.dmi'
 
 	speak_emote = list("clucks","croons")
 
@@ -43,7 +43,7 @@
 
 /mob/living/basic/chicken/Initialize(mapload)
 	. = ..()
-	head_icon = 'monkestation/icons/mob/pets_held_large.dmi'
+	head_icon = 'icons/mob/pets_held_large.dmi'
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 	health = maxHealth
@@ -99,7 +99,7 @@
 /mob/living/basic/chicken/update_overlays()
 	. = ..()
 	if(is_marked)
-		.+= mutable_appearance('monkestation/icons/effects/ranching.dmi', "marked", FLOAT_LAYER, src, plane = src.plane)
+		.+= mutable_appearance('icons/effects/ranching.dmi', "marked", FLOAT_LAYER, src, plane = src.plane)
 
 /mob/living/basic/chicken/pass_stats(atom/child, mutant = FALSE)
 	var/obj/item/food/egg/layed_egg = child

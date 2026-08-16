@@ -33,7 +33,7 @@
 	if(!ckey || !SSdbcore.IsConnected())
 		return FALSE
 
-	if(!max_round_coins && respects_roundcap)
+	if(amount > 0 && (!max_round_coins && respects_roundcap))
 		to_chat(parent, "You've hit the Monkecoin limit for this shift, please try again next shift.")
 		return
 

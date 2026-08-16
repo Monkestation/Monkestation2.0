@@ -540,7 +540,7 @@
 
 /obj/projectile/magic/fire_ball
 	name = "fire ball"
-	icon = 'monkestation/icons/obj/weapons/guns/projectiles.dmi'
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "fire_ball"
 	damage = 20
 	damage_type = BURN

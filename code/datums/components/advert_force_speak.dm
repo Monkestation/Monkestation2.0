@@ -98,7 +98,7 @@ GLOBAL_DATUM_INIT(advertisements, /datum/advertisements, new)
 
 /datum/advertisements/proc/load_file(file_name)
 	var/list/advertisements = list()
-	var/list/lines = world.file2list(file_name)
+	var/list/lines = file2list(file_name)
 	var/name = "Unknown"
 	for (var/line in lines)
 		if (length(line) == 0)

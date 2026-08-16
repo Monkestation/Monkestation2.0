@@ -2,7 +2,7 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 
 /obj/machinery/satellite/meteor_shield
 	name = "meteor defense satellite"
-	icon = 'monkestation/icons/obj/machines/satellite.dmi'
+	icon = 'icons/obj/machines/satellite.dmi'
 	icon_state = "meteor_sat"
 	base_icon_state = null
 	mode = "HK-MPS"

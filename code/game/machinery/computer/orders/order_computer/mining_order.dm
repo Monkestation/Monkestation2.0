@@ -199,7 +199,7 @@
 /obj/item/explorer_voucher
 	name = "explorer voucher"
 	desc = "A token to redeem a set of space exploration gear. Use it on a mining equipment vendor."
-	icon = 'monkestation/icons/obj/items/explorer_voucher.dmi'
+	icon = 'icons/obj/items/explorer_voucher.dmi'
 	icon_state = "explorer_voucher"
 	w_class = WEIGHT_CLASS_TINY
 

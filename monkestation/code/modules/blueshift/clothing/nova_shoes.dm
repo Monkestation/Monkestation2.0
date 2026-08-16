@@ -58,6 +58,7 @@
 
 /obj/item/clothing/shoes/high_heels/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/shoesteps/tap_shoes)
 	//AddComponent(/datum/component/squeak, list('monkestation/code/modules/blueshift/sounds/effects/heel1.ogg' = 1, 'monkestation/code/modules/blueshift/sounds/effects/heel2.ogg' = 1), 50)
 
 /obj/item/clothing/shoes/fancy_heels
@@ -73,6 +74,7 @@
 
 /obj/item/clothing/shoes/fancy_heels/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/shoesteps/tap_shoes)
 	//AddComponent(/datum/component/squeak, list('monkestation/code/modules/blueshift/sounds/effects/heel1.ogg' = 1, 'monkestation/code/modules/blueshift/sounds/effects/heel2.ogg' = 1), 50)
 
 /obj/item/clothing/shoes/discoshoes

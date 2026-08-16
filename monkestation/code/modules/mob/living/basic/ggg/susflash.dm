@@ -1,7 +1,7 @@
 /mob/living/basic/ggg/susflash
 	name = "suspicious flash"
 	desc = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production. This one has legs for some reason..."
-	icon = 'monkestation/icons/mob/ggg/susflash.dmi'
+	icon = 'icons/mob/ggg/susflash.dmi'
 	icon_state = "flash_living"
 	icon_living = "flash_living"
 	icon_dead = "flash_dead"

@@ -2,7 +2,7 @@
 	name = "nanite injector (FOR TESTING)"
 	desc = "Injects nanites into the user."
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'monkestation/icons/obj/device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "nanite_remote"
 
 /obj/item/nanite_injector/attack_self(mob/user)

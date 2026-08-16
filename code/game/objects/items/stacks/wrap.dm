@@ -232,3 +232,4 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 5
+	hitsound = 'sound/items/cardboard_tube.ogg'

@@ -211,7 +211,7 @@
 	. = ..()
 	post_machine_initialize()
 
-/obj/machinery/Destroy()
+/obj/machinery/Destroy(force)
 	SSmachines.unregister_machine(src)
 	end_processing()
 	dump_inventory_contents()
@@ -315,7 +315,7 @@
 	set waitfor = FALSE
 	return PROCESS_KILL
 
-/obj/machinery/process()//If you dont use process or power why are you here
+/obj/machinery/process(seconds_per_tick)//If you dont use process or power why are you here
 	return PROCESS_KILL
 
 ///Late process for machines added to SSmachines.processing_late to gather accurate recordings
@@ -709,7 +709,7 @@
 	var/mob/user = ui.user
 	add_fingerprint(user)
 	update_last_used(user)
-	if(isAI(user) && !GLOB.cameranet.checkTurfVis(get_turf(src))) //We check if they're an AI specifically here, so borgs/adminghosts/human wand can still access off-camera stuff.
+	if(isAI(user) && !SScameras.turf_visible_by_cameras(get_turf(src))) //We check if they're an AI specifically here, so borgs/adminghosts/human wand can still access off-camera stuff.
 		to_chat(user, span_warning("You can no longer connect to this device!"))
 		return FALSE
 	return ..()

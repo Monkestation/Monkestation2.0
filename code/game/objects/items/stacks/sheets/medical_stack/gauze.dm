@@ -296,10 +296,10 @@
 		user.balloon_alert(patient, "applying gauze...")
 
 	playsound(patient, pick(
-		'monkestation/sound/items/rip1.ogg',
-		'monkestation/sound/items/rip2.ogg',
-		'monkestation/sound/items/rip3.ogg',
-		'monkestation/sound/items/rip4.ogg',
+		'sound/items/rip1.ogg',
+		'sound/items/rip2.ogg',
+		'sound/items/rip3.ogg',
+		'sound/items/rip4.ogg',
 	), 33)
 
 	if(!do_after(user, treatment_delay, target = patient))

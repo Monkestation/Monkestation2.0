@@ -9,7 +9,7 @@
 	return assoc_to_keys_features(GLOB.ipc_antennas_list)
 
 /datum/preference/choiced/ipc_antenna/icon_for(value)
-	var/icon/ipc_head = icon('monkestation/icons/mob/species/ipc/bodyparts.dmi', "synth_head")
+	var/icon/ipc_head = icon('icons/mob/species/ipc/bodyparts.dmi', "synth_head")
 
 	var/datum/sprite_accessory/antennae = GLOB.ipc_antennas_list[value]
 
@@ -38,11 +38,11 @@
 	return assoc_to_keys_features(GLOB.ipc_chassis_list)
 
 /datum/preference/choiced/ipc_chassis/icon_for(value)
-	var/icon/ipc = icon('monkestation/icons/mob/species/ipc/bodyparts.dmi', "blank")
+	var/icon/ipc = icon('icons/mob/species/ipc/bodyparts.dmi', "blank")
 
 	var/datum/sprite_accessory/chassis = GLOB.ipc_chassis_list[value]
 
-	var/icon/chassis_icon = icon('monkestation/icons/mob/species/ipc/ipc_chassis.dmi', "m_ipc_chassis_[chassis.icon_state]_FRONT")
+	var/icon/chassis_icon = icon('icons/mob/species/ipc/ipc_chassis.dmi', "m_ipc_chassis_[chassis.icon_state]_FRONT")
 
 	var/icon/final_icon = icon(ipc)
 	final_icon.Blend(chassis_icon, ICON_OVERLAY)
@@ -74,7 +74,7 @@
 	return assoc_to_keys_features(GLOB.ipc_screens_list)
 
 /datum/preference/choiced/ipc_screen/icon_for(value)
-	var/icon/ipc_head = icon('monkestation/icons/mob/species/ipc/bodyparts.dmi', "synth_head")
+	var/icon/ipc_head = icon('icons/mob/species/ipc/bodyparts.dmi', "synth_head")
 
 	var/datum/sprite_accessory/screen = GLOB.ipc_screens_list[value]
 

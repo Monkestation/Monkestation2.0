@@ -108,6 +108,20 @@
 		return TRUE
 	return ACCESS_CAPTAIN in authorize_access
 
+///Returns TRUE/FALSE whether we can print AI codes, which relies on being Non-silicon command, and the sat codes were untouched.
+/obj/machinery/computer/communications/proc/can_print_ai_codes(mob/user)
+	if(issilicon(user))
+		return FALSE
+	if(!(ACCESS_COMMAND in authorize_access))
+		return FALSE
+	var/list/primary_machine = SSmachines.get_machines_by_type(/obj/machinery/ai/data_core/primary)
+	if(!length(primary_machine))
+		return TRUE
+	var/obj/item/paper/ai_control_code/codes = locate() in primary_machine[1]
+	if(isnull(codes))
+		return TRUE
+	return FALSE
+
 /// Are we a silicon, OR logged in?
 /obj/machinery/computer/communications/proc/authenticated(mob/user)
 	if (issilicon(user))
@@ -494,6 +508,15 @@
 			SSjob.safe_code_requested = TRUE
 			SSjob.safe_code_timer_id = addtimer(CALLBACK(SSjob, TYPE_PROC_REF(/datum/controller/subsystem/job, send_spare_id_safe_code), pod_location), 120 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
 			minor_announce("Due to staff shortages, your station has been approved for delivery of access codes to secure the Captain's Spare ID. Delivery via drop pod at [get_area(pod_location)]. ETA 120 seconds.")
+		if("printAIControlCode")
+			if(can_print_ai_codes(user))
+				if(!COOLDOWN_FINISHED(src, important_action_cooldown))
+					return
+				playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
+				GLOB.ai_control_code = random_nukecode(6)
+				new /obj/item/paper/ai_control_code(loc)
+				COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
+				priority_announce("The AI Control Code been printed by [authorize_name]. All previous codes have been invalidated.", "Central Tech Support", SSstation.announcer.get_rand_report_sound())
 
 /obj/machinery/computer/communications/proc/emergency_access_cooldown(mob/user)
 	if(toggle_uses == toggle_max_uses) //you have used up free uses already, do it one more time and start a cooldown
@@ -588,6 +611,8 @@
 				if (authenticated_as_non_silicon_captain(user))
 					data["canMessageAssociates"] = TRUE
 					data["canRequestNuke"] = TRUE
+
+				data["can_request_ai_codes"] = !!can_print_ai_codes(user)
 
 				if (can_send_messages_to_other_sectors(user))
 					data["canSendToSectors"] = TRUE

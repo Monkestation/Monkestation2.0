@@ -1,6 +1,6 @@
 /obj/item/perfume
 	desc = "A bottle of pleasantly smelling fragrance."
-	icon = 'monkestation/icons/obj/perfume.dmi'
+	icon = 'icons/obj/perfume.dmi'
 	icon_state = "perfume"
 	inhand_icon_state = "cleaner"
 	worn_icon_state = "spraybottle"

@@ -258,6 +258,15 @@
 	base_pixel_x = -12
 	name = "goliath"
 
+///////////Shrimp//////////////////////////////////////////////////
+/obj/structure/statue/shrimp
+	name = "Shrimp Statue" // Used in the shrimp restaurant space ruin.
+	desc = "A statue of a shrimp. Smells a bit shrimpy."
+	icon_state = "shrimp"
+	max_integrity = 542149 // vaguely leet for SHRIMP. vaguely. barely.
+	impressiveness = 100
+	abstract_type = /obj/structure/statue/shrimp //This one is uncarvable
+
 ///////////Other Stuff//////////////////////////////////////////////
 /obj/item/chisel
 	name = "chisel"

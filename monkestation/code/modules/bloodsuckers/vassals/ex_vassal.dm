@@ -11,7 +11,7 @@
 	show_in_antagpanel = FALSE
 	silent = TRUE
 	ui_name = FALSE
-	hud_icon = 'monkestation/icons/bloodsuckers/bloodsucker_icons.dmi'
+	hud_icon = 'icons/bloodsuckers/bloodsucker_icons.dmi'
 	antag_flags = FLAG_ANTAG_CAP_IGNORE
 	count_against_dynamic_roll_chance = FALSE
 

@@ -106,9 +106,6 @@
 	/// Allow people with chunky fingers to use?
 	var/allow_chunky = FALSE
 
-	/// Monkestation Addition. Do we force ethernet connection.
-	var/ethernet_forced = FALSE
-
 	///The amount of paper currently stored in the PDA
 	var/stored_paper = 10
 	///The max amount of paper that can be held at once.
@@ -267,14 +264,20 @@
 	if(computer_id_slot)
 		return FALSE
 
-	computer_id_slot = inserting_id
-	if(user)
-		if(!user.transferItemToLoc(inserting_id, src))
-			return FALSE
-		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
-	else
-		inserting_id.forceMove(src)
+	var/obj/item/card/id/real_id = inserting_id
+	if(!istype(real_id))
+		if(user)
+			balloon_alert(user, "not an ID card")
+		return FALSE
 
+	if(user)
+		if(!user.transferItemToLoc(real_id, src))
+			return FALSE
+		balloon_alert(user, "inserted [real_id]")
+	else
+		real_id.forceMove(src)
+
+	computer_id_slot = real_id
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
@@ -666,9 +669,6 @@
 /obj/item/modular_computer/proc/get_ntnet_status()
 	// computers are connected through ethernet
 	if(hardware_flag & PROGRAM_CONSOLE)
-		return NTNET_ETHERNET_SIGNAL
-
-	if(ethernet_forced) //Monkestation Addition - Add a check for forced ethernet
 		return NTNET_ETHERNET_SIGNAL
 
 	// NTNet is down and we are not connected via wired connection. No signal.

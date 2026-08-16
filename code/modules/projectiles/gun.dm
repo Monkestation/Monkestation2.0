@@ -21,6 +21,7 @@
 	attack_verb_simple = list("strike", "hit", "bash")
 	action_slots = ALL
 	alternate_worn_layer = HANDS_LAYER+0.05
+	appearance_flags = KEEP_TOGETHER
 
 	var/super_throw = FALSE
 	var/gun_flags = NONE

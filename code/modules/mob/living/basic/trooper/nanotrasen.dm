@@ -65,7 +65,7 @@
 	unsuitable_cold_damage = 0
 	casingtype = /obj/item/ammo_casing/energy/laser
 	burst_shots = 3
-	projectilesound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+	projectilesound = 'sound/weapons/gun/energy/Laser1.ogg'
 	ranged_cooldown = 5 SECONDS
 	faction = list(ROLE_DEATHSQUAD)
 	loot = list(/obj/effect/gibspawner/human)

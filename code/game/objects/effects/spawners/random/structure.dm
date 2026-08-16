@@ -208,6 +208,7 @@
 		/obj/structure/billboard/donk_n_go = 50,
 		/obj/structure/billboard/space_cola = 50,
 		/obj/structure/billboard/nanotrasen = 35,
+		/obj/structure/billboard/shrimp = 35,
 		/obj/structure/billboard/nanotrasen/defaced = 15,
 	)
 

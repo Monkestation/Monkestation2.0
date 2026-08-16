@@ -4,8 +4,8 @@
 	valid_slots = ITEM_SLOT_HANDS
 
 /datum/hallucination/nearby_fake_item/clockwork_slab
-	left_hand_file = 'monkestation/icons/mob/clock_cult/clockwork_lefthand.dmi'
-	right_hand_file = 'monkestation/icons/mob/clock_cult/clockwork_righthand.dmi'
+	left_hand_file = 'icons/mob/clock_cult/clockwork_lefthand.dmi'
+	right_hand_file = 'icons/mob/clock_cult/clockwork_righthand.dmi'
 	image_icon_state = "clockwork_slab"
 
 /datum/hallucination/hazard/clockwork_skewer
@@ -14,7 +14,7 @@
 
 /obj/effect/client_image_holder/hallucination/danger/clockwork_skewer
 	name = "brass skewer"
-	image_icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
+	image_icon = 'icons/obj/clock_cult/clockwork_objects.dmi'
 	image_state = "brass_skewer"
 
 /obj/effect/client_image_holder/hallucination/danger/clockwork_skewer/on_hallucinator_entered(mob/living/afflicted)

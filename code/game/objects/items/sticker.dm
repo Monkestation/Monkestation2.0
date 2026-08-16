@@ -67,6 +67,7 @@
 	register_signals(user)
 	moveToNullspace()
 	SEND_SIGNAL(attached, COMSIG_STICKER_STICKED, src, user)
+	return TRUE
 
 ///Makes this sticker move from nullspace and cut the overlay from the object it is attached to, silent for no visible message.
 /obj/item/sticker/proc/peel(datum/source)

@@ -216,6 +216,7 @@
 #define BLOOD_COLOR_OIL "#2C2C2C"
 #define BLOOD_COLOR_BLACK "#1F1A00"
 #define BLOOD_COLOR_DRIED "#370404" // Not to be used normally, only exists for mapper convinience
+#define BLOOD_COLOR_HEMOLYMPH "#04e1ed"
 
 ///Main colors for UI themes
 #define COLOR_THEME_MIDNIGHT "#6086A0"
@@ -429,5 +430,21 @@ GLOBAL_LIST_INIT(heretic_path_to_color, list(
 #define CM_COLOR_LUM_MIN 0.65
 #define CM_COLOR_LUM_MAX 0.75
 
-//Monkestation non-modular change: This has to be here because we use it in setup_consistent_human_dna
 #define COLOR_MONKEY_BROWN "#cd8765"
+
+#define LIGHT_COLOR_CLOCKWORK "#BE8700"
+
+//Colors for Bioluminescence plant traits.
+#define COLOR_BIOLUMINESCENCE_STANDARD "#C3E381"
+#define COLOR_BIOLUMINESCENCE_SHADOW "#AAD84B"
+#define COLOR_BIOLUMINESCENCE_YELLOW "#FFFF66"
+#define COLOR_BIOLUMINESCENCE_GREEN "#99FF99"
+#define COLOR_BIOLUMINESCENCE_BLUE "#6699FF"
+#define COLOR_BIOLUMINESCENCE_PURPLE "#D966FF"
+#define COLOR_BIOLUMINESCENCE_PINK "#FFB3DA"
+
+#define LIGHT_RANGE_FIRE_BLOSSOM_HARVESTED 2.7
+#define LIGHT_POWER_FIRE_BLOSSOM_HARVESTED 1.5
+
+#define COLOR_REVENANT	"#1d2953"
+#define COLOR_REVENANT_PLANTBLIGHT "#823abb"

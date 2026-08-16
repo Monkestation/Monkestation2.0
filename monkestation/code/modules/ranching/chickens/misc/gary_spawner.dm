@@ -2,7 +2,7 @@ GLOBAL_LIST(possible_gary_hideouts)
 
 /obj/effect/landmark/start/gary
 	name = "Potential Gary Spawnpoint (Common)"
-	icon = 'monkestation/icons/mob/landmarks.dmi'
+	icon = 'icons/mob/landmarks.dmi'
 	icon_state = "Gary (Common)"
 	var/weight = 15
 

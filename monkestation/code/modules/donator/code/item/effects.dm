@@ -37,7 +37,7 @@
 //bidlink2
 /obj/item/effect_granter/donator/cirno
 	name = "Cirno transformation"
-	icon = 'monkestation/icons/obj/plushes.dmi'
+	icon = 'icons/obj/plushes.dmi'
 	icon_state = "cirno-happy"
 	animal_transformation = /mob/living/basic/pet/cirno
 
@@ -187,3 +187,10 @@
 	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
 	icon_state = "shark_axolotl"
 	animal_transformation = /mob/living/basic/axolotl/shark_costume
+
+//Rynnogen
+/obj/item/effect_granter/donator/vanilla_mothroach
+	name = "Vanilla Mothroach"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "vanilla_mothroach"
+	animal_transformation = /mob/living/basic/mothroach/vanilla

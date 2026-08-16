@@ -261,7 +261,7 @@ GLOBAL_PROTECT(protected_mentor_ranks)
 
 /// Reads contributor file and sets is_contributor if their ckey exists and they have a valid datum to store it.
 /proc/load_contrib_status()
-	for(var/coder in world.file2list("[global.config.directory]/contributors.txt"))
+	for(var/coder in file2list("[global.config.directory]/contributors.txt"))
 		var/key = ckey(coder)
 		var/datum/mentors/contrib_mentor = GLOB.mentor_datums[key] || GLOB.dementors[key]
 		if(istype(contrib_mentor))

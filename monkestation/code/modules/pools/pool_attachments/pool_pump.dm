@@ -5,7 +5,7 @@
 	name = "pool pump"
 	desc = "A pump that attaches to the side of a pool, with this installed it will allow you to insert a beaker and it will try and synthesize the chemicals to fill said pool."
 
-	icon = 'monkestation/icons/obj/pools/structures.dmi'
+	icon = 'icons/obj/pools/structures.dmi'
 	icon_state = "pool_pump"
 
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 10 ///this is basically a better chem factory its expensive as shit while running

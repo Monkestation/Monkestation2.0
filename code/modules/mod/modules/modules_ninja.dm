@@ -90,13 +90,13 @@
 
 /obj/item/mod/module/welding/camera_vision/on_suit_activation()
 	. = ..()
-	RegisterSignal(mod.wearer, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_CAN_TRACK, PROC_REF(track_person))
 
 /obj/item/mod/module/welding/camera_vision/on_suit_deactivation(deleting = FALSE)
 	. = ..()
-	UnregisterSignal(mod.wearer, COMSIG_LIVING_CAN_TRACK)
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_CAN_TRACK)
 
-/obj/item/mod/module/welding/camera_vision/proc/can_track(datum/source, mob/user)
+/obj/item/mod/module/welding/camera_vision/proc/track_person(datum/source, mob/user)
 	SIGNAL_HANDLER
 
 	return COMPONENT_CANT_TRACK

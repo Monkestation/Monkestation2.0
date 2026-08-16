@@ -204,6 +204,7 @@
 	greyscale_colors = "#484848#0099CC#D94927"
 	starting_programs = list(
 		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/science,
 	)
 
 /obj/item/modular_computer/pda/geneticist

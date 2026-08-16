@@ -1,7 +1,7 @@
 /obj/item/book/manual/chicken_encyclopedia
 	name = "chicken encyclopedia"
 	desc = "The exciting sequel to the encyclopedia of 21st century trains!"
-	icon = 'monkestation/icons/obj/ranching.dmi'
+	icon = 'icons/obj/ranching.dmi'
 	icon_state = "chicken_book"
 	unique = TRUE
 

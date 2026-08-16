@@ -5,17 +5,22 @@
 /obj/item/clothing/head/helmet/space/plasmaman/blueshield
 	name = "blueshield envirosuit helmet"
 	desc = "A plasmaman containment helmet designed for certified blueshields, who's job guarding heads should not include self-combustion... most of the time."
-	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/head/plasmaman_hats.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/head/plasmaman_head.dmi'
-	icon_state = "bs_envirohelm"
 	armor_type = /datum/armor/suit_armor
+	greyscale_colors = "#39393f#2b3f92#bd6abd"
+	sleek_greyscale_colors = "#39393f#2b3f92"
 
 /obj/item/clothing/under/plasmaman/blueshield
 	name = "blueshield envirosuit"
 	desc = "A plasmaman containment suit designed for certified blueshields, offering a limited amount of extra protection."
-	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/plasmaman.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/plasmaman.dmi'
-	icon_state = "bs_envirosuit"
+	icon_state = "medal"
+	worn_icon_state = "medal_w"
+	inhand_icon_state = "medal"
+	greyscale_config = /datum/greyscale_config/plasmaman_suit/symbol
+	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/symbol
+	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/symbol
+	greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_suit/inhand_right/symbol
+	greyscale_colors = "#39393f#39393f#2b3f92#2b3f92#2b3f92#2b3f92#1e2e6f"
+	sleek_greyscale_colors = "#2b3f92#39393f#39393f#39393f#39393f"
 	armor_type = /datum/armor/clothing_under/under_plasmaman_blueshield
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
@@ -49,7 +54,7 @@
 	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/inhands/clothing/backpack_righthand.dmi'
 	icon_state = "backpack_blueshield"
 	inhand_icon_state = "backpack_blueshield"
-	alternate_worn_layer = (HEAD_LAYER-0.5)
+	alternate_worn_layer = ABOVE_HEAD_LAYER
 
 /obj/item/storage/backpack/satchel/blueshield
 	name = "blueshield satchel"
@@ -204,7 +209,7 @@
 /obj/item/radio/headset/headset_bs
 	name = "\proper the blueshield's headset"
 	desc = "The headset of the guy who keeps the administration alive."
-	icon = 'monkestation/icons/obj/radio.dmi'
+	icon = 'icons/obj/radio.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/ears.dmi'
 	icon_state = "bshield_headset"
 	worn_icon_state = "bshield_headset"

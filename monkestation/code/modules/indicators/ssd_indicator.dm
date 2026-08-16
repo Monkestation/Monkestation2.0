@@ -1,4 +1,4 @@
-GLOBAL_VAR_INIT(ssd_indicator_overlay, mutable_appearance('monkestation/icons/effects/ssd_indicator.dmi', "default0", FLY_LAYER))
+GLOBAL_VAR_INIT(ssd_indicator_overlay, mutable_appearance('icons/effects/ssd_indicator.dmi', "default0", FLY_LAYER))
 
 /mob/living
 	var/ssd_indicator = FALSE

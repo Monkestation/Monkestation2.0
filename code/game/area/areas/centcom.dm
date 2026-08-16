@@ -168,7 +168,7 @@
 	name = "Abductor Ship"
 	icon_state = "abductor_ship"
 	requires_power = FALSE
-	area_flags = UNIQUE_AREA | NOTELEPORT
+	area_flags = UNIQUE_AREA | NOTELEPORT | AREA_BLOCKS_OUTGOING_RADIO
 	static_lighting = FALSE
 	base_lighting_alpha = 255
 	has_gravity = STANDARD_GRAVITY
@@ -228,6 +228,10 @@
 
 /area/centcom/syndicate_mothership/firebase_trident/hangar
 	name = "Firebase Trident hangar bay"
+	icon_state = "syndie-elite"
+
+/area/centcom/syndicate_mothership/golden_eye
+	name = "Syndicate Golden Eye Base"
 	icon_state = "syndie-elite"
 
 //CAPTURE THE FLAG

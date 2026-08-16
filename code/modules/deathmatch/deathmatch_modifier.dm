@@ -372,6 +372,14 @@
 		var/mine_path = pick(mines)
 		new mine_path (target_turf)
 
+/datum/deathmatch_modifier/random_loadouts
+	name = "Forced random loadouts"
+	description = "Randomizes everyone's loadouts"
+
+/datum/deathmatch_modifier/random_loadouts/on_start_game(datum/deathmatch_lobby/lobby)
+	for(var/key in lobby.players)
+		lobby.players[key]["loadout"] = lobby.loadouts[1]
+
 /datum/deathmatch_modifier/random
 	name = "Random Modifiers"
 	description = "Picks 3 to 5 random modifiers as the game is about to start"
@@ -402,12 +410,14 @@
 			modifiers_pool -= modpath
 
 	///Pick global modifiers at random.
-	for(var/iteration in rand(3, 5))
+	for(var/iteration in 1 to rand(3, 5))
 		var/datum/deathmatch_modifier/modifier = GLOB.deathmatch_game.modifiers[pick_n_take(modifiers_pool)]
 		modifier.on_select(lobby)
 		modifier.on_start_game(lobby)
-		lobby += modifier.type
+		lobby.modifiers += modifier.type
 		modifiers_pool -= modifier.blacklisted_modifiers
+		if(!length(modifiers_pool))
+			return
 
 /datum/deathmatch_modifier/any_loadout
 	name = "Any Loadout Allowed"

@@ -20,7 +20,7 @@
 	resistance_flags = FIRE_PROOF
 	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	/// The max amount of water this extinguisher can hold.
-	var/max_water = 50
+	var/max_water = 75
 	/// Does the welder extinguisher start with water.
 	var/starting_water = TRUE
 	/// Cooldown between uses.
@@ -62,6 +62,7 @@
 	max_water = 30
 	sprite_name = "miniFE"
 	dog_fashion = null
+	tank_holder_icon_state = "holder_extinguisher_mini"
 
 /obj/item/extinguisher/mini/empty
 	starting_water = FALSE
@@ -119,6 +120,7 @@
 	chem = /datum/reagent/firefighting_foam
 	tanktype = /obj/structure/reagent_dispensers/foamtank
 	sprite_name = "foam_extinguisher"
+	max_water = 100
 	precision = TRUE
 
 /obj/item/extinguisher/advanced/empty
@@ -246,7 +248,7 @@
 		var/datum/reagents/water_reagents = new /datum/reagents(5)
 		water.reagents = water_reagents
 		water_reagents.my_atom = water
-		reagents.trans_to(water, 1, transfered_by = user)
+		reagents.trans_to(water, 1, transferred_by = user)
 
 	//Make em move dat ass, hun
 	move_particles(water_particles)

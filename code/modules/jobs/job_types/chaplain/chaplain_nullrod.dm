@@ -687,7 +687,7 @@
 /obj/item/nullrod/cross
 	name = "golden crucifix"
 	desc = "Resist the devil, and he will flee from you."
-	icon = 'monkestation/icons/obj/misc.dmi'
+	icon = 'icons/obj/misc.dmi'
 	icon_state = "cross"
 	inhand_icon_state = "cross"
 	force = 0 // How often we forget

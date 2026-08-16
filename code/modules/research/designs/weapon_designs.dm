@@ -350,6 +350,19 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 	autolathe_exportable = FALSE
 
+/datum/design/lasercannon
+	name = "Laser Cannon Part Kit (Lethal)"
+	desc = "Big lasers for big targets."
+	id = "lasercannon"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT * 3, /datum/material/gold =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 4, /datum/material/uranium =SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/weaponcrafting/gunkit/lasercannon
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+	autolathe_exportable = FALSE
+
 /datum/design/wormhole_projector
 	name = "Bluespace Wormhole Projector"
 	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires a bluespace anomaly core to function."

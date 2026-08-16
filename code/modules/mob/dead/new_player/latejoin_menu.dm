@@ -46,7 +46,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 		"round_duration" = DisplayTimeText(world.time - SSticker.round_start_time, round_seconds_to = 1),
 		"departments" = departments,
 		"notices" = config.lobby_notices, // monkestation edit - lobby notices
-		"selected_character" = user.client?.prefs?.read_preference(/datum/preference/name/real_name),
+		"selected_character" = user.client?.prefs?.get_enabled_character_names(),
 	)
 	if(SSshuttle.emergency)
 		switch(SSshuttle.emergency.mode)
@@ -127,7 +127,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 		if("ui_mounted_with_no_bluescreen")
 			owner.jobs_menu_mounted = TRUE
 		if("change_slot")
-			ui.user.client.change_character_slot()
+			ui.user.client.prefs.tmp_change_character_slot()
 			return TRUE
 		if("select_job")
 			if(params["job"] == "Random")

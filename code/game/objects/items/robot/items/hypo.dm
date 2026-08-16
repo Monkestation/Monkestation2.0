@@ -61,6 +61,24 @@
 		/datum/reagent/consumable/ethanol/tequila, /datum/reagent/consumable/ethanol/triple_sec, /datum/reagent/consumable/ethanol/vermouth,\
 		/datum/reagent/consumable/ethanol/vodka, /datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/wine,\
 	)
+
+#define EXPANDED_SERVICE_REAGENTS list(\
+	/datum/reagent/consumable/blackpepper,\
+	/datum/reagent/consumable/cornmeal,\
+	/datum/reagent/consumable/cooking_oil,\
+	/datum/reagent/consumable/corn_starch,\
+	/datum/reagent/consumable/eggwhite,\
+	/datum/reagent/consumable/eggyolk,\
+	/datum/reagent/consumable/flour,\
+	/datum/reagent/consumable/rice,\
+	/datum/reagent/consumable/sugar,\
+	/datum/reagent/consumable/salt,\
+	/datum/reagent/consumable/soysauce,\
+	/datum/reagent/consumable/ketchup,\
+	/datum/reagent/consumable/mayonnaise,\
+	/datum/reagent/consumable/bbqsauce,\
+)
+
 #define HACKED_SERVICE_REAGENTS list(\
 		/datum/reagent/toxin/fakebeer,\
 		/datum/reagent/consumable/ethanol/fernet,\
@@ -179,7 +197,7 @@
 	to_chat(injectee, span_warning("You feel a tiny prick!"))
 	to_chat(user, span_notice("You inject [injectee] with the injector ([selected_reagent_typepath ? selected_reagent_typepath.name : selected_recipe_id])."))
 	balloon_alert(user, "[reagent_injector.total_volume] unit\s injected")
-	reagent_injector.trans_to(injectee, reagent_injector.total_volume, transfered_by = user, methods = INJECT)
+	reagent_injector.trans_to(injectee, reagent_injector.total_volume, transferred_by = user, methods = INJECT)
 	log_combat(user, injectee, "injected", src, "(CHEMICALS: [reagent_injector])")
 	if(injection_sound)
 		playsound(injectee, injection_sound, 20, TRUE)
@@ -239,7 +257,7 @@
 			to_chat(user, span_warning("Couldn't find recipe ") + span_boldwarning(selected_recipe_id) + span_warning("!"))
 			return FALSE
 		for(var/reagent_name in recipe_information)
-			var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(reagent_name)]
+			var/datum/reagent/reagent_typepath = GLOB.name2reagent[reagent_name]
 			if(!reagent_typepath)
 				balloon_alert(user, "[reagent_name] not found!")
 				return FALSE
@@ -261,7 +279,7 @@
 		var/recipe_information = saved_recipes[selected_recipe_id]
 		if(recipe_information)
 			for(var/reagent_name in recipe_information)
-				var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(reagent_name)]
+				var/datum/reagent/reagent_typepath = GLOB.name2reagent[reagent_name]
 				if(!reagent_typepath)
 					continue
 				var/recipe_volume = recipe_information[reagent_name]
@@ -320,7 +338,7 @@
 	data["recordingRecipe"] = recording_recipe
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/cyborg = user
-		var/obj/item/borg/apparatus/beaker/beaker_apparatus = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+		var/obj/item/borg/apparatus/beaker/beaker_apparatus = (locate() in cyborg.model.usable_modules) || (locate() in cyborg.held_items)
 		data["canReagentSearch"] = !isnull(beaker_apparatus)
 	return data
 
@@ -333,7 +351,7 @@
 	switch(action)
 		if("select_reagent")
 			playsound(src, 'sound/effects/pop.ogg', 50, 0)
-			var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(params["reagent_name"])]
+			var/datum/reagent/reagent_typepath = GLOB.name2reagent[params["reagent_name"]]
 			if(!isnull(stored_reagents[reagent_typepath]))
 				if(recording_recipe)
 					recording_recipe[params["reagent_name"]] += amount_per_transfer_from_this
@@ -364,7 +382,7 @@
 				return
 			if(name && recording_recipe)
 				for(var/reagent_name in recording_recipe)
-					var/datum/reagent/reagent_typepath = GLOB.name2reagent[clean_reagent_name(reagent_name)]
+					var/datum/reagent/reagent_typepath = GLOB.name2reagent[reagent_name]
 					if(isnull(stored_reagents[reagent_typepath]))
 						to_chat(user, span_warning("\The [src] cannot find ") + span_boldwarning(reagent_name) + span_warning("!"))
 						return
@@ -396,7 +414,7 @@
 		if("reaction_lookup")
 			if(iscyborg(user))
 				var/mob/living/silicon/robot/cyborg = user
-				var/obj/item/borg/apparatus/beaker/beaker_apparatus = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+				var/obj/item/borg/apparatus/beaker/beaker_apparatus = (locate() in cyborg.model.usable_modules) || (locate() in cyborg.held_items)
 				if(!isnull(beaker_apparatus) && !isnull(beaker_apparatus.stored))
 					beaker_apparatus.stored.reagents.ui_interact(cyborg)
 					. = TRUE
@@ -489,7 +507,7 @@
 		return ITEM_INTERACT_BLOCKING
 	var/datum/reagents/reagent_injector = create_reagent_injector()
 	balloon_alert(user, "[reagent_injector.total_volume] unit\s poured")
-	reagent_injector.trans_to(interacting_with, reagent_injector.total_volume, transfered_by = user)
+	reagent_injector.trans_to(interacting_with, reagent_injector.total_volume, transferred_by = user)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/borghypo/borgshaker/ui_interact(mob/user, datum/tgui/ui)
@@ -528,11 +546,11 @@
 	data["recordingRecipe"] = recording_recipe
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/cyborg = user
-		var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+		var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in cyborg.model.usable_modules) || (locate() in cyborg.held_items)
 		if(!isnull(beverage_apparatus) && !isnull(beverage_apparatus.stored))
 			data["canReagentSearch"] = TRUE
 		if(!data["canReagentSearch"])
-			var/obj/item/reagent_containers/cup/beaker/large/internal_beaker = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+			var/obj/item/reagent_containers/cup/beaker/large/internal_beaker = (locate() in cyborg.model.usable_modules) || (locate() in cyborg.held_items)
 			if(!isnull(internal_beaker))
 				data["canReagentSearch"] = TRUE
 	return data
@@ -546,12 +564,12 @@
 		if("reaction_lookup")
 			if(iscyborg(user))
 				var/mob/living/silicon/robot/cyborg = user
-				var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+				var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in cyborg.model.usable_modules) || (locate() in cyborg.held_items)
 				if(!isnull(beverage_apparatus) && !isnull(beverage_apparatus.stored))
 					beverage_apparatus.stored.reagents.ui_interact(cyborg)
 					. = TRUE
 				if(!.)
-					var/obj/item/reagent_containers/cup/beaker/large/internal_beaker = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+					var/obj/item/reagent_containers/cup/beaker/large/internal_beaker = (locate() in cyborg.model.usable_modules) || (locate() in cyborg.held_items)
 					if(!isnull(internal_beaker))
 						internal_beaker.reagents.ui_interact(cyborg)
 					. = TRUE
@@ -567,11 +585,44 @@
 
 /obj/item/reagent_containers/borghypo/borgshaker/centcom
 	amount_per_transfer_from_this = 50
-	recharge_time = 1 SECOND
+	recharge_time = 1 SECONDS
 
 /obj/item/reagent_containers/borghypo/borgshaker/centcom/Initialize(mapload)
 	default_reagent_types += BASE_CENTCOM_REAGENTS
 	. = ..()
+
+/obj/item/reagent_containers/borghypo/condiment_synthesizer
+	name = "condiment synthesizer"
+	desc = "An advanced condiment synthesizer."
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "flour"
+	possible_transfer_amounts = list(1, 5, 10, 20, 30)
+	charge_cost = 0.04 * STANDARD_CELL_CHARGE // 2x of borgshaker.
+	recharge_time = 6 SECONDS // 2x of borgshaker.
+	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
+	default_reagent_types = EXPANDED_SERVICE_REAGENTS
+
+/obj/item/reagent_containers/borghypo/condiment_synthesizer/attack(mob/living/target_mob, mob/user)
+	return
+
+/obj/item/reagent_containers/borghypo/condiment_synthesizer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!interacting_with.is_refillable())
+		return NONE
+	if(!has_reagents_for_injection(user)) // Gives balloon alerts.
+		return ITEM_INTERACT_BLOCKING
+	if(interacting_with.reagents.total_volume >= interacting_with.reagents.maximum_volume)
+		balloon_alert(user, "it's full!")
+		return ITEM_INTERACT_BLOCKING
+	var/datum/reagents/reagent_injector = create_reagent_injector()
+	balloon_alert(user, "[reagent_injector.total_volume] unit\s poured")
+	reagent_injector.trans_to(interacting_with, reagent_injector.total_volume, transferred_by = user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/reagent_containers/borghypo/condiment_synthesizer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "BorgChemicalCondiments", "Integrated Condiment Dispenser")
+		ui.open()
 
 #undef BASE_MEDICAL_REAGENTS
 #undef EXPANDED_MEDICAL_REAGENTS
@@ -579,6 +630,7 @@
 #undef BASE_PEACE_REAGENTS
 #undef HACKED_PEACE_REAGENTS
 #undef BASE_SERVICE_REAGENTS
+#undef EXPANDED_SERVICE_REAGENTS
 #undef HACKED_SERVICE_REAGENTS
 #undef BASE_CLOWN_REAGENTS
 #undef HACKED_CLOWN_REAGENTS

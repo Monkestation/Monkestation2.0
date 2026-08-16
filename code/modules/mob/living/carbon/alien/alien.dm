@@ -17,7 +17,7 @@
 	bodytemp_heat_damage_limit = CELCIUS_TO_KELVIN(85 CELCIUS)
 
 	var/leaping = FALSE
-	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
+	gib_type = /obj/effect/decal/cleanable/blood/gibs/xeno
 	unique_name = TRUE
 
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
@@ -47,67 +47,29 @@
 	return -10
 
 /mob/living/carbon/alien/body_temperature_alerts()
-	if(bodytemperature > bodytemp_heat_damage_limit)
-		throw_alert(ALERT_XENO_FIRE, /atom/movable/screen/alert/alien_fire)
-	else
+	if(bodytemperature <= bodytemp_heat_damage_limit)
 		clear_alert(ALERT_XENO_FIRE)
-
-/mob/living/carbon/alien/getTrail()
-	if(getBruteLoss() < 200)
-		return pick (list("xltrails_1", "xltrails2"))
-	else
-		return pick (list("xttrails_1", "xttrails2"))
-
-/mob/living/carbon/alien/makeTrail(turf/target_turf, turf/start, direction)
-	if(!has_gravity() || !isturf(start) || HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return
 
-	var/blood_exists = locate(/obj/effect/decal/cleanable/xenoblood/trail_holder) in start
+	//Body temperature is too hot.
+	throw_alert(ALERT_XENO_FIRE, /atom/movable/screen/alert/alien_fire)
 
-	var/trail_type = getTrail()
-	if(!trail_type)
-		return
+/mob/living/carbon/alien/get_bloodtype()
+	return get_blood_type(BLOOD_TYPE_XENO)
 
-	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
-	if(blood_volume < max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
-		return
-
-	var/bleed_amount = bleedDragAmount()
-	blood_volume = max(blood_volume - bleed_amount, 0) //that depends on our brute damage.
-	var/newdir = get_dir(target_turf, start)
-	if(newdir != direction)
-		newdir = newdir | direction
-		if(newdir == (NORTH|SOUTH))
-			newdir = NORTH
-		else if(newdir == (EAST|WEST))
-			newdir = EAST
-	if((newdir in GLOB.cardinals) && (prob(50)))
-		newdir = turn(get_dir(target_turf, start), 180)
-	if(!blood_exists)
-		var/obj/effect/decal/cleanable/xenoblood/trail_holder/new_blood = new /obj/effect/decal/cleanable/xenoblood/trail_holder(start, get_static_viruses())
-		new_blood.add_mob_blood(src)
-		new_blood.update_appearance()
-
-	for(var/obj/effect/decal/cleanable/xenoblood/trail_holder/TH in start)
-		if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
-			TH.existing_dirs += newdir
-			TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-			TH.add_mob_blood(src)
-			TH.update_appearance()
 /*----------------------------------------
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.
 ----------------------------------------*/
 /mob/living/carbon/alien/proc/AddInfectionImages()
-	if (client)
-		for (var/i in GLOB.mob_living_list)
-			var/mob/living/L = i
-			if(HAS_TRAIT(L, TRAIT_XENO_HOST))
-				var/obj/item/organ/internal/body_egg/alien_embryo/A = L.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo)
-				if(A)
-					var/I = image('icons/mob/nonhuman-player/alien.dmi', loc = L, icon_state = "infected[A.stage]")
-					client.images += I
-	return
+	if (!client)
+		return
+
+	for (var/mob/living/target as anything in GLOB.mob_living_list)
+		if(HAS_TRAIT(target, TRAIT_XENO_HOST))
+			var/obj/item/organ/internal/body_egg/alien_embryo/embryo = target.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo)
+			if(embryo)
+				client.images += image('icons/mob/nonhuman-player/alien.dmi', loc = target, icon_state = "infected[embryo.stage]")
 
 
 /*----------------------------------------

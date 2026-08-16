@@ -4,10 +4,10 @@
 
 
 /obj/item/melee/viking
-	icon = 'monkestation/icons/viking/viking_items.dmi'
-	lefthand_file = 'monkestation/icons/viking/axes_lefthand.dmi'
-	righthand_file = 'monkestation/icons/viking/axes_righthand.dmi'
-	worn_icon = 'monkestation/icons/viking/viking_armor.dmi'
+	icon = 'icons/viking/viking_items.dmi'
+	lefthand_file = 'icons/viking/axes_lefthand.dmi'
+	righthand_file = 'icons/viking/axes_righthand.dmi'
+	worn_icon = 'icons/viking/viking_armor.dmi'
 
 /datum/embedding/viking_axe
 	embed_chance = 50

@@ -713,7 +713,6 @@
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sundress_worn.json'
 
-//MONKESTATION ADDITION START
 /datum/greyscale_config/ballgown
 	name = "Ballgown"
 	icon_file = 'icons/obj/clothing/under/dress.dmi'
@@ -743,7 +742,6 @@
 	name = "Ribboned Gown"
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
 	json_config = 'code/datums/greyscale/json_configs/ribbondress_worn.json'
-//MONKESTATION ADDITION END
 
 /datum/greyscale_config/beanie
 	name = "Beanie"
@@ -867,7 +865,7 @@
 
 /datum/greyscale_config/buckets_cleanbot
 	name = "Buckets - Cleanbot"
-	icon_file = 'monkestation/code/modules/aesthetics/icons/cleanbot.dmi' //monkestation edit
+	icon_file = 'icons/mob/silicon/cleanbot.dmi'
 	json_config = 'code/datums/greyscale/json_configs/buckets_bot.json'
 
 /datum/greyscale_config/buttondown_slacks
@@ -959,6 +957,16 @@
 	name = "Worn Waistcoat"
 	icon_file = 'icons/mob/clothing/accessories.dmi'
 	json_config = 'code/datums/greyscale/json_configs/waistcoat_worn.json'
+
+/datum/greyscale_config/peculiar_watch
+	name = "Peculiar Watch"
+	icon_file = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	json_config = 'code/datums/greyscale/json_configs/peculiar_watch.json'
+
+/datum/greyscale_config/peculiar_watch_worn
+	name = "Worn Peculiar Watch"
+	icon_file = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	json_config = 'code/datums/greyscale/json_configs/peculiar_watch.json'
 
 // Digi Stuff
 
@@ -1090,42 +1098,42 @@
 
 /datum/greyscale_config/polycloak
 	name = "cloak"
-	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
+	icon_file = 'icons/obj/clothing/necks.dmi'
 	json_config = 'code/datums/greyscale/json_configs/polycloak.json'
 
 /datum/greyscale_config/polycloak_worn
 	name = "Wcloak"
-	icon_file = 'monkestation/icons/mob/clothing/neck.dmi'
+	icon_file = 'icons/mob/clothing/neck.dmi'
 	json_config = 'code/datums/greyscale/json_configs/polycloakworn.json'
 
 /datum/greyscale_config/polycowhat
 	name = "polycowhat_poly"
-	icon_file = 'monkestation/icons/obj/clothing/hats.dmi'
+	icon_file = 'icons/obj/clothing/hats.dmi'
 	json_config = 'code/datums/greyscale/json_configs/polycowhat.json'
 
 /datum/greyscale_config/polycowhat_worn
 	name = "wpolycowhat_poly"
-	icon_file = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_file = 'icons/mob/clothing/head.dmi'
 	json_config = 'code/datums/greyscale/json_configs/polycowhatworn.json'
 
 /datum/greyscale_config/boatcloak
 	name = "boatcloak"
-	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
+	icon_file = 'icons/obj/clothing/necks.dmi'
 	json_config = 'code/datums/greyscale/json_configs/boatcloak.json'
 
 /datum/greyscale_config/boatcloak_worn
 	name = "wboatcloak"
-	icon_file = 'monkestation/icons/mob/clothing/neck.dmi'
+	icon_file = 'icons/mob/clothing/neck.dmi'
 	json_config = 'code/datums/greyscale/json_configs/boatcloakworn.json'
 
 /datum/greyscale_config/admincloak
 	name = "admincloak"
-	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
+	icon_file = 'icons/obj/clothing/necks.dmi'
 	json_config = 'code/datums/greyscale/json_configs/admincloak.json'
 
 /datum/greyscale_config/admincloak_worn
 	name = "wadmincloak"
-	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
+	icon_file = 'icons/obj/clothing/necks.dmi'
 	json_config = 'code/datums/greyscale/json_configs/admincloakworn.json'
 
 /datum/greyscale_config/fish_analyzer_inhand_left
@@ -1164,22 +1172,22 @@
 
 /datum/greyscale_config/tailcoat
 	name = "Tailcoat"
-	icon_file = 'monkestation/icons/obj/clothing/suits.dmi'
+	icon_file = 'icons/obj/clothing/suits.dmi'
 	json_config = 'code/datums/greyscale/json_configs/tailcoat.json'
 
 /datum/greyscale_config/tailcoat_worn
 	name = "Worn Tailcoat"
-	icon_file = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon_file = 'icons/mob/clothing/suit.dmi'
 	json_config = 'code/datums/greyscale/json_configs/tailcoat_worn.json'
 
 /datum/greyscale_config/tailcoat_bar
 	name = "Bartender's Tailcoat"
-	icon_file = 'monkestation/icons/obj/clothing/suits.dmi'
+	icon_file = 'icons/obj/clothing/suits.dmi'
 	json_config = 'code/datums/greyscale/json_configs/tailcoat_bar.json'
 
 /datum/greyscale_config/tailcoat_bar_worn
 	name = "Worn Bartender's Tailcoat"
-	icon_file = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon_file = 'icons/mob/clothing/suit.dmi'
 	json_config = 'code/datums/greyscale/json_configs/tailcoat_bar_worn.json'
 
 /datum/greyscale_config/lava_cat_robe
@@ -1215,12 +1223,12 @@
 // JUMPSUITS
 /datum/greyscale_config/bunnysuit
 	name = "Worn Bunny Suit"
-	icon_file = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	icon_file = 'icons/obj/clothing/uniforms.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bunnysuit.json'
 
 /datum/greyscale_config/bunnysuit_worn
 	name = "Worn Bunny Suit"
-	icon_file = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_file = 'icons/mob/clothing/uniform.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bunnysuit_worn.json'
 
 /*
@@ -1230,52 +1238,42 @@
 // SNEAKERS
 /datum/greyscale_config/heels
 	name = "Heels"
-	icon_file = 'monkestation/icons/obj/clothing/shoes.dmi'
+	icon_file = 'icons/obj/clothing/shoes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/heels.json'
 
 /datum/greyscale_config/heels_worn
 	name = "Worn Heels"
-	icon_file = 'monkestation/icons/mob/clothing/feet.dmi'
+	icon_file = 'icons/mob/clothing/feet.dmi'
 	json_config = 'code/datums/greyscale/json_configs/heels_worn.json'
 
 /datum/greyscale_config/bowtie_collar
 	name = "Bowtie Collar"
-	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
+	icon_file = 'icons/obj/clothing/necks.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bowtie_collar.json'
 
 /datum/greyscale_config/bowtie_collar_worn
 	name = "Worn Bowtie Collar"
-	icon_file = 'monkestation/icons/mob/clothing/neck.dmi'
+	icon_file = 'icons/mob/clothing/neck.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bowtie_collar_worn.json'
 
 /datum/greyscale_config/playbunnyears
 	name = "Playbunny Ears"
-	icon_file = 'monkestation/icons/obj/clothing/hats.dmi'
+	icon_file = 'icons/obj/clothing/hats.dmi'
 	json_config = 'code/datums/greyscale/json_configs/playbunny_ears.json'
 
 /datum/greyscale_config/playbunnyears_worn
 	name = "Worn Playbunny Ears"
-	icon_file = 'monkestation/icons/mob/clothing/head_32x48.dmi'
+	icon_file = 'icons/mob/clothing/head_32x48.dmi'
 	json_config = 'code/datums/greyscale/json_configs/playbunny_ears_worn.json'
-
-/datum/greyscale_config/big_manipulator
-	name = "Big Manipulator"
-	icon_file = 'monkestation/code/modules/factory_type_beat/icons/big_manipulator_core.dmi'
-	json_config = 'code/datums/greyscale/json_configs/big_manipulator.json'
-
-/datum/greyscale_config/manipulator_hand
-	name = "Manipulator Hand"
-	icon_file = 'monkestation/code/modules/factory_type_beat/icons/big_manipulator_hand.dmi'
-	json_config = 'code/datums/greyscale/json_configs/manipulator_hand.json'
 
 /datum/greyscale_config/linjacket
 	name = "Tassled Jacket"
-	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
+	icon_file = 'icons/obj/clothing/necks.dmi'
 	json_config = 'code/datums/greyscale/json_configs/linjacket.json'
 
 /datum/greyscale_config/linjacket_worn
 	name = "Worn Tassled Jacket"
-	icon_file = 'monkestation/icons/mob/clothing/neck.dmi'
+	icon_file = 'icons/mob/clothing/neck.dmi'
 	json_config = 'code/datums/greyscale/json_configs/linjacket_worn.json'
 
 /datum/greyscale_config/umbrella
@@ -1325,10 +1323,286 @@
 
 /datum/greyscale_config/green_jester_shoes
 	name = "green_jester_shoes"
-	icon_file = 'monkestation/icons/obj/clothing/shoes.dmi'
+	icon_file = 'icons/obj/clothing/shoes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/green_jester_shoes.json'
 
 /datum/greyscale_config/green_jester_shoes_worn
 	name = "green_jester_shoes"
-	icon_file = 'monkestation/icons/mob/clothing/feet.dmi'
+	icon_file = 'icons/mob/clothing/feet.dmi'
 	json_config = 'code/datums/greyscale/json_configs/green_jester_shoes_worn.json'
+
+/datum/greyscale_config/big_manipulator
+	name = "Big Manipulator"
+	icon_file = 'icons/obj/machines/big_manipulator_parts/big_manipulator_core.dmi'
+	json_config = 'code/datums/greyscale/json_configs/big_manipulator.json'
+
+/datum/greyscale_config/manipulator_arm
+	name = "Manipulator Arm"
+	icon_file = 'icons/obj/machines/big_manipulator_parts/big_manipulator_hand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/manipulator_arm.json'
+
+/datum/greyscale_config/rebellion_mask
+	name = "Rebellion mask"
+	icon_file = 'icons/obj/clothing/masks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/rebellion_mask.json'
+
+/datum/greyscale_config/rebellion_mask/worn
+	name = "Rebellion mask (Worn)"
+	icon_file = 'icons/mob/clothing/mask.dmi'
+
+/datum/greyscale_config/henchmen
+	name = "henchmen"
+	icon_file = 'icons/mob/clothing/costumes/henchmen/henchmen_item.dmi'
+	json_config = 'code/datums/greyscale/json_configs/henchmen.json'
+	expected_colors = 1
+
+/datum/greyscale_config/henchmen_worn
+	name = "henchmen_worn"
+	icon_file = 'icons/mob/clothing/costumes/henchmen/henchmen_worn.dmi'
+	json_config = 'code/datums/greyscale/json_configs/henchmen.json'
+	expected_colors = 1
+
+// Plasmaman
+
+// Helmet
+/datum/greyscale_config/plasmaman_helmet
+	name = "Plasmaman Helmet"
+	icon_file = 'icons/obj/clothing/head/plasmaman_hats.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/default/plasmaman_helmet.json'
+
+/datum/greyscale_config/plasmaman_helmet/base //bases
+	name = "Plasmaman Helmet Base (No Visor)"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/plasmaman_helmet_base.json'
+
+/datum/greyscale_config/plasmaman_helmet/worn
+	name = "Plasmaman Helmet (Worn)"
+	icon_file = 'icons/mob/clothing/head/plasmaman_head.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/default/plasmaman_helmet_worn.json'
+
+/datum/greyscale_config/plasmaman_helmet/worn/base //bases
+	name = "Plasmaman Helmet Base (No Visor) (Worn)"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/plasmaman_helmet_base_worn.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_left
+	name = "Plasmaman Helmet (Held), Left"
+	icon_file = 'icons/mob/inhands/clothing/plasmaman_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/default/plasmaman_helmet_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_left/base //bases
+	name = "Plasmaman Helmet Base (No Visor) (Held), Left"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/plasmaman_helmet_base_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_right
+	name = "Plasmaman Helmet (Held), Right"
+	icon_file = 'icons/mob/inhands/clothing/plasmaman_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/default/plasmaman_helmet_inhand_right.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_right/base //bases
+	name = "Plasmaman Helmet Base (No Visor) (Held), Right"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/plasmaman_helmet_base_inhand_right.json'
+
+// Sleek
+
+/datum/greyscale_config/plasmaman_helmet/sleek
+	name = "Plasmaman Helmet (Sleek)"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/sleek/plasmaman_helmet_sleek.json'
+
+/datum/greyscale_config/plasmaman_helmet/worn/sleek
+	name = "Plasmaman Helmet (Sleek) (Worn)"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/sleek/plasmaman_helmet_sleek_worn.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_left/sleek
+	name = "Plasmaman Helmet (Sleek) (Held), Left"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/sleek/plasmaman_helmet_sleek_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_right/sleek
+	name = "Plasmaman Helmet (Sleek) (Held), Right"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/sleek/plasmaman_helmet_sleek_inhand_right.json'
+
+// Alternative (HoS, Warden and Jani)
+
+/datum/greyscale_config/plasmaman_helmet/stripe
+	name = "Plasmaman Helmet (Striped)"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/striped/plasmaman_helmet_striped.json'
+
+/datum/greyscale_config/plasmaman_helmet/worn/stripe
+	name = "Plasmaman Helmet (Striped) (Worn)"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/striped/plasmaman_helmet_striped_worn.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_left/stripe
+	name = "Plasmaman Helmet (Striped) (Held), Left"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/striped/plasmaman_helmet_striped_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_right/stripe
+	name = "Plasmaman Helmet (Striped) (Held), Right"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/striped/plasmaman_helmet_striped_inhand_right.json'
+
+// Threate Jobs Plasmaman Helmets
+
+/datum/greyscale_config/plasmaman_helmet/clown
+	name = "Plasmaman Clown Helmet"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/clown/plasmaman_clown_helmet.json'
+
+/datum/greyscale_config/plasmaman_helmet/worn/clown
+	name = "Plasmaman Clown Helmet (Worn)"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/clown/plasmaman_clown_helmet_worn.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_left/clown
+	name = "Plasmaman Clown Helmet (Held), Left"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/clown/plasmaman_clown_helmet_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_right/clown
+	name = "Plasmaman Clown Helmet (Held), Right"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/clown/plasmaman_clown_helmet_inhand_right.json'
+
+/datum/greyscale_config/plasmaman_helmet/mime
+	name = "Plasmaman Mime Helmet"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/mime/plasmaman_mime_helmet.json'
+
+/datum/greyscale_config/plasmaman_helmet/worn/mime
+	name = "Plasmaman Mime Helmet (Worn)"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/mime/plasmaman_mime_helmet_worn.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_left/mime
+	name = "Plasmaman Mime Helmet (Held), Left"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/mime/plasmaman_mime_helmet_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_helmet/inhand_right/mime
+	name = "Plasmaman Mime Helmet (Held), Right"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/helmet/mime/plasmaman_mime_helmet_inhand_right.json'
+
+// Suit
+
+/datum/greyscale_config/plasmaman_suit
+	name = "Plasmaman Suit"
+	icon_file = 'icons/obj/clothing/under/plasmaman.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/default/plasmaman_suit.json'
+
+/datum/greyscale_config/plasmaman_suit/base //bases
+	name = "Plasmaman Suit Base"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/plasmaman_suit_base.json'
+
+/datum/greyscale_config/plasmaman_suit/worn
+	name = "Plasmaman Suit (Worn)"
+	icon_file = 'icons/mob/clothing/under/plasmaman.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/default/plasmaman_suit_worn.json'
+
+/datum/greyscale_config/plasmaman_suit/worn/base //bases
+	name = "Plasmaman Suit Base (Worn)"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/plasmaman_suit_base_worn.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_left
+	name = "Plasmaman Suit (Held), Left"
+	icon_file = 'icons/mob/inhands/clothing/plasmaman_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/default/plasmaman_suit_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_left/base //bases
+	name = "Plasmaman Suit Base (Held), Left"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/plasmaman_suit_base_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_right
+	name = "Plasmaman Suit (Held), Right"
+	icon_file = 'icons/mob/inhands/clothing/plasmaman_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/default/plasmaman_suit_inhand_right.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_right/base //bases
+	name = "Plasmaman Suit Base (Held), Right"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/plasmaman_suit_base_inhand_right.json'
+
+// Sleek
+
+/datum/greyscale_config/plasmaman_suit/sleek // since i don't want to extend the file more its being set by icon state
+	name = "Plasmaman Suit (Sleek)"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/sleek/plasmaman_suit_sleek.json'
+
+/datum/greyscale_config/plasmaman_suit/worn/sleek
+	name = "Plasmaman Suit (Sleek) (Worn)"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/sleek/plasmaman_suit_sleek_worn.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_left/sleek
+	name = "Plasmaman Suit (Sleek) (Held), Left"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/sleek/plasmaman_suit_sleek_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_right/sleek
+	name = "Plasmaman Suit (Sleek) (Held), Right"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/sleek/plasmaman_suit_sleek_inhand_right.json'
+
+// Symbols (Cross, Engi, Medal)
+
+/datum/greyscale_config/plasmaman_suit/symbol //symbol defined by icon state
+	name = "Plasmaman Suit (Symbols)"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/symbols/plasmaman_suit_symbols.json'
+
+/datum/greyscale_config/plasmaman_suit/worn/symbol
+	name = "Plasmaman Suit (Symbols) (Worn)"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/symbols/plasmaman_suit_symbols_worn.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_left/symbol
+	name = "Plasmaman Suit (Symbols) (Held), Left"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/symbols/plasmaman_suit_symbols_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_right/symbol
+	name = "Plasmaman Suit (Symbols) (Held), Right"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/symbols/plasmaman_suit_symbols_inhand_right.json'
+
+// Threate Jobs
+
+/datum/greyscale_config/plasmaman_suit/clown
+	name = "Plasmaman Clown Suit"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/clown/plasmaman_clown_suit.json'
+
+/datum/greyscale_config/plasmaman_suit/worn/clown
+	name = "Plasmaman Clown Suit (Worn)"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/clown/plasmaman_clown_suit_worn.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_left/clown
+	name = "Plasmaman Clown Suit (Held), Left"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/clown/plasmaman_clown_suit_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_right/clown
+	name = "Plasmaman Clown Suit (Held), Right"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/clown/plasmaman_clown_suit_inhand_right.json'
+
+/datum/greyscale_config/plasmaman_suit/mime
+	name = "Plasmaman Mime Suit"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/mime/plasmaman_mime_suit.json'
+
+/datum/greyscale_config/plasmaman_suit/worn/mime
+	name = "Plasmaman Mime Suit (Worn)"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/mime/plasmaman_mime_suit_worn.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_left/mime
+	name = "Plasmaman Mime Suit (Held), Left"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/mime/plasmaman_mime_suit_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_right/mime
+	name = "Plasmaman Mime Suit (Held), Right"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/mime/plasmaman_mime_suit_inhand_right.json'
+
+// Striped (HoS, Para, Jani, Warden, Chef)
+
+/datum/greyscale_config/plasmaman_suit/striped
+	name = "Plasmaman Suit Striped"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/striped/plasmaman_suit_striped.json'
+
+/datum/greyscale_config/plasmaman_suit/worn/striped
+	name = "Plasmaman Suit Striped (Worn)"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/striped/plasmaman_suit_striped_worn.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_left/striped
+	name = "Plasmaman Suit Striped (Held), Left"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/striped/plasmaman_suit_striped_inhand_left.json'
+
+/datum/greyscale_config/plasmaman_suit/inhand_right/striped
+	name = "Plasmaman Suit Striped (Held), Right"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/striped/plasmaman_suit_striped_inhand_right.json'
+
+// Double Belt
+
+/datum/greyscale_config/plasmaman_suit/doublebelt
+	name = "Plasmaman Double Belt Suit"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/doublebelt/plasmaman_suit_doublebelt.json'
+
+/datum/greyscale_config/plasmaman_suit/worn/doublebelt
+	name = "Plasmaman Double Belt Suit (Worn)"
+	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/doublebelt/plasmaman_suit_doublebelt_worn.json'

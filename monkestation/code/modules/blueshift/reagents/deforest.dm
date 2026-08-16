@@ -324,8 +324,6 @@
 				span_danger("You suddenly snap back to normal speeds. You feel like you've just been run over by a power loader.")
 			)
 		our_guy.stamina.adjust(-constant_dose_time)
-		if(!HAS_TRAIT(our_guy, TRAIT_TWITCH_ADAPTED))
-			our_guy.adjustOrganLoss(ORGAN_SLOT_HEART, 0.3 * constant_dose_time) // Basically you might die
 
 	if(!our_guy.hud_used)
 		return
@@ -483,6 +481,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/dinitrogen_plasmide/on_mob_life(mob/living/carbon/our_guy, seconds_per_tick, times_fired)
+	. = ..()
 	if((our_guy.mob_biotypes & MOB_ROBOTIC))
 		var/cooling = 50 * REM * seconds_per_tick
 		our_guy.reagents?.chem_temp -= cooling

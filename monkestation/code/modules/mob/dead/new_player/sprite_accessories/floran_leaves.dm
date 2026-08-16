@@ -1,5 +1,5 @@
 /datum/sprite_accessory/floran_leaves
-	icon = 'monkestation/icons/mob/species/floran/floran_leaves.dmi'
+	icon = 'icons/mob/species/floran/floran_leaves.dmi'
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR_SECONDARY
 	fallback_key = MUTANT_COLOR

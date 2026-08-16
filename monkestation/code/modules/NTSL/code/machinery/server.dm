@@ -56,7 +56,7 @@
 	///The character count of the code being compiled
 	var/code_length = length(rawcode)
 
-	if(is_banned_from(user.ckey, JOB_SIGNAL_TECHNICIAN))
+	if(is_banned_from(user.ckey, JOB_NETWORK_ADMIN) || is_banned_from(user.ckey, JOB_SIGNAL_TECHNICIAN))
 		to_chat(user, span_warning("You are banned from using NTSL."))
 		return "Unauthorized access."
 	if(QDELETED(Compiler))

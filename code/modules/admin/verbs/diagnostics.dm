@@ -1,9 +1,9 @@
-ADMIN_VERB_VISIBILITY(debug_air_status, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(debug_air_status, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(debug_air_status, R_DEBUG, FALSE, "Debug Air Status" , ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, turf/target in world)
 	atmos_scan(user.mob, target, silent = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Show Air Status")
 
-ADMIN_VERB_VISIBILITY(fix_next_move, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(fix_next_move, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(fix_next_move, R_DEBUG, FALSE, "Fix Next Move", "Unfreezes all frozen mobs.", ADMIN_CATEGORY_DEBUG)
 	var/largest_move_time = 0
 	var/largest_click_time = 0
@@ -30,7 +30,7 @@ ADMIN_VERB(fix_next_move, R_DEBUG, FALSE, "Fix Next Move", "Unfreezes all frozen
 	message_admins("world.time = [world.time]")
 	BLACKBOX_LOG_ADMIN_VERB("Unfreeze Everyone")
 
-ADMIN_VERB_VISIBILITY(radio_report, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB_VISIBILITY(radio_report, ADMIN_VERB_VISIBILITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(radio_report, R_DEBUG, FALSE, "Radio Report", "Shows a report of all radio devices and their filters.", ADMIN_CATEGORY_DEBUG)
 	var/output = "<b>Radio Report</b><hr>"
 	for (var/fq in SSradio.frequencies)
@@ -92,3 +92,25 @@ ADMIN_VERB(toggle_cdn, R_SERVER | R_DEBUG, FALSE, "Toggle CDN", "Toggles the CDN
 		SSassets.OnConfigLoad()
 		message_admins("[key_name_admin(user)] disabled the CDN asset transport")
 		log_admin("[key_name(user)] disabled the CDN asset transport")
+
+//Admin verb for reloading mentors
+ADMIN_VERB(reload_mentors, R_NONE, FALSE, "Reload Mentors", "Reloads all mentors from the database.", ADMIN_CATEGORY_MAIN)
+	var/confirm = tgui_alert(usr, "Are you sure you want to reload all mentors?", "Confirm", list("Yes", "No"))
+	if(confirm != "Yes")
+		return
+
+	load_mentors()
+	MentorizeAdmins()
+	BLACKBOX_LOG_ADMIN_VERB("Reload All Mentors")
+	message_admins("[key_name_admin(usr)] manually reloaded mentors")
+
+//Mentor verb for reloading mentors
+MENTOR_VERB(mreload_mentors, R_HEADMENTOR, FALSE, "Reload Mentors(M)", "Reloads all mentors from the database.", MENTOR_CATEGORY_MAIN)
+	var/confirm = tgui_alert(user, "Are you sure you want to reload all mentors?", "Confirm", list("Yes", "No"))
+	if(confirm != "Yes")
+		return
+
+	load_mentors()
+	MentorizeAdmins()
+	BLACKBOX_LOG_MENTOR_VERB("Reload All Mentors")
+	message_admins("[key_name_mentor(user)] manually reloaded admins")

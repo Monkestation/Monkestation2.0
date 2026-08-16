@@ -18,9 +18,9 @@
 		'icons/obj/smooth_structures/catwalk.dmi' = list("catwalk-0"),
 		'icons/hud/radial.dmi' = list("cnorth", "csouth", "ceast", "cwest", "chair", "secure_windoor", "stool", "wallfloor", "windowsize", "windowtype", "windoor"),
 		'icons/obj/structures.dmi' = list("glass_table", "rack", "reflector_base", "table", "girder"),
-		'monkestation/icons/obj/structures/window/window.dmi' = list("window-0"),
-		'monkestation/icons/obj/structures/window/reinforced_window.dmi' = list("reinforced_window-0"),
-		'monkestation/icons/obj/structures/window/window_sill.dmi' = list("window_sill-0"),
+		'icons/obj/structures/window/window.dmi' = list("window-0"),
+		'icons/obj/structures/window/reinforced_window.dmi' = list("reinforced_window-0"),
+		'icons/obj/structures/window/window_sill.dmi' = list("window_sill-0"),
 	)
 
 	var/datum/universal_icon/icon
@@ -29,7 +29,7 @@
 			icon = uni_icon(icon_file, icon_state)
 			if(icon_state == "window-0" || icon_state == "reinforced_window-0")
 				icon.blend_color("#305a6d", ICON_MULTIPLY)
-				icon.blend_icon(uni_icon('monkestation/icons/obj/structures/window/grille.dmi', "grille-0"), ICON_UNDERLAY)
+				icon.blend_icon(uni_icon('icons/obj/structures/window/grille.dmi', "grille-0"), ICON_UNDERLAY)
 			insert_icon(sanitize_css_class_name(icon_state), icon)
 
 	//for each airlock type we create its overlayed version with the suffix Glass in the sprite name

@@ -4,8 +4,8 @@
 	icon = 'icons/obj/weapons/guns/redeemer.dmi'
 	icon_state = "redeemer"
 	inhand_icon_state = "redeemer"
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	base_pixel_x = -8
 	pixel_x = -8
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -71,7 +71,7 @@
 	name = "bloodsilver casing"
 	desc = "A bloodsilver bullet casing."
 	icon_state = "redeemer"
-	icon = 'monkestation/icons/obj/guns/ammo.dmi'
+	icon = 'icons/obj/guns/ammo.dmi'
 	projectile_type = /obj/projectile/bullet/bloodsilver
 	caliber = CALIBER_BLOODSILVER
 
@@ -154,5 +154,5 @@
 /atom/movable/screen/alert/status_effect/silver_bullet
 	name = "Bloodsilver Curse"
 	desc = "Your powers have been suppressed by an otherworldly beast!"
-	icon = 'monkestation/icons/hud/screen_alert.dmi'
+	icon = 'icons/hud/screen_alert.dmi'
 	icon_state = "wonderland"

@@ -110,7 +110,6 @@
 		notify_ghosts(
 			"[src] is ready to hatch!",
 			source = src,
-			action = NOTIFY_PLAY,
 			ignore_key = POLL_IGNORE_SPIDER,
 			notify_flags = notify_flags_to_pass,
 		)

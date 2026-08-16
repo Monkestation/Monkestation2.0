@@ -88,6 +88,8 @@
 		speaker.log_message("made a vocal announcement with the following message: [message].", LOG_GAME)
 		speaker.log_talk(message, LOG_SAY, tag = "VOX Announcement")
 		minor_announce(capitalize(message), "[name_override || default_name(speaker)] announces:", should_play_sound = FALSE)
+		if(istype(speaker.loc, /obj/machinery/ai/data_core))
+			origin_turf = speaker.loc
 	if(isnull(check_hearing))
 		check_hearing = src.check_hearing
 	if(isnull(origin_turf))
@@ -103,7 +105,7 @@
 
 /datum/vox_holder/proc/split_into_words(message)
 	. = list()
-	var/trimmed_message = trimtext(lowertext(message))
+	var/trimmed_message = trimtext(LOWER_TEXT(message))
 	for(var/word in splittext_char(trimmed_message, " "))
 		word = trimtext(word)
 		if(word)

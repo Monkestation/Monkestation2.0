@@ -167,7 +167,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
           <>
             <Input
               fluid
-              maxLength={25}
+              maxLength={38}
               onEscape={() => setEditing(false)}
               onEnter={(value) => {
                 setEditing(false);
@@ -245,7 +245,7 @@ const CrimeAuthor = (props) => {
         Name
         <Input
           fluid
-          maxLength={25}
+          maxLength={38}
           onChange={(value) => setCrimeName(value)}
           placeholder="Brief overview"
         />

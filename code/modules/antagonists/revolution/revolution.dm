@@ -567,7 +567,7 @@
 	var/extra_detail = try_auto_call_shuttle() \
 		? "For the safety of our staff, we are expediting an emergency shuttle for remaining members of security and command." \
 		: "For the safety of our staff, we have blacklisted your station for new employment of security and command."
-	var/propaganda = pick(world.file2list("strings/anti_union_propaganda.txt"))
+	var/propaganda = pick(file2list("strings/anti_union_propaganda.txt"))
 
 	priority_announce(
 		"[message_header]\n\n[extra_detail]\n\n[propaganda]",

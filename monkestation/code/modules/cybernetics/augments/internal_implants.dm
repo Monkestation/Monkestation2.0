@@ -57,6 +57,9 @@
 		for(var/obj/item/held_item as anything in owner.held_items)
 			if(!held_item)
 				continue
+			if (held_item.type in ANTI_DROP_BLACKLIST())
+				to_chat(owner, span_notice("You can't seem to get a good grip on the [held_item]."))
+				continue
 			stored_items += held_item
 			to_chat(owner, span_notice("Your [owner.get_held_index_name(owner.get_held_index_of_item(held_item))]'s grip tightens."))
 			ADD_TRAIT(held_item, TRAIT_NODROP, IMPLANT_TRAIT)
@@ -177,6 +180,11 @@
 	if(prob(60/severity))
 		to_chat(owner, span_warning("Your breathing tube suddenly closes!"))
 		owner.losebreath += 2
+
+/obj/item/organ/internal/cyberimp/mouth/breathing_tube/simple
+	name = "simple breathing tube implant"
+	desc = "This simple implant adds an internals connector to your back, allowing you to use internals without a mask."
+	organ_traits = list()
 
 //BOX O' IMPLANTS
 

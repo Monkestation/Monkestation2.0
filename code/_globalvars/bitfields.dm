@@ -16,6 +16,29 @@ GLOBAL_LIST_INIT(bitfields, generate_bitfields())
 		bitfields[bitfield.variable] = bitfield.flags
 	return bitfields
 
+/// Returns an associative list of bitflag name -> number for all valid bitflags in the passed in field
+/proc/get_valid_bitflags(var_name)
+	return GLOB.bitfields[var_name] || list()
+
+/proc/get_random_bitflag(var_name)
+	var/list/flags = get_valid_bitflags(var_name)
+	if(!length(flags))
+		return
+	var/name = pick(flags)
+	return flags[name]
+
+/// Returns null if no such field exists, a list of all matching flags by name otherwise
+/proc/get_matching_bitflags(var_name, value)
+	var/list/valid_bitflags = get_valid_bitflags(var_name)
+	if(!length(valid_bitflags))
+		return null
+
+	var/list/flags = list()
+	for (var/bit_name in valid_bitflags)
+		if (value & valid_bitflags[bit_name])
+			flags += bit_name
+	return flags
+
 DEFINE_BITFIELD(appearance_flags, list(
 	"KEEP_APART" = KEEP_APART,
 	"KEEP_TOGETHER" = KEEP_TOGETHER,
@@ -87,6 +110,7 @@ DEFINE_BITFIELD(clothing_flags, list(
 	"VOICEBOX_DISABLED" = VOICEBOX_DISABLED,
 	"VOICEBOX_TOGGLABLE" = VOICEBOX_TOGGLABLE,
 	"BLOCKS_FIBERS" = BLOCKS_FIBERS,
+	"STERILE" = STERILE,
 ))
 
 DEFINE_BITFIELD(datum_flags, list(
@@ -192,6 +216,7 @@ DEFINE_BITFIELD(flags_inv, list(
 	"HIDEHEADGEAR" = HIDEHEADGEAR,
 	"HIDEJUMPSUIT" = HIDEJUMPSUIT,
 	"HIDEMASK" = HIDEMASK,
+	"HIDETAIL" = HIDETAIL,
 	"HIDEMUTWINGS" = HIDEMUTWINGS,
 	"HIDENECK" = HIDENECK,
 	"HIDESHOES" = HIDESHOES,
@@ -239,6 +264,7 @@ DEFINE_BITFIELD(mob_biotypes, list(
 	"MOB_ORGANIC" = MOB_ORGANIC,
 	"MOB_REPTILE" = MOB_REPTILE,
 	"MOB_ROBOTIC" = MOB_ROBOTIC,
+	"MOB_SLIME" = MOB_SLIME,
 	"MOB_SPIRIT" = MOB_SPIRIT,
 	"MOB_UNDEAD" = MOB_UNDEAD,
 	"MOB_PLANT" = MOB_PLANT
@@ -495,7 +521,7 @@ DEFINE_BITFIELD(organ_flags, list(
 	"ORGAN_VITAL" = ORGAN_VITAL,
 	"ORGAN_EDIBLE" = ORGAN_EDIBLE,
 	"ORGAN_UNREMOVABLE" = ORGAN_UNREMOVABLE,
-	"ORGAN_HIDDEN" = ORGAN_HIDDEN, //Monkestation edit: BLOOD_DATUMS, how was this forgotten
+	"ORGAN_HIDDEN" = ORGAN_HIDDEN,
 	"ORGAN_PROMINENT" = ORGAN_PROMINENT,
 	"ORGAN_HAZARDOUS" = ORGAN_HAZARDOUS,
 ))
@@ -520,4 +546,4 @@ DEFINE_BITFIELD(physics_flags, list(
 	"MPHYSICS_QDEL_WHEN_NO_MOVEMENT" = MPHYSICS_QDEL_WHEN_NO_MOVEMENT,
 	"MPHYSICS_MOVING" = MPHYSICS_MOVING,
 	"MPHYSICS_PAUSED" = MPHYSICS_PAUSED,
-))  //Monkestation EDIT PHYSICS
+))

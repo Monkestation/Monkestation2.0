@@ -74,14 +74,16 @@
 		"computer_id" = interview.owner?.computer_id,
 	))
 
-/datum/controller/subsystem/plexora/proc/check_byondserver_status(id)
-	if (isnull(id)) return
+// Check status by id or game port
+/datum/controller/subsystem/plexora/proc/check_byondserver_status(id, port)
+	if (isnull(id) && isnull(port)) return
 
 	var/list/body = list(
-		"id" = id
+		"id" = id,
+		"port" = port,
 	)
 
-	var/datum/http_request/request = new(RUSTG_HTTP_METHOD_GET, "[base_url]/byondserver_alive", json_encode(body), default_headers)
+	var/datum/http_request/request = new(RUSTG_HTTP_METHOD_POST, "[base_url]/byondserver_alive", json_encode(body), default_headers)
 	request.begin_async()
 	UNTIL_OR_TIMEOUT(request.is_complete(), 5 SECONDS)
 	var/datum/http_response/response = request.into_response()

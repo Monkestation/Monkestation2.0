@@ -74,29 +74,16 @@
 	return src
 
 /mob/proc/AIize(client/preference_source, move = TRUE)
-	var/list/turf/landmark_loc = list()
+	var/valid_core = FALSE
+	for(var/obj/machinery/ai/data_core/core in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ai/data_core))
+		if(core.valid_data_core(src) && is_station_level(core.z) && !QDELETED(core))
+			valid_core = TRUE
+			break
 
-	if(!move)
-		landmark_loc += loc
-	else
-		for(var/obj/effect/landmark/start/ai/sloc in GLOB.landmarks_list)
-			if(locate(/mob/living/silicon/ai) in sloc.loc)
-				continue
-			if(sloc.primary_ai)
-				LAZYCLEARLIST(landmark_loc)
-				landmark_loc += sloc.loc
-				break
-			landmark_loc += sloc.loc
-		if(!length(landmark_loc))
-			to_chat(src, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
-			for(var/obj/effect/landmark/start/ai/sloc in GLOB.landmarks_list)
-				landmark_loc += sloc.loc
+	if(!valid_core)
+		message_admins("No valid data core for [src]. Yell at a mapper! The AI will die.")
 
-	if(!length(landmark_loc))
-		message_admins("Could not find ai landmark for [src]. Yell at a mapper! We are spawning them at their current location.")
-		landmark_loc += loc
-
-	var/mob/living/silicon/ai/our_AI = new /mob/living/silicon/ai(pick(landmark_loc), null, src)
+	var/mob/living/silicon/ai/our_AI = new /mob/living/silicon/ai(loc, null, src)
 	. = our_AI
 
 	if(preference_source)
@@ -277,6 +264,22 @@
 	to_chat(new_corgi, span_boldnotice("You are now a Corgi. Yap Yap!"))
 	qdel(src)
 	return new_corgi
+
+///Transforms cockroach mob into romch.
+/mob/living/basic/cockroach/proc/romchifize()
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+		return
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
+	Paralyze(0.1 SECONDS, ignore_canstun = TRUE)
+	icon = null
+	invisibility = INVISIBILITY_MAXIMUM
+	var/mob/living/basic/pet/eris_romch/romch = new(get_turf(src))
+	if(mind)
+		mind.transfer_to(romch)
+	else
+		romch.PossessByPlayer(key)
+	qdel(src)
+	return romch
 
 /mob/living/carbon/proc/gorillize()
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
