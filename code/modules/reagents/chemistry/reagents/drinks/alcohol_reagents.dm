@@ -3232,10 +3232,8 @@
 	var/obj/item/organ/internal/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(HAS_TRAIT(liver, TRAIT_BARTENDER_METABOLISM))
 		drinker.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 1 * REM * seconds_per_tick, updating_health = FALSE)
-		. = TRUE
-	else
-		drinker.adjust_disgust(2 * REM * seconds_per_tick)
-	return ..()
+		return TRUE
+	drinker.adjust_disgust(2 * REM * seconds_per_tick)
 
 /datum/reagent/consumable/ethanol/brandy_crusta
 	name = "Brandy Crusta"
