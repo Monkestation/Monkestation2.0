@@ -38,13 +38,3 @@
 	)
 	radio_channels = list(RADIO_CHANNEL_SUPPLY)
 	traits = list(TRAIT_CAN_CLIMB_DISPOSALS)
-
-/obj/item/robot_model/cargo/on_cyborg_recharge(datum/source, amount, repairs, sendmats)
-	. = ..()
-	var/power_coeff = amount / (200 JOULES)
-	var/obj/item/cargo_teleporter/teleporter_module = locate() in usable_modules
-	if(!teleporter_module)
-		return
-	teleporter_module.charges = min(teleporter_module.charges + power_coeff, teleporter_module.max_charges)
-	if(QDELETED(teleporter_module.my_fulton))
-		teleporter_module.my_fulton = new(teleporter_module)
