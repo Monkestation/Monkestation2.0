@@ -508,6 +508,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 			case.imp = curimplant
 			curimplant.forceMove(case) //Recase implant it doesn't like to be moved without it.
 			case.update_appearance()
+			SEND_SIGNAL(curimplant, COMSIG_IMPLANT_CASED)
 			process_and_store_item(case, victim)
 
 	for(var/obj/item/organ/organ in victim.organs) // Process and store organ implants and related organs

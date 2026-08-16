@@ -73,3 +73,4 @@ ADMIN_VERB(manipulate_organs, R_DEBUG, FALSE, "Manipulate Organs", "Manipulate t
 				case.imp = I
 				I.forceMove(case)
 				case.update_appearance()
+				SEND_SIGNAL(I, COMSIG_IMPLANT_CASED)

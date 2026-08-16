@@ -52,7 +52,9 @@
 	var/obj/item/implant/radio/radio = new(owner)
 	radio.implant(owner, null, TRUE, TRUE)
 	radio_weakref = WEAKREF(radio)
+	RegisterSignal(radio_weakref.resolve(), COMSIG_IMPLANT_REMOVED, PROC_REF(implant_loss))
 	check_if_augmented()
+
 /obj/item/organ/internal/brain/cybernetic/ai/Remove(mob/living/carbon/organ_owner, special, movement_flags)
 	GLOB.available_ai_shells -= owner
 	if(last_connected_ai)
@@ -210,12 +212,40 @@
 		if(!(carb_owner in GLOB.available_ai_shells))
 			GLOB.available_ai_shells |= carb_owner
 
-/// Is called when any organs are added&removed after uplink is inserted
+/* Is called if the radio implant is removed or deleted after brain insertion.
+*
+* If it is deleted, return.
+* If it is removed from owner, wait until it is in an implantcase
+*/
+/obj/item/organ/internal/brain/cybernetic/ai/proc/implant_loss(datum/source)
+// To handle deleting properly, we need to wait until implant is cased, so we will set RegisterSignal
+	SIGNAL_HANDLER
+	var/obj/item/implant/radio/implant = radio_weakref.resolve()
+	if(!radio_weakref) // if it is already deleted
+		return
+	UnregisterSignal(implant, COMSIG_IMPLANT_REMOVED)
+	if(implant in owner.implants)
+		return
+	RegisterSignal(implant, COMSIG_IMPLANT_CASED, PROC_REF(qdel_implant)) // If it is not being deleted, it will register until implant is moved to an implant case.
+
+/// When the implant case is dropped, creates spark effects & deletes it.
+/obj/item/organ/internal/brain/cybernetic/ai/proc/qdel_implant(datum/source, silent = FALSE, special = 0)
+	SIGNAL_HANDLER
+	var/obj/item/implantcase/implantcase = radio_weakref.resolve().loc
+	if(implantcase)
+		to_chat(owner, span_hear("You feel a tiny jolt from inside of you as your internal radio is removed."))
+		implantcase.visible_message(span_warning("[implantcase] bursts into sparks!"))
+		do_sparks(number = 2, cardinal_only = FALSE, source = owner)
+		qdel(implantcase)
+	UnregisterSignal(radio_weakref, COMSIG_IMPLANT_CASED)
+
+/// Is called when any organs are added & removed after uplink is inserted
 /obj/item/organ/internal/brain/cybernetic/ai/proc/on_organ_gain(datum/source, obj/item/organ/new_organ, special)
 	SIGNAL_HANDLER
 	if(!check_if_augmented())
 		to_chat(owner, span_danger("Connection failure. Organic organs detected."))
 		undeploy()
+
 /// Is called when AI cannot control the shell
 /obj/item/organ/internal/brain/cybernetic/ai/proc/ai_deleted(datum/source)
 	SIGNAL_HANDLER

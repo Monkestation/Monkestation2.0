@@ -74,6 +74,7 @@
 			case.imp = implant
 			implant.forceMove(case)
 			case.update_appearance()
+			SEND_SIGNAL(implant, COMSIG_IMPLANT_CASED)
 			display_results(
 				user,
 				target,
