@@ -3218,7 +3218,6 @@
 	taste_description = "nutty sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-
 /datum/reagent/consumable/ethanol/bartenders_handshake
 	name = "Bartender's Handshake"
 	description = "A tradition of somewhat inconsistent providence, possibly linked to an obscure challenge-coin-based marketing scheme, this drink is a way for bartenders to greet and test each other's mettle via a drink that only a fellow barkeep could appreciate. While there are nearly as many versions of this drink as there are bars, this version tests one's palate by combining two of the most bitter ingredients you're likely to find in a bar."
@@ -3233,8 +3232,11 @@
 	var/obj/item/organ/internal/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(HAS_TRAIT(liver, TRAIT_BARTENDER_METABOLISM))
 		drinker.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 1 * REM * seconds_per_tick, updating_health = FALSE)
+		. = TRUE
 	else
 		drinker.adjust_disgust(2 * REM * seconds_per_tick)
+		. = TRUE
+	return ..()
 
 /datum/reagent/consumable/ethanol/brandy_crusta
 	name = "Brandy Crusta"
@@ -3332,7 +3334,6 @@
 /datum/reagent/consumable/ethanol/negroni/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
 	drinker.overeatduration = max(drinker.overeatduration - (2 SECONDS), 0)
-
 
 /datum/reagent/consumable/ethanol/nuclear_daiquiri
 	name = "Nuclear daiquiri"

@@ -1287,3 +1287,4 @@
 /datum/reagent/consumable/ethanol/bitters_soda/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	affected_mob.adjust_disgust(-5 * REM * seconds_per_tick)
+	return ..()
