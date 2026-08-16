@@ -97,9 +97,9 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	if(charges <= 0)
 		balloon_alert(user, "no charges left!")
 		return ITEM_INTERACT_BLOCKING
-	if(my_fulton.interact_with_atom(interacting_with, user, modifiers) == ITEM_INTERACT_SUCCESS)
+	. = my_fulton.interact_with_atom(interacting_with, user, modifiers)
+	if(. == ITEM_INTERACT_SUCCESS)
 		charges--
-		return ITEM_INTERACT_SUCCESS
 
 /obj/item/cargo_teleporter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/extraction_pack))
