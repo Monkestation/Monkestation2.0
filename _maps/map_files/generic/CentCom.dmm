@@ -20742,7 +20742,7 @@
 	dir = 1
 	},
 /obj/structure/noticeboard/directional/north,
-/obj/machinery/disease2/diseaseanalyser/fullupgrade,
+/obj/machinery/pathology/disease_analyser/fullupgrade,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "cTB" = (
@@ -28118,14 +28118,14 @@
 /turf/open/floor/iron/checker,
 /area/centcom/central_command_areas/adminroom)
 "oZc" = (
-/obj/machinery/disease2/incubator,
+/obj/machinery/pathology/incubator,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
-/obj/item/weapon/virusdish/random,
-/obj/item/weapon/virusdish/random,
-/obj/item/weapon/virusdish/random,
-/obj/item/weapon/virusdish/random,
+/obj/item/virus_dish/random,
+/obj/item/virus_dish/random,
+/obj/item/virus_dish/random,
+/obj/item/virus_dish/random,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "oZg" = (

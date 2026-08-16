@@ -17,7 +17,7 @@
 	do_disease_transformation(mob, new_form)
 
 /*
-/datum/symptom/transformation/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
+/datum/symptom/transformation/deactivate(mob/living/carbon/mob, datum/disease/disease, safe = FALSE)
 	do_disease_transformation(mob, old_form)
 	to_chat(mob, span_notice("You feel like yourself again!"))
 */
@@ -124,7 +124,7 @@
 	restricted = TRUE
 	max_multiplier = 4
 
-/datum/symptom/anxiety/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/anxiety/activate(mob/living/carbon/mob, datum/disease/disease)
 
 	switch(round(multiplier, 1))
 		if(2) //also changes say, see say.dm
@@ -163,7 +163,7 @@
 	chance = 25
 	max_chance = 25
 
-/datum/symptom/death_sandwich/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/death_sandwich/activate(mob/living/carbon/mob, datum/disease/disease)
 	switch(round(multiplier))
 		if(1)
 			if(prob(12))

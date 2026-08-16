@@ -103,7 +103,7 @@ ADMIN_VERB(secrets, R_NONE, FALSE, "Secrets", "Abuse harder than you ever have b
 						continue
 					if(!length(living.diseases))
 						continue
-					for(var/datum/disease/acute/disease as anything in living.diseases)
+					for(var/datum/disease/disease as anything in living.diseases)
 						disease.cure(target = living, safe = TRUE)
 
 		if("list_bombers")
@@ -209,8 +209,8 @@ ADMIN_VERB(secrets, R_NONE, FALSE, "Secrets", "Abuse harder than you ever have b
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Virus Outbreak"))
 			switch(tgui_alert(usr,"Do you want this to be a random disease or do you have something in mind?",,list("Make Your Own","Random","Choose")))
-				if("Make Your Own")
-					AdminCreateVirus(holder)
+				//if("Make Your Own")
+				//	AdminCreateVirus(holder)
 				if("Random")
 					force_event(/datum/round_event_control/disease_outbreak)
 				if("Choose")

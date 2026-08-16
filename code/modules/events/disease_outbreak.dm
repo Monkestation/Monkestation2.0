@@ -142,10 +142,10 @@
 		EFFECT_DANGER_HARMFUL	= 0,
 		EFFECT_DANGER_DEADLY	= 0,
 		)
-	var/datum/disease/acute/new_disease = new virus_choice
+	var/datum/disease/new_disease = new virus_choice
 	new_disease.makerandom(list(30,60),list(50,100),anti,bad,src)
 	new_disease.carrier = TRUE
-	new_disease.Refresh_Acute()
+	new_disease.Refresh()
 	illness_type = new_disease.name
 
 	var/mob/living/carbon/human/victim
@@ -253,9 +253,9 @@
 		EFFECT_DANGER_HARMFUL	= 3,
 		EFFECT_DANGER_DEADLY	= 0,
 		)
-	var/datum/disease/acute/new_disease = new virus_choice
+	var/datum/disease/new_disease = new virus_choice
 	new_disease.makerandom(list(50,90),list(50,100),anti,bad,src)
-	new_disease.Refresh_Acute()
+	new_disease.Refresh()
 
 	var/mob/living/carbon/human/victim
 	while(length(afflicted))

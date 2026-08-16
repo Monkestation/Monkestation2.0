@@ -26,7 +26,7 @@ Bonus
 	badness = EFFECT_DANGER_DEADLY
 	var/zombie = FALSE
 
-/datum/symptom/flesh_death/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/flesh_death/activate(mob/living/carbon/mob, datum/disease/disease)
 	if(HAS_TRAIT(mob, TRAIT_NO_ZOMBIFY)) //These are the zombie symtomps. Best not to kill the zombies with them
 		return
 	switch(disease.stage)
@@ -38,7 +38,7 @@ Bonus
 				to_chat(mob, span_userdanger("[pick("You feel your muscles weakening.", "Some of your skin detaches itself.", "You feel sandy.")]"))
 			Flesh_death(mob, disease)
 
-/datum/symptom/flesh_death/proc/Flesh_death(mob/living/mob, datum/disease/acute/disease)
+/datum/symptom/flesh_death/proc/Flesh_death(mob/living/mob, datum/disease/disease)
 	var/get_damage = rand(6,10)
 	mob.take_overall_damage(brute = get_damage)
 	if(round(multiplier) == 2 && mob.reagents)

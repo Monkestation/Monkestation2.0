@@ -19,7 +19,7 @@
 	if(O.flags_1 & HOLOGRAM_1)
 		return FALSE
 	if(isvirusdish(O))
-		var/obj/item/weapon/virusdish/dish = O
+		var/obj/item/virus_dish/dish = O
 		if(accepts_virus(dish.contained_virus))
 			return TRUE
 	return FALSE

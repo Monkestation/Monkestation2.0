@@ -951,7 +951,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			if(7)
 				to_chat(src, span_notice("Oh, I actually feel quite alright!"))
 				infect_disease_predefined(DISEASE_DECLONING, TRUE, "[ROUND_TIME()] Infected by DNA Instability")
-				//ForceContractDisease(new/datum/disease/decloning()) //slow acting, non-viral clone damage based GBS
 			if(8)
 				var/list/elligible_organs = list()
 				for(var/obj/item/organ/internal/internal_organ in organs) //make sure we dont get an implant or cavity item
@@ -965,7 +964,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 					if(prob(20))
 						O.animate_atom_living()
 			if(9 to 10)
-				//ForceContractDisease(new/datum/disease/gastrolosis())
+				infect_disease_predefined(DISEASE_SNAIL, TRUE, "[ROUND_TIME()] Infected by DNA Instability")
 				to_chat(src, span_notice("Oh, I actually feel quite alright!"))
 	else
 		switch(rand(0,6))
