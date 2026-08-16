@@ -20,7 +20,7 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 /obj/item/cargo_teleporter/Initialize(mapload)
 	. = ..()
 	my_fulton = new(src)
-	my_fulton.uses_left = INFINITY
+	my_fulton.uses_left = INFINITY // No need to worry about the fulton deleting itself if it has infinite uses.
 
 /obj/item/cargo_teleporter/examine(mob/user)
 	. = ..()
