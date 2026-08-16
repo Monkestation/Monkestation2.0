@@ -231,7 +231,8 @@
 /// When the implant case is dropped, creates spark effects & deletes it.
 /obj/item/organ/internal/brain/cybernetic/ai/proc/qdel_implant(datum/source, silent = FALSE, special = 0)
 	SIGNAL_HANDLER
-	var/obj/item/implantcase/implantcase = radio_weakref.resolve().loc
+	var/obj/item/implant/implant = radio_weakref?.resolve()
+	var/obj/item/implantcase/implantcase = implant?.loc
 	if(implantcase)
 		to_chat(owner, span_hear("You feel a tiny jolt from inside of you as your internal radio is removed."))
 		implantcase.visible_message(span_warning("[implantcase] bursts into sparks!"))
