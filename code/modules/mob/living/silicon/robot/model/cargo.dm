@@ -41,7 +41,7 @@
 
 /obj/item/robot_model/cargo/on_cyborg_recharge(datum/source, amount, repairs, sendmats)
 	. = ..()
-	var/power_coeff = amount / (200 KILO JOULES)
+	var/power_coeff = amount / (200 JOULES)
 	var/obj/item/cargo_teleporter/teleporter_module = locate() in usable_modules
 	if(!teleporter_module)
 		return
