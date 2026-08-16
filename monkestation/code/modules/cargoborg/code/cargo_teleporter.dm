@@ -97,8 +97,6 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	if(charges <= 0)
 		balloon_alert(user, "no charges left!")
 		return ITEM_INTERACT_BLOCKING
-	if(!my_fulton.beacon_ref?.resolve() && !my_fulton.choose_beacon(user)) // No beacon? Give them the chance to select one first.
-		return ITEM_INTERACT_BLOCKING
 	if(my_fulton.interact_with_atom(interacting_with, user, modifiers) == ITEM_INTERACT_SUCCESS)
 		charges--
 		return ITEM_INTERACT_SUCCESS
