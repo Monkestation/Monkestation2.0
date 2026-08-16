@@ -792,3 +792,6 @@
 
 /datum/config_entry/string/floxy_password
 	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
+
+/datum/config_entry/string/twitch_key
+	default = "changethisplease"
