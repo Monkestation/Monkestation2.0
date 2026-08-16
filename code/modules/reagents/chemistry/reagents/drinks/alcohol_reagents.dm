@@ -3235,7 +3235,6 @@
 		. = TRUE
 	else
 		drinker.adjust_disgust(2 * REM * seconds_per_tick)
-		. = TRUE
 	return ..()
 
 /datum/reagent/consumable/ethanol/brandy_crusta
