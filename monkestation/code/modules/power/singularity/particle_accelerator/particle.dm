@@ -94,3 +94,13 @@
 
 /mob/living/accelerated_particle_act(obj/effect/accelerated_particle/particle)
 	radiation_pulse(src, 1, 3, 0.5)
+
+// reflectors
+
+/obj/structure/reflector/accelerated_particle_act(obj/effect/accelerated_particle/particle)
+	particle.forceMove(get_turf(src))  // accelerated_particle_act is called when its ABOUT to hit, not when it actually enters its loc
+	particle.dir = angle2dir(rotation_angle) // 8 directions, change to cardinal if issues
+
+/obj/structure/reflector/box/accelerated_particle_act(obj/effect/accelerated_particle/particle)
+	particle.forceMove(get_turf(src)) // accelerated_particle_act is called when its ABOUT to hit, not when it actually enters its loc
+	particle.dir = angle2dir(rotation_angle) // 8 directions, change to cardinal if issues
