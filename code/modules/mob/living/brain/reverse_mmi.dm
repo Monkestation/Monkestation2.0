@@ -28,7 +28,7 @@
 
 /obj/item/organ/internal/brain/cybernetic/ai/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "eyes move with machine precision, their expression completely blank.")
+	AddElement(/datum/element/noticable_organ, "eyes move with machine precision, their expression completely blank.", BODY_ZONE_PRECISE_EYES)
 
 /obj/item/organ/internal/brain/cybernetic/ai/Destroy()
 	if(last_connected_ai)
