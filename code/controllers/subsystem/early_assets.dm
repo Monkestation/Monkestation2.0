@@ -5,15 +5,23 @@
 /// opened it up early.
 SUBSYSTEM_DEF(early_assets)
 	name = "Early Assets"
-	init_order = INIT_ORDER_EARLY_ASSETS
+	dependencies = list(
+		/datum/controller/subsystem/processing/reagents,
+		/datum/controller/subsystem/processing/greyscale,
+	)
+	dependents = list(
+		/datum/controller/subsystem/mapping,
+		/datum/controller/subsystem/atoms,
+	)
+	init_stage = INITSTAGE_EARLY
 	flags = SS_NO_FIRE
 
 /datum/controller/subsystem/early_assets/Initialize()
-	for (var/datum/asset/asset_type as anything in subtypesof(/datum/asset))
-		if (asset_type::_abstract == asset_type)
+	for(var/datum/asset/asset_type as anything in subtypesof(/datum/asset))
+		if(asset_type::_abstract == asset_type)
 			continue
 
-		if (!asset_type::early)
+		if(!asset_type::early)
 			continue
 
 		var/pre_init = REALTIMEOFDAY
@@ -21,7 +29,7 @@ SUBSYSTEM_DEF(early_assets)
 		var/typepath_readable = capitalize(replacetext(typepath_split[length(typepath_split)], "_", " "))
 
 		SStitle.add_init_text(asset_type, "> [typepath_readable]", "<font color='yellow'>CREATING...</font>")
-		if (load_asset_datum(asset_type))
+		if(load_asset_datum(asset_type))
 			var/time = (REALTIMEOFDAY - pre_init) / (1 SECONDS)
 			if(time <= 0.1)
 				SStitle.remove_init_text(asset_type)

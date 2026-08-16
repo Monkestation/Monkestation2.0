@@ -51,11 +51,11 @@
 	. = ..()
 	for(var/obj/item/usable_module in usable_modules)
 		if(istype(usable_module, /obj/item/reagent_containers/spray/cyborg_drying))
-			var/obj/item/reagent_containers/spray/cyborg_drying/drying_spray
+			var/obj/item/reagent_containers/spray/cyborg_drying/drying_spray = usable_module
 			drying_spray.reagents.add_reagent(/datum/reagent/drying_agent, 5 * coeff)
 			continue
 		if(istype(usable_module, /obj/item/reagent_containers/spray/cyborg_lube))
-			var/obj/item/reagent_containers/spray/cyborg_drying/lube_spray
+			var/obj/item/reagent_containers/spray/cyborg_lube/lube_spray = usable_module
 			lube_spray.reagents.add_reagent(/datum/reagent/lube, 2 * coeff)
 			continue
 

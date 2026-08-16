@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(credits)
 	name = "Credits Screen Storage"
 	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_CREDITS
+	init_stage = INITSTAGE_LAST
 
 	var/director = "Some monkey we found on the street"
 	var/list/disclaimers = list()
@@ -29,7 +29,8 @@ SUBSYSTEM_DEF(credits)
 
 /datum/controller/subsystem/credits/Initialize()
 	load_contributors()
-	generate_pref_images()
+	// This proc takes fucking FOREVER and is only used at round end we don't need to wait for it
+	INVOKE_ASYNC(src, PROC_REF(generate_pref_images))
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/credits/proc/generate_credits()

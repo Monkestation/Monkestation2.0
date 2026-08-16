@@ -1,15 +1,9 @@
-GLOBAL_LIST_INIT(jukebox_track_files, list("code/modules/cassettes/track_folder/base_tracks.json"))
-
-///Tracks are sorted by genre then by title inside that.
-/proc/cmp_media_track_asc(datum/media_track/A, datum/media_track/B)
-	var/genre_sort = sorttext(B.genre || "Uncategorized", A.genre || "Uncategorized")
-	return genre_sort || sorttext(B.title, A.title)
-
 SUBSYSTEM_DEF(media_tracks)
 	name = "Media Tracks"
 	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_MEDIA_TRACKS
-
+	dependencies = list(
+		/datum/controller/subsystem/floxy,
+	)
 	/// Every track, including secret
 	var/list/all_tracks = list()
 	/// Non-secret jukebox tracks
