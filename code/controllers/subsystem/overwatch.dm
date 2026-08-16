@@ -1,6 +1,5 @@
 SUBSYSTEM_DEF(overwatch)
 	name = "Overwatch"
-	init_order = INIT_ORDER_OW
 	flags = SS_NO_FIRE
 
 	var/max_error_count = 4
@@ -80,7 +79,6 @@ SUBSYSTEM_DEF(overwatch)
 	log_access("A Database error has occured. Overwatch is automatically disabled.")
 	return FALSE
 
-
 /datum/controller/subsystem/overwatch/proc/CollectClientData(client/C)
 	ASSERT(istype(C))
 
@@ -110,7 +108,6 @@ SUBSYSTEM_DEF(overwatch)
 	C.ip_info.ip_hosting = response["hosting"]
 
 	C.ip_info.is_loaded = TRUE
-	return
 
 /datum/controller/subsystem/overwatch/proc/GetAPIresponse(ip, client/C = null)
 	var/list/response = LoadCachedData(ip)
@@ -202,8 +199,6 @@ SUBSYSTEM_DEF(overwatch)
 
 	qdel(query)
 
-	return
-
 /datum/controller/subsystem/overwatch/proc/CheckASNban(client/C)
 	ASSERT(istype(C))
 
@@ -225,8 +220,6 @@ SUBSYSTEM_DEF(overwatch)
 		. = FALSE
 
 	qdel(query)
-
-	return
 
 /datum/controller/subsystem/overwatch/proc/LoadCachedData(ip)
 	ASSERT(istext(ip))
@@ -364,7 +357,6 @@ SUBSYSTEM_DEF(overwatch)
 
 	return TRUE
 
-
 /datum/controller/subsystem/overwatch/proc/GetAsnBanlistDatabase()
 	var/datum/db_query/_ASN_Banlist_Select_Query = SSdbcore.NewQuery("SELECT `asn`, `timestamp`, `a_ckey` from overwatch_asn_ban")
 	_ASN_Banlist_Select_Query.Execute()
@@ -382,7 +374,6 @@ SUBSYSTEM_DEF(overwatch)
 	qdel(_ASN_Banlist_Select_Query)
 
 	return result
-
 
 /datum/controller/subsystem/overwatch/proc/HandleClientAccessCheck(client/C, postponed = 0)
 	if(!SSoverwatch.CheckForAccess(C) && !(C.ckey in GLOB.admin_datums))
@@ -461,5 +452,3 @@ ADMIN_VERB(Overwatch_toggle, R_SERVER, FALSE, "Toggle Overwatch", "Toggle the ov
 
 	var/overwatch_status = SSoverwatch.Toggle()
 	log_access("has [overwatch_status ? "enabled" : "disabled"] the Overwatch system!")
-
-

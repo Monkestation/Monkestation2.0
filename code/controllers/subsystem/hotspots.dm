@@ -2,7 +2,9 @@ SUBSYSTEM_DEF(hotspots)
 	name = "Oshan Hotspots"
 	wait = 1 SECONDS
 	flags = SS_KEEP_TIMING
-	init_order = INIT_ORDER_HOTSPOTS
+	dependencies = list(
+		/datum/controller/subsystem/mapping,
+	)
 	priority = FIRE_PRIORITY_HOTSPOT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
