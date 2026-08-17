@@ -429,6 +429,7 @@
 		/obj/item/reagent_containers/cup/bowl,
 		/obj/item/reagent_containers/cup/soup_pot,
 		/obj/item/seeds,
+		/obj/item/disk/plantgene,
 		/obj/item/stack/biocube,
 		/obj/item/folder,
 		/obj/item/clipboard

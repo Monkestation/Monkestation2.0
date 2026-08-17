@@ -189,7 +189,6 @@
 		return COMPONENT_RIDDEN_STOP_Z_MOVE
 	return COMPONENT_RIDDEN_ALLOW_Z_MOVE
 
-
 ///////Yes, I said humans. No, this won't end well...//////////
 /datum/component/riding/creature/human
 	can_be_driven = FALSE
@@ -197,6 +196,19 @@
 /datum/component/riding/creature/human/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
 	. = ..()
 	var/mob/living/carbon/human/human_parent = parent
+	if (HAS_TRAIT(human_parent, TRAIT_FEEBLE))
+		human_parent.Paralyze(1 SECONDS)
+		human_parent.Knockdown(4 SECONDS)
+		human_parent.emote("scream", intentional=FALSE)
+		human_parent.adjustBruteLoss(15)
+		human_parent.visible_message(
+			span_danger("The weight of [riding_mob] is too much for [human_parent]!"),
+			span_userdanger("The weight of [riding_mob] is too much. You are crushed beneath [riding_mob.p_them()]!"),
+		)
+		playsound(human_parent.loc, 'sound/weapons/punch1.ogg', 35, TRUE, -1)
+		Unbuckle(riding_mob)
+		return
+
 	human_parent.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 
 	if(ride_check_flags & RIDER_NEEDS_ARMS) // piggyback
@@ -315,11 +327,10 @@
 
 	for(var/mob/living/rider in robot_parent.buckled_mobs)
 		rider.setDir(dir)
-		if(istype(robot_parent.model))
-			if(dir2text(dir) in robot_parent.model.ride_offset_x)
-				rider.pixel_x = robot_parent.model.ride_offset_x[dir2text(dir)]
-			if(dir2text(dir) in robot_parent.model.ride_offset_y)
-				rider.pixel_y = robot_parent.model.ride_offset_y[dir2text(dir)]
+		if(dir2text(dir) in robot_parent.skin.ride_offset_x)
+			rider.pixel_x = robot_parent.skin.ride_offset_x[dir2text(dir)]
+		if(dir2text(dir) in robot_parent.skin.ride_offset_y)
+			rider.pixel_y = robot_parent.skin.ride_offset_y[dir2text(dir)]
 
 //now onto every other ridable mob//
 
@@ -395,6 +406,12 @@
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
+// Carps move 4x faster when ridden in space
+/datum/component/riding/creature/carp/move_delay()
+	. = ..()
+	var/mob/living/living_parent = parent
+	if(!living_parent.has_gravity())
+		. *= 0.25
 
 /datum/component/riding/creature/megacarp/handle_specials()
 	. = ..()
@@ -408,6 +425,13 @@
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+// Carps move 4x faster when ridden in space
+/datum/component/riding/creature/megacarp/move_delay()
+	. = ..()
+	var/mob/living/living_parent = parent
+	if(!living_parent.has_gravity())
+		. *= 0.25
 
 /datum/component/riding/creature/vatbeast
 	override_allow_spacemove = TRUE

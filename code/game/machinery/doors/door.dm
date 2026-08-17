@@ -67,6 +67,11 @@
 	/// What specific lift ID do we link with?
 	var/transport_linked_id
 
+	/// What door types do we want to align with if any
+	var/door_align_type
+	var/align_to_windows = FALSE
+	var/auto_dir_align = TRUE
+
 /datum/armor/machinery_door
 	melee = 30
 	bullet = 30

@@ -204,6 +204,25 @@ GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 /datum/armor/immune/has_any_armor()
 	return TRUE
 
+/datum/armor/proc/combine_max_armor(datum/armor/other) as /datum/armor
+	RETURN_TYPE(/datum/armor)
+	if(!other)
+		return src
+	var/list/ratings = get_rating_list()
+	for(var/rating in ratings)
+		ratings[rating] = max(ratings[rating], other.get_rating(rating))
+	return generate_new_with_specific(ratings)
+
+/datum/armor/proc/operator~=(datum/armor/other)
+	if(ispath(other, /datum/armor))
+		other = get_armor_by_type(other)
+	if(!istype(other, /datum/armor))
+		return FALSE
+	for(var/rating in ARMOR_LIST_ALL())
+		if(vars[rating] != other.vars[rating])
+			return FALSE
+	return TRUE
+
 /**
  * Rounds armor_value down to the nearest 10, divides it by 10 and then converts it to Roman numerals.
  *

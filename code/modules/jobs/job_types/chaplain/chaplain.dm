@@ -70,7 +70,7 @@
 	var/new_bible = player_client?.prefs?.read_preference(/datum/preference/name/bible) || DEFAULT_BIBLE
 
 	holy_bible.deity_name = new_deity
-	switch(lowertext(new_religion))
+	switch(LOWER_TEXT(new_religion))
 		if("lol", "wtf", "poo", "badmin", "shitmin", "deadmin", "meme", "memes")
 			new_bible = pick("Sweet Bro and Hella Jeff: Expanded Edition","F.A.T.A.L. Rulebook")
 			switch(new_bible)

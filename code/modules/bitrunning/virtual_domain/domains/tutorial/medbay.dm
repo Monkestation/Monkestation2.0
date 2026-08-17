@@ -7,3 +7,4 @@
 	key = "medbay"
 	map_name = "medbay"
 	safehouse_path = /datum/map_template/safehouse/den
+	forced_outfit = /datum/outfit/job/doctor

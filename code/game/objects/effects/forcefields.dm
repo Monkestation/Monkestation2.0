@@ -128,19 +128,30 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 
 /obj/effect/forcefield/cosmic_field/CanAllowThrough(atom/movable/mover, border_dir)
 	if(!isliving(mover))
+		if(isprojectile(mover))
+			var/obj/projectile/projectile = mover
+			if(isliving(projectile.firer))
+				var/mob/living/living_firer = projectile.firer
+				if(living_firer.has_status_effect(/datum/status_effect/star_mark))
+					return FALSE
 		return ..()
+
 	var/mob/living/living_mover = mover
 	if(living_mover.can_block_magic(antimagic_flags, charge_cost = 0))
 		return ..()
+
 	// Being buckled/pulled by a cosmic heretic will allow you through cosmic fields EVEN IF you have a star mark
 	if(ismob(living_mover.buckled))
 		var/mob/living/fireman = living_mover.buckled
 		if(fireman.has_status_effect(/datum/status_effect/heretic_passive/cosmic))
 			return ..()
+
 	if(living_mover.pulledby?.has_status_effect(/datum/status_effect/heretic_passive/cosmic))
 		return ..()
+
 	if(living_mover.has_status_effect(/datum/status_effect/star_mark))
 		return FALSE
+
 	return ..()
 
 /obj/effect/forcefield/cosmic_field/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit)

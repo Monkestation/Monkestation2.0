@@ -46,9 +46,8 @@ GLOBAL_LIST_EMPTY(ai_projects)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!can_be_run)
 		return FALSE
-	if(!force_run)
-		if(!canRun())
-			return FALSE
+	if(!canRun() && !force_run)
+		return FALSE
 	running = TRUE
 	LAZYADD(dashboard.running_projects, src)
 	return TRUE
@@ -76,3 +75,11 @@ GLOBAL_LIST_EMPTY(ai_projects)
 	var/datum/action/AC = new ability()
 	AC.Grant(ai)
 	return AC
+
+/datum/ai_project/proc/invest_ability(used_cpu)
+	var/datum/action/innate/ai/ability = locate(ability_path) in ai.actions
+	if(isnull(ability))
+		return FALSE
+	if(ability.uses >= ability.max_uses) //we're already full
+		return
+	ability_recharge_invested += used_cpu
