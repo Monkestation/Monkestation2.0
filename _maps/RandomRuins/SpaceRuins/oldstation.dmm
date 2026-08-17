@@ -4618,7 +4618,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/tank/internals/anesthetic,
-/obj/item/clothing/mask/breath/medical,
+/obj/item/clothing/mask/breath/muzzle,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "sL" = (
@@ -5950,7 +5950,7 @@
 "BQ" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/tank/internals/anesthetic,
-/obj/item/clothing/mask/breath/medical,
+/obj/item/clothing/mask/breath/muzzle,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/medbay)
 "BX" = (
