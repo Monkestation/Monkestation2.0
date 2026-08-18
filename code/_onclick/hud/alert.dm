@@ -375,6 +375,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/screentip_override_text
 	/// Whether the offered item can be examined by shift-clicking the alert
 	var/examinable = TRUE
+	/// Whether this item should bypass active hand checks.
+	var/bypass_active_hand = FALSE
 
 /atom/movable/screen/alert/give/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
@@ -454,11 +456,15 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/mob/living/taker = owner
 	var/mob/living/offerer = offer.owner
 	var/obj/item/receiving = offer.offered_item
-	if(!taker.take(offerer, receiving, visible_message))
+	if(!taker.take(offerer, receiving, bypass_active_hand, visible_message))
 		return FALSE
 
 	SEND_SIGNAL(offerer, COMSIG_CARBON_ITEM_GIVEN, taker, receiving)
 	return TRUE
+
+/// Mostly for borgs to offer items.
+/atom/movable/screen/alert/give/borg
+	bypass_active_hand = TRUE
 
 /atom/movable/screen/alert/give/highfive
 	additional_desc_text = "Click this alert to slap it."

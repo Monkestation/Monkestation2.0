@@ -6,7 +6,7 @@
 
 /datum/artifact_effect/soap/setup()
 	our_artifact.holder.AddComponent(/datum/component/slippery, 80)
-	our_artifact.holder.AddComponent(/datum/component/cleaner, 2 SECOND, 0.1, pre_clean_callback=CALLBACK(src, PROC_REF(should_clean)), on_cleaned_callback=CALLBACK(src, TYPE_PROC_REF(/datum/artifact_effect/soap,sorry_nothing)))
+	our_artifact.holder.AddComponent(/datum/component/cleaner, 2 SECONDS, 0.1, pre_clean_callback=CALLBACK(src, PROC_REF(should_clean)), on_cleaned_callback=CALLBACK(src, TYPE_PROC_REF(/datum/artifact_effect/soap,sorry_nothing)))
 
 /datum/artifact_effect/soap/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
 	if(isitem(our_artifact.holder))

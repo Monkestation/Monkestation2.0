@@ -143,6 +143,10 @@
 
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
+	light_outer_range = 4
+	light_power = 1.4
+	light_color = LIGHT_COLOR_CYAN
+	light_on = TRUE
 
 /turf/open/indestructible/plating
 	icon_state = "plating"

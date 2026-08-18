@@ -265,6 +265,22 @@
 	qdel(src)
 	return new_corgi
 
+///Transforms cockroach mob into romch.
+/mob/living/basic/cockroach/proc/romchifize()
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+		return
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
+	Paralyze(0.1 SECONDS, ignore_canstun = TRUE)
+	icon = null
+	invisibility = INVISIBILITY_MAXIMUM
+	var/mob/living/basic/pet/eris_romch/romch = new(get_turf(src))
+	if(mind)
+		mind.transfer_to(romch)
+	else
+		romch.PossessByPlayer(key)
+	qdel(src)
+	return romch
+
 /mob/living/carbon/proc/gorillize()
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
