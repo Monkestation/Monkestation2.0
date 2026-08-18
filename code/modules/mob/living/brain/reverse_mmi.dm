@@ -157,11 +157,11 @@
 		return
 	if(AI.radio.syndie) /// AI has Syndie radio if traitor.
 		AI.radio.make_syndie()
-		implant.radio.subspace_transmission = TRUE
-		implant.radio.command = TRUE
-		implant.radio.channels = AI.radio.channels
-		for(var/channel in implant.radio.channels)
-			LAZYSET(implant.radio.secure_radio_connections, channel, add_radio(implant.radio, GLOB.radiochannels[channel]))
+	implant.radio.subspace_transmission = TRUE
+	implant.radio.command = TRUE
+	implant.radio.channels = AI.radio.channels
+	for(var/channel in implant.radio.channels)
+		LAZYSET(implant.radio.secure_radio_connections, channel, add_radio(implant.radio, GLOB.radiochannels[channel]))
 	ADD_TRAIT(connected_ai.mind, TRAIT_UNCONVERTABLE, REF(src))
 	ADD_TRAIT(connected_ai, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 	to_chat(owner, span_boldbig("You are still considered a silicon/cyborg/AI. Follow your laws."))
