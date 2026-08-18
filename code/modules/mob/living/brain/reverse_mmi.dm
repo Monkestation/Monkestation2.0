@@ -21,6 +21,8 @@
 	var/mob/living/silicon/ai/connected_ai
 	/// This is for holding onto last connected_ai for handling connected_ipcs list
 	var/mob/living/silicon/ai/last_connected_ai
+	/// If our owner can be used as a shell
+	var/is_shell = FALSE
 	/// action for undeployment
 	var/datum/action/innate/brain_undeployment/undeployment_action = new
 	/// Weakref to our imaginary brain radio implant
@@ -194,22 +196,32 @@
 	update_med_hud_status(owner)
 
 /** Checks if the owner's organs are fully robotic.
-*If they are, adds them to GLOB.available_ai_shells list.
-*If not, removes them from the list.
+*If they are, returns TRUE and sets 'is_shell to TRUE'
+*If not, returns FALSE and sets 'is_shell' to FALSE
 */
 /obj/item/organ/internal/brain/cybernetic/ai/proc/check_if_augmented()
 	var/mob/living/carbon/carb_owner = owner
 	. = TRUE
+	is_shell = TRUE
 	if(!istype(carb_owner))
+		is_shell = FALSE
+		handle_available_shells()
 		return FALSE
 	for(var/obj/item/organ/organ as anything in carb_owner.organs)
 		if(organ.organ_flags && istype(organ, /obj/item/organ/external))
 			continue
 		if(!IS_ROBOTIC_ORGAN(organ) && !istype(organ, /obj/item/organ/internal/tongue)) //tongues are not in the exosuit fab and nobody is going to bother to find them so
-			GLOB.available_ai_shells -= carb_owner
-			return FALSE
-		if(!(carb_owner in GLOB.available_ai_shells))
-			GLOB.available_ai_shells |= carb_owner
+			is_shell = FALSE
+			handle_available_shells()
+				return FALSE
+	handle_available_shells()
+
+/// Adds or removes the owner from 'GLOB.available_ai_shells' list depending on 'is_shell' variable
+/obj/item/organ/internal/brain/cybernetic/ai/proc/handle_available_shells()
+	if(is_shell == TRUE)
+		GLOB.available_ai_shells |= owner
+	else
+		GLOB.available_ai_shells -= owner
 
 /* Is called if the radio implant is removed or deleted after brain insertion.
 *
