@@ -266,6 +266,7 @@
 
 	if(air_transfer.moles[/datum/gas/plasma])
 		var/moles = air_transfer.moles[/datum/gas/plasma] * 5 //Suffering
+		air_transfer.set_gas(/datum/gas/plasma, moles)
 	target.assume_air(air_transfer)
 	//Burn it based on transfered gas
 	target.hotspot_expose((tank_mix.temperature*2) + 380,500)
