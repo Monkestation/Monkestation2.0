@@ -526,7 +526,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 		return
 
 	//Fuck you
-	if(cached_moles[/datum/gas/hypernoblium] >= REACTION_OPPRESSION_THRESHOLD && temperature > REACTION_OPPRESSION_MIN_TEMP)
+	if(cached_moles[/datum/gas/hypernoblium] >= REACTION_OPPRESSION_THRESHOLD && temperature > 20)
 		return STOP_REACTIONS
 
 	reaction_results = new
