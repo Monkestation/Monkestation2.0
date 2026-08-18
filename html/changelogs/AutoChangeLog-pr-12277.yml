@@ -1,0 +1,18 @@
+author: "Gboster, Ghommie, nikothedude, Hardly3D, SomeRandomOwl, mc-oofert"
+delete-after: True
+changes:
+  - rscadd: "Motorized wheelchairs now take a cell to craft."
+  - rscadd: "Deathmatch lobbies now start on the \"Random\" map instead of a random map."
+  - rscadd: "Deathmatch maps now have their max players uncapped, have fun on 12 player ragecage."
+  - rscadd: "Adds a button to automatically rejoin a deathmatch lobby when the deathmatch ends."
+  - rscdel: "\"Forced random loadouts\" is no longer able to be picked by \"Random modifiers\"."
+  - bugfix: "Fixed the \"Parapalegic\" deathmatch modifier spawning a non-working wheelchair"
+  - bugfix: "Fixed the random map sometimes failing to work"
+  - bugfix: "Fixed final destination deathmatch map missing light emitters"
+  - rscadd: "(Ghommie) Added \"No Slowdown\", \"Random Teleports\", \"Snail Crawl\", \"Forcefield Trail\" and \"Manual Blinking/Breathing\" deathmatch modifiers."
+  - bugfix: "(Ghommie) Fixed deathmatch cruise missiles looking like standard pods."
+  - rscadd: "(nikothedude) Added \"Quirks enabled\" and \"Random martial arts\" deathmatch modifiers."
+  - rscadd: "(Hardly3D) Added \"Half-Health\" deathmatch modifier."
+  - admin: "(SomeRandomOwl) Deathmatch Bombs, Smoke, and Liquid floods are now suppressed in the logs and will not actively spam admin logs."
+  - code_imp: "(SomeRandomOwl) adds a area flag to suppress logging for floods and bombs"
+  - bugfix: "(mc-oofert) disciple of pete has low-range signalers, split personality may not roll in deathmatch"
