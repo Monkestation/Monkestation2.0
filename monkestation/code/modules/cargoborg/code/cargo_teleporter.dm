@@ -12,7 +12,7 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	var/max_charges = 3
 	/// The current amount of fulton charges the teleporter currently has.
 	var/charges = 0
-	/// The fulton we use to actually extract living things.
+	/// The fulton we use to actually extract things.
 	var/obj/item/extraction_pack/my_fulton
 	/// The cooldown between teleport usages.
 	COOLDOWN_DECLARE(use_cooldown)
