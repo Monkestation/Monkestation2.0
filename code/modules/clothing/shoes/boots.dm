@@ -81,8 +81,7 @@
 
 /obj/item/clothing/shoes/jackboots/recolorable
 	icon = 'icons/map_icons/clothing/shoes.dmi'
-	icon_state = "/obj/item/clothing/shoes/jackboots/recolorable"
-	post_init_icon_state = "boots"
+	SETUP_MAP_ICONS("boots", "/obj/item/clothing/shoes/jackboots/recolorable")
 	greyscale_config = /datum/greyscale_config/jackboots
 	greyscale_config_worn = /datum/greyscale_config/jackboots/worn
 	greyscale_colors = "#383631"
@@ -148,8 +147,7 @@
 	name = "red christmas boots"
 	desc = "A pair of fluffy red christmas boots!"
 	icon = 'icons/map_icons/clothing/shoes.dmi'
-	icon_state = "/obj/item/clothing/shoes/winterboots/christmas"
-	post_init_icon_state = "christmas_boots"
+	SETUP_MAP_ICONS("christmas_boots", "/obj/item/clothing/shoes/winterboots/christmas")
 	greyscale_config = /datum/greyscale_config/christmas_boots
 	greyscale_config_worn = /datum/greyscale_config/christmas_boots/worn
 	greyscale_colors = "#cc0f0f#c4c2c2"
@@ -158,8 +156,7 @@
 /obj/item/clothing/shoes/winterboots/christmas/green
 	name = "green christmas boots"
 	desc = "A pair of fluffy green christmas boots!"
-	icon_state = "/obj/item/clothing/shoes/winterboots/christmas/green"
-	post_init_icon_state = "christmas_boots"
+	SETUP_MAP_ICONS("christmas_boots", "/obj/item/clothing/shoes/winterboots/christmas/green")
 	greyscale_colors = "#1a991a#c4c2c2"
 
 /datum/armor/ice_boots_eva

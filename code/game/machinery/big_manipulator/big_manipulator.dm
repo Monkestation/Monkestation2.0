@@ -2,8 +2,7 @@
 	name = "big manipulator"
 	desc = "Operates different objects. Truly, a groundbreaking innovation..."
 	icon = 'icons/map_icons/objects.dmi'
-	icon_state = "/obj/machinery/big_manipulator"
-	post_init_icon_state = "core"
+	SETUP_MAP_ICONS("core", "/obj/machinery/big_manipulator")
 	greyscale_config = /datum/greyscale_config/big_manipulator
 	greyscale_colors = "#d8ce13"
 

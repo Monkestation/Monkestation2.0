@@ -203,8 +203,7 @@
 	armor_type = /datum/armor/none
 	allowed = null
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
-	icon_state = "/obj/item/clothing/suit/armor/vest/ctf"
-	post_init_icon_state = "standard"
+	SETUP_MAP_ICONS("standard", "/obj/item/clothing/suit/armor/vest/ctf")
 	greyscale_config = /datum/greyscale_config/ctf_standard
 	greyscale_config_worn = /datum/greyscale_config/ctf_standard_worn
 	greyscale_colors = "#ffffff"
@@ -231,8 +230,7 @@
 	name = "light white shielded vest"
 	desc = "Lightweight vest for playing capture the flag."
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
-	icon_state = "/obj/item/clothing/suit/armor/vest/ctf/light"
-	post_init_icon_state = "light"
+	SETUP_MAP_ICONS("light", "/obj/item/clothing/suit/armor/vest/ctf/light")
 	greyscale_config = /datum/greyscale_config/ctf_light
 	greyscale_config_worn = /datum/greyscale_config/ctf_light_worn
 	slowdown = -0.25

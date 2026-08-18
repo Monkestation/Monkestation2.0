@@ -2,8 +2,7 @@
 	name = "jumpsuit"
 	desc = "A standard issue colored jumpsuit. Variety is the spice of life!"
 	icon = 'icons/map_icons/clothing/under/color.dmi'
-	icon_state = "/obj/item/clothing/under/color"
-	post_init_icon_state = "jumpsuit"
+	SETUP_MAP_ICONS("jumpsuit", "/obj/item/clothing/under/color")
 	inhand_icon_state = "jumpsuit"
 	worn_icon_state = "jumpsuit"
 	worn_icon = 'icons/mob/clothing/under/color.dmi'
@@ -16,8 +15,7 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/color/jumpskirt
-	icon_state = "/obj/item/clothing/under/color/jumpskirt"
-	post_init_icon_state = "jumpskirt"
+	SETUP_MAP_ICONS("jumpskirt", "/obj/item/clothing/under/color/jumpskirt")
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY

@@ -827,8 +827,7 @@
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
 	desc = "A pair of black shoes."
-	icon_state = "/obj/item/clothing/shoes/chameleon"
-	post_init_icon_state = "sneakers"
+	SETUP_MAP_ICONS("sneakers", "/obj/item/clothing/shoes/chameleon")
 	inhand_icon_state = "sneakers_back"
 	greyscale_config = /datum/greyscale_config/sneakers
 	greyscale_config_worn = /datum/greyscale_config/sneakers/worn

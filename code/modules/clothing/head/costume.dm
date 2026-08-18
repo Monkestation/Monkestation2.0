@@ -135,8 +135,7 @@
 /obj/item/clothing/head/costume/fancy
 	name = "fancy hat"
 	icon = 'icons/map_icons/clothing/head/_head.dmi'
-	icon_state = "/obj/item/clothing/head/costume/fancy"
-	post_init_icon_state = "fancy_hat"
+	SETUP_MAP_ICONS("fancy_hat", "/obj/item/clothing/head/costume/fancy")
 	greyscale_config = /datum/greyscale_config/fancy_hat
 	greyscale_config_worn = /datum/greyscale_config/fancy_hat/worn
 	greyscale_colors = "#E3C937#782A81"
@@ -145,8 +144,7 @@
 /obj/item/clothing/head/costume/football_helmet
 	name = "football helmet"
 	icon = 'icons/map_icons/clothing/head/_head.dmi'
-	icon_state = "/obj/item/clothing/head/costume/football_helmet"
-	post_init_icon_state = "football_helmet"
+	SETUP_MAP_ICONS("football_helmet", "/obj/item/clothing/head/costume/football_helmet")
 	greyscale_config = /datum/greyscale_config/football_helmet
 	greyscale_config_worn = /datum/greyscale_config/football_helmet/worn
 	greyscale_colors = "#D74722"

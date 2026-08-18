@@ -544,8 +544,7 @@
 	name = "carp-sie plushie"
 	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to receive the blessing of Carp-Sie."
 	icon = 'icons/map_icons/items/_item.dmi'
-	icon_state = "/obj/item/nullrod/carp"
-	post_init_icon_state = "map_plushie_carp"
+	SETUP_MAP_ICONS("map_plushie_carp", "/obj/item/nullrod/carp")
 	greyscale_config = /datum/greyscale_config/plush_carp
 	greyscale_colors = "#cc99ff#000000"
 	inhand_icon_state = "carp_plushie"

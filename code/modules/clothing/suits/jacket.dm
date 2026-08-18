@@ -20,8 +20,7 @@
 	name = "sweater jacket"
 	desc = "A sweater jacket."
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
-	icon_state = "/obj/item/clothing/suit/toggle/jacket/sweater"
-	post_init_icon_state = "sweater"
+	SETUP_MAP_ICONS("sweater", "/obj/item/clothing/suit/toggle/jacket/sweater")
 	greyscale_config = /datum/greyscale_config/sweater
 	greyscale_config_worn = /datum/greyscale_config/sweater/worn
 	greyscale_colors = "#414344"
@@ -31,8 +30,7 @@
 	name = "oversized jacket"
 	desc = "An oversized jacket."
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
-	icon_state = "/obj/item/clothing/suit/jacket/oversized"
-	post_init_icon_state = "jacket_oversized"
+	SETUP_MAP_ICONS("jacket_oversized", "/obj/item/clothing/suit/jacket/oversized")
 	greyscale_config = /datum/greyscale_config/jacket_oversized
 	greyscale_config_worn = /datum/greyscale_config/jacket_oversized_worn
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
@@ -43,8 +41,7 @@
 	name = "fancy fur coat"
 	desc = "Rated 10 out of 10 in Cosmo for best coat brand."
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
-	icon_state = "/obj/item/clothing/suit/jacket/fancy"
-	post_init_icon_state = "fancy_coat"
+	SETUP_MAP_ICONS("fancy_coat", "/obj/item/clothing/suit/jacket/fancy")
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT

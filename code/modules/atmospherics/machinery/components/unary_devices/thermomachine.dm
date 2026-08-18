@@ -4,8 +4,7 @@
 	name = "Temperature control unit"
 	desc = "Heats or cools gas in connected pipes."
 	icon = 'icons/map_icons/objects.dmi'
-	icon_state = "/obj/machinery/atmospherics/components/unary/thermomachine"
-	post_init_icon_state = "thermo_base"
+	SETUP_MAP_ICONS("thermo_base", "/obj/machinery/atmospherics/components/unary/thermomachine")
 
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 
@@ -333,8 +332,7 @@
 	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
-	icon_state = "/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on"
-	post_init_icon_state = "thermo_1"
+	SETUP_MAP_ICONS("thermo_1", "/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on")
 	flags_1 = /obj/machinery/atmospherics/components/unary/thermomachine::flags_1 // we want this one to generate a preview
 	on = TRUE
 
@@ -356,8 +354,7 @@
 	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on
-	icon_state = "/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on" // same icon as the freezer
-	post_init_icon_state = "thermo_1"
+	SETUP_MAP_ICONS("thermo_1", "/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on")
 	on = TRUE
 
 #undef THERMOMACHINE_POWER_CONVERSION

@@ -92,14 +92,14 @@ SUBSYSTEM_DEF(greyscale_previews)
 		if((map_icon.Height() > 32) || (map_icon.Width() > 32)) // No large icons, use icon_preview and icon_preview_state instead.
 			stack_trace("GAGS configuration is trying to generate a map preview graphic for '[atom_type]', which has a large icon. This is not suppoorted; implement icon_preview instead.")
 			continue
-		if(!(atom_type::post_init_icon_state in map_icon.IconStates()))
+		if(!(atom_type::icon_state in map_icon.IconStates()))
 			stack_trace("GAGS configuration missing icon state needed to generate map preview graphic for '[atom_type]'. Make sure the right greyscale_config is set up.")
 			continue
-		map_icon = icon(map_icon, atom_type::post_init_icon_state)
+		map_icon = icon(map_icon, atom_type::icon_state)
 		icons["[atom_type]"] = map_icon
 	#else // will be updated to use iconforge's new .dmi spritesheet generation instead
 		var/icon/map_icon = icon(SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors))
-		map_icon = icon(map_icon, atom_type::post_init_icon_state)
+		map_icon = icon(map_icon, atom_type::icon_state)
 		icons["[atom_type]"] = map_icon
 	#endif
 

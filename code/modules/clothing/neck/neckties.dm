@@ -1,8 +1,7 @@
 /obj/item/clothing/neck/tie/bunnytie
 	name = "bowtie collar"
 	desc = "A fancy tie that includes a collar. Looking snazzy!"
-	icon_state = "/obj/item/clothing/neck/tie/bunnytie"
-	post_init_icon_state = "bowtie_collar_tied"
+	SETUP_MAP_ICONS("bowtie_collar_tied", "/obj/item/clothing/neck/tie/bunnytie")
 	greyscale_config = /datum/greyscale_config/bowtie_collar
 	greyscale_config_worn = /datum/greyscale_config/bowtie_collar/worn
 	greyscale_colors = "#ffffff#39393f"

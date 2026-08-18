@@ -467,8 +467,7 @@
 	name = "cleric mace"
 	desc = "The grandson of the club, yet the grandfather of the baseball bat. Most notably used by holy orders in days past."
 	icon = 'icons/map_icons/items/_item.dmi'
-	icon_state = "/obj/item/melee/cleric_mace"
-	post_init_icon_state = "default"
+	SETUP_MAP_ICONS("default", "/obj/item/melee/cleric_mace")
 	inhand_icon_state = "default"
 	worn_icon_state = "default_worn"
 

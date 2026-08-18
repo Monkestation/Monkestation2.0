@@ -534,8 +534,7 @@
 	name = "football protective gear"
 	desc = "Given to members of the football team!"
 	icon = 'icons/map_icons/clothing/suit/costume.dmi'
-	icon_state = "/obj/item/clothing/suit/costume/football_armor"
-	post_init_icon_state = "football_armor"
+	SETUP_MAP_ICONS("football_armor", "/obj/item/clothing/suit/costume/football_armor")
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	greyscale_config = /datum/greyscale_config/football_armor
 	greyscale_config_worn = /datum/greyscale_config/football_armor_worn

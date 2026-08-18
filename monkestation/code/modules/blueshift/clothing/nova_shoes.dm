@@ -49,8 +49,7 @@
 	name = "high heels"
 	desc = "A fancy pair of high heels. Won't compensate for your below average height that much."
 	icon = 'icons/map_icons/clothing/shoes.dmi'
-	icon_state = "/obj/item/clothing/shoes/high_heels"
-	post_init_icon_state = "heels"
+	SETUP_MAP_ICONS("heels", "/obj/item/clothing/shoes/high_heels")
 	greyscale_config = /datum/greyscale_config/heels
 	greyscale_config_worn = /datum/greyscale_config/heels/worn
 	greyscale_colors = "#FFFFFF"
@@ -65,8 +64,7 @@
 	name = "fancy heels"
 	desc = "A pair of fancy high heels that are much smaller on your feet."
 	icon = 'icons/map_icons/clothing/shoes.dmi'
-	icon_state = "/obj/item/clothing/shoes/fancy_heels"
-	post_init_icon_state = "fancyheels"
+	SETUP_MAP_ICONS("fancyheels", "/obj/item/clothing/shoes/fancy_heels")
 	greyscale_config = /datum/greyscale_config/fancyheels
 	greyscale_config_worn = /datum/greyscale_config/fancyheels/worn
 	greyscale_colors = "#FFFFFF"
@@ -119,8 +117,7 @@
 	name = "cloth foot wraps"
 	desc = "Boxer tape or bandages wrapped like a mummy, all left up to the choice of the wearer."
 	icon = 'icons/map_icons/clothing/shoes.dmi'
-	icon_state = "/obj/item/clothing/shoes/wraps/cloth"
-	post_init_icon_state = "clothwrap"
+	SETUP_MAP_ICONS("clothwrap", "/obj/item/clothing/shoes/wraps/cloth")
 	greyscale_config = /datum/greyscale_config/clothwraps
 	greyscale_config_worn = /datum/greyscale_config/clothwraps/worn
 	greyscale_colors = "#FFFFFF"
@@ -131,8 +128,7 @@
 	name = "colourable foot wraps"
 	desc = "Ankle coverings. These ones have a customisable colour design."
 	icon = 'icons/map_icons/clothing/shoes.dmi'
-	icon_state = "/obj/item/clothing/shoes/wraps/colourable"
-	post_init_icon_state = "legwrap"
+	SETUP_MAP_ICONS("legwrap", "/obj/item/clothing/shoes/wraps/colourable")
 	greyscale_config = /datum/greyscale_config/legwraps
 	greyscale_config_worn = /datum/greyscale_config/legwraps/worn
 	greyscale_colors = "#FFFFFF"

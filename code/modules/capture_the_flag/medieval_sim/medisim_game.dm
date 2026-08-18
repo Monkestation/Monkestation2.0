@@ -64,8 +64,7 @@
 	name = "\improper Bluesworth Hold Fair Maiden"
 	desc = "Protect your maiden, and capture theirs!"
 	icon = 'icons/map_icons/items/_item.dmi'
-	icon_state = "/obj/item/ctf_flag/blue/medisim"
-	post_init_icon_state = "map_plushie_slime"
+	SETUP_MAP_ICONS("map_plushie_slime", "/obj/item/ctf_flag/blue/medisim")
 	greyscale_config = /datum/greyscale_config/plush_slime
 	greyscale_colors = "#3399ff#000000"
 	force = 0

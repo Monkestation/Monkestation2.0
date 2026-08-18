@@ -12,8 +12,7 @@
 	name = "green sombrero"
 	desc = "As elegant as a dancing cactus."
 	icon = 'icons/map_icons/clothing/head/_head.dmi'
-	icon_state = "/obj/item/clothing/head/costume/sombrero/green"
-	post_init_icon_state = "sombrero"
+	SETUP_MAP_ICONS("sombrero", "/obj/item/clothing/head/costume/sombrero/green")
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	dog_fashion = null
 	greyscale_config = /datum/greyscale_config/sombrero
@@ -27,8 +26,7 @@
 	name = "shamebrero"
 	desc = "Once it's on, it never comes off."
 	icon = 'icons/map_icons/clothing/head/_head.dmi'
-	icon_state = "/obj/item/clothing/head/costume/sombrero/shamebrero"
-	post_init_icon_state = "shamebrero"
+	SETUP_MAP_ICONS("shamebrero", "/obj/item/clothing/head/costume/sombrero/shamebrero")
 	dog_fashion = null
 	greyscale_config = /datum/greyscale_config/sombrero
 	greyscale_config_worn = /datum/greyscale_config/sombrero/worn

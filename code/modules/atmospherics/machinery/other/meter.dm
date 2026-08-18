@@ -2,8 +2,7 @@
 	name = "gas flow meter"
 	desc = "It measures something."
 	icon = 'icons/map_icons/objects.dmi'
-	icon_state = "/obj/machinery/meter"
-	post_init_icon_state = "meter"
+	SETUP_MAP_ICONS("meter", "/obj/machinery/meter")
 	layer = HIGH_PIPE_LAYER
 	power_channel = AREA_USAGE_ENVIRON
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05

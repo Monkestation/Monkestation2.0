@@ -3,8 +3,7 @@
 	desc = "A simple sleeveless tunic worn over an undersuit, it glows in the dark!"
 	icon = 'icons/map_icons/clothing/under/_under.dmi'
 	worn_icon = 'icons/mob/clothing/under/ethereal.dmi'
-	icon_state = "/obj/item/clothing/under/ethereal_tunic"
-	post_init_icon_state = "eth_tunic"
+	SETUP_MAP_ICONS("eth_tunic", "/obj/item/clothing/under/ethereal_tunic")
 	greyscale_config = /datum/greyscale_config/eth_tunic
 	greyscale_config_worn = /datum/greyscale_config/eth_tunic_worn
 	greyscale_colors = "#4e7cc7"
@@ -28,8 +27,7 @@
 /obj/item/clothing/under/ethereal_tunic/trailwarden
 	name = "trailwarden tunic"
 	desc = "Farmers and pilgrims would commonly find their clothes permanently stained from years of wading through the mud and bioluminescent flora of Sprout, eventually it became customary to dye clothes to replicate this effect purposefully."
-	icon_state = "/obj/item/clothing/under/ethereal_tunic/trailwarden"
-	post_init_icon_state = "eth_tunic"
+	SETUP_MAP_ICONS("eth_tunic", "/obj/item/clothing/under/ethereal_tunic/trailwarden")
 	greyscale_colors = "#32a87d"
 
 /obj/item/clothing/under/ethereal_tunic/trailwarden/equipped(mob/living/user, slot)

@@ -3,8 +3,7 @@
 	desc = " A raincoat commonly worn by travelers or tourists not too fond of Sprout's rainy weather."
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	worn_icon = 'icons/mob/clothing/suits/ethereal.dmi'
-	icon_state = "/obj/item/clothing/suit/hooded/ethereal_raincoat"
-	post_init_icon_state = "eth_raincoat"
+	SETUP_MAP_ICONS("eth_raincoat", "/obj/item/clothing/suit/hooded/ethereal_raincoat")
 	greyscale_config = /datum/greyscale_config/eth_raincoat
 	greyscale_config_worn = /datum/greyscale_config/eth_raincoat_worn
 	greyscale_colors = "#4e7cc7"

@@ -4,8 +4,7 @@
 	name = "pressure tank"
 	desc = "A large vessel containing pressurized gas."
 	icon = 'icons/map_icons/objects.dmi'
-	icon_state = "/obj/machinery/atmospherics/components/tank"
-	post_init_icon_state = "smooth"
+	SETUP_MAP_ICONS("smooth", "/obj/machinery/atmospherics/components/tank")
 
 	max_integrity = 800
 	integrity_failure = 0.2

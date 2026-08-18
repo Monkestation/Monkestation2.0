@@ -21,8 +21,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	desc = "Gondola DNA infused into what was once a normal heart."
 
 	icon = 'icons/map_icons/items/_item.dmi'
-	icon_state = "/obj/item/organ/internal/heart/gondola"
-	post_init_icon_state = "heart"
+	SETUP_MAP_ICONS("heart", "/obj/item/organ/internal/heart/gondola")
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GONDOLA_COLORS
 	organ_traits = list(TRAIT_PACIFISM)
@@ -54,8 +53,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	name = "mutated gondola-tongue"
 	desc = "Gondola DNA infused into what was once a normal tongue."
 	icon = 'icons/map_icons/items/_item.dmi'
-	icon_state = "/obj/item/organ/internal/tongue/gondola"
-	post_init_icon_state = "tongue"
+	SETUP_MAP_ICONS("tongue", "/obj/item/organ/internal/tongue/gondola")
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GONDOLA_COLORS
 	organ_traits = list(TRAIT_MUTE)
@@ -78,8 +76,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	name = "mutated gondola-liver"
 	desc = "Gondola DNA infused into what was once a normal liver."
 	icon = 'icons/map_icons/items/_item.dmi'
-	icon_state = "/obj/item/organ/internal/liver/gondola"
-	post_init_icon_state = "liver"
+	SETUP_MAP_ICONS("liver", "/obj/item/organ/internal/liver/gondola")
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GONDOLA_COLORS
 	/// instance of the martial art granted on insertion

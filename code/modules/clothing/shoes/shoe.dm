@@ -59,8 +59,7 @@
 	name = "heels"
 	desc = "A both professional and stylish pair of footwear that are difficult to walk in."
 	icon = 'icons/map_icons/clothing/shoes.dmi'
-	icon_state = "/obj/item/clothing/shoes/heels"
-	post_init_icon_state = "heels"
+	SETUP_MAP_ICONS("heels", "/obj/item/clothing/shoes/heels")
 	greyscale_config = /datum/greyscale_config/heels
 	greyscale_config_worn = /datum/greyscale_config/heels_worn
 	greyscale_colors = "#39393f"
@@ -147,8 +146,7 @@
 	name = "laceup shoes"
 	desc = "These don't seem to come pre-polished, how saddening."
 	icon = 'icons/map_icons/clothing/shoes.dmi'
-	icon_state = "/obj/item/clothing/shoes/colorable_laceups"
-	post_init_icon_state = "laceups"
+	SETUP_MAP_ICONS("laceups", "/obj/item/clothing/shoes/colorable_laceups")
 	greyscale_config = /datum/greyscale_config/laceup
 	greyscale_config_worn = /datum/greyscale_config/laceup/worn
 	greyscale_colors = "#383631"

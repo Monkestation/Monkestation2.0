@@ -3,8 +3,7 @@
  */
 
 /obj/item/modular_computer/pda/heads
-	icon_state = "/obj/item/modular_computer/pda/heads"
-	post_init_icon_state = "pda"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/heads")
 	greyscale_config = /datum/greyscale_config/tablet/head
 	greyscale_colors = "#67A364#a92323"
 	max_capacity = parent_type::max_capacity * 2
@@ -18,8 +17,7 @@
 
 /obj/item/modular_computer/pda/heads/captain
 	name = "captain PDA"
-	icon_state = "/obj/item/modular_computer/pda/heads/captain"
-	post_init_icon_state = "pda"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/heads/captain")
 	greyscale_config = /datum/greyscale_config/tablet/captain
 	greyscale_colors = "#2C7CB2#FF0000#FFFFFF#FFD55B"
 	inserted_item = /obj/item/pen/fountain/captain
@@ -36,8 +34,7 @@
 
 /obj/item/modular_computer/pda/heads/hop
 	name = "head of personnel PDA"
-	icon_state = "/obj/item/modular_computer/pda/heads/hop"
-	post_init_icon_state = "pda"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/heads/hop")
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#374f7e#a52f29#a52f29"
 	inserted_item = /obj/item/pen/fountain
@@ -54,8 +51,7 @@
 
 /obj/item/modular_computer/pda/heads/hos
 	name = "head of security PDA"
-	icon_state = "/obj/item/modular_computer/pda/heads/hos"
-	post_init_icon_state = "pda"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/heads/hos")
 	greyscale_config = /datum/greyscale_config/tablet/head
 	greyscale_colors = "#EA3232#0000CC"
 	inserted_item = /obj/item/pen/red/security
@@ -70,8 +66,7 @@
 
 /obj/item/modular_computer/pda/heads/ce
 	name = "chief engineer PDA"
-	icon_state = "/obj/item/modular_computer/pda/heads/ce"
-	post_init_icon_state = "pda"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/heads/ce")
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#D99A2E#69DBF3#FAFAFA"
 	inserted_item = /obj/item/pen/fountain
@@ -88,8 +83,7 @@
 
 /obj/item/modular_computer/pda/heads/cmo
 	name = "chief medical officer PDA"
-	icon_state = "/obj/item/modular_computer/pda/heads/cmo"
-	post_init_icon_state = "pda"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/heads/cmo")
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#FAFAFA#000099#3F96CC"
 	inserted_item = /obj/item/pen/fountain
@@ -105,8 +99,7 @@
 
 /obj/item/modular_computer/pda/heads/rd
 	name = "research director PDA"
-	icon_state = "/obj/item/modular_computer/pda/heads/rd"
-	post_init_icon_state = "pda"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/heads/rd")
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#FAFAFA#000099#B347BC"
 	inserted_item = /obj/item/pen/fountain
@@ -126,8 +119,8 @@
 
 /obj/item/modular_computer/pda/security
 	name = "security PDA"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/security")
 	greyscale_colors = "#EA3232#0000cc"
-	post_init_icon_state = "pda"
 	inserted_item = /obj/item/pen/red/security
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
@@ -137,8 +130,8 @@
 
 /obj/item/modular_computer/pda/detective
 	name = "detective PDA"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/detective")
 	greyscale_colors = "#805A2F#990202"
-	post_init_icon_state = "pda"
 	inserted_item = /obj/item/pen/red/security
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
@@ -149,8 +142,7 @@
 
 /obj/item/modular_computer/pda/warden
 	name = "warden PDA"
-	icon_state = "/obj/item/modular_computer/pda/warden"
-	post_init_icon_state = "pda"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/warden")
 	greyscale_config = /datum/greyscale_config/tablet/stripe_split
 	greyscale_colors = "#EA3232#0000CC#363636"
 	inserted_item = /obj/item/pen/red/security
@@ -166,8 +158,7 @@
 
 /obj/item/modular_computer/pda/engineering
 	name = "engineering PDA"
-	icon_state = "/obj/item/modular_computer/pda/engineering"
-	post_init_icon_state = "pda"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/engineering")
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#D99A2E#69DBF3#E3DF3D"
 	starting_programs = list(
@@ -176,8 +167,7 @@
 
 /obj/item/modular_computer/pda/atmos
 	name = "atmospherics PDA"
-	icon_state = "/obj/item/modular_computer/pda/atmos"
-	post_init_icon_state = "pda"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/atmos")
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#EEDC43#00E5DA#727272"
 	starting_programs = list(
@@ -191,8 +181,7 @@
 
 /obj/item/modular_computer/pda/science
 	name = "scientist PDA"
-	icon_state = "/obj/item/modular_computer/pda/science"
-	post_init_icon_state = "pda"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/science")
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#FAFAFA#000099#B347BC"
 	starting_programs = list(
@@ -204,8 +193,7 @@
 
 /obj/item/modular_computer/pda/roboticist
 	name = "roboticist PDA"
-	icon_state = "/obj/item/modular_computer/pda/roboticist"
-	post_init_icon_state = "pda"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/roboticist")
 	greyscale_config = /datum/greyscale_config/tablet/stripe_split
 	greyscale_colors = "#484848#0099CC#D94927"
 	starting_programs = list(
@@ -215,8 +203,7 @@
 
 /obj/item/modular_computer/pda/geneticist
 	name = "geneticist PDA"
-	icon_state = "/obj/item/modular_computer/pda/geneticist"
-	post_init_icon_state = "pda"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/geneticist")
 	greyscale_config = /datum/greyscale_config/tablet/stripe_split
 	greyscale_colors = "#FAFAFA#000099#0097CA"
 	starting_programs = list(
@@ -229,8 +216,7 @@
 
 /obj/item/modular_computer/pda/medical
 	name = "medical PDA"
-	icon_state = "/obj/item/modular_computer/pda/medical"
-	post_init_icon_state = "pda"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/medical")
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#FAFAFA#000099#3F96CC"
 	starting_programs = list(
@@ -240,8 +226,7 @@
 
 /obj/item/modular_computer/pda/medical/paramedic
 	name = "paramedic PDA"
-	icon_state = "/obj/item/modular_computer/pda/medical/paramedic"
-	post_init_icon_state = "pda"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/medical/paramedic")
 	greyscale_colors = "#28334D#000099#3F96CC"
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
@@ -250,8 +235,7 @@
 
 /obj/item/modular_computer/pda/viro
 	name = "virology PDA"
-	icon_state = "/obj/item/modular_computer/pda/viro"
-	post_init_icon_state = "pda"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/viro")
 	greyscale_config = /datum/greyscale_config/tablet/stripe_split
 	greyscale_colors = "#FAFAFA#355FAC#57C451"
 	starting_programs = list(
@@ -261,8 +245,7 @@
 
 /obj/item/modular_computer/pda/chemist
 	name = "chemist PDA"
-	icon_state = "/obj/item/modular_computer/pda/chemist"
-	post_init_icon_state = "pda"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/chemist")
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#FAFAFA#355FAC#EA6400"
 
@@ -290,8 +273,7 @@
 
 /obj/item/modular_computer/pda/cargo
 	name = "cargo technician PDA"
-	icon_state = "/obj/item/modular_computer/pda/cargo"
-	post_init_icon_state = "pda"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/cargo")
 	greyscale_colors = "#D6B328#6506CA"
 	stored_paper = 20
 	starting_programs = list(

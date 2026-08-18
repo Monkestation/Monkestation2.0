@@ -18,10 +18,9 @@
 
 /// Set the icon state for preview map_icons, used so we can unit test the given icon_state
 #if defined(UNIT_TESTS)
-#define MAP_ICON(icon_state, map_icon_state) \
-	icon_state = ##icon_state; \
+#define SETUP_MAP_ICONS(compile_icon_state, map_icon_state) \
+	icon_state = ##compile_icon_state; \
 	icon_state_map = ##map_icon_state;
 #else
-#define MAP_ICON(icon_state, map_icon_state) \
-	icon_state = MAP_SWITCH(##icon_state, ##map_icon_state);
+#define SETUP_MAP_ICONS(compile_icon_state, map_icon_state) icon_state = MAP_SWITCH(##compile_icon_state, ##map_icon_state)
 #endif

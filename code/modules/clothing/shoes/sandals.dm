@@ -35,8 +35,7 @@
 	name = "sandals"
 	desc = "Rumor has it that wearing these with socks puts you on a no entry list in several sectors."
 	icon = 'icons/map_icons/clothing/shoes.dmi'
-	icon_state = "/obj/item/clothing/shoes/colorable_sandals"
-	post_init_icon_state = "sandals"
+	SETUP_MAP_ICONS("sandals", "/obj/item/clothing/shoes/colorable_sandals")
 	greyscale_colors = "#383631"
 	greyscale_config = /datum/greyscale_config/sandals
 	greyscale_config_worn = /datum/greyscale_config/sandals/worn

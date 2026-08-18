@@ -1057,8 +1057,7 @@
 	name = "peculiar watch"
 	desc = "It's Hero Time!"
 	icon = 'icons/map_icons/clothing/gloves.dmi'
-	icon_state = "/obj/item/clothing/gloves/peculiar_watch"
-	post_init_icon_state = "peculiar_watch"
+	SETUP_MAP_ICONS("peculiar_watch", "/obj/item/clothing/gloves/peculiar_watch")
 	inhand_icon_state = null
 	greyscale_config = /datum/greyscale_config/peculiar_watch
 	greyscale_config_worn = /datum/greyscale_config/peculiar_watch_worn

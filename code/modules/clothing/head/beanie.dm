@@ -8,8 +8,7 @@
 	desc = "A stylish beanie. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their heads."
 	icon = 'icons/map_icons/clothing/head/_head.dmi'
 	worn_icon = 'icons/mob/clothing/head/beanie.dmi'
-	icon_state = "/obj/item/clothing/head/beanie"
-	post_init_icon_state = "beanie"
+	SETUP_MAP_ICONS("beanie", "/obj/item/clothing/head/beanie")
 	custom_price = PAYCHECK_CREW * 1.2
 	greyscale_config = /datum/greyscale_config/beanie
 	greyscale_config_worn = /datum/greyscale_config/beanie/worn

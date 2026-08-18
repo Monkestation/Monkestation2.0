@@ -1,8 +1,7 @@
 /obj/item/modular_computer/pda
 	name = "pda"
 	icon = 'icons/map_icons/items/pda.dmi'
-	icon_state = "/obj/item/modular_computer/pda"
-	post_init_icon_state = "pda"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda")
 	worn_icon_state = "nothing"
 	base_icon_state = "tablet"
 	greyscale_config = /datum/greyscale_config/tablet

@@ -312,8 +312,7 @@
 	name = "button-down shirt with slacks"
 	desc = "A fancy button-down shirt with slacks."
 	icon = 'icons/map_icons/clothing/under/costume.dmi'
-	icon_state = "/obj/item/clothing/under/costume/buttondown/slacks"
-	post_init_icon_state = "buttondown_slacks"
+	SETUP_MAP_ICONS("buttondown_slacks", "/obj/item/clothing/under/costume/buttondown/slacks")
 	greyscale_config = /datum/greyscale_config/buttondown_slacks
 	greyscale_config_worn = /datum/greyscale_config/buttondown_slacks_worn
 	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
@@ -323,8 +322,7 @@
 	name = "button-down shirt with shorts"
 	desc = "A fancy button-down shirt with shorts."
 	icon = 'icons/map_icons/clothing/under/costume.dmi'
-	icon_state = "/obj/item/clothing/under/costume/buttondown/shorts"
-	post_init_icon_state = "buttondown_shorts"
+	SETUP_MAP_ICONS("buttondown_shorts", "/obj/item/clothing/under/costume/buttondown/shorts")
 	greyscale_config = /datum/greyscale_config/buttondown_shorts
 	greyscale_config_worn = /datum/greyscale_config/buttondown_shorts_worn
 	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
@@ -346,8 +344,7 @@
 /obj/item/clothing/under/costume/football_suit
 	name = "football uniform"
 	icon = 'icons/map_icons/clothing/under/costume.dmi'
-	icon_state = "/obj/item/clothing/under/costume/football_suit"
-	post_init_icon_state = "football_suit"
+	SETUP_MAP_ICONS("football_suit", "/obj/item/clothing/under/costume/football_suit")
 	can_adjust = FALSE
 	greyscale_config = /datum/greyscale_config/football_suit
 	greyscale_config_worn = /datum/greyscale_config/football_suit_worn

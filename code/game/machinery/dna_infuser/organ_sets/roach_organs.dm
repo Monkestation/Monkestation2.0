@@ -50,8 +50,7 @@
 	name = "mutated roach-heart"
 	desc = "Roach DNA infused into what was once a normal heart."
 	icon = 'icons/map_icons/items/_item.dmi'
-	icon_state = "/obj/item/organ/internal/heart/roach"
-	post_init_icon_state = "heart"
+	SETUP_MAP_ICONS("heart", "/obj/item/organ/internal/heart/roach")
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = ROACH_COLORS
 
@@ -157,8 +156,7 @@
 	name = "mutated roach-stomach"
 	desc = "Roach DNA infused into what was once a normal stomach."
 	icon = 'icons/map_icons/items/_item.dmi'
-	icon_state = "/obj/item/organ/internal/stomach/roach"
-	post_init_icon_state = "stomach"
+	SETUP_MAP_ICONS("stomach", "/obj/item/organ/internal/stomach/roach")
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = ROACH_COLORS
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
@@ -181,8 +179,7 @@
 	liver_resistance = 0.25 // But if they manage to get in you're screwed
 
 	icon = 'icons/map_icons/items/_item.dmi'
-	icon_state = "/obj/item/organ/internal/liver/roach"
-	post_init_icon_state = "liver"
+	SETUP_MAP_ICONS("liver", "/obj/item/organ/internal/liver/roach")
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = ROACH_COLORS
 
@@ -214,8 +211,7 @@
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 
 	icon = 'icons/map_icons/items/_item.dmi'
-	icon_state = "/obj/item/organ/internal/appendix/roach"
-	post_init_icon_state = "appendix"
+	SETUP_MAP_ICONS("appendix", "/obj/item/organ/internal/appendix/roach")
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = ROACH_COLORS
 

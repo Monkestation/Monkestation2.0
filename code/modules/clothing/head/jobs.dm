@@ -125,8 +125,7 @@
 	name = "captain's beret"
 	desc = "For the Captains known for their sense of fashion."
 	icon = 'icons/map_icons/clothing/head/_head.dmi'
-	icon_state = "/obj/item/clothing/head/caphat/beret"
-	post_init_icon_state = "beret_badge"
+	SETUP_MAP_ICONS("beret_badge", "/obj/item/clothing/head/caphat/beret")
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#41579a#e6a345"
@@ -292,8 +291,7 @@
 	name = "beret"
 	desc = "A beret, a mime's favorite headwear."
 	icon = 'icons/map_icons/clothing/head/beret.dmi'
-	icon_state = "/obj/item/clothing/head/beret"
-	post_init_icon_state = "beret"
+	SETUP_MAP_ICONS("beret", "/obj/item/clothing/head/beret")
 	dog_fashion = /datum/dog_fashion/head/beret
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
@@ -339,8 +337,7 @@
 	name = "head of security's beret"
 	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection."
 	icon = 'icons/map_icons/clothing/head/_head.dmi'
-	icon_state = "/obj/item/clothing/head/hats/hos/beret"
-	post_init_icon_state = "beret_badge"
+	SETUP_MAP_ICONS("beret_badge", "/obj/item/clothing/head/hats/hos/beret")
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#39393f#f0cc8f"
@@ -460,8 +457,7 @@
 /obj/item/clothing/head/beret/sec
 	name = "security beret"
 	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
-	icon_state = "/obj/item/clothing/head/beret/sec"
-	post_init_icon_state = "beret_badge"
+	SETUP_MAP_ICONS("beret_badge", "/obj/item/clothing/head/beret/sec")
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#a52f29#F2F2F2"
@@ -483,37 +479,32 @@
 /obj/item/clothing/head/beret/sec/navywarden
 	name = "warden's beret"
 	desc = "A special beret with the Warden's insignia emblazoned on it. For wardens with class."
-	icon_state = "/obj/item/clothing/head/beret/sec/navywarden"
-	post_init_icon_state = "beret_badge"
+	SETUP_MAP_ICONS("beret_badge", "/obj/item/clothing/head/beret/sec/navywarden")
 	greyscale_colors = "#638799#ebebeb"
 	strip_delay = 60
 
 /obj/item/clothing/head/beret/sec/navyofficer
 	desc = "A special beret with the security insignia emblazoned on it. For officers with class."
-	icon_state = "/obj/item/clothing/head/beret/sec/navyofficer"
-	post_init_icon_state = "beret_badge"
+	SETUP_MAP_ICONS("beret_badge", "/obj/item/clothing/head/beret/sec/navyofficer")
 	greyscale_colors = "#638799#a52f29"
 
 //Science
 /obj/item/clothing/head/beret/science
 	name = "science beret"
 	desc = "A science-themed beret for our hardworking scientists."
-	icon_state = "/obj/item/clothing/head/beret/science"
-	post_init_icon_state = "beret"
+	SETUP_MAP_ICONS("beret", "/obj/item/clothing/head/beret/science")
 	greyscale_colors = "#8D008F"
 	flags_1 = NONE
 
 /obj/item/clothing/head/beret/science/robo
 	name = "robotics beret"
 	desc = "A sleek black beret designed with high-durability nano-mesh fiber - or so the roboticists claim."
-	icon_state = "/obj/item/clothing/head/beret/science/robo"
-	post_init_icon_state = "beret"
+	SETUP_MAP_ICONS("beret", "/obj/item/clothing/head/beret/science/robo")
 	greyscale_colors = "#3E3E48"
 
 /obj/item/clothing/head/beret/science/rd
 	desc = "A purple badge with the insignia of the Research Director attached. For the paper-shuffler in you!"
-	icon_state = "/obj/item/clothing/head/beret/science/rd"
-	post_init_icon_state = "beret_badge"
+	SETUP_MAP_ICONS("beret_badge", "/obj/item/clothing/head/beret/science/rd")
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#7e1980#c9cbcb"
@@ -522,23 +513,20 @@
 /obj/item/clothing/head/beret/medical
 	name = "medical beret"
 	desc = "A medical-flavored beret for the doctor in you!"
-	icon_state = "/obj/item/clothing/head/beret/medical"
-	post_init_icon_state = "beret"
+	SETUP_MAP_ICONS("beret", "/obj/item/clothing/head/beret/medical")
 	greyscale_colors = COLOR_WHITE
 	flags_1 = NONE
 
 /obj/item/clothing/head/beret/medical/paramedic
 	name = "paramedic beret"
 	desc = "For finding corpses in style!"
-	icon_state = "/obj/item/clothing/head/beret/medical/paramedic"
-	post_init_icon_state = "beret"
+	SETUP_MAP_ICONS("beret", "/obj/item/clothing/head/beret/medical/paramedic")
 	greyscale_colors = "#16313D"
 
 /obj/item/clothing/head/beret/medical/cmo
 	name = "chief medical officer beret"
 	desc = "A beret in a distinct surgical turquoise!"
-	icon_state = "/obj/item/clothing/head/beret/medical/cmo"
-	post_init_icon_state = "beret_badge"
+	SETUP_MAP_ICONS("beret_badge", "/obj/item/clothing/head/beret/medical/cmo")
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#5EB8B8#c9cbcb"
@@ -546,15 +534,13 @@
 /obj/item/clothing/head/beret/medical/virologist
 	name = "virologist beret"
 	desc = "Sneezing in this expensive beret would be a waste of a good beret."
-	icon_state = "/obj/item/clothing/head/beret/medical/virologist"
-	post_init_icon_state = "beret"
+	SETUP_MAP_ICONS("beret", "/obj/item/clothing/head/beret/medical/virologist")
 	greyscale_colors = "#198019"
 
 /obj/item/clothing/head/beret/medical/chemist
 	name = "chemist beret"
 	desc = "Not acid-proof!"
-	icon_state = "/obj/item/clothing/head/beret/medical/chemist"
-	post_init_icon_state = "beret"
+	SETUP_MAP_ICONS("beret", "/obj/item/clothing/head/beret/medical/chemist")
 	greyscale_colors = "#D15B1B"
 
 /obj/item/clothing/head/beret/medical/deforest
@@ -596,16 +582,14 @@
 /obj/item/clothing/head/beret/engi
 	name = "engineering beret"
 	desc = "Might not protect you from radiation, but definitely will protect you from looking unfashionable!"
-	icon_state = "/obj/item/clothing/head/beret/engi"
-	post_init_icon_state = "beret"
+	SETUP_MAP_ICONS("beret", "/obj/item/clothing/head/beret/engi")
 	greyscale_colors = "#FFBC30"
 	flags_1 = NONE
 
 /obj/item/clothing/head/beret/engi/ce
 	name = "chief engineer's beret"
 	desc = "A fancy beret designed exactly to the Chief Engineer's tastes, minus the LEDs."
-	icon_state = "/obj/item/clothing/head/beret/engi/ce"
-	post_init_icon_state = "beret_badge"
+	SETUP_MAP_ICONS("beret_badge", "/obj/item/clothing/head/beret/engi/ce")
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#FFFFFF#2E992E"
@@ -613,8 +597,7 @@
 /obj/item/clothing/head/beret/atmos
 	name = "atmospheric beret"
 	desc = "While \"pipes\" and \"style\" might not rhyme, this beret sure makes you feel like they should!"
-	icon_state = "/obj/item/clothing/head/beret/atmos"
-	post_init_icon_state = "beret"
+	SETUP_MAP_ICONS("beret", "/obj/item/clothing/head/beret/atmos")
 	greyscale_colors = "#59D7FF"
 	flags_1 = NONE
 
@@ -622,8 +605,7 @@
 /obj/item/clothing/head/beret/cargo
 	name = "cargo beret"
 	desc = "No need to compensate when you can wear this beret!"
-	icon_state = "/obj/item/clothing/head/beret/cargo"
-	post_init_icon_state = "beret"
+	SETUP_MAP_ICONS("beret", "/obj/item/clothing/head/beret/cargo")
 	greyscale_colors = "#b7723d"
 	flags_1 = NONE
 
@@ -636,8 +618,7 @@
 /obj/item/clothing/head/beret/durathread
 	name = "durathread beret"
 	desc = "A beret made from durathread, its resilient fibers provide some protection to the wearer."
-	icon_state = "/obj/item/clothing/head/beret/durathread"
-	post_init_icon_state = "beret_badge"
+	SETUP_MAP_ICONS("beret_badge", "/obj/item/clothing/head/beret/durathread")
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#C5D4F3#ECF1F8"
@@ -665,8 +646,7 @@
 /obj/item/clothing/head/beret/centcom_formal
 	name = "\improper CentCom Formal Beret"
 	desc = "Sometimes, a compromise between fashion and defense needs to be made. Thanks to Nanotrasen's most recent nano-fabric durability enhancements, this time, it's not the case."
-	icon_state = "/obj/item/clothing/head/beret/centcom_formal"
-	post_init_icon_state = "beret_badge"
+	SETUP_MAP_ICONS("beret_badge", "/obj/item/clothing/head/beret/centcom_formal")
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#46b946#f2c42e"
@@ -694,8 +674,7 @@
 /obj/item/clothing/head/beret/militia
 	name = "\improper Militia General's Beret"
 	desc = "A rallying cry for the inhabitants of the Spinward Sector, the heroes that wear this keep the horrors of the galaxy at bay. Call them, and they'll be there in a minute!"
-	icon_state = "/obj/item/clothing/head/beret/militia"
-	post_init_icon_state = "beret_badge"
+	SETUP_MAP_ICONS("beret_badge", "/obj/item/clothing/head/beret/militia")
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#43523d#a2abb0"

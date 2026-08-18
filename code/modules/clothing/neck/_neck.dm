@@ -68,8 +68,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_CREW
 	icon = 'icons/map_icons/clothing/neck.dmi'
-	icon_state = "/obj/item/clothing/neck/bowtie"
-	post_init_icon_state = "bowtie_greyscale"
+	SETUP_MAP_ICONS("bowtie_greyscale", "/obj/item/clothing/neck/bowtie")
 	greyscale_config = /datum/greyscale_config/ties
 	greyscale_config_worn = /datum/greyscale_config/ties/worn
 	greyscale_colors = "#151516ff"
@@ -91,8 +90,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_CREW
 	icon = 'icons/map_icons/clothing/neck.dmi'
-	icon_state = "/obj/item/clothing/neck/tie"
-	post_init_icon_state = "tie_greyscale_tied"
+	SETUP_MAP_ICONS("tie_greyscale_tied", "/obj/item/clothing/neck/tie")
 	greyscale_config = /datum/greyscale_config/ties
 	greyscale_config_worn = /datum/greyscale_config/ties/worn
 	greyscale_colors = "#4d4e4e"
@@ -194,14 +192,12 @@
 
 /obj/item/clothing/neck/tie/blue
 	name = "blue tie"
-	icon_state = "/obj/item/clothing/neck/tie/blue"
-	post_init_icon_state = "tie_greyscale_untied"
+	SETUP_MAP_ICONS("tie_greyscale_untied", "/obj/item/clothing/neck/tie/blue")
 	greyscale_colors = "#5275b6ff"
 
 /obj/item/clothing/neck/tie/red
 	name = "red tie"
-	icon_state = "/obj/item/clothing/neck/tie/red"
-	post_init_icon_state = "tie_greyscale_untied"
+	SETUP_MAP_ICONS("tie_greyscale_untied", "/obj/item/clothing/neck/tie/red")
 	greyscale_colors = "#c23838ff"
 
 /obj/item/clothing/neck/tie/red/tied
@@ -219,8 +215,7 @@
 
 /obj/item/clothing/neck/tie/black
 	name = "black tie"
-	icon_state = "/obj/item/clothing/neck/tie/black"
-	post_init_icon_state = "tie_greyscale_untied"
+	SETUP_MAP_ICONS("tie_greyscale_untied", "/obj/item/clothing/neck/tie/black")
 	greyscale_colors = "#151516ff"
 
 /obj/item/clothing/neck/tie/black/tied
@@ -415,8 +410,7 @@
 	name = "scarf"
 	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
 	icon = 'icons/map_icons/clothing/neck.dmi'
-	icon_state = "/obj/item/clothing/neck/scarf"
-	post_init_icon_state = "scarf"
+	SETUP_MAP_ICONS("scarf", "/obj/item/clothing/neck/scarf")
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#EEEEEE#EEEEEE"
@@ -426,75 +420,63 @@
 
 /obj/item/clothing/neck/scarf/black
 	name = "black scarf"
-	icon_state = "/obj/item/clothing/neck/scarf/black"
-	post_init_icon_state = "scarf"
+	SETUP_MAP_ICONS("scarf", "/obj/item/clothing/neck/scarf/black")
 	greyscale_colors = "#4A4A4B#4A4A4B"
 
 /obj/item/clothing/neck/scarf/pink
 	name = "pink scarf"
-	icon_state = "/obj/item/clothing/neck/scarf/pink"
-	post_init_icon_state = "scarf"
+	SETUP_MAP_ICONS("scarf", "/obj/item/clothing/neck/scarf/pink")
 	greyscale_colors = "#F699CD#F699CD"
 
 /obj/item/clothing/neck/scarf/red
 	name = "red scarf"
-	icon_state = "/obj/item/clothing/neck/scarf/red"
-	post_init_icon_state = "scarf"
+	SETUP_MAP_ICONS("scarf", "/obj/item/clothing/neck/scarf/red")
 	greyscale_colors = "#D91414#D91414"
 
 /obj/item/clothing/neck/scarf/green
 	name = "green scarf"
-	icon_state = "/obj/item/clothing/neck/scarf/green"
-	post_init_icon_state = "scarf"
+	SETUP_MAP_ICONS("scarf", "/obj/item/clothing/neck/scarf/green")
 	greyscale_colors = "#5C9E54#5C9E54"
 
 /obj/item/clothing/neck/scarf/darkblue
 	name = "dark blue scarf"
-	icon_state = "/obj/item/clothing/neck/scarf/darkblue"
-	post_init_icon_state = "scarf"
+	SETUP_MAP_ICONS("scarf", "/obj/item/clothing/neck/scarf/darkblue")
 	greyscale_colors = "#1E85BC#1E85BC"
 
 /obj/item/clothing/neck/scarf/purple
 	name = "purple scarf"
-	icon_state = "/obj/item/clothing/neck/scarf/purple"
-	post_init_icon_state = "scarf"
+	SETUP_MAP_ICONS("scarf", "/obj/item/clothing/neck/scarf/purple")
 	greyscale_colors = "#9557C5#9557C5"
 
 /obj/item/clothing/neck/scarf/yellow
 	name = "yellow scarf"
-	icon_state = "/obj/item/clothing/neck/scarf/yellow"
-	post_init_icon_state = "scarf"
+	SETUP_MAP_ICONS("scarf", "/obj/item/clothing/neck/scarf/yellow")
 	greyscale_colors = "#E0C14F#E0C14F"
 
 /obj/item/clothing/neck/scarf/orange
 	name = "orange scarf"
-	icon_state = "/obj/item/clothing/neck/scarf/orange"
-	post_init_icon_state = "scarf"
+	SETUP_MAP_ICONS("scarf", "/obj/item/clothing/neck/scarf/orange")
 	greyscale_colors = "#C67A4B#C67A4B"
 
 /obj/item/clothing/neck/scarf/cyan
 	name = "cyan scarf"
-	icon_state = "/obj/item/clothing/neck/scarf/cyan"
-	post_init_icon_state = "scarf"
+	SETUP_MAP_ICONS("scarf", "/obj/item/clothing/neck/scarf/cyan")
 	greyscale_colors = "#54A3CE#54A3CE"
 
 /obj/item/clothing/neck/scarf/zebra
 	name = "zebra scarf"
-	icon_state = "/obj/item/clothing/neck/scarf/zebra"
-	post_init_icon_state = "scarf"
+	SETUP_MAP_ICONS("scarf", "/obj/item/clothing/neck/scarf/zebra")
 	greyscale_colors = "#333333#EEEEEE"
 
 /obj/item/clothing/neck/scarf/christmas
 	name = "christmas scarf"
-	icon_state = "/obj/item/clothing/neck/scarf/christmas"
-	post_init_icon_state = "scarf"
+	SETUP_MAP_ICONS("scarf", "/obj/item/clothing/neck/scarf/christmas")
 	greyscale_colors = "#038000#960000"
 
 /obj/item/clothing/neck/large_scarf
 	name = "large scarf"
 	icon = 'icons/map_icons/clothing/neck.dmi'
-	icon_state = "/obj/item/clothing/neck/large_scarf"
-	post_init_icon_state = "large_scarf"
+	SETUP_MAP_ICONS("large_scarf", "/obj/item/clothing/neck/large_scarf")
 	greyscale_config = /datum/greyscale_config/large_scarf
 	greyscale_config_worn = /datum/greyscale_config/large_scarf_worn
 	greyscale_colors = "#C6C6C6#EEEEEE"
@@ -505,35 +487,30 @@
 
 /obj/item/clothing/neck/large_scarf/red
 	name = "large red scarf"
-	icon_state = "/obj/item/clothing/neck/large_scarf/red"
-	post_init_icon_state = "large_scarf"
+	SETUP_MAP_ICONS("large_scarf", "/obj/item/clothing/neck/large_scarf/red")
 	greyscale_colors = "#8A2908#A06D66"
 
 /obj/item/clothing/neck/large_scarf/green
 	name = "large green scarf"
-	icon_state = "/obj/item/clothing/neck/large_scarf/green"
-	post_init_icon_state = "large_scarf"
+	SETUP_MAP_ICONS("large_scarf", "/obj/item/clothing/neck/large_scarf/green")
 	greyscale_colors = "#525629#888674"
 
 /obj/item/clothing/neck/large_scarf/blue
 	name = "large blue scarf"
-	icon_state = "/obj/item/clothing/neck/large_scarf/blue"
-	post_init_icon_state = "large_scarf"
+	SETUP_MAP_ICONS("large_scarf", "/obj/item/clothing/neck/large_scarf/blue")
 	greyscale_colors = "#20396C#6F7F91"
 
 /obj/item/clothing/neck/large_scarf/syndie
 	name = "suspicious looking striped scarf"
 	desc = "Ready to operate."
-	icon_state = "/obj/item/clothing/neck/large_scarf/syndie"
-	post_init_icon_state = "large_scarf"
+	SETUP_MAP_ICONS("large_scarf", "/obj/item/clothing/neck/large_scarf/syndie")
 	greyscale_colors = "#B40000#545350"
 	armor_type = /datum/armor/large_scarf_syndie
 
 /obj/item/clothing/neck/infinity_scarf
 	name = "infinity scarf"
 	icon = 'icons/map_icons/clothing/neck.dmi'
-	icon_state = "/obj/item/clothing/neck/infinity_scarf"
-	post_init_icon_state = "infinity_scarf"
+	SETUP_MAP_ICONS("infinity_scarf", "/obj/item/clothing/neck/infinity_scarf")
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#EEEEEE"

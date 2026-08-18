@@ -51,8 +51,7 @@
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#EEEEEE#AA0000"
 	icon = 'icons/map_icons/clothing/mask.dmi'
-	icon_state = "/obj/item/clothing/mask/kitsune"
-	post_init_icon_state = "kitsune"
+	SETUP_MAP_ICONS("kitsune", "/obj/item/clothing/mask/kitsune")
 	greyscale_config = /datum/greyscale_config/kitsune
 	greyscale_config_worn = /datum/greyscale_config/kitsune/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
@@ -89,8 +88,7 @@
 	name = "rebellion mask"
 	desc = "Mask that is usually used during rebellions by insurgents. It covers the entire face and makes you unrecognizable."
 	icon = 'icons/map_icons/clothing/mask.dmi'
-	icon_state = "/obj/item/clothing/mask/rebellion"
-	post_init_icon_state = "rebellion_mask"
+	SETUP_MAP_ICONS("rebellion_mask", "/obj/item/clothing/mask/rebellion")
 	inhand_icon_state = null
 	greyscale_config = /datum/greyscale_config/rebellion_mask
 	greyscale_config_worn = /datum/greyscale_config/rebellion_mask/worn

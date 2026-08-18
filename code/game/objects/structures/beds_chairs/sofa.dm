@@ -100,29 +100,24 @@ COLORED_SOFA(/obj/structure/chair/sofa, maroon, SOFA_MAROON)
 	name = "bench"
 	desc = "Perfectly designed to be comfortable to sit on, and hellish to sleep on."
 	icon = 'icons/map_icons/objects.dmi'
-	icon_state = "/obj/structure/chair/sofa/bench"
-	post_init_icon_state = "bench_middle"
+	SETUP_MAP_ICONS("bench_middle", "/obj/structure/chair/sofa/bench")
 	greyscale_config = /datum/greyscale_config/bench_middle
 	greyscale_colors = "#af7d28"
 
 /obj/structure/chair/sofa/bench/left
-	icon_state = "/obj/structure/chair/sofa/bench/left"
-	post_init_icon_state = "bench_left"
+	SETUP_MAP_ICONS("bench_left", "/obj/structure/chair/sofa/bench/left")
 	greyscale_config = /datum/greyscale_config/bench_left
 
 /obj/structure/chair/sofa/bench/right
-	icon_state = "/obj/structure/chair/sofa/bench/right"
-	post_init_icon_state = "bench_right"
+	SETUP_MAP_ICONS("bench_right", "/obj/structure/chair/sofa/bench/right")
 	greyscale_config = /datum/greyscale_config/bench_right
 
 /obj/structure/chair/sofa/bench/corner
-	icon_state = "/obj/structure/chair/sofa/bench/corner"
-	post_init_icon_state = "bench_corner"
+	SETUP_MAP_ICONS("bench_corner", "/obj/structure/chair/sofa/bench/corner")
 	greyscale_config = /datum/greyscale_config/bench_corner
 
 /obj/structure/chair/sofa/bench/solo
-	icon_state = "/obj/structure/chair/sofa/bench/solo"
-	post_init_icon_state = "bench_solo"
+	SETUP_MAP_ICONS("bench_solo", "/obj/structure/chair/sofa/bench/solo")
 	greyscale_config = /datum/greyscale_config/bench_solo
 
 

@@ -209,8 +209,7 @@
 	name = "suspenders"
 	desc = "They suspend the illusion of the mime's play."
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
-	icon_state = "/obj/item/clothing/suit/toggle/suspenders"
-	post_init_icon_state = "suspenders"
+	SETUP_MAP_ICONS("suspenders", "/obj/item/clothing/suit/toggle/suspenders")
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 	worn_icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here

@@ -871,8 +871,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "\improper E-Cigarette"
 	desc = "A classy and highly sophisticated electronic cigarette, for classy and dignified gentlemen. A warning label reads \"Warning: Do not fill with flammable materials.\""//<<< i'd vape to that.
 	icon = 'icons/map_icons/clothing/mask.dmi'
-	icon_state = "/obj/item/clothing/mask/vape"
-	post_init_icon_state = "vape"
+	SETUP_MAP_ICONS("vape", "/obj/item/clothing/mask/vape")
 	worn_icon_state = "vape_worn"
 	greyscale_config = /datum/greyscale_config/vape
 	greyscale_config_worn = /datum/greyscale_config/vape/worn
@@ -1060,41 +1059,41 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	handle_reagents()
 
 /obj/item/clothing/mask/vape/red
-	icon_state = "/obj/item/clothing/mask/vape/red"
+	SETUP_MAP_ICONS("vape", "/obj/item/clothing/mask/vape/red")
 	greyscale_colors = "#A02525"
 	flags_1 = NONE
 
 /obj/item/clothing/mask/vape/blue
-	icon_state = "/obj/item/clothing/mask/vape/blue"
+	SETUP_MAP_ICONS("vape", "/obj/item/clothing/mask/vape/blue")
 	greyscale_colors = "#294A98"
 	flags_1 = NONE
 
 /obj/item/clothing/mask/vape/purple
-	icon_state = "/obj/item/clothing/mask/vape/purple"
+	SETUP_MAP_ICONS("vape", "/obj/item/clothing/mask/vape/purple")
 	greyscale_colors = "#9900CC"
 	flags_1 = NONE
 
 /obj/item/clothing/mask/vape/green
-	icon_state = "/obj/item/clothing/mask/vape/green"
+	SETUP_MAP_ICONS("vape", "/obj/item/clothing/mask/vape/green")
 	greyscale_colors = "#3D9829"
 	flags_1 = NONE
 
 /obj/item/clothing/mask/vape/yellow
-	icon_state = "/obj/item/clothing/mask/vape/yellow"
+	SETUP_MAP_ICONS("vape", "/obj/item/clothing/mask/vape/yellow")
 	greyscale_colors = "#DAC20E"
 	flags_1 = NONE
 
 /obj/item/clothing/mask/vape/orange
-	icon_state = "/obj/item/clothing/mask/vape/orange"
+	SETUP_MAP_ICONS("vape", "/obj/item/clothing/mask/vape/orange")
 	greyscale_colors = "#da930e"
 	flags_1 = NONE
 
 /obj/item/clothing/mask/vape/black
-	icon_state = "/obj/item/clothing/mask/vape/black"
+	SETUP_MAP_ICONS("vape", "/obj/item/clothing/mask/vape/black")
 	greyscale_colors = "#2e2e2e"
 	flags_1 = NONE
 
 /obj/item/clothing/mask/vape/white
-	icon_state = "/obj/item/clothing/mask/vape/white"
+	SETUP_MAP_ICONS("vape", "/obj/item/clothing/mask/vape/white")
 	greyscale_colors = "#DCDCDC"
 	flags_1 = NONE

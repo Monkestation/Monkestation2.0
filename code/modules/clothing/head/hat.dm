@@ -84,8 +84,7 @@
 	name = "flat cap"
 	desc = "A working man's cap."
 	icon = 'icons/map_icons/clothing/head/_head.dmi'
-	icon_state = "/obj/item/clothing/head/flatcap"
-	post_init_icon_state = "beret_flat"
+	SETUP_MAP_ICONS("beret_flat", "/obj/item/clothing/head/flatcap")
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#8F7654"
@@ -186,8 +185,7 @@
 	name = "jester hat"
 	desc = "A hat with bells, to add some merriness to the suit."
 	icon = 'icons/map_icons/clothing/head/_head.dmi'
-	icon_state = "/obj/item/clothing/head/costume/jester"
-	post_init_icon_state = "jester_hat"
+	SETUP_MAP_ICONS("jester_hat", "/obj/item/clothing/head/costume/jester")
 	greyscale_config = /datum/greyscale_config/jester_hat
 	greyscale_config_worn = /datum/greyscale_config/jester_hat_worn
 	greyscale_colors = "#51E33F#FF1F1F#FFC130"
@@ -327,8 +325,7 @@
 	name = "alternate jester hat"
 	desc = "It's more a hood really."
 	icon = 'icons/map_icons/clothing/head/_head.dmi'
-	icon_state = "/obj/item/clothing/head/costume/jester2"
-	post_init_icon_state = "jester2"
+	SETUP_MAP_ICONS("jester2", "/obj/item/clothing/head/costume/jester2")
 	greyscale_config = /datum/greyscale_config/jester2
 	greyscale_config_worn = /datum/greyscale_config/jester2_worn
 	greyscale_colors = "#FDEA1B#FF0000"

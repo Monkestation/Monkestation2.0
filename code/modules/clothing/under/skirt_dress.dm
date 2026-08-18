@@ -46,8 +46,7 @@
 	name = "plaid skirt"
 	desc = "A preppy plaid skirt with a white blouse."
 	icon = 'icons/map_icons/clothing/under/dress.dmi'
-	icon_state = "/obj/item/clothing/under/dress/skirt/plaid"
-	post_init_icon_state = "plaidskirt"
+	SETUP_MAP_ICONS("plaidskirt", "/obj/item/clothing/under/dress/skirt/plaid")
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
 	custom_price = PAYCHECK_CREW
@@ -61,8 +60,7 @@
 	name = "turtleneck skirt"
 	desc = "A casual turtleneck skirt."
 	icon = 'icons/map_icons/clothing/under/dress.dmi'
-	icon_state = "/obj/item/clothing/under/dress/skirt/turtleskirt"
-	post_init_icon_state = "turtleskirt"
+	SETUP_MAP_ICONS("turtleskirt", "/obj/item/clothing/under/dress/skirt/turtleskirt")
 	greyscale_config = /datum/greyscale_config/turtleskirt
 	greyscale_config_worn = /datum/greyscale_config/turtleskirt_worn
 	greyscale_colors = "#cc0000#5f5f5f"
@@ -73,8 +71,7 @@
 	name = "tango dress"
 	desc = "Filled with Latin fire."
 	icon = 'icons/map_icons/clothing/under/dress.dmi'
-	icon_state = "/obj/item/clothing/under/dress/tango"
-	post_init_icon_state = "tango"
+	SETUP_MAP_ICONS("tango", "/obj/item/clothing/under/dress/tango")
 	custom_price = PAYCHECK_CREW
 	greyscale_config = /datum/greyscale_config/tango
 	greyscale_config_worn = /datum/greyscale_config/tango_worn
@@ -86,8 +83,7 @@
 	name = "sundress"
 	desc = "Makes you want to frolic in a field of daisies."
 	icon = 'icons/map_icons/clothing/under/dress.dmi'
-	icon_state = "/obj/item/clothing/under/dress/sundress"
-	post_init_icon_state = "sundress"
+	SETUP_MAP_ICONS("sundress", "/obj/item/clothing/under/dress/sundress")
 	custom_price = PAYCHECK_CREW
 	greyscale_config = /datum/greyscale_config/sundress
 	greyscale_config_worn = /datum/greyscale_config/sundress_worn
@@ -100,8 +96,7 @@
 	name = "ballgown"
 	desc = "A luxurious ballgown best worn before midnight. A signature of the letters 'VA` is stitched on the hem."
 	icon = 'icons/map_icons/clothing/under/dress.dmi'
-	icon_state = "/obj/item/clothing/under/dress/ballgown"
-	post_init_icon_state = "ballgown"
+	SETUP_MAP_ICONS("ballgown", "/obj/item/clothing/under/dress/ballgown")
 	greyscale_config = /datum/greyscale_config/ballgown
 	greyscale_config_worn = /datum/greyscale_config/ballgown_worn
 	greyscale_colors = "#FFFFFF#CCECFF#FFFFFF"
@@ -114,8 +109,7 @@
 	name = "wonderland pinafore"
 	desc = "An adorable pinafore, just don't chase any white rabbits down any holes this time. It has the initials 'VA' embroidered on the skirt hem."
 	icon = 'icons/map_icons/clothing/under/dress.dmi'
-	icon_state = "/obj/item/clothing/under/dress/ballgown"
-	post_init_icon_state = "wlpinafore"
+	SETUP_MAP_ICONS("wlpinafore", "/obj/item/clothing/under/dress/ballgown")
 	greyscale_config = /datum/greyscale_config/wlpinafore
 	greyscale_config_worn = /datum/greyscale_config/wlpinafore_worn
 	greyscale_colors = "#5190c8#FFFFFF"
@@ -128,8 +122,7 @@
 	name = "ribboned gown"
 	desc = "A classy and elegant gown with ribbon sleeves. It has the initials 'VA' stitched on the back hem."
 	icon = 'icons/map_icons/clothing/under/dress.dmi'
-	icon_state = "/obj/item/clothing/under/dress/ballgown"
-	post_init_icon_state = "ribbondress"
+	SETUP_MAP_ICONS("ribbondress", "/obj/item/clothing/under/dress/ballgown")
 	greyscale_config = /datum/greyscale_config/ribbondress
 	greyscale_config_worn = /datum/greyscale_config/ribbondress_worn
 	greyscale_colors = "#845FAA#D5A6F4"
