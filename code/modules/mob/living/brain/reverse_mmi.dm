@@ -130,7 +130,6 @@
 		to_chat(AI, span_warning("Target is no longer near active cameras."))
 		return
 
-	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(undeploy))
 	AI.deployed_shell = owner
 	deploy_init(AI)
 	AI.mind.transfer_to(owner)
@@ -146,6 +145,7 @@
 	connected_ai = AI
 	last_connected_ai = AI
 	mainframe.connected_ipcs |= owner
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(undeploy))
 	RegisterSignal(AI, COMSIG_QDELETING, PROC_REF(ai_deleted))
 	undeployment_action.Grant(owner)
 	update_med_hud_status(owner)
