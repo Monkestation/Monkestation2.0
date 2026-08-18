@@ -28,5 +28,5 @@
 			continue
 
 		if(!icon_exists(thing_map_icon, thing_map_icon_state))
-			TEST_FAIL("[thing] has a map override icon_state set, but it is not present in [thing_map_icon].")
+			TEST_FAIL("[thing] has a map override icon_state set ([thing_map_icon_state]), but it is not present in [thing_map_icon].")
 #endif
