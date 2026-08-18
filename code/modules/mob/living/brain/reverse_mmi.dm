@@ -153,8 +153,8 @@
 	var/obj/item/implant/radio/implant = radio_weakref.resolve()
 	if(!implant?.radio || !AI.radio)
 		return
-		if(AI.radio.syndie) /// AI has Syndie radio if traitor.
-			AI.radio.make_syndie()
+	if(AI.radio.syndie) /// AI has Syndie radio if traitor.
+		AI.radio.make_syndie()
 		implant.radio.subspace_transmission = TRUE
 		implant.radio.command = TRUE
 		implant.radio.channels = AI.radio.channels
