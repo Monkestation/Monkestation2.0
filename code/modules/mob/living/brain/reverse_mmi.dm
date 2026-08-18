@@ -150,8 +150,9 @@
 
 	owner.add_traits(list(TRAIT_SILICON_ACCESS), REF(src))
 
-	var/obj/item/implant/radio/implant = radio_weakref?.resolve()
-	if(implant.radio && AI.radio)
+	var/obj/item/implant/radio/implant = radio_weakref.resolve()
+	if(!implant?.radio || !AI.radio)
+		return
 		if(AI.radio.syndie) /// AI has Syndie radio if traitor.
 			AI.radio.make_syndie()
 		implant.radio.subspace_transmission = TRUE
