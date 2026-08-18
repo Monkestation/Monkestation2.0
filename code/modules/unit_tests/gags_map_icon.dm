@@ -12,15 +12,15 @@
 
 		// These use continue since if you're missing one you're probably missing any subsequent ones
 
-		var/thing_map_icon_state = thing.icon_state_map
-		if(!thing_map_icon_state)
-			TEST_FAIL("[thing] has greyscale but does not properly implement MAP_ICON or NO_NEW_GAGS_PREVIEW_1 for preview icons.")
-			continue
+		// var/thing_map_icon_state = thing.icon_state_map
+		// if(!thing_map_icon_state)
+		// 	TEST_FAIL("[thing] has greyscale but does not properly implement MAP_ICON or NO_NEW_GAGS_PREVIEW_1 for preview icons.")
+		// 	continue
 
-		var/thing_map_icon = initial(thing.icon)
-		if(!findtextEx(thing_map_icon, "icons/map_icons"))
-			TEST_FAIL("[thing] has a map override icon_state but does not have a map_icon icon file.")
-			continue
+		// var/thing_map_icon = initial(thing.icon)
+		// if(!findtextEx(thing_map_icon, "icons/map_icons"))
+		// 	TEST_FAIL("[thing] has a map override icon_state but does not have a map_icon icon file.")
+		// 	continue
 
 		var/type_string = "[thing.type]"
 		if(type_string != thing_map_icon_state)

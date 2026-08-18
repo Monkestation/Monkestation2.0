@@ -42,7 +42,7 @@
 /obj/item/clothing/head/helmet/space/plasmaman
 	name = "plasma envirosuit helmet"
 	desc = "A special containment helmet that allows plasma-based lifeforms to exist safely in an oxygenated environment. It is space-worthy, and may be worn in tandem with other EVA gear."
-	icon = 'icon/map_icons/clothing/head/helmet/space.dmi'
+	icon = 'icons/map_icons/clothing/head/space_helmet.dmi'
 	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman"
 	post_init_icon_state = "plasmaman_helmet"
 	worn_icon_state = "plasmaman_helmet_w"

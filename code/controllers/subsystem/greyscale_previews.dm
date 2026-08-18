@@ -26,8 +26,9 @@ SUBSYSTEM_DEF(greyscale_previews)
 		"turfs" = /turf, // None of these yet but it's harmless to be prepared
 		"mobs" = /mob, // Ditto
 		"clothing/accessory" = /obj/item/clothing/accessory,
-		"clothing/head/helmet/space" = /obj/item/clothing/head/helmet/space,
+		"clothing/gloves" = /obj/item/clothing/gloves,
 		"clothing/head/beret" = /obj/item/clothing/head/beret,
+		"clothing/head/space_helmet" = /obj/item/clothing/head/helmet/space, // Lots of plasaman icons
 		"clothing/head/_head" = /obj/item/clothing/head,
 		"clothing/mask" = /obj/item/clothing/mask,
 		"clothing/neck" = /obj/item/clothing/neck,
