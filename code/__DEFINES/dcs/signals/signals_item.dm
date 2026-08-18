@@ -122,7 +122,7 @@
 /// called on implants, after an implant has been removed: (mob/living/source, silent, special)
 #define COMSIG_IMPLANT_REMOVED "implant_removed"
 
-/// called on implants, after an implant has been moved to an implantcase: (mob/living/source, silent, special)
+///from /obj/item/implantcase/Entered(): (atom/movable/arrived)
 #define COMSIG_IMPLANT_CASED "implant_cased"
 
 /// called as a mindshield is implanted: (mob/user)
