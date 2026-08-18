@@ -76,17 +76,16 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 	)
 
 /datum/electrolyzer_reaction/nob_conversion/react(turf/location, datum/gas_mixture/air_mixture, working_power)
-	/// The supermatter zap power_level.
 	var/list/cached_moles = air_mixture.moles
 	var/old_heat_capacity = air_mixture.heat_capacity()
 	air_mixture.assert_gases(/datum/gas/hypernoblium, /datum/gas/antinoblium)
-	var/electrolysed = min(cached_moles[/datum/gas/hypernoblium], (1.5 * (working_power ** 2)))
+	var/proportion = min(cached_moles[/datum/gas/hypernoblium], (1.5 * (working_power ** 2)))
 
-	air_mixture.adjust_gas(/datum/gas/hypernoblium, -electrolysed)
-	air_mixture.adjust_gas(/datum/gas/antinoblium, electrolysed)
+	air_mixture.adjust_gas(/datum/gas/hypernoblium, -proportion)
+	air_mixture.adjust_gas(/datum/gas/antinoblium, proportion)
 
 	var/list/cached_specific_heat = GAS_META[META_GAS_SPECIFIC_HEAT]
-	var/new_heat_capacity = old_heat_capacity + electrolysed * (cached_specific_heat[/datum/gas/antinoblium] - cached_specific_heat[/datum/gas/hypernoblium])
+	var/new_heat_capacity = old_heat_capacity + proportion * (cached_specific_heat[/datum/gas/antinoblium] - cached_specific_heat[/datum/gas/hypernoblium])
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 		air_mixture.temperature = max(air_mixture.temperature * old_heat_capacity / new_heat_capacity, TCMB)
 
