@@ -6,3 +6,22 @@
 #define LARGEST_Z_LEVEL_INDEX Z_LEVEL_DOWN
 ///A bitfield containing the cardinal directions
 #define CARDINALS_BITFIELD ((1 << 0)|(1 << 1)|(1 << 2)|(1 << 3))
+
+/// Uses the left operator when compiling, uses the right operator when not compiling.
+// Currently uses the CBT macro, but if http://www.byond.com/forum/post/2831057 is ever added,
+// or if map tools ever agree on a standard, this should switch to use that.
+#ifdef CBT
+#define MAP_SWITCH(compile_time, map_time) ##compile_time
+#else
+#define MAP_SWITCH(compile_time, map_time) ##map_time
+#endif
+
+/// Set the icon state for preview map_icons, used so we can unit test the given icon_state
+#if defined(UNIT_TESTS)
+#define MAP_ICON(icon_state, map_icon_state) \
+	icon_state = ##icon_state; \
+	icon_state_map = ##map_icon_state;
+#else
+#define MAP_ICON(icon_state, map_icon_state) \
+	icon_state = MAP_SWITCH(##icon_state, ##map_icon_state);
+#endif

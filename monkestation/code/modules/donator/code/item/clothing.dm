@@ -1056,14 +1056,14 @@
 /obj/item/clothing/gloves/peculiar_watch
 	name = "peculiar watch"
 	desc = "It's Hero Time!"
-	icon_state = "peculiar_watch"
+	icon = 'icons/map_icons/clothing/gloves.dmi'
+	icon_state = "/obj/item/clothing/gloves/peculiar_watch"
+	post_init_icon_state = "peculiar_watch"
 	inhand_icon_state = null
-	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
-	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
-	greyscale_colors = "#F8F8F8#38B40A"
 	greyscale_config = /datum/greyscale_config/peculiar_watch
 	greyscale_config_worn = /datum/greyscale_config/peculiar_watch_worn
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
+	greyscale_colors = "#F8F8F8#38B40A"
 	body_parts_covered = null
 	flags_1 = IS_PLAYER_COLORABLE_1

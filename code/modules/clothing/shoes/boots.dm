@@ -59,7 +59,7 @@
 	equip_delay_other = 50
 	resistance_flags = NONE
 	armor_type = /datum/armor/shoes_jackboots
-	can_be_tied = FALSE
+	can_be_tied = TRUE
 
 /datum/armor/shoes_jackboots
 	bio = 90
@@ -78,6 +78,15 @@
 
 /obj/item/clothing/shoes/jackboots/sec
 	icon_state = "jackboots_sec"
+
+/obj/item/clothing/shoes/jackboots/recolorable
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	icon_state = "/obj/item/clothing/shoes/jackboots/recolorable"
+	post_init_icon_state = "boots"
+	greyscale_config = /datum/greyscale_config/jackboots
+	greyscale_config_worn = /datum/greyscale_config/jackboots/worn
+	greyscale_colors = "#383631"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/jackboots/floortile
 	name = "floor-tile camouflage jackboots"
@@ -134,6 +143,24 @@
 	equip_delay_other = 4 SECONDS
 	clothing_flags = THICKMATERIAL
 	resistance_flags = NONE
+
+/obj/item/clothing/shoes/winterboots/christmas
+	name = "red christmas boots"
+	desc = "A pair of fluffy red christmas boots!"
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	icon_state = "/obj/item/clothing/shoes/winterboots/christmas"
+	post_init_icon_state = "christmas_boots"
+	greyscale_config = /datum/greyscale_config/christmas_boots
+	greyscale_config_worn = /datum/greyscale_config/christmas_boots/worn
+	greyscale_colors = "#cc0f0f#c4c2c2"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/shoes/winterboots/christmas/green
+	name = "green christmas boots"
+	desc = "A pair of fluffy green christmas boots!"
+	icon_state = "/obj/item/clothing/shoes/winterboots/christmas/green"
+	post_init_icon_state = "christmas_boots"
+	greyscale_colors = "#1a991a#c4c2c2"
 
 /datum/armor/ice_boots_eva
 	melee = 10

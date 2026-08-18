@@ -1246,6 +1246,42 @@
 	icon_file = 'icons/mob/clothing/feet.dmi'
 	json_config = 'code/datums/greyscale/json_configs/heels_worn.json'
 
+/datum/greyscale_config/jackboots
+	name = "Jackboots"
+	icon_file = 'icons/obj/clothing/shoes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jackboots.json'
+
+/datum/greyscale_config/jackboots/worn
+	name = "Jackboots (Worn)"
+	icon_file = 'icons/mob/clothing/feet.dmi'
+
+/datum/greyscale_config/christmas_boots
+	name = "Christmas Boots"
+	icon_file = 'icons/obj/clothing/shoes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/christmas_boots.json'
+
+/datum/greyscale_config/christmas_boots/worn
+	name = "Christmas Boots (Worn)"
+	icon_file = 'icons/mob/clothing/feet.dmi'
+
+/datum/greyscale_config/laceup
+	name = "Laceups"
+	icon_file = 'icons/obj/clothing/shoes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/laceups.json'
+
+/datum/greyscale_config/laceup/worn
+	name = "Laceups (Worn)"
+	icon_file = 'icons/mob/clothing/feet.dmi'
+
+/datum/greyscale_config/sandals
+	name = "Colorable Sandals"
+	icon_file = 'icons/obj/clothing/shoes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sandals.json'
+
+/datum/greyscale_config/sandals/worn
+	name = "Colorable Sandals (Worn)"
+	icon_file = 'icons/mob/clothing/feet.dmi'
+
 /datum/greyscale_config/bowtie_collar
 	name = "Bowtie Collar"
 	icon_file = 'icons/obj/clothing/necks.dmi'

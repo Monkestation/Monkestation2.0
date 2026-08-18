@@ -63,6 +63,7 @@
 /obj/item/clothing/shoes/wheelys/cheap
 	name = "Cheap Wheely-Heels"
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/cheap
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/shoes/wheelys/rollerskates
 	name = "roller skates"

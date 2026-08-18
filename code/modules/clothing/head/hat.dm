@@ -326,7 +326,9 @@
 /obj/item/clothing/head/costume/jester2
 	name = "alternate jester hat"
 	desc = "It's more a hood really."
-	icon_state = "jester2"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/jester2"
+	post_init_icon_state = "jester2"
 	greyscale_config = /datum/greyscale_config/jester2
 	greyscale_config_worn = /datum/greyscale_config/jester2_worn
 	greyscale_colors = "#FDEA1B#FF0000"

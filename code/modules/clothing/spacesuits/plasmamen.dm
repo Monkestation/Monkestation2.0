@@ -42,12 +42,9 @@
 /obj/item/clothing/head/helmet/space/plasmaman
 	name = "plasma envirosuit helmet"
 	desc = "A special containment helmet that allows plasma-based lifeforms to exist safely in an oxygenated environment. It is space-worthy, and may be worn in tandem with other EVA gear."
-	icon = 'icons/obj/clothing/under/plasmaman.dmi'
-	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
-	lefthand_file = 'icons/mob/inhands/clothing/plasmaman_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/clothing/plasmaman_righthand.dmi'
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | PLASMAMAN_PREVENT_IGNITION | HEADINTERNALS
-	icon_state = "plasmaman_helmet"
+	icon = 'icon/map_icons/clothing/head/helmet/space.dmi'
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman"
+	post_init_icon_state = "plasmaman_helmet"
 	worn_icon_state = "plasmaman_helmet_w"
 	inhand_icon_state = "plasmaman_helmet"
 	greyscale_config = /datum/greyscale_config/plasmaman_helmet
@@ -56,6 +53,8 @@
 	greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_helmet/inhand_right
 	/// helmet -> stripes -> visor
 	greyscale_colors = "#d15b1b#a747c0#bd6abd"
+
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | PLASMAMAN_PREVENT_IGNITION | HEADINTERNALS
 	strip_delay = 8 SECONDS
 	flash_protect = FLASH_PROTECTION_WELDER
 	tint = 2
@@ -254,9 +253,11 @@
 /obj/item/clothing/head/helmet/space/plasmaman/security
 	name = "security plasma envirosuit helmet"
 	desc = "A plasmaman containment helmet designed for security officers, protecting them from burning alive, alongside other undesirables."
-	armor_type = /datum/armor/plasmaman_security
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/security"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#a52f29#39393f#bd6abd"
 	sleek_greyscale_colors = "#39393f#a52f29"
+	armor_type = /datum/armor/plasmaman_security
 
 /obj/item/clothing/head/helmet/space/plasmaman/security/handle_style_change(style)
 	. = ..()
@@ -268,12 +269,16 @@
 /obj/item/clothing/head/helmet/space/plasmaman/secmed
 	name = "security medical envirosuit helmet"
 	desc = "A new pattern plasmaman helmet for those qualified as security medical personnel. This is still EVA rated too!"
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/secmed"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#918f8c#a52f29#bd6abd"
 	sleek_greyscale_colors = "#39393f#a52f29"
 
 /obj/item/clothing/head/helmet/space/plasmaman/security/warden
 	name = "warden's plasma envirosuit helmet"
 	desc = "A plasmaman containment helmet designed for the warden. A pair of white stripes being added to differeciate them from other members of security."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/security/warden"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_config = /datum/greyscale_config/plasmaman_helmet/stripe
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_helmet/worn/stripe
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_helmet/inhand_left/stripe
@@ -285,6 +290,8 @@
 	name = "head of security's plasma envirosuit helmet"
 	desc = "A special containment helmet designed for the Head of Security. \
 		A pair of gold stripes are added to differentiate them from other members of security."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/security/head_of_security"
+	post_init_icon_state = "plasmaman_helmet"
 	armor_type = /datum/armor/security_head_of_security
 	greyscale_config = /datum/greyscale_config/plasmaman_helmet/stripe
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_helmet/worn/stripe
@@ -296,66 +303,88 @@
 /obj/item/clothing/head/helmet/space/plasmaman/prisoner
 	name = "prisoner's plasma envirosuit helmet"
 	desc = "A plasmaman containment helmet for prisoners."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/prisoner"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#d15b1b#39393f#bd6abd"
 	sleek_greyscale_colors = "#39393f#bd6abd"
 
 /obj/item/clothing/head/helmet/space/plasmaman/medical
 	name = "medical doctor's plasma envirosuit helmet"
 	desc = "An envirohelmet designed for plasmaman medical doctors, having two stripes down its length to denote as much."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/medical"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#eeeeee#5fa4cc#bd6abd"
 	sleek_greyscale_colors = "#39393f#5fa4cc"
 
 /obj/item/clothing/head/helmet/space/plasmaman/paramedic
 	name = "paramedic plasma envirosuit helmet"
 	desc = "An envirohelmet designed for plasmaman paramedics, with darker blue stripes compared to the medical model."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/paramedic"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#364660#eeeeee#bd6abd"
 	sleek_greyscale_colors = "#39393f#364660"
 
 /obj/item/clothing/head/helmet/space/plasmaman/viro
 	name = "virology plasma envirosuit helmet"
 	desc = "The helmet worn by the safest people on the station, those who are completely immune to the monstrosities they create."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/viro"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#eeeeee#40992e#bd6abd"
 	sleek_greyscale_colors = "#39393f#40992e"
 
 /obj/item/clothing/head/helmet/space/plasmaman/chemist
 	name = "chemistry plasma envirosuit helmet"
 	desc = "A plasmaman envirosuit designed for chemists, two orange stripes going down its face."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/chemist"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#eeeeee#d15b1b#bd6abd"
 	sleek_greyscale_colors = "#39393f#d15b1b"
 
 /obj/item/clothing/head/helmet/space/plasmaman/chief_medical_officer
 	name = "chief medical officer's plasma envirosuit helmet"
 	desc = "A special containment helmet designed for the Chief Medical Officer. A gold stripe applied to differentiate them from other medical staff."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/chief_medical_officer"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#eeeeee#5eb8b8#bd6abd"
 	sleek_greyscale_colors = "#254559#5eb8b8"
 
 /obj/item/clothing/head/helmet/space/plasmaman/science
 	name = "science plasma envirosuit helmet"
 	desc = "A plasmaman envirohelmet designed for scientists."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/science"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#eeeeee#b347a1#bd6abd"
 	sleek_greyscale_colors = "#39393f#b347a1"
 
 /obj/item/clothing/head/helmet/space/plasmaman/robotics
 	name = "robotics plasma envirosuit helmet"
 	desc = "A plasmaman envirohelmet designed for roboticists."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/robotics"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#39393f#88242d#bd6abd"
 	sleek_greyscale_colors = "#39393f#88242d"
 
 /obj/item/clothing/head/helmet/space/plasmaman/genetics
 	name = "geneticist's plasma envirosuit helmet"
 	desc = "A plasmaman envirohelmet designed for geneticists."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/genetics"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#eeeeee#4a77a1#bd6abd"
 	sleek_greyscale_colors = "#39393f#4a77a1"
 
 /obj/item/clothing/head/helmet/space/plasmaman/research_director
 	name = "research director's plasma envirosuit helmet"
 	desc = "A special containment helmet designed for the Research Director. A light brown design is applied to differentiate them from other scientists."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/research_director"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#bcad6c#b347a1#bd6abd"
 	sleek_greyscale_colors = "#254559#b347a1"
 
 /obj/item/clothing/head/helmet/space/plasmaman/engineering
 	name = "engineering plasma envirosuit helmet"
 	desc = "A space-worthy helmet specially designed for engineer plasmamen, the usual purple stripes being replaced by engineering's orange."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/engineering"
+	post_init_icon_state = "plasmaman_helmet"
 	armor_type = /datum/armor/plasmaman_engineering
 	greyscale_colors = "#deb63d#d15b1b#bd6abd"
 	sleek_greyscale_colors = "#39393f#d15b1b"
@@ -364,14 +393,26 @@
 	name = "atmospherics plasma envirosuit helmet"
 	desc = "A space-worthy helmet specially designed for atmos technician plasmamen, \
 		the usual purple stripes being replaced by atmos' blue. Has improved thermal shielding."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/engineering/atmospherics"
+	post_init_icon_state = "plasmaman_helmet"
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT // Same protection as the Atmospherics Hardhat
 	greyscale_colors = "#deb63d#47bfff#bd6abd"
 	sleek_greyscale_colors = "#39393f#47bfff"
+
+/obj/item/clothing/head/helmet/space/plasmaman/engineering/signal_tech
+	name = "network admin's plasma envirosuit helmet"
+	desc = "A space-worthy helmet specially designed for network admin plasmamen, the usual purple stripes being replaced by a unique bright green."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/engineering/signal_tech"
+	post_init_icon_state = "plasmaman_helmet"
+	greyscale_colors = "#deb63d#00ff33#bd6abd"
+	sleek_greyscale_colors = "#39393f#00ff33"
 
 /obj/item/clothing/head/helmet/space/plasmaman/engineering/chief_engineer
 	name = "chief engineer's plasma envirosuit helmet"
 	desc = "A special containment helmet designed for the Chief Engineer, \
 		the usual purple stripes being replaced by the chief's green. Has improved thermal shielding."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/engineering/chief_engineer"
+	post_init_icon_state = "plasmaman_helmet"
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT // Same protection as the Atmospherics Hardhat
 	greyscale_colors = "#deb63d#2e992e#bd6abd"
 	sleek_greyscale_colors = "#254559#2e992e"
@@ -379,24 +420,32 @@
 /obj/item/clothing/head/helmet/space/plasmaman/cargo
 	name = "cargo plasma envirosuit helmet"
 	desc = "A plasmaman envirohelmet designed for cargo techs and quartermasters."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/cargo"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#d0d7da#c99840#bd6abd"
 	sleek_greyscale_colors = "#39393f#c99840"
 
 /obj/item/clothing/head/helmet/space/plasmaman/mining
 	name = "mining plasma envirosuit helmet"
-	desc = "A khaki helmet given to plasmamen miners operating on lavaland."
+	desc = "A khaki helmet given to plasmamen miners operating in mining sectors."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/mining"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#796755#9a428e#bd6abd"
 	sleek_greyscale_colors = "#39393f#9a428e"
 
 /obj/item/clothing/head/helmet/space/plasmaman/chaplain
 	name = "chaplain's plasma envirosuit helmet"
 	desc = "An envirohelmet specially designed for only the most pious of plasmamen."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/chaplain"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#39393f#a747c0#bd6abd"
 	sleek_greyscale_colors = "#39393f#dbaa14"
 
 /obj/item/clothing/head/helmet/space/plasmaman/white
 	name = "white plasma envirosuit helmet"
 	desc = "A generic white envirohelm."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/white"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#eeeeee#a747c0#bd6abd"
 	sleek_greyscale_colors = "#39393f#eeeeee"
 
@@ -409,16 +458,16 @@
 	worn_icon = 'icons/mob/clothing/head/plasmaman_head.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
+	icon_state = "prototype_envirohelm"
+	inhand_icon_state = "void_helmet"
+	worn_icon_state = "prototype_envirohelm"
+	smile_state = "prototype_smile"
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 	greyscale_colors = null
 	actions_types = list(/datum/action/item_action/toggle_welding_screen)
-	icon_state = "prototype_envirohelm"
-	inhand_icon_state = "void_helmet"
-	worn_icon_state = "prototype_envirohelm"
-	smile_state = "prototype_smile"
 
 /obj/item/clothing/head/helmet/space/plasmaman/curator/handle_style_change(style)
 	return
@@ -433,12 +482,16 @@
 	name = "botany plasma envirosuit helmet"
 	desc = "A green and blue envirohelmet designating its wearer as a botanist. \
 		While not specifically designed for it, it would protect against minor plant-related injuries."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/botany"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#50d967#557efc#bd6abd"
 	sleek_greyscale_colors = "#39393f#557efc"
 
 /obj/item/clothing/head/helmet/space/plasmaman/janitor
 	name = "janitor's plasma envirosuit helmet"
 	desc = "A grey helmet bearing a pair of purple stripes, designating the wearer as a janitor."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/janitor"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_config = /datum/greyscale_config/plasmaman_helmet/stripe
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_helmet/worn/stripe
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_helmet/inhand_left/stripe
@@ -449,6 +502,8 @@
 /obj/item/clothing/head/helmet/space/plasmaman/mime
 	name = "mime envirosuit helmet"
 	desc = "The make-up is painted on, it's a miracle it doesn't chip. It's not very colourful."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/mime"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_config = /datum/greyscale_config/plasmaman_helmet/mime
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_helmet/worn/mime
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_helmet/inhand_left/mime
@@ -461,6 +516,8 @@
 /obj/item/clothing/head/helmet/space/plasmaman/clown
 	name = "clown envirosuit helmet"
 	desc = "The make-up is painted on, it's a miracle it doesn't chip. <i>'HONK!'</i>"
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/clown"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_config = /datum/greyscale_config/plasmaman_helmet/clown
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_helmet/worn/clown
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_helmet/inhand_left/clown
@@ -475,6 +532,8 @@
 	name = "head of personnel's envirosuit helmet"
 	desc = "A special containment helmet designed for the Head of Personnel. \
 		Embarrassingly enough, it looks way too much like the captain's design save for the red stripes."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/head_of_personnel"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#3e6588#a52f29#bd6abd"
 	sleek_greyscale_colors = "#254559#3e6588"
 
@@ -483,6 +542,8 @@
 	desc = "A special containment helmet designed for the Captain. \
 		Embarrassingly enough, it looks way too much like the Head of Personnel's design save for the gold stripes. \
 		I mean, come on. Gold stripes can fix anything."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/captain"
+	post_init_icon_state = "plasmaman_helmet"
 	armor_type = /datum/armor/plasmaman_captain
 	greyscale_colors = "#41579a#e6a345#bd6abd"
 	sleek_greyscale_colors = "#254559#e6a345"
@@ -491,18 +552,24 @@
 	name = "CentCom commander plasma envirosuit helmet"
 	desc = "A special containment helmet designed for the Higher Central Command Staff. \
 		Not many of these exist, as CentCom does not usually employ plasmamen to higher staff positions due to their complications."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/centcom_commander"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#46b946#e6b917#bd6abd"
 	sleek_greyscale_colors = "#46b946#e6b917"
 
 /obj/item/clothing/head/helmet/space/plasmaman/centcom_official
 	name = "CentCom official plasma envirosuit helmet"
 	desc = "A special containment helmet designed for CentCom Staff. They sure do love their green."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/centcom_official"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#336637#cbcdd1#bd6abd"
 	sleek_greyscale_colors = "#46b946#cbcdd1"
 
 /obj/item/clothing/head/helmet/space/plasmaman/centcom_intern
 	name = "CentCom intern plasma envirosuit helmet"
 	desc = "A special containment helmet designed for CentCom Staff. You know, so any coffee spills don't kill the poor sod."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/centcom_intern"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#12b560#39393f#bd6abd"
 	sleek_greyscale_colors = "#46b946#39393f"
 
@@ -511,20 +578,18 @@
 	desc = "There's no doubt about it, this helmet puts you above ALL of the other plasmamen. If you see another plasmaman wearing a helmet like this, \
 		it's either because they're a fellow badass, or they've murdered one of your fellow badasses and have taken it from them as a trophy. \
 		Either way, anyone wearing this deserves at least a cursory nod of respect."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/syndie"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#61423f#b22c20#b22c20"
 	sleek_greyscale_colors = "#61423f#b22c20"
 
 /obj/item/clothing/head/helmet/space/plasmaman/bitrunner
 	name = "bitrunner's plasma envirosuit helmet"
 	desc = "An envirohelmet with extended blue light filters for bitrunning plasmamen."
+	icon_state = "/obj/item/clothing/head/helmet/space/plasmaman/bitrunner"
+	post_init_icon_state = "plasmaman_helmet"
 	greyscale_colors = "#39393f#c99840#c99840"
 	sleek_greyscale_colors = "#39393f#c99840"
-
-/obj/item/clothing/head/helmet/space/plasmaman/engineering/signal_tech
-	name = "network admin's plasma envirosuit helmet"
-	desc = "A space-worthy helmet specially designed for network admin plasmamen, the usual purple stripes being replaced by a unique bright green."
-	greyscale_colors = "#deb63d#00ff33#bd6abd"
-	sleek_greyscale_colors = "#39393f#00ff33"
 
 /obj/item/clothing/head/helmet/space/plasmaman/bunny_ears // i would remove this if it wasn't for the fact the bunny wand would kill plasmamen without it - NK
 	name = "bunny eared plasma envirosuit helmet"
