@@ -304,11 +304,10 @@
 		var/datum/gas_mixture/air = chilly.air
 		air.temperature = temperature
 
-		var/list/gases = air.gases
-		if(gases[/datum/gas/plasma])
-			air.assert_gas(/datum/gas/nitrogen)
-			gases[/datum/gas/nitrogen][MOLES] += gases[/datum/gas/plasma][MOLES]
-			gases[/datum/gas/plasma][MOLES] = 0
+		if(air.moles[/datum/gas/plasma])
+			var/mole_count = air.moles[/datum/gas/plasma]
+			air.adjust_gas(/datum/gas/nitrogen, mole_count)
+			air.adjust_gas(/datum/gas/plasma, -mole_count)
 			air.garbage_collect()
 
 		for(var/obj/effect/hotspot/fire in chilly)
