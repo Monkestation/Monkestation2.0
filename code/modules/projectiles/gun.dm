@@ -149,7 +149,7 @@
 		else
 			. += "It doesn't have a <b>firing pin</b> installed, and won't fire."
 	if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
-		. += span_info("You scan the chamber with your X-ray vision: [(chambered) ? "you see [chambered]!" : "it is empty."]")
+		. += span_info("You scan the chamber with your X-ray vision: [(chambered) ? "you see \a [chambered]!" : "it is empty."]")
 
 //called after the gun has successfully fired its chambered ammo.
 /obj/item/gun/proc/process_chamber(mob/living/user, empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
