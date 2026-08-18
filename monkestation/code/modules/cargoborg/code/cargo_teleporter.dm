@@ -10,7 +10,7 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	var/list/marker_children = list()
 	/// The maximum amount of fulton charges the teleporter can have.
 	var/max_charges = 3
-	/// The current amount of fulton charges that teleporter currently has.
+	/// The current amount of fulton charges the teleporter currently has.
 	var/charges = 0
 	/// The fulton we use to actually extract living things.
 	var/obj/item/extraction_pack/my_fulton
