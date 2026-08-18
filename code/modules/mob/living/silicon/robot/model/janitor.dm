@@ -47,16 +47,17 @@
 		QDEL_NULL(wash_toggle_ref)
 	return ..()
 
-/obj/item/robot_model/janitor/on_cyborg_recharge(coeff)
+/obj/item/robot_model/janitor/on_cyborg_recharge(datum/source, amount, repairs, sendmats)
 	. = ..()
+	var/power_coeff = amount / (200 JOULES)
 	for(var/obj/item/usable_module in usable_modules)
 		if(istype(usable_module, /obj/item/reagent_containers/spray/cyborg_drying))
 			var/obj/item/reagent_containers/spray/cyborg_drying/drying_spray = usable_module
-			drying_spray.reagents.add_reagent(/datum/reagent/drying_agent, 5 * coeff)
+			drying_spray.reagents.add_reagent(/datum/reagent/drying_agent, 5 * power_coeff)
 			continue
 		if(istype(usable_module, /obj/item/reagent_containers/spray/cyborg_lube))
 			var/obj/item/reagent_containers/spray/cyborg_lube/lube_spray = usable_module
-			lube_spray.reagents.add_reagent(/datum/reagent/lube, 2 * coeff)
+			lube_spray.reagents.add_reagent(/datum/reagent/lube, 2 * power_coeff)
 			continue
 
 /obj/item/reagent_containers/spray/cyborg_drying

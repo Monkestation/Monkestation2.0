@@ -1,0 +1,4 @@
+author: "hexakats"
+delete-after: True
+changes:
+  - bugfix: "Fixed chameleon shoes (and their no-slip variant) not getting locked properly with a multitool"
