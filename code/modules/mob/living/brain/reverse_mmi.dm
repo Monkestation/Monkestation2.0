@@ -52,7 +52,7 @@
 	var/obj/item/implant/radio/radio = new(owner)
 	radio.implant(owner, null, TRUE, TRUE)
 	radio_weakref = WEAKREF(radio)
-	RegisterSignal(radio_weakref.resolve(), COMSIG_IMPLANT_REMOVED, PROC_REF(implant_loss))
+	RegisterSignal(radio, COMSIG_IMPLANT_REMOVED, PROC_REF(implant_loss))
 	check_if_augmented()
 
 /obj/item/organ/internal/brain/cybernetic/ai/Remove(mob/living/carbon/organ_owner, special, movement_flags)
@@ -131,11 +131,6 @@
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(undeploy))
 	AI.deployed_shell = owner
 	deploy_init(AI)
-	ADD_TRAIT(AI.mind, TRAIT_UNCONVERTABLE, REF(src))
-	ADD_TRAIT(AI, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
-	AI.mind.transfer_to(owner)
-	to_chat(owner, span_boldbig("You are still considered a silicon/cyborg/AI. Follow your laws."))
-
 
 /**
  * deploy_init: Deploys AI unit into AI shell
@@ -164,6 +159,10 @@
 		implant.radio.channels = AI.radio.channels
 		for(var/channel in implant.radio.channels)
 			LAZYSET(implant.radio.secure_radio_connections, channel, add_radio(implant.radio, GLOB.radiochannels[channel]))
+	ADD_TRAIT(connected_ai.mind, TRAIT_UNCONVERTABLE, REF(src))
+	ADD_TRAIT(connected_ai, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
+	connected_ai.mind.transfer_to(owner)
+	to_chat(owner, span_boldbig("You are still considered a silicon/cyborg/AI. Follow your laws."))
 
 /// Handles exiting the shell.
 /obj/item/organ/internal/brain/cybernetic/ai/proc/undeploy(datum/source)
