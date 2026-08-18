@@ -1132,7 +1132,7 @@
 				possible += R
 		if(ishuman(borgie))
 			var/mob/living/carbon/human/human = borgie
-			var/obj/item/organ/internal/brain/cybernetic/ai/brain = locate() in human.organs
+			var/obj/item/organ/internal/brain/cybernetic/ai/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 			//  Checks if shell currently has access from being deployed and has an AI uplink, and is sufficiently augmented
 			if(!(HAS_TRAIT(human, TRAIT_SILICON_ACCESS)) && (brain && brain.check_if_augmented()))
 				possible += human
