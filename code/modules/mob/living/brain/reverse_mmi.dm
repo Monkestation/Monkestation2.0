@@ -213,7 +213,7 @@
 		if(!IS_ROBOTIC_ORGAN(organ) && !istype(organ, /obj/item/organ/internal/tongue)) //tongues are not in the exosuit fab and nobody is going to bother to find them so
 			is_shell = FALSE
 			handle_available_shells()
-				return FALSE
+			return FALSE
 	handle_available_shells()
 
 /// Adds or removes the owner from 'GLOB.available_ai_shells' list depending on 'is_shell' variable
