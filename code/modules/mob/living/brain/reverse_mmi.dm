@@ -202,7 +202,7 @@
 	var/mob/living/carbon/carb_owner = owner
 	. = TRUE
 	if(!istype(carb_owner))
-		return
+		return FALSE
 	for(var/obj/item/organ/organ as anything in carb_owner.organs)
 		if(organ.organ_flags && istype(organ, /obj/item/organ/external))
 			continue
