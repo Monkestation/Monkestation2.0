@@ -131,7 +131,7 @@
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(undeploy))
 	AI.deployed_shell = owner
 	deploy_init(AI)
-
+	AI.mind.transfer_to(owner)
 /**
  * deploy_init: Deploys AI unit into AI shell
  *
@@ -162,7 +162,6 @@
 			LAZYSET(implant.radio.secure_radio_connections, channel, add_radio(implant.radio, GLOB.radiochannels[channel]))
 	ADD_TRAIT(connected_ai.mind, TRAIT_UNCONVERTABLE, REF(src))
 	ADD_TRAIT(connected_ai, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
-	connected_ai.mind.transfer_to(owner)
 	to_chat(owner, span_boldbig("You are still considered a silicon/cyborg/AI. Follow your laws."))
 
 /// Handles exiting the shell.
