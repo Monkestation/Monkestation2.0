@@ -3,6 +3,11 @@
 	var/list/managed_overlays
 	var/post_init_icon_state
 
+#if defined(UNIT_TESTS)
+	/// Tracks the icon_state used for mapping preview icons before icon is changed by greyscale setup, for unit testing
+	var/icon_state_map = null
+#endif
+
 /**
  * Updates the appearence of the icon
  *
