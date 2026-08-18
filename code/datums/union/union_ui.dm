@@ -102,14 +102,6 @@
 		if("abandon_demand")
 			if(isnull(demand_voting_on))
 				return
-			//this is so bad but I can't figure out any better way.
-			if(istype(host))
-				host.req_one_access = list(ACCESS_UNION_LEADER)
-				if(istype(host) && !host.allowed(user))
-					host.req_one_access = initial(host.req_one_access)
-					host.balloon_alert(user, "union leader only!")
-					return TRUE
-				host.req_one_access = initial(host.req_one_access)
 			end_deadlock(union_won = FALSE)
 		//admin buttons
 		if("remove_demand")
