@@ -17,40 +17,66 @@
 
 /obj/item/clothing/head/beanie/black
 	name = "black beanie"
-	icon_state = "/obj/item/clothing/head/beanie/black"
+	SETUP_MAP_ICONS("beanie", "/obj/item/clothing/head/beanie/black")
 	greyscale_colors = "#4A4A4B#4A4A4B"
+
+/obj/item/clothing/head/beanie/black/dboy
+	name = "test subject beanie"
+	desc = "A dingy and torn black beanie. Is that slime or grease?"
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
+	/// Used for the extra flavor text the d-boy himself sees
+	var/datum/weakref/beanie_owner = null
+
+/obj/item/clothing/head/beanie/black/dboy/equipped(mob/user, slot)
+	. = ..()
+	if(iscarbon(user) && !beanie_owner)
+		beanie_owner = WEAKREF(user)
+
+/obj/item/clothing/head/beanie/black/dboy/examine(mob/user)
+	. = ..()
+	if(IS_WEAKREF_OF(user, beanie_owner))
+		. += span_purple("It's covered in otherworldly debris only your eyes have been ruined enough to see.")
 
 /obj/item/clothing/head/beanie/red
 	name = "red beanie"
-	icon_state = "/obj/item/clothing/head/beanie/red"
+	SETUP_MAP_ICONS("beanie", "/obj/item/clothing/head/beanie/black/red")
 	greyscale_colors = "#D91414#D91414"
 
 /obj/item/clothing/head/beanie/darkblue
 	name = "dark blue beanie"
-	icon_state = "/obj/item/clothing/head/beanie/darkblue"
+	SETUP_MAP_ICONS("beanie", "/obj/item/clothing/head/beanie/darkblue")
 	greyscale_colors = "#1E85BC#1E85BC"
 
 /obj/item/clothing/head/beanie/yellow
 	name = "yellow beanie"
-	icon_state = "/obj/item/clothing/head/beanie/yellow"
+	SETUP_MAP_ICONS("beanie", "/obj/item/clothing/head/beanie/yellow")
 	greyscale_colors = "#E0C14F#E0C14F"
 
 /obj/item/clothing/head/beanie/orange
 	name = "orange beanie"
-	icon_state = "/obj/item/clothing/head/beanie/orange"
+	SETUP_MAP_ICONS("beanie", "/obj/item/clothing/head/beanie/orange")
 	greyscale_colors = "#C67A4B#C67A4B"
 
 /obj/item/clothing/head/beanie/christmas
 	name = "christmas beanie"
-	icon_state = "/obj/item/clothing/head/beanie/christmas"
+	SETUP_MAP_ICONS("beanie", "/obj/item/clothing/head/beanie/christmas")
 	greyscale_colors = "#038000#960000"
 
 /obj/item/clothing/head/beanie/durathread
 	name = "durathread beanie"
 	desc = "A beanie made from durathread, its resilient fibres provide some protection to the wearer."
-	icon_state = "/obj/item/clothing/head/beanie/durathread"
+	SETUP_MAP_ICONS("beanie", "/obj/item/clothing/head/beanie/durathread")
 	greyscale_colors = "#8291A1#8291A1"
 	armor_type = /datum/armor/beanie_durathread
+
+/datum/armor/beanie_durathread
+	melee = 15
+	bullet = 5
+	laser = 15
+	energy = 25
+	bomb = 10
+	fire = 30
+	acid = 5
 
 /obj/item/clothing/head/rasta
 	name = "rastacap"
@@ -67,28 +93,3 @@
 	icon_state = "waldo_hat"
 
 //No dog fashion sprites yet :(  poor Ian can't be dope like the rest of us yet
-
-/obj/item/clothing/head/beanie/black/dboy
-	name = "test subject beanie"
-	desc = "A dingy and torn black beanie. Is that slime or grease?"
-	/// Used for the extra flavor text the d-boy himself sees
-	var/datum/weakref/beanie_owner = null
-
-/datum/armor/beanie_durathread
-	melee = 15
-	bullet = 5
-	laser = 15
-	energy = 25
-	bomb = 10
-	fire = 30
-	acid = 5
-
-/obj/item/clothing/head/beanie/black/dboy/equipped(mob/user, slot)
-	. = ..()
-	if(iscarbon(user) && !beanie_owner)
-		beanie_owner = WEAKREF(user)
-
-/obj/item/clothing/head/beanie/black/dboy/examine(mob/user)
-	. = ..()
-	if(IS_WEAKREF_OF(user, beanie_owner))
-		. += span_purple("It's covered in otherworldly debris only your eyes have been ruined enough to see.")

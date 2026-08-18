@@ -1042,8 +1042,8 @@
 
 /obj/item/modular_computer/pda/chameleon
 	name = "tablet"
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	var/datum/action/item_action/chameleon/change/tablet/chameleon_action
-
 
 /obj/item/modular_computer/pda/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)

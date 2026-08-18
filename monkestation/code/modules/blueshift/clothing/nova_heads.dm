@@ -43,10 +43,8 @@
 /obj/item/clothing/head/beret/sec/navywarden/syndicate
 	name = "master at arms' beret"
 	desc = "Surprisingly stylish, if you lived in a silent impressionist film."
-	greyscale_config = /datum/greyscale_config/beret_badge
-	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
+	SETUP_MAP_ICONS("beret_badge", "/obj/item/clothing/head/beret/sec/navywarden/syndicate")
 	greyscale_colors = "#353535#AAAAAA"
-	icon_state = "beret_badge"
 	armor_type = /datum/armor/navywarden_syndicate
 	strip_delay = 60
 
@@ -177,7 +175,7 @@
 /obj/item/clothing/head/beret/badge
 	name = "badged beret"
 	desc = "A beret. With a badge. What do you want, a dissertation? It's a hat."
-	icon_state = "beret_badge"
+	SETUP_MAP_ICONS("beret_badge", "/obj/item/clothing/head/beret/badge")
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#972A2A#EFEFEF"
@@ -235,6 +233,7 @@
 /obj/item/clothing/head/beret/sec/nri
 	name = "commander's beret"
 	desc = "Za rodinu!!"
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	armor_type = /datum/armor/sec_nri
 
 /datum/armor/sec_nri

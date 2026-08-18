@@ -81,7 +81,7 @@
 
 /obj/item/clothing/shoes/jackboots/recolorable
 	icon = 'icons/map_icons/clothing/shoes.dmi'
-	SETUP_MAP_ICONS("boots", "/obj/item/clothing/shoes/jackboots/recolorable")
+	SETUP_MAP_ICONS("jackboots", "/obj/item/clothing/shoes/jackboots/recolorable")
 	greyscale_config = /datum/greyscale_config/jackboots
 	greyscale_config_worn = /datum/greyscale_config/jackboots/worn
 	greyscale_colors = "#383631"

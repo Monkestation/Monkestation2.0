@@ -360,12 +360,11 @@
 /obj/item/clothing/head/playbunnyears
 	name = "bunny ears headband"
 	desc = "A pair of bunny ears attached to a headband. One of the ears is already crooked."
-	icon = 'icons/obj/clothing/hats.dmi'
-	worn_icon = 'icons/mob/clothing/head_32x48.dmi'
-	icon_state = "playbunny_ears"
-	greyscale_colors = "#39393f"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	SETUP_MAP_ICONS("playbunny_ears", "/obj/item/clothing/head/playbunnyears")
 	greyscale_config = /datum/greyscale_config/playbunnyears
 	greyscale_config_worn = /datum/greyscale_config/playbunnyears_worn
+	greyscale_colors = "#39393f"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/playbunnyears/syndicate

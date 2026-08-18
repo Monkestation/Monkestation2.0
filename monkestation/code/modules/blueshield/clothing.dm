@@ -33,16 +33,19 @@
 
 /obj/item/clothing/head/beret/blueshield
 	name = "blueshield's beret"
-	desc = "A blue beret made of durathread with a genuine golden badge, denoting its owner as a Blueshield Lieuteneant. It seems to be padded with nano-kevlar, making it tougher than standard reinforced berets."
+	desc = "A blue beret made of durathread with a genuine golden badge, denoting its owner as a Blueshield Lieuteneant.\
+		It seems to be padded with nano-kevlar, making it tougher than standard reinforced berets."
+	SETUP_MAP_ICONS("beret_badge", "/obj/item/clothing/head/beret/blueshield")
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#3A4E7D#DEB63D"
-	icon_state = "beret_badge_police"
 	armor_type = /datum/armor/suit_armor
 
 /obj/item/clothing/head/beret/blueshield/navy
 	name = "navy blueshield's beret"
-	desc = "A navy-blue beret made of durathread with a silver badge, denoting its owner as a Blueshield Lieuteneant. It seems to be padded with nano-kevlar, making it tougher than standard reinforced berets."
+	desc = "A navy-blue beret made of durathread with a silver badge, denoting its owner as a Blueshield Lieuteneant. \
+		It seems to be padded with nano-kevlar, making it tougher than standard reinforced berets."
+	SETUP_MAP_ICONS("beret_badge", "/obj/item/clothing/head/beret/blueshield/navy")
 	greyscale_colors = "#3C485A#BBBBBB"
 
 /obj/item/storage/backpack/blueshield

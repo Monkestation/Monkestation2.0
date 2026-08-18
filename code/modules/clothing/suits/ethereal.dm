@@ -27,7 +27,7 @@
 /obj/item/clothing/suit/hooded/ethereal_raincoat/trailwarden
 	name = "trailwarden oilcoat"
 	desc = "A masterfully handcrafted oilslick coat, supposedly makes for excellent camouflage among Sprout's vegetation. You can hear a faint electrical buzz emanating from the luminescent pattern."
-	icon_state = "/obj/item/clothing/suit/hooded/ethereal_raincoat/trailwarden"
+	SETUP_MAP_ICONS("eth_raincoat", "/obj/item/clothing/suit/hooded/ethereal_raincoat/trailwarden")
 	greyscale_colors = "#32a87d"
 
 /obj/item/clothing/suit/hooded/ethereal_raincoat/trailwarden/equipped(mob/living/user, slot)

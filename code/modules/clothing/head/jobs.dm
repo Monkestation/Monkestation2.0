@@ -345,7 +345,7 @@
 /obj/item/clothing/head/hats/hos/beret/navyhos
 	name = "head of security's formal beret"
 	desc = "A special beret with the Head of Security's insignia emblazoned on it. A symbol of excellence, a badge of courage, a mark of distinction."
-	icon_state = "/obj/item/clothing/head/hats/hos/beret/navyhos"
+	SETUP_MAP_ICONS("beret_badge", "/obj/item/clothing/head/hats/hos/beret/navyhos")
 	greyscale_colors = "#638799#f0cc8f"
 
 /obj/item/clothing/head/hats/hos/beret/syndicate
@@ -636,6 +636,7 @@
 
 /obj/item/clothing/head/beret/highlander
 	desc = "That was white fabric. <i>Was.</i>"
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	dog_fashion = null //THIS IS FOR SLAUGHTER, NOT PUPPIES
 
 /obj/item/clothing/head/beret/highlander/Initialize(mapload)

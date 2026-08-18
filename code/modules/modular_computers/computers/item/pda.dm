@@ -269,7 +269,7 @@
  */
 /obj/item/modular_computer/pda/nukeops
 	name = "nuclear pda"
-	icon_state = "/obj/item/modular_computer/pda/nukeops"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/nukeops")
 	device_theme = PDA_THEME_SYNDICATE
 	comp_light_luminosity = 6.3 //matching a flashlight
 	light_color = COLOR_RED

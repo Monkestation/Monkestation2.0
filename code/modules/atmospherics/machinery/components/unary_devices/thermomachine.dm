@@ -343,7 +343,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom
 	name = "Cold room temperature control unit"
-	icon_state = "/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom"
+	SETUP_MAP_ICONS("thermo_1", "/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom")
 	greyscale_colors = COLOR_CYAN
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom/Initialize(mapload)

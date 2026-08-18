@@ -14,7 +14,7 @@
 
 		var/thing_map_icon_state = thing.icon_state_map
 		// if(!thing_map_icon_state)
-		// 	TEST_FAIL("[thing] has greyscale but does not properly implement SETUP_MAP_ICONS or NO_NEW_GAGS_PREVIEW_1 for preview icons.")
+		// 	TEST_FAIL("[thing] has greyscale but does not properly implement SETUP_MAP_ICONS or set NO_NEW_GAGS_PREVIEW_1.")
 		// 	continue
 
 		var/thing_map_icon = initial(thing.icon)
