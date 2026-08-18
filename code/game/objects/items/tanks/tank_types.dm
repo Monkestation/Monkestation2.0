@@ -280,8 +280,7 @@
 
 
 /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/populate_gas()
-	ir_contents.set_gas(/datum/gas/nitrogen, (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
-
+	air_contents.set_gas(/datum/gas/nitrogen, (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 
 
 /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/empty/populate_gas()
