@@ -310,12 +310,11 @@
 /obj/item/clothing/suit/apron/chef/colorable_apron
 	name = "apron"
 	desc = "A basic apron."
-	icon = 'monkestation/code/modules/blueshift/gags/icons/suit/suit.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/gags/icons/suit/suit.dmi'
-	icon_state = "apron"
-	greyscale_colors = "#ffffff"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("apron", "/obj/item/clothing/suit/apron/chef/colorable_apron")
 	greyscale_config = /datum/greyscale_config/apron
 	greyscale_config_worn = /datum/greyscale_config/apron/worn
+	greyscale_colors = "#ffffff"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/suit/apron/overalls/Initialize(mapload)

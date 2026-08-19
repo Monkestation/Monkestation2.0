@@ -829,6 +829,7 @@
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
 	desc = "A pair of black shoes."
+	icon = 'icons/map_icons/clothing/shoes.dmi'
 	SETUP_MAP_ICONS("sneakers", "/obj/item/clothing/shoes/chameleon")
 	inhand_icon_state = "sneakers_back"
 	greyscale_config = /datum/greyscale_config/sneakers

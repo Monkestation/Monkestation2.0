@@ -295,6 +295,14 @@
 	greyscale_colors = "#a52f29#39393f#e6a345#bd6abd"
 	sleek_greyscale_colors = "#39393f#a52f29"
 
+/obj/item/clothing/head/helmet/space/plasmaman/blueshield
+	name = "blueshield envirosuit helmet"
+	desc = "A plasmaman containment helmet designed for certified blueshields, who's job guarding heads should not include self-combustion... most of the time."
+	SETUP_MAP_ICONS("plasmaman_helmet", "/obj/item/clothing/head/helmet/space/plasmaman/blueshield")
+	armor_type = /datum/armor/suit_armor
+	greyscale_colors = "#39393f#2b3f92#bd6abd"
+	sleek_greyscale_colors = "#39393f#2b3f92"
+
 /obj/item/clothing/head/helmet/space/plasmaman/prisoner
 	name = "prisoner's plasma envirosuit helmet"
 	desc = "A plasmaman containment helmet for prisoners."

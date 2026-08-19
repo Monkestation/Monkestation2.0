@@ -67,7 +67,7 @@
 /obj/item/clothing/head/collectable/beret
 	name = "collectable beret"
 	desc = "A collectable red beret. It smells faintly of garlic."
-	icon = 'icons/map_icons/clothing/head/beret.dmi'
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
 	SETUP_MAP_ICONS("beret", "/obj/item/clothing/head/collectable/beret")
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn

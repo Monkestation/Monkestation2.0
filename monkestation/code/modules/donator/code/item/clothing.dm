@@ -60,7 +60,7 @@
 	name = "\improper lava cat robe"
 	desc = "This robe is said to be inspired by attire worn in some distant magical land to brave volcanic fire and ash, \
 	assuming such a place ever existed. This one, offers no such protection."
-	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	SETUP_MAP_ICONS("lava_cat_robe", "/obj/item/clothing/suit/hooded/lava_cat_robe")
 	greyscale_config = /datum/greyscale_config/lava_cat_robe
 	greyscale_config_worn = /datum/greyscale_config/lava_cat_robe/worn

@@ -101,7 +101,8 @@
 
 /obj/item/clothing/suit/jacket/leather/colourable
 	desc = "Now with more color!"
-	icon_state = "leather_jacket"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("leather_jacket", "/obj/item/clothing/suit/jacket/leather/colourable")
 	greyscale_config = /datum/greyscale_config/leather_jacket
 	greyscale_config_worn = /datum/greyscale_config/leather_jacket/worn
 	greyscale_colors = "#FFFFFF"
@@ -155,24 +156,25 @@
 /obj/item/clothing/suit/jacket/croptop
 	name = "crop top turtleneck"
 	desc = "A comfy looking turtleneck that exposes your midriff, fashionable but makes the point of a sweater moot."
-	icon_state = "croptop"
-	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/suits/jacket.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suits/jacket.dmi'
-	body_parts_covered = CHEST|ARMS
-
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("croptop", "/obj/item/clothing/suit/jacket/croptop")
 	greyscale_config = /datum/greyscale_config/croptop
 	greyscale_config_worn = /datum/greyscale_config/croptop/worn
 	greyscale_colors = "#1d1b1b"
+
+	body_parts_covered = CHEST|ARMS
 	flags_1 = IS_PLAYER_COLORABLE_1
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/varsity
 	name = "varsity jacket"
 	desc = "A simple varsity jacket with no obvious sources."
-	icon_state = "varsity_jacket"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("varsity_jacket", "/obj/item/clothing/suit/varsity")
 	greyscale_config = /datum/greyscale_config/varsity
 	greyscale_config_worn = /datum/greyscale_config/varsity/worn
 	greyscale_colors = "#553022#a67a5b#2d2d33"
+
 	body_parts_covered = CHEST|GROIN|ARMS
 	flags_1 = IS_PLAYER_COLORABLE_1
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON

@@ -148,9 +148,10 @@
 /obj/item/clothing/head/hopcap/beret
 	name = "head of personnel's beret"
 	desc = "A fancy beret designed by NT's Personnel division for their favorite head's head."
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	SETUP_MAP_ICONS("beret_badge", "/obj/item/clothing/head/hopcap/beret")
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	icon_state = "beret_badge"
 	greyscale_colors = "#3e5c88#88242D"
 
 //Chaplain
@@ -351,6 +352,7 @@
 /obj/item/clothing/head/hats/hos/beret/syndicate
 	name = "syndicate beret"
 	desc = "A black beret with thick armor padding inside. Stylish and robust."
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/head/hats/warden
 	name = "warden's police hat"

@@ -160,17 +160,17 @@
 /obj/item/clothing/head/standalone_hood
 	name = "hood"
 	desc = "A hood with a bit of support around the neck so it actually stays in place, for all those times you want a hood without the coat."
-	icon = 'monkestation/code/modules/blueshift/gags/icons/head/head.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/gags/icons/head/head.dmi'
-	icon_state = "hood"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	SETUP_MAP_ICONS("hood", "/obj/item/clothing/head/standalone_hood")
+	greyscale_config = /datum/greyscale_config/standalone_hood
+	greyscale_config_worn = /datum/greyscale_config/standalone_hood/worn
+	greyscale_colors = "#4e4a43#F1F1F1"
+
 	body_parts_covered = HEAD
 
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEEARS|HIDEHAIR
 	flags_1 = IS_PLAYER_COLORABLE_1
-	greyscale_colors = "#4e4a43#F1F1F1"
-	greyscale_config = /datum/greyscale_config/standalone_hood
-	greyscale_config_worn = /datum/greyscale_config/standalone_hood/worn
 
 /obj/item/clothing/head/beret/badge
 	name = "badged beret"
@@ -193,7 +193,8 @@
 /obj/item/clothing/head/small_bow
 	name = "small bow"
 	desc = "A small compact bow that you can place on the side of your hair."
-	icon_state = "small_bow"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	SETUP_MAP_ICONS("small_bow", "/obj/item/clothing/head/small_bow")
 	greyscale_config = /datum/greyscale_config/small_bow
 	greyscale_config_worn = /datum/greyscale_config/small_bow/worn
 	greyscale_colors = "#7b9ab5"
@@ -206,7 +207,8 @@
 /obj/item/clothing/head/large_bow
 	name = "large bow"
 	desc = "A large bow that you can place on top of your head."
-	icon_state = "large_bow"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	SETUP_MAP_ICONS("large_bow", "/obj/item/clothing/head/large_bow")
 	greyscale_config = /datum/greyscale_config/large_bow
 	greyscale_config_worn = /datum/greyscale_config/large_bow/worn
 	greyscale_colors = "#7b9ab5"
@@ -215,7 +217,8 @@
 /obj/item/clothing/head/back_bow
 	name = "back bow"
 	desc = "A large bow that you can place on the back of your head."
-	icon_state = "back_bow"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	SETUP_MAP_ICONS("back_bow", "/obj/item/clothing/head/back_bow")
 	greyscale_config = /datum/greyscale_config/back_bow
 	greyscale_config_worn = /datum/greyscale_config/back_bow/worn
 	greyscale_colors = "#7b9ab5"

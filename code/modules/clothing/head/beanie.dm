@@ -39,7 +39,7 @@
 
 /obj/item/clothing/head/beanie/red
 	name = "red beanie"
-	SETUP_MAP_ICONS("beanie", "/obj/item/clothing/head/beanie/black/red")
+	SETUP_MAP_ICONS("beanie", "/obj/item/clothing/head/beanie/red")
 	greyscale_colors = "#D91414#D91414"
 
 /obj/item/clothing/head/beanie/darkblue
