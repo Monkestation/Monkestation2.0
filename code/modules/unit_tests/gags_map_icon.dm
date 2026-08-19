@@ -13,7 +13,7 @@
 			continue
 
 		var/thing_map_icon = initial(thing.icon)
-		if(!findtextEx(thing_map_icon, "icons/map_icons"))
+		if(!findtextEx("[thing_map_icon]", "icons/map_icons"))
 			TEST_FAIL("[thing] has a map override icon_state but does not have a map_icon icon file.")
 			continue
 
