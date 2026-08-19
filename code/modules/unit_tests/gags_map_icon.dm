@@ -6,7 +6,6 @@
 	for(var/atom/thing as anything in subtypesof(/atom))
 		if(!thing.greyscale_colors || !thing.greyscale_config)
 			continue
-		// These use continue since if you're missing one you're probably missing any subsequent ones
 
 		var/thing_map_icon_state = thing.icon_state_map
 		if(!thing_map_icon_state)
