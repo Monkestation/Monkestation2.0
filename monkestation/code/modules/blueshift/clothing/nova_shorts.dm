@@ -21,7 +21,8 @@
 /obj/item/clothing/under/pants/nova/jeans_ripped
 	name = "ripped jeans"
 	desc = "A nondescript pair of tough jeans, with several rips and tears. The staple pants choice of both rebels and the poor."
-	icon_state = "jeans_ripped"
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
+	SETUP_MAP_ICONS("jeans_ripped", "/obj/item/clothing/under/pants/nova/jeans_ripped")
 	greyscale_config = /datum/greyscale_config/jeans_ripped //These configs are defined in the GAGS module for now; the icons and item will remain in these files.
 	greyscale_config_worn = /datum/greyscale_config/jeans_ripped/worn
 	greyscale_colors = "#787878#723E0E#4D7EAC"
@@ -41,7 +42,6 @@
 	name = "black chaps"
 	desc = "Yeehaw"
 	icon_state = "chaps"
-
 
 /*
 *	SHORTS

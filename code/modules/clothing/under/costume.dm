@@ -672,17 +672,6 @@ BUNNY SUITS
 	greyscale_config_worn = null
 	greyscale_colors = null
 
-/obj/item/clothing/suit/jacket/tailcoat/centcom/ntrep
-	name = "Centcom tailcoat"
-	desc = "An official coat usually worn by bunny themed executives. The inside is lined with comfortable yet tasteful bunny fluff. Now for Representatives"
-	icon = 'icons/obj/clothing/uniforms.dmi'
-	worn_icon = 'icons/mob/clothing/uniform.dmi'
-	icon_state = "tailcoat_centcom"
-	armor_type = /datum/armor/nanotrasen_representative_bathrobe
-	greyscale_config = null
-	greyscale_config_worn = null
-	greyscale_colors = null
-
 /obj/item/clothing/under/costume/playbunny/british
 	name = "british bunny suit"
 	desc = "The staple of any bunny themed monarchists. It has a little cottonball tail too."

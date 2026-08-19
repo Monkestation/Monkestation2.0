@@ -374,6 +374,16 @@
 	greyscale_config_worn = null
 	greyscale_colors = null
 
+/obj/item/clothing/suit/jacket/tailcoat/centcom/ntrep
+	name = "Centcom tailcoat"
+	desc = "An official coat usually worn by bunny themed executives. The inside is lined with comfortable yet tasteful bunny fluff. Now for Representatives"
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon_state = "tailcoat_centcom"
+	armor_type = /datum/armor/nanotrasen_representative_bathrobe
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 /obj/item/clothing/suit/jacket/tailcoat/british
 	name = "british flag tailcoat"

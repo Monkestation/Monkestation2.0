@@ -6,27 +6,27 @@
 	for(var/atom/thing as anything in subtypesof(/atom))
 		if(!thing.greyscale_colors || !thing.greyscale_config)
 			continue
-
-		if(thing.flags_1 & NO_NEW_GAGS_PREVIEW_1)
-			continue
-
 		// These use continue since if you're missing one you're probably missing any subsequent ones
 
 		var/thing_map_icon_state = thing.icon_state_map
-		// if(!thing_map_icon_state)
-		// 	TEST_FAIL("[thing] has greyscale but does not properly implement SETUP_MAP_ICONS or set NO_NEW_GAGS_PREVIEW_1.")
-		// 	continue
+		if(!thing_map_icon_state)
+			TEST_FAIL("[thing] has greyscale but does not properly implement SETUP_MAP_ICONS or set NO_NEW_GAGS_PREVIEW_1.")
+			continue
 
 		var/thing_map_icon = initial(thing.icon)
-		// if(!findtextEx(thing_map_icon, "icons/map_icons"))
-		// 	TEST_FAIL("[thing] has a map override icon_state but does not have a map_icon icon file.")
-		// 	continue
-
-		var/type_string = "[thing.type]"
-		if(type_string != thing_map_icon_state)
-			TEST_FAIL("[thing] has no unique icon_state for GAGs previews, should be [type_string].")
+		if(!findtextEx(thing_map_icon, "icons/map_icons"))
+			TEST_FAIL("[thing] has a map override icon_state but does not have a map_icon icon file.")
 			continue
 
 		if(!icon_exists(thing_map_icon, thing_map_icon_state))
 			TEST_FAIL("[thing] has a map override icon_state set ([thing_map_icon_state]), but it is not present in [thing_map_icon].")
+
+		if(thing.flags_1 & NO_NEW_GAGS_PREVIEW_1)
+			if("[thing.parent_type]" != thing_map_icon_state)
+				TEST_FAIL("[thing] has NO_NEW_GAGS_PREVIEW_1 but does not share it's preview icon_state with it's parent.")
+			continue
+
+		var/type_string = "[thing.type]"
+		if(type_string != thing_map_icon_state)
+			TEST_FAIL("[thing] has no unique icon_state for GAGs previews, should be [type_string].")
 #endif
