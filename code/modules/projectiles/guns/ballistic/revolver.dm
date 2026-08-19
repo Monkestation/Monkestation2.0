@@ -370,7 +370,6 @@
 	recoil = 3
 	wield_recoil = 1
 
-
 /obj/item/gun/ballistic/revolver/takbok/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_TRAPPISTE)
 

@@ -1033,7 +1033,7 @@
 	fire_delay = 2 SECONDS
 	actions_types = list()
 	force = 15 // I mean if you're gonna beat someone with the thing you might as well get damage appropriate for how big the fukken thing is
-	slowdown = 0.5 // Fat fucking thing
+	slowdown = 0.4 // Fat fucking thing
 	item_flags = SLOWS_WHILE_IN_HAND
 
 /obj/item/gun/ballistic/automatic/wylom/Initialize(mapload)
