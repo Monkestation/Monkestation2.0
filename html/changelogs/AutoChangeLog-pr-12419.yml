@@ -1,4 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - bugfix: "Janitor cyborgs' drying agent and space lube spray bottles now refill with an amount that isn't zero."
