@@ -565,7 +565,6 @@
 /datum/greyscale_config/bandana/worn
 	name = "Bandana (Worn)"
 	icon_file = 'icons/mob/clothing/mask.dmi'
-	json_config = 'code/datums/greyscale/json_configs/bandana_worn.json'
 
 /datum/greyscale_config/bandana/inhands_left
 	name = "Bandana (Held, Left)"
@@ -585,7 +584,6 @@
 /datum/greyscale_config/bandana/striped/worn
 	name = "Striped Bandana (Worn)"
 	icon_file = 'icons/mob/clothing/mask.dmi'
-	json_config = 'code/datums/greyscale/json_configs/bandstriped_worn.json'
 
 /datum/greyscale_config/bandana/striped/inhands_left
 	name = "Striped Bandana (Held, Left)"
@@ -605,7 +603,6 @@
 /datum/greyscale_config/bandana/skull/worn
 	name = "Worn Skull Bandana"
 	icon_file = 'icons/mob/clothing/mask.dmi'
-	json_config = 'code/datums/greyscale/json_configs/bandskull_worn.json'
 
 /datum/greyscale_config/bandana/skull/inhands_left
 	name = "Skull Bandana (Held, Left)"

@@ -370,6 +370,7 @@
 /obj/item/clothing/head/playbunnyears/syndicate
 	name = "blood-red bunny ears headband"
 	desc = "An unusually suspicious pair of bunny ears attached to a headband. The headband looks reinforced with plasteel... but why?"
+	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "syndibunny_ears"
 	clothing_flags = SNUG_FIT
 	armor_type = /datum/armor/playbunnyears_syndicate
@@ -390,6 +391,7 @@
 /obj/item/clothing/head/playbunnyears/centcom
 	name = "centcom bunny ears headband"
 	desc = "A pair of very professional bunny ears attached to a headband. The ears themselves came from an endangered species of green rabbits."
+	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "playbunny_ears_centcom"
 	greyscale_colors = null
 	greyscale_config = null
@@ -398,6 +400,7 @@
 /obj/item/clothing/head/playbunnyears/british
 	name = "british bunny ears headband"
 	desc = "A pair of classy bunny ears attached to a headband. Worn to honor the crown."
+	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "playbunny_ears_brit"
 	greyscale_colors = null
 	greyscale_config = null
@@ -406,6 +409,7 @@
 /obj/item/clothing/head/playbunnyears/communist
 	name = "really red bunny ears headband"
 	desc = "A pair of red and gold bunny ears attached to a headband. Commonly used by any collectivizing bunny waiters."
+	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "playbunny_ears_communist"
 	greyscale_colors = null
 	greyscale_config = null
@@ -414,6 +418,7 @@
 /obj/item/clothing/head/playbunnyears/usa
 	name = "usa bunny ears headband"
 	desc = "A pair of star spangled bunny ears attached to a headband. The headband of a true patriot."
+	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "playbunny_ears_usa"
 	greyscale_colors = null
 	greyscale_config = null
