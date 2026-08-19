@@ -8,7 +8,7 @@
 /obj/item/umbrella
 	name = "umbrella"
 	desc = "A plain umbrella."
-	icon = 'icons/map_icons/_item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	SETUP_MAP_ICONS("umbrella", "/obj/item/umbrella")
 	inhand_icon_state = "umbrella_closed"
 	greyscale_config = /datum/greyscale_config/umbrella

@@ -22,7 +22,7 @@
 	seed = /obj/item/seeds/poppy
 	name = "poppy"
 	desc = "Long-used as a symbol of rest, peace, and death."
-	icon = 'icons/map_icons/_item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	SETUP_MAP_ICONS("map_flower", "/obj/item/food/grown/poppy")
 	greyscale_config = /datum/greyscale_config/flower_simple
 	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
@@ -50,7 +50,6 @@
 	possible_mutations = list(/datum/hydroponics/plant_mutation/trumpet)
 
 /obj/item/food/grown/poppy/lily
-	seed = /obj/item/seeds/poppy/lily
 	name = "lily"
 	desc = "A beautiful orange flower."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
@@ -58,8 +57,9 @@
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
+	seed = /obj/item/seeds/poppy/lily
 
-	//Spacemans's Trumpet
+//Spacemans's Trumpet
 /obj/item/seeds/poppy/lily/trumpet
 	name = "pack of spaceman's trumpet seeds"
 	desc = "A plant sculped by extensive genetic engineering. The spaceman's trumpet is said to bear no resemblance to its wild ancestors. Inside NT AgriSci circles it is better known as NTPW-0372."

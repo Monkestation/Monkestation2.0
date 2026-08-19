@@ -400,7 +400,7 @@
 /obj/item/reagent_containers/cup/bucket
 	name = "bucket"
 	desc = "It's a bucket."
-	icon = 'icons/map_icons/_item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	SETUP_MAP_ICONS("bucket", "/obj/item/reagent_containers/cup/bucket")
@@ -443,6 +443,8 @@
 
 /obj/item/reagent_containers/cup/bucket/wooden
 	name = "wooden bucket"
+	icon = 'icons/obj/service/janitor.dmi'
+	worn_icon = 'icons/mob/clothing/head/utility.dmi'
 	icon_state = "woodbucket"
 	inhand_icon_state = "woodbucket"
 	greyscale_colors = null
