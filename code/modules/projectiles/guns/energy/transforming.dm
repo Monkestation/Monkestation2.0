@@ -908,7 +908,7 @@
 
 /**
  * lawbringer execute mode:
- * It fires a 15 damage bullet
+ * It fires a 20 damage bullet
  */
 /obj/item/ammo_casing/energy/lawbringer/execute
 	projectile_type = /obj/projectile/lawbringer/execute
