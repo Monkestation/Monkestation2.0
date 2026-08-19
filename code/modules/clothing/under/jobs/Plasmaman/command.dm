@@ -52,14 +52,14 @@
 /obj/item/clothing/under/plasmaman/engineering/chief_engineer
 	name = "chief engineer's plasma envirosuit"
 	desc = "An air-tight suit designed to be used by plasmamen insane enough to achieve the rank of \"Chief Engineer\"."
-	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman/chief_engineer")
+	SETUP_MAP_ICONS("sign", "/obj/item/clothing/under/plasmaman/engineering/chief_engineer")
 	greyscale_colors = "#ffcd34#eeeeee#2e992e#2e992e#ffcd34#2e992e#8c4722"
 	sleek_greyscale_colors = "#deb63d#39393f#2e992e#e6a345#eeeeee"
 
 /obj/item/clothing/under/plasmaman/medical/chief_medical_officer
 	name = "chief medical officer's plasma envirosuit"
 	desc = "It's an envirosuit worn by those with the experience to be \"Chief Medical Officer\"."
-	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman/chief_medical_officer")
+	SETUP_MAP_ICONS("cross", "/obj/item/clothing/under/plasmaman/medical/chief_medical_officer")
 	greyscale_colors = "#eeeeee#eeeeee#5eb8b8#5eb8b8#5eb8b8#5eb8b8#224d49"
 	sleek_greyscale_colors = "#5eb8b8#39393f#e6a345#5eb8b8#eeeeee"
 	armor_type = /datum/armor/plasmaman_chief_medical_officer
