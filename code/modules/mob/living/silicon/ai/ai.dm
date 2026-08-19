@@ -1133,8 +1133,8 @@
 		if(ishuman(borgie))
 			var/mob/living/carbon/human/human = borgie
 			var/obj/item/organ/internal/brain/cybernetic/ai/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
-			//  Checks if shell currently has access from being deployed and has an AI uplink, and is sufficiently augmented
-			if(!(HAS_TRAIT(human, TRAIT_SILICON_ACCESS)) && (brain && brain.check_if_augmented()))
+			// Checks if the AI-uplink is unowned OR ours, and if our body is augmented sufficiently.
+			if((brain.mainframe_ai == null || brain.mainframe_ai == src) && (brain && brain.check_if_augmented()))
 				possible += human
 
 	if(!LAZYLEN(possible))
@@ -1152,8 +1152,8 @@
 
 	if(ishuman(target)) // If it is an AI-uplink organic
 		var/mob/living/carbon/human/human = target
-		var/obj/item/organ/internal/brain/cybernetic/ai/brain = locate() in human.organs
-		if(human.stat == DEAD || !(!brain.connected_ai || (brain.connected_ai == src)))
+		var/obj/item/organ/internal/brain/cybernetic/ai/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
+		if(human.stat == DEAD || brain.deployed || !(!brain.mainframe_ai || (brain.mainframe_ai == src)))
 			return
 
 	if(mind)
@@ -1163,7 +1163,8 @@
 			RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(disconnect_shell))
 			deployed_shell = target
 		deployed_shell.deploy_init(src)
-		mind.transfer_to(target)
+		if(mind) // Checking, for human shells handle mind transfer within deploy_init()
+			mind.transfer_to(target)
 	diag_hud_set_deployed()
 
 /datum/action/innate/deploy_shell
