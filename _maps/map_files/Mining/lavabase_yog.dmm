@@ -736,6 +736,11 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible,
 /turf/open/floor/iron/dark,
 /area/mine/maintenance)
+"iJ" = (
+/obj/structure/lattice/catwalk/mining,
+/obj/structure/cable,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "iL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor/window,
@@ -773,6 +778,17 @@
 /obj/structure/fireaxecabinet/fishing_rod/directional/north,
 /turf/open/floor/iron/white,
 /area/mine/medical)
+"jm" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor/window,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/violet/visible,
+/obj/machinery/door/poddoor/preopen{
+	id = "mining1";
+	name = "Mining Lockdown Blast Doors"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/mine/maintenance)
 "jp" = (
 /obj/machinery/door/airlock{
 	name = "Restroom"
@@ -903,6 +919,10 @@
 /obj/item/bedsheet/blue,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
+"lr" = (
+/obj/structure/cable,
+/turf/open/floor/plating/lavaland_atmos,
+/area/mine/maintenance)
 "lw" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
@@ -910,6 +930,7 @@
 	target_pressure = 4500
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/mine/maintenance)
 "lx" = (
@@ -1117,6 +1138,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining_station,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/iron/dark,
 /area/mine/maintenance)
 "py" = (
@@ -1304,6 +1326,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/mine/medical)
+"rN" = (
+/obj/structure/lattice/catwalk/mining,
+/obj/machinery/power/colony_wind_turbine,
+/obj/structure/cable,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "sp" = (
 /obj/structure/ore_box,
 /obj/machinery/light/small{
@@ -1354,11 +1382,12 @@
 /turf/open/floor/iron/dark,
 /area/mine/maintenance)
 "tx" = (
-/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
+/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/mine/maintenance)
 "tM" = (
@@ -1416,7 +1445,6 @@
 /obj/effect/turf_decal/arrows{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/production)
 "us" = (
@@ -1627,6 +1655,7 @@
 	target_pressure = 4500
 	},
 /obj/effect/turf_decal/box,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/mine/maintenance)
 "xP" = (
@@ -2029,6 +2058,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 1
 	},
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/mine/maintenance)
 "DW" = (
@@ -2053,6 +2083,7 @@
 /area/mine/living_quarters)
 "Em" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/mine/maintenance)
 "Ep" = (
@@ -2111,14 +2142,12 @@
 /turf/open/floor/iron,
 /area/mine/production)
 "EJ" = (
-/obj/structure/cable,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
 /area/mine/production)
 "ET" = (
 /obj/structure/fluff/coinpress,
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/production)
 "EW" = (
@@ -2354,7 +2383,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining_station,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/iron/dark/side,
 /area/mine/maintenance)
 "Ji" = (
@@ -2499,6 +2528,7 @@
 	dir = 6
 	},
 /obj/structure/cable/layer1,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/mine/maintenance)
 "LZ" = (
@@ -2774,6 +2804,7 @@
 "Qt" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/mine/maintenance)
 "Qv" = (
@@ -3082,6 +3113,14 @@
 /obj/structure/cable/layer1,
 /turf/open/floor/iron,
 /area/mine/production)
+"VB" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1;
+	scrubbing = 0
+	},
+/obj/structure/cable,
+/turf/open/floor/plating/lavaland_atmos,
+/area/mine/maintenance)
 "VJ" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "mining_internal";
@@ -3154,6 +3193,7 @@
 /area/mine/living_quarters)
 "Xq" = (
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/mine/maintenance)
 "XC" = (
@@ -3703,7 +3743,7 @@ oh
 oh
 oh
 Cv
-Cv
+rN
 Ap
 Ap
 ab
@@ -3755,7 +3795,7 @@ zZ
 as
 iL
 qK
-Cv
+iJ
 Cv
 Ap
 ak
@@ -3807,7 +3847,7 @@ Es
 Gi
 uT
 sW
-sW
+lr
 Cv
 Ap
 ak
@@ -3857,9 +3897,9 @@ xD
 Em
 Qt
 lw
-iL
-qK
-sW
+jm
+VB
+lr
 Cv
 Ap
 ak
@@ -3911,7 +3951,7 @@ Vg
 PL
 uT
 sW
-sW
+lr
 Cv
 Ap
 ak
@@ -3963,7 +4003,7 @@ zv
 us
 bD
 qK
-Cv
+iJ
 Cv
 ak
 ak
@@ -4015,7 +4055,7 @@ zh
 vl
 vl
 Cv
-Cv
+rN
 ak
 ak
 ak

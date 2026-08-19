@@ -1059,6 +1059,14 @@
 	},
 /turf/open/floor/iron,
 /area/mine/atmos/hallway)
+"ho" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/mine/atmos/engine)
 "hs" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/old,
@@ -5475,6 +5483,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/iron,
 /area/mine/eva)
+"MA" = (
+/obj/machinery/power/rtg/portable,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/full,
+/obj/effect/turf_decal/stripes/red/full,
+/turf/open/floor/plating,
+/area/mine/production)
 "MB" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
@@ -18736,7 +18751,7 @@ IP
 IP
 IP
 hR
-xi
+MA
 lI
 Jp
 hg
@@ -21558,7 +21573,7 @@ Jk
 xI
 wM
 Rj
-Mr
+ho
 Iz
 Oi
 GZ
@@ -21642,7 +21657,7 @@ Mh
 DB
 Oq
 gX
-ov
+fO
 Uk
 Lz
 Hf
