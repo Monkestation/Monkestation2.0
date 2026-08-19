@@ -10,7 +10,7 @@
 
 		var/thing_map_icon_state = thing.icon_state_map
 		if(!thing_map_icon_state)
-			TEST_FAIL("[thing] has greyscale but does not properly implement SETUP_MAP_ICONS or set NO_NEW_GAGS_PREVIEW_1.")
+			TEST_FAIL("[thing] has greyscale but does not properly implement SETUP_MAP_ICONS.")
 			continue
 
 		var/thing_map_icon = initial(thing.icon)
@@ -23,10 +23,9 @@
 
 		if(thing.flags_1 & NO_NEW_GAGS_PREVIEW_1)
 			if("[thing.parent_type]" != thing_map_icon_state)
-				TEST_FAIL("[thing] has NO_NEW_GAGS_PREVIEW_1 but does not share it's preview icon_state with it's parent.")
-			continue
-
-		var/type_string = "[thing.type]"
-		if(type_string != thing_map_icon_state)
+				TEST_FAIL("[thing] has NO_NEW_GAGS_PREVIEW_1 but does not share its map preview icon_state with its parent.")
+			if(thing.parent_type::icon != thing_map_icon)
+				TEST_FAIL("[thing] has NO_NEW_GAGS_PREVIEW_1 but does not share its map preview icon with its parent.")
+		else if("[thing.type]" != thing_map_icon_state)
 			TEST_FAIL("[thing] has no unique icon_state for GAGs previews, should be [type_string].")
 #endif
