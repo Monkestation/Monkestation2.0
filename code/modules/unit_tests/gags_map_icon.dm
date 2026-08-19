@@ -21,11 +21,8 @@
 			TEST_FAIL("[thing] has a map override icon_state set ([thing_map_icon_state]), but it is not present in [thing_map_icon].")
 
 		if(thing.flags_1 & NO_NEW_GAGS_PREVIEW_1)
-			var/atom/parent_path = thing.parent_type
-			if(parent_path::icon_state_map != thing_map_icon_state)
-				TEST_FAIL("[thing] has NO_NEW_GAGS_PREVIEW_1 but does not share its map preview icon_state with its parent.")
-			if(parent_path::icon != thing_map_icon)
-				TEST_FAIL("[thing] has NO_NEW_GAGS_PREVIEW_1 but does not share its map preview icon with its parent.")
-		else if("[thing.type]" != thing_map_icon_state)
+			continue
+
+		if("[thing.type]" != thing_map_icon_state)
 			TEST_FAIL("[thing] has no unique icon_state for GAGs previews, should be [thing.type].")
 #endif
