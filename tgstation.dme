@@ -6724,6 +6724,7 @@
 #include "code\modules\surgery\organs\internal\liver\liver_ipc.dm"
 #include "code\modules\surgery\organs\internal\liver\liver_plasmamen.dm"
 #include "code\modules\surgery\organs\internal\liver\liver_skeleton.dm"
+#include "code\modules\surgery\organs\internal\liver\liver_slime.dm"
 #include "code\modules\surgery\organs\internal\tongue\_tongue.dm"
 #include "code\modules\surgery\organs\internal\tongue\tongue_ipc.dm"
 #include "code\modules\surgery\organs\internal\tumor\tumors.dm"
