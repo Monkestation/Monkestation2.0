@@ -158,7 +158,7 @@
 		to_chat(H, span_notice("You feel intact enough as it is."))
 		return
 	to_chat(H, span_notice("You focus intently on your missing [length(limbs_to_heal) >= 2 ? "limbs" : "limb"]..."))
-	if(!do_after(H, 15 SECONDS))
+	if(!do_after(H, 10 SECONDS))
 		return
 	if(H.blood_volume >= 40*length(limbs_to_heal)+BLOOD_VOLUME_OKAY)
 		H.regenerate_limbs()
