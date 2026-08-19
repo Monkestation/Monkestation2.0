@@ -176,7 +176,7 @@
 	else
 		json = list()
 	json[id] = serialize_list(semvers = list())
-	WRITE_FILE(jsonpath, json_encode(json))
+	WRITE_FILE(jsonpath, json_encode(json, JSON_PRETTY_PRINT))
 
 /datum/picture/proc/Copy(greyscale = FALSE, cropx = 0, cropy = 0)
 	var/datum/picture/P = new
