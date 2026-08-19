@@ -344,7 +344,7 @@
 /datum/antagonist/nukeop/lone/junior
 	name = "Junior Lone Operative"
 	nukeop_outfit = /datum/outfit/syndicate/junior
-	preview_outfit = /datum/outfit/syndicate/junior
+	preview_outfit = /datum/outfit/nuclear_operative
 
 /datum/antagonist/nukeop/lone/junior/memorize_code()
 	if(nuke_team && nuke_team.tracked_nuke)
