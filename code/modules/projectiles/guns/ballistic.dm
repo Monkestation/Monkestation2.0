@@ -610,7 +610,6 @@
 			return
 		. += span_info("You scan the chamber with your X-ray vision: [(chambered) ? "you see \a [chambered.name]!" : "it is empty."]")
 
-
 ///Gets the number of bullets in the gun
 /obj/item/gun/ballistic/proc/get_ammo(countchambered = TRUE)
 	var/bullets = 0 //No silly variable names on my watch.
