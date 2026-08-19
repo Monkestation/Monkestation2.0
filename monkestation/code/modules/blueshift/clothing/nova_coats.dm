@@ -71,11 +71,12 @@
 /obj/item/clothing/suit/urban
 	name = "urban coat"
 	desc = "A coat built for urban life."
-	icon_state = "urban_coat"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("urban_coat", "/obj/item/clothing/suit/urban")
 	greyscale_config = /datum/greyscale_config/urban_coat
 	greyscale_config_worn = /datum/greyscale_config/urban_coat/worn
 	greyscale_colors = "#252e5a#938060#66562b"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/suit/toggle/deckard
@@ -111,17 +112,19 @@
 /obj/item/clothing/suit/duster
 	name = "duster"
 	desc = "This station ain't big enough for the both of us."
-	icon_state = "duster"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("duster", "/obj/item/clothing/suit/duster")
 	greyscale_config = /datum/greyscale_config/duster
 	greyscale_config_worn = /datum/greyscale_config/duster/worn
 	greyscale_colors = "#954b21"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/suit/toggle/peacoat
 	name = "peacoat"
 	desc = "The way you guys are blending in with the local colour. I mean, Flag Girl was bad enough, but U-Boat Captain?"
-	icon_state = "peacoat"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("peacoat", "/obj/item/clothing/suit/toggle/peacoat")
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	greyscale_config = /datum/greyscale_config/peacoat
 	greyscale_config_worn = /datum/greyscale_config/peacoat/worn
@@ -145,13 +148,11 @@
 /obj/item/clothing/suit/armor/vest/det_suit/runner
 	name = "joyful coat"
 	desc = "<i>\"You look like a good Joe.\"</i>"
-	icon_state = "bladerunner_neue"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-
-
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/suits.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suit.dmi'
 	blood_overlay_type = "coat"
+	icon_state = "bladerunner_neue"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 
 /obj/item/clothing/suit/jacket/croptop
 	name = "crop top turtleneck"
@@ -204,7 +205,8 @@
 /obj/item/clothing/suit/tailored_jacket
 	name = "tailored jacket"
 	desc = "A somewhat long jacket tailor made for... however it looks right now!"
-	icon_state = "tailored_jacket"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("tailored_jacket", "/obj/item/clothing/suit/tailored_jacket")
 	greyscale_config = /datum/greyscale_config/tailored_jacket
 	greyscale_config_worn = /datum/greyscale_config/tailored_jacket/worn
 	greyscale_colors = "#8c8c8c#8c8c8c#8c8c8c#bf9f78#8c8c8c#8c8c8c#8c8c8c#bf9f78#8c8c8c" // Look this has a lot of colorable sections
@@ -220,6 +222,8 @@
 /obj/item/clothing/suit/tailored_jacket/short
 	name = "tailored short jacket"
 	desc = "A jacket tailor made for... however it looks right now!"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("tailored_jacket", "/obj/item/clothing/suit/tailored_jacket/short")
 	greyscale_config = /datum/greyscale_config/tailored_short_jacket
 	greyscale_config_worn = /datum/greyscale_config/tailored_short_jacket/worn
 	greyscale_colors = "#8c8c8c#8c8c8c#8c8c8c#bf9f78#8c8c8c#8c8c8c#bf9f78#8c8c8c"
@@ -227,7 +231,8 @@
 /obj/item/clothing/suit/warm_coat
 	name = "warm coat"
 	desc = "A long insulated coat with fur, it looks quite comfortable."
-	icon_state = "warm_coat"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("warm_coat", "/obj/item/clothing/suit/warm_coat")
 	greyscale_config = /datum/greyscale_config/warm_coat
 	greyscale_config_worn = /datum/greyscale_config/warm_coat/worn
 	greyscale_colors = "#7a5f4f#d9cec7"
@@ -245,7 +250,8 @@
 	name = "crop-top jacket"
 	desc = "A jacket that, some time long past, probably made quite the effective outdoors wear. Now, \
 		some barbarian has cut the entire bottom half out."
-	icon_state = "crop_jacket"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("crop_jacket", "/obj/item/clothing/suit/crop_jacket")
 	greyscale_config = /datum/greyscale_config/crop_jacket
 	greyscale_config_worn = /datum/greyscale_config/crop_jacket/worn
 	greyscale_colors = "#ebebeb#a52f29#292929"
@@ -265,6 +271,7 @@
 	name = "sleeveless crop-top jacket"
 	desc = "A jacket that, some time long past, probably made quite the effective outdoors wear. Now, \
 		some barbarian has cut the entire bottom half out, as well as the sleeves."
+	SETUP_MAP_ICONS("crop_jacket", "/obj/item/clothing/suit/crop_jacket/sleeveless")
 	greyscale_config = /datum/greyscale_config/sleeveless_crop_jacket
 	greyscale_config_worn = /datum/greyscale_config/sleeveless_crop_jacket/worn
 	greyscale_colors = "#ebebeb#a52f29"

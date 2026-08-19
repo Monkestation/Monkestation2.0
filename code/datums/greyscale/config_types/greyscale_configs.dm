@@ -1304,10 +1304,9 @@
 	icon_file = 'icons/obj/clothing/necks.dmi'
 	json_config = 'code/datums/greyscale/json_configs/linjacket.json'
 
-/datum/greyscale_config/linjacket_worn
-	name = "Worn Tassled Jacket"
+/datum/greyscale_config/linjacket/worn
+	name = "Tassled Jacket (Worn)"
 	icon_file = 'icons/mob/clothing/neck.dmi'
-	json_config = 'code/datums/greyscale/json_configs/linjacket_worn.json'
 
 /datum/greyscale_config/umbrella
 	name = "Umbrella"

@@ -85,7 +85,7 @@
 /obj/item/clothing/head/cowboy/nova/flat/cowl/sheriff
 	name = "winter sheriff hat"
 	desc = "A dark hat with a matching dark cowl, warm yet breathable. There's a small set of antlers embroidered on the inside."
-	SETUP_MAP_ICONS("flatbrim_cowl", "/obj/item/clothing/head/cowboy/nova/flat/sheriff")
+	SETUP_MAP_ICONS("flatbrim_cowl", "/obj/item/clothing/head/cowboy/nova/flat/cowl/sheriff")
 	greyscale_colors = "#3F3F3F#716349#3F3F3F"
 	flags_1 = NONE //No recoloring presets
 

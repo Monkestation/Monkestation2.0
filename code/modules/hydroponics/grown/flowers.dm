@@ -104,13 +104,14 @@
 	possible_mutations = list(/datum/hydroponics/plant_mutation/fraxinella)
 
 /obj/item/food/grown/poppy/geranium
-	seed = /obj/item/seeds/poppy/geranium
-	icon_state = "geranium"
 	name = "geranium"
 	desc = "A beautiful blue flower."
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "geranium"
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
+	seed = /obj/item/seeds/poppy/geranium
 
 ///Fraxinella seeds.
 /obj/item/seeds/poppy/geranium/fraxinella
@@ -127,11 +128,11 @@
 
 ///Fraxinella Flowers.
 /obj/item/food/grown/poppy/geranium/fraxinella
-	seed = /obj/item/seeds/poppy/geranium/fraxinella
 	name = "fraxinella"
 	desc = "A beautiful light pink flower."
 	icon_state = "fraxinella"
 	distill_reagent = /datum/reagent/ash
+	seed = /obj/item/seeds/poppy/geranium/fraxinella
 
 // Harebell
 /obj/item/seeds/harebell

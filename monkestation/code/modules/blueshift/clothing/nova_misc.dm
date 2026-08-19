@@ -107,7 +107,8 @@
 /obj/item/clothing/suit/toggle/jacket/cardigan
 	name = "cardigan"
 	desc = "It's like, half a jacket."
-	icon_state = "cardigan"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("cardigan", "/obj/item/clothing/suit/toggle/jacket/cardigan")
 	greyscale_config = /datum/greyscale_config/cardigan
 	greyscale_config_worn = /datum/greyscale_config/cardigan/worn
 	greyscale_colors = "#FFFFFF"
@@ -340,7 +341,8 @@
 /obj/item/clothing/suit/warm_sweater
 	name = "warm sweater"
 	desc = "A comfortable warm-looking sweater."
-	icon_state = "warm_sweater"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("warm_sweater", "/obj/item/clothing/suit/warm_coat")
 	greyscale_config = /datum/greyscale_config/warm_sweater
 	greyscale_config_worn = /datum/greyscale_config/warm_sweater/worn
 	greyscale_colors = "#867361"
@@ -350,7 +352,8 @@
 /obj/item/clothing/suit/heart_sweater
 	name = "heart sweater"
 	desc = "A comfortable warm-looking sweater. It even has a heart pattern on it, how cute."
-	icon_state = "heart_sweater"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("heart_sweater", "/obj/item/clothing/suit/heart_sweater")
 	greyscale_config = /datum/greyscale_config/heart_sweater
 	greyscale_config_worn = /datum/greyscale_config/heart_sweater/worn
 	greyscale_colors = "#867361#8f3a3a"

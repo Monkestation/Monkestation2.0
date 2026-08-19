@@ -194,7 +194,7 @@
 
 /obj/item/storage/belt/military/cin_surplus
 	desc = "A tactical webbing often used by the CIN's military forces."
-	icon = 'icons/map_icons/clothing/_clothing.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	SETUP_MAP_ICONS("chestrig", "/obj/item/storage/belt/military/cin_surplus")
 	worn_icon_state = "chestrig"
 	greyscale_config = /datum/greyscale_config/cin_surplus_chestrig/object
@@ -233,7 +233,7 @@
 /obj/item/storage/backpack/industrial/cin_surplus
 	name = "\improper CIN military backpack"
 	desc = "A rugged backpack often used by the CIN's military forces."
-	icon = 'icons/map_icons/clothing/_clothing.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	SETUP_MAP_ICONS("backpack", "/obj/item/storage/backpack/industrial/cin_surplus")
 	worn_icon_state = "backpack"
 	greyscale_config = /datum/greyscale_config/cin_surplus_backpack/object

@@ -128,6 +128,8 @@
 	name = "parasol"
 	desc = "A black laced parsol, how intricate."
 	icon = 'icons/obj/weapons/umbrellas.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/umbrellas_inhand_lh.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/umbrellas_inhand_rh.dmi'
 	icon_state = "parasol"
 	inhand_icon_state = "parasol_closed"
 	on_inhand_icon_state = "parasol_on"
