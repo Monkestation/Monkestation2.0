@@ -245,6 +245,14 @@
 	l_hand = /obj/item/modular_computer/pda/nukeops
 	r_hand = /obj/item/shield/energy
 
+/datum/outfit/nuclear_operative_junior
+	name = "Nuclear Operative (Junior, Preview only)"
+
+	back = /obj/item/storage/backpack/fireproof
+	head = /obj/item/clothing/head/helmet/space/syndicate
+	suit = /obj/item/clothing/suit/space/syndicate
+	uniform = /obj/item/clothing/under/syndicate
+
 /datum/outfit/nuclear_operative_elite/post_equip(mob/living/carbon/human/H, visualsOnly)
 	var/obj/item/shield/energy/shield = locate() in H.held_items
 	shield.icon_state = "[shield.base_icon_state]1"
@@ -344,7 +352,7 @@
 /datum/antagonist/nukeop/lone/junior
 	name = "Junior Lone Operative"
 	nukeop_outfit = /datum/outfit/syndicate/junior
-	preview_outfit = /datum/outfit/nuclear_operative
+	preview_outfit = /datum/outfit/nuclear_operative_junior
 
 /datum/antagonist/nukeop/lone/junior/memorize_code()
 	if(nuke_team && nuke_team.tracked_nuke)
