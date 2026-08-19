@@ -145,6 +145,12 @@
 /obj/structure/table/reinforced,
 /obj/item/plate,
 /obj/item/bodypart/head/monkey,
+/obj/structure/grille/indestructible{
+	density = 0;
+	alpha = 0;
+	mouse_opacity = 0;
+	name = "magical camera grille (DO NOT DELETE)"
+	},
 /turf/open/floor/iron/terracotta/small,
 /area/centcom/tdome/arena/actual)
 "xG" = (
@@ -188,9 +194,6 @@
 /area/centcom/tdome/arena/actual)
 "FH" = (
 /obj/structure/table/reinforced,
-/obj/machinery/camera/motion/thunderdome{
-	pixel_x = 10
-	},
 /turf/open/floor/iron/terracotta/small,
 /area/centcom/tdome/arena/actual)
 "Hn" = (

@@ -3,7 +3,9 @@
 
 SUBSYSTEM_DEF(pathogen_clouds)
 	name = "Pathogen Clouds"
-	init_order = INIT_ORDER_PATHOGEN
+	dependencies = list(
+		/datum/controller/subsystem/atoms,
+	)
 	priority = FIRE_PRIORITY_PATHOGEN
 	wait = 1 SECONDS
 	flags = SS_BACKGROUND | SS_NO_INIT | SS_HIBERNATE
@@ -26,9 +28,9 @@ SUBSYSTEM_DEF(pathogen_clouds)
 
 /datum/controller/subsystem/pathogen_clouds/stat_entry(msg)
 	msg += "Run Cores:[length(current_run_cores)]"
-	msg += "Cores:[length(cores)]"
-	msg += "Run Clouds:[length(current_run_clouds)]"
-	msg += "Clouds:[length(clouds)]"
+	msg += "|Cores:[length(cores)]"
+	msg += "|Run Clouds:[length(current_run_clouds)]"
+	msg += "|Clouds:[length(clouds)]"
 	return ..()
 
 /datum/controller/subsystem/pathogen_clouds/Recover()
