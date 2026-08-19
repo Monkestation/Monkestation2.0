@@ -661,7 +661,7 @@
 		owner.fire_nuclear_particle()
 
 /datum/status_effect/cherenkov_radiation/on_remove()
-	if(!QDELETED(mob_light_obj)
+	if(!QDELETED(mob_light_obj))
 		QDEL_NULL(mob_light_obj)
 
 /datum/status_effect/gutted
