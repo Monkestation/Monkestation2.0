@@ -254,6 +254,7 @@
 	head = /obj/item/clothing/head/helmet/space/syndicate
 	suit = /obj/item/clothing/suit/space/syndicate
 	uniform = /obj/item/clothing/under/syndicate
+	suit_store = /obj/item/tank/jetpack/oxygen
 
 /datum/outfit/nuclear_operative_elite/post_equip(mob/living/carbon/human/H, visualsOnly)
 	var/obj/item/shield/energy/shield = locate() in H.held_items
