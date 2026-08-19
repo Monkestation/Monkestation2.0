@@ -1,4 +1,0 @@
-author: "Runian, MrMelbert"
-delete-after: True
-changes:
-  - balance: "Operating computer's TGUI is now more strict on who can see the information displayed on it."

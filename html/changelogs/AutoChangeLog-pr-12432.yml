@@ -1,4 +1,0 @@
-author: "notghosti"
-delete-after: True
-changes:
-  - bugfix: "Rack creators numbers are tweaked to properly adjust with manipulators"
