@@ -248,6 +248,8 @@
 /datum/outfit/nuclear_operative_junior
 	name = "Nuclear Operative (Junior, Preview only)"
 
+	glasses = /obj/item/clothing/glasses/night
+	belt = /obj/item/storage/belt/military
 	back = /obj/item/storage/backpack/fireproof
 	head = /obj/item/clothing/head/helmet/space/syndicate
 	suit = /obj/item/clothing/suit/space/syndicate
