@@ -120,7 +120,7 @@
 
 /obj/item/clothing/under/color/blue
 	name = "blue jumpsuit"
-	SETUP_MAP_ICONS("jumpsuit", "/obj/item/clothing/under/color/grey/blue")
+	SETUP_MAP_ICONS("jumpsuit", "/obj/item/clothing/under/color/blue")
 	greyscale_colors = "#52aecc"
 
 /obj/item/clothing/under/color/jumpskirt/blue

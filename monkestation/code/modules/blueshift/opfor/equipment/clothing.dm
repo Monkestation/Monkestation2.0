@@ -197,6 +197,9 @@
 	description = "The station failed the inspection, now they have to deal with you."
 	item_type = /obj/item/storage/backpack/industrial/cin_surplus/forest/nri_soldier
 
+/obj/item/storage/backpack/industrial/cin_surplus/forest/nri_soldier
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
+
 /obj/item/storage/backpack/industrial/cin_surplus/forest/nri_soldier/PopulateContents()
 	new /obj/item/clothing/under/syndicate/rus_army(src)
 	new /obj/item/clothing/shoes/combat(src)

@@ -665,7 +665,7 @@
 	icon = 'icons/map_icons/clothing/under/costume.dmi'
 	SETUP_MAP_ICONS("donatorgrayscaleturtleneck", "/obj/item/clothing/under/costume/donatorgrayscaleturtleneck")
 	greyscale_config = /datum/greyscale_config/donatorgrayscaleturtleneck
-	greyscale_config_worn = /datum/greyscale_config/donatorgrayscaleturtleneckworn
+	greyscale_config_worn = /datum/greyscale_config/donatorgrayscaleturtleneck/worn
 	greyscale_colors = "#8cd4a2#404577"
 	can_adjust = FALSE
 	inhand_icon_state = null
@@ -676,13 +676,13 @@
 	icon_file = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
 	json_config = 'monkestation/code/modules/donator/code/greyscale/turtleneck.json'
 	expected_colors = 2
-/datum/greyscale_config/donatorgrayscaleturtleneckworn
-	name = "turtleneck with pants"
+
+/datum/greyscale_config/donatorgrayscaleturtleneck/worn
+	name = "turtleneck with pants (Worn)"
 	icon_file = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
-	json_config = 'monkestation/code/modules/donator/code/greyscale/turtleneck.json'
-	expected_colors = 2
 
 /obj/item/clothing/under/costume/donatorgrayscaleturtleneck/nondonator
+	flags_1 = NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/neck/donatorwhitefurshawl
 	name = "white fur shawl"

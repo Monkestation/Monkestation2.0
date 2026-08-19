@@ -14,14 +14,14 @@
 /obj/item/clothing/under/plasmaman/medical/chemist
 	name = "chemistry plasma envirosuit"
 	desc = "A plasmaman envirosuit designed for chemists."
-	SETUP_MAP_ICONS("cross", "/obj/item/clothing/under/plasmaman/chemist")
+	SETUP_MAP_ICONS("cross", "/obj/item/clothing/under/plasmaman/medical/chemist")
 	greyscale_colors = "#eeeeee#eeeeee#d15b1b#eeeeee#d15b1b#d15b1b#8c2a0f"
 	sleek_greyscale_colors = "#eeeeee#39393f#d15b1b#39393f#eeeeee"
 
 /obj/item/clothing/under/plasmaman/medical/viro
 	name = "virology plasma envirosuit"
 	desc = "The suit worn by the safest people on the station, those who are completely immune to the monstrosities they create."
-	SETUP_MAP_ICONS("cross", "/obj/item/clothing/under/plasmaman/viro")
+	SETUP_MAP_ICONS("cross", "/obj/item/clothing/under/plasmaman/medical/viro")
 	greyscale_colors = "#eeeeee#eeeeee#40992e#eeeeee#40992e#40992e#003300"
 	sleek_greyscale_colors = "#eeeeee#39393f#40992e#39393f#eeeeee"
 

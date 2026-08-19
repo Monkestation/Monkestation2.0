@@ -36,4 +36,9 @@
 /obj/item/clothing/under/pants/camo
 	name = "camo pants"
 	desc = "A pair of woodland camouflage pants. Probably not the best choice for a space station."
-	icon_state = "camopants"
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
+	SETUP_MAP_ICONS("camopants", "/obj/item/clothing/under/pants/camo")
+	greyscale_config = /datum/greyscale_config/camo_pants
+	greyscale_config_worn = /datum/greyscale_config/camo_pants/worn
+	greyscale_colors = "#69704C#6E5B4C#343741"
+	flags_1 = IS_PLAYER_COLORABLE_1

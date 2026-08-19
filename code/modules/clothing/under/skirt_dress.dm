@@ -109,7 +109,7 @@
 	name = "wonderland pinafore"
 	desc = "An adorable pinafore, just don't chase any white rabbits down any holes this time. It has the initials 'VA' embroidered on the skirt hem."
 	icon = 'icons/map_icons/clothing/under/dress.dmi'
-	SETUP_MAP_ICONS("wlpinafore", "/obj/item/clothing/under/dress/ballgown")
+	SETUP_MAP_ICONS("wlpinafore", "/obj/item/clothing/under/dress/wlpinafore")
 	greyscale_config = /datum/greyscale_config/wlpinafore
 	greyscale_config_worn = /datum/greyscale_config/wlpinafore_worn
 	greyscale_colors = "#5190c8#FFFFFF"
@@ -122,7 +122,7 @@
 	name = "ribboned gown"
 	desc = "A classy and elegant gown with ribbon sleeves. It has the initials 'VA' stitched on the back hem."
 	icon = 'icons/map_icons/clothing/under/dress.dmi'
-	SETUP_MAP_ICONS("ribbondress", "/obj/item/clothing/under/dress/ballgown")
+	SETUP_MAP_ICONS("ribbondress", "/obj/item/clothing/under/dress/ribbondress")
 	greyscale_config = /datum/greyscale_config/ribbondress
 	greyscale_config_worn = /datum/greyscale_config/ribbondress_worn
 	greyscale_colors = "#845FAA#D5A6F4"

@@ -31,7 +31,7 @@
 /obj/item/clothing/under/plasmaman/security/head_of_security
 	name = "head of security's envirosuit"
 	desc = "A plasmaman containment suit decorated for those few with the dedication to achieve the position of Head of Security."
-	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman/head_of_security")
+	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman/security/head_of_security")
 	greyscale_config = /datum/greyscale_config/plasmaman_suit/striped
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/striped
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/striped

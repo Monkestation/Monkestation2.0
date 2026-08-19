@@ -97,8 +97,8 @@
 /obj/item/clothing/under/suit/fancy
 	name = "fancy suit"
 	desc = "A fancy suit and jacket with an elegant shirt."
-	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
-	SETUP_MAP_ICONS("fancy_suit", "/obj/item/clothing/suit/fancy")
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
+	SETUP_MAP_ICONS("fancy_suit", "/obj/item/clothing/under/suit/fancy")
 	greyscale_config = /datum/greyscale_config/fancy_suit
 	greyscale_config_worn = /datum/greyscale_config/fancy_suit/worn
 	greyscale_colors = "#FFFFFA#0075C4#7C787D"

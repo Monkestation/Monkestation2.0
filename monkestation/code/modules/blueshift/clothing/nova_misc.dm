@@ -342,7 +342,7 @@
 	name = "warm sweater"
 	desc = "A comfortable warm-looking sweater."
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
-	SETUP_MAP_ICONS("warm_sweater", "/obj/item/clothing/suit/warm_coat")
+	SETUP_MAP_ICONS("warm_sweater", "/obj/item/clothing/suit/warm_sweater")
 	greyscale_config = /datum/greyscale_config/warm_sweater
 	greyscale_config_worn = /datum/greyscale_config/warm_sweater/worn
 	greyscale_colors = "#867361"
