@@ -113,6 +113,39 @@
 		/datum/computer_file/program/scipaper_program,
 	)
 
+/obj/item/modular_computer/pda/heads/ntrep
+	name = "Nanotrasen Representative's PDA"
+	inserted_item = /obj/item/pen/fountain
+	starting_programs = list(
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/status,
+		/datum/computer_file/program/nt_rep_comments,
+		/datum/computer_file/program/science,
+		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/budgetorders,
+	)
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
+
+/obj/item/modular_computer/pda/blueshield //for now functionally the same as sec but with lifeline. But having it here means if we want to give a fancy pda or a CC command PDA we most certainly.
+	name = "blueshield PDA"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/blueshield")
+	greyscale_colors = "#EA3232#0000cc"
+	starting_programs = list(
+		/datum/computer_file/program/records/security,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/lifeline,
+	)
+
+/obj/item/modular_computer/pda/bridge_assistant
+	name = "bridge assistant PDA"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/bridge_assistant")
+	greyscale_colors = "#374f7e#a92323"
+	starting_programs = list(
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/status,
+	)
+
 /**
  * Security
  */
@@ -152,6 +185,19 @@
 		/datum/computer_file/program/robocontrol,
 	)
 
+/obj/item/modular_computer/pda/security/brig_physician
+	name = "brig physician PDA"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/security/brig_physician")
+	greyscale_config = /datum/greyscale_config/tablet/stripe_split
+	greyscale_colors = "#A52F29#0000CC#918F8C"
+	starting_programs = list(
+		/datum/computer_file/program/records/security,
+		/datum/computer_file/program/records/medical,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/lifeline, // For finding security officers
+	)
+
 /**
  * Engineering
  */
@@ -163,6 +209,7 @@
 	greyscale_colors = "#D99A2E#69DBF3#E3DF3D"
 	starting_programs = list(
 		/datum/computer_file/program/supermatter_monitor,
+		/datum/computer_file/program/alarm_monitor,
 	)
 
 /obj/item/modular_computer/pda/atmos
@@ -173,6 +220,15 @@
 	starting_programs = list(
 		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/alarm_monitor,
+	)
+
+/obj/item/modular_computer/pda/signal
+	name = "signal PDA"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/signal")
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
+	greyscale_colors = "#D99A2E#0EC220#727272"
+	starting_programs = list(
+		/datum/computer_file/program/ntnetmonitor,
 	)
 
 /**
@@ -198,7 +254,7 @@
 	greyscale_colors = "#484848#0099CC#D94927"
 	starting_programs = list(
 		/datum/computer_file/program/robocontrol,
-		/datum/computer_file/program/science,
+		/datum/computer_file/program/borg_monitor,
 	)
 
 /obj/item/modular_computer/pda/geneticist
@@ -209,6 +265,12 @@
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
 	)
+
+/obj/item/modular_computer/pda/xenobiologist
+	name = "xenobiologist PDA"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/xenobiologist")
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
+	greyscale_colors = "#FAFAFA#000099#FF66CC"
 
 /**
  * Medical
@@ -248,6 +310,21 @@
 	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/chemist")
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#FAFAFA#355FAC#EA6400"
+
+/obj/item/modular_computer/pda/psychologist
+	name = "Psychologist PDA"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/psychologist")
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
+	greyscale_colors = "#FAFAFA#242424#333333"
+	starting_programs = list(
+		/datum/computer_file/program/records/medical,
+		/datum/computer_file/program/robocontrol,
+	)
+
+/obj/item/modular_computer/pda/psychologist/Initialize(mapload)
+	. = ..()
+	for(var/datum/computer_file/program/messenger/messenger_app in stored_files)
+		messenger_app.spam_mode = TRUE
 
 /**
  * Supply
@@ -447,3 +524,9 @@
 	greyscale_config = null
 	greyscale_colors = null
 	long_ranged = TRUE
+
+/obj/item/modular_computer/pda/barber
+	name = "barber PDA"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/barber")
+	greyscale_colors = "#933ea8#235AB2"
+	starting_programs = list()

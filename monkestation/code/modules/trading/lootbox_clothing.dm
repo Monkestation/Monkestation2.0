@@ -39,6 +39,9 @@
 	. = ..()
 	set_armor(/datum/armor/lootbox_clothing)
 
+/obj/item/clothing/head/caphat/beret/lootbox
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
+
 /obj/item/clothing/head/caphat/beret/lootbox/Initialize(mapload)
 	. = ..()
 	set_armor(/datum/armor/lootbox_clothing)

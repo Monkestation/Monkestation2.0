@@ -227,7 +227,8 @@
 /obj/item/clothing/head/sweet_bow
 	name = "sweet bow"
 	desc = "A sweet bow that you can place on the back of your head."
-	icon_state = "sweet_bow"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	SETUP_MAP_ICONS("sweet_bow", "/obj/item/clothing/head/sweet_bow")
 	greyscale_config = /datum/greyscale_config/sweet_bow
 	greyscale_config_worn = /datum/greyscale_config/sweet_bow/worn
 	greyscale_colors = "#7b9ab5"

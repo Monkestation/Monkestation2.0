@@ -297,7 +297,7 @@
 /obj/item/clothing/suit/jacket/tailcoat/bartender
 	name = "bartender's tailcoat"
 	desc = "A coat usually worn by bunny themed bartenders. It has an interior holster for firearms and some extra padding for minor protection."
-	SETUP_MAP_ICONS("tailcoat_bar", "/obj/item/clothing/suit/jacket/tailcoat")
+	SETUP_MAP_ICONS("tailcoat_bar", "/obj/item/clothing/suit/jacket/tailcoat/bartender")
 	greyscale_config = /datum/greyscale_config/tailcoat_bar
 	greyscale_config_worn = /datum/greyscale_config/tailcoat_bar_worn
 	greyscale_colors = "#39393f#ffffff"
