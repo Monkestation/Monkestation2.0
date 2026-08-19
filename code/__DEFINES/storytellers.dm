@@ -111,3 +111,6 @@
 #define STARCOLOUR_REDSTAR "Red Star" // More agressive storytellers but not overly mean
 #define STARCOLOUR_BLACKORBIT "Black Orbit" // Events/admin exclusive storytellers
 #define STARCOLOUR_MIDNIGHTSUN "Midnight Sun" // The storyteller is taking a bat to the crew
+
+///An unreadied player counts for this much compared to a readied one
+#define UNREADIED_PLAYER_WEIGHT 0.25
