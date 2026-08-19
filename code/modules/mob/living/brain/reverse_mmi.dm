@@ -240,14 +240,14 @@
 
 /// Is called when any organs are added & removed after uplink is inserted
 /obj/item/organ/internal/brain/cybernetic/ai/proc/on_organ_gain(datum/source, obj/item/organ/inserted_organ, special)
-    SIGNAL_HANDLER
-    if(check_if_augmented())
-        GLOB.available_ai_shells |= owner
-        return
-    GLOB.available_ai_shells -= owner
-    if(mainframe_ai)
-        to_chat(owner, span_danger("Connection failure. Organic organs detected."))
-        undeploy()
+	SIGNAL_HANDLER
+	if(check_if_augmented())
+		GLOB.available_ai_shells |= owner
+		return
+	GLOB.available_ai_shells -= owner
+	if(mainframe_ai)
+		to_chat(owner, span_danger("Connection failure. Organic organs detected."))
+		undeploy()
 
 /// Is called when AI cannot control the shell
 /obj/item/organ/internal/brain/cybernetic/ai/proc/ai_deleted(datum/source)
