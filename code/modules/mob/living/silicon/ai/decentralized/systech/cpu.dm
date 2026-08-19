@@ -6,7 +6,7 @@
 #define FAILED_OVERCLOCK_NO_POWER "Power Multiplier too low"
 
 /obj/item/ai_cpu
-	name = "neural processing unit"
+	name = "ai cpu unit"
 	desc = "A processor specialized in the tasks that a neural network such as the AI might perform. For usage in server racks only."
 
 	icon = 'icons/obj/module.dmi'
@@ -66,7 +66,7 @@
 	return 1 / (power_multiplier / initial(power_multiplier)) * 100
 
 /obj/item/ai_cpu/advanced
-	name = "advanced neural processing unit"
+	name = "advanced ai cpu unit"
 	desc = "A processor specialized in the tasks that a neural network such as the AI might perform. For usage in server racks only. This chip features advanced branch-prediction and optimized memory access."
 	icon_state = "cpuboard_adv"
 
@@ -74,7 +74,7 @@
 	power_multiplier = /obj/item/ai_cpu::power_multiplier * 1.75
 
 /obj/item/ai_cpu/experimental
-	name = "experimental neural processing unit"
+	name = "experimental ai cpu unit"
 	desc = "A processor specialized in the tasks that a neural network such as the AI might perform. For usage in server racks only. This chip features loose quality-control and as a result of this has more varied overclocking parameters"
 	icon_state = "cpuboard_adv"
 
@@ -88,7 +88,7 @@
 	maximum_growth = 4.5 //max speed achievable at 2.2x power consumption.
 
 /obj/item/ai_cpu/bluespace
-	name = "bluespace neural processing unit"
+	name = "bluespace ai cpu unit"
 	desc = "A processor specialized in the tasks that a neural network such as the AI might perform. For usage in server racks only. This chip exploits advances in bluespace technology to shrink components even further."
 	icon_state = "cpuboard_super"
 

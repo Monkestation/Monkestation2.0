@@ -55,7 +55,7 @@
 	capacity = 4
 
 /datum/design/cpu_basic
-	name = "Neural Processing Unit"
+	name = "Basic AI CPU Unit"
 	id = "basic_ai_cpu"
 	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(
@@ -70,7 +70,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_NETMIN
 
 /datum/design/cpu_advanced
-	name = "Advanced Neural Processing Unit"
+	name = "Advanced AI CPU Unit"
 	id = "advanced_ai_cpu"
 	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(
@@ -85,7 +85,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_NETMIN
 
 /datum/design/cpu_experimental
-	name = "Experimental Neural Processing Unit"
+	name = "Experimental AI CPU Unit"
 	id = "experimental_ai_cpu"
 	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(
@@ -101,7 +101,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_NETMIN
 
 /datum/design/cpu_bluespace
-	name = "Bluespace Neural Processing Unit"
+	name = "Bluespace AI CPU Unit"
 	id = "bluespace_ai_cpu"
 	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(
