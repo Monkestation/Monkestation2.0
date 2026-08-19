@@ -440,6 +440,7 @@
 /obj/structure/rack,
 /obj/item/pickaxe,
 /obj/item/shovel,
+/obj/item/gps/mining,
 /turf/open/floor/iron,
 /area/mine/eva)
 "eO" = (

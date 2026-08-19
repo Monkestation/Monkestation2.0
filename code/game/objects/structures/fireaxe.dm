@@ -248,3 +248,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/fishing_rod, 32)
 	item_overlay = "rod"
 	locked = FALSE
 	item_path = /obj/item/fishing_rod/telescopic
+
+/obj/structure/fireaxecabinet/fishing_rod/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
