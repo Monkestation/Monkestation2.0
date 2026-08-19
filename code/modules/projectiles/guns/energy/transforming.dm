@@ -881,7 +881,7 @@
 	damage_type = STAMINA
 	stamina = 20
 	paralyze_timer = 5 SECONDS
-	//armor_flag = ENERGY //commented out until i can figure out a way for this to not block out ricochet
+	armor_flag = ENERGY
 	hitsound = 'sound/weapons/tap.ogg'
 	ricochets_max = 4
 	ricochet_chance = 140
@@ -896,6 +896,11 @@
 	light_outer_range = 1
 	light_power = 1
 	light_color = LIGHT_COLOR_BLUE
+
+/obj/projectile/lawbringer/detain/check_ricochet_flag(atom/reflecting_atom)
+	if((reflecting_atom.flags_ricochet & RICOCHET_HARD) || (reflecting_atom.flags_ricochet & RICOCHET_SHINY))
+		return TRUE
+	return FALSE
 
 /**
  * lawbringer execute mode:
