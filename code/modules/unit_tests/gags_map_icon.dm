@@ -23,7 +23,8 @@
 		if(thing.flags_1 & NO_NEW_GAGS_PREVIEW_1)
 			if("[thing.parent_type]" != thing_map_icon_state)
 				TEST_FAIL("[thing] has NO_NEW_GAGS_PREVIEW_1 but does not share its map preview icon_state with its parent.")
-			if(thing.parent_type::icon != thing_map_icon)
+			var/atom/parent_path = thing.parent_type
+			if(parent_path::icon != thing_map_icon)
 				TEST_FAIL("[thing] has NO_NEW_GAGS_PREVIEW_1 but does not share its map preview icon with its parent.")
 		else if("[thing.type]" != thing_map_icon_state)
 			TEST_FAIL("[thing] has no unique icon_state for GAGs previews, should be [type_string].")
