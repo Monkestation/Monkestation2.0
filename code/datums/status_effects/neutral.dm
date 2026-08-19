@@ -657,11 +657,12 @@
 	return TRUE
 
 /datum/status_effect/cherenkov_radiation/tick(seconds_between_ticks)
-	if(prob(3))
+	if(SPT_PROB(1.5, seconds_between_ticks))
 		owner.fire_nuclear_particle()
 
 /datum/status_effect/cherenkov_radiation/on_remove()
-	QDEL_NULL(mob_light_obj)
+	if(!QDELETED(mob_light_obj)
+		QDEL_NULL(mob_light_obj)
 
 /datum/status_effect/gutted
 	id = "gutted"

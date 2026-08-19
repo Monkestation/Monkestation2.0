@@ -3184,7 +3184,7 @@
 
 /datum/reagent/consumable/ethanol/flip_cocktail/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	if(prob(10))
+	if(SPT_PROB(5, seconds_per_tick))
 		drinker.emote("flip")
 
 /datum/reagent/consumable/ethanol/aperitivo
@@ -3307,7 +3307,7 @@
 	ADD_TRAIT(drinker, TRAIT_HAD_LAST_WORD, type)
 	to_chat(drinker, span_notice("You take a moment to silently savor your drink..."))
 	drinker.set_silence_if_lower(5 SECONDS)
-	addtimer(TRAIT_CALLBACK_REMOVE(drinker, TRAIT_HAD_LAST_WORD, type), 300 SECONDS)
+	addtimer(TRAIT_CALLBACK_REMOVE(drinker, TRAIT_HAD_LAST_WORD, type), 300 SECONDS, TIMER_DELETE_ME)
 
 /datum/reagent/consumable/ethanol/mary_pickford
 	name = "Mary Pickford"
