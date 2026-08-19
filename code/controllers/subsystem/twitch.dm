@@ -1,14 +1,9 @@
-/datum/config_entry/string/twitch_key
-	default = "changethisplease"
-
 SUBSYSTEM_DEF(twitch)
 	name = "Twitch Events"
 	wait = 0.5 SECONDS
 	flags = SS_KEEP_TIMING | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	priority = FIRE_PRIORITY_TWITCH
-	init_order = INIT_ORDER_TWITCH
-
 
 	///list of all running events with their running times
 	var/list/running_events = list()
@@ -52,12 +47,12 @@ SUBSYSTEM_DEF(twitch)
 	if(incoming[2] != CONFIG_GET(string/twitch_key))
 		return
 
-
 	var/datum/twitch_event/chosen_one
 	for(var/datum/twitch_event/listed_events as anything in subtypesof(/datum/twitch_event))
 		if(incoming[3] != initial(listed_events.id_tag))
 			continue
 		chosen_one = twitch_events_by_type[listed_events]
+
 	if(!chosen_one)
 		return
 
@@ -98,5 +93,3 @@ SUBSYSTEM_DEF(twitch)
 
 /datum/controller/subsystem/twitch/proc/add_to_queue(choice_id, name)
 	deferred_handlers += list(list(choice_id, name))
-
-

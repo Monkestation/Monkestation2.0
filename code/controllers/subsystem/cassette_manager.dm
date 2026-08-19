@@ -1,7 +1,9 @@
 SUBSYSTEM_DEF(cassettes)
 	name = "Cassettes"
-	init_order = INIT_ORDER_CASSETTES
 	flags = SS_NO_FIRE
+	dependencies = list(
+		/datum/controller/subsystem/media_tracks,
+	)
 	/// An associative list of IDs to cassette data.
 	var/list/datum/cassette/cassettes = list()
 
