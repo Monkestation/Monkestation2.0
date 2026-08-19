@@ -66,8 +66,8 @@
 
 /obj/item/implantcase/Entered(atom/movable/arrived)
 	. = ..()
-	var/obj/item/implant/I = arrived
-	SEND_SIGNAL(I, COMSIG_IMPLANT_CASED)
+	if(istype(arrived, /obj/item/implant))
+		SEND_SIGNAL(arrived, COMSIG_IMPLANT_CASED)
 
 ///An implant case that spawns with a tracking implant, as well as an appropriate name and description.
 /obj/item/implantcase/tracking
