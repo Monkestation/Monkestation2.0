@@ -6,7 +6,7 @@
 #define MODPAINT_MIN_OVERALL_COLORS 1.5
 
 /obj/item/mod/paint
-	name = "Robotics paint kit"
+	name = "Robotics Paint Kit"
 	desc = "This kit will allow you to repaint IPCs, robotic limbs, and MODsuits into something unique."
 	icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
 	icon_state = "paintkit"

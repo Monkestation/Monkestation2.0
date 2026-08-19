@@ -1878,7 +1878,7 @@
 	research_icon_state = "cosmohonk-plating"
 
 /datum/design/paint_kit
-	name = "robotics Paint Kit"
+	name = "Robotics Paint Kit"
 	desc = "A paint kit for IPCs, robotic limbs, and MODsuits."
 	id = "paint_kit"
 	build_type = PROTOLATHE | MECHFAB
