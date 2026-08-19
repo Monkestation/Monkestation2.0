@@ -22,7 +22,7 @@
 
 		if(thing.flags_1 & NO_NEW_GAGS_PREVIEW_1)
 			var/atom/parent_path = thing.parent_type
-			if("[parent_path]" != thing_map_icon_state)
+			if(parent_path::icon_state_map != thing_map_icon_state)
 				TEST_FAIL("[thing] has NO_NEW_GAGS_PREVIEW_1 but does not share its map preview icon_state with its parent.")
 			if(parent_path::icon != thing_map_icon)
 				TEST_FAIL("[thing] has NO_NEW_GAGS_PREVIEW_1 but does not share its map preview icon with its parent.")
