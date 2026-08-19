@@ -2,6 +2,9 @@ PROCESSING_SUBSYSTEM_DEF(pollution_emitters)
 	name = "Pollution Emitters"
 	priority = FIRE_PRIORITY_OBJ
 	flags = SS_NO_INIT | SS_HIBERNATE
+	dependencies = list(
+		/datum/controller/subsystem/pollution,
+	)
 	wait = 10 SECONDS
 
 /datum/element/pollution_emitter

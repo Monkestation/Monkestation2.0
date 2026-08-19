@@ -7,18 +7,21 @@
 	var/desc = ":KILL:"
 	/// If defined, using this outfit sets the targets species to it
 	var/datum/species/species_override
+	/// The outfit this loadout should have if the person is a plasmamen
 	var/datum/outfit/plasmaman/plasmaman_outfit = /datum/outfit/plasmaman
 	/// This outfit will grant these spells if applied
-	var/list/granted_spells = list()
+	var/list/spells_to_add = list()
+	/// This outfit will grant these mutations if applied
+	var/list/mutations_to_add = list()
 
-/datum/outfit/deathmatch_loadout/pre_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
+/datum/outfit/deathmatch_loadout/pre_equip(mob/living/carbon/human/user, visuals_only = FALSE)
 	. = ..()
 	if(isdummy(user))
 		return
 
 	if(!isnull(species_override))
 		user.set_species(species_override)
-	else if (!isnull(user.dna.species.outfit_important_for_life) && plasmaman_outfit) //plasmamen get lit on fire and die
+	else if(!isnull(user.dna.species.outfit_important_for_life) && plasmaman_outfit) //plasmamen get lit on fire and die
 		if(isnull(l_hand) || isnull(r_hand))
 			uniform = plasmaman_outfit::uniform
 			gloves = plasmaman_outfit::gloves
@@ -33,12 +36,15 @@
 		else // If both hands are taken, just turn them human
 			user.set_species(/datum/species/human)
 
-	for(var/datum/action/act as anything in granted_spells)
+	for(var/datum/action/act as anything in spells_to_add)
 		var/datum/action/new_ability = new act(user)
 		if(istype(new_ability, /datum/action/cooldown/spell))
 			var/datum/action/cooldown/spell/new_spell = new_ability
-			new_spell.spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
+			new_spell.spell_requirements = NONE
 		new_ability.Grant(user)
+
+	for(var/mutation in mutations_to_add)
+		user.dna.add_mutation(mutation, MUTATION_SOURCE_GHOST_ROLE)
 
 /datum/outfit/deathmatch_loadout/random
 	name = "Deathmatch: Random"
@@ -66,7 +72,7 @@
 /datum/outfit/deathmatch_loadout/assistant/weaponless
 	name = "Deathmatch: Assistant loadout (Weaponless)"
 	display_name = "Assistant (Unarmed)"
-	desc = "What is an assistant without a toolbox? nothing"
+	desc = "What is an assistant without a toolbox? Nothing!"
 	l_hand = null
 
 /datum/outfit/deathmatch_loadout/operative
@@ -170,7 +176,7 @@
 /datum/outfit/deathmatch_loadout/battler
 	name = "Deathmatch: Battler Base"
 	display_name = "Battler"
-	desc = "What is a battler whith out weapone?."
+	desc = "What is a battler without weapons?"
 
 	shoes = /obj/item/clothing/shoes/combat
 	uniform = /obj/item/clothing/under/syndicate
@@ -311,7 +317,7 @@
 		/obj/item/bikehorn/airhorn = 1,
 		/obj/item/food/grown/banana = 3,
 		/obj/item/food/pie/cream = 2,
-		)
+	)
 	plasmaman_outfit = /datum/outfit/plasmaman/clown
 
 /datum/outfit/deathmatch_loadout/battler/tgcoder //tg doesnt stand for tgstation dont ask
@@ -380,7 +386,7 @@
 	suit = /obj/item/clothing/suit/hooded/explorer
 	shoes = /obj/item/clothing/shoes/workboots/mining
 	mask = /obj/item/clothing/mask/gas/explorer
-	granted_spells = list(
+	spells_to_add = list(
 		/datum/action/cooldown/mob_cooldown/dash,
 	)
 	plasmaman_outfit = /datum/outfit/plasmaman/mining
@@ -425,10 +431,10 @@
 	suit = /datum/outfit/wizard::suit
 	head = /datum/outfit/wizard::head
 	shoes = /datum/outfit/wizard::shoes
-	granted_spells = list(
+	spells_to_add = list(
 		/datum/action/cooldown/spell/aoe/magic_missile,
 		/datum/action/cooldown/spell/forcewall,
-		/datum/action/cooldown/spell/jaunt/ethereal_jaunt,
+		/datum/action/cooldown/spell/pointed/projectile/fireball,
 	)
 
 /datum/outfit/deathmatch_loadout/wizard/pyro
@@ -439,7 +445,7 @@
 	suit = /obj/item/clothing/suit/wizrobe/red
 	head = /obj/item/clothing/head/wizard/red
 	mask = /obj/item/clothing/mask/cigarette
-	granted_spells = list(
+	spells_to_add = list(
 		/datum/action/cooldown/spell/pointed/projectile/fireball,
 		/datum/action/cooldown/spell/smoke,
 	)
@@ -451,7 +457,7 @@
 
 	suit = /obj/item/clothing/suit/wizrobe/magusred
 	head = /obj/item/clothing/head/wizard/magus
-	granted_spells = list(
+	spells_to_add = list(
 		/datum/action/cooldown/spell/pointed/projectile/lightningbolt,
 		/datum/action/cooldown/spell/charged/beam/tesla,
 	)
@@ -464,9 +470,9 @@
 	species_override = /datum/species/skeleton
 	suit = /obj/item/clothing/suit/wizrobe/black
 	head = /obj/item/clothing/head/wizard/black
-	granted_spells = list(
+	spells_to_add = list(
 		/datum/action/cooldown/spell/touch/scream_for_me,
-		/datum/action/cooldown/spell/teleport/radius_turf/blink,
+		/datum/action/cooldown/spell/conjure/link_worlds,
 	)
 
 /datum/outfit/deathmatch_loadout/wizard/larp
@@ -478,7 +484,7 @@
 	suit = /obj/item/clothing/suit/wizrobe/fake
 	head = /obj/item/clothing/head/wizard/fake
 	shoes = /obj/item/clothing/shoes/sandal
-	granted_spells = list(
+	spells_to_add = list(
 		/datum/action/cooldown/spell/conjure_item/spellpacket,
 		/datum/action/cooldown/spell/aoe/repulse/wizard,
 	)
@@ -492,7 +498,7 @@
 	suit = /obj/item/clothing/suit/wizrobe/marisa
 	head = /obj/item/clothing/head/wizard/marisa
 	shoes = /obj/item/clothing/shoes/sneakers/marisa
-	granted_spells = list(
+	spells_to_add = list(
 		/datum/action/cooldown/spell/chuuni_invocations,
 		/datum/action/cooldown/spell/pointed/projectile/spell_cards,
 	)
@@ -505,7 +511,7 @@
 	l_hand = /obj/item/mjollnir
 	suit = /obj/item/clothing/suit/wizrobe/magusblue
 	head = /obj/item/clothing/head/wizard/magus
-	granted_spells = list(
+	spells_to_add = list(
 		/datum/action/cooldown/spell/summonitem,
 	)
 
@@ -515,7 +521,7 @@
 	desc = "You feel severely under-leveled for this encounter..."
 
 	l_hand = null
-	granted_spells = list(
+	spells_to_add = list(
 		/datum/action/cooldown/spell/charge,
 	)
 
@@ -528,7 +534,7 @@
 	suit = /obj/item/clothing/suit/wizrobe/tape
 	head = /obj/item/clothing/head/wizard/tape
 	shoes = /obj/item/clothing/shoes/jackboots
-	granted_spells = list(
+	spells_to_add = list(
 		/datum/action/cooldown/spell/conjure_item/infinite_guns/gun,
 		/datum/action/cooldown/spell/aoe/knock,
 	)
@@ -543,7 +549,7 @@
 	suit = /obj/item/clothing/suit/costume/hawaiian
 	head = /obj/item/clothing/head/wizard/red
 	shoes = /obj/item/clothing/shoes/sneakers/marisa
-	granted_spells = list(
+	spells_to_add = list(
 		/datum/action/cooldown/spell/rod_form,
 		/datum/action/cooldown/spell/conjure/the_traps,
 	)
@@ -560,7 +566,7 @@
 	mask = /obj/item/clothing/mask/gas/clown_hat
 	back = /obj/item/storage/backpack/clown
 	shoes = /obj/item/clothing/shoes/clown_shoes
-	granted_spells = null
+	spells_to_add = null
 	plasmaman_outfit = /datum/outfit/plasmaman/clown
 
 /datum/outfit/deathmatch_loadout/wizard/monkey
@@ -574,7 +580,7 @@
 	suit = null
 	head = /obj/item/clothing/head/wizard
 	shoes = null
-	granted_spells = list(
+	spells_to_add = list(
 		/datum/action/cooldown/spell/conjure/simian,
 	)
 
@@ -674,9 +680,9 @@
 	r_hand = /obj/item/sbeacondrop/bomb
 	l_pocket = /obj/item/grenade/syndieminibomb
 	r_pocket = /obj/item/grenade/syndieminibomb
-	implants = list(/obj/item/implanter/explosive_macro)
+	implants = list(/obj/item/implant/explosive/macro)
 	backpack_contents = list(
-		/obj/item/assembly/signaler = 10,
+		/obj/item/assembly/signaler/low_range = 10,
 	)
 	plasmaman_outfit = /datum/outfit/plasmaman/science
 
@@ -755,7 +761,7 @@
 		/obj/item/food/croissant/throwing = 2,
 		)
 
-	granted_spells = list(
+	spells_to_add = list(
 		/datum/action/cooldown/spell/vow_of_silence,
 		/datum/action/cooldown/spell/conjure_item/invisible_box,
 		/datum/action/cooldown/spell/conjure/invisible_chair,

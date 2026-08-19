@@ -83,3 +83,98 @@
       - [x] This code did not runtime during testing.
 
       - [x] You documented all of your changes.'
+2026-08-12:
+  notghosti:
+  - map: Flatpackers have been added to Theseus.
+  - map: Theseus Robotics Desk window is now under robotics access.
+  - bugfix: You can now beat people to death with a balloon mallet, as god intended
+  osaka-fuuri:
+  - rscadd: Added an action button for kissing, only for applied lipsticks with traits
+  - map: added two spraycans to CentCom
+  sufferingintensifies:
+  - map: boxstation now has a disposals bin in the medical storage room, and airlocks
+      in the operating theater.
+  - map: boxstation patient room has been revamped to allow for minor surgeries.
+  - map: boxstation's defibrillator mounts in the surgery area have been shifted slightly
+  - map: blueshift exam area now has walls and posters rather than windows to let
+      doctors place health monitors
+2026-08-13:
+  Runian:
+  - rscadd: Ore vent discovery and completion now contribute points towards regrowth
+      turf's mineral chance.
+  - bugfix: The regrowth turfs from the goldgrub pen no longer create lava underneath
+      them when mined twice.
+  hexakats:
+  - bugfix: The PK "Slab" grenade launcher cycles ammo properly now
+  osaka-fuuri:
+  - rscadd: Added cyborg apparatus functionality to plant gene modifier
+2026-08-14:
+  JohnFulpWillard:
+  - qol: Rechargeable abilities no longer disappear from the recharge UI, and you
+      can keep points in them to automatically start charging them once you use it.
+  - bugfix: AI's ability to clear its own resources now works.
+  - bugfix: Induction abilities now properly update the button name as you upgrade
+      them.
+2026-08-15:
+  osaka-fuuri:
+  - rscadd: Added %2 per tick chance for radstorm to turn cockroaches into romch
+  - rscadd: Added romchifize() and isroach() procs
+2026-08-16:
+  Gboster-0:
+  - rscadd: Added window sill's under green windows on blueshift
+  - bugfix: Fixed missing turfs above monkey pen in LeadPoisoning
+  - bugfix: Fixed too many cameras on specifically Theseus, i hate you Theseus. I
+      couldn't even use strongDMM for specifically theseus it had so many i had to
+      edit the map in VSCode
+  - bugfix: Fixed centcom arena creating a new camera for every single battle
+  - bugfix: Fixed round-start active turfs on Blueshift/Box/Graveyard/LeadPoisoning/Pubby/Void
+      Raptor, so they should load a lil bit faster
+  - bugfix: Fixed duplicate/invalid camera names/positions on basically every map,
+      go to the PR if you wanna see em
+  Runian:
+  - bugfix: Janitor cyborgs now correctly refills their drying agent spray and space
+      lube spray via a recharging station.
+2026-08-19:
+  Gboster, Ghommie, nikothedude, Hardly3D, SomeRandomOwl, mc-oofert:
+  - rscadd: Motorized wheelchairs now take a cell to craft.
+  - rscadd: Deathmatch lobbies now start on the "Random" map instead of a random map.
+  - rscadd: Deathmatch maps now have their max players uncapped, have fun on 12 player
+      ragecage.
+  - rscadd: Adds a button to automatically rejoin a deathmatch lobby when the deathmatch
+      ends.
+  - rscdel: '"Forced random loadouts" is no longer able to be picked by "Random modifiers".'
+  - bugfix: Fixed the "Parapalegic" deathmatch modifier spawning a non-working wheelchair
+  - bugfix: Fixed the random map sometimes failing to work
+  - bugfix: Fixed final destination deathmatch map missing light emitters
+  - rscadd: (Ghommie) Added "No Slowdown", "Random Teleports", "Snail Crawl", "Forcefield
+      Trail" and "Manual Blinking/Breathing" deathmatch modifiers.
+  - bugfix: (Ghommie) Fixed deathmatch cruise missiles looking like standard pods.
+  - rscadd: (nikothedude) Added "Quirks enabled" and "Random martial arts" deathmatch
+      modifiers.
+  - rscadd: (Hardly3D) Added "Half-Health" deathmatch modifier.
+  - admin: (SomeRandomOwl) Deathmatch Bombs, Smoke, and Liquid floods are now suppressed
+      in the logs and will not actively spam admin logs.
+  - code_imp: (SomeRandomOwl) adds a area flag to suppress logging for floods and
+      bombs
+  - bugfix: (mc-oofert) disciple of pete has low-range signalers, split personality
+      may not roll in deathmatch
+  Runian:
+  - bugfix: Cyborgs can now turn on/off stoves.
+  - bugfix: Janitor cyborgs' drying agent and space lube spray bottles now refill
+      with an amount that isn't zero.
+  Runian, MrMelbert:
+  - balance: Operating computer's TGUI is now more strict on who can see the information
+      displayed on it.
+  Runian, StrangeWeirdKitten, Toriate (sprites):
+  - rscadd: Janitor borgs now have a crew operated end that allows their squishy overlords
+      to do some cleaning themselves.
+  hexakats:
+  - bugfix: Fixed chameleon shoes (and their no-slip variant) not getting locked properly
+      with a multitool
+  lelandkemble:
+  - bugfix: the Space Furnace is now usable in rooms that have previously been breached,
+      provided they have recovered enough air.
+  notghosti:
+  - bugfix: Rack creators numbers are tweaked to properly adjust with manipulators
+  osaka-fuuri:
+  - rscadd: Added pig taming visual & SFX

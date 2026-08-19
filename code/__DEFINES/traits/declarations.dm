@@ -419,6 +419,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GUNFLIP "gunflip"
 /// Increases chance of getting special traumas, makes them harder to cure
 #define TRAIT_SPECIAL_TRAUMA_BOOST "special_trauma_boost"
+/// If this item is offered when something is pulled.
+#define TRAIT_OFFERED_WHEN_PULLED "offered_when_pulled"
+/// If the item has a special mob/living/give() interaction.
+#define TRAIT_BORG_GIVE "give_borg_item"
 //---- Brain trauma resists
 /// Unable to gain any brain trauma whatsoever
 #define TRAIT_BRAIN_TRAUMA_IMMUNITY "brain_trauma_immunity"

@@ -85,6 +85,6 @@
 		log_attack(bomb_message)
 
 	GLOB.bombers += bomb_message
-
-	if(message_admins)
+	var/area/bomb_area = get_area(bomb)
+	if(message_admins && !(bomb_area?.area_flags & QUIET_LOGS)) // Don't spam the logs with deathmatch bombs
 		message_admins("[user ? "[ADMIN_LOOKUPFLW(user)][HAS_TRAIT(user, TRAIT_PACIFISM) ? " (pacifist)" : ""] at [ADMIN_VERBOSEJMP(user)] " : ""][details][bomb ? " [bomb.name] at [ADMIN_VERBOSEJMP(bomb)]": ""][target ? " on [target.name] at [ADMIN_VERBOSEJMP(target)]" : ""][additional_details ? " [additional_details]" : ""].")
