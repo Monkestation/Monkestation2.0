@@ -80,7 +80,7 @@
 	name = "jean skirt"
 	desc = "Technically, is there much difference between these and jorts? It's just one big hole instead of two. Does that make this a jirt?"
 	icon = 'icons/map_icons/clothing/under/dress.dmi'
-	SETUP_MAP_ICONS("jean_skirt", "/obj/item/clothing/under/dress/skirt/nova/jean_skirt")
+	SETUP_MAP_ICONS("jean_skirt", "/obj/item/clothing/under/dress/skirt/nova/jean")
 	greyscale_config = /datum/greyscale_config/jean_skirt
 	greyscale_config_worn = /datum/greyscale_config/jean_skirt/worn
 	greyscale_colors = "#787878#723E0E#4D7EAC"
@@ -133,7 +133,7 @@
 	name = "short dress"
 	desc = "An extremely short dress with a lovely sash and flower - only for those with good self-confidence."
 	icon = 'icons/map_icons/clothing/under/dress.dmi'
-	SETUP_MAP_ICONS("short_dress", "/obj/item/clothing/under/dress/skirt/nova/short_dress")
+	SETUP_MAP_ICONS("short_dress", "/obj/item/clothing/under/dress/nova/short_dress")
 	greyscale_config = /datum/greyscale_config/short_dress
 	greyscale_config_worn = /datum/greyscale_config/short_dress/worn
 	greyscale_colors = "#ff3636#363030"
@@ -169,7 +169,7 @@
 	name = "strapless dress"
 	desc = "Typical formal wear with no straps, instead opting to be tied at the waist. Most likely will need constant adjustments."
 	icon = 'icons/map_icons/clothing/under/dress.dmi'
-	SETUP_MAP_ICONS("dress_strapless", "/obj/item/clothing/under/dress/skirt/nova/strapless")
+	SETUP_MAP_ICONS("dress_strapless", "/obj/item/clothing/under/dress/nova/strapless")
 	greyscale_config = /datum/greyscale_config/strapless_dress
 	greyscale_config_worn = /datum/greyscale_config/strapless_dress/worn
 	greyscale_colors = "#cc0000#5f5f5f"
@@ -180,7 +180,7 @@
 	name = "pentagram strapped dress"
 	desc = "A soft dress with straps designed to rest as a pentragram. Isn't this against NT's whole \"Authorized Religion\" stuff?"
 	icon = 'icons/map_icons/clothing/under/dress.dmi'
-	SETUP_MAP_ICONS("dress_pentagram", "/obj/item/clothing/under/dress/skirt/nova/pentagram")
+	SETUP_MAP_ICONS("dress_pentagram", "/obj/item/clothing/under/dress/nova/pentagram")
 	greyscale_config = /datum/greyscale_config/pentagram_dress
 	greyscale_config_worn = /datum/greyscale_config/pentagram_dress/worn
 	greyscale_colors = "#403c46"

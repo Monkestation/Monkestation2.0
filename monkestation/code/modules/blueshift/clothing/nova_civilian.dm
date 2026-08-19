@@ -110,7 +110,6 @@
 	name = "pencilskirt"
 	desc = "A tight-fitting pencilskirt, perfect to augment an undershirt."
 	SETUP_MAP_ICONS("pencilskirt", "/obj/item/clothing/under/suit/nova/pencil/noshirt")
-	icon_state = "pencilskirt"
 	greyscale_config = /datum/greyscale_config/pencilskirt
 	greyscale_config_worn = /datum/greyscale_config/pencilskirt/worn
 	greyscale_colors = "#37373e"
@@ -166,7 +165,6 @@
 	name = "checkered pencilskirt"
 	desc = "A tight-fitting checkered pencilskirt."
 	SETUP_MAP_ICONS("pencilskirt_checkers", "/obj/item/clothing/under/suit/nova/pencil/checkered/noshirt")
-	icon_state = "pencilskirt_checkers"
 	greyscale_config = /datum/greyscale_config/pencilskirt_checkers
 	greyscale_config_worn = /datum/greyscale_config/pencilskirt_checkers/worn
 	greyscale_colors = "#37373e#232323"
@@ -192,7 +190,6 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY|FEMALE_UNIFORM_NO_BREASTS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
 
 /obj/item/clothing/under/suit/nova/inferno
 	name = "inferno suit"
