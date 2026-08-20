@@ -22,7 +22,11 @@
 
 			if (ispath(create_icon_of, /atom))
 				var/atom/atom_icon_source = create_icon_of
-				icon = get_display_icon_for(atom_icon_source)
+				if(atom_path::greyscale_config && atom_path::greyscale_colors)
+					icon = gags_to_universal_icon(atom_icon_source)
+				else
+					icon = atom_icon_source::icon
+					icon_state = atom_icon_source::icon_state
 			else if (isicon(create_icon_of))
 				icon = create_icon_of
 			else
@@ -62,3 +66,17 @@
 			preference_data[preference_entry.savefile_key] = data
 
 	return preference_data
+
+	if(!ispath(atom_path, /atom))
+		return FALSE
+	var/icon_file = atom_path::icon
+	var/icon_state = atom_path::icon_state
+	if(atom_path::greyscale_config && atom_path::greyscale_colors)
+		return gags_to_universal_icon(atom_path)
+	if(ispath(atom_path, /obj))
+		var/obj/obj_path = atom_path
+		if(obj_path::icon_preview)
+			icon_file = obj_path::icon_preview
+		if(obj_path::icon_state_preview)
+			icon_state = obj_path::icon_state_preview
+	return uni_icon(icon_file, icon_state, color=atom_path::color)
