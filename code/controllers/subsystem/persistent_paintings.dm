@@ -103,6 +103,9 @@
 SUBSYSTEM_DEF(persistent_paintings)
 	name = "Persistent Paintings"
 	flags = SS_NO_FIRE
+	dependencies = list(
+		/datum/controller/subsystem/persistence,
+	)
 
 	/// A list of painting frames that this controls
 	var/list/obj/structure/sign/painting/painting_frames = list()
