@@ -33376,7 +33376,6 @@
 /area/station/maintenance/port/fore)
 "jPg" = (
 /obj/structure/table/optable,
-/obj/item/surgical_drapes,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/landmark/start/hangover,
 /obj/structure/drain/big,
@@ -34345,7 +34344,6 @@
 /area/station/hallway/primary/central/aft)
 "keL" = (
 /obj/structure/table/optable,
-/obj/item/surgical_drapes,
 /obj/effect/landmark/start/hangover,
 /obj/structure/drain/big,
 /turf/open/floor/iron/dark,
@@ -60449,6 +60447,7 @@
 /turf/closed/wall/r_wall,
 /area/station/service/janitor)
 "rDw" = (
+/obj/item/surgery_tray/deployed,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "rDF" = (
@@ -70067,7 +70066,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "upb" = (
 /obj/structure/table,
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray{
 	pixel_y = 7;
 	pixel_x = -3
 	},
@@ -79494,12 +79493,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "wZb" = (
-/obj/item/storage/backpack/duffelbag/med/surgery{
-	pixel_y = 11
-	},
-/obj/item/storage/backpack/duffelbag/med/surgery{
-	pixel_y = 4
-	},
 /obj/structure/table/reinforced/rglass,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
@@ -114359,7 +114352,7 @@ tDu
 uXh
 deo
 umj
-rDw
+agP
 miX
 tjT
 iOH
@@ -114872,7 +114865,7 @@ aYM
 aKB
 qSg
 yeK
-agP
+rDw
 rDw
 vcz
 tjT
