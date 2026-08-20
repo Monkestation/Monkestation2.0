@@ -38,33 +38,33 @@
 	mainframe_ai = null
 	QDEL_NULL(undeployment_action)
 
-/obj/item/organ/internal/brain/cybernetic/ai/on_insert(mob/living/carbon/carb_owner, special, movement_flags)
+/obj/item/organ/internal/brain/cybernetic/ai/on_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	carb_owner.add_traits(list(TRAIT_MEDICAL_HUD, TRAIT_NO_MINDSWAP, TRAIT_CORPSELOCKED), REF(src))
-	update_med_hud_status(carb_owner)
-	RegisterSignal(carb_owner, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(update_med_hud_status))
-	RegisterSignal(carb_owner, COMSIG_CLICK, PROC_REF(owner_clicked))
-	RegisterSignal(carb_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
-	RegisterSignals(carb_owner, list(COMSIG_QDELETING, COMSIG_LIVING_PRE_WABBAJACKED), PROC_REF(undeploy))
-	RegisterSignals(carb_owner, list(COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN), PROC_REF(on_organ_gain))
-	if(carb_owner.ai_controller) // If the owner is a monkey, delete its AI
-		QDEL_NULL(carb_owner.ai_controller)
+	organ_owner.add_traits(list(TRAIT_MEDICAL_HUD, TRAIT_NO_MINDSWAP, TRAIT_CORPSELOCKED), REF(src))
+	update_med_hud_status(organ_owner)
+	RegisterSignal(organ_owner, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(update_med_hud_status))
+	RegisterSignal(organ_owner, COMSIG_CLICK, PROC_REF(owner_clicked))
+	RegisterSignal(organ_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+	RegisterSignals(organ_owner, list(COMSIG_QDELETING, COMSIG_LIVING_PRE_WABBAJACKED), PROC_REF(undeploy))
+	RegisterSignals(organ_owner, list(COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN), PROC_REF(on_organ_gain))
+	if(organ_owner.ai_controller) // If the owner is a monkey, delete its AI
+		QDEL_NULL(organ_owner.ai_controller)
 	var/obj/item/implant/radio/radio = new(owner)
 	radio.implant(owner, null, TRUE, TRUE)
 	radio_weakref = WEAKREF(radio)
 	RegisterSignal(radio, COMSIG_IMPLANT_REMOVED, PROC_REF(implant_loss))
 	if(check_if_augmented())
-		GLOB.available_ai_shells |= carb_owner
+		GLOB.available_ai_shells |= organ_owner
 
-/obj/item/organ/internal/brain/cybernetic/ai/Remove(mob/living/carbon/carb_owner, special, movement_flags)
+/obj/item/organ/internal/brain/cybernetic/ai/Remove(mob/living/carbon/organ_owner, special, movement_flags)
 	if(mainframe_ai)
-		mainframe_ai.connected_ipcs -= owner
-	GLOB.available_ai_shells -= owner
+		mainframe_ai.connected_ipcs -= organ_owner
+	GLOB.available_ai_shells -= organ_owner
 	undeploy()
 	mainframe_ai = null
 	. = ..()
-	carb_owner.remove_traits(list(TRAIT_MEDICAL_HUD, TRAIT_NO_MINDSWAP, TRAIT_CORPSELOCKED), REF(src))
-	UnregisterSignal(carb_owner, list(COMSIG_LIVING_HEALTH_UPDATE, COMSIG_CLICK, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_QDELETING, COMSIG_LIVING_PRE_WABBAJACKED))
+	organ_owner.remove_traits(list(TRAIT_MEDICAL_HUD, TRAIT_NO_MINDSWAP, TRAIT_CORPSELOCKED), REF(src))
+	UnregisterSignal(organ_owner, list(COMSIG_LIVING_HEALTH_UPDATE, COMSIG_CLICK, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_QDELETING, COMSIG_LIVING_PRE_WABBAJACKED))
 	var/obj/item/implant/radio/radio = radio_weakref.resolve()
 	if(radio)
 		QDEL_NULL(radio)
@@ -104,7 +104,7 @@
 	lines += span_bold("[owner]")
 	lines += "Target is currently [!HAS_TRAIT(owner, TRAIT_INCAPACITATED) ? "functional" : "incapacitated"]"
 	lines += "Estimated organic/inorganic integrity: [owner.health]"
-	if(mainframe_ai && deployed)
+	if(deployed)
 		lines += span_warning("Already occupied by another digital entity.")
 	else if(mainframe_ai && mainframe_ai != user)
 		lines += span_warning("Uplink is locked by another digital entity.")
@@ -128,8 +128,6 @@
 	if(!SScameras.is_visible_by_cameras(owner))
 		to_chat(AI, span_warning("Target is no longer near active cameras."))
 		return
-
-	AI.deployed_shell = owner
 	deploy_init(AI)
 
 /**
@@ -140,6 +138,7 @@
  */
 /obj/item/organ/internal/brain/cybernetic/ai/proc/deploy_init(mob/living/silicon/ai/AI)
 	mainframe_ai = AI
+	AI.deployed_shell = owner
 	mainframe_ai.connected_ipcs |= owner
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(undeploy))
 	RegisterSignal(AI, COMSIG_QDELETING, PROC_REF(ai_deleted))
@@ -167,22 +166,20 @@
 /// Handles exiting the shell.
 /obj/item/organ/internal/brain/cybernetic/ai/proc/undeploy(datum/source)
 	SIGNAL_HANDLER
+	if(!deployed)
+		return
 	if(!owner?.mind || !mainframe_ai)
 		return
 	UnregisterSignal(owner, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING))
 	UnregisterSignal(mainframe_ai, COMSIG_QDELETING)
-	var/last_loc = owner.loc
 	mainframe_ai.redeploy_action.Grant(mainframe_ai)
 	mainframe_ai.redeploy_action.last_used_shell = owner
 	owner.mind.transfer_to(mainframe_ai)
 	deployed = FALSE
 	mainframe_ai.deployed_shell = null
 	undeployment_action.Remove(owner)
-	if(mainframe_ai.laws)
-		mainframe_ai.laws.show_laws(mainframe_ai)
 	if(mainframe_ai.eyeobj)
-		mainframe_ai.eyeobj.setLoc(last_loc)
-		last_loc = null
+		mainframe_ai.eyeobj.setLoc(owner.loc)
 	REMOVE_TRAIT(mainframe_ai.mind, TRAIT_UNCONVERTABLE, REF(src))
 	REMOVE_TRAIT(mainframe_ai, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 	owner.remove_traits(list(TRAIT_SILICON_ACCESS), REF(src)) // we don't want randoms using our body as free AA, so we only have it when we active.
@@ -198,15 +195,14 @@
 *If not, returns FALSE and sets 'is_shell' to FALSE.
 **/
 /obj/item/organ/internal/brain/cybernetic/ai/proc/check_if_augmented()
-	var/mob/living/carbon/carb_owner = owner
-	. = TRUE
-	if(!istype(carb_owner))
+	if(!istype(owner))
 		return FALSE
-	for(var/obj/item/organ/organ as anything in carb_owner.organs)
+	for(var/obj/item/organ/organ as anything in owner.organs)
 		if(organ.organ_flags && istype(organ, /obj/item/organ/external))
 			continue
 		if(!IS_ROBOTIC_ORGAN(organ) && !istype(organ, /obj/item/organ/internal/tongue)) //tongues are not in the exosuit fab and nobody is going to bother to find them so
 			return FALSE
+	return TRUE
 
 /** Is called if the radio implant is removed or deleted after brain insertion.
 *
@@ -236,7 +232,6 @@
 		implantcase.visible_message(span_warning("[implantcase] bursts into sparks!"))
 		do_sparks(number = 2, cardinal_only = FALSE, source = owner)
 		qdel(implantcase)
-	UnregisterSignal(radio_weakref, COMSIG_IMPLANT_CASED)
 
 /// Is called when any organs are added & removed after uplink is inserted
 /obj/item/organ/internal/brain/cybernetic/ai/proc/on_organ_gain(datum/source, obj/item/organ/inserted_organ, special)
@@ -245,7 +240,7 @@
 		GLOB.available_ai_shells |= owner
 		return
 	GLOB.available_ai_shells -= owner
-	if(mainframe_ai)
+	if(deployed)
 		to_chat(owner, span_danger("Connection failure. Organic organs detected."))
 		undeploy()
 
