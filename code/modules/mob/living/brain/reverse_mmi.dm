@@ -195,6 +195,7 @@
 *If not, returns FALSE and sets 'is_shell' to FALSE.
 **/
 /obj/item/organ/internal/brain/cybernetic/ai/proc/check_if_augmented()
+
 	if(!istype(owner))
 		return FALSE
 	for(var/obj/item/organ/organ as anything in owner.organs)

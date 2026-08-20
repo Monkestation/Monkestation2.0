@@ -92,7 +92,7 @@
 
 	var/party_time //party time
 
-	var/mob/living/silicon/robot/deployed_shell = null //For shell control
+	var/mob/living/deployed_shell = null //For shell control
 	var/datum/action/innate/deploy_shell/deploy_action = new
 	var/datum/action/innate/deploy_last_shell/redeploy_action = new
 	var/datum/action/innate/choose_modules/modules_action
@@ -1158,11 +1158,15 @@
 
 	if(mind)
 		if(ishuman(target))
-			deployed_shell = target.get_organ_by_type(/obj/item/organ/internal/brain/cybernetic/ai)
+			deployed_shell = target
+			var/mob/living/carbon/human = target
+			var/obj/item/organ/internal/brain/cybernetic/ai/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
+			INVOKE_ASYNC(brain, TYPE_PROC_REF(/obj/item/organ/internal/brain/cybernetic/ai, deploy_init), src)
 		if(iscyborg(target))
 			RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(disconnect_shell))
 			deployed_shell = target
-		deployed_shell.deploy_init(src)
+			var/mob/living/silicon/robot/cyborg = target
+			INVOKE_ASYNC(cyborg, TYPE_PROC_REF(/mob/living/silicon/robot, deploy_init), src)
 		if(mind) // Checking, for human shells handle mind transfer within deploy_init()
 			mind.transfer_to(target)
 	diag_hud_set_deployed()
@@ -1199,7 +1203,13 @@
 	SIGNAL_HANDLER
 	if(deployed_shell) //Forcibly call back AI in event of things such as damage, EMP or power loss.
 		to_chat(src, span_danger("Your remote connection has been reset!"))
-		deployed_shell.undeploy()
+		if(iscyborg(deployed_shell))
+			var/mob/living/silicon/robot/cyborg = deployed_shell
+			INVOKE_ASYNC(cyborg, TYPE_PROC_REF(/mob/living/silicon/robot, undeploy))
+		if(ishuman(deployed_shell))
+			var/mob/living/carbon/human = deployed_shell
+			var/obj/item/organ/internal/brain/cybernetic/ai/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
+			INVOKE_ASYNC(brain, TYPE_PROC_REF(/obj/item/organ/internal/brain/cybernetic/ai, undeploy))
 	diag_hud_set_deployed()
 
 /mob/living/silicon/ai/resist()
