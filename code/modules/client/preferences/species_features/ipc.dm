@@ -9,22 +9,23 @@
 	return assoc_to_keys_features(GLOB.ipc_antennas_list)
 
 /datum/preference/choiced/ipc_antenna/icon_for(value)
-	var/icon/ipc_head = icon('icons/mob/species/ipc/bodyparts.dmi', "synth_head")
+	var/static/datum/universal_icon/ipc_head
+	if(isnull(ipc_head))
+		ipc_head = uni_icon('icons/mob/species/ipc/bodyparts.dmi', "synth_head")
 
 	var/datum/sprite_accessory/antennae = GLOB.ipc_antennas_list[value]
 
-	var/icon/icon_with_antennae = new(ipc_head)
-	if(antennae.icon_state != "none")
-		icon_with_antennae.Blend(icon(antennae.icon, "m_ipc_antenna_[antennae.icon_state]_FRONT"), ICON_OVERLAY)
+	var/datum/universal_icon/icon_with_antennae = ipc_head.copy()
+	if(!isnull(antennae) && antennae.icon_state != SPRITE_ACCESSORY_NONE)
+		icon_with_antennae.blend_icon(uni_icon(antennae.icon, "m_ipc_antenna_[antennae.icon_state]_FRONT"), ICON_OVERLAY)
 
-	icon_with_antennae.Scale(64, 64)
-	icon_with_antennae.Crop(15, 64, 15 + 31, 64 - 31)
+	icon_with_antennae.scale(64, 64)
+	icon_with_antennae.crop(15, 64- 31, 15 + 31, 64)
 
 	return icon_with_antennae
 
 /datum/preference/choiced/ipc_antenna/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["ipc_antenna"] = value
-
 
 /datum/preference/choiced/ipc_chassis
 	savefile_key = "feature_ipc_chassis"
@@ -38,18 +39,20 @@
 	return assoc_to_keys_features(GLOB.ipc_chassis_list)
 
 /datum/preference/choiced/ipc_chassis/icon_for(value)
-	var/icon/ipc = icon('icons/mob/species/ipc/bodyparts.dmi', "blank")
+	var/static/datum/universal_icon/ipc_body
+	if(isnull(ipc_body))
+		ipc_body = uni_icon('icons/blanks/32x32.dmi', "nothing")
 
 	var/datum/sprite_accessory/chassis = GLOB.ipc_chassis_list[value]
 
-	var/icon/chassis_icon = icon('icons/mob/species/ipc/ipc_chassis.dmi', "m_ipc_chassis_[chassis.icon_state]_FRONT")
+	var/datum/universal_icon/chassis_icon = uni_icon('icons/mob/species/ipc/ipc_chassis.dmi', "m_ipc_chassis_[chassis.icon_state]_FRONT")
 
-	var/icon/final_icon = icon(ipc)
-	final_icon.Blend(chassis_icon, ICON_OVERLAY)
+	var/datum/universal_icon/final_icon = ipc_body.copy()
+	final_icon.blend_icon(chassis_icon, ICON_OVERLAY)
 
-	final_icon.Crop(10, 8, 22, 23)
-	final_icon.Scale(26, 32)
-	final_icon.Crop(-2, 1, 29, 32)
+	final_icon.crop(10, 8, 22, 23)
+	final_icon.scale(26, 32)
+	final_icon.crop(-2, 1, 29, 32)
 
 	return final_icon
 
@@ -74,20 +77,21 @@
 	return assoc_to_keys_features(GLOB.ipc_screens_list)
 
 /datum/preference/choiced/ipc_screen/icon_for(value)
-	var/icon/ipc_head = icon('icons/mob/species/ipc/bodyparts.dmi', "synth_head")
+	var/static/datum/universal_icon/ipc_head
+	if(isnull(ipc_head))
+		ipc_head = uni_icon('icons/mob/species/ipc/bodyparts.dmi', "synth_head")
 
 	var/datum/sprite_accessory/screen = GLOB.ipc_screens_list[value]
+	var/datum/universal_icon/icon_with_screen = ipc_head.copy()
 
-	var/icon/icon_with_screen = new(ipc_head)
-	icon_with_screen.Blend(icon(screen.icon, "m_ipc_screen_[screen.icon_state]_ADJ"), ICON_OVERLAY)
-	icon_with_screen.Scale(64, 64)
-	icon_with_screen.Crop(15, 64, 15 + 31, 64 - 31)
+	icon_with_screen.blend_icon(uni_icon(screen.icon, "m_ipc_screen_[screen.icon_state]_ADJ"), ICON_OVERLAY)
+	icon_with_screen.scale(64, 64)
+	icon_with_screen.crop(15, 64 - 31, 15 + 31, 64)
 
 	return icon_with_screen
 
 /datum/preference/choiced/ipc_screen/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["ipc_screen"] = value
-
 
 /datum/preference/choiced/ipc_brain
 	savefile_key = "ipc_brain"

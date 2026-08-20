@@ -1,11 +1,9 @@
 /// Assets generated from `/datum/preference` icons
-/datum/asset/spritesheet/preferences
+/datum/asset/spritesheet_batched/preferences
 	name = "preferences"
 	early = TRUE
 
-/datum/asset/spritesheet/preferences/create_spritesheets()
-	var/list/to_insert = list()
-
+/datum/asset/spritesheet_batched/preferences/create_spritesheets()
 	for (var/preference_key in GLOB.preference_entries_by_key)
 		var/datum/preference/choiced/preference = GLOB.preference_entries_by_key[preference_key]
 		if (!istype(preference))
@@ -17,28 +15,20 @@
 		for (var/preference_value in preference.get_choices())
 			var/create_icon_of = preference.icon_for(preference_value)
 
-			var/icon/icon
-			var/icon_state
+			var/datum/universal_icon/icon
 
 			if (ispath(create_icon_of, /atom))
 				var/atom/atom_icon_source = create_icon_of
-				if(atom_path::greyscale_config && atom_path::greyscale_colors)
-					icon = gags_to_universal_icon(atom_icon_source)
-				else
-					icon = atom_icon_source::icon
-					icon_state = atom_icon_source::icon_state
-			else if (isicon(create_icon_of))
+				icon = get_display_icon_for(atom_icon_source)
+			else if (istype(create_icon_of, /datum/universal_icon))
 				icon = create_icon_of
+			else if (isicon(create_icon_of))
+				CRASH("Icon given for preference [preference_key]:[preference_value]. This is not supported anymore, provide a /datum/universal_icon instead.")
 			else
 				CRASH("[create_icon_of] is an invalid preference value (from [preference_key]:[preference_value]).")
-
-			to_insert[preference.get_spritesheet_key(preference.serialize(preference_value))] = list(icon, icon_state)
-			CHECK_TICK
-
-	for (var/spritesheet_key in to_insert)
-		var/list/inserting = to_insert[spritesheet_key]
-		Insert(spritesheet_key, inserting[1], inserting[2])
-		CHECK_TICK
+			// There's no cost associated with inserting uni_icons, so just insert them immediately.
+			var/spritesheet_key = preference.get_spritesheet_key(preference.serialize(preference_value))
+			insert_icon(spritesheet_key, icon)
 
 /// Returns the key that will be used in the spritesheet for a given value.
 /datum/preference/proc/get_spritesheet_key(value)
@@ -66,17 +56,3 @@
 			preference_data[preference_entry.savefile_key] = data
 
 	return preference_data
-
-	if(!ispath(atom_path, /atom))
-		return FALSE
-	var/icon_file = atom_path::icon
-	var/icon_state = atom_path::icon_state
-	if(atom_path::greyscale_config && atom_path::greyscale_colors)
-		return gags_to_universal_icon(atom_path)
-	if(ispath(atom_path, /obj))
-		var/obj/obj_path = atom_path
-		if(obj_path::icon_preview)
-			icon_file = obj_path::icon_preview
-		if(obj_path::icon_state_preview)
-			icon_state = obj_path::icon_state_preview
-	return uni_icon(icon_file, icon_state, color=atom_path::color)

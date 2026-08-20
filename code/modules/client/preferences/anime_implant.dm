@@ -39,22 +39,20 @@
 	return assoc_to_keys_features(GLOB.anime_top_list)
 
 /datum/preference/choiced/anime_top/icon_for(value)
-	var/static/icon/head_icon
+	var/static/datum/universal_icon/head_icon
 
 	if(isnull(head_icon))
-		head_icon = icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_head_m")
-		head_icon.Blend(skintone2hex("caucasian1"), ICON_MULTIPLY)
+		head_icon = uni_icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_head_m")
+		head_icon.blend_color(skintone2hex("caucasian1"), ICON_MULTIPLY)
 
 	var/datum/sprite_accessory/accessory = GLOB.anime_top_list[value]
+	var/datum/universal_icon/final_icon = head_icon.copy()
 
-	var/icon/final_icon = new(head_icon)
+	if(!isnull(accessory) && accessory.icon_state != SPRITE_ACCESSORY_NONE)
+		final_icon.blend_icon(uni_icon(accessory.icon, "m_anime_top_[accessory.icon_state]_FRONT"), ICON_OVERLAY)
 
-	if(accessory.icon_state != "none")
-		var/icon/icon = icon(accessory.icon, "m_anime_top_[accessory.icon_state]_FRONT")
-		final_icon.Blend(icon, ICON_OVERLAY)
-
-	final_icon.Crop(10, 19, 22, 31)
-	final_icon.Scale(32, 32)
+	final_icon.crop(10, 19, 22, 31)
+	final_icon.scale(32, 32)
 
 	return final_icon
 
@@ -73,6 +71,7 @@
 		if(item == "Anime")
 			return TRUE
 	return FALSE
+
 /datum/preference/choiced/anime_middle
 	category = PREFERENCE_CATEGORY_CLOTHING
 	savefile_identifier = PREFERENCE_CHARACTER
@@ -84,35 +83,33 @@
 	return assoc_to_keys_features(GLOB.anime_middle_list)
 
 /datum/preference/choiced/anime_middle/icon_for(value)
-
 	var/static/list/body_parts = list(
 		BODY_ZONE_HEAD,
 		BODY_ZONE_CHEST,
 		BODY_ZONE_L_ARM,
 		BODY_ZONE_R_ARM,
-		BODY_ZONE_PRECISE_L_HAND,
-		BODY_ZONE_PRECISE_R_HAND,
 		BODY_ZONE_L_LEG,
 		BODY_ZONE_R_LEG,
+		BODY_ZONE_PRECISE_L_HAND,
+		BODY_ZONE_PRECISE_R_HAND,
 	)
 
-	var/static/icon/body_icon
+	var/static/datum/universal_icon/body_icon
 	if(isnull(body_icon))
-		body_icon = icon('icons/effects/effects.dmi', "nothing")
-		for (var/body_part in body_parts)
+		body_icon = uni_icon('icons/blanks/32x32.dmi', "nothing")
+
+		for(var/body_part in body_parts)
 			var/gender = body_part == BODY_ZONE_CHEST || body_part == BODY_ZONE_HEAD ? "_m" : ""
-			body_icon.Blend(icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_[body_part][gender]", dir = NORTH), ICON_OVERLAY)
-		body_icon.Blend(skintone2hex("caucasian1"), ICON_MULTIPLY)
-		var/icon/jumpsuit_icon = icon('icons/mob/clothing/under/civilian.dmi', "barman", dir = NORTH)
-		body_icon.Blend(jumpsuit_icon, ICON_OVERLAY)
+			body_icon.blend_icon(uni_icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_[body_part][gender]", dir = NORTH), ICON_OVERLAY)
+
+		body_icon.blend_color(skintone2hex("caucasian1"), ICON_MULTIPLY)
+		body_icon.blend_icon(uni_icon('icons/mob/clothing/under/civilian.dmi', "barman", dir = NORTH), ICON_OVERLAY)
 
 	var/datum/sprite_accessory/accessory = GLOB.anime_middle_list[value]
+	var/datum/universal_icon/final_icon = body_icon.copy()
 
-	var/icon/final_icon = new(body_icon)
-
-	if(accessory.icon_state != "none")
-		var/icon/icon = icon(accessory.icon, "m_anime_middle_[accessory.icon_state]_FRONT", NORTH)
-		final_icon.Blend(icon, ICON_OVERLAY)
+	if(!isnull(accessory) && accessory.icon_state != SPRITE_ACCESSORY_NONE)
+		final_icon.blend_icon(uni_icon(accessory.icon, "m_anime_middle_[accessory.icon_state]_FRONT", NORTH), ICON_OVERLAY)
 
 	return final_icon
 
@@ -143,35 +140,34 @@
 	return assoc_to_keys_features(GLOB.anime_bottom_list)
 
 /datum/preference/choiced/anime_bottom/icon_for(value)
-
 	var/static/list/body_parts = list(
 		BODY_ZONE_HEAD,
 		BODY_ZONE_CHEST,
 		BODY_ZONE_L_ARM,
 		BODY_ZONE_R_ARM,
-		BODY_ZONE_PRECISE_L_HAND,
-		BODY_ZONE_PRECISE_R_HAND,
 		BODY_ZONE_L_LEG,
 		BODY_ZONE_R_LEG,
+		BODY_ZONE_PRECISE_L_HAND,
+		BODY_ZONE_PRECISE_R_HAND,
 	)
 
-	var/static/icon/body_icon
+	var/static/datum/universal_icon/body_icon
 	if(isnull(body_icon))
-		body_icon = icon('icons/effects/effects.dmi', "nothing")
-		for (var/body_part in body_parts)
+		body_icon = uni_icon('icons/blanks/32x32.dmi', "nothing")
+		for(var/body_part in body_parts)
 			var/gender = body_part == BODY_ZONE_CHEST || body_part == BODY_ZONE_HEAD ? "_m" : ""
-			body_icon.Blend(icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_[body_part][gender]", dir = NORTH), ICON_OVERLAY)
-		body_icon.Blend(skintone2hex("caucasian1"), ICON_MULTIPLY)
-		var/icon/jumpsuit_icon = icon('icons/mob/clothing/under/civilian.dmi', "barman", dir = NORTH)
-		jumpsuit_icon.Blend("#b3b3b3", ICON_MULTIPLY)
-		body_icon.Blend(jumpsuit_icon, ICON_OVERLAY)
+			body_icon.blend_icon(uni_icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_[body_part][gender]", dir = NORTH), ICON_OVERLAY)
+
+		body_icon.blend_color(skintone2hex("caucasian1"), ICON_MULTIPLY)
+		var/datum/universal_icon/jumpsuit_icon = uni_icon('icons/mob/clothing/under/civilian.dmi', "barman", dir = NORTH)
+		jumpsuit_icon.blend_color("#b3b3b3", ICON_MULTIPLY)
+		body_icon.blend_icon(jumpsuit_icon, ICON_OVERLAY)
 
 	var/datum/sprite_accessory/accessory = GLOB.anime_bottom_list[value]
+	var/datum/universal_icon/final_icon = body_icon.copy()
 
-	var/icon/final_icon = new(body_icon)
-
-	if(accessory.icon_state != "none")
-		final_icon.Blend(icon(accessory.icon, "m_anime_bottom_[accessory.icon_state]_FRONT", NORTH), ICON_OVERLAY)
+	if(!isnull(accessory) && accessory.icon_state != SPRITE_ACCESSORY_NONE)
+		final_icon.blend_icon(uni_icon(accessory.icon, "m_anime_bottom_[accessory.icon_state]_FRONT", NORTH), ICON_OVERLAY)
 
 	return final_icon
 
@@ -205,13 +201,12 @@
 	return /datum/sprite_accessory/anime_halo/none::name
 
 /datum/preference/choiced/anime_halo/icon_for(value)
-
 	var/datum/sprite_accessory/accessory = GLOB.anime_halo_list[value]
 
-	if(isnull(accessory.icon_state) || accessory.icon_state == "none")
-		return icon('icons/mob/landmarks.dmi', "x")
+	if(isnull(accessory.icon_state) || accessory.icon_state == SPRITE_ACCESSORY_NONE)
+		return uni_icon('icons/mob/landmarks.dmi', "x")
 
-	return icon('icons/mob/anime/anime_halo_preview.dmi', "[accessory.icon_state]_preview")
+	return uni_icon('icons/mob/anime/anime_halo_preview.dmi', "[accessory.icon_state]_preview")
 
 /datum/preference/choiced/anime_halo/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["anime_halo"] = value

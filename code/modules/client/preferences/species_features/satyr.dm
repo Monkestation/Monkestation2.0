@@ -11,11 +11,11 @@
 
 /datum/preference/choiced/satyr_fluff/icon_for(value)
 	var/datum/sprite_accessory/satyr_fluff = GLOB.satyr_fluff_list[value]
-	if(satyr_fluff.icon_state == null || satyr_fluff.icon_state == "none")
-		var/icon/invalid_icon = icon('icons/mob/landmarks.dmi', "x")
-		return invalid_icon
-	var/icon/final_icon = icon(satyr_fluff.icon, "m_satyr_fluff_[satyr_fluff.icon_state]_ADJ")
-	return final_icon
+
+	if(isnull(satyr_fluff) || satyr_fluff.icon_state == SPRITE_ACCESSORY_NONE)
+		return uni_icon('icons/mob/landmarks.dmi', "x")
+
+	return uni_icon(satyr_fluff.icon, "m_satyr_fluff_[satyr_fluff.icon_state]_ADJ")
 
 /datum/preference/choiced/satyr_fluff/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["satyr_fluff"] = value
@@ -33,11 +33,11 @@
 
 /datum/preference/choiced/satyr_tail/icon_for(value)
 	var/datum/sprite_accessory/satyr_tail = GLOB.satyr_tail_list[value]
-	if(satyr_tail.icon_state == null || satyr_tail.icon_state == "none")
-		var/icon/invalid_icon = icon('icons/mob/landmarks.dmi', "x")
-		return invalid_icon
-	var/icon/final_icon = icon(satyr_tail.icon, "m_satyr_tail_[satyr_tail.icon_state]_BEHIND")
-	return final_icon
+
+	if(isnull(satyr_tail) || satyr_tail.icon_state == SPRITE_ACCESSORY_NONE)
+		return uni_icon('icons/mob/landmarks.dmi', "x")
+
+	return uni_icon(satyr_tail.icon, "m_satyr_tail_[satyr_tail.icon_state]_BEHIND", NORTH)
 
 /datum/preference/choiced/satyr_tail/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["satyr_tail"] = value
@@ -55,11 +55,11 @@
 
 /datum/preference/choiced/satyr_horns/icon_for(value)
 	var/datum/sprite_accessory/satyr_horns = GLOB.satyr_horns_list[value]
-	if(satyr_horns.icon_state == null || satyr_horns.icon_state == "none")
-		var/icon/invalid_icon = icon('icons/mob/landmarks.dmi', "x")
-		return invalid_icon
-	var/icon/final_icon = icon(satyr_horns.icon, "m_satyr_horns_[satyr_horns.icon_state]_FRONT")
-	return final_icon
+
+	if(isnull(satyr_horns) || satyr_horns.icon_state == SPRITE_ACCESSORY_NONE)
+		return uni_icon('icons/mob/landmarks.dmi', "x")
+
+	return uni_icon(satyr_horns.icon, "m_satyr_horns_[satyr_horns.icon_state]_FRONT")
 
 /datum/preference/choiced/satyr_horns/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["satyr_horns"] = value
