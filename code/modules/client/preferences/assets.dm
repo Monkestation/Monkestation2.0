@@ -22,8 +22,7 @@
 
 			if (ispath(create_icon_of, /atom))
 				var/atom/atom_icon_source = create_icon_of
-				icon = initial(atom_icon_source.icon)
-				icon_state = initial(atom_icon_source.icon_state)
+				icon = get_display_icon_for(atom_icon_source)
 			else if (isicon(create_icon_of))
 				icon = create_icon_of
 			else
