@@ -145,9 +145,11 @@
 /datum/species/ipc/proc/update_chassis(mob/living/carbon/target)
 	if(!iscarbon(target) || QDELING(target))
 		return
+
 	var/list/features = target.dna?.features
 	if(!features)
 		return
+
 	var/datum/sprite_accessory/ipc_chassis/chassis_of_choice = GLOB.ipc_chassis_list[features["ipc_chassis"]]
 
 	if(!chassis_of_choice)
@@ -158,15 +160,21 @@
 	for(var/obj/item/bodypart/bodypart as anything in target.bodyparts) //Override bodypart data as necessary
 		if(QDELETED(bodypart))
 			return
+		// Do not overwrite replacement/custom limbs (ex: advanced cybernetics)
+		if(bodypart.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES)
+			continue
+
 		bodypart.limb_id = chassis_of_choice.icon_state
 		bodypart.name = "\improper[chassis_of_choice.name] [parse_zone(bodypart.body_zone)]"
 		bodypart.should_draw_greyscale = bodypart::should_draw_greyscale
 		bodypart.palette = bodypart::palette
 		bodypart.palette_key = bodypart::palette_key
+
 		if(chassis_of_choice.palette_key == MUTANT_COLOR)
 			bodypart.should_draw_greyscale = TRUE
 			bodypart.palette = chassis_of_choice.palette
 			bodypart.palette_key = chassis_of_choice.palette_key
+
 		bodypart.update_limb()
 
 /datum/species/ipc/proc/on_emag_act(mob/living/carbon/human/owner, mob/user)
