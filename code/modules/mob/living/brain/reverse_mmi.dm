@@ -186,7 +186,6 @@
 	var/obj/item/implant/radio/implant = radio_weakref.resolve()
 	if(implant)
 		implant.radio.resetChannels()
-	get_status_tab_item()
 	update_med_hud_status(owner)
 
 /** Checks if the owner's organs are fully robotic.
