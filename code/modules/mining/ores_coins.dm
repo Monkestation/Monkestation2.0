@@ -563,6 +563,20 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	heads_name = "valid"
 	material_flags = NONE
 	override_material_worth = TRUE
+	///What type of antag token this is. Used for lootboxes, has no impact on the actual game.
+	var/token_type
+
+/obj/item/coin/antagtoken/low
+	name = "Low Tier Antag Token"
+	token_type = LOW_THREAT
+
+/obj/item/coin/antagtoken/med
+	name = "Medium Tier Antag Token"
+	token_type = MEDIUM_THREAT
+
+/obj/item/coin/antagtoken/high
+	name = "High Tier Antag Token"
+	token_type = HIGH_THREAT
 
 /obj/item/coin/iron
 
