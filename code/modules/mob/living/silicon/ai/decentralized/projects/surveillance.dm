@@ -23,7 +23,7 @@
 	set category = "AI Commands"
 	set desc = "Select a target for the camera memory tracker. Case sensitive."
 
-	if(incapacitated())
+	if(stat == DEAD)
 		return
 	var/target = tgui_input_text(usr, "Please enter the target's full name:", "Camera Tracker", "", MAX_NAME_LEN)
 	if(!target)
