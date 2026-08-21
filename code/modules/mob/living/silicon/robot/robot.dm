@@ -669,16 +669,19 @@
 	. = ..()
 	if(worn_hat == gone)
 		worn_hat = null
-		if(!QDELETED(src)) //Don't update icons if we are deleted.
+		if(!QDELETED(src))
 			update_icons()
 
 	if(worn_badge == gone)
 		worn_badge = null
-		if(!QDELETED(src)) //Don't update icons if we are deleted.
+		if(!QDELETED(src))
 			update_icons()
 
 	if(gone == cell)
 		cell = null
+		low_power_mode = TRUE
+		if(!QDELETED(src))
+			update_icons()
 
 	if(gone == mmi)
 		mmi = null
