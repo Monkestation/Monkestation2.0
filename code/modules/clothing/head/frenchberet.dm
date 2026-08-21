@@ -17,3 +17,6 @@
 /obj/item/clothing/head/beret/frenchberet/dropped(mob/user, silent)
 	. = ..()
 	REMOVE_TRAIT(user, TRAIT_GARLIC_BREATH, type)
+
+/obj/item/clothing/head/beret/frenchberet/armoured
+	armor_type = /datum/armor/cosmetic_sec

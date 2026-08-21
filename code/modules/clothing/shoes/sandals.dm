@@ -39,5 +39,4 @@
 	greyscale_colors = "#383631"
 	greyscale_config = /datum/greyscale_config/sandals
 	greyscale_config_worn = /datum/greyscale_config/sandals/worn
-	icon_state = "sandals"
 	flags_1 = IS_PLAYER_COLORABLE_1
