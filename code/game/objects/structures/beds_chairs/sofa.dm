@@ -20,15 +20,17 @@ path/corner/color_name {\
 	buildstackamount = 1
 	item_chair = null
 	astar_weight = 5
+	var/has_armrests = TRUE
 	var/mutable_appearance/armrest
 
 /obj/structure/chair/sofa/Initialize(mapload)
 	. = ..()
-	gen_armrest()
+	if(has_armrests)
+		gen_armrest()
 	AddElement(/datum/element/soft_landing)
 
 /obj/structure/chair/sofa/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	if(same_z_layer)
+	if(!has_armrests || same_z_layer)
 		return ..()
 	cut_overlay(armrest)
 	armrest = null
@@ -43,13 +45,16 @@ path/corner/color_name {\
 /obj/structure/chair/sofa/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)
 		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1))
-	. = ..()
+	return ..()
 
 /obj/structure/chair/sofa/post_buckle_mob(mob/living/M)
 	. = ..()
 	update_armrest()
 
 /obj/structure/chair/sofa/proc/update_armrest()
+	if(!has_armrests)
+		return
+
 	if(has_buckled_mobs())
 		add_overlay(armrest)
 	else
@@ -104,6 +109,8 @@ COLORED_SOFA(/obj/structure/chair/sofa, maroon, SOFA_MAROON)
 	greyscale_config = /datum/greyscale_config/bench_middle
 	greyscale_colors = "#af7d28"
 
+	has_armrests = FALSE
+
 /obj/structure/chair/sofa/bench/left
 	SETUP_MAP_ICONS("bench_left", "/obj/structure/chair/sofa/bench/left")
 	greyscale_config = /datum/greyscale_config/bench_left
@@ -130,6 +137,8 @@ COLORED_SOFA(/obj/structure/chair/sofa, maroon, SOFA_MAROON)
 	max_integrity = 60
 	buildstacktype = /obj/item/stack/sheet/mineral/bamboo
 	buildstackamount = 3
+
+	has_armrests = FALSE
 
 /obj/structure/chair/sofa/bamboo/left
 	icon_state = "bamboo_sofaend_left"

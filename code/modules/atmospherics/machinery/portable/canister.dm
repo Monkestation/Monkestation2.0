@@ -34,8 +34,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	desc = "A canister for the storage of gas."
 	icon = 'icons/map_icons/objects.dmi'
 	SETUP_MAP_ICONS("", "/obj/machinery/portable_atmospherics/canister")
-	greyscale_config = /datum/greyscale_config/canister
-	greyscale_colors = "#6b6b80"
+	greyscale_config = /datum/greyscale_config/canister/hazard
+	greyscale_colors = "#ffff00#000000"
 
 	density = TRUE
 	volume = 2000
