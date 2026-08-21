@@ -1056,6 +1056,10 @@
 			if(!mutation)
 				return
 
+			if(length(mutation.sources) && get_mutation_class(mutation) == SCANNER_MUTATION_CLASS_OTHER)
+				say("ERROR: This mutation is anomalous, and cannot be saved.")
+				return
+
 			// GUARD CHECK - Nullify should only be used on scrambled or "extra"
 			//  mutations.
 			if(!mutation.scrambled && !(MUTATION_SOURCE_MUTATOR in mutation.sources))
