@@ -558,11 +558,10 @@
 	death = 100
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/hundred
 
-//LEGALLY DISTINCT autoshotgun!
+//auto shotgun parent
 /obj/item/gun/ballistic/shotgun/autoshotgun
-	name = "Auto Shotgun"
-	desc = "A semi-automatic shotgun nicknamed the 'auto shotgun' by field agents. \
-	Compatible with 12 gauge shell magazines that hold 12 shots each."
+	name = "Auto Shotgun Parent"
+	desc = "You shouldn't have this"
 	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
@@ -576,62 +575,43 @@
 	fire_delay = 0
 	base_pixel_x = -2
 	pixel_x = -2
-	projectile_wound_bonus = 15
 	actions_types = list()
 	bolt_wording = "bolt"
-	w_class = WEIGHT_CLASS_BULKY
-	weapon_weight = WEAPON_MEDIUM
 	mag_display = TRUE
-	special_mags = TRUE
-	empty_indicator = FALSE
-	tac_reloads = TRUE
 	casing_ejector = TRUE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/autoshotgun
 	bolt_type = BOLT_TYPE_LOCKING
-	show_bolt_icon = TRUE
 	semi_auto = TRUE
-	can_suppress = TRUE
 	internal_magazine = FALSE
 	rack_sound = 'sound/weapons/gun/general/bolt_rack.ogg'
+
+//LEGALLY DISTINCT autoshotgun!
+/obj/item/gun/ballistic/shotgun/autoshotgun/syndicate
+	name = "Auto Shotgun"
+	desc = "A semi-automatic shotgun nicknamed the 'auto shotgun' by field agents. \
+	Compatible with 12 gauge shell magazines that hold 12 shots each."
+	projectile_wound_bonus = 15
+	weapon_weight = WEAPON_MEDIUM
+	special_mags = TRUE
+	tac_reloads = TRUE
+	accepted_magazine_type = /obj/item/ammo_box/magazine/autoshotgun/syndicate
+	show_bolt_icon = TRUE
+	can_suppress = TRUE
 	fire_sound = 'sound/weapons/gun/shotgun/shotgun_small.ogg'
 	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_heavy.ogg'
 	pbk_gentle = FALSE
 
 //Mining autoshotgun!
-/obj/item/gun/ballistic/shotgun/pkautoshotgun
+/obj/item/gun/ballistic/shotgun/autoshotgun/kinetic
 	name = "20. Gauge Kinetic 'Fenrir' Auto Shotgun"
 	desc = "A fully automatic shotgun created using some spare polymer parts, procured from a undisclosed source. \
 	With some Proto Kinetic Acceleration tech mixed in, the 'Fenrir' becomes a lethal auto shotgun chambered in \
 	20. Gauge shells, for sweeping up any unwanted fauna from a hostile environment."
-	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_icon_state = "protokshotgunauto"
 	worn_icon_state = "protokshotgunauto"
 	icon_state = "protokshotgunauto"
-	slot_flags = ITEM_SLOT_BACK
-	w_class = WEIGHT_CLASS_BULKY
-	weapon_weight = WEAPON_HEAVY
-	inhand_x_dimension = 32
-	inhand_y_dimension = 32
-	burst_size = 1
-	fire_delay = 0
-	base_pixel_x = -2
-	pixel_x = -2
-	wound_bonus = 15
-	actions_types = list()
-	bolt_type = BOLT_TYPE_STANDARD
-	semi_auto = TRUE
-	internal_magazine = FALSE
-	empty_indicator = FALSE
-	show_bolt_icon = FALSE
-	semi_auto = TRUE
-	internal_magazine = FALSE
-	show_bolt_icon = FALSE
-	accepted_magazine_type = /obj/item/ammo_box/magazine/pkautoshotgun
-	rack_sound = 'sound/weapons/gun/general/bolt_rack.ogg'
+	accepted_magazine_type = /obj/item/ammo_box/magazine/autoshotgun/kinetic
 	pin = /obj/item/firing_pin/wastes
-	special_mags = FALSE
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	pb_knockback = 0
 

@@ -123,4 +123,4 @@
 	name = "Beeshot Auto Shotgun Magazine"
 	desc = "An auto shotgun magazine 12 beeshot shells. Creates very angry bees upon impact. Not as strong as buckshot."
 	cost = 3
-	item = /obj/item/ammo_box/magazine/autoshotgun/beeshot
+	item = /obj/item/ammo_box/magazine/autoshotgun/syndicate/beeshot

@@ -316,7 +316,7 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 	/obj/item/resonator,
 	/obj/item/spear,
 	/obj/item/tank/jetpack,
-	/obj/item/gun/ballistic/shotgun/pkautoshotgun,
+	/obj/item/gun/ballistic/shotgun/autoshotgun/kinetic,
 	/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
 	/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
 	/obj/item/gun/ballistic/automatic/proto/pksmg,

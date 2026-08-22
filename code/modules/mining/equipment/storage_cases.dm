@@ -55,9 +55,9 @@
 	atom_storage.set_holdable(list())
 
 /obj/item/storage/box/kinetic/autoshotgun/smallcase/PopulateContents() //populate
-		new /obj/item/ammo_box/magazine/pkautoshotgun (src)
-		new /obj/item/ammo_box/magazine/pkautoshotgun (src)
-		new /obj/item/ammo_box/magazine/pkautoshotgun (src)
+		new /obj/item/ammo_box/magazine/autoshotgun/kinetic (src)
+		new /obj/item/ammo_box/magazine/autoshotgun/kinetic (src)
+		new /obj/item/ammo_box/magazine/autoshotgun/kinetic (src)
 
 
 /obj/item/storage/box/kinetic/kineticlmg //box of stripper clips (20, totalling 100 rounds)
@@ -299,10 +299,10 @@
 
 /obj/item/storage/box/kinetic/autoshotgun/bigcase/PopulateContents() //populate
 
-		new /obj/item/gun/ballistic/shotgun/pkautoshotgun (src)
-		new /obj/item/ammo_box/magazine/pkautoshotgun (src)
-		new /obj/item/ammo_box/magazine/pkautoshotgun (src)
-		new /obj/item/ammo_box/magazine/pkautoshotgun (src)
+		new /obj/item/gun/ballistic/shotgun/autoshotgun/kinetic (src)
+		new /obj/item/ammo_box/magazine/autoshotgun/kinetic (src)
+		new /obj/item/ammo_box/magazine/autoshotgun/kinetic (src)
+		new /obj/item/ammo_box/magazine/autoshotgun/kinetic (src)
 
 
 /obj/item/storage/box/kinetic/kineticlmg/bigcase //box containing the LMG and a box of extra bullets to get one reload

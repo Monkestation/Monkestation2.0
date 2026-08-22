@@ -43,45 +43,49 @@
 
 /obj/item/ammo_box/magazine/autoshotgun
 	name = "autoshotgun magazine (12g buckshot)"
+	desc = "You shouldn't have this."
 	icon = 'icons/obj/weapons/guns/ammo.dmi'
-	icon_state = "magbuckshot"
-	base_icon_state = "magbuckshot"
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
-	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
-	caliber = CALIBER_SHOTGUN
 	max_ammo = 12
 
-/obj/item/ammo_box/magazine/autoshotgun/slug
+/obj/item/ammo_box/magazine/autoshotgun/syndicate
+	name = "autoshotgun magazine (12g buckshot)"
+	icon_state = "magbuckshot"
+	base_icon_state = "magbuckshot"
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+	caliber = CALIBER_SHOTGUN
+
+/obj/item/ammo_box/magazine/autoshotgun/syndicate/slug
 	name = "autoshotgun magazine (12g slugs)"
 	icon_state = "magslugs"
 	base_icon_state = "magslugs"
 	ammo_type = /obj/item/ammo_casing/shotgun
 
-/obj/item/ammo_box/magazine/autoshotgun/beeshot
+/obj/item/ammo_box/magazine/autoshotgun/syndicate/beeshot
 	name = "autoshotgun magazine (12g beeshot)"
 	icon_state = "magbeeshot"
 	base_icon_state = "magbeeshot"
 	ammo_type = /obj/item/ammo_casing/shotgun/beeshot
 
-/obj/item/ammo_box/magazine/autoshotgun/uraniumpen
+/obj/item/ammo_box/magazine/autoshotgun/syndicate/uraniumpen
 	name = "autoshotgun magazine (12g uranium penetrator slugs)"
 	icon_state = "maguraniumslugs"
 	base_icon_state = "maguraniumslugs"
 	ammo_type = /obj/item/ammo_casing/shotgun/uraniumpen
 
-/obj/item/ammo_box/magazine/autoshotgun/rubbershot
+/obj/item/ammo_box/magazine/autoshotgun/syndicate/rubbershot
 	name = "autoshotgun magazine (12g rubbershot)"
 	icon_state = "magrubbershot"
 	base_icon_state = "magrubbershot"
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
 
-/obj/item/ammo_box/magazine/autoshotgun/beanbag
+/obj/item/ammo_box/magazine/autoshotgun/syndicate/beanbag
 	name = "autoshotgun magazine (12g beanbags)"
 	icon_state = "magbeanbags"
 	base_icon_state = "magbeanbags"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 
-/obj/item/ammo_box/magazine/autoshotgun/trickshot
+/obj/item/ammo_box/magazine/autoshotgun/syndicate/trickshot
 	name = "autoshotgun magazine (12g trickshot)"
 	icon_state = "magtrickshot"
 	base_icon_state = "magtrickshot"
@@ -89,7 +93,7 @@
 
 ///Mining autoshotty
 
-/obj/item/ammo_box/magazine/pkautoshotgun
+/obj/item/ammo_box/magazine/autoshotgun/kinetic
 	name = "20 Gauge Shotgun Magazine"
 	desc = "A single magazine capable of holding 12 rounds of 20 gauge kinetic hydra shells."
 	icon_state = "proto20gmag"

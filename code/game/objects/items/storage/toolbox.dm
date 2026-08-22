@@ -468,32 +468,32 @@
 
 /obj/item/storage/toolbox/guncase/traitor/autoshotgun
 	name = "\improper Syndicate auto shotgun gun case"
-	weapon_to_spawn = /obj/item/gun/ballistic/shotgun/autoshotgun
-	extra_to_spawn = /obj/item/ammo_box/magazine/autoshotgun
+	weapon_to_spawn = /obj/item/gun/ballistic/shotgun/autoshotgun/syndicate
+	extra_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate
 
 /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition
 	name = "\improper Syndicate auto shotgun buckshot magazine case"
-	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun
+	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate
 
 /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/slug
 	name = "\improper Syndicate auto shotgun slug magazine case"
-	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/slug
+	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate/slug
 
 /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/rubbershot
 	name = "\improper Syndicate auto shotgun rubbershot magazine case"
-	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/rubbershot
+	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate/rubbershot
 
 /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/beanbag
 	name = "\improper Syndicate auto shotgun beanbags magazine case"
-	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/beanbag
+	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate/beanbag
 
 /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/uraniumpen
 	name = "\improper Syndicate auto shotgun uranium penetrator magazine case"
-	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/uraniumpen
+	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate/uraniumpen
 
 /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/trickshot
 	name = "\improper Syndicate auto shotgun trickshot magazine case"
-	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/trickshot
+	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate/trickshot
 
 /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/PopulateContents()
 	for(var/i in 1 to 2)
