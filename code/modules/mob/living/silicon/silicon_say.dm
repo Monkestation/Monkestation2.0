@@ -1,11 +1,13 @@
 /mob/living/proc/robot_talk(message)
 	log_talk(message, LOG_SAY, tag="binary")
 
+	var/name
 	var/designation = "Default Cyborg"
 	var/spans = list(SPAN_ROBOT)
 
 	if(issilicon(src))
 		var/mob/living/silicon/player = src
+		name = player.name
 		designation = trim_left(player.designation + " " + player.job)
 
 	if(isAI(src))
@@ -16,6 +18,10 @@
 		message,
 		spans
 	)
+	var/obj/item/organ/internal/brain/cybernetic/ai/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(istype(brain))
+		name = brain.mainframe_ai.name
+		designation = brain.mainframe_ai.job
 
 	for(var/mob/M in GLOB.player_list)
 		if(M.binarycheck())
