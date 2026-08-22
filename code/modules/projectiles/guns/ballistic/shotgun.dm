@@ -614,7 +614,7 @@
 	pin = /obj/item/firing_pin/wastes
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	pb_knockback = 0
-
+	show_bolt_icon = FALSE
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/kinetic
 	name = "Kinetic 'Slayer' Boomstick"
