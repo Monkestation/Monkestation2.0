@@ -222,7 +222,7 @@
 /obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/wylom
 	name = "\improper Wylom heavy rifle gunset"
 
-	weapon_to_spawn = /obj/item/gun/ballistic/automatic/wylom
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/wylom/sec
 	extra_to_spawn = /obj/item/ammo_box/magazine/wylom
 
 /obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/wylom/PopulateContents()
