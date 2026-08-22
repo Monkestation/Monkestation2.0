@@ -68,7 +68,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test_artifacts_${{ inputs.map }}_${{ inputs.major }}_${{ inputs.minor }}
+          name: test_artifacts_${{ inputs.map }}_${{ inputs.major || env.BYOND_MAJOR }}_${{ inputs.minor || env.BYOND_MINOR }}
           path: data/screenshots_new/
           retention-days: 1
       - name: On test fail, write a step summary
