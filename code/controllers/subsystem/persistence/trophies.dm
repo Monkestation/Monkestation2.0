@@ -100,7 +100,7 @@
 
 	file_data["data"] = converted_data
 	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
+	WRITE_FILE(json_file, json_encode(file_data, JSON_PRETTY_PRINT))
 
 ///gets the list of json trophies, and deletes the ones with an identical path and message
 /datum/controller/subsystem/persistence/proc/remove_duplicate_trophies(list/trophies)
