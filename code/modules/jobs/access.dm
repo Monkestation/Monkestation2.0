@@ -29,6 +29,12 @@
 				return FALSE
 			if(onSyndieBase() && loc != accessor)
 				return FALSE
+		if((ACCESS_UNION in req_access) || (ACCESS_UNION in req_one_access))
+			if(iscyborg(accessor))
+				var/mob/living/silicon/robot/robot = accessor
+				if(check_access(robot.worn_badge))
+					return TRUE
+			return FALSE
 		return TRUE //AI can do whatever it wants
 	return FALSE
 
@@ -84,12 +90,3 @@
 
 	return id_card?.get_trim_sechud_icon_state() || SECHUD_NO_ID
 
-/// Returns the gun permit icon if the ID's access contain weapon permit
-/obj/item/proc/get_gun_permit_iconstate()
-	var/obj/item/card/id/id_card = GetID()
-
-	if(!id_card)
-		return "hudfan_no"
-	if(ACCESS_WEAPONS in id_card.GetAccess())
-		return "hud_permit"
-	return "hudfan_no"
