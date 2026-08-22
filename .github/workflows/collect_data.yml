@@ -55,9 +55,7 @@ jobs:
           echo "maps={\"paths\":[$map_list]}" >> "$GITHUB_OUTPUT"
 
           echo "map_config<<EOF" >> "$GITHUB_OUTPUT"
-          configs=$(cat map_configs.txt)
-          echo configs
-          echo configs >> "$GITHUB_OUTPUT"
+          cat map_configs.txt >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
       - name: Find Alternate Tests
         id: alternate_test_finder

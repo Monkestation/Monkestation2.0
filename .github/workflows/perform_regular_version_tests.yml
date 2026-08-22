@@ -24,4 +24,5 @@ jobs:
 
     with:
       map: ${{ matrix.map }}
+      map_config: ${{ inputs.map_config }}
       max_required_byond_client: ${{ inputs.max_required_byond_client }}
