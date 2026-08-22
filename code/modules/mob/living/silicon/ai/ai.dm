@@ -1161,12 +1161,12 @@
 			deployed_shell = target
 			var/mob/living/carbon/human = target
 			var/obj/item/organ/internal/brain/cybernetic/ai/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
-			INVOKE_ASYNC(brain, TYPE_PROC_REF(/obj/item/organ/internal/brain/cybernetic/ai, deploy_init), src) // Humans handle mind transfer in deploy_init
+			brain.deploy_init(src) // Humans handle mind transfer in deploy_init
 		if(iscyborg(target))
 			RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(disconnect_shell))
 			deployed_shell = target
 			var/mob/living/silicon/robot/cyborg = target
-			INVOKE_ASYNC(cyborg, TYPE_PROC_REF(/mob/living/silicon/robot, deploy_init), src)
+			cyborg.deploy_init(src)
 			mind.transfer_to(target)
 	diag_hud_set_deployed()
 
@@ -1204,11 +1204,11 @@
 		to_chat(src, span_danger("Your remote connection has been reset!"))
 		if(iscyborg(deployed_shell))
 			var/mob/living/silicon/robot/cyborg = deployed_shell
-			INVOKE_ASYNC(cyborg, TYPE_PROC_REF(/mob/living/silicon/robot, undeploy))
+			cyborg.undeploy()
 		if(ishuman(deployed_shell))
 			var/mob/living/carbon/human = deployed_shell
 			var/obj/item/organ/internal/brain/cybernetic/ai/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
-			INVOKE_ASYNC(brain, TYPE_PROC_REF(/obj/item/organ/internal/brain/cybernetic/ai, undeploy))
+			brain.undeploy()
 	diag_hud_set_deployed()
 
 /mob/living/silicon/ai/resist()
