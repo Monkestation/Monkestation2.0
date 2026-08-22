@@ -48,8 +48,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/turf/run_loc_floor_bottom_left
 	/// The top right floor turf of the testing zone
 	var/turf/run_loc_floor_top_right
-	///The priority of the test, the larger it is the later it fires
-	var/priority = TEST_DEFAULT
 	/// A list of instances created by this unit test. Use allocate()
 	var/list/allocated
 	/// Lazy list of why this unit test failed.
