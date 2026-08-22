@@ -5,7 +5,7 @@
 
 /datum/sprite_accessory/anime_head/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/anime_head/elf1
 	name = "Short Elf Ears"
@@ -80,7 +80,7 @@
 
 /datum/sprite_accessory/anime_middle/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/anime_middle/bee
 	name = "Bee Wings"
@@ -116,7 +116,7 @@
 
 /datum/sprite_accessory/anime_bottom/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/anime_bottom/pony
 	name = "Pony Tail"
@@ -204,7 +204,7 @@
 
 /datum/sprite_accessory/anime_halo/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/anime_halo/gabriel
 	name = "Messenger's halo"
