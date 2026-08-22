@@ -2,6 +2,7 @@
  * This test checks that all expected areas are connected to a starting area
  */
 /datum/unit_test/atmospherics_sanity
+	test_flags = UNIT_TEST_MAP_TEST
 	// we iterate over all atmospherics devices on the starting networks
 	priority = TEST_LONGER
 
