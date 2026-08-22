@@ -162,3 +162,11 @@
 /obj/item/screwdriver/red/Initialize(mapload)
 	. = ..()
 	set_greyscale(colors=list(screwdriver_colors["red"]))
+
+/obj/item/screwdriver/makeshift
+	name = "makeshift screwdriver"
+	desc = "Crude driver of screws. A primitive way to screw things up."
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "screwdriver_makeshift"
+	toolspeed = 2
+	random_color = FALSE
