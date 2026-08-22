@@ -53,10 +53,12 @@ jobs:
           map_list=$(paste -sd, maps_output.txt)
           echo "Maps: $map_list"
           echo "maps={\"paths\":[$map_list]}" >> "$GITHUB_OUTPUT"
+          {
+            echo "map_config<<EOF"
+            cat map_configs.txt
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
 
-          echo "map_config<<EOF" >> "$GITHUB_OUTPUT"
-          cat map_configs.txt >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
       - name: Find Alternate Tests
         id: alternate_test_finder
         run: |
