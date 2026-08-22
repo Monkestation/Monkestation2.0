@@ -163,7 +163,7 @@
 
 // Checks if unit tests are being run locally or well, not
 #if !defined(CIBUILDING) && !defined(SPACEMAN_DMM) && !defined(OPENDREAM)
-//#define RUNNING_LOCAL_TESTS
+#define RUNNING_LOCAL_TESTS
 #endif
 
 #ifdef TGS
