@@ -170,6 +170,8 @@
 	empty_crafting_inventory()
 
 /obj/machinery/assembler/attack_robot(mob/user)
+	if(!user.Adjacent(src))
+		return
 	return attack_hand(user)
 
 /obj/machinery/assembler/crowbar_act(mob/living/user, obj/item/tool)
