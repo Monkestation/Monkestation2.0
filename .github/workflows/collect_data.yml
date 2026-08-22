@@ -46,7 +46,7 @@ jobs:
               echo "map $map_name" >> map_configs.txt
               echo "endmap" >> map_configs.txt
             else
-              echo "Excluded: $file"
+              echo "Excluded: $file" >> "$GITHUB_OUTPUT"
             fi
           done
 
