@@ -1153,7 +1153,7 @@
 	if(ishuman(target)) // If it is an AI-uplink organic
 		var/mob/living/carbon/human/human = target
 		var/obj/item/organ/internal/brain/cybernetic/ai/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
-		if(human.stat == DEAD || brain.deployed || !(!brain.mainframe_ai || (brain.mainframe_ai == src)))
+		if(!brain || brain.deployed || human.stat == DEAD || !(!brain.mainframe_ai || (brain.mainframe_ai == src)))
 			return
 
 	if(mind)
