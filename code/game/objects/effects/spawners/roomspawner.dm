@@ -211,7 +211,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/spawner/lavabase_spawner)
 /obj/effect/spawner/lavabase_spawner/proc/load()
 	var/datum/map_template/lava_base/chosen_base = /datum/map_template/lava_base
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_LAVALAND))
-		switch(rand(1, 2))
+		var/datum/station_trait/random_lavaland/trait = locate(/datum/station_trait/random_lavaland) in SSstation.station_traits
+		switch(trait.chosen_lavabase)
 			if(1)
 				chosen_base = /datum/map_template/lava_base/bee
 			if(2)

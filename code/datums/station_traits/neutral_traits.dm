@@ -514,3 +514,8 @@
 	show_in_report = TRUE
 	report_message = "Your station's mining outpost has been recycled from a fork of your division, thus may look a bit different."
 	trait_to_give = STATION_TRAIT_RANDOM_LAVALAND
+	var/chosen_lavabase
+
+/datum/station_trait/random_lavaland/New()
+	. = ..()
+	chosen_lavabase = rand(1, 2)
