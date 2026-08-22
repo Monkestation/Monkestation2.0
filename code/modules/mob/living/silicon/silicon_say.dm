@@ -1,11 +1,13 @@
 /mob/living/proc/robot_talk(message)
 	log_talk(message, LOG_SAY, tag="binary")
 
+	var/name
 	var/designation = "Default Cyborg"
 	var/spans = list(SPAN_ROBOT)
 
 	if(issilicon(src))
 		var/mob/living/silicon/player = src
+		name = player.name
 		designation = trim_left(player.designation + " " + player.job)
 
 	if(isAI(src))
