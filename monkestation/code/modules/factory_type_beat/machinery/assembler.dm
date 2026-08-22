@@ -170,18 +170,7 @@
 	empty_crafting_inventory()
 
 /obj/machinery/assembler/attack_robot(mob/user)
-	. = ..()
-	if(panel_open)
-		to_chat(user, span_warning("The assembler cannot select a recipe while its service panel is open!"))
-		user.balloon_alert(user, "panel open!")
-		return
-	var/datum/crafting_recipe/choice = tgui_input_list(user, "Choose a recipe", name, legal_crafting_recipes)
-	if(!choice)
-		return
-	chosen_recipe = choice
-	if(crafting)
-		return
-	empty_crafting_inventory()
+	return attack_hand(user)
 
 /obj/machinery/assembler/crowbar_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
