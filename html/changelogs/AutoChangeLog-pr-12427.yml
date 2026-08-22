@@ -1,0 +1,8 @@
+author: "Runian"
+delete-after: True
+changes:
+  - rscadd: "Cargo teleporters now tries to restore their charges when right-clicking a fulton."
+  - qol: "Cargo teleporters no longer prompts to select an extraction beacon when trying to fulton something."
+  - qol: "Cargo teleporters can set their extraction beacon via ctrl-click."
+  - bugfix: "Cargo teleporters no longer hits things that fail to be extracted by a fulton."
+  - spellcheck: "Cargo teleporter's description is now more accurate about fulton usage."

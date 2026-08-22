@@ -155,13 +155,14 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_GHOSTS_DURING_ROUND (1<<19)
 /// This area does not allow virtual entities to enter.
 #define VIRTUAL_SAFE_AREA (1<<20)
+/// This Area Doesn't have Flood or Bomb Admin Messages, but will still log
+#define QUIET_LOGS (1<<21)
 /// This area does not allow the Binary channel
-#define BINARY_JAMMING (1<<21)
+#define BINARY_JAMMING (1<<22)
 /// This area can always be claimed as a bloodsucker lair regardless of Z-level and such
-#define ALWAYS_VALID_BLOODSUCKER_LAIR (1<<22)
+#define ALWAYS_VALID_BLOODSUCKER_LAIR (1<<23)
 ///This area blocks outgoing radio signals. Mostly used for the abductor ship and heretic sacrifice areas.
-#define AREA_BLOCKS_OUTGOING_RADIO (1<<23)
-
+#define AREA_BLOCKS_OUTGOING_RADIO (1<<24)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask

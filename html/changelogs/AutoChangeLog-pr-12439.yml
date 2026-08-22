@@ -1,0 +1,4 @@
+author: "antropod, SmArtKar, TheColorCyan"
+delete-after: True
+changes:
+  - refactor: "Atmos refactor & speedup by utilizing BYOND 516 vector functions (report any atmos bugs)"

@@ -6,26 +6,29 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	icon = 'monkestation/code/modules/cargoborg/icons/cargo_teleporter.dmi'
 	icon_state = "cargo_tele"
 	w_class = WEIGHT_CLASS_SMALL
-	///the list of markers spawned by this item
+	/// The list of markers spawned by this item.
 	var/list/marker_children = list()
-	COOLDOWN_DECLARE(use_cooldown)
-	/// Maximum amount of fulton charges the teleporter can hold
+	/// The maximum amount of fulton charges the teleporter can have.
 	var/max_charges = 3
-	/// Amount of charges remaining to be able to fulton somebody
+	/// The current amount of fulton charges the teleporter currently has.
 	var/charges = 0
-	/// The fulton we use to actually extract living things
+	/// The fulton we use to actually extract things.
 	var/obj/item/extraction_pack/my_fulton
+	/// The cooldown between teleport usages.
+	COOLDOWN_DECLARE(use_cooldown)
 
 /obj/item/cargo_teleporter/Initialize(mapload)
 	. = ..()
 	my_fulton = new(src)
+	my_fulton.uses_left = INFINITY // No need to worry about the fulton deleting itself if it has infinite uses.
 
 /obj/item/cargo_teleporter/examine(mob/user)
 	. = ..()
-	. += span_notice("Attack itself to set down the markers!")
-	. += span_notice("ALT-CLICK to remove all markers!")
-	. += span_notice("You can RIGHT-CLICK a living thing to fulton it with a charge.")
-	. += span_info("It has [charges] charges remaining.")
+	. += span_notice("[EXAMINE_HINT("Use")] in-hand to set down the markers!")
+	. += span_notice("[EXAMINE_HINT("Alt-click")] to remove all markers!")
+	. += span_notice("[EXAMINE_HINT("Ctrl-click")] to select a extraction beacon to fulton to!")
+	. += span_notice("[EXAMINE_HINT("Right-click")] a thing to start fultoning it with a charge.")
+	. += span_info("It has [charges]/[max_charges] charges remaining.")
 
 /obj/item/cargo_teleporter/Destroy()
 	QDEL_NULL(my_fulton)
@@ -39,11 +42,18 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	if(length(marker_children) >= 3)
 		to_chat(user, span_warning("You may only have three spawned markers from [src]!"))
 		return
-	to_chat(user, span_notice("You place a cargo marker below your feet."))
-	var/obj/effect/decal/cleanable/cargo_mark/spawned_marker = new /obj/effect/decal/cleanable/cargo_mark(get_turf(src))
+	to_chat(user, span_notice("You place a cargo marker underneath you."))
 	playsound(src, 'sound/machines/click.ogg', 50)
+	var/obj/effect/decal/cleanable/cargo_mark/spawned_marker = new /obj/effect/decal/cleanable/cargo_mark(get_turf(src))
 	spawned_marker.parent_item = src
 	marker_children += spawned_marker
+
+/obj/item/cargo_teleporter/item_ctrl_click(mob/user)
+	if(!(src in user.held_items))
+		return NONE
+	if(my_fulton.choose_beacon(user))
+		return CLICK_ACTION_SUCCESS
+	return CLICK_ACTION_BLOCKING
 
 /obj/item/cargo_teleporter/click_alt(mob/user)
 	if(length(marker_children))
@@ -58,8 +68,8 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	var/choice = tgui_input_list(user, "Select which cargo mark to teleport the items to?", "Cargo Mark Selection", GLOB.cargo_marks)
 	if(!choice)
 		return NONE
-	if(get_dist(user, interacting_with) > 1)
-		return ITEM_INTERACT_BLOCKING // Means you've moved out of range after the input
+	if(!user.Adjacent(interacting_with))
+		return ITEM_INTERACT_BLOCKING // This prevents teleporting from range as we moved out of expected interaction range.
 	var/turf/moving_turf = get_turf(choice)
 	var/turf/target_turf = get_turf(interacting_with)
 	for(var/check_content in target_turf.contents)
@@ -77,42 +87,40 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 		if(movable_content.anchored)
 			continue
 		do_teleport(movable_content, moving_turf)
-	playsound(src, 'sound/magic/disable_tech.ogg', 35) // Sound isn't played in the teleport because it will spam sounds if a lot of items are present
+	playsound(src, 'sound/magic/disable_tech.ogg', 35) // The sound isn't played in the loop above because it will spam sounds if there are lots of items to teleport.
 	new /obj/effect/decal/cleanable/ash(target_turf)
 	COOLDOWN_START(src, use_cooldown, 8 SECONDS)
 
-//---- Allows the cargo teleporter to hold fultons as charges, in order to fulton people with right click
-/obj/item/cargo_teleporter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(tool, /obj/item/extraction_pack))
-		return NONE
-	if(charges >= max_charges)
-		balloon_alert(user, "charges full")
-		return ITEM_INTERACT_BLOCKING
-	var/obj/item/extraction_pack/attacking_fulton = tool
-	var/missing_charges = max_charges - charges
-	if(missing_charges >= attacking_fulton.uses_left)
-		charges += attacking_fulton.uses_left
-		balloon_alert(user, "added [attacking_fulton.uses_left] charges")
-		qdel(attacking_fulton)
-		if(!my_fulton) // Fultons delete themselves when charges hit 0, so we might have to make a new one after we recharge
-			my_fulton = new(src)
-		return ITEM_INTERACT_SUCCESS
-	charges += missing_charges
-	attacking_fulton.uses_left -= missing_charges
-	balloon_alert(user, "added [missing_charges] charges")
-	if(!my_fulton) // Fulton self delete
-		my_fulton = new(src)
-	return ITEM_INTERACT_SUCCESS
-
 /obj/item/cargo_teleporter/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/item/extraction_pack) && try_refill_charges(user, interacting_with, TRUE))
+		return ITEM_INTERACT_SUCCESS
 	if(charges <= 0)
 		balloon_alert(user, "no charges left!")
 		return ITEM_INTERACT_BLOCKING
-	if(!my_fulton.choose_beacon(user))
-		return ITEM_INTERACT_BLOCKING
-	if(my_fulton.interact_with_atom(interacting_with, user, modifiers) == ITEM_INTERACT_SUCCESS)
+	. = my_fulton.interact_with_atom(interacting_with, user, modifiers)
+	if(. == ITEM_INTERACT_SUCCESS)
 		charges--
-		return ITEM_INTERACT_SUCCESS
+
+/obj/item/cargo_teleporter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/extraction_pack))
+		return NONE
+	if(!try_refill_charges(user, tool))
+		return ITEM_INTERACT_BLOCKING
+	return ITEM_INTERACT_SUCCESS
+
+/// Tries to refill the teleporter's fulton charges.
+/obj/item/cargo_teleporter/proc/try_refill_charges(mob/living/refiller, obj/item/extraction_pack/refilling_pack, silent_if_failure = FALSE)
+	if(charges >= max_charges)
+		if(!silent_if_failure)
+			balloon_alert(refiller, "charges full")
+		return FALSE
+	var/charges_to_refill = clamp(max_charges - charges, 0, refilling_pack.uses_left)
+	charges += charges_to_refill
+	refilling_pack.uses_left -= charges_to_refill
+	balloon_alert(refiller, "added [charges_to_refill] charges")
+	if(!refilling_pack.uses_left)
+		qdel(refilling_pack)
+	return TRUE
 
 /datum/design/cargo_teleporter
 	name = "Cargo Teleporter"
