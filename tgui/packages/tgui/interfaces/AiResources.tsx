@@ -106,7 +106,8 @@ export const AiResources = (props) => {
                 value={remaining_ram}
                 maxValue={total_ram}
               >
-                {remaining_ram} TB
+                {toFixed(remaining_ram)}/{toFixed(total_ram)} TB (
+                {toFixed(remaining_ram * 100)}%)
               </ProgressBar>
             </Section>
             <Section
