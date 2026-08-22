@@ -1161,13 +1161,12 @@
 			deployed_shell = target
 			var/mob/living/carbon/human = target
 			var/obj/item/organ/internal/brain/cybernetic/ai/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
-			INVOKE_ASYNC(brain, TYPE_PROC_REF(/obj/item/organ/internal/brain/cybernetic/ai, deploy_init), src)
+			INVOKE_ASYNC(brain, TYPE_PROC_REF(/obj/item/organ/internal/brain/cybernetic/ai, deploy_init), src) // Humans handle mind transfer in deploy_init
 		if(iscyborg(target))
 			RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(disconnect_shell))
 			deployed_shell = target
 			var/mob/living/silicon/robot/cyborg = target
 			INVOKE_ASYNC(cyborg, TYPE_PROC_REF(/mob/living/silicon/robot, deploy_init), src)
-		if(mind) // Checking, for human shells handle mind transfer within deploy_init()
 			mind.transfer_to(target)
 	diag_hud_set_deployed()
 
