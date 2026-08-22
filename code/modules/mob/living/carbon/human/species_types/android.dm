@@ -36,15 +36,15 @@
 	meat = /obj/item/stack/sheet/plasteel{amount = 5}
 	skinned_type = /obj/item/stack/sheet/iron{amount = 10}
 	species_gibs = GIB_TYPE_ROBOTIC
-	mutantbrain = /obj/item/organ/internal/brain/cybernetic
+	mutantbrain = /obj/item/organ/internal/brain/positronic
 	mutanttongue = /obj/item/organ/internal/tongue/robot
-	mutantstomach = null
+	mutantstomach = /obj/item/organ/internal/stomach/cybernetic/tier2
 	mutantheart = null
-	mutantliver = null
+	mutantliver = /obj/item/organ/internal/liver/cybernetic/tier2
 	mutantlungs = null
 	mutantappendix = null
 	mutantbladder = null
-	mutanteyes = /obj/item/organ/internal/eyes/robotic
+	mutanteyes = /obj/item/organ/internal/eyes/synth
 	mutantears = /obj/item/organ/internal/ears/cybernetic
 	mutantbutt = /obj/item/organ/internal/butt/cyber
 	species_language_holder = /datum/language_holder/synthetic

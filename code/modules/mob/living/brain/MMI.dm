@@ -33,6 +33,8 @@
 	var/brainwash_directive
 	/// Holds the brainwash objectives that should be removed upon brain's ejection.
 	var/list/datum/weakref/brainwash_objectives
+	/// Brainwashing objectives applied specifically while this MMI is installed in an IPC shell.
+	var/list/datum/weakref/ipc_brainwash_objectives
 
 /obj/item/mmi/Initialize(mapload)
 	. = ..()
@@ -329,12 +331,30 @@
 		return FALSE
 	return TRUE
 
+/// Checks whether this MMI can be installed into an IPC and restores its occupant for transfer.
+/obj/item/mmi/proc/ready_for_ipc_install(mob/user)
+	if(!brain_check(user))
+		return FALSE
+	restore_brainmob_consciousness()
+	return TRUE
+
+/// Restores the contained brainmob to a conscious, usable state.
+/obj/item/mmi/proc/restore_brainmob_consciousness()
+	if(!brainmob)
+		return FALSE
+	brainmob.set_stat(CONSCIOUS)
+	brainmob.emp_damage = 0
+	brainmob.reset_perspective()
+	return TRUE
+
 /// Gets the brainwash directive.
 /obj/item/mmi/proc/get_updated_brainwash_directive(mob/living/user)
 	return
 
 /// Brainwashes the brainmob if we can do it.
 /obj/item/mmi/proc/try_brainwash(mob/living/user)
+	if(brainwash_objectives)
+		return
 	if(user)
 		brainwash_directive = get_updated_brainwash_directive(user)
 	if(!brainwash_directive || !brainmob)
@@ -342,12 +362,17 @@
 	to_chat(brainmob, span_userdanger( "You feel the MMI overriding your free will!"))
 	brainwash_objectives = brainwash(brainmob, brainwash_directive)
 
-/// Undoes any brainwashing that we've done.
-/obj/item/mmi/proc/try_unbrainwash()
-	if(!brainwash_objectives || !brainmob)
+/// Undoes any normal MMI brainwashing that we've applied to the provided occupant.
+/obj/item/mmi/proc/try_unbrainwash(mob/living/brainwash_target = brainmob)
+	if(!brainwash_objectives || !brainwash_target)
 		return
-	unbrainwash(brainmob, brainwash_objectives)
+	unbrainwash(brainwash_target, brainwash_objectives)
 	brainwash_objectives = null
+
+/obj/item/mmi/ipc/Initialize(mapload) // IPC MMI brain, brain for spawned IPCs with MMI pref, radio off by default for balance concerns
+	. = ..()
+	set_brainmob(new /mob/living/brain(src))
+	radio.set_on(FALSE)
 
 /obj/item/mmi/syndie
 	name = "\improper Syndicate Man-Machine Interface"
@@ -369,4 +394,6 @@
 		. += "\t[span_info("Cyborgs may be connected to a master AI, but are not obligated to follow their orders.")]"
 
 /obj/item/mmi/syndie/get_updated_brainwash_directive(mob/living/user)
+	if(brainwash_objectives)
+		return
 	return "[user.real_name] is part of the Syndicate! Assist the Syndicate to the best of your abilities."

@@ -151,3 +151,77 @@
 		preop_sound = tool.usesound
 
 	return TRUE
+
+/datum/surgery_step/install_brain
+	name = "insert robotic brain"
+	implements = list(/obj/item/mmi = 100)
+
+/datum/surgery_step/install_brain/preop(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(target_zone != BODY_ZONE_CHEST)
+		to_chat(user, span_notice("You must target the chest cavity."))
+
+		return SURGERY_STEP_FAIL
+
+	var/obj/item/bodypart/affected_bodypart = target.get_bodypart(target_zone)
+	var/obj/item/mmi/installed_mmi = tool
+
+	if(!affected_bodypart)
+		return SURGERY_STEP_FAIL
+
+	if(!istype(installed_mmi))
+		return SURGERY_STEP_FAIL
+
+	if(!isipc(target))
+		to_chat(user, span_danger("[tool] cannot be installed into an organic body, as it is not designed to operate the complex biological systems of one!"))
+		return SURGERY_STEP_FAIL
+
+	if(target.get_organ_slot(ORGAN_SLOT_BRAIN) || target.mind)
+		to_chat(user, span_warning("[target] already houses a consciousness. Remove it before installing [tool]."))
+		return SURGERY_STEP_FAIL
+
+	if(!installed_mmi.ready_for_ipc_install(user))
+		return SURGERY_STEP_FAIL
+
+	user.visible_message(
+		"[user] starts installing \the [tool] into [target]'s [affected_bodypart.name].",
+		"You start installing \the [tool] into [target]'s [affected_bodypart.name]."
+	)
+	return ..()
+
+/datum/surgery_step/install_brain/success(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(target_zone != BODY_ZONE_CHEST)
+		to_chat(user, span_warning("You can no longer access [target]'s chest cavity."))
+		return FALSE
+	var/obj/item/bodypart/affected_bodypart = target.get_bodypart(target_zone)
+	var/obj/item/mmi/installed_mmi = tool
+	if(!affected_bodypart || !istype(installed_mmi))
+		to_chat(user, span_warning("[target]'s chest can no longer accept [tool]."))
+		return FALSE
+	if(!isipc(target))
+		to_chat(user, span_warning("[target]'s body is no longer compatible with [tool]."))
+		return FALSE
+	if(target.get_organ_slot(ORGAN_SLOT_BRAIN) || target.mind)
+		to_chat(user, span_warning("[target] already houses a consciousness. [tool] cannot be inserted."))
+		return FALSE
+	if(!installed_mmi.ready_for_ipc_install(user))
+		to_chat(user, span_warning("[tool]'s personality is no longer ready for installation."))
+		return FALSE
+	if(!user.temporarilyRemoveItemFromInventory(tool))
+		to_chat(user, span_warning("You can no longer install [tool] into [target]."))
+		return FALSE
+	if(!installed_mmi.attempt_become_ipc_organ(affected_bodypart, target, user))
+		user.put_in_hands(tool)
+		to_chat(user, span_warning("You can no longer install [tool] into [target]."))
+		return FALSE
+	user.visible_message(
+		span_notice("[user] has installed [tool] into [target]'s [affected_bodypart.name]."),
+		span_notice("You have installed [tool] into [target]'s [affected_bodypart.name]."),
+	)
+	return ..()
+
+/datum/surgery_step/install_brain/failure(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	..()
+	user.visible_message(
+		span_warning("[user]'s hand slips!"),
+		span_warning("Your hand slips!"),
+	)

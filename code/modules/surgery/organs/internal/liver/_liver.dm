@@ -59,7 +59,6 @@
 	SIGNAL_HANDLER
 
 	qdel(GetComponent(/datum/component/squeak))
-
 /obj/item/organ/internal/liver/on_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
 	RegisterSignal(organ_owner, COMSIG_MOB_REAGENT_TICK, PROC_REF(handle_chemical))
@@ -236,6 +235,16 @@
 	desc = "A liver that used to belong to a killer alien, who knows what it used to eat."
 	liver_resistance = 0.333 * LIVER_DEFAULT_TOX_RESISTANCE // -66%
 	toxTolerance = 15 // complete toxin immunity like xenos have would be too powerful
+
+/obj/item/organ/internal/liver/clockwork
+	name = "biometallic alembic"
+	desc = "A series of small pumps and boilers, designed to facilitate proper metabolism."
+	icon = 'icons/obj/medical/organs/organs.dmi'
+	icon_state = "liver-clock"
+	organ_flags = ORGAN_ROBOTIC
+	alcohol_tolerance = 0
+	liver_resistance = 0
+	toxTolerance = 1 //while the organ isn't damaged by doing its job, it doesnt do it very well
 
 /obj/item/organ/internal/liver/cybernetic
 	name = "basic cybernetic liver"
