@@ -3,6 +3,7 @@
 
 /// Tests to ensure we can load a map from a whitelisted directory (_maps), but not a non-whitelisted directory (i.e "fartyShitPants")
 /datum/unit_test/load_map_security
+	test_flags = UNIT_TEST_MAP_TEST
 
 /datum/unit_test/load_map_security/Run()
 

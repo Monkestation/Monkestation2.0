@@ -6,6 +6,9 @@ on:
       maps:
         required: true
         type: string
+      map_config:
+        required: true
+        type: string
       max_required_byond_client:
         required: true
         type: string
