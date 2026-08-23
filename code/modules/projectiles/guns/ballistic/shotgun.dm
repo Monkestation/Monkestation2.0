@@ -559,9 +559,9 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/hundred
 
 //auto shotgun parent
-/obj/item/gun/ballistic/shotgun/autoshotgun
-	name = "Auto Shotgun Parent"
-	desc = "You shouldn't have this"
+/obj/item/gun/ballistic/shotgun/semiauto
+	name = "Semi-Auto Shotgun"
+	desc = "A semi-auto shotgun."
 	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
@@ -579,14 +579,14 @@
 	bolt_wording = "bolt"
 	mag_display = TRUE
 	casing_ejector = TRUE
-	accepted_magazine_type = /obj/item/ammo_box/magazine/autoshotgun
+	accepted_magazine_type = /obj/item/ammo_box/magazine/autoshotgun/syndicate
 	bolt_type = BOLT_TYPE_LOCKING
 	semi_auto = TRUE
 	internal_magazine = FALSE
 	rack_sound = 'sound/weapons/gun/general/bolt_rack.ogg'
 
 //LEGALLY DISTINCT autoshotgun!
-/obj/item/gun/ballistic/shotgun/autoshotgun/syndicate
+/obj/item/gun/ballistic/shotgun/semiauto/syndicate
 	name = "Auto Shotgun"
 	desc = "A semi-automatic shotgun nicknamed the 'auto shotgun' by field agents. \
 	Compatible with 12 gauge shell magazines that hold 12 shots each."
@@ -602,7 +602,7 @@
 	pbk_gentle = FALSE
 
 //Mining autoshotgun!
-/obj/item/gun/ballistic/shotgun/autoshotgun/kinetic
+/obj/item/gun/ballistic/shotgun/semiauto/kinetic
 	name = "20. Gauge Kinetic 'Fenrir' Auto Shotgun"
 	desc = "A fully automatic shotgun created using some spare polymer parts, procured from a undisclosed source. \
 	With some Proto Kinetic Acceleration tech mixed in, the 'Fenrir' becomes a lethal auto shotgun chambered in \

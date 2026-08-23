@@ -299,7 +299,7 @@
 
 /obj/item/storage/box/kinetic/autoshotgun/bigcase/PopulateContents() //populate
 
-		new /obj/item/gun/ballistic/shotgun/autoshotgun/kinetic (src)
+		new /obj/item/gun/ballistic/shotgun/semiauto/kinetic (src)
 		new /obj/item/ammo_box/magazine/autoshotgun/kinetic (src)
 		new /obj/item/ammo_box/magazine/autoshotgun/kinetic (src)
 		new /obj/item/ammo_box/magazine/autoshotgun/kinetic (src)

@@ -468,7 +468,7 @@
 
 /obj/item/storage/toolbox/guncase/traitor/autoshotgun
 	name = "\improper Syndicate auto shotgun gun case"
-	weapon_to_spawn = /obj/item/gun/ballistic/shotgun/autoshotgun/syndicate
+	weapon_to_spawn = /obj/item/gun/ballistic/shotgun/semiauto/syndicate
 	extra_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate
 
 /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition
