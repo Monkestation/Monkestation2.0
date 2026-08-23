@@ -36,6 +36,8 @@
 					avoid_highlighting = src == M
 				)
 			else
+				if(!iscyborg(M))
+					borg_name = M.name
 				to_chat(
 					M,
 					span_binarysay("\
