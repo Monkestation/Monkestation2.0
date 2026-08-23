@@ -233,6 +233,7 @@
 		implantcase.visible_message(span_warning("[implantcase] bursts into sparks!"))
 		do_sparks(number = 2, cardinal_only = FALSE, source = owner)
 		qdel(implantcase)
+		radio_weakref = null
 
 /// Is called when any organs are added & removed after uplink is inserted
 /obj/item/organ/internal/brain/cybernetic/ai/proc/on_organ_gain(datum/source, obj/item/organ/inserted_organ, special)
