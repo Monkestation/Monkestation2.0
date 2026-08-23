@@ -195,3 +195,20 @@
   antropod, SmArtKar, TheColorCyan:
   - refactor: Atmos refactor & speedup by utilizing BYOND 516 vector functions (report
       any atmos bugs)
+2026-08-23:
+  JohnFulpWillard:
+  - bugfix: Hopefully finally fixes AI in mechs leaving and being able to re-enter
+      their core.
+  Runian:
+  - bugfix: People with the Unborgable quirk that somehow become cyborgs now correctly
+      polls ghosts if they want to take over the their body.
+  - bugfix: Changing a cyborg's now immediately changes their low power mode and their
+      appearance rather than shortly after.
+  Tractor-Maam:
+  - rscadd: Paco handguns can now be suppressed.
+  notghosti:
+  - map: Fixes disconnected disposal pipes in Theseus science
+  - map: Adjusted Theseus Telecommunications to be more readable and give more space
+  osaka-fuuri:
+  - bugfix: Androids now have no spleens
+  - bugfix: Flatulance Simulator (IPC/Android butt) is now robotic.

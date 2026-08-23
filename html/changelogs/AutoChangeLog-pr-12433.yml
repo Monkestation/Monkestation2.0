@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Hopefully finally fixes AI in mechs leaving and being able to re-enter their core."

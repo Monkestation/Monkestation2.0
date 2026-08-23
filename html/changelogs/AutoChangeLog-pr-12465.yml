@@ -1,4 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - bugfix: "Changing a cyborg's now immediately changes their low power mode and their appearance rather than shortly after."
