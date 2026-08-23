@@ -1130,6 +1130,7 @@
 			var/mob/living/silicon/robot/R = borgie
 			if(R.shell && !R.deployed && (R.stat != DEAD) && (!R.connected_ai || (R.connected_ai == src)))
 				possible += R
+			continue
 		if(ishuman(borgie))
 			var/mob/living/carbon/human/human = borgie
 			var/obj/item/organ/internal/brain/cybernetic/ai/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
