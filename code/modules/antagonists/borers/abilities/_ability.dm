@@ -48,7 +48,7 @@
 	var/mob/living/basic/cortical_borer/cortical_owner = owner
 
 	// Status Requirements
-	if(requires_host == TRUE && !cortical_owner.inside_human())
+	if(requires_host == TRUE && isnull(cortical_owner.human_host))
 		owner.balloon_alert(owner, "host required")
 		return FALSE
 	if(needs_living_host == TRUE && cortical_owner.human_host.stat == DEAD)

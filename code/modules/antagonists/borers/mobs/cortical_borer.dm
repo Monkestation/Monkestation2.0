@@ -299,10 +299,6 @@ GLOBAL_LIST_INIT(borer_second_name, file2list("monkestation/code/modules/antagon
 		var/datum/action/attack_action = new action_type(src)
 		attack_action.Grant(src)
 
-	if(mind)
-		if(!mind.has_antag_datum(antagonist_datum))
-			mind.add_antag_datum(antagonist_datum)
-
 	for(var/focus_path in subtypesof(/datum/borer_focus))
 		possible_focuses += new focus_path
 
@@ -310,26 +306,28 @@ GLOBAL_LIST_INIT(borer_second_name, file2list("monkestation/code/modules/antagon
 
 	var/datum/atom_hud/borer_hud = GLOB.huds[DATA_HUD_BORER]
 	borer_hud.show_to(src)
-	INVOKE_ASYNC(src, PROC_REF(resolve_misc_issues)) // if things can fail, they will
+
+/mob/living/basic/cortical_borer/mind_initialize()
+	. = ..()
+	if(!mind.has_antag_datum(antagonist_datum))
+		mind.add_antag_datum(antagonist_datum)
 
 /mob/living/basic/cortical_borer/Destroy()
 	human_host = null
-	GLOB.cortical_borers -= src
+	if(GLOB.cortical_borers.Find(src))
+		GLOB.cortical_borers -= src
 	QDEL_NULL(reagent_holder)
 	return ..()
 
 /mob/living/basic/cortical_borer/death(gibbed)
-	if(inside_human())
-		var/turf/human_turf = get_turf(human_host)
-		forceMove(human_turf)
+	if(gibbed && human_host)
+		forceMove(get_turf(human_host))
 		human_host = null
 	GLOB.cortical_borers -= src
 	if(!deathgasp_once)
 		deathgasp_once = TRUE
 		for(var/borers in GLOB.cortical_borers)
 			to_chat(borers, span_boldwarning("[src] has left the hivemind forcibly!"))
-	if(gibbed)
-		QDEL_NULL(reagent_holder)
 	return ..()
 
 //so we can add some stuff to status, making it easier to read... maybe some hud some day
@@ -353,7 +351,7 @@ GLOBAL_LIST_INIT(borer_second_name, file2list("monkestation/code/modules/antagon
 	. = ..()
 
 	//can only do stuff when we are inside a LIVING human
-	if(!inside_human() || human_host?.stat == DEAD)
+	if(isnull(human_host) || human_host.stat == DEAD)
 		return
 
 	//there needs to be a negative to having a borer
@@ -391,13 +389,11 @@ GLOBAL_LIST_INIT(borer_second_name, file2list("monkestation/code/modules/antagon
 	var/choice = tgui_input_list(usr, "Do you want to control [src]?", "Confirmation", list("Yes", "No"))
 	if(choice != "Yes")
 		return
-	if(ckey || key)
+	if(!istype(user) || ckey || key)
 		return
 	to_chat(user, span_warning("As a borer, you have the option to be friendly or not. Note that how you act will determine how a host responds!"))
 	to_chat(user, span_warning("You are a cortical borer! You can fear someone to make them stop moving, but make sure to inhabit them! You only grow/heal/talk when inside a host!"))
 	PossessByPlayer(user.ckey)
-	if(mind)
-		mind.add_antag_datum(antagonist_datum)
 
 /mob/living/basic/cortical_borer/proc/create_name()
 	// So their gen and a random. ex 1-288 is first gen named 288, 4-483 is fourth gen named 483
@@ -412,33 +408,6 @@ GLOBAL_LIST_INIT(borer_second_name, file2list("monkestation/code/modules/antagon
 	if(generation == 0) //The first ever borer gets a special name
 		name = "The hivequeen [initial(name)]"
 		real_name = name
-
-// if things can go wrong, they will. So this proc is an emergency measure meant to resolve them
-/mob/living/basic/cortical_borer/proc/resolve_misc_issues()
-	sleep(5 SECONDS) // give everything some time to resolve itself, if it fails then we come in
-	if(name == initial(name))
-		message_admins("[ADMIN_LOOKUPFLW(src)] had its name initialization fail, this should never happen! Automatically gave a backup name.")
-		create_name()
-
-	if(mind) // can actually happen if admins turn someone into a borer in a weird enough way
-		if(!mind.has_antag_datum(antagonist_datum))
-			message_admins("[ADMIN_LOOKUPFLW(src)] had its antag datum initialization fail, this should never happen! Automatically gave the mob antag datum [antagonist_datum]")
-			mind.add_antag_datum(antagonist_datum)
-
-	else // apparently can happen with the neutered borer spawner, not a damn clue what causes it
-		message_admins("[ADMIN_LOOKUPFLW(src)] spawned despite having no ghost, automatically informed ghosts!")
-		notify_ghosts(
-			"[src] needs to obtain a ghost, click on it to submit yourself!",
-			source = src,
-			action = NOTIFY_ORBIT,
-			header = "The code did not give it one"
-		)
-
-//check if we are inside a human
-/mob/living/basic/cortical_borer/proc/inside_human()
-	if(!ishuman(loc))
-		return FALSE
-	return TRUE
 
 //check if the host has sugar
 /mob/living/basic/cortical_borer/proc/host_sugar()
@@ -487,11 +456,9 @@ GLOBAL_LIST_INIT(borer_second_name, file2list("monkestation/code/modules/antagon
 	to_chat(src, span_warning("You are not able to whisper!"))
 	return FALSE
 
-//previously had borers unable to emote... but that means less RP, and we want that
-
 //borers should not be talking without a host at least
 /mob/living/basic/cortical_borer/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
-	if(!inside_human())
+	if(isnull(human_host))
 		to_chat(src, span_warning("You are not able to speak without a host!"))
 		return
 	if(host_sugar())

@@ -20,10 +20,10 @@
 	if(cortical_owner.neutered == TRUE)
 		owner.balloon_alert(owner, "you cannot reproduce!")
 		return
-	if(!(cortical_owner.upgrade_flags & BORER_ALONE_PRODUCTION) && !cortical_owner.inside_human())
+	if(!(cortical_owner.upgrade_flags & BORER_ALONE_PRODUCTION) && isnull(cortical_owner.human_host))
 		owner.balloon_alert(owner, "host required")
 		return
-	if((cortical_owner.upgrade_flags & BORER_ALONE_PRODUCTION) && !cortical_owner.inside_human())
+	if((cortical_owner.upgrade_flags & BORER_ALONE_PRODUCTION) && isnull(cortical_owner.human_host))
 		cortical_owner.chemical_storage -= chemical_cost
 		no_host_egg()
 		StartCooldown()
