@@ -53,18 +53,22 @@
 	if(check_if_augmented())
 		GLOB.available_ai_shells |= organ_owner
 
-/obj/item/organ/internal/brain/cybernetic/ai/Remove(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/internal/brain/cybernetic/ai/Remove(mob/living/carbon/organ_owner, special, no_id_transfer)
+	undeploy()
+	. = ..()
+
+/obj/item/organ/internal/brain/cybernetic/ai/on_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	if(mainframe_ai)
 		mainframe_ai.connected_ipcs -= organ_owner
 	GLOB.available_ai_shells -= organ_owner
 	undeploy()
 	mainframe_ai = null
-	. = ..()
 	organ_owner.remove_traits(list(TRAIT_MEDICAL_HUD, TRAIT_NO_MINDSWAP, TRAIT_CORPSELOCKED), REF(src))
 	UnregisterSignal(organ_owner, list(COMSIG_LIVING_HEALTH_UPDATE, COMSIG_CLICK, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_QDELETING, COMSIG_LIVING_PRE_WABBAJACKED))
 	var/obj/item/implant/radio/radio = radio_weakref.resolve()
 	if(radio)
 		QDEL_NULL(radio)
+	. = ..()
 
 /// Updates the connecting AI's statpanel.
 /obj/item/organ/internal/brain/cybernetic/ai/proc/get_status_tab_item(mob/living/source, list/items)
