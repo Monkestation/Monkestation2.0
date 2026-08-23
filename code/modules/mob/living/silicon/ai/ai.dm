@@ -1149,25 +1149,22 @@
 		var/mob/living/silicon/robot/shell = target
 		if(shell.stat == DEAD || shell.deployed || !(!shell.connected_ai || (shell.connected_ai == src)))
 			return
+		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(disconnect_shell))
+		deployed_shell = target
+		var/mob/living/silicon/robot/cyborg = target
+		cyborg.deploy_init(src)
+		mind.transfer_to(target)
 
 	if(ishuman(target)) // If it is an AI-uplink organic
 		var/mob/living/carbon/human/human = target
 		var/obj/item/organ/internal/brain/cybernetic/ai/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
 		if(!brain || brain.deployed || human.stat == DEAD || !(!brain.mainframe_ai || (brain.mainframe_ai == src)))
 			return
+		deployed_shell = target
+		var/mob/living/carbon/human = target
+		var/obj/item/organ/internal/brain/cybernetic/ai/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
+		brain.deploy_init(src) // Humans handle mind transfer in deploy_init
 
-	if(mind)
-		if(ishuman(target))
-			deployed_shell = target
-			var/mob/living/carbon/human = target
-			var/obj/item/organ/internal/brain/cybernetic/ai/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
-			brain.deploy_init(src) // Humans handle mind transfer in deploy_init
-		if(iscyborg(target))
-			RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(disconnect_shell))
-			deployed_shell = target
-			var/mob/living/silicon/robot/cyborg = target
-			cyborg.deploy_init(src)
-			mind.transfer_to(target)
 	diag_hud_set_deployed()
 
 /datum/action/innate/deploy_shell
