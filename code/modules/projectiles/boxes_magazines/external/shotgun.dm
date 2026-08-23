@@ -43,7 +43,7 @@
 
 /obj/item/ammo_box/magazine/autoshotgun
 	name = "autoshotgun magazine (12g buckshot)"
-	desc = "You shouldn't have this."
+	desc = "A shotgun magazine."
 	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 	max_ammo = 12
