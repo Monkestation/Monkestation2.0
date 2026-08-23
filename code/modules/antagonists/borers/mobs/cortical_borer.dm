@@ -274,7 +274,7 @@ GLOBAL_LIST_EMPTY(cortical_borers)
 
 	/// Skips unique borer status tab text, used for unique borer subtypes with their own status tabs
 	var/skip_status_tab = FALSE
-
+	/// The total amount of hivequeens that were created
 	var/static/hivequeen_amount
 
 /mob/living/basic/cortical_borer/can_track(mob/living/user)
@@ -289,7 +289,8 @@ GLOBAL_LIST_EMPTY(cortical_borers)
 	borer_matrix.Scale(0.75, 0.75)
 	transform = borer_matrix
 
-	hivequeen_amount++
+	if(generation == 0)
+		hivequeen_amount++
 	create_name()
 
 	GLOB.cortical_borers += src
