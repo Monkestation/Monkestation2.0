@@ -212,7 +212,7 @@
 	if(!owner) // If the brain & body is gone, return
 		return
 	var/obj/item/implant/radio/implant = radio_weakref.resolve()
-	if(!radio_weakref) // if it is already deleted
+	if(!implant) // if it is already deleted
 		return
 	UnregisterSignal(implant, COMSIG_IMPLANT_REMOVED)
 	if(implant in owner.implants)
