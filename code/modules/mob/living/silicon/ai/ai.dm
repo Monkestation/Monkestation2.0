@@ -1162,8 +1162,6 @@
 		if(!brain || brain.deployed || human.stat == DEAD || !(!brain.mainframe_ai || (brain.mainframe_ai == src)))
 			return
 		deployed_shell = target
-		var/mob/living/carbon/human = target
-		var/obj/item/organ/internal/brain/cybernetic/ai/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
 		brain.deploy_init(src) // Humans handle mind transfer in deploy_init
 
 	diag_hud_set_deployed()
