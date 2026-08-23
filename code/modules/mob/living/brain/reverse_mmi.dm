@@ -30,9 +30,6 @@
 	AddElement(/datum/element/noticable_organ, "eyes move with machine precision.", BODY_ZONE_PRECISE_EYES)
 
 /obj/item/organ/internal/brain/cybernetic/ai/Destroy()
-	if(mainframe_ai)
-		mainframe_ai.connected_ipcs -= owner
-	GLOB.available_ai_shells -= owner
 	. = ..()
 	undeploy()
 	mainframe_ai = null
