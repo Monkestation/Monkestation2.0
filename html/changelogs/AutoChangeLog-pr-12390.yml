@@ -1,0 +1,5 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - map: "Fixes disconnected disposal pipes in Theseus science"
+  - map: "Adjusted Theseus Telecommunications to be more readable and give more space"
