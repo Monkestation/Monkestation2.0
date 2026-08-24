@@ -1,58 +1,91 @@
-/proc/printborer(datum/mind/borer)
-	var/list/text = list()
-	var/mob/living/basic/cortical_borer/player_borer = borer.current
-	if(!player_borer)
-		text += span_redtext("[span_bold(borer.name)] had their body destroyed.")
-		return text.Join("<br>")
-	if(borer.current.stat != DEAD)
-		text += "[span_bold(player_borer.name)] [span_greentext("survived")]"
-	else
-		text += "[span_bold(player_borer.name)] [span_redtext("died")]"
-	text += span_bold("[span_bold(player_borer.name)] produced [player_borer.children_produced] borers.")
-	var/list/string_of_genomes = list()
+/datum/team/cortical_borers
+	name = "Cortical Borer Hive"
+	member_name = "Cortical Borer"
 
-	for(var/evo_index in player_borer.past_evolutions)
-		var/datum/borer_evolution/evolution = player_borer.past_evolutions[evo_index]
-		string_of_genomes += evolution.name
+/datum/team/cortical_borers/New(starting_members)
+	. = ..()
+	name = "[capitalize(pick(GLOB.adjectives))] [name]" // Make sure we have some distinct name if another hive existed
 
-	text += "[span_bold(player_borer.name)] had the following evolutions: [english_list(string_of_genomes)]"
-	return text.Join("<br>")
+/datum/team/cortical_borers/proc/create_objectives()
+	var/list/objectives_to_give = list(
+		/datum/objective/borer_survive,
+		/datum/objective/borer/produce_egg,
+		/datum/objective/borer/willing_hosts,
+		/datum/objective/borer/learn_chemicals,
+	)
+	for(var/datum/objective/borer/objective as anything in objectives_to_give)
+		add_objective(new objective)
 
-/proc/printborerlist(list/players,fleecheck)
+/datum/team/cortical_borers/add_member(datum/mind/new_member, datum/antagonist/cortical_borer/antag)
+	..()
+	if(istype(antag))
+		antag.team = src
+
+	for(var/datum/objective/objective as anything in objectives)
+		antag.objectives |= objective
+		antag.update_static_data_for_all_viewers()
+
+	if(isnull(new_member.current))
+		return
+
+	var/mob/living/basic/cortical_borer/borer = new_member.current
+	if(istype(borer))
+		borer.calculate_maturation_speed()
+
+/datum/team/cortical_borers/roundend_report()
+	var/list/report = list()
+	report += span_header("\The [name]:")
+	report += "The [member_name]s were:"
+	report += printborerlist(members)
+
+	if(length(objectives))
+		report += span_header("They had the following objectives:")
+		var/win = TRUE
+		var/objective_count = 0
+		for(var/datum/objective/objective as anything in objectives)
+			objective_count++
+			if(!objective.check_completion())
+				win = FALSE
+			report += "<B>Objective #[objective_count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
+		if(win)
+			report += span_greentext("The [name] was successful!")
+		else
+			report += span_redtext("The [name] has failed!")
+
+	return "<div class='panel redborder'>[report.Join("<br>")]</div>"
+
+/datum/team/cortical_borers/proc/printborerlist(list/players)
 	var/list/parts = list()
 
 	parts += "<ul class='playerlist'>"
-	for(var/datum/mind/M in players)
+	for(var/datum/mind/M as anything in players)
 		parts += "<li>[printborer(M)]</li>"
 	parts += "</ul>"
-	return parts.Join("<br>")
+	return parts.Join()
 
-/datum/team/cortical_borers
-	name = "Cortical Borers"
+/datum/team/cortical_borers/proc/printborer(datum/mind/mind)
+	var/text = "<b>[mind.name]</b> " // We need to bold with <b> because span_bold() isn't supported
+	var/show_key = GLOB.roundend_hidden_ckeys[ckey(mind.key)]
+	if(show_key)
+		text = "<b>[mind.key]</b> was [text]and "
 
-/datum/team/cortical_borers/roundend_report()
-	var/list/parts = list()
-	parts += span_header("The [name] were:")
-	parts += printborerlist(members)
-	var/survival = FALSE
-	for(var/mob/living/basic/cortical_borer/check_borer in GLOB.cortical_borers)
-		if(check_borer.stat == DEAD)
-			continue
-		survival = TRUE
-	if(survival)
-		parts += span_greentext("Borers were able to survive the shift!")
+	var/mob/living/basic/cortical_borer/borer = mind.current
+	if(!borer)
+		text += span_redtext("had their body destroyed.")
+		return text
+
+	if(borer.stat != DEAD)
+		text += span_greentext("survived")
 	else
-		parts += span_redtext("Borers were unable to survive the shift!")
-	if(GLOB.successful_egg_number >= GLOB.objective_egg_borer_number)
-		parts += span_greentext("Borers were able to produce enough eggs!")
-	else
-		parts += span_redtext("Borers were unable to produce enough eggs!")
-	if(length(GLOB.willing_hosts) >= GLOB.objective_willing_hosts)
-		parts += span_greentext("Borers were able to gather enough willing hosts!")
-	else
-		parts += span_redtext("Borers were unable to gather enough willing hosts!")
-	if(GLOB.successful_blood_chem >= GLOB.objective_blood_borer)
-		parts += span_greentext("Borers were able to learn enough chemicals through the blood!")
-	else
-		parts += span_redtext("Borers were unable to learn enough chemicals through the blood!")
-	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+		text += span_redtext("died")
+
+	if(!istype(borer))
+		return text
+
+	text += " <b>["producing [borer.children_produced] borers."]</b><br>"
+	var/list/string_of_genomes = list()
+	for(var/evo_index in borer.past_evolutions)
+		var/datum/borer_evolution/evolution = borer.past_evolutions[evo_index]
+		string_of_genomes += evolution.name
+	text += "They had the following evolutions: [english_list(string_of_genomes)]"
+	return text

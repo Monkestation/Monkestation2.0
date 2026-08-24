@@ -72,9 +72,17 @@
 	var/mob/living/basic/cortical_borer/cortical_owner = owner
 	var/obj/effect/mob_spawn/ghost_role/borer_egg/spawned_egg = new(cortical_owner.drop_location())
 	spawned_egg.generation = (cortical_owner.generation + 1)
+
 	cortical_owner.children_produced++
-	if(cortical_owner.children_produced == GLOB.objective_egg_egg_number)
-		GLOB.successful_egg_number += 1
+	var/datum/antagonist/cortical_borer/antag = owner.mind.has_antag_datum(/datum/antagonist/cortical_borer)
+	if(antag)
+		if(antag.team)
+			spawned_egg.borer_team = antag.team
+
+		var/datum/objective/borer/produce_egg/objective = locate(/datum/objective/borer/produce_egg) in antag.objectives
+		if(objective)
+			objective.borers[owner.tag] += 1
+			objective.check_completion()
 
 #undef OUT_OF_HOST_EGG_COST
 
@@ -105,10 +113,16 @@
 	if((!chest || IS_ORGANIC_LIMB(chest)) && !cortical_owner.human_host.get_organ_by_type(/obj/item/organ/internal/empowered_borer_egg))
 		var/obj/item/organ/internal/empowered_borer_egg/spawned_egg = new(cortical_owner.human_host)
 		spawned_egg.generation = (cortical_owner.generation + 1)
+		cortical_owner.children_produced++
+		var/datum/antagonist/cortical_borer/antag = owner.mind.has_antag_datum(/datum/antagonist/cortical_borer)
+		if(antag)
+			if(antag.team)
+				spawned_egg.borer_team = antag.team
 
-	cortical_owner.children_produced += 1
-	if(cortical_owner.children_produced == GLOB.objective_egg_egg_number)
-		GLOB.successful_egg_number += 1
+			var/datum/objective/borer/produce_egg/objective = locate(/datum/objective/borer/produce_egg) in antag.objectives
+			if(objective)
+				objective.borers[owner.tag] += 1
+				objective.check_completion()
 
 	playsound(borer_turf, 'sound/effects/splat.ogg', 50, TRUE)
 	var/logging_text = "[key_name(cortical_owner)] gave birth to an empowered borer at [loc_name(borer_turf)]"

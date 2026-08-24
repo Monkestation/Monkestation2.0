@@ -1383,6 +1383,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// For if a body has been dissected, to prevent repeats.
 #define TRAIT_BORER_DISSECTION "borer_dissection"
+/// Given if the host is a willing host
+#define TRAIT_WILLING_HOST "borer_willing_host"
 
 // Traits related directly to Clockwork Cult
 /// Given to Clockwork Golems, gives them a reduction on invoke time for certain scriptures.

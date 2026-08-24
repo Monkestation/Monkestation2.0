@@ -1,15 +1,3 @@
-/// If a borer learns this amount of chemicals from blood, it will count for their objective
-#define BLOOD_CHEM_OBJECTIVE 3
-
-/// How many chemicals does a borer need to count for the objective. We use this exclusivelly for text on the end-round-panel
-GLOBAL_VAR_INIT(objective_blood_chem, 3)
-
-/// Whats the borers progress on getting the chemical objective done?
-GLOBAL_VAR_INIT(successful_blood_chem, 0)
-
-/// How many borers should have to learn "objective_blood_chem" amount of chemicals before we count the objective as complete
-GLOBAL_VAR_INIT(objective_blood_borer, 3)
-
 /**
  * Lets borers learn pre-coded chemicals in the "potential_chemicals" list
  */
@@ -125,17 +113,16 @@ GLOBAL_VAR_INIT(objective_blood_borer, 3)
 
 	cortical_owner.chemical_evolution -= chemical_evo_points
 	cortical_owner.known_chemicals += learned_reagent.type
-	cortical_owner.blood_chems_learned++
-
 	cortical_owner.human_host.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5 * cortical_owner.host_harm_multiplier, maximum = BRAIN_DAMAGE_SEVERE)
-
-	if(cortical_owner.blood_chems_learned == BLOOD_CHEM_OBJECTIVE && !cortical_owner.neutered)
-		GLOB.successful_blood_chem += 1
-
-	owner.balloon_alert(owner, "[reagent_choice] learned")
 	if(!HAS_TRAIT(cortical_owner.human_host, TRAIT_AGEUSIA))
 		to_chat(cortical_owner.human_host, span_notice("You get a strange aftertaste of [initial(learned_reagent.taste_description)]!"))
 
-	StartCooldown()
+	owner.balloon_alert(owner, "[reagent_choice] learned")
+	var/datum/antagonist/cortical_borer/antag = owner.mind?.has_antag_datum(/datum/antagonist/cortical_borer)
+	if(antag)
+		var/datum/objective/borer/learn_chemicals/objective = locate(/datum/objective/borer/learn_chemicals) in antag.objectives
+		if(objective)
+			objective.borers[owner.tag] += 1
+			objective.check_completion()
 
-#undef BLOOD_CHEM_OBJECTIVE
+	StartCooldown()

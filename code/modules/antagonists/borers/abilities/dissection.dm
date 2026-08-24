@@ -35,7 +35,13 @@
 				if(72 to 75)
 					cortical_owner.human_host.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
 	cortical_owner.human_host.add_traits(list(TRAIT_BORER_DISSECTION))
-	cortical_owner.dissections++
+	var/datum/antagonist/cortical_borer/antag = owner.mind?.has_antag_datum(/datum/antagonist/cortical_borer)
+	if(antag)
+		var/datum/objective/borer/dissect_bodies/objective = locate(/datum/objective/borer/dissect_bodies) in antag.objectives
+		if(objective)
+			objective.dissected_bodies++
+			objective.check_completion()
+
 	cortical_owner.chemical_storage -= chemical_cost
 	var/turf/borer_turf = get_turf(cortical_owner)
 	playsound(borer_turf, 'sound/effects/splat.ogg', 50, TRUE)
