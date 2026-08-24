@@ -63,9 +63,9 @@
 /mob/living/basic/possession_holder/death(gibbed)
 	. = ..()
 	if(stored_item)
+		visible_message("You can feel the soul leaving the [stored_item], it returns back to its original self.")
 		stored_item.forceMove(get_turf(src))
 		stored_item = null
-		visible_message("You can feel the soul leaving the [stored_item], it returns back to its original self.")
 	ghostize()
 	qdel(src)
 
@@ -206,3 +206,9 @@
 	UnregisterSignal(stored_item, COMSIG_ITEM_DROPPED)
 	src.forceMove(get_turf(stored_item))
 	stored_item.forceMove(src)
+
+/mob/living/basic/possession_holder/weak
+	health_regeneration = 0
+	maxHealth = 50
+	health = 50
+	speed = 3

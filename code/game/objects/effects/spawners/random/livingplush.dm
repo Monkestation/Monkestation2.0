@@ -26,11 +26,7 @@
 		return
 
 	var/mob/dead/observer/chosen = pick(candidates)
-	var/mob/living/basic/possession_holder/created = new(get_turf(plush), plush)
-
-	created.health_regeneration = 0 // disabling regen
-	created.maxHealth = 50
-	created.health = 50
+	var/mob/living/basic/possession_holder/weak/created = new(get_turf(plush), plush)
 
 	created.PossessByPlayer(chosen.ckey)
 	qdel(src)
