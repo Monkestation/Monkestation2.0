@@ -10,7 +10,7 @@
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "SHAFT_MINER"
 
-	outfit = /datum/outfit/job/miner
+	outfit = /datum/outfit/job/miner/station
 	plasmaman_outfit = /datum/outfit/plasmaman/mining
 
 	paycheck = PAYCHECK_UNION_CREW
@@ -54,7 +54,14 @@
 
 	box = /obj/item/storage/box/survival/mining
 	chameleon_extras = /obj/item/gun/energy/recharge/kinetic_accelerator
-	accessory = /obj/item/clothing/accessory/badge/cargo
+
+/datum/outfit/job/miner/equip(mob/living/carbon/human/H, visualsOnly)
+	if(is_species(H, /datum/species/lizard))
+		backpack_contents += /obj/item/pocket_heater/loaded
+	return ..()
+
+/datum/outfit/job/miner/station
+	accessory = /obj/item/clothing/accessory/badge/cargo/miner
 
 /datum/outfit/job/miner/equipped
 	name = "Shaft Miner (Equipment)"

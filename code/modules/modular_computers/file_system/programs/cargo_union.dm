@@ -1,7 +1,5 @@
 ///Prevents spam-printing badges.
 #define PRINT_DELAY (3 MINUTES)
-#define UNION_LEADER "Union Leader"
-#define UNION_MEMBER "Union Member"
 
 /datum/computer_file/program/cargo_union
 	filename = "unionemployees"
@@ -101,11 +99,9 @@
 					computer.balloon_alert(user, "already a member!")
 					return TRUE
 
-			var/union_leader = tgui_input_list(user, "What is the new member's rank?", "New Union Personnel", list(UNION_LEADER, UNION_MEMBER))
-			if(isnull(union_leader) || union_leader == UNION_MEMBER)
-				union_leader = FALSE
-			else
-				union_leader = TRUE
+			var/union_role = tgui_input_list(user, "What is the new member's rank?", "New Union Personnel", list(CARGO_UNION_LEADER, CARGO_UNION_MEMBER, CARGO_UNION_MINER))
+			if(isnull(union_role))
+				return
 
 			if(isnull(bank_account_details))
 				bank_account_details = tgui_input_number(user, "What is the new member's bank ID? (leaving blank will not pay them)", "New Union Personnel", max_value = 999999, min_value = 111111)
@@ -116,7 +112,7 @@
 			if(!user.Adjacent(computer))
 				return TRUE
 
-			GLOB.cargo_union.add_member(member_name, union_leader, bank_account_details)
+			GLOB.cargo_union.add_member(member_name, union_role, bank_account_details)
 			print_new_badge(user, member_name, cooldown_affected = FALSE)
 			return TRUE
 		//Removes the member from the Union entirely, limited to Union Leader.
@@ -139,7 +135,7 @@
 					continue
 				//printing a golden badge requires access (aka QM level, ID or Badge)
 				//this is why we care for ID AND badge in this app.
-				if(member[CARGO_UNION_LEADER])
+				if(member[CARGO_UNION_ROLE] == CARGO_UNION_LEADER)
 					if(!can_run(user, downloading = TRUE))
 						computer.balloon_alert(user, "elevated access necessary!")
 						return TRUE
@@ -207,10 +203,13 @@
 	for(var/member in GLOB.cargo_union.union_employees)
 		if(member[CARGO_UNION_NAME] != member_name)
 			continue
-		if(member[CARGO_UNION_LEADER])
-			new_cargo_badge = new /obj/item/clothing/accessory/badge/cargo/quartermaster(computer.drop_location())
-		else
-			new_cargo_badge = new /obj/item/clothing/accessory/badge/cargo(computer.drop_location())
+		switch(member[CARGO_UNION_ROLE])
+			if(CARGO_UNION_LEADER)
+				new_cargo_badge = new /obj/item/clothing/accessory/badge/cargo/quartermaster(computer.drop_location())
+			if(CARGO_UNION_MINER)
+				new_cargo_badge = new /obj/item/clothing/accessory/badge/cargo/miner(computer.drop_location())
+			else
+				new_cargo_badge = new /obj/item/clothing/accessory/badge/cargo(computer.drop_location())
 	new_cargo_badge.set_identity(member_name)
 	if(cooldown_affected)
 		COOLDOWN_START(src, time_between_printing, PRINT_DELAY)

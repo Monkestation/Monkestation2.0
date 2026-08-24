@@ -17,7 +17,7 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Manage Cargo Union", "View the Cargo 
 	var/union_active = TRUE
 
 	///Assoc List of people part of the Cargo Union, by default all Cargo personnel but the QM can add more.
-	///stored as: list(CARGO_UNION_LEADER = boolean, CARGO_UNION_NAME = string, CARGO_UNION_BANK, /datum/bank_account)
+	///stored as: list(CARGO_UNION_LEADER = role, CARGO_UNION_NAME = string, CARGO_UNION_BANK, /datum/bank_account)
 	var/list/union_employees = list()
 	///List of all printed badges.
 	var/list/obj/item/clothing/accessory/badge/cargo/printed_badges = list()
@@ -147,10 +147,10 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Manage Cargo Union", "View the Cargo 
 			system_announcement.announce(AUTO_ANNOUNCE_UNION, "[demand_voting_on.name] has failed to get enough votes.", channels = list(radio_channel_used))
 	return TRUE
 
-/datum/union/proc/add_member(member_name, union_leader, datum/bank_account/bank_account_details)
+/datum/union/proc/add_member(member_name, role, datum/bank_account/bank_account_details)
 	union_employees += list(list(
-		CARGO_UNION_LEADER = union_leader,
 		CARGO_UNION_NAME = member_name,
+		CARGO_UNION_LEADER = role,
 		CARGO_UNION_BANK = bank_account_details,
 	))
 

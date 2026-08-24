@@ -29,7 +29,7 @@
 				return FALSE
 			if(onSyndieBase() && loc != accessor)
 				return FALSE
-		if((ACCESS_UNION in req_access) || (ACCESS_UNION in req_one_access))
+		if((ACCESS_UNION in req_access) || (ACCESS_UNION in req_one_access) || (ACCESS_UNION_MINER in req_one_access))
 			if(iscyborg(accessor))
 				var/mob/living/silicon/robot/robot = accessor
 				if(check_access(robot.worn_badge))

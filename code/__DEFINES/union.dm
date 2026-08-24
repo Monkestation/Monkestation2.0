@@ -1,6 +1,10 @@
 #define CARGO_UNION_NAME "name"
-#define CARGO_UNION_LEADER "leader"
+#define CARGO_UNION_ROLE "role"
 #define CARGO_UNION_BANK "bank"
+
+#define CARGO_UNION_LEADER "leader"
+#define CARGO_UNION_MEMBER "member"
+#define CARGO_UNION_MINER "miner"
 
 #define ANNOUNCE_START_VOTE "VOTE_STARTED"
 #define ANNOUNCE_CREW "ANNOUNCE_TO_CREW"

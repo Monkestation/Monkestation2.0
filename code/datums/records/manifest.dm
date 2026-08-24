@@ -99,11 +99,18 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 	set waitfor = FALSE
 	if(!(person.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST))
 		return
+	var/union_role
+	if(person.mind?.assigned_role.title == JOB_QUARTERMASTER)
+		union_role = CARGO_UNION_LEADER
+	else if((person.mind?.assigned_role.title == JOB_SHAFT_MINER) || (person.mind?.assigned_role.title == JOB_EXPLORER))
+		union_role = CARGO_UNION_MINER
+	else
+		union_role = CARGO_UNION_MEMBER
 	//if you're cargo, and not a boss, you're part of the Union.
 	if((person.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_CARGO) && !(person.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
 		GLOB.cargo_union.add_member(
 			member_name = person.real_name,
-			union_leader = !!(person.mind?.assigned_role.title == JOB_QUARTERMASTER),
+			role = union_role,
 			bank_account_details = SSeconomy.bank_accounts_by_id["[person.account_id]"],
 		)
 

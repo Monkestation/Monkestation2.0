@@ -97,28 +97,15 @@
 /datum/union_demand/independent_access/implement_demand(datum/union/union_demanding)
 	. = ..()
 	for(var/obj/machinery/door/airlock/airlock as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
-		if(ACCESS_CARGO in airlock.req_one_access)
-			airlock.req_one_access -= ACCESS_CARGO
-			airlock.req_one_access += ACCESS_UNION
-		if(ACCESS_CARGO in airlock.req_access)
-			airlock.req_access -= ACCESS_CARGO
-			airlock.req_access += ACCESS_UNION
-
-		if(ACCESS_QM in airlock.req_one_access)
-			airlock.req_one_access -= ACCESS_QM
-			airlock.req_one_access += ACCESS_UNION_LEADER
-		if(ACCESS_QM in airlock.req_access)
-			airlock.req_access -= ACCESS_QM
-			airlock.req_access += ACCESS_UNION_LEADER
+		if(!airlock.is_station_level(z))
+			continue
+		airlock.set_union_access()
 
 /datum/union_demand/independent_access/unimplement_demand(datum/union/union_demanding)
 	for(var/obj/machinery/door/airlock/airlock as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
-		if(ACCESS_CARGO in airlock.req_one_access)
-			airlock.req_one_access += ACCESS_CARGO
-			airlock.req_one_access -= ACCESS_UNION
-		if(ACCESS_CARGO in airlock.req_access)
-			airlock.req_access += ACCESS_CARGO
-			airlock.req_access -= ACCESS_UNION
+		if(!airlock.is_station_level(z))
+			continue
+		airlock.unset_union_access()
 	return ..()
 
 /datum/union_demand/better_bounties

@@ -349,6 +349,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_AWAY_ENGINEERING]"] = "Beta Station Engineering"
 	desc_by_access["[ACCESS_UNION]"] = "Union Access"
 	desc_by_access["[ACCESS_UNION_LEADER]"] = "Union Leader Access"
+	desc_by_access["[ACCESS_UNION_MINER]"] = "Union Miner Access"
 	//END OF ADDITION
 
 /**

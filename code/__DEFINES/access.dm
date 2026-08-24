@@ -197,6 +197,7 @@
 
 #define ACCESS_UNION "union"
 #define ACCESS_UNION_LEADER "union_leader"
+#define ACCESS_UNION_MINER "union_miner"
 
 /// - - - ANTAGONIST - - -
 /// SYNDICATE
