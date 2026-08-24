@@ -1,0 +1,4 @@
+author: "Runian"
+delete-after: True
+changes:
+  - bugfix: "People with the Unborgable quirk that somehow become cyborgs now correctly polls ghosts if they want to take over the their body."

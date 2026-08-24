@@ -2,19 +2,21 @@ SUBSYSTEM_DEF(blackbox)
 	name = "Blackbox"
 	wait = 10 MINUTES
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	init_order = INIT_ORDER_BLACKBOX
 
 	var/list/datum/feedback_variable/feedback_list = list() //list of datum/feedback_variable
 	var/list/first_death = list() //the first death of this round, assoc. vars keep track of different things
 	var/triggertime = 0
 	var/sealed = FALSE //time to stop tracking stats?
-	var/list/versions = list("antagonists" = 3,
-							"admin_secrets_fun_used" = 2,
-							"explosion" = 3,
-							"time_dilation_current" = 3,
-							"science_techweb_unlock" = 2,
-							"round_end_stats" = 2,
-							"testmerged_prs" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
+	/// associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
+	var/list/versions = list(
+		"antagonists" = 3,
+		"admin_secrets_fun_used" = 2,
+		"explosion" = 3,
+		"time_dilation_current" = 3,
+		"science_techweb_unlock" = 2,
+		"round_end_stats" = 2,
+		"testmerged_prs" = 2,
+	)
 
 /datum/controller/subsystem/blackbox/Initialize()
 	triggertime = world.time
