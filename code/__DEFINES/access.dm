@@ -545,6 +545,15 @@
 	ACCESS_NT_REPRESENTATVE, \
 )
 
+/// Name for the Union-related region.
+#define REGION_UNION "Union"
+/// Used to seed the accesses_by_region list in SSid_access. A list of all cargo regional accesses that are overseen by the HoP.
+#define REGION_ACCESS_UNION list( \
+	ACCESS_UNION, \
+	ACCESS_UNION_LEADER, \
+	ACCESS_UNION_MINER, \
+)
+
 /// Name for the Centcom region.
 #define REGION_CENTCOM "Central Command"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all CENTCOM_ACCESS regional accesses.
