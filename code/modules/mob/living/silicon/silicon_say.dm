@@ -1,13 +1,11 @@
 /mob/living/proc/robot_talk(message)
 	log_talk(message, LOG_SAY, tag="binary")
 
-	var/borg_name
 	var/designation = "Default Cyborg"
 	var/spans = list(SPAN_ROBOT)
 
 	if(issilicon(src))
 		var/mob/living/silicon/player = src
-		borg_name = player.name
 		designation = trim_left(player.designation + " " + player.job)
 
 	if(isAI(src))
@@ -18,11 +16,16 @@
 		message,
 		spans
 	)
+
+	var/namepart = name
+	if(iscarbon(src))
+		namepart = get_voice()
+
+	// AI in carbon body should still have its real name
 	var/obj/item/organ/internal/brain/cybernetic/ai/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(istype(brain))
-		borg_name = brain.mainframe_ai.name
+		namepart = brain.mainframe_ai.name
 		designation = brain.mainframe_ai.job
-
 	for(var/mob/M in GLOB.player_list)
 		if(M.binarycheck())
 			if(isAI(M))
@@ -30,19 +33,19 @@
 					M,
 					span_binarysay("\
 						Robotic Talk, \
-						<a href='byond://?src=[REF(M)];track=[html_encode(borg_name)]'>[span_name("[borg_name] ([designation])")]</a> \
+						<a href='byond://?src=[REF(M)];track=[html_encode(namepart)]'>[span_name("[namepart] ([designation])")]</a> \
 						<span class='message'>[quoted_message]</span>\
 					"),
 					avoid_highlighting = src == M
 				)
 			else
 				if(!iscyborg(M))
-					borg_name = M.name
+					namepart = M.name
 				to_chat(
 					M,
 					span_binarysay("\
 						Robotic Talk, \
-						[span_name("[borg_name]")] <span class='message'>[quoted_message]</span>\
+						[span_name("[namepart]")] <span class='message'>[quoted_message]</span>\
 					"),
 					avoid_highlighting = src == M
 				)
@@ -64,7 +67,7 @@
 				span_binarysay("\
 					[follow_link] \
 					Robotic Talk, \
-					[span_name("[borg_name]")] <span class='message'>[quoted_message]</span>\
+					[span_name("[namepart]")] <span class='message'>[quoted_message]</span>\
 				"),
 				avoid_highlighting = src == M
 			)
