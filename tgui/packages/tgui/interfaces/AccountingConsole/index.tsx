@@ -95,7 +95,7 @@ export const AccountingConsoleContents = () => {
                           width="70px"
                           height="70px"
                           mt={1}
-                          icon="monkestation/icons/obj/clothing/accessories.dmi"
+                          icon="icons/obj/clothing/accessories.dmi"
                           icon_state="cargo-silver"
                         />
                       </FakeDesktopButton>

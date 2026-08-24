@@ -215,5 +215,3 @@
 		COOLDOWN_START(src, time_between_printing, PRINT_DELAY)
 
 #undef PRINT_DELAY
-#undef UNION_LEADER
-#undef UNION_MEMBER
