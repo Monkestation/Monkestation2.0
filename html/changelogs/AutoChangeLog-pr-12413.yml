@@ -1,0 +1,4 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - rscadd: "Paco handguns can now be suppressed."
