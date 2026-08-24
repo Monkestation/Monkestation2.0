@@ -18,8 +18,6 @@
 	)
 
 	var/namepart = name
-	if(iscarbon(src))
-		namepart = get_voice()
 
 	// AI in carbon body should still have its real name
 	var/obj/item/organ/internal/brain/cybernetic/ai/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
@@ -39,8 +37,6 @@
 					avoid_highlighting = src == M
 				)
 			else
-				if(!iscyborg(M))
-					namepart = M.name
 				to_chat(
 					M,
 					span_binarysay("\
