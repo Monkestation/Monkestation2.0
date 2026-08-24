@@ -136,7 +136,7 @@
 			AI.remote_control = null
 			mob_container = AI
 			newloc = null
-			if(AI.relocate(silent = TRUE, kill_otherwise = FALSE))
+			if(AI.relocate(silent = TRUE, kill_otherwise = FALSE, ignore_z_levels = TRUE))
 				moved_already = TRUE
 			else
 				to_chat(AI, span_userdanger("No cores available. Core code corrupted."))
