@@ -60,8 +60,6 @@
 	if(stat >= SOFT_CRIT)
 		return FALSE
 	var/obj/item/radio/dongle = ears
-	if(!istype(dongle))
-		return FALSE
 	for(var/obj/item/implant/radio/implant in src.implants)
 		if(implant.radio.translate_binary)
 			dongle = implant.radio
@@ -70,11 +68,11 @@
 	var/area/our_area = get_area(src)
 	if(our_area.area_flags & BINARY_JAMMING)
 		return FALSE
-
 	var/obj/item/organ/internal/brain/cybernetic/ai/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(istype(brain))
 		return TRUE
-
+	if(!istype(dongle))
+		return FALSE
 	return dongle.translate_binary
 	// monkestation edit end PR #5133
 
