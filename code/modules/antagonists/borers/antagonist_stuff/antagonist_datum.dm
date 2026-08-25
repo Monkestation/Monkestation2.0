@@ -96,6 +96,10 @@
 /datum/antagonist/cortical_borer/ui_static_data(mob/user)
 	var/list/data = list()
 	var/mob/living/basic/cortical_borer/cortical_owner = owner.current
+	data["ability"] = list()
+	if(!istype(cortical_owner))
+		return data + ..()
+
 	for(var/datum/action/cooldown/borer/ability as anything in cortical_owner.known_abilities)
 		var/list/ability_data = list()
 
@@ -104,7 +108,7 @@
 		ability_data["ability_icon"] = initial(ability.button_icon)
 		ability_data["ability_icon_state"] = initial(ability.button_icon_state)
 
-		data["ability"] += list(ability_data)
+		data["ability"] += ability_data
 
 	return data + ..()
 
