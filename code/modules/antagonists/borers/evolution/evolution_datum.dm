@@ -26,7 +26,7 @@
 /// What happens when a borer gets this evolution
 /datum/borer_evolution/proc/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
 	SHOULD_CALL_PARENT(TRUE)
-	if(cortical_owner.neutered)
+	if(HAS_TRAIT(cortical_owner, TRAIT_NEUTERED))
 		for(var/datum/borer_evolution/evolution as anything in unlocked_evolutions)
 			if(evolution::skip_for_neutered)
 				cortical_owner.do_evolution(evolution)

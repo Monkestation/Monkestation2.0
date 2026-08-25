@@ -17,7 +17,7 @@
 	if(!.)
 		return FALSE
 	var/mob/living/basic/cortical_borer/cortical_owner = owner
-	if(cortical_owner.neutered == TRUE)
+	if(HAS_TRAIT(cortical_owner, TRAIT_NEUTERED))
 		owner.balloon_alert(owner, "you cannot reproduce!")
 		return
 	if(!(cortical_owner.upgrade_flags & BORER_ALONE_PRODUCTION) && isnull(cortical_owner.human_host))
@@ -79,7 +79,7 @@
 		if(antag.team)
 			spawned_egg.borer_team = antag.team
 
-		var/datum/objective/borer/produce_egg/objective = locate(/datum/objective/borer/produce_egg) in antag.objectives
+		var/datum/objective/borer/produce_egg/objective = locate() in antag.objectives
 		if(objective)
 			objective.borers[owner.tag] += 1
 			objective.check_completion()
@@ -103,7 +103,7 @@
 	if(!.)
 		return FALSE
 	var/mob/living/basic/cortical_borer/cortical_owner = owner
-	if(cortical_owner.neutered == TRUE)
+	if(HAS_TRAIT(cortical_owner, TRAIT_NEUTERED))
 		owner.balloon_alert(owner, "you cannot reproduce!")
 		return
 

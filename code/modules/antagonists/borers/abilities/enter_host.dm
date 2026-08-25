@@ -12,6 +12,10 @@
 	- they must be of compatible species\n\
 	- and they must not have helmets designed against us\n\
 	"
+	/// What biotypes does our target need?
+	var/accepted_biotypes = MOB_ORGANIC
+	/// Can we enter changelings?
+	var/allow_changelings = FALSE
 
 /datum/action/cooldown/borer/choosing_host/Trigger(trigger_flags, atom/target)
 	. = ..()
@@ -27,9 +31,10 @@
 				return
 			// we have a host with sugar and our host is dead. Amazing fuckup
 			owner.balloon_alert(owner, "struggling to leave")
-			to_chat(cortical_owner, span_userdanger("We struggle to leave our host, barelly able to due to the sugar in their blood no longer moving, this will take time..."))
+			to_chat(owner, span_userdanger("We struggle to leave our host, barelly able to due to the sugar in their blood no longer moving, this will take time..."))
 			StartCooldown(30 SECONDS) // stay in place now
-			sleep(30 SECONDS)
+			if(!do_after(cortical_owner, 30 SECONDS, cortical_owner.human_host, IGNORE_TARGET_LOC_CHANGE, hidden = TRUE))
+				return
 
 		owner.balloon_alert(owner, "detached from host")
 		if(!(cortical_owner.upgrade_flags & BORER_STEALTH_MODE))
@@ -55,40 +60,39 @@
 	//we dont have a host so lets inhabit one
 	var/list/usable_hosts = list()
 	for(var/mob/living/carbon/human/listed_human in range(1, cortical_owner))
-		// no non-human hosts
-		if(!ishuman(listed_human) || ismonkeybasic(listed_human))
+		if(!ishuman(listed_human)) // No non-human hosts
 			to_chat(cortical_owner, span_warning("[listed_human] is not a human!"))
 			continue
-		// cannot have multiple borers (for now)
-		if(listed_human.has_borer())
+
+		if(has_borer(listed_human)) // Cannot have multiple borers
 			to_chat(cortical_owner, span_warning("[listed_human] already has our sister within them!"))
 			continue
-		// hosts need to be organic
-		if(!(listed_human.dna.species.inherent_biotypes & MOB_ORGANIC) && cortical_owner.organic_restricted)
+
+		if(!(listed_human.dna.species.inherent_biotypes & accepted_biotypes)) // Hosts need to be organic
 			to_chat(cortical_owner, span_warning("[listed_human] has incompatible biology with us!"))
 			continue
-		// hosts NEED to be organic
-		if(!(listed_human.mob_biotypes & MOB_ORGANIC) && cortical_owner.organic_restricted)
+
+		if(!(listed_human.mob_biotypes & accepted_biotypes)) // Hosts NEED to be organic
 			to_chat(cortical_owner, span_warning("[listed_human] has incompatible biology with us!"))
 			continue
-		// hosts cannot be changelings unless we specify otherwise
-		if(listed_human.mind)
+
+		if(listed_human.mind && !allow_changelings) // Hosts cannot be changelings unless we specify otherwise
 			var/datum/antagonist/changeling/changeling = listed_human.mind.has_antag_datum(/datum/antagonist/changeling)
-			if(changeling && cortical_owner.changeling_restricted)
+			if(changeling)
 				to_chat(cortical_owner, span_warning("[listed_human] has incompatible biology with us!"))
 				continue
-		// hosts cannot have bio protected headgear
-		if(check_for_bio_protection(listed_human) == TRUE)
+
+		if(check_for_bio_protection(listed_human) == TRUE) // Hosts cannot have bio protected headgear
 			to_chat(cortical_owner, span_warning("[listed_human] has too hard of a helmet to crawl inside of their ear!"))
 			continue
 		usable_hosts += listed_human
 
-	//if the list of possible hosts is one, just go straight in, no choosing
+	// If the list of possible hosts is one, just go straight in, no choosing
 	if(length(usable_hosts) == 1)
 		enter_host(usable_hosts[1])
 		return
 
-	//if the list of possible host is more than one, allow choosing a host
+	// If the list of possible host is more than one, allow choosing a host
 	var/choose_host = tgui_input_list(cortical_owner, "Choose your host!", "Host Choice", usable_hosts)
 	if(!choose_host)
 		owner.balloon_alert(owner, "no target selected")
@@ -100,10 +104,14 @@
 	if(check_for_bio_protection(singular_host))
 		owner.balloon_alert(owner, "target head too protected!")
 		return
-	if(singular_host.has_borer())
+	if(has_borer(singular_host))
 		owner.balloon_alert(owner, "target already occupied")
 		return
-	if(!do_after(cortical_owner, (((cortical_owner.upgrade_flags & BORER_FAST_BORING) && !(cortical_owner.upgrade_flags & BORER_HIDING)) ? 3 SECONDS : 6 SECONDS), target = singular_host, hidden = TRUE))
+	var/boring_time = 6 SECONDS
+	if(cortical_owner.upgrade_flags & BORER_FAST_BORING && !(cortical_owner.upgrade_flags & BORER_HIDING))
+		boring_time *= 0.5
+
+	if(!do_after(cortical_owner, boring_time, target = singular_host, hidden = TRUE))
 		owner.balloon_alert(owner, "you and target must be still")
 		return
 	if(get_dist(singular_host, cortical_owner) > 1)

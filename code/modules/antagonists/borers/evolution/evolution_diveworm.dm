@@ -50,7 +50,10 @@
 		/datum/borer_evolution/diveworm/harm_increase,
 		/datum/borer_evolution/diveworm/health_per_level/t2,
 	)
-	var/static/list/added_chemicals = list(
+
+/datum/borer_evolution/diveworm/expanded_chemicals/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
+	. = ..()
+	var/list/added_chemicals = list(
 		/datum/reagent/toxin/fentanyl,
 		/datum/reagent/toxin/staminatoxin,
 		/datum/reagent/toxin/mutetoxin,
@@ -59,10 +62,9 @@
 		/datum/reagent/drug/mushroomhallucinogen,
 		/datum/reagent/inverse/oculine,
 	)
-
-/datum/borer_evolution/diveworm/expanded_chemicals/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
-	. = ..()
-	cortical_owner.potential_chemicals |= added_chemicals
+	var/datum/action/cooldown/borer/upgrade_chemical/action = locate() in cortical_owner.actions
+	if(action)
+		action.learnable_reagents |= added_chemicals
 
 /datum/borer_evolution/diveworm/health_per_level/t2 //100 hp per 13 1/3  levels, By level 100 775 hp and 427 seconds to fully heal. Limit is 536 seconds
 	name = "Health Increase II"

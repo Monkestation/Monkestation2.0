@@ -37,7 +37,10 @@
 		/datum/borer_evolution/symbiote/harm_decrease,
 		/datum/borer_evolution/symbiote/chem_per_level/t2,
 	)
-	var/static/list/added_chemicals = list(
+
+/datum/borer_evolution/symbiote/expanded_chemicals/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
+	. = ..()
+	var/list/added_chemicals = list(
 		/datum/reagent/medicine/sal_acid,
 		/datum/reagent/medicine/oxandrolone,
 		/datum/reagent/medicine/atropine,
@@ -45,10 +48,9 @@
 		/datum/reagent/medicine/leporazine,
 		/datum/reagent/medicine/omnizine,
 	)
-
-/datum/borer_evolution/symbiote/expanded_chemicals/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
-	. = ..()
-	cortical_owner.potential_chemicals |= added_chemicals
+	var/datum/action/cooldown/borer/upgrade_chemical/action = locate() in cortical_owner.actions
+	if(action)
+		action.learnable_reagents |= added_chemicals
 
 /datum/borer_evolution/symbiote/chem_per_level/t2
 	name = "Chemical Increase II"

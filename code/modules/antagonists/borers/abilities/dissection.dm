@@ -37,7 +37,7 @@
 	cortical_owner.human_host.add_traits(list(TRAIT_BORER_DISSECTION))
 	var/datum/antagonist/cortical_borer/antag = owner.mind?.has_antag_datum(/datum/antagonist/cortical_borer)
 	if(antag)
-		var/datum/objective/borer/dissect_bodies/objective = locate(/datum/objective/borer/dissect_bodies) in antag.objectives
+		var/datum/objective/borer/dissect_bodies/objective = locate() in antag.objectives
 		if(objective)
 			objective.dissected_bodies++
 			objective.check_completion()

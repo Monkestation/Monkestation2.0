@@ -36,7 +36,7 @@
 	name = "[initial(name)][compiled_string]"
 
 /datum/action/cooldown/borer/Trigger(trigger_flags, atom/target)
-	if (!IsAvailable(feedback = TRUE))
+	if(!IsAvailable(feedback = TRUE))
 		return FALSE
 
 	..()

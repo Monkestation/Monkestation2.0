@@ -23,7 +23,7 @@
 	qdel(src)
 
 /obj/item/borer_egg/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if (..()) // was it caught by a mob?
+	if(..()) // was it caught by a mob?
 		return
 
 	var/turf/hit_turf = get_turf(hit_atom)

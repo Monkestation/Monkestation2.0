@@ -17,10 +17,6 @@
 	multiplicative_slowdown = -0.3
 	id = ACTIONSPEED_ID_BORER
 
-//so that we know if a mob has a borer (only humans should have one, but in case)
-/mob/proc/has_borer() as /mob/living/basic/cortical_borer
-	return locate(/mob/living/basic/cortical_borer) in src
-
 //this allows borers to slide under/through a door
 /obj/machinery/door/Bumped(atom/movable/AM)
 	if(iscorticalborer(AM) && density)
@@ -35,7 +31,9 @@
 //so if a person is debrained, the borer is removed
 /obj/item/organ/internal/brain/Remove(mob/living/carbon/target, special = 0, no_id_transfer = FALSE)
 	. = ..()
-	target.has_borer()?.leave_host()
+	var/mob/living/basic/cortical_borer/borer = has_borer(target)
+	if(borer)
+		borer.leave_host()
 
 //borers also create an organ, so you dont need to debrain someone
 /obj/item/organ/internal/borer_body
@@ -62,13 +60,13 @@
 		body_focus.on_add(carbon_target, borer)
 	carbon_target.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 	if(HAS_MIND_TRAIT(carbon_target, TRAIT_WILLING_HOST))
-		carbon_target.add_mood_event("borer", /datum/mood_event/has_borer)
+		carbon_target.add_mood_event("borer", /datum/mood_event/willing_borer)
 
 	var/image/holder = carbon_target.hud_list[BORER_HUD]
 	var/mutable_appearance/MA = new /mutable_appearance(holder)
 	MA.icon_state = "virus_infected"
 	MA.layer = BELOW_MOB_LAYER
-	if(borer.neutered)
+	if(HAS_TRAIT(borer, TRAIT_NEUTERED))
 		MA.color = COLOR_RED_GRAY
 	else
 		MA.color = COLOR_PURPLE_GRAY
@@ -80,7 +78,7 @@
 //on removal, force the borer out
 /obj/item/organ/internal/borer_body/Remove(mob/living/carbon/carbon_target, special)
 	. = ..()
-	var/mob/living/basic/cortical_borer/cb_inside = carbon_target.has_borer()
+	var/mob/living/basic/cortical_borer/cb_inside = has_borer(carbon_target)
 	if(cb_inside)
 		for(var/datum/borer_focus/body_focus as anything in cb_inside.body_focuses)
 			body_focus.on_remove(carbon_target, borer)
@@ -125,42 +123,6 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	// Because they are small, why can't they be held?
 	can_be_held = TRUE
-	/// What chemicals borers know, starting with none
-	var/list/known_chemicals = list()
-	/// What chemicals the borer can learn
-	var/list/potential_chemicals = list(
-		/datum/reagent/drug/methamphetamine/borer_version,
-
-		/datum/reagent/impurity/libitoil,
-
-		/datum/reagent/lithium,
-
-		/datum/reagent/medicine/antipathogenic/spaceacillin,
-
-		/datum/reagent/medicine/c2/convermol,
-		/datum/reagent/medicine/c2/lenturi,
-		/datum/reagent/medicine/c2/libital,
-		/datum/reagent/medicine/c2/multiver,
-		/datum/reagent/medicine/c2/seiver,
-
-		/datum/reagent/medicine/diphenhydramine,
-		/datum/reagent/medicine/epinephrine,
-		/datum/reagent/medicine/haloperidol,
-		/datum/reagent/medicine/inacusiate,
-		/datum/reagent/medicine/mannitol,
-		/datum/reagent/medicine/painkiller/morphine,
-		/datum/reagent/medicine/mutadone,
-		/datum/reagent/medicine/oculine,
-		/datum/reagent/medicine/potass_iodide,
-		/datum/reagent/medicine/salglu_solution,
-
-		/datum/reagent/toxin/formaldehyde,
-		/datum/reagent/toxin/heparin,
-		/datum/reagent/toxin/mindbreaker,
-	)
-	/// Blacklisted chemicals - separate from chemicals that cannot be synthesized, borers specifically cannot learn these
-	var/list/blacklisted_chemicals = list()
-
 	/// How much time we need to get the next point, what one it is depends on "should_get_evolution"
 	var/maturation_speed = 30 SECONDS
 	/// How old the borer is, starting from zero. Goes up only when inside a host and resets when a point is gained.
@@ -209,8 +171,6 @@
 
 	/// The host
 	var/mob/living/carbon/human/human_host
-	/// What the host gains or loses with the borer
-	var/list/hosts_abilities = list()
 
 	/// How much health we regen per second while in a host. Starts at a 60 seconds to fully to heal. A complete organ manipulation surgery takes 19.8 seconds to compelte with perfect timing to remove a borer
 	var/health_regen = 0.415
@@ -224,25 +184,6 @@
 	var/list/body_focuses = list()
 	/// How many children the borer has produced
 	var/children_produced = 0
-	/// Borers can only enter biologicals if true
-	var/organic_restricted = TRUE
-	/// Borers are unable to enter changelings if true
-	var/changeling_restricted = TRUE
-	/// Assoc list of chemical injection rates that the borer can have
-	var/static/list/injection_rates = list(
-		5,
-		10,
-		25,
-		50,
-	)
-	/// Which injection rates the borer has unlocked
-	var/list/injection_rates_unlocked = list(
-		5,
-	)
-	/// What is the current injection rate of the borer
-	var/injection_rate_current = 5
-	/// Cooldown between injecting chemicals
-	COOLDOWN_DECLARE(injection_cooldown)
 	/// Evolutions we've already learned
 	var/list/past_evolutions = list()
 	/// Bitflag of upgrades and effects the borer has
@@ -251,12 +192,6 @@
 	var/genome_locked = FALSE
 	/// Multiplier for a borer's negative effects to their host
 	var/host_harm_multiplier = 1
-
-	/// Controls if the borer can reproduce or not, TRUE means it wont be able to spawn eggs
-	var/neutered = FALSE
-
-	/// Skips unique borer status tab text, used for unique borer subtypes with their own status tabs
-	var/skip_status_tab = FALSE
 
 /mob/living/basic/cortical_borer/can_track(mob/living/user)
 	return FALSE // The validhunt box machines are onto us, we cannot let them track us
@@ -312,9 +247,6 @@
 	. += "Chemical Evolution Points: [chemical_evolution]"
 	. += "Stat Evolution Points: [stat_evolution]"
 	. += ""
-	if(host_sugar())
-		. += "Sugar detected! Unable to generate resources!"
-		. += ""
 	var/datum/antagonist/cortical_borer/antag = mind.has_antag_datum(/datum/antagonist/cortical_borer)
 	if(isnull(antag))
 		return
@@ -327,16 +259,9 @@
 
 /mob/living/basic/cortical_borer/Life(seconds_per_tick, times_fired)
 	. = ..()
-
-	//can only do stuff when we are inside a LIVING human
-	if(isnull(human_host) || human_host.stat == DEAD)
+	if(isnull(human_host))
 		return
 
-	//there needs to be a negative to having a borer
-	if(prob(5 * host_harm_multiplier * ((upgrade_flags & BORER_STEALTH_MODE) ? 0.1 : 1)) && human_host.getToxLoss() <= (80 * host_harm_multiplier))
-		human_host.adjustToxLoss(2.5 * seconds_per_tick * host_harm_multiplier, TRUE, TRUE)
-
-	//cant do anything if the host has sugar
 	if(host_sugar())
 		if(!has_status_effect(/datum/status_effect/borer_sugar))
 			apply_status_effect(/datum/status_effect/borer_sugar)
@@ -344,17 +269,22 @@
 		if(has_status_effect(/datum/status_effect/borer_sugar))
 			remove_status_effect(/datum/status_effect/borer_sugar)
 
-	//this is regenerating chemical_storage
-	if(chemical_storage < max_chemical_storage)
-		if(!(upgrade_flags & BORER_STEALTH_MODE))
-			chemical_storage = min(chemical_storage + chemical_regen * seconds_per_tick, max_chemical_storage)
+	if(human_host.stat == DEAD) // Can only do stuff when we are inside a LIVING human
+		return
 
-	//this is regenerating health
-	if(health < maxHealth)
-		if(!(upgrade_flags & BORER_STEALTH_MODE))
-			adjustBruteLoss(-health_regen * seconds_per_tick)
+	// There needs to be a negative to having a borer
+	if(prob(5 * host_harm_multiplier * ((upgrade_flags & BORER_STEALTH_MODE) ? 0.1 : 1)) && human_host.getToxLoss() <= (80 * host_harm_multiplier))
+		human_host.adjustToxLoss(2.5 * seconds_per_tick * host_harm_multiplier, TRUE, TRUE)
 
-	//this is so they can evolve
+	if(upgrade_flags & BORER_STEALTH_MODE)
+		return
+
+	if(chemical_storage < max_chemical_storage)	// This is regenerating chemical_storage
+		chemical_storage = min(chemical_storage + chemical_regen * seconds_per_tick, max_chemical_storage)
+
+	if(health < maxHealth) // This is regenerating health
+		adjustBruteLoss(-health_regen * seconds_per_tick)
+
 	mature()
 
 //if it doesnt have a ckey, let ghosts have it
@@ -451,9 +381,9 @@
 	if(split_message[1] == ";")
 		message = copytext(message, 2)
 		message = capitalize(message)
-		if (neutered) 	// Nuetered sound offtune.
+		if(HAS_TRAIT(src, TRAIT_NEUTERED)) 	// Nuetered sound offtune.
 			text = span_red("<b>Cortical Hivemind: [real_name] croons, \"[message]\"</b>")
-		else if (generation == 0) 	//Hivequeens demand attention.
+		else if(generation == 0) 	//Hivequeens demand attention.
 			text = span_purplelarge("<b>Cortical Hivemind: [real_name] choruses, \"[message]\"</b>")
 		else
 			text = span_purple("<b>Cortical Hivemind: [real_name] sings, \"[message]\"</b>")
@@ -477,9 +407,9 @@
 	// This is when they speak normally
 	message = capitalize(message)
 
-	if (neutered)
+	if(HAS_TRAIT(src, TRAIT_NEUTERED))
 		text = span_red("Cortical Link: [real_name] croons, \"[message]\"")
-	else if (HAS_MIND_TRAIT(human_host, TRAIT_WILLING_HOST))
+	else if(HAS_MIND_TRAIT(human_host, TRAIT_WILLING_HOST))
 		text = span_purplelarge("Cortical Link: [real_name] choruses, \"[message]\"")
 	else
 		text = span_purple("Cortical Link: [real_name] sings, \"[message]\"")
@@ -489,7 +419,7 @@
 	human_host.balloon_alert(human_host, "you hear a voice")
 	src.log_talk("[key_name(src)] spoke to [key_name(human_host)]: [message]", LOG_SAY)
 
-	if(neutered)
+	if(HAS_TRAIT(src, TRAIT_NEUTERED))
 		for(var/mob/dead_mob in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(dead_mob, src)
 			to_chat(dead_mob, span_red("[link] Cortical Hivemind: [src] croons to [human_host], \"[message]\""))
@@ -507,11 +437,6 @@
 
 /// Called on Life() for the borer to age a bit
 /mob/living/basic/cortical_borer/proc/mature()
-	. = TRUE
-
-	if(upgrade_flags & BORER_STEALTH_MODE)
-		return FALSE
-
 	maturity_age += DELTA_WORLD_TIME(SSclient_mobs) SECONDS
 	if(maturity_age < maturation_speed)
 		return

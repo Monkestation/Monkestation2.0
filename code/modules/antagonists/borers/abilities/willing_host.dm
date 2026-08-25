@@ -34,10 +34,10 @@
 	ADD_TRAIT(cortical_owner.human_host.mind, TRAIT_WILLING_HOST, owner.tag)
 	var/datum/antagonist/cortical_borer/antag = owner.mind.has_antag_datum(/datum/antagonist/cortical_borer)
 	if(antag)
-		var/datum/objective/borer/willing_hosts/objective = locate(/datum/objective/borer/willing_hosts) in antag.objectives
+		var/datum/objective/borer/willing_hosts/objective = locate() in antag.objectives
 		if(objective)
 			objective.minds += cortical_owner.human_host.mind
 			objective.check_completion()
 
-	cortical_owner.human_host.add_mood_event("borer", /datum/mood_event/has_borer) //If the host is being asked then they have a worm in their ear. The rest is done on insert/exit of the organ.
+	cortical_owner.human_host.add_mood_event("borer", /datum/mood_event/willing_borer) //If the host is being asked then they have a worm in their ear. The rest is done on insert/exit of the organ.
 	StartCooldown()
