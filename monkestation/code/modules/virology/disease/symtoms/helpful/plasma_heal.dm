@@ -45,7 +45,6 @@
 
 /datum/symptom/plasma_heal/proc/CanHeal(mob/living/diseased_mob)
 	var/datum/gas_mixture/environment
-	var/list/gases
 
 	var/base = 0
 
@@ -59,16 +58,14 @@
 		if(internals_tank)
 			var/datum/gas_mixture/tank_contents = internals_tank.return_air()
 			if(tank_contents && round(tank_contents.return_pressure())) // make sure the tank is not empty or 0 pressure
-				if(tank_contents.gases[/datum/gas/plasma])
+				if(tank_contents.moles[/datum/gas/plasma])
 					// higher tank distribution pressure leads to more healing, but once you get to about 15kpa you reach the max
 					base += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, internals_tank.distribute_pressure * HEALING_PER_BREATH_PRESSURE)
 	// Check environment
 	if(diseased_mob.loc)
 		environment = diseased_mob.loc.return_air()
-	if(environment)
-		gases = environment.gases
-		if(gases[/datum/gas/plasma])
-			base += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, gases[/datum/gas/plasma][MOLES] * HEALING_PER_MOL)
+	if(environment && environment.moles[/datum/gas/plasma])
+		. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, environment.moles[/datum/gas/plasma] * HEALING_PER_MOL)
 	// Check for reagents in bloodstream
 	if(diseased_mob.reagents?.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
 		base += power * MAX_HEAL_COEFFICIENT_BLOODSTREAM //Determines how much the symptom heals if injected or ingested

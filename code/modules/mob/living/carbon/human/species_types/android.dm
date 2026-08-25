@@ -1,6 +1,6 @@
 /datum/species/android
 	name = "Android"
-	id = SPECIES_ANDROID
+	id = SPECIES_ANDRhttps://github.com/Monkestation/Monkestation2.0/pull/12089/conflict?name=code%252Fmodules%252Fmob%252Fliving%252Fcarbon%252Fhuman%252Fspecies_types%252Fandroid.dm&ancestor_oid=f80db4d42b35138805b599e9fe4ca415b6bea5fb&base_oid=4b5be19fc18cffd6d750350250e5bb2849fc4725&head_oid=942d4b0c75cd89b89ac1ccb8dbe1ab761378c594OID
 	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
 		TRAIT_NO_UNDERWEAR,
@@ -44,7 +44,8 @@
 	mutantlungs = null
 	mutantappendix = null
 	mutantbladder = null
-	mutanteyes = /obj/item/organ/internal/eyes/synth
+	mutantspleen = null
+	mutanteyes = /obj/item/organ/internal/eyes/robotic
 	mutantears = /obj/item/organ/internal/ears/cybernetic
 	mutantbutt = /obj/item/organ/internal/butt/cyber
 	species_language_holder = /datum/language_holder/synthetic

@@ -160,7 +160,7 @@
 #define SECHUD_STATION_ENGINEER_AWAY "hudstationengineer_away"
 #define SECHUD_APC_AWAY "hudapc_away"
 #define SECHUD_ROBOTICIST_AWAY "hudroboticist_away"
-#define SECHUD_SIGNAL_TECHINICAN "hudsignaltech"
+#define SECHUD_SIGNAL_TECHNICAN "hudsignaltech"
 #define SECHUD_CONTRACTOR "hudsyndicatecontractor"
 #define SECHUD_SYNDIECLOWN "hudsyndicateclown"
 #define SECHUD_SPACEPOL "hudspacepol"
