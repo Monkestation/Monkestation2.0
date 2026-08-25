@@ -105,8 +105,8 @@
 /obj/item/organ/internal/borer_body/organ_failure(seconds_per_tick, times_fired)
 	if(SPT_PROB(1, seconds_per_tick))
 		to_chat(owner, span_danger("You feel as if your brain was decaying."))
-	owner.adjustToxLoss(0.1 * seconds_per_tick, forced = TRUE)
-	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.1 * seconds_per_tick, maximum = BRAIN_DAMAGE_SEVERE)
+	owner.adjustToxLoss(0.2 * seconds_per_tick, forced = TRUE)
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * seconds_per_tick)
 
 /obj/item/reagent_containers/borer
 	volume = 200
