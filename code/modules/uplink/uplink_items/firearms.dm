@@ -79,7 +79,7 @@
 	3 buckshot filled magazines are included in the kit."
 	item = /obj/item/storage/toolbox/guncase/traitor/autoshotgun
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) // Nuke ops have their own shotty, Clown ops can't buy lethal firearms
-	cost = 12
+	cost = 14
 
 /datum/uplink_item/firearms/shotgun_revolver
 	name = "\improper Bóbr 12 GA revolver"
