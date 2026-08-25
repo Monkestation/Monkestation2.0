@@ -1,0 +1,5 @@
+author: "hexakats"
+delete-after: True
+changes:
+  - balance: "Lawbringer detain mode no longer ignores armor."
+  - balance: "Cybersun laser gun disabler modes now respect energy armor instead of laser armor."

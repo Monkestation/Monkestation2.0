@@ -1,0 +1,4 @@
+author: "Runian"
+delete-after: True
+changes:
+  - bugfix: "Cyborg's lights now correctly temporarily turn off when they're unconscious caused by a knockdown."
