@@ -2,7 +2,7 @@
 	name = "Lone Operative"
 	typepath = /datum/round_event/ghost_role/operative
 	weight = 0 //its weight is relative to how much stationary and neglected the nuke disk is. See nuclearbomb.dm. Shouldn't be dynamic hijackable.
-	max_occurrences = 1
+	max_occurrences = 0
 	category = EVENT_CATEGORY_INVASION
 	description = "A single nuclear operative assaults the station."
 	track = EVENT_TRACK_MAJOR //this is a safe guard and does not trigger normally(technically it can but not really) so no tags
@@ -54,7 +54,7 @@
 	category = EVENT_CATEGORY_INVASION
 	description = "A junior nuclear operative infiltrates the station."
 	weight = 0
-	max_occurrences = 5
+	max_occurrences = 0
 	track = EVENT_TRACK_MAJOR
 	repeated_mode_adjust = TRUE
 
