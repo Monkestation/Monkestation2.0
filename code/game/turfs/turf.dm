@@ -702,7 +702,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if (purge_ratio && iscarbon(M))
 		clear_reagents_to_vomit_pool(M, V, purge_ratio)
 
-/proc/clear_reagents_to_vomit_pool(mob/living/carbon/owner, obj/effect/decal/cleanable/vomit/V, purge_ratio = 0.1)
+/proc/clear_reagents_to_vomit_pool(mob/living/carbon/owner, obj/effect/decal/cleanable/vomit/vomit, purge_ratio = 0.1)
 	var/obj/item/organ/internal/stomach/belly = owner.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!belly?.reagents.total_volume)
 		return
