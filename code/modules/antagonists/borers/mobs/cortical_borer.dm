@@ -75,7 +75,7 @@
 	var/datum/atom_hud/my_hud = GLOB.huds[DATA_HUD_BORER]
 	my_hud.add_atom_to_hud(carbon_target)
 
-//on removal, force the borer out
+// On removal, force the borer out
 /obj/item/organ/internal/borer_body/Remove(mob/living/carbon/carbon_target, special)
 	. = ..()
 	var/mob/living/basic/cortical_borer/cb_inside = has_borer(carbon_target)
@@ -92,15 +92,25 @@
 	hud.remove_atom_from_hud(carbon_target)
 
 /obj/item/organ/internal/borer_body/on_life(seconds_per_tick, times_fired)
-	. = ..()
 	if(!iscarbon(owner) || !owner.reagents)
+		return
+
+	if(organ_flags & ORGAN_FAILING)
+		organ_failure(seconds_per_tick)
 		return
 
 	if(HAS_MIND_TRAIT(owner, TRAIT_WILLING_HOST))
 		owner.reagents.metabolize(owner, seconds_per_tick, 0, can_overdose=TRUE)
 
+/obj/item/organ/internal/borer_body/organ_failure(seconds_per_tick, times_fired)
+	if(SPT_PROB(1, seconds_per_tick))
+		to_chat(owner, span_danger("You feel as if your brain was decaying."))
+	owner.adjustToxLoss(0.1 * seconds_per_tick, forced = TRUE)
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.1 * seconds_per_tick, maximum = BRAIN_DAMAGE_SEVERE)
+
 /obj/item/reagent_containers/borer
-	volume = 100
+	volume = 200
+	reagent_flags = NO_REACT
 
 /mob/living/basic/cortical_borer
 	name = "cortical borer"
@@ -218,8 +228,9 @@
 	borer_hud.show_to(src)
 
 /mob/living/basic/cortical_borer/Destroy()
-	human_host = null
 	QDEL_NULL(reagent_holder)
+	if(human_host)
+		leave_host()
 	return ..()
 
 /mob/living/basic/cortical_borer/mind_initialize()
@@ -230,14 +241,18 @@
 		mind.add_antag_datum(/datum/antagonist/cortical_borer)
 
 /mob/living/basic/cortical_borer/death(gibbed)
-	if(gibbed && human_host)
-		forceMove(get_turf(human_host))
-		human_host = null
 	var/datum/antagonist/cortical_borer/antag = mind.has_antag_datum(/datum/antagonist/cortical_borer)
 	if(antag?.team)
 		for(var/datum/mind/member as anything in antag.team.members)
 			if(member.current?.stat != DEAD)
 				to_chat(member.current, span_boldwarning("You feel [real_name]'s connection to the hivemind dissapear!"))
+
+	if(human_host && !gibbed)
+		var/obj/item/organ/internal/borer_body/borer_organ = locate() in human_host.organs
+		if(borer_organ)
+			borer_organ.name = "rotting [borer_organ.name]"
+			borer_organ.apply_organ_damage(borer_organ.maxHealth)
+
 	return ..()
 
 //so we can add some stuff to status, making it easier to read... maybe some hud some day

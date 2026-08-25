@@ -43,7 +43,6 @@
 	data["borerTransferAmounts"] = available_injection_amounts
 	data["onCooldown"] = !COOLDOWN_FINISHED(src, injection_cooldown)
 	data["notEnoughChemicals"] = ((injection_amount * CHEMICALS_PER_UNIT) > cortical_owner.chemical_storage) ? TRUE : FALSE
-	data["reagent_holder"] = (cortical_owner.reagent_holder)
 
 	var/chemicals[0]
 	for(var/reagent in known_chemicals)
@@ -77,7 +76,9 @@
 			if(!known_chemicals.Find(reagent))
 				return
 
-			cortical_owner.human_host.reagents.add_reagent(reagent, injection_amount, added_purity = 1)
+			cortical_owner.reagent_holder.reagents.add_reagent(reagent, injection_amount, added_purity = 1)
+			cortical_owner.reagent_holder.reagents.trans_to(cortical_owner.human_host, injection_amount, methods = INGEST)
+
 			to_chat(cortical_owner.human_host, span_warning("You feel something cool inside of you and a dull ache in your head!"))
 			cortical_owner.chemical_storage -= injection_amount * CHEMICALS_PER_UNIT
 			COOLDOWN_START(src, injection_cooldown, (injection_amount / CHEMICAL_SECOND_DIVISOR))
@@ -91,8 +92,6 @@
 			if(!iscorticalborer(usr))
 				return
 			cortical_owner.reagent_holder.reagents.ui_interact(cortical_owner)
-
-
 
 /datum/action/cooldown/borer/inject_chemical/ui_state(mob/user)
 	return GLOB.always_state
