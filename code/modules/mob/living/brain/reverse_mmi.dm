@@ -14,8 +14,7 @@
 
 /obj/item/organ/internal/brain/cybernetic/ai
 	name = "AI-uplink brain"
-	desc = "Can be inserted into a body with NO ORGANIC INTERNAL ORGANS (robotic organs only) to allow AIs to control it. Comes with its own health sensors beacon. MUST be a humanoid or bad things happen to the consciousness."
-	/// The AI that owns this brain/shell. Once owned, this disallows other AIs from deploying into it.
+	desc = "Can be inserted into a (body with robotic organs only) to allow AIs to control it."
 	var/mob/living/silicon/ai/mainframe_ai
 	/// Is the mainframe AI currently deployed to this brain/shell?
 	var/deployed = FALSE
