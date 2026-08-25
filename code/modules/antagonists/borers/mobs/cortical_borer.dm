@@ -241,11 +241,12 @@
 		mind.add_antag_datum(/datum/antagonist/cortical_borer)
 
 /mob/living/basic/cortical_borer/death(gibbed)
-	var/datum/antagonist/cortical_borer/antag = mind.has_antag_datum(/datum/antagonist/cortical_borer)
-	if(antag?.team)
-		for(var/datum/mind/member as anything in antag.team.members)
-			if(member.current?.stat != DEAD)
-				to_chat(member.current, span_boldwarning("You feel [real_name]'s connection to the hivemind dissapear!"))
+	if(mind)
+		var/datum/antagonist/cortical_borer/antag = mind.has_antag_datum(/datum/antagonist/cortical_borer)
+		if(antag?.team)
+			for(var/datum/mind/member as anything in antag.team.members)
+				if(member.current?.stat != DEAD)
+					to_chat(member.current, span_boldwarning("You feel [real_name]'s connection to the hivemind dissapear!"))
 
 	if(human_host && !gibbed)
 		var/obj/item/organ/internal/borer_body/borer_organ = locate() in human_host.organs
