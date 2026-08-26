@@ -9,7 +9,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	var/spread_flags = 0
 
 	//Fluff
-	var/form = "Virus"
+	var/form = DISEASE_VIRUS
 	var/name = "No disease"
 	var/desc = ""
 	var/agent = "some microbes"
@@ -33,6 +33,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	/// Does it skip species virus immunity check? Some things may diseases and not viruses
 	var/bypasses_immunity = FALSE
 	var/spreading_modifier = 1
+	/// Severity of our disease
 	var/severity = DISEASE_SEVERITY_NONTHREAT
 	/// If the disease requires an organ for the effects to function, robotic organs are immune to disease unless inorganic biology symptom is present
 	var/required_organ
@@ -42,9 +43,10 @@ GLOBAL_LIST_INIT(virusDB, list())
 	var/infectable_biotypes = MOB_ORGANIC
 	/// if this ticks while the host is dead
 	var/process_dead = FALSE
-	var/copy_type = null //if this is null, copies will use the type of the instance being copied
-	var/list/symptoms = list() // The symptoms of the disease.
-
+	/// if this is null, copies will use the type of the instance being copied
+	var/copy_type = null
+	/// The symptoms of the disease.
+	var/list/symptoms = list()
 	//the disease's antigens, that the body's immune_system will read to produce corresponding antibodies. Without antigens, a disease cannot be cured.
 	var/list/antigen = list()
 	//alters a pathogen's propensity to mutate. Set to FALSE to forbid a pathogen from ever mutating.
@@ -72,7 +74,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	var/pattern_color
 
 	/// Pathogenic warfare - If you have a second disease of a form name in the list they will start fighting.
-	var/list/can_kill = list("Bacteria")
+	var/list/can_kill = list(DISEASE_VIRUS)
 
 	//When an opportunity for the disease to spread_flags to a mob arrives, runs this percentage through prob()
 	//Ignored if infected materials are ingested (injected with infected blood, eating infected meat)
@@ -371,6 +373,60 @@ GLOBAL_LIST_INIT(virusDB, list())
 
 	var/turf/source_turf = get_turf(infectee)
 	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
+
+/datum/disease/proc/set_form(form, random = FALSE)
+	var/new_form
+	if(!form && !random)
+		stack_trace("Passed no form argument with random set to FALSE!")
+		return
+	/// Already same type
+	if(form == src.form && !random)
+		return
+	if(random)
+		new_form = pick(GLOB.disease_variations)
+	else
+		new_form = form
+
+	disease_flags = initial(disease_flags)
+
+	switch(new_form)
+		if(DISEASE_VIRUS)
+			src.form = DISEASE_VIRUS
+			max_stages = 4
+			infectionchance = 20
+			infectionchance_base = 20
+			stage_prob = 10
+			stage_variance = -1
+			can_kill = list(DISEASE_BACTERIA)
+			disease_flags |= DISEASE_COPYSTAGE
+		// Faster spread_flags and progression, but only 3 stages max, and reset to stage 1 on every spread_flags
+		if(DISEASE_BACTERIA)
+			src.form = DISEASE_BACTERIA
+			max_stages = 3
+			infectionchance = 30
+			infectionchance_base = 30
+			stage_prob = 30
+			stage_variance = -4
+			can_kill = list(DISEASE_PARASITE)
+		// Slower spread_flags. stage preserved on spread_flags
+		if(DISEASE_PARASITE)
+			src.form = DISEASE_PARASITE
+			max_stages = initial(max_stages)
+			infectionchance = 15
+			infectionchance_base = 15
+			stage_prob = 10
+			stage_variance = 0
+			can_kill = list(DISEASE_VIRUS)
+			disease_flags |= DISEASE_COPYSTAGE
+		// Very fast progression, but very slow spread_flags and resets to stage 1.
+		if(DISEASE_PRION)
+			src.form = DISEASE_PRION
+			max_stages = initial(max_stages)
+			infectionchance = 3
+			infectionchance_base = 3
+			stage_prob = 80
+			stage_variance = -10
+			can_kill = list()
 
 ///DEPRICATED
 /datum/disease/proc/stage_act(seconds_per_tick, times_fired)

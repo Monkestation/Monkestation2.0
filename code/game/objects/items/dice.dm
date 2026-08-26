@@ -382,7 +382,6 @@
 		if(9)
 			//Cold
 			selected_turf.visible_message(span_userdanger("[user] looks a little under the weather!"))
-			var/virus_choice = pick(WILD_ACUTE_DISEASES)
 			var/list/anti = list(
 				ANTIGEN_BLOOD	= 1,
 				ANTIGEN_COMMON	= 1,
@@ -395,8 +394,8 @@
 				EFFECT_DANGER_HINDRANCE	= 3,
 				EFFECT_DANGER_HARMFUL	= 1,
 				)
-			var/datum/disease/new_disease = new virus_choice
-			new_disease.randomize_disease(50, 90, 50, 100, anti, bad, src)
+			var/datum/disease/new_disease = new()
+			new_disease.randomize_disease(50, 90, 50, 100, null, anti, bad, list(GLOB.disease_variations), src)
 			user.infect_disease(new_disease, TRUE, "(Die of Fate 7)")
 
 		if(10)

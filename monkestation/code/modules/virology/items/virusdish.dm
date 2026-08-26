@@ -325,8 +325,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	if(!loc) //because fuck you /datum/subsystem/supply_shuttle/Initialize()
 		GLOB.virusdishes -= src
 		return
-	var/virus_choice = pick(WILD_ACUTE_DISEASES)
-	contained_virus = new virus_choice
+	contained_virus = new()
 	var/list/anti = list(
 		ANTIGEN_BLOOD	= 2,
 		ANTIGEN_COMMON	= 2,
@@ -339,7 +338,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		EFFECT_DANGER_HINDRANCE	= 2,
 		EFFECT_DANGER_HARMFUL	= 2,
 		)
-	contained_virus.randomize_disease(50, 90, 10, 100, anti, bad, src)
+	contained_virus.randomize_disease(50, 90, 10, 100, null, anti, bad, list(GLOB.disease_variations), src)
 	contained_virus.Refresh()
 	growth = rand(5, 50)
 	name = "growth dish (Unknown [contained_virus.form])"

@@ -31,6 +31,10 @@
 //Unique antigens
 #define ANTIGEN_IG "Ig" //For TB
 
+#define DISEASE_VIRUS "virus"
+#define DISEASE_BACTERIA "bacteria"
+#define DISEASE_PRION "prion"
+#define DISEASE_PARASITE "parasite"
 
 #define DISEASE_BUMP "bump"
 #define DISEASE_TOUCH "touch"

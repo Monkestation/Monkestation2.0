@@ -17,26 +17,22 @@
 	..()
 
 //Randomly generated Disease, for virus crates and events
-/datum/disease/advance/random
+/datum/disease/premade/random
 	name = "Experimental Disease"
-	copy_type = /datum/disease/advance
+	copy_type = /datum/disease
 
 /datum/disease/advance/random/New(max_symptoms, max_level = 8)
-	if(!max_symptoms)
-		max_symptoms = rand(1, VIRUS_SYMPTOM_LIMIT)
-	var/list/datum/symptom/possible_symptoms = list()
-	for(var/symptom in subtypesof(/datum/symptom))
-		var/datum/symptom/S = symptom
-		if(initial(S.level) > max_level)
-			continue
-		if(initial(S.level) <= 0) //unobtainable symptoms
-			continue
-		possible_symptoms += S
-	for(var/i in 1 to max_symptoms)
-		var/datum/symptom/chosen_symptom = pick_n_take(possible_symptoms)
-		if(chosen_symptom)
-			var/datum/symptom/S = new chosen_symptom
-			symptoms += S
-	Refresh()
+	var/list/anti = list(
+		ANTIGEN_BLOOD	= 1,
+		ANTIGEN_COMMON	= 2,
+		ANTIGEN_RARE	= 2,
+		)
+	var/list/bad = list(
+		EFFECT_DANGER_HELPFUL	= 2,
+		EFFECT_DANGER_FLAVOR	= 2,
+		EFFECT_DANGER_ANNOYING	= 2,
+		EFFECT_DANGER_HINDRANCE	= 3,
+		)
+	randomize_disease(30, 60, 50, 100, max_symptoms, anti, bad, list(GLOB.disease_variations), src)
 
 	name = "Sample #[rand(1,10000)]"

@@ -25,8 +25,10 @@
  * * max_strength - maximum strength that can roll, defaults to 100 if not set
  * * min_robustness - minimum robustness that can roll, defaults to 1 if not set
  * * max_robustness - maximum robustness that can roll, defaults to 100 if not set
+ * * max_symptoms - maximum amount of symptoms we can get, if not set will be randomized
  * * antigen - list of antigen that can roll for the disease, if not set will be randomized
  * * symptom_danger - list of possible badness of the disease, if not set will be randomized
+ * * possible_forms - list of possible forms disease can be, if not set will default to DISEASE_VIRUS
  * * source - source of the disease
  */
 /datum/disease/proc/randomize_disease(
@@ -34,8 +36,10 @@
 		max_strength,
 		min_robustness,
 		max_robustness,
+		max_symptoms,
 		list/antigen = list(),
 		list/symptom_danger = list(),
+		list/possible_forms = list(),
 		atom/source = null
 		)
 
@@ -43,16 +47,24 @@
 	uniqueID = rand(0, 9999)
 	subID = rand(0, 9999)
 
-	//base stats
+	// Base stats
 	strength = rand((min_strength ? min_strength : 1), (max_strength ? max_strength : 100))
 	robustness = rand((min_robustness ? min_robustness : 1), (max_robustness ? max_robustness : 100))
 	roll_antigen(antigen)
 
-	//effects
-	for(var/symptom_stage = 1; symptom_stage <= max_stages; symptom_stage++)
+	if(possible_forms)
+		set_form(pick(possible_forms))
+
+	if(!max_symptoms)
+		max_symptoms = rand(1, VIRUS_SYMPTOM_LIMIT)
+	else if(max_symptoms > VIRUS_SYMPTOM_LIMIT)
+		max_symptoms = VIRUS_SYMPTOM_LIMIT
+
+	// Effects
+	for(var/new_symptom in 1 to max_symptoms)
 		var/selected_danger
 		if(!symptom_danger)
-			add_symptom(stage = symptom_stage)
+			add_symptom(stage = rand(1, max_stages))
 			continue
 		else
 			selected_danger = pick(symptom_danger)
@@ -60,7 +72,7 @@
 		if(!selected_danger)
 			continue
 
-		add_symptom(danger = selected_danger, stage = symptom_stage)
+		add_symptom(danger = selected_danger, stage = rand(1, max_stages))
 
 	//slightly randomized infection chance
 	var/variance = initial(infectionchance)/10

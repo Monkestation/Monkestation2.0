@@ -72,8 +72,7 @@
 	if((/datum/quirk/item_quirk/immunodeficiency::name in H?.client?.prefs?.all_quirks) || HAS_TRAIT(H, TRAIT_IMMUNODEFICIENCY))
 		return
 	if(prob(10))
-		var/virus_choice = pick(WILD_ACUTE_DISEASES)
-		var/datum/disease/D = new virus_choice
+		var/datum/disease/D = new()
 
 		var/list/anti = list(
 			ANTIGEN_BLOOD	= 1,
@@ -85,7 +84,7 @@
 			EFFECT_DANGER_ANNOYING	= 4,
 			)
 
-		D.randomize_disease(30, 55, 0, 50, anti, bad, null)
+		D.randomize_disease(30, 55, 0, 50, 3, anti, bad, list(GLOB.disease_variations), null)
 
 		D.log += "<br />[ROUND_TIME()] Infected [key_name(H)]"
 		if(!length(H.diseases))

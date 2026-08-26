@@ -19,10 +19,9 @@
 		EFFECT_DANGER_FLAVOR	= 4,
 		EFFECT_DANGER_ANNOYING	= 4,
 	)
-	var/virus_choice = pick(WILD_ACUTE_DISEASES)
-	var/datum/disease/D = new virus_choice
+	var/datum/disease/D = new()
 
-	D.randomize_disease(30, 55, 0, 50, anti, bad, null)
+	D.randomize_disease(30, 55, 0, 50, null, anti, bad, list(GLOB.disease_variations), null)
 
 	D.log += "<br />[ROUND_TIME()] Infected [key_name(owner)]"
 	if(!length(owner))

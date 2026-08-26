@@ -127,7 +127,6 @@
 	afflicted += disease_event.disease_candidates
 	disease_event.disease_candidates.Cut() //Clean the list after use
 
-	var/virus_choice = pick(WILD_ACUTE_DISEASES)
 	var/list/anti = list(
 		ANTIGEN_BLOOD	= 1,
 		ANTIGEN_COMMON	= 2,
@@ -139,8 +138,8 @@
 		EFFECT_DANGER_ANNOYING	= 2,
 		EFFECT_DANGER_HINDRANCE	= 3,
 		)
-	var/datum/disease/new_disease = new virus_choice
-	new_disease.randomize_disease(30, 60, 50, 100, anti, bad, src)
+	var/datum/disease/new_disease = new()
+	new_disease.randomize_disease(30, 60, 50, 100, null, anti, bad, list(GLOB.disease_variations), src)
 	new_disease.carrier = TRUE
 	new_disease.Refresh()
 	illness_type = new_disease.name
@@ -235,7 +234,6 @@
 	afflicted += disease_event.disease_candidates
 	disease_event.disease_candidates.Cut()
 
-	var/virus_choice = pick(WILD_ACUTE_DISEASES)
 	var/list/anti = list(
 		ANTIGEN_BLOOD	= 1,
 		ANTIGEN_COMMON	= 1,
@@ -248,8 +246,8 @@
 		EFFECT_DANGER_HINDRANCE	= 3,
 		EFFECT_DANGER_HARMFUL	= 3,
 		)
-	var/datum/disease/new_disease = new virus_choice
-	new_disease.randomize_disease(50, 90, 50, 100, anti, bad, src)
+	var/datum/disease/new_disease = new()
+	new_disease.randomize_disease(50, 90, 50, 100, null, anti, bad, list(GLOB.disease_variations), src)
 	new_disease.Refresh()
 
 	var/mob/living/carbon/human/victim

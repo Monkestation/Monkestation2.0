@@ -8724,7 +8724,6 @@
 #include "monkestation\code\modules\virology\fullscreen.dm"
 #include "monkestation\code\modules\virology\cargo\pathology.dm"
 #include "monkestation\code\modules\virology\disease\base_disease_folder\admin.dm"
-#include "monkestation\code\modules\virology\disease\base_disease_folder\base_types.dm"
 #include "monkestation\code\modules\virology\disease\base_disease_folder\disease_augmentation.dm"
 #include "monkestation\code\modules\virology\disease\base_disease_folder\disease_modification.dm"
 #include "monkestation\code\modules\virology\disease\base_disease_folder\disease_strings.dm"
