@@ -17,6 +17,18 @@
 		L += D.Copy()
 	return L
 
+/**
+ * Randomizes existing disease
+ *
+ * Arguments:
+ * * min_strength - minimum strength that can roll, defaults to 1 if not set
+ * * max_strength - maximum strength that can roll, defaults to 100 if not set
+ * * min_robustness - minimum robustness that can roll, defaults to 1 if not set
+ * * max_robustness - maximum robustness that can roll, defaults to 100 if not set
+ * * antigen - list of antigen that can roll for the disease, if not set will be randomized
+ * * symptom_danger - list of possible badness of the disease, if not set will be randomized
+ * * source - source of the disease
+ */
 /datum/disease/proc/randomize_disease(
 		min_strength,
 		max_strength,
