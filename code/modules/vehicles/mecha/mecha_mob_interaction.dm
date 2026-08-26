@@ -139,7 +139,10 @@
 			if(AI.relocate(silent = TRUE, kill_otherwise = FALSE, ignore_z_levels = TRUE))
 				moved_already = TRUE
 			else
-				to_chat(AI, span_userdanger("No cores available. Core code corrupted."))
+				to_chat(AI, span_userdanger("No cores available. Enabling controls."))
+				AI.controlled_equipment = src
+				AI.remote_control = src
+				return FALSE
 	else
 		return ..()
 	var/mob/living/ejector = M
