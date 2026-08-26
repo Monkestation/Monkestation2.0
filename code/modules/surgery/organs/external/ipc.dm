@@ -63,6 +63,16 @@
 /datum/bodypart_overlay/mutant/ipc_screen/get_base_icon_state()
 	return sprite_datum.icon_state
 
+// IPC screen sprites have their own stored color. Do not inherit the chassis
+// palette, or paint-kit chassis changes will overwrite the display color.
+/datum/bodypart_overlay/mutant/ipc_screen/get_extended_overlay(layer, obj/item/bodypart/limb)
+	layer = bitflag_to_layer(layer)
+	var/mob/living/carbon/human/owner = limb.owner
+	if(!owner)
+		return
+	var/passed_color = sprite_datum.color_src ? draw_color : null
+	return owner.dna.species.return_accessory_layer(-layer, sprite_datum, owner, passed_color)
+
 /obj/item/organ/external/ipc_screen/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
 	if(!.)
@@ -74,6 +84,9 @@
 	var/datum/bodypart_overlay/mutant/ipc_screen/screen_overlay = bodypart_overlay
 	if(screen_overlay?.sprite_datum?.name)
 		saved_screen = screen_overlay.sprite_datum.name
+		// Use the existing eye color only as the initial display color. Afterwards,
+		// the screen's own menu is the sole owner of this value.
+		screen_overlay.draw_color = receiver.eye_color_left
 
 /obj/item/organ/external/ipc_screen/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
@@ -188,6 +201,6 @@
 	if(transformer.dna)
 		transformer.dna.features["ipc_screen"] = screen_name
 	if(!isnull(color_choice))
-		transformer.eye_color_left = sanitize_hexcolor(color_choice)
+		screen_overlay.draw_color = sanitize_hexcolor(color_choice)
 	transformer.update_body()
 	return TRUE
