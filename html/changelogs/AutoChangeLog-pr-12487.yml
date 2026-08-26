@@ -1,0 +1,6 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - qol: "AI Research Acceleration will not run if it is already being ran by another AI"
+  - qol: "Setting a RAM/CPU value higher than whats possible via the distribution console will now default to the highest possible value."
+  - bugfix: "You no longer can generate fake RAM/CPU with multiple AI's"
