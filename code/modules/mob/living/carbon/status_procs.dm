@@ -19,7 +19,6 @@
 		return
 	if(check_stun_immunity(CANKNOCKDOWN))
 		return
-	SEND_SIGNAL(src, COMSIG_LIVING_STAMINA_STUN)
 
 	visible_message(
 		span_danger("[src] slumps over, too weak to continue fighting..."),
