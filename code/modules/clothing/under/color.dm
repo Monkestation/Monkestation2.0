@@ -34,6 +34,7 @@
 
 /obj/item/clothing/under/color/random
 	icon = 'icons/obj/clothing/under/color.dmi'
+	worn_icon = 'icons/mob/clothing/under/color.dmi'
 	icon_state = "random_jumpsuit"
 	greyscale_config = null
 	greyscale_config_worn = null
@@ -61,6 +62,7 @@
 
 /obj/item/clothing/under/color/jumpskirt/random
 	icon = 'icons/obj/clothing/under/color.dmi'
+	worn_icon = 'icons/mob/clothing/under/color.dmi'
 	icon_state = "random_jumpsuit" //Skirt variant needed
 	greyscale_config = null
 	greyscale_config_worn = null
@@ -110,6 +112,7 @@
 	name = "ancient jumpsuit"
 	desc = "A terribly ragged and frayed grey jumpsuit. It looks like it hasn't been washed in over a decade."
 	icon = 'icons/obj/clothing/under/color.dmi'
+	worn_icon = 'icons/mob/clothing/under/color.dmi'
 	icon_state = "grey_ancient"
 	inhand_icon_state = "gy_suit"
 	greyscale_config = null
@@ -264,6 +267,7 @@
 	name = "rainbow jumpsuit"
 	desc = "A multi-colored jumpsuit!"
 	icon = 'icons/obj/clothing/under/color.dmi'
+	worn_icon = 'icons/mob/clothing/under/color.dmi'
 	icon_state = "rainbow"
 	worn_icon_state = "rainbow"
 	inhand_icon_state = "rainbow"
@@ -281,6 +285,7 @@
 	name = "rainbow jumpskirt"
 	desc = "A multi-colored jumpskirt!"
 	icon = 'icons/obj/clothing/under/color.dmi'
+	worn_icon = 'icons/mob/clothing/under/color.dmi'
 	icon_state = "rainbow_skirt"
 	worn_icon_state = "rainbow_skirt"
 	inhand_icon_state = "rainbow"
