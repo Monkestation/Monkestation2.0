@@ -99,7 +99,8 @@
 			immune_system.strength = max(immune_system.strength - 0.01, 1)
 		return
 
-	var/active_disease = pick(diseases)//only one disease will activate its effects at a time.
+	//only one disease will activate its effects at a time.
+	var/active_disease = pick(diseases)
 	for(var/datum/disease/disease in diseases)
 		disease.activate(src, active_disease != disease, seconds_per_tick)
 

@@ -94,6 +94,7 @@
 /**
  * Adds symptom to the disease
  * If symptom is not set, will randomize the symptom instead
+ *
  * Arguments:
  * * symtom - symptom we are adding to the disease, if not set will be randomized
  * * danger - if symptom randomized, will add symptom of this danger level; if not set, will randomize danger level
