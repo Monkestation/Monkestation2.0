@@ -44,6 +44,7 @@
 
 /datum/surgery/augmentation
 	name = "Augmentation"
+	requires_bodypart_type = BODYTYPE_ORGANIC
 	surgery_flags = SURGERY_SELF_OPERABLE | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
 	possible_locs = list(
 		BODY_ZONE_R_ARM,
@@ -99,7 +100,7 @@
 	return ..()
 
 /datum/surgery/augmentation/mechanical // You can replace already mechanical limbs with new/better ones
-	name = "Augmentation"
+	name = "Mechanical Augmentation"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
 	steps = list(
 		/datum/surgery_step/mechanic_open,

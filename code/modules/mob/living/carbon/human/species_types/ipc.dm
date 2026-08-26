@@ -163,6 +163,9 @@
 		// Do not overwrite replacement/custom limbs (ex: advanced cybernetics)
 		if(bodypart.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES)
 			continue
+		// Only repaint IPC/robotic limbs; preserve organic hybrid limbs.
+		if(!(bodypart.bodytype & BODYTYPE_ROBOTIC))
+			continue
 
 		bodypart.limb_id = chassis_of_choice.icon_state
 		bodypart.name = "\improper[chassis_of_choice.name] [parse_zone(bodypart.body_zone)]"
