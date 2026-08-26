@@ -86,7 +86,9 @@
 		saved_screen = screen_overlay.sprite_datum.name
 		// Use the existing eye color only as the initial display color. Afterwards,
 		// the screen's own menu is the sole owner of this value.
-		screen_overlay.draw_color = receiver.eye_color_left
+		if(ishuman(receiver))
+			var/mob/living/carbon/human/human_receiver = receiver
+			screen_overlay.draw_color = human_receiver.eye_color_left
 
 /obj/item/organ/external/ipc_screen/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
