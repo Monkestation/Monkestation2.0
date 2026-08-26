@@ -98,7 +98,6 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	searching = TRUE
 	personality_request_id++
 	update_appearance()
-	addtimer(CALLBACK(src, PROC_REF(check_success), personality_request_id), ask_delay)
 
 /obj/item/mmi/posibrain/attack_self_secondary(mob/living/user)
 	if(!supports_imprinting())
