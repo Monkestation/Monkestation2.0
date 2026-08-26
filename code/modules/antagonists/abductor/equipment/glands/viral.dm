@@ -21,7 +21,7 @@
 	)
 	var/datum/disease/D = new()
 
-	D.randomize_disease(30, 55, 0, 50, null, anti, bad, list(GLOB.disease_variations), null)
+	D.randomize_disease(30, 55, 0, 50, null, anti, bad, GLOB.disease_variations, null)
 
 	D.log += "<br />[ROUND_TIME()] Infected [key_name(owner)]"
 	if(!length(owner))

@@ -395,7 +395,7 @@
 				EFFECT_DANGER_HARMFUL	= 1,
 				)
 			var/datum/disease/new_disease = new()
-			new_disease.randomize_disease(50, 90, 50, 100, null, anti, bad, list(GLOB.disease_variations), src)
+			new_disease.randomize_disease(50, 90, 50, 100, null, anti, bad, GLOB.disease_variations, src)
 			user.infect_disease(new_disease, TRUE, "(Die of Fate 7)")
 
 		if(10)

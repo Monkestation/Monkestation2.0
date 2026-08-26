@@ -248,7 +248,7 @@
 /obj/item/reagent_containers/cup/bottle/random_virus
 	name = "Experimental disease culture bottle"
 	desc = "A small bottle. Contains an untested viral culture in synthblood medium."
-	spawned_disease = /datum/disease/advance/random
+	spawned_disease = /datum/disease/random
 
 /obj/item/reagent_containers/cup/bottle/cold
 	name = "Rhinovirus culture bottle"

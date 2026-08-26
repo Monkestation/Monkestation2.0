@@ -139,7 +139,7 @@
 		EFFECT_DANGER_HINDRANCE	= 3,
 		)
 	var/datum/disease/new_disease = new()
-	new_disease.randomize_disease(30, 60, 50, 100, null, anti, bad, list(GLOB.disease_variations), src)
+	new_disease.randomize_disease(30, 60, 50, 100, null, anti, bad, GLOB.disease_variations, src)
 	new_disease.carrier = TRUE
 	new_disease.Refresh()
 	illness_type = new_disease.name
@@ -247,7 +247,7 @@
 		EFFECT_DANGER_HARMFUL	= 3,
 		)
 	var/datum/disease/new_disease = new()
-	new_disease.randomize_disease(50, 90, 50, 100, null, anti, bad, list(GLOB.disease_variations), src)
+	new_disease.randomize_disease(50, 90, 50, 100, null, anti, bad, GLOB.disease_variations, src)
 	new_disease.Refresh()
 
 	var/mob/living/carbon/human/victim

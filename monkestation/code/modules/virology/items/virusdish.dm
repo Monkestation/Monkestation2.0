@@ -338,7 +338,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		EFFECT_DANGER_HINDRANCE	= 2,
 		EFFECT_DANGER_HARMFUL	= 2,
 		)
-	contained_virus.randomize_disease(50, 90, 10, 100, null, anti, bad, list(GLOB.disease_variations), src)
+	contained_virus.randomize_disease(50, 90, 10, 100, null, anti, bad, GLOB.disease_variations, source = src)
 	contained_virus.Refresh()
 	growth = rand(5, 50)
 	name = "growth dish (Unknown [contained_virus.form])"

@@ -52,7 +52,7 @@
 	robustness = rand((min_robustness ? min_robustness : 1), (max_robustness ? max_robustness : 100))
 	roll_antigen(antigen)
 
-	if(possible_forms)
+	if(length(possible_forms))
 		set_form(pick(possible_forms))
 
 	if(!max_symptoms)
@@ -63,7 +63,7 @@
 	// Effects
 	for(var/new_symptom in 1 to max_symptoms)
 		var/selected_danger
-		if(!symptom_danger)
+		if(!length(symptom_danger))
 			add_symptom(stage = rand(1, max_stages))
 			continue
 		else

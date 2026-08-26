@@ -74,7 +74,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	var/pattern_color
 
 	/// Pathogenic warfare - If you have a second disease of a form name in the list they will start fighting.
-	var/list/can_kill = list(DISEASE_VIRUS)
+	var/list/can_kill = list(DISEASE_BACTERIA)
 
 	//When an opportunity for the disease to spread_flags to a mob arrives, runs this percentage through prob()
 	//Ignored if infected materials are ingested (injected with infected blood, eating infected meat)
@@ -374,59 +374,60 @@ GLOBAL_LIST_INIT(virusDB, list())
 	var/turf/source_turf = get_turf(infectee)
 	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
 
-/datum/disease/proc/set_form(form, random = FALSE)
-	var/new_form
-	if(!form && !random)
+/datum/disease/proc/set_form(new_form, random = FALSE)
+	var/form_to_set
+	if(!new_form && !random)
 		stack_trace("Passed no form argument with random set to FALSE!")
 		return
-	/// Already same type
-	if(form == src.form && !random)
-		return
 	if(random)
-		new_form = pick(GLOB.disease_variations)
+		form_to_set = pick(GLOB.disease_variations)
 	else
-		new_form = form
+		form_to_set = new_form
 
 	disease_flags = initial(disease_flags)
 
-	switch(new_form)
-		if(DISEASE_VIRUS)
-			src.form = DISEASE_VIRUS
-			max_stages = 4
-			infectionchance = 20
-			infectionchance_base = 20
-			stage_prob = 10
-			stage_variance = -1
-			can_kill = list(DISEASE_BACTERIA)
-			disease_flags |= DISEASE_COPYSTAGE
-		// Faster spread_flags and progression, but only 3 stages max, and reset to stage 1 on every spread_flags
-		if(DISEASE_BACTERIA)
-			src.form = DISEASE_BACTERIA
-			max_stages = 3
-			infectionchance = 30
-			infectionchance_base = 30
-			stage_prob = 30
-			stage_variance = -4
-			can_kill = list(DISEASE_PARASITE)
-		// Slower spread_flags. stage preserved on spread_flags
-		if(DISEASE_PARASITE)
-			src.form = DISEASE_PARASITE
-			max_stages = initial(max_stages)
-			infectionchance = 15
-			infectionchance_base = 15
-			stage_prob = 10
-			stage_variance = 0
-			can_kill = list(DISEASE_VIRUS)
-			disease_flags |= DISEASE_COPYSTAGE
-		// Very fast progression, but very slow spread_flags and resets to stage 1.
-		if(DISEASE_PRION)
-			src.form = DISEASE_PRION
-			max_stages = initial(max_stages)
-			infectionchance = 3
-			infectionchance_base = 3
-			stage_prob = 80
-			stage_variance = -10
-			can_kill = list()
+	if(form_to_set == DISEASE_VIRUS)
+		form = DISEASE_VIRUS
+		max_stages = 4
+		infectionchance = 20
+		infectionchance_base = 20
+		stage_prob = 10
+		stage_variance = -1
+		can_kill = list(DISEASE_BACTERIA)
+		disease_flags |= DISEASE_COPYSTAGE
+
+	// Faster spread_flags and progression, but only 3 stages max, and reset to stage 1 on every spread_flags
+	else if(form_to_set == DISEASE_BACTERIA)
+		form = DISEASE_BACTERIA
+		max_stages = 3
+		infectionchance = 30
+		infectionchance_base = 30
+		stage_prob = 30
+		stage_variance = -4
+		can_kill = list(DISEASE_PARASITE)
+
+	// Slower spread_flags. stage preserved on spread_flags
+	else if(form_to_set == DISEASE_PARASITE)
+		form = DISEASE_PARASITE
+		max_stages = initial(max_stages)
+		infectionchance = 15
+		infectionchance_base = 15
+		stage_prob = 10
+		stage_variance = 0
+		can_kill = list(DISEASE_VIRUS)
+		disease_flags |= DISEASE_COPYSTAGE
+
+	// Very fast progression, but very slow spread_flags and resets to stage 1.
+	else if(form_to_set == DISEASE_PRION)
+		form = DISEASE_PRION
+		max_stages = initial(max_stages)
+		infectionchance = 3
+		infectionchance_base = 3
+		stage_prob = 80
+		stage_variance = -10
+		can_kill = list()
+	else
+		stack_trace("Disease form sent to set_form() was not proper type!")
 
 ///DEPRICATED
 /datum/disease/proc/stage_act(seconds_per_tick, times_fired)

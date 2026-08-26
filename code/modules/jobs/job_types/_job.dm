@@ -204,7 +204,7 @@
 			EFFECT_DANGER_DEADLY = 2,
 		)
 		var/datum/disease/disease = new()
-		disease.randomize_disease(50, 90, 10, 100, null, anti, bad, list(GLOB.disease_variations), src)
+		disease.randomize_disease(50, 90, 10, 100, null, anti, bad, GLOB.disease_variations, src)
 
 		disease.disease_flags |= DISEASE_DORMANT
 		disease.spread_flags &= ~(DISEASE_SPREAD_AIRBORNE | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_BLOOD)

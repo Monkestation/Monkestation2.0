@@ -162,7 +162,7 @@
 		EFFECT_DANGER_ANNOYING	= 2,
 	)
 	var/datum/disease/disease = new()
-	disease.randomize_disease(20, 50, 30, 50, null, anti, bad, list(GLOB.disease_variations), src)
+	disease.randomize_disease(20, 50, 30, 50, null, anti, bad, GLOB.disease_variations, src)
 
 	var/note = "Rot Infection Contact [key_name(react_to)]"
 	react_to.try_contact_infect(disease, note = note)

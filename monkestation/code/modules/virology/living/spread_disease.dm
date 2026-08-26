@@ -84,7 +84,7 @@
 			EFFECT_DANGER_ANNOYING	= 4,
 			)
 
-		D.randomize_disease(30, 55, 0, 50, 3, anti, bad, list(GLOB.disease_variations), null)
+		D.randomize_disease(30, 55, 0, 50, 3, anti, bad, GLOB.disease_variations, null)
 
 		D.log += "<br />[ROUND_TIME()] Infected [key_name(H)]"
 		if(!length(H.diseases))

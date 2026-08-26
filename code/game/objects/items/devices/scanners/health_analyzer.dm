@@ -853,20 +853,12 @@
 		return
 
 	var/list/render = list()
-	for(var/datum/disease/disease as anything in patient.diseases)
-		if(istype(disease, /datum/disease))
-			var/datum/disease/advanced = disease
-			advanced.Refresh()
-			if(!(disease.visibility_flags & HIDDEN_SCANNER))
-				render += "<span class='alert ml-1'><b>Warning: [advanced.origin] disease detected</b>\n\
-				<div class='ml-2'>Name: [advanced.real_name()].\nType: [disease.get_spread_string()].\nStage: [disease.stage]/[disease.max_stages].</div>\
-				</span>"
-
-		else
-			if(!(disease.visibility_flags & HIDDEN_SCANNER))
-				render += "<span class='alert ml-1'><b>Warning: [disease.form] disease detected</b>\n\
-				<div class='ml-2'>Name: [disease.name].\nType: [disease.get_spread_string()].\nStage: [disease.stage]/[disease.max_stages].\nPossible Cure: [disease.cure_text]</div>\
-				</span>"
+	for(var/datum/disease/disease in patient.diseases)
+		disease.Refresh()
+		if(!(disease.visibility_flags & HIDDEN_SCANNER))
+			render += "<span class='alert ml-1'><b>Warning: [disease.form] disease detected</b>\n\
+			<div class='ml-2'>Name: [disease.name].\nType: [disease.get_spread_string()].\nStage: [disease.stage]/[disease.max_stages].\nPossible Cure: [disease.cure_text]</div>\
+			</span>"
 
 	if(!length(render))
 		playsound(scanner, 'sound/machines/ping.ogg', 50, FALSE)
