@@ -146,10 +146,8 @@
 		our_artifact.artifact_deactivate()
 		return FALSE
 	var/datum/gas_mixture/merger = new
-	merger.assert_gas(payload_gas)
-	merger.assert_gas(/datum/gas/oxygen)
-	merger.gases[payload_gas][MOLES] = rand(150,2000)
-	merger.gases[/datum/gas/oxygen][MOLES] = 350
+	merger.set_gas(payload_gas, rand(150,2000))
+	merger.set_gas(/datum/gas/oxygen, 350)
 	merger.temperature = rand(200,3000)
 	O.assume_air(merger)
 	qdel(our_artifact)
