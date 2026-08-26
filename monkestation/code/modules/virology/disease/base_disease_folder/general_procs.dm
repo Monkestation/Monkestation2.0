@@ -43,10 +43,10 @@
 			add_symptom(stage = symptom_stage)
 			continue
 		else
-			selected_danger = GLOB.symptom_danger_levels[pick(symptom_danger)]
+			selected_danger = pick(symptom_danger)
 
 		if(!selected_danger)
-			return
+			continue
 
 		add_symptom(danger = selected_danger, stage = symptom_stage)
 

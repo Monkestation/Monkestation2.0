@@ -12,7 +12,7 @@ GLOBAL_LIST_INIT(symptom_danger_levels, list(
 	EFFECT_DANGER_HINDRANCE,
 	EFFECT_DANGER_HARMFUL,
 	EFFECT_DANGER_DEADLY
-	))
+))
 
 #define	ANTIGEN_BLOOD	"blood"
 #define	ANTIGEN_COMMON	"common"
