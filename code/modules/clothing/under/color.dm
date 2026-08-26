@@ -5,7 +5,6 @@
 	SETUP_MAP_ICONS("jumpsuit", "/obj/item/clothing/under/color")
 	inhand_icon_state = "jumpsuit"
 	worn_icon_state = "jumpsuit"
-	worn_icon = 'icons/mob/clothing/under/color.dmi'
 	dying_key = DYE_REGISTRY_UNDER
 	greyscale_config = /datum/greyscale_config/jumpsuit
 	greyscale_config_worn = /datum/greyscale_config/jumpsuit/worn
@@ -16,6 +15,7 @@
 
 /obj/item/clothing/under/color/jumpskirt
 	SETUP_MAP_ICONS("jumpskirt", "/obj/item/clothing/under/color/jumpskirt")
+	worn_icon_state = "jumpskirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
