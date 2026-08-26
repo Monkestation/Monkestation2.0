@@ -331,7 +331,6 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		ANTIGEN_BLOOD	= 2,
 		ANTIGEN_COMMON	= 2,
 		ANTIGEN_RARE	= 1,
-		ANTIGEN_ALIEN	= 0,
 		)
 	var/list/bad = list(
 		EFFECT_DANGER_HELPFUL	= 1,
@@ -339,9 +338,8 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		EFFECT_DANGER_ANNOYING	= 2,
 		EFFECT_DANGER_HINDRANCE	= 2,
 		EFFECT_DANGER_HARMFUL	= 2,
-		EFFECT_DANGER_DEADLY	= 0,
 		)
-	contained_virus.makerandom(list(50,90),list(10,100),anti,bad,src)
+	contained_virus.randomize_disease(50, 90, 10, 100, anti, bad, src)
 	contained_virus.Refresh()
 	growth = rand(5, 50)
 	name = "growth dish (Unknown [contained_virus.form])"

@@ -105,7 +105,7 @@
 /datum/round_event/disease_outbreak/announce(fake)
 	if(!illness_type)
 		var/list/virus_candidates = list(
-			/datum/disease/cold,
+			///datum/disease/cold,
 			/datum/disease/cold9,
 			/datum/disease/brainrot,
 			/datum/disease/flu,
@@ -132,18 +132,15 @@
 		ANTIGEN_BLOOD	= 1,
 		ANTIGEN_COMMON	= 2,
 		ANTIGEN_RARE	= 2,
-		ANTIGEN_ALIEN	= 0,
 		)
 	var/list/bad = list(
 		EFFECT_DANGER_HELPFUL	= 2,
 		EFFECT_DANGER_FLAVOR	= 2,
 		EFFECT_DANGER_ANNOYING	= 2,
 		EFFECT_DANGER_HINDRANCE	= 3,
-		EFFECT_DANGER_HARMFUL	= 0,
-		EFFECT_DANGER_DEADLY	= 0,
 		)
 	var/datum/disease/new_disease = new virus_choice
-	new_disease.makerandom(list(30,60),list(50,100),anti,bad,src)
+	new_disease.randomize_disease(30, 60, 50, 100, anti, bad, src)
 	new_disease.carrier = TRUE
 	new_disease.Refresh()
 	illness_type = new_disease.name
@@ -243,7 +240,6 @@
 		ANTIGEN_BLOOD	= 1,
 		ANTIGEN_COMMON	= 1,
 		ANTIGEN_RARE	= 2,
-		ANTIGEN_ALIEN	= 0,
 		)
 	var/list/bad = list(
 		EFFECT_DANGER_HELPFUL	= 0,
@@ -251,10 +247,9 @@
 		EFFECT_DANGER_ANNOYING	= 2,
 		EFFECT_DANGER_HINDRANCE	= 3,
 		EFFECT_DANGER_HARMFUL	= 3,
-		EFFECT_DANGER_DEADLY	= 0,
 		)
 	var/datum/disease/new_disease = new virus_choice
-	new_disease.makerandom(list(50,90),list(50,100),anti,bad,src)
+	new_disease.randomize_disease(50, 90, 50, 100, anti, bad, src)
 	new_disease.Refresh()
 
 	var/mob/living/carbon/human/victim

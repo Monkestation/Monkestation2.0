@@ -58,7 +58,7 @@
 			EFFECT_DANGER_DEADLY	= 0,
 			)
 
-		disease.makerandom(list(30,55),list(0,50),anti,bad,null)
+		disease.randomize_disease(30, 55, 0, 50, anti, bad, null)
 
 		disease.log += "<br />[ROUND_TIME()] Infected [key_name(eater)]"
 		if(!length(eater.diseases))

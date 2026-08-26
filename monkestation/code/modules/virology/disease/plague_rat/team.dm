@@ -16,14 +16,10 @@ GLOBAL_VAR_INIT(static_plague_team, null)
 		plague = new
 
 		var/list/anti = list(
-			ANTIGEN_BLOOD	= 0,
-			ANTIGEN_COMMON	= 0,
 			ANTIGEN_RARE	= 1,
 			ANTIGEN_ALIEN	= 2,
 			)
 		var/list/bad = list(
-			EFFECT_DANGER_HELPFUL	= 0,
-			EFFECT_DANGER_FLAVOR	= 0,
 			EFFECT_DANGER_ANNOYING	= 1,
 			EFFECT_DANGER_HINDRANCE	= 1,
 			EFFECT_DANGER_HARMFUL	= 3,
@@ -47,7 +43,7 @@ GLOBAL_VAR_INIT(static_plague_team, null)
 		plague.max_stages = 4 //4 stages, unlocks the really dangerous symptoms rather than just DNA Degradation
 		plague.speed = 2 //Takes about 100 seconds to advance to the next stage, max stage in 5 minutes
 
-		plague.makerandom(list(90,100),list(40,75),anti,bad,null)
+		plague.randomize_disease(90, 100, 40, 75, anti, bad, null)
 		plague.Refresh()
 		for(var/datum/symptom/e in plague.symptoms)
 			e.chance *= 2 //More likely to trigger symptoms per tick

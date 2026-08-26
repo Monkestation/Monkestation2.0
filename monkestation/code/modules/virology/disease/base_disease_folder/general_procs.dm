@@ -17,30 +17,38 @@
 		L += D.Copy()
 	return L
 
-/datum/disease/proc/makerandom(list/str = list(), list/rob = list(), list/anti = list(), list/bad = list(), atom/source = null)
+/datum/disease/proc/randomize_disease(
+		min_strength,
+		max_strength,
+		min_robustness,
+		max_robustness,
+		list/antigen = list(),
+		list/symptom_danger = list(),
+		atom/source = null
+		)
+
 	//ID
-	uniqueID = rand(0,9999)
-	subID = rand(0,9999)
+	uniqueID = rand(0, 9999)
+	subID = rand(0, 9999)
 
 	//base stats
-	strength = rand(str[1],str[2])
-	robustness = rand(rob[1],rob[2])
-	roll_antigen(anti)
+	strength = rand((min_strength ? min_strength : 1), (max_strength ? max_strength : 100))
+	robustness = rand((min_robustness ? min_robustness : 1), (max_robustness ? max_robustness : 100))
+	roll_antigen(antigen)
 
 	//effects
-	for(var/i = 1; i <= max_stages; i++)
-		var/selected_badness = pick(
-			bad[EFFECT_DANGER_HELPFUL];EFFECT_DANGER_HELPFUL,
-			bad[EFFECT_DANGER_FLAVOR];EFFECT_DANGER_FLAVOR,
-			bad[EFFECT_DANGER_ANNOYING];EFFECT_DANGER_ANNOYING,
-			bad[EFFECT_DANGER_HINDRANCE];EFFECT_DANGER_HINDRANCE,
-			bad[EFFECT_DANGER_HARMFUL];EFFECT_DANGER_HARMFUL,
-			bad[EFFECT_DANGER_DEADLY];EFFECT_DANGER_DEADLY,
-			)
-		var/datum/symptom/e = new_effect(text2num(selected_badness), i)
-		symptoms += e
-		SEND_SIGNAL(e, COMSIG_SYMPTOM_ATTACH, src)
-		log += "<br />[ROUND_TIME()] Added effect [e.name] ([e.chance]% Occurence)."
+	for(var/symptom_stage = 1; symptom_stage <= max_stages; symptom_stage++)
+		var/selected_danger
+		if(!symptom_danger)
+			add_symptom(stage = symptom_stage)
+			continue
+		else
+			selected_danger = GLOB.symptom_danger_levels[pick(symptom_danger)]
+
+		if(!selected_danger)
+			return
+
+		add_symptom(danger = selected_danger, stage = symptom_stage)
 
 	//slightly randomized infection chance
 	var/variance = initial(infectionchance)/10
@@ -48,29 +56,53 @@
 	infectionchance_base = infectionchance
 
 	//cosmetic petri dish stuff - if set beforehand, will not be randomized
-	if (!color)
+	if(!color)
 		var/list/randomhexes = list("8","9","a","b","c","d","e")
 		color = "#[pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)]"
 		pattern = rand(1,6)
 		pattern_color = "#[pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)]"
 
 	//spreading vectors - if set beforehand, will not be randomized
-	if (!spread_flags)
+	if(!spread_flags)
 		randomize_spread()
 
 	//logging
 	log += "<br />[ROUND_TIME()] Created and Randomized<br>"
 
 	//admin panel
-	if (origin == "Unknown")
-		if (isvirusdish(source))
-			if (isturf(source.loc))
-				var/turf/T = source.loc
-				if (istype(T.loc,/area/centcom))
-					origin = "Centcom"
-				else if (istype(T.loc,/area/station/medical/virology))
-					origin = "Pathology"
+	if(origin == "Unknown" && isvirusdish(source) && isturf(source.loc))
+		var/turf/source_turf = source.loc
+		if(istype(source_turf.loc, /area/centcom))
+			origin = "Centcom"
+		else if(istype(source_turf.loc, /area/station/medical/virology))
+			origin = "Pathology"
+
 	update_global_log()
+
+/**
+ * Adds symptom to the disease
+ * If symptom is not set, will randomize the symptom instead
+ * Arguments:
+ * * symtom - symptom we are adding to the disease, if not set will be randomized
+ * * danger - if symptom randomized, will add symptom of this danger level; if not set, will randomize danger level
+ * * stage - if symptom randomized, will set the symptom to this stage; 1 if not set
+ * * log_symptom - if set, will log time, name and occurance chance in disease log
+ */
+/datum/disease/proc/add_symptom(datum/symptom/symptom, danger, stage, log_symptom = FALSE)
+	if(istype(symptom, /datum/symptom))
+		stack_trace("Attempted to pass non-symptom datum onto add_symptom()! [symptom]")
+		return
+	var/datum/symptom/added_symptom
+	if(!symptom)
+		var/symptom_danger = danger ? danger : pick(GLOB.symptom_danger_levels)
+		added_symptom = new_effect(text2num(symptom_danger), stage ? stage : 1)
+	else
+		added_symptom = symptom
+	symptoms += added_symptom
+	SEND_SIGNAL(added_symptom, COMSIG_SYMPTOM_ATTACH, src)
+	if(!log_symptom)
+		return
+	log += "<br />[ROUND_TIME()] Added effect [added_symptom.name] ([added_symptom.chance]% Occurence)."
 
 /datum/disease/proc/AddToGoggleView(mob/living/infectedMob)
 	if (spread_flags & DISEASE_SPREAD_CONTACT_SKIN)

@@ -13,21 +13,16 @@
 	var/list/anti = list(
 		ANTIGEN_BLOOD	= 1,
 		ANTIGEN_COMMON	= 1,
-		ANTIGEN_RARE	= 0,
-		ANTIGEN_ALIEN	= 0,
 	)
 	var/list/bad = list(
 		EFFECT_DANGER_HELPFUL	= 1,
 		EFFECT_DANGER_FLAVOR	= 4,
 		EFFECT_DANGER_ANNOYING	= 4,
-		EFFECT_DANGER_HINDRANCE	= 0,
-		EFFECT_DANGER_HARMFUL	= 0,
-		EFFECT_DANGER_DEADLY	= 0,
 	)
 	var/virus_choice = pick(WILD_ACUTE_DISEASES)
 	var/datum/disease/D = new virus_choice
 
-	D.makerandom(list(30,55),list(0,50),anti,bad,null)
+	D.randomize_disease(30, 55, 0, 50, anti, bad, null)
 
 	D.log += "<br />[ROUND_TIME()] Infected [key_name(owner)]"
 	if(!length(owner))

@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(global_diseases, list())
 	strength = rand(70,100)
 	Refresh()
 
-/datum/disease/premade/makerandom(list/str = list(), list/rob = list(), list/anti = list(), list/bad = list(), atom/source = null)
+/datum/disease/premade/randomize_disease(min_strength, max_strength, min_robustness, max_robustness, list/antigen, list/symptom_danger, atom/source)
 	return
 
 /mob/living/proc/infect_disease_predefined(category, forced, notes)

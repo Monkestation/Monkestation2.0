@@ -387,7 +387,6 @@
 				ANTIGEN_BLOOD	= 1,
 				ANTIGEN_COMMON	= 1,
 				ANTIGEN_RARE	= 2,
-				ANTIGEN_ALIEN	= 0,
 				)
 			var/list/bad = list(
 				EFFECT_DANGER_HELPFUL	= 0,
@@ -395,10 +394,9 @@
 				EFFECT_DANGER_ANNOYING	= 2,
 				EFFECT_DANGER_HINDRANCE	= 3,
 				EFFECT_DANGER_HARMFUL	= 1,
-				EFFECT_DANGER_DEADLY	= 0,
 				)
 			var/datum/disease/new_disease = new virus_choice
-			new_disease.makerandom(list(50,90),list(50,100),anti,bad,src)
+			new_disease.randomize_disease(50, 90, 50, 100, anti, bad, src)
 			user.infect_disease(new_disease, TRUE, "(Die of Fate 7)")
 
 		if(10)

@@ -8741,7 +8741,6 @@
 #include "monkestation\code\modules\virology\disease\premades\death_sandwich.dm"
 #include "monkestation\code\modules\virology\disease\premades\debug_disease.dm"
 #include "monkestation\code\modules\virology\disease\premades\decloning.dm"
-#include "monkestation\code\modules\virology\disease\premades\flu.dm"
 #include "monkestation\code\modules\virology\disease\premades\heart_attack.dm"
 #include "monkestation\code\modules\virology\disease\premades\transformations.dm"
 #include "monkestation\code\modules\virology\disease\symptom_cracker\cracker_puzzle.dm"
