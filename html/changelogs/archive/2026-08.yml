@@ -212,3 +212,17 @@
   osaka-fuuri:
   - bugfix: Androids now have no spleens
   - bugfix: Flatulance Simulator (IPC/Android butt) is now robotic.
+2026-08-26:
+  JohnFulpWillard:
+  - bugfix: AIs can use Memory Tracker app now.
+  Runian:
+  - bugfix: Cyborg's lights now correctly temporarily turn off when they're unconscious
+      caused by a knockdown.
+  Tractor-Maam:
+  - bugfix: AIs ejecting from exosuits without a valid core nearby will no longer
+      get sent to container hell.
+  - bugfix: AIs opening PDA bombs will disrupt their APC again.
+  hexakats:
+  - balance: Lawbringer detain mode no longer ignores armor.
+  - balance: Cybersun laser gun disabler modes now respect energy armor instead of
+      laser armor.
