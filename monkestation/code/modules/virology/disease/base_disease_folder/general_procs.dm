@@ -97,7 +97,7 @@
  * Arguments:
  * * symtom - symptom we are adding to the disease, if not set will be randomized
  * * danger - if symptom randomized, will add symptom of this danger level; if not set, will randomize danger level
- * * stage - if symptom randomized, will set the symptom to this stage; 1 if not set
+ * * stage - if symptom randomized, will pick the symptom to this stage; 1 if not set
  * * log_symptom - if set, will log time, name and occurance chance in disease log
  */
 /datum/disease/proc/add_symptom(datum/symptom/symptom, danger, stage, log_symptom = FALSE)
