@@ -1,0 +1,5 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - qol: "AI system resource distribution RAM is now formatted like CPU distrubution."
+  - bugfix: "AI system resource distribution CPU now shows proper % for remaining ram"

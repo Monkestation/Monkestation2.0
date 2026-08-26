@@ -111,7 +111,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 		return
 	var/gas_path = gas_id2path(selected_gas)
 
-	if(!connected_machine.bluespace_network.gases[gas_path])
+	if(!connected_machine.bluespace_network.moles[gas_path])
 		pumping = FALSE
 		selected_gas = null
 		mode = BS_MODE_IDLE
@@ -214,10 +214,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 
 	var/temp_price = 0
 	var/datum/gas_mixture/working_mix = internal_tank.return_air()
-	var/list/purchased_gases = purchased_gas_mix.gases
+	var/list/purchased_moles = purchased_gas_mix.moles
 
-	for(var/gas_id in purchased_gases)
-		temp_price += purchased_gases[gas_id][MOLES] * connected_machine.base_prices[gas_id]
+	for(var/gas_id in purchased_moles)
+		temp_price += purchased_moles[gas_id] * connected_machine.base_prices[gas_id]
 	gas_price = temp_price
 
 	if(tank_purchased)
@@ -246,18 +246,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 /obj/machinery/bluespace_vendor/ui_data(mob/user)
 	var/list/data = list()
 	var/list/bluespace_gasdata = list()
+	var/list/network_moles = connected_machine.bluespace_network.moles
+	var/list/cached_name = GAS_META[META_GAS_NAME]
+	var/list/cached_id = GAS_META[META_GAS_ID]
 	if(connected_machine.bluespace_network.total_moles())
-		for(var/gas_id in connected_machine.bluespace_network.gases)
+		for(var/gas_id, amount in network_moles)
 			bluespace_gasdata.Add(list(list(
-			"name" = connected_machine.bluespace_network.gases[gas_id][GAS_META][META_GAS_NAME],
-			"id" = connected_machine.bluespace_network.gases[gas_id][GAS_META][META_GAS_ID],
-			"amount" = round(connected_machine.bluespace_network.gases[gas_id][MOLES], 0.01),
+			"name" = cached_name[gas_id],
+			"id" = cached_id[gas_id],
+			"amount" = round(amount, 0.01),
 			"price" = connected_machine.base_prices[gas_id],
 			)))
 	else
-		for(var/gas_id in connected_machine.bluespace_network.gases)
+		for(var/gas_id in network_moles)
 			bluespace_gasdata.Add(list(list(
-				"name" = connected_machine.bluespace_network.gases[gas_id][GAS_META][META_GAS_NAME],
+				"name" = cached_name[gas_id],
 				"id" = "",
 				"amount" = 0,
 				"price" = 0,

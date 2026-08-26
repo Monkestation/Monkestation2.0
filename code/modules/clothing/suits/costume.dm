@@ -803,36 +803,6 @@
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
 
-/obj/item/clothing/suit/chameleon/syndie_armor
-	name = "syndicate body armor"
-	desc = "A set of red and black body armor. Lightweight but great protection."
-	icon = 'icons/obj/clothing/suits.dmi'
-	worn_icon = 'icons/mob/clothing/suit.dmi'
-	icon_state = "armor_syndie"
-	armor_type = /datum/armor/mod_theme_infiltrator
-	body_parts_covered = CHEST|GROIN
-
-/obj/item/clothing/suit/chameleon/syndie_armor/Initialize(mapload)
-	. = ..()
-
-	create_storage(storage_type = /datum/storage/pockets)
-
-/obj/item/clothing/suit/chameleon/syndie_armor/item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
-	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
-		return ..()
-
-	if(chameleon_action.hidden)
-		chameleon_action.hidden = FALSE
-		actions += chameleon_action
-		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon body armor ([name]) with [attacking_item]")
-	else
-		chameleon_action.hidden = TRUE
-		actions -= chameleon_action
-		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon body armor ([name]) with [attacking_item]")
-	return ITEM_INTERACT_SUCCESS
-
 /obj/item/clothing/suit/infinity_jacket
 	name = "infinity jersey"
 	desc = "A jersey labelled '88', somehow leaving a threatening aura around it."

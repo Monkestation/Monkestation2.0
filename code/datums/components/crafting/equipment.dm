@@ -48,10 +48,12 @@
 		/obj/item/stack/rods = 8,
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 	)
 	parts = list(
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 	)
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
 	time = 20 SECONDS

@@ -282,7 +282,7 @@
 	dir = 8
 	},
 /obj/item/storage/medkit/brute,
-/obj/item/reagent_containers/hypospray/medipen,
+/obj/item/reagent_containers/medipen,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/plating,
 /area/deathmatch)
