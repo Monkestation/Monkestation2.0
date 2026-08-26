@@ -1,7 +1,6 @@
 /datum/species/android
 	name = "Android"
-	id = SPECIES_ANDRhttps://github.com/Monkestation/Monkestation2.0/pull/12089/conflict?name=code%252Fmodules%252Fmob%252Fliving%252Fcarbon%252Fhuman%252Fspecies_types%252Fandroid.dm&ancestor_oid=f80db4d42b35138805b599e9fe4ca415b6bea5fb&base_oid=4b5be19fc18cffd6d750350250e5bb2849fc4725&head_oid=942d4b0c75cd89b89ac1ccb8dbe1ab761378c594OID
-	examine_limb_id = SPECIES_HUMAN
+	id = SPECIES_ANDROID
 	inherent_traits = list(
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_NO_DNA_COPY,
@@ -12,7 +11,7 @@
 		TRAIT_NOCLONELOSS,
 		TRAIT_NOFIRE,
 		TRAIT_NOHUNGER,
-		/* TRAIT_NOMETABOLISM, */ // monkestation edit: making androids closer to IPCs
+		TRAIT_NOMETABOLISM,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
@@ -23,12 +22,10 @@
 		TRAIT_NOBLOOD,
 		TRAIT_NO_DEBRAIN_OVERLAY,
 		TRAIT_VIRUSIMMUNE,
-		// monkestation edit: making androids closer to IPCs
 		TRAIT_REVIVES_BY_HEALING,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_XENO_IMMUNE,
 		TRAIT_STABLELIVER,
-		// monkestation end
 	)
 
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
