@@ -80,6 +80,12 @@
 
 	ui_interact(user)
 
+/datum/component/surgery_initiator/proc/patient_has_bodypart_type(mob/living/carbon/patient, required_type)
+	for(var/obj/item/bodypart/part as anything in patient.bodyparts)
+		if(part.bodytype & required_type)
+			return TRUE
+	return FALSE
+
 /datum/component/surgery_initiator/proc/get_available_surgeries(mob/user, mob/living/target)
 	var/list/available_surgeries = list()
 
@@ -96,7 +102,8 @@
 			if(!(surgery.surgery_flags & SURGERY_REQUIRE_LIMB))
 				continue
 			if(surgery.requires_bodypart_type && !(affecting.bodytype & surgery.requires_bodypart_type))
-				continue
+				if(!carbon_target || !patient_has_bodypart_type(carbon_target, surgery.requires_bodypart_type))
+					continue
 			if((surgery.surgery_flags & SURGERY_REQUIRES_REAL_LIMB) && (affecting.bodypart_flags & BODYPART_PSEUDOPART))
 				continue
 		else if(carbon_target && (surgery.surgery_flags & SURGERY_REQUIRE_LIMB)) //mob with no limb in surgery zone when we need a limb
@@ -306,8 +313,9 @@
 		return
 
 	if (!isnull(affecting_limb) && surgery.requires_bodypart_type && !(affecting_limb.bodytype & surgery.requires_bodypart_type))
-		target.balloon_alert(user, "not the right type of limb!")
-		return
+		if(!iscarbon(target) || !patient_has_bodypart_type(target, surgery.requires_bodypart_type))
+			target.balloon_alert(user, "not the right type of limb!")
+			return
 
 	if (IS_IN_INVALID_SURGICAL_POSITION(target, surgery))
 		target.balloon_alert(user, "patient is not lying down!")
