@@ -386,6 +386,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ABDUCTOR_SCIENTIST_TRAINING "abductor-scientist-training"
 #define TRAIT_STRONG_GRABBER "strong_grabber"
 #define TRAIT_SOOTHED_THROAT "soothed-throat"
+#define TRAIT_SOOTHED_HEADACHE "soothed-headache"
 #define TRAIT_BOOZE_SLIDER "booze-slider"
 /// We place people into a fireman carry quicker than standard
 #define TRAIT_QUICK_CARRY "quick-carry"
@@ -706,6 +707,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // These traits are applied to /obj/item/organ/internal/liver
 #define TRAIT_LAW_ENFORCEMENT_METABOLISM "law_enforcement_metabolism"
 #define TRAIT_CULINARY_METABOLISM "culinary_metabolism"
+#define TRAIT_BARTENDER_METABOLISM "bartender_metabolism"
 #define TRAIT_COMEDY_METABOLISM "comedy_metabolism"
 #define TRAIT_MEDICAL_METABOLISM "medical_metabolism"
 #define TRAIT_ENGINEER_METABOLISM "engineer_metabolism"
@@ -1104,6 +1106,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait given to a dreaming carbon when they are currently doing dreaming stuff
 #define TRAIT_DREAMING "currently_dreaming"
+
+/// Trait that allows non-heretics to have heretical dreams
+#define TRAIT_HERETICAL_DREAMS "heretical_dreams"
+
+/// Trait for if you've recently had a Last Word cocktail
+#define TRAIT_HAD_LAST_WORD "had_last_word"
 
 ///generic atom traits
 /// Trait from [/datum/element/rust]. Its rusty and should be applying a special overlay to denote this.

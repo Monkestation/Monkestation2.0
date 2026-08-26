@@ -1,7 +1,6 @@
 /datum/species/android
 	name = "Android"
 	id = SPECIES_ANDROID
-	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_NO_DNA_COPY,
@@ -12,7 +11,7 @@
 		TRAIT_NOCLONELOSS,
 		TRAIT_NOFIRE,
 		TRAIT_NOHUNGER,
-		/* TRAIT_NOMETABOLISM, */ // monkestation edit: making androids closer to IPCs
+		/*TRAIT_NOMETABOLISM,*/ // monkestation edit: making androids closer to IPCs
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
@@ -23,12 +22,10 @@
 		TRAIT_NOBLOOD,
 		TRAIT_NO_DEBRAIN_OVERLAY,
 		TRAIT_VIRUSIMMUNE,
-		// monkestation edit: making androids closer to IPCs
 		TRAIT_REVIVES_BY_HEALING,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_XENO_IMMUNE,
 		TRAIT_STABLELIVER,
-		// monkestation end
 	)
 
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
@@ -44,7 +41,8 @@
 	mutantlungs = null
 	mutantappendix = null
 	mutantbladder = null
-	mutanteyes = /obj/item/organ/internal/eyes/synth
+	mutantspleen = null
+	mutanteyes = /obj/item/organ/internal/eyes/robotic
 	mutantears = /obj/item/organ/internal/ears/cybernetic
 	mutantbutt = /obj/item/organ/internal/butt/cyber
 	species_language_holder = /datum/language_holder/synthetic
