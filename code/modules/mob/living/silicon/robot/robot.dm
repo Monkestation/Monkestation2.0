@@ -30,7 +30,8 @@
 
 	previous_health = health
 
-	set_cell(cell)
+	if(cell)
+		set_cell(cell)
 
 	create_modularInterface()
 
