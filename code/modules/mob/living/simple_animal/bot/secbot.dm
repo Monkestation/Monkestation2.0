@@ -55,10 +55,10 @@
 
 	var/stamina_damage = 60 //1 hit slows, 2 hit stam crits
 
-/mob/living/simple_animal/bot/secbot/Initialize(mapload)
-	. = ..()
-	// Beepsky hates people scanning them
-	RegisterSignal(src, COMSIG_MOVABLE_SPY_STEALING, PROC_REF(retaliate_async))
+	COOLDOWN_DECLARE(annoy_cooldown)
+
+	///Looping sound datum for the siren when beepsky is on green alert mode
+	var/datum/looping_sound/siren/weewooloop
 
 /mob/living/simple_animal/bot/secbot/beepsky
 	name = "Commander Beep O'sky"
@@ -116,6 +116,13 @@
 
 /mob/living/simple_animal/bot/secbot/Initialize(mapload)
 	. = ..()
+
+	// Beepsky hates people scanning them
+	RegisterSignal(src, COMSIG_MOVABLE_SPY_STEALING, PROC_REF(retaliate_async))
+
+	weewooloop = new /datum/looping_sound/siren(src, FALSE, FALSE)
+	weewooloop.volume = 30
+
 	weapon = new baton_type()
 	update_appearance(UPDATE_ICON)
 
@@ -148,6 +155,7 @@
 	target = null
 	oldtarget_name = null
 	set_anchored(FALSE)
+	weewooloop.stop()
 	SSmove_manager.stop_looping(src)
 	last_found = world.time
 
@@ -256,7 +264,7 @@
 		return
 	if(attacking_item.tool_behaviour == TOOL_WELDER && !(user.istate & ISTATE_HARM)) // Any intent but harm will heal, so we shouldn't get angry.
 		return
-	if(attacking_item.tool_behaviour != TOOL_SCREWDRIVER && (attacking_item.force) && (!target) && (attacking_item.damtype != STAMINA)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
+	if(attacking_item.tool_behaviour != TOOL_SCREWDRIVER && (attacking_item.force) && (attacking_item.damtype != STAMINA)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 		retaliate(user)
 		special_retaliate_after_attack(user)
 
@@ -333,6 +341,35 @@
 		playsound(src, SFX_LAW, 50, FALSE)
 		back_to_idle()
 
+/mob/living/simple_animal/bot/secbot/proc/check_nearby_doors(mob/living/carbon/current_target)
+	for (var/obj/machinery/door/airlock/nearby_door in view(3, current_target))
+		if ((nearby_door.req_one_access == ACCESS_BRIG_ENTRANCE || (ACCESS_BRIG_ENTRANCE in nearby_door.req_access)) && get_dist(src, current_target) < 7)
+			return TRUE
+	return FALSE
+
+
+/mob/living/simple_animal/bot/secbot/proc/is_in_custody(mob/living/carbon/current_target)
+	return current_target.handcuffed \
+	|| istype(get_area(current_target), /area/station/security) \
+	|| (ACCESS_SECURITY in current_target.pulledby?.get_access()) \
+	|| check_nearby_doors(current_target)
+
+/mob/living/simple_animal/bot/secbot/proc/annoy(mob/living/carbon/current_target, var/first_annoy = FALSE)
+	if (COOLDOWN_FINISHED(src, annoy_cooldown))
+		COOLDOWN_START(src, annoy_cooldown, 5 SECONDS)
+
+		if (first_annoy)
+			speak("+Attention!+ You are wanted for crimes against the station. Turn yourself in at the brig now!")
+		else
+			speak(pick("+Attention!+ You are wanted for crimes against the station. Turn yourself in at the brig now!", \
+			"+HALT+! Stop in the name of the law! Turn yourself in to security now!", \
+			"+Cooperate+ or face additional consequences for Code 105 Obstructing/Resisting!", \
+			"Failure to comply is a +crime!+ Turn yourself in to the station brig now!", \
+			"STOP RESISTING GODDAMMIT!!"))
+		visible_message("<b>[src]</b> points at [current_target.name]!")
+		point_at(target)
+		playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
+
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/current_target, harm = FALSE)
 	//var/judgement_criteria = judgement_criteria()
 	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
@@ -404,6 +441,37 @@
 			else
 				frustration = 0
 
+		if(BOT_GREEN_HUNT) //Preparing to ANNOY target
+			// if can't reach perp for long enough, go idle
+			if(frustration >= 30 || (get_dist(src, target) > 15)) //He will follow you around for a very long time to make you turn yourself in, but will also stop if you get far enough away.
+				SSmove_manager.stop_looping(src)
+				back_to_idle()
+				return
+
+			if(!target || QDELETED(target.client) || target?.client?.is_afk()) // make sure target exists and is not SSD
+				back_to_idle()
+				return
+
+			if(is_in_custody(target))
+				speak("Thank you for your cooperation. Have a secure day.")
+				point_at(target)
+				playsound(src, SFX_LAW, 50, FALSE)
+				back_to_idle()
+				return
+
+			if((get_dist(src, target) <= 7) && isturf(target.loc)) // if close enough to perp - ANNOY THEM
+				annoy(target)
+				set_anchored(TRUE)
+
+			//Not next to perp- try to move closer
+			if (!Adjacent(target))
+				var/turf/olddist = get_dist(src, target)
+				SSmove_manager.move_to(src, target, 1, 2.5) //Moves faster than normal
+				if((get_dist(src, target)) >= (olddist))
+					frustration++
+				else
+					frustration = 0
+
 		if(BOT_PREP_ARREST) // preparing to arrest target
 			// see if he got away. If he's no no longer adjacent or inside a closet or about to get up, we hunt again.
 			if(!Adjacent(target) || !isturf(target.loc) || !HAS_TRAIT(target, TRAIT_FLOORED))
@@ -453,6 +521,7 @@
 
 /mob/living/simple_animal/bot/secbot/proc/back_to_idle()
 	set_anchored(FALSE)
+	weewooloop.stop()
 	mode = BOT_IDLE
 	target = null
 	last_found = world.time
@@ -482,23 +551,38 @@
 			continue
 
 		if(threatlevel >= 4)
-			target = nearby_carbons
-			oldtarget_name = nearby_carbons.name
-			switch(bot_type)
-				if(ADVANCED_SEC_BOT)
-					speak("Level [threatlevel] infraction alert!")
-					playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
-				if(HONK_BOT)
-					speak("Honk!")
-					playsound(src, pick('sound/items/bikehorn.ogg'), 50, FALSE)
-				else
-					speak("Level [threatlevel] infraction alert!")
-					playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
+			//This area check includes the armory and a few other 'high security' areas - in these areas beepsky will act normal regardless of alert level.
+			if (SSsecurity_level.current_security_level.number_level > SEC_LEVEL_GREEN || istype(get_area(nearby_carbons), /area/station/ai_monitored/) || istype(get_area(src), /area/station/ai_monitored))
+				switch(bot_type)
+					if(ADVANCED_SEC_BOT)
+						speak("Level [threatlevel] infraction alert!")
+						playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
+					if(HONK_BOT)
+						speak("Honk!")
+						playsound(src, pick('sound/items/bikehorn.ogg'), 50, FALSE)
+					else
+						speak("Level [threatlevel] infraction alert!")
+						playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
 
-			visible_message("<b>[src]</b> points at [nearby_carbons.name]!")
-			mode = BOT_HUNT
-			INVOKE_ASYNC(src, PROC_REF(handle_automated_action))
-			break
+				target = nearby_carbons
+				oldtarget_name = nearby_carbons.name
+
+				visible_message("<b>[src]</b> points at [target.name]!")
+				point_at(target)
+				mode = BOT_HUNT
+				INVOKE_ASYNC(src, PROC_REF(handle_automated_action))
+				break
+			else
+				if (!is_in_custody(nearby_carbons) && !QDELETED(nearby_carbons.client) && !nearby_carbons.client?.is_afk())
+					target = nearby_carbons
+					oldtarget_name = nearby_carbons.name
+
+					annoy(target, TRUE)
+					mode = BOT_GREEN_HUNT
+					weewooloop.start()
+					INVOKE_ASYNC(src, PROC_REF(handle_automated_action))
+					break
+
 
 /mob/living/simple_animal/bot/secbot/proc/check_for_weapons(obj/item/slot_item)
 	if(slot_item && (slot_item.item_flags & NEEDS_PERMIT))
@@ -551,7 +635,7 @@
 
 /mob/living/simple_animal/bot/secbot/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	if(has_gravity() && ismob(AM) && target)
+	if(has_gravity() && ismob(AM) && target && (mode != BOT_GREEN_HUNT))
 		var/mob/living/carbon/C = AM
 		if(!istype(C) || !C || in_range(src, target))
 			return
