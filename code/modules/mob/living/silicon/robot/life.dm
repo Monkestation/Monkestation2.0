@@ -59,11 +59,13 @@
 	if(!cell?.charge)
 		if(!low_power_mode)
 			set_low_power_mode(TRUE)
-			CRASH("Cyborg left low power mode through unexpected means.") // Cyborg gained power somehow. This usually means that something directly set their cell/charge.
+			// Cyborg somehow regained power.
+			// This is caused by someone directly setting the cyborg's cell or their cell's charge value. They shouldn't be doing that.
+			CRASH("Cyborg left low power mode unexpectedly!")
 		return
 	if(low_power_mode)
 		set_low_power_mode(FALSE)
-		CRASH("Cyborg entered low power mode through unexpected means.") // Ditto above, but for lost power.
+		CRASH("Cyborg entered low power mode unexpectedly!") // Ditto above, but for losing power.
 	if(stat == CONSCIOUS)
 		if(cell.charge <= 0.01 * STANDARD_CELL_CHARGE) // An obvious warning for busy cyborgs to go charge.
 			drop_all_held_items()
