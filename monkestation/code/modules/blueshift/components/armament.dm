@@ -267,6 +267,7 @@
 	return TRUE
 
 /datum/component/armament/company_imports
+	var/obj/machinery/computer/cargo/host_computer
 	/// Selected amount of ammo to purchase
 	var/ammo_purchase_num = 1
 	/// Is this set to private order
@@ -279,6 +280,9 @@
 
 /datum/component/armament/company_imports/on_attackby(atom/target, obj/item, mob/user)
 	return
+
+/datum/component/armament/company_imports/ui_host(mob/user)
+	return host_computer.loc
 
 /datum/component/armament/company_imports/ui_data(mob/user)
 	var/list/data = list()
@@ -361,8 +365,9 @@
 
 	return data
 
-/datum/component/armament/company_imports/ui_interact(mob/user, datum/tgui/ui)
+/datum/component/armament/company_imports/ui_interact(mob/user, datum/tgui/ui, host)
 	ui = SStgui.try_update_ui(user, src, ui)
+	host_computer = host
 	if(!ui)
 		ui = new(user, src, "CargoImportConsole")
 		ui.open()
