@@ -172,6 +172,9 @@
 
 	for(var/pack_id in SSshuttle.supply_packs)
 		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
+		var/list/user_access = user.get_access()
+		if(!is_visible_pack(user, pack.access_view , user_access, pack.contraband) || pack.hidden)
+			continue
 		if(!data["supplies"][pack.group])
 			data["supplies"][pack.group] = list(
 				"name" = pack.group,
@@ -179,6 +182,21 @@
 			)
 
 	return data
+
+/obj/machinery/computer/cargo/proc/is_visible_pack(mob/user, access_to_check, list/access, contraband)
+	if(HAS_SILICON_ACCESS(user)) //Borgs can't buy things.
+		return FALSE
+	if(obj_flags & EMAGGED)
+		return TRUE
+	else if(contraband) //Hide contrband when non-emagged.
+		return FALSE
+	if(!access_to_check) // No required_access, allow it.
+		return TRUE
+	if(isAdminGhostAI(user))
+		return TRUE
+	if(access_to_check in access)
+		return TRUE
+	return FALSE
 
 /**
  * returns a list of supply packs for a certain group

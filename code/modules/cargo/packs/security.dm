@@ -262,7 +262,7 @@
 /datum/supply_pack/security/armory
 	group = "Armory"
 	access = ACCESS_ARMORY
-	access_view = ACCESS_ARMORY
+	access_view = ACCESS_WEAPONS
 	crate_type = /obj/structure/closet/crate/secure/weapon
 
 /datum/supply_pack/security/armory/bulletarmor
