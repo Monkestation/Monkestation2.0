@@ -553,10 +553,8 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define BORER_FAST_BORING (1<<2)
 /// If the borer is currently hiding under tables/couches/stairs or appearing on top of them
 #define BORER_HIDING (1<<3)
-/// If the borer can produce eggs without a host
-#define BORER_ALONE_PRODUCTION (1<<4)
 /// If the borer is energic, used for crawling into various spaces
-#define BORER_ENERGIC (1<<5)
+#define BORER_ENERGIC (1<<4)
 
 // Worm zone ends
 

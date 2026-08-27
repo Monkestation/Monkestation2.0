@@ -108,7 +108,7 @@
 		ability_data["ability_icon"] = initial(ability.button_icon)
 		ability_data["ability_icon_state"] = initial(ability.button_icon_state)
 
-		data["ability"] += ability_data
+		data["ability"] += list(ability_data)
 
 	return data + ..()
 

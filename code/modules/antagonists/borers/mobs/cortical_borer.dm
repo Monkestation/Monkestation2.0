@@ -84,12 +84,11 @@
 			body_focus.on_remove(carbon_target, borer)
 		cb_inside.leave_host()
 	carbon_target.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
-	qdel(src)
-
 	if(HAS_MIND_TRAIT(carbon_target, TRAIT_WILLING_HOST))
 		carbon_target.add_mood_event("borer", /datum/mood_event/no_borer)
 	var/datum/atom_hud/borer/hud = GLOB.huds[DATA_HUD_BORER]
 	hud.remove_atom_from_hud(carbon_target)
+	qdel(src)
 
 /obj/item/organ/internal/borer_body/on_life(seconds_per_tick, times_fired)
 	if(!iscarbon(owner) || !owner.reagents)
@@ -165,8 +164,8 @@
 	/// Chemical regen you gain per level
 	var/chem_regen_per_level = 0.5
 
-	/// The list of actions that the borer has
-	var/list/datum/action/cooldown/borer/known_abilities = list(
+	/// The list of initial actions that the borer has
+	var/list/known_abilities = list(
 		/datum/action/cooldown/borer/toggle_hiding,
 		/datum/action/cooldown/borer/choosing_host,
 		/datum/action/cooldown/borer/evolution_tree,
@@ -188,8 +187,6 @@
 	var/obj/item/reagent_containers/reagent_holder
 	/// Lust a flavor kind of thing
 	var/generation = 0
-	/// List of focus datums
-	var/list/possible_focuses = list()
 	/// What focuses the borer has unlocked
 	var/list/body_focuses = list()
 	/// How many children the borer has produced
@@ -216,14 +213,10 @@
 	reagent_holder = new /obj/item/reagent_containers/borer(src)
 
 	for(var/action_type in known_abilities)
-		var/datum/action/attack_action = new action_type(src)
-		attack_action.Grant(src)
-
-	for(var/datum/borer_focus/focus_path as anything in subtypesof(/datum/borer_focus))
-		possible_focuses += new focus_path
+		var/datum/action/action = new action_type(src)
+		action.Grant(src)
 
 	do_evolution(/datum/borer_evolution/base)
-
 	var/datum/atom_hud/borer_hud = GLOB.huds[DATA_HUD_BORER]
 	borer_hud.show_to(src)
 
@@ -352,7 +345,7 @@
 		loc_temp = get_temperature(environment)
 	var/temp_delta = loc_temp - bodytemperature
 
-	if(!human_host && ismovable(loc))
+	if(isnull(human_host) && ismovable(loc))
 		var/atom/movable/occupied_space = loc
 		temp_delta *= (1 - occupied_space.contents_thermal_insulation)
 
@@ -366,14 +359,16 @@
 /mob/living/basic/cortical_borer/proc/leave_host()
 	if(!human_host)
 		return
+	forceMove(human_host.drop_location())
 	var/obj/item/organ/internal/borer_body/borer_organ = locate() in human_host.organs
 	if(borer_organ)
 		borer_organ.Remove(human_host)
 
+	REMOVE_TRAIT(src, TRAIT_WEATHER_IMMUNE, "borer_in_host")
 	bodytemp_heat_damage_limit = initial(bodytemp_heat_damage_limit) //reset body tempature
 	bodytemp_cold_damage_limit = initial(bodytemp_cold_damage_limit)
-	forceMove(human_host.drop_location())
 	human_host = null
+	SEND_SIGNAL(src, COMSIG_HOST_CHANGED)
 
 //borers shouldnt be able to whisper...
 /mob/living/basic/cortical_borer/whisper(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language, ignore_spam = FALSE, forced, filterproof)

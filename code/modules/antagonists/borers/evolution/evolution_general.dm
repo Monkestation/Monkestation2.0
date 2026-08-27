@@ -72,6 +72,7 @@
 	var/datum/action/cooldown/borer/upgrade_chemical/action = locate() in cortical_owner.actions
 	if(action)
 		action.learnable_reagents |= added_chemicals
+		action.build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 /datum/borer_evolution/synthetic_chems_negative
 	name = "Synthetic Chemicals (-)"
@@ -92,3 +93,4 @@
 	var/datum/action/cooldown/borer/upgrade_chemical/action = locate() in cortical_owner.actions
 	if(action)
 		action.learnable_reagents |= added_chemicals
+		action.build_all_button_icons(UPDATE_BUTTON_STATUS)

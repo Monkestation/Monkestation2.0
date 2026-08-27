@@ -63,4 +63,8 @@
 
 /datum/borer_evolution/hivelord/produce_offspring_alone/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
 	. = ..()
-	cortical_owner.upgrade_flags |= BORER_ALONE_PRODUCTION
+	var/datum/action/cooldown/borer/produce_offspring/action = locate() in cortical_owner.actions
+	if(action)
+		action.requires_host = FALSE
+		action.build_all_button_icons(UPDATE_BUTTON_STATUS)
+		action.UnregisterSignal(action.owner, COMSIG_HOST_CHANGED)

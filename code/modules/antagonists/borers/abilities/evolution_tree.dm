@@ -9,11 +9,9 @@
 	- The Symbiote path focuses on helping their host, for mutual benefit.\n\
 	"
 
-/datum/action/cooldown/borer/evolution_tree/Trigger(trigger_flags, atom/target)
-	. = ..()
-	if(!.)
-		return FALSE
-	ui_interact(owner)
+/datum/action/cooldown/borer/evolution_tree/Activate(mob/living/basic/cortical_borer/user)
+	ui_interact(user)
+	return ..()
 
 /datum/action/cooldown/borer/evolution_tree/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

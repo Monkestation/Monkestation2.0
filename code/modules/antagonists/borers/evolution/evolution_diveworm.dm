@@ -65,6 +65,7 @@
 	var/datum/action/cooldown/borer/upgrade_chemical/action = locate() in cortical_owner.actions
 	if(action)
 		action.learnable_reagents |= added_chemicals
+		action.build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 /datum/borer_evolution/diveworm/health_per_level/t2 //100 hp per 13 1/3  levels, By level 100 775 hp and 427 seconds to fully heal. Limit is 536 seconds
 	name = "Health Increase II"

@@ -22,11 +22,9 @@
 	/// Cooldown between injecting chemicals
 	COOLDOWN_DECLARE(injection_cooldown)
 
-/datum/action/cooldown/borer/inject_chemical/Trigger(trigger_flags, atom/target)
-	. = ..()
-	if(!.)
-		return FALSE
-	ui_interact(owner)
+/datum/action/cooldown/borer/inject_chemical/Activate(mob/user)
+	ui_interact(user)
+	return ..()
 
 /datum/action/cooldown/borer/inject_chemical/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -51,7 +49,6 @@
 			var/chemname = temp.name
 			chemicals.Add(list(list("title" = chemname, "id" = temp.name)))
 	data["chemicals"] = chemicals
-
 	return data
 
 /datum/action/cooldown/borer/inject_chemical/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -66,10 +63,7 @@
 				injection_amount = target
 				. = TRUE
 		if("inject")
-			if(!iscorticalborer(usr) || !COOLDOWN_FINISHED(src, injection_cooldown))
-				return
-			if(cortical_owner.host_sugar())
-				owner.balloon_alert(owner, "cannot function with sugar in host")
+			if(!IsAvailable(TRUE) || !COOLDOWN_FINISHED(src, injection_cooldown))
 				return
 			var/reagent_name = params["reagent"]
 			var/reagent = GLOB.name2reagent[reagent_name]

@@ -1,28 +1,24 @@
 /datum/borer_focus
 	/// Name of the focus
 	var/name = ""
-	/// Cost of the focus
-	var/cost = 5
 	/// Traits to add/remove
 	var/list/traits = list()
-	/// Text that we send to the host when we give them a focus, if set
-	var/gain_text = FALSE
-	/// Text that we send to the host when the host loses a focus, if set
-	var/lose_text = FALSE
+	/// Text that we send to the host when we give them a focus
+	var/gain_text = "Your tongue begins to rapidly spin (call coders)"
+	/// Text that we send to the host when the host loses a focus
+	var/lose_text = "Your tongue stops rapidly spinning (call coders)"
 
 /// Effects to take when the focus is added
 /datum/borer_focus/proc/on_add(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
 	SHOULD_CALL_PARENT(TRUE)
-	if(gain_text)
-		to_chat(host, span_notice("[gain_text]"))
+	to_chat(host, span_notice("[gain_text]"))
 	for(var/trait in traits)
 		ADD_TRAIT(host, trait, REF(borer))
 
 /// Effects to take when the focus is removed
 /datum/borer_focus/proc/on_remove(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
 	SHOULD_CALL_PARENT(TRUE)
-	if(lose_text)
-		to_chat(host, span_notice("[lose_text]"))
+	to_chat(host, span_notice("[lose_text]"))
 	REMOVE_TRAITS_IN(host, REF(borer))
 
 /datum/borer_focus/head

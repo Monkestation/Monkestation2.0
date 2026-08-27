@@ -462,6 +462,7 @@
 #include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_ai.dm"
 #include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_arcade.dm"
 #include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_basic.dm"
+#include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_borer.dm"
 #include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_carbon.dm"
 #include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_guardian.dm"
 #include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_living.dm"
