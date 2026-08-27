@@ -142,28 +142,29 @@
 
 	return data
 
-/datum/component/armament/ui_act(action, list/params)
+/datum/component/armament/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 
+	var/mob/user = ui.user
 	switch(action)
 		if("equip_item")
 			var/check = check_item(params["armament_ref"])
 			if(!check)
 				return
-			select_armament(usr, check)
+			select_armament(user, check)
 			SStgui.update_uis(src)
 		if("buy_ammo")
 			var/check = check_item(params["armament_ref"])
 			if(!check)
 				return
-			buy_ammo(usr, check, params["quantity"])
+			buy_ammo(user, check, params["quantity"])
 			SStgui.update_uis(src)
 		if("eject_card")
 			if(istype(parent, /obj/item/armament_points_card))
 				return
-			eject_card(usr)
+			eject_card(user)
 			SStgui.update_uis(src)
 
 /datum/component/armament/proc/buy_ammo(mob/user, datum/armament_entry/armament_entry, quantity = 1)
@@ -265,10 +266,6 @@
 
 	return TRUE
 
-#define MAX_AMMO_AMOUNT 10
-#define CARGO_CONSOLE 1
-#define IRN_CONSOLE 2
-
 /datum/component/armament/company_imports
 	/// Selected amount of ammo to purchase
 	var/ammo_purchase_num = 1
@@ -276,21 +273,6 @@
 	var/self_paid = FALSE
 	/// Cooldown to announce a requested order
 	COOLDOWN_DECLARE(radio_cooldown)
-	/// To cut down on redundant istypes(), what this component is attached to
-	var/console_state = null
-	/// If this is a tablet, the parent budgetordering
-	var/datum/computer_file/program/budgetorders/parent_prog
-
-/datum/component/armament/company_imports/Initialize(list/required_products, list/needed_access)
-	. = ..()
-	if(istype(parent, /obj/machinery/computer/cargo))
-		console_state = CARGO_CONSOLE
-	else if(istype(parent, /obj/item/modular_computer))
-		console_state = IRN_CONSOLE
-
-/datum/component/armament/company_imports/Destroy(force)
-	parent_prog = null
-	. = ..()
 
 /datum/component/armament/company_imports/on_attack_hand(datum/source, mob/living/user)
 	return
@@ -305,24 +287,10 @@
 	var/obj/item/card/id/id_card
 	var/datum/bank_account/buyer = SSeconomy.get_dep_account(ACCOUNT_CAR)
 
-	if(console_state == IRN_CONSOLE)
-		id_card = parent_prog.computer.computer_id_slot?.GetID()
-	else
-		if(istype(the_person))
-			id_card = the_person.get_idcard(TRUE)
+	if(istype(the_person))
+		id_card = the_person.get_idcard(TRUE)
 
 	var/budget_name = "Cargo Budget"
-
-	if(id_card?.registered_account && (console_state == IRN_CONSOLE))
-		if((ACCESS_COMMAND in id_card.access) || (ACCESS_QM in id_card.access))
-			parent_prog.requestonly = FALSE
-			buyer = SSeconomy.get_dep_account(id_card.registered_account?.account_job.paycheck_department)
-			parent_prog.can_approve_requests = TRUE
-		else
-			parent_prog.requestonly = TRUE
-			parent_prog.can_approve_requests = FALSE
-	else
-		parent_prog?.requestonly = TRUE
 
 	if(id_card)
 		budget_name = self_paid ? id_card.name : buyer.account_holder
@@ -331,15 +299,10 @@
 
 	var/cant_buy_restricted = TRUE
 
-	if(console_state == CARGO_CONSOLE)
-		var/obj/machinery/computer/cargo/console = parent
-		if(!console.requestonly)
-			cant_buy_restricted = FALSE
+	var/obj/machinery/computer/cargo/console = parent
+	if(!console.requestonly)
+		cant_buy_restricted = FALSE
 
-	else if((console_state == IRN_CONSOLE) && id_card?.registered_account)
-		if((ACCESS_COMMAND in id_card.access) || (ACCESS_QM in id_card.access))
-			if((buyer == SSeconomy.get_dep_account(id_card.registered_account.account_job.paycheck_department)) && !self_paid)
-				cant_buy_restricted = FALSE
 
 	data["cant_buy_restricted"] = !!cant_buy_restricted
 	data["budget_points"] = self_paid ? id_card?.registered_account?.account_balance : buyer?.account_balance
@@ -360,8 +323,6 @@
 				var/datum/armament_entry/company_import/gun_entry = armament_entry
 
 				if(gun_entry.contraband)
-					if(!(console_state == CARGO_CONSOLE))
-						continue
 					var/obj/machinery/computer/cargo/parent_console = parent
 					if(!parent_console.contraband)
 						continue
@@ -409,14 +370,7 @@
 
 /datum/component/armament/company_imports/select_armament(mob/user, datum/armament_entry/company_import/armament_entry)
 	var/datum/bank_account/buyer = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	var/obj/item/modular_computer/possible_downloader
-	var/obj/machinery/computer/cargo/possible_console
-
-	if(console_state == CARGO_CONSOLE)
-		possible_console = parent
-
-	else if(console_state == IRN_CONSOLE)
-		possible_downloader = parent
+	var/obj/machinery/computer/cargo/parent_console = parent
 
 	if(!istype(armament_entry))
 		return
@@ -425,23 +379,7 @@
 
 	if(istype(the_person))
 
-		var/obj/item/card/id/id_card
-
-		if(console_state == IRN_CONSOLE)
-			id_card = parent_prog.computer.computer_id_slot?.GetID()
-		else
-			id_card = the_person.get_idcard(TRUE)
-
-		if(id_card?.registered_account && (console_state == IRN_CONSOLE))
-			if((ACCESS_COMMAND in id_card.access) || (ACCESS_QM in id_card.access))
-				parent_prog.requestonly = FALSE
-				buyer = SSeconomy.get_dep_account(id_card.registered_account.account_job.paycheck_department)
-				parent_prog.can_approve_requests = TRUE
-			else
-				parent_prog.requestonly = TRUE
-				parent_prog.can_approve_requests = FALSE
-		else
-			parent_prog?.requestonly = TRUE
+		var/obj/item/card/id/id_card = the_person.get_idcard(TRUE)
 
 		if(self_paid)
 			if(!istype(id_card))
@@ -449,16 +387,11 @@
 				return
 
 			var/datum/bank_account/account = id_card.registered_account
-
 			if(!istype(account))
 				to_chat(user, span_warning("Invalid bank account."))
 				return
 
 			buyer = account
-
-	if(issilicon(user) && (console_state == IRN_CONSOLE))
-		parent_prog.can_approve_requests = TRUE
-		parent_prog.requestonly = FALSE
 
 	if(!buyer)
 		to_chat(user, span_warning("No budget found!"))
@@ -481,21 +414,12 @@
 
 	var/reason = ""
 
-	if(possible_console)
-		if(possible_console.requestonly && !self_paid)
-			reason = tgui_input_text(user, "Reason", name)
-			if(isnull(reason))
-				return
-
-	else if(possible_downloader)
-		var/datum/computer_file/program/budgetorders/parent_file = parent_prog
-		if((parent_file.requestonly && !self_paid) || !(possible_downloader.computer_id_slot?.GetID()))
-			reason = tgui_input_text(user, "Reason", name)
-			if(isnull(reason))
-				return
+	if(parent_console.requestonly && !self_paid)
+		reason = tgui_input_text(user, "Reason", name)
+		if(isnull(reason))
+			return
 
 	used_categories[armament_entry.category]++
-
 	purchased_items[armament_entry]++
 
 	var/datum/supply_pack/armament/created_pack = new
@@ -520,33 +444,26 @@
 		created_order = new(created_pack, name, rank, ckey, reason = reason, can_be_cancelled = TRUE)
 	created_order.selected_entry = armament_entry
 	created_order.used_component = src
-	if(console_state == CARGO_CONSOLE)
-		created_order.generateRequisition(get_turf(parent))
-		if(possible_console.requestonly && !self_paid)
-			SSshuttle.request_list += created_order
-		else
-			SSshuttle.shopping_list += created_order
-	else if(console_state == IRN_CONSOLE)
-		var/datum/computer_file/program/budgetorders/comp_file = parent_prog
-		created_order.generateRequisition(get_turf(parent))
-		if(comp_file.requestonly && !self_paid)
-			SSshuttle.request_list += created_order
-		else
-			SSshuttle.shopping_list += created_order
+	created_order.generateRequisition(get_turf(parent))
+	if(parent_console.requestonly && !self_paid)
+		SSshuttle.request_list += created_order
+	else
+		SSshuttle.shopping_list += created_order
 
 /datum/component/armament/company_imports/proc/cost_calculate(cost)
 	. = cost
 	. *= SSeconomy.pack_price_modifier
 
-/datum/component/armament/company_imports/ui_act(action, list/params)
+/datum/component/armament/company_imports/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 
+	var/mob/user = ui.user
 	switch(action)
 		if("toggleprivate")
 			var/obj/item/card/id/id_card
-			var/mob/living/carbon/human/the_person = usr
+			var/mob/living/carbon/human/the_person = user
 
 			if(!istype(the_person))
 				if(issilicon(the_person))
@@ -554,17 +471,10 @@
 				SStgui.update_uis(src)
 				return
 
-			if(console_state == IRN_CONSOLE)
-				id_card = parent_prog.computer.computer_id_slot?.GetID()
-			else
-				id_card = the_person.get_idcard(TRUE)
+			id_card = the_person.get_idcard(TRUE)
 
 			if(!id_card)
 				return
 
 			self_paid = !self_paid
 			SStgui.update_uis(src)
-
-#undef MAX_AMMO_AMOUNT
-#undef CARGO_CONSOLE
-#undef IRN_CONSOLE

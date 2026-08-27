@@ -370,7 +370,7 @@
 			return FALSE
 		if(order.applied_coupon)
 			say("Coupon refunded.")
-			order.applied_coupon.forceMove(get_turf(src))
+			order.applied_coupon.forceMove(get_turf(drop_location()))
 		SSshuttle.shopping_list -= order
 		qdel(order)
 		return TRUE
@@ -414,7 +414,7 @@
 			else
 				//create the paper from the SSshuttle.shopping_list
 				if(length(SSshuttle.shopping_list))
-					var/obj/item/paper/requisition/requisition_paper = new(get_turf(src))
+					var/obj/item/paper/requisition/requisition_paper = new(get_turf(drop_location()))
 					requisition_paper.name = "requisition form - [station_time_timestamp()]"
 					var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
 					requisition_text += "<hr/>"
@@ -543,6 +543,11 @@
 		if("toggleprivate")
 			self_paid = !self_paid
 			. = TRUE
+		if("company_import_window")
+			var/datum/component/armament/company_imports/company_import_component = GetComponent(/datum/component/armament/company_imports)
+			company_import_component.ui_interact(user)
+			return TRUE
+
 	if(.)
 		post_signal(cargo_shuttle)
 
