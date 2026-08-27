@@ -290,7 +290,12 @@ export const CargoCatalog = (props) => {
                   <Table.Cell collapsing textAlign="right">
                     <Button
                       fluid
-                      tooltip={pack.desc}
+                      tooltip={
+                        pack.can_order
+                          ? pack.desc
+                          : `Needs ${pack.view_access} access to order!`
+                      }
+                      disabled={!pack.can_order}
                       tooltipPosition="left"
                       onClick={() =>
                         act('add', {

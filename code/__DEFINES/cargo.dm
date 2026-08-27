@@ -84,3 +84,10 @@ GLOBAL_LIST_INIT(podstyles, list(\
 //Monkestation Edit: Two new drop pods, the beater car and the washing machine
 //Nearby reference because nobody else did this:
 //The order is: Shape, Base, Door, Decal, Glow Color, Rubble Type, Name, Description
+
+///The supply pack can be seen and ordered
+#define CARGO_CAN_ORDER "can_order"
+///The supply pack can be seen, but not ordered
+#define CARGO_CAN_VIEW "can_view"
+///The supply pack cant be ordered and is fully invisible to the user.
+#define CARGO_CANT_VIEW "cant_view"

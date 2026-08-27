@@ -219,7 +219,7 @@
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
 				return
-			if(pack.hidden || pack.contraband || pack.drop_pod_only || !pack.available())
+			if(pack.hidden || pack.contraband || pack.drop_pod_only)
 				return
 
 			var/name = "*None Provided*"

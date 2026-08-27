@@ -170,54 +170,32 @@
 	data["max_order"] = CARGO_MAX_ORDER
 	data["supplies"] = list()
 
+	var/list/user_access = user.get_access()
 	for(var/pack_id in SSshuttle.supply_packs)
 		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
-		var/list/user_access = user.get_access()
-		if(!is_visible_pack(user, pack.access_view , user_access, pack.contraband) || pack.hidden)
-			continue
 		if(!data["supplies"][pack.group])
 			data["supplies"][pack.group] = list(
 				"name" = pack.group,
-				"packs" = get_packs_data(pack.group),
+				"packs" = get_packs_data(pack.group, user_access = user_access),
 			)
 
 	return data
 
-/obj/machinery/computer/cargo/proc/is_visible_pack(mob/user, access_to_check, list/access, contraband)
-	if(HAS_SILICON_ACCESS(user)) //Borgs can't buy things.
-		return FALSE
-	if(obj_flags & EMAGGED)
-		return TRUE
-	else if(contraband) //Hide contrband when non-emagged.
-		return FALSE
-	if(!access_to_check) // No required_access, allow it.
-		return TRUE
-	if(isAdminGhostAI(user))
-		return TRUE
-	if(access_to_check in access)
-		return TRUE
-	return FALSE
 
 /**
  * returns a list of supply packs for a certain group
  * * group - the group of packs to return
  * * express - if this is an express console
  */
-/obj/machinery/computer/cargo/proc/get_packs_data(group, express = FALSE)
+/obj/machinery/computer/cargo/proc/get_packs_data(group, express = FALSE, list/user_access)
 	var/list/packs = list()
 	for(var/pack_id in SSshuttle.supply_packs)
 		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
 		if(pack.group != group)
 			continue
 
-		// Express console packs check
-		if(express && (pack.hidden || pack.special))
-			continue
-
-		if(!express && ((pack.hidden && !(obj_flags & EMAGGED)) || !pack.available() || pack.drop_pod_only))
-			continue
-
-		if(pack.contraband && !contraband)
+		var/view_accessibility = can_order_pack(pack, express, user_access)
+		if(view_accessibility == CARGO_CANT_VIEW)
 			continue
 
 		var/obj/item/first_item = length(pack.contains) > 0 ? pack.contains[1] : null
@@ -230,11 +208,30 @@
 			"first_item_icon_state" = first_item?.icon_state,
 			"goody" = pack.goody,
 			"access" = pack.access,
+			"view_access" = pack.access_view,
 			"contraband" = pack.contraband,
 			"contains" = pack.get_contents_ui_data(),
+			"can_order" = (view_accessibility == CARGO_CAN_ORDER),
 		))
 
 	return packs
+
+/obj/machinery/computer/cargo/proc/can_order_pack(datum/supply_pack/pack, express = FALSE, list/user_access)
+	if(pack.hidden || (!express && pack.drop_pod_only))
+		return CARGO_CANT_VIEW
+	//emagged has access to pretty much everything else
+	if(obj_flags & EMAGGED)
+		return CARGO_CAN_ORDER
+	//not emagged, can't order emagged stuff.
+	if(pack.emag_only)
+		return CARGO_CANT_VIEW
+	//This is for multitool-ing the board. Emag also sets this but whatever.
+	if(pack.contraband && !contraband)
+		return CARGO_CANT_VIEW
+	//Can we only see this?
+	if(length(pack.access_view) && !(pack.access_view in user_access))
+		return CARGO_CAN_VIEW
+	return CARGO_CAN_ORDER
 
 /**
  * returns the discount multiplier applied to all supply packs,
@@ -261,7 +258,8 @@
 		CRASH("Unknown supply pack id given by order console ui. ID: [id]")
 	if(amount > CARGO_MAX_ORDER || amount < 1) // Holy shit fuck off
 		CRASH("Invalid amount passed into add_item")
-	if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.contraband && !contraband) || pack.drop_pod_only || !pack.available())
+	var/view_accessibility = can_order_pack(pack, user_access = user.get_access())
+	if(view_accessibility != CARGO_CAN_ORDER)
 		return
 
 	var/name = "*None Provided*"

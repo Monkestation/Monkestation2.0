@@ -22,6 +22,7 @@ type Pack = {
   id: string;
   desc: string;
   goody: string;
+  can_order: boolean;
 };
 
 type Category = {
@@ -143,7 +144,11 @@ const DepartmentCatalog = (props) => {
               <Stack.Item className="candystripe" key={pack.name}>
                 <Stack fill>
                   <Stack.Item grow>
-                    <Tooltip content={pack.desc}>
+                    <Tooltip
+                      content={
+                        pack.can_order ? pack.desc : 'Lacking view access!'
+                      }
+                    >
                       <Box
                         as="span"
                         style={{
@@ -158,6 +163,7 @@ const DepartmentCatalog = (props) => {
                     <CooldownEstimate cost={pack.cost} />
                     &ensp;
                     <Button
+                      disabled={pack.can_order}
                       onClick={() =>
                         act('order', {
                           id: pack.id,

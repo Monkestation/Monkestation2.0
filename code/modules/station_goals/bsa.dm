@@ -22,7 +22,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 /datum/station_goal/bluespace_cannon/on_report()
 	//Unlock BSA parts
 	var/datum/supply_pack/engineering/bsa/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/bsa]
-	P.special_enabled = TRUE
+	P.hidden = FALSE
 
 /obj/machinery/bsa
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
