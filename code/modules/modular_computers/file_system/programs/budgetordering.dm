@@ -37,29 +37,6 @@
 	/// Monkestation - are we currently_sending to an ocean point?
 	var/currently_sending = FALSE
 
-/datum/computer_file/program/budgetorders/proc/is_visible_pack(mob/user, paccess_to_check, list/access, contraband)
-	if(HAS_SILICON_ACCESS(user)) //Borgs can't buy things.
-		return FALSE
-	if(computer.obj_flags & EMAGGED)
-		return TRUE
-	else if(contraband) //Hide contrband when non-emagged.
-		return FALSE
-	if(!paccess_to_check) // No required_access, allow it.
-		return TRUE
-	if(isAdminGhostAI(user))
-		return TRUE
-
-	//Aquire access from the inserted ID card.
-	if(!length(access))
-		access = computer?.GetAccess()
-		if(!length(access))
-			return FALSE
-
-	if(paccess_to_check in access)
-		return TRUE
-
-	return FALSE
-
 /datum/computer_file/program/budgetorders/ui_data(mob/user)
 	var/list/data = list()
 	data["location"] = SSshuttle.supply.getStatusText()
@@ -89,9 +66,13 @@
 	//Otherwise static data, that is being applied in ui_data as the crates visible and buyable are not static, and are determined by inserted ID.
 	data["requestonly"] = requestonly
 	data["supplies"] = list()
+	var/list/user_access = user.get_access()
+	if(!length(user_access))
+		user_access = computer?.GetAccess()
 	for(var/pack, value in SSshuttle.supply_packs)
 		var/datum/supply_pack/P = value
-		if(!is_visible_pack(user, P.access_view , null, P.contraband) || P.hidden)
+		var/view_accessibility = can_order_pack(P, user_access)
+		if(view_accessibility == CARGO_CANT_VIEW)
 			continue
 		if(!data["supplies"][P.group])
 			data["supplies"][P.group] = list(
@@ -111,7 +92,9 @@
 			"first_item_icon_state" = first_item?.icon_state,
 			"goody" = P.goody,
 			"access" = P.access,
+			"view_access" = P.access_view,
 			"contains" = P.get_contents_ui_data(),
+			"can_order" = (view_accessibility == CARGO_CAN_ORDER),
 		))
 
 	//Data regarding the User's capability to buy things.
@@ -179,6 +162,10 @@
 /datum/computer_file/program/budgetorders/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	var/mob/user = ui.user
+
+	if(HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user))
+		return FALSE
+
 	switch(action)
 		if("send")
 			if(!SSshuttle.supply.canMove())
@@ -219,7 +206,10 @@
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
 				return
-			if(pack.hidden || pack.contraband || pack.drop_pod_only)
+			var/list/user_access = user.get_access()
+			if(!length(user_access))
+				user_access = computer?.GetAccess()
+			if(can_order_pack(pack, user_access))
 				return
 
 			var/name = "*None Provided*"
@@ -344,6 +334,28 @@
 			. = TRUE
 	if(.)
 		post_signal(cargo_shuttle)
+
+/datum/computer_file/program/budgetorders/proc/can_order_pack(datum/supply_pack/pack, list/user_access)
+	if(pack.hidden || pack.drop_pod_only)
+		return CARGO_CANT_VIEW
+	//emagged has access to pretty much everything else
+	if(computer.obj_flags & EMAGGED)
+		return CARGO_CAN_ORDER
+	//not emagged, can't order emagged stuff.
+	if(pack.emag_only)
+		return CARGO_CANT_VIEW
+	//This is for multitool-ing the board. Emag also sets this but whatever.
+	if(pack.contraband && !contraband)
+		return CARGO_CANT_VIEW
+
+	//Aquire access from the inserted ID card.
+	if(!length(user_access))
+		user_access = computer?.GetAccess()
+
+	//Can we only see this?
+	if(length(pack.access_view) && !(pack.access_view in user_access))
+		return CARGO_CAN_VIEW
+	return CARGO_CAN_ORDER
 
 /datum/computer_file/program/budgetorders/proc/post_signal(command)
 

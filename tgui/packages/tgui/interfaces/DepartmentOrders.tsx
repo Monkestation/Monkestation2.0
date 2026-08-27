@@ -145,9 +145,7 @@ const DepartmentCatalog = (props) => {
                 <Stack fill>
                   <Stack.Item grow>
                     <Tooltip
-                      content={
-                        pack.can_order ? pack.desc : 'Lacking view access!'
-                      }
+                      content={pack.desc}
                     >
                       <Box
                         as="span"
@@ -163,7 +161,6 @@ const DepartmentCatalog = (props) => {
                     <CooldownEstimate cost={pack.cost} />
                     &ensp;
                     <Button
-                      disabled={pack.can_order}
                       onClick={() =>
                         act('order', {
                           id: pack.id,
