@@ -179,7 +179,7 @@
 	)
 
 	/// The host
-	var/mob/living/carbon/human/human_host
+	var/mob/living/carbon/human_host
 
 	/// How much health we regen per second while in a host. Starts at a 60 seconds to fully to heal. A complete organ manipulation surgery takes 19.8 seconds to compelte with perfect timing to remove a borer
 	var/health_regen = 0.415

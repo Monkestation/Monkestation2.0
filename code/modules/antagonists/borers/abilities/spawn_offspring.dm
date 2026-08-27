@@ -102,13 +102,12 @@
 	if(!.)
 		return
 
-	var/mob/living/basic/cortical_borer/neutered/user = owner
-	if(HAS_TRAIT(user, TRAIT_NEUTERED))
+	if(HAS_TRAIT(owner, TRAIT_NEUTERED))
 		if(feedback)
 			owner.balloon_alert(owner, "you cannot reproduce!")
 		return FALSE
 
-/datum/action/cooldown/borer/revive_host/check_conditions()
+/datum/action/cooldown/borer/empowered_offspring/check_conditions()
 	. = ..()
 	if(.)
 		return
