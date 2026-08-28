@@ -21990,6 +21990,7 @@
 	dir = 5
 	},
 /obj/machinery/light/directional/north,
+/obj/item/kirbyplants/random,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/nt_rep)
 "gTc" = (
@@ -64996,7 +64997,10 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/item/kirbyplants/random,
+/obj/structure/table/wood,
+/obj/machinery/jukebox/unlocked/gramophone{
+	step_y = 10
+	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/nt_rep)
 "upS" = (

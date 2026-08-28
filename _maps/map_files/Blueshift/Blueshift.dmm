@@ -25320,6 +25320,11 @@
 /obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = -3
 	},
+/obj/item/reagent_containers/cup/glass/mug/coco{
+	desc = "Still hot!";
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "ePx" = (
@@ -66413,14 +66418,12 @@
 /area/station/maintenance/fore/upper)
 "mNM" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/mug/coco{
-	desc = "Still hot!";
-	pixel_x = -4;
-	pixel_y = 4
-	},
 /obj/machinery/camera/autoname/directional/north{
 	name = "command camera";
 	c_tag = "Consultant's Kitchen"
+	},
+/obj/machinery/jukebox/unlocked/gramophone{
+	step_y = 10
 	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)

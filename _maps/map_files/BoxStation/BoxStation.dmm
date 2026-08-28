@@ -646,6 +646,7 @@
 	c_tag = "Command - Consultant's Lobby";
 	name = "command camera"
 	},
+/obj/structure/grandfatherclock,
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/nt_rep)
 "alB" = (
@@ -11938,7 +11939,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/grandfatherclock,
+/obj/structure/table/wood,
+/obj/machinery/jukebox/unlocked/gramophone{
+	step_y = 10
+	},
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/nt_rep)
 "dPK" = (
@@ -67940,6 +67944,9 @@
 /obj/structure/trash_pile,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
+"vNS" = (
+/turf/open/space/basic,
+/area/station/maintenance/port/fore)
 "vOj" = (
 /obj/effect/turf_decal/box,
 /obj/machinery/portable_atmospherics/pump,
@@ -87232,7 +87239,7 @@ noO
 qPR
 fPN
 vKc
-fhe
+vNS
 qPR
 fPN
 fhe

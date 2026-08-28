@@ -16608,6 +16608,9 @@
 /area/station/command/heads_quarters/hop)
 "hXc" = (
 /obj/structure/table/wood,
+/obj/machinery/jukebox/unlocked/gramophone{
+	step_y = 10
+	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "hXm" = (

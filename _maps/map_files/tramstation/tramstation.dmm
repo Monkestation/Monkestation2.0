@@ -2698,6 +2698,9 @@
 "alG" = (
 /obj/structure/falsewall,
 /obj/effect/turf_decal/sand/plating,
+/obj/machinery/jukebox/unlocked/gramophone{
+	step_y = 10
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "alO" = (
@@ -13644,6 +13647,21 @@
 /obj/item/lighter{
 	pixel_x = 7
 	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
+	pixel_x = 10;
+	pixel_y = 13
+	},
+/obj/item/clothing/mask/cigarette/pipe{
+	pixel_x = -5
+	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "djE" = (
@@ -22471,23 +22489,11 @@
 /area/station/maintenance/tram/right)
 "fUR" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/bottle/whiskey{
-	pixel_x = 10;
-	pixel_y = 13
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
-	pixel_x = 6;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
-	pixel_x = 5;
-	pixel_y = -2
-	},
-/obj/item/clothing/mask/cigarette/pipe{
-	pixel_x = -5
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/jukebox/unlocked/gramophone{
+	step_y = 10
+	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "fVg" = (

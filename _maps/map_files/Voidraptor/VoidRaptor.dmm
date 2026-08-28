@@ -16733,10 +16733,10 @@
 /area/station/service/hydroponics/chicken)
 "eRr" = (
 /obj/structure/table/wood/fancy/green,
-/obj/item/statuebust/hippocratic{
-	pixel_y = 8
-	},
 /obj/machinery/digital_clock/directional/west,
+/obj/machinery/jukebox/unlocked/gramophone{
+	step_y = 10
+	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "eRt" = (
@@ -68095,6 +68095,9 @@
 "sWQ" = (
 /obj/structure/flora/grass/jungle,
 /obj/structure/window/fulltile,
+/obj/machinery/jukebox/unlocked/gramophone{
+	step_y = 10
+	},
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "sXd" = (

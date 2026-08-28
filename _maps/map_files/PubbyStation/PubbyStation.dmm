@@ -30938,6 +30938,12 @@
 /obj/effect/turf_decal/bot/left,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hfr_room)
+"eww" = (
+/obj/machinery/jukebox/unlocked/gramophone{
+	step_y = 10
+	},
+/turf/closed/wall,
+/area/station/service/theater)
 "ewS" = (
 /obj/machinery/door/airlock/command/corporate{
 	name = "Representative's Quarters"
@@ -47161,6 +47167,10 @@
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/machinery/jukebox/unlocked/gramophone{
+	step_y = 10
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/nt_rep)
@@ -90160,7 +90170,7 @@ aKT
 aVl
 aWo
 aXl
-aUf
+eww
 aUf
 ajX
 bbu

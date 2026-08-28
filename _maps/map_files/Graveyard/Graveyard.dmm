@@ -58101,6 +58101,10 @@
 /area/station/smithing)
 "wGI" = (
 /obj/structure/sign/poster/official/corporate_perks_vacation/directional/north,
+/obj/structure/table/wood/fancy/green,
+/obj/machinery/jukebox/unlocked/gramophone{
+	pixel_y = 10
+	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "wGN" = (

@@ -2284,11 +2284,14 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/breakroom)
 "aJL" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "5"
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/machinery/jukebox/unlocked/gramophone{
+	step_y = 10
 	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
+/turf/open/floor/iron/dark/side{
+	dir = 5
+	},
+/area/station/hallway/primary/central)
 "aJN" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -4309,13 +4312,6 @@
 /obj/effect/landmark/start/head_of_security,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hos)
-"bnq" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "3";
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "bnu" = (
 /obj/effect/turf_decal/tile/dark_red/half{
 	dir = 1
@@ -11972,13 +11968,6 @@
 /obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
-"dEg" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "2";
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "dEm" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/structure/table/optable,
@@ -18430,13 +18419,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/service/chapel)
-"fvj" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "1";
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "fvo" = (
 /obj/machinery/computer/records/medical/laptop,
 /obj/effect/turf_decal/siding/wood,
@@ -29840,7 +29822,6 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/plumbing/ooze_compressor,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "iPp" = (
@@ -36614,12 +36595,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"kLW" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "6"
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "kMl" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -53645,7 +53620,10 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
-/obj/structure/displaycase/trophy,
+/obj/structure/table/wood,
+/obj/machinery/jukebox/unlocked/gramophone{
+	step_y = 10
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/heads_quarters/nt_rep)
 "pMa" = (
@@ -61214,13 +61192,6 @@
 	dir = 8
 	},
 /area/station/maintenance/port/aft)
-"rYx" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "4";
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "rYy" = (
 /obj/item/kirbyplants/organic/plant22,
 /obj/effect/turf_decal/siding/dark/end{
@@ -78337,7 +78308,6 @@
 /area/station/maintenance/starboard/greater)
 "wYc" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/plumbing/ooze_compressor,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "wYg" = (
@@ -78867,7 +78837,6 @@
 "xhh" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/plumbing/ooze_compressor,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "xhu" = (
@@ -98140,7 +98109,7 @@ jNA
 iTV
 iTV
 iKa
-dEg
+wLx
 wLx
 wLx
 aAP
@@ -99168,7 +99137,7 @@ iTV
 iTV
 iTV
 iKa
-fvj
+wLx
 wLx
 wLx
 mqQ
@@ -99180,7 +99149,7 @@ lfS
 ngB
 gGl
 wLx
-aJL
+wLx
 mqQ
 jNA
 opx
@@ -99433,7 +99402,7 @@ lfS
 ngB
 fyS
 wLx
-kLW
+wLx
 mqQ
 pTE
 wLx
@@ -99682,7 +99651,7 @@ iTV
 iTV
 iTV
 iKa
-bnq
+wLx
 wLx
 wLx
 aAP
@@ -100710,7 +100679,7 @@ jNA
 jNA
 iTV
 iKa
-rYx
+wLx
 wLx
 wLx
 mqQ
@@ -115900,7 +115869,7 @@ wJX
 vdM
 kMn
 cJh
-lJz
+aJL
 vcr
 kNY
 gTt

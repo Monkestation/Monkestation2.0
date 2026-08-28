@@ -52726,6 +52726,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
+"ncE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/blueshield,
+/turf/open/floor/carpet/green,
+/area/station/command/heads_quarters/nt_rep)
 "ncH" = (
 /obj/structure/table,
 /obj/item/wirecutters,
@@ -54958,7 +54964,10 @@
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "nPh" = (
-/obj/effect/landmark/start/blueshield,
+/obj/structure/table/wood,
+/obj/machinery/jukebox/unlocked/gramophone{
+	step_y = 10
+	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "nPU" = (
@@ -121141,7 +121150,7 @@ bWq
 ccd
 vrK
 jYK
-qSm
+ncE
 qSm
 ftu
 yaF

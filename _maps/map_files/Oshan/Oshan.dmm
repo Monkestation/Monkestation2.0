@@ -28940,6 +28940,10 @@
 /obj/machinery/firealarm/directional/north,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/table/wood,
+/obj/machinery/jukebox/unlocked/gramophone{
+	step_y = 10
+	},
 /turf/open/floor/stone,
 /area/station/command/heads_quarters/nt_rep)
 "iZx" = (
@@ -62079,6 +62083,14 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron,
 /area/station/service/theater/abandoned)
+"teC" = (
+/obj/effect/spawner/random/structure/table_or_rack,
+/obj/effect/spawner/random/maintenance,
+/obj/machinery/jukebox/unlocked/gramophone{
+	step_y = 10
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
 "teZ" = (
 /obj/effect/turf_decal/trimline/hot_pink/filled/line{
 	dir = 1
@@ -111712,7 +111724,7 @@ eWc
 hYx
 qtV
 qtm
-eOF
+teC
 mSq
 vJx
 kXe
