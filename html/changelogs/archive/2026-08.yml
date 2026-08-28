@@ -226,3 +226,21 @@
   - balance: Lawbringer detain mode no longer ignores armor.
   - balance: Cybersun laser gun disabler modes now respect energy armor instead of
       laser armor.
+2026-08-27:
+  Gboster-0:
+  - bugfix: twitch now properly interacts with other action modifiers
+  JupiterJaeden:
+  - balance: Adds 2 slug ammo boxes to the ammo crate, consistent with it having the
+      other types of shotgun ammo.
+  notghosti:
+  - bugfix: AI Crypto mining will now properly generate bitcoin at high values of
+      CPU
+  - qol: AI Research Acceleration will not run if it is already being ran by another
+      AI
+  - qol: Setting a RAM/CPU value higher than whats possible via the distribution console
+      will now default to the highest possible value.
+  - bugfix: You no longer can generate fake RAM/CPU with multiple AI's
+  - qol: AI system resource distribution RAM is now formatted like CPU distrubution.
+  - bugfix: AI system resource distribution CPU now shows proper % for remaining ram
+  osaka-fuuri:
+  - rscadd: Cyborgs can now use assembler interface
