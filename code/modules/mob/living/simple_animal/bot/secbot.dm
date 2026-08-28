@@ -354,7 +354,7 @@
 	|| (ACCESS_SECURITY in current_target.pulledby?.get_access()) \
 	|| check_nearby_doors(current_target)
 
-/mob/living/simple_animal/bot/secbot/proc/annoy(mob/living/carbon/current_target, var/first_annoy = FALSE)
+/mob/living/simple_animal/bot/secbot/proc/annoy(mob/living/carbon/current_target, first_annoy = FALSE)
 	if (COOLDOWN_FINISHED(src, annoy_cooldown))
 		COOLDOWN_START(src, annoy_cooldown, 5 SECONDS)
 
