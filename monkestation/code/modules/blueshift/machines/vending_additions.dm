@@ -160,7 +160,7 @@
 			"icon" = "hat-cowboy",
 			"products" = list(
 				/obj/item/clothing/head/beret/badge = 5,
-				/obj/item/clothing/head/colourable_flatcap= 5,
+				/obj/item/clothing/head/flatcap/recolor= 5,
 				/obj/item/clothing/head/cowboy/nova/cattleman = 5,
 				/obj/item/clothing/head/cowboy/nova/cattleman/wide = 5,
 				/obj/item/clothing/head/cowboy/nova/wide = 5,

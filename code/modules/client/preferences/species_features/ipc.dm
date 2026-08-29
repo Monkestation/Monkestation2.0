@@ -27,7 +27,6 @@
 /datum/preference/choiced/ipc_antenna/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["ipc_antenna"] = value
 
-
 /datum/preference/choiced/ipc_chassis
 	savefile_key = "feature_ipc_chassis"
 	savefile_identifier = PREFERENCE_CHARACTER
@@ -85,16 +84,14 @@
 	var/datum/sprite_accessory/screen = GLOB.ipc_screens_list[value]
 	var/datum/universal_icon/icon_with_screen = ipc_head.copy()
 
-	if(!isnull(screen) && screen.icon_state != SPRITE_ACCESSORY_NONE)
-		icon_with_screen.blend_icon(uni_icon(screen.icon, "m_ipc_screen_[screen.icon_state]_ADJ"), ICON_OVERLAY)
-	icon_with_screen.scale(64, 64)
-	icon_with_screen.crop(15, 64 - 31, 15 + 31, 64)
-
-	return icon_with_screen
+if(!isnull(screen) && screen.icon_state != SPRITE_ACCESSORY_NONE)
+	icon_with_screen.blend_icon(uni_icon(screen.icon, "m_ipc_screen_[screen.icon_state]_ADJ"), ICON_OVERLAY)
+icon_with_screen.scale(64, 64)
+icon_with_screen.crop(15, 64 - 31, 15 + 31, 64)
+return icon_with_screen
 
 /datum/preference/choiced/ipc_screen/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["ipc_screen"] = value
-
 
 /datum/preference/choiced/ipc_brain
 	savefile_key = "ipc_brain"
