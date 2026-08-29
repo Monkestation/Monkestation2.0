@@ -1,4 +1,4 @@
-x/obj/machinery/assembler
+/obj/machinery/assembler
 	name = "assembler"
 	desc = "Produces a set recipe when given the materials, some say a small cargo technican is stuck inside making these things."
 	circuit = /obj/item/circuitboard/machine/assembler
