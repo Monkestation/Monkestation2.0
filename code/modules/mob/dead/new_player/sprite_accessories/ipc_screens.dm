@@ -6,7 +6,7 @@
 
 /datum/sprite_accessory/ipc_screens/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/ipc_screens/blue
 	name = "Blue"

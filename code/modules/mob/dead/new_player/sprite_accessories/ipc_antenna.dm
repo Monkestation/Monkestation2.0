@@ -4,7 +4,7 @@
 	palette_key = MUTANT_COLOR_SECONDARY
 
 /datum/sprite_accessory/ipc_antennas/none
-	name = "none"
+	name = "None"
 	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/ipc_antennas/angled
