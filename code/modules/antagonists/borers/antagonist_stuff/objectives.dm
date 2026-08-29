@@ -121,9 +121,13 @@
 	status_text = "[required_borers] borers learning [target_amount] chemicals from the blood: [successfull_borers]/[required_borers]"
 
 /datum/objective/borer/learn_chemicals/selfish
-	name = "learn chemicals from blood"
+	name = "learn chemicals from blood (Optional)"
 	target_amount = 10
 	required_borers = 1
+
+/datum/objective/borer/learn_chemicals/selfish/update_explanation_text()
+	..()
+	explanation_text = "(Optional) [explanation_text]"
 
 /datum/objective/borer/learn_chemicals/selfish/check_completion()
 	. = ..()
@@ -133,23 +137,29 @@
 		maturation_boost = total_chems_learned SECONDS
 
 	recalculate_borer_speed()
-	status_text = "Learning [target_amount] chemicals from the blood: [min(total_chems_learned, target_amount)]/[target_amount]"
+	status_text = "(Optional) Learning [target_amount] chemicals from the blood: [min(total_chems_learned, target_amount)]/[target_amount]"
+
+/datum/objective/borer/learn_chemicals/selfish/get_roundend_success_suffix()
+	if(completed)
+		return span_greentext("Success!")
+	completed = TRUE
+	return "<span class='neutraltext'><font color=yellow>Not Completed.</font></span>"
 
 /datum/objective/borer/dissect_bodies
-	name = "dissect bodies"
+	name = "dissect bodies (Optional)"
 	target_amount = 3
 	/// The amount of bodies we dissected
 	var/dissected_bodies = 0
 
 /datum/objective/borer/dissect_bodies/update_explanation_text()
-	explanation_text = "To grow stronger we can dissect up to [target_amount] different corpses."
+	explanation_text = "(Optional) To grow stronger we can dissect up to [target_amount] different corpses."
 	check_completion()
 
 /datum/objective/borer/dissect_bodies/check_completion()
 	if(completed)
 		return TRUE
 
-	status_text = "Dissecting [target_amount] bodies: [dissected_bodies]/[target_amount]"
+	status_text = "(Optional) Dissecting [target_amount] bodies: [dissected_bodies]/[target_amount]"
 	maturation_boost = 3.5 SECONDS * min(dissected_bodies, target_amount)
 	recalculate_borer_speed()
 
@@ -157,3 +167,9 @@
 		return FALSE
 	completed = TRUE
 	return TRUE
+
+/datum/objective/borer/dissect_bodies/get_roundend_success_suffix()
+	if(completed)
+		return span_greentext("Success!")
+	completed = TRUE
+	return "<span class='neutraltext'><font color=yellow>Not Completed.</font></span>"

@@ -390,6 +390,11 @@
 
 	//this is so they can talk in hivemind
 	if(split_message[1] == ";")
+		var/datum/antagonist/cortical_borer/antag = mind.has_antag_datum(/datum/antagonist/cortical_borer)
+		if(isnull(antag) || isnull(antag.team))
+			to_chat(src, span_warning("You aren't connected to a hivemind!"))
+			return
+
 		message = copytext(message, 2)
 		message = capitalize(message)
 		if(HAS_TRAIT(src, TRAIT_NEUTERED)) 	// Nuetered sound offtune.
@@ -398,11 +403,6 @@
 			text = span_purplelarge("<b>Cortical Hivemind: [real_name] choruses, \"[message]\"</b>")
 		else
 			text = span_purple("<b>Cortical Hivemind: [real_name] sings, \"[message]\"</b>")
-
-		var/datum/antagonist/cortical_borer/antag = mind.has_antag_datum(/datum/antagonist/cortical_borer)
-		if(isnull(antag) || isnull(antag.team))
-			to_chat(src, span_warning("You aren't connected to a hivemind!"))
-			return
 
 		for(var/datum/mind/mind as anything in antag.team.members)
 			if(mind.current)
