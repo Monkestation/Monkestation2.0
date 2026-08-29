@@ -13594,12 +13594,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/port/lesser)
-"ebA" = (
-/obj/machinery/jukebox/unlocked/gramophone{
-	step_y = 10
-	},
-/turf/open/space/basic,
-/area/space)
 "ebH" = (
 /obj/effect/turf_decal/trimline/piss_yellow/corner{
 	dir = 8
@@ -67603,7 +67597,7 @@
 /obj/machinery/duct,
 /obj/structure/table/wood/fancy/green,
 /obj/machinery/jukebox/unlocked/gramophone{
-	step_y = 10
+	pixel_y = 10
 	},
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
@@ -118420,7 +118414,7 @@ nhC
 nhC
 nhC
 nhC
-ebA
+nhC
 lXw
 lXw
 lXw

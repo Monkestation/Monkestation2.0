@@ -33671,7 +33671,7 @@
 	},
 /obj/structure/table/wood,
 /obj/machinery/jukebox/unlocked/gramophone{
-	step_y = 10
+	pixel_y = 10
 	},
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/nt_rep)

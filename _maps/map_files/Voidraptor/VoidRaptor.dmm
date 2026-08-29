@@ -16735,7 +16735,7 @@
 /obj/structure/table/wood/fancy/green,
 /obj/machinery/digital_clock/directional/west,
 /obj/machinery/jukebox/unlocked/gramophone{
-	step_y = 10
+	pixel_y = 10
 	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
@@ -68095,9 +68095,6 @@
 "sWQ" = (
 /obj/structure/flora/grass/jungle,
 /obj/structure/window/fulltile,
-/obj/machinery/jukebox/unlocked/gramophone{
-	step_y = 10
-	},
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "sXd" = (
