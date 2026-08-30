@@ -104,8 +104,8 @@
 	build_type = MECHFAB | PROTOLATHE
 	construction_time = 10 SECONDS
 	materials = list(
-    /datum/material/iron = SMALL_MATERIAL_AMOUNT,
-    /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT * 0.25,
+	/datum/material/iron = SMALL_MATERIAL_AMOUNT,
+	/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT * 0.25,
 	)
 	build_path = /obj/item/organ/internal/eyes/synth
 	category = list(
@@ -120,9 +120,9 @@
 	build_type = MECHFAB
 	build_path = /obj/item/ipc_core
 	materials = list(
-    /datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
-    /datum/material/titanium = SHEET_MATERIAL_AMOUNT,
-    /datum/material/glass = SHEET_MATERIAL_AMOUNT * 5,
+	/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+	/datum/material/titanium = SHEET_MATERIAL_AMOUNT,
+	/datum/material/glass = SHEET_MATERIAL_AMOUNT * 5,
 	)
 	construction_time = 30 SECONDS
 	category = list(
