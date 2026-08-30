@@ -226,9 +226,9 @@ if(screen && screen_state != IPC_CONSTRUCTION_SECURED)
 	if(screen && screen_state >= IPC_CONSTRUCTION_WIRED)
 		if(screen_state == IPC_CONSTRUCTION_SECURED)
 			to_chat(user, span_warning("You need to unsecure [screen] first!"))
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
 		cutter.play_tool_sound(src)
-		. = TRUE
+		. = ITEM_INTERACT_SUCCESS
 		to_chat(user, span_notice("You cut [screen]'s wiring out of [src]."))
 		new /obj/item/stack/cable_coil(drop_location(), 1)
 		screen_state = IPC_CONSTRUCTION_UNWIRED
@@ -238,26 +238,23 @@ if(screen && screen_state != IPC_CONSTRUCTION_SECURED)
 		return
 	if(core_state == IPC_CONSTRUCTION_SECURED)
 		to_chat(user, span_warning("You need to unsecure [src]'s chest cavity first!"))
-		return TRUE
-	cutter.play_tool_sound(src)
-	. = TRUE
-	to_chat(user, span_notice("You cut the wires out of [src]'s chest cavity."))
-	new /obj/item/stack/cable_coil(drop_location(), 1)
-	core_state = IPC_CONSTRUCTION_UNWIRED
+		return ITEM_INTERACT_BLOCKING
+	. = ITEM_INTERACT_SUCCESS
+	...
 
 /obj/item/ipc_core/crowbar_act(mob/living/user, obj/item/prytool)
 	. = ..()
 	if(core_state == IPC_CONSTRUCTION_SECURED)
 		to_chat(user, span_warning("You need to unsecure [src]'s chest cavity first!"))
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 	if(!stomach && !lungs && !heart && !liver)
 		to_chat(user, span_warning("There are no chest components to remove from [src]."))
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 	prytool.play_tool_sound(src)
 	to_chat(user, span_notice("You pry the chest components out of [src]."))
 	drop_stored_parts()
 	update_appearance()
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/ipc_core/multitool_act(mob/living/user, obj/item/tool)
 	if(!check_core_completion())
