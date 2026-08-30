@@ -104,7 +104,8 @@
 
 /obj/item/organ/internal/stomach/synth/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	var/datum/reagent/nutriment = locate(/datum/reagent/consumable/nutriment) in reagents.reagent_list
+	if(!reagents.get_reagent(/datum/reagent/consumable/nutriment))
+	return
 	if(!nutriment)
 		return
 	if(will_it_blend_timer || blending || !COOLDOWN_FINISHED(src, blend_cooldown))
