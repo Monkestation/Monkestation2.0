@@ -227,8 +227,8 @@ if(screen && screen_state != IPC_CONSTRUCTION_SECURED)
 		if(screen_state == IPC_CONSTRUCTION_SECURED)
 			to_chat(user, span_warning("You need to unsecure [screen] first!"))
 			return TRUE
-		. = TRUE
 		cutter.play_tool_sound(src)
+		. = TRUE
 		to_chat(user, span_notice("You cut [screen]'s wiring out of [src]."))
 		new /obj/item/stack/cable_coil(drop_location(), 1)
 		screen_state = IPC_CONSTRUCTION_UNWIRED
@@ -239,8 +239,8 @@ if(screen && screen_state != IPC_CONSTRUCTION_SECURED)
 	if(core_state == IPC_CONSTRUCTION_SECURED)
 		to_chat(user, span_warning("You need to unsecure [src]'s chest cavity first!"))
 		return TRUE
-	. = TRUE
 	cutter.play_tool_sound(src)
+	. = TRUE
 	to_chat(user, span_notice("You cut the wires out of [src]'s chest cavity."))
 	new /obj/item/stack/cable_coil(drop_location(), 1)
 	core_state = IPC_CONSTRUCTION_UNWIRED
