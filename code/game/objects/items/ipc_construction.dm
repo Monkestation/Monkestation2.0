@@ -85,17 +85,21 @@
 	if(screen)
 		. += span_info("The screen is [screen_state >= IPC_CONSTRUCTION_WIRED ? "wired" : "unwired"] and [screen_state == IPC_CONSTRUCTION_SECURED ? "secured" : "unsecured"].")
 	if(check_completion())
-		. += span_info("It is ready to be finalized with a <b>multitool</b>.")
-	else if(core_state != IPC_CONSTRUCTION_SECURED)
-		. += span_info("Install each chest component, add <b>cable</b>, then use a <b>screwdriver</b> to secure the chest cavity.")
-	else if(check_body_completion() && !screen)
-		. += span_info("Install an <b>IPC screen</b>, then wire and secure it before finalizing the chassis with a <b>multitool</b>.")
-	else if(screen && screen_state == IPC_CONSTRUCTION_UNWIRED)
-		. += span_info("Use <b>cable</b> to wire the installed screen.")
-	else if(screen && screen_state != IPC_CONSTRUCTION_SECURED)
-		. += span_info("Use a <b>screwdriver</b> to secure the wired screen.")
-	else
-		. += span_info("Attach all IPC limbs plus a secured head before installing the screen and finalizing the chassis.")
+	. += span_info("It is ready to be finalized with a <b>multitool</b>.")
+	return
+if(core_state != IPC_CONSTRUCTION_SECURED)
+	. += span_info("Install each chest component, add <b>cable</b>, then use a <b>screwdriver</b> to secure the chest cavity.")
+	return
+if(check_body_completion() && !screen)
+	. += span_info("Install an <b>IPC screen</b>, then wire and secure it before finalizing the chassis with a <b>multitool</b>.")
+	return
+if(screen && screen_state == IPC_CONSTRUCTION_UNWIRED)
+	. += span_info("Use <b>cable</b> to wire the installed screen.")
+	return
+if(screen && screen_state != IPC_CONSTRUCTION_SECURED)
+	. += span_info("Use a <b>screwdriver</b> to secure the wired screen.")
+	return
+. += span_info("Attach all IPC limbs plus a secured head before installing the screen and finalizing the chassis.")
 
 /obj/item/ipc_core/update_overlays()
 	. = ..()
