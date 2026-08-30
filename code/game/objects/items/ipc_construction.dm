@@ -492,43 +492,39 @@ if(screen && screen_state != IPC_CONSTRUCTION_SECURED)
 		qdel(ipc_body)
 		return FALSE
 
-	// Roundstart IPCs receive a charging cord from their species, but constructed shells must have it installed later through augmentation surgery.
-	var/obj/item/organ/internal/cyberimp/arm/item_set/power_cord/power_cord = ipc_body.get_organ_by_type(/obj/item/organ/internal/cyberimp/arm/item_set/power_cord)
-	if(power_cord)
-		power_cord.Remove(ipc_body, TRUE)
-		qdel(power_cord)
+// Roundstart IPCs receive a charging cord from their species, but constructed shells must have it installed later through augmentation surgery.
+var/obj/item/organ/internal/cyberimp/arm/item_set/power_cord/power_cord = ipc_body.get_organ_by_type(/obj/item/organ/internal/cyberimp/arm/item_set/power_cord)
+if(power_cord)
+	power_cord.Remove(ipc_body, TRUE)
+	qdel(power_cord)
 
-	head = null
-	left_arm = null
-	right_arm = null
-	left_leg = null
-	right_leg = null
-	core_state = IPC_CONSTRUCTION_UNWIRED
+// Remove clothes, facial hair, and features.
+ipc_body.undershirt = null
+ipc_body.underwear = null
+ipc_body.socks = null
+ipc_body.facial_hairstyle = null
+ipc_body.hairstyle = null
 
-	// Remove clothes, facial hair, and features.
-	ipc_body.undershirt = null
-	ipc_body.underwear = null
-	ipc_body.socks = null
-	ipc_body.facial_hairstyle = null
-	ipc_body.hairstyle = null
-	// Suppress emotes while creating the inert shell.
-	ADD_TRAIT(ipc_body, TRAIT_EMOTEMUTE, type)
-	ipc_body.death()
-	REMOVE_TRAIT(ipc_body, TRAIT_EMOTEMUTE, type)
+// Suppress emotes while creating the inert shell.
+ADD_TRAIT(ipc_body, TRAIT_EMOTEMUTE, type)
+ipc_body.death()
+REMOVE_TRAIT(ipc_body, TRAIT_EMOTEMUTE, type)
 
-	// The new shell may have randomized to no screen, so establish a valid display feature before inserting the fabricated screen.
-	ipc_body.dna.features["ipc_screen"] = "Blue"
-	if(!installed_screen.Insert(ipc_body, TRUE, FALSE))
-		qdel(ipc_body)
-		return FALSE
-	installed_screen.switch_to_screen(ipc_body, "Blue", IPC_CORE_UNCONNECTED_SCREEN_COLOR)
-	screen = null
-	screen_state = IPC_CONSTRUCTION_UNWIRED
+// The new shell may have randomized to no screen, so establish a valid display feature before inserting the fabricated screen.
+ipc_body.dna.features["ipc_screen"] = "Blue"
+if(!installed_screen.Insert(ipc_body, TRUE, FALSE))
+	qdel(ipc_body)
+	return FALSE
 
-	ipc_body.regenerate_icons()
-	user.visible_message(span_notice("[user] finishes [src] into an inert IPC shell."), span_notice("You finish [src] into an inert IPC shell."))
-	qdel(src)
-	return TRUE
+installed_screen.switch_to_screen(ipc_body, "Blue", IPC_CORE_UNCONNECTED_SCREEN_COLOR)
+
+ipc_body.regenerate_icons()
+user.visible_message(
+	span_notice("[user] finishes [src] into an inert IPC shell."),
+	span_notice("You finish [src] into an inert IPC shell.")
+)
+qdel(src)
+return TRUE
 
 #undef IPC_CORE_OFF_SCREEN
 #undef IPC_CORE_UNCONNECTED_SCREEN
