@@ -19,7 +19,6 @@
 		return
 	if(check_stun_immunity(CANKNOCKDOWN))
 		return
-
 	visible_message(
 		span_danger("[src] slumps over, too weak to continue fighting..."),
 		span_userdanger("You're too exhausted to continue fighting..."),
