@@ -24,16 +24,27 @@
 	. += EXAMINE_HINT("<b>Left-click</b> a MODsuit or IPC.")
 	. += EXAMINE_HINT("<b>Right-click</b> a MODsuit or robotic limb to recolor.")
 
-/obj/item/mod/paint/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if((user.istate & ISTATE_HARM) || !isipc(interacting_with))
-		return NONE
+/obj/item/mod/paint/proc/paint_target(atom/interacting_with, mob/living/user, secondary = FALSE)
+	if(user.istate & ISTATE_HARM)
+		return FALSE
+
+	if(secondary)
+		if(!isbodypart(interacting_with))
+			return FALSE
+		return color_limb(interacting_with, user)
+
+	if(!isipc(interacting_with))
+		return FALSE
 	color_ipc(interacting_with, user)
+	return TRUE
+
+/obj/item/mod/paint/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!paint_target(interacting_with, user))
+		return NONE
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/mod/paint/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if((user.istate & ISTATE_HARM) || !isbodypart(interacting_with))
-		return NONE
-	if(!color_limb(interacting_with, user))
+	if(!paint_target(interacting_with, user, TRUE))
 		return NONE
 	return ITEM_INTERACT_SUCCESS
 
@@ -167,9 +178,11 @@
 			part_image.overlays += image(icon = style_list_icons[skin_option], icon_state = "[limb.limb_id]_[limb.aux_zone]")
 		skins += list("[skin_option]" = part_image)
 	var/choice = show_radial_menu(user, src, skins, require_near = TRUE)
-	if(choice && can_paint_target(limb, user))
-		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
-		limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
+	if(!choice || !can_paint_target(limb, user))
+	return FALSE
+
+	playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
+	limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
 	return TRUE
 
 /// Prompts for and applies a chassis and color to an IPC.
