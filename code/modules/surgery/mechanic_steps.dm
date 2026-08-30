@@ -155,13 +155,9 @@
 /datum/surgery_step/install_brain
 	name = "insert robotic brain"
 	implements = list(/obj/item/mmi = 100)
+	possible_locs = list(BODY_ZONE_CHEST)
 
 /datum/surgery_step/install_brain/preop(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(target_zone != BODY_ZONE_CHEST)
-		to_chat(user, span_notice("You must target the chest cavity."))
-
-		return SURGERY_STEP_FAIL
-
 	var/obj/item/bodypart/affected_bodypart = target.get_bodypart(target_zone)
 	var/obj/item/mmi/installed_mmi = tool
 
