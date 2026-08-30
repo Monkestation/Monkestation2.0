@@ -83,9 +83,12 @@
 		return text
 
 	text += " <b>["producing [borer.children_produced] borers."]</b><br>"
-	var/list/string_of_genomes = list()
-	for(var/evo_index in borer.past_evolutions)
-		var/datum/borer_evolution/evolution = borer.past_evolutions[evo_index]
-		string_of_genomes += evolution.name
-	text += "They had the following evolutions: [english_list(string_of_genomes)]"
+	var/datum/action/cooldown/borer/evolution_tree/action = locate() in borer.actions
+	if(action)
+		var/list/string_of_genomes = list()
+		for(var/datum/borer_evolution/evolution as anything in action.completed_evolutions)
+			string_of_genomes += evolution.name
+		text += "They had the following evolutions: [english_list(string_of_genomes)]"
+	else
+		text += "The borer was incapable of evolution."
 	return text

@@ -87,11 +87,7 @@
 		owner.balloon_alert(owner, "chemical already known!")
 		return
 
-	user.chemical_evolution -= CHEM_COST
-	action.known_chemicals += learned_reagent
-	learnable_reagents -= learned_reagent
-	if(length(learnable_reagents) == 0)
-		build_all_button_icons(UPDATE_BUTTON_STATUS)
+	learn_chem(learned_reagent, action)
 
 	owner.balloon_alert(owner, "[reagent_choice] learned")
 	if(!HAS_TRAIT(user.human_host, TRAIT_AGEUSIA))
@@ -99,6 +95,14 @@
 
 	user.human_host.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5 * user.host_harm_multiplier, maximum = BRAIN_DAMAGE_SEVERE)
 	return ..()
+
+/datum/action/cooldown/borer/upgrade_chemical/proc/learn_chem(datum/reagent/path, datum/action/cooldown/borer/inject_chemical/action)
+	var/mob/living/basic/cortical_borer/user = owner
+	user.chemical_evolution -= CHEM_COST
+	action.known_chemicals += path
+	learnable_reagents -= path
+	if(length(learnable_reagents) == 0)
+		build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 /**
  * Lets borers learn chemicals that the host they reside in currently possess unless its in the "blacklisted_chemicals" list
@@ -143,32 +147,37 @@
 		owner.balloon_alert(owner, "no chemical chosen")
 		return
 
-	var/datum/action/cooldown/borer/inject_chemical/action = locate() in user.actions
-	if(!action)
+	var/datum/action/cooldown/borer/inject_chemical/inject_action = locate() in user.actions
+	if(!inject_action)
 		to_chat(owner, span_warning("What use is it wihout a chemical production gland?"))
 		return
 
 	// We only know the chosen chemicals name at this point, so we gotta check what chemical do we actually give them
 	var/datum/reagent/learned_reagent = GLOB.name2reagent[reagent_choice]
-	if(!user.human_host.reagents.reagent_list.Find(learned_reagent))
+	if(!locate(learned_reagent) in user.human_host.reagents.reagent_list)
 		owner.balloon_alert(owner, "chemical ran out!")
 		return
 
-	if(action.known_chemicals.Find(learned_reagent))
+	if(inject_action.known_chemicals.Find(learned_reagent))
 		owner.balloon_alert(owner, "chemical already known!")
 		return
 
-	if(!(learned_reagent.chemical_flags & REAGENT_CAN_BE_SYNTHESIZED))
+	if(!(initial(learned_reagent.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED))
 		owner.balloon_alert(owner, "cannot learn [reagent_choice]")
 		return
 
-	user.chemical_evolution -= BLOOD_CHEM_COST
-	action.known_chemicals += learned_reagent.type
 	user.human_host.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5 * user.host_harm_multiplier, maximum = BRAIN_DAMAGE_SEVERE)
 	if(!HAS_TRAIT(user.human_host, TRAIT_AGEUSIA))
-		to_chat(user.human_host, span_notice("You get a strange aftertaste of [learned_reagent.taste_description]!"))
+		to_chat(user.human_host, span_notice("You get a strange aftertaste of [initial(learned_reagent.taste_description)]!"))
 
 	owner.balloon_alert(owner, "[reagent_choice] learned")
+	var/datum/action/cooldown/borer/upgrade_chemical/action = locate() in owner.actions
+	if(action && action.learnable_reagents.Find(learned_reagent)) // Just in case someone wants to cheese the objective
+		action.learn_chem(learned_reagent, inject_action)
+		return ..()
+
+	user.chemical_evolution -= BLOOD_CHEM_COST
+	inject_action.known_chemicals += learned_reagent
 	var/datum/antagonist/cortical_borer/antag = owner.mind?.has_antag_datum(/datum/antagonist/cortical_borer)
 	if(antag)
 		var/datum/objective/borer/learn_chemicals/objective = locate() in antag.objectives

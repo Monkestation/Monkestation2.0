@@ -55,15 +55,10 @@
 	spawned_cb.PossessByPlayer(spender.ckey)
 	var/datum/antagonist/cortical_borer/antag = spawned_cb.mind.has_antag_datum(/datum/antagonist/cortical_borer)
 	if(borer_mob_type == /mob/living/basic/cortical_borer/neutered)
-		var/list/objectives_to_give = list(
-			/datum/objective/borer/learn_chemicals/selfish,
-			/datum/objective/borer/dissect_bodies,
-		)
-		for(var/datum/objective/borer/objective as anything in objectives_to_give)
-			objective = new objective()
-			objective.owner = spawned_cb.mind
-			objective.update_explanation_text()
-			antag.objectives += objective
+		var/datum/objective/borer/learn_chemicals/selfish/objective = new()
+		objective.owner = spawned_cb.mind
+		objective.update_explanation_text()
+		antag.objectives += objective
 		antag.update_static_data_for_all_viewers()
 	else
 		var/datum/team/cortical_borers/team = new()

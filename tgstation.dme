@@ -3374,7 +3374,6 @@
 #include "code\modules\antagonists\borers\antagonist_stuff\antagonist_datum.dm"
 #include "code\modules\antagonists\borers\antagonist_stuff\objectives.dm"
 #include "code\modules\antagonists\borers\antagonist_stuff\round_end_text.dm"
-#include "code\modules\antagonists\borers\evolution\borer_evolution.dm"
 #include "code\modules\antagonists\borers\evolution\evolution_datum.dm"
 #include "code\modules\antagonists\borers\evolution\evolution_diveworm.dm"
 #include "code\modules\antagonists\borers\evolution\evolution_general.dm"

@@ -100,7 +100,7 @@ const EvolutionList = (props) => {
                       ` By taking this, you cannot take other T3+ gneomes.`
                     : toLearn.desc
                 }
-                onClick={() => act('evolve', { path: toLearn.path })}
+                onClick={() => act('evolve', { name: toLearn.name })}
               />
               {!!toLearn.gainFlavor && (
                 <BlockQuote>

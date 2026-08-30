@@ -17,8 +17,8 @@
 	generation = 1
 
 /mob/living/basic/cortical_borer/neutered/Initialize(mapload)
-	. = ..()
 	ADD_TRAIT(src, TRAIT_NEUTERED, INNATE_TRAIT)
+	return ..()
 
 /mob/living/basic/cortical_borer/neutered/calculate_maturation_speed()
 	. = initial(maturation_speed)

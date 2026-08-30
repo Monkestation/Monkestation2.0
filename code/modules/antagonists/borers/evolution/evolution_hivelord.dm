@@ -10,7 +10,30 @@
 	evo_cost = 1
 	unlocked_evolutions = list(/datum/borer_evolution/hivelord/blood_chemical)
 	added_action = /datum/action/cooldown/borer/produce_offspring
-	skip_for_neutered = TRUE
+
+/datum/borer_evolution/hivelord/dissection
+	name = "Dissect Corpse"
+	desc = "Gain the ability to probes a corspe's brain to further the rate you grow."
+	gain_text = "After applying extreme radiation exposure to a sample of the eggs, that generation's bed of worms never produced eggs. However, the sanitation teams observed these same worms festering around a dead host that was to be removed."
+	tier = 1
+	evo_cost = 1
+	unlocked_evolutions = list(/datum/borer_evolution/hivelord/blood_chemical)
+	added_action = /datum/action/cooldown/borer/dissection
+
+/datum/borer_evolution/hivelord/dissection/on_evolve(mob/living/basic/cortical_borer/borer)
+	. = ..()
+	if(isnull(borer.mind))
+		return
+
+	var/datum/antagonist/cortical_borer/antag = borer.mind.has_antag_datum(/datum/antagonist/cortical_borer)
+	if(isnull(antag))
+		return
+
+	var/datum/objective/borer/dissect_bodies/objective = new()
+	objective.owner = borer.mind
+	objective.update_explanation_text()
+	antag.objectives += objective
+	antag.update_static_data_for_all_viewers()
 
 // T2
 /datum/borer_evolution/hivelord/blood_chemical
@@ -26,7 +49,7 @@
 	name = "Increased Energy"
 	desc = "Boost your speed by a large amount."
 	gain_text = "And as I watched, the Cortical Borer was able to complete the course in just over half the time it had last week."
-	mutually_exclusive = TRUE
+	locks_paths = TRUE
 	tier = 3
 	unlocked_evolutions = list(/datum/borer_evolution/hivelord/stealth_mode)
 
@@ -46,6 +69,16 @@
 	unlocked_evolutions = list(/datum/borer_evolution/hivelord/produce_offspring_alone)
 	added_action = /datum/action/cooldown/borer/stealth_mode
 
+/datum/borer_evolution/hivelord/stealth_mode/get_evolution_paths(mob/living/basic/cortical_borer/borer)
+	if(HAS_TRAIT(borer, TRAIT_NEUTERED))
+		return list(
+			/datum/borer_evolution/sugar_immunity,
+			/datum/borer_evolution/synthetic_borer,
+			/datum/borer_evolution/reagent_giver/synthetic_chems_positive,
+			/datum/borer_evolution/reagent_giver/synthetic_chems_negative,
+		)
+	return unlocked_evolutions
+
 // T5
 /datum/borer_evolution/hivelord/produce_offspring_alone
 	name = "Produce Offspring II"
@@ -56,10 +89,9 @@
 	unlocked_evolutions = list(
 		/datum/borer_evolution/sugar_immunity,
 		/datum/borer_evolution/synthetic_borer,
-		/datum/borer_evolution/synthetic_chems_positive,
-		/datum/borer_evolution/synthetic_chems_negative,
+		/datum/borer_evolution/reagent_giver/synthetic_chems_positive,
+		/datum/borer_evolution/reagent_giver/synthetic_chems_negative,
 	)
-	skip_for_neutered = TRUE // we set this to TRUE purelly for the message, they dont have the reproduction action anyway
 
 /datum/borer_evolution/hivelord/produce_offspring_alone/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
 	. = ..()

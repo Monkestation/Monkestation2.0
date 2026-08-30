@@ -191,12 +191,8 @@
 	var/list/body_focuses = list()
 	/// How many children the borer has produced
 	var/children_produced = 0
-	/// Evolutions we've already learned
-	var/list/past_evolutions = list()
 	/// Bitflag of upgrades and effects the borer has
 	var/upgrade_flags = 0
-	/// If the borer has evolved with a genome that locks out others of the same & higher tier
-	var/genome_locked = FALSE
 	/// Multiplier for a borer's negative effects to their host
 	var/host_harm_multiplier = 1
 
@@ -216,7 +212,6 @@
 		var/datum/action/action = new action_type(src)
 		action.Grant(src)
 
-	do_evolution(/datum/borer_evolution/base)
 	var/datum/atom_hud/borer_hud = GLOB.huds[DATA_HUD_BORER]
 	borer_hud.show_to(src)
 
@@ -412,7 +407,7 @@
 			var/link = FOLLOW_LINK(dead_mob, src)
 			to_chat(dead_mob, "[link] [message]", type = MESSAGE_TYPE_RADIO)
 
-		src.log_talk("[key_name(src)] spoke into the Borer hivemind: [message]", LOG_SAY)
+		log_talk("[key_name(src)] spoke into the Borer hivemind: [message]", LOG_SAY)
 		return
 
 	// This is when they speak normally
@@ -428,15 +423,13 @@
 	to_chat(human_host, text)
 	to_chat(src, text)
 	human_host.balloon_alert(human_host, "you hear a voice")
-	src.log_talk("[key_name(src)] spoke to [key_name(human_host)]: [message]", LOG_SAY)
+	log_talk("[key_name(src)] spoke to [key_name(human_host)]: [message]", LOG_SAY)
 
-	if(HAS_TRAIT(src, TRAIT_NEUTERED))
-		for(var/mob/dead_mob in GLOB.dead_mob_list)
-			var/link = FOLLOW_LINK(dead_mob, src)
+	for(var/mob/dead_mob in GLOB.dead_mob_list)
+		var/link = FOLLOW_LINK(dead_mob, src)
+		if(HAS_TRAIT(src, TRAIT_NEUTERED))
 			to_chat(dead_mob, span_red("[link] Cortical Hivemind: [src] croons to [human_host], \"[message]\""))
-	else
-		for(var/mob/dead_mob in GLOB.dead_mob_list)
-			var/link = FOLLOW_LINK(dead_mob, src)
+		else
 			to_chat(dead_mob, span_purple("[link] Cortical Hivemind: [src] sings to [human_host], \"[message]\""))
 
 

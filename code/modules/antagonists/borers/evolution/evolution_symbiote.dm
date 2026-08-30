@@ -10,7 +10,6 @@
 	unlocked_evolutions = list(/datum/borer_evolution/symbiote/chem_per_level)
 	evo_cost = 1
 	added_action = /datum/action/cooldown/borer/willing_host
-	skip_for_neutered = TRUE
 
 // T2
 /datum/borer_evolution/symbiote/chem_per_level
@@ -18,7 +17,7 @@
 	desc = "Increase the amount of chemicals per level-up you gain."
 	gain_text = "The rate of which we've had to clean the borer pens is increasing. Perhaps their secretions are excess chemicals they cannot use?"
 	tier = 2
-	unlocked_evolutions = list(/datum/borer_evolution/symbiote/expanded_chemicals)
+	unlocked_evolutions = list(/datum/borer_evolution/reagent_giver/symbiote_chems)
 
 /datum/borer_evolution/symbiote/chem_per_level/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
 	. = ..()
@@ -27,20 +26,18 @@
 	cortical_owner.recalculate_stats()
 
 // T3 + T2 Path
-/datum/borer_evolution/symbiote/expanded_chemicals
-	name = "Expanded Chemical List"
+/datum/borer_evolution/reagent_giver/symbiote_chems
+	name = "Expanded Medicine List"
 	desc = "Gain access to a new list of helpful chemicals to the unlockable list."
 	gain_text = "The chemicals the worms seem capable of synthesizing are truly remarkable, their hosts are able to get up from amazing amounts of harm."
-	mutually_exclusive = TRUE
+	evo_type = BORER_EVOLUTION_SYMBIOTE
+	locks_paths = TRUE
 	tier = 3
 	unlocked_evolutions = list(
 		/datum/borer_evolution/symbiote/harm_decrease,
 		/datum/borer_evolution/symbiote/chem_per_level/t2,
 	)
-
-/datum/borer_evolution/symbiote/expanded_chemicals/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
-	. = ..()
-	var/list/added_chemicals = list(
+	reagents = list(
 		/datum/reagent/medicine/sal_acid,
 		/datum/reagent/medicine/oxandrolone,
 		/datum/reagent/medicine/atropine,
@@ -48,10 +45,6 @@
 		/datum/reagent/medicine/leporazine,
 		/datum/reagent/medicine/omnizine,
 	)
-	var/datum/action/cooldown/borer/upgrade_chemical/action = locate() in cortical_owner.actions
-	if(action)
-		action.learnable_reagents |= added_chemicals
-		action.build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 /datum/borer_evolution/symbiote/chem_per_level/t2
 	name = "Chemical Increase II"
@@ -102,6 +95,6 @@
 	unlocked_evolutions = list(
 		/datum/borer_evolution/sugar_immunity,
 		/datum/borer_evolution/synthetic_borer,
-		/datum/borer_evolution/synthetic_chems_positive,
+		/datum/borer_evolution/reagent_giver/synthetic_chems_positive,
 	)
 	added_action = /datum/action/cooldown/borer/revive_host
