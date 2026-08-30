@@ -50,6 +50,7 @@ export const Mule = (props) => {
                 color="danger"
                 content={emagged ? 'Malfunctional' : 'Safety Lock'}
                 selected={!emagged}
+                icon={emagged ? 'bug' : 'lock'}
                 onClick={() => act('hack')}
                 tooltip={
                   !emagged
