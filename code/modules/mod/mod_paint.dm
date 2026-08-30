@@ -21,8 +21,8 @@
 /obj/item/mod/paint/examine(mob/user)
 	. = ..()
 
-	. += span_notice("<b>Left-click</b> a MODsuit or IPC.")
-	. += span_notice("<b>Right-click</b> a MODsuit or robotic limb to recolor.")
+	. += EXAMINE_HINT("<b>Left-click</b> a MODsuit or IPC.")
+	. += EXAMINE_HINT("<b>Right-click</b> a MODsuit or robotic limb to recolor.")
 
 /obj/item/mod/paint/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if((user.istate & ISTATE_HARM) || !isipc(interacting_with))
