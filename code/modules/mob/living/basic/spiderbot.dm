@@ -182,7 +182,6 @@
 		else
 			icon_state = "spiderbot-chassis-mmi"
 			icon_living = "spiderbot-chassis-mmi"
-
 	else
 		icon_state = "spiderbot-chassis"
 		icon_living = "spiderbot-chassis"
