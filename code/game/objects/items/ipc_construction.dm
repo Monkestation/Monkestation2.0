@@ -147,25 +147,17 @@ if(screen && screen_state != IPC_CONSTRUCTION_SECURED)
 	lungs?.forceMove(drop_to)
 	heart?.forceMove(drop_to)
 	liver?.forceMove(drop_to)
-	stomach = null
-	lungs = null
-	heart = null
-	liver = null
 
 /// Installs all organs stored directly in this IPC core into the completed IPC shell.
 /obj/item/ipc_core/proc/install_stored_organs(mob/living/carbon/receiver)
 	if(stomach && !stomach.Insert(receiver, TRUE, FALSE))
 		return FALSE
-	stomach = null
 	if(lungs && !lungs.Insert(receiver, TRUE, FALSE))
 		return FALSE
-	lungs = null
 	if(heart && !heart.Insert(receiver, TRUE, FALSE))
 		return FALSE
-	heart = null
 	if(liver && !liver.Insert(receiver, TRUE, FALSE))
 		return FALSE
-	liver = null
 	return TRUE
 
 /// Drops all bodyparts currently attached to this IPC core.
