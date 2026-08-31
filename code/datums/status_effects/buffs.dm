@@ -306,18 +306,19 @@
 			itemUser.adjustCloneLoss(-0.5) //Becasue apparently clone damage is the bastion of all health
 
 /datum/status_effect/hippocratic_oath/proc/consume_owner()
-	var/mob/living/carbon/victim = owner
-	owner.visible_message(span_notice("[victim]'s soul is absorbed into the rod, relieving the previous snake of its duty."))
+	owner.visible_message(span_notice("[owner]'s soul is absorbed into the rod, relieving the previous snake of its duty."))
 	var/list/chems = list(/datum/reagent/medicine/sal_acid, /datum/reagent/medicine/c2/convermol, /datum/reagent/medicine/oxandrolone)
-	var/mob/living/basic/snake/spawned = new(victim.loc, pick(chems))
+	var/mob/living/basic/snake/spawned = new(owner.loc, pick(chems))
 	spawned.name = "Asclepius's Snake"
 	spawned.real_name = "Asclepius's Snake"
 	spawned.desc = "A mystical snake previously trapped upon the Rod of Asclepius, now freed of its burden. Unlike the average snake, its bites contain chemicals with minor healing properties."
-	new /obj/effect/decal/cleanable/ash(victim.loc)
-	new /obj/item/rod_of_asclepius(victim.loc)
-	victim.investigate_log("has been consumed by the Rod of Asclepius.", INVESTIGATE_DEATHS)
-	spawned.PossessByPlayer(victim.last_mind?.key)
-	qdel(victim)
+	new /obj/effect/decal/cleanable/ash(owner.loc)
+	new /obj/item/rod_of_asclepius(owner.loc)
+	owner.investigate_log("has been consumed by the Rod of Asclepius.", INVESTIGATE_DEATHS)
+	owner.grab_ghost()
+	if(owner.mind)
+		owner.mind?.transfer_to(spawned)
+	qdel(owner)
 
 /datum/status_effect/good_music
 	id = "Good Music"
