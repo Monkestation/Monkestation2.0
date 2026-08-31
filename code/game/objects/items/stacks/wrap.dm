@@ -103,6 +103,12 @@
 /obj/item/delivery/can_be_package_wrapped()
 	return FALSE
 
+/obj/item/stack/package_wrap/can_be_package_wrapped()
+	return FALSE
+
+/obj/item/stack/wrapping_paper/can_be_package_wrapped()
+	return FALSE
+
 /obj/item/stack/package_wrap/interact_with_atom(obj/interacting_with, mob/living/user, list/modifiers)
 	if(!isobj(interacting_with))
 		return NONE
@@ -112,6 +118,8 @@
 	if(isitem(interacting_with))
 		var/obj/item/item = interacting_with
 		if(!item.can_be_package_wrapped())
+			if(istype(item, /obj/item/stack))
+				return attack_atom(item)
 			if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
 				return NONE // put it in the bag instead of yelling
 			balloon_alert(user, "can't be wrapped!")
