@@ -316,7 +316,7 @@
 	new /obj/item/rod_of_asclepius(owner.loc)
 	owner.investigate_log("has been consumed by the Rod of Asclepius.", INVESTIGATE_DEATHS)
 	owner.grab_ghost()
-	owner.mind.transfer_to(spawned)
+	owner.mind?.transfer_to(spawned)
 	qdel(owner)
 
 /datum/status_effect/good_music
