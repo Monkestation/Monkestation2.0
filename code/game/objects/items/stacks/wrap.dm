@@ -105,12 +105,6 @@
 /obj/item/delivery/can_be_package_wrapped()
 	return FALSE
 
-/obj/item/stack/package_wrap/can_be_package_wrapped()
-	return FALSE
-
-/obj/item/stack/wrapping_paper/can_be_package_wrapped()
-	return FALSE
-
 /obj/item/stack/package_wrap/interact_with_atom(obj/interacting_with, mob/living/user, list/modifiers)
 	if(!isobj(interacting_with))
 		return NONE

@@ -669,13 +669,14 @@
 
 /obj/item/stack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
-	if(istype(tool, /obj/item/stack))
-		if(can_merge(tool, inhand = TRUE))
-			var/obj/item/stack/S = tool
-			if(!merge(S))
-				return ITEM_INTERACT_BLOCKING
-			to_chat(user, span_notice("Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s."))
-			return ITEM_INTERACT_SUCCESS
+	if(!istype(tool, /obj/item/stack))
+		return
+	if(can_merge(tool, inhand = TRUE))
+		var/obj/item/stack/stacks = tool
+		if(!merge(stacks))
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_notice("Your [stacks.name] stack now contains [stacks.get_amount()] [stacks.singular_name]\s."))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/attack_hand_secondary(mob/user, modifiers)
 	. = ..()
@@ -703,20 +704,17 @@
 /obj/item/stack/proc/split_stack(mob/user, amount)
 	if(!use(amount, TRUE, FALSE))
 		return null
-	var/obj/item/stack/F = new type(user? user : drop_location(), amount, FALSE, mats_per_unit)
-	. = F
-	F.copy_evidences(src)
+	var/obj/item/stack/stack = new type(user? user : drop_location(), amount, FALSE, mats_per_unit)
+	. = stack
+	stack.copy_evidences(src)
 	loc.atom_storage?.refresh_views()
 	if(user)
-		if(!user.put_in_hands(F, merge_stacks = FALSE))
-			F.forceMove(user.drop_location())
+		if(!user.put_in_hands(stack, merge_stacks = FALSE))
+			stack.forceMove(user.drop_location())
 		add_fingerprint(user)
-		F.add_fingerprint(user)
+		stack.add_fingerprint(user)
 
 	is_zero_amount(delete_if_zero = TRUE)
-
-/obj/item/stack/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	item_interaction(user, attacking_item, modifiers)
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from)
 	add_blood_DNA(GET_ATOM_BLOOD_DNA(from))
