@@ -1,6 +1,0 @@
-author: "notghosti"
-delete-after: True
-changes:
-  - rscadd: "PTL laser now disables when disabled"
-  - qol: "PTL TGUI is adjusted to actually show how many credits have been earnt."
-  - balance: "PTL will now do damage/gib based on the actual power outputted, not how much you set output to."

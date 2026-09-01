@@ -1,0 +1,21 @@
+2026-09-01:
+  TheColorCyan:
+  - bugfix: (SmArtKar) Fixed flypeople not being able to gain nutrition from slurping
+      up vomit
+  - bugfix: fixed pony ears coloring
+  - bugfix: kinetic smg can no longer be suppresed which fucked its sprite up
+  - bugfix: replaced invisible weight machines in void raptor with stacklifters
+  - bugfix: elucidate will now properly hear and revive the target
+  - bugfix: fixed rainbow adult slimes and silver baby slimes being invisible
+  - bugfix: (SmArtKar) Trying to ignite oil with a welding tool no longer runtimes
+      due to it trying to get ignited twice
+  hexakats:
+  - balance: Replaced the oxygen jetpack in the traitor space suit box with a jetpack
+      harness
+  - balance: The traitor space suit box can hold the jetpack harness along side the
+      space suit and helmet
+  notghosti:
+  - rscadd: PTL laser now disables when disabled
+  - qol: PTL TGUI is adjusted to actually show how many credits have been earnt.
+  - balance: PTL will now do damage/gib based on the actual power outputted, not how
+      much you set output to.
