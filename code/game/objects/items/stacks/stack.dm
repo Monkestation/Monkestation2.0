@@ -669,14 +669,13 @@
 
 /obj/item/stack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
-	if(!istype(tool, /obj/item/stack))
+	if(!can_merge(tool, inhand = TRUE))
 		return
-	if(can_merge(tool, inhand = TRUE))
-		var/obj/item/stack/stacks = tool
-		if(!merge(stacks))
-			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("Your [stacks.name] stack now contains [stacks.get_amount()] [stacks.singular_name]\s."))
-		return ITEM_INTERACT_SUCCESS
+	var/obj/item/stack/overtaking_stack = tool
+	if(!merge(overtaking_stack))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("Your [overtaking_stack.name] stack now contains [overtaking_stack.get_amount()] [overtaking_stack.singular_name]\s."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/attack_hand_secondary(mob/user, modifiers)
 	. = ..()
