@@ -667,6 +667,16 @@
 	else
 		. = ..()
 
+/obj/item/stack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(istype(tool, /obj/item/stack))
+		if(can_merge(tool, inhand = TRUE))
+			var/obj/item/stack/S = tool
+			if(!merge(S))
+				return ITEM_INTERACT_BLOCKING
+			to_chat(user, span_notice("Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s."))
+			return ITEM_INTERACT_SUCCESS
+
 /obj/item/stack/attack_hand_secondary(mob/user, modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
@@ -706,12 +716,7 @@
 	is_zero_amount(delete_if_zero = TRUE)
 
 /obj/item/stack/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(can_merge(attacking_item, inhand = TRUE))
-		var/obj/item/stack/S = attacking_item
-		if(merge(S))
-			to_chat(user, span_notice("Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s."))
-	else
-		. = ..()
+	item_interaction(user, attacking_item, modifiers)
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from)
 	add_blood_DNA(GET_ATOM_BLOOD_DNA(from))
