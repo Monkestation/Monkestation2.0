@@ -205,33 +205,26 @@
 
 /** Is called if the radio implant is removed or deleted after brain insertion.
 *
-* If it is deleted, return.
-* If it is removed from owner, wait until it is in an implantcase.
+* If it is deleted, nullify radio weakref and return.
+* If it is removed from owner, create effects and delete implant & nullify radio weakref
 **/
 /obj/item/organ/internal/brain/cybernetic/ai/proc/implant_loss(datum/source)
-// To handle deleting properly, we need to wait until implant is cased, so we will set RegisterSignal
 	SIGNAL_HANDLER
 	if(!owner) // If the brain & body is gone, return
 		return
 	var/obj/item/implant/radio/implant = radio_weakref.resolve()
+	UnregisterSignal(implant, COMSIG_IMPLANT_REMOVED)
 	if(!implant) // if it is already deleted
+		radio_weakref = null
 		return
 	UnregisterSignal(implant, COMSIG_IMPLANT_REMOVED)
 	if(implant in owner.implants)
 		return
-	RegisterSignal(implant, COMSIG_IMPLANT_CASED, PROC_REF(qdel_implant)) // If it is not being deleted, it will register until implant is moved to an implant case.
-
-/// When the implant case is dropped, creates spark effects & deletes it.
-/obj/item/organ/internal/brain/cybernetic/ai/proc/qdel_implant(datum/source, silent = FALSE, special = 0)
-	SIGNAL_HANDLER
-	var/obj/item/implant/radio/implant = source
-	var/obj/item/implantcase/implantcase = implant.loc
-	if(implantcase)
-		to_chat(owner, span_hear("You feel a tiny jolt from inside of you as your internal radio is removed."))
-		implantcase.visible_message(span_warning("[implantcase] bursts into sparks!"))
-		do_sparks(number = 2, cardinal_only = FALSE, source = owner)
-		qdel(implantcase)
-		radio_weakref = null
+	to_chat(owner, span_hear("You feel a tiny jolt from inside of you as your internal radio is removed."))
+	implant.visible_message(span_warning("[implant] bursts into sparks!"))
+	do_sparks(number = 2, cardinal_only = FALSE, source = implant)
+	qdel(implant)
+	radio_weakref = null
 
 /// Is called when any organs are added & removed after uplink is inserted
 /obj/item/organ/internal/brain/cybernetic/ai/proc/on_organ_gain(datum/source, obj/item/organ/inserted_organ, special)
