@@ -82,10 +82,12 @@
 		//We make sure our shell is actually a shell
 		if(our_shell.shell == FALSE)
 			return
+		our_shell.undeploy()
+		return TRUE
 	else if(ishuman(user.mob))
 		var/obj/item/organ/internal/brain/cybernetic/ai/our_shell = user.mob.get_organ_slot(ORGAN_SLOT_BRAIN)
 		//Is this human an organic shell?
 		if(!istype(our_shell))
 			return
-	our_shell.undeploy()
-	return TRUE
+		our_shell.undeploy()
+		return TRUE
