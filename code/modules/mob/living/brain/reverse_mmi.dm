@@ -24,7 +24,6 @@
 	/// A weakref to our imaginary brain radio implant.
 	var/datum/weakref/radio_weakref
 
-
 /obj/item/organ/internal/brain/cybernetic/ai/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "eyes move with machine precision.", BODY_ZONE_PRECISE_EYES)
@@ -64,11 +63,11 @@
 	undeploy()
 	mainframe_ai = null
 	organ_owner.remove_traits(list(TRAIT_MEDICAL_HUD, TRAIT_NO_MINDSWAP, TRAIT_CORPSELOCKED), REF(src))
-	UnregisterSignal(organ_owner, list(COMSIG_LIVING_HEALTH_UPDATE, COMSIG_CLICK, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_QDELETING, COMSIG_LIVING_PRE_WABBAJACKED))
+	UnregisterSignal(organ_owner, list(COMSIG_LIVING_HEALTH_UPDATE, COMSIG_CLICK, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_QDELETING, COMSIG_LIVING_PRE_WABBAJACKED, COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN))
 	var/obj/item/implant/radio/radio = radio_weakref.resolve()
 	if(radio)
 		QDEL_NULL(radio)
-	. = ..()
+	return ..()
 
 /// Updates the connecting AI's statpanel.
 /obj/item/organ/internal/brain/cybernetic/ai/proc/get_status_tab_item(mob/living/source, list/items)
@@ -195,7 +194,6 @@
 *If not, returns FALSE and sets 'is_shell' to FALSE.
 **/
 /obj/item/organ/internal/brain/cybernetic/ai/proc/check_if_augmented()
-
 	if(!istype(owner))
 		return FALSE
 	for(var/obj/item/organ/organ as anything in owner.organs)
