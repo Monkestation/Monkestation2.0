@@ -64,11 +64,6 @@
 	if(imp)
 		reagents = imp.reagents
 
-/obj/item/implantcase/Entered(atom/movable/arrived)
-	. = ..()
-	if(istype(arrived, /obj/item/implant))
-		SEND_SIGNAL(arrived, COMSIG_IMPLANT_CASED)
-
 ///An implant case that spawns with a tracking implant, as well as an appropriate name and description.
 /obj/item/implantcase/tracking
 	name = "implant case - 'Tracking'"
