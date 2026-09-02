@@ -1,0 +1,6 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - bugfix: "Dying in a mech as a AI will now properly handle you returning to your mecha."
+  - bugfix: "AI mech wreckages now are functional"
+  - bugfix: "AI mech domination will no longer softlock a second ai view panel if they were booted from it."

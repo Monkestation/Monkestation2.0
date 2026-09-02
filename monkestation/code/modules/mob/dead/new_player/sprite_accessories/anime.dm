@@ -20,7 +20,6 @@
 /datum/sprite_accessory/anime_head/pony
 	name = "Pony Ears"
 	icon_state = "pony"
-	hasinner = TRUE
 
 /datum/sprite_accessory/anime_head/kitsune
 	name = "Kitsune Ears"
