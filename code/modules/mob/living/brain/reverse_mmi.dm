@@ -188,10 +188,10 @@
 		implant.radio.resetChannels()
 	update_med_hud_status(owner)
 
-/** Checks if the owner's organs are fully robotic.
+/** Checks if brain owner's internal organs except tongue are robotic.
 *
-*If they are, returns TRUE and sets 'is_shell to TRUE'.
-*If not, returns FALSE and sets 'is_shell' to FALSE.
+*If they are, returns TRUE.
+*If not, returns FALSE.
 **/
 /obj/item/organ/internal/brain/cybernetic/ai/proc/check_if_augmented()
 	if(!istype(owner))
