@@ -1183,6 +1183,7 @@
 	desc = "Reconnect to the most recently used AI shell."
 	button_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_last_shell"
+	/// The most recently used AI shell
 	var/mob/living/last_used_shell
 
 /datum/action/innate/deploy_last_shell/Trigger(trigger_flags)
