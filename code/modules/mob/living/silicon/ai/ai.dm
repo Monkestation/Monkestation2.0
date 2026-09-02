@@ -1152,8 +1152,7 @@
 			return
 		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(disconnect_shell))
 		deployed_shell = target
-		var/mob/living/silicon/robot/cyborg = target
-		cyborg.deploy_init(src)
+		shell.deploy_init(src)
 		mind.transfer_to(target)
 
 	if(ishuman(target)) // If it is an AI-uplink organic
@@ -1161,6 +1160,7 @@
 		var/obj/item/organ/internal/brain/cybernetic/ai/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
 		if(!brain || brain.deployed || human.stat == DEAD || !(!brain.mainframe_ai || (brain.mainframe_ai == src)))
 			return
+
 		deployed_shell = target
 		brain.deploy_init(src) // Humans handle mind transfer in deploy_init
 
@@ -1204,7 +1204,8 @@
 		if(ishuman(deployed_shell))
 			var/mob/living/carbon/human = deployed_shell
 			var/obj/item/organ/internal/brain/cybernetic/ai/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
-			brain.undeploy()
+			if(istype(brain))
+				brain.undeploy()
 	diag_hud_set_deployed()
 
 /mob/living/silicon/ai/resist()
