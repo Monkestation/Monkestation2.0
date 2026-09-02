@@ -1,7 +1,7 @@
 /obj/item/modular_computer/pda
 	name = "pda"
-	icon = 'icons/obj/modular_pda.dmi'
-	icon_state = "pda"
+	icon = 'icons/map_icons/items/pda.dmi'
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda")
 	worn_icon_state = "nothing"
 	base_icon_state = "tablet"
 	greyscale_config = /datum/greyscale_config/tablet
@@ -10,6 +10,8 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	inhand_icon_state = "electronic"
+
+	overlays_icon = 'icons/obj/modular_pda.dmi'
 
 	steel_sheet_cost = 2
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
@@ -80,11 +82,11 @@
 /obj/item/modular_computer/pda/update_overlays()
 	. = ..()
 	if(computer_id_slot)
-		. += mutable_appearance(initial(icon), "id_overlay")
+		. += mutable_appearance(overlays_icon, "id_overlay")
 	if(light_on)
-		. += mutable_appearance(initial(icon), "light_overlay")
+		. += mutable_appearance(overlays_icon, "light_overlay")
 	if(inserted_pai)
-		. += mutable_appearance(initial(icon), "pai_inserted")
+		. += mutable_appearance(overlays_icon, "pai_inserted")
 
 /obj/item/modular_computer/pda/attack_ai(mob/user)
 	to_chat(user, span_notice("It doesn't feel right to snoop around like that..."))
@@ -267,6 +269,7 @@
  */
 /obj/item/modular_computer/pda/nukeops
 	name = "nuclear pda"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/nukeops")
 	device_theme = PDA_THEME_SYNDICATE
 	comp_light_luminosity = 6.3 //matching a flashlight
 	light_color = COLOR_RED
@@ -291,6 +294,7 @@
  */
 /obj/item/modular_computer/pda/silicon
 	name = "modular interface"
+	icon = 'icons/obj/modular_pda.dmi'
 	icon_state = "tablet-silicon"
 	base_icon_state = "tablet-silicon"
 	greyscale_config = null

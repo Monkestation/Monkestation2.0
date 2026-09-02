@@ -64,18 +64,18 @@
 /obj/item/clothing/neck/mantle/recolorable
 	name = "mantle"
 	desc = "A simple drape over the shoulders."
-	icon = 'monkestation/code/modules/blueshift/gags/icons/neck/neck.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/gags/icons/neck/neck.dmi'
-	icon_state = "mantle"
-	greyscale_colors = "#ffffff"
+	icon = 'icons/map_icons/clothing/neck.dmi'
+	SETUP_MAP_ICONS("mantle", "/obj/item/clothing/neck/mantle/recolorable")
 	greyscale_config = /datum/greyscale_config/mantle
 	greyscale_config_worn = /datum/greyscale_config/mantle/worn
+	greyscale_colors = "#ffffff"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/neck/face_scarf
 	name = "face scarf"
 	desc = "A warm looking scarf that you can easily put around your face."
-	icon_state = "face_scarf"
+	icon = 'icons/map_icons/clothing/neck.dmi'
+	SETUP_MAP_ICONS("face_scarf", "/obj/item/clothing/neck/face_scarf")
 	greyscale_config = /datum/greyscale_config/face_scarf
 	greyscale_config_worn = /datum/greyscale_config/face_scarf/worn
 	greyscale_colors = "#a52424"
@@ -96,7 +96,8 @@
 /obj/item/clothing/neck/maid_neck_cover
 	name = "maid neck cover"
 	desc = "A neckpiece for a maid costume, it smells faintly of disappointment."
-	icon_state = "maid_neck_cover"
+	icon = 'icons/map_icons/clothing/neck.dmi'
+	SETUP_MAP_ICONS("maid_neck_cover", "/obj/item/clothing/neck/maid_neck_cover")
 	greyscale_config = /datum/greyscale_config/maid_neck_cover
 	greyscale_config_worn = /datum/greyscale_config/maid_neck_cover/worn
 	greyscale_colors = "#7b9ab5#edf9ff"
@@ -104,7 +105,8 @@
 
 /obj/item/clothing/neck/cloak/colourable
 	name = "colourable cloak"
-	icon_state = "gags_cloak"
+	icon = 'icons/map_icons/clothing/neck.dmi'
+	SETUP_MAP_ICONS("gags_cloak", "/obj/item/clothing/neck/cloak/colourable")
 	greyscale_config = /datum/greyscale_config/cloak
 	greyscale_config_worn = /datum/greyscale_config/cloak/worn
 	greyscale_colors = "#917A57#4e412e#4e412e"
@@ -112,19 +114,20 @@
 
 /obj/item/clothing/neck/cloak/colourable/veil
 	name = "colourable veil"
-	icon_state = "gags_veil"
+	icon = 'icons/map_icons/clothing/neck.dmi'
+	SETUP_MAP_ICONS("gags_veil", "/obj/item/clothing/neck/cloak/colourable/veil")
 	greyscale_config = /datum/greyscale_config/cloak/veil
 	greyscale_config_worn = /datum/greyscale_config/cloak/veil/worn
 
 /obj/item/clothing/neck/cloak/colourable/boat
 	name = "colourable boatcloak"
-	icon_state = "gags_boat"
+	SETUP_MAP_ICONS("gags_boat", "/obj/item/clothing/neck/cloak/colourable/boat")
 	greyscale_config = /datum/greyscale_config/cloak/boat
 	greyscale_config_worn = /datum/greyscale_config/cloak/boat/worn
 
 /obj/item/clothing/neck/cloak/colourable/shroud
 	name = "colourable shroud"
-	icon_state = "gags_shroud"
+	SETUP_MAP_ICONS("gags_shroud", "/obj/item/clothing/neck/cloak/colourable/shroud")
 	greyscale_config = /datum/greyscale_config/cloak/shroud
 	greyscale_config_worn = /datum/greyscale_config/cloak/shroud/worn
 
@@ -161,12 +164,12 @@
 /obj/item/clothing/neck/ranger_poncho
 	name = "ranger poncho"
 	desc = "Aim for the Heart, Ramon."
-	icon_state = "ranger_poncho"
+	icon = 'icons/map_icons/clothing/neck.dmi'
+	SETUP_MAP_ICONS("ranger_poncho", "/obj/item/clothing/neck/ranger_poncho")
 	greyscale_config = /datum/greyscale_config/ranger_poncho
 	greyscale_config_worn = /datum/greyscale_config/ranger_poncho/worn
 	greyscale_colors = "#917A57#858585"	//Roughly the same color as the original non-greyscale item was
 	flags_1 = IS_PLAYER_COLORABLE_1
-
 
 /obj/item/clothing/neck/ranger_poncho/Initialize(mapload)
 	. = ..()
@@ -175,7 +178,8 @@
 /obj/item/clothing/neck/robe_cape
 	name = "robe cape"
 	desc = "A comfortable northern-style cape, draped down your back and held around your neck with a brooch. Reminds you of a sort of robe."
-	icon_state = "robe_cape"
+	icon = 'icons/map_icons/clothing/neck.dmi'
+	SETUP_MAP_ICONS("robe_cape", "/obj/item/clothing/neck/robe_cape")
 	greyscale_config = /datum/greyscale_config/robe_cape
 	greyscale_config_worn = /datum/greyscale_config/robe_cape/worn
 	greyscale_colors = "#867361"
@@ -185,7 +189,8 @@
 /obj/item/clothing/neck/long_cape
 	name = "long cape"
 	desc = "A graceful cloak that carefully surrounds your body."
-	icon_state = "long_cape"
+	icon = 'icons/map_icons/clothing/neck.dmi'
+	SETUP_MAP_ICONS("long_cape", "/obj/item/clothing/neck/long_cape")
 	greyscale_config = /datum/greyscale_config/long_cape
 	greyscale_config_worn = /datum/greyscale_config/long_cape/worn
 	greyscale_colors = "#867361#4d433d#b2a69c#b2a69c"
@@ -199,7 +204,8 @@
 /obj/item/clothing/neck/wide_cape
 	name = "wide cape"
 	desc = "A proud, broad-shouldered cloak with which you can protect the honor of your back."
-	icon_state = "wide_cape"
+	icon = 'icons/map_icons/clothing/neck.dmi'
+	SETUP_MAP_ICONS("wide_cape", "/obj/item/clothing/neck/wide_cape")
 	greyscale_config = /datum/greyscale_config/wide_cape
 	greyscale_config_worn = /datum/greyscale_config/wide_cape/worn
 	greyscale_colors = "#867361#4d433d#b2a69c"

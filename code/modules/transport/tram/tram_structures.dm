@@ -612,22 +612,22 @@
 /obj/structure/chair/sofa/bench/tram
 	name = "bench"
 	desc = "Perfectly designed to be comfortable to sit on, and hellish to sleep on."
-	icon_state = "bench_middle"
+	SETUP_MAP_ICONS("bench_middle", "/obj/structure/chair/sofa/bench/tram")
 	greyscale_config = /datum/greyscale_config/bench_middle
 	greyscale_colors = COLOR_TRAM_BLUE
 
 /obj/structure/chair/sofa/bench/tram/left
-	icon_state = "bench_left"
+	SETUP_MAP_ICONS("bench_left", "/obj/structure/chair/sofa/bench/tram/left")
 	greyscale_config = /datum/greyscale_config/bench_left
 
 /obj/structure/chair/sofa/bench/tram/right
-	icon_state = "bench_right"
+	SETUP_MAP_ICONS("bench_right", "/obj/structure/chair/sofa/bench/tram/right")
 	greyscale_config = /datum/greyscale_config/bench_right
 
 /obj/structure/chair/sofa/bench/tram/corner
-	icon_state = "bench_corner"
+	SETUP_MAP_ICONS("bench_corner", "/obj/structure/chair/sofa/bench/tram/corner")
 	greyscale_config = /datum/greyscale_config/bench_corner
 
 /obj/structure/chair/sofa/bench/tram/solo
-	icon_state = "bench_solo"
+	SETUP_MAP_ICONS("bench_solo", "/obj/structure/chair/sofa/bench/tram/solo")
 	greyscale_config = /datum/greyscale_config/bench_solo

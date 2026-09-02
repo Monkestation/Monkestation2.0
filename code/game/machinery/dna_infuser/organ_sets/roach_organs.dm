@@ -49,12 +49,12 @@
 /obj/item/organ/internal/heart/roach
 	name = "mutated roach-heart"
 	desc = "Roach DNA infused into what was once a normal heart."
-	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
-
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "heart"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("heart", "/obj/item/organ/internal/heart/roach")
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = ROACH_COLORS
+
+	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 
 	/// Timer ID for resetting the damage resistance applied from attacks from behind
 	var/defense_timerid
@@ -155,15 +155,15 @@
 /obj/item/organ/internal/stomach/roach
 	name = "mutated roach-stomach"
 	desc = "Roach DNA infused into what was once a normal stomach."
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("stomach", "/obj/item/organ/internal/stomach/roach")
+	greyscale_config = /datum/greyscale_config/mutant_organ
+	greyscale_colors = ROACH_COLORS
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	disgust_metabolism = 32 // Demolishes any disgust we have
 	metabolism_efficiency = 0.033 // Slightly worse at transferring reagents
 //	hunger_modifier = 3 //monkestation temp removal
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "stomach"
-	greyscale_config = /datum/greyscale_config/mutant_organ
-	greyscale_colors = ROACH_COLORS
 
 /obj/item/organ/internal/stomach/roach/Initialize(mapload)
 	. = ..()
@@ -178,8 +178,8 @@
 	toxTolerance = 5 // More tolerance for toxins
 	liver_resistance = 0.25 // But if they manage to get in you're screwed
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "liver"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("liver", "/obj/item/organ/internal/liver/roach")
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = ROACH_COLORS
 
@@ -210,8 +210,8 @@
 	desc = "Roach DNA infused into what was once a normal appendix. It could get <i>worse</i>?"
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "appendix"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("appendix", "/obj/item/organ/internal/appendix/roach")
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = ROACH_COLORS
 

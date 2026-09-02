@@ -1,0 +1,10 @@
+{
+	"jackboots": [
+		{
+			"type": "icon_state",
+			"icon_state": "jackboots_gags",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	]
+}

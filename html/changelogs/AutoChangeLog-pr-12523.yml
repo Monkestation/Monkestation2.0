@@ -1,0 +1,4 @@
+author: "Runian"
+delete-after: True
+changes:
+  - bugfix: "Kilostation's North Central Primary Hallway's disposal pipes are correctly connected and no longer ends early in the hallway."

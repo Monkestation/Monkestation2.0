@@ -48872,6 +48872,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"oml" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/turf/open/floor/engine,
+/area/station/science/server)
 "omo" = (
 /obj/machinery/light/floor/has_bulb,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -68347,9 +68351,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
-	dir = 1
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
 /turf/open/floor/engine,
 /area/station/science/server)
 "tPo" = (
@@ -106626,7 +106628,7 @@ oAh
 vdw
 xLC
 tPl
-jrK
+oml
 fqx
 gBx
 cOR
