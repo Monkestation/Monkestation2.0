@@ -74,9 +74,6 @@ Doesn't work on other aliens/AI.*/
 	if(!check_for_duplicate())
 		return FALSE
 
-	if(!check_for_vents())
-		return FALSE
-
 	return ..()
 
 /datum/action/cooldown/alien/make_structure/Activate(atom/target)
