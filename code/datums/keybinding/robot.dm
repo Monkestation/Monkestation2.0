@@ -77,9 +77,15 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/living/silicon/robot/shell/our_shell = user.mob
-	//We make sure our shell is actually a shell
-	if(our_shell.shell == FALSE)
-		return
+	if(iscyborg(user.mob))
+		var/mob/living/silicon/robot/our_shell = user.mob
+		//We make sure our shell is actually a shell
+		if(our_shell.shell == FALSE)
+			return
+	else if(ishuman(user.mob))
+		var/obj/item/organ/internal/brain/cybernetic/ai/our_shell = user.mob.get_organ_slot(ORGAN_SLOT_BRAIN)
+		//Is this human an organic shell?
+		if(!istype(our_shell))
+			return
 	our_shell.undeploy()
 	return TRUE
