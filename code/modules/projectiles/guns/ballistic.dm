@@ -605,6 +605,10 @@
 		. += span_danger("You get the feeling this might explode if you fire it....")
 		if(misfire_probability > 0)
 			. += span_danger("Given the state of the gun, there is a [misfire_probability]% chance it'll misfire.")
+	if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
+		if(istype(src, /obj/item/gun/ballistic/rifle/rebarxbow) || istype(src, /obj/item/gun/ballistic/bow)) // Excluding bows & crossbows
+			return
+		. += span_info("You scan the chamber with your X-ray vision: [(chambered) ? "you see \a [chambered.name]!" : "it is empty."]")
 
 ///Gets the number of bullets in the gun
 /obj/item/gun/ballistic/proc/get_ammo(countchambered = TRUE)

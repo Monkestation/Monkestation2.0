@@ -254,3 +254,11 @@
   - rscadd: Upgrading nanite chambers lasers increases volume of nanites initially
       given, by 25 per laser tier for publics, and 35 for regular chambers
   - balance: Anomalous mutations can't be saved via DNA disk
+2026-08-31:
+  EnterTheJake:
+  - balance: CNS Rebooter Implant will now pull you out of stamcrit and grant you
+      a few seconds of stun immunity
+  Runian:
+  - bugfix: Uranium can now be used once more as an item material.
+  Tractor-Maam:
+  - spellcheck: Pre-Approved Cyborg Candidates are no longer "Cantidates"
